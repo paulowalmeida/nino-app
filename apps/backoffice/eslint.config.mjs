@@ -1,6 +1,7 @@
 import { dirname } from 'path'
 import { fileURLToPath } from 'url'
 import { FlatCompat } from '@eslint/eslintrc'
+import simpleImportSort from 'eslint-plugin-simple-import-sort'
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
@@ -11,11 +12,25 @@ const eslintConfig = [
   { ignores: ['next-env.d.ts', '.next/**', 'node_modules/**'] },
   ...compat.extends('next/core-web-vitals', 'next/typescript'),
   {
+    plugins: { 'simple-import-sort': simpleImportSort },
     rules: {
-      '@typescript-eslint/no-unused-vars': ['error', {
-        varsIgnorePattern: '^_',
-        argsIgnorePattern: '^_',
-      }],
+      'simple-import-sort/imports': [
+        'error',
+        {
+          groups: [
+            ['^react', '^next'],
+            ['^@?\\w'],
+            ['^@nino/'],
+            ['^\\.\\./|^\\./'],
+          ],
+        },
+      ],
+      'simple-import-sort/exports': 'error',
+      '@typescript-eslint/no-explicit-any': 'error',
+      '@typescript-eslint/no-unused-vars': [
+        'error',
+        { varsIgnorePattern: '^_', argsIgnorePattern: '^_' },
+      ],
     },
   },
 ]
