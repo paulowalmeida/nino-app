@@ -49,13 +49,13 @@ export interface CreateTenantRequest {
   timezone?: string
 }
 
-export interface UpdateTenantRequest extends Partial<CreateTenantRequest> {}
+export type UpdateTenantRequest = Partial<CreateTenantRequest>
 
 export interface TenantQuery extends PaginatedQuery {
   companyId?: string
 }
 
-export interface TenantPaginatedResponse extends PaginatedResponse<Tenant> {}
+export type TenantPaginatedResponse = PaginatedResponse<Tenant>
 
 export interface TenantSettings {
   id: string
@@ -150,4 +150,5 @@ export interface UpdateTenantPaymentMethodRequest {
   isActive: boolean
 }
 
-export interface TenantPaymentMethodPaginatedResponse extends PaginatedResponse<TenantPaymentMethod> {}
+export type TenantPaymentMethodPaginatedResponse =
+  PaginatedResponse<TenantPaymentMethod>

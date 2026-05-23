@@ -39,4 +39,4 @@ export interface UpdatePlanRequest {
   isActive?: boolean
 }
 
-export interface PlanPaginatedResponse extends PaginatedResponse<PlanRecord> {}
+export type PlanPaginatedResponse = PaginatedResponse<PlanRecord>

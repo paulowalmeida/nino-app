@@ -38,9 +38,9 @@ export interface CreateCompanyRequest {
   country?: string
 }
 
-export interface UpdateCompanyRequest extends Partial<CreateCompanyRequest> {}
+export type UpdateCompanyRequest = Partial<CreateCompanyRequest>
 
-export interface CompanyPaginatedResponse extends PaginatedResponse<Company> {}
+export type CompanyPaginatedResponse = PaginatedResponse<Company>
 
 export interface CompanyResponsible {
   id: string
@@ -60,4 +60,5 @@ export interface CreateCompanyResponsibleRequest {
   email: string
 }
 
-export interface UpdateCompanyResponsibleRequest extends Partial<CreateCompanyResponsibleRequest> {}
+export type UpdateCompanyResponsibleRequest =
+  Partial<CreateCompanyResponsibleRequest>

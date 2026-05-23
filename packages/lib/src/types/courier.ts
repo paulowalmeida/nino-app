@@ -22,4 +22,4 @@ export interface CreateCourierTenantRequest {
   tenantId: string
 }
 
-export interface CourierTenantPaginatedResponse extends PaginatedResponse<CourierTenant> {}
+export type CourierTenantPaginatedResponse = PaginatedResponse<CourierTenant>

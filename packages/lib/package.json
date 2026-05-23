@@ -6,9 +6,8 @@
     ".": "./src/index.ts"
   },
   "scripts": {
+    "lint": "eslint src/ --max-warnings=0",
+    "lint:fix": "eslint src/ --fix",
     "type-check": "tsc --noEmit"
-  },
-  "devDependencies": {
-    "typescript": "^5.7.3"
   }
 }
