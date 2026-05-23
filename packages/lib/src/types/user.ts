@@ -49,7 +49,7 @@ export interface UserQuery extends PaginatedQuery {
   companyId?: string
 }
 
-export interface UserPaginatedResponse extends PaginatedResponse<User> {}
+export type UserPaginatedResponse = PaginatedResponse<User>
 
 export interface UserTenant {
   id: string
@@ -66,4 +66,4 @@ export interface CreateUserTenantRequest {
   tenantRoleId: string
 }
 
-export interface UserTenantPaginatedResponse extends PaginatedResponse<UserTenant> {}
+export type UserTenantPaginatedResponse = PaginatedResponse<UserTenant>
