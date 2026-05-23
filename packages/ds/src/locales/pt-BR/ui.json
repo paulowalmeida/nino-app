@@ -1,0 +1,51 @@
+{
+  "toast": {
+    "dismiss": "Fechar",
+    "stories": {
+      "orderConfirmed": "Pedido confirmado!",
+      "orderDescription": "Seu pedido #1234 está sendo preparado.",
+      "somethingWrong": "Algo deu errado",
+      "tryAgain": "Por favor, tente novamente.",
+      "sessionExpiring": "Sessão expirando",
+      "logoutWarning": "Você será desconectado em 5 minutos.",
+      "notification": "Notificação",
+      "showToast": "Exibir notificação",
+      "orderPreparing": "Seu pedido está sendo preparado."
+    }
+  },
+  "spinner": {
+    "loading": "Carregando"
+  },
+  "button": {
+    "stories": {
+      "confirm": "Confirmar pedido",
+      "cancel": "Cancelar",
+      "viewDetails": "Ver detalhes",
+      "ignore": "Ignorar",
+      "deleteAccount": "Excluir conta",
+      "saving": "Salvando...",
+      "unavailable": "Indisponível",
+      "small": "Pequeno",
+      "medium": "Médio",
+      "large": "Grande",
+      "viewMenu": "Ver cardápio"
+    }
+  },
+  "input": {
+    "stories": {
+      "emailPlaceholder": "Digite seu e-mail",
+      "invalidEmail": "E-mail inválido",
+      "unavailable": "Indisponível",
+      "small": "Pequeno",
+      "medium": "Médio",
+      "large": "Grande"
+    }
+  },
+  "label": {
+    "stories": {
+      "emailAddress": "Endereço de e-mail",
+      "fullName": "Nome completo",
+      "emailPlaceholder": "voce@exemplo.com"
+    }
+  }
+}

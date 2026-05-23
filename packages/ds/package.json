@@ -1,12 +1,17 @@
 {
-  "name": "@nino/ui",
+  "name": "@nino/ds",
   "version": "0.0.1",
   "private": true,
   "exports": {
     ".": "./src/index.ts",
-    "./styles/tokens.css": "./src/styles/tokens.css"
+    "./globals.css": "./src/styles/globals.css"
   },
   "scripts": {
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build",
     "lint": "eslint src/ --max-warnings=0",
     "lint:fix": "eslint src/ --fix",
     "type-check": "tsc --noEmit"

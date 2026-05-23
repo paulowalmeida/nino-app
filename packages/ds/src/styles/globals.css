@@ -1,0 +1,32 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@700;800;900&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap');
+@import "tailwindcss";
+@plugin "tailwindcss-animate";
+
+@theme {
+  /* Typography */
+  --font-sans: 'Plus Jakarta Sans', sans-serif;
+  --font-display: 'Nunito', sans-serif;
+
+  /* Brand tokens — override per tenant */
+  --color-brand: #ff8c38;
+  --color-brand-foreground: #ffffff;
+  --color-brand-hover: color-mix(in srgb, var(--color-brand) 85%, black);
+  --color-brand-active: color-mix(in srgb, var(--color-brand) 70%, black);
+
+  /* Palette */
+  --color-dark: #1a1a2e;
+  --color-surface: #f1f3f5;
+  --color-text: #2d2d2d;
+
+  /* Input tokens — override per tenant */
+  --color-input-border: color-mix(in srgb, var(--color-brand) 20%, transparent);
+  --color-input-border-focus: var(--color-brand);
+
+  /* Structural */
+  --radius-button: 100px;
+  --radius-card: 20px;
+}
+
+@utility shadow-brand-glow {
+  box-shadow: 0 8px 20px color-mix(in srgb, var(--color-brand) 30%, transparent);
+}

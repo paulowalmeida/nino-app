@@ -8,5 +8,6 @@
     "skipLibCheck": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true
-  }
+  },
+  "files": ["global.d.ts"]
 }
