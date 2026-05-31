@@ -1,46 +1,56 @@
-import { render, screen } from '@testing-library/react'
+import { act, render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import { describe, expect, it, vi } from 'vitest'
+import { afterEach, describe, expect, it } from 'vitest'
 
-import { Toast, ToastProvider, ToastViewport } from './Toast'
+import { ToastContainer, toast, toaster } from './Toast'
 
-function renderToast(props = {}) {
-  return render(
-    <ToastProvider>
-      <Toast title="Test message" open onOpenChange={vi.fn()} {...props} />
-      <ToastViewport />
-    </ToastProvider>
-  )
+function renderContainer() {
+  return render(<ToastContainer />)
 }
 
-describe(Toast.name, () => {
-  it('renders the title', () => {
-    renderToast()
-    expect(screen.getByText('Test message')).toBeInTheDocument()
+afterEach(() => {
+  // remove() (sem id) limpa a store de forma síncrona; dismiss() só anima,
+  // e a animação de saída não conclui no jsdom — toasts vazariam entre testes
+  toaster.remove()
+})
+
+describe(ToastContainer.name, () => {
+  it('renders the title', async () => {
+    renderContainer()
+    act(() => toast.default('Mensagem de teste'))
+    expect(await screen.findByText('Mensagem de teste')).toBeInTheDocument()
   })
 
-  it('renders the description when provided', () => {
-    renderToast({ description: 'Additional info' })
-    expect(screen.getByText('Additional info')).toBeInTheDocument()
+  it('renders the description when provided', async () => {
+    renderContainer()
+    act(() => toast.default('Título', 'Informação adicional'))
+    expect(await screen.findByText('Informação adicional')).toBeInTheDocument()
   })
 
-  it('does not render description when not provided', () => {
-    renderToast()
-    expect(screen.queryByText('Additional info')).not.toBeInTheDocument()
+  it('does not render description when absent', async () => {
+    renderContainer()
+    act(() => toast.default('Só título'))
+    await screen.findByText('Só título')
+    expect(screen.queryByText('Informação adicional')).not.toBeInTheDocument()
   })
 
-  it('calls onOpenChange when dismiss button is clicked', async () => {
-    const onOpenChange = vi.fn()
-    renderToast({ onOpenChange })
-    await userEvent.click(screen.getByRole('button', { name: 'Dismiss' }))
-    expect(onOpenChange).toHaveBeenCalledWith(false)
+  it('closes when the close button is clicked', async () => {
+    renderContainer()
+    act(() => toast.default('Mensagem'))
+    await screen.findByText('Mensagem')
+    await userEvent.click(screen.getByRole('button', { name: 'Close' }))
+    await waitFor(
+      () => expect(screen.queryByText('Mensagem')).not.toBeInTheDocument(),
+      { timeout: 3000 }
+    )
   })
 
   it.each(['default', 'success', 'error', 'warning'] as const)(
-    'renders variant %s without errors',
-    (variant) => {
-      renderToast({ variant })
-      expect(screen.getByText('Test message')).toBeInTheDocument()
+    'renderiza variant %s sem erros',
+    async (variant) => {
+      renderContainer()
+      act(() => toast[variant]('Mensagem'))
+      expect(await screen.findByText('Mensagem')).toBeInTheDocument()
     }
   )
 })

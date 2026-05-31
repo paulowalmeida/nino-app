@@ -1,12 +1,29 @@
-import { ButtonHTMLAttributes, ComponentType, forwardRef } from 'react'
+import {
+  ButtonHTMLAttributes,
+  Children,
+  cloneElement,
+  forwardRef,
+  isValidElement,
+  ReactElement,
+  ReactNode,
+} from 'react'
 
-import { Slot } from '@radix-ui/react-slot'
 import { motion } from 'framer-motion'
 
-import { baseDisabled, baseFocus, baseLayout } from '@ds/lib/baseClasses'
+import { baseFocus, baseLayout } from '@ds/lib/baseClasses'
 import { mergeClasses } from '@ds/lib/mergeClasses'
+import { LoadingDots } from '@ds/components/LoadingDots'
 import { Spinner } from '@ds/components/Spinner'
 import { ButtonProps, ButtonSize, ButtonVariant } from './Button.types'
+
+const Slot = forwardRef<
+  HTMLButtonElement,
+  ButtonHTMLAttributes<HTMLButtonElement> & { children?: ReactNode }
+>(({ children, ...props }, ref) => {
+  const child = Children.only(children)
+  if (!isValidElement(child)) return null
+  return cloneElement(child as ReactElement, { ...(props as object), ref } as object)
+})
 
 const variantClasses: Record<ButtonVariant, string> = {
   primary:
@@ -15,7 +32,6 @@ const variantClasses: Record<ButtonVariant, string> = {
   outline:
     'border border-gray-300 text-gray-900 bg-transparent hover:bg-gray-50 active:bg-gray-100',
   ghost: 'text-gray-700 bg-transparent hover:bg-gray-100 active:bg-gray-200',
-  destructive: 'bg-red-600 text-white hover:bg-red-700 active:bg-red-800',
 }
 
 const sizeClasses: Record<ButtonSize, string> = {
@@ -24,38 +40,41 @@ const sizeClasses: Record<ButtonSize, string> = {
   lg: 'h-12 px-6 text-base gap-2',
 }
 
+const baseDisabledStyle = 'disabled:pointer-events-none'
+const disabledOpacity = 'opacity-50'
+
 
 const MotionButton = motion.create('button')
-
-// Slot não declara props de button no tipo, mas as repassa ao filho em runtime
-const SlotButton = Slot as ComponentType<
-  ButtonHTMLAttributes<HTMLButtonElement> & {
-    ref?: React.Ref<HTMLButtonElement>
-  }
->
 
 /**
  * Primary action button. Supports visual variants, sizes,
  * loading state, and child element rendering via `asChild`.
  *
  * @param variant - Visual style of the button. Default: `primary`
+ * 
  * @param size - Height and padding of the button. Default: `md`
- * @param loading - Shows a spinner and blocks interaction while an action is in progress
+ * 
+ * @param loading - Shows a loading indicator and blocks interaction while an action is in progress
+ *
+ * @param loadingIndicator - Style of the loading indicator. Default: `spinner`
+ * 
  * @param asChild - Delegates rendering to the direct child via Radix Slot
+ * 
  * @param disabled - Disables the button
+ * 
  * @param className - Additional CSS classes merged with base styles
  *
  * @param onClick - Fired when the button is clicked
+ * 
  * @param onFocus - Fired when the button receives focus
+ * 
  * @param onBlur - Fired when the button loses focus
+ * 
  * @param onMouseEnter - Fired when the pointer enters the button
+ * 
  * @param onMouseLeave - Fired when the pointer leaves the button
+ * 
  * @param onKeyDown - Fired when a key is pressed while the button is focused
- *
- * @example
- * <Button variant="primary" onClick={handleSubmit}>Confirm</Button>
- * <Button loading>Saving...</Button>
- * <Button asChild><a href="/route">See more</a></Button>
  */
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
   (
@@ -63,6 +82,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       variant = 'primary',
       size = 'md',
       loading = false,
+      loadingIndicator = 'spinner',
       asChild = false,
       disabled,
       className,
@@ -71,12 +91,11 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     },
     ref
   ) => {
-    const isDisabled = disabled || loading
-
     const baseClassName = mergeClasses(
       baseLayout,
       baseFocus,
-      baseDisabled,
+      baseDisabledStyle,
+      disabled && disabledOpacity,
       variantClasses[variant],
       sizeClasses[size],
       className
@@ -84,30 +103,32 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
 
     if (asChild) {
       return (
-        <SlotButton
+        <Slot
           ref={ref}
-          disabled={isDisabled}
+          disabled={disabled || loading}
           aria-busy={loading || undefined}
           className={baseClassName}
           {...props}
         >
           {children}
-        </SlotButton>
+        </Slot>
       )
     }
 
     return (
       <MotionButton
         ref={ref}
-        disabled={isDisabled}
+        disabled={disabled || loading}
         aria-busy={loading || undefined}
         className={baseClassName}
-        whileTap={isDisabled ? {} : { scale: 0.97, opacity: 0.75 }}
+        whileTap={disabled || loading ? {} : { scale: 0.97, opacity: 0.75 }}
         transition={{ type: 'spring', stiffness: 500, damping: 30 }}
         {...props}
       >
-        <Spinner visible={loading} />
-        {children}
+        {loadingIndicator === 'dots'
+          ? <LoadingDots visible={loading} />
+          : <Spinner visible={loading} />}
+        {!loading && children}
       </MotionButton>
     )
   }

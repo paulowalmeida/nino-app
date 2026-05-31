@@ -11,7 +11,8 @@
     "build": "turbo build",
     "lint": "turbo lint",
     "type-check": "turbo type-check",
-    "format": "prettier --write \"**/*.{ts,tsx,css,md}\""
+    "format": "prettier --write \"**/*.{ts,tsx,css,md}\"",
+    "ds:storybook": "turbo run storybook --filter=@nino/ds"
   },
   "dependencies": {
     "clsx": "^2.1.1",
