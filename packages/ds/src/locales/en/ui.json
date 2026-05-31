@@ -1,0 +1,51 @@
+{
+  "toast": {
+    "dismiss": "Dismiss",
+    "stories": {
+      "orderConfirmed": "Order confirmed!",
+      "orderDescription": "Your order #1234 is being prepared.",
+      "somethingWrong": "Something went wrong",
+      "tryAgain": "Please try again.",
+      "sessionExpiring": "Session expiring",
+      "logoutWarning": "You will be logged out in 5 minutes.",
+      "notification": "Notification",
+      "showToast": "Show toast",
+      "orderPreparing": "Your order is being prepared."
+    }
+  },
+  "spinner": {
+    "loading": "Loading"
+  },
+  "button": {
+    "stories": {
+      "confirm": "Confirm order",
+      "cancel": "Cancel",
+      "viewDetails": "View details",
+      "ignore": "Ignore",
+      "deleteAccount": "Delete account",
+      "saving": "Saving...",
+      "unavailable": "Unavailable",
+      "small": "Small",
+      "medium": "Medium",
+      "large": "Large",
+      "viewMenu": "View menu"
+    }
+  },
+  "input": {
+    "stories": {
+      "emailPlaceholder": "Enter your email",
+      "invalidEmail": "Invalid email",
+      "unavailable": "Unavailable",
+      "small": "Small",
+      "medium": "Medium",
+      "large": "Large"
+    }
+  },
+  "label": {
+    "stories": {
+      "emailAddress": "Email address",
+      "fullName": "Full name",
+      "emailPlaceholder": "you@example.com"
+    }
+  }
+}

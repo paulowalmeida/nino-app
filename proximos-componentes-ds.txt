@@ -1,0 +1,111 @@
+# Plano: Componentes @nino/ds — Próximas implementações
+
+## Contexto
+
+O DS já tem 24 componentes base. Vamos agora cobrir os Ark UI primitives ainda não wrappeados + composições puras necessárias para os 4 apps (backoffice, manager, consumer, courier). O arquivo `status-componentes-ds.txt` traz as decisões já tomadas pelo usuário.
+
+**Padrão de tema atual:**
+- `--color-brand: #FF6B00` + `--color-brand-hover` (85% brand + 15% preto) + `--color-brand-active`
+- Variações claras: `color-mix(in srgb, var(--color-brand) 12%, transparent)` (ver DatePicker)
+- Hover "variação clara do tema" = `color-mix(in srgb, var(--color-brand) 10%, white)` como bg
+- Todos os componentes seguem: `Component.tsx`, `Component.types.ts`, `index.ts`, `Component.test.tsx`, `Component.stories.tsx`
+
+---
+
+## Decisões fechadas
+
+| Questão | Decisão |
+|---|---|
+| StatusBadge | Não criar. Badge já tem `success/error/warning/info/default` — basta mapear status de pedido para a variante certa na feature. |
+| Tooltip | Já feito. Já usa Ark UI internamente. |
+| TreeView | Não usar. |
+| Swap | Não priorizar. Uso incerto. Reavaliar quando surgir caso concreto. |
+
+---
+
+## Prioridade 1 — Quick wins (apenas tema + tweaks visuais menores)
+
+Cada componente = wrapper sobre o Ark primitive com classes do tema aplicadas via data-attributes do Ark.
+
+| Componente | Ark Primitive | O que customizar |
+|---|---|---|
+| Combobox | @ark-ui/react/combobox | borda brand no foco + color-mix leve no hover dos itens |
+| Menu | @ark-ui/react/menu | hover dos itens com variação clara do brand |
+| Pagination | @ark-ui/react/pagination | sem borda, rounded-full no item ativo, item ativo = bg-brand text-brand-foreground |
+| Stepper | @ark-ui/react/steps | step ativo/concluído = bg-brand, conector = bg-brand |
+| NumberInput | @ark-ui/react/number-input | borda brand no foco; criar MoneyInput em cima (prefixo R$, casas decimais) |
+| OTPInput | @ark-ui/react/pin-input | borda brand no foco |
+| Collapsible | @ark-ui/react/collapsible | hover do trigger com variação clara do brand |
+| Accordion | @ark-ui/react/accordion | mínimo — apenas garantir consistência visual |
+| RatingGroup | @ark-ui/react/rating-group | estrelas = text-brand, estrelas vazias = text-gray-300 |
+| ScrollArea | @ark-ui/react/scroll-area | scrollbar thumb = bg-brand/30, hover = bg-brand/50 |
+| Slider | @ark-ui/react/slider | track = bg-brand, thumb = bg-brand border-white |
+| TagsInput | @ark-ui/react/tags-input | tag = bg-brand/10 text-brand, borda brand no foco |
+| Clipboard | @ark-ui/react/clipboard | botão de copiar com ícone, feedback visual de copiado |
+| PasswordInput | @ark-ui/react/password-input | borda brand no foco + ícone toggle show/hide |
+| Popover | @ark-ui/react/popover | sombra consistente + animação fade/slide |
+| HoverCard | @ark-ui/react/hover-card | sombra + animação fade |
+| Listbox | @ark-ui/react/listbox | item selecionado = bg-brand/10 text-brand, hover = variação clara |
+
+---
+
+## Prioridade 2 — Requerem trabalho extra
+
+| Componente | Ark Primitive | Trabalho extra |
+|---|---|---|
+| FileUpload | @ark-ui/react/file-upload | Adicionar estado drag-over com animação (border brand pulsando ou bg sutil) + ícone de upload animado. Usar data-dragging attribute do Ark para trigger CSS. |
+| Splitter | @ark-ui/react/splitter | Remover visual do handle (o Ark renderiza um div — deixar invisível). Depender apenas do cursor col-resize/row-resize. Uso previsto: sidebar ↔ conteúdo no manager/backoffice. |
+| ColorPicker | @ark-ui/react/color-picker | Customizar para branding do tenant. Expor apenas canais H/S/L ou hex. Preview do tenant brand em tempo real. |
+| Carousel | @ark-ui/react/carousel | Indicadores de slide com cor brand, botões prev/next customizados. |
+| ImageCropper | @ark-ui/react/image-cropper | Integrar com FileUpload. Crop circular para avatar, retangular para banner. |
+| QRCode | @ark-ui/react/qr-code | Cor brand no QR, logo da Nino no centro (opcional). |
+| Editable | @ark-ui/react/editable | Usar para edição inline (nome de produto, preço, nome da loja no manager). Borda brand no modo edição, ícone de lápis no trigger. |
+
+---
+
+## Prioridade 3 — Composições puras (sem Ark primitive)
+
+| Componente | Estrutura |
+|---|---|
+| FormField | Wrapper sobre Field do Ark (Field.Root + Field.Label + Field.HelperText + Field.ErrorText). Props: label, helperText, error, required. Aceita qualquer input como children. |
+| Fieldset | Wrapper sobre Fieldset do Ark. Para agrupar campos relacionados (ex: endereço, horários). Props: legend, helperText, error. |
+| Card | div com rounded-lg border border-gray-200 bg-white p-4 shadow-sm. Variantes: default, flat (sem shadow), elevated. |
+| PageHeader | div com título + subtítulo + slot de ações. Props: title, subtitle?, actions? (ReactNode). |
+| Table | Wrapper sobre TanStack Table (headless). DS fornece Table, TableHeader, TableBody, TableRow, TableCell, TableHead. |
+| EmptyState | (baixa prioridade) Ícone + título + descrição + CTA opcional. |
+
+Sobre Table: TanStack Table (@tanstack/react-table) é headless — você traz o HTML e estilos. O DS wrappea com componentes estilizados. Sem opinião sobre sorting/filtering da lib.
+
+---
+
+## Deixar para depois / Avaliar caso a caso
+
+- SignaturePad — útil mas sem caso de uso claro agora
+- Tour — útil para onboarding mas sem caso de uso definido
+- DownloadTrigger — wrapper simples, fazer quando surgir necessidade
+- Swap — avaliar quando houver caso concreto
+
+---
+
+## Sequência sugerida de implementação
+
+1. FormField + Fieldset — desbloqueiam todos os forms dos apps
+2. Card — base visual dos dashboards
+3. Combobox — busca de produtos, clientes, etc.
+4. Menu — DropdownMenu em cards e headers
+5. Pagination — tabelas de pedidos/produtos
+6. Table (TanStack) — dashboards do manager e backoffice
+7. TagsInput, Slider, NumberInput/MoneyInput — forms de produto
+8. FileUpload + ImageCropper — upload de imagem de produto/avatar
+9. ColorPicker — branding do tenant
+10. Restantes da Prioridade 1 (Stepper, OTPInput, etc.)
+11. Carousel, QRCode, Editable, SignaturePad, Tour
+
+---
+
+## Verificação por componente
+
+Cada componente deve ter:
+- Stories que demonstram todos os estados (default, foco, erro, disabled, loading)
+- Testes verificando comportamento e acessibilidade
+- Variação de tema visível (cor brand aplicada nos estados certos)

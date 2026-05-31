@@ -6,3 +6,7 @@ out/
 .env.*.local
 .turbo/
 coverage/
+CLAUDE.md
+TODO.md
+STATUS.md
+FRONTEND.md

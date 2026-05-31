@@ -22,7 +22,8 @@ export interface UpdateProductCategoryRequest {
   position?: number
 }
 
-export interface ProductCategoryPaginatedResponse extends PaginatedResponse<ProductCategory> {}
+export type ProductCategoryPaginatedResponse =
+  PaginatedResponse<ProductCategory>
 
 export interface Product {
   id: string
@@ -60,4 +61,4 @@ export interface ProductQuery extends PaginatedQuery {
   isActive?: boolean
 }
 
-export interface ProductPaginatedResponse extends PaginatedResponse<Product> {}
+export type ProductPaginatedResponse = PaginatedResponse<Product>

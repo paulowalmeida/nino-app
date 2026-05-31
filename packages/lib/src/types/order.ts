@@ -121,4 +121,4 @@ export interface Order {
   statusHistory: OrderStatusHistoryItem[]
 }
 
-export interface OrderPaginatedResponse extends PaginatedResponse<Order> {}
+export type OrderPaginatedResponse = PaginatedResponse<Order>

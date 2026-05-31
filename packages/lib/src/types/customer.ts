@@ -18,7 +18,7 @@ export interface UpdateCustomerRequest {
   cpf?: string
 }
 
-export interface CustomerPaginatedResponse extends PaginatedResponse<Customer> {}
+export type CustomerPaginatedResponse = PaginatedResponse<Customer>
 
 export interface CustomerAddress {
   id: string
@@ -49,7 +49,7 @@ export interface CreateCustomerAddressRequest {
   country?: string
 }
 
-export interface UpdateCustomerAddressRequest extends Partial<CreateCustomerAddressRequest> {}
+export type UpdateCustomerAddressRequest = Partial<CreateCustomerAddressRequest>
 
 export interface CustomerPaymentMethod {
   id: string
@@ -79,7 +79,8 @@ export interface UpdateCustomerPaymentMethodRequest {
   isDefault?: boolean
 }
 
-export interface CustomerPaymentMethodPaginatedResponse extends PaginatedResponse<CustomerPaymentMethod> {}
+export type CustomerPaymentMethodPaginatedResponse =
+  PaginatedResponse<CustomerPaymentMethod>
 
 export interface CustomerNotificationPreference {
   id: string
@@ -114,7 +115,7 @@ export interface CreateCustomerTenantRequest {
   tenantId: string
 }
 
-export interface CustomerTenantPaginatedResponse extends PaginatedResponse<CustomerTenant> {}
+export type CustomerTenantPaginatedResponse = PaginatedResponse<CustomerTenant>
 
 export interface LoyaltyTransaction {
   id: string
@@ -140,4 +141,5 @@ export interface LoyaltyTransactionQuery extends PaginatedQuery {
   type?: LoyaltyTransactionType
 }
 
-export interface LoyaltyTransactionPaginatedResponse extends PaginatedResponse<LoyaltyTransaction> {}
+export type LoyaltyTransactionPaginatedResponse =
+  PaginatedResponse<LoyaltyTransaction>

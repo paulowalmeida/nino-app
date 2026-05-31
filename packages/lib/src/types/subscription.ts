@@ -33,4 +33,4 @@ export interface ChangePlanRequest {
   planId: string
 }
 
-export interface SubscriptionPaginatedResponse extends PaginatedResponse<Subscription> {}
+export type SubscriptionPaginatedResponse = PaginatedResponse<Subscription>
