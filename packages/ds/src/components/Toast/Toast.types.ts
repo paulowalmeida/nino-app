@@ -4,6 +4,7 @@ export type ToastVariant = 'default' | 'success' | 'error' | 'warning'
 
 export interface ToastMeta {
   variant: ToastVariant
+  createdAt: number
 }
 
 export interface ToastProviderProps {

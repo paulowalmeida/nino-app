@@ -118,6 +118,7 @@ export const Combobox = forwardRef<ComboboxInputRef, ComboboxProps>(
             ref={ref}
             placeholder={placeholder}
             data-invalid={error || undefined}
+            aria-invalid={error || undefined}
             className={mergeClasses(
               baseInput,
               baseDisabled,

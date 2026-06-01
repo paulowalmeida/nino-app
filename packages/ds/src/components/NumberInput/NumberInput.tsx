@@ -1,4 +1,4 @@
-import { forwardRef } from 'react'
+import { forwardRef, type ChangeEvent } from 'react'
 
 import { mergeClasses } from '@ds/lib/mergeClasses'
 
@@ -33,27 +33,34 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
       className,
     },
     ref
-  ) => (
-    <input
-      ref={ref}
-      type='number'
-      name={name}
-      value={value}
-      defaultValue={defaultValue}
-      min={min}
-      max={max}
-      step={step}
-      placeholder={placeholder}
-      disabled={disabled}
-      onChange={(e) => onValueChange?.(e.target.valueAsNumber)}
-      className={mergeClasses(
-        base,
-        sizeClasses[size],
-        error ? variantError : variantDefault,
-        className
-      )}
-    />
-  )
+  ) => {
+    const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+      const v = e.target.valueAsNumber
+      if (!isNaN(v)) onValueChange?.(v)
+    }
+
+    return (
+      <input
+        ref={ref}
+        type='number'
+        name={name}
+        value={value}
+        defaultValue={defaultValue}
+        min={min}
+        max={max}
+        step={step}
+        placeholder={placeholder}
+        disabled={disabled}
+        onChange={handleChange}
+        className={mergeClasses(
+          base,
+          sizeClasses[size],
+          error ? variantError : variantDefault,
+          className
+        )}
+      />
+    )
+  }
 )
 
 NumberInput.displayName = 'NumberInput'

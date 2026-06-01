@@ -1,3 +1,5 @@
+import { useId } from 'react'
+
 import { RatingGroup as ArkRating } from '@ark-ui/react/rating-group'
 
 import { mergeClasses } from '@ds/lib/mergeClasses'
@@ -12,18 +14,18 @@ const baseItem =
 const readOnlyItem =
   'cursor-default text-gray-300 data-[highlighted]:text-brand data-[checked]:text-brand'
 
-function StarIcon({ half }: { half?: boolean }) {
+function StarIcon({ half, gradientId }: { half?: boolean; gradientId: string }) {
   if (half) {
     return (
       <svg width='20' height='20' viewBox='0 0 24 24' fill='currentColor'>
         <defs>
-          <linearGradient id='half'>
+          <linearGradient id={gradientId}>
             <stop offset='50%' stopColor='currentColor' />
             <stop offset='50%' stopColor='#d1d5db' />
           </linearGradient>
         </defs>
         <path
-          fill='url(#half)'
+          fill={`url(#${gradientId})`}
           d='M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z'
         />
       </svg>
@@ -47,6 +49,8 @@ export function Rating({
   name,
   className,
 }: RatingProps) {
+  const gradientId = useId()
+
   return (
     <ArkRating.Root
       count={count}
@@ -64,7 +68,7 @@ export function Rating({
             Array.from({ length: count }, (_, i) => (
               <ArkRating.Item key={i} index={i + 1} className={readOnly ? readOnlyItem : baseItem}>
                 <ArkRating.ItemContext>
-                  {({ half }) => <StarIcon half={half} />}
+                  {({ half }) => <StarIcon half={half} gradientId={gradientId} />}
                 </ArkRating.ItemContext>
               </ArkRating.Item>
             ))

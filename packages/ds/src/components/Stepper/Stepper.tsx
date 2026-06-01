@@ -52,8 +52,8 @@ export function Stepper({
   const current = controlledStep ?? internalStep
   const isVertical = orientation === 'vertical'
 
-  function handleClick(index: number) {
-    setInternalStep(index)
+  const handleClick = (index: number) => {
+    if (controlledStep === undefined) setInternalStep(index)
     onStepChange?.(index)
   }
 

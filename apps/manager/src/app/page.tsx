@@ -1,3 +1,5 @@
+import { redirect } from "next/navigation";
+
 export default function Page() {
-  return <main>nino-manager</main>
+  redirect('/entrar')
 }

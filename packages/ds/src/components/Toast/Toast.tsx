@@ -31,13 +31,13 @@ export const toaster = createToaster({
 
 export const toast = {
   default: (title: string, description?: string, duration = 4000) =>
-    toaster.create({ title, description, duration, type: 'info', meta: { variant: 'default' } as ToastMeta }),
+    toaster.create({ title, description, duration, type: 'info', meta: { variant: 'default', createdAt: Date.now() } as ToastMeta }),
   success: (title: string, description?: string, duration = 4000) =>
-    toaster.create({ title, description, duration, type: 'success', meta: { variant: 'success' } as ToastMeta }),
+    toaster.create({ title, description, duration, type: 'success', meta: { variant: 'success', createdAt: Date.now() } as ToastMeta }),
   error: (title: string, description?: string, duration = 4000) =>
-    toaster.create({ title, description, duration, type: 'error', meta: { variant: 'error' } as ToastMeta }),
+    toaster.create({ title, description, duration, type: 'error', meta: { variant: 'error', createdAt: Date.now() } as ToastMeta }),
   warning: (title: string, description?: string, duration = 4000) =>
-    toaster.create({ title, description, duration, type: 'warning', meta: { variant: 'warning' } as ToastMeta }),
+    toaster.create({ title, description, duration, type: 'warning', meta: { variant: 'warning', createdAt: Date.now() } as ToastMeta }),
 }
 
 export function ToastProvider({ children }: ToastProviderProps) {
@@ -48,8 +48,12 @@ export function ToastContainer({ className: _ }: ToastContainerProps) {
   return (
     <ArkToaster toaster={toaster}>
       {(t) => {
-        const variant = ((t.meta as ToastMeta | undefined)?.variant) ?? 'default'
+        const meta = t.meta as ToastMeta | undefined
+        const variant = meta?.variant ?? 'default'
         const duration = t.duration ?? 4000
+        const elapsed = meta?.createdAt ? Date.now() - meta.createdAt : 0
+        const remaining = Math.max(0, duration - elapsed)
+        const startPct = duration > 0 ? (remaining / duration) * 100 : 0
 
         return (
           <ArkToast.Root
@@ -89,9 +93,9 @@ export function ToastContainer({ className: _ }: ToastContainerProps) {
                   'absolute bottom-0 left-0 h-0.5 opacity-60',
                   variantAccent[variant]
                 )}
-                initial={{ width: '100%' }}
+                initial={{ width: `${startPct}%` }}
                 animate={{ width: '0%' }}
-                transition={{ duration: duration / 1000, ease: 'linear' }}
+                transition={{ duration: remaining / 1000, ease: 'linear' }}
               />
             )}
           </ArkToast.Root>
