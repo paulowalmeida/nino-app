@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 
-import './globals.css'
+import '@nino/ds/globals.css'
 
 export const metadata: Metadata = {
   title: 'Nino — Gestor',
