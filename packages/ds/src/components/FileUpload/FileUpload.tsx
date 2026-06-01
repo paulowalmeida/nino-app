@@ -86,7 +86,7 @@ export function FileUpload({
         <ArkFileUpload.Context>
           {({ acceptedFiles }) =>
             acceptedFiles.map((file) => (
-              <ArkFileUpload.Item key={file.name} file={file} className={baseItem}>
+              <ArkFileUpload.Item key={`${file.name}-${file.size}-${file.type}`} file={file} className={baseItem}>
                 <ArkFileUpload.ItemPreview type='image/*'>
                   <ArkFileUpload.ItemPreviewImage className='h-8 w-8 rounded object-cover' />
                 </ArkFileUpload.ItemPreview>

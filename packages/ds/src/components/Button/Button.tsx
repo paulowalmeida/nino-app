@@ -1,13 +1,9 @@
 import {
   ButtonHTMLAttributes,
-  Children,
-  cloneElement,
   forwardRef,
-  isValidElement,
-  ReactElement,
-  ReactNode,
 } from 'react'
 
+import { Slot } from '@radix-ui/react-slot'
 import { motion } from 'framer-motion'
 
 import { baseFocus, baseLayout } from '@ds/lib/baseClasses'
@@ -15,15 +11,6 @@ import { mergeClasses } from '@ds/lib/mergeClasses'
 import { LoadingDots } from '@ds/components/LoadingDots'
 import { Spinner } from '@ds/components/Spinner'
 import { ButtonProps, ButtonSize, ButtonVariant } from './Button.types'
-
-const Slot = forwardRef<
-  HTMLButtonElement,
-  ButtonHTMLAttributes<HTMLButtonElement> & { children?: ReactNode }
->(({ children, ...props }, ref) => {
-  const child = Children.only(children)
-  if (!isValidElement(child)) return null
-  return cloneElement(child as ReactElement, { ...(props as object), ref } as object)
-})
 
 const variantClasses: Record<ButtonVariant, string> = {
   primary:
@@ -43,7 +30,6 @@ const sizeClasses: Record<ButtonSize, string> = {
 const baseDisabledStyle = 'disabled:pointer-events-none'
 const disabledOpacity = 'opacity-50'
 
-
 const MotionButton = motion.create('button')
 
 /**
@@ -51,29 +37,29 @@ const MotionButton = motion.create('button')
  * loading state, and child element rendering via `asChild`.
  *
  * @param variant - Visual style of the button. Default: `primary`
- * 
+ *
  * @param size - Height and padding of the button. Default: `md`
- * 
+ *
  * @param loading - Shows a loading indicator and blocks interaction while an action is in progress
  *
  * @param loadingIndicator - Style of the loading indicator. Default: `spinner`
- * 
+ *
  * @param asChild - Delegates rendering to the direct child via Radix Slot
- * 
+ *
  * @param disabled - Disables the button
- * 
+ *
  * @param className - Additional CSS classes merged with base styles
  *
  * @param onClick - Fired when the button is clicked
- * 
+ *
  * @param onFocus - Fired when the button receives focus
- * 
+ *
  * @param onBlur - Fired when the button loses focus
- * 
+ *
  * @param onMouseEnter - Fired when the pointer enters the button
- * 
+ *
  * @param onMouseLeave - Fired when the pointer leaves the button
- * 
+ *
  * @param onKeyDown - Fired when a key is pressed while the button is focused
  */
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
@@ -95,7 +81,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       baseLayout,
       baseFocus,
       baseDisabledStyle,
-      disabled && disabledOpacity,
+      (disabled || loading) && disabledOpacity,
       variantClasses[variant],
       sizeClasses[size],
       className
@@ -108,7 +94,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
           disabled={disabled || loading}
           aria-busy={loading || undefined}
           className={baseClassName}
-          {...props}
+          {...(props as ButtonHTMLAttributes<HTMLButtonElement>)}
         >
           {children}
         </Slot>

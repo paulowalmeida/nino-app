@@ -15,10 +15,6 @@ function calendarToJs(d: CalendarDate): Date {
   return new Date(d.year, d.month - 1, d.day)
 }
 
-const now = new Date()
-const defaultMin = new CalendarDate(now.getFullYear() - 10, 1, 1)
-const defaultMax = new CalendarDate(now.getFullYear() + 1, 12, 31)
-
 const XIcon = () => (
   <svg width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='currentColor' strokeWidth='2.5' strokeLinecap='round' strokeLinejoin='round'>
     <path d='M18 6 6 18M6 6l12 12' />
@@ -45,8 +41,13 @@ export function DatePicker({
   startMonth,
   endMonth,
 }: DatePickerProps) {
-  const min = startMonth ? jsToCalendar(startMonth) : defaultMin
-  const max = endMonth ? jsToCalendar(endMonth) : defaultMax
+  const now = new Date()
+  const min = startMonth
+    ? jsToCalendar(startMonth)
+    : new CalendarDate(now.getFullYear() - 10, 1, 1)
+  const max = endMonth
+    ? jsToCalendar(endMonth)
+    : new CalendarDate(now.getFullYear() + 1, 12, 31)
 
   return (
     <ArkDatePicker.Root
