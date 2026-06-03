@@ -8,9 +8,8 @@
       }
     ],
     "paths": {
-      "@/*": [
-        "./src/*"
-      ]
+      "@/*": ["./src/*"],
+      "@ds/*": ["../../packages/ds/src/*"]
     },
     "allowJs": true,
     "noEmit": true,
