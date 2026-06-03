@@ -16,6 +16,7 @@ const form = 'mt-8 flex flex-col gap-4'
 const errorText = 'text-sm text-red-500 text-center'
 const footer = 'mt-8 text-center text-sm text-gray-500'
 const footerLink = 'text-brand font-semibold hover:underline'
+const riseWrapTitle = 'auth-rise text-center'
 const riseWrap = 'auth-rise'
 const footerRise = `auth-rise ${footer}`
 const submit = 'mt-2 w-full'
@@ -36,7 +37,7 @@ export function LoginForm() {
     try {
       const { tokens } = await login(data)
       setTokens(tokens.accessToken, tokens.refreshToken)
-      router.push('/')
+      router.push('/painel')
     } catch {
       setError('root', { message: 'Email ou senha incorretos.' })
     }
@@ -44,12 +45,12 @@ export function LoginForm() {
 
   return (
     <div>
-      <header className={riseWrap} style={rise(0)}>
+      <header className={riseWrapTitle} style={rise(0)}>
         <h1 className={title}>Bem-vindo de volta</h1>
         <p className={subtitle}>Acesse o painel da sua loja</p>
       </header>
 
-      <form onSubmit={handleSubmit(onSubmit)} className={form}>
+      <form onSubmit={handleSubmit(onSubmit)} method="post" className={form}>
         <div className={riseWrap} style={rise(120)}>
           <FormField label="Email" error={errors.email?.message}>
             <Input
