@@ -35,6 +35,7 @@ export function AccountStep({ onNext }: AccountStepProps) {
     register,
     handleSubmit,
     setError,
+    getValues,
     formState: { errors, isSubmitting },
   } = useForm<AccountFormValues>()
 
@@ -120,16 +121,34 @@ export function AccountStep({ onNext }: AccountStepProps) {
           </FormField>
         </div>
 
+        <div className={riseWrap} style={rise(420)}>
+          <FormField
+            label="Confirmar senha"
+            error={errors.confirmPassword?.message}
+          >
+            <Input
+              type="password"
+              placeholder="••••••••"
+              {...register('confirmPassword', {
+                required: 'Confirme a senha',
+                validate: (value) =>
+                  value === getValues('password') ||
+                  'As senhas não conferem',
+              })}
+            />
+          </FormField>
+        </div>
+
         {errors.root && <p className={errorText}>{errors.root.message}</p>}
 
-        <div className={riseWrap} style={rise(420)}>
+        <div className={riseWrap} style={rise(480)}>
           <Button type="submit" loading={isSubmitting} className={submit}>
             Continuar
           </Button>
         </div>
       </form>
 
-      <p className={footerRise} style={rise(480)}>
+      <p className={footerRise} style={rise(540)}>
         Já tem conta?{' '}
         <Link href="/entrar" className={footerLink}>
           Entrar
