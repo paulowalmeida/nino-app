@@ -2,6 +2,14 @@
 @import 'tailwindcss';
 @plugin "tailwindcss-animate";
 
+/* DS components live outside the consuming app's scan root (node_modules via
+   workspace symlink). Register them explicitly so utilities like `bg-brand`
+   used inside DS components are generated. Paths are relative to this file. */
+@source '../components';
+@source '../lib';
+@source not '../**/*.stories.tsx';
+@source not '../**/*.test.tsx';
+
 @theme {
   /* Typography */
   --font-sans: 'Plus Jakarta Sans', sans-serif;
