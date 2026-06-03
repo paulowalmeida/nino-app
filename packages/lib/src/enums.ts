@@ -1,14 +1,14 @@
 export enum GlobalRole {
   ADMIN = 'ADMIN',
   SUPPORT = 'SUPPORT',
-  MERCHANT = 'MERCHANT',
+  OWNER = 'GLOBAL_OWNER',
   CUSTOMER = 'CUSTOMER',
   COURIER = 'COURIER',
   GUEST = 'GUEST',
 }
 
 export enum TenantRole {
-  OWNER = 'OWNER',
+  OWNER = 'TENANT_OWNER',
   MANAGER = 'MANAGER',
   STAFF = 'STAFF',
 }

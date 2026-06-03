@@ -10,3 +10,6 @@ export * from './types/product'
 export * from './types/order'
 export * from './types/customer'
 export * from './types/courier'
+export * from './services/http-client'
+export * from './types/http-client-config'
+
