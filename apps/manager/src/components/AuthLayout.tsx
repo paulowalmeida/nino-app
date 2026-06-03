@@ -18,7 +18,7 @@ export function AuthLayout({ children }: AuthLayoutProps) {
   const brandLogo = 'relative z-10'
   const mascotWrap =
     'relative z-10 flex flex-1 items-center justify-center py-10'
-  const mascotStage = 'relative h-100 w-100'
+  const mascotStage = 'relative h-96 w-96'
   const mascotHalo = 'absolute inset-6 rounded-full bg-white/5 backdrop-blur-sm'
   const mascot = 'auth-mascot relative h-full w-full drop-shadow-2xl'
   const tagline = 'relative z-10 max-w-lg'
@@ -57,8 +57,7 @@ export function AuthLayout({ children }: AuthLayoutProps) {
             <span className={taglineAccent}>do seu jeito.</span>
           </h2>
           <p className={taglineText}>
-            Pedidos, cardápio e configurações num só lugar. Sem comissão
-            abusiva, com a sua marca no comando.
+            Pedidos, cardápio, vendas, faturamentos ee configurações num só lugar.
           </p>
         </div>
       </aside>

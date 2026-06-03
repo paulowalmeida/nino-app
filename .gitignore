@@ -6,6 +6,7 @@ out/
 .env.*.local
 .turbo/
 coverage/
+*.tsbuildinfo
 CLAUDE.md
 TODO.md
 STATUS.md
