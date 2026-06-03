@@ -18,21 +18,21 @@ export function AuthLayout({ children }: AuthLayoutProps) {
   const brandLogo = 'relative z-10'
   const mascotWrap =
     'relative z-10 flex flex-1 items-center justify-center py-10'
-  const mascotStage = 'relative h-80 w-80'
+  const mascotStage = 'relative h-100 w-100'
   const mascotHalo = 'absolute inset-6 rounded-full bg-white/5 backdrop-blur-sm'
   const mascot = 'auth-mascot relative h-full w-full drop-shadow-2xl'
-  const tagline = 'relative z-10 max-w-md'
+  const tagline = 'relative z-10 max-w-lg'
   const taglineTitle =
-    'font-display text-3xl font-extrabold leading-tight text-white'
+    'font-display text-5xl font-extrabold leading-tight text-white'
   const taglineAccent = 'text-brand'
-  const taglineText = 'mt-3 text-sm leading-relaxed text-white/60'
+  const taglineText = 'mt-3 text-lg leading-relaxed text-white/60'
   const formPanel =
     'relative flex min-h-screen items-center justify-center overflow-hidden px-6 py-12'
   const formGlow =
     'pointer-events-none absolute -top-32 right-0 h-72 w-72 rounded-full bg-brand/10 blur-3xl lg:hidden'
   const formInner = 'relative z-10 w-full max-w-sm'
   const mobileLogo = 'mb-10 flex justify-center lg:hidden'
-  
+
   return (
     <div className={shell}>
       <aside className={brandPanel}>

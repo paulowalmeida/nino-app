@@ -17,6 +17,9 @@ const form = 'mt-8 flex flex-col gap-4'
 const errorText = 'text-sm text-red-500 text-center'
 const footer = 'mt-8 text-center text-sm text-gray-500'
 const footerLink = 'text-brand font-semibold hover:underline'
+const riseWrap = 'auth-rise'
+const footerRise = `auth-rise ${footer}`
+const submit = 'mt-2 w-full'
 
 const rise = (delay: number): CSSProperties =>
   ({ ['--d']: `${delay}ms` }) as CSSProperties
@@ -49,7 +52,7 @@ export function RegisterForm() {
       </header>
 
       <form onSubmit={handleSubmit(onSubmit)} className={form}>
-        <div className="auth-rise" style={rise(120)}>
+        <div className={riseWrap} style={rise(120)}>
           <FormField label="Nome" error={errors.name?.message}>
             <Input
               placeholder="Seu nome"
@@ -58,7 +61,7 @@ export function RegisterForm() {
           </FormField>
         </div>
 
-        <div className="auth-rise" style={rise(180)}>
+        <div className={riseWrap} style={rise(180)}>
           <FormField label="Email" error={errors.email?.message}>
             <Input
               type="email"
@@ -68,7 +71,7 @@ export function RegisterForm() {
           </FormField>
         </div>
 
-        <div className="auth-rise" style={rise(240)}>
+        <div className={riseWrap} style={rise(240)}>
           <FormField label="Senha" error={errors.password?.message}>
             <Input
               type="password"
@@ -83,18 +86,14 @@ export function RegisterForm() {
 
         {errors.root && <p className={errorText}>{errors.root.message}</p>}
 
-        <div className="auth-rise" style={rise(320)}>
-          <Button
-            type="submit"
-            loading={isSubmitting}
-            className="mt-2 w-full"
-          >
+        <div className={riseWrap} style={rise(320)}>
+          <Button type="submit" loading={isSubmitting} className={submit}>
             Criar conta
           </Button>
         </div>
       </form>
 
-      <p className={`auth-rise ${footer}`} style={rise(400)}>
+      <p className={footerRise} style={rise(400)}>
         Já tem conta?{' '}
         <Link href="/entrar" className={footerLink}>
           Entrar

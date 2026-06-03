@@ -16,6 +16,9 @@ const form = 'mt-8 flex flex-col gap-4'
 const errorText = 'text-sm text-red-500 text-center'
 const footer = 'mt-8 text-center text-sm text-gray-500'
 const footerLink = 'text-brand font-semibold hover:underline'
+const riseWrap = 'auth-rise'
+const footerRise = `auth-rise ${footer}`
+const submit = 'mt-2 w-full'
 
 const rise = (delay: number): CSSProperties =>
   ({ ['--d']: `${delay}ms` }) as CSSProperties
@@ -41,13 +44,13 @@ export function LoginForm() {
 
   return (
     <div>
-      <header className="auth-rise" style={rise(0)}>
+      <header className={riseWrap} style={rise(0)}>
         <h1 className={title}>Bem-vindo de volta</h1>
         <p className={subtitle}>Acesse o painel da sua loja</p>
       </header>
 
       <form onSubmit={handleSubmit(onSubmit)} className={form}>
-        <div className="auth-rise" style={rise(120)}>
+        <div className={riseWrap} style={rise(120)}>
           <FormField label="Email" error={errors.email?.message}>
             <Input
               type="email"
@@ -57,7 +60,7 @@ export function LoginForm() {
           </FormField>
         </div>
 
-        <div className="auth-rise" style={rise(200)}>
+        <div className={riseWrap} style={rise(200)}>
           <FormField label="Senha" error={errors.password?.message}>
             <Input
               type="password"
@@ -69,18 +72,14 @@ export function LoginForm() {
 
         {errors.root && <p className={errorText}>{errors.root.message}</p>}
 
-        <div className="auth-rise" style={rise(280)}>
-          <Button
-            type="submit"
-            loading={isSubmitting}
-            className="mt-2 w-full"
-          >
+        <div className={riseWrap} style={rise(280)}>
+          <Button type="submit" loading={isSubmitting} className={submit}>
             Entrar
           </Button>
         </div>
       </form>
 
-      <p className={`auth-rise ${footer}`} style={rise(360)}>
+      <p className={footerRise} style={rise(360)}>
         Não tem conta?{' '}
         <Link href="/cadastrar" className={footerLink}>
           Criar conta
