@@ -7,10 +7,6 @@ type AuthLayoutProps = {
   children: ReactNode
 }
 
-const chip =
-  'auth-chip absolute flex items-center gap-2 rounded-full bg-white px-3.5 py-2 ' +
-  'text-sm font-medium text-gray-800 shadow-[0_8px_24px_rgba(0,0,0,0.18)]'
-
 export function AuthLayout({ children }: AuthLayoutProps) {
   return (
     <div className="min-h-screen bg-white lg:grid lg:grid-cols-[1.05fr_1fr]">
@@ -26,22 +22,6 @@ export function AuthLayout({ children }: AuthLayoutProps) {
           <div className="relative h-80 w-80">
             <div className="absolute inset-6 rounded-full bg-white/5 backdrop-blur-sm" />
             <NinoMascot className="auth-mascot relative h-full w-full drop-shadow-2xl" />
-
-            <div className="auth-chip absolute left-0 top-6 flex items-center gap-2 rounded-full bg-white px-3.5 py-2 text-sm font-medium text-gray-800 shadow-[0_8px_24px_rgba(0,0,0,0.18)]">
-              🚀 <span>Pedido entregue!</span>
-            </div>
-            <div
-              className={`${chip} right-0 top-24`}
-              style={{ ['--d' as string]: '700ms' }}
-            >
-              ⭐ <span>4.9 avaliação</span>
-            </div>
-            <div
-              className={`${chip} bottom-6 right-8`}
-              style={{ ['--d' as string]: '1400ms' }}
-            >
-              💰 <span>R$ 0 de comissão</span>
-            </div>
           </div>
         </div>
 
