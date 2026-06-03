@@ -1,1 +1,11 @@
 @import "../src/styles/globals.css";
+
+/* Storybook usa cinza (#F8F8F8) no canvas e na página de Docs. Forçamos branco
+   para os componentes com superfície branca (ex.: Table) não destoarem.
+   Fica só aqui — não é estilo do DS, não vai para os apps. */
+.sb-show-main,
+.docs-story,
+.sbdocs-wrapper,
+.sbdocs-preview {
+  background-color: #ffffff !important;
+}

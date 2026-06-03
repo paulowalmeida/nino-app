@@ -31,12 +31,12 @@ describe(Input.name, () => {
 
   it('applies error styles when error is true', () => {
     render(<Input error />)
-    expect(screen.getByRole('textbox')).toHaveClass('border-red-500')
+    expect(screen.getByRole('textbox')).toHaveAttribute('data-invalid')
   })
 
   it('applies default styles when error is false', () => {
     render(<Input />)
-    expect(screen.getByRole('textbox')).toHaveClass('border-input-border')
+    expect(screen.getByRole('textbox')).toHaveClass('border-gray-300')
   })
 
   it.each(['sm', 'md', 'lg'] as const)('renders size %s without errors', (size) => {

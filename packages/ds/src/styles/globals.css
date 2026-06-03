@@ -1,5 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@700;800;900&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap');
-@import "tailwindcss";
+@import 'tailwindcss';
 @plugin "tailwindcss-animate";
 
 @theme {
@@ -8,7 +8,7 @@
   --font-display: 'Nunito', sans-serif;
 
   /* Brand tokens — override per tenant */
-  --color-brand: #ff8c38;
+  --color-brand: #ff6b00;
   --color-brand-foreground: #ffffff;
   --color-brand-hover: color-mix(in srgb, var(--color-brand) 85%, black);
   --color-brand-active: color-mix(in srgb, var(--color-brand) 70%, black);
@@ -19,7 +19,7 @@
   --color-text: #2d2d2d;
 
   /* Input tokens — override per tenant */
-  --color-input-border: color-mix(in srgb, var(--color-brand) 20%, transparent);
+  --color-input-border: #d1d5db;
   --color-input-border-focus: var(--color-brand);
 
   /* Structural */
@@ -27,6 +27,135 @@
   --radius-card: 20px;
 }
 
+@keyframes modal-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes modal-out {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes modal-content-in {
+  from {
+    opacity: 0;
+    scale: 0.96;
+  }
+  to {
+    opacity: 1;
+    scale: 1;
+  }
+}
+
+@keyframes modal-content-out {
+  from {
+    opacity: 1;
+    scale: 1;
+  }
+  to {
+    opacity: 0;
+    scale: 0.96;
+  }
+}
+
+.modal-animated-overlay[data-state='open'] {
+  animation: modal-in 0.2s ease-out;
+}
+.modal-animated-overlay[data-state='closed'] {
+  animation: modal-out 0.15s ease-in forwards;
+}
+
+.modal-animated-content[data-state='open'] {
+  animation: modal-content-in 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.modal-animated-content[data-state='closed'] {
+  animation: modal-content-out 0.15s ease-in forwards;
+}
+
+@keyframes toast-in {
+  from {
+    opacity: 0;
+    transform: translateX(calc(100% + 2rem));
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes toast-out {
+  from {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateX(calc(100% + 2rem));
+  }
+}
+
+.toast-animated[data-state='open'] {
+  animation: toast-in 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.toast-animated[data-state='closed'] {
+  animation: toast-out 0.2s ease-in forwards;
+}
+
+@keyframes progress-circle-spin {
+  to {
+    transform: rotate(270deg);
+  }
+}
+
+.progress-circle-range[data-state='indeterminate'] {
+  stroke-dasharray: 25% 75%;
+  transform-origin: center;
+  animation: progress-circle-spin 1s linear infinite;
+}
+
+@keyframes skeleton-wave {
+  from {
+    background-position: -200% 0;
+  }
+  to {
+    background-position: 200% 0;
+  }
+}
+
+.skeleton-wave {
+  background: linear-gradient(90deg, #e5e7eb 25%, #f3f4f6 50%, #e5e7eb 75%);
+  background-size: 200% 100%;
+  animation: skeleton-wave 1.5s ease-in-out infinite;
+}
+
 @utility shadow-brand-glow {
   box-shadow: 0 8px 20px color-mix(in srgb, var(--color-brand) 30%, transparent);
+}
+
+@keyframes accordion-down {
+  from { height: 0; opacity: 0.5; }
+  to   { height: var(--height); opacity: 1; }
+}
+
+@keyframes accordion-up {
+  from { height: var(--height); opacity: 1; }
+  to   { height: 0; opacity: 0.5; }
+}
+
+.accordion-content[data-state='open'] {
+  animation: accordion-down 220ms ease-out;
+}
+
+.accordion-content[data-state='closed'] {
+  animation: accordion-up 180ms ease-in forwards;
 }

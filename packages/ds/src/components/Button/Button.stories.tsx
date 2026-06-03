@@ -9,10 +9,11 @@ const meta: Meta<typeof Button> = {
   argTypes: {
     variant: {
       control: 'select',
-      options: ['primary', 'secondary', 'outline', 'ghost', 'destructive'],
+      options: ['primary', 'secondary', 'outline', 'ghost'],
     },
     size: { control: 'select', options: ['sm', 'md', 'lg'] },
     loading: { control: 'boolean' },
+    loadingIndicator: { control: 'select', options: ['spinner', 'dots'] },
     disabled: { control: 'boolean' },
   },
 }
@@ -36,12 +37,12 @@ export const Ghost: Story = {
   args: { variant: 'ghost', children: 'Dismiss' },
 }
 
-export const Destructive: Story = {
-  args: { variant: 'destructive', children: 'Delete account' },
+export const LoadingSpinner: Story = {
+  args: { variant: 'primary', loading: true, loadingIndicator: 'spinner', children: 'Saving...' },
 }
 
-export const Loading: Story = {
-  args: { variant: 'primary', loading: true, children: 'Saving...' },
+export const LoadingDots: Story = {
+  args: { variant: 'primary', loading: true, loadingIndicator: 'dots', children: 'Saving...' },
 }
 
 export const Disabled: Story = {
@@ -65,7 +66,6 @@ export const AllVariants: Story = {
       <Button variant="secondary">Secondary</Button>
       <Button variant="outline">Outline</Button>
       <Button variant="ghost">Ghost</Button>
-      <Button variant="destructive">Destructive</Button>
     </div>
   ),
 }

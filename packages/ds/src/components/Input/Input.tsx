@@ -1,5 +1,7 @@
 import { forwardRef } from 'react'
 
+import { Field } from '@ark-ui/react/field'
+
 import { baseDisabled } from '@ds/lib/baseClasses'
 import { mergeClasses } from '@ds/lib/mergeClasses'
 
@@ -15,38 +17,47 @@ const baseInput =
   'w-full rounded-md border bg-white text-gray-900 placeholder:text-gray-400 transition-colors outline-none'
 
 const inputDefault =
-  'border-input-border focus:ring-2 focus:ring-input-border-focus focus:border-input-border-focus'
+  'border-gray-300 focus:ring-2 focus:ring-gray-400 focus:border-gray-400'
 
 const inputError =
-  'border-red-500 focus:ring-2 focus:ring-red-500 focus:border-red-500'
+  'aria-[invalid]:border-red-500 aria-[invalid]:focus:ring-red-500 ' +
+  'aria-[invalid]:focus:border-red-500 data-[invalid]:border-red-500 ' +
+  'data-[invalid]:focus:ring-red-500 data-[invalid]:focus:border-red-500'
 
 /**
  * Text input field with size variants and error state.
- * Forwards refs to the underlying `<input>` element.
+ * Renders Ark `Field.Input`: inside a `Field.Root` (via `FormField`) it
+ * inherits `aria-invalid`/`id`/`aria-describedby`; standalone it behaves
+ * as a plain `<input>`.
  *
  * @param size - Height and padding of the input. Default: `md`
+ * 
  * @param error - Applies error styles to indicate invalid input
+ * 
  * @param disabled - Disables the input
+ * 
  * @param placeholder - Placeholder text shown when the input is empty
+ * 
  * @param className - Additional CSS classes merged with base styles
  *
  * @param onChange - Fired when the input value changes
+ * 
  * @param onFocus - Fired when the input receives focus
+ * 
  * @param onBlur - Fired when the input loses focus
+ * 
  * @param onKeyDown - Fired when a key is pressed while the input is focused
- *
- * @example
- * <Input placeholder="Enter your email" />
- * <Input size="lg" error />
  */
 export const Input = forwardRef<HTMLInputElement, InputProps>(
   ({ size = 'md', error = false, className, ...props }, ref) => (
-    <input
+    <Field.Input
       ref={ref}
+      data-invalid={error || undefined}
       className={mergeClasses(
         baseInput,
         sizeClasses[size],
-        error ? inputError : inputDefault,
+        inputDefault,
+        inputError,
         baseDisabled,
         className
       )}

@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 
+import '@nino/ds/globals.css'
 import './globals.css'
 
 export const metadata: Metadata = {

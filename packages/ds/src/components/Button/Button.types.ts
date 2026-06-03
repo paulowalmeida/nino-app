@@ -1,11 +1,6 @@
 import { ButtonHTMLAttributes } from 'react'
 
-export type ButtonVariant =
-  | 'primary'
-  | 'secondary'
-  | 'outline'
-  | 'ghost'
-  | 'destructive'
+export type ButtonVariant = 'primary' | 'secondary' | 'outline' | 'ghost'
 
 export type ButtonSize = 'sm' | 'md' | 'lg'
 
@@ -24,8 +19,10 @@ export interface ButtonProps
   variant?: ButtonVariant
   /** Height and padding of the button. Default: `md` */
   size?: ButtonSize
-  /** Shows a spinner and blocks interaction while an action is in progress */
+  /** Shows a loading indicator and blocks interaction while an action is in progress */
   loading?: boolean
+  /** Loading indicator style. Default: `spinner` */
+  loadingIndicator?: 'spinner' | 'dots'
   /**
    * Delegates rendering to the direct child via Radix Slot.
    * Useful for rendering the Button as `<a>`, `<Link>`, or another element.
