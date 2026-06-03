@@ -1,5 +1,5 @@
-import { HttpClientConfig } from '../types/http-client-config'
-import { HttpMethod } from '../types/http-method'
+import { HttpClientConfig } from '../types/http/http-client-config'
+import { HttpMethod } from '../types/http/http-method'
 
 function buildHeaders(config: HttpClientConfig): Record<string, string> {
   const headers: Record<string, string> = { 'Content-Type': 'application/json' }
@@ -13,7 +13,10 @@ async function toApiError(response: Response): Promise<Error> {
   return new Error(error.message ?? response.statusText)
 }
 
-async function assertOk(response: Response, config: HttpClientConfig): Promise<void> {
+async function assertOk(
+  response: Response,
+  config: HttpClientConfig
+): Promise<void> {
   if (response.status === 401) {
     config.onUnauthorized?.()
     throw new Error('Unauthorized')
@@ -44,15 +47,27 @@ export function get<T>(config: HttpClientConfig, path: string): Promise<T> {
   return request('GET', path, config)
 }
 
-export function post<T>(config: HttpClientConfig, path: string, body?: unknown): Promise<T> {
+export function post<T>(
+  config: HttpClientConfig,
+  path: string,
+  body?: unknown
+): Promise<T> {
   return request('POST', path, config, body)
 }
 
-export function put<T>(config: HttpClientConfig, path: string, body?: unknown): Promise<T> {
+export function put<T>(
+  config: HttpClientConfig,
+  path: string,
+  body?: unknown
+): Promise<T> {
   return request('PUT', path, config, body)
 }
 
-export function patch<T>(config: HttpClientConfig, path: string, body?: unknown): Promise<T> {
+export function patch<T>(
+  config: HttpClientConfig,
+  path: string,
+  body?: unknown
+): Promise<T> {
   return request('PATCH', path, config, body)
 }
 
