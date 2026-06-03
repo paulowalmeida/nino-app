@@ -1,5 +1,10 @@
+import type {
+  LoginRequest,
+  LoginResponse,
+  RegisterRequest,
+  User,
+} from '@nino/lib'
 import { del, get, post } from '@nino/lib'
-import type { LoginRequest, LoginResponse, User } from '@nino/lib'
 
 import { getCookie, removeCookie, setCookie } from '@/lib/cookies'
 import { httpConfig } from '@/lib/http'
@@ -19,6 +24,10 @@ export function clearTokens(): void {
 
 export function login(data: LoginRequest): Promise<LoginResponse> {
   return post<LoginResponse>(httpConfig(), '/auth/login', data)
+}
+
+export function register(data: RegisterRequest): Promise<{ user: User }> {
+  return post<{ user: User }>(httpConfig(), '/auth/register', data)
 }
 
 export function logout(): Promise<void> {
