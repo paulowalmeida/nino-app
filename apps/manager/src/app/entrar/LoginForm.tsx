@@ -1,7 +1,8 @@
 'use client'
 
-import { useRouter } from 'next/navigation'
 import { useForm } from 'react-hook-form'
+import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 
 import { Button, FormField, Input } from '@nino/ds'
 import type { LoginRequest } from '@nino/lib'
@@ -14,6 +15,8 @@ const title = 'text-2xl font-semibold text-gray-900'
 const subtitle = 'mt-1 text-sm text-gray-500'
 const form = 'flex flex-col gap-4'
 const errorText = 'text-sm text-red-500 text-center'
+const footer = 'mt-6 text-center text-sm text-gray-500'
+const footerLink = 'text-brand font-medium hover:underline'
 
 export function LoginForm() {
   const router = useRouter()
@@ -66,6 +69,13 @@ export function LoginForm() {
           Entrar
         </Button>
       </form>
+
+      <p className={footer}>
+        Não tem conta?{' '}
+        <Link href="/cadastrar" className={footerLink}>
+          Criar conta
+        </Link>
+      </p>
     </div>
   )
 }
