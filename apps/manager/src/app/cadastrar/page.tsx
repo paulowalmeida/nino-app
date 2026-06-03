@@ -1,10 +1,11 @@
 import { RegisterForm } from './RegisterForm'
 
+import { AuthLayout } from '@/components/AuthLayout'
+
 export default function CadastrarPage() {
-  const classes = 'min-h-screen flex items-center justify-center bg-gray-50'
   return (
-    <main className={classes}>
+    <AuthLayout>
       <RegisterForm />
-    </main>
+    </AuthLayout>
   )
 }

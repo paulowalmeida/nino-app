@@ -5,3 +5,85 @@
 body {
   margin: 0;
 }
+
+/* ---- Auth screens motion & atmosphere ---- */
+
+@keyframes auth-rise {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes auth-float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes auth-float-soft {
+  0%, 100% {
+    transform: translateY(0) rotate(-1deg);
+  }
+  50% {
+    transform: translateY(-7px) rotate(1deg);
+  }
+}
+
+@keyframes auth-glow-pulse {
+  0%, 100% {
+    opacity: 0.55;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.85;
+    transform: scale(1.08);
+  }
+}
+
+/* element enters with a staggered rise; set --d for delay */
+.auth-rise {
+  opacity: 0;
+  animation: auth-rise 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation-delay: var(--d, 0ms);
+}
+
+.auth-mascot {
+  animation: auth-float 6s ease-in-out infinite;
+}
+
+.auth-chip {
+  animation: auth-float-soft 5s ease-in-out infinite;
+  animation-delay: var(--d, 0ms);
+}
+
+.auth-glow {
+  animation: auth-glow-pulse 7s ease-in-out infinite;
+}
+
+/* subtle dot grid for the brand panel */
+.auth-grid {
+  background-image: radial-gradient(
+    circle at center,
+    rgba(255, 255, 255, 0.07) 1px,
+    transparent 1px
+  );
+  background-size: 26px 26px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .auth-rise,
+  .auth-mascot,
+  .auth-chip,
+  .auth-glow {
+    animation: none;
+    opacity: 1;
+  }
+}
