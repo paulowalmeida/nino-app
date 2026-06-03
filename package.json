@@ -8,6 +8,7 @@
   ],
   "scripts": {
     "dev": "turbo dev",
+    "dev:manager": "turbo dev --filter=nino-manager",
     "build": "turbo build",
     "lint": "turbo lint",
     "type-check": "turbo type-check",
