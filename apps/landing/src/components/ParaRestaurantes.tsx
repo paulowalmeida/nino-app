@@ -8,7 +8,7 @@ const benefits = [
 
 const billing = [
   { name: 'iFood', model: '12–23% por pedido' },
-  { name: 'Anota AI', model: '+R$30 por loja' },
+  { name: 'Anota AI', model: 'R$300–400/mês' },
   { name: 'Brendi', model: '4% do faturamento' },
 ]
 
@@ -51,7 +51,7 @@ export function ParaRestaurantes() {
             ))}
             <div className="compare-row nino">
               <span>Nino</span>
-              <span className="rate">Fixo · tudo incluso</span>
+              <span className="rate">Fixo · Sem Comisão </span>
             </div>
           </div>
         </div>
