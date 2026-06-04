@@ -1,15 +1,15 @@
 const benefits = [
-  'Cardápio ilimitado com fotos e categorias',
-  'Gestão de entregadores próprios',
-  'Cupons e promoções personalizadas',
-  'Relatórios de vendas e clientes mais fiéis',
-  'Suporte via WhatsApp em horário comercial',
+  'App e site próprios com a sua marca — não só um cardápio',
+  'Seus entregadores na sua operação, do seu jeito',
+  'Multi-loja sem taxa por unidade extra',
+  'Pedidos pelo app, site e WhatsApp num lugar só',
+  'Mensalidade fixa — sem comissão, sem % do seu faturamento',
 ]
 
-const rates = [
-  { name: 'iFood', rate: '~27%' },
-  { name: 'Rappi', rate: '~30%' },
-  { name: 'Aiqfome', rate: '~15%' },
+const billing = [
+  { name: 'iFood', model: '12–23% por pedido' },
+  { name: 'Anota AI', model: '+R$30 por loja' },
+  { name: 'Brendi', model: '4% do faturamento' },
 ]
 
 export function ParaRestaurantes() {
@@ -18,14 +18,14 @@ export function ParaRestaurantes() {
       <div className="compare-inner">
         <div>
           <h2>
-            Chega de pagar
+            Mais completo.
             <br />
-            <span>30% pro iFood</span>
+            <span>Mais justo.</span>
           </h2>
           <p className="compare-lead">
-            Cada pedido que sai pelo iFood, você perde quase um terço. Com o
-            Nino, esse dinheiro fica no seu bolso. Pague uma mensalidade fixa e
-            venda à vontade.
+            Os outros cobram por pedido, por loja extra ou uma fatia do seu
+            faturamento. O Nino é uma mensalidade fixa — com app, site, WhatsApp
+            e os seus entregadores no mesmo pacote.
           </p>
           <div className="compare-list">
             {benefits.map((benefit) => (
@@ -40,18 +40,18 @@ export function ParaRestaurantes() {
         <div className="compare-card">
           <div className="compare-card-head">
             <span>Plataforma</span>
-            <span>Taxa por pedido</span>
+            <span>Como cobram</span>
           </div>
           <div className="compare-rows">
-            {rates.map((item) => (
+            {billing.map((item) => (
               <div key={item.name} className="compare-row">
                 <span>{item.name}</span>
-                <span className="rate">{item.rate}</span>
+                <span className="rate">{item.model}</span>
               </div>
             ))}
             <div className="compare-row nino">
               <span>Nino</span>
-              <span className="rate">0%</span>
+              <span className="rate">Fixo · tudo incluso</span>
             </div>
           </div>
         </div>

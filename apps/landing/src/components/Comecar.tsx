@@ -12,8 +12,8 @@ export function Comecar() {
           de graça
         </h2>
         <p className="cta-lead">
-          30 dias pra testar tudo. Se não amar, a gente devolve. Se amar —
-          bem-vindo ao bando do Nino.
+          30 dias grátis pra testar tudo — o dobro do que a maioria oferece.
+          Sem cartão, sem compromisso. Se não for pra você, é só não continuar.
         </p>
         <a className="cta-btn" href={CADASTRO_URL}>
           Criar minha loja grátis →

@@ -1,18 +1,18 @@
 const steps = [
   {
     tone: 'warm',
-    title: 'Cadastre seu negócio',
-    text: 'Preencha os dados do restaurante, cardápio e área de entrega. Leva menos de 20 minutos.',
+    title: 'Configure sua loja',
+    text: 'Cadastre cardápio, área de entrega e formas de pagamento. A gente cuida do resto — em até 48h você está no ar.',
   },
   {
     tone: 'accent',
-    title: 'Personalize sua marca',
-    text: 'Logo, cores e nome. Seu app fica com a cara do seu restaurante, não do Nino.',
+    title: 'Deixe com a sua cara',
+    text: 'Logo, cores e domínio próprio. App e site completos com a SUA marca — seus clientes nunca veem o nome Nino.',
   },
   {
     tone: 'dark',
-    title: 'Receba pedidos',
-    text: 'Compartilhe o link com seus clientes e comece a vender. Sem comissão, sem intermediário.',
+    title: 'Venda no automático',
+    text: 'Pedidos chegam pelo app, site e WhatsApp num lugar só. Seus entregadores, 100% da sua margem.',
   },
 ]
 
