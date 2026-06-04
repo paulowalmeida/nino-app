@@ -46,7 +46,7 @@ export function LoginForm() {
   return (
     <div>
       <header className={riseWrapTitle} style={rise(0)}>
-        <h1 className={title}>Bem-vindo de volta</h1>
+        <h1 className={title}>Bem-vindo</h1>
         <p className={subtitle}>Acesse o painel da sua loja</p>
       </header>
 
