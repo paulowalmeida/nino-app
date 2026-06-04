@@ -55,6 +55,15 @@ export function Header() {
             Entrar
           </a>
         </div>
+
+        <div
+          className={`hamburger${menuOpen ? ' open' : ''}`}
+          onClick={() => setMenuOpen((open) => !open)}
+        >
+          <span />
+          <span />
+          <span />
+        </div>
       </nav>
 
       <div className={`mobile-menu${menuOpen ? ' open' : ''}`} id="mobile-menu">
