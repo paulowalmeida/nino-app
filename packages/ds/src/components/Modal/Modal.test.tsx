@@ -12,14 +12,18 @@ describe(Modal.name, () => {
   })
 
   it('renders content when open', () => {
-    render(<Modal open header={<span>Título</span>} body={<span>Corpo</span>} />)
+    render(
+      <Modal open header={<span>Título</span>} body={<span>Corpo</span>} />
+    )
     expect(screen.getByText('Título')).toBeInTheDocument()
     expect(screen.getByText('Corpo')).toBeInTheDocument()
   })
 
   it('renders footer when provided', () => {
     render(<Modal open footer={<Button>Confirmar</Button>} />)
-    expect(screen.getByRole('button', { name: 'Confirmar' })).toBeInTheDocument()
+    expect(
+      screen.getByRole('button', { name: 'Confirmar' })
+    ).toBeInTheDocument()
   })
 
   it('does not render header when not provided', () => {
@@ -29,13 +33,18 @@ describe(Modal.name, () => {
 
   it('closes when the close button is clicked', async () => {
     const onOpenChange = vi.fn()
-    render(<Modal open onOpenChange={onOpenChange} header={<span>Título</span>} />)
+    render(
+      <Modal open onOpenChange={onOpenChange} header={<span>Título</span>} />
+    )
     await userEvent.click(screen.getByRole('button', { name: 'Close' }))
     expect(onOpenChange).toHaveBeenCalledWith(false)
   })
 
-  it.each(['sm', 'md', 'lg'] as const)('renderiza tamanho %s sem erros', (size) => {
-    render(<Modal open size={size} body={<span>Corpo</span>} />)
-    expect(screen.getByText('Corpo')).toBeInTheDocument()
-  })
+  it.each(['sm', 'md', 'lg'] as const)(
+    'renderiza tamanho %s sem erros',
+    (size) => {
+      render(<Modal open size={size} body={<span>Corpo</span>} />)
+      expect(screen.getByText('Corpo')).toBeInTheDocument()
+    }
+  )
 })

@@ -2,7 +2,7 @@ import { act, render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { afterEach, describe, expect, it } from 'vitest'
 
-import { ToastContainer, toast, toaster } from './Toast'
+import { toast, ToastContainer, toaster } from './Toast'
 
 function renderContainer() {
   return render(<ToastContainer />)

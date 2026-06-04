@@ -1,6 +1,5 @@
 import { Dialog as ArkDialog } from '@ark-ui/react/dialog'
 import { Portal } from '@ark-ui/react/portal'
-
 import { mergeClasses } from '@ds/lib/mergeClasses'
 
 import { ModalProps, ModalSize } from './Modal.types'
@@ -13,8 +12,7 @@ const sizeClasses: Record<ModalSize, string> = {
 
 const baseBackdrop = 'modal-animated-overlay fixed inset-0 z-50 bg-black/50'
 
-const basePositioner =
-  'fixed inset-0 z-50 flex items-center justify-center p-4'
+const basePositioner = 'fixed inset-0 z-50 flex items-center justify-center p-4'
 
 const baseContent =
   'modal-animated-content relative rounded-2xl bg-white shadow-xl outline-none'
@@ -47,24 +45,24 @@ export function Modal({
             aria-label={ariaLabel}
             className={mergeClasses(baseContent, sizeClasses[size])}
           >
-          <ArkDialog.CloseTrigger className={baseClose} aria-label='Close'>
-            <svg
-              width='16'
-              height='16'
-              viewBox='0 0 24 24'
-              fill='none'
-              stroke='currentColor'
-              strokeWidth='2'
-              strokeLinecap='round'
-              strokeLinejoin='round'
-            >
-              <path d='M18 6 6 18M6 6l12 12' />
-            </svg>
-          </ArkDialog.CloseTrigger>
+            <ArkDialog.CloseTrigger className={baseClose} aria-label="Close">
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <path d="M18 6 6 18M6 6l12 12" />
+              </svg>
+            </ArkDialog.CloseTrigger>
 
-          {header && <div className={headerWrapper}>{header}</div>}
-          {body && <div className={bodyWrapper}>{body}</div>}
-          {footer && <div className={footerWrapper}>{footer}</div>}
+            {header && <div className={headerWrapper}>{header}</div>}
+            {body && <div className={bodyWrapper}>{body}</div>}
+            {footer && <div className={footerWrapper}>{footer}</div>}
           </ArkDialog.Content>
         </ArkDialog.Positioner>
       </Portal>

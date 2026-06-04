@@ -1,10 +1,10 @@
 import { Accordion as ArkAccordion } from '@ark-ui/react/accordion'
-
 import { mergeClasses } from '@ds/lib/mergeClasses'
 
 import { AccordionProps } from './Accordion.types'
 
-const baseRoot = 'w-full divide-y divide-gray-200 rounded-md border border-gray-200'
+const baseRoot =
+  'w-full divide-y divide-gray-200 rounded-md border border-gray-200'
 
 const baseItem = 'bg-white'
 
@@ -17,17 +17,17 @@ const baseContentInner = 'px-4 pb-4 pt-0'
 
 const ChevronDown = () => (
   <svg
-    width='16'
-    height='16'
-    viewBox='0 0 24 24'
-    fill='none'
-    stroke='currentColor'
-    strokeWidth='2'
-    strokeLinecap='round'
-    strokeLinejoin='round'
-    className='shrink-0 text-gray-400 transition-transform duration-200 group-data-[state=open]:rotate-180'
+    width="16"
+    height="16"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    className="shrink-0 text-gray-400 transition-transform duration-200 group-data-[state=open]:rotate-180"
   >
-    <path d='m6 9 6 6 6-6' />
+    <path d="m6 9 6 6 6-6" />
   </svg>
 )
 
@@ -55,7 +55,9 @@ export function Accordion({
           disabled={item.disabled}
           className={baseItem}
         >
-          <ArkAccordion.ItemTrigger className={mergeClasses(baseTrigger, 'group')}>
+          <ArkAccordion.ItemTrigger
+            className={mergeClasses(baseTrigger, 'group')}
+          >
             {item.trigger}
             <ChevronDown />
           </ArkAccordion.ItemTrigger>

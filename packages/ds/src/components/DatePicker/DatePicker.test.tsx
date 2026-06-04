@@ -11,7 +11,7 @@ describe(DatePicker.name, () => {
   })
 
   it('displays placeholder when no value is set', () => {
-    render(<DatePicker placeholder='Escolha uma data' />)
+    render(<DatePicker placeholder="Escolha uma data" />)
     expect(screen.getByPlaceholderText('Escolha uma data')).toBeInTheDocument()
   })
 

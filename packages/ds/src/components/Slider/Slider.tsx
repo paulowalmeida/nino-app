@@ -1,5 +1,4 @@
 import { Slider as ArkSlider } from '@ark-ui/react/slider'
-
 import { mergeClasses } from '@ds/lib/mergeClasses'
 
 import { SliderProps } from './Slider.types'
@@ -9,7 +8,8 @@ const baseTrack = 'relative h-1.5 w-full grow rounded-full bg-gray-200'
 const baseRange = 'absolute h-full rounded-full bg-brand'
 const baseThumb =
   'block size-4 rounded-full border-2 border-white bg-brand shadow outline-none transition-shadow focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-1 data-[disabled]:opacity-50'
-const baseLabel = 'flex items-center justify-between text-sm font-medium text-gray-700'
+const baseLabel =
+  'flex items-center justify-between text-sm font-medium text-gray-700'
 const baseValue = 'text-sm text-gray-500 tabular-nums'
 
 /**
@@ -56,9 +56,7 @@ export function Slider({
       {(label || showValue) && (
         <ArkSlider.Label className={baseLabel}>
           <span>{label}</span>
-          {showValue && (
-            <ArkSlider.ValueText className={baseValue} />
-          )}
+          {showValue && <ArkSlider.ValueText className={baseValue} />}
         </ArkSlider.Label>
       )}
       <ArkSlider.Control className={baseControl}>

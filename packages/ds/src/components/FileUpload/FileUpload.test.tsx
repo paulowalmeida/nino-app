@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react'
-import { describe, expect, it, vi } from 'vitest'
+import { describe, expect, it } from 'vitest'
 
 import { FileUpload } from './FileUpload'
 
@@ -25,7 +25,7 @@ describe(FileUpload.displayName!, () => {
   })
 
   it('renders the hidden input', () => {
-    render(<FileUpload name='avatar' />)
+    render(<FileUpload name="avatar" />)
     expect(document.querySelector('input[type="file"]')).toBeInTheDocument()
   })
 })

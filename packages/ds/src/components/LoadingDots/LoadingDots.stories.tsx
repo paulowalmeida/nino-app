@@ -20,7 +20,5 @@ export const Default: Story = {
 }
 
 export const InButton: Story = {
-  render: () => (
-    <Button loading loadingIndicator="dots" />
-  ),
+  render: () => <Button loading loadingIndicator="dots" />,
 }

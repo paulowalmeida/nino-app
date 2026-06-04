@@ -22,8 +22,14 @@ export const Default: Story = {
     const [checked, setChecked] = useState(false)
     return (
       <div className="flex items-center gap-3">
-        <Switch id="switch-default" checked={checked} onCheckedChange={setChecked} />
-        <Label htmlFor="switch-default">{checked ? 'Ativado' : 'Desativado'}</Label>
+        <Switch
+          id="switch-default"
+          checked={checked}
+          onCheckedChange={setChecked}
+        />
+        <Label htmlFor="switch-default">
+          {checked ? 'Ativado' : 'Desativado'}
+        </Label>
       </div>
     )
   },

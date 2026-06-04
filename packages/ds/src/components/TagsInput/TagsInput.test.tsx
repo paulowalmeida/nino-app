@@ -13,8 +13,11 @@ describe(TagsInput.displayName!, () => {
 
   it('creates a tag on type and Enter key', async () => {
     const onValueChange = vi.fn()
-    render(<TagsInput onValueChange={onValueChange} placeholder='Adicionar' />)
-    await userEvent.type(screen.getByPlaceholderText('Adicionar'), 'nova{Enter}')
+    render(<TagsInput onValueChange={onValueChange} placeholder="Adicionar" />)
+    await userEvent.type(
+      screen.getByPlaceholderText('Adicionar'),
+      'nova{Enter}'
+    )
     expect(onValueChange).toHaveBeenCalledWith(['nova'])
   })
 

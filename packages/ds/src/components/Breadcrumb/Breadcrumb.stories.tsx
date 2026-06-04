@@ -36,14 +36,18 @@ export const SlashSeparator: Story = {
 /** Side-by-side comparison of both separator styles. */
 export const Comparison: Story = {
   render: (args) => (
-    <div className='flex flex-col gap-4'>
+    <div className="flex flex-col gap-4">
       <div>
-        <p className='mb-1 text-xs font-medium text-gray-400 uppercase tracking-wide'>Chevron (default)</p>
+        <p className="mb-1 text-xs font-medium text-gray-400 uppercase tracking-wide">
+          Chevron (default)
+        </p>
         <Breadcrumb {...args} />
       </div>
       <div>
-        <p className='mb-1 text-xs font-medium text-gray-400 uppercase tracking-wide'>Slash</p>
-        <Breadcrumb {...args} separator='/' />
+        <p className="mb-1 text-xs font-medium text-gray-400 uppercase tracking-wide">
+          Slash
+        </p>
+        <Breadcrumb {...args} separator="/" />
       </div>
     </div>
   ),

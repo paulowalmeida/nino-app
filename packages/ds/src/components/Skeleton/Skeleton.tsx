@@ -1,17 +1,21 @@
 import { mergeClasses } from '@ds/lib/mergeClasses'
 
-import { SkeletonAnimation, SkeletonProps, SkeletonVariant } from './Skeleton.types'
+import {
+  SkeletonAnimation,
+  SkeletonProps,
+  SkeletonVariant,
+} from './Skeleton.types'
 
 const variantClasses: Record<SkeletonVariant, string> = {
-  rect:   'rounded-md',
+  rect: 'rounded-md',
   circle: 'rounded-full',
-  text:   'rounded w-full h-4',
+  text: 'rounded w-full h-4',
 }
 
 const animationClasses: Record<SkeletonAnimation, string> = {
   pulse: 'animate-pulse bg-gray-200',
-  wave:  'skeleton-wave',
-  none:  'bg-gray-200',
+  wave: 'skeleton-wave',
+  none: 'bg-gray-200',
 }
 
 /**

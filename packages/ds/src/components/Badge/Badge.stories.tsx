@@ -7,7 +7,10 @@ const meta: Meta<typeof Badge> = {
   component: Badge,
   tags: ['autodocs'],
   argTypes: {
-    variant: { control: 'select', options: ['default', 'success', 'error', 'warning', 'info'] },
+    variant: {
+      control: 'select',
+      options: ['default', 'success', 'error', 'warning', 'info'],
+    },
     size: { control: 'select', options: ['sm', 'md'] },
   },
 }
@@ -21,21 +24,25 @@ export const Default: Story = {
 
 export const Variants: Story = {
   render: () => (
-    <div className='flex flex-wrap gap-2'>
-      <Badge variant='default'>Default</Badge>
-      <Badge variant='success'>Active</Badge>
-      <Badge variant='error'>Cancelled</Badge>
-      <Badge variant='warning'>Pending</Badge>
-      <Badge variant='info'>Preparing</Badge>
+    <div className="flex flex-wrap gap-2">
+      <Badge variant="default">Default</Badge>
+      <Badge variant="success">Active</Badge>
+      <Badge variant="error">Cancelled</Badge>
+      <Badge variant="warning">Pending</Badge>
+      <Badge variant="info">Preparing</Badge>
     </div>
   ),
 }
 
 export const Sizes: Story = {
   render: () => (
-    <div className='flex items-center gap-2'>
-      <Badge size='sm' variant='success'>sm</Badge>
-      <Badge size='md' variant='success'>md</Badge>
+    <div className="flex items-center gap-2">
+      <Badge size="sm" variant="success">
+        sm
+      </Badge>
+      <Badge size="md" variant="success">
+        md
+      </Badge>
     </div>
   ),
 }

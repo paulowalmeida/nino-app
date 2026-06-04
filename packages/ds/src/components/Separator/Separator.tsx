@@ -4,7 +4,7 @@ import { SeparatorOrientation, SeparatorProps } from './Separator.types'
 
 const orientationClasses: Record<SeparatorOrientation, string> = {
   horizontal: 'w-full h-px',
-  vertical:   'h-full w-px',
+  vertical: 'h-full w-px',
 }
 
 const baseSeparator = 'shrink-0 bg-gray-200'

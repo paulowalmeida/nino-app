@@ -15,23 +15,23 @@ const separatorClass = 'mx-2 text-gray-400 select-none'
 
 const DefaultSeparator = () => (
   <svg
-    width='14'
-    height='14'
-    viewBox='0 0 24 24'
-    fill='none'
-    stroke='currentColor'
-    strokeWidth='2'
-    strokeLinecap='round'
-    strokeLinejoin='round'
+    width="14"
+    height="14"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
   >
-    <path d='m9 18 6-6-6-6' />
+    <path d="m9 18 6-6-6-6" />
   </svg>
 )
 
 export function Breadcrumb({ items, separator, className }: BreadcrumbProps) {
   return (
-    <nav aria-label='Breadcrumb' className={mergeClasses(baseNav, className)}>
-      <ol className='flex items-center'>
+    <nav aria-label="Breadcrumb" className={mergeClasses(baseNav, className)}>
+      <ol className="flex items-center">
         {items.map((item, index) => {
           const isLast = index === items.length - 1
           return (

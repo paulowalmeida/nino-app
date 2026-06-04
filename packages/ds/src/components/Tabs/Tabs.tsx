@@ -45,8 +45,8 @@ export function Tabs({
             {tab.label}
             {active === tab.value && (
               <motion.span
-                layoutId='tab-indicator'
-                className='absolute bottom-0 left-0 right-0 h-0.5 bg-brand'
+                layoutId="tab-indicator"
+                className="absolute bottom-0 left-0 right-0 h-0.5 bg-brand"
                 transition={{ type: 'spring', stiffness: 500, damping: 40 }}
               />
             )}
@@ -54,7 +54,11 @@ export function Tabs({
         ))}
       </ArkTabs.List>
       {tabs.map((tab) => (
-        <ArkTabs.Content key={tab.value} value={tab.value} className={baseContent}>
+        <ArkTabs.Content
+          key={tab.value}
+          value={tab.value}
+          className={baseContent}
+        >
           {tab.content}
         </ArkTabs.Content>
       ))}

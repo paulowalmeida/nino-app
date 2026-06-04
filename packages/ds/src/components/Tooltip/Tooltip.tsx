@@ -26,13 +26,11 @@ export function Tooltip({
       onOpenChange={({ open: o }) => onOpenChange?.(o)}
       positioning={{ placement: side, offset: { mainAxis: sideOffset } }}
     >
-      <ArkTooltip.Trigger asChild>
-        {children}
-      </ArkTooltip.Trigger>
+      <ArkTooltip.Trigger asChild>{children}</ArkTooltip.Trigger>
       <ArkTooltip.Positioner>
         <ArkTooltip.Content className={baseContent}>
           <ArkTooltip.Arrow>
-            <ArkTooltip.ArrowTip className='bg-gray-900' />
+            <ArkTooltip.ArrowTip className="bg-gray-900" />
           </ArkTooltip.Arrow>
           {content}
         </ArkTooltip.Content>

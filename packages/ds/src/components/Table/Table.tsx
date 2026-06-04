@@ -29,7 +29,7 @@ import {
  */
 export const Table = forwardRef<HTMLTableElement, TableProps>(
   ({ className, ...props }, ref) => (
-    <div className='w-full overflow-x-auto'>
+    <div className="w-full overflow-x-auto">
       <table
         ref={ref}
         className={mergeClasses(
@@ -43,15 +43,19 @@ export const Table = forwardRef<HTMLTableElement, TableProps>(
 )
 Table.displayName = 'Table'
 
-export const TableHeader = forwardRef<HTMLTableSectionElement, TableSectionProps>(
-  ({ className, ...props }, ref) => (
-    <thead
-      ref={ref}
-      className={mergeClasses('[&_tr]:border-b [&_tr]:border-gray-200', className)}
-      {...props}
-    />
-  )
-)
+export const TableHeader = forwardRef<
+  HTMLTableSectionElement,
+  TableSectionProps
+>(({ className, ...props }, ref) => (
+  <thead
+    ref={ref}
+    className={mergeClasses(
+      '[&_tr]:border-b [&_tr]:border-gray-200',
+      className
+    )}
+    {...props}
+  />
+))
 TableHeader.displayName = 'TableHeader'
 
 export const TableBody = forwardRef<HTMLTableSectionElement, TableSectionProps>(
@@ -100,7 +104,10 @@ export const TableCell = forwardRef<HTMLTableCellElement, TableCellProps>(
   ({ className, ...props }, ref) => (
     <td
       ref={ref}
-      className={mergeClasses('px-3 py-2.5 align-middle text-gray-900', className)}
+      className={mergeClasses(
+        'px-3 py-2.5 align-middle text-gray-900',
+        className
+      )}
       {...props}
     />
   )

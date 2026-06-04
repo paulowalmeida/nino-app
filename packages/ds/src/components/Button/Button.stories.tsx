@@ -38,11 +38,21 @@ export const Ghost: Story = {
 }
 
 export const LoadingSpinner: Story = {
-  args: { variant: 'primary', loading: true, loadingIndicator: 'spinner', children: 'Saving...' },
+  args: {
+    variant: 'primary',
+    loading: true,
+    loadingIndicator: 'spinner',
+    children: 'Saving...',
+  },
 }
 
 export const LoadingDots: Story = {
-  args: { variant: 'primary', loading: true, loadingIndicator: 'dots', children: 'Saving...' },
+  args: {
+    variant: 'primary',
+    loading: true,
+    loadingIndicator: 'dots',
+    children: 'Saving...',
+  },
 }
 
 export const Disabled: Story = {

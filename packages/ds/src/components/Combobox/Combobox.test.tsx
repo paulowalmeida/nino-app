@@ -60,10 +60,13 @@ describe(Combobox.displayName!, () => {
     expect(screen.getByRole('combobox')).not.toHaveAttribute('data-invalid')
   })
 
-  it.each(['sm', 'md', 'lg'] as const)('renderiza tamanho %s sem erros', (size) => {
-    render(<Combobox options={options} size={size} />)
-    expect(screen.getByRole('combobox')).toBeInTheDocument()
-  })
+  it.each(['sm', 'md', 'lg'] as const)(
+    'renderiza tamanho %s sem erros',
+    (size) => {
+      render(<Combobox options={options} size={size} />)
+      expect(screen.getByRole('combobox')).toBeInTheDocument()
+    }
+  )
 
   it('forwards ref to the input element', () => {
     const ref = { current: null }

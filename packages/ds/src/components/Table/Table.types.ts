@@ -1,8 +1,4 @@
-import {
-  HTMLAttributes,
-  TdHTMLAttributes,
-  ThHTMLAttributes,
-} from 'react'
+import { HTMLAttributes, TdHTMLAttributes, ThHTMLAttributes } from 'react'
 
 export type TableProps = HTMLAttributes<HTMLTableElement>
 export type TableSectionProps = HTMLAttributes<HTMLTableSectionElement>

@@ -1,7 +1,6 @@
 import { forwardRef } from 'react'
 
 import { Field } from '@ark-ui/react/field'
-
 import { baseDisabled } from '@ds/lib/baseClasses'
 import { mergeClasses } from '@ds/lib/mergeClasses'
 
@@ -31,21 +30,21 @@ const inputError =
  * as a plain `<input>`.
  *
  * @param size - Height and padding of the input. Default: `md`
- * 
+ *
  * @param error - Applies error styles to indicate invalid input
- * 
+ *
  * @param disabled - Disables the input
- * 
+ *
  * @param placeholder - Placeholder text shown when the input is empty
- * 
+ *
  * @param className - Additional CSS classes merged with base styles
  *
  * @param onChange - Fired when the input value changes
- * 
+ *
  * @param onFocus - Fired when the input receives focus
- * 
+ *
  * @param onBlur - Fired when the input loses focus
- * 
+ *
  * @param onKeyDown - Fired when a key is pressed while the input is focused
  */
 export const Input = forwardRef<HTMLInputElement, InputProps>(

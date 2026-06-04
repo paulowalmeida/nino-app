@@ -1,5 +1,4 @@
 import { Switch as ArkSwitch } from '@ark-ui/react/switch'
-
 import { mergeClasses } from '@ds/lib/mergeClasses'
 
 import { SwitchProps, SwitchSize } from './Switch.types'

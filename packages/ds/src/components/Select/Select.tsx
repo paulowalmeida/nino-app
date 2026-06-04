@@ -1,8 +1,7 @@
 import { forwardRef, useMemo } from 'react'
 
-import { Select as ArkSelect, createListCollection } from '@ark-ui/react/select'
 import { Portal } from '@ark-ui/react/portal'
-
+import { createListCollection, Select as ArkSelect } from '@ark-ui/react/select'
 import { baseDisabled, baseFocus } from '@ds/lib/baseClasses'
 import { mergeClasses } from '@ds/lib/mergeClasses'
 
@@ -78,21 +77,21 @@ export const Select = forwardRef<SelectTriggerRef, SelectProps>(
           >
             <ArkSelect.ValueText
               placeholder={placeholder}
-              className='data-placeholder-shown:text-gray-400'
+              className="data-placeholder-shown:text-gray-400"
             />
             <ArkSelect.Indicator>
               <svg
-                width='16'
-                height='16'
-                viewBox='0 0 24 24'
-                fill='none'
-                stroke='currentColor'
-                strokeWidth='2'
-                strokeLinecap='round'
-                strokeLinejoin='round'
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
                 className={chevronClass}
               >
-                <path d='m6 9 6 6 6-6' />
+                <path d="m6 9 6 6 6-6" />
               </svg>
             </ArkSelect.Indicator>
           </ArkSelect.Trigger>

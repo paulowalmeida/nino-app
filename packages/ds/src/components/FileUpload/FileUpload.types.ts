@@ -7,7 +7,9 @@ export interface FileUploadProps {
   disabled?: boolean
   name?: string
   onFileChange?: (files: File[]) => void
-  onFileReject?: (details: { files: { file: File; errors: string[] }[] }) => void
+  onFileReject?: (details: {
+    files: { file: File; errors: string[] }[]
+  }) => void
   /** Clickable trigger label. Default: `'Click to upload'` */
   triggerLabel?: string
   /** Hint shown next to the trigger. Default: `'or drag and drop'` */

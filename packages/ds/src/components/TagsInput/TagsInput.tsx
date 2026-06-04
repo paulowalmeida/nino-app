@@ -1,7 +1,6 @@
 import { forwardRef } from 'react'
 
 import { TagsInput as ArkTagsInput } from '@ark-ui/react/tags-input'
-
 import { mergeClasses } from '@ds/lib/mergeClasses'
 
 import { TagsInputProps, TagsInputSize } from './TagsInput.types'
@@ -77,15 +76,27 @@ export const TagsInput = forwardRef<HTMLInputElement, TagsInputProps>(
         <ArkTagsInput.Context>
           {(api) =>
             api.value.map((val, index) => (
-              <ArkTagsInput.Item key={`${val}-${index}`} index={index} value={val}>
+              <ArkTagsInput.Item
+                key={`${val}-${index}`}
+                index={index}
+                value={val}
+              >
                 <ArkTagsInput.ItemPreview className={chip}>
                   <ArkTagsInput.ItemText>{val}</ArkTagsInput.ItemText>
                   <ArkTagsInput.ItemDeleteTrigger
                     className={chipDelete}
                     aria-label={`Remove ${val}`}
                   >
-                    <svg width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='currentColor' strokeWidth='2.5' strokeLinecap='round'>
-                      <path d='M18 6 6 18M6 6l12 12' />
+                    <svg
+                      width="12"
+                      height="12"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2.5"
+                      strokeLinecap="round"
+                    >
+                      <path d="M18 6 6 18M6 6l12 12" />
                     </svg>
                   </ArkTagsInput.ItemDeleteTrigger>
                 </ArkTagsInput.ItemPreview>

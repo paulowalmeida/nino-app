@@ -39,10 +39,13 @@ describe(Input.name, () => {
     expect(screen.getByRole('textbox')).toHaveClass('border-gray-300')
   })
 
-  it.each(['sm', 'md', 'lg'] as const)('renders size %s without errors', (size) => {
-    render(<Input size={size} />)
-    expect(screen.getByRole('textbox')).toBeInTheDocument()
-  })
+  it.each(['sm', 'md', 'lg'] as const)(
+    'renders size %s without errors',
+    (size) => {
+      render(<Input size={size} />)
+      expect(screen.getByRole('textbox')).toBeInTheDocument()
+    }
+  )
 
   it('forwards ref to the input element', () => {
     const ref = { current: null }

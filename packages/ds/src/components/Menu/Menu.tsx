@@ -1,6 +1,5 @@
 import { Menu as ArkMenu } from '@ark-ui/react/menu'
 import { Portal } from '@ark-ui/react/portal'
-
 import { mergeClasses } from '@ds/lib/mergeClasses'
 
 import { MenuItem, MenuProps } from './Menu.types'
@@ -47,24 +46,24 @@ export function Menu({ trigger, items }: MenuProps) {
       <Portal>
         <ArkMenu.Positioner>
           <ArkMenu.Content className={baseContent}>
-          {items.map((item, i) =>
-            isSeparator(item) ? (
-              <ArkMenu.Separator key={`sep-${i}`} className={baseSeparator} />
-            ) : (
-              <ArkMenu.Item
-                key={item.value}
-                value={item.value}
-                disabled={item.disabled}
-                className={mergeClasses(
-                  baseItem,
-                  item.destructive ? destructiveItem : ''
-                )}
-              >
-                {item.icon}
-                {item.label}
-              </ArkMenu.Item>
-            )
-          )}
+            {items.map((item, i) =>
+              isSeparator(item) ? (
+                <ArkMenu.Separator key={`sep-${i}`} className={baseSeparator} />
+              ) : (
+                <ArkMenu.Item
+                  key={item.value}
+                  value={item.value}
+                  disabled={item.disabled}
+                  className={mergeClasses(
+                    baseItem,
+                    item.destructive ? destructiveItem : ''
+                  )}
+                >
+                  {item.icon}
+                  {item.label}
+                </ArkMenu.Item>
+              )
+            )}
           </ArkMenu.Content>
         </ArkMenu.Positioner>
       </Portal>

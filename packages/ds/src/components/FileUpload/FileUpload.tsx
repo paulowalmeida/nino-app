@@ -1,5 +1,4 @@
 import { FileUpload as ArkFileUpload } from '@ark-ui/react/file-upload'
-
 import { mergeClasses } from '@ds/lib/mergeClasses'
 
 import { FileUploadProps } from './FileUpload.types'
@@ -19,16 +18,34 @@ const baseDeleteButton =
   'shrink-0 rounded p-0.5 text-gray-400 transition-colors hover:bg-gray-100 hover:text-gray-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand'
 
 const UploadIcon = () => (
-  <svg width='32' height='32' viewBox='0 0 24 24' fill='none' stroke='currentColor' strokeWidth='1.5' strokeLinecap='round' strokeLinejoin='round' className='text-gray-400'>
-    <path d='M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4' />
-    <polyline points='17 8 12 3 7 8' />
-    <line x1='12' y1='3' x2='12' y2='15' />
+  <svg
+    width="32"
+    height="32"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="1.5"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    className="text-gray-400"
+  >
+    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+    <polyline points="17 8 12 3 7 8" />
+    <line x1="12" y1="3" x2="12" y2="15" />
   </svg>
 )
 
 const XIcon = () => (
-  <svg width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='currentColor' strokeWidth='2' strokeLinecap='round'>
-    <path d='M18 6 6 18M6 6l12 12' />
+  <svg
+    width="14"
+    height="14"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+  >
+    <path d="M18 6 6 18M6 6l12 12" />
   </svg>
 )
 
@@ -65,20 +82,24 @@ export function FileUpload({
     >
       <ArkFileUpload.Dropzone className={baseDropzone}>
         <UploadIcon />
-        <div className='group-data-dragging:hidden'>
-          <ArkFileUpload.Trigger className='font-medium text-brand hover:underline focus-visible:outline-none'>
+        <div className="group-data-dragging:hidden">
+          <ArkFileUpload.Trigger className="font-medium text-brand hover:underline focus-visible:outline-none">
             {triggerLabel}
           </ArkFileUpload.Trigger>
-          <span className='text-sm text-gray-500'> {dragLabel}</span>
+          <span className="text-sm text-gray-500"> {dragLabel}</span>
         </div>
-        <p className='hidden text-sm font-medium text-brand group-data-dragging:block'>
+        <p className="hidden text-sm font-medium text-brand group-data-dragging:block">
           {dropLabel}
         </p>
         {maxFileSize && (
-          <p className='text-xs text-gray-400 group-data-dragging:hidden'>Max {formatBytes(maxFileSize)}</p>
+          <p className="text-xs text-gray-400 group-data-dragging:hidden">
+            Max {formatBytes(maxFileSize)}
+          </p>
         )}
         {maxFiles > 1 && (
-          <p className='text-xs text-gray-400 group-data-dragging:hidden'>Up to {maxFiles} files</p>
+          <p className="text-xs text-gray-400 group-data-dragging:hidden">
+            Up to {maxFiles} files
+          </p>
         )}
       </ArkFileUpload.Dropzone>
 
@@ -86,13 +107,20 @@ export function FileUpload({
         <ArkFileUpload.Context>
           {({ acceptedFiles }) =>
             acceptedFiles.map((file) => (
-              <ArkFileUpload.Item key={`${file.name}-${file.size}-${file.type}`} file={file} className={baseItem}>
-                <ArkFileUpload.ItemPreview type='image/*'>
-                  <ArkFileUpload.ItemPreviewImage className='h-8 w-8 rounded object-cover' />
+              <ArkFileUpload.Item
+                key={`${file.name}-${file.size}-${file.type}`}
+                file={file}
+                className={baseItem}
+              >
+                <ArkFileUpload.ItemPreview type="image/*">
+                  <ArkFileUpload.ItemPreviewImage className="h-8 w-8 rounded object-cover" />
                 </ArkFileUpload.ItemPreview>
                 <ArkFileUpload.ItemName className={baseItemName} />
                 <ArkFileUpload.ItemSizeText className={baseItemSize} />
-                <ArkFileUpload.ItemDeleteTrigger className={baseDeleteButton} aria-label={removeLabel}>
+                <ArkFileUpload.ItemDeleteTrigger
+                  className={baseDeleteButton}
+                  aria-label={removeLabel}
+                >
                   <XIcon />
                 </ArkFileUpload.ItemDeleteTrigger>
               </ArkFileUpload.Item>

@@ -14,7 +14,7 @@ type Story = StoryObj<typeof Menu>
 
 export const Default: Story = {
   args: {
-    trigger: <Button variant='outline'>Actions</Button>,
+    trigger: <Button variant="outline">Actions</Button>,
     items: [
       { value: 'edit', label: 'Edit' },
       { value: 'duplicate', label: 'Duplicate' },

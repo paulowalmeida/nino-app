@@ -1,9 +1,17 @@
-import { Toast as ArkToast, Toaster as ArkToaster, createToaster } from '@ark-ui/react/toast'
+import {
+  createToaster,
+  Toast as ArkToast,
+  Toaster as ArkToaster,
+} from '@ark-ui/react/toast'
+import { mergeClasses } from '@ds/lib/mergeClasses'
 import { motion } from 'framer-motion'
 
-import { mergeClasses } from '@ds/lib/mergeClasses'
-
-import { ToastContainerProps, ToastMeta, ToastProviderProps, ToastVariant } from './Toast.types'
+import {
+  ToastContainerProps,
+  ToastMeta,
+  ToastProviderProps,
+  ToastVariant,
+} from './Toast.types'
 
 const variantClasses: Record<ToastVariant, string> = {
   default: 'bg-white border-gray-200 text-gray-900',
@@ -31,13 +39,37 @@ export const toaster = createToaster({
 
 export const toast = {
   default: (title: string, description?: string, duration = 4000) =>
-    toaster.create({ title, description, duration, type: 'info', meta: { variant: 'default', createdAt: Date.now() } as ToastMeta }),
+    toaster.create({
+      title,
+      description,
+      duration,
+      type: 'info',
+      meta: { variant: 'default', createdAt: Date.now() } as ToastMeta,
+    }),
   success: (title: string, description?: string, duration = 4000) =>
-    toaster.create({ title, description, duration, type: 'success', meta: { variant: 'success', createdAt: Date.now() } as ToastMeta }),
+    toaster.create({
+      title,
+      description,
+      duration,
+      type: 'success',
+      meta: { variant: 'success', createdAt: Date.now() } as ToastMeta,
+    }),
   error: (title: string, description?: string, duration = 4000) =>
-    toaster.create({ title, description, duration, type: 'error', meta: { variant: 'error', createdAt: Date.now() } as ToastMeta }),
+    toaster.create({
+      title,
+      description,
+      duration,
+      type: 'error',
+      meta: { variant: 'error', createdAt: Date.now() } as ToastMeta,
+    }),
   warning: (title: string, description?: string, duration = 4000) =>
-    toaster.create({ title, description, duration, type: 'warning', meta: { variant: 'warning', createdAt: Date.now() } as ToastMeta }),
+    toaster.create({
+      title,
+      description,
+      duration,
+      type: 'warning',
+      meta: { variant: 'warning', createdAt: Date.now() } as ToastMeta,
+    }),
 }
 
 export function ToastProvider({ children }: ToastProviderProps) {
@@ -75,16 +107,16 @@ export function ToastContainer({ className: _ }: ToastContainerProps) {
                 {t.description}
               </ArkToast.Description>
             )}
-            <ArkToast.CloseTrigger className={closeClass} aria-label='Close'>
+            <ArkToast.CloseTrigger className={closeClass} aria-label="Close">
               <svg
-                width='14'
-                height='14'
-                viewBox='0 0 24 24'
-                fill='none'
-                stroke='currentColor'
-                strokeWidth='2'
+                width="14"
+                height="14"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
               >
-                <path d='M18 6 6 18M6 6l12 12' />
+                <path d="M18 6 6 18M6 6l12 12" />
               </svg>
             </ArkToast.CloseTrigger>
             {duration !== Infinity && (

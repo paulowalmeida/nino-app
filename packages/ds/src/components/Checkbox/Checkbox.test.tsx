@@ -55,10 +55,13 @@ describe(Checkbox.displayName!, () => {
     )
   })
 
-  it.each(['sm', 'md', 'lg'] as const)('renderiza tamanho %s sem erros', (size) => {
-    render(<Checkbox size={size} />)
-    expect(screen.getByRole('checkbox')).toBeInTheDocument()
-  })
+  it.each(['sm', 'md', 'lg'] as const)(
+    'renderiza tamanho %s sem erros',
+    (size) => {
+      render(<Checkbox size={size} />)
+      expect(screen.getByRole('checkbox')).toBeInTheDocument()
+    }
+  )
 
   it('forwards ref to the control element', () => {
     const ref = { current: null }

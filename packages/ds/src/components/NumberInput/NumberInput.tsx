@@ -1,4 +1,4 @@
-import { forwardRef, type ChangeEvent } from 'react'
+import { type ChangeEvent, forwardRef } from 'react'
 
 import { mergeClasses } from '@ds/lib/mergeClasses'
 
@@ -42,7 +42,7 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
     return (
       <input
         ref={ref}
-        type='number'
+        type="number"
         name={name}
         value={value}
         defaultValue={defaultValue}

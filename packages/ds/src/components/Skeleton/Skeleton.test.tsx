@@ -37,7 +37,10 @@ describe(Skeleton.name, () => {
 
   it('does not apply animation when animation=none', () => {
     const { container } = render(<Skeleton animation="none" />)
-    expect(container.firstChild).not.toHaveClass('animate-pulse', 'skeleton-wave')
+    expect(container.firstChild).not.toHaveClass(
+      'animate-pulse',
+      'skeleton-wave'
+    )
   })
 
   it('applies additional className', () => {

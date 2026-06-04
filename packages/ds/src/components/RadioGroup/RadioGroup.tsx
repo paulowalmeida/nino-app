@@ -1,5 +1,4 @@
 import { RadioGroup as ArkRadioGroup } from '@ark-ui/react/radio-group'
-
 import { mergeClasses } from '@ds/lib/mergeClasses'
 
 import { RadioGroupProps } from './RadioGroup.types'
@@ -13,8 +12,7 @@ const baseControl =
 
 const baseIndicatorDot = 'h-1.5 w-1.5 rounded-full bg-white'
 
-const baseLabelText =
-  'text-sm text-gray-700 leading-none cursor-pointer'
+const baseLabelText = 'text-sm text-gray-700 leading-none cursor-pointer'
 
 const baseOptionWrapper = 'flex items-center gap-2 cursor-pointer'
 

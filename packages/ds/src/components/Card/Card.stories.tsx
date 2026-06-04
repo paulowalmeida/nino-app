@@ -28,10 +28,14 @@ export const Elevated: Story = {
 
 export const Variants: Story = {
   render: () => (
-    <div className='flex gap-4'>
-      <Card className='w-48'>default</Card>
-      <Card variant='flat' className='w-48'>flat</Card>
-      <Card variant='elevated' className='w-48'>elevated</Card>
+    <div className="flex gap-4">
+      <Card className="w-48">default</Card>
+      <Card variant="flat" className="w-48">
+        flat
+      </Card>
+      <Card variant="elevated" className="w-48">
+        elevated
+      </Card>
     </div>
   ),
 }

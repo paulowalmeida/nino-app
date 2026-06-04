@@ -25,7 +25,7 @@ export const Default: Story = {
   },
   render: (args) => (
     <FormField {...args}>
-      <Input placeholder='name@company.com' />
+      <Input placeholder="name@company.com" />
     </FormField>
   ),
 }
@@ -37,7 +37,7 @@ export const Required: Story = {
   },
   render: (args) => (
     <FormField {...args}>
-      <Input placeholder='John Smith' />
+      <Input placeholder="John Smith" />
     </FormField>
   ),
 }
@@ -50,7 +50,11 @@ export const WithError: Story = {
   },
   render: (args) => (
     <FormField {...args}>
-      <Input placeholder='name@company.com' error defaultValue='invalid-email' />
+      <Input
+        placeholder="name@company.com"
+        error
+        defaultValue="invalid-email"
+      />
     </FormField>
   ),
 }
@@ -61,7 +65,7 @@ export const WithoutLabel: Story = {
   },
   render: (args) => (
     <FormField {...args}>
-      <Input placeholder='No label' />
+      <Input placeholder="No label" />
     </FormField>
   ),
 }

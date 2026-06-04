@@ -7,7 +7,7 @@ import { Drawer } from './Drawer'
 describe(Drawer.displayName!, () => {
   it('does not render content when closed', () => {
     render(
-      <Drawer open={false} onOpenChange={vi.fn()} title='Painel'>
+      <Drawer open={false} onOpenChange={vi.fn()} title="Painel">
         <p>Conteúdo</p>
       </Drawer>
     )
@@ -16,7 +16,7 @@ describe(Drawer.displayName!, () => {
 
   it('renders content when open', () => {
     render(
-      <Drawer open onOpenChange={vi.fn()} title='Painel'>
+      <Drawer open onOpenChange={vi.fn()} title="Painel">
         <p>Conteúdo</p>
       </Drawer>
     )
@@ -25,7 +25,12 @@ describe(Drawer.displayName!, () => {
 
   it('renders title and description', () => {
     render(
-      <Drawer open onOpenChange={vi.fn()} title='Meu painel' description='Subtítulo'>
+      <Drawer
+        open
+        onOpenChange={vi.fn()}
+        title="Meu painel"
+        description="Subtítulo"
+      >
         <p>x</p>
       </Drawer>
     )
@@ -36,7 +41,7 @@ describe(Drawer.displayName!, () => {
   it('calls onOpenChange when close button is clicked', async () => {
     const onOpenChange = vi.fn()
     render(
-      <Drawer open onOpenChange={onOpenChange} title='Painel'>
+      <Drawer open onOpenChange={onOpenChange} title="Painel">
         <p>x</p>
       </Drawer>
     )

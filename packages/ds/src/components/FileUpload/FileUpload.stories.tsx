@@ -14,7 +14,13 @@ const meta: Meta<typeof FileUpload> = {
   component: FileUpload,
   tags: ['autodocs'],
   args: ptBR,
-  decorators: [(Story) => <div className='w-full max-w-md'><Story /></div>],
+  decorators: [
+    (Story) => (
+      <div className="w-full max-w-md">
+        <Story />
+      </div>
+    ),
+  ],
 }
 
 export default meta

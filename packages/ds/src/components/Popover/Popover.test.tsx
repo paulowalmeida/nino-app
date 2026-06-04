@@ -26,7 +26,7 @@ describe(Popover.displayName!, () => {
 
   it('renders title when provided', async () => {
     render(
-      <Popover trigger={<button>Abrir</button>} title='Título'>
+      <Popover trigger={<button>Abrir</button>} title="Título">
         <span>Conteúdo</span>
       </Popover>
     )

@@ -5,7 +5,6 @@ import {
   createListCollection,
 } from '@ark-ui/react/combobox'
 import { Portal } from '@ark-ui/react/portal'
-
 import { baseDisabled } from '@ds/lib/baseClasses'
 import { mergeClasses } from '@ds/lib/mergeClasses'
 
@@ -132,18 +131,18 @@ export const Combobox = forwardRef<ComboboxInputRef, ComboboxProps>(
         <Portal>
           <ArkCombobox.Positioner>
             <ArkCombobox.Content className={baseContent}>
-            <ArkCombobox.Empty className={baseEmpty}>
-              {emptyMessage}
-            </ArkCombobox.Empty>
-            {filtered.map((option) => (
-              <ArkCombobox.Item
-                key={option.value}
-                item={option}
-                className={baseItem}
-              >
-                <ArkCombobox.ItemText>{option.label}</ArkCombobox.ItemText>
-              </ArkCombobox.Item>
-            ))}
+              <ArkCombobox.Empty className={baseEmpty}>
+                {emptyMessage}
+              </ArkCombobox.Empty>
+              {filtered.map((option) => (
+                <ArkCombobox.Item
+                  key={option.value}
+                  item={option}
+                  className={baseItem}
+                >
+                  <ArkCombobox.ItemText>{option.label}</ArkCombobox.ItemText>
+                </ArkCombobox.Item>
+              ))}
             </ArkCombobox.Content>
           </ArkCombobox.Positioner>
         </Portal>

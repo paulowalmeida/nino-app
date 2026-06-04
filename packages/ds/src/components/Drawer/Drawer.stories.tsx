@@ -23,10 +23,10 @@ export const Default: Story = {
         <Drawer
           open={open}
           onOpenChange={setOpen}
-          title='Order details'
-          description='Order #1234 — Ana Lima'
+          title="Order details"
+          description="Order #1234 — Ana Lima"
         >
-          <p className='text-sm text-gray-600'>
+          <p className="text-sm text-gray-600">
             Drawer content appears here. It can contain forms, lists, or any
             other content.
           </p>
@@ -45,10 +45,10 @@ export const LeftPlacement: Story = {
         <Drawer
           open={open}
           onOpenChange={setOpen}
-          placement='left'
-          title='Side menu'
+          placement="left"
+          title="Side menu"
         >
-          <ul className='space-y-2 text-sm text-gray-700'>
+          <ul className="space-y-2 text-sm text-gray-700">
             <li>Dashboard</li>
             <li>Orders</li>
             <li>Menu</li>

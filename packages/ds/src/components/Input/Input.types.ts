@@ -2,8 +2,10 @@ import { InputHTMLAttributes } from 'react'
 
 export type InputSize = 'sm' | 'md' | 'lg'
 
-export interface InputProps
-  extends Omit<InputHTMLAttributes<HTMLInputElement>, 'size'> {
+export interface InputProps extends Omit<
+  InputHTMLAttributes<HTMLInputElement>,
+  'size'
+> {
   /** Height and padding of the input. Default: `md` */
   size?: InputSize
   /** Applies error styles to indicate invalid input */

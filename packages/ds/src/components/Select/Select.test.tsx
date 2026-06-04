@@ -63,10 +63,13 @@ describe(Select.displayName!, () => {
     expect(screen.getByRole('combobox')).toHaveClass('border-gray-300')
   })
 
-  it.each(['sm', 'md', 'lg'] as const)('renderiza tamanho %s sem erros', (size) => {
-    render(<Select options={options} size={size} />)
-    expect(screen.getByRole('combobox')).toBeInTheDocument()
-  })
+  it.each(['sm', 'md', 'lg'] as const)(
+    'renderiza tamanho %s sem erros',
+    (size) => {
+      render(<Select options={options} size={size} />)
+      expect(screen.getByRole('combobox')).toBeInTheDocument()
+    }
+  )
 
   it('forwards ref to the trigger element', () => {
     const ref = { current: null }

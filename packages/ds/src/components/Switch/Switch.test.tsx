@@ -30,7 +30,9 @@ describe(Switch.name, () => {
 
   it('does not fire events when disabled', async () => {
     const onCheckedChange = vi.fn()
-    render(<Switch aria-label="toggle" disabled onCheckedChange={onCheckedChange} />)
+    render(
+      <Switch aria-label="toggle" disabled onCheckedChange={onCheckedChange} />
+    )
     await userEvent.click(screen.getByRole('checkbox'))
     expect(onCheckedChange).not.toHaveBeenCalled()
   })

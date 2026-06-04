@@ -13,8 +13,10 @@ type MotionConflicts =
   | 'onDragOver'
   | 'onAnimationStart'
 
-export interface ButtonProps
-  extends Omit<ButtonHTMLAttributes<HTMLButtonElement>, MotionConflicts> {
+export interface ButtonProps extends Omit<
+  ButtonHTMLAttributes<HTMLButtonElement>,
+  MotionConflicts
+> {
   /** Visual style of the button. Default: `primary` */
   variant?: ButtonVariant
   /** Height and padding of the button. Default: `md` */

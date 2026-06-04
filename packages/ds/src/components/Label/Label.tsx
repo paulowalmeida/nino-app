@@ -1,5 +1,4 @@
 import { Field } from '@ark-ui/react/field'
-
 import { mergeClasses } from '@ds/lib/mergeClasses'
 
 import { LabelProps } from './Label.types'

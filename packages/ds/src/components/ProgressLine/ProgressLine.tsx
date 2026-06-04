@@ -1,5 +1,4 @@
 import { Progress as ArkProgress } from '@ark-ui/react/progress'
-
 import { mergeClasses } from '@ds/lib/mergeClasses'
 
 import { ProgressLineProps, ProgressLineSize } from './ProgressLine.types'

@@ -12,7 +12,13 @@ const meta: Meta<typeof TagsInput> = {
     error: { control: 'boolean' },
     disabled: { control: 'boolean' },
   },
-  decorators: [(Story) => <div className='w-80'><Story /></div>],
+  decorators: [
+    (Story) => (
+      <div className="w-80">
+        <Story />
+      </div>
+    ),
+  ],
 }
 
 export default meta

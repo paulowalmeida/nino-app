@@ -31,7 +31,7 @@ const items = [
 
 export const Default: Story = {
   render: () => (
-    <div className='w-full max-w-md'>
+    <div className="w-full max-w-md">
       <Accordion items={items} />
     </div>
   ),
@@ -39,7 +39,7 @@ export const Default: Story = {
 
 export const DefaultOpen: Story = {
   render: () => (
-    <div className='w-full max-w-md'>
+    <div className="w-full max-w-md">
       <Accordion items={items} defaultValue={['hours']} />
     </div>
   ),
@@ -47,7 +47,7 @@ export const DefaultOpen: Story = {
 
 export const Multiple: Story = {
   render: () => (
-    <div className='w-full max-w-md'>
+    <div className="w-full max-w-md">
       <Accordion items={items} multiple defaultValue={['hours', 'delivery']} />
     </div>
   ),

@@ -1,7 +1,6 @@
 import { forwardRef } from 'react'
 
 import { Field } from '@ark-ui/react/field'
-
 import { mergeClasses } from '@ds/lib/mergeClasses'
 
 import { TextareaProps } from './Textarea.types'

@@ -1,6 +1,5 @@
 import { Dialog as ArkDialog } from '@ark-ui/react/dialog'
 import { Portal } from '@ark-ui/react/portal'
-
 import { mergeClasses } from '@ds/lib/mergeClasses'
 
 import { DrawerPlacement, DrawerProps } from './Drawer.types'
@@ -27,16 +26,13 @@ const sizeByPlacement: Record<DrawerPlacement, string> = {
 const animationByPlacement: Record<DrawerPlacement, string> = {
   right:
     'data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:slide-out-to-right data-[state=open]:slide-in-from-right',
-  left:
-    'data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:slide-out-to-left data-[state=open]:slide-in-from-left',
+  left: 'data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:slide-out-to-left data-[state=open]:slide-in-from-left',
   bottom:
     'data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:slide-out-to-bottom data-[state=open]:slide-in-from-bottom',
-  top:
-    'data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:slide-out-to-top data-[state=open]:slide-in-from-top',
+  top: 'data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:slide-out-to-top data-[state=open]:slide-in-from-top',
 }
 
-const baseContent =
-  'flex flex-col bg-white shadow-xl outline-none duration-300'
+const baseContent = 'flex flex-col bg-white shadow-xl outline-none duration-300'
 
 const baseHeader =
   'flex items-center justify-between border-b border-gray-200 px-6 py-4'
@@ -50,16 +46,16 @@ const closeButtonClass =
 
 const CloseIcon = () => (
   <svg
-    width='16'
-    height='16'
-    viewBox='0 0 24 24'
-    fill='none'
-    stroke='currentColor'
-    strokeWidth='2'
-    strokeLinecap='round'
-    strokeLinejoin='round'
+    width="16"
+    height="16"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
   >
-    <path d='M18 6 6 18M6 6l12 12' />
+    <path d="M18 6 6 18M6 6l12 12" />
   </svg>
 )
 
@@ -104,7 +100,9 @@ export function Drawer({
               <div className={baseHeader}>
                 <div>
                   {title && (
-                    <ArkDialog.Title className={titleClass}>{title}</ArkDialog.Title>
+                    <ArkDialog.Title className={titleClass}>
+                      {title}
+                    </ArkDialog.Title>
                   )}
                   {description && (
                     <ArkDialog.Description className={descriptionClass}>
@@ -114,7 +112,7 @@ export function Drawer({
                 </div>
                 <ArkDialog.CloseTrigger
                   className={closeButtonClass}
-                  aria-label='Close'
+                  aria-label="Close"
                 >
                   <CloseIcon />
                 </ArkDialog.CloseTrigger>

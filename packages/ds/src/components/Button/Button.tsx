@@ -1,15 +1,12 @@
-import {
-  ButtonHTMLAttributes,
-  forwardRef,
-} from 'react'
+import { ButtonHTMLAttributes, forwardRef } from 'react'
 
+import { LoadingDots } from '@ds/components/LoadingDots'
+import { Spinner } from '@ds/components/Spinner'
+import { baseFocus, baseLayout } from '@ds/lib/baseClasses'
+import { mergeClasses } from '@ds/lib/mergeClasses'
 import { Slot } from '@radix-ui/react-slot'
 import { motion } from 'framer-motion'
 
-import { baseFocus, baseLayout } from '@ds/lib/baseClasses'
-import { mergeClasses } from '@ds/lib/mergeClasses'
-import { LoadingDots } from '@ds/components/LoadingDots'
-import { Spinner } from '@ds/components/Spinner'
 import { ButtonProps, ButtonSize, ButtonVariant } from './Button.types'
 
 const variantClasses: Record<ButtonVariant, string> = {
@@ -111,9 +108,11 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         transition={{ type: 'spring', stiffness: 500, damping: 30 }}
         {...props}
       >
-        {loadingIndicator === 'dots'
-          ? <LoadingDots visible={loading} />
-          : <Spinner visible={loading} />}
+        {loadingIndicator === 'dots' ? (
+          <LoadingDots visible={loading} />
+        ) : (
+          <Spinner visible={loading} />
+        )}
         {!loading && children}
       </MotionButton>
     )

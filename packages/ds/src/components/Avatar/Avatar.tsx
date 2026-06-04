@@ -1,5 +1,4 @@
 import { Avatar as ArkAvatar } from '@ark-ui/react/avatar'
-
 import { mergeClasses } from '@ds/lib/mergeClasses'
 
 import { AvatarProps, AvatarSize } from './Avatar.types'

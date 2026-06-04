@@ -39,7 +39,7 @@ describe(Slider.displayName!, () => {
   })
 
   it('renders the label when provided', () => {
-    render(<Slider label='Preço máximo' />)
+    render(<Slider label="Preço máximo" />)
     expect(screen.getByText('Preço máximo')).toBeInTheDocument()
   })
 })

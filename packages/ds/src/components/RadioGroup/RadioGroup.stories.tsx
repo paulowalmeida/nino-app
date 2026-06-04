@@ -41,7 +41,7 @@ export const Horizontal: Story = {
     return (
       <RadioGroup
         options={paymentOptions}
-        orientation='horizontal'
+        orientation="horizontal"
         value={value}
         onValueChange={setValue}
       />
@@ -57,7 +57,7 @@ export const WithDisabled: Story = {
         { value: 'card', label: 'Credit card (unavailable)', disabled: true },
         { value: 'cash', label: 'Cash' },
       ]}
-      defaultValue='pix'
+      defaultValue="pix"
     />
   ),
 }

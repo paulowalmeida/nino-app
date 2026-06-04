@@ -1,16 +1,16 @@
 import { CSSProperties } from 'react'
 
 import { Progress as ArkProgress } from '@ark-ui/react/progress'
-
 import { mergeClasses } from '@ds/lib/mergeClasses'
 
 import { ProgressCircleProps, ProgressCircleSize } from './ProgressCircle.types'
 
-const sizeMap: Record<ProgressCircleSize, { size: string; thickness: string }> = {
-  sm: { size: '40px', thickness: '4px' },
-  md: { size: '56px', thickness: '5px' },
-  lg: { size: '80px', thickness: '7px' },
-}
+const sizeMap: Record<ProgressCircleSize, { size: string; thickness: string }> =
+  {
+    sm: { size: '40px', thickness: '4px' },
+    md: { size: '56px', thickness: '5px' },
+    lg: { size: '80px', thickness: '7px' },
+  }
 
 const trackStyle: CSSProperties = {
   stroke: '#e5e7eb',

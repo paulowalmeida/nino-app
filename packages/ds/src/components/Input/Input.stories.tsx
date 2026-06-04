@@ -22,7 +22,11 @@ export const Default: Story = {
 }
 
 export const Error: Story = {
-  args: { placeholder: 'Invalid email', error: true, defaultValue: 'not-an-email' },
+  args: {
+    placeholder: 'Invalid email',
+    error: true,
+    defaultValue: 'not-an-email',
+  },
 }
 
 export const Disabled: Story = {

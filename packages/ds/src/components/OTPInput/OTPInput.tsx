@@ -1,5 +1,4 @@
 import { PinInput as ArkPinInput } from '@ark-ui/react/pin-input'
-
 import { mergeClasses } from '@ds/lib/mergeClasses'
 
 import { OTPInputProps } from './OTPInput.types'

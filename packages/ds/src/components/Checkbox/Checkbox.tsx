@@ -1,7 +1,6 @@
 import { forwardRef } from 'react'
 
 import { Checkbox as ArkCheckbox } from '@ark-ui/react/checkbox'
-
 import { baseDisabled, baseFocus } from '@ds/lib/baseClasses'
 import { mergeClasses } from '@ds/lib/mergeClasses'
 
@@ -54,7 +53,10 @@ const indicatorBase = 'flex items-center justify-center text-white'
  * @param className - Additional CSS classes for the control element
  */
 export const Checkbox = forwardRef<CheckboxRef, CheckboxProps>(
-  ({ size = 'md', error = false, className, onCheckedChange, ...props }, ref) => (
+  (
+    { size = 'md', error = false, className, onCheckedChange, ...props },
+    ref
+  ) => (
     <ArkCheckbox.Root
       onCheckedChange={({ checked }) => onCheckedChange?.(checked)}
       {...props}

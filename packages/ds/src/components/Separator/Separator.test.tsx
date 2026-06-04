@@ -11,12 +11,18 @@ describe(Separator.name, () => {
 
   it('has horizontal orientation by default', () => {
     const { getByRole } = render(<Separator />)
-    expect(getByRole('separator')).toHaveAttribute('aria-orientation', 'horizontal')
+    expect(getByRole('separator')).toHaveAttribute(
+      'aria-orientation',
+      'horizontal'
+    )
   })
 
   it('applies vertical orientation', () => {
     const { getByRole } = render(<Separator orientation="vertical" />)
-    expect(getByRole('separator')).toHaveAttribute('aria-orientation', 'vertical')
+    expect(getByRole('separator')).toHaveAttribute(
+      'aria-orientation',
+      'vertical'
+    )
   })
 
   it('applies additional className', () => {

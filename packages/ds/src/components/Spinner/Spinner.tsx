@@ -7,12 +7,16 @@ import { SpinnerProps } from './Spinner.types'
  * Uses `AnimatePresence` to smoothly animate enter and exit transitions.
  *
  * @param visible - Controls visibility with enter/exit animation
- * 
+ *
  * @param size - Size in pixels. Default: 16
- * 
+ *
  * @param label - Accessible label for screen readers. Default: 'Loading'
  */
-export function Spinner({ visible, size = 16, label = 'Loading' }: SpinnerProps) {
+export function Spinner({
+  visible,
+  size = 16,
+  label = 'Loading',
+}: SpinnerProps) {
   return (
     <AnimatePresence initial={true}>
       {visible && (

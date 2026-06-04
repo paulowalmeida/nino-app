@@ -34,10 +34,12 @@ export function Popover({
               <ArkPopover.ArrowTip />
             </ArkPopover.Arrow>
             {title && (
-              <ArkPopover.Title className={titleClass}>{title}</ArkPopover.Title>
+              <ArkPopover.Title className={titleClass}>
+                {title}
+              </ArkPopover.Title>
             )}
             <ArkPopover.Description asChild>
-              <div className='text-sm text-gray-600'>{children}</div>
+              <div className="text-sm text-gray-600">{children}</div>
             </ArkPopover.Description>
           </ArkPopover.Content>
         </ArkPopover.Positioner>

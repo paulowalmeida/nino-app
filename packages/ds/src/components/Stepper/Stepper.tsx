@@ -27,16 +27,16 @@ const descriptionClass = 'text-xs text-gray-400 mt-0.5'
 
 const CheckIcon = () => (
   <svg
-    width='14'
-    height='14'
-    viewBox='0 0 24 24'
-    fill='none'
-    stroke='currentColor'
-    strokeWidth='3'
-    strokeLinecap='round'
-    strokeLinejoin='round'
+    width="14"
+    height="14"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="3"
+    strokeLinecap="round"
+    strokeLinejoin="round"
   >
-    <polyline points='20 6 9 17 4 12' />
+    <polyline points="20 6 9 17 4 12" />
   </svg>
 )
 
@@ -59,8 +59,8 @@ export function Stepper({
 
   return (
     <div
-      role='list'
-      aria-label='Progress'
+      role="list"
+      aria-label="Progress"
       className={mergeClasses(
         'flex w-full',
         isVertical ? 'flex-col' : 'items-start',
@@ -70,11 +70,12 @@ export function Stepper({
       {steps.map((s, index) => {
         const isCompleted = index < current
         const isCurrent = index === current
-        const indicatorClass = isCompleted || isCurrent
-          ? isCurrent
-            ? indicatorActive
-            : indicatorCompleted
-          : indicatorDefault
+        const indicatorClass =
+          isCompleted || isCurrent
+            ? isCurrent
+              ? indicatorActive
+              : indicatorCompleted
+            : indicatorDefault
         const titleClass = isCurrent
           ? titleActive
           : isCompleted
@@ -84,7 +85,7 @@ export function Stepper({
         return (
           <div
             key={index}
-            role='listitem'
+            role="listitem"
             className={mergeClasses(
               'flex',
               isVertical ? 'flex-col' : 'flex-1 flex-col items-center'
@@ -97,7 +98,7 @@ export function Stepper({
               )}
             >
               <button
-                type='button'
+                type="button"
                 aria-label={s.title}
                 aria-current={isCurrent ? 'step' : undefined}
                 onClick={() => handleClick(index)}
@@ -121,7 +122,7 @@ export function Stepper({
               )}
             </div>
             {!isVertical && (
-              <div className='mt-2 text-center'>
+              <div className="mt-2 text-center">
                 <p className={titleClass}>{s.title}</p>
                 {s.description && (
                   <p className={descriptionClass}>{s.description}</p>
@@ -129,7 +130,7 @@ export function Stepper({
               </div>
             )}
             {isVertical && (
-              <div className='ml-11'>
+              <div className="ml-11">
                 <p className={titleClass}>{s.title}</p>
                 {s.description && (
                   <p className={descriptionClass}>{s.description}</p>

@@ -1,5 +1,4 @@
 import { Pagination as ArkPagination } from '@ark-ui/react/pagination'
-
 import { mergeClasses } from '@ds/lib/mergeClasses'
 
 import { PaginationProps } from './Pagination.types'
@@ -16,14 +15,32 @@ const baseEllipsis =
   'inline-flex h-9 min-w-9 items-center justify-center text-sm text-gray-400'
 
 const ChevronLeft = () => (
-  <svg width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='currentColor' strokeWidth='2' strokeLinecap='round' strokeLinejoin='round'>
-    <path d='m15 18-6-6 6-6' />
+  <svg
+    width="16"
+    height="16"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  >
+    <path d="m15 18-6-6 6-6" />
   </svg>
 )
 
 const ChevronRight = () => (
-  <svg width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='currentColor' strokeWidth='2' strokeLinecap='round' strokeLinejoin='round'>
-    <path d='m9 18 6-6-6-6' />
+  <svg
+    width="16"
+    height="16"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  >
+    <path d="m9 18 6-6-6-6" />
   </svg>
 )
 
@@ -58,7 +75,7 @@ export function Pagination({
       onPageChange={({ page: p }) => onPageChange?.(p)}
       className={mergeClasses(baseRoot, className)}
     >
-      <ArkPagination.PrevTrigger className={baseNav} aria-label='Previous page'>
+      <ArkPagination.PrevTrigger className={baseNav} aria-label="Previous page">
         <ChevronLeft />
       </ArkPagination.PrevTrigger>
 
@@ -70,7 +87,11 @@ export function Pagination({
                 {page.value}
               </ArkPagination.Item>
             ) : (
-              <ArkPagination.Ellipsis key={i} index={i} className={baseEllipsis}>
+              <ArkPagination.Ellipsis
+                key={i}
+                index={i}
+                className={baseEllipsis}
+              >
                 &#8230;
               </ArkPagination.Ellipsis>
             )
@@ -78,7 +99,7 @@ export function Pagination({
         }
       </ArkPagination.Context>
 
-      <ArkPagination.NextTrigger className={baseNav} aria-label='Next page'>
+      <ArkPagination.NextTrigger className={baseNav} aria-label="Next page">
         <ChevronRight />
       </ArkPagination.NextTrigger>
     </ArkPagination.Root>

@@ -15,19 +15,19 @@ describe(Card.displayName!, () => {
   })
 
   it('flat variant does not apply shadow', () => {
-    render(<Card variant='flat'>x</Card>)
+    render(<Card variant="flat">x</Card>)
     const card = screen.getByText('x')
     expect(card).not.toHaveClass('shadow-sm')
     expect(card).not.toHaveClass('shadow-md')
   })
 
   it('elevated variant applies shadow-md', () => {
-    render(<Card variant='elevated'>x</Card>)
+    render(<Card variant="elevated">x</Card>)
     expect(screen.getByText('x')).toHaveClass('shadow-md')
   })
 
   it('merges additional className', () => {
-    render(<Card className='w-64'>x</Card>)
+    render(<Card className="w-64">x</Card>)
     expect(screen.getByText('x')).toHaveClass('w-64')
   })
 
