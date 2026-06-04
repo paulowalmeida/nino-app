@@ -71,14 +71,16 @@ export function Precos() {
   return (
     <section id="precos" className="pricing">
       <div className="pricing-inner">
-        <h2>
-          Preço simples,
-          <br />
-          resultado real
-        </h2>
-        <p className="pricing-lead">
-          Sem taxa por pedido. Sem percentual sobre venda. Sem letras miúdas.
-        </p>
+        <div className="pricing-head">
+          <h2>
+            Preço simples,
+            <br />
+            resultado real
+          </h2>
+          <p className="pricing-lead">
+            Sem taxa por pedido. Sem percentual sobre venda. Sem letras miúdas.
+          </p>
+        </div>
         <div className="pricing-grid">
           {plans.map((plan) => (
             <div

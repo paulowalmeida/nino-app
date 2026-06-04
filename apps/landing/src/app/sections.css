@@ -179,9 +179,13 @@
   background: #fff;
 }
 .pricing-inner {
-  max-width: 900px;
+  max-width: 1160px;
   margin: 0 auto;
   text-align: center;
+}
+.pricing-head {
+  max-width: 600px;
+  margin: 0 auto;
 }
 .pricing h2 {
   font-family: var(--font-display);
@@ -197,13 +201,13 @@
 .pricing-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 1.25rem;
+  gap: 1.5rem;
 }
 .plan {
   background: #fff;
   border: 1px solid #dee2e6;
   border-radius: 20px;
-  padding: 2rem 1.5rem;
+  padding: 2.25rem 1.75rem;
   text-align: left;
   display: flex;
   flex-direction: column;
