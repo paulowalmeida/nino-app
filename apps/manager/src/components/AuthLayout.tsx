@@ -10,7 +10,7 @@ type AuthLayoutProps = {
 export function AuthLayout({ children }: AuthLayoutProps) {
   const shell = 'min-h-screen bg-white lg:grid lg:grid-cols-[1.05fr_1fr]'
   const brandPanel =
-    'auth-grid relative hidden overflow-hidden bg-dark lg:flex lg:flex-col lg:justify-between lg:p-12'
+    'auth-grid auth-grain relative hidden overflow-hidden bg-dark lg:flex lg:flex-col lg:justify-between lg:p-12'
   const glowTop =
     'auth-glow pointer-events-none absolute -right-24 -top-24 h-[28rem] w-[28rem] rounded-full bg-brand/30 blur-3xl'
   const glowBottom =
@@ -27,10 +27,11 @@ export function AuthLayout({ children }: AuthLayoutProps) {
   const taglineAccent = 'text-brand'
   const taglineText = 'mt-3 text-lg leading-relaxed text-white/60'
   const formPanel =
-    'relative flex min-h-screen items-center justify-center overflow-hidden px-6 py-12'
+    'auth-warm-bg auth-grain relative flex min-h-screen items-center justify-center overflow-hidden px-6 py-12'
   const formGlow =
-    'pointer-events-none absolute -top-32 right-0 h-72 w-72 rounded-full bg-brand/10 blur-3xl lg:hidden'
-  const formInner = 'relative z-10 w-full max-w-sm'
+    'pointer-events-none absolute -top-32 right-0 h-72 w-72 rounded-full bg-brand/15 blur-3xl lg:hidden'
+  const formInner =
+    'relative z-10 w-full max-w-md rounded-[1.75rem] border border-white/70 bg-white/75 p-8 shadow-2xl shadow-brand/10 backdrop-blur-md sm:p-10'
   const mobileLogo = 'mb-10 flex justify-center lg:hidden'
 
   return (
@@ -57,7 +58,7 @@ export function AuthLayout({ children }: AuthLayoutProps) {
             <span className={taglineAccent}>do seu jeito.</span>
           </h2>
           <p className={taglineText}>
-            Pedidos, cardápio, vendas, faturamentos ee configurações num só lugar.
+            Pedidos, cardápio, vendas e faturamento — tudo num só lugar.
           </p>
         </div>
       </aside>

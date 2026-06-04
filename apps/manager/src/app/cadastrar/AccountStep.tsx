@@ -17,11 +17,11 @@ import {
 
 const header = 'auth-rise text-center'
 const step = 'text-xs font-semibold uppercase tracking-wider text-brand'
-const title = 'font-display text-3xl font-extrabold tracking-tight text-gray-900'
-const subtitle = 'mt-2 text-sm text-gray-500'
+const title = 'font-display text-4xl font-extrabold tracking-tight text-dark'
+const subtitle = 'mt-2 text-sm text-text/60'
 const form = 'mt-8 flex flex-col gap-4'
 const errorText = 'text-sm text-red-500 text-center'
-const footer = 'mt-8 text-center text-sm text-gray-500'
+const footer = 'mt-8 text-center text-sm text-text/60'
 const footerLink = 'text-brand font-semibold hover:underline'
 const riseWrap = 'auth-rise'
 const footerRise = `auth-rise ${footer}`
