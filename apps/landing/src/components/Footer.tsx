@@ -1,5 +1,3 @@
-import Image from 'next/image'
-
 import { CADASTRO_URL } from '@/config'
 
 const columns = [
@@ -37,9 +35,7 @@ export function Footer() {
     <footer>
       <div className="footer-top">
         <div className="footer-brand">
-          <div className="logo">
-            <Image src="/logo.svg" alt="Nino Delivery" width={155} height={50} />
-          </div>
+          <span className="footer-logo">nino</span>
           <p>Delivery com a sua cara, sem comissão abusiva.</p>
         </div>
 
