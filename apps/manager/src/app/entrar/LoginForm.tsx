@@ -74,7 +74,7 @@ export function LoginForm() {
         {errors.root && <p className={errorText}>{errors.root.message}</p>}
 
         <div className={riseWrap} style={rise(280)}>
-          <Button type="submit" loading={isSubmitting} className={submit}>
+          <Button type="submit" loading={isSubmitting} className={submit} loadingIndicator='dots'>
             Entrar
           </Button>
         </div>

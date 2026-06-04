@@ -84,7 +84,7 @@ export function CompanyStep({ responsible }: CompanyStepProps) {
         {errors.root && <p className={errorText}>{errors.root.message}</p>}
 
         <div className={riseWrap} style={rise(300)}>
-          <Button type="submit" loading={isSubmitting} className={submit}>
+          <Button type="submit" loading={isSubmitting} className={submit} loadingIndicator='dots'>
             Concluir cadastro
           </Button>
         </div>

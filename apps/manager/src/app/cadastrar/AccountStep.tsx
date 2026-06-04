@@ -142,7 +142,7 @@ export function AccountStep({ onNext }: AccountStepProps) {
         {errors.root && <p className={errorText}>{errors.root.message}</p>}
 
         <div className={riseWrap} style={rise(480)}>
-          <Button type="submit" loading={isSubmitting} className={submit}>
+          <Button type="submit" loading={isSubmitting} className={submit} loadingIndicator='dots'>
             Continuar
           </Button>
         </div>
