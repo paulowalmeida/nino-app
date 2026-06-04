@@ -3,8 +3,6 @@
 import { useState } from 'react'
 import Image from 'next/image'
 
-import { CADASTRO_URL } from '@/config'
-
 const navLinks = [
   { href: '#como-funciona', label: 'Como funciona' },
   { href: '#para-restaurantes', label: 'Para restaurantes' },
@@ -75,11 +73,8 @@ export function Header() {
             {link.label}
           </a>
         ))}
-        <a href={gestorUrl} className="mobile-login">
-          Entrar no gestor →
-        </a>
-        <a href={CADASTRO_URL} className="mobile-cta" onClick={closeMenu}>
-          Criar minha loja
+        <a href={gestorUrl} className="mobile-login" onClick={closeMenu}>
+          Entrar
         </a>
       </div>
     </>

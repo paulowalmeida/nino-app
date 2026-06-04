@@ -1,13 +1,9 @@
 /* ---- Componentes portados do index original (styles inline → classes) ---- */
 
-/* Itens de destaque do menu mobile */
+/* Item de destaque do menu mobile (Entrar) */
 .mobile-login {
   color: var(--warm) !important;
   font-weight: 700;
-}
-.mobile-cta {
-  color: var(--warm) !important;
-  font-weight: 600;
   text-decoration: none;
 }
 

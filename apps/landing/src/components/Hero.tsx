@@ -7,7 +7,7 @@ import { CADASTRO_URL } from '@/config'
 const stats = [
   { value: '0%', label: 'de comissão' },
   { value: '48h', label: 'pra estar no ar' },
-  { value: '∞', label: 'pedidos por mês' },
+  { value: '100%', label: 'da sua marca' },
 ]
 
 const chips = [
