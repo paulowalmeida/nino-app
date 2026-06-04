@@ -7,9 +7,11 @@ const benefits = [
 ]
 
 const billing = [
-  { name: 'iFood', model: '12–23% por pedido' },
   { name: 'Anota AI', model: 'R$300–400/mês' },
   { name: 'Brendi', model: '4% do faturamento' },
+  { name: 'Cardápio Web', model: 'Mensal + módulos pagos' },
+  { name: 'Goomer', model: 'Limita a 30 pedidos/mês' },
+  { name: 'Wabiz', model: 'Preço só sob demanda' },
 ]
 
 export function ParaRestaurantes() {
