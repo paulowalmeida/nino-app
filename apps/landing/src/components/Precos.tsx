@@ -4,49 +4,65 @@ import { CADASTRO_URL } from '@/config'
 
 const plans = [
   {
-    tag: 'Iniciante',
-    price: 'R$97',
+    tag: 'Básico',
+    price: 'R$89,90',
     period: '/mês',
     small: false,
-    desc: 'Ideal pra quem tá começando no delivery próprio.',
+    desc: 'Pra quem está começando o delivery próprio.',
     features: [
-      'Até 200 pedidos/mês',
-      '1 unidade',
-      'App + site próprio',
-      'Suporte por email',
+      '400 vendas por mês',
+      'Site próprio com cardápio e pedidos',
+      'WhatsApp bot que atende sozinho',
+      'Gestão de entregadores',
+      'Suporte por email (até 24h úteis)',
     ],
     cta: 'Criar minha loja',
     featured: false,
   },
   {
-    tag: 'Profissional',
-    price: 'R$197',
+    tag: 'Padrão',
+    price: 'R$199',
     period: '/mês',
     small: false,
-    desc: 'Pra quem quer crescer de verdade.',
+    desc: 'Pra crescer com a sua própria marca.',
     features: [
-      'Pedidos ilimitados',
-      'Até 3 unidades',
-      'App + site + QR Code',
-      'Cupons e fidelidade',
-      'Suporte WhatsApp',
+      'Tudo do Básico',
+      'Vendas ilimitadas',
+      'App mobile próprio',
+      'Domínio próprio',
+      'Relatórios e fidelidade',
+      'Suporte por WhatsApp',
     ],
     cta: 'Criar minha loja',
     featured: true,
   },
   {
-    tag: 'Rede',
+    tag: 'Pro',
+    price: 'R$299',
+    period: '/mês',
+    small: false,
+    desc: 'Pra escalar e operar várias lojas.',
+    features: [
+      'Tudo do Padrão',
+      'Multi-loja',
+      'Integrações (PDV e fiscal)',
+      'Suporte prioritário',
+    ],
+    cta: 'Criar minha loja',
+    featured: false,
+  },
+  {
+    tag: 'Custom',
     price: 'Sob\nconsulta',
     period: '',
     small: true,
-    desc: 'Para redes com 4+ unidades e volume alto.',
+    desc: 'Pra redes e franquias com alto volume.',
     features: [
-      'Unidades ilimitadas',
-      'API e integrações',
+      'Lojas ilimitadas',
       'Gerente de conta dedicado',
       'SLA garantido',
     ],
-    cta: 'Começar agora',
+    cta: 'Falar com vendas',
     featured: false,
   },
 ]
@@ -96,7 +112,8 @@ export function Precos() {
           ))}
         </div>
         <p className="pricing-fine">
-          🔒 30 dias grátis em todos os planos. Sem cartão de crédito.
+          🔒 30 dias grátis nos planos Básico, Padrão e Pro. Sem cartão de
+          crédito.
         </p>
       </div>
     </section>

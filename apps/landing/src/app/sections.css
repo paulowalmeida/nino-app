@@ -196,14 +196,14 @@
 }
 .pricing-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 2rem;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.25rem;
 }
 .plan {
   background: #fff;
   border: 1px solid #dee2e6;
-  border-radius: 24px;
-  padding: 2.5rem;
+  border-radius: 20px;
+  padding: 2rem 1.5rem;
   text-align: left;
   display: flex;
   flex-direction: column;
@@ -212,7 +212,6 @@
   background: #212529;
   border: 2px solid #212529;
   position: relative;
-  transform: scale(1.05);
 }
 .plan-tag {
   font-size: 0.8rem;
@@ -238,7 +237,7 @@
 }
 .plan-price {
   font-family: var(--font-display);
-  font-size: 3rem;
+  font-size: 2.4rem;
   font-weight: 900;
   color: var(--dark);
 }
@@ -399,6 +398,15 @@
   .how-grid,
   .pricing-grid {
     grid-template-columns: 1fr;
+  }
+}
+
+/* tablets: planos em 2 colunas (4 ficam estreitos demais) */
+@media (max-width: 1024px) and (min-width: 769px) {
+  .pricing-grid {
+    grid-template-columns: repeat(2, 1fr);
+    max-width: 640px;
+    margin: 0 auto;
   }
   .how-line {
     display: none;
