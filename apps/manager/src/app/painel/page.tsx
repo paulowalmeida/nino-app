@@ -1,8 +1,5 @@
 'use client'
 
-import { useEffect } from 'react'
-import { useRouter } from 'next/navigation'
-
 import { FullScreenLoader } from '@/components/FullScreenLoader'
 import { LogoutButton } from '@/components/LogoutButton'
 import { NinoLogo } from '@/components/NinoLogo'
@@ -18,14 +15,9 @@ const title = 'font-display text-4xl font-extrabold tracking-tight text-gray-900
 const subtitle = 'mt-3 max-w-md text-base text-gray-500'
 
 export default function Page() {
-  const router = useRouter()
   const { user, loading } = useAuthUser()
 
-  useEffect(() => {
-    if (user && !user.companyId) router.replace('/onboarding')
-  }, [user, router])
-
-  if (loading || !user || !user.companyId) return <FullScreenLoader />
+  if (loading || !user) return <FullScreenLoader />
 
   return (
     <div className={page}>
