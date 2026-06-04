@@ -1,7 +1,7 @@
 const benefits = [
-  'App e site próprios com a sua marca — não só um cardápio',
-  'Seus entregadores na sua operação, do seu jeito',
-  'Multi-loja sem taxa por unidade extra',
+  'Personalize seu endereço web e site com a sua marca — não só um cardápio',
+  'Gerencie seus entregadores e colaboradores, do seu jeito',
+  'Independente — sua base de clientes é sua, não de um marketplace',
   'Pedidos pelo app, site e WhatsApp num lugar só',
   'Mensalidade fixa — sem comissão, sem % do seu faturamento',
 ]
@@ -24,8 +24,8 @@ export function ParaRestaurantes() {
           </h2>
           <p className="compare-lead">
             Os outros cobram por pedido, por loja extra ou uma fatia do seu
-            faturamento. O Nino é uma mensalidade fixa — com app, site, WhatsApp
-            e os seus entregadores no mesmo pacote.
+            faturamento. No Nino a mensalidade é fixa por plano — com app, site,
+            WhatsApp e os seus entregadores no mesmo pacote.
           </p>
           <div className="compare-list">
             {benefits.map((benefit) => (
