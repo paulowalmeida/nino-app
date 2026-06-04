@@ -51,7 +51,7 @@ export function ParaRestaurantes() {
             ))}
             <div className="compare-row nino">
               <span>Nino</span>
-              <span className="rate">Fixo · Sem Comisão </span>
+              <span className="rate">Fixo · Sem Comissão</span>
             </div>
           </div>
         </div>
