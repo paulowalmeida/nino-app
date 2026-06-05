@@ -1,0 +1,1 @@
+export { ParaRestaurantes } from './ParaRestaurantes'

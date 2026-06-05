@@ -1,0 +1,130 @@
+/*
+ * Como funciona — trilha de 3 passos com círculos numerados laranja
+ * conectados por uma linha, sobre fundo cream quente.
+ */
+
+.section {
+  position: relative;
+  padding: 6.5rem 2.5rem;
+  background: #fff3e9;
+  overflow: hidden;
+}
+
+.inner {
+  max-width: 1040px;
+  margin: 0 auto;
+}
+
+.header {
+  text-align: center;
+  max-width: 540px;
+  margin: 0 auto 4rem;
+}
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-sans);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #e8540c;
+  margin-bottom: 1rem;
+}
+.eyebrow::before,
+.eyebrow::after {
+  content: '';
+  width: 22px;
+  height: 2px;
+  background: #ff6b00;
+  border-radius: 2px;
+}
+.title {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(2rem, 3.6vw, 2.8rem);
+  line-height: 1.08;
+  letter-spacing: -0.02em;
+  color: #1a1206;
+}
+.subtitle {
+  margin-top: 0.9rem;
+  font-size: 1.05rem;
+  color: #6b5d4d;
+}
+
+.track {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+}
+/* linha conectora entre os círculos */
+.track::before {
+  content: '';
+  position: absolute;
+  top: 36px;
+  left: 16%;
+  right: 16%;
+  height: 2px;
+  background: repeating-linear-gradient(
+    90deg,
+    rgba(255, 107, 0, 0.4) 0 8px,
+    transparent 8px 16px
+  );
+  z-index: 0;
+}
+
+.step {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+.num {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 1.7rem;
+  color: #fff;
+  background: linear-gradient(150deg, #ff8a33, #ec5a0e);
+  box-shadow: 0 12px 26px rgba(232, 84, 12, 0.32);
+  border: 4px solid #fff3e9;
+  margin-bottom: 1.5rem;
+}
+.stepTitle {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.25rem;
+  color: #1a1206;
+  margin-bottom: 0.6rem;
+}
+.stepText {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: #6b5d4d;
+  max-width: 17rem;
+}
+
+@media (max-width: 820px) {
+  .section {
+    padding: 4rem 1.25rem;
+  }
+  .track {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+    max-width: 22rem;
+    margin: 0 auto;
+  }
+  .track::before {
+    display: none;
+  }
+}
