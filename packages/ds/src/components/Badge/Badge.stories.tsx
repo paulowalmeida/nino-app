@@ -9,7 +9,7 @@ const meta: Meta<typeof Badge> = {
   argTypes: {
     variant: {
       control: 'select',
-      options: ['default', 'success', 'error', 'warning', 'info'],
+      options: ['default', 'brand', 'success', 'error', 'warning', 'info'],
     },
     size: { control: 'select', options: ['sm', 'md'] },
   },
@@ -26,6 +26,7 @@ export const Variants: Story = {
   render: () => (
     <div className="flex flex-wrap gap-2">
       <Badge variant="default">Default</Badge>
+      <Badge variant="brand">Novo</Badge>
       <Badge variant="success">Active</Badge>
       <Badge variant="error">Cancelled</Badge>
       <Badge variant="warning">Pending</Badge>

@@ -9,8 +9,21 @@ window.HTMLElement.prototype.scrollIntoView = () => {}
 window.HTMLElement.prototype.scrollTo = () => {}
 
 // jsdom does not implement ResizeObserver (used by @radix-ui/react-tooltip)
-global.ResizeObserver = class ResizeObserver {
+globalThis.ResizeObserver = class ResizeObserver {
   observe() {}
   unobserve() {}
   disconnect() {}
 }
+
+// jsdom does not implement IntersectionObserver (used by Ark ScrollArea)
+globalThis.IntersectionObserver = class IntersectionObserver {
+  root = null
+  rootMargin = ''
+  thresholds = []
+  observe() {}
+  unobserve() {}
+  disconnect() {}
+  takeRecords() {
+    return []
+  }
+} as unknown as typeof IntersectionObserver

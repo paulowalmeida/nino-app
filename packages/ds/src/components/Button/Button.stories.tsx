@@ -9,7 +9,14 @@ const meta: Meta<typeof Button> = {
   argTypes: {
     variant: {
       control: 'select',
-      options: ['primary', 'secondary', 'outline', 'ghost'],
+      options: [
+        'primary',
+        'secondary',
+        'outline',
+        'ghost',
+        'inverse',
+        'inverseOutline',
+      ],
     },
     size: { control: 'select', options: ['sm', 'md', 'lg'] },
     loading: { control: 'boolean' },
@@ -76,6 +83,19 @@ export const AllVariants: Story = {
       <Button variant="secondary">Secondary</Button>
       <Button variant="outline">Outline</Button>
       <Button variant="ghost">Ghost</Button>
+    </div>
+  ),
+}
+
+/**
+ * Variantes para superfícies de marca (ex.: hero laranja da landing).
+ * Renderizadas sobre fundo brand para fazer sentido.
+ */
+export const OnBrandSurface: Story = {
+  render: () => (
+    <div className="flex flex-wrap items-center gap-3 rounded-2xl bg-brand p-8">
+      <Button variant="inverse">Criar minha loja grátis</Button>
+      <Button variant="inverseOutline">Entrar</Button>
     </div>
   ),
 }
