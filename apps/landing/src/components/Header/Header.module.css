@@ -1,0 +1,227 @@
+/*
+ * Header fixo (sticky) da landing.
+ * Transparente sobre o hero laranja; ao rolar vira barra laranja
+ * sólida, mantendo mascote + texto brancos legíveis.
+ * Classes escopadas via CSS Module — sem prefixos defensivos.
+ */
+
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  padding: 1.1rem 0;
+  background: transparent;
+  transition: padding 0.3s ease;
+}
+
+/*
+ * Fundo laranja num pseudo-elemento, com a opacidade dirigida pelo
+ * scroll via CSS puro (animation-timeline). Não depende de JS, então
+ * não há flash de "fundo invisível" antes da hidratação. O `.scrolled`
+ * (via JS) é só o fallback para navegadores sem scroll-driven animations.
+ */
+.header::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(165deg, #ff7e1f 0%, #ec5a0e 100%);
+  box-shadow: 0 6px 24px rgba(120, 40, 0, 0.22);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+.scrolled::before {
+  opacity: 1;
+}
+.scrolled {
+  padding: 0.55rem 0;
+}
+
+@supports (animation-timeline: scroll()) {
+  .header::before {
+    animation: header-fill linear both;
+    animation-timeline: scroll(root);
+    animation-range: 16px 72px;
+  }
+}
+@keyframes header-fill {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  text-decoration: none;
+}
+.mascot {
+  width: 40px;
+  height: 40px;
+  display: block;
+  filter: drop-shadow(0 2px 6px rgba(120, 40, 0, 0.2));
+  transition:
+    width 0.3s ease,
+    height 0.3s ease;
+}
+.scrolled .mascot {
+  width: 34px;
+  height: 34px;
+}
+.wordmark {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 1.7rem;
+  letter-spacing: -0.5px;
+  color: #fff;
+}
+.wordmark i {
+  color: #ffebd6;
+  font-style: normal;
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  /* neutraliza o `nav { position: fixed; background }` global (landing.css) */
+  position: static;
+  inset: auto;
+  padding: 0;
+  background: none;
+  backdrop-filter: none;
+  border: none;
+  z-index: auto;
+}
+.navLink {
+  color: rgba(255, 255, 255, 0.85);
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 0.94rem;
+  transition: color 0.2s;
+}
+.navLink:hover {
+  color: #fff;
+}
+.enterButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  color: #fff;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 0.94rem;
+  border: 1.5px solid rgba(255, 255, 255, 0.55);
+  padding: 0.5rem 1.2rem;
+  border-radius: 100px;
+  transition:
+    background 0.2s,
+    color 0.2s,
+    border-color 0.2s;
+}
+.enterButton:hover {
+  background: #fff;
+  color: #e8540c;
+  border-color: #fff;
+}
+.enterButton svg {
+  width: 16px;
+  height: 16px;
+}
+
+/* hamburger (mobile) */
+.burger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  cursor: pointer;
+  padding: 4px;
+  background: none;
+  border: none;
+}
+.burger span {
+  width: 24px;
+  height: 2px;
+  background: #fff;
+  border-radius: 2px;
+  transition: all 0.3s ease;
+  transform-origin: center;
+}
+.burger.open span:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+}
+.burger.open span:nth-child(2) {
+  opacity: 0;
+  transform: scaleX(0);
+}
+.burger.open span:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
+}
+
+/* menu mobile (overlay) */
+.mobileMenu {
+  position: fixed;
+  inset: 0;
+  background: linear-gradient(165deg, #ff7e1f 0%, #ec5a0e 100%);
+  z-index: 101;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1.75rem;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(-16px);
+  transition:
+    opacity 0.3s ease,
+    transform 0.3s ease;
+}
+.mobileMenu.open {
+  opacity: 1;
+  pointer-events: all;
+  transform: translateY(0);
+}
+.mobileMenu a {
+  font-family: var(--font-display);
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #fff;
+  text-decoration: none;
+}
+.mobileClose {
+  position: absolute;
+  top: 1.25rem;
+  right: 1.25rem;
+  background: rgba(255, 255, 255, 0.18);
+  border: none;
+  color: #fff;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  font-size: 1.1rem;
+  cursor: pointer;
+}
+
+@media (max-width: 900px) {
+  .nav {
+    display: none;
+  }
+  .burger {
+    display: flex;
+  }
+}

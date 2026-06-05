@@ -1,3 +1,5 @@
+import styles from './ParaRestaurantes.module.css'
+
 const benefits = [
   'Personalize seu endereço web e site com a sua marca — não só um cardápio',
   'Gerencie seus entregadores e colaboradores, do seu jeito',
@@ -16,45 +18,43 @@ const billing = [
 
 export function ParaRestaurantes() {
   return (
-    <section id="para-restaurantes" className="compare">
-      <div className="compare-inner">
+    <section id="para-restaurantes" className={styles.section}>
+      <div className={styles.inner}>
         <div>
-          <h2>
-            Mais completo.
-            <br />
-            <span>Mais justo.</span>
+          <span className={styles.eyebrow}>O Nino vs o mercado</span>
+          <h2 className={styles.title}>
+            Mais completo.{' '}
+            <span className={styles.titleAccent}>Mais justo.</span>
           </h2>
-          <p className="compare-lead">
+          <p className={styles.lead}>
             Os outros cobram por pedido, por loja extra ou uma fatia do seu
             faturamento. No Nino a mensalidade é fixa por plano — com app, site,
             WhatsApp e os seus entregadores no mesmo pacote.
           </p>
-          <div className="compare-list">
+          <div className={styles.list}>
             {benefits.map((benefit) => (
-              <div key={benefit} className="compare-item">
-                <div className="compare-check">✓</div>
+              <div key={benefit} className={styles.item}>
+                <span className={styles.check}>✓</span>
                 <span>{benefit}</span>
               </div>
             ))}
           </div>
         </div>
 
-        <div className="compare-card">
-          <div className="compare-card-head">
+        <div className={styles.card}>
+          <div className={styles.cardHead}>
             <span>Plataforma</span>
             <span>Como cobram</span>
           </div>
-          <div className="compare-rows">
-            {billing.map((item) => (
-              <div key={item.name} className="compare-row">
-                <span>{item.name}</span>
-                <span className="rate">{item.model}</span>
-              </div>
-            ))}
-            <div className="compare-row nino">
-              <span>Nino</span>
-              <span className="rate">Fixo · Sem Comissão</span>
+          {billing.map((item) => (
+            <div key={item.name} className={styles.row}>
+              <span>{item.name}</span>
+              <span className={styles.rate}>{item.model}</span>
             </div>
+          ))}
+          <div className={`${styles.row} ${styles.nino}`}>
+            <span className={styles.ninoName}>Nino</span>
+            <span className={styles.rate}>Fixo · Sem comissão</span>
           </div>
         </div>
       </div>

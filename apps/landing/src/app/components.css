@@ -84,7 +84,10 @@ a.cta-btn {
   font-weight: 600;
   font-size: 0.9rem;
   cursor: pointer;
-  transition: background 0.2s, border-color 0.2s, color 0.2s;
+  transition:
+    background 0.2s,
+    border-color 0.2s,
+    color 0.2s;
 }
 .demo-tab.active {
   border-color: var(--warm);
@@ -109,4 +112,3 @@ a.cta-btn {
     font-size: 1.8rem;
   }
 }
-

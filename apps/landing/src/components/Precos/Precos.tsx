@@ -1,5 +1,7 @@
 import { Fragment } from 'react'
 
+import styles from './Precos.module.css'
+
 import { CADASTRO_URL } from '@/config'
 
 const plans = [
@@ -69,51 +71,55 @@ const plans = [
 
 export function Precos() {
   return (
-    <section id="precos" className="pricing">
-      <div className="pricing-inner">
-        <div className="pricing-head">
-          <h2>
-            Preço simples,
-            <br />
-            resultado real
-          </h2>
-          <p className="pricing-lead">
+    <section id="precos" className={styles.section}>
+      <div className={styles.inner}>
+        <div className={styles.head}>
+          <span className={styles.eyebrow}>Planos e preços</span>
+          <h2 className={styles.title}>Preço simples, resultado real</h2>
+          <p className={styles.lead}>
             Sem taxa por pedido. Sem percentual sobre venda. Sem letras miúdas.
           </p>
         </div>
-        <div className="pricing-grid">
+
+        <div className={styles.grid}>
           {plans.map((plan) => (
             <div
               key={plan.tag}
-              className={`plan${plan.featured ? ' featured' : ''}`}
+              className={`${styles.plan} ${plan.featured ? styles.featured : ''}`}
             >
-              {plan.featured && <div className="plan-badge">MAIS POPULAR</div>}
-              <p className="plan-tag">{plan.tag}</p>
-              <div className={`plan-price${plan.small ? ' small' : ''}`}>
+              {plan.featured && (
+                <span className={styles.badge}>MAIS POPULAR</span>
+              )}
+              <p className={styles.tag}>{plan.tag}</p>
+              <div
+                className={`${styles.price} ${plan.small ? styles.priceSmall : ''}`}
+              >
                 {plan.price.split('\n').map((line, index) => (
                   <Fragment key={line}>
                     {index > 0 && <br />}
                     {line}
                   </Fragment>
                 ))}
-                {plan.period && <span>{plan.period}</span>}
+                {plan.period && (
+                  <span className={styles.period}>{plan.period}</span>
+                )}
               </div>
-              <p className="plan-desc">{plan.desc}</p>
-              <div className="plan-features">
+              <p className={styles.desc}>{plan.desc}</p>
+              <div className={styles.features}>
                 {plan.features.map((feature) => (
-                  <div key={feature}>✓ {feature}</div>
+                  <span key={feature} className={styles.feature}>
+                    {feature}
+                  </span>
                 ))}
               </div>
-              <a
-                className={`plan-btn${plan.featured ? ' featured' : ''}`}
-                href={CADASTRO_URL}
-              >
+              <a className={styles.btn} href={CADASTRO_URL}>
                 {plan.cta}
               </a>
             </div>
           ))}
         </div>
-        <p className="pricing-fine">
+
+        <p className={styles.fine}>
           🔒 30 dias grátis nos planos Básico, Padrão e Pro. Sem cartão de
           crédito.
         </p>
