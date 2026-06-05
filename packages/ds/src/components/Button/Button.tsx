@@ -16,6 +16,10 @@ const variantClasses: Record<ButtonVariant, string> = {
   outline:
     'border border-gray-300 text-gray-900 bg-transparent hover:bg-gray-50 active:bg-gray-100',
   ghost: 'text-gray-700 bg-transparent hover:bg-gray-100 active:bg-gray-200',
+  inverse:
+    'bg-white text-brand-strong hover:bg-cream active:bg-cream-deep shadow-brand-glow',
+  inverseOutline:
+    'border-[1.5px] border-white/55 text-white bg-transparent hover:bg-white hover:text-brand-strong hover:border-white',
 }
 
 const sizeClasses: Record<ButtonSize, string> = {

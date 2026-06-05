@@ -4,7 +4,7 @@ import { mergeClasses } from '@ds/lib/mergeClasses'
 
 import { CardProps, CardVariant } from './Card.types'
 
-const baseCard = 'rounded-lg bg-white p-4'
+const baseCard = 'rounded-card bg-white p-4'
 
 const variantClasses: Record<CardVariant, string> = {
   default: 'border border-gray-200 shadow-sm',

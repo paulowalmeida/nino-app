@@ -10,7 +10,10 @@ import './preview.css'
 // mesma store e renderiza todos os toasts. Na Docs page há uma story por bloco,
 // então N containers = toasts duplicados. Montamos UM container só para todo o
 // preview do Storybook, fora da renderização das stories.
-if (typeof document !== 'undefined' && !document.getElementById('sb-toast-root')) {
+if (
+  typeof document !== 'undefined' &&
+  !document.getElementById('sb-toast-root')
+) {
   const el = document.createElement('div')
   el.id = 'sb-toast-root'
   document.body.appendChild(el)
@@ -38,26 +41,36 @@ const preview: Preview = {
             'Breadcrumb',
             'Button',
             'Card',
+            'Carousel',
             'Checkbox',
+            'Clipboard',
+            'Collapsible',
+            'ColorPicker',
             'Combobox',
             'DatePicker',
             'Dialog',
             'Drawer',
             'FileUpload',
             'FormField',
+            'HoverCard',
             'Input',
             'Label',
+            'Listbox',
             'LoadingDots',
             'Menu',
             'Modal',
             'NumberInput',
             'OTPInput',
+            'PageHeader',
             'Pagination',
+            'PasswordInput',
             'Popover',
             'ProgressCircle',
             'ProgressLine',
+            'QRCode',
             'RadioGroup',
             'Rating',
+            'ScrollArea',
             'Select',
             'Separator',
             'Skeleton',
