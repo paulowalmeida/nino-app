@@ -4,7 +4,7 @@ import type {
   RegisterRequest,
   User,
 } from '@nino/lib'
-import { del, get, post } from '@nino/lib'
+import { get, post } from '@nino/lib'
 
 import { getCookie, removeCookie, setCookie } from '@/lib/cookies'
 import { httpConfig } from '@/lib/http'
@@ -31,7 +31,7 @@ export function register(data: RegisterRequest): Promise<{ user: User }> {
 }
 
 export function logout(): Promise<void> {
-  return del<void>(httpConfig(() => getCookie('refreshToken')), '/auth/logout')
+  return post<void>(httpConfig(() => getCookie('refreshToken')), '/auth/logout')
 }
 
 export function me(): Promise<User> {
