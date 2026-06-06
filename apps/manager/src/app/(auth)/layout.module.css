@@ -157,6 +157,12 @@
   @apply shadow-brand/10 backdrop-blur-md sm:p-10;
 }
 
-.mobileLogo {
-  @apply mb-10 flex justify-center lg:hidden;
+.mobileBrand {
+  @apply mb-9 flex justify-center lg:hidden;
+}
+
+/* mascote ocupa o slot do "n" — maior que o círculo por ter
+   margem interna no viewBox */
+.mobileMascot {
+  @apply h-20 w-20 drop-shadow-lg;
 }

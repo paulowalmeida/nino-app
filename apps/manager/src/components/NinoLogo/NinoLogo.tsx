@@ -26,15 +26,21 @@ export function NinoLogo({
   className,
   tone = "dark",
   size = "lg",
+  mark,
 }: NinoLogoProps) {
   const s = sizes[size]
   const labelColor = tone === "light" ? styles.labelLight : styles.labelDark
+  const markCls = mark ? styles.mark : `${styles.mark} ${s.mark}`
 
   return (
     <div className={`${styles.root} ${className ?? ""}`}>
-      <span className={`${styles.mark} ${s.mark}`}>
-        <span className={styles.markBg} />
-        <span className={`${styles.letter} ${s.letter}`}>n</span>
+      <span className={markCls}>
+        {mark ?? (
+          <>
+            <span className={styles.markBg} />
+            <span className={`${styles.letter} ${s.letter}`}>n</span>
+          </>
+        )}
       </span>
       <span className={styles.stack}>
         <span className={`${styles.wordmark} ${s.wordmark}`}>nino</span>

@@ -8,6 +8,7 @@ import { NinoLogo } from "@/components/NinoLogo"
 const brandPanel = `${styles.brandPanel} ${styles.dotGrid} ${styles.grain}`
 const glowTop = `${styles.glowTop} ${styles.glowPulse}`
 const mascot = `${styles.mascot} ${styles.mascotFloat}`
+const mobileMascot = `${styles.mobileMascot} ${styles.mascotFloat}`
 const formPanel = `${styles.formPanel} ${styles.warmBackdrop} ${styles.grain}`
 
 export default function AuthLayout({ children }: { children: ReactNode }) {
@@ -43,8 +44,11 @@ export default function AuthLayout({ children }: { children: ReactNode }) {
       <main className={formPanel}>
         <div className={styles.formGlow} />
         <div className={styles.formInner}>
-          <div className={styles.mobileLogo}>
-            <NinoLogo />
+          <div className={styles.mobileBrand}>
+            <NinoLogo
+              size="md"
+              mark={<NinoMascot className={mobileMascot} />}
+            />
           </div>
           {children}
         </div>
