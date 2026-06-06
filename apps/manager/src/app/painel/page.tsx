@@ -47,11 +47,22 @@ export default function Page() {
     <div className={styles.page}>
       <header className={styles.header}>
         <div className={styles.headerGlow} />
-        <p className={styles.greeting}>
-          {getGreeting(user.timezone)}
-        </p>
-        <h1 className={styles.title}>{firstName}</h1>
-        <p className={styles.date}>{getDateLabel(user.timezone)}</p>
+        <div className={styles.headerText}>
+          <p className={styles.greeting}>
+            {getGreeting(user.timezone)}
+          </p>
+          <h1 className={styles.title}>{firstName}</h1>
+          <p className={styles.date}>{getDateLabel(user.timezone)}</p>
+        </div>
+        {/* ilustração decorativa — SVG não passa pela otimização
+            do next/image, então <img> é apropriado aqui */}
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src="/mascot-manager.svg"
+          alt=""
+          aria-hidden="true"
+          className={styles.mascot}
+        />
       </header>
 
       <section className={styles.cards}>
