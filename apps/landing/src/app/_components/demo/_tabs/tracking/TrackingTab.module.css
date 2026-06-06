@@ -1,0 +1,71 @@
+@reference '../../../../theme.css';
+.orderHeader {
+  @apply px-6 py-3.5 border-b border-gray-100;
+  @apply flex justify-between items-center;
+}
+
+.orderTitle {
+  @apply font-extrabold text-[0.95rem] text-gray-900;
+}
+
+.orderSubtitle {
+  @apply text-[0.7rem] text-gray-500 mt-0.5;
+}
+
+.statusBadge {
+  @apply bg-orange-50 text-brand text-[0.7rem] font-bold;
+  @apply px-3 py-1 rounded-full border border-orange-200;
+  @apply flex items-center gap-1.5;
+}
+
+.statusPulseDot {
+  @apply w-1.5 h-1.5 bg-brand rounded-full inline-block animate-pulse;
+}
+
+.mapContainer {
+  @apply h-[220px] relative overflow-hidden;
+}
+
+.mapImage {
+  @apply block w-full h-full object-cover;
+}
+
+.courierSection {
+  @apply px-6 py-4 bg-gray-50 border-b border-gray-100;
+  @apply flex items-center justify-between;
+}
+
+.courierProfile {
+  @apply flex items-center gap-3;
+}
+
+.courierAvatar {
+  @apply w-10 h-10 bg-gray-200 rounded-full;
+  @apply flex items-center justify-center text-xl;
+}
+
+.courierName {
+  @apply font-bold text-[0.85rem] text-gray-900;
+}
+
+.courierDetails {
+  @apply text-[0.7rem] text-gray-500;
+}
+
+.courierContactActions {
+  @apply flex gap-2;
+}
+
+.contactButtonSecondary {
+  @apply w-9 h-9 bg-gray-100 border border-gray-200 rounded-xl;
+  @apply flex items-center justify-center text-base cursor-pointer;
+}
+
+.contactButtonPrimary {
+  @apply w-9 h-9 bg-brand border-none rounded-xl;
+  @apply flex items-center justify-center text-base cursor-pointer;
+}
+
+.deliveryTimeline {
+  @apply px-6 py-5 flex flex-col;
+}

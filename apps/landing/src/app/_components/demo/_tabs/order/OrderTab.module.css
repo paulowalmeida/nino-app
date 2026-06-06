@@ -1,0 +1,122 @@
+@reference '../../../../theme.css';
+.storeHeader {
+  @apply flex items-center gap-4 px-6 py-3.5;
+  @apply border-b border-gray-100;
+}
+
+.storeLogo {
+  @apply w-10 h-10 bg-gray-100 rounded-xl;
+  @apply flex items-center justify-center text-xl shrink-0;
+}
+
+.storeDetails {
+  @apply flex-1 min-w-0;
+}
+
+.storeName {
+  @apply font-extrabold text-[0.95rem] text-gray-900;
+}
+
+.storeMetaInfo {
+  @apply flex items-center gap-2 text-[0.7rem] text-gray-500 mt-0.5;
+}
+
+.storeRating {
+  @apply text-brand font-semibold;
+}
+
+.searchButton {
+  @apply bg-gray-100 px-4 py-1.5 rounded-lg text-gray-600;
+  @apply text-[0.78rem] font-medium whitespace-nowrap shrink-0;
+}
+
+.searchBarWrapper {
+  @apply px-6 py-3.5 bg-gray-50 border-b border-gray-100;
+}
+
+.searchInputField {
+  @apply bg-white border border-gray-200 rounded-xl;
+  @apply px-4 py-2 flex items-center gap-2;
+}
+
+.searchIcon {
+  @apply text-gray-300 text-[0.85rem];
+}
+
+.searchPlaceholder {
+  @apply text-[0.82rem] text-gray-400;
+}
+
+.promo {
+  @apply mx-6 my-4 bg-orange-50 border border-orange-200;
+  @apply rounded-xl p-3.5 flex justify-between items-center;
+}
+
+.promoDetails {
+  @apply flex items-center gap-2.5;
+}
+
+.promoIcon {
+  @apply text-xl;
+}
+
+.promoTitle {
+  @apply font-bold text-[0.82rem] text-gray-900;
+}
+
+.promoSubtitle {
+  @apply text-[0.7rem] text-gray-500 mt-0.5;
+}
+
+.promoActivateButton {
+  @apply bg-brand text-white text-[0.7rem] font-bold;
+  @apply px-2.5 py-1 rounded-md whitespace-nowrap shrink-0;
+}
+
+.categorySection {
+  @apply px-6 pb-3;
+}
+
+.categoryScrollList {
+  @apply flex gap-2 overflow-x-auto pb-1;
+}
+
+.categoryPill {
+  @apply shrink-0 px-4 py-1.5 rounded-full;
+  @apply text-[0.75rem] font-medium bg-gray-100 text-gray-600;
+}
+
+.categoryPillActive {
+  @apply bg-brand text-white font-bold;
+}
+
+.menuSectionTitle {
+  @apply px-6 font-extrabold text-[0.82rem] text-gray-900;
+  @apply mb-3 flex items-center gap-1;
+}
+
+.menuItemList {
+  @apply px-6 pb-4 flex flex-col;
+}
+
+.checkoutBar {
+  @apply bg-brand text-white px-6 py-4;
+  @apply flex justify-between items-center cursor-pointer;
+}
+
+.checkoutBarLeft {
+  @apply flex items-center gap-3;
+}
+
+.cartItemCount {
+  @apply bg-white/25 px-2.5 py-0.5 rounded-md;
+  @apply text-[0.78rem] font-bold;
+}
+
+.viewCartLabel {
+  @apply font-semibold text-[0.9rem];
+}
+
+.checkoutTotal {
+  @apply font-extrabold text-[0.9rem];
+}

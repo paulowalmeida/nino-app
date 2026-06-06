@@ -1,0 +1,66 @@
+@reference '../../theme.css';
+.section {
+  @apply relative overflow-hidden bg-surface-sunk py-[6.5rem] px-10;
+}
+
+.inner {
+  @apply max-w-[1140px] mx-auto;
+}
+
+.head {
+  @apply text-center max-w-[560px] mx-auto mb-14;
+}
+
+.eyebrow {
+  @apply inline-flex items-center gap-2 mb-4;
+  @apply [font-family:var(--font-sans)] text-[0.78rem] font-bold;
+  @apply tracking-[0.12em] uppercase text-brand-strong;
+}
+
+.eyebrow::before,
+.eyebrow::after {
+  content: "";
+  @apply inline-block w-[22px] h-0.5 bg-brand rounded-sm;
+}
+
+.title {
+  @apply [font-family:var(--font-display)] font-extrabold;
+  @apply text-[clamp(2rem,3.6vw,2.8rem)] leading-[1.08];
+  @apply tracking-[-0.02em] text-ink;
+}
+
+.lead {
+  @apply mt-[0.9rem] text-[1.05rem] text-muted;
+}
+
+.grid {
+  @apply grid grid-cols-4 gap-[1.1rem] items-stretch;
+}
+
+.fine {
+  @apply mt-10 text-center text-[0.88rem] text-muted;
+}
+
+@media (max-width: 980px) {
+  .grid {
+    @apply grid-cols-2;
+  }
+
+  .featured {
+    @apply transform-none;
+  }
+
+  .featured:hover {
+    @apply -translate-y-1;
+  }
+}
+
+@media (max-width: 560px) {
+  .section {
+    @apply py-16 px-5;
+  }
+
+  .grid {
+    @apply grid-cols-1;
+  }
+}

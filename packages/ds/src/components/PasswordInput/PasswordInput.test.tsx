@@ -17,11 +17,17 @@ describe(PasswordInput.name, () => {
     expect(document.querySelector('input')).toHaveAttribute('type', 'text')
   })
 
-  it('calls onValueChange while typing', async () => {
-    const onValueChange = vi.fn()
-    render(<PasswordInput onValueChange={onValueChange} />)
+  it('calls onChange while typing (register-compatible)', async () => {
+    const onChange = vi.fn()
+    render(<PasswordInput onChange={onChange} />)
     await userEvent.type(document.querySelector('input')!, 'a')
-    expect(onValueChange).toHaveBeenCalledWith('a')
+    expect(onChange).toHaveBeenCalled()
+  })
+
+  it('forwards the ref to the input', () => {
+    const ref = { current: null as HTMLInputElement | null }
+    render(<PasswordInput ref={ref} />)
+    expect(ref.current).toBeInstanceOf(HTMLInputElement)
   })
 
   it('marks the control invalid on error', () => {

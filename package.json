@@ -10,11 +10,11 @@
     "dev": "turbo dev",
     "dev:manager": "turbo dev --filter=nino-manager",
     "dev:landing": "turbo dev --filter=nino-landing",
+    "ds:storybook": "turbo run storybook --filter=@nino/ds",
     "build": "turbo build",
     "lint": "turbo lint",
     "type-check": "turbo type-check",
-    "format": "prettier --write \"**/*.{ts,tsx,css,md}\"",
-    "ds:storybook": "turbo run storybook --filter=@nino/ds"
+    "format": "prettier --write \"**/*.{ts,tsx,css,md}\""
   },
   "dependencies": {
     "clsx": "^2.1.1",

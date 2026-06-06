@@ -1,1 +1,0 @@
-export { Comecar } from './Comecar'

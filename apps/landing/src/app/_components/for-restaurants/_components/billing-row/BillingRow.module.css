@@ -1,0 +1,30 @@
+@reference '../../../../theme.css';
+.row {
+  @apply flex justify-between items-center px-[1.4rem] py-4;
+  @apply border-t border-sand text-[0.95rem] text-body;
+}
+.row:first-of-type {
+  @apply border-t-0;
+}
+
+.platformName {
+  @apply text-[0.95rem];
+}
+
+.rate {
+  @apply font-semibold text-[0.88rem] text-terracotta;
+}
+
+.ninoRow {
+  @apply border-t-0;
+  background: linear-gradient(150deg, #ff7e1f, #ec5a0e);
+}
+
+.ninoName {
+  @apply [font-family:var(--font-display)] font-extrabold;
+  @apply text-[1.05rem] text-white;
+}
+
+.ninoRate {
+  @apply font-bold text-white;
+}

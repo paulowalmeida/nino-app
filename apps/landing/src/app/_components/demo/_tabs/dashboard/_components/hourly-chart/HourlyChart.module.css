@@ -1,0 +1,20 @@
+@reference '../../../../../../theme.css';
+.chartCard {
+  @apply bg-white border border-gray-200 rounded-xl p-4 mb-4;
+}
+
+.chartHeader {
+  @apply flex justify-between items-center mb-3;
+}
+
+.chartTitle {
+  @apply text-[0.78rem] font-bold text-gray-800;
+}
+
+.peakLabel {
+  @apply text-[0.68rem] text-brand font-semibold;
+}
+
+.chartSvg {
+  @apply w-full;
+}

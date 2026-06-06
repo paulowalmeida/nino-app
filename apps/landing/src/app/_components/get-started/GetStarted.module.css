@@ -1,0 +1,67 @@
+@reference '../../theme.css';
+.section {
+  @apply pt-20 pb-24 px-10 bg-surface;
+}
+
+.card {
+  @apply relative max-w-[980px] mx-auto py-20 px-10;
+  @apply rounded-[36px] text-center overflow-hidden text-white;
+  background:
+    radial-gradient(80% 120% at 15% 0%, #ff8a33 0%, transparent 50%),
+    radial-gradient(90% 130% at 100% 100%, #d94d08 0%, transparent 55%),
+    linear-gradient(160deg, #ff7e1f 0%, #ec5a0e 100%);
+  @apply shadow-[0_30px_70px_rgba(232,84,12,0.34)];
+}
+
+.card::after {
+  content: "";
+  @apply absolute inset-0 pointer-events-none opacity-50 mix-blend-overlay;
+  background-image: url("/noise.svg");
+}
+
+.inner {
+  @apply relative z-[1];
+}
+
+.pill {
+  @apply inline-flex items-center gap-2 mb-6;
+  @apply py-[0.4rem] px-4 rounded-full;
+  @apply bg-white/[0.16] border border-white/30;
+  @apply text-[0.8rem] font-semibold backdrop-blur-sm;
+}
+
+.title {
+  @apply [font-family:var(--font-display)] font-extrabold;
+  @apply text-[clamp(2.3rem,5vw,3.6rem)] leading-[1.02];
+  @apply tracking-[-0.02em];
+}
+
+.lead {
+  @apply mt-[1.3rem] mx-auto max-w-[34rem];
+  @apply text-[1.1rem] leading-relaxed text-white/[0.92];
+}
+
+.btn {
+  @apply inline-block mt-[2.2rem] py-[1.1rem] px-[2.4rem];
+  @apply rounded-full bg-white text-brand-strong;
+  @apply font-bold text-[1.05rem] no-underline;
+  @apply shadow-[0_14px_30px_rgba(120,40,0,0.3)] transition-all duration-200;
+}
+
+.btn:hover {
+  @apply -translate-y-[3px] shadow-[0_20px_40px_rgba(120,40,0,0.42)];
+}
+
+.fine {
+  @apply mt-[1.3rem] text-[0.85rem] text-white/80;
+}
+
+@media (max-width: 720px) {
+  .section {
+    @apply pt-12 pb-16 px-5;
+  }
+
+  .card {
+    @apply py-14 px-6 rounded-[28px];
+  }
+}

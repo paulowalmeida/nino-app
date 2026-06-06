@@ -1,0 +1,103 @@
+@reference '../../../../theme.css';
+.phone {
+  @apply w-[270px] bg-charcoal rounded-[38px] p-[10px];
+  @apply relative z-[2] -rotate-3;
+  box-shadow:
+    0 40px 80px rgba(90, 30, 0, 0.4),
+    0 0 0 1px rgba(255, 255, 255, 0.06);
+}
+
+.notch {
+  @apply absolute top-[18px] left-1/2 -translate-x-1/2;
+  @apply w-[90px] h-[20px] bg-charcoal;
+  @apply rounded-[0_0_12px_12px] z-[3];
+}
+
+.screen {
+  @apply bg-cream rounded-[30px] overflow-hidden;
+  @apply h-[530px] flex flex-col;
+}
+
+.storeHeader {
+  @apply bg-white pt-[1.4rem] px-4 pb-[0.8rem];
+  @apply flex items-center gap-[0.6rem] border-b border-sand-deep;
+}
+
+.storeLogo {
+  @apply w-[38px] h-[38px] rounded-[11px];
+  background: linear-gradient(135deg, #ff8a33, #ff6b00);
+  @apply flex items-center justify-center text-[1.1rem];
+}
+
+.storeName {
+  @apply font-extrabold text-[0.92rem] text-ink;
+}
+
+.storeMeta {
+  @apply text-[0.66rem] text-faint mt-px;
+}
+
+.storeMeta b {
+  @apply text-brand;
+}
+
+.freeShipping {
+  @apply m-[0.8rem] rounded-[14px] border border-peach;
+  background: linear-gradient(120deg, #fff1e4, #ffe3cc);
+  @apply py-[0.7rem] px-[0.85rem] flex justify-between items-center;
+}
+
+.freeShipping b {
+  @apply text-[0.74rem] text-ink;
+}
+
+.freeShipping span {
+  @apply text-[0.6rem] text-faintest;
+}
+
+.freeShippingTag {
+  @apply bg-brand text-white text-[0.6rem] font-bold;
+  @apply py-[0.25rem] px-[0.55rem] rounded-[6px];
+}
+
+.categories {
+  @apply flex gap-[0.4rem] px-[0.8rem] pb-[0.6rem];
+}
+
+.categories div {
+  @apply text-[0.62rem] font-semibold py-[0.3rem] px-[0.7rem];
+  @apply rounded-[20px] bg-sand-deep text-subtle;
+}
+
+.categoryActive {
+  @apply !bg-brand !text-white;
+}
+
+.menuItem {
+  @apply flex gap-[0.7rem] items-center;
+  @apply py-[0.7rem] px-[0.85rem] border-t border-sand;
+}
+
+.itemThumb {
+  @apply w-[52px] h-[52px] rounded-[11px] bg-sand-deep;
+  @apply flex items-center justify-center text-[1.6rem] shrink-0;
+}
+
+.itemTitle {
+  @apply text-[0.76rem] block text-ink font-bold;
+}
+
+.itemDesc {
+  @apply text-[0.62rem] text-faint leading-[1.3] block mt-[2px];
+}
+
+.itemPrice {
+  @apply text-brand font-extrabold text-[0.76rem] mt-[3px];
+}
+
+.cartBar {
+  @apply mt-auto bg-brand text-white;
+  @apply py-[0.85rem] px-4;
+  @apply flex justify-between items-center;
+  @apply text-[0.78rem] font-bold;
+}

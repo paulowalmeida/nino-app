@@ -1,1 +1,0 @@
-export { ParaRestaurantes } from './ParaRestaurantes'

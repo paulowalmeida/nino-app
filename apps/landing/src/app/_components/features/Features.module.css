@@ -1,0 +1,63 @@
+@reference '../../theme.css';
+.section {
+  @apply relative overflow-hidden pt-28 pb-24 px-10;
+  background: #fffbf5;
+  background: radial-gradient(
+    900px 380px at 50% -8%,
+    rgba(255, 126, 31, 0.12),
+    transparent 60%
+  );
+}
+
+.section::after {
+  content: "";
+  @apply absolute inset-0 pointer-events-none opacity-50 mix-blend-multiply;
+  background-image: url("/noise.svg");
+}
+
+.inner {
+  @apply relative z-[1] max-w-[1120px] mx-auto;
+}
+
+.header {
+  @apply max-w-[620px] mb-14;
+}
+
+.eyebrow {
+  @apply inline-flex items-center gap-2 mb-4;
+  @apply [font-family:var(--font-sans)] text-[0.78rem] font-bold;
+  @apply tracking-[0.12em] uppercase text-brand-strong;
+}
+
+.eyebrow::before {
+  content: "";
+  @apply inline-block w-[22px] h-0.5 bg-brand rounded-sm;
+}
+
+.title {
+  @apply [font-family:var(--font-display)] font-extrabold;
+  @apply text-[clamp(2.1rem,4vw,3.1rem)] leading-[1.05];
+  @apply tracking-[-0.02em] text-ink;
+}
+
+.titleAccent {
+  @apply text-brand;
+}
+
+.subtitle {
+  @apply mt-4 text-[1.08rem] leading-relaxed text-muted;
+}
+
+.grid {
+  @apply grid grid-cols-3 gap-5;
+}
+
+@media (max-width: 900px) {
+  .section {
+    @apply py-16 px-5;
+  }
+
+  .grid {
+    @apply grid-cols-1;
+  }
+}

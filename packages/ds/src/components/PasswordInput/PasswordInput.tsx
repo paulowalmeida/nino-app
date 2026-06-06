@@ -1,3 +1,5 @@
+import { forwardRef } from 'react'
+
 import { PasswordInput as ArkPasswordInput } from '@ark-ui/react/password-input'
 import { mergeClasses } from '@ds/lib/mergeClasses'
 
@@ -61,26 +63,15 @@ const EyeOffIcon = () => (
 
 /**
  * Password field with a built-in visibility toggle (Ark `PasswordInput`).
+ * Forwards the ref and native input props, so it's a drop-in for
+ * react-hook-form `register` — just like `Input`.
  *
  * @param size - Height and padding of the field. Default: `md`
  *
  * @param error - Applies error styles to indicate invalid input
- *
- * @param onValueChange - Fired when the value changes
  */
-export function PasswordInput({
-  size = 'md',
-  error = false,
-  className,
-  value,
-  defaultValue,
-  onValueChange,
-  placeholder,
-  disabled,
-  id,
-  name,
-}: PasswordInputProps) {
-  return (
+export const PasswordInput = forwardRef<HTMLInputElement, PasswordInputProps>(
+  ({ size = 'md', error = false, className, disabled, ...props }, ref) => (
     <ArkPasswordInput.Root invalid={error} disabled={disabled}>
       <ArkPasswordInput.Control
         className={mergeClasses(
@@ -90,15 +81,7 @@ export function PasswordInput({
           className
         )}
       >
-        <ArkPasswordInput.Input
-          className={baseInput}
-          value={value}
-          defaultValue={defaultValue}
-          onChange={(e) => onValueChange?.(e.target.value)}
-          placeholder={placeholder}
-          id={id}
-          name={name}
-        />
+        <ArkPasswordInput.Input ref={ref} className={baseInput} {...props} />
         <ArkPasswordInput.VisibilityTrigger
           className={triggerClass}
           aria-label="Mostrar ou ocultar senha"
@@ -110,6 +93,6 @@ export function PasswordInput({
       </ArkPasswordInput.Control>
     </ArkPasswordInput.Root>
   )
-}
+)
 
 PasswordInput.displayName = 'PasswordInput'

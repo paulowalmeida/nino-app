@@ -1,0 +1,62 @@
+@reference '../../theme.css';
+.section {
+  @apply relative overflow-hidden bg-surface-sunk py-[6.5rem] px-10;
+}
+
+.inner {
+  @apply max-w-[1040px] mx-auto;
+}
+
+.header {
+  @apply text-center max-w-[540px] mx-auto mb-16;
+}
+
+.eyebrow {
+  @apply inline-flex items-center gap-2 mb-4;
+  @apply [font-family:var(--font-sans)] text-[0.78rem] font-bold;
+  @apply tracking-[0.12em] uppercase text-brand-strong;
+}
+
+.eyebrow::before,
+.eyebrow::after {
+  content: "";
+  @apply inline-block w-[22px] h-0.5 bg-brand rounded-sm;
+}
+
+.title {
+  @apply [font-family:var(--font-display)] font-extrabold;
+  @apply text-[clamp(2rem,3.6vw,2.8rem)] leading-[1.08];
+  @apply tracking-[-0.02em] text-ink;
+}
+
+.subtitle {
+  @apply mt-[0.9rem] text-[1.05rem] text-muted;
+}
+
+.track {
+  @apply relative grid grid-cols-3 gap-8;
+}
+
+.track::before {
+  content: "";
+  @apply absolute top-9 left-[16%] right-[16%] h-0.5 z-0;
+  background: repeating-linear-gradient(
+    90deg,
+    rgba(255, 107, 0, 0.4) 0 8px,
+    transparent 8px 16px
+  );
+}
+
+@media (max-width: 820px) {
+  .section {
+    @apply py-16 px-5;
+  }
+
+  .track {
+    @apply grid-cols-1 gap-10 max-w-[22rem] mx-auto;
+  }
+
+  .track::before {
+    @apply hidden;
+  }
+}

@@ -1,0 +1,53 @@
+@reference '../../theme.css';
+.footer {
+  @apply bg-ink text-white/70 pt-[4.5rem] pb-10 px-10;
+}
+
+.inner {
+  @apply max-w-[1120px] mx-auto;
+}
+
+.top {
+  @apply grid grid-cols-[1.5fr_1fr_1fr_1fr] gap-12;
+  @apply pb-12 border-b border-white/10;
+}
+
+.brand {
+  @apply max-w-[240px];
+}
+
+.logo {
+  @apply [font-family:var(--font-display)] font-extrabold;
+  @apply text-[1.7rem] tracking-[-0.5px] text-white;
+}
+
+.logo i {
+  @apply text-warm-light not-italic;
+}
+
+.tagline {
+  @apply mt-[0.85rem] text-[0.92rem] leading-relaxed text-white/55;
+}
+
+.bottom {
+  @apply flex justify-between items-center;
+  @apply pt-7 text-[0.82rem] text-white/[0.45];
+}
+
+@media (max-width: 760px) {
+  .footer {
+    @apply pt-12 pb-8 px-5;
+  }
+
+  .top {
+    @apply grid-cols-2 gap-8;
+  }
+
+  .brand {
+    @apply col-span-full;
+  }
+
+  .bottom {
+    @apply flex-col gap-[0.6rem] text-center;
+  }
+}

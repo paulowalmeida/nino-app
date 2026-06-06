@@ -1,0 +1,47 @@
+@reference '../../../../theme.css';
+.notification {
+  @apply absolute z-[4] w-[220px] bg-white rounded-[16px];
+  @apply py-[0.8rem] px-[0.9rem] text-ink;
+  @apply shadow-[0_18px_40px_rgba(90,30,0,0.22)];
+  @apply flex gap-[0.6rem] items-center;
+  @apply animate-[float_4s_ease-in-out_infinite];
+}
+
+.top {
+  @apply top-10 right-[2px];
+}
+
+.bottom {
+  @apply bottom-[46px] right-[-10px] [animation-delay:1.2s];
+}
+
+.icon {
+  @apply w-[34px] h-[34px] flex items-center justify-center;
+  @apply shrink-0 text-base;
+}
+
+.whatsapp {
+  @apply rounded-full bg-whatsapp;
+}
+
+.delivery {
+  @apply rounded-[10px] bg-peach-light text-[1.1rem];
+}
+
+.title {
+  @apply text-[0.78rem] font-bold block;
+}
+
+.subtitle {
+  @apply text-[0.66rem] text-faint;
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-9px);
+  }
+}

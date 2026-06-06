@@ -1,0 +1,28 @@
+@reference '../../../../../../theme.css';
+.statCard {
+  @apply bg-white border border-gray-200 rounded-xl p-4;
+}
+
+.statCardHighlighted {
+  @apply bg-orange-50 border-orange-200;
+}
+
+.metricLabel {
+  @apply text-[0.7rem] text-gray-500 font-medium mb-1;
+}
+
+.metricValue {
+  @apply text-2xl font-black text-gray-900 leading-none;
+}
+
+.metricValueHighlighted {
+  @apply text-brand;
+}
+
+.trendPositive {
+  @apply text-[0.68rem] text-green-500 mt-1 font-semibold;
+}
+
+.trendStable {
+  @apply text-[0.68rem] text-gray-400 mt-1 font-medium;
+}

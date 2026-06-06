@@ -1,12 +1,12 @@
-import { Comecar } from '@/components/Comecar'
-import { ComoFunciona } from '@/components/ComoFunciona'
-import { Demo } from '@/components/Demo'
-import { Features } from '@/components/Features'
-import { Footer } from '@/components/Footer'
-import { Header } from '@/components/Header'
-import { Hero } from '@/components/Hero'
-import { ParaRestaurantes } from '@/components/ParaRestaurantes'
-import { Precos } from '@/components/Precos'
+import { GetStarted } from "./_components/get-started"
+import { HowItWorks } from "./_components/how-it-works"
+import { Demo } from "./_components/demo"
+import { Features } from "./_components/features"
+import { Footer } from "./_components/footer"
+import { Header } from "./_components/header"
+import { Hero } from "./_components/hero"
+import { ForRestaurants } from "./_components/for-restaurants"
+import { Pricing } from "./_components/pricing"
 
 export default function Home() {
   return (
@@ -15,10 +15,10 @@ export default function Home() {
       <Hero />
       <Features />
       <Demo />
-      <ComoFunciona />
-      <ParaRestaurantes />
-      <Precos />
-      <Comecar />
+      <HowItWorks />
+      <ForRestaurants />
+      <Pricing />
+      <GetStarted />
       <Footer />
     </>
   )

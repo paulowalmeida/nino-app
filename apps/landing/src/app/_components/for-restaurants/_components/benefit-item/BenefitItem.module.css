@@ -1,0 +1,11 @@
+@reference '../../../../theme.css';
+.item {
+  @apply flex items-start gap-3 text-[0.96rem] leading-snug;
+  @apply text-body;
+}
+
+.check {
+  @apply shrink-0 flex items-center justify-center;
+  @apply w-6 h-6 rounded-lg text-[0.8rem] font-extrabold mt-px;
+  @apply text-brand-strong bg-brand/12;
+}

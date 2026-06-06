@@ -1,1 +1,0 @@
-export { Precos } from './Precos'

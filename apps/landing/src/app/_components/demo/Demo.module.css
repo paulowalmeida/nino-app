@@ -1,0 +1,32 @@
+@reference '../../theme.css';
+.section {
+  @apply py-24 px-16 bg-white max-md:px-5 max-md:py-12;
+}
+
+.inner {
+  @apply max-w-[1000px] mx-auto;
+}
+
+.header {
+  @apply text-center mb-12;
+}
+
+.tabGroup {
+  @apply flex justify-center gap-2 mb-10 flex-wrap;
+}
+
+.tab {
+  @apply px-5 py-2 rounded-full border-2 border-gray-200;
+  @apply bg-white text-gray-600 font-semibold text-[0.9rem];
+  @apply cursor-pointer transition-all;
+}
+
+.tabActive {
+  @apply border-brand bg-brand text-white;
+}
+
+.mockup {
+  @apply bg-white rounded-[20px] overflow-hidden;
+  @apply shadow-[0_8px_40px_rgba(0,0,0,0.08)];
+  @apply max-w-[680px] mx-auto border border-gray-200;
+}

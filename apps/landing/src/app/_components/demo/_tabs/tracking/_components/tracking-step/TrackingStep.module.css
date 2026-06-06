@@ -1,0 +1,56 @@
+@reference '../../../../../../theme.css';
+.step {
+  @apply flex gap-4 items-start;
+}
+
+.stepIndicator {
+  @apply flex flex-col items-center shrink-0;
+}
+
+.nodeDone {
+  @apply w-8 h-8 rounded-full flex items-center justify-center;
+  @apply text-[0.8rem] font-bold bg-brand text-white;
+}
+
+.nodeActive {
+  @apply w-8 h-8 rounded-full flex items-center justify-center;
+  @apply text-[0.9rem] bg-brand animate-pulse;
+}
+
+.nodePending {
+  @apply w-8 h-8 rounded-full flex items-center justify-center;
+  @apply text-[0.8rem] font-bold bg-gray-100;
+  @apply border-2 border-gray-200 text-gray-300;
+}
+
+.connectorDone {
+  @apply w-0.5 h-6 bg-brand mt-0.5;
+}
+
+.connectorPending {
+  @apply w-0.5 h-6 bg-gray-200 mt-0.5;
+}
+
+.stepContent {
+  @apply pt-1.5 pb-4;
+}
+
+.stepLabelDone {
+  @apply font-semibold text-[0.85rem] text-gray-900;
+}
+
+.stepLabelActive {
+  @apply font-bold text-[0.85rem] text-brand;
+}
+
+.stepLabelPending {
+  @apply font-semibold text-[0.85rem] text-gray-300;
+}
+
+.stepTimeDone {
+  @apply text-[0.7rem] text-gray-400 mt-0.5;
+}
+
+.stepTimePending {
+  @apply text-[0.7rem] text-gray-200 mt-0.5;
+}
