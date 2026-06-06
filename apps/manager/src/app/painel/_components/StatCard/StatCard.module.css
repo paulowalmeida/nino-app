@@ -1,12 +1,12 @@
 @reference "@nino/ds/globals.css";
 
-/* left accent bar */
+/* left accent bar — ajusta posição para o padding menor no mobile */
 .card::before {
   content: "";
   position: absolute;
   left: 0;
-  top: 0.875rem;
-  bottom: 0.875rem;
+  top: 0.75rem;
+  bottom: 0.75rem;
   width: 3px;
   border-radius: 0 3px 3px 0;
   background: var(--color-brand);
@@ -14,25 +14,30 @@
 }
 
 .card {
-  @apply relative flex flex-col gap-3 overflow-hidden;
-  @apply rounded-2xl border border-sand-deep bg-white p-5;
+  @apply relative flex flex-col gap-2.5 overflow-hidden;
+  @apply rounded-2xl border border-sand-deep bg-white;
+  @apply p-4 lg:p-5;
   @apply transition-shadow duration-200;
   @apply hover:shadow-md hover:shadow-brand/5;
 }
 
 .top {
-  @apply flex items-center justify-between;
+  @apply flex items-start justify-between gap-2;
 }
 
 .label {
-  @apply text-xs font-semibold uppercase tracking-widest text-faint;
+  @apply text-[10px] font-bold uppercase leading-snug;
+  @apply tracking-wider text-faint;
+  @apply lg:text-xs lg:tracking-widest;
 }
 
 .iconWrap {
-  @apply flex h-8 w-8 items-center justify-center rounded-lg;
+  @apply flex h-7 w-7 shrink-0 items-center justify-center rounded-lg;
   @apply bg-brand/8 text-brand;
+  @apply lg:h-8 lg:w-8;
 }
 
 .value {
-  @apply font-display text-3xl font-extrabold tracking-tight text-ink;
+  @apply font-display text-2xl font-extrabold tracking-tight text-ink;
+  @apply lg:text-3xl;
 }
