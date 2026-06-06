@@ -5,6 +5,10 @@ export function NinoMascot({ className }: NinoMascotProps) {
   // next/image, então <img> é apropriado aqui
   return (
     // eslint-disable-next-line @next/next/no-img-element
-    <img src="/mascot.svg" alt="Mascote Nino" className={className} />
+    <img
+      src="/mascot-manager.svg"
+      alt="Mascote Nino"
+      className={className}
+    />
   )
 }
