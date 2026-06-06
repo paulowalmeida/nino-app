@@ -1,0 +1,51 @@
+/* Tokens globais — fonte única de verdade, consumida por todos os apps.
+   Importado pelo globals.css do DS e pelo theme.css dos apps. Só cores e
+   estruturais (fontes ficam no globals.css, ligadas à estratégia de load). */
+@theme {
+  /* Marca — override por tenant */
+  --color-brand: #ff6b00;
+  --color-brand-foreground: #ffffff;
+  --color-brand-hover: color-mix(in srgb, var(--color-brand) 85%, black);
+  --color-brand-active: color-mix(in srgb, var(--color-brand) 70%, black);
+  /* Laranja fechado p/ texto/ícone de marca sobre superfície clara */
+  --color-brand-strong: #e8540c;
+  /* Variação clara — fundos sutis, hovers (12% sobre transparente) */
+  --color-brand-soft: color-mix(in srgb, var(--color-brand) 12%, transparent);
+  --color-warm-light: #ff8a33;
+
+  /* Superfícies quentes (warm over white) */
+  --color-cream: #fff7ee;
+  --color-cream-deep: #ffebd6;
+  --color-paper: #fffbf5;
+  --color-surface-sunk: #fff3e9;
+  --color-sand: #f4ece0;
+  --color-sand-deep: #f1e7da;
+  --color-surface: #f1f3f5;
+
+  /* Texto — neutros quentes */
+  --color-ink: #1a1206;
+  --color-dark: #1a1a2e;
+  --color-text: #2d2d2d;
+  --color-body: #2d2418;
+  --color-muted: #6b5d4d;
+  --color-subtle: #7a6c59;
+  --color-faint: #8a7d6c;
+  --color-faintest: #9a8b78;
+
+  /* Acentos */
+  --color-peach-light: #ffe3cc;
+  --color-peach: #ffd9b8;
+  --color-peach-deep: #ffd9a8;
+  --color-lime: #b6ff6b;
+  --color-whatsapp: #25d366;
+  --color-terracotta: #b06a4a;
+  --color-charcoal: #14110c;
+
+  /* Inputs — override por tenant */
+  --color-input-border: #d1d5db;
+  --color-input-border-focus: var(--color-brand);
+
+  /* Estrutural */
+  --radius-button: 100px;
+  --radius-card: 14px;
+}

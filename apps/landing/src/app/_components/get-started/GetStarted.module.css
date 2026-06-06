@@ -1,6 +1,6 @@
 @reference '../../theme.css';
 .section {
-  @apply pt-20 pb-24 px-10 bg-surface;
+  @apply pt-20 pb-24 px-10 bg-paper;
 }
 
 .card {

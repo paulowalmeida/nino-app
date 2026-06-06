@@ -1,8 +1,8 @@
-'use client'
+"use client"
 
-import type { CSSProperties } from 'react'
-import { useForm } from 'react-hook-form'
-import Link from 'next/link'
+import type { CSSProperties } from "react"
+import { useForm } from "react-hook-form"
+import Link from "next/link"
 
 import {
   Button,
@@ -11,32 +11,21 @@ import {
   Input,
   PasswordInput,
   PhoneInput,
-} from '@nino/ds'
-import { GlobalRole } from '@nino/lib'
+} from "@nino/ds"
+import { GlobalRole } from "@nino/lib"
 
-import styles from '../../../motion.module.css'
-import type { AccountFormValues, AccountStepProps } from './AccountStep.types'
+import styles from "../../../authForm.module.css"
+import motion from "../../../motion.module.css"
+import type { AccountFormValues, AccountStepProps } from "./AccountStep.types"
 
 import {
   login,
   register as registerOwner,
   setTokens,
-} from '@/services/auth.service'
-
-const header = `${styles.rise} text-center`
-const step = 'text-xs font-semibold uppercase tracking-wider text-brand'
-const title = 'font-display text-4xl font-extrabold tracking-tight text-dark'
-const subtitle = 'mt-2 text-sm text-text/60'
-const form = 'mt-8 flex flex-col gap-4'
-const errorText = 'text-sm text-red-500 text-center'
-const footer = 'mt-8 text-center text-sm text-text/60'
-const footerLink = 'text-brand font-semibold hover:underline'
-const riseWrap = styles.rise
-const footerRise = `${styles.rise} ${footer}`
-const submit = 'mt-2 w-full'
+} from "@/services/auth.service"
 
 const rise = (delay: number): CSSProperties =>
-  ({ ['--d']: `${delay}ms` }) as CSSProperties
+  ({ ["--d"]: `${delay}ms` }) as CSSProperties
 
 export function AccountStep({ onNext }: AccountStepProps) {
   const {
@@ -67,69 +56,75 @@ export function AccountStep({ onNext }: AccountStepProps) {
         phone: data.phone,
       })
     } catch {
-      setError('root', {
-        message: 'Não foi possível criar a conta. Verifique os dados.',
+      setError("root", {
+        message: "Não foi possível criar a conta. Verifique os dados.",
       })
     }
   }
 
   return (
     <div>
-      <header className={header} style={rise(0)}>
-        <p className={step}>Passo 1 de 2</p>
-        <h1 className={title}>Crie sua conta</h1>
-        <p className={subtitle}>Comece pelos seus dados de responsável</p>
+      <header className={`${motion.rise} ${styles.header}`} style={rise(0)}>
+        <p className={styles.step}>Passo 1 de 2</p>
+        <h1 className={styles.title}>Crie sua conta</h1>
+        <p className={styles.subtitle}>
+          Comece pelos seus dados de responsável
+        </p>
       </header>
 
-      <form onSubmit={handleSubmit(onSubmit)} method="post" className={form}>
-        <div className={riseWrap} style={rise(120)}>
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        method="post"
+        className={styles.form}
+      >
+        <div className={motion.rise} style={rise(120)}>
           <FormField label="Nome" error={errors.name?.message}>
             <Input
               placeholder="Seu nome"
-              {...register('name', { required: 'Informe o nome' })}
+              {...register("name", { required: "Informe o nome" })}
             />
           </FormField>
         </div>
 
-        <div className={riseWrap} style={rise(180)}>
+        <div className={motion.rise} style={rise(180)}>
           <FormField label="Email" error={errors.email?.message}>
             <Input
               type="email"
               placeholder="seu@email.com"
-              {...register('email', { required: 'Informe o email' })}
+              {...register("email", { required: "Informe o email" })}
             />
           </FormField>
         </div>
 
-        <div className={riseWrap} style={rise(240)}>
+        <div className={motion.rise} style={rise(240)}>
           <FormField label="Telefone" error={errors.phone?.message}>
             <PhoneInput
               error={!!errors.phone}
-              {...register('phone', { required: 'Informe o telefone' })}
+              {...register("phone", { required: "Informe o telefone" })}
             />
           </FormField>
         </div>
 
-        <div className={riseWrap} style={rise(300)}>
+        <div className={motion.rise} style={rise(300)}>
           <FormField label="CPF" error={errors.cpf?.message}>
             <CpfInput
               error={!!errors.cpf}
-              {...register('cpf', { required: 'Informe o CPF' })}
+              {...register("cpf", { required: "Informe o CPF" })}
             />
           </FormField>
         </div>
 
-        <div className={riseWrap} style={rise(360)}>
+        <div className={motion.rise} style={rise(360)}>
           <FormField label="Senha" error={errors.password?.message}>
             <PasswordInput
               placeholder="••••••••"
               error={!!errors.password}
-              {...register('password', { required: 'Informe a senha' })}
+              {...register("password", { required: "Informe a senha" })}
             />
           </FormField>
         </div>
 
-        <div className={riseWrap} style={rise(420)}>
+        <div className={motion.rise} style={rise(420)}>
           <FormField
             label="Confirmar senha"
             error={errors.confirmPassword?.message}
@@ -137,22 +132,24 @@ export function AccountStep({ onNext }: AccountStepProps) {
             <PasswordInput
               placeholder="••••••••"
               error={!!errors.confirmPassword}
-              {...register('confirmPassword', {
-                required: 'Confirme a senha',
+              {...register("confirmPassword", {
+                required: "Confirme a senha",
                 validate: (value) =>
-                  value === getValues('password') || 'As senhas não conferem',
+                  value === getValues("password") || "As senhas não conferem",
               })}
             />
           </FormField>
         </div>
 
-        {errors.root && <p className={errorText}>{errors.root.message}</p>}
+        {errors.root && (
+          <p className={styles.errorText}>{errors.root.message}</p>
+        )}
 
-        <div className={riseWrap} style={rise(480)}>
+        <div className={motion.rise} style={rise(480)}>
           <Button
             type="submit"
             loading={isSubmitting}
-            className={submit}
+            className={styles.submit}
             loadingIndicator="dots"
           >
             Continuar
@@ -160,9 +157,9 @@ export function AccountStep({ onNext }: AccountStepProps) {
         </div>
       </form>
 
-      <p className={footerRise} style={rise(540)}>
-        Já tem conta?{' '}
-        <Link href="/entrar" className={footerLink}>
+      <p className={`${motion.rise} ${styles.footer}`} style={rise(540)}>
+        Já tem conta?{" "}
+        <Link href="/entrar" className={styles.footerLink}>
           Entrar
         </Link>
       </p>

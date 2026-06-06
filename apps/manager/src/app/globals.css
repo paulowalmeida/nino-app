@@ -4,12 +4,6 @@
   box-sizing: border-box;
 }
 
-@theme {
-  --color-cream: #fff9f3;
-  --color-cream-deep: #fcefe2;
-  --color-warm-light: #ff8a33;
-}
-
 body {
   margin: 0;
   font-family: var(--font-sans);

@@ -1,10 +1,10 @@
-'use client'
+"use client"
 
-import { useState } from 'react'
+import { useState } from "react"
 
-import { AccountStep } from '../AccountStep'
-import { CompanyStep } from '../CompanyStep'
-import type { Responsible } from './RegisterWizard.types'
+import { AccountStep } from "../AccountStep"
+import { CompanyStep } from "../CompanyStep"
+import type { Responsible } from "./RegisterWizard.types"
 
 export function RegisterWizard() {
   const [responsible, setResponsible] = useState<Responsible | null>(null)

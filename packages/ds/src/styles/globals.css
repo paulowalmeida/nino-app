@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Hanken+Grotesk:wght@400;500;600;700&display=swap');
 @import 'tailwindcss';
+@import './tokens.css';
 @plugin "tailwindcss-animate";
 
 /* DS components live outside the consuming app's scan root (node_modules via
@@ -11,35 +12,9 @@
 @source not '../**/*.test.tsx';
 
 @theme {
-  /* Typography */
+  /* Typography — cores e estruturais vêm de ./tokens.css */
   --font-sans: 'Hanken Grotesk', sans-serif;
   --font-display: 'Bricolage Grotesque', sans-serif;
-
-  /* Brand tokens — override per tenant */
-  --color-brand: #ff6b00;
-  --color-brand-foreground: #ffffff;
-  --color-brand-hover: color-mix(in srgb, var(--color-brand) 85%, black);
-  --color-brand-active: color-mix(in srgb, var(--color-brand) 70%, black);
-  /* Laranja fechado p/ texto/ícone de marca sobre superfície clara */
-  --color-brand-strong: #e8540c;
-  /* Variação clara do tema — fundos sutis, hovers (12% sobre transparente) */
-  --color-brand-soft: color-mix(in srgb, var(--color-brand) 12%, transparent);
-
-  /* Palette — superfícies quentes (warm over white) */
-  --color-cream: #fff7ee;
-  --color-cream-deep: #ffebd6;
-  --color-ink: #1a1206;
-  --color-dark: #1a1a2e;
-  --color-surface: #f1f3f5;
-  --color-text: #2d2d2d;
-
-  /* Input tokens — override per tenant */
-  --color-input-border: #d1d5db;
-  --color-input-border-focus: var(--color-brand);
-
-  /* Structural */
-  --radius-button: 100px;
-  --radius-card: 14px;
 }
 
 @keyframes modal-in {

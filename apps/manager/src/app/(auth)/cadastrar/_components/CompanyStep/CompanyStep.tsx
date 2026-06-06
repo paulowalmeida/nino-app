@@ -1,27 +1,19 @@
-'use client'
+"use client"
 
-import type { CSSProperties } from 'react'
-import { useForm } from 'react-hook-form'
-import { useRouter } from 'next/navigation'
+import type { CSSProperties } from "react"
+import { useForm } from "react-hook-form"
+import { useRouter } from "next/navigation"
 
-import { Button, FormField, Input } from '@nino/ds'
+import { Button, FormField, Input } from "@nino/ds"
 
-import styles from '../../../motion.module.css'
-import type { CompanyFormValues, CompanyStepProps } from './CompanyStep.types'
+import styles from "../../../authForm.module.css"
+import motion from "../../../motion.module.css"
+import type { CompanyFormValues, CompanyStepProps } from "./CompanyStep.types"
 
-import { completeOnboarding } from '@/services/onboarding.service'
-
-const header = `${styles.rise} text-center`
-const step = 'text-xs font-semibold uppercase tracking-wider text-brand'
-const title = 'font-display text-4xl font-extrabold tracking-tight text-dark'
-const subtitle = 'mt-2 text-sm text-text/60'
-const form = 'mt-8 flex flex-col gap-4'
-const errorText = 'text-sm text-red-500 text-center'
-const riseWrap = styles.rise
-const submit = 'mt-2 w-full'
+import { completeOnboarding } from "@/services/onboarding.service"
 
 const rise = (delay: number): CSSProperties =>
-  ({ ['--d']: `${delay}ms` }) as CSSProperties
+  ({ ["--d"]: `${delay}ms` }) as CSSProperties
 
 export function CompanyStep({ responsible }: CompanyStepProps) {
   const router = useRouter()
@@ -35,60 +27,68 @@ export function CompanyStep({ responsible }: CompanyStepProps) {
   async function onSubmit(data: CompanyFormValues) {
     try {
       await completeOnboarding({ company: data.company, responsible })
-      router.push('/painel')
+      router.push("/painel")
     } catch {
-      setError('root', {
-        message: 'Não foi possível concluir. Confira os dados e tente de novo.',
+      setError("root", {
+        message: "Não foi possível concluir. Confira os dados e tente de novo.",
       })
     }
   }
 
   return (
     <div>
-      <header className={header} style={rise(0)}>
-        <p className={step}>Passo 2 de 2</p>
-        <h1 className={title}>Sua empresa</h1>
-        <p className={subtitle}>Quase lá, {responsible.name.split(' ')[0]}</p>
+      <header className={`${motion.rise} ${styles.header}`} style={rise(0)}>
+        <p className={styles.step}>Passo 2 de 2</p>
+        <h1 className={styles.title}>Sua empresa</h1>
+        <p className={styles.subtitle}>
+          Quase lá, {responsible.name.split(" ")[0]}
+        </p>
       </header>
 
-      <form onSubmit={handleSubmit(onSubmit)} method="post" className={form}>
-        <div className={riseWrap} style={rise(120)}>
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        method="post"
+        className={styles.form}
+      >
+        <div className={motion.rise} style={rise(120)}>
           <FormField label="Nome" error={errors.company?.name?.message}>
             <Input
               placeholder="Lanchonete do Zé"
-              {...register('company.name', { required: 'Informe o nome' })}
+              {...register("company.name", { required: "Informe o nome" })}
             />
           </FormField>
         </div>
 
-        <div className={riseWrap} style={rise(180)}>
+        <div className={motion.rise} style={rise(180)}>
           <FormField label="CNPJ" error={errors.company?.cnpj?.message}>
             <Input
               placeholder="00.000.000/0000-00"
-              {...register('company.cnpj', { required: 'Informe o CNPJ' })}
+              {...register("company.cnpj", { required: "Informe o CNPJ" })}
             />
           </FormField>
         </div>
 
-        <div className={riseWrap} style={rise(240)}>
+        <div className={motion.rise} style={rise(240)}>
           <FormField
             label="Razão social (opcional)"
             error={errors.company?.legalName?.message}
           >
             <Input
               placeholder="Zé Alimentos LTDA"
-              {...register('company.legalName')}
+              {...register("company.legalName")}
             />
           </FormField>
         </div>
 
-        {errors.root && <p className={errorText}>{errors.root.message}</p>}
+        {errors.root && (
+          <p className={styles.errorText}>{errors.root.message}</p>
+        )}
 
-        <div className={riseWrap} style={rise(300)}>
+        <div className={motion.rise} style={rise(300)}>
           <Button
             type="submit"
             loading={isSubmitting}
-            className={submit}
+            className={styles.submit}
             loadingIndicator="dots"
           >
             Concluir cadastro

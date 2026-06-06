@@ -1,2 +1,2 @@
-export { CompanyStep } from './CompanyStep'
-export type { CompanyFormValues, CompanyStepProps } from './CompanyStep.types'
+export { CompanyStep } from "./CompanyStep"
+export type { CompanyFormValues, CompanyStepProps } from "./CompanyStep.types"

@@ -4,7 +4,8 @@
   "private": true,
   "exports": {
     ".": "./src/index.ts",
-    "./globals.css": "./src/styles/globals.css"
+    "./globals.css": "./src/styles/globals.css",
+    "./tokens.css": "./src/styles/tokens.css"
   },
   "scripts": {
     "test": "vitest run",

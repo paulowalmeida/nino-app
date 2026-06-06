@@ -1,4 +1,4 @@
-import { RegisterWizard } from './_components/RegisterWizard'
+import { RegisterWizard } from "./_components/RegisterWizard"
 
 export default function CadastrarPage() {
   return <RegisterWizard />

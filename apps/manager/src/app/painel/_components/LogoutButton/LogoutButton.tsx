@@ -1,10 +1,10 @@
-'use client'
+"use client"
 
-import { useRouter } from 'next/navigation'
+import { useRouter } from "next/navigation"
 
-import { Button } from '@nino/ds'
+import { Button } from "@nino/ds"
 
-import { clearTokens, logout } from '@/services/auth.service'
+import { clearTokens, logout } from "@/services/auth.service"
 
 export function LogoutButton() {
   const router = useRouter()
@@ -16,7 +16,7 @@ export function LogoutButton() {
       // mesmo se a API falhar (token expirado), encerra a sessão local
     }
     clearTokens()
-    router.push('/entrar')
+    router.push("/entrar")
   }
 
   return (

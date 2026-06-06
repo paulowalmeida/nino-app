@@ -4,8 +4,6 @@ import styles from "./PhoneMockup.module.css"
 export function PhoneMockup() {
   return (
     <div className={styles.phone}>
-      <div className={styles.notch} />
-
       <div className={styles.screen}>
         <div className={styles.storeHeader}>
           <div className={styles.storeLogo}>🍔</div>

@@ -1,11 +1,11 @@
-'use client'
+"use client"
 
-import { useEffect, useState } from 'react'
-import { useRouter } from 'next/navigation'
+import { useEffect, useState } from "react"
+import { useRouter } from "next/navigation"
 
-import type { User } from '@nino/lib'
+import type { User } from "@nino/lib"
 
-import { clearTokens, me } from '@/services/auth.service'
+import { clearTokens, me } from "@/services/auth.service"
 
 type AuthUserState = {
   user: User | null
@@ -24,7 +24,7 @@ export function useAuthUser(): AuthUserState {
         // token invalido/expirado: limpa a sessao para o middleware
         // nao redirecionar de volta e criar loop com /entrar
         clearTokens()
-        router.replace('/entrar')
+        router.replace("/entrar")
       })
       .finally(() => setLoading(false))
   }, [router])

@@ -1,2 +1,2 @@
-export { NinoLogo } from './NinoLogo'
-export type { NinoLogoProps } from './NinoLogo.types'
+export { NinoLogo } from "./NinoLogo"
+export type { NinoLogoProps } from "./NinoLogo.types"

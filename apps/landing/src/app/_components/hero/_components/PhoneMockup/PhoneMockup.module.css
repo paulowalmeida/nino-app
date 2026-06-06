@@ -7,12 +7,6 @@
     0 0 0 1px rgba(255, 255, 255, 0.06);
 }
 
-.notch {
-  @apply absolute top-[18px] left-1/2 -translate-x-1/2;
-  @apply w-[90px] h-[20px] bg-charcoal;
-  @apply rounded-[0_0_12px_12px] z-[3];
-}
-
 .screen {
   @apply bg-cream rounded-[30px] overflow-hidden;
   @apply h-[530px] flex flex-col;

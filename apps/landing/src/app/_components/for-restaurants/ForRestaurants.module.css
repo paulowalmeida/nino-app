@@ -1,6 +1,6 @@
 @reference '../../theme.css';
 .section {
-  @apply relative overflow-hidden bg-surface py-[6.5rem] px-10;
+  @apply relative overflow-hidden bg-paper py-[6.5rem] px-10;
 }
 
 .inner {

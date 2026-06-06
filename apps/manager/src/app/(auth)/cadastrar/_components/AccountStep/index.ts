@@ -1,2 +1,2 @@
-export { AccountStep } from './AccountStep'
-export type { AccountFormValues, AccountStepProps } from './AccountStep.types'
+export { AccountStep } from "./AccountStep"
+export type { AccountFormValues, AccountStepProps } from "./AccountStep.types"

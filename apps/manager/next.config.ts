@@ -1,7 +1,7 @@
-import type { NextConfig } from 'next'
+import type { NextConfig } from "next"
 
 const config: NextConfig = {
-  transpilePackages: ['@nino/ds', '@nino/forms', '@nino/lib'],
+  transpilePackages: ["@nino/ds", "@nino/forms", "@nino/lib"],
 }
 
 export default config

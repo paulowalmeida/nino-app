@@ -1,10 +1,10 @@
-import { Spinner } from '@nino/ds'
+import { Spinner } from "@nino/ds"
 
-const wrap = 'flex min-h-screen items-center justify-center bg-white'
+import styles from "./FullScreenLoader.module.css"
 
 export function FullScreenLoader() {
   return (
-    <div className={wrap}>
+    <div className={styles.wrap}>
       <Spinner visible size={28} />
     </div>
   )

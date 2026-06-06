@@ -1,35 +1,5 @@
 @import "tailwindcss";
-
-@theme {
-  --color-brand: #ff6b00;
-  --color-brand-strong: #e8540c;
-  --color-ink: #1a1206;
-  --color-cream: #fff7ee;
-  --color-cream-deep: #ffebd6;
-
-  /* texto — neutros quentes */
-  --color-body: #2d2418;
-  --color-muted: #6b5d4d;
-  --color-subtle: #7a6c59;
-  --color-faint: #8a7d6c;
-  --color-faintest: #9a8b78;
-
-  /* superfícies */
-  --color-surface: #fffbf5;
-  --color-surface-sunk: #fff3e9;
-  --color-sand: #f4ece0;
-  --color-sand-deep: #f1e7da;
-
-  /* acentos */
-  --color-warm-light: #ff8a33;
-  --color-peach-light: #ffe3cc;
-  --color-peach: #ffd9b8;
-  --color-peach-deep: #ffd9a8;
-  --color-lime: #b6ff6b;
-  --color-whatsapp: #25d366;
-  --color-terracotta: #b06a4a;
-  --color-charcoal: #14110c;
-}
+@import "@nino/ds/tokens.css";
 
 @layer base {
   html {
