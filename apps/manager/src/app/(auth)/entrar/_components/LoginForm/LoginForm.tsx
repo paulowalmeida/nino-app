@@ -39,7 +39,6 @@ export function LoginForm() {
     <div>
       <header className={`${motion.rise} ${styles.header}`} style={rise(0)}>
         <h1 className={styles.title}>Bem-vindo</h1>
-        <p className={styles.subtitle}>Acesse o painel da sua loja</p>
       </header>
 
       <form
