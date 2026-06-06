@@ -1,0 +1,7 @@
+export type { IconProps } from './icon-props'
+export { IconBag } from './IconBag'
+export { IconClipboard } from './IconClipboard'
+export { IconGear } from './IconGear'
+export { IconGrid } from './IconGrid'
+export { IconLogout } from './IconLogout'
+export { IconUsers } from './IconUsers'

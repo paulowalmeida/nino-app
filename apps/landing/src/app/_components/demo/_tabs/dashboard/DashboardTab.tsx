@@ -1,6 +1,7 @@
 import { HourlyChart } from "@demo/_tabs/dashboard/_components/hourly-chart/HourlyChart"
 import { OrderRow } from "@demo/_tabs/dashboard/_components/order-row/OrderRow"
 import { StatCard } from "@demo/_tabs/dashboard/_components/stat-card/StatCard"
+
 import { chartBars, chartLabels, orders, stats } from "./dashboardTab.constants"
 import styles from "./DashboardTab.module.css"
 

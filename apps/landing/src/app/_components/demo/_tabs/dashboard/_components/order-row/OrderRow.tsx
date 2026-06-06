@@ -1,5 +1,5 @@
-import type { OrderRowProps } from "./OrderRow.types"
 import styles from "./OrderRow.module.css"
+import type { OrderRowProps } from "./OrderRow.types"
 
 export function OrderRow({
   icon,

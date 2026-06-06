@@ -1,4 +1,5 @@
 import { PlanCard } from "@pricing/_components/plan-card/PlanCard"
+
 import { plans } from "./pricing.constants"
 import styles from "./Pricing.module.css"
 

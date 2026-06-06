@@ -1,4 +1,5 @@
 import { FooterColumn } from "@footer/_components/footer-column/FooterColumn"
+
 import { columns } from "./footer.constants"
 import styles from "./Footer.module.css"
 

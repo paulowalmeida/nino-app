@@ -2,6 +2,7 @@
 
 import { FloatingNotification } from "@hero/_components/FloatingNotification"
 import { PhoneMockup } from "@hero/_components/PhoneMockup"
+
 import { proof } from "./hero.constants"
 import styles from "./Hero.module.css"
 

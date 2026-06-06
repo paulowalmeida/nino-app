@@ -2,12 +2,12 @@
 
 import { useState } from "react"
 
-import styles from "./Demo.module.css"
-
 import { DashboardTab } from "@demo/_tabs/dashboard/DashboardTab"
 import { OrderTab } from "@demo/_tabs/order/OrderTab"
 import { DemoTab } from "@demo/_tabs/tab.type"
 import { TrackingTab } from "@demo/_tabs/tracking/TrackingTab"
+
+import styles from "./Demo.module.css"
 
 export function Demo() {
   const tabs: DemoTab[] = [

@@ -1,5 +1,6 @@
 import { BenefitItem } from "@for-restaurants/_components/benefit-item/BenefitItem"
 import { BillingRow } from "@for-restaurants/_components/billing-row/BillingRow"
+
 import { benefits, billing } from "./forRestaurants.constants"
 import styles from "./ForRestaurants.module.css"
 

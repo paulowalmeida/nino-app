@@ -1,5 +1,5 @@
-import type { StepCardProps } from "./StepCard.types"
 import styles from "./StepCard.module.css"
+import type { StepCardProps } from "./StepCard.types"
 
 export function StepCard({ title, text, index }: StepCardProps) {
   return (

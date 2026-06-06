@@ -1,5 +1,5 @@
-import type { TrackingStepProps } from "./TrackingStep.types"
 import styles from "./TrackingStep.module.css"
+import type { TrackingStepProps } from "./TrackingStep.types"
 
 const nodeStyles = {
   done: styles.nodeDone,

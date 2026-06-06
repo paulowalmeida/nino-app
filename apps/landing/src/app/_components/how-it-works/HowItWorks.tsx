@@ -1,4 +1,5 @@
 import { StepCard } from "@how-it-works/_components/step-card/StepCard"
+
 import { steps } from "./howItWorks.constants"
 import styles from "./HowItWorks.module.css"
 

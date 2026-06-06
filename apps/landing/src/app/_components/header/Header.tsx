@@ -1,12 +1,12 @@
 "use client"
 
-import Image from "next/image"
 import { useEffect, useState } from "react"
+import Image from "next/image"
 
+import { navLinks } from "./header.constants"
 import styles from "./Header.module.css"
 
 import { ENTRAR_URL } from "@/config"
-import { navLinks } from "./header.constants"
 
 export function Header() {
   const [menuOpen, setMenuOpen] = useState(false)

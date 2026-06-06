@@ -1,0 +1,38 @@
+@reference "@nino/ds/globals.css";
+
+/* left accent bar */
+.card::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.875rem;
+  bottom: 0.875rem;
+  width: 3px;
+  border-radius: 0 3px 3px 0;
+  background: var(--color-brand);
+  opacity: 0.7;
+}
+
+.card {
+  @apply relative flex flex-col gap-3 overflow-hidden;
+  @apply rounded-2xl border border-sand-deep bg-white p-5;
+  @apply transition-shadow duration-200;
+  @apply hover:shadow-md hover:shadow-brand/5;
+}
+
+.top {
+  @apply flex items-center justify-between;
+}
+
+.label {
+  @apply text-xs font-semibold uppercase tracking-widest text-faint;
+}
+
+.iconWrap {
+  @apply flex h-8 w-8 items-center justify-center rounded-lg;
+  @apply bg-brand/8 text-brand;
+}
+
+.value {
+  @apply font-display text-3xl font-extrabold tracking-tight text-ink;
+}

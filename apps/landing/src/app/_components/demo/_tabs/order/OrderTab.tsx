@@ -1,4 +1,5 @@
 import { MenuItem } from "@demo/_tabs/order/_components/menu-item/MenuItem"
+
 import { categories, menuItems } from "./orderTab.constants"
 import styles from "./OrderTab.module.css"
 

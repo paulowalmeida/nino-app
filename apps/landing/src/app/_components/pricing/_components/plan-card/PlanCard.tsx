@@ -1,7 +1,7 @@
 import { Fragment } from "react"
 
-import type { PlanCardProps } from "./PlanCard.types"
 import styles from "./PlanCard.module.css"
+import type { PlanCardProps } from "./PlanCard.types"
 
 import { CADASTRO_URL } from "@/config"
 

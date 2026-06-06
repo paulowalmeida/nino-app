@@ -1,4 +1,7 @@
+import Image from "next/image"
+
 import { TrackingStep } from "@demo/_tabs/tracking/_components/tracking-step/TrackingStep"
+
 import { trackingSteps } from "./trackingTab.constants"
 import styles from "./TrackingTab.module.css"
 
@@ -20,7 +23,13 @@ export function TrackingTab() {
       </div>
 
       <div className={styles.mapContainer}>
-        <img src="/assets/map-mockup.svg" alt="" className={styles.mapImage} />
+        <Image
+          src="/assets/map-mockup.svg"
+          alt=""
+          width={400}
+          height={200}
+          className={styles.mapImage}
+        />
       </div>
 
       <div className={styles.courierSection}>

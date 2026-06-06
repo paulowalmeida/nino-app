@@ -1,28 +1,47 @@
 @reference "@nino/ds/globals.css";
 
+/* warm glow escaping top-right of the header area */
+.headerGlow {
+  position: absolute;
+  top: -3rem;
+  right: -2rem;
+  width: 16rem;
+  height: 16rem;
+  border-radius: 9999px;
+  background: var(--color-brand);
+  opacity: 0.06;
+  filter: blur(3rem);
+  pointer-events: none;
+}
+
 .page {
-  @apply min-h-screen bg-gray-50;
+  @apply p-6 lg:p-10;
 }
 
 .header {
-  @apply flex items-center justify-between border-b border-gray-200;
-  @apply bg-white px-6 py-4;
+  @apply relative mb-8 overflow-hidden rounded-2xl;
+  @apply border border-sand bg-white/60 px-7 py-6;
+  background: linear-gradient(
+    135deg,
+    var(--color-paper) 0%,
+    var(--color-cream) 100%
+  );
 }
 
-.main {
-  @apply mx-auto flex max-w-2xl flex-col items-center px-6 py-24;
-  @apply text-center;
-}
-
-.badge {
-  @apply mb-6 rounded-full bg-brand/10 px-4 py-1.5 text-sm;
-  @apply font-medium text-brand;
+.greeting {
+  @apply text-xs font-semibold uppercase tracking-widest text-muted;
+  @apply mb-1;
 }
 
 .title {
-  @apply font-display text-4xl font-extrabold tracking-tight text-gray-900;
+  @apply font-display text-3xl font-extrabold tracking-tight text-ink;
+  @apply lg:text-4xl;
 }
 
-.subtitle {
-  @apply mt-3 max-w-md text-base text-gray-500;
+.date {
+  @apply mt-1.5 text-sm text-faint;
+}
+
+.cards {
+  @apply grid grid-cols-2 gap-4 lg:grid-cols-4;
 }

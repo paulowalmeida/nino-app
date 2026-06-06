@@ -1,0 +1,5 @@
+export type { IconProps } from './icon-props'
+export { IconOrders } from './IconOrders'
+export { IconRevenue } from './IconRevenue'
+export { IconStar } from './IconStar'
+export { IconTicket } from './IconTicket'

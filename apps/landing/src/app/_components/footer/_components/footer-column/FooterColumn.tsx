@@ -1,5 +1,5 @@
-import type { FooterColumnProps } from "./FooterColumn.types"
 import styles from "./FooterColumn.module.css"
+import type { FooterColumnProps } from "./FooterColumn.types"
 
 export function FooterColumn({ title, links }: FooterColumnProps) {
   return (

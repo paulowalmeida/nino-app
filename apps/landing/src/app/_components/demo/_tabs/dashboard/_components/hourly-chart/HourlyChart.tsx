@@ -1,5 +1,5 @@
-import type { HourlyChartProps } from "./HourlyChart.types"
 import styles from "./HourlyChart.module.css"
+import type { HourlyChartProps } from "./HourlyChart.types"
 
 export function HourlyChart({ bars, labels, peakRange }: HourlyChartProps) {
   return (
