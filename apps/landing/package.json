@@ -3,7 +3,8 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "dev": "next dev --port 3005",
+    "dev": "NEXT_PUBLIC_MANAGER_URL=https://gestor-dev.nino.delivery next dev --port 3005",
+    "local": "next dev --port 3005",
     "build": "next build",
     "start": "next start --port 3005",
     "lint": "eslint . --max-warnings=0",
