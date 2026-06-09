@@ -4,7 +4,7 @@ import type { CSSProperties } from "react"
 import { useForm } from "react-hook-form"
 import { useRouter } from "next/navigation"
 
-import { Button, FormField, Input } from "@nino/ds"
+import { Button, CnpjInput, FormField, Input } from "@nino/ds"
 
 import styles from "../../../authForm.module.css"
 import motion from "../../../motion.module.css"
@@ -73,7 +73,7 @@ export function CompanyStep({ responsible }: CompanyStepProps) {
             label="Razão social (opcional)"
             error={errors.company?.legalName?.message}
           >
-            <Input
+            <CnpjInput
               placeholder="Zé Alimentos LTDA"
               {...register("company.legalName")}
             />
