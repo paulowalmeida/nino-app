@@ -1,5 +1,7 @@
 "use client"
 
+import { usePainelUser } from "@contexts/PainelAuth"
+
 import { StatCard } from "./_components/StatCard"
 import {
   IconOrders,
@@ -8,8 +10,6 @@ import {
   IconTicket,
 } from "./_components/StatCard/_icons"
 import styles from "./page.module.css"
-
-import { usePainelUser } from "@/contexts/PainelAuth"
 
 function getLocalHour(timezone: string | null): number {
   const tz = timezone ?? Intl.DateTimeFormat().resolvedOptions().timeZone

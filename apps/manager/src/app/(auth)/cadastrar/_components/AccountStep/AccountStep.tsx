@@ -5,6 +5,12 @@ import { useForm } from "react-hook-form"
 import Link from "next/link"
 
 import {
+  login,
+  register as registerOwner,
+  setTokens,
+} from "@services/auth.service"
+
+import {
   Button,
   CpfInput,
   FormField,
@@ -14,15 +20,10 @@ import {
 } from "@nino/ds"
 import { GlobalRole } from "@nino/lib"
 
-import styles from "../../../authForm.module.css"
-import motion from "../../../motion.module.css"
 import type { AccountFormValues, AccountStepProps } from "./AccountStep.types"
 
-import {
-  login,
-  register as registerOwner,
-  setTokens,
-} from "@/services/auth.service"
+import styles from "@/app/(auth)/authForm.module.css"
+import motion from "@/app/(auth)/motion.module.css"
 
 const rise = (delay: number): CSSProperties =>
   ({ ["--d"]: `${delay}ms` }) as CSSProperties

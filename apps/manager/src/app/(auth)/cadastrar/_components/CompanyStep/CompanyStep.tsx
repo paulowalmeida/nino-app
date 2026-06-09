@@ -4,13 +4,14 @@ import type { CSSProperties } from "react"
 import { useForm } from "react-hook-form"
 import { useRouter } from "next/navigation"
 
+import { completeOnboarding } from "@services/onboarding.service"
+
 import { Button, CnpjInput, FormField, Input } from "@nino/ds"
 
-import styles from "../../../authForm.module.css"
-import motion from "../../../motion.module.css"
 import type { CompanyFormValues, CompanyStepProps } from "./CompanyStep.types"
 
-import { completeOnboarding } from "@/services/onboarding.service"
+import styles from "@/app/(auth)/authForm.module.css"
+import motion from "@/app/(auth)/motion.module.css"
 
 const rise = (delay: number): CSSProperties =>
   ({ ["--d"]: `${delay}ms` }) as CSSProperties

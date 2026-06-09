@@ -1,9 +1,9 @@
 import type { ReactNode } from "react"
 
+import { NinoLogo } from "@components/NinoLogo"
+
 import { NinoMascot } from "./_components/NinoMascot"
 import styles from "./layout.module.css"
-
-import { NinoLogo } from "@/components/NinoLogo"
 
 const brandPanel = `${styles.brandPanel} ${styles.dotGrid} ${styles.grain}`
 const glowTop = `${styles.glowTop} ${styles.glowPulse}`
