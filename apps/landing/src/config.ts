@@ -1,3 +1,4 @@
-// Destinos no app do gestor (ajustar para produção quando publicar)
-export const ENTRAR_URL = "https://gestor-dev.nino.delivery"
-export const CADASTRO_URL = "https://gestor-dev.nino.delivery/cadastrar"
+const managerUrl = process.env.NEXT_PUBLIC_MANAGER_URL ?? ''
+
+export const ENTRAR_URL = managerUrl
+export const CADASTRO_URL = `${managerUrl}/cadastrar`
