@@ -9,6 +9,7 @@ export type TenantSettings = {
   deliveryRadius: number
   isDeliveryEnabled: boolean
   isPickupEnabled: boolean
+  isCounterEnabled: boolean
   loyaltyEnabled: boolean
   loyaltyPointsPerOrder: number
   loyaltyPointValue: number

@@ -2,7 +2,7 @@ import { CreateOrderItemRequest } from './create-order-item-request'
 
 export type CreateGuestOrderRequest = {
   tenantId: string
-  isDelivery: boolean
+  channelId: string
   deliveryFee?: number
   guestName: string
   guestPhone: string
