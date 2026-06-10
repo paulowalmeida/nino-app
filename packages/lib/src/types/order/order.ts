@@ -7,7 +7,9 @@ export type Order = {
   tenantId: string
   customerId: string | null
   deliveryAddressId: string | null
-  isDelivery: boolean
+  channelId: string
+  operatorId: string | null
+  tableNumber: string | null
   deliveryFee: number
   subtotal: number
   totalAmount: number

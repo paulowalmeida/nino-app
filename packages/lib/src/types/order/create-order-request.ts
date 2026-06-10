@@ -5,7 +5,8 @@ export type CreateOrderRequest = {
   statusId: string
   customerId?: string
   deliveryAddressId?: string
-  isDelivery: boolean
+  channelId: string
+  tableNumber?: string
   deliveryFee: number
   notes?: string
   estimatedDeliveryAt?: string

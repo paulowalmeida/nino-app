@@ -94,3 +94,9 @@ export enum InvoiceStatus {
   OVERDUE = 'OVERDUE',
   CANCELLED = 'CANCELLED',
 }
+
+export enum OrderChannel {
+  DELIVERY = 'DELIVERY',
+  PICKUP = 'PICKUP',
+  COUNTER = 'COUNTER',
+}
