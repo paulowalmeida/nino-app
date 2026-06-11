@@ -1,6 +1,8 @@
 import type { Metadata } from "next"
 import { Bricolage_Grotesque, Hanken_Grotesk } from "next/font/google"
 
+import { Providers } from "./providers"
+
 import "@nino/ds/globals.css"
 import "./globals.css"
 
@@ -27,7 +29,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="pt-BR" className={`${display.variable} ${sans.variable}`}>
-      <body>{children}</body>
+      <body>
+        <Providers>{children}</Providers>
+      </body>
     </html>
   )
 }
