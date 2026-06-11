@@ -2,9 +2,9 @@
 
 import { useRouter } from "next/navigation"
 
-import { Button } from "@nino/ds"
+import { clearTokens, logout } from "@services/auth.service"
 
-import { clearTokens, logout } from "@/services/auth.service"
+import { Button } from "@nino/ds"
 
 export function LogoutButton() {
   const router = useRouter()

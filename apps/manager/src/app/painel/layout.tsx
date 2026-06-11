@@ -2,13 +2,13 @@
 
 import { type ReactNode,useState } from "react"
 
+import { FullScreenLoader } from "@components/FullScreenLoader"
+import { NinoLogo } from "@components/NinoLogo"
+import { PainelAuthProvider } from "@contexts/PainelAuth"
+import { useAuthUser } from "@hooks/useAuthUser"
+
 import { Sidebar } from "./_components/Sidebar"
 import styles from "./layout.module.css"
-
-import { FullScreenLoader } from "@/components/FullScreenLoader"
-import { NinoLogo } from "@/components/NinoLogo"
-import { PainelAuthProvider } from "@/contexts/PainelAuth"
-import { useAuthUser } from "@/hooks/useAuthUser"
 
 function IconHamburger() {
   return (

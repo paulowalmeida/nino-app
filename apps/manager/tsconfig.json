@@ -9,7 +9,12 @@
     ],
     "paths": {
       "@/*": ["./src/*"],
-      "@ds/*": ["../../packages/ds/src/*"]
+      "@ds/*": ["../../packages/ds/src/*"],
+      "@services/*": ["./src/services/*"],
+      "@components/*": ["./src/components/*"],
+      "@hooks/*": ["./src/hooks/*"],
+      "@lib/*": ["./src/lib/*"],
+      "@contexts/*": ["./src/contexts/*"]
     },
     "allowJs": true,
     "noEmit": true,

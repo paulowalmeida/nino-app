@@ -3,9 +3,9 @@
 import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
 
-import type { User } from "@nino/lib"
+import { clearTokens, me } from "@services/auth.service"
 
-import { clearTokens, me } from "@/services/auth.service"
+import type { User } from "@nino/lib"
 
 type AuthUserState = {
   user: User | null

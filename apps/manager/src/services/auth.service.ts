@@ -1,3 +1,6 @@
+import { getCookie, removeCookie, setCookie } from "@lib/cookies"
+import { httpConfig } from "@lib/http"
+
 import type {
   LoginRequest,
   LoginResponse,
@@ -5,9 +8,6 @@ import type {
   User,
 } from "@nino/lib"
 import { get, post } from "@nino/lib"
-
-import { getCookie, removeCookie, setCookie } from "@/lib/cookies"
-import { httpConfig } from "@/lib/http"
 
 const ACCESS_TOKEN_MAX_AGE = 15 * 60
 const REFRESH_TOKEN_MAX_AGE = 7 * 24 * 60 * 60

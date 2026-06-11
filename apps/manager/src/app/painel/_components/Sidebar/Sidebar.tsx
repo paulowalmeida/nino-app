@@ -3,6 +3,9 @@
 import Link from "next/link"
 import { usePathname, useRouter } from "next/navigation"
 
+import { NinoLogo } from "@components/NinoLogo"
+import { clearTokens, logout } from "@services/auth.service"
+
 import {
   IconBag,
   IconClipboard,
@@ -14,9 +17,6 @@ import {
 import type { NavItemDef } from "./nav-item-def"
 import styles from "./Sidebar.module.css"
 import type { SidebarProps } from "./Sidebar.types"
-
-import { NinoLogo } from "@/components/NinoLogo"
-import { clearTokens, logout } from "@/services/auth.service"
 
 const navItems: NavItemDef[] = [
   { href: '/painel', label: 'Visão geral', icon: IconGrid },

@@ -5,13 +5,13 @@ import { useForm } from "react-hook-form"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 
+import { login, setTokens } from "@services/auth.service"
+
 import { Button, FormField, Input, PasswordInput } from "@nino/ds"
 import type { LoginRequest } from "@nino/lib"
 
-import styles from "../../../authForm.module.css"
-import motion from "../../../motion.module.css"
-
-import { login, setTokens } from "@/services/auth.service"
+import styles from "@/app/(auth)/authForm.module.css"
+import motion from "@/app/(auth)/motion.module.css"
 
 const rise = (delay: number): CSSProperties =>
   ({ ["--d"]: `${delay}ms` }) as CSSProperties
