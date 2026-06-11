@@ -23,7 +23,7 @@ function authErrorMessage(error: unknown): string {
       return "Muitas tentativas. Aguarde um momento e tente de novo."
     if (error.status >= 500)
       return "Erro no servidor. Tente novamente em instantes."
-    return error.message || "Não foi possível entrar. Tente de novo."
+    return "Não foi possível entrar. Tente de novo."
   }
   return "Falha de conexão. Verifique sua internet e tente de novo."
 }
