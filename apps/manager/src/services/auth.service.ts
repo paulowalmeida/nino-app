@@ -5,6 +5,7 @@ import type {
   LoginRequest,
   LoginResponse,
   RegisterRequest,
+  SignupRequest,
   User,
 } from "@nino/lib"
 import { get, post } from "@nino/lib"
@@ -28,6 +29,10 @@ export function login(data: LoginRequest): Promise<LoginResponse> {
 
 export function register(data: RegisterRequest): Promise<{ user: User }> {
   return post<{ user: User }>(httpConfig(), "/auth/register", data)
+}
+
+export function signup(data: SignupRequest): Promise<LoginResponse> {
+  return post<LoginResponse>(httpConfig(), "/auth/signup", data)
 }
 
 export function logout(): Promise<void> {

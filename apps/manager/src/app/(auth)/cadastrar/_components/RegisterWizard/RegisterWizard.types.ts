@@ -1,3 +1,3 @@
-import type { CompleteOnboardingRequest } from "@nino/lib"
+import type { SignupRequest } from "@nino/lib"
 
-export type Responsible = CompleteOnboardingRequest["responsible"]
+export type Account = SignupRequest["account"]

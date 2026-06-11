@@ -1,10 +1,9 @@
-import type { CompleteOnboardingRequest } from "@nino/lib"
+import type { SignupRequest } from "@nino/lib"
 
-export type AccountFormValues = CompleteOnboardingRequest["responsible"] & {
-  password: string
+export type AccountFormValues = SignupRequest["account"] & {
   confirmPassword: string
 }
 
 export type AccountStepProps = {
-  onNext: (responsible: CompleteOnboardingRequest["responsible"]) => void
+  onNext: (account: SignupRequest["account"]) => void
 }
