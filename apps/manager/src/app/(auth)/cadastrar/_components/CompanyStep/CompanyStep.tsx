@@ -4,9 +4,9 @@ import type { CSSProperties } from "react"
 import { useForm } from "react-hook-form"
 import { useRouter } from "next/navigation"
 
-import { setTokens, signup } from "@services/auth.service"
+import { checkAvailability, setTokens, signup } from "@services/auth.service"
 
-import { Button, CnpjInput, FormField, Input } from "@nino/ds"
+import { Button, CnpjInput, FormField, Input, isValidCnpj } from "@nino/ds"
 
 import type { CompanyFormValues, CompanyStepProps } from "./CompanyStep.types"
 
@@ -27,6 +27,14 @@ export function CompanyStep({ account }: CompanyStepProps) {
 
   async function onSubmit(data: CompanyFormValues) {
     try {
+      const availability = await checkAvailability({
+        cnpj: data.company.cnpj,
+      })
+      if (availability.cnpj === false) {
+        setError("company.cnpj", { message: "CNPJ já cadastrado" })
+        return
+      }
+
       const { tokens } = await signup({ account, company: data.company })
       setTokens(tokens.accessToken, tokens.refreshToken)
       router.push("/painel")
@@ -65,7 +73,10 @@ export function CompanyStep({ account }: CompanyStepProps) {
           <FormField label="CNPJ" error={errors.company?.cnpj?.message}>
             <CnpjInput
               error={!!errors.company?.cnpj}
-              {...register("company.cnpj", { required: "Informe o CNPJ" })}
+              {...register("company.cnpj", {
+                required: "Informe o CNPJ",
+                validate: (value) => isValidCnpj(value) || "CNPJ inválido",
+              })}
             />
           </FormField>
         </div>
