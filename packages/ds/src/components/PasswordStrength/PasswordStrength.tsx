@@ -73,7 +73,7 @@ export function PasswordStrength({
   const filled = segmentsByLevel[level]
 
   return (
-    <div className={mergeClasses('w-full', className)}>
+    <div className={mergeClasses('w-full mt-1', className)}>
       <div
         className="flex gap-1.5"
         role="meter"
