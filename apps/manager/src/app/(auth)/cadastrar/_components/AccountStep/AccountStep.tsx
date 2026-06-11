@@ -27,7 +27,7 @@ const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 const rise = (delay: number): CSSProperties =>
   ({ ["--d"]: `${delay}ms` }) as CSSProperties
 
-export function AccountStep({ onNext }: AccountStepProps) {
+export function AccountStep({ defaultValues, onNext }: AccountStepProps) {
   const {
     register,
     handleSubmit,
@@ -35,7 +35,12 @@ export function AccountStep({ onNext }: AccountStepProps) {
     setError,
     watch,
     formState: { errors, isSubmitting },
-  } = useForm<AccountFormValues>()
+  } = useForm<AccountFormValues>({
+    mode: "onTouched",
+    defaultValues: defaultValues
+      ? { ...defaultValues, confirmPassword: defaultValues.password }
+      : undefined,
+  })
 
   const password = watch("password")
 
