@@ -2,6 +2,8 @@ import { getCookie, removeCookie, setCookie } from "@lib/cookies"
 import { httpConfig } from "@lib/http"
 
 import type {
+  CheckAvailabilityRequest,
+  CheckAvailabilityResponse,
   LoginRequest,
   LoginResponse,
   RegisterRequest,
@@ -33,6 +35,16 @@ export function register(data: RegisterRequest): Promise<{ user: User }> {
 
 export function signup(data: SignupRequest): Promise<LoginResponse> {
   return post<LoginResponse>(httpConfig(), "/auth/signup", data)
+}
+
+export function checkAvailability(
+  data: CheckAvailabilityRequest,
+): Promise<CheckAvailabilityResponse> {
+  return post<CheckAvailabilityResponse>(
+    httpConfig(),
+    "/auth/check-availability",
+    data,
+  )
 }
 
 export function logout(): Promise<void> {

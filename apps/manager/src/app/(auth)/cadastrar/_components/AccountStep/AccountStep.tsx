@@ -4,12 +4,16 @@ import type { CSSProperties } from "react"
 import { useForm } from "react-hook-form"
 import Link from "next/link"
 
+import { checkAvailability } from "@services/auth.service"
+
 import {
   Button,
   CpfInput,
   FormField,
   Input,
+  isValidCpf,
   PasswordInput,
+  PasswordStrength,
   PhoneInput,
 } from "@nino/ds"
 
@@ -17,6 +21,8 @@ import type { AccountFormValues, AccountStepProps } from "./AccountStep.types"
 
 import styles from "@/app/(auth)/authForm.module.css"
 import motion from "@/app/(auth)/motion.module.css"
+
+const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
 const rise = (delay: number): CSSProperties =>
   ({ ["--d"]: `${delay}ms` }) as CSSProperties
@@ -26,17 +32,43 @@ export function AccountStep({ onNext }: AccountStepProps) {
     register,
     handleSubmit,
     getValues,
-    formState: { errors },
+    setError,
+    watch,
+    formState: { errors, isSubmitting },
   } = useForm<AccountFormValues>()
 
-  function onSubmit(data: AccountFormValues) {
-    onNext({
-      name: data.name,
-      email: data.email,
-      password: data.password,
-      cpf: data.cpf,
-      phone: data.phone,
-    })
+  const password = watch("password")
+
+  async function onSubmit(data: AccountFormValues) {
+    try {
+      const availability = await checkAvailability({
+        email: data.email,
+        cpf: data.cpf,
+      })
+
+      let taken = false
+      if (availability.email === false) {
+        setError("email", { message: "E-mail já cadastrado" })
+        taken = true
+      }
+      if (availability.cpf === false) {
+        setError("cpf", { message: "CPF já cadastrado" })
+        taken = true
+      }
+      if (taken) return
+
+      onNext({
+        name: data.name,
+        email: data.email,
+        password: data.password,
+        cpf: data.cpf,
+        phone: data.phone,
+      })
+    } catch {
+      setError("root", {
+        message: "Não foi possível validar os dados. Tente de novo.",
+      })
+    }
   }
 
   return (
@@ -68,7 +100,10 @@ export function AccountStep({ onNext }: AccountStepProps) {
             <Input
               type="email"
               placeholder="seu@email.com"
-              {...register("email", { required: "Informe o email" })}
+              {...register("email", {
+                required: "Informe o email",
+                pattern: { value: EMAIL_PATTERN, message: "E-mail inválido" },
+              })}
             />
           </FormField>
         </div>
@@ -86,7 +121,10 @@ export function AccountStep({ onNext }: AccountStepProps) {
           <FormField label="CPF" error={errors.cpf?.message}>
             <CpfInput
               error={!!errors.cpf}
-              {...register("cpf", { required: "Informe o CPF" })}
+              {...register("cpf", {
+                required: "Informe o CPF",
+                validate: (value) => isValidCpf(value) || "CPF inválido",
+              })}
             />
           </FormField>
         </div>
@@ -96,9 +134,20 @@ export function AccountStep({ onNext }: AccountStepProps) {
             <PasswordInput
               placeholder="••••••••"
               error={!!errors.password}
-              {...register("password", { required: "Informe a senha" })}
+              {...register("password", {
+                required: "Informe a senha",
+                minLength: {
+                  value: 8,
+                  message: "A senha deve ter ao menos 8 caracteres",
+                },
+                maxLength: {
+                  value: 16,
+                  message: "A senha deve ter no máximo 16 caracteres",
+                },
+              })}
             />
           </FormField>
+          {password && <PasswordStrength password={password} />}
         </div>
 
         <div className={motion.rise} style={rise(420)}>
@@ -118,8 +167,17 @@ export function AccountStep({ onNext }: AccountStepProps) {
           </FormField>
         </div>
 
+        {errors.root && (
+          <p className={styles.errorText}>{errors.root.message}</p>
+        )}
+
         <div className={motion.rise} style={rise(480)}>
-          <Button type="submit" className={styles.submit}>
+          <Button
+            type="submit"
+            loading={isSubmitting}
+            className={styles.submit}
+            loadingIndicator="dots"
+          >
             Continuar
           </Button>
         </div>
