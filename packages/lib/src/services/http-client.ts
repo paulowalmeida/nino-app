@@ -1,5 +1,6 @@
 import { HttpClientConfig } from '../types/http/http-client-config'
 import { HttpMethod } from '../types/http/http-method'
+import { ApiError } from './api-error'
 
 function buildHeaders(config: HttpClientConfig): Record<string, string> {
   const headers: Record<string, string> = { 'Content-Type': 'application/json' }
@@ -8,19 +9,16 @@ function buildHeaders(config: HttpClientConfig): Record<string, string> {
   return headers
 }
 
-async function toApiError(response: Response): Promise<Error> {
+async function toApiError(response: Response): Promise<ApiError> {
   const error = await response.json().catch(() => ({}))
-  return new Error(error.message ?? response.statusText)
+  return new ApiError(response.status, error.message ?? response.statusText)
 }
 
 async function assertOk(
   response: Response,
   config: HttpClientConfig
 ): Promise<void> {
-  if (response.status === 401) {
-    config.onUnauthorized?.()
-    throw new Error('Unauthorized')
-  }
+  if (response.status === 401) config.onUnauthorized?.()
   if (!response.ok) throw await toApiError(response)
 }
 
