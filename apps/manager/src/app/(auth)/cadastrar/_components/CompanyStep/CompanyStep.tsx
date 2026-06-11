@@ -62,8 +62,8 @@ export function CompanyStep({ responsible }: CompanyStepProps) {
 
         <div className={motion.rise} style={rise(180)}>
           <FormField label="CNPJ" error={errors.company?.cnpj?.message}>
-            <Input
-              placeholder="00.000.000/0000-00"
+            <CnpjInput
+              error={!!errors.company?.cnpj}
               {...register("company.cnpj", { required: "Informe o CNPJ" })}
             />
           </FormField>
@@ -74,7 +74,7 @@ export function CompanyStep({ responsible }: CompanyStepProps) {
             label="Razão social (opcional)"
             error={errors.company?.legalName?.message}
           >
-            <CnpjInput
+            <Input
               placeholder="Zé Alimentos LTDA"
               {...register("company.legalName")}
             />
