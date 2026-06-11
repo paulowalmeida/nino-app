@@ -16,7 +16,7 @@ import motion from "@/app/(auth)/motion.module.css"
 const rise = (delay: number): CSSProperties =>
   ({ ["--d"]: `${delay}ms` }) as CSSProperties
 
-export function CompanyStep({ account }: CompanyStepProps) {
+export function CompanyStep({ account, onBack }: CompanyStepProps) {
   const router = useRouter()
   const {
     register,
@@ -105,6 +105,15 @@ export function CompanyStep({ account }: CompanyStepProps) {
             loadingIndicator="dots"
           >
             Concluir cadastro
+          </Button>
+          <Button
+            type="button"
+            variant="ghost"
+            onClick={onBack}
+            disabled={isSubmitting}
+            className={styles.submit}
+          >
+            Voltar
           </Button>
         </div>
       </form>

@@ -5,5 +5,6 @@ export type AccountFormValues = SignupRequest["account"] & {
 }
 
 export type AccountStepProps = {
+  defaultValues?: SignupRequest["account"] | null
   onNext: (account: SignupRequest["account"]) => void
 }
