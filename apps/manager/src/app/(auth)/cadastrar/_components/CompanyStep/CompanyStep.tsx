@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation"
 import { checkAvailability, setTokens, signup } from "@services/auth.service"
 
 import { Button, CnpjInput, FormField, Input, isValidCnpj } from "@nino/ds"
+import { ApiError } from "@nino/lib"
 
 import type { CompanyFormValues, CompanyStepProps } from "./CompanyStep.types"
 
@@ -38,7 +39,11 @@ export function CompanyStep({ account, onBack }: CompanyStepProps) {
       const { tokens } = await signup({ account, company: data.company })
       setTokens(tokens.accessToken, tokens.refreshToken)
       router.push("/painel")
-    } catch {
+    } catch (error) {
+      if (error instanceof ApiError && error.status === 409) {
+        setError("root", { message: error.message })
+        return
+      }
       setError("root", {
         message: "Não foi possível concluir. Confira os dados e tente de novo.",
       })
