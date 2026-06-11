@@ -5,12 +5,6 @@ import { useForm } from "react-hook-form"
 import Link from "next/link"
 
 import {
-  login,
-  register as registerOwner,
-  setTokens,
-} from "@services/auth.service"
-
-import {
   Button,
   CpfInput,
   FormField,
@@ -18,7 +12,6 @@ import {
   PasswordInput,
   PhoneInput,
 } from "@nino/ds"
-import { GlobalRole } from "@nino/lib"
 
 import type { AccountFormValues, AccountStepProps } from "./AccountStep.types"
 
@@ -32,35 +25,18 @@ export function AccountStep({ onNext }: AccountStepProps) {
   const {
     register,
     handleSubmit,
-    setError,
     getValues,
-    formState: { errors, isSubmitting },
+    formState: { errors },
   } = useForm<AccountFormValues>()
 
-  async function onSubmit(data: AccountFormValues) {
-    try {
-      await registerOwner({
-        name: data.name,
-        email: data.email,
-        password: data.password,
-        globalRole: GlobalRole.OWNER,
-      })
-      const { tokens } = await login({
-        email: data.email,
-        password: data.password,
-      })
-      setTokens(tokens.accessToken, tokens.refreshToken)
-      onNext({
-        name: data.name,
-        email: data.email,
-        cpf: data.cpf,
-        phone: data.phone,
-      })
-    } catch {
-      setError("root", {
-        message: "Não foi possível criar a conta. Verifique os dados.",
-      })
-    }
+  function onSubmit(data: AccountFormValues) {
+    onNext({
+      name: data.name,
+      email: data.email,
+      password: data.password,
+      cpf: data.cpf,
+      phone: data.phone,
+    })
   }
 
   return (
@@ -142,17 +118,8 @@ export function AccountStep({ onNext }: AccountStepProps) {
           </FormField>
         </div>
 
-        {errors.root && (
-          <p className={styles.errorText}>{errors.root.message}</p>
-        )}
-
         <div className={motion.rise} style={rise(480)}>
-          <Button
-            type="submit"
-            loading={isSubmitting}
-            className={styles.submit}
-            loadingIndicator="dots"
-          >
+          <Button type="submit" className={styles.submit}>
             Continuar
           </Button>
         </div>

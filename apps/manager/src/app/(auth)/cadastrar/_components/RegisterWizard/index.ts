@@ -1,2 +1,2 @@
 export { RegisterWizard } from "./RegisterWizard"
-export type { Responsible } from "./RegisterWizard.types"
+export type { Account } from "./RegisterWizard.types"

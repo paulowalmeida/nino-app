@@ -4,7 +4,7 @@ import type { CSSProperties } from "react"
 import { useForm } from "react-hook-form"
 import { useRouter } from "next/navigation"
 
-import { completeOnboarding } from "@services/onboarding.service"
+import { setTokens, signup } from "@services/auth.service"
 
 import { Button, CnpjInput, FormField, Input } from "@nino/ds"
 
@@ -16,7 +16,7 @@ import motion from "@/app/(auth)/motion.module.css"
 const rise = (delay: number): CSSProperties =>
   ({ ["--d"]: `${delay}ms` }) as CSSProperties
 
-export function CompanyStep({ responsible }: CompanyStepProps) {
+export function CompanyStep({ account }: CompanyStepProps) {
   const router = useRouter()
   const {
     register,
@@ -27,7 +27,8 @@ export function CompanyStep({ responsible }: CompanyStepProps) {
 
   async function onSubmit(data: CompanyFormValues) {
     try {
-      await completeOnboarding({ company: data.company, responsible })
+      const { tokens } = await signup({ account, company: data.company })
+      setTokens(tokens.accessToken, tokens.refreshToken)
       router.push("/painel")
     } catch {
       setError("root", {
@@ -42,7 +43,7 @@ export function CompanyStep({ responsible }: CompanyStepProps) {
         <p className={styles.step}>Passo 2 de 2</p>
         <h1 className={styles.title}>Sua empresa</h1>
         <p className={styles.subtitle}>
-          Quase lá, {responsible.name.split(" ")[0]}
+          Quase lá, {account.name.split(" ")[0]}
         </p>
       </header>
 

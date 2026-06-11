@@ -4,12 +4,12 @@ import { useState } from "react"
 
 import { AccountStep } from "../AccountStep"
 import { CompanyStep } from "../CompanyStep"
-import type { Responsible } from "./RegisterWizard.types"
+import type { Account } from "./RegisterWizard.types"
 
 export function RegisterWizard() {
-  const [responsible, setResponsible] = useState<Responsible | null>(null)
+  const [account, setAccount] = useState<Account | null>(null)
 
-  if (!responsible) return <AccountStep onNext={setResponsible} />
+  if (!account) return <AccountStep onNext={setAccount} />
 
-  return <CompanyStep responsible={responsible} />
+  return <CompanyStep account={account} />
 }
