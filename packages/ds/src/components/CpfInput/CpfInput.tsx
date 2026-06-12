@@ -3,9 +3,7 @@ import { forwardRef } from 'react'
 import { maskCpf } from '@ds/lib/masks/masks'
 
 import { MaskedInput } from '../MaskedInput'
-import { MaskedInputProps } from '../MaskedInput/MaskedInput.types'
-
-export type CpfInputProps = Omit<MaskedInputProps, 'mask'>
+import { CpfInputProps } from './CpfInput.types'
 
 /** CPF field with Brazilian mask — 000.000.000-00. */
 export const CpfInput = forwardRef<HTMLInputElement, CpfInputProps>(

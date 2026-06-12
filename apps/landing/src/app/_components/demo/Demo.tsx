@@ -2,22 +2,12 @@
 
 import { useState } from "react"
 
-import { DashboardTab } from "@demo/_tabs/dashboard/DashboardTab"
-import { OrderTab } from "@demo/_tabs/order/OrderTab"
 import { DemoTab } from "@demo/_tabs/tab.type"
-import { TrackingTab } from "@demo/_tabs/tracking/TrackingTab"
+import { type TabId,tabs } from "@demo/demo-tabs"
 
 import styles from "./Demo.module.css"
 
 export function Demo() {
-  const tabs: DemoTab[] = [
-    { id: "order", label: "🛒 Fazer pedido", Component: OrderTab },
-    { id: "tracking", label: "📍 Acompanhar", Component: TrackingTab },
-    { id: "dashboard", label: "📊 Dashboard", Component: DashboardTab },
-  ]
-
-  type TabId = (typeof tabs)[number]["id"]
-
   const [active, setActive] = useState<TabId>("order")
 
   const ActiveTab = tabs.find((t) => t.id === active)!.Component
