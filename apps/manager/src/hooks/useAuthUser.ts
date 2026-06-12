@@ -7,10 +7,7 @@ import { clearTokens, me } from "@services/auth.service"
 
 import type { User } from "@nino/lib"
 
-type AuthUserState = {
-  user: User | null
-  loading: boolean
-}
+import type { AuthUserState } from "./auth-user-state"
 
 export function useAuthUser(): AuthUserState {
   const router = useRouter()

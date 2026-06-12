@@ -3,9 +3,7 @@ import { forwardRef } from 'react'
 import { maskPhone } from '@ds/lib/masks/masks'
 
 import { MaskedInput } from '../MaskedInput'
-import { MaskedInputProps } from '../MaskedInput/MaskedInput.types'
-
-export type PhoneInputProps = Omit<MaskedInputProps, 'mask'>
+import { PhoneInputProps } from './PhoneInput.types'
 
 /** Phone field with Brazilian mask — (00) 00000-0000. */
 export const PhoneInput = forwardRef<HTMLInputElement, PhoneInputProps>(
