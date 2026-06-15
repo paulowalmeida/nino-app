@@ -3,9 +3,7 @@ import { forwardRef } from 'react'
 import { maskCnpj } from '@ds/lib/masks/masks'
 
 import { MaskedInput } from '../MaskedInput'
-import { MaskedInputProps } from '../MaskedInput/MaskedInput.types'
-
-export type CnpjInputProps = Omit<MaskedInputProps, 'mask'>
+import { CnpjInputProps } from './CnpjInput.types'
 
 /** CNPJ field with Brazilian mask — 00.000.000/0000-00. */
 export const CnpjInput = forwardRef<HTMLInputElement, CnpjInputProps>(
