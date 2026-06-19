@@ -1,73 +1,52 @@
-# React + TypeScript + Vite
+# nino-manager
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Painel de gestão do lojista — aplicação **autenticada** (atrás de login).
+SPA React + Vite, React Router (data router) + react-query.
 
-Currently, two official plugins are available:
+## Por que Vite SPA e não Next.js
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+Decisão de 2026-06-12: **todo app autenticado fica em SPA React puro**; Next.js
+fica só em superfície pública (landing/marketing), onde SEO justifica. O manager
+foi o primeiro a pivotar (de Next → React).
 
-## React Compiler
+- É um painel atrás de login — SSR/RSC/prerender do Next não agregam (nada é
+  indexado, o fetching é client-side com sessão).
+- O **data router** do React Router modela melhor regras de acesso ricas (guard
+  de assinatura ativa + role), e um route map central é mais legível que a
+  convenção pesada do App Router.
+- O **auth guard** vira um branch no `createBrowserRouter`, não middleware edge.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+A regra vale para qualquer app futuro atrás de login (consumer, courier,
+backoffice). O setup de Tailwind foi adaptado de Next para Vite.
 
-## Expanding the ESLint configuration
+## Arquitetura de estado
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+Regra central (fechada em 2026-06-15): **separar server state de client state.**
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+### Server state → react-query
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+Qualquer dado que vive na API (user, empresa, pedidos, produtos; a sessão
+`/auth/me` também é server state). O cache mora no `QueryClient` (provider no
+topo), nunca no componente — a leitura por `queryKey` é global e compartilhada
+entre componentes sem parentesco.
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+react-query escala melhor que store manual: o maquinário
+(cache/loading/error/dedupe/refetch/invalidação) é o mesmo para 1 ou 100
+endpoints; escalar = adicionar uma key. Redux para dados de servidor obriga
+reimplementar tudo isso à mão.
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+**Padrões obrigatórios** (evitam a "bagunça" que costuma ser má adoção):
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+- **Query key factory centralizada** (`queryKeys.user.detail(id)`), nunca
+  strings soltas — senão a invalidação não bate e o cache duplica.
+- **Hook por recurso** (`useUser()`, `useOrders()`) encapsulando o `useQuery`.
+  O componente **não** chama `useQuery` cru — esse é o anti-padrão nº 1.
+- react-query é **só** para server state; não usar para form/modal state.
+- **Nunca** copiar cache para `useState` via `useEffect` — destrói o sync.
+- Config global sã de `staleTime`/refetch, para não "piscar" loading.
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+### Client state global → Zustand
+
+Sidebar colapsada, tema, tenant selecionado. **Não** Redux (RTK é cerimônia
+demais para o tamanho do app). **Não instalar Zustand agora** — só quando
+surgir o primeiro client state global real (complexidade especulativa).
