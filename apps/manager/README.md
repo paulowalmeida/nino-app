@@ -50,3 +50,40 @@ reimplementar tudo isso à mão.
 Sidebar colapsada, tema, tenant selecionado. **Não** Redux (RTK é cerimônia
 demais para o tamanho do app). **Não instalar Zustand agora** — só quando
 surgir o primeiro client state global real (complexidade especulativa).
+
+## Contexto e autenticação
+
+Backend: `nino-api` (NestJS + JWT + RBAC). Auth combina **role global**
+(MERCHANT) com **role de tenant** (OWNER/MANAGER). Multi-tenant: um MERCHANT
+pode ter N tenants (lojas) — após o login, um seletor de loja define o tenant
+ativo, que passa a escopar todas as rotas.
+
+## Roteamento
+
+Mapa central via `createBrowserRouter`; o auth guard e o guard de assinatura
+ativa viram branch no route map:
+
+```
+/entrar, /cadastro
+/lojas                      ← seletor de tenants
+/:tenantId/pedidos, /:tenantId/pedidos/:id
+/:tenantId/catalogo         (produtos e categorias — CRUD)
+/:tenantId/configuracoes
+```
+
+## Decisões técnicas
+
+- **API client**: módulos por domínio (`auth`, `tenant`, `catalog`, `orders`)
+- **Formulários**: `@nino/forms` (FormBuilder) para produto, categoria e dados
+  da loja
+- **Tenant selecionado**: client state (Zustand quando existir)
+- **Tipos**: usar `@nino/lib` direto, sem redefinir
+
+## Roadmap (fases)
+
+1. Foundation (estrutura, API client, layout shell, sessão)
+2. Auth (`/entrar`, `/cadastro`)
+3. Seletor de tenants (`/lojas`)
+4. Pedidos (lista + detalhe + status)
+5. Catálogo (CRUD de produtos e categorias)
+6. Configurações (loja, horários, pagamentos, contato)
