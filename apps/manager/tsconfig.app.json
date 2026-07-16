@@ -24,15 +24,18 @@
     "ignoreDeprecations": "6.0",
     "baseUrl": ".",
     "paths": {
-      "@atoms/*": ["src/atoms/*"],
-      "@molecules/*": ["src/molecules/*"],
-      "@organisms/*": ["src/organisms/*"],
-      "@pages/*": ["src/pages/*"],
-      "@layouts/*": ["src/layouts/*"],
-      "@router/*": ["src/router/*"],
+      "@app-types/*": ["src/types/*"],
+      "@constants/*": ["src/constants/*"],
+      "@components/*": ["src/components/*"],
+      "@compositions/*": ["src/compositions/*"],
+      "@elements/*": ["src/elements/*"],
       "@hooks/*": ["src/hooks/*"],
+      "@layouts/*": ["src/layouts/*"],
+      "@pages/*": ["src/pages/*"],
       "@providers/*": ["src/providers/*"],
-      "@states/*": ["src/states/*"]
+      "@router/*": ["src/router/*"],
+      "@services/*": ["src/services/*"],
+      "@states/*": ["src/states/*"],
     }
   },
   "include": ["src"]

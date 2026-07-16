@@ -10,6 +10,7 @@ import { Orders } from '@pages/orders/Orders'
 import { Overview } from '@pages/overview/Overview'
 import { Register } from '@pages/register/Register'
 import { Settings } from '@pages/settings/Settings'
+import { AuthGuard } from './auth-guard'
 
 export const router = createBrowserRouter([
   {
@@ -28,6 +29,7 @@ export const router = createBrowserRouter([
   {
     element: <AppLayout />,
     path: '/:tenantId',
+    loader: AuthGuard,
     children: [
       {
         path: 'visao-geral',
