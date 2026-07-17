@@ -4,12 +4,13 @@ export type ApiFactoryType = {
     ReturnType,
   >(
     url: string,
-    params: ParamsType
+    params?: ParamsType
   ) => Promise<ReturnType>
-  get: <ReturnType>(url: string, id?: string | number) => Promise<ReturnType>
+  get: <ReturnType>(url: string) => Promise<ReturnType>
+  getById: <ReturnType>(url: string, id: string | number) => Promise<ReturnType>
   create: <BodyType, ReturnType>(
     url: string,
-    body: BodyType
+    body?: BodyType
   ) => Promise<ReturnType>
   update: <BodyType, ReturnType>(
     url: string,
