@@ -516,6 +516,54 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/user-tenants/user/{userId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["UserTenantController_getByUserId"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/tenants/{tenantId}/staff": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["TenantStaffController_getStaff"];
+        put?: never;
+        post: operations["TenantStaffController_addStaff"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/tenants/{tenantId}/staff/{userId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        delete: operations["TenantStaffController_removeStaff"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/backoffice/auth/login": {
         parameters: {
             query?: never;
@@ -815,54 +863,6 @@ export interface paths {
         put?: never;
         post?: never;
         delete: operations["TenantCouriersController_removeCourier"];
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/user-tenants/user/{userId}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["UserTenantController_getByUserId"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/tenants/{tenantId}/staff": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["TenantStaffController_getStaff"];
-        put?: never;
-        post: operations["TenantStaffController_addStaff"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/tenants/{tenantId}/staff/{userId}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        post?: never;
-        delete: operations["TenantStaffController_removeStaff"];
         options?: never;
         head?: never;
         patch?: never;
@@ -1864,67 +1864,486 @@ export interface paths {
 export type webhooks = Record<string, never>;
 export interface components {
     schemas: {
-        LoginRequestDto: Record<string, never>;
-        SignupRequestDto: Record<string, never>;
-        CheckAvailabilityDto: Record<string, never>;
-        CreateUserDto: Record<string, never>;
-        UpdateUserDto: Record<string, never>;
-        UpdateMyProfileDto: Record<string, never>;
-        CreateSessionDto: Record<string, never>;
-        UpdateSessionDto: Record<string, never>;
-        CreateCompanyDto: Record<string, never>;
-        UpdateCompanyDto: Record<string, never>;
-        CreateBusinessCategoryDto: Record<string, never>;
+        LoginRequestDto: {
+            /** Format: email */
+            email: string;
+            password: string;
+        };
+        SignupAccountDto: {
+            name: string;
+            /** Format: email */
+            email: string;
+            password: string;
+            cpf: string;
+            phone: string;
+        };
+        SignupCompanyDto: {
+            name: string;
+            cnpj: string;
+            legalName?: string;
+        };
+        SignupRequestDto: {
+            account: components["schemas"]["SignupAccountDto"];
+            company: components["schemas"]["SignupCompanyDto"];
+        };
+        CheckAvailabilityDto: {
+            /** Format: email */
+            email?: string;
+            cpf?: string;
+            cnpj?: string;
+        };
+        CreateUserDto: {
+            name: string;
+            phone?: string;
+            isActive?: boolean;
+            locale?: string;
+            timezone?: string;
+        };
+        Object: Record<string, never>;
+        UpdateUserDto: {
+            lastLoginAt?: Record<string, never>;
+            name?: string;
+            phone?: string;
+            isActive?: boolean;
+            locale?: string;
+            timezone?: string;
+        };
+        UpdateMyProfileDto: {
+            name?: string;
+            phone?: string;
+            locale?: string;
+            timezone?: string;
+        };
+        CreateSessionDto: {
+            /** Format: uuid */
+            userId: string;
+            refreshTokenHash: string;
+            userAgent?: string;
+            ipAddress?: string;
+            expiresAt: Record<string, never>;
+        };
+        UpdateSessionDto: {
+            refreshTokenHash?: string;
+            ipAddress?: string;
+            userAgent?: string;
+            expiresAt?: Record<string, never>;
+        };
+        CreateCompanyDto: {
+            cnpj: string;
+            name: string;
+            ownerId: string;
+            responsibleId: string;
+            legalName?: string;
+            stateRegistration?: string;
+            legalNature?: string;
+            zipCode?: string;
+            street?: string;
+            number?: string;
+            complement?: string;
+            neighborhood?: string;
+            city?: string;
+            state?: string;
+            country?: string;
+        };
+        UpdateCompanyDto: {
+            cnpj?: string;
+            name?: string;
+            ownerId?: string;
+            responsibleId?: string;
+            legalName?: string;
+            stateRegistration?: string;
+            legalNature?: string;
+            zipCode?: string;
+            street?: string;
+            number?: string;
+            complement?: string;
+            neighborhood?: string;
+            city?: string;
+            state?: string;
+            country?: string;
+        };
+        CreateBusinessCategoryDto: {
+            name: string;
+            description?: string;
+        };
         UpdateBusinessCategoryDto: Record<string, never>;
-        CreateCompanyBusinessCategoryDto: Record<string, never>;
-        CreateCompanyResponsibleDto: Record<string, never>;
-        UpdateCompanyResponsibleDto: Record<string, never>;
-        BackofficeLoginRequestDto: Record<string, never>;
-        RequestOtpDto: Record<string, never>;
-        VerifyOtpDto: Record<string, never>;
-        CreateCustomerDto: Record<string, never>;
-        UpdateCustomerDto: Record<string, never>;
-        CreateCustomerAddressDto: Record<string, never>;
+        CreateCompanyBusinessCategoryDto: {
+            /** Format: uuid */
+            businessCategoryId: string;
+        };
+        CreateCompanyResponsibleDto: {
+            name: string;
+            cpf: string;
+            phone: string;
+            /** Format: email */
+            email: string;
+        };
+        UpdateCompanyResponsibleDto: {
+            name?: string;
+            cpf?: string;
+            phone?: string;
+            /** Format: email */
+            email?: string;
+        };
+        AddStaffDto: {
+            /** Format: uuid */
+            userId: string;
+            /** Format: uuid */
+            tenantRoleId: string;
+        };
+        BackofficeLoginRequestDto: {
+            /** Format: email */
+            email: string;
+            password: string;
+        };
+        RequestOtpDto: {
+            phone: string;
+        };
+        VerifyOtpDto: {
+            phone: string;
+            code: string;
+        };
+        CreateCustomerDto: {
+            /** Format: uuid */
+            userId: string;
+            cpf?: string;
+        };
+        UpdateCustomerDto: {
+            cpf?: string;
+        };
+        CreateCustomerAddressDto: {
+            /** Format: uuid */
+            customerId: string;
+            zipCode: string;
+            street: string;
+            number: string;
+            complement?: string;
+            neighborhood: string;
+            city: string;
+            state: string;
+            isPrimary?: boolean;
+            country?: string;
+        };
         UpdateCustomerAddressDto: Record<string, never>;
-        UpsertCustomerNotificationPreferenceDto: Record<string, never>;
-        CreateCustomerTenantDto: Record<string, never>;
-        CreateLoyaltyTransactionDto: Record<string, never>;
-        AddCourierDto: Record<string, never>;
-        AddStaffDto: Record<string, never>;
-        CreateCommonDto: Record<string, never>;
+        UpsertCustomerNotificationPreferenceDto: {
+            emailEnabled?: boolean;
+            pushEnabled?: boolean;
+            smsEnabled?: boolean;
+        };
+        CreateCustomerTenantDto: {
+            /** Format: uuid */
+            tenantId: string;
+        };
+        CreateLoyaltyTransactionDto: {
+            /** Format: uuid */
+            tenantId: string;
+            /** Format: uuid */
+            orderId?: string;
+            /** @enum {string} */
+            type: "EARN" | "REDEEM" | "EXPIRE" | "ADJUST";
+            points: number;
+            description?: string;
+        };
+        AddCourierDto: {
+            /** Format: uuid */
+            courierId: string;
+        };
+        CreateCommonDto: {
+            name: string;
+            description?: string;
+        };
         UpdateCommonDto: Record<string, never>;
-        CreateInviteDto: Record<string, never>;
-        AcceptInviteDto: Record<string, never>;
-        CreateMyCompanyDto: Record<string, never>;
-        UpdateMyCompanyDto: Record<string, never>;
-        CreatePlanDto: Record<string, never>;
-        UpdatePlanDto: Record<string, never>;
-        CreateTenantOrderDto: Record<string, never>;
-        UpdateOrderStatusDto: Record<string, never>;
-        UpdateOrderPaymentDto: Record<string, never>;
-        AssignCourierDto: Record<string, never>;
-        CreateMyOrderDto: Record<string, never>;
-        CancelOrderDto: Record<string, never>;
-        CourierDeliveryStatusDto: Record<string, never>;
-        CreateGuestOrderDto: Record<string, never>;
-        CreateSubscriptionDto: Record<string, never>;
-        ActivateSubscriptionDto: Record<string, never>;
-        CancelSubscriptionDto: Record<string, never>;
-        ChangePlanDto: Record<string, never>;
-        CreateProductDto: Record<string, never>;
-        UpdateProductDto: Record<string, never>;
-        CreateProductCategoryDto: Record<string, never>;
-        UpdateProductCategoryDto: Record<string, never>;
-        CreateTenantDto: Record<string, never>;
+        CreateInviteDto: {
+            /** Format: email */
+            email: string;
+            kind: Record<string, never>;
+            role?: Record<string, never>;
+        };
+        AcceptInviteDto: {
+            token: string;
+            name?: string;
+            password?: string;
+            phone?: string;
+        };
+        CompanyInfoDto: {
+            name: string;
+            cnpj: string;
+            legalName?: string;
+        };
+        ResponsibleInfoDto: {
+            name: string;
+            cpf: string;
+            /** Format: email */
+            email: string;
+            phone: string;
+        };
+        CreateMyCompanyDto: {
+            company: components["schemas"]["CompanyInfoDto"];
+            responsible: components["schemas"]["ResponsibleInfoDto"];
+        };
+        UpdateMyCompanyDto: {
+            name?: string;
+            legalName?: string;
+            legalNature?: string;
+            stateRegistration?: string;
+            zipCode?: string;
+            street?: string;
+            number?: string;
+            complement?: string;
+            neighborhood?: string;
+            city?: string;
+            state?: string;
+            country?: string;
+        };
+        CreatePlanDto: {
+            name: string;
+            slug: string;
+            /** Format: uuid */
+            typeId: string;
+            price: number;
+            maxTenants: number;
+            maxProducts: number;
+            maxOrders: number;
+            hasPrioritySupport?: boolean;
+            isActive?: boolean;
+        };
+        UpdatePlanDto: {
+            name?: string;
+            slug?: string;
+            typeId?: string;
+            price?: number;
+            maxTenants?: number;
+            maxProducts?: number;
+            maxOrders?: number;
+            isActive?: boolean;
+        };
+        OrderDto: {
+            target: string;
+            /** @enum {string} */
+            direction: "asc" | "desc";
+        };
+        CreateOrderItemDto: {
+            /** Format: uuid */
+            productId: string;
+            quantity: number;
+            unitPrice: number;
+        };
+        CreateTenantOrderDto: {
+            /** Format: uuid */
+            customerId?: string;
+            /** Format: uuid */
+            deliveryAddressId?: string;
+            channel: Record<string, never>;
+            tableNumber?: string;
+            /** Format: uuid */
+            deliveryZoneId?: string;
+            paymentMethod: Record<string, never>;
+            changeFor?: number;
+            notes?: string;
+            estimatedDeliveryAt?: string;
+            loyaltyPointsUsed?: number;
+            loyaltyDiscount?: number;
+            items: components["schemas"]["CreateOrderItemDto"][];
+        };
+        UpdateOrderStatusDto: {
+            status: Record<string, never>;
+            cancelReason?: string;
+        };
+        UpdateOrderPaymentDto: {
+            paymentStatus: Record<string, never>;
+        };
+        AssignCourierDto: {
+            /** Format: uuid */
+            courierId: string;
+        };
+        CreateMyOrderDto: {
+            /** Format: uuid */
+            tenantId: string;
+            /** Format: uuid */
+            deliveryAddressId?: string;
+            channel: Record<string, never>;
+            /** Format: uuid */
+            deliveryZoneId?: string;
+            paymentMethod: Record<string, never>;
+            changeFor?: number;
+            notes?: string;
+            estimatedDeliveryAt?: string;
+            loyaltyPointsUsed?: number;
+            loyaltyDiscount?: number;
+            items: components["schemas"]["CreateOrderItemDto"][];
+        };
+        CancelOrderDto: {
+            cancelReason?: string;
+        };
+        CourierDeliveryStatusDto: {
+            /** @enum {string} */
+            status: "DELIVERED";
+        };
+        CreateGuestOrderDto: {
+            /** Format: uuid */
+            tenantId: string;
+            channel: Record<string, never>;
+            /** Format: uuid */
+            deliveryZoneId?: string;
+            paymentMethod: Record<string, never>;
+            changeFor?: number;
+            guestName: string;
+            guestPhone: string;
+            notes?: string;
+            items: components["schemas"]["CreateOrderItemDto"][];
+            /** Format: email */
+            guestEmail?: string;
+            guestCpf?: string;
+            guestZipCode?: string;
+            guestStreet?: string;
+            guestNumber?: string;
+            guestComplement?: string;
+            guestNeighborhood?: string;
+            guestCity?: string;
+            guestState?: string;
+        };
+        CreateSubscriptionDto: {
+            /** Format: uuid */
+            companyId: string;
+            /** Format: uuid */
+            planId: string;
+            /** Format: uuid */
+            subscriptionStatusId: string;
+        };
+        ActivateSubscriptionDto: {
+            /** Format: uuid */
+            subscriptionStatusId: string;
+        };
+        CancelSubscriptionDto: {
+            /** Format: uuid */
+            subscriptionStatusId: string;
+        };
+        ChangePlanDto: {
+            /** Format: uuid */
+            planId: string;
+        };
+        CreateProductDto: {
+            name: string;
+            description?: string;
+            price: number;
+            position?: number;
+            /** Format: uuid */
+            categoryId: string;
+            isActive?: boolean;
+        };
+        UpdateProductDto: {
+            name?: string;
+            description?: string;
+            price?: number;
+            position?: number;
+            /** Format: uuid */
+            categoryId?: string;
+            isActive?: boolean;
+        };
+        CreateProductCategoryDto: {
+            name: string;
+            description?: string;
+            position?: number;
+        };
+        UpdateProductCategoryDto: {
+            name?: string;
+            description?: string;
+            position?: number;
+        };
+        CreateTenantDto: {
+            slug: string;
+            /** Format: uuid */
+            companyId: string;
+            /** Format: uuid */
+            statusId: string;
+            /** Format: uuid */
+            typeId: string;
+            zipCode: string;
+            street: string;
+            number: string;
+            neighborhood: string;
+            city: string;
+            state: string;
+            customName?: string;
+            logoUrl?: string;
+            favicon?: string;
+            primaryColor?: string;
+            secondaryColor?: string;
+            customDomain?: string;
+            complement?: string;
+            country?: string;
+            timezone?: string;
+        };
         UpdateTenantDto: Record<string, never>;
-        CreateMyTenantDto: Record<string, never>;
-        CreateDeliveryZoneDto: Record<string, never>;
-        UpdateDeliveryZoneDto: Record<string, never>;
-        CreateOpeningHoursDto: Record<string, never>;
-        UpdateOpeningHoursDto: Record<string, never>;
-        CreateTenantPhoneDto: Record<string, never>;
-        UpdateTenantPhoneDto: Record<string, never>;
-        UpsertTenantSettingsDto: Record<string, never>;
+        CreateMyTenantDto: {
+            slug: string;
+            /** Format: uuid */
+            statusId: string;
+            /** Format: uuid */
+            typeId: string;
+            zipCode: string;
+            street: string;
+            number: string;
+            neighborhood: string;
+            city: string;
+            state: string;
+            customName?: string;
+            logoUrl?: string;
+            favicon?: string;
+            primaryColor?: string;
+            secondaryColor?: string;
+            customDomain?: string;
+            complement?: string;
+            country?: string;
+            timezone?: string;
+        };
+        CreateDeliveryZoneDto: {
+            name: string;
+            fee: number;
+            isActive?: boolean;
+        };
+        UpdateDeliveryZoneDto: {
+            name?: string;
+            fee?: number;
+            isActive?: boolean;
+        };
+        CreateOpeningHoursDto: {
+            /** Format: uuid */
+            tenantId?: string;
+            dayOfWeek: number;
+            openTime: string;
+            closeTime: string;
+            isOpen?: boolean;
+        };
+        UpdateOpeningHoursDto: {
+            openTime?: string;
+            closeTime?: string;
+            isOpen?: boolean;
+        };
+        CreateTenantPhoneDto: {
+            /** Format: uuid */
+            tenantId?: string;
+            phone: string;
+        };
+        UpdateTenantPhoneDto: {
+            phone?: string;
+        };
+        UpsertTenantSettingsDto: {
+            acceptedPaymentMethods?: Record<string, never>[];
+            requireAccount?: boolean;
+            requireCpf?: boolean;
+            allowGuestOrder?: boolean;
+            deliveryFee?: number;
+            minOrderAmount?: number;
+            deliveryRadius?: number;
+            isDeliveryEnabled?: boolean;
+            isPickupEnabled?: boolean;
+            isCounterEnabled?: boolean;
+            loyaltyEnabled?: boolean;
+            loyaltyPointsPerOrder?: number;
+            loyaltyPointValue?: number;
+            allowSharedStaff?: boolean;
+        };
     };
     responses: never;
     parameters: never;
@@ -1947,7 +2366,9 @@ export interface operations {
                 headers: {
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": Record<string, never>;
+                };
             };
         };
     };
@@ -1968,7 +2389,9 @@ export interface operations {
                 headers: {
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": Record<string, never>;
+                };
             };
         };
     };
@@ -1989,7 +2412,9 @@ export interface operations {
                 headers: {
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": Record<string, never>;
+                };
             };
         };
     };
@@ -2010,7 +2435,9 @@ export interface operations {
                 headers: {
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": Record<string, never>;
+                };
             };
         };
     };
@@ -2050,7 +2477,13 @@ export interface operations {
     };
     UserController_getAll: {
         parameters: {
-            query?: never;
+            query?: {
+                orderBy?: components["schemas"]["Object"];
+                page?: number;
+                size?: number;
+                target?: string;
+                direction?: components["schemas"]["Object"];
+            };
             header?: never;
             path?: never;
             cookie?: never;
@@ -2061,7 +2494,9 @@ export interface operations {
                 headers: {
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": Record<string, never>;
+                };
             };
         };
     };
@@ -2082,7 +2517,9 @@ export interface operations {
                 headers: {
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": Record<string, never>;
+                };
             };
         };
     };
@@ -2101,7 +2538,9 @@ export interface operations {
                 headers: {
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": Record<string, never>;
+                };
             };
         };
     };
@@ -2143,7 +2582,9 @@ export interface operations {
                 headers: {
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": Record<string, never>;
+                };
             };
         };
     };
@@ -2160,7 +2601,9 @@ export interface operations {
                 headers: {
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": Record<string, never>;
+                };
             };
         };
     };
@@ -2181,7 +2624,9 @@ export interface operations {
                 headers: {
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": Record<string, never>;
+                };
             };
         };
     };
@@ -2198,13 +2643,20 @@ export interface operations {
                 headers: {
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": Record<string, never>[];
+                };
             };
         };
     };
     SessionController_getAll: {
         parameters: {
-            query?: never;
+            query: {
+                target: "createdAt" | "expiresAt";
+                page?: number;
+                size?: number;
+                direction?: components["schemas"]["Object"];
+            };
             header?: never;
             path?: never;
             cookie?: never;
@@ -2215,7 +2667,9 @@ export interface operations {
                 headers: {
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": Record<string, never>;
+                };
             };
         };
     };
@@ -2242,7 +2696,12 @@ export interface operations {
     };
     SessionController_getListByUserId: {
         parameters: {
-            query?: never;
+            query: {
+                target: "createdAt" | "expiresAt";
+                page?: number;
+                size?: number;
+                direction?: components["schemas"]["Object"];
+            };
             header?: never;
             path: {
                 userId: string;
@@ -2255,7 +2714,9 @@ export interface operations {
                 headers: {
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": Record<string, never>;
+                };
             };
         };
     };
@@ -2274,7 +2735,9 @@ export interface operations {
                 headers: {
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": Record<string, never>;
+                };
             };
         };
     };
@@ -2316,13 +2779,20 @@ export interface operations {
                 headers: {
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": Record<string, never>;
+                };
             };
         };
     };
     CompanyController_getAll: {
         parameters: {
-            query?: never;
+            query?: {
+                page?: number;
+                size?: number;
+                target?: string;
+                direction?: components["schemas"]["Object"];
+            };
             header?: never;
             path?: never;
             cookie?: never;
@@ -2333,7 +2803,9 @@ export interface operations {
                 headers: {
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": Record<string, never>;
+                };
             };
         };
     };
@@ -2354,7 +2826,9 @@ export interface operations {
                 headers: {
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": Record<string, never>;
+                };
             };
         };
     };
@@ -2373,7 +2847,9 @@ export interface operations {
                 headers: {
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": Record<string, never>;
+                };
             };
         };
     };
@@ -2396,7 +2872,9 @@ export interface operations {
                 headers: {
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": Record<string, never>;
+                };
             };
         };
     };
@@ -2434,7 +2912,9 @@ export interface operations {
                 headers: {
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": Record<string, never>;
+                };
             };
         };
     };
@@ -2453,7 +2933,9 @@ export interface operations {
                 headers: {
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": Record<string, never>;
+                };
             };
         };
     };
@@ -2472,13 +2954,20 @@ export interface operations {
                 headers: {
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": Record<string, never>;
+                };
             };
         };
     };
     BusinessCategoryController_getAll: {
         parameters: {
-            query?: never;
+            query?: {
+                page?: number;
+                size?: number;
+                target?: string;
+                direction?: components["schemas"]["Object"];
+            };
             header?: never;
             path?: never;
             cookie?: never;
@@ -2489,7 +2978,9 @@ export interface operations {
                 headers: {
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": Record<string, never>;
+                };
             };
         };
     };
@@ -2577,7 +3068,12 @@ export interface operations {
     };
     CompanyBusinessCategoryController_getByCompanyId: {
         parameters: {
-            query?: never;
+            query?: {
+                page?: number;
+                size?: number;
+                target?: string;
+                direction?: components["schemas"]["Object"];
+            };
             header?: never;
             path: {
                 companyId: string;
@@ -2590,7 +3086,9 @@ export interface operations {
                 headers: {
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": Record<string, never>;
+                };
             };
         };
     };
@@ -2613,7 +3111,9 @@ export interface operations {
                 headers: {
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": Record<string, never>;
+                };
             };
         };
     };
@@ -2653,7 +3153,9 @@ export interface operations {
                 headers: {
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": Record<string, never>;
+                };
             };
         };
     };
@@ -2673,13 +3175,20 @@ export interface operations {
                 headers: {
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": Record<string, never>;
+                };
             };
         };
     };
     MyCompanyBusinessCategoriesController_getMine: {
         parameters: {
-            query?: never;
+            query?: {
+                page?: number;
+                size?: number;
+                target?: string;
+                direction?: components["schemas"]["Object"];
+            };
             header?: never;
             path?: never;
             cookie?: never;
@@ -2690,7 +3199,9 @@ export interface operations {
                 headers: {
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": Record<string, never>;
+                };
             };
         };
     };
@@ -2711,7 +3222,9 @@ export interface operations {
                 headers: {
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": Record<string, never>;
+                };
             };
         };
     };
@@ -2749,7 +3262,9 @@ export interface operations {
                 headers: {
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": Record<string, never>;
+                };
             };
         };
     };
@@ -2768,13 +3283,20 @@ export interface operations {
                 headers: {
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": Record<string, never>;
+                };
             };
         };
     };
     CompanyResponsibleController_getAll: {
         parameters: {
-            query?: never;
+            query?: {
+                page?: number;
+                size?: number;
+                target?: string;
+                direction?: components["schemas"]["Object"];
+            };
             header?: never;
             path?: never;
             cookie?: never;
@@ -2785,7 +3307,9 @@ export interface operations {
                 headers: {
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": Record<string, never>;
+                };
             };
         };
     };
@@ -2806,7 +3330,9 @@ export interface operations {
                 headers: {
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": Record<string, never>;
+                };
             };
         };
     };
@@ -2825,7 +3351,9 @@ export interface operations {
                 headers: {
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": Record<string, never>;
+                };
             };
         };
     };
@@ -2844,7 +3372,9 @@ export interface operations {
                 headers: {
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": Record<string, never>;
+                };
             };
         };
     };
@@ -2867,7 +3397,9 @@ export interface operations {
                 headers: {
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": Record<string, never>;
+                };
             };
         };
     };
@@ -2883,6 +3415,103 @@ export interface operations {
         requestBody?: never;
         responses: {
             204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    UserTenantController_getByUserId: {
+        parameters: {
+            query?: {
+                page?: number;
+                size?: number;
+                target?: string;
+                direction?: components["schemas"]["Object"];
+            };
+            header?: never;
+            path: {
+                userId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": Record<string, never>;
+                };
+            };
+        };
+    };
+    TenantStaffController_getStaff: {
+        parameters: {
+            query?: {
+                page?: number;
+                size?: number;
+                target?: string;
+                direction?: components["schemas"]["Object"];
+            };
+            header?: never;
+            path: {
+                tenantId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": Record<string, never>;
+                };
+            };
+        };
+    };
+    TenantStaffController_addStaff: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                tenantId: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["AddStaffDto"];
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": Record<string, never>;
+                };
+            };
+        };
+    };
+    TenantStaffController_removeStaff: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                tenantId: string;
+                userId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
                 headers: {
                     [name: string]: unknown;
                 };
@@ -2907,7 +3536,9 @@ export interface operations {
                 headers: {
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": Record<string, never>;
+                };
             };
         };
     };
@@ -2983,7 +3614,9 @@ export interface operations {
                 headers: {
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": Record<string, never>;
+                };
             };
         };
     };
@@ -3023,7 +3656,12 @@ export interface operations {
     };
     CustomerController_getAll: {
         parameters: {
-            query?: never;
+            query?: {
+                page?: number;
+                size?: number;
+                target?: string;
+                direction?: components["schemas"]["Object"];
+            };
             header?: never;
             path?: never;
             cookie?: never;
@@ -3034,7 +3672,9 @@ export interface operations {
                 headers: {
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": Record<string, never>;
+                };
             };
         };
     };
@@ -3055,7 +3695,9 @@ export interface operations {
                 headers: {
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": Record<string, never>;
+                };
             };
         };
     };
@@ -3074,7 +3716,9 @@ export interface operations {
                 headers: {
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": Record<string, never>;
+                };
             };
         };
     };
@@ -3116,13 +3760,20 @@ export interface operations {
                 headers: {
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": Record<string, never>;
+                };
             };
         };
     };
     CustomerAddressController_getAll: {
         parameters: {
-            query?: never;
+            query?: {
+                page?: number;
+                size?: number;
+                target?: string;
+                direction?: components["schemas"]["Object"];
+            };
             header?: never;
             path: {
                 customerId: string;
@@ -3135,7 +3786,9 @@ export interface operations {
                 headers: {
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": Record<string, never>;
+                };
             };
         };
     };
@@ -3219,7 +3872,9 @@ export interface operations {
                 headers: {
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": Record<string, never>[];
+                };
             };
         };
     };
@@ -3243,7 +3898,9 @@ export interface operations {
                 headers: {
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": Record<string, never>;
+                };
             };
         };
     };
@@ -3269,7 +3926,12 @@ export interface operations {
     };
     CustomerTenantController_getAll: {
         parameters: {
-            query?: never;
+            query?: {
+                page?: number;
+                size?: number;
+                target?: string;
+                direction?: components["schemas"]["Object"];
+            };
             header?: never;
             path: {
                 customerId: string;
@@ -3282,7 +3944,9 @@ export interface operations {
                 headers: {
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": Record<string, never>;
+                };
             };
         };
     };
@@ -3305,7 +3969,9 @@ export interface operations {
                 headers: {
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": Record<string, never>;
+                };
             };
         };
     };
@@ -3331,7 +3997,14 @@ export interface operations {
     };
     LoyaltyTransactionController_getAll: {
         parameters: {
-            query?: never;
+            query?: {
+                page?: number;
+                size?: number;
+                target?: string;
+                direction?: components["schemas"]["Object"];
+                tenantId?: string;
+                type?: "EARN" | "REDEEM" | "EXPIRE" | "ADJUST";
+            };
             header?: never;
             path: {
                 customerId: string;
@@ -3344,7 +4017,9 @@ export interface operations {
                 headers: {
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": Record<string, never>;
+                };
             };
         };
     };
@@ -3367,13 +4042,20 @@ export interface operations {
                 headers: {
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": Record<string, never>;
+                };
             };
         };
     };
     CourierTenantController_getByCourierId: {
         parameters: {
-            query?: never;
+            query?: {
+                page?: number;
+                size?: number;
+                target?: string;
+                direction?: components["schemas"]["Object"];
+            };
             header?: never;
             path: {
                 courierId: string;
@@ -3386,13 +4068,20 @@ export interface operations {
                 headers: {
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": Record<string, never>;
+                };
             };
         };
     };
     TenantCouriersController_getCouriers: {
         parameters: {
-            query?: never;
+            query?: {
+                page?: number;
+                size?: number;
+                target?: string;
+                direction?: components["schemas"]["Object"];
+            };
             header?: never;
             path: {
                 tenantId: string;
@@ -3405,7 +4094,9 @@ export interface operations {
                 headers: {
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": Record<string, never>;
+                };
             };
         };
     };
@@ -3428,7 +4119,9 @@ export interface operations {
                 headers: {
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": Record<string, never>;
+                };
             };
         };
     };
@@ -3439,87 +4132,6 @@ export interface operations {
             path: {
                 tenantId: string;
                 courierId: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content?: never;
-            };
-        };
-    };
-    UserTenantController_getByUserId: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                userId: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content?: never;
-            };
-        };
-    };
-    TenantStaffController_getStaff: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                tenantId: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content?: never;
-            };
-        };
-    };
-    TenantStaffController_addStaff: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                tenantId: string;
-            };
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["AddStaffDto"];
-            };
-        };
-        responses: {
-            201: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content?: never;
-            };
-        };
-    };
-    TenantStaffController_removeStaff: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                tenantId: string;
-                userId: string;
             };
             cookie?: never;
         };
@@ -3664,7 +4276,9 @@ export interface operations {
                 headers: {
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": Record<string, never>[];
+                };
             };
         };
     };
@@ -3685,7 +4299,9 @@ export interface operations {
                 headers: {
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": Record<string, never>;
+                };
             };
         };
     };
@@ -3704,7 +4320,9 @@ export interface operations {
                 headers: {
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": Record<string, never>;
+                };
             };
         };
     };
@@ -3727,7 +4345,9 @@ export interface operations {
                 headers: {
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": Record<string, never>;
+                };
             };
         };
     };
@@ -3879,7 +4499,9 @@ export interface operations {
                 headers: {
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": Record<string, never>;
+                };
             };
         };
     };
@@ -3900,7 +4522,9 @@ export interface operations {
                 headers: {
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": Record<string, never>;
+                };
             };
         };
     };
@@ -3921,7 +4545,9 @@ export interface operations {
                 headers: {
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": Record<string, never>;
+                };
             };
         };
     };
@@ -3938,7 +4564,9 @@ export interface operations {
                 headers: {
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": Record<string, never>[];
+                };
             };
         };
     };
@@ -3959,7 +4587,9 @@ export interface operations {
                 headers: {
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": Record<string, never>;
+                };
             };
         };
     };
@@ -3978,7 +4608,9 @@ export interface operations {
                 headers: {
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": Record<string, never>;
+                };
             };
         };
     };
@@ -4001,7 +4633,9 @@ export interface operations {
                 headers: {
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": Record<string, never>;
+                };
             };
         };
     };
@@ -4037,7 +4671,9 @@ export interface operations {
                 headers: {
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": Record<string, never>[];
+                };
             };
         };
     };
@@ -4058,7 +4694,9 @@ export interface operations {
                 headers: {
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": Record<string, never>;
+                };
             };
         };
     };
@@ -4077,7 +4715,9 @@ export interface operations {
                 headers: {
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": Record<string, never>;
+                };
             };
         };
     };
@@ -4119,13 +4759,19 @@ export interface operations {
                 headers: {
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": Record<string, never>;
+                };
             };
         };
     };
     PlanTypeController_getAll: {
         parameters: {
-            query?: never;
+            query?: {
+                page?: number;
+                size?: number;
+                order?: components["schemas"]["OrderDto"];
+            };
             header?: never;
             path?: never;
             cookie?: never;
@@ -4136,7 +4782,9 @@ export interface operations {
                 headers: {
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": Record<string, never>[];
+                };
             };
         };
     };
@@ -4157,7 +4805,9 @@ export interface operations {
                 headers: {
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": Record<string, never>;
+                };
             };
         };
     };
@@ -4176,7 +4826,9 @@ export interface operations {
                 headers: {
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": Record<string, never>;
+                };
             };
         };
     };
@@ -4199,7 +4851,9 @@ export interface operations {
                 headers: {
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": Record<string, never>;
+                };
             };
         };
     };
@@ -4224,7 +4878,15 @@ export interface operations {
     };
     OrderController_getAll: {
         parameters: {
-            query?: never;
+            query?: {
+                page?: number;
+                size?: number;
+                target?: string;
+                direction?: components["schemas"]["Object"];
+                tenantId?: string;
+                customerId?: string;
+                status?: components["schemas"]["Object"];
+            };
             header?: never;
             path: {
                 tenantId: string;
@@ -4237,7 +4899,9 @@ export interface operations {
                 headers: {
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": Record<string, never>;
+                };
             };
         };
     };
@@ -4260,7 +4924,9 @@ export interface operations {
                 headers: {
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": Record<string, never>;
+                };
             };
         };
     };
@@ -4280,7 +4946,9 @@ export interface operations {
                 headers: {
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": Record<string, never>;
+                };
             };
         };
     };
@@ -4304,7 +4972,9 @@ export interface operations {
                 headers: {
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": Record<string, never>;
+                };
             };
         };
     };
@@ -4328,7 +4998,9 @@ export interface operations {
                 headers: {
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": Record<string, never>;
+                };
             };
         };
     };
@@ -4352,13 +5024,23 @@ export interface operations {
                 headers: {
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": Record<string, never>;
+                };
             };
         };
     };
     CustomerOrderController_getMine: {
         parameters: {
-            query?: never;
+            query?: {
+                page?: number;
+                size?: number;
+                target?: string;
+                direction?: components["schemas"]["Object"];
+                tenantId?: string;
+                customerId?: string;
+                status?: components["schemas"]["Object"];
+            };
             header?: never;
             path?: never;
             cookie?: never;
@@ -4369,7 +5051,9 @@ export interface operations {
                 headers: {
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": Record<string, never>;
+                };
             };
         };
     };
@@ -4390,7 +5074,9 @@ export interface operations {
                 headers: {
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": Record<string, never>;
+                };
             };
         };
     };
@@ -4409,7 +5095,9 @@ export interface operations {
                 headers: {
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": Record<string, never>;
+                };
             };
         };
     };
@@ -4432,7 +5120,9 @@ export interface operations {
                 headers: {
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": Record<string, never>;
+                };
             };
         };
     };
@@ -4449,7 +5139,9 @@ export interface operations {
                 headers: {
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": Record<string, never>[];
+                };
             };
         };
     };
@@ -4472,7 +5164,9 @@ export interface operations {
                 headers: {
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": Record<string, never>;
+                };
             };
         };
     };
@@ -4493,7 +5187,9 @@ export interface operations {
                 headers: {
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": Record<string, never>;
+                };
             };
         };
     };
@@ -4514,7 +5210,9 @@ export interface operations {
                 headers: {
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": Record<string, never>;
+                };
             };
         };
     };
@@ -4539,13 +5237,20 @@ export interface operations {
                 headers: {
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": Record<string, never>;
+                };
             };
         };
     };
     SubscriptionController_getAll: {
         parameters: {
-            query?: never;
+            query?: {
+                page?: number;
+                size?: number;
+                target?: string;
+                direction?: components["schemas"]["Object"];
+            };
             header?: never;
             path?: never;
             cookie?: never;
@@ -4556,7 +5261,9 @@ export interface operations {
                 headers: {
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": Record<string, never>;
+                };
             };
         };
     };
@@ -4577,7 +5284,9 @@ export interface operations {
                 headers: {
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": Record<string, never>;
+                };
             };
         };
     };
@@ -4596,7 +5305,9 @@ export interface operations {
                 headers: {
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": Record<string, never>;
+                };
             };
         };
     };
@@ -4615,7 +5326,9 @@ export interface operations {
                 headers: {
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": Record<string, never>;
+                };
             };
         };
     };
@@ -4657,7 +5370,9 @@ export interface operations {
                 headers: {
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": Record<string, never>;
+                };
             };
         };
     };
@@ -4680,7 +5395,9 @@ export interface operations {
                 headers: {
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": Record<string, never>;
+                };
             };
         };
     };
@@ -4703,7 +5420,9 @@ export interface operations {
                 headers: {
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": Record<string, never>;
+                };
             };
         };
     };
@@ -4720,7 +5439,9 @@ export interface operations {
                 headers: {
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": Record<string, never>;
+                };
             };
         };
     };
@@ -4741,7 +5462,9 @@ export interface operations {
                 headers: {
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": Record<string, never>;
+                };
             };
         };
     };
@@ -4762,7 +5485,9 @@ export interface operations {
                 headers: {
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": Record<string, never>;
+                };
             };
         };
     };
@@ -4779,7 +5504,9 @@ export interface operations {
                 headers: {
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": Record<string, never>[];
+                };
             };
         };
     };
@@ -4800,7 +5527,9 @@ export interface operations {
                 headers: {
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": Record<string, never>;
+                };
             };
         };
     };
@@ -4819,7 +5548,9 @@ export interface operations {
                 headers: {
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": Record<string, never>;
+                };
             };
         };
     };
@@ -4842,7 +5573,9 @@ export interface operations {
                 headers: {
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": Record<string, never>;
+                };
             };
         };
     };
@@ -4867,7 +5600,14 @@ export interface operations {
     };
     ProductController_getAll: {
         parameters: {
-            query?: never;
+            query?: {
+                page?: number;
+                size?: number;
+                target?: "name" | "position" | "price" | "createdAt" | "updatedAt";
+                direction?: components["schemas"]["Object"];
+                categoryId?: string;
+                isActive?: boolean;
+            };
             header?: never;
             path: {
                 tenantId: string;
@@ -4880,7 +5620,9 @@ export interface operations {
                 headers: {
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": Record<string, never>;
+                };
             };
         };
     };
@@ -4903,7 +5645,9 @@ export interface operations {
                 headers: {
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": Record<string, never>;
+                };
             };
         };
     };
@@ -4922,7 +5666,9 @@ export interface operations {
                 headers: {
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": Record<string, never>;
+                };
             };
         };
     };
@@ -4964,13 +5710,20 @@ export interface operations {
                 headers: {
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": Record<string, never>;
+                };
             };
         };
     };
     ProductCategoryController_getAll: {
         parameters: {
-            query?: never;
+            query?: {
+                page?: number;
+                size?: number;
+                target?: string;
+                direction?: components["schemas"]["Object"];
+            };
             header?: never;
             path: {
                 tenantId: string;
@@ -4983,7 +5736,9 @@ export interface operations {
                 headers: {
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": Record<string, never>;
+                };
             };
         };
     };
@@ -5073,7 +5828,13 @@ export interface operations {
     };
     TenantController_getAll: {
         parameters: {
-            query?: never;
+            query?: {
+                page?: number;
+                size?: number;
+                target?: string;
+                direction?: components["schemas"]["Object"];
+                companyId?: string;
+            };
             header?: never;
             path?: never;
             cookie?: never;
@@ -5084,7 +5845,9 @@ export interface operations {
                 headers: {
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": Record<string, never>;
+                };
             };
         };
     };
@@ -5105,7 +5868,9 @@ export interface operations {
                 headers: {
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": Record<string, never>;
+                };
             };
         };
     };
@@ -5124,7 +5889,9 @@ export interface operations {
                 headers: {
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": Record<string, never>;
+                };
             };
         };
     };
@@ -5166,7 +5933,9 @@ export interface operations {
                 headers: {
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": Record<string, never>;
+                };
             };
         };
     };
@@ -5185,7 +5954,9 @@ export interface operations {
                 headers: {
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": Record<string, never>;
+                };
             };
         };
     };
@@ -5206,7 +5977,9 @@ export interface operations {
                 headers: {
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": Record<string, never>;
+                };
             };
         };
     };
@@ -5225,13 +5998,20 @@ export interface operations {
                 headers: {
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": Record<string, never>[];
+                };
             };
         };
     };
     DeliveryZoneController_getAll: {
         parameters: {
-            query?: never;
+            query?: {
+                page?: number;
+                size?: number;
+                target?: string;
+                direction?: components["schemas"]["Object"];
+            };
             header?: never;
             path: {
                 tenantId: string;
@@ -5244,7 +6024,9 @@ export interface operations {
                 headers: {
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": Record<string, never>;
+                };
             };
         };
     };
@@ -5315,7 +6097,12 @@ export interface operations {
     };
     OpeningHoursController_getAll: {
         parameters: {
-            query?: never;
+            query?: {
+                page?: number;
+                size?: number;
+                target?: string;
+                direction?: components["schemas"]["Object"];
+            };
             header?: never;
             path: {
                 tenantId: string;
@@ -5328,7 +6115,9 @@ export interface operations {
                 headers: {
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": Record<string, never>;
+                };
             };
         };
     };
@@ -5399,7 +6188,12 @@ export interface operations {
     };
     TenantPhoneController_getAll: {
         parameters: {
-            query?: never;
+            query?: {
+                page?: number;
+                size?: number;
+                target?: string;
+                direction?: components["schemas"]["Object"];
+            };
             header?: never;
             path: {
                 tenantId: string;
@@ -5412,7 +6206,9 @@ export interface operations {
                 headers: {
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": Record<string, never>;
+                };
             };
         };
     };
@@ -5496,7 +6292,9 @@ export interface operations {
                 headers: {
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": Record<string, never>;
+                };
             };
         };
     };
@@ -5563,7 +6361,11 @@ export interface operations {
     };
     TenantStatusController_getAll: {
         parameters: {
-            query?: never;
+            query?: {
+                page?: number;
+                size?: number;
+                order?: components["schemas"]["OrderDto"];
+            };
             header?: never;
             path?: never;
             cookie?: never;
@@ -5574,7 +6376,9 @@ export interface operations {
                 headers: {
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": Record<string, never>[];
+                };
             };
         };
     };
@@ -5595,7 +6399,9 @@ export interface operations {
                 headers: {
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": Record<string, never>;
+                };
             };
         };
     };
@@ -5614,7 +6420,9 @@ export interface operations {
                 headers: {
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": Record<string, never>;
+                };
             };
         };
     };
@@ -5637,7 +6445,9 @@ export interface operations {
                 headers: {
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": Record<string, never>;
+                };
             };
         };
     };
@@ -5662,7 +6472,11 @@ export interface operations {
     };
     TenantTypeController_getAll: {
         parameters: {
-            query?: never;
+            query?: {
+                page?: number;
+                size?: number;
+                order?: components["schemas"]["OrderDto"];
+            };
             header?: never;
             path?: never;
             cookie?: never;
@@ -5673,7 +6487,9 @@ export interface operations {
                 headers: {
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": Record<string, never>[];
+                };
             };
         };
     };
@@ -5694,7 +6510,9 @@ export interface operations {
                 headers: {
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": Record<string, never>;
+                };
             };
         };
     };
@@ -5713,7 +6531,9 @@ export interface operations {
                 headers: {
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": Record<string, never>;
+                };
             };
         };
     };
@@ -5736,7 +6556,9 @@ export interface operations {
                 headers: {
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": Record<string, never>;
+                };
             };
         };
     };
