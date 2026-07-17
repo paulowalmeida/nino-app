@@ -3,6 +3,7 @@ import type {
   CheckAvailabilityRequest,
   CheckAvailabilityResponse,
   LoginRequest,
+  MeResponse,
   SignupRequest,
 } from '@custom_types/auth'
 import { ApiFactory } from '@services/api/api.service'
@@ -23,6 +24,6 @@ export const checkAvailability = (
     data
   )
 
-export const me = (): Promise<AuthUser> => get<AuthUser>('auth/me')
+export const me = (): Promise<MeResponse> => get<MeResponse>('auth/me')
 
 export const logout = (): Promise<void> => create<void, void>('auth/logout')

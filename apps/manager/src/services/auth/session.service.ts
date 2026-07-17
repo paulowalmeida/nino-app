@@ -3,16 +3,17 @@ import { me } from '@services/auth/auth.service'
 import { useSessionStore } from '@states/useSessionStore'
 
 /**
- * Populates the session on the first authenticated load. `memberships` stays
- * empty until the API exposes the caller's own — `/auth/me` returns none today.
+ * Single bootstrap path for the session: every authenticated entry point goes
+ * through here, so user and memberships are always read from the same
+ * `/auth/me` payload.
  */
 export const loadSession = async (): Promise<AuthUser | null> => {
   const { user, setSession } = useSessionStore.getState()
   if (user) return user
 
   try {
-    const fetched = await me()
-    setSession(fetched, [])
+    const { memberships, ...fetched } = await me()
+    setSession(fetched, memberships)
     return fetched
   } catch {
     return null
