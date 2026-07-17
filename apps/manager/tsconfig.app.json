@@ -10,12 +10,12 @@
     /* Bundler mode */
     "moduleResolution": "bundler",
     "allowImportingTsExtensions": true,
-    "verbatimModuleSyntax": true,
     "moduleDetection": "force",
     "noEmit": true,
     "jsx": "react-jsx",
 
     /* Linting */
+    "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "erasableSyntaxOnly": true,
@@ -24,10 +24,12 @@
     "ignoreDeprecations": "6.0",
     "baseUrl": ".",
     "paths": {
-      "@app-types/*": ["src/types/*"],
-      "@constants/*": ["src/constants/*"],
+      "@ds/*": ["../../packages/ds/src/*"],
+      "@assets/*": ["src/assets/*"],
       "@components/*": ["src/components/*"],
       "@compositions/*": ["src/compositions/*"],
+      "@constants/*": ["src/constants/*"],
+      "@custom_types/*": ["src/types/*"],
       "@elements/*": ["src/elements/*"],
       "@hooks/*": ["src/hooks/*"],
       "@layouts/*": ["src/layouts/*"],
@@ -36,6 +38,7 @@
       "@router/*": ["src/router/*"],
       "@services/*": ["src/services/*"],
       "@states/*": ["src/states/*"],
+      "@utils/*": ["src/utils/*"]
     }
   },
   "include": ["src"]
