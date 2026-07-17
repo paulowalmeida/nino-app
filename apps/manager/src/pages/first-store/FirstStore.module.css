@@ -1,0 +1,28 @@
+@reference "@nino/ds/globals.css";
+
+.shell {
+  @apply flex min-h-screen items-center justify-center px-6 py-12;
+  @apply bg-cream;
+}
+
+.panel {
+  @apply w-full max-w-md rounded-[1.75rem] border border-white/70;
+  @apply bg-white/75 p-8 text-center shadow-2xl shadow-brand/10;
+  @apply backdrop-blur-md;
+}
+
+.mascot {
+  @apply mx-auto h-32 w-32;
+}
+
+.title {
+  @apply mt-6 font-display text-3xl font-extrabold tracking-tight text-dark;
+}
+
+.subtitle {
+  @apply mt-2 text-sm leading-relaxed text-text/60;
+}
+
+.cta {
+  @apply mt-8 w-full;
+}

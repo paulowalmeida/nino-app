@@ -1,18 +1,27 @@
 import { createBrowserRouter } from 'react-router'
 
 import { AppLayout } from '@layouts/AppLayout/AppLayout'
-import { AuthLayout } from '@layouts/AuthLayout/AuthLayout'
+import { AuthLayout } from '@layouts/AuthLayout'
 import { Catalog } from '@pages/catalog/Catalog'
 import { Employees } from '@pages/employees/Employees'
+import { FirstStore } from '@pages/first-store/FirstStore'
 import { Login } from '@pages/login/Login'
 import { OrderDetail } from '@pages/order-detail/OrderDetail'
 import { Orders } from '@pages/orders/Orders'
 import { Overview } from '@pages/overview/Overview'
 import { Register } from '@pages/register/Register'
 import { Settings } from '@pages/settings/Settings'
+import { StoreSelection } from '@pages/store-selection/StoreSelection'
+
 import { AuthGuard } from './auth-guard'
+import { RootLoader } from './root-loader'
+import { SessionGuard } from './session-guard'
 
 export const router = createBrowserRouter([
+  {
+    path: '/',
+    loader: RootLoader,
+  },
   {
     element: <AuthLayout />,
     children: [
@@ -25,6 +34,16 @@ export const router = createBrowserRouter([
         element: <Register />,
       },
     ],
+  },
+  {
+    path: '/lojas',
+    element: <StoreSelection />,
+    loader: SessionGuard,
+  },
+  {
+    path: '/primeira-loja',
+    element: <FirstStore />,
+    loader: SessionGuard,
   },
   {
     element: <AppLayout />,
