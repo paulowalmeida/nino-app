@@ -1,13 +1,19 @@
 import { redirect } from 'react-router'
 
+import type { Membership } from '@custom_types/auth'
 import { loadSession } from '@services/auth/session.service'
 import { useSessionStore } from '@states/useSessionStore'
 
+const entryTenant = (memberships: Membership[]): string => {
+  const current = memberships.find(({ isCurrent }) => isCurrent)
+  return (current ?? memberships[0]).tenantId
+}
+
 /**
- * Entry point: sends the merchant where their memberships say they belong.
- *
- * Until the API exposes memberships every session lands on the first-store
- * onboarding, since the list is always empty.
+ * Entry point. Stores of a single company are units of the same business, so
+ * asking which one to open is friction — enter the last used and let the shell
+ * switch. Stores across companies are different restaurants: that choice is
+ * worth a screen.
  */
 export const RootLoader = async () => {
   const user = await loadSession()
@@ -15,9 +21,9 @@ export const RootLoader = async () => {
 
   const { memberships } = useSessionStore.getState()
   if (memberships.length === 0) return redirect('/primeira-loja')
-  if (memberships.length === 1) {
-    return redirect(`/${memberships[0].tenantId}/visao-geral`)
-  }
 
-  return redirect('/lojas')
+  const companies = new Set(memberships.map(({ companyId }) => companyId))
+  if (companies.size > 1) return redirect('/lojas')
+
+  return redirect(`/${entryTenant(memberships)}/visao-geral`)
 }
