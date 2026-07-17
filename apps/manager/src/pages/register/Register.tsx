@@ -1,3 +1,3 @@
-export const Register = () => {
-  return <div>Cadastro</div>
-}
+import { RegisterWizard } from '@compositions/RegisterWizard'
+
+export const Register = () => <RegisterWizard />

@@ -6,12 +6,16 @@ import tailwindcss from '@tailwindcss/vite'
 
 export default defineConfig({
   plugins: [react(), tailwindcss()],
+  /** 3001 is the origin the API allows by default in CORS. */
+  server: { port: 3001, strictPort: true },
   resolve: {
     alias: {
-      '@app-types/': resolve(__dirname, 'src/types/'),
-      '@constants': resolve(__dirname, 'src/constants'),
+      '@ds': resolve(__dirname, '../../packages/ds/src'),
+      '@assets': resolve(__dirname, 'src/assets'),
       '@components': resolve(__dirname, 'src/components'),
       '@compositions': resolve(__dirname, 'src/compositions'),
+      '@constants': resolve(__dirname, 'src/constants'),
+      '@custom_types': resolve(__dirname, 'src/types'),
       '@elements': resolve(__dirname, 'src/elements'),
       '@hooks': resolve(__dirname, 'src/hooks'),
       '@layouts': resolve(__dirname, 'src/layouts'),
@@ -20,6 +24,7 @@ export default defineConfig({
       '@router': resolve(__dirname, 'src/router'),
       '@services': resolve(__dirname, 'src/services'),
       '@states': resolve(__dirname, 'src/states'),
+      '@utils': resolve(__dirname, 'src/utils'),
     },
   },
 })
