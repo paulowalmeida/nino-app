@@ -62,8 +62,8 @@ Regra: estado de servidor (pedidos, produtos, zonas) **nunca** entra em store.
 
 Backend: `nino-api` (NestJS + JWT + RBAC). Auth combina **role global**
 (MERCHANT) com **role de tenant** (`TENANT_OWNER`/`MANAGER`/`STAFF`).
-Multi-tenant: um MERCHANT pode ter N tenants (lojas) — após o login, um seletor
-de loja define o tenant ativo, que passa a escopar todas as rotas.
+Multi-tenant: **Company é a marca (o restaurante) e Tenant é a unidade** — uma
+company tem N tenants. O tenant ativo escopa todas as rotas.
 
 Sessão é **cookie httpOnly** (`accessToken` 15min, `refreshToken` 7 dias), setado
 pela API; o front nunca lê nem escreve token — só manda `credentials: 'include'`.
@@ -93,11 +93,26 @@ Mapa central via `createBrowserRouter`; guards são loaders, não middleware:
 /:tenantId/colaboradores, /:tenantId/configuracoes
 ```
 
-Regra da rota raiz (`RootLoader`): sem sessão → `/entrar`; 0 memberships →
-`/primeira-loja`; 1 → `/:tenantId/visao-geral`; N → `/lojas`.
+Regra da rota raiz (`RootLoader`), agrupando as memberships por **company**:
+
+| Situação | Destino |
+|---|---|
+| Sem sessão | `/entrar` |
+| 0 memberships | `/primeira-loja` (onboarding) |
+| Lojas de **uma** company | `/:tenantId/visao-geral` da `isCurrent` |
+| Lojas em **2+** companies | `/lojas` (escolha de restaurante) |
+
+A distinção existe porque **Company é a marca e Tenant é a unidade**: duas lojas
+da mesma company são unidades do mesmo negócio, e perguntar qual abrir é
+fricção — entra na última usada e a troca de unidade fica no shell (switcher,
+M2). Companies diferentes são restaurantes diferentes: aí a escolha vale tela.
 
 `AuthGuard` (grupo `/:tenantId`) exige sessão viva **e** tenant da URL entre as
 memberships.
+
+Login e signup **não** semeiam a sessão: `POST /auth/login` não devolve
+memberships, então quem popula a store é sempre o `loadSession` via `/auth/me` —
+caminho único de bootstrap.
 
 ## Decisões técnicas
 
@@ -114,20 +129,17 @@ memberships.
   `@nino/api-types` (gerados do OpenAPI). **Não** usar `@nino/lib` — está stale,
   de antes do refactor.
 
-## Pendências de contrato com a nino-api
+## Contrato com a nino-api
 
-Duas coisas do M0 estão inertes esperando a API (tarefa aberta lá):
-
-1. **Memberships** — `/auth/me` não devolve as do próprio usuário, e a view
-   reversa (`GET /user-tenants/user/:userId`) é backoffice-only. Enquanto isso
-   `memberships` fica `[]`: o `AuthGuard` valida só a sessão (qualquer
-   `:tenantId` passa) e a rota raiz sempre cai no braço de 0 → `/primeira-loja`.
-   Quando a API entregar, o plug é preencher no `loadSession` e tirar o
-   `memberships.length > 0` do guard.
-2. **OpenAPI oco** — os 61 schemas saem vazios e nenhuma resposta declara
-   `content` (falta `@nestjs/swagger/plugin` + DTOs de resposta). Por isso os
-   types de auth estão escritos à mão em `@custom_types/auth`; trocar por
-   `@nino/api-types` quando a anotação chegar.
+- **Memberships**: entregues por `GET /auth/me` (nino-api `feat/NAPI-10`), com
+  `companyId`/`companyName` — sem eles o front não distingue troca de unidade de
+  escolha de restaurante.
+- **Types gerados**: `@nino/api-types` cobre os **requests** (o plugin do Swagger
+  preenche os DTOs). As **respostas** ainda saem como `object` no OpenAPI, então
+  os shapes de retorno que o manager consome (`me`, `login`, `signup`) seguem
+  escritos à mão em `@custom_types/auth`. A conversão dos retornos em classes é
+  débito registrado no `docs/todo.md` da API, para ser feita conforme cada
+  controller for tocado.
 
 ## Setup de Tailwind e do `@nino/ds`
 
@@ -147,9 +159,11 @@ CORS por padrão.
 
 1. ✅ **M0 — Fundação**: estrutura atomic + aliases, refresh transparente,
    TanStack Query + query-keys, zustand, `@nino/api-types`, bootstrap de sessão
-   e guards (membership pendente da API)
+   e guards
 2. ✅ **M1 — Auth** (`/entrar`, `/cadastrar`) portado do `manager-legacy`
-3. M2 — Shell do painel (Sidebar responsiva, StatCard, `/lojas` de verdade)
-4. Pedidos (lista + detalhe + status)
-5. Catálogo (CRUD de produtos e categorias)
-6. Configurações (loja, horários, pagamentos, contato)
+3. ✅ **M0.6 — Memberships**: guard de tenant efetivo e regra de entrada por
+   company (depende da nino-api `feat/NAPI-10`)
+4. M2 — Shell do painel (Sidebar responsiva, StatCard, switcher de unidade)
+5. Pedidos (lista + detalhe + status)
+6. Catálogo (CRUD de produtos e categorias)
+7. Configurações (loja, horários, pagamentos, contato)
