@@ -20,7 +20,7 @@ export const RootLoader = async () => {
   if (!user) return redirect('/entrar')
 
   const { memberships } = useSessionStore.getState()
-  if (memberships.length === 0) return redirect('/primeira-loja')
+  if (memberships.length === 0) return redirect('/criar-loja')
 
   const companies = new Set(memberships.map(({ companyId }) => companyId))
   if (companies.size > 1) return redirect('/lojas')
