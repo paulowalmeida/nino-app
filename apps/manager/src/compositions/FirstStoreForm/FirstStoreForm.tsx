@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 
 import {
@@ -15,6 +15,7 @@ import { useStoreTypes } from '@hooks/store/useStoreTypes'
 import { lookupZipCode, onlyDigits } from '@services/store/address.service'
 import { checkSlug } from '@services/store/store.service'
 import { ApiError } from '@utils/api-error'
+import { clearDraft, readDraft, writeDraft } from '@utils/form-draft'
 import { riseDelay } from '@utils/rise-delay'
 import { slugify } from '@utils/slugify'
 
@@ -24,6 +25,7 @@ import styles from './FirstStoreForm.module.css'
 import motion from '@layouts/AuthLayout/motion.module.css'
 
 const TAKEN_MESSAGE = 'Este endereço já está em uso'
+const DRAFT_KEY = 'first-store'
 
 /**
  * The check is a courtesy: the unique constraint is what actually decides, and
@@ -43,6 +45,7 @@ export const FirstStoreForm = () => {
   const { data: types = [] } = useStoreTypes()
   const { mutateAsync: createStore } = useCreateStore()
   const [lookingUp, setLookingUp] = useState(false)
+  const [draft] = useState(() => readDraft<FirstStoreFormValues>(DRAFT_KEY))
 
   const {
     register,
@@ -51,11 +54,21 @@ export const FirstStoreForm = () => {
     setValue,
     getValues,
     setError,
+    watch,
     formState: { errors, isSubmitting },
   } = useForm<FirstStoreFormValues>({
     mode: 'onBlur',
     reValidateMode: 'onBlur',
+    defaultValues: draft ?? undefined,
   })
+
+  useEffect(() => {
+    const { unsubscribe } = watch((values) =>
+      writeDraft<FirstStoreFormValues>(DRAFT_KEY, values)
+    )
+
+    return unsubscribe
+  }, [watch])
 
   const typeOptions = types.map(({ id, name, description }) => ({
     value: id,
@@ -94,11 +107,23 @@ export const FirstStoreForm = () => {
         slug: slugify(data.slug),
         zipCode: onlyDigits(data.zipCode),
       })
+
+      clearDraft(DRAFT_KEY)
     } catch (error) {
       if (error instanceof ApiError && error.status === 409) {
         setError('slug', { message: TAKEN_MESSAGE })
         return
       }
+
+      if (!navigator.onLine) {
+        setError('root', {
+          message:
+            'Você está sem internet. O que já foi preenchido fica salvo — ' +
+            'tente de novo quando a conexão voltar.',
+        })
+        return
+      }
+
       setError('root', {
         message:
           'Não foi possível criar a loja. Confira os dados e tente de novo.',
@@ -108,6 +133,12 @@ export const FirstStoreForm = () => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
+      {draft && (
+        <p className={`${motion.rise} ${styles.draftNotice}`} role="status">
+          Continuamos de onde você parou.
+        </p>
+      )}
+
       <div className={motion.rise} style={riseDelay(180)}>
         <FormField label="Nome da loja" error={errors.customName?.message}>
           <Input

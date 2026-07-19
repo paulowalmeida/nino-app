@@ -20,6 +20,15 @@
   @apply text-sm text-red-500;
 }
 
+.draftNotice {
+  @apply -mb-1 flex items-center gap-1.5 text-sm text-brand-strong;
+}
+
+.draftNotice::before {
+  content: "↺";
+  @apply text-base leading-none;
+}
+
 .submit {
   @apply mt-2 w-full;
 }
