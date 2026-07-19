@@ -19,8 +19,17 @@
   @apply h-4 w-4 shrink-0 text-brand;
 }
 
+.trigerText {
+  @apply flex min-w-0 flex-1 flex-col;
+}
+
 .name {
-  @apply flex-1 truncate;
+  @apply truncate;
+}
+
+/* only shown when the owner has more than one company to tell apart */
+.company {
+  @apply truncate text-[11px] font-normal text-white/35;
 }
 
 .caret {
@@ -30,7 +39,7 @@
   border-top-color: rgb(255 255 255 / 0.4);
 }
 
-.list {
+.panel {
   @apply absolute left-0 right-0 top-full z-20 mt-1 overflow-hidden;
   @apply rounded-xl border border-white/10 bg-dark shadow-xl;
 }
@@ -47,4 +56,10 @@
 
 .checkIcon {
   @apply h-4 w-4 shrink-0 text-brand;
+}
+
+.switchCompany {
+  @apply w-full border-t border-white/10 px-3 py-2.5 text-left;
+  @apply text-xs font-medium text-brand transition-colors duration-150;
+  @apply hover:bg-white/8;
 }

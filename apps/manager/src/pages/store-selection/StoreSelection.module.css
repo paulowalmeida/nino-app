@@ -36,6 +36,3 @@
   @apply mt-0.5 text-sm text-text/60;
 }
 
-.storeRole {
-  @apply mt-1 text-xs uppercase tracking-wider text-text/50;
-}

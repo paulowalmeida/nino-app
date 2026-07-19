@@ -1,15 +1,23 @@
 import { useNavigate } from 'react-router'
 
-import { useSessionStore } from '@states/useSessionStore'
+import type { Membership } from '@custom_types/auth'
+import { useCompanyGroups } from '@hooks/session/useCompanyGroups'
 
 import styles from './StoreSelection.module.css'
 
+const unitLabel = (total: number): string =>
+  total === 1 ? '1 unidade' : `${total} unidades`
+
+/** Resumes where the owner left off, falling back to the first unit. */
+const entryUnit = (units: Membership[]): Membership =>
+  units.find(({ isCurrent }) => isCurrent) ?? units[0]
+
 export const StoreSelection = () => {
   const navigate = useNavigate()
-  const memberships = useSessionStore((state) => state.memberships)
+  const companies = useCompanyGroups()
 
-  const handleSelect = (tenantId: string) => () => {
-    void navigate(`/${tenantId}/visao-geral`)
+  const handleSelect = (units: Membership[]) => () => {
+    void navigate(`/${entryUnit(units).tenantId}/visao-geral`)
   }
 
   return (
@@ -19,18 +27,19 @@ export const StoreSelection = () => {
         <p className={styles.subtitle}>Escolha qual você quer gerenciar</p>
 
         <div className={styles.list}>
-          {memberships.map(({ tenantId, tenantName, companyName, role }) => (
+          {companies.map(({ companyId, companyName, units }) => (
             <button
-              key={tenantId}
+              key={companyId}
               type="button"
-              onClick={handleSelect(tenantId)}
+              onClick={handleSelect(units)}
               className={styles.store}
             >
               <span className={styles.storeName}>{companyName}</span>
-              {tenantName !== companyName && (
-                <span className={styles.storeUnit}>{tenantName}</span>
-              )}
-              <span className={styles.storeRole}>{role}</span>
+              <span className={styles.storeUnit}>
+                {units.length > 1
+                  ? unitLabel(units.length)
+                  : units[0].tenantName}
+              </span>
             </button>
           ))}
         </div>
