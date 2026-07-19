@@ -1,0 +1,108 @@
+@reference "@nino/ds/globals.css";
+
+/*
+ * A comanda de impressora térmica: papel claro, divisórias picotadas e a
+ * base serrilhada de quem acabou de rasgar o pedido da bobina. A serrilha é
+ * feita com mask — por isso o cartão não usa border nem sombra externa
+ * (ambas seriam cortadas junto com o papel).
+ */
+.ticket {
+  --tooth: 9px;
+  @apply relative flex flex-col rounded-t-[10px] bg-paper;
+  padding-bottom: var(--tooth);
+  box-shadow: inset 0 0 0 1px var(--color-sand);
+  mask:
+    radial-gradient(var(--tooth) at 50% 0, #0000 98%, #000 100%) 50% 100% /
+      calc(2 * var(--tooth)) var(--tooth) repeat-x,
+    linear-gradient(#000 0 0) 0 0 / 100% calc(100% - var(--tooth)) no-repeat;
+}
+
+/* pedido esperando aceite: a bobina ainda quente */
+.waiting {
+  box-shadow: inset 0 0 0 1px var(--color-brand-soft);
+  background:
+    linear-gradient(180deg, var(--color-cream) 0%, var(--color-paper) 38%);
+}
+
+.waiting::before {
+  content: "";
+  @apply absolute inset-x-0 top-0 h-[3px] bg-brand;
+}
+
+.cancelled {
+  @apply opacity-60;
+}
+
+.head {
+  @apply flex items-baseline gap-2.5 px-4 pt-3.5 pb-2.5;
+}
+
+.number {
+  @apply font-display text-base font-extrabold tracking-[-0.01em] text-ink;
+  font-variant-numeric: tabular-nums;
+}
+
+.time {
+  @apply text-xs text-faint;
+  font-variant-numeric: tabular-nums;
+}
+
+.channel {
+  @apply ml-auto rounded-full bg-surface-sunk px-2.5 py-1;
+  @apply text-[0.65rem] font-bold uppercase tracking-[0.1em] text-subtle;
+}
+
+.body {
+  @apply block border-t border-dashed border-sand-deep px-4 py-3;
+}
+
+.customer {
+  @apply text-sm font-semibold text-body;
+}
+
+.state {
+  @apply mt-0.5 text-xs text-faint;
+}
+
+.items {
+  @apply mt-2.5 flex flex-col gap-1;
+}
+
+.item {
+  @apply flex items-baseline gap-2 text-sm text-muted;
+}
+
+.quantity {
+  @apply w-6 shrink-0 text-right font-bold text-brand-strong;
+  font-variant-numeric: tabular-nums;
+}
+
+.itemName {
+  @apply truncate;
+}
+
+.more {
+  @apply pl-8 text-xs italic text-faintest;
+}
+
+.foot {
+  @apply flex flex-wrap items-center justify-between gap-3;
+  @apply border-t border-dashed border-sand-deep px-4 pt-3 pb-1;
+}
+
+.money {
+  @apply flex flex-col;
+}
+
+.total {
+  @apply font-display text-lg font-extrabold text-ink;
+  font-variant-numeric: tabular-nums;
+}
+
+.payment {
+  @apply text-[0.7rem] text-faint;
+}
+
+.action {
+  @apply shrink-0;
+}

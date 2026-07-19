@@ -1,12 +1,14 @@
 import type {
+  CreateMenuItemRequest,
   MenuItem,
   MenuItemImage,
   MenuPage,
+  ProductCategory,
   UpdateMenuItemRequest,
 } from '@custom_types/product'
 import { ApiFactory } from '@services/api/api.service'
 
-const { getAll, patch, remove } = ApiFactory()
+const { get, getAll, create, patch, remove } = ApiFactory()
 
 /** The API caps `size` at 100. */
 const PAGE_SIZE = 100
@@ -41,6 +43,30 @@ export const listMenu = async (tenantId: string): Promise<MenuPage> => {
 
   return { ...first, data: items }
 }
+
+export const createItem = (
+  tenantId: string,
+  data: CreateMenuItemRequest
+): Promise<MenuItem> =>
+  create<CreateMenuItemRequest, MenuItem>(
+    `tenants/${tenantId}/products`,
+    data
+  )
+
+/** Categorias, inclusive as ainda sem item — o menu não mostra essas. */
+export const listCategories = (
+  tenantId: string
+): Promise<{ data: ProductCategory[] }> =>
+  get<{ data: ProductCategory[] }>(`tenants/${tenantId}/product-categories`)
+
+export const createCategory = (
+  tenantId: string,
+  name: string
+): Promise<ProductCategory> =>
+  create<{ name: string }, ProductCategory>(
+    `tenants/${tenantId}/product-categories`,
+    { name }
+  )
 
 export const setItemAvailability = (
   tenantId: string,

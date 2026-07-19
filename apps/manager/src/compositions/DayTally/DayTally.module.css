@@ -1,0 +1,62 @@
+@reference "@nino/ds/globals.css";
+
+.heading {
+  @apply mb-3;
+}
+
+/*
+ * O caixa do dia: mesma família dos cartões da fila, mas em superfície
+ * assentada — é resultado consolidado, não trabalho em aberto.
+ */
+.tally {
+  @apply grid gap-3 sm:grid-cols-3 lg:gap-4;
+}
+
+.figure {
+  @apply flex flex-col gap-1 rounded-[22px] border border-sand;
+  @apply bg-surface-sunk/70 p-4 backdrop-blur-sm lg:p-5;
+}
+
+.value {
+  @apply font-display text-2xl font-extrabold leading-none tracking-tight;
+  @apply text-ink lg:text-3xl;
+  font-variant-numeric: tabular-nums;
+}
+
+.label {
+  @apply text-xs leading-snug text-faint lg:text-sm;
+}
+
+.recent {
+  @apply mt-4 flex flex-col;
+}
+
+.entry {
+  @apply border-t border-sand;
+}
+
+.link {
+  @apply flex items-baseline gap-3 rounded-xl px-2 py-2.5;
+  @apply transition-colors duration-150 hover:bg-white/70;
+  @apply focus-visible:outline-none focus-visible:ring-2;
+  @apply focus-visible:ring-brand focus-visible:ring-offset-1;
+}
+
+.number {
+  @apply font-display text-sm font-extrabold text-ink;
+  font-variant-numeric: tabular-nums;
+}
+
+.state {
+  @apply min-w-0 flex-1 truncate text-sm text-muted;
+}
+
+.at {
+  @apply text-xs text-faint;
+  font-variant-numeric: tabular-nums;
+}
+
+.total {
+  @apply text-sm font-semibold text-body;
+  font-variant-numeric: tabular-nums;
+}

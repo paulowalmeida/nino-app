@@ -1,0 +1,42 @@
+@reference "@nino/ds/globals.css";
+
+.timeline {
+  @apply flex flex-col;
+}
+
+.entry {
+  @apply relative flex items-baseline gap-3 pb-4 pl-6;
+}
+
+/* o fio que liga um carimbo ao seguinte */
+.entry:not(.last)::before {
+  content: "";
+  @apply absolute left-[3px] top-2 bottom-0 w-px bg-sand-deep;
+}
+
+.mark {
+  @apply absolute left-0 top-1.5 h-[7px] w-[7px] rounded-full;
+  @apply bg-sand-deep;
+}
+
+.last .mark {
+  @apply bg-brand;
+  box-shadow: 0 0 0 3px var(--color-brand-soft);
+}
+
+.label {
+  @apply text-sm text-muted;
+}
+
+.last .label {
+  @apply font-semibold text-body;
+}
+
+.author {
+  @apply text-faintest;
+}
+
+.at {
+  @apply ml-auto text-xs text-faint;
+  font-variant-numeric: tabular-nums;
+}

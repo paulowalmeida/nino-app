@@ -1,0 +1,21 @@
+@reference "@nino/ds/globals.css";
+
+/* a placa na porta: o ponto aceso é o que se lê de longe */
+.sign {
+  @apply inline-flex items-center gap-2 rounded-full border border-sand;
+  @apply bg-paper/80 px-3 py-1.5 backdrop-blur-sm;
+  @apply text-[0.7rem] font-bold uppercase tracking-[0.1em] text-faint;
+}
+
+.open {
+  @apply border-brand/25 text-brand-strong;
+}
+
+.bulb {
+  @apply h-2 w-2 rounded-full bg-faintest;
+}
+
+.open .bulb {
+  @apply bg-brand;
+  box-shadow: 0 0 0 3px var(--color-brand-soft);
+}

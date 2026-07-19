@@ -1,0 +1,43 @@
+@reference "@nino/ds/globals.css";
+
+.skeleton {
+  @apply h-64 w-full rounded-[24px];
+}
+
+.zones {
+  @apply flex flex-col;
+}
+
+.zone {
+  @apply flex flex-wrap items-center gap-3 border-t border-sand py-3;
+  @apply transition-opacity duration-200;
+}
+
+.off {
+  @apply opacity-55;
+}
+
+.zoneName {
+  @apply min-w-0 flex-1 truncate text-sm font-semibold text-body;
+}
+
+.fee {
+  @apply text-sm text-muted;
+  font-variant-numeric: tabular-nums;
+}
+
+.remove {
+  @apply shrink-0 text-faint;
+}
+
+.add {
+  @apply mt-4 flex flex-wrap items-center gap-2 border-t border-sand pt-4;
+}
+
+.addName {
+  @apply min-w-40 flex-1;
+}
+
+.addFee {
+  @apply w-28;
+}

@@ -1,0 +1,35 @@
+@reference "@nino/ds/globals.css";
+
+.skeleton {
+  @apply h-80 w-full rounded-[24px];
+}
+
+.week {
+  @apply flex flex-col;
+}
+
+/* uma linha por dia — o dia fechado recua para o fundo */
+.day {
+  @apply flex flex-wrap items-center gap-3 border-t border-sand py-3;
+  @apply transition-opacity duration-200;
+}
+
+.closed {
+  @apply opacity-55;
+}
+
+.dayName {
+  @apply w-24 shrink-0 text-sm font-semibold text-body;
+}
+
+.times {
+  @apply flex items-center gap-2;
+}
+
+.until {
+  @apply text-xs text-faint;
+}
+
+.save {
+  @apply ml-auto shrink-0;
+}

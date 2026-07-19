@@ -1,0 +1,30 @@
+@reference "@nino/ds/globals.css";
+
+.skeleton {
+  @apply h-48 w-full rounded-[24px];
+}
+
+.phones {
+  @apply flex flex-col;
+}
+
+.phone {
+  @apply flex items-center gap-3 border-t border-sand py-3;
+}
+
+.number {
+  @apply min-w-0 flex-1 text-sm font-semibold text-body;
+  font-variant-numeric: tabular-nums;
+}
+
+.remove {
+  @apply shrink-0 text-faint;
+}
+
+.add {
+  @apply mt-4 flex flex-wrap items-center gap-2 border-t border-sand pt-4;
+}
+
+.input {
+  @apply min-w-48 flex-1;
+}

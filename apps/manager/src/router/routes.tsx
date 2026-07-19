@@ -6,6 +6,7 @@ import { Catalog } from '@pages/catalog/Catalog'
 import { Employees } from '@pages/employees/Employees'
 import { CreateStore } from '@pages/first-store/FirstStore'
 import { Login } from '@pages/login/Login'
+import { NewProduct } from '@pages/new-product'
 import { OrderDetail } from '@pages/order-detail/OrderDetail'
 import { Orders } from '@pages/orders/Orders'
 import { Overview } from '@pages/overview/Overview'
@@ -66,6 +67,10 @@ export const router = createBrowserRouter([
       {
         path: 'catalogo',
         element: <Catalog />,
+      },
+      {
+        path: 'catalogo/novo',
+        element: <NewProduct />,
       },
       {
         path: 'catalogo/:productId',

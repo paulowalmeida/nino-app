@@ -39,6 +39,20 @@
   @apply overflow-y-auto px-3 py-4;
 }
 
+/* separação por grupo: o que se faz hoje acima, como a loja é montada abaixo */
+.group {
+  @apply flex flex-col gap-0.5;
+}
+
+.group + .group {
+  @apply mt-5;
+}
+
+.groupTitle {
+  @apply mb-1 px-3 text-[0.6rem] font-bold uppercase tracking-[0.14em];
+  @apply text-white/28;
+}
+
 .navItem {
   @apply relative flex items-center gap-3 rounded-xl px-3 py-2.5;
   @apply text-sm font-medium text-white/45;
@@ -67,6 +81,13 @@
   @apply h-[18px] w-[18px] shrink-0;
 }
 
+/* quantos pedidos esperam aceite — o único número que interrompe */
+.tally {
+  @apply ml-auto flex h-5 min-w-5 items-center justify-center rounded-full;
+  @apply bg-brand px-1.5 text-[0.65rem] font-bold text-brand-foreground;
+  font-variant-numeric: tabular-nums;
+}
+
 .footer {
   @apply relative z-10 flex items-center justify-between;
   @apply border-t border-white/8 p-4;
@@ -74,11 +95,6 @@
 
 .userInfo {
   @apply flex items-center gap-2.5 overflow-hidden;
-}
-
-.avatar {
-  @apply flex h-8 w-8 shrink-0 items-center justify-center rounded-full;
-  @apply bg-brand/25 text-xs font-bold text-brand;
 }
 
 .userName {

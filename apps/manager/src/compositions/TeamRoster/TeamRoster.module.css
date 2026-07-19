@@ -1,0 +1,59 @@
+@reference "@nino/ds/globals.css";
+
+.roster {
+  @apply rounded-[24px] border border-sand bg-white/70 p-5 backdrop-blur-sm;
+  @apply lg:p-6;
+}
+
+.head {
+  @apply mb-4;
+}
+
+.title {
+  @apply font-display text-lg font-extrabold tracking-[-0.01em] text-ink;
+}
+
+.hint {
+  @apply mt-0.5 text-sm text-faint;
+}
+
+.list {
+  @apply flex flex-col;
+}
+
+.row {
+  @apply flex flex-wrap items-center gap-3 border-t border-sand py-3;
+}
+
+.person {
+  @apply min-w-0 flex-1;
+}
+
+.name {
+  @apply truncate text-sm font-semibold text-body;
+}
+
+.email {
+  @apply truncate text-xs text-faint;
+}
+
+.role {
+  @apply rounded-full bg-surface-sunk px-2.5 py-1;
+  @apply text-[0.65rem] font-bold uppercase tracking-[0.1em] text-subtle;
+}
+
+.remove {
+  @apply shrink-0 text-faint;
+}
+
+.empty {
+  @apply border-t border-sand pt-4 text-sm text-faint;
+}
+
+.loading {
+  @apply flex flex-col gap-2;
+}
+
+.skeletonRow {
+  @apply h-14 w-full rounded-xl;
+}

@@ -1,0 +1,28 @@
+@reference "@nino/ds/globals.css";
+
+.skeleton {
+  @apply h-64 w-full rounded-[24px];
+}
+
+/* formas de pagamento: selo que a loja acende */
+.chips {
+  @apply flex flex-wrap gap-2;
+}
+
+.chip {
+  @apply rounded-full border border-sand bg-paper px-3.5 py-2;
+  @apply text-sm text-subtle transition-colors duration-200;
+  @apply hover:border-brand/30 hover:text-body;
+}
+
+.chipOn {
+  @apply border-brand/40 bg-brand/10 font-semibold text-brand-strong;
+}
+
+.minimum {
+  @apply flex flex-col gap-1.5 border-t border-sand pt-4;
+}
+
+.minimumInput {
+  @apply max-w-40;
+}
