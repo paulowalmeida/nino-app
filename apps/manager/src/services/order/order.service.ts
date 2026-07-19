@@ -1,4 +1,5 @@
 import type {
+  CreateOrderRequest,
   Order,
   OrderPage,
   OrderQueueSummary,
@@ -6,7 +7,7 @@ import type {
 } from '@custom_types/order'
 import { ApiFactory } from '@services/api/api.service'
 
-const { get, getAll, patch } = ApiFactory()
+const { get, getAll, create, patch } = ApiFactory()
 
 type OrderListParams = {
   target: string
@@ -38,6 +39,12 @@ export const listOrders = (
     size: ORDER_PAGE_SIZE,
     page,
   })
+
+export const createOrder = (
+  tenantId: string,
+  data: CreateOrderRequest
+): Promise<Order> =>
+  create<CreateOrderRequest, Order>(`tenants/${tenantId}/orders`, data)
 
 export const getOrder = (tenantId: string, orderId: string): Promise<Order> =>
   get<Order>(`tenants/${tenantId}/orders/${orderId}`)

@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { Link } from 'react-router'
 
 import { Button, Skeleton } from '@nino/ds'
 
@@ -73,11 +74,18 @@ export const Orders = () => {
   return (
     <div className={styles.page}>
       <header className={styles.header}>
-        <Eyebrow>Sua loja</Eyebrow>
-        <PageTitle accent="Pedidos">Pedidos</PageTitle>
-        <p className={styles.subtitle}>
-          Cada comanda mostra o próximo passo. Um toque move o pedido adiante.
-        </p>
+        <div className={styles.headText}>
+          <Eyebrow>Sua loja</Eyebrow>
+          <PageTitle accent="Pedidos">Pedidos</PageTitle>
+          <p className={styles.subtitle}>
+            Cada comanda mostra o próximo passo. Um toque move o pedido
+            adiante.
+          </p>
+        </div>
+
+        <Button asChild className={`${motion.press} ${styles.newOrder}`}>
+          <Link to="novo">Pedido no balcão</Link>
+        </Button>
       </header>
 
       <div className={motion.unroll}>

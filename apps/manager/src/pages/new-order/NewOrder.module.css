@@ -1,0 +1,137 @@
+@reference "@nino/ds/globals.css";
+
+.page {
+  @apply mx-auto max-w-5xl p-4 lg:p-8;
+}
+
+.backLink {
+  @apply inline-flex items-center gap-1.5 text-sm font-medium text-faint;
+  @apply transition-colors duration-150 hover:text-brand-strong;
+}
+
+.header {
+  @apply mt-4 flex flex-col gap-1.5;
+}
+
+.subtitle {
+  @apply mt-1 max-w-lg text-sm leading-relaxed text-faint;
+}
+
+.columns {
+  @apply mt-6 grid items-start gap-5 lg:grid-cols-[1.2fr_1fr];
+}
+
+.menu {
+  @apply flex flex-col gap-6 rounded-[24px] border border-sand bg-white/70;
+  @apply p-5 backdrop-blur-sm lg:p-6;
+}
+
+.sectionName {
+  @apply mb-2 border-b border-sand pb-2;
+  @apply font-display text-base font-extrabold tracking-tight text-ink;
+}
+
+.items {
+  @apply flex flex-col;
+}
+
+.item {
+  @apply flex items-center gap-3 border-b border-sand/60 py-2.5;
+}
+
+.itemName {
+  @apply min-w-0 flex-1 truncate text-sm font-semibold text-body;
+}
+
+.itemPrice {
+  @apply shrink-0 text-sm text-muted;
+  font-variant-numeric: tabular-nums;
+}
+
+/*
+ * A comanda em branco, preenchida à mão: mesmo papel serrilhado da fila,
+ * agora do lado de quem escreve o pedido.
+ */
+.ticket {
+  --tooth: 10px;
+  @apply relative flex flex-col gap-3 rounded-t-[14px] bg-paper p-5;
+  @apply lg:sticky lg:top-5;
+  padding-bottom: calc(var(--tooth) + 0.75rem);
+  box-shadow: inset 0 0 0 1px var(--color-sand);
+  mask:
+    radial-gradient(var(--tooth) at 50% 0, #0000 98%, #000 100%) 50% 100% /
+      calc(2 * var(--tooth)) var(--tooth) repeat-x,
+    linear-gradient(#000 0 0) 0 0 / 100% calc(100% - var(--tooth)) no-repeat;
+}
+
+.ticketTitle {
+  @apply text-[0.7rem] font-bold uppercase tracking-[0.12em] text-faint;
+}
+
+.empty {
+  @apply text-sm leading-relaxed text-faint;
+}
+
+.lines {
+  @apply flex flex-col;
+}
+
+.line {
+  @apply flex items-center gap-2 border-t border-dashed border-sand-deep py-2;
+}
+
+.lineName {
+  @apply min-w-0 flex-1 truncate text-sm text-body;
+}
+
+.stepper {
+  @apply flex shrink-0 items-center gap-1;
+}
+
+.stepButton {
+  @apply flex h-7 w-7 items-center justify-center rounded-full;
+  @apply border border-sand bg-white text-base leading-none text-subtle;
+  @apply transition-colors duration-150;
+  @apply hover:border-brand/35 hover:text-brand-strong;
+}
+
+.quantity {
+  @apply w-6 text-center text-sm font-bold text-ink;
+  font-variant-numeric: tabular-nums;
+}
+
+.linePrice {
+  @apply w-20 shrink-0 text-right text-sm text-muted;
+  font-variant-numeric: tabular-nums;
+}
+
+.total {
+  @apply flex items-baseline justify-between;
+  @apply border-t border-dashed border-sand-deep pt-3;
+  @apply font-display text-lg font-extrabold text-ink;
+  font-variant-numeric: tabular-nums;
+}
+
+.field {
+  @apply flex flex-col gap-1.5;
+}
+
+.label {
+  @apply text-sm font-medium text-body;
+}
+
+.error {
+  @apply text-sm text-red-500;
+}
+
+.place {
+  @apply mt-1 w-full;
+}
+
+.notice {
+  @apply text-sm text-faint;
+}
+
+.skeletonRow {
+  @apply h-16 w-full rounded-xl;
+}
