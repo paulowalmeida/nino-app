@@ -1,0 +1,92 @@
+@reference "@nino/ds/globals.css";
+
+/* brand glow seeping from top-right */
+.sidebar::after {
+  content: "";
+  position: absolute;
+  top: -4rem;
+  right: -4rem;
+  width: 14rem;
+  height: 14rem;
+  border-radius: 9999px;
+  background: var(--color-brand);
+  opacity: 0.12;
+  filter: blur(3.5rem);
+  pointer-events: none;
+}
+
+.sidebar {
+  @apply fixed left-0 top-0 z-40 flex h-screen w-60 flex-col;
+  @apply -translate-x-full bg-dark;
+  @apply transition-transform duration-300 ease-in-out;
+  @apply lg:translate-x-0;
+}
+
+.open {
+  @apply translate-x-0;
+}
+
+.logoWrap {
+  @apply relative z-10 border-b border-white/8 px-5 py-4;
+}
+
+.switcherWrap {
+  @apply relative z-20 border-b border-white/8 px-2 py-2;
+}
+
+.nav {
+  @apply relative z-10 flex flex-1 flex-col gap-0.5;
+  @apply overflow-y-auto px-3 py-4;
+}
+
+.navItem {
+  @apply relative flex items-center gap-3 rounded-xl px-3 py-2.5;
+  @apply text-sm font-medium text-white/45;
+  @apply transition-colors duration-150;
+  @apply hover:bg-white/6 hover:text-white/80;
+}
+
+/* left accent bar for active item */
+.navItemActive::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.375rem;
+  bottom: 0.375rem;
+  width: 3px;
+  border-radius: 0 3px 3px 0;
+  background: var(--color-brand);
+}
+
+.navItemActive {
+  @apply bg-brand/10 text-brand;
+  @apply hover:bg-brand/14 hover:text-brand;
+}
+
+.navIcon {
+  @apply h-[18px] w-[18px] shrink-0;
+}
+
+.footer {
+  @apply relative z-10 flex items-center justify-between;
+  @apply border-t border-white/8 p-4;
+}
+
+.userInfo {
+  @apply flex items-center gap-2.5 overflow-hidden;
+}
+
+.avatar {
+  @apply flex h-8 w-8 shrink-0 items-center justify-center rounded-full;
+  @apply bg-brand/25 text-xs font-bold text-brand;
+}
+
+.userName {
+  @apply truncate text-sm font-medium text-white/70;
+}
+
+.logoutBtn {
+  @apply flex h-8 w-8 shrink-0 items-center justify-center rounded-lg;
+  @apply text-white/35 transition-colors duration-150;
+  @apply hover:bg-white/8 hover:text-white/70;
+}
