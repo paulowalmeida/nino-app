@@ -8,11 +8,14 @@ import styles from './PersonMark.module.css'
 export const PersonMark = ({
   name,
   tone = 'brand',
+  size = 'md',
   className,
 }: PersonMarkProps) => (
   <span
     aria-hidden="true"
-    className={`${styles.mark} ${styles[tone]} ${className ?? ''}`}
+    className={`${styles.mark} ${styles[tone]} ${styles[size]} ${
+      className ?? ''
+    }`}
   >
     {initialsOf(name)}
   </span>

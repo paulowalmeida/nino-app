@@ -1,8 +1,16 @@
 @reference "@nino/ds/globals.css";
 
 .mark {
-  @apply flex h-10 w-10 shrink-0 items-center justify-center rounded-full;
-  @apply text-sm font-bold uppercase;
+  @apply flex shrink-0 items-center justify-center rounded-full;
+  @apply font-bold uppercase;
+}
+
+.md {
+  @apply h-10 w-10 text-sm;
+}
+
+.sm {
+  @apply h-8 w-8 text-xs;
 }
 
 .brand {
@@ -11,4 +19,8 @@
 
 .quiet {
   @apply bg-surface-sunk text-subtle;
+}
+
+.night {
+  @apply bg-brand/25 text-brand;
 }
