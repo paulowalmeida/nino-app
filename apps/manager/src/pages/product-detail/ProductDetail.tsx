@@ -4,6 +4,7 @@ import { Link, useNavigate, useParams } from 'react-router'
 
 import { Button, FormField, Input, Select, Switch, Textarea } from '@nino/ds'
 
+import { ItemPhoto } from '@compositions/ItemPhoto'
 import { ItemThumb } from '@components/ItemThumb'
 import { useMenuItem } from '@hooks/product/useMenuItem'
 import { useUpdateMenuItem } from '@hooks/product/useUpdateMenuItem'
@@ -99,6 +100,7 @@ export const ProductDetail = () => {
         <div className={styles.heroInner}>
           <ItemThumb
             name={item.name}
+            imageUrl={item.images?.[0]?.url}
             className={`${motion.pop} ${styles.thumb}`}
           />
           <div className={styles.heroText}>
@@ -119,6 +121,15 @@ export const ProductDetail = () => {
       </header>
 
       <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
+        <div className={`${motion.deal} ${styles.field}`} style={riseDelay(80)}>
+          <ItemPhoto
+            tenantId={tenantId}
+            productId={item.id}
+            name={item.name}
+            images={item.images ?? []}
+          />
+        </div>
+
         <div className={`${motion.deal} ${styles.field}`} style={riseDelay(120)}>
           <FormField label="Nome" error={errors.name?.message}>
             <Input {...register('name', { required: 'Informe o nome' })} />

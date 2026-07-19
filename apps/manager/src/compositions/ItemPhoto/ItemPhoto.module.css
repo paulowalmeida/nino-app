@@ -1,0 +1,61 @@
+@reference "@nino/ds/globals.css";
+
+.wrap {
+  @apply flex flex-col gap-3;
+}
+
+.frame {
+  @apply relative overflow-hidden rounded-[20px] border border-sand;
+  @apply aspect-[4/3] w-full bg-white/70;
+}
+
+.photo {
+  @apply h-full w-full object-cover;
+}
+
+/* área de largar arquivo, quando ainda não há foto */
+.empty {
+  @apply flex h-full w-full flex-col items-center justify-center gap-2;
+  @apply border-2 border-dashed border-sand-deep bg-cream/60 p-6 text-center;
+  @apply transition-colors duration-200;
+}
+
+.emptyOver {
+  @apply border-brand bg-brand/8;
+}
+
+.emptyTitle {
+  @apply text-sm font-semibold text-ink;
+}
+
+.emptyHint {
+  @apply text-xs leading-relaxed text-faint;
+}
+
+.actions {
+  @apply flex flex-wrap items-center gap-2;
+}
+
+.fileInput {
+  @apply sr-only;
+}
+
+.trigger {
+  @apply cursor-pointer rounded-xl border border-sand-deep bg-white/80 px-3;
+  @apply py-2 text-xs font-semibold text-ink transition-colors duration-150;
+  @apply hover:border-brand/40 hover:bg-brand/5;
+}
+
+.removeBtn {
+  @apply rounded-xl px-3 py-2 text-xs font-semibold text-faint;
+  @apply transition-colors duration-150 hover:bg-red-50 hover:text-red-500;
+}
+
+.error {
+  @apply text-xs text-red-500;
+}
+
+.sending {
+  @apply absolute inset-0 flex items-center justify-center;
+  @apply bg-ink/35 text-xs font-semibold text-white backdrop-blur-sm;
+}

@@ -1,3 +1,9 @@
+export type MenuItemImage = {
+  id: string
+  url: string
+  isPrimary: boolean
+}
+
 export type MenuItem = {
   id: string
   name: string
@@ -9,4 +15,5 @@ export type MenuItem = {
     id: string
     name: string
   }
+  images: MenuItemImage[]
 }

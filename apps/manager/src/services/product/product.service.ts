@@ -1,11 +1,12 @@
 import type {
   MenuItem,
+  MenuItemImage,
   MenuPage,
   UpdateMenuItemRequest,
 } from '@custom_types/product'
 import { ApiFactory } from '@services/api/api.service'
 
-const { getAll, patch } = ApiFactory()
+const { getAll, patch, remove } = ApiFactory()
 
 /** The API caps `size` at 100. */
 const PAGE_SIZE = 100
@@ -61,4 +62,41 @@ export const updateItem = (
     `tenants/${tenantId}/products`,
     id,
     data
+  )
+
+/**
+ * Multipart: o browser define o boundary sozinho, então o Content-Type não
+ * pode ser fixado aqui — por isso o fetch direto em vez do cliente ky.
+ */
+export const uploadItemImage = async (
+  tenantId: string,
+  productId: string,
+  file: File
+): Promise<MenuItemImage> => {
+  const body = new FormData()
+  body.append('file', file)
+
+  const response = await fetch(
+    `${import.meta.env.VITE_BASE_URL}/tenants/${tenantId}/products/${productId}/images`,
+    { method: 'POST', body, credentials: 'include' }
+  )
+
+  if (!response.ok) {
+    const detail = (await response.json().catch(() => ({}))) as {
+      message?: string
+    }
+    throw new Error(detail.message ?? 'Não foi possível enviar a imagem')
+  }
+
+  return response.json() as Promise<MenuItemImage>
+}
+
+export const removeItemImage = (
+  tenantId: string,
+  productId: string,
+  imageId: string
+): Promise<{ message: string }> =>
+  remove<{ message: string }>(
+    `tenants/${tenantId}/products/${productId}/images`,
+    imageId
   )

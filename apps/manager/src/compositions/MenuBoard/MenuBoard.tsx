@@ -78,7 +78,7 @@ export const MenuBoard = ({ tenantId }: MenuBoardProps) => {
                   to={item.id}
                   className={`${motion.lift} ${styles.itemLink}`}
                 >
-                  <ItemThumb name={item.name} />
+                  <ItemThumb name={item.name} imageUrl={item.images?.[0]?.url} />
                   <span className={styles.itemText}>
                     <span className={styles.itemName}>{item.name}</span>
                     {item.description && (
