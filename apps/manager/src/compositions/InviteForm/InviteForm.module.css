@@ -1,0 +1,30 @@
+@reference "@nino/ds/globals.css";
+
+.form {
+  @apply flex flex-col gap-4 rounded-[24px] border border-brand/15;
+  @apply bg-brand/5 p-5 lg:p-6;
+}
+
+.title {
+  @apply font-display text-lg font-extrabold tracking-[-0.01em] text-ink;
+}
+
+.hint {
+  @apply mt-0.5 text-sm text-faint;
+}
+
+.fields {
+  @apply grid gap-4 sm:grid-cols-2;
+}
+
+.error {
+  @apply text-sm text-red-500;
+}
+
+.sent {
+  @apply text-sm font-medium text-brand-strong;
+}
+
+.submit {
+  @apply self-start;
+}
