@@ -1,3 +1,4 @@
+export * from './create-order-request'
 export * from './order'
 export * from './order-channel'
 export * from './order-item'
