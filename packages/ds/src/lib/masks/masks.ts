@@ -30,6 +30,13 @@ export function maskCpf(value: string): string {
     .replace(/(\d{3})(\d{1,2})$/, '$1-$2')
 }
 
+/** 00000-000 */
+export function maskZipCode(value: string): string {
+  return onlyDigits(value)
+    .slice(0, 8)
+    .replace(/(\d{5})(\d)/, '$1-$2')
+}
+
 /** 00.000.000/0000-00 */
 export function maskCnpj(value: string): string {
   return onlyDigits(value)

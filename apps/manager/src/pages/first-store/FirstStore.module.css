@@ -1,28 +1,70 @@
 @reference "@nino/ds/globals.css";
 
 .shell {
-  @apply flex min-h-screen items-center justify-center px-6 py-12;
+  @apply flex min-h-screen items-start justify-center px-6 py-12;
   @apply bg-cream;
 }
 
 .panel {
-  @apply w-full max-w-md rounded-[1.75rem] border border-white/70;
+  @apply w-full max-w-lg rounded-[1.75rem] border border-white/70;
   @apply bg-white/75 p-8 text-center shadow-2xl shadow-brand/10;
   @apply backdrop-blur-md;
+  animation: settleIn 0.62s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
 .mascot {
-  @apply mx-auto h-32 w-32;
+  @apply mx-auto h-24 w-24;
+  animation: landIn 0.7s cubic-bezier(0.34, 1.42, 0.64, 1) 0.09s both;
 }
 
 .title {
-  @apply mt-6 font-display text-3xl font-extrabold tracking-tight text-dark;
+  @apply mt-5 font-display text-3xl font-extrabold tracking-tight text-dark;
+  animation: riseIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.12s both;
 }
 
 .subtitle {
   @apply mt-2 text-sm leading-relaxed text-text/60;
+  animation: riseIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.16s both;
 }
 
-.cta {
-  @apply mt-8 w-full;
+@keyframes settleIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px) scale(0.985);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes landIn {
+  from {
+    opacity: 0;
+    transform: translateY(-14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes riseIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .panel,
+  .mascot,
+  .title,
+  .subtitle {
+    animation: none;
+  }
 }
