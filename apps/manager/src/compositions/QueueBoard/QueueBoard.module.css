@@ -1,0 +1,43 @@
+@reference "@nino/ds/globals.css";
+
+.heading {
+  @apply mb-3 text-[10px] font-bold uppercase tracking-widest text-muted;
+  @apply lg:text-xs;
+}
+
+.board {
+  @apply grid grid-cols-2 gap-3;
+  @apply lg:grid-cols-4 lg:gap-4;
+}
+
+.tile {
+  @apply flex flex-col gap-1 rounded-2xl border border-sand-deep bg-white;
+  @apply p-4 lg:p-5;
+  @apply transition-colors duration-300;
+}
+
+/*
+ * The one tile that asks for action carries the brand color; the others stay
+ * quiet. Attention is a budget, and it is spent here.
+ */
+.urgent {
+  @apply border-brand/35 bg-brand/5;
+}
+
+.value {
+  @apply font-display text-4xl font-extrabold leading-none tracking-tight;
+  @apply text-ink lg:text-5xl;
+  font-variant-numeric: tabular-nums;
+}
+
+.urgent .value {
+  @apply text-brand-strong;
+}
+
+.label {
+  @apply text-xs leading-snug text-faint lg:text-sm;
+}
+
+.idle {
+  @apply mt-4 text-sm text-faint;
+}
