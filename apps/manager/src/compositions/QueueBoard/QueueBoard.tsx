@@ -1,4 +1,5 @@
 import { CountUp } from '@components/CountUp'
+import { Eyebrow } from '@components/Eyebrow'
 import { useQueueSummary } from '@hooks/order/useQueueSummary'
 import { riseDelay } from '@utils/rise-delay'
 import type { OrderQueueSummary } from '@custom_types/order'
@@ -29,7 +30,9 @@ export const QueueBoard = ({ tenantId }: QueueBoardProps) => {
 
   return (
     <section aria-label="Fila de pedidos">
-      <h2 className={`${motion.unroll} ${styles.heading}`}>Agora na loja</h2>
+      <div className={motion.unroll}>
+        <Eyebrow className={styles.heading}>Agora na loja</Eyebrow>
+      </div>
 
       <div className={styles.board}>
         {tiles.map(({ label, value, urgent }, index) => (

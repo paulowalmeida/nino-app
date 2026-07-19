@@ -1,8 +1,7 @@
 @reference "@nino/ds/globals.css";
 
 .heading {
-  @apply mb-3 text-[10px] font-bold uppercase tracking-widest text-muted;
-  @apply lg:text-xs;
+  @apply mb-3;
 }
 
 .board {
@@ -11,7 +10,8 @@
 }
 
 .tile {
-  @apply flex flex-col gap-1 rounded-2xl border border-sand-deep bg-white;
+  @apply flex flex-col gap-1 rounded-[22px] border border-sand-deep;
+  @apply bg-white/80 backdrop-blur-sm;
   @apply p-4 lg:p-5;
   @apply transition-colors duration-300;
 }
@@ -21,7 +21,7 @@
  * quiet. Attention is a budget, and it is spent here.
  */
 .urgent {
-  @apply border-brand/35 bg-brand/5;
+  @apply border-brand/35 bg-brand/8;
 }
 
 .value {

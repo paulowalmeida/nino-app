@@ -5,13 +5,22 @@
 }
 
 .header {
-  @apply relative mb-6 overflow-hidden rounded-2xl border border-sand;
-  @apply px-5 py-4 lg:mb-8 lg:px-7 lg:py-6;
-  background: linear-gradient(
-    135deg,
-    var(--color-paper) 0%,
-    var(--color-cream) 100%
-  );
+  @apply relative mb-6 overflow-hidden rounded-[28px] border border-sand;
+  @apply px-5 py-5 lg:mb-8 lg:px-8 lg:py-7;
+  background:
+    radial-gradient(
+      700px 260px at 90% -20%,
+      rgba(255, 126, 31, 0.16),
+      transparent 60%
+    ),
+    linear-gradient(135deg, var(--color-paper) 0%, var(--color-cream) 100%);
+}
+
+/* mesmo grão da landing, agora também no cabeçalho */
+.header::after {
+  content: "";
+  @apply pointer-events-none absolute inset-0 opacity-45 mix-blend-multiply;
+  background-image: url("/noise.svg");
 }
 
 /* warm light spilling from the top-right corner */
@@ -33,12 +42,17 @@
 }
 
 .greeting {
-  @apply mb-0.5 text-[10px] font-bold uppercase tracking-widest text-muted;
-  @apply lg:mb-1 lg:text-xs;
+  @apply mb-1 inline-flex items-center gap-2 text-[0.7rem] font-bold;
+  @apply uppercase tracking-[0.12em] text-brand-strong;
+}
+
+.greeting::before {
+  content: "";
+  @apply inline-block h-0.5 w-[22px] rounded-sm bg-brand;
 }
 
 .title {
-  @apply font-display text-2xl font-extrabold tracking-tight text-ink;
+  @apply font-display text-2xl font-extrabold tracking-[-0.02em] text-ink;
   @apply lg:text-4xl;
 }
 

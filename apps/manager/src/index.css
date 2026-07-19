@@ -1,1 +1,22 @@
 @import "@nino/ds/globals.css";
+
+@layer base {
+  body {
+    background: var(--color-cream);
+  }
+
+  /*
+   * Mesmo grão da landing: atmosfera, não textura óbvia. É o que faz painel e
+   * site parecerem o mesmo produto antes de qualquer outra coisa.
+   */
+  body::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0.4;
+    mix-blend-mode: multiply;
+    background-image: url("/noise.svg");
+  }
+}

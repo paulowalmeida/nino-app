@@ -1,16 +1,16 @@
 @reference "@nino/ds/globals.css";
 
 .page {
-  @apply p-4 lg:p-10;
+  @apply relative p-4 lg:p-10;
+  background: radial-gradient(
+    900px 380px at 50% -10%,
+    rgba(255, 126, 31, 0.12),
+    transparent 60%
+  );
 }
 
 .header {
-  @apply mb-6 lg:mb-8;
-}
-
-.title {
-  @apply font-display text-2xl font-extrabold tracking-tight text-ink;
-  @apply lg:text-3xl;
+  @apply mb-6 flex flex-col gap-1.5 lg:mb-8;
 }
 
 .subtitle {

@@ -1,0 +1,16 @@
+@reference "@nino/ds/globals.css";
+
+.title {
+  @apply font-display text-2xl font-extrabold tracking-[-0.02em] text-ink;
+  @apply lg:text-3xl;
+}
+
+.accent {
+  @apply relative whitespace-nowrap;
+}
+
+.accent::after {
+  content: "";
+  @apply absolute bottom-[0.08em] left-0 right-0 -z-[1];
+  @apply h-[0.16em] rounded-sm bg-peach-deep;
+}

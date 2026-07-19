@@ -1,4 +1,6 @@
 import { MenuBoard } from '@compositions/MenuBoard'
+import { Eyebrow } from '@components/Eyebrow'
+import { PageTitle } from '@components/PageTitle'
 import { useCurrentTenant } from '@hooks/session/useCurrentTenant'
 
 import styles from './Catalog.module.css'
@@ -9,7 +11,8 @@ export const Catalog = () => {
   return (
     <div className={styles.page}>
       <header className={styles.header}>
-        <h1 className={styles.title}>Cardápio</h1>
+        <Eyebrow>Sua loja</Eyebrow>
+        <PageTitle accent="Cardápio">Cardápio</PageTitle>
         <p className={styles.subtitle}>
           Desligue o que acabou — o item some do app do cliente na hora.
         </p>

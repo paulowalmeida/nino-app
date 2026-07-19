@@ -15,6 +15,11 @@ import type { ProductFormValues } from './ProductDetail.types'
 import styles from './ProductDetail.module.css'
 import motion from '@styles/motion.module.css'
 
+const brl = new Intl.NumberFormat('pt-BR', {
+  style: 'currency',
+  currency: 'BRL',
+})
+
 const toPrice = (value: string): number =>
   Number(value.replace(/\./g, '').replace(',', '.'))
 
@@ -87,17 +92,29 @@ export const ProductDetail = () => {
   return (
     <div className={styles.page}>
       <Link to=".." relative="path" className={styles.backLink}>
-        ← Cardápio
+        <span aria-hidden="true">←</span> Cardápio
       </Link>
 
-      <header className={`${motion.settle} ${styles.header}`}>
-        <ItemThumb
-          name={item.name}
-          className={`${motion.pop} ${styles.thumb}`}
-        />
-        <div>
-          <h1 className={styles.title}>{item.name}</h1>
-          <p className={styles.breadcrumb}>{item.category.name}</p>
+      <header className={`${motion.settle} ${styles.hero}`}>
+        <div className={styles.heroInner}>
+          <ItemThumb
+            name={item.name}
+            className={`${motion.pop} ${styles.thumb}`}
+          />
+          <div className={styles.heroText}>
+            <p className={styles.category}>{item.category.name}</p>
+            <h1 className={styles.name}>{item.name}</h1>
+            <p className={styles.heroPrice}>{brl.format(+item.price)}</p>
+          </div>
+          <span
+            className={
+              item.isActive
+                ? styles.heroBadge
+                : `${styles.heroBadge} ${styles.heroBadgeOff}`
+            }
+          >
+            {item.isActive ? 'No cardápio' : 'Fora do cardápio'}
+          </span>
         </div>
       </header>
 
