@@ -1,0 +1,55 @@
+@reference "@nino/ds/globals.css";
+
+/*
+ * Chrome comum dos blocos de configuração. Cada bloco é uma placa da loja:
+ * mesma superfície, mesmo cabeçalho, mesma linha com interruptor. O que
+ * varia fica no module do próprio componente.
+ */
+.card {
+  @apply rounded-[24px] border border-sand bg-white/70 p-5 backdrop-blur-sm;
+  @apply lg:p-6;
+}
+
+.head {
+  @apply mb-4;
+}
+
+.title {
+  @apply font-display text-lg font-extrabold tracking-[-0.01em] text-ink;
+}
+
+.hint {
+  @apply mt-0.5 text-sm text-faint;
+}
+
+.group {
+  @apply flex flex-col gap-3 border-t border-sand py-4;
+}
+
+.groupTitle {
+  @apply text-[0.7rem] font-bold uppercase tracking-[0.12em] text-faint;
+}
+
+.row {
+  @apply flex items-start gap-3;
+}
+
+.rowText {
+  @apply min-w-0;
+}
+
+.rowLabel {
+  @apply text-sm font-semibold text-body;
+}
+
+.rowHint {
+  @apply mt-0.5 text-xs leading-relaxed text-faint;
+}
+
+.save {
+  @apply mt-4 self-start;
+}
+
+.empty {
+  @apply border-t border-sand pt-4 text-sm text-faint;
+}
