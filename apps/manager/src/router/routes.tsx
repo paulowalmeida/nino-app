@@ -4,7 +4,7 @@ import { AppLayout } from '@layouts/AppLayout/AppLayout'
 import { AuthLayout } from '@layouts/AuthLayout'
 import { Catalog } from '@pages/catalog/Catalog'
 import { Employees } from '@pages/employees/Employees'
-import { FirstStore } from '@pages/first-store/FirstStore'
+import { CreateStore } from '@pages/first-store/FirstStore'
 import { Login } from '@pages/login/Login'
 import { OrderDetail } from '@pages/order-detail/OrderDetail'
 import { Orders } from '@pages/orders/Orders'
@@ -42,8 +42,8 @@ export const router = createBrowserRouter([
     loader: SessionGuard,
   },
   {
-    path: '/primeira-loja',
-    element: <FirstStore />,
+    path: '/criar-loja',
+    element: <CreateStore />,
     loader: SessionGuard,
   },
   {

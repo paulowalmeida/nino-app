@@ -7,4 +7,5 @@ export type CompanyFormValues = {
 export type CompanyStepProps = {
   account: SignupAccount
   onBack: () => void
+  onSignedUp: () => void
 }

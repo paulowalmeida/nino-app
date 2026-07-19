@@ -12,7 +12,11 @@ import type { CompanyFormValues, CompanyStepProps } from './CompanyStep.types'
 import styles from '@layouts/AuthLayout/authForm.module.css'
 import motion from '@layouts/AuthLayout/motion.module.css'
 
-export const CompanyStep = ({ account, onBack }: CompanyStepProps) => {
+export const CompanyStep = ({
+  account,
+  onBack,
+  onSignedUp,
+}: CompanyStepProps) => {
   const { mutateAsync: checkAvailability } = useCheckAvailability()
   const { mutateAsync: signup } = useSignup()
   const {
@@ -31,6 +35,7 @@ export const CompanyStep = ({ account, onBack }: CompanyStepProps) => {
       }
 
       await signup({ account, company: data.company })
+      onSignedUp()
     } catch (error) {
       if (error instanceof ApiError && error.status === 409) {
         setError('root', { message: error.message })
@@ -45,7 +50,7 @@ export const CompanyStep = ({ account, onBack }: CompanyStepProps) => {
   return (
     <div>
       <header className={`${motion.rise} ${styles.header}`} style={riseDelay(0)}>
-        <p className={styles.step}>Passo 2 de 2</p>
+        <p className={styles.step}>Passo 2 de 3</p>
         <h1 className={styles.title}>Sua empresa</h1>
         <p className={styles.subtitle}>Quase lá, {account.name.split(' ')[0]}</p>
       </header>
@@ -93,7 +98,7 @@ export const CompanyStep = ({ account, onBack }: CompanyStepProps) => {
             className={styles.submit}
             loadingIndicator="dots"
           >
-            Concluir cadastro
+            Continuar
           </Button>
           <Button
             type="button"
