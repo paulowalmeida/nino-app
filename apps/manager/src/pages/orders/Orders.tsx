@@ -84,7 +84,7 @@ export const Orders = () => {
         </div>
 
         <Button asChild className={`${motion.press} ${styles.newOrder}`}>
-          <Link to="novo">Pedido no balcão</Link>
+          <Link to="novo">Abrir pedido</Link>
         </Button>
       </header>
 

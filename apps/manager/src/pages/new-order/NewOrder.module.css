@@ -105,6 +105,16 @@
   font-variant-numeric: tabular-nums;
 }
 
+.feeRow {
+  @apply flex items-baseline justify-between;
+  @apply border-t border-dashed border-sand-deep pt-2 text-sm text-muted;
+  font-variant-numeric: tabular-nums;
+}
+
+.hint {
+  @apply text-xs leading-relaxed text-faint;
+}
+
 .total {
   @apply flex items-baseline justify-between;
   @apply border-t border-dashed border-sand-deep pt-3;

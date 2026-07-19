@@ -6,22 +6,34 @@ import { Button, Select, Skeleton, Textarea } from '@nino/ds'
 import { Eyebrow } from '@components/Eyebrow'
 import { ItemThumb } from '@components/ItemThumb'
 import { PageTitle } from '@components/PageTitle'
+import { RecipientFields } from '@compositions/RecipientFields'
 import { useCreateOrder } from '@hooks/order/useCreateOrder'
 import { useCurrentTenant } from '@hooks/session/useCurrentTenant'
+import { useDeliveryZones } from '@hooks/settings/useDeliveryZones'
 import { useMenu } from '@hooks/product/useMenu'
 import type { OrderChannel, PaymentMethod } from '@custom_types/order'
 import { brl } from '@utils/money'
 import { CHANNEL_LABEL, PAYMENT_METHOD_LABEL } from '@utils/order-flow'
 import { riseDelay } from '@utils/rise-delay'
 
-import type { CartLine } from './NewOrder.types'
+import type { CartLine, Recipient } from './NewOrder.types'
 
 import styles from './NewOrder.module.css'
 import motion from '@styles/motion.module.css'
 
-const CHANNELS: OrderChannel[] = ['COUNTER', 'PICKUP']
+const CHANNELS: OrderChannel[] = ['COUNTER', 'PICKUP', 'DELIVERY']
 
 const METHODS: PaymentMethod[] = ['CASH', 'CARD_ON_DELIVERY']
+
+const EMPTY_RECIPIENT: Recipient = {
+  name: '',
+  phone: '',
+  street: '',
+  number: '',
+  complement: '',
+  neighborhood: '',
+  zoneId: '',
+}
 
 export const NewOrder = () => {
   const tenant = useCurrentTenant()
@@ -29,19 +41,39 @@ export const NewOrder = () => {
   const navigate = useNavigate()
 
   const { sections, isPending } = useMenu(tenantId)
+  const { zones } = useDeliveryZones(tenantId)
   const { mutateAsync: placeOrder, isPending: isPlacing } =
     useCreateOrder(tenantId)
 
   const [lines, setLines] = useState<CartLine[]>([])
   const [channel, setChannel] = useState<OrderChannel>('COUNTER')
   const [method, setMethod] = useState<PaymentMethod>('CASH')
+  const [recipient, setRecipient] = useState<Recipient>(EMPTY_RECIPIENT)
   const [notes, setNotes] = useState('')
   const [failed, setFailed] = useState(false)
 
-  const total = lines.reduce(
+  const isDelivery = channel === 'DELIVERY'
+
+  const zoneOptions = zones
+    .filter(({ isActive }) => isActive)
+    .map(({ id, name, fee }) => ({
+      value: id,
+      label: `${name} · ${brl(fee)}`,
+    }))
+
+  const subtotal = lines.reduce(
     (sum, line) => sum + Number(line.unitPrice) * line.quantity,
     0
   )
+
+  const fee = isDelivery
+    ? Number(zones.find(({ id }) => id === recipient.zoneId)?.fee ?? 0)
+    : 0
+
+  const missingRecipient =
+    isDelivery &&
+    (!recipient.name || !recipient.phone || !recipient.street ||
+      !recipient.zoneId)
 
   const add = (line: Omit<CartLine, 'quantity'>) =>
     setLines((current) => {
@@ -77,6 +109,17 @@ export const NewOrder = () => {
           quantity,
           unitPrice: Number(unitPrice),
         })),
+        ...(isDelivery
+          ? {
+              deliveryZoneId: recipient.zoneId,
+              guestName: recipient.name,
+              guestPhone: recipient.phone,
+              guestStreet: recipient.street,
+              guestNumber: recipient.number || undefined,
+              guestComplement: recipient.complement || undefined,
+              guestNeighborhood: recipient.neighborhood || undefined,
+            }
+          : {}),
       })
       void navigate(`../${order.id}`, { relative: 'path' })
     } catch {
@@ -92,10 +135,10 @@ export const NewOrder = () => {
 
       <header className={styles.header}>
         <Eyebrow>Pedidos</Eyebrow>
-        <PageTitle accent="balcão">Pedido no balcão</PageTitle>
+        <PageTitle accent="mão">Pedido na mão</PageTitle>
         <p className={styles.subtitle}>
-          Monte a comanda de quem pediu na loja. O pedido entra na fila já
-          aceito pela cozinha.
+          Para quem pediu no balcão ou ligou para a loja. O pedido entra na
+          fila do mesmo jeito que o do app.
         </p>
       </header>
 
@@ -174,7 +217,10 @@ export const NewOrder = () => {
           {lines.length > 0 && (
             <ul className={styles.lines}>
               {lines.map((line) => (
-                <li key={line.productId} className={`${motion.deal} ${styles.line}`}>
+                <li
+                  key={line.productId}
+                  className={`${motion.deal} ${styles.line}`}
+                >
                   <span className={styles.lineName}>{line.name}</span>
                   <div className={styles.stepper}>
                     <button
@@ -203,9 +249,16 @@ export const NewOrder = () => {
             </ul>
           )}
 
+          {isDelivery && fee > 0 && (
+            <div className={styles.feeRow}>
+              <span>Entrega</span>
+              <span>{brl(fee)}</span>
+            </div>
+          )}
+
           <div className={styles.total}>
             <span>Total</span>
-            <span>{brl(total)}</span>
+            <span>{brl(subtotal + fee)}</span>
           </div>
 
           <div className={styles.field}>
@@ -222,6 +275,16 @@ export const NewOrder = () => {
               onValueChange={(value) => setChannel(value as OrderChannel)}
             />
           </div>
+
+          {isDelivery && (
+            <RecipientFields
+              value={recipient}
+              zones={zoneOptions}
+              onChange={(patch) =>
+                setRecipient((current) => ({ ...current, ...patch }))
+              }
+            />
+          )}
 
           <div className={styles.field}>
             <span className={styles.label} id="payment-label">
@@ -251,6 +314,12 @@ export const NewOrder = () => {
             />
           </div>
 
+          {missingRecipient && lines.length > 0 && (
+            <p className={styles.hint}>
+              Para entregar, preencha nome, telefone, rua e região.
+            </p>
+          )}
+
           {failed && (
             <p className={styles.error}>
               Não foi possível abrir o pedido. Tente de novo.
@@ -259,7 +328,7 @@ export const NewOrder = () => {
 
           <Button
             loading={isPlacing}
-            disabled={lines.length === 0}
+            disabled={lines.length === 0 || missingRecipient}
             className={`${motion.press} ${styles.place}`}
             onClick={handlePlace}
           >
