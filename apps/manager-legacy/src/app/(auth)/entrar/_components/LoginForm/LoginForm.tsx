@@ -5,7 +5,7 @@ import { useForm } from "react-hook-form"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 
-import { login, setTokens } from "@services/auth.service"
+import { login } from "@services/auth.service"
 
 import { Button, FormField, Input, PasswordInput } from "@nino/ds"
 import { ApiError, type LoginRequest } from "@nino/lib"
@@ -39,8 +39,7 @@ export function LoginForm() {
 
   async function onSubmit(data: LoginRequest) {
     try {
-      const { tokens } = await login(data)
-      setTokens(tokens.accessToken, tokens.refreshToken)
+      await login(data)
       router.push("/painel")
     } catch (error) {
       setError("root", { message: authErrorMessage(error) })

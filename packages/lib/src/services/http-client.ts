@@ -2,11 +2,8 @@ import { HttpClientConfig } from '../types/http/http-client-config'
 import { HttpMethod } from '../types/http/http-method'
 import { ApiError } from './api-error'
 
-function buildHeaders(config: HttpClientConfig): Record<string, string> {
-  const headers: Record<string, string> = { 'Content-Type': 'application/json' }
-  const token = config.getToken?.()
-  if (token) headers['Authorization'] = `Bearer ${token}`
-  return headers
+function buildHeaders(): Record<string, string> {
+  return { 'Content-Type': 'application/json' }
 }
 
 async function toApiError(response: Response): Promise<ApiError> {
@@ -30,7 +27,8 @@ async function request<T>(
 ): Promise<T> {
   const response = await fetch(`${config.baseUrl}${path}`, {
     method,
-    headers: buildHeaders(config),
+    headers: buildHeaders(),
+    credentials: 'include',
     body: body !== undefined ? JSON.stringify(body) : undefined,
   })
 

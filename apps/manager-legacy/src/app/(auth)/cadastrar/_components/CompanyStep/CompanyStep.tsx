@@ -4,7 +4,7 @@ import type { CSSProperties } from "react"
 import { useForm } from "react-hook-form"
 import { useRouter } from "next/navigation"
 
-import { checkAvailability, setTokens, signup } from "@services/auth.service"
+import { checkAvailability, signup } from "@services/auth.service"
 
 import { Button, CnpjInput, FormField, Input, isValidCnpj } from "@nino/ds"
 import { ApiError } from "@nino/lib"
@@ -36,8 +36,7 @@ export function CompanyStep({ account, onBack }: CompanyStepProps) {
         return
       }
 
-      const { tokens } = await signup({ account, company: data.company })
-      setTokens(tokens.accessToken, tokens.refreshToken)
+      await signup({ account, company: data.company })
       router.push("/painel")
     } catch (error) {
       if (error instanceof ApiError && error.status === 409) {
