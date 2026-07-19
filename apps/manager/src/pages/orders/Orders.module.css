@@ -1,0 +1,40 @@
+@reference "@nino/ds/globals.css";
+
+.page {
+  @apply relative p-4 lg:p-10;
+  background: radial-gradient(
+    900px 380px at 50% -10%,
+    rgba(255, 126, 31, 0.12),
+    transparent 60%
+  );
+}
+
+.header {
+  @apply mb-5 flex flex-col gap-1.5 lg:mb-6;
+}
+
+.subtitle {
+  @apply mt-1 text-sm text-faint;
+}
+
+/* a bobina: comandas lado a lado, sempre alinhadas pelo topo */
+.board {
+  @apply mt-5 grid items-start gap-4;
+  @apply sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4;
+}
+
+.loading {
+  @apply mt-5 grid gap-4 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4;
+}
+
+.skeletonTicket {
+  @apply h-52 w-full rounded-[10px];
+}
+
+.notice {
+  @apply mt-8 text-sm text-faint;
+}
+
+.more {
+  @apply mt-6 flex justify-center;
+}

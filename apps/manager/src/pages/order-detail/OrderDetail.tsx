@@ -1,3 +1,280 @@
+import { useState } from 'react'
+import { Link, useParams } from 'react-router'
+
+import { Button, Textarea } from '@nino/ds'
+
+import { OrderTimeline } from '@compositions/OrderTimeline'
+import { useCurrentTenant } from '@hooks/session/useCurrentTenant'
+import { useOrder } from '@hooks/order/useOrder'
+import { useOrderPayment } from '@hooks/order/useOrderPayment'
+import { useOrderStatus } from '@hooks/order/useOrderStatus'
+import { brl } from '@utils/money'
+import { riseDelay } from '@utils/rise-delay'
+import {
+  addressOf,
+  canCancel,
+  CHANNEL_LABEL,
+  customerNameOf,
+  nextStep,
+  PAYMENT_METHOD_LABEL,
+  PAYMENT_STATUS_LABEL,
+  STATUS_LABEL,
+  ticketNumber,
+} from '@utils/order-flow'
+
+import styles from './OrderDetail.module.css'
+import motion from '@styles/motion.module.css'
+
+const stamp = new Intl.DateTimeFormat('pt-BR', {
+  day: '2-digit',
+  month: '2-digit',
+  hour: '2-digit',
+  minute: '2-digit',
+})
+
 export const OrderDetail = () => {
-  return <div>Detalhes do pedido</div>
+  const { orderId } = useParams()
+  const tenant = useCurrentTenant()
+  const tenantId = tenant?.tenantId ?? null
+
+  const { data: order, isPending } = useOrder(tenantId, orderId as string)
+  const { mutate: advance, isPending: isAdvancing } = useOrderStatus(tenantId)
+  const { mutate: markPaid, isPending: isPaying } = useOrderPayment(tenantId)
+
+  const [reason, setReason] = useState('')
+  const [isCancelling, setCancelling] = useState(false)
+
+  if (isPending) return <p className={styles.notice}>Carregando…</p>
+
+  if (!order) {
+    return (
+      <div className={styles.page}>
+        <p className={styles.notice}>
+          Este pedido não está mais nesta loja. Ele pode ter sido removido.
+        </p>
+        <Link to=".." relative="path" className={styles.backLink}>
+          Voltar aos pedidos
+        </Link>
+      </div>
+    )
+  }
+
+  const step = nextStep(order)
+  const address = addressOf(order)
+  const isCancelled = order.status === 'CANCELLED'
+
+  const handleCancel = () => {
+    advance({ orderId: order.id, status: 'CANCELLED', cancelReason: reason })
+    setCancelling(false)
+    setReason('')
+  }
+
+  return (
+    <div className={styles.page}>
+      <Link to=".." relative="path" className={styles.backLink}>
+        <span aria-hidden="true">←</span> Pedidos
+      </Link>
+
+      <header className={`${motion.settle} ${styles.hero}`}>
+        <div className={styles.heroText}>
+          <p className={styles.channel}>{CHANNEL_LABEL[order.channel]}</p>
+          <h1 className={`${motion.land} ${styles.number}`}>
+            #{ticketNumber(order.id)}
+          </h1>
+          <p className={styles.opened}>
+            aberto em {stamp.format(new Date(order.createdAt))}
+          </p>
+        </div>
+        <span
+          className={
+            isCancelled ? `${styles.badge} ${styles.badgeOff}` : styles.badge
+          }
+        >
+          {STATUS_LABEL[order.status]}
+        </span>
+      </header>
+
+      <div className={styles.columns}>
+        <section
+          className={`${motion.unroll} ${styles.receipt}`}
+          aria-label="Itens do pedido"
+        >
+          <ul className={styles.items}>
+            {order.items.map((item, index) => (
+              <li
+                key={item.id}
+                className={`${motion.deal} ${styles.item}`}
+                style={riseDelay(index * 45 + 60)}
+              >
+                <span className={styles.quantity}>{item.quantity}×</span>
+                <span className={styles.itemName}>{item.product.name}</span>
+                <span className={styles.itemPrice}>
+                  {brl(Number(item.unitPrice) * item.quantity)}
+                </span>
+              </li>
+            ))}
+          </ul>
+
+          <dl className={styles.totals}>
+            <div className={styles.totalRow}>
+              <dt>Subtotal</dt>
+              <dd>{brl(order.subtotal)}</dd>
+            </div>
+            {Number(order.deliveryFee) > 0 && (
+              <div className={styles.totalRow}>
+                <dt>
+                  Entrega
+                  {order.deliveryZoneName && (
+                    <span className={styles.zone}>
+                      {' '}
+                      · {order.deliveryZoneName}
+                    </span>
+                  )}
+                </dt>
+                <dd>{brl(order.deliveryFee)}</dd>
+              </div>
+            )}
+            <div className={`${styles.totalRow} ${styles.grandTotal}`}>
+              <dt>Total</dt>
+              <dd>{brl(order.totalAmount)}</dd>
+            </div>
+          </dl>
+
+          {order.notes && (
+            <p className={styles.notes}>
+              <span className={styles.notesLabel}>Observação do cliente</span>
+              {order.notes}
+            </p>
+          )}
+        </section>
+
+        <div className={styles.aside}>
+          <section
+            className={`${motion.settle} ${styles.card}`}
+            style={riseDelay(80)}
+          >
+            <h2 className={styles.cardTitle}>Quem pediu</h2>
+            <p className={styles.customer}>{customerNameOf(order)}</p>
+            {order.guestPhone && (
+              <a
+                href={`tel:${order.guestPhone}`}
+                className={styles.phone}
+              >
+                {order.guestPhone}
+              </a>
+            )}
+            {address && <p className={styles.address}>{address}</p>}
+            {order.tableNumber && (
+              <p className={styles.address}>Mesa {order.tableNumber}</p>
+            )}
+          </section>
+
+          <section
+            className={`${motion.settle} ${styles.card}`}
+            style={riseDelay(140)}
+          >
+            <h2 className={styles.cardTitle}>Pagamento</h2>
+            <p className={styles.payLine}>
+              {PAYMENT_METHOD_LABEL[order.paymentMethod]}
+              <span className={styles.payState}>
+                {' '}
+                · {PAYMENT_STATUS_LABEL[order.paymentStatus]}
+              </span>
+            </p>
+            {order.changeFor && (
+              <p className={styles.change}>
+                Levar troco para {brl(order.changeFor)}
+              </p>
+            )}
+            {order.paymentStatus === 'PENDING' && !isCancelled && (
+              <Button
+                variant="outline"
+                size="sm"
+                loading={isPaying}
+                className={`${motion.press} ${styles.payButton}`}
+                onClick={() => markPaid(order.id)}
+              >
+                Recebi o pagamento
+              </Button>
+            )}
+          </section>
+
+          <section
+            className={`${motion.settle} ${styles.card}`}
+            style={riseDelay(200)}
+          >
+            <h2 className={styles.cardTitle}>Andamento</h2>
+            <OrderTimeline entries={order.statusHistory} />
+            {order.cancelReason && (
+              <p className={styles.cancelReason}>
+                Motivo do cancelamento: {order.cancelReason}
+              </p>
+            )}
+          </section>
+
+          {(step || canCancel(order.status)) && (
+            <section
+              className={`${motion.settle} ${styles.actions}`}
+              style={riseDelay(260)}
+            >
+              {step && (
+                <Button
+                  loading={isAdvancing}
+                  className={`${motion.press} ${styles.advance}`}
+                  onClick={() =>
+                    advance({ orderId: order.id, status: step.target })
+                  }
+                >
+                  {step.label}
+                </Button>
+              )}
+
+              {canCancel(order.status) && !isCancelling && (
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => setCancelling(true)}
+                >
+                  Cancelar pedido
+                </Button>
+              )}
+
+              {isCancelling && (
+                <div className={`${motion.unroll} ${styles.cancelBox}`}>
+                  <label className={styles.cancelLabel} htmlFor="cancel-reason">
+                    Por que o pedido está sendo cancelado?
+                  </label>
+                  <Textarea
+                    id="cancel-reason"
+                    rows={2}
+                    value={reason}
+                    maxLength={280}
+                    placeholder="O cliente vê este motivo"
+                    onChange={(event) => setReason(event.target.value)}
+                  />
+                  <div className={styles.cancelActions}>
+                    <Button
+                      size="sm"
+                      loading={isAdvancing}
+                      disabled={reason.trim().length === 0}
+                      onClick={handleCancel}
+                    >
+                      Confirmar cancelamento
+                    </Button>
+                    <Button
+                      size="sm"
+                      variant="ghost"
+                      onClick={() => setCancelling(false)}
+                    >
+                      Voltar
+                    </Button>
+                  </div>
+                </div>
+              )}
+            </section>
+          )}
+        </div>
+      </div>
+    </div>
+  )
 }

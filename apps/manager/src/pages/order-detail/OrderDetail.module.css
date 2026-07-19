@@ -1,0 +1,201 @@
+@reference "@nino/ds/globals.css";
+
+.page {
+  @apply mx-auto max-w-5xl p-4 lg:p-8;
+}
+
+.backLink {
+  @apply inline-flex items-center gap-1.5 text-sm font-medium text-faint;
+  @apply transition-colors duration-150 hover:text-brand-strong;
+}
+
+/* mesma faixa quente do detalhe de produto — o pedido é o assunto da tela */
+.hero {
+  @apply relative mt-3 flex items-center gap-4 overflow-hidden;
+  @apply rounded-[28px] px-6 py-6 text-cream lg:px-8 lg:py-7;
+  background:
+    radial-gradient(120% 90% at 85% 0%, #ff8a33 0%, transparent 55%),
+    linear-gradient(165deg, #ff7e1f 0%, #ec5a0e 100%);
+}
+
+.hero::after {
+  content: "";
+  @apply pointer-events-none absolute inset-0 opacity-50 mix-blend-overlay;
+  background-image: url("/noise.svg");
+}
+
+.heroText {
+  @apply relative z-10 min-w-0 flex-1;
+}
+
+.channel {
+  @apply mb-1 inline-flex items-center gap-2 text-[0.7rem] font-bold;
+  @apply uppercase tracking-[0.12em] text-white/70;
+}
+
+.channel::before {
+  content: "";
+  @apply inline-block h-0.5 w-[18px] rounded-sm bg-white/60;
+}
+
+.number {
+  @apply font-display text-3xl font-extrabold tracking-[-0.02em] text-white;
+  @apply lg:text-4xl;
+  font-variant-numeric: tabular-nums;
+}
+
+.opened {
+  @apply mt-1 text-sm text-white/80;
+  font-variant-numeric: tabular-nums;
+}
+
+.badge {
+  @apply relative z-10 shrink-0 rounded-full px-3 py-1;
+  @apply text-[0.7rem] font-bold uppercase tracking-wider;
+  @apply bg-white/18 text-white backdrop-blur-sm;
+}
+
+.badgeOff {
+  @apply bg-ink/30 text-white/70;
+}
+
+.columns {
+  @apply mt-6 grid items-start gap-5 lg:grid-cols-[1.1fr_1fr];
+}
+
+/*
+ * A comanda impressa: papel, divisórias picotadas e a base serrilhada.
+ * Mesma técnica do OrderTicket — sem border e sem sombra externa, que a
+ * mask cortaria junto com o papel.
+ */
+.receipt {
+  --tooth: 10px;
+  @apply relative rounded-t-[14px] bg-paper px-5 pt-5 lg:px-6;
+  padding-bottom: calc(var(--tooth) + 0.5rem);
+  box-shadow: inset 0 0 0 1px var(--color-sand);
+  mask:
+    radial-gradient(var(--tooth) at 50% 0, #0000 98%, #000 100%) 50% 100% /
+      calc(2 * var(--tooth)) var(--tooth) repeat-x,
+    linear-gradient(#000 0 0) 0 0 / 100% calc(100% - var(--tooth)) no-repeat;
+}
+
+.items {
+  @apply flex flex-col gap-2.5;
+}
+
+.item {
+  @apply flex items-baseline gap-3 text-sm text-body;
+}
+
+.quantity {
+  @apply w-7 shrink-0 text-right font-bold text-brand-strong;
+  font-variant-numeric: tabular-nums;
+}
+
+.itemName {
+  @apply min-w-0 flex-1 truncate;
+}
+
+.itemPrice {
+  @apply shrink-0 text-muted;
+  font-variant-numeric: tabular-nums;
+}
+
+.totals {
+  @apply mt-4 flex flex-col gap-1.5 border-t border-dashed border-sand-deep;
+  @apply pt-4;
+}
+
+.totalRow {
+  @apply flex items-baseline justify-between text-sm text-muted;
+  font-variant-numeric: tabular-nums;
+}
+
+.zone {
+  @apply text-faintest;
+}
+
+.grandTotal {
+  @apply mt-1 border-t border-dashed border-sand-deep pt-2.5;
+  @apply font-display text-lg font-extrabold text-ink;
+}
+
+.notes {
+  @apply mt-4 rounded-xl bg-surface-sunk p-3 text-sm leading-relaxed;
+  @apply text-muted;
+}
+
+.notesLabel {
+  @apply mb-0.5 block text-[0.65rem] font-bold uppercase tracking-[0.1em];
+  @apply text-faint;
+}
+
+.aside {
+  @apply flex flex-col gap-4;
+}
+
+.card {
+  @apply rounded-[20px] border border-sand bg-white/70 p-5 backdrop-blur-sm;
+}
+
+.cardTitle {
+  @apply mb-2 text-[0.7rem] font-bold uppercase tracking-[0.12em] text-faint;
+}
+
+.customer {
+  @apply text-sm font-semibold text-ink;
+}
+
+.phone {
+  @apply mt-0.5 block text-sm text-brand-strong;
+  @apply transition-colors duration-150 hover:text-brand;
+}
+
+.address {
+  @apply mt-1 text-sm leading-relaxed text-muted;
+}
+
+.payLine {
+  @apply text-sm font-semibold text-ink;
+}
+
+.payState {
+  @apply font-normal text-faint;
+}
+
+.change {
+  @apply mt-1 text-sm text-muted;
+}
+
+.payButton {
+  @apply mt-3;
+}
+
+.cancelReason {
+  @apply mt-3 border-t border-sand pt-3 text-sm leading-relaxed text-muted;
+}
+
+.actions {
+  @apply flex flex-col gap-2 rounded-[20px] border border-brand/15;
+  @apply bg-brand/5 p-5;
+}
+
+.advance {
+  @apply w-full;
+}
+
+.cancelBox {
+  @apply flex flex-col gap-2;
+}
+
+.cancelLabel {
+  @apply text-sm font-medium text-body;
+}
+
+.cancelActions {
+  @apply flex flex-wrap gap-2;
+}
+
+.notice {
+  @apply m-4 rounded-2xl border border-sand bg-white/60 p-6 text-sm text-faint;
+}
