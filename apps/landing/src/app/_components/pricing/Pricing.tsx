@@ -24,8 +24,7 @@ export function Pricing() {
         </div>
 
         <p className={styles.fine}>
-          🔒 30 dias grátis nos planos Básico, Padrão e Pro. Sem cartão de
-          crédito.
+          🔒 30 dias grátis no plano Pro. Sem cartão de crédito.
         </p>
       </div>
     </section>

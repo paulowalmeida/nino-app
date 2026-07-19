@@ -33,8 +33,23 @@
   @apply mt-2.5 text-[0.88rem] leading-snug text-muted min-h-[2.6rem];
 }
 
+.inherits {
+  @apply flex items-center gap-1.5 mt-5 pb-3.5;
+  @apply text-[0.82rem] font-bold text-brand-strong;
+  @apply border-b border-dashed border-brand/25;
+  @apply [font-family:var(--font-sans)];
+}
+
+.inheritsMark {
+  @apply text-[0.9rem] leading-none shrink-0;
+}
+
 .featureList {
-  @apply flex flex-col gap-2.5 my-5 flex-1;
+  @apply flex flex-col gap-2.5 mt-4 mb-5 flex-1;
+}
+
+.inherits + .featureList {
+  @apply mt-3.5;
 }
 
 .featureItem {
@@ -89,6 +104,10 @@
 
 .featured .description {
   @apply text-white;
+}
+
+.featured .inherits {
+  @apply text-white border-white/40;
 }
 
 .featured .featureItem {

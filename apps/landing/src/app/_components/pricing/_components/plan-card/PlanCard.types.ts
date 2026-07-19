@@ -4,6 +4,7 @@ export type PlanCardProps = {
   period: string
   small: boolean
   desc: string
+  inherits?: string
   features: string[]
   cta: string
   featured: boolean

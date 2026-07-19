@@ -11,6 +11,7 @@ export function PlanCard({
   period,
   small,
   desc,
+  inherits,
   features,
   cta,
   featured,
@@ -32,6 +33,15 @@ export function PlanCard({
       </div>
 
       <p className={styles.description}>{desc}</p>
+
+      {inherits && (
+        <p className={styles.inherits}>
+          <span aria-hidden="true" className={styles.inheritsMark}>
+            ↳
+          </span>
+          {inherits}
+        </p>
+      )}
 
       <div className={styles.featureList}>
         {features.map((f) => (
