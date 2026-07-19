@@ -1,0 +1,7 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "framework": "vite",
+  "buildCommand": "turbo run build --filter=nino-manager",
+  "outputDirectory": "apps/manager/dist",
+  "rewrites": [{ "source": "/(.*)", "destination": "/index.html" }]
+}
