@@ -1,0 +1,77 @@
+@reference "@nino/ds/globals.css";
+
+.board {
+  @apply flex flex-col gap-8;
+}
+
+.sectionHead {
+  @apply mb-2 flex items-baseline justify-between gap-3;
+  @apply border-b border-sand pb-2;
+}
+
+.sectionName {
+  @apply font-display text-lg font-extrabold tracking-tight text-ink;
+  @apply lg:text-xl;
+}
+
+.sectionCount {
+  @apply shrink-0 text-[11px] uppercase tracking-widest text-faint;
+}
+
+.items {
+  @apply flex flex-col;
+}
+
+.item {
+  @apply grid grid-cols-[1fr_auto_auto] items-center gap-4;
+  @apply border-b border-sand/60 py-3;
+  @apply transition-opacity duration-200;
+}
+
+/*
+ * Sold out reads as absence, not as a badge: the row fades and the price is
+ * struck through, so the owner sees the menu the way the customer will.
+ */
+.itemOff {
+  @apply grid grid-cols-[1fr_auto_auto] items-center gap-4;
+  @apply border-b border-sand/60 py-3 opacity-45;
+  @apply transition-opacity duration-200;
+}
+
+.itemText {
+  @apply min-w-0;
+}
+
+.itemName {
+  @apply truncate text-sm font-semibold text-ink lg:text-base;
+}
+
+.itemOff .itemName {
+  @apply font-normal;
+}
+
+.itemDescription {
+  @apply mt-0.5 truncate text-xs text-faint;
+}
+
+.price {
+  @apply shrink-0 font-display text-sm font-bold text-ink lg:text-base;
+  font-variant-numeric: tabular-nums;
+}
+
+.itemOff .price {
+  @apply font-medium text-faint line-through;
+}
+
+.loading {
+  @apply flex flex-col gap-3;
+}
+
+.skeletonRow {
+  @apply h-14 w-full rounded-xl;
+}
+
+.notice {
+  @apply rounded-2xl border border-sand bg-white/60 p-6;
+  @apply text-sm leading-relaxed text-faint;
+}
