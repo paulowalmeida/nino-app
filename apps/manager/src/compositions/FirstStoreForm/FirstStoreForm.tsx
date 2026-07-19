@@ -23,6 +23,22 @@ import type { FirstStoreFormValues } from './FirstStoreForm.types'
 import styles from './FirstStoreForm.module.css'
 import motion from '@layouts/AuthLayout/motion.module.css'
 
+const TAKEN_MESSAGE = 'Este endereço já está em uso'
+
+/**
+ * The check is a courtesy: the unique constraint is what actually decides, and
+ * the submit surfaces it as a 409. So a throttled or offline lookup lets the
+ * form through instead of blocking on an answer we could not get.
+ */
+const checkSlugTaken = async (slug: string): Promise<true | string> => {
+  try {
+    const { available } = await checkSlug(slug)
+    return available || TAKEN_MESSAGE
+  } catch {
+    return true
+  }
+}
+
 export const FirstStoreForm = () => {
   const { data: types = [] } = useStoreTypes()
   const { mutateAsync: createStore } = useCreateStore()
@@ -36,7 +52,10 @@ export const FirstStoreForm = () => {
     getValues,
     setError,
     formState: { errors, isSubmitting },
-  } = useForm<FirstStoreFormValues>({ mode: 'onBlur' })
+  } = useForm<FirstStoreFormValues>({
+    mode: 'onBlur',
+    reValidateMode: 'onBlur',
+  })
 
   const typeOptions = types.map(({ id, name, description }) => ({
     value: id,
@@ -77,7 +96,7 @@ export const FirstStoreForm = () => {
       })
     } catch (error) {
       if (error instanceof ApiError && error.status === 409) {
-        setError('slug', { message: 'Este endereço já está em uso' })
+        setError('slug', { message: TAKEN_MESSAGE })
         return
       }
       setError('root', {
@@ -117,8 +136,7 @@ export const FirstStoreForm = () => {
                 validate: async (value) => {
                   const slug = slugify(value)
                   if (!slug) return 'Informe o endereço'
-                  const { available } = await checkSlug(slug)
-                  return available || 'Este endereço já está em uso'
+                  return checkSlugTaken(slug)
                 },
               })}
             />
