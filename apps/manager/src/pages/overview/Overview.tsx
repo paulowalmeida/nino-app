@@ -1,4 +1,6 @@
+import { DayTally } from '@compositions/DayTally'
 import { QueueBoard } from '@compositions/QueueBoard'
+import { StoreSign } from '@compositions/StoreSign'
 import { useCurrentTenant } from '@hooks/session/useCurrentTenant'
 import { useSessionStore } from '@states/useSessionStore'
 
@@ -35,6 +37,7 @@ export const Overview = () => {
 
   const timezone = user?.timezone ?? null
   const firstName = user?.name.split(' ')[0] ?? ''
+  const tenantId = tenant?.tenantId ?? null
 
   return (
     <div className={styles.page}>
@@ -47,8 +50,13 @@ export const Overview = () => {
           <h1 className={`${motion.deal} ${styles.title}`}>{firstName}</h1>
           <p className={styles.date}>
             {dateFor(timezone)}
-            {tenant && <span className={styles.store}>· {tenant.tenantName}</span>}
+            {tenant && (
+              <span className={styles.store}>· {tenant.tenantName}</span>
+            )}
           </p>
+          <div className={styles.sign}>
+            <StoreSign tenantId={tenantId} timezone={timezone} />
+          </div>
         </div>
         <img
           src="/mascot-manager.svg"
@@ -58,7 +66,11 @@ export const Overview = () => {
         />
       </header>
 
-      <QueueBoard tenantId={tenant?.tenantId ?? null} />
+      <QueueBoard tenantId={tenantId} />
+
+      <div className={styles.tally}>
+        <DayTally tenantId={tenantId} timezone={timezone} />
+      </div>
     </div>
   )
 }

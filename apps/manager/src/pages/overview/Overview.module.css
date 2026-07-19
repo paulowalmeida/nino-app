@@ -64,6 +64,14 @@
   @apply ml-1 text-subtle;
 }
 
+.sign {
+  @apply mt-3;
+}
+
+.tally {
+  @apply mt-8 lg:mt-10;
+}
+
 .mascot {
   @apply pointer-events-none hidden select-none sm:block;
   position: absolute;
