@@ -1,0 +1,86 @@
+@reference '../../../../theme.css';
+.header {
+  @apply flex items-start justify-between gap-4;
+  @apply px-6 py-4 border-b border-gray-100;
+}
+
+.greeting {
+  @apply text-[0.72rem] font-bold uppercase tracking-[0.1em];
+  @apply text-brand-strong [font-family:var(--font-sans)];
+}
+
+.owner {
+  @apply text-[1.35rem] font-extrabold leading-tight text-ink;
+  @apply [font-family:var(--font-display)];
+}
+
+.date {
+  @apply text-[0.72rem] text-gray-500 mt-0.5;
+}
+
+.openBadge {
+  @apply shrink-0 px-3 py-1 rounded-full text-[0.68rem] font-bold;
+  @apply text-emerald-700 bg-emerald-500/12;
+}
+
+.body {
+  @apply px-6 py-4 flex flex-col gap-4 bg-gray-50;
+}
+
+.eyebrow {
+  @apply inline-flex items-center gap-2 text-[0.7rem] font-bold;
+  @apply tracking-[0.12em] uppercase text-brand-strong;
+  @apply [font-family:var(--font-sans)];
+}
+
+.eyebrow::before {
+  content: "";
+  @apply inline-block w-[18px] h-0.5 bg-brand rounded-sm;
+}
+
+.board {
+  @apply grid grid-cols-4 gap-2.5 max-sm:grid-cols-2;
+}
+
+.tile {
+  @apply flex flex-col gap-1 px-3 py-3 rounded-xl bg-white;
+  @apply border border-gray-200;
+}
+
+.urgent {
+  @apply border-brand/40 bg-brand/6;
+}
+
+.value {
+  @apply text-[1.6rem] font-extrabold leading-none text-ink;
+  @apply [font-family:var(--font-display)];
+}
+
+.urgent .value {
+  @apply text-brand-strong;
+}
+
+.label {
+  @apply text-[0.68rem] leading-tight text-gray-500;
+}
+
+.queue {
+  @apply bg-white border border-gray-200 rounded-xl overflow-hidden;
+}
+
+.queueHeader {
+  @apply flex items-center justify-between px-4 py-3;
+  @apply border-b border-gray-100;
+}
+
+.queueTitle {
+  @apply font-bold text-[0.82rem] text-gray-900;
+}
+
+.queueHint {
+  @apply text-[0.68rem] text-gray-400;
+}
+
+.audit {
+  @apply text-[0.72rem] leading-relaxed text-gray-500;
+}

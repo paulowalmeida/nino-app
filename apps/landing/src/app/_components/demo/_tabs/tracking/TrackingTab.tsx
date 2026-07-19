@@ -1,8 +1,6 @@
-import Image from "next/image"
-
 import { TrackingStep } from "@demo/_tabs/tracking/_components/tracking-step/TrackingStep"
 
-import { trackingSteps } from "./trackingTab.constants"
+import { notifications, trackingSteps } from "./trackingTab.constants"
 import styles from "./TrackingTab.module.css"
 
 export function TrackingTab() {
@@ -18,37 +16,8 @@ export function TrackingTab() {
         </div>
 
         <div className={styles.statusBadge}>
-          <span className={styles.statusPulseDot} />A caminho
-        </div>
-      </div>
-
-      <div className={styles.mapContainer}>
-        <Image
-          src="/assets/map-mockup.svg"
-          alt=""
-          width={400}
-          height={200}
-          className={styles.mapImage}
-        />
-      </div>
-
-      <div className={styles.courierSection}>
-        <div className={styles.courierProfile}>
-          <div className={styles.courierAvatar}>👤</div>
-
-          <div>
-            <div className={styles.courierName}>Carlos Silva</div>
-
-            <div className={styles.courierDetails}>
-              ⭐ 4.9 · Honda CG · ABC-1234
-            </div>
-          </div>
-        </div>
-
-        <div className={styles.courierContactActions}>
-          <button className={styles.contactButtonSecondary}>💬</button>
-
-          <button className={styles.contactButtonPrimary}>📞</button>
+          <span className={styles.statusPulseDot} />
+          Em preparo
         </div>
       </div>
 
@@ -61,6 +30,25 @@ export function TrackingTab() {
           />
         ))}
       </div>
+
+      <section className={styles.notices}>
+        <p className={styles.noticesTitle}>
+          💬 O que chegou no WhatsApp dele
+        </p>
+
+        {notifications.map(({ time, text }) => (
+          <div key={time} className={styles.bubble}>
+            <p className={styles.bubbleText}>{text}</p>
+
+            <span className={styles.bubbleTime}>{time} ✓✓</span>
+          </div>
+        ))}
+
+        <p className={styles.noticesFine}>
+          Enviado pelo Nino a cada mudança de status — ninguém da loja precisa
+          parar pra responder &ldquo;cadê meu pedido?&rdquo;.
+        </p>
+      </section>
     </div>
   )
 }

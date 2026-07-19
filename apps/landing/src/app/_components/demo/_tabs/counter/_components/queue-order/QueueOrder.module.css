@@ -1,0 +1,56 @@
+@reference '../../../../../../theme.css';
+.row {
+  @apply grid gap-x-3 gap-y-1 items-start px-4 py-3;
+  @apply border-b border-gray-100 last:border-b-0;
+  grid-template-columns: 1fr auto;
+}
+
+.identity {
+  @apply flex flex-col gap-0.5 min-w-0;
+}
+
+.code {
+  @apply text-[0.68rem] font-bold tracking-[0.06em] text-faintest;
+  @apply [font-family:var(--font-sans)];
+}
+
+.customer {
+  @apply font-bold text-[0.86rem] text-gray-900 truncate;
+}
+
+.items {
+  @apply text-[0.75rem] text-gray-500 truncate;
+}
+
+.state {
+  @apply flex flex-col items-end gap-1;
+}
+
+.status {
+  @apply px-2.5 py-1 rounded-full text-[0.68rem] font-bold;
+  @apply whitespace-nowrap;
+}
+
+.waiting {
+  @apply text-white bg-brand-strong;
+}
+
+.kitchen {
+  @apply text-brand-strong bg-brand/12;
+}
+
+.pickup {
+  @apply text-emerald-700 bg-emerald-500/12;
+}
+
+.delivery {
+  @apply text-sky-700 bg-sky-500/12;
+}
+
+.total {
+  @apply text-[0.8rem] font-bold text-gray-900;
+}
+
+.trail {
+  @apply col-span-2 text-[0.7rem] text-gray-400;
+}

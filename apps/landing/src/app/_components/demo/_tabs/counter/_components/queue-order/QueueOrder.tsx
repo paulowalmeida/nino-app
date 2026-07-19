@@ -1,0 +1,32 @@
+import styles from "./QueueOrder.module.css"
+import type { QueueOrderProps } from "./QueueOrder.types"
+
+export function QueueOrder({
+  code,
+  customer,
+  items,
+  total,
+  status,
+  tone,
+  trail,
+}: QueueOrderProps) {
+  return (
+    <article className={styles.row}>
+      <div className={styles.identity}>
+        <span className={styles.code}>{code}</span>
+
+        <span className={styles.customer}>{customer}</span>
+
+        <span className={styles.items}>{items}</span>
+      </div>
+
+      <div className={styles.state}>
+        <span className={`${styles.status} ${styles[tone]}`}>{status}</span>
+
+        <span className={styles.total}>{total}</span>
+      </div>
+
+      <p className={styles.trail}>{trail}</p>
+    </article>
+  )
+}

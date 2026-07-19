@@ -16,7 +16,7 @@ export function OrderTab() {
           <div className={styles.storeName}>Burgão do Zé</div>
 
           <div className={styles.storeMetaInfo}>
-            <span className={styles.storeRating}>⭐ 4.8</span>
+            <span className={styles.storeRating}>Aberto até 23h</span>
 
             <span>·</span>
 

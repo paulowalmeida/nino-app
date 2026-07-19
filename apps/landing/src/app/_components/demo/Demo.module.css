@@ -8,11 +8,37 @@
 }
 
 .header {
-  @apply text-center mb-12;
+  @apply text-center max-w-[620px] mx-auto mb-10;
+}
+
+.eyebrow {
+  @apply inline-flex items-center gap-2 mb-4;
+  @apply [font-family:var(--font-sans)] text-[0.78rem] font-bold;
+  @apply tracking-[0.12em] uppercase text-brand-strong;
+}
+
+.eyebrow::before,
+.eyebrow::after {
+  content: "";
+  @apply inline-block w-[22px] h-0.5 bg-brand rounded-sm;
+}
+
+.title {
+  @apply [font-family:var(--font-display)] font-extrabold;
+  @apply text-[clamp(2rem,3.6vw,2.8rem)] leading-[1.08];
+  @apply tracking-[-0.02em] text-ink;
+}
+
+.titleAccent {
+  @apply text-brand;
+}
+
+.lead {
+  @apply mt-[0.9rem] text-[1.05rem] text-muted;
 }
 
 .tabGroup {
-  @apply flex justify-center gap-2 mb-10 flex-wrap;
+  @apply flex justify-center gap-2 mb-4 flex-wrap;
 }
 
 .tab {
@@ -21,12 +47,60 @@
   @apply cursor-pointer transition-all;
 }
 
+.tab:hover {
+  @apply border-brand/40 text-brand-strong;
+}
+
 .tabActive {
   @apply border-brand bg-brand text-white;
+}
+
+.tabActive:hover {
+  @apply border-brand text-white;
+}
+
+.caption {
+  @apply text-center text-[0.88rem] text-muted mb-6;
+  @apply max-w-[520px] mx-auto min-h-[2.4rem];
 }
 
 .mockup {
   @apply bg-white rounded-[20px] overflow-hidden;
   @apply shadow-[0_8px_40px_rgba(0,0,0,0.08)];
-  @apply max-w-[680px] mx-auto border border-gray-200;
+  @apply max-w-[420px] mx-auto border border-gray-200;
+  @apply transition-[max-width] duration-500;
+}
+
+.mockupOwner {
+  @apply max-w-[680px];
+}
+
+.chrome {
+  @apply flex items-center justify-between gap-3 px-4 py-2;
+  @apply bg-ink text-[0.68rem] [font-family:var(--font-sans)];
+}
+
+.chromeLabel {
+  @apply font-bold tracking-[0.08em] uppercase text-white/90;
+}
+
+.chromeMeta {
+  @apply truncate text-white/50;
+}
+
+.screen {
+  @apply bg-white;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mockup {
+    @apply transition-none;
+  }
+}
+
+@media (max-width: 560px) {
+  .mockup,
+  .mockupOwner {
+    @apply max-w-full;
+  }
 }

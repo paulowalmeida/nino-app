@@ -22,50 +22,43 @@
   @apply w-1.5 h-1.5 bg-brand rounded-full inline-block animate-pulse;
 }
 
-.mapContainer {
-  @apply h-[220px] relative overflow-hidden;
-}
 
-.mapImage {
-  @apply block w-full h-full object-cover;
-}
 
-.courierSection {
-  @apply px-6 py-4 bg-gray-50 border-b border-gray-100;
-  @apply flex items-center justify-between;
-}
 
-.courierProfile {
-  @apply flex items-center gap-3;
-}
 
-.courierAvatar {
-  @apply w-10 h-10 bg-gray-200 rounded-full;
-  @apply flex items-center justify-center text-xl;
-}
 
-.courierName {
-  @apply font-bold text-[0.85rem] text-gray-900;
-}
 
-.courierDetails {
-  @apply text-[0.7rem] text-gray-500;
-}
 
-.courierContactActions {
-  @apply flex gap-2;
-}
 
-.contactButtonSecondary {
-  @apply w-9 h-9 bg-gray-100 border border-gray-200 rounded-xl;
-  @apply flex items-center justify-center text-base cursor-pointer;
-}
 
-.contactButtonPrimary {
-  @apply w-9 h-9 bg-brand border-none rounded-xl;
-  @apply flex items-center justify-center text-base cursor-pointer;
-}
 
 .deliveryTimeline {
   @apply px-6 py-5 flex flex-col;
+}
+
+.notices {
+  @apply px-6 pb-6 pt-1 flex flex-col gap-2.5;
+}
+
+.noticesTitle {
+  @apply text-[0.72rem] font-bold uppercase tracking-[0.1em];
+  @apply text-brand-strong [font-family:var(--font-sans)];
+}
+
+.bubble {
+  @apply self-start max-w-[92%] px-3.5 py-2.5;
+  @apply rounded-2xl rounded-tl-md bg-emerald-500/10;
+  @apply border border-emerald-500/20;
+}
+
+.bubbleText {
+  @apply text-[0.8rem] leading-snug text-gray-700;
+}
+
+.bubbleTime {
+  @apply block mt-1 text-[0.65rem] text-emerald-700/70 text-right;
+}
+
+.noticesFine {
+  @apply mt-1 text-[0.7rem] leading-relaxed text-gray-500;
 }
