@@ -25,9 +25,9 @@ export function Hero() {
             </h1>
 
             <p className={styles.subtitle}>
-              App, site e WhatsApp com a sua marca — não a de um marketplace.
-              Mensalidade fixa, seus entregadores e nenhuma fatia das suas
-              vendas.
+              Loja de pedidos e WhatsApp com a sua marca — não a de um
+              marketplace. Mensalidade fixa, seus entregadores e nenhuma fatia
+              das suas vendas.
             </p>
 
             <div className={styles.actions}>

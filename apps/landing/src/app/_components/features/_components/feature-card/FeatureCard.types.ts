@@ -5,4 +5,5 @@ export type FeatureCardProps = {
   text: string
   featured?: boolean
   tag?: string
+  plan?: string
 }

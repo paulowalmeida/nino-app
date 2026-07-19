@@ -45,6 +45,18 @@
   @apply text-brand-strong bg-white/[0.92];
 }
 
+.planBadge {
+  @apply self-start mt-4 inline-flex items-center no-underline;
+  @apply px-2.5 py-1 rounded-full text-[0.7rem] font-bold;
+  @apply tracking-[0.04em] text-brand-strong bg-brand/8;
+  @apply transition-colors duration-200;
+  @apply [font-family:var(--font-sans)];
+}
+
+.planBadge:hover {
+  @apply bg-brand/16;
+}
+
 .featured {
   @apply border-transparent shadow-[0_18px_40px_rgba(232,84,12,0.28)];
   background:

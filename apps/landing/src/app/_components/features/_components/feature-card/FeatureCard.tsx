@@ -8,6 +8,7 @@ export function FeatureCard({
   text,
   featured = false,
   tag,
+  plan,
 }: FeatureCardProps) {
   return (
     <article
@@ -22,6 +23,12 @@ export function FeatureCard({
       <p className={styles.cardBody}>{text}</p>
 
       {tag && <span className={styles.highlightTag}>★ {tag}</span>}
+
+      {plan && (
+        <a className={styles.planBadge} href="#precos">
+          a partir do {plan}
+        </a>
+      )}
     </article>
   )
 }

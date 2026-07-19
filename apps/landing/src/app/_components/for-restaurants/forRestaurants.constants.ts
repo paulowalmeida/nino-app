@@ -1,8 +1,8 @@
 export const benefits = [
-  "Personalize seu endereço web e site com a sua marca — não só um cardápio",
-  "Gerencie seus entregadores e colaboradores, do seu jeito",
+  "Loja de pedidos com a sua marca — não só um cardápio em PDF",
+  "Sua equipe com papéis e permissões, e cada mudança no pedido registrada",
   "Independente — sua base de clientes é sua, não de um marketplace",
-  "Pedidos pelo app, site e WhatsApp num lugar só",
+  "Pedidos do site, do WhatsApp e do balcão num lugar só",
   "Mensalidade fixa — sem comissão, sem % do seu faturamento",
 ]
 

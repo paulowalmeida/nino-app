@@ -10,7 +10,7 @@ export function GetStarted() {
       <div className={styles.wrap}>
         <div className={styles.card}>
           <div className={styles.inner}>
-            <span className={styles.pill}>🎁 30 dias grátis</span>
+            <span className={styles.pill}>🎁 30 dias grátis no Pro</span>
 
             <h2 className={styles.title}>
               Comece hoje,
@@ -19,8 +19,8 @@ export function GetStarted() {
             </h2>
 
             <p className={styles.lead}>
-              30 dias grátis pra testar tudo — o dobro do que a maioria
-              oferece. Sem cartão, sem compromisso.
+              Você começa no Pro, o plano completo, por 30 dias — o dobro do
+              que a maioria oferece. Depois escolhe a faixa sabendo o que usa.
             </p>
 
             <a className={styles.btn} href={CADASTRO_URL}>

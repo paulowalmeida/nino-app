@@ -5,10 +5,10 @@ export const steps = [
   },
   {
     title: "Deixe com a sua cara",
-    text: "Logo, cores e domínio próprio. App e site completos com a SUA marca — seus clientes nunca veem o nome Nino.",
+    text: "Logo e cores na sua loja de pedidos — seus clientes nunca veem o nome Nino. Domínio próprio a partir do Pro.",
   },
   {
     title: "Venda no automático",
-    text: "Pedidos chegam pelo app, site e WhatsApp num lugar só. Seus entregadores, 100% da sua margem.",
+    text: "Pedidos chegam pelo site, pelo WhatsApp e pelo balcão num lugar só, já pagos no Pix ou no cartão. Seus entregadores, 100% da sua margem.",
   },
 ]
