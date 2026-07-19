@@ -9,6 +9,7 @@ import { Login } from '@pages/login/Login'
 import { OrderDetail } from '@pages/order-detail/OrderDetail'
 import { Orders } from '@pages/orders/Orders'
 import { Overview } from '@pages/overview/Overview'
+import { ProductDetail } from '@pages/product-detail'
 import { Register } from '@pages/register/Register'
 import { Settings } from '@pages/settings/Settings'
 import { StoreSelection } from '@pages/store-selection/StoreSelection'
@@ -65,6 +66,10 @@ export const router = createBrowserRouter([
       {
         path: 'catalogo',
         element: <Catalog />,
+      },
+      {
+        path: 'catalogo/:productId',
+        element: <ProductDetail />,
       },
       {
         path: 'colaboradores',

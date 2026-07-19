@@ -1,4 +1,8 @@
-import type { MenuItem, MenuPage } from '@custom_types/product'
+import type {
+  MenuItem,
+  MenuPage,
+  UpdateMenuItemRequest,
+} from '@custom_types/product'
 import { ApiFactory } from '@services/api/api.service'
 
 const { getAll, patch } = ApiFactory()
@@ -46,4 +50,15 @@ export const setItemAvailability = (
     `tenants/${tenantId}/products`,
     id,
     { isActive }
+  )
+
+export const updateItem = (
+  tenantId: string,
+  id: string,
+  data: UpdateMenuItemRequest
+): Promise<MenuItem> =>
+  patch<UpdateMenuItemRequest, MenuItem>(
+    `tenants/${tenantId}/products`,
+    id,
+    data
   )

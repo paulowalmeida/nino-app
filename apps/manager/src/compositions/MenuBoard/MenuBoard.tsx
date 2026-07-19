@@ -1,5 +1,8 @@
+import { Link } from 'react-router'
+
 import { Skeleton, Switch } from '@nino/ds'
 
+import { ItemThumb } from '@components/ItemThumb'
 import { useItemAvailability } from '@hooks/product/useItemAvailability'
 import { useMenu } from '@hooks/product/useMenu'
 
@@ -63,14 +66,18 @@ export const MenuBoard = ({ tenantId }: MenuBoardProps) => {
                 key={item.id}
                 className={item.isActive ? styles.item : styles.itemOff}
               >
-                <div className={styles.itemText}>
-                  <p className={styles.itemName}>{item.name}</p>
-                  {item.description && (
-                    <p className={styles.itemDescription}>{item.description}</p>
-                  )}
-                </div>
-
-                <span className={styles.price}>{brl.format(+item.price)}</span>
+                <Link to={item.id} className={styles.itemLink}>
+                  <ItemThumb name={item.name} />
+                  <span className={styles.itemText}>
+                    <span className={styles.itemName}>{item.name}</span>
+                    {item.description && (
+                      <span className={styles.itemDescription}>
+                        {item.description}
+                      </span>
+                    )}
+                  </span>
+                  <span className={styles.price}>{brl.format(+item.price)}</span>
+                </Link>
 
                 <Switch
                   size="sm"

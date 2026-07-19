@@ -1,0 +1,59 @@
+@reference "@nino/ds/globals.css";
+
+.page {
+  @apply mx-auto max-w-2xl p-4 lg:p-10;
+}
+
+.backLink {
+  @apply inline-block text-sm font-medium text-faint;
+  @apply transition-colors duration-150 hover:text-brand;
+}
+
+.header {
+  @apply mt-4 flex items-center gap-4;
+}
+
+.thumb {
+  @apply h-14 w-14 text-sm;
+}
+
+.title {
+  @apply font-display text-2xl font-extrabold tracking-tight text-ink;
+}
+
+.breadcrumb {
+  @apply mt-0.5 text-xs uppercase tracking-widest text-faint;
+}
+
+.form {
+  @apply mt-8 flex flex-col gap-5;
+}
+
+.row {
+  @apply grid grid-cols-[2fr_1fr] gap-4;
+}
+
+.availability {
+  @apply flex items-start gap-3 rounded-2xl border border-sand;
+  @apply bg-white/60 p-4;
+}
+
+.availabilityLabel {
+  @apply text-sm font-semibold text-ink;
+}
+
+.availabilityHint {
+  @apply mt-0.5 text-xs leading-relaxed text-faint;
+}
+
+.error {
+  @apply text-sm text-red-500;
+}
+
+.actions {
+  @apply flex flex-col gap-2 sm:flex-row;
+}
+
+.notice {
+  @apply rounded-2xl border border-sand bg-white/60 p-6 text-sm text-faint;
+}
