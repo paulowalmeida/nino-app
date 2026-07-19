@@ -8,10 +8,12 @@ import { ItemThumb } from '@components/ItemThumb'
 import { useMenuItem } from '@hooks/product/useMenuItem'
 import { useUpdateMenuItem } from '@hooks/product/useUpdateMenuItem'
 import { useCurrentTenant } from '@hooks/session/useCurrentTenant'
+import { riseDelay } from '@utils/rise-delay'
 
 import type { ProductFormValues } from './ProductDetail.types'
 
 import styles from './ProductDetail.module.css'
+import motion from '@styles/motion.module.css'
 
 const toPrice = (value: string): number =>
   Number(value.replace(/\./g, '').replace(',', '.'))
@@ -88,8 +90,11 @@ export const ProductDetail = () => {
         ← Cardápio
       </Link>
 
-      <header className={styles.header}>
-        <ItemThumb name={item.name} className={styles.thumb} />
+      <header className={`${motion.settle} ${styles.header}`}>
+        <ItemThumb
+          name={item.name}
+          className={`${motion.pop} ${styles.thumb}`}
+        />
         <div>
           <h1 className={styles.title}>{item.name}</h1>
           <p className={styles.breadcrumb}>{item.category.name}</p>
@@ -97,18 +102,25 @@ export const ProductDetail = () => {
       </header>
 
       <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
-        <FormField label="Nome" error={errors.name?.message}>
-          <Input {...register('name', { required: 'Informe o nome' })} />
-        </FormField>
+        <div className={`${motion.deal} ${styles.field}`} style={riseDelay(120)}>
+          <FormField label="Nome" error={errors.name?.message}>
+            <Input {...register('name', { required: 'Informe o nome' })} />
+          </FormField>
+        </div>
 
-        <FormField
-          label="Descrição"
-          helperText="Aparece abaixo do nome no app do cliente"
+        <div className={`${motion.deal} ${styles.field}`} style={riseDelay(180)}>
+          <FormField
+            label="Descrição"
+            helperText="Aparece abaixo do nome no app do cliente"
+          >
+            <Textarea rows={3} {...register('description')} />
+          </FormField>
+        </div>
+
+        <div
+          className={`${motion.deal} ${styles.row}`}
+          style={riseDelay(240)}
         >
-          <Textarea rows={3} {...register('description')} />
-        </FormField>
-
-        <div className={styles.row}>
           <FormField label="Preço" error={errors.price?.message}>
             <Input
               inputMode="decimal"
@@ -133,23 +145,28 @@ export const ProductDetail = () => {
           </FormField>
         </div>
 
-        <FormField label="Categoria" error={errors.categoryId?.message}>
-          <Controller
-            name="categoryId"
-            control={control}
-            rules={{ required: 'Escolha a categoria' }}
-            render={({ field }) => (
-              <Select
-                options={categories}
-                value={field.value}
-                onValueChange={field.onChange}
-                error={!!errors.categoryId}
-              />
-            )}
-          />
-        </FormField>
+        <div className={`${motion.deal} ${styles.field}`} style={riseDelay(300)}>
+          <FormField label="Categoria" error={errors.categoryId?.message}>
+            <Controller
+              name="categoryId"
+              control={control}
+              rules={{ required: 'Escolha a categoria' }}
+              render={({ field }) => (
+                <Select
+                  options={categories}
+                  value={field.value}
+                  onValueChange={field.onChange}
+                  error={!!errors.categoryId}
+                />
+              )}
+            />
+          </FormField>
+        </div>
 
-        <div className={styles.availability}>
+        <div
+          className={`${motion.deal} ${styles.availability}`}
+          style={riseDelay(360)}
+        >
           <Controller
             name="isActive"
             control={control}
@@ -171,7 +188,10 @@ export const ProductDetail = () => {
 
         {errors.root && <p className={styles.error}>{errors.root.message}</p>}
 
-        <div className={styles.actions}>
+        <div
+          className={`${motion.deal} ${styles.actions}`}
+          style={riseDelay(420)}
+        >
           <Button type="submit" loading={isSubmitting} disabled={!isDirty}>
             Salvar alterações
           </Button>

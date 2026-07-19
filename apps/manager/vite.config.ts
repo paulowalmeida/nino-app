@@ -16,6 +16,7 @@ export default defineConfig({
       '@compositions': resolve(__dirname, 'src/compositions'),
       '@constants': resolve(__dirname, 'src/constants'),
       '@custom_types': resolve(__dirname, 'src/types'),
+      '@styles': resolve(__dirname, 'src/styles'),
       '@elements': resolve(__dirname, 'src/elements'),
       '@hooks': resolve(__dirname, 'src/hooks'),
       '@layouts': resolve(__dirname, 'src/layouts'),

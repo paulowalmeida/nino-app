@@ -2,8 +2,10 @@ import { useNavigate } from 'react-router'
 
 import type { Membership } from '@custom_types/auth'
 import { useCompanyGroups } from '@hooks/session/useCompanyGroups'
+import { riseDelay } from '@utils/rise-delay'
 
 import styles from './StoreSelection.module.css'
+import motion from '@styles/motion.module.css'
 
 const unitLabel = (total: number): string =>
   total === 1 ? '1 unidade' : `${total} unidades`
@@ -22,17 +24,18 @@ export const StoreSelection = () => {
 
   return (
     <div className={styles.shell}>
-      <div className={styles.panel}>
+      <div className={`${motion.settle} ${styles.panel}`}>
         <h1 className={styles.title}>Seus restaurantes</h1>
         <p className={styles.subtitle}>Escolha qual você quer gerenciar</p>
 
         <div className={styles.list}>
-          {companies.map(({ companyId, companyName, units }) => (
+          {companies.map(({ companyId, companyName, units }, index) => (
             <button
               key={companyId}
               type="button"
               onClick={handleSelect(units)}
-              className={styles.store}
+              style={riseDelay(index * 80 + 100)}
+              className={`${motion.settle} ${motion.lift} ${styles.store}`}
             >
               <span className={styles.storeName}>{companyName}</span>
               <span className={styles.storeUnit}>

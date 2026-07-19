@@ -6,12 +6,14 @@ import type { NavIconName } from '@components/NavIcon/NavIcon.types'
 import { logout } from '@services/auth/auth.service'
 import { useSessionStore } from '@states/useSessionStore'
 import { endSession } from '@utils/end-session'
+import { riseDelay } from '@utils/rise-delay'
 
 import { StoreSwitcher } from '../StoreSwitcher'
 
 import type { SidebarProps } from './Sidebar.types'
 
 import styles from './Sidebar.module.css'
+import motion from '@styles/motion.module.css'
 
 const NAV: { section: string; label: string; icon: NavIconName }[] = [
   { section: 'visao-geral', label: 'Visão geral', icon: 'grid' },
@@ -52,13 +54,16 @@ export const Sidebar = ({ tenantId, isOpen, onClose }: SidebarProps) => {
       </div>
 
       <nav className={styles.nav}>
-        {NAV.map(({ section, label, icon }) => (
+        {NAV.map(({ section, label, icon }, index) => (
           <NavLink
             key={section}
             to={`/${tenantId}/${section}`}
             onClick={onClose}
+            style={riseDelay(index * 55 + 120)}
             className={({ isActive }) =>
-              isActive ? `${styles.navItem} ${styles.navItemActive}` : styles.navItem
+              isActive
+                ? `${motion.slide} ${styles.navItem} ${styles.navItemActive}`
+                : `${motion.slide} ${styles.navItem}`
             }
           >
             <NavIcon name={icon} className={styles.navIcon} />

@@ -1,10 +1,12 @@
 import { CountUp } from '@components/CountUp'
 import { useQueueSummary } from '@hooks/order/useQueueSummary'
+import { riseDelay } from '@utils/rise-delay'
 import type { OrderQueueSummary } from '@custom_types/order'
 
 import type { QueueBoardProps } from './QueueBoard.types'
 
 import styles from './QueueBoard.module.css'
+import motion from '@styles/motion.module.css'
 
 const count = (summary: OrderQueueSummary | undefined, ...keys: string[]) =>
   keys.reduce(
@@ -27,13 +29,16 @@ export const QueueBoard = ({ tenantId }: QueueBoardProps) => {
 
   return (
     <section aria-label="Fila de pedidos">
-      <h2 className={styles.heading}>Agora na loja</h2>
+      <h2 className={`${motion.unroll} ${styles.heading}`}>Agora na loja</h2>
 
       <div className={styles.board}>
-        {tiles.map(({ label, value, urgent }) => (
+        {tiles.map(({ label, value, urgent }, index) => (
           <article
             key={label}
-            className={urgent ? `${styles.tile} ${styles.urgent}` : styles.tile}
+            className={`${motion.settle} ${
+              urgent ? `${styles.tile} ${styles.urgent}` : styles.tile
+            }`}
+            style={riseDelay(index * 70 + 80)}
           >
             <span className={styles.value}>
               {isPending ? '·' : <CountUp value={value} />}
@@ -44,7 +49,7 @@ export const QueueBoard = ({ tenantId }: QueueBoardProps) => {
       </div>
 
       {idle && (
-        <p className={styles.idle}>
+        <p className={`${motion.unroll} ${styles.idle}`}>
           Nenhum pedido na fila. Assim que entrar um, ele aparece aqui.
         </p>
       )}

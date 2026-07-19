@@ -5,10 +5,12 @@ import { Skeleton, Switch } from '@nino/ds'
 import { ItemThumb } from '@components/ItemThumb'
 import { useItemAvailability } from '@hooks/product/useItemAvailability'
 import { useMenu } from '@hooks/product/useMenu'
+import { riseDelay } from '@utils/rise-delay'
 
 import type { MenuBoardProps } from './MenuBoard.types'
 
 import styles from './MenuBoard.module.css'
+import motion from '@styles/motion.module.css'
 
 const brl = new Intl.NumberFormat('pt-BR', {
   style: 'currency',
@@ -51,9 +53,12 @@ export const MenuBoard = ({ tenantId }: MenuBoardProps) => {
 
   return (
     <div className={styles.board}>
-      {sections.map(({ id, name, items }) => (
+      {sections.map(({ id, name, items }, sectionIndex) => (
         <section key={id} className={styles.section}>
-          <header className={styles.sectionHead}>
+          <header
+            className={`${motion.unroll} ${styles.sectionHead}`}
+            style={riseDelay(sectionIndex * 90)}
+          >
             <h2 className={styles.sectionName}>{name}</h2>
             <span className={styles.sectionCount}>
               {itemLabel(items.length)}
@@ -61,12 +66,18 @@ export const MenuBoard = ({ tenantId }: MenuBoardProps) => {
           </header>
 
           <ul className={styles.items}>
-            {items.map((item) => (
+            {items.map((item, index) => (
               <li
                 key={item.id}
-                className={item.isActive ? styles.item : styles.itemOff}
+                className={`${motion.deal} ${
+                  item.isActive ? styles.item : styles.itemOff
+                }`}
+                style={riseDelay(sectionIndex * 90 + index * 45 + 60)}
               >
-                <Link to={item.id} className={styles.itemLink}>
+                <Link
+                  to={item.id}
+                  className={`${motion.lift} ${styles.itemLink}`}
+                >
                   <ItemThumb name={item.name} />
                   <span className={styles.itemText}>
                     <span className={styles.itemName}>{item.name}</span>

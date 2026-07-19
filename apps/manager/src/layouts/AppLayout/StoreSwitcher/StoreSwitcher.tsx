@@ -7,6 +7,7 @@ import { useCompanyGroups } from '@hooks/session/useCompanyGroups'
 import type { StoreSwitcherProps } from './StoreSwitcher.types'
 
 import styles from './StoreSwitcher.module.css'
+import motion from '@styles/motion.module.css'
 
 /** Keeps the section when switching: /:tenantId/pedidos stays on pedidos. */
 const sectionOf = (pathname: string): string =>
@@ -38,7 +39,7 @@ export const StoreSwitcher = ({ currentTenantId }: StoreSwitcherProps) => {
     <div className={styles.wrap}>
       <button
         type="button"
-        className={styles.trigger}
+        className={`${motion.press} ${styles.trigger}`}
         onClick={() => setOpen(!open)}
         aria-expanded={open}
         aria-haspopup="listbox"
@@ -54,7 +55,7 @@ export const StoreSwitcher = ({ currentTenantId }: StoreSwitcherProps) => {
       </button>
 
       {open && (
-        <div className={styles.panel}>
+        <div className={`${motion.unroll} ${styles.panel}`}>
           {units.length > 1 && (
             <ul className={styles.list} role="listbox">
               {units.map(({ tenantId, tenantName }) => (
@@ -63,7 +64,7 @@ export const StoreSwitcher = ({ currentTenantId }: StoreSwitcherProps) => {
                     type="button"
                     role="option"
                     aria-selected={tenantId === currentTenantId}
-                    className={styles.option}
+                    className={`${motion.press} ${styles.option}`}
                     onClick={() => goTo(tenantId)}
                   >
                     <span className={styles.optionName}>{tenantName}</span>

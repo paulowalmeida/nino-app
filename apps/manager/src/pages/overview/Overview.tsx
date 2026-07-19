@@ -3,6 +3,7 @@ import { useCurrentTenant } from '@hooks/session/useCurrentTenant'
 import { useSessionStore } from '@states/useSessionStore'
 
 import styles from './Overview.module.css'
+import motion from '@styles/motion.module.css'
 
 const resolveZone = (timezone: string | null): string =>
   timezone ?? Intl.DateTimeFormat().resolvedOptions().timeZone
@@ -37,11 +38,13 @@ export const Overview = () => {
 
   return (
     <div className={styles.page}>
-      <header className={styles.header}>
+      <header className={`${motion.settle} ${styles.header}`}>
         <div className={styles.glow} />
         <div className={styles.headerText}>
-          <p className={styles.greeting}>{greetingFor(timezone)}</p>
-          <h1 className={styles.title}>{firstName}</h1>
+          <p className={`${motion.deal} ${styles.greeting}`}>
+            {greetingFor(timezone)}
+          </p>
+          <h1 className={`${motion.deal} ${styles.title}`}>{firstName}</h1>
           <p className={styles.date}>
             {dateFor(timezone)}
             {tenant && <span className={styles.store}>· {tenant.tenantName}</span>}
@@ -51,7 +54,7 @@ export const Overview = () => {
           src="/mascot-manager.svg"
           alt=""
           aria-hidden="true"
-          className={styles.mascot}
+          className={`${motion.land} ${styles.mascot}`}
         />
       </header>
 
