@@ -8,6 +8,7 @@ export type NavIconName =
   | 'menu'
   | 'store'
   | 'check'
+  | 'chevron'
 
 export type NavIconProps = {
   name: NavIconName

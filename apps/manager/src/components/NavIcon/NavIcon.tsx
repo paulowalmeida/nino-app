@@ -12,6 +12,7 @@ const PATHS: Record<NavIconName, string> = {
   menu: 'M3 6h18M3 12h18M3 18h18',
   store: 'M3 9 4.5 4h15L21 9M3 9h18M3 9v10a1 1 0 0 0 1 1h16a1 1 0 0 0 1-1V9',
   check: 'M20 6 9 17l-5-5',
+  chevron: 'm6 9 6 6 6-6',
 }
 
 export const NavIcon = ({ name, className }: NavIconProps) => (

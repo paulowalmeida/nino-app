@@ -3,27 +3,10 @@ import { Outlet } from 'react-router'
 import { Eyebrow } from '@components/Eyebrow'
 import { PageTitle } from '@components/PageTitle'
 import { SectionNav } from '@compositions/SectionNav'
-import type { SectionLink } from '@compositions/SectionNav/SectionNav.types'
+import { SETTINGS_SECTIONS } from '@constants/settings-sections'
 
 import styles from './Settings.module.css'
 
-/**
- * Uma tela por assunto, não uma página infinita: cada seção tem rota
- * própria, então o link é compartilhável, o voltar do navegador funciona e
- * recarregar devolve a pessoa onde ela estava.
- */
-const SECTIONS: SectionLink[] = [
-  { to: 'empresa', label: 'Empresa', hint: 'CNPJ, razão social e endereço' },
-  { to: 'unidade', label: 'Unidades', hint: 'Esta loja e as outras da empresa' },
-  {
-    to: 'atendimento',
-    label: 'Atendimento',
-    hint: 'Canais, pagamento e pedido mínimo',
-  },
-  { to: 'horarios', label: 'Horários', hint: 'Quando a loja abre e fecha' },
-  { to: 'entrega', label: 'Entrega', hint: 'Regiões atendidas e taxa' },
-  { to: 'contato', label: 'Contato', hint: 'Telefones da loja' },
-]
 
 export const Settings = () => (
   <div className={styles.page}>
@@ -37,7 +20,9 @@ export const Settings = () => (
     </header>
 
     <div className={styles.columns}>
-      <SectionNav sections={SECTIONS} ariaLabel="Seções das configurações" />
+      <div className={styles.index}>
+        <SectionNav sections={SETTINGS_SECTIONS} ariaLabel="Seções das configurações" />
+      </div>
 
       <div className={styles.panel}>
         <Outlet />

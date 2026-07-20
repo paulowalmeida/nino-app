@@ -59,7 +59,8 @@
 }
 
 .navItem {
-  @apply relative flex items-center gap-3 rounded-xl px-3 py-2.5;
+  @apply relative flex min-w-0 flex-1 items-center gap-3 rounded-xl;
+  @apply px-3 py-2.5;
   @apply text-sm font-medium text-white/45;
   @apply transition-colors duration-150;
   @apply hover:bg-white/6 hover:text-white/80;
@@ -80,6 +81,40 @@
 .navItemActive {
   @apply bg-brand/10 text-brand;
   @apply hover:bg-brand/14 hover:text-brand;
+}
+
+/* linha do item: o link ocupa o espaço, o disclosure fica na ponta */
+.navRow {
+  @apply flex items-center gap-0.5;
+}
+
+.disclosure {
+  @apply flex h-8 w-7 shrink-0 cursor-pointer items-center justify-center;
+  @apply rounded-lg text-white/35 transition-colors duration-150;
+  @apply hover:bg-white/8 hover:text-white/70;
+}
+
+.chevron {
+  @apply h-4 w-4 transition-transform duration-200;
+}
+
+.chevronOpen {
+  @apply rotate-180;
+}
+
+/* seções da tela aberta, recuadas sob o item principal */
+.subNav {
+  @apply mt-0.5 mb-1 flex flex-col gap-px pl-9;
+}
+
+.subItem {
+  @apply rounded-lg px-3 py-1.5 text-[0.8rem] text-white/40;
+  @apply transition-colors duration-150;
+  @apply hover:bg-white/6 hover:text-white/75;
+}
+
+.subItemActive {
+  @apply bg-white/8 font-semibold text-white/90;
 }
 
 .navIcon {
