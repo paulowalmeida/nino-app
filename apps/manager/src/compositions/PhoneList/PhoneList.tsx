@@ -2,7 +2,7 @@ import { useState } from 'react'
 
 import { Button, PhoneInput, Skeleton } from '@nino/ds'
 
-import { formatPhone } from '@utils/phone'
+import { formatPhone, toE164 } from '@utils/phone'
 import { riseDelay } from '@utils/rise-delay'
 
 import type { PhoneListProps } from './PhoneList.types'
@@ -23,7 +23,7 @@ export const PhoneList = ({
   const handleAdd = () => {
     const digits = phone.replace(/\D/g, '')
     if (digits.length < 10) return
-    onAdd(`+55${digits}`)
+    onAdd(toE164(phone))
     setPhone('')
   }
 

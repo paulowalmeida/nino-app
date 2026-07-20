@@ -13,6 +13,7 @@ import { useDeliveryZones } from '@hooks/settings/useDeliveryZones'
 import { useMenu } from '@hooks/product/useMenu'
 import type { OrderChannel, PaymentMethod } from '@custom_types/order'
 import { brl } from '@utils/money'
+import { toE164 } from '@utils/phone'
 import { CHANNEL_LABEL, PAYMENT_METHOD_LABEL } from '@utils/order-flow'
 import { riseDelay } from '@utils/rise-delay'
 
@@ -110,7 +111,7 @@ export const NewOrder = () => {
           unitPrice: Number(unitPrice),
         })),
         guestName: recipient.name || undefined,
-        guestPhone: recipient.phone || undefined,
+        guestPhone: recipient.phone ? toE164(recipient.phone) : undefined,
         ...(isDelivery
           ? {
               deliveryZoneId: recipient.zoneId,
