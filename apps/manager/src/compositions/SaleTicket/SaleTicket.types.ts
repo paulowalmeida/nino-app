@@ -3,6 +3,8 @@ import type { OrderChannel, PaymentMethod } from '@custom_types/order'
 
 export type SaleTicketProps = {
   lines: CartLine[]
+  /** Formas que a unidade aceita, vindas das regras da loja. */
+  methods: PaymentMethod[]
   channel: OrderChannel
   method: PaymentMethod
   isSending: boolean

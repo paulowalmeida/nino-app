@@ -5,6 +5,7 @@ import { SaleTicket } from '@compositions/SaleTicket'
 import { useCreateOrder } from '@hooks/order/useCreateOrder'
 import { useCurrentTenant } from '@hooks/session/useCurrentTenant'
 import { useMenu } from '@hooks/product/useMenu'
+import { useAcceptedPayments } from '@hooks/settings/useAcceptedPayments'
 import type { CartLine } from '@custom_types/counter'
 import type { MenuItem } from '@custom_types/product'
 import type { OrderChannel, PaymentMethod } from '@custom_types/order'
@@ -22,12 +23,16 @@ export const Counter = () => {
   const tenantId = tenant?.tenantId ?? null
 
   const { sections, isPending } = useMenu(tenantId)
+  const { methods } = useAcceptedPayments(tenantId)
   const { mutateAsync: placeOrder, isPending: isSending } =
     useCreateOrder(tenantId)
 
   const [lines, setLines] = useState<CartLine[]>([])
   const [channel, setChannel] = useState<OrderChannel>('COUNTER')
-  const [method, setMethod] = useState<PaymentMethod>('CASH')
+  const [chosen, setChosen] = useState<PaymentMethod | null>(null)
+
+  /** A escolha só vale enquanto a loja aceitar aquela forma. */
+  const method = chosen && methods.includes(chosen) ? chosen : methods[0]
   const [failed, setFailed] = useState(false)
   const [closed, setClosed] = useState<string | null>(null)
 
@@ -99,13 +104,14 @@ export const Counter = () => {
 
         <SaleTicket
           lines={lines}
+          methods={methods}
           channel={channel}
           method={method}
           isSending={isSending}
           failed={failed}
           onStep={step}
           onChannel={setChannel}
-          onMethod={setMethod}
+          onMethod={setChosen}
           onClear={() => setLines([])}
           onFinish={finish}
         />

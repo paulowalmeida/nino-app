@@ -1,8 +1,8 @@
 import { Button } from '@nino/ds'
 
-import type { OrderChannel, PaymentMethod } from '@custom_types/order'
+import type { OrderChannel } from '@custom_types/order'
 import { brl } from '@utils/money'
-import { CHANNEL_LABEL } from '@utils/order-flow'
+import { CHANNEL_LABEL, paymentLabelFor } from '@utils/order-flow'
 
 import type { SaleTicketProps } from './SaleTicket.types'
 
@@ -11,18 +11,13 @@ import motion from '@styles/motion.module.css'
 
 const CHANNELS: OrderChannel[] = ['COUNTER', 'PICKUP']
 
-/** No balcão o cartão é passado na hora — o rótulo do painel não serve. */
-const METHODS: { value: PaymentMethod; label: string }[] = [
-  { value: 'CASH', label: 'Dinheiro' },
-  { value: 'CARD_ON_DELIVERY', label: 'Cartão' },
-]
-
 /**
  * A comanda do caixa fica sempre à vista, com o total em corpo grande: é o
  * número que o operador fala em voz alta antes de receber.
  */
 export const SaleTicket = ({
   lines,
+  methods,
   channel,
   method,
   isSending,
@@ -104,7 +99,7 @@ export const SaleTicket = ({
         </div>
 
         <div className={styles.choices}>
-          {METHODS.map(({ value, label }) => (
+          {methods.map((value) => (
             <button
               key={value}
               type="button"
@@ -114,7 +109,7 @@ export const SaleTicket = ({
                 method === value ? styles.choiceOn : ''
               }`}
             >
-              {label}
+              {paymentLabelFor(value, channel)}
             </button>
           ))}
         </div>

@@ -10,13 +10,14 @@ import { RecipientFields } from '@compositions/RecipientFields'
 import { useCreateOrder } from '@hooks/order/useCreateOrder'
 import { useCurrentTenant } from '@hooks/session/useCurrentTenant'
 import { useDeliveryZones } from '@hooks/settings/useDeliveryZones'
+import { useAcceptedPayments } from '@hooks/settings/useAcceptedPayments'
 import { useOpeningHours } from '@hooks/settings/useOpeningHours'
 import { usePause } from '@hooks/store/usePause'
 import { useMenu } from '@hooks/product/useMenu'
 import type { OrderChannel, PaymentMethod } from '@custom_types/order'
 import { brl } from '@utils/money'
 import { toE164 } from '@utils/phone'
-import { CHANNEL_LABEL, PAYMENT_METHOD_LABEL } from '@utils/order-flow'
+import { CHANNEL_LABEL, paymentLabelFor } from '@utils/order-flow'
 import { riseDelay } from '@utils/rise-delay'
 import { isStoreOpen } from '@utils/store-open'
 
@@ -26,8 +27,6 @@ import styles from './NewOrder.module.css'
 import motion from '@styles/motion.module.css'
 
 const CHANNELS: OrderChannel[] = ['COUNTER', 'PICKUP', 'DELIVERY']
-
-const METHODS: PaymentMethod[] = ['CASH', 'CARD_ON_DELIVERY']
 
 const EMPTY_RECIPIENT: Recipient = {
   name: '',
@@ -47,13 +46,18 @@ export const NewOrder = () => {
   const { sections, isPending } = useMenu(tenantId)
   const { zones } = useDeliveryZones(tenantId)
   const { hours } = useOpeningHours(tenantId)
+  const { methods } = useAcceptedPayments(tenantId)
   const { data: pause } = usePause(tenantId)
   const { mutateAsync: placeOrder, isPending: isPlacing } =
     useCreateOrder(tenantId)
 
   const [lines, setLines] = useState<CartLine[]>([])
   const [channel, setChannel] = useState<OrderChannel>('COUNTER')
-  const [method, setMethod] = useState<PaymentMethod>('CASH')
+  const [chosenMethod, setChosenMethod] = useState<PaymentMethod | null>(null)
+
+  /** A forma escolhida só vale enquanto a loja aceitar. */
+  const method =
+    chosenMethod && methods.includes(chosenMethod) ? chosenMethod : methods[0]
   const [recipient, setRecipient] = useState<Recipient>(EMPTY_RECIPIENT)
   const [notes, setNotes] = useState('')
   const [failed, setFailed] = useState(false)
@@ -304,13 +308,13 @@ export const NewOrder = () => {
               Pagamento
             </span>
             <Select
-              options={METHODS.map((value) => ({
+              options={methods.map((value) => ({
                 value,
-                label: PAYMENT_METHOD_LABEL[value],
+                label: paymentLabelFor(value, channel),
               }))}
               value={method}
               aria-labelledby="payment-label"
-              onValueChange={(value) => setMethod(value as PaymentMethod)}
+              onValueChange={(value) => setChosenMethod(value as PaymentMethod)}
             />
           </div>
 

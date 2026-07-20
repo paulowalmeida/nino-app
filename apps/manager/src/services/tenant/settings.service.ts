@@ -5,6 +5,7 @@ import type {
   TenantSettings,
   UpdateTenantSettingsRequest,
 } from '@custom_types/settings'
+import type { PaymentMethod } from '@custom_types/order'
 import { ApiFactory } from '@services/api/api.service'
 
 const { get, create, patch, update, remove } = ApiFactory()
@@ -16,6 +17,17 @@ type Page<T> = {
 
 export const getSettings = (tenantId: string): Promise<TenantSettings> =>
   get<TenantSettings>(`tenants/${tenantId}/settings`)
+
+/**
+ * Fatia pública das regras: o balcão precisa das formas aceitas e quem
+ * opera pode ser STAFF, que não lê as settings completas.
+ */
+export const getAcceptedPayments = (
+  tenantId: string
+): Promise<{ acceptedPaymentMethods: PaymentMethod[] }> =>
+  get<{ acceptedPaymentMethods: PaymentMethod[] }>(
+    `tenants/${tenantId}/settings/public`
+  )
 
 /**
  * `PUT /tenants/:id/settings` não tem id de recurso: o `update` da factory

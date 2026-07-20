@@ -116,3 +116,15 @@ export const addressOf = (order: Order): string | null => {
 
   return rest ? `${line} — ${rest}` : line
 }
+
+/**
+ * O mesmo meio de pagamento tem nome diferente conforme o canal: no balcão
+ * ninguém fala "cartão na entrega".
+ */
+export const paymentLabelFor = (
+  method: PaymentMethod,
+  channel: OrderChannel
+): string => {
+  if (method !== 'CARD_ON_DELIVERY') return PAYMENT_METHOD_LABEL[method]
+  return channel === 'DELIVERY' ? 'Cartão na entrega' : 'Cartão'
+}
