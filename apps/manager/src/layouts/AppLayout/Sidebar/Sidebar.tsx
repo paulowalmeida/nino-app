@@ -149,16 +149,15 @@ export const Sidebar = ({ tenantId, isOpen, onClose }: SidebarProps) => {
                       id={`sub-${section}`}
                       className={`${motion.unroll} ${styles.subNav}`}
                     >
-                      {children.map(({ to, label: childLabel }, childIndex) => (
+                      {children.map(({ to, label: childLabel }) => (
                         <NavLink
                           key={to}
                           to={`/${tenantId}/${section}/${to}`}
                           onClick={onClose}
-                          style={riseDelay(childIndex * 30)}
                           className={({ isActive }) =>
                             isActive
-                              ? `${motion.deal} ${styles.subItem} ${styles.subItemActive}`
-                              : `${motion.deal} ${styles.subItem}`
+                              ? `${styles.subItem} ${styles.subItemActive}`
+                              : styles.subItem
                           }
                         >
                           {childLabel}
