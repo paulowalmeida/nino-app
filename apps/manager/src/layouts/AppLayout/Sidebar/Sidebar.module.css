@@ -58,8 +58,10 @@
   @apply text-white/28;
 }
 
+/* serve a link e a botão: o item com filhos abre a lista em vez de navegar */
 .navItem {
-  @apply relative flex items-center gap-3 rounded-xl px-3 py-2.5;
+  @apply relative flex w-full cursor-pointer items-center gap-3 rounded-xl;
+  @apply px-3 py-2.5 text-left;
   @apply text-sm font-medium text-white/45;
   @apply transition-colors duration-150;
   @apply hover:bg-white/6 hover:text-white/80;
