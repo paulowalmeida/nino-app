@@ -1,0 +1,32 @@
+@reference "@nino/ds/globals.css";
+
+.thumb {
+  @apply flex h-11 w-11 shrink-0 items-center justify-center;
+  @apply rounded-xl object-cover text-xs font-bold uppercase;
+  @apply select-none tracking-tight;
+}
+
+/* warm range around the brand, none of them competing with it */
+.tone0 {
+  @apply bg-brand/12 text-brand-strong;
+}
+
+.tone1 {
+  @apply bg-peach text-terracotta;
+}
+
+.tone2 {
+  @apply bg-sand-deep text-ink/70;
+}
+
+.tone3 {
+  @apply bg-cream-deep text-brand-strong;
+}
+
+.tone4 {
+  @apply bg-peach-light text-terracotta;
+}
+
+.tone5 {
+  @apply bg-lime/20 text-ink/70;
+}

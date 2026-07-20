@@ -1,0 +1,67 @@
+@reference "@nino/ds/globals.css";
+
+.wrap {
+  @apply flex min-h-0 flex-1 flex-col gap-3;
+}
+
+/* categorias como trilho: um toque troca a bandeja inteira */
+.tabs {
+  @apply flex shrink-0 gap-2 overflow-x-auto pb-1;
+  scrollbar-width: none;
+}
+
+.tabs::-webkit-scrollbar {
+  display: none;
+}
+
+.tab {
+  @apply shrink-0 cursor-pointer rounded-full border border-sand bg-paper;
+  @apply px-4 py-2.5 text-base font-semibold text-subtle;
+  @apply transition-colors duration-150;
+  @apply hover:border-brand/30 hover:text-body;
+}
+
+.tabOn {
+  @apply border-brand/40 bg-brand/10 text-brand-strong;
+}
+
+/* alvos grandes: dedo, não cursor */
+.grid {
+  @apply grid min-h-0 flex-1 auto-rows-min gap-3 overflow-y-auto pb-2;
+  @apply grid-cols-2 md:grid-cols-3 xl:grid-cols-4;
+}
+
+.card {
+  @apply flex cursor-pointer flex-col items-start gap-2 rounded-[20px];
+  @apply border border-sand bg-paper p-3 text-left;
+  @apply transition-colors duration-150;
+  @apply hover:border-brand/35 hover:bg-white;
+  @apply focus-visible:outline-none focus-visible:ring-2;
+  @apply focus-visible:ring-brand focus-visible:ring-offset-2;
+  min-height: 8.5rem;
+}
+
+.thumb {
+  @apply h-12 w-12 text-base;
+}
+
+.name {
+  @apply line-clamp-2 flex-1 text-base font-semibold leading-tight text-body;
+}
+
+.price {
+  @apply font-display text-lg font-extrabold text-ink;
+  font-variant-numeric: tabular-nums;
+}
+
+.loading {
+  @apply grid flex-1 grid-cols-2 gap-3 md:grid-cols-3 xl:grid-cols-4;
+}
+
+.skeleton {
+  @apply h-34 w-full rounded-[20px];
+}
+
+.empty {
+  @apply p-6 text-base text-faint;
+}

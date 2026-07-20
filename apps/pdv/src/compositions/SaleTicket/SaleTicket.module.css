@@ -1,0 +1,98 @@
+@reference "@nino/ds/globals.css";
+
+/* a comanda ocupa a coluna inteira e nunca rola junto com o cardápio */
+.ticket {
+  @apply flex h-full min-h-0 w-full flex-col rounded-[24px] border border-sand;
+  @apply bg-paper;
+}
+
+.head {
+  @apply flex shrink-0 items-center justify-between border-b border-sand;
+  @apply px-4 py-3;
+}
+
+.title {
+  @apply font-display text-lg font-extrabold text-ink;
+}
+
+.clear {
+  @apply cursor-pointer rounded-full px-3 py-1.5 text-sm font-semibold;
+  @apply text-faint transition-colors duration-150 hover:text-brand-strong;
+}
+
+.empty {
+  @apply flex-1 px-4 py-6 text-base leading-relaxed text-faint;
+}
+
+.lines {
+  @apply flex min-h-0 flex-1 flex-col overflow-y-auto px-4;
+}
+
+.line {
+  @apply flex items-center gap-2 border-b border-dashed border-sand-deep py-3;
+}
+
+.lineName {
+  @apply line-clamp-2 min-w-0 flex-1 text-base leading-tight text-body;
+}
+
+.stepper {
+  @apply flex shrink-0 items-center gap-1;
+}
+
+.step {
+  @apply flex h-10 w-10 cursor-pointer items-center justify-center;
+  @apply rounded-full border border-sand bg-white text-xl leading-none;
+  @apply text-subtle transition-colors duration-150;
+  @apply hover:border-brand/35 hover:text-brand-strong;
+}
+
+.quantity {
+  @apply w-8 text-center text-base font-bold text-ink;
+  font-variant-numeric: tabular-nums;
+}
+
+.linePrice {
+  @apply w-24 shrink-0 text-right text-base font-semibold text-body;
+  font-variant-numeric: tabular-nums;
+}
+
+.foot {
+  @apply flex shrink-0 flex-col gap-3 border-t border-sand p-4;
+}
+
+.choices {
+  @apply grid grid-cols-2 gap-2;
+}
+
+.choice {
+  @apply cursor-pointer rounded-full border border-sand bg-white px-3 py-2.5;
+  @apply text-sm font-semibold text-subtle transition-colors duration-150;
+  @apply hover:border-brand/30;
+}
+
+.choiceOn {
+  @apply border-brand/40 bg-brand/10 text-brand-strong;
+}
+
+.total {
+  @apply flex items-baseline justify-between border-t border-dashed;
+  @apply border-sand-deep pt-3;
+}
+
+.totalLabel {
+  @apply text-sm text-faint;
+}
+
+.totalValue {
+  @apply font-display text-3xl font-extrabold text-ink;
+  font-variant-numeric: tabular-nums;
+}
+
+.error {
+  @apply text-sm text-red-500;
+}
+
+.finish {
+  @apply w-full;
+}

@@ -1,0 +1,38 @@
+@reference "@nino/ds/globals.css";
+
+.screen {
+  @apply flex min-h-dvh items-center justify-center p-4;
+  background:
+    radial-gradient(
+      900px 500px at 50% -10%,
+      rgba(255, 126, 31, 0.16),
+      transparent 60%
+    ),
+    var(--color-cream);
+}
+
+.card {
+  @apply flex w-full max-w-sm flex-col gap-4 rounded-[28px] border;
+  @apply border-sand bg-paper p-6 lg:p-8;
+  box-shadow: 0 24px 60px -32px rgba(26, 18, 6, 0.4);
+}
+
+.head {
+  @apply flex flex-col gap-1;
+}
+
+.title {
+  @apply font-display text-2xl font-extrabold tracking-[-0.02em] text-ink;
+}
+
+.hint {
+  @apply text-sm leading-relaxed text-faint;
+}
+
+.error {
+  @apply text-sm text-red-500;
+}
+
+.enter {
+  @apply mt-1 w-full;
+}
