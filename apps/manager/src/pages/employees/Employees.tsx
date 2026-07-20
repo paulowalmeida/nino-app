@@ -1,4 +1,3 @@
-import { Eyebrow } from '@components/Eyebrow'
 import { PageTitle } from '@components/PageTitle'
 import { InviteForm } from '@compositions/InviteForm'
 import { TeamRoster } from '@compositions/TeamRoster'
@@ -55,7 +54,6 @@ export const Employees = () => {
   return (
     <div className={styles.page}>
       <header className={styles.header}>
-        <Eyebrow>Sua loja</Eyebrow>
         <PageTitle accent="equipe">Quem toca a equipe</PageTitle>
         <p className={styles.subtitle}>
           Cada pessoa entra com a própria conta — e o painel registra quem

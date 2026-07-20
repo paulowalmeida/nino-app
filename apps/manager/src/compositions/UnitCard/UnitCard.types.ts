@@ -4,6 +4,10 @@ export type UnitCardProps = {
   unit: TenantDetail | undefined
   isPending: boolean
   isSaving: boolean
+  /** Matriz da empresa — o posto aparece no cabeçalho da ficha. */
+  isMain: boolean
+  isPromoting: boolean
+  onSetMain: () => void
   onSave: (data: UpdateTenantRequest) => void
 }
 

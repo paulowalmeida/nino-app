@@ -1,6 +1,5 @@
 import { Outlet, useLocation } from 'react-router'
 
-import { Eyebrow } from '@components/Eyebrow'
 import { PageTitle } from '@components/PageTitle'
 
 import styles from './Settings.module.css'
@@ -16,7 +15,6 @@ export const Settings = () => {
   return (
     <div className={styles.page}>
       <header className={`${motion.deal} ${styles.header}`}>
-        <Eyebrow>Sua loja</Eyebrow>
         <PageTitle accent="loja">As regras da loja</PageTitle>
         <p className={styles.subtitle}>
           O que você define aqui vale na hora do pedido — no app do cliente e

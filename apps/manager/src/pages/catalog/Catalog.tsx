@@ -3,7 +3,6 @@ import { Link } from 'react-router'
 import { Button } from '@nino/ds'
 
 import { MenuBoard } from '@compositions/MenuBoard'
-import { Eyebrow } from '@components/Eyebrow'
 import { PageTitle } from '@components/PageTitle'
 import { useCurrentTenant } from '@hooks/session/useCurrentTenant'
 import { useTenantRole } from '@hooks/session/useTenantRole'
@@ -19,7 +18,6 @@ export const Catalog = () => {
     <div className={styles.page}>
       <header className={styles.header}>
         <div className={styles.headText}>
-          <Eyebrow>Sua loja</Eyebrow>
           <PageTitle accent="Cardápio">Cardápio</PageTitle>
           <p className={styles.subtitle}>
             Desligue o que acabou — o item some do app do cliente na hora.

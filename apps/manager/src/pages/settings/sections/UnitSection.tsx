@@ -3,16 +3,10 @@ import { Link } from 'react-router'
 
 import { Button } from '@nino/ds'
 
-import { UnitCard } from '@compositions/UnitCard'
 import { useSubscription } from '@hooks/account/useSubscription'
 import { useCompanyGroups } from '@hooks/session/useCompanyGroups'
 import { useCurrentTenant } from '@hooks/session/useCurrentTenant'
-import {
-  useRemoveTenant,
-  useSaveTenant,
-  useSetMainTenant,
-  useTenantDetail,
-} from '@hooks/store/useTenantDetail'
+import { useRemoveTenant, useTenantDetail } from '@hooks/store/useTenantDetail'
 import { riseDelay } from '@utils/rise-delay'
 
 import styles from './UnitSection.module.css'
@@ -20,40 +14,28 @@ import motion from '@styles/motion.module.css'
 import card from '@styles/settingsCard.module.css'
 
 /**
- * As lojas da empresa. O plano diz quantas cabem — abrir a próxima é o
- * gesto que faz o cliente subir de faixa, então o limite aparece antes de
- * virar erro da API.
+ * A lista das lojas, não o formulário de uma delas: a linha leva ao detalhe
+ * e a tela cabe de uma vez. O plano diz quantas cabem, então o limite
+ * aparece antes de virar erro da API.
  */
 export const UnitSection = () => {
   const current = useCurrentTenant()
   const tenantId = current?.tenantId ?? null
-  const groups = useCompanyGroups()
 
-  const { data: unit, isPending } = useTenantDetail(tenantId)
-  const { mutate: save, isPending: isSaving } = useSaveTenant(tenantId)
+  const { data: unit } = useTenantDetail(tenantId)
   const { mutate: removeUnit, isPending: isRemoving } = useRemoveTenant()
-  const { mutate: setMain, isPending: isPromoting } = useSetMainTenant(tenantId)
   const { data: subscription } = useSubscription()
 
   const [confirming, setConfirming] = useState<string | null>(null)
 
-  const units = groups.flatMap(({ units: list }) => list)
-  const others = units.filter(({ tenantId: id }) => id !== tenantId)
-
+  const units = useCompanyGroups().flatMap(({ units: list }) => list)
   const limit = subscription?.plan.maxTenants ?? null
   const isFull = limit !== null && units.length >= limit
 
   return (
-    <div className={styles.stack}>
-      <UnitCard
-        unit={unit}
-        isPending={isPending}
-        isSaving={isSaving}
-        onSave={save}
-      />
-
-      <section className={card.card}>
-        <header className={`${motion.unroll} ${card.head}`}>
+    <section className={card.card}>
+      <header className={`${motion.unroll} ${styles.head}`}>
+        <div>
           <h2 className={card.title}>Lojas da empresa</h2>
           <p className={card.hint}>
             {limit === null
@@ -62,96 +44,82 @@ export const UnitSection = () => {
                   subscription?.plan.name ?? ''
                 }.`}
           </p>
-        </header>
+        </div>
 
-        <ul className={styles.list}>
-          <li className={`${motion.deal} ${styles.item}`}>
-            <div className={styles.unit}>
-              <span className={styles.name}>
-                {current?.tenantName}
-                <span className={styles.here}>você está aqui</span>
-                {unit?.isMain && <span className={styles.main}>matriz</span>}
-              </span>
-              <span className={styles.company}>{current?.companyName}</span>
-            </div>
-
-            {unit && !unit.isMain && units.length > 1 && (
-              <Button
-                variant="ghost"
-                size="sm"
-                loading={isPromoting}
-                className={`${motion.press} ${styles.promote}`}
-                onClick={() => setMain(unit.id)}
-              >
-                Tornar matriz
-              </Button>
-            )}
-          </li>
-
-          {others.map(({ tenantId: id, tenantName, companyName }, index) => (
-            <li
-              key={id}
-              className={`${motion.deal} ${styles.item}`}
-              style={riseDelay(index * 45 + 60)}
-            >
-              <Link
-                to={`/${id}/configuracoes/unidade`}
-                className={`${motion.lift} ${styles.unit}`}
-              >
-                <span className={styles.name}>{tenantName}</span>
-                <span className={styles.company}>{companyName}</span>
-              </Link>
-
-              {confirming === id ? (
-                <div className={styles.confirm}>
-                  <span className={styles.confirmText}>Fechar esta loja?</span>
-                  <Button
-                    size="sm"
-                    loading={isRemoving}
-                    className={motion.press}
-                    onClick={() => removeUnit(id)}
-                  >
-                    Fechar
-                  </Button>
-                  <Button
-                    size="sm"
-                    variant="ghost"
-                    onClick={() => setConfirming(null)}
-                  >
-                    Voltar
-                  </Button>
-                </div>
-              ) : (
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  className={`${motion.press} ${styles.remove}`}
-                  onClick={() => setConfirming(id)}
-                >
-                  Fechar loja
-                </Button>
-              )}
-            </li>
-          ))}
-        </ul>
-
-        {isFull ? (
-          <p className={styles.full}>
-            O plano {subscription?.plan.name} cobre {limit}{' '}
-            {limit === 1 ? 'unidade' : 'unidades'}. Para abrir outra, fale com
-            a gente sobre a próxima faixa.
-          </p>
-        ) : (
-          <Button
-            asChild
-            className={`${motion.press} ${styles.add}`}
-          >
+        {!isFull && (
+          <Button asChild className={`${motion.press} ${styles.add}`}>
             <Link to="../../unidades/nova" relative="path">
-              Abrir nova unidade
+              Abrir unidade
             </Link>
           </Button>
         )}
-      </section>
-    </div>
+      </header>
+
+      <ul className={styles.list}>
+        {units.map(({ tenantId: id, tenantName, companyName }, index) => {
+          const isHere = id === tenantId
+
+          return (
+            <li
+              key={id}
+              className={`${motion.deal} ${styles.item}`}
+              style={riseDelay(index * 40 + 60)}
+            >
+              <Link
+                to={isHere ? 'detalhe' : `/${id}/configuracoes/unidade/detalhe`}
+                className={`${motion.lift} ${styles.unit}`}
+              >
+                <span className={styles.name}>
+                  {tenantName}
+                  {isHere && <span className={styles.here}>aqui</span>}
+                  {isHere && unit?.isMain && (
+                    <span className={styles.main}>matriz</span>
+                  )}
+                </span>
+                <span className={styles.company}>{companyName}</span>
+              </Link>
+
+              {!isHere &&
+                (confirming === id ? (
+                  <div className={styles.confirm}>
+                    <Button
+                      size="sm"
+                      loading={isRemoving}
+                      className={motion.press}
+                      onClick={() => removeUnit(id)}
+                    >
+                      Fechar loja
+                    </Button>
+                    <Button
+                      size="sm"
+                      variant="ghost"
+                      onClick={() => setConfirming(null)}
+                    >
+                      Voltar
+                    </Button>
+                  </div>
+                ) : (
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    className={`${motion.press} ${styles.remove}`}
+                    onClick={() => setConfirming(id)}
+                  >
+                    Fechar
+                  </Button>
+                ))}
+            </li>
+          )
+        })}
+      </ul>
+
+      {isFull && (
+        <p className={styles.full}>
+          O plano {subscription?.plan.name} cobre {limit}{' '}
+          {limit === 1 ? 'unidade' : 'unidades'}. Para abrir outra, fale com a
+          gente sobre a próxima faixa.
+        </p>
+      )}
+    </section>
   )
 }

@@ -1,5 +1,4 @@
-import { BackLink } from '@components/BackLink'
-import { Eyebrow } from '@components/Eyebrow'
+import { Breadcrumb } from '@components/Breadcrumb'
 import { PageTitle } from '@components/PageTitle'
 import { FirstStoreForm } from '@compositions/FirstStoreForm'
 
@@ -13,10 +12,15 @@ import motion from '@styles/motion.module.css'
  */
 export const NewUnit = () => (
   <div className={styles.page}>
-    <BackLink to="../../configuracoes/unidade">Unidades</BackLink>
+    <Breadcrumb
+      trail={[
+        { label: 'Configurações', to: '../../configuracoes/empresa' },
+        { label: 'Unidades', to: '../../configuracoes/unidade' },
+        { label: 'Nova unidade' },
+      ]}
+    />
 
     <header className={`${motion.deal} ${styles.header}`}>
-      <Eyebrow>Sua empresa</Eyebrow>
       <PageTitle accent="unidade">Abrir nova unidade</PageTitle>
       <p className={styles.subtitle}>
         Cada unidade tem cardápio, horário e zonas próprios. Equipe e

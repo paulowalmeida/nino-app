@@ -5,7 +5,6 @@ import { useNavigate } from 'react-router'
 import { Button, FormField, Input, Select, Textarea } from '@nino/ds'
 
 import { BackLink } from '@components/BackLink'
-import { Eyebrow } from '@components/Eyebrow'
 import { PageTitle } from '@components/PageTitle'
 import {
   useCategories,
@@ -84,7 +83,6 @@ export const NewProduct = () => {
       <BackLink>Cardápio</BackLink>
 
       <header className={styles.header}>
-        <Eyebrow>Cardápio</Eyebrow>
         <PageTitle accent="item">Novo item</PageTitle>
         <p className={styles.subtitle}>
           Cadastre o essencial agora — a foto entra na tela seguinte.

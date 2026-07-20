@@ -53,6 +53,9 @@ export const UnitCard = ({
   unit,
   isPending,
   isSaving,
+  isMain,
+  isPromoting,
+  onSetMain,
   onSave,
 }: UnitCardProps) => {
   const [draft, setDraft] = useState<UnitDraft>(EMPTY)
@@ -74,11 +77,28 @@ export const UnitCard = ({
 
   return (
     <section className={styles.card}>
-      <header className={`${motion.unroll} ${styles.head}`}>
-        <h2 className={styles.title}>Esta unidade</h2>
-        <p className={styles.hint}>
-          É o endereço de onde o pedido sai — e o que o cliente vê na loja.
-        </p>
+      <header className={`${motion.unroll} ${local.head}`}>
+        <div>
+          <h2 className={styles.title}>
+            {unit?.customName || 'Esta unidade'}
+            {isMain && <span className={local.main}>matriz</span>}
+          </h2>
+          <p className={styles.hint}>
+            É o endereço de onde o pedido sai — e o que o cliente vê na loja.
+          </p>
+        </div>
+
+        {!isMain && (
+          <Button
+            variant="outline"
+            size="sm"
+            loading={isPromoting}
+            className={`${motion.press} ${local.promote}`}
+            onClick={onSetMain}
+          >
+            Tornar matriz
+          </Button>
+        )}
       </header>
 
       <div className={local.fields}>

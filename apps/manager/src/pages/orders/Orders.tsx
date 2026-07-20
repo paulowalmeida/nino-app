@@ -2,7 +2,6 @@ import { useSearchParams } from 'react-router'
 
 import { Button, Skeleton } from '@nino/ds'
 
-import { Eyebrow } from '@components/Eyebrow'
 import { PageTitle } from '@components/PageTitle'
 import { OrderTicket } from '@compositions/OrderTicket'
 import { StageTrack } from '@compositions/StageTrack'
@@ -84,7 +83,6 @@ export const Orders = () => {
     <div className={styles.page}>
       <header className={styles.header}>
         <div className={styles.headText}>
-          <Eyebrow>Sua loja</Eyebrow>
           <PageTitle accent="Pedidos">Pedidos</PageTitle>
           <p className={styles.subtitle}>
             Cada comanda mostra o próximo passo. Um toque move o pedido

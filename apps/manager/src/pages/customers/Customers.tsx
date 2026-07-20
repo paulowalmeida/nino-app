@@ -2,7 +2,6 @@ import { Link } from 'react-router'
 
 import { Button, Skeleton } from '@nino/ds'
 
-import { Eyebrow } from '@components/Eyebrow'
 import { PageTitle } from '@components/PageTitle'
 import { PersonMark } from '@components/PersonMark'
 import { useCurrentTenant } from '@hooks/session/useCurrentTenant'
@@ -32,7 +31,6 @@ export const Customers = () => {
   return (
     <div className={styles.page}>
       <header className={`${motion.deal} ${styles.header}`}>
-        <Eyebrow>Sua loja</Eyebrow>
         <PageTitle accent="volta">Quem já comprou e volta</PageTitle>
         <p className={styles.subtitle}>
           {total !== undefined

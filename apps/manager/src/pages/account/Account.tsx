@@ -2,7 +2,6 @@ import { useState } from 'react'
 
 import { Button, FormField, Input, Skeleton } from '@nino/ds'
 
-import { Eyebrow } from '@components/Eyebrow'
 import { PageTitle } from '@components/PageTitle'
 import { useProfile, useSaveProfile } from '@hooks/account/useProfile'
 import type { Profile } from '@custom_types/account'
@@ -43,7 +42,6 @@ export const Account = () => {
   return (
     <div className={styles.page}>
       <header className={`${motion.deal} ${styles.header}`}>
-        <Eyebrow>Sua conta</Eyebrow>
         <PageTitle accent="dados">Meus dados</PageTitle>
         <p className={styles.subtitle}>
           É como a equipe te identifica no painel e no histórico dos pedidos.

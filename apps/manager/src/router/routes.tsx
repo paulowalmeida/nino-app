@@ -24,6 +24,7 @@ import {
   DeliverySection,
   HoursSection,
   ServiceSection,
+  UnitDetailSection,
   UnitSection,
 } from '@pages/settings/sections'
 import { StoreSelection } from '@pages/store-selection/StoreSelection'
@@ -137,6 +138,7 @@ export const router = createBrowserRouter([
           { index: true, element: <Navigate to="empresa" replace /> },
           { path: 'empresa', element: <CompanySection /> },
           { path: 'unidade', element: <UnitSection /> },
+          { path: 'unidade/detalhe', element: <UnitDetailSection /> },
           { path: 'atendimento', element: <ServiceSection /> },
           { path: 'horarios', element: <HoursSection /> },
           { path: 'entrega', element: <DeliverySection /> },

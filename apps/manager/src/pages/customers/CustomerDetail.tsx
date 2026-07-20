@@ -2,7 +2,7 @@ import { Link, useParams } from 'react-router'
 
 import { Skeleton } from '@nino/ds'
 
-import { BackLink } from '@components/BackLink'
+import { Breadcrumb } from '@components/Breadcrumb'
 import { PersonMark } from '@components/PersonMark'
 import { useCurrentTenant } from '@hooks/session/useCurrentTenant'
 import { useCustomer } from '@hooks/customer/useCustomers'
@@ -43,17 +43,22 @@ export const CustomerDetail = () => {
   if (!customer) {
     return (
       <div className={styles.page}>
+        <Breadcrumb trail={[{ label: 'Clientes', to: '..' }, { label: '—' }]} />
         <p className={styles.notice}>
           Esta pessoa não tem pedido nesta loja.
         </p>
-        <BackLink>Clientes</BackLink>
       </div>
     )
   }
 
   return (
     <div className={styles.page}>
-      <BackLink>Clientes</BackLink>
+      <Breadcrumb
+        trail={[
+          { label: 'Clientes', to: '..' },
+          { label: customer.name },
+        ]}
+      />
 
       <header className={`${motion.settle} ${styles.hero}`}>
         <PersonMark name={customer.name} className={styles.mark} />

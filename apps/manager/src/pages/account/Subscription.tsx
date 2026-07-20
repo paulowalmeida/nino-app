@@ -1,6 +1,5 @@
 import { Skeleton } from '@nino/ds'
 
-import { Eyebrow } from '@components/Eyebrow'
 import { PageTitle } from '@components/PageTitle'
 import { useSubscription } from '@hooks/account/useSubscription'
 import { brl } from '@utils/money'
@@ -25,7 +24,6 @@ export const Subscription = () => {
   return (
     <div className={styles.page}>
       <header className={styles.header}>
-        <Eyebrow>Sua conta</Eyebrow>
         <PageTitle accent="plano">Assinatura e plano</PageTitle>
         <p className={styles.subtitle}>
           A assinatura é da empresa e vale para todas as unidades.

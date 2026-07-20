@@ -4,7 +4,6 @@ import { useNavigate } from 'react-router'
 import { Button, Select, Skeleton, Textarea } from '@nino/ds'
 
 import { BackLink } from '@components/BackLink'
-import { Eyebrow } from '@components/Eyebrow'
 import { ItemThumb } from '@components/ItemThumb'
 import { PageTitle } from '@components/PageTitle'
 import { RecipientFields } from '@compositions/RecipientFields'
@@ -150,7 +149,6 @@ export const NewOrder = () => {
       <BackLink>Pedidos</BackLink>
 
       <header className={styles.header}>
-        <Eyebrow>Pedidos</Eyebrow>
         <PageTitle accent="mão">Pedido na mão</PageTitle>
         <p className={styles.subtitle}>
           Para quem pediu no balcão ou ligou para a loja. O pedido entra na
