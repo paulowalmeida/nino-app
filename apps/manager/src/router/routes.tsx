@@ -10,6 +10,7 @@ import { CreateStore } from '@pages/first-store/FirstStore'
 import { Account, Subscription } from '@pages/account'
 import { Login } from '@pages/login/Login'
 import { NewOrder } from '@pages/new-order'
+import { NewUnit } from '@pages/new-unit'
 import { NewProduct } from '@pages/new-product'
 import { OrderDetail } from '@pages/order-detail/OrderDetail'
 import { Orders } from '@pages/orders/Orders'
@@ -99,6 +100,11 @@ export const router = createBrowserRouter([
       {
         path: 'catalogo/:productId',
         element: <ProductDetail />,
+      },
+      {
+        path: 'unidades/nova',
+        element: <NewUnit />,
+        loader: roleGuard(MANAGERS),
       },
       {
         path: 'clientes',

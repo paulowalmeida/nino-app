@@ -19,7 +19,10 @@ import { clearDraft, readDraft, writeDraft } from '@utils/form-draft'
 import { riseDelay } from '@utils/rise-delay'
 import { slugify } from '@utils/slugify'
 
-import type { FirstStoreFormValues } from './FirstStoreForm.types'
+import type {
+  FirstStoreFormProps,
+  FirstStoreFormValues,
+} from './FirstStoreForm.types'
 
 import styles from './FirstStoreForm.module.css'
 import motion from '@layouts/AuthLayout/motion.module.css'
@@ -41,9 +44,9 @@ const checkSlugTaken = async (slug: string): Promise<true | string> => {
   }
 }
 
-export const FirstStoreForm = () => {
+export const FirstStoreForm = ({ onCreated }: FirstStoreFormProps) => {
   const { data: types = [] } = useStoreTypes()
-  const { mutateAsync: createStore } = useCreateStore()
+  const { mutateAsync: createStore } = useCreateStore(onCreated)
   const [lookingUp, setLookingUp] = useState(false)
   const [draft] = useState(() => readDraft<FirstStoreFormValues>(DRAFT_KEY))
 

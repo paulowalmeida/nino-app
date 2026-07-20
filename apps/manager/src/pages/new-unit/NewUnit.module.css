@@ -1,0 +1,18 @@
+@reference "@nino/ds/globals.css";
+
+.page {
+  @apply mx-auto max-w-2xl p-4 lg:p-8;
+}
+
+.header {
+  @apply mt-3 flex flex-col gap-1.5;
+}
+
+.subtitle {
+  @apply mt-1 max-w-lg text-sm leading-relaxed text-faint;
+}
+
+.form {
+  @apply mt-6 rounded-[24px] border border-sand bg-white/70 p-5;
+  @apply backdrop-blur-sm lg:p-7;
+}

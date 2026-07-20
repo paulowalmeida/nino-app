@@ -12,14 +12,14 @@ import { useSessionStore } from '@states/useSessionStore'
  * `loadSession` short-circuits on the user already in memory — keeping it would
  * send the root loader back here with the same empty membership list.
  */
-export const useCreateStore = () => {
+export const useCreateStore = (onCreated?: (store: CreatedStore) => string) => {
   const navigate = useNavigate()
 
   return useMutation<CreatedStore, Error, CreateStoreRequest>({
     mutationFn: createStore,
-    onSuccess: () => {
+    onSuccess: (store) => {
       useSessionStore.getState().clear()
-      void navigate('/')
+      void navigate(onCreated?.(store) ?? '/')
     },
   })
 }

@@ -146,7 +146,9 @@ export const UnitSection = () => {
             asChild
             className={`${motion.press} ${styles.add}`}
           >
-            <Link to="/criar-loja">Abrir nova unidade</Link>
+            <Link to="../../unidades/nova" relative="path">
+              Abrir nova unidade
+            </Link>
           </Button>
         )}
       </section>
