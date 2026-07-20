@@ -35,6 +35,7 @@ export const UserMenu = ({ name, tenantId, onNavigate }: UserMenuProps) => {
 
   return (
     <Menu
+      contentClassName={styles.panel}
       trigger={
         <button type="button" className={styles.trigger}>
           <PersonMark name={name} tone="night" size="sm" />

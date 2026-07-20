@@ -17,18 +17,6 @@
   @apply mt-1 hidden max-w-xl text-sm leading-relaxed text-faint lg:block;
 }
 
-/*
- * No desktop as seções vivem no menu lateral, então a tela não repete o
- * índice; no celular, onde o menu está fechado, o trilho é a navegação.
- */
-.columns {
-  @apply flex flex-col gap-4;
-}
-
-.index {
-  @apply lg:hidden;
-}
-
 .panel {
   @apply min-w-0;
 }

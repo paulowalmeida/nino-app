@@ -42,7 +42,7 @@ export const Account = () => {
 
   return (
     <div className={styles.page}>
-      <header className={styles.header}>
+      <header className={`${motion.deal} ${styles.header}`}>
         <Eyebrow>Sua conta</Eyebrow>
         <PageTitle accent="dados">Meus dados</PageTitle>
         <p className={styles.subtitle}>
@@ -53,7 +53,7 @@ export const Account = () => {
       {isPending ? (
         <Skeleton className={styles.skeleton} />
       ) : (
-        <section className={card.card}>
+        <section className={`${motion.settle} ${card.card}`}>
           <div className={styles.fields}>
             <FormField label="Nome">
               <Input

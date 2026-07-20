@@ -1,10 +1,10 @@
-import type { SectionLink } from '@compositions/SectionNav/SectionNav.types'
+import type { SettingsSection } from '@custom_types/ui/settings-section'
 
 /**
  * Fonte única das seções de Configurações: o menu lateral usa como subitens
  * e a tela usa como trilho no celular.
  */
-export const SETTINGS_SECTIONS: SectionLink[] = [
+export const SETTINGS_SECTIONS: SettingsSection[] = [
   { to: 'empresa', label: 'Empresa', hint: 'CNPJ, razão social e endereço' },
   { to: 'unidade', label: 'Unidades', hint: 'Esta loja e as outras da empresa' },
   {
