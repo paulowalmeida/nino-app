@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import { NavLink, useLocation } from 'react-router'
 
 import { NavIcon } from '@components/NavIcon'
@@ -57,19 +56,6 @@ export const Sidebar = ({ tenantId, isOpen, onClose }: SidebarProps) => {
   const user = useSessionStore(({ user }) => user)
   const { pathname } = useLocation()
 
-  /** A seção da rota atual nasce aberta; o resto o usuário controla. */
-  const [expanded, setExpanded] = useState<string[]>(() =>
-    GROUPS.flatMap(({ items }) => items)
-      .filter(({ children, section }) => children && pathname.includes(section))
-      .map(({ section }) => section)
-  )
-
-  const toggle = (section: string) =>
-    setExpanded((current) =>
-      current.includes(section)
-        ? current.filter((item) => item !== section)
-        : [...current, section]
-    )
   const { data: summary } = useQueueSummary(tenantId)
 
   const waiting = summary?.PENDING ?? 0
@@ -95,60 +81,32 @@ export const Sidebar = ({ tenantId, isOpen, onClose }: SidebarProps) => {
 
             {items.map(({ section, label, icon, children }) => {
               const delay = riseDelay(order++ * 55 + 120)
-              const isOpen = expanded.includes(section)
+              const isOpen = pathname.includes(`/${section}`)
 
               return (
                 <div key={section}>
-                  <div className={styles.navRow}>
-                    <NavLink
-                      to={`/${tenantId}/${section}`}
-                      onClick={onClose}
-                      style={delay}
-                      className={({ isActive }) =>
-                        isActive
-                          ? `${motion.slide} ${styles.navItem} ${styles.navItemActive}`
-                          : `${motion.slide} ${styles.navItem}`
-                      }
-                    >
-                      <NavIcon name={icon} className={styles.navIcon} />
-                      <span>{label}</span>
-                      {section === 'pedidos' && waiting > 0 && (
-                        <span className={`${motion.pop} ${styles.tally}`}>
-                          {waiting}
-                        </span>
-                      )}
-                    </NavLink>
-
-                    {children && (
-                      <button
-                        type="button"
-                        aria-label={
-                          isOpen
-                            ? `Recolher ${label}`
-                            : `Expandir ${label}`
-                        }
-                        aria-expanded={isOpen}
-                        aria-controls={`sub-${section}`}
-                        className={styles.disclosure}
-                        onClick={() => toggle(section)}
-                      >
-                        <NavIcon
-                          name="chevron"
-                          className={
-                            isOpen
-                              ? `${styles.chevron} ${styles.chevronOpen}`
-                              : styles.chevron
-                          }
-                        />
-                      </button>
+                  <NavLink
+                    to={`/${tenantId}/${section}`}
+                    onClick={onClose}
+                    style={delay}
+                    className={({ isActive }) =>
+                      isActive || isOpen
+                        ? `${motion.slide} ${styles.navItem} ${styles.navItemActive}`
+                        : `${motion.slide} ${styles.navItem}`
+                    }
+                  >
+                    <NavIcon name={icon} className={styles.navIcon} />
+                    <span>{label}</span>
+                    {section === 'pedidos' && waiting > 0 && (
+                      <span className={`${motion.pop} ${styles.tally}`}>
+                        {waiting}
+                      </span>
                     )}
-                  </div>
+                  </NavLink>
 
+                  {/* os filhos acompanham a seção aberta — sem clique extra */}
                   {children && isOpen && (
-                    <div
-                      id={`sub-${section}`}
-                      className={`${motion.unroll} ${styles.subNav}`}
-                    >
+                    <div className={`${motion.unroll} ${styles.subNav}`}>
                       {children.map(({ to, label: childLabel }) => (
                         <NavLink
                           key={to}
