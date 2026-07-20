@@ -1,0 +1,26 @@
+@reference "@nino/ds/globals.css";
+
+.page {
+  @apply relative mx-auto max-w-2xl p-4 lg:p-10;
+  background: radial-gradient(
+    900px 380px at 50% -10%,
+    rgba(255, 126, 31, 0.12),
+    transparent 60%
+  );
+}
+
+.header {
+  @apply mb-5 flex flex-col gap-1.5 lg:mb-8;
+}
+
+.subtitle {
+  @apply mt-1 text-sm leading-relaxed text-faint;
+}
+
+.fields {
+  @apply grid grid-cols-1 gap-3 sm:grid-cols-2;
+}
+
+.skeleton {
+  @apply h-52 w-full rounded-[24px];
+}

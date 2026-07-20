@@ -1,0 +1,88 @@
+import { Skeleton } from '@nino/ds'
+
+import { Eyebrow } from '@components/Eyebrow'
+import { PageTitle } from '@components/PageTitle'
+import { useSubscription } from '@hooks/account/useSubscription'
+import { brl } from '@utils/money'
+import { riseDelay } from '@utils/rise-delay'
+
+import styles from './Subscription.module.css'
+import motion from '@styles/motion.module.css'
+import card from '@styles/settingsCard.module.css'
+
+const day = new Intl.DateTimeFormat('pt-BR', {
+  day: '2-digit',
+  month: 'long',
+  year: 'numeric',
+})
+
+const dateOf = (iso: string | null): string =>
+  iso ? day.format(new Date(iso)) : '—'
+
+export const Subscription = () => {
+  const { data, isPending, isError } = useSubscription()
+
+  return (
+    <div className={styles.page}>
+      <header className={styles.header}>
+        <Eyebrow>Sua conta</Eyebrow>
+        <PageTitle accent="plano">Assinatura e plano</PageTitle>
+        <p className={styles.subtitle}>
+          A assinatura é da empresa e vale para todas as unidades.
+        </p>
+      </header>
+
+      {isPending && <Skeleton className={styles.skeleton} />}
+
+      {isError && (
+        <p className={styles.notice}>
+          Não foi possível carregar a assinatura agora.
+        </p>
+      )}
+
+      {data && (
+        <section className={`${motion.settle} ${card.card}`}>
+          <div className={styles.plan}>
+            <div>
+              <p className={styles.planLabel}>Plano atual</p>
+              <p className={styles.planName}>{data.plan.name}</p>
+            </div>
+            <p className={styles.price}>
+              {brl(data.plan.price)}
+              <span className={styles.period}>/mês</span>
+            </p>
+          </div>
+
+          <dl className={styles.facts}>
+            {[
+              ['Situação', data.subscriptionStatus.name],
+              ['Assinada em', dateOf(data.startedAt)],
+              ['Teste até', dateOf(data.trialEndsAt)],
+              ['Renova em', dateOf(data.expiresAt)],
+              [
+                'Unidades inclusas',
+                data.plan.maxTenants === null
+                  ? 'ilimitadas'
+                  : String(data.plan.maxTenants),
+              ],
+            ].map(([label, value], index) => (
+              <div
+                key={label}
+                className={`${motion.deal} ${styles.fact}`}
+                style={riseDelay(index * 45 + 60)}
+              >
+                <dt className={styles.factLabel}>{label}</dt>
+                <dd className={styles.factValue}>{value}</dd>
+              </div>
+            ))}
+          </dl>
+
+          <p className={styles.hint}>
+            Mudança de plano e cancelamento passam pelo suporte enquanto a
+            troca automática não está no ar.
+          </p>
+        </section>
+      )}
+    </div>
+  )
+}

@@ -1,8 +1,9 @@
 import { useState } from 'react'
-import { Link, useNavigate } from 'react-router'
+import { useNavigate } from 'react-router'
 
 import { Button, Select, Skeleton, Textarea } from '@nino/ds'
 
+import { BackLink } from '@components/BackLink'
 import { Eyebrow } from '@components/Eyebrow'
 import { ItemThumb } from '@components/ItemThumb'
 import { PageTitle } from '@components/PageTitle'
@@ -130,9 +131,7 @@ export const NewOrder = () => {
 
   return (
     <div className={styles.page}>
-      <Link to=".." relative="path" className={styles.backLink}>
-        <span aria-hidden="true">←</span> Pedidos
-      </Link>
+      <BackLink>Pedidos</BackLink>
 
       <header className={styles.header}>
         <Eyebrow>Pedidos</Eyebrow>

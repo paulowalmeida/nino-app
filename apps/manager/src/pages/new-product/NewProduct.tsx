@@ -1,9 +1,10 @@
 import { useState } from 'react'
 import { Controller, useForm } from 'react-hook-form'
-import { Link, useNavigate } from 'react-router'
+import { useNavigate } from 'react-router'
 
 import { Button, FormField, Input, Select, Textarea } from '@nino/ds'
 
+import { BackLink } from '@components/BackLink'
 import { Eyebrow } from '@components/Eyebrow'
 import { PageTitle } from '@components/PageTitle'
 import {
@@ -80,9 +81,7 @@ export const NewProduct = () => {
 
   return (
     <div className={styles.page}>
-      <Link to=".." relative="path" className={styles.backLink}>
-        <span aria-hidden="true">←</span> Cardápio
-      </Link>
+      <BackLink>Cardápio</BackLink>
 
       <header className={styles.header}>
         <Eyebrow>Cardápio</Eyebrow>

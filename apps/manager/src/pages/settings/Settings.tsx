@@ -14,7 +14,7 @@ import styles from './Settings.module.css'
  */
 const SECTIONS: SectionLink[] = [
   { to: 'empresa', label: 'Empresa', hint: 'CNPJ, razão social e endereço' },
-  { to: 'unidade', label: 'Unidade', hint: 'Nome, link e endereço da loja' },
+  { to: 'unidade', label: 'Unidades', hint: 'Esta loja e as outras da empresa' },
   {
     to: 'atendimento',
     label: 'Atendimento',

@@ -2,15 +2,13 @@ import { NavLink } from 'react-router'
 
 import { NavIcon } from '@components/NavIcon'
 import { NinoLogo } from '@components/NinoLogo'
-import { PersonMark } from '@components/PersonMark'
 import type { NavIconName } from '@components/NavIcon/NavIcon.types'
 import { useQueueSummary } from '@hooks/order/useQueueSummary'
-import { logout } from '@services/auth/auth.service'
 import { useSessionStore } from '@states/useSessionStore'
-import { endSession } from '@utils/end-session'
 import { riseDelay } from '@utils/rise-delay'
 
 import { StoreSwitcher } from '../StoreSwitcher'
+import { UserMenu } from '../UserMenu'
 
 import type { SidebarProps } from './Sidebar.types'
 
@@ -50,15 +48,6 @@ export const Sidebar = ({ tenantId, isOpen, onClose }: SidebarProps) => {
   const { data: summary } = useQueueSummary(tenantId)
 
   const waiting = summary?.PENDING ?? 0
-
-  const handleLogout = async () => {
-    try {
-      await logout()
-    } catch {
-      // a sessão local é encerrada mesmo se a API não responder
-    }
-    endSession()
-  }
 
   let order = 0
 
@@ -109,20 +98,13 @@ export const Sidebar = ({ tenantId, isOpen, onClose }: SidebarProps) => {
       </nav>
 
       <div className={styles.footer}>
-        <div className={styles.userInfo}>
-          <PersonMark name={user?.name ?? ''} tone="night" size="sm" />
-          <span className={styles.userName}>{user?.name.split(' ')[0]}</span>
-        </div>
-        <button
-          type="button"
-          className={styles.logoutBtn}
-          onClick={handleLogout}
-          aria-label="Sair"
-          title="Sair"
-        >
-          <NavIcon name="logout" className={styles.navIcon} />
-        </button>
+        <UserMenu
+          name={user?.name ?? ''}
+          tenantId={tenantId}
+          onNavigate={onClose}
+        />
       </div>
+
     </aside>
   )
 }

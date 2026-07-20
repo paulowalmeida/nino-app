@@ -1,5 +1,7 @@
 import { useState } from 'react'
-import { Link, useParams } from 'react-router'
+import { useParams } from 'react-router'
+
+import { BackLink } from '@components/BackLink'
 
 import { Button, Textarea } from '@nino/ds'
 
@@ -53,9 +55,7 @@ export const OrderDetail = () => {
         <p className={styles.notice}>
           Este pedido não está mais nesta loja. Ele pode ter sido removido.
         </p>
-        <Link to=".." relative="path" className={styles.backLink}>
-          Voltar aos pedidos
-        </Link>
+        <BackLink>Pedidos</BackLink>
       </div>
     )
   }
@@ -72,9 +72,7 @@ export const OrderDetail = () => {
 
   return (
     <div className={styles.page}>
-      <Link to=".." relative="path" className={styles.backLink}>
-        <span aria-hidden="true">←</span> Pedidos
-      </Link>
+      <BackLink>Pedidos</BackLink>
 
       <header className={`${motion.settle} ${styles.hero}`}>
         <div className={styles.heroText}>

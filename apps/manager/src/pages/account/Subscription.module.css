@@ -1,0 +1,69 @@
+@reference "@nino/ds/globals.css";
+
+.page {
+  @apply relative mx-auto max-w-2xl p-4 lg:p-10;
+  background: radial-gradient(
+    900px 380px at 50% -10%,
+    rgba(255, 126, 31, 0.12),
+    transparent 60%
+  );
+}
+
+.header {
+  @apply mb-5 flex flex-col gap-1.5 lg:mb-8;
+}
+
+.subtitle {
+  @apply mt-1 text-sm leading-relaxed text-faint;
+}
+
+/* o plano é o assunto: nome grande, preço ao lado */
+.plan {
+  @apply flex flex-wrap items-end justify-between gap-3 border-b border-sand;
+  @apply pb-4;
+}
+
+.planLabel {
+  @apply text-[0.7rem] font-bold uppercase tracking-[0.12em] text-faint;
+}
+
+.planName {
+  @apply font-display text-2xl font-extrabold tracking-[-0.02em] text-ink;
+}
+
+.price {
+  @apply font-display text-xl font-extrabold text-brand-strong;
+  font-variant-numeric: tabular-nums;
+}
+
+.period {
+  @apply text-sm font-semibold text-faint;
+}
+
+.facts {
+  @apply flex flex-col pt-1;
+}
+
+.fact {
+  @apply flex items-baseline justify-between gap-3 border-b border-sand py-2.5;
+}
+
+.factLabel {
+  @apply text-sm text-faint;
+}
+
+.factValue {
+  @apply text-sm font-semibold text-body;
+}
+
+.hint {
+  @apply mt-4 text-xs leading-relaxed text-faint;
+}
+
+.skeleton {
+  @apply h-64 w-full rounded-[24px];
+}
+
+.notice {
+  @apply rounded-2xl border border-sand bg-white/60 p-6 text-sm text-faint;
+}

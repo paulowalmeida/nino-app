@@ -5,6 +5,7 @@ import { AuthLayout } from '@layouts/AuthLayout'
 import { Catalog } from '@pages/catalog/Catalog'
 import { Employees } from '@pages/employees/Employees'
 import { CreateStore } from '@pages/first-store/FirstStore'
+import { Account, Subscription } from '@pages/account'
 import { Login } from '@pages/login/Login'
 import { NewOrder } from '@pages/new-order'
 import { NewProduct } from '@pages/new-product'
@@ -92,6 +93,14 @@ export const router = createBrowserRouter([
       {
         path: 'colaboradores',
         element: <Employees />,
+      },
+      {
+        path: 'minha-conta',
+        element: <Account />,
+      },
+      {
+        path: 'assinatura',
+        element: <Subscription />,
       },
       {
         path: 'configuracoes',

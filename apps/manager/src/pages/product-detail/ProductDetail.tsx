@@ -1,10 +1,11 @@
 import { useEffect } from 'react'
 import { Controller, useForm } from 'react-hook-form'
-import { Link, useNavigate, useParams } from 'react-router'
+import { useNavigate, useParams } from 'react-router'
 
 import { Button, FormField, Input, Select, Switch, Textarea } from '@nino/ds'
 
 import { ItemPhoto } from '@compositions/ItemPhoto'
+import { BackLink } from '@components/BackLink'
 import { ItemThumb } from '@components/ItemThumb'
 import { useMenuItem } from '@hooks/product/useMenuItem'
 import { useUpdateMenuItem } from '@hooks/product/useUpdateMenuItem'
@@ -65,9 +66,7 @@ export const ProductDetail = () => {
         <p className={styles.notice}>
           Este item não está no cardápio. Ele pode ter sido removido.
         </p>
-        <Link to=".." relative="path" className={styles.backLink}>
-          Voltar ao cardápio
-        </Link>
+        <BackLink>Cardápio</BackLink>
       </div>
     )
   }
@@ -92,9 +91,7 @@ export const ProductDetail = () => {
 
   return (
     <div className={styles.page}>
-      <Link to=".." relative="path" className={styles.backLink}>
-        <span aria-hidden="true">←</span> Cardápio
-      </Link>
+      <BackLink>Cardápio</BackLink>
 
       <header className={`${motion.settle} ${styles.hero}`}>
         <div className={styles.heroInner}>
