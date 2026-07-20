@@ -18,6 +18,7 @@ import { Orders } from '@pages/orders/Orders'
 import { Overview } from '@pages/overview/Overview'
 import { ProductDetail } from '@pages/product-detail'
 import { Register } from '@pages/register/Register'
+import { Reports } from '@pages/reports'
 import { Settings } from '@pages/settings/Settings'
 import {
   CompanySection,
@@ -110,6 +111,11 @@ export const router = createBrowserRouter([
       {
         path: 'unidades/nova',
         element: <NewUnit />,
+        loader: roleGuard(MANAGERS),
+      },
+      {
+        path: 'relatorios',
+        element: <Reports />,
         loader: roleGuard(MANAGERS),
       },
       {

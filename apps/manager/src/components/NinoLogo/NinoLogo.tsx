@@ -1,5 +1,9 @@
-import type { NinoLogoProps } from './NinoLogo.types'
+import { Link } from 'react-router'
+
+import type { ReactNode } from 'react'
+
 import styles from './NinoLogo.module.css'
+import type { NinoLogoProps } from './NinoLogo.types'
 
 const sizes = {
   sm: {
@@ -27,13 +31,14 @@ export const NinoLogo = ({
   tone = 'dark',
   size = 'lg',
   mark,
+  to,
 }: NinoLogoProps) => {
   const variant = sizes[size]
   const labelColor = tone === 'light' ? styles.labelLight : styles.labelDark
   const markClass = mark ? styles.mark : `${styles.mark} ${variant.mark}`
 
-  return (
-    <div className={`${styles.root} ${className ?? ''}`}>
+  const content: ReactNode = (
+    <>
       <span className={markClass}>
         {mark ?? (
           <>
@@ -48,6 +53,22 @@ export const NinoLogo = ({
           GESTOR
         </span>
       </span>
+    </>
+  )
+
+  return (
+    <div className={`${styles.root} ${className ?? ''}`}>
+      {to ? (
+        <Link
+          to={to}
+          className={styles.link}
+          aria-label="Ir para a visão geral"
+        >
+          {content}
+        </Link>
+      ) : (
+        content
+      )}
     </div>
   )
 }

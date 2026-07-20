@@ -1,6 +1,7 @@
 export type NavIconName =
   | 'grid'
   | 'gauge'
+  | 'chart'
   | 'bag'
   | 'clipboard'
   | 'book'

@@ -4,6 +4,13 @@
   @apply inline-flex items-center gap-2.5;
 }
 
+/* o link herda o mesmo eixo do logo, sem sublinhado nem cor de link */
+.link {
+  @apply inline-flex items-center gap-2.5 rounded-lg no-underline;
+  @apply transition-opacity duration-150 hover:opacity-80;
+  @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand;
+}
+
 .mark {
   @apply relative inline-flex items-center justify-center;
 }

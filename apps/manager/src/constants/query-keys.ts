@@ -19,7 +19,11 @@ export const queryKeys = {
   products: {
     all: (tenantId: string) => ['products', tenantId] as const,
     list: (tenantId: string, categoryId?: string) =>
-      [...queryKeys.products.all(tenantId), 'list', categoryId ?? null] as const,
+      [
+        ...queryKeys.products.all(tenantId),
+        'list',
+        categoryId ?? null,
+      ] as const,
     detail: (tenantId: string, productId: string) =>
       [...queryKeys.products.all(tenantId), 'detail', productId] as const,
   },
@@ -34,6 +38,8 @@ export const queryKeys = {
       [...queryKeys.orders.all(tenantId), 'list', status ?? null] as const,
     detail: (tenantId: string, orderId: string) =>
       [...queryKeys.orders.all(tenantId), 'detail', orderId] as const,
+    report: (tenantId: string, from: string, to: string) =>
+      [...queryKeys.orders.all(tenantId), 'report', from, to] as const,
   },
   tenant: {
     all: (tenantId: string) => ['tenant', tenantId] as const,
