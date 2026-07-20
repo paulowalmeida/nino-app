@@ -1,30 +1,86 @@
 @reference "@nino/ds/globals.css";
 
 /*
- * Cartão de cozinha: tudo maior que no painel, porque é lido de longe, com
- * a mão ocupada. Sem preço — quem monta o prato não decide dinheiro.
+ * A comanda de bobina, do tamanho da cozinha: mesmo papel e mesma serrilha
+ * do painel, tudo escalado para leitura a alguns metros e para dedo sujo.
+ * A serrilha é mask — por isso nada de border ou sombra externa, que seriam
+ * recortadas junto com o papel.
  */
 .card {
-  @apply flex flex-col gap-3 rounded-[22px] border-2 border-sand bg-paper p-4;
+  --tooth: 11px;
+  @apply relative flex flex-col rounded-t-[12px] bg-paper;
+  @apply pt-[6px] pb-[var(--tooth)];
+  box-shadow: inset 0 0 0 1px var(--color-sand-deep);
+  mask:
+    radial-gradient(var(--tooth) at 50% 0, #0000 98%, #000 100%) 50% 100% /
+      calc(2 * var(--tooth)) var(--tooth) repeat-x,
+    linear-gradient(#000 0 0) 0 0 / 100% calc(100% - var(--tooth)) no-repeat;
 }
 
-/* passou do tempo: a borda acende, sem alarme sonoro nem cor de erro */
+/* a fita do prazo: enche com o tempo, no lugar de um alarme */
+.ribbon {
+  @apply absolute inset-x-0 top-0 h-[6px] overflow-hidden bg-sand;
+}
+
+.fill {
+  @apply block h-full;
+  width: calc(var(--t, 0) * 100%);
+  background: linear-gradient(
+    90deg,
+    var(--color-peach) 0%,
+    var(--color-warm-light) 60%,
+    var(--color-brand) 100%
+  );
+  transition: width 900ms linear;
+}
+
+/* estourou o prazo: o papel esquenta e a fita respira */
 .late {
-  @apply border-brand;
-  background: linear-gradient(180deg, var(--color-cream) 0%, var(--color-paper) 45%);
+  box-shadow: inset 0 0 0 2px var(--color-brand);
+  background: linear-gradient(
+    180deg,
+    var(--color-cream-deep) 0%,
+    var(--color-paper) 42%
+  );
+}
+
+.late .fill {
+  background: var(--color-brand-strong);
+  animation: breathe 2.4s ease-in-out infinite;
+}
+
+@keyframes breathe {
+  50% {
+    opacity: 0.45;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .late .fill {
+    animation: none;
+  }
+
+  .fill {
+    transition: none;
+  }
 }
 
 .head {
-  @apply flex items-baseline justify-between gap-2;
+  @apply flex items-baseline justify-between gap-3 px-4 pt-3;
 }
 
+/*
+ * O número é o que se grita na praça, então é o maior elemento do cartão —
+ * e o `#` sai: na parede ele só rouba corpo do que importa.
+ */
 .number {
-  @apply font-display text-2xl font-extrabold tracking-[-0.02em] text-ink;
+  @apply font-display text-[2.5rem] leading-none font-extrabold text-ink;
+  @apply tracking-[-0.03em];
   font-variant-numeric: tabular-nums;
 }
 
 .clock {
-  @apply text-base font-bold text-faint;
+  @apply shrink-0 text-xl leading-none font-bold text-muted;
   font-variant-numeric: tabular-nums;
 }
 
@@ -33,36 +89,57 @@
 }
 
 .who {
-  @apply flex flex-col gap-0.5 border-b border-dashed border-sand-deep pb-2;
+  @apply flex flex-wrap items-center gap-x-2 gap-y-1 px-4 pt-2 pb-3;
 }
 
 .channel {
-  @apply text-xs font-bold uppercase tracking-[0.1em] text-faint;
+  @apply rounded-full bg-ink px-2.5 py-1 text-[0.7rem] font-bold uppercase;
+  @apply tracking-[0.1em] text-cream;
+}
+
+.name {
+  @apply min-w-0 flex-1 truncate text-base font-semibold text-body;
+}
+
+.table {
+  @apply rounded-full bg-surface-sunk px-2 py-0.5 text-[0.7rem] font-bold;
+  @apply uppercase tracking-[0.08em] text-subtle;
 }
 
 /* a observação é o que mais gera retrabalho: entra antes dos itens */
 .notes {
-  @apply rounded-lg bg-brand/10 px-3 py-2 text-base font-semibold leading-snug;
-  @apply text-brand-strong;
+  @apply mx-4 mb-1 rounded-lg bg-brand/12 px-3 py-2 text-base leading-snug;
+  @apply font-semibold text-brand-strong;
+}
+
+.notesLabel {
+  @apply mr-1.5 text-[0.7rem] font-bold uppercase tracking-[0.08em];
+  @apply text-brand-strong/70;
 }
 
 .items {
-  @apply flex flex-1 flex-col gap-1.5;
+  @apply flex flex-1 flex-col gap-2 px-4 py-3;
+  @apply border-t border-dashed border-sand-deep;
 }
 
 .item {
-  @apply flex items-baseline gap-2 text-lg leading-snug text-body;
+  @apply flex items-center gap-3 text-xl leading-tight text-body;
 }
 
+/*
+ * A quantidade vira ficha: na correria a cozinha lê "quantos" antes de ler
+ * "o quê", e um número solto na mesma cor some no meio do nome.
+ */
 .quantity {
-  @apply w-8 shrink-0 text-right font-display font-extrabold text-ink;
+  @apply flex h-8 w-8 shrink-0 items-center justify-center rounded-lg;
+  @apply bg-ink font-display text-base font-extrabold text-cream;
   font-variant-numeric: tabular-nums;
 }
 
 .itemName {
-  @apply min-w-0 flex-1;
+  @apply min-w-0 flex-1 font-medium;
 }
 
 .action {
-  @apply w-full;
+  @apply mx-4 h-14 text-base;
 }

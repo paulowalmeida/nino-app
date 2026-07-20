@@ -12,9 +12,9 @@ import styles from './Kitchen.module.css'
 import motion from '@styles/motion.module.css'
 
 /**
- * A cozinha em três colunas, na ordem em que o prato anda: o que chegou, o
- * que está na chapa e o que espera sair. Cada coluna rola por dentro, então
- * a tela nunca perde o cabeçalho.
+ * A cozinha em quatro trilhos, na ordem em que o prato anda: o que chegou, o
+ * que está na chapa, o que saiu para a rua e o que espera no balcão. Cada
+ * trilho rola por dentro, então a tela nunca perde o cabeçalho.
  */
 const COLUMNS: { stage: OrderStage; title: string; empty: string }[] = [
   { stage: 'incoming', title: 'Chegou agora', empty: 'Nada esperando aceite.' },
@@ -43,8 +43,12 @@ export const Kitchen = () => {
         {COLUMNS.map(({ stage, title, empty }) => {
           const list = orders.filter((order) => stageOf(order.status) === stage)
 
+          const column = `${styles.column} ${
+            stage === 'incoming' ? styles.waiting : ''
+          }`
+
           return (
-            <section key={stage} className={styles.column} aria-label={title}>
+            <section key={stage} className={column} aria-label={title}>
               <header className={`${motion.unroll} ${styles.columnHead}`}>
                 <h2 className={styles.columnTitle}>{title}</h2>
                 <span className={styles.count}>{list.length}</span>
