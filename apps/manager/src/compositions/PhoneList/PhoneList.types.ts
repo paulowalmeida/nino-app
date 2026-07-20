@@ -5,5 +5,6 @@ export type PhoneListProps = {
   isPending: boolean
   isAdding: boolean
   onAdd: (phone: string) => void
+  onEdit: (id: string, phone: string) => void
   onRemove: (id: string) => void
 }

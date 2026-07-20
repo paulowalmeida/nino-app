@@ -16,9 +16,23 @@ export const PhoneList = ({
   isPending,
   isAdding,
   onAdd,
+  onEdit,
   onRemove,
 }: PhoneListProps) => {
   const [phone, setPhone] = useState('')
+  const [editing, setEditing] = useState<string | null>(null)
+  const [draft, setDraft] = useState('')
+
+  const startEdit = (entry: { id: string; phone: string }) => {
+    setEditing(entry.id)
+    setDraft(formatPhone(entry.phone))
+  }
+
+  const commitEdit = () => {
+    if (!editing || draft.replace(/\D/g, '').length < 10) return
+    onEdit(editing, toE164(draft))
+    setEditing(null)
+  }
 
   const handleAdd = () => {
     const digits = phone.replace(/\D/g, '')
@@ -51,17 +65,56 @@ export const PhoneList = ({
               className={`${motion.deal} ${local.phone}`}
               style={riseDelay(index * 45 + 60)}
             >
-              <span className={local.number}>
-                {formatPhone(entry.phone)}
-              </span>
-              <Button
-                variant="ghost"
-                size="sm"
-                className={`${motion.press} ${local.remove}`}
-                onClick={() => onRemove(entry.id)}
-              >
-                Remover
-              </Button>
+              {editing === entry.id ? (
+                <div className={local.editRow}>
+                  <PhoneInput
+                    aria-label="Telefone da loja"
+                    className={local.input}
+                    value={draft}
+                    onChange={(event) => setDraft(event.target.value)}
+                  />
+                  <Button
+                    size="sm"
+                    className={motion.press}
+                    onClick={commitEdit}
+                  >
+                    Salvar
+                  </Button>
+                  <Button
+                    size="sm"
+                    variant="ghost"
+                    onClick={() => setEditing(null)}
+                  >
+                    Voltar
+                  </Button>
+                </div>
+              ) : (
+                <>
+                  <button
+                    type="button"
+                    className={local.number}
+                    onClick={() => startEdit(entry)}
+                  >
+                    {formatPhone(entry.phone)}
+                  </button>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    className={`${motion.press} ${local.edit}`}
+                    onClick={() => startEdit(entry)}
+                  >
+                    Editar
+                  </Button>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    className={`${motion.press} ${local.remove}`}
+                    onClick={() => onRemove(entry.id)}
+                  >
+                    Remover
+                  </Button>
+                </>
+              )}
             </li>
           ))}
         </ul>

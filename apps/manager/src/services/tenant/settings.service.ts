@@ -101,6 +101,15 @@ export const createPhone = (
     phone,
   })
 
+export const updatePhone = (
+  tenantId: string,
+  id: string,
+  phone: string
+): Promise<TenantPhone> =>
+  patch<{ phone: string }, TenantPhone>(`tenants/${tenantId}/phones`, id, {
+    phone,
+  })
+
 export const removePhone = (
   tenantId: string,
   id: string

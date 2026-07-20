@@ -1,7 +1,7 @@
 @reference "@nino/ds/globals.css";
 
 .page {
-  @apply relative mx-auto max-w-3xl p-4 lg:p-10;
+  @apply relative mx-auto max-w-5xl p-4 lg:p-10;
   background: radial-gradient(
     900px 380px at 50% -10%,
     rgba(255, 126, 31, 0.12),
@@ -10,13 +10,18 @@
 }
 
 .header {
-  @apply mb-6 flex flex-col gap-1.5 lg:mb-8;
+  @apply mb-4 flex flex-col gap-1.5 lg:mb-8;
 }
 
 .subtitle {
-  @apply mt-1 max-w-xl text-sm leading-relaxed text-faint;
+  @apply mt-1 hidden max-w-xl text-sm leading-relaxed text-faint lg:block;
 }
 
-.stack {
-  @apply flex flex-col gap-5;
+/* índice à esquerda, seção à direita — no celular um empilha no outro */
+.columns {
+  @apply grid items-start gap-4 lg:grid-cols-[15rem_1fr] lg:gap-8;
+}
+
+.panel {
+  @apply min-w-0;
 }

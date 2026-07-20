@@ -12,9 +12,19 @@
   @apply flex items-center gap-3 border-t border-sand py-3;
 }
 
+/* o número é o alvo de edição — clicar nele abre a linha */
 .number {
-  @apply min-w-0 flex-1 text-sm font-semibold text-body;
+  @apply min-w-0 flex-1 cursor-pointer text-left text-sm font-semibold;
+  @apply text-body transition-colors duration-150 hover:text-brand-strong;
   font-variant-numeric: tabular-nums;
+}
+
+.editRow {
+  @apply flex min-w-0 flex-1 flex-wrap items-center gap-2;
+}
+
+.edit {
+  @apply shrink-0 text-faint;
 }
 
 .remove {

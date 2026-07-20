@@ -6,6 +6,7 @@ import {
   createPhone,
   listPhones,
   removePhone,
+  updatePhone,
 } from '@services/tenant/settings.service'
 
 const phonesKey = (tenantId: string) => [
@@ -37,10 +38,16 @@ export const usePhoneMutations = (tenantId: string | null) => {
     onSuccess: invalidate,
   })
 
+  const edit = useMutation({
+    mutationFn: ({ id, phone }: { id: string; phone: string }) =>
+      updatePhone(tenantId as string, id, phone),
+    onSuccess: invalidate,
+  })
+
   const drop = useMutation({
     mutationFn: (id: string) => removePhone(tenantId as string, id),
     onSuccess: invalidate,
   })
 
-  return { add, drop }
+  return { add, edit, drop }
 }
