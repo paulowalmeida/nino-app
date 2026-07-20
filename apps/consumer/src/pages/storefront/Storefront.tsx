@@ -7,6 +7,7 @@ import { StoreHeader } from '@compositions/StoreHeader/StoreHeader'
 import { useActiveSection } from '@hooks/useActiveSection'
 import { useMenu } from '@hooks/useMenu'
 import { useStore } from '@hooks/useStore'
+import { resolveSlug } from '@utils/resolve-slug'
 
 import { StorefrontSkeleton } from './StorefrontSkeleton'
 import styles from './Storefront.module.css'
@@ -14,8 +15,9 @@ import styles from './Storefront.module.css'
 const sectionDomId = (id: string): string => `section-${id}`
 
 export const Storefront = () => {
-  const { slug } = useParams()
-  const { store, isPending: loadingStore, isError } = useStore(slug)
+  const { slug: pathSlug } = useParams()
+  const slug = resolveSlug(pathSlug)
+  const { store, isPending: loadingStore, isError } = useStore(slug ?? undefined)
   const { sections, isPending: loadingMenu } = useMenu(store?.id)
 
   const activeId = useActiveSection(sections.map((section) => section.id))
@@ -27,6 +29,17 @@ export const Storefront = () => {
     document
       .getElementById(sectionDomId(id))
       ?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+  }
+
+  if (!slug) {
+    return (
+      <div className={styles.notFound}>
+        <h1 className={styles.notFoundTitle}>Qual loja você procura?</h1>
+        <p className={styles.notFoundText}>
+          Abra pelo link da loja — cada uma tem o seu endereço.
+        </p>
+      </div>
+    )
   }
 
   if (loadingStore) return <StorefrontSkeleton />
