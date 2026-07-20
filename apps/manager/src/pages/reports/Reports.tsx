@@ -1,0 +1,169 @@
+import { useState } from 'react'
+
+import { Input, Skeleton } from '@nino/ds'
+
+import { PageTitle } from '@components/PageTitle'
+import { CountUp } from '@components/CountUp'
+import { useCurrentTenant } from '@hooks/session/useCurrentTenant'
+import { useSalesReport } from '@hooks/order/useSalesReport'
+import { brl } from '@utils/money'
+import { riseDelay } from '@utils/rise-delay'
+import {
+  customRange,
+  rangeOf,
+  todayInput,
+  type ReportPeriod,
+} from '@utils/report-range'
+
+import styles from './Reports.module.css'
+import motion from '@styles/motion.module.css'
+
+type PeriodChoice = ReportPeriod | 'custom'
+
+const PERIODS: { id: PeriodChoice; label: string }[] = [
+  { id: 'today', label: 'Hoje' },
+  { id: 'week', label: '7 dias' },
+  { id: 'month', label: '30 dias' },
+  { id: 'custom', label: 'Escolher' },
+]
+
+const FIGURES: {
+  key: 'revenue' | 'orderCount' | 'averageTicket'
+  label: string
+  money: boolean
+}[] = [
+  { key: 'revenue', label: 'Faturamento', money: true },
+  { key: 'orderCount', label: 'Pedidos concluídos', money: false },
+  { key: 'averageTicket', label: 'Ticket médio', money: true },
+]
+
+export const Reports = () => {
+  const tenant = useCurrentTenant()
+  const tenantId = tenant?.tenantId ?? null
+
+  const [period, setPeriod] = useState<PeriodChoice>('today')
+  const [customFrom, setCustomFrom] = useState('')
+  const [customTo, setCustomTo] = useState('')
+
+  const range =
+    period === 'custom' ? customRange(customFrom, customTo) : rangeOf(period)
+
+  const { report, isPending } = useSalesReport(
+    range ? tenantId : null,
+    range?.from ?? '',
+    range?.to ?? ''
+  )
+
+  const awaitingDates = period === 'custom' && !range
+  const noSales = !isPending && !awaitingDates && report?.orderCount === 0
+
+  return (
+    <div className={styles.page}>
+      <header className={`${motion.deal} ${styles.header}`}>
+        <PageTitle accent="venda">Relatório de venda</PageTitle>
+        <p className={styles.subtitle}>
+          O que a loja vendeu no período — só pedidos concluídos entram na
+          conta.
+        </p>
+      </header>
+
+      <div className={`${motion.unroll} ${styles.periods}`} role="tablist">
+        {PERIODS.map(({ id, label }) => (
+          <button
+            key={id}
+            type="button"
+            role="tab"
+            aria-selected={period === id}
+            onClick={() => setPeriod(id)}
+            className={`${motion.press} ${styles.period} ${
+              period === id ? styles.periodOn : ''
+            }`}
+          >
+            {label}
+          </button>
+        ))}
+      </div>
+
+      {period === 'custom' && (
+        <div className={`${motion.unroll} ${styles.dates}`}>
+          <label className={styles.date}>
+            <span className={styles.dateLabel}>De</span>
+            <Input
+              type="date"
+              size="sm"
+              max={customTo || todayInput()}
+              value={customFrom}
+              onChange={(event) => setCustomFrom(event.target.value)}
+            />
+          </label>
+          <label className={styles.date}>
+            <span className={styles.dateLabel}>Até</span>
+            <Input
+              type="date"
+              size="sm"
+              min={customFrom}
+              max={todayInput()}
+              value={customTo}
+              onChange={(event) => setCustomTo(event.target.value)}
+            />
+          </label>
+        </div>
+      )}
+
+      <div className={styles.figures}>
+        {FIGURES.map(({ key, label, money }, index) => (
+          <div
+            key={key}
+            className={`${motion.settle} ${styles.figure}`}
+            style={riseDelay(index * 60)}
+          >
+            <span className={styles.value}>
+              {isPending || !report ? (
+                '·'
+              ) : money ? (
+                brl(report[key])
+              ) : (
+                <CountUp value={report[key]} />
+              )}
+            </span>
+            <span className={styles.label}>{label}</span>
+          </div>
+        ))}
+      </div>
+
+      <section className={styles.top} aria-label="Produtos mais vendidos">
+        <h2 className={styles.topTitle}>Mais vendidos</h2>
+
+        {awaitingDates && (
+          <p className={styles.empty}>
+            Escolha as datas de início e fim para ver o relatório.
+          </p>
+        )}
+
+        {!awaitingDates && isPending && (
+          <Skeleton className={styles.topSkeleton} />
+        )}
+
+        {noSales && (
+          <p className={styles.empty}>Nenhuma venda concluída no período.</p>
+        )}
+
+        {!awaitingDates && !isPending && !noSales && (
+          <ol className={styles.ranking}>
+            {report?.topProducts.map((item, index) => (
+              <li
+                key={item.productId}
+                className={`${motion.deal} ${styles.rank}`}
+                style={riseDelay(index * 40)}
+              >
+                <span className={styles.position}>{index + 1}</span>
+                <span className={styles.rankName}>{item.name}</span>
+                <span className={styles.rankQty}>{item.quantity} un</span>
+              </li>
+            ))}
+          </ol>
+        )}
+      </section>
+    </div>
+  )
+}

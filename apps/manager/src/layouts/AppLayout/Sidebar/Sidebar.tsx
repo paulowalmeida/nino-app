@@ -54,6 +54,12 @@ const GROUPS: { title: string; items: NavItem[] }[] = [
     title: 'Da loja',
     items: [
       {
+        section: 'relatorios',
+        label: 'Relatórios',
+        icon: 'chart',
+        roles: MANAGERS,
+      },
+      {
         section: 'clientes',
         label: 'Clientes',
         icon: 'users',
@@ -103,7 +109,7 @@ export const Sidebar = ({ tenantId, isOpen, onClose }: SidebarProps) => {
       className={isOpen ? `${styles.sidebar} ${styles.open}` : styles.sidebar}
     >
       <div className={styles.logoWrap}>
-        <NinoLogo size="sm" tone="light" />
+        <NinoLogo size="sm" tone="light" to={`/${tenantId}/visao-geral`} />
       </div>
 
       <div className={styles.switcherWrap}>

@@ -3,6 +3,7 @@ import type {
   Order,
   OrderPage,
   OrderQueueSummary,
+  SalesReport,
   UpdateOrderStatusRequest,
 } from '@custom_types/order'
 import { ApiFactory } from '@services/api/api.service'
@@ -19,10 +20,18 @@ type OrderListParams = {
 /** The API caps `size` at 100. */
 export const ORDER_PAGE_SIZE = 40
 
-export const getQueueSummary = (
-  tenantId: string
-): Promise<OrderQueueSummary> =>
+export const getQueueSummary = (tenantId: string): Promise<OrderQueueSummary> =>
   get<OrderQueueSummary>(`tenants/${tenantId}/orders/summary`)
+
+export const getSalesReport = (
+  tenantId: string,
+  from: string,
+  to: string
+): Promise<SalesReport> =>
+  getAll<{ from: string; to: string }, SalesReport>(
+    `tenants/${tenantId}/orders/report`,
+    { from, to }
+  )
 
 /**
  * Newest first — the order the store has to act on. No status filter: the
