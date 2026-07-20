@@ -70,7 +70,7 @@
  */
 .receipt {
   --tooth: 10px;
-  @apply relative rounded-t-[14px] bg-paper px-5 pt-5 lg:px-6;
+  @apply relative min-w-0 rounded-t-[14px] bg-paper px-5 pt-5 lg:px-6;
   padding-bottom: calc(var(--tooth) + 0.5rem);
   box-shadow: inset 0 0 0 1px var(--color-sand);
   mask:
@@ -131,7 +131,7 @@
 }
 
 .aside {
-  @apply flex flex-col gap-4;
+  @apply flex min-w-0 flex-col gap-4;
 }
 
 .card {
