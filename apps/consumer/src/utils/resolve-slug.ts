@@ -1,9 +1,10 @@
 /**
  * Domínios-base do consumer. Um subdomínio de qualquer um deles é uma loja:
- * `burgao-do-nino.nino.delivery` em produção, `burgao-do-nino.localhost` no
- * desenvolvimento (o browser resolve `*.localhost` sem editar /etc/hosts).
+ * `burgao-do-nino.dev.nino.delivery` em produção (o mesmo espaço "dev" de
+ * gestor-dev/api-dev, aqui hierárquico em vez de sufixo), `burgao-do-nino.localhost`
+ * no desenvolvimento (o browser resolve `*.localhost` sem editar /etc/hosts).
  */
-const BASE_DOMAINS = ['nino.delivery', 'localhost']
+const BASE_DOMAINS = ['dev.nino.delivery', 'localhost']
 
 /**
  * O slug carregado pelo host, quando há um. Só um nível de subdomínio vira
