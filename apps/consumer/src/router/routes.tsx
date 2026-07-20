@@ -3,10 +3,15 @@ import { createBrowserRouter } from 'react-router'
 import { Storefront } from '@pages/storefront/Storefront'
 
 /**
- * A loja mora no slug: `/:slug` é a vitrine. A raiz sem loja ainda não tem
- * destino — o acesso real vem por link da loja (slug ou domínio próprio).
+ * A loja vem do subdomínio (`slug.nino.delivery`), então a raiz já é a
+ * vitrine. `/:slug` no caminho é o atalho de desenvolvimento em
+ * `localhost/slug`, sem precisar de subdomínio.
  */
 export const router = createBrowserRouter([
+  {
+    path: '/',
+    element: <Storefront />,
+  },
   {
     path: '/:slug',
     element: <Storefront />,
