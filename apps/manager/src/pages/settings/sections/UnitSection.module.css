@@ -27,6 +27,16 @@ a.unit {
   @apply flex flex-wrap items-center gap-2 text-sm font-semibold text-body;
 }
 
+/* a matriz da empresa: uma só, garantida por unique no banco */
+.main {
+  @apply rounded-full bg-ink px-2 py-0.5;
+  @apply text-[0.6rem] font-bold uppercase tracking-[0.1em] text-cream;
+}
+
+.promote {
+  @apply shrink-0 text-faint;
+}
+
 /* onde a pessoa está agora — some a dúvida de qual loja ela edita */
 .here {
   @apply rounded-full bg-brand/12 px-2 py-0.5;

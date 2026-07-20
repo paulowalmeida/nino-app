@@ -4,6 +4,7 @@ import { AppLayout } from '@layouts/AppLayout/AppLayout'
 import { AuthLayout } from '@layouts/AuthLayout'
 import { Catalog } from '@pages/catalog/Catalog'
 import { Counter } from '@pages/counter'
+import { CustomerDetail, Customers } from '@pages/customers'
 import { Employees } from '@pages/employees/Employees'
 import { CreateStore } from '@pages/first-store/FirstStore'
 import { Account, Subscription } from '@pages/account'
@@ -98,6 +99,16 @@ export const router = createBrowserRouter([
       {
         path: 'catalogo/:productId',
         element: <ProductDetail />,
+      },
+      {
+        path: 'clientes',
+        element: <Customers />,
+        loader: roleGuard(MANAGERS),
+      },
+      {
+        path: 'clientes/:customerId',
+        element: <CustomerDetail />,
+        loader: roleGuard(MANAGERS),
       },
       {
         path: 'colaboradores',

@@ -1,6 +1,8 @@
 /** A unidade como ela é cadastrada — endereço, marca e link público. */
 export type TenantDetail = {
   id: string
+  /** Matriz da empresa. Uma só, garantida por unique no banco. */
+  isMain: boolean | null
   customName: string | null
   slug: string
   logoUrl: string | null

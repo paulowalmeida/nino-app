@@ -1,0 +1,106 @@
+@reference "@nino/ds/globals.css";
+
+.page {
+  @apply mx-auto max-w-3xl p-4 lg:p-8;
+}
+
+.hero {
+  @apply mt-3 flex items-center gap-4 rounded-[24px] border border-sand;
+  @apply bg-white/70 p-5 backdrop-blur-sm;
+}
+
+.mark {
+  @apply h-14 w-14 text-base;
+}
+
+.heroText {
+  @apply min-w-0;
+}
+
+.name {
+  @apply truncate font-display text-2xl font-extrabold tracking-[-0.02em];
+  @apply text-ink;
+}
+
+.phone {
+  @apply text-sm text-brand-strong transition-colors duration-150;
+  @apply hover:text-brand;
+  font-variant-numeric: tabular-nums;
+}
+
+.email {
+  @apply truncate text-sm text-faint;
+}
+
+.facts {
+  @apply mt-4 grid grid-cols-2 gap-3 lg:grid-cols-4;
+}
+
+.fact {
+  @apply flex flex-col gap-0.5 rounded-[20px] border border-sand;
+  @apply bg-surface-sunk/70 p-4;
+}
+
+.factLabel {
+  @apply text-[0.7rem] font-bold uppercase tracking-[0.1em] text-faint;
+}
+
+.factValue {
+  @apply font-display text-lg font-extrabold text-ink;
+  font-variant-numeric: tabular-nums;
+}
+
+.history {
+  @apply mt-6;
+}
+
+.historyTitle {
+  @apply mb-2 text-[0.7rem] font-bold uppercase tracking-[0.12em] text-faint;
+}
+
+.orders {
+  @apply flex flex-col rounded-[24px] border border-sand bg-white/70 px-2;
+  @apply backdrop-blur-sm;
+}
+
+.order {
+  @apply border-b border-sand last:border-b-0;
+}
+
+.orderLink {
+  @apply flex flex-wrap items-baseline gap-x-4 gap-y-1 rounded-xl px-2 py-3;
+  @apply transition-colors duration-150 hover:bg-white/80;
+  @apply focus-visible:outline-none focus-visible:ring-2;
+  @apply focus-visible:ring-brand focus-visible:ring-offset-1;
+}
+
+.orderNumber {
+  @apply font-display text-sm font-extrabold text-ink;
+  font-variant-numeric: tabular-nums;
+}
+
+.orderStatus {
+  @apply min-w-0 flex-1 truncate text-sm text-muted;
+}
+
+.orderAt {
+  @apply text-xs text-faint;
+  font-variant-numeric: tabular-nums;
+}
+
+.orderTotal {
+  @apply text-sm font-semibold text-body;
+  font-variant-numeric: tabular-nums;
+}
+
+.empty {
+  @apply rounded-2xl border border-sand bg-white/60 p-5 text-sm text-faint;
+}
+
+.skeleton {
+  @apply m-4 h-64 rounded-[24px] lg:m-8;
+}
+
+.notice {
+  @apply rounded-2xl border border-sand bg-white/60 p-6 text-sm text-faint;
+}

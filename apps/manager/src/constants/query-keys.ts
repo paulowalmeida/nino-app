@@ -40,6 +40,13 @@ export const queryKeys = {
     settings: (tenantId: string) =>
       [...queryKeys.tenant.all(tenantId), 'settings'] as const,
   },
+  customers: {
+    all: (tenantId: string) => ['customers', tenantId] as const,
+    list: (tenantId: string) =>
+      [...queryKeys.customers.all(tenantId), 'list'] as const,
+    detail: (tenantId: string, customerId: string) =>
+      [...queryKeys.customers.all(tenantId), 'detail', customerId] as const,
+  },
   team: {
     all: (tenantId: string) => ['team', tenantId] as const,
     list: (tenantId: string) =>

@@ -7,6 +7,7 @@ import type { TenantDetail, UpdateTenantRequest } from '@custom_types/store'
 import {
   getTenant,
   removeTenant,
+  setMainTenant,
   updateTenant,
 } from '@services/store/store.service'
 import { useSessionStore } from '@states/useSessionStore'
@@ -46,6 +47,20 @@ export const useRemoveTenant = () => {
     onSuccess: () => {
       useSessionStore.getState().clear()
       void navigate('/')
+    },
+  })
+}
+
+/** Promove a unidade a matriz da empresa. */
+export const useSetMainTenant = (tenantId: string | null) => {
+  const queryClient = useQueryClient()
+
+  return useMutation({
+    mutationFn: (id: string) => setMainTenant(id),
+    onSuccess: () => {
+      void queryClient.invalidateQueries({
+        queryKey: queryKeys.tenant.all(tenantId ?? ''),
+      })
     },
   })
 }

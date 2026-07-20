@@ -10,6 +10,7 @@ import { useCurrentTenant } from '@hooks/session/useCurrentTenant'
 import {
   useRemoveTenant,
   useSaveTenant,
+  useSetMainTenant,
   useTenantDetail,
 } from '@hooks/store/useTenantDetail'
 import { riseDelay } from '@utils/rise-delay'
@@ -31,6 +32,7 @@ export const UnitSection = () => {
   const { data: unit, isPending } = useTenantDetail(tenantId)
   const { mutate: save, isPending: isSaving } = useSaveTenant(tenantId)
   const { mutate: removeUnit, isPending: isRemoving } = useRemoveTenant()
+  const { mutate: setMain, isPending: isPromoting } = useSetMainTenant(tenantId)
   const { data: subscription } = useSubscription()
 
   const [confirming, setConfirming] = useState<string | null>(null)
@@ -68,9 +70,22 @@ export const UnitSection = () => {
               <span className={styles.name}>
                 {current?.tenantName}
                 <span className={styles.here}>você está aqui</span>
+                {unit?.isMain && <span className={styles.main}>matriz</span>}
               </span>
               <span className={styles.company}>{current?.companyName}</span>
             </div>
+
+            {unit && !unit.isMain && units.length > 1 && (
+              <Button
+                variant="ghost"
+                size="sm"
+                loading={isPromoting}
+                className={`${motion.press} ${styles.promote}`}
+                onClick={() => setMain(unit.id)}
+              >
+                Tornar matriz
+              </Button>
+            )}
           </li>
 
           {others.map(({ tenantId: id, tenantName, companyName }, index) => (

@@ -55,9 +55,15 @@ const GROUPS: { title: string; items: NavItem[] }[] = [
     title: 'Da loja',
     items: [
       {
+        section: 'clientes',
+        label: 'Clientes',
+        icon: 'users',
+        roles: MANAGERS,
+      },
+      {
         section: 'colaboradores',
         label: 'Equipe',
-        icon: 'users',
+        icon: 'store',
         roles: MANAGERS,
       },
       {

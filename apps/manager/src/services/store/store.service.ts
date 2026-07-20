@@ -52,3 +52,6 @@ export const resumeStore = (tenantId: string): Promise<TenantPause> =>
 /** Fecha a unidade. A empresa e as outras lojas seguem de pé. */
 export const removeTenant = (tenantId: string): Promise<{ message: string }> =>
   remove<{ message: string }>('tenants', tenantId)
+
+export const setMainTenant = (tenantId: string): Promise<TenantDetail> =>
+  patch<Record<string, never>, TenantDetail>('tenants', `${tenantId}/main`, {})
