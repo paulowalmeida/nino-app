@@ -5,14 +5,40 @@ import type { SettingsSection } from '@custom_types/ui/settings-section'
  * e a tela usa como trilho no celular.
  */
 export const SETTINGS_SECTIONS: SettingsSection[] = [
-  { to: 'empresa', label: 'Empresa', hint: 'CNPJ, razão social e endereço' },
-  { to: 'unidade', label: 'Unidades', hint: 'Esta loja e as outras da empresa' },
+  {
+    to: 'empresa',
+    label: 'Empresa',
+    hint: 'CNPJ, razão social e endereço',
+    icon: 'building',
+  },
+  {
+    to: 'unidade',
+    label: 'Unidades',
+    hint: 'Esta loja e as outras da empresa',
+    icon: 'store',
+  },
   {
     to: 'atendimento',
     label: 'Atendimento',
     hint: 'Canais, pagamento e pedido mínimo',
+    icon: 'card',
   },
-  { to: 'horarios', label: 'Horários', hint: 'Quando a loja abre e fecha' },
-  { to: 'entrega', label: 'Entrega', hint: 'Regiões atendidas e taxa' },
-  { to: 'contato', label: 'Contato', hint: 'Telefones da loja' },
+  {
+    to: 'horarios',
+    label: 'Horários',
+    hint: 'Quando a loja abre e fecha',
+    icon: 'clock',
+  },
+  {
+    to: 'entrega',
+    label: 'Entrega',
+    hint: 'Regiões atendidas e taxa',
+    icon: 'pin',
+  },
+  {
+    to: 'contato',
+    label: 'Contato',
+    hint: 'Telefones da loja',
+    icon: 'phone',
+  },
 ]

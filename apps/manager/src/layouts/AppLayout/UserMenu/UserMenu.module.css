@@ -15,6 +15,11 @@
   @apply h-4 w-4 shrink-0 text-white/35;
 }
 
+/* dentro do painel claro o traço acompanha o texto do item, não o menu */
+.itemIcon {
+  @apply h-[17px] w-[17px] shrink-0;
+}
+
 /*
  * O menu é papel do painel, não caixa branca de sistema: mesmo creme,
  * mesmo raio e a sombra quente que o resto das superfícies usa.
