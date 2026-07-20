@@ -21,13 +21,11 @@
   @apply grid-cols-1 sm:grid-cols-2 xl:grid-cols-4;
 }
 
+/* filete no lugar de caixa: todo trilho ganha o mesmo recuo e a mesma
+ * marca à esquerda, o primeiro inclusive — senão "Chegou agora" fica
+ * desalinhado das demais etapas. */
 .column {
-  @apply flex min-h-0 flex-col;
-}
-
-/* filete no lugar de caixa: separa os trilhos sem competir com o papel */
-.column + .column {
-  @apply sm:border-l sm:border-sand-deep sm:pl-5;
+  @apply flex min-h-0 flex-col sm:border-l sm:border-sand-deep sm:pl-5;
 }
 
 .columnHead {
