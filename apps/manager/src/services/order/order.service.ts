@@ -4,6 +4,7 @@ import type {
   OrderPage,
   OrderQueueSummary,
   SalesReport,
+  TimingReport,
   UpdateOrderStatusRequest,
 } from '@custom_types/order'
 import { ApiFactory } from '@services/api/api.service'
@@ -30,6 +31,16 @@ export const getSalesReport = (
 ): Promise<SalesReport> =>
   getAll<{ from: string; to: string }, SalesReport>(
     `tenants/${tenantId}/orders/report`,
+    { from, to }
+  )
+
+export const getTimingReport = (
+  tenantId: string,
+  from: string,
+  to: string
+): Promise<TimingReport> =>
+  getAll<{ from: string; to: string }, TimingReport>(
+    `tenants/${tenantId}/orders/report/timing`,
     { from, to }
   )
 

@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 
 import { Input, Skeleton } from '@nino/ds'
 
@@ -6,6 +6,7 @@ import { PageTitle } from '@components/PageTitle'
 import { CountUp } from '@components/CountUp'
 import { useCurrentTenant } from '@hooks/session/useCurrentTenant'
 import { useSalesReport } from '@hooks/order/useSalesReport'
+import { useTimingReport } from '@hooks/order/useTimingReport'
 import { brl } from '@utils/money'
 import { riseDelay } from '@utils/rise-delay'
 import {
@@ -37,6 +38,23 @@ const FIGURES: {
   { key: 'averageTicket', label: 'Ticket médio', money: true },
 ]
 
+const TIMING_FIGURES: {
+  key: 'averagePreparationMinutes' | 'averageDeliveryMinutes'
+  sampleKey: 'preparationSampleSize' | 'deliverySampleSize'
+  label: string
+}[] = [
+  {
+    key: 'averagePreparationMinutes',
+    sampleKey: 'preparationSampleSize',
+    label: 'Tempo médio de preparo',
+  },
+  {
+    key: 'averageDeliveryMinutes',
+    sampleKey: 'deliverySampleSize',
+    label: 'Tempo médio de entrega',
+  },
+]
+
 export const Reports = () => {
   const tenant = useCurrentTenant()
   const tenantId = tenant?.tenantId ?? null
@@ -45,10 +63,23 @@ export const Reports = () => {
   const [customFrom, setCustomFrom] = useState('')
   const [customTo, setCustomTo] = useState('')
 
-  const range =
-    period === 'custom' ? customRange(customFrom, customTo) : rangeOf(period)
+  /**
+   * Sem memo, `rangeOf` gera um `to` novo a cada render — a query key muda,
+   * dispara outro fetch, o `isPending` muda e o componente renderiza de novo:
+   * loop infinito de requisições. Trava em `period`/`customFrom`/`customTo`.
+   */
+  const range = useMemo(
+    () =>
+      period === 'custom' ? customRange(customFrom, customTo) : rangeOf(period),
+    [period, customFrom, customTo]
+  )
 
   const { report, isPending } = useSalesReport(
+    range ? tenantId : null,
+    range?.from ?? '',
+    range?.to ?? ''
+  )
+  const { report: timing, isPending: isTimingPending } = useTimingReport(
     range ? tenantId : null,
     range?.from ?? '',
     range?.to ?? ''
@@ -130,6 +161,34 @@ export const Reports = () => {
           </div>
         ))}
       </div>
+
+      {!awaitingDates && (
+        <div className={styles.timingFigures}>
+          {TIMING_FIGURES.map(({ key, sampleKey, label }, index) => {
+            const noSample = !isTimingPending && timing?.[sampleKey] === 0
+            return (
+              <div
+                key={key}
+                className={`${motion.settle} ${styles.figure}`}
+                style={riseDelay((FIGURES.length + index) * 60)}
+              >
+                <span className={styles.value}>
+                  {isTimingPending || !timing ? (
+                    '·'
+                  ) : noSample ? (
+                    '—'
+                  ) : (
+                    <>
+                      <CountUp value={Math.round(timing[key])} /> min
+                    </>
+                  )}
+                </span>
+                <span className={styles.label}>{label}</span>
+              </div>
+            )
+          })}
+        </div>
+      )}
 
       <section className={styles.top} aria-label="Produtos mais vendidos">
         <h2 className={styles.topTitle}>Mais vendidos</h2>

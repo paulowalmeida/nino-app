@@ -40,6 +40,8 @@ export const queryKeys = {
       [...queryKeys.orders.all(tenantId), 'detail', orderId] as const,
     report: (tenantId: string, from: string, to: string) =>
       [...queryKeys.orders.all(tenantId), 'report', from, to] as const,
+    timingReport: (tenantId: string, from: string, to: string) =>
+      [...queryKeys.orders.all(tenantId), 'timing-report', from, to] as const,
   },
   tenant: {
     all: (tenantId: string) => ['tenant', tenantId] as const,
