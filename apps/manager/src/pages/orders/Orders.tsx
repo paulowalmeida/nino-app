@@ -1,5 +1,4 @@
-import { useState } from 'react'
-import { Link } from 'react-router'
+import { Link, useSearchParams } from 'react-router'
 
 import { Button, Skeleton } from '@nino/ds'
 
@@ -49,7 +48,17 @@ const STAGES: { id: OrderStage; label: string; empty: string }[] = [
 export const Orders = () => {
   const tenant = useCurrentTenant()
   const tenantId = tenant?.tenantId ?? null
-  const [stage, setStage] = useState<OrderStage>('incoming')
+  /**
+   * A etapa mora na URL: assim o quadro da visão geral aponta direto para
+   * ela, o link é compartilhável e voltar do navegador funciona.
+   */
+  const [params, setParams] = useSearchParams()
+  const fromUrl = params.get('etapa') as OrderStage | null
+  const stage: OrderStage =
+    fromUrl && STAGES.some(({ id }) => id === fromUrl) ? fromUrl : 'incoming'
+
+  const setStage = (next: OrderStage) =>
+    setParams(next === 'incoming' ? {} : { etapa: next }, { replace: true })
 
   const { orders, isPending, isError, hasNextPage, fetchNextPage } =
     useOrders(tenantId)

@@ -1,8 +1,10 @@
+import { Link } from 'react-router'
+
 import { CountUp } from '@components/CountUp'
 import { Eyebrow } from '@components/Eyebrow'
 import { useQueueSummary } from '@hooks/order/useQueueSummary'
 import { riseDelay } from '@utils/rise-delay'
-import type { OrderQueueSummary } from '@custom_types/order'
+import type { OrderQueueSummary, OrderStage } from '@custom_types/order'
 
 import type { QueueBoardProps } from './QueueBoard.types'
 
@@ -19,11 +21,30 @@ export const QueueBoard = ({ tenantId }: QueueBoardProps) => {
   const { data, isPending } = useQueueSummary(tenantId)
 
   const waiting = count(data, 'PENDING')
-  const tiles = [
-    { label: 'esperando aceite', value: waiting, urgent: waiting > 0 },
-    { label: 'na cozinha', value: count(data, 'ACCEPTED', 'PREPARING') },
-    { label: 'saíram para entrega', value: count(data, 'OUT_FOR_DELIVERY') },
-    { label: 'prontos para retirada', value: count(data, 'READY_FOR_PICKUP') },
+
+  /** Cada quadro é a mesma etapa que a fila de pedidos filtra. */
+  const tiles: { label: string; value: number; stage: OrderStage; urgent?: boolean }[] = [
+    {
+      label: 'esperando aceite',
+      value: waiting,
+      stage: 'incoming',
+      urgent: waiting > 0,
+    },
+    {
+      label: 'na cozinha',
+      value: count(data, 'ACCEPTED', 'PREPARING'),
+      stage: 'kitchen',
+    },
+    {
+      label: 'saíram para entrega',
+      value: count(data, 'OUT_FOR_DELIVERY'),
+      stage: 'street',
+    },
+    {
+      label: 'prontos para retirada',
+      value: count(data, 'READY_FOR_PICKUP'),
+      stage: 'counter',
+    },
   ]
 
   const idle = !isPending && tiles.every(({ value }) => value === 0)
@@ -35,10 +56,13 @@ export const QueueBoard = ({ tenantId }: QueueBoardProps) => {
       </div>
 
       <div className={styles.board}>
-        {tiles.map(({ label, value, urgent }, index) => (
-          <article
+        {tiles.map(({ label, value, stage, urgent }, index) => (
+          <Link
             key={label}
-            className={`${motion.settle} ${
+            to={`../pedidos?etapa=${stage}`}
+            relative="path"
+            aria-label={`Ver pedidos ${label}`}
+            className={`${motion.settle} ${motion.lift} ${
               urgent ? `${styles.tile} ${styles.urgent}` : styles.tile
             }`}
             style={riseDelay(index * 70 + 80)}
@@ -47,7 +71,7 @@ export const QueueBoard = ({ tenantId }: QueueBoardProps) => {
               {isPending ? '·' : <CountUp value={value} />}
             </span>
             <span className={styles.label}>{label}</span>
-          </article>
+          </Link>
         ))}
       </div>
 
