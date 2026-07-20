@@ -44,7 +44,7 @@ export const Settings = () => {
     <div className={styles.page}>
       <header className={styles.header}>
         <Eyebrow>Sua loja</Eyebrow>
-        <PageTitle accent="regras">As regras da loja</PageTitle>
+        <PageTitle accent="loja">As regras da loja</PageTitle>
         <p className={styles.subtitle}>
           O que você define aqui vale na hora do pedido — no app do cliente e
           no painel.

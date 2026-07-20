@@ -18,7 +18,7 @@
 }
 
 .newOrder {
-  @apply shrink-0;
+  @apply w-full shrink-0 sm:w-auto;
 }
 
 .subtitle {
@@ -29,6 +29,11 @@
 .board {
   @apply mt-5 grid items-start gap-4;
   @apply sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4;
+}
+
+/* coluna de grade não encolhe sozinha — sem isto um nome longo alarga a tela */
+.board > li {
+  @apply min-w-0;
 }
 
 .loading {

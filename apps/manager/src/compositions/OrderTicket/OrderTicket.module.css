@@ -34,7 +34,7 @@
 }
 
 .head {
-  @apply flex items-baseline gap-2.5 px-4 pt-3.5 pb-2.5;
+  @apply flex min-w-0 items-baseline gap-2.5 px-4 pt-3.5 pb-2.5;
 }
 
 .number {
@@ -48,7 +48,7 @@
 }
 
 .channel {
-  @apply ml-auto rounded-full bg-surface-sunk px-2.5 py-1;
+  @apply ml-auto shrink-0 rounded-full bg-surface-sunk px-2.5 py-1;
   @apply text-[0.65rem] font-bold uppercase tracking-[0.1em] text-subtle;
 }
 
@@ -57,7 +57,7 @@
 }
 
 .customer {
-  @apply text-sm font-semibold text-body;
+  @apply truncate text-sm font-semibold text-body;
 }
 
 .state {
@@ -69,7 +69,7 @@
 }
 
 .item {
-  @apply flex items-baseline gap-2 text-sm text-muted;
+  @apply flex min-w-0 items-baseline gap-2 text-sm text-muted;
 }
 
 .quantity {
@@ -78,7 +78,7 @@
 }
 
 .itemName {
-  @apply truncate;
+  @apply min-w-0 flex-1 truncate;
 }
 
 .more {

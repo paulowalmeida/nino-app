@@ -7,10 +7,7 @@ import type { TenantSettings } from '@custom_types/settings'
 import { PAYMENT_METHOD_LABEL } from '@utils/order-flow'
 import { riseDelay } from '@utils/rise-delay'
 
-import type {
-  ServiceRulesDraft,
-  ServiceRulesProps,
-} from './ServiceRules.types'
+import type { ServiceRulesDraft, ServiceRulesProps } from './ServiceRules.types'
 
 import local from './ServiceRules.module.css'
 import motion from '@styles/motion.module.css'
@@ -51,7 +48,7 @@ const toDraft = (settings: TenantSettings): ServiceRulesDraft => ({
   isCounterEnabled: settings.isCounterEnabled,
   allowGuestOrder: settings.allowGuestOrder,
   requireCpf: settings.requireCpf,
-  minOrderAmount: Number(settings.minOrderAmount).toFixed(2),
+  minOrderAmount: Number(settings.minOrderAmount).toFixed(2).replace('.', ','),
   acceptedPaymentMethods: settings.acceptedPaymentMethods,
 })
 
@@ -147,6 +144,7 @@ export const ServiceRules = ({
               type="button"
               onClick={() => toggleMethod(method)}
               aria-pressed={draft.acceptedPaymentMethods.includes(method)}
+              style={{ cursor: 'pointer' }}
               className={`${motion.press} ${local.chip} ${
                 draft.acceptedPaymentMethods.includes(method)
                   ? local.chipOn
@@ -182,9 +180,7 @@ export const ServiceRules = ({
           />
           <div className={styles.rowText}>
             <p className={styles.rowLabel}>Pedir CPF na nota</p>
-            <p className={styles.rowHint}>
-              Some do checkout quando desligado.
-            </p>
+            <p className={styles.rowHint}>Some do checkout quando desligado.</p>
           </div>
         </div>
       </div>

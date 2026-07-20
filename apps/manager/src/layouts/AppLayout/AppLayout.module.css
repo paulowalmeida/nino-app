@@ -28,6 +28,11 @@
   @apply fixed inset-0 z-20 bg-dark/60 backdrop-blur-sm lg:hidden;
 }
 
+/*
+ * `min-w-0` é o que segura a largura: sem ele o item flex assume a largura do
+ * conteúdo mais largo (uma grade de comandas, uma linha longa) e a página
+ * inteira ganha rolagem horizontal no celular.
+ */
 .main {
-  @apply min-h-screen flex-1 pt-14 lg:ml-60 lg:pt-0;
+  @apply min-h-screen w-full min-w-0 flex-1 pt-14 lg:ml-60 lg:pt-0;
 }

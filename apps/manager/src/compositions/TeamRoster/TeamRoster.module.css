@@ -21,12 +21,14 @@
   @apply flex flex-col;
 }
 
+/* nome inteiro tem prioridade: o botao desce quando a linha aperta */
 .row {
-  @apply flex flex-wrap items-center gap-3 border-t border-sand py-3;
+  @apply flex flex-wrap items-center gap-x-3 gap-y-2;
+  @apply border-t border-sand py-3;
 }
 
 .person {
-  @apply min-w-0 flex-1;
+  @apply min-w-[9rem] flex-1;
 }
 
 .name {
@@ -43,7 +45,7 @@
 }
 
 .remove {
-  @apply shrink-0 text-faint;
+  @apply ml-auto shrink-0 text-faint;
 }
 
 .empty {

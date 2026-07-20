@@ -2,6 +2,7 @@ import { useState } from 'react'
 
 import { Button, PhoneInput, Skeleton } from '@nino/ds'
 
+import { formatPhone } from '@utils/phone'
 import { riseDelay } from '@utils/rise-delay'
 
 import type { PhoneListProps } from './PhoneList.types'
@@ -50,7 +51,9 @@ export const PhoneList = ({
               className={`${motion.deal} ${local.phone}`}
               style={riseDelay(index * 45 + 60)}
             >
-              <span className={local.number}>{entry.phone}</span>
+              <span className={local.number}>
+                {formatPhone(entry.phone)}
+              </span>
               <Button
                 variant="ghost"
                 size="sm"

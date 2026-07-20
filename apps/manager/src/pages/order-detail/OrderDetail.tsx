@@ -9,6 +9,7 @@ import { useOrder } from '@hooks/order/useOrder'
 import { useOrderPayment } from '@hooks/order/useOrderPayment'
 import { useOrderStatus } from '@hooks/order/useOrderStatus'
 import { brl } from '@utils/money'
+import { formatPhone } from '@utils/phone'
 import { riseDelay } from '@utils/rise-delay'
 import {
   addressOf,
@@ -160,7 +161,7 @@ export const OrderDetail = () => {
                 href={`tel:${order.guestPhone}`}
                 className={styles.phone}
               >
-                {order.guestPhone}
+                {formatPhone(order.guestPhone)}
               </a>
             )}
             {address && <p className={styles.address}>{address}</p>}

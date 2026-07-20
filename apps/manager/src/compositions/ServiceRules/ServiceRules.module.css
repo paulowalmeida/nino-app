@@ -10,7 +10,7 @@
 }
 
 .chip {
-  @apply rounded-full border border-sand bg-paper px-3.5 py-2;
+  @apply rounded-full border border-sand bg-paper px-3.5 py-2 cursor-pointer;
   @apply text-sm text-subtle transition-colors duration-200;
   @apply hover:border-brand/30 hover:text-body;
 }
