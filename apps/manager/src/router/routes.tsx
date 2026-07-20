@@ -3,6 +3,7 @@ import { createBrowserRouter, Navigate } from 'react-router'
 import { AppLayout } from '@layouts/AppLayout/AppLayout'
 import { AuthLayout } from '@layouts/AuthLayout'
 import { Catalog } from '@pages/catalog/Catalog'
+import { Counter } from '@pages/counter'
 import { Employees } from '@pages/employees/Employees'
 import { CreateStore } from '@pages/first-store/FirstStore'
 import { Account, Subscription } from '@pages/account'
@@ -65,6 +66,10 @@ export const router = createBrowserRouter([
       {
         path: 'visao-geral',
         element: <Overview />,
+      },
+      {
+        path: 'balcao',
+        element: <Counter />,
       },
       {
         path: 'pedidos',

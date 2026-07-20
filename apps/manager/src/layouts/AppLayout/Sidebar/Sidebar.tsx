@@ -5,7 +5,9 @@ import { NavIcon } from '@components/NavIcon'
 import { NinoLogo } from '@components/NinoLogo'
 import type { NavIconName } from '@components/NavIcon/NavIcon.types'
 import { SETTINGS_SECTIONS } from '@constants/settings-sections'
+import type { TenantRole } from '@custom_types/auth'
 import { useQueueSummary } from '@hooks/order/useQueueSummary'
+import { useTenantRole } from '@hooks/session/useTenantRole'
 import { useSessionStore } from '@states/useSessionStore'
 import { riseDelay } from '@utils/rise-delay'
 
@@ -23,8 +25,11 @@ type NavItem = {
   icon: NavIconName
   /** Seções internas — aparecem quando o item está aberto. */
   children?: { to: string; label: string }[]
+  /** Papéis que enxergam o item; ausente = todo mundo da loja. */
+  roles?: TenantRole[]
 }
 
+const MANAGERS: TenantRole[] = ['TENANT_OWNER', 'MANAGER']
 
 /**
  * Two groups: what the store does today, and how the store is set up. The
@@ -34,7 +39,13 @@ const GROUPS: { title: string; items: NavItem[] }[] = [
   {
     title: 'Do dia',
     items: [
-      { section: 'visao-geral', label: 'Visão geral', icon: 'grid' },
+      {
+        section: 'visao-geral',
+        label: 'Visão geral',
+        icon: 'grid',
+        roles: MANAGERS,
+      },
+      { section: 'balcao', label: 'Balcão', icon: 'store' },
       { section: 'pedidos', label: 'Pedidos', icon: 'bag' },
       { section: 'catalogo', label: 'Cardápio', icon: 'clipboard' },
     ],
@@ -42,12 +53,18 @@ const GROUPS: { title: string; items: NavItem[] }[] = [
   {
     title: 'Da loja',
     items: [
-      { section: 'colaboradores', label: 'Equipe', icon: 'users' },
+      {
+        section: 'colaboradores',
+        label: 'Equipe',
+        icon: 'users',
+        roles: MANAGERS,
+      },
       {
         section: 'configuracoes',
         label: 'Configurações',
         icon: 'gear',
         children: SETTINGS_SECTIONS,
+        roles: MANAGERS,
       },
     ],
   },
@@ -57,6 +74,7 @@ export const Sidebar = ({ tenantId, isOpen, onClose }: SidebarProps) => {
   const user = useSessionStore(({ user }) => user)
   const { pathname } = useLocation()
 
+  const role = useTenantRole()
   const { data: summary } = useQueueSummary(tenantId)
 
   const waiting = summary?.PENDING ?? 0
@@ -91,83 +109,85 @@ export const Sidebar = ({ tenantId, isOpen, onClose }: SidebarProps) => {
           <div key={title} className={styles.group}>
             <p className={styles.groupTitle}>{title}</p>
 
-            {items.map(({ section, label, icon, children }) => {
-              const delay = riseDelay(order++ * 55 + 120)
-              const isInside = pathname.includes(`/${section}`)
-              const isOpen = children ? opened === section : false
+            {items
+              .filter(({ roles }) => !roles || (role && roles.includes(role)))
+              .map(({ section, label, icon, children }) => {
+                const delay = riseDelay(order++ * 55 + 120)
+                const isInside = pathname.includes(`/${section}`)
+                const isOpen = children ? opened === section : false
 
-              const content = (
-                <>
-                  <NavIcon name={icon} className={styles.navIcon} />
-                  <span>{label}</span>
-                  {section === 'pedidos' && waiting > 0 && (
-                    <span className={`${motion.pop} ${styles.tally}`}>
-                      {waiting}
-                    </span>
-                  )}
-                </>
-              )
+                const content = (
+                  <>
+                    <NavIcon name={icon} className={styles.navIcon} />
+                    <span>{label}</span>
+                    {section === 'pedidos' && waiting > 0 && (
+                      <span className={`${motion.pop} ${styles.tally}`}>
+                        {waiting}
+                      </span>
+                    )}
+                  </>
+                )
 
-              return (
-                <div key={section}>
-                  {children ? (
-                    <button
-                      type="button"
-                      aria-expanded={isOpen}
-                      aria-controls={`sub-${section}`}
-                      style={delay}
-                      className={
-                        isInside
-                          ? `${motion.slide} ${styles.navItem} ${styles.navItemActive}`
-                          : `${motion.slide} ${styles.navItem}`
-                      }
-                      onClick={() =>
-                        setOpened((current) =>
-                          current === section ? null : section
-                        )
-                      }
-                    >
-                      {content}
-                    </button>
-                  ) : (
-                    <NavLink
-                      to={`/${tenantId}/${section}`}
-                      onClick={onClose}
-                      style={delay}
-                      className={({ isActive }) =>
-                        isActive
-                          ? `${motion.slide} ${styles.navItem} ${styles.navItemActive}`
-                          : `${motion.slide} ${styles.navItem}`
-                      }
-                    >
-                      {content}
-                    </NavLink>
-                  )}
+                return (
+                  <div key={section}>
+                    {children ? (
+                      <button
+                        type="button"
+                        aria-expanded={isOpen}
+                        aria-controls={`sub-${section}`}
+                        style={delay}
+                        className={
+                          isInside
+                            ? `${motion.slide} ${styles.navItem} ${styles.navItemActive}`
+                            : `${motion.slide} ${styles.navItem}`
+                        }
+                        onClick={() =>
+                          setOpened((current) =>
+                            current === section ? null : section
+                          )
+                        }
+                      >
+                        {content}
+                      </button>
+                    ) : (
+                      <NavLink
+                        to={`/${tenantId}/${section}`}
+                        onClick={onClose}
+                        style={delay}
+                        className={({ isActive }) =>
+                          isActive
+                            ? `${motion.slide} ${styles.navItem} ${styles.navItemActive}`
+                            : `${motion.slide} ${styles.navItem}`
+                        }
+                      >
+                        {content}
+                      </NavLink>
+                    )}
 
-                  {children && isOpen && (
-                    <div
-                      id={`sub-${section}`}
-                      className={`${motion.unroll} ${styles.subNav}`}
-                    >
-                      {children.map(({ to, label: childLabel }) => (
-                        <NavLink
-                          key={to}
-                          to={`/${tenantId}/${section}/${to}`}
-                          onClick={onClose}
-                          className={({ isActive }) =>
-                            isActive
-                              ? `${styles.subItem} ${styles.subItemActive}`
-                              : styles.subItem
-                          }
-                        >
-                          {childLabel}
-                        </NavLink>
-                      ))}
-                    </div>
-                  )}
-                </div>
-              )
-            })}
+                    {children && isOpen && (
+                      <div
+                        id={`sub-${section}`}
+                        className={`${motion.unroll} ${styles.subNav}`}
+                      >
+                        {children.map(({ to, label: childLabel }) => (
+                          <NavLink
+                            key={to}
+                            to={`/${tenantId}/${section}/${to}`}
+                            onClick={onClose}
+                            className={({ isActive }) =>
+                              isActive
+                                ? `${styles.subItem} ${styles.subItemActive}`
+                                : styles.subItem
+                            }
+                          >
+                            {childLabel}
+                          </NavLink>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                )
+              })}
           </div>
         ))}
       </nav>
@@ -179,7 +199,6 @@ export const Sidebar = ({ tenantId, isOpen, onClose }: SidebarProps) => {
           onNavigate={onClose}
         />
       </div>
-
     </aside>
   )
 }

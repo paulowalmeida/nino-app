@@ -1,0 +1,121 @@
+import { useState } from 'react'
+
+import { ProductGrid } from '@compositions/ProductGrid'
+import { SaleTicket } from '@compositions/SaleTicket'
+import { useCreateOrder } from '@hooks/order/useCreateOrder'
+import { useCurrentTenant } from '@hooks/session/useCurrentTenant'
+import { useMenu } from '@hooks/product/useMenu'
+import type { CartLine } from '@custom_types/counter'
+import type { MenuItem } from '@custom_types/product'
+import type { OrderChannel, PaymentMethod } from '@custom_types/order'
+
+import styles from './Counter.module.css'
+import motion from '@styles/motion.module.css'
+
+/**
+ * O balcão: atender quem está na loja sem passar pelo resto do painel.
+ * Alvos grandes, comanda sempre à vista e tela limpa a cada venda — quem
+ * opera aqui repete o mesmo gesto o expediente inteiro.
+ */
+export const Counter = () => {
+  const tenant = useCurrentTenant()
+  const tenantId = tenant?.tenantId ?? null
+
+  const { sections, isPending } = useMenu(tenantId)
+  const { mutateAsync: placeOrder, isPending: isSending } =
+    useCreateOrder(tenantId)
+
+  const [lines, setLines] = useState<CartLine[]>([])
+  const [channel, setChannel] = useState<OrderChannel>('COUNTER')
+  const [method, setMethod] = useState<PaymentMethod>('CASH')
+  const [failed, setFailed] = useState(false)
+  const [closed, setClosed] = useState<string | null>(null)
+
+  const pick = (item: MenuItem) =>
+    setLines((current) => {
+      const found = current.find(({ productId }) => productId === item.id)
+      if (!found) {
+        return [
+          ...current,
+          {
+            productId: item.id,
+            name: item.name,
+            unitPrice: item.price,
+            quantity: 1,
+          },
+        ]
+      }
+      return current.map((line) =>
+        line.productId === item.id
+          ? { ...line, quantity: line.quantity + 1 }
+          : line
+      )
+    })
+
+  const step = (productId: string, by: number) =>
+    setLines((current) =>
+      current
+        .map((line) =>
+          line.productId === productId
+            ? { ...line, quantity: line.quantity + by }
+            : line
+        )
+        .filter(({ quantity }) => quantity > 0)
+    )
+
+  const finish = async () => {
+    setFailed(false)
+    try {
+      const order = await placeOrder({
+        channel,
+        paymentMethod: method,
+        items: lines.map(({ productId, quantity, unitPrice }) => ({
+          productId,
+          quantity,
+          unitPrice: Number(unitPrice),
+        })),
+      })
+      setLines([])
+      setClosed(order.id.slice(-4).toUpperCase())
+      window.setTimeout(() => setClosed(null), 4000)
+    } catch {
+      setFailed(true)
+    }
+  }
+
+  return (
+    <div className={styles.page}>
+      <header className={`${motion.deal} ${styles.header}`}>
+        <h1 className={styles.title}>Balcão</h1>
+        <p className={styles.subtitle}>
+          Monte o pedido de quem está na loja e feche a venda.
+        </p>
+      </header>
+
+      <div className={styles.floor}>
+        <section className={styles.menu} aria-label="Cardápio">
+          <ProductGrid sections={sections} isPending={isPending} onPick={pick} />
+        </section>
+
+        <SaleTicket
+          lines={lines}
+          channel={channel}
+          method={method}
+          isSending={isSending}
+          failed={failed}
+          onStep={step}
+          onChannel={setChannel}
+          onMethod={setMethod}
+          onClear={() => setLines([])}
+          onFinish={finish}
+        />
+      </div>
+
+      {closed && (
+        <p className={`${motion.land} ${styles.closed}`} role="status">
+          Venda #{closed} fechada
+        </p>
+      )}
+    </div>
+  )
+}

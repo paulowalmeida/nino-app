@@ -1,0 +1,215 @@
+<svg
+  viewBox="0 0 300 300"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <defs>
+    <radialGradient id="ninoBody" cx="50%" cy="40%" r="55%">
+      <stop offset="0%" stop-color="#FFFFFF" />
+      <stop offset="100%" stop-color="#E8E8E8" />
+    </radialGradient>
+    <linearGradient id="counterTop" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#FFFBF5" />
+      <stop offset="100%" stop-color="#F1E7DA" />
+    </linearGradient>
+    <linearGradient id="counterFront" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#F4ECE0" />
+      <stop offset="100%" stop-color="#E6D9C6" />
+    </linearGradient>
+    <filter id="ninoShadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#00000015" />
+    </filter>
+  </defs>
+
+  <!-- cauda: sobe atrás do ombro, como quem está de pé atendendo -->
+  <path
+    d="M222 214 Q268 196 262 152 Q256 118 232 132 Q222 139 226 155 Q232 175 214 186"
+    stroke="#1A1A2E"
+    stroke-width="16"
+    fill="none"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  />
+
+  <!-- corpo -->
+  <ellipse
+    cx="148"
+    cy="196"
+    rx="70"
+    ry="66"
+    fill="url(#ninoBody)"
+    filter="url(#ninoShadow)"
+  />
+
+  <!-- avental: alças no pescoço, peitoral largo e bolso com costura -->
+  <path
+    d="M124 158 Q150 178 176 158 L182 168 Q150 190 118 168 Z"
+    fill="#E8540C"
+  />
+  <path
+    d="M118 168 Q150 190 182 168 L192 236 Q150 250 108 236 Z"
+    fill="#FF6B00"
+  />
+  <path
+    d="M118 168 Q150 190 182 168 L185 196 Q150 214 115 196 Z"
+    fill="#FFFFFF"
+    opacity="0.12"
+  />
+  <path
+    d="M131 156 Q150 142 169 156"
+    stroke="#E8540C"
+    stroke-width="6"
+    fill="none"
+    stroke-linecap="round"
+  />
+  <path
+    d="M112 212 Q150 224 188 212"
+    stroke="#C24709"
+    stroke-width="2"
+    fill="none"
+    stroke-dasharray="5 4"
+    stroke-linecap="round"
+  />
+  <rect x="134" y="216" width="32" height="18" rx="3" fill="#E8540C" />
+  <rect x="140" y="210" width="8" height="12" rx="2" fill="#FFC24D" />
+  <rect x="152" y="212" width="10" height="10" rx="2" fill="#FFFBF5" />
+
+  <!-- orelhas -->
+  <path d="M88 84 Q68 38 95 26 Q110 51 118 74 Z" fill="#1A1A2E" />
+  <path d="M92 78 Q76 46 96 36 Q107 54 113 72 Z" fill="#e8a8a8" opacity="0.7" />
+  <path d="M212 84 Q232 38 205 26 Q190 51 182 74 Z" fill="#1A1A2E" />
+  <path
+    d="M208 78 Q224 46 204 36 Q193 54 187 72 Z"
+    fill="#e8a8a8"
+    opacity="0.7"
+  />
+
+  <!-- cabeça -->
+  <ellipse
+    cx="150"
+    cy="126"
+    rx="74"
+    ry="70"
+    fill="url(#ninoBody)"
+    filter="url(#ninoShadow)"
+  />
+  <path
+    d="M88 84 Q95 71 118 66 Q125 91 108 104 Q96 98 88 84 Z"
+    fill="#1A1A2E"
+    opacity="0.85"
+  />
+
+  <!-- lápis atrás da orelha: o gesto de quem anota pedido o dia inteiro -->
+  <g transform="rotate(-24 202 88)">
+    <rect x="192" y="74" width="9" height="34" rx="2" fill="#FFC24D" />
+    <rect x="192" y="74" width="9" height="8" rx="2" fill="#E8540C" />
+    <path d="M192 108 L196.5 118 L201 108 Z" fill="#F1E7DA" />
+    <path d="M194.6 113.8 L196.5 118 L198.4 113.8 Z" fill="#2D2D4E" />
+  </g>
+
+  <!-- rosto: sobrancelhas altas, atento a quem chega -->
+  <path
+    d="M108 106 Q122 96 136 106"
+    stroke="#1A1A2E"
+    stroke-width="4.5"
+    fill="none"
+    stroke-linecap="round"
+  />
+  <path
+    d="M164 106 Q178 96 192 106"
+    stroke="#1A1A2E"
+    stroke-width="4.5"
+    fill="none"
+    stroke-linecap="round"
+  />
+  <ellipse cx="124" cy="122" rx="7" ry="9" fill="#1A1A2E" />
+  <ellipse cx="176" cy="122" rx="7" ry="9" fill="#1A1A2E" />
+  <circle cx="126.5" cy="119" r="2.6" fill="#FFFFFF" />
+  <circle cx="178.5" cy="119" r="2.6" fill="#FFFFFF" />
+  <ellipse cx="108" cy="136" rx="14" ry="8" fill="#FF6B00" opacity="0.18" />
+  <ellipse cx="192" cy="136" rx="14" ry="8" fill="#FF6B00" opacity="0.18" />
+  <path d="M144 134 L150 141 L156 134 Q150 131 144 134 Z" fill="#E87070" />
+  <path
+    d="M130 144 Q150 164 170 144"
+    stroke="#C05050"
+    stroke-width="2.5"
+    fill="none"
+    stroke-linecap="round"
+  />
+
+  <!-- bigodes -->
+  <g stroke="#888" stroke-width="1" opacity="0.5">
+    <line x1="55" y1="137" x2="118" y2="142" />
+    <line x1="55" y1="145" x2="118" y2="145" />
+    <line x1="60" y1="153" x2="118" y2="148" />
+    <line x1="182" y1="142" x2="245" y2="137" />
+    <line x1="182" y1="145" x2="245" y2="145" />
+    <line x1="182" y1="148" x2="240" y2="153" />
+  </g>
+
+  <!-- o balcão: corta a cena e põe o gato do lado de dentro -->
+  <g filter="url(#ninoShadow)">
+    <rect x="18" y="242" width="264" height="16" rx="8" fill="url(#counterTop)" />
+    <rect x="28" y="258" width="244" height="42" rx="6" fill="url(#counterFront)" />
+    <rect
+      x="28"
+      y="258"
+      width="244"
+      height="42"
+      rx="6"
+      fill="none"
+      stroke="#DCCDB6"
+      stroke-width="2"
+    />
+    <rect x="28" y="274" width="244" height="4" fill="#FF6B00" opacity="0.18" />
+  </g>
+
+  <!-- patas apoiadas no tampo -->
+  <ellipse cx="96" cy="238" rx="24" ry="13" fill="url(#ninoBody)" />
+  <ellipse cx="86" cy="240" rx="7" ry="5" fill="#F0F0F0" />
+  <ellipse cx="97" cy="242" rx="7" ry="5" fill="#F0F0F0" />
+  <ellipse cx="108" cy="240" rx="7" ry="5" fill="#F0F0F0" />
+
+  <ellipse cx="204" cy="238" rx="24" ry="13" fill="url(#ninoBody)" />
+  <ellipse cx="194" cy="240" rx="7" ry="5" fill="#F0F0F0" />
+  <ellipse cx="205" cy="242" rx="7" ry="5" fill="#F0F0F0" />
+  <ellipse cx="216" cy="240" rx="7" ry="5" fill="#F0F0F0" />
+
+  <!-- a comanda que ele acabou de rasgar, serrilhada como no painel -->
+  <g filter="url(#ninoShadow)">
+    <path
+      d="M36 186 h42 v56 l-5.25 -5 l-5.25 5 l-5.25 -5 l-5.25 5 l-5.25 -5 l-5.25 5 l-5.25 -5 l-5.25 5 Z"
+      fill="#FFFBF5"
+      stroke="#E4DCC8"
+      stroke-width="1.5"
+      stroke-linejoin="round"
+    />
+    <line
+      x1="44"
+      y1="200"
+      x2="70"
+      y2="200"
+      stroke="#C9BFA6"
+      stroke-width="2.5"
+      stroke-linecap="round"
+    />
+    <line
+      x1="44"
+      y1="212"
+      x2="64"
+      y2="212"
+      stroke="#DAD0B8"
+      stroke-width="2.5"
+      stroke-linecap="round"
+    />
+    <line
+      x1="44"
+      y1="224"
+      x2="68"
+      y2="224"
+      stroke="#DAD0B8"
+      stroke-width="2.5"
+      stroke-linecap="round"
+    />
+  </g>
+</svg>
