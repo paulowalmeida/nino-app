@@ -14,7 +14,7 @@
 }
 
 .stage {
-  @apply relative flex shrink-0 snap-start items-center gap-2;
+  @apply relative flex shrink-0 cursor-pointer snap-start items-center gap-2;
   @apply rounded-full px-3.5 py-2 text-sm text-subtle;
   @apply transition-colors duration-200;
   @apply hover:bg-white/70 hover:text-body;

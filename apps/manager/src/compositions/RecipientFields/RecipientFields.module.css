@@ -15,3 +15,7 @@
 .street {
   @apply col-span-1;
 }
+
+.hint {
+  @apply text-xs leading-relaxed text-faint;
+}

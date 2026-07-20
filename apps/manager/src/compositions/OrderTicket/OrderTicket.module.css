@@ -52,10 +52,6 @@
   @apply text-[0.65rem] font-bold uppercase tracking-[0.1em] text-subtle;
 }
 
-.body {
-  @apply block border-t border-dashed border-sand-deep px-4 py-3;
-}
-
 .customer {
   @apply truncate text-sm font-semibold text-body;
 }
@@ -64,8 +60,13 @@
   @apply mt-0.5 text-xs text-faint;
 }
 
+/* resumo em uma linha no celular; lista completa da tabela para cima */
+.summary {
+  @apply mt-1.5 truncate text-sm text-muted sm:hidden;
+}
+
 .items {
-  @apply mt-2.5 flex flex-col gap-1;
+  @apply mt-2.5 hidden flex-col gap-1 sm:flex;
 }
 
 .item {
@@ -90,6 +91,10 @@
   @apply border-t border-dashed border-sand-deep px-4 pt-3 pb-1;
 }
 
+.body {
+  @apply block border-t border-dashed border-sand-deep px-4 py-3;
+}
+
 .money {
   @apply flex flex-col;
 }
@@ -104,5 +109,5 @@
 }
 
 .action {
-  @apply shrink-0;
+  @apply w-full shrink-0 sm:w-auto;
 }

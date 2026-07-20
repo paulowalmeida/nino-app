@@ -3,10 +3,12 @@ import type {
   CreateStoreRequest,
   SlugAvailabilityResponse,
   StoreTypeOption,
+  TenantDetail,
+  UpdateTenantRequest,
 } from '@custom_types/store'
 import { ApiFactory } from '@services/api/api.service'
 
-const { get, getAll, create } = ApiFactory()
+const { get, getAll, create, patch } = ApiFactory()
 
 export const createStore = (data: CreateStoreRequest): Promise<CreatedStore> =>
   create<CreateStoreRequest, CreatedStore>('my/company/tenants', data)
@@ -19,3 +21,12 @@ export const checkSlug = (slug: string): Promise<SlugAvailabilityResponse> =>
     'my/company/tenants/slug-availability',
     { slug }
   )
+
+export const getTenant = (tenantId: string): Promise<TenantDetail> =>
+  get<TenantDetail>(`tenants/${tenantId}`)
+
+export const updateTenant = (
+  tenantId: string,
+  data: UpdateTenantRequest
+): Promise<TenantDetail> =>
+  patch<UpdateTenantRequest, TenantDetail>('tenants', tenantId, data)

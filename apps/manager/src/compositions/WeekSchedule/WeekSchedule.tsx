@@ -44,21 +44,36 @@ const toWeek = (hours: OpeningHours[]): HoursDraft[] =>
 export const WeekSchedule = ({
   hours,
   isPending,
-  savingDay,
+  isSaving,
   onSave,
 }: WeekScheduleProps) => {
   const [week, setWeek] = useState<HoursDraft[]>(() =>
     DAYS.map((_, day) => blank(day))
   )
-  const [dirtyDay, setDirtyDay] = useState<number | null>(null)
+  const [saved, setSaved] = useState<HoursDraft[]>(() =>
+    DAYS.map((_, day) => blank(day))
+  )
   const [seed, setSeed] = useState<OpeningHours[] | null>(null)
 
   /** Re-seeds the week when the API sends a different snapshot. */
   if (hours !== seed) {
     setSeed(hours)
     setWeek(toWeek(hours))
-    setDirtyDay(null)
+    setSaved(toWeek(hours))
   }
+
+  /**
+   * Só os dias que mudaram vão para a API: um botão único não pode virar
+   * sete requisições, sob pena de estourar o throttle da API.
+   */
+  const changed = week.filter((day, index) => {
+    const before = saved[index]
+    return (
+      day.isOpen !== before.isOpen ||
+      day.openTime !== before.openTime ||
+      day.closeTime !== before.closeTime
+    )
+  })
 
   const change = (day: number, patch: Partial<HoursDraft>) => {
     setWeek((current) =>
@@ -66,7 +81,6 @@ export const WeekSchedule = ({
         entry.dayOfWeek === day ? { ...entry, ...patch } : entry
       )
     )
-    setDirtyDay(day)
   }
 
   if (isPending) return <Skeleton className={local.skeleton} />
@@ -121,19 +135,18 @@ export const WeekSchedule = ({
               />
             </div>
 
-            {dirtyDay === entry.dayOfWeek && (
-              <Button
-                size="sm"
-                loading={savingDay === entry.dayOfWeek}
-                className={`${motion.press} ${local.save}`}
-                onClick={() => onSave(entry)}
-              >
-                Salvar
-              </Button>
-            )}
           </li>
         ))}
       </ul>
+
+      <Button
+        loading={isSaving}
+        disabled={changed.length === 0}
+        className={`${motion.press} ${styles.save}`}
+        onClick={() => onSave(changed)}
+      >
+        Salvar horários
+      </Button>
     </section>
   )
 }

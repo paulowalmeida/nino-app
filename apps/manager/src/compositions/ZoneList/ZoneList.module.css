@@ -17,8 +17,27 @@
   @apply opacity-55;
 }
 
+/* o nome é o alvo de edição — clicar nele abre a linha */
 .zoneName {
-  @apply min-w-0 flex-1 truncate text-sm font-semibold text-body;
+  @apply min-w-0 flex-1 cursor-pointer truncate text-left;
+  @apply text-sm font-semibold text-body transition-colors duration-150;
+  @apply hover:text-brand-strong;
+}
+
+.editRow {
+  @apply flex min-w-0 flex-1 flex-wrap items-center gap-2;
+}
+
+.editName {
+  @apply min-w-32 flex-1;
+}
+
+.editFee {
+  @apply w-24;
+}
+
+.edit {
+  @apply shrink-0 text-faint;
 }
 
 .fee {

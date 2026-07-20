@@ -5,6 +5,7 @@ export type ZoneListProps = {
   isPending: boolean
   isAdding: boolean
   onAdd: (data: { name: string; fee: number }) => void
+  onEdit: (id: string, data: { name: string; fee: number }) => void
   onToggle: (id: string, isActive: boolean) => void
   onRemove: (id: string) => void
 }

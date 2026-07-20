@@ -16,11 +16,28 @@ export const ZoneList = ({
   isPending,
   isAdding,
   onAdd,
+  onEdit,
   onToggle,
   onRemove,
 }: ZoneListProps) => {
   const [name, setName] = useState('')
   const [fee, setFee] = useState('')
+  const [editing, setEditing] = useState<string | null>(null)
+  const [draft, setDraft] = useState({ name: '', fee: '' })
+
+  const startEdit = (zone: { id: string; name: string; fee: string }) => {
+    setEditing(zone.id)
+    setDraft({ name: zone.name, fee: Number(zone.fee).toFixed(2).replace('.', ',') })
+  }
+
+  const commitEdit = () => {
+    if (!editing || !draft.name.trim()) return
+    onEdit(editing, {
+      name: draft.name.trim(),
+      fee: Number(draft.fee.replace(',', '.')) || 0,
+    })
+    setEditing(null)
+  }
 
   const handleAdd = () => {
     const value = Number(fee.replace(',', '.'))
@@ -63,16 +80,71 @@ export const ZoneList = ({
                 onCheckedChange={(checked) => onToggle(zone.id, checked)}
                 aria-label={`${zone.name} atendido`}
               />
-              <span className={local.zoneName}>{zone.name}</span>
-              <span className={local.fee}>{brl(zone.fee)}</span>
-              <Button
-                variant="ghost"
-                size="sm"
-                className={`${motion.press} ${local.remove}`}
-                onClick={() => onRemove(zone.id)}
-              >
-                Remover
-              </Button>
+
+              {editing === zone.id ? (
+                <div className={local.editRow}>
+                  <Input
+                    aria-label="Nome da região"
+                    className={local.editName}
+                    value={draft.name}
+                    onChange={(event) =>
+                      setDraft((current) => ({
+                        ...current,
+                        name: event.target.value,
+                      }))
+                    }
+                  />
+                  <Input
+                    inputMode="decimal"
+                    aria-label="Taxa da região"
+                    className={local.editFee}
+                    value={draft.fee}
+                    onChange={(event) =>
+                      setDraft((current) => ({
+                        ...current,
+                        fee: event.target.value,
+                      }))
+                    }
+                  />
+                  <Button size="sm" className={motion.press} onClick={commitEdit}>
+                    Salvar
+                  </Button>
+                  <Button
+                    size="sm"
+                    variant="ghost"
+                    onClick={() => setEditing(null)}
+                  >
+                    Voltar
+                  </Button>
+                </div>
+              ) : (
+                <>
+                  <button
+                    type="button"
+                    className={local.zoneName}
+                    onClick={() => startEdit(zone)}
+                  >
+                    {zone.name}
+                  </button>
+                  <span className={local.fee}>{brl(zone.fee)}</span>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    className={`${motion.press} ${local.edit}`}
+                    onClick={() => startEdit(zone)}
+                  >
+                    Editar
+                  </Button>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    className={`${motion.press} ${local.remove}`}
+                    onClick={() => onRemove(zone.id)}
+                  >
+                    Remover
+                  </Button>
+                </>
+              )}
             </li>
           ))}
         </ul>

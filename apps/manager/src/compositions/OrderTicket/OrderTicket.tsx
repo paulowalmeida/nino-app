@@ -58,6 +58,13 @@ export const OrderTicket = ({
         <p className={styles.customer}>{customerNameOf(order)}</p>
         <p className={styles.state}>{STATUS_LABEL[order.status]}</p>
 
+        {/* no celular a comanda inteira não cabe: vale a conta, não a lista */}
+        <p className={styles.summary}>
+          {order.items.reduce((total, { quantity }) => total + quantity, 0)}{' '}
+          {order.items.length === 1 ? 'item' : 'itens'} ·{' '}
+          {order.items.map(({ product }) => product.name).join(', ')}
+        </p>
+
         <ul className={styles.items}>
           {order.items.slice(0, VISIBLE_ITEMS).map((item) => (
             <li key={item.id} className={styles.item}>

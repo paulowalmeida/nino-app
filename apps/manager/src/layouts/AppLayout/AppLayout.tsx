@@ -2,7 +2,6 @@ import { useState } from 'react'
 import { Outlet } from 'react-router'
 
 import { NavIcon } from '@components/NavIcon'
-import { NinoLogo } from '@components/NinoLogo'
 import { useCurrentTenant } from '@hooks/session/useCurrentTenant'
 
 import { Sidebar } from './Sidebar'
@@ -17,6 +16,7 @@ export const AppLayout = () => {
 
   return (
     <div className={styles.shell}>
+      {/* a marca já está no menu — aqui vale o nome da loja em que se opera */}
       <header className={styles.topbar}>
         <button
           type="button"
@@ -26,8 +26,7 @@ export const AppLayout = () => {
         >
           <NavIcon name="menu" className={styles.hamburgerIcon} />
         </button>
-        <NinoLogo size="sm" tone="light" />
-        <div className={styles.spacer} />
+        <span className={styles.storeName}>{tenant?.tenantName}</span>
       </header>
 
       <Sidebar
@@ -37,7 +36,11 @@ export const AppLayout = () => {
       />
 
       {menuOpen && (
-        <div className={styles.overlay} onClick={closeMenu} role="presentation" />
+        <div
+          className={styles.overlay}
+          onClick={closeMenu}
+          role="presentation"
+        />
       )}
 
       <main className={styles.main}>
