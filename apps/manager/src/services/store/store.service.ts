@@ -10,7 +10,7 @@ import type {
 } from '@custom_types/store'
 import { ApiFactory } from '@services/api/api.service'
 
-const { get, getAll, create, patch } = ApiFactory()
+const { get, getAll, create, patch, remove } = ApiFactory()
 
 export const createStore = (data: CreateStoreRequest): Promise<CreatedStore> =>
   create<CreateStoreRequest, CreatedStore>('my/company/tenants', data)
@@ -48,3 +48,7 @@ export const resumeStore = (tenantId: string): Promise<TenantPause> =>
     `${tenantId}/resume`,
     {}
   )
+
+/** Fecha a unidade. A empresa e as outras lojas seguem de pé. */
+export const removeTenant = (tenantId: string): Promise<{ message: string }> =>
+  remove<{ message: string }>('tenants', tenantId)

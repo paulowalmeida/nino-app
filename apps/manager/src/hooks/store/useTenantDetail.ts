@@ -1,8 +1,15 @@
+import { useNavigate } from 'react-router'
+
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 
 import { queryKeys } from '@constants/query-keys'
 import type { TenantDetail, UpdateTenantRequest } from '@custom_types/store'
-import { getTenant, updateTenant } from '@services/store/store.service'
+import {
+  getTenant,
+  removeTenant,
+  updateTenant,
+} from '@services/store/store.service'
+import { useSessionStore } from '@states/useSessionStore'
 
 const detailKey = (tenantId: string) => [
   ...queryKeys.tenant.all(tenantId),
@@ -24,5 +31,21 @@ export const useSaveTenant = (tenantId: string | null) => {
       updateTenant(tenantId as string, data),
     onSuccess: (tenant) =>
       queryClient.setQueryData(detailKey(tenantId ?? ''), tenant),
+  })
+}
+
+/**
+ * Remover unidade muda a lista de lojas da sessão — por isso a sessão é
+ * limpa e a raiz reencaminha para a que sobrou.
+ */
+export const useRemoveTenant = () => {
+  const navigate = useNavigate()
+
+  return useMutation({
+    mutationFn: (tenantId: string) => removeTenant(tenantId),
+    onSuccess: () => {
+      useSessionStore.getState().clear()
+      void navigate('/')
+    },
   })
 }

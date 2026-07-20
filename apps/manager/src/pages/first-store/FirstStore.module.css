@@ -68,3 +68,8 @@
     animation: none;
   }
 }
+
+.back {
+  @apply mt-4 inline-flex text-sm font-medium text-faint;
+  @apply transition-colors duration-150 hover:text-brand-strong;
+}

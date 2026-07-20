@@ -9,20 +9,52 @@
 }
 
 .item {
-  @apply border-t border-sand;
+  @apply flex flex-wrap items-center gap-3 border-t border-sand py-2;
 }
 
-.link {
-  @apply flex flex-col gap-0.5 rounded-xl px-2 py-3;
-  @apply transition-colors duration-150 hover:bg-white/70;
+.unit {
+  @apply flex min-w-0 flex-1 flex-col gap-0.5 rounded-xl px-2 py-2;
+  @apply transition-colors duration-150;
   @apply focus-visible:outline-none focus-visible:ring-2;
   @apply focus-visible:ring-brand focus-visible:ring-offset-1;
 }
 
+a.unit {
+  @apply hover:bg-white/70;
+}
+
 .name {
-  @apply text-sm font-semibold text-body;
+  @apply flex flex-wrap items-center gap-2 text-sm font-semibold text-body;
+}
+
+/* onde a pessoa está agora — some a dúvida de qual loja ela edita */
+.here {
+  @apply rounded-full bg-brand/12 px-2 py-0.5;
+  @apply text-[0.6rem] font-bold uppercase tracking-[0.1em] text-brand-strong;
 }
 
 .company {
   @apply text-xs text-faint;
+}
+
+.remove {
+  @apply shrink-0 text-faint;
+}
+
+.confirm {
+  @apply flex flex-wrap items-center gap-2;
+}
+
+.confirmText {
+  @apply text-sm text-muted;
+}
+
+.add {
+  @apply mt-4 self-start;
+}
+
+/* limite do plano: informa a faixa antes de a API recusar */
+.full {
+  @apply mt-4 rounded-xl border border-brand/20 bg-brand/8 p-3;
+  @apply text-sm leading-relaxed text-brand-strong;
 }
