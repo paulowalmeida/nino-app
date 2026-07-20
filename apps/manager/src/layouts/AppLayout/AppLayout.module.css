@@ -1,17 +1,19 @@
 @reference "@nino/ds/globals.css";
 
+/* dvh, não vh: no celular a barra do navegador entra na conta de vh */
 .shell {
-  @apply flex min-h-screen bg-paper;
+  @apply flex min-h-dvh bg-paper;
 }
 
 .topbar {
-  @apply fixed left-0 right-0 top-0 z-30 flex h-14 items-center;
-  @apply justify-between border-b border-white/10 bg-dark px-4;
+  @apply fixed left-0 right-0 top-0 z-30 flex h-14 items-center gap-3;
+  @apply border-b border-white/10 bg-dark px-4;
   @apply lg:hidden;
 }
 
 .hamburger {
-  @apply flex h-8 w-8 items-center justify-center rounded-lg;
+  @apply flex h-8 w-8 shrink-0 cursor-pointer items-center justify-center;
+  @apply rounded-lg;
   @apply text-white/70 transition-colors duration-150;
   @apply hover:bg-white/10 hover:text-white;
 }
@@ -20,8 +22,8 @@
   @apply h-[18px] w-[18px];
 }
 
-.spacer {
-  @apply w-8;
+.storeName {
+  @apply min-w-0 truncate text-sm font-semibold text-white/85;
 }
 
 .overlay {
@@ -34,5 +36,5 @@
  * inteira ganha rolagem horizontal no celular.
  */
 .main {
-  @apply min-h-screen w-full min-w-0 flex-1 pt-14 lg:ml-60 lg:pt-0;
+  @apply min-h-dvh w-full min-w-0 flex-1 pt-14 lg:ml-60 lg:pt-0;
 }

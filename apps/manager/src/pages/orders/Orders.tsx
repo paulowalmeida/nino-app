@@ -88,7 +88,7 @@ export const Orders = () => {
         </Button>
       </header>
 
-      <div className={motion.unroll}>
+      <div className={`${motion.unroll} ${styles.track}`}>
         <StageTrack stages={options} value={stage} onChange={setStage} />
       </div>
 

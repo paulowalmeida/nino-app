@@ -9,8 +9,20 @@
   );
 }
 
+/* no celular o cabeçalho cede espaço para a fila: título e ação lado a lado */
 .header {
-  @apply mb-5 flex flex-wrap items-start justify-between gap-4 lg:mb-6;
+  @apply mb-3 flex items-center justify-between gap-3;
+  @apply lg:mb-6 lg:items-start;
+}
+
+/*
+ * No celular a trilha gruda no topo: trocar de etapa não pode exigir rolar a
+ * fila inteira de volta. O fundo acompanha a página para o conteúdo passar
+ * por baixo sem borrar.
+ */
+.track {
+  @apply sticky top-14 z-10 -mx-4 bg-cream/95 px-4 py-2 backdrop-blur-sm;
+  @apply lg:static lg:mx-0 lg:bg-transparent lg:px-0 lg:py-0 lg:backdrop-blur-none;
 }
 
 .headText {
@@ -18,11 +30,11 @@
 }
 
 .newOrder {
-  @apply w-full shrink-0 sm:w-auto;
+  @apply shrink-0;
 }
 
 .subtitle {
-  @apply mt-1 text-sm text-faint;
+  @apply mt-1 hidden text-sm text-faint lg:block;
 }
 
 /* a bobina: comandas lado a lado, sempre alinhadas pelo topo */
