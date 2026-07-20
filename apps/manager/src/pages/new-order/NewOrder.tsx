@@ -109,11 +109,11 @@ export const NewOrder = () => {
           quantity,
           unitPrice: Number(unitPrice),
         })),
+        guestName: recipient.name || undefined,
+        guestPhone: recipient.phone || undefined,
         ...(isDelivery
           ? {
               deliveryZoneId: recipient.zoneId,
-              guestName: recipient.name,
-              guestPhone: recipient.phone,
               guestStreet: recipient.street,
               guestNumber: recipient.number || undefined,
               guestComplement: recipient.complement || undefined,
@@ -276,15 +276,14 @@ export const NewOrder = () => {
             />
           </div>
 
-          {isDelivery && (
-            <RecipientFields
-              value={recipient}
-              zones={zoneOptions}
-              onChange={(patch) =>
-                setRecipient((current) => ({ ...current, ...patch }))
-              }
-            />
-          )}
+          <RecipientFields
+            value={recipient}
+            zones={zoneOptions}
+            withAddress={isDelivery}
+            onChange={(patch) =>
+              setRecipient((current) => ({ ...current, ...patch }))
+            }
+          />
 
           <div className={styles.field}>
             <span className={styles.label} id="payment-label">

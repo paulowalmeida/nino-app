@@ -40,22 +40,25 @@ export const useOpeningHours = (tenantId: string | null) => {
  * One entry per weekday: creates it the first time the day is filled in,
  * updates it from then on. The API keys `(tenantId, dayOfWeek)` as unique.
  */
-export const useSaveOpeningHours = (tenantId: string | null) => {
+const persistDay = (
+  tenantId: string,
+  { id, dayOfWeek, openTime, closeTime, isOpen }: HoursDraft
+) =>
+  id
+    ? updateOpeningHours(tenantId, id, { openTime, closeTime, isOpen })
+    : createOpeningHours(tenantId, { dayOfWeek, openTime, closeTime })
+
+/**
+ * The week is saved as one action — the store decides its schedule as a
+ * whole, not day by day. Days are written in parallel; a single failure
+ * fails the batch and keeps the form dirty.
+ */
+export const useSaveWeek = (tenantId: string | null) => {
   const queryClient = useQueryClient()
 
   return useMutation({
-    mutationFn: ({ id, dayOfWeek, openTime, closeTime, isOpen }: HoursDraft) =>
-      id
-        ? updateOpeningHours(tenantId as string, id, {
-            openTime,
-            closeTime,
-            isOpen,
-          })
-        : createOpeningHours(tenantId as string, {
-            dayOfWeek,
-            openTime,
-            closeTime,
-          }),
+    mutationFn: (week: HoursDraft[]) =>
+      Promise.all(week.map((day) => persistDay(tenantId as string, day))),
     onSuccess: () => {
       void queryClient.invalidateQueries({ queryKey: hoursKey(tenantId ?? '') })
     },

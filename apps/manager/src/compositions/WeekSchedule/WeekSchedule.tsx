@@ -44,20 +44,20 @@ const toWeek = (hours: OpeningHours[]): HoursDraft[] =>
 export const WeekSchedule = ({
   hours,
   isPending,
-  savingDay,
+  isSaving,
   onSave,
 }: WeekScheduleProps) => {
   const [week, setWeek] = useState<HoursDraft[]>(() =>
     DAYS.map((_, day) => blank(day))
   )
-  const [dirtyDay, setDirtyDay] = useState<number | null>(null)
+  const [isDirty, setDirty] = useState(false)
   const [seed, setSeed] = useState<OpeningHours[] | null>(null)
 
   /** Re-seeds the week when the API sends a different snapshot. */
   if (hours !== seed) {
     setSeed(hours)
     setWeek(toWeek(hours))
-    setDirtyDay(null)
+    setDirty(false)
   }
 
   const change = (day: number, patch: Partial<HoursDraft>) => {
@@ -66,7 +66,7 @@ export const WeekSchedule = ({
         entry.dayOfWeek === day ? { ...entry, ...patch } : entry
       )
     )
-    setDirtyDay(day)
+    setDirty(true)
   }
 
   if (isPending) return <Skeleton className={local.skeleton} />
@@ -121,19 +121,18 @@ export const WeekSchedule = ({
               />
             </div>
 
-            {dirtyDay === entry.dayOfWeek && (
-              <Button
-                size="sm"
-                loading={savingDay === entry.dayOfWeek}
-                className={`${motion.press} ${local.save}`}
-                onClick={() => onSave(entry)}
-              >
-                Salvar
-              </Button>
-            )}
           </li>
         ))}
       </ul>
+
+      <Button
+        loading={isSaving}
+        disabled={!isDirty}
+        className={`${motion.press} ${styles.save}`}
+        onClick={() => onSave(week)}
+      >
+        Salvar horários
+      </Button>
     </section>
   )
 }

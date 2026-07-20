@@ -1,0 +1,33 @@
+@reference "@nino/ds/globals.css";
+
+.grid {
+  @apply grid grid-cols-2 gap-3 sm:grid-cols-6;
+}
+
+.zip {
+  @apply col-span-2 sm:col-span-2;
+}
+
+.street {
+  @apply col-span-2 sm:col-span-4;
+}
+
+.number {
+  @apply col-span-1 sm:col-span-2;
+}
+
+.complement {
+  @apply col-span-1 sm:col-span-4;
+}
+
+.neighborhood {
+  @apply col-span-2 sm:col-span-3;
+}
+
+.city {
+  @apply col-span-1 sm:col-span-2;
+}
+
+.state {
+  @apply col-span-1;
+}

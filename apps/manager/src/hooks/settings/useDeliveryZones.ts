@@ -39,6 +39,18 @@ export const useZoneMutations = (tenantId: string | null) => {
     onSuccess: invalidate,
   })
 
+  const edit = useMutation({
+    mutationFn: ({
+      id,
+      ...data
+    }: {
+      id: string
+      name: string
+      fee: number
+    }) => updateDeliveryZone(tenantId as string, id, data),
+    onSuccess: invalidate,
+  })
+
   const toggle = useMutation({
     mutationFn: ({ id, isActive }: { id: string; isActive: boolean }) =>
       updateDeliveryZone(tenantId as string, id, { isActive }),
@@ -50,5 +62,5 @@ export const useZoneMutations = (tenantId: string | null) => {
     onSuccess: invalidate,
   })
 
-  return { add, toggle, drop }
+  return { add, edit, toggle, drop }
 }

@@ -11,6 +11,7 @@ export type HoursDraft = {
 export type WeekScheduleProps = {
   hours: OpeningHours[]
   isPending: boolean
-  savingDay?: number
-  onSave: (draft: HoursDraft) => void
+  isSaving: boolean
+  /** A semana inteira de uma vez — a loja decide a escala como um bloco. */
+  onSave: (week: HoursDraft[]) => void
 }
