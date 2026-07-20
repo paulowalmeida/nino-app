@@ -1,6 +1,7 @@
 import { useRef, useState } from 'react'
 
 import { ItemThumb } from '@components/ItemThumb'
+import { PhotoCropper } from '@compositions/PhotoCropper'
 import { useItemImages } from '@hooks/product/useItemImages'
 
 import type { ItemPhotoProps } from './ItemPhoto.types'
@@ -20,10 +21,12 @@ export const ItemPhoto = ({
   const inputRef = useRef<HTMLInputElement>(null)
   const [dragging, setDragging] = useState(false)
   const [error, setError] = useState<string | null>(null)
+  const [chosen, setChosen] = useState<File | null>(null)
 
   const cover = images.find(({ isPrimary }) => isPrimary) ?? images[0] ?? null
 
-  const send = (file: File | undefined) => {
+  /** Nada sobe direto: o arquivo escolhido vai para o enquadramento antes. */
+  const choose = (file: File | undefined) => {
     setError(null)
     if (!file) return
 
@@ -32,15 +35,34 @@ export const ItemPhoto = ({
       return
     }
 
-    upload.mutate(file, {
+    setChosen(file)
+  }
+
+  const send = (edited: File) =>
+    upload.mutate(edited, {
+      onSuccess: () => setChosen(null),
       onError: (cause) => setError(cause.message),
     })
-  }
 
   const onDrop = (event: React.DragEvent) => {
     event.preventDefault()
     setDragging(false)
-    send(event.dataTransfer.files[0])
+    choose(event.dataTransfer.files[0])
+  }
+
+  if (chosen) {
+    return (
+      <div className={styles.wrap}>
+        <PhotoCropper
+          key={`${chosen.name}-${chosen.size}`}
+          file={chosen}
+          isSending={upload.isPending}
+          onConfirm={send}
+          onCancel={() => setChosen(null)}
+        />
+        {error && <p className={styles.error}>{error}</p>}
+      </div>
+    )
   }
 
   return (
@@ -68,8 +90,6 @@ export const ItemPhoto = ({
             </p>
           </div>
         )}
-
-        {upload.isPending && <p className={styles.sending}>Enviando…</p>}
       </div>
 
       <div className={styles.actions}>
@@ -80,7 +100,7 @@ export const ItemPhoto = ({
             type="file"
             accept={ACCEPT}
             className={styles.fileInput}
-            onChange={(event) => send(event.target.files?.[0])}
+            onChange={(event) => choose(event.target.files?.[0])}
           />
         </label>
 
