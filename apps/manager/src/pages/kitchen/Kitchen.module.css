@@ -1,23 +1,19 @@
 @reference "@nino/ds/globals.css";
 
 /*
- * Tela de parede: o escuro do menu ocupa a sala inteira para que o papel
- * das comandas seja a única coisa clara — no fundo claro do painel, comanda
- * clara sobre fundo claro não salta de longe. Nunca rola por inteiro; quem
- * rola é cada trilho.
+ * Tela de parede: mesma superfície das outras telas do gestor — papel claro
+ * com o glow de marca escorrendo do topo. Nunca rola por inteiro; quem rola
+ * é cada trilho. A comanda se destaca pelo próprio contorno picotado, não
+ * por contraste de fundo.
  */
 .screen {
   @apply relative flex h-[calc(100dvh-3.5rem)] flex-col overflow-hidden;
-  @apply bg-dark px-3 pt-3 lg:h-dvh lg:px-5 lg:pt-4;
-}
-
-/* o mesmo glow de marca que vaza no topo do menu, do outro canto */
-.screen::after {
-  content: '';
-  @apply pointer-events-none absolute -top-24 -left-24 h-72 w-72 rounded-full;
-  background: var(--color-brand);
-  opacity: 0.14;
-  filter: blur(4.5rem);
+  @apply px-3 pt-3 lg:h-dvh lg:px-5 lg:pt-4;
+  background: radial-gradient(
+    900px 380px at 50% -10%,
+    rgba(255, 126, 31, 0.12),
+    transparent 60%
+  );
 }
 
 .board {
@@ -31,7 +27,7 @@
 
 /* filete no lugar de caixa: separa os trilhos sem competir com o papel */
 .column + .column {
-  @apply sm:border-l sm:border-white/8 sm:pl-5;
+  @apply sm:border-l sm:border-sand-deep sm:pl-5;
 }
 
 .columnHead {
@@ -39,12 +35,12 @@
 }
 
 .columnTitle {
-  @apply text-[0.8rem] font-bold uppercase tracking-[0.14em] text-white/55;
+  @apply text-[0.8rem] font-bold uppercase tracking-[0.14em] text-faint;
 }
 
 .count {
   @apply flex h-6 min-w-6 items-center justify-center rounded-full px-1.5;
-  @apply bg-white/10 text-xs font-bold text-white/70;
+  @apply bg-ink text-xs font-bold text-cream;
   font-variant-numeric: tabular-nums;
 }
 
@@ -54,7 +50,7 @@
 }
 
 .waiting .columnTitle {
-  @apply text-white/80;
+  @apply text-brand-strong;
 }
 
 .stack {
@@ -62,9 +58,9 @@
 }
 
 .empty {
-  @apply px-0.5 text-sm leading-relaxed text-white/35;
+  @apply px-0.5 text-sm leading-relaxed text-faint;
 }
 
 .skeleton {
-  @apply h-44 w-full rounded-[12px] bg-white/8;
+  @apply h-44 w-full rounded-[12px] bg-sand;
 }
