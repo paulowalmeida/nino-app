@@ -34,6 +34,11 @@ export const Storefront = () => {
   if (!slug) {
     return (
       <div className={styles.notFound}>
+        <img
+          src="/mascot-consumer.svg"
+          alt=""
+          className={styles.notFoundMascot}
+        />
         <h1 className={styles.notFoundTitle}>Qual loja você procura?</h1>
         <p className={styles.notFoundText}>
           Abra pelo link da loja — cada uma tem o seu endereço.
@@ -47,6 +52,11 @@ export const Storefront = () => {
   if (isError || !store) {
     return (
       <div className={styles.notFound}>
+        <img
+          src="/mascot-consumer-sad.svg"
+          alt=""
+          className={styles.notFoundMascot}
+        />
         <h1 className={styles.notFoundTitle}>Loja não encontrada</h1>
         <p className={styles.notFoundText}>
           Confira o link — o endereço pode ter mudado ou a loja saiu do ar.

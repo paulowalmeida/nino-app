@@ -47,6 +47,10 @@
   @apply px-6 text-center;
 }
 
+.notFoundMascot {
+  @apply mb-4 h-40 w-40;
+}
+
 .notFoundTitle {
   @apply font-display text-2xl font-extrabold text-ink;
 }
