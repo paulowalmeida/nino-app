@@ -1,15 +1,12 @@
 import { Button, Input } from '@nino/ds'
 
-import type { OrderChannel } from '@custom_types/order'
 import { brl } from '@utils/money'
-import { CHANNEL_LABEL, paymentLabelFor } from '@utils/order-flow'
+import { paymentLabelFor } from '@utils/order-flow'
 
 import type { SaleTicketProps } from './SaleTicket.types'
 
 import styles from './SaleTicket.module.css'
 import motion from '@styles/motion.module.css'
-
-const CHANNELS: OrderChannel[] = ['COUNTER', 'PICKUP']
 
 /**
  * A comanda do caixa fica sempre à vista, com o total em corpo grande: é o
@@ -22,12 +19,10 @@ export const SaleTicket = ({
   tableNumber,
   onCustomerName,
   onTableNumber,
-  channel,
   method,
   isSending,
   failed,
   onStep,
-  onChannel,
   onMethod,
   onClear,
   onFinish,
@@ -68,13 +63,14 @@ export const SaleTicket = ({
       </div>
 
       {lines.length === 0 ? (
-        <p className={styles.empty}>
-          Toque nos itens para montar a venda.
-        </p>
+        <p className={styles.empty}>Toque nos itens para montar a venda.</p>
       ) : (
         <ul className={styles.lines}>
           {lines.map((line) => (
-            <li key={line.productId} className={`${motion.deal} ${styles.line}`}>
+            <li
+              key={line.productId}
+              className={`${motion.deal} ${styles.line}`}
+            >
               <span className={styles.lineName}>{line.name}</span>
               <div className={styles.stepper}>
                 <button
@@ -105,22 +101,6 @@ export const SaleTicket = ({
 
       <div className={styles.foot}>
         <div className={styles.choices}>
-          {CHANNELS.map((value) => (
-            <button
-              key={value}
-              type="button"
-              aria-pressed={channel === value}
-              onClick={() => onChannel(value)}
-              className={`${motion.press} ${styles.choice} ${
-                channel === value ? styles.choiceOn : ''
-              }`}
-            >
-              {CHANNEL_LABEL[value]}
-            </button>
-          ))}
-        </div>
-
-        <div className={styles.choices}>
           {methods.map((value) => (
             <button
               key={value}
@@ -131,7 +111,7 @@ export const SaleTicket = ({
                 method === value ? styles.choiceOn : ''
               }`}
             >
-              {paymentLabelFor(value, channel)}
+              {paymentLabelFor(value, 'COUNTER')}
             </button>
           ))}
         </div>

@@ -8,7 +8,7 @@ import { useMenu } from '@hooks/product/useMenu'
 import { useAcceptedPayments } from '@hooks/settings/useAcceptedPayments'
 import type { CartLine } from '@custom_types/counter'
 import type { MenuItem } from '@custom_types/product'
-import type { OrderChannel, PaymentMethod } from '@custom_types/order'
+import type { PaymentMethod } from '@custom_types/order'
 
 import styles from './Counter.module.css'
 import motion from '@styles/motion.module.css'
@@ -28,7 +28,6 @@ export const Counter = () => {
     useCreateOrder(tenantId)
 
   const [lines, setLines] = useState<CartLine[]>([])
-  const [channel, setChannel] = useState<OrderChannel>('COUNTER')
   const [chosen, setChosen] = useState<PaymentMethod | null>(null)
 
   /** A escolha só vale enquanto a loja aceitar aquela forma. */
@@ -74,7 +73,7 @@ export const Counter = () => {
     setFailed(false)
     try {
       const order = await placeOrder({
-        channel,
+        channel: 'COUNTER',
         paymentMethod: method,
         guestName: customerName || undefined,
         tableNumber: tableNumber || undefined,
@@ -105,7 +104,11 @@ export const Counter = () => {
 
       <div className={styles.floor}>
         <section className={styles.menu} aria-label="Cardápio">
-          <ProductGrid sections={sections} isPending={isPending} onPick={pick} />
+          <ProductGrid
+            sections={sections}
+            isPending={isPending}
+            onPick={pick}
+          />
         </section>
 
         <SaleTicket
@@ -115,12 +118,10 @@ export const Counter = () => {
           tableNumber={tableNumber}
           onCustomerName={setCustomerName}
           onTableNumber={setTableNumber}
-          channel={channel}
           method={method}
           isSending={isSending}
           failed={failed}
           onStep={step}
-          onChannel={setChannel}
           onMethod={setChosen}
           onClear={() => {
             setLines([])
