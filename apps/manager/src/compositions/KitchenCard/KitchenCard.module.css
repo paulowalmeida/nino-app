@@ -1,0 +1,68 @@
+@reference "@nino/ds/globals.css";
+
+/*
+ * Cartão de cozinha: tudo maior que no painel, porque é lido de longe, com
+ * a mão ocupada. Sem preço — quem monta o prato não decide dinheiro.
+ */
+.card {
+  @apply flex flex-col gap-3 rounded-[22px] border-2 border-sand bg-paper p-4;
+}
+
+/* passou do tempo: a borda acende, sem alarme sonoro nem cor de erro */
+.late {
+  @apply border-brand;
+  background: linear-gradient(180deg, var(--color-cream) 0%, var(--color-paper) 45%);
+}
+
+.head {
+  @apply flex items-baseline justify-between gap-2;
+}
+
+.number {
+  @apply font-display text-2xl font-extrabold tracking-[-0.02em] text-ink;
+  font-variant-numeric: tabular-nums;
+}
+
+.clock {
+  @apply text-base font-bold text-faint;
+  font-variant-numeric: tabular-nums;
+}
+
+.late .clock {
+  @apply text-brand-strong;
+}
+
+.who {
+  @apply flex flex-col gap-0.5 border-b border-dashed border-sand-deep pb-2;
+}
+
+.channel {
+  @apply text-xs font-bold uppercase tracking-[0.1em] text-faint;
+}
+
+/* a observação é o que mais gera retrabalho: entra antes dos itens */
+.notes {
+  @apply rounded-lg bg-brand/10 px-3 py-2 text-base font-semibold leading-snug;
+  @apply text-brand-strong;
+}
+
+.items {
+  @apply flex flex-1 flex-col gap-1.5;
+}
+
+.item {
+  @apply flex items-baseline gap-2 text-lg leading-snug text-body;
+}
+
+.quantity {
+  @apply w-8 shrink-0 text-right font-display font-extrabold text-ink;
+  font-variant-numeric: tabular-nums;
+}
+
+.itemName {
+  @apply min-w-0 flex-1;
+}
+
+.action {
+  @apply w-full;
+}

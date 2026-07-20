@@ -1,0 +1,42 @@
+@reference "@nino/ds/globals.css";
+
+/* tela de parede: ocupa tudo e nunca rola por inteiro */
+.screen {
+  @apply flex h-dvh flex-col overflow-hidden p-3 lg:h-screen lg:p-4;
+}
+
+.board {
+  @apply grid min-h-0 flex-1 gap-3;
+  @apply grid-cols-1 sm:grid-cols-2 xl:grid-cols-4;
+}
+
+.column {
+  @apply flex min-h-0 flex-col rounded-[24px] bg-white/60 p-3 backdrop-blur-sm;
+}
+
+.columnHead {
+  @apply mb-2 flex shrink-0 items-center justify-between gap-2 px-1;
+}
+
+.columnTitle {
+  @apply font-display text-lg font-extrabold tracking-tight text-ink;
+}
+
+.count {
+  @apply flex h-7 min-w-7 items-center justify-center rounded-full;
+  @apply bg-ink px-2 text-sm font-bold text-cream;
+  font-variant-numeric: tabular-nums;
+}
+
+/* cada coluna rola sozinha: o cabeçalho fica sempre visível */
+.stack {
+  @apply flex min-h-0 flex-1 flex-col gap-3 overflow-y-auto pr-0.5;
+}
+
+.empty {
+  @apply px-1 text-sm leading-relaxed text-faint;
+}
+
+.skeleton {
+  @apply h-40 w-full rounded-[22px];
+}

@@ -5,6 +5,7 @@ import { AuthLayout } from '@layouts/AuthLayout'
 import { Catalog } from '@pages/catalog/Catalog'
 import { Counter } from '@pages/counter'
 import { CustomerDetail, Customers } from '@pages/customers'
+import { Kitchen } from '@pages/kitchen'
 import { Employees } from '@pages/employees/Employees'
 import { CreateStore } from '@pages/first-store/FirstStore'
 import { Account, Subscription } from '@pages/account'
@@ -77,6 +78,10 @@ export const router = createBrowserRouter([
       {
         path: 'balcao',
         element: <Counter />,
+      },
+      {
+        path: 'cozinha',
+        element: <Kitchen />,
       },
       {
         path: 'pedidos',

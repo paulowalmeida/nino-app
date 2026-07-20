@@ -47,6 +47,7 @@ const GROUPS: { title: string; items: NavItem[] }[] = [
         roles: MANAGERS,
       },
       { section: 'balcao', label: 'Balcão', icon: 'store' },
+      { section: 'cozinha', label: 'Cozinha', icon: 'clipboard' },
       { section: 'pedidos', label: 'Pedidos', icon: 'bag' },
       { section: 'catalogo', label: 'Cardápio', icon: 'clipboard' },
     ],
