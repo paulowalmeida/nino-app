@@ -71,6 +71,21 @@
   @apply mt-1.5 truncate text-sm text-muted sm:hidden;
 }
 
+/*
+ * A observação vem antes dos itens e com fundo próprio: é o que a cozinha
+ * erra quando não lê, e ler o pedido inteiro para achar não acontece na
+ * correria.
+ */
+.notes {
+  @apply mt-2 rounded-lg bg-brand/8 px-2.5 py-1.5 text-sm leading-snug;
+  @apply text-brand-strong;
+}
+
+.notesLabel {
+  @apply mr-1.5 text-[0.65rem] font-bold uppercase tracking-[0.08em];
+  @apply text-brand-strong/70;
+}
+
 .items {
   @apply mt-2.5 hidden flex-col gap-1 sm:flex;
 }

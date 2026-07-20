@@ -70,6 +70,13 @@ export const OrderTicket = ({
           {order.items.map(({ product }) => product.name).join(', ')}
         </p>
 
+        {order.notes && (
+          <p className={styles.notes}>
+            <span className={styles.notesLabel}>Observação</span>
+            {order.notes}
+          </p>
+        )}
+
         <ul className={styles.items}>
           {order.items.slice(0, VISIBLE_ITEMS).map((item) => (
             <li key={item.id} className={styles.item}>
