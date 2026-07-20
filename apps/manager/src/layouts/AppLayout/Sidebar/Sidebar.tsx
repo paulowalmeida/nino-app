@@ -25,12 +25,10 @@ type NavItem = {
   label: string
   icon: NavIconName
   /** Seções internas — aparecem quando o item está aberto. */
-  children?: { to: string; label: string }[]
+  children?: { to: string; label: string; icon: NavIconName }[]
   /** Papéis que enxergam o item; ausente = todo mundo da loja. */
   roles?: TenantRole[]
 }
-
-
 
 /**
  * Two groups: what the store does today, and how the store is set up. The
@@ -43,13 +41,13 @@ const GROUPS: { title: string; items: NavItem[] }[] = [
       {
         section: 'visao-geral',
         label: 'Visão geral',
-        icon: 'grid',
+        icon: 'gauge',
         roles: MANAGERS,
       },
-      { section: 'balcao', label: 'Balcão', icon: 'store' },
-      { section: 'cozinha', label: 'Cozinha', icon: 'clipboard' },
+      { section: 'balcao', label: 'Balcão', icon: 'register' },
+      { section: 'cozinha', label: 'Cozinha', icon: 'chef' },
       { section: 'pedidos', label: 'Pedidos', icon: 'bag' },
-      { section: 'catalogo', label: 'Cardápio', icon: 'clipboard' },
+      { section: 'catalogo', label: 'Cardápio', icon: 'book' },
     ],
   },
   {
@@ -64,7 +62,7 @@ const GROUPS: { title: string; items: NavItem[] }[] = [
       {
         section: 'colaboradores',
         label: 'Equipe',
-        icon: 'store',
+        icon: 'badge',
         roles: MANAGERS,
       },
       {
@@ -177,20 +175,26 @@ export const Sidebar = ({ tenantId, isOpen, onClose }: SidebarProps) => {
                         id={`sub-${section}`}
                         className={`${motion.unroll} ${styles.subNav}`}
                       >
-                        {children.map(({ to, label: childLabel }) => (
-                          <NavLink
-                            key={to}
-                            to={`/${tenantId}/${section}/${to}`}
-                            onClick={onClose}
-                            className={({ isActive }) =>
-                              isActive
-                                ? `${styles.subItem} ${styles.subItemActive}`
-                                : styles.subItem
-                            }
-                          >
-                            {childLabel}
-                          </NavLink>
-                        ))}
+                        {children.map(
+                          ({ to, label: childLabel, icon: childIcon }) => (
+                            <NavLink
+                              key={to}
+                              to={`/${tenantId}/${section}/${to}`}
+                              onClick={onClose}
+                              className={({ isActive }) =>
+                                isActive
+                                  ? `${styles.subItem} ${styles.subItemActive}`
+                                  : styles.subItem
+                              }
+                            >
+                              <NavIcon
+                                name={childIcon}
+                                className={styles.subIcon}
+                              />
+                              <span>{childLabel}</span>
+                            </NavLink>
+                          )
+                        )}
                       </div>
                     )}
                   </div>

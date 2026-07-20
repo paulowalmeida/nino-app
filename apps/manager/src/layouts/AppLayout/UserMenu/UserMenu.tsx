@@ -47,17 +47,20 @@ export const UserMenu = ({ name, tenantId, onNavigate }: UserMenuProps) => {
         {
           value: 'profile',
           label: 'Meus dados',
+          icon: <NavIcon name="user" className={styles.itemIcon} />,
           onSelect: () => go('minha-conta'),
         },
         {
           value: 'subscription',
           label: 'Assinatura e plano',
+          icon: <NavIcon name="receipt" className={styles.itemIcon} />,
           onSelect: () => go('assinatura'),
         },
         { separator: true },
         {
           value: 'logout',
           label: 'Sair da conta',
+          icon: <NavIcon name="logout" className={styles.itemIcon} />,
           destructive: true,
           onSelect: () => void handleLogout(),
         },

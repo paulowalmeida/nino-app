@@ -1,42 +1,70 @@
 @reference "@nino/ds/globals.css";
 
-/* tela de parede: ocupa tudo e nunca rola por inteiro */
+/*
+ * Tela de parede: o escuro do menu ocupa a sala inteira para que o papel
+ * das comandas seja a única coisa clara — no fundo claro do painel, comanda
+ * clara sobre fundo claro não salta de longe. Nunca rola por inteiro; quem
+ * rola é cada trilho.
+ */
 .screen {
-  @apply flex h-dvh flex-col overflow-hidden p-3 lg:h-screen lg:p-4;
+  @apply relative flex h-[calc(100dvh-3.5rem)] flex-col overflow-hidden;
+  @apply bg-dark px-3 pt-3 lg:h-dvh lg:px-5 lg:pt-4;
+}
+
+/* o mesmo glow de marca que vaza no topo do menu, do outro canto */
+.screen::after {
+  content: '';
+  @apply pointer-events-none absolute -top-24 -left-24 h-72 w-72 rounded-full;
+  background: var(--color-brand);
+  opacity: 0.14;
+  filter: blur(4.5rem);
 }
 
 .board {
-  @apply grid min-h-0 flex-1 gap-3;
+  @apply relative z-10 grid min-h-0 flex-1 gap-x-5 gap-y-4;
   @apply grid-cols-1 sm:grid-cols-2 xl:grid-cols-4;
 }
 
 .column {
-  @apply flex min-h-0 flex-col rounded-[24px] bg-white/60 p-3 backdrop-blur-sm;
+  @apply flex min-h-0 flex-col;
+}
+
+/* filete no lugar de caixa: separa os trilhos sem competir com o papel */
+.column + .column {
+  @apply sm:border-l sm:border-white/8 sm:pl-5;
 }
 
 .columnHead {
-  @apply mb-2 flex shrink-0 items-center justify-between gap-2 px-1;
+  @apply mb-3 flex shrink-0 items-center gap-2.5 px-0.5;
 }
 
 .columnTitle {
-  @apply font-display text-lg font-extrabold tracking-tight text-ink;
+  @apply text-[0.8rem] font-bold uppercase tracking-[0.14em] text-white/55;
 }
 
 .count {
-  @apply flex h-7 min-w-7 items-center justify-center rounded-full;
-  @apply bg-ink px-2 text-sm font-bold text-cream;
+  @apply flex h-6 min-w-6 items-center justify-center rounded-full px-1.5;
+  @apply bg-white/10 text-xs font-bold text-white/70;
   font-variant-numeric: tabular-nums;
 }
 
-/* cada coluna rola sozinha: o cabeçalho fica sempre visível */
+/* o que espera aceite é o único trilho com dívida: a contagem acende */
+.waiting .count {
+  @apply bg-brand text-brand-foreground;
+}
+
+.waiting .columnTitle {
+  @apply text-white/80;
+}
+
 .stack {
-  @apply flex min-h-0 flex-1 flex-col gap-3 overflow-y-auto pr-0.5;
+  @apply flex min-h-0 flex-1 flex-col gap-4 overflow-y-auto pb-4 pr-1;
 }
 
 .empty {
-  @apply px-1 text-sm leading-relaxed text-faint;
+  @apply px-0.5 text-sm leading-relaxed text-white/35;
 }
 
 .skeleton {
-  @apply h-40 w-full rounded-[22px];
+  @apply h-44 w-full rounded-[12px] bg-white/8;
 }
