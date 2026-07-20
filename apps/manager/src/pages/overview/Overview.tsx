@@ -1,4 +1,5 @@
 import { DayTally } from '@compositions/DayTally'
+import { PauseSwitch } from '@compositions/PauseSwitch'
 import { QueueBoard } from '@compositions/QueueBoard'
 import { StoreSign } from '@compositions/StoreSign'
 import { useCurrentTenant } from '@hooks/session/useCurrentTenant'
@@ -65,6 +66,10 @@ export const Overview = () => {
           className={`${motion.land} ${styles.mascot}`}
         />
       </header>
+
+      <div className={styles.pause}>
+        <PauseSwitch tenantId={tenantId} timezone={timezone} />
+      </div>
 
       <QueueBoard tenantId={tenantId} />
 

@@ -11,12 +11,15 @@ import { RecipientFields } from '@compositions/RecipientFields'
 import { useCreateOrder } from '@hooks/order/useCreateOrder'
 import { useCurrentTenant } from '@hooks/session/useCurrentTenant'
 import { useDeliveryZones } from '@hooks/settings/useDeliveryZones'
+import { useOpeningHours } from '@hooks/settings/useOpeningHours'
+import { usePause } from '@hooks/store/usePause'
 import { useMenu } from '@hooks/product/useMenu'
 import type { OrderChannel, PaymentMethod } from '@custom_types/order'
 import { brl } from '@utils/money'
 import { toE164 } from '@utils/phone'
 import { CHANNEL_LABEL, PAYMENT_METHOD_LABEL } from '@utils/order-flow'
 import { riseDelay } from '@utils/rise-delay'
+import { isStoreOpen } from '@utils/store-open'
 
 import type { CartLine, Recipient } from './NewOrder.types'
 
@@ -44,6 +47,8 @@ export const NewOrder = () => {
 
   const { sections, isPending } = useMenu(tenantId)
   const { zones } = useDeliveryZones(tenantId)
+  const { hours } = useOpeningHours(tenantId)
+  const { data: pause } = usePause(tenantId)
   const { mutateAsync: placeOrder, isPending: isPlacing } =
     useCreateOrder(tenantId)
 
@@ -55,6 +60,17 @@ export const NewOrder = () => {
   const [failed, setFailed] = useState(false)
 
   const isDelivery = channel === 'DELIVERY'
+
+  /**
+   * O balcão atende quem está na porta a qualquer hora; a entrega, não. O
+   * aviso informa e deixa a decisão com quem está atendendo — bloquear
+   * seria pior no dia em que o entregador ainda está na rua.
+   */
+  const zone = tenant?.tenantId
+    ? Intl.DateTimeFormat().resolvedOptions().timeZone
+    : undefined
+  const closedNow =
+    pause?.isPaused || (hours.length > 0 && !isStoreOpen(hours, zone ?? 'UTC'))
 
   const zoneOptions = zones
     .filter(({ isActive }) => isActive)
@@ -312,6 +328,14 @@ export const NewOrder = () => {
               onChange={(event) => setNotes(event.target.value)}
             />
           </div>
+
+          {isDelivery && closedNow && (
+            <p className={`${motion.unroll} ${styles.warning}`} role="status">
+              {pause?.isPaused
+                ? 'A loja está fechada agora. O pedido entra assim mesmo.'
+                : 'Fora do horário de entrega. O pedido entra assim mesmo.'}
+            </p>
+          )}
 
           {missingRecipient && lines.length > 0 && (
             <p className={styles.hint}>

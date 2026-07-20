@@ -72,6 +72,10 @@
   @apply mt-8 lg:mt-10;
 }
 
+.pause {
+  @apply mb-6 lg:mb-8;
+}
+
 .mascot {
   @apply pointer-events-none hidden select-none sm:block;
   position: absolute;

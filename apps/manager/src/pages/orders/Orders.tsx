@@ -1,4 +1,4 @@
-import { Link, useSearchParams } from 'react-router'
+import { useSearchParams } from 'react-router'
 
 import { Button, Skeleton } from '@nino/ds'
 
@@ -91,10 +91,6 @@ export const Orders = () => {
             adiante.
           </p>
         </div>
-
-        <Button asChild className={`${motion.press} ${styles.newOrder}`}>
-          <Link to="novo">Abrir pedido</Link>
-        </Button>
       </header>
 
       <div className={`${motion.unroll} ${styles.track}`}>

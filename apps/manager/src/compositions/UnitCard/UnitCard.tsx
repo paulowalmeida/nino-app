@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-import { Button, FormField, Input, Skeleton } from '@nino/ds'
+import { Button, FormField, Input, Select, Skeleton } from '@nino/ds'
 
 import { AddressFields } from '@compositions/AddressFields'
 import type { TenantDetail } from '@custom_types/store'
@@ -11,8 +11,22 @@ import local from './UnitCard.module.css'
 import motion from '@styles/motion.module.css'
 import styles from '@styles/settingsCard.module.css'
 
+/** Fusos que cobrem o Brasil — a loja opera num, não em qualquer um. */
+const ZONES = [
+  { value: 'America/Sao_Paulo', label: 'Brasília (GMT-3)' },
+  { value: 'America/Belem', label: 'Belém (GMT-3)' },
+  { value: 'America/Fortaleza', label: 'Fortaleza (GMT-3)' },
+  { value: 'America/Manaus', label: 'Manaus (GMT-4)' },
+  { value: 'America/Cuiaba', label: 'Cuiabá (GMT-4)' },
+  { value: 'America/Porto_Velho', label: 'Porto Velho (GMT-4)' },
+  { value: 'America/Rio_Branco', label: 'Rio Branco (GMT-5)' },
+  { value: 'America/Noronha', label: 'Fernando de Noronha (GMT-2)' },
+]
+
 const EMPTY: UnitDraft = {
   customName: '',
+  timezone: 'America/Sao_Paulo',
+  primaryColor: '#FF6B00',
   zipCode: '',
   street: '',
   number: '',
@@ -24,6 +38,8 @@ const EMPTY: UnitDraft = {
 
 const toDraft = (unit: TenantDetail): UnitDraft => ({
   customName: unit.customName ?? '',
+  timezone: unit.timezone,
+  primaryColor: unit.primaryColor ?? '#FF6B00',
   zipCode: unit.zipCode,
   street: unit.street,
   number: unit.number,
@@ -79,6 +95,38 @@ export const UnitCard = ({
           helperText="Muda só pelo suporte — links já divulgados quebrariam"
         >
           <Input value={unit?.slug ?? ''} disabled readOnly />
+        </FormField>
+
+        <FormField
+          label="Fuso horário"
+          helperText="Define a virada do dia e o horário de funcionamento"
+        >
+          <Select
+            options={ZONES}
+            value={draft.timezone}
+            aria-label="Fuso horário da unidade"
+            onValueChange={(timezone) => change({ timezone })}
+          />
+        </FormField>
+
+        <FormField
+          label="Cor da marca"
+          helperText="Usada na loja que o cliente vê"
+        >
+          <div className={local.color}>
+            <input
+              type="color"
+              aria-label="Cor da marca"
+              className={local.picker}
+              value={draft.primaryColor}
+              onChange={(event) => change({ primaryColor: event.target.value })}
+            />
+            <Input
+              value={draft.primaryColor}
+              className={local.hex}
+              onChange={(event) => change({ primaryColor: event.target.value })}
+            />
+          </div>
         </FormField>
       </div>
 

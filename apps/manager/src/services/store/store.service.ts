@@ -3,7 +3,9 @@ import type {
   CreateStoreRequest,
   SlugAvailabilityResponse,
   StoreTypeOption,
+  PauseRequest,
   TenantDetail,
+  TenantPause,
   UpdateTenantRequest,
 } from '@custom_types/store'
 import { ApiFactory } from '@services/api/api.service'
@@ -30,3 +32,19 @@ export const updateTenant = (
   data: UpdateTenantRequest
 ): Promise<TenantDetail> =>
   patch<UpdateTenantRequest, TenantDetail>('tenants', tenantId, data)
+
+export const getPause = (tenantId: string): Promise<TenantPause> =>
+  get<TenantPause>(`tenants/${tenantId}/pause`)
+
+export const pauseStore = (
+  tenantId: string,
+  data: PauseRequest
+): Promise<TenantPause> =>
+  patch<PauseRequest, TenantPause>('tenants', `${tenantId}/pause`, data)
+
+export const resumeStore = (tenantId: string): Promise<TenantPause> =>
+  patch<Record<string, never>, TenantPause>(
+    'tenants',
+    `${tenantId}/resume`,
+    {}
+  )

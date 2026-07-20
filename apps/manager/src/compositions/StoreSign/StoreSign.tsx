@@ -1,4 +1,5 @@
 import { useOpeningHours } from '@hooks/settings/useOpeningHours'
+import { usePause } from '@hooks/store/usePause'
 import { isStoreOpen } from '@utils/store-open'
 
 import type { StoreSignProps } from './StoreSign.types'
@@ -13,11 +14,13 @@ import motion from '@styles/motion.module.css'
  */
 export const StoreSign = ({ tenantId, timezone }: StoreSignProps) => {
   const { hours, isError, isPending } = useOpeningHours(tenantId)
+  const { data: pause } = usePause(tenantId)
 
   if (isPending || isError || hours.length === 0) return null
 
   const zone = timezone ?? Intl.DateTimeFormat().resolvedOptions().timeZone
-  const open = isStoreOpen(hours, zone)
+  /** Pausa manual vence o horário: quem fechou na mão fechou de verdade. */
+  const open = !pause?.isPaused && isStoreOpen(hours, zone)
 
   return (
     <span

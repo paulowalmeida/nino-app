@@ -1,0 +1,44 @@
+@reference "@nino/ds/globals.css";
+
+/* fechada é estado de exceção: fundo quente e forte, impossível de ignorar */
+.paused {
+  @apply flex flex-wrap items-center justify-between gap-3 rounded-[22px];
+  @apply border border-brand/35 bg-brand/10 p-4;
+}
+
+.text {
+  @apply min-w-0;
+}
+
+.title {
+  @apply font-display text-base font-extrabold text-brand-strong;
+}
+
+.hint {
+  @apply mt-0.5 text-sm leading-relaxed text-muted;
+}
+
+.open {
+  @apply flex;
+}
+
+.trigger {
+  @apply text-faint;
+}
+
+.form {
+  @apply flex w-full flex-col gap-2 rounded-[22px] border border-sand;
+  @apply bg-white/70 p-4 backdrop-blur-sm;
+}
+
+.formTitle {
+  @apply text-sm font-semibold text-body;
+}
+
+.reason {
+  @apply max-w-sm;
+}
+
+.options {
+  @apply flex flex-wrap gap-2;
+}

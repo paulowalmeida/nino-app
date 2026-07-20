@@ -117,6 +117,12 @@
   @apply text-xs leading-relaxed text-faint;
 }
 
+/* aviso, não bloqueio: informa e deixa a decisão com quem atende */
+.warning {
+  @apply rounded-xl border border-brand/30 bg-brand/8 px-3 py-2;
+  @apply text-xs leading-relaxed text-brand-strong;
+}
+
 .total {
   @apply flex items-baseline justify-between;
   @apply border-t border-dashed border-sand-deep pt-3;
