@@ -1,0 +1,127 @@
+@reference "@nino/ds/globals.css";
+
+/* mobile-first: a vitrine é uma coluna estreita centrada, confortável no
+ * polegar e limitada para não esticar no desktop */
+.page {
+  @apply mx-auto min-h-dvh w-full max-w-xl pb-24;
+}
+
+.menu {
+  @apply px-5;
+}
+
+.section {
+  @apply scroll-mt-16 pt-5;
+}
+
+.sectionTitle {
+  @apply mb-1 font-display text-xl font-extrabold tracking-tight text-ink;
+}
+
+.items {
+  @apply divide-y divide-sand;
+}
+
+.hint {
+  @apply py-10 text-center text-sm text-muted;
+}
+
+/* barra da sacola: flutua acima do polegar, some quando nada foi somado */
+.cartBar {
+  @apply fixed inset-x-0 bottom-0 z-30 mx-auto flex max-w-xl items-center;
+  @apply justify-between gap-3 border-t border-sand bg-paper/95 px-5 py-4;
+  @apply backdrop-blur-sm;
+}
+
+.cartCount {
+  @apply font-display text-base font-extrabold text-ink;
+}
+
+.cartSoon {
+  @apply rounded-full bg-surface-sunk px-3 py-1.5 text-xs font-bold text-subtle;
+}
+
+/* ----- não encontrada ----- */
+.notFound {
+  @apply mx-auto flex min-h-dvh max-w-md flex-col items-center justify-center;
+  @apply px-6 text-center;
+}
+
+.notFoundTitle {
+  @apply font-display text-2xl font-extrabold text-ink;
+}
+
+.notFoundText {
+  @apply mt-2 text-sm leading-relaxed text-muted;
+}
+
+/* ----- skeleton ----- */
+.skHeader {
+  @apply flex items-center gap-4 px-5 pt-8 pb-6;
+}
+
+.skLogo {
+  @apply h-20 w-20 shrink-0 rounded-3xl bg-sand;
+}
+
+.skLines {
+  @apply flex-1;
+}
+
+.skName {
+  @apply h-7 w-2/3 rounded-lg bg-sand;
+}
+
+.skAddress {
+  @apply mt-2 h-4 w-1/2 rounded bg-sand;
+}
+
+.skTrack {
+  @apply flex gap-2 border-b border-sand px-4 py-3;
+}
+
+.skChip {
+  @apply h-9 w-24 shrink-0 rounded-full bg-sand;
+}
+
+.skRow {
+  @apply flex items-center justify-between gap-3 border-b border-sand py-4;
+}
+
+.skText {
+  @apply flex-1;
+}
+
+.skItemName {
+  @apply h-5 w-1/2 rounded bg-sand;
+}
+
+.skItemDesc {
+  @apply mt-2 h-4 w-3/4 rounded bg-sand;
+}
+
+.skPhoto {
+  @apply h-28 w-28 shrink-0 rounded-2xl bg-sand;
+}
+
+.skHeader,
+.skTrack,
+.skRow,
+.skChip {
+  animation: shimmer 1.4s ease-in-out infinite;
+}
+
+@keyframes shimmer {
+  50% {
+    opacity: 0.55;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .skHeader,
+  .skTrack,
+  .skRow,
+  .skChip {
+    animation: none;
+  }
+}
