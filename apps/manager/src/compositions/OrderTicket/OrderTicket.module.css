@@ -53,7 +53,13 @@
 }
 
 .customer {
-  @apply truncate text-sm font-semibold text-body;
+  @apply flex flex-wrap items-center gap-2 text-sm font-semibold text-body;
+}
+
+/* mesa ao lado do nome: é como o balcão chama o pedido */
+.table {
+  @apply rounded-full bg-surface-sunk px-2 py-0.5;
+  @apply text-[0.65rem] font-bold uppercase tracking-[0.08em] text-subtle;
 }
 
 .state {

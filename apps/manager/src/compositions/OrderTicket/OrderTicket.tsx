@@ -55,7 +55,12 @@ export const OrderTicket = ({
         className={`${motion.lift} ${styles.body}`}
         aria-label={`Abrir pedido ${ticketNumber(order.id)}`}
       >
-        <p className={styles.customer}>{customerNameOf(order)}</p>
+        <p className={styles.customer}>
+          {customerNameOf(order)}
+          {order.tableNumber && (
+            <span className={styles.table}>mesa {order.tableNumber}</span>
+          )}
+        </p>
         <p className={styles.state}>{STATUS_LABEL[order.status]}</p>
 
         {/* no celular a comanda inteira não cabe: vale a conta, não a lista */}

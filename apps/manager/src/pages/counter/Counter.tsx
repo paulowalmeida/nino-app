@@ -33,6 +33,8 @@ export const Counter = () => {
 
   /** A escolha só vale enquanto a loja aceitar aquela forma. */
   const method = chosen && methods.includes(chosen) ? chosen : methods[0]
+  const [customerName, setCustomerName] = useState('')
+  const [tableNumber, setTableNumber] = useState('')
   const [failed, setFailed] = useState(false)
   const [closed, setClosed] = useState<string | null>(null)
 
@@ -74,6 +76,8 @@ export const Counter = () => {
       const order = await placeOrder({
         channel,
         paymentMethod: method,
+        guestName: customerName || undefined,
+        tableNumber: tableNumber || undefined,
         items: lines.map(({ productId, quantity, unitPrice }) => ({
           productId,
           quantity,
@@ -81,6 +85,8 @@ export const Counter = () => {
         })),
       })
       setLines([])
+      setCustomerName('')
+      setTableNumber('')
       setClosed(order.id.slice(-4).toUpperCase())
       window.setTimeout(() => setClosed(null), 4000)
     } catch {
@@ -105,6 +111,10 @@ export const Counter = () => {
         <SaleTicket
           lines={lines}
           methods={methods}
+          customerName={customerName}
+          tableNumber={tableNumber}
+          onCustomerName={setCustomerName}
+          onTableNumber={setTableNumber}
           channel={channel}
           method={method}
           isSending={isSending}
@@ -112,7 +122,11 @@ export const Counter = () => {
           onStep={step}
           onChannel={setChannel}
           onMethod={setChosen}
-          onClear={() => setLines([])}
+          onClear={() => {
+            setLines([])
+            setCustomerName('')
+            setTableNumber('')
+          }}
           onFinish={finish}
         />
       </div>

@@ -20,6 +20,19 @@
   @apply text-faint transition-colors duration-150 hover:text-brand-strong;
 }
 
+/* identificação no topo: é a primeira coisa que se pergunta no balcão */
+.who {
+  @apply flex shrink-0 gap-2 border-b border-sand px-4 py-3;
+}
+
+.whoName {
+  @apply min-w-0 flex-1;
+}
+
+.whoTable {
+  @apply w-20 shrink-0;
+}
+
 .empty {
   @apply flex-1 px-4 py-6 text-base leading-relaxed text-faint;
 }

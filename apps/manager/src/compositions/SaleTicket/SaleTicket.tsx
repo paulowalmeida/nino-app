@@ -1,4 +1,4 @@
-import { Button } from '@nino/ds'
+import { Button, Input } from '@nino/ds'
 
 import type { OrderChannel } from '@custom_types/order'
 import { brl } from '@utils/money'
@@ -18,6 +18,10 @@ const CHANNELS: OrderChannel[] = ['COUNTER', 'PICKUP']
 export const SaleTicket = ({
   lines,
   methods,
+  customerName,
+  tableNumber,
+  onCustomerName,
+  onTableNumber,
   channel,
   method,
   isSending,
@@ -44,6 +48,24 @@ export const SaleTicket = ({
           </button>
         )}
       </header>
+
+      {/* sem nome, a comanda pronta vira "de quem é esse pedido?" */}
+      <div className={styles.who}>
+        <Input
+          placeholder="Nome de quem pediu"
+          aria-label="Nome de quem pediu"
+          className={styles.whoName}
+          value={customerName}
+          onChange={(event) => onCustomerName(event.target.value)}
+        />
+        <Input
+          placeholder="Mesa"
+          aria-label="Mesa ou comanda"
+          className={styles.whoTable}
+          value={tableNumber}
+          onChange={(event) => onTableNumber(event.target.value)}
+        />
+      </div>
 
       {lines.length === 0 ? (
         <p className={styles.empty}>
