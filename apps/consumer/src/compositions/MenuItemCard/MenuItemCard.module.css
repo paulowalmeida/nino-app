@@ -1,0 +1,49 @@
+@reference "@nino/ds/globals.css";
+
+.card {
+  @apply flex items-stretch gap-3 py-4;
+}
+
+.body {
+  @apply flex min-w-0 flex-1 flex-col;
+}
+
+.name {
+  @apply font-display text-base font-bold leading-snug text-ink;
+}
+
+.description {
+  @apply mt-1 line-clamp-2 text-sm leading-snug text-muted;
+}
+
+/* o preço fica no rodapé do texto e em corpo forte: é a informação que
+ * decide, então não disputa espaço com a descrição */
+.price {
+  @apply mt-auto pt-2 font-display text-lg font-extrabold text-ink;
+  font-variant-numeric: tabular-nums;
+}
+
+.media {
+  @apply relative shrink-0;
+}
+
+.photo {
+  @apply h-28 w-28 rounded-2xl object-cover;
+  box-shadow: inset 0 0 0 1px var(--color-sand);
+}
+
+/*
+ * O botão de somar mora no canto da foto quando há foto, e sozinho quando
+ * não há — por isso ancora no container da mídia, não na imagem.
+ */
+.add {
+  @apply absolute -bottom-2 -right-2 flex h-11 w-11 items-center justify-center;
+  @apply rounded-full bg-brand text-2xl font-bold leading-none text-brand-foreground;
+  @apply transition-transform duration-150 active:scale-90;
+  box-shadow: 0 8px 18px -6px rgba(232, 84, 12, 0.6);
+}
+
+/* sem foto, o card não reserva 112px de vazio: a mídia encolhe para o botão */
+.media:not(:has(.photo)) {
+  @apply flex h-28 w-11 items-end;
+}

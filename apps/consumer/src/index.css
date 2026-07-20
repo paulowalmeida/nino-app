@@ -1,0 +1,23 @@
+@import "@nino/ds/globals.css";
+
+@layer base {
+  body {
+    background: var(--color-cream);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /*
+   * O mesmo grão da landing e do gestor: atmosfera, não textura. É o que faz
+   * a vitrine, o painel e o site parecerem o mesmo produto.
+   */
+  body::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0.4;
+    mix-blend-mode: multiply;
+    background-image: url("/noise.svg");
+  }
+}
