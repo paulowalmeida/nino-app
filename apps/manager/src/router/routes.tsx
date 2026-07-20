@@ -26,7 +26,10 @@ import {
 } from '@pages/settings/sections'
 import { StoreSelection } from '@pages/store-selection/StoreSelection'
 
+import { MANAGERS } from '@constants/roles'
+
 import { AuthGuard } from './auth-guard'
+import { roleGuard } from './role-guard'
 import { RootLoader } from './root-loader'
 import { SessionGuard } from './session-guard'
 
@@ -66,6 +69,7 @@ export const router = createBrowserRouter([
       {
         path: 'visao-geral',
         element: <Overview />,
+        loader: roleGuard(MANAGERS),
       },
       {
         path: 'balcao',
@@ -98,6 +102,7 @@ export const router = createBrowserRouter([
       {
         path: 'colaboradores',
         element: <Employees />,
+        loader: roleGuard(MANAGERS),
       },
       {
         path: 'minha-conta',
@@ -110,6 +115,7 @@ export const router = createBrowserRouter([
       {
         path: 'configuracoes',
         element: <Settings />,
+        loader: roleGuard(MANAGERS),
         children: [
           { index: true, element: <Navigate to="empresa" replace /> },
           { path: 'empresa', element: <CompanySection /> },

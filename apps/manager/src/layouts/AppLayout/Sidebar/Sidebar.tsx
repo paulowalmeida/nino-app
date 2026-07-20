@@ -4,6 +4,7 @@ import { NavLink, useLocation } from 'react-router'
 import { NavIcon } from '@components/NavIcon'
 import { NinoLogo } from '@components/NinoLogo'
 import type { NavIconName } from '@components/NavIcon/NavIcon.types'
+import { MANAGERS } from '@constants/roles'
 import { SETTINGS_SECTIONS } from '@constants/settings-sections'
 import type { TenantRole } from '@custom_types/auth'
 import { useQueueSummary } from '@hooks/order/useQueueSummary'
@@ -29,7 +30,7 @@ type NavItem = {
   roles?: TenantRole[]
 }
 
-const MANAGERS: TenantRole[] = ['TENANT_OWNER', 'MANAGER']
+
 
 /**
  * Two groups: what the store does today, and how the store is set up. The

@@ -1,13 +1,12 @@
 import { redirect } from 'react-router'
 
+import { HOME_OF } from '@constants/roles'
 import type { Membership } from '@custom_types/auth'
 import { loadSession } from '@services/auth/session.service'
 import { useSessionStore } from '@states/useSessionStore'
 
-const entryTenant = (memberships: Membership[]): string => {
-  const current = memberships.find(({ isCurrent }) => isCurrent)
-  return (current ?? memberships[0]).tenantId
-}
+const entryUnit = (memberships: Membership[]): Membership =>
+  memberships.find(({ isCurrent }) => isCurrent) ?? memberships[0]
 
 /**
  * Entry point. Stores of a single company are units of the same business, so
@@ -25,5 +24,6 @@ export const RootLoader = async () => {
   const companies = new Set(memberships.map(({ companyId }) => companyId))
   if (companies.size > 1) return redirect('/lojas')
 
-  return redirect(`/${entryTenant(memberships)}/visao-geral`)
+  const unit = entryUnit(memberships)
+  return redirect(`/${unit.tenantId}/${HOME_OF[unit.role]}`)
 }
