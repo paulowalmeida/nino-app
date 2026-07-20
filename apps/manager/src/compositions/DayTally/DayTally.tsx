@@ -35,12 +35,18 @@ export const DayTally = ({ tenantId, timezone }: DayTallyProps) => {
       </div>
 
       <div className={styles.tally}>
-        <article className={`${motion.settle} ${styles.figure}`}>
+        {/* o único número com destino: os outros dois não são uma lista */}
+        <Link
+          to="../pedidos?etapa=closed"
+          relative="path"
+          aria-label="Ver os pedidos fechados"
+          className={`${motion.settle} ${motion.lift} ${styles.figure}`}
+        >
           <span className={styles.value}>
             {isPending ? '·' : <CountUp value={count} />}
           </span>
           <span className={styles.label}>pedidos fechados</span>
-        </article>
+        </Link>
 
         <article
           className={`${motion.settle} ${styles.figure}`}
@@ -72,9 +78,7 @@ export const DayTally = ({ tenantId, timezone }: DayTallyProps) => {
                 relative="path"
                 className={`${motion.lift} ${styles.link}`}
               >
-                <span className={styles.number}>
-                  #{ticketNumber(order.id)}
-                </span>
+                <span className={styles.number}>#{ticketNumber(order.id)}</span>
                 <span className={styles.state}>
                   {STATUS_LABEL[order.status]}
                 </span>

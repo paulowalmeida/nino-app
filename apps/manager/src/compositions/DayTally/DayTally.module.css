@@ -15,6 +15,14 @@
 .figure {
   @apply flex flex-col gap-1 rounded-[22px] border border-sand;
   @apply bg-surface-sunk/70 p-4 backdrop-blur-sm lg:p-5;
+  @apply transition-colors duration-200;
+}
+
+/* só o quadro que leva a algum lugar reage ao cursor */
+a.figure {
+  @apply hover:border-brand/30;
+  @apply focus-visible:outline-none focus-visible:ring-2;
+  @apply focus-visible:ring-brand focus-visible:ring-offset-2;
 }
 
 .value {
