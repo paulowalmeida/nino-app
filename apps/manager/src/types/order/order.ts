@@ -1,7 +1,7 @@
 import type { OrderChannel } from './order-channel'
 import type { OrderItem } from './order-item'
 import type { OrderStatusEntry } from './order-status-entry'
-import type { OrderStatusKey } from './order-queue-summary'
+import type { OrderStatusKey } from './order-status-key'
 import type { PaymentMethod } from './payment-method'
 import type { PaymentStatus } from './payment-status'
 

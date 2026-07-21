@@ -1,4 +1,5 @@
-import type { Order, OrderStatusKey } from '@custom_types/order'
+import type { Order } from '@custom_types/order'
+import type { OrderStatusKey } from '@custom_types/order/order-status-key'
 
 export type OrderTicketProps = {
   order: Order

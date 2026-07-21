@@ -2,11 +2,11 @@ import type {
   Order,
   OrderChannel,
   OrderStage,
-  OrderStatusKey,
   OrderStep,
   PaymentMethod,
   PaymentStatus,
 } from '@custom_types/order'
+import type { OrderStatusKey } from '@custom_types/order/order-status-key'
 
 /**
  * The panel speaks the kitchen's language, not the database's. Every label

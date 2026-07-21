@@ -6,7 +6,7 @@ import { Reorder, useDragControls, type Transition } from 'framer-motion'
 import { Switch } from '@nino/ds'
 
 import gripIcon from '@assets/icons/grip.svg?raw'
-import { Icon } from '@components/Icon'
+import { Icon } from '@components/Icon/Icon'
 import { ItemThumb } from '@components/ItemThumb'
 import { riseDelay } from '@utils/rise-delay'
 

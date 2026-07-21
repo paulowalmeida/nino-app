@@ -1,12 +1,7 @@
+import type { CropArea } from '@custom_types/ui'
+
 /** Lado do quadrado gerado — o cardápio nunca mostra a foto maior que isso. */
 const OUTPUT = 1080
-
-export type CropArea = {
-  /** Deslocamento do centro da imagem, em fração do lado visível. */
-  offsetX: number
-  offsetY: number
-  zoom: number
-}
 
 /**
  * Redesenha o recorte visível num quadrado de 1080px. O enquadramento é o

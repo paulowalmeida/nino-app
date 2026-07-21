@@ -1,3 +1,3 @@
-import type { ReportPeriod } from '@utils/report-range'
+import type { ReportPeriod } from './report-period'
 
 export type PeriodChoice = ReportPeriod | 'custom'

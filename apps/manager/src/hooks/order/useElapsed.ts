@@ -1,6 +1,7 @@
 import { useSyncExternalStore } from 'react'
 
-import { elapsedSince, type Elapsed } from '@utils/elapsed'
+import type { Elapsed } from '@custom_types/ui'
+import { elapsedSince } from '@utils/elapsed'
 
 /** O relógio da cozinha bate junto: um timer só para a tela inteira. */
 const TICK_MS = 15_000

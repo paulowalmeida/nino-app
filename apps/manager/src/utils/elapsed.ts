@@ -1,12 +1,7 @@
+import type { Elapsed } from '@custom_types/ui'
+
 /** A partir daqui o pedido está demorando o bastante para incomodar. */
 const LATE_MINUTES = 20
-
-export type Elapsed = {
-  label: string
-  isLate: boolean
-  /** Quanto da paciência já foi gasta, de 0 a 1 — trava em 1 no atraso. */
-  ratio: number
-}
 
 /** Quanto tempo passou, em linguagem de cozinha: minutos até virar hora. */
 export const elapsedSince = (iso: string): Elapsed => {

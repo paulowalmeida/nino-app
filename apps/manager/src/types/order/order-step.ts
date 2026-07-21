@@ -1,4 +1,4 @@
-import type { OrderStatusKey } from './order-queue-summary'
+import type { OrderStatusKey } from './order-status-key'
 
 /** The single move the store can make on an order right now. */
 export type OrderStep = {

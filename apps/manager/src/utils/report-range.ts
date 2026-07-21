@@ -1,9 +1,4 @@
-export type ReportPeriod = 'today' | 'week' | 'month'
-
-export type ReportRange = {
-  from: string
-  to: string
-}
+import type { ReportPeriod, ReportRange } from '@custom_types/ui'
 
 const DAYS_BACK: Record<ReportPeriod, number> = {
   today: 0,

@@ -1,4 +1,4 @@
-import type { OrderStatusKey } from './order-queue-summary'
+import type { OrderStatusKey } from './order-status-key'
 
 /** Uma passagem de status, com quem assinou. */
 export type OrderStatusEntry = {

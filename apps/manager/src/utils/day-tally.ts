@@ -1,10 +1,4 @@
-import type { Order } from '@custom_types/order'
-
-export type DayTally = {
-  orders: number
-  revenue: number
-  average: number
-}
+import type { DayTally, Order } from '@custom_types/order'
 
 const isToday = (iso: string, timezone: string): boolean => {
   const format = (date: Date) =>

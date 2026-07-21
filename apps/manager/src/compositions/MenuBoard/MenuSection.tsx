@@ -5,7 +5,7 @@ import { Reorder } from 'framer-motion'
 import { useReorderMenuItems } from '@hooks/product/useReorderMenuItems'
 import { riseDelay } from '@utils/rise-delay'
 
-import { MenuRow } from './MenuRow'
+import { MenuRow } from './MenuRow/MenuRow'
 import type { MenuSectionProps } from './MenuSection.types'
 
 import styles from './MenuBoard.module.css'

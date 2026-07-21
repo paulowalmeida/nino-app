@@ -1,11 +1,6 @@
+import type { CreateOrderItem } from './create-order-item'
 import type { OrderChannel } from './order-channel'
 import type { PaymentMethod } from './payment-method'
-
-export type CreateOrderItem = {
-  productId: string
-  quantity: number
-  unitPrice: number
-}
 
 /**
  * Pedido aberto pelo painel. A API resolve o operador pelo token e calcula a

@@ -1,8 +1,4 @@
-export type MenuItemImage = {
-  id: string
-  url: string
-  isPrimary: boolean
-}
+import type { MenuItemImage } from './menu-item-image'
 
 export type MenuItem = {
   id: string
