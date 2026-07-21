@@ -20,5 +20,5 @@
 }
 
 .chipOn {
-  @apply bg-ink text-cream;
+  @apply bg-brand text-brand-foreground;
 }

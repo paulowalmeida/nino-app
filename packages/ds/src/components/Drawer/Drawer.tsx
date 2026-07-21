@@ -67,6 +67,7 @@ export function Drawer({
   description,
   children,
   size,
+  contentClassName,
 }: DrawerProps) {
   const isHorizontal = placement === 'left' || placement === 'right'
   const sizeStyle = size
@@ -92,7 +93,8 @@ export function Drawer({
               baseContent,
               sizeByPlacement[placement],
               alignByPlacement[placement],
-              animationByPlacement[placement]
+              animationByPlacement[placement],
+              contentClassName ?? ''
             )}
             style={sizeStyle}
           >

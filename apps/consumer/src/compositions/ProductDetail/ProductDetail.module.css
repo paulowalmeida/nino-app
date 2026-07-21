@@ -1,0 +1,39 @@
+@reference "@nino/ds/globals.css";
+
+.drawer {
+  @apply rounded-t-3xl bg-paper;
+}
+
+.media {
+  @apply -mx-6 -mt-4 mb-4;
+}
+
+.photo {
+  @apply aspect-[4/3] w-full object-cover;
+}
+
+.photoFallback {
+  @apply aspect-[4/3] w-full bg-sand;
+}
+
+.description {
+  @apply text-sm leading-relaxed text-muted;
+}
+
+.footer {
+  @apply sticky bottom-0 -mx-6 -mb-4 mt-4 flex items-center gap-3;
+  @apply border-t border-sand bg-paper px-6 py-4;
+}
+
+.stepper {
+  @apply flex shrink-0 items-center gap-2;
+}
+
+.stepperCount {
+  @apply w-4 text-center text-sm font-bold text-ink;
+  font-variant-numeric: tabular-nums;
+}
+
+.confirm {
+  @apply flex-1;
+}

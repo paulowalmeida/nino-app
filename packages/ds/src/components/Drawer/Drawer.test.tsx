@@ -48,4 +48,20 @@ describe(Drawer.displayName!, () => {
     await userEvent.click(screen.getByLabelText('Close'))
     expect(onOpenChange).toHaveBeenCalledWith(false)
   })
+
+  it('applies contentClassName to the content surface', () => {
+    render(
+      <Drawer
+        open
+        onOpenChange={vi.fn()}
+        title="Painel"
+        contentClassName="bg-paper"
+      >
+        <p>x</p>
+      </Drawer>
+    )
+    expect(screen.getByText('Painel').closest('[role="dialog"]')).toHaveClass(
+      'bg-paper'
+    )
+  })
 })

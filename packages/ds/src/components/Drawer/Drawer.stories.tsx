@@ -36,6 +36,27 @@ export const Default: Story = {
   },
 }
 
+/** `contentClassName` para apps com tema próprio (ex.: fundo quente). */
+export const ThemedContent: Story = {
+  render: () => {
+    const [open, setOpen] = useState(false)
+    return (
+      <>
+        <Button onClick={() => setOpen(true)}>Open themed drawer</Button>
+        <Drawer
+          open={open}
+          onOpenChange={setOpen}
+          placement="bottom"
+          title="Sua sacola"
+          contentClassName="rounded-t-3xl bg-orange-50"
+        >
+          <p className="text-sm text-gray-600">1 item — R$ 12,00</p>
+        </Drawer>
+      </>
+    )
+  },
+}
+
 export const LeftPlacement: Story = {
   render: () => {
     const [open, setOpen] = useState(false)

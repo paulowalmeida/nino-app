@@ -11,4 +11,14 @@ export const queryKeys = {
     all: ['menu'] as const,
     byTenant: (tenantId: string) => [...queryKeys.menu.all, tenantId] as const,
   },
+  settings: {
+    all: ['settings'] as const,
+    byTenant: (tenantId: string) =>
+      [...queryKeys.settings.all, tenantId] as const,
+  },
+  deliveryZones: {
+    all: ['delivery-zones'] as const,
+    byTenant: (tenantId: string) =>
+      [...queryKeys.deliveryZones.all, tenantId] as const,
+  },
 }

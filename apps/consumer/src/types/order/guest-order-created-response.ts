@@ -1,0 +1,13 @@
+import type { OrderChannel } from './order-channel'
+import type { OrderStatus } from './order-status'
+import type { PaymentMethod } from './payment-method'
+
+export type GuestOrderCreatedResponse = {
+  id: string
+  status: OrderStatus
+  channel: OrderChannel
+  paymentMethod: PaymentMethod
+  totalAmount: string
+  estimatedDeliveryAt: string | null
+  trackingToken: string
+}

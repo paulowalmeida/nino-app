@@ -11,4 +11,6 @@ export interface DrawerProps {
   children?: ReactNode
   /** Width (for left/right) or height (for top/bottom). E.g. '400px', '80%' */
   size?: string
+  /** Extra classes for the content surface — for apps with their own theme. */
+  contentClassName?: string
 }

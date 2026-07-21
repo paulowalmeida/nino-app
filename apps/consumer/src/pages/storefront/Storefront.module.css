@@ -19,26 +19,82 @@
 }
 
 .items {
-  @apply divide-y divide-sand;
+  @apply flex flex-col gap-2;
 }
 
 .hint {
   @apply py-10 text-center text-sm text-muted;
 }
 
-/* barra da sacola: flutua acima do polegar, some quando nada foi somado */
+/*
+ * Barra da sacola: flutua acima do polegar como uma comanda recém-impressa
+ * — a borda picotada no topo ecoa a do StoreHeader e fecha o motivo visual.
+ */
 .cartBar {
   @apply fixed inset-x-0 bottom-0 z-30 mx-auto flex max-w-xl items-center;
-  @apply justify-between gap-3 border-t border-sand bg-paper/95 px-5 py-4;
-  @apply backdrop-blur-sm;
+  @apply justify-between gap-3 bg-ink px-5 py-4 text-cream;
+  @apply shadow-[0_-8px_24px_rgba(26,18,6,0.18)];
+  animation: rise 0.28s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.cartBar::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 14px;
+  transform: translateY(-100%);
+  background: radial-gradient(
+      circle at 7px 7px,
+      var(--color-ink) 7px,
+      transparent 7.5px
+    )
+    0 0 / 14px 14px repeat-x;
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cartBar {
+    animation: none;
+  }
+}
+
+.cartSummary {
+  @apply flex items-center gap-2.5;
+}
+
+.cartIcon {
+  @apply text-brand;
+}
+
+.cartText {
+  @apply flex flex-col leading-tight;
 }
 
 .cartCount {
-  @apply font-display text-base font-extrabold text-ink;
+  @apply text-xs font-semibold text-cream/60;
 }
 
-.cartSoon {
-  @apply rounded-full bg-surface-sunk px-3 py-1.5 text-xs font-bold text-subtle;
+.cartTotal {
+  @apply font-display text-lg font-extrabold;
+  font-variant-numeric: tabular-nums;
+}
+
+.cartCta {
+  @apply cursor-pointer rounded-full bg-brand px-4 py-2.5 text-sm font-bold;
+  @apply text-brand-foreground transition-transform duration-150;
+  @apply active:scale-95;
 }
 
 /* ----- não encontrada ----- */

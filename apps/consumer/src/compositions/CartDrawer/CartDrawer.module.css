@@ -1,0 +1,62 @@
+@reference "@nino/ds/globals.css";
+
+.drawer {
+  @apply rounded-t-3xl bg-paper;
+}
+
+.lines {
+  @apply flex flex-col gap-3 pb-4;
+}
+
+.line {
+  @apply flex items-center gap-3;
+}
+
+.photo {
+  @apply h-14 w-14 shrink-0 rounded-xl object-cover;
+  box-shadow: inset 0 0 0 1px var(--color-sand);
+}
+
+.photoFallback {
+  @apply h-14 w-14 shrink-0 rounded-xl bg-sand;
+}
+
+.lineText {
+  @apply flex min-w-0 flex-1 flex-col;
+}
+
+.lineName {
+  @apply truncate text-sm font-semibold text-ink;
+}
+
+.linePrice {
+  @apply mt-0.5 text-xs text-muted;
+  font-variant-numeric: tabular-nums;
+}
+
+.stepper {
+  @apply flex shrink-0 items-center gap-2;
+}
+
+.stepperBtn {
+  @apply h-8 w-8 text-base;
+}
+
+.stepperCount {
+  @apply w-4 text-center text-sm font-bold text-ink;
+  font-variant-numeric: tabular-nums;
+}
+
+/*
+ * O rodapé gruda no fim da área rolável do Drawer (que já é
+ * flex-1 overflow-y-auto) — sticky funciona relativo a ela.
+ */
+.footer {
+  @apply sticky bottom-0 -mx-6 -mb-4 flex items-center justify-between;
+  @apply gap-3 border-t border-sand bg-paper px-6 py-4;
+}
+
+.total {
+  @apply font-display text-xl font-extrabold text-ink;
+  font-variant-numeric: tabular-nums;
+}
