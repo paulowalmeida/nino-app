@@ -25,7 +25,7 @@ const ChevronDown = () => (
     strokeWidth="2"
     strokeLinecap="round"
     strokeLinejoin="round"
-    className="shrink-0 text-gray-400 transition-transform duration-200 group-data-[state=open]:rotate-180"
+    className="shrink-0 transition-transform duration-200 group-data-[state=open]:rotate-180"
   >
     <path d="m6 9 6 6 6-6" />
   </svg>
@@ -38,6 +38,9 @@ export function Accordion({
   value,
   onValueChange,
   className,
+  itemClassName,
+  triggerClassName,
+  contentClassName,
 }: AccordionProps) {
   return (
     <ArkAccordion.Root
@@ -53,15 +56,21 @@ export function Accordion({
           key={item.value}
           value={item.value}
           disabled={item.disabled}
-          className={baseItem}
+          className={mergeClasses(baseItem, itemClassName ?? '')}
         >
           <ArkAccordion.ItemTrigger
-            className={mergeClasses(baseTrigger, 'group')}
+            className={mergeClasses(
+              baseTrigger,
+              'group',
+              triggerClassName ?? ''
+            )}
           >
             {item.trigger}
             <ChevronDown />
           </ArkAccordion.ItemTrigger>
-          <ArkAccordion.ItemContent className={baseContent}>
+          <ArkAccordion.ItemContent
+            className={mergeClasses(baseContent, contentClassName ?? '')}
+          >
             <div className={baseContentInner}>{item.content}</div>
           </ArkAccordion.ItemContent>
         </ArkAccordion.Item>

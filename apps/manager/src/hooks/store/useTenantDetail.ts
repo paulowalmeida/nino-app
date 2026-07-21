@@ -5,11 +5,11 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { queryKeys } from '@constants/query-keys'
 import type { TenantDetail, UpdateTenantRequest } from '@custom_types/store'
 import {
-  getTenant,
+  getById,
   removeTenant,
   setMainTenant,
   updateTenant,
-} from '@services/store/store.service'
+} from '@services/tenant/tenant.service'
 import { useSessionStore } from '@states/useSessionStore'
 
 const detailKey = (tenantId: string) => [
@@ -20,7 +20,7 @@ const detailKey = (tenantId: string) => [
 export const useTenantDetail = (tenantId: string | null) =>
   useQuery<TenantDetail>({
     queryKey: detailKey(tenantId ?? ''),
-    queryFn: () => getTenant(tenantId as string),
+    queryFn: () => getById(tenantId as string),
     enabled: !!tenantId,
   })
 

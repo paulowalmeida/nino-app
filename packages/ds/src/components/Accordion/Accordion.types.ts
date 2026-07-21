@@ -15,4 +15,10 @@ export interface AccordionProps {
   value?: string[]
   onValueChange?: (value: string[]) => void
   className?: string
+  /** Classes extras por item — para superfícies com tema próprio (ex.: dark). */
+  itemClassName?: string
+  /** Classes extras por trigger — para superfícies com tema próprio. */
+  triggerClassName?: string
+  /** Classes extras por painel de conteúdo — para superfícies com tema próprio. */
+  contentClassName?: string
 }

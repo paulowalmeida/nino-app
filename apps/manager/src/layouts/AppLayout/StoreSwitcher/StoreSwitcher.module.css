@@ -40,26 +40,13 @@
 }
 
 .panel {
-  @apply absolute left-0 right-0 top-full z-20 mt-1 overflow-hidden;
-  @apply rounded-xl border border-white/10 bg-dark shadow-xl;
+  @apply border border-white/10 bg-dark shadow-xl;
 }
 
 .option {
-  @apply flex w-full items-center gap-2 px-3 py-2.5 text-left;
-  @apply text-sm text-white/60 transition-colors duration-150;
-  @apply hover:bg-white/8 hover:text-white;
-}
-
-.optionName {
-  @apply flex-1 truncate;
+  @apply text-white/60 data-[highlighted]:bg-white/8 data-[highlighted]:text-white;
 }
 
 .checkIcon {
   @apply h-4 w-4 shrink-0 text-brand;
-}
-
-.switchCompany {
-  @apply w-full border-t border-white/10 px-3 py-2.5 text-left;
-  @apply text-xs font-medium text-brand transition-colors duration-150;
-  @apply hover:bg-white/8;
 }

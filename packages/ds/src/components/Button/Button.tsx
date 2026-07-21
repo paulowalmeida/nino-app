@@ -20,12 +20,15 @@ const variantClasses: Record<ButtonVariant, string> = {
     'bg-white text-brand-strong hover:bg-cream active:bg-cream-deep shadow-brand-glow',
   inverseOutline:
     'border-[1.5px] border-white/55 text-white bg-transparent hover:bg-white hover:text-brand-strong hover:border-white',
+  danger:
+    'text-gray-500 bg-transparent hover:bg-red-50 hover:text-red-500 active:bg-red-100',
 }
 
 const sizeClasses: Record<ButtonSize, string> = {
   sm: 'h-8 px-3 text-sm gap-1.5',
   md: 'h-10 px-4 text-sm gap-2',
   lg: 'h-12 px-6 text-base gap-2',
+  icon: 'h-10 w-10 shrink-0 p-0',
 }
 
 const baseDisabledStyle = 'disabled:pointer-events-none'

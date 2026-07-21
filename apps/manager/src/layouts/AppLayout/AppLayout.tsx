@@ -1,6 +1,8 @@
 import { useState } from 'react'
 import { Outlet } from 'react-router'
 
+import { Button } from '@nino/ds'
+
 import { NavIcon } from '@components/NavIcon'
 import { useCurrentTenant } from '@hooks/session/useCurrentTenant'
 
@@ -18,14 +20,15 @@ export const AppLayout = () => {
     <div className={styles.shell}>
       {/* a marca já está no menu — aqui vale o nome da loja em que se opera */}
       <header className={styles.topbar}>
-        <button
-          type="button"
+        <Button
+          size="icon"
+          variant="ghost"
           className={styles.hamburger}
           onClick={() => setMenuOpen(true)}
           aria-label="Abrir menu"
         >
           <NavIcon name="menu" className={styles.hamburgerIcon} />
-        </button>
+        </Button>
         <span className={styles.storeName}>{tenant?.tenantName}</span>
       </header>
 

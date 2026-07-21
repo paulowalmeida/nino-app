@@ -84,6 +84,30 @@
   @apply hover:bg-brand/14 hover:text-brand;
 }
 
+/* wrapper único pro conteúdo do trigger — Accordion separa isso do chevron */
+.triggerContent {
+  @apply flex items-center gap-3;
+}
+
+.navItemTrigger {
+  @apply w-full rounded-xl px-3 py-2.5 text-left;
+  @apply text-sm font-medium text-white/45;
+  @apply transition-colors duration-150;
+  @apply hover:bg-white/6 hover:text-white/80;
+}
+
+.accordionRoot {
+  @apply w-full divide-y-0 rounded-none border-0;
+}
+
+.accordionItem {
+  @apply bg-transparent;
+}
+
+.accordionContent {
+  @apply text-white/60;
+}
+
 /* seções da tela aberta, recuadas sob o item principal */
 .subNav {
   @apply mt-0.5 mb-1 flex flex-col gap-px pl-9;

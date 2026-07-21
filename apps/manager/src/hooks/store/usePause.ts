@@ -2,7 +2,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 
 import { queryKeys } from '@constants/query-keys'
 import type { PauseRequest, TenantPause } from '@custom_types/store'
-import { getPause, pauseStore, resumeStore } from '@services/store/store.service'
+import { getPause, pauseStore, resumeStore } from '@services/tenant/tenant.service'
 
 const pauseKey = (tenantId: string) => [
   ...queryKeys.tenant.all(tenantId),

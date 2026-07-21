@@ -52,3 +52,22 @@ export const Multiple: Story = {
     </div>
   ),
 }
+
+/**
+ * `itemClassName`/`triggerClassName`/`contentClassName` para superfícies com
+ * tema próprio (ex.: uma sidebar escura), onde o cartão branco padrão não
+ * faz sentido.
+ */
+export const OnDarkSurface: Story = {
+  render: () => (
+    <div className="w-full max-w-md rounded-2xl bg-gray-900 p-4">
+      <Accordion
+        items={items}
+        className="border-0 bg-transparent divide-y-0"
+        itemClassName="bg-transparent"
+        triggerClassName="text-white/80 hover:bg-white/10 rounded-lg"
+        contentClassName="text-white/60"
+      />
+    </div>
+  ),
+}

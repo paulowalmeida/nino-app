@@ -66,7 +66,7 @@ export const createOrder = (
 ): Promise<Order> =>
   create<CreateOrderRequest, Order>(`tenants/${tenantId}/orders`, data)
 
-export const getOrder = (tenantId: string, orderId: string): Promise<Order> =>
+export const getById = (tenantId: string, orderId: string): Promise<Order> =>
   get<Order>(`tenants/${tenantId}/orders/${orderId}`)
 
 export const updateOrderStatus = (

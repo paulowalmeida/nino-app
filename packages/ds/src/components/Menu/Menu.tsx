@@ -36,7 +36,12 @@ function isSeparator(item: MenuItem): item is { separator: true } {
  *   { value: 'del', label: 'Delete', destructive: true, onSelect: del },
  * ]} />
  */
-export function Menu({ trigger, items, contentClassName }: MenuProps) {
+export function Menu({
+  trigger,
+  items,
+  contentClassName,
+  itemClassName,
+}: MenuProps) {
   function handleSelect(value: string) {
     const item = items.find((i) => !isSeparator(i) && i.value === value)
     if (item && !isSeparator(item)) item.onSelect?.()
@@ -60,7 +65,8 @@ export function Menu({ trigger, items, contentClassName }: MenuProps) {
                   disabled={item.disabled}
                   className={mergeClasses(
                     baseItem,
-                    item.destructive ? destructiveItem : ''
+                    item.destructive ? destructiveItem : '',
+                    itemClassName ?? ''
                   )}
                 >
                   {item.icon}

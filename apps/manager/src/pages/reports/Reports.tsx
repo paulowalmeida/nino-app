@@ -4,6 +4,7 @@ import { DatePicker, Skeleton, Tabs } from '@nino/ds'
 
 import { PageTitle } from '@components/PageTitle'
 import { CountUp } from '@components/CountUp'
+import type { PeriodChoice } from '@custom_types/ui'
 import { useCurrentTenant } from '@hooks/session/useCurrentTenant'
 import { useSalesReport } from '@hooks/order/useSalesReport'
 import { useTimingReport } from '@hooks/order/useTimingReport'
@@ -15,13 +16,10 @@ import {
   parseInputDate,
   rangeOf,
   todayInput,
-  type ReportPeriod,
 } from '@utils/report-range'
 
 import styles from './Reports.module.css'
 import motion from '@styles/motion.module.css'
-
-type PeriodChoice = ReportPeriod | 'custom'
 
 const PERIODS: { id: PeriodChoice; label: string }[] = [
   { id: 'today', label: 'Hoje' },

@@ -16,9 +16,10 @@ const meta: Meta<typeof Button> = {
         'ghost',
         'inverse',
         'inverseOutline',
+        'danger',
       ],
     },
-    size: { control: 'select', options: ['sm', 'md', 'lg'] },
+    size: { control: 'select', options: ['sm', 'md', 'lg', 'icon'] },
     loading: { control: 'boolean' },
     loadingIndicator: { control: 'select', options: ['spinner', 'dots'] },
     disabled: { control: 'boolean' },
@@ -42,6 +43,10 @@ export const Outline: Story = {
 
 export const Ghost: Story = {
   args: { variant: 'ghost', children: 'Dismiss' },
+}
+
+export const Danger: Story = {
+  args: { variant: 'danger', children: 'Remover' },
 }
 
 export const LoadingSpinner: Story = {
@@ -83,6 +88,20 @@ export const AllVariants: Story = {
       <Button variant="secondary">Secondary</Button>
       <Button variant="outline">Outline</Button>
       <Button variant="ghost">Ghost</Button>
+      <Button variant="danger">Danger</Button>
+    </div>
+  ),
+}
+
+export const IconSize: Story = {
+  render: () => (
+    <div className="flex items-center gap-3">
+      <Button size="icon" variant="ghost" aria-label="Fechar">
+        ×
+      </Button>
+      <Button size="icon" variant="outline" aria-label="Adicionar">
+        +
+      </Button>
     </div>
   ),
 }

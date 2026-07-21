@@ -24,7 +24,7 @@ export const listCustomers = (
     page,
   })
 
-export const getCustomer = (
+export const getById = (
   tenantId: string,
   customerId: string
 ): Promise<CustomerHistory> =>

@@ -1,5 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 
+import { Button } from '@nino/ds'
+
 import { ItemThumb } from '@components/ItemThumb'
 import { PhotoCropper } from '@compositions/PhotoCropper'
 import { useItemImages } from '@hooks/product/useItemImages'
@@ -129,20 +131,24 @@ export const ItemPhoto = ({
         </label>
 
         {stagedUrl && (
-          <button type="button" className={styles.removeBtn} onClick={removeStaged}>
+          <Button
+            variant="danger"
+            size="sm"
+            onClick={removeStaged}
+          >
             Remover
-          </button>
+          </Button>
         )}
 
         {!stagedUrl && cover && (
-          <button
-            type="button"
-            className={styles.removeBtn}
+          <Button
+            variant="danger"
+            size="sm"
             onClick={() => remove.mutate(cover.id)}
-            disabled={remove.isPending}
+            loading={remove.isPending}
           >
-            {remove.isPending ? 'Removendo…' : 'Remover'}
-          </button>
+            Remover
+          </Button>
         )}
       </div>
 

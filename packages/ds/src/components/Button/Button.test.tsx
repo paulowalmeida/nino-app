@@ -52,18 +52,27 @@ describe('Button', () => {
     expect(screen.getByRole('button')).toHaveClass('inline-flex')
   })
 
-  it.each(['primary', 'secondary', 'outline', 'ghost'] as const)(
-    'renderiza variante %s sem erros',
-    (variant) => {
-      render(<Button variant={variant}>{variant}</Button>)
-      expect(screen.getByRole('button')).toBeInTheDocument()
-    }
-  )
+  it.each([
+    'primary',
+    'secondary',
+    'outline',
+    'ghost',
+    'inverse',
+    'inverseOutline',
+    'danger',
+  ] as const)('renderiza variante %s sem erros', (variant) => {
+    render(<Button variant={variant}>{variant}</Button>)
+    expect(screen.getByRole('button')).toBeInTheDocument()
+  })
 
-  it.each(['sm', 'md', 'lg'] as const)(
+  it.each(['sm', 'md', 'lg', 'icon'] as const)(
     'renderiza tamanho %s sem erros',
     (size) => {
-      render(<Button size={size}>{size}</Button>)
+      render(
+        <Button size={size} aria-label={size}>
+          {size === 'icon' ? '×' : size}
+        </Button>
+      )
       expect(screen.getByRole('button')).toBeInTheDocument()
     }
   )

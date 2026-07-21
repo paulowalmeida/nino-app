@@ -4,7 +4,7 @@ import { queryKeys } from '@constants/query-keys'
 import type { CustomerHistory, CustomerPage, TenantCustomer } from '@custom_types/customer'
 import {
   CUSTOMER_PAGE_SIZE,
-  getCustomer,
+  getById,
   listCustomers,
 } from '@services/customer/customer.service'
 
@@ -30,6 +30,6 @@ export const useCustomers = (tenantId: string | null) => {
 export const useCustomer = (tenantId: string | null, customerId: string) =>
   useQuery<CustomerHistory>({
     queryKey: queryKeys.customers.detail(tenantId ?? '', customerId),
-    queryFn: () => getCustomer(tenantId as string, customerId),
+    queryFn: () => getById(tenantId as string, customerId),
     enabled: !!tenantId && !!customerId,
   })

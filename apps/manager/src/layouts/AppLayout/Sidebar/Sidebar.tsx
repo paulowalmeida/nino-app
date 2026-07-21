@@ -1,12 +1,13 @@
 import { useState } from 'react'
 import { NavLink, useLocation } from 'react-router'
 
+import { Accordion } from '@nino/ds'
+
 import { NavIcon } from '@components/NavIcon'
 import { NinoLogo } from '@components/NinoLogo'
-import type { NavIconName } from '@components/NavIcon/NavIcon.types'
 import { MANAGERS } from '@constants/roles'
 import { SETTINGS_SECTIONS } from '@constants/settings-sections'
-import type { TenantRole } from '@custom_types/auth'
+import type { NavItem } from '@custom_types/ui'
 import { useQueueSummary } from '@hooks/order/useQueueSummary'
 import { useTenantRole } from '@hooks/session/useTenantRole'
 import { useSessionStore } from '@states/useSessionStore'
@@ -19,16 +20,6 @@ import type { SidebarProps } from './Sidebar.types'
 
 import styles from './Sidebar.module.css'
 import motion from '@styles/motion.module.css'
-
-type NavItem = {
-  section: string
-  label: string
-  icon: NavIconName
-  /** Seções internas — aparecem quando o item está aberto. */
-  children?: { to: string; label: string; icon: NavIconName }[]
-  /** Papéis que enxergam o item; ausente = todo mundo da loja. */
-  roles?: TenantRole[]
-}
 
 /**
  * Two groups: what the store does today, and how the store is set up. The
@@ -141,67 +132,68 @@ export const Sidebar = ({ tenantId, isOpen, onClose }: SidebarProps) => {
                 )
 
                 return (
-                  <div key={section}>
+                  <div key={section} style={delay} className={motion.slide}>
                     {children ? (
-                      <button
-                        type="button"
-                        aria-expanded={isOpen}
-                        aria-controls={`sub-${section}`}
-                        style={delay}
-                        className={
+                      <Accordion
+                        items={[
+                          {
+                            value: section,
+                            trigger: (
+                              <span className={styles.triggerContent}>
+                                {content}
+                              </span>
+                            ),
+                            content: (
+                              <div className={styles.subNav}>
+                                {children.map(
+                                  ({ to, label: childLabel, icon: childIcon }) => (
+                                    <NavLink
+                                      key={to}
+                                      to={`/${tenantId}/${section}/${to}`}
+                                      onClick={onClose}
+                                      className={({ isActive }) =>
+                                        isActive
+                                          ? `${styles.subItem} ${styles.subItemActive}`
+                                          : styles.subItem
+                                      }
+                                    >
+                                      <NavIcon
+                                        name={childIcon}
+                                        className={styles.subIcon}
+                                      />
+                                      <span>{childLabel}</span>
+                                    </NavLink>
+                                  )
+                                )}
+                              </div>
+                            ),
+                          },
+                        ]}
+                        value={isOpen ? [section] : []}
+                        onValueChange={(values) =>
+                          setOpened(values.includes(section) ? section : null)
+                        }
+                        className={styles.accordionRoot}
+                        itemClassName={styles.accordionItem}
+                        triggerClassName={
                           isInside
-                            ? `${motion.slide} ${styles.navItem} ${styles.navItemActive}`
-                            : `${motion.slide} ${styles.navItem}`
+                            ? `${styles.navItemTrigger} ${styles.navItemActive}`
+                            : styles.navItemTrigger
                         }
-                        onClick={() =>
-                          setOpened((current) =>
-                            current === section ? null : section
-                          )
-                        }
-                      >
-                        {content}
-                      </button>
+                        contentClassName={styles.accordionContent}
+                      />
                     ) : (
                       <NavLink
                         to={`/${tenantId}/${section}`}
                         onClick={onClose}
-                        style={delay}
                         className={({ isActive }) =>
                           isActive
-                            ? `${motion.slide} ${styles.navItem} ${styles.navItemActive}`
-                            : `${motion.slide} ${styles.navItem}`
+                            ? `${styles.navItem} ${styles.navItemActive}`
+                            : styles.navItem
                         }
                       >
                         {content}
                       </NavLink>
-                    )}
-
-                    {children && isOpen && (
-                      <div
-                        id={`sub-${section}`}
-                        className={`${motion.unroll} ${styles.subNav}`}
-                      >
-                        {children.map(
-                          ({ to, label: childLabel, icon: childIcon }) => (
-                            <NavLink
-                              key={to}
-                              to={`/${tenantId}/${section}/${to}`}
-                              onClick={onClose}
-                              className={({ isActive }) =>
-                                isActive
-                                  ? `${styles.subItem} ${styles.subItemActive}`
-                                  : styles.subItem
-                              }
-                            >
-                              <NavIcon
-                                name={childIcon}
-                                className={styles.subIcon}
-                              />
-                              <span>{childLabel}</span>
-                            </NavLink>
-                          )
-                        )}
-                      </div>
                     )}
                   </div>
                 )

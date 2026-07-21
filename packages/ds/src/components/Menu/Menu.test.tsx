@@ -46,4 +46,19 @@ describe(Menu.displayName!, () => {
     await user.click(await screen.findByRole('menuitem', { name: 'Bloquear' }))
     expect(onSelect).not.toHaveBeenCalled()
   })
+
+  it('applies itemClassName to every item', async () => {
+    const user = userEvent.setup({ pointerEventsCheck: 0 })
+    render(
+      <Menu
+        trigger={<Button>Ações</Button>}
+        items={items()}
+        itemClassName="text-white/70"
+      />
+    )
+    await user.click(screen.getByRole('button', { name: 'Ações' }))
+    expect(await screen.findByRole('menuitem', { name: 'Editar' })).toHaveClass(
+      'text-white/70'
+    )
+  })
 })

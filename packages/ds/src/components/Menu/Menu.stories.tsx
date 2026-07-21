@@ -23,3 +23,23 @@ export const Default: Story = {
     ],
   },
 }
+
+/**
+ * `contentClassName`/`itemClassName` para superfícies com tema próprio
+ * (ex.: uma sidebar escura), onde as cores padrão do Menu não fazem sentido.
+ */
+export const OnDarkSurface: Story = {
+  render: () => (
+    <div className="rounded-2xl bg-gray-900 p-8">
+      <Menu
+        trigger={<Button variant="inverseOutline">Store</Button>}
+        contentClassName="bg-gray-800 border-white/10"
+        itemClassName="text-white/70 data-[highlighted]:bg-white/10 data-[highlighted]:text-white"
+        items={[
+          { value: 'unit-a', label: 'Unidade A' },
+          { value: 'unit-b', label: 'Unidade B' },
+        ]}
+      />
+    </div>
+  ),
+}

@@ -40,4 +40,17 @@ describe(Accordion.displayName!, () => {
     expect(screen.getByText('Conteúdo A')).toBeInTheDocument()
     expect(screen.getByText('Conteúdo B')).toBeInTheDocument()
   })
+
+  it('applies itemClassName and triggerClassName to every item', () => {
+    render(
+      <Accordion
+        items={items}
+        itemClassName="bg-transparent"
+        triggerClassName="text-white/80"
+      />
+    )
+    const trigger = screen.getByText('Item A').closest('button')
+    expect(trigger).toHaveClass('text-white/80')
+    expect(trigger?.closest('[data-part="item"]')).toHaveClass('bg-transparent')
+  })
 })

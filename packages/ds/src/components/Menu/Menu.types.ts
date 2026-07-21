@@ -22,4 +22,6 @@ export interface MenuProps {
   items: MenuItem[]
   /** Classes extras do painel — para o app dar o tom dele ao menu. */
   contentClassName?: string
+  /** Classes extras por item — para superfícies com tema próprio (ex.: dark). */
+  itemClassName?: string
 }

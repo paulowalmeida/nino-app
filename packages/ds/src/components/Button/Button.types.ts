@@ -7,8 +7,9 @@ export type ButtonVariant =
   | 'ghost'
   | 'inverse'
   | 'inverseOutline'
+  | 'danger'
 
-export type ButtonSize = 'sm' | 'md' | 'lg'
+export type ButtonSize = 'sm' | 'md' | 'lg' | 'icon'
 
 type MotionConflicts =
   | 'onDrag'
