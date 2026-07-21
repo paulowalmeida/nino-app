@@ -1,24 +1,12 @@
-import { Link } from 'react-router'
+import { Skeleton } from '@nino/ds'
 
-import { Skeleton, Switch } from '@nino/ds'
-
-import { ItemThumb } from '@components/ItemThumb'
 import { useItemAvailability } from '@hooks/product/useItemAvailability'
 import { useMenu } from '@hooks/product/useMenu'
-import { riseDelay } from '@utils/rise-delay'
 
+import { MenuSection } from './MenuSection'
 import type { MenuBoardProps } from './MenuBoard.types'
 
 import styles from './MenuBoard.module.css'
-import motion from '@styles/motion.module.css'
-
-const brl = new Intl.NumberFormat('pt-BR', {
-  style: 'currency',
-  currency: 'BRL',
-})
-
-const itemLabel = (total: number): string =>
-  total === 1 ? '1 item' : `${total} itens`
 
 export const MenuBoard = ({ tenantId }: MenuBoardProps) => {
   const { sections, isPending, isError } = useMenu(tenantId)
@@ -54,54 +42,16 @@ export const MenuBoard = ({ tenantId }: MenuBoardProps) => {
   return (
     <div className={styles.board}>
       {sections.map(({ id, name, items }, sectionIndex) => (
-        <section key={id} className={styles.section}>
-          <header
-            className={`${motion.unroll} ${styles.sectionHead}`}
-            style={riseDelay(sectionIndex * 90)}
-          >
-            <h2 className={styles.sectionName}>{name}</h2>
-            <span className={styles.sectionCount}>
-              {itemLabel(items.length)}
-            </span>
-          </header>
-
-          <ul className={styles.items}>
-            {items.map((item, index) => (
-              <li
-                key={item.id}
-                className={`${motion.deal} ${
-                  item.isActive ? styles.item : styles.itemOff
-                }`}
-                style={riseDelay(sectionIndex * 90 + index * 45 + 60)}
-              >
-                <Link
-                  to={item.id}
-                  className={`${motion.lift} ${styles.itemLink}`}
-                >
-                  <ItemThumb name={item.name} imageUrl={item.images?.[0]?.url} />
-                  <span className={styles.itemText}>
-                    <span className={styles.itemName}>{item.name}</span>
-                    {item.description && (
-                      <span className={styles.itemDescription}>
-                        {item.description}
-                      </span>
-                    )}
-                  </span>
-                  <span className={styles.price}>{brl.format(+item.price)}</span>
-                </Link>
-
-                <Switch
-                  size="sm"
-                  checked={item.isActive}
-                  onCheckedChange={(isActive) =>
-                    setAvailability({ id: item.id, isActive })
-                  }
-                  aria-label={`${item.name} disponível`}
-                />
-              </li>
-            ))}
-          </ul>
-        </section>
+        <MenuSection
+          key={id}
+          tenantId={tenantId}
+          name={name}
+          items={items}
+          sectionIndex={sectionIndex}
+          onToggleAvailability={(itemId, isActive) =>
+            setAvailability({ id: itemId, isActive })
+          }
+        />
       ))}
     </div>
   )

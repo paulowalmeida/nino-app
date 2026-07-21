@@ -79,6 +79,17 @@ export const setItemAvailability = (
     { isActive }
   )
 
+export const setItemPosition = (
+  tenantId: string,
+  id: string,
+  position: number
+): Promise<MenuItem> =>
+  patch<{ position: number }, MenuItem>(
+    `tenants/${tenantId}/products`,
+    id,
+    { position }
+  )
+
 export const updateItem = (
   tenantId: string,
   id: string,

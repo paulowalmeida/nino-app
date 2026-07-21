@@ -27,6 +27,12 @@
   @apply transition-opacity duration-200;
 }
 
+.dragHandle {
+  @apply flex shrink-0 cursor-grab touch-none items-center justify-center;
+  @apply rounded-lg p-1.5 text-faint transition-colors duration-150;
+  @apply hover:bg-white/70 hover:text-subtle active:cursor-grabbing;
+}
+
 /*
  * Sold out reads as absence, not as a badge: the row fades and the price is
  * struck through, so the owner sees the menu the way the customer will.
