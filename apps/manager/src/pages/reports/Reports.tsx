@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react'
 
-import { DatePicker, Skeleton } from '@nino/ds'
+import { DatePicker, Skeleton, Tabs } from '@nino/ds'
 
 import { PageTitle } from '@components/PageTitle'
 import { CountUp } from '@components/CountUp'
@@ -100,22 +100,12 @@ export const Reports = () => {
         </p>
       </header>
 
-      <div className={`${motion.unroll} ${styles.periods}`} role="tablist">
-        {PERIODS.map(({ id, label }) => (
-          <button
-            key={id}
-            type="button"
-            role="tab"
-            aria-selected={period === id}
-            onClick={() => setPeriod(id)}
-            className={`${motion.press} ${styles.period} ${
-              period === id ? styles.periodOn : ''
-            }`}
-          >
-            {label}
-          </button>
-        ))}
-      </div>
+      <Tabs
+        className={motion.unroll}
+        tabs={PERIODS.map(({ id, label }) => ({ value: id, label, content: null }))}
+        value={period}
+        onValueChange={(value) => setPeriod(value as PeriodChoice)}
+      />
 
       {period === 'custom' && (
         <div className={`${motion.unroll} ${styles.dates}`}>

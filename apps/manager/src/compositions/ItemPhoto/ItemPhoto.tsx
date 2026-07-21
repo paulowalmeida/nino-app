@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 import { ItemThumb } from '@components/ItemThumb'
 import { PhotoCropper } from '@compositions/PhotoCropper'
@@ -16,12 +16,18 @@ export const ItemPhoto = ({
   productId,
   name,
   images,
+  onStagedFile,
 }: ItemPhotoProps) => {
-  const { upload, remove } = useItemImages(tenantId, productId)
+  const { upload, remove } = useItemImages(tenantId, productId ?? '')
   const inputRef = useRef<HTMLInputElement>(null)
   const [dragging, setDragging] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [chosen, setChosen] = useState<File | null>(null)
+  const [stagedUrl, setStagedUrl] = useState<string | null>(null)
+
+  useEffect(() => () => {
+    if (stagedUrl) URL.revokeObjectURL(stagedUrl)
+  }, [stagedUrl])
 
   const cover = images.find(({ isPrimary }) => isPrimary) ?? images[0] ?? null
 
@@ -38,11 +44,25 @@ export const ItemPhoto = ({
     setChosen(file)
   }
 
-  const send = (edited: File) =>
+  const send = (edited: File) => {
+    if (!productId) {
+      setStagedUrl(URL.createObjectURL(edited))
+      onStagedFile?.(edited)
+      setChosen(null)
+      return
+    }
+
     upload.mutate(edited, {
       onSuccess: () => setChosen(null),
       onError: (cause) => setError(cause.message),
     })
+  }
+
+  const removeStaged = () => {
+    if (stagedUrl) URL.revokeObjectURL(stagedUrl)
+    setStagedUrl(null)
+    onStagedFile?.(null)
+  }
 
   const onDrop = (event: React.DragEvent) => {
     event.preventDefault()
@@ -68,8 +88,12 @@ export const ItemPhoto = ({
   return (
     <div className={styles.wrap}>
       <div className={styles.frame}>
-        {cover ? (
-          <img src={cover.url} alt={name} className={styles.photo} />
+        {stagedUrl || cover ? (
+          <img
+            src={stagedUrl ?? cover?.url}
+            alt={name}
+            className={styles.photo}
+          />
         ) : (
           <div
             className={
@@ -94,7 +118,7 @@ export const ItemPhoto = ({
 
       <div className={styles.actions}>
         <label className={styles.trigger}>
-          {cover ? 'Trocar foto' : 'Escolher arquivo'}
+          {stagedUrl || cover ? 'Trocar foto' : 'Escolher arquivo'}
           <input
             ref={inputRef}
             type="file"
@@ -104,7 +128,13 @@ export const ItemPhoto = ({
           />
         </label>
 
-        {cover && (
+        {stagedUrl && (
+          <button type="button" className={styles.removeBtn} onClick={removeStaged}>
+            Remover
+          </button>
+        )}
+
+        {!stagedUrl && cover && (
           <button
             type="button"
             className={styles.removeBtn}

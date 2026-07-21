@@ -1,9 +1,12 @@
 import { useState } from 'react'
-import { Controller, useForm } from 'react-hook-form'
+import { Controller, useForm, useWatch } from 'react-hook-form'
 import { useNavigate } from 'react-router'
+
+import { useQueryClient } from '@tanstack/react-query'
 
 import { Button, FormField, Input, Select, Textarea } from '@nino/ds'
 
+import { ItemPhoto } from '@compositions/ItemPhoto'
 import { BackLink } from '@components/BackLink'
 import { PageTitle } from '@components/PageTitle'
 import {
@@ -11,7 +14,9 @@ import {
   useCreateCategory,
 } from '@hooks/product/useCategories'
 import { useCreateMenuItem } from '@hooks/product/useCreateMenuItem'
+import { menuQueryKey } from '@hooks/product/useMenu'
 import { useCurrentTenant } from '@hooks/session/useCurrentTenant'
+import { uploadItemImage } from '@services/product/product.service'
 import { riseDelay } from '@utils/rise-delay'
 
 import type { NewProductFormValues } from './NewProduct.types'
@@ -26,6 +31,7 @@ export const NewProduct = () => {
   const tenant = useCurrentTenant()
   const tenantId = tenant?.tenantId ?? null
   const navigate = useNavigate()
+  const queryClient = useQueryClient()
 
   const { categories, isPending: isCategoriesPending } =
     useCategories(tenantId)
@@ -35,6 +41,7 @@ export const NewProduct = () => {
 
   const [newCategory, setNewCategory] = useState('')
   const [isNaming, setNaming] = useState(false)
+  const [photoFile, setPhotoFile] = useState<File | null>(null)
 
   const {
     register,
@@ -46,6 +53,8 @@ export const NewProduct = () => {
   } = useForm<NewProductFormValues>({
     defaultValues: { name: '', description: '', price: '', categoryId: '' },
   })
+
+  const name = useWatch({ control, name: 'name' })
 
   const options = categories.map(({ id, name }) => ({
     value: id,
@@ -70,7 +79,19 @@ export const NewProduct = () => {
         price: toPrice(values.price),
         categoryId: values.categoryId,
       })
-      void navigate(`../${item.id}`, { relative: 'path' })
+
+      if (photoFile) {
+        try {
+          await uploadItemImage(tenantId as string, item.id, photoFile)
+          void queryClient.invalidateQueries({
+            queryKey: menuQueryKey(tenantId),
+          })
+        } catch {
+          // item já foi criado — a foto pode ser adicionada depois no detalhe
+        }
+      }
+
+      void navigate('..', { relative: 'path' })
     } catch {
       setError('root', {
         message: 'Não foi possível cadastrar. Confira os campos e tente de novo.',
@@ -85,11 +106,21 @@ export const NewProduct = () => {
       <header className={styles.header}>
         <PageTitle accent="item">Novo item</PageTitle>
         <p className={styles.subtitle}>
-          Cadastre o essencial agora — a foto entra na tela seguinte.
+          O que o cliente vê no cardápio, tudo em um lugar só.
         </p>
       </header>
 
       <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
+        <div className={`${motion.deal} ${styles.field}`} style={riseDelay(40)}>
+          <ItemPhoto
+            tenantId={tenantId}
+            productId={null}
+            name={name || 'Novo item'}
+            images={[]}
+            onStagedFile={setPhotoFile}
+          />
+        </div>
+
         <div className={`${motion.deal} ${styles.field}`} style={riseDelay(80)}>
           <FormField label="Nome" error={errors.name?.message}>
             <Input
