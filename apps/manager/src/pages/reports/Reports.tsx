@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react'
 
-import { Input, Skeleton } from '@nino/ds'
+import { DatePicker, Skeleton } from '@nino/ds'
 
 import { PageTitle } from '@components/PageTitle'
 import { CountUp } from '@components/CountUp'
@@ -11,6 +11,8 @@ import { brl } from '@utils/money'
 import { riseDelay } from '@utils/rise-delay'
 import {
   customRange,
+  dateToInput,
+  parseInputDate,
   rangeOf,
   todayInput,
   type ReportPeriod,
@@ -119,23 +121,23 @@ export const Reports = () => {
         <div className={`${motion.unroll} ${styles.dates}`}>
           <label className={styles.date}>
             <span className={styles.dateLabel}>De</span>
-            <Input
-              type="date"
-              size="sm"
-              max={customTo || todayInput()}
-              value={customFrom}
-              onChange={(event) => setCustomFrom(event.target.value)}
+            <DatePicker
+              value={customFrom ? parseInputDate(customFrom) : undefined}
+              onValueChange={(date) =>
+                setCustomFrom(date ? dateToInput(date) : '')
+              }
+              endMonth={parseInputDate(customTo || todayInput())}
             />
           </label>
           <label className={styles.date}>
             <span className={styles.dateLabel}>Até</span>
-            <Input
-              type="date"
-              size="sm"
-              min={customFrom}
-              max={todayInput()}
-              value={customTo}
-              onChange={(event) => setCustomTo(event.target.value)}
+            <DatePicker
+              value={customTo ? parseInputDate(customTo) : undefined}
+              onValueChange={(date) =>
+                setCustomTo(date ? dateToInput(date) : '')
+              }
+              startMonth={customFrom ? parseInputDate(customFrom) : undefined}
+              endMonth={parseInputDate(todayInput())}
             />
           </label>
         </div>

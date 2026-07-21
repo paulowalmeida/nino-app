@@ -49,3 +49,12 @@ export const todayInput = (): string => {
   const offset = now.getTimezoneOffset() * 60_000
   return new Date(now.getTime() - offset).toISOString().slice(0, 10)
 }
+
+/** `YYYY-MM-DD` local para `Date`, na mesma âncora de meia-noite do `customRange`. */
+export const parseInputDate = (day: string): Date => new Date(`${day}T00:00:00`)
+
+/** `Date` para `YYYY-MM-DD` local, inverso do `todayInput`. */
+export const dateToInput = (date: Date): string => {
+  const offset = date.getTimezoneOffset() * 60_000
+  return new Date(date.getTime() - offset).toISOString().slice(0, 10)
+}
