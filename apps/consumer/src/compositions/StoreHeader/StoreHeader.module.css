@@ -9,26 +9,7 @@
   );
 }
 
-/*
- * Borda picotada de comanda: o cabeçalho "se destaca" do cardápio como um
- * recibo, ecoando a comanda que sai da impressora no painel do lojista.
- */
-.header::after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 14px;
-  background: radial-gradient(
-      circle at 7px 0,
-      transparent 7px,
-      var(--color-cream) 7.5px
-    )
-    0 -7px / 14px 14px repeat-x;
-}
-
-/* o brilho de marca escorrendo do topo, como no gestor */
+/* o brilho de marca escorrendo do topo, como na landing */
 .glow {
   @apply pointer-events-none absolute -top-24 right-[-15%] h-64 w-64 rounded-full;
   background: var(--color-brand);

@@ -15,8 +15,9 @@
 }
 
 .chip {
-  @apply shrink-0 cursor-pointer rounded-full px-4 py-2 text-sm font-semibold;
-  @apply bg-surface-sunk text-subtle transition-colors duration-150;
+  @apply flex shrink-0 cursor-pointer items-center gap-1.5 rounded-full;
+  @apply px-4 py-2 text-sm font-semibold text-subtle transition-colors duration-150;
+  @apply bg-surface-sunk;
 }
 
 .chipOn {

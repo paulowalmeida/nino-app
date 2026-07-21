@@ -1,6 +1,8 @@
 import { useState } from 'react'
 import { useNavigate, useParams } from 'react-router'
 
+import { Input } from '@nino/ds'
+
 import bagIcon from '@assets/icons/bag.svg?raw'
 import { Icon } from '@components/Icon/Icon'
 import { CartDrawer } from '@compositions/CartDrawer/CartDrawer'
@@ -35,6 +37,19 @@ export const Storefront = () => {
   const decrementCartLine = useCartStore((state) => state.decrement)
   const [isCartOpen, setIsCartOpen] = useState(false)
   const [selectedItem, setSelectedItem] = useState<MenuItem | null>(null)
+  const [search, setSearch] = useState('')
+
+  const query = search.trim().toLowerCase()
+  const visibleSections = query
+    ? sections
+        .map((section) => ({
+          ...section,
+          items: section.items.filter(({ name }) =>
+            name.toLowerCase().includes(query)
+          ),
+        }))
+        .filter((section) => section.items.length > 0)
+    : sections
 
   const handleConfirmDetail = (item: MenuItem, quantity: number) => {
     addToCart(item, quantity)
@@ -93,6 +108,16 @@ export const Storefront = () => {
       <StoreHeader store={store} />
 
       {sections.length > 0 && (
+        <div className={styles.searchWrap}>
+          <Input
+            value={search}
+            onChange={(event) => setSearch(event.target.value)}
+            placeholder="🔍 Buscar no cardápio…"
+          />
+        </div>
+      )}
+
+      {sections.length > 0 && !query && (
         <CategoryNav
           sections={sections}
           activeId={activeId}
@@ -109,7 +134,11 @@ export const Storefront = () => {
           </p>
         )}
 
-        {sections.map((section) => (
+        {!loadingMenu && query && visibleSections.length === 0 && (
+          <p className={styles.hint}>Nada encontrado para “{search}”.</p>
+        )}
+
+        {visibleSections.map((section) => (
           <section
             key={section.id}
             id={sectionDomId(section.id)}

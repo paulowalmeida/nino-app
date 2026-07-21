@@ -8,9 +8,9 @@ import type { MenuItemCardProps } from './MenuItemCard.types'
 import styles from './MenuItemCard.module.css'
 
 /**
- * O item como o cliente decide: texto à esquerda para ler, foto à direita
- * para desejar, e o botão de somar no canto da foto — um toque, sem sair da
- * lista. Sem foto, o espaço vira só preço e ação, sem buraco.
+ * O item como o cliente decide: texto à esquerda para ler, o botão de somar
+ * logo depois (alvo fácil pro polegar) e a foto por último, só pra desejar —
+ * o mesmo arranjo que a vitrine de exemplo do site usa.
  */
 export const MenuItemCard = ({ item, onAdd, onSelect }: MenuItemCardProps) => {
   const image = primaryImage(item)
@@ -36,17 +36,20 @@ export const MenuItemCard = ({ item, onAdd, onSelect }: MenuItemCardProps) => {
         <span className={styles.price}>{brl(item.price)}</span>
       </div>
 
-      <div className={styles.media}>
-        {image && <img src={image} alt="" className={styles.photo} />}
-        <button
-          type="button"
-          className={styles.add}
-          aria-label={`Adicionar ${item.name}`}
-          onClick={handleAdd}
-        >
-          +
-        </button>
-      </div>
+      <button
+        type="button"
+        className={styles.add}
+        aria-label={`Adicionar ${item.name}`}
+        onClick={handleAdd}
+      >
+        +
+      </button>
+
+      {image ? (
+        <img src={image} alt="" className={styles.photo} />
+      ) : (
+        <div className={styles.photoFallback} aria-hidden="true" />
+      )}
     </article>
   )
 }

@@ -1,5 +1,7 @@
 import { useEffect, useRef } from 'react'
 
+import { categoryIcon } from '@utils/category-icon'
+
 import type { CategoryNavProps } from './CategoryNav.types'
 
 import styles from './CategoryNav.module.css'
@@ -29,6 +31,7 @@ export const CategoryNav = ({
       <ul className={styles.track}>
         {sections.map((section) => {
           const isActive = section.id === activeId
+          const icon = categoryIcon(section.name)
           return (
             <li key={section.id}>
               <button
@@ -38,6 +41,7 @@ export const CategoryNav = ({
                 onClick={() => onSelect(section.id)}
                 className={`${styles.chip} ${isActive ? styles.chipOn : ''}`}
               >
+                {icon && <span aria-hidden="true">{icon}</span>}
                 {section.name}
               </button>
             </li>
