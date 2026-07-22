@@ -1,62 +1,128 @@
-import { displayName, initials, isOpen, shortAddress } from '@utils/store-info'
+import { useEffect, useRef, useState } from 'react'
+
+import { Input } from '@nino/ds'
+
+import searchIcon from '@assets/icons/search.svg?raw'
+import { Icon } from '@components/Icon/Icon'
+import { displayName, initials, isOpen } from '@utils/store-info'
 
 import type { StoreHeaderProps } from './StoreHeader.types'
 
 import styles from './StoreHeader.module.css'
 
 /**
- * O rosto da loja: logo sobre o brilho de marca, nome em corpo grande e o
- * selo de aberto/fechado — a primeira pergunta de quem chega com fome é "dá
- * para pedir agora?".
+ * O rosto da loja: logo em azulejo, nome em corpo justo e, logo abaixo, a
+ * resposta de quem chega com fome — está aberto? em quanto tempo chega? A lupa
+ * abre um campo de busca por produto sem roubar espaço fixo do topo.
  */
-export const StoreHeader = ({ store, hours }: StoreHeaderProps) => {
+export const StoreHeader = ({
+  store,
+  hours,
+  estimatedMinutes,
+  searchable,
+  search,
+  onSearchChange,
+}: StoreHeaderProps) => {
   const open = isOpen(store, hours)
+  const [searchOpen, setSearchOpen] = useState(() => search.trim().length > 0)
+  const inputRef = useRef<HTMLInputElement>(null)
+
+  useEffect(() => {
+    if (searchOpen) inputRef.current?.focus()
+  }, [searchOpen])
+
+  const closeSearch = (): void => {
+    onSearchChange('')
+    setSearchOpen(false)
+  }
 
   return (
     <header className={styles.header}>
-      <div className={styles.glow} aria-hidden="true" />
+      <div className={styles.top}>
+        <div className={styles.brand}>
+          <div className={styles.logo}>
+            {store.logoUrl ? (
+              <img src={store.logoUrl} alt="" className={styles.logoImg} />
+            ) : (
+              <span className={styles.logoFallback}>{initials(store)}</span>
+            )}
+          </div>
 
-      <div className={styles.brand}>
-        <div className={styles.logo}>
-          {store.logoUrl ? (
-            <img src={store.logoUrl} alt="" className={styles.logoImg} />
-          ) : (
-            <span className={styles.logoFallback}>{initials(store)}</span>
-          )}
+          <div className={styles.identity}>
+            <h1 className={styles.name}>{displayName(store)}</h1>
+            <div className={styles.meta}>
+              <span
+                className={`${styles.badge} ${
+                  open ? styles.badgeOpen : styles.badgeShut
+                }`}
+              >
+                <span className={styles.dot} aria-hidden="true" />
+                {open ? 'Aberto' : 'Fechado'}
+              </span>
+              {estimatedMinutes ? (
+                <span className={styles.time}>~{estimatedMinutes} min</span>
+              ) : null}
+            </div>
+          </div>
         </div>
 
-        <div className={styles.identity}>
-          <h1 className={styles.name}>{displayName(store)}</h1>
-          <p className={styles.address}>
-            <svg
-              className={styles.pin}
-              width="14"
-              height="14"
-              viewBox="0 0 24 24"
-              fill="none"
-              aria-hidden="true"
-            >
-              <path
-                d="M12 21s7-6.3 7-11a7 7 0 1 0-14 0c0 4.7 7 11 7 11Z"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinejoin="round"
+        {searchable ? (
+          <button
+            type="button"
+            className={styles.searchToggle}
+            aria-label={searchOpen ? 'Fechar busca' : 'Buscar no cardápio'}
+            aria-expanded={searchOpen}
+            onClick={() => (searchOpen ? closeSearch() : setSearchOpen(true))}
+          >
+            <span className={styles.searchToggleIconStack}>
+              <Icon
+                svg={searchIcon}
+                className={`${styles.searchToggleIcon} ${
+                  searchOpen ? styles.searchToggleIconHidden : ''
+                }`}
               />
-              <circle cx="12" cy="10" r="2.4" fill="currentColor" />
-            </svg>
-            {shortAddress(store)}
-          </p>
-        </div>
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                aria-hidden="true"
+                className={`${styles.searchToggleIcon} ${
+                  searchOpen ? '' : styles.searchToggleIconHidden
+                }`}
+              >
+                <path
+                  d="M6 6l12 12M18 6L6 18"
+                  stroke="currentColor"
+                  strokeWidth="2.2"
+                  strokeLinecap="round"
+                />
+              </svg>
+            </span>
+          </button>
+        ) : null}
       </div>
 
-      <span
-        className={`${styles.badge} ${open ? styles.badgeOpen : styles.badgeShut}`}
-      >
-        <span className={styles.dot} aria-hidden="true" />
-        {open ? 'Aberto agora' : 'Fechado no momento'}
-      </span>
-
-      <div className={styles.valance} aria-hidden="true" />
+      {searchable ? (
+        <div
+          className={`${styles.searchRow} ${
+            searchOpen ? styles.searchRowOpen : ''
+          }`}
+        >
+          <div className={styles.searchRowInner}>
+            <div className={styles.searchField}>
+              <Icon svg={searchIcon} className={styles.searchFieldIcon} />
+              <Input
+                ref={inputRef}
+                value={search}
+                onChange={(event) => onSearchChange(event.target.value)}
+                placeholder="Buscar no cardápio…"
+                className={styles.searchInput}
+                tabIndex={searchOpen ? 0 : -1}
+              />
+            </div>
+          </div>
+        </div>
+      ) : null}
     </header>
   )
 }

@@ -10,6 +10,7 @@ export type TenantSettings = {
   deliveryFee: string
   minOrderAmount: string
   deliveryRadius: number
+  estimatedMinutes: number
   isDeliveryEnabled: boolean
   isPickupEnabled: boolean
   isCounterEnabled: boolean

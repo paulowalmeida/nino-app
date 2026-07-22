@@ -5,44 +5,49 @@
  * sobre um fundo quente mais fechado. Aqui ele deixa de ser uma coluna de
  * celular esticada: abre para ~1120px e o corpo se parte em duas colunas —
  * um índice de categorias fixo à esquerda e a grade de itens à direita. */
+/* No celular a vitrine vira uma "casca de app": a página trava na altura da
+ * tela e nada nela rola por fora. O topo (cabeçalho + trilha de categorias)
+ * fica fixo e só a lista de produtos rola, dentro do próprio container. No
+ * desktop volta a ser o painel de papel emoldurado que cresce e rola no
+ * documento. */
 .page {
-  @apply relative mx-auto min-h-dvh w-full max-w-xl overflow-hidden bg-paper pb-28;
-  @apply lg:my-8 lg:max-w-[70rem] lg:rounded-[1.75rem] lg:border lg:border-line;
-  @apply lg:pb-16 lg:shadow-[0_30px_80px_-40px_rgba(26,18,6,0.45)];
+  @apply relative mx-auto flex h-dvh w-full max-w-xl flex-col overflow-hidden;
+  @apply bg-paper;
+  @apply lg:my-8 lg:block lg:h-auto lg:min-h-dvh lg:max-w-[70rem];
+  @apply lg:rounded-[1.75rem] lg:border lg:border-line lg:pb-16;
+  @apply lg:shadow-[0_30px_80px_-40px_rgba(26,18,6,0.45)];
 }
 
-/* corpo do cardápio: fluxo único no celular; no desktop, grade de duas colunas
- * — índice (col 1, ocupa as duas linhas) e busca + itens (col 2). */
+/* bloco fixo do topo: cabeçalho + banner de pedido ativo. Não encolhe e não
+ * rola. No desktop é só um wrapper transparente no fluxo normal. */
+.topbar {
+  @apply shrink-0;
+}
+
+/* corpo do cardápio: no celular é a coluna que sobra abaixo do topo fixo —
+ * trilha de categorias presa no alto e a lista rolando embaixo. No desktop
+ * vira a grade de duas colunas (índice + itens). */
 .body {
-  @apply lg:grid lg:grid-cols-[13rem_minmax(0,1fr)] lg:gap-x-10 lg:px-9 lg:pt-7;
+  @apply flex min-h-0 flex-1 flex-col overflow-hidden;
+  @apply lg:grid lg:min-h-0 lg:flex-none lg:grid-cols-[13rem_minmax(0,1fr)];
+  @apply lg:gap-x-10 lg:overflow-visible lg:px-9 lg:pt-7;
 }
 
-.searchWrap {
-  @apply bg-paper px-5 pb-2 pt-5;
-  @apply lg:col-start-2 lg:row-start-1 lg:p-0 lg:pb-1;
-}
-
-/* índice lateral: só existe como coluna no desktop. No celular é um wrapper
- * transparente e a própria CategoryNav cuida do "grude" horizontal. */
+/* índice lateral: no celular é a trilha presa no topo do corpo (não rola). No
+ * desktop vira a coluna do índice, grudada ao rolar o documento. */
 .rail {
-  @apply lg:col-start-1 lg:row-span-2 lg:row-start-1 lg:self-start;
+  @apply shrink-0;
+  @apply lg:col-start-1 lg:row-start-1 lg:self-start;
   @apply lg:sticky lg:top-7;
 }
 
-.searchField {
-  @apply relative flex items-center;
-}
-
-.searchIcon {
-  @apply pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2 text-faint;
-}
-
-.searchInput {
-  @apply h-12 rounded-full border-line bg-cream pl-11 text-[0.95rem];
-}
-
+/* a lista: no celular é a ÚNICA coisa que rola — flex-1 + overflow interno, com
+ * respiro embaixo pra barra da sacola não cobrir o último item. No desktop rola
+ * junto com o documento, dentro da coluna. */
 .menu {
-  @apply px-5 lg:col-start-2 lg:row-start-2 lg:px-0;
+  @apply min-h-0 flex-1 overflow-y-auto px-5 pb-28;
+  @apply lg:col-start-2 lg:row-start-1 lg:flex-none lg:overflow-visible;
+  @apply lg:px-0 lg:pb-0;
 }
 
 .section {
@@ -65,7 +70,7 @@
 }
 
 .items {
-  @apply flex flex-col gap-2.5 lg:grid lg:grid-cols-2 lg:gap-3.5;
+  @apply flex flex-col lg:grid lg:grid-cols-2 lg:gap-3.5;
 }
 
 .hint {
@@ -157,12 +162,11 @@
 
 /* ----- skeleton ----- */
 .skHeader {
-  @apply flex items-center gap-4 px-5 pt-9 pb-9;
-  background: linear-gradient(168deg, #ff7e1f 0%, #ec5a0e 100%);
+  @apply flex items-center gap-4 border-b border-line bg-paper px-5 pb-5 pt-6;
 }
 
 .skLogo {
-  @apply h-[4.75rem] w-[4.75rem] shrink-0 rounded-[1.4rem] bg-white/85;
+  @apply h-16 w-16 shrink-0 rounded-2xl bg-sand;
 }
 
 .skLines {
@@ -170,11 +174,7 @@
 }
 
 .skName {
-  @apply h-7 w-2/3 rounded-lg bg-white/35;
-}
-
-.skAddress {
-  @apply mt-2 h-4 w-1/2 rounded bg-white/25;
+  @apply h-7 w-2/3 rounded-lg bg-sand;
 }
 
 .skTrack {

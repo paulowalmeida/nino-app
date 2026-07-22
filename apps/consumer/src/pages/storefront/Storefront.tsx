@@ -1,10 +1,6 @@
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import { useNavigate, useParams } from 'react-router'
 
-import { Input } from '@nino/ds'
-
-import searchIcon from '@assets/icons/search.svg?raw'
-import { Icon } from '@components/Icon/Icon'
 import { ActiveOrderBanner } from '@compositions/ActiveOrderBanner/ActiveOrderBanner'
 import { CartDrawer } from '@compositions/CartDrawer/CartDrawer'
 import { CategoryNav } from '@compositions/CategoryNav/CategoryNav'
@@ -15,6 +11,7 @@ import type { MenuItem } from '@custom_types/menu/menu-item'
 import { useActiveSection } from '@hooks/useActiveSection'
 import { useMenu } from '@hooks/useMenu'
 import { useOpeningHours } from '@hooks/useOpeningHours'
+import { usePublicSettings } from '@hooks/usePublicSettings'
 import { useStore } from '@hooks/useStore'
 import { useCartStore } from '@states/useCartStore'
 import { categoryIcon } from '@utils/category-icon'
@@ -35,8 +32,14 @@ export const Storefront = () => {
   const { store, isPending: loadingStore, isError } = useStore(slug ?? undefined)
   const { sections, isPending: loadingMenu } = useMenu(store?.id)
   const { hours, isPending: loadingHours } = useOpeningHours(store?.id)
+  const { settings } = usePublicSettings(store?.id)
 
-  const activeId = useActiveSection(sections.map((section) => section.id))
+  const menuRef = useRef<HTMLElement>(null)
+  const activeDomId = useActiveSection(
+    sections.map((section) => sectionDomId(section.id)),
+    menuRef
+  )
+  const activeId = activeDomId?.replace(/^section-/, '') ?? null
   const cart = useCartStore((state) => state.lines)
   const addToCart = useCartStore((state) => state.add)
   const incrementCartLine = useCartStore((state) => state.increment)
@@ -113,25 +116,20 @@ export const Storefront = () => {
 
   return (
     <div className={styles.page}>
-      <StoreHeader store={store} hours={hours} />
+      <div className={styles.topbar}>
+        <StoreHeader
+          store={store}
+          hours={hours}
+          estimatedMinutes={settings?.estimatedMinutes}
+          searchable={sections.length > 0}
+          search={search}
+          onSearchChange={setSearch}
+        />
 
-      <ActiveOrderBanner slug={slug} />
+        <ActiveOrderBanner slug={slug} />
+      </div>
 
       <div className={styles.body}>
-        {sections.length > 0 && (
-          <div className={styles.searchWrap}>
-            <div className={styles.searchField}>
-              <Icon svg={searchIcon} className={styles.searchIcon} />
-              <Input
-                value={search}
-                onChange={(event) => setSearch(event.target.value)}
-                placeholder="Buscar no cardápio…"
-                className={styles.searchInput}
-              />
-            </div>
-          </div>
-        )}
-
         {sections.length > 0 && !query && (
           <aside className={styles.rail}>
             <CategoryNav
@@ -142,7 +140,7 @@ export const Storefront = () => {
           </aside>
         )}
 
-        <main className={styles.menu}>
+        <main className={styles.menu} ref={menuRef}>
           {loadingMenu && <MenuRowsSkeleton />}
 
         {!loadingMenu && sections.length === 0 && (

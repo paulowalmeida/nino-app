@@ -7,9 +7,6 @@ import { isStoreOpen } from './store-open'
 export const displayName = (store: Store): string =>
   store.customName ?? store.company.name
 
-export const shortAddress = (store: Store): string =>
-  `${store.neighborhood}, ${store.city}`
-
 /**
  * Dá para pedir agora? A pausa manual e o status da loja mandam primeiro —
  * uma pausa fecha mesmo dentro do expediente. Uma loja que ainda não

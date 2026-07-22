@@ -8,7 +8,6 @@ export const StorefrontSkeleton = () => (
       <div className={styles.skLogo} />
       <div className={styles.skLines}>
         <div className={styles.skName} />
-        <div className={styles.skAddress} />
       </div>
     </div>
     <div className={styles.skTrack}>

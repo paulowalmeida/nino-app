@@ -49,6 +49,7 @@ const toDraft = (settings: TenantSettings): ServiceRulesDraft => ({
   allowGuestOrder: settings.allowGuestOrder,
   requireCpf: settings.requireCpf,
   minOrderAmount: Number(settings.minOrderAmount).toFixed(2).replace('.', ','),
+  estimatedMinutes: String(settings.estimatedMinutes),
   acceptedPaymentMethods: settings.acceptedPaymentMethods,
 })
 
@@ -59,6 +60,7 @@ const EMPTY: ServiceRulesDraft = {
   allowGuestOrder: true,
   requireCpf: false,
   minOrderAmount: '0',
+  estimatedMinutes: '30',
   acceptedPaymentMethods: [],
 }
 
@@ -99,6 +101,7 @@ export const ServiceRules = ({
       allowGuestOrder: draft.allowGuestOrder,
       requireCpf: draft.requireCpf,
       minOrderAmount: Number(draft.minOrderAmount.replace(',', '.')) || 0,
+      estimatedMinutes: Number(draft.estimatedMinutes) || 1,
       acceptedPaymentMethods: draft.acceptedPaymentMethods,
     })
     setDirty(false)
@@ -197,6 +200,24 @@ export const ServiceRules = ({
           onChange={(event) => change({ minOrderAmount: event.target.value })}
         />
         <p className={styles.rowHint}>Deixe em 0 para não exigir mínimo.</p>
+      </div>
+
+      <div className={local.minimum}>
+        <label className={styles.rowLabel} htmlFor="estimated-minutes">
+          Tempo estimado (min)
+        </label>
+        <Input
+          id="estimated-minutes"
+          inputMode="numeric"
+          className={local.minimumInput}
+          value={draft.estimatedMinutes}
+          onChange={(event) =>
+            change({ estimatedMinutes: event.target.value })
+          }
+        />
+        <p className={styles.rowHint}>
+          Preparo + entrega. Aparece pro cliente na vitrine.
+        </p>
       </div>
 
       <Button

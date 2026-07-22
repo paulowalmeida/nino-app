@@ -5,6 +5,7 @@ export type UpdateTenantSettingsRequest = {
   allowGuestOrder?: boolean
   requireCpf?: boolean
   minOrderAmount?: number
+  estimatedMinutes?: number
   isDeliveryEnabled?: boolean
   isPickupEnabled?: boolean
   isCounterEnabled?: boolean
