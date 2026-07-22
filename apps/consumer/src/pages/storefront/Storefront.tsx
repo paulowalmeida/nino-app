@@ -3,7 +3,6 @@ import { useNavigate, useParams } from 'react-router'
 
 import { Input } from '@nino/ds'
 
-import bagIcon from '@assets/icons/bag.svg?raw'
 import searchIcon from '@assets/icons/search.svg?raw'
 import { Icon } from '@components/Icon/Icon'
 import { ActiveOrderBanner } from '@compositions/ActiveOrderBanner/ActiveOrderBanner'
@@ -118,30 +117,33 @@ export const Storefront = () => {
 
       <ActiveOrderBanner slug={slug} />
 
-      {sections.length > 0 && (
-        <div className={styles.searchWrap}>
-          <div className={styles.searchField}>
-            <Icon svg={searchIcon} className={styles.searchIcon} />
-            <Input
-              value={search}
-              onChange={(event) => setSearch(event.target.value)}
-              placeholder="Buscar no cardápio…"
-              className={styles.searchInput}
-            />
+      <div className={styles.body}>
+        {sections.length > 0 && (
+          <div className={styles.searchWrap}>
+            <div className={styles.searchField}>
+              <Icon svg={searchIcon} className={styles.searchIcon} />
+              <Input
+                value={search}
+                onChange={(event) => setSearch(event.target.value)}
+                placeholder="Buscar no cardápio…"
+                className={styles.searchInput}
+              />
+            </div>
           </div>
-        </div>
-      )}
+        )}
 
-      {sections.length > 0 && !query && (
-        <CategoryNav
-          sections={sections}
-          activeId={activeId}
-          onSelect={goToSection}
-        />
-      )}
+        {sections.length > 0 && !query && (
+          <aside className={styles.rail}>
+            <CategoryNav
+              sections={sections}
+              activeId={activeId}
+              onSelect={goToSection}
+            />
+          </aside>
+        )}
 
-      <main className={styles.menu}>
-        {loadingMenu && <MenuRowsSkeleton />}
+        <main className={styles.menu}>
+          {loadingMenu && <MenuRowsSkeleton />}
 
         {!loadingMenu && sections.length === 0 && (
           <p className={styles.hint}>
@@ -163,14 +165,7 @@ export const Storefront = () => {
               aria-label={section.name}
             >
               <div className={styles.sectionHead}>
-                <h2 className={styles.sectionTitle}>
-                  {icon && (
-                    <span className={styles.sectionIcon} aria-hidden="true">
-                      {icon}
-                    </span>
-                  )}
-                  {section.name}
-                </h2>
+                <h2 className={styles.sectionTitle}>{section.name}</h2>
                 <span className={styles.sectionCount}>
                   {section.items.length}{' '}
                   {section.items.length === 1 ? 'opção' : 'opções'}
@@ -189,9 +184,10 @@ export const Storefront = () => {
                 ))}
               </div>
             </section>
-          )
-        })}
-      </main>
+            )
+          })}
+        </main>
+      </div>
 
       {cartCount > 0 && (
         <button
@@ -199,23 +195,28 @@ export const Storefront = () => {
           className={styles.cartBar}
           onClick={() => setIsCartOpen(true)}
         >
-          <div className={styles.cartSummary}>
-            <span className={styles.cartChip}>
-              <Icon svg={bagIcon} className={styles.cartIcon} />
-              <span className={styles.cartBadge}>{cartCount}</span>
+          <span className={styles.cartSummary}>
+            <span className={styles.cartCount}>
+              {cartCount} {cartCount === 1 ? 'item' : 'itens'}
             </span>
-            <span className={styles.cartText}>
-              <span className={styles.cartCount}>Sua sacola</span>
-              <span className={styles.cartTotal}>{brl(cartTotal)}</span>
+            <span className={styles.cartDot} aria-hidden="true">
+              ·
             </span>
-          </div>
+            <span className={styles.cartAction}>Ver sacola</span>
+          </span>
           <span className={styles.cartCta}>
-            Ver sacola
-            <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true">
+            {brl(cartTotal)}
+            <svg
+              className={styles.cartArrow}
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              aria-hidden="true"
+            >
               <path
-                d="M9 6l6 6-6 6"
+                d="M4 12h15m0 0l-6-6m6 6l-6 6"
                 stroke="currentColor"
-                strokeWidth="2.5"
+                strokeWidth="2.2"
                 strokeLinecap="round"
                 strokeLinejoin="round"
               />

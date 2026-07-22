@@ -1,12 +1,22 @@
 @reference "@nino/ds/globals.css";
 
-/* gruda no topo com o papel por baixo, para o cardápio passar sem borrar */
+/* celular: gruda no topo com o papel por baixo, para o cardápio passar sem
+ * borrar. desktop: deixa de ser barra flutuante e vira o corpo do índice
+ * lateral — quem controla o "grude" é o trilho da vitrine. */
 .nav {
   @apply sticky top-0 z-20 border-b border-line bg-paper/90 backdrop-blur-md;
+  @apply lg:static lg:z-auto lg:border-b-0 lg:bg-transparent lg:backdrop-blur-none;
+}
+
+/* eyebrow do índice — só no desktop, onde a coluna precisa de um rótulo */
+.railLabel {
+  @apply hidden lg:mb-3 lg:block lg:text-[0.7rem] lg:font-bold lg:uppercase;
+  @apply lg:tracking-[0.14em] lg:text-faint;
 }
 
 .track {
-  @apply flex gap-2 overflow-x-auto px-5 py-3 lg:px-8;
+  @apply flex gap-2 overflow-x-auto px-5 py-3;
+  @apply lg:flex-col lg:gap-1 lg:overflow-visible lg:px-0 lg:py-0;
   scrollbar-width: none;
 }
 
@@ -18,10 +28,13 @@
   @apply flex shrink-0 cursor-pointer items-center gap-1.5 rounded-full;
   @apply border border-line bg-cream px-4 py-2 text-[0.82rem] font-bold;
   @apply text-subtle transition-all duration-150;
+  @apply lg:w-full lg:justify-start lg:rounded-xl lg:border-transparent;
+  @apply lg:bg-transparent lg:px-3.5 lg:py-2.5 lg:text-[0.9rem];
 }
 
 .chip:hover {
   @apply border-peach text-brand-strong;
+  @apply lg:border-transparent lg:bg-cream lg:text-ink;
 }
 
 .chipOn {
@@ -31,4 +44,25 @@
 
 .chipOn:hover {
   @apply border-brand text-brand-foreground;
+}
+
+/* ativo no índice vertical: sem pílula cheia, um marcador de página com
+ * barra lateral — mais índice de cardápio, menos botão. */
+.chipOn.chip {
+  @apply lg:relative lg:border-transparent lg:bg-brand-soft lg:text-brand-strong;
+  @apply lg:shadow-none;
+}
+
+.chipOn.chip:hover {
+  @apply lg:bg-brand-soft lg:text-brand-strong;
+}
+
+.chipOn.chip::before {
+  @apply lg:absolute lg:left-0 lg:top-1/2 lg:h-5 lg:w-1 lg:-translate-y-1/2;
+  @apply lg:rounded-full lg:bg-brand;
+  content: '';
+}
+
+.chip:not(.chipOn)::before {
+  content: none;
 }

@@ -8,7 +8,8 @@
  */
 .header {
   --awning: linear-gradient(168deg, #ff7e1f 0%, #ec5a0e 100%);
-  @apply relative px-5 pt-9 pb-8 text-cream lg:px-9 lg:pt-10;
+  @apply relative px-5 pt-9 pb-8 text-cream;
+  @apply lg:flex lg:items-center lg:justify-between lg:gap-6 lg:px-10 lg:pb-9 lg:pt-11;
   background:
     radial-gradient(130% 80% at 82% -10%, #ff9038 0%, transparent 55%),
     var(--awning);
@@ -53,7 +54,7 @@
 }
 
 .brand {
-  @apply relative z-[2] flex items-center gap-4;
+  @apply relative z-[2] flex items-center gap-4 lg:gap-5;
 }
 
 .logo {
@@ -94,6 +95,7 @@
 .badge {
   @apply relative z-[2] mt-5 inline-flex items-center gap-2 rounded-full;
   @apply border px-3.5 py-2 text-[0.82rem] font-bold backdrop-blur-sm;
+  @apply lg:mt-0 lg:shrink-0 lg:self-center;
 }
 
 .badgeOpen {

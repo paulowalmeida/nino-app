@@ -1,15 +1,14 @@
 import { useEffect, useRef } from 'react'
 
-import { categoryIcon } from '@utils/category-icon'
-
 import type { CategoryNavProps } from './CategoryNav.types'
 
 import styles from './CategoryNav.module.css'
 
 /**
- * A trilha de categorias que gruda no topo ao rolar: mesmo gesto da fila do
- * gestor. A categoria ativa se centraliza sozinha, para o próximo destino
- * estar sempre à mão no polegar.
+ * As categorias do cardápio. No celular é uma trilha horizontal que gruda no
+ * topo ao rolar; a categoria ativa se centraliza sozinha para o próximo destino
+ * ficar à mão no polegar. No desktop vira um índice vertical fixo à esquerda —
+ * o menu lateral de um cardápio de verdade, só os nomes, sem ícone.
  */
 export const CategoryNav = ({
   sections,
@@ -28,10 +27,10 @@ export const CategoryNav = ({
 
   return (
     <nav className={styles.nav} aria-label="Categorias do cardápio">
+      <p className={styles.railLabel}>Cardápio</p>
       <ul className={styles.track}>
         {sections.map((section) => {
           const isActive = section.id === activeId
-          const icon = categoryIcon(section.name)
           return (
             <li key={section.id}>
               <button
@@ -41,7 +40,6 @@ export const CategoryNav = ({
                 onClick={() => onSelect(section.id)}
                 className={`${styles.chip} ${isActive ? styles.chipOn : ''}`}
               >
-                {icon && <span aria-hidden="true">{icon}</span>}
                 {section.name}
               </button>
             </li>
