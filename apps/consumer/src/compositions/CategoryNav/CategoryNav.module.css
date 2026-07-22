@@ -2,11 +2,11 @@
 
 /* gruda no topo com o papel por baixo, para o cardápio passar sem borrar */
 .nav {
-  @apply sticky top-0 z-20 border-b border-sand bg-paper/95 backdrop-blur-sm;
+  @apply sticky top-0 z-20 border-b border-line bg-paper/90 backdrop-blur-md;
 }
 
 .track {
-  @apply flex gap-2 overflow-x-auto px-4 py-3 lg:px-8;
+  @apply flex gap-2 overflow-x-auto px-5 py-3 lg:px-8;
   scrollbar-width: none;
 }
 
@@ -16,10 +16,19 @@
 
 .chip {
   @apply flex shrink-0 cursor-pointer items-center gap-1.5 rounded-full;
-  @apply px-4 py-2 text-sm font-semibold text-subtle transition-colors duration-150;
-  @apply bg-surface-sunk;
+  @apply border border-line bg-cream px-4 py-2 text-[0.82rem] font-bold;
+  @apply text-subtle transition-all duration-150;
+}
+
+.chip:hover {
+  @apply border-peach text-brand-strong;
 }
 
 .chipOn {
-  @apply bg-brand text-brand-foreground;
+  @apply border-brand bg-brand text-brand-foreground;
+  box-shadow: 0 6px 14px -6px rgba(232, 84, 12, 0.5);
+}
+
+.chipOn:hover {
+  @apply border-brand text-brand-foreground;
 }

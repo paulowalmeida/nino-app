@@ -26,11 +26,20 @@
 }
 
 .photoFallback {
-  @apply h-56 w-full bg-sand;
+  @apply flex h-56 w-full items-center justify-center;
+  background: radial-gradient(
+    120% 100% at 30% 15%,
+    var(--color-cream),
+    var(--color-sand)
+  );
+}
+
+.fallbackGlyph {
+  @apply text-[4.5rem] opacity-40;
 }
 
 .description {
-  @apply text-sm leading-relaxed text-muted;
+  @apply text-[0.95rem] leading-relaxed text-body;
 }
 
 .footer {

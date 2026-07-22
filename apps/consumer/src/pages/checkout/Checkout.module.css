@@ -1,16 +1,20 @@
 @reference "@nino/ds/globals.css";
 
 .page {
-  @apply mx-auto min-h-dvh w-full max-w-xl pb-10;
+  @apply mx-auto min-h-dvh w-full max-w-xl bg-paper pb-10;
+  @apply lg:my-8 lg:min-h-0 lg:max-w-xl lg:rounded-[1.75rem] lg:border;
+  @apply lg:border-line lg:pb-8 lg:shadow-[0_30px_80px_-40px_rgba(26,18,6,0.45)];
 }
 
 .header {
-  @apply flex items-center gap-3 px-5 pb-4 pt-8;
+  @apply sticky top-0 z-10 flex items-center gap-3 border-b border-line;
+  @apply bg-paper/90 px-5 py-4 backdrop-blur-md lg:rounded-t-[1.75rem];
 }
 
 .back {
-  @apply flex h-9 w-9 items-center justify-center rounded-full bg-sand;
-  @apply text-lg text-ink;
+  @apply flex h-10 w-10 items-center justify-center rounded-full border;
+  @apply border-line bg-cream text-lg text-ink transition-colors;
+  @apply hover:border-peach hover:text-brand-strong;
 }
 
 .title {
@@ -18,7 +22,7 @@
 }
 
 .form {
-  @apply flex flex-col gap-6 px-5;
+  @apply flex flex-col gap-7 px-5 pt-5;
 }
 
 .section {
@@ -26,34 +30,41 @@
 }
 
 .sectionTitle {
-  @apply font-display text-base font-extrabold text-ink;
+  @apply flex items-center gap-2 font-display text-[1.05rem] font-extrabold text-ink;
+}
+
+.sectionTitle::before {
+  content: '';
+  @apply h-4 w-1 rounded-full bg-brand;
 }
 
 .row {
   @apply grid grid-cols-2 gap-3;
 }
 
+/* o resumo como um cupom: papel creme, borda quente, total destacado */
 .summary {
-  @apply flex flex-col gap-2 rounded-2xl bg-paper p-4;
-  box-shadow: inset 0 0 0 1px var(--color-sand);
+  @apply flex flex-col gap-2 rounded-2xl border border-line bg-cream p-5;
 }
 
 .summaryLine {
   @apply flex items-center justify-between text-sm text-muted;
+  font-variant-numeric: tabular-nums;
 }
 
 .summaryTotal {
-  @apply mt-1 flex items-center justify-between border-t border-sand pt-2;
-  @apply font-display text-lg font-extrabold text-ink;
+  @apply mt-2 flex items-center justify-between pt-3;
+  @apply font-display text-xl font-extrabold text-ink;
+  border-top: 1.5px dashed var(--color-line);
   font-variant-numeric: tabular-nums;
 }
 
 .error {
-  @apply text-sm text-red-500;
+  @apply rounded-xl bg-red-50 px-4 py-3 text-sm font-medium text-red-600;
 }
 
 .submit {
-  @apply w-full;
+  @apply h-12 w-full text-base;
 }
 
 /* ----- vazio / confirmado ----- */
@@ -72,20 +83,20 @@
 }
 
 .confirmedMascot {
-  @apply h-32 w-32;
+  @apply h-36 w-36 drop-shadow-[0_12px_24px_rgba(232,84,12,0.22)];
 }
 
 .confirmedTitle {
-  @apply font-display text-2xl font-extrabold text-ink;
+  @apply font-display text-3xl font-extrabold text-ink;
 }
 
 .confirmedText {
-  @apply text-sm leading-relaxed text-muted;
+  @apply max-w-xs text-sm leading-relaxed text-muted;
 }
 
 .confirmedCode {
-  @apply mb-2 rounded-full bg-sand px-4 py-1.5 font-display text-sm font-bold;
-  @apply uppercase tracking-wide text-ink;
+  @apply mb-2 rounded-full border border-line bg-cream px-5 py-2 font-display;
+  @apply text-base font-extrabold uppercase tracking-widest text-brand-strong;
 }
 
 /* ----- skeleton ----- */

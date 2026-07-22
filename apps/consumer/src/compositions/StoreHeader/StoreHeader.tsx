@@ -27,7 +27,25 @@ export const StoreHeader = ({ store, hours }: StoreHeaderProps) => {
 
         <div className={styles.identity}>
           <h1 className={styles.name}>{displayName(store)}</h1>
-          <p className={styles.address}>{shortAddress(store)}</p>
+          <p className={styles.address}>
+            <svg
+              className={styles.pin}
+              width="14"
+              height="14"
+              viewBox="0 0 24 24"
+              fill="none"
+              aria-hidden="true"
+            >
+              <path
+                d="M12 21s7-6.3 7-11a7 7 0 1 0-14 0c0 4.7 7 11 7 11Z"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinejoin="round"
+              />
+              <circle cx="12" cy="10" r="2.4" fill="currentColor" />
+            </svg>
+            {shortAddress(store)}
+          </p>
         </div>
       </div>
 
@@ -37,6 +55,8 @@ export const StoreHeader = ({ store, hours }: StoreHeaderProps) => {
         <span className={styles.dot} aria-hidden="true" />
         {open ? 'Aberto agora' : 'Fechado no momento'}
       </span>
+
+      <div className={styles.valance} aria-hidden="true" />
     </header>
   )
 }

@@ -1,5 +1,6 @@
 import { Button, Drawer } from '@nino/ds'
 
+import { categoryIcon } from '@utils/category-icon'
 import { primaryImage } from '@utils/menu-image'
 import { brl } from '@utils/money'
 
@@ -34,7 +35,9 @@ export const CartDrawer = ({
               {image ? (
                 <img src={image} alt="" className={styles.photo} />
               ) : (
-                <div className={styles.photoFallback} aria-hidden="true" />
+                <div className={styles.photoFallback} aria-hidden="true">
+                  {categoryIcon(item.name) ?? '🍽️'}
+                </div>
               )}
 
               <div className={styles.lineText}>
@@ -69,8 +72,13 @@ export const CartDrawer = ({
       </div>
 
       <div className={styles.footer}>
-        <span className={styles.total}>{brl(total)}</span>
-        <Button onClick={onCheckout}>Finalizar pedido</Button>
+        <div className={styles.totalRow}>
+          <span className={styles.totalLabel}>Total</span>
+          <span className={styles.total}>{brl(total)}</span>
+        </div>
+        <Button className={styles.checkout} onClick={onCheckout}>
+          Finalizar pedido
+        </Button>
       </div>
     </div>
   </Drawer>

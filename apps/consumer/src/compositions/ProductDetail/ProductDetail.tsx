@@ -3,6 +3,7 @@ import { useState } from 'react'
 import { Button, Carousel, Drawer, Modal } from '@nino/ds'
 
 import { useIsDesktop } from '@hooks/useIsDesktop'
+import { categoryIcon } from '@utils/category-icon'
 import { brl } from '@utils/money'
 
 import type { ProductDetailProps } from './ProductDetail.types'
@@ -39,7 +40,11 @@ export const ProductDetail = ({
       ))}
     />
   ) : (
-    <div className={styles.photoFallback} aria-hidden="true" />
+    <div className={styles.photoFallback} aria-hidden="true">
+      <span className={styles.fallbackGlyph}>
+        {categoryIcon(shown.name) ?? '🍽️'}
+      </span>
+    </div>
   )
 
   const stepper = (

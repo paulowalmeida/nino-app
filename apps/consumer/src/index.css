@@ -6,6 +6,16 @@
     -webkit-font-smoothing: antialiased;
   }
 
+  /* No desktop a vitrine vira um painel pousado — o fundo fecha num tom
+     quente mais escuro para o "cardápio" ganhar borda e sombra reais. */
+  @media (min-width: 1024px) {
+    body {
+      background:
+        radial-gradient(80% 60% at 50% -10%, #f6ead8 0%, transparent 60%),
+        var(--color-sand-deep);
+    }
+  }
+
   /*
    * O mesmo grão da landing e do gestor: atmosfera, não textura. É o que faz
    * a vitrine, o painel e o site parecerem o mesmo produto.

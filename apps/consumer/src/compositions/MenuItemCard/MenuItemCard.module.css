@@ -1,10 +1,16 @@
 @reference "@nino/ds/globals.css";
 
 .card {
-  @apply flex cursor-pointer items-center gap-3 rounded-2xl bg-paper p-3;
-  @apply shadow-[0_1px_2px_rgba(26,18,6,0.06)] outline-none;
-  @apply focus-visible:ring-2 focus-visible:ring-brand;
+  @apply relative flex cursor-pointer items-stretch gap-3.5 rounded-2xl;
+  @apply border border-line bg-paper p-3.5 pr-4 outline-none transition-all;
+  @apply duration-200 focus-visible:ring-2 focus-visible:ring-brand;
+  box-shadow: 0 1px 2px rgba(26, 18, 6, 0.04);
   animation: settle 0.36s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.card:hover {
+  @apply -translate-y-0.5 border-peach;
+  box-shadow: 0 10px 24px -12px rgba(26, 18, 6, 0.25);
 }
 
 @keyframes settle {
@@ -22,12 +28,20 @@
   .card {
     animation: none;
   }
+  .card:hover {
+    @apply translate-y-0;
+  }
 }
 
 /* loja fechada: item continua legível, só sai do caminho de quem clica */
 .disabled {
   @apply cursor-not-allowed grayscale;
-  opacity: 0.55;
+  opacity: 0.5;
+}
+
+.disabled:hover {
+  @apply translate-y-0 border-line;
+  box-shadow: 0 1px 2px rgba(26, 18, 6, 0.04);
 }
 
 .disabled .add {
@@ -35,35 +49,49 @@
 }
 
 .body {
-  @apply flex min-w-0 flex-1 flex-col;
+  @apply flex min-w-0 flex-1 flex-col py-0.5;
 }
 
 .name {
-  @apply font-display text-base font-bold leading-snug text-ink;
+  @apply font-display text-[1.02rem] font-bold leading-snug text-ink;
 }
 
 .description {
-  @apply mt-1 line-clamp-2 text-sm leading-snug text-muted;
+  @apply mt-1 line-clamp-2 text-[0.84rem] leading-snug text-muted;
 }
 
 /* preço em laranja: é a informação que decide, então usa a cor de marca */
 .price {
-  @apply mt-1 font-display text-base font-extrabold text-brand-strong;
+  @apply mt-auto pt-2 font-display text-[1.05rem] font-extrabold text-brand-strong;
   font-variant-numeric: tabular-nums;
 }
 
-.add {
-  @apply flex h-9 w-9 shrink-0 items-center justify-center rounded-lg;
-  @apply bg-brand text-xl font-bold leading-none text-brand-foreground;
-  @apply transition-transform duration-150 active:scale-90;
-  box-shadow: 0 6px 14px -6px rgba(232, 84, 12, 0.6);
+.media {
+  @apply relative shrink-0 self-center;
 }
 
 .photo {
-  @apply h-16 w-16 shrink-0 rounded-xl object-cover;
-  box-shadow: inset 0 0 0 1px var(--color-sand);
+  @apply h-[5.4rem] w-[5.4rem] rounded-xl object-cover;
+  box-shadow: inset 0 0 0 1px rgba(26, 18, 6, 0.06);
 }
 
 .photoFallback {
-  @apply h-16 w-16 shrink-0 rounded-xl bg-sand;
+  @apply flex h-[5.4rem] w-[5.4rem] items-center justify-center rounded-xl;
+  background:
+    radial-gradient(120% 120% at 30% 20%, var(--color-cream), var(--color-sand));
+  box-shadow: inset 0 0 0 1px var(--color-line);
+}
+
+.fallbackGlyph {
+  @apply text-[2rem] opacity-45 grayscale-0;
+  filter: saturate(0.85);
+}
+
+/* o botão de somar ancorado no canto da foto, estilo vitrine de delivery */
+.add {
+  @apply absolute -bottom-2 -right-2 flex h-9 w-9 items-center justify-center;
+  @apply rounded-full bg-brand text-brand-foreground transition-transform;
+  @apply duration-150 active:scale-90;
+  border: 2.5px solid var(--color-paper);
+  box-shadow: 0 6px 14px -4px rgba(232, 84, 12, 0.55);
 }

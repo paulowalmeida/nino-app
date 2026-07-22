@@ -18,6 +18,7 @@ import { useMenu } from '@hooks/useMenu'
 import { useOpeningHours } from '@hooks/useOpeningHours'
 import { useStore } from '@hooks/useStore'
 import { useCartStore } from '@states/useCartStore'
+import { categoryIcon } from '@utils/category-icon'
 import { brl } from '@utils/money'
 import { resolveSlug } from '@utils/resolve-slug'
 import { isOpen } from '@utils/store-info'
@@ -152,48 +153,75 @@ export const Storefront = () => {
           <p className={styles.hint}>Nada encontrado para “{search}”.</p>
         )}
 
-        {visibleSections.map((section) => (
-          <section
-            key={section.id}
-            id={sectionDomId(section.id)}
-            className={styles.section}
-            aria-label={section.name}
-          >
-            <h2 className={styles.sectionTitle}>{section.name}</h2>
-            <div className={styles.items}>
-              {section.items.map((item) => (
-                <MenuItemCard
-                  key={item.id}
-                  item={item}
-                  onAdd={addToCart}
-                  onSelect={setSelectedItem}
-                  disabled={!storeOpen}
-                />
-              ))}
-            </div>
-          </section>
-        ))}
+        {visibleSections.map((section) => {
+          const icon = categoryIcon(section.name)
+          return (
+            <section
+              key={section.id}
+              id={sectionDomId(section.id)}
+              className={styles.section}
+              aria-label={section.name}
+            >
+              <div className={styles.sectionHead}>
+                <h2 className={styles.sectionTitle}>
+                  {icon && (
+                    <span className={styles.sectionIcon} aria-hidden="true">
+                      {icon}
+                    </span>
+                  )}
+                  {section.name}
+                </h2>
+                <span className={styles.sectionCount}>
+                  {section.items.length}{' '}
+                  {section.items.length === 1 ? 'opção' : 'opções'}
+                </span>
+              </div>
+              <div className={styles.items}>
+                {section.items.map((item) => (
+                  <MenuItemCard
+                    key={item.id}
+                    item={item}
+                    onAdd={addToCart}
+                    onSelect={setSelectedItem}
+                    disabled={!storeOpen}
+                    fallbackIcon={icon}
+                  />
+                ))}
+              </div>
+            </section>
+          )
+        })}
       </main>
 
       {cartCount > 0 && (
-        <div className={styles.cartBar}>
+        <button
+          type="button"
+          className={styles.cartBar}
+          onClick={() => setIsCartOpen(true)}
+        >
           <div className={styles.cartSummary}>
-            <Icon svg={bagIcon} className={styles.cartIcon} />
+            <span className={styles.cartChip}>
+              <Icon svg={bagIcon} className={styles.cartIcon} />
+              <span className={styles.cartBadge}>{cartCount}</span>
+            </span>
             <span className={styles.cartText}>
-              <span className={styles.cartCount}>
-                {cartCount} {cartCount === 1 ? 'item' : 'itens'}
-              </span>
+              <span className={styles.cartCount}>Sua sacola</span>
               <span className={styles.cartTotal}>{brl(cartTotal)}</span>
             </span>
           </div>
-          <button
-            type="button"
-            className={styles.cartCta}
-            onClick={() => setIsCartOpen(true)}
-          >
+          <span className={styles.cartCta}>
             Ver sacola
-          </button>
-        </div>
+            <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true">
+              <path
+                d="M9 6l6 6-6 6"
+                stroke="currentColor"
+                strokeWidth="2.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+          </span>
+        </button>
       )}
 
       <CartDrawer
