@@ -66,11 +66,11 @@
 }
 
 .collapseIcon {
-  @apply h-[14px] w-[14px] -rotate-90 transition-transform duration-300;
+  @apply h-[14px] w-[14px] rotate-90 transition-transform duration-300;
 }
 
 .sidebar.collapsed .collapseIcon {
-  @apply rotate-90;
+  @apply -rotate-90;
 }
 
 .switcherWrap {
