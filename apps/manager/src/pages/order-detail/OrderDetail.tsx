@@ -3,7 +3,7 @@ import { useParams } from 'react-router'
 
 import { BackLink } from '@components/BackLink'
 
-import { Button, Textarea } from '@nino/ds'
+import { Button, Skeleton, Textarea } from '@nino/ds'
 
 import { OrderTimeline } from '@compositions/OrderTimeline'
 import { useCurrentTenant } from '@hooks/session/useCurrentTenant'
@@ -47,7 +47,13 @@ export const OrderDetail = () => {
   const [reason, setReason] = useState('')
   const [isCancelling, setCancelling] = useState(false)
 
-  if (isPending) return <p className={styles.notice}>Carregando…</p>
+  if (isPending) {
+    return (
+      <div className={styles.page}>
+        <Skeleton className={styles.skeleton} />
+      </div>
+    )
+  }
 
   if (!order) {
     return (

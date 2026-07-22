@@ -2,7 +2,7 @@
 
 /* a comanda ocupa a coluna inteira e nunca rola junto com o cardápio */
 .ticket {
-  @apply flex w-full flex-col rounded-[24px] border border-sand bg-paper;
+  @apply flex w-full flex-col rounded-[24px] border border-line bg-paper;
   @apply lg:h-full lg:min-h-0;
 }
 

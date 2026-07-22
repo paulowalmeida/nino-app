@@ -19,4 +19,5 @@ export interface ComboboxProps {
   onValueChange?: (value: string) => void
   emptyMessage?: string
   className?: string
+  ariaLabel?: string
 }

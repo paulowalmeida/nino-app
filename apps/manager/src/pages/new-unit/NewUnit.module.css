@@ -13,6 +13,6 @@
 }
 
 .form {
-  @apply mt-6 rounded-[24px] border border-sand bg-white/70 p-5;
+  @apply mt-6 rounded-[24px] border border-line bg-white/70 p-5;
   @apply backdrop-blur-sm lg:p-7;
 }

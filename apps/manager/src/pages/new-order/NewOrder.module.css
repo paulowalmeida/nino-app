@@ -22,7 +22,7 @@
 }
 
 .menu {
-  @apply flex min-w-0 flex-col gap-6 rounded-[24px] border border-sand;
+  @apply flex min-w-0 flex-col gap-6 rounded-[24px] border border-line;
   @apply bg-white/70;
   @apply p-5 backdrop-blur-sm lg:p-6;
 }

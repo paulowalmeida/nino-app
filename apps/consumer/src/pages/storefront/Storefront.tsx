@@ -4,6 +4,7 @@ import { useNavigate, useParams } from 'react-router'
 import { Input } from '@nino/ds'
 
 import bagIcon from '@assets/icons/bag.svg?raw'
+import searchIcon from '@assets/icons/search.svg?raw'
 import { Icon } from '@components/Icon/Icon'
 import { CartDrawer } from '@compositions/CartDrawer/CartDrawer'
 import { CategoryNav } from '@compositions/CategoryNav/CategoryNav'
@@ -13,10 +14,12 @@ import { StoreHeader } from '@compositions/StoreHeader/StoreHeader'
 import type { MenuItem } from '@custom_types/menu/menu-item'
 import { useActiveSection } from '@hooks/useActiveSection'
 import { useMenu } from '@hooks/useMenu'
+import { useOpeningHours } from '@hooks/useOpeningHours'
 import { useStore } from '@hooks/useStore'
 import { useCartStore } from '@states/useCartStore'
 import { brl } from '@utils/money'
 import { resolveSlug } from '@utils/resolve-slug'
+import { displayName, isOpen } from '@utils/store-info'
 
 import { StorefrontSkeleton } from './StorefrontSkeleton'
 import styles from './Storefront.module.css'
@@ -29,6 +32,7 @@ export const Storefront = () => {
   const slug = resolveSlug(pathSlug)
   const { store, isPending: loadingStore, isError } = useStore(slug ?? undefined)
   const { sections, isPending: loadingMenu } = useMenu(store?.id)
+  const { hours, isPending: loadingHours } = useOpeningHours(store?.id)
 
   const activeId = useActiveSection(sections.map((section) => section.id))
   const cart = useCartStore((state) => state.lines)
@@ -103,17 +107,38 @@ export const Storefront = () => {
     )
   }
 
+  if (!loadingHours && !isOpen(store, hours)) {
+    return (
+      <div className={styles.notFound}>
+        <img
+          src="/mascot-consumer.svg"
+          alt=""
+          className={styles.notFoundMascot}
+        />
+        <h1 className={styles.notFoundTitle}>{displayName(store)} fechou</h1>
+        <p className={styles.notFoundText}>
+          Fora do horário de funcionamento agora. Volta já já — passa aqui de
+          novo daqui a pouco.
+        </p>
+      </div>
+    )
+  }
+
   return (
     <div className={styles.page}>
-      <StoreHeader store={store} />
+      <StoreHeader store={store} hours={hours} />
 
       {sections.length > 0 && (
         <div className={styles.searchWrap}>
-          <Input
-            value={search}
-            onChange={(event) => setSearch(event.target.value)}
-            placeholder="🔍 Buscar no cardápio…"
-          />
+          <div className={styles.searchField}>
+            <Icon svg={searchIcon} className={styles.searchIcon} />
+            <Input
+              value={search}
+              onChange={(event) => setSearch(event.target.value)}
+              placeholder="Buscar no cardápio…"
+              className={styles.searchInput}
+            />
+          </div>
         </div>
       )}
 

@@ -10,11 +10,11 @@
 }
 
 .tile {
-  @apply flex flex-col gap-1 rounded-[22px] border border-sand-deep;
-  @apply bg-white/80 backdrop-blur-sm;
+  @apply flex flex-col gap-1 rounded-[22px] border border-line;
+  @apply bg-white/80 shadow-card backdrop-blur-sm;
   @apply p-4 lg:p-5;
-  @apply transition-colors duration-300;
-  @apply hover:border-brand/30;
+  @apply transition-all duration-300;
+  @apply hover:border-brand/60 hover:shadow-card-hover;
   @apply focus-visible:outline-none focus-visible:ring-2;
   @apply focus-visible:ring-brand focus-visible:ring-offset-2;
 }

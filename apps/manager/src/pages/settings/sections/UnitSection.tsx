@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { Link } from 'react-router'
 
-import { Button } from '@nino/ds'
+import { Button, Skeleton } from '@nino/ds'
 
 import { useSubscription } from '@hooks/account/useSubscription'
 import { useCompanyGroups } from '@hooks/session/useCompanyGroups'
@@ -24,13 +24,16 @@ export const UnitSection = () => {
 
   const { data: unit } = useTenantDetail(tenantId)
   const { mutate: removeUnit, isPending: isRemoving } = useRemoveTenant()
-  const { data: subscription } = useSubscription()
+  const { data: subscription, isPending: isSubscriptionPending } =
+    useSubscription()
 
   const [confirming, setConfirming] = useState<string | null>(null)
 
   const units = useCompanyGroups().flatMap(({ units: list }) => list)
   const limit = subscription?.plan.maxTenants ?? null
   const isFull = limit !== null && units.length >= limit
+
+  if (isSubscriptionPending) return <Skeleton className={styles.skeleton} />
 
   return (
     <section className={card.card}>

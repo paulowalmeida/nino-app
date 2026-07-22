@@ -23,7 +23,7 @@
 .sidebar {
   @apply fixed left-0 top-0 z-40 flex h-dvh w-60 flex-col overflow-hidden;
   @apply -translate-x-full bg-dark;
-  @apply transition-transform duration-300 ease-in-out;
+  @apply transition-[transform,width] duration-300 ease-in-out;
   @apply lg:translate-x-0;
 }
 
@@ -31,8 +31,46 @@
   @apply translate-x-0;
 }
 
+.collapsed {
+  @apply lg:w-[4.75rem];
+}
+
+.sidebar.collapsed .navItem,
+.sidebar.collapsed .navItemTrigger,
+.sidebar.collapsed .subItem {
+  @apply lg:justify-center lg:px-0;
+}
+
+.sidebar.collapsed .triggerContent {
+  @apply lg:justify-center;
+}
+
+.sidebar.collapsed .subNav {
+  @apply lg:pl-0;
+}
+
 .logoWrap {
-  @apply relative z-10 shrink-0 border-b border-white/8 px-5 py-4;
+  @apply relative z-10 flex shrink-0 items-center justify-between;
+  @apply border-b border-white/8 px-5 py-4;
+}
+
+.sidebar.collapsed .logoWrap {
+  @apply lg:px-3;
+}
+
+.collapseBtn {
+  @apply flex h-6 w-6 shrink-0 cursor-pointer items-center justify-center;
+  @apply rounded-md text-white/35 transition-colors duration-150;
+  @apply hover:bg-white/10 hover:text-white/80;
+  @apply hidden lg:flex;
+}
+
+.collapseIcon {
+  @apply h-[14px] w-[14px] -rotate-90 transition-transform duration-300;
+}
+
+.sidebar.collapsed .collapseIcon {
+  @apply rotate-90;
 }
 
 .switcherWrap {

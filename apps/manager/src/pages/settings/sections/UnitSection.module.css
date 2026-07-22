@@ -4,6 +4,10 @@
   @apply mb-4 flex flex-wrap items-start justify-between gap-3;
 }
 
+.skeleton {
+  @apply h-52 w-full rounded-[24px];
+}
+
 .add {
   @apply shrink-0;
 }

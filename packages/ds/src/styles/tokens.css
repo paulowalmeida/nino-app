@@ -21,6 +21,9 @@
   --color-sand: #f4ece0;
   --color-sand-deep: #f1e7da;
   --color-surface: #f1f3f5;
+  /* Borda de card — contraste real sobre paper/cream/white, sand é sutil
+     demais pra isso */
+  --color-line: #e6d9c4;
 
   /* Texto — neutros quentes */
   --color-ink: #1a1206;

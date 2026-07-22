@@ -65,5 +65,5 @@
 }
 
 .notice {
-  @apply rounded-2xl border border-sand bg-white/60 p-6 text-sm text-faint;
+  @apply rounded-2xl border border-line bg-white/60 p-6 text-sm text-faint;
 }

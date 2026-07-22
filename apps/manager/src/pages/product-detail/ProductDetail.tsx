@@ -1,12 +1,22 @@
-import { useEffect } from 'react'
-import { Controller, useForm } from 'react-hook-form'
+import { useEffect, useState } from 'react'
+import { Controller, useForm, useWatch } from 'react-hook-form'
 import { useNavigate, useParams } from 'react-router'
 
-import { Button, FormField, Input, Select, Switch, Textarea } from '@nino/ds'
+import {
+  Button,
+  Dialog,
+  FormField,
+  Input,
+  Select,
+  Skeleton,
+  Switch,
+  Textarea,
+} from '@nino/ds'
 
 import { ItemPhoto } from '@compositions/ItemPhoto'
 import { BackLink } from '@components/BackLink'
 import { ItemThumb } from '@components/ItemThumb'
+import { useDeleteMenuItem } from '@hooks/product/useDeleteMenuItem'
 import { useMenuItem } from '@hooks/product/useMenuItem'
 import { useUpdateMenuItem } from '@hooks/product/useUpdateMenuItem'
 import { useCurrentTenant } from '@hooks/session/useCurrentTenant'
@@ -22,6 +32,8 @@ const brl = new Intl.NumberFormat('pt-BR', {
   currency: 'BRL',
 })
 
+const DESCRIPTION_MAX_LENGTH = 300
+
 const toPrice = (value: string): number =>
   Number(value.replace(/\./g, '').replace(',', '.'))
 
@@ -36,6 +48,12 @@ export const ProductDetail = () => {
 
   const { item, categories, isPending } = useMenuItem(tenantId, productId)
   const { mutateAsync: save } = useUpdateMenuItem(tenantId, productId as string)
+  const { mutateAsync: deleteItem, isPending: isDeleting } = useDeleteMenuItem(
+    tenantId,
+    productId as string
+  )
+  const [isDeleteOpen, setIsDeleteOpen] = useState(false)
+  const [deleteError, setDeleteError] = useState<string | null>(null)
 
   const {
     register,
@@ -45,6 +63,8 @@ export const ProductDetail = () => {
     setError,
     formState: { errors, isSubmitting, isDirty },
   } = useForm<ProductFormValues>()
+
+  const description = useWatch({ control, name: 'description' })
 
   useEffect(() => {
     if (!item) return
@@ -58,7 +78,22 @@ export const ProductDetail = () => {
     })
   }, [item, reset])
 
-  if (isPending) return <p className={styles.notice}>Carregando…</p>
+  const onDelete = async () => {
+    try {
+      await deleteItem()
+      void navigate('..', { relative: 'path' })
+    } catch {
+      setDeleteError('Não foi possível excluir. Tente de novo.')
+    }
+  }
+
+  if (isPending) {
+    return (
+      <div className={styles.page}>
+        <Skeleton className={styles.skeleton} />
+      </div>
+    )
+  }
 
   if (!item) {
     return (
@@ -136,9 +171,19 @@ export const ProductDetail = () => {
         <div className={`${motion.deal} ${styles.field}`} style={riseDelay(180)}>
           <FormField
             label="Descrição"
-            helperText="Aparece abaixo do nome no app do cliente"
+            helperText={`${description?.length ?? 0}/${DESCRIPTION_MAX_LENGTH} · Aparece abaixo do nome no app do cliente`}
+            error={errors.description?.message}
           >
-            <Textarea rows={3} {...register('description')} />
+            <Textarea
+              rows={3}
+              maxLength={DESCRIPTION_MAX_LENGTH}
+              {...register('description', {
+                maxLength: {
+                  value: DESCRIPTION_MAX_LENGTH,
+                  message: `A descrição não pode passar de ${DESCRIPTION_MAX_LENGTH} caracteres`,
+                },
+              })}
+            />
           </FormField>
         </div>
 
@@ -227,8 +272,28 @@ export const ProductDetail = () => {
           >
             Cancelar
           </Button>
+          <Button
+            type="button"
+            variant="danger"
+            onClick={() => setIsDeleteOpen(true)}
+          >
+            Excluir item
+          </Button>
         </div>
       </form>
+
+      <Dialog
+        open={isDeleteOpen}
+        onOpenChange={setIsDeleteOpen}
+        title="Excluir item"
+        description={`"${item.name}" será removido do cardápio. Esta ação não pode ser desfeita.`}
+        confirmLabel="Excluir"
+        onConfirm={() => void onDelete()}
+        onCancel={() => setIsDeleteOpen(false)}
+        loading={isDeleting}
+      />
+
+      {deleteError && <p className={styles.error}>{deleteError}</p>}
     </div>
   )
 }

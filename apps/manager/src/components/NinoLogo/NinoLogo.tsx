@@ -32,6 +32,7 @@ export const NinoLogo = ({
   size = 'lg',
   mark,
   to,
+  hideWordmark = false,
 }: NinoLogoProps) => {
   const variant = sizes[size]
   const labelColor = tone === 'light' ? styles.labelLight : styles.labelDark
@@ -47,12 +48,16 @@ export const NinoLogo = ({
           </>
         )}
       </span>
-      <span className={styles.stack}>
-        <span className={`${styles.wordmark} ${variant.wordmark}`}>nino</span>
-        <span className={`${styles.label} ${variant.label} ${labelColor}`}>
-          GESTOR
+      {!hideWordmark && (
+        <span className={styles.stack}>
+          <span className={`${styles.wordmark} ${variant.wordmark}`}>
+            nino
+          </span>
+          <span className={`${styles.label} ${variant.label} ${labelColor}`}>
+            GESTOR
+          </span>
         </span>
-      </span>
+      )}
     </>
   )
 

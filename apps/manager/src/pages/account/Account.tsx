@@ -11,6 +11,20 @@ import styles from './Account.module.css'
 import motion from '@styles/motion.module.css'
 import card from '@styles/settingsCard.module.css'
 
+const day = new Intl.DateTimeFormat('pt-BR', {
+  day: '2-digit',
+  month: 'long',
+  year: 'numeric',
+})
+
+const dateOf = (iso: string | null): string =>
+  iso ? day.format(new Date(iso)) : '—'
+
+const providerLabel: Record<string, string> = {
+  local: 'E-mail e senha',
+  google: 'Google',
+}
+
 export const Account = () => {
   const { data: profile, isPending } = useProfile()
   const { mutate: save, isPending: isSaving } = useSaveProfile()
@@ -80,6 +94,30 @@ export const Account = () => {
           >
             Salvar meus dados
           </Button>
+        </section>
+      )}
+
+      {profile && (
+        <section className={`${motion.settle} ${card.card}`}>
+          <p className={styles.factsTitle}>Sobre a conta</p>
+          <dl className={styles.facts}>
+            {[
+              ['E-mail', profile.credentials[0]?.email ?? '—'],
+              [
+                'Login via',
+                providerLabel[profile.credentials[0]?.provider ?? ''] ??
+                  profile.credentials[0]?.provider ??
+                  '—',
+              ],
+              ['Membro desde', dateOf(profile.createdAt)],
+              ['Último acesso', dateOf(profile.lastLoginAt)],
+            ].map(([label, value]) => (
+              <div key={label} className={styles.fact}>
+                <dt className={styles.factLabel}>{label}</dt>
+                <dd className={styles.factValue}>{value}</dd>
+              </div>
+            ))}
+          </dl>
         </section>
       )}
     </div>

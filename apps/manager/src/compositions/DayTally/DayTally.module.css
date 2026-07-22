@@ -13,7 +13,7 @@
 }
 
 .figure {
-  @apply flex flex-col gap-1 rounded-[22px] border border-sand;
+  @apply flex flex-col gap-1 rounded-[22px] border border-line;
   @apply bg-surface-sunk/70 p-4 backdrop-blur-sm lg:p-5;
   @apply transition-colors duration-200;
 }

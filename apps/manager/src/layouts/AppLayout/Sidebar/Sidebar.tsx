@@ -73,7 +73,13 @@ const GROUPS: { title: string; items: NavItem[] }[] = [
   },
 ]
 
-export const Sidebar = ({ tenantId, isOpen, onClose }: SidebarProps) => {
+export const Sidebar = ({
+  tenantId,
+  isOpen,
+  onClose,
+  collapsed,
+  onToggleCollapse,
+}: SidebarProps) => {
   const user = useSessionStore(({ user }) => user)
   const { pathname } = useLocation()
 
@@ -81,6 +87,13 @@ export const Sidebar = ({ tenantId, isOpen, onClose }: SidebarProps) => {
   const { data: summary } = useQueueSummary(tenantId)
 
   const waiting = summary?.PENDING ?? 0
+
+  /**
+   * `collapsed` é preferência de desktop. No drawer mobile aberto (`isOpen`)
+   * o texto sempre aparece — não faz sentido colapsar uma folha que já
+   * ocupa a tela inteira.
+   */
+  const isCollapsed = collapsed && !isOpen
 
   /**
    * Item com filhos abre a lista, não uma tela: quem escolhe a seção é a
@@ -95,22 +108,41 @@ export const Sidebar = ({ tenantId, isOpen, onClose }: SidebarProps) => {
 
   let order = 0
 
+  const asideClass = [
+    styles.sidebar,
+    isOpen && styles.open,
+    isCollapsed && styles.collapsed,
+  ]
+    .filter(Boolean)
+    .join(' ')
+
   return (
-    <aside
-      className={isOpen ? `${styles.sidebar} ${styles.open}` : styles.sidebar}
-    >
+    <aside className={asideClass}>
       <div className={styles.logoWrap}>
-        <NinoLogo size="sm" tone="light" to={`/${tenantId}/visao-geral`} />
+        <NinoLogo
+          size="sm"
+          tone="light"
+          to={`/${tenantId}/visao-geral`}
+          hideWordmark={isCollapsed}
+        />
+        <button
+          type="button"
+          className={styles.collapseBtn}
+          onClick={onToggleCollapse}
+          aria-label={collapsed ? 'Expandir menu' : 'Recolher menu'}
+        >
+          <NavIcon name="chevron" className={styles.collapseIcon} />
+        </button>
       </div>
 
       <div className={styles.switcherWrap}>
-        <StoreSwitcher currentTenantId={tenantId} />
+        <StoreSwitcher currentTenantId={tenantId} collapsed={isCollapsed} />
       </div>
 
       <nav className={styles.nav}>
         {GROUPS.map(({ title, items }) => (
           <div key={title} className={styles.group}>
-            <p className={styles.groupTitle}>{title}</p>
+            {!isCollapsed && <p className={styles.groupTitle}>{title}</p>}
 
             {items
               .filter(({ roles }) => !roles || (role && roles.includes(role)))
@@ -122,7 +154,7 @@ export const Sidebar = ({ tenantId, isOpen, onClose }: SidebarProps) => {
                 const content = (
                   <>
                     <NavIcon name={icon} className={styles.navIcon} />
-                    <span>{label}</span>
+                    {!isCollapsed && <span>{label}</span>}
                     {section === 'pedidos' && waiting > 0 && (
                       <span className={`${motion.pop} ${styles.tally}`}>
                         {waiting}
@@ -161,7 +193,9 @@ export const Sidebar = ({ tenantId, isOpen, onClose }: SidebarProps) => {
                                         name={childIcon}
                                         className={styles.subIcon}
                                       />
-                                      <span>{childLabel}</span>
+                                      {!isCollapsed && (
+                                        <span>{childLabel}</span>
+                                      )}
                                     </NavLink>
                                   )
                                 )}
@@ -207,6 +241,7 @@ export const Sidebar = ({ tenantId, isOpen, onClose }: SidebarProps) => {
           name={user?.name ?? ''}
           tenantId={tenantId}
           onNavigate={onClose}
+          collapsed={isCollapsed}
         />
       </div>
     </aside>

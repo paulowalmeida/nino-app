@@ -1,8 +1,8 @@
 @reference "@nino/ds/globals.css";
 
 .roster {
-  @apply rounded-[24px] border border-sand bg-white/70 p-5 backdrop-blur-sm;
-  @apply lg:p-6;
+  @apply rounded-[24px] border border-line bg-white/70 p-5 shadow-card;
+  @apply backdrop-blur-sm lg:p-6;
 }
 
 .head {

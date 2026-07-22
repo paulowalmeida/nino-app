@@ -2,11 +2,11 @@
 
 /* gruda no topo com o papel por baixo, para o cardápio passar sem borrar */
 .nav {
-  @apply sticky top-0 z-20 border-b border-sand bg-cream/95 backdrop-blur-sm;
+  @apply sticky top-0 z-20 border-b border-sand bg-paper/95 backdrop-blur-sm;
 }
 
 .track {
-  @apply flex gap-2 overflow-x-auto px-4 py-3;
+  @apply flex gap-2 overflow-x-auto px-4 py-3 lg:px-8;
   scrollbar-width: none;
 }
 

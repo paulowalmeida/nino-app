@@ -16,7 +16,12 @@ import styles from './UserMenu.module.css'
  * dela e a assinatura da empresa — coisas que não pertencem a nenhuma
  * seção da loja aberta.
  */
-export const UserMenu = ({ name, tenantId, onNavigate }: UserMenuProps) => {
+export const UserMenu = ({
+  name,
+  tenantId,
+  onNavigate,
+  collapsed = false,
+}: UserMenuProps) => {
   const navigate = useNavigate()
 
   const go = (path: string) => {
@@ -39,8 +44,12 @@ export const UserMenu = ({ name, tenantId, onNavigate }: UserMenuProps) => {
       trigger={
         <button type="button" className={styles.trigger}>
           <PersonMark name={name} tone="night" size="sm" />
-          <span className={styles.name}>{name.split(' ')[0]}</span>
-          <NavIcon name="gear" className={styles.icon} />
+          {!collapsed && (
+            <>
+              <span className={styles.name}>{name.split(' ')[0]}</span>
+              <NavIcon name="gear" className={styles.icon} />
+            </>
+          )}
         </button>
       }
       items={[

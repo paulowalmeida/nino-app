@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-import { Button, Input, Skeleton, Switch } from '@nino/ds'
+import { Button, Skeleton, Switch, TimePicker } from '@nino/ds'
 
 import type { OpeningHours } from '@custom_types/settings'
 import { riseDelay } from '@utils/rise-delay'
@@ -114,23 +114,21 @@ export const WeekSchedule = ({
             <span className={local.dayName}>{DAYS[entry.dayOfWeek]}</span>
 
             <div className={local.times}>
-              <Input
-                type="time"
+              <TimePicker
                 size="sm"
-                aria-label={`Abre ${DAYS[entry.dayOfWeek]}`}
+                ariaLabel={`Abre ${DAYS[entry.dayOfWeek]}`}
                 value={entry.openTime}
-                onChange={(event) =>
-                  change(entry.dayOfWeek, { openTime: event.target.value })
+                onValueChange={(openTime) =>
+                  change(entry.dayOfWeek, { openTime })
                 }
               />
               <span className={local.until}>às</span>
-              <Input
-                type="time"
+              <TimePicker
                 size="sm"
-                aria-label={`Fecha ${DAYS[entry.dayOfWeek]}`}
+                ariaLabel={`Fecha ${DAYS[entry.dayOfWeek]}`}
                 value={entry.closeTime}
-                onChange={(event) =>
-                  change(entry.dayOfWeek, { closeTime: event.target.value })
+                onValueChange={(closeTime) =>
+                  change(entry.dayOfWeek, { closeTime })
                 }
               />
             </div>

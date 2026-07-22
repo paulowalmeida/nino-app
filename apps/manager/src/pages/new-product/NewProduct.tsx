@@ -27,6 +27,8 @@ import motion from '@styles/motion.module.css'
 const toPrice = (value: string): number =>
   Number(value.replace(/\./g, '').replace(',', '.'))
 
+const DESCRIPTION_MAX_LENGTH = 300
+
 export const NewProduct = () => {
   const tenant = useCurrentTenant()
   const tenantId = tenant?.tenantId ?? null
@@ -55,6 +57,7 @@ export const NewProduct = () => {
   })
 
   const name = useWatch({ control, name: 'name' })
+  const description = useWatch({ control, name: 'description' })
 
   const options = categories.map(({ id, name }) => ({
     value: id,
@@ -134,9 +137,19 @@ export const NewProduct = () => {
         <div className={`${motion.deal} ${styles.field}`} style={riseDelay(140)}>
           <FormField
             label="Descrição"
-            helperText="Aparece abaixo do nome no app do cliente"
+            helperText={`${description?.length ?? 0}/${DESCRIPTION_MAX_LENGTH} · Aparece abaixo do nome no app do cliente`}
+            error={errors.description?.message}
           >
-            <Textarea rows={3} {...register('description')} />
+            <Textarea
+              rows={3}
+              maxLength={DESCRIPTION_MAX_LENGTH}
+              {...register('description', {
+                maxLength: {
+                  value: DESCRIPTION_MAX_LENGTH,
+                  message: `A descrição não pode passar de ${DESCRIPTION_MAX_LENGTH} caracteres`,
+                },
+              })}
+            />
           </FormField>
         </div>
 

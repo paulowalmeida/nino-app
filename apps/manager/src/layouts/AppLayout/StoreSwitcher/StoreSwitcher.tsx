@@ -14,7 +14,10 @@ import motion from '@styles/motion.module.css'
 const sectionOf = (pathname: string): string =>
   pathname.split('/').slice(2).join('/') || 'visao-geral'
 
-export const StoreSwitcher = ({ currentTenantId }: StoreSwitcherProps) => {
+export const StoreSwitcher = ({
+  currentTenantId,
+  collapsed = false,
+}: StoreSwitcherProps) => {
   const groups = useCompanyGroups()
   const navigate = useNavigate()
   const { pathname } = useLocation()
@@ -27,7 +30,9 @@ export const StoreSwitcher = ({ currentTenantId }: StoreSwitcherProps) => {
   const hasOtherCompanies = groups.length > 1
 
   if (units.length <= 1 && !hasOtherCompanies) {
-    return <p className={styles.single}>{current?.tenantName ?? 'Sua loja'}</p>
+    return collapsed ? null : (
+      <p className={styles.single}>{current?.tenantName ?? 'Sua loja'}</p>
+    )
   }
 
   const goTo = (tenantId: string) =>
@@ -68,13 +73,19 @@ export const StoreSwitcher = ({ currentTenantId }: StoreSwitcherProps) => {
             className={`${motion.press} ${styles.trigger}`}
           >
             <NavIcon name="store" className={styles.storeIcon} />
-            <span className={styles.trigerText}>
-              <span className={styles.name}>{current?.tenantName}</span>
-              {hasOtherCompanies && (
-                <span className={styles.company}>{company?.companyName}</span>
-              )}
-            </span>
-            <span className={styles.caret} aria-hidden="true" />
+            {!collapsed && (
+              <>
+                <span className={styles.trigerText}>
+                  <span className={styles.name}>{current?.tenantName}</span>
+                  {hasOtherCompanies && (
+                    <span className={styles.company}>
+                      {company?.companyName}
+                    </span>
+                  )}
+                </span>
+                <span className={styles.caret} aria-hidden="true" />
+              </>
+            )}
           </button>
         }
         items={items}

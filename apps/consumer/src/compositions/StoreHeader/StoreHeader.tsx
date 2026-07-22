@@ -9,8 +9,8 @@ import styles from './StoreHeader.module.css'
  * selo de aberto/fechado — a primeira pergunta de quem chega com fome é "dá
  * para pedir agora?".
  */
-export const StoreHeader = ({ store }: StoreHeaderProps) => {
-  const open = isOpen(store)
+export const StoreHeader = ({ store, hours }: StoreHeaderProps) => {
+  const open = isOpen(store, hours)
 
   return (
     <header className={styles.header}>

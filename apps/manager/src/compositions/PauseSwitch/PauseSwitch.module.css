@@ -27,7 +27,7 @@
 }
 
 .form {
-  @apply flex w-full flex-col gap-2 rounded-[22px] border border-sand;
+  @apply flex w-full flex-col gap-2 rounded-[22px] border border-line;
   @apply bg-white/70 p-4 backdrop-blur-sm;
 }
 

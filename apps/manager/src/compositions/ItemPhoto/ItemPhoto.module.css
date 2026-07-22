@@ -5,7 +5,7 @@
 }
 
 .frame {
-  @apply relative overflow-hidden rounded-[20px] border border-sand;
+  @apply relative overflow-hidden rounded-[20px] border border-line;
   @apply aspect-[4/3] w-full bg-white/70;
 }
 

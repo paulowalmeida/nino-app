@@ -5,6 +5,10 @@ import { Button } from '@nino/ds'
 
 import { NavIcon } from '@components/NavIcon'
 import { useCurrentTenant } from '@hooks/session/useCurrentTenant'
+import {
+  readSidebarCollapsed,
+  writeSidebarCollapsed,
+} from '@utils/sidebar-collapse'
 
 import { Sidebar } from './Sidebar'
 
@@ -13,8 +17,17 @@ import styles from './AppLayout.module.css'
 export const AppLayout = () => {
   const tenant = useCurrentTenant()
   const [menuOpen, setMenuOpen] = useState(false)
+  const [collapsed, setCollapsed] = useState(readSidebarCollapsed)
 
   const closeMenu = () => setMenuOpen(false)
+
+  const toggleCollapsed = () => {
+    setCollapsed((current) => {
+      const next = !current
+      writeSidebarCollapsed(next)
+      return next
+    })
+  }
 
   return (
     <div className={styles.shell}>
@@ -36,6 +49,8 @@ export const AppLayout = () => {
         tenantId={tenant?.tenantId ?? null}
         isOpen={menuOpen}
         onClose={closeMenu}
+        collapsed={collapsed}
+        onToggleCollapse={toggleCollapsed}
       />
 
       {menuOpen && (
@@ -46,7 +61,11 @@ export const AppLayout = () => {
         />
       )}
 
-      <main className={styles.main}>
+      <main
+        className={
+          collapsed ? `${styles.main} ${styles.mainCollapsed}` : styles.main
+        }
+      >
         <Outlet />
       </main>
     </div>

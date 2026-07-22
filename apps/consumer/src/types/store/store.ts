@@ -6,6 +6,7 @@ export type Store = {
   logoUrl: string | null
   primaryColor: string | null
   isPaused: boolean
+  timezone: string
   street: string
   number: string
   neighborhood: string

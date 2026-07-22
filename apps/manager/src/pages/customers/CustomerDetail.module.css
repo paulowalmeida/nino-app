@@ -5,7 +5,7 @@
 }
 
 .hero {
-  @apply mt-3 flex items-center gap-4 rounded-[24px] border border-sand;
+  @apply mt-3 flex items-center gap-4 rounded-[24px] border border-line;
   @apply bg-white/70 p-5 backdrop-blur-sm;
 }
 
@@ -37,7 +37,7 @@
 }
 
 .fact {
-  @apply flex flex-col gap-0.5 rounded-[20px] border border-sand;
+  @apply flex flex-col gap-0.5 rounded-[20px] border border-line;
   @apply bg-surface-sunk/70 p-4;
 }
 
@@ -59,7 +59,7 @@
 }
 
 .orders {
-  @apply flex flex-col rounded-[24px] border border-sand bg-white/70 px-2;
+  @apply flex flex-col rounded-[24px] border border-line bg-white/70 px-2;
   @apply backdrop-blur-sm;
 }
 
@@ -94,7 +94,7 @@
 }
 
 .empty {
-  @apply rounded-2xl border border-sand bg-white/60 p-5 text-sm text-faint;
+  @apply rounded-2xl border border-line bg-white/60 p-5 text-sm text-faint;
 }
 
 .skeleton {
@@ -102,5 +102,5 @@
 }
 
 .notice {
-  @apply rounded-2xl border border-sand bg-white/60 p-6 text-sm text-faint;
+  @apply rounded-2xl border border-line bg-white/60 p-6 text-sm text-faint;
 }

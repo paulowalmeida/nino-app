@@ -1,0 +1,19 @@
+import { useEffect, useState } from 'react'
+
+/** Mesmo ponto de corte do `lg:` do Tailwind — abaixo disso é bottom-sheet. */
+const QUERY = '(min-width: 1024px)'
+
+export const useIsDesktop = (): boolean => {
+  const [isDesktop, setIsDesktop] = useState(
+    () => window.matchMedia(QUERY).matches
+  )
+
+  useEffect(() => {
+    const mql = window.matchMedia(QUERY)
+    const onChange = () => setIsDesktop(mql.matches)
+    mql.addEventListener('change', onChange)
+    return () => mql.removeEventListener('change', onChange)
+  }, [])
+
+  return isDesktop
+}

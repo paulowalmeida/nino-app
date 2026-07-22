@@ -1,5 +1,8 @@
 @reference "@nino/ds/globals.css";
 
+/* Folha do polegar, só no mobile — a partir de lg vira Modal centralizado
+   (ver ProductDetail.tsx), que se ajusta ao conteúdo em vez de forçar
+   90dvh numa tela onde isso é um popup gigante. */
 .drawer {
   @apply rounded-t-3xl bg-paper;
 }
@@ -8,12 +11,22 @@
   @apply -mx-6 -mt-4 mb-4;
 }
 
+.modalTitle {
+  @apply font-display text-lg font-bold text-ink;
+}
+
+.modalMedia {
+  @apply mb-4 overflow-hidden rounded-xl;
+}
+
+/* altura fixa, não aspect-ratio: numa folha larga um 4:3 vira uma foto
+   gigantesca só porque a tela é grande */
 .photo {
-  @apply aspect-[4/3] w-full object-cover;
+  @apply h-56 w-full object-cover;
 }
 
 .photoFallback {
-  @apply aspect-[4/3] w-full bg-sand;
+  @apply h-56 w-full bg-sand;
 }
 
 .description {
@@ -23,6 +36,10 @@
 .footer {
   @apply sticky bottom-0 -mx-6 -mb-4 mt-4 flex items-center gap-3;
   @apply border-t border-sand bg-paper px-6 py-4;
+}
+
+.modalFooter {
+  @apply flex w-full items-center gap-3;
 }
 
 .stepper {

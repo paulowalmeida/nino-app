@@ -26,6 +26,10 @@
   @apply flex items-center gap-2;
 }
 
+.timeInput {
+  @apply w-24;
+}
+
 .until {
   @apply text-xs text-faint;
 }

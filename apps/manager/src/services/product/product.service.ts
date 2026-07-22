@@ -128,6 +128,12 @@ export const uploadItemImage = async (
   return response.json() as Promise<MenuItemImage>
 }
 
+export const removeItem = (
+  tenantId: string,
+  id: string
+): Promise<{ message: string }> =>
+  remove<{ message: string }>(`tenants/${tenantId}/products`, id)
+
 export const removeItemImage = (
   tenantId: string,
   productId: string,

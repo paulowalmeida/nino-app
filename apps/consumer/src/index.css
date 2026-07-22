@@ -2,7 +2,7 @@
 
 @layer base {
   body {
-    background: var(--color-cream);
+    background: var(--color-paper);
     -webkit-font-smoothing: antialiased;
   }
 

@@ -69,6 +69,9 @@ function filterOptions(options: ComboboxOption[], query: string) {
  * @param emptyMessage - Text shown when no option matches. Default: `Nenhum resultado`
  *
  * @param className - Additional CSS classes merged into the input
+ *
+ * @param ariaLabel - Accessible name for the input when no visible label
+ * wraps it (e.g. outside `FormField`)
  */
 export const Combobox = forwardRef<ComboboxInputRef, ComboboxProps>(
   (
@@ -83,6 +86,7 @@ export const Combobox = forwardRef<ComboboxInputRef, ComboboxProps>(
       onValueChange,
       emptyMessage = 'Nenhum resultado',
       className,
+      ariaLabel,
     },
     ref
   ) => {
@@ -116,6 +120,7 @@ export const Combobox = forwardRef<ComboboxInputRef, ComboboxProps>(
           <ArkCombobox.Input
             ref={ref}
             placeholder={placeholder}
+            aria-label={ariaLabel}
             data-invalid={error || undefined}
             aria-invalid={error || undefined}
             className={mergeClasses(

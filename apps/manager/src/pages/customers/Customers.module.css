@@ -18,8 +18,8 @@
 }
 
 .list {
-  @apply flex flex-col rounded-[24px] border border-sand bg-white/70;
-  @apply px-2 backdrop-blur-sm lg:px-3;
+  @apply flex flex-col rounded-[24px] border border-line bg-white/70;
+  @apply px-2 shadow-card backdrop-blur-sm lg:px-3;
 }
 
 .item {
@@ -29,7 +29,7 @@
 /* uma linha por pessoa: os números à direita, o nome sempre inteiro */
 .link {
   @apply flex flex-wrap items-center gap-x-4 gap-y-2 rounded-xl px-2 py-3;
-  @apply transition-colors duration-150 hover:bg-white/80;
+  @apply transition-colors duration-150 hover:bg-brand/5;
   @apply focus-visible:outline-none focus-visible:ring-2;
   @apply focus-visible:ring-brand focus-visible:ring-offset-1;
 }
@@ -73,7 +73,7 @@
 }
 
 .notice {
-  @apply rounded-2xl border border-sand bg-white/60 p-6 text-sm;
+  @apply rounded-2xl border border-line bg-white/60 p-6 text-sm;
   @apply leading-relaxed text-faint;
 }
 

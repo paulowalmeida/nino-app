@@ -1,17 +1,30 @@
 @reference "@nino/ds/globals.css";
 
-/* mobile-first: a vitrine é uma coluna estreita centrada, confortável no
- * polegar e limitada para não esticar no desktop */
+/* mobile-first: coluna estreita centrada, confortável no polegar — a
+ * partir de lg a coluna alarga e o cardápio vira grade de 2 colunas, em
+ * vez de esticar uma lista de celular no meio de uma tela de 1440px */
 .page {
-  @apply mx-auto min-h-dvh w-full max-w-xl pb-24;
+  @apply mx-auto min-h-dvh w-full max-w-xl pb-24 lg:max-w-4xl;
 }
 
 .searchWrap {
-  @apply bg-cream px-5 pb-3 pt-4;
+  @apply bg-paper px-5 pb-3 pt-4 lg:px-8;
+}
+
+.searchField {
+  @apply relative flex items-center;
+}
+
+.searchIcon {
+  @apply pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-faint;
+}
+
+.searchInput {
+  @apply pl-10;
 }
 
 .menu {
-  @apply px-5;
+  @apply px-5 lg:px-8;
 }
 
 .section {
@@ -23,7 +36,7 @@
 }
 
 .items {
-  @apply flex flex-col gap-2;
+  @apply flex flex-col gap-2 lg:grid lg:grid-cols-2 lg:gap-3;
 }
 
 .hint {
@@ -35,6 +48,7 @@
   @apply fixed inset-x-0 bottom-3 z-30 mx-auto flex w-[calc(100%-1.5rem)];
   @apply max-w-xl items-center justify-between gap-3 rounded-2xl bg-ink;
   @apply px-5 py-4 text-cream shadow-[0_8px_24px_rgba(26,18,6,0.25)];
+  @apply lg:max-w-4xl;
   animation: rise 0.28s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 

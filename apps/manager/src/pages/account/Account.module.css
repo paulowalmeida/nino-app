@@ -24,3 +24,23 @@
 .skeleton {
   @apply h-52 w-full rounded-[24px];
 }
+
+.factsTitle {
+  @apply mb-1 text-[0.7rem] font-bold uppercase tracking-[0.12em] text-faint;
+}
+
+.facts {
+  @apply flex flex-col pt-1;
+}
+
+.fact {
+  @apply flex items-baseline justify-between gap-3 border-b border-sand py-2.5;
+}
+
+.factLabel {
+  @apply text-sm text-faint;
+}
+
+.factValue {
+  @apply text-sm font-semibold text-body;
+}

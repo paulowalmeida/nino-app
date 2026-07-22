@@ -1,7 +1,7 @@
 @reference "@nino/ds/globals.css";
 
 .header {
-  @apply relative overflow-hidden px-5 pt-8 pb-7;
+  @apply relative overflow-hidden px-5 pt-8 pb-7 lg:px-8;
   background: linear-gradient(
     180deg,
     var(--color-cream-deep) 0%,
