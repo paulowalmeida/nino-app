@@ -1,9 +1,4 @@
-export type WeekdaySchedule = {
-  dayOfWeek: number
-  openTime: string
-  closeTime: string
-  isOpen: boolean
-}
+import type { PublicOpeningHours } from '@custom_types/opening-hours/public-opening-hours'
 
 const minutesOf = (time: string): number => {
   const [hour, minute] = time.split(':').map(Number)
@@ -35,12 +30,12 @@ const nowIn = (timezone: string): { day: number; minutes: number } => {
  * that closes past midnight (18:00–02:00) still belongs to the day it opened.
  */
 export const isStoreOpen = (
-  hours: WeekdaySchedule[],
+  hours: PublicOpeningHours[],
   timezone: string
 ): boolean => {
   const { day, minutes } = nowIn(timezone)
 
-  const openNow = (entry: WeekdaySchedule, atMinutes: number): boolean => {
+  const openNow = (entry: PublicOpeningHours, atMinutes: number): boolean => {
     const open = minutesOf(entry.openTime)
     const close = minutesOf(entry.closeTime)
     return close > open

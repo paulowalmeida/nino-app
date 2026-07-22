@@ -22,6 +22,7 @@ import { CHANNEL_LABEL, PAYMENT_METHOD_LABEL } from '@utils/order-flow'
 import { resolveSlug } from '@utils/resolve-slug'
 import { displayName, isOpen } from '@utils/store-info'
 
+import { CheckoutSkeleton } from './CheckoutSkeleton'
 import type { CheckoutFormValues } from './Checkout.types'
 import styles from './Checkout.module.css'
 
@@ -105,7 +106,9 @@ export const Checkout = () => {
     createOrder(payload, { onSuccess: () => clearCart() })
   }
 
-  if (loadingStore || !store) return null
+  if (loadingStore) return <CheckoutSkeleton />
+
+  if (!store) return null
 
   if (!loadingHours && !isOpen(store, hours)) {
     return (

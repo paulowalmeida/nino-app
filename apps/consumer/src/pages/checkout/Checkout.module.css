@@ -87,3 +87,47 @@
   @apply mb-2 rounded-full bg-sand px-4 py-1.5 font-display text-sm font-bold;
   @apply uppercase tracking-wide text-ink;
 }
+
+/* ----- skeleton ----- */
+.skTitle {
+  @apply h-6 w-40 rounded-lg bg-sand;
+}
+
+.skSectionTitle {
+  @apply h-4 w-32 rounded bg-sand;
+}
+
+.skField {
+  @apply h-10 w-full rounded-md bg-sand;
+}
+
+.skSummary {
+  @apply flex flex-col gap-3 rounded-2xl bg-paper p-4;
+  box-shadow: inset 0 0 0 1px var(--color-sand);
+}
+
+.skSummaryLine {
+  @apply h-4 w-full rounded bg-sand;
+}
+
+.skTitle,
+.skSectionTitle,
+.skField,
+.skSummaryLine {
+  animation: sk-shimmer 1.4s ease-in-out infinite;
+}
+
+@keyframes sk-shimmer {
+  50% {
+    opacity: 0.55;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .skTitle,
+  .skSectionTitle,
+  .skField,
+  .skSummaryLine {
+    animation: none;
+  }
+}

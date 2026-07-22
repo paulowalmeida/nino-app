@@ -1,6 +1,7 @@
-import { isStoreOpen, type WeekdaySchedule } from '@nino/lib'
-
+import type { PublicOpeningHours } from '@custom_types/opening-hours/public-opening-hours'
 import type { Store } from '@custom_types/store/store'
+
+import { isStoreOpen } from './store-open'
 
 /** O nome que a loja escolheu mostrar, com a razão social como piso. */
 export const displayName = (store: Store): string =>
@@ -15,7 +16,7 @@ export const shortAddress = (store: Store): string =>
  * cadastrou horários não é travada por isso: sem faixa configurada, o
  * expediente não entra na conta.
  */
-export const isOpen = (store: Store, hours: WeekdaySchedule[]): boolean =>
+export const isOpen = (store: Store, hours: PublicOpeningHours[]): boolean =>
   !store.isPaused &&
   store.status.name === 'ACTIVE' &&
   (hours.length === 0 || isStoreOpen(hours, store.timezone))

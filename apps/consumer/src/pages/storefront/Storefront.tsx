@@ -21,6 +21,7 @@ import { brl } from '@utils/money'
 import { resolveSlug } from '@utils/resolve-slug'
 import { displayName, isOpen } from '@utils/store-info'
 
+import { MenuRowsSkeleton } from './MenuRowsSkeleton'
 import { StorefrontSkeleton } from './StorefrontSkeleton'
 import styles from './Storefront.module.css'
 
@@ -151,7 +152,7 @@ export const Storefront = () => {
       )}
 
       <main className={styles.menu}>
-        {loadingMenu && <p className={styles.hint}>Carregando o cardápio…</p>}
+        {loadingMenu && <MenuRowsSkeleton />}
 
         {!loadingMenu && sections.length === 0 && (
           <p className={styles.hint}>
