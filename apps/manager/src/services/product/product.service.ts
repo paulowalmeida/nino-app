@@ -68,6 +68,17 @@ export const createCategory = (
     { name }
   )
 
+export const setCategoryPosition = (
+  tenantId: string,
+  id: string,
+  position: number
+): Promise<ProductCategory> =>
+  patch<{ position: number }, ProductCategory>(
+    `tenants/${tenantId}/product-categories`,
+    id,
+    { position }
+  )
+
 export const setItemAvailability = (
   tenantId: string,
   id: string,

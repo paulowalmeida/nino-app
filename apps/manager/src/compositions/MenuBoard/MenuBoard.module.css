@@ -5,13 +5,19 @@
 }
 
 .sectionHead {
-  @apply mb-1 flex items-baseline justify-between gap-3;
+  @apply mb-1 flex items-center gap-2;
   @apply border-b border-sand pb-2;
 }
 
+.sectionDragHandle {
+  @apply flex shrink-0 cursor-grab touch-none items-center justify-center;
+  @apply rounded-lg p-1.5 text-faint transition-colors duration-150;
+  @apply hover:bg-white/70 hover:text-subtle active:cursor-grabbing;
+}
+
 .sectionName {
-  @apply font-display text-lg font-extrabold tracking-tight text-ink;
-  @apply lg:text-xl;
+  @apply min-w-0 flex-1 truncate font-display text-lg font-extrabold;
+  @apply tracking-tight text-ink lg:text-xl;
 }
 
 .sectionCount {

@@ -6,9 +6,11 @@ import { listMenu } from '@services/product/product.service'
 export const menuQueryKey = (tenantId: string | null) => ['menu', tenantId]
 
 /**
- * Groups by category in the order the items arrive: the API already sorts by
- * `position`, so the first appearance of a category is its place on the menu.
- * Avoids a second read from `/product-categories`, which only OWNER can do.
+ * Groups by category e ordena pela `position` da própria categoria — não
+ * pela ordem de chegada dos produtos, que é só a posição de cada item
+ * dentro da sua categoria. Vem embutido em cada produto (`category.position`),
+ * então não precisa de uma segunda leitura em `/product-categories` (que só
+ * OWNER pode fazer).
  */
 const toSections = (page: MenuPage | undefined): MenuSection[] => {
   const sections: MenuSection[] = []
@@ -20,11 +22,12 @@ const toSections = (page: MenuPage | undefined): MenuSection[] => {
       sections.push({
         id: item.category.id,
         name: item.category.name,
+        position: item.category.position,
         items: [item],
       })
   }
 
-  return sections
+  return sections.sort((a, b) => a.position - b.position)
 }
 
 export const useMenu = (tenantId: string | null) => {

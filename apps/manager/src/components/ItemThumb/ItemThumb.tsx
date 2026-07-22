@@ -1,3 +1,5 @@
+import { categoryIcon } from '@utils/category-icon'
+
 import type { ItemThumbProps } from './ItemThumb.types'
 
 import styles from './ItemThumb.module.css'
@@ -15,13 +17,6 @@ const toneOf = (name: string): number => {
   return Math.abs(hash) % TONES
 }
 
-const monogramOf = (name: string): string => {
-  const words = name.replace(/^[^\p{L}\p{N}]+/u, '').split(/\s+/)
-  const first = words[0]?.[0] ?? '?'
-  const second = words[1]?.[0] ?? ''
-  return (first + second).toUpperCase()
-}
-
 export const ItemThumb = ({ name, imageUrl, className }: ItemThumbProps) => {
   const classes = className ? `${styles.thumb} ${className}` : styles.thumb
 
@@ -31,10 +26,10 @@ export const ItemThumb = ({ name, imageUrl, className }: ItemThumbProps) => {
 
   return (
     <span
-      className={`${classes} ${styles[`tone${toneOf(name)}`]}`}
+      className={`${classes} ${styles.glyph} ${styles[`tone${toneOf(name)}`]}`}
       aria-hidden="true"
     >
-      {monogramOf(name)}
+      {categoryIcon(name) ?? '🍽️'}
     </span>
   )
 }

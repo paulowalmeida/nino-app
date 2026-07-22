@@ -54,6 +54,15 @@
   @apply scroll-mt-14 pt-7 lg:scroll-mt-8 lg:first:pt-1;
 }
 
+/* a última seção precisa poder subir até a linha de leitura no alto da lista,
+ * mesmo com um item só. Sem isso não há conteúdo abaixo dela pra empurrar o
+ * scroll: a lista para no meio, a categoria clicada nunca acende na trilha e o
+ * scroll parece "travado". No celular ela cresce até preencher a altura visível
+ * da lista; no desktop o documento já tem folga de sobra. */
+.menu > .section:last-child {
+  @apply min-h-full lg:min-h-0;
+}
+
 .sectionHead {
   @apply mb-3 flex items-baseline justify-between gap-3;
   border-bottom: 1.5px solid var(--color-line);

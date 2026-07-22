@@ -10,6 +10,7 @@ export type MenuItem = {
   category: {
     id: string
     name: string
+    position: number
   }
   images: MenuItemImage[]
 }

@@ -27,14 +27,34 @@
 .chip {
   @apply flex shrink-0 cursor-pointer items-center rounded-full;
   @apply border border-line bg-sand px-4 py-2 text-[0.82rem] font-bold;
-  @apply text-subtle transition-all duration-150;
+  @apply text-body transition-colors duration-150;
   @apply lg:w-full lg:justify-start lg:rounded-xl lg:border-transparent;
-  @apply lg:bg-transparent lg:px-3.5 lg:py-2.5 lg:text-[0.9rem];
+  @apply lg:bg-transparent lg:px-3.5 lg:py-2.5 lg:text-[0.9rem] lg:text-subtle;
 }
 
-.chip:hover {
-  @apply border-peach bg-peach-light text-brand-strong;
-  @apply lg:border-transparent lg:bg-cream lg:text-ink;
+/* feedback de toque em qualquer dispositivo: afunda de leve sem trocar cor,
+ * assim o "push" nunca deixa o texto ilegível. */
+.chip:active {
+  @apply scale-95;
+}
+
+/* hover só onde existe ponteiro de verdade — no touch ele "gruda" depois do
+ * tap e lavava a pílula ativa (fundo claro + texto claro). */
+@media (hover: hover) {
+  .chip:hover {
+    @apply border-peach bg-peach-light text-brand-strong;
+    @apply lg:border-transparent lg:bg-cream lg:text-ink;
+  }
+
+  /* ativo com hover: mantém o preenchimento da marca, só escurece pra dar
+   * resposta — nunca cai no fundo claro da pílula inativa. */
+  .chipOn:hover {
+    @apply border-brand-hover bg-brand-hover text-brand-foreground;
+  }
+
+  .chipOn.chip:hover {
+    @apply lg:border-transparent lg:bg-brand-soft lg:text-brand-strong;
+  }
 }
 
 .chipOn {
@@ -42,19 +62,11 @@
   box-shadow: 0 6px 14px -6px rgba(232, 84, 12, 0.5);
 }
 
-.chipOn:hover {
-  @apply border-brand text-brand-foreground;
-}
-
 /* ativo no índice vertical: sem pílula cheia, um marcador de página com
  * barra lateral — mais índice de cardápio, menos botão. */
 .chipOn.chip {
   @apply lg:relative lg:border-transparent lg:bg-brand-soft lg:text-brand-strong;
   @apply lg:shadow-none;
-}
-
-.chipOn.chip:hover {
-  @apply lg:bg-brand-soft lg:text-brand-strong;
 }
 
 .chipOn.chip::before {

@@ -1,7 +1,9 @@
 import { useEffect, useRef, useState } from 'react'
 
-import { Reorder } from 'framer-motion'
+import { Reorder, useDragControls } from 'framer-motion'
 
+import gripIcon from '@assets/icons/grip.svg?raw'
+import { Icon } from '@components/Icon/Icon'
 import { useReorderMenuItems } from '@hooks/product/useReorderMenuItems'
 import { riseDelay } from '@utils/rise-delay'
 
@@ -15,12 +17,15 @@ const itemLabel = (total: number): string =>
   total === 1 ? '1 item' : `${total} itens`
 
 export const MenuSection = ({
+  value,
   tenantId,
   name,
   items,
   sectionIndex,
   onToggleAvailability,
+  onSectionDragEnd,
 }: MenuSectionProps) => {
+  const sectionDragControls = useDragControls()
   const [order, setOrder] = useState(items)
   const [prevItems, setPrevItems] = useState(items)
   const orderRef = useRef(order)
@@ -53,11 +58,26 @@ export const MenuSection = ({
   }
 
   return (
-    <section className={styles.section}>
+    <Reorder.Item
+      as="section"
+      value={value}
+      dragListener={false}
+      dragControls={sectionDragControls}
+      onDragEnd={onSectionDragEnd}
+      className={styles.section}
+    >
       <header
         className={`${motion.unroll} ${styles.sectionHead}`}
         style={riseDelay(sectionIndex * 90)}
       >
+        <button
+          type="button"
+          className={styles.sectionDragHandle}
+          aria-label={`Reordenar categoria ${name}`}
+          onPointerDown={(event) => sectionDragControls.start(event)}
+        >
+          <Icon svg={gripIcon} />
+        </button>
         <h2 className={styles.sectionName}>{name}</h2>
         <span className={styles.sectionCount}>{itemLabel(order.length)}</span>
       </header>
@@ -80,6 +100,6 @@ export const MenuSection = ({
           />
         ))}
       </Reorder.Group>
-    </section>
+    </Reorder.Item>
   )
 }

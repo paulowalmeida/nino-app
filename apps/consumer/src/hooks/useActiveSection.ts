@@ -1,12 +1,16 @@
 import { useEffect, useState } from 'react'
 import type { RefObject } from 'react'
 
+const DESKTOP_LINE = 96
+const MOBILE_LINE = 60
+
 /**
  * Qual seção está sob os olhos agora: acompanha o scroll para acender a
  * categoria certa na trilha. No celular o scroll mora dentro da lista de
- * produtos, então o observer olha esse container (rootRef); no desktop a página
- * rola no documento e o root é a viewport. Entre as seções visíveis, vence a de
- * topo mais baixo — a que acabou de encostar no alto da lista.
+ * produtos (rootRef); no desktop a página rola no documento. Em vez de confiar
+ * num IntersectionObserver — que dispara durante o layout instável do load e
+ * não se corrige sozinho — mede as posições a cada scroll: ativa é a última
+ * seção cujo topo já passou da linha de leitura no alto da lista.
  */
 export const useActiveSection = (
   ids: string[],
@@ -18,32 +22,37 @@ export const useActiveSection = (
     if (ids.length === 0) return
 
     const desktop = window.matchMedia('(min-width: 1024px)').matches
-    const root = desktop ? null : (rootRef?.current ?? null)
+    const scroller: HTMLElement | Window | null = desktop
+      ? window
+      : (rootRef?.current ?? null)
+    if (!scroller) return
 
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const visible = entries.filter((entry) => entry.isIntersecting)
-        if (visible.length === 0) return
-        const top = visible.reduce((current, entry) =>
-          entry.boundingClientRect.top > current.boundingClientRect.top
-            ? entry
-            : current
-        )
-        setActive(top.target.id)
-      },
-      {
-        root,
-        rootMargin: root ? '0px 0px -70% 0px' : '-96px 0px -70% 0px',
-        threshold: 0,
-      }
-    )
-
-    for (const id of ids) {
-      const el = document.getElementById(id)
-      if (el) observer.observe(el)
+    const lineTop = (): number => {
+      if (desktop) return DESKTOP_LINE
+      const top = rootRef?.current?.getBoundingClientRect().top ?? 0
+      return top + MOBILE_LINE
     }
 
-    return () => observer.disconnect()
+    const compute = (): void => {
+      const line = lineTop()
+      let current = ids[0]
+      for (const id of ids) {
+        const el = document.getElementById(id)
+        if (!el) continue
+        if (el.getBoundingClientRect().top - line > 1) break
+        current = id
+      }
+      setActive(current)
+    }
+
+    compute()
+    scroller.addEventListener('scroll', compute, { passive: true })
+    window.addEventListener('resize', compute)
+
+    return () => {
+      scroller.removeEventListener('scroll', compute)
+      window.removeEventListener('resize', compute)
+    }
   }, [ids, rootRef])
 
   return active

@@ -2,8 +2,11 @@
 
 .thumb {
   @apply flex h-11 w-11 shrink-0 items-center justify-center;
-  @apply rounded-xl object-cover text-xs font-bold uppercase;
-  @apply select-none tracking-tight;
+  @apply rounded-xl object-cover select-none;
+}
+
+.glyph {
+  @apply text-lg leading-none;
 }
 
 /* warm range around the brand, none of them competing with it */
