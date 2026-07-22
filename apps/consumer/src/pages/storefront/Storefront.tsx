@@ -6,6 +6,7 @@ import { Input } from '@nino/ds'
 import bagIcon from '@assets/icons/bag.svg?raw'
 import searchIcon from '@assets/icons/search.svg?raw'
 import { Icon } from '@components/Icon/Icon'
+import { ActiveOrderBanner } from '@compositions/ActiveOrderBanner/ActiveOrderBanner'
 import { CartDrawer } from '@compositions/CartDrawer/CartDrawer'
 import { CategoryNav } from '@compositions/CategoryNav/CategoryNav'
 import { MenuItemCard } from '@compositions/MenuItemCard/MenuItemCard'
@@ -113,6 +114,8 @@ export const Storefront = () => {
   return (
     <div className={styles.page}>
       <StoreHeader store={store} hours={hours} />
+
+      <ActiveOrderBanner slug={slug} />
 
       {sections.length > 0 && (
         <div className={styles.searchWrap}>

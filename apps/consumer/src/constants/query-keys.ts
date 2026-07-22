@@ -26,4 +26,8 @@ export const queryKeys = {
     byTenant: (tenantId: string) =>
       [...queryKeys.openingHours.all, tenantId] as const,
   },
+  guestOrder: {
+    all: ['guest-order'] as const,
+    byId: (orderId: string) => [...queryKeys.guestOrder.all, orderId] as const,
+  },
 }

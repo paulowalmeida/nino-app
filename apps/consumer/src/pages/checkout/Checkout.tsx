@@ -21,6 +21,7 @@ import { brl } from '@utils/money'
 import { CHANNEL_LABEL, PAYMENT_METHOD_LABEL } from '@utils/order-flow'
 import { resolveSlug } from '@utils/resolve-slug'
 import { isOpen } from '@utils/store-info'
+import { writeLastOrder } from '@utils/last-order'
 
 import { CheckoutSkeleton } from './CheckoutSkeleton'
 import type { CheckoutFormValues } from './Checkout.types'
@@ -103,7 +104,16 @@ export const Checkout = () => {
       })),
     }
 
-    createOrder(payload, { onSuccess: () => clearCart() })
+    createOrder(payload, {
+      onSuccess: (response) => {
+        clearCart()
+        writeLastOrder({
+          orderId: response.id,
+          token: response.trackingToken,
+          slug: slug ?? '',
+        })
+      },
+    })
   }
 
   if (loadingStore) return <CheckoutSkeleton />
@@ -126,7 +136,16 @@ export const Checkout = () => {
           acompanhar.
         </p>
         <p className={styles.confirmedCode}>{created.id.slice(0, 8)}</p>
-        <Button onClick={() => void navigate(backHref)}>
+        <Button
+          onClick={() =>
+            void navigate(
+              `${pathSlug ? `/${pathSlug}` : ''}/pedido/${created.id}?token=${created.trackingToken}`
+            )
+          }
+        >
+          Acompanhar pedido
+        </Button>
+        <Button variant="ghost" onClick={() => void navigate(backHref)}>
           Voltar para a loja
         </Button>
       </div>

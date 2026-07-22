@@ -1,0 +1,32 @@
+@reference "@nino/ds/globals.css";
+
+.banner {
+  @apply mx-5 mt-3 flex items-center gap-2.5 rounded-2xl bg-brand-soft;
+  @apply px-4 py-3 text-sm transition-colors duration-150 lg:mx-8;
+  @apply hover:bg-brand/15;
+}
+
+.dot {
+  @apply h-2 w-2 shrink-0 rounded-full bg-whatsapp;
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  50% {
+    opacity: 0.4;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dot {
+    animation: none;
+  }
+}
+
+.text {
+  @apply min-w-0 flex-1 truncate font-semibold text-ink;
+}
+
+.cta {
+  @apply shrink-0 font-bold text-brand-strong;
+}
