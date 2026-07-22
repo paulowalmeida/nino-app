@@ -19,7 +19,7 @@ import { useStore } from '@hooks/useStore'
 import { useCartStore } from '@states/useCartStore'
 import { brl } from '@utils/money'
 import { resolveSlug } from '@utils/resolve-slug'
-import { displayName, isOpen } from '@utils/store-info'
+import { isOpen } from '@utils/store-info'
 
 import { MenuRowsSkeleton } from './MenuRowsSkeleton'
 import { StorefrontSkeleton } from './StorefrontSkeleton'
@@ -108,22 +108,7 @@ export const Storefront = () => {
     )
   }
 
-  if (!loadingHours && !isOpen(store, hours)) {
-    return (
-      <div className={styles.notFound}>
-        <img
-          src="/mascot-consumer.svg"
-          alt=""
-          className={styles.notFoundMascot}
-        />
-        <h1 className={styles.notFoundTitle}>{displayName(store)} fechou</h1>
-        <p className={styles.notFoundText}>
-          Fora do horário de funcionamento agora. Volta já já — passa aqui de
-          novo daqui a pouco.
-        </p>
-      </div>
-    )
-  }
+  const storeOpen = loadingHours || isOpen(store, hours)
 
   return (
     <div className={styles.page}>
@@ -179,6 +164,7 @@ export const Storefront = () => {
                   item={item}
                   onAdd={addToCart}
                   onSelect={setSelectedItem}
+                  disabled={!storeOpen}
                 />
               ))}
             </div>

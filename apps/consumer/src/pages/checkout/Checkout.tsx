@@ -20,7 +20,7 @@ import { useCartStore } from '@states/useCartStore'
 import { brl } from '@utils/money'
 import { CHANNEL_LABEL, PAYMENT_METHOD_LABEL } from '@utils/order-flow'
 import { resolveSlug } from '@utils/resolve-slug'
-import { displayName, isOpen } from '@utils/store-info'
+import { isOpen } from '@utils/store-info'
 
 import { CheckoutSkeleton } from './CheckoutSkeleton'
 import type { CheckoutFormValues } from './Checkout.types'
@@ -110,18 +110,7 @@ export const Checkout = () => {
 
   if (!store) return null
 
-  if (!loadingHours && !isOpen(store, hours)) {
-    return (
-      <div className={styles.empty}>
-        <p className={styles.emptyText}>
-          {displayName(store)} fechou — não dá para finalizar o pedido agora.
-        </p>
-        <Link to={backHref} className={styles.emptyLink}>
-          Voltar para a loja
-        </Link>
-      </div>
-    )
-  }
+  const storeOpen = loadingHours || isOpen(store, hours)
 
   if (created) {
     return (
@@ -319,7 +308,18 @@ export const Checkout = () => {
           </p>
         )}
 
-        <Button type="submit" loading={isSubmitting} className={styles.submit}>
+        {!storeOpen && (
+          <p className={styles.error}>
+            A loja está fechada agora — não dá para confirmar o pedido.
+          </p>
+        )}
+
+        <Button
+          type="submit"
+          loading={isSubmitting}
+          disabled={!storeOpen}
+          className={styles.submit}
+        >
           Confirmar pedido — {brl(total)}
         </Button>
       </form>

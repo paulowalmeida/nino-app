@@ -12,21 +12,30 @@ import styles from './MenuItemCard.module.css'
  * logo depois (alvo fácil pro polegar) e a foto por último, só pra desejar —
  * o mesmo arranjo que a vitrine de exemplo do site usa.
  */
-export const MenuItemCard = ({ item, onAdd, onSelect }: MenuItemCardProps) => {
+export const MenuItemCard = ({
+  item,
+  onAdd,
+  onSelect,
+  disabled = false,
+}: MenuItemCardProps) => {
   const image = primaryImage(item)
 
   const handleAdd = (event: MouseEvent) => {
     event.stopPropagation()
+    if (disabled) return
     onAdd(item)
   }
 
   return (
     <article
-      className={styles.card}
-      onClick={() => onSelect(item)}
+      className={disabled ? `${styles.card} ${styles.disabled}` : styles.card}
+      onClick={() => !disabled && onSelect(item)}
       role="button"
-      tabIndex={0}
-      onKeyDown={(event) => event.key === 'Enter' && onSelect(item)}
+      tabIndex={disabled ? -1 : 0}
+      aria-disabled={disabled}
+      onKeyDown={(event) =>
+        !disabled && event.key === 'Enter' && onSelect(item)
+      }
     >
       <div className={styles.body}>
         <h3 className={styles.name}>{item.name}</h3>
@@ -40,6 +49,7 @@ export const MenuItemCard = ({ item, onAdd, onSelect }: MenuItemCardProps) => {
         type="button"
         className={styles.add}
         aria-label={`Adicionar ${item.name}`}
+        disabled={disabled}
         onClick={handleAdd}
       >
         +

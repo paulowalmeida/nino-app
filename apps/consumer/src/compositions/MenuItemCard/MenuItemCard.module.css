@@ -24,6 +24,16 @@
   }
 }
 
+/* loja fechada: item continua legível, só sai do caminho de quem clica */
+.disabled {
+  @apply cursor-not-allowed grayscale;
+  opacity: 0.55;
+}
+
+.disabled .add {
+  @apply cursor-not-allowed active:scale-100;
+}
+
 .body {
   @apply flex min-w-0 flex-1 flex-col;
 }
