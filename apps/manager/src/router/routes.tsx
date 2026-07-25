@@ -2,34 +2,6 @@ import { createBrowserRouter, Navigate } from 'react-router'
 
 import { AppLayout } from '@layouts/AppLayout/AppLayout'
 import { AuthLayout } from '@layouts/AuthLayout'
-import { Catalog } from '@pages/catalog/Catalog'
-import { Counter } from '@pages/counter'
-import { CustomerDetail, Customers } from '@pages/customers'
-import { Kitchen } from '@pages/kitchen'
-import { Employees } from '@pages/employees/Employees'
-import { CreateStore } from '@pages/first-store/FirstStore'
-import { Account, Subscription } from '@pages/account'
-import { Login } from '@pages/login/Login'
-import { NewOrder } from '@pages/new-order'
-import { NewUnit } from '@pages/new-unit'
-import { NewProduct } from '@pages/new-product'
-import { OrderDetail } from '@pages/order-detail/OrderDetail'
-import { Orders } from '@pages/orders/Orders'
-import { Overview } from '@pages/overview/Overview'
-import { ProductDetail } from '@pages/product-detail'
-import { Register } from '@pages/register/Register'
-import { Reports } from '@pages/reports'
-import { Settings } from '@pages/settings/Settings'
-import {
-  CompanySection,
-  ContactSection,
-  DeliverySection,
-  HoursSection,
-  ServiceSection,
-  UnitDetailSection,
-  UnitSection,
-} from '@pages/settings/sections'
-import { StoreSelection } from '@pages/store-selection/StoreSelection'
 
 import { MANAGERS } from '@constants/roles'
 
@@ -48,23 +20,33 @@ export const router = createBrowserRouter([
     children: [
       {
         path: '/entrar',
-        element: <Login />,
+        lazy: () => import('@pages/login/Login').then(({ Login }) => ({
+          Component: Login,
+        })),
       },
       {
         path: '/cadastrar',
-        element: <Register />,
+        lazy: () => import('@pages/register/Register').then(({ Register }) => ({
+          Component: Register,
+        })),
       },
     ],
   },
   {
     path: '/lojas',
-    element: <StoreSelection />,
     loader: SessionGuard,
+    lazy: () =>
+      import('@pages/store-selection/StoreSelection').then(
+        ({ StoreSelection }) => ({ Component: StoreSelection })
+      ),
   },
   {
     path: '/criar-loja',
-    element: <CreateStore />,
     loader: SessionGuard,
+    lazy: () =>
+      import('@pages/first-store/FirstStore').then(({ CreateStore }) => ({
+        Component: CreateStore,
+      })),
   },
   {
     element: <AppLayout />,
@@ -73,87 +55,180 @@ export const router = createBrowserRouter([
     children: [
       {
         path: 'visao-geral',
-        element: <Overview />,
         loader: roleGuard(MANAGERS),
+        lazy: () =>
+          import('@pages/overview/Overview').then(({ Overview }) => ({
+            Component: Overview,
+          })),
       },
       {
         path: 'balcao',
-        element: <Counter />,
+        lazy: () =>
+          import('@pages/counter').then(({ Counter }) => ({
+            Component: Counter,
+          })),
       },
       {
         path: 'cozinha',
-        element: <Kitchen />,
+        lazy: () =>
+          import('@pages/kitchen').then(({ Kitchen }) => ({
+            Component: Kitchen,
+          })),
       },
       {
         path: 'pedidos',
-        element: <Orders />,
+        lazy: () =>
+          import('@pages/orders/Orders').then(({ Orders }) => ({
+            Component: Orders,
+          })),
       },
       {
         path: 'pedidos/novo',
-        element: <NewOrder />,
+        lazy: () =>
+          import('@pages/new-order').then(({ NewOrder }) => ({
+            Component: NewOrder,
+          })),
       },
       {
         path: 'pedidos/:orderId',
-        element: <OrderDetail />,
+        lazy: () =>
+          import('@pages/order-detail/OrderDetail').then(({ OrderDetail }) => ({
+            Component: OrderDetail,
+          })),
       },
       {
         path: 'catalogo',
-        element: <Catalog />,
+        lazy: () =>
+          import('@pages/catalog/Catalog').then(({ Catalog }) => ({
+            Component: Catalog,
+          })),
       },
       {
         path: 'catalogo/novo',
-        element: <NewProduct />,
+        lazy: () =>
+          import('@pages/new-product').then(({ NewProduct }) => ({
+            Component: NewProduct,
+          })),
       },
       {
         path: 'catalogo/:productId',
-        element: <ProductDetail />,
+        lazy: () =>
+          import('@pages/product-detail').then(({ ProductDetail }) => ({
+            Component: ProductDetail,
+          })),
       },
       {
         path: 'unidades/nova',
-        element: <NewUnit />,
         loader: roleGuard(MANAGERS),
+        lazy: () =>
+          import('@pages/new-unit').then(({ NewUnit }) => ({
+            Component: NewUnit,
+          })),
       },
       {
         path: 'relatorios',
-        element: <Reports />,
         loader: roleGuard(MANAGERS),
+        lazy: () =>
+          import('@pages/reports').then(({ Reports }) => ({
+            Component: Reports,
+          })),
       },
       {
         path: 'clientes',
-        element: <Customers />,
         loader: roleGuard(MANAGERS),
+        lazy: () =>
+          import('@pages/customers').then(({ Customers }) => ({
+            Component: Customers,
+          })),
       },
       {
         path: 'clientes/:customerId',
-        element: <CustomerDetail />,
         loader: roleGuard(MANAGERS),
+        lazy: () =>
+          import('@pages/customers').then(({ CustomerDetail }) => ({
+            Component: CustomerDetail,
+          })),
       },
       {
         path: 'colaboradores',
-        element: <Employees />,
         loader: roleGuard(MANAGERS),
+        lazy: () =>
+          import('@pages/employees/Employees').then(({ Employees }) => ({
+            Component: Employees,
+          })),
       },
       {
         path: 'minha-conta',
-        element: <Account />,
+        lazy: () =>
+          import('@pages/account').then(({ Account }) => ({
+            Component: Account,
+          })),
       },
       {
         path: 'assinatura',
-        element: <Subscription />,
+        lazy: () =>
+          import('@pages/account').then(({ Subscription }) => ({
+            Component: Subscription,
+          })),
       },
       {
         path: 'configuracoes',
-        element: <Settings />,
         loader: roleGuard(MANAGERS),
+        lazy: () =>
+          import('@pages/settings/Settings').then(({ Settings }) => ({
+            Component: Settings,
+          })),
         children: [
           { index: true, element: <Navigate to="empresa" replace /> },
-          { path: 'empresa', element: <CompanySection /> },
-          { path: 'unidade', element: <UnitSection /> },
-          { path: 'unidade/detalhe', element: <UnitDetailSection /> },
-          { path: 'atendimento', element: <ServiceSection /> },
-          { path: 'horarios', element: <HoursSection /> },
-          { path: 'entrega', element: <DeliverySection /> },
-          { path: 'contato', element: <ContactSection /> },
+          {
+            path: 'empresa',
+            lazy: () =>
+              import('@pages/settings/sections').then(
+                ({ CompanySection }) => ({ Component: CompanySection })
+              ),
+          },
+          {
+            path: 'unidade',
+            lazy: () =>
+              import('@pages/settings/sections').then(({ UnitSection }) => ({
+                Component: UnitSection,
+              })),
+          },
+          {
+            path: 'unidade/detalhe',
+            lazy: () =>
+              import('@pages/settings/sections').then(
+                ({ UnitDetailSection }) => ({ Component: UnitDetailSection })
+              ),
+          },
+          {
+            path: 'atendimento',
+            lazy: () =>
+              import('@pages/settings/sections').then(
+                ({ ServiceSection }) => ({ Component: ServiceSection })
+              ),
+          },
+          {
+            path: 'horarios',
+            lazy: () =>
+              import('@pages/settings/sections').then(({ HoursSection }) => ({
+                Component: HoursSection,
+              })),
+          },
+          {
+            path: 'entrega',
+            lazy: () =>
+              import('@pages/settings/sections').then(
+                ({ DeliverySection }) => ({ Component: DeliverySection })
+              ),
+          },
+          {
+            path: 'contato',
+            lazy: () =>
+              import('@pages/settings/sections').then(
+                ({ ContactSection }) => ({ Component: ContactSection })
+              ),
+          },
         ],
       },
     ],

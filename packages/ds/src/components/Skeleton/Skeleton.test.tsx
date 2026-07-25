@@ -25,9 +25,9 @@ describe(Skeleton.name, () => {
     }
   )
 
-  it('applies animate-pulse by default', () => {
+  it('applies skeleton-wave by default', () => {
     const { container } = render(<Skeleton />)
-    expect(container.firstChild).toHaveClass('animate-pulse')
+    expect(container.firstChild).toHaveClass('skeleton-wave')
   })
 
   it('applies skeleton-wave when animation=wave', () => {

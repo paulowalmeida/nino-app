@@ -101,18 +101,22 @@
 
 /* ----- skeleton ----- */
 .skBack {
+  composes: nino-skeleton from global;
   @apply h-10 w-10 shrink-0 rounded-full bg-sand;
 }
 
 .skTitle {
+  composes: nino-skeleton from global;
   @apply h-6 w-40 rounded-lg bg-sand;
 }
 
 .skSectionTitle {
+  composes: nino-skeleton from global;
   @apply h-4 w-32 rounded bg-sand;
 }
 
 .skField {
+  composes: nino-skeleton from global;
   @apply h-10 w-full rounded-md bg-sand;
 }
 
@@ -126,11 +130,13 @@
 }
 
 .skPill {
+  composes: nino-skeleton from global;
   @apply h-11 flex-1 rounded-xl bg-sand;
 }
 
 /* Textarea: mais alta que um input simples */
 .skTextarea {
+  composes: nino-skeleton from global;
   @apply h-20 w-full rounded-md bg-sand;
 }
 
@@ -140,39 +146,11 @@
 }
 
 .skSummaryLine {
+  composes: nino-skeleton from global;
   @apply h-4 w-full rounded bg-sand;
 }
 
 .skSummaryTotal {
+  composes: nino-skeleton from global;
   @apply mt-2 h-6 w-full rounded bg-sand;
-}
-
-.skBack,
-.skTitle,
-.skSectionTitle,
-.skField,
-.skPill,
-.skTextarea,
-.skSummaryLine,
-.skSummaryTotal {
-  animation: sk-shimmer 1.4s ease-in-out infinite;
-}
-
-@keyframes sk-shimmer {
-  50% {
-    opacity: 0.55;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .skBack,
-  .skTitle,
-  .skSectionTitle,
-  .skField,
-  .skPill,
-  .skTextarea,
-  .skSummaryLine,
-  .skSummaryTotal {
-    animation: none;
-  }
 }

@@ -30,8 +30,8 @@ export const PauseSwitch = ({ tenantId, timezone }: PauseSwitchProps) => {
   if (isPending) {
     return (
       <Skeleton
-        animation="none"
-        className="h-8 w-56 animate-pulse rounded-md bg-sand"
+        animation="wave"
+        className="h-8 w-56 rounded-md bg-sand"
       />
     )
   }

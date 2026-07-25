@@ -1,8 +1,19 @@
 import { createBrowserRouter } from 'react-router'
 
-import { Checkout } from '@pages/checkout/Checkout'
-import { OrderTracking } from '@pages/order-tracking/OrderTracking'
-import { Storefront } from '@pages/storefront/Storefront'
+const storefrontLazy = () =>
+  import('@pages/storefront/Storefront').then(({ Storefront }) => ({
+    Component: Storefront,
+  }))
+
+const checkoutLazy = () =>
+  import('@pages/checkout/Checkout').then(({ Checkout }) => ({
+    Component: Checkout,
+  }))
+
+const orderTrackingLazy = () =>
+  import('@pages/order-tracking/OrderTracking').then(({ OrderTracking }) => ({
+    Component: OrderTracking,
+  }))
 
 /**
  * A loja vem do subdomínio (`slug.nino.delivery`), então a raiz já é a
@@ -13,26 +24,26 @@ import { Storefront } from '@pages/storefront/Storefront'
 export const router = createBrowserRouter([
   {
     path: '/',
-    element: <Storefront />,
+    lazy: storefrontLazy,
   },
   {
     path: '/:slug',
-    element: <Storefront />,
+    lazy: storefrontLazy,
   },
   {
     path: '/checkout',
-    element: <Checkout />,
+    lazy: checkoutLazy,
   },
   {
     path: '/:slug/checkout',
-    element: <Checkout />,
+    lazy: checkoutLazy,
   },
   {
     path: '/pedido/:orderId',
-    element: <OrderTracking />,
+    lazy: orderTrackingLazy,
   },
   {
     path: '/:slug/pedido/:orderId',
-    element: <OrderTracking />,
+    lazy: orderTrackingLazy,
   },
 ])

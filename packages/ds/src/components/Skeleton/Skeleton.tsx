@@ -14,7 +14,7 @@ const variantClasses: Record<SkeletonVariant, string> = {
 
 const animationClasses: Record<SkeletonAnimation, string> = {
   pulse: 'animate-pulse bg-gray-200',
-  wave: 'skeleton-wave',
+  wave: 'skeleton-wave bg-gray-200',
   none: 'bg-gray-200',
 }
 
@@ -23,7 +23,7 @@ const animationClasses: Record<SkeletonAnimation, string> = {
  *
  * @param variant - Shape of the skeleton. Default: `rect`
  *
- * @param animation - Animation type. Default: `pulse`
+ * @param animation - Animation type. Default: `wave`
  *
  * @param className - Additional classes (width and height required for rect/circle)
  *
@@ -34,7 +34,7 @@ const animationClasses: Record<SkeletonAnimation, string> = {
  */
 export function Skeleton({
   variant = 'rect',
-  animation = 'pulse',
+  animation = 'wave',
   className,
   ...props
 }: SkeletonProps) {

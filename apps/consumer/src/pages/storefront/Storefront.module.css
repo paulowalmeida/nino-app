@@ -177,6 +177,7 @@
 }
 
 .skLogo {
+  composes: nino-skeleton from global;
   @apply h-14 w-14 shrink-0 rounded-2xl bg-sand lg:h-[4.5rem] lg:w-[4.5rem];
 }
 
@@ -185,15 +186,18 @@
 }
 
 .skName {
+  composes: nino-skeleton from global;
   @apply h-6 w-2/3 rounded-lg bg-sand lg:h-9;
 }
 
 .skMeta {
+  composes: nino-skeleton from global;
   @apply mt-2 h-4 w-2/5 rounded bg-sand;
 }
 
 /* eyebrow do índice — só existe no desktop, como no CategoryNav */
 .skRailLabel {
+  composes: nino-skeleton from global;
   @apply hidden lg:mb-3 lg:block lg:h-3 lg:w-20 lg:rounded lg:bg-sand;
 }
 
@@ -204,6 +208,7 @@
 }
 
 .skChip {
+  composes: nino-skeleton from global;
   @apply h-9 shrink-0 rounded-full bg-sand;
   @apply lg:h-10 lg:w-full lg:rounded-xl;
 }
@@ -238,14 +243,17 @@
 }
 
 .skItemName {
+  composes: nino-skeleton from global;
   @apply h-5 w-1/2 rounded bg-sand;
 }
 
 .skItemDesc {
+  composes: nino-skeleton from global;
   @apply mt-2 h-4 w-3/4 rounded bg-sand;
 }
 
 .skItemPrice {
+  composes: nino-skeleton from global;
   @apply mt-auto h-5 w-16 rounded bg-sand;
 }
 
@@ -254,34 +262,14 @@
 }
 
 .skPhoto {
+  composes: nino-skeleton from global;
   @apply h-[5.4rem] w-[5.4rem] shrink-0 rounded-xl bg-sand;
   @apply lg:h-[6.5rem] lg:w-[6.5rem];
 }
 
 /* botão "+" ancorado no canto da foto, como no card real */
 .skAdd {
+  composes: nino-skeleton from global;
   @apply absolute -bottom-2 -right-2 h-9 w-9 rounded-full bg-sand;
   border: 2.5px solid var(--color-paper);
-}
-
-.skHeader,
-.skTrack,
-.skRow,
-.skChip {
-  animation: shimmer 1.4s ease-in-out infinite;
-}
-
-@keyframes shimmer {
-  50% {
-    opacity: 0.55;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .skHeader,
-  .skTrack,
-  .skRow,
-  .skChip {
-    animation: none;
-  }
 }

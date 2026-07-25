@@ -77,8 +77,8 @@ export const QueueBoard = ({ tenantId }: QueueBoardProps) => {
             <span className={styles.value}>
               {isPending ? (
                 <Skeleton
-                  animation="none"
-                  className="h-9 w-10 animate-pulse bg-sand lg:h-11"
+                  animation="wave"
+                  className="h-9 w-10 bg-sand lg:h-11"
                 />
               ) : (
                 <CountUp value={value} />

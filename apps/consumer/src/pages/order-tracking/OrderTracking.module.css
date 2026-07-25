@@ -137,20 +137,24 @@
 /* ----- skeleton ----- */
 /* usa o mesmo `.header` do real; back e título viram placeholder */
 .skBack {
+  composes: nino-skeleton from global;
   @apply h-10 w-10 shrink-0 rounded-full bg-sand;
 }
 
 .skTitle {
+  composes: nino-skeleton from global;
   @apply h-6 w-32 rounded-lg bg-sand;
 }
 
 /* banner de status: cupom alto e arredondado, como o `.status` real */
 .skStatus {
+  composes: nino-skeleton from global;
   @apply h-[4.6rem] w-full rounded-2xl bg-sand;
 }
 
 /* ETA: uma linha curta de texto pequeno */
 .skEta {
+  composes: nino-skeleton from global;
   @apply mt-3 h-4 w-40 rounded bg-sand;
 }
 
@@ -174,6 +178,7 @@
 }
 
 .skDot {
+  composes: nino-skeleton from global;
   @apply relative z-10 mt-1 h-3 w-3 shrink-0 rounded-full bg-sand;
 }
 
@@ -182,33 +187,11 @@
 }
 
 .skEntryLabel {
+  composes: nino-skeleton from global;
   @apply h-4 w-32 rounded bg-sand;
 }
 
 .skEntryTime {
+  composes: nino-skeleton from global;
   @apply h-3 w-16 rounded bg-sand;
-}
-
-.skBack,
-.skTitle,
-.skStatus,
-.skEta,
-.skEntry {
-  animation: sk-shimmer 1.4s ease-in-out infinite;
-}
-
-@keyframes sk-shimmer {
-  50% {
-    opacity: 0.55;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .skBack,
-  .skTitle,
-  .skStatus,
-  .skEta,
-  .skEntry {
-    animation: none;
-  }
 }

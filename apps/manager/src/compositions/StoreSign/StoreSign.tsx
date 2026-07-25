@@ -21,8 +21,8 @@ export const StoreSign = ({ tenantId, timezone }: StoreSignProps) => {
   if (isPending) {
     return (
       <Skeleton
-        animation="none"
-        className="h-[1.75rem] w-32 animate-pulse rounded-full bg-sand"
+        animation="wave"
+        className="h-[1.75rem] w-32 rounded-full bg-sand"
       />
     )
   }

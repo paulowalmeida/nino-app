@@ -1,4 +1,4 @@
-@import "@nino/ds/globals.css";
+@import '@nino/ds/globals.css';
 
 @layer base {
   body {
@@ -21,13 +21,46 @@
    * a vitrine, o painel e o site parecerem o mesmo produto.
    */
   body::after {
-    content: "";
+    content: '';
     position: fixed;
     inset: 0;
     pointer-events: none;
     z-index: 9999;
     opacity: 0.4;
     mix-blend-mode: multiply;
-    background-image: url("/noise.svg");
+    background-image: url('/noise.svg');
+  }
+}
+
+/*
+ * Skeleton warm shimmer — um brilho translúcido varre a superfície da esquerda
+ * para a direita, em vez de a peça inteira pulsar de opacidade. O highlight é
+ * só background-image, então o tom quente (bg-sand) da peça continua visível por
+ * baixo. Compartilhado pelos 3 skeletons via `composes: nino-skeleton from global`.
+ */
+@keyframes ninoSkeletonSweep {
+  from {
+    background-position: 150% 0;
+  }
+  to {
+    background-position: -150% 0;
+  }
+}
+
+.nino-skeleton {
+  background-image: linear-gradient(
+    100deg,
+    transparent 25%,
+    rgba(255, 255, 255, 0.65) 50%,
+    transparent 75%
+  );
+  background-size: 220% 100%;
+  background-repeat: no-repeat;
+  animation: ninoSkeletonSweep 1.25s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nino-skeleton {
+    animation: none;
   }
 }
