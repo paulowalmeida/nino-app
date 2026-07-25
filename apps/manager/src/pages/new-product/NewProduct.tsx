@@ -4,15 +4,12 @@ import { useNavigate } from 'react-router'
 
 import { useQueryClient } from '@tanstack/react-query'
 
-import { Button, FormField, Input, Select, Textarea } from '@nino/ds'
+import { Button, FormField, Input, Select, Skeleton, Textarea } from '@nino/ds'
 
 import { ItemPhoto } from '@compositions/ItemPhoto'
 import { BackLink } from '@components/BackLink'
 import { PageTitle } from '@components/PageTitle'
-import {
-  useCategories,
-  useCreateCategory,
-} from '@hooks/product/useCategories'
+import { useCategories, useCreateCategory } from '@hooks/product/useCategories'
 import { useCreateMenuItem } from '@hooks/product/useCreateMenuItem'
 import { menuQueryKey } from '@hooks/product/useMenu'
 import { useCurrentTenant } from '@hooks/session/useCurrentTenant'
@@ -35,8 +32,7 @@ export const NewProduct = () => {
   const navigate = useNavigate()
   const queryClient = useQueryClient()
 
-  const { categories, isPending: isCategoriesPending } =
-    useCategories(tenantId)
+  const { categories, isPending: isCategoriesPending } = useCategories(tenantId)
   const { mutateAsync: addCategory, isPending: isAddingCategory } =
     useCreateCategory(tenantId)
   const { mutateAsync: addItem } = useCreateMenuItem(tenantId)
@@ -97,7 +93,8 @@ export const NewProduct = () => {
       void navigate('..', { relative: 'path' })
     } catch {
       setError('root', {
-        message: 'Não foi possível cadastrar. Confira os campos e tente de novo.',
+        message:
+          'Não foi possível cadastrar. Confira os campos e tente de novo.',
       })
     }
   }
@@ -134,7 +131,10 @@ export const NewProduct = () => {
           </FormField>
         </div>
 
-        <div className={`${motion.deal} ${styles.field}`} style={riseDelay(140)}>
+        <div
+          className={`${motion.deal} ${styles.field}`}
+          style={riseDelay(140)}
+        >
           <FormField
             label="Descrição"
             helperText={`${description?.length ?? 0}/${DESCRIPTION_MAX_LENGTH} · Aparece abaixo do nome no app do cliente`}
@@ -167,26 +167,31 @@ export const NewProduct = () => {
           </FormField>
 
           <FormField label="Categoria" error={errors.categoryId?.message}>
-            <Controller
-              name="categoryId"
-              control={control}
-              rules={{ required: 'Escolha a categoria' }}
-              render={({ field }) => (
-                <Select
-                  options={options}
-                  placeholder={
-                    isCategoriesPending ? 'Carregando…' : 'Escolha uma'
-                  }
-                  value={field.value}
-                  onValueChange={field.onChange}
-                  error={!!errors.categoryId}
-                />
-              )}
-            />
+            {isCategoriesPending ? (
+              <Skeleton className="h-10 w-full" />
+            ) : (
+              <Controller
+                name="categoryId"
+                control={control}
+                rules={{ required: 'Escolha a categoria' }}
+                render={({ field }) => (
+                  <Select
+                    options={options}
+                    placeholder="Escolha uma"
+                    value={field.value}
+                    onValueChange={field.onChange}
+                    error={!!errors.categoryId}
+                  />
+                )}
+              />
+            )}
           </FormField>
         </div>
 
-        <div className={`${motion.deal} ${styles.category}`} style={riseDelay(260)}>
+        <div
+          className={`${motion.deal} ${styles.category}`}
+          style={riseDelay(260)}
+        >
           {!isNaming && (
             <Button
               type="button"
@@ -231,7 +236,10 @@ export const NewProduct = () => {
 
         {errors.root && <p className={styles.error}>{errors.root.message}</p>}
 
-        <div className={`${motion.deal} ${styles.actions}`} style={riseDelay(320)}>
+        <div
+          className={`${motion.deal} ${styles.actions}`}
+          style={riseDelay(320)}
+        >
           <Button type="submit" loading={isSubmitting}>
             Cadastrar item
           </Button>

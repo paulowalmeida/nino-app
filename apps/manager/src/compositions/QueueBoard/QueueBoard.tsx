@@ -1,5 +1,7 @@
 import { Link } from 'react-router'
 
+import { Skeleton } from '@nino/ds'
+
 import { CountUp } from '@components/CountUp'
 import { Eyebrow } from '@components/Eyebrow'
 import { useQueueSummary } from '@hooks/order/useQueueSummary'
@@ -23,7 +25,12 @@ export const QueueBoard = ({ tenantId }: QueueBoardProps) => {
   const waiting = count(data, 'PENDING')
 
   /** Cada quadro é a mesma etapa que a fila de pedidos filtra. */
-  const tiles: { label: string; value: number; stage: OrderStage; urgent?: boolean }[] = [
+  const tiles: {
+    label: string
+    value: number
+    stage: OrderStage
+    urgent?: boolean
+  }[] = [
     {
       label: 'esperando aceite',
       value: waiting,
@@ -68,7 +75,14 @@ export const QueueBoard = ({ tenantId }: QueueBoardProps) => {
             style={riseDelay(index * 70 + 80)}
           >
             <span className={styles.value}>
-              {isPending ? '·' : <CountUp value={value} />}
+              {isPending ? (
+                <Skeleton
+                  animation="none"
+                  className="h-9 w-10 animate-pulse bg-sand lg:h-11"
+                />
+              ) : (
+                <CountUp value={value} />
+              )}
             </span>
             <span className={styles.label}>{label}</span>
           </Link>

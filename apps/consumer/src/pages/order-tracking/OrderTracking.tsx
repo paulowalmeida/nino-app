@@ -18,20 +18,35 @@ export const OrderTracking = () => {
   const token = searchParams.get('token') ?? undefined
   const backHref = pathSlug ? `/${pathSlug}` : '/'
 
-  const { data: order, isPending, isError } = useGuestOrderStatus(
-    orderId,
-    token
-  )
+  const {
+    data: order,
+    isPending,
+    isError,
+  } = useGuestOrderStatus(orderId, token)
 
   if (isPending) {
     return (
-      <div className={styles.page} aria-busy="true" aria-label="Carregando o pedido">
-        <div className={styles.skTitle} />
-        <div className={styles.skLine} />
+      <div
+        className={styles.page}
+        aria-busy="true"
+        aria-label="Carregando o pedido"
+      >
+        <header className={styles.header}>
+          <div className={styles.skBack} />
+          <div className={styles.skTitle} />
+        </header>
+        <div className={styles.skStatus} />
+        <div className={styles.skEta} />
         <div className={styles.skTimeline}>
-          <div className={styles.skRow} />
-          <div className={styles.skRow} />
-          <div className={styles.skRow} />
+          {Array.from({ length: 3 }).map((_, i) => (
+            <div key={i} className={styles.skEntry}>
+              <div className={styles.skDot} />
+              <div className={styles.skEntryText}>
+                <div className={styles.skEntryLabel} />
+                <div className={styles.skEntryTime} />
+              </div>
+            </div>
+          ))}
         </div>
       </div>
     )
@@ -69,7 +84,9 @@ export const OrderTracking = () => {
 
       <div
         className={
-          isCancelled ? `${styles.status} ${styles.statusCancelled}` : styles.status
+          isCancelled
+            ? `${styles.status} ${styles.statusCancelled}`
+            : styles.status
         }
       >
         <span className={styles.statusDot} aria-hidden="true" />
@@ -95,7 +112,9 @@ export const OrderTracking = () => {
             />
             <div>
               <p className={styles.entryLabel}>{STATUS_LABEL[entry.status]}</p>
-              <p className={styles.entryTime}>{stamp.format(new Date(entry.at))}</p>
+              <p className={styles.entryTime}>
+                {stamp.format(new Date(entry.at))}
+              </p>
             </div>
           </li>
         ))}

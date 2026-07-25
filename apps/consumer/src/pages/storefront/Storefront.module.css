@@ -170,36 +170,71 @@
 }
 
 /* ----- skeleton ----- */
+/* cabeçalho: mesma métrica do StoreHeader real (logo 14→4.5rem, padding) */
 .skHeader {
   @apply flex items-center gap-4 border-b border-line bg-paper px-5 pb-5 pt-6;
+  @apply lg:gap-5 lg:px-10 lg:pb-6 lg:pt-8;
 }
 
 .skLogo {
-  @apply h-16 w-16 shrink-0 rounded-2xl bg-sand;
+  @apply h-14 w-14 shrink-0 rounded-2xl bg-sand lg:h-[4.5rem] lg:w-[4.5rem];
 }
 
 .skLines {
-  @apply flex-1;
+  @apply min-w-0 flex-1;
 }
 
 .skName {
-  @apply h-7 w-2/3 rounded-lg bg-sand;
+  @apply h-6 w-2/3 rounded-lg bg-sand lg:h-9;
 }
 
+.skMeta {
+  @apply mt-2 h-4 w-2/5 rounded bg-sand;
+}
+
+/* eyebrow do índice — só existe no desktop, como no CategoryNav */
+.skRailLabel {
+  @apply hidden lg:mb-3 lg:block lg:h-3 lg:w-20 lg:rounded lg:bg-sand;
+}
+
+/* índice: fila horizontal no celular, lista vertical no desktop */
 .skTrack {
-  @apply flex gap-2 border-b border-sand px-4 py-3;
+  @apply flex gap-2 overflow-hidden border-b border-line px-5 py-3;
+  @apply lg:flex-col lg:gap-1 lg:border-b-0 lg:px-0 lg:py-0;
 }
 
 .skChip {
-  @apply h-9 w-24 shrink-0 rounded-full bg-sand;
+  @apply h-9 shrink-0 rounded-full bg-sand;
+  @apply lg:h-10 lg:w-full lg:rounded-xl;
 }
 
+.skChipS {
+  @apply w-16;
+}
+
+.skChipM {
+  @apply w-24;
+}
+
+.skChipL {
+  @apply w-32;
+}
+
+/* grade de itens: coluna no celular, 2 colunas no desktop (igual `.items`) */
+.skItems {
+  @apply flex flex-col lg:grid lg:grid-cols-2 lg:gap-3.5;
+}
+
+/* linha no celular, card emoldurado no desktop (igual `MenuItemCard`) */
 .skRow {
-  @apply flex items-center justify-between gap-3 border-b border-sand py-4;
+  @apply flex items-stretch justify-between gap-3.5 border-b border-line py-4;
+  @apply last:border-b-0;
+  @apply lg:gap-4 lg:rounded-2xl lg:border lg:border-line lg:bg-paper;
+  @apply lg:p-4 lg:pr-5 lg:last:border-b;
 }
 
 .skText {
-  @apply flex-1;
+  @apply flex min-w-0 flex-1 flex-col py-0.5;
 }
 
 .skItemName {
@@ -210,8 +245,23 @@
   @apply mt-2 h-4 w-3/4 rounded bg-sand;
 }
 
+.skItemPrice {
+  @apply mt-auto h-5 w-16 rounded bg-sand;
+}
+
+.skMedia {
+  @apply relative shrink-0 self-center;
+}
+
 .skPhoto {
-  @apply h-28 w-28 shrink-0 rounded-2xl bg-sand;
+  @apply h-[5.4rem] w-[5.4rem] shrink-0 rounded-xl bg-sand;
+  @apply lg:h-[6.5rem] lg:w-[6.5rem];
+}
+
+/* botão "+" ancorado no canto da foto, como no card real */
+.skAdd {
+  @apply absolute -bottom-2 -right-2 h-9 w-9 rounded-full bg-sand;
+  border: 2.5px solid var(--color-paper);
 }
 
 .skHeader,

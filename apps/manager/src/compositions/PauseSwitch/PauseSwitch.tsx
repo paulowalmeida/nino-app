@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-import { Button, Input } from '@nino/ds'
+import { Button, Input, Skeleton } from '@nino/ds'
 
 import { usePause, usePauseActions } from '@hooks/store/usePause'
 
@@ -27,7 +27,16 @@ export const PauseSwitch = ({ tenantId, timezone }: PauseSwitchProps) => {
   const [isOpen, setOpen] = useState(false)
   const [reason, setReason] = useState('')
 
-  if (isPending || !pause) return null
+  if (isPending) {
+    return (
+      <Skeleton
+        animation="none"
+        className="h-8 w-56 animate-pulse rounded-md bg-sand"
+      />
+    )
+  }
+
+  if (!pause) return null
 
   const clock = new Intl.DateTimeFormat('pt-BR', {
     hour: '2-digit',
@@ -91,7 +100,9 @@ export const PauseSwitch = ({ tenantId, timezone }: PauseSwitchProps) => {
                 key={label}
                 size="sm"
                 variant="outline"
-                loading={doPause.isPending && doPause.variables?.minutes === minutes}
+                loading={
+                  doPause.isPending && doPause.variables?.minutes === minutes
+                }
                 className={motion.press}
                 onClick={() => {
                   doPause.mutate({ minutes, reason: reason || undefined })

@@ -1,5 +1,7 @@
 import { Link } from 'react-router'
 
+import { Skeleton } from '@nino/ds'
+
 import { CountUp } from '@components/CountUp'
 import { Eyebrow } from '@components/Eyebrow'
 import { useOrders } from '@hooks/order/useOrders'
@@ -43,7 +45,14 @@ export const DayTally = ({ tenantId, timezone }: DayTallyProps) => {
           className={`${motion.settle} ${motion.lift} ${styles.figure}`}
         >
           <span className={styles.value}>
-            {isPending ? '·' : <CountUp value={count} />}
+            {isPending ? (
+              <Skeleton
+                animation="none"
+                className="h-7 w-10 animate-pulse bg-sand lg:h-8"
+              />
+            ) : (
+              <CountUp value={count} />
+            )}
           </span>
           <span className={styles.label}>pedidos fechados</span>
         </Link>
@@ -52,7 +61,16 @@ export const DayTally = ({ tenantId, timezone }: DayTallyProps) => {
           className={`${motion.settle} ${styles.figure}`}
           style={riseDelay(70)}
         >
-          <span className={styles.value}>{brl(revenue)}</span>
+          <span className={styles.value}>
+            {isPending ? (
+              <Skeleton
+                animation="none"
+                className="h-7 w-24 animate-pulse bg-sand lg:h-8"
+              />
+            ) : (
+              brl(revenue)
+            )}
+          </span>
           <span className={styles.label}>entraram no caixa</span>
         </article>
 
@@ -60,7 +78,16 @@ export const DayTally = ({ tenantId, timezone }: DayTallyProps) => {
           className={`${motion.settle} ${styles.figure}`}
           style={riseDelay(140)}
         >
-          <span className={styles.value}>{brl(average)}</span>
+          <span className={styles.value}>
+            {isPending ? (
+              <Skeleton
+                animation="none"
+                className="h-7 w-20 animate-pulse bg-sand lg:h-8"
+              />
+            ) : (
+              brl(average)
+            )}
+          </span>
           <span className={styles.label}>por pedido</span>
         </article>
       </div>

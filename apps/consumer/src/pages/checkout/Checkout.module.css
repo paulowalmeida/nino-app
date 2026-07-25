@@ -100,6 +100,10 @@
 }
 
 /* ----- skeleton ----- */
+.skBack {
+  @apply h-10 w-10 shrink-0 rounded-full bg-sand;
+}
+
 .skTitle {
   @apply h-6 w-40 rounded-lg bg-sand;
 }
@@ -112,19 +116,45 @@
   @apply h-10 w-full rounded-md bg-sand;
 }
 
+.skRow {
+  @apply grid grid-cols-2 gap-3;
+}
+
+/* RadioGroup: fileira de opções lado a lado, não um retângulo cheio */
+.skRadio {
+  @apply flex gap-3;
+}
+
+.skPill {
+  @apply h-11 flex-1 rounded-xl bg-sand;
+}
+
+/* Textarea: mais alta que um input simples */
+.skTextarea {
+  @apply h-20 w-full rounded-md bg-sand;
+}
+
+/* resumo como o cupom real: papel creme, borda quente */
 .skSummary {
-  @apply flex flex-col gap-3 rounded-2xl bg-paper p-4;
-  box-shadow: inset 0 0 0 1px var(--color-sand);
+  @apply flex flex-col gap-3 rounded-2xl border border-line bg-cream p-5;
 }
 
 .skSummaryLine {
   @apply h-4 w-full rounded bg-sand;
 }
 
+.skSummaryTotal {
+  @apply mt-2 h-6 w-full rounded bg-sand;
+}
+
+.skBack,
 .skTitle,
 .skSectionTitle,
 .skField,
-.skSummaryLine {
+.skPill,
+.skTextarea,
+.skSummaryLine,
+.skSummaryTotal {
   animation: sk-shimmer 1.4s ease-in-out infinite;
 }
 
@@ -135,10 +165,14 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .skBack,
   .skTitle,
   .skSectionTitle,
   .skField,
-  .skSummaryLine {
+  .skPill,
+  .skTextarea,
+  .skSummaryLine,
+  .skSummaryTotal {
     animation: none;
   }
 }
