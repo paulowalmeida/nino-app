@@ -52,7 +52,17 @@ export const Overview = () => {
           <p className={styles.date}>
             {dateFor(timezone)}
             {tenant && (
-              <span className={styles.store}>· {tenant.tenantName}</span>
+              <>
+                {' · '}
+                <a
+                  href={`https://nino.delivery/${tenant.tenantSlug}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={styles.store}
+                >
+                  {tenant.tenantName}
+                </a>
+              </>
             )}
           </p>
           <div className={styles.sign}>

@@ -12,7 +12,7 @@ export type SaleTicketProps = {
   methods: PaymentMethod[]
   method: PaymentMethod
   isSending: boolean
-  failed: boolean
+  error: string | null
   onStep: (productId: string, by: number) => void
   onMethod: (method: PaymentMethod) => void
   onClear: () => void

@@ -6,6 +6,7 @@ import { useCreateOrder } from '@hooks/order/useCreateOrder'
 import { useCurrentTenant } from '@hooks/session/useCurrentTenant'
 import { useMenu } from '@hooks/product/useMenu'
 import { useAcceptedPayments } from '@hooks/settings/useAcceptedPayments'
+import { ApiError } from '@utils/api-error'
 import type { CartLine } from '@custom_types/counter'
 import type { MenuItem } from '@custom_types/product'
 import type { PaymentMethod } from '@custom_types/order'
@@ -34,7 +35,7 @@ export const Counter = () => {
   const method = chosen && methods.includes(chosen) ? chosen : methods[0]
   const [customerName, setCustomerName] = useState('')
   const [tableNumber, setTableNumber] = useState('')
-  const [failed, setFailed] = useState(false)
+  const [error, setError] = useState<string | null>(null)
   const [closed, setClosed] = useState<string | null>(null)
 
   const pick = (item: MenuItem) =>
@@ -70,7 +71,11 @@ export const Counter = () => {
     )
 
   const finish = async () => {
-    setFailed(false)
+    setError(null)
+    if (!customerName && !tableNumber) {
+      setError('Informe o nome do cliente ou o número da mesa.')
+      return
+    }
     try {
       const order = await placeOrder({
         channel: 'COUNTER',
@@ -88,8 +93,12 @@ export const Counter = () => {
       setTableNumber('')
       setClosed(order.id.slice(-4).toUpperCase())
       window.setTimeout(() => setClosed(null), 4000)
-    } catch {
-      setFailed(true)
+    } catch (caught) {
+      if (caught instanceof ApiError && caught.status < 500) {
+        setError(caught.message)
+        return
+      }
+      setError('Não foi possível fechar a venda. Tente de novo.')
     }
   }
 
@@ -120,7 +129,7 @@ export const Counter = () => {
           onTableNumber={setTableNumber}
           method={method}
           isSending={isSending}
-          failed={failed}
+          error={error}
           onStep={step}
           onMethod={setChosen}
           onClear={() => {

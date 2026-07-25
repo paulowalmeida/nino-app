@@ -61,7 +61,8 @@
 }
 
 .store {
-  @apply ml-1 text-subtle;
+  @apply ml-1 font-semibold text-brand-strong underline decoration-1;
+  @apply underline-offset-2 transition-opacity hover:opacity-70;
 }
 
 .sign {

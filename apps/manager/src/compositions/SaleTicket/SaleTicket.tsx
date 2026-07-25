@@ -21,7 +21,7 @@ export const SaleTicket = ({
   onTableNumber,
   method,
   isSending,
-  failed,
+  error,
   onStep,
   onMethod,
   onClear,
@@ -123,11 +123,7 @@ export const SaleTicket = ({
           <span className={styles.totalValue}>{brl(total)}</span>
         </div>
 
-        {failed && (
-          <p className={styles.error}>
-            Não foi possível fechar a venda. Tente de novo.
-          </p>
-        )}
+        {error && <p className={styles.error}>{error}</p>}
 
         <Button
           size="lg"
