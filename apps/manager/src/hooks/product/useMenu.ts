@@ -1,3 +1,5 @@
+import { useMemo } from 'react'
+
 import { useQuery } from '@tanstack/react-query'
 
 import type { MenuPage, MenuSection } from '@custom_types/product'
@@ -37,5 +39,7 @@ export const useMenu = (tenantId: string | null) => {
     enabled: !!tenantId,
   })
 
-  return { ...query, sections: toSections(query.data) }
+  const sections = useMemo(() => toSections(query.data), [query.data])
+
+  return { ...query, sections }
 }
