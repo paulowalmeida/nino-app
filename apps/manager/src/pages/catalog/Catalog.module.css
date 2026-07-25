@@ -17,6 +17,14 @@
   @apply flex flex-col gap-1.5;
 }
 
+.actions {
+  @apply flex w-full flex-col gap-2 sm:w-auto sm:flex-row sm:items-center;
+}
+
+.manageCategories {
+  @apply w-full shrink-0 sm:w-auto;
+}
+
 .newItem {
   @apply w-full shrink-0 sm:w-auto;
 }

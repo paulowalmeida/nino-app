@@ -111,6 +111,14 @@ export const router = createBrowserRouter([
           })),
       },
       {
+        path: 'catalogo/categorias',
+        loader: roleGuard(['TENANT_OWNER']),
+        lazy: () =>
+          import('@pages/categories/Categories').then(({ Categories }) => ({
+            Component: Categories,
+          })),
+      },
+      {
         path: 'catalogo/:productId',
         lazy: () =>
           import('@pages/product-detail').then(({ ProductDetail }) => ({

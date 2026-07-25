@@ -25,9 +25,18 @@ export const Catalog = () => {
         </div>
 
         {role === 'TENANT_OWNER' && (
-          <Button asChild className={`${motion.press} ${styles.newItem}`}>
-            <Link to="novo">Novo item</Link>
-          </Button>
+          <div className={styles.actions}>
+            <Button
+              asChild
+              variant="outline"
+              className={`${motion.press} ${styles.manageCategories}`}
+            >
+              <Link to="categorias">Gerenciar categorias</Link>
+            </Button>
+            <Button asChild className={`${motion.press} ${styles.newItem}`}>
+              <Link to="novo">Novo item</Link>
+            </Button>
+          </div>
         )}
       </header>
 

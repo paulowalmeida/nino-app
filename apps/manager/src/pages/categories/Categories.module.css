@@ -1,0 +1,95 @@
+@reference "@nino/ds/globals.css";
+
+.page {
+  @apply relative mx-auto max-w-3xl p-4 lg:p-10;
+  background: radial-gradient(
+    900px 380px at 50% -10%,
+    rgba(255, 126, 31, 0.12),
+    transparent 60%
+  );
+}
+
+.header {
+  @apply mb-5 mt-2 flex flex-col gap-1.5 lg:mb-7;
+}
+
+.subtitle {
+  @apply mt-1 max-w-prose text-sm text-faint;
+}
+
+/* linha de criação: input larga + botão que não encolhe */
+.create {
+  @apply mb-6 flex flex-col gap-2 sm:flex-row sm:items-center;
+}
+
+.create > :first-child {
+  @apply flex-1;
+}
+
+.list {
+  @apply flex flex-col rounded-[24px] border border-line bg-white/70;
+  @apply px-2 shadow-card backdrop-blur-sm lg:px-3;
+}
+
+.row {
+  @apply flex min-h-16 flex-wrap items-center gap-3 rounded-xl px-2 py-3;
+  @apply border-b border-sand transition-colors duration-150;
+  @apply last:border-b-0 hover:bg-brand/5;
+}
+
+.who {
+  @apply flex min-w-40 flex-1 flex-col;
+}
+
+.name {
+  @apply truncate text-sm font-semibold text-body;
+}
+
+.hint {
+  @apply text-xs text-faint;
+  font-variant-numeric: tabular-nums;
+}
+
+/* categoria vazia é a única segura de excluir — o texto sinaliza isso */
+.hintEmpty {
+  @apply text-xs font-medium text-brand/80;
+}
+
+.actions {
+  @apply flex shrink-0 items-center gap-1;
+}
+
+.action {
+  @apply flex size-9 items-center justify-center rounded-lg text-faint;
+  @apply transition-colors duration-150;
+  @apply hover:bg-sand hover:text-body;
+  @apply focus-visible:outline-none focus-visible:ring-2;
+  @apply focus-visible:ring-brand focus-visible:ring-offset-1;
+  @apply disabled:pointer-events-none disabled:opacity-40;
+}
+
+.danger {
+  @apply hover:bg-red-50 hover:text-red-600;
+}
+
+/* modo edição inline: input toma a linha, ações à direita */
+.editForm {
+  @apply flex w-full flex-wrap items-center gap-2;
+}
+
+.editForm > :first-child {
+  @apply min-w-40 flex-1;
+}
+
+.loading {
+  @apply flex flex-col gap-2;
+}
+
+.skeletonRow {
+  @apply h-16 w-full rounded-2xl;
+}
+
+.notice {
+  @apply mt-4 rounded-2xl border border-line bg-white/60 p-6 text-sm;
+  @apply leading-relaxed text-faint;
+}

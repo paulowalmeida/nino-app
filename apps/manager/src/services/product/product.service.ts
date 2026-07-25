@@ -79,6 +79,23 @@ export const setCategoryPosition = (
     { position }
   )
 
+export const updateCategory = (
+  tenantId: string,
+  id: string,
+  name: string
+): Promise<ProductCategory> =>
+  patch<{ name: string }, ProductCategory>(
+    `tenants/${tenantId}/product-categories`,
+    id,
+    { name }
+  )
+
+export const deleteCategory = (
+  tenantId: string,
+  id: string
+): Promise<{ message: string }> =>
+  remove<{ message: string }>(`tenants/${tenantId}/product-categories`, id)
+
 export const setItemAvailability = (
   tenantId: string,
   id: string,

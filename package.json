@@ -10,6 +10,7 @@
     "dev": "turbo dev",
     "dev:manager": "turbo dev --filter=nino-manager",
     "dev:landing": "turbo dev --filter=nino-landing",
+    "dev:consumer": "turbo dev --filter=nino-consumer", 
     "ds:storybook": "turbo run storybook --filter=@nino/ds",
     "build": "turbo build",
     "lint": "turbo lint",
