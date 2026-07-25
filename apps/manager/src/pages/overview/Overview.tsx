@@ -58,6 +58,7 @@ export const Overview = () => {
                   href={`https://${tenant.tenantSlug}.dev.nino.delivery`}
                   target="_blank"
                   rel="noopener noreferrer"
+                  title='ir para a loja'
                   className={styles.store}
                 >
                   {tenant.tenantName}
