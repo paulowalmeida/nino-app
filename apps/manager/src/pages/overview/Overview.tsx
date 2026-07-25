@@ -55,7 +55,7 @@ export const Overview = () => {
               <>
                 {' · '}
                 <a
-                  href={`https://nino.delivery/${tenant.tenantSlug}`}
+                  href={`https://${tenant.tenantSlug}.dev.nino.delivery`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className={styles.store}
