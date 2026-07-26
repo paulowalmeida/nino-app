@@ -1,11 +1,31 @@
 @reference "@nino/ds/globals.css";
 
 /*
- * Altura pelo conteúdo, com teto: uma sacola de um item não precisa de uma
- * folha de 85dvh quase vazia — ela cresce só até onde tem o que mostrar.
+ * Duas formas para o mesmo conteúdo (ver CartDrawer.tsx): no celular, folha
+ * que sobe do polegar; no desktop, painel na direita.
+ *
+ * A folha do celular tem altura pelo conteúdo, com teto: uma sacola de um
+ * item não precisa de 85dvh quase vazios. O painel do desktop é o contrário —
+ * ocupa a altura toda, colado na borda, e por isso não arredonda em cima.
+ * Vinha subindo do rodapé numa tela de 1080px de largura, o que jogava o
+ * "Finalizar pedido" de ponta a ponta e cobria o cardápio inteiro.
  */
-.drawer {
+.sheet {
   @apply max-h-[85dvh] rounded-t-3xl bg-paper;
+}
+
+.panel {
+  @apply bg-paper;
+  box-shadow: -24px 0 60px -30px rgba(26, 18, 6, 0.35);
+}
+
+/*
+ * Coluna de altura cheia: sem isso o rodapé encosta no fim do conteúdo, e no
+ * painel do desktop (que é alto) uma sacola de um item deixava o total
+ * flutuando no topo, longe da borda de baixo.
+ */
+.body {
+  @apply flex min-h-full flex-col;
 }
 
 .lines {
@@ -72,7 +92,7 @@
 }
 
 .empty {
-  @apply flex flex-col items-center py-10 text-center;
+  @apply flex flex-1 flex-col items-center justify-center py-10 text-center;
 }
 
 .emptyMascot {
@@ -92,7 +112,7 @@
  * flex-1 overflow-y-auto) — sticky funciona relativo a ela.
  */
 .footer {
-  @apply sticky bottom-0 -mx-6 -mb-4 flex flex-col gap-3;
+  @apply sticky bottom-0 -mx-6 -mb-4 mt-auto flex flex-col gap-3;
   @apply border-t border-line bg-paper px-6 pb-5 pt-4;
 }
 
