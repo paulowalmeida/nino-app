@@ -25,6 +25,7 @@ export const StorefrontSkeleton = () => (
           <div className={styles.skName} />
           <div className={styles.skMeta} />
         </div>
+        <div className={styles.skSearch} />
       </div>
     </div>
 
