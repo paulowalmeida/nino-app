@@ -2,13 +2,16 @@ import { useState } from 'react'
 
 import { Button, Carousel, Drawer, Modal } from '@nino/ds'
 
+import { AnimatedNumber } from '@components/AnimatedNumber/AnimatedNumber'
 import { useIsDesktop } from '@hooks/useIsDesktop'
 import { categoryIcon } from '@utils/category-icon'
 import { brl } from '@utils/money'
+import { riseDelay } from '@utils/rise-delay'
 
 import type { ProductDetailProps } from './ProductDetail.types'
 
 import styles from './ProductDetail.module.css'
+import motion from '@styles/motion.module.css'
 
 export const ProductDetail = ({
   item,
@@ -47,6 +50,24 @@ export const ProductDetail = ({
     </div>
   )
 
+  /**
+   * `key={shown.id}` força o remount ao trocar de item: sem isso o CSS de
+   * entrada não reinicia, porque o mesmo nó de DOM continua ali.
+   */
+  const reveal = (
+    <div key={shown.id}>
+      <div className={`${motion.riseIn} ${styles.media}`}>{media}</div>
+      {shown.description && (
+        <p
+          className={`${motion.riseIn} ${styles.description}`}
+          style={riseDelay(70)}
+        >
+          {shown.description}
+        </p>
+      )}
+    </div>
+  )
+
   const stepper = (
     <div className={styles.stepper}>
       <Button
@@ -58,7 +79,7 @@ export const ProductDetail = ({
       >
         −
       </Button>
-      <span className={styles.stepperCount}>{quantity}</span>
+      <AnimatedNumber value={quantity} className={styles.stepperCount} />
       <Button
         size="icon"
         variant="outline"
@@ -72,7 +93,8 @@ export const ProductDetail = ({
 
   const confirmButton = (
     <Button className={styles.confirm} onClick={() => onConfirm(shown, quantity)}>
-      Adicionar — {brl(Number(shown.price) * quantity)}
+      Adicionar —{' '}
+      <AnimatedNumber value={brl(Number(shown.price) * quantity)} />
     </Button>
   )
 
@@ -85,12 +107,19 @@ export const ProductDetail = ({
         ariaLabel={shown.name}
         header={<h2 className={styles.modalTitle}>{shown.name}</h2>}
         body={
-          <>
-            <div className={styles.modalMedia}>{media}</div>
+          <div key={shown.id}>
+            <div className={`${motion.riseIn} ${styles.modalMedia}`}>
+              {media}
+            </div>
             {shown.description && (
-              <p className={styles.description}>{shown.description}</p>
+              <p
+                className={`${motion.riseIn} ${styles.description}`}
+                style={riseDelay(70)}
+              >
+                {shown.description}
+              </p>
             )}
-          </>
+          </div>
         }
         footer={
           <div className={styles.modalFooter}>
@@ -111,11 +140,7 @@ export const ProductDetail = ({
       size="90dvh"
       contentClassName={styles.drawer}
     >
-      <div className={styles.media}>{media}</div>
-
-      {shown.description && (
-        <p className={styles.description}>{shown.description}</p>
-      )}
+      {reveal}
 
       <div className={styles.footer}>
         {stepper}

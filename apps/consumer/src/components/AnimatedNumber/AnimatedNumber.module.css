@@ -1,0 +1,8 @@
+.wrap {
+  display: inline-grid;
+  justify-items: center;
+}
+
+.wrap > * {
+  grid-area: 1 / 1;
+}

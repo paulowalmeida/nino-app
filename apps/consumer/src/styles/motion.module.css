@@ -1,0 +1,49 @@
+@reference "@nino/ds/globals.css";
+
+/*
+ * Vocabulário de movimento da vitrine: o mesmo expo-out do painel do
+ * gestor (cubic-bezier(0.16, 1, 0.3, 1)), reaplicado aqui para que a marca
+ * se mova do mesmo jeito nos dois lados — só a metáfora muda. Lá é a
+ * comanda saindo da impressora; aqui é o prato chegando à mesa: some entra
+ * subindo de leve, sem cair de cima.
+ *
+ * Toda classe aceita --d para escalonar entradas em sequência.
+ */
+
+.riseIn {
+  animation: rise-in 0.36s cubic-bezier(0.16, 1, 0.3, 1) var(--d, 0ms) both;
+}
+
+@keyframes rise-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px) scale(0.985);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .riseIn {
+    animation: none;
+  }
+}
+
+/* alvos de toque: afundam ao pressionar — botões, steppers, CTA */
+.press {
+  @apply transition-transform duration-150 ease-out;
+}
+
+.press:active {
+  transform: scale(0.94);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .press,
+  .press:active {
+    transform: none;
+    transition: none;
+  }
+}
