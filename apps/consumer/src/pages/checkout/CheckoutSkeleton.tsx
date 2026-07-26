@@ -1,10 +1,9 @@
 import styles from './Checkout.module.css'
 
 /**
- * Espelha a forma do checkout real: cabeçalho, as três seções do formulário
- * (recebimento/endereço, dados, pagamento) mais observações, e o cupom de
- * resumo. Cada tipo de campo tem seu placeholder — input, fileira de opções
- * (RadioGroup) e área de texto — pra não haver salto ao trocar pelo conteúdo.
+ * Espelha a forma real: comanda dobrada no topo, os blocos de campos e a
+ * barra de destaque fixa embaixo. Cada peça tem a altura do que vai
+ * substituí-la, pra não haver salto quando o conteúdo chega.
  */
 export const CheckoutSkeleton = () => (
   <div
@@ -18,50 +17,47 @@ export const CheckoutSkeleton = () => (
     </header>
 
     <div className={styles.form}>
-      <div className={styles.section}>
-        <div className={styles.skSectionTitle} />
-        <div className={styles.skRadio}>
-          <div className={styles.skPill} />
-          <div className={styles.skPill} />
+      <div className={styles.skReceipt} />
+
+      <div className={styles.block}>
+        <div className={styles.skLabel} />
+        <div className={styles.skChoices}>
+          <div className={styles.skChoice} />
+          <div className={styles.skChoice} />
         </div>
       </div>
 
-      <div className={styles.section}>
-        <div className={styles.skSectionTitle} />
+      <div className={styles.block}>
+        <div className={styles.skLabel} />
         <div className={styles.skField} />
-        <div className={styles.skRow}>
+        <div className={styles.row}>
           <div className={styles.skField} />
           <div className={styles.skField} />
         </div>
+        <div className={styles.skField} />
       </div>
 
-      <div className={styles.section}>
-        <div className={styles.skSectionTitle} />
+      <div className={styles.block}>
+        <div className={styles.skLabel} />
         <div className={styles.skField} />
         <div className={styles.skField} />
       </div>
 
-      <div className={styles.section}>
-        <div className={styles.skSectionTitle} />
-        <div className={styles.skRadio}>
-          <div className={styles.skPill} />
-          <div className={styles.skPill} />
-          <div className={styles.skPill} />
+      <div className={styles.block}>
+        <div className={styles.skLabel} />
+        <div className={styles.skChoices}>
+          <div className={styles.skChoiceCompact} />
+          <div className={styles.skChoiceCompact} />
         </div>
       </div>
+    </div>
 
-      <div className={styles.section}>
-        <div className={styles.skSectionTitle} />
-        <div className={styles.skTextarea} />
+    <div className={styles.tearBar}>
+      <div className={styles.tearTotals}>
+        <div className={styles.skLabel} />
+        <div className={styles.skTotal} />
       </div>
-
-      <div className={styles.skSummary}>
-        <div className={styles.skSummaryLine} />
-        <div className={styles.skSummaryLine} />
-        <div className={styles.skSummaryLine} />
-        <div className={styles.skSummaryLine} />
-        <div className={styles.skSummaryTotal} />
-      </div>
+      <div className={styles.skSubmit} />
     </div>
   </div>
 )

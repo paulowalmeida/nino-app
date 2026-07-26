@@ -14,6 +14,19 @@ import motion from '@styles/motion.module.css'
 
 const EASE = [0.16, 1, 0.3, 1] as const
 
+const TrashIcon = () => (
+  <svg width="15" height="15" viewBox="0 0 24 24" aria-hidden="true">
+    <path
+      d="M4 7h16M10 11v6M14 11v6M6 7l1 12a2 2 0 002 2h6a2 2 0 002-2l1-12M9 7V5a2 2 0 012-2h2a2 2 0 012 2v2"
+      stroke="currentColor"
+      strokeWidth="1.8"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      fill="none"
+    />
+  </svg>
+)
+
 export const CartDrawer = ({
   open,
   onOpenChange,
@@ -23,108 +36,129 @@ export const CartDrawer = ({
   onDecrement,
   onClear,
   onCheckout,
-}: CartDrawerProps) => (
-  <Drawer
-    open={open}
-    onOpenChange={onOpenChange}
-    placement="bottom"
-    title="Sua sacola"
-    size="85dvh"
-    contentClassName={styles.drawer}
-  >
-    <div className={styles.body}>
-      {lines.length === 0 ? (
-        <div className={`${motion.riseIn} ${styles.empty}`}>
-          <img
-            src="/mascot-consumer.svg"
-            alt=""
-            className={styles.emptyMascot}
-          />
-          <p className={styles.emptyTitle}>Sua sacola está vazia</p>
-          <p className={styles.emptyText}>
-            Volte ao cardápio e escolha o que vai pedir.
-          </p>
-        </div>
-      ) : (
-        <>
-          <div className={styles.lines}>
-            <AnimatePresence initial={false}>
-              {lines.map(({ item, quantity }, index) => {
-                const image = primaryImage(item)
+}: CartDrawerProps) => {
+  const itemCount = lines.reduce((sum, line) => sum + line.quantity, 0)
 
-                return (
-                  <motionEl.div
-                    key={item.id}
-                    layout
-                    initial={{ opacity: 0, y: 12 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, x: -24, height: 0, marginBottom: 0 }}
-                    transition={{
-                      duration: 0.28,
-                      ease: EASE,
-                      delay: index * 0.04,
-                    }}
-                    className={styles.line}
-                  >
-                    {image ? (
-                      <img src={image} alt="" className={styles.photo} />
-                    ) : (
-                      <div className={styles.photoFallback} aria-hidden="true">
-                        {categoryIcon(item.name) ?? '🍽️'}
+  return (
+    <Drawer
+      open={open}
+      onOpenChange={onOpenChange}
+      placement="bottom"
+      title="Sua sacola"
+      description={
+        lines.length === 0
+          ? undefined
+          : `${itemCount} ${itemCount === 1 ? 'item' : 'itens'}`
+      }
+      size="auto"
+      contentClassName={styles.drawer}
+    >
+      <div className={styles.body}>
+        {lines.length === 0 ? (
+          <div className={`${motion.riseIn} ${styles.empty}`}>
+            <img
+              src="/mascot-consumer.svg"
+              alt=""
+              className={styles.emptyMascot}
+            />
+            <p className={styles.emptyTitle}>Sua sacola está vazia</p>
+            <p className={styles.emptyText}>
+              Volte ao cardápio e escolha o que vai pedir.
+            </p>
+          </div>
+        ) : (
+          <>
+            <div className={styles.lines}>
+              <AnimatePresence initial={false}>
+                {lines.map(({ item, quantity }, index) => {
+                  const image = primaryImage(item)
+                  const isLast = quantity === 1
+
+                  return (
+                    <motionEl.div
+                      key={item.id}
+                      layout
+                      initial={{ opacity: 0, y: 12 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, x: -24, height: 0, marginBottom: 0 }}
+                      transition={{
+                        duration: 0.28,
+                        ease: EASE,
+                        delay: index * 0.04,
+                      }}
+                      className={styles.line}
+                    >
+                      {image ? (
+                        <img src={image} alt="" className={styles.photo} />
+                      ) : (
+                        <div className={styles.photoFallback} aria-hidden="true">
+                          {categoryIcon(item.name) ?? '🍽️'}
+                        </div>
+                      )}
+
+                      <div className={styles.lineText}>
+                        <span className={styles.lineName}>{item.name}</span>
+                        <span className={styles.lineMath}>
+                          {quantity} × {brl(item.price)}
+                        </span>
                       </div>
-                    )}
 
-                    <div className={styles.lineText}>
-                      <span className={styles.lineName}>{item.name}</span>
-                      <span className={styles.linePrice}>
-                        {brl(item.price)}
-                      </span>
-                    </div>
+                      <div className={styles.lineRight}>
+                        <AnimatedNumber
+                          value={brl(Number(item.price) * quantity)}
+                          className={styles.lineTotal}
+                        />
 
-                    <div className={styles.stepper}>
-                      <Button
-                        size="icon"
-                        variant="outline"
-                        className={styles.stepperBtn}
-                        aria-label={`Remover uma unidade de ${item.name}`}
-                        onClick={() => onDecrement(item.id)}
-                      >
-                        −
-                      </Button>
-                      <AnimatedNumber
-                        value={quantity}
-                        className={styles.stepperCount}
-                      />
-                      <Button
-                        size="icon"
-                        variant="outline"
-                        className={styles.stepperBtn}
-                        aria-label={`Adicionar mais uma unidade de ${item.name}`}
-                        onClick={() => onIncrement(item.id)}
-                      >
-                        +
-                      </Button>
-                    </div>
-                  </motionEl.div>
-                )
-              })}
-            </AnimatePresence>
-          </div>
-
-          <div className={styles.footer}>
-            <div className={styles.totalRow}>
-              <span className={styles.totalLabel}>Total</span>
-              <AnimatedNumber value={brl(total)} className={styles.total} />
+                        <div className={styles.stepper}>
+                          <Button
+                            size="icon"
+                            variant="outline"
+                            className={styles.stepperBtn}
+                            aria-label={
+                              isLast
+                                ? `Remover ${item.name} da sacola`
+                                : `Remover uma unidade de ${item.name}`
+                            }
+                            onClick={() => onDecrement(item.id)}
+                          >
+                            {isLast ? <TrashIcon /> : '−'}
+                          </Button>
+                          <AnimatedNumber
+                            value={quantity}
+                            className={styles.stepperCount}
+                          />
+                          <Button
+                            size="icon"
+                            variant="outline"
+                            className={styles.stepperBtn}
+                            aria-label={`Adicionar mais uma unidade de ${item.name}`}
+                            onClick={() => onIncrement(item.id)}
+                          >
+                            +
+                          </Button>
+                        </div>
+                      </div>
+                    </motionEl.div>
+                  )
+                })}
+              </AnimatePresence>
             </div>
-            <Button className={styles.checkout} onClick={onCheckout}>
-              Finalizar pedido
-            </Button>
-            <Button variant="ghost" className={styles.clear} onClick={onClear}>
-              Esvaziar sacola
-            </Button>
-          </div>
-        </>
-      )}
-    </div>
-  </Drawer>
-)
+
+            <div className={styles.footer}>
+              <div className={styles.totalRow}>
+                <span className={styles.totalLabel}>Total</span>
+                <AnimatedNumber value={brl(total)} className={styles.total} />
+              </div>
+              <Button className={styles.checkout} onClick={onCheckout}>
+                Finalizar pedido
+              </Button>
+              <Button variant="ghost" className={styles.clear} onClick={onClear}>
+                Esvaziar sacola
+              </Button>
+            </div>
+          </>
+        )}
+      </div>
+    </Drawer>
+  )
+}

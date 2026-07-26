@@ -1,15 +1,21 @@
+import { useEffect, useState } from 'react'
 import { Controller, useForm, useWatch } from 'react-hook-form'
 import { Link, useNavigate, useParams } from 'react-router'
 
 import {
+  Alert,
   Button,
+  Collapsible,
   FormField,
   Input,
-  RadioGroup,
+  MaskedInput,
+  PhoneInput,
   Select,
   Textarea,
+  maskZipCode,
 } from '@nino/ds'
 
+import { AnimatedNumber } from '@components/AnimatedNumber/AnimatedNumber'
 import type { CreateGuestOrderRequest } from '@custom_types/order/create-guest-order-request'
 import { useCreateGuestOrder } from '@hooks/useCreateGuestOrder'
 import { useDeliveryZones } from '@hooks/useDeliveryZones'
@@ -18,14 +24,29 @@ import { usePublicSettings } from '@hooks/usePublicSettings'
 import { useStore } from '@hooks/useStore'
 import { useCartStore } from '@states/useCartStore'
 import { brl } from '@utils/money'
-import { CHANNEL_LABEL, PAYMENT_METHOD_LABEL } from '@utils/order-flow'
+import { PAYMENT_METHOD_LABEL } from '@utils/order-flow'
+import { isCompletePhone, toE164 } from '@utils/phone'
 import { resolveSlug } from '@utils/resolve-slug'
+import { riseDelay } from '@utils/rise-delay'
 import { isOpen } from '@utils/store-info'
 import { writeLastOrder } from '@utils/last-order'
 
 import { CheckoutSkeleton } from './CheckoutSkeleton'
 import type { CheckoutFormValues } from './Checkout.types'
 import styles from './Checkout.module.css'
+import motion from '@styles/motion.module.css'
+
+const BackArrow = () => (
+  <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
+    <path
+      d="M20 12H5m0 0l6-6m-6 6l6 6"
+      stroke="currentColor"
+      strokeWidth="2.2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </svg>
+)
 
 export const Checkout = () => {
   const navigate = useNavigate()
@@ -35,12 +56,14 @@ export const Checkout = () => {
 
   const { store, isPending: loadingStore } = useStore(slug ?? undefined)
   const { settings } = usePublicSettings(store?.id)
-  const { zones } = useDeliveryZones(store?.id)
+  const { zones, isPending: loadingZones } = useDeliveryZones(store?.id)
   const { hours, isPending: loadingHours } = useOpeningHours(store?.id)
 
   const cart = useCartStore((state) => state.lines)
   const clearCart = useCartStore((state) => state.clear)
   const cartLines = Object.values(cart)
+
+  const [isReceiptOpen, setIsReceiptOpen] = useState(false)
 
   const {
     mutate: createOrder,
@@ -53,6 +76,7 @@ export const Checkout = () => {
     register,
     handleSubmit,
     control,
+    setValue,
     formState: { errors },
   } = useForm<CheckoutFormValues>({
     defaultValues: { channel: 'DELIVERY', paymentMethod: 'CASH' },
@@ -62,21 +86,23 @@ export const Checkout = () => {
   const paymentMethod = useWatch({ control, name: 'paymentMethod' })
   const deliveryZoneId = useWatch({ control, name: 'deliveryZoneId' })
 
+  /** Loja que não entrega não pode ficar com "Entrega" marcado por padrão. */
+  useEffect(() => {
+    if (!loadingZones && zones.length === 0) setValue('channel', 'PICKUP')
+  }, [loadingZones, zones.length, setValue])
+
+  const isDelivery = channel === 'DELIVERY'
+
+  const itemCount = cartLines.reduce((total, line) => total + line.quantity, 0)
   const subtotal = cartLines.reduce(
     (total, line) => total + Number(line.item.price) * line.quantity,
     0
   )
   const zone = zones.find(({ id }) => id === deliveryZoneId)
-  const deliveryFee = channel === 'DELIVERY' ? Number(zone?.fee ?? 0) : 0
+  const deliveryFee = isDelivery ? Number(zone?.fee ?? 0) : 0
   const total = subtotal + deliveryFee
 
-  const channelOptions = (
-    zones.length > 0 ? (['DELIVERY', 'PICKUP'] as const) : (['PICKUP'] as const)
-  ).map((value) => ({ value, label: CHANNEL_LABEL[value] }))
-
-  const paymentOptions = (settings?.acceptedPaymentMethods ?? ['CASH']).map(
-    (value) => ({ value, label: PAYMENT_METHOD_LABEL[value] })
-  )
+  const paymentOptions = settings?.acceptedPaymentMethods ?? ['CASH']
 
   const onSubmit = (values: CheckoutFormValues) => {
     if (!store) return
@@ -84,16 +110,16 @@ export const Checkout = () => {
     const payload: CreateGuestOrderRequest = {
       tenantId: store.id,
       channel: values.channel,
-      deliveryZoneId: values.channel === 'DELIVERY' ? values.deliveryZoneId : undefined,
+      deliveryZoneId: isDelivery ? values.deliveryZoneId : undefined,
       paymentMethod: values.paymentMethod,
       changeFor: values.paymentMethod === 'CASH' ? values.changeFor : undefined,
       guestName: values.guestName,
-      guestPhone: values.guestPhone,
-      guestZipCode: values.guestZipCode,
-      guestStreet: values.guestStreet,
-      guestNumber: values.guestNumber,
-      guestComplement: values.guestComplement,
-      guestNeighborhood: values.guestNeighborhood,
+      guestPhone: toE164(values.guestPhone),
+      guestZipCode: isDelivery ? values.guestZipCode : undefined,
+      guestStreet: isDelivery ? values.guestStreet : undefined,
+      guestNumber: isDelivery ? values.guestNumber : undefined,
+      guestComplement: isDelivery ? values.guestComplement : undefined,
+      guestNeighborhood: isDelivery ? values.guestNeighborhood : undefined,
       guestCity: values.guestCity,
       guestState: values.guestState,
       notes: values.notes,
@@ -123,17 +149,24 @@ export const Checkout = () => {
   const storeOpen = loadingHours || isOpen(store, hours)
 
   if (created) {
+    const isPickup = created.channel === 'PICKUP'
+
     return (
       <div className={styles.confirmed}>
         <img
-          src="/mascot-consumer.svg"
+          src={
+            isPickup
+              ? '/mascot-consumer-pickup.svg'
+              : '/mascot-consumer-delivery.svg'
+          }
           alt=""
           className={styles.confirmedMascot}
         />
         <h1 className={styles.confirmedTitle}>Pedido enviado!</h1>
         <p className={styles.confirmedText}>
-          A loja já recebeu seu pedido. Guarde o código abaixo para
-          acompanhar.
+          {isPickup
+            ? 'A loja já recebeu e vai preparar. Guarde o código para retirar no balcão.'
+            : 'A loja já recebeu e vai preparar. Guarde o código para acompanhar a entrega.'}
         </p>
         <p className={styles.confirmedCode}>{created.id.slice(0, 8)}</p>
         <Button
@@ -163,44 +196,132 @@ export const Checkout = () => {
     )
   }
 
+  const deliveryNote = settings?.estimatedMinutes
+    ? `Chega em ~${settings.estimatedMinutes} min`
+    : 'Levamos até você'
+
   return (
-    <div className={styles.page}>
+    <form onSubmit={handleSubmit(onSubmit)} className={styles.page}>
       <header className={styles.header}>
         <Link to={backHref} className={styles.back} aria-label="Voltar">
-          ←
+          <BackArrow />
         </Link>
-        <h1 className={styles.title}>Finalizar pedido</h1>
+        <div className={styles.headText}>
+          <h1 className={styles.title}>Finalizar pedido</h1>
+          <p className={styles.storeLine}>
+            {store.customName ?? store.company.name}
+          </p>
+        </div>
       </header>
 
-      <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
-        <section className={styles.section}>
-          <h2 className={styles.sectionTitle}>Como você quer receber?</h2>
-          <Controller
-            name="channel"
-            control={control}
-            render={({ field }) => (
-              <RadioGroup
-                options={channelOptions}
-                value={field.value}
-                onValueChange={field.onChange}
-                orientation="horizontal"
-              />
-            )}
-          />
+      <div className={styles.form}>
+        <section
+          className={`${motion.riseIn} ${styles.receipt}`}
+          style={riseDelay(20)}
+        >
+          <Collapsible
+            open={isReceiptOpen}
+            onOpenChange={setIsReceiptOpen}
+            trigger={
+              <>
+                <span className={styles.receiptHead}>
+                  <span className={styles.receiptLabel}>Seu pedido</span>
+                  <span className={styles.receiptCount}>
+                    {itemCount} {itemCount === 1 ? 'item' : 'itens'} ·{' '}
+                    {brl(subtotal)}
+                  </span>
+                </span>
+                <span className={styles.receiptToggle}>
+                  {isReceiptOpen ? 'Ocultar' : 'Ver itens'}
+                </span>
+              </>
+            }
+          >
+            <div className={styles.receiptItems}>
+              {cartLines.map(({ item, quantity }) => (
+                <p key={item.id} className={styles.receiptItem}>
+                  <span className={styles.receiptName}>
+                    <span className={styles.receiptQty}>{quantity}×</span>
+                    {item.name}
+                  </span>
+                  <span>{brl(Number(item.price) * quantity)}</span>
+                </p>
+              ))}
+
+              <div className={styles.receiptRule} />
+
+              <div className={styles.receiptTally}>
+                <p className={styles.receiptTallyRow}>
+                  <span>Subtotal</span>
+                  <span>{brl(subtotal)}</span>
+                </p>
+                {isDelivery && (
+                  <p className={styles.receiptTallyRow}>
+                    <span>Entrega</span>
+                    <span>{zone ? brl(deliveryFee) : 'a definir'}</span>
+                  </p>
+                )}
+              </div>
+            </div>
+          </Collapsible>
         </section>
 
-        {channel === 'DELIVERY' && (
-          <section className={styles.section}>
-            <h2 className={styles.sectionTitle}>Endereço de entrega</h2>
+        <section
+          className={`${motion.riseIn} ${styles.block}`}
+          style={riseDelay(70)}
+        >
+          <p className={styles.blockLabel}>Como receber</p>
+          <div
+            className={`${styles.choices} ${styles.choicesTwo}`}
+            role="radiogroup"
+            aria-label="Como receber"
+          >
+            {zones.length > 0 && (
+              <label className={styles.choice}>
+                <input
+                  type="radio"
+                  value="DELIVERY"
+                  className={styles.choiceInput}
+                  {...register('channel')}
+                />
+                <span className={styles.choiceBody}>
+                  <span className={styles.choiceTitle}>Entrega</span>
+                  <span className={styles.choiceNote}>{deliveryNote}</span>
+                </span>
+              </label>
+            )}
 
-            <FormField label="Zona de entrega" error={errors.deliveryZoneId?.message}>
+            <label className={styles.choice}>
+              <input
+                type="radio"
+                value="PICKUP"
+                className={styles.choiceInput}
+                {...register('channel')}
+              />
+              <span className={styles.choiceBody}>
+                <span className={styles.choiceTitle}>Retirada</span>
+                <span className={styles.choiceNote}>Você busca na loja</span>
+              </span>
+            </label>
+          </div>
+        </section>
+
+        {isDelivery && (
+          <section
+            className={`${motion.riseIn} ${styles.block}`}
+            style={riseDelay(20)}
+          >
+            <p className={styles.blockLabel}>Onde entregar</p>
+
+            <FormField error={errors.deliveryZoneId?.message}>
               <Controller
                 name="deliveryZoneId"
                 control={control}
-                rules={{ required: 'Escolha uma zona de entrega' }}
+                rules={{ required: 'Escolha a região da entrega' }}
                 render={({ field }) => (
                   <Select
-                    placeholder="Selecione"
+                    placeholder="Região da entrega"
+                    error={!!errors.deliveryZoneId}
                     options={zones.map((z) => ({
                       value: z.id,
                       label: `${z.name} — ${brl(z.fee)}`,
@@ -213,135 +334,197 @@ export const Checkout = () => {
             </FormField>
 
             <div className={styles.row}>
-              <FormField label="Rua" error={errors.guestStreet?.message}>
+              <FormField error={errors.guestStreet?.message}>
                 <Input
+                  placeholder="Rua"
+                  aria-label="Rua"
+                  autoComplete="address-line1"
+                  error={!!errors.guestStreet}
                   {...register('guestStreet', { required: 'Informe a rua' })}
                 />
               </FormField>
-              <FormField label="Número" error={errors.guestNumber?.message}>
+              <FormField error={errors.guestNumber?.message}>
                 <Input
-                  {...register('guestNumber', { required: 'Informe o número' })}
+                  placeholder="Nº"
+                  aria-label="Número"
+                  inputMode="numeric"
+                  error={!!errors.guestNumber}
+                  {...register('guestNumber', { required: 'Informe o nº' })}
                 />
               </FormField>
             </div>
 
-            <FormField label="Complemento (opcional)">
-              <Input {...register('guestComplement')} />
+            <FormField error={errors.guestNeighborhood?.message}>
+              <Input
+                placeholder="Bairro"
+                aria-label="Bairro"
+                autoComplete="address-level3"
+                error={!!errors.guestNeighborhood}
+                {...register('guestNeighborhood', {
+                  required: 'Informe o bairro',
+                })}
+              />
             </FormField>
 
-            <div className={styles.row}>
-              <FormField
-                label="Bairro"
-                error={errors.guestNeighborhood?.message}
-              >
+            <Collapsible
+              className={styles.disclosure}
+              trigger={
+                <span className={styles.disclosureLabel}>
+                  <span className={styles.disclosurePlus} aria-hidden="true">
+                    +
+                  </span>
+                  Complemento, referência ou CEP
+                </span>
+              }
+            >
+              <div className={styles.disclosureFields}>
                 <Input
-                  {...register('guestNeighborhood', {
-                    required: 'Informe o bairro',
-                  })}
+                  placeholder="Apto, bloco ou ponto de referência"
+                  aria-label="Complemento ou ponto de referência"
+                  autoComplete="address-line2"
+                  {...register('guestComplement')}
                 />
-              </FormField>
-              <FormField label="CEP (opcional)">
-                <Input {...register('guestZipCode')} />
-              </FormField>
-            </div>
+                <MaskedInput
+                  mask={maskZipCode}
+                  placeholder="CEP"
+                  aria-label="CEP"
+                  autoComplete="postal-code"
+                  {...register('guestZipCode')}
+                />
+              </div>
+            </Collapsible>
           </section>
         )}
 
-        <section className={styles.section}>
-          <h2 className={styles.sectionTitle}>Seus dados</h2>
-          <FormField label="Nome" error={errors.guestName?.message}>
+        <section
+          className={`${motion.riseIn} ${styles.block}`}
+          style={riseDelay(120)}
+        >
+          <p className={styles.blockLabel}>Quem recebe</p>
+
+          <FormField error={errors.guestName?.message}>
             <Input
+              placeholder="Seu nome"
+              aria-label="Seu nome"
+              autoComplete="name"
+              error={!!errors.guestName}
               {...register('guestName', { required: 'Informe seu nome' })}
             />
           </FormField>
-          <FormField label="Telefone" error={errors.guestPhone?.message}>
-            <Input
-              type="tel"
-              placeholder="(11) 91234-5678"
-              {...register('guestPhone', { required: 'Informe seu telefone' })}
+
+          <FormField
+            error={errors.guestPhone?.message}
+            helperText="A loja usa para avisar sobre o pedido"
+          >
+            <PhoneInput
+              aria-label="Telefone"
+              autoComplete="tel"
+              error={!!errors.guestPhone}
+              {...register('guestPhone', {
+                required: 'Informe seu telefone',
+                validate: (value) =>
+                  isCompletePhone(value) || 'Telefone incompleto',
+              })}
             />
           </FormField>
         </section>
 
-        <section className={styles.section}>
-          <h2 className={styles.sectionTitle}>Pagamento</h2>
-          <Controller
-            name="paymentMethod"
-            control={control}
-            render={({ field }) => (
-              <RadioGroup
-                options={paymentOptions}
-                value={field.value}
-                onValueChange={field.onChange}
-              />
-            )}
-          />
+        <section
+          className={`${motion.riseIn} ${styles.block}`}
+          style={riseDelay(170)}
+        >
+          <p className={styles.blockLabel}>Pagamento na entrega</p>
+
+          <div
+            className={`${styles.choices} ${styles.choicesPay}`}
+            role="radiogroup"
+            aria-label="Forma de pagamento"
+          >
+            {paymentOptions.map((method) => (
+              <label key={method} className={styles.choice}>
+                <input
+                  type="radio"
+                  value={method}
+                  className={styles.choiceInput}
+                  {...register('paymentMethod')}
+                />
+                <span
+                  className={`${styles.choiceBody} ${styles.choiceCompact}`}
+                >
+                  <span className={styles.choiceTitle}>
+                    {PAYMENT_METHOD_LABEL[method]}
+                  </span>
+                </span>
+              </label>
+            ))}
+          </div>
 
           {paymentMethod === 'CASH' && (
-            <FormField label="Troco para quanto? (opcional)">
+            <FormField helperText="Deixe vazio se não precisar de troco">
               <Input
                 type="number"
                 step="0.01"
                 min={0}
+                placeholder="Troco para quanto?"
+                aria-label="Troco para quanto"
+                className={styles.noSpin}
                 {...register('changeFor', { valueAsNumber: true })}
               />
             </FormField>
           )}
         </section>
 
-        <section className={styles.section}>
-          <FormField label="Observações (opcional)">
-            <Textarea rows={3} {...register('notes')} />
-          </FormField>
-        </section>
-
-        <section className={styles.summary}>
-          {cartLines.map(({ item, quantity }) => (
-            <div key={item.id} className={styles.summaryLine}>
-              <span>
-                {quantity}× {item.name}
+        <section
+          className={`${motion.riseIn} ${styles.block}`}
+          style={riseDelay(220)}
+        >
+          <Collapsible
+            className={styles.disclosure}
+            trigger={
+              <span className={styles.disclosureLabel}>
+                <span className={styles.disclosurePlus} aria-hidden="true">
+                  +
+                </span>
+                Observação para a loja
               </span>
-              <span>{brl(Number(item.price) * quantity)}</span>
-            </div>
-          ))}
-          <div className={styles.summaryLine}>
-            <span>Subtotal</span>
-            <span>{brl(subtotal)}</span>
-          </div>
-          {channel === 'DELIVERY' && (
-            <div className={styles.summaryLine}>
-              <span>Entrega</span>
-              <span>{brl(deliveryFee)}</span>
-            </div>
-          )}
-          <div className={styles.summaryTotal}>
-            <span>Total</span>
-            <span>{brl(total)}</span>
-          </div>
+            }
+          >
+            <Textarea
+              rows={3}
+              placeholder="Sem cebola, ponto da carne, portaria…"
+              aria-label="Observação para a loja"
+              {...register('notes')}
+            />
+          </Collapsible>
         </section>
 
         {submitFailed && (
-          <p className={styles.error}>
-            Não foi possível enviar seu pedido. Confira os dados e tente de
-            novo.
-          </p>
+          <Alert variant="error" title="O pedido não foi enviado">
+            Confira os campos marcados e toque em confirmar de novo.
+          </Alert>
         )}
 
         {!storeOpen && (
-          <p className={styles.error}>
-            A loja está fechada agora — não dá para confirmar o pedido.
-          </p>
+          <Alert variant="warning" title="A loja está fechada agora">
+            Sua sacola fica guardada — volte quando ela reabrir.
+          </Alert>
         )}
+      </div>
 
+      <div className={styles.tearBar}>
+        <div className={styles.tearTotals}>
+          <span className={styles.tearLabel}>Total</span>
+          <AnimatedNumber value={brl(total)} className={styles.tearTotal} />
+        </div>
         <Button
           type="submit"
           loading={isSubmitting}
           disabled={!storeOpen}
           className={styles.submit}
         >
-          Confirmar pedido — {brl(total)}
+          Confirmar pedido
         </Button>
-      </form>
-    </div>
+      </div>
+    </form>
   )
 }

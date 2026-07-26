@@ -1,73 +1,277 @@
 @reference "@nino/ds/globals.css";
 
+/*
+ * O checkout é a comanda: o cliente preenche a via que a cozinha imprime.
+ * Daí o papel quente, os fios tracejados, o numeral tabular e o picote que
+ * separa "o que você está dizendo à loja" de "enviar isso".
+ */
+
 .page {
-  @apply mx-auto min-h-dvh w-full max-w-xl bg-paper pb-10;
-  @apply lg:my-8 lg:min-h-0 lg:max-w-xl lg:rounded-[1.75rem] lg:border;
-  @apply lg:border-line lg:pb-8 lg:shadow-[0_30px_80px_-40px_rgba(26,18,6,0.45)];
+  @apply mx-auto flex min-h-dvh w-full max-w-xl flex-col bg-paper;
+  @apply lg:my-8 lg:min-h-[calc(100dvh-4rem)] lg:rounded-[1.75rem];
+  @apply lg:border lg:border-line;
+  @apply lg:shadow-[0_30px_80px_-40px_rgba(26,18,6,0.45)];
 }
 
 .header {
-  @apply sticky top-0 z-10 flex items-center gap-3 border-b border-line;
-  @apply bg-paper/90 px-5 py-4 backdrop-blur-md lg:rounded-t-[1.75rem];
+  @apply sticky top-0 z-20 flex items-center gap-3 border-b border-line;
+  @apply bg-paper/90 px-5 py-3.5 backdrop-blur-md lg:rounded-t-[1.75rem];
 }
 
 .back {
-  @apply flex h-10 w-10 items-center justify-center rounded-full border;
-  @apply border-line bg-cream text-lg text-ink transition-colors;
+  @apply flex h-11 w-11 shrink-0 items-center justify-center rounded-full;
+  @apply border border-line bg-cream text-ink transition-colors duration-150;
   @apply hover:border-peach hover:text-brand-strong;
+  @apply focus-visible:outline-none focus-visible:ring-2;
+  @apply focus-visible:ring-brand focus-visible:ring-offset-2;
+  @apply focus-visible:ring-offset-paper;
+}
+
+.headText {
+  @apply flex min-w-0 flex-col;
 }
 
 .title {
-  @apply font-display text-xl font-extrabold text-ink;
+  @apply truncate font-display text-lg font-extrabold leading-tight text-ink;
+}
+
+.storeLine {
+  @apply truncate text-xs text-faint;
 }
 
 .form {
-  @apply flex flex-col gap-7 px-5 pt-5;
+  @apply flex flex-1 flex-col gap-6 px-5 pb-8 pt-5;
 }
 
-.section {
+/* ----- bloco de campos ----- */
+
+.block {
   @apply flex flex-col gap-3;
 }
 
-.sectionTitle {
-  @apply flex items-center gap-2 font-display text-[1.05rem] font-extrabold text-ink;
-}
-
-.sectionTitle::before {
-  content: '';
-  @apply h-4 w-1 rounded-full bg-brand;
+/*
+ * Microrótulo em caixa alta com tracking largo: é a voz impressa da comanda,
+ * não um título de seção de formulário. Substitui a barrinha colorida antes
+ * do título — aquilo decorava, isto informa.
+ */
+.blockLabel {
+  @apply text-[0.7rem] font-bold uppercase tracking-[0.14em] text-faint;
 }
 
 .row {
-  @apply grid grid-cols-2 gap-3;
+  @apply grid gap-3;
+  grid-template-columns: 1fr 5.5rem;
 }
 
-/* o resumo como um cupom: papel creme, borda quente, total destacado */
-.summary {
-  @apply flex flex-col gap-2 rounded-2xl border border-line bg-cream p-5;
+/* ----- escolha (canal e pagamento) ----- */
+
+.choices {
+  @apply grid gap-2;
 }
 
-.summaryLine {
+.choicesTwo {
+  @apply grid-cols-2;
+}
+
+.choicesPay {
+  @apply grid-cols-2;
+}
+
+.choice {
+  @apply relative flex;
+}
+
+.choiceInput {
+  @apply absolute h-0 w-0 opacity-0;
+}
+
+.choiceBody {
+  @apply flex h-full w-full cursor-pointer flex-col justify-center gap-0.5;
+  @apply rounded-2xl border border-line bg-paper px-4 py-3;
+  @apply transition-colors duration-150;
+}
+
+.choiceBody:hover {
+  @apply border-peach bg-cream;
+}
+
+.choiceInput:checked + .choiceBody {
+  @apply border-brand bg-brand-soft;
+  box-shadow: inset 0 0 0 1px var(--color-brand);
+}
+
+.choiceInput:focus-visible + .choiceBody {
+  @apply outline-none ring-2 ring-brand ring-offset-2 ring-offset-paper;
+}
+
+.choiceCompact {
+  @apply flex-row items-center px-3.5 py-2.5;
+}
+
+.choiceTitle {
+  @apply font-display text-[0.95rem] font-bold leading-tight text-ink;
+}
+
+.choiceNote {
+  @apply text-xs leading-snug text-muted;
+}
+
+/* ----- a comanda (resumo dobrável) ----- */
+
+.receipt {
+  @apply overflow-hidden rounded-2xl border border-line bg-cream;
+}
+
+.receiptHead {
+  @apply flex min-w-0 flex-col items-start gap-0.5;
+}
+
+.receiptLabel {
+  @apply text-[0.7rem] font-bold uppercase tracking-[0.14em] text-faint;
+}
+
+.receiptCount {
+  @apply font-display text-[0.95rem] font-extrabold text-ink;
+}
+
+.receiptToggle {
+  @apply shrink-0 text-xs font-bold text-brand-strong;
+}
+
+.receiptItems {
+  @apply flex flex-col gap-2;
+}
+
+.receiptItem {
+  @apply flex items-baseline justify-between gap-3 text-sm text-body;
+  font-variant-numeric: tabular-nums;
+}
+
+.receiptQty {
+  @apply mr-1.5 font-bold text-brand-strong;
+}
+
+.receiptName {
+  @apply min-w-0 flex-1 truncate;
+}
+
+.receiptRule {
+  @apply my-3;
+  border-top: 1.5px dashed var(--color-line);
+}
+
+.receiptTally {
+  @apply flex flex-col gap-1.5;
+}
+
+.receiptTallyRow {
   @apply flex items-center justify-between text-sm text-muted;
   font-variant-numeric: tabular-nums;
 }
 
-.summaryTotal {
-  @apply mt-2 flex items-center justify-between pt-3;
-  @apply font-display text-xl font-extrabold text-ink;
-  border-top: 1.5px dashed var(--color-line);
+/* ----- disclosure (opcionais) ----- */
+
+.disclosure {
+  @apply -mx-3;
+}
+
+/* Quieto de propósito: só o confirmar merece laranja cheio nesta tela. */
+.disclosureLabel {
+  @apply flex items-center gap-2 text-sm font-semibold text-muted;
+}
+
+.disclosurePlus {
+  @apply flex h-5 w-5 shrink-0 items-center justify-center rounded-full;
+  @apply border border-line bg-cream text-[0.8rem] font-bold leading-none;
+  @apply text-brand-strong;
+}
+
+.disclosureFields {
+  @apply flex flex-col gap-3;
+}
+
+/* ----- picote + barra de confirmar ----- */
+
+.tearBar {
+  @apply sticky bottom-0 z-20 flex flex-col gap-3 bg-cream px-5 pb-5 pt-3;
+  @apply lg:rounded-b-[1.75rem];
+  box-shadow: 0 -10px 30px -20px rgba(26, 18, 6, 0.45);
+}
+
+/*
+ * O conteúdo dissolve no papel antes de chegar no picote — sem isso a linha
+ * serrilhada fatia o que estiver rolando atrás e vira ruído.
+ */
+.tearBar::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 100%;
+  height: 2.25rem;
+  pointer-events: none;
+  background: linear-gradient(
+    to bottom,
+    rgba(255, 251, 245, 0),
+    var(--color-paper)
+  );
+}
+
+/*
+ * O picote: meias-luas vazadas na borda de cima da barra, exatamente como
+ * destacar a comanda da impressora. Duas camadas idênticas com 1px de
+ * deslocamento — a de baixo vira o fio que desenha a silhueta serrilhada,
+ * senão creme sobre papel não contrasta e o picote some.
+ */
+.tearBar::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 100%;
+  height: 7px;
+  background-image:
+    radial-gradient(circle at 7px 0, transparent 0 5px, var(--color-cream) 5px),
+    radial-gradient(circle at 7px 0, transparent 0 5px, var(--color-line) 5px);
+  background-size:
+    14px 7px,
+    14px 7px;
+  background-position:
+    0 1px,
+    0 0;
+  background-repeat: repeat-x, repeat-x;
+}
+
+.tearTotals {
+  @apply flex items-baseline justify-between;
+}
+
+.tearLabel {
+  @apply text-[0.7rem] font-bold uppercase tracking-[0.14em] text-faint;
+}
+
+.tearTotal {
+  @apply font-display text-2xl font-extrabold text-ink;
   font-variant-numeric: tabular-nums;
 }
 
-.error {
-  @apply rounded-xl bg-red-50 px-4 py-3 text-sm font-medium text-red-600;
+.submit {
+  @apply h-13 w-full text-base;
 }
 
-.submit {
-  @apply h-12 w-full text-base;
+/* As setinhas do input number não têm uso num valor de troco digitado. */
+.noSpin {
+  -moz-appearance: textfield;
+}
+
+.noSpin::-webkit-outer-spin-button,
+.noSpin::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }
 
 /* ----- vazio / confirmado ----- */
+
 .empty,
 .confirmed {
   @apply mx-auto flex min-h-dvh max-w-md flex-col items-center justify-center;
@@ -100,19 +304,20 @@
 }
 
 /* ----- skeleton ----- */
+
 .skBack {
   composes: nino-skeleton from global;
-  @apply h-10 w-10 shrink-0 rounded-full bg-sand;
+  @apply h-11 w-11 shrink-0 rounded-full bg-sand;
 }
 
 .skTitle {
   composes: nino-skeleton from global;
-  @apply h-6 w-40 rounded-lg bg-sand;
+  @apply h-5 w-40 rounded-lg bg-sand;
 }
 
-.skSectionTitle {
+.skLabel {
   composes: nino-skeleton from global;
-  @apply h-4 w-32 rounded bg-sand;
+  @apply h-3 w-24 rounded bg-sand;
 }
 
 .skField {
@@ -120,37 +325,31 @@
   @apply h-10 w-full rounded-md bg-sand;
 }
 
-.skRow {
-  @apply grid grid-cols-2 gap-3;
-}
-
-/* RadioGroup: fileira de opções lado a lado, não um retângulo cheio */
-.skRadio {
-  @apply flex gap-3;
-}
-
-.skPill {
+.skReceipt {
   composes: nino-skeleton from global;
-  @apply h-11 flex-1 rounded-xl bg-sand;
+  @apply h-14 w-full rounded-2xl bg-sand;
 }
 
-/* Textarea: mais alta que um input simples */
-.skTextarea {
+.skChoices {
+  @apply grid grid-cols-2 gap-2;
+}
+
+.skChoice {
   composes: nino-skeleton from global;
-  @apply h-20 w-full rounded-md bg-sand;
+  @apply h-16 rounded-2xl bg-sand;
 }
 
-/* resumo como o cupom real: papel creme, borda quente */
-.skSummary {
-  @apply flex flex-col gap-3 rounded-2xl border border-line bg-cream p-5;
-}
-
-.skSummaryLine {
+.skChoiceCompact {
   composes: nino-skeleton from global;
-  @apply h-4 w-full rounded bg-sand;
+  @apply h-11 rounded-2xl bg-sand;
 }
 
-.skSummaryTotal {
+.skTotal {
   composes: nino-skeleton from global;
-  @apply mt-2 h-6 w-full rounded bg-sand;
+  @apply h-7 w-32 rounded bg-sand;
+}
+
+.skSubmit {
+  composes: nino-skeleton from global;
+  @apply h-13 w-full rounded-full bg-sand;
 }
