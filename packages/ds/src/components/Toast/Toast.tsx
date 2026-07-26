@@ -34,11 +34,11 @@ import {
  * tone, so a saturated surface never turns into a colour puzzle.
  */
 const surfaceClass: Record<ToastVariant, string> = {
-  default: 'bg-body border-white/12',
-  success: 'bg-success border-white/15',
-  error: 'bg-danger border-white/15',
-  warning: 'bg-warning-bright border-black/10',
-  loading: 'bg-body border-white/12',
+  default: 'bg-body',
+  success: 'bg-success',
+  error: 'bg-danger',
+  warning: 'bg-warning-bright',
+  loading: 'bg-body',
 }
 
 type ToastTone = {
@@ -56,7 +56,7 @@ const onFill: ToastTone = {
   description: 'text-white/80',
   icon: 'text-white',
   action:
-    'bg-white/15 text-cream hover:bg-white/25 focus-visible:ring-white/70',
+    'bg-white/20 text-cream hover:bg-white/30 focus-visible:ring-white/70',
   close:
     'text-white/55 hover:bg-white/15 hover:text-white ' +
     'focus-visible:ring-white/70',
@@ -110,7 +110,7 @@ const rootClass = 'relative flex w-[min(24rem,calc(100vw-2rem))]'
  * would collapse mid-hover. */
 const cardClass =
   'toast-card relative flex h-full w-full gap-3 overflow-hidden ' +
-  'rounded-[14px] border pb-3 pl-4 pr-11 pt-2.5'
+  'rounded-[8px] pb-3 pl-4 pr-11 pt-2.5'
 const bodyClass = 'flex min-w-0 flex-col gap-0.5'
 const titleClass =
   'font-display text-[0.9375rem] font-semibold leading-tight ' +
