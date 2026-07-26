@@ -213,7 +213,7 @@
   background: linear-gradient(
     to bottom,
     rgba(255, 251, 245, 0),
-    var(--color-paper)
+    var(--color-brand-foreground)
   );
 }
 

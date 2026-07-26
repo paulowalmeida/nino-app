@@ -13,7 +13,7 @@
       rgba(255, 126, 31, 0.16),
       transparent 60%
     ),
-    linear-gradient(135deg, var(--color-paper) 0%, var(--color-cream) 100%);
+    linear-gradient(135deg, var(--color-brand-foreground) 0%, var(--color-cream) 100%);
 }
 
 /* mesmo grão da landing, agora também no cabeçalho */

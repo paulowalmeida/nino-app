@@ -41,7 +41,7 @@
   background: linear-gradient(
     180deg,
     var(--color-cream-deep) 0%,
-    var(--color-paper) 42%
+    var(--color-brand-foreground) 42%
   );
 }
 

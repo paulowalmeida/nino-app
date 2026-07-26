@@ -16,7 +16,7 @@
   /* Superfícies quentes (warm over white) */
   --color-cream: #fff7ee;
   --color-cream-deep: #ffebd6;
-  --color-paper: #fffbf5;
+  --color-brand-foreground: #fffbf5;
   --color-surface-sunk: #fff3e9;
   --color-sand: #f4ece0;
   --color-sand-deep: #f1e7da;
@@ -55,6 +55,11 @@
   --color-danger-surface: #fdeae4;
   --color-warning: #8a6114;
   --color-warning-surface: #fbf0d8;
+  /* Mesma família, puxada para cima em luminosidade: os status escuros somem
+     sobre superfície escura (toast). Usar só sobre ink/charcoal. */
+  --color-success-bright: #7ed3a0;
+  --color-danger-bright: #ff8a6b;
+  --color-warning-bright: #f2c14e;
 
   /* Inputs — override por tenant */
   --color-input-border: #d1d5db;
