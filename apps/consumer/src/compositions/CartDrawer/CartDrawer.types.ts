@@ -7,5 +7,6 @@ export type CartDrawerProps = {
   total: number
   onIncrement: (itemId: string) => void
   onDecrement: (itemId: string) => void
+  onClear: () => void
   onCheckout: () => void
 }

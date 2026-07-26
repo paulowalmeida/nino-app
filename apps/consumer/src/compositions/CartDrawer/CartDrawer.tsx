@@ -21,31 +21,34 @@ export const CartDrawer = ({
   total,
   onIncrement,
   onDecrement,
+  onClear,
   onCheckout,
-}: CartDrawerProps) => (
-  <Drawer
-    open={open}
-    onOpenChange={onOpenChange}
-    placement="bottom"
-    title="Sua sacola"
-    size="85dvh"
-    contentClassName={styles.drawer}
-  >
-    <div className={styles.body}>
-      {lines.length === 0 ? (
-        <div className={`${motion.riseIn} ${styles.empty}`}>
-          <img
-            src="/mascot-consumer.svg"
-            alt=""
-            className={styles.emptyMascot}
-          />
-          <p className={styles.emptyTitle}>Sua sacola está vazia</p>
-          <p className={styles.emptyText}>
-            Volte ao cardápio e escolha o que vai pedir.
-          </p>
-        </div>
-      ) : (
-        <>
+}: CartDrawerProps) => {
+  const isEmpty = lines.length === 0
+
+  return (
+    <Drawer
+      open={open}
+      onOpenChange={onOpenChange}
+      placement="bottom"
+      title="Sua sacola"
+      size="85dvh"
+      contentClassName={styles.drawer}
+    >
+      <div className={styles.body}>
+        {isEmpty ? (
+          <div className={`${motion.riseIn} ${styles.empty}`}>
+            <img
+              src="/mascot-consumer.svg"
+              alt=""
+              className={styles.emptyMascot}
+            />
+            <p className={styles.emptyTitle}>Sua sacola está vazia</p>
+            <p className={styles.emptyText}>
+              Volte ao cardápio e escolha o que vai pedir.
+            </p>
+          </div>
+        ) : (
           <div className={styles.lines}>
             <AnimatePresence initial={false}>
               {lines.map(({ item, quantity }, index) => {
@@ -109,18 +112,32 @@ export const CartDrawer = ({
               })}
             </AnimatePresence>
           </div>
+        )}
 
-          <div className={styles.footer}>
+        <div className={styles.footer}>
+          {!isEmpty && (
             <div className={styles.totalRow}>
               <span className={styles.totalLabel}>Total</span>
               <AnimatedNumber value={brl(total)} className={styles.total} />
             </div>
+          )}
+
+          {isEmpty ? (
+            <Button
+              variant="outline"
+              className={styles.checkout}
+              disabled
+              onClick={onClear}
+            >
+              Esvaziar sacola
+            </Button>
+          ) : (
             <Button className={styles.checkout} onClick={onCheckout}>
               Finalizar pedido
             </Button>
-          </div>
-        </>
-      )}
-    </div>
-  </Drawer>
-)
+          )}
+        </div>
+      </div>
+    </Drawer>
+  )
+}

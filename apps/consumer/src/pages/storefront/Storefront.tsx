@@ -44,6 +44,7 @@ export const Storefront = () => {
   const addToCart = useCartStore((state) => state.add)
   const incrementCartLine = useCartStore((state) => state.increment)
   const decrementCartLine = useCartStore((state) => state.decrement)
+  const clearCart = useCartStore((state) => state.clear)
   const [isCartOpen, setIsCartOpen] = useState(false)
   const [selectedItem, setSelectedItem] = useState<MenuItem | null>(null)
   const [search, setSearch] = useState('')
@@ -230,6 +231,7 @@ export const Storefront = () => {
         total={cartTotal}
         onIncrement={incrementCartLine}
         onDecrement={decrementCartLine}
+        onClear={clearCart}
         onCheckout={() => {
           setIsCartOpen(false)
           void navigate(pathSlug ? `/${pathSlug}/checkout` : '/checkout')
