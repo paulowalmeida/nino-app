@@ -1,6 +1,8 @@
+import { useState } from 'react'
+
 import { AnimatePresence, motion as motionEl } from 'framer-motion'
 
-import { Button, Drawer } from '@nino/ds'
+import { Button, Dialog, Drawer } from '@nino/ds'
 
 import { AnimatedNumber } from '@components/AnimatedNumber/AnimatedNumber'
 import { categoryIcon } from '@utils/category-icon'
@@ -24,7 +26,12 @@ export const CartDrawer = ({
   onClear,
   onCheckout,
 }: CartDrawerProps) => {
-  const isEmpty = lines.length === 0
+  const [isClearOpen, setIsClearOpen] = useState(false)
+
+  const handleClear = () => {
+    onClear()
+    setIsClearOpen(false)
+  }
 
   return (
     <Drawer
@@ -36,7 +43,7 @@ export const CartDrawer = ({
       contentClassName={styles.drawer}
     >
       <div className={styles.body}>
-        {isEmpty ? (
+        {lines.length === 0 ? (
           <div className={`${motion.riseIn} ${styles.empty}`}>
             <img
               src="/mascot-consumer.svg"
@@ -49,95 +56,103 @@ export const CartDrawer = ({
             </p>
           </div>
         ) : (
-          <div className={styles.lines}>
-            <AnimatePresence initial={false}>
-              {lines.map(({ item, quantity }, index) => {
-                const image = primaryImage(item)
+          <>
+            <div className={styles.lines}>
+              <AnimatePresence initial={false}>
+                {lines.map(({ item, quantity }, index) => {
+                  const image = primaryImage(item)
 
-                return (
-                  <motionEl.div
-                    key={item.id}
-                    layout
-                    initial={{ opacity: 0, y: 12 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, x: -24, height: 0, marginBottom: 0 }}
-                    transition={{
-                      duration: 0.28,
-                      ease: EASE,
-                      delay: index * 0.04,
-                    }}
-                    className={styles.line}
-                  >
-                    {image ? (
-                      <img src={image} alt="" className={styles.photo} />
-                    ) : (
-                      <div className={styles.photoFallback} aria-hidden="true">
-                        {categoryIcon(item.name) ?? '🍽️'}
+                  return (
+                    <motionEl.div
+                      key={item.id}
+                      layout
+                      initial={{ opacity: 0, y: 12 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, x: -24, height: 0, marginBottom: 0 }}
+                      transition={{
+                        duration: 0.28,
+                        ease: EASE,
+                        delay: index * 0.04,
+                      }}
+                      className={styles.line}
+                    >
+                      {image ? (
+                        <img src={image} alt="" className={styles.photo} />
+                      ) : (
+                        <div
+                          className={styles.photoFallback}
+                          aria-hidden="true"
+                        >
+                          {categoryIcon(item.name) ?? '🍽️'}
+                        </div>
+                      )}
+
+                      <div className={styles.lineText}>
+                        <span className={styles.lineName}>{item.name}</span>
+                        <span className={styles.linePrice}>
+                          {brl(item.price)}
+                        </span>
                       </div>
-                    )}
 
-                    <div className={styles.lineText}>
-                      <span className={styles.lineName}>{item.name}</span>
-                      <span className={styles.linePrice}>
-                        {brl(item.price)}
-                      </span>
-                    </div>
-
-                    <div className={styles.stepper}>
-                      <Button
-                        size="icon"
-                        variant="outline"
-                        className={styles.stepperBtn}
-                        aria-label={`Remover uma unidade de ${item.name}`}
-                        onClick={() => onDecrement(item.id)}
-                      >
-                        −
-                      </Button>
-                      <AnimatedNumber
-                        value={quantity}
-                        className={styles.stepperCount}
-                      />
-                      <Button
-                        size="icon"
-                        variant="outline"
-                        className={styles.stepperBtn}
-                        aria-label={`Adicionar mais uma unidade de ${item.name}`}
-                        onClick={() => onIncrement(item.id)}
-                      >
-                        +
-                      </Button>
-                    </div>
-                  </motionEl.div>
-                )
-              })}
-            </AnimatePresence>
-          </div>
-        )}
-
-        <div className={styles.footer}>
-          {!isEmpty && (
-            <div className={styles.totalRow}>
-              <span className={styles.totalLabel}>Total</span>
-              <AnimatedNumber value={brl(total)} className={styles.total} />
+                      <div className={styles.stepper}>
+                        <Button
+                          size="icon"
+                          variant="outline"
+                          className={styles.stepperBtn}
+                          aria-label={`Remover uma unidade de ${item.name}`}
+                          onClick={() => onDecrement(item.id)}
+                        >
+                          −
+                        </Button>
+                        <AnimatedNumber
+                          value={quantity}
+                          className={styles.stepperCount}
+                        />
+                        <Button
+                          size="icon"
+                          variant="outline"
+                          className={styles.stepperBtn}
+                          aria-label={`Adicionar mais uma unidade de ${item.name}`}
+                          onClick={() => onIncrement(item.id)}
+                        >
+                          +
+                        </Button>
+                      </div>
+                    </motionEl.div>
+                  )
+                })}
+              </AnimatePresence>
             </div>
-          )}
 
-          {isEmpty ? (
-            <Button
-              variant="outline"
-              className={styles.checkout}
-              disabled
-              onClick={onClear}
-            >
-              Esvaziar sacola
-            </Button>
-          ) : (
-            <Button className={styles.checkout} onClick={onCheckout}>
-              Finalizar pedido
-            </Button>
-          )}
-        </div>
+            <div className={styles.footer}>
+              <div className={styles.totalRow}>
+                <span className={styles.totalLabel}>Total</span>
+                <AnimatedNumber value={brl(total)} className={styles.total} />
+              </div>
+              <Button className={styles.checkout} onClick={onCheckout}>
+                Finalizar pedido
+              </Button>
+              <Button
+                variant="ghost"
+                className={styles.clear}
+                onClick={() => setIsClearOpen(true)}
+              >
+                Esvaziar sacola
+              </Button>
+            </div>
+          </>
+        )}
       </div>
+
+      <Dialog
+        open={isClearOpen}
+        onOpenChange={setIsClearOpen}
+        title="Esvaziar sacola"
+        description="Todos os itens serão removidos. Esta ação não pode ser desfeita."
+        confirmLabel="Esvaziar"
+        onConfirm={handleClear}
+        onCancel={() => setIsClearOpen(false)}
+      />
     </Drawer>
   )
 }

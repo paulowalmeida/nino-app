@@ -94,3 +94,7 @@
 .checkout {
   @apply h-12 w-full text-base;
 }
+
+.clear {
+  @apply h-10 w-full text-sm text-muted;
+}
