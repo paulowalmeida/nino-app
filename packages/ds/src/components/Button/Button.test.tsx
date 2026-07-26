@@ -30,6 +30,31 @@ describe('Button', () => {
     expect(onClick).not.toHaveBeenCalled()
   })
 
+  it('drops the fill when a filled variant is disabled', () => {
+    render(<Button disabled>Salvar</Button>)
+    const button = screen.getByRole('button')
+    expect(button.className).toContain('bg-sand')
+    expect(button.className).not.toMatch(/(^|\s)bg-brand(\s|$)/)
+  })
+
+  it('keeps the fill while loading, since the action is running', () => {
+    render(<Button loading>Salvar</Button>)
+    const button = screen.getByRole('button')
+    expect(button.className).toMatch(/(^|\s)bg-brand(\s|$)/)
+    expect(button.className).toContain('opacity-50')
+  })
+
+  it('fades a transparent variant instead of filling it', () => {
+    render(
+      <Button variant="outline" disabled>
+        Salvar
+      </Button>
+    )
+    const button = screen.getByRole('button')
+    expect(button.className).toContain('opacity-50')
+    expect(button.className).not.toContain('bg-sand')
+  })
+
   it('does not call onClick when loading', async () => {
     const onClick = vi.fn()
     render(

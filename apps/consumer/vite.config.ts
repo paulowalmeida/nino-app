@@ -4,11 +4,12 @@ import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import tailwindcss from '@tailwindcss/vite'
 
+const API = 'https://api-dev.nino.delivery'
+
 export default defineConfig({
   plugins: [react(), tailwindcss()],
   /**
-   * 3002 is inside the range the API allows by default in CORS (manager owns
-   * 3001).
+   * 3002 is the consumer's port in dev (manager owns 3001).
    *
    * The `/api` proxy exists so the browser sees a single origin while the app
    * runs locally against the deployed API: the session cookies are
@@ -16,15 +17,22 @@ export default defineConfig({
    * never send them again — every request would answer 401. It only applies to
    * `vite dev`; `vite build` ignores this block, so production is untouched.
    * Point `VITE_BASE_URL` at `/api` in `.env.local` to use it.
+   *
+   * `headers.origin` rewrites the browser's `Origin` to the API's own host,
+   * because Chrome sends `Origin: http://localhost:3002` on POST (and not on
+   * a simple GET) and localhost is not in the API's CORS allowlist — the
+   * menu loaded and only the checkout was refused. Rewriting here keeps the
+   * deployed allowlist closed instead of opening it to localhost.
    */
   server: {
     port: 3002,
     strictPort: true,
     proxy: {
       '/api': {
-        target: 'https://api-dev.nino.delivery',
+        target: API,
         changeOrigin: true,
         secure: true,
+        headers: { origin: API },
         rewrite: (path) => path.replace(/^\/api/, ''),
         cookieDomainRewrite: 'localhost',
       },

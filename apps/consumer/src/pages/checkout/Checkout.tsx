@@ -26,7 +26,7 @@ import { isCompletePhone, toE164 } from '@utils/phone'
 import { resolveSlug } from '@utils/resolve-slug'
 import { riseDelay } from '@utils/rise-delay'
 import { isOpen } from '@utils/store-info'
-import { writeLastOrder } from '@utils/last-order'
+import { readLastOrder, writeLastOrder } from '@utils/last-order'
 
 import { CheckoutSkeleton } from './CheckoutSkeleton'
 import type { CheckoutFormValues } from './Checkout.types'
@@ -62,6 +62,9 @@ export const Checkout = () => {
 
   const [isReceiptOpen, setIsReceiptOpen] = useState(false)
 
+  /** Lido uma vez: o pedido em andamento de quem já fechou uma sacola. */
+  const [lastOrder] = useState(readLastOrder)
+
   const {
     mutate: createOrder,
     isPending: isSubmitting,
@@ -87,6 +90,29 @@ export const Checkout = () => {
   useEffect(() => {
     if (!loadingZones && zones.length === 0) setValue('channel', 'PICKUP')
   }, [loadingZones, zones.length, setValue])
+
+  /**
+   * A sacola só esvazia depois que a confirmação existe. Limpar junto com o
+   * envio faz a tela de sacola vazia piscar no intervalo entre o carrinho
+   * (store externa) e o `created` (estado da mutation) se atualizarem.
+   */
+  useEffect(() => {
+    if (created) clearCart()
+  }, [created, clearCart])
+
+  /**
+   * `created` vive só em memória: recarregar a confirmação, ou voltar até
+   * ela, chega aqui com a sacola já vazia. O pedido em andamento ficou no
+   * storage, então o destino é o acompanhamento, não a sacola vazia.
+   */
+  useEffect(() => {
+    if (created || cartLines.length > 0 || !lastOrder) return
+
+    void navigate(
+      `${pathSlug ? `/${pathSlug}` : ''}/pedido/${lastOrder.orderId}?token=${lastOrder.token}`,
+      { replace: true }
+    )
+  }, [created, cartLines.length, lastOrder, navigate, pathSlug])
 
   const isDelivery = channel === 'DELIVERY'
 
@@ -129,7 +155,6 @@ export const Checkout = () => {
 
     createOrder(payload, {
       onSuccess: (response) => {
-        clearCart()
         writeLastOrder({
           orderId: response.id,
           token: response.trackingToken,
@@ -183,6 +208,8 @@ export const Checkout = () => {
   }
 
   if (cartLines.length === 0) {
+    if (lastOrder) return <CheckoutSkeleton />
+
     return (
       <div className={styles.empty}>
         <p className={styles.emptyText}>Sua sacola está vazia.</p>
