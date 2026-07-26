@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 
-import { Input } from '@nino/ds'
+import { Image, Input } from '@nino/ds'
 
 import searchIcon from '@assets/icons/search.svg?raw'
 import { Icon } from '@components/Icon/Icon'
@@ -41,11 +41,14 @@ export const StoreHeader = ({
       <div className={styles.top}>
         <div className={styles.brand}>
           <div className={styles.logo}>
-            {store.logoUrl ? (
-              <img src={store.logoUrl} alt="" className={styles.logoImg} />
-            ) : (
-              <span className={styles.logoFallback}>{initials(store)}</span>
-            )}
+            <Image
+              src={store.logoUrl}
+              alt=""
+              className={styles.logoImg}
+              placeholder={
+                <span className={styles.logoFallback}>{initials(store)}</span>
+              }
+            />
           </div>
 
           <div className={styles.identity}>

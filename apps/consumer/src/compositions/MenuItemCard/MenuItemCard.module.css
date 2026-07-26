@@ -73,9 +73,28 @@
   @apply mt-1 line-clamp-2 text-[0.84rem] leading-snug text-muted;
 }
 
-/* preço em laranja: é a informação que decide, então usa a cor de marca */
+/*
+ * Preço em tinta, não em laranja. Num cardápio impresso o preço nunca é
+ * colorido: é a mesma tinta, alinhada, e é o numeral tabular que faz a coluna
+ * ler. Com vinte preços laranja competindo com vinte botões laranja, nenhum
+ * dos dois aparecia — agora o laranja quer dizer "dá pra agir aqui".
+ */
 .price {
-  @apply mt-auto pt-2 font-display text-[1.05rem] font-extrabold text-brand-strong;
+  @apply mt-auto pt-2 font-display text-[1.05rem] font-extrabold text-ink;
+  font-variant-numeric: tabular-nums;
+}
+
+/*
+ * A mesma marca `2×` do resumo do pedido, ancorada no canto oposto ao "+".
+ * Fica fora da coluna de preços de propósito: um prefixo antes do valor
+ * empurraria o preço pra direita só nos itens que estão na sacola e
+ * quebraria justamente o alinhamento que o numeral tabular constrói.
+ */
+.tally {
+  @apply absolute -left-2 -top-2 z-10 flex min-w-7 items-center justify-center;
+  @apply rounded-full bg-paper px-1.5 py-0.5;
+  @apply font-display text-[0.78rem] font-extrabold text-brand-strong;
+  border: 2px solid var(--color-brand);
   font-variant-numeric: tabular-nums;
 }
 

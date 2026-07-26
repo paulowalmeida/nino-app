@@ -1,5 +1,7 @@
 import type { MouseEvent } from 'react'
 
+import { Image } from '@nino/ds'
+
 import { categoryIcon } from '@utils/category-icon'
 import { brl } from '@utils/money'
 import { primaryImage } from '@utils/menu-image'
@@ -13,6 +15,9 @@ import styles from './MenuItemCard.module.css'
  * à direita para desejar e o botão de somar ancorado no canto dela — o alvo do
  * polegar fica junto do que dá vontade. Sem foto, um ladrilho quente com o
  * emoji da categoria segura o lugar, em vez de um quadrado vazio.
+ *
+ * O `2×` antes do preço é a mesma notação do resumo do pedido: o cardápio
+ * mostra o que já está escrito na comanda que a pessoa está montando.
  */
 export const MenuItemCard = ({
   item,
@@ -20,6 +25,7 @@ export const MenuItemCard = ({
   onSelect,
   disabled = false,
   fallbackIcon,
+  quantity = 0,
 }: MenuItemCardProps) => {
   const image = primaryImage(item)
   const glyph = categoryIcon(item.name) ?? fallbackIcon ?? '🍽️'
@@ -50,13 +56,22 @@ export const MenuItemCard = ({
       </div>
 
       <div className={styles.media}>
-        {image ? (
-          <img src={image} alt="" className={styles.photo} />
-        ) : (
-          <div className={styles.photoFallback} aria-hidden="true">
-            <span className={styles.fallbackGlyph}>{glyph}</span>
-          </div>
+        {quantity > 0 && (
+          <span className={styles.tally} aria-label={`${quantity} na sacola`}>
+            {quantity}×
+          </span>
         )}
+
+        <Image
+          src={image}
+          alt=""
+          className={styles.photo}
+          placeholder={
+            <div className={styles.photoFallback} aria-hidden="true">
+              <span className={styles.fallbackGlyph}>{glyph}</span>
+            </div>
+          }
+        />
 
         <button
           type="button"

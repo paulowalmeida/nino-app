@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-import { Button, Carousel, Drawer, Modal } from '@nino/ds'
+import { Button, Carousel, Drawer, Image, Modal } from '@nino/ds'
 
 import { AnimatedNumber } from '@components/AnimatedNumber/AnimatedNumber'
 import { useIsDesktop } from '@hooks/useIsDesktop'
@@ -36,18 +36,29 @@ export const ProductDetail = ({
 
   const images = shown.images.length > 0 ? shown.images : null
 
-  const media = images ? (
-    <Carousel
-      slides={images.map((image) => (
-        <img key={image.id} src={image.url} alt="" className={styles.photo} />
-      ))}
-    />
-  ) : (
+  const fallback = (
     <div className={styles.photoFallback} aria-hidden="true">
       <span className={styles.fallbackGlyph}>
         {categoryIcon(shown.name) ?? '🍽️'}
       </span>
     </div>
+  )
+
+  const media = images ? (
+    <Carousel
+      slides={images.map((image) => (
+        <Image
+          key={image.id}
+          src={image.url}
+          alt=""
+          className={styles.photo}
+          wrapperClassName={styles.photoWrap}
+          placeholder={fallback}
+        />
+      ))}
+    />
+  ) : (
+    fallback
   )
 
   /**

@@ -1,3 +1,5 @@
+import { Image } from '@nino/ds'
+
 import { categoryIcon } from '@utils/category-icon'
 
 import type { ItemThumbProps } from './ItemThumb.types'
@@ -17,19 +19,29 @@ const toneOf = (name: string): number => {
   return Math.abs(hash) % TONES
 }
 
+/**
+ * O ladrilho com o emoji não é só o estado "sem foto": ele segura o lugar
+ * enquanto a foto baixa, então a linha nunca aparece com um buraco depois
+ * que o skeleton da lista sai.
+ */
 export const ItemThumb = ({ name, imageUrl, className }: ItemThumbProps) => {
   const classes = className ? `${styles.thumb} ${className}` : styles.thumb
 
-  if (imageUrl) {
-    return <img src={imageUrl} alt="" aria-hidden="true" className={classes} />
-  }
-
   return (
-    <span
-      className={`${classes} ${styles.glyph} ${styles[`tone${toneOf(name)}`]}`}
+    <Image
+      src={imageUrl}
+      alt=""
       aria-hidden="true"
-    >
-      {categoryIcon(name) ?? '🍽️'}
-    </span>
+      className={classes}
+      wrapperClassName={styles.wrapper}
+      placeholder={
+        <span
+          className={`${classes} ${styles.glyph} ${styles[`tone${toneOf(name)}`]}`}
+          aria-hidden="true"
+        >
+          {categoryIcon(name) ?? '🍽️'}
+        </span>
+      }
+    />
   )
 }

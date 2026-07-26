@@ -1,6 +1,9 @@
 import { useRef, useState } from 'react'
 import { useNavigate, useParams } from 'react-router'
 
+import { Button } from '@nino/ds'
+
+import { AnimatedNumber } from '@components/AnimatedNumber/AnimatedNumber'
 import { ActiveOrderBanner } from '@compositions/ActiveOrderBanner/ActiveOrderBanner'
 import { CartDrawer } from '@compositions/CartDrawer/CartDrawer'
 import { CategoryNav } from '@compositions/CategoryNav/CategoryNav'
@@ -179,6 +182,7 @@ export const Storefront = () => {
                     onSelect={setSelectedItem}
                     disabled={!storeOpen}
                     fallbackIcon={icon}
+                    quantity={cart[item.id]?.quantity ?? 0}
                   />
                 ))}
               </div>
@@ -189,39 +193,23 @@ export const Storefront = () => {
       </div>
 
       {cartCount > 0 && (
-        <button
-          type="button"
-          className={styles.cartBar}
-          onClick={() => setIsCartOpen(true)}
-        >
-          <span className={styles.cartSummary}>
+        <div className={styles.cartBar}>
+          <div className={styles.cartTotals}>
             <span className={styles.cartCount}>
               {cartCount} {cartCount === 1 ? 'item' : 'itens'}
             </span>
-            <span className={styles.cartDot} aria-hidden="true">
-              ·
-            </span>
-            <span className={styles.cartAction}>Ver sacola</span>
-          </span>
-          <span className={styles.cartCta}>
-            {brl(cartTotal)}
-            <svg
-              className={styles.cartArrow}
-              width="20"
-              height="20"
-              viewBox="0 0 24 24"
-              aria-hidden="true"
-            >
-              <path
-                d="M4 12h15m0 0l-6-6m6 6l-6 6"
-                stroke="currentColor"
-                strokeWidth="2.2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
-          </span>
-        </button>
+            <AnimatedNumber
+              value={brl(cartTotal)}
+              className={styles.cartTotal}
+            />
+          </div>
+          <Button
+            className={styles.cartCta}
+            onClick={() => setIsCartOpen(true)}
+          >
+            Ver sacola
+          </Button>
+        </div>
       )}
 
       <CartDrawer

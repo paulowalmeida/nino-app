@@ -1,6 +1,6 @@
 import { AnimatePresence, motion as motionEl } from 'framer-motion'
 
-import { Button, Drawer } from '@nino/ds'
+import { Button, Drawer, Image } from '@nino/ds'
 
 import { AnimatedNumber } from '@components/AnimatedNumber/AnimatedNumber'
 import { categoryIcon } from '@utils/category-icon'
@@ -88,13 +88,20 @@ export const CartDrawer = ({
                       }}
                       className={styles.line}
                     >
-                      {image ? (
-                        <img src={image} alt="" className={styles.photo} />
-                      ) : (
-                        <div className={styles.photoFallback} aria-hidden="true">
-                          {categoryIcon(item.name) ?? '🍽️'}
-                        </div>
-                      )}
+                      <Image
+                        src={image}
+                        alt=""
+                        className={styles.photo}
+                        wrapperClassName={styles.photoWrap}
+                        placeholder={
+                          <div
+                            className={styles.photoFallback}
+                            aria-hidden="true"
+                          >
+                            {categoryIcon(item.name) ?? '🍽️'}
+                          </div>
+                        }
+                      />
 
                       <div className={styles.lineText}>
                         <span className={styles.lineName}>{item.name}</span>

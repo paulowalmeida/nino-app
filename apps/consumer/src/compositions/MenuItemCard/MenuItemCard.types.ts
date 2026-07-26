@@ -8,4 +8,6 @@ export type MenuItemCardProps = {
   disabled?: boolean
   /** Emoji da categoria para o ladrilho quando o item não tem foto. */
   fallbackIcon?: string | null
+  /** Quantas unidades já estão na sacola — 0 não marca nada. */
+  quantity?: number
 }

@@ -19,6 +19,10 @@
   @apply mb-4 overflow-hidden rounded-xl;
 }
 
+.photoWrap {
+  @apply w-full;
+}
+
 /* altura fixa, não aspect-ratio: numa folha larga um 4:3 vira uma foto
    gigantesca só porque a tela é grande */
 .photo {

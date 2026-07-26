@@ -1,5 +1,11 @@
 @reference "@nino/ds/globals.css";
 
+/* O empilhamento não pode encolher onde a linha aperta — o shrink-0 do
+   ladrilho vive no filho, e o pai precisa do mesmo. */
+.wrapper {
+  @apply shrink-0;
+}
+
 .thumb {
   @apply flex h-11 w-11 shrink-0 items-center justify-center;
   @apply rounded-xl object-cover select-none;
