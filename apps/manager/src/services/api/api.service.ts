@@ -4,6 +4,7 @@ import { HTTP_ERRORS } from '@constants/http.constants'
 import type { ApiFactoryParams, ApiFactoryType } from '@custom_types/http'
 import { ApiError } from '@utils/api-error'
 import { endSession } from '@utils/end-session'
+import { hadSession } from '@utils/session-hint'
 
 const BASE_URL = import.meta.env.VITE_BASE_URL
 
@@ -83,6 +84,13 @@ export const ApiFactory = ({
       beforeRetry: [
         async ({ request, error }) => {
           if (isPublicPath(request.url)) throw error
+
+          /*
+           * Sem sessão anterior neste browser não há o que renovar: quem abre
+           * o painel deslogado pagava uma ida e volta à API só para ouvir 401
+           * antes de ver a tela de login.
+           */
+          if (!hadSession()) throw error
 
           const refreshed = await refreshSession()
           if (!refreshed) throw error

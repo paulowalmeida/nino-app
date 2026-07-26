@@ -1,6 +1,7 @@
 import type { AuthUser } from '@custom_types/auth'
 import { me } from '@services/auth/auth.service'
 import { useSessionStore } from '@states/useSessionStore'
+import { forgetSession, rememberSession } from '@utils/session-hint'
 
 /**
  * Single bootstrap path for the session: every authenticated entry point goes
@@ -14,8 +15,10 @@ export const loadSession = async (): Promise<AuthUser | null> => {
   try {
     const { memberships, ...fetched } = await me()
     setSession(fetched, memberships)
+    rememberSession()
     return fetched
   } catch {
+    forgetSession()
     return null
   }
 }
