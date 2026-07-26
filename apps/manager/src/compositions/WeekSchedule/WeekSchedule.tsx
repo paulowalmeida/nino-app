@@ -83,6 +83,22 @@ export const WeekSchedule = ({
     )
   }
 
+  /**
+   * A linha de base avança no instante em que a API confirma, não quando o
+   * refetch chega: no intervalo entre os dois o botão já não está mais
+   * `loading` e voltaria a aceitar clique, gravando a mesma coisa de novo.
+   * Falha mantém o formulário sujo, de propósito — a escala não foi gravada.
+   */
+  const handleSave = async () => {
+    const sent = week
+    try {
+      await onSave(changed)
+      setSaved(sent)
+    } catch {
+      /* segue sujo: dá pra tentar de novo */
+    }
+  }
+
   if (isPending) return <Skeleton className={local.skeleton} />
 
   return (
@@ -141,7 +157,7 @@ export const WeekSchedule = ({
         loading={isSaving}
         disabled={changed.length === 0}
         className={`${motion.press} ${styles.save}`}
-        onClick={() => onSave(changed)}
+        onClick={() => void handleSave()}
       >
         Salvar horários
       </Button>
