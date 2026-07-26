@@ -8,5 +8,5 @@ export type EditEmailModalProps = {
   title: string
   hint: string
   currentEmail: string | null
-  onSave: (email: string) => Promise<void>
+  onSave: (email: string) => Promise<unknown>
 }
