@@ -221,6 +221,40 @@ export const Stacked: Story = {
   ),
 }
 
+/**
+ * The five states side by side, kept on screen for reviewing colour and
+ * contrast. Expands the deck and drops the timers so nothing disappears
+ * mid-review; the other stories keep the real defaults.
+ */
+export const EveryState: Story = {
+  render: () => (
+    <Button
+      onClick={() => {
+        toast.configure({ overlap: false, max: 5 })
+        toast.success('Order confirmed', {
+          description: 'Order #1234 is now in the kitchen.',
+          duration: Infinity,
+        })
+        toast.error('Menu did not save', {
+          description: 'The connection dropped mid-save.',
+          duration: Infinity,
+        })
+        toast.warning('Photo did not upload', {
+          description: 'The item was created anyway.',
+          duration: Infinity,
+        })
+        toast.default('Order #4821 updated', {
+          description: 'Delivery moved to 8:40pm.',
+          duration: Infinity,
+        })
+        toast.loading('Publishing menu')
+      }}
+    >
+      Show every state
+    </Button>
+  ),
+}
+
 export const AllVariants: Story = {
   render: () => (
     <div className="flex flex-wrap gap-2">
