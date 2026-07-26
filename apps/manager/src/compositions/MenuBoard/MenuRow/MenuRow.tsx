@@ -75,7 +75,7 @@ export const MenuRow = ({
         <Icon svg={gripIcon} />
       </button>
 
-      <Link to={item.id} className={`${motion.lift} ${styles.itemLink}`}>
+      <Link to={item.id} className={styles.itemLink}>
         <ItemThumb name={item.name} imageUrl={item.images?.[0]?.url} />
         <span className={styles.itemText}>
           <span className={styles.itemName}>{item.name}</span>
