@@ -1,7 +1,7 @@
 import { useSearchParams } from 'react-router'
 
-import { Button, Skeleton } from '@nino/ds'
-
+import { Button } from '@nino/ds/components/Button'
+import { Skeleton } from '@nino/ds/components/Skeleton'
 import { PageTitle } from '@components/PageTitle'
 import { OrderTicket } from '@compositions/OrderTicket'
 import { StageTrack } from '@compositions/StageTrack'

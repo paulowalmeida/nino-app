@@ -1,7 +1,6 @@
 import { useState } from 'react'
 
-import { Skeleton } from '@nino/ds'
-
+import { Skeleton } from '@nino/ds/components/Skeleton'
 import { ItemThumb } from '@components/ItemThumb'
 import { brl } from '@utils/money'
 import { riseDelay } from '@utils/rise-delay'

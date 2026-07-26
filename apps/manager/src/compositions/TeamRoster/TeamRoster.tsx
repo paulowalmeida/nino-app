@@ -1,5 +1,5 @@
-import { Button, Skeleton } from '@nino/ds'
-
+import { Button } from '@nino/ds/components/Button'
+import { Skeleton } from '@nino/ds/components/Skeleton'
 import { PersonMark } from '@components/PersonMark'
 import { riseDelay } from '@utils/rise-delay'
 

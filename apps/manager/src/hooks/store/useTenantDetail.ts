@@ -28,6 +28,10 @@ export const useSaveTenant = (tenantId: string | null) => {
   const queryClient = useQueryClient()
 
   return useMutation({
+    meta: {
+      success: 'Dados da unidade salvos',
+      errorTitle: 'Os dados da unidade não foram salvos',
+    },
     mutationFn: (data: UpdateTenantRequest) =>
       updateTenant(tenantId as string, data),
     onSuccess: (tenant) =>
@@ -43,6 +47,10 @@ export const useRemoveTenant = () => {
   const navigate = useNavigate()
 
   return useMutation({
+    meta: {
+      success: 'Loja fechada',
+      errorTitle: 'Não deu pra fechar a loja',
+    },
     mutationFn: (tenantId: string) => removeTenant(tenantId),
     onSuccess: () => {
       useSessionStore.getState().clear()
@@ -56,6 +64,10 @@ export const useSetMainTenant = (tenantId: string | null) => {
   const queryClient = useQueryClient()
 
   return useMutation({
+    meta: {
+      success: 'Unidade definida como matriz',
+      errorTitle: 'Não deu pra definir a matriz',
+    },
     mutationFn: (id: string) => setMainTenant(id),
     onSuccess: () => {
       void queryClient.invalidateQueries({

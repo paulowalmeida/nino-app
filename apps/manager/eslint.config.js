@@ -19,4 +19,41 @@ export default defineConfig([
       globals: globals.browser,
     },
   },
+  {
+    files: ['**/*.{ts,tsx}'],
+    rules: {
+      /*
+       * Barrel de pacote do workspace é proibido: um único import dele amarra
+       * o pacote inteiro num chunk só — no manager isso dobrava o JS da tela
+       * de login (1166 KB → 702 KB depois da migração). Importe o subcaminho.
+       */
+      'no-restricted-imports': [
+        'error',
+        {
+          paths: [
+            {
+              name: '@nino/ds',
+              message:
+                "Importe o subcaminho: '@nino/ds/components/<Componente>'.",
+            },
+            {
+              name: '@nino/lib',
+              message:
+                "Importe o subcaminho: '@nino/lib/types/<dominio>' ou '@nino/lib/services/<arquivo>'.",
+            },
+            {
+              name: '@nino/forms',
+              message:
+                'Importe o arquivo direto em vez do barrel do pacote.',
+            },
+            {
+              name: '@nino/api-types',
+              message:
+                'Importe o arquivo direto em vez do barrel do pacote.',
+            },
+          ],
+        },
+      ],
+    },
+  },
 ])

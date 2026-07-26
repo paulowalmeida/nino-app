@@ -1,7 +1,6 @@
 import { Link } from 'react-router'
 
-import { Button } from '@nino/ds'
-
+import { Button } from '@nino/ds/components/Button'
 import { MenuBoard } from '@compositions/MenuBoard'
 import { PageTitle } from '@components/PageTitle'
 import { useCurrentTenant } from '@hooks/session/useCurrentTenant'

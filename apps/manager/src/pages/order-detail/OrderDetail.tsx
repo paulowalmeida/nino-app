@@ -3,8 +3,9 @@ import { useParams } from 'react-router'
 
 import { BackLink } from '@components/BackLink'
 
-import { Button, Skeleton, Textarea } from '@nino/ds'
-
+import { Button } from '@nino/ds/components/Button'
+import { Skeleton } from '@nino/ds/components/Skeleton'
+import { Textarea } from '@nino/ds/components/Textarea'
 import { OrderTimeline } from '@compositions/OrderTimeline'
 import { useCurrentTenant } from '@hooks/session/useCurrentTenant'
 import { useOrder } from '@hooks/order/useOrder'

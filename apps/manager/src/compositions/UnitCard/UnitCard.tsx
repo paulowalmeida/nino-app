@@ -1,7 +1,10 @@
 import { useState } from 'react'
 
-import { Button, FormField, Input, Select, Skeleton } from '@nino/ds'
-
+import { Button } from '@nino/ds/components/Button'
+import { FormField } from '@nino/ds/components/FormField'
+import { Input } from '@nino/ds/components/Input'
+import { Select } from '@nino/ds/components/Select'
+import { Skeleton } from '@nino/ds/components/Skeleton'
 import { AddressFields } from '@compositions/AddressFields'
 import type { TenantDetail } from '@custom_types/store'
 

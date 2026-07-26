@@ -1,7 +1,9 @@
 import { useState } from 'react'
 
-import { Button, Input, Skeleton, Switch } from '@nino/ds'
-
+import { Button } from '@nino/ds/components/Button'
+import { Input } from '@nino/ds/components/Input'
+import { Skeleton } from '@nino/ds/components/Skeleton'
+import { Switch } from '@nino/ds/components/Switch'
 import { brl } from '@utils/money'
 import { riseDelay } from '@utils/rise-delay'
 

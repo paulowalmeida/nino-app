@@ -1,7 +1,9 @@
 import { useState } from 'react'
 
-import { Button, Skeleton, Switch, TimePicker } from '@nino/ds'
-
+import { Button } from '@nino/ds/components/Button'
+import { Skeleton } from '@nino/ds/components/Skeleton'
+import { Switch } from '@nino/ds/components/Switch'
+import { TimePicker } from '@nino/ds/components/TimePicker'
 import type { OpeningHours } from '@custom_types/settings'
 import { riseDelay } from '@utils/rise-delay'
 

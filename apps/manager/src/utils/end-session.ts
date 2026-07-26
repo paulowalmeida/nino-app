@@ -1,5 +1,6 @@
 import { queryClient } from '@services/query-client'
 import { useSessionStore } from '@states/useSessionStore'
+import { forgetSession } from '@utils/session-hint'
 
 const LOGIN_PATH = '/entrar'
 
@@ -11,6 +12,7 @@ const LOGIN_PATH = '/entrar'
 export const endSession = (): void => {
   useSessionStore.getState().clear()
   queryClient.clear()
+  forgetSession()
 
   if (window.location.pathname !== LOGIN_PATH) {
     window.location.replace(LOGIN_PATH)

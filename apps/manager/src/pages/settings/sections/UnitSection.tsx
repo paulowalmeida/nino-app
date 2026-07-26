@@ -1,8 +1,8 @@
 import { useState } from 'react'
 import { Link } from 'react-router'
 
-import { Button, Skeleton } from '@nino/ds'
-
+import { Button } from '@nino/ds/components/Button'
+import { Skeleton } from '@nino/ds/components/Skeleton'
 import { useSubscription } from '@hooks/account/useSubscription'
 import { useCompanyGroups } from '@hooks/session/useCompanyGroups'
 import { useCurrentTenant } from '@hooks/session/useCurrentTenant'

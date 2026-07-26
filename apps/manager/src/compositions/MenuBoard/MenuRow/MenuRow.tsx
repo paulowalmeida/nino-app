@@ -3,8 +3,8 @@ import { Link } from 'react-router'
 
 import { Reorder, useDragControls, type Transition } from 'framer-motion'
 
-import { Dialog, Switch } from '@nino/ds'
-
+import { Dialog } from '@nino/ds/components/Dialog'
+import { Switch } from '@nino/ds/components/Switch'
 import gripIcon from '@assets/icons/grip.svg?raw'
 import trashIcon from '@assets/icons/trash.svg?raw'
 import { Icon } from '@components/Icon/Icon'

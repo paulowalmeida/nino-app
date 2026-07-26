@@ -1,7 +1,6 @@
 import { Link } from 'react-router'
 
-import { Button } from '@nino/ds'
-
+import { Button } from '@nino/ds/components/Button'
 import { brl } from '@utils/money'
 import {
   CHANNEL_LABEL,

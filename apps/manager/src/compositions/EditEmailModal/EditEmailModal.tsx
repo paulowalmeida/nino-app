@@ -1,8 +1,10 @@
 import { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 
-import { Button, FormField, Input, Modal } from '@nino/ds'
-
+import { Button } from '@nino/ds/components/Button'
+import { FormField } from '@nino/ds/components/FormField'
+import { Input } from '@nino/ds/components/Input'
+import { Modal } from '@nino/ds/components/Modal'
 import type {
   EditEmailFormValues,
   EditEmailModalProps,

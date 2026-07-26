@@ -138,6 +138,13 @@
   animation: toast-out 0.2s ease-in forwards;
 }
 
+@media (prefers-reduced-motion: reduce) {
+  .toast-animated[data-state='open'],
+  .toast-animated[data-state='closed'] {
+    animation: none;
+  }
+}
+
 @keyframes progress-circle-spin {
   to {
     transform: rotate(270deg);

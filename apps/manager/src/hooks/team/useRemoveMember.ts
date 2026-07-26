@@ -13,6 +13,10 @@ export const useRemoveMember = (tenantId: string | null) => {
   const queryClient = useQueryClient()
 
   return useMutation({
+    meta: {
+      success: 'Pessoa removida da loja',
+      errorTitle: 'A pessoa continua na loja',
+    },
     mutationFn: ({ id, kind }: Removal) =>
       kind === 'STAFF'
         ? removeStaff(tenantId as string, id)

@@ -1,8 +1,7 @@
 import { useRef, useState } from 'react'
 import { useNavigate, useParams } from 'react-router'
 
-import { Button } from '@nino/ds'
-
+import { Button } from '@nino/ds/components/Button'
 import { AnimatedNumber } from '@components/AnimatedNumber/AnimatedNumber'
 import { ActiveOrderBanner } from '@compositions/ActiveOrderBanner/ActiveOrderBanner'
 import { CartDrawer } from '@compositions/CartDrawer/CartDrawer'

@@ -1,7 +1,8 @@
 import { useState } from 'react'
 
-import { Button, Input, Skeleton } from '@nino/ds'
-
+import { Button } from '@nino/ds/components/Button'
+import { Input } from '@nino/ds/components/Input'
+import { Skeleton } from '@nino/ds/components/Skeleton'
 import { usePause, usePauseActions } from '@hooks/store/usePause'
 
 import type { PauseSwitchProps } from './PauseSwitch.types'

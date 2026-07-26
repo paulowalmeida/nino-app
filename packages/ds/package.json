@@ -5,7 +5,10 @@
   "exports": {
     ".": "./src/index.ts",
     "./globals.css": "./src/styles/globals.css",
-    "./tokens.css": "./src/styles/tokens.css"
+    "./tokens.css": "./src/styles/tokens.css",
+    "./masks": "./src/lib/masks/masks.ts",
+    "./validators": "./src/lib/masks/validators.ts",
+    "./components/*": "./src/components/*/index.ts"
   },
   "scripts": {
     "test": "vitest run",

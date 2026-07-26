@@ -1,7 +1,8 @@
 import { useMemo, useState } from 'react'
 
-import { DatePicker, Skeleton, Tabs } from '@nino/ds'
-
+import { DatePicker } from '@nino/ds/components/DatePicker'
+import { Skeleton } from '@nino/ds/components/Skeleton'
+import { Tabs } from '@nino/ds/components/Tabs'
 import { PageTitle } from '@components/PageTitle'
 import { CountUp } from '@components/CountUp'
 import type { PeriodChoice } from '@custom_types/ui'

@@ -11,6 +11,10 @@ export const useDeleteMenuItem = (
   const queryClient = useQueryClient()
 
   return useMutation({
+    meta: {
+      success: 'Item excluído do cardápio',
+      errorTitle: 'O item continua no cardápio',
+    },
     mutationFn: () => removeItem(tenantId as string, productId),
     onSuccess: () => {
       void queryClient.invalidateQueries({ queryKey: menuQueryKey(tenantId) })

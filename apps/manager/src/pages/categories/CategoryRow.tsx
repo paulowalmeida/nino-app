@@ -1,7 +1,7 @@
 import { useState } from 'react'
 
-import { Button, Input } from '@nino/ds'
-
+import { Button } from '@nino/ds/components/Button'
+import { Input } from '@nino/ds/components/Input'
 import pencilIcon from '@assets/icons/pencil.svg?raw'
 import trashIcon from '@assets/icons/trash.svg?raw'
 import { Icon } from '@components/Icon/Icon'
@@ -32,11 +32,16 @@ export const CategoryRow = ({
     setDraft(category.name)
   }
 
+  /* Em falha o formulário fica aberto com o texto digitado; o toast explica. */
   const submit = async () => {
     const name = draft.trim()
     if (!name || name === category.name) return closeEditing()
-    await onRename(name)
-    setEditing(false)
+    try {
+      await onRename(name)
+      setEditing(false)
+    } catch {
+      /* nada a fazer aqui: o nome antigo continua valendo na lista */
+    }
   }
 
   return (

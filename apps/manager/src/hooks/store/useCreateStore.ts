@@ -16,6 +16,8 @@ export const useCreateStore = (onCreated?: (store: CreatedStore) => string) => {
   const navigate = useNavigate()
 
   return useMutation<CreatedStore, Error, CreateStoreRequest>({
+    /* O formulário trata 409, offline e erro genérico inline. */
+    meta: { silentError: true },
     mutationFn: createStore,
     onSuccess: (store) => {
       useSessionStore.getState().clear()

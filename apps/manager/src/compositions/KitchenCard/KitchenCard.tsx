@@ -1,5 +1,4 @@
-import { Button } from '@nino/ds'
-
+import { Button } from '@nino/ds/components/Button'
 import { useElapsed } from '@hooks/order/useElapsed'
 import { elapsedVar } from '@utils/elapsed-var'
 import {

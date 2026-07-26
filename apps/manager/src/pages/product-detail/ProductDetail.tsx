@@ -2,17 +2,14 @@ import { useEffect, useState } from 'react'
 import { Controller, useForm, useWatch } from 'react-hook-form'
 import { useNavigate, useParams } from 'react-router'
 
-import {
-  Button,
-  Dialog,
-  FormField,
-  Input,
-  Select,
-  Skeleton,
-  Switch,
-  Textarea,
-} from '@nino/ds'
-
+import { Button } from '@nino/ds/components/Button'
+import { Dialog } from '@nino/ds/components/Dialog'
+import { FormField } from '@nino/ds/components/FormField'
+import { Input } from '@nino/ds/components/Input'
+import { Select } from '@nino/ds/components/Select'
+import { Skeleton } from '@nino/ds/components/Skeleton'
+import { Switch } from '@nino/ds/components/Switch'
+import { Textarea } from '@nino/ds/components/Textarea'
 import { ItemPhoto } from '@compositions/ItemPhoto'
 import { BackLink } from '@components/BackLink'
 import { ItemThumb } from '@components/ItemThumb'
@@ -53,7 +50,6 @@ export const ProductDetail = () => {
     productId as string
   )
   const [isDeleteOpen, setIsDeleteOpen] = useState(false)
-  const [deleteError, setDeleteError] = useState<string | null>(null)
 
   const {
     register,
@@ -78,12 +74,13 @@ export const ProductDetail = () => {
     })
   }, [item, reset])
 
+  /* O erro vira toast: a página some ao excluir e a mensagem iria junto. */
   const onDelete = async () => {
     try {
       await deleteItem()
       void navigate('..', { relative: 'path' })
     } catch {
-      setDeleteError('Não foi possível excluir. Tente de novo.')
+      setIsDeleteOpen(false)
     }
   }
 
@@ -292,8 +289,6 @@ export const ProductDetail = () => {
         onCancel={() => setIsDeleteOpen(false)}
         loading={isDeleting}
       />
-
-      {deleteError && <p className={styles.error}>{deleteError}</p>}
     </div>
   )
 }

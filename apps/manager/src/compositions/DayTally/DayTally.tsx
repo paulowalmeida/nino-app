@@ -1,7 +1,6 @@
 import { Link } from 'react-router'
 
-import { Skeleton } from '@nino/ds'
-
+import { Skeleton } from '@nino/ds/components/Skeleton'
 import { CountUp } from '@components/CountUp'
 import { Eyebrow } from '@components/Eyebrow'
 import { useOrders } from '@hooks/order/useOrders'

@@ -1,8 +1,10 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router'
 
-import { Button, Dialog, Input, Skeleton } from '@nino/ds'
-
+import { Button } from '@nino/ds/components/Button'
+import { Dialog } from '@nino/ds/components/Dialog'
+import { Input } from '@nino/ds/components/Input'
+import { Skeleton } from '@nino/ds/components/Skeleton'
 import { BackLink } from '@components/BackLink'
 import { PageTitle } from '@components/PageTitle'
 import {
@@ -35,8 +37,14 @@ export const Categories = () => {
   const { sections } = useMenu(tenantId)
 
   const createCategory = useCreateCategory(tenantId)
-  const { mutateAsync: rename, variables: renaming } =
-    useUpdateCategory(tenantId)
+  const {
+    mutateAsync: rename,
+    variables: renamingVariables,
+    isPending: isRenaming,
+  } = useUpdateCategory(tenantId)
+
+  /* `variables` sobrevive à falha: sem o isPending o botão gira pra sempre. */
+  const renaming = isRenaming ? renamingVariables : undefined
   const { mutateAsync: remove, isPending: isDeleting } =
     useDeleteCategory(tenantId)
 
@@ -54,11 +62,16 @@ export const Categories = () => {
       count: countById.get(category.id) ?? 0,
     }))
 
+  /* O toast de erro global avisa; aqui só o campo não pode se limpar à toa. */
   const addCategory = async () => {
     const name = newName.trim()
     if (!name) return
-    await createCategory.mutateAsync(name)
-    setNewName('')
+    try {
+      await createCategory.mutateAsync(name)
+      setNewName('')
+    } catch {
+      /* o nome digitado fica no campo pra pessoa tentar de novo */
+    }
   }
 
   const openDelete = (category: CategoryWithCount) => {

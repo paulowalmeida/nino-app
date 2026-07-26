@@ -2,19 +2,16 @@ import { useEffect, useState } from 'react'
 import { Controller, useForm, useWatch } from 'react-hook-form'
 import { Link, useNavigate, useParams } from 'react-router'
 
-import {
-  Alert,
-  Button,
-  Collapsible,
-  FormField,
-  Input,
-  MaskedInput,
-  PhoneInput,
-  Select,
-  Textarea,
-  maskZipCode,
-} from '@nino/ds'
-
+import { Alert } from '@nino/ds/components/Alert'
+import { Button } from '@nino/ds/components/Button'
+import { Collapsible } from '@nino/ds/components/Collapsible'
+import { FormField } from '@nino/ds/components/FormField'
+import { Input } from '@nino/ds/components/Input'
+import { MaskedInput } from '@nino/ds/components/MaskedInput'
+import { PhoneInput } from '@nino/ds/components/PhoneInput'
+import { Select } from '@nino/ds/components/Select'
+import { Textarea } from '@nino/ds/components/Textarea'
+import { maskZipCode } from '@nino/ds/masks'
 import { AnimatedNumber } from '@components/AnimatedNumber/AnimatedNumber'
 import type { CreateGuestOrderRequest } from '@custom_types/order/create-guest-order-request'
 import { useCreateGuestOrder } from '@hooks/useCreateGuestOrder'

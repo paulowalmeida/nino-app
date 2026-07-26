@@ -1,7 +1,9 @@
 import { useState } from 'react'
 
-import { Button, Input, Skeleton, Switch } from '@nino/ds'
-
+import { Button } from '@nino/ds/components/Button'
+import { Input } from '@nino/ds/components/Input'
+import { Skeleton } from '@nino/ds/components/Skeleton'
+import { Switch } from '@nino/ds/components/Switch'
 import type { PaymentMethod } from '@custom_types/order'
 import type { TenantSettings } from '@custom_types/settings'
 import { PAYMENT_METHOD_LABEL } from '@utils/order-flow'

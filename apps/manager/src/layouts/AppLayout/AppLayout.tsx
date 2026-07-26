@@ -1,8 +1,7 @@
 import { useState } from 'react'
 import { Outlet } from 'react-router'
 
-import { Button } from '@nino/ds'
-
+import { Button } from '@nino/ds/components/Button'
 import { NavIcon } from '@components/NavIcon'
 import { useCurrentTenant } from '@hooks/session/useCurrentTenant'
 import {

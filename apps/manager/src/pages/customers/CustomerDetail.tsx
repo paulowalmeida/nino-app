@@ -1,7 +1,6 @@
 import { Link, useParams } from 'react-router'
 
-import { Skeleton } from '@nino/ds'
-
+import { Skeleton } from '@nino/ds/components/Skeleton'
 import { Breadcrumb } from '@components/Breadcrumb'
 import { PersonMark } from '@components/PersonMark'
 import { useCurrentTenant } from '@hooks/session/useCurrentTenant'

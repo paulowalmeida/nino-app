@@ -1,7 +1,10 @@
 import { useState } from 'react'
 
-import { Button, Carousel, Drawer, Image, Modal } from '@nino/ds'
-
+import { Button } from '@nino/ds/components/Button'
+import { Carousel } from '@nino/ds/components/Carousel'
+import { Drawer } from '@nino/ds/components/Drawer'
+import { Image } from '@nino/ds/components/Image'
+import { Modal } from '@nino/ds/components/Modal'
 import { AnimatedNumber } from '@components/AnimatedNumber/AnimatedNumber'
 import { useIsDesktop } from '@hooks/useIsDesktop'
 import { categoryIcon } from '@utils/category-icon'

@@ -1,5 +1,5 @@
-import { Button, Input } from '@nino/ds'
-
+import { Button } from '@nino/ds/components/Button'
+import { Input } from '@nino/ds/components/Input'
 import { brl } from '@utils/money'
 import { paymentLabelFor } from '@utils/order-flow'
 

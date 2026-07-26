@@ -1,5 +1,4 @@
-import { Skeleton } from '@nino/ds'
-
+import { Skeleton } from '@nino/ds/components/Skeleton'
 import { useOpeningHours } from '@hooks/settings/useOpeningHours'
 import { usePause } from '@hooks/store/usePause'
 import { isStoreOpen } from '@utils/store-open'

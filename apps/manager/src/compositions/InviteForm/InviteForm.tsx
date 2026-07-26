@@ -1,8 +1,10 @@
 import { useState } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 
-import { Button, FormField, Input, Select } from '@nino/ds'
-
+import { Button } from '@nino/ds/components/Button'
+import { FormField } from '@nino/ds/components/FormField'
+import { Input } from '@nino/ds/components/Input'
+import { Select } from '@nino/ds/components/Select'
 import type { CreateInviteRequest } from '@custom_types/team'
 
 import type { InviteFormProps, InviteFormValues } from './InviteForm.types'

@@ -1,7 +1,8 @@
 import { useState } from 'react'
 
-import { Button, PhoneInput, Skeleton } from '@nino/ds'
-
+import { Button } from '@nino/ds/components/Button'
+import { PhoneInput } from '@nino/ds/components/PhoneInput'
+import { Skeleton } from '@nino/ds/components/Skeleton'
 import { formatPhone, toE164 } from '@utils/phone'
 import { riseDelay } from '@utils/rise-delay'
 

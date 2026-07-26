@@ -12,6 +12,8 @@ export const useUpdateMenuItem = (
   const queryClient = useQueryClient()
 
   return useMutation({
+    /* O erro aparece no fim do formulário; o sucesso navega pro cardápio. */
+    meta: { success: 'Item salvo', silentError: true },
     mutationFn: (data: UpdateMenuItemRequest) =>
       updateItem(tenantId as string, productId, data),
     onSuccess: () => {

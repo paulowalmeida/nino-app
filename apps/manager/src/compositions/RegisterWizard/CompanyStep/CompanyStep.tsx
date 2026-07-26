@@ -1,7 +1,10 @@
 import { useForm } from 'react-hook-form'
 
-import { Button, CnpjInput, FormField, Input, isValidCnpj } from '@nino/ds'
-
+import { Button } from '@nino/ds/components/Button'
+import { CnpjInput } from '@nino/ds/components/CnpjInput'
+import { FormField } from '@nino/ds/components/FormField'
+import { Input } from '@nino/ds/components/Input'
+import { isValidCnpj } from '@nino/ds/validators'
 import { useCheckAvailability } from '@hooks/auth/useCheckAvailability'
 import { useSignup } from '@hooks/auth/useSignup'
 import { ApiError } from '@utils/api-error'

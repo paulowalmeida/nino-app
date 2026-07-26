@@ -1,17 +1,14 @@
 import { Link } from 'react-router'
 import { useForm } from 'react-hook-form'
 
-import {
-  Button,
-  CpfInput,
-  FormField,
-  Input,
-  isValidCpf,
-  PasswordInput,
-  PasswordStrength,
-  PhoneInput,
-} from '@nino/ds'
-
+import { Button } from '@nino/ds/components/Button'
+import { CpfInput } from '@nino/ds/components/CpfInput'
+import { FormField } from '@nino/ds/components/FormField'
+import { Input } from '@nino/ds/components/Input'
+import { PasswordInput } from '@nino/ds/components/PasswordInput'
+import { PasswordStrength } from '@nino/ds/components/PasswordStrength'
+import { PhoneInput } from '@nino/ds/components/PhoneInput'
+import { isValidCpf } from '@nino/ds/validators'
 import { useCheckAvailability } from '@hooks/auth/useCheckAvailability'
 import { riseDelay } from '@utils/rise-delay'
 

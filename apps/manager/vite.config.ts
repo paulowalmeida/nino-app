@@ -6,8 +6,28 @@ import tailwindcss from '@tailwindcss/vite'
 
 export default defineConfig({
   plugins: [react(), tailwindcss()],
-  /** 3001 is the origin the API allows by default in CORS. */
-  server: { port: 3001, strictPort: true },
+  /**
+   * 3001 is the origin the API allows by default in CORS.
+   *
+   * The `/api` proxy exists so the browser sees a single origin while the app
+   * runs locally against the deployed API: the session cookies are
+   * `sameSite: 'strict'`, so a page on localhost would store them at login and
+   * never send them again — every request would answer 401. It only applies to
+   * `vite dev`; `vite build` ignores this block, so production is untouched.
+   */
+  server: {
+    port: 3001,
+    strictPort: true,
+    proxy: {
+      '/api': {
+        target: 'https://api-dev.nino.delivery',
+        changeOrigin: true,
+        secure: true,
+        rewrite: (path) => path.replace(/^\/api/, ''),
+        cookieDomainRewrite: 'localhost',
+      },
+    },
+  },
   resolve: {
     alias: {
       '@ds': resolve(__dirname, '../../packages/ds/src'),

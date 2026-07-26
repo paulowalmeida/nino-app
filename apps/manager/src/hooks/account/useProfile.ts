@@ -16,6 +16,7 @@ export const useSaveProfile = () => {
   const queryClient = useQueryClient()
 
   return useMutation({
+    meta: { success: 'Perfil salvo', errorTitle: 'O perfil não foi salvo' },
     mutationFn: (data: UpdateProfileRequest) => updateProfile(data),
     onSuccess: (profile) => queryClient.setQueryData(profileKey, profile),
   })
@@ -25,6 +26,8 @@ export const useUpdateMyEmail = () => {
   const queryClient = useQueryClient()
 
   return useMutation({
+    /* O modal fecha em sucesso e mostra o erro inline: só o sucesso vira toast. */
+    meta: { success: 'E-mail de login atualizado', silentError: true },
     mutationFn: (email: string) => updateMyEmail(email),
     onSuccess: () => {
       void queryClient.invalidateQueries({ queryKey: profileKey })

@@ -65,6 +65,28 @@ export const Warning: Story = {
   ),
 }
 
+/** All four side by side, kept on screen for reviewing color and contrast. */
+export const Showcase: Story = {
+  render: () => (
+    <Button
+      onClick={() => {
+        toast.success('Loja fechada', 'Volta a receber pedidos às 14h.')
+        toast.error(
+          'A ordem dos itens voltou ao que era',
+          'Tente arrastar de novo.'
+        )
+        toast.warning(
+          'Item criado, mas a foto não subiu',
+          'Abra o item no cardápio e envie de novo.'
+        )
+        toast.default('Pedido #4821 atualizado')
+      }}
+    >
+      Show every variant
+    </Button>
+  ),
+}
+
 export const AllVariants: Story = {
   render: () => (
     <div className="flex flex-wrap gap-2">

@@ -2,8 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 
 import { Reorder } from 'framer-motion'
 
-import { Skeleton } from '@nino/ds'
-
+import { Skeleton } from '@nino/ds/components/Skeleton'
 import { useItemAvailability } from '@hooks/product/useItemAvailability'
 import { useMenu } from '@hooks/product/useMenu'
 import { useReorderCategories } from '@hooks/product/useReorderCategories'

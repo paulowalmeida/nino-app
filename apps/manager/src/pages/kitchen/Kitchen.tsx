@@ -1,5 +1,4 @@
-import { Skeleton } from '@nino/ds'
-
+import { Skeleton } from '@nino/ds/components/Skeleton'
 import { KitchenCard } from '@compositions/KitchenCard'
 import { useCurrentTenant } from '@hooks/session/useCurrentTenant'
 import { useOrders } from '@hooks/order/useOrders'

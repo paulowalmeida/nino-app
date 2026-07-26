@@ -44,6 +44,18 @@
   --color-terracotta: #b06a4a;
   --color-charcoal: #14110c;
 
+  /*
+   * Status — família da paleta, não semáforo genérico. O vermelho fica entre
+   * brand e terracotta; o warning é mostarda porque laranja de aviso ao lado
+   * de uma marca laranja não comunica nada.
+   */
+  --color-success: #2c6e49;
+  --color-success-surface: #eaf3e3;
+  --color-danger: #b23a2b;
+  --color-danger-surface: #fdeae4;
+  --color-warning: #8a6114;
+  --color-warning-surface: #fbf0d8;
+
   /* Inputs — override por tenant */
   --color-input-border: #d1d5db;
   --color-input-border-focus: var(--color-brand);
