@@ -12,6 +12,12 @@ const stamp = new Intl.DateTimeFormat('pt-BR', {
   minute: '2-digit',
 })
 
+/** A previsão é a hora, não a data: ninguém espera o pedido pra outro dia. */
+const clock = new Intl.DateTimeFormat('pt-BR', {
+  hour: '2-digit',
+  minute: '2-digit',
+})
+
 export const OrderTracking = () => {
   const { slug: pathSlug, orderId } = useParams()
   const [searchParams] = useSearchParams()
@@ -36,7 +42,6 @@ export const OrderTracking = () => {
           <div className={styles.skTitle} />
         </header>
         <div className={styles.skStatus} />
-        <div className={styles.skEta} />
         <div className={styles.skTimeline}>
           {Array.from({ length: 3 }).map((_, i) => (
             <div key={i} className={styles.skEntry}>
@@ -90,34 +95,50 @@ export const OrderTracking = () => {
         }
       >
         <span className={styles.statusDot} aria-hidden="true" />
-        <p className={styles.statusLabel}>{STATUS_LABEL[order.status]}</p>
+        <div className={styles.statusText}>
+          <p className={styles.statusLabel}>{STATUS_LABEL[order.status]}</p>
+          {order.estimatedDeliveryAt && !isCancelled && (
+            <p className={styles.statusEta}>
+              Previsão {clock.format(new Date(order.estimatedDeliveryAt))}
+            </p>
+          )}
+        </div>
       </div>
 
-      {order.estimatedDeliveryAt && !isCancelled && (
-        <p className={styles.eta}>
-          Previsão: {stamp.format(new Date(order.estimatedDeliveryAt))}
-        </p>
-      )}
-
       <ol className={styles.timeline}>
-        {order.timeline.map((entry, index) => (
-          <li key={`${entry.status}-${entry.at}`} className={styles.entry}>
-            <span
+        {order.timeline.map((entry, index) => {
+          const isCurrent = index === order.timeline.length - 1
+          return (
+            <li
+              key={`${entry.status}-${entry.at}`}
               className={
-                index === order.timeline.length - 1
-                  ? `${styles.entryDot} ${styles.entryDotCurrent}`
-                  : styles.entryDot
+                isCurrent ? `${styles.entry} ${styles.current}` : styles.entry
               }
-              aria-hidden="true"
-            />
-            <div>
-              <p className={styles.entryLabel}>{STATUS_LABEL[entry.status]}</p>
-              <p className={styles.entryTime}>
-                {stamp.format(new Date(entry.at))}
-              </p>
-            </div>
-          </li>
-        ))}
+              aria-current={isCurrent ? 'step' : undefined}
+            >
+              <span className={styles.entryDot} aria-hidden="true">
+                {!isCurrent && (
+                  <svg width="8" height="8" viewBox="0 0 12 12">
+                    <path
+                      d="M2.5 6.5l2.5 2.5 4.5-5.5"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      fill="none"
+                    />
+                  </svg>
+                )}
+              </span>
+              <div>
+                <p className={styles.entryLabel}>{STATUS_LABEL[entry.status]}</p>
+                <p className={styles.entryTime}>
+                  {stamp.format(new Date(entry.at))}
+                </p>
+              </div>
+            </li>
+          )
+        })}
       </ol>
 
       <p className={styles.code}>Código do pedido: {order.id.slice(0, 8)}</p>
