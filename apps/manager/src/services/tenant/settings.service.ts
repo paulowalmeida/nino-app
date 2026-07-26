@@ -48,9 +48,18 @@ export const listOpeningHours = (
 ): Promise<Page<OpeningHours>> =>
   get<Page<OpeningHours>>(`tenants/${tenantId}/opening-hours`)
 
+/**
+ * `isOpen` vai explícito: o banco assume `true` por padrão, então omitir o
+ * campo faz um dia criado como fechado voltar aberto da API.
+ */
 export const createOpeningHours = (
   tenantId: string,
-  data: { dayOfWeek: number; openTime: string; closeTime: string }
+  data: {
+    dayOfWeek: number
+    openTime: string
+    closeTime: string
+    isOpen: boolean
+  }
 ): Promise<OpeningHours> =>
   create<typeof data, OpeningHours>(`tenants/${tenantId}/opening-hours`, data)
 

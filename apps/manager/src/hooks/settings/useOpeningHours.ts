@@ -46,7 +46,7 @@ const persistDay = (
 ) =>
   id
     ? updateOpeningHours(tenantId, id, { openTime, closeTime, isOpen })
-    : createOpeningHours(tenantId, { dayOfWeek, openTime, closeTime })
+    : createOpeningHours(tenantId, { dayOfWeek, openTime, closeTime, isOpen })
 
 /**
  * The week is saved as one action — the store decides its schedule as a
