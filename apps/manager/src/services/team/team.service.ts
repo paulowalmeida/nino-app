@@ -1,3 +1,4 @@
+import type { CredentialInfo, UpdateEmailRequest } from '@custom_types/account'
 import type {
   CourierPage,
   CreateInviteRequest,
@@ -5,7 +6,7 @@ import type {
 } from '@custom_types/team'
 import { ApiFactory } from '@services/api/api.service'
 
-const { get, create, remove } = ApiFactory()
+const { get, create, patch, remove } = ApiFactory()
 
 export const listStaff = (tenantId: string): Promise<StaffPage> =>
   get<StaffPage>(`tenants/${tenantId}/staff`)
@@ -24,6 +25,17 @@ export const sendInvite = (
   create<CreateInviteRequest, { id: string; email: string }>(
     `tenants/${tenantId}/invites`,
     data
+  )
+
+export const updateStaffEmail = (
+  tenantId: string,
+  userId: string,
+  email: string
+): Promise<CredentialInfo> =>
+  patch<UpdateEmailRequest, CredentialInfo>(
+    `tenants/${tenantId}/staff/${userId}`,
+    'email',
+    { email }
   )
 
 export const removeStaff = (

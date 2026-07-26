@@ -1,5 +1,6 @@
 import { MemoryRouter } from 'react-router'
 
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { Reorder } from 'framer-motion'
@@ -19,22 +20,28 @@ const sectionValue: MenuSectionData = {
 /** Reorder.Item exige um Reorder.Group ancestral, mesmo fora de teste de drag. */
 const renderWithRouter = (ui: React.ReactElement) =>
   render(
-    <MemoryRouter>
-      <Reorder.Group
-        as="div"
-        axis="y"
-        values={[sectionValue]}
-        onReorder={() => {}}
-      >
-        {ui}
-      </Reorder.Group>
-    </MemoryRouter>
+    <QueryClientProvider client={new QueryClient()}>
+      <MemoryRouter>
+        <Reorder.Group
+          as="div"
+          axis="y"
+          values={[sectionValue]}
+          onReorder={() => {}}
+        >
+          {ui}
+        </Reorder.Group>
+      </MemoryRouter>
+    </QueryClientProvider>
   )
 
 const { mutate } = vi.hoisted(() => ({ mutate: vi.fn() }))
 
 vi.mock('@hooks/product/useReorderMenuItems', () => ({
   useReorderMenuItems: () => ({ mutate }),
+}))
+
+vi.mock('@hooks/product/useDeleteMenuItem', () => ({
+  useDeleteMenuItem: () => ({ mutate: vi.fn(), isPending: false }),
 }))
 
 const buildItem = (overrides: Partial<MenuItem>): MenuItem => ({

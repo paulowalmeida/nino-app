@@ -16,6 +16,7 @@ export const TeamRoster = ({
   isPending,
   removingId,
   onRemove,
+  onEditEmail,
 }: TeamRosterProps) => (
   <section className={styles.roster}>
     <header className={`${motion.unroll} ${styles.head}`}>
@@ -54,17 +55,30 @@ export const TeamRoster = ({
 
             <span className={styles.role}>{entry.role}</span>
 
-            {entry.removable && (
-              <Button
-                variant="ghost"
-                size="sm"
-                loading={removingId === entry.id}
-                className={`${motion.press} ${styles.remove}`}
-                onClick={() => onRemove(entry.id)}
-              >
-                Tirar da loja
-              </Button>
-            )}
+            <div className={styles.actions}>
+              {entry.emailEditable && onEditEmail && (
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  className={motion.press}
+                  onClick={() => onEditEmail(entry.id)}
+                >
+                  Editar e-mail
+                </Button>
+              )}
+
+              {entry.removable && (
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  loading={removingId === entry.id}
+                  className={`${motion.press} ${styles.remove}`}
+                  onClick={() => onRemove(entry.id)}
+                >
+                  Tirar da loja
+                </Button>
+              )}
+            </div>
           </li>
         ))}
       </ul>

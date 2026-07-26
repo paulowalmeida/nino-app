@@ -1,6 +1,8 @@
 import type {
+  CredentialInfo,
   Profile,
   Subscription,
+  UpdateEmailRequest,
   UpdateProfileRequest,
 } from '@custom_types/account'
 import { ApiFactory } from '@services/api/api.service'
@@ -14,6 +16,9 @@ export const updateProfile = (
   data: UpdateProfileRequest
 ): Promise<Profile> =>
   patch<UpdateProfileRequest, Profile>('my', 'profile', data)
+
+export const updateMyEmail = (email: string): Promise<CredentialInfo> =>
+  patch<UpdateEmailRequest, CredentialInfo>('my/profile', 'email', { email })
 
 export const getSubscription = (): Promise<Subscription> =>
   get<Subscription>('my/subscription')

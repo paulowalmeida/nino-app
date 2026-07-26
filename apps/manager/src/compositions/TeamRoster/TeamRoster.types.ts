@@ -7,6 +7,8 @@ export type RosterEntry = {
   /** Quiet mark for people who don't operate the panel. */
   quiet?: boolean
   removable: boolean
+  /** Whether this entry's e-mail can be edited from the roster. */
+  emailEditable?: boolean
 }
 
 export type TeamRosterProps = {
@@ -17,4 +19,5 @@ export type TeamRosterProps = {
   isPending?: boolean
   removingId?: string
   onRemove: (id: string) => void
+  onEditEmail?: (id: string) => void
 }

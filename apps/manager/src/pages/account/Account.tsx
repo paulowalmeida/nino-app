@@ -3,7 +3,12 @@ import { useState } from 'react'
 import { Button, FormField, Input, Skeleton } from '@nino/ds'
 
 import { PageTitle } from '@components/PageTitle'
-import { useProfile, useSaveProfile } from '@hooks/account/useProfile'
+import { EditEmailModal } from '@compositions/EditEmailModal'
+import {
+  useProfile,
+  useSaveProfile,
+  useUpdateMyEmail,
+} from '@hooks/account/useProfile'
 import type { Profile } from '@custom_types/account'
 import { formatPhone, toE164 } from '@utils/phone'
 
@@ -28,10 +33,12 @@ const providerLabel: Record<string, string> = {
 export const Account = () => {
   const { data: profile, isPending } = useProfile()
   const { mutate: save, isPending: isSaving } = useSaveProfile()
+  const { mutateAsync: saveEmail } = useUpdateMyEmail()
 
   const [draft, setDraft] = useState({ name: '', phone: '' })
   const [isDirty, setDirty] = useState(false)
   const [seed, setSeed] = useState<Profile | undefined>(undefined)
+  const [isEditingEmail, setIsEditingEmail] = useState(false)
 
   if (profile && profile !== seed) {
     setSeed(profile)
@@ -101,8 +108,22 @@ export const Account = () => {
         <section className={`${motion.settle} ${card.card}`}>
           <p className={styles.factsTitle}>Sobre a conta</p>
           <dl className={styles.facts}>
+            <div className={styles.fact}>
+              <dt className={styles.factLabel}>E-mail</dt>
+              <dd className={styles.factValue}>
+                {profile.credentials[0]?.email ?? '—'}
+                <Button
+                  type="button"
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => setIsEditingEmail(true)}
+                >
+                  Editar
+                </Button>
+              </dd>
+            </div>
+
             {[
-              ['E-mail', profile.credentials[0]?.email ?? '—'],
               [
                 'Login via',
                 providerLabel[profile.credentials[0]?.provider ?? ''] ??
@@ -120,6 +141,15 @@ export const Account = () => {
           </dl>
         </section>
       )}
+
+      <EditEmailModal
+        open={isEditingEmail}
+        onOpenChange={setIsEditingEmail}
+        title="Editar e-mail"
+        hint="Usado para entrar no painel."
+        currentEmail={profile?.credentials[0]?.email ?? null}
+        onSave={(email) => saveEmail(email)}
+      />
     </div>
   )
 }

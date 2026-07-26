@@ -3,11 +3,13 @@ import { Link } from 'react-router'
 
 import { Reorder, useDragControls, type Transition } from 'framer-motion'
 
-import { Switch } from '@nino/ds'
+import { Dialog, Switch } from '@nino/ds'
 
 import gripIcon from '@assets/icons/grip.svg?raw'
+import trashIcon from '@assets/icons/trash.svg?raw'
 import { Icon } from '@components/Icon/Icon'
 import { ItemThumb } from '@components/ItemThumb'
+import { useDeleteMenuItem } from '@hooks/product/useDeleteMenuItem'
 import { riseDelay } from '@utils/rise-delay'
 
 import type { MenuRowProps } from './MenuRow.types'
@@ -29,14 +31,25 @@ export const MenuRow = ({
   item,
   index,
   sectionIndex,
+  tenantId,
   onToggleAvailability,
   onDragEnd,
 }: MenuRowProps) => {
   const dragControls = useDragControls()
   const [isEntering, setIsEntering] = useState(true)
+  const [isDeleteOpen, setIsDeleteOpen] = useState(false)
+
+  const { mutate: deleteItem, isPending: isDeleting } = useDeleteMenuItem(
+    tenantId,
+    item.id
+  )
 
   const handleEntranceEnd = (event: AnimationEvent<HTMLLIElement>) => {
     if (event.target === event.currentTarget) setIsEntering(false)
+  }
+
+  const handleDelete = () => {
+    deleteItem(undefined, { onSuccess: () => setIsDeleteOpen(false) })
   }
 
   return (
@@ -78,6 +91,26 @@ export const MenuRow = ({
         checked={item.isActive}
         onCheckedChange={(isActive) => onToggleAvailability(item.id, isActive)}
         aria-label={`${item.name} disponível`}
+      />
+
+      <button
+        type="button"
+        className={styles.deleteHandle}
+        aria-label={`Excluir ${item.name}`}
+        onClick={() => setIsDeleteOpen(true)}
+      >
+        <Icon svg={trashIcon} />
+      </button>
+
+      <Dialog
+        open={isDeleteOpen}
+        onOpenChange={setIsDeleteOpen}
+        title="Excluir item"
+        description={`"${item.name}" será removido do cardápio. Esta ação não pode ser desfeita.`}
+        confirmLabel="Excluir"
+        onConfirm={handleDelete}
+        onCancel={() => setIsDeleteOpen(false)}
+        loading={isDeleting}
       />
     </Reorder.Item>
   )

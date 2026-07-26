@@ -95,6 +95,7 @@ export const MenuSection = ({
             item={item}
             index={index}
             sectionIndex={sectionIndex}
+            tenantId={tenantId}
             onToggleAvailability={onToggleAvailability}
             onDragEnd={persist}
           />
