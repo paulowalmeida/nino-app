@@ -28,25 +28,60 @@ import {
 } from './toastRegistry'
 
 /**
- * The card is a dark counter ticket, not a tinted panel: it never blends into
- * the warm surfaces it lands on, and it holds up on a kitchen screen read from
- * a step back. Status arrives as a luminous mark — icon, action, timer — while
- * the surface stays the same for every variant.
+ * The whole card carries the status: the panel is read across a counter and a
+ * kitchen, from a step back, where the fill lands before anyone parses the
+ * words. Everything on top of it — text, close, timer — is one contrasting
+ * tone, so a saturated surface never turns into a colour puzzle.
  */
-const accentClass: Record<ToastVariant, string> = {
-  default: 'text-warm-light',
-  success: 'text-success-bright',
-  error: 'text-danger-bright',
-  warning: 'text-warning-bright',
-  loading: 'text-peach',
+const surfaceClass: Record<ToastVariant, string> = {
+  default: 'bg-body border-white/12',
+  success: 'bg-success border-white/15',
+  error: 'bg-danger border-white/15',
+  warning: 'bg-warning-bright border-black/10',
+  loading: 'bg-body border-white/12',
 }
 
-const timerClass: Record<ToastVariant, string> = {
-  default: 'bg-warm-light',
-  success: 'bg-success-bright',
-  error: 'bg-danger-bright',
-  warning: 'bg-warning-bright',
-  loading: 'bg-peach',
+type ToastTone = {
+  title: string
+  description: string
+  icon: string
+  action: string
+  close: string
+  track: string
+  timer: string
+}
+
+const onFill: ToastTone = {
+  title: 'text-cream',
+  description: 'text-white/80',
+  icon: 'text-white',
+  action:
+    'bg-white/15 text-cream hover:bg-white/25 focus-visible:ring-white/70',
+  close:
+    'text-white/55 hover:bg-white/15 hover:text-white ' +
+    'focus-visible:ring-white/70',
+  track: 'bg-black/20',
+  timer: 'bg-white/90',
+}
+
+/* Mustard is the one surface light enough to need ink on top of it. */
+const onMustard: ToastTone = {
+  title: 'text-ink',
+  description: 'text-ink/75',
+  icon: 'text-ink',
+  action: 'bg-black/10 text-ink hover:bg-black/20 focus-visible:ring-ink/60',
+  close:
+    'text-ink/50 hover:bg-black/10 hover:text-ink focus-visible:ring-ink/60',
+  track: 'bg-black/15',
+  timer: 'bg-ink/80',
+}
+
+const toneClass: Record<ToastVariant, ToastTone> = {
+  default: onFill,
+  success: onFill,
+  error: onFill,
+  warning: onMustard,
+  loading: onFill,
 }
 
 const iconName: Record<Exclude<ToastVariant, 'loading'>, StatusIconName> = {
@@ -66,24 +101,28 @@ const arkType: Record<ToastVariant, ToastType> = {
 
 /* Width is pinned here: without it Ark shrinks the card to one word per line
  * as soon as the message carries a description. */
-const rootClass =
-  'toast-card relative flex w-[min(24rem,calc(100vw-2rem))] gap-3 ' +
-  'rounded-[16px] border border-white/10 bg-charcoal pb-4 pl-4 pr-11 pt-3.5 ' +
-  'overflow-hidden focus-visible:outline-none'
-const bodyClass = 'flex min-w-0 flex-col gap-1'
+const rootClass = 'relative flex w-[min(24rem,calc(100vw-2rem))]'
+
+/* The visible card is a layer inside the root, never the root itself: Ark
+ * hangs ghost elements off the root that stretch past its bounds to bridge the
+ * gap between cards, and they keep the deck open while the pointer travels
+ * from one card to the next. Clipping the root would eat them, and the stack
+ * would collapse mid-hover. */
+const cardClass =
+  'toast-card relative flex h-full w-full gap-3 overflow-hidden ' +
+  'rounded-[14px] border pb-3 pl-4 pr-11 pt-2.5'
+const bodyClass = 'flex min-w-0 flex-col gap-0.5'
 const titleClass =
   'font-display text-[0.9375rem] font-semibold leading-tight ' +
-  'tracking-[-0.01em] text-cream'
-const descriptionClass = 'text-[0.8125rem] leading-[1.45] text-white/60'
+  'tracking-[-0.01em]'
+const descriptionClass = 'text-[0.8125rem] leading-[1.45]'
 const actionClass =
-  'mt-1.5 self-start rounded-full text-[0.8125rem] font-semibold ' +
-  'underline-offset-4 hover:underline focus-visible:outline-none ' +
-  'focus-visible:ring-2 focus-visible:ring-warm-light'
+  'mt-1.5 self-start rounded-full px-3 py-0.5 text-[0.8125rem] font-semibold ' +
+  'transition-colors focus-visible:outline-none focus-visible:ring-2'
 const closeClass =
-  'absolute right-2.5 top-2.5 grid size-7 place-items-center rounded-full ' +
-  'text-white/40 transition-colors hover:bg-white/10 hover:text-cream ' +
-  'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-warm-light'
-const timerTrackClass = 'absolute inset-x-0 bottom-0 h-[2px] bg-white/10'
+  'absolute right-2 top-2 grid size-7 place-items-center rounded-full ' +
+  'transition-colors focus-visible:outline-none focus-visible:ring-2'
+const timerTrackClass = 'absolute inset-x-0 bottom-0 h-[2px]'
 
 const toOptions = (input?: ToastInput): ToastOptions =>
   typeof input === 'string' ? { description: input } : (input ?? {})
@@ -211,7 +250,7 @@ export function ToastProvider({ children }: ToastProviderProps) {
 function ToastIcon({ variant }: { variant: ToastVariant }) {
   const className = mergeClasses(
     'mt-px size-[18px] shrink-0',
-    accentClass[variant]
+    toneClass[variant].icon
   )
 
   if (variant === 'loading') {
@@ -255,50 +294,65 @@ function ToastStack({
       {(t) => {
         const meta = t.meta as ToastMeta | undefined
         const variant = meta?.variant ?? 'default'
+        const tone = toneClass[variant]
 
         return (
           <ArkToast.Root key={t.id} className={rootClass}>
-            <ToastIcon variant={variant} />
-            <div className={bodyClass}>
-              <ArkToast.Title className={titleClass}>{t.title}</ArkToast.Title>
-              {t.description && (
-                <ArkToast.Description className={descriptionClass}>
-                  {t.description}
-                </ArkToast.Description>
-              )}
-              {t.action && (
-                <ArkToast.ActionTrigger
-                  className={mergeClasses(actionClass, accentClass[variant])}
+            <div className={mergeClasses(cardClass, surfaceClass[variant])}>
+              <ToastIcon variant={variant} />
+              <div className={bodyClass}>
+                <ArkToast.Title
+                  className={mergeClasses(titleClass, tone.title)}
                 >
-                  {t.action.label}
-                </ArkToast.ActionTrigger>
+                  {t.title}
+                </ArkToast.Title>
+                {t.description && (
+                  <ArkToast.Description
+                    className={mergeClasses(descriptionClass, tone.description)}
+                  >
+                    {t.description}
+                  </ArkToast.Description>
+                )}
+                {t.action && (
+                  <ArkToast.ActionTrigger
+                    className={mergeClasses(actionClass, tone.action)}
+                  >
+                    {t.action.label}
+                  </ArkToast.ActionTrigger>
+                )}
+              </div>
+              {t.closable !== false && (
+                <ArkToast.CloseTrigger
+                  className={mergeClasses(closeClass, tone.close)}
+                  aria-label="Close"
+                >
+                  <svg
+                    width="14"
+                    height="14"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                  >
+                    <path d="M18 6 6 18M6 6l12 12" />
+                  </svg>
+                </ArkToast.CloseTrigger>
+              )}
+              {meta?.timed && (
+                <span
+                  className={mergeClasses(timerTrackClass, tone.track)}
+                  aria-hidden="true"
+                >
+                  <span
+                    className={mergeClasses(
+                      'toast-timer block h-full w-full origin-left',
+                      tone.timer
+                    )}
+                  />
+                </span>
               )}
             </div>
-            {t.closable !== false && (
-              <ArkToast.CloseTrigger className={closeClass} aria-label="Close">
-                <svg
-                  width="14"
-                  height="14"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                >
-                  <path d="M18 6 6 18M6 6l12 12" />
-                </svg>
-              </ArkToast.CloseTrigger>
-            )}
-            {meta?.timed && (
-              <span className={timerTrackClass} aria-hidden="true">
-                <span
-                  className={mergeClasses(
-                    'toast-timer block h-full w-full origin-left',
-                    timerClass[variant]
-                  )}
-                />
-              </span>
-            )}
           </ArkToast.Root>
         )
       }}

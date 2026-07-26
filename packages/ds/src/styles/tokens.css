@@ -55,10 +55,8 @@
   --color-danger-surface: #fdeae4;
   --color-warning: #8a6114;
   --color-warning-surface: #fbf0d8;
-  /* Mesma família, puxada para cima em luminosidade: os status escuros somem
-     sobre superfície escura (toast). Usar só sobre ink/charcoal. */
-  --color-success-bright: #7ed3a0;
-  --color-danger-bright: #ff8a6b;
+  /* Mostarda cheia: o warning escuro serve a texto, não a fundo. Único status
+     claro o bastante para pedir texto ink por cima (toast). */
   --color-warning-bright: #f2c14e;
 
   /* Inputs — override por tenant */

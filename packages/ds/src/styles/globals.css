@@ -148,9 +148,11 @@
     inset 0 1px 0 rgba(255, 255, 255, 0.07);
 }
 
-.toast-card:focus-visible {
+/* O foco fica no root (é ele que recebe o tabindex do Ark), não no cartão. */
+[data-scope='toast'][data-part='root']:focus-visible {
   outline: 2px solid var(--color-warm-light);
   outline-offset: 2px;
+  border-radius: 14px;
 }
 
 /* O prazo é a própria borda de baixo do cartão, drenando. --duration é o tempo
