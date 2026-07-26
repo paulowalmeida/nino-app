@@ -1,7 +1,7 @@
 import { Link } from 'react-router'
 
-import { Button, Skeleton } from '@nino/ds'
-
+import { Button } from '@nino/ds/components/Button'
+import { Skeleton } from '@nino/ds/components/Skeleton'
 import { PageTitle } from '@components/PageTitle'
 import { PersonMark } from '@components/PersonMark'
 import { useCurrentTenant } from '@hooks/session/useCurrentTenant'

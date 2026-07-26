@@ -3,7 +3,10 @@
   "version": "0.0.1",
   "private": true,
   "exports": {
-    ".": "./src/index.ts"
+    ".": "./src/index.ts",
+    "./enums": "./src/enums.ts",
+    "./services/*": "./src/services/*.ts",
+    "./types/*": "./src/types/*/index.ts"
   },
   "scripts": {
     "lint": "eslint src/ --max-warnings=0",

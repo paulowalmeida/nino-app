@@ -1,7 +1,8 @@
 import { AnimatePresence, motion as motionEl } from 'framer-motion'
 
-import { Button, Drawer, Image } from '@nino/ds'
-
+import { Button } from '@nino/ds/components/Button'
+import { Drawer } from '@nino/ds/components/Drawer'
+import { Image } from '@nino/ds/components/Image'
 import { AnimatedNumber } from '@components/AnimatedNumber/AnimatedNumber'
 import { categoryIcon } from '@utils/category-icon'
 import { primaryImage } from '@utils/menu-image'

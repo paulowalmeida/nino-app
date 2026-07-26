@@ -1,7 +1,6 @@
 import { useState } from 'react'
 
-import { toast } from '@nino/ds'
-
+import { toast } from '@nino/ds/components/Toast'
 import { ProductGrid } from '@compositions/ProductGrid'
 import { SaleTicket } from '@compositions/SaleTicket'
 import { useCreateOrder } from '@hooks/order/useCreateOrder'

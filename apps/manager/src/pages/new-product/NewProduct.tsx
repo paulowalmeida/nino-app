@@ -4,16 +4,13 @@ import { useNavigate } from 'react-router'
 
 import { useQueryClient } from '@tanstack/react-query'
 
-import {
-  Button,
-  FormField,
-  Input,
-  Select,
-  Skeleton,
-  Textarea,
-  toast,
-} from '@nino/ds'
-
+import { Button } from '@nino/ds/components/Button'
+import { FormField } from '@nino/ds/components/FormField'
+import { Input } from '@nino/ds/components/Input'
+import { Select } from '@nino/ds/components/Select'
+import { Skeleton } from '@nino/ds/components/Skeleton'
+import { Textarea } from '@nino/ds/components/Textarea'
+import { toast } from '@nino/ds/components/Toast'
 import { ItemPhoto } from '@compositions/ItemPhoto'
 import { BackLink } from '@components/BackLink'
 import { PageTitle } from '@components/PageTitle'

@@ -2,17 +2,14 @@ import { useEffect, useState } from 'react'
 import { Controller, useForm, useWatch } from 'react-hook-form'
 import { useNavigate, useParams } from 'react-router'
 
-import {
-  Button,
-  Dialog,
-  FormField,
-  Input,
-  Select,
-  Skeleton,
-  Switch,
-  Textarea,
-} from '@nino/ds'
-
+import { Button } from '@nino/ds/components/Button'
+import { Dialog } from '@nino/ds/components/Dialog'
+import { FormField } from '@nino/ds/components/FormField'
+import { Input } from '@nino/ds/components/Input'
+import { Select } from '@nino/ds/components/Select'
+import { Skeleton } from '@nino/ds/components/Skeleton'
+import { Switch } from '@nino/ds/components/Switch'
+import { Textarea } from '@nino/ds/components/Textarea'
 import { ItemPhoto } from '@compositions/ItemPhoto'
 import { BackLink } from '@components/BackLink'
 import { ItemThumb } from '@components/ItemThumb'

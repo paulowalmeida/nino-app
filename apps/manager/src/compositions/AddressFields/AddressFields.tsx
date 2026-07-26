@@ -1,5 +1,5 @@
-import { FormField, Input } from '@nino/ds'
-
+import { FormField } from '@nino/ds/components/FormField'
+import { Input } from '@nino/ds/components/Input'
 import type { AddressFieldsProps } from './AddressFields.types'
 
 import styles from './AddressFields.module.css'

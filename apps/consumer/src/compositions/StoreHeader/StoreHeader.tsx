@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 
-import { Image, Input } from '@nino/ds'
-
+import { Image } from '@nino/ds/components/Image'
+import { Input } from '@nino/ds/components/Input'
 import searchIcon from '@assets/icons/search.svg?raw'
 import { Icon } from '@components/Icon/Icon'
 import { displayName, initials, isOpen } from '@utils/store-info'

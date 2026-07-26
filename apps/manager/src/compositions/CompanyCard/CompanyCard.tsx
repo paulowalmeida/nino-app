@@ -1,7 +1,9 @@
 import { useState } from 'react'
 
-import { Button, FormField, Input, Skeleton } from '@nino/ds'
-
+import { Button } from '@nino/ds/components/Button'
+import { FormField } from '@nino/ds/components/FormField'
+import { Input } from '@nino/ds/components/Input'
+import { Skeleton } from '@nino/ds/components/Skeleton'
 import { AddressFields } from '@compositions/AddressFields'
 import type { Company } from '@custom_types/company'
 import { formatCnpj } from '@utils/document'

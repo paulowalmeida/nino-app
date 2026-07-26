@@ -1,7 +1,7 @@
 import { useRef, useState } from 'react'
 
-import { Button, Slider } from '@nino/ds'
-
+import { Button } from '@nino/ds/components/Button'
+import { Slider } from '@nino/ds/components/Slider'
 import { cropToSquare } from '@utils/crop-image'
 
 import type { PhotoCropperProps } from './PhotoCropper.types'

@@ -1,4 +1,4 @@
-import { toast } from '@nino/ds'
+import { toast } from '@nino/ds/components/Toast'
 import { MutationCache, QueryClient } from '@tanstack/react-query'
 
 /**

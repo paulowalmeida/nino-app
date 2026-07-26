@@ -1,7 +1,6 @@
 import { useNavigate } from 'react-router'
 
-import { Menu } from '@nino/ds'
-
+import { Menu } from '@nino/ds/components/Menu'
 import { NavIcon } from '@components/NavIcon'
 import { PersonMark } from '@components/PersonMark'
 import { logout } from '@services/auth/auth.service'

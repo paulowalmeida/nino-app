@@ -1,8 +1,10 @@
 import { Link } from 'react-router'
 import { useForm } from 'react-hook-form'
 
-import { Button, FormField, Input, PasswordInput } from '@nino/ds'
-
+import { Button } from '@nino/ds/components/Button'
+import { FormField } from '@nino/ds/components/FormField'
+import { Input } from '@nino/ds/components/Input'
+import { PasswordInput } from '@nino/ds/components/PasswordInput'
 import type { LoginRequest } from '@custom_types/auth'
 import { useLogin } from '@hooks/auth/useLogin'
 import { authErrorMessage } from '@utils/auth-error-message'

@@ -1,7 +1,7 @@
 import { useState } from 'react'
 
-import { Button, Input } from '@nino/ds'
-
+import { Button } from '@nino/ds/components/Button'
+import { Input } from '@nino/ds/components/Input'
 import pencilIcon from '@assets/icons/pencil.svg?raw'
 import trashIcon from '@assets/icons/trash.svg?raw'
 import { Icon } from '@components/Icon/Icon'

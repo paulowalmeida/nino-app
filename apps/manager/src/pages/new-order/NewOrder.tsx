@@ -1,8 +1,10 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router'
 
-import { Button, Select, Skeleton, Textarea } from '@nino/ds'
-
+import { Button } from '@nino/ds/components/Button'
+import { Select } from '@nino/ds/components/Select'
+import { Skeleton } from '@nino/ds/components/Skeleton'
+import { Textarea } from '@nino/ds/components/Textarea'
 import { BackLink } from '@components/BackLink'
 import { ItemThumb } from '@components/ItemThumb'
 import { PageTitle } from '@components/PageTitle'

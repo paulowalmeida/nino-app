@@ -1,4 +1,4 @@
-import { toast } from '@nino/ds'
+import { toast } from '@nino/ds/components/Toast'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 
 import { queryClient } from './query-client'

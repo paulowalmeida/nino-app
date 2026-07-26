@@ -1,4 +1,4 @@
-import { toast } from '@nino/ds'
+import { toast } from '@nino/ds/components/Toast'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 
 import { queryKeys } from '@constants/query-keys'

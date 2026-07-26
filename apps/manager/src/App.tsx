@@ -1,4 +1,4 @@
-import { ToastContainer } from '@nino/ds'
+import { ToastContainer } from '@nino/ds/components/Toast'
 import { RouterProvider } from 'react-router'
 
 import { QueryProvider } from '@providers/QueryProvider'

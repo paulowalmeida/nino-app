@@ -1,5 +1,5 @@
-import { Input, Select } from '@nino/ds'
-
+import { Input } from '@nino/ds/components/Input'
+import { Select } from '@nino/ds/components/Select'
 import type { RecipientFieldsProps } from './RecipientFields.types'
 
 import styles from './RecipientFields.module.css'

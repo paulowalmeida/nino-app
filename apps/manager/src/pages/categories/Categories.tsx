@@ -1,8 +1,10 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router'
 
-import { Button, Dialog, Input, Skeleton } from '@nino/ds'
-
+import { Button } from '@nino/ds/components/Button'
+import { Dialog } from '@nino/ds/components/Dialog'
+import { Input } from '@nino/ds/components/Input'
+import { Skeleton } from '@nino/ds/components/Skeleton'
 import { BackLink } from '@components/BackLink'
 import { PageTitle } from '@components/PageTitle'
 import {

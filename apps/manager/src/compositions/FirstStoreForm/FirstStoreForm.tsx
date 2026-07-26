@@ -1,15 +1,12 @@
 import { useEffect, useState } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 
-import {
-  Button,
-  FormField,
-  Input,
-  MaskedInput,
-  Select,
-  maskZipCode,
-} from '@nino/ds'
-
+import { Button } from '@nino/ds/components/Button'
+import { FormField } from '@nino/ds/components/FormField'
+import { Input } from '@nino/ds/components/Input'
+import { MaskedInput } from '@nino/ds/components/MaskedInput'
+import { Select } from '@nino/ds/components/Select'
+import { maskZipCode } from '@nino/ds/masks'
 import { useCreateStore } from '@hooks/store/useCreateStore'
 import { useStoreTypes } from '@hooks/store/useStoreTypes'
 import { lookupZipCode, onlyDigits } from '@services/store/address.service'

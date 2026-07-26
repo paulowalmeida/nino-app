@@ -1,5 +1,4 @@
-import { Skeleton } from '@nino/ds'
-
+import { Skeleton } from '@nino/ds/components/Skeleton'
 import { PageTitle } from '@components/PageTitle'
 import { useSubscription } from '@hooks/account/useSubscription'
 import { brl } from '@utils/money'

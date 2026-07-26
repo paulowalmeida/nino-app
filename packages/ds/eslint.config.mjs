@@ -23,6 +23,35 @@ export default tseslint.config(
         },
       ],
       'simple-import-sort/exports': 'error',
+      /*
+       * Um componente que importa o barrel do próprio pacote reintroduz o
+       * acoplamento pelo lado de dentro: quem importar só o Button acaba
+       * levando os 57. Importe a pasta do componente.
+       */
+      'no-restricted-imports': [
+        'error',
+        {
+          paths: [
+            {
+              name: '@ds/components',
+              message:
+                'Importe a pasta do componente, nunca o barrel do pacote.',
+            },
+            {
+              name: '@ds',
+              message:
+                'Importe a pasta do componente, nunca o barrel do pacote.',
+            },
+          ],
+          patterns: [
+            {
+              group: ['**/components/index'],
+              message:
+                'Importe a pasta do componente, nunca o barrel do pacote.',
+            },
+          ],
+        },
+      ],
       '@typescript-eslint/no-explicit-any': 'error',
       '@typescript-eslint/no-unused-vars': [
         'error',

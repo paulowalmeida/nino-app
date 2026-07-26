@@ -1,5 +1,4 @@
-import { Image } from '@nino/ds'
-
+import { Image } from '@nino/ds/components/Image'
 import { categoryIcon } from '@utils/category-icon'
 
 import type { ItemThumbProps } from './ItemThumb.types'

@@ -1,8 +1,7 @@
 import { useState } from 'react'
 import { NavLink, useLocation } from 'react-router'
 
-import { Accordion } from '@nino/ds'
-
+import { Accordion } from '@nino/ds/components/Accordion'
 import { NavIcon } from '@components/NavIcon'
 import { NinoLogo } from '@components/NinoLogo'
 import { MANAGERS } from '@constants/roles'

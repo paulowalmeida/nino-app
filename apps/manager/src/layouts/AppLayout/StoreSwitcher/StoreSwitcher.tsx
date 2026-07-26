@@ -1,7 +1,6 @@
 import { useLocation, useNavigate } from 'react-router'
 
-import { Menu, type MenuItem } from '@nino/ds'
-
+import { Menu, type MenuItem } from '@nino/ds/components/Menu'
 import { NavIcon } from '@components/NavIcon'
 import { useCompanyGroups } from '@hooks/session/useCompanyGroups'
 
