@@ -2,12 +2,46 @@ import type { Meta, StoryObj } from '@storybook/react'
 
 import { Button } from '../Button'
 import { toast, ToastContainer } from './Toast'
-import type { ToastVariant } from './Toast.types'
+import type { ToastPlacement, ToastVariant } from './Toast.types'
+
+const placements: ToastPlacement[] = [
+  'top-start',
+  'top',
+  'top-end',
+  'bottom-start',
+  'bottom',
+  'bottom-end',
+]
 
 const meta: Meta<typeof ToastContainer> = {
   title: 'Components/Toast',
   component: ToastContainer,
   tags: ['autodocs'],
+  argTypes: {
+    placement: {
+      control: 'select',
+      options: placements,
+      description: 'Corner the stack docks to',
+    },
+    duration: {
+      control: { type: 'number', step: 500 },
+      description: 'Milliseconds on screen (Infinity keeps it until dismissed)',
+    },
+    max: {
+      control: { type: 'number', min: 1, max: 8 },
+      description: 'Visible at once; the rest queue',
+    },
+    gap: { control: 'number', description: 'Pixels between expanded cards' },
+    offset: { control: 'text', description: 'Distance from the viewport edge' },
+    overlap: {
+      control: 'boolean',
+      description: 'Collapse into a deck that fans open on hover',
+    },
+    pauseOnPageIdle: {
+      control: 'boolean',
+      description: 'Hold timers while the tab is in the background',
+    },
+  },
   decorators: [
     (Story) => (
       <div className="flex flex-col items-center gap-4 p-8">
@@ -22,7 +56,36 @@ type Story = StoryObj<typeof ToastContainer>
 
 export const Default: Story = {
   render: () => (
-    <Button onClick={() => toast.default('Notification')}>Show default</Button>
+    <Button onClick={() => toast.default('Order #4821 updated')}>
+      Show default
+    </Button>
+  ),
+}
+
+/**
+ * The controls below are the settings `ToastContainer` takes as props. The
+ * Storybook preview mounts a single container outside the stories, so this
+ * story pushes the same settings through `toast.configure`.
+ */
+export const Playground: Story = {
+  args: {
+    placement: 'bottom-end',
+    duration: 4200,
+    max: 4,
+    gap: 12,
+    offset: '1.25rem',
+    overlap: true,
+    pauseOnPageIdle: true,
+  },
+  render: ({ className: _className, ...settings }) => (
+    <Button
+      onClick={() => {
+        toast.configure(settings)
+        toast.success('Order confirmed', 'Order #1234 is now in the kitchen.')
+      }}
+    >
+      Show with these settings
+    </Button>
   ),
 }
 
@@ -30,7 +93,7 @@ export const Success: Story = {
   render: () => (
     <Button
       onClick={() =>
-        toast.success('Order confirmed!', 'Your order #1234 is being prepared.')
+        toast.success('Order confirmed', 'Order #1234 is now in the kitchen.')
       }
     >
       Show success
@@ -42,7 +105,9 @@ export const Error: Story = {
   render: () => (
     <Button
       variant="outline"
-      onClick={() => toast.error('Something went wrong', 'Please try again.')}
+      onClick={() =>
+        toast.error('Menu did not save', 'The connection dropped mid-save.')
+      }
     >
       Show error
     </Button>
@@ -54,10 +119,7 @@ export const Warning: Story = {
     <Button
       variant="outline"
       onClick={() =>
-        toast.warning(
-          'Session expiring',
-          'You will be logged out in 5 minutes.'
-        )
+        toast.warning('Photo did not upload', 'The item was created anyway.')
       }
     >
       Show warning
@@ -65,24 +127,96 @@ export const Warning: Story = {
   ),
 }
 
-/** All four side by side, kept on screen for reviewing color and contrast. */
-export const Showcase: Story = {
+/** A toast that carries the next step instead of describing it. */
+export const WithAction: Story = {
+  render: () => (
+    <Button
+      onClick={() =>
+        toast.error('Menu did not save', {
+          description: 'The connection dropped mid-save.',
+          duration: 10000,
+          action: {
+            label: 'Save again',
+            onClick: () => toast.success('Menu saved'),
+          },
+        })
+      }
+    >
+      Show toast with an action
+    </Button>
+  ),
+}
+
+/** Stays put until something replaces it — no timer bar is drawn. */
+export const Persistent: Story = {
+  render: () => (
+    <Button
+      variant="outline"
+      onClick={() =>
+        toast.warning('Store is offline', {
+          description: 'New orders are not coming through.',
+          duration: Infinity,
+        })
+      }
+    >
+      Show persistent toast
+    </Button>
+  ),
+}
+
+/** One card that becomes its own outcome. */
+export const PromiseToast: Story = {
+  name: 'Promise',
+  render: () => (
+    <Button
+      onClick={() =>
+        toast.promise(
+          new Promise<void>((resolve) => setTimeout(resolve, 2200)),
+          {
+            loading: 'Publishing menu',
+            success: 'Menu is live',
+            error: 'Menu did not publish',
+          }
+        )
+      }
+    >
+      Publish menu
+    </Button>
+  ),
+}
+
+/** Every corner is available per call, not just per app. */
+export const Placements: Story = {
+  render: () => (
+    <div className="flex flex-wrap justify-center gap-2">
+      {placements.map((placement) => (
+        <Button
+          key={placement}
+          variant="outline"
+          onClick={() => toast.default(placement, { placement })}
+        >
+          {placement}
+        </Button>
+      ))}
+    </div>
+  ),
+}
+
+/**
+ * Four at once: they collapse into a deck and fan open on hover, and each
+ * timer pauses while the pointer is over the stack.
+ */
+export const Stacked: Story = {
   render: () => (
     <Button
       onClick={() => {
-        toast.success('Loja fechada', 'Volta a receber pedidos às 14h.')
-        toast.error(
-          'A ordem dos itens voltou ao que era',
-          'Tente arrastar de novo.'
-        )
-        toast.warning(
-          'Item criado, mas a foto não subiu',
-          'Abra o item no cardápio e envie de novo.'
-        )
-        toast.default('Pedido #4821 atualizado')
+        toast.success('Store closed', 'Orders resume at 2pm.')
+        toast.error('Item order rolled back', 'Drag it again.')
+        toast.warning('Photo did not upload', 'Send it again from the menu.')
+        toast.default('Order #4821 updated')
       }}
     >
-      Show every variant
+      Show a full stack
     </Button>
   ),
 }
@@ -90,17 +224,19 @@ export const Showcase: Story = {
 export const AllVariants: Story = {
   render: () => (
     <div className="flex flex-wrap gap-2">
-      {(['default', 'success', 'error', 'warning'] as ToastVariant[]).map(
-        (v) => (
-          <Button
-            key={v}
-            variant="outline"
-            onClick={() => toast[v](v.charAt(0).toUpperCase() + v.slice(1))}
-          >
-            {v}
-          </Button>
-        )
-      )}
+      {(
+        ['default', 'success', 'error', 'warning', 'loading'] as ToastVariant[]
+      ).map((variant) => (
+        <Button
+          key={variant}
+          variant="outline"
+          onClick={() =>
+            toast[variant](variant.charAt(0).toUpperCase() + variant.slice(1))
+          }
+        >
+          {variant}
+        </Button>
+      ))}
     </div>
   ),
 }

@@ -2,7 +2,7 @@
 
 @layer base {
   body {
-    background: var(--color-paper);
+    background: var(--color-brand-foreground);
     -webkit-font-smoothing: antialiased;
   }
 

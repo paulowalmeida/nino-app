@@ -108,39 +108,77 @@
   }
 }
 
-@keyframes toast-in {
+/* Toast — o movimento não é keyframe: a máquina do Ark escreve --x/--y/--scale/
+   --opacity/--z-index no root a cada mudança da pilha, e o cartão apenas
+   transiciona entre esses valores. É o que faz um toast novo empurrar os de
+   baixo em vez de saltar, e o baralho abrir no hover. */
+[data-scope='toast'][data-part='root'] {
+  translate: var(--x) var(--y);
+  scale: var(--scale, 1);
+  height: var(--height, auto);
+  z-index: var(--z-index);
+  opacity: var(--opacity);
+  will-change: translate, scale, opacity;
+  transition:
+    translate 460ms cubic-bezier(0.22, 1, 0.36, 1),
+    scale 460ms cubic-bezier(0.22, 1, 0.36, 1),
+    height 460ms cubic-bezier(0.22, 1, 0.36, 1),
+    filter 460ms cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 300ms ease-out;
+}
+
+/* Entra desfocado e assenta em foco — o borrão dura o tempo do deslocamento,
+   então o cartão parece frear, não parar. */
+[data-scope='toast'][data-part='root']:not([data-mounted]),
+[data-scope='toast'][data-part='root'][data-state='closed'] {
+  filter: blur(6px);
+}
+
+[data-scope='toast'][data-part='root'][data-state='closed'] {
+  transition-duration: 220ms, 220ms, 220ms, 220ms, 160ms;
+  transition-timing-function: cubic-bezier(0.4, 0, 1, 1);
+}
+
+/* Uma sombra só, difusa e fraca: serve para descolar o cartão do fundo, não
+   para dar volume. Sem highlight interno — a cor tem que ler como chapada. */
+.toast-card {
+  box-shadow: 0 6px 20px -6px rgba(10, 8, 4, 0.35);
+}
+
+/* O foco fica no root (é ele que recebe o tabindex do Ark), não no cartão. */
+[data-scope='toast'][data-part='root']:focus-visible {
+  outline: 2px solid var(--color-warm-light);
+  outline-offset: 2px;
+  border-radius: 8px;
+}
+
+/* O prazo é a própria borda de baixo do cartão, drenando. --duration é o tempo
+   restante: o Ark reescreve no hover, e data-paused congela a barra junto com
+   o cronômetro — a pausa fica visível, não só implícita. */
+@keyframes toast-timer {
   from {
-    opacity: 0;
-    transform: translateX(calc(100% + 2rem));
+    transform: scaleX(1);
   }
   to {
-    opacity: 1;
-    transform: translateX(0);
+    transform: scaleX(0);
   }
 }
 
-@keyframes toast-out {
-  from {
-    opacity: 1;
-    transform: translateX(0);
-  }
-  to {
-    opacity: 0;
-    transform: translateX(calc(100% + 2rem));
-  }
+.toast-timer {
+  animation: toast-timer var(--duration, 4200ms) linear forwards;
 }
 
-.toast-animated[data-state='open'] {
-  animation: toast-in 0.35s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.toast-animated[data-state='closed'] {
-  animation: toast-out 0.2s ease-in forwards;
+[data-scope='toast'][data-part='root'][data-paused] .toast-timer {
+  animation-play-state: paused;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .toast-animated[data-state='open'],
-  .toast-animated[data-state='closed'] {
+  [data-scope='toast'][data-part='root'] {
+    transition-property: opacity;
+    filter: none;
+  }
+
+  .toast-timer {
     animation: none;
   }
 }
