@@ -42,9 +42,34 @@
   font-variant-numeric: tabular-nums;
 }
 
+/* pedido fechado: sem cronômetro correndo, o dado é a hora que entrou */
 .time {
   @apply text-xs text-faint;
   font-variant-numeric: tabular-nums;
+}
+
+/*
+ * Na fila o que decide é há quanto tempo o pedido espera, não a que horas
+ * entrou: "12 min" responde sozinho, "17:00" exige conta de cabeça no meio
+ * do movimento. A hora cheia continua no `dateTime` e no title.
+ *
+ * Mesmo relógio da cozinha (`useElapsed`), gramática diferente: aqui é uma
+ * pastilha no cabeçalho, não a fita de prazo escorrendo — a fita é da
+ * comanda de quem está com as mãos na chapa e não pode ler número.
+ */
+.waited {
+  @apply rounded-full bg-surface-sunk px-2 py-0.5 text-[0.7rem] font-bold;
+  @apply tracking-[0.02em] text-subtle;
+  font-variant-numeric: tabular-nums;
+}
+
+.overdue {
+  @apply bg-danger-surface text-danger;
+}
+
+/* passou do prazo esperando aceite: a borda quente do topo esfria em alerta */
+.waiting.late::before {
+  @apply bg-danger;
 }
 
 .channel {
