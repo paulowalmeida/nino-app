@@ -1,6 +1,7 @@
 import { Link } from 'react-router'
 
 import { Button } from '@nino/ds/components/Button'
+import { useElapsed } from '@hooks/order/useElapsed'
 import { brl } from '@utils/money'
 import {
   CHANNEL_LABEL,
@@ -8,6 +9,7 @@ import {
   nextStep,
   PAYMENT_METHOD_LABEL,
   PAYMENT_STATUS_LABEL,
+  stageOf,
   STATUS_LABEL,
   ticketNumber,
 } from '@utils/order-flow'
@@ -34,18 +36,39 @@ export const OrderTicket = ({
   const hidden = order.items.length - VISIBLE_ITEMS
   const isWaiting = order.status === 'PENDING'
   const isCancelled = order.status === 'CANCELLED'
+  /** Pedido encerrado não tem cronômetro: aí a hora cheia volta a valer. */
+  const isDone = isCancelled || stageOf(order.status) === 'closed'
+  const { label: elapsed, isLate } = useElapsed(order.createdAt)
+  const clock = time.format(new Date(order.createdAt))
+
+  const classes = [
+    styles.ticket,
+    isWaiting ? styles.waiting : '',
+    isCancelled ? styles.cancelled : '',
+    isLate && !isDone ? styles.late : '',
+  ]
+
+  const waitedClass = isLate
+    ? `${styles.waited} ${styles.overdue}`
+    : styles.waited
 
   return (
-    <article
-      className={`${styles.ticket} ${isWaiting ? styles.waiting : ''} ${
-        isCancelled ? styles.cancelled : ''
-      }`}
-    >
+    <article className={classes.filter(Boolean).join(' ')}>
       <header className={styles.head}>
         <span className={styles.number}>#{ticketNumber(order.id)}</span>
-        <time className={styles.time} dateTime={order.createdAt}>
-          {time.format(new Date(order.createdAt))}
-        </time>
+        {isDone ? (
+          <time className={styles.time} dateTime={order.createdAt}>
+            {clock}
+          </time>
+        ) : (
+          <time
+            className={waitedClass}
+            dateTime={order.createdAt}
+            title={`Entrou às ${clock}`}
+          >
+            {elapsed}
+          </time>
+        )}
         <span className={styles.channel}>{CHANNEL_LABEL[order.channel]}</span>
       </header>
 

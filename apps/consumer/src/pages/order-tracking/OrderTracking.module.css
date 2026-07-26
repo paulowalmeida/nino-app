@@ -66,12 +66,23 @@
   }
 }
 
-.statusLabel {
-  @apply relative z-10 font-display text-lg font-extrabold;
+.statusText {
+  @apply relative z-10 flex min-w-0 flex-col;
 }
 
-.eta {
-  @apply mt-3 text-sm font-medium text-muted;
+.statusLabel {
+  @apply font-display text-lg font-extrabold;
+}
+
+/*
+ * A previsão mora dentro do cupom, não numa linha cinza embaixo dele: a
+ * pergunta de quem abre esta tela é "que horas fica pronto", e antes ela
+ * respondia em 14px de texto apagado ao lado de um banner laranja gritando o
+ * nome do estado.
+ */
+.statusEta {
+  @apply mt-0.5 text-[0.82rem] font-semibold text-cream/85;
+  font-variant-numeric: tabular-nums;
 }
 
 .timeline {
@@ -82,30 +93,54 @@
   @apply relative flex gap-3 pb-6 pl-1 last:pb-0;
 }
 
+/* conector alinhado ao centro do ponto: pl-1 (4px) + metade de 16px */
 .entry:not(:last-child)::before {
   content: '';
   position: absolute;
-  left: 5px;
-  top: 14px;
-  bottom: -4px;
+  left: 11px;
+  top: 18px;
+  bottom: -2px;
   width: 2px;
   background: var(--color-sand);
 }
 
+/*
+ * Três pesos, não um: o que já passou é um check apagado, o passo de agora é
+ * o único em tinta cheia, com o ponto laranja pulsando. Antes as cinco etapas
+ * tinham o mesmo peso de texto e a pessoa tinha que ler a lista inteira pra
+ * descobrir onde o pedido está.
+ */
 .entryDot {
-  @apply relative z-10 mt-1 h-3 w-3 shrink-0 rounded-full bg-sand-deep;
-}
-
-.entryDotCurrent {
-  @apply bg-brand;
+  @apply relative z-10 mt-0.5 flex h-4 w-4 shrink-0 items-center;
+  @apply justify-center rounded-full bg-sand-deep text-subtle;
 }
 
 .entryLabel {
-  @apply text-sm font-semibold text-body;
+  @apply text-sm font-medium text-muted;
 }
 
 .entryTime {
   @apply mt-0.5 text-xs text-faint;
+}
+
+.current .entryDot {
+  @apply h-4 w-4 bg-brand;
+  box-shadow: 0 0 0 4px var(--color-brand-soft);
+  animation: pulse 2s ease-in-out infinite;
+}
+
+.current .entryLabel {
+  @apply font-display text-[0.95rem] font-extrabold text-ink;
+}
+
+.current .entryTime {
+  @apply text-muted;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .current .entryDot {
+    animation: none;
+  }
 }
 
 .code {
@@ -146,16 +181,10 @@
   @apply h-6 w-32 rounded-lg bg-sand;
 }
 
-/* banner de status: cupom alto e arredondado, como o `.status` real */
+/* banner de status: cupom de duas linhas (estado + previsão), como o real */
 .skStatus {
   composes: nino-skeleton from global;
-  @apply h-[4.6rem] w-full rounded-2xl bg-sand;
-}
-
-/* ETA: uma linha curta de texto pequeno */
-.skEta {
-  composes: nino-skeleton from global;
-  @apply mt-3 h-4 w-40 rounded bg-sand;
+  @apply h-[5.5rem] w-full rounded-2xl bg-sand;
 }
 
 /* timeline: mesma métrica do real — ponto + duas linhas + conector vertical */
@@ -170,16 +199,16 @@
 .skEntry:not(:last-child)::before {
   content: '';
   position: absolute;
-  left: 5px;
-  top: 14px;
-  bottom: -4px;
+  left: 11px;
+  top: 18px;
+  bottom: -2px;
   width: 2px;
   background: var(--color-sand-deep);
 }
 
 .skDot {
   composes: nino-skeleton from global;
-  @apply relative z-10 mt-1 h-3 w-3 shrink-0 rounded-full bg-sand;
+  @apply relative z-10 mt-0.5 h-4 w-4 shrink-0 rounded-full bg-sand;
 }
 
 .skEntryText {

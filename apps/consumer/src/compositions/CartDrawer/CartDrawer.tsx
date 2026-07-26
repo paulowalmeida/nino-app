@@ -4,6 +4,7 @@ import { Button } from '@nino/ds/components/Button'
 import { Drawer } from '@nino/ds/components/Drawer'
 import { Image } from '@nino/ds/components/Image'
 import { AnimatedNumber } from '@components/AnimatedNumber/AnimatedNumber'
+import { useIsDesktop } from '@hooks/useIsDesktop'
 import { categoryIcon } from '@utils/category-icon'
 import { primaryImage } from '@utils/menu-image'
 import { brl } from '@utils/money'
@@ -39,20 +40,21 @@ export const CartDrawer = ({
   onCheckout,
 }: CartDrawerProps) => {
   const itemCount = lines.reduce((sum, line) => sum + line.quantity, 0)
+  const isDesktop = useIsDesktop()
 
   return (
     <Drawer
       open={open}
       onOpenChange={onOpenChange}
-      placement="bottom"
+      placement={isDesktop ? 'right' : 'bottom'}
       title="Sua sacola"
       description={
         lines.length === 0
           ? undefined
           : `${itemCount} ${itemCount === 1 ? 'item' : 'itens'}`
       }
-      size="auto"
-      contentClassName={styles.drawer}
+      size={isDesktop ? '25rem' : 'auto'}
+      contentClassName={isDesktop ? styles.panel : styles.sheet}
     >
       <div className={styles.body}>
         {lines.length === 0 ? (

@@ -151,7 +151,7 @@ export const ProductDetail = ({
       onOpenChange={(open) => !open && onClose()}
       placement="bottom"
       title={shown.name}
-      size="90dvh"
+      size="auto"
       contentClassName={styles.drawer}
     >
       {reveal}
