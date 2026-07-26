@@ -32,7 +32,21 @@ const sizeClasses: Record<ButtonSize, string> = {
 }
 
 const baseDisabledStyle = 'disabled:pointer-events-none'
-const disabledOpacity = 'opacity-50'
+
+/**
+ * Desligado é superfície apagada, não CTA translúcido: laranja de marca a
+ * 50% sobre cream continua lendo como botão vivo — a pessoa clica, nada
+ * acontece e a culpa parece ser do sistema. Variante com preenchimento
+ * troca a tinta por `sand`; as de fundo transparente (outline, ghost) já
+ * comunicam pelo apagamento e mantêm a opacidade.
+ */
+const FILLED: ButtonVariant[] = ['primary', 'secondary', 'inverse']
+
+const disabledStyle = (variant: ButtonVariant): string =>
+  FILLED.includes(variant) ? 'bg-sand text-subtle shadow-none' : 'opacity-50'
+
+/** Carregando não é desligado: a ação está em curso, a tinta continua. */
+const loadingOpacity = 'opacity-50'
 
 const MotionButton = motion.create('button')
 
@@ -85,9 +99,10 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       baseLayout,
       baseFocus,
       baseDisabledStyle,
-      (disabled || loading) && disabledOpacity,
       variantClasses[variant],
       sizeClasses[size],
+      /* depois da variante: é ela que o estado desligado precisa sobrescrever */
+      loading ? loadingOpacity : disabled && disabledStyle(variant),
       className
     )
 
