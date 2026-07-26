@@ -1,10 +1,17 @@
 @reference "@nino/ds/globals.css";
 
-/* Folha do polegar, só no mobile — a partir de lg vira Modal centralizado
-   (ver ProductDetail.tsx), que se ajusta ao conteúdo em vez de forçar
-   90dvh numa tela onde isso é um popup gigante. */
+/*
+ * Folha do polegar, só no mobile — a partir de lg vira Modal centralizado
+ * (ver ProductDetail.tsx).
+ *
+ * Altura pelo conteúdo, com teto: com 90dvh fixo, um item de uma linha de
+ * descrição abria uma folha de tela quase inteira e deixava o "Adicionar"
+ * flutuando no meio, com 400px de vazio embaixo — o `sticky` do rodapé só
+ * ancora quando o conteúdo transborda. Agora a folha cresce até o conteúdo
+ * e só rola quando passa do teto.
+ */
 .drawer {
-  @apply rounded-t-3xl bg-paper;
+  @apply max-h-[90dvh] rounded-t-3xl bg-paper;
 }
 
 .media {
