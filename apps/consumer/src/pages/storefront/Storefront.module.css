@@ -220,6 +220,29 @@
   @apply h-6 w-2/3 rounded-lg bg-sand lg:h-9;
 }
 
+/* Mesma caixa do `.searchToggle` do StoreHeader — sem ele, o bloco de texto
+ * nasce mais largo e encolhe quando o header real entra. */
+.skSearch {
+  composes: nino-skeleton from global;
+  @apply h-11 w-11 shrink-0 self-center rounded-full bg-sand;
+}
+
+/* Espelha o `.sectionHead`: título, contagem e a divisória tracejada. */
+.skSectionHead {
+  @apply mb-3 flex items-baseline justify-between gap-3 pb-2;
+  border-bottom: 1.5px dashed var(--color-line);
+}
+
+.skSectionTitle {
+  composes: nino-skeleton from global;
+  @apply h-7 w-40 rounded-lg bg-sand lg:h-8;
+}
+
+.skSectionCount {
+  composes: nino-skeleton from global;
+  @apply h-3 w-20 shrink-0 rounded bg-sand;
+}
+
 .skMeta {
   composes: nino-skeleton from global;
   @apply mt-2 h-4 w-2/5 rounded bg-sand;
@@ -243,16 +266,19 @@
   @apply lg:h-10 lg:w-full lg:rounded-xl;
 }
 
+/* As larguras variadas valem só na trilha horizontal do celular. No desktop a
+ * lista é vertical e uniforme — sem o `lg:w-full` aqui, estas regras vencem o
+ * do `.skChip` por virem depois na cascata, e a coluna pisca desalinhada. */
 .skChipS {
-  @apply w-16;
+  @apply w-16 lg:w-full;
 }
 
 .skChipM {
-  @apply w-24;
+  @apply w-24 lg:w-full;
 }
 
 .skChipL {
-  @apply w-32;
+  @apply w-32 lg:w-full;
 }
 
 /* grade de itens: coluna no celular, 2 colunas no desktop (igual `.items`) */
