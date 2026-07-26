@@ -24,11 +24,19 @@ export const usePauseActions = (tenantId: string | null) => {
     queryClient.setQueryData(pauseKey(tenantId ?? ''), pause)
 
   const pause = useMutation({
+    meta: {
+      success: 'Loja fechada',
+      errorTitle: 'A loja continua aberta',
+    },
     mutationFn: (data: PauseRequest) => pauseStore(tenantId as string, data),
     onSuccess: write,
   })
 
   const resume = useMutation({
+    meta: {
+      success: 'Loja reaberta',
+      errorTitle: 'A loja continua fechada',
+    },
     mutationFn: () => resumeStore(tenantId as string),
     onSuccess: write,
   })

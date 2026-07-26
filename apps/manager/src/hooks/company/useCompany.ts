@@ -12,6 +12,10 @@ export const useSaveCompany = () => {
   const queryClient = useQueryClient()
 
   return useMutation({
+    meta: {
+      success: 'Dados da empresa salvos',
+      errorTitle: 'Os dados da empresa não foram salvos',
+    },
     mutationFn: (data: UpdateCompanyRequest) => updateMyCompany(data),
     onSuccess: (company) => queryClient.setQueryData(companyKey, company),
   })

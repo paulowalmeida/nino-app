@@ -31,8 +31,14 @@ export const Employees = () => {
   const { data: staff, isPending: isStaffPending } = useStaff(tenantId)
   const { data: couriers, isPending: isCourierPending } = useCouriers(tenantId)
   const { mutateAsync: invite } = useInvite(tenantId)
-  const { mutate: removeMember, variables: removing } =
-    useRemoveMember(tenantId)
+  const {
+    mutate: removeMember,
+    variables: removingVariables,
+    isPending: isRemoving,
+  } = useRemoveMember(tenantId)
+
+  /* `variables` sobrevive à falha: sem o isPending o botão gira pra sempre. */
+  const removing = isRemoving ? removingVariables : undefined
   const { mutateAsync: updateStaffEmail } = useUpdateStaffEmail(tenantId)
 
   const [editingStaffId, setEditingStaffId] = useState<string | null>(null)

@@ -4,7 +4,7 @@ import {
   Toaster as ArkToaster,
 } from '@ark-ui/react/toast'
 import { mergeClasses } from '@ds/lib/mergeClasses'
-import { motion } from 'framer-motion'
+import { StatusIconName, statusIconPaths } from '@ds/lib/statusIconPaths'
 
 import {
   ToastContainerProps,
@@ -13,28 +13,52 @@ import {
   ToastVariant,
 } from './Toast.types'
 
+/**
+ * Tinted surface per status: the panel is used across a counter and a kitchen,
+ * where people read the screen from a step back. Color carries the state at
+ * that distance; an icon alone does not.
+ */
 const variantClasses: Record<ToastVariant, string> = {
-  default: 'bg-white border-gray-200 text-gray-900',
-  success: 'bg-white border-green-500 text-gray-900',
-  error: 'bg-white border-red-500 text-gray-900',
-  warning: 'bg-white border-yellow-500 text-gray-900',
+  default: 'bg-cream border-line',
+  success: 'bg-success-surface border-success/25',
+  error: 'bg-danger-surface border-danger/25',
+  warning: 'bg-warning-surface border-warning/25',
 }
 
 const variantAccent: Record<ToastVariant, string> = {
-  default: 'bg-gray-500',
-  success: 'bg-green-500',
-  error: 'bg-red-500',
-  warning: 'bg-yellow-500',
+  default: 'bg-muted',
+  success: 'bg-success',
+  error: 'bg-danger',
+  warning: 'bg-warning',
 }
 
-const titleClass = 'text-sm font-semibold'
-const descriptionClass = 'text-sm text-gray-500'
+const variantIconColor: Record<ToastVariant, string> = {
+  default: 'text-muted',
+  success: 'text-success',
+  error: 'text-danger',
+  warning: 'text-warning',
+}
+
+const iconName: Record<ToastVariant, StatusIconName> = {
+  default: 'info',
+  success: 'success',
+  error: 'error',
+  warning: 'warning',
+}
+
+/* A largura é fixa aqui: sem ela o Ark encolhe o cartão até uma palavra por
+ * linha quando a mensagem tem descrição. */
+const rootClass =
+  'relative flex w-[min(22rem,calc(100vw-2rem))] gap-3 rounded-[14px] border py-4 pl-5 pr-9 shadow-card overflow-hidden toast-animated'
+const titleClass = 'text-sm font-semibold text-ink'
+const descriptionClass = 'text-sm text-muted'
 const closeClass =
-  'absolute right-2 top-2 rounded p-0.5 text-gray-400 hover:text-gray-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand'
+  'absolute right-2 top-2 rounded p-0.5 text-faint hover:text-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand'
 
 export const toaster = createToaster({
   placement: 'bottom-end',
   gap: 8,
+  offsets: '1rem',
 })
 
 export const toast = {
@@ -44,7 +68,7 @@ export const toast = {
       description,
       duration,
       type: 'info',
-      meta: { variant: 'default', createdAt: Date.now() } as ToastMeta,
+      meta: { variant: 'default' } as ToastMeta,
     }),
   success: (title: string, description?: string, duration = 4000) =>
     toaster.create({
@@ -52,7 +76,7 @@ export const toast = {
       description,
       duration,
       type: 'success',
-      meta: { variant: 'success', createdAt: Date.now() } as ToastMeta,
+      meta: { variant: 'success' } as ToastMeta,
     }),
   error: (title: string, description?: string, duration = 4000) =>
     toaster.create({
@@ -60,7 +84,7 @@ export const toast = {
       description,
       duration,
       type: 'error',
-      meta: { variant: 'error', createdAt: Date.now() } as ToastMeta,
+      meta: { variant: 'error' } as ToastMeta,
     }),
   warning: (title: string, description?: string, duration = 4000) =>
     toaster.create({
@@ -68,7 +92,7 @@ export const toast = {
       description,
       duration,
       type: 'warning',
-      meta: { variant: 'warning', createdAt: Date.now() } as ToastMeta,
+      meta: { variant: 'warning' } as ToastMeta,
     }),
 }
 
@@ -76,37 +100,49 @@ export function ToastProvider({ children }: ToastProviderProps) {
   return <>{children}</>
 }
 
-export function ToastContainer({ className: _ }: ToastContainerProps) {
+function ToastIcon({ variant }: { variant: ToastVariant }) {
   return (
-    <ArkToaster toaster={toaster}>
+    <svg
+      viewBox="0 0 24 24"
+      fill="currentColor"
+      className={mergeClasses(
+        'mt-0.5 h-4 w-4 shrink-0',
+        variantIconColor[variant]
+      )}
+      aria-hidden="true"
+    >
+      <path d={statusIconPaths[iconName[variant]]} />
+    </svg>
+  )
+}
+
+export function ToastContainer({ className }: ToastContainerProps) {
+  return (
+    <ArkToaster toaster={toaster} className={className}>
       {(t) => {
         const meta = t.meta as ToastMeta | undefined
         const variant = meta?.variant ?? 'default'
-        const duration = t.duration ?? 4000
-        const elapsed = meta?.createdAt ? Date.now() - meta.createdAt : 0
-        const remaining = Math.max(0, duration - elapsed)
-        const startPct = duration > 0 ? (remaining / duration) * 100 : 0
 
         return (
           <ArkToast.Root
             key={t.id}
-            className={mergeClasses(
-              'relative flex flex-col gap-1 rounded-lg border p-4 pr-8 shadow-md overflow-hidden toast-animated',
-              variantClasses[variant]
-            )}
+            className={mergeClasses(rootClass, variantClasses[variant])}
           >
             <span
               className={mergeClasses(
-                'absolute left-0 top-0 bottom-0 w-1 rounded-l-lg',
+                'absolute left-0 top-0 bottom-0 w-1',
                 variantAccent[variant]
               )}
             />
-            <ArkToast.Title className={titleClass}>{t.title}</ArkToast.Title>
-            {t.description && (
-              <ArkToast.Description className={descriptionClass}>
-                {t.description}
-              </ArkToast.Description>
-            )}
+            <ToastIcon variant={variant} />
+            <div className="flex flex-col gap-1">
+              <ArkToast.Title className={titleClass}>{t.title}</ArkToast.Title>
+              {t.description && (
+                <ArkToast.Description className={descriptionClass}>
+                  {t.description}
+                </ArkToast.Description>
+              )}
+            </div>
             <ArkToast.CloseTrigger className={closeClass} aria-label="Close">
               <svg
                 width="14"
@@ -119,17 +155,6 @@ export function ToastContainer({ className: _ }: ToastContainerProps) {
                 <path d="M18 6 6 18M6 6l12 12" />
               </svg>
             </ArkToast.CloseTrigger>
-            {duration !== Infinity && (
-              <motion.div
-                className={mergeClasses(
-                  'absolute bottom-0 left-0 h-0.5 opacity-60',
-                  variantAccent[variant]
-                )}
-                initial={{ width: `${startPct}%` }}
-                animate={{ width: '0%' }}
-                transition={{ duration: remaining / 1000, ease: 'linear' }}
-              />
-            )}
           </ArkToast.Root>
         )
       }}

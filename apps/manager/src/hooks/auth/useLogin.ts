@@ -14,6 +14,8 @@ export const useLogin = () => {
   const navigate = useNavigate()
 
   return useMutation<AuthUser, Error, LoginRequest>({
+    /* O formulário já mostra o erro embaixo do campo. */
+    meta: { silentError: true },
     mutationFn: login,
     onSuccess: () => {
       void navigate('/')

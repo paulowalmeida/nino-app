@@ -31,6 +31,10 @@ export const useCreateCategory = (tenantId: string | null) => {
   const queryClient = useQueryClient()
 
   return useMutation({
+    meta: {
+      success: 'Categoria criada',
+      errorTitle: 'A categoria não foi criada',
+    },
     mutationFn: (name: string) => createCategory(tenantId as string, name),
     onSuccess: () => {
       void queryClient.invalidateQueries({
@@ -54,6 +58,10 @@ export const useUpdateCategory = (tenantId: string | null) => {
   const queryClient = useQueryClient()
 
   return useMutation({
+    meta: {
+      success: 'Categoria renomeada',
+      errorTitle: 'A categoria continua com o nome antigo',
+    },
     mutationFn: ({ id, name }: { id: string; name: string }) =>
       updateCategory(tenantId as string, id, name),
     onSuccess: () => invalidateCategoryQueries(queryClient, tenantId),
@@ -64,6 +72,8 @@ export const useDeleteCategory = (tenantId: string | null) => {
   const queryClient = useQueryClient()
 
   return useMutation({
+    /* A tela explica na hora por que uma categoria com itens não sai. */
+    meta: { success: 'Categoria excluída', silentError: true },
     mutationFn: (id: string) => deleteCategory(tenantId as string, id),
     onSuccess: () => invalidateCategoryQueries(queryClient, tenantId),
   })

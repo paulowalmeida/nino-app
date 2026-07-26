@@ -20,6 +20,7 @@ export const useItemAvailability = (tenantId: string | null) => {
   const key = menuQueryKey(tenantId)
 
   return useMutation({
+    meta: { errorTitle: 'O item voltou como estava' },
     mutationFn: ({ id, isActive }: Variables) =>
       setItemAvailability(tenantId as string, id, isActive),
 

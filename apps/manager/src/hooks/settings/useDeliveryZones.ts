@@ -1,3 +1,4 @@
+import { toast } from '@nino/ds'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 
 import { queryKeys } from '@constants/query-keys'
@@ -34,12 +35,17 @@ export const useZoneMutations = (tenantId: string | null) => {
   }
 
   const add = useMutation({
+    meta: {
+      success: 'Região adicionada',
+      errorTitle: 'A região não foi adicionada',
+    },
     mutationFn: (data: { name: string; fee: number }) =>
       createDeliveryZone(tenantId as string, data),
     onSuccess: invalidate,
   })
 
   const edit = useMutation({
+    meta: { success: 'Região salva', errorTitle: 'A região não foi salva' },
     mutationFn: ({
       id,
       ...data
@@ -52,12 +58,22 @@ export const useZoneMutations = (tenantId: string | null) => {
   })
 
   const toggle = useMutation({
+    meta: { errorTitle: 'A entrega nessa região não mudou' },
     mutationFn: ({ id, isActive }: { id: string; isActive: boolean }) =>
       updateDeliveryZone(tenantId as string, id, { isActive }),
-    onSuccess: invalidate,
+    onSuccess: (_zone, { isActive }) => {
+      invalidate()
+      toast.success(
+        isActive ? 'Entrega ligada na região' : 'Entrega desligada na região'
+      )
+    },
   })
 
   const drop = useMutation({
+    meta: {
+      success: 'Região removida',
+      errorTitle: 'A região não foi removida',
+    },
     mutationFn: (id: string) => removeDeliveryZone(tenantId as string, id),
     onSuccess: invalidate,
   })

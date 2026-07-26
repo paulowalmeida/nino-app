@@ -53,7 +53,6 @@ export const ProductDetail = () => {
     productId as string
   )
   const [isDeleteOpen, setIsDeleteOpen] = useState(false)
-  const [deleteError, setDeleteError] = useState<string | null>(null)
 
   const {
     register,
@@ -78,12 +77,13 @@ export const ProductDetail = () => {
     })
   }, [item, reset])
 
+  /* O erro vira toast: a página some ao excluir e a mensagem iria junto. */
   const onDelete = async () => {
     try {
       await deleteItem()
       void navigate('..', { relative: 'path' })
     } catch {
-      setDeleteError('Não foi possível excluir. Tente de novo.')
+      setIsDeleteOpen(false)
     }
   }
 
@@ -292,8 +292,6 @@ export const ProductDetail = () => {
         onCancel={() => setIsDeleteOpen(false)}
         loading={isDeleting}
       />
-
-      {deleteError && <p className={styles.error}>{deleteError}</p>}
     </div>
   )
 }

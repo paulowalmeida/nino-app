@@ -8,5 +8,6 @@ import { checkAvailability } from '@services/auth/auth.service'
 
 export const useCheckAvailability = () =>
   useMutation<CheckAvailabilityResponse, Error, CheckAvailabilityRequest>({
+    meta: { silentError: true },
     mutationFn: checkAvailability,
   })

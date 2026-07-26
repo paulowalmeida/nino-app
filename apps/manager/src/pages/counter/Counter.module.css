@@ -28,10 +28,3 @@
 .menu {
   @apply flex min-w-0 flex-col lg:min-h-0;
 }
-
-/* a confirmação some sozinha: no balcão ninguém para para fechar diálogo */
-.closed {
-  @apply fixed bottom-5 left-1/2 z-20 -translate-x-1/2 rounded-full;
-  @apply bg-ink px-5 py-3 text-base font-semibold text-cream;
-  box-shadow: 0 12px 32px -12px rgba(26, 18, 6, 0.6);
-}

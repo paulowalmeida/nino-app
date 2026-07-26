@@ -20,6 +20,8 @@ export const useReorderMenuItems = (tenantId: string | null) => {
   const key = menuQueryKey(tenantId)
 
   return useMutation({
+    meta: { errorTitle: 'A ordem dos itens voltou ao que era' },
+
     mutationFn: ({ positions }: Variables) =>
       Promise.all(
         positions.map(({ id, position }) =>

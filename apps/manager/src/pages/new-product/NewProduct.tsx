@@ -4,7 +4,15 @@ import { useNavigate } from 'react-router'
 
 import { useQueryClient } from '@tanstack/react-query'
 
-import { Button, FormField, Input, Select, Skeleton, Textarea } from '@nino/ds'
+import {
+  Button,
+  FormField,
+  Input,
+  Select,
+  Skeleton,
+  Textarea,
+  toast,
+} from '@nino/ds'
 
 import { ItemPhoto } from '@compositions/ItemPhoto'
 import { BackLink } from '@components/BackLink'
@@ -64,10 +72,14 @@ export const NewProduct = () => {
     const name = newCategory.trim()
     if (!name) return
 
-    const created = await addCategory(name)
-    setValue('categoryId', created.id, { shouldValidate: true })
-    setNewCategory('')
-    setNaming(false)
+    try {
+      const created = await addCategory(name)
+      setValue('categoryId', created.id, { shouldValidate: true })
+      setNewCategory('')
+      setNaming(false)
+    } catch {
+      /* o toast de erro global avisa; o nome digitado fica no campo */
+    }
   }
 
   const onSubmit = async (values: NewProductFormValues) => {
@@ -86,7 +98,11 @@ export const NewProduct = () => {
             queryKey: menuQueryKey(tenantId),
           })
         } catch {
-          // item já foi criado — a foto pode ser adicionada depois no detalhe
+          /* O item já foi criado: avisar da foto é melhor que falhar tudo. */
+          toast.warning(
+            'Item criado, mas a foto não subiu',
+            'Abra o item no cardápio e envie a foto de novo.'
+          )
         }
       }
 

@@ -8,6 +8,10 @@ export const useOrderPayment = (tenantId: string | null) => {
   const queryClient = useQueryClient()
 
   return useMutation<Order, Error, string>({
+    meta: {
+      success: 'Pagamento registrado',
+      errorTitle: 'Não deu pra registrar o pagamento',
+    },
     mutationFn: (orderId) => markOrderPaid(tenantId as string, orderId),
     onSuccess: () => {
       void queryClient.invalidateQueries({

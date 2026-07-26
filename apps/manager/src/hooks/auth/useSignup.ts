@@ -8,4 +8,8 @@ import { signup } from '@services/auth/auth.service'
  * Where to go next belongs to the wizard, which still has the store step ahead.
  */
 export const useSignup = () =>
-  useMutation<AuthUser, Error, SignupRequest>({ mutationFn: signup })
+  useMutation<AuthUser, Error, SignupRequest>({
+    /* O wizard mostra o erro da API no próprio passo. */
+    meta: { silentError: true },
+    mutationFn: signup,
+  })

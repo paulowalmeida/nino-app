@@ -32,11 +32,16 @@ export const CategoryRow = ({
     setDraft(category.name)
   }
 
+  /* Em falha o formulário fica aberto com o texto digitado; o toast explica. */
   const submit = async () => {
     const name = draft.trim()
     if (!name || name === category.name) return closeEditing()
-    await onRename(name)
-    setEditing(false)
+    try {
+      await onRename(name)
+      setEditing(false)
+    } catch {
+      /* nada a fazer aqui: o nome antigo continua valendo na lista */
+    }
   }
 
   return (

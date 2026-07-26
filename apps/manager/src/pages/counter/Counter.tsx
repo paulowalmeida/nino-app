@@ -1,5 +1,7 @@
 import { useState } from 'react'
 
+import { toast } from '@nino/ds'
+
 import { ProductGrid } from '@compositions/ProductGrid'
 import { SaleTicket } from '@compositions/SaleTicket'
 import { useCreateOrder } from '@hooks/order/useCreateOrder'
@@ -36,7 +38,6 @@ export const Counter = () => {
   const [customerName, setCustomerName] = useState('')
   const [tableNumber, setTableNumber] = useState('')
   const [error, setError] = useState<string | null>(null)
-  const [closed, setClosed] = useState<string | null>(null)
 
   const pick = (item: MenuItem) =>
     setLines((current) => {
@@ -91,8 +92,7 @@ export const Counter = () => {
       setLines([])
       setCustomerName('')
       setTableNumber('')
-      setClosed(order.id.slice(-4).toUpperCase())
-      window.setTimeout(() => setClosed(null), 4000)
+      toast.success(`Venda #${order.id.slice(-4).toUpperCase()} fechada`)
     } catch (caught) {
       if (caught instanceof ApiError && caught.status < 500) {
         setError(caught.message)
@@ -140,12 +140,6 @@ export const Counter = () => {
           onFinish={finish}
         />
       </div>
-
-      {closed && (
-        <p className={`${motion.land} ${styles.closed}`} role="status">
-          Venda #{closed} fechada
-        </p>
-      )}
     </div>
   )
 }

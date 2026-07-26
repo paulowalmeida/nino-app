@@ -57,6 +57,10 @@ export const useSaveWeek = (tenantId: string | null) => {
   const queryClient = useQueryClient()
 
   return useMutation({
+    meta: {
+      success: 'Horários salvos',
+      errorTitle: 'Os horários não foram salvos',
+    },
     mutationFn: (week: HoursDraft[]) =>
       Promise.all(week.map((day) => persistDay(tenantId as string, day))),
     onSuccess: () => {
