@@ -1,5 +1,6 @@
 import { Link } from 'react-router'
 
+import { Card } from '@nino/ds/components/Card'
 import { Skeleton } from '@nino/ds/components/Skeleton'
 import { CountUp } from '@components/CountUp'
 import { Eyebrow } from '@components/Eyebrow'
@@ -37,29 +38,36 @@ export const DayTally = ({ tenantId, timezone }: DayTallyProps) => {
 
       <div className={styles.tally}>
         {/* o único número com destino: os outros dois não são uma lista */}
-        <Link
-          to="../pedidos?etapa=closed"
-          relative="path"
-          aria-label="Ver os pedidos fechados"
+        <Card
+          asChild
+          variant="flat"
           className={`${motion.settle} ${motion.lift} ${styles.figure}`}
         >
-          <span className={styles.value}>
-            {isPending ? (
-              <Skeleton
-                animation="wave"
-                className="h-7 w-10 bg-sand lg:h-8"
-              />
-            ) : (
-              <CountUp value={count} />
-            )}
-          </span>
-          <span className={styles.label}>pedidos fechados</span>
-        </Link>
+          <Link
+            to="../pedidos?etapa=closed"
+            relative="path"
+            aria-label="Ver os pedidos fechados"
+          >
+            <span className={styles.value}>
+              {isPending ? (
+                <Skeleton
+                  animation="wave"
+                  className="h-7 w-10 bg-sand lg:h-8"
+                />
+              ) : (
+                <CountUp value={count} />
+              )}
+            </span>
+            <span className={styles.label}>pedidos fechados</span>
+          </Link>
+        </Card>
 
-        <article
+        <Card
+          asChild
+          variant="flat"
           className={`${motion.settle} ${styles.figure}`}
-          style={riseDelay(70)}
         >
+          <article style={riseDelay(70)}>
           <span className={styles.value}>
             {isPending ? (
               <Skeleton
@@ -71,12 +79,15 @@ export const DayTally = ({ tenantId, timezone }: DayTallyProps) => {
             )}
           </span>
           <span className={styles.label}>entraram no caixa</span>
-        </article>
+          </article>
+        </Card>
 
-        <article
+        <Card
+          asChild
+          variant="flat"
           className={`${motion.settle} ${styles.figure}`}
-          style={riseDelay(140)}
         >
+          <article style={riseDelay(140)}>
           <span className={styles.value}>
             {isPending ? (
               <Skeleton
@@ -88,7 +99,8 @@ export const DayTally = ({ tenantId, timezone }: DayTallyProps) => {
             )}
           </span>
           <span className={styles.label}>por pedido</span>
-        </article>
+          </article>
+        </Card>
       </div>
 
       {recent.length > 0 && (
