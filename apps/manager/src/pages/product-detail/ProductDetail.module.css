@@ -4,8 +4,56 @@
   @apply mx-auto max-w-3xl p-4 lg:p-8;
 }
 
-.skeleton {
-  @apply h-96 w-full rounded-[24px];
+/*
+ * Ossos da ficha: cada um tem a altura do elemento que substitui, para a
+ * página não pular de altura quando o item chega.
+ */
+.boneCategory {
+  @apply mb-2 h-3 w-24 rounded-sm;
+}
+
+.boneName {
+  @apply h-8 w-2/3 rounded-lg lg:h-9;
+}
+
+.bonePrice {
+  @apply mt-2 h-4 w-20 rounded-sm;
+}
+
+.boneBadge {
+  @apply h-5 w-28 shrink-0 rounded-[4px];
+}
+
+.bonePhoto {
+  @apply h-40 w-full rounded-2xl;
+}
+
+.boneLabel {
+  @apply mb-2 h-3.5 w-28 rounded-sm;
+}
+
+.boneInput {
+  @apply h-10 w-full rounded-card;
+}
+
+.boneTextarea {
+  @apply h-20 w-full rounded-card;
+}
+
+.boneSwitch {
+  @apply h-5 w-9 shrink-0 rounded-full;
+}
+
+.boneAvailabilityText {
+  @apply min-w-0 flex-1;
+}
+
+.boneHint {
+  @apply h-3 w-full max-w-[42ch] rounded-sm;
+}
+
+.boneButton {
+  @apply h-10 w-full rounded-button sm:w-40;
 }
 
 .backLink {
@@ -21,10 +69,6 @@
 
 .head {
   @apply flex items-center gap-4 border-b border-sand pb-5;
-}
-
-.thumb {
-  @apply h-16 w-16 text-base lg:h-20 lg:w-20 lg:text-lg;
 }
 
 .headText {

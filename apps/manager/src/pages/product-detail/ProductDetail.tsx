@@ -10,18 +10,17 @@ import { Dialog } from '@nino/ds/components/Dialog'
 import { FormField } from '@nino/ds/components/FormField'
 import { Input } from '@nino/ds/components/Input'
 import { Select } from '@nino/ds/components/Select'
-import { Skeleton } from '@nino/ds/components/Skeleton'
 import { Switch } from '@nino/ds/components/Switch'
 import { Textarea } from '@nino/ds/components/Textarea'
 import { ItemPhoto } from '@compositions/ItemPhoto'
 import { BackLink } from '@components/BackLink'
-import { ItemThumb } from '@components/ItemThumb'
 import { useDeleteMenuItem } from '@hooks/product/useDeleteMenuItem'
 import { useMenuItem } from '@hooks/product/useMenuItem'
 import { useUpdateMenuItem } from '@hooks/product/useUpdateMenuItem'
 import { useCurrentTenant } from '@hooks/session/useCurrentTenant'
 import { riseDelay } from '@utils/rise-delay'
 
+import { ProductDetailSkeleton } from './ProductDetailSkeleton'
 import type { ProductFormValues } from './ProductDetail.types'
 
 import styles from './ProductDetail.module.css'
@@ -87,13 +86,7 @@ export const ProductDetail = () => {
     }
   }
 
-  if (isPending) {
-    return (
-      <div className={styles.page}>
-        <Skeleton className={styles.skeleton} />
-      </div>
-    )
-  }
+  if (isPending) return <ProductDetailSkeleton />
 
   if (!item) {
     return (
@@ -130,11 +123,6 @@ export const ProductDetail = () => {
 
       <Card className={`${motion.settle} ${styles.sheet}`}>
         <header className={styles.head}>
-          <ItemThumb
-            name={item.name}
-            imageUrl={item.images?.[0]?.url}
-            className={`${motion.pop} ${styles.thumb}`}
-          />
           <div className={styles.headText}>
             <p className={styles.category}>{item.category.name}</p>
             <h1 className={styles.name}>{item.name}</h1>
