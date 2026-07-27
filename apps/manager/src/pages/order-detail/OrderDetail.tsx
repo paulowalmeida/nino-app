@@ -6,6 +6,7 @@ import { BackLink } from '@components/BackLink'
 import { Alert } from '@nino/ds/components/Alert'
 import { Badge } from '@nino/ds/components/Badge'
 import { Button } from '@nino/ds/components/Button'
+import { Card } from '@nino/ds/components/Card'
 import { Skeleton } from '@nino/ds/components/Skeleton'
 import { Textarea } from '@nino/ds/components/Textarea'
 import { OrderTimeline } from '@compositions/OrderTimeline'
@@ -156,8 +157,8 @@ export const OrderDetail = () => {
         </section>
 
         <div className={styles.aside}>
-          <section
-            className={`${motion.settle} ${styles.card}`}
+          <Card
+            className={motion.settle}
             style={riseDelay(80)}
           >
             <h2 className={styles.cardTitle}>Quem pediu</h2>
@@ -174,10 +175,10 @@ export const OrderDetail = () => {
             {order.tableNumber && (
               <p className={styles.address}>Mesa {order.tableNumber}</p>
             )}
-          </section>
+          </Card>
 
-          <section
-            className={`${motion.settle} ${styles.card}`}
+          <Card
+            className={motion.settle}
             style={riseDelay(140)}
           >
             <h2 className={styles.cardTitle}>Pagamento</h2>
@@ -204,10 +205,10 @@ export const OrderDetail = () => {
                 Recebi o pagamento
               </Button>
             )}
-          </section>
+          </Card>
 
-          <section
-            className={`${motion.settle} ${styles.card}`}
+          <Card
+            className={motion.settle}
             style={riseDelay(200)}
           >
             <h2 className={styles.cardTitle}>Andamento</h2>
@@ -217,7 +218,7 @@ export const OrderDetail = () => {
                 Motivo do cancelamento: {order.cancelReason}
               </p>
             )}
-          </section>
+          </Card>
 
           {(step || canCancel(order.status)) && (
             <section

@@ -1,5 +1,6 @@
 import { useState } from 'react'
 
+import { Card } from '@nino/ds/components/Card'
 import { Button } from '@nino/ds/components/Button'
 import { Input } from '@nino/ds/components/Input'
 import { Skeleton } from '@nino/ds/components/Skeleton'
@@ -112,7 +113,7 @@ export const ServiceRules = ({
   if (isPending) return <Skeleton className={local.skeleton} />
 
   return (
-    <section className={styles.card}>
+    <Card>
       <header className={`${motion.unroll} ${styles.head}`}>
         <h2 className={styles.title}>Como a loja atende</h2>
         <p className={styles.hint}>
@@ -230,6 +231,6 @@ export const ServiceRules = ({
       >
         Salvar atendimento
       </Button>
-    </section>
+    </Card>
   )
 }

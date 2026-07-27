@@ -2,6 +2,7 @@ import type { ReactNode } from 'react'
 
 import { Alert } from '@nino/ds/components/Alert'
 import { Badge } from '@nino/ds/components/Badge'
+import { Card } from '@nino/ds/components/Card'
 import { Skeleton } from '@nino/ds/components/Skeleton'
 import { PageTitle } from '@components/PageTitle'
 import { useSubscription } from '@hooks/account/useSubscription'
@@ -10,7 +11,6 @@ import { riseDelay } from '@utils/rise-delay'
 
 import styles from './Subscription.module.css'
 import motion from '@styles/motion.module.css'
-import card from '@styles/settingsCard.module.css'
 
 const day = new Intl.DateTimeFormat('pt-BR', {
   day: '2-digit',
@@ -42,7 +42,7 @@ export const Subscription = () => {
       )}
 
       {data && (
-        <section className={`${motion.settle} ${card.card}`}>
+        <Card className={motion.settle}>
           <div className={styles.plan}>
             <div>
               <p className={styles.planLabel}>Plano atual</p>
@@ -89,7 +89,7 @@ export const Subscription = () => {
             Mudança de plano e cancelamento passam pelo suporte enquanto a
             troca automática não está no ar.
           </p>
-        </section>
+        </Card>
       )}
     </div>
   )

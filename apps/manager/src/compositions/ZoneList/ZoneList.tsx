@@ -1,5 +1,6 @@
 import { useState } from 'react'
 
+import { Card } from '@nino/ds/components/Card'
 import { Button } from '@nino/ds/components/Button'
 import { Input } from '@nino/ds/components/Input'
 import { Skeleton } from '@nino/ds/components/Skeleton'
@@ -52,7 +53,7 @@ export const ZoneList = ({
   if (isPending) return <Skeleton className={local.skeleton} />
 
   return (
-    <section className={styles.card}>
+    <Card>
       <header className={`${motion.unroll} ${styles.head}`}>
         <h2 className={styles.title}>Onde a loja entrega</h2>
         <p className={styles.hint}>
@@ -175,6 +176,6 @@ export const ZoneList = ({
           Adicionar região
         </Button>
       </div>
-    </section>
+    </Card>
   )
 }

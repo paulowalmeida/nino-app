@@ -5,12 +5,6 @@
  * mesma superfície, mesmo cabeçalho, mesma linha com interruptor. O que
  * varia fica no module do próprio componente.
  */
-.card {
-  @apply rounded-[24px] border border-line bg-brand-foreground/70 p-5;
-  @apply shadow-card;
-  @apply backdrop-blur-sm lg:p-6;
-}
-
 .head {
   @apply mb-4;
 }

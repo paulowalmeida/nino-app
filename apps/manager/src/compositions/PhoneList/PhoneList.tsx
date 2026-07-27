@@ -1,5 +1,6 @@
 import { useState } from 'react'
 
+import { Card } from '@nino/ds/components/Card'
 import { Button } from '@nino/ds/components/Button'
 import { PhoneInput } from '@nino/ds/components/PhoneInput'
 import { Skeleton } from '@nino/ds/components/Skeleton'
@@ -45,7 +46,7 @@ export const PhoneList = ({
   if (isPending) return <Skeleton className={local.skeleton} />
 
   return (
-    <section className={styles.card}>
+    <Card>
       <header className={`${motion.unroll} ${styles.head}`}>
         <h2 className={styles.title}>Telefones da loja</h2>
         <p className={styles.hint}>
@@ -135,6 +136,6 @@ export const PhoneList = ({
           Adicionar telefone
         </Button>
       </div>
-    </section>
+    </Card>
   )
 }
