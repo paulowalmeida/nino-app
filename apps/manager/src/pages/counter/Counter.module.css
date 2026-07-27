@@ -45,7 +45,7 @@
  * `overflow-y-auto`, e uma classe só perde para o utilitário do DS na cascata.
  */
 .sheet .sheetBody {
-  @apply flex min-h-0 overflow-y-hidden;
+  @apply flex min-h-0 flex-col overflow-y-hidden;
 }
 
 .menu {
