@@ -82,8 +82,10 @@
   @apply font-normal;
 }
 
+/* no celular sobram ~15 caracteres antes do corte: uma descrição truncada
+   assim não informa nada e ainda cobra uma linha de altura por item */
 .itemDescription {
-  @apply mt-0.5 truncate text-xs text-faint;
+  @apply mt-0.5 hidden truncate text-xs text-faint sm:block;
 }
 
 .price {

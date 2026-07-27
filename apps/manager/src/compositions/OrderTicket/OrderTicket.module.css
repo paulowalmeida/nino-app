@@ -34,7 +34,7 @@
 }
 
 .head {
-  @apply flex min-w-0 items-baseline gap-2.5 px-4 pt-3.5 pb-2.5;
+  @apply flex min-w-0 items-baseline gap-2.5 px-4 pt-3 pb-2;
 }
 
 .number {
@@ -133,12 +133,12 @@
 }
 
 .foot {
-  @apply flex flex-wrap items-center justify-between gap-3;
-  @apply border-t border-dashed border-sand-deep px-4 pt-3 pb-1;
+  @apply flex flex-wrap items-center justify-between gap-2.5;
+  @apply border-t border-dashed border-sand-deep px-4 pt-2.5 pb-1;
 }
 
 .body {
-  @apply block border-t border-dashed border-sand-deep px-4 py-3;
+  @apply block border-t border-dashed border-sand-deep px-4 py-2.5;
 }
 
 .money {

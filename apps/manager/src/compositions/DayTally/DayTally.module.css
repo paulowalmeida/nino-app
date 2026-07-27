@@ -8,13 +8,15 @@
  * O caixa do dia: mesma superfície dos cartões da fila, sem sombra — é
  * resultado consolidado, não trabalho em aberto.
  */
+/* três colunas já no celular: empilhado, o caixa do dia empurrava a lista
+   de pedidos recentes para fora da primeira tela */
 .tally {
-  @apply grid gap-3 sm:grid-cols-3 lg:gap-4;
+  @apply grid grid-cols-3 gap-2 lg:gap-4;
 }
 
 .figure {
   @apply flex flex-col gap-1 rounded-[22px] border border-line;
-  @apply bg-brand-foreground p-4 lg:p-5;
+  @apply bg-brand-foreground p-3 lg:p-5;
   @apply transition-colors duration-200;
 }
 

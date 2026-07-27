@@ -1,4 +1,5 @@
 import { CountUp } from '@components/CountUp'
+import { NavIcon } from '@components/NavIcon'
 import { riseDelay } from '@utils/rise-delay'
 
 import type { StageTrackProps } from './StageTrack.types'

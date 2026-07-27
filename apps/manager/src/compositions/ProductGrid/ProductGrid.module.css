@@ -41,11 +41,11 @@
   @apply hover:shadow-card-hover;
   @apply focus-visible:outline-none focus-visible:ring-2;
   @apply focus-visible:ring-brand focus-visible:ring-offset-2;
-  min-height: 8.5rem;
+  @apply min-h-28 lg:min-h-32;
 }
 
 .thumb {
-  @apply h-12 w-12 text-base;
+  @apply h-10 w-10 text-base lg:h-12 lg:w-12;
 }
 
 .name {
@@ -62,7 +62,7 @@
 }
 
 .skeleton {
-  @apply h-34 w-full rounded-[20px];
+  @apply h-28 w-full rounded-[20px] lg:h-32;
 }
 
 .empty {
