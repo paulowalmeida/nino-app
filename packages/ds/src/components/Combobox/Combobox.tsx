@@ -22,21 +22,23 @@ const sizeClasses: Record<ComboboxSize, string> = {
 }
 
 const baseInput =
-  'w-full rounded-card border bg-surface-sunk text-ink placeholder:text-faint transition-colors outline-none'
+  'w-full rounded-card border bg-white text-ink placeholder:text-faint transition-[color,box-shadow,border-color] duration-200 outline-none'
 
 const inputDefault =
-  'border-transparent focus:ring-2 focus:ring-brand focus:border-brand'
+  'border-input-border focus:border-brand focus:ring-1 focus:ring-inset focus:ring-brand'
 
 const inputError =
-  'aria-[invalid]:border-danger aria-[invalid]:focus:ring-danger ' +
-  'aria-[invalid]:focus:border-danger data-[invalid]:border-danger ' +
-  'data-[invalid]:focus:ring-danger data-[invalid]:focus:border-danger'
+  'data-[invalid]:border-danger data-[invalid]:focus:ring-danger aria-[invalid]:border-danger aria-[invalid]:focus:border-danger aria-[invalid]:focus:ring-danger'
 
+/* Lista longa (o TimePicker manda 96 horários) precisa de teto: sem altura
+ * máxima o painel cresce além da viewport e some por cima ou por baixo. */
 const baseContent =
-  'z-50 min-w-[var(--reference-width)] overflow-hidden rounded-card bg-surface-sunk shadow-overlay p-1'
+  'z-50 min-w-[var(--reference-width)] max-h-[min(18rem,var(--available-height))] ' +
+  'overflow-y-auto overscroll-contain scrollbar-slim rounded-card ' +
+  'bg-white shadow-overlay p-1'
 
 const baseItem =
-  'relative flex cursor-default select-none items-center rounded px-3 py-2 text-sm text-ink outline-none transition-colors data-[highlighted]:bg-[color-mix(in_srgb,var(--color-brand)_10%,white)] data-[highlighted]:text-brand data-[disabled]:pointer-events-none data-[disabled]:opacity-50'
+  'relative flex cursor-default select-none items-center rounded px-3 py-2 text-sm text-ink outline-none transition-[color,box-shadow,border-color] duration-200 data-[highlighted]:bg-[color-mix(in_srgb,var(--color-brand)_10%,white)] data-[highlighted]:text-brand data-[disabled]:pointer-events-none data-[disabled]:opacity-50'
 
 const baseEmpty = 'px-3 py-2 text-sm text-faint'
 

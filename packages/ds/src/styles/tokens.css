@@ -18,12 +18,16 @@
   --color-cream-deep: #ffebd6;
   --color-paper: #fffbf5;
   --color-surface-sunk: #fff3e9;
+  /* Rebaixado neutro: cinza claríssimo tirado do `ink`, para o trilho e a
+     faixa não puxarem para o pêssego contra o branco. */
+  --color-surface-mute: color-mix(in srgb, #1a1206 4%, transparent);
   --color-sand: #f4ece0;
   --color-sand-deep: #f1e7da;
   --color-surface: #f1f3f5;
-  /* Borda de card — contraste real sobre paper/cream/white, sand é sutil
-     demais pra isso */
-  --color-line: #e6d9c4;
+  /* Borda: tinta, não superfície. Bege pastel some contra o branco e some de
+     vez contra cream — a linha vem do `ink` diluído, então é neutra escura,
+     e por ser translúcida assenta sobre qualquer fundo. */
+  --color-line: color-mix(in srgb, #1a1206 18%, transparent);
 
   /* Texto — neutros quentes */
   --color-ink: #1a1206;
@@ -59,9 +63,11 @@
      claro o bastante para pedir texto ink por cima (toast). */
   --color-warning-bright: #f2c14e;
 
-  /* Inputs — override por tenant. Um passo mais fechado que `line`: a borda
-     de card só delimita, a de campo precisa dizer onde se escreve. */
-  --color-input-border: #dccdb2;
+  /* Inputs — override por tenant. Contorno de marca diluído: o campo já se
+     anuncia como território da marca em repouso, e o foco é o mesmo laranja
+     cheio, então a diferença entre parado e ativo é de intensidade, não de
+     cor. */
+  --color-input-border: color-mix(in srgb, var(--color-brand) 35%, transparent);
   --color-input-border-focus: var(--color-brand);
 
   /* Estrutural */

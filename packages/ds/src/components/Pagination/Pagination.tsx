@@ -6,16 +6,16 @@ import { PaginationProps } from './Pagination.types'
 /* Mesmo objeto das abas: trilho rebaixado com uma placa levantada marcando
  * onde a pessoa está na sequência. */
 const baseRoot =
-  'inline-flex items-center gap-1 rounded-card bg-surface-sunk p-1'
+  'inline-flex items-center gap-1 rounded-card bg-surface-mute p-1'
 
 const baseNav =
-  'inline-flex h-8 min-w-8 items-center justify-center rounded-[6px] ' +
-  'text-muted transition-colors hover:bg-cream-deep hover:text-brand-strong ' +
+  'inline-flex h-8 cursor-pointer min-w-8 items-center justify-center rounded-[6px] ' +
+  'text-muted transition-colors hover:bg-line/25 hover:text-brand-strong ' +
   'disabled:pointer-events-none disabled:opacity-40'
 
 const baseItem =
-  'inline-flex h-8 min-w-8 items-center justify-center rounded-[6px] px-2 ' +
-  'text-sm font-semibold text-body transition-colors hover:bg-cream-deep ' +
+  'inline-flex h-8 cursor-pointer min-w-8 items-center justify-center rounded-[6px] px-2 ' +
+  'text-sm font-semibold text-body transition-colors hover:bg-line/25 ' +
   'hover:text-brand-strong data-[selected]:bg-white ' +
   'data-[selected]:text-ink data-[selected]:shadow-card'
 

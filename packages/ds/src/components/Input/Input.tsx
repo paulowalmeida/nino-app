@@ -13,15 +13,13 @@ const sizeClasses: Record<InputSize, string> = {
 }
 
 const baseInput =
-  'w-full rounded-card border bg-surface-sunk text-ink placeholder:text-faint transition-colors outline-none'
+  'w-full rounded-card border bg-white text-ink placeholder:text-faint transition-[color,box-shadow,border-color] duration-200 outline-none'
 
 const inputDefault =
-  'border-transparent focus:ring-2 focus:ring-brand/25 focus:border-brand'
+  'border-input-border focus:border-brand focus:ring-1 focus:ring-inset focus:ring-brand'
 
 const inputError =
-  'aria-[invalid]:border-danger aria-[invalid]:focus:ring-danger ' +
-  'aria-[invalid]:focus:border-danger data-[invalid]:border-danger ' +
-  'data-[invalid]:focus:ring-danger data-[invalid]:focus:border-danger'
+  'data-[invalid]:border-danger data-[invalid]:focus:ring-danger aria-[invalid]:border-danger aria-[invalid]:focus:border-danger aria-[invalid]:focus:ring-danger'
 
 /**
  * Text input field with size variants and error state.

@@ -35,7 +35,7 @@ const animationByPlacement: Record<DrawerPlacement, string> = {
 const baseContent =
   'flex flex-col bg-white shadow-overlay outline-none duration-300'
 
-const baseHeader = 'flex items-center justify-between bg-surface-sunk px-6 py-4'
+const baseHeader = 'flex items-center justify-between px-6 pb-2 pt-6'
 
 const titleClass =
   'font-display text-base font-semibold tracking-[-0.01em] text-ink'
@@ -43,7 +43,8 @@ const descriptionClass = 'mt-1 text-[0.8125rem] leading-[1.45] text-muted'
 const baseBody = 'flex-1 overflow-y-auto px-6 py-4'
 
 const closeButtonClass =
-  'rounded-full p-1.5 text-faint transition-colors hover:bg-sand ' +
+  'cursor-pointer rounded-full p-1.5 text-faint transition-colors ' +
+  'hover:bg-sand ' +
   'hover:text-ink focus-visible:outline-2 focus-visible:outline-brand ' +
   'focus-visible:outline-offset-2'
 

@@ -60,7 +60,7 @@ describe(Select.displayName!, () => {
 
   it('applies default classes when error is false', () => {
     render(<Select options={options} />)
-    expect(screen.getByRole('combobox')).toHaveClass('border-transparent')
+    expect(screen.getByRole('combobox')).toHaveClass('border-input-border')
   })
 
   it.each(['sm', 'md', 'lg'] as const)(

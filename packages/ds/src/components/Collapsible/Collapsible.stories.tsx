@@ -14,7 +14,7 @@ type Story = StoryObj<typeof Collapsible>
 export const Default: Story = {
   render: () => (
     <div className="w-80">
-      <Collapsible trigger="Detalhes do pedido">
+      <Collapsible trigger="Detalhes do pedido" indicator>
         <p>2× X-Burgão Especial · R$ 57,80</p>
         <p>1× Combo Família · R$ 69,90</p>
       </Collapsible>
@@ -25,7 +25,7 @@ export const Default: Story = {
 export const OpenByDefault: Story = {
   render: () => (
     <div className="w-80">
-      <Collapsible trigger="Formas de pagamento" defaultOpen>
+      <Collapsible trigger="Formas de pagamento" defaultOpen indicator>
         Pix, cartão de crédito e dinheiro na entrega.
       </Collapsible>
     </div>

@@ -22,10 +22,10 @@ const baseControl =
   /* Vazio é superfície rebaixada, marcado é tinta cheia — nada de caixinha
    * contornada em cima de fundo claro. */
   'flex shrink-0 items-center justify-center rounded-[4px] border ' +
-  'bg-surface-sunk transition-colors cursor-pointer'
+  'bg-white transition-[color,box-shadow,border-color] duration-200 cursor-pointer'
 
 const controlDefault =
-  'border-transparent data-[state=checked]:bg-brand ' +
+  'border-input-border data-[state=checked]:bg-brand ' +
   'data-[state=checked]:border-brand'
 
 const controlError =

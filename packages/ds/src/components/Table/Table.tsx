@@ -76,7 +76,7 @@ export const TableRow = forwardRef<HTMLTableRowElement, TableRowProps>(
     <tr
       ref={ref}
       className={mergeClasses(
-        'transition-colors even:bg-cream hover:bg-cream-deep ' +
+        'transition-colors even:bg-surface-mute hover:bg-line/25 ' +
           'data-selected:bg-body data-selected:text-cream ' +
           'data-selected:hover:bg-body',
         className
