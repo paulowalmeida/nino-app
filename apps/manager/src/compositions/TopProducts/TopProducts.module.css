@@ -27,6 +27,15 @@
   @apply mt-4 border-t border-sand pt-3 text-xs leading-snug text-faint;
 }
 
-.skeleton {
-  @apply h-52 w-full rounded-card;
+/*
+ * A mesma métrica do BarList do DS: linhas de 2rem separadas por `gap-2` e
+ * raio de 4px. O bloco antigo tinha 208px chapados, que não batia com a
+ * altura de cinco linhas em nenhum dos dois tamanhos de tela.
+ */
+.skeletonBars {
+  @apply flex flex-1 flex-col gap-2;
+}
+
+.skeletonBar {
+  @apply h-8 rounded-[4px];
 }

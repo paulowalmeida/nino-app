@@ -71,8 +71,18 @@
   font-variant-numeric: tabular-nums;
 }
 
-.loading {
-  @apply grid flex-1 grid-cols-2 gap-3 md:grid-cols-3 xl:grid-cols-4;
+/*
+ * O carregamento reusa `.wrap`, `.tabs` e `.grid` em vez de ter geometria
+ * própria: assim a bandeja tem exatamente a mesma medida antes e depois dos
+ * dados, e o que muda é só o conteúdo das caixas.
+ */
+.skeletonSearch {
+  @apply mb-3 h-11 w-full;
+}
+
+/* a mesma pílula da aba: `px-4 py-2.5` com texto de 16px dá 44px de altura */
+.skeletonTab {
+  @apply h-11 w-24 shrink-0 rounded-full;
 }
 
 .skeleton {

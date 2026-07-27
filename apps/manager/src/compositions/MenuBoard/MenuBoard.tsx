@@ -17,6 +17,9 @@ import type { MenuBoardProps } from './MenuBoard.types'
 import styles from './MenuBoard.module.css'
 import motion from '@styles/motion.module.css'
 
+/** Seis linhas: o que cabe na primeira tela antes de precisar rolar. */
+const GHOST_ROWS = ['one', 'two', 'three', 'four', 'five', 'six']
+
 export const MenuBoard = ({ tenantId, categoryId, search }: MenuBoardProps) => {
   const {
     items,
@@ -70,12 +73,35 @@ export const MenuBoard = ({ tenantId, categoryId, search }: MenuBoardProps) => {
     if (changes.length > 0) reorder({ positions: changes })
   }
 
+  /*
+   * O esqueleto reusa as classes da lista de verdade — mesmo cartão, mesmas
+   * divisórias, mesma altura de linha. Três blocos soltos com respiro entre
+   * eles, como era antes, tinham geometria própria e a lista pulava ao chegar.
+   */
   if (isPending) {
     return (
-      <div className={styles.loading}>
-        <Skeleton className={styles.skeletonRow} />
-        <Skeleton className={styles.skeletonRow} />
-        <Skeleton className={styles.skeletonRow} />
+      <div className={styles.wrap}>
+        <Skeleton className={styles.ghostTally} />
+
+        <div className={styles.scroll}>
+          <Card className={styles.list}>
+            <ul className={styles.items}>
+              {GHOST_ROWS.map((row) => (
+                <li key={row} className={styles.item}>
+                  <div className={styles.itemLink}>
+                    <Skeleton className={styles.ghostThumb} />
+                    <div className={styles.itemText}>
+                      <Skeleton className={styles.ghostName} />
+                      <Skeleton className={styles.ghostDescription} />
+                    </div>
+                    <Skeleton className={styles.ghostPrice} />
+                  </div>
+                  <Skeleton className={styles.ghostSwitch} />
+                </li>
+              ))}
+            </ul>
+          </Card>
+        </div>
       </div>
     )
   }

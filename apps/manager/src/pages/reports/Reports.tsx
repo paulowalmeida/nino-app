@@ -45,6 +45,22 @@ const FIGURES: {
   { key: 'averageTicket', label: 'Ticket médio', money: true },
 ]
 
+/** Cinco linhas: o tamanho usual do ranking que a API devolve. */
+const GHOST_ROWS = ['one', 'two', 'three', 'four', 'five']
+
+/** Um cabeçalho só para os dois estados — carregando e carregado. */
+const tableHead = (
+  <TableHeader>
+    <TableRow>
+      <TableHead className={styles.colRank}>#</TableHead>
+      <TableHead>Produto</TableHead>
+      <TableHead className={styles.colNumber}>Qtd.</TableHead>
+      <TableHead className={styles.colNumber}>Preço un.</TableHead>
+      <TableHead className={styles.colNumber}>Total</TableHead>
+    </TableRow>
+  </TableHeader>
+)
+
 /** Pódio: as três primeiras linhas leem antes das outras. */
 const podiumClass = (index: number): string => {
   if (index === 0) return `${styles.podium} ${styles.leader}`
@@ -174,7 +190,9 @@ export const Reports = () => {
           >
             <span className={styles.value}>
               {isPending || !report ? (
-                '·'
+                <Skeleton
+                  className={money ? styles.ghostMoney : styles.ghostCount}
+                />
               ) : money ? (
                 brl(report[key])
               ) : (
@@ -198,7 +216,7 @@ export const Reports = () => {
               >
                 <span className={styles.value}>
                   {isTimingPending || !timing ? (
-                    '·'
+                    <Skeleton className={styles.ghostCount} />
                   ) : noSample ? (
                     '—'
                   ) : (
@@ -231,8 +249,35 @@ export const Reports = () => {
           </EmptyState>
         )}
 
+        {/* a mesma tabela, com as células por preencher: cabeçalho e larguras
+            de coluna já no lugar, para o ranking não se remontar ao chegar */}
         {!awaitingDates && isPending && (
-          <Skeleton className={styles.topSkeleton} />
+          <div className={styles.tableWrap}>
+            <Table>
+              {tableHead}
+              <TableBody>
+                {GHOST_ROWS.map((row) => (
+                  <TableRow key={row}>
+                    <TableCell className={styles.colRank}>
+                      <Skeleton className={styles.ghostPosition} />
+                    </TableCell>
+                    <TableCell className={styles.rankName}>
+                      <Skeleton className={styles.ghostName} />
+                    </TableCell>
+                    <TableCell className={styles.colNumber}>
+                      <Skeleton className={styles.ghostCell} />
+                    </TableCell>
+                    <TableCell className={styles.colNumber}>
+                      <Skeleton className={styles.ghostCell} />
+                    </TableCell>
+                    <TableCell className={styles.colTotal}>
+                      <Skeleton className={styles.ghostCell} />
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </div>
         )}
 
         {noSales && (
@@ -242,15 +287,7 @@ export const Reports = () => {
         {!awaitingDates && !isPending && !noSales && (
           <div className={styles.tableWrap}>
             <Table>
-              <TableHeader>
-                <TableRow>
-                  <TableHead className={styles.colRank}>#</TableHead>
-                  <TableHead>Produto</TableHead>
-                  <TableHead className={styles.colNumber}>Qtd.</TableHead>
-                  <TableHead className={styles.colNumber}>Preço un.</TableHead>
-                  <TableHead className={styles.colNumber}>Total</TableHead>
-                </TableRow>
-              </TableHeader>
+              {tableHead}
               <TableBody>
                 {report?.topProducts.map((item, index) => (
                   <TableRow

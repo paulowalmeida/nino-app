@@ -18,6 +18,9 @@ const PERCENT = new Intl.NumberFormat('pt-BR', {
   signDisplay: 'exceptZero',
 })
 
+/** Sete dias na base do gráfico — o mesmo recorte que a série traz. */
+const SKELETON_DAYS = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun']
+
 /**
  * Compara o último dia fechado com o anterior. Sem essa referência o número
  * sozinho não responde a pergunta que o dono faz — está bom ou está ruim?
@@ -51,7 +54,11 @@ export const SalesTrend = ({ tenantId }: SalesTrendProps) => {
       <Card className={`${motion.settle} ${styles.card}`}>
         <header className={styles.head}>
           <div>
-            <p className={styles.total}>{isPending ? '—' : brl(total)}</p>
+            {isPending ? (
+              <Skeleton className={styles.skeletonTotal} />
+            ) : (
+              <p className={styles.total}>{brl(total)}</p>
+            )}
             <p className={styles.label}>faturamento na semana</p>
           </div>
 
@@ -66,7 +73,25 @@ export const SalesTrend = ({ tenantId }: SalesTrendProps) => {
           )}
         </header>
 
-        {isPending && <Skeleton className={styles.skeleton} />}
+        {/* a forma do gráfico que vem: eixo à esquerda, sete dias na base */}
+        {isPending && (
+          <div className={styles.skeletonChart}>
+            <div className={styles.skeletonAxis}>
+              <Skeleton className={styles.skeletonTick} />
+              <Skeleton className={styles.skeletonTick} />
+              <Skeleton className={styles.skeletonTick} />
+              <Skeleton className={styles.skeletonTick} />
+            </div>
+            <div className={styles.skeletonPlot}>
+              <Skeleton className={styles.skeletonLine} />
+              <div className={styles.skeletonDays}>
+                {SKELETON_DAYS.map((day) => (
+                  <Skeleton key={day} className={styles.skeletonDay} />
+                ))}
+              </div>
+            </div>
+          </div>
+        )}
 
         {noSales && (
           <EmptyState>

@@ -54,8 +54,31 @@
   @apply mb-3 font-display text-lg font-extrabold tracking-tight text-ink;
 }
 
-.topSkeleton {
-  @apply h-40 w-full rounded-xl;
+/*
+ * Esqueleto: as medidas acompanham o que vai ocupar cada lugar. O número dos
+ * cartões usa `text-xl`/`text-2xl` com `leading-none` — 1.25rem e 1.5rem —, e
+ * faturamento é mais largo que uma contagem de pedidos.
+ */
+.ghostMoney {
+  @apply h-5 w-24 lg:h-6 lg:w-28;
+}
+
+.ghostCount {
+  @apply h-5 w-12 lg:h-6 lg:w-16;
+}
+
+/* a mesma ficha quadrada da posição no ranking */
+.ghostPosition {
+  @apply h-7 w-7 rounded-lg;
+}
+
+.ghostName {
+  @apply h-3.5 w-40;
+}
+
+/* coluna numérica é alinhada à direita: o bloco encosta na borda da célula */
+.ghostCell {
+  @apply ml-auto h-3.5 w-14;
 }
 
 /* quatro colunas numéricas não cabem em 390px: a tabela rola dentro do

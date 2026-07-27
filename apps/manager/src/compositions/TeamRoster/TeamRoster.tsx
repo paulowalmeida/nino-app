@@ -10,6 +10,9 @@ import type { TeamRosterProps } from './TeamRoster.types'
 import styles from './TeamRoster.module.css'
 import motion from '@styles/motion.module.css'
 
+/** Três pessoas: uma equipe pequena inteira, que é o caso comum. */
+const GHOST_ROWS = ['first', 'second', 'third']
+
 export const TeamRoster = ({
   title,
   hint,
@@ -26,11 +29,22 @@ export const TeamRoster = ({
       <p className={styles.hint}>{hint}</p>
     </header>
 
+    {/* a mesma lista, com as pessoas por chegar: disco, nome, e-mail, papel */}
     {isPending && (
-      <div className={styles.loading}>
-        <Skeleton className={styles.skeletonRow} />
-        <Skeleton className={styles.skeletonRow} />
-      </div>
+      <ul className={styles.list}>
+        {GHOST_ROWS.map((row) => (
+          <li key={row} className={styles.row}>
+            <Skeleton className={styles.ghostMark} />
+
+            <div className={styles.person}>
+              <Skeleton className={styles.ghostName} />
+              <Skeleton className={styles.ghostEmail} />
+            </div>
+
+            <Skeleton className={styles.ghostRole} />
+          </li>
+        ))}
+      </ul>
     )}
 
     {!isPending && entries.length === 0 && (

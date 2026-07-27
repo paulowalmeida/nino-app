@@ -141,3 +141,54 @@
 .action {
   @apply w-full shrink-0 sm:w-auto;
 }
+
+/*
+ * Esqueleto: as medidas acompanham o texto que vai ocupar cada lugar, e as
+ * larguras são irregulares de propósito — barra uniforme lê como bloco cinza,
+ * não como comanda carregando.
+ */
+.ghostNumber {
+  @apply h-4 w-14;
+}
+
+.ghostWaited {
+  @apply h-3 w-12;
+}
+
+/* o selo do status: 4px de raio, como o Badge do DS */
+.ghostStatus {
+  @apply ml-auto h-[1.125rem] w-24 shrink-0 rounded-[4px];
+}
+
+.ghostCustomer {
+  @apply h-3.5 w-32;
+}
+
+.ghostMeta {
+  @apply mt-1 h-3 w-24;
+}
+
+.ghostSummary {
+  @apply mt-1.5 h-3.5 w-full sm:hidden;
+}
+
+.ghostQuantity {
+  @apply h-3.5 w-6 shrink-0;
+}
+
+.ghostItemName {
+  @apply h-3.5 min-w-0 flex-1;
+}
+
+.ghostTotal {
+  @apply h-5 w-24;
+}
+
+.ghostPayment {
+  @apply mt-1.5 h-2.5 w-28;
+}
+
+/* o botão de avançar: raio de pílula, largura cheia só no celular */
+.ghostAction {
+  @apply h-8 w-full shrink-0 rounded-button sm:w-28;
+}

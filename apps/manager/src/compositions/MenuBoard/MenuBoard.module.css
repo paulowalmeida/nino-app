@@ -100,12 +100,34 @@
   @apply font-medium text-faint line-through;
 }
 
-.loading {
-  @apply flex flex-col gap-3;
+/*
+ * Esqueleto: as medidas acompanham o que vai ocupar cada lugar — o ladrilho
+ * do item mede 44px, o nome sobe de `text-sm` para `text-base` no desktop, e
+ * a descrição só existe a partir de `sm`, como na linha de verdade.
+ */
+.ghostTally {
+  @apply mb-2 h-3 w-24 shrink-0 lg:h-3.5 lg:w-32;
 }
 
-.skeletonRow {
-  @apply h-16 w-full rounded-card;
+.ghostThumb {
+  @apply h-11 w-11 shrink-0 rounded-xl;
+}
+
+.ghostName {
+  @apply h-3.5 w-40 lg:h-4;
+}
+
+.ghostDescription {
+  @apply mt-1 hidden h-2.5 w-56 sm:block;
+}
+
+.ghostPrice {
+  @apply h-3.5 w-16 shrink-0 lg:h-4;
+}
+
+/* o interruptor de disponível: a medida do Switch `sm` do DS */
+.ghostSwitch {
+  @apply h-4 w-7 shrink-0 rounded-full;
 }
 
 .more {

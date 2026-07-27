@@ -10,6 +10,19 @@ import type { ProductGridProps } from './ProductGrid.types'
 import styles from './ProductGrid.module.css'
 import motion from '@styles/motion.module.css'
 
+/** Três abas e oito cartões: o que preenche a primeira tela do balcão. */
+const SKELETON_TABS = ['first', 'second', 'third']
+const SKELETON_CARDS = [
+  'one',
+  'two',
+  'three',
+  'four',
+  'five',
+  'six',
+  'seven',
+  'eight',
+]
+
 /**
  * O cardápio do caixa: alvo grande, preço legível de longe e categorias
  * como filtro — quem opera não rola atrás do item, escolhe a aba e toca.
@@ -40,12 +53,27 @@ export const ProductGrid = ({
 
   const visible = items.filter(({ isActive }) => isActive)
 
+  /*
+   * Busca e abas continuam desenhadas enquanto carrega: elas não dependem da
+   * requisição, e sumir para voltar depois faz a bandeja inteira saltar meia
+   * tela no meio do atendimento.
+   */
   if (isPending) {
     return (
-      <div className={styles.loading}>
-        {Array.from({ length: 8 }).map((_, index) => (
-          <Skeleton key={index} className={styles.skeleton} />
-        ))}
+      <div className={styles.wrap}>
+        <Skeleton className={styles.skeletonSearch} />
+
+        <div className={styles.tabs}>
+          {SKELETON_TABS.map((tab) => (
+            <Skeleton key={tab} className={styles.skeletonTab} />
+          ))}
+        </div>
+
+        <div className={styles.grid}>
+          {SKELETON_CARDS.map((card) => (
+            <Skeleton key={card} className={styles.skeleton} />
+          ))}
+        </div>
       </div>
     )
   }

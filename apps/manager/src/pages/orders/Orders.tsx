@@ -4,9 +4,9 @@ import { Alert } from '@nino/ds/components/Alert'
 import { Button } from '@nino/ds/components/Button'
 import { EmptyState } from '@nino/ds/components/EmptyState'
 import { PageHeader } from '@nino/ds/components/PageHeader'
-import { Skeleton } from '@nino/ds/components/Skeleton'
 import type { NavIconName } from '@components/NavIcon/NavIcon.types'
 import { OrderTicket } from '@compositions/OrderTicket'
+import { OrderTicketSkeleton } from '@compositions/OrderTicket/OrderTicketSkeleton'
 import { StageTrack } from '@compositions/StageTrack'
 import type { StageOption } from '@compositions/StageTrack/StageTrack.types'
 import { useCurrentTenant } from '@hooks/session/useCurrentTenant'
@@ -26,6 +26,9 @@ type Stage = {
   empty: string
   icon: NavIconName
 }
+
+/** Quatro comandas: uma linha cheia no desktop, duas telas no celular. */
+const LOADING_TICKETS = ['first', 'second', 'third', 'fourth']
 
 const STAGES: Stage[] = [
   {
@@ -112,11 +115,13 @@ export const Orders = () => {
       {/* só a bobina rola: cabeçalho e trilha ficam parados no desktop */}
       <div className={styles.queue}>
         {isPending && (
-          <div className={styles.loading}>
-            <Skeleton className={styles.skeletonTicket} />
-            <Skeleton className={styles.skeletonTicket} />
-            <Skeleton className={styles.skeletonTicket} />
-          </div>
+          <ul className={styles.board}>
+            {LOADING_TICKETS.map((ticket) => (
+              <li key={ticket}>
+                <OrderTicketSkeleton />
+              </li>
+            ))}
+          </ul>
         )}
 
         {isError && (

@@ -14,6 +14,9 @@ import motion from '@styles/motion.module.css'
 /** Cinco linhas cabem ao lado do gráfico sem esticar o cartão. */
 const LIMIT = 5
 
+/** Barras decrescentes: a lista chega ordenada, e o esqueleto já diz isso. */
+const SKELETON_WIDTHS = ['92%', '74%', '58%', '43%', '31%']
+
 /**
  * O que mais saiu na semana. O dado já vinha no relatório de venda e era
  * descartado — a Visão geral pedia por ele sem saber.
@@ -38,7 +41,18 @@ export const TopProducts = ({ tenantId }: TopProductsProps) => {
       </div>
 
       <Card className={`${motion.settle} ${styles.card}`}>
-        {isPending && <Skeleton className={styles.skeleton} />}
+        {/* cinco linhas de barra, como as que vêm — a mais vendida no topo */}
+        {isPending && (
+          <div className={styles.skeletonBars}>
+            {SKELETON_WIDTHS.map((width) => (
+              <Skeleton
+                key={width}
+                className={styles.skeletonBar}
+                style={{ width }}
+              />
+            ))}
+          </div>
+        )}
 
         {!isPending && items.length === 0 && (
           <EmptyState>Nenhuma venda concluída na semana.</EmptyState>

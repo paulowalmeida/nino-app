@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, type AnimationEvent } from 'react'
 
 import { Reorder, useDragControls } from 'framer-motion'
 
@@ -8,6 +8,7 @@ import gripIcon from '@assets/icons/grip.svg?raw'
 import pencilIcon from '@assets/icons/pencil.svg?raw'
 import trashIcon from '@assets/icons/trash.svg?raw'
 import { Icon } from '@components/Icon/Icon'
+import { REORDER_TRANSITION } from '@constants/reorder-transition'
 import { riseDelay } from '@utils/rise-delay'
 
 import type { CategoryRowProps } from './Categories.types'
@@ -29,8 +30,19 @@ export const CategoryRow = ({
 }: CategoryRowProps) => {
   const dragControls = useDragControls()
   const [editing, setEditing] = useState(false)
+  const [isEntering, setIsEntering] = useState(true)
   const [draft, setDraft] = useState(category.name)
   const empty = category.count === 0
+
+  /**
+   * A entrada é uma animação CSS com `fill-mode: both`, então o `transform`
+   * final dela fica grudado no elemento e ganha do `transform` inline que o
+   * framer usa para mover a linha — sem soltar a classe no fim, o arraste
+   * reordena sem animar nada.
+   */
+  const handleEntranceEnd = (event: AnimationEvent<HTMLLIElement>) => {
+    if (event.target === event.currentTarget) setIsEntering(false)
+  }
 
   const closeEditing = () => {
     setEditing(false)
@@ -56,8 +68,10 @@ export const CategoryRow = ({
       dragListener={false}
       dragControls={dragControls}
       onDragEnd={onDragEnd}
-      className={`${motion.deal} ${styles.row}`}
-      style={riseDelay(index * 35 + 60)}
+      onAnimationEnd={handleEntranceEnd}
+      transition={REORDER_TRANSITION}
+      className={`${isEntering ? motion.deal : ''} ${styles.row}`}
+      style={isEntering ? riseDelay(index * 35 + 60) : {}}
     >
       {editing ? (
         <form

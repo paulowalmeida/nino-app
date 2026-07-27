@@ -23,6 +23,9 @@ const clock = new Intl.DateTimeFormat('pt-BR', {
 
 const RECENT = 4
 
+/** Quatro linhas enquanto carrega — as mesmas que vêm. */
+const SKELETON_ROWS = ['first', 'second', 'third', 'fourth']
+
 export const DayTally = ({ tenantId, timezone }: DayTallyProps) => {
   const { orders, isPending } = useOrders(tenantId)
 
@@ -105,7 +108,22 @@ export const DayTally = ({ tenantId, timezone }: DayTallyProps) => {
         </Card>
       </div>
 
-      {recent.length > 0 && (
+      {isPending && (
+        <ul className={styles.recent}>
+          {SKELETON_ROWS.map((row) => (
+            <li key={row} className={styles.entry}>
+              <div className={styles.skeletonRow}>
+                <Skeleton className={styles.skeletonTicket} />
+                <Skeleton className={styles.skeletonState} />
+                <Skeleton className={styles.skeletonAt} />
+                <Skeleton className={styles.skeletonTotal} />
+              </div>
+            </li>
+          ))}
+        </ul>
+      )}
+
+      {!isPending && recent.length > 0 && (
         <ul className={styles.recent}>
           {recent.map((order, index) => (
             <li

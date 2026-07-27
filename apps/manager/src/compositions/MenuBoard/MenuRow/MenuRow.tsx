@@ -1,7 +1,7 @@
 import { useState, type AnimationEvent } from 'react'
 import { Link } from 'react-router'
 
-import { Reorder, useDragControls, type Transition } from 'framer-motion'
+import { Reorder, useDragControls } from 'framer-motion'
 
 import { Dialog } from '@nino/ds/components/Dialog'
 import { Switch } from '@nino/ds/components/Switch'
@@ -9,6 +9,7 @@ import gripIcon from '@assets/icons/grip.svg?raw'
 import trashIcon from '@assets/icons/trash.svg?raw'
 import { Icon } from '@components/Icon/Icon'
 import { ItemThumb } from '@components/ItemThumb'
+import { REORDER_TRANSITION } from '@constants/reorder-transition'
 import { useDeleteMenuItem } from '@hooks/product/useDeleteMenuItem'
 import { riseDelay } from '@utils/rise-delay'
 
@@ -21,11 +22,6 @@ const brl = new Intl.NumberFormat('pt-BR', {
   style: 'currency',
   currency: 'BRL',
 })
-
-const REORDER_TRANSITION: Transition = {
-  duration: 0.32,
-  ease: [0.16, 1, 0.3, 1],
-}
 
 export const MenuRow = ({
   item,

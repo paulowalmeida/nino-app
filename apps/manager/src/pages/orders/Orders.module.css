@@ -56,16 +56,6 @@
   @apply min-w-0;
 }
 
-.loading {
-  @apply mt-1 grid gap-4 lg:mt-3;
-  @apply sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4;
-}
-
-/* o mesmo raio do Card do DS: o esqueleto tem que ter a forma do que vem */
-.skeletonTicket {
-  @apply h-52 w-full rounded-card;
-}
-
 .more {
   @apply mt-6 flex justify-center;
 }

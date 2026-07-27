@@ -48,10 +48,23 @@
   @apply text-faint;
 }
 
-.loading {
-  @apply flex flex-col gap-2;
+/*
+ * Esqueleto: as medidas acompanham o que vai ocupar cada lugar. O disco de
+ * iniciais é o Avatar `md` do DS (40px), e o papel é um Badge — 4px de raio,
+ * não pílula.
+ */
+.ghostMark {
+  @apply h-10 w-10 shrink-0 rounded-full;
 }
 
-.skeletonRow {
-  @apply h-14 w-full rounded-xl;
+.ghostName {
+  @apply h-3.5 w-32;
+}
+
+.ghostEmail {
+  @apply mt-1 h-2.5 w-44;
+}
+
+.ghostRole {
+  @apply ml-auto h-[1.125rem] w-20 shrink-0 rounded-[4px];
 }

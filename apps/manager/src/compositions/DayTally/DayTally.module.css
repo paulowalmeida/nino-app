@@ -36,8 +36,56 @@
   @apply text-xs leading-snug text-faint lg:text-sm;
 }
 
+/*
+ * A altura acompanha o número que vai ocupar o lugar — `text-2xl` com
+ * `leading-none` mede 1.5rem, `text-3xl` mede 1.875rem. A largura muda por
+ * cartão porque o conteúdo muda: uma contagem é curta, "R$ 1.234,56" não.
+ */
+.skeletonCount,
+.skeletonMoney,
+.skeletonAverage {
+  @apply h-6 lg:h-[1.875rem];
+}
+
+.skeletonCount {
+  @apply w-10;
+}
+
+.skeletonMoney {
+  @apply w-24;
+}
+
+.skeletonAverage {
+  @apply w-20;
+}
+
 .recent {
   @apply mt-4 flex flex-col;
+}
+
+/*
+ * Espelha a linha real (`.link`) sem o que é de link: mesmo espaçamento e
+ * mesma repartição das quatro colunas, para as linhas não mudarem de altura
+ * nem de alinhamento quando os pedidos chegam.
+ */
+.skeletonRow {
+  @apply flex items-center gap-3 px-2 py-2.5;
+}
+
+.skeletonTicket {
+  @apply h-3.5 w-12;
+}
+
+.skeletonState {
+  @apply h-3.5 min-w-0 flex-1;
+}
+
+.skeletonAt {
+  @apply h-3 w-10;
+}
+
+.skeletonTotal {
+  @apply h-3.5 w-16;
 }
 
 .entry {

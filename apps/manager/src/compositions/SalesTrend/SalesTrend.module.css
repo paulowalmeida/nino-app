@@ -48,6 +48,39 @@
   @apply font-medium text-faint;
 }
 
-.skeleton {
-  @apply h-60 w-full rounded-card;
+.skeletonTotal {
+  @apply h-8 w-40 lg:h-9 lg:w-48;
+}
+
+/*
+ * A altura é a do gráfico de verdade, que encolhe no celular (180px contra
+ * 240px no desktop). O bloco antigo tinha 240px fixos, então a página saltava
+ * 60px quando o dado chegava no celular.
+ */
+.skeletonChart {
+  @apply flex h-[180px] w-full gap-3 lg:h-60;
+}
+
+.skeletonAxis {
+  @apply flex shrink-0 flex-col justify-between py-1;
+}
+
+.skeletonTick {
+  @apply h-2.5 w-8;
+}
+
+.skeletonPlot {
+  @apply flex min-w-0 flex-1 flex-col justify-between;
+}
+
+.skeletonLine {
+  @apply w-full flex-1 rounded-card;
+}
+
+.skeletonDays {
+  @apply mt-2 flex shrink-0 justify-between;
+}
+
+.skeletonDay {
+  @apply h-2.5 w-6;
 }
