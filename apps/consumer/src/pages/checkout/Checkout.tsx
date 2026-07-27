@@ -10,6 +10,7 @@ import { FormField } from '@nino/ds/components/FormField'
 import { Input } from '@nino/ds/components/Input'
 import { MaskedInput } from '@nino/ds/components/MaskedInput'
 import { PhoneInput } from '@nino/ds/components/PhoneInput'
+import { RadioGroup } from '@nino/ds/components/RadioGroup'
 import { Select } from '@nino/ds/components/Select'
 import { Textarea } from '@nino/ds/components/Textarea'
 import { maskZipCode } from '@nino/ds/masks'
@@ -301,39 +302,35 @@ export const Checkout = () => {
           style={riseDelay(70)}
         >
           <p className={styles.blockLabel}>Como receber</p>
-          <div
-            className={`${styles.choices} ${styles.choicesTwo}`}
-            role="radiogroup"
-            aria-label="Como receber"
-          >
-            {zones.length > 0 && (
-              <label className={styles.choice}>
-                <input
-                  type="radio"
-                  value="DELIVERY"
-                  className={styles.choiceInput}
-                  {...register('channel')}
-                />
-                <span className={styles.choiceBody}>
-                  <span className={styles.choiceTitle}>Entrega</span>
-                  <span className={styles.choiceNote}>{deliveryNote}</span>
-                </span>
-              </label>
-            )}
-
-            <label className={styles.choice}>
-              <input
-                type="radio"
-                value="PICKUP"
-                className={styles.choiceInput}
-                {...register('channel')}
+          <Controller
+            name="channel"
+            control={control}
+            render={({ field }) => (
+              <RadioGroup
+                variant="card"
+                orientation="horizontal"
+                aria-label="Como receber"
+                value={field.value}
+                onValueChange={field.onChange}
+                options={[
+                  ...(zones.length > 0
+                    ? [
+                        {
+                          value: 'DELIVERY',
+                          label: 'Entrega',
+                          description: deliveryNote,
+                        },
+                      ]
+                    : []),
+                  {
+                    value: 'PICKUP',
+                    label: 'Retirada',
+                    description: 'Você busca na loja',
+                  },
+                ]}
               />
-              <span className={styles.choiceBody}>
-                <span className={styles.choiceTitle}>Retirada</span>
-                <span className={styles.choiceNote}>Você busca na loja</span>
-              </span>
-            </label>
-          </div>
+            )}
+          />
         </section>
 
         {isDelivery && (
@@ -465,29 +462,23 @@ export const Checkout = () => {
         >
           <p className={styles.blockLabel}>Pagamento na entrega</p>
 
-          <div
-            className={`${styles.choices} ${styles.choicesPay}`}
-            role="radiogroup"
-            aria-label="Forma de pagamento"
-          >
-            {paymentOptions.map((method) => (
-              <label key={method} className={styles.choice}>
-                <input
-                  type="radio"
-                  value={method}
-                  className={styles.choiceInput}
-                  {...register('paymentMethod')}
-                />
-                <span
-                  className={`${styles.choiceBody} ${styles.choiceCompact}`}
-                >
-                  <span className={styles.choiceTitle}>
-                    {PAYMENT_METHOD_LABEL[method]}
-                  </span>
-                </span>
-              </label>
-            ))}
-          </div>
+          <Controller
+            name="paymentMethod"
+            control={control}
+            render={({ field }) => (
+              <RadioGroup
+                variant="card"
+                orientation="horizontal"
+                aria-label="Forma de pagamento"
+                value={field.value}
+                onValueChange={field.onChange}
+                options={paymentOptions.map((method) => ({
+                  value: method,
+                  label: PAYMENT_METHOD_LABEL[method],
+                }))}
+              />
+            )}
+          />
 
           {paymentMethod === 'CASH' && (
             <FormField helperText="Deixe vazio se não precisar de troco">

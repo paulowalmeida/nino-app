@@ -90,4 +90,11 @@ describe(RadioGroup.name, () => {
     await userEvent.click(screen.getByLabelText('Retirada'))
     expect(onValueChange).toHaveBeenCalledWith('PICKUP')
   })
+
+  it('takes an accessible name from aria-label', () => {
+    render(<RadioGroup options={options} aria-label="Forma de pagamento" />)
+    expect(
+      screen.getByRole('radiogroup', { name: 'Forma de pagamento' })
+    ).toBeInTheDocument()
+  })
 })

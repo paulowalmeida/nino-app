@@ -21,4 +21,8 @@ export interface RadioGroupProps {
   onValueChange?: (value: string) => void
   disabled?: boolean
   className?: string
+  /** Names the group for assistive tech when no visible label points at it. */
+  'aria-label'?: string
+  /** Id of the visible element that already names the group. */
+  'aria-labelledby'?: string
 }

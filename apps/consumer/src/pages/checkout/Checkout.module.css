@@ -63,59 +63,6 @@
   grid-template-columns: 1fr 5.5rem;
 }
 
-/* ----- escolha (canal e pagamento) ----- */
-
-.choices {
-  @apply grid gap-2;
-}
-
-.choicesTwo {
-  @apply grid-cols-2;
-}
-
-.choicesPay {
-  @apply grid-cols-2;
-}
-
-.choice {
-  @apply relative flex;
-}
-
-.choiceInput {
-  @apply absolute h-0 w-0 opacity-0;
-}
-
-.choiceBody {
-  @apply flex h-full w-full cursor-pointer flex-col justify-center gap-0.5;
-  @apply rounded-2xl border border-line bg-brand-foreground px-4 py-3;
-  @apply transition-colors duration-150;
-}
-
-.choiceBody:hover {
-  @apply border-peach bg-cream;
-}
-
-.choiceInput:checked + .choiceBody {
-  @apply border-brand bg-brand-soft;
-  box-shadow: inset 0 0 0 1px var(--color-brand);
-}
-
-.choiceInput:focus-visible + .choiceBody {
-  @apply outline-none ring-2 ring-brand ring-offset-2 ring-offset-paper;
-}
-
-.choiceCompact {
-  @apply flex-row items-center px-3.5 py-2.5;
-}
-
-.choiceTitle {
-  @apply font-display text-[0.95rem] font-bold leading-tight text-ink;
-}
-
-.choiceNote {
-  @apply text-xs leading-snug text-muted;
-}
-
 /* ----- a comanda (resumo dobrável) ----- */
 
 .receipt {
