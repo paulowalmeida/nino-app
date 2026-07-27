@@ -13,7 +13,7 @@ const contentClass =
 const itemClass =
   'flex cursor-pointer select-none items-center justify-between gap-2 ' +
   'rounded-[6px] px-3 py-2 text-sm text-ink outline-none transition-colors ' +
-  'data-[highlighted]:bg-surface-sunk data-[highlighted]:text-ink ' +
+  'data-[highlighted]:bg-surface-mute data-[highlighted]:text-ink ' +
   'data-[state=checked]:font-semibold data-[state=checked]:text-brand-strong ' +
   'data-[disabled]:pointer-events-none data-[disabled]:opacity-50'
 

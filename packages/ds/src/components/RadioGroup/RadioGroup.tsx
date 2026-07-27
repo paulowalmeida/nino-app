@@ -8,8 +8,8 @@ const rootVertical = 'flex-col'
 const rootHorizontal = 'flex-row flex-wrap'
 
 const baseControl =
-  'h-4 w-4 shrink-0 rounded-full border border-transparent bg-surface-sunk ' +
-  'flex items-center justify-center outline-none transition-colors ' +
+  'h-4 w-4 shrink-0 rounded-full border border-input-border bg-white ' +
+  'flex items-center justify-center outline-none transition-[color,box-shadow,border-color] duration-200 ' +
   'focus-visible:outline-2 focus-visible:outline-brand ' +
   'focus-visible:outline-offset-2 data-[state=checked]:border-brand ' +
   'data-[state=checked]:bg-brand disabled:cursor-not-allowed ' +

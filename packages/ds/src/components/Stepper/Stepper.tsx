@@ -11,17 +11,17 @@ const baseIndicator =
   'flex h-8 w-8 shrink-0 items-center justify-center rounded-[6px] ' +
   'text-sm font-bold transition-colors'
 
-const indicatorDefault = 'bg-surface-sunk text-faint'
+const indicatorDefault = 'bg-surface-mute text-faint'
 const indicatorActive = 'bg-brand text-brand-foreground'
 const indicatorCompleted = 'bg-body text-cream'
 
 const separatorHClass = 'h-1 flex-1 mx-2 rounded-full transition-colors'
 const separatorVClass = 'ml-4 mt-1 mb-1 h-6 w-1 rounded-full transition-colors'
 const separatorDone = 'bg-body'
-const separatorPending = 'bg-surface-sunk'
+const separatorPending = 'bg-surface-mute'
 
 const baseTrigger =
-  'flex items-center gap-3 rounded-card outline-none ' +
+  'flex cursor-pointer items-center gap-3 rounded-card outline-none ' +
   'focus-visible:outline-2 focus-visible:outline-brand ' +
   'focus-visible:outline-offset-2'
 

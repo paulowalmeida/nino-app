@@ -12,7 +12,7 @@ const sizeClasses: Record<AvatarSize, string> = {
 
 const baseRoot =
   'relative inline-flex shrink-0 items-center justify-center ' +
-  'overflow-hidden rounded-full bg-surface-sunk select-none'
+  'overflow-hidden rounded-full bg-surface-mute select-none'
 
 const baseImage = 'h-full w-full object-cover'
 

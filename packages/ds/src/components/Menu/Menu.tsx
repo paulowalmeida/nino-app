@@ -9,7 +9,7 @@ const baseContent =
   'bg-white shadow-overlay p-1 outline-none'
 
 const baseItem =
-  'relative flex cursor-pointer select-none items-center gap-2 rounded-[6px] px-3 py-2.5 text-sm font-medium text-body outline-none transition-colors data-[highlighted]:bg-surface-sunk data-[highlighted]:text-ink data-[disabled]:pointer-events-none data-[disabled]:opacity-50'
+  'relative flex cursor-pointer select-none items-center gap-2 rounded-[6px] px-3 py-2.5 text-sm font-medium text-body outline-none transition-colors data-[highlighted]:bg-surface-mute data-[highlighted]:text-ink data-[disabled]:pointer-events-none data-[disabled]:opacity-50'
 
 const destructiveItem =
   'text-danger data-[highlighted]:bg-danger-surface data-[highlighted]:text-danger'

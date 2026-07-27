@@ -4,7 +4,7 @@ import { mergeClasses } from '@ds/lib/mergeClasses'
 import { SliderProps } from './Slider.types'
 
 const baseControl = 'relative flex w-full items-center py-2'
-const baseTrack = 'relative h-1.5 w-full grow rounded-full bg-surface-sunk'
+const baseTrack = 'relative h-1.5 w-full grow rounded-full bg-surface-mute'
 const baseRange = 'absolute h-full rounded-full bg-brand'
 const baseThumb =
   'block size-4 rounded-full bg-brand shadow-card outline-none ' +

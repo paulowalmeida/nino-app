@@ -51,7 +51,7 @@ describe(Checkbox.displayName!, () => {
   it('applies default classes when error is false', () => {
     const { container } = render(<Checkbox />)
     expect(container.querySelector('[data-part="control"]')).toHaveClass(
-      'border-transparent'
+      'border-input-border'
     )
   })
 

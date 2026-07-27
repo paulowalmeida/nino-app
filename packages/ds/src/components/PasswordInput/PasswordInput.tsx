@@ -12,19 +12,20 @@ const sizeClasses: Record<PasswordInputSize, string> = {
 }
 
 const baseControl =
-  'flex items-center gap-2 w-full rounded-card border bg-surface-sunk transition-colors ' +
-  'focus-within:ring-2 focus-within:ring-brand/25 focus-within:border-brand'
+  'flex items-center gap-2 w-full rounded-card border bg-white transition-[color,box-shadow,border-color] duration-200 ' +
+  'focus-within:border-brand focus-within:ring-1 focus-within:ring-inset focus-within:ring-brand'
 
-const controlDefault = 'border-transparent'
+const controlDefault = 'border-input-border'
 
 const controlError =
-  'border-danger focus-within:ring-danger/25 focus-within:border-danger'
+  'border-danger focus-within:border-danger focus-within:ring-1 ' +
+  'focus-within:ring-inset focus-within:ring-danger'
 
 const baseInput =
   'flex-1 min-w-0 bg-transparent outline-none text-ink placeholder:text-faint'
 
 const triggerClass =
-  'shrink-0 text-faint transition-colors outline-none cursor-pointer ' +
+  'shrink-0 text-faint transition-[color,box-shadow,border-color] duration-200 outline-none cursor-pointer ' +
   'hover:text-muted focus-visible:text-brand disabled:pointer-events-none'
 
 const EyeIcon = () => (

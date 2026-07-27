@@ -17,7 +17,7 @@ const baseControl =
   /* Trilho rebaixado com uma placa deslizando por cima — o mesmo par de
    * superfícies das abas e da paginação, reduzido a um controle. */
   'inline-flex shrink-0 cursor-pointer items-center rounded-full border-2 ' +
-  'border-transparent bg-surface-sunk transition-colors ' +
+  'border-transparent bg-surface-mute transition-colors ' +
   'data-[state=checked]:bg-brand focus-visible:outline-2 ' +
   'focus-visible:outline-brand focus-visible:outline-offset-2 ' +
   'disabled:cursor-not-allowed disabled:opacity-50'

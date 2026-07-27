@@ -12,12 +12,12 @@ const variantClasses: Record<SkeletonVariant, string> = {
   text: 'rounded-[4px] w-full h-4',
 }
 
-/* Sand, not gray: the placeholder has to read as the warm surface it will be
- * replaced by, otherwise the page turns cold while it loads. */
+/* Cinza neutro: o placeholder não é conteúdo, e tingir de marca faz a página
+ * parecer carregada de laranja antes de existir qualquer dado. */
 const animationClasses: Record<SkeletonAnimation, string> = {
-  pulse: 'animate-pulse bg-sand',
-  wave: 'skeleton-wave bg-sand',
-  none: 'bg-sand',
+  pulse: 'animate-pulse bg-ink/8',
+  wave: 'skeleton-wave bg-ink/8',
+  none: 'bg-ink/8',
 }
 
 /**

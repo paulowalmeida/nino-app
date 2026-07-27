@@ -4,14 +4,14 @@ import { mergeClasses } from '@ds/lib/mergeClasses'
 
 import { CardProps, CardVariant } from './Card.types'
 
-const baseCard = 'rounded-card bg-white p-4'
+const baseCard = 'rounded-card border border-line/60 bg-white p-4'
 
-/* Height off the page, and only one thing says it: a lifted surface carries
- * shadow, a resting one carries the border. Both at once is the stacked look
- * the toast dropped. */
+/* A borda fina fecha o cartão em qualquer fundo — sem ela a superfície branca
+ * se dissolve na página. A variante diz só a altura: encostado, levantado, ou
+ * sem sombra nenhuma. */
 const variantClasses: Record<CardVariant, string> = {
   default: 'shadow-card',
-  flat: 'border border-line',
+  flat: '',
   elevated: 'shadow-card-hover',
 }
 

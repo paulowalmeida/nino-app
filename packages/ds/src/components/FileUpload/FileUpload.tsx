@@ -8,7 +8,7 @@ const baseDropzone =
    * o fundo afunda, é onde se deposita algo. O tracejado marca que ainda está
    * vazia. */
   'group flex flex-col items-center justify-center gap-3 rounded-card ' +
-  'border-2 border-dashed border-line bg-surface-sunk px-6 py-10 ' +
+  'border-2 border-dashed border-line bg-surface-mute px-6 py-10 ' +
   'text-center transition-colors cursor-pointer hover:border-brand ' +
   'hover:bg-cream-deep data-[dragging]:border-brand ' +
   'data-[dragging]:bg-cream-deep'
@@ -16,7 +16,7 @@ const baseDropzone =
 const baseItemGroup = 'mt-4 flex flex-col gap-2'
 
 const baseItem =
-  'flex items-center gap-3 rounded-card bg-surface-sunk px-3 py-2 text-sm'
+  'flex items-center gap-3 rounded-card bg-surface-mute px-3 py-2 text-sm'
 
 const baseItemName = 'flex-1 truncate text-ink'
 const baseItemSize = 'shrink-0 text-xs text-faint'

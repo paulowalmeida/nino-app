@@ -4,16 +4,19 @@ import { mergeClasses } from '@ds/lib/mergeClasses'
 import { ClipboardProps } from './Clipboard.types'
 
 const baseControl =
-  'flex items-center gap-2 w-full h-10 rounded-card border border-transparent bg-surface-sunk pl-3 pr-1 ' +
-  'transition-colors focus-within:ring-2 focus-within:ring-brand/25 focus-within:border-brand'
+  'flex items-center gap-2 w-full h-10 rounded-card border ' +
+  'border-input-border bg-white pl-3 pr-1 transition-[color,box-shadow,border-color] duration-200 ' +
+  'focus-within:border-brand focus-within:ring-1 focus-within:ring-inset focus-within:ring-brand'
 
 const baseInput = 'flex-1 min-w-0 bg-transparent text-sm text-ink outline-none'
 
+/* Dentro do campo, um bloco escuro pesa mais que o próprio valor copiado: o
+ * gatilho fica discreto e só ganha superfície no hover. */
 const triggerClass =
-  'shrink-0 inline-flex h-8 items-center gap-1.5 rounded-[6px] px-3 ' +
-  'text-sm font-semibold text-cream bg-body transition-colors ' +
-  'cursor-pointer outline-none hover:bg-ink focus-visible:outline-2 ' +
-  'focus-visible:outline-brand focus-visible:outline-offset-2'
+  'shrink-0 inline-flex h-8 items-center gap-1.5 rounded-[6px] px-2.5 ' +
+  'text-sm font-semibold text-brand-strong transition-[color,box-shadow,border-color] duration-200 ' +
+  'cursor-pointer outline-none hover:bg-line/25 focus-visible:outline-2 ' +
+  'focus-visible:outline-brand focus-visible:-outline-offset-2'
 
 const CopyIcon = () => (
   <svg

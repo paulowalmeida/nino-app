@@ -12,13 +12,15 @@ const sizeClasses: Record<TagsInputSize, string> = {
 }
 
 const baseControl =
-  'flex w-full flex-wrap items-center gap-1.5 rounded-card border bg-surface-sunk px-2 py-1 transition-colors focus-within:ring-2'
+  'flex w-full flex-wrap items-center gap-1.5 rounded-card border bg-white ' +
+  'px-2 py-1 transition-[color,box-shadow] duration-200 ' +
+  'focus-within:ring-1 focus-within:ring-inset'
 
 const controlDefault =
-  'border-transparent focus-within:ring-brand focus-within:border-brand'
+  'border-input-border focus-within:border-brand focus-within:ring-brand'
 
 const controlError =
-  'border-danger focus-within:ring-danger focus-within:border-danger'
+  'border-danger focus-within:border-danger focus-within:ring-danger'
 
 const chip =
   'inline-flex items-center gap-1 rounded bg-[color-mix(in_srgb,var(--color-brand)_12%,white)] px-2 py-0.5 text-sm text-brand'
