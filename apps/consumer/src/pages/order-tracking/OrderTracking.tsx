@@ -1,23 +1,14 @@
 import { Link, useParams, useSearchParams } from 'react-router'
 
 import { EmptyState } from '@nino/ds/components/EmptyState'
+import { OrderJourney } from '@compositions/OrderJourney/OrderJourney'
+import { OrderStage } from '@compositions/OrderStage/OrderStage'
 import { useGuestOrderStatus } from '@hooks/useGuestOrderStatus'
-import { STATUS_LABEL } from '@utils/order-flow'
+import { isTerminal } from '@utils/order-journey'
+import { riseDelay } from '@utils/rise-delay'
 
 import styles from './OrderTracking.module.css'
-
-const stamp = new Intl.DateTimeFormat('pt-BR', {
-  day: '2-digit',
-  month: '2-digit',
-  hour: '2-digit',
-  minute: '2-digit',
-})
-
-/** A previsão é a hora, não a data: ninguém espera o pedido pra outro dia. */
-const clock = new Intl.DateTimeFormat('pt-BR', {
-  hour: '2-digit',
-  minute: '2-digit',
-})
+import motion from '@styles/motion.module.css'
 
 export const OrderTracking = () => {
   const { slug: pathSlug, orderId } = useParams()
@@ -42,15 +33,13 @@ export const OrderTracking = () => {
           <div className={styles.skBack} />
           <div className={styles.skTitle} />
         </header>
-        <div className={styles.skStatus} />
-        <div className={styles.skTimeline}>
-          {Array.from({ length: 3 }).map((_, i) => (
-            <div key={i} className={styles.skEntry}>
+        <div className={styles.skStage} />
+        <div className={styles.skJourney}>
+          {Array.from({ length: 5 }).map((_, i) => (
+            <div key={i} className={styles.skRow}>
               <div className={styles.skDot} />
-              <div className={styles.skEntryText}>
-                <div className={styles.skEntryLabel} />
-                <div className={styles.skEntryTime} />
-              </div>
+              <div className={styles.skLabel} />
+              <div className={styles.skTime} />
             </div>
           ))}
         </div>
@@ -76,72 +65,64 @@ export const OrderTracking = () => {
     )
   }
 
-  const isCancelled = order.status === 'CANCELLED'
+  const done = isTerminal(order.status)
 
   return (
     <div className={styles.page}>
-      <header className={styles.header}>
-        <Link to={backHref} className={styles.back} aria-label="Voltar">
+      <header className={`${motion.riseIn} ${styles.header}`}>
+        <Link
+          to={backHref}
+          className={`${motion.press} ${styles.back}`}
+          aria-label="Voltar para a loja"
+        >
           ←
         </Link>
-        <h1 className={styles.title}>Seu pedido</h1>
+        <div>
+          <h1 className={styles.title}>Seu pedido</h1>
+          <p className={styles.code}>#{order.id.slice(0, 8)}</p>
+        </div>
       </header>
 
-      <div
-        className={
-          isCancelled
-            ? `${styles.status} ${styles.statusCancelled}`
-            : styles.status
-        }
+      <OrderStage
+        order={order}
+        className={motion.riseIn}
+        style={riseDelay(60)}
+      />
+
+      {!done && (
+        <p
+          className={`${motion.riseIn} ${styles.reassurance}`}
+          style={riseDelay(120)}
+        >
+          <span className={styles.whatsappDot} aria-hidden="true" />
+          Pode fechar esta tela. A gente avisa no WhatsApp a cada passo.
+        </p>
+      )}
+
+      <p
+        className={`${motion.riseIn} ${styles.eyebrow}`}
+        style={riseDelay(160)}
       >
-        <span className={styles.statusDot} aria-hidden="true" />
-        <div className={styles.statusText}>
-          <p className={styles.statusLabel}>{STATUS_LABEL[order.status]}</p>
-          {order.estimatedDeliveryAt && !isCancelled && (
-            <p className={styles.statusEta}>
-              Previsão {clock.format(new Date(order.estimatedDeliveryAt))}
-            </p>
-          )}
-        </div>
-      </div>
+        Passo a passo
+      </p>
 
-      <ol className={styles.timeline}>
-        {order.timeline.map((entry, index) => {
-          const isCurrent = index === order.timeline.length - 1
-          return (
-            <li
-              key={`${entry.status}-${entry.at}`}
-              className={
-                isCurrent ? `${styles.entry} ${styles.current}` : styles.entry
-              }
-              aria-current={isCurrent ? 'step' : undefined}
-            >
-              <span className={styles.entryDot} aria-hidden="true">
-                {!isCurrent && (
-                  <svg width="8" height="8" viewBox="0 0 12 12">
-                    <path
-                      d="M2.5 6.5l2.5 2.5 4.5-5.5"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      fill="none"
-                    />
-                  </svg>
-                )}
-              </span>
-              <div>
-                <p className={styles.entryLabel}>{STATUS_LABEL[entry.status]}</p>
-                <p className={styles.entryTime}>
-                  {stamp.format(new Date(entry.at))}
-                </p>
-              </div>
-            </li>
-          )
-        })}
-      </ol>
+      <OrderJourney order={order} />
 
-      <p className={styles.code}>Código do pedido: {order.id.slice(0, 8)}</p>
+      {done && (
+        <Link
+          to={backHref}
+          className={[
+            motion.press,
+            motion.riseIn,
+            order.status === 'CANCELLED' ? styles.againQuiet : styles.again,
+          ].join(' ')}
+          style={riseDelay(420)}
+        >
+          {order.status === 'CANCELLED'
+            ? 'Voltar ao cardápio'
+            : 'Pedir de novo'}
+        </Link>
+      )}
     </div>
   )
 }

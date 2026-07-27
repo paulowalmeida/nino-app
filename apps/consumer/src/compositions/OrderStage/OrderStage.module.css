@@ -1,0 +1,150 @@
+@reference "@nino/ds/globals.css";
+
+/*
+ * O cartão vivo é um toast grande: mesma gramática do aviso que o app já dá
+ * em todo lugar — superfície chapada, canto de `radius-card`, tudo por cima
+ * numa tinta só, e o prazo desenhado como a barra que drena na borda de
+ * baixo. Aqui a superfície é laranja bem claro em vez de saturada porque
+ * este cartão não pisca e some: fica na tela o tempo inteiro da espera.
+ */
+.stage {
+  @apply relative overflow-hidden rounded-card border border-brand/12;
+  @apply bg-cream-deep px-5 pb-7 pt-4 text-ink shadow-card;
+}
+
+/* Cancelado sai do laranja: nada está acontecendo para acompanhar. */
+.stageCancelled {
+  @apply border-line bg-sand-deep pb-5;
+}
+
+.flag {
+  @apply flex items-center gap-2 text-[0.68rem] font-bold uppercase;
+  @apply tracking-[0.14em] text-brand-strong;
+}
+
+.flagDone {
+  @apply flex items-center gap-2 text-[0.68rem] font-bold uppercase;
+  @apply tracking-[0.14em] text-subtle;
+}
+
+.flagDot {
+  @apply h-1.5 w-1.5 shrink-0 rounded-full bg-success;
+  animation: stage-pulse 2s ease-in-out infinite;
+}
+
+.flagDone .flagDot {
+  @apply bg-faintest;
+  animation: none;
+}
+
+@keyframes stage-pulse {
+  50% {
+    opacity: 0.3;
+  }
+}
+
+.copy {
+  @apply mt-2.5;
+}
+
+.headline {
+  @apply font-display text-[1.4rem] font-extrabold leading-[1.15] text-ink;
+  @apply sm:text-[1.55rem];
+}
+
+.note {
+  @apply mt-1.5 text-[0.82rem] leading-snug text-muted;
+}
+
+/*
+ * A previsão é a resposta que a pessoa veio buscar, então ela é o maior
+ * número da tela — e conta sozinha, minuto a minuto. Antes era uma linha de
+ * 13px abaixo do nome do estado, do mesmo tamanho de todo o resto.
+ */
+.eta {
+  @apply mt-6;
+}
+
+.etaLead {
+  @apply text-[0.68rem] font-bold uppercase tracking-[0.14em] text-brand-strong;
+}
+
+.etaValue {
+  @apply flex items-baseline gap-2 font-display text-[3.1rem] font-extrabold;
+  @apply leading-none text-ink;
+  font-variant-numeric: tabular-nums;
+}
+
+.etaUnit {
+  @apply font-sans text-base font-bold text-subtle;
+}
+
+.etaClock {
+  @apply mt-1.5 text-[0.78rem] text-subtle;
+}
+
+.etaSoon {
+  @apply font-display text-[1.5rem] font-extrabold leading-tight text-ink;
+}
+
+/*
+ * O trilho é a barra do toast, repartida: cinco fatias coladas na borda de
+ * baixo, uma por passo. O que passou fica laranja cheio, o que falta fica
+ * quase apagado, e a fatia de agora tem um brilho atravessando de ponta a
+ * ponta — é essa varredura que diz "isto está acontecendo", sem texto.
+ */
+.rail {
+  @apply absolute inset-x-0 bottom-0 flex h-1 gap-0.5;
+}
+
+.railDone,
+.railCurrent,
+.railAhead {
+  @apply h-full flex-1;
+}
+
+.railDone {
+  @apply bg-brand;
+}
+
+.railAhead {
+  background: color-mix(in srgb, var(--color-brand) 22%, transparent);
+}
+
+.railCurrent {
+  @apply relative overflow-hidden;
+  background: color-mix(in srgb, var(--color-brand) 40%, transparent);
+}
+
+.railCurrent::after {
+  content: '';
+  @apply absolute inset-0;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    var(--color-brand) 50%,
+    transparent 100%
+  );
+  animation: rail-sweep 1.9s cubic-bezier(0.45, 0, 0.15, 1) infinite;
+}
+
+@keyframes rail-sweep {
+  from {
+    transform: translateX(-105%);
+  }
+  to {
+    transform: translateX(105%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .flagDot,
+  .railCurrent::after {
+    animation: none;
+  }
+
+  .railCurrent::after {
+    background: var(--color-brand);
+    opacity: 0.7;
+  }
+}
