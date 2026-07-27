@@ -14,9 +14,10 @@
   @apply grid grid-cols-3 gap-2 lg:gap-4;
 }
 
-/* superfície vem do Card do DS; aqui fica o que ele não sabe */
+/* superfície vem do Card do DS; aqui fica o que ele não sabe. O número tem
+   leading-none: sem gap explícito, o rótulo encosta nele. */
 .figure {
-  @apply flex flex-col gap-1 p-3 lg:p-5;
+  @apply flex flex-col gap-1.5 p-3.5 lg:p-5;
   @apply transition-colors duration-200;
 }
 

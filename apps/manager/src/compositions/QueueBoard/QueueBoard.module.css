@@ -9,9 +9,11 @@
   @apply lg:grid-cols-4 lg:gap-4;
 }
 
-/* superfície e sombra vêm do Card do DS; aqui fica o que ele não sabe */
+/* superfície e sombra vêm do Card do DS; aqui fica o que ele não sabe.
+   O gap não é 1: o número usa leading-none, então não há entrelinha para
+   servir de folga entre ele e o rótulo. */
 .tile {
-  @apply flex flex-col gap-1 lg:p-5;
+  @apply flex flex-col gap-2 p-5;
   @apply transition-all duration-300;
   @apply hover:border-brand/60 hover:shadow-card-hover;
   @apply focus-visible:outline-none focus-visible:ring-2;
