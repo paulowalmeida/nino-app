@@ -47,32 +47,20 @@
   @apply mt-1.5 flex flex-wrap items-center gap-x-2.5 gap-y-1;
 }
 
-/* selo de aberto/fechado — compacto, mora na linha de status */
+/* selo de aberto/fechado — só o espaçamento; o resto vem do Badge do DS */
 .badge {
-  @apply inline-flex shrink-0 items-center gap-1.5 rounded-full border;
-  @apply px-2.5 py-1 text-[0.72rem] font-bold;
-}
-
-.badgeOpen {
-  @apply border-brand-soft bg-paper text-brand-strong;
-}
-
-.badgeShut {
-  @apply border-line bg-sand text-faint;
+  @apply gap-1.5;
 }
 
 .dot {
-  @apply h-1.5 w-1.5 rounded-full;
+  @apply h-1.5 w-1.5 rounded-full bg-current opacity-50;
 }
 
-.badgeOpen .dot {
-  @apply bg-lime;
+/* o ponto aceso é o que se lê de longe */
+.dotOn {
+  @apply bg-lime opacity-100;
   box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-lime) 30%, transparent);
   animation: pulse 2s ease-in-out infinite;
-}
-
-.badgeShut .dot {
-  @apply bg-faintest;
 }
 
 /* tempo estimado: produção + entrega, sem valor de frete */
