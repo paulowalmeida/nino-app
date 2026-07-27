@@ -45,3 +45,7 @@
 .idle {
   @apply mt-4 text-sm text-faint;
 }
+
+.cardOverview {
+  @apply flex flex-row gap-x-2 items-center;
+}

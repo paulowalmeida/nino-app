@@ -47,6 +47,7 @@ export const DayTally = ({ tenantId, timezone }: DayTallyProps) => {
             to="../pedidos?etapa=closed"
             relative="path"
             aria-label="Ver os pedidos fechados"
+            className={styles.cardOverview}
           >
             <span className={styles.value}>
               {isPending ? (
@@ -63,43 +64,33 @@ export const DayTally = ({ tenantId, timezone }: DayTallyProps) => {
         </Card>
 
         <Card
-          asChild
           variant="flat"
-          className={`${motion.settle} ${styles.figure}`}
+          style={riseDelay(70)}
+          className={`${motion.settle} ${styles.figure} ${styles.cardOverview}`}
         >
-          <article style={riseDelay(70)}>
           <span className={styles.value}>
             {isPending ? (
-              <Skeleton
-                animation="wave"
-                className="h-7 w-24 bg-sand lg:h-8"
-              />
+              <Skeleton animation="wave" className="h-7 w-24 bg-sand lg:h-8" />
             ) : (
               brl(revenue)
             )}
           </span>
           <span className={styles.label}>entraram no caixa</span>
-          </article>
         </Card>
 
         <Card
-          asChild
           variant="flat"
-          className={`${motion.settle} ${styles.figure}`}
+          style={riseDelay(140)}
+          className={`${motion.settle} ${styles.figure} ${styles.cardOverview}`}
         >
-          <article style={riseDelay(140)}>
           <span className={styles.value}>
             {isPending ? (
-              <Skeleton
-                animation="wave"
-                className="h-7 w-20 bg-sand lg:h-8"
-              />
+              <Skeleton animation="wave" className="h-7 w-20 bg-sand lg:h-8" />
             ) : (
               brl(average)
             )}
           </span>
           <span className={styles.label}>por pedido</span>
-          </article>
         </Card>
       </div>
 
