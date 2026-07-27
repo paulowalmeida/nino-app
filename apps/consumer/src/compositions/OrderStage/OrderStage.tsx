@@ -1,15 +1,11 @@
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
 
 import { AnimatedNumber } from '@components/AnimatedNumber/AnimatedNumber'
+import { OrderRail } from '@compositions/OrderRail/OrderRail'
 import { useMinutesUntil } from '@hooks/useMinutesUntil'
 import { clockLabel } from '@utils/clock'
 import { STATUS_LABEL } from '@utils/order-flow'
-import {
-  etaLead,
-  isTerminal,
-  journeyFor,
-  stageNote,
-} from '@utils/order-journey'
+import { etaLead, isTerminal, stageNote } from '@utils/order-journey'
 
 import type { OrderStageProps } from './OrderStage.types'
 
@@ -24,10 +20,6 @@ export const OrderStage = ({ order, className, style }: OrderStageProps) => {
   const done = isTerminal(order.status)
   const cancelled = order.status === 'CANCELLED'
 
-  const journey = journeyFor(order.channel)
-  /* Pedido encerrado preenche o trilho inteiro: o último passo não fica
-     "em andamento" piscando depois que a comida já chegou. */
-  const stepIndex = done ? journey.length : journey.indexOf(order.status)
   const finishedAt = done ? order.timeline.at(-1)?.at : undefined
 
   const counting =
@@ -106,22 +98,7 @@ export const OrderStage = ({ order, className, style }: OrderStageProps) => {
         </div>
       )}
 
-      {!cancelled && (
-        <div className={styles.rail} aria-hidden="true">
-          {journey.map((step, i) => (
-            <span
-              key={step}
-              className={
-                i < stepIndex
-                  ? styles.railDone
-                  : i === stepIndex
-                    ? styles.railCurrent
-                    : styles.railAhead
-              }
-            />
-          ))}
-        </div>
-      )}
+      {!cancelled && <OrderRail order={order} />}
     </section>
   )
 }

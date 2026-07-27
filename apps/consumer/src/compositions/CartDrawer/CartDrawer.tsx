@@ -38,6 +38,7 @@ export const CartDrawer = ({
   onOpenChange,
   lines,
   total,
+  estimatedMinutes,
   onIncrement,
   onDecrement,
   onClear,
@@ -157,13 +158,24 @@ export const CartDrawer = ({
 
             <div className={styles.footer}>
               <div className={styles.totalRow}>
-                <span className={styles.totalLabel}>Total</span>
+                <div>
+                  <p className={styles.totalLabel}>Total</p>
+                  {estimatedMinutes ? (
+                    <p className={styles.totalEta}>
+                      pronto em ~{estimatedMinutes} min
+                    </p>
+                  ) : null}
+                </div>
                 <AnimatedNumber value={brl(total)} className={styles.total} />
               </div>
               <Button className={styles.checkout} onClick={onCheckout}>
                 Finalizar pedido
               </Button>
-              <Button variant="ghost" className={styles.clear} onClick={onClear}>
+              <Button
+                variant="ghost"
+                className={styles.clear}
+                onClick={onClear}
+              >
                 Esvaziar sacola
               </Button>
             </div>

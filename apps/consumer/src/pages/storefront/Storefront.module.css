@@ -5,54 +5,56 @@
  * sobre um fundo quente mais fechado. Aqui ele deixa de ser uma coluna de
  * celular esticada: abre para ~1120px e o corpo se parte em duas colunas —
  * um índice de categorias fixo à esquerda e a grade de itens à direita. */
-/* No celular a vitrine vira uma "casca de app": a página trava na altura da
- * tela e nada nela rola por fora. O topo (cabeçalho + trilha de categorias)
- * fica fixo e só a lista de produtos rola, dentro do próprio container. No
- * desktop volta a ser o painel de papel emoldurado que cresce e rola no
- * documento. */
+/* A vitrine é uma "casca de app" nas duas larguras: a página trava na altura
+ * da tela e nada nela rola por fora. O topo (cabeçalho, banner de pedido e
+ * índice de categorias) fica parado e só a lista de produtos rola, dentro do
+ * próprio container. No desktop isso vale igual — o painel emoldurado tem
+ * altura fixa e o cardápio rola por dentro dele, então o nome da loja, o
+ * pedido em andamento e a sacola nunca saem de vista. */
 /* O respiro do rodapé mora no corpo, não na página: a barra da sacola precisa
    encostar na borda do painel pra fechar o cartão. */
 .page {
   @apply relative mx-auto flex h-dvh w-full max-w-xl flex-col overflow-hidden;
   @apply bg-brand-foreground;
-  @apply lg:my-8 lg:block lg:h-auto lg:min-h-dvh lg:max-w-[70rem];
+  @apply lg:my-8 lg:h-[calc(100dvh-4rem)] lg:max-w-[70rem];
   @apply lg:rounded-[1.75rem] lg:border lg:border-line;
   @apply lg:shadow-[0_30px_80px_-40px_rgba(26,18,6,0.45)];
-  /* `overflow` cria contexto de rolagem e mata o `sticky` da barra da sacola —
-     a casca de app do celular precisa dele, o painel do desktop não. */
-  @apply lg:overflow-visible;
 }
 
 /* bloco fixo do topo: cabeçalho + banner de pedido ativo. Não encolhe e não
- * rola. No desktop é só um wrapper transparente no fluxo normal. */
+ * rola, em nenhuma largura. */
 .topbar {
   @apply shrink-0;
 }
 
-/* corpo do cardápio: no celular é a coluna que sobra abaixo do topo fixo —
- * trilha de categorias presa no alto e a lista rolando embaixo. No desktop
- * vira a grade de duas colunas (índice + itens). */
+/* corpo do cardápio: a faixa que sobra entre o topo fixo e a barra da sacola.
+ * No celular é uma coluna (trilha presa no alto, lista rolando embaixo); no
+ * desktop, a grade de duas colunas (índice + itens). Nos dois casos ele
+ * mesmo não rola — quem rola é a coluna de dentro. */
 .body {
   @apply flex min-h-0 flex-1 flex-col overflow-hidden;
-  @apply lg:grid lg:min-h-0 lg:flex-none lg:grid-cols-[13rem_minmax(0,1fr)];
-  @apply lg:gap-x-10 lg:overflow-visible lg:px-9 lg:pb-16 lg:pt-7;
+  @apply lg:grid lg:grid-cols-[13rem_minmax(0,1fr)];
+  @apply lg:gap-x-10 lg:px-9 lg:pb-0 lg:pt-7;
 }
 
-/* índice lateral: no celular é a trilha presa no topo do corpo (não rola). No
- * desktop vira a coluna do índice, grudada ao rolar o documento. */
+/* índice lateral: no celular é a trilha presa no topo do corpo; no desktop, a
+ * coluna do índice. Não precisa mais de `sticky` — o corpo não rola, então ele
+ * já fica parado; só ganha rolagem própria se a loja tiver categorias demais
+ * para a altura da tela. */
 .rail {
   @apply shrink-0;
-  @apply lg:col-start-1 lg:row-start-1 lg:self-start;
-  @apply lg:sticky lg:top-7;
+  @apply lg:col-start-1 lg:row-start-1 lg:max-h-full lg:self-start;
+  @apply lg:overflow-y-auto lg:scrollbar-slim;
 }
 
-/* a lista: no celular é a ÚNICA coisa que rola — flex-1 + overflow interno, com
- * respiro embaixo pra barra da sacola não cobrir o último item. No desktop rola
- * junto com o documento, dentro da coluna. */
+/* a lista: a ÚNICA coisa que rola na tela — overflow interno, com respiro
+ * embaixo pra barra da sacola não cobrir o último item. No desktop a barra
+ * fina fica encostada na borda do painel, então a coluna ganha um respiro à
+ * direita pro texto não encostar nela. */
 .menu {
   @apply min-h-0 flex-1 overflow-y-auto px-5 pb-6;
-  @apply lg:col-start-2 lg:row-start-1 lg:flex-none lg:overflow-visible;
-  @apply lg:px-0 lg:pb-0;
+  @apply lg:col-start-2 lg:row-start-1 lg:min-h-0 lg:overflow-y-auto;
+  @apply lg:scrollbar-slim lg:pb-8 lg:pl-0 lg:pr-3;
 }
 
 .section {
@@ -62,10 +64,10 @@
 /* a última seção precisa poder subir até a linha de leitura no alto da lista,
  * mesmo com um item só. Sem isso não há conteúdo abaixo dela pra empurrar o
  * scroll: a lista para no meio, a categoria clicada nunca acende na trilha e o
- * scroll parece "travado". No celular ela cresce até preencher a altura visível
- * da lista; no desktop o documento já tem folga de sobra. */
+ * scroll parece "travado". Vale nas duas larguras, agora que o desktop também
+ * rola por dentro da coluna. */
 .menu > .section:last-child {
-  @apply min-h-full lg:min-h-0;
+  @apply min-h-full;
 }
 
 /* fio tracejado, não sólido: é lista impressa, não divisória de interface —
@@ -75,9 +77,12 @@
   border-bottom: 1.5px dashed var(--color-line);
 }
 
+/* o nome da categoria é uma placa, não uma manchete: ele se repete a cada
+   seção e a régua tracejada abaixo já separa o bloco — cada ponto a mais de
+   corpo aqui é um item a menos visível na primeira dobra */
 .sectionTitle {
-  @apply font-display text-[1.35rem] font-extrabold tracking-tight text-ink;
-  @apply lg:text-[1.5rem];
+  @apply font-display text-[1rem] font-extrabold tracking-tight text-ink;
+  @apply lg:text-[1.05rem];
 }
 
 .sectionCount {
@@ -132,7 +137,11 @@
   bottom: 100%;
   height: 7px;
   background-image:
-    radial-gradient(circle at 7px 0, transparent 0 5px, var(--color-brand-foreground) 5px),
+    radial-gradient(
+      circle at 7px 0,
+      transparent 0 5px,
+      var(--color-brand-foreground) 5px
+    ),
     radial-gradient(circle at 7px 0, transparent 0 5px, var(--color-line) 5px);
   background-size:
     14px 7px,
@@ -169,8 +178,15 @@
 }
 
 .cartTotal {
-  @apply font-display text-2xl font-extrabold text-ink;
+  @apply font-display text-[1.05rem] font-extrabold leading-none text-ink;
   font-variant-numeric: tabular-nums;
+}
+
+/* o prazo entra na mesma linha da contagem: é a segunda pergunta de quem
+   está fechando a sacola, e a resposta vem do mesmo lugar que a tela de
+   acompanhamento vai repetir depois */
+.cartEta {
+  @apply text-brand-strong;
 }
 
 .cartCta {

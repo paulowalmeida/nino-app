@@ -7,7 +7,8 @@
   @apply py-4 outline-none transition-all duration-200;
   @apply focus-visible:ring-2 focus-visible:ring-brand;
   @apply last:border-b-0;
-  @apply lg:gap-4 lg:rounded-2xl lg:border lg:border-line lg:bg-brand-foreground;
+  @apply lg:gap-4 lg:rounded-card lg:border lg:border-line;
+  @apply lg:bg-brand-foreground;
   @apply lg:p-4 lg:pr-5 lg:last:border-b;
   animation: settle 0.36s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
@@ -66,7 +67,7 @@
 }
 
 .name {
-  @apply font-display text-[1.02rem] font-bold leading-snug text-ink;
+  @apply font-display text-[0.88rem] font-bold leading-snug text-ink;
 }
 
 .description {
@@ -80,7 +81,7 @@
  * dos dois aparecia — agora o laranja quer dizer "dá pra agir aqui".
  */
 .price {
-  @apply mt-auto pt-2 font-display text-[1.05rem] font-extrabold text-ink;
+  @apply mt-auto pt-2 font-display text-[0.8125rem] font-extrabold text-ink;
   font-variant-numeric: tabular-nums;
 }
 
@@ -103,15 +104,19 @@
 }
 
 .photo {
-  @apply h-[5.4rem] w-[5.4rem] rounded-xl object-cover lg:h-[6.5rem] lg:w-[6.5rem];
+  @apply h-[5.4rem] w-[5.4rem] rounded-card object-cover;
+  @apply lg:h-[6.5rem] lg:w-[6.5rem];
   box-shadow: inset 0 0 0 1px rgba(26, 18, 6, 0.06);
 }
 
 .photoFallback {
-  @apply flex h-[5.4rem] w-[5.4rem] items-center justify-center rounded-xl;
+  @apply flex h-[5.4rem] w-[5.4rem] items-center justify-center rounded-card;
   @apply lg:h-[6.5rem] lg:w-[6.5rem];
-  background:
-    radial-gradient(120% 120% at 30% 20%, var(--color-cream), var(--color-brand-foreground));
+  background: radial-gradient(
+    120% 120% at 30% 20%,
+    var(--color-cream),
+    var(--color-brand-foreground)
+  );
   box-shadow: inset 0 0 0 1px var(--color-line);
 }
 

@@ -32,7 +32,11 @@ export const Storefront = () => {
   const navigate = useNavigate()
   const { slug: pathSlug } = useParams()
   const slug = resolveSlug(pathSlug)
-  const { store, isPending: loadingStore, isError } = useStore(slug ?? undefined)
+  const {
+    store,
+    isPending: loadingStore,
+    isError,
+  } = useStore(slug ?? undefined)
   const { sections, isPending: loadingMenu } = useMenu(store?.id)
   const { hours, isPending: loadingHours } = useOpeningHours(store?.id)
   const { settings } = usePublicSettings(store?.id)
@@ -141,46 +145,46 @@ export const Storefront = () => {
         <main className={styles.menu} ref={menuRef}>
           {loadingMenu && <MenuRowsSkeleton />}
 
-        {!loadingMenu && sections.length === 0 && (
-          <EmptyState>
-            Esta loja ainda não publicou itens no cardápio.
-          </EmptyState>
-        )}
+          {!loadingMenu && sections.length === 0 && (
+            <EmptyState>
+              Esta loja ainda não publicou itens no cardápio.
+            </EmptyState>
+          )}
 
-        {!loadingMenu && query && visibleSections.length === 0 && (
-          <EmptyState>Nada encontrado para “{search}”.</EmptyState>
-        )}
+          {!loadingMenu && query && visibleSections.length === 0 && (
+            <EmptyState>Nada encontrado para “{search}”.</EmptyState>
+          )}
 
-        {visibleSections.map((section) => {
-          const icon = categoryIcon(section.name)
-          return (
-            <section
-              key={section.id}
-              id={sectionDomId(section.id)}
-              className={styles.section}
-              aria-label={section.name}
-            >
-              <div className={styles.sectionHead}>
-                <h2 className={styles.sectionTitle}>{section.name}</h2>
-                <span className={styles.sectionCount}>
-                  {section.items.length}{' '}
-                  {section.items.length === 1 ? 'opção' : 'opções'}
-                </span>
-              </div>
-              <div className={styles.items}>
-                {section.items.map((item) => (
-                  <MenuItemCard
-                    key={item.id}
-                    item={item}
-                    onAdd={addToCart}
-                    onSelect={setSelectedItem}
-                    disabled={!storeOpen}
-                    fallbackIcon={icon}
-                    quantity={cart[item.id]?.quantity ?? 0}
-                  />
-                ))}
-              </div>
-            </section>
+          {visibleSections.map((section) => {
+            const icon = categoryIcon(section.name)
+            return (
+              <section
+                key={section.id}
+                id={sectionDomId(section.id)}
+                className={styles.section}
+                aria-label={section.name}
+              >
+                <div className={styles.sectionHead}>
+                  <h2 className={styles.sectionTitle}>{section.name}</h2>
+                  <span className={styles.sectionCount}>
+                    {section.items.length}{' '}
+                    {section.items.length === 1 ? 'opção' : 'opções'}
+                  </span>
+                </div>
+                <div className={styles.items}>
+                  {section.items.map((item) => (
+                    <MenuItemCard
+                      key={item.id}
+                      item={item}
+                      onAdd={addToCart}
+                      onSelect={setSelectedItem}
+                      disabled={!storeOpen}
+                      fallbackIcon={icon}
+                      quantity={cart[item.id]?.quantity ?? 0}
+                    />
+                  ))}
+                </div>
+              </section>
             )
           })}
         </main>
@@ -191,6 +195,14 @@ export const Storefront = () => {
           <div className={styles.cartTotals}>
             <span className={styles.cartCount}>
               {cartCount} {cartCount === 1 ? 'item' : 'itens'}
+              {settings?.estimatedMinutes ? (
+                <>
+                  {' · '}
+                  <span className={styles.cartEta}>
+                    pronto em ~{settings.estimatedMinutes} min
+                  </span>
+                </>
+              ) : null}
             </span>
             <AnimatedNumber
               value={brl(cartTotal)}
@@ -211,6 +223,7 @@ export const Storefront = () => {
         onOpenChange={setIsCartOpen}
         lines={cartLines}
         total={cartTotal}
+        estimatedMinutes={settings?.estimatedMinutes}
         onIncrement={incrementCartLine}
         onDecrement={decrementCartLine}
         onClear={clearCart}

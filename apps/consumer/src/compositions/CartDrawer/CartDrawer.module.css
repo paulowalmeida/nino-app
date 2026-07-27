@@ -50,7 +50,7 @@
   background: radial-gradient(
     120% 120% at 30% 20%,
     var(--color-brand-foreground),
-    var(--color-brand-foreground),
+    var(--color-brand-foreground)
   );
   box-shadow: inset 0 0 0 1px var(--color-brand-foreground);
 }
@@ -106,15 +106,24 @@
 }
 
 .totalRow {
-  @apply flex items-baseline justify-between;
+  @apply flex items-end justify-between;
 }
 
+/* mesma etiqueta em micro-caps do resto do app: o rótulo recua, o número
+   manda */
 .totalLabel {
-  @apply text-sm font-semibold text-muted;
+  @apply text-[0.7rem] font-bold uppercase tracking-[0.14em] text-faint;
+}
+
+/* o prazo fecha a sacola com a mesma frase que a tela de acompanhamento vai
+   repetir depois de pagar */
+.totalEta {
+  @apply mt-0.5 text-[0.72rem] font-semibold text-brand-strong;
+  font-variant-numeric: tabular-nums;
 }
 
 .total {
-  @apply font-display text-2xl font-extrabold text-ink;
+  @apply font-display text-[1.05rem] font-extrabold leading-none text-ink;
   font-variant-numeric: tabular-nums;
 }
 
