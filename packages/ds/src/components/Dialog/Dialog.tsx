@@ -3,8 +3,9 @@ import { Modal } from '@ds/components/Modal'
 
 import { DialogProps } from './Dialog.types'
 
-const headerClass = 'text-base font-semibold text-gray-900'
-const bodyClass = 'text-sm text-gray-600'
+const headerClass =
+  'font-display text-base font-semibold tracking-[-0.01em] text-ink'
+const bodyClass = 'text-sm leading-[1.45] text-muted'
 
 /**
  * Confirmation dialog built on top of Modal.

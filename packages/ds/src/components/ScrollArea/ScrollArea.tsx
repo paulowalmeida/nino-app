@@ -15,7 +15,7 @@ const scrollbarClass =
   'data-[orientation=horizontal]:flex-col'
 
 const thumbClass =
-  'flex-1 rounded-full bg-gray-300 transition-colors hover:bg-brand'
+  'flex-1 rounded-full bg-sand-deep transition-colors hover:bg-brand'
 
 /**
  * Scrollable region with a themed custom scrollbar (Ark `ScrollArea`).

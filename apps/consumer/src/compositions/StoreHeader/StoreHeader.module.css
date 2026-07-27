@@ -7,7 +7,7 @@
  * um campo de busca. Uma linha fina separa o cabeçalho do cardápio.
  */
 .header {
-  @apply relative border-b border-line bg-paper;
+  @apply relative border-b border-line bg-brand-foreground;
   @apply px-5 pb-5 pt-6 lg:px-10 lg:pb-6 lg:pt-8;
 }
 

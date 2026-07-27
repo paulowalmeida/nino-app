@@ -4,11 +4,12 @@ import { Portal } from '@ark-ui/react/portal'
 import { PopoverProps } from './Popover.types'
 
 const baseContent =
-  'z-50 w-72 rounded-md border border-gray-200 bg-white p-4 shadow-md outline-none data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95'
+  'z-50 w-72 rounded-card border border-line bg-paper p-4 shadow-overlay outline-none data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95'
 
-const arrowClass = 'fill-white [&>*]:stroke-gray-200'
+const arrowClass = 'fill-paper [&>*]:stroke-line'
 
-const titleClass = 'mb-2 text-sm font-semibold text-gray-900'
+const titleClass =
+  'mb-2 font-display text-sm font-semibold tracking-[-0.01em] text-ink'
 
 export function Popover({
   trigger,
@@ -39,7 +40,9 @@ export function Popover({
               </ArkPopover.Title>
             )}
             <ArkPopover.Description asChild>
-              <div className="text-sm text-gray-600">{children}</div>
+              <div className="text-[0.8125rem] leading-[1.45] text-muted">
+                {children}
+              </div>
             </ArkPopover.Description>
           </ArkPopover.Content>
         </ArkPopover.Positioner>

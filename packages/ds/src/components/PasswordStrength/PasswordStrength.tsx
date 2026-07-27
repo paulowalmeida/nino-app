@@ -12,15 +12,15 @@ const labels: Record<PasswordStrengthLevel, string> = {
 }
 
 const fillClasses: Record<PasswordStrengthLevel, string> = {
-  weak: 'bg-red-500',
-  medium: 'bg-yellow-500',
-  strong: 'bg-green-500',
+  weak: 'bg-danger',
+  medium: 'bg-warning',
+  strong: 'bg-success',
 }
 
 const textClasses: Record<PasswordStrengthLevel, string> = {
-  weak: 'text-red-600',
-  medium: 'text-yellow-600',
-  strong: 'text-green-600',
+  weak: 'text-danger',
+  medium: 'text-warning',
+  strong: 'text-success',
 }
 
 const segmentsByLevel: Record<PasswordStrengthLevel, number> = {
@@ -29,7 +29,7 @@ const segmentsByLevel: Record<PasswordStrengthLevel, number> = {
   strong: 3,
 }
 
-const baseTrack = 'h-1.5 flex-1 rounded-full bg-gray-200 overflow-hidden'
+const baseTrack = 'h-1.5 flex-1 rounded-full bg-sand overflow-hidden'
 const baseFill = 'h-full w-full rounded-full transition-colors duration-300'
 
 /**

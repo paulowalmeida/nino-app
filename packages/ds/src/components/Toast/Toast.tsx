@@ -8,6 +8,7 @@ import {
 import { mergeClasses } from '@ds/lib/mergeClasses'
 import { StatusIconName, statusIconPaths } from '@ds/lib/statusIconPaths'
 
+import { Spinner } from '../Spinner/Spinner'
 import {
   ToastContainerProps,
   ToastInput,
@@ -109,8 +110,8 @@ const rootClass = 'relative flex w-[min(24rem,calc(100vw-2rem))]'
  * from one card to the next. Clipping the root would eat them, and the stack
  * would collapse mid-hover. */
 const cardClass =
-  'toast-card relative flex h-full w-full gap-3 overflow-hidden ' +
-  'rounded-[8px] pb-3 pl-4 pr-11 pt-2.5'
+  'shadow-overlay relative flex h-full w-full gap-3 overflow-hidden ' +
+  'rounded-card pb-3 pl-4 pr-11 pt-2.5'
 const bodyClass = 'flex min-w-0 flex-col gap-0.5'
 const titleClass =
   'font-display text-[0.9375rem] font-semibold leading-tight ' +
@@ -255,18 +256,9 @@ function ToastIcon({ variant }: { variant: ToastVariant }) {
 
   if (variant === 'loading') {
     return (
-      <svg
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="2.5"
-        strokeLinecap="round"
-        className={mergeClasses(className, 'animate-spin')}
-        aria-hidden="true"
-      >
-        <path d="M12 3a9 9 0 0 1 9 9" />
-        <circle cx="12" cy="12" r="9" strokeOpacity="0.25" />
-      </svg>
+      <span className={className}>
+        <Spinner visible size={18} />
+      </span>
     )
   }
 

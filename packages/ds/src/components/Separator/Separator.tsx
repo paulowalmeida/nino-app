@@ -7,7 +7,7 @@ const orientationClasses: Record<SeparatorOrientation, string> = {
   vertical: 'h-full w-px',
 }
 
-const baseSeparator = 'shrink-0 bg-gray-200'
+const baseSeparator = 'shrink-0 bg-line'
 
 /**
  * Divider line to separate content sections.

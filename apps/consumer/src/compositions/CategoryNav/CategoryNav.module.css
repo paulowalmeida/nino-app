@@ -4,7 +4,7 @@
  * borrar. desktop: deixa de ser barra flutuante e vira o corpo do índice
  * lateral — quem controla o "grude" é o trilho da vitrine. */
 .nav {
-  @apply sticky top-0 z-20 border-b border-line bg-paper/90 backdrop-blur-md;
+  @apply sticky top-0 z-20 border-b border-line bg-brand-foreground/90 backdrop-blur-md;
   @apply lg:static lg:z-auto lg:border-b-0 lg:bg-transparent lg:backdrop-blur-none;
 }
 

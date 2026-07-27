@@ -4,12 +4,14 @@ import { mergeClasses } from '@ds/lib/mergeClasses'
 
 import { CardProps, CardVariant } from './Card.types'
 
-const baseCard = 'rounded-card bg-white p-4'
+const baseCard = 'rounded-card border border-line bg-paper p-4'
 
+/* Variant is height off the page, nothing else: flat sits in the layout,
+ * default is lifted a millimetre, elevated is clearly above it. */
 const variantClasses: Record<CardVariant, string> = {
-  default: 'border border-gray-200 shadow-sm',
-  flat: 'border border-gray-200',
-  elevated: 'border border-gray-200 shadow-md',
+  default: 'shadow-card',
+  flat: '',
+  elevated: 'shadow-card-hover',
 }
 
 /**
