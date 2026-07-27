@@ -65,3 +65,33 @@
   @apply h-28 w-full rounded-[20px] lg:h-32;
 }
 
+/* Enquanto o dedo segura, o card recua um pouco: dá o retorno de que o gesto
+   foi entendido antes do preview abrir. */
+.pressing {
+  @apply scale-[0.97] transition-transform duration-150;
+}
+
+.preview {
+  @apply flex flex-col gap-2;
+}
+
+.previewPhotoWrap {
+  @apply overflow-hidden rounded-card bg-surface-mute;
+}
+
+.previewPhoto {
+  @apply h-40 w-full object-cover;
+}
+
+.previewName {
+  @apply font-display text-base font-extrabold leading-tight text-ink;
+}
+
+.previewText {
+  @apply text-xs leading-relaxed text-muted;
+}
+
+.previewPrice {
+  @apply text-sm font-bold text-brand-strong;
+  font-variant-numeric: tabular-nums;
+}

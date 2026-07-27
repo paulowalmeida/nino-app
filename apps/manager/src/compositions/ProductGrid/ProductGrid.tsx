@@ -2,10 +2,8 @@ import { useState } from 'react'
 
 import { EmptyState } from '@nino/ds/components/EmptyState'
 import { Skeleton } from '@nino/ds/components/Skeleton'
-import { ItemThumb } from '@components/ItemThumb'
-import { brl } from '@utils/money'
-import { riseDelay } from '@utils/rise-delay'
 
+import { ProductCard } from './ProductCard'
 import type { ProductGridProps } from './ProductGrid.types'
 
 import styles from './ProductGrid.module.css'
@@ -66,21 +64,12 @@ export const ProductGrid = ({
         {items
           .filter(({ isActive }) => isActive)
           .map((item, index) => (
-            <button
+            <ProductCard
               key={item.id}
-              type="button"
-              onClick={() => onPick(item)}
-              style={riseDelay(index * 25)}
-              className={`${motion.settle} ${motion.press} ${styles.card}`}
-            >
-              <ItemThumb
-                name={item.name}
-                imageUrl={item.images?.[0]?.url}
-                className={styles.thumb}
-              />
-              <span className={styles.name}>{item.name}</span>
-              <span className={styles.price}>{brl(item.price)}</span>
-            </button>
+              item={item}
+              index={index}
+              onPick={onPick}
+            />
           ))}
       </div>
     </div>
