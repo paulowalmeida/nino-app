@@ -35,7 +35,7 @@ const buildRows = (order: GuestOrderStatus): Row[] => {
   const rows = (() => {
     if (order.status === 'CANCELLED') return fromHistory(order)
 
-    const journey = journeyFor(order.channel)
+    const journey = journeyFor(order)
     const current = journey.indexOf(order.status)
     if (current === -1) return fromHistory(order)
 

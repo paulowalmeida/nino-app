@@ -213,7 +213,9 @@ export const Storefront = () => {
             className={styles.cartCta}
             onClick={() => setIsCartOpen(true)}
           >
+            <span className={styles.cartCtaCount}>{cartCount}</span>
             Ver sacola
+            <span className={styles.cartCtaTotal}>{brl(cartTotal)}</span>
           </Button>
         </div>
       )}

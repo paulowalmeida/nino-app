@@ -56,15 +56,13 @@ export const OrderStage = ({ order, className, style }: OrderStageProps) => {
           }}
         >
           <h2 className={styles.headline}>{STATUS_LABEL[order.status]}</h2>
-          <p className={styles.note}>
-            {stageNote(order.status, order.channel)}
-          </p>
+          <p className={styles.note}>{stageNote(order, order.status)}</p>
         </motion.div>
       </AnimatePresence>
 
       {counting && (
         <div className={styles.eta}>
-          <p className={styles.etaLead}>{etaLead(order.channel)}</p>
+          <p className={styles.etaLead}>{etaLead(order)}</p>
           <p className={styles.etaValue}>
             <AnimatedNumber value={minutes} />
             <span className={styles.etaUnit}>min</span>
@@ -77,14 +75,14 @@ export const OrderStage = ({ order, className, style }: OrderStageProps) => {
 
       {arriving && (
         <div className={styles.eta}>
-          <p className={styles.etaLead}>{etaLead(order.channel)}</p>
+          <p className={styles.etaLead}>{etaLead(order)}</p>
           <p className={styles.etaSoon}>a qualquer momento</p>
         </div>
       )}
 
       {!done && !counting && !arriving && order.estimatedDeliveryAt && (
         <div className={styles.eta}>
-          <p className={styles.etaLead}>{etaLead(order.channel)}</p>
+          <p className={styles.etaLead}>{etaLead(order)}</p>
           <p className={styles.etaSoon}>
             {clockLabel(order.estimatedDeliveryAt)}
           </p>

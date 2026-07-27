@@ -1,5 +1,23 @@
-import type { OrderChannel } from '@custom_types/order/order-channel'
+import type { GuestOrderStatus } from '@custom_types/order/guest-order-status'
 import type { OrderStatus } from '@custom_types/order/order-status'
+
+/** O que a jornada precisa saber do pedido — nada além disto. */
+type JourneySource = Pick<GuestOrderStatus, 'channel' | 'timeline'>
+
+/**
+ * Entrega ou retirada. O `channel` é a fonte boa, mas ele nem sempre vem: o
+ * endpoint público de status é mínimo por design e pode não expor o canal.
+ * Sem ele, o próprio histórico entrega a resposta — só pedido de balcão passa
+ * por PRONTO PARA RETIRADA. Na dúvida, entrega: é o caso comum, e é o único
+ * palpite que não promete um balcão pra quem está esperando em casa.
+ */
+const isPickup = (order: JourneySource): boolean => {
+  if (order.channel) return order.channel !== 'DELIVERY'
+
+  return order.timeline.some(
+    ({ status }) => status === 'READY_FOR_PICKUP' || status === 'COMPLETED'
+  )
+}
 
 /**
  * A jornada inteira, não só o que já aconteceu. Quem abre a tela quer saber
@@ -23,8 +41,8 @@ const PICKUP_JOURNEY: OrderStatus[] = [
   'COMPLETED',
 ]
 
-export const journeyFor = (channel: OrderChannel): OrderStatus[] =>
-  channel === 'DELIVERY' ? DELIVERY_JOURNEY : PICKUP_JOURNEY
+export const journeyFor = (order: JourneySource): OrderStatus[] =>
+  isPickup(order) ? PICKUP_JOURNEY : DELIVERY_JOURNEY
 
 const TERMINAL: OrderStatus[] = ['DELIVERED', 'COMPLETED', 'CANCELLED']
 
@@ -51,12 +69,8 @@ const PICKUP_NOTE: Partial<Record<OrderStatus, string>> = {
   PREPARING: 'Está no fogo. Avisamos assim que estiver pronto para retirar.',
 }
 
-export const stageNote = (
-  status: OrderStatus,
-  channel: OrderChannel
-): string =>
-  (channel === 'DELIVERY' ? undefined : PICKUP_NOTE[status]) ??
-  STAGE_NOTE[status]
+export const stageNote = (order: JourneySource, status: OrderStatus): string =>
+  (isPickup(order) ? PICKUP_NOTE[status] : undefined) ?? STAGE_NOTE[status]
 
 /**
  * Cada passo tem a cara do que acontece nele — a mesma ideia da demo da
@@ -78,5 +92,5 @@ const STAGE_ICON: Record<OrderStatus, string> = {
 export const stageIcon = (status: OrderStatus): string => STAGE_ICON[status]
 
 /** "faltam X min para" o quê — a espera de entrega e a de balcão diferem. */
-export const etaLead = (channel: OrderChannel): string =>
-  channel === 'DELIVERY' ? 'Chega em' : 'Fica pronto em'
+export const etaLead = (order: JourneySource): string =>
+  isPickup(order) ? 'Fica pronto em' : 'Chega em'

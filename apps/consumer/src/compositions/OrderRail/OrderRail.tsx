@@ -15,7 +15,7 @@ import styles from './OrderRail.module.css'
  * lerem como o mesmo objeto.
  */
 export const OrderRail = ({ order, className }: OrderRailProps) => {
-  const journey = journeyFor(order.channel)
+  const journey = journeyFor(order)
 
   /* Pedido encerrado preenche o trilho inteiro: o último passo não fica
      "em andamento" piscando depois que a comida já chegou. */

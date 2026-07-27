@@ -13,6 +13,10 @@
  * pedido em andamento e a sacola nunca saem de vista. */
 /* O respiro do rodapé mora no corpo, não na página: a barra da sacola precisa
    encostar na borda do painel pra fechar o cartão. */
+/* No desktop a sacola deixa de ser barra: uma faixa de 1040px com um botão
+   gigante existe pra polegar em tela de 6", não pra ponteiro em tela de 27".
+   Ela vira uma pílula ancorada no canto inferior direito do painel — o
+   cardápio fica com a largura inteira e o alvo continua sempre visível. */
 .page {
   @apply relative mx-auto flex h-dvh w-full max-w-xl flex-col overflow-hidden;
   @apply bg-brand-foreground;
@@ -54,7 +58,7 @@
 .menu {
   @apply min-h-0 flex-1 overflow-y-auto px-5 pb-6;
   @apply lg:col-start-2 lg:row-start-1 lg:min-h-0 lg:overflow-y-auto;
-  @apply lg:scrollbar-slim lg:pb-8 lg:pl-0 lg:pr-3;
+  @apply lg:scrollbar-slim lg:pb-24 lg:pl-0 lg:pr-3;
 }
 
 .section {
@@ -107,7 +111,8 @@
 .cartBar {
   @apply sticky bottom-0 z-30 flex shrink-0 flex-col gap-2.5;
   @apply bg-brand-foreground px-5 pb-5 pt-3;
-  @apply lg:rounded-b-[1.75rem] lg:px-9;
+  @apply lg:absolute lg:bottom-6 lg:left-auto lg:right-9 lg:w-auto;
+  @apply lg:bg-transparent lg:p-0;
   box-shadow: 0 -10px 30px -18px rgba(26, 18, 6, 0.45);
   animation: rise 0.28s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
@@ -170,7 +175,7 @@
 }
 
 .cartTotals {
-  @apply flex items-baseline justify-between;
+  @apply flex items-baseline justify-between lg:hidden;
 }
 
 .cartCount {
@@ -191,6 +196,21 @@
 
 .cartCta {
   @apply h-13 w-full text-base;
+  @apply lg:h-12 lg:w-auto lg:gap-3 lg:px-5 lg:text-sm lg:shadow-overlay;
+}
+
+/* contagem e total só aparecem dentro da pílula: no celular eles já moram na
+   linha de cima, e repetir seria dizer a mesma coisa duas vezes */
+.cartCtaCount {
+  @apply hidden lg:flex lg:h-6 lg:min-w-6 lg:items-center lg:justify-center;
+  @apply lg:rounded-full lg:bg-brand-foreground/25 lg:px-1.5;
+  @apply lg:font-display lg:text-xs lg:font-extrabold;
+  font-variant-numeric: tabular-nums;
+}
+
+.cartCtaTotal {
+  @apply hidden lg:inline lg:font-display lg:text-[0.95rem] lg:font-extrabold;
+  font-variant-numeric: tabular-nums;
 }
 
 /* ----- não encontrada ----- */
@@ -328,4 +348,18 @@
   composes: nino-skeleton from global;
   @apply absolute -bottom-2 -right-2 h-9 w-9 rounded-full bg-sand;
   border: 2.5px solid var(--color-brand-foreground);
+}
+
+/* Desligado por último de propósito: as regras do picote e da sombra do papel
+   moram acima, e um override de mesma especificidade só vence se vier depois.
+   A pílula do desktop não tem papel atrás — nada pra picotar. */
+@media (min-width: 1024px) {
+  .cartBar {
+    box-shadow: none;
+  }
+
+  .cartBar::before,
+  .cartBar::after {
+    content: none;
+  }
 }
