@@ -47,7 +47,6 @@ export const DayTally = ({ tenantId, timezone }: DayTallyProps) => {
             to="../pedidos?etapa=closed"
             relative="path"
             aria-label="Ver os pedidos fechados"
-            className={styles.cardOverview}
           >
             <span className={styles.value}>
               {isPending ? (
@@ -72,7 +71,6 @@ export const DayTally = ({ tenantId, timezone }: DayTallyProps) => {
             relative="path"
             aria-label="Ver o relatório de faturamento de hoje"
             style={riseDelay(70)}
-            className={styles.cardOverview}
           >
             <span className={styles.value}>
               {isPending ? (
@@ -97,7 +95,6 @@ export const DayTally = ({ tenantId, timezone }: DayTallyProps) => {
             relative="path"
             aria-label="Ver o ticket médio de hoje no relatório"
             style={riseDelay(140)}
-            className={styles.cardOverview}
           >
             <span className={styles.value}>
               {isPending ? (

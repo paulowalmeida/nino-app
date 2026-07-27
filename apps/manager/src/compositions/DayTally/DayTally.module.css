@@ -14,13 +14,11 @@
   @apply grid grid-cols-1 gap-2 lg:grid-cols-3 lg:gap-4;
 }
 
-/* superfície vem do Card do DS; aqui fica o que ele não sabe */
+/* mesma classe única dos cartões da fila, pelo mesmo motivo — e agora os
+   três levam a algum lugar, então todos reagem ao cursor */
 .figure {
-  @apply p-5;
+  @apply flex flex-row items-center gap-x-2 p-5;
   @apply transition-all duration-300;
-}
-
-a.figure {
   @apply hover:border-brand/60 hover:shadow-card-hover;
   @apply focus-visible:outline-none focus-visible:ring-2;
   @apply focus-visible:ring-brand focus-visible:ring-offset-2;
@@ -69,13 +67,4 @@ a.figure {
 .total {
   @apply text-sm font-semibold text-body;
   font-variant-numeric: tabular-nums;
-}
-
-/*
- * Número e rótulo na mesma linha, como na fila — o cartão fica na altura de
- * uma linha de texto em vez de duas. No celular são três colunas, e lado a
- * lado "R$ 1.234,56" e "entraram no caixa" não cabem: lá continua empilhado.
- */
-.cardOverview {
-  @apply flex flex-row items-baseline gap-x-2;
 }

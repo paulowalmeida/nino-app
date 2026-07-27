@@ -76,7 +76,6 @@ export const QueueBoard = ({ tenantId }: QueueBoardProps) => {
               relative="path"
               aria-label={`Ver pedidos ${label}`}
               style={riseDelay(index * 70 + 80)}
-              className={styles.cardOverview}
             >
               <span className={styles.value}>
                 {isPending ? (
