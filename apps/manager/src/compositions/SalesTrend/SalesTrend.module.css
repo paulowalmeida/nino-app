@@ -1,0 +1,47 @@
+@reference "@nino/ds/globals.css";
+
+.heading {
+  @apply mb-3;
+}
+
+.card {
+  @apply p-5;
+}
+
+.head {
+  @apply mb-4 flex items-start justify-between gap-4;
+}
+
+.total {
+  @apply font-display text-3xl font-extrabold leading-none tracking-tight;
+  @apply text-ink lg:text-4xl;
+  font-variant-numeric: tabular-nums;
+}
+
+.label {
+  @apply mt-1.5 text-xs leading-snug text-faint lg:text-sm;
+}
+
+/* A variação é o julgamento que falta ao número — verde e vermelho aqui não
+   são enfeite, são a resposta a "está bom ou está ruim?". */
+.deltaUp,
+.deltaDown {
+  @apply shrink-0 text-sm font-bold;
+  font-variant-numeric: tabular-nums;
+}
+
+.deltaUp {
+  @apply text-success;
+}
+
+.deltaDown {
+  @apply text-danger;
+}
+
+.deltaNote {
+  @apply font-medium text-faint;
+}
+
+.skeleton {
+  @apply h-60 w-full rounded-card;
+}

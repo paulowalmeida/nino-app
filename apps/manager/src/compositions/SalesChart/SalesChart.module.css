@@ -1,0 +1,68 @@
+@reference "@nino/ds/globals.css";
+
+/* O `figure` zera a margem que o user-agent dá e deixa o gráfico ocupar o
+   cartão inteiro — a moldura é do Card, não daqui. */
+.figure {
+  @apply m-0 w-full;
+}
+
+.canvas {
+  @apply relative w-full;
+}
+
+/*
+ * Grade recessiva: 1px sólida, um passo fora da superfície. Nunca tracejada —
+ * tracejo compete com o dado por atenção.
+ */
+.grid {
+  @apply stroke-sand;
+  stroke-width: 1;
+}
+
+.axisLine {
+  @apply stroke-sand;
+}
+
+.tickText {
+  @apply fill-faint text-xs;
+}
+
+.line {
+  @apply stroke-brand;
+  fill: none;
+}
+
+/*
+ * O anel branco é o que mantém o ponto legível onde ele cruza a própria
+ * linha — separar com borda colorida somaria tinta que não é dado.
+ */
+.dot {
+  @apply fill-brand stroke-white;
+}
+
+.dotActive {
+  @apply fill-brand-strong stroke-white;
+}
+
+.areaTop {
+  stop-color: var(--color-brand);
+  stop-opacity: 0.2;
+}
+
+.areaBottom {
+  stop-color: var(--color-brand);
+  stop-opacity: 0.02;
+}
+
+.tooltip {
+  @apply rounded-card border border-line bg-white px-3 py-2 shadow-card;
+}
+
+.tooltipLabel {
+  @apply text-xs font-bold capitalize text-ink;
+}
+
+.tooltipValue {
+  @apply mt-0.5 text-sm font-semibold text-brand-strong;
+  font-variant-numeric: tabular-nums;
+}

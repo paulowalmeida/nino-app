@@ -1,6 +1,8 @@
 import { DayTally } from '@compositions/DayTally'
 import { PauseSwitch } from '@compositions/PauseSwitch'
 import { QueueBoard } from '@compositions/QueueBoard'
+import { SalesTrend } from '@compositions/SalesTrend'
+import { TopProducts } from '@compositions/TopProducts'
 import { StoreSign } from '@compositions/StoreSign'
 import { useCurrentTenant } from '@hooks/session/useCurrentTenant'
 import { useSessionStore } from '@states/useSessionStore'
@@ -83,6 +85,11 @@ export const Overview = () => {
       </div>
 
       <QueueBoard tenantId={tenantId} />
+
+      <div className={styles.charts}>
+        <SalesTrend tenantId={tenantId} />
+        <TopProducts tenantId={tenantId} />
+      </div>
 
       <div className={styles.tally}>
         <DayTally tenantId={tenantId} timezone={timezone} />

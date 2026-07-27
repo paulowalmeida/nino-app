@@ -95,3 +95,10 @@
     height: 142px;
   }
 }
+
+/* A linha do tempo pede mais largura que a lista de itens: 1.4 contra 1 dá
+   respiro ao eixo sem espremer os nomes dos produtos. */
+.charts {
+  @apply mt-6 grid gap-4;
+  @apply lg:grid-cols-[1.4fr_1fr] lg:gap-5;
+}
