@@ -12,16 +12,21 @@ import { ButtonProps, ButtonSize, ButtonVariant } from './Button.types'
 const variantClasses: Record<ButtonVariant, string> = {
   primary:
     'bg-brand text-brand-foreground hover:bg-brand-hover active:bg-brand-active',
-  secondary: 'bg-gray-100 text-gray-900 hover:bg-gray-200 active:bg-gray-300',
+  secondary: 'bg-sand text-ink hover:bg-sand-deep active:bg-line',
   outline:
-    'border border-gray-300 text-gray-900 bg-transparent hover:bg-gray-50 active:bg-gray-100',
-  ghost: 'text-gray-700 bg-transparent hover:bg-gray-100 active:bg-gray-200',
+    'border border-line text-ink bg-transparent hover:bg-cream ' +
+    'active:bg-cream-deep',
+  ghost: 'text-body bg-transparent hover:bg-cream active:bg-cream-deep',
+  /* Sem halo colorido: sobre o laranja da marca, o glow virava um segundo
+   * botão desfocado atrás do primeiro. */
   inverse:
-    'bg-white text-brand-strong hover:bg-cream active:bg-cream-deep shadow-brand-glow',
+    'bg-paper text-brand-strong hover:bg-cream active:bg-cream-deep ' +
+    'shadow-card',
   inverseOutline:
     'border-[1.5px] border-white/55 text-white bg-transparent hover:bg-white hover:text-brand-strong hover:border-white',
   danger:
-    'text-gray-500 bg-transparent hover:bg-red-50 hover:text-red-500 active:bg-red-100',
+    'text-subtle bg-transparent hover:bg-danger-surface hover:text-danger ' +
+    'active:bg-danger-surface',
 }
 
 const sizeClasses: Record<ButtonSize, string> = {

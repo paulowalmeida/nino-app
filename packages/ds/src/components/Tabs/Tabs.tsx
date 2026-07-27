@@ -5,10 +5,10 @@ import { motion } from 'framer-motion'
 
 import { TabsProps } from './Tabs.types'
 
-const baseList = 'relative flex items-center border-b border-gray-200'
+const baseList = 'relative flex items-center border-b border-line'
 
 const baseTrigger =
-  'relative px-4 py-2.5 text-sm font-medium text-gray-500 transition-colors duration-200 outline-none whitespace-nowrap focus-visible:ring-2 focus-visible:ring-brand disabled:pointer-events-none disabled:opacity-40 data-[selected]:text-brand'
+  'relative px-4 py-2.5 text-sm font-medium text-subtle transition-colors duration-200 outline-none whitespace-nowrap focus-visible:ring-2 focus-visible:ring-brand disabled:pointer-events-none disabled:opacity-40 data-[selected]:text-brand'
 
 const baseContent = 'mt-4 outline-none'
 

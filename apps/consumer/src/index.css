@@ -12,7 +12,7 @@
     body {
       background:
         radial-gradient(80% 60% at 50% -10%, #f6ead8 0%, transparent 60%),
-        var(--color-sand-deep);
+        var(--color-paper);
     }
   }
 

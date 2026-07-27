@@ -49,10 +49,7 @@ export const TableHeader = forwardRef<
 >(({ className, ...props }, ref) => (
   <thead
     ref={ref}
-    className={mergeClasses(
-      '[&_tr]:border-b [&_tr]:border-gray-200',
-      className
-    )}
+    className={mergeClasses('[&_tr]:border-b [&_tr]:border-line', className)}
     {...props}
   />
 ))
@@ -77,7 +74,7 @@ export const TableRow = forwardRef<HTMLTableRowElement, TableRowProps>(
     <tr
       ref={ref}
       className={mergeClasses(
-        'border-b border-gray-200 transition-colors data-selected:bg-[color-mix(in_srgb,var(--color-brand)_10%,white)]',
+        'border-b border-line transition-colors data-selected:bg-[color-mix(in_srgb,var(--color-brand)_10%,white)]',
         className
       )}
       {...props}
@@ -91,7 +88,7 @@ export const TableHead = forwardRef<HTMLTableCellElement, TableHeadProps>(
     <th
       ref={ref}
       className={mergeClasses(
-        'h-10 px-3 text-left align-middle text-xs font-medium text-gray-500',
+        'h-10 px-3 text-left align-middle text-xs font-medium text-subtle',
         className
       )}
       {...props}
@@ -104,10 +101,7 @@ export const TableCell = forwardRef<HTMLTableCellElement, TableCellProps>(
   ({ className, ...props }, ref) => (
     <td
       ref={ref}
-      className={mergeClasses(
-        'px-3 py-2.5 align-middle text-gray-900',
-        className
-      )}
+      className={mergeClasses('px-3 py-2.5 align-middle text-ink', className)}
       {...props}
     />
   )

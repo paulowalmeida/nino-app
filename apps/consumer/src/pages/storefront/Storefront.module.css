@@ -202,7 +202,7 @@
 /* ----- skeleton ----- */
 /* cabeçalho: mesma métrica do StoreHeader real (logo 14→4.5rem, padding) */
 .skHeader {
-  @apply flex items-center gap-4 border-b border-line bg-brand-foreground px-5 pb-5 pt-6;
+  @apply flex items-center gap-4 border-b border-line px-5 pb-5 pt-6;
   @apply lg:gap-5 lg:px-10 lg:pb-6 lg:pt-8;
 }
 

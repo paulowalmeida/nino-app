@@ -7,11 +7,11 @@ import { BreadcrumbProps } from './Breadcrumb.types'
 const baseNav = 'flex items-center text-sm'
 
 const baseLink =
-  'text-gray-500 transition-colors hover:text-brand focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-1 rounded'
+  'text-subtle transition-colors hover:text-brand focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-1 rounded'
 
-const activeLinkClass = 'text-gray-900 font-medium pointer-events-none'
+const activeLinkClass = 'text-ink font-medium pointer-events-none'
 
-const separatorClass = 'mx-2 text-gray-400 select-none'
+const separatorClass = 'mx-2 text-faint select-none'
 
 const DefaultSeparator = () => (
   <svg

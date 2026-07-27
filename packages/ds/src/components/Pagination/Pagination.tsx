@@ -6,13 +6,13 @@ import { PaginationProps } from './Pagination.types'
 const baseRoot = 'flex items-center gap-1'
 
 const baseNav =
-  'inline-flex h-9 min-w-9 items-center justify-center rounded-full text-gray-600 transition-colors hover:bg-[color-mix(in_srgb,var(--color-brand)_10%,white)] hover:text-brand disabled:pointer-events-none disabled:opacity-40'
+  'inline-flex h-9 min-w-9 items-center justify-center rounded-full text-muted transition-colors hover:bg-[color-mix(in_srgb,var(--color-brand)_10%,white)] hover:text-brand disabled:pointer-events-none disabled:opacity-40'
 
 const baseItem =
-  'inline-flex h-9 min-w-9 items-center justify-center rounded-full px-2 text-sm text-gray-700 transition-colors hover:bg-[color-mix(in_srgb,var(--color-brand)_10%,white)] hover:text-brand data-[selected]:bg-brand data-[selected]:text-brand-foreground data-[selected]:hover:bg-brand-hover'
+  'inline-flex h-9 min-w-9 items-center justify-center rounded-full px-2 text-sm text-body transition-colors hover:bg-[color-mix(in_srgb,var(--color-brand)_10%,white)] hover:text-brand data-[selected]:bg-brand data-[selected]:text-brand-foreground data-[selected]:hover:bg-brand-hover'
 
 const baseEllipsis =
-  'inline-flex h-9 min-w-9 items-center justify-center text-sm text-gray-400'
+  'inline-flex h-9 min-w-9 items-center justify-center text-sm text-faint'
 
 const ChevronLeft = () => (
   <svg
