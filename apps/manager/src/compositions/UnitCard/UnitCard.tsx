@@ -2,6 +2,7 @@ import { useState } from 'react'
 
 import { Badge } from '@nino/ds/components/Badge'
 import { Card } from '@nino/ds/components/Card'
+import { ColorPicker } from '@nino/ds/components/ColorPicker'
 import { Button } from '@nino/ds/components/Button'
 import { FormField } from '@nino/ds/components/FormField'
 import { Input } from '@nino/ds/components/Input'
@@ -142,20 +143,10 @@ export const UnitCard = ({
           label="Cor da marca"
           helperText="Usada na loja que o cliente vê"
         >
-          <div className={local.color}>
-            <input
-              type="color"
-              aria-label="Cor da marca"
-              className={local.picker}
-              value={draft.primaryColor}
-              onChange={(event) => change({ primaryColor: event.target.value })}
-            />
-            <Input
-              value={draft.primaryColor}
-              className={local.hex}
-              onChange={(event) => change({ primaryColor: event.target.value })}
-            />
-          </div>
+          <ColorPicker
+            value={draft.primaryColor}
+            onValueChange={(primaryColor) => change({ primaryColor })}
+          />
         </FormField>
       </div>
 
