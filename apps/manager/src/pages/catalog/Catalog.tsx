@@ -1,8 +1,8 @@
 import { Link } from 'react-router'
 
 import { Button } from '@nino/ds/components/Button'
+import { PageHeader } from '@nino/ds/components/PageHeader'
 import { MenuBoard } from '@compositions/MenuBoard'
-import { PageTitle } from '@components/PageTitle'
 import { useCurrentTenant } from '@hooks/session/useCurrentTenant'
 import { useTenantRole } from '@hooks/session/useTenantRole'
 
@@ -15,29 +15,28 @@ export const Catalog = () => {
 
   return (
     <div className={styles.page}>
-      <header className={styles.header}>
-        <div className={styles.headText}>
-          <PageTitle accent="Cardápio">Cardápio</PageTitle>
-          <p className={styles.subtitle}>
-            Desligue o que acabou — o item some do app do cliente na hora.
-          </p>
-        </div>
-
-        {role === 'TENANT_OWNER' && (
-          <div className={styles.actions}>
-            <Button
-              asChild
-              variant="outline"
-              className={`${motion.press} ${styles.manageCategories}`}
-            >
-              <Link to="categorias">Gerenciar categorias</Link>
-            </Button>
-            <Button asChild className={`${motion.press} ${styles.newItem}`}>
-              <Link to="novo">Novo item</Link>
-            </Button>
-          </div>
-        )}
-      </header>
+      <PageHeader
+        className={styles.header}
+        title="Cardápio"
+        accent="Cardápio"
+        description="Desligue o que acabou — o item some do app do cliente na hora."
+        actions={
+          role === 'TENANT_OWNER' ? (
+            <>
+              <Button
+                asChild
+                variant="outline"
+                className={`${motion.press} ${styles.manageCategories}`}
+              >
+                <Link to="categorias">Gerenciar categorias</Link>
+              </Button>
+              <Button asChild className={`${motion.press} ${styles.newItem}`}>
+                <Link to="novo">Novo item</Link>
+              </Button>
+            </>
+          ) : undefined
+        }
+      />
 
       <MenuBoard tenantId={tenant?.tenantId ?? null} />
     </div>

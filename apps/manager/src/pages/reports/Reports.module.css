@@ -8,10 +8,6 @@
   @apply mb-4 lg:mb-6;
 }
 
-.subtitle {
-  @apply mt-1 text-sm text-faint lg:text-base;
-}
-
 /* aparece só no modo "Escolher": as duas pontas do intervalo */
 .dates {
   @apply mb-5 flex flex-wrap items-end gap-3 lg:mb-6;

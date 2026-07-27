@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-import { PageTitle } from '@components/PageTitle'
+import { PageHeader } from '@nino/ds/components/PageHeader'
 import { EditEmailModal } from '@compositions/EditEmailModal'
 import { InviteForm } from '@compositions/InviteForm'
 import { TeamRoster } from '@compositions/TeamRoster'
@@ -69,13 +69,12 @@ export const Employees = () => {
 
   return (
     <div className={styles.page}>
-      <header className={styles.header}>
-        <PageTitle accent="equipe">Quem toca a equipe</PageTitle>
-        <p className={styles.subtitle}>
-          Cada pessoa entra com a própria conta — e o painel registra quem
-          mexeu em cada pedido.
-        </p>
-      </header>
+      <PageHeader
+        className={styles.header}
+        title="Quem toca a equipe"
+        accent="equipe"
+        description="Cada pessoa entra com a própria conta — e o painel registra quem mexeu em cada pedido."
+      />
 
       <div className={styles.stack}>
         <InviteForm onInvite={invite} />

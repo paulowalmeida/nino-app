@@ -2,6 +2,7 @@ import { useMemo, useState } from 'react'
 
 import { DatePicker } from '@nino/ds/components/DatePicker'
 import { EmptyState } from '@nino/ds/components/EmptyState'
+import { PageHeader } from '@nino/ds/components/PageHeader'
 import { Skeleton } from '@nino/ds/components/Skeleton'
 import {
   Table,
@@ -12,7 +13,6 @@ import {
   TableRow,
 } from '@nino/ds/components/Table'
 import { Tabs } from '@nino/ds/components/Tabs'
-import { PageTitle } from '@components/PageTitle'
 import { CountUp } from '@components/CountUp'
 import type { PeriodChoice } from '@custom_types/ui'
 import { useCurrentTenant } from '@hooks/session/useCurrentTenant'
@@ -106,13 +106,12 @@ export const Reports = () => {
 
   return (
     <div className={styles.page}>
-      <header className={`${motion.deal} ${styles.header}`}>
-        <PageTitle accent="venda">Relatório de venda</PageTitle>
-        <p className={styles.subtitle}>
-          O que a loja vendeu no período — só pedidos concluídos entram na
-          conta.
-        </p>
-      </header>
+      <PageHeader
+        className={`${motion.deal} ${styles.header}`}
+        title="Relatório de venda"
+        accent="venda"
+        description="O que a loja vendeu no período — só pedidos concluídos entram na conta."
+      />
 
       <Tabs
         className={motion.unroll}

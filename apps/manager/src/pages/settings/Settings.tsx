@@ -1,7 +1,7 @@
 import { Outlet, useLocation } from 'react-router'
 
-import { PageTitle } from '@components/PageTitle'
 
+import { PageHeader } from '@nino/ds/components/PageHeader'
 import styles from './Settings.module.css'
 import motion from '@styles/motion.module.css'
 
@@ -14,13 +14,12 @@ export const Settings = () => {
 
   return (
     <div className={styles.page}>
-      <header className={`${motion.deal} ${styles.header}`}>
-        <PageTitle accent="loja">As regras da loja</PageTitle>
-        <p className={styles.subtitle}>
-          O que você define aqui vale na hora do pedido — no app do cliente e
-          no painel.
-        </p>
-      </header>
+      <PageHeader
+        className={`${motion.deal} ${styles.header}`}
+        title="As regras da loja"
+        accent="loja"
+        description="O que você define aqui vale na hora do pedido — no app do cliente e no painel."
+      />
 
       {/* a key reanima a seção a cada troca, como uma tela nova */}
       <div key={pathname} className={`${motion.settle} ${styles.panel}`}>

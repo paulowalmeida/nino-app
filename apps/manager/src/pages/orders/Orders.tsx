@@ -3,9 +3,9 @@ import { useSearchParams } from 'react-router'
 import { Alert } from '@nino/ds/components/Alert'
 import { Button } from '@nino/ds/components/Button'
 import { EmptyState } from '@nino/ds/components/EmptyState'
+import { PageHeader } from '@nino/ds/components/PageHeader'
 import { Skeleton } from '@nino/ds/components/Skeleton'
 import type { NavIconName } from '@components/NavIcon/NavIcon.types'
-import { PageTitle } from '@components/PageTitle'
 import { OrderTicket } from '@compositions/OrderTicket'
 import { StageTrack } from '@compositions/StageTrack'
 import type { StageOption } from '@compositions/StageTrack/StageTrack.types'
@@ -98,15 +98,12 @@ export const Orders = () => {
 
   return (
     <div className={styles.page}>
-      <header className={styles.header}>
-        <div className={styles.headText}>
-          <PageTitle accent="Pedidos">Pedidos</PageTitle>
-          <p className={styles.subtitle}>
-            Cada comanda mostra o próximo passo. Um toque move o pedido
-            adiante.
-          </p>
-        </div>
-      </header>
+      <PageHeader
+        className={styles.header}
+        title="Pedidos"
+        accent="Pedidos"
+        description="Cada comanda mostra o próximo passo. Um toque move o pedido adiante."
+      />
 
       <div className={`${motion.unroll} ${styles.track}`}>
         <StageTrack stages={options} value={stage} onChange={setStage} />

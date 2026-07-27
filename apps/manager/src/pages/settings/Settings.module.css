@@ -8,10 +8,6 @@
   @apply mb-4 flex flex-col gap-1.5 lg:mb-8;
 }
 
-.subtitle {
-  @apply mt-1 hidden max-w-xl text-sm leading-relaxed text-faint lg:block;
-}
-
 .panel {
   @apply min-w-0;
 }

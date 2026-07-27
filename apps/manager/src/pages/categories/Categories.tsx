@@ -6,9 +6,9 @@ import { Button } from '@nino/ds/components/Button'
 import { Dialog } from '@nino/ds/components/Dialog'
 import { EmptyState } from '@nino/ds/components/EmptyState'
 import { Input } from '@nino/ds/components/Input'
+import { PageHeader } from '@nino/ds/components/PageHeader'
 import { Skeleton } from '@nino/ds/components/Skeleton'
 import { BackLink } from '@components/BackLink'
-import { PageTitle } from '@components/PageTitle'
 import {
   useCategories,
   useCreateCategory,
@@ -100,13 +100,12 @@ export const Categories = () => {
     <div className={styles.page}>
       <BackLink>Cardápio</BackLink>
 
-      <header className={`${motion.deal} ${styles.header}`}>
-        <PageTitle accent="organiza">Como o cardápio se organiza</PageTitle>
-        <p className={styles.subtitle}>
-          As categorias agrupam os itens no app do cliente. A ordem em que
-          aparecem você ajusta arrastando no próprio cardápio.
-        </p>
-      </header>
+      <PageHeader
+        className={`${motion.deal} ${styles.header}`}
+        title="Como o cardápio se organiza"
+        accent="organiza"
+        description="As categorias agrupam os itens no app do cliente. A ordem em que aparecem você ajusta arrastando no próprio cardápio."
+      />
 
       <form
         className={`${motion.deal} ${styles.create}`}

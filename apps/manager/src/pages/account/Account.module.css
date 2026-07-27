@@ -8,10 +8,6 @@
   @apply mb-5 flex flex-col gap-1.5 lg:mb-8;
 }
 
-.subtitle {
-  @apply mt-1 text-sm leading-relaxed text-faint;
-}
-
 .fields {
   @apply grid grid-cols-1 gap-3 sm:grid-cols-2;
 }

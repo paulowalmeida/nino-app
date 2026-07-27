@@ -8,10 +8,6 @@
   @apply mb-5 flex flex-col gap-1.5 lg:mb-8;
 }
 
-.subtitle {
-  @apply mt-1 text-sm leading-relaxed text-faint;
-}
-
 /* o plano é o assunto: nome grande, preço ao lado */
 .plan {
   @apply flex flex-wrap items-end justify-between gap-3 border-b border-sand;
