@@ -8,7 +8,7 @@
  */
 .ticket {
   --tooth: 9px;
-  @apply relative flex flex-col rounded-t-[10px] bg-paper;
+  @apply relative flex flex-col rounded-t-[10px] bg-white;
   padding-bottom: var(--tooth);
   box-shadow: inset 0 0 0 1px var(--color-sand);
   mask:

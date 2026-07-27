@@ -15,7 +15,7 @@ const baseControl =
   'data-[state=checked]:bg-brand disabled:cursor-not-allowed ' +
   'disabled:opacity-50'
 
-const baseIndicatorDot = 'h-1.5 w-1.5 rounded-full bg-paper'
+const baseIndicatorDot = 'h-1.5 w-1.5 rounded-full bg-white'
 
 const baseLabelText = 'text-sm text-body leading-none cursor-pointer'
 

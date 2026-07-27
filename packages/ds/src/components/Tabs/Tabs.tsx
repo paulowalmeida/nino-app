@@ -55,7 +55,7 @@ export function Tabs({
             {active === tab.value && (
               <motion.span
                 layoutId="tab-indicator"
-                className="absolute inset-0 rounded-[6px] bg-paper shadow-card"
+                className="absolute inset-0 rounded-[6px] bg-white shadow-card"
                 transition={{ type: 'spring', stiffness: 500, damping: 40 }}
               />
             )}

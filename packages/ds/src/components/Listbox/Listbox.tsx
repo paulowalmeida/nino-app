@@ -8,7 +8,7 @@ import { ListboxOption, ListboxProps } from './Listbox.types'
 const labelClass = 'mb-1.5 block text-sm font-medium text-body'
 
 const contentClass =
-  'flex flex-col gap-0.5 rounded-card bg-paper p-1 shadow-card outline-none'
+  'flex flex-col gap-0.5 rounded-card bg-white p-1 shadow-card outline-none'
 
 const itemClass =
   'flex cursor-pointer select-none items-center justify-between gap-2 ' +

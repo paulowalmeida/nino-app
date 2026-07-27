@@ -23,7 +23,7 @@ const baseControl =
   'disabled:cursor-not-allowed disabled:opacity-50'
 
 const baseThumb =
-  'pointer-events-none block rounded-full bg-paper shadow-card ring-0 ' +
+  'pointer-events-none block rounded-full bg-white shadow-card ring-0 ' +
   'transition-transform data-[state=unchecked]:translate-x-0'
 
 export function Switch({

@@ -4,9 +4,9 @@ import { Portal } from '@ark-ui/react/portal'
 import { PopoverProps } from './Popover.types'
 
 const baseContent =
-  'z-50 w-72 rounded-card bg-paper p-4 shadow-overlay outline-none data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95'
+  'z-50 w-72 rounded-card bg-white p-4 shadow-overlay outline-none data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95'
 
-const arrowClass = 'fill-paper'
+const arrowClass = 'fill-white'
 
 const titleClass =
   'mb-2 font-display text-sm font-semibold tracking-[-0.01em] text-ink'

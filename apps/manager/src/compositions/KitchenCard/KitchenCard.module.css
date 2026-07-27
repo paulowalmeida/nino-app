@@ -8,7 +8,7 @@
  */
 .card {
   --tooth: 11px;
-  @apply relative flex flex-col rounded-t-[12px] bg-paper;
+  @apply relative flex flex-col rounded-t-[12px] bg-white;
   @apply pt-[10px] pb-[var(--tooth)];
   box-shadow: inset 0 0 0 1px var(--color-sand-deep);
   mask:

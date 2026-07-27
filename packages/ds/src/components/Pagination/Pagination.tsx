@@ -16,7 +16,7 @@ const baseNav =
 const baseItem =
   'inline-flex h-8 min-w-8 items-center justify-center rounded-[6px] px-2 ' +
   'text-sm font-semibold text-body transition-colors hover:bg-cream-deep ' +
-  'hover:text-brand-strong data-[selected]:bg-paper ' +
+  'hover:text-brand-strong data-[selected]:bg-white ' +
   'data-[selected]:text-ink data-[selected]:shadow-card'
 
 const baseEllipsis =
