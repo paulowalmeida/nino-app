@@ -2,6 +2,7 @@ import { useState } from 'react'
 
 import { Card } from '@nino/ds/components/Card'
 import { Button } from '@nino/ds/components/Button'
+import { EmptyState } from '@nino/ds/components/EmptyState'
 import { Input } from '@nino/ds/components/Input'
 import { Skeleton } from '@nino/ds/components/Skeleton'
 import { Switch } from '@nino/ds/components/Switch'
@@ -63,9 +64,9 @@ export const ZoneList = ({
       </header>
 
       {zones.length === 0 && (
-        <p className={styles.empty}>
+        <EmptyState>
           Nenhuma região cadastrada. Sem zona, a loja não cobra entrega.
-        </p>
+        </EmptyState>
       )}
 
       {zones.length > 0 && (

@@ -1,5 +1,6 @@
 import { Link, useParams } from 'react-router'
 
+import { EmptyState } from '@nino/ds/components/EmptyState'
 import { Skeleton } from '@nino/ds/components/Skeleton'
 import { Breadcrumb } from '@components/Breadcrumb'
 import { PersonMark } from '@components/PersonMark'
@@ -43,9 +44,9 @@ export const CustomerDetail = () => {
     return (
       <div className={styles.page}>
         <Breadcrumb trail={[{ label: 'Clientes', to: '..' }, { label: '—' }]} />
-        <p className={styles.notice}>
+        <EmptyState>
           Esta pessoa não tem pedido nesta loja.
-        </p>
+        </EmptyState>
       </div>
     )
   }
@@ -94,9 +95,9 @@ export const CustomerDetail = () => {
         <h2 className={styles.historyTitle}>Últimos pedidos</h2>
 
         {customer.history.length === 0 ? (
-          <p className={styles.empty}>
+          <EmptyState>
             Nenhum pedido registrado nesta loja ainda.
-          </p>
+          </EmptyState>
         ) : (
           <ul className={styles.orders}>
             {customer.history.map((order, index) => (

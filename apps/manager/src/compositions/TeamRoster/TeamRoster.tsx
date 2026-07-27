@@ -1,5 +1,6 @@
 import { Badge } from '@nino/ds/components/Badge'
 import { Button } from '@nino/ds/components/Button'
+import { EmptyState } from '@nino/ds/components/EmptyState'
 import { Skeleton } from '@nino/ds/components/Skeleton'
 import { PersonMark } from '@components/PersonMark'
 import { riseDelay } from '@utils/rise-delay'
@@ -33,7 +34,7 @@ export const TeamRoster = ({
     )}
 
     {!isPending && entries.length === 0 && (
-      <p className={styles.empty}>{empty}</p>
+      <EmptyState>{empty}</EmptyState>
     )}
 
     {entries.length > 0 && (

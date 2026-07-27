@@ -65,6 +65,3 @@
   @apply h-28 w-full rounded-[20px] lg:h-32;
 }
 
-.empty {
-  @apply p-6 text-base text-faint;
-}

@@ -2,6 +2,7 @@ import { Link } from 'react-router'
 
 import { Alert } from '@nino/ds/components/Alert'
 import { Button } from '@nino/ds/components/Button'
+import { EmptyState } from '@nino/ds/components/EmptyState'
 import { Skeleton } from '@nino/ds/components/Skeleton'
 import { PageTitle } from '@components/PageTitle'
 import { PersonMark } from '@components/PersonMark'
@@ -55,10 +56,10 @@ export const Customers = () => {
       )}
 
       {!isPending && !isError && customers.length === 0 && (
-        <p className={`${motion.unroll} ${styles.notice}`}>
+        <EmptyState className={motion.unroll}>
           Ninguém por aqui ainda. Quem fizer o primeiro pedido pelo app
           aparece nesta lista.
-        </p>
+        </EmptyState>
       )}
 
       {customers.length > 0 && (

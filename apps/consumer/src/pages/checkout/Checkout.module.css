@@ -278,10 +278,6 @@
   @apply gap-3 px-6 text-center;
 }
 
-.emptyText {
-  @apply text-base text-muted;
-}
-
 .emptyLink {
   @apply font-bold text-brand-strong;
 }

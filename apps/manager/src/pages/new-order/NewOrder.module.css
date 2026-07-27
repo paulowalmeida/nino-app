@@ -70,10 +70,6 @@
   @apply text-[0.7rem] font-bold uppercase tracking-[0.12em] text-faint;
 }
 
-.empty {
-  @apply text-sm leading-relaxed text-faint;
-}
-
 .lines {
   @apply flex flex-col;
 }
@@ -137,10 +133,6 @@
 
 .place {
   @apply mt-1 w-full;
-}
-
-.notice {
-  @apply text-sm text-faint;
 }
 
 .skeletonRow {

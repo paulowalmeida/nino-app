@@ -94,16 +94,7 @@
   font-variant-numeric: tabular-nums;
 }
 
-.empty {
-  @apply rounded-2xl border border-line bg-brand-foreground/60 p-5 text-sm;
-  @apply text-faint;
-}
-
 .skeleton {
   @apply m-4 h-64 rounded-[24px] lg:m-8;
 }
 
-.notice {
-  @apply rounded-2xl border border-line bg-brand-foreground/60 p-6 text-sm;
-  @apply text-faint;
-}

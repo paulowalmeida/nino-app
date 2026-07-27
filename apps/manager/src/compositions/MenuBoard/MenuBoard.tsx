@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from 'react'
 import { Reorder } from 'framer-motion'
 
 import { Alert } from '@nino/ds/components/Alert'
+import { EmptyState } from '@nino/ds/components/EmptyState'
 import { Skeleton } from '@nino/ds/components/Skeleton'
 import { useItemAvailability } from '@hooks/product/useItemAvailability'
 import { useMenu } from '@hooks/product/useMenu'
@@ -70,9 +71,9 @@ export const MenuBoard = ({ tenantId }: MenuBoardProps) => {
 
   if (sections.length === 0) {
     return (
-      <p className={styles.notice}>
+      <EmptyState>
         Seu cardápio está vazio. Cadastre o primeiro item para começar a vender.
-      </p>
+      </EmptyState>
     )
   }
 

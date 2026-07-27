@@ -2,6 +2,7 @@ import { useRef, useState } from 'react'
 import { useNavigate, useParams } from 'react-router'
 
 import { Button } from '@nino/ds/components/Button'
+import { EmptyState } from '@nino/ds/components/EmptyState'
 import { AnimatedNumber } from '@components/AnimatedNumber/AnimatedNumber'
 import { ActiveOrderBanner } from '@compositions/ActiveOrderBanner/ActiveOrderBanner'
 import { CartDrawer } from '@compositions/CartDrawer/CartDrawer'
@@ -83,17 +84,14 @@ export const Storefront = () => {
 
   if (!slug) {
     return (
-      <div className={styles.notFound}>
-        <img
-          src="/mascot-consumer.svg"
-          alt=""
-          className={styles.notFoundMascot}
-        />
-        <h1 className={styles.notFoundTitle}>Qual loja você procura?</h1>
-        <p className={styles.notFoundText}>
-          Abra pelo link da loja — cada uma tem o seu endereço.
-        </p>
-      </div>
+      <EmptyState
+        size="md"
+        className={styles.notFound}
+        illustration={<img src="/mascot-consumer.svg" alt="" />}
+        title="Qual loja você procura?"
+      >
+        Abra pelo link da loja — cada uma tem o seu endereço.
+      </EmptyState>
     )
   }
 
@@ -101,17 +99,14 @@ export const Storefront = () => {
 
   if (isError || !store) {
     return (
-      <div className={styles.notFound}>
-        <img
-          src="/mascot-consumer-sad.svg"
-          alt=""
-          className={styles.notFoundMascot}
-        />
-        <h1 className={styles.notFoundTitle}>Loja não encontrada</h1>
-        <p className={styles.notFoundText}>
-          Confira o link — o endereço pode ter mudado ou a loja saiu do ar.
-        </p>
-      </div>
+      <EmptyState
+        size="md"
+        className={styles.notFound}
+        illustration={<img src="/mascot-consumer-sad.svg" alt="" />}
+        title="Loja não encontrada"
+      >
+        Confira o link — o endereço pode ter mudado ou a loja saiu do ar.
+      </EmptyState>
     )
   }
 
@@ -147,13 +142,13 @@ export const Storefront = () => {
           {loadingMenu && <MenuRowsSkeleton />}
 
         {!loadingMenu && sections.length === 0 && (
-          <p className={styles.hint}>
+          <EmptyState>
             Esta loja ainda não publicou itens no cardápio.
-          </p>
+          </EmptyState>
         )}
 
         {!loadingMenu && query && visibleSections.length === 0 && (
-          <p className={styles.hint}>Nada encontrado para “{search}”.</p>
+          <EmptyState>Nada encontrado para “{search}”.</EmptyState>
         )}
 
         {visibleSections.map((section) => {

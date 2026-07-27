@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router'
 
 import { Alert } from '@nino/ds/components/Alert'
 import { Button } from '@nino/ds/components/Button'
+import { EmptyState } from '@nino/ds/components/EmptyState'
 import { Select } from '@nino/ds/components/Select'
 import { Skeleton } from '@nino/ds/components/Skeleton'
 import { Textarea } from '@nino/ds/components/Textarea'
@@ -173,9 +174,9 @@ export const NewOrder = () => {
           )}
 
           {!isPending && sections.length === 0 && (
-            <p className={styles.notice}>
+            <EmptyState>
               O cardápio está vazio. Cadastre um item antes de abrir pedido.
-            </p>
+            </EmptyState>
           )}
 
           {sections.map(({ id, name, items }, sectionIndex) => (
@@ -230,9 +231,9 @@ export const NewOrder = () => {
           <h2 className={styles.ticketTitle}>A comanda</h2>
 
           {lines.length === 0 && (
-            <p className={styles.empty}>
+            <EmptyState>
               Nada na comanda ainda. Toque em Adicionar no item do cardápio.
-            </p>
+            </EmptyState>
           )}
 
           {lines.length > 0 && (
