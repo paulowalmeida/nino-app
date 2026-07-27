@@ -6,10 +6,13 @@ import { Drawer } from '@nino/ds/components/Drawer'
 import { Image } from '@nino/ds/components/Image'
 import { Modal } from '@nino/ds/components/Modal'
 import { AnimatedNumber } from '@components/AnimatedNumber/AnimatedNumber'
+import { Icon } from '@components/Icon/Icon'
 import { useIsDesktop } from '@hooks/useIsDesktop'
 import { categoryIcon } from '@utils/category-icon'
 import { brl } from '@utils/money'
 import { riseDelay } from '@utils/rise-delay'
+import minusIcon from '@assets/icons/minus.svg?raw'
+import plusIcon from '@assets/icons/plus.svg?raw'
 
 import type { ProductDetailProps } from './ProductDetail.types'
 
@@ -91,7 +94,7 @@ export const ProductDetail = ({
         disabled={quantity <= 1}
         onClick={() => setQuantity((n) => Math.max(1, n - 1))}
       >
-        −
+        <Icon svg={minusIcon} />
       </Button>
       <AnimatedNumber value={quantity} className={styles.stepperCount} />
       <Button
@@ -100,7 +103,7 @@ export const ProductDetail = ({
         aria-label="Aumentar quantidade"
         onClick={() => setQuantity((n) => n + 1)}
       >
-        +
+        <Icon svg={plusIcon} />
       </Button>
     </div>
   )

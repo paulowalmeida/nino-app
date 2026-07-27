@@ -2,9 +2,12 @@ import { Alert } from '@nino/ds/components/Alert'
 import { Button } from '@nino/ds/components/Button'
 import { EmptyState } from '@nino/ds/components/EmptyState'
 import { Input } from '@nino/ds/components/Input'
+import { Icon } from '@components/Icon/Icon'
 import { ItemThumb } from '@components/ItemThumb'
 import { brl } from '@utils/money'
 import { paymentLabelFor } from '@utils/order-flow'
+import minusIcon from '@assets/icons/minus.svg?raw'
+import plusIcon from '@assets/icons/plus.svg?raw'
 
 import type { SaleTicketProps } from './SaleTicket.types'
 
@@ -105,7 +108,7 @@ export const SaleTicket = ({
                       >
                         {/* Na última unidade o traço vira lixeira: tocar de
                             novo remove, e o ícone avisa antes. */}
-                        {isLast ? <TrashIcon /> : '−'}
+                        {isLast ? <TrashIcon /> : <Icon svg={minusIcon} />}
                       </Button>
 
                       <span className={styles.stepperCount}>
@@ -119,7 +122,7 @@ export const SaleTicket = ({
                         aria-label={`Mais um ${line.name}`}
                         onClick={() => onStep(line.productId, 1)}
                       >
-                        +
+                        <Icon svg={plusIcon} />
                       </Button>
                     </div>
                   </div>
