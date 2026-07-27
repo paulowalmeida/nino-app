@@ -9,11 +9,11 @@
   @apply lg:grid-cols-4 lg:gap-4;
 }
 
-/* Superfície e sombra vêm do Card do DS; aqui fica o que ele não sabe.
-   Uma classe só para o cartão inteiro: com asChild o Card entrega as classes
-   ao próprio <a>, e duas classes disputando display acabam se cancelando. */
+/* superfície e sombra vêm do Card do DS; aqui fica o que ele não sabe.
+   O gap não é 1: o número usa leading-none, então não há entrelinha para
+   servir de folga entre ele e o rótulo. */
 .tile {
-  @apply flex flex-row items-center gap-x-2 p-5;
+  @apply flex flex-col gap-2 p-5;
   @apply transition-all duration-300;
   @apply hover:border-brand/60 hover:shadow-card-hover;
   @apply focus-visible:outline-none focus-visible:ring-2;
@@ -44,4 +44,8 @@
 
 .idle {
   @apply mt-4 text-sm text-faint;
+}
+
+.cardOverview {
+  @apply flex flex-row gap-x-2 items-center;
 }

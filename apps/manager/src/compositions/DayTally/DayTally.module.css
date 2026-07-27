@@ -14,10 +14,11 @@
   @apply grid grid-cols-1 gap-2 lg:grid-cols-3 lg:gap-4;
 }
 
-/* mesma classe única dos cartões da fila, pelo mesmo motivo — e agora os
-   três levam a algum lugar, então todos reagem ao cursor */
+/* superfície e sombra vêm do Card do DS; aqui fica o que ele não sabe.
+   O gap não é 1: o número usa leading-none, então não há entrelinha para
+   servir de folga entre ele e o rótulo. */
 .figure {
-  @apply flex flex-row items-center gap-x-2 p-5;
+  @apply flex flex-col gap-2 p-5;
   @apply transition-all duration-300;
   @apply hover:border-brand/60 hover:shadow-card-hover;
   @apply focus-visible:outline-none focus-visible:ring-2;
@@ -67,4 +68,8 @@
 .total {
   @apply text-sm font-semibold text-body;
   font-variant-numeric: tabular-nums;
+}
+
+.cardOverview {
+  @apply flex flex-row gap-x-2 items-center;
 }
