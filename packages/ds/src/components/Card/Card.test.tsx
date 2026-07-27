@@ -36,4 +36,29 @@ describe(Card.displayName!, () => {
     render(<Card ref={ref}>x</Card>)
     expect(ref.current).toBeInstanceOf(HTMLDivElement)
   })
+
+  it('renders a div by default', () => {
+    render(<Card>x</Card>)
+    expect(screen.getByText('x').tagName).toBe('DIV')
+  })
+
+  it('delegates rendering to the child when asChild is set', () => {
+    render(
+      <Card asChild>
+        <a href="/pedidos">Ver pedidos</a>
+      </Card>
+    )
+    const link = screen.getByRole('link', { name: 'Ver pedidos' })
+    expect(link).toHaveClass('rounded-card')
+    expect(link).toHaveClass('shadow-card')
+  })
+
+  it('keeps the child as the only element when asChild is set', () => {
+    const { container } = render(
+      <Card asChild>
+        <button type="button">Escolher loja</button>
+      </Card>
+    )
+    expect(container.querySelector('div')).not.toBeInTheDocument()
+  })
 })
