@@ -101,15 +101,7 @@
   @apply mt-0.5 text-xs leading-relaxed text-faint;
 }
 
-.error {
-  @apply text-sm text-red-500;
-}
-
 .actions {
   @apply flex flex-col gap-2 border-t border-sand pt-5 sm:flex-row;
 }
 
-.notice {
-  @apply rounded-2xl border border-line bg-brand-foreground/60 p-6 text-sm;
-  @apply text-faint;
-}

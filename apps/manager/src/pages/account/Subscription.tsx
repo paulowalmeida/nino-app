@@ -1,3 +1,4 @@
+import { Alert } from '@nino/ds/components/Alert'
 import { Skeleton } from '@nino/ds/components/Skeleton'
 import { PageTitle } from '@components/PageTitle'
 import { useSubscription } from '@hooks/account/useSubscription'
@@ -32,9 +33,9 @@ export const Subscription = () => {
       {isPending && <Skeleton className={styles.skeleton} />}
 
       {isError && (
-        <p className={styles.notice}>
+        <Alert variant="error">
           Não foi possível carregar a assinatura agora.
-        </p>
+        </Alert>
       )}
 
       {data && (

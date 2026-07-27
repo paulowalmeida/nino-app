@@ -18,10 +18,6 @@
   @apply mt-8 flex flex-col gap-4;
 }
 
-.errorText {
-  @apply text-center text-sm text-red-500;
-}
-
 .footer {
   @apply mt-8 text-center text-sm text-text/60;
 }

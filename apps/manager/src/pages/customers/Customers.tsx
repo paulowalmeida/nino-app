@@ -1,5 +1,6 @@
 import { Link } from 'react-router'
 
+import { Alert } from '@nino/ds/components/Alert'
 import { Button } from '@nino/ds/components/Button'
 import { Skeleton } from '@nino/ds/components/Skeleton'
 import { PageTitle } from '@components/PageTitle'
@@ -48,9 +49,9 @@ export const Customers = () => {
       )}
 
       {isError && (
-        <p className={styles.notice}>
+        <Alert variant="error">
           Não foi possível carregar a base agora. Recarregue a página.
-        </p>
+        </Alert>
       )}
 
       {!isPending && !isError && customers.length === 0 && (

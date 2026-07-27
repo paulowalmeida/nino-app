@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { Controller, useForm, useWatch } from 'react-hook-form'
 import { useNavigate, useParams } from 'react-router'
 
+import { Alert } from '@nino/ds/components/Alert'
 import { Button } from '@nino/ds/components/Button'
 import { Dialog } from '@nino/ds/components/Dialog'
 import { FormField } from '@nino/ds/components/FormField'
@@ -95,9 +96,9 @@ export const ProductDetail = () => {
   if (!item) {
     return (
       <div className={styles.page}>
-        <p className={styles.notice}>
+        <Alert variant="info">
           Este item não está no cardápio. Ele pode ter sido removido.
-        </p>
+        </Alert>
         <BackLink>Cardápio</BackLink>
       </div>
     )
@@ -253,7 +254,7 @@ export const ProductDetail = () => {
           </div>
         </div>
 
-        {errors.root && <p className={styles.error}>{errors.root.message}</p>}
+        {errors.root && <Alert variant="error">{errors.root.message}</Alert>}
 
         <div
           className={`${motion.deal} ${styles.actions}`}

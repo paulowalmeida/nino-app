@@ -3,6 +3,7 @@ import { useParams } from 'react-router'
 
 import { BackLink } from '@components/BackLink'
 
+import { Alert } from '@nino/ds/components/Alert'
 import { Button } from '@nino/ds/components/Button'
 import { Skeleton } from '@nino/ds/components/Skeleton'
 import { Textarea } from '@nino/ds/components/Textarea'
@@ -59,9 +60,9 @@ export const OrderDetail = () => {
   if (!order) {
     return (
       <div className={styles.page}>
-        <p className={styles.notice}>
+        <Alert variant="info">
           Este pedido não está mais nesta loja. Ele pode ter sido removido.
-        </p>
+        </Alert>
         <BackLink>Pedidos</BackLink>
       </div>
     )

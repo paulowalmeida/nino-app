@@ -47,10 +47,6 @@
   @apply hover:border-brand/40 hover:bg-brand/5;
 }
 
-.error {
-  @apply text-xs text-red-500;
-}
-
 .sending {
   @apply absolute inset-0 flex items-center justify-center;
   @apply bg-ink/35 text-xs font-semibold text-white backdrop-blur-sm;

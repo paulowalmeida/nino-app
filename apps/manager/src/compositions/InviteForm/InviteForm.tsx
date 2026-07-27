@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 
+import { Alert } from '@nino/ds/components/Alert'
 import { Button } from '@nino/ds/components/Button'
 import { FormField } from '@nino/ds/components/FormField'
 import { Input } from '@nino/ds/components/Input'
@@ -94,12 +95,12 @@ export const InviteForm = ({ onInvite }: InviteFormProps) => {
         </FormField>
       </div>
 
-      {errors.root && <p className={styles.error}>{errors.root.message}</p>}
+      {errors.root && <Alert variant="error">{errors.root.message}</Alert>}
 
       {sentTo && !errors.root && (
-        <p className={`${motion.unroll} ${styles.sent}`}>
+        <Alert variant="success" className={motion.unroll}>
           Convite enviado para {sentTo}.
-        </p>
+        </Alert>
       )}
 
       <Button

@@ -1,6 +1,7 @@
 import { Link } from 'react-router'
 import { useForm } from 'react-hook-form'
 
+import { Alert } from '@nino/ds/components/Alert'
 import { Button } from '@nino/ds/components/Button'
 import { FormField } from '@nino/ds/components/FormField'
 import { Input } from '@nino/ds/components/Input'
@@ -60,7 +61,7 @@ export const LoginForm = () => {
           </FormField>
         </div>
 
-        {errors.root && <p className={styles.errorText}>{errors.root.message}</p>}
+        {errors.root && <Alert variant="error">{errors.root.message}</Alert>}
 
         <div className={motion.rise} style={riseDelay(280)}>
           <Button

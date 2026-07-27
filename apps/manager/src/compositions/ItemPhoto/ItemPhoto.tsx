@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 
+import { Alert } from '@nino/ds/components/Alert'
 import { Button } from '@nino/ds/components/Button'
 import { ItemThumb } from '@components/ItemThumb'
 import { PhotoCropper } from '@compositions/PhotoCropper'
@@ -81,7 +82,7 @@ export const ItemPhoto = ({
           onConfirm={send}
           onCancel={() => setChosen(null)}
         />
-        {error && <p className={styles.error}>{error}</p>}
+        {error && <Alert variant="error">{error}</Alert>}
       </div>
     )
   }
@@ -151,7 +152,7 @@ export const ItemPhoto = ({
         )}
       </div>
 
-      {error && <p className={styles.error}>{error}</p>}
+      {error && <Alert variant="error">{error}</Alert>}
     </div>
   )
 }

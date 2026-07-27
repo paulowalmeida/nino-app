@@ -1,3 +1,4 @@
+import { Alert } from '@nino/ds/components/Alert'
 import { Button } from '@nino/ds/components/Button'
 import { Input } from '@nino/ds/components/Input'
 import { brl } from '@utils/money'
@@ -123,7 +124,7 @@ export const SaleTicket = ({
           <span className={styles.totalValue}>{brl(total)}</span>
         </div>
 
-        {error && <p className={styles.error}>{error}</p>}
+        {error && <Alert variant="error">{error}</Alert>}
 
         <Button
           size="lg"

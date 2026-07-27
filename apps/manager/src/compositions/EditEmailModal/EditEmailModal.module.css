@@ -12,6 +12,3 @@
   @apply text-sm leading-relaxed text-faint;
 }
 
-.error {
-  @apply text-sm text-red-500;
-}
