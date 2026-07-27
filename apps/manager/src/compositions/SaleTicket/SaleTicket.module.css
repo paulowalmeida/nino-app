@@ -7,9 +7,20 @@
   @apply lg:h-full lg:min-h-0;
 }
 
+/* Sem moldura: dentro da folha, quem emoldura é a folha. */
+.ticketBare {
+  @apply flex w-full flex-col;
+}
+
 .head {
   @apply flex shrink-0 items-center justify-between border-b border-sand;
   @apply px-4 py-3;
+}
+
+/* Sem o título, sobra só a ação — que encosta à direita em vez de flutuar
+   sozinha à esquerda, onde o olho procura um rótulo que não existe. */
+.headBare {
+  @apply flex shrink-0 items-center justify-end px-4 pb-2;
 }
 
 .title {

@@ -21,8 +21,17 @@
   @apply mt-1 text-sm text-faint;
 }
 
+/* `pb-24` abre espaço para a aba do cupom não cobrir a última linha de
+   produtos. Some no desktop, onde nada fica preso no rodapé. */
 .floor {
-  @apply grid flex-1 gap-4 lg:min-h-0 lg:grid-cols-[1fr_23rem];
+  @apply grid flex-1 gap-4 pb-24;
+  @apply lg:min-h-0 lg:grid-cols-[1fr_23rem] lg:pb-0;
+}
+
+/* A folha para antes do topo: o cardápio continua aparecendo atrás, e é isso
+   que diz que dá para fechar e voltar a escolher. */
+.sheet {
+  @apply max-h-[85dvh] overflow-y-auto;
 }
 
 .menu {

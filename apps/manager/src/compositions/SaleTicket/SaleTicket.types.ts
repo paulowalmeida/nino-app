@@ -17,4 +17,9 @@ export type SaleTicketProps = {
   onMethod: (method: PaymentMethod) => void
   onClear: () => void
   onFinish: () => void
+  /**
+   * Dentro da folha do celular a moldura e o título são da própria folha —
+   * repeti-los aqui viraria caixa dentro de caixa.
+   */
+  bare?: boolean
 }

@@ -1,5 +1,11 @@
 @reference "@nino/ds/globals.css";
 
+/* Busca antes das abas: com sessenta bebidas, digitar é mais curto que
+   lembrar em que categoria o item foi cadastrado. */
+.search {
+  @apply mb-3 h-11;
+}
+
 .wrap {
   @apply flex min-h-0 flex-1 flex-col gap-3;
 }

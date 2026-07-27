@@ -28,6 +28,7 @@ export const SaleTicket = ({
   onMethod,
   onClear,
   onFinish,
+  bare = false,
 }: SaleTicketProps) => {
   const total = lines.reduce(
     (sum, line) => sum + Number(line.unitPrice) * line.quantity,
@@ -36,9 +37,9 @@ export const SaleTicket = ({
   const count = lines.reduce((sum, { quantity }) => sum + quantity, 0)
 
   return (
-    <aside className={styles.ticket}>
-      <header className={styles.head}>
-        <h2 className={styles.title}>Venda</h2>
+    <aside className={bare ? styles.ticketBare : styles.ticket}>
+      <header className={bare ? styles.headBare : styles.head}>
+        {!bare && <h2 className={styles.title}>Venda</h2>}
         {count > 0 && (
           <button type="button" className={styles.clear} onClick={onClear}>
             Limpar
