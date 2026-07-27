@@ -2,6 +2,14 @@ import { useMemo, useState } from 'react'
 
 import { DatePicker } from '@nino/ds/components/DatePicker'
 import { Skeleton } from '@nino/ds/components/Skeleton'
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@nino/ds/components/Table'
 import { Tabs } from '@nino/ds/components/Tabs'
 import { PageTitle } from '@components/PageTitle'
 import { CountUp } from '@components/CountUp'
@@ -38,6 +46,12 @@ const FIGURES: {
   { key: 'orderCount', label: 'Pedidos concluídos', money: false },
   { key: 'averageTicket', label: 'Ticket médio', money: true },
 ]
+
+/** Pódio: as três primeiras linhas leem antes das outras. */
+const podiumClass = (index: number): string => {
+  if (index === 0) return `${styles.podium} ${styles.leader}`
+  return index < 3 ? styles.podium : ''
+}
 
 const TIMING_FIGURES: {
   key: 'averagePreparationMinutes' | 'averageDeliveryMinutes'
@@ -199,19 +213,44 @@ export const Reports = () => {
         )}
 
         {!awaitingDates && !isPending && !noSales && (
-          <ol className={styles.ranking}>
-            {report?.topProducts.map((item, index) => (
-              <li
-                key={item.productId}
-                className={`${motion.deal} ${styles.rank}`}
-                style={riseDelay(index * 40)}
-              >
-                <span className={styles.position}>{index + 1}</span>
-                <span className={styles.rankName}>{item.name}</span>
-                <span className={styles.rankQty}>{item.quantity} un</span>
-              </li>
-            ))}
-          </ol>
+          <div className={styles.tableWrap}>
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead className={styles.colRank}>#</TableHead>
+                  <TableHead>Produto</TableHead>
+                  <TableHead className={styles.colNumber}>Qtd.</TableHead>
+                  <TableHead className={styles.colNumber}>Preço un.</TableHead>
+                  <TableHead className={styles.colNumber}>Total</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {report?.topProducts.map((item, index) => (
+                  <TableRow
+                    key={item.productId}
+                    className={`${motion.deal} ${podiumClass(index)}`}
+                    style={riseDelay(index * 40)}
+                  >
+                    <TableCell className={styles.colRank}>
+                      <span className={styles.position}>{index + 1}</span>
+                    </TableCell>
+                    <TableCell className={styles.rankName}>
+                      {item.name}
+                    </TableCell>
+                    <TableCell className={styles.colNumber}>
+                      {item.quantity} un
+                    </TableCell>
+                    <TableCell className={styles.colNumber}>
+                      {brl(item.unitPrice)}
+                    </TableCell>
+                    <TableCell className={styles.colTotal}>
+                      {brl(item.revenue)}
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </div>
         )}
       </section>
     </div>

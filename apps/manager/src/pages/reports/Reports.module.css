@@ -37,7 +37,7 @@
 
 .figure {
   @apply flex flex-col gap-1 rounded-[22px] border border-line;
-  @apply bg-surface-sunk/70 p-3 backdrop-blur-sm lg:p-5;
+  @apply bg-brand-foreground p-3 lg:p-5;
 }
 
 .value {
@@ -66,27 +66,59 @@
   @apply py-6 text-center text-sm text-faint;
 }
 
-.ranking {
-  @apply flex flex-col;
-}
-
-.rank {
-  @apply flex items-center gap-3 border-t border-sand py-2.5 first:border-t-0;
+/* quatro colunas numéricas não cabem em 390px: a tabela rola dentro do
+   cartão em vez de empurrar a página inteira para os lados */
+.tableWrap {
+  @apply -mx-1 overflow-x-auto;
 }
 
 /* a posição no ranking é o gancho de leitura: ficha escura, como a
  * quantidade na comanda da cozinha */
 .position {
   @apply flex h-7 w-7 shrink-0 items-center justify-center rounded-lg;
-  @apply bg-ink font-display text-sm font-extrabold text-cream;
+  @apply bg-surface-mute font-display text-sm font-extrabold text-subtle;
   font-variant-numeric: tabular-nums;
 }
 
-.rankName {
-  @apply min-w-0 flex-1 truncate text-body;
+/*
+ * O pódio é o que se lê primeiro: do 4º em diante a ficha esmaece e o nome
+ * perde peso. Só o líder leva a cor da marca — três laranjas lado a lado não
+ * seriam mais um ranking, seriam três primeiros lugares.
+ */
+.podium .position {
+  @apply bg-ink text-cream;
 }
 
-.rankQty {
-  @apply shrink-0 text-sm font-semibold text-muted;
+.leader .position {
+  @apply bg-brand text-brand-foreground shadow-brand-glow;
+}
+
+.rankName {
+  @apply min-w-40 text-body;
+}
+
+.podium .rankName {
+  @apply font-semibold text-ink;
+}
+
+.leader .rankName {
+  @apply font-bold;
+}
+
+.podium .colTotal {
+  @apply text-brand-strong;
+}
+
+.colRank {
+  @apply w-10 pr-0;
+}
+
+.colNumber {
+  @apply whitespace-nowrap text-right text-muted;
+  font-variant-numeric: tabular-nums;
+}
+
+.colTotal {
+  @apply whitespace-nowrap text-right font-semibold text-ink;
   font-variant-numeric: tabular-nums;
 }
