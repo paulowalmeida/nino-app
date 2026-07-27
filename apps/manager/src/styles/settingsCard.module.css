@@ -6,7 +6,8 @@
  * varia fica no module do próprio componente.
  */
 .card {
-  @apply rounded-[24px] border border-line bg-white/70 p-5 shadow-card;
+  @apply rounded-[24px] border border-line bg-brand-foreground/70 p-5;
+  @apply shadow-card;
   @apply backdrop-blur-sm lg:p-6;
 }
 

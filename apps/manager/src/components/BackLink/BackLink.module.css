@@ -4,7 +4,7 @@
   @apply -ml-2 inline-flex h-11 items-center gap-2 rounded-full px-3;
   @apply text-base font-semibold text-subtle;
   @apply transition-colors duration-150;
-  @apply hover:bg-white/70 hover:text-brand-strong;
+  @apply hover:bg-brand-foreground/70 hover:text-brand-strong;
   @apply focus-visible:outline-none focus-visible:ring-2;
   @apply focus-visible:ring-brand focus-visible:ring-offset-1;
 }

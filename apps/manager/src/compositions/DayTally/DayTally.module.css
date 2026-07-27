@@ -5,16 +5,18 @@
 }
 
 /*
- * O caixa do dia: mesma família dos cartões da fila, mas em superfície
- * assentada — é resultado consolidado, não trabalho em aberto.
+ * O caixa do dia: mesma superfície dos cartões da fila, sem sombra — é
+ * resultado consolidado, não trabalho em aberto.
  */
+/* três colunas já no celular: empilhado, o caixa do dia empurrava a lista
+   de pedidos recentes para fora da primeira tela */
 .tally {
-  @apply grid gap-3 sm:grid-cols-3 lg:gap-4;
+  @apply grid grid-cols-3 gap-2 lg:gap-4;
 }
 
 .figure {
   @apply flex flex-col gap-1 rounded-[22px] border border-line;
-  @apply bg-surface-sunk/70 p-4 backdrop-blur-sm lg:p-5;
+  @apply bg-brand-foreground p-3 lg:p-5;
   @apply transition-colors duration-200;
 }
 
@@ -26,8 +28,8 @@ a.figure {
 }
 
 .value {
-  @apply font-display text-2xl font-extrabold leading-none tracking-tight;
-  @apply text-ink lg:text-3xl;
+  @apply font-display text-xl font-extrabold leading-none tracking-tight;
+  @apply text-ink lg:text-2xl;
   font-variant-numeric: tabular-nums;
 }
 
@@ -45,7 +47,7 @@ a.figure {
 
 .link {
   @apply flex items-baseline gap-3 rounded-xl px-2 py-2.5;
-  @apply transition-colors duration-150 hover:bg-white/70;
+  @apply transition-colors duration-150 hover:bg-surface-mute;
   @apply focus-visible:outline-none focus-visible:ring-2;
   @apply focus-visible:ring-brand focus-visible:ring-offset-1;
 }

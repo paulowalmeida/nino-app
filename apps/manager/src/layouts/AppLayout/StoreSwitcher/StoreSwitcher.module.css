@@ -50,3 +50,8 @@
 .checkIcon {
   @apply h-4 w-4 shrink-0 text-brand;
 }
+
+/* the column stays reserved on every row, so the names line up */
+.checkOff {
+  @apply invisible;
+}

@@ -37,15 +37,21 @@ export const StoreSwitcher = ({
   const goTo = (tenantId: string) =>
     navigate(`/${tenantId}/${sectionOf(pathname)}`)
 
+  const check = (active: boolean) => (
+    <NavIcon
+      name="check"
+      className={
+        active ? styles.checkIcon : `${styles.checkIcon} ${styles.checkOff}`
+      }
+    />
+  )
+
   const items: MenuItem[] = [
     ...(units.length > 1
       ? units.map(({ tenantId, tenantName }) => ({
           value: tenantId,
           label: tenantName,
-          icon:
-            tenantId === currentTenantId ? (
-              <NavIcon name="check" className={styles.checkIcon} />
-            ) : undefined,
+          icon: check(tenantId === currentTenantId),
           onSelect: () => goTo(tenantId),
         }))
       : []),
@@ -57,6 +63,7 @@ export const StoreSwitcher = ({
           {
             value: 'switch-company',
             label: 'Trocar de restaurante',
+            icon: check(false),
             onSelect: () => void navigate('/lojas'),
           },
         ]

@@ -148,6 +148,8 @@ export const Sidebar = ({
               .map(({ section, label, icon, children }) => {
                 const delay = riseDelay(order++ * 55 + 120)
                 const isInside = pathname.includes(`/${section}`)
+                /* An accordion trigger only carries the active surface while
+                   open — collapsed it stays invisible, even on its route. */
                 const isOpen = children ? opened === section : false
 
                 const content = (
@@ -209,7 +211,7 @@ export const Sidebar = ({
                         className={styles.accordionRoot}
                         itemClassName={styles.accordionItem}
                         triggerClassName={
-                          isInside
+                          isInside && isOpen
                             ? `${styles.navItemTrigger} ${styles.navItemActive}`
                             : styles.navItemTrigger
                         }

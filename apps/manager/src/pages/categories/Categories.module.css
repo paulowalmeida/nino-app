@@ -2,11 +2,6 @@
 
 .page {
   @apply relative mx-auto max-w-3xl p-4 lg:p-10;
-  background: radial-gradient(
-    900px 380px at 50% -10%,
-    rgba(255, 126, 31, 0.12),
-    transparent 60%
-  );
 }
 
 .header {
@@ -22,12 +17,14 @@
   @apply mb-6 flex flex-col gap-2 sm:flex-row sm:items-center;
 }
 
+/* só a partir de `sm`, quando a linha é horizontal: em coluna, `flex-1` zera
+   o flex-basis no eixo vertical e achata o input contra o line-height */
 .create > :first-child {
-  @apply flex-1;
+  @apply sm:flex-1;
 }
 
 .list {
-  @apply flex flex-col rounded-[24px] border border-line bg-white/70;
+  @apply flex flex-col rounded-[24px] border border-line bg-brand-foreground/70;
   @apply px-2 shadow-card backdrop-blur-sm lg:px-3;
 }
 
@@ -90,6 +87,6 @@
 }
 
 .notice {
-  @apply mt-4 rounded-2xl border border-line bg-white/60 p-6 text-sm;
+  @apply mt-4 rounded-2xl border border-line bg-brand-foreground/60 p-6 text-sm;
   @apply leading-relaxed text-faint;
 }

@@ -6,14 +6,13 @@
  * é cada trilho. A comanda se destaca pelo próprio contorno picotado, não
  * por contraste de fundo.
  */
+/* Empilhado no celular não cabe tela de parede: os quatro trilhos dividiriam
+   a mesma altura e cada comanda ficaria cortada. Aí a página rola inteira;
+   a partir de duas colunas volta a ser painel fixo com trilhos rolantes. */
 .screen {
-  @apply relative flex h-[calc(100dvh-3.5rem)] flex-col overflow-hidden;
-  @apply px-3 pt-3 lg:h-dvh lg:px-5 lg:pt-4;
-  background: radial-gradient(
-    900px 380px at 50% -10%,
-    rgba(255, 126, 31, 0.12),
-    transparent 60%
-  );
+  @apply relative flex min-h-[calc(100dvh-3.5rem)] flex-col;
+  @apply px-3 pt-3 sm:h-[calc(100dvh-3.5rem)] sm:overflow-hidden;
+  @apply lg:h-dvh lg:px-5 lg:pt-4;
 }
 
 .board {
@@ -52,7 +51,7 @@
 }
 
 .stack {
-  @apply flex min-h-0 flex-1 flex-col gap-4 overflow-y-auto pb-4 pr-1;
+  @apply flex min-h-0 flex-1 flex-col gap-4 pb-4 pr-1 sm:overflow-y-auto;
 }
 
 .empty {

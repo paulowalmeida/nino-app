@@ -2,11 +2,6 @@
 
 .page {
   @apply relative p-4 lg:p-10;
-  background: radial-gradient(
-    900px 380px at 50% -10%,
-    rgba(255, 126, 31, 0.12),
-    transparent 60%
-  );
 }
 
 .header {
@@ -30,22 +25,24 @@
   @apply text-xs font-semibold uppercase tracking-[0.08em] text-subtle;
 }
 
+/* mesma razão do caixa do dia: empilhado, cinco números empurram os mais
+   vendidos para a segunda tela */
 .figures {
-  @apply mb-6 grid gap-3 sm:grid-cols-3 lg:mb-8 lg:gap-4;
+  @apply mb-4 grid grid-cols-2 gap-2 sm:grid-cols-3 lg:mb-8 lg:gap-4;
 }
 
 .timingFigures {
-  @apply mb-6 grid gap-3 sm:grid-cols-2 lg:mb-8 lg:gap-4;
+  @apply mb-4 grid grid-cols-2 gap-2 lg:mb-8 lg:gap-4;
 }
 
 .figure {
   @apply flex flex-col gap-1 rounded-[22px] border border-line;
-  @apply bg-surface-sunk/70 p-4 backdrop-blur-sm lg:p-5;
+  @apply bg-surface-sunk/70 p-3 backdrop-blur-sm lg:p-5;
 }
 
 .value {
-  @apply font-display text-2xl font-extrabold leading-none tracking-tight;
-  @apply text-ink lg:text-3xl;
+  @apply font-display text-xl font-extrabold leading-none tracking-tight;
+  @apply text-ink lg:text-2xl;
   font-variant-numeric: tabular-nums;
 }
 
@@ -54,7 +51,7 @@
 }
 
 .top {
-  @apply rounded-[22px] border border-line bg-white/70 p-4 lg:p-5;
+  @apply rounded-[22px] border border-line bg-brand-foreground/70 p-4 lg:p-5;
 }
 
 .topTitle {

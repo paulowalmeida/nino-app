@@ -2,11 +2,6 @@
 
 .page {
   @apply relative mx-auto max-w-2xl p-4 lg:p-10;
-  background: radial-gradient(
-    900px 380px at 50% -10%,
-    rgba(255, 126, 31, 0.12),
-    transparent 60%
-  );
 }
 
 .header {
@@ -65,5 +60,6 @@
 }
 
 .notice {
-  @apply rounded-2xl border border-line bg-white/60 p-6 text-sm text-faint;
+  @apply rounded-2xl border border-line bg-brand-foreground/60 p-6 text-sm;
+  @apply text-faint;
 }

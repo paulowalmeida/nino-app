@@ -2,11 +2,6 @@
 
 .page {
   @apply relative mx-auto max-w-2xl p-4 lg:p-10;
-  background: radial-gradient(
-    900px 380px at 50% -10%,
-    rgba(255, 126, 31, 0.12),
-    transparent 60%
-  );
 }
 
 .header {

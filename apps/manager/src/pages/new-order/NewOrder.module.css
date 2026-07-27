@@ -23,7 +23,7 @@
 
 .menu {
   @apply flex min-w-0 flex-col gap-6 rounded-[24px] border border-line;
-  @apply bg-white/70;
+  @apply bg-brand-foreground/70;
   @apply p-5 backdrop-blur-sm lg:p-6;
 }
 
@@ -55,7 +55,8 @@
  */
 .ticket {
   --tooth: 10px;
-  @apply relative flex min-w-0 flex-col gap-3 rounded-t-[14px] bg-white p-5;
+  @apply relative flex min-w-0 flex-col gap-3 rounded-t-[14px];
+  @apply bg-brand-foreground p-5;
   @apply lg:sticky lg:top-5;
   padding-bottom: calc(var(--tooth) + 0.75rem);
   box-shadow: inset 0 0 0 1px var(--color-sand);
@@ -92,7 +93,8 @@
 .stepButton {
   @apply flex h-7 w-7 cursor-pointer items-center justify-center;
   @apply rounded-full;
-  @apply border border-sand bg-white text-base leading-none text-subtle;
+  @apply border border-sand bg-brand-foreground text-base leading-none;
+  @apply text-subtle;
   @apply transition-colors duration-150;
   @apply hover:border-brand/35 hover:text-brand-strong;
 }

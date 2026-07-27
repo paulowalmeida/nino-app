@@ -8,7 +8,7 @@
  */
 .card {
   --tooth: 11px;
-  @apply relative flex flex-col rounded-t-[12px] bg-white;
+  @apply relative flex flex-col rounded-t-[12px] bg-brand-foreground;
   @apply pt-[10px] pb-[var(--tooth)];
   box-shadow: inset 0 0 0 1px var(--color-sand-deep);
   mask:
@@ -75,7 +75,7 @@
  * e o `#` sai: na parede ele só rouba corpo do que importa.
  */
 .number {
-  @apply font-display text-[2.5rem] leading-none font-extrabold text-ink;
+  @apply font-display text-3xl leading-none font-extrabold text-ink;
   @apply tracking-[-0.03em];
   font-variant-numeric: tabular-nums;
 }

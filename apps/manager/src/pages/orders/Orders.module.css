@@ -2,11 +2,6 @@
 
 .page {
   @apply relative p-4 lg:p-10;
-  background: radial-gradient(
-    900px 380px at 50% -10%,
-    rgba(255, 126, 31, 0.12),
-    transparent 60%
-  );
 }
 
 /* no celular o cabeçalho cede espaço para a fila: título e ação lado a lado */
@@ -21,7 +16,8 @@
  * por baixo sem borrar.
  */
 .track {
-  @apply sticky top-14 z-10 -mx-4 bg-cream/95 px-4 py-2 backdrop-blur-sm;
+  @apply sticky top-14 z-10 -mx-4 px-4 py-2;
+  @apply bg-brand-foreground/95 backdrop-blur-sm;
   @apply lg:static lg:mx-0 lg:bg-transparent lg:px-0 lg:py-0 lg:backdrop-blur-none;
 }
 
