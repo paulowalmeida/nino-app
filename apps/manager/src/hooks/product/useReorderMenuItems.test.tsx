@@ -1,24 +1,42 @@
 import type { ReactNode } from 'react'
 
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import {
+  QueryClient,
+  QueryClientProvider,
+  type InfiniteData,
+} from '@tanstack/react-query'
 import { renderHook, waitFor } from '@testing-library/react'
 import { describe, expect, it, vi } from 'vitest'
 
+import { queryKeys } from '@constants/query-keys'
 import type { MenuPage } from '@custom_types/product'
 import { setItemPosition } from '@services/product/product.service'
 
-import { menuQueryKey } from './useMenu'
 import { useReorderMenuItems } from './useReorderMenuItems'
 
 vi.mock('@services/product/product.service')
 
-const buildPage = (): MenuPage => ({
-  data: [
-    { id: 'a', position: 1 } as MenuPage['data'][number],
-    { id: 'b', position: 2 } as MenuPage['data'][number],
+const CATEGORY_ID = 'cat-1'
+
+const key = queryKeys.products.catalog('tenant-1', CATEGORY_ID, '')
+
+const buildPages = (): InfiniteData<MenuPage> => ({
+  pageParams: [1],
+  pages: [
+    {
+      data: [
+        { id: 'a', position: 1 } as MenuPage['data'][number],
+        { id: 'b', position: 2 } as MenuPage['data'][number],
+      ],
+      pagination: { total: 2 },
+    },
   ],
-  pagination: { total: 2 },
 })
+
+const idsIn = (client: QueryClient): string[] | undefined =>
+  client
+    .getQueryData<InfiniteData<MenuPage>>(key)
+    ?.pages.flatMap((page) => page.data.map((item) => item.id))
 
 const wrapWithClient = (client: QueryClient) => {
   const wrapper = ({ children }: { children: ReactNode }) => (
@@ -30,12 +48,13 @@ const wrapWithClient = (client: QueryClient) => {
 describe(useReorderMenuItems.name, () => {
   it('reorders the cache optimistically before the request resolves', async () => {
     const client = new QueryClient()
-    client.setQueryData(menuQueryKey('tenant-1'), buildPage())
+    client.setQueryData(key, buildPages())
     vi.mocked(setItemPosition).mockResolvedValue({} as never)
 
-    const { result } = renderHook(() => useReorderMenuItems('tenant-1'), {
-      wrapper: wrapWithClient(client),
-    })
+    const { result } = renderHook(
+      () => useReorderMenuItems('tenant-1', CATEGORY_ID),
+      { wrapper: wrapWithClient(client) }
+    )
 
     result.current.mutate({
       positions: [
@@ -44,27 +63,41 @@ describe(useReorderMenuItems.name, () => {
       ],
     })
 
+    await waitFor(() => expect(idsIn(client)).toEqual(['b', 'a']))
+  })
+
+  it('keeps the page sizes when it repaginates', async () => {
+    const client = new QueryClient()
+    client.setQueryData(key, buildPages())
+    vi.mocked(setItemPosition).mockResolvedValue({} as never)
+
+    const { result } = renderHook(
+      () => useReorderMenuItems('tenant-1', CATEGORY_ID),
+      { wrapper: wrapWithClient(client) }
+    )
+
+    result.current.mutate({ positions: [{ id: 'a', position: 2 }] })
+
     await waitFor(() => {
-      const page = client.getQueryData<MenuPage>(menuQueryKey('tenant-1'))
-      expect(page?.data.map((item) => item.id)).toEqual(['b', 'a'])
+      const cached = client.getQueryData<InfiniteData<MenuPage>>(key)
+      expect(cached?.pages.map((page) => page.data.length)).toEqual([2])
     })
   })
 
   it('rolls back the cache when the request fails', async () => {
     const client = new QueryClient()
-    const original = buildPage()
-    client.setQueryData(menuQueryKey('tenant-1'), original)
+    client.setQueryData(key, buildPages())
     vi.mocked(setItemPosition).mockRejectedValue(new Error('network error'))
 
-    const { result } = renderHook(() => useReorderMenuItems('tenant-1'), {
-      wrapper: wrapWithClient(client),
-    })
+    const { result } = renderHook(
+      () => useReorderMenuItems('tenant-1', CATEGORY_ID),
+      { wrapper: wrapWithClient(client) }
+    )
 
     result.current.mutate({ positions: [{ id: 'a', position: 2 }] })
 
     await waitFor(() => expect(result.current.isError).toBe(true))
 
-    const page = client.getQueryData<MenuPage>(menuQueryKey('tenant-1'))
-    expect(page?.data.map((item) => item.id)).toEqual(['a', 'b'])
+    expect(idsIn(client)).toEqual(['a', 'b'])
   })
 })

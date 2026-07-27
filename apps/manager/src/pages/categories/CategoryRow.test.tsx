@@ -1,3 +1,5 @@
+import { Reorder } from 'framer-motion'
+
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { describe, expect, it, vi } from 'vitest'
@@ -20,7 +22,7 @@ const renderRow = (
   props: Partial<React.ComponentProps<typeof CategoryRow>> = {}
 ) =>
   render(
-    <ul>
+    <Reorder.Group as="ul" axis="y" values={[category]} onReorder={vi.fn()}>
       <CategoryRow
         category={category}
         index={0}
@@ -28,9 +30,10 @@ const renderRow = (
         disabled={false}
         onRename={vi.fn()}
         onDelete={vi.fn()}
+        onDragEnd={vi.fn()}
         {...props}
       />
-    </ul>
+    </Reorder.Group>
   )
 
 describe(CategoryRow.name, () => {

@@ -1,32 +1,28 @@
 @reference "@nino/ds/globals.css";
 
 /*
- * A comanda de impressora térmica: papel claro, divisórias picotadas e a
- * base serrilhada de quem acabou de rasgar o pedido da bobina. A serrilha é
- * feita com mask — por isso o cartão não usa border nem sombra externa
- * (ambas seriam cortadas junto com o papel).
+ * A comanda é um Card do DS: mesma superfície branca, mesmo raio e mesma
+ * sombra dos quadros da visão geral e do cardápio do balcão. O que sobra aqui
+ * é só o que o Card não sabe — as divisórias internas e os estados da fila.
+ * O `p-0` desmonta o padding do Card de propósito: cada faixa tem o seu, e a
+ * linha divisória precisa ir de borda a borda.
  */
 .ticket {
-  --tooth: 9px;
-  @apply relative flex flex-col rounded-t-[10px] bg-brand-foreground;
-  padding-bottom: var(--tooth);
-  box-shadow: inset 0 0 0 1px var(--color-sand);
-  mask:
-    radial-gradient(var(--tooth) at 50% 0, #0000 98%, #000 100%) 50% 100% /
-      calc(2 * var(--tooth)) var(--tooth) repeat-x,
-    linear-gradient(#000 0 0) 0 0 / 100% calc(100% - var(--tooth)) no-repeat;
+  @apply flex flex-col p-0 transition-all duration-300;
+  @apply hover:border-brand/60 hover:shadow-card-hover;
 }
 
-/* pedido esperando aceite: a bobina ainda quente */
+/*
+ * Pedido esperando aceite é o único que pede ação: leva a cor da marca, como
+ * o quadro urgente da fila. Os outros ficam quietos.
+ */
 .waiting {
-  box-shadow: inset 0 0 0 1px var(--color-brand-soft);
-  background:
-    linear-gradient(180deg, var(--color-cream) 0%, var(--color-brand-foreground) 38%);
+  @apply border-brand/35 bg-brand/8;
 }
 
-.waiting::before {
-  content: "";
-  @apply absolute inset-x-0 top-0 h-[3px] bg-brand;
+/* passou do prazo esperando aceite: o destaque quente esfria em alerta */
+.waiting.late {
+  @apply border-danger/40 bg-danger-surface/60;
 }
 
 .cancelled {
@@ -34,7 +30,7 @@
 }
 
 .head {
-  @apply flex min-w-0 items-baseline gap-2.5 px-4 pt-3 pb-2;
+  @apply flex min-w-0 items-center gap-2.5 px-4 pt-3.5 pb-2.5;
 }
 
 .number {
@@ -50,44 +46,36 @@
 
 /*
  * Na fila o que decide é há quanto tempo o pedido espera, não a que horas
- * entrou: "12 min" responde sozinho, "17:00" exige conta de cabeça no meio
- * do movimento. A hora cheia continua no `dateTime` e no title.
+ * entrou: "12 min" responde sozinho, "17:00" exige conta de cabeça no meio do
+ * movimento. A hora cheia continua no `dateTime` e no title.
  *
- * Mesmo relógio da cozinha (`useElapsed`), gramática diferente: aqui é uma
- * pastilha no cabeçalho, não a fita de prazo escorrendo — a fita é da
- * comanda de quem está com as mãos na chapa e não pode ler número.
+ * Número solto, sem pastilha: o selo do status já é o carimbo do cabeçalho, e
+ * dois selos lado a lado disputam a mesma leitura.
  */
 .waited {
-  @apply rounded-full bg-surface-sunk px-2 py-0.5 text-[0.7rem] font-bold;
-  @apply tracking-[0.02em] text-subtle;
+  @apply text-xs font-semibold text-subtle;
   font-variant-numeric: tabular-nums;
 }
 
 .overdue {
-  @apply bg-danger-surface text-danger;
+  @apply text-danger;
 }
 
-/* passou do prazo esperando aceite: a borda quente do topo esfria em alerta */
-.waiting.late::before {
-  @apply bg-danger;
+.status {
+  @apply ml-auto shrink-0;
 }
 
-.channel {
-  @apply ml-auto shrink-0 rounded-full bg-surface-sunk px-2.5 py-1;
-  @apply text-[0.65rem] font-bold uppercase tracking-[0.1em] text-subtle;
+.body {
+  @apply block border-t border-line/60 px-4 py-3;
 }
 
 .customer {
-  @apply flex flex-wrap items-center gap-2 text-sm font-semibold text-body;
+  @apply truncate text-sm font-semibold text-body;
 }
 
-/* mesa ao lado do nome: é como o balcão chama o pedido */
-.table {
-  @apply rounded-full bg-surface-sunk px-2 py-0.5;
-  @apply text-[0.65rem] font-bold uppercase tracking-[0.08em] text-subtle;
-}
-
-.state {
+/* canal e mesa: metadado de apoio, no mesmo tom da linha de endereço do
+   detalhe do pedido */
+.meta {
   @apply mt-0.5 text-xs text-faint;
 }
 
@@ -133,12 +121,8 @@
 }
 
 .foot {
-  @apply flex flex-wrap items-center justify-between gap-2.5;
-  @apply border-t border-dashed border-sand-deep px-4 pt-2.5 pb-1;
-}
-
-.body {
-  @apply block border-t border-dashed border-sand-deep px-4 py-2.5;
+  @apply mt-auto flex flex-wrap items-center justify-between gap-2.5;
+  @apply border-t border-line/60 px-4 py-3;
 }
 
 .money {

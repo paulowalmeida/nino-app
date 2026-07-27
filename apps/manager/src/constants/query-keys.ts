@@ -30,6 +30,15 @@ export const queryKeys = {
         'list',
         categoryId ?? null,
       ] as const,
+    /** O recorte da tela de cardápio: categoria + busca fazem parte da chave,
+     *  senão trocar de filtro reaproveita o cache do filtro anterior. */
+    catalog: (tenantId: string, categoryId: string | null, search: string) =>
+      [
+        ...queryKeys.products.all(tenantId),
+        'catalog',
+        categoryId,
+        search,
+      ] as const,
     detail: (tenantId: string, productId: string) =>
       [...queryKeys.products.all(tenantId), 'detail', productId] as const,
   },

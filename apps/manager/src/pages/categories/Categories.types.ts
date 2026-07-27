@@ -11,5 +11,6 @@ export type CategoryRowProps = {
   isRenaming: boolean
   onRename: (name: string) => Promise<void>
   onDelete: () => void
+  onDragEnd: () => void
   disabled: boolean
 }

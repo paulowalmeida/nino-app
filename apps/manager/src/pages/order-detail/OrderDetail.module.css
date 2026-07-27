@@ -1,16 +1,71 @@
 @reference "@nino/ds/globals.css";
 
+/*
+ * Mesmo casco da fila de pedidos: a tela é fixa e só o miolo rola por dentro.
+ * O desconto de 3.5rem é a barra fixa do AppLayout, compensada por um `pt-14`
+ * no `main` — sem descontar, a página fica uma barra mais alta que a tela.
+ */
 .page {
-  @apply mx-auto max-w-5xl p-4 lg:p-8;
+  @apply mx-auto flex h-[calc(100dvh-3.5rem)] max-w-5xl flex-col p-4;
+  @apply lg:h-dvh lg:p-8;
 }
 
-.skeleton {
-  @apply h-96 w-full rounded-[24px];
+/*
+ * As medidas do esqueleto acompanham o texto que vai ocupar o lugar: mesma
+ * altura de linha e larguras irregulares, que é o que faz o bloco parecer
+ * texto carregando em vez de uma barra cinza.
+ */
+.ghostEyebrow {
+  @apply mb-2 h-2.5 w-24;
 }
 
-.backLink {
-  @apply inline-flex items-center gap-1.5 text-sm font-medium text-faint;
-  @apply transition-colors duration-150 hover:text-brand-strong;
+.ghostNumber {
+  @apply h-7 w-32 lg:h-8;
+}
+
+.ghostLine {
+  @apply mt-2 h-3.5 w-40;
+}
+
+.ghostLineShort {
+  @apply mt-2 h-3.5 w-24;
+}
+
+.ghostBadge {
+  @apply h-5 w-24 shrink-0 rounded-[4px];
+}
+
+.ghostQuantity {
+  @apply h-3.5 w-7 shrink-0;
+}
+
+.ghostItemName {
+  @apply h-3.5 flex-1;
+}
+
+.ghostPrice {
+  @apply h-3.5 w-14 shrink-0;
+}
+
+.ghostTotal {
+  @apply h-5 w-full;
+}
+
+/*
+ * Voltar fica fora da área rolável, então não depende de `sticky`: não há
+ * fundo para borrar nem conteúdo passando por baixo, e ele nunca sai do lugar.
+ */
+.backBar {
+  @apply shrink-0 pb-1;
+}
+
+/*
+ * A área rolável. `min-h-0` é o que faz o filho de flex encolher abaixo do
+ * conteúdo: sem ele o item nasce com `min-height: auto`, o miolo empurra a
+ * página e a rolagem volta para a tela inteira.
+ */
+.scroller {
+  @apply min-h-0 flex-1 overflow-y-auto overscroll-contain pb-2;
 }
 
 /* mesma faixa quente do detalhe de produto — o pedido é o assunto da tela */
@@ -22,14 +77,9 @@
   @apply min-w-0 flex-1;
 }
 
+/* forma e traço vêm do Eyebrow, o mesmo rótulo da visão geral */
 .channel {
-  @apply mb-1 inline-flex items-center gap-2 text-[0.7rem] font-bold;
-  @apply uppercase tracking-[0.12em] text-faint;
-}
-
-.channel::before {
-  content: "";
-  @apply inline-block h-0.5 w-[18px] rounded-sm bg-line;
+  @apply mb-1;
 }
 
 .number {
@@ -51,21 +101,9 @@
   @apply mt-6 grid items-start gap-5 lg:grid-cols-[1.1fr_1fr];
 }
 
-/*
- * A comanda impressa: papel, divisórias picotadas e a base serrilhada.
- * Mesma técnica do OrderTicket — sem border e sem sombra externa, que a
- * mask cortaria junto com o papel.
- */
+/* superfície, borda e sombra vêm do Card do DS; aqui fica só o respiro */
 .receipt {
-  --tooth: 10px;
-  @apply relative min-w-0 rounded-t-[14px] bg-brand-foreground px-5 pt-5;
-  @apply lg:px-6;
-  padding-bottom: calc(var(--tooth) + 0.5rem);
-  box-shadow: inset 0 0 0 1px var(--color-sand);
-  mask:
-    radial-gradient(var(--tooth) at 50% 0, #0000 98%, #000 100%) 50% 100% /
-      calc(2 * var(--tooth)) var(--tooth) repeat-x,
-    linear-gradient(#000 0 0) 0 0 / 100% calc(100% - var(--tooth)) no-repeat;
+  @apply min-w-0 p-5 lg:p-6;
 }
 
 .items {
@@ -91,7 +129,7 @@
 }
 
 .totals {
-  @apply mt-4 flex flex-col gap-1.5 border-t border-dashed border-sand-deep;
+  @apply mt-4 flex flex-col gap-1.5 border-t border-line/60;
   @apply pt-4;
 }
 
@@ -105,18 +143,20 @@
 }
 
 .grandTotal {
-  @apply mt-1 border-t border-dashed border-sand-deep pt-2.5;
+  @apply mt-1 border-t border-line/60 pt-2.5;
   @apply font-display text-lg font-extrabold text-ink;
 }
 
+/* mesma marcação da observação na comanda da fila: é o mesmo texto do
+   cliente, e é o que a cozinha erra quando não lê */
 .notes {
-  @apply mt-4 rounded-xl bg-surface-sunk p-3 text-sm leading-relaxed;
-  @apply text-muted;
+  @apply mt-4 rounded-lg bg-brand/8 p-3 text-sm leading-relaxed;
+  @apply text-brand-strong;
 }
 
 .notesLabel {
   @apply mb-0.5 block text-[0.65rem] font-bold uppercase tracking-[0.1em];
-  @apply text-faint;
+  @apply text-brand-strong/70;
 }
 
 .aside {
@@ -157,12 +197,13 @@
 }
 
 .cancelReason {
-  @apply mt-3 border-t border-sand pt-3 text-sm leading-relaxed text-muted;
+  @apply mt-3 border-t border-line/60 pt-3 text-sm leading-relaxed text-muted;
 }
 
+/* sem caixa: o botão primário já é o destaque da coluna, e uma moldura em
+   volta dele só repete o que a cor do próprio botão diz */
 .actions {
-  @apply flex flex-col gap-2 rounded-[20px] border border-brand/15;
-  @apply bg-brand/5 p-5;
+  @apply flex flex-col gap-2;
 }
 
 .advance {

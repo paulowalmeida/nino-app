@@ -1,27 +1,30 @@
 @reference "@nino/ds/globals.css";
 
-.board {
-  @apply flex flex-col gap-8;
+/* o quadro ocupa a altura que a página deu e reparte: contagem parada em
+   cima, lista rolando embaixo */
+.wrap {
+  @apply flex min-h-0 flex-1 flex-col;
 }
 
-.sectionHead {
-  @apply mb-1 flex items-center gap-2;
-  @apply border-b border-sand pb-2;
+/* a linha de contagem também é onde a dica de arraste aparece, e só quando
+   arrastar de fato funciona */
+.tally {
+  @apply mb-2 shrink-0 text-xs text-faint lg:text-sm;
 }
 
-.sectionDragHandle {
-  @apply flex shrink-0 cursor-grab touch-none items-center justify-center;
-  @apply rounded-lg p-1.5 text-faint transition-colors duration-150;
-  @apply hover:bg-brand-foreground/70 hover:text-subtle active:cursor-grabbing;
+/*
+ * `min-h-0` é o que faz o filho de flex encolher abaixo do conteúdo: sem ele
+ * o item nasce com `min-height: auto`, a lista empurra o quadro e a rolagem
+ * escapa para a página.
+ */
+.scroll {
+  @apply min-h-0 flex-1 overflow-y-auto overscroll-contain pb-2;
 }
 
-.sectionName {
-  @apply min-w-0 flex-1 truncate font-display text-lg font-extrabold;
-  @apply tracking-tight text-ink lg:text-xl;
-}
-
-.sectionCount {
-  @apply shrink-0 text-[11px] uppercase tracking-widest text-faint;
+/* superfície, borda e sombra vêm do Card do DS; o `p-0` é para as divisórias
+   das linhas irem de borda a borda */
+.list {
+  @apply overflow-hidden p-0;
 }
 
 .items {
@@ -29,20 +32,20 @@
 }
 
 .item {
-  @apply flex items-center gap-3 border-b border-sand/60 pr-1;
+  @apply flex items-center gap-3 border-b border-line/60 px-2 last:border-b-0;
   @apply transition-opacity duration-200;
 }
 
 .dragHandle {
   @apply flex shrink-0 cursor-grab touch-none items-center justify-center;
   @apply rounded-lg p-1.5 text-faint transition-colors duration-150;
-  @apply hover:bg-brand-foreground/70 hover:text-subtle active:cursor-grabbing;
+  @apply hover:bg-surface-sunk hover:text-subtle active:cursor-grabbing;
 }
 
 .deleteHandle {
   @apply flex shrink-0 items-center justify-center rounded-lg p-1.5;
   @apply text-faint transition-colors duration-150;
-  @apply hover:bg-red-50 hover:text-red-500;
+  @apply hover:bg-danger-surface hover:text-danger;
 }
 
 /*
@@ -50,8 +53,8 @@
  * struck through, so the owner sees the menu the way the customer will.
  */
 .itemOff {
-  @apply flex items-center gap-3 border-b border-sand/60 pr-1 opacity-45;
-  @apply transition-opacity duration-200;
+  @apply flex items-center gap-3 border-b border-line/60 px-2 opacity-45;
+  @apply transition-opacity duration-200 last:border-b-0;
 }
 
 /*
@@ -60,8 +63,8 @@
  * uma vence e a outra pula sem animar. Aqui as duas ficam na mesma regra.
  */
 .itemLink {
-  @apply flex min-w-0 flex-1 items-center gap-3 rounded-xl py-2.5 pl-1 pr-2;
-  @apply hover:bg-brand-foreground/70 hover:-translate-y-0.5;
+  @apply flex min-w-0 flex-1 items-center gap-3 rounded-card py-2.5 pl-1 pr-2;
+  @apply hover:bg-surface-sunk hover:-translate-y-0.5;
   @apply active:translate-y-0;
   @apply focus-visible:outline-none focus-visible:ring-2;
   @apply focus-visible:ring-brand focus-visible:ring-offset-1;
@@ -102,6 +105,9 @@
 }
 
 .skeletonRow {
-  @apply h-16 w-full rounded-xl;
+  @apply h-16 w-full rounded-card;
 }
 
+.more {
+  @apply mt-4 flex justify-center;
+}

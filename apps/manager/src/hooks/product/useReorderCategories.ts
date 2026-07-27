@@ -1,23 +1,26 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 
-import type { MenuPage } from '@custom_types/product'
+import { queryKeys } from '@constants/query-keys'
+import type { ProductCategory } from '@custom_types/product'
 import { setCategoryPosition } from '@services/product/product.service'
 
 import { menuQueryKey } from './useMenu'
+
+type CategoryList = { data: ProductCategory[] }
 
 type Variables = {
   positions: { id: string; position: number }[]
 }
 
 /**
- * Optimistic, como useReorderMenuItems: a categoria não tem cache próprio
- * (useMenu monta as seções a partir de `product.category.position`), então
- * reordenar precisa atualizar essa posição em todo item da categoria movida
- * pra useMenu reordenar as seções na hora.
+ * Optimistic, como o reordenar de itens. Escreve na lista de categorias, que
+ * é o que a tela de categorias desenha; o cardápio e o balcão leem a ordem de
+ * `category.position` embutida em cada produto, então esses são invalidados no
+ * fim — a lista de lá não está na tela enquanto se arrasta aqui.
  */
 export const useReorderCategories = (tenantId: string | null) => {
   const queryClient = useQueryClient()
-  const key = menuQueryKey(tenantId)
+  const key = queryKeys.productCategories.list(tenantId ?? '')
 
   return useMutation({
     meta: { errorTitle: 'A ordem das categorias voltou ao que era' },
@@ -31,21 +34,21 @@ export const useReorderCategories = (tenantId: string | null) => {
 
     onMutate: async ({ positions }: Variables) => {
       await queryClient.cancelQueries({ queryKey: key })
-      const previous = queryClient.getQueryData<MenuPage>(key)
+      const previous = queryClient.getQueryData<CategoryList>(key)
       const nextPositionById = new Map(
         positions.map(({ id, position }) => [id, position])
       )
 
-      queryClient.setQueryData<MenuPage>(key, (page) => {
-        if (!page) return page
+      queryClient.setQueryData<CategoryList>(key, (cached) => {
+        if (!cached) return cached
         return {
-          ...page,
-          data: page.data.map((item) => {
-            const position = nextPositionById.get(item.category.id)
-            return position === undefined
-              ? item
-              : { ...item, category: { ...item.category, position } }
-          }),
+          ...cached,
+          data: cached.data
+            .map((category) => {
+              const position = nextPositionById.get(category.id)
+              return position === undefined ? category : { ...category, position }
+            })
+            .sort((a, b) => a.position - b.position),
         }
       })
 
@@ -58,6 +61,10 @@ export const useReorderCategories = (tenantId: string | null) => {
 
     onSettled: () => {
       void queryClient.invalidateQueries({ queryKey: key })
+      void queryClient.invalidateQueries({ queryKey: menuQueryKey(tenantId) })
+      void queryClient.invalidateQueries({
+        queryKey: queryKeys.products.all(tenantId ?? ''),
+      })
     },
   })
 }

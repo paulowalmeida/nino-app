@@ -4,6 +4,7 @@ import type {
   MenuItemImage,
   MenuPage,
   ProductCategory,
+  ProductListParams,
   UpdateMenuItemRequest,
 } from '@custom_types/product'
 import { ApiFactory } from '@services/api/api.service'
@@ -42,6 +43,29 @@ export const listMenu = async (tenantId: string): Promise<MenuPage> => {
   }
 
   return { ...first, data: items }
+}
+
+/**
+ * Uma página só, do recorte pedido — é o que o painel usa para listar o
+ * cardápio. `categoryId` e `search` vão para a API: filtrar em memória exige
+ * ter o catálogo inteiro em memória, que é justamente o que a paginação evita.
+ */
+export const listProducts = (
+  tenantId: string,
+  { page, size, categoryId, search }: ProductListParams
+): Promise<MenuPage> => {
+  const params: Record<string, string | number> = {
+    target: 'position',
+    page,
+    size,
+  }
+  if (categoryId) params['categoryId'] = categoryId
+  if (search) params['search'] = search
+
+  return getAll<Record<string, string | number>, MenuPage>(
+    `tenants/${tenantId}/products`,
+    params
+  )
 }
 
 export const createItem = (

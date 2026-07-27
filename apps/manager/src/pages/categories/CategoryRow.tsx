@@ -1,7 +1,10 @@
 import { useState } from 'react'
 
+import { Reorder, useDragControls } from 'framer-motion'
+
 import { Button } from '@nino/ds/components/Button'
 import { Input } from '@nino/ds/components/Input'
+import gripIcon from '@assets/icons/grip.svg?raw'
 import pencilIcon from '@assets/icons/pencil.svg?raw'
 import trashIcon from '@assets/icons/trash.svg?raw'
 import { Icon } from '@components/Icon/Icon'
@@ -21,8 +24,10 @@ export const CategoryRow = ({
   isRenaming,
   onRename,
   onDelete,
+  onDragEnd,
   disabled,
 }: CategoryRowProps) => {
+  const dragControls = useDragControls()
   const [editing, setEditing] = useState(false)
   const [draft, setDraft] = useState(category.name)
   const empty = category.count === 0
@@ -45,7 +50,12 @@ export const CategoryRow = ({
   }
 
   return (
-    <li
+    <Reorder.Item
+      as="li"
+      value={category}
+      dragListener={false}
+      dragControls={dragControls}
+      onDragEnd={onDragEnd}
       className={`${motion.deal} ${styles.row}`}
       style={riseDelay(index * 35 + 60)}
     >
@@ -79,6 +89,17 @@ export const CategoryRow = ({
         </form>
       ) : (
         <>
+          {/* a alça vem antes do nome: é a ordem em que a lista aparece no
+              app do cliente que se está mexendo aqui */}
+          <button
+            type="button"
+            className={styles.dragHandle}
+            aria-label={`Reordenar ${category.name}`}
+            onPointerDown={(event) => dragControls.start(event)}
+          >
+            <Icon svg={gripIcon} />
+          </button>
+
           <div className={styles.who}>
             <span className={styles.name}>{category.name}</span>
             <span className={empty ? styles.hintEmpty : styles.hint}>
@@ -108,6 +129,6 @@ export const CategoryRow = ({
           </div>
         </>
       )}
-    </li>
+    </Reorder.Item>
   )
 }

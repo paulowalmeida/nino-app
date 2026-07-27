@@ -34,6 +34,15 @@
   font-variant-numeric: tabular-nums;
 }
 
+/*
+ * A altura acompanha o número que vai ocupar o lugar — `text-3xl` com
+ * `leading-none` mede 1.875rem, `text-4xl` mede 2.25rem. Sem casar os dois, o
+ * quadro encolhe quando o dado chega e a página inteira dá um salto.
+ */
+.skeletonValue {
+  @apply h-[1.875rem] w-10 lg:h-9;
+}
+
 .urgent .value {
   @apply text-brand-strong;
 }

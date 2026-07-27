@@ -1,11 +1,13 @@
 @reference "@nino/ds/globals.css";
 
 /*
- * A trilha: os estágios ligados por uma linha, na ordem em que o pedido
- * anda. A linha passa atrás dos pontos e para no último.
+ * A trilha: as etapas na ordem em que o pedido anda, roláveis no celular.
+ * A ficha é a mesma do trilho de categorias do balcão — mesmo gesto, mesma
+ * forma. O fio que ligava um ponto ao outro saiu quando as fichas ganharam
+ * borda: duas linhas competindo pelo mesmo vão viravam ruído.
  */
 .track {
-  @apply relative flex snap-x gap-1 overflow-x-auto pb-1;
+  @apply relative flex snap-x gap-2 overflow-x-auto pb-1;
   scrollbar-width: none;
 }
 
@@ -13,22 +15,19 @@
   display: none;
 }
 
+/* `min-h-11` é o piso de toque de 44px do celular */
 .stage {
-  @apply relative flex shrink-0 cursor-pointer snap-start items-center gap-2;
-  @apply rounded-full px-3.5 py-2 text-sm text-subtle;
+  @apply flex min-h-11 shrink-0 cursor-pointer snap-start items-center gap-2;
+  @apply rounded-full border border-sand bg-brand-foreground px-4 py-2;
+  @apply text-sm font-semibold text-subtle;
   @apply transition-colors duration-200;
-  @apply hover:bg-brand-foreground/70 hover:text-body;
-}
-
-/* o trilho entre um ponto e o próximo */
-.stage:not(:last-child)::after {
-  content: "";
-  @apply absolute right-0 top-1/2 h-px w-1 -translate-y-1/2 bg-sand-deep;
+  @apply hover:border-brand/30 hover:text-body;
+  @apply focus-visible:outline-none focus-visible:ring-2;
+  @apply focus-visible:ring-brand focus-visible:ring-offset-2;
 }
 
 .current {
-  @apply bg-brand-foreground text-ink;
-  box-shadow: inset 0 0 0 1px var(--color-brand-soft);
+  @apply border-brand/40 bg-brand/10 text-brand-strong;
 }
 
 /* o ícone diz a etapa sem depender da leitura do rótulo — no trilho rolando
@@ -42,15 +41,16 @@
 }
 
 .label {
-  @apply whitespace-nowrap font-medium;
+  @apply whitespace-nowrap;
 }
 
+/* a contagem é número, não selo: uma pastilha dentro de outra pastilha é o
+   que fazia a trilha destoar dos quadros da visão geral */
 .count {
-  @apply rounded-full bg-surface-sunk px-2 py-0.5;
-  @apply text-xs font-bold text-subtle;
+  @apply text-xs font-bold text-faintest;
   font-variant-numeric: tabular-nums;
 }
 
 .current .count {
-  @apply bg-brand/12 text-brand-strong;
+  @apply text-brand-strong;
 }

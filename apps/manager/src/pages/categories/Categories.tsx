@@ -1,5 +1,7 @@
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useNavigate } from 'react-router'
+
+import { Reorder } from 'framer-motion'
 
 import { Alert } from '@nino/ds/components/Alert'
 import { Button } from '@nino/ds/components/Button'
@@ -16,6 +18,7 @@ import {
   useUpdateCategory,
 } from '@hooks/product/useCategories'
 import { useMenu } from '@hooks/product/useMenu'
+import { useReorderCategories } from '@hooks/product/useReorderCategories'
 import { useCurrentTenant } from '@hooks/session/useCurrentTenant'
 import { ApiError } from '@utils/api-error'
 import { riseDelay } from '@utils/rise-delay'
@@ -54,6 +57,8 @@ export const Categories = () => {
   const [target, setTarget] = useState<CategoryWithCount | null>(null)
   const [deleteError, setDeleteError] = useState<string | null>(null)
 
+  const { mutate: reorderCategories } = useReorderCategories(tenantId)
+
   const countById = new Map(
     sections.map((section) => [section.id, section.items.length])
   )
@@ -63,6 +68,42 @@ export const Categories = () => {
       ...category,
       count: countById.get(category.id) ?? 0,
     }))
+
+  const [order, setOrder] = useState(rows)
+  const [prevRows, setPrevRows] = useState(rows)
+  const orderRef = useRef(order)
+
+  /**
+   * `rows` é remontado a cada render, então comparar por referência não serve:
+   * a lista só é re-semeada quando a ordem que veio da API muda de fato.
+   */
+  const signature = rows.map(({ id }) => id).join()
+  const prevSignature = prevRows.map(({ id }) => id).join()
+  if (signature !== prevSignature) {
+    setPrevRows(rows)
+    setOrder(rows)
+  }
+
+  useEffect(() => {
+    orderRef.current = order
+  }, [order])
+
+  /**
+   * As posições são fixas — o mesmo conjunto, só reatribuído. Sem isso, duas
+   * categorias podem terminar com a mesma posição e a ordem no app do cliente
+   * passa a depender do desempate do banco.
+   */
+  const persistOrder = () => {
+    const slots = rows.map(({ position }) => position).sort((a, b) => a - b)
+    const previousPositionById = new Map(
+      rows.map(({ id, position }) => [id, position])
+    )
+    const changes = orderRef.current
+      .map(({ id }, index) => ({ id, position: slots[index] }))
+      .filter(({ id, position }) => previousPositionById.get(id) !== position)
+
+    if (changes.length > 0) reorderCategories({ positions: changes })
+  }
 
   /* O toast de erro global avisa; aqui só o campo não pode se limpar à toa. */
   const addCategory = async () => {
@@ -104,7 +145,7 @@ export const Categories = () => {
         className={`${motion.deal} ${styles.header}`}
         title="Como o cardápio se organiza"
         accent="organiza"
-        description="As categorias agrupam os itens no app do cliente. A ordem em que aparecem você ajusta arrastando no próprio cardápio."
+        description="As categorias agrupam os itens no app do cliente. Arraste para mudar a ordem em que aparecem lá."
       />
 
       <form
@@ -145,16 +186,22 @@ export const Categories = () => {
         </Alert>
       )}
 
-      {!isPending && !isError && rows.length === 0 && (
+      {!isPending && !isError && order.length === 0 && (
         <EmptyState className={motion.unroll}>
           Nenhuma categoria ainda. Crie a primeira acima — depois cadastre itens
           dentro dela.
         </EmptyState>
       )}
 
-      {rows.length > 0 && (
-        <ul className={styles.list}>
-          {rows.map((category, index) => (
+      {order.length > 0 && (
+        <Reorder.Group
+          as="ul"
+          axis="y"
+          values={order}
+          onReorder={setOrder}
+          className={styles.list}
+        >
+          {order.map((category, index) => (
             <CategoryRow
               key={category.id}
               category={category}
@@ -165,9 +212,10 @@ export const Categories = () => {
                 await rename({ id: category.id, name })
               }}
               onDelete={() => openDelete(category)}
+              onDragEnd={persistOrder}
             />
           ))}
-        </ul>
+        </Reorder.Group>
       )}
 
       {target && hasProducts && (

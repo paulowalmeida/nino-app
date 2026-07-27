@@ -30,8 +30,8 @@ const REORDER_TRANSITION: Transition = {
 export const MenuRow = ({
   item,
   index,
-  sectionIndex,
   tenantId,
+  canReorder,
   onToggleAvailability,
   onDragEnd,
 }: MenuRowProps) => {
@@ -64,16 +64,18 @@ export const MenuRow = ({
       className={`${isEntering ? motion.deal : ''} ${
         item.isActive ? styles.item : styles.itemOff
       }`}
-      style={isEntering ? riseDelay(sectionIndex * 90 + index * 45 + 60) : {}}
+      style={isEntering ? riseDelay(index * 45 + 60) : {}}
     >
-      <button
-        type="button"
-        className={styles.dragHandle}
-        aria-label={`Reordenar ${item.name}`}
-        onPointerDown={(event) => dragControls.start(event)}
-      >
-        <Icon svg={gripIcon} />
-      </button>
+      {canReorder && (
+        <button
+          type="button"
+          className={styles.dragHandle}
+          aria-label={`Reordenar ${item.name}`}
+          onPointerDown={(event) => dragControls.start(event)}
+        >
+          <Icon svg={gripIcon} />
+        </button>
+      )}
 
       <Link to={item.id} className={styles.itemLink}>
         <ItemThumb name={item.name} imageUrl={item.images?.[0]?.url} />

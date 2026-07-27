@@ -51,10 +51,7 @@ export const DayTally = ({ tenantId, timezone }: DayTallyProps) => {
           >
             <span className={styles.value}>
               {isPending ? (
-                <Skeleton
-                  animation="wave"
-                  className="h-7 w-10 bg-sand lg:h-8"
-                />
+                <Skeleton className={styles.skeletonCount} />
               ) : (
                 <CountUp value={count} />
               )}
@@ -76,10 +73,7 @@ export const DayTally = ({ tenantId, timezone }: DayTallyProps) => {
           >
             <span className={styles.value}>
               {isPending ? (
-                <Skeleton
-                  animation="wave"
-                  className="h-7 w-24 bg-sand lg:h-8"
-                />
+                <Skeleton className={styles.skeletonMoney} />
               ) : (
                 brl(revenue)
               )}
@@ -101,10 +95,7 @@ export const DayTally = ({ tenantId, timezone }: DayTallyProps) => {
           >
             <span className={styles.value}>
               {isPending ? (
-                <Skeleton
-                  animation="wave"
-                  className="h-7 w-20 bg-sand lg:h-8"
-                />
+                <Skeleton className={styles.skeletonAverage} />
               ) : (
                 brl(average)
               )}

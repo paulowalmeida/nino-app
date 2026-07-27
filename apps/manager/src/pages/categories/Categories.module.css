@@ -19,15 +19,23 @@
   @apply sm:flex-1;
 }
 
+/* mesma superfície do Card do DS, escrita à mão porque o Reorder.Group já
+   ocupa o elemento — raio, borda e sombra são os mesmos tokens */
 .list {
-  @apply flex flex-col rounded-[24px] border border-line bg-brand-foreground/70;
-  @apply px-2 shadow-card backdrop-blur-sm lg:px-3;
+  @apply flex flex-col rounded-card border border-line/60 bg-white;
+  @apply px-2 shadow-card lg:px-3;
 }
 
 .row {
-  @apply flex min-h-16 flex-wrap items-center gap-3 rounded-xl px-2 py-3;
-  @apply border-b border-sand transition-colors duration-150;
-  @apply last:border-b-0 hover:bg-brand/5;
+  @apply flex min-h-16 flex-wrap items-center gap-3 rounded-card px-2 py-3;
+  @apply border-b border-line/60 transition-colors duration-150;
+  @apply last:border-b-0 hover:bg-surface-sunk;
+}
+
+.dragHandle {
+  @apply flex shrink-0 cursor-grab touch-none items-center justify-center;
+  @apply rounded-lg p-1.5 text-faint transition-colors duration-150;
+  @apply hover:bg-surface-sunk hover:text-subtle active:cursor-grabbing;
 }
 
 .who {
@@ -62,7 +70,7 @@
 }
 
 .danger {
-  @apply hover:bg-red-50 hover:text-red-600;
+  @apply hover:bg-danger-surface hover:text-danger;
 }
 
 /* modo edição inline: input toma a linha, ações à direita */
@@ -79,6 +87,6 @@
 }
 
 .skeletonRow {
-  @apply h-16 w-full rounded-2xl;
+  @apply h-16 w-full rounded-card;
 }
 

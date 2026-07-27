@@ -1,33 +1,53 @@
 @reference "@nino/ds/globals.css";
 
+/*
+ * A tela é fixa e só a bobina rola por dentro — mais ainda no celular, onde
+ * cabem duas comandas por vez: trocar de etapa não pode exigir rolar a fila
+ * inteira de volta.
+ *
+ * O desconto de 3.5rem é a barra fixa do AppLayout, que no celular vive fora
+ * do fluxo e é compensada por um `pt-14` no `main`. Sem descontar, a página
+ * ficaria uma barra mais alta que a tela.
+ */
 .page {
-  @apply relative p-4 lg:p-10;
+  @apply relative flex h-[calc(100dvh-3.5rem)] flex-col p-4;
+  @apply lg:h-dvh lg:p-10;
 }
 
 /* no celular o cabeçalho cede espaço para a fila: título e ação lado a lado */
 .header {
-  @apply mb-3 flex items-center justify-between gap-3;
+  @apply mb-3 flex shrink-0 items-center justify-between gap-3;
   @apply lg:mb-6 lg:items-start;
 }
 
 /*
- * No celular a trilha gruda no topo: trocar de etapa não pode exigir rolar a
- * fila inteira de volta. O fundo acompanha a página para o conteúdo passar
- * por baixo sem borrar.
+ * A linha de apoio do cabeçalho sai no celular: numa tela que já é curta, ela
+ * custa duas comandas e diz o que o próprio botão de cada comanda já mostra.
  */
+.header p {
+  @apply hidden lg:block;
+}
+
 .track {
-  @apply sticky top-14 z-10 -mx-4 px-4 py-2;
-  @apply bg-brand-foreground/95 backdrop-blur-sm;
-  @apply lg:static lg:mx-0 lg:bg-transparent lg:px-0 lg:py-0 lg:backdrop-blur-none;
+  @apply shrink-0 pb-2 lg:pb-0;
 }
 
 .newOrder {
   @apply shrink-0;
 }
 
+/*
+ * A área rolável. `min-h-0` é o que faz o filho de flex encolher abaixo do
+ * conteúdo: sem ele o item nasce com `min-height: auto`, a bobina empurra a
+ * página e a rolagem volta para a tela inteira.
+ */
+.queue {
+  @apply min-h-0 flex-1 overflow-y-auto overscroll-contain pb-2;
+}
+
 /* a bobina: comandas lado a lado, sempre alinhadas pelo topo */
 .board {
-  @apply mt-5 grid items-start gap-4;
+  @apply mt-1 grid items-start gap-4 lg:mt-3;
   @apply sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4;
 }
 
@@ -37,11 +57,13 @@
 }
 
 .loading {
-  @apply mt-5 grid gap-4 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4;
+  @apply mt-1 grid gap-4 lg:mt-3;
+  @apply sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4;
 }
 
+/* o mesmo raio do Card do DS: o esqueleto tem que ter a forma do que vem */
 .skeletonTicket {
-  @apply h-52 w-full rounded-[10px];
+  @apply h-52 w-full rounded-card;
 }
 
 .more {

@@ -109,55 +109,60 @@ export const Orders = () => {
         <StageTrack stages={options} value={stage} onChange={setStage} />
       </div>
 
-      {isPending && (
-        <div className={styles.loading}>
-          <Skeleton className={styles.skeletonTicket} />
-          <Skeleton className={styles.skeletonTicket} />
-          <Skeleton className={styles.skeletonTicket} />
-        </div>
-      )}
+      {/* só a bobina rola: cabeçalho e trilha ficam parados no desktop */}
+      <div className={styles.queue}>
+        {isPending && (
+          <div className={styles.loading}>
+            <Skeleton className={styles.skeletonTicket} />
+            <Skeleton className={styles.skeletonTicket} />
+            <Skeleton className={styles.skeletonTicket} />
+          </div>
+        )}
 
-      {isError && (
-        <Alert variant="error">
-          Não foi possível carregar os pedidos. Recarregue a página para tentar
-          de novo.
-        </Alert>
-      )}
+        {isError && (
+          <Alert variant="error">
+            Não foi possível carregar os pedidos. Recarregue a página para
+            tentar de novo.
+          </Alert>
+        )}
 
-      {!isPending && !isError && shown.length === 0 && (
-        <EmptyState className={motion.unroll}>{empty}</EmptyState>
-      )}
+        {!isPending && !isError && shown.length === 0 && (
+          <EmptyState size="md" className={motion.unroll}>
+            {empty}
+          </EmptyState>
+        )}
 
-      {shown.length > 0 && (
-        <ul className={styles.board}>
-          {shown.map((order, index) => (
-            <li
-              key={order.id}
-              className={motion.settle}
-              style={riseDelay(index * 55 + 80)}
+        {shown.length > 0 && (
+          <ul className={styles.board}>
+            {shown.map((order, index) => (
+              <li
+                key={order.id}
+                className={motion.settle}
+                style={riseDelay(index * 55 + 80)}
+              >
+                <OrderTicket
+                  order={order}
+                  onAdvance={handleAdvance}
+                  isBusy={isAdvancing && variables?.orderId === order.id}
+                />
+              </li>
+            ))}
+          </ul>
+        )}
+
+        {stage === 'closed' && hasNextPage && (
+          <div className={styles.more}>
+            <Button
+              variant="outline"
+              size="sm"
+              className={motion.press}
+              onClick={() => void fetchNextPage()}
             >
-              <OrderTicket
-                order={order}
-                onAdvance={handleAdvance}
-                isBusy={isAdvancing && variables?.orderId === order.id}
-              />
-            </li>
-          ))}
-        </ul>
-      )}
-
-      {stage === 'closed' && hasNextPage && (
-        <div className={styles.more}>
-          <Button
-            variant="outline"
-            size="sm"
-            className={motion.press}
-            onClick={() => void fetchNextPage()}
-          >
-            Carregar pedidos mais antigos
-          </Button>
-        </div>
-      )}
+              Carregar pedidos mais antigos
+            </Button>
+          </div>
+        )}
+      </div>
     </div>
   )
 }

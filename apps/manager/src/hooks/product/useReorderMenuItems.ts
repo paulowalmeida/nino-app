@@ -1,5 +1,10 @@
-import { useMutation, useQueryClient } from '@tanstack/react-query'
+import {
+  useMutation,
+  useQueryClient,
+  type InfiniteData,
+} from '@tanstack/react-query'
 
+import { queryKeys } from '@constants/query-keys'
 import type { MenuPage } from '@custom_types/product'
 import { setItemPosition } from '@services/product/product.service'
 
@@ -10,14 +15,20 @@ type Variables = {
 }
 
 /**
- * Optimistic, like useItemAvailability: the drag already moved the row on
- * screen, so the cache has to agree immediately or the list snaps back
- * before the round trip finishes. Re-sorts by position so useMenu's grouping
- * (which walks the list in order) keeps building sections correctly.
+ * Optimistic: o arraste já moveu a linha na tela, então o cache tem que
+ * concordar na hora ou a lista volta ao lugar antes da resposta chegar.
+ *
+ * Escreve no recorte da tela de cardápio — a lista só aceita arraste com uma
+ * categoria escolhida e sem busca, então a chave é sempre a mesma. O cache do
+ * `useMenu` (balcão e contagens) é invalidado no fim, não remendado: lá a
+ * ordem não muda nada enquanto a pessoa arrasta.
  */
-export const useReorderMenuItems = (tenantId: string | null) => {
+export const useReorderMenuItems = (
+  tenantId: string | null,
+  categoryId: string | null
+) => {
   const queryClient = useQueryClient()
-  const key = menuQueryKey(tenantId)
+  const key = queryKeys.products.catalog(tenantId ?? '', categoryId, '')
 
   return useMutation({
     meta: { errorTitle: 'A ordem dos itens voltou ao que era' },
@@ -31,22 +42,32 @@ export const useReorderMenuItems = (tenantId: string | null) => {
 
     onMutate: async ({ positions }: Variables) => {
       await queryClient.cancelQueries({ queryKey: key })
-      const previous = queryClient.getQueryData<MenuPage>(key)
+      const previous = queryClient.getQueryData<InfiniteData<MenuPage>>(key)
       const nextPositionById = new Map(
         positions.map(({ id, position }) => [id, position])
       )
 
-      queryClient.setQueryData<MenuPage>(key, (page) => {
-        if (!page) return page
-        return {
-          ...page,
-          data: page.data
-            .map((item) => {
-              const position = nextPositionById.get(item.id)
-              return position === undefined ? item : { ...item, position }
-            })
-            .sort((a, b) => a.position - b.position),
-        }
+      queryClient.setQueryData<InfiniteData<MenuPage>>(key, (cached) => {
+        if (!cached) return cached
+
+        const ordered = cached.pages
+          .flatMap((page) => page.data)
+          .map((item) => {
+            const position = nextPositionById.get(item.id)
+            return position === undefined ? item : { ...item, position }
+          })
+          .sort((a, b) => a.position - b.position)
+
+        /* Repagina mantendo o tamanho de cada página: o infinite query conta
+           itens carregados para saber se ainda falta buscar. */
+        let cursor = 0
+        const pages = cached.pages.map((page) => {
+          const data = ordered.slice(cursor, cursor + page.data.length)
+          cursor += page.data.length
+          return { ...page, data }
+        })
+
+        return { ...cached, pages }
       })
 
       return { previous }
@@ -58,6 +79,7 @@ export const useReorderMenuItems = (tenantId: string | null) => {
 
     onSettled: () => {
       void queryClient.invalidateQueries({ queryKey: key })
+      void queryClient.invalidateQueries({ queryKey: menuQueryKey(tenantId) })
     },
   })
 }

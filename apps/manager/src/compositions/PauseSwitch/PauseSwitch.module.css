@@ -1,5 +1,10 @@
 @reference "@nino/ds/globals.css";
 
+/* a altura do botão que vai ocupar o lugar, para a linha não pular */
+.skeleton {
+  @apply h-9 w-56 rounded-button;
+}
+
 /* fechada é estado de exceção: fundo quente e forte, impossível de ignorar */
 .paused {
   @apply flex flex-wrap items-center justify-between gap-3 rounded-[22px];

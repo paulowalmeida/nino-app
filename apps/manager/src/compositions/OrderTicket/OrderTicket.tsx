@@ -1,8 +1,11 @@
 import { Link } from 'react-router'
 
+import { Badge } from '@nino/ds/components/Badge'
 import { Button } from '@nino/ds/components/Button'
+import { Card } from '@nino/ds/components/Card'
 import { useElapsed } from '@hooks/order/useElapsed'
 import { brl } from '@utils/money'
+import { statusBadgeVariant } from '@utils/order-badge'
 import {
   CHANNEL_LABEL,
   customerNameOf,
@@ -53,87 +56,93 @@ export const OrderTicket = ({
     : styles.waited
 
   return (
-    <article className={classes.filter(Boolean).join(' ')}>
-      <header className={styles.head}>
-        <span className={styles.number}>#{ticketNumber(order.id)}</span>
-        {isDone ? (
-          <time className={styles.time} dateTime={order.createdAt}>
-            {clock}
-          </time>
-        ) : (
-          <time
-            className={waitedClass}
-            dateTime={order.createdAt}
-            title={`Entrou às ${clock}`}
-          >
-            {elapsed}
-          </time>
-        )}
-        <span className={styles.channel}>{CHANNEL_LABEL[order.channel]}</span>
-      </header>
-
-      <Link
-        to={order.id}
-        className={`${motion.lift} ${styles.body}`}
-        aria-label={`Abrir pedido ${ticketNumber(order.id)}`}
-      >
-        <p className={styles.customer}>
-          {customerNameOf(order)}
-          {order.tableNumber && (
-            <span className={styles.table}>mesa {order.tableNumber}</span>
+    <Card asChild className={classes.filter(Boolean).join(' ')}>
+      <article>
+        <header className={styles.head}>
+          <span className={styles.number}>#{ticketNumber(order.id)}</span>
+          {isDone ? (
+            <time className={styles.time} dateTime={order.createdAt}>
+              {clock}
+            </time>
+          ) : (
+            <time
+              className={waitedClass}
+              dateTime={order.createdAt}
+              title={`Entrou às ${clock}`}
+            >
+              {elapsed}
+            </time>
           )}
-        </p>
-        <p className={styles.state}>{STATUS_LABEL[order.status]}</p>
-
-        {/* no celular a comanda inteira não cabe: vale a conta, não a lista */}
-        <p className={styles.summary}>
-          {order.items.reduce((total, { quantity }) => total + quantity, 0)}{' '}
-          {order.items.length === 1 ? 'item' : 'itens'} ·{' '}
-          {order.items.map(({ product }) => product.name).join(', ')}
-        </p>
-
-        {order.notes && (
-          <p className={styles.notes}>
-            <span className={styles.notesLabel}>Observação</span>
-            {order.notes}
-          </p>
-        )}
-
-        <ul className={styles.items}>
-          {order.items.slice(0, VISIBLE_ITEMS).map((item) => (
-            <li key={item.id} className={styles.item}>
-              <span className={styles.quantity}>{item.quantity}×</span>
-              <span className={styles.itemName}>{item.product.name}</span>
-            </li>
-          ))}
-          {hidden > 0 && (
-            <li className={styles.more}>
-              e mais {hidden} {hidden === 1 ? 'item' : 'itens'}
-            </li>
-          )}
-        </ul>
-      </Link>
-
-      <footer className={styles.foot}>
-        <div className={styles.money}>
-          <span className={styles.total}>{brl(order.totalAmount)}</span>
-          <span className={styles.payment}>
-            {PAYMENT_METHOD_LABEL[order.paymentMethod]} ·{' '}
-            {PAYMENT_STATUS_LABEL[order.paymentStatus]}
-          </span>
-        </div>
-
-        {step && (
-          <Button
+          <Badge
             size="sm"
-            loading={isBusy}
-            className={`${motion.press} ${styles.action}`}
-            onClick={() => onAdvance(order.id, step.target)}
+            variant={statusBadgeVariant(order.status)}
+            className={styles.status}
           >
-            {step.label}
-          </Button>
-        )}
-      </footer>
-    </article>
+            {STATUS_LABEL[order.status]}
+          </Badge>
+        </header>
+
+        <Link
+          to={order.id}
+          className={`${motion.lift} ${styles.body}`}
+          aria-label={`Abrir pedido ${ticketNumber(order.id)}`}
+        >
+          <p className={styles.customer}>{customerNameOf(order)}</p>
+          <p className={styles.meta}>
+            {CHANNEL_LABEL[order.channel]}
+            {order.tableNumber && ` · Mesa ${order.tableNumber}`}
+          </p>
+
+          {/* no celular a comanda inteira não cabe: vale a conta, não a lista */}
+          <p className={styles.summary}>
+            {order.items.reduce((total, { quantity }) => total + quantity, 0)}{' '}
+            {order.items.length === 1 ? 'item' : 'itens'} ·{' '}
+            {order.items.map(({ product }) => product.name).join(', ')}
+          </p>
+
+          {order.notes && (
+            <p className={styles.notes}>
+              <span className={styles.notesLabel}>Observação</span>
+              {order.notes}
+            </p>
+          )}
+
+          <ul className={styles.items}>
+            {order.items.slice(0, VISIBLE_ITEMS).map((item) => (
+              <li key={item.id} className={styles.item}>
+                <span className={styles.quantity}>{item.quantity}×</span>
+                <span className={styles.itemName}>{item.product.name}</span>
+              </li>
+            ))}
+            {hidden > 0 && (
+              <li className={styles.more}>
+                e mais {hidden} {hidden === 1 ? 'item' : 'itens'}
+              </li>
+            )}
+          </ul>
+        </Link>
+
+        <footer className={styles.foot}>
+          <div className={styles.money}>
+            <span className={styles.total}>{brl(order.totalAmount)}</span>
+            <span className={styles.payment}>
+              {PAYMENT_METHOD_LABEL[order.paymentMethod]} ·{' '}
+              {PAYMENT_STATUS_LABEL[order.paymentStatus]}
+            </span>
+          </div>
+
+          {step && (
+            <Button
+              size="sm"
+              loading={isBusy}
+              className={`${motion.press} ${styles.action}`}
+              onClick={() => onAdvance(order.id, step.target)}
+            >
+              {step.label}
+            </Button>
+          )}
+        </footer>
+      </article>
+    </Card>
   )
 }
