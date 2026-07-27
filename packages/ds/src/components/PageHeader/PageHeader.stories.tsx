@@ -31,3 +31,22 @@ export const TitleOnly: Story = {
     </div>
   ),
 }
+
+/**
+ * The peach underline sits behind one word of the title — the one carrying the
+ * subject. It comes from the landing, and it is what makes a panel screen read
+ * as the same product as the site.
+ */
+export const WithAccent: Story = {
+  render: () => (
+    <div className="flex w-[640px] flex-col gap-8">
+      <PageHeader
+        title="Quem toca a equipe"
+        accent="equipe"
+        description="Cada pessoa entra com a própria conta."
+      />
+      <PageHeader title="Meus dados" accent="dados" />
+      <PageHeader title="Cardápio" accent="Cardápio" />
+    </div>
+  ),
+}
