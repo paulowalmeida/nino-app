@@ -17,44 +17,53 @@
   @apply px-4 py-3;
 }
 
-/* Sem o título, sobra só a ação — que encosta à direita em vez de flutuar
-   sozinha à esquerda, onde o olho procura um rótulo que não existe. */
+/*
+ * Sem título, o cabeçalho não é cabeçalho: vira a linha da ação, encostada à
+ * direita e rente ao conteúdo. Com a altura de antes, abria um vão entre o
+ * topo da folha e a lista.
+ */
 .headBare {
-  @apply flex shrink-0 items-center justify-end px-4 pb-2;
+  @apply flex shrink-0 items-center justify-end px-4 pb-1 pt-0;
 }
 
 .title {
   @apply font-display text-lg font-extrabold text-ink;
 }
 
+/* Ação destrutiva discreta: tem a forma de botão do DS, mas em tom apagado —
+   é saída de emergência, não o caminho normal. */
 .clear {
-  @apply cursor-pointer rounded-full px-3 py-1.5 text-sm font-semibold;
-  @apply text-faint transition-colors duration-150 hover:text-brand-strong;
+  @apply gap-1.5 text-faint hover:text-danger;
 }
 
-/* identificação no topo: é a primeira coisa que se pergunta no balcão */
+/* Identificação depois dos itens, empilhada: dividindo a linha, "Mesa" ficava
+   estreito demais para caber o texto que explica o que é. */
 .who {
-  @apply flex shrink-0 gap-2 border-b border-sand px-4 py-3;
-}
-
-.whoName {
-  @apply min-w-0 flex-1;
-}
-
-.whoTable {
-  @apply w-20 shrink-0;
+  @apply flex shrink-0 flex-col gap-2 border-t border-sand px-4 py-3;
 }
 
 .lines {
   @apply flex flex-1 flex-col px-4 lg:min-h-0 lg:overflow-y-auto;
 }
 
+/*
+ * Empilhado por padrão: em 320px o par de botões e o preço já comem 200px
+ * dos 288 úteis, e o nome do produto colapsava até sumir. Só volta para uma
+ * linha quando há largura para os três caberem.
+ */
 .line {
-  @apply flex items-center gap-2 border-b border-dashed border-sand-deep py-3;
+  @apply flex flex-col gap-2 border-b border-dashed border-sand-deep py-3;
+  @apply sm:flex-row sm:items-center;
 }
 
 .lineName {
-  @apply line-clamp-2 min-w-0 flex-1 text-base leading-tight text-body;
+  @apply min-w-0 text-base leading-tight text-body sm:line-clamp-2 sm:flex-1;
+}
+
+/* Empilhado, os controles ocupam a linha: quantidade à esquerda, preço à
+   direita, onde a leitura já procura o valor. */
+.lineControls {
+  @apply flex items-center justify-between gap-2 sm:justify-end;
 }
 
 .stepper {
@@ -75,12 +84,18 @@
 }
 
 .linePrice {
-  @apply w-24 shrink-0 text-right text-base font-semibold text-body;
+  @apply shrink-0 text-right text-base font-semibold text-body sm:w-24;
   font-variant-numeric: tabular-nums;
 }
 
 .foot {
   @apply flex shrink-0 flex-col gap-3 border-t border-sand p-4;
+}
+
+/* Rótulo antes das formas: sem ele, três botões soltos no rodapé não dizem
+   que são escolha de pagamento. */
+.payLabel {
+  @apply mb-2 text-xs font-bold uppercase tracking-[0.1em] text-faint;
 }
 
 .choices {

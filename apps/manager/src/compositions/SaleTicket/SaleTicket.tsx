@@ -14,6 +14,24 @@ import motion from '@styles/motion.module.css'
  * A comanda do caixa fica sempre à vista, com o total em corpo grande: é o
  * número que o operador fala em voz alta antes de receber.
  */
+const TrashIcon = () => (
+  <svg
+    width="14"
+    height="14"
+    viewBox="0 0 24 24"
+    aria-hidden="true"
+    fill="none"
+  >
+    <path
+      d="M4 7h16M10 11v6M14 11v6M6 7l1 12a2 2 0 002 2h6a2 2 0 002-2l1-12M9 7V5a2 2 0 012-2h2a2 2 0 012 2v2"
+      stroke="currentColor"
+      strokeWidth="1.8"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </svg>
+)
+
 export const SaleTicket = ({
   lines,
   methods,
@@ -41,29 +59,18 @@ export const SaleTicket = ({
       <header className={bare ? styles.headBare : styles.head}>
         {!bare && <h2 className={styles.title}>Venda</h2>}
         {count > 0 && (
-          <button type="button" className={styles.clear} onClick={onClear}>
-            Limpar
-          </button>
+          <Button
+            type="button"
+            variant="ghost"
+            size="sm"
+            className={styles.clear}
+            onClick={onClear}
+          >
+            <TrashIcon />
+            Limpar comanda
+          </Button>
         )}
       </header>
-
-      {/* sem nome, a comanda pronta vira "de quem é esse pedido?" */}
-      <div className={styles.who}>
-        <Input
-          placeholder="Nome de quem pediu"
-          aria-label="Nome de quem pediu"
-          className={styles.whoName}
-          value={customerName}
-          onChange={(event) => onCustomerName(event.target.value)}
-        />
-        <Input
-          placeholder="Mesa"
-          aria-label="Mesa ou comanda"
-          className={styles.whoTable}
-          value={tableNumber}
-          onChange={(event) => onTableNumber(event.target.value)}
-        />
-      </div>
 
       {lines.length === 0 ? (
         <EmptyState>Toque nos itens para montar a venda.</EmptyState>
@@ -75,34 +82,60 @@ export const SaleTicket = ({
               className={`${motion.deal} ${styles.line}`}
             >
               <span className={styles.lineName}>{line.name}</span>
-              <div className={styles.stepper}>
-                <button
-                  type="button"
-                  className={styles.step}
-                  aria-label={`Tirar um ${line.name}`}
-                  onClick={() => onStep(line.productId, -1)}
-                >
-                  −
-                </button>
-                <span className={styles.quantity}>{line.quantity}</span>
-                <button
-                  type="button"
-                  className={styles.step}
-                  aria-label={`Mais um ${line.name}`}
-                  onClick={() => onStep(line.productId, 1)}
-                >
-                  +
-                </button>
+              <div className={styles.lineControls}>
+                <div className={styles.stepper}>
+                  <button
+                    type="button"
+                    className={styles.step}
+                    aria-label={`Tirar um ${line.name}`}
+                    onClick={() => onStep(line.productId, -1)}
+                  >
+                    −
+                  </button>
+                  <span className={styles.quantity}>{line.quantity}</span>
+                  <button
+                    type="button"
+                    className={styles.step}
+                    aria-label={`Mais um ${line.name}`}
+                    onClick={() => onStep(line.productId, 1)}
+                  >
+                    +
+                  </button>
+                </div>
+                <span className={styles.linePrice}>
+                  {brl(Number(line.unitPrice) * line.quantity)}
+                </span>
               </div>
-              <span className={styles.linePrice}>
-                {brl(Number(line.unitPrice) * line.quantity)}
-              </span>
             </li>
           ))}
         </ul>
       )}
 
+      {/*
+       * Identificação depois dos itens: o operador monta o pedido primeiro e
+       * só então pergunta o nome. No topo, esses campos ocupavam o lugar do
+       * assunto e empurravam a lista para baixo.
+       */}
+      {lines.length > 0 && (
+        <div className={styles.who}>
+          <Input
+            placeholder="Nome de quem pediu"
+            aria-label="Nome de quem pediu"
+            value={customerName}
+            onChange={(event) => onCustomerName(event.target.value)}
+          />
+          <Input
+            placeholder="Mesa ou comanda"
+            aria-label="Mesa ou comanda"
+            value={tableNumber}
+            onChange={(event) => onTableNumber(event.target.value)}
+          />
+        </div>
+      )}
+
       <div className={styles.foot}>
+        <p className={styles.payLabel}>Como vai pagar</p>
+
         <div className={styles.choices}>
           {methods.map((value) => (
             <button
@@ -120,9 +153,7 @@ export const SaleTicket = ({
         </div>
 
         <div className={styles.total}>
-          <span className={styles.totalLabel}>
-            {count} {count === 1 ? 'item' : 'itens'}
-          </span>
+          <span className={styles.totalLabel}>Total</span>
           <span className={styles.totalValue}>{brl(total)}</span>
         </div>
 
