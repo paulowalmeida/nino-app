@@ -11,11 +11,11 @@
  * "Finalizar pedido" de ponta a ponta e cobria o cardápio inteiro.
  */
 .sheet {
-  @apply max-h-[85dvh] rounded-t-3xl bg-paper;
+  @apply max-h-[85dvh] rounded-t-3xl bg-brand-foreground;
 }
 
 .panel {
-  @apply bg-paper;
+  @apply bg-brand-foreground;
   box-shadow: -24px 0 60px -30px rgba(26, 18, 6, 0.35);
 }
 
@@ -49,10 +49,10 @@
   @apply flex h-14 w-14 shrink-0 items-center justify-center rounded-xl text-2xl;
   background: radial-gradient(
     120% 120% at 30% 20%,
-    var(--color-cream),
-    var(--color-sand)
+    var(--color-brand-foreground),
+    var(--color-brand-foreground),
   );
-  box-shadow: inset 0 0 0 1px var(--color-line);
+  box-shadow: inset 0 0 0 1px var(--color-brand-foreground);
 }
 
 .lineText {
@@ -113,7 +113,7 @@
  */
 .footer {
   @apply sticky bottom-0 -mx-6 -mb-4 mt-auto flex flex-col gap-3;
-  @apply border-t border-line bg-paper px-6 pb-5 pt-4;
+  @apply border-t border-line bg-brand-foreground px-6 pb-5 pt-4;
 }
 
 .totalRow {

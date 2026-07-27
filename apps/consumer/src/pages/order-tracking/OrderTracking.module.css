@@ -1,7 +1,7 @@
 @reference "@nino/ds/globals.css";
 
 .page {
-  @apply mx-auto min-h-dvh w-full max-w-xl bg-paper px-5 pb-10;
+  @apply mx-auto min-h-dvh w-full max-w-xl bg-brand-foreground px-5 pb-10;
   @apply lg:my-8 lg:min-h-0 lg:max-w-xl lg:rounded-[1.75rem] lg:border;
   @apply lg:border-line lg:px-8 lg:pb-10 lg:shadow-[0_30px_80px_-40px_rgba(26,18,6,0.45)];
 }

@@ -9,21 +9,21 @@ describe(Card.displayName!, () => {
     expect(screen.getByText('Conteúdo')).toBeInTheDocument()
   })
 
-  it('applies the default variant (border + shadow-sm)', () => {
+  it('applies the default variant (border + resting shadow)', () => {
     render(<Card>x</Card>)
-    expect(screen.getByText('x')).toHaveClass('shadow-sm')
+    expect(screen.getByText('x')).toHaveClass('shadow-card')
   })
 
   it('flat variant does not apply shadow', () => {
     render(<Card variant="flat">x</Card>)
     const card = screen.getByText('x')
-    expect(card).not.toHaveClass('shadow-sm')
-    expect(card).not.toHaveClass('shadow-md')
+    expect(card).not.toHaveClass('shadow-card')
+    expect(card).not.toHaveClass('shadow-card-hover')
   })
 
-  it('elevated variant applies shadow-md', () => {
+  it('elevated variant applies the lifted shadow', () => {
     render(<Card variant="elevated">x</Card>)
-    expect(screen.getByText('x')).toHaveClass('shadow-md')
+    expect(screen.getByText('x')).toHaveClass('shadow-card-hover')
   })
 
   it('merges additional className', () => {

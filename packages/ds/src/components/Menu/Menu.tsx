@@ -5,14 +5,14 @@ import { mergeClasses } from '@ds/lib/mergeClasses'
 import { MenuItem, MenuProps } from './Menu.types'
 
 const baseContent =
-  'menu-animated-content z-50 min-w-40 overflow-hidden rounded-md border ' +
-  'border-gray-200 bg-white shadow-md p-1 outline-none'
+  'menu-animated-content z-50 min-w-40 overflow-hidden rounded-card border ' +
+  'border-line bg-paper shadow-overlay p-1 outline-none'
 
 const baseItem =
-  'relative flex cursor-pointer select-none items-center gap-2 rounded-lg px-3 py-2.5 text-sm font-medium text-body outline-none transition-colors data-[highlighted]:bg-[color-mix(in_srgb,var(--color-brand)_10%,white)] data-[highlighted]:text-brand-strong data-[disabled]:pointer-events-none data-[disabled]:opacity-50'
+  'relative flex cursor-pointer select-none items-center gap-2 rounded-[6px] px-3 py-2.5 text-sm font-medium text-body outline-none transition-colors data-[highlighted]:bg-[color-mix(in_srgb,var(--color-brand)_10%,white)] data-[highlighted]:text-brand-strong data-[disabled]:pointer-events-none data-[disabled]:opacity-50'
 
 const destructiveItem =
-  'text-red-600 data-[highlighted]:bg-red-50 data-[highlighted]:text-red-600'
+  'text-danger data-[highlighted]:bg-danger-surface data-[highlighted]:text-danger'
 
 // `border-0`: o Ark usa <hr>, que traz borda do navegador por padrão
 const baseSeparator = 'my-1 h-px border-0 bg-sand'

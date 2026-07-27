@@ -9,8 +9,12 @@ const trackSizeClasses: Record<ProgressLineSize, string> = {
   lg: 'h-3',
 }
 
-const baseTrack = 'w-full overflow-hidden rounded-full bg-gray-200'
-const baseRange = 'h-full rounded-full bg-brand transition-all duration-300'
+/* Thin linear forms keep a radius equal to their own thickness — the 8px of a
+ * surface would round a 4px bar into a lozenge. */
+const baseTrack = 'w-full overflow-hidden rounded-full bg-sand'
+const baseRange =
+  'h-full rounded-full bg-brand transition-all duration-[460ms] ' +
+  'ease-[cubic-bezier(0.22,1,0.36,1)]'
 
 /**
  * Linear progress bar themed via `--color-brand`.

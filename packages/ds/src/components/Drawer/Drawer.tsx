@@ -32,17 +32,21 @@ const animationByPlacement: Record<DrawerPlacement, string> = {
   top: 'data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:slide-out-to-top data-[state=open]:slide-in-from-top',
 }
 
-const baseContent = 'flex flex-col bg-white shadow-xl outline-none duration-300'
+const baseContent =
+  'flex flex-col bg-paper shadow-overlay outline-none duration-300'
 
 const baseHeader =
-  'flex items-center justify-between border-b border-gray-200 px-6 py-4'
+  'flex items-center justify-between border-b border-line px-6 py-4'
 
-const titleClass = 'text-base font-semibold text-gray-900'
-const descriptionClass = 'mt-1 text-sm text-gray-500'
+const titleClass =
+  'font-display text-base font-semibold tracking-[-0.01em] text-ink'
+const descriptionClass = 'mt-1 text-[0.8125rem] leading-[1.45] text-muted'
 const baseBody = 'flex-1 overflow-y-auto px-6 py-4'
 
 const closeButtonClass =
-  'rounded-full p-1.5 text-gray-400 transition-colors hover:bg-gray-100 hover:text-gray-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand'
+  'rounded-full p-1.5 text-faint transition-colors hover:bg-sand ' +
+  'hover:text-ink focus-visible:outline-none focus-visible:ring-2 ' +
+  'focus-visible:ring-brand'
 
 const CloseIcon = () => (
   <svg

@@ -2,13 +2,15 @@ import { mergeClasses } from '@ds/lib/mergeClasses'
 
 import { BadgeProps, BadgeSize, BadgeVariant } from './Badge.types'
 
+/* Same pale surfaces as Alert: a badge labels a row, it does not raise an
+ * alarm, so it never takes the saturated fill the toast uses. */
 const variantClasses: Record<BadgeVariant, string> = {
-  default: 'bg-gray-100 text-gray-700',
+  default: 'bg-sand text-body',
   brand: 'bg-brand-soft text-brand-strong',
-  success: 'bg-green-100 text-green-700',
-  error: 'bg-red-100 text-red-700',
-  warning: 'bg-yellow-100 text-yellow-700',
-  info: 'bg-blue-100 text-blue-700',
+  success: 'bg-success-surface text-success',
+  error: 'bg-danger-surface text-danger',
+  warning: 'bg-warning-surface text-warning',
+  info: 'bg-cream-deep text-brand-strong',
 }
 
 const sizeClasses: Record<BadgeSize, string> = {
@@ -16,7 +18,7 @@ const sizeClasses: Record<BadgeSize, string> = {
   md: 'px-2.5 py-1 text-xs',
 }
 
-const baseBadge = 'inline-flex items-center rounded-full font-medium'
+const baseBadge = 'inline-flex items-center rounded-card font-semibold'
 
 /**
  * Status badge for labeling items with a visual category.

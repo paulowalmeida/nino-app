@@ -64,6 +64,9 @@
   --color-input-border-focus: var(--color-brand);
 
   /* Estrutural */
+  /* Superfície é reta, só quebrada no canto; ação continua pílula — o
+     contraste entre as duas formas é o que separa "onde estou" de "o que
+     faço". */
   --radius-button: 100px;
-  --radius-card: 14px;
+  --radius-card: 8px;
 }

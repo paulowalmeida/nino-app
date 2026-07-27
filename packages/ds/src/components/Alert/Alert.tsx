@@ -3,23 +3,30 @@ import { statusIconPaths } from '@ds/lib/statusIconPaths'
 
 import { AlertProps, AlertVariant } from './Alert.types'
 
+/**
+ * The alert is the toast's counterpart: same status family, inverted pair.
+ * A toast interrupts and leaves, so it takes the saturated fill; an alert
+ * stays on the page, so it takes the pale surface of the same hue with the
+ * dark tone on top. No border and no shadow — it sits in the layout, it does
+ * not float above it.
+ */
 const variantClasses: Record<AlertVariant, string> = {
-  info: 'bg-blue-50 border-blue-200 text-blue-800',
-  success: 'bg-green-50 border-green-200 text-green-800',
-  warning: 'bg-yellow-50 border-yellow-200 text-yellow-800',
-  error: 'bg-red-50 border-red-200 text-red-800',
+  info: 'bg-cream-deep text-body',
+  success: 'bg-success-surface text-success',
+  warning: 'bg-warning-surface text-warning',
+  error: 'bg-danger-surface text-danger',
 }
 
 const iconClasses: Record<AlertVariant, string> = {
-  info: 'text-blue-500',
-  success: 'text-green-500',
-  warning: 'text-yellow-500',
-  error: 'text-red-500',
+  info: 'text-brand-strong',
+  success: 'text-success',
+  warning: 'text-warning',
+  error: 'text-danger',
 }
 
-const baseAlert = 'flex gap-3 rounded-lg border p-4'
-const titleClass = 'text-sm font-semibold'
-const bodyClass = 'text-sm'
+const baseAlert = 'flex gap-3 rounded-card p-4'
+const titleClass = 'font-display text-sm font-semibold tracking-[-0.01em]'
+const bodyClass = 'text-[0.8125rem] leading-[1.45]'
 
 function AlertIcon({ variant }: { variant: AlertVariant }) {
   return (

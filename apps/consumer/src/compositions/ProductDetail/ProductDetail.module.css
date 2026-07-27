@@ -11,7 +11,7 @@
  * e só rola quando passa do teto.
  */
 .drawer {
-  @apply max-h-[90dvh] rounded-t-3xl bg-paper;
+  @apply max-h-[90dvh] rounded-t-3xl bg-brand-foreground;
 }
 
 .media {
@@ -55,7 +55,7 @@
 
 .footer {
   @apply sticky bottom-0 -mx-6 -mb-4 mt-4 flex items-center gap-3;
-  @apply border-t border-sand bg-paper px-6 py-4;
+  @apply border-t border-sand bg-brand-foreground px-6 py-4;
 }
 
 .modalFooter {

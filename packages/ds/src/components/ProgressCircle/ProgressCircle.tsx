@@ -13,7 +13,7 @@ const sizeMap: Record<ProgressCircleSize, { size: string; thickness: string }> =
   }
 
 const trackStyle: CSSProperties = {
-  stroke: '#e5e7eb',
+  stroke: 'var(--color-sand)',
 }
 
 const rangeStyle: CSSProperties = {

@@ -7,15 +7,17 @@ import {
 } from './Skeleton.types'
 
 const variantClasses: Record<SkeletonVariant, string> = {
-  rect: 'rounded-md',
+  rect: 'rounded-card',
   circle: 'rounded-full',
-  text: 'rounded w-full h-4',
+  text: 'rounded-[4px] w-full h-4',
 }
 
+/* Sand, not gray: the placeholder has to read as the warm surface it will be
+ * replaced by, otherwise the page turns cold while it loads. */
 const animationClasses: Record<SkeletonAnimation, string> = {
-  pulse: 'animate-pulse bg-gray-200',
-  wave: 'skeleton-wave bg-gray-200',
-  none: 'bg-gray-200',
+  pulse: 'animate-pulse bg-sand',
+  wave: 'skeleton-wave bg-sand',
+  none: 'bg-sand',
 }
 
 /**

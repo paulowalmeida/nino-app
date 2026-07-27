@@ -5,7 +5,8 @@ import { Tooltip as ArkTooltip } from '@ark-ui/react/tooltip'
 import { TooltipProps } from './Tooltip.types'
 
 const baseContent =
-  'z-50 max-w-xs rounded-md bg-gray-900 px-2.5 py-1.5 text-xs text-white shadow-md animate-in fade-in-0 zoom-in-95'
+  'z-50 max-w-xs rounded-card bg-ink px-2.5 py-1.5 text-xs text-cream ' +
+  'shadow-overlay animate-in fade-in-0 zoom-in-95'
 
 export function Tooltip({
   content,
@@ -30,7 +31,7 @@ export function Tooltip({
       <ArkTooltip.Positioner>
         <ArkTooltip.Content className={baseContent}>
           <ArkTooltip.Arrow>
-            <ArkTooltip.ArrowTip className="bg-gray-900" />
+            <ArkTooltip.ArrowTip className="bg-ink" />
           </ArkTooltip.Arrow>
           {content}
         </ArkTooltip.Content>
