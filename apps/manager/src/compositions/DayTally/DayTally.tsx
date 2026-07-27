@@ -36,17 +36,18 @@ export const DayTally = ({ tenantId, timezone }: DayTallyProps) => {
         <Eyebrow className={styles.heading}>O dia até agora</Eyebrow>
       </div>
 
+      {/* Todo número daqui leva ao seu recorte: a contagem abre a fila
+          fechada, faturamento e ticket médio abrem o relatório do dia. */}
       <div className={styles.tally}>
-        {/* o único número com destino: os outros dois não são uma lista */}
         <Card
           asChild
-          variant="flat"
           className={`${motion.settle} ${motion.lift} ${styles.figure}`}
         >
           <Link
             to="../pedidos?etapa=closed"
             relative="path"
             aria-label="Ver os pedidos fechados"
+            className={styles.cardOverview}
           >
             <span className={styles.value}>
               {isPending ? (
@@ -64,42 +65,52 @@ export const DayTally = ({ tenantId, timezone }: DayTallyProps) => {
 
         <Card
           asChild
-          variant="flat"
-          className={`${motion.settle} ${styles.figure}`}
+          className={`${motion.settle} ${motion.lift} ${styles.figure}`}
         >
-          <article style={riseDelay(70)}>
-          <span className={styles.value}>
-            {isPending ? (
-              <Skeleton
-                animation="wave"
-                className="h-7 w-24 bg-sand lg:h-8"
-              />
-            ) : (
-              brl(revenue)
-            )}
-          </span>
-          <span className={styles.label}>entraram no caixa</span>
-          </article>
+          <Link
+            to="../relatorios?periodo=today"
+            relative="path"
+            aria-label="Ver o relatório de faturamento de hoje"
+            style={riseDelay(70)}
+            className={styles.cardOverview}
+          >
+            <span className={styles.value}>
+              {isPending ? (
+                <Skeleton
+                  animation="wave"
+                  className="h-7 w-24 bg-sand lg:h-8"
+                />
+              ) : (
+                brl(revenue)
+              )}
+            </span>
+            <span className={styles.label}>entraram no caixa</span>
+          </Link>
         </Card>
 
         <Card
           asChild
-          variant="flat"
-          className={`${motion.settle} ${styles.figure}`}
+          className={`${motion.settle} ${motion.lift} ${styles.figure}`}
         >
-          <article style={riseDelay(140)}>
-          <span className={styles.value}>
-            {isPending ? (
-              <Skeleton
-                animation="wave"
-                className="h-7 w-20 bg-sand lg:h-8"
-              />
-            ) : (
-              brl(average)
-            )}
-          </span>
-          <span className={styles.label}>por pedido</span>
-          </article>
+          <Link
+            to="../relatorios?periodo=today"
+            relative="path"
+            aria-label="Ver o ticket médio de hoje no relatório"
+            style={riseDelay(140)}
+            className={styles.cardOverview}
+          >
+            <span className={styles.value}>
+              {isPending ? (
+                <Skeleton
+                  animation="wave"
+                  className="h-7 w-20 bg-sand lg:h-8"
+                />
+              ) : (
+                brl(average)
+              )}
+            </span>
+            <span className={styles.label}>por pedido</span>
+          </Link>
         </Card>
       </div>
 

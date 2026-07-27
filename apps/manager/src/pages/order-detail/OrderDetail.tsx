@@ -84,7 +84,7 @@ export const OrderDetail = () => {
     <div className={styles.page}>
       <BackLink>Pedidos</BackLink>
 
-      <header className={`${motion.settle} ${styles.hero}`}>
+      <Card className={`${motion.settle} ${styles.hero}`}>
         <div className={styles.heroText}>
           <p className={styles.channel}>{CHANNEL_LABEL[order.channel]}</p>
           <h1 className={`${motion.land} ${styles.number}`}>
@@ -100,7 +100,7 @@ export const OrderDetail = () => {
         >
           {STATUS_LABEL[order.status]}
         </Badge>
-      </header>
+      </Card>
 
       <div className={styles.columns}>
         <section

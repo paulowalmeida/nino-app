@@ -5,31 +5,30 @@
 }
 
 /*
- * O caixa do dia: mesma superfície dos cartões da fila, sem sombra — é
- * resultado consolidado, não trabalho em aberto.
+ * O caixa do dia: mesma superfície, sombra e métrica dos cartões da fila.
+ * Uma coluna no celular — com o rótulo ao lado do número, cada cartão é uma
+ * linha de texto, e os três empilhados ocupam menos altura do que ocupavam
+ * espremidos lado a lado.
  */
-/* três colunas já no celular: empilhado, o caixa do dia empurrava a lista
-   de pedidos recentes para fora da primeira tela */
 .tally {
-  @apply grid grid-cols-3 gap-2 lg:gap-4;
+  @apply grid grid-cols-1 gap-2 lg:grid-cols-3 lg:gap-4;
 }
 
-/* superfície vem do Card do DS; aqui fica o que ele não sabe */
+/* superfície e sombra vêm do Card do DS; aqui fica o que ele não sabe.
+   O gap não é 1: o número usa leading-none, então não há entrelinha para
+   servir de folga entre ele e o rótulo. */
 .figure {
-  @apply flex flex-col gap-1 p-3 lg:p-5;
-  @apply transition-colors duration-200;
-}
-
-/* só o quadro que leva a algum lugar reage ao cursor */
-a.figure {
-  @apply hover:border-brand/30;
+  @apply flex flex-col gap-2 p-5;
+  @apply transition-all duration-300;
+  @apply hover:border-brand/60 hover:shadow-card-hover;
   @apply focus-visible:outline-none focus-visible:ring-2;
   @apply focus-visible:ring-brand focus-visible:ring-offset-2;
 }
 
+/* um degrau abaixo da fila: lá são contagens curtas, aqui cabe "R$ 1.234,56" */
 .value {
-  @apply font-display text-xl font-extrabold leading-none tracking-tight;
-  @apply text-ink lg:text-2xl;
+  @apply font-display text-2xl font-extrabold leading-none tracking-tight;
+  @apply text-ink lg:text-3xl;
   font-variant-numeric: tabular-nums;
 }
 
@@ -69,4 +68,8 @@ a.figure {
 .total {
   @apply text-sm font-semibold text-body;
   font-variant-numeric: tabular-nums;
+}
+
+.cardOverview {
+  @apply flex flex-row gap-x-2 items-center;
 }

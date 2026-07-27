@@ -15,46 +15,36 @@
 
 /* mesma faixa quente do detalhe de produto — o pedido é o assunto da tela */
 .hero {
-  @apply relative mt-3 flex items-center gap-4 overflow-hidden;
-  @apply rounded-[28px] px-6 py-6 text-cream lg:px-8 lg:py-7;
-  background:
-    radial-gradient(120% 90% at 85% 0%, #ff8a33 0%, transparent 55%),
-    linear-gradient(165deg, #ff7e1f 0%, #ec5a0e 100%);
-}
-
-.hero::after {
-  content: "";
-  @apply pointer-events-none absolute inset-0 opacity-50 mix-blend-overlay;
-  background-image: url("/noise.svg");
+  @apply mt-3 flex items-center gap-4 p-5 lg:p-6;
 }
 
 .heroText {
-  @apply relative z-10 min-w-0 flex-1;
+  @apply min-w-0 flex-1;
 }
 
 .channel {
   @apply mb-1 inline-flex items-center gap-2 text-[0.7rem] font-bold;
-  @apply uppercase tracking-[0.12em] text-white/70;
+  @apply uppercase tracking-[0.12em] text-faint;
 }
 
 .channel::before {
   content: "";
-  @apply inline-block h-0.5 w-[18px] rounded-sm bg-white/60;
+  @apply inline-block h-0.5 w-[18px] rounded-sm bg-line;
 }
 
 .number {
-  @apply font-display text-2xl font-extrabold tracking-[-0.02em] text-white;
+  @apply font-display text-2xl font-extrabold tracking-[-0.02em] text-ink;
   @apply lg:text-3xl;
   font-variant-numeric: tabular-nums;
 }
 
 .opened {
-  @apply mt-1 text-sm text-white/80;
+  @apply mt-1 text-sm text-subtle;
   font-variant-numeric: tabular-nums;
 }
 
 .badge {
-  @apply relative z-10 shrink-0;
+  @apply shrink-0;
 }
 
 .columns {

@@ -4,8 +4,56 @@
   @apply mx-auto max-w-3xl p-4 lg:p-8;
 }
 
-.skeleton {
-  @apply h-96 w-full rounded-[24px];
+/*
+ * Ossos da ficha: cada um tem a altura do elemento que substitui, para a
+ * página não pular de altura quando o item chega.
+ */
+.boneCategory {
+  @apply mb-2 h-3 w-24 rounded-sm;
+}
+
+.boneName {
+  @apply h-8 w-2/3 rounded-lg lg:h-9;
+}
+
+.bonePrice {
+  @apply mt-2 h-4 w-20 rounded-sm;
+}
+
+.boneBadge {
+  @apply h-5 w-28 shrink-0 rounded-[4px];
+}
+
+.bonePhoto {
+  @apply h-40 w-full rounded-2xl;
+}
+
+.boneLabel {
+  @apply mb-2 h-3.5 w-28 rounded-sm;
+}
+
+.boneInput {
+  @apply h-10 w-full rounded-card;
+}
+
+.boneTextarea {
+  @apply h-20 w-full rounded-card;
+}
+
+.boneSwitch {
+  @apply h-5 w-9 shrink-0 rounded-full;
+}
+
+.boneAvailabilityText {
+  @apply min-w-0 flex-1;
+}
+
+.boneHint {
+  @apply h-3 w-full max-w-[42ch] rounded-sm;
+}
+
+.boneButton {
+  @apply h-10 w-full rounded-button sm:w-40;
 }
 
 .backLink {
@@ -13,65 +61,46 @@
   @apply transition-colors duration-150 hover:text-brand-strong;
 }
 
-/*
- * Faixa do item com o mesmo gradiente e grão do hero da landing: o produto é
- * o assunto da tela e merece o tratamento de capa, não um cartão branco.
- */
-.hero {
-  @apply relative mt-3 overflow-hidden rounded-[28px] px-6 py-6 text-cream;
-  @apply lg:px-8 lg:py-7;
-  background:
-    radial-gradient(120% 90% at 85% 0%, #ff8a33 0%, transparent 55%),
-    linear-gradient(165deg, #ff7e1f 0%, #ec5a0e 100%);
+/* A tela toda é uma ficha só: o cabeçalho do item mora no topo do cartão,
+   separado do formulário por um fio — não é outra superfície. */
+.sheet {
+  @apply mt-3 p-5 lg:p-7;
 }
 
-.hero::after {
-  content: "";
-  @apply pointer-events-none absolute inset-0 opacity-50 mix-blend-overlay;
-  background-image: url("/noise.svg");
+.head {
+  @apply flex items-center gap-4 border-b border-sand pb-5;
 }
 
-.heroInner {
-  @apply relative z-10 flex items-center gap-4;
-}
-
-.thumb {
-  @apply h-16 w-16 border border-white/25 bg-white/15 text-base text-white;
-  @apply lg:h-20 lg:w-20 lg:text-lg;
-}
-
-.heroText {
+.headText {
   @apply min-w-0 flex-1;
 }
 
 .category {
   @apply mb-1 inline-flex items-center gap-2 text-[0.7rem] font-bold;
-  @apply uppercase tracking-[0.12em] text-white/70;
+  @apply uppercase tracking-[0.12em] text-faint;
 }
 
 .category::before {
   content: "";
-  @apply inline-block h-0.5 w-[18px] rounded-sm bg-white/60;
+  @apply inline-block h-0.5 w-[18px] rounded-sm bg-line;
 }
 
 .name {
   @apply truncate font-display text-2xl font-extrabold tracking-[-0.02em];
-  @apply text-white lg:text-3xl;
+  @apply text-ink lg:text-3xl;
 }
 
-.heroPrice {
-  @apply mt-1 text-sm font-semibold text-white/85;
+.price {
+  @apply mt-1 text-sm font-semibold text-subtle;
   font-variant-numeric: tabular-nums;
 }
 
-/* estado do item, no canto da faixa */
-.heroBadge {
-  @apply relative z-10 shrink-0;
+.headBadge {
+  @apply shrink-0;
 }
 
 .form {
-  @apply mt-6 flex flex-col gap-5 rounded-[24px] border border-line;
-  @apply bg-brand-foreground/70 p-5 backdrop-blur-sm lg:p-7;
+  @apply mt-5 flex flex-col gap-5;
 }
 
 .field {
