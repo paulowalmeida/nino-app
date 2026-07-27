@@ -25,10 +25,10 @@
 }
 
 .chip {
-  @apply flex shrink-0 cursor-pointer items-center rounded-full;
-  @apply border border-line bg-brand-foreground px-4 py-2 text-[0.82rem] font-bold;
+  @apply flex cursor-pointer items-center rounded-full;
+  @apply bg-brand-foreground px-4 py-2 text-[0.82rem] font-bold;
   @apply text-body transition-colors duration-150;
-  @apply lg:w-full lg:justify-start lg:rounded-xl lg:border-transparent;
+  @apply lg:w-full lg:justify-start lg:rounded-xl;
   @apply lg:bg-transparent lg:px-3.5 lg:py-2.5 lg:text-[0.9rem] lg:text-subtle;
 }
 
@@ -42,7 +42,7 @@
  * tap e lavava a pílula ativa (fundo claro + texto claro). */
 @media (hover: hover) {
   .chip:hover {
-    @apply border-peach bg-peach-light text-brand-strong;
+    @apply  text-brand-strong;
     @apply lg:border-transparent lg:bg-cream lg:text-ink;
   }
 
@@ -59,7 +59,6 @@
 
 .chipOn {
   @apply border-brand bg-brand text-brand-foreground;
-  box-shadow: 0 6px 14px -6px rgba(232, 84, 12, 0.5);
 }
 
 /* ativo no índice vertical: sem pílula cheia, um marcador de página com
