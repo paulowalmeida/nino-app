@@ -54,7 +54,7 @@
 }
 
 .badgeOpen {
-  @apply border-brand-soft bg-brand-soft text-brand-strong;
+  @apply border-brand-soft bg-paper text-brand-strong;
 }
 
 .badgeShut {

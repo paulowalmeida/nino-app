@@ -26,7 +26,7 @@
 
 .chip {
   @apply flex shrink-0 cursor-pointer items-center rounded-full;
-  @apply border border-line bg-sand px-4 py-2 text-[0.82rem] font-bold;
+  @apply border border-line bg-brand-foreground px-4 py-2 text-[0.82rem] font-bold;
   @apply text-body transition-colors duration-150;
   @apply lg:w-full lg:justify-start lg:rounded-xl lg:border-transparent;
   @apply lg:bg-transparent lg:px-3.5 lg:py-2.5 lg:text-[0.9rem] lg:text-subtle;

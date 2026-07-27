@@ -107,7 +107,7 @@ export const Account = () => {
       )}
 
       {profile && (
-        <section className={`${motion.settle} ${card.card}`}>
+        <section className={`mt-4 ${motion.settle} ${card.card}`}>
           <p className={styles.factsTitle}>Sobre a conta</p>
           <dl className={styles.facts}>
             <div className={styles.fact}>
