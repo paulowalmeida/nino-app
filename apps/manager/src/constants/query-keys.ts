@@ -11,6 +11,12 @@
  * Domain hooks live in `src/hooks/<domain>/`, consume these keys and the
  * matching service (`@services/...`).
  */
+import type { ReportRangeParams } from '@custom_types/order'
+
+/** Um recorte vira uma string estável: preset ou o par de dias. */
+const rangeKey = (range: ReportRangeParams): string =>
+  range.period ?? `${range.from}:${range.to}`
+
 export const queryKeys = {
   session: {
     all: ['session'] as const,
@@ -38,23 +44,25 @@ export const queryKeys = {
       [...queryKeys.orders.all(tenantId), 'list', status ?? null] as const,
     detail: (tenantId: string, orderId: string) =>
       [...queryKeys.orders.all(tenantId), 'detail', orderId] as const,
-    report: (tenantId: string, from: string, to: string) =>
-      [...queryKeys.orders.all(tenantId), 'report', from, to] as const,
+    report: (tenantId: string, range: ReportRangeParams) =>
+      [...queryKeys.orders.all(tenantId), 'report', rangeKey(range)] as const,
     series: (
       tenantId: string,
-      from: string,
-      to: string,
+      range: ReportRangeParams,
       granularity?: string
     ) =>
       [
         ...queryKeys.orders.all(tenantId),
         'series',
-        from,
-        to,
+        rangeKey(range),
         granularity ?? null,
       ] as const,
-    timingReport: (tenantId: string, from: string, to: string) =>
-      [...queryKeys.orders.all(tenantId), 'timing-report', from, to] as const,
+    timingReport: (tenantId: string, range: ReportRangeParams) =>
+      [
+        ...queryKeys.orders.all(tenantId),
+        'timing-report',
+        rangeKey(range),
+      ] as const,
   },
   tenant: {
     all: (tenantId: string) => ['tenant', tenantId] as const,

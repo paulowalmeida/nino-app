@@ -1,7 +1,11 @@
 import { useQuery } from '@tanstack/react-query'
 
 import { queryKeys } from '@constants/query-keys'
-import type { SalesSeries, SeriesGranularity } from '@custom_types/order'
+import type {
+  ReportRangeParams,
+  SalesSeries,
+  SeriesGranularity,
+} from '@custom_types/order'
 import { getSalesSeries } from '@services/order/order.service'
 
 /**
@@ -11,13 +15,12 @@ import { getSalesSeries } from '@services/order/order.service'
  */
 export const useSalesSeries = (
   tenantId: string | null,
-  from: string,
-  to: string,
+  params: ReportRangeParams,
   granularity?: SeriesGranularity
 ) => {
   const query = useQuery<SalesSeries>({
-    queryKey: queryKeys.orders.series(tenantId ?? '', from, to, granularity),
-    queryFn: () => getSalesSeries(tenantId as string, from, to, granularity),
+    queryKey: queryKeys.orders.series(tenantId ?? '', params, granularity),
+    queryFn: () => getSalesSeries(tenantId as string, params, granularity),
     enabled: !!tenantId,
   })
 
