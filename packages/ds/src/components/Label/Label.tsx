@@ -4,9 +4,9 @@ import { mergeClasses } from '@ds/lib/mergeClasses'
 import { LabelProps } from './Label.types'
 
 const baseLabel =
-  'text-sm font-medium text-gray-700 leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-50'
+  'text-sm font-medium text-body leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-50'
 
-const requiredMark = 'ml-1 text-red-500'
+const requiredMark = 'ml-1 text-danger'
 
 /**
  * Form label. Renders Ark `Field.Label`: inside a `Field.Root` (via

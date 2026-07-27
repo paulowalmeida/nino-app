@@ -3,15 +3,20 @@ import { mergeClasses } from '@ds/lib/mergeClasses'
 
 import { AccordionProps } from './Accordion.types'
 
-const baseRoot =
-  'w-full divide-y divide-gray-200 rounded-md border border-gray-200'
+/* Cada item é um bloco fechado em si: o cabeçalho é a superfície rebaixada
+ * onde se clica e o corpo é a folha clara que sai dela. Sem grade em volta. */
+const baseRoot = 'flex w-full flex-col gap-2'
 
-const baseItem = 'bg-white'
+const baseItem = 'overflow-hidden rounded-card bg-paper'
 
 const baseTrigger =
-  'flex w-full items-center justify-between px-4 py-3.5 text-sm font-medium text-gray-900 transition-colors outline-none hover:bg-[color-mix(in_srgb,var(--color-brand)_5%,white)] focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-brand disabled:pointer-events-none disabled:opacity-50'
+  'flex w-full items-center justify-between bg-surface-sunk px-4 py-3 ' +
+  'text-sm font-semibold text-ink transition-colors outline-none ' +
+  'hover:bg-cream-deep focus-visible:outline-2 focus-visible:-outline-offset-2 ' +
+  'focus-visible:outline-brand disabled:pointer-events-none ' +
+  'disabled:opacity-50 data-[state=open]:bg-cream-deep'
 
-const baseContent = 'accordion-content overflow-hidden text-sm text-gray-600'
+const baseContent = 'accordion-content overflow-hidden text-sm text-muted'
 
 const baseContentInner = 'px-4 pb-4 pt-0'
 

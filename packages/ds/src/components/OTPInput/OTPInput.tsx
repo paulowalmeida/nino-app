@@ -6,7 +6,7 @@ import { OTPInputProps } from './OTPInput.types'
 const baseRoot = 'flex items-center gap-2'
 
 const baseInput =
-  'h-12 w-12 rounded-md border border-gray-300 bg-white text-center text-lg font-semibold text-gray-900 outline-none transition-colors placeholder:text-gray-300 focus:border-brand focus:ring-2 focus:ring-brand data-[invalid]:border-red-500 data-[invalid]:focus:ring-red-500 data-[complete]:border-brand disabled:pointer-events-none disabled:opacity-50'
+  'h-12 w-12 rounded-card border border-transparent bg-surface-sunk text-center text-lg font-semibold text-ink outline-none transition-colors placeholder:text-faint focus:border-brand focus:ring-2 focus:ring-brand data-[invalid]:border-danger data-[invalid]:focus:ring-danger data-[complete]:border-brand disabled:pointer-events-none disabled:opacity-50'
 
 export function OTPInput({
   length = 6,

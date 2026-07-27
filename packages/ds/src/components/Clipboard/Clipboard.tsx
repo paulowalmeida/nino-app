@@ -4,16 +4,16 @@ import { mergeClasses } from '@ds/lib/mergeClasses'
 import { ClipboardProps } from './Clipboard.types'
 
 const baseControl =
-  'flex items-center gap-2 w-full h-10 rounded-md border border-gray-300 bg-white pl-3 pr-1 ' +
+  'flex items-center gap-2 w-full h-10 rounded-card border border-transparent bg-surface-sunk pl-3 pr-1 ' +
   'transition-colors focus-within:ring-2 focus-within:ring-brand/25 focus-within:border-brand'
 
-const baseInput =
-  'flex-1 min-w-0 bg-transparent text-sm text-gray-900 outline-none'
+const baseInput = 'flex-1 min-w-0 bg-transparent text-sm text-ink outline-none'
 
 const triggerClass =
-  'shrink-0 inline-flex h-8 items-center gap-1.5 rounded px-2.5 text-sm font-medium ' +
-  'text-brand transition-colors cursor-pointer outline-none ' +
-  'hover:bg-brand-soft focus-visible:ring-2 focus-visible:ring-brand'
+  'shrink-0 inline-flex h-8 items-center gap-1.5 rounded-[6px] px-3 ' +
+  'text-sm font-semibold text-cream bg-body transition-colors ' +
+  'cursor-pointer outline-none hover:bg-ink focus-visible:outline-2 ' +
+  'focus-visible:outline-brand focus-visible:outline-offset-2'
 
 const CopyIcon = () => (
   <svg

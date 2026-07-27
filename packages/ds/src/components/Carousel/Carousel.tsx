@@ -11,16 +11,19 @@ const itemClass = 'min-w-0 shrink-0 grow-0'
 
 const triggerClass =
   'absolute top-1/2 z-10 flex h-9 w-9 -translate-y-1/2 items-center ' +
-  'justify-center rounded-full border border-gray-200 bg-white text-gray-700 ' +
-  'shadow-sm transition-colors cursor-pointer outline-none ' +
-  'hover:bg-brand-soft hover:text-brand focus-visible:ring-2 focus-visible:ring-brand ' +
-  'disabled:pointer-events-none disabled:opacity-40'
+  'justify-center rounded-card bg-paper text-body shadow-card ' +
+  'transition-colors cursor-pointer outline-none hover:bg-cream-deep ' +
+  'hover:text-brand-strong focus-visible:outline-2 ' +
+  'focus-visible:outline-brand disabled:pointer-events-none ' +
+  'disabled:opacity-40'
 
 const indicatorGroupClass = 'mt-3 flex items-center justify-center gap-2'
 
 const indicatorClass =
-  'h-2 w-2 rounded-full bg-gray-300 transition-all cursor-pointer outline-none ' +
-  'data-[current]:w-5 data-[current]:bg-brand focus-visible:ring-2 focus-visible:ring-brand'
+  'h-1.5 w-4 rounded-full bg-line transition-all cursor-pointer ' +
+  'outline-none data-[current]:w-8 data-[current]:bg-body ' +
+  'focus-visible:outline-2 focus-visible:outline-brand ' +
+  'focus-visible:outline-offset-2'
 
 const Chevron = ({ dir }: { dir: 'left' | 'right' }) => (
   <svg

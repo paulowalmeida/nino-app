@@ -8,11 +8,16 @@ const rootVertical = 'flex-col'
 const rootHorizontal = 'flex-row flex-wrap'
 
 const baseControl =
-  'h-4 w-4 shrink-0 rounded-full border border-gray-300 flex items-center justify-center outline-none transition-colors focus-visible:ring-2 focus-visible:ring-brand data-[state=checked]:border-brand data-[state=checked]:bg-brand disabled:cursor-not-allowed disabled:opacity-50'
+  'h-4 w-4 shrink-0 rounded-full border border-transparent bg-surface-sunk ' +
+  'flex items-center justify-center outline-none transition-colors ' +
+  'focus-visible:outline-2 focus-visible:outline-brand ' +
+  'focus-visible:outline-offset-2 data-[state=checked]:border-brand ' +
+  'data-[state=checked]:bg-brand disabled:cursor-not-allowed ' +
+  'disabled:opacity-50'
 
-const baseIndicatorDot = 'h-1.5 w-1.5 rounded-full bg-white'
+const baseIndicatorDot = 'h-1.5 w-1.5 rounded-full bg-paper'
 
-const baseLabelText = 'text-sm text-gray-700 leading-none cursor-pointer'
+const baseLabelText = 'text-sm text-body leading-none cursor-pointer'
 
 const baseOptionWrapper = 'flex items-center gap-2 cursor-pointer'
 

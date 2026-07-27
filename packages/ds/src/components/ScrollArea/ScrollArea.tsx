@@ -7,15 +7,14 @@ const rootClass = 'relative overflow-hidden'
 
 const viewportClass =
   'h-full w-full rounded-[inherit] focus-visible:outline-none ' +
-  'focus-visible:ring-2 focus-visible:ring-brand'
+  'focus-visible:outline-2 focus-visible:outline-brand focus-visible:outline-offset-2'
 
 const scrollbarClass =
   'flex touch-none select-none p-0.5 transition-colors ' +
   'data-[orientation=vertical]:w-2.5 data-[orientation=horizontal]:h-2.5 ' +
   'data-[orientation=horizontal]:flex-col'
 
-const thumbClass =
-  'flex-1 rounded-full bg-sand-deep transition-colors hover:bg-brand'
+const thumbClass = 'flex-1 rounded-full bg-line transition-colors hover:bg-body'
 
 /**
  * Scrollable region with a themed custom scrollbar (Ark `ScrollArea`).

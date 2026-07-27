@@ -30,6 +30,6 @@ describe(NumberInput.displayName!, () => {
 
   it('applies error styling when error=true', () => {
     render(<NumberInput error />)
-    expect(screen.getByRole('spinbutton')).toHaveClass('border-red-500')
+    expect(screen.getByRole('spinbutton')).toHaveClass('border-danger')
   })
 })

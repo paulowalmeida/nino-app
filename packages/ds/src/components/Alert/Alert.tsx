@@ -4,11 +4,12 @@ import { statusIconPaths } from '@ds/lib/statusIconPaths'
 import { AlertProps, AlertVariant } from './Alert.types'
 
 /**
- * The alert is the toast's counterpart: same status family, inverted pair.
- * A toast interrupts and leaves, so it takes the saturated fill; an alert
- * stays on the page, so it takes the pale surface of the same hue with the
- * dark tone on top. No border and no shadow — it sits in the layout, it does
- * not float above it.
+ * An alert lives inside the page and often several sit on the same screen, so
+ * flooding it with saturated fill — the toast's move — would leave nowhere to
+ * rest. It keeps the pale surface and concentrates the solid colour in one
+ * stamp: the icon block. Same language as the toast (flat fill, contrasting
+ * mark on top, no border), applied to a square centimetre instead of the
+ * whole card.
  */
 const variantClasses: Record<AlertVariant, string> = {
   info: 'bg-cream-deep text-body',
@@ -17,27 +18,30 @@ const variantClasses: Record<AlertVariant, string> = {
   error: 'bg-danger-surface text-danger',
 }
 
-const iconClasses: Record<AlertVariant, string> = {
-  info: 'text-brand-strong',
-  success: 'text-success',
-  warning: 'text-warning',
-  error: 'text-danger',
+const stampClasses: Record<AlertVariant, string> = {
+  info: 'bg-brand-strong text-cream',
+  success: 'bg-success text-cream',
+  warning: 'bg-warning-bright text-ink',
+  error: 'bg-danger text-cream',
 }
 
 const baseAlert = 'flex gap-3 rounded-card p-4'
+const stampClass = 'grid size-7 shrink-0 place-items-center rounded-[6px]'
 const titleClass = 'font-display text-sm font-semibold tracking-[-0.01em]'
-const bodyClass = 'text-[0.8125rem] leading-[1.45]'
+const bodyClass = 'text-[0.8125rem] leading-[1.45] opacity-80'
 
-function AlertIcon({ variant }: { variant: AlertVariant }) {
+function AlertStamp({ variant }: { variant: AlertVariant }) {
   return (
-    <svg
-      viewBox="0 0 24 24"
-      fill="currentColor"
-      className={mergeClasses('mt-0.5 h-4 w-4 shrink-0', iconClasses[variant])}
-      aria-hidden="true"
-    >
-      <path d={statusIconPaths[variant]} />
-    </svg>
+    <span className={mergeClasses(stampClass, stampClasses[variant])}>
+      <svg
+        viewBox="0 0 24 24"
+        fill="currentColor"
+        className="size-[15px]"
+        aria-hidden="true"
+      >
+        <path d={statusIconPaths[variant]} />
+      </svg>
+    </span>
   )
 }
 
@@ -67,8 +71,8 @@ export function Alert({
       className={mergeClasses(baseAlert, variantClasses[variant], className)}
       {...props}
     >
-      <AlertIcon variant={variant} />
-      <div className="flex flex-col gap-1">
+      <AlertStamp variant={variant} />
+      <div className="flex flex-col gap-1 pt-0.5">
         {title && <p className={titleClass}>{title}</p>}
         {children && <p className={bodyClass}>{children}</p>}
       </div>

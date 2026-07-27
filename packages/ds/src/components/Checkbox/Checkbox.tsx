@@ -19,13 +19,17 @@ const iconSizeClasses: Record<CheckboxSize, string> = {
 }
 
 const baseControl =
-  'flex shrink-0 items-center justify-center rounded border bg-white transition-colors cursor-pointer'
+  /* Vazio é superfície rebaixada, marcado é tinta cheia — nada de caixinha
+   * contornada em cima de fundo claro. */
+  'flex shrink-0 items-center justify-center rounded-[4px] border ' +
+  'bg-surface-sunk transition-colors cursor-pointer'
 
 const controlDefault =
-  'border-gray-300 data-[state=checked]:bg-brand data-[state=checked]:border-brand'
+  'border-transparent data-[state=checked]:bg-brand ' +
+  'data-[state=checked]:border-brand'
 
 const controlError =
-  'border-red-500 data-[state=checked]:bg-red-500 data-[state=checked]:border-red-500'
+  'border-danger data-[state=checked]:bg-danger data-[state=checked]:border-danger'
 
 const indicatorBase = 'flex items-center justify-center text-white'
 

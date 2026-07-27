@@ -4,13 +4,15 @@ import { mergeClasses } from '@ds/lib/mergeClasses'
 import { SliderProps } from './Slider.types'
 
 const baseControl = 'relative flex w-full items-center py-2'
-const baseTrack = 'relative h-1.5 w-full grow rounded-full bg-gray-200'
+const baseTrack = 'relative h-1.5 w-full grow rounded-full bg-surface-sunk'
 const baseRange = 'absolute h-full rounded-full bg-brand'
 const baseThumb =
-  'block size-4 rounded-full border-2 border-white bg-brand shadow outline-none transition-shadow focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-1 data-[disabled]:opacity-50'
+  'block size-4 rounded-full bg-brand shadow-card outline-none ' +
+  'transition-shadow focus-visible:outline-2 focus-visible:outline-brand ' +
+  'focus-visible:outline-offset-2 data-[disabled]:opacity-50'
 const baseLabel =
-  'flex items-center justify-between text-sm font-medium text-gray-700'
-const baseValue = 'text-sm text-gray-500 tabular-nums'
+  'flex items-center justify-between text-sm font-medium text-body'
+const baseValue = 'text-sm text-subtle tabular-nums'
 
 /**
  * Slider for numeric values (price, quantity, percentage).

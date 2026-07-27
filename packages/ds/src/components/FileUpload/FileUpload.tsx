@@ -4,18 +4,25 @@ import { mergeClasses } from '@ds/lib/mergeClasses'
 import { FileUploadProps } from './FileUpload.types'
 
 const baseDropzone =
-  'group flex flex-col items-center justify-center gap-3 rounded-lg border-2 border-dashed border-gray-300 bg-white px-6 py-10 text-center transition-colors cursor-pointer hover:border-brand hover:bg-[color-mix(in_srgb,var(--color-brand)_5%,white)] data-[dragging]:border-brand data-[dragging]:bg-[color-mix(in_srgb,var(--color-brand)_8%,white)]'
+  /* A área que recebe arquivo é a mesma superfície rebaixada dos campos: onde
+   * o fundo afunda, é onde se deposita algo. O tracejado marca que ainda está
+   * vazia. */
+  'group flex flex-col items-center justify-center gap-3 rounded-card ' +
+  'border-2 border-dashed border-line bg-surface-sunk px-6 py-10 ' +
+  'text-center transition-colors cursor-pointer hover:border-brand ' +
+  'hover:bg-cream-deep data-[dragging]:border-brand ' +
+  'data-[dragging]:bg-cream-deep'
 
 const baseItemGroup = 'mt-4 flex flex-col gap-2'
 
 const baseItem =
-  'flex items-center gap-3 rounded-md border border-gray-200 bg-white px-3 py-2 text-sm'
+  'flex items-center gap-3 rounded-card bg-surface-sunk px-3 py-2 text-sm'
 
-const baseItemName = 'flex-1 truncate text-gray-900'
-const baseItemSize = 'shrink-0 text-xs text-gray-400'
+const baseItemName = 'flex-1 truncate text-ink'
+const baseItemSize = 'shrink-0 text-xs text-faint'
 
 const baseDeleteButton =
-  'shrink-0 rounded p-0.5 text-gray-400 transition-colors hover:bg-gray-100 hover:text-gray-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand'
+  'shrink-0 rounded p-0.5 text-faint transition-colors hover:bg-sand hover:text-muted focus-visible:outline-2 focus-visible:outline-brand focus-visible:outline-offset-2'
 
 const UploadIcon = () => (
   <svg
@@ -27,7 +34,7 @@ const UploadIcon = () => (
     strokeWidth="1.5"
     strokeLinecap="round"
     strokeLinejoin="round"
-    className="text-gray-400"
+    className="text-faint"
   >
     <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
     <polyline points="17 8 12 3 7 8" />
@@ -86,18 +93,18 @@ export function FileUpload({
           <ArkFileUpload.Trigger className="font-medium text-brand hover:underline focus-visible:outline-none">
             {triggerLabel}
           </ArkFileUpload.Trigger>
-          <span className="text-sm text-gray-500"> {dragLabel}</span>
+          <span className="text-sm text-subtle"> {dragLabel}</span>
         </div>
         <p className="hidden text-sm font-medium text-brand group-data-dragging:block">
           {dropLabel}
         </p>
         {maxFileSize && (
-          <p className="text-xs text-gray-400 group-data-dragging:hidden">
+          <p className="text-xs text-faint group-data-dragging:hidden">
             Max {formatBytes(maxFileSize)}
           </p>
         )}
         {maxFiles > 1 && (
-          <p className="text-xs text-gray-400 group-data-dragging:hidden">
+          <p className="text-xs text-faint group-data-dragging:hidden">
             Up to {maxFiles} files
           </p>
         )}

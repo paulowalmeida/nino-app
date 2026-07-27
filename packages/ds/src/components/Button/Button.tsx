@@ -12,16 +12,22 @@ import { ButtonProps, ButtonSize, ButtonVariant } from './Button.types'
 const variantClasses: Record<ButtonVariant, string> = {
   primary:
     'bg-brand text-brand-foreground hover:bg-brand-hover active:bg-brand-active',
-  secondary: 'bg-gray-100 text-gray-900 hover:bg-gray-200 active:bg-gray-300',
+  secondary: 'bg-sand text-ink hover:bg-sand-deep active:bg-line',
   outline:
-    'border border-gray-300 text-gray-900 bg-transparent hover:bg-gray-50 active:bg-gray-100',
-  ghost: 'text-gray-700 bg-transparent hover:bg-gray-100 active:bg-gray-200',
+    'border border-line text-ink bg-transparent hover:bg-cream ' +
+    'active:bg-cream-deep',
+  ghost: 'text-body bg-transparent hover:bg-cream active:bg-cream-deep',
+  /* Sem halo colorido: sobre o laranja da marca, o glow virava um segundo
+   * botão desfocado atrás do primeiro. */
   inverse:
-    'bg-white text-brand-strong hover:bg-cream active:bg-cream-deep shadow-brand-glow',
+    'bg-paper text-brand-strong hover:bg-cream active:bg-cream-deep ' +
+    'shadow-card',
   inverseOutline:
     'border-[1.5px] border-white/55 text-white bg-transparent hover:bg-white hover:text-brand-strong hover:border-white',
-  danger:
-    'text-gray-500 bg-transparent hover:bg-red-50 hover:text-red-500 active:bg-red-100',
+  /* Destrutivo é preenchimento cheio, como o toast de erro: um botão apagado
+   * que só fica vermelho no hover esconde a consequência até o último
+   * instante. */
+  danger: 'bg-danger text-cream hover:bg-danger/90 active:bg-danger/80',
 }
 
 const sizeClasses: Record<ButtonSize, string> = {
@@ -40,7 +46,7 @@ const baseDisabledStyle = 'disabled:pointer-events-none'
  * troca a tinta por `sand`; as de fundo transparente (outline, ghost) já
  * comunicam pelo apagamento e mantêm a opacidade.
  */
-const FILLED: ButtonVariant[] = ['primary', 'secondary', 'inverse']
+const FILLED: ButtonVariant[] = ['primary', 'secondary', 'inverse', 'danger']
 
 const disabledStyle = (variant: ButtonVariant): string =>
   FILLED.includes(variant) ? 'bg-sand text-subtle shadow-none' : 'opacity-50'
@@ -126,7 +132,9 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         disabled={disabled || loading}
         aria-busy={loading || undefined}
         className={baseClassName}
-        whileTap={disabled || loading ? {} : { scale: 0.97, opacity: 0.75 }}
+        /* Só escala: baixar a opacidade clareia a tinta e o botão pisca
+           desligado no meio do próprio clique. */
+        whileTap={disabled || loading ? {} : { scale: 0.96 }}
         transition={{ type: 'spring', stiffness: 500, damping: 30 }}
         {...props}
       >

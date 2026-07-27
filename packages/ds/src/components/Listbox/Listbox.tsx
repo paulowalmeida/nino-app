@@ -5,17 +5,16 @@ import {
 
 import { ListboxOption, ListboxProps } from './Listbox.types'
 
-const labelClass = 'mb-1.5 block text-sm font-medium text-gray-700'
+const labelClass = 'mb-1.5 block text-sm font-medium text-body'
 
 const contentClass =
-  'flex flex-col gap-0.5 rounded-md border border-gray-200 bg-white p-1 ' +
-  'outline-none'
+  'flex flex-col gap-0.5 rounded-card bg-paper p-1 shadow-card outline-none'
 
 const itemClass =
-  'flex cursor-pointer select-none items-center justify-between gap-2 rounded ' +
-  'px-3 py-2 text-sm text-gray-900 outline-none transition-colors ' +
-  'data-[highlighted]:bg-brand-soft data-[highlighted]:text-brand ' +
-  'data-[state=checked]:font-medium data-[state=checked]:text-brand ' +
+  'flex cursor-pointer select-none items-center justify-between gap-2 ' +
+  'rounded-[6px] px-3 py-2 text-sm text-ink outline-none transition-colors ' +
+  'data-[highlighted]:bg-surface-sunk data-[highlighted]:text-ink ' +
+  'data-[state=checked]:font-semibold data-[state=checked]:text-brand-strong ' +
   'data-[disabled]:pointer-events-none data-[disabled]:opacity-50'
 
 const indicatorClass = 'text-brand'

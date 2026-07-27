@@ -3,12 +3,12 @@ import { mergeClasses } from '@ds/lib/mergeClasses'
 
 import { QRCodeProps } from './QRCode.types'
 
-const baseRoot = 'inline-block rounded-md bg-white p-3'
+const baseRoot = 'inline-block rounded-card bg-paper p-3'
 
-const frameClass = 'h-full w-full [&_path]:fill-gray-900'
+const frameClass = 'h-full w-full [&_path]:fill-ink'
 
 const overlayClass =
-  'flex items-center justify-center rounded-md bg-white p-1 shadow-sm'
+  'flex items-center justify-center rounded-card bg-paper p-1 shadow-card'
 
 /**
  * Renders a QR code (Ark `QrCode`) — share a store link, Pix, or menu.

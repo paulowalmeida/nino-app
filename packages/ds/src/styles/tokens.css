@@ -59,8 +59,9 @@
      claro o bastante para pedir texto ink por cima (toast). */
   --color-warning-bright: #f2c14e;
 
-  /* Inputs — override por tenant */
-  --color-input-border: #d1d5db;
+  /* Inputs — override por tenant. Um passo mais fechado que `line`: a borda
+     de card só delimita, a de campo precisa dizer onde se escreve. */
+  --color-input-border: #dccdb2;
   --color-input-border-focus: var(--color-brand);
 
   /* Estrutural */

@@ -19,7 +19,7 @@ const defaultPresets = [
 ]
 
 const controlClass =
-  'inline-flex h-10 items-center gap-2 rounded-md border border-gray-300 bg-white ' +
+  'inline-flex h-10 items-center gap-2 rounded-card border border-input-border bg-paper ' +
   'pl-2 pr-3 transition-colors hover:border-brand focus-within:ring-2 ' +
   'focus-within:ring-brand/25 focus-within:border-brand ' +
   'data-[disabled]:pointer-events-none data-[disabled]:opacity-50'
@@ -27,17 +27,17 @@ const controlClass =
 const triggerClass =
   'inline-flex items-center gap-2 outline-none cursor-pointer'
 
-const swatchClass = 'h-6 w-6 rounded border border-black/10'
+const swatchClass = 'h-6 w-6 rounded-[4px]'
 
-const valueTextClass = 'text-sm font-medium text-gray-900 tabular-nums'
+const valueTextClass = 'text-sm font-medium text-ink tabular-nums'
 
 const contentClass =
-  'z-50 w-60 rounded-card border border-gray-200 bg-white p-3 shadow-lg ' +
+  'z-50 w-60 rounded-card border border-line bg-paper p-3 shadow-overlay ' +
   'outline-none data-[state=open]:animate-in data-[state=closed]:animate-out ' +
   'data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 ' +
   'data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95'
 
-const areaClass = 'h-36 w-full overflow-hidden rounded-md'
+const areaClass = 'h-36 w-full overflow-hidden rounded-card'
 
 const areaThumbClass =
   'h-4 w-4 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 ' +
@@ -49,14 +49,14 @@ const hueThumbClass =
   'h-4 w-4 -translate-y-1/2 rounded-full border-2 border-white shadow ring-1 ring-black/20'
 
 const hexInputClass =
-  'mt-3 h-8 w-full rounded-md border border-gray-300 px-2 text-sm uppercase ' +
-  'text-gray-900 outline-none transition-colors focus:ring-2 focus:ring-brand/25 focus:border-brand'
+  'mt-3 h-8 w-full rounded-card border border-input-border px-2 text-sm uppercase ' +
+  'text-ink outline-none transition-colors focus:ring-2 focus:ring-brand/25 focus:border-brand'
 
 const swatchGroupClass = 'mt-3 flex flex-wrap gap-1.5'
 
 const presetSwatchClass =
   'h-6 w-6 cursor-pointer rounded border border-black/10 outline-none ' +
-  'transition-transform hover:scale-110 focus-visible:ring-2 focus-visible:ring-brand'
+  'transition-transform hover:scale-110 focus-visible:outline-2 focus-visible:outline-brand focus-visible:outline-offset-2'
 
 /**
  * Color picker for tenant branding — lets the store owner pick their brand
