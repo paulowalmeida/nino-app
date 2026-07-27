@@ -1,5 +1,6 @@
 import { useState } from 'react'
 
+import { Stepper } from '@nino/ds/components/Stepper'
 import type { SignupAccount } from '@custom_types/auth'
 
 import type { RegisterStep } from './RegisterWizard.types'
@@ -7,6 +8,10 @@ import type { RegisterStep } from './RegisterWizard.types'
 import { AccountStep } from './AccountStep'
 import { CompanyStep } from './CompanyStep'
 import { StoreStep } from './StoreStep'
+
+import styles from '@layouts/AuthLayout/authForm.module.css'
+
+const STEPS = [{ title: 'Conta' }, { title: 'Empresa' }, { title: 'Loja' }]
 
 /**
  * Step 1 lives only in memory: account and company go up together in
@@ -27,19 +32,34 @@ export const RegisterWizard = () => {
 
   const handleSignedUp = () => setStep(3)
 
-  if (step === 1 || !account) {
-    return <AccountStep defaultValues={account} onNext={handleAccountNext} />
+  /* Só voltar, e só do passo 2: a partir do 3 a conta já existe e a sessão
+   * está de pé — clicar numa etapa anterior não desfaz isso. */
+  const handleStepChange = (next: number) => {
+    if (step === 2 && next === 0) handleBack()
   }
 
-  if (step === 2) {
-    return (
+  const content =
+    step === 1 || !account ? (
+      <AccountStep defaultValues={account} onNext={handleAccountNext} />
+    ) : step === 2 ? (
       <CompanyStep
         account={account}
         onBack={handleBack}
         onSignedUp={handleSignedUp}
       />
+    ) : (
+      <StoreStep firstName={account.name.split(' ')[0]} />
     )
-  }
 
-  return <StoreStep firstName={account.name.split(' ')[0]} />
+  return (
+    <>
+      <Stepper
+        steps={STEPS}
+        step={account ? step - 1 : 0}
+        onStepChange={handleStepChange}
+        className={styles.stepper}
+      />
+      {content}
+    </>
+  )
 }

@@ -6,8 +6,8 @@
   @apply text-center;
 }
 
-.step {
-  @apply text-xs font-semibold uppercase tracking-wider text-brand;
+.stepper {
+  @apply mb-8;
 }
 
 .title {
