@@ -10,15 +10,17 @@ const sizeClasses: Record<AvatarSize, string> = {
   xl: 'h-16 w-16 text-lg',
 }
 
+/* A cor do texto fica na raiz, não no fallback: assim quem passa `className`
+ * consegue recolorir as iniciais junto com o fundo — o fallback herda. */
 const baseRoot =
   'relative inline-flex shrink-0 items-center justify-center ' +
-  'overflow-hidden rounded-full bg-surface-mute select-none'
+  'overflow-hidden rounded-full bg-surface-mute text-muted select-none'
 
 const baseImage = 'h-full w-full object-cover'
 
 const baseFallback =
   'flex h-full w-full items-center justify-center font-bold ' +
-  'tracking-[0.04em] text-muted uppercase'
+  'tracking-[0.04em] uppercase'
 
 /**
  * User avatar with image support and initials fallback.
