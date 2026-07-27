@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 
 /** Tempo até o gesto virar "segurar". Abaixo disso ainda é um toque. */
-const HOLD_MS = 400
+const HOLD_MS = 450
 
 /** Quanto o dedo pode escorregar antes de virar rolagem. */
 const SLIP_PX = 10
@@ -28,8 +28,7 @@ export const useLongPress = ({ onLongPress, onRelease }: LongPressOptions) => {
   const fired = useRef(false)
   const [isPressing, setPressing] = useState(false)
 
-
-  const clearTimer = useCallback(() => {
+  const cancelTimer = useCallback(() => {
     if (timer.current) clearTimeout(timer.current)
     timer.current = null
     origin.current = null
@@ -37,18 +36,37 @@ export const useLongPress = ({ onLongPress, onRelease }: LongPressOptions) => {
   }, [])
 
   /*
-   * O menu de contexto é barrado no documento, não no elemento: quando o
-   * Chrome resolve abri-lo, o dedo já está sobre o preview, não sobre o card.
+   * Tudo o que encerra o gesto vive aqui, e é ouvido no documento porque o
+   * que o gesto abre cobre a tela e deixa o resto inerte — no elemento, o
+   * evento não voltaria.
+   *
+   * Soltar antes da conta é clique comum e só desarma o relógio; soltar
+   * depois fecha o que abriu. Sem esta escuta, largar o dedo cedo deixava o
+   * relógio correndo e o preview abria sozinho depois do clique.
    */
   useEffect(() => {
     if (!isPressing) return
 
     const block = (event: Event) => event.preventDefault()
-    document.addEventListener('contextmenu', block, { capture: true })
 
-    return () =>
-      document.removeEventListener('contextmenu', block, { capture: true })
-  }, [isPressing])
+    const end = () => {
+      const opened = fired.current
+      cancelTimer()
+      if (opened) onRelease?.()
+    }
+
+    const options = { capture: true } as const
+
+    document.addEventListener('contextmenu', block, options)
+    document.addEventListener('pointerup', end, options)
+    document.addEventListener('pointercancel', end, options)
+
+    return () => {
+      document.removeEventListener('contextmenu', block, options)
+      document.removeEventListener('pointerup', end, options)
+      document.removeEventListener('pointercancel', end, options)
+    }
+  }, [isPressing, cancelTimer, onRelease])
 
   const onPointerDown = useCallback(
     (event: React.PointerEvent) => {
@@ -62,25 +80,9 @@ export const useLongPress = ({ onLongPress, onRelease }: LongPressOptions) => {
       timer.current = setTimeout(() => {
         fired.current = true
         onLongPress()
-
-        /*
-         * A soltura é armada aqui, no mesmo instante da abertura, e não num
-         * efeito: o preview abre um diálogo que interrompe os eventos alheios
-         * e provoca novo render, e amarrar isso a dependência de efeito
-         * deixava o preview aberto depois de o dedo sair. Em captura e com
-         * `once`, escuta uma vez e se desfaz sozinho.
-         */
-        const finish = () => {
-          clearTimer()
-          onRelease?.()
-        }
-
-        const armed = { once: true, capture: true } as const
-        document.addEventListener('pointerup', finish, armed)
-        document.addEventListener('pointercancel', finish, armed)
       }, HOLD_MS)
     },
-    [onLongPress, onRelease, clearTimer]
+    [onLongPress]
   )
 
   const onPointerMove = useCallback(
@@ -91,9 +93,9 @@ export const useLongPress = ({ onLongPress, onRelease }: LongPressOptions) => {
         Math.abs(event.clientX - origin.current.x) > SLIP_PX ||
         Math.abs(event.clientY - origin.current.y) > SLIP_PX
 
-      if (slipped) clearTimer()
+      if (slipped) cancelTimer()
     },
-    [clearTimer]
+    [cancelTimer]
   )
 
   /* Engole o clique que vem depois do gesto — e só ele. */
@@ -112,11 +114,6 @@ export const useLongPress = ({ onLongPress, onRelease }: LongPressOptions) => {
 
   return {
     isPressing,
-    handlers: {
-      onPointerDown,
-      onPointerMove,
-      onClickCapture,
-      onContextMenu,
-    },
+    handlers: { onPointerDown, onPointerMove, onClickCapture, onContextMenu },
   }
 }
