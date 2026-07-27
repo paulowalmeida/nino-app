@@ -1,6 +1,7 @@
 import type { MouseEvent } from 'react'
 
 import { Image } from '@nino/ds/components/Image'
+import { Card } from '@nino/ds/components/Card'
 import { categoryIcon } from '@utils/category-icon'
 import { brl } from '@utils/money'
 import { primaryImage } from '@utils/menu-image'
