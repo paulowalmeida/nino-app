@@ -1,10 +1,34 @@
 @reference "@nino/ds/globals.css";
 
-/* a comanda ocupa a coluna inteira e nunca rola junto com o cardápio */
+/*
+ * Mesma anatomia da sacola do app do cliente (consumer/CartDrawer): linha com
+ * foto, nome e conta aberta à esquerda; valor e quantidade empilhados à
+ * direita. O que muda aqui é o que o balcão precisa a mais — quem pediu,
+ * forma de pagamento e o fechamento.
+ */
 .ticket {
   @apply flex w-full flex-col rounded-[24px] border border-line;
   @apply bg-brand-foreground;
   @apply lg:h-full lg:min-h-0;
+}
+
+/*
+ * Sem moldura: dentro da folha, quem emoldura é a folha — e o recuo lateral
+ * também é dela. Somado ao próprio, sobrava largura de meia palavra para o
+ * nome do item em tela de 320px.
+ */
+.ticketBare {
+  @apply flex min-h-0 w-full flex-1 flex-col;
+}
+
+.ticketBare .body {
+  @apply px-0;
+}
+
+/* Sangra até a borda da folha (px-6/py-4 do Drawer) para o fundo do rodapé
+   cobrir a largura toda, com o conteúdo alinhado à lista. */
+.ticketBare .footer {
+  @apply -mx-6 -mb-4 px-6 pb-5;
 }
 
 .head {
@@ -13,94 +37,135 @@
 }
 
 .title {
-  @apply font-display text-lg font-extrabold text-ink;
+  @apply font-display text-lg font-extrabold tracking-[-0.01em] text-ink;
 }
 
-.clear {
-  @apply cursor-pointer rounded-full px-3 py-1.5 text-sm font-semibold;
-  @apply text-faint transition-colors duration-150 hover:text-brand-strong;
+/*
+ * A comanda inteira cabe na altura disponível e não rola: quem rola é só a
+ * lista de itens. Nome, mesa, pagamento e total ficam onde estão — no balcão
+ * eles são o próximo passo, e rolar atrás do total é perder a venda de vista.
+ */
+.body {
+  @apply flex h-full min-h-0 flex-1 flex-col overflow-hidden px-4 pt-3;
 }
 
-/* identificação no topo: é a primeira coisa que se pergunta no balcão */
-.who {
-  @apply flex shrink-0 gap-2 border-b border-sand px-4 py-3;
+.empty {
+  @apply flex-1;
 }
 
-.whoName {
-  @apply min-w-0 flex-1;
-}
-
-.whoTable {
-  @apply w-20 shrink-0;
-}
-
+/*
+ * `basis: auto` de propósito: na folha do celular a altura vem do conteúdo, e
+ * com `flex-1` puro (basis 0) a lista não contribuiria com altura nenhuma e
+ * colapsaria. Assim ela cresce até o teto da folha e só então rola.
+ */
 .lines {
-  @apply flex flex-1 flex-col px-4 lg:min-h-0 lg:overflow-y-auto;
+  @apply flex min-h-0 flex-col divide-y divide-sand overflow-y-auto pb-4;
+  @apply flex-[1_1_auto];
 }
 
 .line {
-  @apply flex items-center gap-2 border-b border-dashed border-sand-deep py-3;
+  @apply flex shrink-0 items-center gap-2.5 py-3 first:pt-0 sm:gap-3;
+}
+
+/* Menor no celular estreito: cada pixel aqui sai da largura do nome. */
+.photo {
+  @apply h-12 w-12 shrink-0 rounded-xl text-xl;
+  @apply sm:h-14 sm:w-14 sm:text-2xl;
+}
+
+.lineText {
+  @apply flex min-w-0 flex-1 flex-col;
 }
 
 .lineName {
-  @apply line-clamp-2 min-w-0 flex-1 text-base leading-tight text-body;
+  @apply truncate text-sm font-semibold text-ink;
+}
+
+/*
+ * A conta aberta: com 2 unidades, "2 × R$ 24,90" explica o total à direita.
+ * Numa linha só — quebrado em duas, empurra a linha inteira para baixo.
+ */
+.lineMath {
+  @apply mt-0.5 truncate whitespace-nowrap text-xs text-muted;
+  font-variant-numeric: tabular-nums;
+}
+
+/*
+ * Valor em cima, contador embaixo. É o que faz o nome caber em tela estreita:
+ * lado a lado, contador e preço tomavam a linha e o nome sumia.
+ */
+.lineRight {
+  @apply flex shrink-0 flex-col items-end gap-1.5;
+}
+
+.lineTotal {
+  @apply font-display text-sm font-extrabold text-ink;
+  font-variant-numeric: tabular-nums;
 }
 
 .stepper {
-  @apply flex shrink-0 items-center gap-1;
+  @apply flex shrink-0 items-center gap-1.5;
 }
 
-.step {
-  @apply flex h-10 w-10 cursor-pointer items-center justify-center;
-  @apply rounded-full border border-sand bg-brand-foreground text-xl;
-  @apply leading-none;
-  @apply text-subtle transition-colors duration-150;
-  @apply hover:border-brand/35 hover:text-brand-strong;
+.stepperBtn {
+  @apply h-7 w-7 text-base sm:h-8 sm:w-8;
 }
 
-.quantity {
-  @apply w-8 text-center text-base font-bold text-ink;
+.stepperCount {
+  @apply w-4 text-center text-sm font-bold text-ink;
   font-variant-numeric: tabular-nums;
 }
 
-.linePrice {
-  @apply w-24 shrink-0 text-right text-base font-semibold text-body;
-  font-variant-numeric: tabular-nums;
+/* Empilhados: dividindo a linha, "Mesa ou comanda" não cabia o próprio nome. */
+.who {
+  @apply flex shrink-0 flex-col gap-2 border-t border-sand py-2.5 sm:py-3;
 }
 
-.foot {
-  @apply flex shrink-0 flex-col gap-3 border-t border-sand p-4;
+/* Fora da área rolável: o total e o fechar nunca saem da tela. */
+.footer {
+  @apply -mx-4 mt-auto flex shrink-0 flex-col gap-3;
+  @apply border-t border-line bg-brand-foreground px-4 pb-4 pt-3;
 }
 
+/* Sem rótulo, três botões soltos não dizem que são escolha de pagamento. */
+.payLabel {
+  @apply mt-1 text-xs font-bold uppercase tracking-[0.1em] text-faint;
+}
+
+/* Numa linha: em duas, cada fileira cobrava 46px da lista de itens. */
 .choices {
-  @apply grid grid-cols-2 gap-2;
+  @apply grid grid-cols-3 gap-1.5 sm:gap-2;
 }
 
 .choice {
-  @apply cursor-pointer rounded-full border border-sand bg-brand-foreground;
-  @apply px-3 py-2.5;
-  @apply text-sm font-semibold text-subtle transition-colors duration-150;
-  @apply hover:border-brand/30;
+  @apply cursor-pointer rounded-full border border-sand px-2 py-2 sm:px-3;
+  @apply text-xs font-semibold text-subtle transition-colors duration-150;
+  @apply hover:border-brand/40 hover:text-brand-strong sm:text-sm;
 }
 
 .choiceOn {
-  @apply border-brand/40 bg-brand/10 text-brand-strong;
+  @apply border-brand bg-brand-soft text-brand-strong;
 }
 
-.total {
-  @apply flex items-baseline justify-between border-t border-dashed;
-  @apply border-sand-deep pt-3;
+.totalRow {
+  @apply flex items-baseline justify-between;
 }
 
 .totalLabel {
-  @apply text-sm text-faint;
+  @apply text-sm font-semibold text-muted;
 }
 
-.totalValue {
-  @apply font-display text-3xl font-extrabold text-ink;
+.total {
+  @apply font-display text-2xl font-extrabold text-ink;
   font-variant-numeric: tabular-nums;
 }
 
 .finish {
-  @apply w-full;
+  @apply h-12 w-full text-base;
+}
+
+/* Abaixo da ação principal e apagado: desfazer a venda inteira não divide
+   peso com fechá-la. */
+.clear {
+  @apply h-10 w-full text-sm text-muted hover:text-danger;
 }

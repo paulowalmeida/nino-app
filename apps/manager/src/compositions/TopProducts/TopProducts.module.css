@@ -1,0 +1,32 @@
+@reference "@nino/ds/globals.css";
+
+/* Coluna a partir do desktop: assim o cartão pode ocupar a altura que o
+   grid deu à linha, e os dois blocos terminam juntos. */
+.section {
+  @apply lg:flex lg:h-full lg:flex-col;
+}
+
+.heading {
+  @apply mb-3;
+}
+
+/*
+ * Ao lado do gráfico, o cartão acompanha a altura da linha do grid — é o
+ * `stretch` do próprio grid que iguala os dois, sem número mágico. Empilhado
+ * no celular, fecha no tamanho da lista em vez de abrir um vazio embaixo.
+ */
+.card {
+  @apply flex min-w-0 flex-col p-5 lg:flex-1;
+}
+
+.bars {
+  @apply text-brand lg:flex-1;
+}
+
+.note {
+  @apply mt-4 border-t border-sand pt-3 text-xs leading-snug text-faint;
+}
+
+.skeleton {
+  @apply h-52 w-full rounded-card;
+}

@@ -25,6 +25,7 @@ const baseClose =
   'focus-visible:outline-offset-2'
 
 const headerWrapper = 'px-6 pb-1 pt-6 pr-12'
+const headerWrapperBare = 'px-6 pb-1 pt-6'
 const bodyWrapper = 'px-6 py-5'
 const footerWrapper = 'flex items-center justify-end gap-3 px-6 pb-6 pt-2'
 
@@ -36,6 +37,9 @@ export function Modal({
   ariaLabel,
   open,
   onOpenChange,
+  dismissible = true,
+  backdropClassName,
+  contentClassName,
 }: ModalProps) {
   return (
     <ArkDialog.Root
@@ -43,28 +47,40 @@ export function Modal({
       onOpenChange={({ open: o }) => onOpenChange?.(o)}
     >
       <Portal>
-        <ArkDialog.Backdrop className={baseBackdrop} />
+        <ArkDialog.Backdrop
+          className={mergeClasses(baseBackdrop, backdropClassName)}
+        />
         <ArkDialog.Positioner className={basePositioner}>
           <ArkDialog.Content
             aria-label={ariaLabel}
-            className={mergeClasses(baseContent, sizeClasses[size])}
+            className={mergeClasses(
+              baseContent,
+              sizeClasses[size],
+              contentClassName
+            )}
           >
-            <ArkDialog.CloseTrigger className={baseClose} aria-label="Close">
-              <svg
-                width="16"
-                height="16"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              >
-                <path d="M18 6 6 18M6 6l12 12" />
-              </svg>
-            </ArkDialog.CloseTrigger>
+            {dismissible && (
+              <ArkDialog.CloseTrigger className={baseClose} aria-label="Close">
+                <svg
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <path d="M18 6 6 18M6 6l12 12" />
+                </svg>
+              </ArkDialog.CloseTrigger>
+            )}
 
-            {header && <div className={headerWrapper}>{header}</div>}
+            {header && (
+              <div className={dismissible ? headerWrapper : headerWrapperBare}>
+                {header}
+              </div>
+            )}
             {body && <div className={bodyWrapper}>{body}</div>}
             {footer && <div className={footerWrapper}>{footer}</div>}
           </ArkDialog.Content>

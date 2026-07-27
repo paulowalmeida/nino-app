@@ -1,10 +1,13 @@
 import { useState } from 'react'
 
+import { Drawer } from '@nino/ds/components/Drawer'
 import { toast } from '@nino/ds/components/Toast'
 import { ProductGrid } from '@compositions/ProductGrid'
+import { CouponTab } from '@compositions/CouponTab'
 import { SaleTicket } from '@compositions/SaleTicket'
 import { useCreateOrder } from '@hooks/order/useCreateOrder'
 import { useCurrentTenant } from '@hooks/session/useCurrentTenant'
+import { useIsDesktop } from '@hooks/ui/useIsDesktop'
 import { useMenu } from '@hooks/product/useMenu'
 import { useAcceptedPayments } from '@hooks/settings/useAcceptedPayments'
 import { ApiError } from '@utils/api-error'
@@ -30,6 +33,8 @@ export const Counter = () => {
     useCreateOrder(tenantId)
 
   const [lines, setLines] = useState<CartLine[]>([])
+  const [sheet, setSheet] = useState(false)
+  const isDesktop = useIsDesktop()
   const [chosen, setChosen] = useState<PaymentMethod | null>(null)
 
   /** A escolha só vale enquanto a loja aceitar aquela forma. */
@@ -101,6 +106,35 @@ export const Counter = () => {
     }
   }
 
+  const count = lines.reduce((sum, line) => sum + line.quantity, 0)
+  const total = lines.reduce(
+    (sum, line) => sum + Number(line.unitPrice) * line.quantity,
+    0
+  )
+
+  const ticketFor = (bare: boolean) => (
+    <SaleTicket
+      bare={bare}
+      lines={lines}
+      methods={methods}
+      customerName={customerName}
+      tableNumber={tableNumber}
+      onCustomerName={setCustomerName}
+      onTableNumber={setTableNumber}
+      method={method}
+      isSending={isSending}
+      error={error}
+      onStep={step}
+      onMethod={setChosen}
+      onClear={() => {
+        setLines([])
+        setCustomerName('')
+        setTableNumber('')
+      }}
+      onFinish={finish}
+    />
+  )
+
   return (
     <div className={styles.page}>
       <header className={`${motion.deal} ${styles.header}`}>
@@ -119,26 +153,33 @@ export const Counter = () => {
           />
         </section>
 
-        <SaleTicket
-          lines={lines}
-          methods={methods}
-          customerName={customerName}
-          tableNumber={tableNumber}
-          onCustomerName={setCustomerName}
-          onTableNumber={setTableNumber}
-          method={method}
-          isSending={isSending}
-          error={error}
-          onStep={step}
-          onMethod={setChosen}
-          onClear={() => {
-            setLines([])
-            setCustomerName('')
-            setTableNumber('')
-          }}
-          onFinish={finish}
-        />
+        {/* No desktop a comanda mora na coluna ao lado, sempre aberta. */}
+        {isDesktop && ticketFor(false)}
       </div>
+
+      {/*
+       * No celular ela vira cupom: a ponta fica presa no rodapé com o total,
+       * e puxar abre a comanda inteira. Sem isso, fechar a venda exigia rolar
+       * o cardápio todo — com sessenta bebidas, três telas.
+       */}
+      {!isDesktop && count > 0 && (
+        <>
+          <CouponTab count={count} total={total} onOpen={() => setSheet(true)} />
+
+          <Drawer
+            open={sheet}
+            onOpenChange={setSheet}
+            placement="bottom"
+            size="auto"
+            title="Comanda"
+            description={`${count} ${count === 1 ? 'item' : 'itens'}`}
+            contentClassName={styles.sheet}
+            bodyClassName={styles.sheetBody}
+          >
+            {ticketFor(true)}
+          </Drawer>
+        </>
+      )}
     </div>
   )
 }

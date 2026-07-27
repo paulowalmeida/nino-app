@@ -37,8 +37,14 @@
   pointer-events: none;
 }
 
+/*
+ * Coluna com espaçamento próprio: a data, o link da loja e o selo eram três
+ * blocos com margens soltas, e o selo some quando a loja não tem horário
+ * cadastrado — a margem dele ficava reservada para nada.
+ */
 .headerText {
-  @apply relative z-10 sm:pr-32 lg:pr-40;
+  @apply relative z-10 flex flex-col items-start gap-1.5;
+  @apply sm:pr-32 lg:pr-40;
 }
 
 .greeting {
@@ -56,17 +62,29 @@
   @apply lg:text-3xl;
 }
 
+/*
+ * No celular a loja ganha linha própria: junto da data, o nome empurrava a
+ * linha até a borda. A partir do desktop volta a caber ao lado, separado pelo
+ * ponto médio.
+ */
+.meta {
+  @apply flex flex-col items-start gap-1.5;
+  @apply lg:flex-row lg:items-baseline lg:gap-2;
+}
+
 .date {
-  @apply mt-1 text-xs text-faint lg:mt-1.5 lg:text-sm;
+  @apply text-xs text-faint lg:text-sm;
 }
 
 .store {
-  @apply ml-1 font-semibold text-brand-strong underline decoration-1;
-  @apply underline-offset-2 transition-opacity hover:opacity-70;
+  @apply text-xs font-semibold text-brand-strong underline decoration-1;
+  @apply underline-offset-2 transition-opacity hover:opacity-70 lg:text-sm;
 }
 
-.sign {
-  @apply mt-3;
+/* O ponto médio só existe quando os dois dividem a linha. */
+.store::before {
+  @apply hidden text-faint no-underline lg:inline;
+  content: "· ";
 }
 
 .tally {
@@ -94,4 +112,20 @@
     width: 142px;
     height: 142px;
   }
+}
+
+/* A linha do tempo pede mais largura que a lista de itens: 1.4 contra 1 dá
+   respiro ao eixo sem espremer os nomes dos produtos. */
+.charts {
+  @apply mt-6 grid items-stretch gap-4;
+  @apply lg:grid-cols-[1.4fr_1fr] lg:gap-5;
+}
+
+/*
+ * Item de grid nasce com `min-width: auto` e não encolhe abaixo do próprio
+ * conteúdo. Com um SVG medido em px dentro, isso vira um piso de largura: o
+ * cartão estoura a tela e empurra a página inteira.
+ */
+.charts > * {
+  @apply min-w-0;
 }

@@ -3,6 +3,14 @@
 @layer base {
   body {
     background: var(--color-cream);
+
+    /*
+     * `manipulation` corta o zoom do toque duplo e o atraso de 300ms que vem
+     * com ele: é uma ferramenta de operação, e dois toques seguidos na mesma
+     * comanda são pressa, não intenção de ampliar. O pinça-para-ampliar
+     * continua valendo — quem precisa enxergar melhor não perde o recurso.
+     */
+    touch-action: manipulation;
   }
 
   /*

@@ -1,6 +1,8 @@
 import { DayTally } from '@compositions/DayTally'
 import { PauseSwitch } from '@compositions/PauseSwitch'
 import { QueueBoard } from '@compositions/QueueBoard'
+import { SalesTrend } from '@compositions/SalesTrend'
+import { TopProducts } from '@compositions/TopProducts'
 import { StoreSign } from '@compositions/StoreSign'
 import { useCurrentTenant } from '@hooks/session/useCurrentTenant'
 import { useSessionStore } from '@states/useSessionStore'
@@ -49,26 +51,23 @@ export const Overview = () => {
             {greetingFor(timezone)}
           </p>
           <h1 className={`${motion.deal} ${styles.title}`}>{firstName}</h1>
-          <p className={styles.date}>
-            {dateFor(timezone)}
+          <div className={styles.meta}>
+            <p className={styles.date}>{dateFor(timezone)}</p>
+
             {tenant && (
-              <>
-                {' · '}
-                <a
-                  href={`https://${tenant.tenantSlug}.dev.nino.delivery`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  title='ir para a loja'
-                  className={styles.store}
-                >
-                  {tenant.tenantName}
-                </a>
-              </>
+              <a
+                href={`https://${tenant.tenantSlug}.dev.nino.delivery`}
+                target="_blank"
+                rel="noopener noreferrer"
+                title="ir para a loja"
+                className={styles.store}
+              >
+                {tenant.tenantName}
+              </a>
             )}
-          </p>
-          <div className={styles.sign}>
-            <StoreSign tenantId={tenantId} timezone={timezone} />
           </div>
+
+          <StoreSign tenantId={tenantId} timezone={timezone} />
         </div>
         <img
           src="/mascot-manager.svg"
@@ -83,6 +82,11 @@ export const Overview = () => {
       </div>
 
       <QueueBoard tenantId={tenantId} />
+
+      <div className={styles.charts}>
+        <SalesTrend tenantId={tenantId} />
+        <TopProducts tenantId={tenantId} />
+      </div>
 
       <div className={styles.tally}>
         <DayTally tenantId={tenantId} timezone={timezone} />

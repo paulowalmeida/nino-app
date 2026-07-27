@@ -72,6 +72,7 @@ export function Drawer({
   children,
   size,
   contentClassName,
+  bodyClassName,
 }: DrawerProps) {
   const isHorizontal = placement === 'left' || placement === 'right'
   const sizeStyle = size
@@ -124,7 +125,9 @@ export function Drawer({
                 </ArkDialog.CloseTrigger>
               </div>
             )}
-            <div className={baseBody}>{children}</div>
+            <div className={mergeClasses(baseBody, bodyClassName ?? '')}>
+              {children}
+            </div>
           </ArkDialog.Content>
         </ArkDialog.Positioner>
       </Portal>

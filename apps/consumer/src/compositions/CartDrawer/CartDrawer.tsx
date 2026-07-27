@@ -5,10 +5,13 @@ import { Drawer } from '@nino/ds/components/Drawer'
 import { EmptyState } from '@nino/ds/components/EmptyState'
 import { Image } from '@nino/ds/components/Image'
 import { AnimatedNumber } from '@components/AnimatedNumber/AnimatedNumber'
+import { Icon } from '@components/Icon/Icon'
 import { useIsDesktop } from '@hooks/useIsDesktop'
 import { categoryIcon } from '@utils/category-icon'
 import { primaryImage } from '@utils/menu-image'
 import { brl } from '@utils/money'
+import minusIcon from '@assets/icons/minus.svg?raw'
+import plusIcon from '@assets/icons/plus.svg?raw'
 
 import type { CartDrawerProps } from './CartDrawer.types'
 
@@ -129,7 +132,7 @@ export const CartDrawer = ({
                             }
                             onClick={() => onDecrement(item.id)}
                           >
-                            {isLast ? <TrashIcon /> : '−'}
+                            {isLast ? <TrashIcon /> : <Icon svg={minusIcon} />}
                           </Button>
                           <AnimatedNumber
                             value={quantity}
@@ -142,7 +145,7 @@ export const CartDrawer = ({
                             aria-label={`Adicionar mais uma unidade de ${item.name}`}
                             onClick={() => onIncrement(item.id)}
                           >
-                            +
+                            <Icon svg={plusIcon} />
                           </Button>
                         </div>
                       </div>
