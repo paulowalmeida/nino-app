@@ -73,7 +73,6 @@ export const AccountStep = ({ defaultValues, onNext }: AccountStepProps) => {
   return (
     <div>
       <header className={`${motion.rise} ${styles.header}`} style={riseDelay(0)}>
-        <p className={styles.step}>Passo 1 de 3</p>
         <h1 className={styles.title}>Crie sua conta</h1>
         <p className={styles.subtitle}>Comece pelos seus dados de responsável</p>
       </header>

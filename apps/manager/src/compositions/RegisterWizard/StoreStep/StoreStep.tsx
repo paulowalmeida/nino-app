@@ -15,8 +15,6 @@ import motion from '@layouts/AuthLayout/motion.module.css'
 export const StoreStep = ({ firstName }: StoreStepProps) => (
   <div>
     <header className={`${motion.rise} ${styles.header}`} style={riseDelay(0)}>
-      <p className={styles.step}>Passo 3 de 3</p>
-
       <h1 className={styles.title}>Sua primeira loja</h1>
 
       <p className={styles.subtitle}>

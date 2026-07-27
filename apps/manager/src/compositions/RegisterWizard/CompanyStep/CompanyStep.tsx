@@ -54,7 +54,6 @@ export const CompanyStep = ({
   return (
     <div>
       <header className={`${motion.rise} ${styles.header}`} style={riseDelay(0)}>
-        <p className={styles.step}>Passo 2 de 3</p>
         <h1 className={styles.title}>Sua empresa</h1>
         <p className={styles.subtitle}>Quase lá, {account.name.split(' ')[0]}</p>
       </header>
