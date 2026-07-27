@@ -13,7 +13,7 @@ import motion from '@styles/motion.module.css'
  */
 export const StageTrack = ({ stages, value, onChange }: StageTrackProps) => (
   <div className={styles.track} role="tablist" aria-label="Etapas da fila">
-    {stages.map(({ id, label, count }, index) => (
+    {stages.map(({ id, label, count, icon }, index) => (
       <button
         key={id}
         type="button"
@@ -25,7 +25,7 @@ export const StageTrack = ({ stages, value, onChange }: StageTrackProps) => (
           id === value ? styles.current : ''
         }`}
       >
-        <span className={styles.dot} />
+        <NavIcon name={icon} className={styles.icon} />
         <span className={styles.label}>{label}</span>
         <span className={styles.count}>
           <CountUp value={count} />

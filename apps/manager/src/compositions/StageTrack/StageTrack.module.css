@@ -31,13 +31,14 @@
   box-shadow: inset 0 0 0 1px var(--color-brand-soft);
 }
 
-.dot {
-  @apply h-2 w-2 shrink-0 rounded-full bg-sand-deep;
-  @apply transition-colors duration-200;
+/* o ícone diz a etapa sem depender da leitura do rótulo — no trilho rolando
+   no celular, metade dos nomes chega cortada */
+.icon {
+  @apply h-4 w-4 shrink-0 text-faintest transition-colors duration-200;
 }
 
-.current .dot {
-  @apply bg-brand;
+.current .icon {
+  @apply text-brand;
 }
 
 .label {

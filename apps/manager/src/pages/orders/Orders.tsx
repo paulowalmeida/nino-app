@@ -2,6 +2,7 @@ import { useSearchParams } from 'react-router'
 
 import { Button } from '@nino/ds/components/Button'
 import { Skeleton } from '@nino/ds/components/Skeleton'
+import type { NavIconName } from '@components/NavIcon/NavIcon.types'
 import { PageTitle } from '@components/PageTitle'
 import { OrderTicket } from '@compositions/OrderTicket'
 import { StageTrack } from '@compositions/StageTrack'
@@ -17,31 +18,43 @@ import { stageOf } from '@utils/order-flow'
 import styles from './Orders.module.css'
 import motion from '@styles/motion.module.css'
 
-const STAGES: { id: OrderStage; label: string; empty: string }[] = [
+type Stage = {
+  id: OrderStage
+  label: string
+  empty: string
+  icon: NavIconName
+}
+
+const STAGES: Stage[] = [
   {
     id: 'incoming',
     label: 'Novos',
     empty: 'Nenhum pedido esperando aceite.',
+    icon: 'receipt',
   },
   {
     id: 'kitchen',
     label: 'Na cozinha',
     empty: 'A cozinha está livre.',
+    icon: 'chef',
   },
   {
     id: 'street',
     label: 'Na rua',
     empty: 'Nenhuma entrega em andamento.',
+    icon: 'pin',
   },
   {
     id: 'counter',
     label: 'No balcão',
     empty: 'Nada esperando retirada.',
+    icon: 'register',
   },
   {
     id: 'closed',
     label: 'Fechados',
     empty: 'Os pedidos concluídos aparecem aqui.',
+    icon: 'check',
   },
 ]
 
@@ -68,9 +81,10 @@ export const Orders = () => {
     variables,
   } = useOrderStatus(tenantId)
 
-  const options: StageOption[] = STAGES.map(({ id, label }) => ({
+  const options: StageOption[] = STAGES.map(({ id, label, icon }) => ({
     id,
     label,
+    icon,
     count: orders.filter((order) => stageOf(order.status) === id).length,
   }))
 
