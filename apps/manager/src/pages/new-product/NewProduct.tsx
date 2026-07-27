@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router'
 
 import { useQueryClient } from '@tanstack/react-query'
 
+import { Alert } from '@nino/ds/components/Alert'
 import { Button } from '@nino/ds/components/Button'
 import { FormField } from '@nino/ds/components/FormField'
 import { Input } from '@nino/ds/components/Input'
@@ -247,7 +248,7 @@ export const NewProduct = () => {
           )}
         </div>
 
-        {errors.root && <p className={styles.error}>{errors.root.message}</p>}
+        {errors.root && <Alert variant="error">{errors.root.message}</Alert>}
 
         <div
           className={`${motion.deal} ${styles.actions}`}

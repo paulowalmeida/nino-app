@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 
 import { Reorder } from 'framer-motion'
 
+import { Alert } from '@nino/ds/components/Alert'
 import { Skeleton } from '@nino/ds/components/Skeleton'
 import { useItemAvailability } from '@hooks/product/useItemAvailability'
 import { useMenu } from '@hooks/product/useMenu'
@@ -60,10 +61,10 @@ export const MenuBoard = ({ tenantId }: MenuBoardProps) => {
 
   if (isError) {
     return (
-      <p className={styles.notice}>
+      <Alert variant="error">
         Não foi possível carregar o cardápio. Recarregue a página para tentar de
         novo.
-      </p>
+      </Alert>
     )
   }
 

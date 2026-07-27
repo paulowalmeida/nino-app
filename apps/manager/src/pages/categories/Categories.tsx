@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router'
 
+import { Alert } from '@nino/ds/components/Alert'
 import { Button } from '@nino/ds/components/Button'
 import { Dialog } from '@nino/ds/components/Dialog'
 import { Input } from '@nino/ds/components/Input'
@@ -139,9 +140,9 @@ export const Categories = () => {
       )}
 
       {isError && (
-        <p className={styles.notice}>
+        <Alert variant="error">
           Não foi possível carregar as categorias. Recarregue a página.
-        </p>
+        </Alert>
       )}
 
       {!isPending && !isError && rows.length === 0 && (
@@ -196,7 +197,7 @@ export const Categories = () => {
         />
       )}
 
-      {deleteError && <p className={styles.notice}>{deleteError}</p>}
+      {deleteError && <Alert variant="error">{deleteError}</Alert>}
     </div>
   )
 }

@@ -105,10 +105,6 @@
   font-variant-numeric: tabular-nums;
 }
 
-.error {
-  @apply text-sm text-red-500;
-}
-
 .finish {
   @apply w-full;
 }

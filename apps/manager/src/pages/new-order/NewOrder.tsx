@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router'
 
+import { Alert } from '@nino/ds/components/Alert'
 import { Button } from '@nino/ds/components/Button'
 import { Select } from '@nino/ds/components/Select'
 import { Skeleton } from '@nino/ds/components/Skeleton'
@@ -334,11 +335,15 @@ export const NewOrder = () => {
           </div>
 
           {isDelivery && closedNow && (
-            <p className={`${motion.unroll} ${styles.warning}`} role="status">
+            <Alert
+              variant="warning"
+              role="status"
+              className={motion.unroll}
+            >
               {pause?.isPaused
                 ? 'A loja está fechada agora. O pedido entra assim mesmo.'
                 : 'Fora do horário de entrega. O pedido entra assim mesmo.'}
-            </p>
+            </Alert>
           )}
 
           {missingRecipient && lines.length > 0 && (
@@ -348,9 +353,9 @@ export const NewOrder = () => {
           )}
 
           {failed && (
-            <p className={styles.error}>
+            <Alert variant="error">
               Não foi possível abrir o pedido. Tente de novo.
-            </p>
+            </Alert>
           )}
 
           <Button

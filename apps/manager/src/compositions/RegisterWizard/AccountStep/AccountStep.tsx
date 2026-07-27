@@ -1,6 +1,7 @@
 import { Link } from 'react-router'
 import { useForm } from 'react-hook-form'
 
+import { Alert } from '@nino/ds/components/Alert'
 import { Button } from '@nino/ds/components/Button'
 import { CpfInput } from '@nino/ds/components/CpfInput'
 import { FormField } from '@nino/ds/components/FormField'
@@ -159,7 +160,7 @@ export const AccountStep = ({ defaultValues, onNext }: AccountStepProps) => {
           </FormField>
         </div>
 
-        {errors.root && <p className={styles.errorText}>{errors.root.message}</p>}
+        {errors.root && <Alert variant="error">{errors.root.message}</Alert>}
 
         <div className={motion.rise} style={riseDelay(480)}>
           <Button

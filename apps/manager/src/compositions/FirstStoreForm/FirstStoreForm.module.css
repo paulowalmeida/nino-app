@@ -16,10 +16,6 @@
   @apply shrink-0 text-sm text-text/50;
 }
 
-.errorText {
-  @apply text-sm text-red-500;
-}
-
 .draftNotice {
   @apply -mb-1 flex items-center gap-1.5 text-sm text-brand-strong;
 }

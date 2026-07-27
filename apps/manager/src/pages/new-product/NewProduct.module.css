@@ -39,10 +39,6 @@
   @apply bg-brand/5 p-3;
 }
 
-.error {
-  @apply text-sm text-red-500;
-}
-
 .actions {
   @apply flex flex-col gap-2 border-t border-sand pt-5 sm:flex-row;
 }

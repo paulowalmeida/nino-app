@@ -1,6 +1,7 @@
 import { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 
+import { Alert } from '@nino/ds/components/Alert'
 import { Button } from '@nino/ds/components/Button'
 import { FormField } from '@nino/ds/components/FormField'
 import { Input } from '@nino/ds/components/Input'
@@ -67,7 +68,7 @@ export const EditEmailModal = ({
             />
           </FormField>
 
-          {errors.root && <p className={styles.error}>{errors.root.message}</p>}
+          {errors.root && <Alert variant="error">{errors.root.message}</Alert>}
         </form>
       }
       footer={

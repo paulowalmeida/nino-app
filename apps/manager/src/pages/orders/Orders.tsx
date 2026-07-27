@@ -1,5 +1,6 @@
 import { useSearchParams } from 'react-router'
 
+import { Alert } from '@nino/ds/components/Alert'
 import { Button } from '@nino/ds/components/Button'
 import { Skeleton } from '@nino/ds/components/Skeleton'
 import type { NavIconName } from '@components/NavIcon/NavIcon.types'
@@ -119,10 +120,10 @@ export const Orders = () => {
       )}
 
       {isError && (
-        <p className={styles.notice}>
+        <Alert variant="error">
           Não foi possível carregar os pedidos. Recarregue a página para tentar
           de novo.
-        </p>
+        </Alert>
       )}
 
       {!isPending && !isError && shown.length === 0 && (
