@@ -41,7 +41,6 @@ export const DayTally = ({ tenantId, timezone }: DayTallyProps) => {
       <div className={styles.tally}>
         <Card
           asChild
-          variant="flat"
           className={`${motion.settle} ${motion.lift} ${styles.figure}`}
         >
           <Link
@@ -66,7 +65,6 @@ export const DayTally = ({ tenantId, timezone }: DayTallyProps) => {
 
         <Card
           asChild
-          variant="flat"
           className={`${motion.settle} ${motion.lift} ${styles.figure}`}
         >
           <Link
@@ -92,7 +90,6 @@ export const DayTally = ({ tenantId, timezone }: DayTallyProps) => {
 
         <Card
           asChild
-          variant="flat"
           className={`${motion.settle} ${motion.lift} ${styles.figure}`}
         >
           <Link
