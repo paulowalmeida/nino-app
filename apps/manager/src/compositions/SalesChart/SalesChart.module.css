@@ -16,6 +16,12 @@
  * Grade recessiva: 1px sólida, um passo fora da superfície. Nunca tracejada —
  * tracejo compete com o dado por atenção.
  */
+/* O gesto sobre o gráfico é de leitura, não de rolagem: sem isso o dedo
+   arrasta a página e o ponto nunca é escolhido. */
+.touchArea {
+  touch-action: none;
+}
+
 .grid {
   @apply stroke-sand;
   stroke-width: 1;

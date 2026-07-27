@@ -145,7 +145,7 @@ export const SalesChart = ({
   )
 
   const handleMove = useCallback(
-    (event: React.MouseEvent | React.TouchEvent) => {
+    (event: React.PointerEvent) => {
       const point = localPoint(event)
       if (!point || data.length === 0) return
 
@@ -266,10 +266,21 @@ export const SalesChart = ({
               width={innerWidth}
               height={innerHeight}
               fill="transparent"
-              onMouseMove={handleMove}
-              onTouchMove={handleMove}
-              onMouseLeave={hideTooltip}
-              onTouchEnd={hideTooltip}
+              className={styles.touchArea}
+              /*
+               * Pointer, não mouse+touch separados: um toque simples não gera
+               * `touchmove`, então só ouvir movimento deixava o celular sem
+               * resposta. `pointerdown` cobre o toque, o clique e a caneta com
+               * um caminho só.
+               *
+               * Sair não esconde no toque — o dedo levanta logo depois, e a
+               * informação sumiria antes de ser lida.
+               */
+              onPointerDown={handleMove}
+              onPointerMove={handleMove}
+              onPointerLeave={(event) =>
+                event.pointerType === 'mouse' && hideTooltip()
+              }
             />
           </Group>
         </svg>

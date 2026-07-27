@@ -51,26 +51,23 @@ export const Overview = () => {
             {greetingFor(timezone)}
           </p>
           <h1 className={`${motion.deal} ${styles.title}`}>{firstName}</h1>
-          <p className={styles.date}>
-            {dateFor(timezone)}
+          <div className={styles.meta}>
+            <p className={styles.date}>{dateFor(timezone)}</p>
+
             {tenant && (
-              <>
-                {' · '}
-                <a
-                  href={`https://${tenant.tenantSlug}.dev.nino.delivery`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  title='ir para a loja'
-                  className={styles.store}
-                >
-                  {tenant.tenantName}
-                </a>
-              </>
+              <a
+                href={`https://${tenant.tenantSlug}.dev.nino.delivery`}
+                target="_blank"
+                rel="noopener noreferrer"
+                title="ir para a loja"
+                className={styles.store}
+              >
+                {tenant.tenantName}
+              </a>
             )}
-          </p>
-          <div className={styles.sign}>
-            <StoreSign tenantId={tenantId} timezone={timezone} />
           </div>
+
+          <StoreSign tenantId={tenantId} timezone={timezone} />
         </div>
         <img
           src="/mascot-manager.svg"
