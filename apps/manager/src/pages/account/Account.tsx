@@ -1,5 +1,6 @@
 import { useState } from 'react'
 
+import { Card } from '@nino/ds/components/Card'
 import { Button } from '@nino/ds/components/Button'
 import { FormField } from '@nino/ds/components/FormField'
 import { Input } from '@nino/ds/components/Input'
@@ -74,7 +75,7 @@ export const Account = () => {
       {isPending ? (
         <Skeleton className={styles.skeleton} />
       ) : (
-        <section className={`${motion.settle} ${card.card}`}>
+        <Card className={motion.settle}>
           <div className={styles.fields}>
             <FormField label="Nome">
               <Input
@@ -103,11 +104,11 @@ export const Account = () => {
           >
             Salvar meus dados
           </Button>
-        </section>
+        </Card>
       )}
 
       {profile && (
-        <section className={`mt-4 ${motion.settle} ${card.card}`}>
+        <Card className={`mt-4 ${motion.settle}`}>
           <p className={styles.factsTitle}>Sobre a conta</p>
           <dl className={styles.facts}>
             <div className={styles.fact}>
@@ -141,7 +142,7 @@ export const Account = () => {
               </div>
             ))}
           </dl>
-        </section>
+        </Card>
       )}
 
       <EditEmailModal

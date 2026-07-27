@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { Link } from 'react-router'
 
 import { Badge } from '@nino/ds/components/Badge'
+import { Card } from '@nino/ds/components/Card'
 import { Button } from '@nino/ds/components/Button'
 import { Skeleton } from '@nino/ds/components/Skeleton'
 import { useSubscription } from '@hooks/account/useSubscription'
@@ -37,7 +38,7 @@ export const UnitSection = () => {
   if (isSubscriptionPending) return <Skeleton className={styles.skeleton} />
 
   return (
-    <section className={card.card}>
+    <Card>
       <header className={`${motion.unroll} ${styles.head}`}>
         <div>
           <h2 className={card.title}>Lojas da empresa</h2>
@@ -128,6 +129,6 @@ export const UnitSection = () => {
           gente sobre a próxima faixa.
         </p>
       )}
-    </section>
+    </Card>
   )
 }

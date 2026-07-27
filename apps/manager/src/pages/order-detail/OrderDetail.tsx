@@ -156,8 +156,8 @@ export const OrderDetail = () => {
         </section>
 
         <div className={styles.aside}>
-          <section
-            className={`${motion.settle} ${styles.card}`}
+          <Card
+            className={motion.settle}
             style={riseDelay(80)}
           >
             <h2 className={styles.cardTitle}>Quem pediu</h2>
@@ -174,10 +174,10 @@ export const OrderDetail = () => {
             {order.tableNumber && (
               <p className={styles.address}>Mesa {order.tableNumber}</p>
             )}
-          </section>
+          </Card>
 
-          <section
-            className={`${motion.settle} ${styles.card}`}
+          <Card
+            className={motion.settle}
             style={riseDelay(140)}
           >
             <h2 className={styles.cardTitle}>Pagamento</h2>
@@ -204,10 +204,10 @@ export const OrderDetail = () => {
                 Recebi o pagamento
               </Button>
             )}
-          </section>
+          </Card>
 
-          <section
-            className={`${motion.settle} ${styles.card}`}
+          <Card
+            className={motion.settle}
             style={riseDelay(200)}
           >
             <h2 className={styles.cardTitle}>Andamento</h2>
@@ -217,7 +217,7 @@ export const OrderDetail = () => {
                 Motivo do cancelamento: {order.cancelReason}
               </p>
             )}
-          </section>
+          </Card>
 
           {(step || canCancel(order.status)) && (
             <section

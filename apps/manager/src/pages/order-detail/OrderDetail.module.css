@@ -133,11 +133,6 @@
   @apply flex min-w-0 flex-col gap-4;
 }
 
-.card {
-  @apply rounded-[20px] border border-line bg-brand-foreground/70 p-5;
-  @apply backdrop-blur-sm;
-}
-
 .cardTitle {
   @apply mb-2 text-[0.7rem] font-bold uppercase tracking-[0.12em] text-faint;
 }

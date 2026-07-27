@@ -1,5 +1,6 @@
 import { useState } from 'react'
 
+import { Card } from '@nino/ds/components/Card'
 import { Button } from '@nino/ds/components/Button'
 import { Skeleton } from '@nino/ds/components/Skeleton'
 import { Switch } from '@nino/ds/components/Switch'
@@ -104,7 +105,7 @@ export const WeekSchedule = ({
   if (isPending) return <Skeleton className={local.skeleton} />
 
   return (
-    <section className={styles.card}>
+    <Card>
       <header className={`${motion.unroll} ${styles.head}`}>
         <h2 className={styles.title}>Quando a loja abre</h2>
         <p className={styles.hint}>
@@ -163,6 +164,6 @@ export const WeekSchedule = ({
       >
         Salvar horários
       </Button>
-    </section>
+    </Card>
   )
 }

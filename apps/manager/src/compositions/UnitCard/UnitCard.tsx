@@ -1,6 +1,7 @@
 import { useState } from 'react'
 
 import { Badge } from '@nino/ds/components/Badge'
+import { Card } from '@nino/ds/components/Card'
 import { Button } from '@nino/ds/components/Button'
 import { FormField } from '@nino/ds/components/FormField'
 import { Input } from '@nino/ds/components/Input'
@@ -80,7 +81,7 @@ export const UnitCard = ({
   if (isPending) return <Skeleton className={local.skeleton} />
 
   return (
-    <section className={styles.card}>
+    <Card>
       <header className={`${motion.unroll} ${local.head}`}>
         <div>
           <h2 className={styles.title}>
@@ -171,6 +172,6 @@ export const UnitCard = ({
       >
         Salvar unidade
       </Button>
-    </section>
+    </Card>
   )
 }
