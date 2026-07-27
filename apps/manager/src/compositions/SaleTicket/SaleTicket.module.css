@@ -30,10 +30,10 @@
   @apply font-display text-lg font-extrabold text-ink;
 }
 
-/* Ação destrutiva discreta: tem a forma de botão do DS, mas em tom apagado —
-   é saída de emergência, não o caminho normal. */
+/* Abaixo da ação principal, em tom apagado e largura cheia — mesmo lugar que
+   "Esvaziar sacola" ocupa no app do cliente. */
 .clear {
-  @apply gap-1.5 text-faint hover:text-danger;
+  @apply w-full text-faint hover:text-danger;
 }
 
 /* Identificação depois dos itens, empilhada: dividindo a linha, "Mesa" ficava
@@ -56,8 +56,19 @@
   @apply sm:flex-row sm:items-center;
 }
 
+.lineText {
+  @apply flex min-w-0 flex-col gap-0.5 sm:flex-1;
+}
+
 .lineName {
-  @apply min-w-0 text-base leading-tight text-body sm:line-clamp-2 sm:flex-1;
+  @apply min-w-0 text-base leading-tight text-body sm:line-clamp-2;
+}
+
+/* A conta por extenso: sem ela, ver "R$ 74,70" numa linha de três unidades
+   obriga a dividir de cabeça para conferir o preço do item. */
+.lineMath {
+  @apply text-xs text-faint;
+  font-variant-numeric: tabular-nums;
 }
 
 /* Empilhado, os controles ocupam a linha: quantidade à esquerda, preço à

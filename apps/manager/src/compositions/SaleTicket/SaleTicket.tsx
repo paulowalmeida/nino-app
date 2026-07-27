@@ -58,18 +58,6 @@ export const SaleTicket = ({
     <aside className={bare ? styles.ticketBare : styles.ticket}>
       <header className={bare ? styles.headBare : styles.head}>
         {!bare && <h2 className={styles.title}>Venda</h2>}
-        {count > 0 && (
-          <Button
-            type="button"
-            variant="ghost"
-            size="sm"
-            className={styles.clear}
-            onClick={onClear}
-          >
-            <TrashIcon />
-            Limpar comanda
-          </Button>
-        )}
       </header>
 
       {lines.length === 0 ? (
@@ -81,16 +69,27 @@ export const SaleTicket = ({
               key={line.productId}
               className={`${motion.deal} ${styles.line}`}
             >
-              <span className={styles.lineName}>{line.name}</span>
+              <span className={styles.lineText}>
+                <span className={styles.lineName}>{line.name}</span>
+                <span className={styles.lineMath}>
+                  {line.quantity} × {brl(line.unitPrice)}
+                </span>
+              </span>
               <div className={styles.lineControls}>
                 <div className={styles.stepper}>
                   <button
                     type="button"
                     className={styles.step}
-                    aria-label={`Tirar um ${line.name}`}
+                    aria-label={
+                      line.quantity === 1
+                        ? `Tirar ${line.name} da comanda`
+                        : `Tirar um ${line.name}`
+                    }
                     onClick={() => onStep(line.productId, -1)}
                   >
-                    −
+                    {/* Na última unidade o traço vira lixeira: tocar de novo
+                        remove o item, e o ícone avisa antes de acontecer. */}
+                    {line.quantity === 1 ? <TrashIcon /> : '−'}
                   </button>
                   <span className={styles.quantity}>{line.quantity}</span>
                   <button
@@ -168,6 +167,19 @@ export const SaleTicket = ({
         >
           Fechar venda
         </Button>
+
+        {/* Abaixo da ação principal e em tom apagado: desfazer a venda inteira
+            não pode dividir peso com fechá-la. */}
+        {count > 0 && (
+          <Button
+            type="button"
+            variant="ghost"
+            className={styles.clear}
+            onClick={onClear}
+          >
+            Limpar comanda
+          </Button>
+        )}
       </div>
     </aside>
   )
