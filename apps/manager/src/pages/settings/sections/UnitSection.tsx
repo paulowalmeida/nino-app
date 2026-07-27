@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { Link } from 'react-router'
 
+import { Badge } from '@nino/ds/components/Badge'
 import { Button } from '@nino/ds/components/Button'
 import { Skeleton } from '@nino/ds/components/Skeleton'
 import { useSubscription } from '@hooks/account/useSubscription'
@@ -74,9 +75,13 @@ export const UnitSection = () => {
               >
                 <span className={styles.name}>
                   {tenantName}
-                  {isHere && <span className={styles.here}>aqui</span>}
+                  {isHere && (
+                    <Badge variant="brand" size="sm">
+                      aqui
+                    </Badge>
+                  )}
                   {isHere && unit?.isMain && (
-                    <span className={styles.main}>matriz</span>
+                    <Badge size="sm">matriz</Badge>
                   )}
                 </span>
                 <span className={styles.company}>{companyName}</span>

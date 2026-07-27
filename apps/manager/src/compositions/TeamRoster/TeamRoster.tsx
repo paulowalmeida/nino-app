@@ -1,3 +1,4 @@
+import { Badge } from '@nino/ds/components/Badge'
 import { Button } from '@nino/ds/components/Button'
 import { Skeleton } from '@nino/ds/components/Skeleton'
 import { PersonMark } from '@components/PersonMark'
@@ -53,7 +54,7 @@ export const TeamRoster = ({
               {entry.email && <p className={styles.email}>{entry.email}</p>}
             </div>
 
-            <span className={styles.role}>{entry.role}</span>
+            <Badge variant="info">{entry.role}</Badge>
 
             <div className={styles.actions}>
               {entry.emailEditable && onEditEmail && (

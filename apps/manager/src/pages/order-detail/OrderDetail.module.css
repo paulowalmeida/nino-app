@@ -54,13 +54,7 @@
 }
 
 .badge {
-  @apply relative z-10 shrink-0 rounded-full px-3 py-1;
-  @apply text-[0.7rem] font-bold uppercase tracking-wider;
-  @apply bg-white/18 text-white backdrop-blur-sm;
-}
-
-.badgeOff {
-  @apply bg-ink/30 text-white/70;
+  @apply relative z-10 shrink-0;
 }
 
 .columns {
