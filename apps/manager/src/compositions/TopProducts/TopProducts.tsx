@@ -32,7 +32,7 @@ export const TopProducts = ({ tenantId }: TopProductsProps) => {
   }))
 
   return (
-    <section aria-label="O que mais sai">
+    <section aria-label="O que mais sai" className={styles.section}>
       <div className={motion.unroll}>
         <Eyebrow className={styles.heading}>O que mais sai</Eyebrow>
       </div>

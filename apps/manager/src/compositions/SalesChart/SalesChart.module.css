@@ -3,11 +3,13 @@
 /* O `figure` zera a margem que o user-agent dá e deixa o gráfico ocupar o
    cartão inteiro — a moldura é do Card, não daqui. */
 .figure {
-  @apply m-0 w-full;
+  @apply m-0 w-full min-w-0;
 }
 
+/* `overflow-hidden` fecha o ciclo: sem ele o SVG mais largo que o cartão
+   realimentaria a medição e nunca encolheria. */
 .canvas {
-  @apply relative w-full;
+  @apply relative w-full min-w-0 overflow-hidden;
 }
 
 /*

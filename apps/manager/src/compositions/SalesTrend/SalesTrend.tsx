@@ -41,7 +41,7 @@ export const SalesTrend = ({ tenantId }: SalesTrendProps) => {
   const noSales = !isPending && total === 0
 
   return (
-    <section aria-label="Os últimos 7 dias">
+    <section aria-label="Os últimos 7 dias" className={styles.section}>
       <div className={motion.unroll}>
         <Eyebrow className={styles.heading}>
           Os últimos 7 dias

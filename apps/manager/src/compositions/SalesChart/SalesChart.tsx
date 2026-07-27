@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 
 import { AxisBottom, AxisLeft } from '@visx/axis'
 import { localPoint } from '@visx/event'
@@ -14,9 +14,17 @@ import type { SalesChartProps, SalesMetric } from './SalesChart.types'
 
 import styles from './SalesChart.module.css'
 
-/* Sobra para os eixos respirarem. O topo tem folga para o ponto mais alto não
-   encostar na borda do cartão. */
-const MARGIN = { top: 12, right: 12, bottom: 32, left: 52 }
+/*
+ * Sobra para os eixos respirarem, em duas medidas: no celular o rótulo do eixo
+ * Y é mais curto e a margem larga comeria a área de desenho.
+ */
+const MARGIN = { top: 12, right: 20, bottom: 32, left: 52 }
+/* A direita segura o último rótulo do eixo: com 8px, a data final saía
+   cortada na borda do cartão. */
+const NARROW_MARGIN = { top: 8, right: 20, bottom: 28, left: 38 }
+
+/* Abaixo disso o gráfico é estreito: menos marcas no eixo e margem menor. */
+const NARROW_WIDTH = 420
 
 const STROKE = 2
 const DOT_RADIUS = 4
@@ -66,9 +74,23 @@ export const SalesChart = ({
   label,
 }: SalesChartProps) => {
   const [width, setWidth] = useState(0)
+  const holder = useRef<HTMLElement | null>(null)
 
-  const measure = useCallback((node: HTMLDivElement | null) => {
-    if (node) setWidth(node.getBoundingClientRect().width)
+  /*
+   * Medir uma vez não basta: a largura muda ao girar o celular, ao recolher a
+   * sidebar e quando a fonte termina de carregar. Sem observar, o desenho fica
+   * preso no tamanho do primeiro render.
+   */
+  useEffect(() => {
+    const node = holder.current
+    if (!node) return
+
+    const observer = new ResizeObserver(([entry]) => {
+      setWidth(entry.contentRect.width)
+    })
+
+    observer.observe(node)
+    return () => observer.disconnect()
   }, [])
 
   const {
@@ -94,8 +116,12 @@ export const SalesChart = ({
     [points, metric]
   )
 
-  const innerWidth = Math.max(width - MARGIN.left - MARGIN.right, 0)
-  const innerHeight = Math.max(height - MARGIN.top - MARGIN.bottom, 0)
+  const isNarrow = width > 0 && width < NARROW_WIDTH
+  const margin = isNarrow ? NARROW_MARGIN : MARGIN
+  const drawHeight = isNarrow ? Math.min(height, 180) : height
+
+  const innerWidth = Math.max(width - margin.left - margin.right, 0)
+  const innerHeight = Math.max(drawHeight - margin.top - margin.bottom, 0)
 
   const xScale = useMemo(
     () =>
@@ -123,7 +149,7 @@ export const SalesChart = ({
       const point = localPoint(event)
       if (!point || data.length === 0) return
 
-      const x = point.x - MARGIN.left
+      const x = point.x - margin.left
       const time = xScale.invert(x).getTime()
 
       const nearest = data.reduce((best, current) =>
@@ -134,19 +160,19 @@ export const SalesChart = ({
 
       showTooltip({
         tooltipData: nearest,
-        tooltipLeft: MARGIN.left + (xScale(nearest.at) ?? 0),
-        tooltipTop: MARGIN.top + (yScale(nearest.value) ?? 0),
+        tooltipLeft: margin.left + (xScale(nearest.at) ?? 0),
+        tooltipTop: margin.top + (yScale(nearest.value) ?? 0),
       })
     },
-    [data, xScale, yScale, showTooltip]
+    [data, xScale, yScale, showTooltip, margin]
   )
 
   if (data.length < 2) return null
 
   return (
-    <figure className={styles.figure} ref={measure}>
+    <figure className={styles.figure} ref={holder}>
       <div ref={containerRef} className={styles.canvas}>
-        <svg width={width} height={height} role="img" aria-label={label}>
+        <svg width={width} height={drawHeight} role="img" aria-label={label}>
           <defs>
             <linearGradient id="salesArea" x1="0" y1="0" x2="0" y2="1">
               <stop offset="0%" className={styles.areaTop} />
@@ -154,8 +180,8 @@ export const SalesChart = ({
             </linearGradient>
           </defs>
 
-          <Group left={MARGIN.left} top={MARGIN.top}>
-            {yScale.ticks(4).map((tick) => (
+          <Group left={margin.left} top={margin.top}>
+            {yScale.ticks(isNarrow ? 3 : 4).map((tick) => (
               <line
                 key={tick}
                 x1={0}
@@ -199,7 +225,7 @@ export const SalesChart = ({
 
             <AxisLeft
               scale={yScale}
-              numTicks={4}
+              numTicks={isNarrow ? 3 : 4}
               hideAxisLine
               hideTicks
               tickFormat={(value) =>
@@ -213,7 +239,7 @@ export const SalesChart = ({
             <AxisBottom
               scale={xScale}
               top={innerHeight}
-              numTicks={Math.min(data.length, 6)}
+              numTicks={Math.min(data.length, isNarrow ? 3 : 6)}
               hideTicks
               tickFormat={(value) =>
                 (granularity === 'hour' ? hourLabel : dayLabel).format(
