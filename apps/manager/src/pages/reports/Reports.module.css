@@ -62,10 +62,6 @@
   @apply h-40 w-full rounded-xl;
 }
 
-.empty {
-  @apply py-6 text-center text-sm text-faint;
-}
-
 /* quatro colunas numéricas não cabem em 390px: a tabela rola dentro do
    cartão em vez de empurrar a página inteira para os lados */
 .tableWrap {

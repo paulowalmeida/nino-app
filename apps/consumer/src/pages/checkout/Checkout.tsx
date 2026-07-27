@@ -5,6 +5,7 @@ import { Link, useNavigate, useParams } from 'react-router'
 import { Alert } from '@nino/ds/components/Alert'
 import { Button } from '@nino/ds/components/Button'
 import { Collapsible } from '@nino/ds/components/Collapsible'
+import { EmptyState } from '@nino/ds/components/EmptyState'
 import { FormField } from '@nino/ds/components/FormField'
 import { Input } from '@nino/ds/components/Input'
 import { MaskedInput } from '@nino/ds/components/MaskedInput'
@@ -211,12 +212,16 @@ export const Checkout = () => {
     if (lastOrder) return <CheckoutSkeleton />
 
     return (
-      <div className={styles.empty}>
-        <p className={styles.emptyText}>Sua sacola está vazia.</p>
-        <Link to={backHref} className={styles.emptyLink}>
-          Voltar para o cardápio
-        </Link>
-      </div>
+      <EmptyState
+        size="md"
+        className={styles.empty}
+        title="Sua sacola está vazia"
+        action={
+          <Link to={backHref} className={styles.emptyLink}>
+            Voltar para o cardápio
+          </Link>
+        }
+      />
     )
   }
 

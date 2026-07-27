@@ -1,5 +1,6 @@
 import { useState } from 'react'
 
+import { EmptyState } from '@nino/ds/components/EmptyState'
 import { Skeleton } from '@nino/ds/components/Skeleton'
 import { ItemThumb } from '@components/ItemThumb'
 import { brl } from '@utils/money'
@@ -36,9 +37,9 @@ export const ProductGrid = ({
 
   if (sections.length === 0) {
     return (
-      <p className={styles.empty}>
+      <EmptyState>
         O cardápio está vazio. Cadastre itens no gestor para vender aqui.
-      </p>
+      </EmptyState>
     )
   }
 

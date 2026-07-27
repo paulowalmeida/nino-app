@@ -153,18 +153,6 @@
   @apply gap-3 px-6 text-center;
 }
 
-.notFoundMascot {
-  @apply h-32 w-32;
-}
-
-.notFoundTitle {
-  @apply font-display text-2xl font-extrabold text-ink;
-}
-
-.notFoundText {
-  @apply text-sm leading-relaxed text-muted;
-}
-
 .backLink {
   @apply mt-2 font-bold text-brand-strong;
 }

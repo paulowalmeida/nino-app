@@ -1,5 +1,6 @@
 import { Alert } from '@nino/ds/components/Alert'
 import { Button } from '@nino/ds/components/Button'
+import { EmptyState } from '@nino/ds/components/EmptyState'
 import { Input } from '@nino/ds/components/Input'
 import { brl } from '@utils/money'
 import { paymentLabelFor } from '@utils/order-flow'
@@ -64,7 +65,7 @@ export const SaleTicket = ({
       </div>
 
       {lines.length === 0 ? (
-        <p className={styles.empty}>Toque nos itens para montar a venda.</p>
+        <EmptyState>Toque nos itens para montar a venda.</EmptyState>
       ) : (
         <ul className={styles.lines}>
           {lines.map((line) => (

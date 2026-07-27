@@ -88,10 +88,6 @@
   @apply flex flex-col lg:grid lg:grid-cols-2 lg:gap-3.5;
 }
 
-.hint {
-  @apply py-12 text-center text-sm text-muted;
-}
-
 /*
  * A mesma barra de destaque do checkout — a comanda que a pessoa está
  * montando. Ela é a constante do fluxo: não some entre a vitrine e o
@@ -185,18 +181,6 @@
 .notFound {
   @apply mx-auto flex min-h-dvh max-w-md flex-col items-center justify-center;
   @apply px-6 text-center;
-}
-
-.notFoundMascot {
-  @apply mb-4 h-40 w-40;
-}
-
-.notFoundTitle {
-  @apply font-display text-2xl font-extrabold text-ink;
-}
-
-.notFoundText {
-  @apply mt-2 text-sm leading-relaxed text-muted;
 }
 
 /* ----- skeleton ----- */

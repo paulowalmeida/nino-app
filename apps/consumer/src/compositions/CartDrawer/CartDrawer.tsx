@@ -2,6 +2,7 @@ import { AnimatePresence, motion as motionEl } from 'framer-motion'
 
 import { Button } from '@nino/ds/components/Button'
 import { Drawer } from '@nino/ds/components/Drawer'
+import { EmptyState } from '@nino/ds/components/EmptyState'
 import { Image } from '@nino/ds/components/Image'
 import { AnimatedNumber } from '@components/AnimatedNumber/AnimatedNumber'
 import { useIsDesktop } from '@hooks/useIsDesktop'
@@ -58,17 +59,14 @@ export const CartDrawer = ({
     >
       <div className={styles.body}>
         {lines.length === 0 ? (
-          <div className={`${motion.riseIn} ${styles.empty}`}>
-            <img
-              src="/mascot-consumer.svg"
-              alt=""
-              className={styles.emptyMascot}
-            />
-            <p className={styles.emptyTitle}>Sua sacola está vazia</p>
-            <p className={styles.emptyText}>
-              Volte ao cardápio e escolha o que vai pedir.
-            </p>
-          </div>
+          <EmptyState
+            size="md"
+            className={`${motion.riseIn} ${styles.empty}`}
+            illustration={<img src="/mascot-consumer.svg" alt="" />}
+            title="Sua sacola está vazia"
+          >
+            Volte ao cardápio e escolha o que vai pedir.
+          </EmptyState>
         ) : (
           <>
             <div className={styles.lines}>

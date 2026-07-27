@@ -67,11 +67,6 @@
   @apply h-16 w-full rounded-2xl;
 }
 
-.notice {
-  @apply rounded-2xl border border-line bg-brand-foreground/60 p-6 text-sm;
-  @apply leading-relaxed text-faint;
-}
-
 .more {
   @apply mt-5 flex justify-center;
 }

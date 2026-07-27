@@ -2,6 +2,7 @@ import { useSearchParams } from 'react-router'
 
 import { Alert } from '@nino/ds/components/Alert'
 import { Button } from '@nino/ds/components/Button'
+import { EmptyState } from '@nino/ds/components/EmptyState'
 import { Skeleton } from '@nino/ds/components/Skeleton'
 import type { NavIconName } from '@components/NavIcon/NavIcon.types'
 import { PageTitle } from '@components/PageTitle'
@@ -127,7 +128,7 @@ export const Orders = () => {
       )}
 
       {!isPending && !isError && shown.length === 0 && (
-        <p className={`${motion.unroll} ${styles.notice}`}>{empty}</p>
+        <EmptyState className={motion.unroll}>{empty}</EmptyState>
       )}
 
       {shown.length > 0 && (

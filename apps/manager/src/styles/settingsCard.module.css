@@ -45,6 +45,3 @@
   @apply mt-4 self-start;
 }
 
-.empty {
-  @apply border-t border-sand pt-4 text-sm text-faint;
-}

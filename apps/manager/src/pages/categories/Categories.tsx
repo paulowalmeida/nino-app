@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router'
 import { Alert } from '@nino/ds/components/Alert'
 import { Button } from '@nino/ds/components/Button'
 import { Dialog } from '@nino/ds/components/Dialog'
+import { EmptyState } from '@nino/ds/components/EmptyState'
 import { Input } from '@nino/ds/components/Input'
 import { Skeleton } from '@nino/ds/components/Skeleton'
 import { BackLink } from '@components/BackLink'
@@ -146,10 +147,10 @@ export const Categories = () => {
       )}
 
       {!isPending && !isError && rows.length === 0 && (
-        <p className={`${motion.unroll} ${styles.notice}`}>
+        <EmptyState className={motion.unroll}>
           Nenhuma categoria ainda. Crie a primeira acima — depois cadastre itens
           dentro dela.
-        </p>
+        </EmptyState>
       )}
 
       {rows.length > 0 && (

@@ -1,3 +1,4 @@
+import { EmptyState } from '@nino/ds/components/EmptyState'
 import { Skeleton } from '@nino/ds/components/Skeleton'
 import { KitchenCard } from '@compositions/KitchenCard'
 import { useCurrentTenant } from '@hooks/session/useCurrentTenant'
@@ -58,7 +59,7 @@ export const Kitchen = () => {
                 {isPending && <Skeleton className={styles.skeleton} />}
 
                 {!isPending && list.length === 0 && (
-                  <p className={styles.empty}>{empty}</p>
+                  <EmptyState>{empty}</EmptyState>
                 )}
 
                 {list.map((order, index) => (

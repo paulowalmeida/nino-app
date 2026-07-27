@@ -2,6 +2,7 @@ import { useState } from 'react'
 
 import { Card } from '@nino/ds/components/Card'
 import { Button } from '@nino/ds/components/Button'
+import { EmptyState } from '@nino/ds/components/EmptyState'
 import { PhoneInput } from '@nino/ds/components/PhoneInput'
 import { Skeleton } from '@nino/ds/components/Skeleton'
 import { formatPhone, toE164 } from '@utils/phone'
@@ -56,7 +57,7 @@ export const PhoneList = ({
       </header>
 
       {phones.length === 0 && (
-        <p className={styles.empty}>Nenhum telefone cadastrado.</p>
+        <EmptyState>Nenhum telefone cadastrado.</EmptyState>
       )}
 
       {phones.length > 0 && (

@@ -1,6 +1,7 @@
 import { useMemo, useState } from 'react'
 
 import { DatePicker } from '@nino/ds/components/DatePicker'
+import { EmptyState } from '@nino/ds/components/EmptyState'
 import { Skeleton } from '@nino/ds/components/Skeleton'
 import {
   Table,
@@ -199,9 +200,9 @@ export const Reports = () => {
         <h2 className={styles.topTitle}>Mais vendidos</h2>
 
         {awaitingDates && (
-          <p className={styles.empty}>
+          <EmptyState>
             Escolha as datas de início e fim para ver o relatório.
-          </p>
+          </EmptyState>
         )}
 
         {!awaitingDates && isPending && (
@@ -209,7 +210,7 @@ export const Reports = () => {
         )}
 
         {noSales && (
-          <p className={styles.empty}>Nenhuma venda concluída no período.</p>
+          <EmptyState>Nenhuma venda concluída no período.</EmptyState>
         )}
 
         {!awaitingDates && !isPending && !noSales && (

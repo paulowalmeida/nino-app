@@ -91,20 +91,9 @@
   font-variant-numeric: tabular-nums;
 }
 
+/* só a altura: o desenho do vazio vem do EmptyState do DS */
 .empty {
-  @apply flex flex-1 flex-col items-center justify-center py-10 text-center;
-}
-
-.emptyMascot {
-  @apply mb-4 h-24 w-24 opacity-90;
-}
-
-.emptyTitle {
-  @apply font-display text-lg font-bold text-ink;
-}
-
-.emptyText {
-  @apply mt-1.5 max-w-[22ch] text-sm leading-relaxed text-muted;
+  @apply flex-1;
 }
 
 /*

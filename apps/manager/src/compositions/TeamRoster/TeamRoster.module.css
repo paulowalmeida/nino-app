@@ -48,10 +48,6 @@
   @apply text-faint;
 }
 
-.empty {
-  @apply border-t border-sand pt-4 text-sm text-faint;
-}
-
 .loading {
   @apply flex flex-col gap-2;
 }

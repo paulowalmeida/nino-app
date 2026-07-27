@@ -1,5 +1,6 @@
 import { Link, useParams, useSearchParams } from 'react-router'
 
+import { EmptyState } from '@nino/ds/components/EmptyState'
 import { useGuestOrderStatus } from '@hooks/useGuestOrderStatus'
 import { STATUS_LABEL } from '@utils/order-flow'
 
@@ -59,20 +60,19 @@ export const OrderTracking = () => {
 
   if (isError || !order) {
     return (
-      <div className={styles.notFound}>
-        <img
-          src="/mascot-consumer-sad.svg"
-          alt=""
-          className={styles.notFoundMascot}
-        />
-        <h1 className={styles.notFoundTitle}>Pedido não encontrado</h1>
-        <p className={styles.notFoundText}>
-          Confira o link — ele é o mesmo que apareceu na hora do pedido.
-        </p>
-        <Link to={backHref} className={styles.backLink}>
-          Voltar para a loja
-        </Link>
-      </div>
+      <EmptyState
+        size="md"
+        className={styles.notFound}
+        illustration={<img src="/mascot-consumer-sad.svg" alt="" />}
+        title="Pedido não encontrado"
+        action={
+          <Link to={backHref} className={styles.backLink}>
+            Voltar para a loja
+          </Link>
+        }
+      >
+        Confira o link — ele é o mesmo que apareceu na hora do pedido.
+      </EmptyState>
     )
   }
 
