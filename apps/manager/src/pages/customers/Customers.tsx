@@ -3,8 +3,8 @@ import { Link } from 'react-router'
 import { Alert } from '@nino/ds/components/Alert'
 import { Button } from '@nino/ds/components/Button'
 import { EmptyState } from '@nino/ds/components/EmptyState'
+import { PageHeader } from '@nino/ds/components/PageHeader'
 import { Skeleton } from '@nino/ds/components/Skeleton'
-import { PageTitle } from '@components/PageTitle'
 import { PersonMark } from '@components/PersonMark'
 import { useCurrentTenant } from '@hooks/session/useCurrentTenant'
 import { useCustomers } from '@hooks/customer/useCustomers'
@@ -32,14 +32,16 @@ export const Customers = () => {
 
   return (
     <div className={styles.page}>
-      <header className={`${motion.deal} ${styles.header}`}>
-        <PageTitle accent="volta">Quem já comprou e volta</PageTitle>
-        <p className={styles.subtitle}>
-          {total !== undefined
+      <PageHeader
+        className={`${motion.deal} ${styles.header}`}
+        title="Quem já comprou e volta"
+        accent="volta"
+        description={
+          total !== undefined
             ? `${total} ${total === 1 ? 'pessoa' : 'pessoas'} com pedido nesta loja.`
-            : 'Quem pede pelo app entra nesta lista.'}
-        </p>
-      </header>
+            : 'Quem pede pelo app entra nesta lista.'
+        }
+      />
 
       {isPending && (
         <div className={styles.loading}>

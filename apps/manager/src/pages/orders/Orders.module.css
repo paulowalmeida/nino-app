@@ -21,16 +21,8 @@
   @apply lg:static lg:mx-0 lg:bg-transparent lg:px-0 lg:py-0 lg:backdrop-blur-none;
 }
 
-.headText {
-  @apply flex flex-col gap-1.5;
-}
-
 .newOrder {
   @apply shrink-0;
-}
-
-.subtitle {
-  @apply mt-1 hidden text-sm text-faint lg:block;
 }
 
 /* a bobina: comandas lado a lado, sempre alinhadas pelo topo */

@@ -1,5 +1,5 @@
 import { Breadcrumb } from '@components/Breadcrumb'
-import { PageTitle } from '@components/PageTitle'
+import { PageHeader } from '@nino/ds/components/PageHeader'
 import { FirstStoreForm } from '@compositions/FirstStoreForm'
 
 import styles from './NewUnit.module.css'
@@ -20,13 +20,12 @@ export const NewUnit = () => (
       ]}
     />
 
-    <header className={`${motion.deal} ${styles.header}`}>
-      <PageTitle accent="unidade">Abrir nova unidade</PageTitle>
-      <p className={styles.subtitle}>
-        Cada unidade tem cardápio, horário e zonas próprios. Equipe e
-        assinatura continuam da empresa.
-      </p>
-    </header>
+    <PageHeader
+      className={`${motion.deal} ${styles.header}`}
+      title="Abrir nova unidade"
+      accent="unidade"
+      description="Cada unidade tem cardápio, horário e zonas próprios. Equipe e assinatura continuam da empresa."
+    />
 
     <div className={`${motion.settle} ${styles.form}`}>
       <FirstStoreForm

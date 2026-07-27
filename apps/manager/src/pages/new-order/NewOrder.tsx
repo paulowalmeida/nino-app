@@ -4,12 +4,12 @@ import { useNavigate } from 'react-router'
 import { Alert } from '@nino/ds/components/Alert'
 import { Button } from '@nino/ds/components/Button'
 import { EmptyState } from '@nino/ds/components/EmptyState'
+import { PageHeader } from '@nino/ds/components/PageHeader'
 import { Select } from '@nino/ds/components/Select'
 import { Skeleton } from '@nino/ds/components/Skeleton'
 import { Textarea } from '@nino/ds/components/Textarea'
 import { BackLink } from '@components/BackLink'
 import { ItemThumb } from '@components/ItemThumb'
-import { PageTitle } from '@components/PageTitle'
 import { RecipientFields } from '@compositions/RecipientFields'
 import { useCreateOrder } from '@hooks/order/useCreateOrder'
 import { useCurrentTenant } from '@hooks/session/useCurrentTenant'
@@ -156,13 +156,12 @@ export const NewOrder = () => {
     <div className={styles.page}>
       <BackLink>Pedidos</BackLink>
 
-      <header className={styles.header}>
-        <PageTitle accent="mão">Pedido na mão</PageTitle>
-        <p className={styles.subtitle}>
-          Para quem pediu no balcão ou ligou para a loja. O pedido entra na
-          fila do mesmo jeito que o do app.
-        </p>
-      </header>
+      <PageHeader
+        className={styles.header}
+        title="Pedido na mão"
+        accent="mão"
+        description="Para quem pediu no balcão ou ligou para a loja. O pedido entra na fila do mesmo jeito que o do app."
+      />
 
       <div className={styles.columns}>
         <section className={styles.menu} aria-label="Cardápio">

@@ -8,10 +8,6 @@
   @apply mb-5 flex flex-col gap-1.5 lg:mb-8;
 }
 
-.subtitle {
-  @apply mt-1 text-sm text-faint;
-}
-
 .list {
   @apply flex flex-col rounded-[24px] border border-line bg-brand-foreground/70;
   @apply px-2 shadow-card backdrop-blur-sm lg:px-3;

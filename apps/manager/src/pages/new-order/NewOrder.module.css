@@ -13,10 +13,6 @@
   @apply mt-4 flex flex-col gap-1.5;
 }
 
-.subtitle {
-  @apply mt-1 max-w-lg text-sm leading-relaxed text-faint;
-}
-
 .columns {
   @apply mt-6 grid items-start gap-5 lg:grid-cols-[1.2fr_1fr];
 }

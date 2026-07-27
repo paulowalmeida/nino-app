@@ -4,8 +4,8 @@ import { Card } from '@nino/ds/components/Card'
 import { Button } from '@nino/ds/components/Button'
 import { FormField } from '@nino/ds/components/FormField'
 import { Input } from '@nino/ds/components/Input'
+import { PageHeader } from '@nino/ds/components/PageHeader'
 import { Skeleton } from '@nino/ds/components/Skeleton'
-import { PageTitle } from '@components/PageTitle'
 import { EditEmailModal } from '@compositions/EditEmailModal'
 import {
   useProfile,
@@ -65,12 +65,12 @@ export const Account = () => {
 
   return (
     <div className={styles.page}>
-      <header className={`${motion.deal} ${styles.header}`}>
-        <PageTitle accent="dados">Meus dados</PageTitle>
-        <p className={styles.subtitle}>
-          É como a equipe te identifica no painel e no histórico dos pedidos.
-        </p>
-      </header>
+      <PageHeader
+        className={`${motion.deal} ${styles.header}`}
+        title="Meus dados"
+        accent="dados"
+        description="É como a equipe te identifica no painel e no histórico dos pedidos."
+      />
 
       {isPending ? (
         <Skeleton className={styles.skeleton} />

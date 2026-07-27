@@ -8,13 +8,13 @@ import { Alert } from '@nino/ds/components/Alert'
 import { Button } from '@nino/ds/components/Button'
 import { FormField } from '@nino/ds/components/FormField'
 import { Input } from '@nino/ds/components/Input'
+import { PageHeader } from '@nino/ds/components/PageHeader'
 import { Select } from '@nino/ds/components/Select'
 import { Skeleton } from '@nino/ds/components/Skeleton'
 import { Textarea } from '@nino/ds/components/Textarea'
 import { toast } from '@nino/ds/components/Toast'
 import { ItemPhoto } from '@compositions/ItemPhoto'
 import { BackLink } from '@components/BackLink'
-import { PageTitle } from '@components/PageTitle'
 import { useCategories, useCreateCategory } from '@hooks/product/useCategories'
 import { useCreateMenuItem } from '@hooks/product/useCreateMenuItem'
 import { menuQueryKey } from '@hooks/product/useMenu'
@@ -117,12 +117,12 @@ export const NewProduct = () => {
     <div className={styles.page}>
       <BackLink>Cardápio</BackLink>
 
-      <header className={styles.header}>
-        <PageTitle accent="item">Novo item</PageTitle>
-        <p className={styles.subtitle}>
-          O que o cliente vê no cardápio, tudo em um lugar só.
-        </p>
-      </header>
+      <PageHeader
+        className={styles.header}
+        title="Novo item"
+        accent="item"
+        description="O que o cliente vê no cardápio, tudo em um lugar só."
+      />
 
       <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
         <div className={`${motion.deal} ${styles.field}`} style={riseDelay(40)}>

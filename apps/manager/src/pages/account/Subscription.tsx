@@ -3,8 +3,8 @@ import type { ReactNode } from 'react'
 import { Alert } from '@nino/ds/components/Alert'
 import { Badge } from '@nino/ds/components/Badge'
 import { Card } from '@nino/ds/components/Card'
+import { PageHeader } from '@nino/ds/components/PageHeader'
 import { Skeleton } from '@nino/ds/components/Skeleton'
-import { PageTitle } from '@components/PageTitle'
 import { useSubscription } from '@hooks/account/useSubscription'
 import { brl } from '@utils/money'
 import { riseDelay } from '@utils/rise-delay'
@@ -26,12 +26,12 @@ export const Subscription = () => {
 
   return (
     <div className={styles.page}>
-      <header className={styles.header}>
-        <PageTitle accent="plano">Assinatura e plano</PageTitle>
-        <p className={styles.subtitle}>
-          A assinatura é da empresa e vale para todas as unidades.
-        </p>
-      </header>
+      <PageHeader
+        className={styles.header}
+        title="Assinatura e plano"
+        accent="plano"
+        description="A assinatura é da empresa e vale para todas as unidades."
+      />
 
       {isPending && <Skeleton className={styles.skeleton} />}
 
