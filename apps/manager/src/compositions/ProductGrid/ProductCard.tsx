@@ -46,31 +46,37 @@ export const ProductCard = ({ item, index, onPick }: ProductCardProps) => {
        * No centro da tela e com o fundo desfocado, como o preview de foto do
        * Instagram — e sem botão de fechar: quem abriu foi o dedo, e soltar
        * fecha. Um X aqui seria alvo impossível de acertar sem largar o gesto.
+       *
+       * Montado só quando abre: o diálogo do Ark mantém o conteúdo no DOM
+       * mesmo fechado, e a grade tem dezenas de itens — seriam dezenas de
+       * diálogos parados na página para um preview de cada vez.
        */}
-      <Modal
-        open={preview}
-        onOpenChange={setPreview}
-        dismissible={false}
-        size="lg"
-        ariaLabel={`Prévia de ${item.name}`}
-        backdropClassName={styles.previewBackdrop}
-        body={
-          <div className={styles.preview}>
-            {/* O mesmo ladrilho do card, em tamanho de olhar: sem foto ele cai
-                no emoji da categoria em vez de deixar buraco. */}
-            <ItemThumb
-              name={item.name}
-              imageUrl={photo}
-              className={styles.previewPhoto}
-            />
-            <p className={styles.previewName}>{item.name}</p>
-            {item.description && (
-              <p className={styles.previewText}>{item.description}</p>
-            )}
-            <p className={styles.previewPrice}>{brl(item.price)}</p>
-          </div>
-        }
-      />
+      {preview && (
+        <Modal
+          open
+          onOpenChange={setPreview}
+          dismissible={false}
+          size="lg"
+          ariaLabel={`Prévia de ${item.name}`}
+          backdropClassName={styles.previewBackdrop}
+          body={
+            <div className={styles.preview}>
+              {/* O mesmo ladrilho do card, em tamanho de olhar: sem foto ele
+                  cai no emoji da categoria em vez de deixar buraco. */}
+              <ItemThumb
+                name={item.name}
+                imageUrl={photo}
+                className={styles.previewPhoto}
+              />
+              <p className={styles.previewName}>{item.name}</p>
+              {item.description && (
+                <p className={styles.previewText}>{item.description}</p>
+              )}
+              <p className={styles.previewPrice}>{brl(item.price)}</p>
+            </div>
+          }
+        />
+      )}
     </>
   )
 }

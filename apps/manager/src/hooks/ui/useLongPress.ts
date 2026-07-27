@@ -1,4 +1,4 @@
-import { useCallback, useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 
 /** Tempo até o gesto virar "segurar". Abaixo disso ainda é um toque. */
 const HOLD_MS = 400
@@ -28,12 +28,27 @@ export const useLongPress = ({ onLongPress, onRelease }: LongPressOptions) => {
   const fired = useRef(false)
   const [isPressing, setPressing] = useState(false)
 
-  const clear = useCallback(() => {
+
+  const clearTimer = useCallback(() => {
     if (timer.current) clearTimeout(timer.current)
     timer.current = null
     origin.current = null
     setPressing(false)
   }, [])
+
+  /*
+   * O menu de contexto é barrado no documento, não no elemento: quando o
+   * Chrome resolve abri-lo, o dedo já está sobre o preview, não sobre o card.
+   */
+  useEffect(() => {
+    if (!isPressing) return
+
+    const block = (event: Event) => event.preventDefault()
+    document.addEventListener('contextmenu', block, { capture: true })
+
+    return () =>
+      document.removeEventListener('contextmenu', block, { capture: true })
+  }, [isPressing])
 
   const onPointerDown = useCallback(
     (event: React.PointerEvent) => {
@@ -47,9 +62,25 @@ export const useLongPress = ({ onLongPress, onRelease }: LongPressOptions) => {
       timer.current = setTimeout(() => {
         fired.current = true
         onLongPress()
+
+        /*
+         * A soltura é armada aqui, no mesmo instante da abertura, e não num
+         * efeito: o preview abre um diálogo que interrompe os eventos alheios
+         * e provoca novo render, e amarrar isso a dependência de efeito
+         * deixava o preview aberto depois de o dedo sair. Em captura e com
+         * `once`, escuta uma vez e se desfaz sozinho.
+         */
+        const finish = () => {
+          clearTimer()
+          onRelease?.()
+        }
+
+        const armed = { once: true, capture: true } as const
+        document.addEventListener('pointerup', finish, armed)
+        document.addEventListener('pointercancel', finish, armed)
       }, HOLD_MS)
     },
-    [onLongPress]
+    [onLongPress, onRelease, clearTimer]
   )
 
   const onPointerMove = useCallback(
@@ -60,20 +91,10 @@ export const useLongPress = ({ onLongPress, onRelease }: LongPressOptions) => {
         Math.abs(event.clientX - origin.current.x) > SLIP_PX ||
         Math.abs(event.clientY - origin.current.y) > SLIP_PX
 
-      if (slipped) clear()
+      if (slipped) clearTimer()
     },
-    [clear]
+    [clearTimer]
   )
-
-  const onPointerUp = useCallback(() => {
-    clear()
-    if (fired.current) onRelease?.()
-  }, [clear, onRelease])
-
-  const onPointerCancel = useCallback(() => {
-    clear()
-    if (fired.current) onRelease?.()
-  }, [clear, onRelease])
 
   /* Engole o clique que vem depois do gesto — e só ele. */
   const onClickCapture = useCallback((event: React.MouseEvent) => {
@@ -94,8 +115,6 @@ export const useLongPress = ({ onLongPress, onRelease }: LongPressOptions) => {
     handlers: {
       onPointerDown,
       onPointerMove,
-      onPointerUp,
-      onPointerCancel,
       onClickCapture,
       onContextMenu,
     },
