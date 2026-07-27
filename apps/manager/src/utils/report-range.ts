@@ -3,8 +3,30 @@ import type { ReportPeriod, ReportRange } from '@custom_types/ui'
 const DAYS_BACK: Record<ReportPeriod, number> = {
   today: 0,
   week: 6,
+  fortnight: 14,
   month: 29,
 }
+
+/** Teto da janela personalizada, igual ao que a API valida no DTO. */
+export const MAX_RANGE_MONTHS = 6
+
+/**
+ * Soma meses prendendo o dia ao último do mês de destino — 31 de agosto mais
+ * seis meses é 28 de fevereiro, não 3 de março.
+ */
+const addMonths = (date: Date, months: number): Date => {
+  const day = date.getDate()
+  const result = new Date(date)
+
+  result.setDate(1)
+  result.setMonth(result.getMonth() + months)
+  result.setDate(Math.min(day, daysInMonth(result)))
+
+  return result
+}
+
+const daysInMonth = (date: Date): number =>
+  new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate()
 
 /**
  * Janela do relatório a partir de um preset: do início do dia N dias atrás
@@ -34,6 +56,15 @@ export const customRange = (
 
   const from = new Date(`${fromDay}T00:00:00`)
   const to = new Date(`${toDay}T23:59:59.999`)
+
+  /* O mesmo teto que a API aplica: recusar aqui evita a ida ao servidor só
+     para receber 400, e deixa o formulário explicar o limite na hora.
+     O limite é o FIM do dia — `to` já é 23:59, então comparar contra a
+     meia-noite recusaria a janela de exatamente seis meses. */
+  const limit = addMonths(from, MAX_RANGE_MONTHS)
+  limit.setHours(23, 59, 59, 999)
+
+  if (to > limit) return null
 
   return { from: from.toISOString(), to: to.toISOString() }
 }

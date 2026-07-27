@@ -4,6 +4,8 @@ import type {
   OrderPage,
   OrderQueueSummary,
   SalesReport,
+  SalesSeries,
+  SeriesGranularity,
   TimingReport,
   UpdateOrderStatusRequest,
 } from '@custom_types/order'
@@ -33,6 +35,21 @@ export const getSalesReport = (
     `tenants/${tenantId}/orders/report`,
     { from, to }
   )
+
+/**
+ * Série de venda no tempo. `granularity` é opcional: a API deriva do tamanho
+ * do intervalo — "hoje" por dia seria um ponto só.
+ */
+export const getSalesSeries = (
+  tenantId: string,
+  from: string,
+  to: string,
+  granularity?: SeriesGranularity
+): Promise<SalesSeries> =>
+  getAll<
+    { from: string; to: string; granularity?: SeriesGranularity },
+    SalesSeries
+  >(`tenants/${tenantId}/orders/report/series`, { from, to, granularity })
 
 export const getTimingReport = (
   tenantId: string,

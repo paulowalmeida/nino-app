@@ -22,6 +22,7 @@ import { brl } from '@utils/money'
 import { riseDelay } from '@utils/rise-delay'
 import {
   customRange,
+  MAX_RANGE_MONTHS,
   dateToInput,
   parseInputDate,
   rangeOf,
@@ -34,6 +35,7 @@ import motion from '@styles/motion.module.css'
 const PERIODS: { id: PeriodChoice; label: string }[] = [
   { id: 'today', label: 'Hoje' },
   { id: 'week', label: '7 dias' },
+  { id: 'fortnight', label: '15 dias' },
   { id: 'month', label: '30 dias' },
   { id: 'custom', label: 'Escolher' },
 ]
@@ -102,6 +104,14 @@ export const Reports = () => {
   )
 
   const awaitingDates = period === 'custom' && !range
+  /* `customRange` devolve null tanto para data faltando quanto para janela
+     acima do teto — só a segunda merece explicação, senão o vazio parece bug. */
+  const overLimit =
+    period === 'custom' &&
+    !range &&
+    !!customFrom &&
+    !!customTo &&
+    customFrom <= customTo
   const noSales = !isPending && !awaitingDates && report?.orderCount === 0
 
   return (
@@ -115,7 +125,11 @@ export const Reports = () => {
 
       <Tabs
         className={motion.unroll}
-        tabs={PERIODS.map(({ id, label }) => ({ value: id, label, content: null }))}
+        tabs={PERIODS.map(({ id, label }) => ({
+          value: id,
+          label,
+          content: null,
+        }))}
         value={period}
         onValueChange={(value) => setPeriod(value as PeriodChoice)}
       />
@@ -198,9 +212,15 @@ export const Reports = () => {
       <section className={styles.top} aria-label="Produtos mais vendidos">
         <h2 className={styles.topTitle}>Mais vendidos</h2>
 
-        {awaitingDates && (
+        {awaitingDates && !overLimit && (
           <EmptyState>
             Escolha as datas de início e fim para ver o relatório.
+          </EmptyState>
+        )}
+
+        {overLimit && (
+          <EmptyState title="Período longo demais">
+            {`O relatório cobre no máximo ${MAX_RANGE_MONTHS} meses de uma vez. Aproxime as datas para ver os números.`}
           </EmptyState>
         )}
 
