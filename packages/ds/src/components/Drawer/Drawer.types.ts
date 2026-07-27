@@ -13,4 +13,10 @@ export interface DrawerProps {
   size?: string
   /** Extra classes for the content surface — for apps with their own theme. */
   contentClassName?: string
+  /**
+   * Extra classes for the scrolling body. Use it when the drawer's own child
+   * owns the scrolling — a cart that keeps its total fixed and scrolls only
+   * the item list needs the body to stop scrolling and hand over its height.
+   */
+  bodyClassName?: string
 }

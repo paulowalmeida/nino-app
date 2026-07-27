@@ -174,6 +174,7 @@ export const Counter = () => {
             title="Comanda"
             description={`${count} ${count === 1 ? 'item' : 'itens'}`}
             contentClassName={styles.sheet}
+            bodyClassName={styles.sheetBody}
           >
             {ticketFor(true)}
           </Drawer>

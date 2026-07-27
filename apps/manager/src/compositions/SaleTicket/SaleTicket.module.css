@@ -18,7 +18,7 @@
  * nome do item em tela de 320px.
  */
 .ticketBare {
-  @apply flex w-full flex-col;
+  @apply flex h-full min-h-0 w-full flex-col;
 }
 
 .ticketBare .body {
@@ -41,25 +41,30 @@
 }
 
 /*
- * Coluna de altura cheia: sem isso o rodapé encosta no fim do conteúdo, e na
- * coluna alta do desktop uma comanda de um item deixaria o total flutuando
- * no topo, longe da borda de baixo.
+ * A comanda inteira cabe na altura disponível e não rola: quem rola é só a
+ * lista de itens. Nome, mesa, pagamento e total ficam onde estão — no balcão
+ * eles são o próximo passo, e rolar atrás do total é perder a venda de vista.
  */
 .body {
-  @apply flex min-h-full flex-1 flex-col px-4 pt-3;
-  @apply lg:min-h-0 lg:overflow-y-auto;
+  @apply flex h-full min-h-0 flex-1 flex-col overflow-hidden px-4 pt-3;
 }
 
 .empty {
   @apply flex-1;
 }
 
+/*
+ * `basis: auto` de propósito: na folha do celular a altura vem do conteúdo, e
+ * com `flex-1` puro (basis 0) a lista não contribuiria com altura nenhuma e
+ * colapsaria. Assim ela cresce até o teto da folha e só então rola.
+ */
 .lines {
-  @apply flex flex-col divide-y divide-sand pb-4;
+  @apply flex min-h-0 flex-col divide-y divide-sand overflow-y-auto pb-4;
+  @apply flex-[1_1_auto];
 }
 
 .line {
-  @apply flex items-center gap-2.5 py-3 first:pt-0 sm:gap-3;
+  @apply flex shrink-0 items-center gap-2.5 py-3 first:pt-0 sm:gap-3;
 }
 
 /* Menor no celular estreito: cada pixel aqui sai da largura do nome. */
@@ -116,12 +121,9 @@
   @apply flex shrink-0 flex-col gap-2 border-t border-sand py-3;
 }
 
-/*
- * Gruda no fim da área rolável, como o rodapé da sacola: o total e o fechar
- * ficam à mão mesmo com a lista longa.
- */
+/* Fora da área rolável: o total e o fechar nunca saem da tela. */
 .footer {
-  @apply sticky bottom-0 -mx-4 mt-auto flex flex-col gap-3;
+  @apply -mx-4 mt-auto flex shrink-0 flex-col gap-3;
   @apply border-t border-line bg-brand-foreground px-4 pb-4 pt-3;
 }
 
