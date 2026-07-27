@@ -19,7 +19,7 @@ const defaultPresets = [
 ]
 
 const controlClass =
-  'inline-flex h-10 items-center gap-2 rounded-card border border-input-border bg-paper ' +
+  'inline-flex h-10 items-center gap-2 rounded-card border border-input-border bg-white ' +
   'pl-2 pr-3 transition-colors hover:border-brand focus-within:ring-2 ' +
   'focus-within:ring-brand/25 focus-within:border-brand ' +
   'data-[disabled]:pointer-events-none data-[disabled]:opacity-50'
@@ -32,7 +32,7 @@ const swatchClass = 'h-6 w-6 rounded-[4px]'
 const valueTextClass = 'text-sm font-medium text-ink tabular-nums'
 
 const contentClass =
-  'z-50 w-60 rounded-card border border-line bg-paper p-3 shadow-overlay ' +
+  'z-50 w-60 rounded-card border border-line bg-white p-3 shadow-overlay ' +
   'outline-none data-[state=open]:animate-in data-[state=closed]:animate-out ' +
   'data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 ' +
   'data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95'

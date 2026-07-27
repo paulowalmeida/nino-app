@@ -15,7 +15,7 @@ const baseBackdrop = 'modal-animated-overlay fixed inset-0 z-50 bg-ink/45'
 const basePositioner = 'fixed inset-0 z-50 flex items-center justify-center p-4'
 
 const baseContent =
-  'modal-animated-content relative overflow-hidden rounded-card bg-paper ' +
+  'modal-animated-content relative overflow-hidden rounded-card bg-white ' +
   'shadow-overlay outline-none'
 
 const baseClose =

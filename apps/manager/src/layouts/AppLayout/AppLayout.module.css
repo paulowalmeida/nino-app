@@ -2,7 +2,7 @@
 
 /* dvh, não vh: no celular a barra do navegador entra na conta de vh */
 .shell {
-  @apply flex min-h-dvh bg-paper;
+  @apply flex min-h-dvh bg-white;
 }
 
 .topbar {

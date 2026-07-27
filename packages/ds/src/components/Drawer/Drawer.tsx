@@ -33,7 +33,7 @@ const animationByPlacement: Record<DrawerPlacement, string> = {
 }
 
 const baseContent =
-  'flex flex-col bg-paper shadow-overlay outline-none duration-300'
+  'flex flex-col bg-white shadow-overlay outline-none duration-300'
 
 const baseHeader = 'flex items-center justify-between bg-surface-sunk px-6 py-4'
 

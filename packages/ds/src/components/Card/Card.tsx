@@ -4,7 +4,7 @@ import { mergeClasses } from '@ds/lib/mergeClasses'
 
 import { CardProps, CardVariant } from './Card.types'
 
-const baseCard = 'rounded-card bg-paper p-4'
+const baseCard = 'rounded-card bg-white p-4'
 
 /* Height off the page, and only one thing says it: a lifted surface carries
  * shadow, a resting one carries the border. Both at once is the stacked look

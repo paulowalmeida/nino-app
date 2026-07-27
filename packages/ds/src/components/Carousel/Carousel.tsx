@@ -11,7 +11,7 @@ const itemClass = 'min-w-0 shrink-0 grow-0'
 
 const triggerClass =
   'absolute top-1/2 z-10 flex h-9 w-9 -translate-y-1/2 items-center ' +
-  'justify-center rounded-card bg-paper text-body shadow-card ' +
+  'justify-center rounded-card bg-white text-body shadow-card ' +
   'transition-colors cursor-pointer outline-none hover:bg-cream-deep ' +
   'hover:text-brand-strong focus-visible:outline-2 ' +
   'focus-visible:outline-brand disabled:pointer-events-none ' +

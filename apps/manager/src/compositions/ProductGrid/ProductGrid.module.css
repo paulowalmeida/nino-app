@@ -15,7 +15,7 @@
 }
 
 .tab {
-  @apply shrink-0 cursor-pointer rounded-full border border-sand bg-paper;
+  @apply shrink-0 cursor-pointer rounded-full border border-sand bg-white;
   @apply px-4 py-2.5 text-base font-semibold text-subtle;
   @apply transition-colors duration-150;
   @apply hover:border-brand/30 hover:text-body;
@@ -34,7 +34,7 @@
 
 .card {
   @apply flex cursor-pointer flex-col items-start gap-2 rounded-[20px];
-  @apply border border-line bg-paper p-3 text-left shadow-card;
+  @apply border border-line bg-white p-3 text-left shadow-card;
   @apply transition-all duration-150;
   @apply hover:-translate-y-0.5 hover:border-brand/60 hover:bg-white;
   @apply hover:shadow-card-hover;

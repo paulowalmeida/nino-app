@@ -7,7 +7,7 @@ import { AccordionProps } from './Accordion.types'
  * onde se clica e o corpo é a folha clara que sai dela. Sem grade em volta. */
 const baseRoot = 'flex w-full flex-col gap-2'
 
-const baseItem = 'overflow-hidden rounded-card bg-paper'
+const baseItem = 'overflow-hidden rounded-card bg-white'
 
 const baseTrigger =
   'flex w-full items-center justify-between bg-surface-sunk px-4 py-3 ' +

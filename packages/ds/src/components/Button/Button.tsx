@@ -20,7 +20,7 @@ const variantClasses: Record<ButtonVariant, string> = {
   /* Sem halo colorido: sobre o laranja da marca, o glow virava um segundo
    * botão desfocado atrás do primeiro. */
   inverse:
-    'bg-paper text-brand-strong hover:bg-cream active:bg-cream-deep ' +
+    'bg-white text-brand-strong hover:bg-cream active:bg-cream-deep ' +
     'shadow-card',
   inverseOutline:
     'border-[1.5px] border-white/55 text-white bg-transparent hover:bg-white hover:text-brand-strong hover:border-white',
