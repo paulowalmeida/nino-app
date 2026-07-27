@@ -1,5 +1,6 @@
 import { useNavigate } from 'react-router'
 
+import { Card } from '@nino/ds/components/Card'
 import type { Membership } from '@custom_types/auth'
 import { useCompanyGroups } from '@hooks/session/useCompanyGroups'
 import { riseDelay } from '@utils/rise-delay'
@@ -30,20 +31,25 @@ export const StoreSelection = () => {
 
         <div className={styles.list}>
           {companies.map(({ companyId, companyName, units }, index) => (
-            <button
+            <Card
               key={companyId}
-              type="button"
-              onClick={handleSelect(units)}
-              style={riseDelay(index * 80 + 100)}
+              asChild
+              variant="flat"
               className={`${motion.settle} ${motion.lift} ${styles.store}`}
             >
-              <span className={styles.storeName}>{companyName}</span>
-              <span className={styles.storeUnit}>
-                {units.length > 1
-                  ? unitLabel(units.length)
-                  : units[0].tenantName}
-              </span>
-            </button>
+              <button
+                type="button"
+                onClick={handleSelect(units)}
+                style={riseDelay(index * 80 + 100)}
+              >
+                <span className={styles.storeName}>{companyName}</span>
+                <span className={styles.storeUnit}>
+                  {units.length > 1
+                    ? unitLabel(units.length)
+                    : units[0].tenantName}
+                </span>
+              </button>
+            </Card>
           ))}
         </div>
       </div>

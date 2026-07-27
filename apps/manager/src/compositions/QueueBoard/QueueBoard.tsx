@@ -1,5 +1,6 @@
 import { Link } from 'react-router'
 
+import { Card } from '@nino/ds/components/Card'
 import { Skeleton } from '@nino/ds/components/Skeleton'
 import { CountUp } from '@components/CountUp'
 import { Eyebrow } from '@components/Eyebrow'
@@ -63,28 +64,32 @@ export const QueueBoard = ({ tenantId }: QueueBoardProps) => {
 
       <div className={styles.board}>
         {tiles.map(({ label, value, stage, urgent }, index) => (
-          <Link
+          <Card
             key={label}
-            to={`../pedidos?etapa=${stage}`}
-            relative="path"
-            aria-label={`Ver pedidos ${label}`}
+            asChild
             className={`${motion.settle} ${motion.lift} ${
               urgent ? `${styles.tile} ${styles.urgent}` : styles.tile
             }`}
-            style={riseDelay(index * 70 + 80)}
           >
-            <span className={styles.value}>
-              {isPending ? (
-                <Skeleton
-                  animation="wave"
-                  className="h-9 w-10 bg-sand lg:h-11"
-                />
-              ) : (
-                <CountUp value={value} />
-              )}
-            </span>
-            <span className={styles.label}>{label}</span>
-          </Link>
+            <Link
+              to={`../pedidos?etapa=${stage}`}
+              relative="path"
+              aria-label={`Ver pedidos ${label}`}
+              style={riseDelay(index * 70 + 80)}
+            >
+              <span className={styles.value}>
+                {isPending ? (
+                  <Skeleton
+                    animation="wave"
+                    className="h-9 w-10 bg-sand lg:h-11"
+                  />
+                ) : (
+                  <CountUp value={value} />
+                )}
+              </span>
+              <span className={styles.label}>{label}</span>
+            </Link>
+          </Card>
         ))}
       </div>
 

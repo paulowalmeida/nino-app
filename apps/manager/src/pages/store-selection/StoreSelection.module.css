@@ -22,9 +22,9 @@
   @apply mt-8 flex flex-col gap-3;
 }
 
+/* superfície vem do Card do DS; aqui fica o que ele não sabe */
 .store {
-  @apply flex w-full flex-col items-start rounded-2xl border p-4;
-  @apply border-brand/12 bg-brand-foreground text-left transition-colors;
+  @apply flex w-full flex-col items-start text-left transition-colors;
   @apply hover:border-brand/40 hover:bg-cream;
 }
 
