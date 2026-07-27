@@ -3,7 +3,10 @@ import type {
   Order,
   OrderPage,
   OrderQueueSummary,
+  ReportRangeParams,
   SalesReport,
+  SalesSeries,
+  SeriesGranularity,
   TimingReport,
   UpdateOrderStatusRequest,
 } from '@custom_types/order'
@@ -24,24 +27,51 @@ export const ORDER_PAGE_SIZE = 40
 export const getQueueSummary = (tenantId: string): Promise<OrderQueueSummary> =>
   get<OrderQueueSummary>(`tenants/${tenantId}/orders/summary`)
 
+
+/**
+ * Monta a query do recorte. Só entra o que existe: `searchParams` com valor
+ * `undefined` viraria a string "undefined" na URL.
+ */
+const rangeQuery = (
+  params: ReportRangeParams,
+  granularity?: SeriesGranularity
+): Record<string, string> => ({
+  ...(params.period
+    ? { period: params.period }
+    : { from: params.from, to: params.to }),
+  ...(granularity ? { granularity } : {}),
+})
+
 export const getSalesReport = (
   tenantId: string,
-  from: string,
-  to: string
+  params: ReportRangeParams
 ): Promise<SalesReport> =>
-  getAll<{ from: string; to: string }, SalesReport>(
+  getAll<Record<string, string>, SalesReport>(
     `tenants/${tenantId}/orders/report`,
-    { from, to }
+    rangeQuery(params)
+  )
+
+/**
+ * Série de venda no tempo. `granularity` é opcional: a API deriva do tamanho
+ * do intervalo — "hoje" por dia seria um ponto só.
+ */
+export const getSalesSeries = (
+  tenantId: string,
+  params: ReportRangeParams,
+  granularity?: SeriesGranularity
+): Promise<SalesSeries> =>
+  getAll<Record<string, string>, SalesSeries>(
+    `tenants/${tenantId}/orders/report/series`,
+    rangeQuery(params, granularity)
   )
 
 export const getTimingReport = (
   tenantId: string,
-  from: string,
-  to: string
+  params: ReportRangeParams
 ): Promise<TimingReport> =>
-  getAll<{ from: string; to: string }, TimingReport>(
+  getAll<Record<string, string>, TimingReport>(
     `tenants/${tenantId}/orders/report/timing`,
-    { from, to }
+    rangeQuery(params)
   )
 
 /**

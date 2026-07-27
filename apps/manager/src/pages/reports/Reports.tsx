@@ -15,19 +15,14 @@ import {
 } from '@nino/ds/components/Table'
 import { Tabs } from '@nino/ds/components/Tabs'
 import { CountUp } from '@components/CountUp'
+import type { ReportRangeParams } from '@custom_types/order'
 import type { PeriodChoice } from '@custom_types/ui'
 import { useCurrentTenant } from '@hooks/session/useCurrentTenant'
 import { useSalesReport } from '@hooks/order/useSalesReport'
 import { useTimingReport } from '@hooks/order/useTimingReport'
 import { brl } from '@utils/money'
 import { riseDelay } from '@utils/rise-delay'
-import {
-  customRange,
-  dateToInput,
-  parseInputDate,
-  rangeOf,
-  todayInput,
-} from '@utils/report-range'
+import { dateToInput, parseInputDate, todayInput } from '@utils/date-input'
 
 import styles from './Reports.module.css'
 import motion from '@styles/motion.module.css'
@@ -35,6 +30,7 @@ import motion from '@styles/motion.module.css'
 const PERIODS: { id: PeriodChoice; label: string }[] = [
   { id: 'today', label: 'Hoje' },
   { id: 'week', label: '7 dias' },
+  { id: 'fortnight', label: '15 dias' },
   { id: 'month', label: '30 dias' },
   { id: 'custom', label: 'Escolher' },
 ]
@@ -99,30 +95,29 @@ export const Reports = () => {
   const [customFrom, setCustomFrom] = useState('')
   const [customTo, setCustomTo] = useState('')
 
-  /**
-   * Sem memo, `rangeOf` gera um `to` novo a cada render — a query key muda,
-   * dispara outro fetch, o `isPending` muda e o componente renderiza de novo:
-   * loop infinito de requisições. Trava em `period`/`customFrom`/`customTo`.
-   */
-  const range = useMemo(
-    () =>
-      period === 'custom' ? customRange(customFrom, customTo) : rangeOf(period),
-    [period, customFrom, customTo]
-  )
+  const awaitingDates = period === 'custom' && (!customFrom || !customTo)
 
-  const { report, isPending } = useSalesReport(
+  /* Preset ou dias: quem traduz para instante é a API, no fuso da loja. O
+     objeto é memoizado porque vira query key — recriá-lo a cada render
+     dispararia fetch em laço. */
+  const range = useMemo<ReportRangeParams | null>(() => {
+    if (period !== 'custom') return { period }
+    if (!customFrom || !customTo || customFrom > customTo) return null
+
+    return { from: customFrom, to: customTo }
+  }, [period, customFrom, customTo])
+
+  const { report, isPending, isError } = useSalesReport(
     range ? tenantId : null,
-    range?.from ?? '',
-    range?.to ?? ''
+    range ?? { period: 'today' }
   )
   const { report: timing, isPending: isTimingPending } = useTimingReport(
     range ? tenantId : null,
-    range?.from ?? '',
-    range?.to ?? ''
+    range ?? { period: 'today' }
   )
 
-  const awaitingDates = period === 'custom' && !range
-  const noSales = !isPending && !awaitingDates && report?.orderCount === 0
+  const noSales =
+    !isPending && !isError && !awaitingDates && report?.orderCount === 0
 
   return (
     <div className={styles.page}>
@@ -225,6 +220,14 @@ export const Reports = () => {
         {awaitingDates && (
           <EmptyState>
             Escolha as datas de início e fim para ver o relatório.
+          </EmptyState>
+        )}
+
+        {/* O teto da janela é da API — mostrar o que ela recusou evita duas
+            regras de limite vivendo em lugares diferentes. */}
+        {isError && (
+          <EmptyState title="Não deu para montar o relatório">
+            Confira o período escolhido — janelas muito longas não são aceitas.
           </EmptyState>
         )}
 

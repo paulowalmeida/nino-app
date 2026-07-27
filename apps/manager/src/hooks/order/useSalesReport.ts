@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query'
 
 import { queryKeys } from '@constants/query-keys'
-import type { SalesReport } from '@custom_types/order'
+import type { ReportRangeParams, SalesReport } from '@custom_types/order'
 import { getSalesReport } from '@services/order/order.service'
 
 /**
@@ -10,12 +10,11 @@ import { getSalesReport } from '@services/order/order.service'
  */
 export const useSalesReport = (
   tenantId: string | null,
-  from: string,
-  to: string
+  params: ReportRangeParams
 ) => {
   const query = useQuery<SalesReport>({
-    queryKey: queryKeys.orders.report(tenantId ?? '', from, to),
-    queryFn: () => getSalesReport(tenantId as string, from, to),
+    queryKey: queryKeys.orders.report(tenantId ?? '', params),
+    queryFn: () => getSalesReport(tenantId as string, params),
     enabled: !!tenantId,
   })
 
