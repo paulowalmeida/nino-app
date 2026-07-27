@@ -14,7 +14,7 @@ import type { OrderStatusKey } from '@custom_types/order/order-status-key'
  */
 export const STATUS_LABEL: Record<OrderStatusKey, string> = {
   PENDING: 'esperando aceite',
-  ACCEPTED: 'aceito',
+  ACCEPTED: 'confirmado',
   PREPARING: 'na cozinha',
   OUT_FOR_DELIVERY: 'na rua',
   READY_FOR_PICKUP: 'no balcão',
@@ -46,7 +46,7 @@ export const PAYMENT_STATUS_LABEL: Record<PaymentStatus, string> = {
 
 const STAGE_OF: Record<OrderStatusKey, OrderStage> = {
   PENDING: 'incoming',
-  ACCEPTED: 'kitchen',
+  ACCEPTED: 'confirmed',
   PREPARING: 'kitchen',
   OUT_FOR_DELIVERY: 'street',
   READY_FOR_PICKUP: 'counter',
@@ -69,7 +69,7 @@ export const nextStep = (order: Order): OrderStep | null => {
   const { status, channel } = order
 
   if (status === 'PENDING') {
-    return { target: 'ACCEPTED', label: 'Aceitar pedido' }
+    return { target: 'ACCEPTED', label: 'Confirmar pedido' }
   }
 
   if (status === 'ACCEPTED') {
@@ -98,8 +98,7 @@ export const canCancel = (status: OrderStatusKey): boolean =>
   status === 'PENDING' || status === 'ACCEPTED' || status === 'PREPARING'
 
 /** Short handle for the printed ticket — the last block of the uuid. */
-export const ticketNumber = (id: string): string =>
-  id.slice(-4).toUpperCase()
+export const ticketNumber = (id: string): string => id.slice(-4).toUpperCase()
 
 export const customerNameOf = (order: Order): string =>
   order.guestName ?? 'Cliente sem cadastro'
@@ -107,9 +106,7 @@ export const customerNameOf = (order: Order): string =>
 export const addressOf = (order: Order): string | null => {
   if (!order.guestStreet) return null
 
-  const line = [order.guestStreet, order.guestNumber]
-    .filter(Boolean)
-    .join(', ')
+  const line = [order.guestStreet, order.guestNumber].filter(Boolean).join(', ')
   const rest = [order.guestComplement, order.guestNeighborhood]
     .filter(Boolean)
     .join(' · ')

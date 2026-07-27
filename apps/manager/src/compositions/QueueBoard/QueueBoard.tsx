@@ -38,8 +38,13 @@ export const QueueBoard = ({ tenantId }: QueueBoardProps) => {
       urgent: waiting > 0,
     },
     {
+      label: 'confirmados',
+      value: count(data, 'ACCEPTED'),
+      stage: 'confirmed',
+    },
+    {
       label: 'na cozinha',
-      value: count(data, 'ACCEPTED', 'PREPARING'),
+      value: count(data, 'PREPARING'),
       stage: 'kitchen',
     },
     {

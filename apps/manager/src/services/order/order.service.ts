@@ -19,6 +19,7 @@ type OrderListParams = {
   direction: string
   size: number
   page: number
+  search?: string
 }
 
 /** The API caps `size` at 100. */
@@ -26,7 +27,6 @@ export const ORDER_PAGE_SIZE = 40
 
 export const getQueueSummary = (tenantId: string): Promise<OrderQueueSummary> =>
   get<OrderQueueSummary>(`tenants/${tenantId}/orders/summary`)
-
 
 /**
  * Monta a query do recorte. Só entra o que existe: `searchParams` com valor
@@ -79,15 +79,22 @@ export const getTimingReport = (
  * live queue and the recent history come from the same read, and the panel
  * splits them by stage without paying for another request.
  */
+/**
+ * `search` casa com código do pedido, nome ou telefone — e é resolvido no
+ * servidor de propósito: filtrar no cliente só acharia o que já foi paginado,
+ * e quem procura um pedido específico costuma procurar um antigo.
+ */
 export const listOrders = (
   tenantId: string,
-  page: number
+  page: number,
+  search?: string
 ): Promise<OrderPage> =>
   getAll<OrderListParams, OrderPage>(`tenants/${tenantId}/orders`, {
     target: 'createdAt',
     direction: 'desc',
     size: ORDER_PAGE_SIZE,
     page,
+    ...(search ? { search } : {}),
   })
 
 export const createOrder = (

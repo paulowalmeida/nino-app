@@ -59,3 +59,19 @@
 .more {
   @apply mt-6 flex justify-center;
 }
+
+/* a busca fica acima da trilha: ela troca a trilha inteira quando ativa, e
+   um campo que aparece embaixo do que ele substitui confunde */
+.toolbar {
+  @apply mb-3 flex shrink-0;
+}
+
+.search {
+  @apply w-full lg:max-w-sm;
+}
+
+/* linha de resultado: ocupa o lugar da trilha de etapas durante a busca */
+.results {
+  @apply mb-3 flex shrink-0 flex-wrap items-center gap-x-2 gap-y-1 text-sm;
+  @apply text-muted;
+}

@@ -49,8 +49,13 @@ export const queryKeys = {
   },
   orders: {
     all: (tenantId: string) => ['orders', tenantId] as const,
-    list: (tenantId: string, status?: string) =>
-      [...queryKeys.orders.all(tenantId), 'list', status ?? null] as const,
+    list: (tenantId: string, status?: string, search?: string) =>
+      [
+        ...queryKeys.orders.all(tenantId),
+        'list',
+        status ?? null,
+        search ?? null,
+      ] as const,
     detail: (tenantId: string, orderId: string) =>
       [...queryKeys.orders.all(tenantId), 'detail', orderId] as const,
     report: (tenantId: string, range: ReportRangeParams) =>
