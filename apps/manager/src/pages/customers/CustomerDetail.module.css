@@ -6,7 +6,7 @@
 
 .hero {
   @apply mt-3 flex items-center gap-4 rounded-[24px] border border-line;
-  @apply bg-white/70 p-5 backdrop-blur-sm;
+  @apply bg-brand-foreground/70 p-5 backdrop-blur-sm;
 }
 
 .mark {
@@ -59,7 +59,8 @@
 }
 
 .orders {
-  @apply flex flex-col rounded-[24px] border border-line bg-white/70 px-2;
+  @apply flex flex-col rounded-[24px] border border-line bg-brand-foreground/70;
+  @apply px-2;
   @apply backdrop-blur-sm;
 }
 
@@ -69,7 +70,7 @@
 
 .orderLink {
   @apply flex flex-wrap items-baseline gap-x-4 gap-y-1 rounded-xl px-2 py-3;
-  @apply transition-colors duration-150 hover:bg-white/80;
+  @apply transition-colors duration-150 hover:bg-brand-foreground/80;
   @apply focus-visible:outline-none focus-visible:ring-2;
   @apply focus-visible:ring-brand focus-visible:ring-offset-1;
 }
@@ -94,7 +95,8 @@
 }
 
 .empty {
-  @apply rounded-2xl border border-line bg-white/60 p-5 text-sm text-faint;
+  @apply rounded-2xl border border-line bg-brand-foreground/60 p-5 text-sm;
+  @apply text-faint;
 }
 
 .skeleton {
@@ -102,5 +104,6 @@
 }
 
 .notice {
-  @apply rounded-2xl border border-line bg-white/60 p-6 text-sm text-faint;
+  @apply rounded-2xl border border-line bg-brand-foreground/60 p-6 text-sm;
+  @apply text-faint;
 }

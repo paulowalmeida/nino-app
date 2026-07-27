@@ -54,7 +54,7 @@
 }
 
 .top {
-  @apply rounded-[22px] border border-line bg-white/70 p-4 lg:p-5;
+  @apply rounded-[22px] border border-line bg-brand-foreground/70 p-4 lg:p-5;
 }
 
 .topTitle {

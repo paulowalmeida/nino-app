@@ -7,7 +7,7 @@
 
 .panel {
   @apply w-full max-w-md rounded-[1.75rem] border border-white/70;
-  @apply bg-white/75 p-8 shadow-2xl shadow-brand/10 backdrop-blur-md;
+  @apply bg-brand-foreground/75 p-8 shadow-2xl shadow-brand/10 backdrop-blur-md;
 }
 
 .title {
@@ -24,7 +24,7 @@
 
 .store {
   @apply flex w-full flex-col items-start rounded-2xl border p-4;
-  @apply border-brand/12 bg-white text-left transition-colors;
+  @apply border-brand/12 bg-brand-foreground text-left transition-colors;
   @apply hover:border-brand/40 hover:bg-cream;
 }
 

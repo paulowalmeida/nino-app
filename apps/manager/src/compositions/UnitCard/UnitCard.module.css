@@ -18,7 +18,8 @@
 
 /* o seletor nativo é o que o sistema já sabe fazer bem */
 .picker {
-  @apply h-10 w-12 cursor-pointer rounded-lg border border-sand bg-white p-1;
+  @apply h-10 w-12 cursor-pointer rounded-lg border border-sand;
+  @apply bg-brand-foreground p-1;
 }
 
 .hex {

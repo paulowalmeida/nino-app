@@ -43,8 +43,8 @@
 }
 
 .number {
-  @apply font-display text-3xl font-extrabold tracking-[-0.02em] text-white;
-  @apply lg:text-4xl;
+  @apply font-display text-2xl font-extrabold tracking-[-0.02em] text-white;
+  @apply lg:text-3xl;
   font-variant-numeric: tabular-nums;
 }
 
@@ -74,7 +74,8 @@
  */
 .receipt {
   --tooth: 10px;
-  @apply relative min-w-0 rounded-t-[14px] bg-white px-5 pt-5 lg:px-6;
+  @apply relative min-w-0 rounded-t-[14px] bg-brand-foreground px-5 pt-5;
+  @apply lg:px-6;
   padding-bottom: calc(var(--tooth) + 0.5rem);
   box-shadow: inset 0 0 0 1px var(--color-sand);
   mask:
@@ -139,7 +140,8 @@
 }
 
 .card {
-  @apply rounded-[20px] border border-line bg-white/70 p-5 backdrop-blur-sm;
+  @apply rounded-[20px] border border-line bg-brand-foreground/70 p-5;
+  @apply backdrop-blur-sm;
 }
 
 .cardTitle {
@@ -201,5 +203,6 @@
 }
 
 .notice {
-  @apply m-4 rounded-2xl border border-line bg-white/60 p-6 text-sm text-faint;
+  @apply m-4 rounded-2xl border border-line bg-brand-foreground/60 p-6 text-sm;
+  @apply text-faint;
 }

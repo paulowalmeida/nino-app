@@ -27,7 +27,7 @@
 }
 
 .list {
-  @apply flex flex-col rounded-[24px] border border-line bg-white/70;
+  @apply flex flex-col rounded-[24px] border border-line bg-brand-foreground/70;
   @apply px-2 shadow-card backdrop-blur-sm lg:px-3;
 }
 
@@ -90,6 +90,6 @@
 }
 
 .notice {
-  @apply mt-4 rounded-2xl border border-line bg-white/60 p-6 text-sm;
+  @apply mt-4 rounded-2xl border border-line bg-brand-foreground/60 p-6 text-sm;
   @apply leading-relaxed text-faint;
 }

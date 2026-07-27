@@ -53,7 +53,7 @@
 
 .title {
   @apply font-display text-2xl font-extrabold tracking-[-0.02em] text-ink;
-  @apply lg:text-4xl;
+  @apply lg:text-3xl;
 }
 
 .date {

@@ -23,7 +23,9 @@
 .sidebar {
   @apply fixed left-0 top-0 z-40 flex h-dvh w-60 flex-col overflow-hidden;
   @apply -translate-x-full bg-dark;
-  @apply transition-[transform,width] duration-300 ease-in-out;
+  /* `translate`, não `transform`: no Tailwind v4 translate-x-* escreve na
+     propriedade translate, e transicionar transform não pega o deslize. */
+  @apply transition-[translate,width] duration-300 ease-in-out;
   @apply lg:translate-x-0;
 }
 
@@ -127,11 +129,24 @@
   @apply flex items-center gap-3;
 }
 
+/*
+ * O Accordion do DS pinta o cabeçalho com a superfície de marca (fechado) e
+ * um laranja diluído (aberto). No trilho escuro do menu isso vira um bloco
+ * solto: aqui o trigger é só mais um item de navegação, sem fundo próprio.
+ */
 .navItemTrigger {
   @apply w-full rounded-xl px-3 py-2.5 text-left;
   @apply text-sm font-medium text-white/45;
   @apply transition-colors duration-150;
+  @apply bg-transparent data-[state=open]:bg-transparent;
   @apply hover:bg-white/6 hover:text-white/80;
+  @apply data-[state=open]:hover:bg-white/6;
+}
+
+/* aberto na própria rota: aí sim carrega a superfície do item ativo */
+.navItemTrigger.navItemActive {
+  @apply text-brand data-[state=open]:bg-brand/10;
+  @apply data-[state=open]:hover:bg-brand/14 hover:text-brand;
 }
 
 .accordionRoot {

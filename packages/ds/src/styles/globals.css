@@ -15,6 +15,32 @@
   /* Typography — cores e estruturais vêm de ./tokens.css */
   --font-sans: 'Hanken Grotesk', sans-serif;
   --font-display: 'Bricolage Grotesque', sans-serif;
+
+  /*
+   * Escala uma casa abaixo da default do Tailwind. O app é uma ferramenta de
+   * operação: no celular, cada ponto de fonte a mais empurra uma comanda para
+   * fora da tela. Corpo em 15px, texto de apoio em 13px — a mesma faixa dos
+   * apps de delivery. Os passos de display encolhem mais que os de texto:
+   * título grande é o que mais rouba altura sem acrescentar informação.
+   */
+  --text-xs: 0.75rem;
+  --text-xs--line-height: 1rem;
+  --text-sm: 0.8125rem;
+  --text-sm--line-height: 1.175rem;
+  --text-base: 0.9375rem;
+  --text-base--line-height: 1.4rem;
+  --text-lg: 1.0625rem;
+  --text-lg--line-height: 1.55rem;
+  --text-xl: 1.1875rem;
+  --text-xl--line-height: 1.65rem;
+  --text-2xl: 1.375rem;
+  --text-2xl--line-height: 1.8rem;
+  --text-3xl: 1.625rem;
+  --text-3xl--line-height: 2rem;
+  --text-4xl: 1.875rem;
+  --text-4xl--line-height: 2.2rem;
+  --text-5xl: 2.5rem;
+  --text-5xl--line-height: 2.75rem;
 }
 
 @keyframes modal-in {

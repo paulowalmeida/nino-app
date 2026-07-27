@@ -1,8 +1,8 @@
 @reference "@nino/ds/globals.css";
 
 .title {
-  @apply font-display text-2xl font-extrabold tracking-[-0.02em] text-ink;
-  @apply lg:text-3xl;
+  @apply font-display text-xl font-extrabold tracking-[-0.02em] text-ink;
+  @apply lg:text-2xl;
 }
 
 .accent {

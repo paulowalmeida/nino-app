@@ -2,7 +2,8 @@
 
 /* a comanda ocupa a coluna inteira e nunca rola junto com o cardápio */
 .ticket {
-  @apply flex w-full flex-col rounded-[24px] border border-line bg-white;
+  @apply flex w-full flex-col rounded-[24px] border border-line;
+  @apply bg-brand-foreground;
   @apply lg:h-full lg:min-h-0;
 }
 
@@ -55,7 +56,8 @@
 
 .step {
   @apply flex h-10 w-10 cursor-pointer items-center justify-center;
-  @apply rounded-full border border-sand bg-white text-xl leading-none;
+  @apply rounded-full border border-sand bg-brand-foreground text-xl;
+  @apply leading-none;
   @apply text-subtle transition-colors duration-150;
   @apply hover:border-brand/35 hover:text-brand-strong;
 }
@@ -79,7 +81,8 @@
 }
 
 .choice {
-  @apply cursor-pointer rounded-full border border-sand bg-white px-3 py-2.5;
+  @apply cursor-pointer rounded-full border border-sand bg-brand-foreground;
+  @apply px-3 py-2.5;
   @apply text-sm font-semibold text-subtle transition-colors duration-150;
   @apply hover:border-brand/30;
 }

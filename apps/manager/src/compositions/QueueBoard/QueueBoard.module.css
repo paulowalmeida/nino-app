@@ -11,7 +11,7 @@
 
 .tile {
   @apply flex flex-col gap-1 rounded-[22px] border border-line;
-  @apply bg-white/80 shadow-card backdrop-blur-sm;
+  @apply bg-brand-foreground shadow-card;
   @apply p-4 lg:p-5;
   @apply transition-all duration-300;
   @apply hover:border-brand/60 hover:shadow-card-hover;
@@ -28,8 +28,8 @@
 }
 
 .value {
-  @apply font-display text-4xl font-extrabold leading-none tracking-tight;
-  @apply text-ink lg:text-5xl;
+  @apply font-display text-3xl font-extrabold leading-none tracking-tight;
+  @apply text-ink lg:text-4xl;
   font-variant-numeric: tabular-nums;
 }
 

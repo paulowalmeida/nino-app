@@ -28,7 +28,7 @@
 }
 
 a.unit {
-  @apply hover:bg-white/70;
+  @apply hover:bg-brand-foreground/70;
 }
 
 .name {

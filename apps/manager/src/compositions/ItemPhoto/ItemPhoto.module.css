@@ -6,7 +6,7 @@
 
 .frame {
   @apply relative overflow-hidden rounded-[20px] border border-line;
-  @apply aspect-[4/3] w-full bg-white/70;
+  @apply aspect-[4/3] w-full bg-brand-foreground/70;
 }
 
 .photo {
@@ -41,7 +41,8 @@
 }
 
 .trigger {
-  @apply cursor-pointer rounded-xl border border-sand-deep bg-white/80 px-3;
+  @apply cursor-pointer rounded-xl border border-sand-deep;
+  @apply bg-brand-foreground/80 px-3;
   @apply py-2 text-xs font-semibold text-ink transition-colors duration-150;
   @apply hover:border-brand/40 hover:bg-brand/5;
 }
