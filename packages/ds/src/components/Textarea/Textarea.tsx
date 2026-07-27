@@ -6,15 +6,15 @@ import { mergeClasses } from '@ds/lib/mergeClasses'
 import { TextareaProps } from './Textarea.types'
 
 const baseTextarea =
-  'w-full rounded-md border bg-white px-3 py-2 text-sm text-gray-900 placeholder:text-gray-400 transition-colors outline-none resize-y min-h-[80px] disabled:cursor-not-allowed disabled:opacity-50'
+  'w-full rounded-card border bg-surface-sunk px-3 py-2 text-sm text-ink placeholder:text-faint transition-colors outline-none resize-y min-h-[80px] disabled:cursor-not-allowed disabled:opacity-50'
 
 const stateDefault =
-  'border-gray-300 focus:ring-2 focus:ring-brand/25 focus:border-brand'
+  'border-transparent focus:ring-2 focus:ring-brand/25 focus:border-brand'
 
 const stateError =
-  'aria-[invalid]:border-red-500 aria-[invalid]:focus:ring-red-500 ' +
-  'aria-[invalid]:focus:border-red-500 data-[invalid]:border-red-500 ' +
-  'data-[invalid]:focus:ring-red-500 data-[invalid]:focus:border-red-500'
+  'aria-[invalid]:border-danger aria-[invalid]:focus:ring-danger ' +
+  'aria-[invalid]:focus:border-danger data-[invalid]:border-danger ' +
+  'data-[invalid]:focus:ring-danger data-[invalid]:focus:border-danger'
 
 /**
  * Multiline text input. Renders Ark `Field.Textarea`: inside a `Field.Root`

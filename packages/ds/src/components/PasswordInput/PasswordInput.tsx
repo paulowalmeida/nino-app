@@ -12,20 +12,20 @@ const sizeClasses: Record<PasswordInputSize, string> = {
 }
 
 const baseControl =
-  'flex items-center gap-2 w-full rounded-md border bg-white transition-colors ' +
+  'flex items-center gap-2 w-full rounded-card border bg-surface-sunk transition-colors ' +
   'focus-within:ring-2 focus-within:ring-brand/25 focus-within:border-brand'
 
-const controlDefault = 'border-gray-300'
+const controlDefault = 'border-transparent'
 
 const controlError =
-  'border-red-500 focus-within:ring-red-500/25 focus-within:border-red-500'
+  'border-danger focus-within:ring-danger/25 focus-within:border-danger'
 
 const baseInput =
-  'flex-1 min-w-0 bg-transparent outline-none text-gray-900 placeholder:text-gray-400'
+  'flex-1 min-w-0 bg-transparent outline-none text-ink placeholder:text-faint'
 
 const triggerClass =
-  'shrink-0 text-gray-400 transition-colors outline-none cursor-pointer ' +
-  'hover:text-gray-600 focus-visible:text-brand disabled:pointer-events-none'
+  'shrink-0 text-faint transition-colors outline-none cursor-pointer ' +
+  'hover:text-muted focus-visible:text-brand disabled:pointer-events-none'
 
 const EyeIcon = () => (
   <svg

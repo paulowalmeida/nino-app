@@ -8,10 +8,15 @@ import { RatingProps } from './Rating.types'
 const baseControl = 'flex items-center gap-1'
 
 const baseItem =
-  'cursor-pointer text-gray-300 transition-colors outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-1 rounded data-[highlighted]:text-brand data-[checked]:text-brand disabled:pointer-events-none disabled:opacity-50'
+  'cursor-pointer rounded-[4px] text-sand-deep transition-colors ' +
+  'outline-none focus-visible:outline-2 focus-visible:outline-brand ' +
+  'focus-visible:outline-offset-2 data-[highlighted]:text-brand ' +
+  'data-[checked]:text-brand disabled:pointer-events-none ' +
+  'disabled:opacity-50'
 
 const readOnlyItem =
-  'cursor-default text-gray-300 data-[highlighted]:text-brand data-[checked]:text-brand'
+  'cursor-default text-sand-deep data-[highlighted]:text-brand ' +
+  'data-[checked]:text-brand'
 
 function StarIcon({
   half,

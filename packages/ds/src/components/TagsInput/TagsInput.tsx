@@ -12,13 +12,13 @@ const sizeClasses: Record<TagsInputSize, string> = {
 }
 
 const baseControl =
-  'flex w-full flex-wrap items-center gap-1.5 rounded-md border bg-white px-2 py-1 transition-colors focus-within:ring-2'
+  'flex w-full flex-wrap items-center gap-1.5 rounded-card border bg-surface-sunk px-2 py-1 transition-colors focus-within:ring-2'
 
 const controlDefault =
-  'border-gray-300 focus-within:ring-brand focus-within:border-brand'
+  'border-transparent focus-within:ring-brand focus-within:border-brand'
 
 const controlError =
-  'border-red-500 focus-within:ring-red-500 focus-within:border-red-500'
+  'border-danger focus-within:ring-danger focus-within:border-danger'
 
 const chip =
   'inline-flex items-center gap-1 rounded bg-[color-mix(in_srgb,var(--color-brand)_12%,white)] px-2 py-0.5 text-sm text-brand'
@@ -27,7 +27,7 @@ const chipDelete =
   'rounded-full p-0.5 leading-none text-brand/70 transition-colors hover:bg-[color-mix(in_srgb,var(--color-brand)_20%,white)] hover:text-brand'
 
 const baseInput =
-  'flex-1 min-w-24 bg-transparent px-1 py-0.5 outline-none placeholder:text-gray-400 disabled:cursor-not-allowed'
+  'flex-1 min-w-24 bg-transparent px-1 py-0.5 outline-none placeholder:text-faint disabled:cursor-not-allowed'
 
 /**
  * Tag input field — type and press Enter to create removable chips.

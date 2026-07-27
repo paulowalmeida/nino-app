@@ -5,10 +5,18 @@ import { motion } from 'framer-motion'
 
 import { TabsProps } from './Tabs.types'
 
-const baseList = 'relative flex items-center border-b border-line'
+/* A physical selector, not the toast's card: the whole strip is a sunk track
+ * and the active tab is the one lifted plate on it. Solid, flat, 8px — same
+ * language, different object. */
+const baseList =
+  'relative inline-flex items-center gap-1 rounded-card bg-surface-sunk p-1'
 
 const baseTrigger =
-  'relative px-4 py-2.5 text-sm font-medium text-subtle transition-colors duration-200 outline-none whitespace-nowrap focus-visible:ring-2 focus-visible:ring-brand disabled:pointer-events-none disabled:opacity-40 data-[selected]:text-brand'
+  'relative rounded-[6px] px-4 py-1.5 text-sm font-semibold text-subtle ' +
+  'transition-all duration-200 outline-none whitespace-nowrap ' +
+  'hover:text-ink focus-visible:outline-2 focus-visible:outline-brand ' +
+  'focus-visible:outline-offset-2 disabled:pointer-events-none ' +
+  'disabled:opacity-40 data-[selected]:text-ink'
 
 const baseContent = 'mt-4 outline-none'
 
@@ -42,14 +50,16 @@ export function Tabs({
             disabled={tab.disabled}
             className={baseTrigger}
           >
-            {tab.label}
+            {/* The plate itself is the indicator: it slides between tabs
+                instead of a separate hairline riding under them. */}
             {active === tab.value && (
               <motion.span
                 layoutId="tab-indicator"
-                className="absolute bottom-0 left-0 right-0 h-0.5 bg-brand"
+                className="absolute inset-0 rounded-[6px] bg-paper shadow-card"
                 transition={{ type: 'spring', stiffness: 500, damping: 40 }}
               />
             )}
+            <span className="relative">{tab.label}</span>
           </ArkTabs.Trigger>
         ))}
       </ArkTabs.List>

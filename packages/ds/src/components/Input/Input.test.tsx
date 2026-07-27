@@ -36,7 +36,7 @@ describe(Input.name, () => {
 
   it('applies default styles when error is false', () => {
     render(<Input />)
-    expect(screen.getByRole('textbox')).toHaveClass('border-gray-300')
+    expect(screen.getByRole('textbox')).toHaveClass('border-transparent')
   })
 
   it.each(['sm', 'md', 'lg'] as const)(

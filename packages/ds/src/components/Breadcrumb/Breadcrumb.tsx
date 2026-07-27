@@ -7,7 +7,7 @@ import { BreadcrumbProps } from './Breadcrumb.types'
 const baseNav = 'flex items-center text-sm'
 
 const baseLink =
-  'text-subtle transition-colors hover:text-brand focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-1 rounded'
+  'text-subtle transition-colors hover:text-brand focus-visible:outline-2 focus-visible:outline-brand focus-visible:outline-offset-2 rounded'
 
 const activeLinkClass = 'text-ink font-medium pointer-events-none'
 

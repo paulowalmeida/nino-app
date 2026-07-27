@@ -2,11 +2,13 @@ import { mergeClasses } from '@ds/lib/mergeClasses'
 
 import { PageHeaderProps } from './PageHeader.types'
 
-const baseRoot = 'flex flex-col gap-3 pb-4 border-b border-gray-200'
+/* Sem fio embaixo: o respiro separa o cabeçalho do conteúdo, e a régua a
+ * mais só some no meio das superfícies rebaixadas da página. */
+const baseRoot = 'flex flex-col gap-3 pb-5'
 
-const titleClass = 'font-display text-2xl font-bold text-gray-900'
+const titleClass = 'font-display text-2xl font-bold tracking-[-0.02em] text-ink'
 
-const descriptionClass = 'mt-1 text-sm text-gray-500'
+const descriptionClass = 'mt-1 text-sm text-subtle'
 
 /**
  * Page heading with title, optional description, breadcrumb and actions.

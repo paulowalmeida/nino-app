@@ -55,12 +55,12 @@ describe(Select.displayName!, () => {
 
   it('applies error classes when error is true', () => {
     render(<Select options={options} error />)
-    expect(screen.getByRole('combobox')).toHaveClass('border-red-500')
+    expect(screen.getByRole('combobox')).toHaveClass('border-danger')
   })
 
   it('applies default classes when error is false', () => {
     render(<Select options={options} />)
-    expect(screen.getByRole('combobox')).toHaveClass('border-gray-300')
+    expect(screen.getByRole('combobox')).toHaveClass('border-transparent')
   })
 
   it.each(['sm', 'md', 'lg'] as const)(

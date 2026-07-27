@@ -14,10 +14,17 @@ const thumbSizeClasses: Record<SwitchSize, string> = {
 }
 
 const baseControl =
-  'inline-flex shrink-0 cursor-pointer items-center rounded-full border-2 border-transparent bg-gray-200 transition-colors data-[state=checked]:bg-brand focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50'
+  /* Trilho rebaixado com uma placa deslizando por cima — o mesmo par de
+   * superfícies das abas e da paginação, reduzido a um controle. */
+  'inline-flex shrink-0 cursor-pointer items-center rounded-full border-2 ' +
+  'border-transparent bg-surface-sunk transition-colors ' +
+  'data-[state=checked]:bg-brand focus-visible:outline-2 ' +
+  'focus-visible:outline-brand focus-visible:outline-offset-2 ' +
+  'disabled:cursor-not-allowed disabled:opacity-50'
 
 const baseThumb =
-  'pointer-events-none block rounded-full bg-white shadow-sm ring-0 transition-transform data-[state=unchecked]:translate-x-0'
+  'pointer-events-none block rounded-full bg-paper shadow-card ring-0 ' +
+  'transition-transform data-[state=unchecked]:translate-x-0'
 
 export function Switch({
   size = 'md',

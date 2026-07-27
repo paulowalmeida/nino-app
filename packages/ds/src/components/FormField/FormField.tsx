@@ -3,10 +3,10 @@ import { mergeClasses } from '@ds/lib/mergeClasses'
 
 import { FormFieldProps } from './FormField.types'
 
-const baseLabel = 'text-sm font-medium text-gray-700 leading-none'
-const baseHelper = 'text-sm text-gray-500'
-const baseError = 'text-sm text-red-500'
-const baseRequired = 'ml-1 text-red-500'
+const baseLabel = 'text-sm font-medium text-body leading-none'
+const baseHelper = 'text-sm text-subtle'
+const baseError = 'text-sm text-danger'
+const baseRequired = 'ml-1 text-danger'
 const horizontalRow = 'flex items-center gap-2'
 
 /**

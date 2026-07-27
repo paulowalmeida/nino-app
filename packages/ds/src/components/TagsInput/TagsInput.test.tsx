@@ -31,7 +31,7 @@ describe(TagsInput.displayName!, () => {
   it('applies error state', () => {
     const { container } = render(<TagsInput error onValueChange={vi.fn()} />)
     expect(container.querySelector('[data-part="control"]')).toHaveClass(
-      'border-red-500'
+      'border-danger'
     )
   })
 })

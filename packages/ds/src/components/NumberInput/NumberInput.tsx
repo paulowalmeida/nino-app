@@ -11,10 +11,10 @@ const sizeClasses: Record<NumberInputSize, string> = {
 }
 
 const base =
-  'w-full rounded-md border bg-white text-gray-900 outline-none transition-colors placeholder:text-gray-400 tabular-nums focus:ring-2 focus:ring-brand focus:border-brand disabled:pointer-events-none disabled:opacity-50'
+  'w-full rounded-card border bg-surface-sunk text-ink outline-none transition-colors placeholder:text-faint tabular-nums focus:ring-2 focus:ring-brand focus:border-brand disabled:pointer-events-none disabled:opacity-50'
 
-const variantDefault = 'border-gray-300'
-const variantError = 'border-red-500 focus:ring-red-500 focus:border-red-500'
+const variantDefault = 'border-transparent'
+const variantError = 'border-danger focus:ring-danger focus:border-danger'
 
 export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
   (

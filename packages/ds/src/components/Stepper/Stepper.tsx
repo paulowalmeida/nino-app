@@ -4,23 +4,29 @@ import { mergeClasses } from '@ds/lib/mergeClasses'
 
 import { StepperProps } from './Stepper.types'
 
+/* Marcador quadrado de canto quebrado, não bolinha: é a mesma peça do Badge,
+ * e uma etapa é um bloco na sequência, não uma conta de colar. Estado por
+ * preenchimento — vazio é superfície rebaixada, feito é tinta cheia. */
 const baseIndicator =
-  'flex h-8 w-8 shrink-0 items-center justify-center rounded-full border-2 text-sm font-semibold transition-colors'
+  'flex h-8 w-8 shrink-0 items-center justify-center rounded-[6px] ' +
+  'text-sm font-bold transition-colors'
 
-const indicatorDefault = 'border-line bg-paper text-subtle'
-const indicatorActive = 'border-brand bg-brand text-brand-foreground'
-const indicatorCompleted = 'border-brand bg-brand text-brand-foreground'
+const indicatorDefault = 'bg-surface-sunk text-faint'
+const indicatorActive = 'bg-brand text-brand-foreground'
+const indicatorCompleted = 'bg-body text-cream'
 
-const separatorHClass = 'h-0.5 flex-1 mx-2 transition-colors'
-const separatorVClass = 'ml-4 mt-1 mb-1 h-6 w-0.5 transition-colors'
-const separatorDone = 'bg-brand'
-const separatorPending = 'bg-line'
+const separatorHClass = 'h-1 flex-1 mx-2 rounded-full transition-colors'
+const separatorVClass = 'ml-4 mt-1 mb-1 h-6 w-1 rounded-full transition-colors'
+const separatorDone = 'bg-body'
+const separatorPending = 'bg-surface-sunk'
 
 const baseTrigger =
-  'flex items-center gap-3 rounded outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-1'
+  'flex items-center gap-3 rounded-card outline-none ' +
+  'focus-visible:outline-2 focus-visible:outline-brand ' +
+  'focus-visible:outline-offset-2'
 
-const titleActive = 'text-sm font-medium text-brand'
-const titleCompleted = 'text-sm font-medium text-ink'
+const titleActive = 'text-sm font-semibold text-brand-strong'
+const titleCompleted = 'text-sm font-semibold text-ink'
 const titleDefault = 'text-sm font-medium text-subtle'
 
 const descriptionClass = 'text-xs text-faint mt-0.5'

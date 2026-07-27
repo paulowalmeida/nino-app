@@ -14,21 +14,21 @@ const sizeClasses: Record<SelectSize, string> = {
 }
 
 const baseTrigger =
-  'w-full flex items-center justify-between gap-2 rounded-md border bg-white text-gray-900 transition-colors outline-none'
+  'w-full flex items-center justify-between gap-2 rounded-card border bg-surface-sunk text-ink transition-colors outline-none'
 
 const triggerDefault =
-  'border-gray-300 focus:ring-2 focus:ring-brand focus:border-brand'
+  'border-transparent focus:ring-2 focus:ring-brand focus:border-brand'
 
 const triggerError =
-  'border-red-500 focus:ring-2 focus:ring-red-500 focus:border-red-500'
+  'border-danger focus:ring-2 focus:ring-danger focus:border-danger'
 
 const baseContent =
-  'z-50 min-w-[var(--reference-width)] overflow-hidden rounded-md border border-gray-200 bg-white shadow-md p-1'
+  'z-50 min-w-[var(--reference-width)] overflow-hidden rounded-card bg-surface-sunk shadow-overlay p-1'
 
 const baseItem =
-  'relative flex cursor-default select-none items-center rounded px-3 py-2 text-sm text-gray-900 outline-none transition-colors data-[highlighted]:bg-[color-mix(in_srgb,var(--color-brand)_10%,white)] data-[highlighted]:text-brand data-[disabled]:pointer-events-none data-[disabled]:opacity-50'
+  'relative flex cursor-default select-none items-center rounded px-3 py-2 text-sm text-ink outline-none transition-colors data-[highlighted]:bg-[color-mix(in_srgb,var(--color-brand)_10%,white)] data-[highlighted]:text-brand data-[disabled]:pointer-events-none data-[disabled]:opacity-50'
 
-const chevronClass = 'shrink-0 text-gray-400'
+const chevronClass = 'shrink-0 text-faint'
 
 export const Select = forwardRef<SelectTriggerRef, SelectProps>(
   (
@@ -77,7 +77,7 @@ export const Select = forwardRef<SelectTriggerRef, SelectProps>(
           >
             <ArkSelect.ValueText
               placeholder={placeholder}
-              className="data-placeholder-shown:text-gray-400"
+              className="data-placeholder-shown:text-faint"
             />
             <ArkSelect.Indicator>
               <svg

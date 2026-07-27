@@ -4,21 +4,22 @@ import { mergeClasses } from '@ds/lib/mergeClasses'
 
 import { CardProps, CardVariant } from './Card.types'
 
-const baseCard = 'rounded-card border border-line bg-paper p-4'
+const baseCard = 'rounded-card bg-paper p-4'
 
-/* Variant is height off the page, nothing else: flat sits in the layout,
- * default is lifted a millimetre, elevated is clearly above it. */
+/* Height off the page, and only one thing says it: a lifted surface carries
+ * shadow, a resting one carries the border. Both at once is the stacked look
+ * the toast dropped. */
 const variantClasses: Record<CardVariant, string> = {
   default: 'shadow-card',
-  flat: '',
+  flat: 'border border-line',
   elevated: 'shadow-card-hover',
 }
 
 /**
  * Surface container for grouping content (dashboards, list items, panels).
  *
- * @param variant - `default` (border + subtle shadow), `flat` (border only),
- * `elevated` (border + larger shadow). Default: `default`
+ * @param variant - `default` (resting shadow), `flat` (border, no shadow),
+ * `elevated` (lifted shadow). Default: `default`
  *
  * @param className - Additional CSS classes
  *

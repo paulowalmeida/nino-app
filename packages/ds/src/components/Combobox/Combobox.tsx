@@ -22,23 +22,23 @@ const sizeClasses: Record<ComboboxSize, string> = {
 }
 
 const baseInput =
-  'w-full rounded-md border bg-white text-gray-900 placeholder:text-gray-400 transition-colors outline-none'
+  'w-full rounded-card border bg-surface-sunk text-ink placeholder:text-faint transition-colors outline-none'
 
 const inputDefault =
-  'border-gray-300 focus:ring-2 focus:ring-brand focus:border-brand'
+  'border-transparent focus:ring-2 focus:ring-brand focus:border-brand'
 
 const inputError =
-  'aria-[invalid]:border-red-500 aria-[invalid]:focus:ring-red-500 ' +
-  'aria-[invalid]:focus:border-red-500 data-[invalid]:border-red-500 ' +
-  'data-[invalid]:focus:ring-red-500 data-[invalid]:focus:border-red-500'
+  'aria-[invalid]:border-danger aria-[invalid]:focus:ring-danger ' +
+  'aria-[invalid]:focus:border-danger data-[invalid]:border-danger ' +
+  'data-[invalid]:focus:ring-danger data-[invalid]:focus:border-danger'
 
 const baseContent =
-  'z-50 min-w-[var(--reference-width)] overflow-hidden rounded-md border border-gray-200 bg-white shadow-md p-1'
+  'z-50 min-w-[var(--reference-width)] overflow-hidden rounded-card bg-surface-sunk shadow-overlay p-1'
 
 const baseItem =
-  'relative flex cursor-default select-none items-center rounded px-3 py-2 text-sm text-gray-900 outline-none transition-colors data-[highlighted]:bg-[color-mix(in_srgb,var(--color-brand)_10%,white)] data-[highlighted]:text-brand data-[disabled]:pointer-events-none data-[disabled]:opacity-50'
+  'relative flex cursor-default select-none items-center rounded px-3 py-2 text-sm text-ink outline-none transition-colors data-[highlighted]:bg-[color-mix(in_srgb,var(--color-brand)_10%,white)] data-[highlighted]:text-brand data-[disabled]:pointer-events-none data-[disabled]:opacity-50'
 
-const baseEmpty = 'px-3 py-2 text-sm text-gray-400'
+const baseEmpty = 'px-3 py-2 text-sm text-faint'
 
 function filterOptions(options: ComboboxOption[], query: string) {
   if (!query) return options

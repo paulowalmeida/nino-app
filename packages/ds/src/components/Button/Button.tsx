@@ -24,9 +24,10 @@ const variantClasses: Record<ButtonVariant, string> = {
     'shadow-card',
   inverseOutline:
     'border-[1.5px] border-white/55 text-white bg-transparent hover:bg-white hover:text-brand-strong hover:border-white',
-  danger:
-    'text-subtle bg-transparent hover:bg-danger-surface hover:text-danger ' +
-    'active:bg-danger-surface',
+  /* Destrutivo é preenchimento cheio, como o toast de erro: um botão apagado
+   * que só fica vermelho no hover esconde a consequência até o último
+   * instante. */
+  danger: 'bg-danger text-cream hover:bg-danger/90 active:bg-danger/80',
 }
 
 const sizeClasses: Record<ButtonSize, string> = {
@@ -45,7 +46,7 @@ const baseDisabledStyle = 'disabled:pointer-events-none'
  * troca a tinta por `sand`; as de fundo transparente (outline, ghost) já
  * comunicam pelo apagamento e mantêm a opacidade.
  */
-const FILLED: ButtonVariant[] = ['primary', 'secondary', 'inverse']
+const FILLED: ButtonVariant[] = ['primary', 'secondary', 'inverse', 'danger']
 
 const disabledStyle = (variant: ButtonVariant): string =>
   FILLED.includes(variant) ? 'bg-sand text-subtle shadow-none' : 'opacity-50'
@@ -131,7 +132,9 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         disabled={disabled || loading}
         aria-busy={loading || undefined}
         className={baseClassName}
-        whileTap={disabled || loading ? {} : { scale: 0.97, opacity: 0.75 }}
+        /* Só escala: baixar a opacidade clareia a tinta e o botão pisca
+           desligado no meio do próprio clique. */
+        whileTap={disabled || loading ? {} : { scale: 0.96 }}
         transition={{ type: 'spring', stiffness: 500, damping: 30 }}
         {...props}
       >

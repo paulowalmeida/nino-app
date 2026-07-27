@@ -44,14 +44,14 @@ describe(Checkbox.displayName!, () => {
   it('applies error classes when error is true', () => {
     const { container } = render(<Checkbox error />)
     expect(container.querySelector('[data-part="control"]')).toHaveClass(
-      'border-red-500'
+      'border-danger'
     )
   })
 
   it('applies default classes when error is false', () => {
     const { container } = render(<Checkbox />)
     expect(container.querySelector('[data-part="control"]')).toHaveClass(
-      'border-gray-300'
+      'border-transparent'
     )
   })
 
