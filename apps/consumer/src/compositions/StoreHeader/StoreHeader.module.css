@@ -88,7 +88,7 @@
 /* lupa: botão redondo que abre/fecha o campo de busca */
 .searchToggle {
   @apply flex h-11 w-11 shrink-0 cursor-pointer items-center justify-center;
-  @apply self-center rounded-full border border-line bg-cream text-subtle;
+  @apply self-center rounded-full border border-line bg-brand-foreground text-subtle;
   @apply transition-colors duration-150 hover:border-peach hover:text-brand-strong;
   @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand;
 }
@@ -139,7 +139,7 @@
 }
 
 .searchInput {
-  @apply h-12 w-full rounded-full border-line bg-cream pl-11 text-[0.95rem];
+  @apply h-12 w-full rounded-full border-line bg-brand-foreground pl-11 text-[0.95rem];
 }
 
 @media (prefers-reduced-motion: reduce) {
