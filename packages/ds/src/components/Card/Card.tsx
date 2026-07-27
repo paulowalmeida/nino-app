@@ -1,6 +1,7 @@
 import { forwardRef } from 'react'
 
 import { mergeClasses } from '@ds/lib/mergeClasses'
+import { Slot } from '@radix-ui/react-slot'
 
 import { CardProps, CardVariant } from './Card.types'
 
@@ -21,22 +22,34 @@ const variantClasses: Record<CardVariant, string> = {
  * @param variant - `default` (resting shadow), `flat` (border, no shadow),
  * `elevated` (lifted shadow). Default: `default`
  *
+ * @param asChild - Delegates rendering to the direct child via Radix Slot,
+ * for when the surface itself is the click target
+ *
  * @param className - Additional CSS classes
  *
  * @example
  * <Card>content</Card>
  * <Card variant="elevated">highlighted</Card>
+ *
+ * @example
+ * <Card asChild>
+ *   <Link to="/pedidos">the whole surface is the link</Link>
+ * </Card>
  */
 export const Card = forwardRef<HTMLDivElement, CardProps>(
-  ({ variant = 'default', className, children, ...props }, ref) => (
-    <div
-      ref={ref}
-      className={mergeClasses(baseCard, variantClasses[variant], className)}
-      {...props}
-    >
-      {children}
-    </div>
-  )
+  ({ variant = 'default', asChild, className, children, ...props }, ref) => {
+    const Root = asChild ? Slot : 'div'
+
+    return (
+      <Root
+        ref={ref}
+        className={mergeClasses(baseCard, variantClasses[variant], className)}
+        {...props}
+      >
+        {children}
+      </Root>
+    )
+  }
 )
 
 Card.displayName = 'Card'

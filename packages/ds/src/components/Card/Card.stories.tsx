@@ -39,3 +39,30 @@ export const Variants: Story = {
     </div>
   ),
 }
+
+/**
+ * When the surface itself is the click target, `asChild` hands the styling to
+ * the child — the link or button keeps its own semantics and focus ring, with
+ * no wrapper in between.
+ */
+export const AsChild: Story = {
+  render: () => (
+    <div className="flex gap-4">
+      <Card asChild className="w-48 transition-shadow hover:shadow-card-hover">
+        <a href="#pedidos">
+          <span className="text-2xl font-bold text-ink">12</span>
+          <span className="mt-1 block text-sm text-subtle">na fila</span>
+        </a>
+      </Card>
+
+      <Card asChild variant="flat" className="w-48 text-left">
+        <button type="button">
+          <span className="text-sm font-semibold text-ink">
+            Lanchonete do Zé
+          </span>
+          <span className="mt-1 block text-xs text-faint">Centro</span>
+        </button>
+      </Card>
+    </div>
+  ),
+}
