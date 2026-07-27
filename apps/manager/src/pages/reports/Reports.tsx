@@ -1,4 +1,5 @@
 import { useMemo, useState } from 'react'
+import { useSearchParams } from 'react-router'
 
 import { DatePicker } from '@nino/ds/components/DatePicker'
 import { EmptyState } from '@nino/ds/components/EmptyState'
@@ -75,7 +76,26 @@ export const Reports = () => {
   const tenant = useCurrentTenant()
   const tenantId = tenant?.tenantId ?? null
 
-  const [period, setPeriod] = useState<PeriodChoice>('today')
+  /**
+   * O período vive na URL: o link que vem da visão geral já chega no recorte
+   * certo, e recarregar ou compartilhar devolve o mesmo relatório.
+   */
+  const [searchParams, setSearchParams] = useSearchParams()
+  const requested = searchParams.get('periodo')
+  const period: PeriodChoice = PERIODS.some(({ id }) => id === requested)
+    ? (requested as PeriodChoice)
+    : 'today'
+
+  const setPeriod = (next: PeriodChoice) =>
+    setSearchParams(
+      (current) => {
+        const params = new URLSearchParams(current)
+        params.set('periodo', next)
+        return params
+      },
+      { replace: true }
+    )
+
   const [customFrom, setCustomFrom] = useState('')
   const [customTo, setCustomTo] = useState('')
 
@@ -115,7 +135,11 @@ export const Reports = () => {
 
       <Tabs
         className={motion.unroll}
-        tabs={PERIODS.map(({ id, label }) => ({ value: id, label, content: null }))}
+        tabs={PERIODS.map(({ id, label }) => ({
+          value: id,
+          label,
+          content: null,
+        }))}
         value={period}
         onValueChange={(value) => setPeriod(value as PeriodChoice)}
       />

@@ -8,15 +8,16 @@
  * O caixa do dia: mesma superfície dos cartões da fila, sem sombra — é
  * resultado consolidado, não trabalho em aberto.
  */
-/* três colunas já no celular: empilhado, o caixa do dia empurrava a lista
-   de pedidos recentes para fora da primeira tela */
+/* Uma coluna no celular: com o rótulo ao lado do número, cada cartão é uma
+   linha de texto — os três empilhados ocupam menos altura do que ocupavam
+   lado a lado, e a lista de pedidos recentes continua na primeira tela. */
 .tally {
-  @apply grid grid-cols-3 gap-2 lg:gap-4;
+  @apply grid grid-cols-1 gap-2 lg:grid-cols-3 lg:gap-4;
 }
 
 /* superfície vem do Card do DS; aqui fica o que ele não sabe */
 .figure {
-  @apply p-3 lg:p-4;
+  @apply p-5;
   @apply transition-colors duration-200;
 }
 
@@ -27,9 +28,10 @@ a.figure {
   @apply focus-visible:ring-brand focus-visible:ring-offset-2;
 }
 
+/* um degrau abaixo da fila: lá são contagens curtas, aqui cabe "R$ 1.234,56" */
 .value {
-  @apply font-display text-lg font-extrabold leading-none tracking-tight;
-  @apply text-ink lg:text-xl;
+  @apply font-display text-2xl font-extrabold leading-none tracking-tight;
+  @apply text-ink lg:text-3xl;
   font-variant-numeric: tabular-nums;
 }
 
@@ -77,5 +79,5 @@ a.figure {
  * lado "R$ 1.234,56" e "entraram no caixa" não cabem: lá continua empilhado.
  */
 .cardOverview {
-  @apply flex flex-col gap-1 lg:flex-row lg:items-baseline lg:gap-x-2;
+  @apply flex flex-row items-baseline gap-x-2;
 }
