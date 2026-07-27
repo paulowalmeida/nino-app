@@ -3,6 +3,7 @@ import { Controller, useForm, useWatch } from 'react-hook-form'
 import { useNavigate, useParams } from 'react-router'
 
 import { Alert } from '@nino/ds/components/Alert'
+import { Badge } from '@nino/ds/components/Badge'
 import { Button } from '@nino/ds/components/Button'
 import { Dialog } from '@nino/ds/components/Dialog'
 import { FormField } from '@nino/ds/components/FormField'
@@ -138,15 +139,12 @@ export const ProductDetail = () => {
             <h1 className={styles.name}>{item.name}</h1>
             <p className={styles.heroPrice}>{brl.format(+item.price)}</p>
           </div>
-          <span
-            className={
-              item.isActive
-                ? styles.heroBadge
-                : `${styles.heroBadge} ${styles.heroBadgeOff}`
-            }
+          <Badge
+            variant={item.isActive ? 'success' : 'error'}
+            className={styles.heroBadge}
           >
             {item.isActive ? 'No cardápio' : 'Fora do cardápio'}
-          </span>
+          </Badge>
         </div>
       </header>
 

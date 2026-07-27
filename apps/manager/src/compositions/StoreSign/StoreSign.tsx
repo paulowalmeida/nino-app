@@ -1,3 +1,4 @@
+import { Badge } from '@nino/ds/components/Badge'
 import { Skeleton } from '@nino/ds/components/Skeleton'
 import { useOpeningHours } from '@hooks/settings/useOpeningHours'
 import { usePause } from '@hooks/store/usePause'
@@ -33,9 +34,14 @@ export const StoreSign = ({ tenantId, timezone }: StoreSignProps) => {
   const open = !pause?.isPaused && isStoreOpen(hours, zone)
 
   return (
-    <span className={`${motion.pop} ${styles.sign} ${open ? styles.open : ''}`}>
-      <span className={styles.bulb} />
+    <Badge
+      variant={open ? 'success' : 'default'}
+      className={`${motion.pop} ${styles.sign}`}
+    >
+      <span
+        className={open ? `${styles.bulb} ${styles.bulbOn}` : styles.bulb}
+      />
       {open ? 'Aberta agora' : 'Fechada agora'}
-    </span>
+    </Badge>
   )
 }

@@ -4,6 +4,7 @@ import { useParams } from 'react-router'
 import { BackLink } from '@components/BackLink'
 
 import { Alert } from '@nino/ds/components/Alert'
+import { Badge } from '@nino/ds/components/Badge'
 import { Button } from '@nino/ds/components/Button'
 import { Skeleton } from '@nino/ds/components/Skeleton'
 import { Textarea } from '@nino/ds/components/Textarea'
@@ -92,13 +93,12 @@ export const OrderDetail = () => {
             aberto em {stamp.format(new Date(order.createdAt))}
           </p>
         </div>
-        <span
-          className={
-            isCancelled ? `${styles.badge} ${styles.badgeOff}` : styles.badge
-          }
+        <Badge
+          variant={isCancelled ? 'error' : 'default'}
+          className={styles.badge}
         >
           {STATUS_LABEL[order.status]}
-        </span>
+        </Badge>
       </header>
 
       <div className={styles.columns}>

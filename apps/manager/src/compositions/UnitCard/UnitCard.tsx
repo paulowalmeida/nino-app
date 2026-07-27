@@ -1,5 +1,6 @@
 import { useState } from 'react'
 
+import { Badge } from '@nino/ds/components/Badge'
 import { Button } from '@nino/ds/components/Button'
 import { FormField } from '@nino/ds/components/FormField'
 import { Input } from '@nino/ds/components/Input'
@@ -84,7 +85,11 @@ export const UnitCard = ({
         <div>
           <h2 className={styles.title}>
             {unit?.customName || 'Esta unidade'}
-            {isMain && <span className={local.main}>matriz</span>}
+            {isMain && (
+              <Badge size="sm" className={local.main}>
+                matriz
+              </Badge>
+            )}
           </h2>
           <p className={styles.hint}>
             É o endereço de onde o pedido sai — e o que o cliente vê na loja.

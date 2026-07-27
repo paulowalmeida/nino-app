@@ -1,4 +1,7 @@
+import type { ReactNode } from 'react'
+
 import { Alert } from '@nino/ds/components/Alert'
+import { Badge } from '@nino/ds/components/Badge'
 import { Skeleton } from '@nino/ds/components/Skeleton'
 import { PageTitle } from '@components/PageTitle'
 import { useSubscription } from '@hooks/account/useSubscription'
@@ -52,18 +55,25 @@ export const Subscription = () => {
           </div>
 
           <dl className={styles.facts}>
-            {[
-              ['Situação', data.subscriptionStatus.name],
-              ['Assinada em', dateOf(data.startedAt)],
-              ['Teste até', dateOf(data.trialEndsAt)],
-              ['Renova em', dateOf(data.expiresAt)],
+            {(
               [
-                'Unidades inclusas',
-                data.plan.maxTenants === null
-                  ? 'ilimitadas'
-                  : String(data.plan.maxTenants),
-              ],
-            ].map(([label, value], index) => (
+                [
+                  'Situação',
+                  <Badge variant={data.isActive ? 'success' : 'warning'}>
+                    {data.subscriptionStatus.name}
+                  </Badge>,
+                ],
+                ['Assinada em', dateOf(data.startedAt)],
+                ['Teste até', dateOf(data.trialEndsAt)],
+                ['Renova em', dateOf(data.expiresAt)],
+                [
+                  'Unidades inclusas',
+                  data.plan.maxTenants === null
+                    ? 'ilimitadas'
+                    : String(data.plan.maxTenants),
+                ],
+              ] satisfies [string, ReactNode][]
+            ).map(([label, value], index) => (
               <div
                 key={label}
                 className={`${motion.deal} ${styles.fact}`}
