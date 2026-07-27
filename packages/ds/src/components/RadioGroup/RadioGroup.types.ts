@@ -1,11 +1,20 @@
 export interface RadioOption {
   value: string
   label: string
+  /** Supporting line under the label — a price, a delay, a consequence. */
+  description?: string
   disabled?: boolean
 }
 
+export type RadioGroupVariant = 'default' | 'card'
+
 export interface RadioGroupProps {
   options: RadioOption[]
+  /**
+   * `card` turns each option into a surface of its own — for choices that
+   * carry a description and deserve a bigger touch target.
+   */
+  variant?: RadioGroupVariant
   orientation?: 'horizontal' | 'vertical'
   value?: string
   defaultValue?: string
