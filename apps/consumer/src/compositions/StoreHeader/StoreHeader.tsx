@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 
+import { Badge } from '@nino/ds/components/Badge'
 import { Image } from '@nino/ds/components/Image'
 import { Input } from '@nino/ds/components/Input'
 import searchIcon from '@assets/icons/search.svg?raw'
@@ -54,14 +55,16 @@ export const StoreHeader = ({
           <div className={styles.identity}>
             <h1 className={styles.name}>{displayName(store)}</h1>
             <div className={styles.meta}>
-              <span
-                className={`${styles.badge} ${
-                  open ? styles.badgeOpen : styles.badgeShut
-                }`}
+              <Badge
+                variant={open ? 'success' : 'default'}
+                className={styles.badge}
               >
-                <span className={styles.dot} aria-hidden="true" />
+                <span
+                  className={open ? `${styles.dot} ${styles.dotOn}` : styles.dot}
+                  aria-hidden="true"
+                />
                 {open ? 'Aberto' : 'Fechado'}
-              </span>
+              </Badge>
               {estimatedMinutes ? (
                 <span className={styles.time}>~{estimatedMinutes} min</span>
               ) : null}
