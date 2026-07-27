@@ -75,12 +75,10 @@
   @apply flex flex-col gap-2;
 }
 
-.previewPhotoWrap {
-  @apply overflow-hidden rounded-card bg-surface-mute;
-}
-
+/* Altura de olhar, não de miniatura: é o motivo do gesto existir. O emoji
+   do fallback cresce junto para não ficar perdido no meio do quadro. */
 .previewPhoto {
-  @apply h-40 w-full object-cover;
+  @apply h-40 w-full rounded-card object-cover text-5xl;
 }
 
 .previewName {

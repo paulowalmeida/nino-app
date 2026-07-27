@@ -1,6 +1,5 @@
 import { useState } from 'react'
 
-import { Image } from '@nino/ds/components/Image'
 import { Popover } from '@nino/ds/components/Popover'
 import { ItemThumb } from '@components/ItemThumb'
 import { useLongPress } from '@hooks/ui/useLongPress'
@@ -55,14 +54,13 @@ export const ProductCard = ({ item, index, onPick }: ProductCardProps) => {
       }
     >
       <div className={styles.preview}>
-        {photo && (
-          <Image
-            src={photo}
-            alt=""
-            className={styles.previewPhoto}
-            wrapperClassName={styles.previewPhotoWrap}
-          />
-        )}
+        {/* O mesmo ladrilho do card, em tamanho de olhar: quando o item não
+            tem foto ele cai no emoji da categoria em vez de deixar buraco. */}
+        <ItemThumb
+          name={item.name}
+          imageUrl={photo}
+          className={styles.previewPhoto}
+        />
         <p className={styles.previewName}>{item.name}</p>
         {item.description && (
           <p className={styles.previewText}>{item.description}</p>
