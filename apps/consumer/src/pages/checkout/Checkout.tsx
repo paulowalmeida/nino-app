@@ -246,6 +246,7 @@ export const Checkout = () => {
           <Collapsible
             open={isReceiptOpen}
             onOpenChange={setIsReceiptOpen}
+            className='bg-brand-foreground'
             trigger={
               <>
                 <span className={styles.receiptHead}>

@@ -69,13 +69,13 @@ export function Collapsible({
       defaultOpen={defaultOpen}
       disabled={disabled}
       onOpenChange={({ open: o }) => onOpenChange?.(o)}
-      className={className}
+      className={'bg-brand-foreground' + className}
     >
-      <ArkCollapsible.Trigger className={triggerClass}>
+      <ArkCollapsible.Trigger className={'bg-brand-foreground' + triggerClass}>
         {trigger}
         {indicator && <ChevronSeal />}
       </ArkCollapsible.Trigger>
-      <ArkCollapsible.Content className={contentClass}>
+      <ArkCollapsible.Content className={'bg-brand-foreground' + contentClass}>
         <div className="px-3 pb-3 pt-1">{children}</div>
       </ArkCollapsible.Content>
     </ArkCollapsible.Root>

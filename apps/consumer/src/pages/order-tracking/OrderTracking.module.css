@@ -12,7 +12,7 @@
 
 .back {
   @apply flex h-10 w-10 items-center justify-center rounded-full border;
-  @apply border-line bg-cream text-lg text-ink transition-colors;
+  @apply border-line bg-brand-foreground text-lg text-ink transition-colors;
   @apply hover:border-peach hover:text-brand-strong;
 }
 

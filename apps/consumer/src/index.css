@@ -4,6 +4,7 @@
   body {
     background: var(--color-brand-foreground);
     -webkit-font-smoothing: antialiased;
+    font-size: var(--text-xs);
   }
 
   /* No desktop a vitrine vira um painel pousado — o fundo fecha num tom
