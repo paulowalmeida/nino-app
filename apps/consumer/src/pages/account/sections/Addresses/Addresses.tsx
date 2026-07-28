@@ -193,7 +193,8 @@ export const Addresses = () => {
       </ul>
 
       {editing === NEW ? (
-        <div className={`${motion.settle} ${styles.newCard}`}>
+        <div className={`${motion.settle} ${styles.newForm}`}>
+          <p className={styles.newTitle}>Novo endereço</p>
           <AddressForm
             isSaving={save.isPending}
             hasError={save.isError}

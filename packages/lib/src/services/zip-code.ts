@@ -1,4 +1,4 @@
-import type { AddressLookup } from '@custom_types/store'
+import type { AddressLookup } from '../types/address/address-lookup'
 
 type ViaCepResponse = {
   logradouro?: string
@@ -13,6 +13,11 @@ export const onlyDigits = (value: string): string => value.replace(/\D/g, '')
 /**
  * ViaCEP answers 200 with `{ erro: true }` for a well-formed but unknown zip
  * code, so a missing address is a null result rather than a thrown error.
+ *
+ * Shared by every app that asks for a Brazilian address: the manager, when a
+ * store is created, and the storefront, when a customer saves where to
+ * deliver. Same source in both, so the two never disagree about what a zip
+ * code means.
  */
 export const lookupZipCode = async (
   zipCode: string

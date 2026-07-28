@@ -67,24 +67,83 @@
   @apply mt-5;
 }
 
+/* ----- formulário ----- */
+/*
+ * Grade, não linhas de flex com margem: a versão anterior espaçava os campos
+ * pelo `mt` de cada um, e dentro de uma linha o segundo campo herdava essa
+ * margem e descia sozinho — era daí que vinham o "Nº" e a "UF" fora de
+ * esquadro com os vizinhos. Aqui o espaço é do container e todo campo começa
+ * na mesma altura.
+ */
+/* teto de largura no desktop: o painel tem 800px e um campo de rua esticado
+   até lá não fica mais fácil de ler, fica mais difícil de mirar */
 .form {
-  @apply w-full;
+  @apply grid w-full gap-4 lg:max-w-[34rem];
 }
 
-.row {
-  @apply flex gap-3;
+/*
+ * Os pares têm largura por proporção, não por número fixo: o número da casa
+ * cabe em quatro dígitos e a UF em duas letras, e dar a eles a mesma caixa de
+ * um nome de rua é o que fazia o formulário parecer desmontado.
+ */
+.pair {
+  @apply grid gap-3;
+  grid-template-columns: 1fr 5.5rem;
 }
 
-.grow {
-  @apply flex-1;
+.pairState {
+  @apply grid gap-3;
+  grid-template-columns: 1fr 4.5rem;
 }
 
-.narrow {
-  @apply w-24 shrink-0;
+.field {
+  @apply grid content-start gap-1.5;
 }
 
-.newCard {
-  @apply mt-5 rounded-card border border-black/[0.08] bg-white p-4;
+.label {
+  @apply text-xs font-bold text-muted;
+}
+
+.optional {
+  @apply font-medium text-faintest;
+}
+
+.input {
+  @apply h-12 w-full rounded-xl border-black/10 bg-white text-[0.95rem];
+  @apply text-muted;
+}
+
+.input:focus {
+  border-color: var(--store-tint, var(--color-brand));
+  box-shadow: inset 0 0 0 1px var(--store-tint, var(--color-brand));
+}
+
+/* o CEP é o campo que trabalha: preenche os quatro abaixo dele, então tem
+   largura própria e um lugar reservado para dizer o que está fazendo */
+.zip {
+  @apply grid gap-1.5;
+  grid-template-columns: minmax(0, 11rem);
+}
+
+.zipStatus {
+  @apply mt-1.5 text-xs leading-snug text-faint;
+}
+
+.zipStatusError {
+  @apply mt-1.5 text-xs leading-snug text-danger;
+}
+
+/*
+ * Sem moldura: com a mesma borda dos itens, o formulário de novo endereço
+ * lia como mais um endereço já salvo no fim da lista. Um filete e um rótulo
+ * dizem melhor o que ele é — a lista acabou, aqui começa o que se escreve.
+ */
+.newForm {
+  @apply mt-6 border-t border-black/[0.07] pt-6;
+}
+
+.newTitle {
+  @apply mb-4 text-[0.68rem] font-bold uppercase tracking-[0.14em] text-faint;
 }
 
 .add {

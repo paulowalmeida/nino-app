@@ -1,3 +1,4 @@
+/** O que um CEP responde: o endereço menos o número e o complemento. */
 export type AddressLookup = {
   street: string
   neighborhood: string

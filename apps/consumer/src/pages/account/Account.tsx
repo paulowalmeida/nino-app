@@ -5,6 +5,7 @@ import { useLogout } from '@hooks/useLogout'
 import { useMyAddresses } from '@hooks/useMyAddresses'
 import { useMyOrders } from '@hooks/useMyOrders'
 import { useScrollProgress } from '@hooks/useScrollProgress'
+import { useStoreTint } from '@hooks/useStoreTint'
 import { firstName } from '@utils/customer-name'
 import { greeting } from '@utils/greeting'
 import { riseDelay } from '@utils/rise-delay'
@@ -38,6 +39,7 @@ export const Account = () => {
   const { customer, isPending } = useCustomerSession()
   const logout = useLogout()
   const progress = useScrollProgress(60)
+  const tint = useStoreTint()
 
   const { data: orders } = useMyOrders(!!customer)
   const { data: addresses } = useMyAddresses(!!customer)
@@ -57,10 +59,18 @@ export const Account = () => {
      como se chama, a saudação vai sozinha */
   const name = customer.profileCompletedAt ? firstName(customer.name) : null
 
+  /* a cor da loja também vale aqui dentro: a conta é do freguês, mas é a
+     conta dele nesta loja, e o foco dos campos e a seção aberta são os
+     lugares onde essa marca aparece */
   return (
     <div
       className={styles.page}
-      style={{ '--p': progress } as React.CSSProperties}
+      style={
+        {
+          '--p': progress,
+          ...(tint ? { '--store-tint': tint } : {}),
+        } as React.CSSProperties
+      }
     >
       <div className={styles.shell}>
         <header className={`${motion.settle} ${styles.header}`}>
