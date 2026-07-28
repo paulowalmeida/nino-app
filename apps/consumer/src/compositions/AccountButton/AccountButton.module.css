@@ -1,0 +1,20 @@
+@reference "@nino/ds/globals.css";
+
+/* reserva o espaço do botão enquanto a sessão não responde, senão o cabeçalho
+   pula quando ela chega */
+.placeholder {
+  @apply block h-11 w-11 shrink-0;
+}
+
+.signIn {
+  @apply flex h-11 shrink-0 items-center justify-center rounded-full border;
+  @apply border-line bg-brand-foreground px-4 text-[0.78rem] font-bold;
+  @apply text-ink transition-colors;
+  @apply hover:border-peach hover:text-brand-strong;
+}
+
+.avatar {
+  @apply flex h-11 w-11 shrink-0 items-center justify-center rounded-full;
+  @apply bg-brand-soft font-display text-[0.85rem] font-extrabold;
+  @apply text-brand-strong transition-colors hover:bg-peach-light;
+}

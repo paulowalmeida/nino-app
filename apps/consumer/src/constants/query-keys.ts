@@ -30,4 +30,10 @@ export const queryKeys = {
     all: ['guest-order'] as const,
     byId: (orderId: string) => [...queryKeys.guestOrder.all, orderId] as const,
   },
+  session: {
+    all: ['session'] as const,
+  },
+  myOrders: {
+    all: ['my-orders'] as const,
+  },
 }

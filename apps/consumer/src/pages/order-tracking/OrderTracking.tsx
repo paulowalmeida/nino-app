@@ -3,6 +3,7 @@ import { Link, useParams, useSearchParams } from 'react-router'
 import { EmptyState } from '@nino/ds/components/EmptyState'
 import { OrderJourney } from '@compositions/OrderJourney/OrderJourney'
 import { OrderStage } from '@compositions/OrderStage/OrderStage'
+import { useCustomerSession } from '@hooks/useCustomerSession'
 import { useGuestOrderStatus } from '@hooks/useGuestOrderStatus'
 import { isTerminal } from '@utils/order-journey'
 import { riseDelay } from '@utils/rise-delay'
@@ -16,13 +17,38 @@ export const OrderTracking = () => {
   const token = searchParams.get('token') ?? undefined
   const backHref = pathSlug ? `/${pathSlug}` : '/'
 
+  const { customer, isPending: loadingSession } = useCustomerSession()
+
   const {
     data: order,
     isPending,
     isError,
-  } = useGuestOrderStatus(orderId, token)
+  } = useGuestOrderStatus(orderId, token, !!customer)
 
-  if (isPending) {
+  /* Sem token e sem sessão não há como provar de quem é o pedido: a consulta
+     nem sai, então esperar por ela seria um esqueleto eterno. */
+  const canAsk = !!token || !!customer
+
+  if (!loadingSession && !canAsk) {
+    return (
+      <EmptyState
+        size="md"
+        className={styles.notFound}
+        illustration={<img src="/mascot-consumer-sad.svg" alt="" />}
+        title="Pedido não encontrado"
+        action={
+          <Link to={backHref} className={styles.backLink}>
+            Voltar para a loja
+          </Link>
+        }
+      >
+        Abra pelo link que apareceu na hora do pedido, ou entre na sua conta
+        para ver seus pedidos.
+      </EmptyState>
+    )
+  }
+
+  if (isPending || loadingSession) {
     return (
       <div
         className={styles.page}

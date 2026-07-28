@@ -4,6 +4,7 @@ import { Image } from '@nino/ds/components/Image'
 import { Input } from '@nino/ds/components/Input'
 import searchIcon from '@assets/icons/search.svg?raw'
 import { Icon } from '@components/Icon/Icon'
+import { AccountButton } from '@compositions/AccountButton/AccountButton'
 import { displayName, initials, isOpen } from '@utils/store-info'
 
 import type { StoreHeaderProps } from './StoreHeader.types'
@@ -17,6 +18,7 @@ import styles from './StoreHeader.module.css'
  */
 export const StoreHeader = ({
   store,
+  slug,
   hours,
   estimatedMinutes,
   searchable,
@@ -68,40 +70,44 @@ export const StoreHeader = ({
           </div>
         </div>
 
-        {searchable ? (
-          <button
-            type="button"
-            className={styles.searchToggle}
-            aria-label={searchOpen ? 'Fechar busca' : 'Buscar no cardápio'}
-            aria-expanded={searchOpen}
-            onClick={() => (searchOpen ? closeSearch() : setSearchOpen(true))}
-          >
-            <span className={styles.searchToggleIconStack}>
-              <Icon
-                svg={searchIcon}
-                className={`${styles.searchToggleIcon} ${
-                  searchOpen ? styles.searchToggleIconHidden : ''
-                }`}
-              />
-              <svg
-                width="20"
-                height="20"
-                viewBox="0 0 24 24"
-                aria-hidden="true"
-                className={`${styles.searchToggleIcon} ${
-                  searchOpen ? '' : styles.searchToggleIconHidden
-                }`}
-              >
-                <path
-                  d="M6 6l12 12M18 6L6 18"
-                  stroke="currentColor"
-                  strokeWidth="2.2"
-                  strokeLinecap="round"
+        <div className={styles.tools}>
+          {searchable ? (
+            <button
+              type="button"
+              className={styles.searchToggle}
+              aria-label={searchOpen ? 'Fechar busca' : 'Buscar no cardápio'}
+              aria-expanded={searchOpen}
+              onClick={() => (searchOpen ? closeSearch() : setSearchOpen(true))}
+            >
+              <span className={styles.searchToggleIconStack}>
+                <Icon
+                  svg={searchIcon}
+                  className={`${styles.searchToggleIcon} ${
+                    searchOpen ? styles.searchToggleIconHidden : ''
+                  }`}
                 />
-              </svg>
-            </span>
-          </button>
-        ) : null}
+                <svg
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  aria-hidden="true"
+                  className={`${styles.searchToggleIcon} ${
+                    searchOpen ? '' : styles.searchToggleIconHidden
+                  }`}
+                >
+                  <path
+                    d="M6 6l12 12M18 6L6 18"
+                    stroke="currentColor"
+                    strokeWidth="2.2"
+                    strokeLinecap="round"
+                  />
+                </svg>
+              </span>
+            </button>
+          ) : null}
+
+          <AccountButton slug={slug} />
+        </div>
       </div>
 
       {searchable ? (

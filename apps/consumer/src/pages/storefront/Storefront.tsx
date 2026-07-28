@@ -121,6 +121,7 @@ export const Storefront = () => {
       <div className={styles.topbar}>
         <StoreHeader
           store={store}
+          slug={pathSlug ?? ''}
           hours={hours}
           estimatedMinutes={settings?.estimatedMinutes}
           searchable={sections.length > 0}

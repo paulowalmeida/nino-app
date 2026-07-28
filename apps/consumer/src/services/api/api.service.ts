@@ -47,3 +47,6 @@ export const getWith = <T>(
 
 export const post = <B, T>(url: string, body: B): Promise<T> =>
   run<T>(client.post(url, { json: body }))
+
+export const patch = <B, T>(url: string, body: B): Promise<T> =>
+  run<T>(client.patch(url, { json: body }))

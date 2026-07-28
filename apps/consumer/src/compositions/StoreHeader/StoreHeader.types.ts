@@ -3,6 +3,8 @@ import type { Store } from '@custom_types/store/store'
 
 export type StoreHeaderProps = {
   store: Store
+  /** Slug no caminho — vazio quando a vitrine roda em subdomínio. */
+  slug: string
   hours: PublicOpeningHours[]
   /** Produção + entrega, sem frete. Ausente enquanto as settings carregam. */
   estimatedMinutes?: number

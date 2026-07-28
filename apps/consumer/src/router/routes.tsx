@@ -15,6 +15,14 @@ const orderTrackingLazy = () =>
     Component: OrderTracking,
   }))
 
+const signInLazy = () =>
+  import('@pages/sign-in/SignIn').then(({ SignIn }) => ({ Component: SignIn }))
+
+const accountLazy = () =>
+  import('@pages/account/Account').then(({ Account }) => ({
+    Component: Account,
+  }))
+
 /**
  * A loja vem do subdomínio (`slug.nino.delivery`), então a raiz já é a
  * vitrine. `/:slug` no caminho é o atalho de desenvolvimento em
@@ -45,5 +53,21 @@ export const router = createBrowserRouter([
   {
     path: '/:slug/pedido/:orderId',
     lazy: orderTrackingLazy,
+  },
+  {
+    path: '/entrar',
+    lazy: signInLazy,
+  },
+  {
+    path: '/:slug/entrar',
+    lazy: signInLazy,
+  },
+  {
+    path: '/conta',
+    lazy: accountLazy,
+  },
+  {
+    path: '/:slug/conta',
+    lazy: accountLazy,
   },
 ])
