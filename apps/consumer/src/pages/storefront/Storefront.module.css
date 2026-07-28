@@ -182,7 +182,7 @@
 
 /* ----- cardápio ----- */
 .menu {
-  @apply mt-8;
+  @apply mt-4;
 }
 
 /* o alvo do "ir para a categoria" precisa parar abaixo do topo fixo + régua,

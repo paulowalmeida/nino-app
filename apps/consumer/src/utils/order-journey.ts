@@ -79,13 +79,13 @@ export const stageNote = (order: JourneySource, status: OrderStatus): string =>
  * guardam o ícone, e é ele que diz do que se trata antes da leitura.
  */
 const STAGE_ICON: Record<OrderStatus, string> = {
-  PENDING: '🧾',
-  ACCEPTED: '👩‍🍳',
+  PENDING: '⏱',
+  ACCEPTED: '🧾',
   PREPARING: '🍳',
   OUT_FOR_DELIVERY: '🛵',
   READY_FOR_PICKUP: '🛍️',
-  DELIVERED: '🍽️',
-  COMPLETED: '🍽️',
+  DELIVERED: '✅',
+  COMPLETED: '✅  ',
   CANCELLED: '✕',
 }
 
