@@ -3,11 +3,11 @@
 /* mobile: linha de lista contínua — sem moldura de card, separada da próxima
    por uma divisória fina. desktop: vira card emoldurado. */
 .card {
-  @apply relative flex cursor-pointer items-stretch gap-3.5 border-b border-line;
+  @apply relative flex cursor-pointer items-stretch gap-3.5 border-b border-black/[0.08];
   @apply py-4 outline-none transition-all duration-200;
   @apply focus-visible:ring-2 focus-visible:ring-brand;
   @apply last:border-b-0;
-  @apply lg:gap-4 lg:rounded-card lg:border lg:border-line;
+  @apply lg:gap-4 lg:rounded-card lg:border lg:border-black/[0.08];
   @apply lg:bg-brand-foreground;
   @apply lg:p-4 lg:pr-5 lg:last:border-b;
   animation: settle 0.36s cubic-bezier(0.16, 1, 0.3, 1) both;
@@ -54,7 +54,7 @@
 }
 
 .disabled:hover {
-  @apply translate-y-0 border-line;
+  @apply translate-y-0 border-black/[0.08];
   box-shadow: 0 1px 2px rgba(26, 18, 6, 0.04);
 }
 

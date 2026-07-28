@@ -1,0 +1,86 @@
+import { Drawer } from '@nino/ds/components/Drawer'
+import { useIsDesktop } from '@hooks/useIsDesktop'
+import { displayName } from '@utils/store-info'
+
+import type { StoreInfoProps } from './StoreInfo.types'
+
+import styles from './StoreInfo.module.css'
+
+const DAYS = [
+  'Domingo',
+  'Segunda',
+  'Terça',
+  'Quarta',
+  'Quinta',
+  'Sexta',
+  'Sábado',
+]
+
+const hhmm = (time: string): string => time.slice(0, 5)
+
+/**
+ * O que estava atrás de "Ver mais": onde a loja fica e quando ela atende.
+ * São as duas perguntas que a vitrine não responde e que decidem se vale
+ * pedir — por isso ficam a um toque do nome, não num rodapé.
+ */
+export const StoreInfo = ({
+  store,
+  hours,
+  estimatedMinutes,
+  open,
+  onOpenChange,
+}: StoreInfoProps) => {
+  const isDesktop = useIsDesktop()
+  const today = new Date().getDay()
+
+  const address = `${store.street}, ${store.number} — ${store.neighborhood}`
+  const city = `${store.city}/${store.state}`
+
+  return (
+    <Drawer
+      open={open}
+      onOpenChange={onOpenChange}
+      placement={isDesktop ? 'right' : 'bottom'}
+      title={displayName(store)}
+      size={isDesktop ? '25rem' : 'auto'}
+    >
+      <div className={styles.body}>
+        <section>
+          <h3 className={styles.label}>Endereço</h3>
+          <p className={styles.value}>{address}</p>
+          <p className={styles.sub}>{city}</p>
+        </section>
+
+        {estimatedMinutes ? (
+          <section>
+            <h3 className={styles.label}>Tempo de entrega</h3>
+            <p className={styles.value}>~{estimatedMinutes} min</p>
+          </section>
+        ) : null}
+
+        <section>
+          <h3 className={styles.label}>Horários</h3>
+          <ul className={styles.hours}>
+            {DAYS.map((day, index) => {
+              const entry = hours.find((hour) => hour.dayOfWeek === index)
+              const isToday = index === today
+              return (
+                <li
+                  key={day}
+                  className={isToday ? styles.rowToday : styles.row}
+                >
+                  <span>{day}</span>
+                  <span className={styles.time}>
+                    {entry?.isOpen
+                      ? `${hhmm(entry.openTime)} às ${hhmm(entry.closeTime)}`
+                      : 'Fechado'}
+                  </span>
+                </li>
+              )
+            })}
+          </ul>
+        </section>
+      </div>
+    </Drawer>
+  )
+}

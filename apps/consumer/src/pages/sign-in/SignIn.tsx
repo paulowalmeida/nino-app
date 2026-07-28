@@ -4,8 +4,8 @@ import { Link, useNavigate, useParams } from 'react-router'
 import { Alert } from '@nino/ds/components/Alert'
 import { Button } from '@nino/ds/components/Button'
 import { Input } from '@nino/ds/components/Input'
+import { OTPInput } from '@nino/ds/components/OTPInput'
 import { PhoneInput } from '@nino/ds/components/PhoneInput'
-import { useCompleteProfile } from '@hooks/useCompleteProfile'
 import { useRequestOtp } from '@hooks/useRequestOtp'
 import { useVerifyOtp } from '@hooks/useVerifyOtp'
 import { isCompletePhone, toE164 } from '@utils/phone'
@@ -14,8 +14,10 @@ import { riseDelay } from '@utils/rise-delay'
 import styles from './SignIn.module.css'
 import motion from '@styles/motion.module.css'
 
-type Step = 'identify' | 'code' | 'name'
+type Step = 'identify' | 'code'
 type Channel = 'phone' | 'email'
+
+const CODE_LENGTH = 6
 
 const CHANNELS: { id: Channel; label: string }[] = [
   { id: 'phone', label: 'Telefone' },
@@ -23,10 +25,14 @@ const CHANNELS: { id: Channel; label: string }[] = [
 ]
 
 /**
- * Entrar na loja é uma conversa de três perguntas, uma por tela: o telefone,
- * o código que chegou nele e — só de quem nunca disse — o nome. Nenhuma senha,
- * nenhum cadastro antes da primeira compra: o número que a pessoa já digita no
- * checkout é a identidade dela.
+ * Entrar na loja é uma conversa de duas perguntas, uma por tela: o telefone e
+ * o código que chegou nele. Nenhuma senha, nenhum cadastro antes da primeira
+ * compra: o número que a pessoa já digita no checkout é a identidade dela.
+ *
+ * O nome não é perguntado aqui. Quem entrou quer entrar — cobrar um cadastro
+ * na porta é pedir para a pessoa desistir dela. Ele é editável em
+ * `/conta/dados` e o checkout pergunta na hora em que ele realmente importa,
+ * que é quando alguém precisa gritar o pedido na cozinha.
  */
 export const SignIn = () => {
   const { slug } = useParams()
@@ -39,7 +45,6 @@ export const SignIn = () => {
   const [phone, setPhone] = useState('')
   const [email, setEmail] = useState('')
   const [code, setCode] = useState('')
-  const [name, setName] = useState('')
 
   const isEmail = channel === 'email'
   const ready = isEmail ? /.+@.+\..+/.test(email) : isCompletePhone(phone)
@@ -48,7 +53,6 @@ export const SignIn = () => {
 
   const request = useRequestOtp()
   const verify = useVerifyOtp()
-  const profile = useCompleteProfile()
 
   const handleIdentify = (event: React.FormEvent) => {
     event.preventDefault()
@@ -59,25 +63,10 @@ export const SignIn = () => {
 
   const handleCode = (event: React.FormEvent) => {
     event.preventDefault()
-    if (code.length !== 6) return
+    if (code.length !== CODE_LENGTH) return
 
     verify.mutate(
       { credentials, code },
-      {
-        onSuccess: (customer) => {
-          if (customer.profileCompletedAt) void navigate(account)
-          else setStep('name')
-        },
-      }
-    )
-  }
-
-  const handleName = (event: React.FormEvent) => {
-    event.preventDefault()
-    if (name.trim().length < 2) return
-
-    profile.mutate(
-      { name: name.trim() },
       { onSuccess: () => void navigate(account) }
     )
   }
@@ -179,16 +168,23 @@ export const SignIn = () => {
             minutos.
           </p>
 
-          <Input
-            aria-label="Código de 6 dígitos"
-            autoComplete="one-time-code"
-            inputMode="numeric"
-            maxLength={6}
-            className={`${styles.field} ${styles.codeField}`}
-            value={code}
-            onChange={(event) =>
-              setCode(event.target.value.replace(/\D/g, '').slice(0, 6))
+          {/* o Ark controla um array de 6 posições: mandar um array curto
+              (ou receber os buracos dele de volta) vira `undefined` no meio
+              do código já na primeira tecla */}
+          <OTPInput
+            length={CODE_LENGTH}
+            type="numeric"
+            otp
+            invalid={verify.isError}
+            className={styles.field}
+            value={Array.from(
+              { length: CODE_LENGTH },
+              (_, index) => code[index] ?? ''
+            )}
+            onValueChange={(digits) =>
+              setCode(digits.map((digit) => digit ?? '').join(''))
             }
+            onValueComplete={(filled) => setCode(filled)}
           />
 
           {verify.isError && (
@@ -200,7 +196,7 @@ export const SignIn = () => {
           <Button
             type="submit"
             className={`${motion.press} ${styles.cta}`}
-            disabled={code.length !== 6 || verify.isPending}
+            disabled={code.length !== CODE_LENGTH || verify.isPending}
           >
             {verify.isPending ? 'Confirmando…' : 'Entrar'}
           </Button>
@@ -219,42 +215,6 @@ export const SignIn = () => {
         </form>
       )}
 
-      {step === 'name' && (
-        <form
-          className={`${motion.riseIn} ${styles.card}`}
-          style={riseDelay(60)}
-          onSubmit={handleName}
-        >
-          <p className={styles.eyebrow}>Falta só isto</p>
-          <h2 className={styles.headline}>Como a loja te chama?</h2>
-          <p className={styles.note}>
-            O nome aparece na comanda, para a cozinha e o entregador saberem de
-            quem é o pedido.
-          </p>
-
-          <Input
-            aria-label="Seu nome"
-            autoComplete="name"
-            className={styles.field}
-            value={name}
-            onChange={(event) => setName(event.target.value)}
-          />
-
-          {profile.isError && (
-            <Alert variant="error" className={styles.alert}>
-              Não deu para salvar seu nome agora. Tente de novo.
-            </Alert>
-          )}
-
-          <Button
-            type="submit"
-            className={`${motion.press} ${styles.cta}`}
-            disabled={name.trim().length < 2 || profile.isPending}
-          >
-            {profile.isPending ? 'Salvando…' : 'Concluir'}
-          </Button>
-        </form>
-      )}
     </div>
   )
 }

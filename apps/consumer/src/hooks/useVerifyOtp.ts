@@ -4,6 +4,7 @@ import { queryKeys } from '@constants/query-keys'
 import type { Customer } from '@custom_types/customer/customer'
 import type { OtpCredentials } from '@services/auth/customer-auth.service'
 import { verifyOtp } from '@services/auth/customer-auth.service'
+import { rememberSession } from '@utils/session-hint'
 
 /**
  * Confirma o código e abre a sessão. O cliente volta no corpo da resposta e já
@@ -22,6 +23,7 @@ export const useVerifyOtp = () => {
       code: string
     }) => verifyOtp(credentials, code),
     onSuccess: (customer: Customer) => {
+      rememberSession()
       queryClient.setQueryData(queryKeys.session.all, customer)
     },
   })

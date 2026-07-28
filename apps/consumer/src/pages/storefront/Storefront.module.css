@@ -1,365 +1,371 @@
 @reference "@nino/ds/globals.css";
 
-/* mobile-first: a vitrine ocupa a tela toda no celular. No desktop ela vira
- * um "cardápio" — um painel de papel emoldurado, com o toldo no topo, pousado
- * sobre um fundo quente mais fechado. Aqui ele deixa de ser uma coluna de
- * celular esticada: abre para ~1120px e o corpo se parte em duas colunas —
- * um índice de categorias fixo à esquerda e a grade de itens à direita. */
-/* A vitrine é uma "casca de app" nas duas larguras: a página trava na altura
- * da tela e nada nela rola por fora. O topo (cabeçalho, banner de pedido e
- * índice de categorias) fica parado e só a lista de produtos rola, dentro do
- * próprio container. No desktop isso vale igual — o painel emoldurado tem
- * altura fixa e o cardápio rola por dentro dele, então o nome da loja, o
- * pedido em andamento e a sacola nunca saem de vista. */
-/* O respiro do rodapé mora no corpo, não na página: a barra da sacola precisa
-   encostar na borda do painel pra fechar o cartão. */
-/* No desktop a sacola deixa de ser barra: uma faixa de 1040px com um botão
-   gigante existe pra polegar em tela de 6", não pra ponteiro em tela de 27".
-   Ela vira uma pílula ancorada no canto inferior direito do painel — o
-   cardápio fica com a largura inteira e o alvo continua sempre visível. */
+/*
+ * A vitrine é uma PÁGINA, não um painel. A versão anterior era um cartão de
+ * altura travada boiando num fundo areia, com o cardápio rolando por dentro:
+ * no celular virava uma caixa dentro da caixa, e no desktop sobrava moldura
+ * onde devia sobrar comida.
+ *
+ * Aqui a página rola inteira, o fundo é branco e as faixas (banner, barra de
+ * categorias) sangram de ponta a ponta — só o conteúdo se alinha numa coluna
+ * central. Branco porque a loja precisa de apetite e atenção; o areia baixa o
+ * contraste e leva a urgência junto.
+ */
 .page {
-  @apply relative mx-auto flex h-dvh w-full max-w-xl flex-col overflow-hidden;
-  @apply bg-brand-foreground;
-  @apply lg:my-8 lg:h-[calc(100dvh-4rem)] lg:max-w-[70rem];
-  @apply lg:rounded-[1.75rem] lg:border lg:border-line;
-  @apply lg:shadow-[0_30px_80px_-40px_rgba(26,18,6,0.45)];
+  @apply relative min-h-dvh w-full bg-white;
+  /* respiro do rodapé: sacola no desktop, sacola + tab bar no celular */
+  @apply pb-28 lg:pb-24;
 }
 
-/* bloco fixo do topo: cabeçalho + banner de pedido ativo. Não encolhe e não
- * rola, em nenhuma largura. */
-.topbar {
-  @apply shrink-0;
+/* a coluna central: tudo que é leitura mora aqui; o que é faixa passa por fora */
+.shell {
+  @apply mx-auto w-full max-w-[71rem] px-4 sm:px-6;
 }
 
-/* corpo do cardápio: a faixa que sobra entre o topo fixo e a barra da sacola.
- * No celular é uma coluna (trilha presa no alto, lista rolando embaixo); no
- * desktop, a grade de duas colunas (índice + itens). Nos dois casos ele
- * mesmo não rola — quem rola é a coluna de dentro. */
-.body {
-  @apply flex min-h-0 flex-1 flex-col overflow-hidden;
-  @apply lg:grid lg:grid-cols-[13rem_minmax(0,1fr)];
-  @apply lg:gap-x-10 lg:px-9 lg:pb-0 lg:pt-7;
-}
-
-/* índice lateral: no celular é a trilha presa no topo do corpo; no desktop, a
- * coluna do índice. Não precisa mais de `sticky` — o corpo não rola, então ele
- * já fica parado; só ganha rolagem própria se a loja tiver categorias demais
- * para a altura da tela. */
-.rail {
-  @apply shrink-0;
-  @apply lg:col-start-1 lg:row-start-1 lg:max-h-full lg:self-start;
-  @apply lg:overflow-y-auto lg:scrollbar-slim;
-}
-
-/* a lista: a ÚNICA coisa que rola na tela — overflow interno, com respiro
- * embaixo pra barra da sacola não cobrir o último item. No desktop a barra
- * fina fica encostada na borda do painel, então a coluna ganha um respiro à
- * direita pro texto não encostar nela. */
-.menu {
-  @apply min-h-0 flex-1 overflow-y-auto px-5 pb-6;
-  @apply lg:col-start-2 lg:row-start-1 lg:min-h-0 lg:overflow-y-auto;
-  @apply lg:scrollbar-slim lg:pb-24 lg:pl-0 lg:pr-3;
-}
-
-.section {
-  @apply scroll-mt-14 pt-7 lg:scroll-mt-8 lg:first:pt-1;
-}
-
-/* a última seção precisa poder subir até a linha de leitura no alto da lista,
- * mesmo com um item só. Sem isso não há conteúdo abaixo dela pra empurrar o
- * scroll: a lista para no meio, a categoria clicada nunca acende na trilha e o
- * scroll parece "travado". Vale nas duas larguras, agora que o desktop também
- * rola por dentro da coluna. */
-.menu > .section:last-child {
-  @apply min-h-full;
-}
-
-/* fio tracejado, não sólido: é lista impressa, não divisória de interface —
-   o mesmo fio que separa os itens no resumo do pedido. */
-.sectionHead {
-  @apply mb-3 flex items-baseline justify-between gap-3 pb-2;
-  border-bottom: 1.5px dashed var(--color-line);
-}
-
-/* o nome da categoria é uma placa, não uma manchete: ele se repete a cada
-   seção e a régua tracejada abaixo já separa o bloco — cada ponto a mais de
-   corpo aqui é um item a menos visível na primeira dobra */
-.sectionTitle {
-  @apply font-display text-[1rem] font-extrabold tracking-tight text-ink;
-  @apply lg:text-[1.05rem];
-}
-
-.sectionCount {
-  @apply shrink-0 text-[0.7rem] font-bold uppercase tracking-[0.14em] text-faint;
-}
-
-.items {
-  @apply flex flex-col lg:grid lg:grid-cols-2 lg:gap-3.5;
-}
-
+/* ----- banner ----- */
 /*
- * A mesma barra de destaque do checkout — a comanda que a pessoa está
- * montando. Ela é a constante do fluxo: não some entre a vitrine e o
- * checkout, só troca o conteúdo. Papel creme, picote serrilhado em cima e o
- * laranja reservado ao botão.
+ * Sem foto de capa no cadastro da loja, a faixa é a marca dela: o
+ * `primaryColor` do white-label vira campo de cor e a logo entra como marca
+ * d'água. Quando existir `coverUrl`, a imagem substitui o gradiente e o resto
+ * da faixa continua igual.
  */
-/*
- * No fluxo, não `fixed`: assim a lista encolhe em vez de correr por baixo da
- * barra, e no desktop ela para no rodapé do painel em vez de flutuar no meio
- * dele com cardápio aparecendo embaixo — o que contradizia o picote.
- */
-.cartBar {
-  @apply sticky bottom-0 z-30 flex shrink-0 flex-col gap-2.5;
-  @apply bg-brand-foreground px-5 pb-5 pt-3;
-  @apply lg:absolute lg:bottom-6 lg:left-auto lg:right-9 lg:w-auto;
-  @apply lg:bg-transparent lg:p-0;
-  box-shadow: 0 -10px 30px -18px rgba(26, 18, 6, 0.45);
-  animation: rise 0.28s cubic-bezier(0.16, 1, 0.3, 1) both;
-}
-
-/* o conteúdo dissolve no papel antes do picote, senão a serrilha fatia o
-   que estiver rolando atrás */
-.cartBar::before {
-  content: '';
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 100%;
-  height: 2.25rem;
-  pointer-events: none;
+/* baixa: sem foto de capa, faixa alta é laje de cor parada ocupando a dobra
+   onde devia estar comida */
+.banner {
+  @apply relative w-full overflow-hidden;
+  @apply h-24 sm:h-32 lg:h-40;
   background: linear-gradient(
-    to bottom,
-    rgba(255, 251, 245, 0),
-    var(--color-brand-foreground)
+    118deg,
+    var(--store-tint, var(--color-brand)) 0%,
+    color-mix(in srgb, var(--store-tint, var(--color-brand)) 72%, black) 100%
   );
 }
 
-.cartBar::after {
-  content: '';
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 100%;
-  height: 7px;
-  background-image:
-    radial-gradient(
-      circle at 7px 0,
-      transparent 0 5px,
-      var(--color-brand-foreground) 5px
-    ),
-    radial-gradient(circle at 7px 0, transparent 0 5px, var(--color-line) 5px);
-  background-size:
-    14px 7px,
-    14px 7px;
-  background-position:
-    0 1px,
-    0 0;
-  background-repeat: repeat-x, repeat-x;
+.bannerMark {
+  @apply pointer-events-none absolute -right-10 -top-8 h-[150%] w-auto;
+  @apply select-none opacity-[0.13];
 }
 
-@keyframes rise {
-  from {
-    opacity: 0;
-    transform: translateY(100%);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+.bannerScrim {
+  @apply absolute inset-x-0 bottom-0 h-24;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.3), transparent);
+}
+
+/* ----- identidade ----- */
+.identityRow {
+  @apply flex items-start gap-4 pb-1 pt-5;
+}
+
+/* o azulejo sobe sobre o banner: costura as duas faixas e dá à logo o tamanho
+   que ela merece sem roubar altura da página */
+/*
+ * A ponta que sai. Encolhe pela borda superior esquerda — a mesma margem em
+ * que a logo do topo aparece — então as duas peças nunca disputam posição: o
+ * azulejo se recolhe para o canto e o topo assume de lá.
+ */
+.logoTile {
+  @apply relative z-10 -mt-12 h-20 w-20 shrink-0 overflow-hidden rounded-2xl;
+  @apply border-4 border-white bg-white;
+  @apply shadow-[0_8px_24px_-10px_rgba(0,0,0,0.45)];
+  @apply sm:-mt-14 sm:h-24 sm:w-24;
+  transform-origin: top left;
+  transform: scale(calc(1 - var(--p, 0) * 0.62));
+  opacity: clamp(0, calc(1 - var(--p, 0) * 1.7), 1);
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .cartBar {
-    animation: none;
+  .logoTile {
+    transform: none;
+    opacity: 1;
   }
 }
 
+.logoImg {
+  @apply h-full w-full object-cover;
+}
+
+.logoFallback {
+  @apply flex h-full w-full items-center justify-center bg-brand;
+  @apply font-display text-2xl font-extrabold text-white;
+}
+
+.identity {
+  @apply min-w-0 flex-1 pt-1;
+}
+
+.name {
+  @apply truncate font-display text-xl font-extrabold text-ink sm:text-2xl;
+}
+
+.identityMeta {
+  @apply mt-1 flex flex-wrap items-center gap-x-2 gap-y-1 text-[0.82rem];
+  @apply text-muted;
+}
+
+.more {
+  @apply font-bold text-brand-strong underline-offset-2 hover:underline;
+}
+
+.sep {
+  @apply text-black/20;
+}
+
+.status {
+  @apply inline-flex items-center gap-1.5 font-semibold;
+}
+
+.dot {
+  @apply h-1.5 w-1.5 rounded-full bg-black/25;
+}
+
+.dotOn {
+  @apply bg-success;
+}
+
+/* ----- busca + fatos da entrega ----- */
+/* a busca da página desaparece à medida que a do topo assume — é a mesma
+   busca em dois lugares, nunca duas visíveis ao mesmo tempo */
+.toolbar {
+  @apply mt-5 flex flex-col gap-3 sm:flex-row sm:items-stretch;
+  opacity: clamp(0, calc(1 - var(--p, 0) * 1.6), 1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .toolbar {
+    opacity: 1;
+  }
+}
+
+.searchField {
+  @apply relative flex-1;
+}
+
+.searchIcon {
+  @apply pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-faint;
+}
+
+.searchInput {
+  @apply h-14 w-full rounded-xl border border-black/10 bg-white pl-12 pr-4;
+  @apply text-[0.95rem] text-ink outline-none transition-colors;
+  @apply placeholder:text-faint hover:border-black/20;
+  @apply focus:border-brand focus:ring-1 focus:ring-inset focus:ring-brand;
+}
+
+/* os dois fatos que decidem a compra ficam ao lado da busca, não escondidos
+   atrás de um "ver mais": dá para entregar, e em quanto tempo */
+.fact {
+  @apply flex h-14 shrink-0 flex-col justify-center rounded-xl border;
+  @apply border-black/10 bg-white px-4;
+}
+
+.factLabel {
+  @apply text-[0.68rem] font-bold uppercase tracking-[0.1em] text-faint;
+}
+
+.factValue {
+  @apply text-sm font-bold text-ink;
+}
+
+/* ----- categorias ----- */
+/* gruda no topo ao rolar: é o índice do cardápio, e índice que sai de vista
+   deixa de ser índice */
+/* gruda logo abaixo da barra do topo, não no topo da janela: as duas são
+   fixas, e sem o deslocamento a régua sumiria atrás do cabeçalho */
+.categoryBar {
+  @apply sticky top-14 z-20 mt-6 border-y border-black/[0.07] bg-white/95;
+  @apply backdrop-blur;
+}
+
+.categoryInner {
+  @apply mx-auto w-full max-w-[71rem] px-4 sm:px-6;
+}
+
+/* ----- cardápio ----- */
+.menu {
+  @apply mt-8;
+}
+
+/* o alvo do "ir para a categoria" precisa parar abaixo do topo fixo + régua,
+   senão o título da seção chega escondido atrás delas */
+.section {
+  @apply scroll-mt-[8.5rem] pt-2;
+}
+
+.section + .section {
+  @apply mt-10;
+}
+
+.sectionHead {
+  @apply mb-4 flex items-baseline gap-3;
+}
+
+.sectionTitle {
+  @apply font-display text-lg font-extrabold text-ink sm:text-xl;
+}
+
+.sectionCount {
+  @apply text-xs text-faint;
+}
+
+.items {
+  @apply grid gap-3 sm:grid-cols-2 xl:grid-cols-3;
+}
+
+.notFound {
+  @apply mx-auto flex min-h-dvh max-w-md flex-col items-center justify-center;
+  @apply gap-3 px-6 text-center;
+}
+
+.empty {
+  @apply mt-10;
+}
+
+/* ----- barra da sacola ----- */
+/* fixa no rodapé da janela, acima da tab bar no celular */
+.cartBar {
+  @apply fixed inset-x-0 bottom-16 z-30 border-t border-black/[0.07];
+  @apply bg-white/95 px-4 py-3 backdrop-blur sm:px-6 lg:bottom-0;
+  box-shadow: 0 -8px 30px -18px rgba(0, 0, 0, 0.5);
+}
+
+.cartInner {
+  @apply mx-auto flex w-full max-w-[71rem] items-center gap-4;
+}
+
 .cartTotals {
-  @apply flex items-baseline justify-between lg:hidden;
+  @apply flex min-w-0 flex-1 flex-col;
 }
 
 .cartCount {
-  @apply text-[0.7rem] font-bold uppercase tracking-[0.14em] text-faint;
+  @apply truncate text-xs text-muted;
+}
+
+.cartEta {
+  @apply text-faint;
 }
 
 .cartTotal {
-  @apply font-display text-[1.05rem] font-extrabold leading-none text-ink;
+  @apply text-base font-extrabold text-ink;
   font-variant-numeric: tabular-nums;
-}
-
-/* o prazo entra na mesma linha da contagem: é a segunda pergunta de quem
-   está fechando a sacola, e a resposta vem do mesmo lugar que a tela de
-   acompanhamento vai repetir depois */
-.cartEta {
-  @apply text-brand-strong;
 }
 
 .cartCta {
-  @apply h-13 w-full text-base;
-  @apply lg:h-12 lg:w-auto lg:gap-3 lg:px-5 lg:text-sm lg:shadow-overlay;
+  @apply h-12 shrink-0 gap-3 px-6;
 }
 
-/* contagem e total só aparecem dentro da pílula: no celular eles já moram na
-   linha de cima, e repetir seria dizer a mesma coisa duas vezes */
 .cartCtaCount {
-  @apply hidden lg:flex lg:h-6 lg:min-w-6 lg:items-center lg:justify-center;
-  @apply lg:rounded-full lg:bg-brand-foreground/25 lg:px-1.5;
-  @apply lg:font-display lg:text-xs lg:font-extrabold;
-  font-variant-numeric: tabular-nums;
+  @apply flex h-6 min-w-6 items-center justify-center rounded-full;
+  @apply bg-white/25 px-1.5 text-xs font-extrabold;
 }
 
 .cartCtaTotal {
-  @apply hidden lg:inline lg:font-display lg:text-[0.95rem] lg:font-extrabold;
+  @apply font-extrabold;
   font-variant-numeric: tabular-nums;
 }
 
-/* ----- não encontrada ----- */
-.notFound {
-  @apply mx-auto flex min-h-dvh max-w-md flex-col items-center justify-center;
-  @apply px-6 text-center;
-}
-
 /* ----- skeleton ----- */
-/* cabeçalho: mesma métrica do StoreHeader real (logo 14→4.5rem, padding) */
-.skHeader {
-  @apply flex items-center gap-4 border-b border-line px-5 pb-5 pt-6;
-  @apply lg:gap-5 lg:px-10 lg:pb-6 lg:pt-8;
+.skBanner {
+  composes: nino-skeleton from global;
+  @apply h-24 w-full bg-black/[0.06] sm:h-32 lg:h-40;
 }
 
 .skLogo {
   composes: nino-skeleton from global;
-  @apply h-14 w-14 shrink-0 rounded-2xl bg-sand lg:h-[4.5rem] lg:w-[4.5rem];
+  @apply relative z-10 -mt-12 h-20 w-20 shrink-0 rounded-2xl bg-black/[0.06];
+  @apply sm:-mt-14 sm:h-24 sm:w-24;
 }
 
 .skLines {
-  @apply min-w-0 flex-1;
+  @apply flex-1 pt-2;
 }
 
 .skName {
   composes: nino-skeleton from global;
-  @apply h-6 w-2/3 rounded-lg bg-sand lg:h-9;
-}
-
-/* Mesma caixa do `.searchToggle` do StoreHeader — sem ele, o bloco de texto
- * nasce mais largo e encolhe quando o header real entra. */
-.skSearch {
-  composes: nino-skeleton from global;
-  @apply h-11 w-11 shrink-0 self-center rounded-full bg-sand;
-}
-
-/* Espelha o `.sectionHead`: título, contagem e a divisória tracejada. */
-.skSectionHead {
-  @apply mb-3 flex items-baseline justify-between gap-3 pb-2;
-  border-bottom: 1.5px dashed var(--color-line);
-}
-
-.skSectionTitle {
-  composes: nino-skeleton from global;
-  @apply h-7 w-40 rounded-lg bg-sand lg:h-8;
-}
-
-.skSectionCount {
-  composes: nino-skeleton from global;
-  @apply h-3 w-20 shrink-0 rounded bg-sand;
+  @apply h-6 w-52 rounded-lg bg-black/[0.06];
 }
 
 .skMeta {
   composes: nino-skeleton from global;
-  @apply mt-2 h-4 w-2/5 rounded bg-sand;
+  @apply mt-2 h-3.5 w-36 rounded bg-black/[0.06];
 }
 
-/* eyebrow do índice — só existe no desktop, como no CategoryNav */
-.skRailLabel {
+.skSearch {
   composes: nino-skeleton from global;
-  @apply hidden lg:mb-3 lg:block lg:h-3 lg:w-20 lg:rounded lg:bg-sand;
+  @apply mt-5 h-14 w-full rounded-xl bg-black/[0.06];
 }
 
-/* índice: fila horizontal no celular, lista vertical no desktop */
 .skTrack {
-  @apply flex gap-2 overflow-hidden border-b border-line px-5 py-3;
-  @apply lg:flex-col lg:gap-1 lg:border-b-0 lg:px-0 lg:py-0;
+  @apply mt-6 flex gap-2 border-y border-black/[0.07] py-3;
 }
 
 .skChip {
   composes: nino-skeleton from global;
-  @apply h-9 shrink-0 rounded-full bg-sand;
-  @apply lg:h-10 lg:w-full lg:rounded-xl;
+  @apply h-8 rounded-full bg-black/[0.06];
 }
 
-/* As larguras variadas valem só na trilha horizontal do celular. No desktop a
- * lista é vertical e uniforme — sem o `lg:w-full` aqui, estas regras vencem o
- * do `.skChip` por virem depois na cascata, e a coluna pisca desalinhada. */
 .skChipS {
-  @apply w-16 lg:w-full;
+  @apply w-20;
 }
 
 .skChipM {
-  @apply w-24 lg:w-full;
+  @apply w-28;
 }
 
 .skChipL {
-  @apply w-32 lg:w-full;
+  @apply w-24;
 }
 
-/* grade de itens: coluna no celular, 2 colunas no desktop (igual `.items`) */
+.skSectionHead {
+  @apply mb-4 mt-8 flex items-baseline gap-3;
+}
+
+.skSectionTitle {
+  composes: nino-skeleton from global;
+  @apply h-5 w-40 rounded bg-black/[0.06];
+}
+
+.skSectionCount {
+  composes: nino-skeleton from global;
+  @apply h-3 w-16 rounded bg-black/[0.06];
+}
+
 .skItems {
-  @apply flex flex-col lg:grid lg:grid-cols-2 lg:gap-3.5;
+  @apply grid gap-3 sm:grid-cols-2 xl:grid-cols-3;
 }
 
-/* linha no celular, card emoldurado no desktop (igual `MenuItemCard`) */
 .skRow {
-  @apply flex items-stretch justify-between gap-3.5 border-b border-line py-4;
-  @apply last:border-b-0;
-  @apply lg:gap-4 lg:rounded-2xl lg:border lg:border-line lg:bg-brand-foreground;
-  @apply lg:p-4 lg:pr-5 lg:last:border-b;
+  @apply flex items-center gap-4 rounded-xl border border-black/[0.07] p-3;
 }
 
 .skText {
-  @apply flex min-w-0 flex-1 flex-col py-0.5;
+  @apply min-w-0 flex-1;
 }
 
 .skItemName {
   composes: nino-skeleton from global;
-  @apply h-5 w-1/2 rounded bg-sand;
+  @apply h-4 w-32 rounded bg-black/[0.06];
 }
 
 .skItemDesc {
   composes: nino-skeleton from global;
-  @apply mt-2 h-4 w-3/4 rounded bg-sand;
+  @apply mt-2 h-3 w-44 rounded bg-black/[0.06];
 }
 
 .skItemPrice {
   composes: nino-skeleton from global;
-  @apply mt-auto h-5 w-16 rounded bg-sand;
+  @apply mt-3 h-4 w-16 rounded bg-black/[0.06];
 }
 
 .skMedia {
-  @apply relative shrink-0 self-center;
+  @apply shrink-0;
 }
 
 .skPhoto {
   composes: nino-skeleton from global;
-  @apply h-[5.4rem] w-[5.4rem] shrink-0 rounded-xl bg-sand;
-  @apply lg:h-[6.5rem] lg:w-[6.5rem];
+  @apply h-20 w-20 rounded-lg bg-black/[0.06];
 }
 
-/* botão "+" ancorado no canto da foto, como no card real */
 .skAdd {
   composes: nino-skeleton from global;
-  @apply absolute -bottom-2 -right-2 h-9 w-9 rounded-full bg-sand;
-  border: 2.5px solid var(--color-brand-foreground);
-}
-
-/* Desligado por último de propósito: as regras do picote e da sombra do papel
-   moram acima, e um override de mesma especificidade só vence se vier depois.
-   A pílula do desktop não tem papel atrás — nada pra picotar. */
-@media (min-width: 1024px) {
-  .cartBar {
-    box-shadow: none;
-  }
-
-  .cartBar::before,
-  .cartBar::after {
-    content: none;
-  }
+  @apply mt-2 h-8 w-20 rounded-full bg-black/[0.06];
 }

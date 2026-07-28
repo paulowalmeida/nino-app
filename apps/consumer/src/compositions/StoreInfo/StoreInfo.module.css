@@ -1,0 +1,36 @@
+@reference "@nino/ds/globals.css";
+
+.body {
+  @apply flex flex-col gap-6 pb-2;
+}
+
+.label {
+  @apply mb-1 text-[0.68rem] font-bold uppercase tracking-[0.12em] text-faint;
+}
+
+.value {
+  @apply text-sm font-bold text-ink;
+}
+
+.sub {
+  @apply text-sm text-muted;
+}
+
+.hours {
+  @apply flex flex-col;
+}
+
+.row {
+  @apply flex items-center justify-between border-b border-black/[0.06] py-2;
+  @apply text-sm text-muted last:border-0;
+}
+
+/* hoje em negrito: das sete linhas, é a única que a pessoa veio conferir */
+.rowToday {
+  @apply flex items-center justify-between border-b border-black/[0.06] py-2;
+  @apply text-sm font-bold text-ink last:border-0;
+}
+
+.time {
+  font-variant-numeric: tabular-nums;
+}

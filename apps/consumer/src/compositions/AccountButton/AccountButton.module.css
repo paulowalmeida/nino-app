@@ -8,7 +8,7 @@
 
 .signIn {
   @apply flex h-11 shrink-0 items-center justify-center rounded-full border;
-  @apply border-line bg-brand-foreground px-4 text-[0.78rem] font-bold;
+  @apply border-black/[0.08] bg-brand-foreground px-4 text-[0.78rem] font-bold;
   @apply text-ink transition-colors;
   @apply hover:border-peach hover:text-brand-strong;
 }

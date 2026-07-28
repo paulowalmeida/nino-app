@@ -1,0 +1,20 @@
+@reference "@nino/ds/globals.css";
+
+/* traço interrompido: a gaveta existe, o conteúdo ainda não */
+.card {
+  @apply mt-5 flex flex-col items-center gap-3 rounded-card border;
+  @apply border-dashed border-black/[0.08] bg-white px-6 py-12 text-center;
+}
+
+.icon {
+  @apply text-faintest;
+}
+
+.note {
+  @apply max-w-xs text-sm leading-snug text-muted;
+}
+
+.tag {
+  @apply rounded-full bg-black/[0.06] px-3 py-1 text-[0.62rem] font-bold uppercase;
+  @apply tracking-[0.12em] text-faint;
+}

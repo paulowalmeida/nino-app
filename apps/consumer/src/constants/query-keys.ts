@@ -36,4 +36,7 @@ export const queryKeys = {
   myOrders: {
     all: ['my-orders'] as const,
   },
+  myAddresses: {
+    all: ['my-addresses'] as const,
+  },
 }

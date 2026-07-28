@@ -1,105 +1,65 @@
 @reference "@nino/ds/globals.css";
 
+/*
+ * Página inteira, branca, sem moldura — a mesma casca da vitrine. O conteúdo
+ * é que se alinha numa coluna central; a página não vira cartão.
+ */
 .page {
-  @apply mx-auto min-h-dvh w-full max-w-xl bg-brand-foreground px-5 pb-10;
-  @apply lg:my-8 lg:min-h-0 lg:max-w-md lg:rounded-[1.75rem] lg:border;
-  @apply lg:border-line lg:px-8 lg:pb-10;
-  @apply lg:shadow-[0_30px_80px_-40px_rgba(26,18,6,0.45)];
+  @apply min-h-dvh w-full bg-white pb-24 lg:pb-10;
+}
+
+.shell {
+  @apply mx-auto w-full max-w-[71rem] px-4 sm:px-6;
 }
 
 .header {
-  @apply flex items-center gap-3 pb-5 pt-8;
+  @apply flex items-center gap-3 border-b border-black/[0.07] pb-5 pt-6;
 }
 
 .back {
   @apply flex h-11 w-11 shrink-0 items-center justify-center rounded-full;
-  @apply border border-line bg-brand-foreground text-lg text-ink;
+  @apply border border-black/[0.08] bg-brand-foreground text-lg text-ink;
   @apply transition-colors hover:border-peach hover:text-brand-strong;
 }
 
+.identity {
+  @apply min-w-0;
+}
+
 .title {
-  @apply font-display text-xl font-extrabold leading-tight text-ink;
+  @apply truncate font-display text-xl font-extrabold leading-tight text-ink;
 }
 
-.card {
-  @apply rounded-card border border-brand/12 bg-cream-deep px-5 pb-5 pt-4;
-  @apply shadow-card;
+/* a linha do freguês: diz há quanto tempo a pessoa é de casa, não o e-mail
+   dela — isso está na gaveta de dados, a um toque daqui */
+.since {
+  @apply text-xs text-faint;
 }
 
-.eyebrow {
-  @apply text-[0.68rem] font-bold uppercase tracking-[0.14em] text-brand-strong;
+.body {
+  @apply pt-6 lg:flex lg:items-start lg:gap-10;
 }
 
-.name {
-  @apply mt-1.5 font-display text-[1.3rem] font-extrabold leading-tight;
-  @apply text-ink;
+.panel {
+  @apply min-w-0 flex-1;
 }
 
-.phone {
-  @apply mt-0.5 text-[0.82rem] text-muted;
-  font-variant-numeric: tabular-nums;
+/* o sair mora no rodapé do índice no desktop; no celular ele é o fim da
+   página, longe do polegar que troca de seção */
+.logoutMobile {
+  @apply mt-10 flex h-12 w-full items-center justify-center rounded-button;
+  @apply border border-black/[0.08] font-bold text-muted transition-colors;
+  @apply hover:border-peach hover:text-brand-strong lg:hidden;
+  @apply disabled:cursor-not-allowed disabled:opacity-60;
 }
 
-.sectionLabel {
-  @apply mt-8 pb-1 text-[0.68rem] font-bold uppercase tracking-[0.14em];
-  @apply text-faint;
-}
-
-.orders {
-  @apply flex flex-col;
-}
-
-.order {
-  @apply border-b border-line last:border-b-0;
-}
-
-.orderLink {
-  @apply flex items-center gap-3.5 py-3 transition-colors;
-  @apply hover:text-brand-strong;
-}
-
-.orderIcon {
-  @apply flex h-9 w-9 shrink-0 items-center justify-center rounded-full;
-  @apply bg-surface-sunk text-[1rem] leading-none;
-}
-
-.orderBody {
-  @apply flex min-w-0 flex-1 flex-col;
-}
-
-.orderStatus {
-  @apply truncate font-display text-[0.9rem] font-extrabold text-ink;
-}
-
-.orderWhen {
-  @apply mt-0.5 text-xs text-faint;
-  font-variant-numeric: tabular-nums;
-}
-
-/* o pedido que ainda está rolando é o único que interessa agora */
-.live {
-  @apply font-bold text-brand-strong;
-}
-
-.orderTotal {
-  @apply shrink-0 font-display text-[0.9rem] font-extrabold text-ink;
-  font-variant-numeric: tabular-nums;
-}
-
-.empty {
-  @apply py-6;
-}
-
-.logout {
-  @apply mt-8 h-12 w-full;
-}
-
-.skCard {
+/* ----- skeleton ----- */
+.skHeader {
   composes: nino-skeleton from global;
-  @apply mt-16 h-28 w-full rounded-card bg-sand;
+  @apply mt-8 h-11 w-52 rounded-xl bg-black/[0.06];
 }
 
-.skList {
+.skBody {
   composes: nino-skeleton from global;
-  @apply h-40 w-full rounded-card bg-sand;
+  @apply mt-6 h-72 w-full rounded-card bg-black/[0.06];
 }

@@ -1,0 +1,20 @@
+@reference "@nino/ds/globals.css";
+
+.bar {
+  @apply fixed inset-x-0 bottom-0 z-40 flex h-16 items-stretch;
+  @apply border-t border-black/[0.07] bg-white lg:hidden;
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+.tab {
+  @apply flex flex-1 flex-col items-center justify-center gap-1 text-faint;
+  @apply transition-colors;
+}
+
+.tabOn {
+  @apply text-brand-strong;
+}
+
+.label {
+  @apply text-[0.68rem] font-semibold;
+}

@@ -1,22 +1,25 @@
 @reference "@nino/ds/globals.css";
 
-/* celular: gruda no topo com o papel por baixo, para o cardápio passar sem
- * borrar. desktop: deixa de ser barra flutuante e vira o corpo do índice
- * lateral — quem controla o "grude" é o trilho da vitrine. */
+/*
+ * Trilha horizontal em qualquer largura. Antes ela virava índice vertical no
+ * desktop porque a vitrine era um painel de duas colunas; agora que a página
+ * rola inteira, o índice acompanha o topo como uma régua de categorias — o
+ * mesmo gesto do celular, sem uma coluna roubando largura da comida.
+ *
+ * O "grude" é da barra que envolve este componente na vitrine; aqui é só a
+ * trilha.
+ */
 .nav {
-  @apply sticky top-0 z-20 border-b border-line bg-brand-foreground/90 backdrop-blur-md;
-  @apply lg:static lg:z-auto lg:border-b-0 lg:bg-transparent lg:backdrop-blur-none;
+  @apply w-full;
 }
 
-/* eyebrow do índice — só no desktop, onde a coluna precisa de um rótulo */
+/* o rótulo só fazia sentido no índice vertical do desktop */
 .railLabel {
-  @apply hidden lg:mb-3 lg:block lg:text-[0.7rem] lg:font-bold lg:uppercase;
-  @apply lg:tracking-[0.14em] lg:text-faint;
+  @apply hidden;
 }
 
 .track {
-  @apply flex gap-2 overflow-x-auto px-5 py-3;
-  @apply lg:flex-col lg:gap-1 lg:overflow-visible lg:px-0 lg:py-0;
+  @apply flex gap-2 overflow-x-auto py-2.5;
   scrollbar-width: none;
 }
 
@@ -25,11 +28,9 @@
 }
 
 .chip {
-  @apply flex cursor-pointer items-center rounded-full;
-  @apply bg-brand-foreground px-4 py-2 text-[0.82rem] font-bold;
-  @apply text-body transition-colors duration-150;
-  @apply lg:w-full lg:justify-start lg:rounded-xl;
-  @apply lg:bg-transparent lg:px-3.5 lg:py-2.5 lg:text-[0.9rem] lg:text-subtle;
+  @apply flex shrink-0 cursor-pointer items-center rounded-full border;
+  @apply border-black/10 bg-white px-4 py-2 text-[0.82rem] font-bold;
+  @apply text-muted transition-colors duration-150;
 }
 
 /* feedback de toque em qualquer dispositivo: afunda de leve sem trocar cor,
@@ -39,41 +40,17 @@
 }
 
 /* hover só onde existe ponteiro de verdade — no touch ele "gruda" depois do
- * tap e lavava a pílula ativa (fundo claro + texto claro). */
+ * tap e lavava a pílula ativa. */
 @media (hover: hover) {
   .chip:hover {
-    @apply  text-brand-strong;
-    @apply lg:border-transparent lg:bg-cream lg:text-ink;
+    @apply border-black/20 text-ink;
   }
 
-  /* ativo com hover: mantém o preenchimento da marca, só escurece pra dar
-   * resposta — nunca cai no fundo claro da pílula inativa. */
   .chipOn:hover {
-    @apply border-brand-hover bg-brand-hover text-brand-foreground;
-  }
-
-  .chipOn.chip:hover {
-    @apply lg:border-transparent lg:bg-brand-soft lg:text-brand-strong;
+    @apply border-brand-hover bg-brand-hover text-white;
   }
 }
 
 .chipOn {
-  @apply border-brand bg-brand text-brand-foreground;
-}
-
-/* ativo no índice vertical: sem pílula cheia, um marcador de página com
- * barra lateral — mais índice de cardápio, menos botão. */
-.chipOn.chip {
-  @apply lg:relative lg:border-transparent lg:bg-brand-soft lg:text-brand-strong;
-  @apply lg:shadow-none;
-}
-
-.chipOn.chip::before {
-  @apply lg:absolute lg:left-0 lg:top-1/2 lg:h-5 lg:w-1 lg:-translate-y-1/2;
-  @apply lg:rounded-full lg:bg-brand;
-  content: '';
-}
-
-.chip:not(.chipOn)::before {
-  content: none;
+  @apply border-brand bg-brand text-white;
 }

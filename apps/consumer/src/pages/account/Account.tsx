@@ -1,132 +1,108 @@
-import { Link, Navigate, useParams } from 'react-router'
+import { Link, Navigate, Outlet, useLocation, useParams } from 'react-router'
 
-import { Button } from '@nino/ds/components/Button'
-import { EmptyState } from '@nino/ds/components/EmptyState'
 import { useCustomerSession } from '@hooks/useCustomerSession'
 import { useLogout } from '@hooks/useLogout'
+import { useMyAddresses } from '@hooks/useMyAddresses'
 import { useMyOrders } from '@hooks/useMyOrders'
-import { clockLabel } from '@utils/clock'
-import { brl } from '@utils/money'
-import { STATUS_LABEL } from '@utils/order-flow'
-import { isTerminal, stageIcon } from '@utils/order-journey'
 import { formatPhone } from '@utils/phone'
 import { riseDelay } from '@utils/rise-delay'
+
+import { AccountNav } from './AccountNav/AccountNav'
 
 import styles from './Account.module.css'
 import motion from '@styles/motion.module.css'
 
-const day = new Intl.DateTimeFormat('pt-BR', {
-  day: '2-digit',
-  month: '2-digit',
+const since = new Intl.DateTimeFormat('pt-BR', {
+  month: 'long',
+  year: 'numeric',
 })
 
 /**
- * A área de quem tem conta. O que ela entrega e a compra sem conta não: saber
- * o que já foi pedido aqui, e voltar a acompanhar um pedido em andamento sem
- * depender do link que chegou no WhatsApp.
+ * A conta do cliente é a caderneta dele nesta loja: quem ele é, para onde
+ * entregar, o que já pediu. O índice fica sempre à vista e cada gaveta é uma
+ * rota — a URL é o estado, então voltar e recarregar caem onde a pessoa
+ * estava, e cada painel fica curto o bastante para caber numa tela.
  */
 export const Account = () => {
   const { slug } = useParams()
+  const { pathname } = useLocation()
   const home = slug ? `/${slug}` : '/'
+  const base = slug ? `/${slug}/conta` : '/conta'
   const signIn = slug ? `/${slug}/entrar` : '/entrar'
 
   const { customer, isPending } = useCustomerSession()
-  const { data: orders, isPending: loadingOrders } = useMyOrders(!!customer)
   const logout = useLogout()
+
+  const { data: orders } = useMyOrders(!!customer)
+  const { data: addresses } = useMyAddresses(!!customer)
 
   if (isPending) {
     return (
       <div className={styles.page} aria-busy="true" aria-label="Carregando">
-        <div className={styles.skCard} />
+        <div className={styles.skHeader} />
+        <div className={styles.skBody} />
       </div>
     )
   }
 
   if (!customer) return <Navigate to={signIn} replace />
 
-  const named = customer.profileCompletedAt ? customer.name : 'Bem-vindo'
-
   return (
     <div className={styles.page}>
-      <header className={`${motion.riseIn} ${styles.header}`}>
-        <Link
-          to={home}
-          className={`${motion.press} ${styles.back}`}
-          aria-label="Voltar para a loja"
-        >
-          ←
-        </Link>
-        <h1 className={styles.title}>Sua conta</h1>
-      </header>
-
-      <section
-        className={`${motion.riseIn} ${styles.card}`}
-        style={riseDelay(60)}
-      >
-        <p className={styles.eyebrow}>Você está logado</p>
-        <h2 className={styles.name}>{named}</h2>
-        <p className={styles.phone}>{formatPhone(customer.phone)}</p>
-      </section>
-
-      <p
-        className={`${motion.riseIn} ${styles.sectionLabel}`}
-        style={riseDelay(120)}
-      >
-        Seus pedidos
-      </p>
-
-      {loadingOrders && <div className={styles.skList} />}
-
-      {!loadingOrders && orders?.length === 0 && (
-        <EmptyState size="md" className={styles.empty}>
-          Seus pedidos aparecem aqui assim que você fizer o primeiro.
-        </EmptyState>
-      )}
-
-      <ul className={styles.orders}>
-        {orders?.map((order, index) => (
-          <li
-            key={order.id}
-            className={`${motion.riseIn} ${styles.order}`}
-            style={riseDelay(160 + index * 55)}
+      <div className={styles.shell}>
+        <header className={`${motion.riseIn} ${styles.header}`}>
+          <Link
+            to={home}
+            className={`${motion.press} ${styles.back}`}
+            aria-label="Voltar para a loja"
           >
-            <Link
-              to={slug ? `/${slug}/pedido/${order.id}` : `/pedido/${order.id}`}
-              className={styles.orderLink}
-            >
-              <span className={styles.orderIcon} aria-hidden="true">
-                {stageIcon(order.status)}
-              </span>
+            ←
+          </Link>
 
-              <span className={styles.orderBody}>
-                <span className={styles.orderStatus}>
-                  {STATUS_LABEL[order.status]}
-                </span>
-                <span className={styles.orderWhen}>
-                  {day.format(new Date(order.createdAt))} ·{' '}
-                  {clockLabel(order.createdAt)}
-                  {!isTerminal(order.status) && (
-                    <span className={styles.live}> · em andamento</span>
-                  )}
-                </span>
-              </span>
+          {/* conta aberta por telefone nasce com o número no lugar do nome —
+            mostrar o cru seria devolver à pessoa o que ela ainda não disse */}
+          <div className={styles.identity}>
+            <h1 className={styles.title}>
+              {customer.profileCompletedAt
+                ? customer.name
+                : formatPhone(customer.phone)}
+            </h1>
+            <p className={styles.since}>
+              na casa desde {since.format(new Date(customer.createdAt))}
+            </p>
+          </div>
+        </header>
 
-              <span className={styles.orderTotal}>
-                {brl(Number(order.totalAmount))}
-              </span>
-            </Link>
-          </li>
-        ))}
-      </ul>
+        <div className={styles.body}>
+          <AccountNav
+            base={base}
+            counts={{
+              enderecos: addresses?.length,
+              pedidos: orders?.length,
+            }}
+            onLogout={() => logout.mutate()}
+            isLoggingOut={logout.isPending}
+          />
 
-      <Button
-        variant="outline"
-        className={`${motion.press} ${styles.logout}`}
-        disabled={logout.isPending}
-        onClick={() => logout.mutate()}
-      >
-        Sair da conta
-      </Button>
+          {/* a key reanima o painel a cada troca, como uma tela nova */}
+          <div
+            key={pathname}
+            className={`${motion.riseIn} ${styles.panel}`}
+            style={riseDelay(60)}
+          >
+            <Outlet />
+          </div>
+        </div>
+
+        <button
+          type="button"
+          className={`${motion.press} ${styles.logoutMobile}`}
+          onClick={() => logout.mutate()}
+          disabled={logout.isPending}
+        >
+          {logout.isPending ? 'Saindo…' : 'Sair da conta'}
+        </button>
+      </div>
     </div>
   )
 }

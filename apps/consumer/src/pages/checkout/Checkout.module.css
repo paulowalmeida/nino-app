@@ -9,18 +9,18 @@
 .page {
   @apply mx-auto flex min-h-dvh w-full max-w-xl flex-col bg-brand-foreground;
   @apply lg:my-8 lg:min-h-[calc(100dvh-4rem)] lg:rounded-[1.75rem];
-  @apply lg:border lg:border-line;
+  @apply lg:border lg:border-black/[0.08];
   @apply lg:shadow-[0_30px_80px_-40px_rgba(26,18,6,0.45)];
 }
 
 .header {
-  @apply sticky top-0 z-20 flex items-center gap-3 border-b border-line;
+  @apply sticky top-0 z-20 flex items-center gap-3 border-b border-black/[0.08];
   @apply bg-brand-foreground/90 px-5 py-3.5 backdrop-blur-md lg:rounded-t-[1.75rem];
 }
 
 .back {
   @apply flex h-11 w-11 shrink-0 items-center justify-center rounded-full;
-  @apply border border-line bg-brand-foreground text-ink transition-colors duration-150;
+  @apply border border-black/[0.08] bg-brand-foreground text-ink transition-colors duration-150;
   @apply hover:border-peach hover:text-brand-strong;
   @apply focus-visible:outline-none focus-visible:ring-2;
   @apply focus-visible:ring-brand focus-visible:ring-offset-2;
@@ -66,7 +66,7 @@
 /* ----- a comanda (resumo dobrável) ----- */
 
 .receipt {
-  @apply overflow-hidden rounded-2xl border border-line bg-brand-foreground;
+  @apply overflow-hidden rounded-2xl border border-black/[0.08] bg-brand-foreground;
 }
 
 .receiptHead {
@@ -129,7 +129,7 @@
 
 .disclosurePlus {
   @apply flex h-5 w-5 shrink-0 items-center justify-center rounded-full;
-  @apply border border-line bg-cream text-[0.8rem] font-bold leading-none;
+  @apply border border-black/[0.08] bg-black/[0.05] text-[0.8rem] font-bold leading-none;
   @apply text-brand-strong;
 }
 
@@ -242,7 +242,7 @@
 }
 
 .confirmedCode {
-  @apply mb-2 rounded-full border border-line bg-cream px-5 py-2 font-display;
+  @apply mb-2 rounded-full border border-black/[0.08] bg-black/[0.05] px-5 py-2 font-display;
   @apply text-base font-extrabold uppercase tracking-widest text-brand-strong;
 }
 
@@ -250,27 +250,27 @@
 
 .skBack {
   composes: nino-skeleton from global;
-  @apply h-11 w-11 shrink-0 rounded-full bg-sand;
+  @apply h-11 w-11 shrink-0 rounded-full bg-black/[0.06];
 }
 
 .skTitle {
   composes: nino-skeleton from global;
-  @apply h-5 w-40 rounded-lg bg-sand;
+  @apply h-5 w-40 rounded-lg bg-black/[0.06];
 }
 
 .skLabel {
   composes: nino-skeleton from global;
-  @apply h-3 w-24 rounded bg-sand;
+  @apply h-3 w-24 rounded bg-black/[0.06];
 }
 
 .skField {
   composes: nino-skeleton from global;
-  @apply h-10 w-full rounded-md bg-sand;
+  @apply h-10 w-full rounded-md bg-black/[0.06];
 }
 
 .skReceipt {
   composes: nino-skeleton from global;
-  @apply h-14 w-full rounded-2xl bg-sand;
+  @apply h-14 w-full rounded-2xl bg-black/[0.06];
 }
 
 .skChoices {
@@ -279,20 +279,20 @@
 
 .skChoice {
   composes: nino-skeleton from global;
-  @apply h-16 rounded-2xl bg-sand;
+  @apply h-16 rounded-2xl bg-black/[0.06];
 }
 
 .skChoiceCompact {
   composes: nino-skeleton from global;
-  @apply h-11 rounded-2xl bg-sand;
+  @apply h-11 rounded-2xl bg-black/[0.06];
 }
 
 .skTotal {
   composes: nino-skeleton from global;
-  @apply h-7 w-32 rounded bg-sand;
+  @apply h-7 w-32 rounded bg-black/[0.06];
 }
 
 .skSubmit {
   composes: nino-skeleton from global;
-  @apply h-13 w-full rounded-full bg-sand;
+  @apply h-13 w-full rounded-full bg-black/[0.06];
 }
