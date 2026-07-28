@@ -140,9 +140,7 @@ export const Storefront = () => {
       style={
         {
           '--p': progress,
-          ...(store.primaryColor
-            ? { '--store-tint': store.primaryColor }
-            : {}),
+          ...(store.primaryColor ? { '--store-tint': store.primaryColor } : {}),
         } as React.CSSProperties
       }
     >
@@ -175,11 +173,7 @@ export const Storefront = () => {
               o valor final por cima dele, matando o merge com o topo */}
           <div className={styles.logoTile}>
             {store.logoUrl ? (
-              <img
-                src={store.logoUrl}
-                alt=""
-                className={styles.logoImg}
-              />
+              <img src={store.logoUrl} alt="" className={styles.logoImg} />
             ) : (
               <span className={styles.logoFallback}>{initials(store)}</span>
             )}
@@ -210,6 +204,10 @@ export const Storefront = () => {
                 />
                 {storeOpen ? 'Aberto agora' : 'Fechado'}
               </span>
+              <span className={styles.sep}>·</span>
+              <span className={styles.time}>
+                ~{settings?.estimatedMinutes} min
+              </span>
             </p>
           </div>
         </div>
@@ -230,15 +228,6 @@ export const Storefront = () => {
                 onChange={(event) => setSearch(event.target.value)}
               />
             </div>
-
-            {settings?.estimatedMinutes ? (
-              <div className={styles.fact}>
-                <span className={styles.factLabel}>Entrega</span>
-                <span className={styles.factValue}>
-                  ~{settings.estimatedMinutes} min
-                </span>
-              </div>
-            ) : null}
           </div>
         )}
       </div>

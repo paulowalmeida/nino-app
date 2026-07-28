@@ -63,7 +63,7 @@ export const StoreHeader = ({
               {open ? 'Aberto agora' : 'Fechado'}
               {open && estimatedMinutes ? (
                 <span className={styles.time}>
-                  entrega em ~{estimatedMinutes} min
+                  ~{estimatedMinutes} min
                 </span>
               ) : null}
             </p>

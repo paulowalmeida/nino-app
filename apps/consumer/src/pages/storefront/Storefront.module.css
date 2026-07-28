@@ -172,7 +172,7 @@
 /* gruda logo abaixo da barra do topo, não no topo da janela: as duas são
    fixas, e sem o deslocamento a régua sumiria atrás do cabeçalho */
 .categoryBar {
-  @apply sticky top-14 z-20 mt-6 border-y border-black/[0.07] bg-white/95;
+  @apply sticky top-14 z-20 mt-4 bg-white/95;
   @apply backdrop-blur;
 }
 
