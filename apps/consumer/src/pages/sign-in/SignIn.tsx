@@ -7,9 +7,12 @@ import { Input } from '@nino/ds/components/Input'
 import { OTPInput } from '@nino/ds/components/OTPInput'
 import { PhoneInput } from '@nino/ds/components/PhoneInput'
 import { useRequestOtp } from '@hooks/useRequestOtp'
+import { useStore } from '@hooks/useStore'
 import { useVerifyOtp } from '@hooks/useVerifyOtp'
 import { isCompletePhone, toE164 } from '@utils/phone'
+import { resolveSlug } from '@utils/resolve-slug'
 import { riseDelay } from '@utils/rise-delay'
+import { displayName, initials } from '@utils/store-info'
 
 import styles from './SignIn.module.css'
 import motion from '@styles/motion.module.css'
@@ -33,12 +36,18 @@ const CHANNELS: { id: Channel; label: string }[] = [
  * na porta é pedir para a pessoa desistir dela. Ele é editável em
  * `/conta/dados` e o checkout pergunta na hora em que ele realmente importa,
  * que é quando alguém precisa gritar o pedido na cozinha.
+ *
+ * A loja aparece no alto com o azulejo que a vitrine e a caderneta usam: esta
+ * é a porta de um balcão específico, não um login de plataforma, e a pessoa
+ * precisa reconhecer onde está antes de entregar o número dela.
  */
 export const SignIn = () => {
-  const { slug } = useParams()
+  const { slug: pathSlug } = useParams()
   const navigate = useNavigate()
-  const home = slug ? `/${slug}` : '/'
-  const account = slug ? `/${slug}/conta` : '/conta'
+  const home = pathSlug ? `/${pathSlug}` : '/'
+  const account = pathSlug ? `/${pathSlug}/conta` : '/conta'
+
+  const { store } = useStore(resolveSlug(pathSlug) ?? undefined)
 
   const [step, setStep] = useState<Step>('identify')
   const [channel, setChannel] = useState<Channel>('phone')
@@ -72,8 +81,15 @@ export const SignIn = () => {
   }
 
   return (
-    <div className={styles.page}>
-      <header className={`${motion.riseIn} ${styles.header}`}>
+    <div
+      className={styles.page}
+      style={
+        store?.primaryColor
+          ? ({ '--store-tint': store.primaryColor } as React.CSSProperties)
+          : undefined
+      }
+    >
+      <div className={styles.shell}>
         <Link
           to={home}
           className={`${motion.press} ${styles.back}`}
@@ -81,140 +97,155 @@ export const SignIn = () => {
         >
           ←
         </Link>
-        <h1 className={styles.title}>Sua conta</h1>
-      </header>
 
-      {step === 'identify' && (
-        <form
-          className={`${motion.riseIn} ${styles.card}`}
-          style={riseDelay(60)}
-          onSubmit={handleIdentify}
-        >
-          <p className={styles.eyebrow}>Passo 1 de 2</p>
-          <h2 className={styles.headline}>
-            {isEmail ? 'Qual é o seu e-mail?' : 'Qual é o seu telefone?'}
-          </h2>
-          <p className={styles.note}>
-            Mandamos um código de 6 dígitos para confirmar que é você. Sem senha
-            para inventar nem lembrar depois.
-          </p>
-
-          {/* a escolha do canal vem antes do campo: é ela que decide o que
-              digitar, e um campo que aceita as duas coisas não sabe mascarar
-              nenhuma das duas */}
-          <div className={styles.channels} role="tablist">
-            {CHANNELS.map(({ id, label }) => (
-              <button
-                key={id}
-                type="button"
-                role="tab"
-                aria-selected={channel === id}
-                className={channel === id ? styles.channelOn : styles.channel}
-                onClick={() => setChannel(id)}
-              >
-                {label}
-              </button>
-            ))}
+        {store && (
+          <div className={`${motion.riseIn} ${styles.brand}`}>
+            <div className={styles.tile}>
+              {store.logoUrl ? (
+                <img src={store.logoUrl} alt="" className={styles.logo} />
+              ) : (
+                initials(store)
+              )}
+            </div>
+            <p className={styles.store}>{displayName(store)}</p>
           </div>
+        )}
 
-          {isEmail ? (
-            <Input
-              type="email"
-              aria-label="E-mail"
-              autoComplete="email"
-              placeholder="voce@email.com"
-              className={styles.field}
-              value={email}
-              onChange={(event) => setEmail(event.target.value)}
-            />
-          ) : (
-            <PhoneInput
-              aria-label="Telefone"
-              autoComplete="tel"
-              className={styles.field}
-              value={phone}
-              onChange={(event) => setPhone(event.target.value)}
-            />
-          )}
-
-          {request.isError && (
-            <Alert variant="error" className={styles.alert}>
-              {isEmail
-                ? 'Não achamos conta com esse e-mail. Entre pelo telefone — depois dá para salvar o e-mail na sua conta.'
-                : 'Não conseguimos enviar o código agora. Tente de novo em instantes.'}
-            </Alert>
-          )}
-
-          <Button
-            type="submit"
-            className={`${motion.press} ${styles.cta}`}
-            disabled={!ready || request.isPending}
+        {step === 'identify' && (
+          <form
+            className={motion.riseIn}
+            style={riseDelay(60)}
+            onSubmit={handleIdentify}
           >
-            {request.isPending ? 'Enviando…' : 'Enviar código'}
-          </Button>
-        </form>
-      )}
+            <p className={styles.step}>Passo 1 de 2</p>
+            <h1 className={styles.headline}>
+              {isEmail ? 'Qual é o seu e-mail?' : 'Qual é o seu telefone?'}
+            </h1>
+            <p className={styles.note}>
+              Mandamos um código de 6 dígitos para confirmar que é você. Sem
+              senha para inventar nem lembrar depois.
+            </p>
 
-      {step === 'code' && (
-        <form
-          className={`${motion.riseIn} ${styles.card}`}
-          style={riseDelay(60)}
-          onSubmit={handleCode}
-        >
-          <p className={styles.eyebrow}>Passo 2 de 2</p>
-          <h2 className={styles.headline}>Digite o código</h2>
-          <p className={styles.note}>
-            Enviamos para <strong>{sentTo}</strong>. Ele vale por poucos
-            minutos.
-          </p>
+            {/* a escolha do canal vem antes do campo: é ela que decide o que
+                digitar, e um campo que aceita as duas coisas não sabe mascarar
+                nenhuma das duas */}
+            <div className={styles.channels} role="tablist">
+              {CHANNELS.map(({ id, label }) => (
+                <button
+                  key={id}
+                  type="button"
+                  role="tab"
+                  aria-selected={channel === id}
+                  className={channel === id ? styles.channelOn : styles.channel}
+                  onClick={() => setChannel(id)}
+                >
+                  {label}
+                </button>
+              ))}
+            </div>
 
-          {/* o Ark controla um array de 6 posições: mandar um array curto
-              (ou receber os buracos dele de volta) vira `undefined` no meio
-              do código já na primeira tecla */}
-          <OTPInput
-            length={CODE_LENGTH}
-            type="numeric"
-            otp
-            invalid={verify.isError}
-            className={styles.field}
-            value={Array.from(
-              { length: CODE_LENGTH },
-              (_, index) => code[index] ?? ''
+            {isEmail ? (
+              <Input
+                type="email"
+                size="lg"
+                aria-label="E-mail"
+                autoComplete="email"
+                placeholder="voce@email.com"
+                className={styles.field}
+                value={email}
+                onChange={(event) => setEmail(event.target.value)}
+              />
+            ) : (
+              <PhoneInput
+                size="lg"
+                aria-label="Telefone"
+                autoComplete="tel"
+                className={styles.field}
+                value={phone}
+                onChange={(event) => setPhone(event.target.value)}
+              />
             )}
-            onValueChange={(digits) =>
-              setCode(digits.map((digit) => digit ?? '').join(''))
-            }
-            onValueComplete={(filled) => setCode(filled)}
-          />
 
-          {verify.isError && (
-            <Alert variant="error" className={styles.alert}>
-              Código inválido ou expirado. Peça outro e tente de novo.
-            </Alert>
-          )}
+            {request.isError && (
+              <Alert variant="error" className={styles.alert}>
+                {isEmail
+                  ? 'Não achamos conta com esse e-mail. Entre pelo telefone ' +
+                    '— depois dá para salvar o e-mail na sua conta.'
+                  : 'Não conseguimos enviar o código agora. Tente de novo ' +
+                    'em instantes.'}
+              </Alert>
+            )}
 
-          <Button
-            type="submit"
-            className={`${motion.press} ${styles.cta}`}
-            disabled={code.length !== CODE_LENGTH || verify.isPending}
+            <Button
+              type="submit"
+              className={`${motion.press} ${styles.cta}`}
+              disabled={!ready || request.isPending}
+            >
+              {request.isPending ? 'Enviando…' : 'Enviar código'}
+            </Button>
+          </form>
+        )}
+
+        {step === 'code' && (
+          <form
+            className={motion.riseIn}
+            style={riseDelay(60)}
+            onSubmit={handleCode}
           >
-            {verify.isPending ? 'Confirmando…' : 'Entrar'}
-          </Button>
+            <p className={styles.step}>Passo 2 de 2</p>
+            <h1 className={styles.headline}>Digite o código</h1>
+            <p className={styles.note}>
+              Enviamos para <span className={styles.sentTo}>{sentTo}</span>. Ele
+              vale por poucos minutos.
+            </p>
 
-          <Button
-            type="button"
-            variant="ghost"
-            className={`${motion.press} ${styles.secondary}`}
-            onClick={() => {
-              setCode('')
-              setStep('identify')
-            }}
-          >
-            {isEmail ? 'Usar outro e-mail' : 'Usar outro telefone'}
-          </Button>
-        </form>
-      )}
+            {/* o Ark controla um array de 6 posições: mandar um array curto
+                (ou receber os buracos dele de volta) vira `undefined` no meio
+                do código já na primeira tecla */}
+            <OTPInput
+              length={CODE_LENGTH}
+              type="numeric"
+              otp
+              invalid={verify.isError}
+              className={styles.codeField}
+              value={Array.from(
+                { length: CODE_LENGTH },
+                (_, index) => code[index] ?? ''
+              )}
+              onValueChange={(digits) =>
+                setCode(digits.map((digit) => digit ?? '').join(''))
+              }
+              onValueComplete={(filled) => setCode(filled)}
+            />
 
+            {verify.isError && (
+              <Alert variant="error" className={styles.alert}>
+                Código inválido ou expirado. Peça outro e tente de novo.
+              </Alert>
+            )}
+
+            <Button
+              type="submit"
+              className={`${motion.press} ${styles.cta}`}
+              disabled={code.length !== CODE_LENGTH || verify.isPending}
+            >
+              {verify.isPending ? 'Confirmando…' : 'Entrar'}
+            </Button>
+
+            <Button
+              type="button"
+              variant="ghost"
+              className={`${motion.press} ${styles.secondary}`}
+              onClick={() => {
+                setCode('')
+                setStep('identify')
+              }}
+            >
+              {isEmail ? 'Usar outro e-mail' : 'Usar outro telefone'}
+            </Button>
+          </form>
+        )}
+      </div>
     </div>
   )
 }

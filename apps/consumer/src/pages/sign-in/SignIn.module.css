@@ -1,80 +1,161 @@
 @reference "@nino/ds/globals.css";
 
+/*
+ * A porta da loja, não um formulário dentro de um cartão dentro de outro.
+ *
+ * A versão anterior empilhava três superfícies para fazer duas perguntas: uma
+ * moldura branca arredondada, uma caixa areia por dentro e o campo dentro
+ * dela. Cada borda dessas é uma linha que o olho precisa atravessar antes de
+ * chegar no que importa, que é digitar um telefone.
+ *
+ * Aqui a tela é branca e vazia, a pergunta é o maior tipo da página, e a cor
+ * da loja aparece como luz no alto e no botão — a mesma gramática da gaveta
+ * da conta.
+ */
 .page {
-  @apply mx-auto min-h-dvh w-full max-w-xl bg-brand-foreground px-5 pb-10;
-  @apply lg:my-8 lg:min-h-0 lg:max-w-md lg:rounded-[1.75rem] lg:border;
-  @apply lg:border-black/[0.08] lg:px-8 lg:pb-10;
-  @apply lg:shadow-[0_30px_80px_-40px_rgba(26,18,6,0.45)];
+  @apply flex min-h-dvh w-full flex-col bg-white px-6;
+  background-image: radial-gradient(
+    100% 55% at 50% 0%,
+    color-mix(in srgb, var(--store-tint, var(--color-brand)) 12%, transparent)
+      0%,
+    transparent 58%
+  );
+  padding-top: calc(1.5rem + env(safe-area-inset-top));
+  padding-bottom: calc(2.5rem + env(safe-area-inset-bottom));
 }
 
-.header {
-  @apply flex items-center gap-3 pb-5 pt-8;
+/* a coluna é estreita de propósito: uma pergunta por vez não precisa de mais
+   largura que a linha que a responde */
+.shell {
+  @apply mx-auto flex w-full max-w-[24rem] flex-1 flex-col lg:justify-center;
 }
 
 .back {
-  @apply flex h-11 w-11 shrink-0 items-center justify-center rounded-full;
-  @apply border border-black/[0.08] bg-brand-foreground text-lg text-muted;
-  @apply transition-colors hover:border-peach hover:text-brand-strong;
+  @apply -ml-2 flex h-11 w-11 shrink-0 items-center justify-center;
+  @apply rounded-full text-lg text-muted transition-colors;
+  @apply hover:bg-black/[0.04] hover:text-brand-strong;
 }
 
-.title {
-  @apply font-display text-xl font-extrabold leading-tight text-muted;
+/* ----- a loja se apresenta ----- */
+/* o mesmo azulejo da vitrine e da caderneta: quem está entrando reconhece a
+   casa antes de digitar o número */
+.brand {
+  @apply mt-6 flex items-center gap-3;
 }
 
-/* mesma superfície chapada do cartão de acompanhamento: uma pergunta por vez,
-   num bloco que não divide atenção com mais nada na tela */
-.card {
-  @apply flex flex-col rounded-card border border-brand/12 bg-black/[0.07];
-  @apply px-5 pb-5 pt-4 shadow-card;
+.tile {
+  @apply flex h-12 w-12 shrink-0 items-center justify-center overflow-hidden;
+  @apply rounded-2xl border-4 border-white font-display text-sm;
+  @apply font-extrabold text-white;
+  background: var(--store-tint, var(--color-brand));
+  box-shadow: 0 10px 24px -12px
+    color-mix(in srgb, var(--store-tint, var(--color-brand)) 85%, transparent);
 }
 
-.eyebrow {
-  @apply text-[0.68rem] font-bold uppercase tracking-[0.14em] text-brand-strong;
+.logo {
+  @apply h-full w-full object-cover;
 }
 
+.store {
+  @apply min-w-0 truncate text-sm font-bold text-muted;
+}
+
+/* ----- a pergunta ----- */
+.step {
+  @apply mt-9 text-[0.62rem] font-bold uppercase tracking-[0.16em];
+  @apply text-faintest;
+}
+
+/* o herói da tela: a pergunta, no maior tipo da página */
 .headline {
-  @apply mt-2 font-display text-[1.3rem] font-extrabold leading-tight text-muted;
+  @apply mt-2 font-display text-[1.75rem] font-extrabold leading-[1.1];
+  @apply text-muted;
 }
 
 .note {
-  @apply mt-1.5 text-[0.82rem] leading-snug text-muted;
+  @apply mt-2.5 text-sm leading-relaxed text-muted;
 }
 
-/* dois canais, um par de fichas: mesma forma das etapas do pedido no painel */
+.sentTo {
+  @apply font-bold text-muted;
+}
+
+/* ----- canais ----- */
+/*
+ * Trilho com a ficha ativa branca, no lugar de duas pílulas em que a escolhida
+ * ficava laranja: o laranja é do botão que conclui a tela, e dois laranjas
+ * disputando a mesma dobra fazem a pessoa procurar qual deles avança.
+ */
 .channels {
-  @apply mt-5 flex gap-1.5;
+  @apply mt-7 flex gap-1 rounded-full bg-black/[0.05] p-1;
 }
 
 .channel {
-  @apply flex-1 rounded-button border border-black/[0.08] bg-brand-foreground py-2;
-  @apply text-[0.78rem] font-bold text-muted transition-colors;
-  @apply hover:border-peach hover:text-brand-strong;
+  @apply flex-1 rounded-full py-2 text-[0.8rem] font-bold text-faint;
+  @apply transition-colors hover:text-muted;
 }
 
 .channelOn {
-  @apply flex-1 rounded-button border border-brand bg-brand py-2;
-  @apply text-[0.78rem] font-bold text-brand-foreground;
+  @apply flex-1 rounded-full bg-white py-2 text-[0.8rem] font-bold;
+  @apply text-muted shadow-[0_1px_3px_rgba(26,18,6,0.14)];
 }
 
+/* ----- campo ----- */
 .field {
-  @apply mt-3 w-full bg-brand-foreground;
+  @apply mt-3 h-14 w-full rounded-xl border-black/10 bg-white text-base;
+  @apply text-muted;
 }
 
-/* o código é o dado, não o rótulo: dígitos grandes, espaçados e tabulares */
+.field:focus {
+  border-color: var(--store-tint, var(--color-brand));
+  box-shadow: inset 0 0 0 1px var(--store-tint, var(--color-brand));
+}
+
+/* o código é o dado da tela: as casas têm a altura do campo do passo 1, para
+   as duas telas serem a mesma conversa em dois momentos */
 .codeField {
-  @apply text-center font-display text-[1.4rem] font-extrabold;
-  letter-spacing: 0.35em;
+  @apply mt-3 justify-between gap-2;
+}
+
+.codeField input {
+  @apply h-14 w-full rounded-xl border-black/10 text-center;
+  @apply font-display text-xl font-extrabold text-muted;
   font-variant-numeric: tabular-nums;
+}
+
+.codeField input:focus {
+  border-color: var(--store-tint, var(--color-brand));
+  box-shadow: inset 0 0 0 1px var(--store-tint, var(--color-brand));
 }
 
 .alert {
   @apply mt-4;
 }
 
+/* ----- ações ----- */
+/*
+ * A cor da loja só na ação viva. Desligado é `sand` com texto apagado — a
+ * regra é do próprio Button do DS, e pintar o fundo aqui sem essa ressalva
+ * devolvia um CTA laranja vivo que não faz nada quando tocado.
+ */
 .cta {
-  @apply mt-5 h-12 w-full text-base;
+  @apply mt-6 h-14 w-full rounded-button text-base font-bold;
 }
 
+.cta:not(:disabled) {
+  background: var(--store-tint, var(--color-brand));
+}
+
+.cta:not(:disabled):hover {
+  background: color-mix(
+    in srgb,
+    var(--store-tint, var(--color-brand)) 88%,
+    black
+  );
+}
+
+/* sair do passo é caminho de volta, não oferta: texto, sem moldura */
 .secondary {
-  @apply mt-1 h-11 w-full text-sm;
+  @apply mt-2 h-12 w-full text-sm font-bold text-muted;
+  @apply hover:text-brand-strong;
 }
