@@ -3,8 +3,10 @@ import { Link, useParams, useSearchParams } from 'react-router'
 import { EmptyState } from '@nino/ds/components/EmptyState'
 import { OrderJourney } from '@compositions/OrderJourney/OrderJourney'
 import { OrderStage } from '@compositions/OrderStage/OrderStage'
+import { PoweredBy } from '@compositions/PoweredBy/PoweredBy'
 import { useCustomerSession } from '@hooks/useCustomerSession'
 import { useGuestOrderStatus } from '@hooks/useGuestOrderStatus'
+import { useScrollProgress } from '@hooks/useScrollProgress'
 import { isTerminal } from '@utils/order-journey'
 import { riseDelay } from '@utils/rise-delay'
 
@@ -18,6 +20,7 @@ export const OrderTracking = () => {
   const backHref = pathSlug ? `/${pathSlug}` : '/'
 
   const { customer, isPending: loadingSession } = useCustomerSession()
+  const progress = useScrollProgress(60)
 
   const {
     data: order,
@@ -94,8 +97,12 @@ export const OrderTracking = () => {
   const done = isTerminal(order.status)
 
   return (
-    <div className={styles.page}>
-      <header className={`${motion.riseIn} ${styles.header}`}>
+    <div
+      className={styles.page}
+      style={{ '--p': progress } as React.CSSProperties}
+    >
+      <div className={styles.shell}>
+      <header className={`${motion.settle} ${styles.header}`}>
         <Link
           to={backHref}
           className={`${motion.press} ${styles.back}`}
@@ -149,6 +156,9 @@ export const OrderTracking = () => {
             : 'Pedir de novo'}
         </Link>
       )}
+
+        <PoweredBy />
+      </div>
     </div>
   )
 }

@@ -62,7 +62,7 @@ export const Orders = () => {
         {orders?.map((order, index) => (
           <li
             key={order.id}
-            className={`${motion.riseIn} ${styles.item}`}
+            className={`${motion.deal} ${styles.item}`}
             style={riseDelay(index * 55)}
           >
             <Link to={orderPath(order.id)} className={styles.link}>

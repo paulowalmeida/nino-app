@@ -4,8 +4,11 @@ import { useCustomerSession } from '@hooks/useCustomerSession'
 import { useLogout } from '@hooks/useLogout'
 import { useMyAddresses } from '@hooks/useMyAddresses'
 import { useMyOrders } from '@hooks/useMyOrders'
+import { useScrollProgress } from '@hooks/useScrollProgress'
 import { formatPhone } from '@utils/phone'
 import { riseDelay } from '@utils/rise-delay'
+
+import { PoweredBy } from '@compositions/PoweredBy/PoweredBy'
 
 import { AccountNav } from './AccountNav/AccountNav'
 
@@ -32,6 +35,7 @@ export const Account = () => {
 
   const { customer, isPending } = useCustomerSession()
   const logout = useLogout()
+  const progress = useScrollProgress(60)
 
   const { data: orders } = useMyOrders(!!customer)
   const { data: addresses } = useMyAddresses(!!customer)
@@ -48,9 +52,12 @@ export const Account = () => {
   if (!customer) return <Navigate to={signIn} replace />
 
   return (
-    <div className={styles.page}>
+    <div
+      className={styles.page}
+      style={{ '--p': progress } as React.CSSProperties}
+    >
       <div className={styles.shell}>
-        <header className={`${motion.riseIn} ${styles.header}`}>
+        <header className={`${motion.settle} ${styles.header}`}>
           <Link
             to={home}
             className={`${motion.press} ${styles.back}`}
@@ -87,7 +94,7 @@ export const Account = () => {
           {/* a key reanima o painel a cada troca, como uma tela nova */}
           <div
             key={pathname}
-            className={`${motion.riseIn} ${styles.panel}`}
+            className={`${motion.settle} ${styles.panel}`}
             style={riseDelay(60)}
           >
             <Outlet />
@@ -102,6 +109,8 @@ export const Account = () => {
         >
           {logout.isPending ? 'Saindo…' : 'Sair da conta'}
         </button>
+
+        <PoweredBy />
       </div>
     </div>
   )

@@ -1,17 +1,99 @@
 @reference "@nino/ds/globals.css";
 
 /*
- * Vocabulário de movimento da vitrine: o mesmo expo-out do painel do
- * gestor (cubic-bezier(0.16, 1, 0.3, 1)), reaplicado aqui para que a marca
- * se mova do mesmo jeito nos dois lados — só a metáfora muda. Lá é a
- * comanda saindo da impressora; aqui é o prato chegando à mesa: some entra
- * subindo de leve, sem cair de cima.
+ * Vocabulário de movimento da vitrine — o mesmo do painel do gestor, para a
+ * marca se mover igual dos dois lados. Expo-out (0.16, 1, 0.3, 1) em tudo,
+ * exceto onde o overshoot é intencional.
+ *
+ * Tempos: 380–620ms. Abaixo disso o movimento não é lido; acima, atrapalha
+ * quem já sabe onde clicar.
  *
  * Toda classe aceita --d para escalonar entradas em sequência.
  */
 
+/* páginas e painéis: assentam no lugar. É o gesto de troca de tela. */
+.settle {
+  animation: settle 0.52s cubic-bezier(0.16, 1, 0.3, 1) var(--d, 0ms) both;
+}
+
+/* linhas de lista e texto: entram deslizando da esquerda, curtas */
+.deal {
+  animation: deal 0.42s cubic-bezier(0.16, 1, 0.3, 1) var(--d, 0ms) both;
+}
+
+/* destaque que chega de cima e quica uma vez */
+.land {
+  animation: land 0.66s cubic-bezier(0.34, 1.42, 0.64, 1) var(--d, 0ms) both;
+}
+
+/* revela de cima para baixo por clip-path, sem fade */
+.unroll {
+  animation: unroll 0.46s cubic-bezier(0.16, 1, 0.3, 1) var(--d, 0ms) both;
+}
+
+/* números e selos: crescem com um respiro */
+.pop {
+  animation: pop 0.42s cubic-bezier(0.34, 1.56, 0.64, 1) var(--d, 0ms) both;
+}
+
+/* o prato chegando à mesa: sobe de leve, sem cair de cima */
 .riseIn {
   animation: rise-in 0.36s cubic-bezier(0.16, 1, 0.3, 1) var(--d, 0ms) both;
+}
+
+@keyframes settle {
+  from {
+    opacity: 0;
+    transform: translateY(10px) scale(0.985);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes deal {
+  from {
+    opacity: 0;
+    transform: translateX(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes land {
+  from {
+    opacity: 0;
+    transform: translateY(-16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes unroll {
+  from {
+    clip-path: inset(0 0 100% 0);
+    transform: translateY(-6px);
+  }
+  to {
+    clip-path: inset(0 0 0 0);
+    transform: translateY(0);
+  }
+}
+
+@keyframes pop {
+  from {
+    opacity: 0;
+    transform: scale(0.82);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
 }
 
 @keyframes rise-in {
@@ -26,6 +108,11 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .settle,
+  .deal,
+  .land,
+  .unroll,
+  .pop,
   .riseIn {
     animation: none;
   }

@@ -15,6 +15,7 @@
   @apply text-brand-strong;
 }
 
+/* quatro alvos numa tela de 360px: o rótulo aperta antes do ícone */
 .label {
-  @apply text-[0.68rem] font-semibold;
+  @apply text-[0.62rem] font-semibold;
 }

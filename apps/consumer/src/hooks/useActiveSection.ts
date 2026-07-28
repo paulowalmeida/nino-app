@@ -1,59 +1,54 @@
 import { useEffect, useState } from 'react'
-import type { RefObject } from 'react'
-
-const DESKTOP_LINE = 96
-const MOBILE_LINE = 60
 
 /**
  * Qual seção está sob os olhos agora: acompanha o scroll para acender a
- * categoria certa na trilha. No celular o scroll mora dentro da lista de
- * produtos (rootRef); no desktop a página rola no documento. Em vez de confiar
- * num IntersectionObserver — que dispara durante o layout instável do load e
- * não se corrige sozinho — mede as posições a cada scroll: ativa é a última
- * seção cujo topo já passou da linha de leitura no alto da lista.
+ * categoria certa na régua.
+ *
+ * Mede posições a cada scroll em vez de usar IntersectionObserver — ele
+ * dispara durante o layout instável do carregamento e não se corrige sozinho.
+ * Ativa é a última seção cujo topo já passou da linha de leitura.
+ *
+ * A linha fica abaixo das duas barras fixas (topo + régua): acender a
+ * categoria seguinte enquanto o título dela ainda está escondido atrás delas
+ * faz a régua apontar para o que ninguém está vendo.
  */
-export const useActiveSection = (
-  ids: string[],
-  rootRef?: RefObject<HTMLElement | null>
-): string | null => {
+const READING_LINE = 130
+
+export const useActiveSection = (ids: string[]): string | null => {
   const [active, setActive] = useState<string | null>(ids[0] ?? null)
 
   useEffect(() => {
     if (ids.length === 0) return
 
-    const desktop = window.matchMedia('(min-width: 1024px)').matches
-    const scroller: HTMLElement | Window | null = desktop
-      ? window
-      : (rootRef?.current ?? null)
-    if (!scroller) return
-
-    const lineTop = (): number => {
-      if (desktop) return DESKTOP_LINE
-      const top = rootRef?.current?.getBoundingClientRect().top ?? 0
-      return top + MOBILE_LINE
-    }
+    let frame = 0
 
     const compute = (): void => {
-      const line = lineTop()
+      frame = 0
       let current = ids[0]
       for (const id of ids) {
         const el = document.getElementById(id)
         if (!el) continue
-        if (el.getBoundingClientRect().top - line > 1) break
+        if (el.getBoundingClientRect().top - READING_LINE > 1) break
         current = id
       }
-      setActive(current)
+      setActive((previous) => (previous === current ? previous : current))
+    }
+
+    const onScroll = (): void => {
+      if (frame) return
+      frame = window.requestAnimationFrame(compute)
     }
 
     compute()
-    scroller.addEventListener('scroll', compute, { passive: true })
-    window.addEventListener('resize', compute)
+    window.addEventListener('scroll', onScroll, { passive: true })
+    window.addEventListener('resize', onScroll)
 
     return () => {
-      scroller.removeEventListener('scroll', compute)
-      window.removeEventListener('resize', compute)
+      window.removeEventListener('scroll', onScroll)
+      window.removeEventListener('resize', onScroll)
+      if (frame) window.cancelAnimationFrame(frame)
     }
-  }, [ids, rootRef])
+  }, [ids])
 
   return active
 }

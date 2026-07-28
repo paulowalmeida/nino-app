@@ -3,7 +3,8 @@ import { NavLink } from 'react-router'
 import { Icon } from '@components/Icon/Icon'
 
 import bagIcon from '@assets/icons/bag.svg?raw'
-import searchIcon from '@assets/icons/search.svg?raw'
+import cardIcon from '@assets/icons/credit-card.svg?raw'
+import pinIcon from '@assets/icons/map-pin.svg?raw'
 import userIcon from '@assets/icons/user.svg?raw'
 
 import type { TabBarProps } from './TabBar.types'
@@ -11,38 +12,33 @@ import type { TabBarProps } from './TabBar.types'
 import styles from './TabBar.module.css'
 
 /**
- * A barra de ações do celular. Só existe no celular: no desktop os mesmos
- * destinos moram no topo, e uma barra colada no rodapé de uma tela de 27"
- * seria um alvo longe de qualquer mão.
+ * A barra de ações do celular — os mesmos atalhos que o desktop guarda no
+ * menu da conta, aqui abertos ao polegar.
  *
- * Sem "Início": a vitrine já é a página onde a pessoa está, e um botão que
- * leva para onde você já está é um botão que ensina a ignorar a barra.
+ * Sem "Início": a vitrine já é a página onde a pessoa está. Sem lupa: a busca
+ * mora no topo e acompanha a rolagem, então um atalho para ela seria um botão
+ * que leva a algo que já está à vista.
  */
-export const TabBar = ({ base, onSearch }: TabBarProps) => (
+const TABS = [
+  { to: '/conta/pedidos', label: 'Pedidos', icon: bagIcon },
+  { to: '/conta/enderecos', label: 'Endereços', icon: pinIcon },
+  { to: '/conta/pagamento', label: 'Pagamento', icon: cardIcon },
+  { to: '/conta/dados', label: 'Perfil', icon: userIcon },
+]
+
+export const TabBar = ({ base }: TabBarProps) => (
   <nav className={styles.bar} aria-label="Atalhos">
-    <button type="button" className={styles.tab} onClick={onSearch}>
-      <Icon svg={searchIcon} />
-      <span className={styles.label}>Buscar</span>
-    </button>
-
-    <NavLink
-      to={`${base}/conta/pedidos`}
-      className={({ isActive }) =>
-        isActive ? `${styles.tab} ${styles.tabOn}` : styles.tab
-      }
-    >
-      <Icon svg={bagIcon} />
-      <span className={styles.label}>Pedidos</span>
-    </NavLink>
-
-    <NavLink
-      to={`${base}/conta/dados`}
-      className={({ isActive }) =>
-        isActive ? `${styles.tab} ${styles.tabOn}` : styles.tab
-      }
-    >
-      <Icon svg={userIcon} />
-      <span className={styles.label}>Perfil</span>
-    </NavLink>
+    {TABS.map(({ to, label, icon }) => (
+      <NavLink
+        key={to}
+        to={`${base}${to}`}
+        className={({ isActive }) =>
+          isActive ? `${styles.tab} ${styles.tabOn}` : styles.tab
+        }
+      >
+        <Icon svg={icon} />
+        <span className={styles.label}>{label}</span>
+      </NavLink>
+    ))}
   </nav>
 )

@@ -4,6 +4,23 @@
   @apply sticky top-0 z-40 w-full border-b border-black/[0.07] bg-white;
 }
 
+/*
+ * No celular a barra não existe no topo da página: sem sacola e sem "Entrar"
+ * (que moram no rodapé), e com a logo e a busca ainda na vitrine, ela seria
+ * 56px de branco vazio empurrando o banner para baixo.
+ *
+ * Ela sai de cena e desce conforme a rolagem, trazendo justamente o que a
+ * página perdeu. `fixed` em vez de `sticky` para não reservar a altura
+ * enquanto está fora: o banner começa colado na borda de cima.
+ */
+@media (max-width: 1023px) {
+  .bar {
+    @apply fixed;
+    transform: translateY(calc((var(--p, 0) - 1) * 100%));
+    opacity: var(--p, 0);
+  }
+}
+
 .inner {
   @apply mx-auto flex h-14 w-full max-w-[71rem] items-center gap-3 px-4;
   @apply sm:px-6;
@@ -72,8 +89,13 @@
   }
 }
 
+/*
+ * Some no celular inteiro. A sacola já tem a barra fixa do rodapé e a conta
+ * tem a tab bar — repetir os dois aqui é cobrar duas vezes pela mesma ação,
+ * na borda mais longe do polegar.
+ */
 .tools {
-  @apply ml-auto flex shrink-0 items-center gap-1;
+  @apply ml-auto hidden shrink-0 items-center gap-1 lg:flex;
 }
 
 .iconBtn {

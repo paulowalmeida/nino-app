@@ -99,7 +99,7 @@ export const Addresses = () => {
         {addresses?.map((address, index) => (
           <li
             key={address.id}
-            className={`${motion.riseIn} ${styles.item}`}
+            className={`${motion.deal} ${styles.item}`}
             style={riseDelay(index * 55)}
           >
             {editing === address.id ? (
@@ -193,7 +193,7 @@ export const Addresses = () => {
       </ul>
 
       {editing === NEW ? (
-        <div className={`${motion.riseIn} ${styles.newCard}`}>
+        <div className={`${motion.settle} ${styles.newCard}`}>
           <AddressForm
             isSaving={save.isPending}
             hasError={save.isError}

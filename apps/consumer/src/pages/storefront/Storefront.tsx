@@ -9,6 +9,7 @@ import { ActiveOrderBanner } from '@compositions/ActiveOrderBanner/ActiveOrderBa
 import { CartDrawer } from '@compositions/CartDrawer/CartDrawer'
 import { CategoryNav } from '@compositions/CategoryNav/CategoryNav'
 import { MenuItemCard } from '@compositions/MenuItemCard/MenuItemCard'
+import { PoweredBy } from '@compositions/PoweredBy/PoweredBy'
 import { ProductDetail } from '@compositions/ProductDetail/ProductDetail'
 import { StoreInfo } from '@compositions/StoreInfo/StoreInfo'
 import { StoreTopBar } from '@compositions/StoreTopBar/StoreTopBar'
@@ -24,6 +25,7 @@ import { useCartStore } from '@states/useCartStore'
 import { categoryIcon } from '@utils/category-icon'
 import { brl } from '@utils/money'
 import { resolveSlug } from '@utils/resolve-slug'
+import { riseDelay } from '@utils/rise-delay'
 import { displayName, initials, isOpen } from '@utils/store-info'
 
 import searchIcon from '@assets/icons/search.svg?raw'
@@ -31,6 +33,7 @@ import searchIcon from '@assets/icons/search.svg?raw'
 import { MenuRowsSkeleton } from './MenuRowsSkeleton'
 import { StorefrontSkeleton } from './StorefrontSkeleton'
 import styles from './Storefront.module.css'
+import motion from '@styles/motion.module.css'
 
 const sectionDomId = (id: string): string => `section-${id}`
 
@@ -54,12 +57,10 @@ export const Storefront = () => {
   const { hours, isPending: loadingHours } = useOpeningHours(store?.id)
   const { settings } = usePublicSettings(store?.id)
 
-  const menuRef = useRef<HTMLElement>(null)
   const searchRef = useRef<HTMLInputElement>(null)
   const progress = useScrollProgress(HEADER_TRANSITION_PX)
   const activeDomId = useActiveSection(
-    sections.map((section) => sectionDomId(section.id)),
-    menuRef
+    sections.map((section) => sectionDomId(section.id))
   )
   const activeId = activeDomId?.replace(/^section-/, '') ?? null
   const cart = useCartStore((state) => state.lines)
@@ -100,13 +101,6 @@ export const Storefront = () => {
     document
       .getElementById(sectionDomId(id))
       ?.scrollIntoView({ behavior: 'smooth', block: 'start' })
-  }
-
-  /* volta ao topo antes de focar: rolado, a busca da página está desbotada
-     e quem foca um campo invisível não vê o cursor que acabou de pedir */
-  const focusSearch = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' })
-    searchRef.current?.focus({ preventScroll: true })
   }
 
   if (!slug) {
@@ -164,8 +158,10 @@ export const Storefront = () => {
       />
 
       {/* a faixa da loja sangra de ponta a ponta: é a primeira coisa que diz
-          onde a pessoa está, e uma capa emoldurada não diz isso */}
-      <div className={styles.banner}>
+          onde a pessoa está, e uma capa emoldurada não diz isso.
+          Ela desenrola de cima para baixo — o mesmo gesto de comanda saindo
+          da impressora que abre as telas do gestor. */}
+      <div className={`${motion.unroll} ${styles.banner}`}>
         {store.logoUrl && (
           <img src={store.logoUrl} alt="" className={styles.bannerMark} />
         )}
@@ -174,6 +170,9 @@ export const Storefront = () => {
 
       <div className={styles.shell}>
         <div className={styles.identityRow}>
+          {/* sem classe de entrada aqui: o azulejo já tem `transform` ligado
+              ao progresso da rolagem, e uma animação com fill both congelaria
+              o valor final por cima dele, matando o merge com o topo */}
           <div className={styles.logoTile}>
             {store.logoUrl ? (
               <img
@@ -187,8 +186,13 @@ export const Storefront = () => {
           </div>
 
           <div className={styles.identity}>
-            <h1 className={styles.name}>{displayName(store)}</h1>
-            <p className={styles.identityMeta}>
+            <h1 className={`${motion.deal} ${styles.name}`}>
+              {displayName(store)}
+            </h1>
+            <p
+              className={`${motion.deal} ${styles.identityMeta}`}
+              style={riseDelay(70)}
+            >
               <button
                 type="button"
                 className={styles.more}
@@ -240,7 +244,10 @@ export const Storefront = () => {
       </div>
 
       {sections.length > 0 && !query && (
-        <div className={styles.categoryBar}>
+        <div
+          className={`${motion.settle} ${styles.categoryBar}`}
+          style={riseDelay(140)}
+        >
           <div className={styles.categoryInner}>
             <CategoryNav
               sections={sections}
@@ -251,8 +258,11 @@ export const Storefront = () => {
         </div>
       )}
 
-      <main className={styles.shell} ref={menuRef}>
-        <div className={styles.menu}>
+      <main className={styles.shell}>
+        <div
+          className={`${motion.settle} ${styles.menu}`}
+          style={riseDelay(200)}
+        >
           {loadingMenu && <MenuRowsSkeleton />}
 
           {!loadingMenu && sections.length === 0 && (
@@ -334,7 +344,11 @@ export const Storefront = () => {
         </div>
       )}
 
-      <TabBar base={base} onSearch={focusSearch} />
+      <div className={styles.shell}>
+        <PoweredBy />
+      </div>
+
+      <TabBar base={base} />
 
       <StoreInfo
         store={store}

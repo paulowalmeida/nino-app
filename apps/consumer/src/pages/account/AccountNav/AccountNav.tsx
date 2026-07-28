@@ -31,7 +31,7 @@ export const AccountNav = ({
       {ACCOUNT_SECTIONS.map(({ to, label, icon, soon }, index) => (
         <li
           key={to}
-          className={`${motion.riseIn} ${styles.item}`}
+          className={`${motion.deal} ${styles.item}`}
           style={riseDelay(90 + index * 45)}
         >
           <NavLink
