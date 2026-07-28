@@ -12,9 +12,15 @@
  * contraste e leva a urgência junto.
  */
 .page {
-  @apply relative min-h-dvh w-full bg-white;
+  @apply relative flex min-h-dvh w-full flex-col bg-white;
   /* respiro do rodapé: sacola no desktop, sacola + tab bar no celular */
   @apply pb-28 lg:pb-24;
+}
+
+/* cresce para empurrar o rodapé até o fim da página em telas curtas, em vez
+   de deixá-lo boiando logo depois do último item do cardápio */
+.main {
+  @apply flex-1;
 }
 
 /* a coluna central: tudo que é leitura mora aqui; o que é faixa passa por fora */

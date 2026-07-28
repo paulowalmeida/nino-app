@@ -247,7 +247,7 @@ export const Storefront = () => {
         </div>
       )}
 
-      <main className={styles.shell}>
+      <main className={`${styles.shell} ${styles.main}`}>
         <div
           className={`${motion.settle} ${styles.menu}`}
           style={riseDelay(200)}
@@ -333,9 +333,7 @@ export const Storefront = () => {
         </div>
       )}
 
-      <div className={styles.shell}>
-        <PoweredBy />
-      </div>
+      <PoweredBy />
 
       <TabBar base={base} />
 

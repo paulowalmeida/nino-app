@@ -5,10 +5,11 @@ import { useLogout } from '@hooks/useLogout'
 import { useMyAddresses } from '@hooks/useMyAddresses'
 import { useMyOrders } from '@hooks/useMyOrders'
 import { useScrollProgress } from '@hooks/useScrollProgress'
-import { formatPhone } from '@utils/phone'
+import { firstName, greeting } from '@utils/greeting'
 import { riseDelay } from '@utils/rise-delay'
 
 import { PoweredBy } from '@compositions/PoweredBy/PoweredBy'
+import { TabBar } from '@compositions/TabBar/TabBar'
 
 import { AccountNav } from './AccountNav/AccountNav'
 
@@ -51,6 +52,10 @@ export const Account = () => {
 
   if (!customer) return <Navigate to={signIn} replace />
 
+  /* conta aberta por telefone nasce sem nome de verdade: até a pessoa dizer
+     como se chama, a saudação vai sozinha */
+  const name = customer.profileCompletedAt ? firstName(customer.name) : null
+
   return (
     <div
       className={styles.page}
@@ -66,13 +71,13 @@ export const Account = () => {
             ←
           </Link>
 
-          {/* conta aberta por telefone nasce com o número no lugar do nome —
-            mostrar o cru seria devolver à pessoa o que ela ainda não disse */}
+          {/* a saudação é a mesma da gaveta do celular: a casa cumprimenta
+            quem chegou. Conta aberta por telefone ainda não tem nome — aí a
+            saudação fica sozinha, sem devolver o número cru no lugar dele */}
           <div className={styles.identity}>
             <h1 className={styles.title}>
-              {customer.profileCompletedAt
-                ? customer.name
-                : formatPhone(customer.phone)}
+              {greeting()}
+              {name ? `, ${name}` : ''}
             </h1>
             <p className={styles.since}>
               na casa desde {since.format(new Date(customer.createdAt))}
@@ -101,17 +106,11 @@ export const Account = () => {
           </div>
         </div>
 
-        <button
-          type="button"
-          className={`${motion.press} ${styles.logoutMobile}`}
-          onClick={() => logout.mutate()}
-          disabled={logout.isPending}
-        >
-          {logout.isPending ? 'Saindo…' : 'Sair da conta'}
-        </button>
-
-        <PoweredBy />
       </div>
+
+      <PoweredBy />
+
+      <TabBar base={slug ? `/${slug}` : ''} />
     </div>
   )
 }

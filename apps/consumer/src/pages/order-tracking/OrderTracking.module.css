@@ -3,11 +3,12 @@
 /* página inteira e branca, como a vitrine — o cartão flutuante virava caixa
    dentro de caixa no celular e moldura sobrando no desktop */
 .page {
-  @apply min-h-dvh w-full bg-white pb-16;
+  @apply flex min-h-dvh w-full flex-col bg-white pb-16;
 }
 
+/* cresce para empurrar o rodapé até o fim da página em telas curtas */
 .shell {
-  @apply mx-auto w-full max-w-xl px-5;
+  @apply mx-auto w-full max-w-xl flex-1 px-5;
 }
 
 /*

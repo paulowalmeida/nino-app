@@ -5,11 +5,12 @@
  * é que se alinha numa coluna central; a página não vira cartão.
  */
 .page {
-  @apply min-h-dvh w-full bg-white pb-24 lg:pb-10;
+  @apply flex min-h-dvh w-full flex-col bg-white pb-24 lg:pb-10;
 }
 
+/* cresce para empurrar o rodapé até o fim da página em telas curtas */
 .shell {
-  @apply mx-auto w-full max-w-[71rem] px-4 sm:px-6;
+  @apply mx-auto w-full max-w-[71rem] flex-1 px-4 sm:px-6;
 }
 
 /* mesmo header colapsável da vitrine: gruda no topo e só ganha borda e
@@ -48,15 +49,6 @@
 
 .panel {
   @apply min-w-0 flex-1;
-}
-
-/* o sair mora no rodapé do índice no desktop; no celular ele é o fim da
-   página, longe do polegar que troca de seção */
-.logoutMobile {
-  @apply mt-10 flex h-12 w-full items-center justify-center rounded-button;
-  @apply border border-black/[0.08] font-bold text-muted transition-colors;
-  @apply hover:border-peach hover:text-brand-strong lg:hidden;
-  @apply disabled:cursor-not-allowed disabled:opacity-60;
 }
 
 /* ----- skeleton ----- */

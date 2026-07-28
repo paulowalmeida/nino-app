@@ -15,7 +15,43 @@
   @apply text-brand-strong;
 }
 
-/* quatro alvos numa tela de 360px: o rótulo aperta antes do ícone */
+/*
+ * O alvo do meio é a casa, e ele se anuncia por um anel — não por um botão
+ * que estoura para cima. A barra da sacola mora logo acima desta, e um disco
+ * flutuante entre as duas empilharia dois pesos no mesmo canto da tela.
+ * O destaque cabe dentro da altura da barra: mesma linha, outro peso.
+ */
+.home {
+  @apply flex flex-1 flex-col items-center justify-center gap-0.5 text-faint;
+  @apply transition-colors;
+}
+
+.homeRing {
+  @apply flex h-10 w-10 items-center justify-center rounded-full border-2;
+  @apply transition-all;
+  border-color: color-mix(
+    in srgb,
+    var(--store-tint, var(--color-brand)) 40%,
+    transparent
+  );
+  color: var(--store-tint, var(--color-brand));
+}
+
+/* na vitrine o anel enche: o alvo aceso é a única superfície da navegação
+   pintada com a cor da loja */
+.homeOn .homeRing {
+  border-color: var(--store-tint, var(--color-brand));
+  background: var(--store-tint, var(--color-brand));
+  @apply text-white;
+  box-shadow: 0 6px 16px -8px
+    color-mix(in srgb, var(--store-tint, var(--color-brand)) 90%, transparent);
+}
+
+.homeOn {
+  color: var(--store-tint, var(--color-brand));
+}
+
+/* três alvos numa tela de 360px: o rótulo aperta antes do ícone */
 .label {
   @apply text-[0.62rem] font-semibold;
 }

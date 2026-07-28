@@ -1,11 +1,13 @@
 @reference "@nino/ds/globals.css";
 
 /*
- * Celular: trilha horizontal que rola. Desktop: coluna fixa. O mesmo
- * componente nos dois — o que muda é o eixo, não o vocabulário.
+ * Só no desktop. No celular este índice era uma trilha rolável no alto do
+ * painel; hoje quem lista as gavetas lá é a gaveta que o "Perfil" da barra
+ * abre (`AccountDrawer`), e dois índices para o mesmo menu ensinariam dois
+ * caminhos para a mesma coisa. Ambos leem de `ACCOUNT_SECTIONS`.
  */
 .nav {
-  @apply -mx-5 mb-6 px-5;
+  @apply hidden;
   @apply lg:mx-0 lg:mb-0 lg:flex lg:w-56 lg:shrink-0 lg:flex-col lg:px-0;
 }
 

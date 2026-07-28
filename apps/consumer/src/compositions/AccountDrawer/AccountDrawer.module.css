@@ -1,0 +1,100 @@
+@reference "@nino/ds/globals.css";
+
+.panel {
+  @apply flex flex-col bg-brand-foreground;
+  box-shadow: 24px 0 60px -30px rgba(26, 18, 6, 0.35);
+}
+
+/*
+ * A saudação é o cabeçalho da gaveta: a única linha da loja falada na voz de
+ * quem atende no balcão. Fica na cor da loja porque é o momento em que a
+ * marca do cliente cumprimenta o freguês dele — o nino não aparece aqui.
+ */
+.head {
+  @apply -mx-5 -mt-5 mb-4 px-5 pb-5 pt-7;
+  background: linear-gradient(
+    150deg,
+    var(--store-tint, var(--color-brand)) 0%,
+    color-mix(in srgb, var(--store-tint, var(--color-brand)) 76%, black) 100%
+  );
+}
+
+.greeting {
+  @apply font-display text-lg font-extrabold leading-tight text-white/85;
+}
+
+.name {
+  @apply truncate font-display text-2xl font-extrabold leading-tight;
+  @apply text-white;
+}
+
+.nav {
+  @apply flex-1;
+}
+
+.list {
+  @apply flex flex-col gap-0.5;
+}
+
+.item {
+  @apply flex h-12 w-full items-center gap-3 rounded-xl px-3 text-sm;
+  @apply font-semibold text-muted transition-colors;
+  @apply hover:bg-black/[0.04] hover:text-brand-strong;
+}
+
+.itemOn {
+  @apply relative bg-black/[0.05] text-ink;
+}
+
+.itemOn::before {
+  content: '';
+  @apply absolute bottom-2 left-0 top-2 w-[3px] rounded-full bg-brand;
+}
+
+.icon {
+  @apply shrink-0 text-faint;
+}
+
+.itemOn .icon {
+  @apply text-brand-strong;
+}
+
+.label {
+  @apply flex-1 text-left;
+}
+
+.count {
+  @apply text-xs font-bold text-faint;
+  font-variant-numeric: tabular-nums;
+}
+
+.soon {
+  @apply text-[0.62rem] font-bold uppercase tracking-[0.1em] text-faintest;
+}
+
+/* a seta só diz "isto abre uma tela"; sem ela o item parece um interruptor */
+.chevron {
+  @apply shrink-0 text-faintest;
+}
+
+.logout {
+  @apply mt-2 flex h-12 w-full items-center gap-3 rounded-xl px-3 text-sm;
+  @apply font-semibold text-muted transition-colors;
+  @apply hover:bg-black/[0.04] hover:text-brand-strong;
+  @apply disabled:cursor-not-allowed disabled:opacity-60;
+}
+
+/* ----- visitante ----- */
+.guest {
+  @apply flex flex-1 flex-col items-start gap-4 pt-2;
+}
+
+.guestText {
+  @apply text-sm leading-relaxed text-muted;
+}
+
+.enter {
+  @apply flex h-12 w-full items-center justify-center rounded-button;
+  @apply bg-brand font-bold text-brand-foreground transition-colors;
+  @apply hover:bg-brand-hover;
+}

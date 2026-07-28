@@ -102,63 +102,63 @@ export const OrderTracking = () => {
       style={{ '--p': progress } as React.CSSProperties}
     >
       <div className={styles.shell}>
-      <header className={`${motion.settle} ${styles.header}`}>
-        <Link
-          to={backHref}
-          className={`${motion.press} ${styles.back}`}
-          aria-label="Voltar para a loja"
-        >
-          ←
-        </Link>
-        <div>
-          <h1 className={styles.title}>Seu pedido</h1>
-          <p className={styles.code}>#{order.id.slice(0, 8)}</p>
-        </div>
-      </header>
+        <header className={`${motion.settle} ${styles.header}`}>
+          <Link
+            to={backHref}
+            className={`${motion.press} ${styles.back}`}
+            aria-label="Voltar para a loja"
+          >
+            ←
+          </Link>
+          <div>
+            <h1 className={styles.title}>Seu pedido</h1>
+            <p className={styles.code}>#{order.id.slice(0, 8)}</p>
+          </div>
+        </header>
 
-      <OrderStage
-        order={order}
-        className={motion.riseIn}
-        style={riseDelay(60)}
-      />
+        <OrderStage
+          order={order}
+          className={motion.riseIn}
+          style={riseDelay(60)}
+        />
 
-      {!done && (
+        {!done && (
+          <p
+            className={`${motion.riseIn} ${styles.reassurance}`}
+            style={riseDelay(120)}
+          >
+            <span className={styles.whatsappDot} aria-hidden="true" />
+            Pode fechar esta tela. A gente avisa no WhatsApp a cada passo.
+          </p>
+        )}
+
         <p
-          className={`${motion.riseIn} ${styles.reassurance}`}
-          style={riseDelay(120)}
+          className={`${motion.riseIn} ${styles.eyebrow}`}
+          style={riseDelay(160)}
         >
-          <span className={styles.whatsappDot} aria-hidden="true" />
-          Pode fechar esta tela. A gente avisa no WhatsApp a cada passo.
+          Passo a passo
         </p>
-      )}
 
-      <p
-        className={`${motion.riseIn} ${styles.eyebrow}`}
-        style={riseDelay(160)}
-      >
-        Passo a passo
-      </p>
+        <OrderJourney order={order} />
 
-      <OrderJourney order={order} />
-
-      {done && (
-        <Link
-          to={backHref}
-          className={[
-            motion.press,
-            motion.riseIn,
-            order.status === 'CANCELLED' ? styles.againQuiet : styles.again,
-          ].join(' ')}
-          style={riseDelay(420)}
-        >
-          {order.status === 'CANCELLED'
-            ? 'Voltar ao cardápio'
-            : 'Pedir de novo'}
-        </Link>
-      )}
-
-        <PoweredBy />
+        {done && (
+          <Link
+            to={backHref}
+            className={[
+              motion.press,
+              motion.riseIn,
+              order.status === 'CANCELLED' ? styles.againQuiet : styles.again,
+            ].join(' ')}
+            style={riseDelay(420)}
+          >
+            {order.status === 'CANCELLED'
+              ? 'Voltar ao cardápio'
+              : 'Pedir de novo'}
+          </Link>
+        )}
       </div>
+
+      <PoweredBy />
     </div>
   )
 }
