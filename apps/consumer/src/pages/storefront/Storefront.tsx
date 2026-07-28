@@ -1,6 +1,12 @@
 import { useRef, useState } from 'react'
 import { useNavigate, useParams } from 'react-router'
 
+import {
+  AnimatePresence,
+  motion as motionEl,
+  useReducedMotion,
+} from 'framer-motion'
+
 import { Button } from '@nino/ds/components/Button'
 import { EmptyState } from '@nino/ds/components/EmptyState'
 import { AnimatedNumber } from '@components/AnimatedNumber/AnimatedNumber'
@@ -59,6 +65,7 @@ export const Storefront = () => {
 
   const searchRef = useRef<HTMLInputElement>(null)
   const progress = useScrollProgress(HEADER_TRANSITION_PX)
+  const reduceMotion = useReducedMotion()
   const activeDomId = useActiveSection(
     sections.map((section) => sectionDomId(section.id))
   )
@@ -313,28 +320,49 @@ export const Storefront = () => {
         O total vem junto e sobe a cada item: quem acompanha o valor durante o
         cardápio não leva susto no checkout.
       */}
-      {cartCount > 0 && (
-        <div className={styles.cartDock}>
-          <div className={styles.cartInner}>
-            <div className={styles.cartSummary}>
-              <span className={styles.cartCount}>
-                {cartCount} {cartCount === 1 ? 'item' : 'itens'}
-              </span>
-              <AnimatedNumber
-                value={brl(cartTotal)}
-                className={styles.cartTotal}
-              />
-            </div>
+      {/*
+        A comanda sobe do rodapé com uma quicada curta em vez de aparecer
+        pronta: é a única confirmação de que o toque no "+" virou item, e um
+        elemento que brota sem movimento não é lido como resposta ao gesto —
+        parece que sempre esteve lá.
 
-            <Button
-              className={styles.cartCta}
-              onClick={() => setIsCartOpen(true)}
-            >
-              Ver sacola
-            </Button>
-          </div>
-        </div>
-      )}
+        `AnimatePresence` porque ela também precisa sair andando quando a
+        sacola esvazia; desmontar seco seria o mesmo susto ao contrário.
+      */}
+      <AnimatePresence>
+        {cartCount > 0 && (
+          <motionEl.div
+            className={styles.cartDock}
+            initial={reduceMotion ? false : { y: '130%' }}
+            animate={{ y: 0 }}
+            exit={reduceMotion ? { opacity: 0 } : { y: '130%' }}
+            transition={
+              reduceMotion
+                ? { duration: 0 }
+                : { type: 'spring', stiffness: 300, damping: 21, mass: 1 }
+            }
+          >
+            <div className={styles.cartInner}>
+              <div className={styles.cartSummary}>
+                <span className={styles.cartCount}>
+                  {cartCount} {cartCount === 1 ? 'item' : 'itens'}
+                </span>
+                <AnimatedNumber
+                  value={brl(cartTotal)}
+                  className={styles.cartTotal}
+                />
+              </div>
+
+              <Button
+                className={styles.cartCta}
+                onClick={() => setIsCartOpen(true)}
+              >
+                Ver sacola
+              </Button>
+            </div>
+          </motionEl.div>
+        )}
+      </AnimatePresence>
 
       <PoweredBy />
 

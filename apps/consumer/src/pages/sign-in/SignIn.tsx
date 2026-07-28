@@ -45,7 +45,6 @@ export const SignIn = () => {
   const { slug: pathSlug } = useParams()
   const navigate = useNavigate()
   const home = pathSlug ? `/${pathSlug}` : '/'
-  const account = pathSlug ? `/${pathSlug}/conta` : '/conta'
 
   const { store } = useStore(resolveSlug(pathSlug) ?? undefined)
 
@@ -74,9 +73,15 @@ export const SignIn = () => {
     event.preventDefault()
     if (code.length !== CODE_LENGTH) return
 
+    /*
+     * Entrar devolve ao cardápio, não à conta: quem abre a loja veio comer, e
+     * a conta é onde se ajusta cadastro. `replace` porque a porta já foi
+     * atravessada — voltar no navegador tem que sair da loja, não cair de
+     * novo num login que já não tem o que perguntar.
+     */
     verify.mutate(
       { credentials, code },
-      { onSuccess: () => void navigate(account) }
+      { onSuccess: () => void navigate(home, { replace: true }) }
     )
   }
 
