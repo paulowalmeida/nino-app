@@ -43,7 +43,7 @@
  * tap e lavava a pílula ativa. */
 @media (hover: hover) {
   .chip:hover {
-    @apply border-black/20 text-ink;
+    @apply border-black/20;
   }
 
   .chipOn:hover {

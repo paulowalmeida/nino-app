@@ -67,7 +67,7 @@
 }
 
 .name {
-  @apply font-display text-[0.88rem] font-bold leading-snug text-ink;
+  @apply font-display text-[0.88rem] font-bold leading-snug text-muted;
 }
 
 .description {
@@ -81,7 +81,7 @@
  * dos dois aparecia — agora o laranja quer dizer "dá pra agir aqui".
  */
 .price {
-  @apply mt-auto pt-2 font-display text-[0.8125rem] font-extrabold text-ink;
+  @apply mt-auto pt-2 font-display text-[0.8125rem] font-extrabold text-muted;
   font-variant-numeric: tabular-nums;
 }
 

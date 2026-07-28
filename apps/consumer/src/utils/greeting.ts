@@ -12,13 +12,3 @@ export const greeting = (now: Date = new Date()): string => {
   if (hour < 18) return 'Boa tarde'
   return 'Boa noite'
 }
-
-/**
- * O primeiro nome, que é como a casa chama o freguês. Conta aberta por
- * telefone ainda não tem nome — nesses casos a saudação fica sozinha, sem o
- * número cru no lugar de um nome.
- */
-export const firstName = (name?: string | null): string | null => {
-  const first = name?.trim().split(/\s+/)[0]
-  return first || null
-}

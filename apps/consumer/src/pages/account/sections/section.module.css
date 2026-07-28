@@ -10,7 +10,7 @@
 }
 
 .headline {
-  @apply font-display text-lg font-extrabold leading-tight text-ink;
+  @apply font-display text-lg font-extrabold leading-tight text-muted;
 }
 
 .note {
@@ -44,17 +44,23 @@
   @apply mt-6 flex flex-col gap-2.5 sm:flex-row-reverse;
 }
 
+/*
+ * Largura por `w-full`, nunca por `flex-1`: no celular `.actions` é uma
+ * coluna, e em coluna o `flex-1` zera a altura-base do botão e passa por cima
+ * do `h-12` — o botão chegava esmagado a uma faixa de texto. Da borda `sm`
+ * para cima a linha é horizontal e a largura volta a ser a do conteúdo.
+ */
 .primary {
-  @apply flex h-12 flex-1 items-center justify-center rounded-button bg-brand;
+  @apply flex h-12 w-full items-center justify-center rounded-button bg-brand;
   @apply font-bold text-brand-foreground transition-colors;
-  @apply hover:bg-brand-hover sm:flex-none sm:px-7;
+  @apply hover:bg-brand-hover sm:w-auto sm:px-7;
   @apply disabled:cursor-not-allowed disabled:opacity-60;
 }
 
 .ghost {
-  @apply flex h-12 flex-1 items-center justify-center rounded-button border;
+  @apply flex h-12 w-full items-center justify-center rounded-button border;
   @apply border-black/[0.08] font-bold text-muted transition-colors;
-  @apply hover:border-peach hover:text-brand-strong sm:flex-none sm:px-7;
+  @apply hover:border-peach hover:text-brand-strong sm:w-auto sm:px-7;
   @apply disabled:cursor-not-allowed disabled:opacity-60;
 }
 

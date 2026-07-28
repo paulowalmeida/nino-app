@@ -41,7 +41,7 @@
    precisa ser o maior texto do topo, não uma manchete de jornal */
 .name {
   @apply font-display font-extrabold leading-[1.15] tracking-[-0.02em];
-  @apply text-[0.98rem] text-ink lg:text-[1.25rem] lg:leading-[1.1];
+  @apply text-[0.98rem] text-muted lg:text-[1.25rem] lg:leading-[1.1];
 }
 
 /*

@@ -39,11 +39,13 @@
  * de marca à esquerda — a lista é longa e um preenchimento inteiro em cada
  * linha brigaria com o painel ao lado.
  */
+/* no desktop o aceso não muda de cor de texto — a coluna inteira fala num
+   tom só, e quem marca a seção aberta é o fundo mais o filete de marca */
 .linkOn {
   @apply border-transparent bg-brand text-brand-foreground;
   @apply hover:border-transparent hover:text-brand-foreground;
-  @apply lg:relative lg:bg-black/[0.05] lg:text-ink;
-  @apply lg:hover:border-transparent lg:hover:text-ink;
+  @apply lg:relative lg:bg-black/[0.05] lg:text-muted;
+  @apply lg:hover:border-transparent;
 }
 
 .linkOn::before {

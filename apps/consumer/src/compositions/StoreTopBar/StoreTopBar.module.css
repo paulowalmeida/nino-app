@@ -53,7 +53,7 @@
    aparece — a barra tem largura para o nome ou para a busca, e a busca é a
    que a pessoa vai usar. */
 .storeName {
-  @apply hidden truncate font-display text-sm font-extrabold text-ink sm:block;
+  @apply hidden truncate font-display text-sm font-extrabold text-muted sm:block;
   opacity: clamp(0, calc((var(--p, 0) - 0.6) * 3), 1);
 }
 
@@ -75,7 +75,7 @@
 
 .searchInput {
   @apply h-9 w-full rounded-full border border-black/10 bg-black/[0.03];
-  @apply pl-9 pr-3 text-sm text-ink outline-none transition-colors;
+  @apply pl-9 pr-3 text-sm text-muted outline-none transition-colors;
   @apply placeholder:text-faint;
   @apply focus:border-brand focus:bg-white;
 }
@@ -100,7 +100,7 @@
 
 .iconBtn {
   @apply relative flex h-10 w-10 items-center justify-center rounded-full;
-  @apply text-ink transition-colors hover:bg-black/[0.05];
+  @apply text-muted transition-colors hover:bg-black/[0.05];
 }
 
 .badge {
@@ -110,7 +110,7 @@
 
 /* no celular só o ícone: o nome come a barra inteira e a loja perde o topo */
 .account {
-  @apply flex h-10 items-center gap-2 rounded-full px-2.5 text-ink;
+  @apply flex h-10 items-center gap-2 rounded-full px-2.5 text-muted;
   @apply transition-colors hover:bg-black/[0.05];
 }
 

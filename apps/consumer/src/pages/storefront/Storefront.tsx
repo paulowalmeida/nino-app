@@ -136,7 +136,9 @@ export const Storefront = () => {
 
   return (
     <div
-      className={styles.page}
+      className={
+        cartCount > 0 ? `${styles.page} ${styles.pageWithCart}` : styles.page
+      }
       style={
         {
           '--p': progress,
@@ -301,33 +303,34 @@ export const Storefront = () => {
         </div>
       </main>
 
+      {/*
+        Dois acessos à sacola, dois papéis: a do topo diz o estado e fica lá
+        mesmo vazia; esta é a ação de fechar o pedido e só existe com item
+        dentro. Ela mora embaixo porque é onde o polegar está enquanto se rola
+        o cardápio — subir ao canto superior direito para fechar a compra é o
+        caminho mais longo da tela.
+
+        O total vem junto e sobe a cada item: quem acompanha o valor durante o
+        cardápio não leva susto no checkout.
+      */}
       {cartCount > 0 && (
-        <div className={styles.cartBar}>
+        <div className={styles.cartDock}>
           <div className={styles.cartInner}>
-            <div className={styles.cartTotals}>
+            <div className={styles.cartSummary}>
               <span className={styles.cartCount}>
                 {cartCount} {cartCount === 1 ? 'item' : 'itens'}
-                {settings?.estimatedMinutes ? (
-                  <>
-                    {' · '}
-                    <span className={styles.cartEta}>
-                      pronto em ~{settings.estimatedMinutes} min
-                    </span>
-                  </>
-                ) : null}
               </span>
               <AnimatedNumber
                 value={brl(cartTotal)}
                 className={styles.cartTotal}
               />
             </div>
+
             <Button
               className={styles.cartCta}
               onClick={() => setIsCartOpen(true)}
             >
-              <span className={styles.cartCtaCount}>{cartCount}</span>
               Ver sacola
-              <span className={styles.cartCtaTotal}>{brl(cartTotal)}</span>
             </Button>
           </div>
         </div>

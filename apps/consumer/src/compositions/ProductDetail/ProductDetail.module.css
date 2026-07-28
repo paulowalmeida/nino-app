@@ -19,7 +19,7 @@
 }
 
 .modalTitle {
-  @apply font-display text-lg font-bold text-ink;
+  @apply font-display text-lg font-bold text-muted;
 }
 
 .modalMedia {
@@ -67,7 +67,7 @@
 }
 
 .stepperCount {
-  @apply w-4 text-center text-sm font-bold text-ink;
+  @apply w-4 text-center text-sm font-bold text-muted;
   font-variant-numeric: tabular-nums;
 }
 

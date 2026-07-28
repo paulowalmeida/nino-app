@@ -14,7 +14,7 @@
 }
 
 .line {
-  @apply text-sm font-bold leading-snug text-ink;
+  @apply text-sm font-bold leading-snug text-muted;
 }
 
 .city {
@@ -45,7 +45,7 @@
 }
 
 .confirmText {
-  @apply text-xs font-bold text-ink;
+  @apply text-xs font-bold text-muted;
 }
 
 .confirmActions {
@@ -54,7 +54,7 @@
 
 .confirmNo {
   @apply h-9 rounded-full px-3.5 text-xs font-bold text-muted;
-  @apply transition-colors hover:text-ink;
+  @apply transition-colors hover:text-brand-strong;
 }
 
 .confirmYes {

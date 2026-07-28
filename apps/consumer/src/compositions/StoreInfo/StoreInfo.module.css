@@ -9,7 +9,7 @@
 }
 
 .value {
-  @apply text-sm font-bold text-ink;
+  @apply text-sm font-bold text-muted;
 }
 
 .sub {
@@ -28,7 +28,7 @@
 /* hoje em negrito: das sete linhas, é a única que a pessoa veio conferir */
 .rowToday {
   @apply flex items-center justify-between border-b border-black/[0.06] py-2;
-  @apply text-sm font-bold text-ink last:border-0;
+  @apply text-sm font-bold text-muted last:border-0;
 }
 
 .time {

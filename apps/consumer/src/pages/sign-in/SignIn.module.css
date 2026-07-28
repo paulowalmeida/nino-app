@@ -13,12 +13,12 @@
 
 .back {
   @apply flex h-11 w-11 shrink-0 items-center justify-center rounded-full;
-  @apply border border-black/[0.08] bg-brand-foreground text-lg text-ink;
+  @apply border border-black/[0.08] bg-brand-foreground text-lg text-muted;
   @apply transition-colors hover:border-peach hover:text-brand-strong;
 }
 
 .title {
-  @apply font-display text-xl font-extrabold leading-tight text-ink;
+  @apply font-display text-xl font-extrabold leading-tight text-muted;
 }
 
 /* mesma superfície chapada do cartão de acompanhamento: uma pergunta por vez,
@@ -33,7 +33,7 @@
 }
 
 .headline {
-  @apply mt-2 font-display text-[1.3rem] font-extrabold leading-tight text-ink;
+  @apply mt-2 font-display text-[1.3rem] font-extrabold leading-tight text-muted;
 }
 
 .note {

@@ -20,7 +20,7 @@
 
 .back {
   @apply flex h-11 w-11 shrink-0 items-center justify-center rounded-full;
-  @apply border border-black/[0.08] bg-brand-foreground text-ink transition-colors duration-150;
+  @apply border border-black/[0.08] bg-brand-foreground text-muted transition-colors duration-150;
   @apply hover:border-peach hover:text-brand-strong;
   @apply focus-visible:outline-none focus-visible:ring-2;
   @apply focus-visible:ring-brand focus-visible:ring-offset-2;
@@ -32,7 +32,7 @@
 }
 
 .title {
-  @apply truncate font-display text-lg font-extrabold leading-tight text-ink;
+  @apply truncate font-display text-lg font-extrabold leading-tight text-muted;
 }
 
 .storeLine {
@@ -78,7 +78,7 @@
 }
 
 .receiptCount {
-  @apply font-display text-[0.95rem] font-extrabold text-ink;
+  @apply font-display text-[0.95rem] font-extrabold text-muted;
 }
 
 .receiptToggle {
@@ -198,7 +198,7 @@
 }
 
 .tearTotal {
-  @apply font-display text-2xl font-extrabold text-ink;
+  @apply font-display text-2xl font-extrabold text-muted;
   font-variant-numeric: tabular-nums;
 }
 
@@ -234,7 +234,7 @@
 }
 
 .confirmedTitle {
-  @apply font-display text-3xl font-extrabold text-ink;
+  @apply font-display text-3xl font-extrabold text-muted;
 }
 
 .confirmedText {

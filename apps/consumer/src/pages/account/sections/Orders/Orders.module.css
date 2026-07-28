@@ -23,7 +23,7 @@
 }
 
 .status {
-  @apply flex flex-wrap items-center gap-2 text-sm font-bold text-ink;
+  @apply flex flex-wrap items-center gap-2 text-sm font-bold text-muted;
 }
 
 /* o pedido vivo se anuncia na lista: é o único que ainda pede atenção */
@@ -38,7 +38,7 @@
 }
 
 .total {
-  @apply shrink-0 text-sm font-extrabold text-ink;
+  @apply shrink-0 text-sm font-extrabold text-muted;
   font-variant-numeric: tabular-nums;
 }
 

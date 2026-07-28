@@ -39,12 +39,12 @@
 
 .step {
   @apply mt-0.5 line-clamp-2 font-display text-[0.95rem] font-extrabold;
-  @apply leading-tight text-ink;
+  @apply leading-tight text-muted;
 }
 
 /* o mesmo número que manda na tela de acompanhamento, em corpo de bolso */
 .eta {
-  @apply flex shrink-0 items-baseline gap-1 text-ink;
+  @apply flex shrink-0 items-baseline gap-1 text-muted;
   font-variant-numeric: tabular-nums;
 }
 

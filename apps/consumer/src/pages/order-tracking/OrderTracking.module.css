@@ -26,12 +26,12 @@
 
 .back {
   @apply flex h-11 w-11 shrink-0 items-center justify-center rounded-full;
-  @apply border border-black/[0.08] bg-brand-foreground text-lg text-ink;
+  @apply border border-black/[0.08] bg-brand-foreground text-lg text-muted;
   @apply transition-colors hover:border-peach hover:text-brand-strong;
 }
 
 .title {
-  @apply font-display text-xl font-extrabold leading-tight text-ink;
+  @apply font-display text-xl font-extrabold leading-tight text-muted;
 }
 
 /* o código sai do rodapé e vira legenda do título: é a identidade do pedido,
@@ -71,7 +71,7 @@
    volta ao cardápio existe, mas em tom de saída, não de oferta */
 .againQuiet {
   @apply mt-8 flex h-12 items-center justify-center rounded-button border;
-  @apply border-black/[0.08] font-bold text-ink transition-colors;
+  @apply border-black/[0.08] font-bold text-muted transition-colors;
   @apply hover:border-peach hover:text-brand-strong;
 }
 

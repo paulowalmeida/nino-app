@@ -13,20 +13,33 @@
   @apply mx-auto w-full max-w-[71rem] flex-1 px-4 sm:px-6;
 }
 
-/* mesmo header colapsável da vitrine: gruda no topo e só ganha borda e
-   sombra quando há conteúdo passando por baixo */
+/*
+ * Só no desktop, e pelo mesmo motivo da seta: no celular a saudação já é o
+ * cabeçalho da gaveta que abriu esta tela, e cada seção traz o próprio
+ * título — repetir "Boa tarde, Paulo" acima de "Dados pessoais" era dizer
+ * duas vezes onde a pessoa está.
+ *
+ * Colapsável como o da vitrine: gruda no topo e só ganha borda e sombra
+ * quando há conteúdo passando por baixo.
+ */
 .header {
-  @apply sticky top-0 z-30 -mx-4 flex items-center gap-3 bg-white/95 px-4;
-  @apply py-4 backdrop-blur sm:-mx-6 sm:px-6;
+  @apply sticky top-0 z-30 -mx-4 hidden items-center gap-3 bg-white/95 px-4;
+  @apply py-4 backdrop-blur sm:-mx-6 sm:px-6 lg:flex;
   border-bottom: 1px solid
     color-mix(in srgb, black calc(var(--p, 0) * 8%), transparent);
   box-shadow: 0 6px 20px -18px rgba(0, 0, 0, calc(var(--p, 0) * 0.9));
 }
 
+/*
+ * Só no desktop. No celular a barra de baixo tem o "Início", que é o mesmo
+ * destino desta seta e fica onde o polegar já está — a seta era um segundo
+ * caminho para a loja, no canto mais distante da mão.
+ */
 .back {
-  @apply flex h-11 w-11 shrink-0 items-center justify-center rounded-full;
-  @apply border border-black/[0.08] bg-brand-foreground text-lg text-ink;
+  @apply hidden h-11 w-11 shrink-0 items-center justify-center rounded-full;
+  @apply border border-black/[0.08] bg-brand-foreground text-lg text-muted;
   @apply transition-colors hover:border-peach hover:text-brand-strong;
+  @apply lg:flex;
 }
 
 .identity {
@@ -34,7 +47,7 @@
 }
 
 .title {
-  @apply truncate font-display text-xl font-extrabold leading-tight text-ink;
+  @apply truncate font-display text-xl font-extrabold leading-tight text-muted;
 }
 
 /* a linha do freguês: diz há quanto tempo a pessoa é de casa, não o e-mail
@@ -43,8 +56,17 @@
   @apply text-xs text-faint;
 }
 
+/* sem o cabeçalho no celular, o topo da seção é o topo da tela: o respiro
+   que era do header passa para cá, somado à faixa do sistema */
 .body {
-  @apply pt-6 lg:flex lg:items-start lg:gap-10;
+  @apply lg:flex lg:items-start lg:gap-10;
+  padding-top: calc(2rem + env(safe-area-inset-top));
+}
+
+@media (min-width: 1024px) {
+  .body {
+    padding-top: 1.5rem;
+  }
 }
 
 .panel {
