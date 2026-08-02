@@ -6,6 +6,8 @@ import { ApiError } from '@utils/api-error'
 import { endSession } from '@utils/end-session'
 import { hadSession } from '@utils/session-hint'
 
+import { refreshOnce } from './refresh-lock'
+
 const BASE_URL = import.meta.env.VITE_BASE_URL
 
 /**
@@ -71,23 +73,14 @@ export const ApiFactory = ({
   /** Bare client: refreshing the session must not trigger its own refresh. */
   const plain = ky.create({ prefix: baseUrl, credentials: 'include' })
 
-  /**
-   * One renewal at a time: N requests hitting 401 together share the same
-   * promise instead of firing N concurrent refreshes.
-   */
-  let refreshing: Promise<boolean> | null = null
-
-  const refreshSession = (): Promise<boolean> => {
-    refreshing ??= plain
-      .post('auth/refresh')
-      .then(() => true)
-      .catch(() => false)
-      .finally(() => {
-        refreshing = null
-      })
-
-    return refreshing
-  }
+  /* O lock é do módulo, não desta instância: ver `refresh-lock.ts`. */
+  const refreshSession = (): Promise<boolean> =>
+    refreshOnce(() =>
+      plain
+        .post('auth/refresh')
+        .then(() => true)
+        .catch(() => false),
+    )
 
   const client = plain.extend({
     retry: {
