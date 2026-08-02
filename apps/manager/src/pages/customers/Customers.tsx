@@ -3,7 +3,7 @@ import { Link } from 'react-router'
 import { Alert } from '@nino/ds/components/Alert'
 import { Button } from '@nino/ds/components/Button'
 import { EmptyState } from '@nino/ds/components/EmptyState'
-import { PageHeader } from '@nino/ds/components/PageHeader'
+import { ScrollArea } from '@nino/ds/components/ScrollArea'
 import { Skeleton } from '@nino/ds/components/Skeleton'
 import { PersonMark } from '@components/PersonMark'
 import { useCurrentTenant } from '@hooks/session/useCurrentTenant'
@@ -23,6 +23,9 @@ const day = new Intl.DateTimeFormat('pt-BR', {
 
 const since = (iso: string): string => day.format(new Date(iso))
 
+/** Rótulos da grade: o primeiro alinha à esquerda, o resto acompanha o número. */
+const COLUMNS = ['Cliente', 'Pedidos', 'Gasto', 'Pontos', 'Cliente desde']
+
 export const Customers = () => {
   const tenant = useCurrentTenant()
   const tenantId = tenant?.tenantId ?? null
@@ -32,16 +35,16 @@ export const Customers = () => {
 
   return (
     <div className={styles.page}>
-      <PageHeader
-        className={`${motion.deal} ${styles.header}`}
-        title="Quem já comprou e volta"
-        accent="volta"
-        description={
-          total !== undefined
-            ? `${total} ${total === 1 ? 'pessoa' : 'pessoas'} com pedido nesta loja.`
-            : 'Quem pede pelo app entra nesta lista.'
-        }
-      />
+      <p className={styles.eyebrow}>Clientes</p>
+
+      <header className={`${motion.deal} ${styles.head}`}>
+        <h1 className={styles.title}>Quem já comprou e volta</h1>
+        <p className={styles.subtitle}>
+          {total !== undefined
+            ? `${total} ${total === 1 ? 'pessoa' : 'pessoas'} com pedido nesta loja. Abra alguém para ver o histórico.`
+            : 'Quem pede pelo app entra nesta lista.'}
+        </p>
+      </header>
 
       {isPending && (
         <div className={styles.loading}>
@@ -58,61 +61,79 @@ export const Customers = () => {
       )}
 
       {!isPending && !isError && customers.length === 0 && (
-        <EmptyState className={motion.unroll}>
-          Ninguém por aqui ainda. Quem fizer o primeiro pedido pelo app
-          aparece nesta lista.
+        <EmptyState className={`${motion.unroll} ${styles.empty}`}>
+          Ninguém por aqui ainda. Quem fizer o primeiro pedido pelo app aparece
+          nesta lista.
         </EmptyState>
       )}
 
       {customers.length > 0 && (
-        <ul className={styles.list}>
-          {customers.map((customer, index) => (
-            <li
-              key={customer.id}
-              className={`${motion.deal} ${styles.item}`}
-              style={riseDelay(index * 35 + 60)}
-            >
-              <Link
-                to={customer.id}
-                className={`${motion.lift} ${styles.link}`}
+        <>
+          <div className={`${styles.grid} ${styles.columns}`} aria-hidden>
+            {COLUMNS.map((label) => (
+              <span key={label} className={styles.columnLabel}>
+                {label}
+              </span>
+            ))}
+          </div>
+
+          <ScrollArea className={styles.listScroll}>
+            <ul className={styles.list}>
+            {customers.map((customer, index) => (
+              <li
+                key={customer.id}
+                className={`${motion.deal} ${styles.item}`}
+                style={riseDelay(index * 35 + 60)}
               >
-                <PersonMark name={customer.name} />
+                <Link
+                  to={customer.id}
+                  className={`${styles.grid} ${styles.link}`}
+                >
+                  <span className={styles.who}>
+                    <PersonMark name={customer.name} />
 
-                <div className={styles.who}>
-                  <span className={styles.name}>{customer.name}</span>
-                  <span className={styles.phone}>
-                    {formatPhone(customer.phone)}
+                    <span className={styles.identity}>
+                      <span className={styles.name}>{customer.name}</span>
+                      <span className={styles.phone}>
+                        {formatPhone(customer.phone)}
+                      </span>
+                    </span>
                   </span>
-                </div>
 
-                <div className={styles.stat}>
-                  <span className={styles.statValue}>{customer.orders}</span>
-                  <span className={styles.statLabel}>
-                    {customer.orders === 1 ? 'pedido' : 'pedidos'}
+                  <span className={styles.stats}>
+                    <span className={styles.stat}>
+                      <span className={styles.statValue}>
+                        {customer.orders}
+                      </span>
+                      <span className={styles.statLabel}>
+                        {customer.orders === 1 ? 'pedido' : 'pedidos'}
+                      </span>
+                    </span>
+
+                    <span className={styles.stat}>
+                      <span className={styles.statValue}>
+                        {brl(customer.spent)}
+                      </span>
+                      <span className={styles.statLabel}>gastos</span>
+                    </span>
+
+                    <span className={styles.stat}>
+                      <span className={styles.statValue}>
+                        {customer.loyaltyPoints}
+                      </span>
+                      <span className={styles.statLabel}>pontos</span>
+                    </span>
+
+                    <span className={styles.since}>
+                      {since(customer.since)}
+                    </span>
                   </span>
-                </div>
-
-                <div className={styles.stat}>
-                  <span className={styles.statValue}>
-                    {brl(customer.spent)}
-                  </span>
-                  <span className={styles.statLabel}>gastos</span>
-                </div>
-
-                <div className={styles.stat}>
-                  <span className={styles.statValue}>
-                    {customer.loyaltyPoints}
-                  </span>
-                  <span className={styles.statLabel}>pontos</span>
-                </div>
-
-                <span className={styles.since}>
-                  desde {since(customer.since)}
-                </span>
-              </Link>
-            </li>
-          ))}
-        </ul>
+                </Link>
+              </li>
+            ))}
+            </ul>
+          </ScrollArea>
+        </>
       )}
 
       {hasNextPage && (
