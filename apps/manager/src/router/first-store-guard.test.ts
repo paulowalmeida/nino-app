@@ -9,10 +9,29 @@ const loadSession = vi.hoisted(() => vi.fn())
 
 vi.mock('@services/auth/session.service', () => ({ loadSession }))
 
-const USER = { id: 'u1', name: 'Weskley' } as AuthUser
+const USER: AuthUser = {
+  id: 'u1',
+  name: 'Weskley',
+  phone: '11987654321',
+  isActive: true,
+  lastLoginAt: null,
+  profileCompletedAt: '2026-08-01T12:00:00.000Z',
+  locale: null,
+  timezone: null,
+  createdAt: '2026-08-01T12:00:00.000Z',
+  updatedAt: '2026-08-01T12:00:00.000Z',
+  credentials: [],
+}
 
-const membership = (): Membership =>
-  ({ tenantId: 't1', companyId: 'c1', role: 'OWNER' }) as Membership
+const membership = (): Membership => ({
+  tenantId: 't1',
+  tenantName: 'Burgão do Nino — Centro',
+  tenantSlug: 'burgao-centro',
+  companyId: 'c1',
+  companyName: 'Burgão do Nino LTDA',
+  role: 'TENANT_OWNER',
+  isCurrent: true,
+})
 
 const locationOf = (result: unknown) =>
   (result as Response).headers.get('location')

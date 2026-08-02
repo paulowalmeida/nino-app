@@ -1,3 +1,4 @@
+import { RouterContextProvider } from 'react-router'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 
 import type { AuthUser, Membership } from '@custom_types/auth'
@@ -12,17 +13,43 @@ vi.mock('@services/auth/session.service', () => ({ loadSession }))
 vi.mock('@utils/form-draft', () => ({ clearDraft }))
 
 const HINT_KEY = 'nino.had-session'
-const USER = { id: 'u1', name: 'Weskley' } as AuthUser
+const USER: AuthUser = {
+  id: 'u1',
+  name: 'Weskley',
+  phone: '11987654321',
+  isActive: true,
+  lastLoginAt: null,
+  profileCompletedAt: '2026-08-01T12:00:00.000Z',
+  locale: null,
+  timezone: null,
+  createdAt: '2026-08-01T12:00:00.000Z',
+  updatedAt: '2026-08-01T12:00:00.000Z',
+  credentials: [],
+}
 
-const membership = (): Membership =>
-  ({ tenantId: 't1', companyId: 'c1', role: 'OWNER' }) as Membership
+const membership = (): Membership => ({
+  tenantId: 't1',
+  tenantName: 'Burgão do Nino — Centro',
+  tenantSlug: 'burgao-centro',
+  companyId: 'c1',
+  companyName: 'Burgão do Nino LTDA',
+  role: 'TENANT_OWNER',
+  isCurrent: true,
+})
 
-const visit = (pathname: string) =>
-  GuestGuard({
-    request: new Request(`http://localhost${pathname}`),
+/* O router entrega mais do que a guarda lê; montar o argumento inteiro evita
+ * cast e quebra o teste se a assinatura mudar, que é o ponto de tê-lo. */
+const visit = (pathname: string) => {
+  const url = new URL(`http://localhost${pathname}`)
+
+  return GuestGuard({
+    request: new Request(url),
+    url,
+    pattern: pathname,
     params: {},
-    context: undefined as never,
+    context: new RouterContextProvider(),
   })
+}
 
 /** Browser carrying a session cookie worth asking the API about. */
 const signedIn = (memberships: Membership[]) => {
