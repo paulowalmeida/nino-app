@@ -71,16 +71,19 @@ const TIMING_FIGURES: {
   key: 'averagePreparationMinutes' | 'averageDeliveryMinutes'
   sampleKey: 'preparationSampleSize' | 'deliverySampleSize'
   label: string
+  empty: string
 }[] = [
   {
     key: 'averagePreparationMinutes',
     sampleKey: 'preparationSampleSize',
     label: 'Tempo médio de preparo',
+    empty: 'Sem pedidos no período',
   },
   {
     key: 'averageDeliveryMinutes',
     sampleKey: 'deliverySampleSize',
     label: 'Tempo médio de entrega',
+    empty: 'Sem entregas no período',
   },
 ]
 
@@ -206,7 +209,7 @@ export const Reports = () => {
 
       {!awaitingDates && (
         <div className={styles.timingFigures}>
-          {TIMING_FIGURES.map(({ key, sampleKey, label }, index) => {
+          {TIMING_FIGURES.map(({ key, sampleKey, label, empty }, index) => {
             const noSample = !isTimingPending && timing?.[sampleKey] === 0
             return (
               <div
@@ -214,11 +217,13 @@ export const Reports = () => {
                 className={`${motion.settle} ${styles.figure}`}
                 style={riseDelay((FIGURES.length + index) * 60)}
               >
-                <span className={styles.value}>
+                <span
+                  className={noSample ? styles.valueEmpty : styles.value}
+                >
                   {isTimingPending || !timing ? (
                     <Skeleton className={styles.ghostCount} />
                   ) : noSample ? (
-                    '—'
+                    empty
                   ) : (
                     <>
                       <CountUp value={Math.round(timing[key])} /> min

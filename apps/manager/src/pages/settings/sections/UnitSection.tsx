@@ -2,12 +2,12 @@ import { useState } from 'react'
 import { Link } from 'react-router'
 
 import { Badge } from '@nino/ds/components/Badge'
-import { Card } from '@nino/ds/components/Card'
 import { Button } from '@nino/ds/components/Button'
 import { Skeleton } from '@nino/ds/components/Skeleton'
 import { useSubscription } from '@hooks/account/useSubscription'
 import { useCompanyGroups } from '@hooks/session/useCompanyGroups'
 import { useCurrentTenant } from '@hooks/session/useCurrentTenant'
+import { RemoveUnitModal } from '@compositions/RemoveUnitModal/RemoveUnitModal'
 import { useRemoveTenant, useTenantDetail } from '@hooks/store/useTenantDetail'
 import { riseDelay } from '@utils/rise-delay'
 
@@ -29,7 +29,12 @@ export const UnitSection = () => {
   const { data: subscription, isPending: isSubscriptionPending } =
     useSubscription()
 
-  const [confirming, setConfirming] = useState<string | null>(null)
+  /* a loja escolhida vive aqui até a modal confirmar: o nome vai junto do id
+     porque é ele que a pessoa vai ter de digitar para fechar */
+  const [confirming, setConfirming] = useState<{
+    id: string
+    name: string
+  } | null>(null)
 
   const units = useCompanyGroups().flatMap(({ units: list }) => list)
   const limit = subscription?.plan.maxTenants ?? null
@@ -38,7 +43,7 @@ export const UnitSection = () => {
   if (isSubscriptionPending) return <Skeleton className={styles.skeleton} />
 
   return (
-    <Card>
+    <section className={card.panel}>
       <header className={`${motion.unroll} ${styles.head}`}>
         <div>
           <h2 className={card.title}>Lojas da empresa</h2>
@@ -88,39 +93,31 @@ export const UnitSection = () => {
                 <span className={styles.company}>{companyName}</span>
               </Link>
 
-              {!isHere &&
-                (confirming === id ? (
-                  <div className={styles.confirm}>
-                    <Button
-                      size="sm"
-                      loading={isRemoving}
-                      className={motion.press}
-                      onClick={() => removeUnit(id)}
-                    >
-                      Fechar loja
-                    </Button>
-                    <Button
-                      size="sm"
-                      variant="ghost"
-                      onClick={() => setConfirming(null)}
-                    >
-                      Voltar
-                    </Button>
-                  </div>
-                ) : (
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    className={`${motion.press} ${styles.remove}`}
-                    onClick={() => setConfirming(id)}
-                  >
-                    Fechar
-                  </Button>
-                ))}
+              {!isHere && (
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  className={`${motion.press} ${styles.remove}`}
+                  onClick={() => setConfirming({ id, name: tenantName })}
+                >
+                  Excluir
+                </Button>
+              )}
             </li>
           )
         })}
       </ul>
+
+      <RemoveUnitModal
+        open={confirming !== null}
+        onOpenChange={(open) => !open && setConfirming(null)}
+        unitName={confirming?.name ?? ''}
+        loading={isRemoving}
+        onConfirm={() =>
+          confirming &&
+          removeUnit(confirming.id, { onSuccess: () => setConfirming(null) })
+        }
+      />
 
       {isFull && (
         <p className={styles.full}>
@@ -129,6 +126,6 @@ export const UnitSection = () => {
           gente sobre a próxima faixa.
         </p>
       )}
-    </Card>
+    </section>
   )
 }

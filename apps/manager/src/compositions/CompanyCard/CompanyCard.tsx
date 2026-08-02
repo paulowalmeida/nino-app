@@ -1,6 +1,5 @@
 import { useState } from 'react'
 
-import { Card } from '@nino/ds/components/Card'
 import { Button } from '@nino/ds/components/Button'
 import { FormField } from '@nino/ds/components/FormField'
 import { Input } from '@nino/ds/components/Input'
@@ -65,7 +64,7 @@ export const CompanyCard = ({
   if (isPending) return <Skeleton className={local.skeleton} />
 
   return (
-    <Card>
+    <section className={styles.panel}>
       <header className={`${motion.unroll} ${styles.head}`}>
         <h2 className={styles.title}>A empresa</h2>
         <p className={styles.hint}>
@@ -115,6 +114,6 @@ export const CompanyCard = ({
       >
         Salvar empresa
       </Button>
-    </Card>
+    </section>
   )
 }

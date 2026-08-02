@@ -5,12 +5,17 @@
 }
 
 .week {
-  @apply flex flex-col;
+  @apply flex flex-col gap-1;
 }
 
-/* uma linha por dia — o dia fechado recua para o fundo */
+/*
+ * Uma linha por dia — o dia fechado recua para o fundo. Sem divisória: fora
+ * do cartão, o traço atravessava a largura inteira da página enquanto os
+ * campos paravam na metade, e sobrava linha à direita apontando para nada. O
+ * que separa os dias é o próprio ritmo das linhas.
+ */
 .day {
-  @apply flex flex-wrap items-center gap-3 border-t border-sand py-3;
+  @apply flex flex-wrap items-center gap-3 py-2;
   @apply transition-opacity duration-200;
 }
 

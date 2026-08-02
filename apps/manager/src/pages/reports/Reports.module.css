@@ -46,6 +46,11 @@
   @apply text-xs leading-snug text-faint lg:text-sm;
 }
 
+/* a frase ocupa o lugar do número, mas não pode ter o peso dele */
+.valueEmpty {
+  @apply font-display text-sm font-semibold leading-tight text-faint lg:text-base;
+}
+
 .top {
   @apply rounded-[22px] border border-line bg-brand-foreground/70 p-4 lg:p-5;
 }

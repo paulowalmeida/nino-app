@@ -48,14 +48,6 @@ a.unit {
   @apply shrink-0 text-faint;
 }
 
-.confirm {
-  @apply flex flex-wrap items-center gap-2;
-}
-
-.confirmText {
-  @apply text-sm text-muted;
-}
-
 /* limite do plano: informa a faixa antes de a API recusar */
 .full {
   @apply mt-4 rounded-xl border border-brand/20 bg-brand/8 p-3;

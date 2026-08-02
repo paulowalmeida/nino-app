@@ -1,20 +1,31 @@
 @reference "@nino/ds/globals.css";
 
 /*
- * Chrome comum dos blocos de configuração. Cada bloco é uma placa da loja:
- * mesma superfície, mesmo cabeçalho, mesma linha com interruptor. O que
- * varia fica no module do próprio componente.
+ * Chrome comum dos blocos de configuração: mesmo cabeçalho, mesma linha com
+ * interruptor. O que varia fica no module do próprio componente.
+ *
+ * Sem moldura de propósito. Cada seção virou rota, então ela é a tela toda —
+ * um cartão aqui só repetiria o contorno que a página já dá, e o título da
+ * seção nasceria dois recuos para dentro do título da página. Quem separa os
+ * blocos por dentro é a divisória de `.group`, não uma borda em volta.
  */
-.head {
-  @apply mb-4;
+.panel {
+  @apply flex min-w-0 flex-col;
 }
 
+.head {
+  @apply mb-4 lg:mb-6;
+}
+
+/* Mesma régua do PageHeader do DS: sem o cabeçalho da casca, o título da
+   seção é o título da tela, e tem de pesar como o das outras páginas. */
 .title {
-  @apply font-display text-lg font-extrabold tracking-[-0.01em] text-ink;
+  @apply font-display text-xl font-extrabold tracking-[-0.02em] text-ink;
+  @apply lg:text-2xl;
 }
 
 .hint {
-  @apply mt-0.5 text-sm text-faint;
+  @apply mt-1 text-sm text-subtle;
 }
 
 .group {
@@ -41,7 +52,8 @@
   @apply mt-0.5 text-xs leading-relaxed text-faint;
 }
 
+/* No fim da leitura, não no começo: quem salva já percorreu o formulário
+   inteiro, e a ação fecha o bloco à direita. */
 .save {
-  @apply mt-4 self-start;
+  @apply mt-4 self-end;
 }
-

@@ -4,13 +4,14 @@ import { Reorder } from 'framer-motion'
 
 import { Alert } from '@nino/ds/components/Alert'
 import { Button } from '@nino/ds/components/Button'
-import { Card } from '@nino/ds/components/Card'
 import { EmptyState } from '@nino/ds/components/EmptyState'
 import { Skeleton } from '@nino/ds/components/Skeleton'
 import { useCatalog } from '@hooks/product/useCatalog'
 import { useItemAvailability } from '@hooks/product/useItemAvailability'
 import { useReorderMenuItems } from '@hooks/product/useReorderMenuItems'
+import type { MenuItem } from '@custom_types/product'
 
+import { DeleteItemDialog } from './DeleteItemDialog'
 import { MenuRow } from './MenuRow/MenuRow'
 import type { MenuBoardProps } from './MenuBoard.types'
 
@@ -32,6 +33,7 @@ export const MenuBoard = ({ tenantId, categoryId, search }: MenuBoardProps) => {
   } = useCatalog(tenantId, { categoryId, search })
 
   const { mutate: setAvailability } = useItemAvailability(tenantId)
+  const [deleting, setDeleting] = useState<MenuItem | null>(null)
   const { mutate: reorder } = useReorderMenuItems(tenantId, categoryId)
 
   /**
@@ -84,7 +86,7 @@ export const MenuBoard = ({ tenantId, categoryId, search }: MenuBoardProps) => {
         <Skeleton className={styles.ghostTally} />
 
         <div className={styles.scroll}>
-          <Card className={styles.list}>
+          <div className={styles.list}>
             <ul className={styles.items}>
               {GHOST_ROWS.map((row) => (
                 <li key={row} className={styles.item}>
@@ -100,7 +102,7 @@ export const MenuBoard = ({ tenantId, categoryId, search }: MenuBoardProps) => {
                 </li>
               ))}
             </ul>
-          </Card>
+          </div>
         </div>
       </div>
     )
@@ -134,7 +136,7 @@ export const MenuBoard = ({ tenantId, categoryId, search }: MenuBoardProps) => {
 
       {/* a rolagem começa aqui: a contagem acima fica parada */}
       <div className={styles.scroll}>
-        <Card className={styles.list}>
+        <div className={styles.list}>
           <Reorder.Group
             as="ul"
             axis="y"
@@ -147,16 +149,16 @@ export const MenuBoard = ({ tenantId, categoryId, search }: MenuBoardProps) => {
                 key={item.id}
                 item={item}
                 index={index}
-                tenantId={tenantId}
                 canReorder={canReorder}
                 onToggleAvailability={(itemId, isActive) =>
                   setAvailability({ id: itemId, isActive })
                 }
+                onDelete={setDeleting}
                 onDragEnd={persist}
               />
             ))}
           </Reorder.Group>
-        </Card>
+        </div>
 
         {hasNextPage && (
           <div className={styles.more}>
@@ -172,6 +174,14 @@ export const MenuBoard = ({ tenantId, categoryId, search }: MenuBoardProps) => {
           </div>
         )}
       </div>
+
+      {deleting && (
+        <DeleteItemDialog
+          tenantId={tenantId}
+          item={deleting}
+          onClose={() => setDeleting(null)}
+        />
+      )}
     </div>
   )
 }

@@ -4,10 +4,11 @@
  * Mesmo casco da fila de pedidos: a tela é fixa e só a lista rola por dentro.
  * O desconto de 3.5rem é a barra fixa do AppLayout, compensada por um `pt-14`
  * no `main`. A largura tem teto como na tela de categorias — numa tela larga o
- * nome do item e o preço ficavam nas duas pontas opostas do monitor.
+ * nome do item e o preço ficavam nas duas pontas opostas do monitor. O teto
+ * acompanha o do balcão: as duas telas mostram o mesmo cardápio.
  */
 .page {
-  @apply relative mx-auto flex h-[calc(100dvh-3.5rem)] max-w-5xl flex-col p-4;
+  @apply relative flex h-[calc(100dvh-3.5rem)] max-w-7xl flex-col p-4;
   @apply lg:h-dvh lg:p-10;
 }
 

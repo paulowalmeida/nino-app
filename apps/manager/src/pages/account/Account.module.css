@@ -1,7 +1,7 @@
 @reference "@nino/ds/globals.css";
 
 .page {
-  @apply relative mx-auto max-w-2xl p-4 lg:p-10;
+  @apply relative max-w-2xl p-4 lg:p-10;
 }
 
 .header {

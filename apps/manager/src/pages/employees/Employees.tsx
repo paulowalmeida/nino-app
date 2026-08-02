@@ -49,6 +49,7 @@ export const Employees = () => {
       name: user.name,
       email: emailOf(user),
       role: ROLE_LABEL[role],
+      lastLoginAt: user.lastLoginAt,
       removable: role !== 'TENANT_OWNER',
       emailEditable: true,
     })
@@ -62,6 +63,7 @@ export const Employees = () => {
       name: courier.name,
       email: emailOf(courier),
       role: isActive ? 'Ativo' : 'Parado',
+      lastLoginAt: courier.lastLoginAt,
       quiet: true,
       removable: true,
     })

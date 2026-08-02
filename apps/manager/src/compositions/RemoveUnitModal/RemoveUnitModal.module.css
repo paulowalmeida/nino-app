@@ -1,0 +1,29 @@
+@reference "@nino/ds/globals.css";
+
+.title {
+  @apply font-display text-lg font-extrabold tracking-tight text-ink;
+}
+
+.form {
+  @apply flex flex-col gap-4;
+}
+
+.field {
+  @apply flex flex-col gap-1.5;
+}
+
+.label {
+  @apply text-sm leading-relaxed text-body;
+}
+
+/* o nome vem em bloco de código para não se confundir com a instrução */
+.code {
+  @apply rounded-md bg-sand px-1.5 py-0.5;
+  @apply font-mono text-sm font-semibold text-ink;
+  user-select: all;
+}
+
+.danger {
+  @apply bg-danger text-white;
+  @apply hover:bg-danger disabled:opacity-50;
+}

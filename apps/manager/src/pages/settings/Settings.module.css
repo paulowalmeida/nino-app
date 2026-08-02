@@ -1,11 +1,7 @@
 @reference "@nino/ds/globals.css";
 
 .page {
-  @apply relative mx-auto max-w-5xl p-4 lg:p-10;
-}
-
-.header {
-  @apply mb-4 flex flex-col gap-1.5 lg:mb-8;
+  @apply relative max-w-5xl p-4 lg:p-10;
 }
 
 .panel {

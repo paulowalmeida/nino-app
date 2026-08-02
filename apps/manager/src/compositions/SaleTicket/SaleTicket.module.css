@@ -6,9 +6,15 @@
  * direita. O que muda aqui é o que o balcão precisa a mais — quem pediu,
  * forma de pagamento e o fechamento.
  */
+/*
+ * Sem moldura: a comanda é uma das duas regiões da tela, não um objeto solto
+ * sobre ela. Quem a separa do cardápio é o fundo próprio — borda e cantos
+ * arredondados só repetiam o contorno que a página já dá. Com eles saiu
+ * também o `overflow-hidden`, que existia para o rodapé sangrado não comer a
+ * curva de baixo: sem curva, não há o que recortar.
+ */
 .ticket {
-  @apply flex w-full flex-col rounded-[24px] border border-line;
-  @apply bg-brand-foreground;
+  @apply flex w-full flex-col bg-brand-foreground;
   @apply lg:h-full lg:min-h-0;
 }
 

@@ -3,14 +3,13 @@ import { Link } from 'react-router'
 
 import { Reorder, useDragControls } from 'framer-motion'
 
-import { Dialog } from '@nino/ds/components/Dialog'
+import { Button } from '@nino/ds/components/Button'
 import { Switch } from '@nino/ds/components/Switch'
 import gripIcon from '@assets/icons/grip.svg?raw'
 import trashIcon from '@assets/icons/trash.svg?raw'
 import { Icon } from '@components/Icon/Icon'
 import { ItemThumb } from '@components/ItemThumb'
 import { REORDER_TRANSITION } from '@constants/reorder-transition'
-import { useDeleteMenuItem } from '@hooks/product/useDeleteMenuItem'
 import { riseDelay } from '@utils/rise-delay'
 
 import type { MenuRowProps } from './MenuRow.types'
@@ -26,26 +25,16 @@ const brl = new Intl.NumberFormat('pt-BR', {
 export const MenuRow = ({
   item,
   index,
-  tenantId,
   canReorder,
   onToggleAvailability,
+  onDelete,
   onDragEnd,
 }: MenuRowProps) => {
   const dragControls = useDragControls()
   const [isEntering, setIsEntering] = useState(true)
-  const [isDeleteOpen, setIsDeleteOpen] = useState(false)
-
-  const { mutate: deleteItem, isPending: isDeleting } = useDeleteMenuItem(
-    tenantId,
-    item.id
-  )
 
   const handleEntranceEnd = (event: AnimationEvent<HTMLLIElement>) => {
     if (event.target === event.currentTarget) setIsEntering(false)
-  }
-
-  const handleDelete = () => {
-    deleteItem(undefined, { onSuccess: () => setIsDeleteOpen(false) })
   }
 
   return (
@@ -91,25 +80,16 @@ export const MenuRow = ({
         aria-label={`${item.name} disponível`}
       />
 
-      <button
-        type="button"
-        className={styles.deleteHandle}
+      {/* só onde sobra largura: no celular, excluir mora na tela do item */}
+      <Button
+        variant="ghost"
+        size="icon"
+        className={`${motion.press} ${styles.delete}`}
         aria-label={`Excluir ${item.name}`}
-        onClick={() => setIsDeleteOpen(true)}
+        onClick={() => onDelete(item)}
       >
         <Icon svg={trashIcon} />
-      </button>
-
-      <Dialog
-        open={isDeleteOpen}
-        onOpenChange={setIsDeleteOpen}
-        title="Excluir item"
-        description={`"${item.name}" será removido do cardápio. Esta ação não pode ser desfeita.`}
-        confirmLabel="Excluir"
-        onConfirm={handleDelete}
-        onCancel={() => setIsDeleteOpen(false)}
-        loading={isDeleting}
-      />
+      </Button>
     </Reorder.Item>
   )
 }

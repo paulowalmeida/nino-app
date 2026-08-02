@@ -31,3 +31,11 @@
 .state {
   @apply col-span-1;
 }
+
+.status {
+  @apply mt-1 text-xs text-muted;
+}
+
+.statusError {
+  @apply mt-1 text-xs text-danger;
+}

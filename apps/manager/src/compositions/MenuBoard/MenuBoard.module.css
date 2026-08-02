@@ -21,10 +21,13 @@
   @apply min-h-0 flex-1 overflow-y-auto overscroll-contain pb-2;
 }
 
-/* superfície, borda e sombra vêm do Card do DS; o `p-0` é para as divisórias
-   das linhas irem de borda a borda */
+/*
+ * Sem moldura: a lista é a tela, não um objeto sobre ela. Quem separa uma
+ * linha da outra é a divisória de `.item`, que já faz o trabalho — a borda em
+ * volta só somava um contorno ao redor do contorno da página.
+ */
 .list {
-  @apply overflow-hidden p-0;
+  @apply overflow-hidden;
 }
 
 .items {
@@ -42,12 +45,6 @@
   @apply hover:bg-surface-sunk hover:text-subtle active:cursor-grabbing;
 }
 
-.deleteHandle {
-  @apply flex shrink-0 items-center justify-center rounded-lg p-1.5;
-  @apply text-faint transition-colors duration-150;
-  @apply hover:bg-danger-surface hover:text-danger;
-}
-
 /*
  * Sold out reads as absence, not as a badge: the row fades and the price is
  * struck through, so the owner sees the menu the way the customer will.
@@ -55,6 +52,16 @@
 .itemOff {
   @apply flex items-center gap-3 border-b border-line/60 px-2 opacity-45;
   @apply transition-opacity duration-200 last:border-b-0;
+}
+
+/*
+ * Excluir só aparece a partir de `lg`, onde a linha tem largura de sobra: no
+ * celular ele disputaria o polegar com o interruptor de disponível, e a
+ * exclusão já mora na tela do item.
+ */
+.delete {
+  @apply hidden h-9 w-9 text-faint lg:inline-flex;
+  @apply hover:bg-danger-surface hover:text-danger;
 }
 
 /*

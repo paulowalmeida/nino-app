@@ -36,6 +36,13 @@ export function Switch({
 }: SwitchProps) {
   return (
     <ArkSwitch.Root
+      /*
+       * `relative` ancora o input escondido, que o Ark posiciona em absolute.
+       * Sem isso ele se prende ao primeiro ancestral posicionado — numa lista
+       * rolável, um contêiner acima do scroller: o input escapa do recorte e
+       * estica o documento na altura que teria no fluxo, uma linha por item.
+       */
+      className="relative"
       checked={checked}
       defaultChecked={defaultChecked}
       onCheckedChange={({ checked: c }) => onCheckedChange?.(c)}

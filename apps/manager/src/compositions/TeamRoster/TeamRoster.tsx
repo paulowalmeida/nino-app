@@ -3,6 +3,7 @@ import { Button } from '@nino/ds/components/Button'
 import { EmptyState } from '@nino/ds/components/EmptyState'
 import { Skeleton } from '@nino/ds/components/Skeleton'
 import { PersonMark } from '@components/PersonMark'
+import { lastSeenLabel } from '@utils/last-seen'
 import { riseDelay } from '@utils/rise-delay'
 
 import type { TeamRosterProps } from './TeamRoster.types'
@@ -67,6 +68,13 @@ export const TeamRoster = ({
             <div className={styles.person}>
               <p className={styles.name}>{entry.name}</p>
               {entry.email && <p className={styles.email}>{entry.email}</p>}
+              <p
+                className={
+                  entry.lastLoginAt ? styles.lastSeen : styles.neverSeen
+                }
+              >
+                Último acesso: {lastSeenLabel(entry.lastLoginAt)}
+              </p>
             </div>
 
             <Badge variant="info">{entry.role}</Badge>

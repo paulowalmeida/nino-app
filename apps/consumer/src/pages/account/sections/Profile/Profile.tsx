@@ -5,6 +5,7 @@ import { toast } from '@nino/ds/components/Toast'
 import { useCompleteProfile } from '@hooks/useCompleteProfile'
 import { useCustomerSession } from '@hooks/useCustomerSession'
 import { formatPhone } from '@utils/phone'
+import { hasProfanity } from '@utils/profanity'
 
 import section from '../section.module.css'
 
@@ -28,9 +29,13 @@ export const Profile = () => {
   const trimmedEmail = email.trim()
 
   const emailValid = !trimmedEmail || /.+@.+\..+/.test(trimmedEmail)
+  /* o nome vai para a comanda e para as telas do painel — palavrão fica de
+     fora antes de sair do aparelho, e a API recusa de novo do outro lado */
+  const nameClean = !hasProfanity(trimmedName)
   const changed =
     trimmedName !== savedName || trimmedEmail !== (customer?.email ?? '')
-  const ready = trimmedName.length >= 2 && emailValid && changed
+  const ready =
+    trimmedName.length >= 2 && nameClean && emailValid && changed
 
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault()
@@ -62,9 +67,15 @@ export const Profile = () => {
           <Input
             id="profile-name"
             autoComplete="name"
+            error={!nameClean}
             value={name}
             onChange={(event) => setName(event.target.value)}
           />
+          {!nameClean && (
+            <p className={section.hint}>
+              Esse nome vai ser lido em voz alta na cozinha — escolha outro.
+            </p>
+          )}
         </div>
 
         <div className={section.field}>
