@@ -1,7 +1,9 @@
 import { Badge } from '@nino/ds/components/Badge'
+import { Menu } from '@nino/ds/components/Menu'
 import { Button } from '@nino/ds/components/Button'
 import { EmptyState } from '@nino/ds/components/EmptyState'
 import { Skeleton } from '@nino/ds/components/Skeleton'
+import { NavIcon } from '@components/NavIcon'
 import { PersonMark } from '@components/PersonMark'
 import { lastSeenLabel } from '@utils/last-seen'
 import { riseDelay } from '@utils/rise-delay'
@@ -10,6 +12,28 @@ import type { TeamRosterProps } from './TeamRoster.types'
 
 import styles from './TeamRoster.module.css'
 import motion from '@styles/motion.module.css'
+
+/**
+ * O que cada cargo pode fazer, dito em uma linha: quem troca precisa saber o
+ * que está entregando, e "gerente" sozinho não explica nada.
+ */
+const ROLE_OPTIONS = [
+  {
+    value: 'TENANT_OWNER' as const,
+    label: 'Dono',
+    hint: 'Tudo, inclusive assinatura e equipe',
+  },
+  {
+    value: 'MANAGER' as const,
+    label: 'Gerente',
+    hint: 'Dia a dia e configurações da loja',
+  },
+  {
+    value: 'STAFF' as const,
+    label: 'Atendente',
+    hint: 'Vê e move pedidos',
+  },
+]
 
 /** Três pessoas: uma equipe pequena inteira, que é o caso comum. */
 const GHOST_ROWS = ['first', 'second', 'third']
@@ -21,8 +45,10 @@ export const TeamRoster = ({
   empty,
   isPending,
   removingId,
+  changingRoleId,
   onRemove,
   onEditEmail,
+  onChangeRole,
 }: TeamRosterProps) => (
   <section className={styles.roster}>
     <header className={`${motion.unroll} ${styles.head}`}>
@@ -77,7 +103,31 @@ export const TeamRoster = ({
               </p>
             </div>
 
-            <Badge variant="info">{entry.role}</Badge>
+            {onChangeRole && entry.roleKey && !entry.roleLocked ? (
+              <Menu
+                contentClassName={styles.rolePanel}
+                trigger={
+                  <button
+                    type="button"
+                    className={styles.roleTrigger}
+                    disabled={changingRoleId === entry.id}
+                  >
+                    <Badge variant="info">{entry.role}</Badge>
+                    <NavIcon name="chevron" className={styles.roleCaret} />
+                  </button>
+                }
+                items={ROLE_OPTIONS.map(({ value, label, hint }) => ({
+                  value,
+                  label: `${label} — ${hint}`,
+                  disabled: entry.roleKey === value,
+                  onSelect: () => onChangeRole(entry.id, value),
+                }))}
+              />
+            ) : (
+              <Badge variant="info" title={entry.roleLocked}>
+                {entry.role}
+              </Badge>
+            )}
 
             <div className={styles.actions}>
               {entry.emailEditable && onEditEmail && (

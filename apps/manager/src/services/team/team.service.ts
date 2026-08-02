@@ -1,7 +1,9 @@
 import type { CredentialInfo, UpdateEmailRequest } from '@custom_types/account'
+import type { TenantRole } from '@custom_types/auth'
 import type {
   CourierPage,
   CreateInviteRequest,
+  StaffMember,
   StaffPage,
 } from '@custom_types/team'
 import { ApiFactory } from '@services/api/api.service'
@@ -25,6 +27,22 @@ export const sendInvite = (
   create<CreateInviteRequest, { id: string; email: string }>(
     `tenants/${tenantId}/invites`,
     data
+  )
+
+/**
+ * Troca o cargo de quem já está na loja. A API recusa rebaixar o último dono e
+ * recusa quem tenta mudar o próprio cargo — a tela esconde os dois casos, mas
+ * quem decide é o servidor.
+ */
+export const updateStaffRole = (
+  tenantId: string,
+  userId: string,
+  role: TenantRole
+): Promise<StaffMember> =>
+  patch<{ role: TenantRole }, StaffMember>(
+    `tenants/${tenantId}/staff/${userId}`,
+    'role',
+    { role }
   )
 
 export const updateStaffEmail = (

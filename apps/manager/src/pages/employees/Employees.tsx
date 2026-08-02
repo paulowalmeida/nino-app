@@ -11,6 +11,8 @@ import { useInvite } from '@hooks/team/useInvite'
 import { useRemoveMember } from '@hooks/team/useRemoveMember'
 import { useStaff } from '@hooks/team/useStaff'
 import { useUpdateStaffEmail } from '@hooks/team/useUpdateStaffEmail'
+import { useUpdateStaffRole } from '@hooks/team/useUpdateStaffRole'
+import { useSessionStore } from '@states/useSessionStore'
 import type { AuthUser, TenantRole } from '@custom_types/auth'
 
 import styles from './Employees.module.css'
@@ -43,12 +45,23 @@ export const Employees = () => {
 
   const [editingStaffId, setEditingStaffId] = useState<string | null>(null)
 
+  const { mutate: changeRole, isPending: isChangingRole, variables: roleVars } =
+    useUpdateStaffRole(tenantId)
+
+  /* Só o dono troca cargo — a API recusa o resto, e mostrar o menu para quem
+   * vai levar 403 é prometer o que não se cumpre. */
+  const isOwner = tenant?.role === 'TENANT_OWNER'
+  const meId = useSessionStore((state) => state.user?.id)
+
   const staffEntries: RosterEntry[] = (staff?.data ?? []).map(
     ({ user, role }) => ({
       id: user.id,
       name: user.name,
       email: emailOf(user),
       role: ROLE_LABEL[role],
+      roleKey: role,
+      roleLocked:
+        user.id === meId ? 'Você não pode mudar o próprio cargo' : undefined,
       lastLoginAt: user.lastLoginAt,
       removable: role !== 'TENANT_OWNER',
       emailEditable: true,
@@ -90,6 +103,12 @@ export const Employees = () => {
           removingId={removing?.kind === 'STAFF' ? removing.id : undefined}
           onRemove={(id) => removeMember({ id, kind: 'STAFF' })}
           onEditEmail={setEditingStaffId}
+          onChangeRole={
+            isOwner
+              ? (userId, role) => changeRole({ userId, role })
+              : undefined
+          }
+          changingRoleId={isChangingRole ? roleVars?.userId : undefined}
         />
 
         <TeamRoster

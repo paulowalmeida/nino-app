@@ -77,3 +77,20 @@
 .ghostRole {
   @apply ml-auto h-[1.125rem] w-20 shrink-0 rounded-[4px];
 }
+
+/* o cargo vira botão sem parecer outro botão: o crachá continua sendo o
+   crachá, e a setinha diz que dá para trocar */
+.roleTrigger {
+  @apply flex shrink-0 items-center gap-1 rounded-full transition-opacity;
+  @apply duration-150 hover:opacity-80 disabled:opacity-50;
+  @apply focus-visible:outline-2 focus-visible:outline-brand;
+  @apply focus-visible:outline-offset-2;
+}
+
+.roleCaret {
+  @apply h-3 w-3 rotate-90 text-faint;
+}
+
+.rolePanel {
+  @apply min-w-64;
+}
