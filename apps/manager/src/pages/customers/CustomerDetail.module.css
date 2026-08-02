@@ -6,8 +6,17 @@
  * separa cada bloco.
  */
 .page {
-  @apply flex h-[calc(100dvh-3.5rem)] max-w-3xl flex-col p-4;
+  @apply flex h-[calc(100dvh-3.5rem)] max-w-5xl flex-col p-4;
   @apply lg:h-dvh lg:p-10;
+}
+
+/* Duas colunas no desktop: o histórico é o assunto e fica com a largura; o
+   resumo acompanha à direita, parado. No celular o resumo vem primeiro, em
+   faixa, porque é o que se lê antes de rolar pedido por pedido. */
+.body {
+  @apply mt-5 flex min-h-0 flex-1 flex-col gap-5;
+  @apply lg:grid lg:grid-cols-[minmax(0,1fr)_15rem] lg:items-start lg:gap-8;
+  @apply lg:overflow-hidden;
 }
 
 .eyebrow {
@@ -50,30 +59,35 @@
  * ("17 pedidos, R$ 2.831, desde julho"), e cartão em volta de cada um quebra
  * essa leitura em quatro paradas. No celular quebram em duas colunas.
  */
+/* celular: faixa 2×2 entre fios. desktop: coluna à direita, um fato por linha */
 .facts {
-  @apply mt-5 grid grid-cols-2 gap-y-4 border-y border-line/60 py-4;
-  @apply lg:grid-cols-4 lg:gap-0;
+  @apply grid grid-cols-2 gap-y-4 border-y border-line/60 py-4;
+  @apply lg:order-2 lg:grid-cols-1 lg:gap-0 lg:border-y-0 lg:py-0;
 }
 
 .fact {
-  @apply flex flex-col gap-0.5 lg:border-l lg:border-line/60 lg:px-5;
+  @apply flex flex-col gap-0.5;
+  @apply lg:flex-row lg:items-baseline lg:justify-between lg:gap-3;
+  @apply lg:border-b lg:border-sand lg:py-2.5;
 }
 
-.fact:first-child {
-  @apply lg:border-l-0 lg:pl-0;
+.fact:last-child {
+  @apply lg:border-b-0;
 }
 
 .factLabel {
   @apply text-[0.68rem] font-bold uppercase tracking-[0.1em] text-faintest;
 }
 
+/* número em corpo de texto, não manchete: aqui ele é referência de apoio —
+   quem manda na tela é a lista de pedidos */
 .factValue {
-  @apply font-display text-lg font-extrabold text-ink;
+  @apply font-display text-[0.95rem] font-extrabold text-ink lg:text-right;
   font-variant-numeric: tabular-nums;
 }
 
 .history {
-  @apply mt-6 flex min-h-0 flex-1 flex-col;
+  @apply flex min-h-0 flex-1 flex-col lg:order-1 lg:h-full;
 }
 
 /* o título e a régua da janela na mesma linha: o que se lê abaixo tem limite,

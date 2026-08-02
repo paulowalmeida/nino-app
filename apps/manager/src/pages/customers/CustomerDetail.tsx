@@ -23,9 +23,11 @@ const stamp = new Intl.DateTimeFormat('pt-BR', {
   minute: '2-digit',
 })
 
+/* mês abreviado: "14 de julho de 2026" quebrava em duas linhas na coluna de
+   resumo e desalinhava os quatro números */
 const day = new Intl.DateTimeFormat('pt-BR', {
   day: '2-digit',
-  month: 'long',
+  month: 'short',
   year: 'numeric',
 })
 
@@ -80,7 +82,8 @@ export const CustomerDetail = () => {
         </div>
       </header>
 
-      <dl className={styles.facts}>
+      <div className={styles.body}>
+        <dl className={styles.facts}>
         {[
           ['Pedidos', String(customer.orders)],
           ['Gastos', brl(customer.spent)],
@@ -96,9 +99,9 @@ export const CustomerDetail = () => {
             <dd className={styles.factValue}>{value}</dd>
           </div>
         ))}
-      </dl>
+        </dl>
 
-      <section className={styles.history} aria-label="Últimos pedidos">
+        <section className={styles.history} aria-label="Últimos pedidos">
         <div className={styles.historyHead}>
           <h2 className={styles.historyTitle}>Últimos pedidos</h2>
           <p className={styles.historyWindow}>
@@ -142,7 +145,8 @@ export const CustomerDetail = () => {
             </ul>
           </ScrollArea>
         )}
-      </section>
+        </section>
+      </div>
     </div>
   )
 }
