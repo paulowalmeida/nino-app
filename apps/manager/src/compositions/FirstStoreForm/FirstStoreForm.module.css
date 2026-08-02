@@ -1,30 +1,77 @@
 @reference "@nino/ds/globals.css";
 
+/* container query, não breakpoint de viewport: o mesmo formulário mora num
+   painel estreito (cadastro inicial) e num cartão largo (abrir unidade) —
+   quem decide o número de colunas é a caixa, não o tamanho da tela */
 .form {
-  @apply mt-8 flex flex-col gap-4 text-left;
+  @apply flex flex-col text-left;
+  container-type: inline-size;
+}
+
+/*
+ * Dez campos empilhados são uma parede: quem preenche não sabe quanto falta.
+ * Divididos em dois blocos — quem é a loja, onde ela fica — cada trecho tem
+ * começo e fim, e a divisória basta para separá-los. Mesma régua de grupo das
+ * seções de configurações.
+ */
+.group {
+  @apply flex flex-col gap-4;
+}
+
+.group + .group {
+  @apply mt-6 border-t border-sand pt-6;
+}
+
+.groupTitle {
+  @apply text-[0.7rem] font-bold uppercase tracking-[0.12em] text-faint;
 }
 
 .row {
   @apply grid grid-cols-2 gap-4;
 }
 
+/* bairro e cidade são frases, o estado são duas letras: dar coluna igual aos
+   três deixava o campo de UF com o triplo da largura que ele usa */
+.rowAddress {
+  @apply grid grid-cols-2 gap-4;
+}
+
+@container (min-width: 32rem) {
+  .rowAddress {
+    grid-template-columns: 1.3fr 1fr 5.5rem;
+  }
+}
+
+/* o que o cliente vai digitar no navegador: o prefixo é parte do endereço,
+   não legenda — fica colado ao campo e com o mesmo peso do que se escreve */
 .slugField {
-  @apply flex items-center gap-1;
+  @apply flex items-center gap-1.5;
 }
 
 .slugPrefix {
-  @apply shrink-0 text-sm text-text/50;
+  @apply shrink-0 text-sm font-semibold tracking-[-0.01em] text-faint;
 }
 
 .draftNotice {
-  @apply -mb-1 flex items-center gap-1.5 text-sm text-brand-strong;
+  @apply mb-4 flex items-center gap-1.5 text-sm text-brand-strong;
 }
 
 .draftNotice::before {
-  content: "↺";
+  content: '↺';
   @apply text-base leading-none;
 }
 
+.error {
+  @apply mt-6;
+}
+
+/* ação fecha o formulário à direita, atrás de um fio — mesma régua da ficha
+   do item e do formulário de novo produto */
+.actions {
+  @apply mt-6 flex flex-col border-t border-sand pt-5;
+  @apply sm:flex-row sm:justify-end;
+}
+
 .submit {
-  @apply mt-2 w-full;
+  @apply w-full sm:w-auto;
 }

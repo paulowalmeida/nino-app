@@ -29,7 +29,11 @@ export const CreateStore = () => {
             ? 'Sua conta está pronta. Cadastre a loja para começar a receber pedidos.'
             : 'Cada unidade tem cardápio, horário e zonas próprios. A equipe e a assinatura continuam da empresa.'}
         </p>
-        <FirstStoreForm />
+        <div className={styles.form}>
+          <FirstStoreForm
+            submitLabel={isFirst ? 'Criar loja' : 'Abrir unidade'}
+          />
+        </div>
 
         {!isFirst && current && (
           <Link

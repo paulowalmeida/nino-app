@@ -17,6 +17,15 @@ const destructiveItem =
 // `border-0`: o Ark usa <hr>, que traz borda do navegador por padrão
 const baseSeparator = 'my-1 h-px border-0 bg-sand'
 
+/* O Ark posiciona o portal com `z-index: var(--z-index)` e entrega 50. Cromo
+ * fixo de app passa disso — o sidebar do gestor é z-70 — e o menu abre atrás
+ * da coluna: aberto, mas invisível e sem receber clique.
+ *
+ * Tem de ser `!important`: o Ark reescreve o style inline do positioner a cada
+ * reposicionamento, então passar `--z-index` via prop `style` dura até o
+ * primeiro reflow e some. */
+const basePositioner = 'z-[100]!'
+
 function isSeparator(item: MenuItem): item is { separator: true } {
   return 'separator' in item
 }
@@ -51,7 +60,7 @@ export function Menu({
     <ArkMenu.Root onSelect={({ value }) => handleSelect(value)}>
       <ArkMenu.Trigger asChild>{trigger}</ArkMenu.Trigger>
       <Portal>
-        <ArkMenu.Positioner>
+        <ArkMenu.Positioner className={basePositioner}>
           <ArkMenu.Content
             className={mergeClasses(baseContent, contentClassName ?? '')}
           >

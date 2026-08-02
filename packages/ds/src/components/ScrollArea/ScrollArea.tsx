@@ -1,10 +1,14 @@
 import type { CSSProperties } from 'react'
+import { useCallback, useEffect, useRef } from 'react'
 
 import { ScrollArea as ArkScrollArea } from '@ark-ui/react/scroll-area'
 import { mergeClasses } from '@ds/lib/mergeClasses'
 
 import styles from './ScrollArea.module.css'
 import { ScrollAreaProps } from './ScrollArea.types'
+
+/** How much of the edge dissolves while the axis can still scroll. */
+const FADE = '2rem'
 
 const rootClass = 'group relative overflow-hidden'
 
@@ -38,12 +42,12 @@ const thumbBaseClass =
 
 const thumbVerticalClass = mergeClasses(
   thumbBaseClass,
-  'mx-auto w-[2px] group-hover:w-1.5',
+  'mx-auto w-[2px] group-hover:w-1.5'
 )
 
 const thumbHorizontalClass = mergeClasses(
   thumbBaseClass,
-  'my-auto h-[2px] group-hover:h-1.5',
+  'my-auto h-[2px] group-hover:h-1.5'
 )
 
 /**
@@ -54,7 +58,7 @@ const thumbHorizontalClass = mergeClasses(
  *
  * @param className - Root classes, typically a height constraint
  *
- * @param fadeEdges - Fade out the edge the content still scrolls past
+ * @param fadeEdges - Fade any edge the content can still scroll past
  *
  * @param style - Inline sizing when the height does not come from a class
  *
@@ -63,10 +67,44 @@ const thumbHorizontalClass = mergeClasses(
 export function ScrollArea({
   children,
   className,
-  fadeEdges = true,
+  fadeEdges = false,
   style,
   thumbColor,
 }: ScrollAreaProps) {
+  const viewportRef = useRef<HTMLDivElement>(null)
+
+  /* Uma variável por borda, escrita direto no elemento: a máscara do CSS só
+   * lê. Sem estado em React — isto roda a cada frame de rolagem. */
+  const paintEdges = useCallback(() => {
+    const el = viewportRef.current
+    if (!el) return
+
+    const { scrollTop, scrollLeft } = el
+    const bottom = el.scrollHeight - el.clientHeight - scrollTop
+    const right = el.scrollWidth - el.clientWidth - scrollLeft
+
+    el.style.setProperty('--ds-fade-t', scrollTop > 1 ? FADE : '0px')
+    el.style.setProperty('--ds-fade-b', bottom > 1 ? FADE : '0px')
+    el.style.setProperty('--ds-fade-l', scrollLeft > 1 ? FADE : '0px')
+    el.style.setProperty('--ds-fade-r', right > 1 ? FADE : '0px')
+  }, [])
+
+  /* O conteúdo cresce e encolhe sem ninguém rolar (item novo na lista, coluna
+   * que recolhe): sem observar o tamanho, a borda ficaria esmaecida no fim de
+   * uma lista que já cabe inteira. */
+  useEffect(() => {
+    const el = viewportRef.current
+    if (!fadeEdges || !el) return
+
+    paintEdges()
+
+    const observer = new ResizeObserver(paintEdges)
+    observer.observe(el)
+    if (el.firstElementChild) observer.observe(el.firstElementChild)
+
+    return () => observer.disconnect()
+  }, [fadeEdges, paintEdges])
+
   const thumbStyle = {
     '--ds-scroll-thumb': thumbColor ?? 'var(--color-brand)',
     ...style,
@@ -78,6 +116,8 @@ export function ScrollArea({
       style={thumbStyle}
     >
       <ArkScrollArea.Viewport
+        ref={viewportRef}
+        onScroll={fadeEdges ? paintEdges : undefined}
         className={mergeClasses(viewportClass, fadeEdges && styles.fade)}
       >
         <ArkScrollArea.Content>{children}</ArkScrollArea.Content>

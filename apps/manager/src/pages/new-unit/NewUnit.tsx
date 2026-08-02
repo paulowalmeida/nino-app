@@ -29,6 +29,7 @@ export const NewUnit = () => (
 
     <div className={`${motion.settle} ${styles.form}`}>
       <FirstStoreForm
+        submitLabel="Abrir unidade"
         onCreated={({ id }) => `/${id}/configuracoes/unidade`}
       />
     </div>

@@ -1,105 +1,26 @@
-/* Pistas de borda do ScrollArea.
+/* Pistas de borda do ScrollArea, opt-in por `fadeEdges`.
  *
- * O conteúdo dissolve no lado em que ainda sobra rolagem e volta a ficar
- * sólido ao chegar na ponta — a borda vira o indicador, no lugar de sombra
- * ou gradiente fixo. Quem move a máscara é o próprio scroll (scroll-driven
- * animation): sem listener, sem re-render, sem estado em React.
- *
- * Sem overflow no eixo, a timeline fica inativa e vale o initial-value (0px),
- * ou seja: nenhuma máscara. Mesmo efeito em navegador sem suporte, pelo
- * @supports — o componente degrada para a versão sem fade. */
-
-@property --ds-scroll-fade-t {
-  syntax: '<length>';
-  inherits: false;
-  initial-value: 0px;
-}
-@property --ds-scroll-fade-b {
-  syntax: '<length>';
-  inherits: false;
-  initial-value: 0px;
-}
-@property --ds-scroll-fade-l {
-  syntax: '<length>';
-  inherits: false;
-  initial-value: 0px;
-}
-@property --ds-scroll-fade-r {
-  syntax: '<length>';
-  inherits: false;
-  initial-value: 0px;
-}
+ * A máscara é estática: quem muda as quatro variáveis é o handler de scroll
+ * do componente. A primeira versão disto usava `animation-timeline:
+ * scroll(self)` e travava o renderer do Chrome quando um menu do Ark abria
+ * (scroll lock + máscara no mesmo scroller = recálculo em loop). Não voltar
+ * para scroll-driven animation aqui. */
 
 .fade {
-  --ds-scroll-fade: 2rem;
-
-  /* Dois gradientes cruzados por `intersect`: um recorta o eixo vertical, o
-   * outro o horizontal, e o resultado é a interseção dos dois. */
   mask-image:
     linear-gradient(
       to bottom,
       transparent,
-      #000 var(--ds-scroll-fade-t),
-      #000 calc(100% - var(--ds-scroll-fade-b)),
+      #000 var(--ds-fade-t, 0px),
+      #000 calc(100% - var(--ds-fade-b, 0px)),
       transparent
     ),
     linear-gradient(
       to right,
       transparent,
-      #000 var(--ds-scroll-fade-l),
-      #000 calc(100% - var(--ds-scroll-fade-r)),
+      #000 var(--ds-fade-l, 0px),
+      #000 calc(100% - var(--ds-fade-r, 0px)),
       transparent
     );
   mask-composite: intersect;
-}
-
-@supports (animation-timeline: scroll()) {
-  .fade {
-    animation:
-      ds-scroll-fade-t linear both,
-      ds-scroll-fade-b linear both,
-      ds-scroll-fade-l linear both,
-      ds-scroll-fade-r linear both;
-    animation-timeline:
-      scroll(self block), scroll(self block), scroll(self inline),
-      scroll(self inline);
-    animation-range:
-      0 var(--ds-scroll-fade),
-      calc(100% - var(--ds-scroll-fade)) 100%,
-      0 var(--ds-scroll-fade),
-      calc(100% - var(--ds-scroll-fade)) 100%;
-  }
-}
-
-@keyframes ds-scroll-fade-t {
-  from {
-    --ds-scroll-fade-t: 0px;
-  }
-  to {
-    --ds-scroll-fade-t: var(--ds-scroll-fade);
-  }
-}
-@keyframes ds-scroll-fade-b {
-  from {
-    --ds-scroll-fade-b: var(--ds-scroll-fade);
-  }
-  to {
-    --ds-scroll-fade-b: 0px;
-  }
-}
-@keyframes ds-scroll-fade-l {
-  from {
-    --ds-scroll-fade-l: 0px;
-  }
-  to {
-    --ds-scroll-fade-l: var(--ds-scroll-fade);
-  }
-}
-@keyframes ds-scroll-fade-r {
-  from {
-    --ds-scroll-fade-r: var(--ds-scroll-fade);
-  }
-  to {
-    --ds-scroll-fade-r: 0px;
-  }
 }

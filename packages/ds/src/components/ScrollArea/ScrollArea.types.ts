@@ -6,10 +6,9 @@ export type ScrollAreaProps = {
   /** Classes for the root — typically a height/max-height constraint */
   className?: string
   /**
-   * Fades the content against the edge it can still scroll past, on both
-   * axes. Driven by the scroll position itself; nothing fades when the axis
-   * has no overflow. Turn it off for content that must stay fully opaque,
-   * such as a table with a sticky header. Defaults to `true`.
+   * Fades the content against any edge it can still scroll past. Opt-in: the
+   * mask is a paint effect over the whole viewport, so it is off by default
+   * and each caller decides. Defaults to `false`.
    */
   fadeEdges?: boolean
   /** Inline sizing, for heights that do not come from a utility class */

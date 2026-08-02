@@ -1,7 +1,9 @@
 @reference "@nino/ds/globals.css";
 
+/* mesma largura do formulário de novo produto: com endereço em três colunas,
+   max-w-2xl apertava bairro e cidade */
 .page {
-  @apply max-w-2xl p-4 lg:p-10;
+  @apply max-w-3xl p-4 lg:p-10;
 }
 
 .header {

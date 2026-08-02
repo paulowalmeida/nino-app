@@ -139,7 +139,7 @@ export const Sidebar = ({
         <StoreSwitcher currentTenantId={tenantId} collapsed={isCollapsed} />
       </div>
 
-      <ScrollArea className={styles.nav}>
+      <ScrollArea fadeEdges className={styles.nav}>
         <nav className={styles.navInner}>
         {GROUPS.map(({ title, items }) => (
           <div key={title} className={styles.group}>

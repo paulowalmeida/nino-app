@@ -72,16 +72,22 @@ export const CompanyCard = ({
         </p>
       </header>
 
+      <div className={local.identity}>
+        <span className={local.identityLabel}>CNPJ</span>
+        <span className={local.identityValue}>
+          {company?.cnpj ? formatCnpj(company.cnpj) : '—'}
+        </span>
+        <span className={local.identityHint}>
+          Não muda depois do cadastro. Para corrigir, fale com o suporte.
+        </span>
+      </div>
+
       <div className={local.fields}>
         <FormField label="Nome" className={local.wide}>
           <Input
             value={draft.name}
             onChange={(event) => change({ name: event.target.value })}
           />
-        </FormField>
-
-        <FormField label="CNPJ" helperText="Não muda depois do cadastro">
-          <Input value={formatCnpj(company?.cnpj ?? '')} disabled readOnly />
         </FormField>
 
         <FormField label="Razão social" className={local.wide}>
@@ -106,14 +112,19 @@ export const CompanyCard = ({
         <AddressFields value={draft} onChange={change} />
       </div>
 
-      <Button
-        loading={isSaving}
-        disabled={!isDirty}
-        className={`${motion.press} ${styles.save}`}
-        onClick={() => onSave(draft)}
-      >
-        Salvar empresa
-      </Button>
+      <div className={local.actions}>
+        {!isDirty && (
+          <p className={local.status}>Nada mudou desde o último salvamento.</p>
+        )}
+        <Button
+          loading={isSaving}
+          disabled={!isDirty}
+          className={motion.press}
+          onClick={() => onSave(draft)}
+        >
+          Salvar empresa
+        </Button>
+      </div>
     </section>
   )
 }
