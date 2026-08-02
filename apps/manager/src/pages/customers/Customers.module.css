@@ -30,18 +30,23 @@
 }
 
 /*
- * Uma grade só para o cabeçalho de coluna e para as linhas: número embaixo do
- * rótulo, sempre na mesma posição. Sem isso os valores dançam de linha para
- * linha e a leitura vertical — que é o que se faz numa lista de clientes —
- * deixa de existir.
+ * Duas leituras diferentes, não uma encolhida.
+ *
+ * No desktop é tabela: cabeçalho de coluna e valores sempre na mesma posição,
+ * porque ali se compara gente com gente, de cima a baixo.
+ *
+ * No celular é extrato: nome à esquerda, dinheiro à direita, e o número de
+ * pedidos como legenda embaixo do valor. Pontos e "cliente desde" saem — não
+ * cabem sem virar sopa de letrinha, e a ficha do cliente tem os dois.
  */
 .grid {
-  @apply grid items-center gap-x-4 gap-y-1;
+  @apply grid items-center gap-x-3;
   grid-template-columns: minmax(0, 1fr) auto;
 }
 
 @media (min-width: 1024px) {
   .grid {
+    @apply gap-x-4;
     grid-template-columns: minmax(0, 1fr) 5rem 7.5rem 5rem 7.5rem;
   }
 }
@@ -71,9 +76,10 @@
   @apply border-t border-sand;
 }
 
+/* alvo de toque de 56px no celular: lista longa se percorre com o polegar */
 .link {
-  @apply rounded-xl px-3 py-3.5 transition-colors duration-150;
-  @apply hover:bg-surface-mute;
+  @apply rounded-xl px-2 py-3 transition-colors duration-150 lg:px-3;
+  @apply lg:py-3.5 hover:bg-surface-mute;
   @apply focus-visible:outline-none focus-visible:ring-2;
   @apply focus-visible:ring-brand focus-visible:ring-offset-1;
 }
@@ -87,21 +93,22 @@
 }
 
 .name {
-  @apply truncate text-sm font-semibold text-body;
+  @apply truncate text-[0.95rem] font-semibold text-body lg:text-sm;
 }
 
 .phone {
-  @apply text-xs text-faint;
+  @apply truncate text-xs text-faint;
   font-variant-numeric: tabular-nums;
 }
 
-/* no celular os números viram uma linha só embaixo do nome */
+/* no celular vira a coluna de dinheiro à direita; no desktop dissolve na
+   grade para cada número cair sob seu rótulo */
 .stats {
-  @apply col-span-2 flex items-baseline gap-4 pl-11 lg:contents;
+  @apply flex flex-col items-end lg:contents;
 }
 
 .stat {
-  @apply flex flex-col lg:block lg:text-right;
+  @apply lg:block lg:text-right;
 }
 
 .statValue {
@@ -109,12 +116,23 @@
   font-variant-numeric: tabular-nums;
 }
 
+/* no celular a contagem de pedidos é legenda do valor, não outro número solto */
+.statOrders {
+  @apply text-xs font-medium text-faint lg:text-base lg:font-extrabold;
+  @apply lg:font-display lg:text-ink;
+  font-variant-numeric: tabular-nums;
+}
+
 .statLabel {
-  @apply text-[0.7rem] text-faint lg:hidden;
+  @apply text-xs text-faint lg:hidden;
+}
+
+.statPoints {
+  @apply hidden lg:block lg:text-right;
 }
 
 .since {
-  @apply text-right text-xs text-faintest;
+  @apply hidden text-right text-xs text-faintest lg:block;
 }
 
 .loading {

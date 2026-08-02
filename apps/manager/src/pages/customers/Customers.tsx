@@ -24,7 +24,7 @@ const day = new Intl.DateTimeFormat('pt-BR', {
 const since = (iso: string): string => day.format(new Date(iso))
 
 /** Rótulos da grade: o primeiro alinha à esquerda, o resto acompanha o número. */
-const COLUMNS = ['Cliente', 'Pedidos', 'Gasto', 'Pontos', 'Cliente desde']
+const COLUMNS = ['Cliente', 'Gasto', 'Pedidos', 'Pontos', 'Cliente desde']
 
 export const Customers = () => {
   const tenant = useCurrentTenant()
@@ -101,27 +101,26 @@ export const Customers = () => {
                   </span>
 
                   <span className={styles.stats}>
-                    <span className={styles.stat}>
-                      <span className={styles.statValue}>
-                        {customer.orders}
-                      </span>
-                      <span className={styles.statLabel}>
-                        {customer.orders === 1 ? 'pedido' : 'pedidos'}
-                      </span>
-                    </span>
-
+                    {/* no celular o dinheiro lidera; no desktop vira coluna */}
                     <span className={styles.stat}>
                       <span className={styles.statValue}>
                         {brl(customer.spent)}
                       </span>
-                      <span className={styles.statLabel}>gastos</span>
                     </span>
 
                     <span className={styles.stat}>
+                      <span className={styles.statOrders}>
+                        {customer.orders}
+                      </span>
+                      <span className={styles.statLabel}>
+                        {customer.orders === 1 ? ' pedido' : ' pedidos'}
+                      </span>
+                    </span>
+
+                    <span className={styles.statPoints}>
                       <span className={styles.statValue}>
                         {customer.loyaltyPoints}
                       </span>
-                      <span className={styles.statLabel}>pontos</span>
                     </span>
 
                     <span className={styles.since}>

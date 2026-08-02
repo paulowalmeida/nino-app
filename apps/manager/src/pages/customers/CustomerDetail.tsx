@@ -61,16 +61,22 @@ export const CustomerDetail = () => {
         ]}
       />
 
+      <p className={styles.eyebrow}>Cliente</p>
+
       <header className={`${motion.settle} ${styles.hero}`}>
         <PersonMark name={customer.name} className={styles.mark} />
+
         <div className={styles.heroText}>
           <h1 className={styles.name}>{customer.name}</h1>
-          <a href={`tel:${customer.phone}`} className={styles.phone}>
-            {formatPhone(customer.phone)}
-          </a>
-          {customer.email && (
-            <p className={styles.email}>{customer.email}</p>
-          )}
+
+          <div className={styles.contact}>
+            <a href={`tel:${customer.phone}`} className={styles.phone}>
+              {formatPhone(customer.phone)}
+            </a>
+            {customer.email && (
+              <span className={styles.email}>{customer.email}</span>
+            )}
+          </div>
         </div>
       </header>
 
@@ -101,8 +107,8 @@ export const CustomerDetail = () => {
         </div>
 
         {customer.history.length === 0 ? (
-          <EmptyState>
-            Nenhum pedido registrado nesta loja ainda.
+          <EmptyState className={styles.empty}>
+            Nenhum pedido nos últimos 90 dias.
           </EmptyState>
         ) : (
           <ScrollArea className={styles.ordersScroll}>
