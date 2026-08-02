@@ -150,7 +150,7 @@
  * voz alta para o cliente — merece o peso que as molduras genéricas gastavam.
  */
 .totals {
-  @apply mt-4 flex flex-col gap-1.5 rounded-[18px] border border-line/60 bg-white p-4;
+  @apply mt-4 flex flex-col gap-1.5 rounded-[18px] bg-cream p-4;
 }
 
 .totalRow {

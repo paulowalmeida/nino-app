@@ -37,8 +37,8 @@
 }
 
 .fact {
-  @apply flex flex-col gap-0.5 rounded-[20px] border border-line/60;
-  @apply bg-white p-4;
+  @apply flex flex-col gap-0.5 rounded-[20px] border border-line;
+  @apply bg-surface-sunk/70 p-4;
 }
 
 .factLabel {
