@@ -1,5 +1,8 @@
+import { useState } from 'react'
+
 import { Alert } from '@nino/ds/components/Alert'
 import { Button } from '@nino/ds/components/Button'
+import { Dialog } from '@nino/ds/components/Dialog'
 import { EmptyState } from '@nino/ds/components/EmptyState'
 import { Input } from '@nino/ds/components/Input'
 import { Icon } from '@components/Icon/Icon'
@@ -56,6 +59,12 @@ export const SaleTicket = ({
     0
   )
   const count = lines.reduce((sum, { quantity }) => sum + quantity, 0)
+  const [confirmingClear, setConfirmingClear] = useState(false)
+
+  const handleConfirmClear = () => {
+    setConfirmingClear(false)
+    onClear()
+  }
 
   return (
     <aside className={bare ? styles.ticketBare : styles.ticket}>
@@ -198,13 +207,26 @@ export const SaleTicket = ({
               type="button"
               variant="ghost"
               className={styles.clear}
-              onClick={onClear}
+              onClick={() => setConfirmingClear(true)}
             >
               Limpar comanda
             </Button>
           )}
         </div>
       </div>
+
+      {confirmingClear && (
+        <Dialog
+          open
+          onOpenChange={(open) => !open && setConfirmingClear(false)}
+          title="Limpar a comanda?"
+          description="Os itens da venda serão removidos. Não dá para desfazer."
+          confirmLabel="Limpar"
+          cancelLabel="Cancelar"
+          onConfirm={handleConfirmClear}
+          onCancel={() => setConfirmingClear(false)}
+        />
+      )}
     </aside>
   )
 }

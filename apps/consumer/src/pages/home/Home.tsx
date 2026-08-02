@@ -50,7 +50,8 @@ const sectionDomId = (id: string): string => `section-${id}`
  */
 const HEADER_TRANSITION_PX = 140
 
-export const Storefront = () => {
+export const Home = () => {
+  // Hooks
   const navigate = useNavigate()
   const { slug: pathSlug } = useParams()
   const slug = resolveSlug(pathSlug)

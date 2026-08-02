@@ -1,24 +1,24 @@
 import { createBrowserRouter, Navigate, type RouteObject } from 'react-router'
 
-const storefrontLazy = () =>
-  import('@pages/storefront/Storefront').then(({ Storefront }) => ({
-    Component: Storefront,
+const Home = () =>
+  import('@pages/home/Home').then(({ Home: Home }) => ({
+    Component: Home,
   }))
 
-const checkoutLazy = () =>
+const checkout = () =>
   import('@pages/checkout/Checkout').then(({ Checkout }) => ({
     Component: Checkout,
   }))
 
-const orderTrackingLazy = () =>
+const orderTracking = () =>
   import('@pages/order-tracking/OrderTracking').then(({ OrderTracking }) => ({
     Component: OrderTracking,
   }))
 
-const signInLazy = () =>
+const signIn = () =>
   import('@pages/sign-in/SignIn').then(({ SignIn }) => ({ Component: SignIn }))
 
-const accountLazy = () =>
+const account = () =>
   import('@pages/account/Account').then(({ Account }) => ({
     Component: Account,
   }))
@@ -53,11 +53,6 @@ const invoicesLazy = () =>
     Component: Invoices,
   }))
 
-/**
- * As gavetas da conta. Cada uma é uma rota para que a URL seja o estado:
- * link compartilhável, voltar do navegador funciona e o F5 devolve a pessoa
- * na seção em que ela estava.
- */
 const accountChildren: RouteObject[] = [
   { index: true, element: <Navigate to="dados" replace /> },
   { path: 'dados', lazy: profileLazy },
@@ -68,53 +63,47 @@ const accountChildren: RouteObject[] = [
   { path: 'notas', lazy: invoicesLazy },
 ]
 
-/**
- * A loja vem do subdomínio (`slug.nino.delivery`), então a raiz já é a
- * vitrine. `/:slug` no caminho é o atalho de desenvolvimento em
- * `localhost/slug`, sem precisar de subdomínio. `/checkout` e `/pedido/:id`
- * seguem o mesmo par de rotas para funcionar nos dois modos.
- */
 export const router = createBrowserRouter([
   {
     path: '/',
-    lazy: storefrontLazy,
+    lazy: Home,
   },
   {
     path: '/:slug',
-    lazy: storefrontLazy,
+    lazy: Home,
   },
   {
     path: '/checkout',
-    lazy: checkoutLazy,
+    lazy: checkout,
   },
   {
     path: '/:slug/checkout',
-    lazy: checkoutLazy,
+    lazy: checkout,
   },
   {
     path: '/pedido/:orderId',
-    lazy: orderTrackingLazy,
+    lazy: orderTracking,
   },
   {
     path: '/:slug/pedido/:orderId',
-    lazy: orderTrackingLazy,
+    lazy: orderTracking,
   },
   {
     path: '/entrar',
-    lazy: signInLazy,
+    lazy: signIn,
   },
   {
     path: '/:slug/entrar',
-    lazy: signInLazy,
+    lazy: signIn,
   },
   {
     path: '/conta',
-    lazy: accountLazy,
+    lazy: account,
     children: accountChildren,
   },
   {
     path: '/:slug/conta',
-    lazy: accountLazy,
+    lazy: account,
     children: accountChildren,
   },
 ])

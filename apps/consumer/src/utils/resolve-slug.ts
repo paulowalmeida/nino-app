@@ -11,7 +11,7 @@ const BASE_DOMAINS = ['dev.nino.delivery', 'localhost']
  * loja — `a.b.nino.delivery` não é uma. O domínio nu (`nino.delivery`,
  * `localhost`) não tem loja e devolve `null`, deixando o caminho decidir.
  */
-export const slugFromHost = (host: string): string | null => {
+const slugFromHost = (host: string): string | null => {
   for (const base of BASE_DOMAINS) {
     if (host === base) return null
     if (host.endsWith(`.${base}`)) {
