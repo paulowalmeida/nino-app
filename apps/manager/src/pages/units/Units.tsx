@@ -2,16 +2,14 @@ import { useCallback, useState } from 'react'
 import { Link } from 'react-router'
 
 import { FirstStoreForm } from '@compositions/FirstStoreForm'
+import { StorePreview } from '@compositions/StorePreview'
 
 import { NinoLogo } from '@components/NinoLogo'
 import { logout } from '@services/auth/auth.service'
 import { useSessionStore } from '@states/useSessionStore'
 import { endSession } from '@utils/end-session'
-import { slugify } from '@utils/slugify'
 
 import styles from './Units.module.css'
-
-const PLACEHOLDER = { name: 'O nome da sua loja', slug: 'sua-loja' }
 
 /**
  * Unidades de quem ainda não tem nenhuma. A loja nasce aqui, na mesma tela em
@@ -37,9 +35,6 @@ export const Units = () => {
     }
     endSession()
   }
-
-  const typed = storeName.trim()
-  const lit = typed.length > 0
 
   return (
     <div className={styles.shell}>
@@ -73,20 +68,8 @@ export const Units = () => {
           </Link>
         </div>
 
-        {/* O cartão que o cliente vai ver, montando enquanto se digita */}
-        <div className={styles.preview} data-lit={lit} aria-hidden="true">
-          <span className={styles.tile}>
-            {(typed || PLACEHOLDER.name).charAt(0).toUpperCase()}
-          </span>
-
-          <span className={styles.previewText}>
-            <span className={styles.previewName}>
-              {typed || PLACEHOLDER.name}
-            </span>
-            <span className={styles.previewLink}>
-              nino.delivery/{typed ? slugify(typed) : PLACEHOLDER.slug}
-            </span>
-          </span>
+        <div className={styles.preview}>
+          <StorePreview name={storeName} />
         </div>
 
         <div className={styles.form}>

@@ -6,6 +6,7 @@ import { AuthLayout } from '@layouts/AuthLayout'
 import { MANAGERS } from '@constants/roles'
 
 import { AuthGuard } from './auth-guard'
+import { FirstStoreGuard } from './first-store-guard'
 import { GuestGuard } from './guest-guard'
 import { roleGuard } from './role-guard'
 import { RootLoader } from './root-loader'
@@ -53,7 +54,7 @@ export const router = createBrowserRouter([
   },
   {
     path: '/unidades',
-    loader: SessionGuard,
+    loader: FirstStoreGuard,
     lazy: () =>
       import('@pages/units/Units').then(({ Units }) => ({ Component: Units })),
   },

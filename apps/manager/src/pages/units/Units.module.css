@@ -42,46 +42,9 @@
   @apply focus-visible:outline-2 focus-visible:outline-brand;
 }
 
-/*
- * Mesma peça do cabeçalho da loja no consumer: azulejo laranja suave com a
- * inicial, nome em display e o link embaixo, sobre branco. É o retrato de como
- * o cliente vai ver a loja — por isso não inventa estilo próprio.
- */
+/* espaçamento é da tela; a peça em si mora em compositions/StorePreview */
 .preview {
-  @apply mt-6 flex items-center gap-4 rounded-card border border-line/60;
-  @apply bg-white px-5 py-4 shadow-card lg:gap-5;
-}
-
-.tile {
-  @apply flex h-14 w-14 shrink-0 items-center justify-center rounded-card;
-  @apply bg-brand-soft font-display text-xl font-extrabold text-brand-strong;
-  @apply transition-colors duration-300;
-}
-
-.preview[data-lit='true'] .tile {
-  @apply bg-brand text-white;
-}
-
-.previewText {
-  @apply flex min-w-0 flex-1 flex-col;
-}
-
-.previewName {
-  @apply block truncate font-display text-lg font-extrabold leading-[1.15];
-  @apply tracking-[-0.02em] text-muted transition-colors duration-300;
-  @apply lg:text-xl;
-}
-
-.preview[data-lit='true'] .previewName {
-  @apply text-ink;
-}
-
-.previewLink {
-  @apply mt-0.5 block truncate text-xs text-faint transition-colors duration-300;
-}
-
-.preview[data-lit='true'] .previewLink {
-  @apply text-brand-strong;
+  @apply mt-6;
 }
 
 .form {

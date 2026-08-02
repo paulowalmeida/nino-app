@@ -1,0 +1,47 @@
+@reference "@nino/ds/globals.css";
+
+/*
+ * Mesma peça do cabeçalho da loja no consumer: azulejo laranja suave com a
+ * inicial, nome em display e o link embaixo. É o retrato de como o cliente vai
+ * ver a loja, então não inventa estilo próprio — apaga enquanto ninguém
+ * digitou e acende com o nome.
+ */
+.preview {
+  @apply flex items-center gap-4 rounded-card border border-line/60 bg-white;
+  @apply px-5 py-4 shadow-card lg:gap-5;
+}
+
+.tile {
+  @apply flex h-14 w-14 shrink-0 items-center justify-center rounded-card;
+  @apply bg-brand-soft font-display text-xl font-extrabold text-brand-strong;
+  @apply transition-colors duration-300;
+}
+
+.preview[data-lit='true'] .tile {
+  @apply bg-brand text-white;
+}
+
+.text {
+  @apply flex min-w-0 flex-1 flex-col;
+}
+
+/* em coluna estreita o nome quebra em duas linhas em vez de virar reticências:
+   o que se confere aqui é justamente o nome inteiro */
+.name {
+  @apply block font-display text-lg font-extrabold leading-[1.15];
+  @apply tracking-[-0.02em] text-muted transition-colors duration-300;
+  @apply line-clamp-2 break-words;
+}
+
+.preview[data-lit='true'] .name {
+  @apply text-ink;
+}
+
+.link {
+  @apply mt-0.5 block truncate text-xs text-faint transition-colors;
+  @apply duration-300;
+}
+
+.preview[data-lit='true'] .link {
+  @apply text-brand-strong;
+}
