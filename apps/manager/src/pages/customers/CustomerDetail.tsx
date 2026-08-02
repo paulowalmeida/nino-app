@@ -6,7 +6,8 @@ import { Skeleton } from '@nino/ds/components/Skeleton'
 import { Breadcrumb } from '@components/Breadcrumb'
 import { PersonMark } from '@components/PersonMark'
 import { useCurrentTenant } from '@hooks/session/useCurrentTenant'
-import { useCustomer } from '@hooks/customer/useCustomers'
+import { useCustomer, useCustomerOrders } from '@hooks/customer/useCustomers'
+import { useLoadMore } from '@hooks/ui/useLoadMore'
 import { brl } from '@utils/money'
 import { formatPhone } from '@utils/phone'
 import { riseDelay } from '@utils/rise-delay'
@@ -40,6 +41,16 @@ export const CustomerDetail = () => {
     tenantId,
     customerId as string
   )
+
+  const {
+    orders,
+    total: totalOrders,
+    hasNextPage,
+    isFetchingNextPage,
+    fetchNextPage,
+  } = useCustomerOrders(tenantId, customerId as string)
+
+  const sentinelRef = useLoadMore(!!hasNextPage, () => void fetchNextPage())
 
   if (isPending) return <Skeleton className={styles.skeleton} />
 
@@ -105,18 +116,20 @@ export const CustomerDetail = () => {
         <div className={styles.historyHead}>
           <h2 className={styles.historyTitle}>Últimos pedidos</h2>
           <p className={styles.historyWindow}>
-            90 dias ou 90 pedidos — o que vier primeiro
+            {totalOrders !== undefined
+              ? `${totalOrders} nos últimos 90 dias`
+              : '90 dias ou 90 pedidos — o que vier primeiro'}
           </p>
         </div>
 
-        {customer.history.length === 0 ? (
+        {orders.length === 0 ? (
           <EmptyState className={styles.empty}>
             Nenhum pedido nos últimos 90 dias.
           </EmptyState>
         ) : (
           <ScrollArea className={styles.ordersScroll}>
             <ul className={styles.orders}>
-            {customer.history.map((order, index) => (
+            {orders.map((order, index) => (
               <li
                 key={order.id}
                 className={`${motion.deal} ${styles.order}`}
@@ -143,6 +156,15 @@ export const CustomerDetail = () => {
               </li>
             ))}
             </ul>
+
+            {/* sentinela: entra em cena e puxa a próxima página sozinha */}
+            <div ref={sentinelRef} className={styles.sentinel}>
+              {isFetchingNextPage && (
+                <span className={styles.loadingMore}>
+                  Carregando mais pedidos…
+                </span>
+              )}
+            </div>
           </ScrollArea>
         )}
         </section>
