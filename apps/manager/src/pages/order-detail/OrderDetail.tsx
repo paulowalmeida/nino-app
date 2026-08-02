@@ -6,8 +6,8 @@ import { Eyebrow } from '@components/Eyebrow'
 
 import { Alert } from '@nino/ds/components/Alert'
 import { Badge } from '@nino/ds/components/Badge'
+import { ScrollArea } from '@nino/ds/components/ScrollArea'
 import { Button } from '@nino/ds/components/Button'
-import { Card } from '@nino/ds/components/Card'
 import { Skeleton } from '@nino/ds/components/Skeleton'
 import { Textarea } from '@nino/ds/components/Textarea'
 import { OrderTimeline } from '@compositions/OrderTimeline'
@@ -68,41 +68,39 @@ export const OrderDetail = () => {
           <BackLink>Pedidos</BackLink>
         </div>
 
-        <div className={styles.scroller}>
-          <Card className={styles.hero}>
-            <div className={styles.heroText}>
-              <Skeleton variant="text" className={styles.ghostEyebrow} />
-              <Skeleton variant="text" className={styles.ghostNumber} />
-              <Skeleton variant="text" className={styles.ghostLine} />
-            </div>
-            <Skeleton className={styles.ghostBadge} />
-          </Card>
+        <header className={styles.hero}>
+          <div className={styles.heroText}>
+            <Skeleton variant="text" className={styles.ghostEyebrow} />
+            <Skeleton variant="text" className={styles.ghostNumber} />
+            <Skeleton variant="text" className={styles.ghostLine} />
+          </div>
+          <Skeleton className={styles.ghostBadge} />
+        </header>
 
-          <div className={styles.columns}>
-            <Card className={styles.receipt}>
-              <div className={styles.items}>
-                {GHOST_ITEMS.map((item) => (
-                  <div key={item} className={styles.item}>
-                    <Skeleton variant="text" className={styles.ghostQuantity} />
-                    <Skeleton variant="text" className={styles.ghostItemName} />
-                    <Skeleton variant="text" className={styles.ghostPrice} />
-                  </div>
-                ))}
-              </div>
-              <div className={styles.totals}>
-                <Skeleton variant="text" className={styles.ghostTotal} />
-              </div>
-            </Card>
-
-            <div className={styles.aside}>
-              {GHOST_CARDS.map((card) => (
-                <Card key={card}>
-                  <Skeleton variant="text" className={styles.ghostEyebrow} />
-                  <Skeleton variant="text" className={styles.ghostLine} />
-                  <Skeleton variant="text" className={styles.ghostLineShort} />
-                </Card>
+        <div className={styles.columns}>
+          <div className={styles.receipt}>
+            <div className={styles.items}>
+              {GHOST_ITEMS.map((item) => (
+                <div key={item} className={styles.item}>
+                  <Skeleton variant="text" className={styles.ghostQuantity} />
+                  <Skeleton variant="text" className={styles.ghostItemName} />
+                  <Skeleton variant="text" className={styles.ghostPrice} />
+                </div>
               ))}
             </div>
+            <div className={styles.totals}>
+              <Skeleton variant="text" className={styles.ghostTotal} />
+            </div>
+          </div>
+
+          <div className={styles.aside}>
+            {GHOST_CARDS.map((card) => (
+              <div key={card} className={styles.block}>
+                <Skeleton variant="text" className={styles.ghostEyebrow} />
+                <Skeleton variant="text" className={styles.ghostLine} />
+                <Skeleton variant="text" className={styles.ghostLineShort} />
+              </div>
+            ))}
           </div>
         </div>
       </div>
@@ -138,8 +136,7 @@ export const OrderDetail = () => {
         <BackLink>Pedidos</BackLink>
       </div>
 
-      <div className={styles.scroller}>
-        <Card className={`${motion.settle} ${styles.hero}`}>
+      <header className={`${motion.settle} ${styles.hero}`}>
           <div className={styles.heroText}>
             <Eyebrow className={styles.channel}>
               {CHANNEL_LABEL[order.channel]}
@@ -151,18 +148,21 @@ export const OrderDetail = () => {
               aberto em {stamp.format(new Date(order.createdAt))}
             </p>
           </div>
-          <Badge
-            variant={statusBadgeVariant(order.status)}
-            className={styles.badge}
-          >
-            {STATUS_LABEL[order.status]}
-          </Badge>
-        </Card>
+        <Badge
+          variant={statusBadgeVariant(order.status)}
+          className={styles.badge}
+        >
+          {STATUS_LABEL[order.status]}
+        </Badge>
+      </header>
 
         <div className={styles.columns}>
-          <Card asChild className={`${motion.unroll} ${styles.receipt}`}>
-            <section aria-label="Itens do pedido">
-              <ul className={styles.items}>
+          <section
+            aria-label="Itens do pedido"
+            className={`${motion.unroll} ${styles.receipt}`}
+          >
+              <ScrollArea className={styles.itemsScroll}>
+                <ul className={styles.items}>
                 {order.items.map((item, index) => (
                   <li
                     key={item.id}
@@ -176,7 +176,8 @@ export const OrderDetail = () => {
                     </span>
                   </li>
                 ))}
-              </ul>
+                </ul>
+              </ScrollArea>
 
               <dl className={styles.totals}>
                 <div className={styles.totalRow}>
@@ -211,11 +212,10 @@ export const OrderDetail = () => {
                   {order.notes}
                 </p>
               )}
-            </section>
-          </Card>
+          </section>
 
           <div className={styles.aside}>
-            <Card className={motion.settle} style={riseDelay(80)}>
+            <section className={`${motion.settle} ${styles.block}`} style={riseDelay(80)}>
               <h2 className={styles.cardTitle}>Quem pediu</h2>
               <p className={styles.customer}>{customerNameOf(order)}</p>
               {order.guestPhone && (
@@ -227,9 +227,9 @@ export const OrderDetail = () => {
               {order.tableNumber && (
                 <p className={styles.address}>Mesa {order.tableNumber}</p>
               )}
-            </Card>
+            </section>
 
-            <Card className={motion.settle} style={riseDelay(140)}>
+            <section className={`${motion.settle} ${styles.block}`} style={riseDelay(140)}>
               <h2 className={styles.cardTitle}>Pagamento</h2>
               <p className={styles.payLine}>
                 {PAYMENT_METHOD_LABEL[order.paymentMethod]}
@@ -254,9 +254,9 @@ export const OrderDetail = () => {
                   Recebi o pagamento
                 </Button>
               )}
-            </Card>
+            </section>
 
-            <Card className={motion.settle} style={riseDelay(200)}>
+            <section className={`${motion.settle} ${styles.block}`} style={riseDelay(200)}>
               <h2 className={styles.cardTitle}>Andamento</h2>
               <OrderTimeline entries={order.statusHistory} />
               {order.cancelReason && (
@@ -264,7 +264,7 @@ export const OrderDetail = () => {
                   Motivo do cancelamento: {order.cancelReason}
                 </p>
               )}
-            </Card>
+            </section>
 
             {(step || canCancel(order.status)) && (
               <section
@@ -332,7 +332,6 @@ export const OrderDetail = () => {
             )}
           </div>
         </div>
-      </div>
     </div>
   )
 }

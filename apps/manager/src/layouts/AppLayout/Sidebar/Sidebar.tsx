@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { NavLink, useLocation } from 'react-router'
 
+import { ScrollArea } from '@nino/ds/components/ScrollArea'
 import { Accordion } from '@nino/ds/components/Accordion'
 import { NavIcon } from '@components/NavIcon'
 import { NinoLogo } from '@components/NinoLogo'
@@ -138,7 +139,8 @@ export const Sidebar = ({
         <StoreSwitcher currentTenantId={tenantId} collapsed={isCollapsed} />
       </div>
 
-      <nav className={styles.nav}>
+      <ScrollArea className={styles.nav}>
+        <nav className={styles.navInner}>
         {GROUPS.map(({ title, items }) => (
           <div key={title} className={styles.group}>
             {!isCollapsed && <p className={styles.groupTitle}>{title}</p>}
@@ -235,7 +237,8 @@ export const Sidebar = ({
               })}
           </div>
         ))}
-      </nav>
+        </nav>
+      </ScrollArea>
 
       <div className={styles.footer}>
         <UserMenu

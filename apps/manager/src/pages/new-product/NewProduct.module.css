@@ -35,6 +35,8 @@
   @apply bg-brand/5 p-3;
 }
 
+/* mesma régua da ficha do item: ação fecha o formulário à direita */
 .actions {
-  @apply flex flex-col gap-2 border-t border-sand pt-5 sm:flex-row;
+  @apply flex flex-col gap-2 border-t border-sand pt-5;
+  @apply sm:flex-row sm:justify-end;
 }

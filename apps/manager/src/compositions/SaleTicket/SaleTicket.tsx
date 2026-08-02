@@ -2,6 +2,7 @@ import { useState } from 'react'
 
 import { Alert } from '@nino/ds/components/Alert'
 import { Button } from '@nino/ds/components/Button'
+import { ScrollArea } from '@nino/ds/components/ScrollArea'
 import { Dialog } from '@nino/ds/components/Dialog'
 import { EmptyState } from '@nino/ds/components/EmptyState'
 import { Input } from '@nino/ds/components/Input'
@@ -80,7 +81,8 @@ export const SaleTicket = ({
             Toque nos itens para montar a venda.
           </EmptyState>
         ) : (
-          <ul className={styles.lines}>
+          <ScrollArea className={styles.linesScroll}>
+            <ul className={styles.lines}>
             {lines.map((line) => {
               const isLast = line.quantity === 1
 
@@ -138,7 +140,8 @@ export const SaleTicket = ({
                 </li>
               )
             })}
-          </ul>
+            </ul>
+          </ScrollArea>
         )}
 
         {/*

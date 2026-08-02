@@ -21,7 +21,7 @@
  * crescer mais que a tela.
  */
 .sidebar {
-  @apply fixed left-0 top-0 z-40 flex h-dvh w-60 flex-col overflow-hidden;
+  @apply fixed left-0 top-0 z-[70] flex h-dvh w-60 flex-col overflow-hidden;
   @apply -translate-x-full bg-dark;
   /* `translate`, não `transform`: no Tailwind v4 translate-x-* escreve na
      propriedade translate, e transicionar transform não pega o deslize. */
@@ -79,9 +79,14 @@
   @apply relative z-20 shrink-0 border-b border-white/8 px-2 py-2;
 }
 
+/* a rolagem é do ScrollArea do DS: aqui fica só o espaço que ela ocupa na
+   coluna — a barra nativa escura do sistema cortava a lateral do menu */
 .nav {
-  @apply relative z-10 flex min-h-0 flex-1 flex-col gap-0.5;
-  @apply overflow-y-auto overscroll-contain px-3 py-4;
+  @apply relative z-10 min-h-0 flex-1;
+}
+
+.navInner {
+  @apply flex flex-col gap-0.5 px-3 py-4;
 }
 
 /* separação por grupo: o que se faz hoje acima, como a loja é montada abaixo */

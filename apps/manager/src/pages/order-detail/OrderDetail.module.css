@@ -1,13 +1,13 @@
 @reference "@nino/ds/globals.css";
 
 /*
- * Mesmo casco da fila de pedidos: a tela é fixa e só o miolo rola por dentro.
- * O desconto de 3.5rem é a barra fixa do AppLayout, compensada por um `pt-14`
- * no `main` — sem descontar, a página fica uma barra mais alta que a tela.
+ * A tela rola inteira, como qualquer documento. Ela nasceu com o casco da
+ * fila de pedidos — altura travada e miolo rolando por dentro —, mas ali a
+ * altura fixa serve às colunas por etapa, que rolam separadas. Aqui só
+ * produzia uma barra de rolagem no meio da tela e cortava a coluna da direita.
  */
 .page {
-  @apply flex h-[calc(100dvh-3.5rem)] max-w-5xl flex-col p-4;
-  @apply lg:h-dvh lg:p-10;
+  @apply flex max-w-5xl flex-col p-4 lg:p-10;
 }
 
 /*
@@ -60,17 +60,12 @@
 }
 
 /*
- * A área rolável. `min-h-0` é o que faz o filho de flex encolher abaixo do
- * conteúdo: sem ele o item nasce com `min-height: auto`, o miolo empurra a
- * página e a rolagem volta para a tela inteira.
+ * Cabeçalho sem moldura: o número do pedido é o título da tela, e um cartão
+ * em volta dele só repetia o contorno que a página já dá. A divisória embaixo
+ * é o que separa a identificação do conteúdo.
  */
-.scroller {
-  @apply min-h-0 flex-1 overflow-y-auto overscroll-contain pb-2;
-}
-
-/* mesma faixa quente do detalhe de produto — o pedido é o assunto da tela */
 .hero {
-  @apply mt-3 flex items-center gap-4 p-5 lg:p-6;
+  @apply mt-2 flex items-start gap-4 border-b border-line/60 pb-5;
 }
 
 .heroText {
@@ -97,21 +92,43 @@
   @apply shrink-0;
 }
 
+/* sem os cartões, o vão é o que separa a via da lateral — apertado, as duas
+   colunas voltavam a parecer uma tabela só */
 .columns {
-  @apply mt-6 grid items-start gap-5 lg:grid-cols-[1.1fr_1fr];
+  @apply mt-6 grid items-start gap-5 lg:grid-cols-[1.1fr_1fr] lg:gap-12;
 }
 
-/* superfície, borda e sombra vêm do Card do DS; aqui fica só o respiro */
+/* a via do pedido: sem cartão, quem separa item de item é a divisória */
 .receipt {
-  @apply min-w-0 p-5 lg:p-6;
+  @apply min-w-0;
+}
+
+/*
+ * Teto de oito itens no desktop: passando disso, a via empurrava o total para
+ * fora da tela e a lateral (quem pediu, pagamento, andamento) ficava sozinha
+ * num vão em branco. Rolando por dentro, o total continua à vista, que é o
+ * dado que se confere no fim. No celular a página inteira rola — encaixar
+ * rolagem dentro de rolagem no polegar é pior que a lista longa.
+ */
+/*
+ * O teto vai no viewport, não na raiz: o `Viewport` do Ark é `h-full`, e num
+ * pai que só tem `max-height` isso resolve para `auto` — a raiz recortava a
+ * lista em 22rem e ninguém conseguia rolar até o fim dela.
+ */
+.itemsScroll {
+  @apply lg:pr-2;
+}
+
+.itemsScroll [data-part='viewport'] {
+  @apply lg:max-h-[22rem];
 }
 
 .items {
-  @apply flex flex-col gap-2.5;
+  @apply flex flex-col divide-y divide-line/50;
 }
 
 .item {
-  @apply flex items-baseline gap-3 text-sm text-body;
+  @apply flex items-baseline gap-3 py-2.5 text-sm text-body first:pt-0;
 }
 
 .quantity {
@@ -128,9 +145,12 @@
   font-variant-numeric: tabular-nums;
 }
 
+/*
+ * O único bloco com superfície na tela. É o número que se lê por último e em
+ * voz alta para o cliente — merece o peso que as molduras genéricas gastavam.
+ */
 .totals {
-  @apply mt-4 flex flex-col gap-1.5 border-t border-line/60;
-  @apply pt-4;
+  @apply mt-4 flex flex-col gap-1.5 rounded-[18px] bg-cream p-4;
 }
 
 .totalRow {
@@ -143,8 +163,8 @@
 }
 
 .grandTotal {
-  @apply mt-1 border-t border-line/60 pt-2.5;
-  @apply font-display text-lg font-extrabold text-ink;
+  @apply mt-1 border-t border-sand pt-2.5;
+  @apply font-display text-xl font-extrabold text-ink;
 }
 
 /* mesma marcação da observação na comanda da fila: é o mesmo texto do
@@ -159,8 +179,17 @@
   @apply text-brand-strong/70;
 }
 
+/*
+ * Três blocos, uma pilha só: eram três cartões empilhados, cada um com sua
+ * borda, o que dava à coluna a aparência de lista de caixas. Divisória entre
+ * eles diz a mesma coisa com um traço.
+ */
 .aside {
-  @apply flex min-w-0 flex-col gap-4;
+  @apply flex min-w-0 flex-col;
+}
+
+.block {
+  @apply border-t border-line/60 py-4 first:border-t-0 lg:first:pt-0;
 }
 
 .cardTitle {
@@ -203,7 +232,7 @@
 /* sem caixa: o botão primário já é o destaque da coluna, e uma moldura em
    volta dele só repete o que a cor do próprio botão diz */
 .actions {
-  @apply flex flex-col gap-2;
+  @apply mt-2 flex flex-col gap-2 border-t border-line/60 pt-4;
 }
 
 .advance {
@@ -221,4 +250,3 @@
 .cancelActions {
   @apply flex flex-wrap gap-2;
 }
-

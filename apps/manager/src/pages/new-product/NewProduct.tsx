@@ -254,15 +254,15 @@ export const NewProduct = () => {
           className={`${motion.deal} ${styles.actions}`}
           style={riseDelay(320)}
         >
-          <Button type="submit" loading={isSubmitting}>
-            Cadastrar item
-          </Button>
           <Button
             type="button"
             variant="ghost"
             onClick={() => void navigate('..', { relative: 'path' })}
           >
             Cancelar
+          </Button>
+          <Button type="submit" loading={isSubmitting}>
+            Cadastrar item
           </Button>
         </div>
       </form>

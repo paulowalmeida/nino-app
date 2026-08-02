@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Outlet } from 'react-router'
 
 import { Button } from '@nino/ds/components/Button'
@@ -19,6 +19,24 @@ export const AppLayout = () => {
   const [collapsed, setCollapsed] = useState(readSidebarCollapsed)
 
   const closeMenu = () => setMenuOpen(false)
+
+  /*
+   * Com o menu aberto no celular, o que rolava por trás do véu era a página
+   * inteira: o dedo passava do menu para o conteúdo e a pessoa voltava para
+   * uma tela deslocada. O `overflow` volta ao que era ao fechar, em vez de
+   * ficar `''` fixo — telas de altura travada dependem do valor delas.
+   */
+  useEffect(() => {
+    if (!menuOpen) return
+
+    const { body } = document
+    const previous = body.style.overflow
+    body.style.overflow = 'hidden'
+
+    return () => {
+      body.style.overflow = previous
+    }
+  }, [menuOpen])
 
   const toggleCollapsed = () => {
     setCollapsed((current) => {

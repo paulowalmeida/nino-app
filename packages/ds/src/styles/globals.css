@@ -269,10 +269,24 @@
 }
 
 /* Barra fina para painéis que rolam por dentro (Select, Combobox, TimePicker):
-   mesma tinta discreta do ScrollArea, sem precisar montar o componente. */
+   mesma tinta do ScrollArea, sem precisar montar o componente. */
 @utility scrollbar-slim {
   scrollbar-width: thin;
-  scrollbar-color: color-mix(in srgb, var(--color-ink) 20%, transparent)
+  scrollbar-color: color-mix(in srgb, var(--color-brand) 55%, transparent)
+    transparent;
+}
+
+/*
+ * A barra nativa segue a marca em toda a aplicação. Onde o ScrollArea não é
+ * viável — a lista do cardápio arrasta para reordenar, a fila e a cozinha são
+ * operadas no toque —, o que rolava era a barra cinza do sistema, do lado de
+ * uma tela inteira em laranja e creme. `scrollbar-color` é herdável, então
+ * declarar na raiz basta; quem quiser outra tinta sobrescreve no próprio
+ * container.
+ */
+html {
+  scrollbar-width: thin;
+  scrollbar-color: color-mix(in srgb, var(--color-brand) 55%, transparent)
     transparent;
 }
 

@@ -10,12 +10,24 @@ import trashIcon from '@assets/icons/trash.svg?raw'
 import { Icon } from '@components/Icon/Icon'
 import { ItemThumb } from '@components/ItemThumb'
 import { REORDER_TRANSITION } from '@constants/reorder-transition'
+import { CATALOG_PAGE_SIZE } from '@hooks/product/useCatalog'
 import { riseDelay } from '@utils/rise-delay'
 
 import type { MenuRowProps } from './MenuRow.types'
 
 import styles from '../MenuBoard.module.css'
 import motion from '@styles/motion.module.css'
+
+/*
+ * A entrada é escalonada por lote e com teto. Com o índice global da lista, a
+ * página 2 começava no item 21 — 945ms de espera — e como `deal` usa
+ * `fill-mode: both`, a linha já ocupa o lugar dela enquanto espera: a lista
+ * abria vinte faixas em branco que iam pintando ao longo de dois segundos.
+ */
+const MAX_STAGGERED = 8
+
+const entranceDelay = (index: number): number =>
+  Math.min(index % CATALOG_PAGE_SIZE, MAX_STAGGERED) * 45 + 60
 
 const brl = new Intl.NumberFormat('pt-BR', {
   style: 'currency',
@@ -49,7 +61,7 @@ export const MenuRow = ({
       className={`${isEntering ? motion.deal : ''} ${
         item.isActive ? styles.item : styles.itemOff
       }`}
-      style={isEntering ? riseDelay(index * 45 + 60) : {}}
+      style={isEntering ? riseDelay(entranceDelay(index)) : {}}
     >
       {canReorder && (
         <button

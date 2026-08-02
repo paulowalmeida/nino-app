@@ -27,7 +27,7 @@
 }
 
 .overlay {
-  @apply fixed inset-0 z-20 bg-dark/60 backdrop-blur-sm lg:hidden;
+  @apply fixed inset-0 z-[60] bg-dark/60 backdrop-blur-sm lg:hidden;
 }
 
 /*

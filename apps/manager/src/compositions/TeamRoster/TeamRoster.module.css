@@ -1,13 +1,13 @@
 @reference "@nino/ds/globals.css";
 
+/* sem cartão: são dois grupos da mesma equipe, não dois objetos soltos na
+   tela — o que separa um do outro é o título e o espaço */
 .roster {
-  @apply rounded-[24px] border border-line bg-brand-foreground/70 p-5;
-  @apply shadow-card;
-  @apply backdrop-blur-sm lg:p-6;
+  @apply min-w-0;
 }
 
 .head {
-  @apply mb-4;
+  @apply mb-3;
 }
 
 .title {

@@ -5,7 +5,6 @@ import { useNavigate, useParams } from 'react-router'
 import { Alert } from '@nino/ds/components/Alert'
 import { Badge } from '@nino/ds/components/Badge'
 import { Button } from '@nino/ds/components/Button'
-import { Card } from '@nino/ds/components/Card'
 import { Dialog } from '@nino/ds/components/Dialog'
 import { FormField } from '@nino/ds/components/FormField'
 import { Input } from '@nino/ds/components/Input'
@@ -25,11 +24,6 @@ import type { ProductFormValues } from './ProductDetail.types'
 
 import styles from './ProductDetail.module.css'
 import motion from '@styles/motion.module.css'
-
-const brl = new Intl.NumberFormat('pt-BR', {
-  style: 'currency',
-  currency: 'BRL',
-})
 
 const DESCRIPTION_MAX_LENGTH = 300
 
@@ -121,38 +115,45 @@ export const ProductDetail = () => {
     <div className={styles.page}>
       <BackLink>Cardápio</BackLink>
 
-      <Card className={`${motion.settle} ${styles.sheet}`}>
-        <header className={styles.head}>
-          <div className={styles.headText}>
-            <p className={styles.category}>{item.category.name}</p>
-            <h1 className={styles.name}>{item.name}</h1>
-            <p className={styles.price}>{brl.format(+item.price)}</p>
-          </div>
-          <Badge
-            variant={item.isActive ? 'success' : 'error'}
-            className={styles.headBadge}
+      <header className={`${motion.settle} ${styles.head}`}>
+        <div className={styles.headText}>
+          <h1 className={styles.name}>{item.name}</h1>
+        </div>
+        <Badge
+          variant={item.isActive ? 'success' : 'error'}
+          className={styles.headBadge}
+        >
+          {item.isActive ? 'No cardápio' : 'Fora do cardápio'}
+        </Badge>
+      </header>
+
+      <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
+        <div
+          className={`${motion.deal} ${styles.photoCol}`}
+          style={riseDelay(80)}
+        >
+          <ItemPhoto
+            tenantId={tenantId}
+            productId={item.id}
+            name={item.name}
+            images={item.images ?? []}
+          />
+        </div>
+
+        <div className={styles.fields}>
+          <div
+            className={`${motion.deal} ${styles.field}`}
+            style={riseDelay(120)}
           >
-            {item.isActive ? 'No cardápio' : 'Fora do cardápio'}
-          </Badge>
-        </header>
-
-          <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
-          <div className={`${motion.deal} ${styles.field}`} style={riseDelay(80)}>
-            <ItemPhoto
-              tenantId={tenantId}
-              productId={item.id}
-              name={item.name}
-              images={item.images ?? []}
-            />
-          </div>
-
-          <div className={`${motion.deal} ${styles.field}`} style={riseDelay(120)}>
             <FormField label="Nome" error={errors.name?.message}>
               <Input {...register('name', { required: 'Informe o nome' })} />
             </FormField>
           </div>
 
-          <div className={`${motion.deal} ${styles.field}`} style={riseDelay(180)}>
+          <div
+            className={`${motion.deal} ${styles.field}`}
+            style={riseDelay(180)}
+          >
             <FormField
               label="Descrição"
               helperText={`${description?.length ?? 0}/${DESCRIPTION_MAX_LENGTH} · Aparece abaixo do nome no app do cliente`}
@@ -186,11 +187,7 @@ export const ProductDetail = () => {
               />
             </FormField>
 
-            <FormField
-              label="Posição"
-              helperText="Ordem dentro da categoria"
-              error={errors.position?.message}
-            >
+            <FormField label="Posição" error={errors.position?.message}>
               <Input
                 type="number"
                 min={0}
@@ -199,7 +196,10 @@ export const ProductDetail = () => {
             </FormField>
           </div>
 
-          <div className={`${motion.deal} ${styles.field}`} style={riseDelay(300)}>
+          <div
+            className={`${motion.deal} ${styles.field}`}
+            style={riseDelay(300)}
+          >
             <FormField label="Categoria" error={errors.categoryId?.message}>
               <Controller
                 name="categoryId"
@@ -241,31 +241,31 @@ export const ProductDetail = () => {
           </div>
 
           {errors.root && <Alert variant="error">{errors.root.message}</Alert>}
+        </div>
 
-          <div
-            className={`${motion.deal} ${styles.actions}`}
-            style={riseDelay(420)}
+        <div
+          className={`${motion.deal} ${styles.actions}`}
+          style={riseDelay(420)}
+        >
+          <Button
+            type="button"
+            variant="danger"
+            onClick={() => setIsDeleteOpen(true)}
           >
-            <Button type="submit" loading={isSubmitting} disabled={!isDirty}>
-              Salvar alterações
-            </Button>
-            <Button
-              type="button"
-              variant="ghost"
-              onClick={() => void navigate('..', { relative: 'path' })}
-            >
-              Cancelar
-            </Button>
-            <Button
-              type="button"
-              variant="danger"
-              onClick={() => setIsDeleteOpen(true)}
-            >
-              Excluir item
-            </Button>
-          </div>
-        </form>
-      </Card>
+            Excluir item
+          </Button>
+          <Button
+            type="button"
+            variant="ghost"
+            onClick={() => void navigate('..', { relative: 'path' })}
+          >
+            Cancelar
+          </Button>
+          <Button type="submit" loading={isSubmitting} disabled={!isDirty}>
+            Salvar alterações
+          </Button>
+        </div>
+      </form>
 
       <Dialog
         open={isDeleteOpen}

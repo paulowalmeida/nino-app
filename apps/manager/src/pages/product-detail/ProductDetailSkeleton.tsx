@@ -1,4 +1,3 @@
-import { Card } from '@nino/ds/components/Card'
 import { Skeleton } from '@nino/ds/components/Skeleton'
 import { BackLink } from '@components/BackLink'
 
@@ -13,19 +12,19 @@ export const ProductDetailSkeleton = () => (
   <div className={styles.page}>
     <BackLink>Cardápio</BackLink>
 
-    <Card className={styles.sheet}>
-      <header className={styles.head}>
-        <div className={styles.headText}>
-          <Skeleton className={styles.boneCategory} />
-          <Skeleton className={styles.boneName} />
-          <Skeleton className={styles.bonePrice} />
-        </div>
-        <Skeleton className={styles.boneBadge} />
-      </header>
+    <header className={styles.head}>
+      <div className={styles.headText}>
+        <Skeleton className={styles.boneName} />
+      </div>
+      <Skeleton className={styles.boneBadge} />
+    </header>
 
-      <div className={styles.form}>
+    <div className={styles.form}>
+      <div className={styles.photoCol}>
         <Skeleton className={styles.bonePhoto} />
+      </div>
 
+      <div className={styles.fields}>
         <div className={styles.field}>
           <Skeleton className={styles.boneLabel} />
           <Skeleton className={styles.boneInput} />
@@ -59,12 +58,12 @@ export const ProductDetailSkeleton = () => (
             <Skeleton className={styles.boneHint} />
           </div>
         </div>
-
-        <div className={styles.actions}>
-          <Skeleton className={styles.boneButton} />
-          <Skeleton className={styles.boneButton} />
-        </div>
       </div>
-    </Card>
+
+      <div className={styles.actions}>
+        <Skeleton className={styles.boneButton} />
+        <Skeleton className={styles.boneButton} />
+      </div>
+    </div>
   </div>
 )

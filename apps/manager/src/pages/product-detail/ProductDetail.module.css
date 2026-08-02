@@ -1,23 +1,17 @@
 @reference "@nino/ds/globals.css";
 
+/* mais largo que os formulários simples: a ficha tem foto e campos lado a
+   lado no desktop, e em 3xl a foto sozinha comia meia tela de altura */
 .page {
-  @apply max-w-3xl p-4 lg:p-10;
+  @apply max-w-5xl p-4 lg:p-10;
 }
 
 /*
  * Ossos da ficha: cada um tem a altura do elemento que substitui, para a
  * página não pular de altura quando o item chega.
  */
-.boneCategory {
-  @apply mb-2 h-3 w-24 rounded-sm;
-}
-
 .boneName {
   @apply h-8 w-2/3 rounded-lg lg:h-9;
-}
-
-.bonePrice {
-  @apply mt-2 h-4 w-20 rounded-sm;
 }
 
 .boneBadge {
@@ -25,7 +19,7 @@
 }
 
 .bonePhoto {
-  @apply h-40 w-full rounded-2xl;
+  @apply aspect-[4/3] h-auto w-full rounded-[20px];
 }
 
 .boneLabel {
@@ -63,26 +57,14 @@
 
 /* A tela toda é uma ficha só: o cabeçalho do item mora no topo do cartão,
    separado do formulário por um fio — não é outra superfície. */
-.sheet {
-  @apply mt-3 p-5 lg:p-7;
-}
-
+/* sem cartão: a ficha é a tela, e a divisória basta para separar o
+   cabeçalho do formulário */
 .head {
-  @apply flex items-center gap-4 border-b border-sand pb-5;
+  @apply mt-2 flex items-center gap-4 border-b border-line/60 pb-5;
 }
 
 .headText {
   @apply min-w-0 flex-1;
-}
-
-.category {
-  @apply mb-1 inline-flex items-center gap-2 text-[0.7rem] font-bold;
-  @apply uppercase tracking-[0.12em] text-faint;
-}
-
-.category::before {
-  content: "";
-  @apply inline-block h-0.5 w-[18px] rounded-sm bg-line;
 }
 
 .name {
@@ -90,30 +72,40 @@
   @apply text-ink lg:text-3xl;
 }
 
-.price {
-  @apply mt-1 text-sm font-semibold text-subtle;
-  font-variant-numeric: tabular-nums;
-}
-
 .headBadge {
   @apply shrink-0;
 }
 
+/*
+ * Duas colunas no desktop: a foto tem largura fixa à esquerda e os campos
+ * ocupam o resto. Empilhada, a moldura 4/3 nascia com a largura inteira da
+ * página — quase 500px de altura antes do primeiro campo.
+ */
 .form {
-  @apply mt-5 flex flex-col gap-5;
+  @apply mt-6 flex flex-col gap-5;
+  @apply lg:grid lg:grid-cols-[20rem_1fr] lg:items-start lg:gap-x-10;
+}
+
+.photoCol {
+  @apply min-w-0;
+}
+
+.fields {
+  @apply flex min-w-0 flex-col gap-5;
 }
 
 .field {
   @apply min-w-0;
 }
 
+/* preço e posição são campos curtos: a largura acompanha o que se digita
+   ("16,90", "13"), não a coluna inteira do formulário */
 .row {
-  @apply grid grid-cols-[2fr_1fr] gap-4;
+  @apply grid grid-cols-2 gap-4 sm:grid-cols-[9rem_7rem];
 }
 
 .availability {
-  @apply flex items-start gap-3 rounded-2xl border border-brand/15;
-  @apply bg-brand/5 p-4;
+  @apply flex items-start gap-3 rounded-2xl bg-cream p-4;
 }
 
 .availabilityLabel {
@@ -124,7 +116,9 @@
   @apply mt-0.5 text-xs leading-relaxed text-faint;
 }
 
+/* ação fecha o bloco à direita, com a primária na ponta: é onde a mão vai
+   depois de percorrer o formulário inteiro */
 .actions {
-  @apply flex flex-col gap-2 border-t border-sand pt-5 sm:flex-row;
+  @apply flex flex-col gap-2 border-t border-line/60 pt-5;
+  @apply sm:flex-row sm:justify-end lg:col-span-2;
 }
-
