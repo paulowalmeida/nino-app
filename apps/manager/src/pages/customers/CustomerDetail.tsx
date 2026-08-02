@@ -1,6 +1,7 @@
 import { Link, useParams } from 'react-router'
 
 import { EmptyState } from '@nino/ds/components/EmptyState'
+import { ScrollArea } from '@nino/ds/components/ScrollArea'
 import { Skeleton } from '@nino/ds/components/Skeleton'
 import { Breadcrumb } from '@components/Breadcrumb'
 import { PersonMark } from '@components/PersonMark'
@@ -92,14 +93,20 @@ export const CustomerDetail = () => {
       </dl>
 
       <section className={styles.history} aria-label="Últimos pedidos">
-        <h2 className={styles.historyTitle}>Últimos pedidos</h2>
+        <div className={styles.historyHead}>
+          <h2 className={styles.historyTitle}>Últimos pedidos</h2>
+          <p className={styles.historyWindow}>
+            90 dias ou 90 pedidos — o que vier primeiro
+          </p>
+        </div>
 
         {customer.history.length === 0 ? (
           <EmptyState>
             Nenhum pedido registrado nesta loja ainda.
           </EmptyState>
         ) : (
-          <ul className={styles.orders}>
+          <ScrollArea className={styles.ordersScroll}>
+            <ul className={styles.orders}>
             {customer.history.map((order, index) => (
               <li
                 key={order.id}
@@ -126,7 +133,8 @@ export const CustomerDetail = () => {
                 </Link>
               </li>
             ))}
-          </ul>
+            </ul>
+          </ScrollArea>
         )}
       </section>
     </div>
