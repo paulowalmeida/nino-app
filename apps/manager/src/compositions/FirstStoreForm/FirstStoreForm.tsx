@@ -9,6 +9,7 @@ import { MaskedInput } from '@nino/ds/components/MaskedInput'
 import { Select } from '@nino/ds/components/Select'
 import { maskZipCode } from '@nino/ds/masks'
 import { lookupZipCode, onlyDigits } from '@nino/lib/services/zip-code'
+import { STORE_DRAFT_KEY } from '@constants/drafts'
 import { useCreateStore } from '@hooks/store/useCreateStore'
 import { useStoreTypes } from '@hooks/store/useStoreTypes'
 import { checkSlug } from '@services/store/store.service'
@@ -26,7 +27,6 @@ import styles from './FirstStoreForm.module.css'
 import motion from '@layouts/AuthLayout/motion.module.css'
 
 const TAKEN_MESSAGE = 'Este endereço já está em uso'
-const DRAFT_KEY = 'first-store'
 
 /**
  * The check is a courtesy: the unique constraint is what actually decides, and
@@ -43,13 +43,14 @@ const checkSlugTaken = async (slug: string): Promise<true | string> => {
 }
 
 export const FirstStoreForm = ({
+  onChange,
   onCreated,
   submitLabel = 'Criar loja',
 }: FirstStoreFormProps) => {
   const { data: types = [] } = useStoreTypes()
   const { mutateAsync: createStore } = useCreateStore(onCreated)
   const [lookingUp, setLookingUp] = useState(false)
-  const [draft] = useState(() => readDraft<FirstStoreFormValues>(DRAFT_KEY))
+  const [draft] = useState(() => readDraft<FirstStoreFormValues>(STORE_DRAFT_KEY))
 
   const {
     register,
@@ -66,13 +67,20 @@ export const FirstStoreForm = ({
     defaultValues: draft ?? undefined,
   })
 
+  /* O rascunho entra antes da primeira tecla: quem espelha o formulário
+   * (a placa da tela de unidades) precisa nascer com o que já está lá. */
   useEffect(() => {
-    const { unsubscribe } = watch((values) =>
-      writeDraft<FirstStoreFormValues>(DRAFT_KEY, values)
-    )
+    if (draft) onChange?.(draft)
+  }, [draft, onChange])
+
+  useEffect(() => {
+    const { unsubscribe } = watch((values) => {
+      writeDraft<FirstStoreFormValues>(STORE_DRAFT_KEY, values)
+      onChange?.(values)
+    })
 
     return unsubscribe
-  }, [watch])
+  }, [watch, onChange])
 
   const typeOptions = types.map(({ id, name, description }) => ({
     value: id,
@@ -112,7 +120,7 @@ export const FirstStoreForm = ({
         zipCode: onlyDigits(data.zipCode),
       })
 
-      clearDraft(DRAFT_KEY)
+      clearDraft(STORE_DRAFT_KEY)
     } catch (error) {
       if (error instanceof ApiError && error.status === 409) {
         setError('slug', { message: TAKEN_MESSAGE })

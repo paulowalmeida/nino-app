@@ -33,6 +33,28 @@ export const Default: Story = {
   ),
 }
 
+/**
+ * Opt-in edge fade: the content dissolves against any edge it can still
+ * scroll past, and goes solid once that end is reached.
+ */
+export const WithFadeEdges: Story = {
+  render: () => (
+    <ScrollArea
+      fadeEdges
+      className="rounded-card border border-line"
+      style={{ height: 192, width: 256 }}
+    >
+      <div className="p-4">
+        {Array.from({ length: 20 }).map((_, i) => (
+          <p key={i} className="py-1 text-sm text-body">
+            Pedido #{1000 + i}
+          </p>
+        ))}
+      </div>
+    </ScrollArea>
+  ),
+}
+
 /** Horizontal overflow: the bottom bar shows up on the same rules. */
 export const Horizontal: Story = {
   render: () => (

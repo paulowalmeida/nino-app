@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useNavigate } from 'react-router'
 
 import { Stepper } from '@nino/ds/components/Stepper'
 import type { SignupAccount } from '@custom_types/auth'
@@ -7,19 +8,20 @@ import type { RegisterStep } from './RegisterWizard.types'
 
 import { AccountStep } from './AccountStep'
 import { CompanyStep } from './CompanyStep'
-import { StoreStep } from './StoreStep'
 
 import styles from '@layouts/AuthLayout/authForm.module.css'
 
-const STEPS = [{ title: 'Conta' }, { title: 'Empresa' }, { title: 'Loja' }]
+const STEPS = [{ title: 'Conta' }, { title: 'Empresa' }]
 
 /**
- * Step 1 lives only in memory: account and company go up together in
- * `POST /auth/signup`, which creates both atomically — no orphan account. Step
- * 3 runs already authenticated, so the store is created with a live session
- * instead of on a separate screen the merchant gets redirected to.
+ * Cadastro termina na empresa. Conta e empresa sobem juntas em
+ * `POST /auth/signup`, que cria as duas de forma atômica — não existe conta
+ * órfã. A loja não é etapa de cadastro: ela nasce dentro do gestor, na tela de
+ * unidades, onde a segunda, a terceira e a décima também nascem. Uma tela só
+ * para a primeira loja seria um caminho que ninguém percorre duas vezes.
  */
 export const RegisterWizard = () => {
+  const navigate = useNavigate()
   const [account, setAccount] = useState<SignupAccount | null>(null)
   const [step, setStep] = useState<RegisterStep>(1)
 
@@ -30,36 +32,32 @@ export const RegisterWizard = () => {
 
   const handleBack = () => setStep(1)
 
-  const handleSignedUp = () => setStep(3)
+  /* A sessão já está de pé quando o signup responde: a raiz lê a sessão nova e
+   * manda para as unidades, que é onde a loja é criada. */
+  const handleSignedUp = () => void navigate('/')
 
-  /* Só voltar, e só do passo 2: a partir do 3 a conta já existe e a sessão
-   * está de pé — clicar numa etapa anterior não desfaz isso. */
   const handleStepChange = (next: number) => {
     if (step === 2 && next === 0) handleBack()
   }
-
-  const content =
-    step === 1 || !account ? (
-      <AccountStep defaultValues={account} onNext={handleAccountNext} />
-    ) : step === 2 ? (
-      <CompanyStep
-        account={account}
-        onBack={handleBack}
-        onSignedUp={handleSignedUp}
-      />
-    ) : (
-      <StoreStep firstName={account.name.split(' ')[0]} />
-    )
 
   return (
     <>
       <Stepper
         steps={STEPS}
-        step={account ? step - 1 : 0}
+        step={step - 1}
         onStepChange={handleStepChange}
         className={styles.stepper}
       />
-      {content}
+
+      {step === 2 && account ? (
+        <CompanyStep
+          account={account}
+          onBack={handleBack}
+          onSignedUp={handleSignedUp}
+        />
+      ) : (
+        <AccountStep defaultValues={account} onNext={handleAccountNext} />
+      )}
     </>
   )
 }

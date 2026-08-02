@@ -15,7 +15,13 @@ const indicatorDefault = 'bg-surface-mute text-faint'
 const indicatorActive = 'bg-brand text-brand-foreground'
 const indicatorCompleted = 'bg-body text-cream'
 
-const separatorHClass = 'h-1 flex-1 mx-2 rounded-full transition-colors'
+/* Fora do fluxo, ligando o centro de um marcador ao do próximo: no fluxo, ele
+ * entrava na largura da etapa e o rótulo — centrado na coluna — saía deslocado
+ * meio conector para a direita, enquanto a última etapa (sem conector) ficava
+ * centrada sozinha. `1.5rem` = metade do marcador (16px) + 8px de respiro. */
+const separatorHClass =
+  'absolute top-4 h-1 -translate-y-1/2 rounded-full transition-colors ' +
+  'left-[calc(50%+1.5rem)] right-[calc(-50%+1.5rem)]'
 const separatorVClass = 'ml-4 mt-1 mb-1 h-6 w-1 rounded-full transition-colors'
 const separatorDone = 'bg-body'
 const separatorPending = 'bg-surface-mute'
@@ -94,13 +100,15 @@ export function Stepper({
             role="listitem"
             className={mergeClasses(
               'flex',
-              isVertical ? 'flex-col' : 'flex-1 flex-col items-center'
+              isVertical
+                ? 'flex-col'
+                : 'relative min-w-0 flex-1 flex-col items-center'
             )}
           >
             <div
               className={mergeClasses(
                 'flex items-center',
-                isVertical ? 'gap-3' : 'w-full'
+                isVertical ? 'gap-3' : ''
               )}
             >
               <button
@@ -117,16 +125,16 @@ export function Stepper({
                   {isCompleted ? <CheckIcon /> : <span>{index + 1}</span>}
                 </span>
               </button>
-              {!isVertical && index < steps.length - 1 && (
-                <div
-                  aria-hidden
-                  className={mergeClasses(
-                    separatorHClass,
-                    isCompleted ? separatorDone : separatorPending
-                  )}
-                />
-              )}
             </div>
+            {!isVertical && index < steps.length - 1 && (
+              <div
+                aria-hidden
+                className={mergeClasses(
+                  separatorHClass,
+                  isCompleted ? separatorDone : separatorPending
+                )}
+              />
+            )}
             {!isVertical && (
               <div className="mt-2 text-center">
                 <p className={titleClass}>{s.title}</p>

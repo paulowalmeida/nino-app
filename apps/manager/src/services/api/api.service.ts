@@ -9,20 +9,35 @@ import { hadSession } from '@utils/session-hint'
 const BASE_URL = import.meta.env.VITE_BASE_URL
 
 /**
- * Routes where a 401 means wrong credentials, not an expired session —
- * refreshing and retrying there would mask the user's real error.
+ * Rotas onde 401 é resposta, não sessão expirada: credencial errada, e-mail já
+ * em uso, token de refresh vencido. Renovar e repetir aqui mascararia o erro
+ * real de quem está na tela.
  */
-const PUBLIC_PATHS = [
+const CREDENTIAL_PATHS = [
   'auth/login',
   'auth/signup',
   'auth/refresh',
   'auth/check-availability',
 ]
 
-const isPublicPath = (url: string): boolean => {
+/**
+ * A sondagem de sessão. Um 401 aqui pode ser das duas coisas — token expirado
+ * (renova e repete, como qualquer rota) ou visitante sem sessão (resposta
+ * legítima) —, então ela renova como as demais mas nunca derruba a sessão:
+ * telas públicas perguntam quem está logado e não podem ser expulsas por isso.
+ */
+const SESSION_PROBE = 'auth/me'
+
+const matches = (url: string, paths: string[]): boolean => {
   const { pathname } = new URL(url)
-  return PUBLIC_PATHS.some((path) => pathname.endsWith(`/${path}`))
+  return paths.some((path) => pathname.endsWith(`/${path}`))
 }
+
+const isCredentialPath = (url: string): boolean =>
+  matches(url, CREDENTIAL_PATHS)
+
+const endsSessionOn401 = (url: string): boolean =>
+  !matches(url, [...CREDENTIAL_PATHS, SESSION_PROBE])
 
 const parseMessage = async (response: Response): Promise<string> => {
   const fallback = HTTP_ERRORS[response.status] ?? response.statusText
@@ -43,7 +58,7 @@ const parseMessage = async (response: Response): Promise<string> => {
 const handleError = async (error: unknown): Promise<never> => {
   if (error instanceof HTTPError) {
     const { status } = error.response
-    if (status === 401 && !isPublicPath(error.request.url)) endSession()
+    if (status === 401 && endsSessionOn401(error.request.url)) endSession()
     throw new ApiError(status, await parseMessage(error.response))
   }
   if (error instanceof TimeoutError) throw new ApiError(0, 'Request timed out')
@@ -83,7 +98,7 @@ export const ApiFactory = ({
     hooks: {
       beforeRetry: [
         async ({ request, error }) => {
-          if (isPublicPath(request.url)) throw error
+          if (isCredentialPath(request.url)) throw error
 
           /*
            * Sem sessão anterior neste browser não há o que renovar: quem abre

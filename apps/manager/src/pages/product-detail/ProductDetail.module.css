@@ -105,7 +105,7 @@
 }
 
 .availability {
-  @apply flex items-start gap-3 rounded-2xl bg-cream p-4;
+  @apply flex items-start gap-3 rounded-2xl border border-line/60 bg-white p-4;
 }
 
 .availabilityLabel {

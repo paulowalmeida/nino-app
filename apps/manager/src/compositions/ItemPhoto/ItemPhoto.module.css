@@ -16,7 +16,7 @@
 /* área de largar arquivo, quando ainda não há foto */
 .empty {
   @apply flex h-full w-full flex-col items-center justify-center gap-2;
-  @apply border-2 border-dashed border-sand-deep bg-cream/60 p-6 text-center;
+  @apply border-2 border-dashed border-line/50 bg-white p-6 text-center;
   @apply transition-colors duration-200;
 }
 

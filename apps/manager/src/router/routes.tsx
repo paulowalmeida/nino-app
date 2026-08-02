@@ -6,6 +6,7 @@ import { AuthLayout } from '@layouts/AuthLayout'
 import { MANAGERS } from '@constants/roles'
 
 import { AuthGuard } from './auth-guard'
+import { GuestGuard } from './guest-guard'
 import { roleGuard } from './role-guard'
 import { RootLoader } from './root-loader'
 import { SessionGuard } from './session-guard'
@@ -20,12 +21,14 @@ export const router = createBrowserRouter([
     children: [
       {
         path: '/entrar',
+        loader: GuestGuard,
         lazy: () => import('@pages/login/Login').then(({ Login }) => ({
           Component: Login,
         })),
       },
       {
         path: '/cadastrar',
+        loader: GuestGuard,
         lazy: () => import('@pages/register/Register').then(({ Register }) => ({
           Component: Register,
         })),
@@ -41,12 +44,18 @@ export const router = createBrowserRouter([
       ),
   },
   {
-    path: '/criar-loja',
+    path: '/boas-vindas',
     loader: SessionGuard,
     lazy: () =>
-      import('@pages/first-store/FirstStore').then(({ CreateStore }) => ({
-        Component: CreateStore,
+      import('@pages/welcome/Welcome').then(({ Welcome }) => ({
+        Component: Welcome,
       })),
+  },
+  {
+    path: '/unidades',
+    loader: SessionGuard,
+    lazy: () =>
+      import('@pages/units/Units').then(({ Units }) => ({ Component: Units })),
   },
   {
     element: <AppLayout />,
