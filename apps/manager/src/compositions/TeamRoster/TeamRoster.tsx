@@ -4,9 +4,11 @@ import { Badge } from '@nino/ds/components/Badge'
 import { Menu, type MenuItem } from '@nino/ds/components/Menu'
 import { EmptyState } from '@nino/ds/components/EmptyState'
 import { Skeleton } from '@nino/ds/components/Skeleton'
+import { Icon } from '@components/Icon/Icon'
 import { PersonMark } from '@components/PersonMark'
 import { lastSeenLabel } from '@utils/last-seen'
 import { riseDelay } from '@utils/rise-delay'
+import kebabIcon from '@assets/icons/kebab.svg?raw'
 
 import type { RosterEntry, TeamRosterProps } from './TeamRoster.types'
 
@@ -37,14 +39,6 @@ const ROLE_OPTIONS = [
 
 /** Três pessoas: uma equipe pequena inteira, que é o caso comum. */
 const GHOST_ROWS = ['first', 'second', 'third']
-
-const KebabIcon = () => (
-  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-    <circle cx="12" cy="5" r="2" />
-    <circle cx="12" cy="12" r="2" />
-    <circle cx="12" cy="19" r="2" />
-  </svg>
-)
 
 export const TeamRoster = ({
   title,
@@ -211,7 +205,7 @@ export const TeamRoster = ({
                         disabled={busy}
                         aria-label={`Ações para ${entry.name}`}
                       >
-                        <KebabIcon />
+                        <Icon svg={kebabIcon} />
                       </button>
                     }
                     items={items}

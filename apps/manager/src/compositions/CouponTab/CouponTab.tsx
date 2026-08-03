@@ -1,4 +1,6 @@
+import { Icon } from '@components/Icon/Icon'
 import { brl } from '@utils/money'
+import chevronUpIcon from '@assets/icons/chevron-up.svg?raw'
 
 import type { CouponTabProps } from './CouponTab.types'
 
@@ -23,15 +25,7 @@ export const CouponTab = ({ count, total, onOpen }: CouponTabProps) => (
       </span>
       <span className={styles.total}>{brl(total)}</span>
       <span className={styles.hint} aria-hidden="true">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
-          <path
-            d="M6 15l6-6 6 6"
-            stroke="currentColor"
-            strokeWidth="2.4"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-        </svg>
+        <Icon svg={chevronUpIcon} />
       </span>
     </span>
   </button>

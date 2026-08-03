@@ -12,24 +12,12 @@ import { brl } from '@utils/money'
 import { paymentLabelFor } from '@utils/order-flow'
 import minusIcon from '@assets/icons/minus.svg?raw'
 import plusIcon from '@assets/icons/plus.svg?raw'
+import trashIcon from '@assets/icons/trash-thin.svg?raw'
 
 import type { SaleTicketProps } from './SaleTicket.types'
 
 import styles from './SaleTicket.module.css'
 import motion from '@styles/motion.module.css'
-
-const TrashIcon = () => (
-  <svg width="15" height="15" viewBox="0 0 24 24" aria-hidden="true">
-    <path
-      d="M4 7h16M10 11v6M14 11v6M6 7l1 12a2 2 0 002 2h6a2 2 0 002-2l1-12M9 7V5a2 2 0 012-2h2a2 2 0 012 2v2"
-      stroke="currentColor"
-      strokeWidth="1.8"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      fill="none"
-    />
-  </svg>
-)
 
 /**
  * A comanda do caixa, na mesma forma da sacola do app do cliente: linha com
@@ -119,7 +107,11 @@ export const SaleTicket = ({
                       >
                         {/* Na última unidade o traço vira lixeira: tocar de
                             novo remove, e o ícone avisa antes. */}
-                        {isLast ? <TrashIcon /> : <Icon svg={minusIcon} />}
+                        {isLast ? (
+                          <Icon svg={trashIcon} />
+                        ) : (
+                          <Icon svg={minusIcon} />
+                        )}
                       </Button>
 
                       <span className={styles.stepperCount}>

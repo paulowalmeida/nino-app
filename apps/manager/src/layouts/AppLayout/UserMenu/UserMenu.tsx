@@ -46,7 +46,7 @@ export const UserMenu = ({
           {!collapsed && (
             <>
               <span className={styles.name}>{name.split(' ')[0]}</span>
-              <NavIcon name="gear" className={styles.icon} />
+              <NavIcon name="settings" className={styles.icon} />
             </>
           )}
         </button>

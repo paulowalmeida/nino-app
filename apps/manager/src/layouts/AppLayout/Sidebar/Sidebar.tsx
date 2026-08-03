@@ -65,7 +65,7 @@ const GROUPS: { title: string; items: NavItem[] }[] = [
       {
         section: 'configuracoes',
         label: 'Configurações',
-        icon: 'gear',
+        icon: 'settings',
         children: SETTINGS_SECTIONS,
         roles: MANAGERS,
       },

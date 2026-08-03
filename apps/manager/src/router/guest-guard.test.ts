@@ -67,84 +67,86 @@ describe('GuestGuard', () => {
     useSessionStore.getState().clear()
   })
 
-  describe('visitor with no session', () => {
-    it('opens the login screen without asking the API', async () => {
-      expect(await visit('/entrar')).toBeNull()
-      expect(loadSession).not.toHaveBeenCalled()
-    })
-
-    it('opens the signup wizard without asking the API', async () => {
-      expect(await visit('/cadastrar')).toBeNull()
-      expect(loadSession).not.toHaveBeenCalled()
-    })
-
-    it('keeps any draft it finds, having nothing to abandon', async () => {
-      await visit('/entrar')
-
-      expect(clearDraft).not.toHaveBeenCalled()
-    })
+  it('no session: opens the login screen without asking the API', async () => {
+    expect(await visit('/entrar')).toBeNull()
+    expect(loadSession).not.toHaveBeenCalled()
   })
 
-  describe('session remembered but already gone', () => {
-    beforeEach(() => {
-      window.localStorage.setItem(HINT_KEY, '1')
-      loadSession.mockResolvedValue(null)
-    })
-
-    it('opens the login screen', async () => {
-      expect(await visit('/entrar')).toBeNull()
-    })
-
-    it('opens the signup wizard', async () => {
-      expect(await visit('/cadastrar')).toBeNull()
-    })
-
-    it('keeps the draft, since nobody is signed in to abandon it', async () => {
-      await visit('/entrar')
-
-      expect(clearDraft).not.toHaveBeenCalled()
-    })
+  it('no session: opens the signup wizard without asking the API', async () => {
+    expect(await visit('/cadastrar')).toBeNull()
+    expect(loadSession).not.toHaveBeenCalled()
   })
 
-  describe('signup finished, merchant already has a store', () => {
-    beforeEach(() => signedIn([membership()]))
+  it('no session: keeps any draft it finds, having nothing to abandon', async () => {
+    await visit('/entrar')
 
-    it('sends the login screen back to the root', async () => {
-      expect(locationOf(await visit('/entrar'))).toBe('/')
-    })
-
-    it('sends the signup wizard back to the root', async () => {
-      expect(locationOf(await visit('/cadastrar'))).toBe('/')
-    })
-
-    it('keeps the store draft of a merchant who is not signing up', async () => {
-      await visit('/entrar')
-
-      expect(clearDraft).not.toHaveBeenCalled()
-    })
+    expect(clearDraft).not.toHaveBeenCalled()
   })
 
-  describe('account created, store still missing', () => {
-    beforeEach(() => signedIn([]))
+  it('stale hint: opens the login screen', async () => {
+    window.localStorage.setItem(HINT_KEY, '1')
+    loadSession.mockResolvedValue(null)
 
-    it('sends the wizard to the units screen, where the store is born', async () => {
-      expect(locationOf(await visit('/cadastrar'))).toBe('/unidades')
-    })
+    expect(await visit('/entrar')).toBeNull()
+  })
 
-    it('keeps the draft on the way to the units screen', async () => {
-      await visit('/cadastrar')
+  it('stale hint: opens the signup wizard', async () => {
+    window.localStorage.setItem(HINT_KEY, '1')
+    loadSession.mockResolvedValue(null)
 
-      expect(clearDraft).not.toHaveBeenCalled()
-    })
+    expect(await visit('/cadastrar')).toBeNull()
+  })
 
-    it('stays on login when the person walks back to it', async () => {
-      expect(await visit('/entrar')).toBeNull()
-    })
+  it('stale hint: keeps the draft, since nobody is signed in to abandon it', async () => {
+    window.localStorage.setItem(HINT_KEY, '1')
+    loadSession.mockResolvedValue(null)
+    await visit('/entrar')
 
-    it('discards the store draft once login is reached', async () => {
-      await visit('/entrar')
+    expect(clearDraft).not.toHaveBeenCalled()
+  })
 
-      expect(clearDraft).toHaveBeenCalledWith('first-store')
-    })
+  it('has a store: sends the login screen back to the root', async () => {
+    signedIn([membership()])
+
+    expect(locationOf(await visit('/entrar'))).toBe('/')
+  })
+
+  it('has a store: sends the signup wizard back to the root', async () => {
+    signedIn([membership()])
+
+    expect(locationOf(await visit('/cadastrar'))).toBe('/')
+  })
+
+  it('has a store: keeps the store draft of a merchant who is not signing up', async () => {
+    signedIn([membership()])
+    await visit('/entrar')
+
+    expect(clearDraft).not.toHaveBeenCalled()
+  })
+
+  it('store missing: sends the wizard to the units screen, where the store is born', async () => {
+    signedIn([])
+
+    expect(locationOf(await visit('/cadastrar'))).toBe('/unidades')
+  })
+
+  it('store missing: keeps the draft on the way to the units screen', async () => {
+    signedIn([])
+    await visit('/cadastrar')
+
+    expect(clearDraft).not.toHaveBeenCalled()
+  })
+
+  it('store missing: stays on login when the person walks back to it', async () => {
+    signedIn([])
+
+    expect(await visit('/entrar')).toBeNull()
+  })
+
+  it('store missing: discards the store draft once login is reached', async () => {
+    signedIn([])
+    await visit('/entrar')
+
+    expect(clearDraft).toHaveBeenCalledWith('first-store')
   })
 })

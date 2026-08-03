@@ -45,7 +45,7 @@ describe('DeleteItemDialog', () => {
   })
 
   it('deletes only after the confirm button', async () => {
-    vi.mocked(removeItem).mockResolvedValue(undefined as never)
+    vi.mocked(removeItem).mockResolvedValue({ message: 'Item removido' })
     const { onClose } = renderDialog()
 
     await userEvent.click(screen.getByRole('button', { name: 'Excluir' }))

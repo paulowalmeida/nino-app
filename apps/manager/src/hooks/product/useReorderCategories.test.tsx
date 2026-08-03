@@ -37,7 +37,9 @@ describe(useReorderCategories.name, () => {
   it('reorders the cache optimistically before the request resolves', async () => {
     const client = new QueryClient()
     client.setQueryData(key, buildList())
-    vi.mocked(setCategoryPosition).mockResolvedValue({} as never)
+    vi.mocked(setCategoryPosition).mockResolvedValue(
+      {} as unknown as ProductCategory
+    )
 
     const { result } = renderHook(() => useReorderCategories('tenant-1'), {
       wrapper: wrapWithClient(client),
