@@ -119,7 +119,7 @@ export const ProductGrid = ({
         <EmptyState>Nenhum item com esse nome no cardápio.</EmptyState>
       )}
 
-      <div className={styles.grid}>
+      <div className={`${styles.grid} pt-4`}>
         {visible.map((item, index) => (
           <ProductCard
             key={item.id}

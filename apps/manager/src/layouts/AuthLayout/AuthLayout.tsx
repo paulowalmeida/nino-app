@@ -41,7 +41,6 @@ export const AuthLayout = () => (
     </aside>
 
     <main className={formPanel}>
-      <div className={styles.formGlow} />
       <div className={styles.formInner}>
         <div className={styles.mobileBrand}>
           <NinoLogo size="md" mark={<NinoMascot className={mobileMascot} />} />

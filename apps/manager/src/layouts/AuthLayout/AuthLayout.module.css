@@ -14,13 +14,8 @@
 
 /* warm cream wash with a glow seeping from the brand panel edge */
 .warmBackdrop {
-  background:
-    radial-gradient(
-      120% 100% at 0% 30%,
-      rgba(255, 138, 51, 0.14) 0%,
-      transparent 55%
-    ),
-    linear-gradient(180deg, var(--color-cream) 0%, var(--color-cream-deep) 100%);
+  background: #fff,
+    /* linear-gradient(180deg, var(--color-cream) 0%, var(--color-cream-deep) 100%); */
 }
 
 /* subtle dot grid for the dark brand panel */
@@ -146,15 +141,10 @@
   @apply overflow-hidden px-6 py-12;
 }
 
-.formGlow {
-  @apply pointer-events-none absolute -top-32 right-0;
-  @apply h-72 w-72 rounded-full bg-brand/15 blur-3xl lg:hidden;
-}
-
 .formInner {
   @apply relative z-10 w-full max-w-md rounded-[1.75rem];
-  @apply border border-white/70 bg-white/75 p-8 shadow-2xl;
-  @apply shadow-brand/10 backdrop-blur-md sm:p-10;
+  @apply border border-white/70 bg-white/75 p-8;
+  @apply backdrop-blur-md sm:p-10;
 }
 
 .mobileBrand {
