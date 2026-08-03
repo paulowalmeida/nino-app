@@ -1,16 +1,14 @@
 import { Link } from 'react-router'
 
 import { Badge } from '@nino/ds/components/Badge'
-import { Menu } from '@nino/ds/components/Menu'
-import { Button } from '@nino/ds/components/Button'
+import { Menu, type MenuItem } from '@nino/ds/components/Menu'
 import { EmptyState } from '@nino/ds/components/EmptyState'
 import { Skeleton } from '@nino/ds/components/Skeleton'
-import { NavIcon } from '@components/NavIcon'
 import { PersonMark } from '@components/PersonMark'
 import { lastSeenLabel } from '@utils/last-seen'
 import { riseDelay } from '@utils/rise-delay'
 
-import type { TeamRosterProps } from './TeamRoster.types'
+import type { RosterEntry, TeamRosterProps } from './TeamRoster.types'
 
 import styles from './TeamRoster.module.css'
 import motion from '@styles/motion.module.css'
@@ -40,6 +38,14 @@ const ROLE_OPTIONS = [
 /** Três pessoas: uma equipe pequena inteira, que é o caso comum. */
 const GHOST_ROWS = ['first', 'second', 'third']
 
+const KebabIcon = () => (
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+    <circle cx="12" cy="5" r="2" />
+    <circle cx="12" cy="12" r="2" />
+    <circle cx="12" cy="19" r="2" />
+  </svg>
+)
+
 export const TeamRoster = ({
   title,
   hint,
@@ -51,140 +57,171 @@ export const TeamRoster = ({
   onRemove,
   onEditEmail,
   onChangeRole,
-}: TeamRosterProps) => (
-  <section className={styles.roster}>
-    <header className={`${motion.unroll} ${styles.head}`}>
-      <h2 className={styles.title}>{title}</h2>
-      <p className={styles.hint}>{hint}</p>
-    </header>
+}: TeamRosterProps) => {
+  /*
+   * Um menu só por pessoa, não três controles disputando a mesma linha:
+   * trocar cargo, editar e-mail e tirar da loja são a mesma pergunta — "o que
+   * fazer com esta pessoa" — e a régua de largura é o que dá certo em
+   * qualquer tela, do celular ao desktop, sem precisar de layout diferente
+   * para cada tamanho.
+   */
+  const actionsOf = (entry: RosterEntry): MenuItem[] => {
+    const items: MenuItem[] = []
+    const canChangeRole = onChangeRole && entry.roleKey && !entry.roleLocked
 
-    {/* a mesma lista, com as pessoas por chegar: disco, nome, e-mail, papel */}
-    {isPending && (
-      <ul className={styles.list}>
-        {GHOST_ROWS.map((row) => (
-          <li key={row} className={styles.row}>
-            <Skeleton className={styles.ghostMark} />
+    if (canChangeRole) {
+      items.push(
+        ...ROLE_OPTIONS.map(({ value, label, hint: roleHint }) => ({
+          value: `role-${value}`,
+          label:
+            entry.roleKey === value
+              ? `${label} — atual`
+              : `${label} — ${roleHint}`,
+          disabled: entry.roleKey === value,
+          onSelect: () => onChangeRole(entry.id, value),
+        }))
+      )
+    }
 
-            <div className={styles.person}>
-              <Skeleton className={styles.ghostName} />
-              <Skeleton className={styles.ghostEmail} />
-            </div>
+    if (entry.emailEditable && onEditEmail) {
+      if (items.length > 0) items.push({ separator: true })
+      items.push({
+        value: 'edit-email',
+        label: 'Editar e-mail',
+        onSelect: () => onEditEmail(entry.id),
+      })
+    }
 
-            <Skeleton className={styles.ghostRole} />
-          </li>
-        ))}
-      </ul>
-    )}
+    if (entry.removable) {
+      if (items.length > 0) items.push({ separator: true })
+      items.push({
+        value: 'remove',
+        label: 'Tirar da loja',
+        destructive: true,
+        onSelect: () => onRemove(entry.id),
+      })
+    }
 
-    {!isPending && entries.length === 0 && (
-      <EmptyState>{empty}</EmptyState>
-    )}
+    return items
+  }
 
-    {entries.length > 0 && (
-      <ul className={styles.list}>
-        {entries.map((entry, index) => (
-          <li
-            key={entry.id}
-            className={`${motion.deal} ${styles.row}`}
-            style={riseDelay(index * 50 + 60)}
-          >
-            {entry.href ? (
-              <Link to={entry.href} className={styles.identity}>
-                <PersonMark
-                  name={entry.name}
-                  tone={entry.quiet ? 'quiet' : 'brand'}
-                />
+  return (
+    <section className={styles.roster}>
+      <header className={`${motion.unroll} ${styles.head}`}>
+        <h2 className={styles.title}>{title}</h2>
+        <p className={styles.hint}>{hint}</p>
+      </header>
 
-                <div className={styles.person}>
-                  <p className={styles.name}>{entry.name}</p>
-                  {entry.email && (
-                    <p className={styles.email}>{entry.email}</p>
-                  )}
-                  <p
-                    className={
-                      entry.lastLoginAt ? styles.lastSeen : styles.neverSeen
-                    }
-                  >
-                    Último acesso: {lastSeenLabel(entry.lastLoginAt)}
-                  </p>
-                </div>
-              </Link>
-            ) : (
-              <>
-                <PersonMark
-                  name={entry.name}
-                  tone={entry.quiet ? 'quiet' : 'brand'}
-                />
+      {/* a mesma lista, com as pessoas por chegar: disco, nome, e-mail, papel */}
+      {isPending && (
+        <ul className={styles.list}>
+          {GHOST_ROWS.map((row) => (
+            <li key={row} className={styles.row}>
+              <Skeleton className={styles.ghostMark} />
 
-                <div className={styles.person}>
-                  <p className={styles.name}>{entry.name}</p>
-                  {entry.email && (
-                    <p className={styles.email}>{entry.email}</p>
-                  )}
-                  <p
-                    className={
-                      entry.lastLoginAt ? styles.lastSeen : styles.neverSeen
-                    }
-                  >
-                    Último acesso: {lastSeenLabel(entry.lastLoginAt)}
-                  </p>
-                </div>
-              </>
-            )}
+              <div className={styles.person}>
+                <Skeleton className={styles.ghostName} />
+                <Skeleton className={styles.ghostEmail} />
+              </div>
 
-            {onChangeRole && entry.roleKey && !entry.roleLocked ? (
-              <Menu
-                contentClassName={styles.rolePanel}
-                trigger={
-                  <button
-                    type="button"
-                    className={styles.roleTrigger}
-                    disabled={changingRoleId === entry.id}
-                  >
-                    <Badge variant="info">{entry.role}</Badge>
-                    <NavIcon name="chevron" className={styles.roleCaret} />
-                  </button>
-                }
-                items={ROLE_OPTIONS.map(({ value, label, hint }) => ({
-                  value,
-                  label: `${label} — ${hint}`,
-                  disabled: entry.roleKey === value,
-                  onSelect: () => onChangeRole(entry.id, value),
-                }))}
-              />
-            ) : (
-              <Badge variant="info" title={entry.roleLocked}>
-                {entry.role}
-              </Badge>
-            )}
+              <Skeleton className={styles.ghostRole} />
+            </li>
+          ))}
+        </ul>
+      )}
 
-            <div className={styles.actions}>
-              {entry.emailEditable && onEditEmail && (
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  className={motion.press}
-                  onClick={() => onEditEmail(entry.id)}
+      {!isPending && entries.length === 0 && <EmptyState>{empty}</EmptyState>}
+
+      {entries.length > 0 && (
+        <ul className={styles.list}>
+          {entries.map((entry, index) => {
+            const items = actionsOf(entry)
+            const busy =
+              changingRoleId === entry.id || removingId === entry.id
+
+            return (
+              <li
+                key={entry.id}
+                className={`${motion.deal} ${styles.row}`}
+                style={riseDelay(index * 50 + 60)}
+              >
+                {entry.href ? (
+                  <Link to={entry.href} className={styles.identity}>
+                    <PersonMark
+                      name={entry.name}
+                      tone={entry.quiet ? 'quiet' : 'brand'}
+                    />
+
+                    <div className={styles.person}>
+                      <p className={styles.name}>{entry.name}</p>
+                      {entry.email && (
+                        <p className={styles.email}>{entry.email}</p>
+                      )}
+                      <p
+                        className={
+                          entry.lastLoginAt
+                            ? styles.lastSeen
+                            : styles.neverSeen
+                        }
+                      >
+                        Último acesso: {lastSeenLabel(entry.lastLoginAt)}
+                      </p>
+                    </div>
+                  </Link>
+                ) : (
+                  <div className={styles.identity}>
+                    <PersonMark
+                      name={entry.name}
+                      tone={entry.quiet ? 'quiet' : 'brand'}
+                    />
+
+                    <div className={styles.person}>
+                      <p className={styles.name}>{entry.name}</p>
+                      {entry.email && (
+                        <p className={styles.email}>{entry.email}</p>
+                      )}
+                      <p
+                        className={
+                          entry.lastLoginAt
+                            ? styles.lastSeen
+                            : styles.neverSeen
+                        }
+                      >
+                        Último acesso: {lastSeenLabel(entry.lastLoginAt)}
+                      </p>
+                    </div>
+                  </div>
+                )}
+
+                <Badge
+                  variant="info"
+                  className={styles.roleBadge}
+                  title={entry.roleLocked}
                 >
-                  Editar e-mail
-                </Button>
-              )}
+                  {entry.role}
+                </Badge>
 
-              {entry.removable && (
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  loading={removingId === entry.id}
-                  className={`${motion.press} ${styles.remove}`}
-                  onClick={() => onRemove(entry.id)}
-                >
-                  Tirar da loja
-                </Button>
-              )}
-            </div>
-          </li>
-        ))}
-      </ul>
-    )}
-  </section>
-)
+                {items.length > 0 && (
+                  <Menu
+                    contentClassName={styles.menuPanel}
+                    trigger={
+                      <button
+                        type="button"
+                        className={styles.kebab}
+                        disabled={busy}
+                        aria-label={`Ações para ${entry.name}`}
+                      >
+                        <KebabIcon />
+                      </button>
+                    }
+                    items={items}
+                  />
+                )}
+              </li>
+            )
+          })}
+        </ul>
+      )}
+    </section>
+  )
+}
