@@ -1,7 +1,7 @@
 import { forwardRef } from 'react'
 
 import { mergeClasses } from '@ds/lib/mergeClasses'
-import { Slot } from '@radix-ui/react-slot'
+import { Slot } from '@ds/lib/Slot'
 
 import { CardProps, CardVariant } from './Card.types'
 
@@ -22,7 +22,7 @@ const variantClasses: Record<CardVariant, string> = {
  * @param variant - `default` (resting shadow), `flat` (border, no shadow),
  * `elevated` (lifted shadow). Default: `default`
  *
- * @param asChild - Delegates rendering to the direct child via Radix Slot,
+ * @param asChild - Delegates rendering to the direct child via `Slot`,
  * for when the surface itself is the click target
  *
  * @param className - Additional CSS classes

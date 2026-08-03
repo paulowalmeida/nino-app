@@ -33,7 +33,7 @@ export interface ButtonProps extends Omit<
   /** Loading indicator style. Default: `spinner` */
   loadingIndicator?: 'spinner' | 'dots'
   /**
-   * Delegates rendering to the direct child via Radix Slot.
+   * Delegates rendering to the direct child via `Slot`.
    * Useful for rendering the Button as `<a>`, `<Link>`, or another element.
    * @example
    * <Button asChild><a href="/route">See more</a></Button>

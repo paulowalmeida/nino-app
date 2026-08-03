@@ -4,7 +4,7 @@ import { LoadingDots } from '@ds/components/LoadingDots'
 import { Spinner } from '@ds/components/Spinner'
 import { baseFocus, baseLayout } from '@ds/lib/baseClasses'
 import { mergeClasses } from '@ds/lib/mergeClasses'
-import { Slot } from '@radix-ui/react-slot'
+import { Slot } from '@ds/lib/Slot'
 import { motion } from 'framer-motion'
 
 import { ButtonProps, ButtonSize, ButtonVariant } from './Button.types'
@@ -68,7 +68,7 @@ const MotionButton = motion.create('button')
  *
  * @param loadingIndicator - Style of the loading indicator. Default: `spinner`
  *
- * @param asChild - Delegates rendering to the direct child via Radix Slot
+ * @param asChild - Delegates rendering to the direct child via `Slot`
  *
  * @param disabled - Disables the button
  *

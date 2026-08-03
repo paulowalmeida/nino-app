@@ -8,11 +8,6 @@ const EMPTY: Pick<SessionState, 'user' | 'memberships' | 'currentTenantId'> = {
   currentTenantId: null,
 }
 
-/**
- * Merchant session: who is logged in, which stores they can open and which one
- * is active. Server data (orders, products, zones) never lands here — that is
- * TanStack Query's territory.
- */
 export const useSessionStore = create<SessionState>((set) => ({
   ...EMPTY,
   setSession: (user, memberships) => set({ user, memberships }),

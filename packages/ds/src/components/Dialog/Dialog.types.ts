@@ -1,12 +1,8 @@
-import { ComponentPropsWithoutRef } from 'react'
-
 import { ModalSize } from '@ds/components/Modal'
-import * as DialogPrimitive from '@radix-ui/react-dialog'
 
-export interface DialogProps extends Pick<
-  ComponentPropsWithoutRef<typeof DialogPrimitive.Root>,
-  'open' | 'onOpenChange'
-> {
+export type DialogProps = {
+  open?: boolean
+  onOpenChange?: (open: boolean) => void
   title: string
   description: string
   confirmLabel?: string
