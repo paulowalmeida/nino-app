@@ -1,0 +1,9 @@
+@reference "@nino/ds/globals.css";
+
+.icon {
+  @apply inline-flex shrink-0;
+}
+
+.icon svg {
+  @apply h-full w-full;
+}

@@ -1,49 +1,63 @@
+import badgeIcon from '@assets/icons/badge.svg?raw'
+import bagIcon from '@assets/icons/bag.svg?raw'
+import buildingIcon from '@assets/icons/building.svg?raw'
+import cardIcon from '@assets/icons/credit-card.svg?raw'
+import chartIcon from '@assets/icons/bar-chart.svg?raw'
+import checkIcon from '@assets/icons/check.svg?raw'
+import chefIcon from '@assets/icons/chef-hat.svg?raw'
+import chevronIcon from '@assets/icons/chevron-down.svg?raw'
+import clockIcon from '@assets/icons/clock.svg?raw'
+import bookIcon from '@assets/icons/book.svg?raw'
+import gaugeIcon from '@assets/icons/gauge.svg?raw'
+import settingsIcon from '@assets/icons/settings.svg?raw'
+import gridIcon from '@assets/icons/grid.svg?raw'
+import logoutIcon from '@assets/icons/logout.svg?raw'
+import menuIcon from '@assets/icons/menu.svg?raw'
+import phoneIcon from '@assets/icons/phone.svg?raw'
+import pinIcon from '@assets/icons/pin.svg?raw'
+import receiptIcon from '@assets/icons/receipt.svg?raw'
+import registerIcon from '@assets/icons/cash-register.svg?raw'
+import storeIcon from '@assets/icons/store.svg?raw'
+import userIcon from '@assets/icons/user.svg?raw'
+import usersIcon from '@assets/icons/users.svg?raw'
+
 import type { NavIconName, NavIconProps } from './NavIcon.types'
 
-const PATHS: Record<NavIconName, string> = {
-  grid: 'M3 3h7v7H3zM14 3h7v7h-7zM14 14h7v7h-7zM3 14h7v7H3z',
-  bag: 'M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4zM3 6h18M16 10a4 4 0 0 1-8 0',
-  clipboard:
-    'M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2M9 2h6v4H9z',
-  users:
-    'M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75',
-  gear: 'M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1',
-  gauge: 'M3.5 17a9 9 0 1 1 17 0M12 13l4.5-4.5',
-  chart: 'M4 4v16h16M8 16v-4M12 16V9M16 16v-6',
-  book: 'M4 5a2 2 0 0 1 2-2h4v16H6a2 2 0 0 0-2 2zM20 5a2 2 0 0 0-2-2h-4v16h4a2 2 0 0 1 2 2z',
-  chef: 'M7 13a4 4 0 1 1 .9-7.9 4.5 4.5 0 0 1 8.2 0A4 4 0 1 1 17 13M7 13h10M7 13v5a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1v-5',
-  register:
-    'M3 11h18v8a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1zM6 11V7a2 2 0 0 1 2-2h6l3 4v2M7 15h4M15 15h2',
-  badge:
-    'M9 3h6v2a1 1 0 0 1-1 1h-4a1 1 0 0 1-1-1zM5 6h14a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1M12 11a2 2 0 1 0 0 4 2 2 0 0 0 0-4M9 18h6',
-  building:
-    'M3 21h18M5 21V6a1 1 0 0 1 1-1h8a1 1 0 0 1 1 1v15M15 10h4a1 1 0 0 1 1 1v10M8 9h4M8 13h4M8 17h4',
-  card: 'M3 7a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zM3 10h18M7 15h4',
-  clock: 'M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18M12 7v5l3 2',
-  pin: 'M12 21s7-5.5 7-11a7 7 0 1 0-14 0c0 5.5 7 11 7 11M12 12a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5',
-  phone:
-    'M15.5 21A12.5 12.5 0 0 1 3 8.5 2.5 2.5 0 0 1 5.5 6h1.6a1 1 0 0 1 1 .8l.7 3a1 1 0 0 1-.5 1.1l-1.3.7a10 10 0 0 0 5 5l.7-1.3a1 1 0 0 1 1.1-.5l3 .7a1 1 0 0 1 .8 1v1.6A2.5 2.5 0 0 1 15.5 21',
-  user: 'M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8M4 21v-1a6 6 0 0 1 6-6h4a6 6 0 0 1 6 6v1',
-  receipt:
-    'M6 3h12a1 1 0 0 1 1 1v17l-2.5-1.5L14 21l-2-1.5L10 21l-2.5-1.5L5 21V4a1 1 0 0 1 1-1M9 8h6M9 12h6',
-  logout: 'M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9',
-  menu: 'M3 6h18M3 12h18M3 18h18',
-  store: 'M3 9 4.5 4h15L21 9M3 9h18M3 9v10a1 1 0 0 0 1 1h16a1 1 0 0 0 1-1V9',
-  check: 'M20 6 9 17l-5-5',
-  chevron: 'm6 9 6 6 6-6',
+import styles from './NavIcon.module.css'
+
+const ICONS: Record<NavIconName, string> = {
+  grid: gridIcon,
+  bag: bagIcon,
+  users: usersIcon,
+  settings: settingsIcon,
+  gauge: gaugeIcon,
+  chart: chartIcon,
+  book: bookIcon,
+  chef: chefIcon,
+  register: registerIcon,
+  badge: badgeIcon,
+  building: buildingIcon,
+  card: cardIcon,
+  clock: clockIcon,
+  pin: pinIcon,
+  phone: phoneIcon,
+  user: userIcon,
+  receipt: receiptIcon,
+  logout: logoutIcon,
+  menu: menuIcon,
+  store: storeIcon,
+  check: checkIcon,
+  chevron: chevronIcon,
 }
 
+/**
+ * `svg` comes from a build-time `?raw` import — trusted markup, not user
+ * input, so `dangerouslySetInnerHTML` is safe here.
+ */
 export const NavIcon = ({ name, className }: NavIconProps) => (
-  <svg
-    className={className}
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="2"
-    strokeLinecap="round"
-    strokeLinejoin="round"
+  <span
+    className={className ? `${styles.icon} ${className}` : styles.icon}
     aria-hidden="true"
-  >
-    <path d={PATHS[name]} />
-  </svg>
+    dangerouslySetInnerHTML={{ __html: ICONS[name] }}
+  />
 )
