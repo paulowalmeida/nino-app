@@ -10,7 +10,6 @@ import { FormField } from '@nino/ds/components/FormField'
 import { Input } from '@nino/ds/components/Input'
 import { PageHeader } from '@nino/ds/components/PageHeader'
 import { Select } from '@nino/ds/components/Select'
-import { Skeleton } from '@nino/ds/components/Skeleton'
 import { Textarea } from '@nino/ds/components/Textarea'
 import { toast } from '@nino/ds/components/Toast'
 import { ItemPhoto } from '@compositions/ItemPhoto'
@@ -22,6 +21,7 @@ import { useCurrentTenant } from '@hooks/session/useCurrentTenant'
 import { uploadItemImage } from '@services/product/product.service'
 import { riseDelay } from '@utils/rise-delay'
 
+import { NewProductSkeleton } from './NewProductSkeleton'
 import type { NewProductFormValues } from './NewProduct.types'
 
 import styles from './NewProduct.module.css'
@@ -65,6 +65,8 @@ export const NewProduct = () => {
     value: id,
     label: name,
   }))
+
+  if (isCategoriesPending) return <NewProductSkeleton />
 
   const handleAddCategory = async () => {
     const name = newCategory.trim()
@@ -125,7 +127,7 @@ export const NewProduct = () => {
       />
 
       <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
-        <div className={`${motion.deal} ${styles.field}`} style={riseDelay(40)}>
+        <div className={`${motion.deal} ${styles.photoCol}`} style={riseDelay(40)}>
           <ItemPhoto
             tenantId={tenantId}
             productId={null}
@@ -135,55 +137,59 @@ export const NewProduct = () => {
           />
         </div>
 
-        <div className={`${motion.deal} ${styles.field}`} style={riseDelay(80)}>
-          <FormField label="Nome" error={errors.name?.message}>
-            <Input
-              autoFocus
-              placeholder="X-Tudo"
-              {...register('name', { required: 'Informe o nome' })}
-            />
-          </FormField>
-        </div>
-
-        <div
-          className={`${motion.deal} ${styles.field}`}
-          style={riseDelay(140)}
-        >
-          <FormField
-            label="Descrição"
-            helperText={`${description?.length ?? 0}/${DESCRIPTION_MAX_LENGTH} · Aparece abaixo do nome no app do cliente`}
-            error={errors.description?.message}
+        <div className={styles.fields}>
+          <div
+            className={`${motion.deal} ${styles.field}`}
+            style={riseDelay(80)}
           >
-            <Textarea
-              rows={3}
-              maxLength={DESCRIPTION_MAX_LENGTH}
-              {...register('description', {
-                maxLength: {
-                  value: DESCRIPTION_MAX_LENGTH,
-                  message: `A descrição não pode passar de ${DESCRIPTION_MAX_LENGTH} caracteres`,
-                },
-              })}
-            />
-          </FormField>
-        </div>
+            <FormField label="Nome" error={errors.name?.message}>
+              <Input
+                autoFocus
+                placeholder="X-Tudo"
+                {...register('name', { required: 'Informe o nome' })}
+              />
+            </FormField>
+          </div>
 
-        <div className={`${motion.deal} ${styles.row}`} style={riseDelay(200)}>
-          <FormField label="Preço" error={errors.price?.message}>
-            <Input
-              inputMode="decimal"
-              placeholder="24,90"
-              {...register('price', {
-                required: 'Informe o preço',
-                validate: (value) =>
-                  toPrice(value) > 0 || 'O preço precisa ser maior que zero',
-              })}
-            />
-          </FormField>
+          <div
+            className={`${motion.deal} ${styles.field}`}
+            style={riseDelay(140)}
+          >
+            <FormField
+              label="Descrição"
+              helperText={`${description?.length ?? 0}/${DESCRIPTION_MAX_LENGTH} · Aparece abaixo do nome no app do cliente`}
+              error={errors.description?.message}
+            >
+              <Textarea
+                rows={3}
+                maxLength={DESCRIPTION_MAX_LENGTH}
+                {...register('description', {
+                  maxLength: {
+                    value: DESCRIPTION_MAX_LENGTH,
+                    message: `A descrição não pode passar de ${DESCRIPTION_MAX_LENGTH} caracteres`,
+                  },
+                })}
+              />
+            </FormField>
+          </div>
 
-          <FormField label="Categoria" error={errors.categoryId?.message}>
-            {isCategoriesPending ? (
-              <Skeleton className={styles.ghostCategorySelect} />
-            ) : (
+          <div
+            className={`${motion.deal} ${styles.row}`}
+            style={riseDelay(200)}
+          >
+            <FormField label="Preço" error={errors.price?.message}>
+              <Input
+                inputMode="decimal"
+                placeholder="24,90"
+                {...register('price', {
+                  required: 'Informe o preço',
+                  validate: (value) =>
+                    toPrice(value) > 0 || 'O preço precisa ser maior que zero',
+                })}
+              />
+            </FormField>
+
+            <FormField label="Categoria" error={errors.categoryId?.message}>
               <Controller
                 name="categoryId"
                 control={control}
@@ -198,57 +204,57 @@ export const NewProduct = () => {
                   />
                 )}
               />
-            )}
-          </FormField>
-        </div>
+            </FormField>
+          </div>
 
-        <div
-          className={`${motion.deal} ${styles.category}`}
-          style={riseDelay(260)}
-        >
-          {!isNaming && (
-            <Button
-              type="button"
-              variant="ghost"
-              size="sm"
-              className={motion.press}
-              onClick={() => setNaming(true)}
-            >
-              Criar uma categoria
-            </Button>
-          )}
-
-          {isNaming && (
-            <div className={`${motion.unroll} ${styles.categoryBox}`}>
-              <Input
-                autoFocus
-                placeholder="Lanches"
-                value={newCategory}
-                onChange={(event) => setNewCategory(event.target.value)}
-              />
+          <div
+            className={`${motion.deal} ${styles.category}`}
+            style={riseDelay(260)}
+          >
+            {!isNaming && (
               <Button
                 type="button"
-                size="sm"
-                loading={isAddingCategory}
-                disabled={!newCategory.trim()}
-                className={motion.press}
-                onClick={handleAddCategory}
-              >
-                Criar
-              </Button>
-              <Button
-                type="button"
-                size="sm"
                 variant="ghost"
-                onClick={() => setNaming(false)}
+                size="sm"
+                className={motion.press}
+                onClick={() => setNaming(true)}
               >
-                Voltar
+                Criar uma categoria
               </Button>
-            </div>
-          )}
-        </div>
+            )}
 
-        {errors.root && <Alert variant="error">{errors.root.message}</Alert>}
+            {isNaming && (
+              <div className={`${motion.unroll} ${styles.categoryBox}`}>
+                <Input
+                  autoFocus
+                  placeholder="Lanches"
+                  value={newCategory}
+                  onChange={(event) => setNewCategory(event.target.value)}
+                />
+                <Button
+                  type="button"
+                  size="sm"
+                  loading={isAddingCategory}
+                  disabled={!newCategory.trim()}
+                  className={motion.press}
+                  onClick={handleAddCategory}
+                >
+                  Criar
+                </Button>
+                <Button
+                  type="button"
+                  size="sm"
+                  variant="ghost"
+                  onClick={() => setNaming(false)}
+                >
+                  Voltar
+                </Button>
+              </div>
+            )}
+          </div>
+
+          {errors.root && <Alert variant="error">{errors.root.message}</Alert>}
+        </div>
 
         <div
           className={`${motion.deal} ${styles.actions}`}

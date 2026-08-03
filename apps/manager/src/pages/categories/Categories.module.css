@@ -19,17 +19,16 @@
   @apply sm:flex-1;
 }
 
-/* mesma superfície do Card do DS, escrita à mão porque o Reorder.Group já
-   ocupa o elemento — raio, borda e sombra são os mesmos tokens */
+/* sem moldura: a página já é a lista, como Clientes e Configurações — um
+   cartão em volta só repetiria o contorno que a tela já dá */
 .list {
-  @apply flex flex-col rounded-card border border-line/60 bg-white;
-  @apply px-2 shadow-card lg:px-3;
+  @apply flex flex-col;
 }
 
 .row {
-  @apply flex min-h-16 flex-wrap items-center gap-3 rounded-card px-2 py-3;
-  @apply border-b border-line/60 transition-colors duration-150;
-  @apply last:border-b-0 hover:bg-surface-sunk;
+  @apply flex min-h-16 flex-wrap items-center gap-3 rounded-xl px-2 py-3;
+  @apply border-t border-sand transition-colors duration-150;
+  @apply hover:bg-surface-mute;
 }
 
 .dragHandle {

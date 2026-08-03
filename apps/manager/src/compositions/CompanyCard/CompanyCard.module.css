@@ -1,7 +1,59 @@
 @reference "@nino/ds/globals.css";
 
-.skeleton {
-  @apply h-72 w-full rounded-[24px];
+.ghostTitle {
+  @apply h-3.5 w-16;
+}
+
+.ghostHint {
+  @apply mt-1.5 h-4 w-64;
+}
+
+.ghostIdentityLabel {
+  @apply h-3 w-10;
+}
+
+.ghostIdentityValue {
+  @apply h-5 w-40;
+}
+
+.ghostField {
+  @apply h-10 w-full;
+}
+
+.ghostGroupTitle {
+  @apply mb-3 h-3.5 w-32;
+}
+
+.ghostAddressGrid {
+  @apply grid grid-cols-2 gap-3 sm:grid-cols-6;
+}
+
+.ghostZip {
+  @apply col-span-2 sm:col-span-2;
+}
+
+.ghostStreet {
+  @apply col-span-2 sm:col-span-4;
+}
+
+.ghostNumber {
+  @apply col-span-1 sm:col-span-2;
+}
+
+.ghostComplement {
+  @apply col-span-1 sm:col-span-4;
+}
+
+.ghostNeighborhood {
+  @apply col-span-2 sm:col-span-3;
+}
+
+.ghostCity {
+  @apply col-span-1 sm:col-span-2;
+}
+
+.ghostState {
+  @apply col-span-1;
 }
 
 /*

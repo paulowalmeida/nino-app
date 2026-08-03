@@ -22,6 +22,15 @@
   @apply aspect-[4/3] h-auto w-full rounded-[20px];
 }
 
+/* a barra de trocar/remover foto que fica sob a moldura */
+.bonePhotoActions {
+  @apply mt-3 flex gap-2;
+}
+
+.bonePhotoAction {
+  @apply h-9 w-28 rounded-xl;
+}
+
 .boneLabel {
   @apply mb-2 h-3.5 w-28 rounded-sm;
 }
@@ -32,6 +41,11 @@
 
 .boneTextarea {
   @apply h-20 w-full rounded-card;
+}
+
+/* linha de "42/300 · Aparece..." sob a descrição */
+.boneHelper {
+  @apply mt-1.5 h-3 w-64 max-w-full rounded-sm;
 }
 
 .boneSwitch {

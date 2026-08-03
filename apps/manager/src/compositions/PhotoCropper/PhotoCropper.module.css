@@ -54,6 +54,21 @@
   @apply text-xs leading-relaxed text-faint;
 }
 
+/*
+ * Hierarquia em dois andares, não três botões disputando a mesma linha: a
+ * coluna da foto tem 20rem, e três botões lado a lado nunca cabiam sem
+ * quebrar torto. A confirmação lidera sozinha; as duas saídas — trocar ou
+ * remover — dividem uma linha menor embaixo, do mesmo porte da barra de
+ * ações da foto já salva.
+ */
 .actions {
-  @apply flex flex-wrap gap-2;
+  @apply flex flex-col gap-2;
+}
+
+.confirm {
+  @apply w-full;
+}
+
+.secondary {
+  @apply flex items-center justify-between gap-2;
 }

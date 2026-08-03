@@ -9,6 +9,7 @@ import { useItemImages } from '@hooks/product/useItemImages'
 import type { ItemPhotoProps } from './ItemPhoto.types'
 
 import styles from './ItemPhoto.module.css'
+import motion from '@styles/motion.module.css'
 
 const MAX_BYTES = 4 * 1024 * 1024
 const ACCEPT = 'image/jpeg,image/png,image/webp,image/avif'
@@ -66,6 +67,13 @@ export const ItemPhoto = ({
     onStagedFile?.(null)
   }
 
+  /** Descarta o arquivo em recorte e também a foto anterior, se houver. */
+  const removeFromCropper = () => {
+    if (stagedUrl) removeStaged()
+    if (cover) remove.mutate(cover.id)
+    setChosen(null)
+  }
+
   const onDrop = (event: React.DragEvent) => {
     event.preventDefault()
     setDragging(false)
@@ -81,6 +89,7 @@ export const ItemPhoto = ({
           isSending={upload.isPending}
           onConfirm={send}
           onCancel={() => setChosen(null)}
+          onRemove={removeFromCropper}
         />
         {error && <Alert variant="error">{error}</Alert>}
       </div>
@@ -89,7 +98,19 @@ export const ItemPhoto = ({
 
   return (
     <div className={styles.wrap}>
-      <div className={styles.frame}>
+      <div
+        className={
+          dragging
+            ? `${motion.settle} ${styles.frame} ${styles.frameOver}`
+            : `${motion.settle} ${styles.frame}`
+        }
+        onDragOver={(event) => {
+          event.preventDefault()
+          setDragging(true)
+        }}
+        onDragLeave={() => setDragging(false)}
+        onDrop={onDrop}
+      >
         {stagedUrl || cover ? (
           <img
             src={stagedUrl ?? cover?.url}
@@ -97,17 +118,7 @@ export const ItemPhoto = ({
             className={styles.photo}
           />
         ) : (
-          <div
-            className={
-              dragging ? `${styles.empty} ${styles.emptyOver}` : styles.empty
-            }
-            onDragOver={(event) => {
-              event.preventDefault()
-              setDragging(true)
-            }}
-            onDragLeave={() => setDragging(false)}
-            onDrop={onDrop}
-          >
+          <div className={styles.empty}>
             <ItemThumb name={name} />
             <p className={styles.emptyTitle}>Arraste uma foto aqui</p>
             <p className={styles.emptyHint}>
@@ -119,7 +130,7 @@ export const ItemPhoto = ({
       </div>
 
       <div className={styles.actions}>
-        <label className={styles.trigger}>
+        <label className={`${motion.press} ${styles.trigger}`}>
           {stagedUrl || cover ? 'Trocar foto' : 'Escolher arquivo'}
           <input
             ref={inputRef}
@@ -134,6 +145,7 @@ export const ItemPhoto = ({
           <Button
             variant="danger"
             size="sm"
+            className={motion.press}
             onClick={removeStaged}
           >
             Remover
@@ -144,6 +156,7 @@ export const ItemPhoto = ({
           <Button
             variant="danger"
             size="sm"
+            className={motion.press}
             onClick={() => remove.mutate(cover.id)}
             loading={remove.isPending}
           >

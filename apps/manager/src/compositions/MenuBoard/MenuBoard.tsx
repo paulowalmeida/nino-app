@@ -3,11 +3,12 @@ import { useEffect, useRef, useState } from 'react'
 import { Reorder } from 'framer-motion'
 
 import { Alert } from '@nino/ds/components/Alert'
-import { Button } from '@nino/ds/components/Button'
 import { EmptyState } from '@nino/ds/components/EmptyState'
+import { ScrollArea } from '@nino/ds/components/ScrollArea'
 import { Skeleton } from '@nino/ds/components/Skeleton'
 import { useCatalog } from '@hooks/product/useCatalog'
 import { useItemAvailability } from '@hooks/product/useItemAvailability'
+import { useLoadMore } from '@hooks/ui/useLoadMore'
 import { useReorderMenuItems } from '@hooks/product/useReorderMenuItems'
 import type { MenuItem } from '@custom_types/product'
 
@@ -35,6 +36,7 @@ export const MenuBoard = ({ tenantId, categoryId, search }: MenuBoardProps) => {
   const { mutate: setAvailability } = useItemAvailability(tenantId)
   const [deleting, setDeleting] = useState<MenuItem | null>(null)
   const { mutate: reorder } = useReorderMenuItems(tenantId, categoryId)
+  const sentinelRef = useLoadMore(!!hasNextPage, () => void fetchNextPage())
 
   /**
    * Arrastar só faz sentido dentro de uma categoria: a posição de um item é
@@ -135,7 +137,7 @@ export const MenuBoard = ({ tenantId, categoryId, search }: MenuBoardProps) => {
       </p>
 
       {/* a rolagem começa aqui: a contagem acima fica parada */}
-      <div className={styles.scroll}>
+      <ScrollArea className={styles.scroll}>
         <div className={styles.list}>
           <Reorder.Group
             as="ul"
@@ -160,20 +162,13 @@ export const MenuBoard = ({ tenantId, categoryId, search }: MenuBoardProps) => {
           </Reorder.Group>
         </div>
 
-        {hasNextPage && (
-          <div className={styles.more}>
-            <Button
-              variant="outline"
-              size="sm"
-              loading={isFetchingNextPage}
-              className={motion.press}
-              onClick={() => void fetchNextPage()}
-            >
-              Carregar mais itens
-            </Button>
-          </div>
-        )}
-      </div>
+        {/* sentinela: entra em cena e puxa a próxima página sozinha */}
+        <div ref={sentinelRef} className={styles.sentinel}>
+          {isFetchingNextPage && (
+            <span className={styles.loadingMore}>Carregando mais itens…</span>
+          )}
+        </div>
+      </ScrollArea>
 
       {deleting && (
         <DeleteItemDialog

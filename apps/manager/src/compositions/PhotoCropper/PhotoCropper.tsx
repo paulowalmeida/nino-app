@@ -22,6 +22,7 @@ export const PhotoCropper = ({
   isSending,
   onConfirm,
   onCancel,
+  onRemove,
 }: PhotoCropperProps) => {
   const imageRef = useRef<HTMLImageElement>(null)
   const dragRef = useRef<{ x: number; y: number } | null>(null)
@@ -84,6 +85,11 @@ export const PhotoCropper = ({
     onCancel()
   }
 
+  const handleRemove = () => {
+    release()
+    onRemove()
+  }
+
   return (
     <div className={`${motion.settle} ${styles.editor}`}>
       <div
@@ -128,14 +134,32 @@ export const PhotoCropper = ({
       <div className={styles.actions}>
         <Button
           loading={isSending}
-          className={motion.press}
+          className={`${motion.press} ${styles.confirm}`}
           onClick={handleConfirm}
         >
           Usar esta foto
         </Button>
-        <Button variant="ghost" onClick={handleCancel} disabled={isSending}>
-          Escolher outra
-        </Button>
+
+        <div className={styles.secondary}>
+          <Button
+            variant="ghost"
+            size="sm"
+            className={motion.press}
+            onClick={handleCancel}
+            disabled={isSending}
+          >
+            Escolher outra
+          </Button>
+          <Button
+            variant="danger"
+            size="sm"
+            className={motion.press}
+            onClick={handleRemove}
+            disabled={isSending}
+          >
+            Remover foto
+          </Button>
+        </div>
       </div>
     </div>
   )

@@ -27,16 +27,6 @@ const EMPTY: CompanyDraft = {
   state: '',
 }
 
-/** Zip, rua, número, complemento, bairro, cidade, UF: os sete campos do endereço. */
-const GHOST_ADDRESS_FIELDS = [
-  'zip',
-  'street',
-  'number',
-  'complement',
-  'neighborhood',
-  'city',
-  'state',
-] as const
 
 const toDraft = (company: Company): CompanyDraft => ({
   name: company.name,
@@ -94,12 +84,17 @@ export const CompanyCard = ({
         <div className={local.address}>
           <Skeleton variant="text" className={local.ghostGroupTitle} />
           <div className={local.ghostAddressGrid}>
-            {GHOST_ADDRESS_FIELDS.map((field) => (
-              <Skeleton
-                key={field}
-                className={`${local.ghostField} ${local[`ghost${field}`]}`}
-              />
-            ))}
+            <Skeleton className={`${local.ghostField} ${local.ghostZip}`} />
+            <Skeleton className={`${local.ghostField} ${local.ghostStreet}`} />
+            <Skeleton className={`${local.ghostField} ${local.ghostNumber}`} />
+            <Skeleton
+              className={`${local.ghostField} ${local.ghostComplement}`}
+            />
+            <Skeleton
+              className={`${local.ghostField} ${local.ghostNeighborhood}`}
+            />
+            <Skeleton className={`${local.ghostField} ${local.ghostCity}`} />
+            <Skeleton className={`${local.ghostField} ${local.ghostState}`} />
           </div>
         </div>
       </section>

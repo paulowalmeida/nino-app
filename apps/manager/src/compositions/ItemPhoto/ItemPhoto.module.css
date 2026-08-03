@@ -6,7 +6,13 @@
 
 .frame {
   @apply relative overflow-hidden rounded-[20px] border border-line;
-  @apply aspect-[4/3] w-full bg-brand-foreground/70;
+  @apply aspect-[4/3] w-full bg-brand-foreground/70 transition-colors;
+  @apply duration-200;
+}
+
+/* arrastar por cima da foto já existente troca ela, não só a área vazia */
+.frameOver {
+  @apply border-brand bg-brand/8;
 }
 
 .photo {
@@ -18,10 +24,6 @@
   @apply flex h-full w-full flex-col items-center justify-center gap-2;
   @apply border-2 border-dashed border-sand-deep bg-cream/60 p-6 text-center;
   @apply transition-colors duration-200;
-}
-
-.emptyOver {
-  @apply border-brand bg-brand/8;
 }
 
 .emptyTitle {

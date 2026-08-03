@@ -22,6 +22,9 @@ export const ProductDetailSkeleton = () => (
     <div className={styles.form}>
       <div className={styles.photoCol}>
         <Skeleton className={styles.bonePhoto} />
+        <div className={styles.bonePhotoActions}>
+          <Skeleton className={styles.bonePhotoAction} />
+        </div>
       </div>
 
       <div className={styles.fields}>
@@ -33,6 +36,7 @@ export const ProductDetailSkeleton = () => (
         <div className={styles.field}>
           <Skeleton className={styles.boneLabel} />
           <Skeleton className={styles.boneTextarea} />
+          <Skeleton className={styles.boneHelper} />
         </div>
 
         <div className={styles.row}>
@@ -61,6 +65,7 @@ export const ProductDetailSkeleton = () => (
       </div>
 
       <div className={styles.actions}>
+        <Skeleton className={styles.boneButton} />
         <Skeleton className={styles.boneButton} />
         <Skeleton className={styles.boneButton} />
       </div>

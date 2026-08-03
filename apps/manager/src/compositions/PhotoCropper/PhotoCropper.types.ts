@@ -4,4 +4,5 @@ export type PhotoCropperProps = {
   isSending: boolean
   onConfirm: (edited: File) => void
   onCancel: () => void
+  onRemove: () => void
 }
