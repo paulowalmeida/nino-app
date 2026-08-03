@@ -9,7 +9,7 @@ const items = [
   { label: 'Detalhes' },
 ]
 
-describe(Breadcrumb.displayName!, () => {
+describe(Breadcrumb.name, () => {
   it('renders all items', () => {
     render(<Breadcrumb items={items} />)
     expect(screen.getByText('Início')).toBeInTheDocument()

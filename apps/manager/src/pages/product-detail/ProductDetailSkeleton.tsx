@@ -1,5 +1,5 @@
 import { Skeleton } from '@nino/ds/components/Skeleton'
-import { BackLink } from '@components/BackLink'
+import { BackLink } from '@elements/BackLink/BackLink'
 
 import styles from './ProductDetail.module.css'
 

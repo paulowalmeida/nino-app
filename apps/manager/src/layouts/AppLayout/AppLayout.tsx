@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { Outlet } from 'react-router'
 
 import { Button } from '@nino/ds/components/Button'
-import { NavIcon } from '@components/NavIcon'
+import { Icon } from '@nino/ds/components/Icon'
 import { useCurrentTenant } from '@hooks/session/useCurrentTenant'
 import {
   readSidebarCollapsed,
@@ -57,7 +57,7 @@ export const AppLayout = () => {
           onClick={() => setMenuOpen(true)}
           aria-label="Abrir menu"
         >
-          <NavIcon name="menu" className={styles.hamburgerIcon} />
+          <Icon name="menu" className={styles.hamburgerIcon} />
         </Button>
         <span className={styles.storeName}>{tenant?.tenantName}</span>
       </header>

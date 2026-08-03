@@ -1,7 +1,7 @@
 import { Card } from '@nino/ds/components/Card'
 import { EmptyState } from '@nino/ds/components/EmptyState'
 import { Skeleton } from '@nino/ds/components/Skeleton'
-import { Eyebrow } from '@components/Eyebrow'
+import { Eyebrow } from '@nino/ds/components/Eyebrow'
 import { useSalesSeries } from '@hooks/order/useSalesSeries'
 import { brl } from '@utils/money'
 

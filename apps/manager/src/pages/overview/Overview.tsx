@@ -7,6 +7,8 @@ import { StoreSign } from '@compositions/StoreSign'
 import { useCurrentTenant } from '@hooks/session/useCurrentTenant'
 import { useSessionStore } from '@states/useSessionStore'
 
+import mascotSrc from '@nino/ds/mascot.svg'
+
 import styles from './Overview.module.css'
 import motion from '@styles/motion.module.css'
 
@@ -70,7 +72,7 @@ export const Overview = () => {
           <StoreSign tenantId={tenantId} timezone={timezone} />
         </div>
         <img
-          src="/mascot-manager.svg"
+          src={mascotSrc}
           alt=""
           aria-hidden="true"
           className={`${motion.land} ${styles.mascot}`}

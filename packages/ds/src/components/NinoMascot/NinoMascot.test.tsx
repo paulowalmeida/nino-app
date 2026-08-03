@@ -1,0 +1,40 @@
+import { render } from '@testing-library/react'
+import { describe, expect, it } from 'vitest'
+
+import { NinoMascot } from './NinoMascot'
+
+describe(NinoMascot.name, () => {
+  it('hides the decorative mascot image from assistive tech', () => {
+    // Arrange
+    const { container } = render(<NinoMascot />)
+
+    // Act
+    const image = container.querySelector('img')
+
+    // Assert
+    expect(image).toHaveAttribute('aria-hidden', 'true')
+    expect(image).toHaveAttribute('alt', '')
+  })
+
+  it('has no className when none is provided', () => {
+    // Arrange
+    const { container } = render(<NinoMascot />)
+
+    // Act
+    const image = container.querySelector('img')
+
+    // Assert
+    expect(image).not.toHaveAttribute('class')
+  })
+
+  it('applies the given className to the image', () => {
+    // Arrange
+    const { container } = render(<NinoMascot className="floating" />)
+
+    // Act
+    const image = container.querySelector('img')
+
+    // Assert
+    expect(image).toHaveClass('floating')
+  })
+})

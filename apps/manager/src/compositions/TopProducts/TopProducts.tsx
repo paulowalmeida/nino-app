@@ -2,7 +2,7 @@ import { BarList } from '@nino/ds/components/BarList'
 import { Card } from '@nino/ds/components/Card'
 import { EmptyState } from '@nino/ds/components/EmptyState'
 import { Skeleton } from '@nino/ds/components/Skeleton'
-import { Eyebrow } from '@components/Eyebrow'
+import { Eyebrow } from '@nino/ds/components/Eyebrow'
 import { useSalesReport } from '@hooks/order/useSalesReport'
 import { brl } from '@utils/money'
 

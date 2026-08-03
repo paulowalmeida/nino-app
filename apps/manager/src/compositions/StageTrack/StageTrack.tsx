@@ -1,5 +1,5 @@
-import { CountUp } from '@components/CountUp'
-import { NavIcon } from '@components/NavIcon'
+import { CountUp } from '@nino/ds/components/CountUp'
+import { Icon } from '@nino/ds/components/Icon'
 import { riseDelay } from '@utils/rise-delay'
 
 import type { StageTrackProps } from './StageTrack.types'
@@ -25,7 +25,7 @@ export const StageTrack = ({ stages, value, onChange }: StageTrackProps) => (
           id === value ? styles.current : ''
         }`}
       >
-        <NavIcon name={icon} className={styles.icon} />
+        <Icon name={icon} className={styles.icon} />
         <span className={styles.label}>{label}</span>
         <span className={styles.count}>
           <CountUp value={count} />

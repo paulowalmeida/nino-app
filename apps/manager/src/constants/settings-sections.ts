@@ -21,7 +21,7 @@ export const SETTINGS_SECTIONS: SettingsSection[] = [
     to: 'atendimento',
     label: 'Atendimento',
     hint: 'Canais, pagamento e pedido mínimo',
-    icon: 'card',
+    icon: 'credit-card',
   },
   {
     to: 'horarios',

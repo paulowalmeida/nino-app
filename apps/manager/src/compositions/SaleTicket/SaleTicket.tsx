@@ -6,13 +6,10 @@ import { ScrollArea } from '@nino/ds/components/ScrollArea'
 import { Dialog } from '@nino/ds/components/Dialog'
 import { EmptyState } from '@nino/ds/components/EmptyState'
 import { Input } from '@nino/ds/components/Input'
-import { Icon } from '@components/Icon/Icon'
-import { ItemThumb } from '@components/ItemThumb'
+import { Icon } from '@nino/ds/components/Icon'
+import { ItemThumb } from '@components/ItemThumb/ItemThumb'
 import { brl } from '@utils/money'
 import { paymentLabelFor } from '@utils/order-flow'
-import minusIcon from '@assets/icons/minus.svg?raw'
-import plusIcon from '@assets/icons/plus.svg?raw'
-import trashIcon from '@assets/icons/trash-thin.svg?raw'
 
 import type { SaleTicketProps } from './SaleTicket.types'
 
@@ -108,9 +105,9 @@ export const SaleTicket = ({
                         {/* Na última unidade o traço vira lixeira: tocar de
                             novo remove, e o ícone avisa antes. */}
                         {isLast ? (
-                          <Icon svg={trashIcon} />
+                          <Icon name="trash-thin" />
                         ) : (
-                          <Icon svg={minusIcon} />
+                          <Icon name="minus" />
                         )}
                       </Button>
 
@@ -125,7 +122,7 @@ export const SaleTicket = ({
                         aria-label={`Mais um ${line.name}`}
                         onClick={() => onStep(line.productId, 1)}
                       >
-                        <Icon svg={plusIcon} />
+                        <Icon name="plus" />
                       </Button>
                     </div>
                   </div>

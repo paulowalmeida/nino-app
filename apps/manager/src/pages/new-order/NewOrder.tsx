@@ -8,9 +8,9 @@ import { PageHeader } from '@nino/ds/components/PageHeader'
 import { Select } from '@nino/ds/components/Select'
 import { Skeleton } from '@nino/ds/components/Skeleton'
 import { Textarea } from '@nino/ds/components/Textarea'
-import { BackLink } from '@components/BackLink'
-import { Icon } from '@components/Icon/Icon'
-import { ItemThumb } from '@components/ItemThumb'
+import { BackLink } from '@elements/BackLink/BackLink'
+import { Icon } from '@nino/ds/components/Icon'
+import { ItemThumb } from '@components/ItemThumb/ItemThumb'
 import { RecipientFields } from '@compositions/RecipientFields'
 import { useCreateOrder } from '@hooks/order/useCreateOrder'
 import { useCurrentTenant } from '@hooks/session/useCurrentTenant'
@@ -25,8 +25,6 @@ import { toE164 } from '@utils/phone'
 import { CHANNEL_LABEL, paymentLabelFor } from '@utils/order-flow'
 import { riseDelay } from '@utils/rise-delay'
 import { isStoreOpen } from '@utils/store-open'
-import minusIcon from '@assets/icons/minus.svg?raw'
-import plusIcon from '@assets/icons/plus.svg?raw'
 
 import type { CartLine, Recipient } from './NewOrder.types'
 
@@ -268,7 +266,7 @@ export const NewOrder = () => {
                       aria-label={`Tirar um ${line.name}`}
                       onClick={() => step(line.productId, -1)}
                     >
-                      <Icon svg={minusIcon} />
+                      <Icon name="minus" />
                     </button>
                     <span className={styles.quantity}>{line.quantity}</span>
                     <button
@@ -277,7 +275,7 @@ export const NewOrder = () => {
                       aria-label={`Mais um ${line.name}`}
                       onClick={() => step(line.productId, 1)}
                     >
-                      <Icon svg={plusIcon} />
+                      <Icon name="plus" />
                     </button>
                   </div>
                   <span className={styles.linePrice}>

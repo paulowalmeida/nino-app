@@ -8,9 +8,11 @@
     "./tokens.css": "./src/styles/tokens.css",
     "./masks": "./src/lib/masks/masks.ts",
     "./validators": "./src/lib/masks/validators.ts",
-    "./components/*": "./src/components/*/index.ts"
+    "./components/*": "./src/components/*/index.ts",
+    "./mascot.svg": "./src/assets/mascot.svg"
   },
   "scripts": {
+    "icons:sprite": "node scripts/build-icon-sprite.mjs",
     "test": "vitest run",
     "test:watch": "vitest",
     "test:coverage": "vitest run --coverage",

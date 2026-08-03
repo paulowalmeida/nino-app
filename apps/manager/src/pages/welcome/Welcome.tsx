@@ -6,7 +6,7 @@ import { Button } from '@nino/ds/components/Button'
 import { KitchenCard } from '@compositions/KitchenCard'
 import { OrderTicket } from '@compositions/OrderTicket'
 import { OrderTimeline } from '@compositions/OrderTimeline'
-import { NinoLogo } from '@components/NinoLogo'
+import { NinoLogo } from '@elements/NinoLogo/NinoLogo'
 import { useSessionStore } from '@states/useSessionStore'
 import { rememberOnboarding } from '@utils/onboarding-seen'
 

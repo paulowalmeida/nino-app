@@ -4,10 +4,7 @@ import { Reorder, useDragControls } from 'framer-motion'
 
 import { Button } from '@nino/ds/components/Button'
 import { Input } from '@nino/ds/components/Input'
-import gripIcon from '@assets/icons/grip.svg?raw'
-import pencilIcon from '@assets/icons/pencil.svg?raw'
-import trashIcon from '@assets/icons/trash.svg?raw'
-import { Icon } from '@components/Icon/Icon'
+import { Icon } from '@nino/ds/components/Icon'
 import { REORDER_TRANSITION } from '@constants/reorder-transition'
 import { riseDelay } from '@utils/rise-delay'
 
@@ -111,7 +108,7 @@ export const CategoryRow = ({
             aria-label={`Reordenar ${category.name}`}
             onPointerDown={(event) => dragControls.start(event)}
           >
-            <Icon svg={gripIcon} />
+            <Icon name="grip" />
           </button>
 
           <div className={styles.who}>
@@ -129,7 +126,7 @@ export const CategoryRow = ({
               disabled={disabled}
               onClick={() => setEditing(true)}
             >
-              <Icon svg={pencilIcon} />
+              <Icon name="pencil" />
             </button>
             <button
               type="button"
@@ -138,7 +135,7 @@ export const CategoryRow = ({
               disabled={disabled}
               onClick={onDelete}
             >
-              <Icon svg={trashIcon} />
+              <Icon name="trash" />
             </button>
           </div>
         </>

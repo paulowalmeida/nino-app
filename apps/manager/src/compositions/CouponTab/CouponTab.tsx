@@ -1,6 +1,5 @@
-import { Icon } from '@components/Icon/Icon'
+import { Icon } from '@nino/ds/components/Icon'
 import { brl } from '@utils/money'
-import chevronUpIcon from '@assets/icons/chevron-up.svg?raw'
 
 import type { CouponTabProps } from './CouponTab.types'
 
@@ -25,7 +24,7 @@ export const CouponTab = ({ count, total, onOpen }: CouponTabProps) => (
       </span>
       <span className={styles.total}>{brl(total)}</span>
       <span className={styles.hint} aria-hidden="true">
-        <Icon svg={chevronUpIcon} />
+        <Icon name="chevron-up" />
       </span>
     </span>
   </button>

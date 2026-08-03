@@ -1,5 +1,5 @@
 import { Skeleton } from '@nino/ds/components/Skeleton'
-import { Breadcrumb } from '@components/Breadcrumb'
+import { Breadcrumb } from '@elements/Breadcrumb/Breadcrumb'
 
 import styles from './CustomerDetail.module.css'
 

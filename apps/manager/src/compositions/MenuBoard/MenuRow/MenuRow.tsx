@@ -5,10 +5,8 @@ import { Reorder, useDragControls } from 'framer-motion'
 
 import { Button } from '@nino/ds/components/Button'
 import { Switch } from '@nino/ds/components/Switch'
-import gripIcon from '@assets/icons/grip.svg?raw'
-import trashIcon from '@assets/icons/trash.svg?raw'
-import { Icon } from '@components/Icon/Icon'
-import { ItemThumb } from '@components/ItemThumb'
+import { Icon } from '@nino/ds/components/Icon'
+import { ItemThumb } from '@components/ItemThumb/ItemThumb'
 import { REORDER_TRANSITION } from '@constants/reorder-transition'
 import { CATALOG_PAGE_SIZE } from '@hooks/product/useCatalog'
 import { riseDelay } from '@utils/rise-delay'
@@ -70,7 +68,7 @@ export const MenuRow = ({
           aria-label={`Reordenar ${item.name}`}
           onPointerDown={(event) => dragControls.start(event)}
         >
-          <Icon svg={gripIcon} />
+          <Icon name="grip" />
         </button>
       )}
 
@@ -100,7 +98,7 @@ export const MenuRow = ({
         aria-label={`Excluir ${item.name}`}
         onClick={() => onDelete(item)}
       >
-        <Icon svg={trashIcon} />
+        <Icon name="trash" />
       </Button>
     </Reorder.Item>
   )

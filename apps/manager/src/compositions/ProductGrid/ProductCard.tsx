@@ -1,7 +1,7 @@
 import { useState } from 'react'
 
 import { Modal } from '@nino/ds/components/Modal'
-import { ItemThumb } from '@components/ItemThumb'
+import { ItemThumb } from '@components/ItemThumb/ItemThumb'
 import { useLongPress } from '@hooks/ui/useLongPress'
 import { brl } from '@utils/money'
 import { riseDelay } from '@utils/rise-delay'

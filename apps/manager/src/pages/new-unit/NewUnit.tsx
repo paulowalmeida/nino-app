@@ -1,6 +1,6 @@
 import { useCallback, useState } from 'react'
 
-import { Breadcrumb } from '@components/Breadcrumb'
+import { Breadcrumb } from '@elements/Breadcrumb/Breadcrumb'
 import { FirstStoreForm } from '@compositions/FirstStoreForm'
 import { StorePreview } from '@compositions/StorePreview'
 

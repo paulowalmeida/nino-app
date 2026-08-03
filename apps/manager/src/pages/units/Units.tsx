@@ -4,7 +4,7 @@ import { Link } from 'react-router'
 import { FirstStoreForm } from '@compositions/FirstStoreForm'
 import { StorePreview } from '@compositions/StorePreview'
 
-import { NinoLogo } from '@components/NinoLogo'
+import { NinoLogo } from '@elements/NinoLogo/NinoLogo'
 import { logout } from '@services/auth/auth.service'
 import { useSessionStore } from '@states/useSessionStore'
 import { endSession } from '@utils/end-session'

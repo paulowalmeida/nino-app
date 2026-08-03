@@ -1,13 +1,8 @@
 import { Skeleton } from '@nino/ds/components/Skeleton'
-import { BackLink } from '@components/BackLink'
+import { BackLink } from '@elements/BackLink/BackLink'
 
 import styles from './OrderDetail.module.css'
 
-/**
- * O esqueleto desenha a própria tela — comanda à esquerda, três fichas à
- * direita — em vez de um retângulo só. O bloco único fazia a página saltar de
- * forma quando os dados chegavam, e não dizia nada sobre o que vinha.
- */
 const GHOST_ITEMS = ['first', 'second', 'third', 'fourth']
 const GHOST_CARDS = ['customer', 'payment', 'timeline']
 

@@ -1,7 +1,7 @@
 import { useLocation, useNavigate } from 'react-router'
 
 import { Menu, type MenuItem } from '@nino/ds/components/Menu'
-import { NavIcon } from '@components/NavIcon'
+import { Icon } from '@nino/ds/components/Icon'
 import { useCompanyGroups } from '@hooks/session/useCompanyGroups'
 
 import type { StoreSwitcherProps } from './StoreSwitcher.types'
@@ -38,7 +38,7 @@ export const StoreSwitcher = ({
     navigate(`/${tenantId}/${sectionOf(pathname)}`)
 
   const check = (active: boolean) => (
-    <NavIcon
+    <Icon
       name="check"
       className={
         active ? styles.checkIcon : `${styles.checkIcon} ${styles.checkOff}`
@@ -78,7 +78,7 @@ export const StoreSwitcher = ({
             type="button"
             className={`${motion.press} ${styles.trigger}`}
           >
-            <NavIcon name="store" className={styles.storeIcon} />
+            <Icon name="store" className={styles.storeIcon} />
             {!collapsed && (
               <>
                 <span className={styles.trigerText}>

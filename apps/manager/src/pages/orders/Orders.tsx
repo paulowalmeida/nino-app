@@ -6,7 +6,7 @@ import { Button } from '@nino/ds/components/Button'
 import { EmptyState } from '@nino/ds/components/EmptyState'
 import { Input } from '@nino/ds/components/Input'
 import { PageHeader } from '@nino/ds/components/PageHeader'
-import type { NavIconName } from '@components/NavIcon/NavIcon.types'
+import type { IconName } from '@nino/ds/components/Icon'
 import { OrderTicket } from '@compositions/OrderTicket'
 import { OrderTicketSkeleton } from '@compositions/OrderTicket/OrderTicketSkeleton'
 import { StageTrack } from '@compositions/StageTrack'
@@ -27,7 +27,7 @@ type Stage = {
   id: OrderStage
   label: string
   empty: string
-  icon: NavIconName
+  icon: IconName
 }
 
 /** Quatro comandas: uma linha cheia no desktop, duas telas no celular. */
@@ -50,7 +50,7 @@ const STAGES: Stage[] = [
     id: 'kitchen',
     label: 'Na cozinha',
     empty: 'A cozinha está livre.',
-    icon: 'chef',
+    icon: 'chef-hat',
   },
   {
     id: 'street',
@@ -62,7 +62,7 @@ const STAGES: Stage[] = [
     id: 'counter',
     label: 'No balcão',
     empty: 'Nada esperando retirada.',
-    icon: 'register',
+    icon: 'cash-register',
   },
   {
     id: 'closed',

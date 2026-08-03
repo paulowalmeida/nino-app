@@ -1,8 +1,8 @@
 import { useNavigate } from 'react-router'
 
 import { Menu } from '@nino/ds/components/Menu'
-import { NavIcon } from '@components/NavIcon'
-import { PersonMark } from '@components/PersonMark'
+import { Icon } from '@nino/ds/components/Icon'
+import { PersonMark } from '@components/PersonMark/PersonMark'
 import { logout } from '@services/auth/auth.service'
 import { endSession } from '@utils/end-session'
 
@@ -46,7 +46,7 @@ export const UserMenu = ({
           {!collapsed && (
             <>
               <span className={styles.name}>{name.split(' ')[0]}</span>
-              <NavIcon name="settings" className={styles.icon} />
+              <Icon name="settings" className={styles.icon} />
             </>
           )}
         </button>
@@ -55,20 +55,20 @@ export const UserMenu = ({
         {
           value: 'profile',
           label: 'Meus dados',
-          icon: <NavIcon name="user" className={styles.itemIcon} />,
+          icon: <Icon name="user" className={styles.itemIcon} />,
           onSelect: () => go('minha-conta'),
         },
         {
           value: 'subscription',
           label: 'Assinatura e plano',
-          icon: <NavIcon name="receipt" className={styles.itemIcon} />,
+          icon: <Icon name="receipt" className={styles.itemIcon} />,
           onSelect: () => go('assinatura'),
         },
         { separator: true },
         {
           value: 'logout',
           label: 'Sair da conta',
-          icon: <NavIcon name="logout" className={styles.itemIcon} />,
+          icon: <Icon name="logout" className={styles.itemIcon} />,
           destructive: true,
           onSelect: () => void handleLogout(),
         },

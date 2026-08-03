@@ -1,6 +1,6 @@
 @reference "@nino/ds/globals.css";
 
-/* Só o tom: forma, tamanho e centralização vêm do Avatar do DS. */
+/* Only the tone: shape, size and centering come from the DS Avatar. */
 
 .brand {
   @apply bg-brand/12 text-brand-strong;

@@ -10,7 +10,7 @@ import { EmptyState } from '@nino/ds/components/EmptyState'
 import { Input } from '@nino/ds/components/Input'
 import { PageHeader } from '@nino/ds/components/PageHeader'
 import { Skeleton } from '@nino/ds/components/Skeleton'
-import { BackLink } from '@components/BackLink'
+import { BackLink } from '@elements/BackLink/BackLink'
 import {
   useCategories,
   useCreateCategory,

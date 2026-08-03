@@ -4,11 +4,10 @@ import { Badge } from '@nino/ds/components/Badge'
 import { Menu, type MenuItem } from '@nino/ds/components/Menu'
 import { EmptyState } from '@nino/ds/components/EmptyState'
 import { Skeleton } from '@nino/ds/components/Skeleton'
-import { Icon } from '@components/Icon/Icon'
-import { PersonMark } from '@components/PersonMark'
+import { Icon } from '@nino/ds/components/Icon'
+import { PersonMark } from '@components/PersonMark/PersonMark'
 import { lastSeenLabel } from '@utils/last-seen'
 import { riseDelay } from '@utils/rise-delay'
-import kebabIcon from '@assets/icons/kebab.svg?raw'
 
 import type { RosterEntry, TeamRosterProps } from './TeamRoster.types'
 
@@ -205,7 +204,7 @@ export const TeamRoster = ({
                         disabled={busy}
                         aria-label={`Ações para ${entry.name}`}
                       >
-                        <Icon svg={kebabIcon} />
+                        <Icon name="kebab" />
                       </button>
                     }
                     items={items}

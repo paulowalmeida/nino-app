@@ -3,8 +3,8 @@ import { NavLink, useLocation } from 'react-router'
 
 import { ScrollArea } from '@nino/ds/components/ScrollArea'
 import { Accordion } from '@nino/ds/components/Accordion'
-import { NavIcon } from '@components/NavIcon'
-import { NinoLogo } from '@components/NinoLogo'
+import { Icon } from '@nino/ds/components/Icon'
+import { NinoLogo } from '@elements/NinoLogo/NinoLogo'
 import { MANAGERS } from '@constants/roles'
 import { SETTINGS_SECTIONS } from '@constants/settings-sections'
 import type { NavItem } from '@custom_types/ui'
@@ -35,8 +35,8 @@ const GROUPS: { title: string; items: NavItem[] }[] = [
         icon: 'gauge',
         roles: MANAGERS,
       },
-      { section: 'balcao', label: 'Balcão', icon: 'register' },
-      { section: 'cozinha', label: 'Cozinha', icon: 'chef' },
+      { section: 'balcao', label: 'Balcão', icon: 'cash-register' },
+      { section: 'cozinha', label: 'Cozinha', icon: 'chef-hat' },
       { section: 'pedidos', label: 'Pedidos', icon: 'bag' },
       { section: 'catalogo', label: 'Cardápio', icon: 'book' },
     ],
@@ -47,7 +47,7 @@ const GROUPS: { title: string; items: NavItem[] }[] = [
       {
         section: 'relatorios',
         label: 'Relatórios',
-        icon: 'chart',
+        icon: 'bar-chart',
         roles: MANAGERS,
       },
       {
@@ -131,7 +131,7 @@ export const Sidebar = ({
           onClick={onToggleCollapse}
           aria-label={collapsed ? 'Expandir menu' : 'Recolher menu'}
         >
-          <NavIcon name="chevron" className={styles.collapseIcon} />
+          <Icon name="chevron-down" className={styles.collapseIcon} />
         </button>
       </div>
 
@@ -156,7 +156,7 @@ export const Sidebar = ({
 
                 const content = (
                   <>
-                    <NavIcon name={icon} className={styles.navIcon} />
+                    <Icon name={icon} className={styles.navIcon} />
                     {!isCollapsed && <span>{label}</span>}
                     {section === 'pedidos' && waiting > 0 && (
                       <span className={`${motion.pop} ${styles.tally}`}>
@@ -192,7 +192,7 @@ export const Sidebar = ({
                                           : styles.subItem
                                       }
                                     >
-                                      <NavIcon
+                                      <Icon
                                         name={childIcon}
                                         className={styles.subIcon}
                                       />

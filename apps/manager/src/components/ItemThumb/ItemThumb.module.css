@@ -1,8 +1,6 @@
 @reference "@nino/ds/globals.css";
 
-/* O empilhamento não pode encolher onde a linha aperta — o shrink-0 do
-   ladrilho vive no filho, e o pai precisa do mesmo. */
-.wrapper {
+.imageWrapper {
   @apply shrink-0;
 }
 
@@ -15,7 +13,6 @@
   @apply text-lg leading-none;
 }
 
-/* warm range around the brand, none of them competing with it */
 .tone0 {
   @apply bg-brand/12 text-brand-strong;
 }

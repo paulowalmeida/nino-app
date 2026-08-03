@@ -1,11 +1,11 @@
-import type { NavIconName } from '@components/NavIcon/NavIcon.types'
+import type { IconName } from '@nino/ds/components/Icon'
 import type { OrderStage } from '@custom_types/order'
 
 export type StageOption = {
   id: OrderStage
   label: string
   count: number
-  icon: NavIconName
+  icon: IconName
 }
 
 export type StageTrackProps = {

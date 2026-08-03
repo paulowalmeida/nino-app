@@ -1,8 +1,8 @@
 import { useState } from 'react'
 import { useParams } from 'react-router'
 
-import { BackLink } from '@components/BackLink'
-import { Eyebrow } from '@components/Eyebrow'
+import { BackLink } from '@elements/BackLink/BackLink'
+import { Eyebrow } from '@nino/ds/components/Eyebrow'
 
 import { Alert } from '@nino/ds/components/Alert'
 import { Badge } from '@nino/ds/components/Badge'

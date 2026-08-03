@@ -1,13 +1,24 @@
-import { Fragment } from 'react'
+import { Fragment, MouseEvent, ReactNode } from 'react'
 
 import { mergeClasses } from '@ds/lib/mergeClasses'
 
-import { BreadcrumbProps } from './Breadcrumb.types'
+export interface BreadcrumbItem {
+  label: ReactNode
+  href?: string
+  onClick?: (e: MouseEvent<HTMLAnchorElement>) => void
+}
+
+export interface BreadcrumbProps {
+  items: BreadcrumbItem[]
+  separator?: ReactNode
+  className?: string
+  ariaLabel?: string
+}
 
 const baseNav = 'flex items-center text-sm'
 
 const baseLink =
-  'text-subtle transition-colors hover:text-brand focus-visible:outline-2 focus-visible:outline-brand focus-visible:outline-offset-2 rounded'
+  'inline-flex h-11 items-center text-subtle transition-colors hover:text-brand focus-visible:outline-2 focus-visible:outline-brand focus-visible:outline-offset-2 rounded'
 
 const activeLinkClass = 'text-ink font-medium pointer-events-none'
 
@@ -28,9 +39,14 @@ const DefaultSeparator = () => (
   </svg>
 )
 
-export function Breadcrumb({ items, separator, className }: BreadcrumbProps) {
+export function Breadcrumb({
+  items,
+  separator,
+  className,
+  ariaLabel = 'Breadcrumb',
+}: BreadcrumbProps) {
   return (
-    <nav aria-label="Breadcrumb" className={mergeClasses(baseNav, className)}>
+    <nav aria-label={ariaLabel} className={mergeClasses(baseNav, className)}>
       <ol className="flex items-center">
         {items.map((item, index) => {
           const isLast = index === items.length - 1
@@ -58,5 +74,3 @@ export function Breadcrumb({ items, separator, className }: BreadcrumbProps) {
     </nav>
   )
 }
-
-Breadcrumb.displayName = 'Breadcrumb'

@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 
 import { Alert } from '@nino/ds/components/Alert'
 import { Button } from '@nino/ds/components/Button'
-import { ItemThumb } from '@components/ItemThumb'
+import { ItemThumb } from '@components/ItemThumb/ItemThumb'
 import { PhotoCropper } from '@compositions/PhotoCropper'
 import { useItemImages } from '@hooks/product/useItemImages'
 

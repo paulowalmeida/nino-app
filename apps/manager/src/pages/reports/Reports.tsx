@@ -14,7 +14,7 @@ import {
   TableRow,
 } from '@nino/ds/components/Table'
 import { Tabs } from '@nino/ds/components/Tabs'
-import { CountUp } from '@components/CountUp'
+import { CountUp } from '@nino/ds/components/CountUp'
 import type { ReportRangeParams } from '@custom_types/order'
 import type { PeriodChoice } from '@custom_types/ui'
 import { useCurrentTenant } from '@hooks/session/useCurrentTenant'

@@ -1,7 +1,7 @@
 import { Outlet } from 'react-router'
 
-import { NinoLogo } from '@components/NinoLogo'
-import { NinoMascot } from '@components/NinoMascot'
+import { NinoLogo } from '@elements/NinoLogo/NinoLogo'
+import { NinoMascot } from '@nino/ds/components/NinoMascot'
 
 import styles from './AuthLayout.module.css'
 

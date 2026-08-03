@@ -1,6 +1,6 @@
 import { Skeleton } from '@nino/ds/components/Skeleton'
 import { PageHeader } from '@nino/ds/components/PageHeader'
-import { BackLink } from '@components/BackLink'
+import { BackLink } from '@elements/BackLink/BackLink'
 
 import styles from './NewProduct.module.css'
 
