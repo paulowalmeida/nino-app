@@ -3,6 +3,7 @@ import type { TenantRole } from '@custom_types/auth'
 import type {
   CourierPage,
   CreateInviteRequest,
+  StaffDetail,
   StaffMember,
   StaffPage,
 } from '@custom_types/team'
@@ -12,6 +13,12 @@ const { get, create, patch, remove } = ApiFactory()
 
 export const listStaff = (tenantId: string): Promise<StaffPage> =>
   get<StaffPage>(`tenants/${tenantId}/staff`)
+
+export const getStaffDetail = (
+  tenantId: string,
+  userId: string
+): Promise<StaffDetail> =>
+  get<StaffDetail>(`tenants/${tenantId}/staff/${userId}`)
 
 export const listCouriers = (tenantId: string): Promise<CourierPage> =>
   get<CourierPage>(`tenants/${tenantId}/couriers`)

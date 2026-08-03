@@ -32,6 +32,14 @@
   @apply min-w-[9rem] flex-1;
 }
 
+/* mesmo espaço do disco+texto, só que clicável — sem mudar a régua da linha */
+.identity {
+  @apply flex min-w-0 flex-1 items-center gap-3 rounded-lg;
+  @apply transition-colors duration-150 hover:bg-surface-mute;
+  @apply focus-visible:outline-none focus-visible:ring-2;
+  @apply focus-visible:ring-brand focus-visible:ring-offset-1;
+}
+
 .name {
   @apply truncate text-sm font-semibold text-body;
 }

@@ -1,0 +1,139 @@
+@reference "@nino/ds/globals.css";
+
+/*
+ * Mesma régua da ficha do cliente: a tela ocupa a altura da janela, o topo
+ * fica parado e a atividade rola por dentro. Sem cartão — a página é a ficha.
+ */
+.page {
+  @apply flex h-[calc(100dvh-3.5rem)] max-w-5xl flex-col p-4;
+  @apply lg:h-dvh lg:p-10;
+}
+
+.eyebrow {
+  @apply mt-3 text-[0.7rem] font-bold uppercase tracking-[0.12em] text-faint;
+}
+
+.hero {
+  @apply mt-1 flex items-center gap-4;
+}
+
+.mark {
+  @apply h-14 w-14 shrink-0 text-base;
+}
+
+.heroText {
+  @apply min-w-0;
+}
+
+.name {
+  @apply truncate font-display text-2xl font-extrabold tracking-[-0.02em];
+  @apply text-ink lg:text-3xl;
+}
+
+.contact {
+  @apply mt-0.5 flex flex-wrap items-baseline gap-x-3 gap-y-0.5;
+}
+
+.email {
+  @apply text-sm font-semibold text-brand-strong;
+}
+
+.role {
+  @apply shrink-0;
+}
+
+/* Duas colunas no desktop: a atividade é o assunto e fica com a largura; o
+   resumo acompanha à direita, parado. */
+.body {
+  @apply mt-5 flex min-h-0 flex-1 flex-col gap-5;
+  @apply lg:grid lg:grid-cols-[minmax(0,1fr)_15rem] lg:items-start lg:gap-8;
+  @apply lg:overflow-hidden;
+}
+
+/* celular: faixa entre fios. desktop: coluna à direita, um fato por linha */
+.facts {
+  @apply grid grid-cols-2 gap-y-4 border-y border-line/60 py-4;
+  @apply lg:order-2 lg:grid-cols-1 lg:gap-0 lg:border-y-0 lg:py-0;
+}
+
+.fact {
+  @apply flex flex-col gap-0.5;
+  @apply lg:flex-row lg:items-baseline lg:justify-between lg:gap-3;
+  @apply lg:border-b lg:border-sand lg:py-2.5;
+}
+
+.fact:last-child {
+  @apply lg:border-b-0;
+}
+
+.factLabel {
+  @apply text-[0.68rem] font-bold uppercase tracking-[0.1em] text-faintest;
+}
+
+.factValue {
+  @apply font-display text-[0.95rem] font-extrabold text-ink lg:text-right;
+  font-variant-numeric: tabular-nums;
+}
+
+.activity {
+  @apply flex min-h-0 flex-1 flex-col lg:order-1 lg:h-full;
+}
+
+.activityHead {
+  @apply flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1;
+  @apply border-b border-line/60 pb-3;
+}
+
+.activityTitle {
+  @apply text-[0.7rem] font-bold uppercase tracking-[0.12em] text-faint;
+}
+
+.activityHint {
+  @apply text-xs text-faint;
+}
+
+.listScroll {
+  @apply min-h-0 flex-1;
+}
+
+.entries {
+  @apply flex flex-col pr-1;
+}
+
+.entry {
+  @apply border-b border-sand last:border-b-0;
+}
+
+.entryRow {
+  @apply grid grid-cols-[auto_1fr] items-baseline gap-x-3 gap-y-1;
+  @apply rounded-xl px-2 py-3 transition-colors duration-150;
+  @apply hover:bg-surface-mute;
+}
+
+@media (min-width: 1024px) {
+  .entryRow {
+    grid-template-columns: 4.5rem minmax(0, 1fr) auto;
+  }
+}
+
+.entryTicket {
+  @apply font-display text-sm font-extrabold text-ink;
+  font-variant-numeric: tabular-nums;
+}
+
+.entryStatus {
+  @apply min-w-0 truncate text-sm text-muted;
+}
+
+.entryAt {
+  @apply col-start-2 text-xs text-faint lg:col-auto lg:text-right;
+  font-variant-numeric: tabular-nums;
+}
+
+.empty {
+  @apply mt-4;
+}
+
+.skeleton {
+  @apply m-4 h-64 rounded-[24px] lg:m-8;
+}

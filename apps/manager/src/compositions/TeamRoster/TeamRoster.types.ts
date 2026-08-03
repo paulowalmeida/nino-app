@@ -10,6 +10,8 @@ export type RosterEntry = {
   roleKey?: TenantRole
   /** Motivo de o cargo estar travado, quando estiver. */
   roleLocked?: string
+  /** Rota da ficha da pessoa. Sem isto, o nome não é link. */
+  href?: string
   /** Last sign-in, ISO or null for an account that never signed in. */
   lastLoginAt: string | null
   /** Quiet mark for people who don't operate the panel. */

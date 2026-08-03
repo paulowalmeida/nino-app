@@ -1,3 +1,5 @@
+import { Link } from 'react-router'
+
 import { Badge } from '@nino/ds/components/Badge'
 import { Menu } from '@nino/ds/components/Menu'
 import { Button } from '@nino/ds/components/Button'
@@ -86,22 +88,49 @@ export const TeamRoster = ({
             className={`${motion.deal} ${styles.row}`}
             style={riseDelay(index * 50 + 60)}
           >
-            <PersonMark
-              name={entry.name}
-              tone={entry.quiet ? 'quiet' : 'brand'}
-            />
+            {entry.href ? (
+              <Link to={entry.href} className={styles.identity}>
+                <PersonMark
+                  name={entry.name}
+                  tone={entry.quiet ? 'quiet' : 'brand'}
+                />
 
-            <div className={styles.person}>
-              <p className={styles.name}>{entry.name}</p>
-              {entry.email && <p className={styles.email}>{entry.email}</p>}
-              <p
-                className={
-                  entry.lastLoginAt ? styles.lastSeen : styles.neverSeen
-                }
-              >
-                Último acesso: {lastSeenLabel(entry.lastLoginAt)}
-              </p>
-            </div>
+                <div className={styles.person}>
+                  <p className={styles.name}>{entry.name}</p>
+                  {entry.email && (
+                    <p className={styles.email}>{entry.email}</p>
+                  )}
+                  <p
+                    className={
+                      entry.lastLoginAt ? styles.lastSeen : styles.neverSeen
+                    }
+                  >
+                    Último acesso: {lastSeenLabel(entry.lastLoginAt)}
+                  </p>
+                </div>
+              </Link>
+            ) : (
+              <>
+                <PersonMark
+                  name={entry.name}
+                  tone={entry.quiet ? 'quiet' : 'brand'}
+                />
+
+                <div className={styles.person}>
+                  <p className={styles.name}>{entry.name}</p>
+                  {entry.email && (
+                    <p className={styles.email}>{entry.email}</p>
+                  )}
+                  <p
+                    className={
+                      entry.lastLoginAt ? styles.lastSeen : styles.neverSeen
+                    }
+                  >
+                    Último acesso: {lastSeenLabel(entry.lastLoginAt)}
+                  </p>
+                </div>
+              </>
+            )}
 
             {onChangeRole && entry.roleKey && !entry.roleLocked ? (
               <Menu

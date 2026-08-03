@@ -65,6 +65,7 @@ export const Employees = () => {
       lastLoginAt: user.lastLoginAt,
       removable: role !== 'TENANT_OWNER',
       emailEditable: true,
+      href: user.id,
     })
   )
 

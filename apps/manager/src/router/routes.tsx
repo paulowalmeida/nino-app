@@ -176,6 +176,14 @@ export const router = createBrowserRouter([
           })),
       },
       {
+        path: 'colaboradores/:userId',
+        loader: roleGuard(MANAGERS),
+        lazy: () =>
+          import('@pages/employees/CollaboratorDetail').then(
+            ({ CollaboratorDetail }) => ({ Component: CollaboratorDetail }),
+          ),
+      },
+      {
         path: 'minha-conta',
         lazy: () =>
           import('@pages/account').then(({ Account }) => ({

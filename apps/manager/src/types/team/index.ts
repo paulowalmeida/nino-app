@@ -1,5 +1,7 @@
 export * from './courier-member'
 export * from './create-invite-request'
+export * from './staff-activity-entry'
+export * from './staff-detail'
 export * from './staff-member'
 export * from './page'
 export * from './team-page'

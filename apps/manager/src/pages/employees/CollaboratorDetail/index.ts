@@ -1,0 +1,1 @@
+export { CollaboratorDetail } from './CollaboratorDetail'
