@@ -9,7 +9,8 @@ import { PersonMark } from '@components/PersonMark'
 import { useCurrentTenant } from '@hooks/session/useCurrentTenant'
 import { useStaffDetail } from '@hooks/team/useStaffDetail'
 import { lastSeenLabel } from '@utils/last-seen'
-import { STATUS_LABEL, ticketNumber } from '@utils/order-flow'
+import { brl } from '@utils/money'
+import { CHANNEL_LABEL, STATUS_LABEL, ticketNumber } from '@utils/order-flow'
 import { formatPhone } from '@utils/phone'
 import { riseDelay } from '@utils/rise-delay'
 
@@ -22,10 +23,11 @@ const ROLE_LABEL: Record<string, string> = {
   STAFF: 'Atendente',
 }
 
+const COLUMNS = ['Pedido', 'Cliente', 'Canal', 'Situação', 'Quando', 'Valor']
+
 const stamp = new Intl.DateTimeFormat('pt-BR', {
   day: '2-digit',
   month: '2-digit',
-  year: 'numeric',
   hour: '2-digit',
   minute: '2-digit',
 })
@@ -87,10 +89,7 @@ export const CollaboratorDetail = () => {
 
           <div className={styles.contact}>
             {member.user.phone && (
-              <a
-                href={`tel:${member.user.phone}`}
-                className={styles.email}
-              >
+              <a href={`tel:${member.user.phone}`} className={styles.email}>
                 {formatPhone(member.user.phone)}
               </a>
             )}
@@ -131,32 +130,62 @@ export const CollaboratorDetail = () => {
               Nenhum pedido passou pela mão desta pessoa ainda.
             </EmptyState>
           ) : (
-            <ScrollArea className={styles.listScroll}>
-              <ul className={styles.entries}>
-                {member.activity.map((entry, index) => (
-                  <li
-                    key={entry.id}
-                    className={`${motion.deal} ${styles.entry}`}
-                    style={riseDelay(index * 30 + 80)}
-                  >
-                    <div className={styles.entryRow}>
-                      <span className={styles.entryTicket}>
-                        #{ticketNumber(entry.orderId)}
-                      </span>
-                      <span className={styles.entryStatus}>
-                        {STATUS_LABEL[entry.status]}
-                      </span>
-                      <time
-                        className={styles.entryAt}
-                        dateTime={entry.createdAt}
-                      >
-                        {stamp.format(new Date(entry.createdAt))}
-                      </time>
-                    </div>
-                  </li>
+            <>
+              <div className={`${styles.grid} ${styles.columns}`} aria-hidden>
+                {COLUMNS.map((label) => (
+                  <span key={label} className={styles.columnLabel}>
+                    {label}
+                  </span>
                 ))}
-              </ul>
-            </ScrollArea>
+              </div>
+
+              <ScrollArea className={styles.listScroll}>
+                <ul className={styles.entries}>
+                  {member.activity.map((entry, index) => (
+                    <li
+                      key={entry.id}
+                      className={`${motion.deal} ${styles.entry}`}
+                      style={riseDelay(index * 30 + 80)}
+                    >
+                      <div className={`${styles.grid} ${styles.entryRow}`}>
+                        <span className={styles.entryTicket}>
+                          #{ticketNumber(entry.orderId)}
+                        </span>
+
+                        <span className={styles.entryCustomer}>
+                          {entry.customerName ?? 'Visitante'}
+                        </span>
+
+                        <div className={styles.entryMeta}>
+                          <span className={styles.entryChannel}>
+                            {CHANNEL_LABEL[entry.channel]}
+                          </span>
+                          <span className={styles.entryDot} aria-hidden>
+                            ·
+                          </span>
+                          <span className={styles.entryStatus}>
+                            {STATUS_LABEL[entry.status]}
+                          </span>
+                          <span className={styles.entryDot} aria-hidden>
+                            ·
+                          </span>
+                          <time
+                            className={styles.entryAt}
+                            dateTime={entry.createdAt}
+                          >
+                            {stamp.format(new Date(entry.createdAt))}
+                          </time>
+                        </div>
+
+                        <span className={styles.entryTotal}>
+                          {brl(entry.totalAmount)}
+                        </span>
+                      </div>
+                    </li>
+                  ))}
+                </ul>
+              </ScrollArea>
+            </>
           )}
         </section>
       </div>
