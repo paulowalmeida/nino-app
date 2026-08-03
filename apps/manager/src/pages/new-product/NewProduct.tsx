@@ -182,7 +182,7 @@ export const NewProduct = () => {
 
           <FormField label="Categoria" error={errors.categoryId?.message}>
             {isCategoriesPending ? (
-              <Skeleton className="h-10 w-full" />
+              <Skeleton className={styles.ghostCategorySelect} />
             ) : (
               <Controller
                 name="categoryId"

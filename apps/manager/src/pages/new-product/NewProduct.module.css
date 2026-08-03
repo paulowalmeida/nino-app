@@ -40,3 +40,7 @@
   @apply flex flex-col gap-2 border-t border-sand pt-5;
   @apply sm:flex-row sm:justify-end;
 }
+
+.ghostCategorySelect {
+  @apply h-10 w-full;
+}

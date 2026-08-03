@@ -8,7 +8,6 @@ import { Alert } from '@nino/ds/components/Alert'
 import { Badge } from '@nino/ds/components/Badge'
 import { ScrollArea } from '@nino/ds/components/ScrollArea'
 import { Button } from '@nino/ds/components/Button'
-import { Skeleton } from '@nino/ds/components/Skeleton'
 import { Textarea } from '@nino/ds/components/Textarea'
 import { OrderTimeline } from '@compositions/OrderTimeline'
 import { useCurrentTenant } from '@hooks/session/useCurrentTenant'
@@ -31,6 +30,8 @@ import {
   ticketNumber,
 } from '@utils/order-flow'
 
+import { OrderDetailSkeleton } from './OrderDetailSkeleton'
+
 import styles from './OrderDetail.module.css'
 import motion from '@styles/motion.module.css'
 
@@ -40,14 +41,6 @@ const stamp = new Intl.DateTimeFormat('pt-BR', {
   hour: '2-digit',
   minute: '2-digit',
 })
-
-/**
- * O esqueleto desenha a própria tela — comanda à esquerda, três fichas à
- * direita — em vez de um retângulo só. O bloco único fazia a página saltar de
- * forma quando os dados chegavam, e não dizia nada sobre o que vinha.
- */
-const GHOST_ITEMS = ['first', 'second', 'third', 'fourth']
-const GHOST_CARDS = ['customer', 'payment', 'timeline']
 
 export const OrderDetail = () => {
   const { orderId } = useParams()
@@ -61,51 +54,7 @@ export const OrderDetail = () => {
   const [reason, setReason] = useState('')
   const [isCancelling, setCancelling] = useState(false)
 
-  if (isPending) {
-    return (
-      <div className={styles.page}>
-        <div className={styles.backBar}>
-          <BackLink>Pedidos</BackLink>
-        </div>
-
-        <header className={styles.hero}>
-          <div className={styles.heroText}>
-            <Skeleton variant="text" className={styles.ghostEyebrow} />
-            <Skeleton variant="text" className={styles.ghostNumber} />
-            <Skeleton variant="text" className={styles.ghostLine} />
-          </div>
-          <Skeleton className={styles.ghostBadge} />
-        </header>
-
-        <div className={styles.columns}>
-          <div className={styles.receipt}>
-            <div className={styles.items}>
-              {GHOST_ITEMS.map((item) => (
-                <div key={item} className={styles.item}>
-                  <Skeleton variant="text" className={styles.ghostQuantity} />
-                  <Skeleton variant="text" className={styles.ghostItemName} />
-                  <Skeleton variant="text" className={styles.ghostPrice} />
-                </div>
-              ))}
-            </div>
-            <div className={styles.totals}>
-              <Skeleton variant="text" className={styles.ghostTotal} />
-            </div>
-          </div>
-
-          <div className={styles.aside}>
-            {GHOST_CARDS.map((card) => (
-              <div key={card} className={styles.block}>
-                <Skeleton variant="text" className={styles.ghostEyebrow} />
-                <Skeleton variant="text" className={styles.ghostLine} />
-                <Skeleton variant="text" className={styles.ghostLineShort} />
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-    )
-  }
+  if (isPending) return <OrderDetailSkeleton />
 
   if (!order) {
     return (

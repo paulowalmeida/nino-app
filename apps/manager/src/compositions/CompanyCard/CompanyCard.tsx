@@ -27,6 +27,17 @@ const EMPTY: CompanyDraft = {
   state: '',
 }
 
+/** Zip, rua, número, complemento, bairro, cidade, UF: os sete campos do endereço. */
+const GHOST_ADDRESS_FIELDS = [
+  'zip',
+  'street',
+  'number',
+  'complement',
+  'neighborhood',
+  'city',
+  'state',
+] as const
+
 const toDraft = (company: Company): CompanyDraft => ({
   name: company.name,
   legalName: company.legalName ?? '',
@@ -61,7 +72,39 @@ export const CompanyCard = ({
     setDirty(true)
   }
 
-  if (isPending) return <Skeleton className={local.skeleton} />
+  if (isPending) {
+    return (
+      <section className={styles.panel}>
+        <header className={styles.head}>
+          <Skeleton variant="text" className={local.ghostTitle} />
+          <Skeleton variant="text" className={local.ghostHint} />
+        </header>
+
+        <div className={local.identity}>
+          <Skeleton variant="text" className={local.ghostIdentityLabel} />
+          <Skeleton variant="text" className={local.ghostIdentityValue} />
+        </div>
+
+        <div className={local.fields}>
+          <Skeleton className={`${local.wide} ${local.ghostField}`} />
+          <Skeleton className={`${local.wide} ${local.ghostField}`} />
+          <Skeleton className={local.ghostField} />
+        </div>
+
+        <div className={local.address}>
+          <Skeleton variant="text" className={local.ghostGroupTitle} />
+          <div className={local.ghostAddressGrid}>
+            {GHOST_ADDRESS_FIELDS.map((field) => (
+              <Skeleton
+                key={field}
+                className={`${local.ghostField} ${local[`ghost${field}`]}`}
+              />
+            ))}
+          </div>
+        </div>
+      </section>
+    )
+  }
 
   return (
     <section className={styles.panel}>

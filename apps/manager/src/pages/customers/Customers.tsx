@@ -26,6 +26,9 @@ const since = (iso: string): string => day.format(new Date(iso))
 /** Rótulos da grade: o primeiro alinha à esquerda, o resto acompanha o número. */
 const COLUMNS = ['Cliente', 'Gasto', 'Pedidos', 'Pontos', 'Cliente desde']
 
+/** Três linhas: o que cabe na primeira tela antes de rolar. */
+const GHOST_ROWS = ['first', 'second', 'third']
+
 export const Customers = () => {
   const tenant = useCurrentTenant()
   const tenantId = tenant?.tenantId ?? null
@@ -48,9 +51,24 @@ export const Customers = () => {
 
       {isPending && (
         <div className={styles.loading}>
-          <Skeleton className={styles.skeletonRow} />
-          <Skeleton className={styles.skeletonRow} />
-          <Skeleton className={styles.skeletonRow} />
+          {GHOST_ROWS.map((row) => (
+            <div key={row} className={`${styles.grid} ${styles.ghostRow}`}>
+              <span className={styles.who}>
+                <Skeleton variant="circle" className={styles.ghostMark} />
+                <span className={styles.identity}>
+                  <Skeleton className={styles.ghostName} />
+                  <Skeleton className={styles.ghostPhone} />
+                </span>
+              </span>
+
+              <span className={styles.stats}>
+                <Skeleton className={styles.ghostStat} />
+                <Skeleton className={styles.ghostStat} />
+                <Skeleton className={styles.ghostStatDesktop} />
+                <Skeleton className={styles.ghostStatDesktop} />
+              </span>
+            </div>
+          ))}
         </div>
       )}
 

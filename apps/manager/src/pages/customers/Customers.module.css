@@ -139,8 +139,28 @@
   @apply mt-6 flex flex-col gap-2;
 }
 
-.skeletonRow {
-  @apply h-16 w-full rounded-2xl;
+.ghostRow {
+  @apply px-2 py-3 lg:px-3 lg:py-3.5;
+}
+
+.ghostMark {
+  @apply h-10 w-10 shrink-0;
+}
+
+.ghostName {
+  @apply h-4 w-28;
+}
+
+.ghostPhone {
+  @apply mt-1.5 h-3 w-20;
+}
+
+.ghostStat {
+  @apply h-4 w-14 lg:h-4 lg:w-12 lg:justify-self-end;
+}
+
+.ghostStatDesktop {
+  @apply hidden lg:block lg:h-4 lg:w-12 lg:justify-self-end;
 }
 
 .empty {

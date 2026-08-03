@@ -1,6 +1,6 @@
 import { EmptyState } from '@nino/ds/components/EmptyState'
-import { Skeleton } from '@nino/ds/components/Skeleton'
 import { KitchenCard } from '@compositions/KitchenCard'
+import { KitchenCardSkeleton } from '@compositions/KitchenCard/KitchenCardSkeleton'
 import { useCurrentTenant } from '@hooks/session/useCurrentTenant'
 import { useOrders } from '@hooks/order/useOrders'
 import { useOrderStatus } from '@hooks/order/useOrderStatus'
@@ -18,6 +18,9 @@ import motion from '@styles/motion.module.css'
  * a rua e o que espera no balcão. Cada trilho rola por dentro, então a tela
  * nunca perde o cabeçalho.
  */
+/** Duas comandas: o que cabe num trilho antes de precisar rolar. */
+const LOADING_CARDS = ['first', 'second']
+
 const COLUMNS: { stage: OrderStage; title: string; empty: string }[] = [
   { stage: 'incoming', title: 'Chegou agora', empty: 'Nada esperando aceite.' },
   {
@@ -62,7 +65,8 @@ export const Kitchen = () => {
               </header>
 
               <div className={styles.stack}>
-                {isPending && <Skeleton className={styles.skeleton} />}
+                {isPending &&
+                  LOADING_CARDS.map((card) => <KitchenCardSkeleton key={card} />)}
 
                 {!isPending && list.length === 0 && (
                   <EmptyState>{empty}</EmptyState>

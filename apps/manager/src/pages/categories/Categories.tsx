@@ -33,6 +33,9 @@ const HAS_PRODUCTS_HINT =
   'Essa categoria ainda tem produtos. Mova ou exclua os produtos antes de ' +
   'excluir a categoria.'
 
+/** Três linhas: o que cabe antes de rolar numa lista de categorias comum. */
+const GHOST_ROWS = ['first', 'second', 'third']
+
 export const Categories = () => {
   const tenant = useCurrentTenant()
   const tenantId = tenant?.tenantId ?? null
@@ -174,9 +177,19 @@ export const Categories = () => {
 
       {isPending && (
         <div className={styles.loading}>
-          <Skeleton className={styles.skeletonRow} />
-          <Skeleton className={styles.skeletonRow} />
-          <Skeleton className={styles.skeletonRow} />
+          {GHOST_ROWS.map((row) => (
+            <div key={row} className={styles.row}>
+              <Skeleton className={styles.ghostHandle} />
+              <div className={styles.who}>
+                <Skeleton className={styles.ghostName} />
+                <Skeleton className={styles.ghostHint} />
+              </div>
+              <div className={styles.actions}>
+                <Skeleton className={styles.ghostAction} />
+                <Skeleton className={styles.ghostAction} />
+              </div>
+            </div>
+          ))}
         </div>
       )}
 

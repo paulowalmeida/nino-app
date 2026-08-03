@@ -35,6 +35,10 @@ import motion from '@styles/motion.module.css'
 
 const CHANNELS: OrderChannel[] = ['COUNTER', 'PICKUP', 'DELIVERY']
 
+/** Duas seções de três itens: o que cabe na primeira tela do cardápio. */
+const GHOST_SECTIONS = ['first', 'second']
+const GHOST_ITEMS = ['first', 'second', 'third']
+
 const EMPTY_RECIPIENT: Recipient = {
   name: '',
   phone: '',
@@ -168,12 +172,23 @@ export const NewOrder = () => {
 
       <div className={styles.columns}>
         <section className={styles.menu} aria-label="Cardápio">
-          {isPending && (
-            <>
-              <Skeleton className={styles.skeletonRow} />
-              <Skeleton className={styles.skeletonRow} />
-            </>
-          )}
+          {isPending &&
+            GHOST_SECTIONS.map((section) => (
+              <div key={section} className={styles.section}>
+                <Skeleton variant="text" className={styles.ghostSectionName} />
+
+                <ul className={styles.items}>
+                  {GHOST_ITEMS.map((item) => (
+                    <li key={item} className={styles.item}>
+                      <Skeleton className={styles.ghostThumb} />
+                      <Skeleton variant="text" className={styles.ghostItemName} />
+                      <Skeleton variant="text" className={styles.ghostItemPrice} />
+                      <Skeleton className={styles.ghostAddButton} />
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
 
           {!isPending && sections.length === 0 && (
             <EmptyState>

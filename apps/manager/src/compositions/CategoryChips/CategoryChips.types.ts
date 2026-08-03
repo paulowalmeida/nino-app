@@ -5,4 +5,5 @@ export type CategoryChipsProps = {
   /** `null` é "Todas" — o cardápio inteiro, sem recorte. */
   value: string | null
   onChange: (categoryId: string | null) => void
+  isPending?: boolean
 }

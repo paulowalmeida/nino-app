@@ -167,6 +167,48 @@
   @apply mt-4;
 }
 
-.skeleton {
-  @apply m-4 h-64 rounded-[24px] lg:m-8;
+.ghostName {
+  @apply h-7 w-40 lg:h-8 lg:w-56;
+}
+
+.ghostPhone {
+  @apply mt-2 h-4 w-32;
+}
+
+.ghostFactLabel {
+  @apply h-3 w-16;
+}
+
+.ghostFactValue {
+  @apply mt-1 h-5 w-20 lg:mt-0;
+}
+
+.ghostHistoryTitle {
+  @apply h-3 w-24;
+}
+
+.ghostHistoryWindow {
+  @apply h-3 w-32;
+}
+
+.ghostOrderLink {
+  @apply grid grid-cols-[auto_1fr_auto] items-baseline gap-x-3 px-2 py-3;
+}
+
+@media (min-width: 1024px) {
+  .ghostOrderLink {
+    grid-template-columns: 4.5rem minmax(0, 1fr) 6rem;
+  }
+}
+
+.ghostOrderNumber {
+  @apply h-4 w-10;
+}
+
+.ghostOrderStatus {
+  @apply h-4 w-24;
+}
+
+.ghostOrderTotal {
+  @apply h-4 w-14 justify-self-end;
 }

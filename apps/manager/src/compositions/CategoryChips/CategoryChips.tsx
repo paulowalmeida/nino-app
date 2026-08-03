@@ -1,6 +1,11 @@
+import { Skeleton } from '@nino/ds/components/Skeleton'
+
 import type { CategoryChipsProps } from './CategoryChips.types'
 
 import styles from './CategoryChips.module.css'
+
+/** Quatro fichas: o que cabe no trilho antes de a rolagem ser necessária. */
+const GHOST_CHIPS = ['first', 'second', 'third', 'fourth']
 
 /**
  * O mesmo trilho de fichas do balcão e da fila de pedidos: um toque troca a
@@ -11,29 +16,42 @@ export const CategoryChips = ({
   categories,
   value,
   onChange,
-}: CategoryChipsProps) => (
-  <div className={styles.track} role="tablist" aria-label="Categorias">
-    <button
-      type="button"
-      role="tab"
-      aria-selected={value === null}
-      onClick={() => onChange(null)}
-      className={`${styles.chip} ${value === null ? styles.current : ''}`}
-    >
-      Todas
-    </button>
+  isPending,
+}: CategoryChipsProps) => {
+  if (isPending) {
+    return (
+      <div className={styles.track} role="tablist" aria-label="Categorias">
+        {GHOST_CHIPS.map((chip) => (
+          <Skeleton key={chip} className={styles.ghostChip} />
+        ))}
+      </div>
+    )
+  }
 
-    {categories.map(({ id, name }) => (
+  return (
+    <div className={styles.track} role="tablist" aria-label="Categorias">
       <button
-        key={id}
         type="button"
         role="tab"
-        aria-selected={id === value}
-        onClick={() => onChange(id)}
-        className={`${styles.chip} ${id === value ? styles.current : ''}`}
+        aria-selected={value === null}
+        onClick={() => onChange(null)}
+        className={`${styles.chip} ${value === null ? styles.current : ''}`}
       >
-        {name}
+        Todas
       </button>
-    ))}
-  </div>
-)
+
+      {categories.map(({ id, name }) => (
+        <button
+          key={id}
+          type="button"
+          role="tab"
+          aria-selected={id === value}
+          onClick={() => onChange(id)}
+          className={`${styles.chip} ${id === value ? styles.current : ''}`}
+        >
+          {name}
+        </button>
+      ))}
+    </div>
+  )
+}

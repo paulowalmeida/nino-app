@@ -51,7 +51,23 @@
   @apply mt-4 text-xs leading-relaxed text-faint;
 }
 
-.skeleton {
-  @apply h-64 w-full rounded-[24px];
+.ghostPlanLabel {
+  @apply h-3 w-20;
+}
+
+.ghostPlanName {
+  @apply mt-1.5 h-7 w-32;
+}
+
+.ghostPrice {
+  @apply h-6 w-20;
+}
+
+.ghostFactLabel {
+  @apply h-4 w-24;
+}
+
+.ghostFactValue {
+  @apply h-4 w-16;
 }
 

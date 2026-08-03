@@ -131,6 +131,22 @@
   @apply mt-1 w-full;
 }
 
-.skeletonRow {
-  @apply h-16 w-full rounded-xl;
+.ghostSectionName {
+  @apply mb-2 h-5 w-32;
+}
+
+.ghostThumb {
+  @apply h-11 w-11 shrink-0;
+}
+
+.ghostItemName {
+  @apply h-4 min-w-0 flex-1;
+}
+
+.ghostItemPrice {
+  @apply h-4 w-12 shrink-0;
+}
+
+.ghostAddButton {
+  @apply h-8 w-24 shrink-0;
 }

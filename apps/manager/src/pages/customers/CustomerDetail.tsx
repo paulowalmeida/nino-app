@@ -2,7 +2,6 @@ import { Link, useParams } from 'react-router'
 
 import { EmptyState } from '@nino/ds/components/EmptyState'
 import { ScrollArea } from '@nino/ds/components/ScrollArea'
-import { Skeleton } from '@nino/ds/components/Skeleton'
 import { Breadcrumb } from '@components/Breadcrumb'
 import { PersonMark } from '@components/PersonMark'
 import { useCurrentTenant } from '@hooks/session/useCurrentTenant'
@@ -12,6 +11,8 @@ import { brl } from '@utils/money'
 import { formatPhone } from '@utils/phone'
 import { riseDelay } from '@utils/rise-delay'
 import { STATUS_LABEL, ticketNumber } from '@utils/order-flow'
+
+import { CustomerDetailSkeleton } from './CustomerDetailSkeleton'
 
 import styles from './CustomerDetail.module.css'
 import motion from '@styles/motion.module.css'
@@ -52,7 +53,7 @@ export const CustomerDetail = () => {
 
   const sentinelRef = useLoadMore(!!hasNextPage, () => void fetchNextPage())
 
-  if (isPending) return <Skeleton className={styles.skeleton} />
+  if (isPending) return <CustomerDetailSkeleton />
 
   if (!customer) {
     return (

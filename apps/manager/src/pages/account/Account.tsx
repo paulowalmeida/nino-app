@@ -32,6 +32,9 @@ const providerLabel: Record<string, string> = {
 
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
+/** Nome, e-mail, telefone: os três campos da ficha, na mesma grade. */
+const GHOST_FIELDS = ['wide', 'regular', 'regular'] as const
+
 type Draft = { name: string; phone: string; email: string }
 
 export const Account = () => {
@@ -105,7 +108,18 @@ export const Account = () => {
       </header>
 
       {isPending ? (
-        <Skeleton className={styles.skeleton} />
+        <div className={`${motion.settle} ${styles.fields}`}>
+          {GHOST_FIELDS.map((size, index) => (
+            <Skeleton
+              key={index}
+              className={
+                size === 'wide'
+                  ? `${styles.wide} ${styles.ghostField}`
+                  : styles.ghostField
+              }
+            />
+          ))}
+        </div>
       ) : (
         <>
           <div className={`${motion.settle} ${styles.fields}`}>

@@ -19,7 +19,7 @@ export const Catalog = () => {
   const tenantId = tenant?.tenantId ?? null
   const role = useTenantRole()
 
-  const { categories } = useCategories(tenantId)
+  const { categories, isPending: isCategoriesPending } = useCategories(tenantId)
   const [categoryId, setCategoryId] = useState<string | null>(null)
   const [term, setTerm] = useState('')
   const search = useDebouncedValue(term.trim())
@@ -70,6 +70,7 @@ export const Catalog = () => {
           categories={ordered}
           value={categoryId}
           onChange={setCategoryId}
+          isPending={isCategoriesPending}
         />
       </div>
 

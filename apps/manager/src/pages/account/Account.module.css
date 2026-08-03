@@ -23,8 +23,8 @@
   @apply text-sm text-subtle;
 }
 
-.skeleton {
-  @apply mt-6 h-52 w-full rounded-[24px];
+.ghostField {
+  @apply h-10 w-full;
 }
 
 .groupTitle {

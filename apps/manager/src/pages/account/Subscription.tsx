@@ -21,6 +21,9 @@ const day = new Intl.DateTimeFormat('pt-BR', {
 const dateOf = (iso: string | null): string =>
   iso ? day.format(new Date(iso)) : '—'
 
+/** Situação, assinada em, teste até, renova em, unidades: os cinco fatos. */
+const GHOST_FACTS = ['first', 'second', 'third', 'fourth', 'fifth']
+
 export const Subscription = () => {
   const { data, isPending, isError } = useSubscription()
 
@@ -33,7 +36,26 @@ export const Subscription = () => {
         description="A assinatura é da empresa e vale para todas as unidades."
       />
 
-      {isPending && <Skeleton className={styles.skeleton} />}
+      {isPending && (
+        <Card>
+          <div className={styles.plan}>
+            <div>
+              <Skeleton variant="text" className={styles.ghostPlanLabel} />
+              <Skeleton variant="text" className={styles.ghostPlanName} />
+            </div>
+            <Skeleton variant="text" className={styles.ghostPrice} />
+          </div>
+
+          <dl className={styles.facts}>
+            {GHOST_FACTS.map((fact) => (
+              <div key={fact} className={styles.fact}>
+                <Skeleton variant="text" className={styles.ghostFactLabel} />
+                <Skeleton variant="text" className={styles.ghostFactValue} />
+              </div>
+            ))}
+          </dl>
+        </Card>
+      )}
 
       {isError && (
         <Alert variant="error">

@@ -144,3 +144,31 @@
 .action {
   @apply mx-4 h-14 text-base;
 }
+
+.ghostNumber {
+  @apply h-8 w-12;
+}
+
+.ghostClock {
+  @apply h-6 w-14;
+}
+
+.ghostChannel {
+  @apply h-6 w-20 rounded-full;
+}
+
+.ghostName {
+  @apply h-5 min-w-0 flex-1;
+}
+
+.ghostQuantity {
+  @apply h-8 w-8 shrink-0 rounded-lg;
+}
+
+.ghostItemName {
+  @apply h-5 min-w-0 flex-1;
+}
+
+.ghostAction {
+  @apply mx-4 mt-1 mb-3 h-14;
+}
