@@ -1,37 +1,92 @@
 @reference "@nino/ds/globals.css";
 
+/* sem moldura: a página é a ficha, como a de empresa e a de cliente — um
+   cartão aqui só repetiria o contorno que a tela já dá */
 .page {
   @apply relative max-w-2xl p-4 lg:p-10;
 }
 
-.header {
-  @apply mb-5 flex flex-col gap-1.5 lg:mb-8;
+.eyebrow {
+  @apply text-[0.7rem] font-bold uppercase tracking-[0.12em] text-faint;
 }
 
-.fields {
-  @apply grid grid-cols-1 gap-3 sm:grid-cols-2;
+.head {
+  @apply mt-1 flex flex-col gap-1.5 border-b border-line/60 pb-5;
+}
+
+.title {
+  @apply font-display text-2xl font-extrabold tracking-[-0.02em] text-ink;
+  @apply lg:text-3xl;
+}
+
+.subtitle {
+  @apply text-sm text-subtle;
 }
 
 .skeleton {
-  @apply h-52 w-full rounded-[24px];
+  @apply mt-6 h-52 w-full rounded-[24px];
 }
 
-.factsTitle {
-  @apply mb-1 text-[0.7rem] font-bold uppercase tracking-[0.12em] text-faint;
+.groupTitle {
+  @apply text-[0.7rem] font-bold uppercase tracking-[0.12em] text-faint;
+}
+
+.fields {
+  @apply mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2;
+}
+
+/* nome abre a linha sozinho — é o campo mais lido da ficha; e-mail e telefone
+   dividem a linha de baixo, do mesmo jeito que CNPJ/inscrição dividem na
+   ficha da empresa */
+.wide {
+  @apply sm:col-span-2;
+}
+
+.saveError {
+  @apply mt-4;
+}
+
+/* ação fecha o bloco à direita, atrás de um fio — mesma régua da empresa */
+.actions {
+  @apply mt-6 flex flex-col border-t border-sand pt-5;
+  @apply sm:flex-row sm:items-center sm:justify-end sm:gap-4;
+}
+
+.status {
+  @apply mb-2 text-xs text-faint sm:mb-0 sm:mr-auto;
+}
+
+/*
+ * "Sobre a conta" é o que o sistema sabe, não o que se digita: uma faixa
+ * entre fios, só leitura. Diferente de nome/telefone/e-mail, estes três
+ * fatos não têm equivalente editável em lugar nenhum — não são um formulário
+ * escondido, são o retrato de como a conta chegou até aqui.
+ */
+.about {
+  @apply mt-10;
 }
 
 .facts {
-  @apply flex flex-col pt-1;
+  @apply mt-3 grid grid-cols-2 gap-y-4 border-y border-line/60 py-4;
+  @apply sm:grid-cols-1 sm:gap-0 sm:border-y-0 sm:py-0;
 }
 
 .fact {
-  @apply flex items-baseline justify-between gap-3 border-b border-sand py-2.5;
+  @apply flex flex-col gap-0.5;
+  @apply sm:flex-row sm:items-baseline sm:justify-between sm:gap-3;
+  @apply sm:border-b sm:border-sand sm:py-2.5;
+}
+
+.fact:last-child {
+  @apply sm:border-b-0;
 }
 
 .factLabel {
-  @apply text-sm text-faint;
+  @apply text-xs font-medium text-faint sm:text-sm;
 }
 
 .factValue {
-  @apply flex items-center gap-2 text-sm font-semibold text-body;
+  @apply flex flex-wrap items-center gap-x-2 gap-y-1 text-sm font-semibold;
+  @apply text-ink;
+  font-variant-numeric: tabular-nums;
 }
