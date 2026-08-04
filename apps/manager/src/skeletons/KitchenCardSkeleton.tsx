@@ -1,6 +1,6 @@
 import { Skeleton } from '@nino/ds/components/Skeleton'
 
-import styles from './KitchenCard.module.css'
+import styles from '@compositions/KitchenCard/KitchenCard.module.css'
 
 const GHOST_ITEMS = ['first', 'second']
 
