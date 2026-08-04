@@ -1,4 +1,4 @@
-import type { CropArea } from '@custom_types/ui'
+import type { CropArea } from '@custom_types/ui/crop-area'
 
 /** Lado do quadrado gerado — o cardápio nunca mostra a foto maior que isso. */
 const OUTPUT = 1080

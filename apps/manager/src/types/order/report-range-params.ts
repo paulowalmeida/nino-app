@@ -1,4 +1,4 @@
-import type { ReportPeriod } from '@custom_types/ui'
+import type { ReportPeriod } from '@custom_types/ui/report-period'
 
 /**
  * Recorte pedido à API: preset OU dias soltos, nunca instante. Quem traduz

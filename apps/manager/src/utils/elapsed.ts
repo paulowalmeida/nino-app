@@ -1,4 +1,4 @@
-import type { Elapsed } from '@custom_types/ui'
+import type { Elapsed } from '@custom_types/ui/elapsed'
 
 /** A partir daqui o pedido está demorando o bastante para incomodar. */
 const LATE_MINUTES = 20

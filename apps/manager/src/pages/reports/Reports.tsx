@@ -16,7 +16,7 @@ import {
 import { Tabs } from '@nino/ds/components/Tabs'
 import { CountUp } from '@nino/ds/components/CountUp'
 import type { ReportRangeParams } from '@custom_types/order'
-import type { PeriodChoice } from '@custom_types/ui'
+import type { PeriodChoice } from '@custom_types/ui/period-choice'
 import { useCurrentTenant } from '@hooks/session/useCurrentTenant'
 import { useSalesReport } from '@hooks/order/useSalesReport'
 import { useTimingReport } from '@hooks/order/useTimingReport'
