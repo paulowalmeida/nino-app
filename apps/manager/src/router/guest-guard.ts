@@ -1,7 +1,6 @@
 import { redirect, type LoaderFunctionArgs } from 'react-router'
 
 import { STORE_DRAFT_KEY } from '@constants/drafts'
-import { loadSession } from '@services/auth/session.service'
 import { useSessionStore } from '@states/useSessionStore'
 import { clearDraft } from '@utils/form-draft'
 import { hadSession } from '@utils/session-hint'
@@ -29,7 +28,7 @@ export const GuestGuard = async ({ request }: LoaderFunctionArgs) => {
    * visitante, e a viagem até a API só atrasaria a tela. */
   if (!hadSession()) return null
 
-  const user = await loadSession()
+  const user = await useSessionStore.getState().load()
   if (!user) return null
 
   const { memberships } = useSessionStore.getState()

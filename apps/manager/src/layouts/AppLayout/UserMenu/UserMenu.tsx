@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router'
 import { Menu } from '@nino/ds/components/Menu'
 import { Icon } from '@nino/ds/components/Icon'
 import { PersonMark } from '@components/PersonMark/PersonMark'
-import { logout } from '@services/auth/auth.service'
+import { AuthService } from '@services/auth.service'
 import { endSession } from '@utils/end-session'
 
 import type { UserMenuProps } from './UserMenu.types'
@@ -30,7 +30,7 @@ export const UserMenu = ({
 
   const handleLogout = async () => {
     try {
-      await logout()
+      await AuthService.logout()
     } catch {
       // a sessão local é encerrada mesmo se a API não responder
     }

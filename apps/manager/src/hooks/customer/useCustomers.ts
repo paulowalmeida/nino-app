@@ -10,17 +10,15 @@ import type {
 } from '@custom_types/customer'
 import {
   CUSTOMER_PAGE_SIZE,
+  CustomerService,
   HISTORY_PAGE_SIZE,
-  getById,
-  listCustomerOrders,
-  listCustomers,
-} from '@services/customer/customer.service'
+} from '@services/customer.service'
 
 export const useCustomers = (tenantId: string | null) => {
   const query = useInfiniteQuery<CustomerPage>({
     queryKey: [...queryKeys.customers.list(tenantId ?? '')],
     queryFn: ({ pageParam }) =>
-      listCustomers(tenantId as string, pageParam as number),
+      CustomerService.listCustomers(tenantId as string, pageParam as number),
     initialPageParam: 1,
     getNextPageParam: ({ pagination }) => {
       const loaded = pagination.page * CUSTOMER_PAGE_SIZE
@@ -38,7 +36,7 @@ export const useCustomers = (tenantId: string | null) => {
 export const useCustomer = (tenantId: string | null, customerId: string) =>
   useQuery<CustomerHistory>({
     queryKey: queryKeys.customers.detail(tenantId ?? '', customerId),
-    queryFn: () => getById(tenantId as string, customerId),
+    queryFn: () => CustomerService.getById(tenantId as string, customerId),
     enabled: !!tenantId && !!customerId,
   })
 
@@ -53,7 +51,7 @@ export const useCustomerOrders = (
   const query = useInfiniteQuery<CustomerHistoryPage>({
     queryKey: [...queryKeys.customers.detail(tenantId ?? '', customerId), 'orders'],
     queryFn: ({ pageParam }) =>
-      listCustomerOrders(tenantId as string, customerId, pageParam as number),
+      CustomerService.listCustomerOrders(tenantId as string, customerId, pageParam as number),
     initialPageParam: 1,
     getNextPageParam: ({ pagination }) => {
       const loaded = pagination.page * HISTORY_PAGE_SIZE

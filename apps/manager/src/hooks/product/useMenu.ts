@@ -3,7 +3,7 @@ import { useMemo } from 'react'
 import { useQuery } from '@tanstack/react-query'
 
 import type { MenuPage, MenuSection } from '@custom_types/product'
-import { listMenu } from '@services/product/product.service'
+import { ProductService } from '@services/product.service'
 
 export const menuQueryKey = (tenantId: string | null) => ['menu', tenantId]
 
@@ -35,7 +35,7 @@ const toSections = (page: MenuPage | undefined): MenuSection[] => {
 export const useMenu = (tenantId: string | null) => {
   const query = useQuery<MenuPage>({
     queryKey: menuQueryKey(tenantId),
-    queryFn: () => listMenu(tenantId as string),
+    queryFn: () => ProductService.listMenu(tenantId as string),
     enabled: !!tenantId,
   })
 

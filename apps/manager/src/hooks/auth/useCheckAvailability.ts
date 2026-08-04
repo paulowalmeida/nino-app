@@ -4,10 +4,10 @@ import type {
   CheckAvailabilityRequest,
   CheckAvailabilityResponse,
 } from '@custom_types/auth'
-import { checkAvailability } from '@services/auth/auth.service'
+import { AuthService } from '@services/auth.service'
 
 export const useCheckAvailability = () =>
   useMutation<CheckAvailabilityResponse, Error, CheckAvailabilityRequest>({
     meta: { silentError: true },
-    mutationFn: checkAvailability,
+    mutationFn: AuthService.checkAvailability,
   })

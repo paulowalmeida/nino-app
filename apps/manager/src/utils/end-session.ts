@@ -1,4 +1,4 @@
-import { queryClient } from '@services/query-client'
+import { queryClient } from '@lib/query-client'
 import { useSessionStore } from '@states/useSessionStore'
 import { forgetSession } from '@utils/session-hint'
 

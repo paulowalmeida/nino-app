@@ -7,7 +7,7 @@ import type {
   OrderStatusKey,
   UpdateOrderStatusRequest,
 } from '@custom_types/order'
-import { updateOrderStatus } from '@services/order/order.service'
+import { OrderService } from '@services/order.service'
 
 type StatusChange = UpdateOrderStatusRequest & { orderId: string }
 
@@ -37,7 +37,7 @@ export const useOrderStatus = (tenantId: string | null) => {
   return useMutation<Order, Error, StatusChange>({
     meta: { errorTitle: 'O pedido continua onde estava' },
     mutationFn: ({ orderId, ...data }) =>
-      updateOrderStatus(tenantId as string, orderId, data),
+      OrderService.updateOrderStatus(tenantId as string, orderId, data),
     onSuccess: (_order, { status }) => {
       toast.success(confirmationByStatus[status])
       void queryClient.invalidateQueries({

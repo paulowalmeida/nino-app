@@ -4,7 +4,7 @@ import { useInfiniteQuery } from '@tanstack/react-query'
 
 import { queryKeys } from '@constants/query-keys'
 import type { MenuItem, MenuPage } from '@custom_types/product'
-import { listProducts } from '@services/product/product.service'
+import { ProductService } from '@services/product.service'
 
 /**
  * Vinte por vez: cabe numa tela e meia de celular, que é o quanto alguém
@@ -31,7 +31,7 @@ export const useCatalog = (
     enabled: !!tenantId,
     initialPageParam: 1,
     queryFn: ({ pageParam }) =>
-      listProducts(tenantId as string, {
+      ProductService.listProducts(tenantId as string, {
         page: pageParam,
         size: CATALOG_PAGE_SIZE,
         categoryId: categoryId ?? undefined,

@@ -5,7 +5,7 @@ import { FirstStoreForm } from '@compositions/FirstStoreForm'
 import { StorePreview } from '@compositions/StorePreview'
 
 import { NinoLogo } from '@elements/NinoLogo/NinoLogo'
-import { logout } from '@services/auth/auth.service'
+import { AuthService } from '@services/auth.service'
 import { useSessionStore } from '@states/useSessionStore'
 import { endSession } from '@utils/end-session'
 
@@ -29,7 +29,7 @@ export const Units = () => {
 
   const handleLogout = async () => {
     try {
-      await logout()
+      await AuthService.logout()
     } catch {
       // a sessão local é encerrada mesmo se a API não responder
     }

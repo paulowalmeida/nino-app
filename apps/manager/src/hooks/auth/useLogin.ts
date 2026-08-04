@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router'
 import { useMutation } from '@tanstack/react-query'
 
 import type { AuthUser, LoginRequest } from '@custom_types/auth'
-import { login } from '@services/auth/auth.service'
+import { AuthService } from '@services/auth.service'
 
 /**
  * Login only sets the cookies — `/auth/login` has no memberships in its body,
@@ -16,7 +16,7 @@ export const useLogin = () => {
   return useMutation<AuthUser, Error, LoginRequest>({
     /* O formulário já mostra o erro embaixo do campo. */
     meta: { silentError: true },
-    mutationFn: login,
+    mutationFn: AuthService.login,
     onSuccess: () => {
       void navigate('/')
     },

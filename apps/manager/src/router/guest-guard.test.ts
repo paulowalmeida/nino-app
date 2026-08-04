@@ -6,10 +6,10 @@ import { useSessionStore } from '@states/useSessionStore'
 
 import { GuestGuard } from './guest-guard'
 
-const loadSession = vi.hoisted(() => vi.fn())
+const me = vi.hoisted(() => vi.fn())
 const clearDraft = vi.hoisted(() => vi.fn())
 
-vi.mock('@services/auth/session.service', () => ({ loadSession }))
+vi.mock('@services/auth.service', () => ({ AuthService: { me } }))
 vi.mock('@utils/form-draft', () => ({ clearDraft }))
 
 const HINT_KEY = 'nino.had-session'
@@ -54,7 +54,6 @@ const visit = (pathname: string) => {
 /** Browser carrying a session cookie worth asking the API about. */
 const signedIn = (memberships: Membership[]) => {
   window.localStorage.setItem(HINT_KEY, '1')
-  loadSession.mockResolvedValue(USER)
   useSessionStore.getState().setSession(USER, memberships)
 }
 
@@ -69,12 +68,12 @@ describe('GuestGuard', () => {
 
   it('no session: opens the login screen without asking the API', async () => {
     expect(await visit('/entrar')).toBeNull()
-    expect(loadSession).not.toHaveBeenCalled()
+    expect(me).not.toHaveBeenCalled()
   })
 
   it('no session: opens the signup wizard without asking the API', async () => {
     expect(await visit('/cadastrar')).toBeNull()
-    expect(loadSession).not.toHaveBeenCalled()
+    expect(me).not.toHaveBeenCalled()
   })
 
   it('no session: keeps any draft it finds, having nothing to abandon', async () => {
@@ -85,21 +84,21 @@ describe('GuestGuard', () => {
 
   it('stale hint: opens the login screen', async () => {
     window.localStorage.setItem(HINT_KEY, '1')
-    loadSession.mockResolvedValue(null)
+    me.mockRejectedValue(new Error('stale hint'))
 
     expect(await visit('/entrar')).toBeNull()
   })
 
   it('stale hint: opens the signup wizard', async () => {
     window.localStorage.setItem(HINT_KEY, '1')
-    loadSession.mockResolvedValue(null)
+    me.mockRejectedValue(new Error('stale hint'))
 
     expect(await visit('/cadastrar')).toBeNull()
   })
 
   it('stale hint: keeps the draft, since nobody is signed in to abandon it', async () => {
     window.localStorage.setItem(HINT_KEY, '1')
-    loadSession.mockResolvedValue(null)
+    me.mockRejectedValue(new Error('stale hint'))
     await visit('/entrar')
 
     expect(clearDraft).not.toHaveBeenCalled()

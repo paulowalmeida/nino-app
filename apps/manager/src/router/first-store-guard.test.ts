@@ -5,9 +5,9 @@ import { useSessionStore } from '@states/useSessionStore'
 
 import { FirstStoreGuard } from './first-store-guard'
 
-const loadSession = vi.hoisted(() => vi.fn())
+const me = vi.hoisted(() => vi.fn())
 
-vi.mock('@services/auth/session.service', () => ({ loadSession }))
+vi.mock('@services/auth.service', () => ({ AuthService: { me } }))
 
 const USER: AuthUser = {
   id: 'u1',
@@ -43,20 +43,18 @@ describe('FirstStoreGuard', () => {
   })
 
   it('sends a visitor without a session to the login screen', async () => {
-    loadSession.mockResolvedValue(null)
+    me.mockRejectedValue(new Error('no session'))
 
     expect(locationOf(await FirstStoreGuard())).toBe('/entrar')
   })
 
   it('opens the screen for an account with no store yet', async () => {
-    loadSession.mockResolvedValue(USER)
     useSessionStore.getState().setSession(USER, [])
 
     expect(await FirstStoreGuard()).toBeNull()
   })
 
   it('sends a merchant who already has a store back to the panel', async () => {
-    loadSession.mockResolvedValue(USER)
     useSessionStore.getState().setSession(USER, [membership()])
 
     expect(locationOf(await FirstStoreGuard())).toBe('/')

@@ -2,7 +2,6 @@ import { redirect } from 'react-router'
 
 import { HOME_OF } from '@constants/roles'
 import type { Membership } from '@custom_types/auth'
-import { loadSession } from '@services/auth/session.service'
 import { useSessionStore } from '@states/useSessionStore'
 import { sawOnboarding } from '@utils/onboarding-seen'
 
@@ -19,7 +18,7 @@ const entryUnit = (memberships: Membership[]): Membership =>
  * worth a screen.
  */
 export const RootLoader = async () => {
-  const user = await loadSession()
+  const user = await useSessionStore.getState().load()
   if (!user) return redirect('/entrar')
 
   const { memberships } = useSessionStore.getState()

@@ -2,11 +2,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 
 import { queryKeys } from '@constants/query-keys'
 import type { OpeningHours } from '@custom_types/settings'
-import {
-  createOpeningHours,
-  listOpeningHours,
-  updateOpeningHours,
-} from '@services/tenant/settings.service'
+import { OpeningHoursService } from '@services/opening-hours.service'
 
 type HoursDraft = {
   id?: string
@@ -27,7 +23,7 @@ const hoursKey = (tenantId: string) => [
 export const useOpeningHours = (tenantId: string | null) => {
   const query = useQuery({
     queryKey: hoursKey(tenantId ?? ''),
-    queryFn: () => listOpeningHours(tenantId as string),
+    queryFn: () => OpeningHoursService.listOpeningHours(tenantId as string),
     enabled: !!tenantId,
   })
 
@@ -45,8 +41,8 @@ const persistDay = (
   { id, dayOfWeek, openTime, closeTime, isOpen }: HoursDraft
 ) =>
   id
-    ? updateOpeningHours(tenantId, id, { openTime, closeTime, isOpen })
-    : createOpeningHours(tenantId, { dayOfWeek, openTime, closeTime, isOpen })
+    ? OpeningHoursService.updateOpeningHours(tenantId, id, { openTime, closeTime, isOpen })
+    : OpeningHoursService.createOpeningHours(tenantId, { dayOfWeek, openTime, closeTime, isOpen })
 
 /**
  * The week is saved as one action — the store decides its schedule as a

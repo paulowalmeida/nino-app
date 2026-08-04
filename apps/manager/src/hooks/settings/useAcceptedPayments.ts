@@ -2,7 +2,7 @@ import { useQuery } from '@tanstack/react-query'
 
 import { queryKeys } from '@constants/query-keys'
 import type { PaymentMethod } from '@custom_types/order'
-import { getAcceptedPayments } from '@services/tenant/settings.service'
+import { SettingsService } from '@services/settings.service'
 
 /** Sem forma configurada a loja não vende: dinheiro é o piso. */
 const FALLBACK: PaymentMethod[] = ['CASH']
@@ -10,7 +10,7 @@ const FALLBACK: PaymentMethod[] = ['CASH']
 export const useAcceptedPayments = (tenantId: string | null) => {
   const query = useQuery({
     queryKey: [...queryKeys.tenant.all(tenantId ?? ''), 'accepted-payments'],
-    queryFn: () => getAcceptedPayments(tenantId as string),
+    queryFn: () => SettingsService.getAcceptedPayments(tenantId as string),
     enabled: !!tenantId,
   })
 

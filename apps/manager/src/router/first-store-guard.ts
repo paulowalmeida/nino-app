@@ -1,6 +1,5 @@
 import { redirect } from 'react-router'
 
-import { loadSession } from '@services/auth/session.service'
 import { useSessionStore } from '@states/useSessionStore'
 
 /**
@@ -10,7 +9,7 @@ import { useSessionStore } from '@states/useSessionStore'
  * passou dessa fase.
  */
 export const FirstStoreGuard = async () => {
-  const user = await loadSession()
+  const user = await useSessionStore.getState().load()
   if (!user) return redirect('/entrar')
 
   const { memberships } = useSessionStore.getState()

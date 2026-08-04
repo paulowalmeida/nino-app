@@ -15,12 +15,6 @@ export const AddressFields = ({ value, onChange }: AddressFieldsProps) => {
   const [lookup, setLookup] = useState<Lookup>('idle')
   const numberRef = useRef<HTMLInputElement>(null)
 
-  /*
-   * A busca dispara na digitação, não ao sair do campo: quem acabou de
-   * completar o CEP já está indo para o número, e preencher depois do blur faz
-   * o formulário se mexer embaixo do dedo. Mesmo comportamento do endereço de
-   * entrega no consumer.
-   */
   const handleZipChange = async (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {

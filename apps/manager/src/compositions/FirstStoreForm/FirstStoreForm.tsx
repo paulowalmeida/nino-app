@@ -12,7 +12,7 @@ import { lookupZipCode, onlyDigits } from '@nino/lib/services/zip-code'
 import { STORE_DRAFT_KEY } from '@constants/drafts'
 import { useCreateStore } from '@hooks/store/useCreateStore'
 import { useStoreTypes } from '@hooks/store/useStoreTypes'
-import { checkSlug } from '@services/store/store.service'
+import { TenantService } from '@services/tenant.service'
 import { ApiError } from '@utils/api-error'
 import { clearDraft, readDraft, writeDraft } from '@utils/form-draft'
 import { riseDelay } from '@utils/rise-delay'
@@ -35,7 +35,7 @@ const TAKEN_MESSAGE = 'Este endereço já está em uso'
  */
 const checkSlugTaken = async (slug: string): Promise<true | string> => {
   try {
-    const { available } = await checkSlug(slug)
+    const { available } = await TenantService.checkSlug(slug)
     return available || TAKEN_MESSAGE
   } catch {
     return true

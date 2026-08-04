@@ -18,7 +18,7 @@ import { useCategories, useCreateCategory } from '@hooks/product/useCategories'
 import { useCreateMenuItem } from '@hooks/product/useCreateMenuItem'
 import { menuQueryKey } from '@hooks/product/useMenu'
 import { useCurrentTenant } from '@hooks/session/useCurrentTenant'
-import { uploadItemImage } from '@services/product/product.service'
+import { ProductService } from '@services/product.service'
 import { riseDelay } from '@utils/rise-delay'
 
 import { NewProductSkeleton } from './NewProductSkeleton'
@@ -93,7 +93,7 @@ export const NewProduct = () => {
 
       if (photoFile) {
         try {
-          await uploadItemImage(tenantId as string, item.id, photoFile)
+          await ProductService.uploadItemImage(tenantId as string, item.id, photoFile)
           void queryClient.invalidateQueries({
             queryKey: menuQueryKey(tenantId),
           })

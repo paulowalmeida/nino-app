@@ -17,7 +17,7 @@ vi.mock('@hooks/product/useItemAvailability', () => ({
 vi.mock('@hooks/product/useReorderMenuItems', () => ({
   useReorderMenuItems: () => ({ mutate: vi.fn() }),
 }))
-vi.mock('@services/product/product.service')
+vi.mock('@services/product.service')
 
 const item: MenuItem = {
   id: 'item-1',

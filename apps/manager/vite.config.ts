@@ -48,6 +48,7 @@ export default defineConfig({
       '@elements': resolve(__dirname, 'src/elements'),
       '@hooks': resolve(__dirname, 'src/hooks'),
       '@layouts': resolve(__dirname, 'src/layouts'),
+      '@lib': resolve(__dirname, 'src/lib'),
       '@pages': resolve(__dirname, 'src/pages'),
       '@providers': resolve(__dirname, 'src/providers'),
       '@router': resolve(__dirname, 'src/router'),

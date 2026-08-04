@@ -2,7 +2,6 @@ import { redirect, type LoaderFunctionArgs } from 'react-router'
 
 import { HOME_OF } from '@constants/roles'
 import type { TenantRole } from '@custom_types/auth'
-import { loadSession } from '@services/auth/session.service'
 import { useSessionStore } from '@states/useSessionStore'
 
 /**
@@ -13,7 +12,7 @@ import { useSessionStore } from '@states/useSessionStore'
 export const roleGuard =
   (allowed: TenantRole[]) =>
   async ({ params }: LoaderFunctionArgs) => {
-    const user = await loadSession()
+    const user = await useSessionStore.getState().load()
     if (!user) return redirect('/entrar')
 
     const { memberships, setCurrentTenant } = useSessionStore.getState()

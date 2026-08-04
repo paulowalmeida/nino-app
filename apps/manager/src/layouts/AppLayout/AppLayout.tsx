@@ -9,7 +9,7 @@ import {
   writeSidebarCollapsed,
 } from '@utils/sidebar-collapse'
 
-import { Sidebar } from './Sidebar'
+import { Sidebar } from './Sidebar/Sidebar'
 
 import styles from './AppLayout.module.css'
 

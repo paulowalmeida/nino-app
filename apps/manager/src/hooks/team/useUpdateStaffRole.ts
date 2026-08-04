@@ -2,7 +2,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query'
 
 import type { TenantRole } from '@custom_types/auth'
 import { queryKeys } from '@constants/query-keys'
-import { updateStaffRole } from '@services/team/team.service'
+import { StaffService } from '@services/staff.service'
 
 /**
  * O erro aparece em toast porque a recusa é a informação: "a loja precisa de
@@ -14,7 +14,7 @@ export const useUpdateStaffRole = (tenantId: string | null) => {
   return useMutation({
     meta: { success: 'Cargo atualizado' },
     mutationFn: ({ userId, role }: { userId: string; role: TenantRole }) =>
-      updateStaffRole(tenantId as string, userId, role),
+      StaffService.updateStaffRole(tenantId as string, userId, role),
     onSuccess: () => {
       void queryClient.invalidateQueries({
         queryKey: queryKeys.team.all(tenantId ?? ''),

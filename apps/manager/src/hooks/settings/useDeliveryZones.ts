@@ -3,12 +3,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 
 import { queryKeys } from '@constants/query-keys'
 import type { DeliveryZone } from '@custom_types/settings'
-import {
-  createDeliveryZone,
-  listDeliveryZones,
-  removeDeliveryZone,
-  updateDeliveryZone,
-} from '@services/tenant/settings.service'
+import { DeliveryZoneService } from '@services/delivery-zone.service'
 
 const zonesKey = (tenantId: string) => [
   ...queryKeys.tenant.all(tenantId),
@@ -18,7 +13,7 @@ const zonesKey = (tenantId: string) => [
 export const useDeliveryZones = (tenantId: string | null) => {
   const query = useQuery({
     queryKey: zonesKey(tenantId ?? ''),
-    queryFn: () => listDeliveryZones(tenantId as string),
+    queryFn: () => DeliveryZoneService.listDeliveryZones(tenantId as string),
     enabled: !!tenantId,
   })
 
@@ -40,7 +35,7 @@ export const useZoneMutations = (tenantId: string | null) => {
       errorTitle: 'A região não foi adicionada',
     },
     mutationFn: (data: { name: string; fee: number }) =>
-      createDeliveryZone(tenantId as string, data),
+      DeliveryZoneService.createDeliveryZone(tenantId as string, data),
     onSuccess: invalidate,
   })
 
@@ -53,14 +48,14 @@ export const useZoneMutations = (tenantId: string | null) => {
       id: string
       name: string
       fee: number
-    }) => updateDeliveryZone(tenantId as string, id, data),
+    }) => DeliveryZoneService.updateDeliveryZone(tenantId as string, id, data),
     onSuccess: invalidate,
   })
 
   const toggle = useMutation({
     meta: { errorTitle: 'A entrega nessa região não mudou' },
     mutationFn: ({ id, isActive }: { id: string; isActive: boolean }) =>
-      updateDeliveryZone(tenantId as string, id, { isActive }),
+      DeliveryZoneService.updateDeliveryZone(tenantId as string, id, { isActive }),
     onSuccess: (_zone, { isActive }) => {
       invalidate()
       toast.success(
@@ -74,7 +69,7 @@ export const useZoneMutations = (tenantId: string | null) => {
       success: 'Região removida',
       errorTitle: 'A região não foi removida',
     },
-    mutationFn: (id: string) => removeDeliveryZone(tenantId as string, id),
+    mutationFn: (id: string) => DeliveryZoneService.removeDeliveryZone(tenantId as string, id),
     onSuccess: invalidate,
   })
 

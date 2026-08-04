@@ -2,12 +2,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 
 import { queryKeys } from '@constants/query-keys'
 import type { ProductCategory } from '@custom_types/product'
-import {
-  createCategory,
-  deleteCategory,
-  listCategories,
-  updateCategory,
-} from '@services/product/product.service'
+import { CategoryService } from '@services/category.service'
 
 import { menuQueryKey } from './useMenu'
 
@@ -18,7 +13,7 @@ import { menuQueryKey } from './useMenu'
 export const useCategories = (tenantId: string | null) => {
   const query = useQuery({
     queryKey: queryKeys.productCategories.list(tenantId ?? ''),
-    queryFn: () => listCategories(tenantId as string),
+    queryFn: () => CategoryService.listCategories(tenantId as string),
     enabled: !!tenantId,
   })
 
@@ -35,7 +30,7 @@ export const useCreateCategory = (tenantId: string | null) => {
       success: 'Categoria criada',
       errorTitle: 'A categoria não foi criada',
     },
-    mutationFn: (name: string) => createCategory(tenantId as string, name),
+    mutationFn: (name: string) => CategoryService.createCategory(tenantId as string, name),
     onSuccess: () => {
       void queryClient.invalidateQueries({
         queryKey: queryKeys.productCategories.all(tenantId ?? ''),
@@ -63,7 +58,7 @@ export const useUpdateCategory = (tenantId: string | null) => {
       errorTitle: 'A categoria continua com o nome antigo',
     },
     mutationFn: ({ id, name }: { id: string; name: string }) =>
-      updateCategory(tenantId as string, id, name),
+      CategoryService.updateCategory(tenantId as string, id, name),
     onSuccess: () => invalidateCategoryQueries(queryClient, tenantId),
   })
 }
@@ -74,7 +69,7 @@ export const useDeleteCategory = (tenantId: string | null) => {
   return useMutation({
     /* A tela explica na hora por que uma categoria com itens não sai. */
     meta: { success: 'Categoria excluída', silentError: true },
-    mutationFn: (id: string) => deleteCategory(tenantId as string, id),
+    mutationFn: (id: string) => CategoryService.removeCategory(tenantId as string, id),
     onSuccess: () => invalidateCategoryQueries(queryClient, tenantId),
   })
 }

@@ -1,15 +1,12 @@
 import { useState } from 'react'
 import { NavLink, useLocation } from 'react-router'
 
-import { ScrollArea } from '@nino/ds/components/ScrollArea'
-import { Accordion } from '@nino/ds/components/Accordion'
-import { Icon } from '@nino/ds/components/Icon'
 import { NinoLogo } from '@elements/NinoLogo/NinoLogo'
-import { MANAGERS } from '@constants/roles'
-import { SETTINGS_SECTIONS } from '@constants/settings-sections'
-import type { NavItem } from '@custom_types/ui'
 import { useQueueSummary } from '@hooks/order/useQueueSummary'
 import { useTenantRole } from '@hooks/session/useTenantRole'
+import { Accordion } from '@nino/ds/components/Accordion'
+import { Icon } from '@nino/ds/components/Icon'
+import { ScrollArea } from '@nino/ds/components/ScrollArea'
 import { useSessionStore } from '@states/useSessionStore'
 import { riseDelay } from '@utils/rise-delay'
 
@@ -18,60 +15,9 @@ import { UserMenu } from '../UserMenu'
 
 import type { SidebarProps } from './Sidebar.types'
 
-import styles from './Sidebar.module.css'
 import motion from '@styles/motion.module.css'
-
-/**
- * Two groups: what the store does today, and how the store is set up. The
- * split keeps the daily work at the top, where the hand goes first.
- */
-const GROUPS: { title: string; items: NavItem[] }[] = [
-  {
-    title: 'Do dia',
-    items: [
-      {
-        section: 'visao-geral',
-        label: 'Visão geral',
-        icon: 'gauge',
-        roles: MANAGERS,
-      },
-      { section: 'balcao', label: 'Balcão', icon: 'cash-register' },
-      { section: 'cozinha', label: 'Cozinha', icon: 'chef-hat' },
-      { section: 'pedidos', label: 'Pedidos', icon: 'bag' },
-      { section: 'catalogo', label: 'Cardápio', icon: 'book' },
-    ],
-  },
-  {
-    title: 'Da loja',
-    items: [
-      {
-        section: 'relatorios',
-        label: 'Relatórios',
-        icon: 'bar-chart',
-        roles: MANAGERS,
-      },
-      {
-        section: 'clientes',
-        label: 'Clientes',
-        icon: 'users',
-        roles: MANAGERS,
-      },
-      {
-        section: 'colaboradores',
-        label: 'Equipe',
-        icon: 'badge',
-        roles: MANAGERS,
-      },
-      {
-        section: 'configuracoes',
-        label: 'Configurações',
-        icon: 'settings',
-        children: SETTINGS_SECTIONS,
-        roles: MANAGERS,
-      },
-    ],
-  },
-]
+import styles from './Sidebar.module.css'
+import { SIDEMENU_GROUPS } from '@constants/sidemenu.constants'
 
 export const Sidebar = ({
   tenantId,
@@ -100,7 +46,7 @@ export const Sidebar = ({
    * pessoa. Nasce aberto quando já se está dentro dele.
    */
   const [opened, setOpened] = useState<string | null>(() => {
-    const inside = GROUPS.flatMap(({ items }) => items).find(
+    const inside = SIDEMENU_GROUPS.flatMap(({ items }) => items).find(
       ({ children, section }) => children && pathname.includes(`/${section}`)
     )
     return inside?.section ?? null
@@ -141,102 +87,106 @@ export const Sidebar = ({
 
       <ScrollArea fadeEdges className={styles.nav}>
         <nav className={styles.navInner}>
-        {GROUPS.map(({ title, items }) => (
-          <div key={title} className={styles.group}>
-            {!isCollapsed && <p className={styles.groupTitle}>{title}</p>}
+          {SIDEMENU_GROUPS.map(({ title, items }) => (
+            <div key={title} className={styles.group}>
+              {!isCollapsed && <p className={styles.groupTitle}>{title}</p>}
 
-            {items
-              .filter(({ roles }) => !roles || (role && roles.includes(role)))
-              .map(({ section, label, icon, children }) => {
-                const delay = riseDelay(order++ * 55 + 120)
-                const isInside = pathname.includes(`/${section}`)
-                /* An accordion trigger only carries the active surface while
+              {items
+                .filter(({ roles }) => !roles || (role && roles.includes(role)))
+                .map(({ section, label, icon, children }) => {
+                  const delay = riseDelay(order++ * 55 + 120)
+                  const isInside = pathname.includes(`/${section}`)
+                  /* An accordion trigger only carries the active surface while
                    open — collapsed it stays invisible, even on its route. */
-                const isOpen = children ? opened === section : false
+                  const isOpen = children ? opened === section : false
 
-                const content = (
-                  <>
-                    <Icon name={icon} className={styles.navIcon} />
-                    {!isCollapsed && <span>{label}</span>}
-                    {section === 'pedidos' && waiting > 0 && (
-                      <span className={`${motion.pop} ${styles.tally}`}>
-                        {waiting}
-                      </span>
-                    )}
-                  </>
-                )
+                  const content = (
+                    <>
+                      <Icon name={icon} className={styles.navIcon} />
+                      {!isCollapsed && <span>{label}</span>}
+                      {section === 'pedidos' && waiting > 0 && (
+                        <span className={`${motion.pop} ${styles.tally}`}>
+                          {waiting}
+                        </span>
+                      )}
+                    </>
+                  )
 
-                return (
-                  <div key={section} style={delay} className={motion.slide}>
-                    {children ? (
-                      <Accordion
-                        items={[
-                          {
-                            value: section,
-                            trigger: (
-                              <span className={styles.triggerContent}>
-                                {content}
-                              </span>
-                            ),
-                            content: (
-                              <div className={styles.subNav}>
-                                {children.map(
-                                  ({ to, label: childLabel, icon: childIcon }) => (
-                                    <NavLink
-                                      key={to}
-                                      to={`/${tenantId}/${section}/${to}`}
-                                      onClick={onClose}
-                                      className={({ isActive }) =>
-                                        isActive
-                                          ? `${styles.subItem} ${styles.subItemActive}`
-                                          : styles.subItem
-                                      }
-                                    >
-                                      <Icon
-                                        name={childIcon}
-                                        className={styles.subIcon}
-                                      />
-                                      {!isCollapsed && (
-                                        <span>{childLabel}</span>
-                                      )}
-                                    </NavLink>
-                                  )
-                                )}
-                              </div>
-                            ),
-                          },
-                        ]}
-                        value={isOpen ? [section] : []}
-                        onValueChange={(values) =>
-                          setOpened(values.includes(section) ? section : null)
-                        }
-                        className={styles.accordionRoot}
-                        itemClassName={styles.accordionItem}
-                        triggerClassName={
-                          isInside && isOpen
-                            ? `${styles.navItemTrigger} ${styles.navItemActive}`
-                            : styles.navItemTrigger
-                        }
-                        contentClassName={styles.accordionContent}
-                      />
-                    ) : (
-                      <NavLink
-                        to={`/${tenantId}/${section}`}
-                        onClick={onClose}
-                        className={({ isActive }) =>
-                          isActive
-                            ? `${styles.navItem} ${styles.navItemActive}`
-                            : styles.navItem
-                        }
-                      >
-                        {content}
-                      </NavLink>
-                    )}
-                  </div>
-                )
-              })}
-          </div>
-        ))}
+                  return (
+                    <div key={section} style={delay} className={motion.slide}>
+                      {children ? (
+                        <Accordion
+                          items={[
+                            {
+                              value: section,
+                              trigger: (
+                                <span className={styles.triggerContent}>
+                                  {content}
+                                </span>
+                              ),
+                              content: (
+                                <div className={styles.subNav}>
+                                  {children.map(
+                                    ({
+                                      to,
+                                      label: childLabel,
+                                      icon: childIcon,
+                                    }) => (
+                                      <NavLink
+                                        key={to}
+                                        to={`/${tenantId}/${section}/${to}`}
+                                        onClick={onClose}
+                                        className={({ isActive }) =>
+                                          isActive
+                                            ? `${styles.subItem} ${styles.subItemActive}`
+                                            : styles.subItem
+                                        }
+                                      >
+                                        <Icon
+                                          name={childIcon}
+                                          className={styles.subIcon}
+                                        />
+                                        {!isCollapsed && (
+                                          <span>{childLabel}</span>
+                                        )}
+                                      </NavLink>
+                                    )
+                                  )}
+                                </div>
+                              ),
+                            },
+                          ]}
+                          value={isOpen ? [section] : []}
+                          onValueChange={(values) =>
+                            setOpened(values.includes(section) ? section : null)
+                          }
+                          className={styles.accordionRoot}
+                          itemClassName={styles.accordionItem}
+                          triggerClassName={
+                            isInside && isOpen
+                              ? `${styles.navItemTrigger} ${styles.navItemActive}`
+                              : styles.navItemTrigger
+                          }
+                          contentClassName={styles.accordionContent}
+                        />
+                      ) : (
+                        <NavLink
+                          to={`/${tenantId}/${section}`}
+                          onClick={onClose}
+                          className={({ isActive }) =>
+                            isActive
+                              ? `${styles.navItem} ${styles.navItemActive}`
+                              : styles.navItem
+                          }
+                        >
+                          {content}
+                        </NavLink>
+                      )}
+                    </div>
+                  )
+                })}
+            </div>
+          ))}
         </nav>
       </ScrollArea>
 

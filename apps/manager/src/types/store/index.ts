@@ -1,7 +1,6 @@
 export * from './create-store-request'
 export * from './created-store'
 export * from './pause-request'
-export * from './slug-availability-response'
 export * from './store-type-option'
 export * from './tenant-detail'
 export * from './tenant-pause'

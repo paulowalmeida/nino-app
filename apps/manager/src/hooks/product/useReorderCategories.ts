@@ -2,7 +2,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query'
 
 import { queryKeys } from '@constants/query-keys'
 import type { ProductCategory } from '@custom_types/product'
-import { setCategoryPosition } from '@services/product/product.service'
+import { CategoryService } from '@services/category.service'
 
 import { menuQueryKey } from './useMenu'
 
@@ -28,7 +28,7 @@ export const useReorderCategories = (tenantId: string | null) => {
     mutationFn: ({ positions }: Variables) =>
       Promise.all(
         positions.map(({ id, position }) =>
-          setCategoryPosition(tenantId as string, id, position)
+          CategoryService.setCategoryPosition(tenantId as string, id, position)
         )
       ),
 

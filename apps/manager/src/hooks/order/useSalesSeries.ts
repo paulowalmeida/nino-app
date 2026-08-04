@@ -6,7 +6,7 @@ import type {
   SalesSeries,
   SeriesGranularity,
 } from '@custom_types/order'
-import { getSalesSeries } from '@services/order/order.service'
+import { OrderService } from '@services/order.service'
 
 /**
  * Série de venda do período. Sem polling, como o relatório: é leitura de
@@ -20,7 +20,7 @@ export const useSalesSeries = (
 ) => {
   const query = useQuery<SalesSeries>({
     queryKey: queryKeys.orders.series(tenantId ?? '', params, granularity),
-    queryFn: () => getSalesSeries(tenantId as string, params, granularity),
+    queryFn: () => OrderService.getSalesSeries(tenantId as string, params, granularity),
     enabled: !!tenantId,
   })
 

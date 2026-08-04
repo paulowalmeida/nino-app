@@ -3,7 +3,7 @@ import type { InfiniteData } from '@tanstack/react-query'
 
 import { queryKeys } from '@constants/query-keys'
 import type { MenuPage } from '@custom_types/product'
-import { setItemAvailability } from '@services/product/product.service'
+import { ProductService } from '@services/product.service'
 
 import { menuQueryKey } from './useMenu'
 
@@ -35,7 +35,7 @@ export const useItemAvailability = (tenantId: string | null) => {
   return useMutation({
     meta: { errorTitle: 'O item voltou como estava' },
     mutationFn: ({ id, isActive }: Variables) =>
-      setItemAvailability(tenantId as string, id, isActive),
+      ProductService.setItemAvailability(tenantId as string, id, isActive),
 
     onMutate: async ({ id, isActive }: Variables) => {
       await queryClient.cancelQueries({ queryKey: key })

@@ -2,7 +2,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query'
 
 import { queryKeys } from '@constants/query-keys'
 import type { CreateInviteRequest } from '@custom_types/team'
-import { sendInvite } from '@services/team/team.service'
+import { StaffService } from '@services/staff.service'
 
 export const useInvite = (tenantId: string | null) => {
   const queryClient = useQueryClient()
@@ -11,7 +11,7 @@ export const useInvite = (tenantId: string | null) => {
     /* O formulário já confirma e erra na linha de baixo do campo. */
     meta: { silentError: true },
     mutationFn: (data: CreateInviteRequest) =>
-      sendInvite(tenantId as string, data),
+      StaffService.sendInvite(tenantId as string, data),
     onSuccess: () => {
       void queryClient.invalidateQueries({
         queryKey: queryKeys.team.all(tenantId ?? ''),

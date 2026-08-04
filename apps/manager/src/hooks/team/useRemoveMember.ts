@@ -1,7 +1,8 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 
 import { queryKeys } from '@constants/query-keys'
-import { removeCourier, removeStaff } from '@services/team/team.service'
+import { CourierService } from '@services/courier.service'
+import { StaffService } from '@services/staff.service'
 
 type Removal = {
   id: string
@@ -19,8 +20,8 @@ export const useRemoveMember = (tenantId: string | null) => {
     },
     mutationFn: ({ id, kind }: Removal) =>
       kind === 'STAFF'
-        ? removeStaff(tenantId as string, id)
-        : removeCourier(tenantId as string, id),
+        ? StaffService.removeStaff(tenantId as string, id)
+        : CourierService.removeCourier(tenantId as string, id),
     onSuccess: () => {
       void queryClient.invalidateQueries({
         queryKey: queryKeys.team.all(tenantId ?? ''),

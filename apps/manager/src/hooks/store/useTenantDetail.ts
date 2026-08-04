@@ -4,12 +4,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 
 import { queryKeys } from '@constants/query-keys'
 import type { TenantDetail, UpdateTenantRequest } from '@custom_types/store'
-import {
-  getById,
-  removeTenant,
-  setMainTenant,
-  updateTenant,
-} from '@services/tenant/tenant.service'
+import { TenantService } from '@services/tenant.service'
 import { useSessionStore } from '@states/useSessionStore'
 
 const detailKey = (tenantId: string) => [
@@ -20,7 +15,7 @@ const detailKey = (tenantId: string) => [
 export const useTenantDetail = (tenantId: string | null) =>
   useQuery<TenantDetail>({
     queryKey: detailKey(tenantId ?? ''),
-    queryFn: () => getById(tenantId as string),
+    queryFn: () => TenantService.getById(tenantId as string),
     enabled: !!tenantId,
   })
 
@@ -33,7 +28,7 @@ export const useSaveTenant = (tenantId: string | null) => {
       errorTitle: 'Os dados da unidade não foram salvos',
     },
     mutationFn: (data: UpdateTenantRequest) =>
-      updateTenant(tenantId as string, data),
+      TenantService.updateTenant(tenantId as string, data),
     onSuccess: (tenant) =>
       queryClient.setQueryData(detailKey(tenantId ?? ''), tenant),
   })
@@ -51,7 +46,7 @@ export const useRemoveTenant = () => {
       success: 'Loja fechada',
       errorTitle: 'Não deu pra fechar a loja',
     },
-    mutationFn: (tenantId: string) => removeTenant(tenantId),
+    mutationFn: (tenantId: string) => TenantService.removeTenant(tenantId),
     onSuccess: () => {
       useSessionStore.getState().clear()
       void navigate('/')
@@ -68,7 +63,7 @@ export const useSetMainTenant = (tenantId: string | null) => {
       success: 'Unidade definida como matriz',
       errorTitle: 'Não deu pra definir a matriz',
     },
-    mutationFn: (id: string) => setMainTenant(id),
+    mutationFn: (id: string) => TenantService.setMainTenant(id),
     onSuccess: () => {
       void queryClient.invalidateQueries({
         queryKey: queryKeys.tenant.all(tenantId ?? ''),

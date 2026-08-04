@@ -5,12 +5,12 @@ import type {
   TenantSettings,
   UpdateTenantSettingsRequest,
 } from '@custom_types/settings'
-import { getSettings, saveSettings } from '@services/tenant/settings.service'
+import { SettingsService } from '@services/settings.service'
 
 export const useSettings = (tenantId: string | null) =>
   useQuery<TenantSettings>({
     queryKey: queryKeys.tenant.settings(tenantId ?? ''),
-    queryFn: () => getSettings(tenantId as string),
+    queryFn: () => SettingsService.getSettings(tenantId as string),
     enabled: !!tenantId,
   })
 
@@ -23,7 +23,7 @@ export const useSaveSettings = (tenantId: string | null) => {
       errorTitle: 'O atendimento não foi salvo',
     },
     mutationFn: (data: UpdateTenantSettingsRequest) =>
-      saveSettings(tenantId as string, data),
+      SettingsService.saveSettings(tenantId as string, data),
     onSuccess: (settings) => {
       queryClient.setQueryData(
         queryKeys.tenant.settings(tenantId ?? ''),

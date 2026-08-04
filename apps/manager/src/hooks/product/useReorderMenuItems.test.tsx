@@ -9,12 +9,12 @@ import { renderHook, waitFor } from '@testing-library/react'
 import { describe, expect, it, vi } from 'vitest'
 
 import { queryKeys } from '@constants/query-keys'
-import type { MenuPage } from '@custom_types/product'
-import { setItemPosition } from '@services/product/product.service'
+import type { MenuItem, MenuPage } from '@custom_types/product'
+import { ProductService } from '@services/product.service'
 
 import { useReorderMenuItems } from './useReorderMenuItems'
 
-vi.mock('@services/product/product.service')
+vi.mock('@services/product.service')
 
 const CATEGORY_ID = 'cat-1'
 
@@ -49,7 +49,7 @@ describe(useReorderMenuItems.name, () => {
   it('reorders the cache optimistically before the request resolves', async () => {
     const client = new QueryClient()
     client.setQueryData(key, buildPages())
-    vi.mocked(setItemPosition).mockResolvedValue({} as never)
+    vi.mocked(ProductService.setItemPosition).mockResolvedValue({} as unknown as MenuItem)
 
     const { result } = renderHook(
       () => useReorderMenuItems('tenant-1', CATEGORY_ID),
@@ -69,7 +69,7 @@ describe(useReorderMenuItems.name, () => {
   it('keeps the page sizes when it repaginates', async () => {
     const client = new QueryClient()
     client.setQueryData(key, buildPages())
-    vi.mocked(setItemPosition).mockResolvedValue({} as never)
+    vi.mocked(ProductService.setItemPosition).mockResolvedValue({} as unknown as MenuItem)
 
     const { result } = renderHook(
       () => useReorderMenuItems('tenant-1', CATEGORY_ID),
@@ -87,7 +87,7 @@ describe(useReorderMenuItems.name, () => {
   it('rolls back the cache when the request fails', async () => {
     const client = new QueryClient()
     client.setQueryData(key, buildPages())
-    vi.mocked(setItemPosition).mockRejectedValue(new Error('network error'))
+    vi.mocked(ProductService.setItemPosition).mockRejectedValue(new Error('network error'))
 
     const { result } = renderHook(
       () => useReorderMenuItems('tenant-1', CATEGORY_ID),

@@ -2,12 +2,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 
 import { queryKeys } from '@constants/query-keys'
 import type { TenantPhone } from '@custom_types/settings'
-import {
-  createPhone,
-  listPhones,
-  removePhone,
-  updatePhone,
-} from '@services/tenant/settings.service'
+import { PhoneService } from '@services/phone.service'
 
 const phonesKey = (tenantId: string) => [
   ...queryKeys.tenant.all(tenantId),
@@ -17,7 +12,7 @@ const phonesKey = (tenantId: string) => [
 export const usePhones = (tenantId: string | null) => {
   const query = useQuery({
     queryKey: phonesKey(tenantId ?? ''),
-    queryFn: () => listPhones(tenantId as string),
+    queryFn: () => PhoneService.listPhones(tenantId as string),
     enabled: !!tenantId,
   })
 
@@ -38,14 +33,14 @@ export const usePhoneMutations = (tenantId: string | null) => {
       success: 'Telefone adicionado',
       errorTitle: 'O telefone não foi adicionado',
     },
-    mutationFn: (phone: string) => createPhone(tenantId as string, phone),
+    mutationFn: (phone: string) => PhoneService.createPhone(tenantId as string, phone),
     onSuccess: invalidate,
   })
 
   const edit = useMutation({
     meta: { success: 'Telefone salvo', errorTitle: 'O telefone não foi salvo' },
     mutationFn: ({ id, phone }: { id: string; phone: string }) =>
-      updatePhone(tenantId as string, id, phone),
+      PhoneService.updatePhone(tenantId as string, id, phone),
     onSuccess: invalidate,
   })
 
@@ -54,7 +49,7 @@ export const usePhoneMutations = (tenantId: string | null) => {
       success: 'Telefone removido',
       errorTitle: 'O telefone não foi removido',
     },
-    mutationFn: (id: string) => removePhone(tenantId as string, id),
+    mutationFn: (id: string) => PhoneService.removePhone(tenantId as string, id),
     onSuccess: invalidate,
   })
 

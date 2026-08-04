@@ -6,7 +6,7 @@ import {
 
 import { queryKeys } from '@constants/query-keys'
 import type { MenuPage } from '@custom_types/product'
-import { setItemPosition } from '@services/product/product.service'
+import { ProductService } from '@services/product.service'
 
 import { menuQueryKey } from './useMenu'
 
@@ -36,7 +36,7 @@ export const useReorderMenuItems = (
     mutationFn: ({ positions }: Variables) =>
       Promise.all(
         positions.map(({ id, position }) =>
-          setItemPosition(tenantId as string, id, position)
+          ProductService.setItemPosition(tenantId as string, id, position)
         )
       ),
 

@@ -1,7 +1,7 @@
 import { useMutation } from '@tanstack/react-query'
 
 import type { AuthUser, SignupRequest } from '@custom_types/auth'
-import { signup } from '@services/auth/auth.service'
+import { AuthService } from '@services/auth.service'
 
 /**
  * Signup creates account and company and sets the cookies — nothing else.
@@ -11,5 +11,5 @@ export const useSignup = () =>
   useMutation<AuthUser, Error, SignupRequest>({
     /* O wizard mostra o erro da API no próprio passo. */
     meta: { silentError: true },
-    mutationFn: signup,
+    mutationFn: AuthService.signup,
   })

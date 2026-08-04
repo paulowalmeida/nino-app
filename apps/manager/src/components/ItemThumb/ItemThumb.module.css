@@ -1,6 +1,6 @@
 @reference "@nino/ds/globals.css";
 
-.imageWrapper {
+.thumbWrapper {
   @apply shrink-0;
 }
 

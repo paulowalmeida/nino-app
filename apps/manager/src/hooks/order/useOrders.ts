@@ -2,7 +2,7 @@ import { useInfiniteQuery } from '@tanstack/react-query'
 
 import { queryKeys } from '@constants/query-keys'
 import type { Order, OrderPage } from '@custom_types/order'
-import { listOrders, ORDER_PAGE_SIZE } from '@services/order/order.service'
+import { ORDER_PAGE_SIZE, OrderService } from '@services/order.service'
 
 /**
  * Polls every 25s: the queue is a workstation, not a report, and a pending
@@ -14,7 +14,7 @@ export const useOrders = (tenantId: string | null, search?: string) => {
   const query = useInfiniteQuery<OrderPage>({
     queryKey: queryKeys.orders.list(tenantId ?? '', undefined, term),
     queryFn: ({ pageParam }) =>
-      listOrders(tenantId as string, pageParam as number, term),
+      OrderService.listOrders(tenantId as string, pageParam as number, term),
     initialPageParam: 1,
     getNextPageParam: ({ pagination }) => {
       const loaded = pagination.page * ORDER_PAGE_SIZE

@@ -3,7 +3,7 @@ import { describe, expect, it, vi } from 'vitest'
 import { GuestGuard } from './guest-guard'
 import { router } from './routes'
 
-vi.mock('@services/auth/session.service', () => ({ loadSession: vi.fn() }))
+vi.mock('@services/auth.service', () => ({ AuthService: { me: vi.fn() } }))
 
 const routeOf = (path: string) =>
   router.routes.flatMap((route) => route.children ?? [route]).find(

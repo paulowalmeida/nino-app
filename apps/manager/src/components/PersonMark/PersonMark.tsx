@@ -5,16 +5,11 @@ import styles from './PersonMark.module.css'
 
 type PersonMarkProps = {
   name: string
-  /**
-   * `quiet` for someone who doesn't operate the panel; `night` on dark
-   * backgrounds.
-   */
   tone?: 'brand' | 'quiet' | 'night'
   size?: 'sm' | 'md'
   className?: string
 }
 
-/** `aria-hidden`: the name always sits next to the disc, so readers skip it. */
 export const PersonMark = ({
   name,
   tone = 'brand',

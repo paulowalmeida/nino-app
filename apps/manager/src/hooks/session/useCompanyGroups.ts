@@ -1,5 +1,5 @@
 import type { Membership } from '@custom_types/auth'
-import type { CompanyGroup } from '@custom_types/session'
+import type { CompanyGroup } from '@custom_types/session/company-group'
 import { useSessionStore } from '@states/useSessionStore'
 
 /**

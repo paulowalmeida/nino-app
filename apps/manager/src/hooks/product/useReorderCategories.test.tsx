@@ -6,11 +6,11 @@ import { describe, expect, it, vi } from 'vitest'
 
 import { queryKeys } from '@constants/query-keys'
 import type { ProductCategory } from '@custom_types/product'
-import { setCategoryPosition } from '@services/product/product.service'
+import { CategoryService } from '@services/category.service'
 
 import { useReorderCategories } from './useReorderCategories'
 
-vi.mock('@services/product/product.service')
+vi.mock('@services/category.service')
 
 type CategoryList = { data: ProductCategory[] }
 
@@ -37,7 +37,7 @@ describe(useReorderCategories.name, () => {
   it('reorders the cache optimistically before the request resolves', async () => {
     const client = new QueryClient()
     client.setQueryData(key, buildList())
-    vi.mocked(setCategoryPosition).mockResolvedValue(
+    vi.mocked(CategoryService.setCategoryPosition).mockResolvedValue(
       {} as unknown as ProductCategory
     )
 
@@ -58,7 +58,7 @@ describe(useReorderCategories.name, () => {
   it('rolls back the cache when the request fails', async () => {
     const client = new QueryClient()
     client.setQueryData(key, buildList())
-    vi.mocked(setCategoryPosition).mockRejectedValue(new Error('network error'))
+    vi.mocked(CategoryService.setCategoryPosition).mockRejectedValue(new Error('network error'))
 
     const { result } = renderHook(() => useReorderCategories('tenant-1'), {
       wrapper: wrapWithClient(client),

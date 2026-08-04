@@ -2,7 +2,7 @@ import { useQuery } from '@tanstack/react-query'
 
 import { queryKeys } from '@constants/query-keys'
 import type { ReportRangeParams, SalesReport } from '@custom_types/order'
-import { getSalesReport } from '@services/order/order.service'
+import { OrderService } from '@services/order.service'
 
 /**
  * Relatório é leitura de análise, não a fila de trabalho: sem polling. A
@@ -14,7 +14,7 @@ export const useSalesReport = (
 ) => {
   const query = useQuery<SalesReport>({
     queryKey: queryKeys.orders.report(tenantId ?? '', params),
-    queryFn: () => getSalesReport(tenantId as string, params),
+    queryFn: () => OrderService.getSalesReport(tenantId as string, params),
     enabled: !!tenantId,
   })
 
