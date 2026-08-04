@@ -1,31 +1,25 @@
 import { useEffect, useState } from 'react'
-import { Controller, useForm, useWatch } from 'react-hook-form'
+import { useForm, useWatch } from 'react-hook-form'
 import { useNavigate, useParams } from 'react-router'
 
 import { Alert } from '@nino/ds/components/Alert'
 import { Badge } from '@nino/ds/components/Badge'
 import { Button } from '@nino/ds/components/Button'
 import { Dialog } from '@nino/ds/components/Dialog'
-import { FormField } from '@nino/ds/components/FormField'
-import { Input } from '@nino/ds/components/Input'
-import { Select } from '@nino/ds/components/Select'
-import { Switch } from '@nino/ds/components/Switch'
-import { Textarea } from '@nino/ds/components/Textarea'
-import { ItemPhoto } from '@compositions/ItemPhoto/ItemPhoto'
+import {
+  ProductDetailFields,
+  type ProductFormValues,
+} from '@compositions/ProductDetailFields/ProductDetailFields'
 import { BackLink } from '@elements/BackLink/BackLink'
 import { useDeleteMenuItem } from '@hooks/product/useDeleteMenuItem'
 import { useMenuItem } from '@hooks/product/useMenuItem'
 import { useUpdateMenuItem } from '@hooks/product/useUpdateMenuItem'
 import { useCurrentTenant } from '@hooks/session/useCurrentTenant'
-import { riseDelay } from '@utils/rise-delay'
-
 import { ProductDetailSkeleton } from '@skeletons/ProductDetailSkeleton/ProductDetailSkeleton'
-import type { ProductFormValues } from './ProductDetail.types'
+import { riseDelay } from '@utils/rise-delay'
 
 import styles from './ProductDetail.module.css'
 import motion from '@styles/motion.module.css'
-
-const DESCRIPTION_MAX_LENGTH = 300
 
 const toPrice = (value: string): number =>
   Number(value.replace(/\./g, '').replace(',', '.'))
@@ -128,120 +122,15 @@ export const ProductDetail = () => {
       </header>
 
       <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
-        <div
-          className={`${motion.deal} ${styles.photoCol}`}
-          style={riseDelay(80)}
-        >
-          <ItemPhoto
-            tenantId={tenantId}
-            productId={item.id}
-            name={item.name}
-            images={item.images ?? []}
-          />
-        </div>
-
-        <div className={styles.fields}>
-          <div
-            className={`${motion.deal} ${styles.field}`}
-            style={riseDelay(120)}
-          >
-            <FormField label="Nome" error={errors.name?.message}>
-              <Input {...register('name', { required: 'Informe o nome' })} />
-            </FormField>
-          </div>
-
-          <div
-            className={`${motion.deal} ${styles.field}`}
-            style={riseDelay(180)}
-          >
-            <FormField
-              label="Descrição"
-              helperText={`${description?.length ?? 0}/${DESCRIPTION_MAX_LENGTH} · Aparece abaixo do nome no app do cliente`}
-              error={errors.description?.message}
-            >
-              <Textarea
-                rows={3}
-                maxLength={DESCRIPTION_MAX_LENGTH}
-                {...register('description', {
-                  maxLength: {
-                    value: DESCRIPTION_MAX_LENGTH,
-                    message: `A descrição não pode passar de ${DESCRIPTION_MAX_LENGTH} caracteres`,
-                  },
-                })}
-              />
-            </FormField>
-          </div>
-
-          <div
-            className={`${motion.deal} ${styles.row}`}
-            style={riseDelay(240)}
-          >
-            <FormField label="Preço" error={errors.price?.message}>
-              <Input
-                inputMode="decimal"
-                {...register('price', {
-                  required: 'Informe o preço',
-                  validate: (value) =>
-                    toPrice(value) > 0 || 'O preço precisa ser maior que zero',
-                })}
-              />
-            </FormField>
-
-            <FormField label="Posição" error={errors.position?.message}>
-              <Input
-                type="number"
-                min={0}
-                {...register('position', { valueAsNumber: true })}
-              />
-            </FormField>
-          </div>
-
-          <div
-            className={`${motion.deal} ${styles.field}`}
-            style={riseDelay(300)}
-          >
-            <FormField label="Categoria" error={errors.categoryId?.message}>
-              <Controller
-                name="categoryId"
-                control={control}
-                rules={{ required: 'Escolha a categoria' }}
-                render={({ field }) => (
-                  <Select
-                    options={categories}
-                    value={field.value}
-                    onValueChange={field.onChange}
-                    error={!!errors.categoryId}
-                  />
-                )}
-              />
-            </FormField>
-          </div>
-
-          <div
-            className={`${motion.deal} ${styles.availability}`}
-            style={riseDelay(360)}
-          >
-            <Controller
-              name="isActive"
-              control={control}
-              render={({ field }) => (
-                <Switch
-                  checked={field.value}
-                  onCheckedChange={field.onChange}
-                  aria-label="Item disponível"
-                />
-              )}
-            />
-            <div>
-              <p className={styles.availabilityLabel}>Disponível</p>
-              <p className={styles.availabilityHint}>
-                Desligado, o item some do app do cliente sem sair do cardápio.
-              </p>
-            </div>
-          </div>
-
-          {errors.root && <Alert variant="error">{errors.root.message}</Alert>}
-        </div>
+        <ProductDetailFields
+          tenantId={tenantId}
+          item={item}
+          categories={categories}
+          description={description}
+          register={register}
+          control={control}
+          errors={errors}
+        />
 
         <div
           className={`${motion.deal} ${styles.actions}`}

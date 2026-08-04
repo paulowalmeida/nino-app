@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useState } from 'react'
 import { useNavigate } from 'react-router'
 
 import { Reorder } from 'framer-motion'
@@ -10,19 +10,18 @@ import { EmptyState } from '@nino/ds/components/EmptyState'
 import { Input } from '@nino/ds/components/Input'
 import { PageHeader } from '@nino/ds/components/PageHeader'
 import { Skeleton } from '@nino/ds/components/Skeleton'
+import { CategoryRow } from '@compositions/CategoryRow/CategoryRow'
 import { BackLink } from '@elements/BackLink/BackLink'
 import { useCategories } from '@hooks/product/useCategories'
+import { useCategoryOrder } from '@hooks/product/useCategoryOrder'
 import { useCreateCategory } from '@hooks/product/useCreateCategory'
 import { useDeleteCategory } from '@hooks/product/useDeleteCategory'
 import { useMenu } from '@hooks/product/useMenu'
 import { useUpdateCategory } from '@hooks/product/useUpdateCategory'
-import { useReorderCategories } from '@hooks/product/useReorderCategories'
 import { useCurrentTenant } from '@hooks/session/useCurrentTenant'
+import type { CategoryWithCount } from '@custom_types/product'
 import { ApiError } from '@utils/api-error'
 import { riseDelay } from '@utils/rise-delay'
-
-import type { CategoryWithCount } from './Categories.types'
-import { CategoryRow } from './CategoryRow'
 
 import styles from './Categories.module.css'
 import motion from '@styles/motion.module.css'
@@ -58,53 +57,11 @@ export const Categories = () => {
   const [target, setTarget] = useState<CategoryWithCount | null>(null)
   const [deleteError, setDeleteError] = useState<string | null>(null)
 
-  const { mutate: reorderCategories } = useReorderCategories(tenantId)
-
-  const countById = new Map(
-    sections.map((section) => [section.id, section.items.length])
+  const { order, setOrder, persistOrder } = useCategoryOrder(
+    tenantId,
+    categories,
+    sections
   )
-  const rows: CategoryWithCount[] = [...categories]
-    .sort((a, b) => a.position - b.position)
-    .map((category) => ({
-      ...category,
-      count: countById.get(category.id) ?? 0,
-    }))
-
-  const [order, setOrder] = useState(rows)
-  const [prevRows, setPrevRows] = useState(rows)
-  const orderRef = useRef(order)
-
-  /**
-   * `rows` é remontado a cada render, então comparar por referência não serve:
-   * a lista só é re-semeada quando a ordem que veio da API muda de fato.
-   */
-  const signature = rows.map(({ id }) => id).join()
-  const prevSignature = prevRows.map(({ id }) => id).join()
-  if (signature !== prevSignature) {
-    setPrevRows(rows)
-    setOrder(rows)
-  }
-
-  useEffect(() => {
-    orderRef.current = order
-  }, [order])
-
-  /**
-   * As posições são fixas — o mesmo conjunto, só reatribuído. Sem isso, duas
-   * categorias podem terminar com a mesma posição e a ordem no app do cliente
-   * passa a depender do desempate do banco.
-   */
-  const persistOrder = () => {
-    const slots = rows.map(({ position }) => position).sort((a, b) => a - b)
-    const previousPositionById = new Map(
-      rows.map(({ id, position }) => [id, position])
-    )
-    const changes = orderRef.current
-      .map(({ id }, index) => ({ id, position: slots[index] }))
-      .filter(({ id, position }) => previousPositionById.get(id) !== position)
-
-    if (changes.length > 0) reorderCategories({ positions: changes })
-  }
 
   /* O toast de erro global avisa; aqui só o campo não pode se limpar à toa. */
   const addCategory = async () => {

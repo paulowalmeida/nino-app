@@ -1,3 +1,4 @@
+export * from './category-with-count'
 export * from './create-menu-item-request'
 export * from './menu-item'
 export * from './menu-item-image'

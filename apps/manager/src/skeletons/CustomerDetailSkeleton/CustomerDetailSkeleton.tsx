@@ -1,7 +1,7 @@
 import { Skeleton } from '@nino/ds/components/Skeleton'
 import { Breadcrumb } from '@elements/Breadcrumb/Breadcrumb'
 
-import styles from '@pages/customers/CustomerDetail.module.css'
+import styles from '@pages/customer-detail/CustomerDetail.module.css'
 
 const GHOST_FACTS = ['first', 'second', 'third', 'fourth']
 const GHOST_ORDERS = ['first', 'second', 'third']

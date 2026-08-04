@@ -1,0 +1,47 @@
+import { render, screen } from '@testing-library/react'
+import { describe, expect, it, vi } from 'vitest'
+
+import { useSubscription } from '@hooks/account/useSubscription'
+
+import {
+  AccountSubscription,
+} from '@pages/account-subscription/AccountSubscription'
+
+import { activeSubscription } from './AccountSubscription.mock'
+
+vi.mock('@hooks/account/useSubscription')
+
+describe(AccountSubscription.name, () => {
+  it('shows the current plan once loaded', () => {
+    // Arrange
+    vi.mocked(useSubscription).mockReturnValue({
+      data: activeSubscription,
+      isPending: false,
+      isError: false,
+    } as unknown as ReturnType<typeof useSubscription>)
+
+    // Act
+    render(<AccountSubscription />)
+
+    // Assert
+    expect(screen.getByText('Pro')).toBeInTheDocument()
+    expect(screen.getByText('Ativa')).toBeInTheDocument()
+  })
+
+  it('shows an error message when the subscription fails to load', () => {
+    // Arrange
+    vi.mocked(useSubscription).mockReturnValue({
+      data: undefined,
+      isPending: false,
+      isError: true,
+    } as unknown as ReturnType<typeof useSubscription>)
+
+    // Act
+    render(<AccountSubscription />)
+
+    // Assert
+    expect(
+      screen.getByText('Não foi possível carregar a assinatura agora.')
+    ).toBeInTheDocument()
+  })
+})

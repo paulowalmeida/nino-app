@@ -1,4 +1,4 @@
-import type { Recipient } from '@pages/new-order/NewOrder.types'
+import type { Recipient } from '@custom_types/order'
 
 export const emptyRecipient: Recipient = {
   name: '',

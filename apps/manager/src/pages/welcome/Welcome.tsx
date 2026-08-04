@@ -2,7 +2,6 @@ import { Fragment, useState, type ReactNode } from 'react'
 import { useNavigate } from 'react-router'
 
 import { Button } from '@nino/ds/components/Button'
-
 import { KitchenCard } from '@compositions/KitchenCard/KitchenCard'
 import { OrderTicket } from '@compositions/OrderTicket/OrderTicket'
 import { OrderTimeline } from '@compositions/OrderTimeline/OrderTimeline'

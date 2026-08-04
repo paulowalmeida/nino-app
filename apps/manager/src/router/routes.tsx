@@ -161,9 +161,9 @@ export const router = createBrowserRouter([
         path: 'clientes/:customerId',
         loader: roleGuard(MANAGERS),
         lazy: () =>
-          import('@pages/customers/CustomerDetail').then(({ CustomerDetail }) => ({
-            Component: CustomerDetail,
-          })),
+          import('@pages/customer-detail/CustomerDetail').then(
+            ({ CustomerDetail }) => ({ Component: CustomerDetail })
+          ),
       },
       {
         path: 'colaboradores',
@@ -177,8 +177,8 @@ export const router = createBrowserRouter([
         path: 'colaboradores/:userId',
         loader: roleGuard(MANAGERS),
         lazy: () =>
-          import('@pages/employees/CollaboratorDetail/CollaboratorDetail').then(
-            ({ CollaboratorDetail }) => ({ Component: CollaboratorDetail }),
+          import('@pages/collaborator-detail/CollaboratorDetail').then(
+            ({ CollaboratorDetail }) => ({ Component: CollaboratorDetail })
           ),
       },
       {
@@ -191,9 +191,9 @@ export const router = createBrowserRouter([
       {
         path: 'assinatura',
         lazy: () =>
-          import('@pages/account/Subscription').then(({ Subscription }) => ({
-            Component: Subscription,
-          })),
+          import('@pages/account-subscription/AccountSubscription').then(
+            ({ AccountSubscription }) => ({ Component: AccountSubscription })
+          ),
       },
       {
         path: 'configuracoes',
@@ -207,50 +207,60 @@ export const router = createBrowserRouter([
           {
             path: 'empresa',
             lazy: () =>
-              import('@pages/settings/sections/CompanySection').then(
-                ({ CompanySection }) => ({ Component: CompanySection })
+              import('@pages/settings-company-section/SettingsCompanySection').then(
+                ({ SettingsCompanySection }) => ({
+                  Component: SettingsCompanySection,
+                })
               ),
           },
           {
             path: 'unidade',
             lazy: () =>
-              import('@pages/settings/sections/UnitSection').then(({ UnitSection }) => ({
-                Component: UnitSection,
-              })),
+              import('@pages/settings-unit-section/SettingsUnitSection').then(
+                ({ SettingsUnitSection }) => ({ Component: SettingsUnitSection })
+              ),
           },
           {
             path: 'unidade/detalhe',
             lazy: () =>
-              import('@pages/settings/sections/UnitDetailSection').then(
-                ({ UnitDetailSection }) => ({ Component: UnitDetailSection })
-              ),
+              import(
+                '@pages/settings-unit-detail-section/SettingsUnitDetailSection'
+              ).then(({ SettingsUnitDetailSection }) => ({
+                Component: SettingsUnitDetailSection,
+              })),
           },
           {
             path: 'atendimento',
             lazy: () =>
-              import('@pages/settings/sections/ServiceSection').then(
-                ({ ServiceSection }) => ({ Component: ServiceSection })
+              import('@pages/settings-service-section/SettingsServiceSection').then(
+                ({ SettingsServiceSection }) => ({
+                  Component: SettingsServiceSection,
+                })
               ),
           },
           {
             path: 'horarios',
             lazy: () =>
-              import('@pages/settings/sections/HoursSection').then(({ HoursSection }) => ({
-                Component: HoursSection,
-              })),
+              import('@pages/settings-hours-section/SettingsHoursSection').then(
+                ({ SettingsHoursSection }) => ({ Component: SettingsHoursSection })
+              ),
           },
           {
             path: 'entrega',
             lazy: () =>
-              import('@pages/settings/sections/DeliverySection').then(
-                ({ DeliverySection }) => ({ Component: DeliverySection })
+              import('@pages/settings-delivery-section/SettingsDeliverySection').then(
+                ({ SettingsDeliverySection }) => ({
+                  Component: SettingsDeliverySection,
+                })
               ),
           },
           {
             path: 'contato',
             lazy: () =>
-              import('@pages/settings/sections/ContactSection').then(
-                ({ ContactSection }) => ({ Component: ContactSection })
+              import('@pages/settings-contact-section/SettingsContactSection').then(
+                ({ SettingsContactSection }) => ({
+                  Component: SettingsContactSection,
+                })
               ),
           },
         ],

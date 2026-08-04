@@ -1,3 +1,3 @@
-import { LoginForm } from './LoginForm/LoginForm'
+import { LoginForm } from '@components/LoginForm/LoginForm'
 
 export const Login = () => <LoginForm />

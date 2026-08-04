@@ -1,17 +1,10 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router'
 
-import { Alert } from '@nino/ds/components/Alert'
-import { Button } from '@nino/ds/components/Button'
-import { EmptyState } from '@nino/ds/components/EmptyState'
 import { PageHeader } from '@nino/ds/components/PageHeader'
-import { Select } from '@nino/ds/components/Select'
-import { Skeleton } from '@nino/ds/components/Skeleton'
-import { Textarea } from '@nino/ds/components/Textarea'
 import { BackLink } from '@elements/BackLink/BackLink'
-import { Icon } from '@nino/ds/components/Icon'
-import { ItemThumb } from '@components/ItemThumb/ItemThumb'
-import { RecipientFields } from '@compositions/RecipientFields/RecipientFields'
+import { NewOrderMenu } from '@compositions/NewOrderMenu/NewOrderMenu'
+import { NewOrderTicket } from '@compositions/NewOrderTicket/NewOrderTicket'
 import { useCreateOrder } from '@hooks/order/useCreateOrder'
 import { useCurrentTenant } from '@hooks/session/useCurrentTenant'
 import { useDeliveryZones } from '@hooks/settings/useDeliveryZones'
@@ -19,23 +12,17 @@ import { useAcceptedPayments } from '@hooks/settings/useAcceptedPayments'
 import { useOpeningHours } from '@hooks/settings/useOpeningHours'
 import { usePause } from '@hooks/store/usePause'
 import { useMenu } from '@hooks/product/useMenu'
-import type { OrderChannel, PaymentMethod } from '@custom_types/order'
+import type { CartLine } from '@custom_types/counter'
+import type {
+  OrderChannel,
+  PaymentMethod,
+  Recipient,
+} from '@custom_types/order'
 import { brl } from '@utils/money'
 import { toE164 } from '@utils/phone'
-import { CHANNEL_LABEL, paymentLabelFor } from '@utils/order-flow'
-import { riseDelay } from '@utils/rise-delay'
 import { isStoreOpen } from '@utils/store-open'
 
-import type { CartLine, Recipient } from './NewOrder.types'
-
 import styles from './NewOrder.module.css'
-import motion from '@styles/motion.module.css'
-
-const CHANNELS: OrderChannel[] = ['COUNTER', 'PICKUP', 'DELIVERY']
-
-/** Duas seções de três itens: o que cabe na primeira tela do cardápio. */
-const GHOST_SECTIONS = ['first', 'second']
-const GHOST_ITEMS = ['first', 'second', 'third']
 
 const EMPTY_RECIPIENT: Recipient = {
   name: '',
@@ -169,220 +156,32 @@ export const NewOrder = () => {
       />
 
       <div className={styles.columns}>
-        <section className={styles.menu} aria-label="Cardápio">
-          {isPending &&
-            GHOST_SECTIONS.map((section) => (
-              <div key={section} className={styles.section}>
-                <Skeleton variant="text" className={styles.ghostSectionName} />
+        <NewOrderMenu sections={sections} isPending={isPending} onAdd={add} />
 
-                <ul className={styles.items}>
-                  {GHOST_ITEMS.map((item) => (
-                    <li key={item} className={styles.item}>
-                      <Skeleton className={styles.ghostThumb} />
-                      <Skeleton variant="text" className={styles.ghostItemName} />
-                      <Skeleton variant="text" className={styles.ghostItemPrice} />
-                      <Skeleton className={styles.ghostAddButton} />
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
-
-          {!isPending && sections.length === 0 && (
-            <EmptyState>
-              O cardápio está vazio. Cadastre um item antes de abrir pedido.
-            </EmptyState>
-          )}
-
-          {sections.map(({ id, name, items }, sectionIndex) => (
-            <div key={id} className={styles.section}>
-              <h2
-                className={`${motion.unroll} ${styles.sectionName}`}
-                style={riseDelay(sectionIndex * 70)}
-              >
-                {name}
-              </h2>
-
-              <ul className={styles.items}>
-                {items
-                  .filter(({ isActive }) => isActive)
-                  .map((item, index) => (
-                    <li
-                      key={item.id}
-                      className={`${motion.deal} ${styles.item}`}
-                      style={riseDelay(sectionIndex * 70 + index * 40 + 50)}
-                    >
-                      <ItemThumb
-                        name={item.name}
-                        imageUrl={item.images?.[0]?.url}
-                      />
-                      <span className={styles.itemName}>{item.name}</span>
-                      <span className={styles.itemPrice}>
-                        {brl(item.price)}
-                      </span>
-                      <Button
-                        size="sm"
-                        variant="outline"
-                        aria-label={`Adicionar ${item.name}`}
-                        className={motion.press}
-                        onClick={() =>
-                          add({
-                            productId: item.id,
-                            name: item.name,
-                            unitPrice: item.price,
-                          })
-                        }
-                      >
-                        Adicionar
-                      </Button>
-                    </li>
-                  ))}
-              </ul>
-            </div>
-          ))}
-        </section>
-
-        <aside className={styles.ticket}>
-          <h2 className={styles.ticketTitle}>A comanda</h2>
-
-          {lines.length === 0 && (
-            <EmptyState>
-              Nada na comanda ainda. Toque em Adicionar no item do cardápio.
-            </EmptyState>
-          )}
-
-          {lines.length > 0 && (
-            <ul className={styles.lines}>
-              {lines.map((line) => (
-                <li
-                  key={line.productId}
-                  className={`${motion.deal} ${styles.line}`}
-                >
-                  <span className={styles.lineName}>{line.name}</span>
-                  <div className={styles.stepper}>
-                    <button
-                      type="button"
-                      className={styles.stepButton}
-                      aria-label={`Tirar um ${line.name}`}
-                      onClick={() => step(line.productId, -1)}
-                    >
-                      <Icon name="minus" />
-                    </button>
-                    <span className={styles.quantity}>{line.quantity}</span>
-                    <button
-                      type="button"
-                      className={styles.stepButton}
-                      aria-label={`Mais um ${line.name}`}
-                      onClick={() => step(line.productId, 1)}
-                    >
-                      <Icon name="plus" />
-                    </button>
-                  </div>
-                  <span className={styles.linePrice}>
-                    {brl(Number(line.unitPrice) * line.quantity)}
-                  </span>
-                </li>
-              ))}
-            </ul>
-          )}
-
-          {isDelivery && fee > 0 && (
-            <div className={styles.feeRow}>
-              <span>Entrega</span>
-              <span>{brl(fee)}</span>
-            </div>
-          )}
-
-          <div className={styles.total}>
-            <span>Total</span>
-            <span>{brl(subtotal + fee)}</span>
-          </div>
-
-          <div className={styles.field}>
-            <span className={styles.label} id="channel-label">
-              Como sai
-            </span>
-            <Select
-              options={CHANNELS.map((value) => ({
-                value,
-                label: CHANNEL_LABEL[value],
-              }))}
-              value={channel}
-              aria-labelledby="channel-label"
-              onValueChange={(value) => setChannel(value as OrderChannel)}
-            />
-          </div>
-
-          <RecipientFields
-            value={recipient}
-            zones={zoneOptions}
-            hasAddress={isDelivery}
-            onChange={(patch) =>
-              setRecipient((current) => ({ ...current, ...patch }))
-            }
-          />
-
-          <div className={styles.field}>
-            <span className={styles.label} id="payment-label">
-              Pagamento
-            </span>
-            <Select
-              options={methods.map((value) => ({
-                value,
-                label: paymentLabelFor(value, channel),
-              }))}
-              value={method}
-              aria-labelledby="payment-label"
-              onValueChange={(value) => setChosenMethod(value as PaymentMethod)}
-            />
-          </div>
-
-          <div className={styles.field}>
-            <label className={styles.label} htmlFor="notes">
-              Observação
-            </label>
-            <Textarea
-              id="notes"
-              rows={2}
-              placeholder="Sem cebola, ponto da carne…"
-              value={notes}
-              onChange={(event) => setNotes(event.target.value)}
-            />
-          </div>
-
-          {isDelivery && closedNow && (
-            <Alert
-              variant="warning"
-              role="status"
-              className={motion.unroll}
-            >
-              {pause?.isPaused
-                ? 'A loja está fechada agora. O pedido entra assim mesmo.'
-                : 'Fora do horário de entrega. O pedido entra assim mesmo.'}
-            </Alert>
-          )}
-
-          {missingRecipient && lines.length > 0 && (
-            <p className={styles.hint}>
-              Para entregar, preencha nome, telefone, rua e região.
-            </p>
-          )}
-
-          {failed && (
-            <Alert variant="error">
-              Não foi possível abrir o pedido. Tente de novo.
-            </Alert>
-          )}
-
-          <Button
-            loading={isPlacing}
-            disabled={lines.length === 0 || missingRecipient}
-            className={`${motion.press} ${styles.place}`}
-            onClick={handlePlace}
-          >
-            Abrir pedido
-          </Button>
-        </aside>
+        <NewOrderTicket
+          lines={lines}
+          subtotal={subtotal}
+          fee={fee}
+          channel={channel}
+          onChannelChange={setChannel}
+          method={method}
+          methods={methods}
+          onMethodChange={setChosenMethod}
+          recipient={recipient}
+          zoneOptions={zoneOptions}
+          onRecipientChange={(patch) =>
+            setRecipient((current) => ({ ...current, ...patch }))
+          }
+          notes={notes}
+          onNotesChange={setNotes}
+          isPaused={!!pause?.isPaused}
+          closedNow={closedNow}
+          missingRecipient={!!missingRecipient}
+          failed={failed}
+          isPlacing={isPlacing}
+          onStep={step}
+          onPlace={() => void handlePlace()}
+        />
       </div>
     </div>
   )

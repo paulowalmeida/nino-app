@@ -9,8 +9,8 @@ import { stageOf } from '@utils/order-flow'
 import { riseDelay } from '@utils/rise-delay'
 import { KitchenCardSkeleton } from '@skeletons/KitchenCardSkeleton/KitchenCardSkeleton'
 
-import motion from '@styles/motion.module.css'
 import styles from './Kitchen.module.css'
+import motion from '@styles/motion.module.css'
 
 const LOADING_CARDS = ['first', 'second']
 

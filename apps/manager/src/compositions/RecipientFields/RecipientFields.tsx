@@ -1,6 +1,6 @@
 import { Input } from '@nino/ds/components/Input'
 import { Select } from '@nino/ds/components/Select'
-import type { Recipient } from '@pages/new-order/NewOrder.types'
+import type { Recipient } from '@custom_types/order'
 
 import styles from './RecipientFields.module.css'
 import motion from '@styles/motion.module.css'
