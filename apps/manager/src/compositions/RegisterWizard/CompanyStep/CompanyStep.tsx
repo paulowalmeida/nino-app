@@ -8,14 +8,16 @@ import { Input } from '@nino/ds/components/Input'
 import { isValidCnpj } from '@nino/ds/validators'
 import { useCheckAvailability } from '@hooks/auth/useCheckAvailability'
 import { useSignup } from '@hooks/auth/useSignup'
-import type { SignupAccount } from '@custom_types/auth'
+import type { SignupAccount, SignupCompany } from '@custom_types/auth'
 import { ApiError } from '@utils/api-error'
 import { riseDelay } from '@utils/rise-delay'
 
-import type { CompanyFormValues } from './CompanyStep.types'
+import styles from '@styles/authForm.module.css'
+import motion from '@styles/rise.module.css'
 
-import styles from '@layouts/AuthLayout/authForm.module.css'
-import motion from '@layouts/AuthLayout/motion.module.css'
+type CompanyFormValues = {
+  company: SignupCompany
+}
 
 export type CompanyStepProps = {
   account: SignupAccount

@@ -1,30 +1,25 @@
 import { useEffect, useState } from 'react'
-import { Controller, useForm } from 'react-hook-form'
+import { useForm } from 'react-hook-form'
 
 import { STORE_DRAFT_KEY } from '@constants/drafts'
-import {
-  SLUG_TAKEN_MESSAGE,
-  useCheckSlugAvailable,
-} from '@hooks/store/useCheckSlugAvailable'
+import { SLUG_TAKEN_MESSAGE } from '@hooks/store/useCheckSlugAvailable'
 import { useCreateStore } from '@hooks/store/useCreateStore'
 import { useStoreTypes } from '@hooks/store/useStoreTypes'
 import { Alert } from '@nino/ds/components/Alert'
 import { Button } from '@nino/ds/components/Button'
-import { FormField } from '@nino/ds/components/FormField'
-import { Input } from '@nino/ds/components/Input'
-import { MaskedInput } from '@nino/ds/components/MaskedInput'
-import { Select } from '@nino/ds/components/Select'
-import { maskZipCode } from '@nino/ds/masks'
-import { lookupZipCode, onlyDigits } from '@nino/lib/services/zip-code'
+import { onlyDigits } from '@nino/lib/services/zip-code'
 import { ApiError } from '@utils/api-error'
 import { clearDraft, readDraft, writeDraft } from '@utils/form-draft'
 import { riseDelay } from '@utils/rise-delay'
 import { slugify } from '@utils/slugify'
 
-import motion from '@layouts/AuthLayout/motion.module.css'
-import styles from './FirstStoreForm.module.css'
+import { StoreAddressFields } from './StoreAddressFields/StoreAddressFields'
+import { StoreDetailsFields } from './StoreDetailsFields/StoreDetailsFields'
 
-type FirstStoreFormValues = {
+import styles from './FirstStoreForm.module.css'
+import motion from '@styles/rise.module.css'
+
+export type FirstStoreFormValues = {
   customName: string
   slug: string
   typeId: string
@@ -50,8 +45,6 @@ export const FirstStoreForm = ({
 }: FirstStoreFormProps) => {
   const { data: types = [] } = useStoreTypes()
   const { mutateAsync: createStore } = useCreateStore(onCreated)
-  const checkSlugTaken = useCheckSlugAvailable()
-  const [lookingUp, setLookingUp] = useState(false)
   const [draft] = useState(() =>
     readDraft<FirstStoreFormValues>(STORE_DRAFT_KEY)
   )
@@ -92,31 +85,6 @@ export const FirstStoreForm = ({
     label: description ?? name,
   }))
 
-  const handleNameBlur = () => {
-    const { customName, slug } = getValues()
-    if (!slug && customName) setValue('slug', slugify(customName))
-  }
-
-  const handleZipCodeBlur = async () => {
-    const zipCode = getValues('zipCode')
-    if (onlyDigits(zipCode).length !== 8) return
-
-    setLookingUp(true)
-    const address = await lookupZipCode(zipCode).finally(() =>
-      setLookingUp(false)
-    )
-
-    if (!address) {
-      setError('zipCode', { message: 'CEP não encontrado' })
-      return
-    }
-
-    setValue('street', address.street)
-    setValue('neighborhood', address.neighborhood)
-    setValue('city', address.city)
-    setValue('state', address.state)
-  }
-
   const onSubmit = async (data: FirstStoreFormValues) => {
     try {
       await createStore({
@@ -156,131 +124,21 @@ export const FirstStoreForm = ({
         </p>
       )}
 
-      <section className={styles.group}>
-        <p className={`${motion.rise} ${styles.groupTitle}`}>A loja</p>
+      <StoreDetailsFields
+        register={register}
+        errors={errors}
+        control={control}
+        getValues={getValues}
+        setValue={setValue}
+        typeOptions={typeOptions}
+      />
 
-        <div className={motion.rise} style={riseDelay(180)}>
-          <FormField label="Nome da loja" error={errors.customName?.message}>
-            <Input
-              placeholder="Lanchonete do Zé"
-              {...register('customName', {
-                required: 'Informe o nome da loja',
-                onBlur: handleNameBlur,
-              })}
-            />
-          </FormField>
-        </div>
-
-        <div className={motion.rise} style={riseDelay(220)}>
-          <FormField
-            label="Endereço da loja"
-            helperText="É o link que seus clientes vão acessar"
-            error={errors.slug?.message}
-          >
-            <div className={styles.slugField}>
-              <span className={styles.slugPrefix}>nino.delivery/</span>
-              <Input
-                placeholder="lanchonete-do-ze"
-                {...register('slug', {
-                  required: 'Informe o endereço',
-                  setValueAs: slugify,
-                  validate: async (value) => {
-                    const slug = slugify(value)
-                    if (!slug) return 'Informe o endereço'
-                    return checkSlugTaken(slug)
-                  },
-                })}
-              />
-            </div>
-          </FormField>
-        </div>
-
-        <div className={motion.rise} style={riseDelay(260)}>
-          <FormField label="Tipo" error={errors.typeId?.message}>
-            <Controller
-              name="typeId"
-              control={control}
-              rules={{ required: 'Escolha o tipo da loja' }}
-              render={({ field }) => (
-                <Select
-                  options={typeOptions}
-                  placeholder="Selecione"
-                  error={!!errors.typeId}
-                  value={field.value}
-                  onValueChange={field.onChange}
-                />
-              )}
-            />
-          </FormField>
-        </div>
-      </section>
-
-      <section className={styles.group}>
-        <p className={`${motion.rise} ${styles.groupTitle}`}>Onde fica</p>
-
-        <div className={`${motion.rise} ${styles.row}`} style={riseDelay(300)}>
-          <FormField label="CEP" error={errors.zipCode?.message}>
-            <MaskedInput
-              mask={maskZipCode}
-              placeholder="00000-000"
-              error={!!errors.zipCode}
-              {...register('zipCode', {
-                required: 'Informe o CEP',
-                onBlur: handleZipCodeBlur,
-              })}
-            />
-          </FormField>
-
-          <FormField label="Número" error={errors.number?.message}>
-            <Input
-              placeholder="123"
-              {...register('number', { required: 'Informe o número' })}
-            />
-          </FormField>
-        </div>
-
-        <div className={motion.rise} style={riseDelay(340)}>
-          <FormField label="Rua" error={errors.street?.message}>
-            <Input
-              placeholder={lookingUp ? 'Buscando…' : 'Rua das Flores'}
-              {...register('street', { required: 'Informe a rua' })}
-            />
-          </FormField>
-        </div>
-
-        <div className={motion.rise} style={riseDelay(380)}>
-          <FormField label="Complemento (opcional)">
-            <Input placeholder="Loja 2" {...register('complement')} />
-          </FormField>
-        </div>
-
-        <div
-          className={`${motion.rise} ${styles.rowAddress}`}
-          style={riseDelay(420)}
-        >
-          <FormField label="Bairro" error={errors.neighborhood?.message}>
-            <Input
-              placeholder="Centro"
-              {...register('neighborhood', { required: 'Informe o bairro' })}
-            />
-          </FormField>
-
-          <FormField label="Cidade" error={errors.city?.message}>
-            <Input
-              placeholder="Belém"
-              {...register('city', { required: 'Informe a cidade' })}
-            />
-          </FormField>
-
-          <FormField label="UF" error={errors.state?.message}>
-            <Input
-              placeholder="PA"
-              maxLength={2}
-              {...register('state', { required: 'Informe o estado' })}
-            />
-          </FormField>
-        </div>
-      </section>
+      <StoreAddressFields
+        register={register}
+        errors={errors}
+        setValue={setValue}
+        setError={setError}
+      />
 
       {errors.root && (
         <div className={styles.error}>

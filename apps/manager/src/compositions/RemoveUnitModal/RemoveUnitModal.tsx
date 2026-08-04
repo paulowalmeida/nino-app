@@ -43,11 +43,11 @@ export const RemoveUnitModal = ({
     setTyped('')
   }
 
-  const matches = typed.trim() === unitName.trim()
+  const matchesUnitName = typed.trim() === unitName.trim()
 
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault()
-    if (matches && !loading) onConfirm()
+    if (matchesUnitName && !loading) onConfirm()
   }
 
   return (
@@ -101,7 +101,7 @@ export const RemoveUnitModal = ({
             form="remove-unit-form"
             className={styles.danger}
             loading={loading}
-            disabled={!matches}
+            disabled={!matchesUnitName}
           >
             Confirmar
           </Button>

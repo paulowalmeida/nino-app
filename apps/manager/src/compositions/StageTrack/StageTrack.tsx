@@ -1,17 +1,11 @@
 import { CountUp } from '@nino/ds/components/CountUp'
-import { Icon, type IconName } from '@nino/ds/components/Icon'
+import { Icon } from '@nino/ds/components/Icon'
 import type { OrderStage } from '@custom_types/order'
+import type { StageOption } from '@custom_types/order/stage-option'
 import { riseDelay } from '@utils/rise-delay'
 
 import styles from './StageTrack.module.css'
 import motion from '@styles/motion.module.css'
-
-export type StageOption = {
-  id: OrderStage
-  label: string
-  count: number
-  icon: IconName
-}
 
 export type StageTrackProps = {
   stages: StageOption[]

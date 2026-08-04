@@ -12,7 +12,8 @@ export const useOrderPayment = (tenantId: string | null) => {
       success: 'Pagamento registrado',
       errorTitle: 'Não deu pra registrar o pagamento',
     },
-    mutationFn: (orderId) => OrderService.markOrderPaid(tenantId as string, orderId),
+    mutationFn: (orderId) =>
+      OrderService.markOrderPaid(tenantId as string, orderId),
     onSuccess: () => {
       void queryClient.invalidateQueries({
         queryKey: queryKeys.orders.all(tenantId ?? ''),

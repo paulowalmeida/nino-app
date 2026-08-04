@@ -5,8 +5,8 @@ import type { ReportRangeParams, SalesReport } from '@custom_types/order'
 import { OrderService } from '@services/order.service'
 
 /**
- * Relatório é leitura de análise, não a fila de trabalho: sem polling. A
- * chave carrega o período, então trocar de intervalo troca de cache.
+ * A report is an analytics read, not the work queue: no polling. The key
+ * carries the period, so switching the range switches the cache.
  */
 export const useSalesReport = (
   tenantId: string | null,

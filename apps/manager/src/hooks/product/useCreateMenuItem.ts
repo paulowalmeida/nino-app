@@ -9,7 +9,7 @@ export const useCreateMenuItem = (tenantId: string | null) => {
   const queryClient = useQueryClient()
 
   return useMutation({
-    /* O erro aparece no fim do formulário; o sucesso navega pro cardápio. */
+    /* Error shows at the bottom of the form; success navigates to the menu. */
     meta: { success: 'Item adicionado ao cardápio', silentError: true },
     mutationFn: (data: CreateMenuItemRequest) =>
       ProductService.createItem(tenantId as string, data),

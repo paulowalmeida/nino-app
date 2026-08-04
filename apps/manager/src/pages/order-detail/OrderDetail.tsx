@@ -30,7 +30,7 @@ import {
   ticketNumber,
 } from '@utils/order-flow'
 
-import { OrderDetailSkeleton } from './OrderDetailSkeleton'
+import { OrderDetailSkeleton } from '@skeletons/OrderDetailSkeleton/OrderDetailSkeleton'
 
 import styles from './OrderDetail.module.css'
 import motion from '@styles/motion.module.css'

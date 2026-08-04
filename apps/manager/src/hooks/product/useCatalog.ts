@@ -7,8 +7,9 @@ import type { MenuItem, MenuPage } from '@custom_types/product'
 import { ProductService } from '@services/product.service'
 
 /**
- * Vinte por vez: cabe numa tela e meia de celular, que é o quanto alguém
- * percorre antes de decidir filtrar. Página maior só adia o mesmo problema.
+ * Twenty at a time: fits a screen and a half on mobile, which is roughly
+ * how far someone scrolls before deciding to filter instead. A bigger page
+ * only postpones the same problem.
  */
 export const CATALOG_PAGE_SIZE = 20
 
@@ -18,9 +19,9 @@ type CatalogFilter = {
 }
 
 /**
- * O cardápio do painel, sob demanda. Antes a tela varria todas as páginas de
- * 100 e montava o catálogo inteiro em memória para depois recortar no cliente
- * — com mil itens isso é um megabyte de JSON para mostrar vinte linhas.
+ * Fetches the catalog page by page instead of loading it whole: with a
+ * thousand items, pulling everything up front means a megabyte of JSON
+ * just to render twenty rows.
  */
 export const useCatalog = (
   tenantId: string | null,

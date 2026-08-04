@@ -64,16 +64,17 @@ const isCredentialPath = (url: string): boolean =>
 const endsSessionOn401 = (url: string): boolean =>
   !matches(url, [...CREDENTIAL_PATHS, SESSION_PROBE])
 
-const parseMessage = async (response: Response): Promise<string> => {
-  const fallback = HTTP_ERRORS[response.status] ?? response.statusText
-  try {
-    const body: unknown = await response.clone().json()
-    const { message } = body as { message?: string | string[] }
-    if (Array.isArray(message)) return message.join(', ')
-    return message ?? fallback
-  } catch {
-    return fallback
-  }
+/**
+ * `error.data` is what `ky` gives us instead of the raw body: it already
+ * consumed the response stream to populate it, so `error.response.json()`
+ * would just throw (see ky's `HTTPError` docs) — this is the only way left
+ * to read the backend's own message.
+ */
+const parseMessage = (data: unknown, status: number, statusText: string) => {
+  const fallback = HTTP_ERRORS[status] ?? statusText
+  const { message } = (data ?? {}) as { message?: string | string[] }
+  if (Array.isArray(message)) return message.join(', ')
+  return message ?? fallback
 }
 
 /**
@@ -82,9 +83,9 @@ const parseMessage = async (response: Response): Promise<string> => {
  */
 const handleError = async (error: unknown): Promise<never> => {
   if (error instanceof HTTPError) {
-    const { status } = error.response
+    const { status, statusText } = error.response
     if (status === 401 && endsSessionOn401(error.request.url)) endSession()
-    throw new ApiError(status, await parseMessage(error.response))
+    throw new ApiError(status, parseMessage(error.data, status, statusText))
   }
   if (error instanceof TimeoutError) throw new ApiError(0, 'Request timed out')
   throw error

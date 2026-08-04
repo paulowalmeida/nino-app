@@ -1,5 +1,6 @@
 import { CompanyCard } from '@compositions/CompanyCard/CompanyCard'
-import { useCompany, useSaveCompany } from '@hooks/company/useCompany'
+import { useCompany } from '@hooks/company/useCompany'
+import { useSaveCompany } from '@hooks/company/useSaveCompany'
 
 export const CompanySection = () => {
   const { data: company, isPending } = useCompany()

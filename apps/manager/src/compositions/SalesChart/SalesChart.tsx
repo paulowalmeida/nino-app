@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { useCallback, useMemo } from 'react'
 
 import { AxisBottom, AxisLeft } from '@visx/axis'
 import { localPoint } from '@visx/event'
@@ -8,6 +8,7 @@ import { AreaClosed, Bar, LinePath } from '@visx/shape'
 import { useTooltip, useTooltipInPortal } from '@visx/tooltip'
 import { curveMonotoneX } from '@visx/curve'
 
+import { useElementWidth } from '@hooks/ui/useElementWidth'
 import type { SalesSeriesPoint, SeriesGranularity } from '@custom_types/order'
 import { brl } from '@utils/money'
 
@@ -19,9 +20,8 @@ export type SalesMetric = 'revenue' | 'orderCount'
 export type SalesChartProps = {
   points: SalesSeriesPoint[]
   granularity: SeriesGranularity
-  /** Default: `revenue` */
   metric?: SalesMetric
-  /** Drawing height in px. Default: `240` */
+  /** Drawing height in px. */
   height?: number
   /** Accessible name — the chart is an image to anyone who can't see it. */
   label: string
@@ -65,9 +65,9 @@ const compact = new Intl.NumberFormat('pt-BR', {
   maximumFractionDigits: 1,
 })
 
-type Datum = { at: Date; value: number }
+type SalesPoint = { at: Date; value: number }
 
-const valueOf = (value: number, metric: SalesMetric): string =>
+const formatMetricValue = (value: number, metric: SalesMetric): string =>
   metric === 'revenue' ? brl(value) : String(value)
 
 /**
@@ -88,25 +88,7 @@ export const SalesChart = ({
   height = 240,
   label,
 }: SalesChartProps) => {
-  const [width, setWidth] = useState(0)
-  const holder = useRef<HTMLElement | null>(null)
-
-  /*
-   * Measuring once isn't enough: the width changes when the phone rotates,
-   * when the sidebar collapses, and when the font finishes loading. Without
-   * observing it, the drawing stays stuck at the first render's size.
-   */
-  useEffect(() => {
-    const node = holder.current
-    if (!node) return
-
-    const observer = new ResizeObserver(([entry]) => {
-      setWidth(entry.contentRect.width)
-    })
-
-    observer.observe(node)
-    return () => observer.disconnect()
-  }, [])
+  const { ref: holder, width } = useElementWidth<HTMLElement>()
 
   const {
     tooltipData,
@@ -115,14 +97,14 @@ export const SalesChart = ({
     showTooltip,
     hideTooltip,
     tooltipOpen,
-  } = useTooltip<Datum>()
+  } = useTooltip<SalesPoint>()
 
   const { containerRef, TooltipInPortal } = useTooltipInPortal({
     scroll: true,
     detectBounds: true,
   })
 
-  const data = useMemo<Datum[]>(
+  const data = useMemo<SalesPoint[]>(
     () =>
       points.map((point) => ({
         at: new Date(point.at),
@@ -156,7 +138,7 @@ export const SalesChart = ({
   const yScale = useMemo(
     () =>
       scaleLinear({
-        domain: [0, Math.max(...data.map((d) => d.value), 1) * 1.1],
+        domain: [0, Math.max(...data.map((point) => point.value), 1) * 1.1],
         range: [innerHeight, 0],
         nice: true,
       }),
@@ -212,19 +194,19 @@ export const SalesChart = ({
               />
             ))}
 
-            <AreaClosed<Datum>
+            <AreaClosed<SalesPoint>
               data={data}
-              x={(d) => xScale(d.at) ?? 0}
-              y={(d) => yScale(d.value) ?? 0}
+              x={(point) => xScale(point.at) ?? 0}
+              y={(point) => yScale(point.value) ?? 0}
               yScale={yScale}
               curve={curveMonotoneX}
               fill="url(#salesArea)"
             />
 
-            <LinePath<Datum>
+            <LinePath<SalesPoint>
               data={data}
-              x={(d) => xScale(d.at) ?? 0}
-              y={(d) => yScale(d.value) ?? 0}
+              x={(point) => xScale(point.at) ?? 0}
+              y={(point) => yScale(point.value) ?? 0}
               curve={curveMonotoneX}
               strokeWidth={STROKE}
               strokeLinecap="round"
@@ -232,11 +214,11 @@ export const SalesChart = ({
               className={styles.line}
             />
 
-            {data.map((d) => (
+            {data.map((point) => (
               <circle
-                key={d.at.toISOString()}
-                cx={xScale(d.at)}
-                cy={yScale(d.value)}
+                key={point.at.toISOString()}
+                cx={xScale(point.at)}
+                cy={yScale(point.value)}
                 r={DOT_RADIUS}
                 strokeWidth={2}
                 className={styles.dot}
@@ -315,7 +297,7 @@ export const SalesChart = ({
               {fullLabel.format(tooltipData.at)}
             </p>
             <p className={styles.tooltipValue}>
-              {valueOf(tooltipData.value, metric)}
+              {formatMetricValue(tooltipData.value, metric)}
             </p>
           </TooltipInPortal>
         )}

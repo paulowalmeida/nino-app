@@ -1,0 +1,249 @@
+@reference "@nino/ds/globals.css";
+
+/* brand glow seeping from top-right */
+.sidebar::after {
+  content: '';
+  position: absolute;
+  top: -4rem;
+  right: -4rem;
+  width: 14rem;
+  height: 14rem;
+  border-radius: 9999px;
+  background: var(--color-brand);
+  opacity: 0.12;
+  filter: blur(3.5rem);
+  pointer-events: none;
+}
+
+/*
+ * Real screen height (dvh) and a single scrollable area: logo, store
+ * switcher and footer stay anchored, and only the section list scrolls
+ * when the menu grows taller than the screen.
+ */
+.sidebar {
+  @apply fixed left-0 top-0 z-[70] flex h-dvh w-60 flex-col overflow-hidden;
+  @apply -translate-x-full bg-dark;
+  /* `translate`, not `transform`: in Tailwind v4 translate-x-* writes to
+     the translate property, and transitioning transform misses the slide. */
+  @apply transition-[translate,width] duration-300 ease-in-out;
+  @apply lg:translate-x-0;
+}
+
+.open {
+  @apply translate-x-0;
+}
+
+.collapsed {
+  @apply lg:w-[4.75rem];
+}
+
+.sidebar.collapsed .navItem,
+.sidebar.collapsed .navItemTrigger,
+.sidebar.collapsed .subItem {
+  @apply lg:justify-center lg:px-0;
+}
+
+.sidebar.collapsed .triggerContent {
+  @apply lg:justify-center;
+}
+
+.sidebar.collapsed .subNav {
+  @apply lg:pl-0;
+}
+
+.logoWrap {
+  @apply relative z-10 flex shrink-0 items-center justify-between;
+  @apply border-b border-white/8 px-5 py-4;
+}
+
+.sidebar.collapsed .logoWrap {
+  @apply lg:px-3;
+}
+
+.collapseBtn {
+  @apply flex h-6 w-6 shrink-0 cursor-pointer items-center justify-center;
+  @apply rounded-md text-white/35 transition-colors duration-150;
+  @apply hover:bg-white/10 hover:text-white/80;
+  @apply hidden lg:flex;
+}
+
+.collapseIcon {
+  @apply h-[14px] w-[14px] rotate-90 transition-transform duration-300;
+}
+
+.sidebar.collapsed .collapseIcon {
+  @apply -rotate-90;
+}
+
+.switcherWrap {
+  @apply relative z-20 shrink-0 border-b border-white/8 px-2 py-2;
+}
+
+/* scrolling belongs to the DS ScrollArea: this is just the space it takes
+   in the column — the dark native scrollbar was cutting into the menu */
+.nav {
+  @apply relative z-10 min-h-0 flex-1;
+}
+
+.navInner {
+  @apply flex flex-col gap-0.5 px-3 py-4;
+}
+
+/* grouped by topic: what happens today on top, how the store is set up
+   below */
+.group {
+  @apply flex flex-col gap-0.5;
+}
+
+.group + .group {
+  @apply mt-5;
+}
+
+.groupTitle {
+  @apply mb-1 px-3 text-[0.6rem] font-bold uppercase tracking-[0.14em];
+  @apply text-white/28;
+}
+
+/* serves both link and button: an item with children opens the list
+   instead of navigating */
+.navItem {
+  @apply relative flex w-full cursor-pointer items-center gap-3 rounded-xl;
+  @apply px-3 py-2.5 text-left;
+  @apply text-sm font-medium text-white/45;
+  @apply transition-colors duration-150;
+  @apply hover:bg-white/6 hover:text-white/80;
+}
+
+/* left accent bar for active item */
+.navItemActive::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.375rem;
+  bottom: 0.375rem;
+  width: 3px;
+  border-radius: 0 3px 3px 0;
+  background: var(--color-brand);
+}
+
+.navItemActive {
+  @apply bg-brand/10 text-brand;
+  @apply hover:bg-brand/14 hover:text-brand;
+}
+
+/* single wrapper for the trigger content — Accordion keeps it apart from
+   the chevron */
+.triggerContent {
+  @apply flex items-center gap-3;
+}
+
+/*
+ * The DS Accordion paints the header with the brand surface (closed) and
+ * a diluted orange (open). On the menu's dark rail that turns into a loose
+ * block: here the trigger is just another nav item, with no fill of its
+ * own.
+ */
+.navItemTrigger {
+  @apply w-full rounded-xl px-3 py-2.5 text-left;
+  @apply text-sm font-medium text-white/45;
+  @apply transition-colors duration-150;
+  @apply bg-transparent data-[state=open]:bg-transparent;
+  @apply hover:bg-white/6 hover:text-white/80;
+  @apply data-[state=open]:hover:bg-white/6;
+}
+
+/* open on its own route: only then it carries the active item surface */
+.navItemTrigger.navItemActive {
+  @apply text-brand data-[state=open]:bg-brand/10;
+  @apply data-[state=open]:hover:bg-brand/14 hover:text-brand;
+}
+
+.accordionRoot {
+  @apply w-full divide-y-0 rounded-none border-0;
+}
+
+.accordionItem {
+  @apply bg-transparent;
+}
+
+.accordionContent {
+  @apply text-white/60;
+}
+
+/* sections of the open screen, indented under the parent item */
+.subNav {
+  @apply mt-0.5 mb-1 flex flex-col gap-px pl-9;
+}
+
+/*
+ * The staggered entrance lives in a CSS rule, not a NavLink class: the
+ * link's class changes on every navigation (isActive) and would restart
+ * the animation, making the items flicker.
+ */
+@keyframes sub-in {
+  from {
+    opacity: 0;
+    transform: translateX(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.subNav > a {
+  animation: sub-in 0.34s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.subNav > a:nth-child(2) {
+  animation-delay: 40ms;
+}
+.subNav > a:nth-child(3) {
+  animation-delay: 80ms;
+}
+.subNav > a:nth-child(4) {
+  animation-delay: 120ms;
+}
+.subNav > a:nth-child(5) {
+  animation-delay: 160ms;
+}
+.subNav > a:nth-child(6) {
+  animation-delay: 200ms;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .subNav > a {
+    animation: none;
+  }
+}
+
+.subItem {
+  @apply flex items-center gap-2.5 rounded-lg px-3 py-1.5;
+  @apply text-[0.8rem] text-white/40 transition-colors duration-150;
+  @apply hover:bg-white/6 hover:text-white/75;
+}
+
+/* smaller than the parent item's icon: the subitem is a child, and the
+   stroke says so */
+.subIcon {
+  @apply h-[15px] w-[15px] shrink-0;
+}
+
+.subItemActive {
+  @apply bg-white/8 font-semibold text-white/90;
+}
+
+.navIcon {
+  @apply h-[18px] w-[18px] shrink-0;
+}
+
+/* how many orders wait for acceptance — the one number that interrupts */
+.tally {
+  @apply ml-auto flex h-5 min-w-5 items-center justify-center rounded-full;
+  @apply bg-brand px-1.5 text-[0.65rem] font-bold text-brand-foreground;
+  font-variant-numeric: tabular-nums;
+}
+
+.footer {
+  @apply relative z-10 shrink-0 border-t border-white/8 p-2;
+}

@@ -30,18 +30,18 @@ export const StoreSign = ({ tenantId, timezone }: StoreSignProps) => {
   if (isError || hours.length === 0) return null
 
   const zone = timezone ?? Intl.DateTimeFormat().resolvedOptions().timeZone
-  /** Pausa manual vence o horário: quem fechou na mão fechou de verdade. */
-  const open = !pause?.isPaused && isStoreOpen(hours, zone)
+  /** Manual pause beats the schedule: closing it by hand really closes it. */
+  const isOpen = !pause?.isPaused && isStoreOpen(hours, zone)
 
   return (
     <Badge
-      variant={open ? 'success' : 'default'}
+      variant={isOpen ? 'success' : 'default'}
       className={`${motion.pop} ${styles.sign}`}
     >
       <span
-        className={open ? `${styles.bulb} ${styles.bulbOn}` : styles.bulb}
+        className={isOpen ? `${styles.bulb} ${styles.bulbOn}` : styles.bulb}
       />
-      {open ? 'Aberta agora' : 'Fechada agora'}
+      {isOpen ? 'Aberta agora' : 'Fechada agora'}
     </Badge>
   )
 }

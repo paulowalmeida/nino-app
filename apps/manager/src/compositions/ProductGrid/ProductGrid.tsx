@@ -57,7 +57,7 @@ export const ProductGrid = ({
     .filter(({ isActive }) => isActive)
 
   const renderGrid = (items: MenuItem[]) => (
-    <div className={`${styles.grid} pt-4`}>
+    <div className={`${styles.grid} ${styles.resultsTop}`}>
       {items.map((item, index) => (
         <ProductCard key={item.id} item={item} index={index} onPick={onPick} />
       ))}

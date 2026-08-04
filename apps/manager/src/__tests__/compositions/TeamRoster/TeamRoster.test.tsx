@@ -1,10 +1,8 @@
 import { render, screen } from '@testing-library/react'
 import { describe, expect, it, vi } from 'vitest'
 
-import {
-  TeamRoster,
-  type RosterEntry,
-} from '@compositions/TeamRoster/TeamRoster'
+import { TeamRoster } from '@compositions/TeamRoster/TeamRoster'
+import type { RosterEntry } from '@custom_types/team/roster-entry'
 
 const entry: RosterEntry = {
   id: 'user-1',

@@ -1,6 +1,7 @@
-import { WeekSchedule } from '@compositions/WeekSchedule'
+import { WeekSchedule } from '@compositions/WeekSchedule/WeekSchedule'
 import { useCurrentTenant } from '@hooks/session/useCurrentTenant'
-import { useOpeningHours, useSaveWeek } from '@hooks/settings/useOpeningHours'
+import { useOpeningHours } from '@hooks/settings/useOpeningHours'
+import { useSaveWeek } from '@hooks/settings/useSaveWeek'
 
 export const HoursSection = () => {
   const tenantId = useCurrentTenant()?.tenantId ?? null

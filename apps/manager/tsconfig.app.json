@@ -32,13 +32,16 @@
       "@custom_types/*": ["src/types/*"],
       "@styles/*": ["src/styles/*"],
       "@elements/*": ["src/elements/*"],
+      "@guards/*": ["src/guards/*"],
       "@hooks/*": ["src/hooks/*"],
       "@layouts/*": ["src/layouts/*"],
       "@lib/*": ["src/lib/*"],
+      "@loaders/*": ["src/loaders/*"],
       "@pages/*": ["src/pages/*"],
       "@providers/*": ["src/providers/*"],
       "@router/*": ["src/router/*"],
       "@services/*": ["src/services/*"],
+      "@skeletons/*": ["src/skeletons/*"],
       "@states/*": ["src/states/*"],
       "@utils/*": ["src/utils/*"]
     }

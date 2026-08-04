@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react'
 
-/** Mesmo ponto de corte do `lg:` do Tailwind — abaixo disso é folha. */
 const QUERY = '(min-width: 1024px)'
 
 export const useIsDesktop = (): boolean => {

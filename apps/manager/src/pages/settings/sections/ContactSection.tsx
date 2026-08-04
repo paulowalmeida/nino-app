@@ -1,6 +1,7 @@
 import { PhoneList } from '@compositions/PhoneList/PhoneList'
 import { useCurrentTenant } from '@hooks/session/useCurrentTenant'
-import { usePhoneMutations, usePhones } from '@hooks/settings/usePhones'
+import { usePhoneMutations } from '@hooks/settings/usePhoneMutations'
+import { usePhones } from '@hooks/settings/usePhones'
 
 export const ContactSection = () => {
   const tenantId = useCurrentTenant()?.tenantId ?? null

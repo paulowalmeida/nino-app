@@ -3,6 +3,7 @@ import { useInfiniteQuery } from '@tanstack/react-query'
 import { queryKeys } from '@constants/query-keys'
 import type { Order, OrderPage } from '@custom_types/order'
 import { ORDER_PAGE_SIZE, OrderService } from '@services/order.service'
+import { nextPageParam } from '@utils/next-page-param'
 
 /**
  * Polls every 25s: the queue is a workstation, not a report, and a pending
@@ -16,10 +17,8 @@ export const useOrders = (tenantId: string | null, search?: string) => {
     queryFn: ({ pageParam }) =>
       OrderService.listOrders(tenantId as string, pageParam as number, term),
     initialPageParam: 1,
-    getNextPageParam: ({ pagination }) => {
-      const loaded = pagination.page * ORDER_PAGE_SIZE
-      return loaded < pagination.total ? pagination.page + 1 : undefined
-    },
+    getNextPageParam: ({ pagination }) =>
+      nextPageParam(pagination, ORDER_PAGE_SIZE),
     enabled: !!tenantId,
     refetchInterval: 25_000,
     refetchOnWindowFocus: true,

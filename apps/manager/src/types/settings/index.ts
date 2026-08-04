@@ -1,4 +1,5 @@
 export * from './delivery-zone'
+export * from './hours-draft'
 export * from './opening-hours'
 export * from './tenant-phone'
 export * from './tenant-settings'

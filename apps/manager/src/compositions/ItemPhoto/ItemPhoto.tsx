@@ -30,7 +30,7 @@ export const ItemPhoto = ({
 }: ItemPhotoProps) => {
   const { upload, remove } = useItemImages(tenantId, productId ?? '')
   const inputRef = useRef<HTMLInputElement>(null)
-  const [dragging, setDragging] = useState(false)
+  const [isDragging, setIsDragging] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [chosen, setChosen] = useState<File | null>(null)
   const [stagedUrl, setStagedUrl] = useState<string | null>(null)
@@ -81,7 +81,7 @@ export const ItemPhoto = ({
 
   const onDrop = (event: React.DragEvent) => {
     event.preventDefault()
-    setDragging(false)
+    setIsDragging(false)
     choose(event.dataTransfer.files[0])
   }
 
@@ -105,15 +105,15 @@ export const ItemPhoto = ({
     <div className={styles.wrap}>
       <div
         className={
-          dragging
+          isDragging
             ? `${motion.settle} ${styles.frame} ${styles.frameOver}`
             : `${motion.settle} ${styles.frame}`
         }
         onDragOver={(event) => {
           event.preventDefault()
-          setDragging(true)
+          setIsDragging(true)
         }}
-        onDragLeave={() => setDragging(false)}
+        onDragLeave={() => setIsDragging(false)}
         onDrop={onDrop}
       >
         {stagedUrl || cover ? (

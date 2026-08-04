@@ -3,7 +3,7 @@ import { useSyncExternalStore } from 'react'
 import type { Elapsed } from '@custom_types/ui/elapsed'
 import { elapsedSince } from '@utils/elapsed'
 
-/** O relógio da cozinha bate junto: um timer só para a tela inteira. */
+/** The kitchen clock ticks together: a single timer for the whole screen. */
 const TICK_MS = 15_000
 
 let now = Date.now()
@@ -31,8 +31,8 @@ const subscribe = (listener: () => void): (() => void) => {
 const getSnapshot = (): number => now
 
 /**
- * O tempo decorrido que continua andando: sem isso o cartão congela no
- * minuto em que a lista chegou e a cozinha passa a ler um número morto.
+ * Elapsed time that keeps ticking: without this the card freezes at the
+ * minute the list loaded, and the kitchen ends up reading a dead number.
  */
 export const useElapsed = (iso: string): Elapsed => {
   useSyncExternalStore(subscribe, getSnapshot, getSnapshot)

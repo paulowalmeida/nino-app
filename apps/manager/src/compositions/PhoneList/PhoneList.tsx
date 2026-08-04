@@ -30,18 +30,18 @@ export const PhoneList = ({
   onRemove,
 }: PhoneListProps) => {
   const [phone, setPhone] = useState('')
-  const [editing, setEditing] = useState<string | null>(null)
+  const [editingId, setEditingId] = useState<string | null>(null)
   const [draft, setDraft] = useState('')
 
   const startEdit = (entry: { id: string; phone: string }) => {
-    setEditing(entry.id)
+    setEditingId(entry.id)
     setDraft(formatPhone(entry.phone))
   }
 
   const commitEdit = () => {
-    if (!editing || draft.replace(/\D/g, '').length < 10) return
-    onEdit(editing, toE164(draft))
-    setEditing(null)
+    if (!editingId || draft.replace(/\D/g, '').length < 10) return
+    onEdit(editingId, toE164(draft))
+    setEditingId(null)
   }
 
   const handleAdd = () => {
@@ -75,7 +75,7 @@ export const PhoneList = ({
               className={`${motion.deal} ${local.phone}`}
               style={riseDelay(index * 45 + 60)}
             >
-              {editing === entry.id ? (
+              {editingId === entry.id ? (
                 <div className={local.editRow}>
                   <PhoneInput
                     aria-label="Telefone da loja"
@@ -93,7 +93,7 @@ export const PhoneList = ({
                   <Button
                     size="sm"
                     variant="ghost"
-                    onClick={() => setEditing(null)}
+                    onClick={() => setEditingId(null)}
                   >
                     Voltar
                   </Button>

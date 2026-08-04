@@ -10,8 +10,12 @@ import type { OrderQueueSummary, OrderStage } from '@custom_types/order'
 
 import styles from './QueueBoard.module.css'
 import motion from '@styles/motion.module.css'
+import tile from '@styles/statTile.module.css'
 
-const count = (summary: OrderQueueSummary | undefined, ...keys: string[]) =>
+const sumByKeys = (
+  summary: OrderQueueSummary | undefined,
+  ...keys: string[]
+) =>
   keys.reduce(
     (total, key) => total + (summary?.[key as keyof OrderQueueSummary] ?? 0),
     0
@@ -24,7 +28,7 @@ export type QueueBoardProps = {
 export const QueueBoard = ({ tenantId }: QueueBoardProps) => {
   const { data, isPending } = useQueueSummary(tenantId)
 
-  const waiting = count(data, 'PENDING')
+  const waiting = sumByKeys(data, 'PENDING')
 
   /** Each tile is the same stage the order queue filters by. */
   const tiles: {
@@ -41,27 +45,27 @@ export const QueueBoard = ({ tenantId }: QueueBoardProps) => {
     },
     {
       label: 'confirmados',
-      value: count(data, 'ACCEPTED'),
+      value: sumByKeys(data, 'ACCEPTED'),
       stage: 'confirmed',
     },
     {
       label: 'na cozinha',
-      value: count(data, 'PREPARING'),
+      value: sumByKeys(data, 'PREPARING'),
       stage: 'kitchen',
     },
     {
       label: 'saíram para entrega',
-      value: count(data, 'OUT_FOR_DELIVERY'),
+      value: sumByKeys(data, 'OUT_FOR_DELIVERY'),
       stage: 'street',
     },
     {
       label: 'prontos para retirada',
-      value: count(data, 'READY_FOR_PICKUP'),
+      value: sumByKeys(data, 'READY_FOR_PICKUP'),
       stage: 'counter',
     },
   ]
 
-  const idle = !isPending && tiles.every(({ value }) => value === 0)
+  const isIdle = !isPending && tiles.every(({ value }) => value === 0)
 
   return (
     <section aria-label="Fila de pedidos">
@@ -83,7 +87,7 @@ export const QueueBoard = ({ tenantId }: QueueBoardProps) => {
               relative="path"
               aria-label={`Ver pedidos ${label}`}
               style={riseDelay(index * 70 + 80)}
-              className={styles.cardOverview}
+              className={tile.cardOverview}
             >
               <span className={styles.value}>
                 {isPending ? (
@@ -98,7 +102,7 @@ export const QueueBoard = ({ tenantId }: QueueBoardProps) => {
         ))}
       </div>
 
-      {idle && (
+      {isIdle && (
         <p className={`${motion.unroll} ${styles.idle}`}>
           Nenhum pedido na fila. Assim que entrar um, ele aparece aqui.
         </p>

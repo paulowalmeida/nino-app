@@ -4,14 +4,14 @@ import { useNavigate } from 'react-router'
 import { Stepper } from '@nino/ds/components/Stepper'
 import type { SignupAccount } from '@custom_types/auth'
 
-import type { RegisterStep } from './RegisterWizard.types'
-
 import { AccountStep } from './AccountStep/AccountStep'
 import { CompanyStep } from './CompanyStep/CompanyStep'
 
-import styles from '@layouts/AuthLayout/authForm.module.css'
+import styles from '@styles/authForm.module.css'
 
 const STEPS = [{ title: 'Conta' }, { title: 'Empresa' }]
+
+type RegisterStep = 1 | 2
 
 /**
  * Signup ends at the company. Account and company go up together in

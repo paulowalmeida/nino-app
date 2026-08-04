@@ -1,6 +1,6 @@
 @reference "@nino/ds/globals.css";
 
-/* dvh, não vh: no celular a barra do navegador entra na conta de vh */
+/* dvh, not vh: on mobile the browser bar counts toward vh */
 .shell {
   @apply flex min-h-dvh bg-white;
 }
@@ -12,7 +12,7 @@
 }
 
 .hamburger {
-  @apply flex h-8 w-8 shrink-0 cursor-pointer items-center justify-center;
+  @apply flex h-11 w-11 shrink-0 cursor-pointer items-center justify-center;
   @apply rounded-lg;
   @apply text-white/70 transition-colors duration-150;
   @apply hover:bg-white/10 hover:text-white;
@@ -31,9 +31,9 @@
 }
 
 /*
- * `min-w-0` é o que segura a largura: sem ele o item flex assume a largura do
- * conteúdo mais largo (uma grade de comandas, uma linha longa) e a página
- * inteira ganha rolagem horizontal no celular.
+ * `min-w-0` is what holds the width: without it the flex item takes the
+ * width of its widest content (an order grid, a long line) and the whole
+ * page gets horizontal scroll on mobile.
  */
 .main {
   @apply min-h-dvh w-full min-w-0 flex-1 pt-14 lg:ml-60 lg:pt-0;

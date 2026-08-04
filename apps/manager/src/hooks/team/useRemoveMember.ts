@@ -9,7 +9,7 @@ type Removal = {
   kind: 'STAFF' | 'COURIER'
 }
 
-/** Tira a pessoa desta loja — a conta dela continua existindo. */
+/** Removes the person from this store — their account still exists. */
 export const useRemoveMember = (tenantId: string | null) => {
   const queryClient = useQueryClient()
 

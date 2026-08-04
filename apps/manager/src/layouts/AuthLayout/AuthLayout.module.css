@@ -14,8 +14,11 @@
 
 /* warm cream wash with a glow seeping from the brand panel edge */
 .warmBackdrop {
-  background: #fff,
-    /* linear-gradient(180deg, var(--color-cream) 0%, var(--color-cream-deep) 100%); */
+  background: linear-gradient(
+    180deg,
+    var(--color-cream) 0%,
+    var(--color-cream-deep) 100%
+  );
 }
 
 /* subtle dot grid for the dark brand panel */
@@ -30,9 +33,7 @@
 
 /* tagline highlight bar echoing the landing hero */
 .highlight {
-  position: relative;
-  white-space: nowrap;
-  color: #fff;
+  @apply relative whitespace-nowrap text-white;
 }
 .highlight::after {
   content: "";
@@ -83,7 +84,7 @@
   }
 }
 
-/* layout — compor com os efeitos acima via className no JSX */
+/* layout — compose with the effects above via className in JSX */
 
 .shell {
   @apply min-h-screen bg-white lg:grid lg:grid-cols-[1.05fr_1fr];
@@ -151,8 +152,8 @@
   @apply mb-9 flex justify-center lg:hidden;
 }
 
-/* mascote ocupa o slot do "n" — maior que o círculo por ter
-   margem interna no viewBox */
+/* mascot fills the "n" slot — bigger than the circle since the viewBox
+   has its own inner margin */
 .mobileMascot {
   @apply h-20 w-20 drop-shadow-lg;
 }

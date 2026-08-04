@@ -13,10 +13,10 @@ type Variables = {
 }
 
 /**
- * Optimistic, como o reordenar de itens. Escreve na lista de categorias, que
- * é o que a tela de categorias desenha; o cardápio e o balcão leem a ordem de
- * `category.position` embutida em cada produto, então esses são invalidados no
- * fim — a lista de lá não está na tela enquanto se arrasta aqui.
+ * Optimistic, same as item reordering. Writes to the category list, which
+ * is what the categories screen renders; the menu and the counter read the
+ * `category.position` order embedded in each product, so those are
+ * invalidated at the end — their list isn't on screen while dragging here.
  */
 export const useReorderCategories = (tenantId: string | null) => {
   const queryClient = useQueryClient()
@@ -46,7 +46,9 @@ export const useReorderCategories = (tenantId: string | null) => {
           data: cached.data
             .map((category) => {
               const position = nextPositionById.get(category.id)
-              return position === undefined ? category : { ...category, position }
+              return position === undefined
+                ? category
+                : { ...category, position }
             })
             .sort((a, b) => a.position - b.position),
         }

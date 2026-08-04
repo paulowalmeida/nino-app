@@ -4,7 +4,6 @@ import { Skeleton } from '@nino/ds/components/Skeleton'
 import { Eyebrow } from '@nino/ds/components/Eyebrow'
 import { useSalesSeries } from '@hooks/order/useSalesSeries'
 import { brl } from '@utils/money'
-
 import { SalesChart } from '@compositions/SalesChart/SalesChart'
 
 import styles from './SalesTrend.module.css'
@@ -44,7 +43,7 @@ export const SalesTrend = ({ tenantId }: SalesTrendProps) => {
   const revenues = points.map(({ revenue }) => revenue)
   const total = revenues.reduce((sum, value) => sum + value, 0)
   const delta = deltaOf(revenues)
-  const noSales = !isPending && total === 0
+  const hasNoSales = !isPending && total === 0
 
   return (
     <section aria-label="Os últimos 7 dias" className={styles.section}>
@@ -96,13 +95,13 @@ export const SalesTrend = ({ tenantId }: SalesTrendProps) => {
           </div>
         )}
 
-        {noSales && (
+        {hasNoSales && (
           <EmptyState>
             Nenhuma venda concluída nos últimos sete dias.
           </EmptyState>
         )}
 
-        {!isPending && !noSales && series && (
+        {!isPending && !hasNoSales && series && (
           <SalesChart
             points={points}
             granularity={series.granularity}

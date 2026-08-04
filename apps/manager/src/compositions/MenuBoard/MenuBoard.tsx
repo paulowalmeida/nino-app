@@ -18,7 +18,7 @@ import { MenuRow } from './MenuRow/MenuRow'
 import styles from './MenuBoard.module.css'
 import motion from '@styles/motion.module.css'
 
-/** Seis linhas: o que cabe na primeira tela antes de precisar rolar. */
+/** Six rows: what fits on the first screen before scrolling is needed. */
 const GHOST_ROWS = ['one', 'two', 'three', 'four', 'five', 'six']
 
 export type MenuBoardProps = {
@@ -44,7 +44,9 @@ export const MenuBoard = ({
   } = useCatalog(tenantId, { categoryId, search })
 
   const { mutate: setAvailability } = useItemAvailability(tenantId)
-  const [deleting, setDeleting] = useState<MenuItem | null>(null)
+  const [itemPendingDelete, setItemPendingDelete] = useState<MenuItem | null>(
+    null
+  )
   const { mutate: reorder } = useReorderMenuItems(tenantId, categoryId)
   const sentinelRef = useLoadMore(!!hasNextPage, () => void fetchNextPage())
 
@@ -56,19 +58,19 @@ export const MenuBoard = ({
    */
   const canReorder = !!categoryId && !search
 
-  const [order, setOrder] = useState(items)
+  const [sortedItems, setSortedItems] = useState(items)
   const [prevItems, setPrevItems] = useState(items)
-  const orderRef = useRef(order)
+  const sortedItemsRef = useRef(sortedItems)
 
   /** Re-seeds only when the API sends a different slice than what we have. */
   if (items !== prevItems) {
     setPrevItems(items)
-    setOrder(items)
+    setSortedItems(items)
   }
 
   useEffect(() => {
-    orderRef.current = order
-  }, [order])
+    sortedItemsRef.current = sortedItems
+  }, [sortedItems])
 
   /**
    * Positions are fixed (the same set, just reassigned): the list loads the
@@ -81,7 +83,7 @@ export const MenuBoard = ({
     const previousPositionById = new Map(
       items.map((item) => [item.id, item.position])
     )
-    const changes = orderRef.current
+    const changes = sortedItemsRef.current
       .map((item, index) => ({ id: item.id, position: slots[index] }))
       .filter(({ id, position }) => previousPositionById.get(id) !== position)
 
@@ -154,11 +156,11 @@ export const MenuBoard = ({
           <Reorder.Group
             as="ul"
             axis="y"
-            values={order}
-            onReorder={setOrder}
+            values={sortedItems}
+            onReorder={setSortedItems}
             className={styles.items}
           >
-            {order.map((item, index) => (
+            {sortedItems.map((item, index) => (
               <MenuRow
                 key={item.id}
                 item={item}
@@ -167,7 +169,7 @@ export const MenuBoard = ({
                 onToggleAvailability={(itemId, isActive) =>
                   setAvailability({ id: itemId, isActive })
                 }
-                onDelete={setDeleting}
+                onDelete={setItemPendingDelete}
                 onDragEnd={persist}
               />
             ))}
@@ -182,11 +184,11 @@ export const MenuBoard = ({
         </div>
       </ScrollArea>
 
-      {deleting && (
+      {itemPendingDelete && (
         <DeleteItemDialog
           tenantId={tenantId}
-          item={deleting}
-          onClose={() => setDeleting(null)}
+          item={itemPendingDelete}
+          onClose={() => setItemPendingDelete(null)}
         />
       )}
     </div>

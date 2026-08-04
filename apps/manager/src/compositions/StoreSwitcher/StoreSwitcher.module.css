@@ -1,0 +1,56 @@
+@reference "@nino/ds/globals.css";
+
+.wrap {
+  @apply relative;
+}
+
+.single {
+  @apply truncate px-3 py-2 text-sm font-medium text-white/70;
+}
+
+.trigger {
+  @apply flex w-full items-center gap-2 rounded-xl px-3 py-2;
+  @apply text-left text-sm font-medium text-white/70;
+  @apply transition-colors duration-150;
+  @apply hover:bg-white/8 hover:text-white;
+}
+
+.storeIcon {
+  @apply h-4 w-4 shrink-0 text-brand;
+}
+
+.triggerText {
+  @apply flex min-w-0 flex-1 flex-col;
+}
+
+.name {
+  @apply truncate;
+}
+
+/* only shown when the owner has more than one company to tell apart */
+.company {
+  @apply truncate text-[11px] font-normal text-white/35;
+}
+
+.caret {
+  @apply h-0 w-0 shrink-0 border-x-4 border-t-4;
+  @apply border-x-transparent border-t-white/40;
+}
+
+.panel {
+  @apply border border-white/10 bg-dark shadow-xl;
+}
+
+.option {
+  @apply text-white/60 data-[highlighted]:bg-white/8;
+  @apply data-[highlighted]:text-white;
+}
+
+.checkIcon {
+  @apply h-4 w-4 shrink-0 text-brand;
+}
+
+/* the column stays reserved on every row, so the names line up */
+.checkOff {
+  @apply invisible;
+}

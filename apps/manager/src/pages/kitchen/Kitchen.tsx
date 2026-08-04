@@ -7,7 +7,7 @@ import { useCurrentTenant } from '@hooks/session/useCurrentTenant'
 import { EmptyState } from '@nino/ds/components/EmptyState'
 import { stageOf } from '@utils/order-flow'
 import { riseDelay } from '@utils/rise-delay'
-import { KitchenCardSkeleton } from 'src/skeletons/KitchenCardSkeleton'
+import { KitchenCardSkeleton } from '@skeletons/KitchenCardSkeleton/KitchenCardSkeleton'
 
 import motion from '@styles/motion.module.css'
 import styles from './Kitchen.module.css'

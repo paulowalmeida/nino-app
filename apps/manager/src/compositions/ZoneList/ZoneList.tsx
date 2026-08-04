@@ -5,14 +5,23 @@ import { EmptyState } from '@nino/ds/components/EmptyState'
 import { Input } from '@nino/ds/components/Input'
 import { Skeleton } from '@nino/ds/components/Skeleton'
 import { Switch } from '@nino/ds/components/Switch'
+import type { DeliveryZone } from '@custom_types/settings'
 import { brl } from '@utils/money'
 import { riseDelay } from '@utils/rise-delay'
-
-import type { ZoneListProps } from './ZoneList.types'
 
 import local from './ZoneList.module.css'
 import motion from '@styles/motion.module.css'
 import styles from '@styles/settingsCard.module.css'
+
+export type ZoneListProps = {
+  zones: DeliveryZone[]
+  isPending: boolean
+  isAdding: boolean
+  onAdd: (data: { name: string; fee: number }) => void
+  onEdit: (id: string, data: { name: string; fee: number }) => void
+  onToggle: (id: string, isActive: boolean) => void
+  onRemove: (id: string) => void
+}
 
 export const ZoneList = ({
   zones,
@@ -25,21 +34,24 @@ export const ZoneList = ({
 }: ZoneListProps) => {
   const [name, setName] = useState('')
   const [fee, setFee] = useState('')
-  const [editing, setEditing] = useState<string | null>(null)
+  const [editingId, setEditingId] = useState<string | null>(null)
   const [draft, setDraft] = useState({ name: '', fee: '' })
 
   const startEdit = (zone: { id: string; name: string; fee: string }) => {
-    setEditing(zone.id)
-    setDraft({ name: zone.name, fee: Number(zone.fee).toFixed(2).replace('.', ',') })
+    setEditingId(zone.id)
+    setDraft({
+      name: zone.name,
+      fee: Number(zone.fee).toFixed(2).replace('.', ','),
+    })
   }
 
   const commitEdit = () => {
-    if (!editing || !draft.name.trim()) return
-    onEdit(editing, {
+    if (!editingId || !draft.name.trim()) return
+    onEdit(editingId, {
       name: draft.name.trim(),
       fee: Number(draft.fee.replace(',', '.')) || 0,
     })
-    setEditing(null)
+    setEditingId(null)
   }
 
   const handleAdd = () => {
@@ -84,7 +96,7 @@ export const ZoneList = ({
                 aria-label={`${zone.name} atendido`}
               />
 
-              {editing === zone.id ? (
+              {editingId === zone.id ? (
                 <div className={local.editRow}>
                   <Input
                     aria-label="Nome da região"
@@ -109,13 +121,17 @@ export const ZoneList = ({
                       }))
                     }
                   />
-                  <Button size="sm" className={motion.press} onClick={commitEdit}>
+                  <Button
+                    size="sm"
+                    className={motion.press}
+                    onClick={commitEdit}
+                  >
                     Salvar
                   </Button>
                   <Button
                     size="sm"
                     variant="ghost"
-                    onClick={() => setEditing(null)}
+                    onClick={() => setEditingId(null)}
                   >
                     Voltar
                   </Button>

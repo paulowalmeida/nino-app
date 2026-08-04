@@ -19,7 +19,7 @@ import { useUpdateMenuItem } from '@hooks/product/useUpdateMenuItem'
 import { useCurrentTenant } from '@hooks/session/useCurrentTenant'
 import { riseDelay } from '@utils/rise-delay'
 
-import { ProductDetailSkeleton } from './ProductDetailSkeleton'
+import { ProductDetailSkeleton } from '@skeletons/ProductDetailSkeleton/ProductDetailSkeleton'
 import type { ProductFormValues } from './ProductDetail.types'
 
 import styles from './ProductDetail.module.css'

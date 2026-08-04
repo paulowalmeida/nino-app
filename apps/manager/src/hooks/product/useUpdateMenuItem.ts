@@ -12,7 +12,7 @@ export const useUpdateMenuItem = (
   const queryClient = useQueryClient()
 
   return useMutation({
-    /* O erro aparece no fim do formulário; o sucesso navega pro cardápio. */
+    /* Error shows at the bottom of the form; success navigates to the menu. */
     meta: { success: 'Item salvo', silentError: true },
     mutationFn: (data: UpdateMenuItemRequest) =>
       ProductService.updateItem(tenantId as string, productId, data),

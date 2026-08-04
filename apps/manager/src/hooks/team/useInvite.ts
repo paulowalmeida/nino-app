@@ -8,7 +8,7 @@ export const useInvite = (tenantId: string | null) => {
   const queryClient = useQueryClient()
 
   return useMutation({
-    /* O formulário já confirma e erra na linha de baixo do campo. */
+    /* The form already shows success/error inline below the field. */
     meta: { silentError: true },
     mutationFn: (data: CreateInviteRequest) =>
       StaffService.sendInvite(tenantId as string, data),

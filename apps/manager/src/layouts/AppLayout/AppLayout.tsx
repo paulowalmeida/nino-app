@@ -3,13 +3,12 @@ import { Outlet } from 'react-router'
 
 import { Button } from '@nino/ds/components/Button'
 import { Icon } from '@nino/ds/components/Icon'
+import { Sidebar } from '@compositions/Sidebar/Sidebar'
 import { useCurrentTenant } from '@hooks/session/useCurrentTenant'
 import {
   readSidebarCollapsed,
   writeSidebarCollapsed,
 } from '@utils/sidebar-collapse'
-
-import { Sidebar } from './Sidebar/Sidebar'
 
 import styles from './AppLayout.module.css'
 
@@ -21,10 +20,10 @@ export const AppLayout = () => {
   const closeMenu = () => setMenuOpen(false)
 
   /*
-   * Com o menu aberto no celular, o que rolava por trás do véu era a página
-   * inteira: o dedo passava do menu para o conteúdo e a pessoa voltava para
-   * uma tela deslocada. O `overflow` volta ao que era ao fechar, em vez de
-   * ficar `''` fixo — telas de altura travada dependem do valor delas.
+   * With the menu open on mobile, the whole page used to scroll behind the
+   * veil: a finger drag on the menu would drag the content too, landing on
+   * a shifted screen. `overflow` restores whatever it was before, instead
+   * of a fixed `''` — height-locked screens depend on their own value.
    */
   useEffect(() => {
     if (!menuOpen) return
@@ -48,7 +47,7 @@ export const AppLayout = () => {
 
   return (
     <div className={styles.shell}>
-      {/* a marca já está no menu — aqui vale o nome da loja em que se opera */}
+      {/* the brand already lives in the menu — here it's the active store */}
       <header className={styles.topbar}>
         <Button
           size="icon"

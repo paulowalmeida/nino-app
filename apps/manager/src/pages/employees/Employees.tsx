@@ -3,10 +3,7 @@ import { useState } from 'react'
 import { PageHeader } from '@nino/ds/components/PageHeader'
 import { EditEmailModal } from '@compositions/EditEmailModal/EditEmailModal'
 import { InviteForm } from '@compositions/InviteForm/InviteForm'
-import {
-  TeamRoster,
-  type RosterEntry,
-} from '@compositions/TeamRoster/TeamRoster'
+import { TeamRoster } from '@compositions/TeamRoster/TeamRoster'
 import { useCouriers } from '@hooks/team/useCouriers'
 import { useCurrentTenant } from '@hooks/session/useCurrentTenant'
 import { useInvite } from '@hooks/team/useInvite'
@@ -16,6 +13,7 @@ import { useUpdateStaffEmail } from '@hooks/team/useUpdateStaffEmail'
 import { useUpdateStaffRole } from '@hooks/team/useUpdateStaffRole'
 import { useSessionStore } from '@states/useSessionStore'
 import type { AuthUser, TenantRole } from '@custom_types/auth'
+import type { RosterEntry } from '@custom_types/team/roster-entry'
 
 import styles from './Employees.module.css'
 

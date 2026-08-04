@@ -1,6 +1,7 @@
 import { ServiceRules } from '@compositions/ServiceRules/ServiceRules'
 import { useCurrentTenant } from '@hooks/session/useCurrentTenant'
-import { useSaveSettings, useSettings } from '@hooks/settings/useSettings'
+import { useSaveSettings } from '@hooks/settings/useSaveSettings'
+import { useSettings } from '@hooks/settings/useSettings'
 
 export const ServiceSection = () => {
   const tenantId = useCurrentTenant()?.tenantId ?? null

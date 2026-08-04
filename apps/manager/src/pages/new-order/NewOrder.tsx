@@ -316,7 +316,7 @@ export const NewOrder = () => {
           <RecipientFields
             value={recipient}
             zones={zoneOptions}
-            withAddress={isDelivery}
+            hasAddress={isDelivery}
             onChange={(patch) =>
               setRecipient((current) => ({ ...current, ...patch }))
             }

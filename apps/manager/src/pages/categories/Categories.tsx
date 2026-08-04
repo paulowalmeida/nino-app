@@ -11,13 +11,11 @@ import { Input } from '@nino/ds/components/Input'
 import { PageHeader } from '@nino/ds/components/PageHeader'
 import { Skeleton } from '@nino/ds/components/Skeleton'
 import { BackLink } from '@elements/BackLink/BackLink'
-import {
-  useCategories,
-  useCreateCategory,
-  useDeleteCategory,
-  useUpdateCategory,
-} from '@hooks/product/useCategories'
+import { useCategories } from '@hooks/product/useCategories'
+import { useCreateCategory } from '@hooks/product/useCreateCategory'
+import { useDeleteCategory } from '@hooks/product/useDeleteCategory'
 import { useMenu } from '@hooks/product/useMenu'
+import { useUpdateCategory } from '@hooks/product/useUpdateCategory'
 import { useReorderCategories } from '@hooks/product/useReorderCategories'
 import { useCurrentTenant } from '@hooks/session/useCurrentTenant'
 import { ApiError } from '@utils/api-error'

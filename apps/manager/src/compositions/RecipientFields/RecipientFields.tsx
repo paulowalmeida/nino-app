@@ -9,7 +9,7 @@ export type RecipientFieldsProps = {
   value: Recipient
   zones: { value: string; label: string }[]
   /** Delivery needs address and zone; counter and pickup only need contact. */
-  withAddress: boolean
+  hasAddress: boolean
   onChange: (patch: Partial<Recipient>) => void
 }
 
@@ -21,11 +21,11 @@ export type RecipientFieldsProps = {
 export const RecipientFields = ({
   value,
   zones,
-  withAddress,
+  hasAddress,
   onChange,
 }: RecipientFieldsProps) => (
   <div className={`${motion.unroll} ${styles.block}`}>
-    <p className={styles.title}>{withAddress ? 'Quem recebe' : 'Quem pediu'}</p>
+    <p className={styles.title}>{hasAddress ? 'Quem recebe' : 'Quem pediu'}</p>
 
     <div className={styles.pair}>
       <Input
@@ -43,13 +43,13 @@ export const RecipientFields = ({
       />
     </div>
 
-    {!withAddress && (
+    {!hasAddress && (
       <p className={styles.hint}>
         Opcional — serve para chamar o cliente quando o pedido ficar pronto.
       </p>
     )}
 
-    {withAddress && (
+    {hasAddress && (
       <>
         <div className={styles.pair}>
           <Input

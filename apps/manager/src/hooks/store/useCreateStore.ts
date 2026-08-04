@@ -13,11 +13,13 @@ import { useSessionStore } from '@states/useSessionStore'
  * keeping it would send the root loader back here with the same empty
  * membership list.
  */
-export const useCreateStore = (onCreated?: (store: CreatedStore) => string) => {
+export const useCreateStore = (
+  onCreated?: (store: CreatedStore) => string
+) => {
   const navigate = useNavigate()
 
   return useMutation<CreatedStore, Error, CreateStoreRequest>({
-    /* O formulário trata 409, offline e erro genérico inline. */
+    /* The form handles 409, offline and generic error inline. */
     meta: { silentError: true },
     mutationFn: TenantService.createStore,
     onSuccess: (store) => {

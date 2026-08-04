@@ -23,11 +23,11 @@ export type ProductCardProps = {
  * opening the menu, without leaving the sale in progress.
  */
 export const ProductCard = ({ item, index, onPick }: ProductCardProps) => {
-  const [preview, setPreview] = useState(false)
+  const [isPreviewOpen, setIsPreviewOpen] = useState(false)
 
   const { isPressing, handlers } = useLongPress({
-    onLongPress: () => setPreview(true),
-    onRelease: () => setPreview(false),
+    onLongPress: () => setIsPreviewOpen(true),
+    onRelease: () => setIsPreviewOpen(false),
   })
 
   const photo = item.images?.[0]?.url
@@ -59,10 +59,10 @@ export const ProductCard = ({ item, index, onPick }: ProductCardProps) => {
        * dozens of idle dialogs on the page for a preview shown one at a
        * time.
        */}
-      {preview && (
+      {isPreviewOpen && (
         <Modal
           open
-          onOpenChange={setPreview}
+          onOpenChange={setIsPreviewOpen}
           dismissible={false}
           size="lg"
           ariaLabel={`Prévia de ${item.name}`}

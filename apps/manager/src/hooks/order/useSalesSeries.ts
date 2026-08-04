@@ -9,9 +9,9 @@ import type {
 import { OrderService } from '@services/order.service'
 
 /**
- * Série de venda do período. Sem polling, como o relatório: é leitura de
- * análise, não a fila de trabalho. A granularidade entra na chave porque
- * muda o formato da resposta, não só o conteúdo.
+ * Sales series for the period. No polling, same as the report: it is an
+ * analytics read, not the work queue. Granularity is part of the key
+ * because it changes the response shape, not just the content.
  */
 export const useSalesSeries = (
   tenantId: string | null,
@@ -20,7 +20,8 @@ export const useSalesSeries = (
 ) => {
   const query = useQuery<SalesSeries>({
     queryKey: queryKeys.orders.series(tenantId ?? '', params, granularity),
-    queryFn: () => OrderService.getSalesSeries(tenantId as string, params, granularity),
+    queryFn: () =>
+      OrderService.getSalesSeries(tenantId as string, params, granularity),
     enabled: !!tenantId,
   })
 

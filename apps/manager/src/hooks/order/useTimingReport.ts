@@ -5,8 +5,8 @@ import type { ReportRangeParams, TimingReport } from '@custom_types/order'
 import { OrderService } from '@services/order.service'
 
 /**
- * Mesmo regime do sales report: leitura de análise, sem polling, chave presa
- * ao período.
+ * Same regime as the sales report: analytics read, no polling, key tied
+ * to the period.
  */
 export const useTimingReport = (
   tenantId: string | null,

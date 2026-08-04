@@ -4,7 +4,7 @@ import { queryKeys } from '@constants/query-keys'
 import type { PaymentMethod } from '@custom_types/order'
 import { SettingsService } from '@services/settings.service'
 
-/** Sem forma configurada a loja não vende: dinheiro é o piso. */
+/** With no method configured the store can't sell: cash is the floor. */
 const FALLBACK: PaymentMethod[] = ['CASH']
 
 export const useAcceptedPayments = (tenantId: string | null) => {

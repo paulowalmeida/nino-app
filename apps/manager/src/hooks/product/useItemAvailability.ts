@@ -2,7 +2,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query'
 import type { InfiniteData } from '@tanstack/react-query'
 
 import { queryKeys } from '@constants/query-keys'
-import type { MenuPage } from '@custom_types/product'
+import type { MenuItem, MenuPage } from '@custom_types/product'
 import { ProductService } from '@services/product.service'
 
 import { menuQueryKey } from './useMenu'
@@ -13,6 +13,13 @@ type Variables = {
 }
 
 type CatalogData = InfiniteData<MenuPage>
+
+const patchAvailability = (
+  items: MenuItem[],
+  id: string,
+  isActive: boolean
+): MenuItem[] =>
+  items.map((item) => (item.id === id ? { ...item, isActive } : item))
 
 /**
  * Optimistic on purpose: this is the rush-hour gesture — an item runs out and
@@ -50,9 +57,7 @@ export const useItemAvailability = (tenantId: string | null) => {
         (page) =>
           page && {
             ...page,
-            data: page.data.map((item) =>
-              item.id === id ? { ...item, isActive } : item
-            ),
+            data: patchAvailability(page.data, id, isActive),
           }
       )
 
@@ -62,9 +67,7 @@ export const useItemAvailability = (tenantId: string | null) => {
               ...data,
               pages: data.pages.map((page) => ({
                 ...page,
-                data: page.data.map((item) =>
-                  item.id === id ? { ...item, isActive } : item
-                ),
+                data: patchAvailability(page.data, id, isActive),
               })),
             }
           : data

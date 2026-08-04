@@ -14,12 +14,14 @@ import { useCheckAvailability } from '@hooks/auth/useCheckAvailability'
 import type { SignupAccount } from '@custom_types/auth'
 import { riseDelay } from '@utils/rise-delay'
 
-import type { AccountFormValues } from './AccountStep.types'
-
-import styles from '@layouts/AuthLayout/authForm.module.css'
-import motion from '@layouts/AuthLayout/motion.module.css'
+import styles from '@styles/authForm.module.css'
+import motion from '@styles/rise.module.css'
 
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+
+type AccountFormValues = SignupAccount & {
+  confirmPassword: string
+}
 
 export type AccountStepProps = {
   defaultValues?: SignupAccount | null
@@ -51,16 +53,16 @@ export const AccountStep = ({ defaultValues, onNext }: AccountStepProps) => {
         cpf: data.cpf,
       })
 
-      let taken = false
+      let isTaken = false
       if (availability.email === false) {
         setError('email', { message: 'E-mail já cadastrado' })
-        taken = true
+        isTaken = true
       }
       if (availability.cpf === false) {
         setError('cpf', { message: 'CPF já cadastrado' })
-        taken = true
+        isTaken = true
       }
-      if (taken) return
+      if (isTaken) return
 
       onNext({
         name: data.name,

@@ -13,6 +13,7 @@ import { STATUS_LABEL } from '@utils/order-flow'
 
 import styles from './DayTally.module.css'
 import motion from '@styles/motion.module.css'
+import tile from '@styles/statTile.module.css'
 
 const clock = new Intl.DateTimeFormat('pt-BR', {
   hour: '2-digit',
@@ -54,7 +55,7 @@ export const DayTally = ({ tenantId, timezone }: DayTallyProps) => {
             to="../pedidos?etapa=closed"
             relative="path"
             aria-label="Ver os pedidos fechados"
-            className={styles.cardOverview}
+            className={tile.cardOverview}
           >
             <span className={styles.value}>
               {isPending ? (
@@ -76,7 +77,7 @@ export const DayTally = ({ tenantId, timezone }: DayTallyProps) => {
             relative="path"
             aria-label="Ver o relatório de faturamento de hoje"
             style={riseDelay(70)}
-            className={styles.cardOverview}
+            className={tile.cardOverview}
           >
             <span className={styles.value}>
               {isPending ? (
@@ -98,7 +99,7 @@ export const DayTally = ({ tenantId, timezone }: DayTallyProps) => {
             relative="path"
             aria-label="Ver o ticket médio de hoje no relatório"
             style={riseDelay(140)}
-            className={styles.cardOverview}
+            className={tile.cardOverview}
           >
             <span className={styles.value}>
               {isPending ? (

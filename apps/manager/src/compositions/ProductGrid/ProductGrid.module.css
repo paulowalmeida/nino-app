@@ -28,6 +28,12 @@
   @apply lg:min-h-0 lg:overflow-y-auto;
 }
 
+/* Search results and tab content sit below the search bar/tab rail, so
+   they need breathing room the skeleton grid doesn't. */
+.resultsTop {
+  @apply pt-4;
+}
+
 /*
  * The loading state reuses `.wrap` and `.grid` instead of having its own
  * geometry: this way the tray has the exact same measurements before and

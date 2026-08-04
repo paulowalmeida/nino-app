@@ -8,11 +8,11 @@ import { ProductService } from '@services/product.service'
 export const menuQueryKey = (tenantId: string | null) => ['menu', tenantId]
 
 /**
- * Groups by category e ordena pela `position` da própria categoria — não
- * pela ordem de chegada dos produtos, que é só a posição de cada item
- * dentro da sua categoria. Vem embutido em cada produto (`category.position`),
- * então não precisa de uma segunda leitura em `/product-categories` (que só
- * OWNER pode fazer).
+ * Groups by category and sorts by the category's own `position` — not by
+ * the arrival order of the products, which is just each item's position
+ * within its category. It comes embedded in every product
+ * (`category.position`), so there's no need for a second read from
+ * `/product-categories` (which only OWNER can do).
  */
 const toSections = (page: MenuPage | undefined): MenuSection[] => {
   const sections: MenuSection[] = []

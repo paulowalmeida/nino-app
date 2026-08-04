@@ -23,10 +23,10 @@ export const StorePreview = ({
   placeholderSlug = 'sua-loja',
 }: StorePreviewProps) => {
   const typed = name.trim()
-  const lit = typed.length > 0
+  const isLit = typed.length > 0
 
   return (
-    <div className={styles.preview} data-lit={lit} aria-hidden="true">
+    <div className={styles.preview} data-lit={isLit} aria-hidden="true">
       <span className={styles.tile}>
         {(typed || placeholder).charAt(0).toUpperCase()}
       </span>

@@ -5,12 +5,10 @@ import { Button } from '@nino/ds/components/Button'
 import { FormField } from '@nino/ds/components/FormField'
 import { Input } from '@nino/ds/components/Input'
 import { Skeleton } from '@nino/ds/components/Skeleton'
-import {
-  useProfile,
-  useSaveProfile,
-  useUpdateMyEmail,
-} from '@hooks/account/useProfile'
 import type { Profile } from '@custom_types/account'
+import { useProfile } from '@hooks/account/useProfile'
+import { useSaveProfile } from '@hooks/account/useSaveProfile'
+import { useUpdateMyEmail } from '@hooks/account/useUpdateMyEmail'
 import { formatPhone, toE164 } from '@utils/phone'
 
 import styles from './Account.module.css'

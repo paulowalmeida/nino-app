@@ -5,28 +5,22 @@ import { Skeleton } from '@nino/ds/components/Skeleton'
 import { Switch } from '@nino/ds/components/Switch'
 import { TimePicker } from '@nino/ds/components/TimePicker'
 import type { OpeningHours } from '@custom_types/settings'
+import type { HoursDraft } from '@custom_types/settings/hours-draft'
 import { riseDelay } from '@utils/rise-delay'
 
 import local from './WeekSchedule.module.css'
 import motion from '@styles/motion.module.css'
 import styles from '@styles/settingsCard.module.css'
 
-export type HoursDraft = {
-  id?: string
-  dayOfWeek: number
-  openTime: string
-  closeTime: string
-  isOpen: boolean
-}
-
 export type WeekScheduleProps = {
   hours: OpeningHours[]
   isPending: boolean
   isSaving: boolean
   /**
-   * A semana inteira de uma vez — a loja decide a escala como um bloco.
-   * Devolve promessa: o botão precisa saber o instante em que gravou, sem
-   * esperar o refetch, senão volta a ficar clicável no meio do caminho.
+   * The whole week at once — the store decides the schedule as one block.
+   * Returns a promise: the button needs to know the instant it saved,
+   * without waiting for the refetch, or it becomes clickable again
+   * mid-flight.
    */
   onSave: (week: HoursDraft[]) => Promise<unknown>
 }
@@ -83,8 +77,8 @@ export const WeekSchedule = ({
   }
 
   /**
-   * Só os dias que mudaram vão para a API: um botão único não pode virar
-   * sete requisições, sob pena de estourar o throttle da API.
+   * Only the days that changed go to the API: a single button can't turn
+   * into seven requests, or it blows past the API throttle.
    */
   const changed = week.filter((day, index) => {
     const before = saved[index]
@@ -104,10 +98,10 @@ export const WeekSchedule = ({
   }
 
   /**
-   * A linha de base avança no instante em que a API confirma, não quando o
-   * refetch chega: no intervalo entre os dois o botão já não está mais
-   * `loading` e voltaria a aceitar clique, gravando a mesma coisa de novo.
-   * Falha mantém o formulário sujo, de propósito — a escala não foi gravada.
+   * The baseline advances the instant the API confirms, not when the
+   * refetch lands: in the gap between the two, the button stops being
+   * `loading` and would accept another click, saving the same thing again.
+   * A failure keeps the form dirty on purpose — the schedule wasn't saved.
    */
   const handleSave = async () => {
     const sent = week
@@ -115,7 +109,7 @@ export const WeekSchedule = ({
       await onSave(changed)
       setSaved(sent)
     } catch {
-      /* segue sujo: dá pra tentar de novo */
+      /* stays dirty: can be retried */
     }
   }
 

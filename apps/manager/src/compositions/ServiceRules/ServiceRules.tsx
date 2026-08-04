@@ -168,7 +168,6 @@ export const ServiceRules = ({
               type="button"
               onClick={() => toggleMethod(method)}
               aria-pressed={draft.acceptedPaymentMethods.includes(method)}
-              style={{ cursor: 'pointer' }}
               className={`${motion.press} ${local.chip} ${
                 draft.acceptedPaymentMethods.includes(method)
                   ? local.chipOn

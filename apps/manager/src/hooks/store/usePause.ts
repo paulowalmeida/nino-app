@@ -1,10 +1,10 @@
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import { useQuery } from '@tanstack/react-query'
 
 import { queryKeys } from '@constants/query-keys'
-import type { PauseRequest, TenantPause } from '@custom_types/store'
+import type { TenantPause } from '@custom_types/store'
 import { TenantService } from '@services/tenant.service'
 
-const pauseKey = (tenantId: string) => [
+export const pauseKey = (tenantId: string) => [
   ...queryKeys.tenant.all(tenantId),
   'pause',
 ]
@@ -16,30 +16,3 @@ export const usePause = (tenantId: string | null) =>
     enabled: !!tenantId,
     refetchInterval: 60_000,
   })
-
-export const usePauseActions = (tenantId: string | null) => {
-  const queryClient = useQueryClient()
-
-  const write = (pause: TenantPause) =>
-    queryClient.setQueryData(pauseKey(tenantId ?? ''), pause)
-
-  const pause = useMutation({
-    meta: {
-      success: 'Loja fechada',
-      errorTitle: 'A loja continua aberta',
-    },
-    mutationFn: (data: PauseRequest) => TenantService.pauseStore(tenantId as string, data),
-    onSuccess: write,
-  })
-
-  const resume = useMutation({
-    meta: {
-      success: 'Loja reaberta',
-      errorTitle: 'A loja continua fechada',
-    },
-    mutationFn: () => TenantService.resumeStore(tenantId as string),
-    onSuccess: write,
-  })
-
-  return { pause, resume }
-}

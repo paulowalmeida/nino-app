@@ -1,11 +1,9 @@
 import { Breadcrumb } from '@elements/Breadcrumb/Breadcrumb'
 import { UnitCard } from '@compositions/UnitCard/UnitCard'
 import { useCurrentTenant } from '@hooks/session/useCurrentTenant'
-import {
-  useSaveTenant,
-  useSetMainTenant,
-  useTenantDetail,
-} from '@hooks/store/useTenantDetail'
+import { useSaveTenant } from '@hooks/store/useSaveTenant'
+import { useSetMainTenant } from '@hooks/store/useSetMainTenant'
+import { useTenantDetail } from '@hooks/store/useTenantDetail'
 
 import styles from './UnitDetailSection.module.css'
 

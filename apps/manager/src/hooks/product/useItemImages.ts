@@ -10,7 +10,7 @@ export const useItemImages = (tenantId: string | null, productId: string) => {
     queryClient.invalidateQueries({ queryKey: menuQueryKey(tenantId) })
 
   const upload = useMutation({
-    /* O cropper mostra o erro no lugar da foto. */
+    /* The cropper shows the error in place of the photo. */
     meta: { success: 'Foto salva', silentError: true },
     mutationFn: (file: File) =>
       ProductService.uploadItemImage(tenantId as string, productId, file),

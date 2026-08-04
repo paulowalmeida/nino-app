@@ -7,13 +7,13 @@ import { Button } from '@nino/ds/components/Button'
 import { FormField } from '@nino/ds/components/FormField'
 import { Input } from '@nino/ds/components/Input'
 import { Select } from '@nino/ds/components/Select'
-
 import {
   INVITE_FORM_REQUEST_OF,
   INVITE_FORM_SEATS,
 } from '@constants/invite-form.constants'
-import motion from '@styles/motion.module.css'
+
 import styles from './InviteForm.module.css'
+import motion from '@styles/motion.module.css'
 
 type InviteSeat = 'STAFF' | 'MANAGER' | 'COURIER'
 

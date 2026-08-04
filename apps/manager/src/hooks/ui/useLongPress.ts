@@ -1,9 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 
-/** Tempo até o gesto virar "segurar". Abaixo disso ainda é um toque. */
 const HOLD_MS = 450
 
-/** Quanto o dedo pode escorregar antes de virar rolagem. */
 const SLIP_PX = 10
 
 type LongPressOptions = {
@@ -11,17 +9,6 @@ type LongPressOptions = {
   onRelease?: () => void
 }
 
-/**
- * Pressionar e segurar, como o preview de foto do Instagram.
- *
- * Pointer em vez de mouse e touch separados: o mesmo gesto vale para dedo,
- * clique e caneta, e um toque simples não gera `touchmove` — ouvir só
- * movimento deixaria o celular sem resposta.
- *
- * O clique seguinte é engolido de propósito. No balcão o card já adiciona o
- * item à venda; sem isso, soltar o dedo depois de espiar somaria um produto
- * no meio do atendimento.
- */
 export const useLongPress = ({ onLongPress, onRelease }: LongPressOptions) => {
   const timer = useRef<ReturnType<typeof setTimeout> | null>(null)
   const origin = useRef<{ x: number; y: number } | null>(null)
@@ -35,15 +22,6 @@ export const useLongPress = ({ onLongPress, onRelease }: LongPressOptions) => {
     setPressing(false)
   }, [])
 
-  /*
-   * Tudo o que encerra o gesto vive aqui, e é ouvido no documento porque o
-   * que o gesto abre cobre a tela e deixa o resto inerte — no elemento, o
-   * evento não voltaria.
-   *
-   * Soltar antes da conta é clique comum e só desarma o relógio; soltar
-   * depois fecha o que abriu. Sem esta escuta, largar o dedo cedo deixava o
-   * relógio correndo e o preview abria sozinho depois do clique.
-   */
   useEffect(() => {
     if (!isPressing) return
 
@@ -70,7 +48,6 @@ export const useLongPress = ({ onLongPress, onRelease }: LongPressOptions) => {
 
   const onPointerDown = useCallback(
     (event: React.PointerEvent) => {
-      /* Botão direito e cliques secundários não são o gesto. */
       if (event.button !== 0) return
 
       fired.current = false
@@ -98,7 +75,6 @@ export const useLongPress = ({ onLongPress, onRelease }: LongPressOptions) => {
     [cancelTimer]
   )
 
-  /* Engole o clique que vem depois do gesto — e só ele. */
   const onClickCapture = useCallback((event: React.MouseEvent) => {
     if (!fired.current) return
 
@@ -107,7 +83,6 @@ export const useLongPress = ({ onLongPress, onRelease }: LongPressOptions) => {
     fired.current = false
   }, [])
 
-  /* O menu de contexto do celular aparece ao segurar e atrapalha o gesto. */
   const onContextMenu = useCallback((event: React.MouseEvent) => {
     event.preventDefault()
   }, [])

@@ -1,16 +1,14 @@
 import { createBrowserRouter, Navigate } from 'react-router'
 
 import { AppLayout } from '@layouts/AppLayout/AppLayout'
-import { AuthLayout } from '@layouts/AuthLayout'
-
+import { AuthLayout } from '@layouts/AuthLayout/AuthLayout'
 import { MANAGERS } from '@constants/roles'
-
-import { AuthGuard } from './auth-guard'
-import { FirstStoreGuard } from './first-store-guard'
-import { GuestGuard } from './guest-guard'
-import { roleGuard } from './role-guard'
-import { RootLoader } from './root-loader'
-import { SessionGuard } from './session-guard'
+import { AuthGuard } from '@guards/auth-guard'
+import { FirstStoreGuard } from '@guards/first-store-guard'
+import { GuestGuard } from '@guards/guest-guard'
+import { roleGuard } from '@guards/role-guard'
+import { SessionGuard } from '@guards/session-guard'
+import { RootLoader } from '@loaders/root-loader'
 
 export const router = createBrowserRouter([
   {
@@ -74,14 +72,14 @@ export const router = createBrowserRouter([
       {
         path: 'balcao',
         lazy: () =>
-          import('@pages/counter').then(({ Counter }) => ({
+          import('@pages/counter/Counter').then(({ Counter }) => ({
             Component: Counter,
           })),
       },
       {
         path: 'cozinha',
         lazy: () =>
-          import('@pages/kitchen').then(({ Kitchen }) => ({
+          import('@pages/kitchen/Kitchen').then(({ Kitchen }) => ({
             Component: Kitchen,
           })),
       },
@@ -95,7 +93,7 @@ export const router = createBrowserRouter([
       {
         path: 'pedidos/novo',
         lazy: () =>
-          import('@pages/new-order').then(({ NewOrder }) => ({
+          import('@pages/new-order/NewOrder').then(({ NewOrder }) => ({
             Component: NewOrder,
           })),
       },
@@ -116,7 +114,7 @@ export const router = createBrowserRouter([
       {
         path: 'catalogo/novo',
         lazy: () =>
-          import('@pages/new-product').then(({ NewProduct }) => ({
+          import('@pages/new-product/NewProduct').then(({ NewProduct }) => ({
             Component: NewProduct,
           })),
       },
@@ -131,7 +129,7 @@ export const router = createBrowserRouter([
       {
         path: 'catalogo/:productId',
         lazy: () =>
-          import('@pages/product-detail').then(({ ProductDetail }) => ({
+          import('@pages/product-detail/ProductDetail').then(({ ProductDetail }) => ({
             Component: ProductDetail,
           })),
       },
@@ -139,7 +137,7 @@ export const router = createBrowserRouter([
         path: 'unidades/nova',
         loader: roleGuard(MANAGERS),
         lazy: () =>
-          import('@pages/new-unit').then(({ NewUnit }) => ({
+          import('@pages/new-unit/NewUnit').then(({ NewUnit }) => ({
             Component: NewUnit,
           })),
       },
@@ -147,7 +145,7 @@ export const router = createBrowserRouter([
         path: 'relatorios',
         loader: roleGuard(MANAGERS),
         lazy: () =>
-          import('@pages/reports').then(({ Reports }) => ({
+          import('@pages/reports/Reports').then(({ Reports }) => ({
             Component: Reports,
           })),
       },
@@ -155,7 +153,7 @@ export const router = createBrowserRouter([
         path: 'clientes',
         loader: roleGuard(MANAGERS),
         lazy: () =>
-          import('@pages/customers').then(({ Customers }) => ({
+          import('@pages/customers/Customers').then(({ Customers }) => ({
             Component: Customers,
           })),
       },
@@ -163,7 +161,7 @@ export const router = createBrowserRouter([
         path: 'clientes/:customerId',
         loader: roleGuard(MANAGERS),
         lazy: () =>
-          import('@pages/customers').then(({ CustomerDetail }) => ({
+          import('@pages/customers/CustomerDetail').then(({ CustomerDetail }) => ({
             Component: CustomerDetail,
           })),
       },
@@ -179,21 +177,21 @@ export const router = createBrowserRouter([
         path: 'colaboradores/:userId',
         loader: roleGuard(MANAGERS),
         lazy: () =>
-          import('@pages/employees/CollaboratorDetail').then(
+          import('@pages/employees/CollaboratorDetail/CollaboratorDetail').then(
             ({ CollaboratorDetail }) => ({ Component: CollaboratorDetail }),
           ),
       },
       {
         path: 'minha-conta',
         lazy: () =>
-          import('@pages/account').then(({ Account }) => ({
+          import('@pages/account/Account').then(({ Account }) => ({
             Component: Account,
           })),
       },
       {
         path: 'assinatura',
         lazy: () =>
-          import('@pages/account').then(({ Subscription }) => ({
+          import('@pages/account/Subscription').then(({ Subscription }) => ({
             Component: Subscription,
           })),
       },
@@ -209,49 +207,49 @@ export const router = createBrowserRouter([
           {
             path: 'empresa',
             lazy: () =>
-              import('@pages/settings/sections').then(
+              import('@pages/settings/sections/CompanySection').then(
                 ({ CompanySection }) => ({ Component: CompanySection })
               ),
           },
           {
             path: 'unidade',
             lazy: () =>
-              import('@pages/settings/sections').then(({ UnitSection }) => ({
+              import('@pages/settings/sections/UnitSection').then(({ UnitSection }) => ({
                 Component: UnitSection,
               })),
           },
           {
             path: 'unidade/detalhe',
             lazy: () =>
-              import('@pages/settings/sections').then(
+              import('@pages/settings/sections/UnitDetailSection').then(
                 ({ UnitDetailSection }) => ({ Component: UnitDetailSection })
               ),
           },
           {
             path: 'atendimento',
             lazy: () =>
-              import('@pages/settings/sections').then(
+              import('@pages/settings/sections/ServiceSection').then(
                 ({ ServiceSection }) => ({ Component: ServiceSection })
               ),
           },
           {
             path: 'horarios',
             lazy: () =>
-              import('@pages/settings/sections').then(({ HoursSection }) => ({
+              import('@pages/settings/sections/HoursSection').then(({ HoursSection }) => ({
                 Component: HoursSection,
               })),
           },
           {
             path: 'entrega',
             lazy: () =>
-              import('@pages/settings/sections').then(
+              import('@pages/settings/sections/DeliverySection').then(
                 ({ DeliverySection }) => ({ Component: DeliverySection })
               ),
           },
           {
             path: 'contato',
             lazy: () =>
-              import('@pages/settings/sections').then(
+              import('@pages/settings/sections/ContactSection').then(
                 ({ ContactSection }) => ({ Component: ContactSection })
               ),
           },

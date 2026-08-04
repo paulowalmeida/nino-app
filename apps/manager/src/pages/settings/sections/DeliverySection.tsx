@@ -1,9 +1,7 @@
-import { ZoneList } from '@compositions/ZoneList'
+import { ZoneList } from '@compositions/ZoneList/ZoneList'
 import { useCurrentTenant } from '@hooks/session/useCurrentTenant'
-import {
-  useDeliveryZones,
-  useZoneMutations,
-} from '@hooks/settings/useDeliveryZones'
+import { useDeliveryZones } from '@hooks/settings/useDeliveryZones'
+import { useZoneMutations } from '@hooks/settings/useZoneMutations'
 
 export const DeliverySection = () => {
   const tenantId = useCurrentTenant()?.tenantId ?? null

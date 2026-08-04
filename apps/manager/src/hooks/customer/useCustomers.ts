@@ -1,18 +1,9 @@
-import { useInfiniteQuery, useQuery } from '@tanstack/react-query'
+import { useInfiniteQuery } from '@tanstack/react-query'
 
 import { queryKeys } from '@constants/query-keys'
-import type {
-  CustomerHistory,
-  CustomerHistoryEntry,
-  CustomerHistoryPage,
-  CustomerPage,
-  TenantCustomer,
-} from '@custom_types/customer'
-import {
-  CUSTOMER_PAGE_SIZE,
-  CustomerService,
-  HISTORY_PAGE_SIZE,
-} from '@services/customer.service'
+import type { CustomerPage, TenantCustomer } from '@custom_types/customer'
+import { CUSTOMER_PAGE_SIZE, CustomerService } from '@services/customer.service'
+import { nextPageParam } from '@utils/next-page-param'
 
 export const useCustomers = (tenantId: string | null) => {
   const query = useInfiniteQuery<CustomerPage>({
@@ -20,10 +11,8 @@ export const useCustomers = (tenantId: string | null) => {
     queryFn: ({ pageParam }) =>
       CustomerService.listCustomers(tenantId as string, pageParam as number),
     initialPageParam: 1,
-    getNextPageParam: ({ pagination }) => {
-      const loaded = pagination.page * CUSTOMER_PAGE_SIZE
-      return loaded < pagination.total ? pagination.page + 1 : undefined
-    },
+    getNextPageParam: ({ pagination }) =>
+      nextPageParam(pagination, CUSTOMER_PAGE_SIZE),
     enabled: !!tenantId,
   })
 
@@ -31,37 +20,4 @@ export const useCustomers = (tenantId: string | null) => {
     query.data?.pages.flatMap(({ data }) => data) ?? []
 
   return { ...query, customers, total: query.data?.pages[0]?.pagination.total }
-}
-
-export const useCustomer = (tenantId: string | null, customerId: string) =>
-  useQuery<CustomerHistory>({
-    queryKey: queryKeys.customers.detail(tenantId ?? '', customerId),
-    queryFn: () => CustomerService.getById(tenantId as string, customerId),
-    enabled: !!tenantId && !!customerId,
-  })
-
-/**
- * Histórico sob demanda: a ficha abre com a primeira página e busca a próxima
- * quando a pessoa chega ao fim da lista, como o cardápio faz com os itens.
- */
-export const useCustomerOrders = (
-  tenantId: string | null,
-  customerId: string
-) => {
-  const query = useInfiniteQuery<CustomerHistoryPage>({
-    queryKey: [...queryKeys.customers.detail(tenantId ?? '', customerId), 'orders'],
-    queryFn: ({ pageParam }) =>
-      CustomerService.listCustomerOrders(tenantId as string, customerId, pageParam as number),
-    initialPageParam: 1,
-    getNextPageParam: ({ pagination }) => {
-      const loaded = pagination.page * HISTORY_PAGE_SIZE
-      return loaded < pagination.total ? pagination.page + 1 : undefined
-    },
-    enabled: !!tenantId && !!customerId,
-  })
-
-  const orders: CustomerHistoryEntry[] =
-    query.data?.pages.flatMap(({ data }) => data) ?? []
-
-  return { ...query, orders, total: query.data?.pages[0]?.pagination.total }
 }

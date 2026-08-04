@@ -9,7 +9,7 @@ import { Modal } from '@nino/ds/components/Modal'
 
 import styles from './EditEmailModal.module.css'
 
- type EditEmailFormValues = {
+type EditEmailFormValues = {
   email: string
 }
 

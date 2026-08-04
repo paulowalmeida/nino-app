@@ -7,7 +7,8 @@ export const useUpdateStaffEmail = (tenantId: string | null) => {
   const queryClient = useQueryClient()
 
   return useMutation({
-    /* O modal fecha em sucesso e mostra o erro inline: só o sucesso vira toast. */
+    /* The modal closes on success and shows errors inline — only
+     * success becomes a toast. */
     meta: { success: 'E-mail de login atualizado', silentError: true },
     mutationFn: ({ userId, email }: { userId: string; email: string }) =>
       StaffService.updateStaffEmail(tenantId as string, userId, email),

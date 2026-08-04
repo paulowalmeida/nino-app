@@ -15,13 +15,13 @@ type Variables = {
 }
 
 /**
- * Optimistic: o arraste já moveu a linha na tela, então o cache tem que
- * concordar na hora ou a lista volta ao lugar antes da resposta chegar.
+ * Optimistic: the drag already moved the row on screen, so the cache has to
+ * agree right away or the list snaps back before the response arrives.
  *
- * Escreve no recorte da tela de cardápio — a lista só aceita arraste com uma
- * categoria escolhida e sem busca, então a chave é sempre a mesma. O cache do
- * `useMenu` (balcão e contagens) é invalidado no fim, não remendado: lá a
- * ordem não muda nada enquanto a pessoa arrasta.
+ * Writes to the menu screen's own slice — the list only accepts drag with a
+ * category chosen and no search, so the key is always the same. The
+ * `useMenu` cache (counter and counts) is invalidated at the end, not
+ * patched: order doesn't affect it while the person is dragging.
  */
 export const useReorderMenuItems = (
   tenantId: string | null,
@@ -58,8 +58,8 @@ export const useReorderMenuItems = (
           })
           .sort((a, b) => a.position - b.position)
 
-        /* Repagina mantendo o tamanho de cada página: o infinite query conta
-           itens carregados para saber se ainda falta buscar. */
+        /* Re-paginates keeping each page's size: the infinite query counts
+           loaded items to know whether there's still more to fetch. */
         let cursor = 0
         const pages = cached.pages.map((page) => {
           const data = ordered.slice(cursor, cursor + page.data.length)

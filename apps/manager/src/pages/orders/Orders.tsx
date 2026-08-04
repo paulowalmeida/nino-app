@@ -8,17 +8,15 @@ import { Input } from '@nino/ds/components/Input'
 import { PageHeader } from '@nino/ds/components/PageHeader'
 import type { IconName } from '@nino/ds/components/Icon'
 import { OrderTicket } from '@compositions/OrderTicket/OrderTicket'
-import { OrderTicketSkeleton } from '@compositions/OrderTicket/OrderTicketSkeleton'
-import {
-  StageTrack,
-  type StageOption,
-} from '@compositions/StageTrack/StageTrack'
+import { OrderTicketSkeleton } from '@skeletons/OrderTicketSkeleton/OrderTicketSkeleton'
+import { StageTrack } from '@compositions/StageTrack/StageTrack'
 import { useCurrentTenant } from '@hooks/session/useCurrentTenant'
 import { useOrders } from '@hooks/order/useOrders'
 import { useOrderStatus } from '@hooks/order/useOrderStatus'
 import { useDebouncedValue } from '@hooks/ui/useDebouncedValue'
 import type { OrderStage } from '@custom_types/order'
 import type { OrderStatusKey } from '@custom_types/order/order-status-key'
+import type { StageOption } from '@custom_types/order/stage-option'
 import { riseDelay } from '@utils/rise-delay'
 import { stageOf } from '@utils/order-flow'
 

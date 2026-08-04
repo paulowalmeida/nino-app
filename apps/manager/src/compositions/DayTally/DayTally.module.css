@@ -118,7 +118,3 @@
   @apply text-sm font-semibold text-body;
   font-variant-numeric: tabular-nums;
 }
-
-.cardOverview {
-  @apply flex flex-row gap-x-2 items-center;
-}

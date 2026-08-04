@@ -5,8 +5,9 @@ import { queryKeys } from '@constants/query-keys'
 import { StaffService } from '@services/staff.service'
 
 /**
- * O erro aparece em toast porque a recusa é a informação: "a loja precisa de
- * pelo menos um dono" é o que a pessoa precisa ler para saber o que fazer.
+ * The error surfaces as a toast because the rejection itself is the
+ * information: "the store needs at least one owner" is what the person
+ * needs to read to know what to do.
  */
 export const useUpdateStaffRole = (tenantId: string | null) => {
   const queryClient = useQueryClient()

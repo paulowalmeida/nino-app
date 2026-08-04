@@ -11,8 +11,8 @@ import { useLogin } from '@hooks/auth/useLogin'
 import { authErrorMessage } from '@utils/auth-error-message'
 import { riseDelay } from '@utils/rise-delay'
 
-import styles from '@layouts/AuthLayout/authForm.module.css'
-import motion from '@layouts/AuthLayout/motion.module.css'
+import styles from '@styles/authForm.module.css'
+import motion from '@styles/rise.module.css'
 
 export const LoginForm = () => {
   const { mutateAsync: login } = useLogin()

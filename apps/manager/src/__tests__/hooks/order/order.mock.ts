@@ -1,0 +1,41 @@
+import type { Order, OrderPage } from '@custom_types/order'
+
+export const baseOrder: Order = {
+  id: 'order-1',
+  tenantId: 'tenant-1',
+  customerId: null,
+  status: 'PENDING',
+  channel: 'DELIVERY',
+  courierId: null,
+  tableNumber: null,
+  notes: null,
+  subtotal: '10.00',
+  deliveryFee: '0.00',
+  totalAmount: '10.00',
+  deliveryZoneName: null,
+  paymentMethod: 'PIX_ONLINE',
+  paymentStatus: 'PENDING',
+  changeFor: null,
+  cancelReason: null,
+  cancelledBy: null,
+  guestName: null,
+  guestPhone: null,
+  guestStreet: null,
+  guestNumber: null,
+  guestComplement: null,
+  guestNeighborhood: null,
+  guestCity: null,
+  guestState: null,
+  guestZipCode: null,
+  acceptedAt: null,
+  deliveredAt: null,
+  cancelledAt: null,
+  createdAt: '2026-08-01T12:00:00.000Z',
+  items: [],
+  statusHistory: [],
+}
+
+export const oneOrderPage: OrderPage = {
+  data: [baseOrder],
+  pagination: { total: 1, page: 1, size: 20 },
+}
