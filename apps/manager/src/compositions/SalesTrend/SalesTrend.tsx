@@ -5,12 +5,14 @@ import { Eyebrow } from '@nino/ds/components/Eyebrow'
 import { useSalesSeries } from '@hooks/order/useSalesSeries'
 import { brl } from '@utils/money'
 
-import { SalesChart } from '@compositions/SalesChart'
-
-import type { SalesTrendProps } from './SalesTrend.types'
+import { SalesChart } from '@compositions/SalesChart/SalesChart'
 
 import styles from './SalesTrend.module.css'
 import motion from '@styles/motion.module.css'
+
+export type SalesTrendProps = {
+  tenantId: string | null
+}
 
 const PERCENT = new Intl.NumberFormat('pt-BR', {
   style: 'percent',
@@ -18,12 +20,13 @@ const PERCENT = new Intl.NumberFormat('pt-BR', {
   signDisplay: 'exceptZero',
 })
 
-/** Sete dias na base do gráfico — o mesmo recorte que a série traz. */
+/** Seven days at the chart's base — the same slice the series brings. */
 const SKELETON_DAYS = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun']
 
 /**
- * Compara o último dia fechado com o anterior. Sem essa referência o número
- * sozinho não responde a pergunta que o dono faz — está bom ou está ruim?
+ * Compares the last closed day against the previous one. Without this
+ * reference the number alone doesn't answer the question the owner asks —
+ * is it good or bad?
  */
 const deltaOf = (values: number[]): number | null => {
   if (values.length < 2) return null
@@ -73,7 +76,7 @@ export const SalesTrend = ({ tenantId }: SalesTrendProps) => {
           )}
         </header>
 
-        {/* a forma do gráfico que vem: eixo à esquerda, sete dias na base */}
+        {/* the chart shape to come: axis on the left, seven days at the base */}
         {isPending && (
           <div className={styles.skeletonChart}>
             <div className={styles.skeletonAxis}>

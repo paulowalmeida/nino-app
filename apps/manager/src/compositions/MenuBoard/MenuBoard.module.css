@@ -1,30 +1,31 @@
 @reference "@nino/ds/globals.css";
 
-/* o quadro ocupa a altura que a página deu e reparte: contagem parada em
-   cima, lista rolando embaixo */
+/* the board fills the height the page gave and splits it: count stays put
+   on top, list scrolls below */
 .wrap {
   @apply flex min-h-0 flex-1 flex-col;
 }
 
-/* a linha de contagem também é onde a dica de arraste aparece, e só quando
-   arrastar de fato funciona */
+/* the count row is also where the drag hint shows, and only when dragging
+   actually works */
 .tally {
   @apply mb-2 shrink-0 text-xs text-faint lg:text-sm;
 }
 
 /*
- * `min-h-0` é o que faz o filho de flex encolher abaixo do conteúdo: sem ele
- * o item nasce com `min-height: auto`, a lista empurra o quadro e a rolagem
- * escapa para a página.
+ * `min-h-0` is what lets the flex child shrink below its content: without
+ * it the item is born with `min-height: auto`, the list pushes the board
+ * and scrolling escapes to the page.
  */
 .scroll {
   @apply min-h-0 flex-1;
 }
 
 /*
- * Sem moldura: a lista é a tela, não um objeto sobre ela. Quem separa uma
- * linha da outra é a divisória de `.item`, que já faz o trabalho — a borda em
- * volta só somava um contorno ao redor do contorno da página.
+ * No frame: the list is the screen, not an object on top of it. What
+ * separates one row from the next is the `.item` divider, which already
+ * does the job — a border around it would just add an outline around the
+ * page's own outline.
  */
 .list {
   @apply overflow-hidden;
@@ -55,9 +56,9 @@
 }
 
 /*
- * Excluir só aparece a partir de `lg`, onde a linha tem largura de sobra: no
- * celular ele disputaria o polegar com o interruptor de disponível, e a
- * exclusão já mora na tela do item.
+ * Delete only shows from `lg` up, where the row has room to spare: on
+ * mobile it would compete for the thumb with the availability switch, and
+ * deleting already lives on the item's own screen.
  */
 .delete {
   @apply hidden h-9 w-9 text-faint lg:inline-flex;
@@ -65,9 +66,10 @@
 }
 
 /*
- * Transição própria em vez de compor com `motion.lift`: duas classes
- * aplicando `transition-property` (colors aqui, transform lá) colidem — só
- * uma vence e a outra pula sem animar. Aqui as duas ficam na mesma regra.
+ * Own transition instead of composing with `motion.lift`: two classes
+ * applying `transition-property` (colors here, transform there) collide —
+ * only one wins and the other jumps without animating. Here both live in
+ * the same rule.
  */
 .itemLink {
   @apply flex min-w-0 flex-1 items-center gap-3 rounded-card py-2.5 pl-1 pr-2;
@@ -92,8 +94,8 @@
   @apply font-normal;
 }
 
-/* no celular sobram ~15 caracteres antes do corte: uma descrição truncada
-   assim não informa nada e ainda cobra uma linha de altura por item */
+/* on mobile only ~15 characters remain before the cut: a description
+   truncated like that says nothing and still costs a line of height */
 .itemDescription {
   @apply mt-0.5 hidden truncate text-xs text-faint sm:block;
 }
@@ -108,9 +110,9 @@
 }
 
 /*
- * Esqueleto: as medidas acompanham o que vai ocupar cada lugar — o ladrilho
- * do item mede 44px, o nome sobe de `text-sm` para `text-base` no desktop, e
- * a descrição só existe a partir de `sm`, como na linha de verdade.
+ * Skeleton: the measurements match what will occupy each spot — the item
+ * tile measures 44px, the name grows from `text-sm` to `text-base` on
+ * desktop, and the description only exists from `sm` up, like the real row.
  */
 .ghostTally {
   @apply mb-2 h-3 w-24 shrink-0 lg:h-3.5 lg:w-32;
@@ -132,7 +134,7 @@
   @apply h-3.5 w-16 shrink-0 lg:h-4;
 }
 
-/* o interruptor de disponível: a medida do Switch `sm` do DS */
+/* the availability switch: the DS's `sm` Switch measurement */
 .ghostSwitch {
   @apply h-4 w-7 shrink-0 rounded-full;
 }

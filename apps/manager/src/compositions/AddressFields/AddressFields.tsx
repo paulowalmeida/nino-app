@@ -4,13 +4,25 @@ import { FormField } from '@nino/ds/components/FormField'
 import { Input } from '@nino/ds/components/Input'
 import { lookupZipCode, onlyDigits } from '@nino/lib/services/zip-code'
 
-import type { AddressFieldsProps } from './AddressFields.types'
-
 import styles from './AddressFields.module.css'
 
 type Lookup = 'idle' | 'loading' | 'done' | 'notFound'
 
-/** Endereço em uma malha só, reaproveitada por empresa e unidade. */
+type AddressValue = {
+  zipCode: string
+  street: string
+  number: string
+  complement: string
+  neighborhood: string
+  city: string
+  state: string
+}
+
+type AddressFieldsProps = {
+  value: AddressValue
+  onChange: (patch: Partial<AddressValue>) => void
+}
+
 export const AddressFields = ({ value, onChange }: AddressFieldsProps) => {
   const [lookup, setLookup] = useState<Lookup>('idle')
   const numberRef = useRef<HTMLInputElement>(null)
@@ -34,8 +46,6 @@ export const AddressFields = ({ value, onChange }: AddressFieldsProps) => {
       return
     }
 
-    /* CEP de rua comprida volta sem logradouro — o que veio vazio não apaga
-       o que já estava escrito, e nada aqui fica travado depois da busca */
     setLookup('done')
     onChange({
       street: found.street || value.street,

@@ -1,7 +1,8 @@
 @reference "@nino/ds/globals.css";
 
-/* sem cartão: são dois grupos da mesma equipe, não dois objetos soltos na
-   tela — o que separa um do outro é o título e o espaço */
+/* no card: these are two groups of the same team, not two loose objects on
+   the screen — what separates one from the other is the title and the
+   spacing */
 .roster {
   @apply min-w-0;
 }
@@ -22,7 +23,7 @@
   @apply flex flex-col;
 }
 
-/* nome inteiro tem prioridade: o crachá e o menu não encolhem */
+/* full name gets priority: the badge and the menu never shrink */
 .row {
   @apply flex items-center gap-x-3;
   @apply border-t border-sand py-3;
@@ -32,8 +33,8 @@
   @apply min-w-0 flex-1;
 }
 
-/* identidade é link: disco, nome e e-mail truncam antes de disputar espaço
-   com o crachá e o menu, que nunca encolhem */
+/* identity is a link: avatar, name and email truncate before competing for
+   space with the badge and the menu, which never shrink */
 .identity {
   @apply flex min-w-0 flex-1 items-center gap-3 rounded-lg;
   @apply transition-colors duration-150 hover:bg-surface-mute;
@@ -53,22 +54,23 @@
   @apply truncate text-xs text-faint;
 }
 
-/* conta que nunca entrou é o que a auditoria procura — não se esconde */
+/* an account that never signed in is what an audit looks for — it doesn't
+   hide */
 .neverSeen {
   @apply truncate text-xs font-semibold text-muted;
 }
 
-/* o crachá só informa; quem muda é o menu ao lado */
+/* the badge only informs; the menu next to it is what changes things */
 .roleBadge {
   @apply shrink-0;
 }
 
 /*
- * Um menu só por pessoa: trocar cargo, editar e-mail e tirar da loja são a
- * mesma pergunta ("o que fazer com esta pessoa"), e um botão de reticências
- * cabe em qualquer largura de tela sem precisar de layout diferente por
- * breakpoint. 40px de alvo de toque, círculo em vez de retângulo — mesmo
- * peso visual do avatar do outro lado da linha.
+ * One menu per person: changing role, editing e-mail and removing from the
+ * store are the same question ("what to do with this person"), and a kebab
+ * button fits any screen width without needing a different layout per
+ * breakpoint. 40px touch target, circle instead of rectangle — same visual
+ * weight as the avatar on the other side of the row.
  */
 .kebab {
   @apply flex h-10 w-10 shrink-0 items-center justify-center rounded-full;
@@ -83,9 +85,9 @@
 }
 
 /*
- * Esqueleto: as medidas acompanham o que vai ocupar cada lugar. O disco de
- * iniciais é o Avatar `md` do DS (40px), e o papel é um Badge — 4px de raio,
- * não pílula.
+ * Skeleton: the measurements match what will occupy each spot. The initials
+ * disc is the DS's `md` Avatar (40px), and the role is a Badge — 4px
+ * radius, not a pill.
  */
 .ghostMark {
   @apply h-10 w-10 shrink-0 rounded-full;

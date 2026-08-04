@@ -11,8 +11,6 @@ import { riseDelay } from '@utils/rise-delay'
 import { ticketNumber } from '@utils/order-flow'
 import { STATUS_LABEL } from '@utils/order-flow'
 
-import type { DayTallyProps } from './DayTally.types'
-
 import styles from './DayTally.module.css'
 import motion from '@styles/motion.module.css'
 
@@ -23,8 +21,13 @@ const clock = new Intl.DateTimeFormat('pt-BR', {
 
 const RECENT = 4
 
-/** Quatro linhas enquanto carrega — as mesmas que vêm. */
+/** Four rows while loading — matches the count that arrives. */
 const SKELETON_ROWS = ['first', 'second', 'third', 'fourth']
+
+type DayTallyProps = {
+  tenantId: string | null
+  timezone: string | null
+}
 
 export const DayTally = ({ tenantId, timezone }: DayTallyProps) => {
   const { orders, isPending } = useOrders(tenantId)
@@ -39,8 +42,9 @@ export const DayTally = ({ tenantId, timezone }: DayTallyProps) => {
         <Eyebrow className={styles.heading}>O dia até agora</Eyebrow>
       </div>
 
-      {/* Todo número daqui leva ao seu recorte: a contagem abre a fila
-          fechada, faturamento e ticket médio abrem o relatório do dia. */}
+      {/* Every number here links to its own drill-down: the count opens
+          the closed queue, revenue and average ticket open the day's
+          report. */}
       <div className={styles.tally}>
         <Card
           asChild

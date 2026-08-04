@@ -1,7 +1,6 @@
 import { riseDelay } from '@utils/rise-delay'
 import { STATUS_LABEL } from '@utils/order-flow'
-
-import type { OrderTimelineProps } from './OrderTimeline.types'
+import type { OrderStatusEntry } from '@custom_types/order'
 
 import styles from './OrderTimeline.module.css'
 import motion from '@styles/motion.module.css'
@@ -16,6 +15,10 @@ const REALM_LABEL: Record<string, string> = {
   BACKOFFICE: 'pelo suporte',
   CUSTOMER: 'pelo cliente',
   GUEST: 'pelo cliente',
+}
+
+export type OrderTimelineProps = {
+  entries: OrderStatusEntry[]
 }
 
 /** Oldest first: the order's own account of what happened, in order. */

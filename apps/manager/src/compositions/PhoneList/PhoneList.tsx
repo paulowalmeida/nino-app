@@ -4,14 +4,22 @@ import { Button } from '@nino/ds/components/Button'
 import { EmptyState } from '@nino/ds/components/EmptyState'
 import { PhoneInput } from '@nino/ds/components/PhoneInput'
 import { Skeleton } from '@nino/ds/components/Skeleton'
+import type { TenantPhone } from '@custom_types/settings'
 import { formatPhone, toE164 } from '@utils/phone'
 import { riseDelay } from '@utils/rise-delay'
-
-import type { PhoneListProps } from './PhoneList.types'
 
 import local from './PhoneList.module.css'
 import motion from '@styles/motion.module.css'
 import styles from '@styles/settingsCard.module.css'
+
+export type PhoneListProps = {
+  phones: TenantPhone[]
+  isPending: boolean
+  isAdding: boolean
+  onAdd: (phone: string) => void
+  onEdit: (id: string, phone: string) => void
+  onRemove: (id: string) => void
+}
 
 export const PhoneList = ({
   phones,

@@ -1,17 +1,18 @@
 @reference "@nino/ds/globals.css";
 
 /*
- * Mesma anatomia da sacola do app do cliente (consumer/CartDrawer): linha com
- * foto, nome e conta aberta à esquerda; valor e quantidade empilhados à
- * direita. O que muda aqui é o que o balcão precisa a mais — quem pediu,
- * forma de pagamento e o fechamento.
+ * Same anatomy as the customer app's cart (consumer/CartDrawer): a row with
+ * photo, name and running total on the left; value and quantity stacked on
+ * the right. What differs here is what the counter needs on top — who
+ * ordered, payment method and closing the sale.
  */
 /*
- * Sem moldura: a comanda é uma das duas regiões da tela, não um objeto solto
- * sobre ela. Quem a separa do cardápio é o fundo próprio — borda e cantos
- * arredondados só repetiam o contorno que a página já dá. Com eles saiu
- * também o `overflow-hidden`, que existia para o rodapé sangrado não comer a
- * curva de baixo: sem curva, não há o que recortar.
+ * No frame: the ticket is one of the two regions of the screen, not a loose
+ * object sitting on top of it. What separates it from the menu is its own
+ * background — border and rounded corners just repeated the outline the
+ * page already gives. `overflow-hidden` left with them too; it existed only
+ * so the bled footer wouldn't eat into the bottom curve — with no curve,
+ * there's nothing to clip.
  */
 .ticket {
   @apply flex w-full flex-col bg-brand-foreground;
@@ -19,9 +20,9 @@
 }
 
 /*
- * Sem moldura: dentro da folha, quem emoldura é a folha — e o recuo lateral
- * também é dela. Somado ao próprio, sobrava largura de meia palavra para o
- * nome do item em tela de 320px.
+ * No frame: inside the sheet, the sheet itself is the frame — and the side
+ * padding belongs to it too. Added to its own, there was only half a word's
+ * width left for the item name on a 320px screen.
  */
 .ticketBare {
   @apply flex min-h-0 w-full flex-1 flex-col;
@@ -31,8 +32,8 @@
   @apply px-0;
 }
 
-/* Sangra até a borda da folha (px-6/py-4 do Drawer) para o fundo do rodapé
-   cobrir a largura toda, com o conteúdo alinhado à lista. */
+/* Bleeds to the sheet's edge (the Drawer's px-6/py-4) so the footer's
+   background covers the full width, with content aligned to the list. */
 .ticketBare .footer {
   @apply -mx-6 -mb-4 px-6 pb-5;
 }
@@ -47,9 +48,10 @@
 }
 
 /*
- * A comanda inteira cabe na altura disponível e não rola: quem rola é só a
- * lista de itens. Nome, mesa, pagamento e total ficam onde estão — no balcão
- * eles são o próximo passo, e rolar atrás do total é perder a venda de vista.
+ * The whole ticket fits the available height and doesn't scroll: only the
+ * item list scrolls. Name, table, payment and total stay put — at the
+ * counter they're the next step, and scrolling past the total loses the
+ * sale from sight.
  */
 .body {
   @apply flex h-full min-h-0 flex-1 flex-col overflow-hidden px-4 pt-3;
@@ -60,9 +62,10 @@
 }
 
 /*
- * `basis: auto` de propósito: na folha do celular a altura vem do conteúdo, e
- * com `flex-1` puro (basis 0) a lista não contribuiria com altura nenhuma e
- * colapsaria. Assim ela cresce até o teto da folha e só então rola.
+ * `basis: auto` on purpose: on the mobile sheet the height comes from the
+ * content, and with plain `flex-1` (basis 0) the list would contribute no
+ * height at all and collapse. This way it grows to the sheet's ceiling and
+ * only then scrolls.
  */
 .lines {
   @apply flex min-h-0 flex-col divide-y divide-sand overflow-y-auto pb-4;
@@ -73,7 +76,8 @@
   @apply flex shrink-0 items-center gap-2.5 py-3 first:pt-0 sm:gap-3;
 }
 
-/* Menor no celular estreito: cada pixel aqui sai da largura do nome. */
+/* Smaller on a narrow phone: every pixel here comes out of the name's
+   width. */
 .photo {
   @apply h-12 w-12 shrink-0 rounded-xl text-xl;
   @apply sm:h-14 sm:w-14 sm:text-2xl;
@@ -88,8 +92,8 @@
 }
 
 /*
- * A conta aberta: com 2 unidades, "2 × R$ 24,90" explica o total à direita.
- * Numa linha só — quebrado em duas, empurra a linha inteira para baixo.
+ * The running total: with 2 units, "2 × R$ 24,90" explains the total on the
+ * right. On a single line — broken into two, it pushes the whole row down.
  */
 .lineMath {
   @apply mt-0.5 truncate whitespace-nowrap text-xs text-muted;
@@ -97,8 +101,9 @@
 }
 
 /*
- * Valor em cima, contador embaixo. É o que faz o nome caber em tela estreita:
- * lado a lado, contador e preço tomavam a linha e o nome sumia.
+ * Value on top, counter below. This is what lets the name fit on a narrow
+ * screen: side by side, counter and price took over the row and the name
+ * disappeared.
  */
 .lineRight {
   @apply flex shrink-0 flex-col items-end gap-1.5;
@@ -122,23 +127,25 @@
   font-variant-numeric: tabular-nums;
 }
 
-/* Empilhados: dividindo a linha, "Mesa ou comanda" não cabia o próprio nome. */
+/* Stacked: splitting the row, "Mesa ou comanda" didn't fit its own name. */
 .who {
   @apply flex shrink-0 flex-col gap-2 border-t border-sand py-2.5 sm:py-3;
 }
 
-/* Fora da área rolável: o total e o fechar nunca saem da tela. */
+/* Outside the scrollable area: the total and the close button never leave
+   the screen. */
 .footer {
   @apply -mx-4 mt-auto flex shrink-0 flex-col gap-3;
   @apply border-t border-line bg-brand-foreground px-4 pb-4 pt-3;
 }
 
-/* Sem rótulo, três botões soltos não dizem que são escolha de pagamento. */
+/* Without a label, three loose buttons don't say they're a payment
+   choice. */
 .payLabel {
   @apply mt-1 text-xs font-bold uppercase tracking-[0.1em] text-faint;
 }
 
-/* Numa linha: em duas, cada fileira cobrava 46px da lista de itens. */
+/* On one row: split into two, each line cost 46px of the item list. */
 .choices {
   @apply grid grid-cols-3 gap-1.5 sm:gap-2;
 }
@@ -170,8 +177,8 @@
   @apply h-12 w-full text-base;
 }
 
-/* Abaixo da ação principal e apagado: desfazer a venda inteira não divide
-   peso com fechá-la. */
+/* Below the main action and muted: undoing the whole sale doesn't share
+   weight with closing it. */
 .clear {
   @apply h-10 w-full text-sm text-muted hover:text-danger;
 }

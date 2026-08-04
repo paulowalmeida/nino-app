@@ -6,19 +6,20 @@ import type { SignupAccount } from '@custom_types/auth'
 
 import type { RegisterStep } from './RegisterWizard.types'
 
-import { AccountStep } from './AccountStep'
-import { CompanyStep } from './CompanyStep'
+import { AccountStep } from './AccountStep/AccountStep'
+import { CompanyStep } from './CompanyStep/CompanyStep'
 
 import styles from '@layouts/AuthLayout/authForm.module.css'
 
 const STEPS = [{ title: 'Conta' }, { title: 'Empresa' }]
 
 /**
- * Cadastro termina na empresa. Conta e empresa sobem juntas em
- * `POST /auth/signup`, que cria as duas de forma atômica — não existe conta
- * órfã. A loja não é etapa de cadastro: ela nasce dentro do gestor, na tela de
- * unidades, onde a segunda, a terceira e a décima também nascem. Uma tela só
- * para a primeira loja seria um caminho que ninguém percorre duas vezes.
+ * Signup ends at the company. Account and company go up together in
+ * `POST /auth/signup`, which creates both atomically — there is no orphan
+ * account. The store is not a signup step: it is born inside the manager,
+ * on the units screen, the same place the second, third and tenth store are
+ * born too. A dedicated screen for the first store would be a path nobody
+ * walks twice.
  */
 export const RegisterWizard = () => {
   const navigate = useNavigate()
@@ -32,8 +33,9 @@ export const RegisterWizard = () => {
 
   const handleBack = () => setStep(1)
 
-  /* A sessão já está de pé quando o signup responde: a raiz lê a sessão nova e
-   * manda para as unidades, que é onde a loja é criada. */
+  /* The session is already up by the time signup responds: the root reads
+   * the new session and sends the person to units, which is where the
+   * store gets created. */
   const handleSignedUp = () => void navigate('/')
 
   const handleStepChange = (next: number) => {

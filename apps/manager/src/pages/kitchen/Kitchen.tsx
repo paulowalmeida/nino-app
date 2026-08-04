@@ -1,24 +1,17 @@
-import { EmptyState } from '@nino/ds/components/EmptyState'
-import { KitchenCard } from '@compositions/KitchenCard'
-import { KitchenCardSkeleton } from '@compositions/KitchenCard/KitchenCardSkeleton'
-import { useCurrentTenant } from '@hooks/session/useCurrentTenant'
-import { useOrders } from '@hooks/order/useOrders'
-import { useOrderStatus } from '@hooks/order/useOrderStatus'
+import { KitchenCard } from '@compositions/KitchenCard/KitchenCard'
 import type { OrderStage } from '@custom_types/order'
 import type { OrderStatusKey } from '@custom_types/order/order-status-key'
-import { riseDelay } from '@utils/rise-delay'
+import { useOrders } from '@hooks/order/useOrders'
+import { useOrderStatus } from '@hooks/order/useOrderStatus'
+import { useCurrentTenant } from '@hooks/session/useCurrentTenant'
+import { EmptyState } from '@nino/ds/components/EmptyState'
 import { stageOf } from '@utils/order-flow'
+import { riseDelay } from '@utils/rise-delay'
+import { KitchenCardSkeleton } from 'src/skeletons/KitchenCardSkeleton'
 
-import styles from './Kitchen.module.css'
 import motion from '@styles/motion.module.css'
+import styles from './Kitchen.module.css'
 
-/**
- * A cozinha na ordem em que o prato anda: o que chegou, o que a loja
- * confirmou e ainda não entrou na chapa, o que está na chapa, o que saiu para
- * a rua e o que espera no balcão. Cada trilho rola por dentro, então a tela
- * nunca perde o cabeçalho.
- */
-/** Duas comandas: o que cabe num trilho antes de precisar rolar. */
 const LOADING_CARDS = ['first', 'second']
 
 const COLUMNS: { stage: OrderStage; title: string; empty: string }[] = [
@@ -66,7 +59,9 @@ export const Kitchen = () => {
 
               <div className={styles.stack}>
                 {isPending &&
-                  LOADING_CARDS.map((card) => <KitchenCardSkeleton key={card} />)}
+                  LOADING_CARDS.map((card) => (
+                    <KitchenCardSkeleton key={card} />
+                  ))}
 
                 {!isPending && list.length === 0 && (
                   <EmptyState>{empty}</EmptyState>

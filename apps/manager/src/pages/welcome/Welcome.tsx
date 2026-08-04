@@ -3,9 +3,9 @@ import { useNavigate } from 'react-router'
 
 import { Button } from '@nino/ds/components/Button'
 
-import { KitchenCard } from '@compositions/KitchenCard'
-import { OrderTicket } from '@compositions/OrderTicket'
-import { OrderTimeline } from '@compositions/OrderTimeline'
+import { KitchenCard } from '@compositions/KitchenCard/KitchenCard'
+import { OrderTicket } from '@compositions/OrderTicket/OrderTicket'
+import { OrderTimeline } from '@compositions/OrderTimeline/OrderTimeline'
 import { NinoLogo } from '@elements/NinoLogo/NinoLogo'
 import { useSessionStore } from '@states/useSessionStore'
 import { rememberOnboarding } from '@utils/onboarding-seen'

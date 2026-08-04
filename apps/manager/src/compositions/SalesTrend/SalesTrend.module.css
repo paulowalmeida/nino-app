@@ -1,7 +1,7 @@
 @reference "@nino/ds/globals.css";
 
-/* Coluna a partir do desktop: assim o cartão pode ocupar a altura que o
-   grid deu à linha, e os dois blocos terminam juntos. */
+/* Column from desktop up: this lets the card fill the height the grid gave
+   the row, so the two blocks end together. */
 .section {
   @apply lg:flex lg:h-full lg:flex-col;
 }
@@ -28,8 +28,8 @@
   @apply mt-1.5 text-xs leading-snug text-faint lg:text-sm;
 }
 
-/* A variação é o julgamento que falta ao número — verde e vermelho aqui não
-   são enfeite, são a resposta a "está bom ou está ruim?". */
+/* The delta is the judgment call the number alone lacks — green and red here
+   aren't decoration, they're the answer to "is it good or bad?". */
 .deltaUp,
 .deltaDown {
   @apply shrink-0 text-sm font-bold;
@@ -53,9 +53,9 @@
 }
 
 /*
- * A altura é a do gráfico de verdade, que encolhe no celular (180px contra
- * 240px no desktop). O bloco antigo tinha 240px fixos, então a página saltava
- * 60px quando o dado chegava no celular.
+ * The height matches the real chart, which shrinks on mobile (180px vs
+ * 240px on desktop). The old block had a fixed 240px, so the page jumped
+ * 60px when the data arrived on mobile.
  */
 .skeletonChart {
   @apply flex h-[180px] w-full gap-3 lg:h-60;

@@ -1,7 +1,7 @@
 @reference "@nino/ds/globals.css";
 
-/* Coluna a partir do desktop: assim o cartão pode ocupar a altura que o
-   grid deu à linha, e os dois blocos terminam juntos. */
+/* Column from desktop up: this lets the card fill the height the grid gave
+   the row, so the two blocks end together. */
 .section {
   @apply lg:flex lg:h-full lg:flex-col;
 }
@@ -11,9 +11,10 @@
 }
 
 /*
- * Ao lado do gráfico, o cartão acompanha a altura da linha do grid — é o
- * `stretch` do próprio grid que iguala os dois, sem número mágico. Empilhado
- * no celular, fecha no tamanho da lista em vez de abrir um vazio embaixo.
+ * Next to the chart, the card follows the grid row's height — it's the
+ * grid's own `stretch` that equalizes the two, no magic number. Stacked on
+ * mobile, it closes at the list's size instead of opening an empty gap
+ * below.
  */
 .card {
   @apply flex min-w-0 flex-col p-5 lg:flex-1;
@@ -28,9 +29,9 @@
 }
 
 /*
- * A mesma métrica do BarList do DS: linhas de 2rem separadas por `gap-2` e
- * raio de 4px. O bloco antigo tinha 208px chapados, que não batia com a
- * altura de cinco linhas em nenhum dos dois tamanhos de tela.
+ * Same metric as the DS's BarList: 2rem rows separated by `gap-2` and a 4px
+ * radius. The old block had a flat 208px, which didn't match the height of
+ * five rows on either screen size.
  */
 .skeletonBars {
   @apply flex flex-1 flex-col gap-2;

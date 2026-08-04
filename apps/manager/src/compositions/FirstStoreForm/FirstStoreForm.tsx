@@ -1,6 +1,13 @@
 import { useEffect, useState } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 
+import { STORE_DRAFT_KEY } from '@constants/drafts'
+import {
+  SLUG_TAKEN_MESSAGE,
+  useCheckSlugAvailable,
+} from '@hooks/store/useCheckSlugAvailable'
+import { useCreateStore } from '@hooks/store/useCreateStore'
+import { useStoreTypes } from '@hooks/store/useStoreTypes'
 import { Alert } from '@nino/ds/components/Alert'
 import { Button } from '@nino/ds/components/Button'
 import { FormField } from '@nino/ds/components/FormField'
@@ -9,37 +16,31 @@ import { MaskedInput } from '@nino/ds/components/MaskedInput'
 import { Select } from '@nino/ds/components/Select'
 import { maskZipCode } from '@nino/ds/masks'
 import { lookupZipCode, onlyDigits } from '@nino/lib/services/zip-code'
-import { STORE_DRAFT_KEY } from '@constants/drafts'
-import { useCreateStore } from '@hooks/store/useCreateStore'
-import { useStoreTypes } from '@hooks/store/useStoreTypes'
-import { TenantService } from '@services/tenant.service'
 import { ApiError } from '@utils/api-error'
 import { clearDraft, readDraft, writeDraft } from '@utils/form-draft'
 import { riseDelay } from '@utils/rise-delay'
 import { slugify } from '@utils/slugify'
 
-import type {
-  FirstStoreFormProps,
-  FirstStoreFormValues,
-} from './FirstStoreForm.types'
-
-import styles from './FirstStoreForm.module.css'
 import motion from '@layouts/AuthLayout/motion.module.css'
+import styles from './FirstStoreForm.module.css'
 
-const TAKEN_MESSAGE = 'Este endereço já está em uso'
+type FirstStoreFormValues = {
+  customName: string
+  slug: string
+  typeId: string
+  zipCode: string
+  street: string
+  number: string
+  complement: string
+  neighborhood: string
+  city: string
+  state: string
+}
 
-/**
- * The check is a courtesy: the unique constraint is what actually decides, and
- * the submit surfaces it as a 409. So a throttled or offline lookup lets the
- * form through instead of blocking on an answer we could not get.
- */
-const checkSlugTaken = async (slug: string): Promise<true | string> => {
-  try {
-    const { available } = await TenantService.checkSlug(slug)
-    return available || TAKEN_MESSAGE
-  } catch {
-    return true
-  }
+type FirstStoreFormProps = {
+  onChange?: (values: Partial<FirstStoreFormValues>) => void
+  onCreated?: (store: { id: string; slug: string }) => string
+  submitLabel?: string
 }
 
 export const FirstStoreForm = ({
@@ -49,8 +50,11 @@ export const FirstStoreForm = ({
 }: FirstStoreFormProps) => {
   const { data: types = [] } = useStoreTypes()
   const { mutateAsync: createStore } = useCreateStore(onCreated)
+  const checkSlugTaken = useCheckSlugAvailable()
   const [lookingUp, setLookingUp] = useState(false)
-  const [draft] = useState(() => readDraft<FirstStoreFormValues>(STORE_DRAFT_KEY))
+  const [draft] = useState(() =>
+    readDraft<FirstStoreFormValues>(STORE_DRAFT_KEY)
+  )
 
   const {
     register,
@@ -67,8 +71,9 @@ export const FirstStoreForm = ({
     defaultValues: draft ?? undefined,
   })
 
-  /* O rascunho entra antes da primeira tecla: quem espelha o formulário
-   * (a placa da tela de unidades) precisa nascer com o que já está lá. */
+  /* The draft lands before the first keystroke: whoever mirrors the form
+   * (the store sign on the units screen) needs to be born with what is
+   * already there. */
   useEffect(() => {
     if (draft) onChange?.(draft)
   }, [draft, onChange])
@@ -123,15 +128,15 @@ export const FirstStoreForm = ({
       clearDraft(STORE_DRAFT_KEY)
     } catch (error) {
       if (error instanceof ApiError && error.status === 409) {
-        setError('slug', { message: TAKEN_MESSAGE })
+        setError('slug', { message: SLUG_TAKEN_MESSAGE })
         return
       }
 
       if (!navigator.onLine) {
         setError('root', {
           message:
-            'Você está sem internet. O que já foi preenchido fica salvo — ' +
-            'tente de novo quando a conexão voltar.',
+            'Você está sem internet. O que já foi preenchido fica ' +
+            'salvo — tente de novo quando a conexão voltar.',
         })
         return
       }

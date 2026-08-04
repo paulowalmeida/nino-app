@@ -6,17 +6,52 @@ import { EmptyState } from '@nino/ds/components/EmptyState'
 import { Skeleton } from '@nino/ds/components/Skeleton'
 import { Icon } from '@nino/ds/components/Icon'
 import { PersonMark } from '@components/PersonMark/PersonMark'
+import type { TenantRole } from '@custom_types/auth'
 import { lastSeenLabel } from '@utils/last-seen'
 import { riseDelay } from '@utils/rise-delay'
-
-import type { RosterEntry, TeamRosterProps } from './TeamRoster.types'
 
 import styles from './TeamRoster.module.css'
 import motion from '@styles/motion.module.css'
 
+export type RosterEntry = {
+  id: string
+  name: string
+  email: string | null
+  /** Role in the store or status — what this person is here. */
+  role: string
+  /** Raw role, when the row allows switching jobs. */
+  roleKey?: TenantRole
+  /** Reason the role is locked, when it is. */
+  roleLocked?: string
+  /** Route to this person's profile. Without it, the name isn't a link. */
+  href?: string
+  /** Last sign-in, ISO or null for an account that never signed in. */
+  lastLoginAt: string | null
+  /** Quiet mark for people who don't operate the panel. */
+  quiet?: boolean
+  removable: boolean
+  /** Whether this entry's e-mail can be edited from the roster. */
+  emailEditable?: boolean
+}
+
+export type TeamRosterProps = {
+  /** Enables switching roles. Only the store owner gets this. */
+  onChangeRole?: (id: string, role: TenantRole) => void
+  /** Row with a role change in progress. */
+  changingRoleId?: string
+  title: string
+  hint: string
+  entries: RosterEntry[]
+  empty: string
+  isPending?: boolean
+  removingId?: string
+  onRemove: (id: string) => void
+  onEditEmail?: (id: string) => void
+}
+
 /**
- * O que cada cargo pode fazer, dito em uma linha: quem troca precisa saber o
- * que está entregando, e "gerente" sozinho não explica nada.
+ * What each role can do, said in one line: whoever changes it needs to know
+ * what they're handing over, and "manager" alone doesn't explain anything.
  */
 const ROLE_OPTIONS = [
   {
@@ -36,7 +71,7 @@ const ROLE_OPTIONS = [
   },
 ]
 
-/** Três pessoas: uma equipe pequena inteira, que é o caso comum. */
+/** Three people: a whole small team, which is the common case. */
 const GHOST_ROWS = ['first', 'second', 'third']
 
 export const TeamRoster = ({
@@ -52,11 +87,11 @@ export const TeamRoster = ({
   onChangeRole,
 }: TeamRosterProps) => {
   /*
-   * Um menu só por pessoa, não três controles disputando a mesma linha:
-   * trocar cargo, editar e-mail e tirar da loja são a mesma pergunta — "o que
-   * fazer com esta pessoa" — e a régua de largura é o que dá certo em
-   * qualquer tela, do celular ao desktop, sem precisar de layout diferente
-   * para cada tamanho.
+   * One menu per person, not three controls fighting for the same row:
+   * changing role, editing e-mail and removing from the store are the same
+   * question — "what to do with this person" — and the width budget is
+   * what works on any screen, from mobile to desktop, without needing a
+   * different layout per size.
    */
   const actionsOf = (entry: RosterEntry): MenuItem[] => {
     const items: MenuItem[] = []
@@ -105,7 +140,8 @@ export const TeamRoster = ({
         <p className={styles.hint}>{hint}</p>
       </header>
 
-      {/* a mesma lista, com as pessoas por chegar: disco, nome, e-mail, papel */}
+      {/* the same list, with the people yet to arrive: avatar, name, e-mail,
+          role */}
       {isPending && (
         <ul className={styles.list}>
           {GHOST_ROWS.map((row) => (

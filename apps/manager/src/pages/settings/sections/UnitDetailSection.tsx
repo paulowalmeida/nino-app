@@ -1,5 +1,5 @@
 import { Breadcrumb } from '@elements/Breadcrumb/Breadcrumb'
-import { UnitCard } from '@compositions/UnitCard'
+import { UnitCard } from '@compositions/UnitCard/UnitCard'
 import { useCurrentTenant } from '@hooks/session/useCurrentTenant'
 import {
   useSaveTenant,

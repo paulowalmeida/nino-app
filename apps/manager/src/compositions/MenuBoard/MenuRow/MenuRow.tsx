@@ -10,17 +10,17 @@ import { ItemThumb } from '@components/ItemThumb/ItemThumb'
 import { REORDER_TRANSITION } from '@constants/reorder-transition'
 import { CATALOG_PAGE_SIZE } from '@hooks/product/useCatalog'
 import { riseDelay } from '@utils/rise-delay'
-
-import type { MenuRowProps } from './MenuRow.types'
+import type { MenuItem } from '@custom_types/product'
 
 import styles from '../MenuBoard.module.css'
 import motion from '@styles/motion.module.css'
 
 /*
- * A entrada é escalonada por lote e com teto. Com o índice global da lista, a
- * página 2 começava no item 21 — 945ms de espera — e como `deal` usa
- * `fill-mode: both`, a linha já ocupa o lugar dela enquanto espera: a lista
- * abria vinte faixas em branco que iam pintando ao longo de dois segundos.
+ * The entrance is staggered per batch and with a cap. With the list's
+ * global index, page 2 started at item 21 — a 945ms wait — and since
+ * `deal` uses `fill-mode: both`, the row already occupies its spot while
+ * waiting: the list opened twenty blank stripes that painted in over two
+ * seconds.
  */
 const MAX_STAGGERED = 8
 
@@ -31,6 +31,20 @@ const brl = new Intl.NumberFormat('pt-BR', {
   style: 'currency',
   currency: 'BRL',
 })
+
+export type MenuRowProps = {
+  item: MenuItem
+  index: number
+  /**
+   * With no category chosen or with an active search, the drag handle
+   * disappears.
+   */
+  canReorder: boolean
+  onToggleAvailability: (id: string, isActive: boolean) => void
+  /** Desktop only: on mobile deleting lives on the item's own screen. */
+  onDelete: (item: MenuItem) => void
+  onDragEnd: () => void
+}
 
 export const MenuRow = ({
   item,
@@ -90,7 +104,8 @@ export const MenuRow = ({
         aria-label={`${item.name} disponível`}
       />
 
-      {/* só onde sobra largura: no celular, excluir mora na tela do item */}
+      {/* only where width allows: on mobile, delete lives on the
+        item's own screen */}
       <Button
         variant="ghost"
         size="icon"

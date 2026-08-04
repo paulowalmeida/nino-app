@@ -1,9 +1,17 @@
 import { Input } from '@nino/ds/components/Input'
 import { Select } from '@nino/ds/components/Select'
-import type { RecipientFieldsProps } from './RecipientFields.types'
+import type { Recipient } from '@pages/new-order/NewOrder.types'
 
 import styles from './RecipientFields.module.css'
 import motion from '@styles/motion.module.css'
+
+export type RecipientFieldsProps = {
+  value: Recipient
+  zones: { value: string; label: string }[]
+  /** Delivery needs address and zone; counter and pickup only need contact. */
+  withAddress: boolean
+  onChange: (patch: Partial<Recipient>) => void
+}
 
 /**
  * Who ordered. At the counter it is the name called out when the order is
@@ -77,7 +85,9 @@ export const RecipientFields = ({
         <Select
           options={zones}
           placeholder={
-            zones.length > 0 ? 'Região da entrega' : 'Nenhuma região cadastrada'
+            zones.length > 0
+              ? 'Região da entrega'
+              : 'Nenhuma região cadastrada'
           }
           value={value.zoneId}
           aria-label="Região da entrega"

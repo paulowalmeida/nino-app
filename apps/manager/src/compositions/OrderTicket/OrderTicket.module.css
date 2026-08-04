@@ -1,11 +1,11 @@
 @reference "@nino/ds/globals.css";
 
 /*
- * A comanda é um Card do DS: mesma superfície branca, mesmo raio e mesma
- * sombra dos quadros da visão geral e do cardápio do balcão. O que sobra aqui
- * é só o que o Card não sabe — as divisórias internas e os estados da fila.
- * O `p-0` desmonta o padding do Card de propósito: cada faixa tem o seu, e a
- * linha divisória precisa ir de borda a borda.
+ * The ticket is a DS Card: same white surface, same radius and same
+ * shadow as the overview and counter menu cards. What's left here is only
+ * what the Card doesn't know — the internal dividers and the queue
+ * states. `p-0` unsets the Card's padding on purpose: each strip has its
+ * own, and the divider line needs to run edge to edge.
  */
 .ticket {
   @apply flex flex-col p-0 transition-all duration-300;
@@ -13,14 +13,16 @@
 }
 
 /*
- * Pedido esperando aceite é o único que pede ação: leva a cor da marca, como
- * o quadro urgente da fila. Os outros ficam quietos.
+ * An order waiting for acceptance is the only one that calls for action:
+ * it wears the brand color, like the queue's urgent card. The rest stay
+ * quiet.
  */
 .waiting {
   @apply border-brand/35 bg-brand/8;
 }
 
-/* passou do prazo esperando aceite: o destaque quente esfria em alerta */
+/* past the deadline while waiting for acceptance: the warm highlight
+   cools into alert */
 .waiting.late {
   @apply border-danger/40 bg-danger-surface/60;
 }
@@ -38,19 +40,20 @@
   font-variant-numeric: tabular-nums;
 }
 
-/* pedido fechado: sem cronômetro correndo, o dado é a hora que entrou */
+/* closed order: no running timer, the data is the time it came in */
 .time {
   @apply text-xs text-faint;
   font-variant-numeric: tabular-nums;
 }
 
 /*
- * Na fila o que decide é há quanto tempo o pedido espera, não a que horas
- * entrou: "12 min" responde sozinho, "17:00" exige conta de cabeça no meio do
- * movimento. A hora cheia continua no `dateTime` e no title.
+ * In the queue what matters is how long the order has been waiting, not
+ * what time it came in: "12 min" answers on its own, "17:00" demands
+ * mental math in the middle of the rush. The full time still lives in
+ * `dateTime` and the title.
  *
- * Número solto, sem pastilha: o selo do status já é o carimbo do cabeçalho, e
- * dois selos lado a lado disputam a mesma leitura.
+ * Bare number, no pill: the status badge is already the header's stamp,
+ * and two badges side by side compete for the same reading.
  */
 .waited {
   @apply text-xs font-semibold text-subtle;
@@ -73,21 +76,21 @@
   @apply truncate text-sm font-semibold text-body;
 }
 
-/* canal e mesa: metadado de apoio, no mesmo tom da linha de endereço do
-   detalhe do pedido */
+/* channel and table: supporting metadata, in the same tone as the address
+   line in the order detail */
 .meta {
   @apply mt-0.5 text-xs text-faint;
 }
 
-/* resumo em uma linha no celular; lista completa da tabela para cima */
+/* one-line summary on mobile; full list from table size up */
 .summary {
   @apply mt-1.5 truncate text-sm text-muted sm:hidden;
 }
 
 /*
- * A observação vem antes dos itens e com fundo próprio: é o que a cozinha
- * erra quando não lê, e ler o pedido inteiro para achar não acontece na
- * correria.
+ * The note comes before the items and with its own background: it's what
+ * the kitchen gets wrong when it doesn't read it, and reading the whole
+ * order to find it doesn't happen during the rush.
  */
 .notes {
   @apply mt-2 rounded-lg bg-brand/8 px-2.5 py-1.5 text-sm leading-snug;
@@ -143,9 +146,9 @@
 }
 
 /*
- * Esqueleto: as medidas acompanham o texto que vai ocupar cada lugar, e as
- * larguras são irregulares de propósito — barra uniforme lê como bloco cinza,
- * não como comanda carregando.
+ * Skeleton: the measurements match the text that will occupy each spot,
+ * and the widths are irregular on purpose — a uniform bar reads as a gray
+ * block, not as a loading ticket.
  */
 .ghostNumber {
   @apply h-4 w-14;
@@ -155,7 +158,7 @@
   @apply h-3 w-12;
 }
 
-/* o selo do status: 4px de raio, como o Badge do DS */
+/* the status badge: 4px radius, like the DS Badge */
 .ghostStatus {
   @apply ml-auto h-[1.125rem] w-24 shrink-0 rounded-[4px];
 }
@@ -188,7 +191,7 @@
   @apply mt-1.5 h-2.5 w-28;
 }
 
-/* o botão de avançar: raio de pílula, largura cheia só no celular */
+/* the advance button: pill radius, full width only on mobile */
 .ghostAction {
   @apply h-8 w-full shrink-0 rounded-button sm:w-28;
 }

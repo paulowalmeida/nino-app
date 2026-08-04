@@ -1,11 +1,12 @@
 @reference "@nino/ds/globals.css";
 
-/* a altura e o raio da própria placa, para ela não mudar de forma ao chegar */
+/* the sign's own height and radius, so it doesn't change shape when it
+   arrives */
 .skeleton {
   @apply h-7 w-32 rounded-full;
 }
 
-/* a placa na porta: o ponto aceso é o que se lê de longe */
+/* the sign on the door: the lit dot is what reads from a distance */
 .sign {
   @apply gap-1.5;
 }

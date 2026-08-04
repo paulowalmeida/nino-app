@@ -5,8 +5,6 @@ import { Input } from '@nino/ds/components/Input'
 import { Skeleton } from '@nino/ds/components/Skeleton'
 import { usePause, usePauseActions } from '@hooks/store/usePause'
 
-import type { PauseSwitchProps } from './PauseSwitch.types'
-
 import styles from './PauseSwitch.module.css'
 import motion from '@styles/motion.module.css'
 
@@ -17,9 +15,15 @@ const OPTIONS = [
   { minutes: undefined, label: 'Até eu reabrir' },
 ]
 
+export type PauseSwitchProps = {
+  tenantId: string | null
+  timezone: string | null
+}
+
 /**
- * O botão de pânico do salão: chuva forte, cozinha entupida, acabou a massa.
- * Fecha antes da hora combinada sem mexer no horário fixo da loja.
+ * The dining room's panic button: heavy rain, kitchen backed up, out of
+ * dough. Closes before the scheduled time without touching the store's
+ * fixed hours.
  */
 export const PauseSwitch = ({ tenantId, timezone }: PauseSwitchProps) => {
   const { data: pause, isPending } = usePause(tenantId)

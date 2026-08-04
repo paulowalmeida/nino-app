@@ -1,0 +1,71 @@
+@reference "@nino/ds/globals.css";
+
+.card {
+  @apply flex cursor-pointer flex-col items-start gap-2 rounded-[20px];
+  @apply border border-line bg-brand-foreground p-3 text-left shadow-card;
+  @apply transition-all duration-150;
+
+  /*
+   * A long press here is the gesture to peek at the product. Without
+   * turning off callout and selection, the phone reacts first — it opens
+   * the context menu and starts selecting the card's text, and the preview
+   * never arrives.
+   */
+  @apply select-none;
+  -webkit-touch-callout: none;
+  @apply hover:-translate-y-0.5 hover:border-brand/60 hover:bg-brand-foreground;
+  @apply hover:shadow-card-hover;
+  @apply focus-visible:outline-none focus-visible:ring-2;
+  @apply focus-visible:ring-brand focus-visible:ring-offset-2;
+  @apply min-h-28 lg:min-h-32;
+}
+
+.thumb {
+  @apply h-10 w-10 text-base lg:h-12 lg:w-12;
+}
+
+.name {
+  @apply line-clamp-2 flex-1 text-base font-semibold leading-tight text-body;
+}
+
+.price {
+  @apply font-display text-lg font-extrabold text-ink;
+  font-variant-numeric: tabular-nums;
+}
+
+/* While the finger holds, the card pulls back a little: it gives feedback
+   that the gesture was understood before the preview opens. */
+.pressing {
+  @apply scale-[0.97] transition-transform duration-150;
+}
+
+.preview {
+  @apply flex flex-col gap-2;
+}
+
+/* The backdrop goes out of focus so the product stays alone in view — it's
+   what makes the preview feel like it zooms in, instead of just opening a
+   box on top. */
+.previewBackdrop {
+  @apply bg-ink/40 backdrop-blur-md;
+}
+
+/* Look-height, not thumbnail-height: it's the whole reason the gesture
+   exists. The fallback emoji grows along with it so it doesn't get lost in
+   the middle of the frame. */
+.previewPhoto {
+  @apply h-56 w-full rounded-card object-cover text-7xl;
+}
+
+.previewName {
+  @apply mt-1 font-display text-xl font-extrabold leading-tight text-ink;
+}
+
+.previewText {
+  @apply text-sm leading-relaxed text-muted;
+}
+
+.previewPrice {
+  @apply text-lg font-bold text-brand-strong;
+  font-variant-numeric: tabular-nums;
+}

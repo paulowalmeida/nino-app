@@ -1,8 +1,8 @@
 import { useCallback, useState } from 'react'
 
 import { Breadcrumb } from '@elements/Breadcrumb/Breadcrumb'
-import { FirstStoreForm } from '@compositions/FirstStoreForm'
-import { StorePreview } from '@compositions/StorePreview'
+import { FirstStoreForm } from '@compositions/FirstStoreForm/FirstStoreForm'
+import { StorePreview } from '@compositions/StorePreview/StorePreview'
 
 import styles from './NewUnit.module.css'
 import motion from '@styles/motion.module.css'

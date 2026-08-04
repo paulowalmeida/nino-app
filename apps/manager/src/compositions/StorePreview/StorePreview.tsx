@@ -1,13 +1,21 @@
 import { slugify } from '@utils/slugify'
 
-import type { StorePreviewProps } from './StorePreview.types'
-
 import styles from './StorePreview.module.css'
 
+export type StorePreviewProps = {
+  /** Typed name. Empty keeps the sign dark, showing the placeholder text. */
+  name: string
+  /** Placeholder text while no one has typed anything. */
+  placeholder?: string
+  /** Placeholder slug, shown next to the domain while the sign is dark. */
+  placeholderSlug?: string
+}
+
 /**
- * A loja como o cliente vai vê-la, montando enquanto se digita. Serve de
- * confirmação antes do envio: o nome cabe, o link ficou legível, a inicial é a
- * esperada. Decorativa por definição — o formulário abaixo é quem manda.
+ * The store as the customer will see it, assembling itself as it's typed.
+ * Serves as confirmation before submitting: the name fits, the link reads
+ * clearly, the initial is the one expected. Decorative by definition — the
+ * form below is the one in charge.
  */
 export const StorePreview = ({
   name,

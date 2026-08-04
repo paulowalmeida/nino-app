@@ -1,10 +1,12 @@
 import { useState } from 'react'
 
 import { PageHeader } from '@nino/ds/components/PageHeader'
-import { EditEmailModal } from '@compositions/EditEmailModal'
-import { InviteForm } from '@compositions/InviteForm'
-import { TeamRoster } from '@compositions/TeamRoster'
-import type { RosterEntry } from '@compositions/TeamRoster/TeamRoster.types'
+import { EditEmailModal } from '@compositions/EditEmailModal/EditEmailModal'
+import { InviteForm } from '@compositions/InviteForm/InviteForm'
+import {
+  TeamRoster,
+  type RosterEntry,
+} from '@compositions/TeamRoster/TeamRoster'
 import { useCouriers } from '@hooks/team/useCouriers'
 import { useCurrentTenant } from '@hooks/session/useCurrentTenant'
 import { useInvite } from '@hooks/team/useInvite'

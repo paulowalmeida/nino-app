@@ -1,4 +1,4 @@
-import { PhoneList } from '@compositions/PhoneList'
+import { PhoneList } from '@compositions/PhoneList/PhoneList'
 import { useCurrentTenant } from '@hooks/session/useCurrentTenant'
 import { usePhoneMutations, usePhones } from '@hooks/settings/usePhones'
 

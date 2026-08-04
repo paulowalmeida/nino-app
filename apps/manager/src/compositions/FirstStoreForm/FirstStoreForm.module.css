@@ -9,10 +9,10 @@
 }
 
 /*
- * Dez campos empilhados são uma parede: quem preenche não sabe quanto falta.
- * Divididos em dois blocos — quem é a loja, onde ela fica — cada trecho tem
- * começo e fim, e a divisória basta para separá-los. Mesma régua de grupo das
- * seções de configurações.
+ * Dez campos empilhados são uma parede: quem preenche não sabe quanto
+ * falta. Divididos em dois blocos — quem é a loja, onde ela fica — cada
+ * trecho tem começo e fim, e a divisória basta para separá-los. Mesma
+ * régua de grupo das seções de configurações.
  */
 .group {
   @apply flex flex-col gap-4;
@@ -65,8 +65,8 @@
   @apply mt-6;
 }
 
-/* ação fecha o formulário à direita, atrás de um fio — mesma régua da ficha
-   do item e do formulário de novo produto */
+/* ação fecha o formulário à direita, atrás de um fio — mesma régua
+   da ficha do item e do formulário de novo produto */
 .actions {
   @apply mt-6 flex flex-col border-t border-sand pt-5;
   @apply sm:flex-row sm:justify-end;

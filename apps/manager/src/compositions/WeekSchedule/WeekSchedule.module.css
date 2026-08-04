@@ -9,10 +9,10 @@
 }
 
 /*
- * Uma linha por dia — o dia fechado recua para o fundo. Sem divisória: fora
- * do cartão, o traço atravessava a largura inteira da página enquanto os
- * campos paravam na metade, e sobrava linha à direita apontando para nada. O
- * que separa os dias é o próprio ritmo das linhas.
+ * One row per day — a closed day recedes into the background. No divider:
+ * outside the card, the rule used to run the page's full width while the
+ * fields stopped halfway, leaving a stroke on the right pointing at
+ * nothing. What separates the days is the rows' own rhythm.
  */
 .day {
   @apply flex flex-wrap items-center gap-3 py-2;

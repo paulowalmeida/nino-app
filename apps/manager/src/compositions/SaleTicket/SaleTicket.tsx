@@ -8,21 +8,46 @@ import { EmptyState } from '@nino/ds/components/EmptyState'
 import { Input } from '@nino/ds/components/Input'
 import { Icon } from '@nino/ds/components/Icon'
 import { ItemThumb } from '@components/ItemThumb/ItemThumb'
+import type { CartLine } from '@custom_types/counter'
+import type { PaymentMethod } from '@custom_types/order'
 import { brl } from '@utils/money'
 import { paymentLabelFor } from '@utils/order-flow'
-
-import type { SaleTicketProps } from './SaleTicket.types'
 
 import styles from './SaleTicket.module.css'
 import motion from '@styles/motion.module.css'
 
+export type SaleTicketProps = {
+  lines: CartLine[]
+  /** Who will pick up the order once it's ready. */
+  customerName: string
+  tableNumber: string
+  onCustomerName: (name: string) => void
+  onTableNumber: (table: string) => void
+  /** Methods the unit accepts, coming from the store's rules. */
+  methods: PaymentMethod[]
+  method: PaymentMethod
+  isSending: boolean
+  error: string | null
+  onStep: (productId: string, by: number) => void
+  onMethod: (method: PaymentMethod) => void
+  onClear: () => void
+  onFinish: () => void
+  /**
+   * Inside the mobile sheet the frame and the title belong to the sheet
+   * itself — repeating them here would be a box inside a box.
+   */
+  bare?: boolean
+}
+
 /**
- * A comanda do caixa, na mesma forma da sacola do app do cliente: linha com
- * foto, nome e a conta aberta à esquerda; valor e quantidade empilhados à
- * direita. É o que faz o nome caber em tela estreita — com o contador ao lado
- * do nome, ele era o primeiro a ser espremido.
+ * The counter's ticket, in the same shape as the customer app's cart: a row
+ * with photo, name and running total on the left; value and quantity
+ * stacked on the right. This is what lets the name fit on a narrow screen —
+ * with the counter next to the name, it used to be the first thing
+ * squeezed.
  *
- * O que o balcão tem a mais: quem pediu, forma de pagamento e o fechamento.
+ * What the counter has on top: who ordered, payment method and closing the
+ * sale.
  */
 export const SaleTicket = ({
   lines,
@@ -102,8 +127,9 @@ export const SaleTicket = ({
                         }
                         onClick={() => onStep(line.productId, -1)}
                       >
-                        {/* Na última unidade o traço vira lixeira: tocar de
-                            novo remove, e o ícone avisa antes. */}
+                        {/* On the last unit the dash turns into a trash
+                            icon: tapping again removes it, and the icon
+                            warns beforehand. */}
                         {isLast ? (
                           <Icon name="trash-thin" />
                         ) : (
@@ -134,8 +160,9 @@ export const SaleTicket = ({
         )}
 
         {/*
-         * Identificação depois dos itens: no balcão o pedido é montado antes
-         * de se perguntar o nome, e no topo esses campos empurravam a lista.
+         * Identification after the items: at the counter the order is
+         * assembled before anyone asks for the name, and at the top these
+         * fields used to push the list down.
          */}
         {lines.length > 0 && (
           <div className={styles.who}>
@@ -153,9 +180,9 @@ export const SaleTicket = ({
             />
 
             {/*
-             * Pagamento fica aqui, e não no rodapé fixo: é preenchimento como
-             * o nome, e preso embaixo tomava metade da tela do celular, que é
-             * espaço que a lista de itens precisa.
+             * Payment lives here, not in the fixed footer: it's filler like
+             * the name, and pinned at the bottom it used to take up half
+             * the phone screen — space the item list needs.
              */}
             <p className={styles.payLabel}>Como vai pagar</p>
 
@@ -212,7 +239,9 @@ export const SaleTicket = ({
           open
           onOpenChange={(open) => !open && setConfirmingClear(false)}
           title="Limpar a comanda?"
-          description="Os itens da venda serão removidos. Não dá para desfazer."
+          description={
+            'Os itens da venda serão removidos. Não dá para desfazer.'
+          }
           confirmLabel="Limpar"
           cancelLabel="Cancelar"
           onConfirm={handleConfirmClear}

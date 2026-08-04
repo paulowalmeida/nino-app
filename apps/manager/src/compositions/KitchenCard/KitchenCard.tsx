@@ -7,19 +7,29 @@ import {
   nextStep,
   ticketNumber,
 } from '@utils/order-flow'
-
-import type { KitchenCardProps } from './KitchenCard.types'
+import type { Order } from '@custom_types/order'
+import type { OrderStatusKey } from '@custom_types/order/order-status-key'
 
 import styles from './KitchenCard.module.css'
 import motion from '@styles/motion.module.css'
 
+export type KitchenCardProps = {
+  order: Order
+  onAdvance: (orderId: string, target: OrderStatusKey) => void
+  isBusy: boolean
+}
+
 /**
- * A comanda como sai da bobina: papel picotado, número grande o bastante
- * para ler do outro lado da praça e nenhum valor — quem monta o prato não
- * decide dinheiro. A fita do topo é o prazo escorrendo; quando enche, a
- * comanda inteira acende.
+ * The ticket as it comes off the roll: torn paper, a number big enough to
+ * read across the kitchen and no price — whoever plates the food doesn't
+ * decide money. The strip at the top is the deadline draining; when it
+ * fills, the whole ticket lights up.
  */
-export const KitchenCard = ({ order, onAdvance, isBusy }: KitchenCardProps) => {
+export const KitchenCard = ({
+  order,
+  onAdvance,
+  isBusy,
+}: KitchenCardProps) => {
   const step = nextStep(order)
   const {
     label: elapsed,

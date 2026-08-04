@@ -11,14 +11,20 @@ import { PasswordStrength } from '@nino/ds/components/PasswordStrength'
 import { PhoneInput } from '@nino/ds/components/PhoneInput'
 import { isValidCpf } from '@nino/ds/validators'
 import { useCheckAvailability } from '@hooks/auth/useCheckAvailability'
+import type { SignupAccount } from '@custom_types/auth'
 import { riseDelay } from '@utils/rise-delay'
 
-import type { AccountFormValues, AccountStepProps } from './AccountStep.types'
+import type { AccountFormValues } from './AccountStep.types'
 
 import styles from '@layouts/AuthLayout/authForm.module.css'
 import motion from '@layouts/AuthLayout/motion.module.css'
 
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+
+export type AccountStepProps = {
+  defaultValues?: SignupAccount | null
+  onNext: (account: SignupAccount) => void
+}
 
 export const AccountStep = ({ defaultValues, onNext }: AccountStepProps) => {
   const { mutateAsync: checkAvailability } = useCheckAvailability()

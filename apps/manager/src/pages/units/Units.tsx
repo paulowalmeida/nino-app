@@ -1,8 +1,8 @@
 import { useCallback, useState } from 'react'
 import { Link } from 'react-router'
 
-import { FirstStoreForm } from '@compositions/FirstStoreForm'
-import { StorePreview } from '@compositions/StorePreview'
+import { FirstStoreForm } from '@compositions/FirstStoreForm/FirstStoreForm'
+import { StorePreview } from '@compositions/StorePreview/StorePreview'
 
 import { NinoLogo } from '@elements/NinoLogo/NinoLogo'
 import { AuthService } from '@services/auth.service'

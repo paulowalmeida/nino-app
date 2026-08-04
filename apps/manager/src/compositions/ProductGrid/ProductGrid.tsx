@@ -3,14 +3,20 @@ import { useState } from 'react'
 import { EmptyState } from '@nino/ds/components/EmptyState'
 import { Input } from '@nino/ds/components/Input'
 import { Skeleton } from '@nino/ds/components/Skeleton'
+import { Tabs } from '@nino/ds/components/Tabs'
+import type { MenuItem, MenuSection } from '@custom_types/product'
 
-import { ProductCard } from './ProductCard'
-import type { ProductGridProps } from './ProductGrid.types'
+import { ProductCard } from './ProductCard/ProductCard'
 
 import styles from './ProductGrid.module.css'
-import motion from '@styles/motion.module.css'
 
-/** Três abas e oito cartões: o que preenche a primeira tela do balcão. */
+export type ProductGridProps = {
+  sections: MenuSection[]
+  isPending: boolean
+  onPick: (item: MenuItem) => void
+}
+
+/** Three tabs and eight cards: what fills the counter's first screen. */
 const SKELETON_TABS = ['first', 'second', 'third']
 const SKELETON_CARDS = [
   'one',
@@ -24,8 +30,9 @@ const SKELETON_CARDS = [
 ]
 
 /**
- * O cardápio do caixa: alvo grande, preço legível de longe e categorias
- * como filtro — quem opera não rola atrás do item, escolhe a aba e toca.
+ * The counter's menu: large targets, price readable from a distance, and
+ * categories as a filter — whoever is operating doesn't scroll to find the
+ * item, they pick the tab and tap.
  */
 export const ProductGrid = ({
   sections,
@@ -39,31 +46,35 @@ export const ProductGrid = ({
   const searching = term.trim().length > 0
 
   /*
-   * Buscando, as categorias saem de cena e o cardápio inteiro vira uma lista
-   * só: com sessenta bebidas ninguém quer lembrar em que aba o item estava —
-   * quer digitar "coca" e tocar.
+   * While searching, categories step out and the whole menu becomes a
+   * single list: with sixty drinks nobody wants to remember which tab an
+   * item was registered under — they want to type "coke" and tap.
    */
-  const items = searching
-    ? sections
-        .flatMap(({ items: list }) => list)
-        .filter(({ name }) =>
-          name.toLowerCase().includes(term.trim().toLowerCase())
-        )
-    : (sections.find(({ id }) => id === active)?.items ?? [])
+  const query = term.trim().toLowerCase()
+  const searchResults = sections
+    .flatMap(({ items: list }) => list)
+    .filter(({ name }) => name.toLowerCase().includes(query))
+    .filter(({ isActive }) => isActive)
 
-  const visible = items.filter(({ isActive }) => isActive)
+  const renderGrid = (items: MenuItem[]) => (
+    <div className={`${styles.grid} pt-4`}>
+      {items.map((item, index) => (
+        <ProductCard key={item.id} item={item} index={index} onPick={onPick} />
+      ))}
+    </div>
+  )
 
   /*
-   * Busca e abas continuam desenhadas enquanto carrega: elas não dependem da
-   * requisição, e sumir para voltar depois faz a bandeja inteira saltar meia
-   * tela no meio do atendimento.
+   * Search and tabs stay drawn while loading: they don't depend on the
+   * request, and hiding them to bring them back later makes the whole tray
+   * jump half a screen mid-service.
    */
   if (isPending) {
     return (
       <div className={styles.wrap}>
         <Skeleton className={styles.skeletonSearch} />
 
-        <div className={styles.tabs}>
+        <div className={styles.skeletonTabsRow}>
           {SKELETON_TABS.map((tab) => (
             <Skeleton key={tab} className={styles.skeletonTab} />
           ))}
@@ -96,39 +107,27 @@ export const ProductGrid = ({
         className={styles.search}
       />
 
-      {!searching && (
-        <div className={styles.tabs} role="tablist" aria-label="Categorias">
-          {sections.map(({ id, name }) => (
-            <button
-              key={id}
-              type="button"
-              role="tab"
-              aria-selected={id === active}
-              onClick={() => setCurrent(id)}
-              className={`${motion.press} ${styles.tab} ${
-                id === active ? styles.tabOn : ''
-              }`}
-            >
-              {name}
-            </button>
-          ))}
-        </div>
-      )}
-
-      {searching && visible.length === 0 && (
-        <EmptyState>Nenhum item com esse nome no cardápio.</EmptyState>
-      )}
-
-      <div className={`${styles.grid} pt-4`}>
-        {visible.map((item, index) => (
-          <ProductCard
-            key={item.id}
-            item={item}
-            index={index}
-            onPick={onPick}
-          />
+      {searching &&
+        (searchResults.length === 0 ? (
+          <EmptyState>Nenhum item com esse nome no cardápio.</EmptyState>
+        ) : (
+          renderGrid(searchResults)
         ))}
-      </div>
+
+      {!searching && (
+        <Tabs
+          value={active ?? undefined}
+          onValueChange={setCurrent}
+          className={styles.tabsRoot}
+          tabs={sections.map((section) => ({
+            value: section.id,
+            label: section.name,
+            content: renderGrid(
+              section.items.filter(({ isActive }) => isActive)
+            ),
+          }))}
+        />
+      )}
     </div>
   )
 }

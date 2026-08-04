@@ -6,33 +6,38 @@ import { Eyebrow } from '@nino/ds/components/Eyebrow'
 import { useSalesReport } from '@hooks/order/useSalesReport'
 import { brl } from '@utils/money'
 
-import type { TopProductsProps } from './TopProducts.types'
-
 import styles from './TopProducts.module.css'
 import motion from '@styles/motion.module.css'
 
-/** Cinco linhas cabem ao lado do gráfico sem esticar o cartão. */
+export type TopProductsProps = {
+  tenantId: string | null
+}
+
+/** Five rows fit next to the chart without stretching the card. */
 const LIMIT = 5
 
-/** Barras decrescentes: a lista chega ordenada, e o esqueleto já diz isso. */
+/** Descending bars: the list arrives sorted, and the skeleton says so too. */
 const SKELETON_WIDTHS = ['92%', '74%', '58%', '43%', '31%']
 
 /**
- * O que mais saiu na semana. O dado já vinha no relatório de venda e era
- * descartado — a Visão geral pedia por ele sem saber.
+ * What sold the most this week. The data was already coming in the sales
+ * report and being discarded — the Overview page needed it without
+ * knowing.
  *
- * Ordena por quantidade, não por receita: a pergunta aqui é o que sai da
- * cozinha, e um item caro vendido uma vez não é o carro-chefe.
+ * Sorted by quantity, not revenue: the question here is what leaves the
+ * kitchen, and an expensive item sold once isn't the flagship.
  */
 export const TopProducts = ({ tenantId }: TopProductsProps) => {
   const { report, isPending } = useSalesReport(tenantId, { period: 'week' })
 
-  const items = (report?.topProducts ?? []).slice(0, LIMIT).map((product) => ({
-    id: product.productId,
-    label: product.name,
-    value: product.quantity,
-    display: brl(product.revenue),
-  }))
+  const items = (report?.topProducts ?? [])
+    .slice(0, LIMIT)
+    .map((product) => ({
+      id: product.productId,
+      label: product.name,
+      value: product.quantity,
+      display: brl(product.revenue),
+    }))
 
   return (
     <section aria-label="O que mais sai" className={styles.section}>
@@ -41,7 +46,8 @@ export const TopProducts = ({ tenantId }: TopProductsProps) => {
       </div>
 
       <Card className={`${motion.settle} ${styles.card}`}>
-        {/* cinco linhas de barra, como as que vêm — a mais vendida no topo */}
+        {/* five bar rows, matching the ones that arrive — best seller on
+            top */}
         {isPending && (
           <div className={styles.skeletonBars}>
             {SKELETON_WIDTHS.map((width) => (

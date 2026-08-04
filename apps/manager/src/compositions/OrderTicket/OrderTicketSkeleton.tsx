@@ -3,17 +3,17 @@ import { Skeleton } from '@nino/ds/components/Skeleton'
 
 import styles from './OrderTicket.module.css'
 
-/** Três linhas de item, o mesmo teto que a comanda mostra antes de resumir. */
+/** Three item lines, the same cap the ticket shows before summarizing. */
 const GHOST_ITEMS = ['first', 'second', 'third']
 
 /**
- * A forma da comanda enquanto ela não chega. Divide o módulo com o
- * OrderTicket de propósito: as duas leem as mesmas classes de estrutura, então
- * mudar o cabeçalho ou o rodapé de uma move a outra junto.
+ * The ticket's shape while it hasn't arrived yet. Shares the module with
+ * OrderTicket on purpose: both read the same structure classes, so
+ * changing one's header or footer moves the other along.
  *
- * A lista de itens herda o `hidden sm:flex` da comanda de verdade — no celular
- * ela não existe, e um esqueleto que a desenhasse ficaria mais alto que o
- * cartão que vai ocupar o lugar.
+ * The item list inherits `hidden sm:flex` from the real ticket — on
+ * mobile it doesn't exist, and a skeleton that drew it would end up
+ * taller than the card that will take its place.
  */
 export const OrderTicketSkeleton = () => (
   <Card asChild className={styles.ticket}>

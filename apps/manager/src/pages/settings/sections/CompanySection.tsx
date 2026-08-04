@@ -1,4 +1,4 @@
-import { CompanyCard } from '@compositions/CompanyCard'
+import { CompanyCard } from '@compositions/CompanyCard/CompanyCard'
 import { useCompany, useSaveCompany } from '@hooks/company/useCompany'
 
 export const CompanySection = () => {

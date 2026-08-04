@@ -6,12 +6,21 @@ import { Button } from '@nino/ds/components/Button'
 import { FormField } from '@nino/ds/components/FormField'
 import { Input } from '@nino/ds/components/Input'
 import { Modal } from '@nino/ds/components/Modal'
-import type {
-  EditEmailFormValues,
-  EditEmailModalProps,
-} from './EditEmailModal.types'
 
 import styles from './EditEmailModal.module.css'
+
+ type EditEmailFormValues = {
+  email: string
+}
+
+type EditEmailModalProps = {
+  open: boolean
+  onOpenChange: (open: boolean) => void
+  title: string
+  hint: string
+  currentEmail: string | null
+  onSave: (email: string) => Promise<unknown>
+}
 
 export const EditEmailModal = ({
   open,

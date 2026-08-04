@@ -7,16 +7,39 @@ import { FormField } from '@nino/ds/components/FormField'
 import { Input } from '@nino/ds/components/Input'
 import { Select } from '@nino/ds/components/Select'
 import { Skeleton } from '@nino/ds/components/Skeleton'
-import { AddressFields } from '@compositions/AddressFields'
-import type { TenantDetail } from '@custom_types/store'
-
-import type { UnitCardProps, UnitDraft } from './UnitCard.types'
+import { AddressFields } from '@compositions/AddressFields/AddressFields'
+import type { TenantDetail, UpdateTenantRequest } from '@custom_types/store'
 
 import local from './UnitCard.module.css'
 import motion from '@styles/motion.module.css'
 import styles from '@styles/settingsCard.module.css'
 
-/** Fusos que cobrem o Brasil — a loja opera num, não em qualquer um. */
+export type UnitCardProps = {
+  unit: TenantDetail | undefined
+  isPending: boolean
+  isSaving: boolean
+  /** Company's headquarters — the rank shows in the profile's header. */
+  isMain: boolean
+  isPromoting: boolean
+  onSetMain: () => void
+  onSave: (data: UpdateTenantRequest) => void
+}
+
+export type UnitDraft = {
+  customName: string
+  timezone: string
+  primaryColor: string
+  zipCode: string
+  street: string
+  number: string
+  complement: string
+  neighborhood: string
+  city: string
+  state: string
+}
+
+/** Time zones covering Brazil — the store operates in one, not any of
+    them. */
 const ZONES = [
   { value: 'America/Sao_Paulo', label: 'Brasília (GMT-3)' },
   { value: 'America/Belem', label: 'Belém (GMT-3)' },
@@ -93,7 +116,8 @@ export const UnitCard = ({
             )}
           </h2>
           <p className={styles.hint}>
-            É o endereço de onde o pedido sai — e o que o cliente vê na loja.
+            É o endereço de onde o pedido sai — e o que o cliente vê na
+            loja.
           </p>
         </div>
 

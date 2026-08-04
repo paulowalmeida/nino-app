@@ -12,9 +12,8 @@ import { useLoadMore } from '@hooks/ui/useLoadMore'
 import { useReorderMenuItems } from '@hooks/product/useReorderMenuItems'
 import type { MenuItem } from '@custom_types/product'
 
-import { DeleteItemDialog } from './DeleteItemDialog'
+import { DeleteItemDialog } from './DeleteItemDialog/DeleteItemDialog'
 import { MenuRow } from './MenuRow/MenuRow'
-import type { MenuBoardProps } from './MenuBoard.types'
 
 import styles from './MenuBoard.module.css'
 import motion from '@styles/motion.module.css'
@@ -22,7 +21,18 @@ import motion from '@styles/motion.module.css'
 /** Seis linhas: o que cabe na primeira tela antes de precisar rolar. */
 const GHOST_ROWS = ['one', 'two', 'three', 'four', 'five', 'six']
 
-export const MenuBoard = ({ tenantId, categoryId, search }: MenuBoardProps) => {
+export type MenuBoardProps = {
+  tenantId: string | null
+  /** `null` is the whole menu; with a category chosen, dragging turns on. */
+  categoryId: string | null
+  search: string
+}
+
+export const MenuBoard = ({
+  tenantId,
+  categoryId,
+  search,
+}: MenuBoardProps) => {
   const {
     items,
     total,
@@ -39,10 +49,10 @@ export const MenuBoard = ({ tenantId, categoryId, search }: MenuBoardProps) => {
   const sentinelRef = useLoadMore(!!hasNextPage, () => void fetchNextPage())
 
   /**
-   * Arrastar só faz sentido dentro de uma categoria: a posição de um item é
-   * relativa aos irmãos dela. Em "Todas" a lista atravessa categorias, e numa
-   * busca ela é um recorte — mover a terceira linha de um resultado não diz
-   * para onde o item deveria ir no cardápio.
+   * Dragging only makes sense within a category: an item's position is
+   * relative to its siblings. In "All" the list spans categories, and in a
+   * search it's a slice — moving the third row of a result doesn't say
+   * where the item should go in the menu.
    */
   const canReorder = !!categoryId && !search
 
@@ -50,7 +60,7 @@ export const MenuBoard = ({ tenantId, categoryId, search }: MenuBoardProps) => {
   const [prevItems, setPrevItems] = useState(items)
   const orderRef = useRef(order)
 
-  /** Re-seeds só quando a API manda um recorte diferente do que já temos. */
+  /** Re-seeds only when the API sends a different slice than what we have. */
   if (items !== prevItems) {
     setPrevItems(items)
     setOrder(items)
@@ -61,9 +71,10 @@ export const MenuBoard = ({ tenantId, categoryId, search }: MenuBoardProps) => {
   }, [order])
 
   /**
-   * As posições são fixas (o mesmo conjunto, só reatribuído): a lista carrega
-   * a categoria em ordem, então trocar duas linhas troca duas posições que já
-   * existem — não inventa posição nova nem desloca o que ainda não carregou.
+   * Positions are fixed (the same set, just reassigned): the list loads the
+   * category in order, so swapping two rows swaps two positions that
+   * already exist — it never invents a new position or shifts what hasn't
+   * loaded yet.
    */
   const persist = () => {
     const slots = items.map((item) => item.position).sort((a, b) => a - b)
@@ -78,9 +89,10 @@ export const MenuBoard = ({ tenantId, categoryId, search }: MenuBoardProps) => {
   }
 
   /*
-   * O esqueleto reusa as classes da lista de verdade — mesmo cartão, mesmas
-   * divisórias, mesma altura de linha. Três blocos soltos com respiro entre
-   * eles, como era antes, tinham geometria própria e a lista pulava ao chegar.
+   * The skeleton reuses the real list's classes — same card, same
+   * dividers, same row height. Three loose blocks with spacing between
+   * them, like before, had their own geometry and the list jumped on
+   * arrival.
    */
   if (isPending) {
     return (
@@ -113,8 +125,8 @@ export const MenuBoard = ({ tenantId, categoryId, search }: MenuBoardProps) => {
   if (isError) {
     return (
       <Alert variant="error">
-        Não foi possível carregar o cardápio. Recarregue a página para tentar de
-        novo.
+        Não foi possível carregar o cardápio. Recarregue a página para
+        tentar de novo.
       </Alert>
     )
   }
@@ -136,7 +148,7 @@ export const MenuBoard = ({ tenantId, categoryId, search }: MenuBoardProps) => {
         {canReorder && ' · arraste para mudar a ordem no app do cliente'}
       </p>
 
-      {/* a rolagem começa aqui: a contagem acima fica parada */}
+      {/* scrolling starts here: the count above stays put */}
       <ScrollArea className={styles.scroll}>
         <div className={styles.list}>
           <Reorder.Group
@@ -162,7 +174,7 @@ export const MenuBoard = ({ tenantId, categoryId, search }: MenuBoardProps) => {
           </Reorder.Group>
         </div>
 
-        {/* sentinela: entra em cena e puxa a próxima página sozinha */}
+        {/* sentinel: enters view and pulls the next page on its own */}
         <div ref={sentinelRef} className={styles.sentinel}>
           {isFetchingNextPage && (
             <span className={styles.loadingMore}>Carregando mais itens…</span>

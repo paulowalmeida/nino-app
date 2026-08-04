@@ -5,16 +5,24 @@ import { Button } from '@nino/ds/components/Button'
 import { Input } from '@nino/ds/components/Input'
 import { Modal } from '@nino/ds/components/Modal'
 
-import type { RemoveUnitModalProps } from './RemoveUnitModal.types'
-
 import styles from './RemoveUnitModal.module.css'
 
+export type RemoveUnitModalProps = {
+  open: boolean
+  onOpenChange: (open: boolean) => void
+  /** Name the person has to type — the same one shown in the list. */
+  unitName: string
+  loading?: boolean
+  onConfirm: () => void
+}
+
 /**
- * Fechar uma loja apaga o histórico dela junto — não é o tipo de coisa que se
- * desfaz com um "voltar". Por isso a confirmação não é um segundo botão do
- * lado do primeiro: quem está fechando tem de escrever o nome da unidade, do
- * mesmo jeito que o GitHub pede o nome do repositório. O gesto de copiar o
- * nome é o que obriga a olhar qual loja está prestes a sumir.
+ * Closing a store wipes its history along with it — not the kind of thing
+ * that undoes with a "go back". That's why the confirmation isn't a second
+ * button next to the first: whoever is closing it has to type the unit
+ * name, the same way GitHub asks for the repository name. The act of
+ * copying the name is what forces a look at which store is about to
+ * disappear.
  */
 export const RemoveUnitModal = ({
   open,
@@ -25,10 +33,10 @@ export const RemoveUnitModal = ({
 }: RemoveUnitModalProps) => {
   const [typed, setTyped] = useState('')
 
-  /* cada abertura começa do zero — o nome digitado antes não vale para a
-     próxima loja, e sobrar texto no campo é meio caminho para o engano. O
-     ajuste é na render, não num efeito: o campo nunca chega a pintar com o
-     texto da loja anterior */
+  /* Every opening starts from zero — the name typed before doesn't carry
+     over to the next store, and leftover text in the field is halfway to a
+     mistake. The reset happens during render, not in an effect: the field
+     never gets to paint with the previous store's text. */
   const [wasOpen, setWasOpen] = useState(open)
   if (open !== wasOpen) {
     setWasOpen(open)
@@ -59,8 +67,9 @@ export const RemoveUnitModal = ({
             desfazer.
           </Alert>
 
-          {/* a dica fica acima do campo, junto do rótulo: o nome tem de estar
-              à vista na hora de digitar, não abaixo do que se digitou */}
+          {/* The hint sits above the field, next to the label: the name
+              needs to stay visible while typing, not below what was
+              already typed. */}
           <div className={styles.field}>
             <label className={styles.label} htmlFor="remove-unit-name">
               Para confirmar, digite <code className={styles.code}>

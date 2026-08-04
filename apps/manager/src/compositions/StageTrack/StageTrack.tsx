@@ -1,11 +1,23 @@
 import { CountUp } from '@nino/ds/components/CountUp'
-import { Icon } from '@nino/ds/components/Icon'
+import { Icon, type IconName } from '@nino/ds/components/Icon'
+import type { OrderStage } from '@custom_types/order'
 import { riseDelay } from '@utils/rise-delay'
-
-import type { StageTrackProps } from './StageTrack.types'
 
 import styles from './StageTrack.module.css'
 import motion from '@styles/motion.module.css'
+
+export type StageOption = {
+  id: OrderStage
+  label: string
+  count: number
+  icon: IconName
+}
+
+export type StageTrackProps = {
+  stages: StageOption[]
+  value: OrderStage
+  onChange: (stage: OrderStage) => void
+}
 
 /**
  * The queue is a sequence — a pedido walks the track from left to right —

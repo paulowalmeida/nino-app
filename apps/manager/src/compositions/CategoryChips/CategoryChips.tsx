@@ -1,17 +1,17 @@
 import { Skeleton } from '@nino/ds/components/Skeleton'
-
-import type { CategoryChipsProps } from './CategoryChips.types'
+import type { ProductCategory } from '@custom_types/product'
 
 import styles from './CategoryChips.module.css'
 
-/** Quatro fichas: o que cabe no trilho antes de a rolagem ser necessária. */
 const GHOST_CHIPS = ['first', 'second', 'third', 'fourth']
 
-/**
- * O mesmo trilho de fichas do balcão e da fila de pedidos: um toque troca a
- * lista inteira. Categoria é o recorte que a pessoa já tem na cabeça quando
- * abre o cardápio — antes disso era preciso rolar até achar o título da seção.
- */
+type CategoryChipsProps = {
+  categories: ProductCategory[]
+  value: string | null
+  onChange: (categoryId: string | null) => void
+  isPending?: boolean
+}
+
 export const CategoryChips = ({
   categories,
   value,

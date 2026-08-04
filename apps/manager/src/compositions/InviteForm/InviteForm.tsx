@@ -1,28 +1,29 @@
 import { useState } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 
+import type { CreateInviteRequest } from '@custom_types/team'
 import { Alert } from '@nino/ds/components/Alert'
 import { Button } from '@nino/ds/components/Button'
 import { FormField } from '@nino/ds/components/FormField'
 import { Input } from '@nino/ds/components/Input'
 import { Select } from '@nino/ds/components/Select'
-import type { CreateInviteRequest } from '@custom_types/team'
 
-import type { InviteFormProps, InviteFormValues } from './InviteForm.types'
-
-import styles from './InviteForm.module.css'
+import {
+  INVITE_FORM_REQUEST_OF,
+  INVITE_FORM_SEATS,
+} from '@constants/invite-form.constants'
 import motion from '@styles/motion.module.css'
+import styles from './InviteForm.module.css'
 
-const SEATS = [
-  { value: 'STAFF', label: 'Atendente — vê e move pedidos' },
-  { value: 'MANAGER', label: 'Gerente — também mexe no cardápio' },
-  { value: 'COURIER', label: 'Entregador — recebe as entregas' },
-]
+type InviteSeat = 'STAFF' | 'MANAGER' | 'COURIER'
 
-const REQUEST_OF: Record<string, CreateInviteRequest['kind']> = {
-  STAFF: 'STAFF',
-  MANAGER: 'STAFF',
-  COURIER: 'COURIER',
+type InviteFormValues = {
+  email: string
+  seat: InviteSeat
+}
+
+type InviteFormProps = {
+  onInvite: (data: CreateInviteRequest) => Promise<unknown>
 }
 
 export const InviteForm = ({ onInvite }: InviteFormProps) => {
@@ -40,7 +41,7 @@ export const InviteForm = ({ onInvite }: InviteFormProps) => {
   })
 
   const onSubmit = async ({ email, seat }: InviteFormValues) => {
-    const kind = REQUEST_OF[seat]
+    const kind = INVITE_FORM_REQUEST_OF[seat]
 
     try {
       await onInvite({
@@ -86,7 +87,7 @@ export const InviteForm = ({ onInvite }: InviteFormProps) => {
             control={control}
             render={({ field }) => (
               <Select
-                options={SEATS}
+                options={INVITE_FORM_SEATS}
                 value={field.value}
                 onValueChange={field.onChange}
               />

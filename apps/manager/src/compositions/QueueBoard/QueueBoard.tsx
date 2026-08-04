@@ -8,8 +8,6 @@ import { useQueueSummary } from '@hooks/order/useQueueSummary'
 import { riseDelay } from '@utils/rise-delay'
 import type { OrderQueueSummary, OrderStage } from '@custom_types/order'
 
-import type { QueueBoardProps } from './QueueBoard.types'
-
 import styles from './QueueBoard.module.css'
 import motion from '@styles/motion.module.css'
 
@@ -19,12 +17,16 @@ const count = (summary: OrderQueueSummary | undefined, ...keys: string[]) =>
     0
   )
 
+export type QueueBoardProps = {
+  tenantId: string | null
+}
+
 export const QueueBoard = ({ tenantId }: QueueBoardProps) => {
   const { data, isPending } = useQueueSummary(tenantId)
 
   const waiting = count(data, 'PENDING')
 
-  /** Cada quadro é a mesma etapa que a fila de pedidos filtra. */
+  /** Each tile is the same stage the order queue filters by. */
   const tiles: {
     label: string
     value: number

@@ -4,7 +4,7 @@
   @apply h-64 w-full rounded-[24px];
 }
 
-/* formas de pagamento: selo que a loja acende */
+/* payment methods: a badge the store lights up */
 .chips {
   @apply flex flex-wrap gap-2;
 }

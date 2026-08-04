@@ -5,10 +5,10 @@
 }
 
 /*
- * O caixa do dia: mesma superfície, sombra e métrica dos cartões da fila.
- * Uma coluna no celular — com o rótulo ao lado do número, cada cartão é uma
- * linha de texto, e os três empilhados ocupam menos altura do que ocupavam
- * espremidos lado a lado.
+ * O caixa do dia: mesma superfície, sombra e métrica dos cartões da
+ * fila. Uma coluna no celular — com o rótulo ao lado do número, cada
+ * cartão é uma linha de texto, e os três empilhados ocupam menos
+ * altura do que ocupavam espremidos lado a lado.
  */
 .tally {
   @apply grid grid-cols-1 gap-2 lg:grid-cols-3 lg:gap-4;
@@ -25,7 +25,8 @@
   @apply focus-visible:ring-brand focus-visible:ring-offset-2;
 }
 
-/* um degrau abaixo da fila: lá são contagens curtas, aqui cabe "R$ 1.234,56" */
+/* um degrau abaixo da fila: lá são contagens curtas, aqui cabe
+   "R$ 1.234,56" */
 .value {
   @apply font-display text-2xl font-extrabold leading-none tracking-tight;
   @apply text-ink lg:text-3xl;

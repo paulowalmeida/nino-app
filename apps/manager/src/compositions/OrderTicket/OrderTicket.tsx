@@ -16,8 +16,8 @@ import {
   STATUS_LABEL,
   ticketNumber,
 } from '@utils/order-flow'
-
-import type { OrderTicketProps } from './OrderTicket.types'
+import type { Order } from '@custom_types/order'
+import type { OrderStatusKey } from '@custom_types/order/order-status-key'
 
 import styles from './OrderTicket.module.css'
 import motion from '@styles/motion.module.css'
@@ -27,8 +27,16 @@ const time = new Intl.DateTimeFormat('pt-BR', {
   minute: '2-digit',
 })
 
-/** Up to three lines, then a count — the ticket stays readable at a glance. */
+/** Up to three lines, then a count — the ticket stays readable at a
+ * glance. */
 const VISIBLE_ITEMS = 3
+
+export type OrderTicketProps = {
+  order: Order
+  /** Runs the single move available on this order right now. */
+  onAdvance: (orderId: string, target: OrderStatusKey) => void
+  isBusy?: boolean
+}
 
 export const OrderTicket = ({
   order,
@@ -39,7 +47,7 @@ export const OrderTicket = ({
   const hidden = order.items.length - VISIBLE_ITEMS
   const isWaiting = order.status === 'PENDING'
   const isCancelled = order.status === 'CANCELLED'
-  /** Pedido encerrado não tem cronômetro: aí a hora cheia volta a valer. */
+  /** A closed order has no timer: the full clock time matters again. */
   const isDone = isCancelled || stageOf(order.status) === 'closed'
   const { label: elapsed, isLate } = useElapsed(order.createdAt)
   const clock = time.format(new Date(order.createdAt))
@@ -93,9 +101,13 @@ export const OrderTicket = ({
             {order.tableNumber && ` · Mesa ${order.tableNumber}`}
           </p>
 
-          {/* no celular a comanda inteira não cabe: vale a conta, não a lista */}
+          {/* the whole ticket doesn't fit on mobile: the count matters,
+            not the list */}
           <p className={styles.summary}>
-            {order.items.reduce((total, { quantity }) => total + quantity, 0)}{' '}
+            {order.items.reduce(
+              (total, { quantity }) => total + quantity,
+              0
+            )}{' '}
             {order.items.length === 1 ? 'item' : 'itens'} ·{' '}
             {order.items.map(({ product }) => product.name).join(', ')}
           </p>

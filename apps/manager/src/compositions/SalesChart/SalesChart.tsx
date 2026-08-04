@@ -8,22 +8,35 @@ import { AreaClosed, Bar, LinePath } from '@visx/shape'
 import { useTooltip, useTooltipInPortal } from '@visx/tooltip'
 import { curveMonotoneX } from '@visx/curve'
 
+import type { SalesSeriesPoint, SeriesGranularity } from '@custom_types/order'
 import { brl } from '@utils/money'
-
-import type { SalesChartProps, SalesMetric } from './SalesChart.types'
 
 import styles from './SalesChart.module.css'
 
+/** What the line measures — changes the axis and the value format. */
+export type SalesMetric = 'revenue' | 'orderCount'
+
+export type SalesChartProps = {
+  points: SalesSeriesPoint[]
+  granularity: SeriesGranularity
+  /** Default: `revenue` */
+  metric?: SalesMetric
+  /** Drawing height in px. Default: `240` */
+  height?: number
+  /** Accessible name — the chart is an image to anyone who can't see it. */
+  label: string
+}
+
 /*
- * Sobra para os eixos respirarem, em duas medidas: no celular o rótulo do eixo
- * Y é mais curto e a margem larga comeria a área de desenho.
+ * Room for the axes to breathe, in two sizes: on mobile the Y-axis label is
+ * shorter and the wide margin would eat into the drawing area.
  */
 const MARGIN = { top: 12, right: 20, bottom: 32, left: 52 }
-/* A direita segura o último rótulo do eixo: com 8px, a data final saía
-   cortada na borda do cartão. */
+/* The right side holds the last axis label: at 8px, the final date was
+   getting cut off at the card's edge. */
 const NARROW_MARGIN = { top: 8, right: 20, bottom: 28, left: 38 }
 
-/* Abaixo disso o gráfico é estreito: menos marcas no eixo e margem menor. */
+/* Below this the chart is narrow: fewer axis marks and a smaller margin. */
 const NARROW_WIDTH = 420
 
 const STROKE = 2
@@ -58,13 +71,15 @@ const valueOf = (value: number, metric: SalesMetric): string =>
   metric === 'revenue' ? brl(value) : String(value)
 
 /**
- * Evolução da venda no período: área fechada com linha por cima, uma série só.
+ * Sales evolution over the period: closed area with a line on top, a single
+ * series.
  *
- * Sem legenda de propósito — uma série é nomeada pelo título do bloco, e uma
- * caixa com um quadradinho repetiria o que já está escrito acima dela.
+ * No legend on purpose — a single series is named by the block's title, and
+ * a box with a little square would repeat what's already written above it.
  *
- * A área existe para dar corpo à linha sem inventar uma segunda cor; fica em
- * gradiente fraco para não competir com o traço, que é o que se lê.
+ * The area exists to give the line body without inventing a second color; it
+ * stays in a faint gradient so it doesn't compete with the stroke, which is
+ * what actually gets read.
  */
 export const SalesChart = ({
   points,
@@ -77,9 +92,9 @@ export const SalesChart = ({
   const holder = useRef<HTMLElement | null>(null)
 
   /*
-   * Medir uma vez não basta: a largura muda ao girar o celular, ao recolher a
-   * sidebar e quando a fonte termina de carregar. Sem observar, o desenho fica
-   * preso no tamanho do primeiro render.
+   * Measuring once isn't enough: the width changes when the phone rotates,
+   * when the sidebar collapses, and when the font finishes loading. Without
+   * observing it, the drawing stays stuck at the first render's size.
    */
   useEffect(() => {
     const node = holder.current
@@ -126,14 +141,18 @@ export const SalesChart = ({
   const xScale = useMemo(
     () =>
       scaleTime({
-        domain: [data[0]?.at ?? new Date(), data[data.length - 1]?.at ?? new Date()],
+        domain: [
+          data[0]?.at ?? new Date(),
+          data[data.length - 1]?.at ?? new Date(),
+        ],
         range: [0, innerWidth],
       }),
     [data, innerWidth]
   )
 
-  /* O eixo começa no zero mesmo quando a série não chega perto dele: partir do
-     mínimo faria uma variação de centavos parecer um salto. */
+  /* The axis starts at zero even when the series never gets close to it:
+     starting from the minimum would make a cents-sized swing look like a
+     jump. */
   const yScale = useMemo(
     () =>
       scaleLinear({
@@ -153,7 +172,8 @@ export const SalesChart = ({
       const time = xScale.invert(x).getTime()
 
       const nearest = data.reduce((best, current) =>
-        Math.abs(current.at.getTime() - time) < Math.abs(best.at.getTime() - time)
+        Math.abs(current.at.getTime() - time) <
+        Math.abs(best.at.getTime() - time)
           ? current
           : best
       )
@@ -260,21 +280,21 @@ export const SalesChart = ({
               />
             )}
 
-            {/* Alvo de mouse sobre a área inteira: mirar no ponto exigiria
-                precisão que ninguém tem no celular. */}
+            {/* Mouse target over the whole area: aiming at the exact point
+                would need precision nobody has on a phone. */}
             <Bar
               width={innerWidth}
               height={innerHeight}
               fill="transparent"
               className={styles.touchArea}
               /*
-               * Pointer, não mouse+touch separados: um toque simples não gera
-               * `touchmove`, então só ouvir movimento deixava o celular sem
-               * resposta. `pointerdown` cobre o toque, o clique e a caneta com
-               * um caminho só.
+               * Pointer, not separate mouse+touch: a plain tap doesn't fire
+               * `touchmove`, so listening only to movement left the phone
+               * unresponsive. `pointerdown` covers touch, click and pen with
+               * a single path.
                *
-               * Sair não esconde no toque — o dedo levanta logo depois, e a
-               * informação sumiria antes de ser lida.
+               * Leaving doesn't hide on touch — the finger lifts right after,
+               * and the info would disappear before it could be read.
                */
               onPointerDown={handleMove}
               onPointerMove={handleMove}

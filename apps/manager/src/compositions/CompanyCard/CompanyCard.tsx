@@ -4,15 +4,33 @@ import { Button } from '@nino/ds/components/Button'
 import { FormField } from '@nino/ds/components/FormField'
 import { Input } from '@nino/ds/components/Input'
 import { Skeleton } from '@nino/ds/components/Skeleton'
-import { AddressFields } from '@compositions/AddressFields'
-import type { Company } from '@custom_types/company'
+import { AddressFields } from '@compositions/AddressFields/AddressFields'
+import type { Company, UpdateCompanyRequest } from '@custom_types/company'
 import { formatCnpj } from '@utils/document'
-
-import type { CompanyCardProps, CompanyDraft } from './CompanyCard.types'
 
 import local from './CompanyCard.module.css'
 import motion from '@styles/motion.module.css'
 import styles from '@styles/settingsCard.module.css'
+
+type CompanyDraft = {
+  name: string
+  legalName: string
+  stateRegistration: string
+  zipCode: string
+  street: string
+  number: string
+  complement: string
+  neighborhood: string
+  city: string
+  state: string
+}
+
+type CompanyCardProps = {
+  company: Company | undefined
+  isPending: boolean
+  isSaving: boolean
+  onSave: (data: UpdateCompanyRequest) => void
+}
 
 const EMPTY: CompanyDraft = {
   name: '',

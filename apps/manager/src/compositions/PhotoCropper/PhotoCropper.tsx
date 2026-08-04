@@ -4,18 +4,25 @@ import { Button } from '@nino/ds/components/Button'
 import { Slider } from '@nino/ds/components/Slider'
 import { cropToSquare } from '@utils/crop-image'
 
-import type { PhotoCropperProps } from './PhotoCropper.types'
-
 import styles from './PhotoCropper.module.css'
 import motion from '@styles/motion.module.css'
 
 const MIN_ZOOM = 1
 const MAX_ZOOM = 3
 
+export type PhotoCropperProps = {
+  /** File already chosen, not yet uploaded. */
+  file: File
+  isSending: boolean
+  onConfirm: (edited: File) => void
+  onCancel: () => void
+  onRemove: () => void
+}
+
 /**
- * O enquadramento antes do envio: a moldura é quadrada como no cardápio, a
- * foto cobre a moldura e a pessoa arrasta para escolher o que fica visível.
- * Nada sobe para o servidor até confirmar.
+ * The framing step before upload: the frame is square like the menu card,
+ * the photo fills it and the person drags to pick what stays visible.
+ * Nothing reaches the server until confirmed.
  */
 export const PhotoCropper = ({
   file,
@@ -32,9 +39,9 @@ export const PhotoCropper = ({
   const [seed, setSeed] = useState(file)
 
   /**
-   * A URL nasce com o componente e é liberada ao sair — nunca no cleanup de
-   * um efeito: em StrictMode o cleanup roda logo após montar e revogaria a
-   * URL que a `<img>` ainda vai carregar.
+   * The URL is born with the component and released on exit — never inside
+   * an effect cleanup: in StrictMode the cleanup runs right after mount and
+   * would revoke the URL the `<img>` is still about to load.
    */
   const [source] = useState(() => URL.createObjectURL(file))
 

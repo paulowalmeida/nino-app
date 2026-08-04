@@ -1,10 +1,10 @@
 @reference "@nino/ds/globals.css";
 
 /*
- * Mesma peça do cabeçalho da loja no consumer: azulejo laranja suave com a
- * inicial, nome em display e o link embaixo. É o retrato de como o cliente vai
- * ver a loja, então não inventa estilo próprio — apaga enquanto ninguém
- * digitou e acende com o nome.
+ * Same piece as the consumer app's store header: soft orange tile with the
+ * initial, display-font name and the link below. It's a portrait of how the
+ * customer will see the store, so it doesn't invent its own style — stays
+ * dark while no one has typed and lights up with the name.
  */
 .preview {
   @apply flex items-center gap-4 rounded-card border border-line/60 bg-white;
@@ -25,8 +25,8 @@
   @apply flex min-w-0 flex-1 flex-col;
 }
 
-/* em coluna estreita o nome quebra em duas linhas em vez de virar reticências:
-   o que se confere aqui é justamente o nome inteiro */
+/* in a narrow column the name wraps into two lines instead of ellipsizing:
+   what gets checked here is exactly the whole name */
 .name {
   @apply block font-display text-lg font-extrabold leading-[1.15];
   @apply tracking-[-0.02em] text-muted transition-colors duration-300;

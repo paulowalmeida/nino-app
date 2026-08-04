@@ -7,10 +7,12 @@ import { EmptyState } from '@nino/ds/components/EmptyState'
 import { Input } from '@nino/ds/components/Input'
 import { PageHeader } from '@nino/ds/components/PageHeader'
 import type { IconName } from '@nino/ds/components/Icon'
-import { OrderTicket } from '@compositions/OrderTicket'
+import { OrderTicket } from '@compositions/OrderTicket/OrderTicket'
 import { OrderTicketSkeleton } from '@compositions/OrderTicket/OrderTicketSkeleton'
-import { StageTrack } from '@compositions/StageTrack'
-import type { StageOption } from '@compositions/StageTrack/StageTrack.types'
+import {
+  StageTrack,
+  type StageOption,
+} from '@compositions/StageTrack/StageTrack'
 import { useCurrentTenant } from '@hooks/session/useCurrentTenant'
 import { useOrders } from '@hooks/order/useOrders'
 import { useOrderStatus } from '@hooks/order/useOrderStatus'

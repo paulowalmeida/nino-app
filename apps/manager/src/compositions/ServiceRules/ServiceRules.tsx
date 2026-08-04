@@ -5,15 +5,34 @@ import { Input } from '@nino/ds/components/Input'
 import { Skeleton } from '@nino/ds/components/Skeleton'
 import { Switch } from '@nino/ds/components/Switch'
 import type { PaymentMethod } from '@custom_types/order'
-import type { TenantSettings } from '@custom_types/settings'
+import type {
+  TenantSettings,
+  UpdateTenantSettingsRequest,
+} from '@custom_types/settings'
 import { PAYMENT_METHOD_LABEL } from '@utils/order-flow'
 import { riseDelay } from '@utils/rise-delay'
-
-import type { ServiceRulesDraft, ServiceRulesProps } from './ServiceRules.types'
 
 import local from './ServiceRules.module.css'
 import motion from '@styles/motion.module.css'
 import styles from '@styles/settingsCard.module.css'
+
+export type ServiceRulesProps = {
+  settings: TenantSettings | undefined
+  isPending: boolean
+  isSaving: boolean
+  onSave: (data: UpdateTenantSettingsRequest) => void
+}
+
+export type ServiceRulesDraft = {
+  isDeliveryEnabled: boolean
+  isPickupEnabled: boolean
+  isCounterEnabled: boolean
+  allowGuestOrder: boolean
+  requireCpf: boolean
+  minOrderAmount: string
+  estimatedMinutes: string
+  acceptedPaymentMethods: PaymentMethod[]
+}
 
 const CHANNELS: {
   key: 'isDeliveryEnabled' | 'isPickupEnabled' | 'isCounterEnabled'

@@ -4,10 +4,13 @@ import { useOpeningHours } from '@hooks/settings/useOpeningHours'
 import { usePause } from '@hooks/store/usePause'
 import { isStoreOpen } from '@utils/store-open'
 
-import type { StoreSignProps } from './StoreSign.types'
-
 import styles from './StoreSign.module.css'
 import motion from '@styles/motion.module.css'
+
+export type StoreSignProps = {
+  tenantId: string | null
+  timezone: string | null
+}
 
 /**
  * The sign on the door, read from the same schedule the customer app reads.

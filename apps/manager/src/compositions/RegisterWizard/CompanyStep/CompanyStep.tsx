@@ -8,13 +8,20 @@ import { Input } from '@nino/ds/components/Input'
 import { isValidCnpj } from '@nino/ds/validators'
 import { useCheckAvailability } from '@hooks/auth/useCheckAvailability'
 import { useSignup } from '@hooks/auth/useSignup'
+import type { SignupAccount } from '@custom_types/auth'
 import { ApiError } from '@utils/api-error'
 import { riseDelay } from '@utils/rise-delay'
 
-import type { CompanyFormValues, CompanyStepProps } from './CompanyStep.types'
+import type { CompanyFormValues } from './CompanyStep.types'
 
 import styles from '@layouts/AuthLayout/authForm.module.css'
 import motion from '@layouts/AuthLayout/motion.module.css'
+
+export type CompanyStepProps = {
+  account: SignupAccount
+  onBack: () => void
+  onSignedUp: () => void
+}
 
 export const CompanyStep = ({
   account,

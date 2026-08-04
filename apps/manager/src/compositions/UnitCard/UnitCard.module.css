@@ -16,7 +16,7 @@
   @apply mb-4 flex flex-wrap items-start justify-between gap-3;
 }
 
-/* o posto fica ao lado do nome, onde a pergunta aparece */
+/* the rank sits next to the name, where the question shows up */
 .main {
   @apply ml-2 align-middle;
 }

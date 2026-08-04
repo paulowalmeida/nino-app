@@ -57,9 +57,10 @@
 }
 
 /*
- * O CNPJ não é campo: não se digita, não se corrige, e como input desabilitado
- * no meio da grade parecia defeito. Vira a placa da empresa no topo da tela —
- * mesma superfície cream da faixa de disponibilidade da ficha do produto.
+ * O CNPJ não é campo: não se digita, não se corrige, e como input
+ * desabilitado no meio da grade parecia defeito. Vira a placa da empresa no
+ * topo da tela — mesma superfície cream da faixa de disponibilidade da
+ * ficha do produto.
  */
 .identity {
   @apply flex flex-wrap items-baseline gap-x-4 gap-y-1 rounded-2xl;
@@ -93,14 +94,15 @@
   @apply mt-5 flex flex-col gap-3 border-t border-sand pt-5;
 }
 
-/* ação fecha o bloco à direita, atrás de um fio: é onde a mão vai depois de
-   percorrer o formulário inteiro */
+/* ação fecha o bloco à direita, atrás de um fio: é onde a mão vai
+   depois de percorrer o formulário inteiro */
 .actions {
   @apply mt-6 flex flex-col border-t border-sand pt-5;
   @apply sm:flex-row sm:items-center sm:justify-end sm:gap-4;
 }
 
-/* diz por que o botão está apagado, em vez de deixar a pessoa clicando nele */
+/* diz por que o botão está apagado, em vez de deixar a pessoa
+   clicando nele */
 .status {
   @apply mb-2 text-xs text-faint sm:mb-0 sm:mr-auto;
 }

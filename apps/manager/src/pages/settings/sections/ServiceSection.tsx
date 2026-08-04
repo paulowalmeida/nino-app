@@ -1,4 +1,4 @@
-import { ServiceRules } from '@compositions/ServiceRules'
+import { ServiceRules } from '@compositions/ServiceRules/ServiceRules'
 import { useCurrentTenant } from '@hooks/session/useCurrentTenant'
 import { useSaveSettings, useSettings } from '@hooks/settings/useSettings'
 

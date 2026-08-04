@@ -3,16 +3,23 @@ import { useEffect, useRef, useState } from 'react'
 import { Alert } from '@nino/ds/components/Alert'
 import { Button } from '@nino/ds/components/Button'
 import { ItemThumb } from '@components/ItemThumb/ItemThumb'
-import { PhotoCropper } from '@compositions/PhotoCropper'
+import { PhotoCropper } from '@compositions/PhotoCropper/PhotoCropper'
 import { useItemImages } from '@hooks/product/useItemImages'
-
-import type { ItemPhotoProps } from './ItemPhoto.types'
+import type { MenuItemImage } from '@custom_types/product'
 
 import styles from './ItemPhoto.module.css'
 import motion from '@styles/motion.module.css'
 
 const MAX_BYTES = 4 * 1024 * 1024
 const ACCEPT = 'image/jpeg,image/png,image/webp,image/avif'
+
+export type ItemPhotoProps = {
+  tenantId: string | null
+  productId: string | null
+  name: string
+  images: MenuItemImage[]
+  onStagedFile?: (file: File | null) => void
+}
 
 export const ItemPhoto = ({
   tenantId,
@@ -34,7 +41,6 @@ export const ItemPhoto = ({
 
   const cover = images.find(({ isPrimary }) => isPrimary) ?? images[0] ?? null
 
-  /** Nada sobe direto: o arquivo escolhido vai para o enquadramento antes. */
   const choose = (file: File | undefined) => {
     setError(null)
     if (!file) return
@@ -67,7 +73,6 @@ export const ItemPhoto = ({
     onStagedFile?.(null)
   }
 
-  /** Descarta o arquivo em recorte e também a foto anterior, se houver. */
   const removeFromCropper = () => {
     if (stagedUrl) removeStaged()
     if (cover) remove.mutate(cover.id)

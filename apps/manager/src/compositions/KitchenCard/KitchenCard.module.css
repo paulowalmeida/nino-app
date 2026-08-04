@@ -1,10 +1,10 @@
 @reference "@nino/ds/globals.css";
 
 /*
- * A comanda de bobina, do tamanho da cozinha: mesmo papel e mesma serrilha
- * do painel, tudo escalado para leitura a alguns metros e para dedo sujo.
- * A serrilha é mask — por isso nada de border ou sombra externa, que seriam
- * recortadas junto com o papel.
+ * The roll ticket, kitchen-sized: same paper and same perforation as the
+ * panel, everything scaled for reading a few meters away and with a dirty
+ * finger. The perforation is a mask — so no border or outer shadow, which
+ * would get cut off along with the paper.
  */
 .card {
   --tooth: 11px;
@@ -17,7 +17,7 @@
     linear-gradient(#000 0 0) 0 0 / 100% calc(100% - var(--tooth)) no-repeat;
 }
 
-/* a fita do prazo: enche com o tempo, no lugar de um alarme */
+/* the deadline strip: fills with time, instead of an alarm */
 .ribbon {
   @apply absolute inset-x-0 top-0 h-[10px] overflow-hidden rounded-t-[12px];
   @apply bg-sand;
@@ -35,7 +35,7 @@
   transition: width 900ms linear;
 }
 
-/* estourou o prazo: o papel esquenta e a fita respira */
+/* past the deadline: the paper heats up and the strip breathes */
 .late {
   box-shadow: inset 0 0 0 2px var(--color-brand);
   background: linear-gradient(
@@ -71,8 +71,9 @@
 }
 
 /*
- * O número é o que se grita na praça, então é o maior elemento do cartão —
- * e o `#` sai: na parede ele só rouba corpo do que importa.
+ * The number is what gets shouted across the kitchen, so it's the biggest
+ * element on the card — and the `#` goes: on the wall it just steals
+ * weight from what matters.
  */
 .number {
   @apply font-display text-3xl leading-none font-extrabold text-ink;
@@ -107,7 +108,7 @@
   @apply uppercase tracking-[0.08em] text-subtle;
 }
 
-/* a observação é o que mais gera retrabalho: entra antes dos itens */
+/* the note is what most causes rework: it goes before the items */
 .notes {
   @apply mx-4 mb-1 rounded-lg bg-brand/12 px-3 py-2 text-base leading-snug;
   @apply font-semibold text-brand-strong;
@@ -128,8 +129,8 @@
 }
 
 /*
- * A quantidade vira ficha: na correria a cozinha lê "quantos" antes de ler
- * "o quê", e um número solto na mesma cor some no meio do nome.
+ * The quantity becomes a chip: in the rush the kitchen reads "how many"
+ * before "what", and a bare number in the same color gets lost in the name.
  */
 .quantity {
   @apply flex h-8 w-8 shrink-0 items-center justify-center rounded-lg;
