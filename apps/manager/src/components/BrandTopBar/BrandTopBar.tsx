@@ -8,11 +8,6 @@ type BrandTopBarProps = {
   onAction: () => void
 }
 
-/**
- * Barra das telas anteriores ao painel. A marca aqui é identidade, não
- * navegação — não há para onde voltar antes da primeira loja existir —, então
- * o logo não vira link e fica no mesmo tamanho da casca do app.
- */
 export const BrandTopBar = ({ actionLabel, onAction }: BrandTopBarProps) => (
   <header className={styles.bar}>
     <NinoLogo size="sm" />
