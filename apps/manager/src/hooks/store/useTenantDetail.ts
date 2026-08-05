@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query'
 
 import { queryKeys } from '@constants/query-keys'
-import type { TenantDetail } from '@custom_types/store'
+import type { TenantDetail } from '@custom_types/store/tenant-detail'
 import { TenantService } from '@services/tenant.service'
 
 export const detailKey = (tenantId: string) => [

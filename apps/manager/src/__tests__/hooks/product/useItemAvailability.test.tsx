@@ -4,7 +4,8 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { renderHook, waitFor } from '@testing-library/react'
 import { describe, expect, it, vi } from 'vitest'
 
-import type { MenuItem, MenuPage } from '@custom_types/product'
+import type { MenuItem } from '@custom_types/product/menu-item'
+import type { MenuPage } from '@custom_types/product/menu-page'
 import { useItemAvailability } from '@hooks/product/useItemAvailability'
 import { ProductService } from '@services/product.service'
 
@@ -69,8 +70,6 @@ describe(useItemAvailability.name, () => {
 
     // Assert
     const menu = client.getQueryData<MenuPage>(menuKey)
-    expect(menu?.data.find((item) => item.id === 'item-1')?.isActive).toBe(
-      true
-    )
+    expect(menu?.data.find((item) => item.id === 'item-1')?.isActive).toBe(true)
   })
 })

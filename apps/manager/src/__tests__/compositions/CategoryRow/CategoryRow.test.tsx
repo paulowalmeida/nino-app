@@ -6,7 +6,7 @@ import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { describe, expect, it, vi } from 'vitest'
 
-import type { CategoryWithCount } from '@custom_types/product'
+import type { CategoryWithCount } from '@custom_types/product/category-with-count'
 import { CategoryRow } from '@compositions/CategoryRow/CategoryRow'
 
 import { buildCategory } from './CategoryRow.mock'

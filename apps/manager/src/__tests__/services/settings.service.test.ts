@@ -1,6 +1,6 @@
 import { describe, expect, it, vi } from 'vitest'
 
-import type { PaymentMethod } from '@custom_types/order'
+import type { PaymentMethod } from '@custom_types/order/payment-method'
 import { apiMock } from './http.service.mock'
 
 vi.mock('@services/http.service', () => ({ api: apiMock }))
@@ -28,9 +28,7 @@ describe('SettingsService', () => {
     const result = await SettingsService.getAcceptedPayments('tenant-1')
 
     // Assert
-    expect(apiMock.get).toHaveBeenCalledWith(
-      'tenants/tenant-1/settings/public'
-    )
+    expect(apiMock.get).toHaveBeenCalledWith('tenants/tenant-1/settings/public')
     expect(result).toEqual({ acceptedPaymentMethods: ['PIX'] })
   })
 
@@ -58,8 +56,8 @@ describe('SettingsService', () => {
     apiMock.get.mockRejectedValueOnce(new Error('network error'))
 
     // Act / Assert
-    await expect(
-      SettingsService.getSettings('tenant-1')
-    ).rejects.toThrow('network error')
+    await expect(SettingsService.getSettings('tenant-1')).rejects.toThrow(
+      'network error'
+    )
   })
 })

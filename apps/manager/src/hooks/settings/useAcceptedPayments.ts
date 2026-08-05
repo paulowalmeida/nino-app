@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query'
 
 import { queryKeys } from '@constants/query-keys'
-import type { PaymentMethod } from '@custom_types/order'
+import type { PaymentMethod } from '@custom_types/order/payment-method'
 import { SettingsService } from '@services/settings.service'
 
 /** With no method configured the store can't sell: cash is the floor. */

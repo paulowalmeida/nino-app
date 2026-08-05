@@ -1,5 +1,4 @@
-import type { DeliveryZone } from '@custom_types/settings'
-
+import type { DeliveryZone } from '@custom_types/settings/delivery-zone'
 export const activeZone: DeliveryZone = {
   id: 'zone-1',
   tenantId: 'tenant-1',

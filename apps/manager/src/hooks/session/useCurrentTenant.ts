@@ -1,4 +1,4 @@
-import type { Membership } from '@custom_types/auth'
+import type { Membership } from '@custom_types/auth/membership'
 import { useSessionStore } from '@states/useSessionStore'
 
 /** Membership of the tenant addressed by the current route, when known. */

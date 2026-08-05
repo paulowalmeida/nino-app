@@ -1,6 +1,5 @@
 import type { Page } from '@custom_types/http/page'
-import type { DeliveryZone } from '@custom_types/settings'
-
+import type { DeliveryZone } from '@custom_types/settings/delivery-zone'
 export const zonesPage: Page<DeliveryZone> = {
   data: [
     {

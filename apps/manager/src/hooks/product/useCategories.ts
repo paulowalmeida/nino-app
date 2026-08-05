@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query'
 
 import { queryKeys } from '@constants/query-keys'
-import type { ProductCategory } from '@custom_types/product'
+import type { ProductCategory } from '@custom_types/product/product-category'
 import { CategoryService } from '@services/category.service'
 
 /**

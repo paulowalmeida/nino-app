@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query'
 
 import { queryKeys } from '@constants/query-keys'
-import type { TenantSettings } from '@custom_types/settings'
+import type { TenantSettings } from '@custom_types/settings/tenant-settings'
 import { SettingsService } from '@services/settings.service'
 
 export const useSettings = (tenantId: string | null) =>

@@ -4,7 +4,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { renderHook, waitFor } from '@testing-library/react'
 import { describe, expect, it, vi } from 'vitest'
 
-import type { Profile } from '@custom_types/account'
+import type { Profile } from '@custom_types/account/profile'
 import { profileKey } from '@hooks/account/useProfile'
 import { useSaveProfile } from '@hooks/account/useSaveProfile'
 import { AccountService } from '@services/account.service'

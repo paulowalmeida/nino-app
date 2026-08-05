@@ -1,5 +1,4 @@
-import type { ProductCategory } from '@custom_types/product'
-
+import type { ProductCategory } from '@custom_types/product/product-category'
 export const categoryList = {
   data: [
     { id: 'cat-a', name: 'Lanches', position: 1 } as ProductCategory,

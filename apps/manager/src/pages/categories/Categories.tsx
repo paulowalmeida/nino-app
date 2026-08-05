@@ -19,7 +19,7 @@ import { useDeleteCategory } from '@hooks/product/useDeleteCategory'
 import { useMenu } from '@hooks/product/useMenu'
 import { useUpdateCategory } from '@hooks/product/useUpdateCategory'
 import { useCurrentTenant } from '@hooks/session/useCurrentTenant'
-import type { CategoryWithCount } from '@custom_types/product'
+import type { CategoryWithCount } from '@custom_types/product/category-with-count'
 import { ApiError } from '@utils/api-error'
 import { riseDelay } from '@utils/rise-delay'
 

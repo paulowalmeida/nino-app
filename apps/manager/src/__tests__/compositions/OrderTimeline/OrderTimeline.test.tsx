@@ -2,8 +2,7 @@ import { render, screen } from '@testing-library/react'
 import { describe, expect, it } from 'vitest'
 
 import { OrderTimeline } from '@compositions/OrderTimeline/OrderTimeline'
-import type { OrderStatusEntry } from '@custom_types/order'
-
+import type { OrderStatusEntry } from '@custom_types/order/order-status-entry'
 const acceptedFirst: OrderStatusEntry = {
   id: 'entry-1',
   status: 'ACCEPTED',

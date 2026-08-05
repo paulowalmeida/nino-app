@@ -1,10 +1,8 @@
-import type {
-  CreateMenuItemRequest,
-  MenuItem,
-  MenuItemImage,
-  MenuPage,
-  UpdateMenuItemRequest,
-} from '@custom_types/product'
+import type { CreateMenuItemRequest } from '@custom_types/product/create-menu-item-request'
+import type { MenuItem } from '@custom_types/product/menu-item'
+import type { MenuItemImage } from '@custom_types/product/menu-item-image'
+import type { MenuPage } from '@custom_types/product/menu-page'
+import type { UpdateMenuItemRequest } from '@custom_types/product/update-menu-item-request'
 import { api } from '@services/http.service'
 
 const PAGE_SIZE = 100

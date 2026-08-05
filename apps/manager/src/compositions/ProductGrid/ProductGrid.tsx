@@ -4,8 +4,8 @@ import { EmptyState } from '@nino/ds/components/EmptyState'
 import { Input } from '@nino/ds/components/Input'
 import { Skeleton } from '@nino/ds/components/Skeleton'
 import { Tabs } from '@nino/ds/components/Tabs'
-import type { MenuItem, MenuSection } from '@custom_types/product'
-
+import type { MenuItem } from '@custom_types/product/menu-item'
+import type { MenuSection } from '@custom_types/product/menu-section'
 import { ProductCard } from './ProductCard/ProductCard'
 
 import styles from './ProductGrid.module.css'

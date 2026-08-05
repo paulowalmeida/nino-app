@@ -1,7 +1,8 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 
 import { queryKeys } from '@constants/query-keys'
-import type { CreateOrderRequest, Order } from '@custom_types/order'
+import type { CreateOrderRequest } from '@custom_types/order/create-order-request'
+import type { Order } from '@custom_types/order/order'
 import { OrderService } from '@services/order.service'
 
 export const useCreateOrder = (tenantId: string | null) => {

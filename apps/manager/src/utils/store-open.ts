@@ -1,5 +1,4 @@
-import type { OpeningHours } from '@custom_types/settings'
-
+import type { OpeningHours } from '@custom_types/settings/opening-hours'
 const minutesOf = (time: string): number => {
   const [hour, minute] = time.split(':').map(Number)
   return hour * 60 + (minute || 0)

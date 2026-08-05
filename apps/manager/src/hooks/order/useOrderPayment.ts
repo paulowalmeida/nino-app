@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 
 import { queryKeys } from '@constants/query-keys'
-import type { Order } from '@custom_types/order'
+import type { Order } from '@custom_types/order/order'
 import { OrderService } from '@services/order.service'
 
 export const useOrderPayment = (tenantId: string | null) => {

@@ -6,7 +6,7 @@ import { EmptyState } from '@nino/ds/components/EmptyState'
 import { Skeleton } from '@nino/ds/components/Skeleton'
 import { Icon } from '@nino/ds/components/Icon'
 import { PersonMark } from '@components/PersonMark/PersonMark'
-import type { TenantRole } from '@custom_types/auth'
+import type { TenantRole } from '@custom_types/auth/tenant-role'
 import type { RosterEntry } from '@custom_types/team/roster-entry'
 import { lastSeenLabel } from '@utils/last-seen'
 import { riseDelay } from '@utils/rise-delay'
@@ -168,9 +168,7 @@ export const TeamRoster = ({
                       )}
                       <p
                         className={
-                          entry.lastLoginAt
-                            ? styles.lastSeen
-                            : styles.neverSeen
+                          entry.lastLoginAt ? styles.lastSeen : styles.neverSeen
                         }
                       >
                         Último acesso: {lastSeenLabel(entry.lastLoginAt)}
@@ -191,9 +189,7 @@ export const TeamRoster = ({
                       )}
                       <p
                         className={
-                          entry.lastLoginAt
-                            ? styles.lastSeen
-                            : styles.neverSeen
+                          entry.lastLoginAt ? styles.lastSeen : styles.neverSeen
                         }
                       >
                         Último acesso: {lastSeenLabel(entry.lastLoginAt)}

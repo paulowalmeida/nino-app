@@ -1,15 +1,15 @@
+import type { CreateOrderRequest } from '@custom_types/order/create-order-request'
+import type { Order } from '@custom_types/order/order'
+import type { OrderPage } from '@custom_types/order/order-page'
+import type { OrderQueueSummary } from '@custom_types/order/order-queue-summary'
+import type { ReportRangeParams } from '@custom_types/order/report-range-params'
+import type { SalesReport } from '@custom_types/order/sales-report'
 import type {
-  CreateOrderRequest,
-  Order,
-  OrderPage,
-  OrderQueueSummary,
-  ReportRangeParams,
-  SalesReport,
   SalesSeries,
   SeriesGranularity,
-  TimingReport,
-  UpdateOrderStatusRequest,
-} from '@custom_types/order'
+} from '@custom_types/order/sales-series'
+import type { TimingReport } from '@custom_types/order/timing-report'
+import type { UpdateOrderStatusRequest } from '@custom_types/order/update-order-status-request'
 import { api } from '@services/http.service'
 
 type OrderListParams = {

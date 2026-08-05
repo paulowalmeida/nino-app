@@ -2,8 +2,7 @@ import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 
-import type { SignupAccount } from '@custom_types/auth'
-
+import type { SignupAccount } from '@custom_types/auth/signup-account'
 import { RegisterWizard } from '@compositions/RegisterWizard/RegisterWizard'
 
 const ACCOUNT: SignupAccount = {

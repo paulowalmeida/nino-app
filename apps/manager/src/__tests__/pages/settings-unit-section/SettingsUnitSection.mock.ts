@@ -1,15 +1,14 @@
-import type { Membership } from '@custom_types/auth'
+import type { Membership } from '@custom_types/auth/membership'
 import type { CompanyGroup } from '@custom_types/session/company-group'
-import type { Subscription } from '@custom_types/account'
-import type { TenantDetail } from '@custom_types/store'
-
+import type { Subscription } from '@custom_types/account/subscription'
+import type { TenantDetail } from '@custom_types/store/tenant-detail'
 export const hereUnit: Membership = {
   tenantId: 'tenant-1',
   tenantName: 'Lanchonete do Zé - Centro',
   tenantSlug: 'centro',
   companyId: 'company-1',
   companyName: 'Lanchonete do Zé',
-  role: 'OWNER',
+  role: 'TENANT_OWNER',
   isCurrent: true,
 }
 
@@ -19,7 +18,7 @@ export const otherUnit: Membership = {
   tenantSlug: 'norte',
   companyId: 'company-1',
   companyName: 'Lanchonete do Zé',
-  role: 'OWNER',
+  role: 'TENANT_OWNER',
   isCurrent: false,
 }
 

@@ -9,7 +9,8 @@ import { useTooltip, useTooltipInPortal } from '@visx/tooltip'
 import { curveMonotoneX } from '@visx/curve'
 
 import { useElementWidth } from '@hooks/ui/useElementWidth'
-import type { SalesSeriesPoint, SeriesGranularity } from '@custom_types/order'
+import type { SalesSeriesPoint } from '@custom_types/order/sales-series-point'
+import type { SeriesGranularity } from '@custom_types/order/sales-series'
 import { brl } from '@utils/money'
 
 import styles from './SalesChart.module.css'

@@ -1,10 +1,8 @@
-import type {
-  CredentialInfo,
-  Profile,
-  Subscription,
-  UpdateEmailRequest,
-  UpdateProfileRequest,
-} from '@custom_types/account'
+import type { CredentialInfo } from '@custom_types/account/credential-info'
+import type { Profile } from '@custom_types/account/profile'
+import type { Subscription } from '@custom_types/account/subscription'
+import type { UpdateEmailRequest } from '@custom_types/account/update-email-request'
+import type { UpdateProfileRequest } from '@custom_types/account/update-profile-request'
 import { api } from '@services/http.service'
 
 export const AccountService = {

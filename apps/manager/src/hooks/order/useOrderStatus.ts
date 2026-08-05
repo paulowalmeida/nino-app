@@ -2,11 +2,9 @@ import { toast } from '@nino/ds/components/Toast'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 
 import { queryKeys } from '@constants/query-keys'
-import type {
-  Order,
-  OrderStatusKey,
-  UpdateOrderStatusRequest,
-} from '@custom_types/order'
+import type { Order } from '@custom_types/order/order'
+import type { OrderStatusKey } from '@custom_types/order/order-status-key'
+import type { UpdateOrderStatusRequest } from '@custom_types/order/update-order-status-request'
 import { OrderService } from '@services/order.service'
 
 type StatusChange = UpdateOrderStatusRequest & { orderId: string }

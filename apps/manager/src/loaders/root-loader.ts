@@ -1,7 +1,7 @@
 import { redirect } from 'react-router'
 
 import { HOME_OF } from '@constants/roles'
-import type { Membership } from '@custom_types/auth'
+import type { Membership } from '@custom_types/auth/membership'
 import { useSessionStore } from '@states/useSessionStore'
 import { sawOnboarding } from '@utils/onboarding-seen'
 

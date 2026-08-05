@@ -4,7 +4,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { renderHook, waitFor } from '@testing-library/react'
 import { describe, expect, it, vi } from 'vitest'
 
-import type { TenantPhone } from '@custom_types/settings'
+import type { TenantPhone } from '@custom_types/settings/tenant-phone'
 import { usePhoneMutations } from '@hooks/settings/usePhoneMutations'
 import { PhoneService } from '@services/phone.service'
 

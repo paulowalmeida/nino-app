@@ -1,5 +1,4 @@
-import type { CreateStoreRequest } from '@custom_types/store'
-
+import type { CreateStoreRequest } from '@custom_types/store/create-store-request'
 export const createStoreRequest: CreateStoreRequest = {
   slug: 'padaria-boa',
   typeId: 'type-1',

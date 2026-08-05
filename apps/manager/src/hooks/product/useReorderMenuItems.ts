@@ -5,7 +5,7 @@ import {
 } from '@tanstack/react-query'
 
 import { queryKeys } from '@constants/query-keys'
-import type { MenuPage } from '@custom_types/product'
+import type { MenuPage } from '@custom_types/product/menu-page'
 import { ProductService } from '@services/product.service'
 
 import { menuQueryKey } from './useMenu'

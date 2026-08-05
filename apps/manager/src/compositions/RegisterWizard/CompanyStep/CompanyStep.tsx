@@ -8,7 +8,8 @@ import { Input } from '@nino/ds/components/Input'
 import { isValidCnpj } from '@nino/ds/validators'
 import { useCheckAvailability } from '@hooks/auth/useCheckAvailability'
 import { useSignup } from '@hooks/auth/useSignup'
-import type { SignupAccount, SignupCompany } from '@custom_types/auth'
+import type { SignupAccount } from '@custom_types/auth/signup-account'
+import type { SignupCompany } from '@custom_types/auth/signup-company'
 import { ApiError } from '@utils/api-error'
 import { riseDelay } from '@utils/rise-delay'
 
@@ -62,9 +63,14 @@ export const CompanyStep = ({
 
   return (
     <div>
-      <header className={`${motion.rise} ${styles.header}`} style={riseDelay(0)}>
+      <header
+        className={`${motion.rise} ${styles.header}`}
+        style={riseDelay(0)}
+      >
         <h1 className={styles.title}>Sua empresa</h1>
-        <p className={styles.subtitle}>Quase lá, {account.name.split(' ')[0]}</p>
+        <p className={styles.subtitle}>
+          Quase lá, {account.name.split(' ')[0]}
+        </p>
       </header>
 
       <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>

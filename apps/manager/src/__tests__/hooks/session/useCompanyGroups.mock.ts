@@ -1,5 +1,4 @@
-import type { Membership } from '@custom_types/auth'
-
+import type { Membership } from '@custom_types/auth/membership'
 export const twoCompaniesMemberships: Membership[] = [
   {
     tenantId: 'tenant-1',

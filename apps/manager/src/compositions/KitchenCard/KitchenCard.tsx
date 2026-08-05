@@ -7,7 +7,7 @@ import {
   nextStep,
   ticketNumber,
 } from '@utils/order-flow'
-import type { Order } from '@custom_types/order'
+import type { Order } from '@custom_types/order/order'
 import type { OrderStatusKey } from '@custom_types/order/order-status-key'
 
 import styles from './KitchenCard.module.css'
@@ -25,11 +25,7 @@ export type KitchenCardProps = {
  * decide money. The strip at the top is the deadline draining; when it
  * fills, the whole ticket lights up.
  */
-export const KitchenCard = ({
-  order,
-  onAdvance,
-  isBusy,
-}: KitchenCardProps) => {
+export const KitchenCard = ({ order, onAdvance, isBusy }: KitchenCardProps) => {
   const step = nextStep(order)
   const {
     label: elapsed,

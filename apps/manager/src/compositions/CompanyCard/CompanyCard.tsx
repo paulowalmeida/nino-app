@@ -5,7 +5,8 @@ import { FormField } from '@nino/ds/components/FormField'
 import { Input } from '@nino/ds/components/Input'
 import { Skeleton } from '@nino/ds/components/Skeleton'
 import { AddressFields } from '@compositions/AddressFields/AddressFields'
-import type { Company, UpdateCompanyRequest } from '@custom_types/company'
+import type { Company } from '@custom_types/company/company'
+import type { UpdateCompanyRequest } from '@custom_types/company/update-company-request'
 import { formatCnpj } from '@utils/document'
 
 import local from './CompanyCard.module.css'
@@ -44,7 +45,6 @@ const EMPTY: CompanyDraft = {
   city: '',
   state: '',
 }
-
 
 const toDraft = (company: Company): CompanyDraft => ({
   name: company.name,

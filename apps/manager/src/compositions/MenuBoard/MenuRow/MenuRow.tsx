@@ -10,8 +10,7 @@ import { ItemThumb } from '@components/ItemThumb/ItemThumb'
 import { REORDER_TRANSITION } from '@constants/reorder-transition'
 import { CATALOG_PAGE_SIZE } from '@hooks/product/useCatalog'
 import { riseDelay } from '@utils/rise-delay'
-import type { MenuItem } from '@custom_types/product'
-
+import type { MenuItem } from '@custom_types/product/menu-item'
 import styles from '../MenuBoard.module.css'
 import motion from '@styles/motion.module.css'
 

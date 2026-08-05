@@ -2,7 +2,8 @@ import { useNavigate } from 'react-router'
 
 import { useMutation } from '@tanstack/react-query'
 
-import type { CreatedStore, CreateStoreRequest } from '@custom_types/store'
+import type { CreatedStore } from '@custom_types/store/created-store'
+import type { CreateStoreRequest } from '@custom_types/store/create-store-request'
 import { TenantService } from '@services/tenant.service'
 import { useSessionStore } from '@states/useSessionStore'
 
@@ -13,9 +14,7 @@ import { useSessionStore } from '@states/useSessionStore'
  * keeping it would send the root loader back here with the same empty
  * membership list.
  */
-export const useCreateStore = (
-  onCreated?: (store: CreatedStore) => string
-) => {
+export const useCreateStore = (onCreated?: (store: CreatedStore) => string) => {
   const navigate = useNavigate()
 
   return useMutation<CreatedStore, Error, CreateStoreRequest>({

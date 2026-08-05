@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router'
 
 import { Card } from '@nino/ds/components/Card'
-import type { Membership } from '@custom_types/auth'
+import type { Membership } from '@custom_types/auth/membership'
 import { useCompanyGroups } from '@hooks/session/useCompanyGroups'
 import { riseDelay } from '@utils/rise-delay'
 

@@ -1,5 +1,4 @@
-import type { TenantDetail } from '@custom_types/store'
-
+import type { TenantDetail } from '@custom_types/store/tenant-detail'
 export const branchUnit: TenantDetail = {
   id: 'tenant-2',
   isMain: false,

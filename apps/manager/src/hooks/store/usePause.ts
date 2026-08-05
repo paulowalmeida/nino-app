@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query'
 
 import { queryKeys } from '@constants/query-keys'
-import type { TenantPause } from '@custom_types/store'
+import type { TenantPause } from '@custom_types/store/tenant-pause'
 import { TenantService } from '@services/tenant.service'
 
 export const pauseKey = (tenantId: string) => [

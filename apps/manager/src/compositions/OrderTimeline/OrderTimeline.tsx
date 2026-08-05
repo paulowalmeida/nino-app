@@ -1,7 +1,6 @@
 import { riseDelay } from '@utils/rise-delay'
 import { STATUS_LABEL } from '@utils/order-flow'
-import type { OrderStatusEntry } from '@custom_types/order'
-
+import type { OrderStatusEntry } from '@custom_types/order/order-status-entry'
 import styles from './OrderTimeline.module.css'
 import motion from '@styles/motion.module.css'
 

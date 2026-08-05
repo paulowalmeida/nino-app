@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 
-import type { UpdateTenantRequest } from '@custom_types/store'
+import type { UpdateTenantRequest } from '@custom_types/store/update-tenant-request'
 import { TenantService } from '@services/tenant.service'
 
 import { detailKey } from './useTenantDetail'

@@ -1,9 +1,6 @@
-import type {
-  CustomerHistory,
-  CustomerHistoryPage,
-  CustomerPage,
-} from '@custom_types/customer'
-
+import type { CustomerHistory } from '@custom_types/customer/customer-history'
+import type { CustomerHistoryPage } from '@custom_types/customer/customer-history-page'
+import type { CustomerPage } from '@custom_types/customer/customer-page'
 export const oneCustomerPage: CustomerPage = {
   data: [
     {

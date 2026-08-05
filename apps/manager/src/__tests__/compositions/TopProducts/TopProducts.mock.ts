@@ -1,5 +1,4 @@
-import type { SalesReport } from '@custom_types/order'
-
+import type { SalesReport } from '@custom_types/order/sales-report'
 export const salesReportWithProducts: SalesReport = {
   revenue: 540,
   orderCount: 30,

@@ -4,7 +4,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { renderHook, waitFor } from '@testing-library/react'
 import { describe, expect, it, vi } from 'vitest'
 
-import type { OpeningHours } from '@custom_types/settings'
+import type { OpeningHours } from '@custom_types/settings/opening-hours'
 import { useSaveWeek } from '@hooks/settings/useSaveWeek'
 import { OpeningHoursService } from '@services/opening-hours.service'
 

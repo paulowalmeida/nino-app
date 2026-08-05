@@ -5,8 +5,7 @@ import { Button } from '@nino/ds/components/Button'
 import { ItemThumb } from '@components/ItemThumb/ItemThumb'
 import { PhotoCropper } from '@compositions/PhotoCropper/PhotoCropper'
 import { useItemImages } from '@hooks/product/useItemImages'
-import type { MenuItemImage } from '@custom_types/product'
-
+import type { MenuItemImage } from '@custom_types/product/menu-item-image'
 import styles from './ItemPhoto.module.css'
 import motion from '@styles/motion.module.css'
 
@@ -35,9 +34,12 @@ export const ItemPhoto = ({
   const [chosen, setChosen] = useState<File | null>(null)
   const [stagedUrl, setStagedUrl] = useState<string | null>(null)
 
-  useEffect(() => () => {
-    if (stagedUrl) URL.revokeObjectURL(stagedUrl)
-  }, [stagedUrl])
+  useEffect(
+    () => () => {
+      if (stagedUrl) URL.revokeObjectURL(stagedUrl)
+    },
+    [stagedUrl]
+  )
 
   const cover = images.find(({ isPrimary }) => isPrimary) ?? images[0] ?? null
 

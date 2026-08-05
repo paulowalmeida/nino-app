@@ -5,7 +5,7 @@ import { EmptyState } from '@nino/ds/components/EmptyState'
 import { Input } from '@nino/ds/components/Input'
 import { Skeleton } from '@nino/ds/components/Skeleton'
 import { Switch } from '@nino/ds/components/Switch'
-import type { DeliveryZone } from '@custom_types/settings'
+import type { DeliveryZone } from '@custom_types/settings/delivery-zone'
 import { brl } from '@utils/money'
 import { riseDelay } from '@utils/rise-delay'
 
@@ -69,8 +69,8 @@ export const ZoneList = ({
       <header className={`${motion.unroll} ${styles.head}`}>
         <h2 className={styles.title}>Onde a loja entrega</h2>
         <p className={styles.hint}>
-          A taxa do bairro entra no pedido no momento em que ele é feito —
-          mudar o valor depois não mexe em pedido já fechado.
+          A taxa do bairro entra no pedido no momento em que ele é feito — mudar
+          o valor depois não mexe em pedido já fechado.
         </p>
       </header>
 

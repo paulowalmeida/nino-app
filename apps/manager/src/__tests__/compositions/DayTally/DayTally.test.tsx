@@ -3,7 +3,7 @@ import { MemoryRouter } from 'react-router'
 import { render, screen } from '@testing-library/react'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
-import type { Order } from '@custom_types/order'
+import type { Order } from '@custom_types/order/order'
 import { useOrders } from '@hooks/order/useOrders'
 import { DayTally } from '@compositions/DayTally/DayTally'
 

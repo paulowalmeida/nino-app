@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query'
 
-import type { Company } from '@custom_types/company'
+import type { Company } from '@custom_types/company/company'
 import { CompanyService } from '@services/company.service'
 
 export const companyKey = ['company', 'mine'] as const

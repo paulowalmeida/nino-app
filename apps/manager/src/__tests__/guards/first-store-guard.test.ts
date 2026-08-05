@@ -1,6 +1,7 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 
-import type { AuthUser, Membership } from '@custom_types/auth'
+import type { AuthUser } from '@custom_types/auth/auth-user'
+import type { Membership } from '@custom_types/auth/membership'
 import { FirstStoreGuard } from '@guards/first-store-guard'
 import { useSessionStore } from '@states/useSessionStore'
 

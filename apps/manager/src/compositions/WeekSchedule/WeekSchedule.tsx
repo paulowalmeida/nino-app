@@ -4,7 +4,7 @@ import { Button } from '@nino/ds/components/Button'
 import { Skeleton } from '@nino/ds/components/Skeleton'
 import { Switch } from '@nino/ds/components/Switch'
 import { TimePicker } from '@nino/ds/components/TimePicker'
-import type { OpeningHours } from '@custom_types/settings'
+import type { OpeningHours } from '@custom_types/settings/opening-hours'
 import type { HoursDraft } from '@custom_types/settings/hours-draft'
 import { riseDelay } from '@utils/rise-delay'
 
@@ -162,7 +162,6 @@ export const WeekSchedule = ({
                 }
               />
             </div>
-
           </li>
         ))}
       </ul>

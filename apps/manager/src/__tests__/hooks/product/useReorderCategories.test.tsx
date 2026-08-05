@@ -5,7 +5,7 @@ import { renderHook, waitFor } from '@testing-library/react'
 import { describe, expect, it, vi } from 'vitest'
 
 import { queryKeys } from '@constants/query-keys'
-import type { ProductCategory } from '@custom_types/product'
+import type { ProductCategory } from '@custom_types/product/product-category'
 import { useReorderCategories } from '@hooks/product/useReorderCategories'
 import { CategoryService } from '@services/category.service'
 

@@ -1,5 +1,4 @@
-import type { Order } from '@custom_types/order'
-
+import type { Order } from '@custom_types/order/order'
 export const openOrder: Order = {
   id: 'order-1',
   tenantId: 'tenant-1',

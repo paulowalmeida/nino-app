@@ -1,6 +1,6 @@
 import { CountUp } from '@nino/ds/components/CountUp'
 import { Icon } from '@nino/ds/components/Icon'
-import type { OrderStage } from '@custom_types/order'
+import type { OrderStage } from '@custom_types/order/order-stage'
 import type { StageOption } from '@custom_types/order/stage-option'
 import { riseDelay } from '@utils/rise-delay'
 

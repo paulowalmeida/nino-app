@@ -1,8 +1,5 @@
-import type {
-  TenantSettings,
-  UpdateTenantSettingsRequest,
-} from '@custom_types/settings'
-
+import type { TenantSettings } from '@custom_types/settings/tenant-settings'
+import type { UpdateTenantSettingsRequest } from '@custom_types/settings/update-tenant-settings-request'
 export const baseSettings: TenantSettings = {
   id: 'settings-1',
   tenantId: 'tenant-1',

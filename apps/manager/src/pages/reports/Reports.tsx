@@ -7,7 +7,7 @@ import { Skeleton } from '@nino/ds/components/Skeleton'
 import { Tabs } from '@nino/ds/components/Tabs'
 import { CountUp } from '@nino/ds/components/CountUp'
 import { TopSalesTable } from '@compositions/TopSalesTable/TopSalesTable'
-import type { ReportRangeParams } from '@custom_types/order'
+import type { ReportRangeParams } from '@custom_types/order/report-range-params'
 import type { PeriodChoice } from '@custom_types/ui/period-choice'
 import { useCurrentTenant } from '@hooks/session/useCurrentTenant'
 import { useSalesReport } from '@hooks/order/useSalesReport'
@@ -187,9 +187,7 @@ export const Reports = () => {
                 className={`${motion.settle} ${styles.figure}`}
                 style={riseDelay((FIGURES.length + index) * 60)}
               >
-                <span
-                  className={noSample ? styles.valueEmpty : styles.value}
-                >
+                <span className={noSample ? styles.valueEmpty : styles.value}>
                   {isTimingPending || !timing ? (
                     <Skeleton className={styles.ghostCount} />
                   ) : noSample ? (

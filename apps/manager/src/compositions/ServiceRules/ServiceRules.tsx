@@ -4,11 +4,9 @@ import { Button } from '@nino/ds/components/Button'
 import { Input } from '@nino/ds/components/Input'
 import { Skeleton } from '@nino/ds/components/Skeleton'
 import { Switch } from '@nino/ds/components/Switch'
-import type { PaymentMethod } from '@custom_types/order'
-import type {
-  TenantSettings,
-  UpdateTenantSettingsRequest,
-} from '@custom_types/settings'
+import type { PaymentMethod } from '@custom_types/order/payment-method'
+import type { TenantSettings } from '@custom_types/settings/tenant-settings'
+import type { UpdateTenantSettingsRequest } from '@custom_types/settings/update-tenant-settings-request'
 import { PAYMENT_METHOD_LABEL } from '@utils/order-flow'
 import { riseDelay } from '@utils/rise-delay'
 
@@ -231,9 +229,7 @@ export const ServiceRules = ({
           inputMode="numeric"
           className={local.minimumInput}
           value={draft.estimatedMinutes}
-          onChange={(event) =>
-            change({ estimatedMinutes: event.target.value })
-          }
+          onChange={(event) => change({ estimatedMinutes: event.target.value })}
         />
         <p className={styles.rowHint}>
           Preparo + entrega. Aparece pro cliente na vitrine.

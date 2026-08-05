@@ -11,10 +11,9 @@ import { useIsDesktop } from '@hooks/ui/useIsDesktop'
 import { useMenu } from '@hooks/product/useMenu'
 import { useAcceptedPayments } from '@hooks/settings/useAcceptedPayments'
 import { ApiError } from '@utils/api-error'
-import type { CartLine } from '@custom_types/counter'
-import type { MenuItem } from '@custom_types/product'
-import type { PaymentMethod } from '@custom_types/order'
-
+import type { CartLine } from '@custom_types/counter/cart-line'
+import type { MenuItem } from '@custom_types/product/menu-item'
+import type { PaymentMethod } from '@custom_types/order/payment-method'
 import styles from './Counter.module.css'
 import motion from '@styles/motion.module.css'
 
@@ -164,7 +163,11 @@ export const Counter = () => {
        */}
       {!isDesktop && count > 0 && (
         <>
-          <CouponTab count={count} total={total} onOpen={() => setSheet(true)} />
+          <CouponTab
+            count={count}
+            total={total}
+            onOpen={() => setSheet(true)}
+          />
 
           <Drawer
             open={sheet}

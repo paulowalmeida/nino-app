@@ -1,4 +1,4 @@
-import type { Order } from '@custom_types/order'
+import type { Order } from '@custom_types/order/order'
 import type { OrderItem } from '@custom_types/order/order-item'
 import type { OrderStatusEntry } from '@custom_types/order/order-status-entry'
 import type { OrderStatusKey } from '@custom_types/order/order-status-key'

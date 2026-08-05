@@ -1,5 +1,4 @@
-import type { PaymentMethod } from '@custom_types/order'
-
+import type { PaymentMethod } from '@custom_types/order/payment-method'
 /** Regras de atendimento da loja. Valores monetários chegam como string. */
 export type TenantSettings = {
   id: string

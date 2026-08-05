@@ -1,6 +1,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 
-import type { PauseRequest, TenantPause } from '@custom_types/store'
+import type { PauseRequest } from '@custom_types/store/pause-request'
+import type { TenantPause } from '@custom_types/store/tenant-pause'
 import { TenantService } from '@services/tenant.service'
 
 import { pauseKey } from './usePause'

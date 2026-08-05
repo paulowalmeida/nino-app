@@ -1,5 +1,4 @@
-import type { TenantRole } from '@custom_types/auth'
-
+import type { TenantRole } from '@custom_types/auth/tenant-role'
 /** Quem administra a loja: vê faturamento, equipe e configurações. */
 export const MANAGERS: TenantRole[] = ['TENANT_OWNER', 'MANAGER']
 

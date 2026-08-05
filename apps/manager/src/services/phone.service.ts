@@ -1,5 +1,5 @@
 import type { Page } from '@custom_types/http/page'
-import type { TenantPhone } from '@custom_types/settings'
+import type { TenantPhone } from '@custom_types/settings/tenant-phone'
 import { api } from '@services/http.service'
 
 export const PhoneService = {

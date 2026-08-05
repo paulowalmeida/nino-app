@@ -1,12 +1,10 @@
-import type {
-  CreatedStore,
-  CreateStoreRequest,
-  PauseRequest,
-  StoreTypeOption,
-  TenantDetail,
-  TenantPause,
-  UpdateTenantRequest,
-} from '@custom_types/store'
+import type { CreatedStore } from '@custom_types/store/created-store'
+import type { CreateStoreRequest } from '@custom_types/store/create-store-request'
+import type { PauseRequest } from '@custom_types/store/pause-request'
+import type { StoreTypeOption } from '@custom_types/store/store-type-option'
+import type { TenantDetail } from '@custom_types/store/tenant-detail'
+import type { TenantPause } from '@custom_types/store/tenant-pause'
+import type { UpdateTenantRequest } from '@custom_types/store/update-tenant-request'
 import { api } from '@services/http.service'
 
 type SlugAvailabilityResponse = {

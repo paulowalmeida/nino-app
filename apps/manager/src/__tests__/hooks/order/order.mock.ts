@@ -1,5 +1,5 @@
-import type { Order, OrderPage } from '@custom_types/order'
-
+import type { Order } from '@custom_types/order/order'
+import type { OrderPage } from '@custom_types/order/order-page'
 export const baseOrder: Order = {
   id: 'order-1',
   tenantId: 'tenant-1',

@@ -1,5 +1,4 @@
-import type { TenantPause } from '@custom_types/store'
-
+import type { TenantPause } from '@custom_types/store/tenant-pause'
 export const openPause: TenantPause = {
   isPaused: false,
   pausedUntil: null,

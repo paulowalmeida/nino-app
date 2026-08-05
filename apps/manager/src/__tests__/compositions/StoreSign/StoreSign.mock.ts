@@ -1,6 +1,5 @@
-import type { OpeningHours } from '@custom_types/settings'
-import type { TenantPause } from '@custom_types/store'
-
+import type { OpeningHours } from '@custom_types/settings/opening-hours'
+import type { TenantPause } from '@custom_types/store/tenant-pause'
 export const openAllDay: OpeningHours = {
   id: 'hours-1',
   tenantId: 'tenant-1',

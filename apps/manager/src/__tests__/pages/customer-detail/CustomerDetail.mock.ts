@@ -1,6 +1,5 @@
-import type { CustomerHistory } from '@custom_types/customer'
-import type { Membership } from '@custom_types/auth'
-
+import type { CustomerHistory } from '@custom_types/customer/customer-history'
+import type { Membership } from '@custom_types/auth/membership'
 export const currentTenant = { tenantId: 'tenant-1' } as Membership
 
 export const customerHistory: CustomerHistory = {

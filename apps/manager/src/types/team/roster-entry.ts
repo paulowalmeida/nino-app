@@ -1,5 +1,4 @@
-import type { TenantRole } from '@custom_types/auth'
-
+import type { TenantRole } from '@custom_types/auth/tenant-role'
 export type RosterEntry = {
   id: string
   name: string

@@ -1,7 +1,8 @@
 import { useInfiniteQuery } from '@tanstack/react-query'
 
 import { queryKeys } from '@constants/query-keys'
-import type { CustomerPage, TenantCustomer } from '@custom_types/customer'
+import type { CustomerPage } from '@custom_types/customer/customer-page'
+import type { TenantCustomer } from '@custom_types/customer/tenant-customer'
 import { CUSTOMER_PAGE_SIZE, CustomerService } from '@services/customer.service'
 import { nextPageParam } from '@utils/next-page-param'
 

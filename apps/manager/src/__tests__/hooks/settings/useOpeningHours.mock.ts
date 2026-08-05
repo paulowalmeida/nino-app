@@ -1,6 +1,5 @@
 import type { Page } from '@custom_types/http/page'
-import type { OpeningHours } from '@custom_types/settings'
-
+import type { OpeningHours } from '@custom_types/settings/opening-hours'
 export const mondayHoursPage: Page<OpeningHours> = {
   data: [
     {

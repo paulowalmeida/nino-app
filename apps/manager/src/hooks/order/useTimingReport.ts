@@ -1,7 +1,8 @@
 import { useQuery } from '@tanstack/react-query'
 
 import { queryKeys } from '@constants/query-keys'
-import type { ReportRangeParams, TimingReport } from '@custom_types/order'
+import type { ReportRangeParams } from '@custom_types/order/report-range-params'
+import type { TimingReport } from '@custom_types/order/timing-report'
 import { OrderService } from '@services/order.service'
 
 /**

@@ -2,8 +2,7 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router'
 
 import { Stepper } from '@nino/ds/components/Stepper'
-import type { SignupAccount } from '@custom_types/auth'
-
+import type { SignupAccount } from '@custom_types/auth/signup-account'
 import { AccountStep } from './AccountStep/AccountStep'
 import { CompanyStep } from './CompanyStep/CompanyStep'
 

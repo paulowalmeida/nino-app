@@ -2,8 +2,7 @@ import { render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { describe, expect, it, vi } from 'vitest'
 
-import type { OpeningHours } from '@custom_types/settings'
-
+import type { OpeningHours } from '@custom_types/settings/opening-hours'
 import { WeekSchedule } from '@compositions/WeekSchedule/WeekSchedule'
 
 const week: OpeningHours[] = Array.from({ length: 7 }, (_, day) => ({

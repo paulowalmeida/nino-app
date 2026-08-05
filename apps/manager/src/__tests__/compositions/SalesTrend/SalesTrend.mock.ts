@@ -1,5 +1,4 @@
-import type { SalesSeries } from '@custom_types/order'
-
+import type { SalesSeries } from '@custom_types/order/sales-series'
 export const emptySeries: SalesSeries = {
   granularity: 'day',
   points: [

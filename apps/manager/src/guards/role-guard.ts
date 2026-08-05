@@ -1,7 +1,7 @@
 import { redirect, type LoaderFunctionArgs } from 'react-router'
 
 import { HOME_OF } from '@constants/roles'
-import type { TenantRole } from '@custom_types/auth'
+import type { TenantRole } from '@custom_types/auth/tenant-role'
 import { useSessionStore } from '@states/useSessionStore'
 
 /**

@@ -8,8 +8,8 @@ import { EmptyState } from '@nino/ds/components/EmptyState'
 import { Input } from '@nino/ds/components/Input'
 import { Icon } from '@nino/ds/components/Icon'
 import { ItemThumb } from '@components/ItemThumb/ItemThumb'
-import type { CartLine } from '@custom_types/counter'
-import type { PaymentMethod } from '@custom_types/order'
+import type { CartLine } from '@custom_types/counter/cart-line'
+import type { PaymentMethod } from '@custom_types/order/payment-method'
 import { brl } from '@utils/money'
 import { paymentLabelFor } from '@utils/order-flow'
 
@@ -93,68 +93,68 @@ export const SaleTicket = ({
         ) : (
           <ScrollArea className={styles.linesScroll}>
             <ul className={styles.lines}>
-            {lines.map((line) => {
-              const isLast = line.quantity === 1
+              {lines.map((line) => {
+                const isLast = line.quantity === 1
 
-              return (
-                <li
-                  key={line.productId}
-                  className={`${motion.deal} ${styles.line}`}
-                >
-                  <ItemThumb name={line.name} className={styles.photo} />
+                return (
+                  <li
+                    key={line.productId}
+                    className={`${motion.deal} ${styles.line}`}
+                  >
+                    <ItemThumb name={line.name} className={styles.photo} />
 
-                  <div className={styles.lineText}>
-                    <span className={styles.lineName}>{line.name}</span>
-                    <span className={styles.lineMath}>
-                      {line.quantity} × {brl(line.unitPrice)}
-                    </span>
-                  </div>
+                    <div className={styles.lineText}>
+                      <span className={styles.lineName}>{line.name}</span>
+                      <span className={styles.lineMath}>
+                        {line.quantity} × {brl(line.unitPrice)}
+                      </span>
+                    </div>
 
-                  <div className={styles.lineRight}>
-                    <span className={styles.lineTotal}>
-                      {brl(Number(line.unitPrice) * line.quantity)}
-                    </span>
-
-                    <div className={styles.stepper}>
-                      <Button
-                        size="icon"
-                        variant="outline"
-                        className={styles.stepperBtn}
-                        aria-label={
-                          isLast
-                            ? `Tirar ${line.name} da comanda`
-                            : `Tirar um ${line.name}`
-                        }
-                        onClick={() => onStep(line.productId, -1)}
-                      >
-                        {/* On the last unit the dash turns into a trash
-                            icon: tapping again removes it, and the icon
-                            warns beforehand. */}
-                        {isLast ? (
-                          <Icon name="trash-thin" />
-                        ) : (
-                          <Icon name="minus" />
-                        )}
-                      </Button>
-
-                      <span className={styles.stepperCount}>
-                        {line.quantity}
+                    <div className={styles.lineRight}>
+                      <span className={styles.lineTotal}>
+                        {brl(Number(line.unitPrice) * line.quantity)}
                       </span>
 
-                      <Button
-                        size="icon"
-                        variant="outline"
-                        className={styles.stepperBtn}
-                        aria-label={`Mais um ${line.name}`}
-                        onClick={() => onStep(line.productId, 1)}
-                      >
-                        <Icon name="plus" />
-                      </Button>
+                      <div className={styles.stepper}>
+                        <Button
+                          size="icon"
+                          variant="outline"
+                          className={styles.stepperBtn}
+                          aria-label={
+                            isLast
+                              ? `Tirar ${line.name} da comanda`
+                              : `Tirar um ${line.name}`
+                          }
+                          onClick={() => onStep(line.productId, -1)}
+                        >
+                          {/* On the last unit the dash turns into a trash
+                            icon: tapping again removes it, and the icon
+                            warns beforehand. */}
+                          {isLast ? (
+                            <Icon name="trash-thin" />
+                          ) : (
+                            <Icon name="minus" />
+                          )}
+                        </Button>
+
+                        <span className={styles.stepperCount}>
+                          {line.quantity}
+                        </span>
+
+                        <Button
+                          size="icon"
+                          variant="outline"
+                          className={styles.stepperBtn}
+                          aria-label={`Mais um ${line.name}`}
+                          onClick={() => onStep(line.productId, 1)}
+                        >
+                          <Icon name="plus" />
+                        </Button>
+                      </div>
                     </div>
-                  </div>
-                </li>
-              )
-            })}
+                  </li>
+                )
+              })}
             </ul>
           </ScrollArea>
         )}

@@ -1,5 +1,4 @@
-import type { PaymentMethod } from '@custom_types/order'
-
+import type { PaymentMethod } from '@custom_types/order/payment-method'
 export type UpdateTenantSettingsRequest = {
   acceptedPaymentMethods?: PaymentMethod[]
   allowGuestOrder?: boolean

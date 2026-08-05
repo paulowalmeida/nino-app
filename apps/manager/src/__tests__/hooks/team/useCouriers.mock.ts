@@ -1,5 +1,4 @@
-import type { CourierPage } from '@custom_types/team'
-
+import type { CourierPage } from '@custom_types/team/team-page'
 export const courierPage: CourierPage = {
   data: [
     {

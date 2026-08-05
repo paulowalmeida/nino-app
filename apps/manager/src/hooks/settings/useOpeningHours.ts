@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query'
 
 import { queryKeys } from '@constants/query-keys'
-import type { OpeningHours } from '@custom_types/settings'
+import type { OpeningHours } from '@custom_types/settings/opening-hours'
 import { OpeningHoursService } from '@services/opening-hours.service'
 
 /** Stable identity so consumers can compare snapshots by reference. */

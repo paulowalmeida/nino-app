@@ -1,5 +1,4 @@
-import type { MenuSection } from '@custom_types/product'
-
+import type { MenuSection } from '@custom_types/product/menu-section'
 const category = { id: 'cat-1', name: 'Bebidas', position: 0 }
 
 export const sections: MenuSection[] = [

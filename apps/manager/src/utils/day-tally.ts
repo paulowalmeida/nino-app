@@ -1,5 +1,5 @@
-import type { DayTally, Order } from '@custom_types/order'
-
+import type { DayTally } from '@custom_types/order/day-tally'
+import type { Order } from '@custom_types/order/order'
 const isToday = (iso: string, timezone: string): boolean => {
   const format = (date: Date) =>
     new Intl.DateTimeFormat('en-CA', { timeZone: timezone }).format(date)
@@ -13,7 +13,8 @@ const isToday = (iso: string, timezone: string): boolean => {
  */
 export const tallyToday = (orders: Order[], timezone: string): DayTally => {
   const today = orders.filter(
-    (order) => order.status !== 'CANCELLED' && isToday(order.createdAt, timezone)
+    (order) =>
+      order.status !== 'CANCELLED' && isToday(order.createdAt, timezone)
   )
 
   const revenue = today.reduce(

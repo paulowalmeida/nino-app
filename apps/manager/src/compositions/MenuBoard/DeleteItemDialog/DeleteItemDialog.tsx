@@ -1,7 +1,6 @@
 import { Dialog } from '@nino/ds/components/Dialog'
 import { useDeleteMenuItem } from '@hooks/product/useDeleteMenuItem'
-import type { MenuItem } from '@custom_types/product'
-
+import type { MenuItem } from '@custom_types/product/menu-item'
 export type DeleteItemDialogProps = {
   tenantId: string | null
   item: MenuItem
@@ -22,7 +21,8 @@ export const DeleteItemDialog = ({
     tenantId,
     item.id
   )
-  const description = `"${item.name}" será removido do cardápio. Esta ` +
+  const description =
+    `"${item.name}" será removido do cardápio. Esta ` +
     'ação não pode ser desfeita.'
 
   /* the error already becomes a toast via the mutation meta — just closes */

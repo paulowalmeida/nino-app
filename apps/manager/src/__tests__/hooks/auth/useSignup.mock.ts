@@ -1,5 +1,4 @@
-import type { SignupRequest } from '@custom_types/auth'
-
+import type { SignupRequest } from '@custom_types/auth/signup-request'
 export const signupRequest: SignupRequest = {
   account: {
     name: 'Maria Silva',

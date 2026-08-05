@@ -1,5 +1,5 @@
 import { KitchenCard } from '@compositions/KitchenCard/KitchenCard'
-import type { OrderStage } from '@custom_types/order'
+import type { OrderStage } from '@custom_types/order/order-stage'
 import type { OrderStatusKey } from '@custom_types/order/order-status-key'
 import { useOrders } from '@hooks/order/useOrders'
 import { useOrderStatus } from '@hooks/order/useOrderStatus'

@@ -1,6 +1,5 @@
-import type { Membership } from '@custom_types/auth'
-import type { DeliveryZone } from '@custom_types/settings'
-
+import type { Membership } from '@custom_types/auth/membership'
+import type { DeliveryZone } from '@custom_types/settings/delivery-zone'
 export const currentTenant = { tenantId: 'tenant-1' } as Membership
 
 export const activeZone: DeliveryZone = {

@@ -1,6 +1,7 @@
 import { create } from 'zustand'
 
-import type { AuthUser, Membership } from '@custom_types/auth'
+import type { AuthUser } from '@custom_types/auth/auth-user'
+import type { Membership } from '@custom_types/auth/membership'
 import { AuthService } from '@services/auth.service'
 import { forgetSession, rememberSession } from '@utils/session-hint'
 

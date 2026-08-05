@@ -1,4 +1,4 @@
-import type { CourierPage } from '@custom_types/team'
+import type { CourierPage } from '@custom_types/team/team-page'
 import { api } from '@services/http.service'
 
 export const CourierService = {
@@ -9,8 +9,5 @@ export const CourierService = {
     tenantId: string,
     courierId: string
   ): Promise<{ message: string }> =>
-    api.remove<{ message: string }>(
-      `tenants/${tenantId}/couriers`,
-      courierId
-    ),
+    api.remove<{ message: string }>(`tenants/${tenantId}/couriers`, courierId),
 }

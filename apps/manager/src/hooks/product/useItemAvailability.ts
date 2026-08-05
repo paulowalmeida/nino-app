@@ -2,7 +2,8 @@ import { useMutation, useQueryClient } from '@tanstack/react-query'
 import type { InfiniteData } from '@tanstack/react-query'
 
 import { queryKeys } from '@constants/query-keys'
-import type { MenuItem, MenuPage } from '@custom_types/product'
+import type { MenuItem } from '@custom_types/product/menu-item'
+import type { MenuPage } from '@custom_types/product/menu-page'
 import { ProductService } from '@services/product.service'
 
 import { menuQueryKey } from './useMenu'

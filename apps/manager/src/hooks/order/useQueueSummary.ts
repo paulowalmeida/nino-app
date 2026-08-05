@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query'
 
-import type { OrderQueueSummary } from '@custom_types/order'
+import type { OrderQueueSummary } from '@custom_types/order/order-queue-summary'
 import { OrderService } from '@services/order.service'
 
 /**

@@ -1,6 +1,5 @@
 import { Skeleton } from '@nino/ds/components/Skeleton'
-import type { ProductCategory } from '@custom_types/product'
-
+import type { ProductCategory } from '@custom_types/product/product-category'
 import styles from './CategoryChips.module.css'
 
 const GHOST_CHIPS = ['first', 'second', 'third', 'fourth']

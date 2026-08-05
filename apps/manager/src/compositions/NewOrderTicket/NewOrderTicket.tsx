@@ -5,12 +5,10 @@ import { Icon } from '@nino/ds/components/Icon'
 import { Select } from '@nino/ds/components/Select'
 import { Textarea } from '@nino/ds/components/Textarea'
 import { RecipientFields } from '@compositions/RecipientFields/RecipientFields'
-import type { CartLine } from '@custom_types/counter'
-import type {
-  OrderChannel,
-  PaymentMethod,
-  Recipient,
-} from '@custom_types/order'
+import type { CartLine } from '@custom_types/counter/cart-line'
+import type { OrderChannel } from '@custom_types/order/order-channel'
+import type { PaymentMethod } from '@custom_types/order/payment-method'
+import type { Recipient } from '@custom_types/order/recipient'
 import { brl } from '@utils/money'
 import { CHANNEL_LABEL, paymentLabelFor } from '@utils/order-flow'
 

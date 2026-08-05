@@ -1,5 +1,4 @@
-import type { Profile } from '@custom_types/account'
-
+import type { Profile } from '@custom_types/account/profile'
 export const profile: Profile = {
   id: 'profile-1',
   name: 'Maria Silva',

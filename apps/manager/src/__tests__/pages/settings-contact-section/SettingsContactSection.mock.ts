@@ -1,6 +1,5 @@
-import type { Membership } from '@custom_types/auth'
-import type { TenantPhone } from '@custom_types/settings'
-
+import type { Membership } from '@custom_types/auth/membership'
+import type { TenantPhone } from '@custom_types/settings/tenant-phone'
 export const currentTenant = { tenantId: 'tenant-1' } as Membership
 
 export const phones: TenantPhone[] = [

@@ -1,5 +1,5 @@
-import type { MenuItem, UpdateMenuItemRequest } from '@custom_types/product'
-
+import type { MenuItem } from '@custom_types/product/menu-item'
+import type { UpdateMenuItemRequest } from '@custom_types/product/update-menu-item-request'
 export const updateRequest: UpdateMenuItemRequest = {
   name: 'Burger',
   price: 25,

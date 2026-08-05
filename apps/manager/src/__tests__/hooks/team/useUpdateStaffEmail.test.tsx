@@ -4,7 +4,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { renderHook, waitFor } from '@testing-library/react'
 import { describe, expect, it, vi } from 'vitest'
 
-import type { CredentialInfo } from '@custom_types/account'
+import type { CredentialInfo } from '@custom_types/account/credential-info'
 import { useUpdateStaffEmail } from '@hooks/team/useUpdateStaffEmail'
 import { StaffService } from '@services/staff.service'
 

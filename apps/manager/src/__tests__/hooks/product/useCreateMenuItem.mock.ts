@@ -1,5 +1,5 @@
-import type { CreateMenuItemRequest, MenuItem } from '@custom_types/product'
-
+import type { CreateMenuItemRequest } from '@custom_types/product/create-menu-item-request'
+import type { MenuItem } from '@custom_types/product/menu-item'
 export const newItemRequest: CreateMenuItemRequest = {
   name: 'Pizza Marguerita',
   price: 42.9,

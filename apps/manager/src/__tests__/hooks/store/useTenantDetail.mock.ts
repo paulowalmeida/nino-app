@@ -1,5 +1,4 @@
-import type { TenantDetail } from '@custom_types/store'
-
+import type { TenantDetail } from '@custom_types/store/tenant-detail'
 export const tenantDetail: TenantDetail = {
   id: 'tenant-1',
   isMain: true,

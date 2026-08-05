@@ -2,7 +2,7 @@ import { Button } from '@nino/ds/components/Button'
 import { EmptyState } from '@nino/ds/components/EmptyState'
 import { Skeleton } from '@nino/ds/components/Skeleton'
 import { ItemThumb } from '@components/ItemThumb/ItemThumb'
-import type { MenuSection } from '@custom_types/product'
+import type { MenuSection } from '@custom_types/product/menu-section'
 import { brl } from '@utils/money'
 import { riseDelay } from '@utils/rise-delay'
 

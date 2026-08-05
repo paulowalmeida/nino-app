@@ -1,5 +1,4 @@
-import type { AuthUser } from '@custom_types/auth'
-
+import type { AuthUser } from '@custom_types/auth/auth-user'
 export const authUser: AuthUser = {
   id: 'user-1',
   name: 'Maria Silva',

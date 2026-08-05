@@ -1,8 +1,6 @@
-import type { PaymentMethod } from '@custom_types/order'
-import type {
-  TenantSettings,
-  UpdateTenantSettingsRequest,
-} from '@custom_types/settings'
+import type { PaymentMethod } from '@custom_types/order/payment-method'
+import type { TenantSettings } from '@custom_types/settings/tenant-settings'
+import type { UpdateTenantSettingsRequest } from '@custom_types/settings/update-tenant-settings-request'
 import { api } from '@services/http.service'
 
 export const SettingsService = {

@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 
-import type { TenantRole } from '@custom_types/auth'
+import type { TenantRole } from '@custom_types/auth/tenant-role'
 import { queryKeys } from '@constants/query-keys'
 import { StaffService } from '@services/staff.service'
 

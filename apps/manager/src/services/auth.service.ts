@@ -1,11 +1,9 @@
-import type {
-  AuthUser,
-  CheckAvailabilityRequest,
-  CheckAvailabilityResponse,
-  LoginRequest,
-  Membership,
-  SignupRequest,
-} from '@custom_types/auth'
+import type { AuthUser } from '@custom_types/auth/auth-user'
+import type { CheckAvailabilityRequest } from '@custom_types/auth/check-availability-request'
+import type { CheckAvailabilityResponse } from '@custom_types/auth/check-availability-response'
+import type { LoginRequest } from '@custom_types/auth/login-request'
+import type { Membership } from '@custom_types/auth/membership'
+import type { SignupRequest } from '@custom_types/auth/signup-request'
 import { api } from '@services/http.service'
 
 type MeResponse = AuthUser & {

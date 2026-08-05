@@ -11,7 +11,7 @@ import { PasswordStrength } from '@nino/ds/components/PasswordStrength'
 import { PhoneInput } from '@nino/ds/components/PhoneInput'
 import { isValidCpf } from '@nino/ds/validators'
 import { useCheckAvailability } from '@hooks/auth/useCheckAvailability'
-import type { SignupAccount } from '@custom_types/auth'
+import type { SignupAccount } from '@custom_types/auth/signup-account'
 import { riseDelay } from '@utils/rise-delay'
 
 import styles from '@styles/authForm.module.css'
@@ -80,9 +80,14 @@ export const AccountStep = ({ defaultValues, onNext }: AccountStepProps) => {
 
   return (
     <div>
-      <header className={`${motion.rise} ${styles.header}`} style={riseDelay(0)}>
+      <header
+        className={`${motion.rise} ${styles.header}`}
+        style={riseDelay(0)}
+      >
         <h1 className={styles.title}>Crie sua conta</h1>
-        <p className={styles.subtitle}>Comece pelos seus dados de responsável</p>
+        <p className={styles.subtitle}>
+          Comece pelos seus dados de responsável
+        </p>
       </header>
 
       <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>

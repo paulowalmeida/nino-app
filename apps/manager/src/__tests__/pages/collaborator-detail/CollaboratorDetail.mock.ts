@@ -1,6 +1,5 @@
-import type { Membership } from '@custom_types/auth'
-import type { StaffDetail } from '@custom_types/team'
-
+import type { Membership } from '@custom_types/auth/membership'
+import type { StaffDetail } from '@custom_types/team/staff-detail'
 export const currentTenant = { tenantId: 'tenant-1' } as Membership
 
 export const staffDetail: StaffDetail = {

@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query'
 
 import { queryKeys } from '@constants/query-keys'
-import type { CustomerHistory } from '@custom_types/customer'
+import type { CustomerHistory } from '@custom_types/customer/customer-history'
 import { CustomerService } from '@services/customer.service'
 
 export const useCustomer = (tenantId: string | null, customerId: string) =>

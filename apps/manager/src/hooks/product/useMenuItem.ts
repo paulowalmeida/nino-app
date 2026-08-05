@@ -1,5 +1,4 @@
-import type { MenuItem } from '@custom_types/product'
-
+import type { MenuItem } from '@custom_types/product/menu-item'
 import { useMenu } from './useMenu'
 
 type MenuItemQuery = {

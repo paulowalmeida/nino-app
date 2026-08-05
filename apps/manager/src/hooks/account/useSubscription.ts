@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query'
 
-import type { Subscription } from '@custom_types/account'
+import type { Subscription } from '@custom_types/account/subscription'
 import { AccountService } from '@services/account.service'
 
 export const useSubscription = () =>

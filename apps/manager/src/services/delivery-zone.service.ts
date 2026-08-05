@@ -1,6 +1,6 @@
-import type { Page } from '@custom_types/http/page';
-import type { DeliveryZone } from '@custom_types/settings';
-import { api } from '@services/http.service';
+import type { Page } from '@custom_types/http/page'
+import type { DeliveryZone } from '@custom_types/settings/delivery-zone'
+import { api } from '@services/http.service'
 
 export const DeliveryZoneService = {
   listDeliveryZones: (tenantId: string): Promise<Page<DeliveryZone>> =>

@@ -1,5 +1,4 @@
-import type { Company } from '@custom_types/company'
-
+import type { Company } from '@custom_types/company/company'
 export const company: Company = {
   id: 'company-1',
   name: 'Padaria Boa',

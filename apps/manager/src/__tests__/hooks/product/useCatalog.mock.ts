@@ -1,5 +1,5 @@
-import type { MenuItem, MenuPage } from '@custom_types/product'
-
+import type { MenuItem } from '@custom_types/product/menu-item'
+import type { MenuPage } from '@custom_types/product/menu-page'
 const category = { id: 'cat-1', name: 'Lanches', position: 1 }
 
 export const itemA: MenuItem = {

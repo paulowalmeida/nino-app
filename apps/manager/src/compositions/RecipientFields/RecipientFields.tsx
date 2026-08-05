@@ -1,7 +1,6 @@
 import { Input } from '@nino/ds/components/Input'
 import { Select } from '@nino/ds/components/Select'
-import type { Recipient } from '@custom_types/order'
-
+import type { Recipient } from '@custom_types/order/recipient'
 import styles from './RecipientFields.module.css'
 import motion from '@styles/motion.module.css'
 
@@ -85,9 +84,7 @@ export const RecipientFields = ({
         <Select
           options={zones}
           placeholder={
-            zones.length > 0
-              ? 'Região da entrega'
-              : 'Nenhuma região cadastrada'
+            zones.length > 0 ? 'Região da entrega' : 'Nenhuma região cadastrada'
           }
           value={value.zoneId}
           aria-label="Região da entrega"

@@ -12,7 +12,8 @@ import { useStaff } from '@hooks/team/useStaff'
 import { useUpdateStaffEmail } from '@hooks/team/useUpdateStaffEmail'
 import { useUpdateStaffRole } from '@hooks/team/useUpdateStaffRole'
 import { useSessionStore } from '@states/useSessionStore'
-import type { AuthUser, TenantRole } from '@custom_types/auth'
+import type { AuthUser } from '@custom_types/auth/auth-user'
+import type { TenantRole } from '@custom_types/auth/tenant-role'
 import type { RosterEntry } from '@custom_types/team/roster-entry'
 
 import styles from './Employees.module.css'
@@ -45,8 +46,11 @@ export const Employees = () => {
 
   const [editingStaffId, setEditingStaffId] = useState<string | null>(null)
 
-  const { mutate: changeRole, isPending: isChangingRole, variables: roleVars } =
-    useUpdateStaffRole(tenantId)
+  const {
+    mutate: changeRole,
+    isPending: isChangingRole,
+    variables: roleVars,
+  } = useUpdateStaffRole(tenantId)
 
   /* Só o dono troca cargo — a API recusa o resto, e mostrar o menu para quem
    * vai levar 403 é prometer o que não se cumpre. */
@@ -105,9 +109,7 @@ export const Employees = () => {
           onRemove={(id) => removeMember({ id, kind: 'STAFF' })}
           onEditEmail={setEditingStaffId}
           onChangeRole={
-            isOwner
-              ? (userId, role) => changeRole({ userId, role })
-              : undefined
+            isOwner ? (userId, role) => changeRole({ userId, role }) : undefined
           }
           changingRoleId={isChangingRole ? roleVars?.userId : undefined}
         />

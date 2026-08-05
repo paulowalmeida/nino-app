@@ -4,7 +4,7 @@ import { Button } from '@nino/ds/components/Button'
 import { EmptyState } from '@nino/ds/components/EmptyState'
 import { PhoneInput } from '@nino/ds/components/PhoneInput'
 import { Skeleton } from '@nino/ds/components/Skeleton'
-import type { TenantPhone } from '@custom_types/settings'
+import type { TenantPhone } from '@custom_types/settings/tenant-phone'
 import { formatPhone, toE164 } from '@utils/phone'
 import { riseDelay } from '@utils/rise-delay'
 
@@ -136,11 +136,7 @@ export const PhoneList = ({
           className={local.input}
           onChange={(event) => setPhone(event.target.value)}
         />
-        <Button
-          loading={isAdding}
-          className={motion.press}
-          onClick={handleAdd}
-        >
+        <Button loading={isAdding} className={motion.press} onClick={handleAdd}>
           Adicionar telefone
         </Button>
       </div>

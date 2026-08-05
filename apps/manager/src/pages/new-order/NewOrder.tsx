@@ -12,12 +12,10 @@ import { useAcceptedPayments } from '@hooks/settings/useAcceptedPayments'
 import { useOpeningHours } from '@hooks/settings/useOpeningHours'
 import { usePause } from '@hooks/store/usePause'
 import { useMenu } from '@hooks/product/useMenu'
-import type { CartLine } from '@custom_types/counter'
-import type {
-  OrderChannel,
-  PaymentMethod,
-  Recipient,
-} from '@custom_types/order'
+import type { CartLine } from '@custom_types/counter/cart-line'
+import type { OrderChannel } from '@custom_types/order/order-channel'
+import type { PaymentMethod } from '@custom_types/order/payment-method'
+import type { Recipient } from '@custom_types/order/recipient'
 import { brl } from '@utils/money'
 import { toE164 } from '@utils/phone'
 import { isStoreOpen } from '@utils/store-open'
@@ -89,7 +87,9 @@ export const NewOrder = () => {
 
   const missingRecipient =
     isDelivery &&
-    (!recipient.name || !recipient.phone || !recipient.street ||
+    (!recipient.name ||
+      !recipient.phone ||
+      !recipient.street ||
       !recipient.zoneId)
 
   const add = (line: Omit<CartLine, 'quantity'>) =>

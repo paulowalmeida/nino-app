@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 
 import { queryKeys } from '@constants/query-keys'
-import type { CreateInviteRequest } from '@custom_types/team'
+import type { CreateInviteRequest } from '@custom_types/team/create-invite-request'
 import { StaffService } from '@services/staff.service'
 
 export const useInvite = (tenantId: string | null) => {

@@ -1,11 +1,11 @@
 import { useQuery } from '@tanstack/react-query'
 
 import { queryKeys } from '@constants/query-keys'
+import type { ReportRangeParams } from '@custom_types/order/report-range-params'
 import type {
-  ReportRangeParams,
   SalesSeries,
   SeriesGranularity,
-} from '@custom_types/order'
+} from '@custom_types/order/sales-series'
 import { OrderService } from '@services/order.service'
 
 /**

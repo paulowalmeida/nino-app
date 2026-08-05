@@ -1,5 +1,4 @@
-import type { CategoryWithCount } from '@custom_types/product'
-
+import type { CategoryWithCount } from '@custom_types/product/category-with-count'
 export const buildCategory = (
   overrides: Partial<CategoryWithCount>
 ): CategoryWithCount => ({

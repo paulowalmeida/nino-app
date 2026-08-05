@@ -10,8 +10,7 @@ import { useCatalog } from '@hooks/product/useCatalog'
 import { useItemAvailability } from '@hooks/product/useItemAvailability'
 import { useLoadMore } from '@hooks/ui/useLoadMore'
 import { useReorderMenuItems } from '@hooks/product/useReorderMenuItems'
-import type { MenuItem } from '@custom_types/product'
-
+import type { MenuItem } from '@custom_types/product/menu-item'
 import { DeleteItemDialog } from './DeleteItemDialog/DeleteItemDialog'
 import { MenuRow } from './MenuRow/MenuRow'
 
@@ -28,11 +27,7 @@ export type MenuBoardProps = {
   search: string
 }
 
-export const MenuBoard = ({
-  tenantId,
-  categoryId,
-  search,
-}: MenuBoardProps) => {
+export const MenuBoard = ({ tenantId, categoryId, search }: MenuBoardProps) => {
   const {
     items,
     total,
@@ -127,8 +122,8 @@ export const MenuBoard = ({
   if (isError) {
     return (
       <Alert variant="error">
-        Não foi possível carregar o cardápio. Recarregue a página para
-        tentar de novo.
+        Não foi possível carregar o cardápio. Recarregue a página para tentar de
+        novo.
       </Alert>
     )
   }

@@ -1,5 +1,5 @@
 import type { Page } from '@custom_types/http/page'
-import type { OpeningHours } from '@custom_types/settings'
+import type { OpeningHours } from '@custom_types/settings/opening-hours'
 import { api } from '@services/http.service'
 
 export const OpeningHoursService = {

@@ -1,10 +1,8 @@
 import { useInfiniteQuery } from '@tanstack/react-query'
 
 import { queryKeys } from '@constants/query-keys'
-import type {
-  CustomerHistoryEntry,
-  CustomerHistoryPage,
-} from '@custom_types/customer'
+import type { CustomerHistoryEntry } from '@custom_types/customer/customer-history-entry'
+import type { CustomerHistoryPage } from '@custom_types/customer/customer-history-page'
 import { CustomerService, HISTORY_PAGE_SIZE } from '@services/customer.service'
 import { nextPageParam } from '@utils/next-page-param'
 

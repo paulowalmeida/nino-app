@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query'
 
 import { queryKeys } from '@constants/query-keys'
-import type { DeliveryZone } from '@custom_types/settings'
+import type { DeliveryZone } from '@custom_types/settings/delivery-zone'
 import { DeliveryZoneService } from '@services/delivery-zone.service'
 
 export const zonesKey = (tenantId: string) => [

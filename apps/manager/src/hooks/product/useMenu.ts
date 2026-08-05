@@ -2,7 +2,8 @@ import { useMemo } from 'react'
 
 import { useQuery } from '@tanstack/react-query'
 
-import type { MenuPage, MenuSection } from '@custom_types/product'
+import type { MenuPage } from '@custom_types/product/menu-page'
+import type { MenuSection } from '@custom_types/product/menu-section'
 import { ProductService } from '@services/product.service'
 
 export const menuQueryKey = (tenantId: string | null) => ['menu', tenantId]

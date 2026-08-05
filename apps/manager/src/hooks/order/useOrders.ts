@@ -1,7 +1,8 @@
 import { useInfiniteQuery } from '@tanstack/react-query'
 
 import { queryKeys } from '@constants/query-keys'
-import type { Order, OrderPage } from '@custom_types/order'
+import type { Order } from '@custom_types/order/order'
+import type { OrderPage } from '@custom_types/order/order-page'
 import { ORDER_PAGE_SIZE, OrderService } from '@services/order.service'
 import { nextPageParam } from '@utils/next-page-param'
 

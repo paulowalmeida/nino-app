@@ -1,7 +1,6 @@
 import type { InfiniteData } from '@tanstack/react-query'
 
-import type { MenuPage } from '@custom_types/product'
-
+import type { MenuPage } from '@custom_types/product/menu-page'
 export const twoItemPage: InfiniteData<MenuPage> = {
   pageParams: [1],
   pages: [

@@ -1,13 +1,12 @@
-import type { Membership } from '@custom_types/auth'
-import type { TenantDetail } from '@custom_types/store'
-
+import type { Membership } from '@custom_types/auth/membership'
+import type { TenantDetail } from '@custom_types/store/tenant-detail'
 export const currentTenant: Membership = {
   tenantId: 'tenant-1',
   tenantName: 'Lanchonete do Zé - Centro',
   tenantSlug: 'centro',
   companyId: 'company-1',
   companyName: 'Lanchonete do Zé',
-  role: 'OWNER',
+  role: 'TENANT_OWNER',
   isCurrent: true,
 }
 

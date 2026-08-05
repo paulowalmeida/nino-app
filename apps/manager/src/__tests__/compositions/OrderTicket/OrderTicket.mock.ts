@@ -1,5 +1,4 @@
-import type { Order } from '@custom_types/order'
-
+import type { Order } from '@custom_types/order/order'
 export const pendingOrder: Order = {
   id: 'order-abcd1234',
   tenantId: 'tenant-1',

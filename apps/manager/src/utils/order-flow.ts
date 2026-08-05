@@ -1,11 +1,9 @@
-import type {
-  Order,
-  OrderChannel,
-  OrderStage,
-  OrderStep,
-  PaymentMethod,
-  PaymentStatus,
-} from '@custom_types/order'
+import type { Order } from '@custom_types/order/order'
+import type { OrderChannel } from '@custom_types/order/order-channel'
+import type { OrderStage } from '@custom_types/order/order-stage'
+import type { OrderStep } from '@custom_types/order/order-step'
+import type { PaymentMethod } from '@custom_types/order/payment-method'
+import type { PaymentStatus } from '@custom_types/order/payment-status'
 import type { OrderStatusKey } from '@custom_types/order/order-status-key'
 
 /**

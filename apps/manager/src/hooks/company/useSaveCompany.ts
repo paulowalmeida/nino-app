@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 
-import type { UpdateCompanyRequest } from '@custom_types/company'
+import type { UpdateCompanyRequest } from '@custom_types/company/update-company-request'
 import { CompanyService } from '@services/company.service'
 
 import { companyKey } from './useCompany'

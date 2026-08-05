@@ -1,5 +1,5 @@
-import type { AuthUser, Membership } from '@custom_types/auth'
-
+import type { AuthUser } from '@custom_types/auth/auth-user'
+import type { Membership } from '@custom_types/auth/membership'
 export const authUser: AuthUser = {
   id: 'user-1',
   name: 'Fulano',

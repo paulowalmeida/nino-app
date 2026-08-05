@@ -12,7 +12,7 @@ import { Select } from '@nino/ds/components/Select'
 import { Switch } from '@nino/ds/components/Switch'
 import { Textarea } from '@nino/ds/components/Textarea'
 import { ItemPhoto } from '@compositions/ItemPhoto/ItemPhoto'
-import type { MenuItem } from '@custom_types/product'
+import type { MenuItem } from '@custom_types/product/menu-item'
 import { riseDelay } from '@utils/rise-delay'
 
 import styles from '@pages/product-detail/ProductDetail.module.css'

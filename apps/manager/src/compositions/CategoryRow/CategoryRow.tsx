@@ -6,7 +6,7 @@ import { Button } from '@nino/ds/components/Button'
 import { Input } from '@nino/ds/components/Input'
 import { Icon } from '@nino/ds/components/Icon'
 import { REORDER_TRANSITION } from '@constants/reorder-transition'
-import type { CategoryWithCount } from '@custom_types/product'
+import type { CategoryWithCount } from '@custom_types/product/category-with-count'
 import { riseDelay } from '@utils/rise-delay'
 
 import styles from '@pages/categories/Categories.module.css'

@@ -8,7 +8,7 @@ import {
   TableHeader,
   TableRow,
 } from '@nino/ds/components/Table'
-import type { TopProduct } from '@custom_types/order'
+import type { TopProduct } from '@custom_types/order/top-product'
 import { brl } from '@utils/money'
 import { riseDelay } from '@utils/rise-delay'
 

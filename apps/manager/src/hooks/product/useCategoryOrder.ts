@@ -1,11 +1,8 @@
 import { useEffect, useRef, useState } from 'react'
 
-import type {
-  CategoryWithCount,
-  MenuSection,
-  ProductCategory,
-} from '@custom_types/product'
-
+import type { CategoryWithCount } from '@custom_types/product/category-with-count'
+import type { MenuSection } from '@custom_types/product/menu-section'
+import type { ProductCategory } from '@custom_types/product/product-category'
 import { useReorderCategories } from './useReorderCategories'
 
 const withCounts = (

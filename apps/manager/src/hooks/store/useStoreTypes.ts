@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query'
 
-import type { StoreTypeOption } from '@custom_types/store'
+import type { StoreTypeOption } from '@custom_types/store/store-type-option'
 import { TenantService } from '@services/tenant.service'
 
 /** Immutable catalog for the length of a session — no refetch on focus. */

@@ -11,8 +11,7 @@
  * Domain hooks live in `src/hooks/<domain>/`, consume these keys and the
  * matching service (`@services/...`).
  */
-import type { ReportRangeParams } from '@custom_types/order'
-
+import type { ReportRangeParams } from '@custom_types/order/report-range-params'
 /** Um recorte vira uma string estável: preset ou o par de dias. */
 const rangeKey = (range: ReportRangeParams): string =>
   range.period ?? `${range.from}:${range.to}`

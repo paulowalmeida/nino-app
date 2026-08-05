@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query'
 
 import { queryKeys } from '@constants/query-keys'
-import type { TenantPhone } from '@custom_types/settings'
+import type { TenantPhone } from '@custom_types/settings/tenant-phone'
 import { PhoneService } from '@services/phone.service'
 
 export const phonesKey = (tenantId: string) => [

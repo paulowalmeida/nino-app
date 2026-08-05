@@ -1,5 +1,4 @@
-import type { CartLine } from '@custom_types/counter'
-
+import type { CartLine } from '@custom_types/counter/cart-line'
 export const coxinhaLine: CartLine = {
   productId: 'item-1',
   name: 'Coxinha',

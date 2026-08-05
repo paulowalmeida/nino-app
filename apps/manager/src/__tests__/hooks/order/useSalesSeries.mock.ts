@@ -1,5 +1,5 @@
-import type { ReportRangeParams, SalesSeries } from '@custom_types/order'
-
+import type { ReportRangeParams } from '@custom_types/order/report-range-params'
+import type { SalesSeries } from '@custom_types/order/sales-series'
 export const weekRange: ReportRangeParams = { period: 'week' }
 
 export const salesSeries: SalesSeries = {

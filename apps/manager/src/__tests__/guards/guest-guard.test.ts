@@ -1,7 +1,8 @@
 import { RouterContextProvider } from 'react-router'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 
-import type { AuthUser, Membership } from '@custom_types/auth'
+import type { AuthUser } from '@custom_types/auth/auth-user'
+import type { Membership } from '@custom_types/auth/membership'
 import { GuestGuard } from '@guards/guest-guard'
 import { useSessionStore } from '@states/useSessionStore'
 
@@ -56,7 +57,8 @@ const signedIn = (memberships: Membership[]) => {
   useSessionStore.getState().setSession(USER, memberships)
 }
 
-const locationOf = (result: unknown) => (result as Response).headers.get('location')
+const locationOf = (result: unknown) =>
+  (result as Response).headers.get('location')
 
 describe('GuestGuard', () => {
   beforeEach(() => {

@@ -1,5 +1,4 @@
-import type { Subscription } from '@custom_types/account'
-
+import type { Subscription } from '@custom_types/account/subscription'
 export const activeSubscription: Subscription = {
   id: 'sub-1',
   companyId: 'company-1',

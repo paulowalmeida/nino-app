@@ -6,16 +6,13 @@ import { CountUp } from '@nino/ds/components/CountUp'
 import { Eyebrow } from '@nino/ds/components/Eyebrow'
 import { useQueueSummary } from '@hooks/order/useQueueSummary'
 import { riseDelay } from '@utils/rise-delay'
-import type { OrderQueueSummary, OrderStage } from '@custom_types/order'
-
+import type { OrderQueueSummary } from '@custom_types/order/order-queue-summary'
+import type { OrderStage } from '@custom_types/order/order-stage'
 import styles from './QueueBoard.module.css'
 import motion from '@styles/motion.module.css'
 import tile from '@styles/statTile.module.css'
 
-const sumByKeys = (
-  summary: OrderQueueSummary | undefined,
-  ...keys: string[]
-) =>
+const sumByKeys = (summary: OrderQueueSummary | undefined, ...keys: string[]) =>
   keys.reduce(
     (total, key) => total + (summary?.[key as keyof OrderQueueSummary] ?? 0),
     0

@@ -1,4 +1,5 @@
-import type { Company, UpdateCompanyRequest } from '@custom_types/company'
+import type { Company } from '@custom_types/company/company'
+import type { UpdateCompanyRequest } from '@custom_types/company/update-company-request'
 import { api } from '@services/http.service'
 
 export const CompanyService = {

@@ -1,4 +1,4 @@
-import type { ProductCategory } from '@custom_types/product'
+import type { ProductCategory } from '@custom_types/product/product-category'
 import { api } from '@services/http.service'
 
 export const CategoryService = {
@@ -7,10 +7,7 @@ export const CategoryService = {
       `tenants/${tenantId}/product-categories`
     ),
 
-  createCategory: (
-    tenantId: string,
-    name: string
-  ): Promise<ProductCategory> =>
+  createCategory: (tenantId: string, name: string): Promise<ProductCategory> =>
     api.create<{ name: string }, ProductCategory>(
       `tenants/${tenantId}/product-categories`,
       { name }

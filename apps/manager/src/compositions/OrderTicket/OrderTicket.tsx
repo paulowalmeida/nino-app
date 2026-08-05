@@ -16,7 +16,7 @@ import {
   STATUS_LABEL,
   ticketNumber,
 } from '@utils/order-flow'
-import type { Order } from '@custom_types/order'
+import type { Order } from '@custom_types/order/order'
 import type { OrderStatusKey } from '@custom_types/order/order-status-key'
 
 import styles from './OrderTicket.module.css'
@@ -38,11 +38,7 @@ export type OrderTicketProps = {
   isBusy?: boolean
 }
 
-export const OrderTicket = ({
-  order,
-  onAdvance,
-  isBusy,
-}: OrderTicketProps) => {
+export const OrderTicket = ({ order, onAdvance, isBusy }: OrderTicketProps) => {
   const step = nextStep(order)
   const hidden = order.items.length - VISIBLE_ITEMS
   const isWaiting = order.status === 'PENDING'
@@ -104,10 +100,7 @@ export const OrderTicket = ({
           {/* the whole ticket doesn't fit on mobile: the count matters,
             not the list */}
           <p className={styles.summary}>
-            {order.items.reduce(
-              (total, { quantity }) => total + quantity,
-              0
-            )}{' '}
+            {order.items.reduce((total, { quantity }) => total + quantity, 0)}{' '}
             {order.items.length === 1 ? 'item' : 'itens'} ·{' '}
             {order.items.map(({ product }) => product.name).join(', ')}
           </p>

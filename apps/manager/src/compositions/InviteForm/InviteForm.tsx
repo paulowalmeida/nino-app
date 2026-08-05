@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 
-import type { CreateInviteRequest } from '@custom_types/team'
+import type { CreateInviteRequest } from '@custom_types/team/create-invite-request'
 import { Alert } from '@nino/ds/components/Alert'
 import { Button } from '@nino/ds/components/Button'
 import { FormField } from '@nino/ds/components/FormField'

@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 
-import type { UpdateMenuItemRequest } from '@custom_types/product'
+import type { UpdateMenuItemRequest } from '@custom_types/product/update-menu-item-request'
 import { ProductService } from '@services/product.service'
 
 import { menuQueryKey } from './useMenu'

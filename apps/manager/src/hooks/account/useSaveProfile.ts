@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 
-import type { UpdateProfileRequest } from '@custom_types/account'
+import type { UpdateProfileRequest } from '@custom_types/account/update-profile-request'
 import { profileKey } from '@hooks/account/useProfile'
 import { AccountService } from '@services/account.service'
 

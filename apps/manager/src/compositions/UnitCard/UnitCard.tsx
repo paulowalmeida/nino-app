@@ -8,8 +8,8 @@ import { Input } from '@nino/ds/components/Input'
 import { Select } from '@nino/ds/components/Select'
 import { Skeleton } from '@nino/ds/components/Skeleton'
 import { AddressFields } from '@compositions/AddressFields/AddressFields'
-import type { TenantDetail, UpdateTenantRequest } from '@custom_types/store'
-
+import type { TenantDetail } from '@custom_types/store/tenant-detail'
+import type { UpdateTenantRequest } from '@custom_types/store/update-tenant-request'
 import local from './UnitCard.module.css'
 import motion from '@styles/motion.module.css'
 import styles from '@styles/settingsCard.module.css'
@@ -116,8 +116,7 @@ export const UnitCard = ({
             )}
           </h2>
           <p className={styles.hint}>
-            É o endereço de onde o pedido sai — e o que o cliente vê na
-            loja.
+            É o endereço de onde o pedido sai — e o que o cliente vê na loja.
           </p>
         </div>
 

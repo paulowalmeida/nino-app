@@ -1,5 +1,5 @@
-import type { ReportRangeParams, TimingReport } from '@custom_types/order'
-
+import type { ReportRangeParams } from '@custom_types/order/report-range-params'
+import type { TimingReport } from '@custom_types/order/timing-report'
 export const weekRange: ReportRangeParams = { period: 'week' }
 
 export const timingReport: TimingReport = {
