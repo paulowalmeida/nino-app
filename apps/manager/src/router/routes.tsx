@@ -2,6 +2,7 @@ import { createBrowserRouter, Navigate } from 'react-router'
 
 import { AppLayout } from '@layouts/AppLayout/AppLayout'
 import { AuthLayout } from '@layouts/AuthLayout/AuthLayout'
+import { RouteErrorBoundary } from '@components/RouteErrorBoundary/RouteErrorBoundary'
 import { MANAGERS } from '@constants/roles'
 import { AuthGuard } from '@guards/auth-guard'
 import { FirstStoreGuard } from '@guards/first-store-guard'
@@ -14,9 +15,11 @@ export const router = createBrowserRouter([
   {
     path: '/',
     loader: RootLoader,
+    errorElement: <RouteErrorBoundary />,
   },
   {
     element: <AuthLayout />,
+    errorElement: <RouteErrorBoundary />,
     children: [
       {
         path: '/entrar',
@@ -37,6 +40,7 @@ export const router = createBrowserRouter([
   {
     path: '/lojas',
     loader: SessionGuard,
+    errorElement: <RouteErrorBoundary />,
     lazy: () =>
       import('@pages/store-selection/StoreSelection').then(
         ({ StoreSelection }) => ({ Component: StoreSelection })
@@ -45,6 +49,7 @@ export const router = createBrowserRouter([
   {
     path: '/boas-vindas',
     loader: SessionGuard,
+    errorElement: <RouteErrorBoundary />,
     lazy: () =>
       import('@pages/welcome/Welcome').then(({ Welcome }) => ({
         Component: Welcome,
@@ -53,6 +58,7 @@ export const router = createBrowserRouter([
   {
     path: '/unidades',
     loader: FirstStoreGuard,
+    errorElement: <RouteErrorBoundary />,
     lazy: () =>
       import('@pages/units/Units').then(({ Units }) => ({ Component: Units })),
   },
@@ -60,6 +66,7 @@ export const router = createBrowserRouter([
     element: <AppLayout />,
     path: '/:tenantId',
     loader: AuthGuard,
+    errorElement: <RouteErrorBoundary />,
     children: [
       {
         path: 'visao-geral',

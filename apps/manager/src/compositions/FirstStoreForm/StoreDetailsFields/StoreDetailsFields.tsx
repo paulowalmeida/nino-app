@@ -66,7 +66,6 @@ export const StoreDetailsFields = ({
           error={errors.slug?.message}
         >
           <div className={styles.slugField}>
-            <span className={styles.slugPrefix}>nino.delivery/</span>
             <Input
               placeholder="lanchonete-do-ze"
               {...register('slug', {
@@ -79,6 +78,7 @@ export const StoreDetailsFields = ({
                 },
               })}
             />
+            <span className={styles.slugPrefix}>dev.nino.delivery</span>
           </div>
         </FormField>
       </div>
