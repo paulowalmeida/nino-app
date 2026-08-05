@@ -13,12 +13,11 @@ import { Input } from '@nino/ds/components/Input'
 import { Select } from '@nino/ds/components/Select'
 import { Textarea } from '@nino/ds/components/Textarea'
 import { ItemPhoto } from '@compositions/ItemPhoto/ItemPhoto'
+import { DESCRIPTION_MAX_LENGTH } from '@constants/product.constants'
 import { riseDelay } from '@utils/rise-delay'
 
 import styles from './NewProductFields.module.css'
 import motion from '@styles/motion.module.css'
-
-const DESCRIPTION_MAX_LENGTH = 300
 
 export type NewProductFormValues = {
   name: string

@@ -9,6 +9,10 @@ import { useTooltip, useTooltipInPortal } from '@visx/tooltip'
 import { curveMonotoneX } from '@visx/curve'
 
 import { useElementWidth } from '@hooks/ui/useElementWidth'
+import {
+  SALES_CHART_MARGIN,
+  SALES_CHART_NARROW_MARGIN,
+} from '@constants/order.constants'
 import type { SalesSeriesPoint } from '@custom_types/order/sales-series-point'
 import type { SeriesGranularity } from '@custom_types/order/series-granularity'
 import { brl } from '@utils/money'
@@ -27,15 +31,6 @@ export type SalesChartProps = {
   /** Accessible name — the chart is an image to anyone who can't see it. */
   label: string
 }
-
-/*
- * Room for the axes to breathe, in two sizes: on mobile the Y-axis label is
- * shorter and the wide margin would eat into the drawing area.
- */
-const MARGIN = { top: 12, right: 20, bottom: 32, left: 52 }
-/* The right side holds the last axis label: at 8px, the final date was
-   getting cut off at the card's edge. */
-const NARROW_MARGIN = { top: 8, right: 20, bottom: 28, left: 38 }
 
 /* Below this the chart is narrow: fewer axis marks and a smaller margin. */
 const NARROW_WIDTH = 420
@@ -115,7 +110,7 @@ export const SalesChart = ({
   )
 
   const isNarrow = width > 0 && width < NARROW_WIDTH
-  const margin = isNarrow ? NARROW_MARGIN : MARGIN
+  const margin = isNarrow ? SALES_CHART_NARROW_MARGIN : SALES_CHART_MARGIN
   const drawHeight = isNarrow ? Math.min(height, 180) : height
 
   const innerWidth = Math.max(width - margin.left - margin.right, 0)

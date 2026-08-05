@@ -6,6 +6,11 @@ import { FormField } from '@nino/ds/components/FormField'
 import { Input } from '@nino/ds/components/Input'
 import { Skeleton } from '@nino/ds/components/Skeleton'
 import type { Profile } from '@custom_types/account/profile'
+import { EMAIL_PATTERN } from '@constants/auth.constants'
+import {
+  ACCOUNT_GHOST_FIELDS,
+  ACCOUNT_PROVIDER_LABEL,
+} from '@constants/account.constants'
 import { useProfile } from '@hooks/account/useProfile'
 import { useSaveProfile } from '@hooks/account/useSaveProfile'
 import { useUpdateMyEmail } from '@hooks/account/useUpdateMyEmail'
@@ -22,16 +27,6 @@ const day = new Intl.DateTimeFormat('pt-BR', {
 
 const dateOf = (iso: string | null): string =>
   iso ? day.format(new Date(iso)) : '—'
-
-const providerLabel: Record<string, string> = {
-  local: 'E-mail e senha',
-  google: 'Google',
-}
-
-const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-
-/** Nome, e-mail, telefone: os três campos da ficha, na mesma grade. */
-const GHOST_FIELDS = ['wide', 'regular', 'regular'] as const
 
 type Draft = { name: string; phone: string; email: string }
 
@@ -107,7 +102,7 @@ export const Account = () => {
 
       {isPending ? (
         <div className={`${motion.settle} ${styles.fields}`}>
-          {GHOST_FIELDS.map((size, index) => (
+          {ACCOUNT_GHOST_FIELDS.map((size, index) => (
             <Skeleton
               key={index}
               className={
@@ -185,7 +180,9 @@ export const Account = () => {
             {[
               [
                 'Login via',
-                providerLabel[profile.credentials[0]?.provider ?? ''] ??
+                ACCOUNT_PROVIDER_LABEL[
+                  profile.credentials[0]?.provider ?? ''
+                ] ??
                   profile.credentials[0]?.provider ??
                   '—',
               ],

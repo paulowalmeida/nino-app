@@ -9,14 +9,12 @@ import {
   TableRow,
 } from '@nino/ds/components/Table'
 import type { TopProduct } from '@custom_types/order/top-product'
+import { TOP_SALES_TABLE_GHOST_ROWS } from '@constants/order.constants'
 import { brl } from '@utils/money'
 import { riseDelay } from '@utils/rise-delay'
 
 import styles from './TopSalesTable.module.css'
 import motion from '@styles/motion.module.css'
-
-/** Cinco linhas: o tamanho usual do ranking que a API devolve. */
-const GHOST_ROWS = ['one', 'two', 'three', 'four', 'five']
 
 /** Pódio: as três primeiras linhas leem antes das outras. */
 const podiumClass = (index: number): string => {
@@ -76,7 +74,7 @@ export const TopSalesTable = ({
         <Table>
           {tableHead}
           <TableBody>
-            {GHOST_ROWS.map((row) => (
+            {TOP_SALES_TABLE_GHOST_ROWS.map((row) => (
               <TableRow key={row}>
                 <TableCell className={styles.colRank}>
                   <Skeleton className={styles.ghostPosition} />

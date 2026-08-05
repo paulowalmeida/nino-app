@@ -11,13 +11,12 @@ import { PasswordStrength } from '@nino/ds/components/PasswordStrength'
 import { PhoneInput } from '@nino/ds/components/PhoneInput'
 import { isValidCpf } from '@nino/ds/validators'
 import { useCheckAvailability } from '@hooks/auth/useCheckAvailability'
+import { EMAIL_PATTERN } from '@constants/auth.constants'
 import type { SignupAccount } from '@custom_types/auth/signup-account'
 import { riseDelay } from '@utils/rise-delay'
 
 import styles from '@styles/authForm.module.css'
 import motion from '@styles/rise.module.css'
-
-const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
 type AccountFormValues = SignupAccount & {
   confirmPassword: string

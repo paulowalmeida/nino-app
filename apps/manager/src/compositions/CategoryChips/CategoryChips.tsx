@@ -1,9 +1,8 @@
 import { Chip } from '@nino/ds/components/Chip'
 import { Skeleton } from '@nino/ds/components/Skeleton'
+import { CATEGORY_CHIPS_GHOST_ITEMS } from '@constants/product.constants'
 import type { ProductCategory } from '@custom_types/product/product-category'
 import styles from './CategoryChips.module.css'
-
-const GHOST_CHIPS = ['first', 'second', 'third', 'fourth']
 
 type CategoryChipsProps = {
   categories: ProductCategory[]
@@ -21,7 +20,7 @@ export const CategoryChips = ({
   if (isPending) {
     return (
       <div className={styles.track} role="tablist" aria-label="Categorias">
-        {GHOST_CHIPS.map((chip) => (
+        {CATEGORY_CHIPS_GHOST_ITEMS.map((chip) => (
           <Skeleton key={chip} className={styles.ghostChip} />
         ))}
       </div>

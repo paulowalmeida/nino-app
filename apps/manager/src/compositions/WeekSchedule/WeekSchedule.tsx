@@ -6,6 +6,7 @@ import { Switch } from '@nino/ds/components/Switch'
 import { TimePicker } from '@nino/ds/components/TimePicker'
 import type { OpeningHours } from '@custom_types/settings/opening-hours'
 import type { HoursDraft } from '@custom_types/settings/hours-draft'
+import { WEEK_SCHEDULE_DAYS } from '@constants/settings.constants'
 import { riseDelay } from '@utils/rise-delay'
 
 import local from './WeekSchedule.module.css'
@@ -25,16 +26,6 @@ export type WeekScheduleProps = {
   onSave: (week: HoursDraft[]) => Promise<unknown>
 }
 
-const DAYS = [
-  'Domingo',
-  'Segunda',
-  'Terça',
-  'Quarta',
-  'Quinta',
-  'Sexta',
-  'Sábado',
-]
-
 const blank = (dayOfWeek: number): HoursDraft => ({
   dayOfWeek,
   openTime: '18:00',
@@ -43,7 +34,7 @@ const blank = (dayOfWeek: number): HoursDraft => ({
 })
 
 const toWeek = (hours: OpeningHours[]): HoursDraft[] =>
-  DAYS.map((_, day) => {
+  WEEK_SCHEDULE_DAYS.map((_, day) => {
     const saved = hours.find(({ dayOfWeek }) => dayOfWeek === day)
     if (!saved) return blank(day)
     return {
@@ -62,10 +53,10 @@ export const WeekSchedule = ({
   onSave,
 }: WeekScheduleProps) => {
   const [week, setWeek] = useState<HoursDraft[]>(() =>
-    DAYS.map((_, day) => blank(day))
+    WEEK_SCHEDULE_DAYS.map((_, day) => blank(day))
   )
   const [saved, setSaved] = useState<HoursDraft[]>(() =>
-    DAYS.map((_, day) => blank(day))
+    WEEK_SCHEDULE_DAYS.map((_, day) => blank(day))
   )
   const [seed, setSeed] = useState<OpeningHours[] | null>(null)
 
@@ -138,15 +129,17 @@ export const WeekSchedule = ({
               onCheckedChange={(checked) =>
                 change(entry.dayOfWeek, { isOpen: checked })
               }
-              aria-label={DAYS[entry.dayOfWeek]}
+              aria-label={WEEK_SCHEDULE_DAYS[entry.dayOfWeek]}
             />
 
-            <span className={local.dayName}>{DAYS[entry.dayOfWeek]}</span>
+            <span className={local.dayName}>
+              {WEEK_SCHEDULE_DAYS[entry.dayOfWeek]}
+            </span>
 
             <div className={local.times}>
               <TimePicker
                 size="sm"
-                ariaLabel={`Abre ${DAYS[entry.dayOfWeek]}`}
+                ariaLabel={`Abre ${WEEK_SCHEDULE_DAYS[entry.dayOfWeek]}`}
                 value={entry.openTime}
                 onValueChange={(openTime) =>
                   change(entry.dayOfWeek, { openTime })
@@ -155,7 +148,7 @@ export const WeekSchedule = ({
               <span className={local.until}>às</span>
               <TimePicker
                 size="sm"
-                ariaLabel={`Fecha ${DAYS[entry.dayOfWeek]}`}
+                ariaLabel={`Fecha ${WEEK_SCHEDULE_DAYS[entry.dayOfWeek]}`}
                 value={entry.closeTime}
                 onValueChange={(closeTime) =>
                   change(entry.dayOfWeek, { closeTime })

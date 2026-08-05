@@ -8,6 +8,11 @@ import { Switch } from '@nino/ds/components/Switch'
 import type { PaymentMethod } from '@custom_types/order/payment-method'
 import type { TenantSettings } from '@custom_types/settings/tenant-settings'
 import type { UpdateTenantSettingsRequest } from '@custom_types/settings/update-tenant-settings-request'
+import {
+  EMPTY_SERVICE_RULES_DRAFT,
+  SERVICE_RULES_CHANNELS,
+  SERVICE_RULES_METHODS,
+} from '@constants/settings.constants'
 import { PAYMENT_METHOD_LABEL } from '@utils/order-flow'
 import { riseDelay } from '@utils/rise-delay'
 
@@ -33,35 +38,6 @@ export type ServiceRulesDraft = {
   acceptedPaymentMethods: PaymentMethod[]
 }
 
-const CHANNELS: {
-  key: 'isDeliveryEnabled' | 'isPickupEnabled' | 'isCounterEnabled'
-  label: string
-  hint: string
-}[] = [
-  {
-    key: 'isDeliveryEnabled',
-    label: 'Entrega',
-    hint: 'A loja leva o pedido até o cliente.',
-  },
-  {
-    key: 'isPickupEnabled',
-    label: 'Retirada',
-    hint: 'O cliente pede pelo app e busca na loja.',
-  },
-  {
-    key: 'isCounterEnabled',
-    label: 'Balcão',
-    hint: 'Alguém da equipe registra o pedido no painel.',
-  },
-]
-
-const METHODS: PaymentMethod[] = [
-  'CASH',
-  'CARD_ON_DELIVERY',
-  'PIX_ONLINE',
-  'CARD_ONLINE',
-]
-
 const toDraft = (settings: TenantSettings): ServiceRulesDraft => ({
   isDeliveryEnabled: settings.isDeliveryEnabled,
   isPickupEnabled: settings.isPickupEnabled,
@@ -73,24 +49,15 @@ const toDraft = (settings: TenantSettings): ServiceRulesDraft => ({
   acceptedPaymentMethods: settings.acceptedPaymentMethods,
 })
 
-const EMPTY: ServiceRulesDraft = {
-  isDeliveryEnabled: true,
-  isPickupEnabled: false,
-  isCounterEnabled: false,
-  allowGuestOrder: true,
-  requireCpf: false,
-  minOrderAmount: '0',
-  estimatedMinutes: '30',
-  acceptedPaymentMethods: [],
-}
-
 export const ServiceRules = ({
   settings,
   isPending,
   isSaving,
   onSave,
 }: ServiceRulesProps) => {
-  const [draft, setDraft] = useState<ServiceRulesDraft>(EMPTY)
+  const [draft, setDraft] = useState<ServiceRulesDraft>(
+    EMPTY_SERVICE_RULES_DRAFT
+  )
   const [isDirty, setDirty] = useState(false)
   const [seed, setSeed] = useState<TenantSettings | undefined>(undefined)
 
@@ -139,7 +106,7 @@ export const ServiceRules = ({
       </header>
 
       <div className={styles.group}>
-        {CHANNELS.map(({ key, label, hint }, index) => (
+        {SERVICE_RULES_CHANNELS.map(({ key, label, hint }, index) => (
           <div
             key={key}
             className={`${motion.deal} ${styles.row}`}
@@ -161,7 +128,7 @@ export const ServiceRules = ({
       <div className={styles.group}>
         <p className={styles.groupTitle}>Formas de pagamento aceitas</p>
         <div className={local.chips}>
-          {METHODS.map((method) => (
+          {SERVICE_RULES_METHODS.map((method) => (
             <Chip
               key={method}
               variant="toggle"

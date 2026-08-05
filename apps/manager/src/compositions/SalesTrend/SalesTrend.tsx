@@ -5,6 +5,7 @@ import { Eyebrow } from '@nino/ds/components/Eyebrow'
 import { useSalesSeries } from '@hooks/order/useSalesSeries'
 import { brl } from '@utils/money'
 import { SalesChart } from '@compositions/SalesChart/SalesChart'
+import { SALES_TREND_SKELETON_DAYS } from '@constants/order.constants'
 
 import styles from './SalesTrend.module.css'
 import motion from '@styles/motion.module.css'
@@ -18,9 +19,6 @@ const PERCENT = new Intl.NumberFormat('pt-BR', {
   maximumFractionDigits: 0,
   signDisplay: 'exceptZero',
 })
-
-/** Seven days at the chart's base — the same slice the series brings. */
-const SKELETON_DAYS = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun']
 
 /**
  * Compares the last closed day against the previous one. Without this
@@ -48,9 +46,7 @@ export const SalesTrend = ({ tenantId }: SalesTrendProps) => {
   return (
     <section aria-label="Os últimos 7 dias" className={styles.section}>
       <div className={motion.unroll}>
-        <Eyebrow className={styles.heading}>
-          Os últimos 7 dias
-        </Eyebrow>
+        <Eyebrow className={styles.heading}>Os últimos 7 dias</Eyebrow>
       </div>
 
       <Card className={`${motion.settle} ${styles.card}`}>
@@ -87,7 +83,7 @@ export const SalesTrend = ({ tenantId }: SalesTrendProps) => {
             <div className={styles.skeletonPlot}>
               <Skeleton className={styles.skeletonLine} />
               <div className={styles.skeletonDays}>
-                {SKELETON_DAYS.map((day) => (
+                {SALES_TREND_SKELETON_DAYS.map((day) => (
                   <Skeleton key={day} className={styles.skeletonDay} />
                 ))}
               </div>

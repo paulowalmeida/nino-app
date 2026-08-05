@@ -7,6 +7,10 @@ import { Tabs } from '@nino/ds/components/Tabs'
 import type { MenuItem } from '@custom_types/product/menu-item'
 import type { MenuSection } from '@custom_types/product/menu-section'
 import { ProductCard } from '@compositions/ProductCard/ProductCard'
+import {
+  PRODUCT_GRID_SKELETON_CARDS,
+  PRODUCT_GRID_SKELETON_TABS,
+} from '@constants/product.constants'
 
 import styles from './ProductGrid.module.css'
 
@@ -15,19 +19,6 @@ export type ProductGridProps = {
   isPending: boolean
   onPick: (item: MenuItem) => void
 }
-
-/** Three tabs and eight cards: what fills the counter's first screen. */
-const SKELETON_TABS = ['first', 'second', 'third']
-const SKELETON_CARDS = [
-  'one',
-  'two',
-  'three',
-  'four',
-  'five',
-  'six',
-  'seven',
-  'eight',
-]
 
 /**
  * The counter's menu: large targets, price readable from a distance, and
@@ -75,13 +66,13 @@ export const ProductGrid = ({
         <Skeleton className={styles.skeletonSearch} />
 
         <div className={styles.skeletonTabsRow}>
-          {SKELETON_TABS.map((tab) => (
+          {PRODUCT_GRID_SKELETON_TABS.map((tab) => (
             <Skeleton key={tab} className={styles.skeletonTab} />
           ))}
         </div>
 
         <div className={styles.grid}>
-          {SKELETON_CARDS.map((card) => (
+          {PRODUCT_GRID_SKELETON_CARDS.map((card) => (
             <Skeleton key={card} className={styles.skeleton} />
           ))}
         </div>

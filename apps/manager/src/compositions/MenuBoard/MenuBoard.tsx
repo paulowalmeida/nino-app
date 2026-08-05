@@ -13,13 +13,11 @@ import { useReorderMenuItems } from '@hooks/product/useReorderMenuItems'
 import type { MenuItem } from '@custom_types/product/menu-item'
 import { DeleteItemDialog } from '@compositions/DeleteItemDialog/DeleteItemDialog'
 import { MenuRow } from '@compositions/MenuRow/MenuRow'
+import { MENU_BOARD_GHOST_ROWS } from '@constants/product.constants'
 
 import styles from './MenuBoard.module.css'
 import rowStyles from '@compositions/MenuRow/MenuRow.module.css'
 import motion from '@styles/motion.module.css'
-
-/** Six rows: what fits on the first screen before scrolling is needed. */
-const GHOST_ROWS = ['one', 'two', 'three', 'four', 'five', 'six']
 
 export type MenuBoardProps = {
   tenantId: string | null
@@ -100,7 +98,7 @@ export const MenuBoard = ({ tenantId, categoryId, search }: MenuBoardProps) => {
         <div className={styles.scroll}>
           <div className={styles.list}>
             <ul className={styles.items}>
-              {GHOST_ROWS.map((row) => (
+              {MENU_BOARD_GHOST_ROWS.map((row) => (
                 <li key={row} className={rowStyles.item}>
                   <div className={rowStyles.itemLink}>
                     <Skeleton className={styles.ghostThumb} />

@@ -6,6 +6,8 @@ import { ScrollArea } from '@nino/ds/components/ScrollArea'
 import { Skeleton } from '@nino/ds/components/Skeleton'
 import { Breadcrumb } from '@elements/Breadcrumb/Breadcrumb'
 import { PersonMark } from '@components/PersonMark/PersonMark'
+import { COLLABORATOR_DETAIL_COLUMNS } from '@constants/order.constants'
+import { TEAM_ROLE_LABEL } from '@constants/team.constants'
 import { useCurrentTenant } from '@hooks/session/useCurrentTenant'
 import { useStaffDetail } from '@hooks/team/useStaffDetail'
 import { lastSeenLabel } from '@utils/last-seen'
@@ -16,14 +18,6 @@ import { riseDelay } from '@utils/rise-delay'
 
 import styles from './CollaboratorDetail.module.css'
 import motion from '@styles/motion.module.css'
-
-const ROLE_LABEL: Record<string, string> = {
-  TENANT_OWNER: 'Dono',
-  MANAGER: 'Gerente',
-  STAFF: 'Atendente',
-}
-
-const COLUMNS = ['Pedido', 'Cliente', 'Canal', 'Situação', 'Quando', 'Valor']
 
 const stamp = new Intl.DateTimeFormat('pt-BR', {
   day: '2-digit',
@@ -55,10 +49,7 @@ export const CollaboratorDetail = () => {
   const tenant = useCurrentTenant()
   const tenantId = tenant?.tenantId ?? null
 
-  const { data: member, isPending } = useStaffDetail(
-    tenantId,
-    userId as string
-  )
+  const { data: member, isPending } = useStaffDetail(tenantId, userId as string)
 
   if (isPending) return <Skeleton className={styles.skeleton} />
 
@@ -97,7 +88,7 @@ export const CollaboratorDetail = () => {
         </div>
 
         <Badge variant="info" className={styles.role}>
-          {ROLE_LABEL[member.role] ?? member.role}
+          {TEAM_ROLE_LABEL[member.role] ?? member.role}
         </Badge>
       </header>
 
@@ -132,7 +123,7 @@ export const CollaboratorDetail = () => {
           ) : (
             <>
               <div className={`${styles.grid} ${styles.columns}`} aria-hidden>
-                {COLUMNS.map((label) => (
+                {COLLABORATOR_DETAIL_COLUMNS.map((label) => (
                   <span key={label} className={styles.columnLabel}>
                     {label}
                   </span>

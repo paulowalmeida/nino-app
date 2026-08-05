@@ -1,6 +1,9 @@
 import { KitchenCard } from '@compositions/KitchenCard/KitchenCard'
-import type { OrderStage } from '@custom_types/order/order-stage'
 import type { OrderStatusKey } from '@custom_types/order/order-status-key'
+import {
+  KITCHEN_COLUMNS,
+  KITCHEN_LOADING_CARDS,
+} from '@constants/order.constants'
 import { useOrders } from '@hooks/order/useOrders'
 import { useOrderStatus } from '@hooks/order/useOrderStatus'
 import { useCurrentTenant } from '@hooks/session/useCurrentTenant'
@@ -11,20 +14,6 @@ import { KitchenCardSkeleton } from '@skeletons/KitchenCardSkeleton/KitchenCardS
 
 import styles from './Kitchen.module.css'
 import motion from '@styles/motion.module.css'
-
-const LOADING_CARDS = ['first', 'second']
-
-const COLUMNS: { stage: OrderStage; title: string; empty: string }[] = [
-  { stage: 'incoming', title: 'Chegou agora', empty: 'Nada esperando aceite.' },
-  {
-    stage: 'confirmed',
-    title: 'Na fila',
-    empty: 'Nada confirmado esperando a chapa.',
-  },
-  { stage: 'kitchen', title: 'Na chapa', empty: 'Nenhum pedido em preparo.' },
-  { stage: 'street', title: 'Saiu', empty: 'Nada na rua.' },
-  { stage: 'counter', title: 'No balcão', empty: 'Nada esperando retirada.' },
-]
 
 export const Kitchen = () => {
   const tenant = useCurrentTenant()
@@ -43,7 +32,7 @@ export const Kitchen = () => {
   return (
     <div className={styles.screen}>
       <div className={styles.board}>
-        {COLUMNS.map(({ stage, title, empty }) => {
+        {KITCHEN_COLUMNS.map(({ stage, title, empty }) => {
           const list = orders.filter((order) => stageOf(order.status) === stage)
 
           const column = `${styles.column} ${
@@ -59,7 +48,7 @@ export const Kitchen = () => {
 
               <div className={styles.stack}>
                 {isPending &&
-                  LOADING_CARDS.map((card) => (
+                  KITCHEN_LOADING_CARDS.map((card) => (
                     <KitchenCardSkeleton key={card} />
                   ))}
 

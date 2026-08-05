@@ -1,5 +1,6 @@
 import { riseDelay } from '@utils/rise-delay'
 import { STATUS_LABEL } from '@utils/order-flow'
+import { ORDER_TIMELINE_REALM_LABEL } from '@constants/order.constants'
 import type { OrderStatusEntry } from '@custom_types/order/order-status-entry'
 import styles from './OrderTimeline.module.css'
 import motion from '@styles/motion.module.css'
@@ -8,13 +9,6 @@ const clock = new Intl.DateTimeFormat('pt-BR', {
   hour: '2-digit',
   minute: '2-digit',
 })
-
-const REALM_LABEL: Record<string, string> = {
-  OPERATIONAL: 'pela loja',
-  BACKOFFICE: 'pelo suporte',
-  CUSTOMER: 'pelo cliente',
-  GUEST: 'pelo cliente',
-}
 
 export type OrderTimelineProps = {
   entries: OrderStatusEntry[]
@@ -41,7 +35,7 @@ export const OrderTimeline = ({ entries }: OrderTimelineProps) => {
             {STATUS_LABEL[entry.status]}
             <span className={styles.author}>
               {' '}
-              {REALM_LABEL[entry.changedByRealm] ?? ''}
+              {ORDER_TIMELINE_REALM_LABEL[entry.changedByRealm] ?? ''}
             </span>
           </span>
           <time className={styles.at} dateTime={entry.createdAt}>

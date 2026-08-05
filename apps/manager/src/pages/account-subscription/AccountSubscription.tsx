@@ -6,6 +6,7 @@ import { Card } from '@nino/ds/components/Card'
 import { PageHeader } from '@nino/ds/components/PageHeader'
 import { Skeleton } from '@nino/ds/components/Skeleton'
 import { useSubscription } from '@hooks/account/useSubscription'
+import { ACCOUNT_SUBSCRIPTION_GHOST_FACTS } from '@constants/account.constants'
 import { brl } from '@utils/money'
 import { riseDelay } from '@utils/rise-delay'
 
@@ -20,9 +21,6 @@ const day = new Intl.DateTimeFormat('pt-BR', {
 
 const dateOf = (iso: string | null): string =>
   iso ? day.format(new Date(iso)) : '—'
-
-/** Situação, assinada em, teste até, renova em, unidades: os cinco fatos. */
-const GHOST_FACTS = ['first', 'second', 'third', 'fourth', 'fifth']
 
 export const AccountSubscription = () => {
   const { data, isPending, isError } = useSubscription()
@@ -47,7 +45,7 @@ export const AccountSubscription = () => {
           </div>
 
           <dl className={styles.facts}>
-            {GHOST_FACTS.map((fact) => (
+            {ACCOUNT_SUBSCRIPTION_GHOST_FACTS.map((fact) => (
               <div key={fact} className={styles.fact}>
                 <Skeleton variant="text" className={styles.ghostFactLabel} />
                 <Skeleton variant="text" className={styles.ghostFactValue} />
@@ -108,8 +106,8 @@ export const AccountSubscription = () => {
           </dl>
 
           <p className={styles.hint}>
-            Mudança de plano e cancelamento passam pelo suporte enquanto a
-            troca automática não está no ar.
+            Mudança de plano e cancelamento passam pelo suporte enquanto a troca
+            automática não está no ar.
           </p>
         </Card>
       )}

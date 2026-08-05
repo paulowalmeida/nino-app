@@ -16,21 +16,12 @@ import type { CartLine } from '@custom_types/counter/cart-line'
 import type { OrderChannel } from '@custom_types/order/order-channel'
 import type { PaymentMethod } from '@custom_types/order/payment-method'
 import type { Recipient } from '@custom_types/order/recipient'
+import { NEW_ORDER_EMPTY_RECIPIENT } from '@constants/order.constants'
 import { brl } from '@utils/money'
 import { toE164 } from '@utils/phone'
 import { isStoreOpen } from '@utils/store-open'
 
 import styles from './NewOrder.module.css'
-
-const EMPTY_RECIPIENT: Recipient = {
-  name: '',
-  phone: '',
-  street: '',
-  number: '',
-  complement: '',
-  neighborhood: '',
-  zoneId: '',
-}
 
 export const NewOrder = () => {
   const tenant = useCurrentTenant()
@@ -52,7 +43,9 @@ export const NewOrder = () => {
   /** A forma escolhida só vale enquanto a loja aceitar. */
   const method =
     chosenMethod && methods.includes(chosenMethod) ? chosenMethod : methods[0]
-  const [recipient, setRecipient] = useState<Recipient>(EMPTY_RECIPIENT)
+  const [recipient, setRecipient] = useState<Recipient>(
+    NEW_ORDER_EMPTY_RECIPIENT
+  )
   const [notes, setNotes] = useState('')
   const [failed, setFailed] = useState(false)
 

@@ -5,6 +5,7 @@ import { Icon } from '@nino/ds/components/Icon'
 import { Select } from '@nino/ds/components/Select'
 import { Textarea } from '@nino/ds/components/Textarea'
 import { RecipientFields } from '@compositions/RecipientFields/RecipientFields'
+import { NEW_ORDER_TICKET_CHANNELS } from '@constants/order.constants'
 import type { CartLine } from '@custom_types/counter/cart-line'
 import type { OrderChannel } from '@custom_types/order/order-channel'
 import type { PaymentMethod } from '@custom_types/order/payment-method'
@@ -14,8 +15,6 @@ import { CHANNEL_LABEL, paymentLabelFor } from '@utils/order-flow'
 
 import styles from './NewOrderTicket.module.css'
 import motion from '@styles/motion.module.css'
-
-const CHANNELS: OrderChannel[] = ['COUNTER', 'PICKUP', 'DELIVERY']
 
 export type NewOrderTicketProps = {
   lines: CartLine[]
@@ -128,7 +127,7 @@ export const NewOrderTicket = ({
           Como sai
         </span>
         <Select
-          options={CHANNELS.map((value) => ({
+          options={NEW_ORDER_TICKET_CHANNELS.map((value) => ({
             value,
             label: CHANNEL_LABEL[value],
           }))}

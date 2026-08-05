@@ -25,6 +25,7 @@
     "baseUrl": ".",
     "paths": {
       "@ds/*": ["../../packages/ds/src/*"],
+      "@adapters/*": ["src/adapters/*"],
       "@assets/*": ["src/assets/*"],
       "@components/*": ["src/components/*"],
       "@compositions/*": ["src/compositions/*"],

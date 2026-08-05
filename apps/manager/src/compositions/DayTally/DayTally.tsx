@@ -10,6 +10,7 @@ import { tallyToday } from '@utils/day-tally'
 import { riseDelay } from '@utils/rise-delay'
 import { ticketNumber } from '@utils/order-flow'
 import { STATUS_LABEL } from '@utils/order-flow'
+import { DAY_TALLY_SKELETON_ROWS } from '@constants/order.constants'
 
 import styles from './DayTally.module.css'
 import motion from '@styles/motion.module.css'
@@ -21,9 +22,6 @@ const clock = new Intl.DateTimeFormat('pt-BR', {
 })
 
 const RECENT = 4
-
-/** Four rows while loading — matches the count that arrives. */
-const SKELETON_ROWS = ['first', 'second', 'third', 'fourth']
 
 type DayTallyProps = {
   tenantId: string | null
@@ -115,7 +113,7 @@ export const DayTally = ({ tenantId, timezone }: DayTallyProps) => {
 
       {isPending && (
         <ul className={styles.recent}>
-          {SKELETON_ROWS.map((row) => (
+          {DAY_TALLY_SKELETON_ROWS.map((row) => (
             <li key={row} className={styles.entry}>
               <div className={styles.skeletonRow}>
                 <Skeleton className={styles.skeletonTicket} />

@@ -12,17 +12,11 @@ import { useStaff } from '@hooks/team/useStaff'
 import { useUpdateStaffEmail } from '@hooks/team/useUpdateStaffEmail'
 import { useUpdateStaffRole } from '@hooks/team/useUpdateStaffRole'
 import { useSessionStore } from '@states/useSessionStore'
+import { TEAM_ROLE_LABEL } from '@constants/team.constants'
 import type { AuthUser } from '@custom_types/auth/auth-user'
-import type { TenantRole } from '@custom_types/auth/tenant-role'
 import type { RosterEntry } from '@custom_types/team/roster-entry'
 
 import styles from './Employees.module.css'
-
-const ROLE_LABEL: Record<TenantRole, string> = {
-  TENANT_OWNER: 'Dono',
-  MANAGER: 'Gerente',
-  STAFF: 'Atendente',
-}
 
 const emailOf = (user: AuthUser): string | null =>
   user.credentials.find(({ email }) => !!email)?.email ?? null
@@ -62,7 +56,7 @@ export const Employees = () => {
       id: user.id,
       name: user.name,
       email: emailOf(user),
-      role: ROLE_LABEL[role],
+      role: TEAM_ROLE_LABEL[role],
       roleKey: role,
       roleLocked:
         user.id === meId ? 'Você não pode mudar o próprio cargo' : undefined,

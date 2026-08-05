@@ -5,10 +5,9 @@ import { Stepper } from '@nino/ds/components/Stepper'
 import type { SignupAccount } from '@custom_types/auth/signup-account'
 import { AccountStep } from '@compositions/AccountStep/AccountStep'
 import { CompanyStep } from '@compositions/CompanyStep/CompanyStep'
+import { REGISTER_WIZARD_STEPS } from '@constants/auth.constants'
 
 import styles from '@styles/authForm.module.css'
-
-const STEPS = [{ title: 'Conta' }, { title: 'Empresa' }]
 
 type RegisterStep = 1 | 2
 
@@ -44,7 +43,7 @@ export const RegisterWizard = () => {
   return (
     <>
       <Stepper
-        steps={STEPS}
+        steps={REGISTER_WIZARD_STEPS}
         step={step - 1}
         onStepChange={handleStepChange}
         className={styles.stepper}

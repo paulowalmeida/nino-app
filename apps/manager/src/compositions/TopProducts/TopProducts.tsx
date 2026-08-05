@@ -4,6 +4,7 @@ import { EmptyState } from '@nino/ds/components/EmptyState'
 import { Skeleton } from '@nino/ds/components/Skeleton'
 import { Eyebrow } from '@nino/ds/components/Eyebrow'
 import { useSalesReport } from '@hooks/order/useSalesReport'
+import { TOP_PRODUCTS_SKELETON_WIDTHS } from '@constants/order.constants'
 import { brl } from '@utils/money'
 
 import styles from './TopProducts.module.css'
@@ -16,9 +17,6 @@ export type TopProductsProps = {
 /** Five rows fit next to the chart without stretching the card. */
 const LIMIT = 5
 
-/** Descending bars: the list arrives sorted, and the skeleton says so too. */
-const SKELETON_WIDTHS = ['92%', '74%', '58%', '43%', '31%']
-
 /**
  * What sold the most this week. The data was already coming in the sales
  * report and being discarded — the Overview page needed it without
@@ -30,14 +28,12 @@ const SKELETON_WIDTHS = ['92%', '74%', '58%', '43%', '31%']
 export const TopProducts = ({ tenantId }: TopProductsProps) => {
   const { report, isPending } = useSalesReport(tenantId, { period: 'week' })
 
-  const items = (report?.topProducts ?? [])
-    .slice(0, LIMIT)
-    .map((product) => ({
-      id: product.productId,
-      label: product.name,
-      value: product.quantity,
-      display: brl(product.revenue),
-    }))
+  const items = (report?.topProducts ?? []).slice(0, LIMIT).map((product) => ({
+    id: product.productId,
+    label: product.name,
+    value: product.quantity,
+    display: brl(product.revenue),
+  }))
 
   return (
     <section aria-label="O que mais sai" className={styles.section}>
@@ -50,7 +46,7 @@ export const TopProducts = ({ tenantId }: TopProductsProps) => {
             top */}
         {isPending && (
           <div className={styles.skeletonBars}>
-            {SKELETON_WIDTHS.map((width) => (
+            {TOP_PRODUCTS_SKELETON_WIDTHS.map((width) => (
               <Skeleton
                 key={width}
                 className={styles.skeletonBar}

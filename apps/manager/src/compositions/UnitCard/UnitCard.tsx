@@ -8,6 +8,7 @@ import { Input } from '@nino/ds/components/Input'
 import { Select } from '@nino/ds/components/Select'
 import { Skeleton } from '@nino/ds/components/Skeleton'
 import { AddressFields } from '@compositions/AddressFields/AddressFields'
+import { EMPTY_UNIT_DRAFT, UNIT_TIMEZONES } from '@constants/store.constants'
 import type { TenantDetail } from '@custom_types/store/tenant-detail'
 import type { UpdateTenantRequest } from '@custom_types/store/update-tenant-request'
 import local from './UnitCard.module.css'
@@ -38,32 +39,6 @@ export type UnitDraft = {
   state: string
 }
 
-/** Time zones covering Brazil — the store operates in one, not any of
-    them. */
-const ZONES = [
-  { value: 'America/Sao_Paulo', label: 'Brasília (GMT-3)' },
-  { value: 'America/Belem', label: 'Belém (GMT-3)' },
-  { value: 'America/Fortaleza', label: 'Fortaleza (GMT-3)' },
-  { value: 'America/Manaus', label: 'Manaus (GMT-4)' },
-  { value: 'America/Cuiaba', label: 'Cuiabá (GMT-4)' },
-  { value: 'America/Porto_Velho', label: 'Porto Velho (GMT-4)' },
-  { value: 'America/Rio_Branco', label: 'Rio Branco (GMT-5)' },
-  { value: 'America/Noronha', label: 'Fernando de Noronha (GMT-2)' },
-]
-
-const EMPTY: UnitDraft = {
-  customName: '',
-  timezone: 'America/Sao_Paulo',
-  primaryColor: '#FF6B00',
-  zipCode: '',
-  street: '',
-  number: '',
-  complement: '',
-  neighborhood: '',
-  city: '',
-  state: '',
-}
-
 const toDraft = (unit: TenantDetail): UnitDraft => ({
   customName: unit.customName ?? '',
   timezone: unit.timezone,
@@ -86,7 +61,7 @@ export const UnitCard = ({
   onSetMain,
   onSave,
 }: UnitCardProps) => {
-  const [draft, setDraft] = useState<UnitDraft>(EMPTY)
+  const [draft, setDraft] = useState<UnitDraft>(EMPTY_UNIT_DRAFT)
   const [isDirty, setDirty] = useState(false)
   const [seed, setSeed] = useState<TenantDetail | undefined>(undefined)
 
@@ -154,7 +129,7 @@ export const UnitCard = ({
           helperText="Define a virada do dia e o horário de funcionamento"
         >
           <Select
-            options={ZONES}
+            options={UNIT_TIMEZONES}
             value={draft.timezone}
             aria-label="Fuso horário da unidade"
             onValueChange={(timezone) => change({ timezone })}

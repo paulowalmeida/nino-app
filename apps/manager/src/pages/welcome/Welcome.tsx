@@ -1,75 +1,14 @@
-import { Fragment, useState, type ReactNode } from 'react'
+import { Fragment, useState } from 'react'
 import { useNavigate } from 'react-router'
 
 import { Button } from '@nino/ds/components/Button'
 import { BrandTopBar } from '@components/BrandTopBar/BrandTopBar'
-import { KitchenCard } from '@compositions/KitchenCard/KitchenCard'
-import { OrderTicket } from '@compositions/OrderTicket/OrderTicket'
-import { OrderTimeline } from '@compositions/OrderTimeline/OrderTimeline'
+import { welcomePanelDemo } from '@adapters/welcomePanelDemo.adapter'
+import { WELCOME_PANELS } from '@constants/welcome.constants'
 import { useSessionStore } from '@states/useSessionStore'
 import { rememberOnboarding } from '@utils/onboarding-seen'
 
-import { demoOrder, demoTimeline } from './demo-order'
-
 import styles from './Welcome.module.css'
-
-const noop = () => {}
-
-type Panel = {
-  leg: string
-  stage: string
-  title: string
-  text: string
-  screen: string
-  demo: ReactNode
-}
-
-/**
- * Cada parada mostra o componente que a pessoa vai usar de verdade — a ficha do
- * pedido, a comanda da cozinha, a linha do tempo da entrega —, alimentado por
- * um pedido de mentira. Explicar o painel com desenho genérico seria vender
- * outra coisa; aqui o que aparece é o painel.
- */
-const PANELS: Panel[] = [
-  {
-    leg: 'Balcão',
-    stage: 'Primeira parada',
-    title: 'O pedido cai no balcão',
-    text: 'Chega pelo link da sua loja e aparece na hora, com itens, endereço e o relógio correndo. Você aceita, recusa ou ajusta o tempo.',
-    screen: 'Pedidos',
-    demo: (
-      <OrderTicket
-        order={demoOrder('PENDING', 2)}
-        onAdvance={noop}
-        isBusy={false}
-      />
-    ),
-  },
-  {
-    leg: 'Cozinha',
-    stage: 'Segunda parada',
-    title: 'A cozinha já sabe',
-    text: 'A comanda abre no painel de parede assim que você aceita, com o número grande e o prazo escorrendo. Ninguém grita pedido nem imprime papel.',
-    screen: 'Cozinha',
-    demo: (
-      <KitchenCard
-        order={demoOrder('PREPARING', 6)}
-        onAdvance={noop}
-        isBusy={false}
-      />
-    ),
-  },
-  {
-    leg: 'Entrega',
-    stage: 'Última parada',
-    title: 'Sai para entrega',
-    text: 'Cada passo fica registrado com hora. O cliente acompanha pelo mesmo link, e no fim do dia o caixa fecha com o que entrou.',
-    screen: 'Pedido #1042',
-    demo: (
-      <OrderTimeline entries={demoTimeline()} />
-    ),
-  },
-]
 
 /**
  * Boas-vindas de quem acabou de criar a conta. Opcional do começo ao fim:
@@ -82,8 +21,8 @@ export const Welcome = () => {
   const firstName = (user?.name ?? '').split(' ')[0]
 
   const [index, setIndex] = useState(0)
-  const panel = PANELS[index]
-  const isLast = index === PANELS.length - 1
+  const panel = WELCOME_PANELS[index]
+  const isLast = index === WELCOME_PANELS.length - 1
 
   const leave = () => {
     rememberOnboarding()
@@ -110,7 +49,7 @@ export const Welcome = () => {
             </div>
 
             <ol className={styles.journey}>
-              {PANELS.map(({ leg }, position) => (
+              {WELCOME_PANELS.map(({ leg }, position) => (
                 <Fragment key={leg}>
                   {position > 0 && (
                     <span className={styles.legLine} aria-hidden="true" />
@@ -133,7 +72,7 @@ export const Welcome = () => {
 
             <div className={styles.frameBody}>
               <div className={styles.demo} aria-hidden="true" inert>
-                {panel.demo}
+                {welcomePanelDemo(panel.demoKey)}
               </div>
             </div>
           </div>
@@ -151,7 +90,7 @@ export const Welcome = () => {
           )}
 
           <div className={styles.progress} aria-hidden="true">
-            {PANELS.map(({ leg }, position) => (
+            {WELCOME_PANELS.map(({ leg }, position) => (
               <span
                 key={leg}
                 className={styles.tick}

@@ -2,16 +2,16 @@ import { Button } from '@nino/ds/components/Button'
 import { EmptyState } from '@nino/ds/components/EmptyState'
 import { Skeleton } from '@nino/ds/components/Skeleton'
 import { ItemThumb } from '@components/ItemThumb/ItemThumb'
+import {
+  NEW_ORDER_MENU_GHOST_ITEMS,
+  NEW_ORDER_MENU_GHOST_SECTIONS,
+} from '@constants/product.constants'
 import type { MenuSection } from '@custom_types/product/menu-section'
 import { brl } from '@utils/money'
 import { riseDelay } from '@utils/rise-delay'
 
 import styles from './NewOrderMenu.module.css'
 import motion from '@styles/motion.module.css'
-
-/** Duas seções de três itens: o que cabe na primeira tela do cardápio. */
-const GHOST_SECTIONS = ['first', 'second']
-const GHOST_ITEMS = ['first', 'second', 'third']
 
 export type NewOrderMenuProps = {
   sections: MenuSection[]
@@ -26,12 +26,12 @@ export const NewOrderMenu = ({
 }: NewOrderMenuProps) => (
   <section className={styles.menu} aria-label="Cardápio">
     {isPending &&
-      GHOST_SECTIONS.map((section) => (
+      NEW_ORDER_MENU_GHOST_SECTIONS.map((section) => (
         <div key={section} className={styles.section}>
           <Skeleton variant="text" className={styles.ghostSectionName} />
 
           <ul className={styles.items}>
-            {GHOST_ITEMS.map((item) => (
+            {NEW_ORDER_MENU_GHOST_ITEMS.map((item) => (
               <li key={item} className={styles.item}>
                 <Skeleton className={styles.ghostThumb} />
                 <Skeleton variant="text" className={styles.ghostItemName} />

@@ -8,6 +8,10 @@ import { Skeleton } from '@nino/ds/components/Skeleton'
 import { PersonMark } from '@components/PersonMark/PersonMark'
 import { useCurrentTenant } from '@hooks/session/useCurrentTenant'
 import { useCustomers } from '@hooks/customer/useCustomers'
+import {
+  CUSTOMERS_COLUMNS,
+  CUSTOMERS_GHOST_ROWS,
+} from '@constants/customer.constants'
 import { brl } from '@utils/money'
 import { formatPhone } from '@utils/phone'
 import { riseDelay } from '@utils/rise-delay'
@@ -22,12 +26,6 @@ const day = new Intl.DateTimeFormat('pt-BR', {
 })
 
 const since = (iso: string): string => day.format(new Date(iso))
-
-/** Rótulos da grade: o primeiro alinha à esquerda, o resto acompanha o número. */
-const COLUMNS = ['Cliente', 'Gasto', 'Pedidos', 'Pontos', 'Cliente desde']
-
-/** Três linhas: o que cabe na primeira tela antes de rolar. */
-const GHOST_ROWS = ['first', 'second', 'third']
 
 export const Customers = () => {
   const tenant = useCurrentTenant()
@@ -51,7 +49,7 @@ export const Customers = () => {
 
       {isPending && (
         <div className={styles.loading}>
-          {GHOST_ROWS.map((row) => (
+          {CUSTOMERS_GHOST_ROWS.map((row) => (
             <div key={row} className={`${styles.grid} ${styles.ghostRow}`}>
               <span className={styles.who}>
                 <Skeleton variant="circle" className={styles.ghostMark} />
@@ -88,7 +86,7 @@ export const Customers = () => {
       {customers.length > 0 && (
         <>
           <div className={`${styles.grid} ${styles.columns}`} aria-hidden>
-            {COLUMNS.map((label) => (
+            {CUSTOMERS_COLUMNS.map((label) => (
               <span key={label} className={styles.columnLabel}>
                 {label}
               </span>
@@ -97,57 +95,57 @@ export const Customers = () => {
 
           <ScrollArea className={styles.listScroll}>
             <ul className={styles.list}>
-            {customers.map((customer, index) => (
-              <li
-                key={customer.id}
-                className={`${motion.deal} ${styles.item}`}
-                style={riseDelay(index * 35 + 60)}
-              >
-                <Link
-                  to={customer.id}
-                  className={`${styles.grid} ${styles.link}`}
+              {customers.map((customer, index) => (
+                <li
+                  key={customer.id}
+                  className={`${motion.deal} ${styles.item}`}
+                  style={riseDelay(index * 35 + 60)}
                 >
-                  <span className={styles.who}>
-                    <PersonMark name={customer.name} />
+                  <Link
+                    to={customer.id}
+                    className={`${styles.grid} ${styles.link}`}
+                  >
+                    <span className={styles.who}>
+                      <PersonMark name={customer.name} />
 
-                    <span className={styles.identity}>
-                      <span className={styles.name}>{customer.name}</span>
-                      <span className={styles.phone}>
-                        {formatPhone(customer.phone)}
-                      </span>
-                    </span>
-                  </span>
-
-                  <span className={styles.stats}>
-                    {/* no celular o dinheiro lidera; no desktop vira coluna */}
-                    <span className={styles.stat}>
-                      <span className={styles.statValue}>
-                        {brl(customer.spent)}
+                      <span className={styles.identity}>
+                        <span className={styles.name}>{customer.name}</span>
+                        <span className={styles.phone}>
+                          {formatPhone(customer.phone)}
+                        </span>
                       </span>
                     </span>
 
-                    <span className={styles.stat}>
-                      <span className={styles.statOrders}>
-                        {customer.orders}
+                    <span className={styles.stats}>
+                      {/* no celular o dinheiro lidera; no desktop vira coluna */}
+                      <span className={styles.stat}>
+                        <span className={styles.statValue}>
+                          {brl(customer.spent)}
+                        </span>
                       </span>
-                      <span className={styles.statLabel}>
-                        {customer.orders === 1 ? ' pedido' : ' pedidos'}
-                      </span>
-                    </span>
 
-                    <span className={styles.statPoints}>
-                      <span className={styles.statValue}>
-                        {customer.loyaltyPoints}
+                      <span className={styles.stat}>
+                        <span className={styles.statOrders}>
+                          {customer.orders}
+                        </span>
+                        <span className={styles.statLabel}>
+                          {customer.orders === 1 ? ' pedido' : ' pedidos'}
+                        </span>
+                      </span>
+
+                      <span className={styles.statPoints}>
+                        <span className={styles.statValue}>
+                          {customer.loyaltyPoints}
+                        </span>
+                      </span>
+
+                      <span className={styles.since}>
+                        {since(customer.since)}
                       </span>
                     </span>
-
-                    <span className={styles.since}>
-                      {since(customer.since)}
-                    </span>
-                  </span>
-                </Link>
-              </li>
-            ))}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </ScrollArea>
         </>

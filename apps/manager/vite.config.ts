@@ -39,6 +39,7 @@ export default defineConfig({
   resolve: {
     alias: {
       '@ds': resolve(__dirname, '../../packages/ds/src'),
+      '@adapters': resolve(__dirname, 'src/adapters'),
       '@assets': resolve(__dirname, 'src/assets'),
       '@components': resolve(__dirname, 'src/components'),
       '@compositions': resolve(__dirname, 'src/compositions'),

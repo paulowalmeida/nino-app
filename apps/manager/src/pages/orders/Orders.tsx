@@ -17,60 +17,22 @@ import { useDebouncedValue } from '@hooks/ui/useDebouncedValue'
 import type { OrderStage } from '@custom_types/order/order-stage'
 import type { OrderStatusKey } from '@custom_types/order/order-status-key'
 import type { StageOption } from '@custom_types/order/stage-option'
+import {
+  ORDERS_LOADING_TICKETS,
+  ORDERS_STAGES,
+} from '@constants/order.constants'
 import { riseDelay } from '@utils/rise-delay'
 import { stageOf } from '@utils/order-flow'
 
 import styles from './Orders.module.css'
 import motion from '@styles/motion.module.css'
 
-type Stage = {
+export type Stage = {
   id: OrderStage
   label: string
   empty: string
   icon: IconName
 }
-
-/** Quatro comandas: uma linha cheia no desktop, duas telas no celular. */
-const LOADING_TICKETS = ['first', 'second', 'third', 'fourth']
-
-const STAGES: Stage[] = [
-  {
-    id: 'incoming',
-    label: 'Novos',
-    empty: 'Nenhum pedido esperando aceite.',
-    icon: 'receipt',
-  },
-  {
-    id: 'confirmed',
-    label: 'Confirmados',
-    empty: 'Nenhum pedido confirmado esperando produção.',
-    icon: 'clock',
-  },
-  {
-    id: 'kitchen',
-    label: 'Na cozinha',
-    empty: 'A cozinha está livre.',
-    icon: 'chef-hat',
-  },
-  {
-    id: 'street',
-    label: 'Na rua',
-    empty: 'Nenhuma entrega em andamento.',
-    icon: 'pin',
-  },
-  {
-    id: 'counter',
-    label: 'No balcão',
-    empty: 'Nada esperando retirada.',
-    icon: 'cash-register',
-  },
-  {
-    id: 'closed',
-    label: 'Fechados',
-    empty: 'Os pedidos concluídos aparecem aqui.',
-    icon: 'check',
-  },
-]
 
 export const Orders = () => {
   const tenant = useCurrentTenant()
@@ -82,7 +44,9 @@ export const Orders = () => {
   const [params, setParams] = useSearchParams()
   const fromUrl = params.get('etapa') as OrderStage | null
   const stage: OrderStage =
-    fromUrl && STAGES.some(({ id }) => id === fromUrl) ? fromUrl : 'incoming'
+    fromUrl && ORDERS_STAGES.some(({ id }) => id === fromUrl)
+      ? fromUrl
+      : 'incoming'
 
   const setStage = (next: OrderStage) =>
     setParams(next === 'incoming' ? {} : { etapa: next }, { replace: true })
@@ -120,7 +84,7 @@ export const Orders = () => {
     variables,
   } = useOrderStatus(tenantId)
 
-  const options: StageOption[] = STAGES.map(({ id, label, icon }) => ({
+  const options: StageOption[] = ORDERS_STAGES.map(({ id, label, icon }) => ({
     id,
     label,
     icon,
@@ -138,7 +102,7 @@ export const Orders = () => {
 
   const empty = isSearching
     ? `Nenhum pedido encontrado para "${search}".`
-    : (STAGES.find(({ id }) => id === stage)?.empty ?? '')
+    : (ORDERS_STAGES.find(({ id }) => id === stage)?.empty ?? '')
 
   const handleAdvance = (orderId: string, target: OrderStatusKey) =>
     advance({ orderId, status: target })
@@ -186,7 +150,7 @@ export const Orders = () => {
       <div className={styles.queue}>
         {isPending && (
           <ul className={styles.board}>
-            {LOADING_TICKETS.map((ticket) => (
+            {ORDERS_LOADING_TICKETS.map((ticket) => (
               <li key={ticket}>
                 <OrderTicketSkeleton />
               </li>

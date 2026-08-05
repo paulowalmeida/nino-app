@@ -20,6 +20,7 @@ import { useMenu } from '@hooks/product/useMenu'
 import { useUpdateCategory } from '@hooks/product/useUpdateCategory'
 import { useCurrentTenant } from '@hooks/session/useCurrentTenant'
 import type { CategoryWithCount } from '@custom_types/product/category-with-count'
+import { CATEGORIES_GHOST_ROWS } from '@constants/product.constants'
 import { ApiError } from '@utils/api-error'
 import { riseDelay } from '@utils/rise-delay'
 
@@ -30,9 +31,6 @@ import motion from '@styles/motion.module.css'
 const HAS_PRODUCTS_HINT =
   'Essa categoria ainda tem produtos. Mova ou exclua os produtos antes de ' +
   'excluir a categoria.'
-
-/** Três linhas: o que cabe antes de rolar numa lista de categorias comum. */
-const GHOST_ROWS = ['first', 'second', 'third']
 
 export const Categories = () => {
   const tenant = useCurrentTenant()
@@ -133,7 +131,7 @@ export const Categories = () => {
 
       {isPending && (
         <div className={styles.loading}>
-          {GHOST_ROWS.map((row) => (
+          {CATEGORIES_GHOST_ROWS.map((row) => (
             <div key={row} className={rowStyles.row}>
               <Skeleton className={styles.ghostHandle} />
               <div className={rowStyles.who}>

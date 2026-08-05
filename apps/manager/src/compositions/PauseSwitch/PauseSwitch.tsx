@@ -5,16 +5,10 @@ import { Input } from '@nino/ds/components/Input'
 import { Skeleton } from '@nino/ds/components/Skeleton'
 import { usePause } from '@hooks/store/usePause'
 import { usePauseActions } from '@hooks/store/usePauseActions'
+import { PAUSE_DURATION_OPTIONS } from '@constants/store.constants'
 
 import styles from './PauseSwitch.module.css'
 import motion from '@styles/motion.module.css'
-
-const OPTIONS = [
-  { minutes: 30, label: '30 min' },
-  { minutes: 60, label: '1 hora' },
-  { minutes: 180, label: '3 horas' },
-  { minutes: undefined, label: 'Até eu reabrir' },
-]
 
 export type PauseSwitchProps = {
   tenantId: string | null
@@ -34,9 +28,7 @@ export const PauseSwitch = ({ tenantId, timezone }: PauseSwitchProps) => {
   const [reason, setReason] = useState('')
 
   if (isPending) {
-    return (
-      <Skeleton className={styles.skeleton} />
-    )
+    return <Skeleton className={styles.skeleton} />
   }
 
   if (!pause) return null
@@ -98,7 +90,7 @@ export const PauseSwitch = ({ tenantId, timezone }: PauseSwitchProps) => {
           />
 
           <div className={styles.options}>
-            {OPTIONS.map(({ minutes, label }) => (
+            {PAUSE_DURATION_OPTIONS.map(({ minutes, label }) => (
               <Button
                 key={label}
                 size="sm"

@@ -3,29 +3,10 @@ import { useCallback, useState } from 'react'
 import { Breadcrumb } from '@elements/Breadcrumb/Breadcrumb'
 import { FirstStoreForm } from '@compositions/FirstStoreForm/FirstStoreForm'
 import { StorePreview } from '@compositions/StorePreview/StorePreview'
+import { NEW_UNIT_FACTS } from '@constants/store.constants'
 
 import styles from './NewUnit.module.css'
 import motion from '@styles/motion.module.css'
-
-/**
- * O que a pessoa precisa saber antes de abrir, e não depois. Não é lista de
- * passos — são dois fatos paralelos —, então nada de numeração: fio fino
- * separando, como nos outros blocos do painel.
- */
-const FACTS = [
-  {
-    strong: 'Cardápio, horário e zonas',
-    rest: ' são só desta unidade. Nada vem copiado das outras.',
-  },
-  {
-    strong: 'Equipe e assinatura',
-    rest: ' continuam da empresa — quem já trabalha com você entra aqui também.',
-  },
-  {
-    strong: 'O link',
-    rest: ' é o endereço que seus clientes vão acessar. Depois de criado, mudar quebra o que já foi divulgado.',
-  },
-]
 
 /**
  * Abrir unidade acontece dentro do painel: quem já opera não sai do ambiente
@@ -82,7 +63,7 @@ export const NewUnit = () => {
           />
 
           <div className={styles.facts}>
-            {FACTS.map(({ strong, rest }) => (
+            {NEW_UNIT_FACTS.map(({ strong, rest }) => (
               <p key={strong} className={styles.fact}>
                 <span className={styles.factStrong}>{strong}</span>
                 {rest}

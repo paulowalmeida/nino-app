@@ -9,6 +9,11 @@ import { CountUp } from '@nino/ds/components/CountUp'
 import { TopSalesTable } from '@compositions/TopSalesTable/TopSalesTable'
 import type { ReportRangeParams } from '@custom_types/order/report-range-params'
 import type { PeriodChoice } from '@custom_types/ui/period-choice'
+import {
+  REPORTS_FIGURES,
+  REPORTS_PERIODS,
+  REPORTS_TIMING_FIGURES,
+} from '@constants/order.constants'
 import { useCurrentTenant } from '@hooks/session/useCurrentTenant'
 import { useSalesReport } from '@hooks/order/useSalesReport'
 import { useTimingReport } from '@hooks/order/useTimingReport'
@@ -18,44 +23,6 @@ import { dateToInput, parseInputDate, todayInput } from '@utils/date-input'
 
 import styles from './Reports.module.css'
 import motion from '@styles/motion.module.css'
-
-const PERIODS: { id: PeriodChoice; label: string }[] = [
-  { id: 'today', label: 'Hoje' },
-  { id: 'week', label: '7 dias' },
-  { id: 'fortnight', label: '15 dias' },
-  { id: 'month', label: '30 dias' },
-  { id: 'custom', label: 'Escolher' },
-]
-
-const FIGURES: {
-  key: 'revenue' | 'orderCount' | 'averageTicket'
-  label: string
-  money: boolean
-}[] = [
-  { key: 'revenue', label: 'Faturamento', money: true },
-  { key: 'orderCount', label: 'Pedidos concluídos', money: false },
-  { key: 'averageTicket', label: 'Ticket médio', money: true },
-]
-
-const TIMING_FIGURES: {
-  key: 'averagePreparationMinutes' | 'averageDeliveryMinutes'
-  sampleKey: 'preparationSampleSize' | 'deliverySampleSize'
-  label: string
-  empty: string
-}[] = [
-  {
-    key: 'averagePreparationMinutes',
-    sampleKey: 'preparationSampleSize',
-    label: 'Tempo médio de preparo',
-    empty: 'Sem pedidos no período',
-  },
-  {
-    key: 'averageDeliveryMinutes',
-    sampleKey: 'deliverySampleSize',
-    label: 'Tempo médio de entrega',
-    empty: 'Sem entregas no período',
-  },
-]
 
 export const Reports = () => {
   const tenant = useCurrentTenant()
@@ -67,7 +34,9 @@ export const Reports = () => {
    */
   const [searchParams, setSearchParams] = useSearchParams()
   const requested = searchParams.get('periodo')
-  const period: PeriodChoice = PERIODS.some(({ id }) => id === requested)
+  const period: PeriodChoice = REPORTS_PERIODS.some(
+    ({ id }) => id === requested
+  )
     ? (requested as PeriodChoice)
     : 'today'
 
@@ -119,7 +88,7 @@ export const Reports = () => {
 
       <Tabs
         className={motion.unroll}
-        tabs={PERIODS.map(({ id, label }) => ({
+        tabs={REPORTS_PERIODS.map(({ id, label }) => ({
           value: id,
           label,
           content: null,
@@ -155,7 +124,7 @@ export const Reports = () => {
       )}
 
       <div className={styles.figures}>
-        {FIGURES.map(({ key, label, money }, index) => (
+        {REPORTS_FIGURES.map(({ key, label, money }, index) => (
           <div
             key={key}
             className={`${motion.settle} ${styles.figure}`}
@@ -179,29 +148,31 @@ export const Reports = () => {
 
       {!awaitingDates && (
         <div className={styles.timingFigures}>
-          {TIMING_FIGURES.map(({ key, sampleKey, label, empty }, index) => {
-            const noSample = !isTimingPending && timing?.[sampleKey] === 0
-            return (
-              <div
-                key={key}
-                className={`${motion.settle} ${styles.figure}`}
-                style={riseDelay((FIGURES.length + index) * 60)}
-              >
-                <span className={noSample ? styles.valueEmpty : styles.value}>
-                  {isTimingPending || !timing ? (
-                    <Skeleton className={styles.ghostCount} />
-                  ) : noSample ? (
-                    empty
-                  ) : (
-                    <>
-                      <CountUp value={Math.round(timing[key])} /> min
-                    </>
-                  )}
-                </span>
-                <span className={styles.label}>{label}</span>
-              </div>
-            )
-          })}
+          {REPORTS_TIMING_FIGURES.map(
+            ({ key, sampleKey, label, empty }, index) => {
+              const noSample = !isTimingPending && timing?.[sampleKey] === 0
+              return (
+                <div
+                  key={key}
+                  className={`${motion.settle} ${styles.figure}`}
+                  style={riseDelay((REPORTS_FIGURES.length + index) * 60)}
+                >
+                  <span className={noSample ? styles.valueEmpty : styles.value}>
+                    {isTimingPending || !timing ? (
+                      <Skeleton className={styles.ghostCount} />
+                    ) : noSample ? (
+                      empty
+                    ) : (
+                      <>
+                        <CountUp value={Math.round(timing[key])} /> min
+                      </>
+                    )}
+                  </span>
+                  <span className={styles.label}>{label}</span>
+                </div>
+              )
+            }
+          )}
         </div>
       )}
 

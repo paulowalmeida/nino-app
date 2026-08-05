@@ -5,6 +5,7 @@ import { FormField } from '@nino/ds/components/FormField'
 import { Input } from '@nino/ds/components/Input'
 import { Skeleton } from '@nino/ds/components/Skeleton'
 import { AddressFields } from '@compositions/AddressFields/AddressFields'
+import { EMPTY_COMPANY_DRAFT } from '@constants/company.constants'
 import type { Company } from '@custom_types/company/company'
 import type { UpdateCompanyRequest } from '@custom_types/company/update-company-request'
 import { formatCnpj } from '@utils/document'
@@ -13,7 +14,7 @@ import local from './CompanyCard.module.css'
 import motion from '@styles/motion.module.css'
 import styles from '@styles/settingsCard.module.css'
 
-type CompanyDraft = {
+export type CompanyDraft = {
   name: string
   legalName: string
   stateRegistration: string
@@ -31,19 +32,6 @@ type CompanyCardProps = {
   isPending: boolean
   isSaving: boolean
   onSave: (data: UpdateCompanyRequest) => void
-}
-
-const EMPTY: CompanyDraft = {
-  name: '',
-  legalName: '',
-  stateRegistration: '',
-  zipCode: '',
-  street: '',
-  number: '',
-  complement: '',
-  neighborhood: '',
-  city: '',
-  state: '',
 }
 
 const toDraft = (company: Company): CompanyDraft => ({
@@ -65,7 +53,7 @@ export const CompanyCard = ({
   isSaving,
   onSave,
 }: CompanyCardProps) => {
-  const [draft, setDraft] = useState<CompanyDraft>(EMPTY)
+  const [draft, setDraft] = useState<CompanyDraft>(EMPTY_COMPANY_DRAFT)
   const [isDirty, setDirty] = useState(false)
   const [seed, setSeed] = useState<Company | undefined>(undefined)
 
