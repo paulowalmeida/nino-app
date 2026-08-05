@@ -1,0 +1,114 @@
+@reference "@nino/ds/globals.css";
+
+/* três colunas fixas: marcador, passo, hora — as horas alinham à direita,
+   então dá para ler a coluna inteira sem varrer o texto */
+.row {
+  @apply relative grid items-center gap-x-3.5 py-2;
+  grid-template-columns: 2rem minmax(0, 1fr) auto;
+}
+
+/* o fio liga marcador a marcador: sai da borda de baixo de um ícone e para na
+   borda de cima do próximo, sem passar por dentro de nenhum dos dois */
+.row:not(:last-child)::before {
+  content: '';
+  @apply absolute w-0.5 rounded-full;
+  left: 15px;
+  top: calc(50% + 18px);
+  bottom: calc(-50% + 18px);
+  background: var(--color-sand-deep);
+}
+
+.done:not(:last-child)::before,
+.final:not(:last-child)::before {
+  background: color-mix(in srgb, var(--color-brand) 35%, transparent);
+}
+
+/*
+ * O marcador é o mesmo da demo da landing: um disco de 2rem com a cara do
+ * passo dentro. É o que dá ritmo à coluna — cinco discos em vez de cinco
+ * pontinhos —, e é o que se lê antes do texto quando a tela é conferida de
+ * relance.
+ */
+.node {
+  @apply relative z-10 flex h-8 w-8 items-center justify-center rounded-full;
+  @apply text-[1.05rem] leading-none;
+}
+
+/*
+ * Três pesos, e só um deles em tinta cheia. O passo de agora é o único em
+ * fonte de display: quem abre a tela encontra onde o pedido está sem ler a
+ * lista inteira, que era o custo de cinco linhas com o mesmo peso.
+ */
+.done .node,
+.final .node {
+  @apply bg-brand text-[0.8rem] font-bold text-brand-foreground;
+}
+
+.done .label {
+  @apply text-sm font-medium text-muted;
+}
+
+.done .time {
+  @apply text-xs text-faint;
+}
+
+.current .node {
+  @apply bg-brand-foreground text-base;
+  box-shadow:
+    inset 0 0 0 2px var(--color-brand),
+    0 0 0 4px var(--color-brand-soft);
+  animation: journey-pulse 2.2s ease-in-out infinite;
+}
+
+.current .label,
+.final .label {
+  @apply font-display text-[0.95rem] font-extrabold leading-tight text-muted;
+}
+
+.current .time,
+.final .time {
+  @apply text-xs font-bold text-brand-strong;
+}
+
+.ahead .node {
+  @apply bg-surface-sunk opacity-75;
+  box-shadow: inset 0 0 0 1.5px var(--color-sand-deep);
+}
+
+.ahead .label {
+  @apply text-sm font-medium text-faintest;
+}
+
+.ahead .time {
+  @apply text-xs text-faintest;
+}
+
+/* cancelado fecha a lista em tom de aviso, não de marca */
+.cancelled .node {
+  @apply bg-danger-surface text-sm font-bold text-danger;
+  box-shadow: none;
+  animation: none;
+}
+
+.cancelled .time {
+  @apply text-danger;
+}
+
+.time {
+  @apply justify-self-end;
+  font-variant-numeric: tabular-nums;
+}
+
+@keyframes journey-pulse {
+  50% {
+    box-shadow:
+      inset 0 0 0 2px var(--color-brand),
+      0 0 0 8px transparent;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .current .node {
+    animation: none;
+  }
+}

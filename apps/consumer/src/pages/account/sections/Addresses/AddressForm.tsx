@@ -9,6 +9,7 @@ import { maskZipCode } from '@nino/ds/masks'
 import { lookupZipCode, onlyDigits } from '@nino/lib/services/zip-code'
 import type { Address } from '@custom_types/address/address'
 import type { SaveAddressRequest } from '@custom_types/address/save-address-request'
+import { addressSaveRequest } from '@adapters/addressSaveRequest.adapter'
 
 import styles from './Addresses.module.css'
 import section from '../section.module.css'
@@ -55,15 +56,7 @@ export const AddressForm = ({
 }: AddressFormProps) => {
   const [form, setForm] = useState<SaveAddressRequest>(
     address
-      ? {
-          zipCode: address.zipCode,
-          street: address.street,
-          number: address.number,
-          complement: address.complement ?? '',
-          neighborhood: address.neighborhood,
-          city: address.city,
-          state: address.state,
-        }
+      ? { ...addressSaveRequest(address), complement: address.complement ?? '' }
       : EMPTY
   )
   const [lookup, setLookup] = useState<Lookup>('idle')

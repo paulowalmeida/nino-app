@@ -1,4 +1,5 @@
 import { Drawer } from '@nino/ds/components/Drawer'
+import { storeWeekSchedule } from '@adapters/storeWeekSchedule.adapter'
 import { useIsDesktop } from '@hooks/useIsDesktop'
 import { displayName } from '@utils/store-info'
 import type { PublicOpeningHours } from '@custom_types/opening-hours/public-opening-hours'
@@ -14,18 +15,6 @@ type StoreInfoProps = {
   onOpenChange: (open: boolean) => void
 }
 
-const DAYS = [
-  'Domingo',
-  'Segunda',
-  'Terça',
-  'Quarta',
-  'Quinta',
-  'Sexta',
-  'Sábado',
-]
-
-const formatHourMinute = (time: string): string => time.slice(0, 5)
-
 /**
  * O que estava atrás de "Ver mais": onde a loja fica e quando ela atende.
  * São as duas perguntas que a vitrine não responde e que decidem se vale
@@ -39,7 +28,7 @@ export const StoreInfo = ({
   onOpenChange,
 }: StoreInfoProps) => {
   const isDesktop = useIsDesktop()
-  const today = new Date().getDay()
+  const week = storeWeekSchedule(hours, new Date().getDay())
 
   const address = `${store.street}, ${store.number} — ${store.neighborhood}`
   const city = `${store.city}/${store.state}`
@@ -69,23 +58,12 @@ export const StoreInfo = ({
         <section>
           <h3 className={styles.label}>Horários</h3>
           <ul className={styles.hours}>
-            {DAYS.map((day, index) => {
-              const entry = hours.find((hour) => hour.dayOfWeek === index)
-              const isToday = index === today
-              return (
-                <li
-                  key={day}
-                  className={isToday ? styles.rowToday : styles.row}
-                >
-                  <span>{day}</span>
-                  <span className={styles.time}>
-                    {entry?.isOpen
-                      ? `${formatHourMinute(entry.openTime)} às ${formatHourMinute(entry.closeTime)}`
-                      : 'Fechado'}
-                  </span>
-                </li>
-              )
-            })}
+            {week.map(({ day, timeLabel, isToday }) => (
+              <li key={day} className={isToday ? styles.rowToday : styles.row}>
+                <span>{day}</span>
+                <span className={styles.time}>{timeLabel}</span>
+              </li>
+            ))}
           </ul>
         </section>
       </div>

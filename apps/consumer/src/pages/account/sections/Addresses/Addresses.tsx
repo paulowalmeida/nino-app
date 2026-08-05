@@ -3,15 +3,16 @@ import { useState } from 'react'
 import { Button } from '@nino/ds/components/Button'
 import { EmptyState } from '@nino/ds/components/EmptyState'
 import { toast } from '@nino/ds/components/Toast'
-import { Icon } from '@nino/ds/components/Icon'
 import type { Address } from '@custom_types/address/address'
 import type { SaveAddressRequest } from '@custom_types/address/save-address-request'
+import { addressSaveRequest } from '@adapters/addressSaveRequest.adapter'
 import { useCustomerSession } from '@hooks/useCustomerSession'
 import { useDeleteAddress } from '@hooks/useDeleteAddress'
 import { useMyAddresses } from '@hooks/useMyAddresses'
 import { useSaveAddress } from '@hooks/useSaveAddress'
 import { riseDelay } from '@utils/rise-delay'
 
+import { AddressCard } from './AddressCard'
 import { AddressForm } from './AddressForm'
 
 import styles from './Addresses.module.css'
@@ -19,12 +20,6 @@ import section from '../section.module.css'
 import motion from '@styles/motion.module.css'
 
 const NEW = 'new'
-
-const lineOf = ({ street, number, complement }: Address): string =>
-  [`${street}, ${number}`, complement].filter(Boolean).join(' · ')
-
-const cityOf = ({ neighborhood, city, state, zipCode }: Address): string =>
-  `${neighborhood} · ${city}/${state} · ${zipCode}`
 
 /**
  * A agenda de para-onde-entregar. O principal fica no topo e é o que o
@@ -56,16 +51,7 @@ export const Addresses = () => {
   const handlePrimary = (address: Address) => {
     save.mutate({
       id: address.id,
-      data: {
-        zipCode: address.zipCode,
-        street: address.street,
-        number: address.number,
-        complement: address.complement ?? undefined,
-        neighborhood: address.neighborhood,
-        city: address.city,
-        state: address.state,
-        isPrimary: true,
-      },
+      data: { ...addressSaveRequest(address), isPrimary: true },
     })
   }
 
@@ -99,96 +85,29 @@ export const Addresses = () => {
             className={`${motion.deal} ${styles.item}`}
             style={riseDelay(index * 55)}
           >
-            {editing === address.id ? (
-              <AddressForm
-                address={address}
-                isSaving={save.isPending}
-                hasError={save.isError}
-                onCancel={close}
-                onSubmit={handleSubmit(address.id)}
-              />
-            ) : (
-              <>
-                <div className={styles.body}>
-                  <p className={styles.line}>{lineOf(address)}</p>
-                  <p className={styles.city}>{cityOf(address)}</p>
-                  {address.isPrimary && (
-                    <span className={styles.badge}>Principal</span>
-                  )}
-                </div>
-
-                <div className={styles.tools}>
-                  {!address.isPrimary && (
-                    <Button
-                      type="button"
-                      variant="ghost"
-                      className={`${motion.press} ${styles.tool}`}
-                      onClick={() => handlePrimary(address)}
-                      disabled={save.isPending}
-                      aria-label="Tornar principal"
-                      title="Tornar principal"
-                    >
-                      <Icon name="star" />
-                    </Button>
-                  )}
-                  <Button
-                    type="button"
-                    variant="ghost"
-                    className={`${motion.press} ${styles.tool}`}
-                    onClick={() => setEditing(address.id)}
-                    aria-label="Editar endereço"
-                    title="Editar"
-                  >
-                    <Icon name="pencil" />
-                  </Button>
-                  <Button
-                    type="button"
-                    variant="ghost"
-                    className={`${motion.press} ${styles.tool}`}
-                    onClick={() => setConfirming(address.id)}
-                    aria-label="Excluir endereço"
-                    title="Excluir"
-                  >
-                    <Icon name="trash" />
-                  </Button>
-                </div>
-
-                {/* apagar é irreversível: a confirmação nasce na própria
-                    linha, sem tirar a lista da frente de quem escolhe */}
-                {confirming === address.id && (
-                  <div className={styles.confirm}>
-                    <p className={styles.confirmText}>Excluir este endereço?</p>
-                    <div className={styles.confirmActions}>
-                      <Button
-                        type="button"
-                        variant="ghost"
-                        className={`${motion.press} ${styles.confirmNo}`}
-                        onClick={() => setConfirming(null)}
-                      >
-                        Manter
-                      </Button>
-                      <Button
-                        type="button"
-                        className={`${motion.press} ${styles.confirmYes}`}
-                        disabled={remove.isPending}
-                        onClick={() =>
-                          remove.mutate(address.id, {
-                            onSuccess: () => {
-                              setConfirming(null)
-                              toast.success('Endereço excluído.')
-                            },
-                            onError: () =>
-                              toast.error('Não deu para excluir agora.'),
-                          })
-                        }
-                      >
-                        {remove.isPending ? 'Excluindo…' : 'Excluir'}
-                      </Button>
-                    </div>
-                  </div>
-                )}
-              </>
-            )}
+            <AddressCard
+              address={address}
+              isEditing={editing === address.id}
+              isConfirmingDelete={confirming === address.id}
+              isSaving={save.isPending}
+              hasSaveError={save.isError}
+              isRemoving={remove.isPending}
+              onEdit={() => setEditing(address.id)}
+              onCancelEdit={close}
+              onSubmit={handleSubmit(address.id)}
+              onMakePrimary={() => handlePrimary(address)}
+              onRequestDelete={() => setConfirming(address.id)}
+              onCancelDelete={() => setConfirming(null)}
+              onConfirmDelete={() =>
+                remove.mutate(address.id, {
+                  onSuccess: () => {
+                    setConfirming(null)
+                    toast.success('Endereço excluído.')
+                  },
+                  onError: () => toast.error('Não deu para excluir agora.'),
+                })
+              }
+            />
           </li>
         ))}
       </ul>
