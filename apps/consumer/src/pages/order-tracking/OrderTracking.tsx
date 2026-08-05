@@ -1,12 +1,14 @@
 import { Link, useParams, useSearchParams } from 'react-router'
 
 import { EmptyState } from '@nino/ds/components/EmptyState'
+import { Icon } from '@nino/ds/components/Icon'
 import { OrderJourney } from '@compositions/OrderJourney/OrderJourney'
 import { OrderStage } from '@compositions/OrderStage/OrderStage'
 import { PoweredBy } from '@elements/PoweredBy/PoweredBy'
 import { useCustomerSession } from '@hooks/useCustomerSession'
 import { useGuestOrderStatus } from '@hooks/useGuestOrderStatus'
 import { useScrollProgress } from '@hooks/useScrollProgress'
+import { OrderTrackingSkeleton } from '@skeletons/OrderTrackingSkeleton/OrderTrackingSkeleton'
 import { isTerminal } from '@utils/order-journey'
 import { riseDelay } from '@utils/rise-delay'
 
@@ -51,30 +53,7 @@ export const OrderTracking = () => {
     )
   }
 
-  if (isPending || loadingSession) {
-    return (
-      <div
-        className={styles.page}
-        aria-busy="true"
-        aria-label="Carregando o pedido"
-      >
-        <header className={styles.header}>
-          <div className={styles.skBack} />
-          <div className={styles.skTitle} />
-        </header>
-        <div className={styles.skStage} />
-        <div className={styles.skJourney}>
-          {Array.from({ length: 5 }).map((_, i) => (
-            <div key={i} className={styles.skRow}>
-              <div className={styles.skDot} />
-              <div className={styles.skLabel} />
-              <div className={styles.skTime} />
-            </div>
-          ))}
-        </div>
-      </div>
-    )
-  }
+  if (isPending || loadingSession) return <OrderTrackingSkeleton />
 
   if (isError || !order) {
     return (
@@ -108,7 +87,7 @@ export const OrderTracking = () => {
             className={`${motion.press} ${styles.back}`}
             aria-label="Voltar para a loja"
           >
-            ←
+            <Icon name="arrow-left" />
           </Link>
           <div>
             <h1 className={styles.title}>Seu pedido</h1>

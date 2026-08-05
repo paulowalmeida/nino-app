@@ -1,0 +1,20 @@
+@reference "@nino/ds/globals.css";
+
+.block {
+  @apply flex flex-col gap-3;
+}
+
+.blockLabel {
+  @apply text-[0.7rem] font-bold uppercase tracking-[0.14em] text-faint;
+}
+
+/* As setinhas do input number não têm uso num valor de troco digitado. */
+.noSpin {
+  -moz-appearance: textfield;
+}
+
+.noSpin::-webkit-outer-spin-button,
+.noSpin::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}

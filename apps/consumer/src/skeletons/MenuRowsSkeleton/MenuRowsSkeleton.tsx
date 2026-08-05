@@ -1,4 +1,4 @@
-import styles from './Storefront.module.css'
+import styles from '@pages/home/Storefront.module.css'
 
 type MenuRowsSkeletonProps = {
   count?: number

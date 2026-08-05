@@ -1,13 +1,14 @@
 import { useRef, useState } from 'react'
 
 import { Alert } from '@nino/ds/components/Alert'
+import { Button } from '@nino/ds/components/Button'
+import { FormField } from '@nino/ds/components/FormField'
 import { Input } from '@nino/ds/components/Input'
 import { MaskedInput } from '@nino/ds/components/MaskedInput'
 import { maskZipCode } from '@nino/ds/masks'
 import { lookupZipCode, onlyDigits } from '@nino/lib/services/zip-code'
+import type { Address } from '@custom_types/address/address'
 import type { SaveAddressRequest } from '@custom_types/address/save-address-request'
-
-import type { AddressFormProps } from './AddressForm.types'
 
 import styles from './Addresses.module.css'
 import section from '../section.module.css'
@@ -23,6 +24,14 @@ const EMPTY: SaveAddressRequest = {
 }
 
 type Lookup = 'idle' | 'loading' | 'done' | 'notFound'
+
+type AddressFormProps = {
+  address?: Address
+  isSaving: boolean
+  hasError: boolean
+  onCancel: () => void
+  onSubmit: (data: SaveAddressRequest) => void
+}
 
 /**
  * O mesmo formulário abre para criar e para editar — o que muda é de onde os
@@ -116,13 +125,18 @@ export const AddressForm = ({
 
   return (
     <form className={styles.form} onSubmit={handleSubmit}>
-      <div className={styles.field}>
-        <label className={styles.label} htmlFor="address-zip">
-          CEP
-        </label>
+      <FormField
+        label="CEP"
+        labelClassName={styles.label}
+        error={
+          lookup === 'notFound'
+            ? 'Não achamos esse CEP. Preencha o endereço abaixo.'
+            : undefined
+        }
+        helperText={lookup === 'loading' ? 'Buscando endereço…' : undefined}
+      >
         <div className={styles.zip}>
           <MaskedInput
-            id="address-zip"
             mask={maskZipCode}
             placeholder="00000-000"
             autoComplete="postal-code"
@@ -132,91 +146,65 @@ export const AddressForm = ({
             onChange={handleZip}
           />
         </div>
-
-        {lookup === 'loading' && (
-          <p className={styles.zipStatus}>Buscando endereço…</p>
-        )}
-        {lookup === 'notFound' && (
-          <p className={styles.zipStatusError}>
-            Não achamos esse CEP. Preencha o endereço abaixo.
-          </p>
-        )}
-      </div>
+      </FormField>
 
       <div className={styles.pair}>
-        <div className={styles.field}>
-          <label className={styles.label} htmlFor="address-street">
-            Rua
-          </label>
+        <FormField label="Rua" labelClassName={styles.label}>
           <Input
-            id="address-street"
             autoComplete="address-line1"
             className={styles.input}
             value={form.street}
             onChange={set('street')}
           />
-        </div>
-        <div className={styles.field}>
-          <label className={styles.label} htmlFor="address-number">
-            Nº
-          </label>
+        </FormField>
+        <FormField label="Nº" labelClassName={styles.label}>
           <Input
-            id="address-number"
             ref={numberRef}
             inputMode="numeric"
             className={styles.input}
             value={form.number}
             onChange={set('number')}
           />
-        </div>
+        </FormField>
       </div>
 
-      <div className={styles.field}>
-        <label className={styles.label} htmlFor="address-complement">
-          Complemento <span className={styles.optional}>(opcional)</span>
-        </label>
+      <FormField
+        label={
+          <>
+            Complemento <span className={styles.optional}>(opcional)</span>
+          </>
+        }
+        labelClassName={styles.label}
+      >
         <Input
-          id="address-complement"
           placeholder="Apto, bloco ou ponto de referência"
           autoComplete="address-line2"
           className={styles.input}
           value={form.complement ?? ''}
           onChange={set('complement')}
         />
-      </div>
+      </FormField>
 
-      <div className={styles.field}>
-        <label className={styles.label} htmlFor="address-neighborhood">
-          Bairro
-        </label>
+      <FormField label="Bairro" labelClassName={styles.label}>
         <Input
-          id="address-neighborhood"
           autoComplete="address-level3"
           className={styles.input}
           value={form.neighborhood}
           onChange={set('neighborhood')}
         />
-      </div>
+      </FormField>
 
       <div className={styles.pairState}>
-        <div className={styles.field}>
-          <label className={styles.label} htmlFor="address-city">
-            Cidade
-          </label>
+        <FormField label="Cidade" labelClassName={styles.label}>
           <Input
-            id="address-city"
             autoComplete="address-level2"
             className={styles.input}
             value={form.city}
             onChange={set('city')}
           />
-        </div>
-        <div className={styles.field}>
-          <label className={styles.label} htmlFor="address-state">
-            UF
-          </label>
+        </FormField>
+        <FormField label="UF" labelClassName={styles.label}>
           <Input
-            id="address-state"
             maxLength={2}
             autoComplete="address-level1"
             className={styles.input}
@@ -228,7 +216,7 @@ export const AddressForm = ({
               }))
             }
           />
-        </div>
+        </FormField>
       </div>
 
       {hasError && (
@@ -238,21 +226,18 @@ export const AddressForm = ({
       )}
 
       <div className={section.actions}>
-        <button
-          type="submit"
-          className={section.primary}
-          disabled={!ready || isSaving}
-        >
+        <Button type="submit" className={section.primary} disabled={!ready || isSaving}>
           {isSaving ? 'Salvando…' : 'Salvar endereço'}
-        </button>
-        <button
+        </Button>
+        <Button
           type="button"
+          variant="ghost"
           className={section.ghost}
           onClick={onCancel}
           disabled={isSaving}
         >
           Cancelar
-        </button>
+        </Button>
       </div>
     </form>
   )

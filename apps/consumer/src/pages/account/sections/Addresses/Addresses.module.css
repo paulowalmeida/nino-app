@@ -96,10 +96,6 @@
   grid-template-columns: 1fr 4.5rem;
 }
 
-.field {
-  @apply grid content-start gap-1.5;
-}
-
 .label {
   @apply text-xs font-bold text-muted;
 }

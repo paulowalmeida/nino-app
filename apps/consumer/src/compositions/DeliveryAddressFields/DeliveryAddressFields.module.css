@@ -1,0 +1,27 @@
+@reference "@nino/ds/globals.css";
+
+.block {
+  @apply flex flex-col gap-3;
+}
+
+/*
+ * Microrótulo em caixa alta com tracking largo: é a voz impressa da comanda,
+ * não um título de seção de formulário. Substitui a barrinha colorida antes
+ * do título — aquilo decorava, isto informa.
+ */
+.blockLabel {
+  @apply text-[0.7rem] font-bold uppercase tracking-[0.14em] text-faint;
+}
+
+.row {
+  @apply grid gap-3;
+  grid-template-columns: 1fr 5.5rem;
+}
+
+.disclosure {
+  @apply -mx-3;
+}
+
+.disclosureFields {
+  @apply flex flex-col gap-3;
+}

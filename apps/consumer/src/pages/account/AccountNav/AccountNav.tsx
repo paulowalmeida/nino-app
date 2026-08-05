@@ -1,13 +1,19 @@
 import { NavLink } from 'react-router'
 
+import { Button } from '@nino/ds/components/Button'
 import { Icon } from '@nino/ds/components/Icon'
 import { ACCOUNT_SECTIONS } from '@constants/account-sections'
 import { riseDelay } from '@utils/rise-delay'
 
-import type { AccountNavProps } from './AccountNav.types'
-
 import styles from './AccountNav.module.css'
 import motion from '@styles/motion.module.css'
+
+type AccountNavProps = {
+  base: string
+  counts: Record<string, number | undefined>
+  onLogout: () => void
+  isLoggingOut: boolean
+}
 
 /**
  * O índice da conta. No desktop é uma coluna à esquerda do painel; no celular
@@ -53,8 +59,9 @@ export const AccountNav = ({
       ))}
     </ul>
 
-    <button
+    <Button
       type="button"
+      variant="ghost"
       className={`${motion.press} ${styles.logout}`}
       onClick={onLogout}
       disabled={isLoggingOut}
@@ -63,6 +70,6 @@ export const AccountNav = ({
       <span className={styles.label}>
         {isLoggingOut ? 'Saindo…' : 'Sair da conta'}
       </span>
-    </button>
+    </Button>
   </nav>
 )

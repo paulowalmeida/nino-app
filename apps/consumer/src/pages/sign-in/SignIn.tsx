@@ -3,6 +3,8 @@ import { Link, useNavigate, useParams } from 'react-router'
 
 import { Alert } from '@nino/ds/components/Alert'
 import { Button } from '@nino/ds/components/Button'
+import { Chip } from '@nino/ds/components/Chip'
+import { Icon } from '@nino/ds/components/Icon'
 import { Input } from '@nino/ds/components/Input'
 import { OTPInput } from '@nino/ds/components/OTPInput'
 import { PhoneInput } from '@nino/ds/components/PhoneInput'
@@ -100,7 +102,7 @@ export const SignIn = () => {
           className={`${motion.press} ${styles.back}`}
           aria-label="Voltar para a loja"
         >
-          ←
+          <Icon name="arrow-left" />
         </Link>
 
         {store && (
@@ -136,16 +138,15 @@ export const SignIn = () => {
                 nenhuma das duas */}
             <div className={styles.channels} role="tablist">
               {CHANNELS.map(({ id, label }) => (
-                <button
+                <Chip
                   key={id}
-                  type="button"
-                  role="tab"
-                  aria-selected={channel === id}
+                  variant="tab"
+                  selected={channel === id}
                   className={channel === id ? styles.channelOn : styles.channel}
                   onClick={() => setChannel(id)}
                 >
                   {label}
-                </button>
+                </Chip>
               ))}
             </div>
 

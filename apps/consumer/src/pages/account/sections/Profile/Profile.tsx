@@ -1,5 +1,7 @@
 import { useState } from 'react'
 
+import { Button } from '@nino/ds/components/Button'
+import { FormField } from '@nino/ds/components/FormField'
 import { Input } from '@nino/ds/components/Input'
 import { toast } from '@nino/ds/components/Toast'
 import { useCompleteProfile } from '@hooks/useCompleteProfile'
@@ -60,23 +62,22 @@ export const Profile = () => {
       </p>
 
       <div className={section.card}>
-        <div className={section.field}>
-          <label className={section.label} htmlFor="profile-name">
-            Nome
-          </label>
+        <FormField
+          label="Nome"
+          labelClassName={section.label}
+          error={
+            !nameClean
+              ? 'Esse nome vai ser lido em voz alta na cozinha — escolha outro.'
+              : undefined
+          }
+        >
           <Input
-            id="profile-name"
             autoComplete="name"
             error={!nameClean}
             value={name}
             onChange={(event) => setName(event.target.value)}
           />
-          {!nameClean && (
-            <p className={section.hint}>
-              Esse nome vai ser lido em voz alta na cozinha — escolha outro.
-            </p>
-          )}
-        </div>
+        </FormField>
 
         <div className={section.field}>
           <label className={section.label} htmlFor="profile-phone">
@@ -91,12 +92,16 @@ export const Profile = () => {
           </p>
         </div>
 
-        <div className={section.field}>
-          <label className={section.label} htmlFor="profile-email">
-            E-mail <span className={section.hint}>(opcional)</span>
-          </label>
+        <FormField
+          label={
+            <>
+              E-mail <span className={section.hint}>(opcional)</span>
+            </>
+          }
+          labelClassName={section.label}
+          helperText="Salvando o e-mail você também passa a entrar por ele, além do telefone."
+        >
           <Input
-            id="profile-email"
             type="email"
             autoComplete="email"
             placeholder="voce@email.com"
@@ -104,21 +109,17 @@ export const Profile = () => {
             value={email}
             onChange={(event) => setEmail(event.target.value)}
           />
-          <p className={section.hint}>
-            Salvando o e-mail você também passa a entrar por ele, além do
-            telefone.
-          </p>
-        </div>
+        </FormField>
       </div>
 
       <div className={section.actions}>
-        <button
+        <Button
           type="submit"
           className={section.primary}
           disabled={!ready || save.isPending}
         >
           {save.isPending ? 'Salvando…' : 'Salvar'}
-        </button>
+        </Button>
       </div>
     </form>
   )

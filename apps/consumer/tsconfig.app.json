@@ -23,6 +23,7 @@
     "baseUrl": ".",
     "paths": {
       "@ds/*": ["../../packages/ds/src/*"],
+      "@adapters/*": ["src/adapters/*"],
       "@assets/*": ["src/assets/*"],
       "@components/*": ["src/components/*"],
       "@compositions/*": ["src/compositions/*"],
@@ -36,6 +37,7 @@
       "@providers/*": ["src/providers/*"],
       "@router/*": ["src/router/*"],
       "@services/*": ["src/services/*"],
+      "@skeletons/*": ["src/skeletons/*"],
       "@states/*": ["src/states/*"],
       "@utils/*": ["src/utils/*"]
     }

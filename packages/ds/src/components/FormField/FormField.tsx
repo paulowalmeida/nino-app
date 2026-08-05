@@ -24,6 +24,10 @@ const horizontalRow = 'flex items-center gap-2'
  * @param orientation - `vertical` (label above, default) or `horizontal`
  * (control and label side by side — for Checkbox/Switch)
  *
+ * @param labelClassName - Overrides the label's typography (size, weight,
+ * color) for screens with their own label voice, without giving up the
+ * built-in accessibility wiring
+ *
  * @param children - The input element
  */
 export function FormField({
@@ -32,13 +36,14 @@ export function FormField({
   error,
   required,
   orientation = 'vertical',
+  labelClassName,
   children,
   className,
 }: FormFieldProps) {
   const isHorizontal = orientation === 'horizontal'
 
   const labelEl = label && (
-    <Field.Label className={baseLabel}>
+    <Field.Label className={mergeClasses(baseLabel, labelClassName)}>
       {label}
       {required && <Field.RequiredIndicator className={baseRequired} />}
     </Field.Label>

@@ -1,0 +1,52 @@
+@reference "@nino/ds/globals.css";
+
+.receipt {
+  @apply overflow-hidden rounded-2xl border border-black/[0.08] bg-brand-foreground;
+}
+
+.head {
+  @apply flex min-w-0 flex-col items-start gap-0.5;
+}
+
+.label {
+  @apply text-[0.7rem] font-bold uppercase tracking-[0.14em] text-faint;
+}
+
+.count {
+  @apply font-display text-[0.95rem] font-extrabold text-muted;
+}
+
+.toggle {
+  @apply shrink-0 text-xs font-bold text-brand-strong;
+}
+
+.items {
+  @apply flex flex-col gap-2;
+}
+
+.item {
+  @apply flex items-baseline justify-between gap-3 text-sm text-body;
+  font-variant-numeric: tabular-nums;
+}
+
+.qty {
+  @apply mr-1.5 font-bold text-brand-strong;
+}
+
+.name {
+  @apply min-w-0 flex-1 truncate;
+}
+
+.rule {
+  @apply my-3;
+  border-top: 1.5px dashed var(--color-line);
+}
+
+.tally {
+  @apply flex flex-col gap-1.5;
+}
+
+.tallyRow {
+  @apply flex items-center justify-between text-sm text-muted;
+  font-variant-numeric: tabular-nums;
+}

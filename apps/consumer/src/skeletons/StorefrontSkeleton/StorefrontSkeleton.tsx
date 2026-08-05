@@ -1,5 +1,7 @@
-import { MenuRowsSkeleton } from './MenuRowsSkeleton'
-import styles from './Storefront.module.css'
+import identityStyles from '@compositions/StoreIdentity/StoreIdentity.module.css'
+import styles from '@pages/home/Storefront.module.css'
+
+import { MenuRowsSkeleton } from '@skeletons/MenuRowsSkeleton/MenuRowsSkeleton'
 
 /** Larguras variadas pros chips, imitando nomes de categoria de tamanhos
  * diferentes. */
@@ -20,7 +22,7 @@ export const StorefrontSkeleton = () => (
     <div className={styles.skBanner} />
 
     <div className={styles.shell}>
-      <div className={styles.identityRow}>
+      <div className={identityStyles.identityRow}>
         <div className={styles.skLogo} />
         <div className={styles.skLines}>
           <div className={styles.skName} />

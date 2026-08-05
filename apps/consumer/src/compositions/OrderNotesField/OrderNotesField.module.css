@@ -1,0 +1,5 @@
+@reference "@nino/ds/globals.css";
+
+.disclosure {
+  @apply -mx-3;
+}

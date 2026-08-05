@@ -18,19 +18,19 @@ import { PoweredBy } from '@elements/PoweredBy/PoweredBy'
 import { StoreBanner } from '@elements/StoreBanner/StoreBanner'
 import { StoreLookupEmptyState } from '@elements/StoreLookupEmptyState/StoreLookupEmptyState'
 import type { MenuItem } from '@custom_types/menu/menu-item'
+import { useCartSummary } from '@hooks/useCartSummary'
 import { useMenu } from '@hooks/useMenu'
 import { useMenuSections } from '@hooks/useMenuSections'
 import { useOpeningHours } from '@hooks/useOpeningHours'
 import { useScrollProgress } from '@hooks/useScrollProgress'
 import { usePublicSettings } from '@hooks/usePublicSettings'
 import { useStore } from '@hooks/useStore'
-import { useCartStore } from '@states/useCartStore'
+import { MenuRowsSkeleton } from '@skeletons/MenuRowsSkeleton/MenuRowsSkeleton'
+import { StorefrontSkeleton } from '@skeletons/StorefrontSkeleton/StorefrontSkeleton'
 import { resolveSlug } from '@utils/resolve-slug'
 import { riseDelay } from '@utils/rise-delay'
 import { isOpen } from '@utils/store-info'
 
-import { MenuRowsSkeleton } from './MenuRowsSkeleton'
-import { StorefrontSkeleton } from './StorefrontSkeleton'
 import styles from './Storefront.module.css'
 import motion from '@styles/motion.module.css'
 
@@ -57,11 +57,16 @@ export const Home = () => {
 
   const searchRef = useRef<HTMLInputElement>(null)
   const progress = useScrollProgress(HEADER_TRANSITION_PX)
-  const cart = useCartStore((state) => state.lines)
-  const addToCart = useCartStore((state) => state.add)
-  const incrementCartLine = useCartStore((state) => state.increment)
-  const decrementCartLine = useCartStore((state) => state.decrement)
-  const clearCart = useCartStore((state) => state.clear)
+  const {
+    lines: cart,
+    cartLines,
+    count: cartCount,
+    total: cartTotal,
+    add: addToCart,
+    increment: incrementCartLine,
+    decrement: decrementCartLine,
+    clear: clearCart,
+  } = useCartSummary()
   const [isCartOpen, setIsCartOpen] = useState(false)
   const [isInfoOpen, setIsInfoOpen] = useState(false)
   const [selectedItem, setSelectedItem] = useState<MenuItem | null>(null)
@@ -74,13 +79,6 @@ export const Home = () => {
     addToCart(item, quantity)
     setSelectedItem(null)
   }
-
-  const cartLines = Object.values(cart)
-  const cartCount = cartLines.reduce((total, line) => total + line.quantity, 0)
-  const cartTotal = cartLines.reduce(
-    (total, line) => total + Number(line.item.price) * line.quantity,
-    0
-  )
 
   if (!slug) {
     return (

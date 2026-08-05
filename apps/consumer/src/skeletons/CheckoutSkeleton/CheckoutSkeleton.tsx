@@ -1,4 +1,8 @@
-import styles from './Checkout.module.css'
+import headerStyles from '@compositions/CheckoutHeader/CheckoutHeader.module.css'
+import addressStyles from '@compositions/DeliveryAddressFields/DeliveryAddressFields.module.css'
+import blockStyles from '@compositions/ChannelFields/ChannelFields.module.css'
+import footerStyles from '@compositions/CheckoutFooter/CheckoutFooter.module.css'
+import styles from '@pages/checkout/Checkout.module.css'
 
 /**
  * Espelha a forma real: comanda dobrada no topo, os blocos de campos e a
@@ -11,7 +15,7 @@ export const CheckoutSkeleton = () => (
     aria-busy="true"
     aria-label="Carregando o checkout"
   >
-    <header className={styles.header}>
+    <header className={headerStyles.header}>
       <div className={styles.skBack} />
       <div className={styles.skTitle} />
     </header>
@@ -19,7 +23,7 @@ export const CheckoutSkeleton = () => (
     <div className={styles.form}>
       <div className={styles.skReceipt} />
 
-      <div className={styles.block}>
+      <div className={blockStyles.block}>
         <div className={styles.skLabel} />
         <div className={styles.skChoices}>
           <div className={styles.skChoice} />
@@ -27,23 +31,23 @@ export const CheckoutSkeleton = () => (
         </div>
       </div>
 
-      <div className={styles.block}>
+      <div className={blockStyles.block}>
         <div className={styles.skLabel} />
         <div className={styles.skField} />
-        <div className={styles.row}>
+        <div className={addressStyles.row}>
           <div className={styles.skField} />
           <div className={styles.skField} />
         </div>
         <div className={styles.skField} />
       </div>
 
-      <div className={styles.block}>
+      <div className={blockStyles.block}>
         <div className={styles.skLabel} />
         <div className={styles.skField} />
         <div className={styles.skField} />
       </div>
 
-      <div className={styles.block}>
+      <div className={blockStyles.block}>
         <div className={styles.skLabel} />
         <div className={styles.skChoices}>
           <div className={styles.skChoiceCompact} />
@@ -52,8 +56,8 @@ export const CheckoutSkeleton = () => (
       </div>
     </div>
 
-    <div className={styles.tearBar}>
-      <div className={styles.tearTotals}>
+    <div className={footerStyles.tearBar}>
+      <div className={footerStyles.totals}>
         <div className={styles.skLabel} />
         <div className={styles.skTotal} />
       </div>

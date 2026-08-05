@@ -1,5 +1,6 @@
 import { useState } from 'react'
 
+import { Button } from '@nino/ds/components/Button'
 import { EmptyState } from '@nino/ds/components/EmptyState'
 import { toast } from '@nino/ds/components/Toast'
 import { Icon } from '@nino/ds/components/Icon'
@@ -118,8 +119,9 @@ export const Addresses = () => {
 
                 <div className={styles.tools}>
                   {!address.isPrimary && (
-                    <button
+                    <Button
                       type="button"
+                      variant="ghost"
                       className={`${motion.press} ${styles.tool}`}
                       onClick={() => handlePrimary(address)}
                       disabled={save.isPending}
@@ -127,26 +129,28 @@ export const Addresses = () => {
                       title="Tornar principal"
                     >
                       <Icon name="star" />
-                    </button>
+                    </Button>
                   )}
-                  <button
+                  <Button
                     type="button"
+                    variant="ghost"
                     className={`${motion.press} ${styles.tool}`}
                     onClick={() => setEditing(address.id)}
                     aria-label="Editar endereço"
                     title="Editar"
                   >
                     <Icon name="pencil" />
-                  </button>
-                  <button
+                  </Button>
+                  <Button
                     type="button"
+                    variant="ghost"
                     className={`${motion.press} ${styles.tool}`}
                     onClick={() => setConfirming(address.id)}
                     aria-label="Excluir endereço"
                     title="Excluir"
                   >
                     <Icon name="trash" />
-                  </button>
+                  </Button>
                 </div>
 
                 {/* apagar é irreversível: a confirmação nasce na própria
@@ -155,14 +159,15 @@ export const Addresses = () => {
                   <div className={styles.confirm}>
                     <p className={styles.confirmText}>Excluir este endereço?</p>
                     <div className={styles.confirmActions}>
-                      <button
+                      <Button
                         type="button"
+                        variant="ghost"
                         className={`${motion.press} ${styles.confirmNo}`}
                         onClick={() => setConfirming(null)}
                       >
                         Manter
-                      </button>
-                      <button
+                      </Button>
+                      <Button
                         type="button"
                         className={`${motion.press} ${styles.confirmYes}`}
                         disabled={remove.isPending}
@@ -178,7 +183,7 @@ export const Addresses = () => {
                         }
                       >
                         {remove.isPending ? 'Excluindo…' : 'Excluir'}
-                      </button>
+                      </Button>
                     </div>
                   </div>
                 )}
@@ -199,13 +204,14 @@ export const Addresses = () => {
           />
         </div>
       ) : (
-        <button
+        <Button
           type="button"
+          variant="ghost"
           className={`${motion.press} ${styles.add}`}
           onClick={() => setEditing(NEW)}
         >
           Adicionar endereço
-        </button>
+        </Button>
       )}
     </div>
   )

@@ -1,9 +1,14 @@
-import { Icon } from '@nino/ds/components/Icon'
-
-import type { SoonProps } from './Soon.types'
+import { Icon, type IconName } from '@nino/ds/components/Icon'
 
 import styles from './Soon.module.css'
 import section from '../section.module.css'
+
+type SoonProps = {
+  eyebrow: string
+  headline: string
+  note: string
+  icon: IconName
+}
 
 /**
  * A gaveta que ainda não tem nada dentro. Ela abre e diz o que vai guardar,

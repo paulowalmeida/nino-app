@@ -41,6 +41,7 @@ export default defineConfig({
   resolve: {
     alias: {
       '@ds': resolve(__dirname, '../../packages/ds/src'),
+      '@adapters': resolve(__dirname, 'src/adapters'),
       '@assets': resolve(__dirname, 'src/assets'),
       '@components': resolve(__dirname, 'src/components'),
       '@compositions': resolve(__dirname, 'src/compositions'),
@@ -54,6 +55,7 @@ export default defineConfig({
       '@providers': resolve(__dirname, 'src/providers'),
       '@router': resolve(__dirname, 'src/router'),
       '@services': resolve(__dirname, 'src/services'),
+      '@skeletons': resolve(__dirname, 'src/skeletons'),
       '@states': resolve(__dirname, 'src/states'),
       '@utils': resolve(__dirname, 'src/utils'),
     },

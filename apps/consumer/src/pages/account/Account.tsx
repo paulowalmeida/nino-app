@@ -1,11 +1,13 @@
 import { Link, Navigate, Outlet, useLocation, useParams } from 'react-router'
 
+import { Icon } from '@nino/ds/components/Icon'
 import { useCustomerSession } from '@hooks/useCustomerSession'
 import { useLogout } from '@hooks/useLogout'
 import { useMyAddresses } from '@hooks/useMyAddresses'
 import { useMyOrders } from '@hooks/useMyOrders'
 import { useScrollProgress } from '@hooks/useScrollProgress'
 import { useStoreTint } from '@hooks/useStoreTint'
+import { AccountSkeleton } from '@skeletons/AccountSkeleton/AccountSkeleton'
 import { firstName } from '@utils/customer-name'
 import { greeting } from '@utils/greeting'
 import { riseDelay } from '@utils/rise-delay'
@@ -44,14 +46,7 @@ export const Account = () => {
   const { data: orders } = useMyOrders(!!customer)
   const { data: addresses } = useMyAddresses(!!customer)
 
-  if (isPending) {
-    return (
-      <div className={styles.page} aria-busy="true" aria-label="Carregando">
-        <div className={styles.skHeader} />
-        <div className={styles.skBody} />
-      </div>
-    )
-  }
+  if (isPending) return <AccountSkeleton />
 
   if (!customer) return <Navigate to={signIn} replace />
 
@@ -79,7 +74,7 @@ export const Account = () => {
             className={`${motion.press} ${styles.back}`}
             aria-label="Voltar para a loja"
           >
-            ←
+            <Icon name="arrow-left" />
           </Link>
 
           {/* a saudação é a mesma da gaveta do celular: a casa cumprimenta

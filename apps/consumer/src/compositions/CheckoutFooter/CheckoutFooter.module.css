@@ -1,0 +1,68 @@
+@reference "@nino/ds/globals.css";
+
+.tearBar {
+  @apply sticky bottom-0 z-20 flex flex-col gap-3 bg-brand-foreground px-5 pb-5 pt-3;
+  @apply lg:rounded-b-[1.75rem];
+  box-shadow: 0 -10px 30px -20px rgba(26, 18, 6, 0.45);
+}
+
+/*
+ * O conteúdo dissolve no papel antes de chegar no picote — sem isso a linha
+ * serrilhada fatia o que estiver rolando atrás e vira ruído.
+ */
+.tearBar::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 100%;
+  height: 2.25rem;
+  pointer-events: none;
+  background: linear-gradient(
+    to bottom,
+    rgba(255, 251, 245, 0),
+    var(--color-brand-foreground)
+  );
+}
+
+/*
+ * O picote: meias-luas vazadas na borda de cima da barra, exatamente como
+ * destacar a comanda da impressora. Duas camadas idênticas com 1px de
+ * deslocamento — a de baixo vira o fio que desenha a silhueta serrilhada,
+ * senão creme sobre papel não contrasta e o picote some.
+ */
+.tearBar::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 100%;
+  height: 7px;
+  background-image:
+    radial-gradient(circle at 7px 0, transparent 0 5px, var(--color-brand-foreground) 5px),
+    radial-gradient(circle at 7px 0, transparent 0 5px, var(--color-line) 5px);
+  background-size:
+    14px 7px,
+    14px 7px;
+  background-position:
+    0 1px,
+    0 0;
+  background-repeat: repeat-x, repeat-x;
+}
+
+.totals {
+  @apply flex items-baseline justify-between;
+}
+
+.label {
+  @apply text-[0.7rem] font-bold uppercase tracking-[0.14em] text-faint;
+}
+
+.total {
+  @apply font-display text-2xl font-extrabold text-muted;
+  font-variant-numeric: tabular-nums;
+}
+
+.submit {
+  @apply h-13 w-full text-base;
+}

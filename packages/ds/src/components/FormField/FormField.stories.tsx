@@ -69,3 +69,15 @@ export const WithoutLabel: Story = {
     </FormField>
   ),
 }
+
+export const CustomLabelTypography: Story = {
+  args: {
+    label: 'Full name',
+    labelClassName: 'text-xs font-bold uppercase tracking-wide',
+  },
+  render: (args) => (
+    <FormField {...args}>
+      <Input placeholder="John Smith" />
+    </FormField>
+  ),
+}
