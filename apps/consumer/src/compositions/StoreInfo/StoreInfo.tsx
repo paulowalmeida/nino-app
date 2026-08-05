@@ -1,10 +1,18 @@
 import { Drawer } from '@nino/ds/components/Drawer'
 import { useIsDesktop } from '@hooks/useIsDesktop'
 import { displayName } from '@utils/store-info'
-
-import type { StoreInfoProps } from './StoreInfo.types'
+import type { PublicOpeningHours } from '@custom_types/opening-hours/public-opening-hours'
+import type { Store } from '@custom_types/store/store'
 
 import styles from './StoreInfo.module.css'
+
+type StoreInfoProps = {
+  store: Store
+  hours: PublicOpeningHours[]
+  estimatedMinutes?: number
+  open: boolean
+  onOpenChange: (open: boolean) => void
+}
 
 const DAYS = [
   'Domingo',
@@ -16,7 +24,7 @@ const DAYS = [
   'Sábado',
 ]
 
-const hhmm = (time: string): string => time.slice(0, 5)
+const formatHourMinute = (time: string): string => time.slice(0, 5)
 
 /**
  * O que estava atrás de "Ver mais": onde a loja fica e quando ela atende.
@@ -72,7 +80,7 @@ export const StoreInfo = ({
                   <span>{day}</span>
                   <span className={styles.time}>
                     {entry?.isOpen
-                      ? `${hhmm(entry.openTime)} às ${hhmm(entry.closeTime)}`
+                      ? `${formatHourMinute(entry.openTime)} às ${formatHourMinute(entry.closeTime)}`
                       : 'Fechado'}
                   </span>
                 </li>

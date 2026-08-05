@@ -1,14 +1,20 @@
 import { useEffect, useRef } from 'react'
 
-import type { CategoryNavProps } from './CategoryNav.types'
+import { Chip } from '@nino/ds/components/Chip'
+import type { MenuSection } from '@custom_types/menu/menu-section'
 
 import styles from './CategoryNav.module.css'
 
+type CategoryNavProps = {
+  sections: MenuSection[]
+  activeId: string | null
+  onSelect: (id: string) => void
+}
+
 /**
- * As categorias do cardápio. No celular é uma trilha horizontal que gruda no
- * topo ao rolar; a categoria ativa se centraliza sozinha para o próximo destino
- * ficar à mão no polegar. No desktop vira um índice vertical fixo à esquerda —
- * o menu lateral de um cardápio de verdade, só os nomes, sem ícone.
+ * As categorias do cardápio. Uma trilha horizontal que gruda no topo ao
+ * rolar, em qualquer largura de tela — a categoria ativa se centraliza
+ * sozinha para o próximo destino ficar à mão no polegar.
  */
 export const CategoryNav = ({
   sections,
@@ -26,26 +32,29 @@ export const CategoryNav = ({
   }, [activeId])
 
   return (
-    <nav className={styles.nav} aria-label="Categorias do cardápio">
+    <nav
+      className={styles.nav}
+      role="tablist"
+      aria-label="Categorias do cardápio"
+    >
       <p className={styles.railLabel}>Cardápio</p>
-      <ul className={styles.track}>
+      <div className={styles.track}>
         {sections.map((section) => {
           const isActive = section.id === activeId
           return (
-            <li key={section.id}>
-              <button
-                ref={isActive ? activeRef : undefined}
-                type="button"
-                aria-current={isActive}
-                onClick={() => onSelect(section.id)}
-                className={`${styles.chip} ${isActive ? styles.chipOn : ''}`}
-              >
-                {section.name}
-              </button>
-            </li>
+            <Chip
+              key={section.id}
+              ref={isActive ? activeRef : undefined}
+              variant="tab"
+              selected={isActive}
+              onClick={() => onSelect(section.id)}
+              className={`${styles.chip} ${isActive ? styles.chipOn : ''}`}
+            >
+              {section.name}
+            </Chip>
           )
         })}
-      </ul>
+      </div>
     </nav>
   )
 }

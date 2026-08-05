@@ -1,7 +1,7 @@
 import { Link, useParams } from 'react-router'
 
 import { EmptyState } from '@nino/ds/components/EmptyState'
-import { Icon } from '@components/Icon/Icon'
+import { Icon } from '@nino/ds/components/Icon'
 import { useCustomerSession } from '@hooks/useCustomerSession'
 import { useMyOrders } from '@hooks/useMyOrders'
 import { clockLabel } from '@utils/clock'
@@ -9,8 +9,6 @@ import { brl } from '@utils/money'
 import { STATUS_LABEL } from '@utils/order-flow'
 import { isTerminal, stageIcon } from '@utils/order-journey'
 import { riseDelay } from '@utils/rise-delay'
-
-import chevronIcon from '@assets/icons/chevron-right.svg?raw'
 
 import styles from './Orders.module.css'
 import section from '../section.module.css'
@@ -87,7 +85,7 @@ export const Orders = () => {
                 {brl(Number(order.totalAmount))}
               </span>
 
-              <Icon svg={chevronIcon} className={styles.chevron} />
+              <Icon name="chevron-right" className={styles.chevron} />
             </Link>
           </li>
         ))}

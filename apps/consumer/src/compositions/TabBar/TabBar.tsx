@@ -1,16 +1,16 @@
 import { useState } from 'react'
 import { NavLink, useLocation, useNavigate } from 'react-router'
 
-import { Icon } from '@components/Icon/Icon'
+import { Icon } from '@nino/ds/components/Icon'
+import { Button } from '@nino/ds/components/Button'
 import { AccountDrawer } from '@compositions/AccountDrawer/AccountDrawer'
 
-import bagIcon from '@assets/icons/bag.svg?raw'
-import homeIcon from '@assets/icons/home.svg?raw'
-import userIcon from '@assets/icons/user.svg?raw'
-
-import type { TabBarProps } from './TabBar.types'
-
 import styles from './TabBar.module.css'
+
+type TabBarProps = {
+  /** Prefixo de rota da loja: `/slug` no atalho local, vazio no subdomínio. */
+  base: string
+}
 
 /**
  * A barra de ações do celular — três alvos, com a vitrine no meio.
@@ -66,35 +66,35 @@ export const TabBar = ({ base }: TabBarProps) => {
               : styles.tab
           }
         >
-          <Icon svg={bagIcon} />
+          <Icon name="bag" />
           <span className={styles.label}>Pedidos</span>
         </NavLink>
 
         {/* o único alvo que veste a cor da loja: a vitrine é a casa, e o anel
             é a marca do cliente aparecendo na navegação do freguês dele */}
-        <button
-          type="button"
+        <Button
+          variant="ghost"
           onClick={handleHome}
           aria-current={isHome ? 'page' : undefined}
           aria-label={isHome ? 'Voltar ao topo do cardápio' : 'Ir ao cardápio'}
           className={isHome ? `${styles.home} ${styles.homeOn}` : styles.home}
         >
           <span className={styles.homeRing}>
-            <Icon svg={homeIcon} />
+            <Icon name="home" />
           </span>
           <span className={styles.label}>Início</span>
-        </button>
+        </Button>
 
-        <button
-          type="button"
+        <Button
+          variant="ghost"
           onClick={() => setIsAccountOpen(true)}
           aria-haspopup="dialog"
           aria-expanded={isAccountOpen}
           className={isAccount ? `${styles.tab} ${styles.tabOn}` : styles.tab}
         >
-          <Icon svg={userIcon} />
+          <Icon name="user" />
           <span className={styles.label}>Perfil</span>
-        </button>
+        </Button>
       </nav>
 
       <AccountDrawer

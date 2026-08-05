@@ -167,6 +167,7 @@ export const ICON_NAMES = [
   'maximize-2',
   'meh',
   'menu',
+  'message',
   'message-circle',
   'message-square',
   'mic',

@@ -1,10 +1,8 @@
 import { NavLink } from 'react-router'
 
-import { Icon } from '@components/Icon/Icon'
+import { Icon } from '@nino/ds/components/Icon'
 import { ACCOUNT_SECTIONS } from '@constants/account-sections'
 import { riseDelay } from '@utils/rise-delay'
-
-import logoutIcon from '@assets/icons/logout.svg?raw'
 
 import type { AccountNavProps } from './AccountNav.types'
 
@@ -40,7 +38,7 @@ export const AccountNav = ({
               isActive ? `${styles.link} ${styles.linkOn}` : styles.link
             }
           >
-            <Icon svg={icon} className={styles.icon} />
+            <Icon name={icon} className={styles.icon} />
             <span className={styles.label}>{label}</span>
 
             {soon ? (
@@ -61,7 +59,7 @@ export const AccountNav = ({
       onClick={onLogout}
       disabled={isLoggingOut}
     >
-      <Icon svg={logoutIcon} className={styles.icon} />
+      <Icon name="logout" className={styles.icon} />
       <span className={styles.label}>
         {isLoggingOut ? 'Saindo…' : 'Sair da conta'}
       </span>

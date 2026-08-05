@@ -1,7 +1,8 @@
 import { useLocation, useNavigate } from 'react-router'
 
 import { Drawer } from '@nino/ds/components/Drawer'
-import { Icon } from '@components/Icon/Icon'
+import { Icon, type IconName } from '@nino/ds/components/Icon'
+import { Button } from '@nino/ds/components/Button'
 import { ACCOUNT_SECTIONS } from '@constants/account-sections'
 import { useCustomerSession } from '@hooks/useCustomerSession'
 import { useLogout } from '@hooks/useLogout'
@@ -12,13 +13,15 @@ import { firstName, initials } from '@utils/customer-name'
 import { greeting } from '@utils/greeting'
 import { riseDelay } from '@utils/rise-delay'
 
-import logoutIcon from '@assets/icons/logout.svg?raw'
-import userIcon from '@assets/icons/user.svg?raw'
-
-import type { AccountDrawerProps } from './AccountDrawer.types'
-
 import styles from './AccountDrawer.module.css'
 import motion from '@styles/motion.module.css'
+
+type AccountDrawerProps = {
+  open: boolean
+  onOpenChange: (open: boolean) => void
+  /** Prefixo de rota da loja: `/slug` no atalho local, vazio no subdomínio. */
+  base: string
+}
 
 const since = new Intl.DateTimeFormat('pt-BR', {
   month: 'long',
@@ -76,26 +79,31 @@ export const AccountDrawer = ({
     navigate(to)
   }
 
-  const item = (to: string, label: string, icon: string, index: number) => {
+  const sectionRow = (
+    to: string,
+    label: string,
+    icon: IconName,
+    index: number
+  ) => {
     const href = `${base}/conta/${to}`
     const isOn = pathname === href
     const className = isOn ? `${styles.item} ${styles.itemOn}` : styles.item
 
     return (
       <li key={to}>
-        <button
-          type="button"
+        <Button
+          variant="ghost"
           onClick={() => go(href)}
           aria-current={isOn ? 'page' : undefined}
           className={`${motion.deal} ${className}`}
           style={riseDelay(120 + index * 45)}
         >
-          <Icon svg={icon} className={styles.icon} />
+          <Icon name={icon} className={styles.icon} />
           <span className={styles.label}>{label}</span>
           {counts[to] !== undefined && (
             <span className={styles.count}>{counts[to]}</span>
           )}
-        </button>
+        </Button>
       </li>
     )
   }
@@ -117,7 +125,7 @@ export const AccountDrawer = ({
       >
         <header className={styles.head}>
           <div className={`${motion.land} ${styles.tile}`}>
-            {mark ?? <Icon svg={userIcon} className={styles.tileIcon} />}
+            {mark ?? <Icon name="user" className={styles.tileIcon} />}
           </div>
 
           <p
@@ -152,7 +160,7 @@ export const AccountDrawer = ({
             <nav className={styles.nav} aria-label="Seções da conta">
               <ul className={styles.list}>
                 {ready.map(({ to, label, icon }, index) =>
-                  item(to, label, icon, index)
+                  sectionRow(to, label, icon, index)
                 )}
               </ul>
 
@@ -162,21 +170,21 @@ export const AccountDrawer = ({
 
               <ul className={`${styles.list} ${styles.listSoon}`}>
                 {soon.map(({ to, label, icon }, index) =>
-                  item(to, label, icon, ready.length + index)
+                  sectionRow(to, label, icon, ready.length + index)
                 )}
               </ul>
             </nav>
 
             <div className={styles.foot}>
-              <button
-                type="button"
+              <Button
+                variant="ghost"
                 className={`${motion.press} ${styles.logout}`}
                 onClick={() => logout.mutate()}
                 disabled={logout.isPending}
               >
-                <Icon svg={logoutIcon} className={styles.icon} />
+                <Icon name="logout" className={styles.icon} />
                 {logout.isPending ? 'Saindo…' : 'Sair da conta'}
-              </button>
+              </Button>
             </div>
           </>
         ) : (
@@ -187,13 +195,13 @@ export const AccountDrawer = ({
               Entre para acompanhar seus pedidos e guardar seus endereços de
               entrega.
             </p>
-            <button
-              type="button"
+            <Button
+              variant="ghost"
               className={`${motion.press} ${styles.enter}`}
               onClick={() => go(`${base}/entrar`)}
             >
               Entrar
-            </button>
+            </Button>
           </div>
         )}
       </div>

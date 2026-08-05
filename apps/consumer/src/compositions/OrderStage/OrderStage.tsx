@@ -1,15 +1,21 @@
+import type { CSSProperties } from 'react'
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
 
-import { AnimatedNumber } from '@components/AnimatedNumber/AnimatedNumber'
-import { OrderRail } from '@compositions/OrderRail/OrderRail'
+import { AnimatedNumber } from '@elements/AnimatedNumber/AnimatedNumber'
+import { OrderRail } from '@elements/OrderRail/OrderRail'
 import { useMinutesUntil } from '@hooks/useMinutesUntil'
 import { clockLabel } from '@utils/clock'
 import { STATUS_LABEL } from '@utils/order-flow'
 import { etaLead, isTerminal, stageNote } from '@utils/order-journey'
-
-import type { OrderStageProps } from './OrderStage.types'
+import type { GuestOrderStatus } from '@custom_types/order/guest-order-status'
 
 import styles from './OrderStage.module.css'
+
+type OrderStageProps = {
+  order: GuestOrderStatus
+  className?: string
+  style?: CSSProperties
+}
 
 /** Acima disso a contagem regressiva vira ansiedade: só o horário basta. */
 const COUNTDOWN_CEILING = 90
@@ -17,20 +23,20 @@ const COUNTDOWN_CEILING = 90
 export const OrderStage = ({ order, className, style }: OrderStageProps) => {
   const reduceMotion = useReducedMotion()
   const minutes = useMinutesUntil(order.estimatedDeliveryAt)
-  const done = isTerminal(order.status)
-  const cancelled = order.status === 'CANCELLED'
+  const isDone = isTerminal(order.status)
+  const isCancelled = order.status === 'CANCELLED'
 
-  const finishedAt = done ? order.timeline.at(-1)?.at : undefined
+  const finishedAt = isDone ? order.timeline.at(-1)?.at : undefined
 
-  const counting =
-    !done && minutes !== null && minutes > 0 && minutes <= COUNTDOWN_CEILING
-  const arriving = !done && minutes !== null && minutes <= 0
+  const isCounting =
+    !isDone && minutes !== null && minutes > 0 && minutes <= COUNTDOWN_CEILING
+  const isArriving = !isDone && minutes !== null && minutes <= 0
 
   return (
     <section
       className={[
         styles.stage,
-        cancelled ? styles.stageCancelled : '',
+        isCancelled ? styles.stageCancelled : '',
         className ?? '',
       ]
         .filter(Boolean)
@@ -38,9 +44,9 @@ export const OrderStage = ({ order, className, style }: OrderStageProps) => {
       style={style}
       aria-live="polite"
     >
-      <p className={done ? styles.flagDone : styles.flag}>
+      <p className={isDone ? styles.flagDone : styles.flag}>
         <span className={styles.flagDot} aria-hidden="true" />
-        {done ? 'Pedido encerrado' : 'Acompanhando ao vivo'}
+        {isDone ? 'Pedido encerrado' : 'Acompanhando ao vivo'}
       </p>
 
       <AnimatePresence mode="wait" initial={false}>
@@ -60,7 +66,7 @@ export const OrderStage = ({ order, className, style }: OrderStageProps) => {
         </motion.div>
       </AnimatePresence>
 
-      {counting && (
+      {isCounting && (
         <div className={styles.eta}>
           <p className={styles.etaLead}>{etaLead(order)}</p>
           <p className={styles.etaValue}>
@@ -73,14 +79,14 @@ export const OrderStage = ({ order, className, style }: OrderStageProps) => {
         </div>
       )}
 
-      {arriving && (
+      {isArriving && (
         <div className={styles.eta}>
           <p className={styles.etaLead}>{etaLead(order)}</p>
           <p className={styles.etaSoon}>a qualquer momento</p>
         </div>
       )}
 
-      {!done && !counting && !arriving && order.estimatedDeliveryAt && (
+      {!isDone && !isCounting && !isArriving && order.estimatedDeliveryAt && (
         <div className={styles.eta}>
           <p className={styles.etaLead}>{etaLead(order)}</p>
           <p className={styles.etaSoon}>
@@ -89,14 +95,14 @@ export const OrderStage = ({ order, className, style }: OrderStageProps) => {
         </div>
       )}
 
-      {done && !cancelled && finishedAt && (
+      {isDone && !isCancelled && finishedAt && (
         <div className={styles.eta}>
           <p className={styles.etaLead}>Concluído</p>
           <p className={styles.etaSoon}>às {clockLabel(finishedAt)}</p>
         </div>
       )}
 
-      {!cancelled && <OrderRail order={order} />}
+      {!isCancelled && <OrderRail order={order} />}
     </section>
   )
 }

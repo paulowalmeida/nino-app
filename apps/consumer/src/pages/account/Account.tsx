@@ -10,7 +10,7 @@ import { firstName } from '@utils/customer-name'
 import { greeting } from '@utils/greeting'
 import { riseDelay } from '@utils/rise-delay'
 
-import { PoweredBy } from '@compositions/PoweredBy/PoweredBy'
+import { PoweredBy } from '@elements/PoweredBy/PoweredBy'
 import { TabBar } from '@compositions/TabBar/TabBar'
 
 import { AccountNav } from './AccountNav/AccountNav'

@@ -2,7 +2,7 @@ import { useState } from 'react'
 
 import { EmptyState } from '@nino/ds/components/EmptyState'
 import { toast } from '@nino/ds/components/Toast'
-import { Icon } from '@components/Icon/Icon'
+import { Icon } from '@nino/ds/components/Icon'
 import type { Address } from '@custom_types/address/address'
 import type { SaveAddressRequest } from '@custom_types/address/save-address-request'
 import { useCustomerSession } from '@hooks/useCustomerSession'
@@ -10,10 +10,6 @@ import { useDeleteAddress } from '@hooks/useDeleteAddress'
 import { useMyAddresses } from '@hooks/useMyAddresses'
 import { useSaveAddress } from '@hooks/useSaveAddress'
 import { riseDelay } from '@utils/rise-delay'
-
-import pencilIcon from '@assets/icons/pencil.svg?raw'
-import starIcon from '@assets/icons/star.svg?raw'
-import trashIcon from '@assets/icons/trash.svg?raw'
 
 import { AddressForm } from './AddressForm'
 
@@ -130,7 +126,7 @@ export const Addresses = () => {
                       aria-label="Tornar principal"
                       title="Tornar principal"
                     >
-                      <Icon svg={starIcon} />
+                      <Icon name="star" />
                     </button>
                   )}
                   <button
@@ -140,7 +136,7 @@ export const Addresses = () => {
                     aria-label="Editar endereço"
                     title="Editar"
                   >
-                    <Icon svg={pencilIcon} />
+                    <Icon name="pencil" />
                   </button>
                   <button
                     type="button"
@@ -149,7 +145,7 @@ export const Addresses = () => {
                     aria-label="Excluir endereço"
                     title="Excluir"
                   >
-                    <Icon svg={trashIcon} />
+                    <Icon name="trash" />
                   </button>
                 </div>
 

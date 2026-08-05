@@ -1,4 +1,4 @@
-import { Icon } from '@components/Icon/Icon'
+import { Icon } from '@nino/ds/components/Icon'
 
 import type { SoonProps } from './Soon.types'
 
@@ -16,7 +16,7 @@ export const Soon = ({ eyebrow, headline, note, icon }: SoonProps) => (
     <h2 className={section.headline}>{headline}</h2>
 
     <div className={styles.card}>
-      <Icon svg={icon} className={styles.icon} />
+      <Icon name={icon} className={styles.icon} />
       <p className={styles.note}>{note}</p>
       <span className={styles.tag}>Em breve</span>
     </div>

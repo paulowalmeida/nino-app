@@ -7,34 +7,31 @@ import { Dialog } from '@nino/ds/components/Dialog'
 import { Drawer } from '@nino/ds/components/Drawer'
 import { EmptyState } from '@nino/ds/components/EmptyState'
 import { Image } from '@nino/ds/components/Image'
-import { AnimatedNumber } from '@components/AnimatedNumber/AnimatedNumber'
-import { Icon } from '@components/Icon/Icon'
+import { AnimatedNumber } from '@elements/AnimatedNumber/AnimatedNumber'
+import { Icon } from '@nino/ds/components/Icon'
 import { useIsDesktop } from '@hooks/useIsDesktop'
 import { categoryIcon } from '@utils/category-icon'
 import { primaryImage } from '@utils/menu-image'
 import { brl } from '@utils/money'
-import minusIcon from '@assets/icons/minus.svg?raw'
-import plusIcon from '@assets/icons/plus.svg?raw'
-
-import type { CartDrawerProps } from './CartDrawer.types'
+import type { CartLine } from '@custom_types/cart/cart-line'
 
 import styles from './CartDrawer.module.css'
 import motion from '@styles/motion.module.css'
 
-const EASE = [0.16, 1, 0.3, 1] as const
+type CartDrawerProps = {
+  open: boolean
+  onOpenChange: (open: boolean) => void
+  lines: CartLine[]
+  total: number
+  /** Prazo da loja, o mesmo do cabeçalho — some quando não está configurado. */
+  estimatedMinutes?: number
+  onIncrement: (itemId: string) => void
+  onDecrement: (itemId: string) => void
+  onClear: () => void
+  onCheckout: () => void
+}
 
-const TrashIcon = () => (
-  <svg width="15" height="15" viewBox="0 0 24 24" aria-hidden="true">
-    <path
-      d="M4 7h16M10 11v6M14 11v6M6 7l1 12a2 2 0 002 2h6a2 2 0 002-2l1-12M9 7V5a2 2 0 012-2h2a2 2 0 012 2v2"
-      stroke="currentColor"
-      strokeWidth="1.8"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      fill="none"
-    />
-  </svg>
-)
+const EASE = [0.16, 1, 0.3, 1] as const
 
 export const CartDrawer = ({
   open,
@@ -49,10 +46,10 @@ export const CartDrawer = ({
 }: CartDrawerProps) => {
   const itemCount = lines.reduce((sum, line) => sum + line.quantity, 0)
   const isDesktop = useIsDesktop()
-  const [confirmingClear, setConfirmingClear] = useState(false)
+  const [isConfirmingClear, setIsConfirmingClear] = useState(false)
 
   const handleConfirmClear = () => {
-    setConfirmingClear(false)
+    setIsConfirmingClear(false)
     onClear()
   }
 
@@ -149,9 +146,9 @@ export const CartDrawer = ({
                               onClick={() => onDecrement(item.id)}
                             >
                               {isLast ? (
-                                <TrashIcon />
+                                <Icon name="trash" size="sm" />
                               ) : (
-                                <Icon svg={minusIcon} />
+                                <Icon name="minus" size="sm" />
                               )}
                             </Button>
                             <AnimatedNumber
@@ -165,7 +162,7 @@ export const CartDrawer = ({
                               aria-label={`Adicionar mais uma unidade de ${item.name}`}
                               onClick={() => onIncrement(item.id)}
                             >
-                              <Icon svg={plusIcon} />
+                              <Icon name="plus" size="sm" />
                             </Button>
                           </div>
                         </div>
@@ -193,7 +190,7 @@ export const CartDrawer = ({
                 <Button
                   variant="ghost"
                   className={styles.clear}
-                  onClick={() => setConfirmingClear(true)}
+                  onClick={() => setIsConfirmingClear(true)}
                 >
                   Esvaziar sacola
                 </Button>
@@ -203,16 +200,16 @@ export const CartDrawer = ({
         </div>
       </Drawer>
 
-      {confirmingClear && (
+      {isConfirmingClear && (
         <Dialog
           open
-          onOpenChange={(open) => !open && setConfirmingClear(false)}
+          onOpenChange={(open) => !open && setIsConfirmingClear(false)}
           title="Esvaziar a sacola?"
           description="Todos os itens serão removidos. Não dá para desfazer."
           confirmLabel="Esvaziar"
           cancelLabel="Cancelar"
           onConfirm={handleConfirmClear}
-          onCancel={() => setConfirmingClear(false)}
+          onCancel={() => setIsConfirmingClear(false)}
         />
       )}
     </>

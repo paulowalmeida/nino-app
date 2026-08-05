@@ -1,22 +1,29 @@
 import { useNavigate } from 'react-router'
 
 import { Menu } from '@nino/ds/components/Menu'
-import { Icon } from '@components/Icon/Icon'
+import { Icon } from '@nino/ds/components/Icon'
+import { Image } from '@nino/ds/components/Image'
+import { Input } from '@nino/ds/components/Input'
+import { Button } from '@nino/ds/components/Button'
 import { useCustomerSession } from '@hooks/useCustomerSession'
 import { useLogout } from '@hooks/useLogout'
 import { displayName, initials } from '@utils/store-info'
 import { formatPhone } from '@utils/phone'
-
-import bagIcon from '@assets/icons/bag.svg?raw'
-import cardIcon from '@assets/icons/credit-card.svg?raw'
-import logoutIcon from '@assets/icons/logout.svg?raw'
-import pinIcon from '@assets/icons/map-pin.svg?raw'
-import searchIcon from '@assets/icons/search.svg?raw'
-import userIcon from '@assets/icons/user.svg?raw'
-
-import type { StoreTopBarProps } from './StoreTopBar.types'
+import type { Store } from '@custom_types/store/store'
 
 import styles from './StoreTopBar.module.css'
+
+type StoreTopBarProps = {
+  store: Store
+  slug: string
+  cartCount: number
+  onCart: () => void
+  /** 0 no topo da página, 1 com a transição do cabeçalho concluída. */
+  progress: number
+  searchable: boolean
+  search: string
+  onSearchChange: (value: string) => void
+}
 
 /**
  * A faixa que não sai da tela: identidade da loja à esquerda, sacola e conta
@@ -61,11 +68,12 @@ export const StoreTopBar = ({
          */}
         <a href={base || '/'} className={styles.brand}>
           <span className={styles.logo}>
-            {store.logoUrl ? (
-              <img src={store.logoUrl} alt="" className={styles.logoImg} />
-            ) : (
-              initials(store)
-            )}
+            <Image
+              src={store.logoUrl}
+              alt=""
+              className={styles.logoImg}
+              placeholder={initials(store)}
+            />
           </span>
           <span className={styles.storeName}>{displayName(store)}</span>
         </a>
@@ -74,8 +82,8 @@ export const StoreTopBar = ({
             rolou até o fim do cardápio não precisa voltar para procurar */}
         {searchable && (
           <div className={styles.search}>
-            <Icon svg={searchIcon} className={styles.searchIcon} />
-            <input
+            <Icon name="search" className={styles.searchIcon} />
+            <Input
               type="search"
               aria-label="Buscar no cardápio"
               placeholder="Buscar no cardápio"
@@ -87,76 +95,77 @@ export const StoreTopBar = ({
         )}
 
         <div className={styles.tools}>
-          <button
-            type="button"
+          <Button
+            variant="ghost"
+            size="icon"
             className={styles.iconBtn}
             onClick={onCart}
             aria-label={`Sacola com ${cartCount} ${
               cartCount === 1 ? 'item' : 'itens'
             }`}
           >
-            <Icon svg={bagIcon} />
+            <Icon name="bag" />
             {cartCount > 0 && (
               <span className={styles.badge}>{cartCount}</span>
             )}
-          </button>
+          </Button>
 
           {customer ? (
             <Menu
               contentClassName={styles.menuPanel}
               trigger={
-                <button
-                  type="button"
+                <Button
+                  variant="ghost"
                   className={styles.account}
                   aria-label={`Sua conta — ${named}`}
                 >
-                  <Icon svg={userIcon} />
+                  <Icon name="user" />
                   <span className={styles.accountName}>{named}</span>
-                </button>
+                </Button>
               }
               items={[
                 {
                   value: 'orders',
                   label: 'Pedidos',
-                  icon: <Icon svg={bagIcon} />,
+                  icon: <Icon name="bag" />,
                   onSelect: go('/conta/pedidos'),
                 },
                 {
                   value: 'addresses',
                   label: 'Endereços',
-                  icon: <Icon svg={pinIcon} />,
+                  icon: <Icon name="map-pin" />,
                   onSelect: go('/conta/enderecos'),
                 },
                 {
                   value: 'payment',
                   label: 'Pagamento',
-                  icon: <Icon svg={cardIcon} />,
+                  icon: <Icon name="credit-card" />,
                   onSelect: go('/conta/pagamento'),
                 },
                 {
                   value: 'profile',
                   label: 'Meus dados',
-                  icon: <Icon svg={userIcon} />,
+                  icon: <Icon name="user" />,
                   onSelect: go('/conta/dados'),
                 },
                 { separator: true },
                 {
                   value: 'logout',
                   label: 'Sair',
-                  icon: <Icon svg={logoutIcon} />,
+                  icon: <Icon name="logout" />,
                   destructive: true,
                   onSelect: () => logout.mutate(),
                 },
               ]}
             />
           ) : (
-            <button
-              type="button"
+            <Button
+              variant="ghost"
               className={styles.signIn}
               onClick={go('/entrar')}
             >
               Entrar
-            </button>
+            </Button>
           )}
         </div>
       </div>

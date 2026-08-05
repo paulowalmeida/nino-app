@@ -5,19 +5,22 @@ import { Carousel } from '@nino/ds/components/Carousel'
 import { Drawer } from '@nino/ds/components/Drawer'
 import { Image } from '@nino/ds/components/Image'
 import { Modal } from '@nino/ds/components/Modal'
-import { AnimatedNumber } from '@components/AnimatedNumber/AnimatedNumber'
-import { Icon } from '@components/Icon/Icon'
+import { AnimatedNumber } from '@elements/AnimatedNumber/AnimatedNumber'
+import { Icon } from '@nino/ds/components/Icon'
 import { useIsDesktop } from '@hooks/useIsDesktop'
 import { categoryIcon } from '@utils/category-icon'
 import { brl } from '@utils/money'
 import { riseDelay } from '@utils/rise-delay'
-import minusIcon from '@assets/icons/minus.svg?raw'
-import plusIcon from '@assets/icons/plus.svg?raw'
-
-import type { ProductDetailProps } from './ProductDetail.types'
+import type { MenuItem } from '@custom_types/menu/menu-item'
 
 import styles from './ProductDetail.module.css'
 import motion from '@styles/motion.module.css'
+
+type ProductDetailProps = {
+  item: MenuItem | null
+  onClose: () => void
+  onConfirm: (item: MenuItem, quantity: number) => void
+}
 
 export const ProductDetail = ({
   item,
@@ -94,7 +97,7 @@ export const ProductDetail = ({
         disabled={quantity <= 1}
         onClick={() => setQuantity((n) => Math.max(1, n - 1))}
       >
-        <Icon svg={minusIcon} />
+        <Icon name="minus" size="sm" />
       </Button>
       <AnimatedNumber value={quantity} className={styles.stepperCount} />
       <Button
@@ -103,7 +106,7 @@ export const ProductDetail = ({
         aria-label="Aumentar quantidade"
         onClick={() => setQuantity((n) => n + 1)}
       >
-        <Icon svg={plusIcon} />
+        <Icon name="plus" size="sm" />
       </Button>
     </div>
   )

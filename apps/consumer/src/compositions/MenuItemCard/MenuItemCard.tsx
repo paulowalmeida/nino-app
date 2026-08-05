@@ -1,13 +1,26 @@
 import type { MouseEvent } from 'react'
 
 import { Image } from '@nino/ds/components/Image'
+import { Icon } from '@nino/ds/components/Icon'
+import { Button } from '@nino/ds/components/Button'
 import { categoryIcon } from '@utils/category-icon'
 import { brl } from '@utils/money'
 import { primaryImage } from '@utils/menu-image'
-
-import type { MenuItemCardProps } from './MenuItemCard.types'
+import type { MenuItem } from '@custom_types/menu/menu-item'
 
 import styles from './MenuItemCard.module.css'
+
+type MenuItemCardProps = {
+  item: MenuItem
+  onAdd: (item: MenuItem) => void
+  onSelect: (item: MenuItem) => void
+  /** Loja fechada: mostra o item apagado e não deixa pedir. */
+  disabled?: boolean
+  /** Emoji da categoria para o ladrilho quando o item não tem foto. */
+  fallbackIcon?: string | null
+  /** Quantas unidades já estão na sacola — 0 não marca nada. */
+  quantity?: number
+}
 
 /**
  * O item como o cliente decide: o texto à esquerda para ler, a foto emoldurada
@@ -72,22 +85,16 @@ export const MenuItemCard = ({
           }
         />
 
-        <button
-          type="button"
+        <Button
+          variant="primary"
+          size="icon"
           className={styles.add}
           aria-label={`Adicionar ${item.name}`}
           disabled={disabled}
           onClick={handleAdd}
         >
-          <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true">
-            <path
-              d="M12 5v14M5 12h14"
-              stroke="currentColor"
-              strokeWidth="2.5"
-              strokeLinecap="round"
-            />
-          </svg>
-        </button>
+          <Icon name="plus" />
+        </Button>
       </div>
     </article>
   )

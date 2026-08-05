@@ -1,3 +1,5 @@
+import type { CSSProperties } from 'react'
+
 import type { GuestOrderStatus } from '@custom_types/order/guest-order-status'
 import type { OrderStatus } from '@custom_types/order/order-status'
 import { clockLabel } from '@utils/clock'
@@ -5,10 +7,14 @@ import { STATUS_LABEL } from '@utils/order-flow'
 import { isTerminal, journeyFor, stageIcon } from '@utils/order-journey'
 import { riseDelay } from '@utils/rise-delay'
 
-import type { OrderJourneyProps } from './OrderJourney.types'
-
 import styles from './OrderJourney.module.css'
 import motion from '@styles/motion.module.css'
+
+type OrderJourneyProps = {
+  order: GuestOrderStatus
+  className?: string
+  style?: CSSProperties
+}
 
 type RowState = 'done' | 'current' | 'final' | 'ahead'
 
@@ -19,7 +25,7 @@ type Row = {
 }
 
 /** O que já aconteceu, na ordem em que aconteceu, com o último em destaque. */
-const fromHistory = (order: GuestOrderStatus): Row[] =>
+const historyRows = (order: GuestOrderStatus): Row[] =>
   order.timeline.map((entry, i) => ({
     status: entry.status,
     at: entry.at,
@@ -33,11 +39,11 @@ const fromHistory = (order: GuestOrderStatus): Row[] =>
  */
 const buildRows = (order: GuestOrderStatus): Row[] => {
   const rows = (() => {
-    if (order.status === 'CANCELLED') return fromHistory(order)
+    if (order.status === 'CANCELLED') return historyRows(order)
 
     const journey = journeyFor(order)
     const current = journey.indexOf(order.status)
-    if (current === -1) return fromHistory(order)
+    if (current === -1) return historyRows(order)
 
     const at = new Map(order.timeline.map((entry) => [entry.status, entry.at]))
 

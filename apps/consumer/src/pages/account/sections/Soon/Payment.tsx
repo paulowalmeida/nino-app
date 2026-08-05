@@ -1,5 +1,3 @@
-import cardIcon from '@assets/icons/credit-card.svg?raw'
-
 import { Soon } from './Soon'
 
 export const Payment = () => (
@@ -7,6 +5,6 @@ export const Payment = () => (
     eyebrow="Pagamento"
     headline="Seus cartões salvos"
     note="Guardar um cartão para não digitar tudo de novo a cada pedido ainda está em construção. Por enquanto o pagamento acontece no checkout."
-    icon={cardIcon}
+    icon="credit-card"
   />
 )

@@ -1,16 +1,18 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router'
 
-import { OrderRail } from '@compositions/OrderRail/OrderRail'
+import { OrderRail } from '@elements/OrderRail/OrderRail'
 import { useGuestOrderStatus } from '@hooks/useGuestOrderStatus'
 import { useMinutesUntil } from '@hooks/useMinutesUntil'
 import { clearLastOrder, readLastOrder } from '@utils/last-order'
 import { STATUS_LABEL } from '@utils/order-flow'
 import { isTerminal, stageIcon } from '@utils/order-journey'
 
-import type { ActiveOrderBannerProps } from './ActiveOrderBanner.types'
-
 import styles from './ActiveOrderBanner.module.css'
+
+type ActiveOrderBannerProps = {
+  slug: string
+}
 
 /**
  * Quem acabou de pedir e voltou pra loja (ou deu F5) não devia ter que

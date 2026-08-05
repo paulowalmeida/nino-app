@@ -29,6 +29,7 @@
       "@constants/*": ["src/constants/*"],
       "@custom_types/*": ["src/types/*"],
       "@styles/*": ["src/styles/*"],
+      "@elements/*": ["src/elements/*"],
       "@hooks/*": ["src/hooks/*"],
       "@layouts/*": ["src/layouts/*"],
       "@pages/*": ["src/pages/*"],

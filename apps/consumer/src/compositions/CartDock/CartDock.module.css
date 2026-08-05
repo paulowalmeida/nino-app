@@ -1,0 +1,98 @@
+@reference "@nino/ds/globals.css";
+
+/*
+ * No celular ela é a comanda saindo da impressora: encosta na tab bar, mostra
+ * a prévia do que já foi pedido e traz o mesmo picote do checkout na borda de
+ * cima. É a peça que empilha com o rodapé em vez de pairar solta sobre ele.
+ */
+.dock {
+  @apply fixed inset-x-0 bottom-16 z-30 bg-brand-foreground px-4 py-3;
+  box-shadow: 0 -10px 30px -20px rgba(26, 18, 6, 0.45);
+}
+
+/* o cardápio dissolve no papel antes do picote: sem isso a serrilha fatia o
+   que estiver rolando atrás e vira ruído */
+.dock::before {
+  content: '';
+  @apply pointer-events-none absolute inset-x-0 bottom-full h-9;
+  background: linear-gradient(
+    to bottom,
+    rgba(255, 251, 245, 0),
+    var(--color-brand-foreground)
+  );
+}
+
+/* o picote, o mesmo da comanda do checkout: duas camadas iguais com 1px de
+   deslocamento — a de baixo é o fio que desenha a silhueta serrilhada */
+.dock::after {
+  content: '';
+  @apply absolute inset-x-0 bottom-full h-[7px];
+  background-image:
+    radial-gradient(
+      circle at 7px 0,
+      transparent 0 5px,
+      var(--color-brand-foreground) 5px
+    ),
+    radial-gradient(circle at 7px 0, transparent 0 5px, var(--color-line) 5px);
+  background-size:
+    14px 7px,
+    14px 7px;
+  background-position:
+    0 1px,
+    0 0;
+  background-repeat: repeat-x, repeat-x;
+}
+
+.inner {
+  @apply mx-auto flex w-full max-w-[71rem] items-center gap-4;
+}
+
+.summary {
+  @apply flex min-w-0 flex-1 flex-col;
+}
+
+.count {
+  @apply truncate text-xs text-muted;
+}
+
+/* o total é `inline-grid` centrado por dentro (troca de valor sem pulo): sem
+   encolher ao conteúdo, ele estica na coluna e desalinha da contagem */
+.total {
+  @apply self-start text-base font-extrabold text-muted;
+  font-variant-numeric: tabular-nums;
+}
+
+.cta {
+  @apply h-12 shrink-0 px-6;
+}
+
+/*
+ * No desktop não há tab bar embaixo nem papel para destacar: a comanda vira
+ * pastilha. Uma faixa de ponta a ponta atravessaria 1440px de tela para
+ * carregar um botão de 200px, e o picote sem a barra vira enfeite solto.
+ */
+@media (min-width: 1024px) {
+  /* centrada por `mx-auto` sobre uma faixa de largura cheia, não por
+     `translate-x`: a animação de entrada anima `transform`, e o deslocamento
+     de centralização seria zerado no primeiro quadro */
+  .dock {
+    @apply bottom-8 mx-auto w-fit;
+    @apply rounded-full border border-black/[0.07] py-2.5 pl-6 pr-2.5;
+    box-shadow:
+      0 18px 40px -14px rgba(26, 18, 6, 0.5),
+      0 2px 8px -2px rgba(26, 18, 6, 0.18);
+  }
+
+  .dock::before,
+  .dock::after {
+    display: none;
+  }
+
+  .inner {
+    @apply w-auto gap-5;
+  }
+
+  .summary {
+    @apply flex-none;
+  }
+}

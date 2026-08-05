@@ -1,5 +1,3 @@
-import fileIcon from '@assets/icons/file-text.svg?raw'
-
 import { Soon } from './Soon'
 
 export const Invoices = () => (
@@ -7,6 +5,6 @@ export const Invoices = () => (
     eyebrow="Notas fiscais"
     headline="A nota de cada pedido"
     note="Baixar a nota fiscal dos seus pedidos ainda está em construção. Quando chegar, ela aparece aqui junto do pedido correspondente."
-    icon={fileIcon}
+    icon="file-text"
   />
 )
