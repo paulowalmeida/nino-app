@@ -5,7 +5,7 @@ import { AnimatedNumber } from '@elements/AnimatedNumber/AnimatedNumber'
 import { OrderRail } from '@elements/OrderRail/OrderRail'
 import { useMinutesUntil } from '@hooks/useMinutesUntil'
 import { clockLabel } from '@utils/clock'
-import { STATUS_LABEL } from '@utils/order-flow'
+import { STATUS_LABEL } from '@constants/order.constants'
 import { etaLead, isTerminal, stageNote } from '@utils/order-journey'
 import type { GuestOrderStatus } from '@custom_types/order/guest-order-status'
 

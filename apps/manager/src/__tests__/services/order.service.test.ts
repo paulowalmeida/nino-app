@@ -176,8 +176,7 @@ describe('OrderService', () => {
 
     // Assert
     expect(apiMock.patch).toHaveBeenCalledWith(
-      'tenants/tenant-1/orders',
-      'order-1/status',
+      'tenants/tenant-1/orders/order-1/status',
       { status: 'PREPARING' }
     )
   })
@@ -188,8 +187,7 @@ describe('OrderService', () => {
 
     // Assert
     expect(apiMock.patch).toHaveBeenCalledWith(
-      'tenants/tenant-1/orders',
-      'order-1/payment',
+      'tenants/tenant-1/orders/order-1/payment',
       { paymentStatus: 'PAID' }
     )
   })

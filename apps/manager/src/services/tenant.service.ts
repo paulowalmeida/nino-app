@@ -19,7 +19,7 @@ export const TenantService = {
     api.get<StoreTypeOption[]>('my/company/tenants/types'),
 
   checkSlug: (slug: string): Promise<SlugAvailabilityResponse> =>
-    api.getAll<{ slug: string }, SlugAvailabilityResponse>(
+    api.getAll<SlugAvailabilityResponse>(
       'my/company/tenants/slug-availability',
       { slug }
     ),
@@ -31,28 +31,29 @@ export const TenantService = {
     tenantId: string,
     data: UpdateTenantRequest
   ): Promise<TenantDetail> =>
-    api.patch<UpdateTenantRequest, TenantDetail>('tenants', tenantId, data),
+    api.patch<UpdateTenantRequest, TenantDetail>(`tenants/${tenantId}`, data),
 
   getPause: (tenantId: string): Promise<TenantPause> =>
     api.get<TenantPause>(`tenants/${tenantId}/pause`),
 
   pauseStore: (tenantId: string, data: PauseRequest): Promise<TenantPause> =>
-    api.patch<PauseRequest, TenantPause>('tenants', `${tenantId}/pause`, data),
+    api.patch<PauseRequest, TenantPause>(
+      `tenants/${tenantId}/pause`,
+      data
+    ),
 
   resumeStore: (tenantId: string): Promise<TenantPause> =>
     api.patch<Record<string, never>, TenantPause>(
-      'tenants',
-      `${tenantId}/resume`,
+      `tenants/${tenantId}/resume`,
       {}
     ),
 
   removeTenant: (tenantId: string): Promise<{ message: string }> =>
-    api.remove<{ message: string }>('tenants', tenantId),
+    api.remove<{ message: string }>(`tenants/${tenantId}`),
 
   setMainTenant: (tenantId: string): Promise<TenantDetail> =>
     api.patch<Record<string, never>, TenantDetail>(
-      'tenants',
-      `${tenantId}/main`,
+      `tenants/${tenantId}/main`,
       {}
     ),
 }

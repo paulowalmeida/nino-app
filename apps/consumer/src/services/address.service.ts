@@ -10,7 +10,7 @@ export const listMyAddresses = (): Promise<Address[]> =>
   api.get<Address[]>('my/addresses')
 
 export const createMyAddress = (data: SaveAddressRequest): Promise<Address> =>
-  api.post<SaveAddressRequest, Address>('my/addresses', data)
+  api.create<SaveAddressRequest, Address>('my/addresses', data)
 
 export const updateMyAddress = (
   id: string,

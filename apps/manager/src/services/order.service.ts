@@ -10,14 +10,6 @@ import type { TimingReport } from '@custom_types/order/timing-report'
 import type { UpdateOrderStatusRequest } from '@custom_types/order/update-order-status-request'
 import { api } from '@services/http.service'
 
-type OrderListParams = {
-  target: string
-  direction: string
-  size: number
-  page: number
-  search?: string
-}
-
 export const ORDER_PAGE_SIZE = 40
 
 const isCustomRange = (
@@ -43,7 +35,7 @@ export const OrderService = {
     tenantId: string,
     params: ReportRangeParams
   ): Promise<SalesReport> =>
-    api.getAll<Record<string, string>, SalesReport>(
+    api.getAll<SalesReport>(
       `tenants/${tenantId}/orders/report`,
       rangeQuery(params)
     ),
@@ -53,7 +45,7 @@ export const OrderService = {
     params: ReportRangeParams,
     granularity?: SeriesGranularity
   ): Promise<SalesSeries> =>
-    api.getAll<Record<string, string>, SalesSeries>(
+    api.getAll<SalesSeries>(
       `tenants/${tenantId}/orders/report/series`,
       rangeQuery(params, granularity)
     ),
@@ -62,7 +54,7 @@ export const OrderService = {
     tenantId: string,
     params: ReportRangeParams
   ): Promise<TimingReport> =>
-    api.getAll<Record<string, string>, TimingReport>(
+    api.getAll<TimingReport>(
       `tenants/${tenantId}/orders/report/timing`,
       rangeQuery(params)
     ),
@@ -72,7 +64,7 @@ export const OrderService = {
     page: number,
     search?: string
   ): Promise<OrderPage> =>
-    api.getAll<OrderListParams, OrderPage>(`tenants/${tenantId}/orders`, {
+    api.getAll<OrderPage>(`tenants/${tenantId}/orders`, {
       target: 'createdAt',
       direction: 'desc',
       size: ORDER_PAGE_SIZE,
@@ -92,15 +84,13 @@ export const OrderService = {
     data: UpdateOrderStatusRequest
   ): Promise<Order> =>
     api.patch<UpdateOrderStatusRequest, Order>(
-      `tenants/${tenantId}/orders`,
-      `${orderId}/status`,
+      `tenants/${tenantId}/orders/${orderId}/status`,
       data
     ),
 
   markOrderPaid: (tenantId: string, orderId: string): Promise<Order> =>
     api.patch<{ paymentStatus: string }, Order>(
-      `tenants/${tenantId}/orders`,
-      `${orderId}/payment`,
+      `tenants/${tenantId}/orders/${orderId}/payment`,
       { paymentStatus: 'PAID' }
     ),
 }

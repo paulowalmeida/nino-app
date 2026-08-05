@@ -45,8 +45,7 @@ describe('PhoneService', () => {
 
     // Assert
     expect(apiMock.patch).toHaveBeenCalledWith(
-      'tenants/tenant-1/phones',
-      'phone-1',
+      'tenants/tenant-1/phones/phone-1',
       { phone: '11912345678' }
     )
   })
@@ -57,8 +56,7 @@ describe('PhoneService', () => {
 
     // Assert
     expect(apiMock.remove).toHaveBeenCalledWith(
-      'tenants/tenant-1/phones',
-      'phone-1'
+      'tenants/tenant-1/phones/phone-1'
     )
   })
 

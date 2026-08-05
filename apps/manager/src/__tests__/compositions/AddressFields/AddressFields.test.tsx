@@ -2,16 +2,16 @@ import { fireEvent, render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { describe, expect, it, vi } from 'vitest'
 
-import { lookupZipCode } from '@nino/lib/services/zip-code'
+import { lookupZipCode } from '@nino/lib/services/zip-code.service'
 
 import { AddressFields } from '@compositions/AddressFields/AddressFields'
 
 import { emptyAddressValue, foundAddress } from './AddressFields.mock'
 
-vi.mock('@nino/lib/services/zip-code', async () => {
+vi.mock('@nino/lib/services/zip-code.service', async () => {
   const actual = await vi.importActual<
-    typeof import('@nino/lib/services/zip-code')
-  >('@nino/lib/services/zip-code')
+    typeof import('@nino/lib/services/zip-code.service')
+  >('@nino/lib/services/zip-code.service')
   return { ...actual, lookupZipCode: vi.fn() }
 })
 

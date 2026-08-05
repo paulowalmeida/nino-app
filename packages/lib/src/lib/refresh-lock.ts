@@ -4,7 +4,7 @@
  * A API rotaciona o refresh token e trata repetição como ataque: dois
  * `POST /auth/refresh` com o mesmo cookie derrubam a sessão inteira com
  * "Refresh token reuse detected". Um lock em variável de módulo só protege
- * chamadas dentro do mesmo processo JS — abrir o painel em duas abas cria dois
+ * chamadas dentro do mesmo processo JS — abrir duas abas cria dois
  * processos, cada um com seu próprio lock, e as duas podem renovar ao mesmo
  * tempo com o cookie que ainda é o mesmo (cookie é do navegador, não da aba).
  * Cliente com duas abas é o caso comum, não a exceção, então isso não pode
@@ -50,7 +50,9 @@ const markRefreshed = (): void => {
  * jsdom): protege ao menos a aba atual, que é o que o código fazia antes. */
 let sameTabRun: Promise<boolean> | null = null
 
-const withoutCrossTabLock = (renew: () => Promise<boolean>): Promise<boolean> => {
+const withoutCrossTabLock = (
+  renew: () => Promise<boolean>
+): Promise<boolean> => {
   sameTabRun ??= renew().finally(() => {
     sameTabRun = null
   })
@@ -58,17 +60,25 @@ const withoutCrossTabLock = (renew: () => Promise<boolean>): Promise<boolean> =>
   return sameTabRun
 }
 
-export const refreshOnce = (renew: () => Promise<boolean>): Promise<boolean> => {
+export const refreshOnce = (
+  renew: () => Promise<boolean>
+): Promise<boolean> => {
   if (typeof navigator === 'undefined' || !navigator.locks) {
     return withoutCrossTabLock(renew)
   }
 
-  return navigator.locks.request(LOCK_NAME, async () => {
+  /*
+   * `lib.dom.d.ts` nesta versão do TypeScript declara `LockGrantedCallback`
+   * como síncrono (`(lock) => T`, sem `PromiseLike<T>`) — não bate com a API
+   * real, que sempre aguarda o retorno. O cast documenta a lacuna do tipo,
+   * não uma escolha de design.
+   */
+  return navigator.locks.request(LOCK_NAME, (async () => {
     if (recentlyRefreshed()) return true
 
     const refreshed = await renew()
     if (refreshed) markRefreshed()
 
     return refreshed
-  })
+  }) as unknown as LockGrantedCallback<boolean>)
 }

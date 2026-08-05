@@ -12,7 +12,7 @@ export const firstName = (name?: string | null): string | null => {
  * As iniciais do freguês, do jeito que a loja tem as dela no azulejo da
  * vitrine: no máximo duas letras, primeira e última palavra do nome.
  */
-export const initials = (name?: string | null): string | null => {
+export const customerInitials = (name?: string | null): string | null => {
   const parts = name?.trim().split(/\s+/).filter(Boolean)
   if (!parts?.length) return null
 

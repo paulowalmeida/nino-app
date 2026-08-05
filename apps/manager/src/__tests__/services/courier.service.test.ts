@@ -25,8 +25,7 @@ describe('CourierService', () => {
 
     // Assert
     expect(apiMock.remove).toHaveBeenCalledWith(
-      'tenants/tenant-1/couriers',
-      'courier-1'
+      'tenants/tenant-1/couriers/courier-1'
     )
   })
 

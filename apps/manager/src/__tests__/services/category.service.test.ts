@@ -45,8 +45,7 @@ describe('CategoryService', () => {
 
     // Assert
     expect(apiMock.patch).toHaveBeenCalledWith(
-      'tenants/tenant-1/product-categories',
-      'cat-1',
+      'tenants/tenant-1/product-categories/cat-1',
       { position: 3 }
     )
   })
@@ -57,8 +56,7 @@ describe('CategoryService', () => {
 
     // Assert
     expect(apiMock.patch).toHaveBeenCalledWith(
-      'tenants/tenant-1/product-categories',
-      'cat-1',
+      'tenants/tenant-1/product-categories/cat-1',
       { name: 'Bebidas' }
     )
   })
@@ -69,8 +67,7 @@ describe('CategoryService', () => {
 
     // Assert
     expect(apiMock.remove).toHaveBeenCalledWith(
-      'tenants/tenant-1/product-categories',
-      'cat-1'
+      'tenants/tenant-1/product-categories/cat-1'
     )
   })
 

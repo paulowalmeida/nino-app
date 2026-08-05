@@ -1,6 +1,6 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
-import { refreshOnce } from '@lib/refresh-lock'
+import { refreshOnce } from '../../lib/refresh-lock'
 
 /**
  * jsdom não implementa Web Locks. Este mock reproduz a única garantia que o
@@ -86,7 +86,10 @@ describe('refreshOnce', () => {
 
   it('lets the next tab try again after a failed renewal', async () => {
     installLockQueue()
-    const renew = vi.fn().mockResolvedValueOnce(false).mockResolvedValueOnce(true)
+    const renew = vi
+      .fn()
+      .mockResolvedValueOnce(false)
+      .mockResolvedValueOnce(true)
 
     expect(await refreshOnce(renew)).toBe(false)
     expect(await refreshOnce(renew)).toBe(true)

@@ -1,4 +1,4 @@
-import { ApiError } from './api-error'
+import { ApiError } from '@nino/lib/utils/api-error'
 
 export const authErrorMessage = (error: unknown): string => {
   if (!(error instanceof ApiError)) {

@@ -1,12 +1,19 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
-const endSession = vi.hoisted(() => vi.fn())
-vi.mock('@utils/end-session', () => ({ endSession }))
+import { createHttpClient } from '../../lib/http-client'
 
-const { createHttpClient } = await import('@lib/http-client')
-
-const HINT_KEY = 'nino.had-session'
 const BASE_URL = 'https://api.test'
+const HINT_KEY = 'had-session'
+
+const baseConfig = () => ({
+  baseUrl: BASE_URL,
+  refreshPath: 'auth/refresh',
+  exemptPaths: ['auth/login', 'auth/signup', 'auth/refresh'],
+  sessionProbePath: 'auth/me',
+  hasPriorSession: () => window.localStorage.getItem(HINT_KEY) === '1',
+  onUnrecoverable: vi.fn(),
+  httpErrorLabels: { 500: 'Internal server error' },
+})
 
 const jsonResponse = (status: number, body?: unknown) =>
   new Response(body === undefined ? null : JSON.stringify(body), {
@@ -46,7 +53,7 @@ describe('createHttpClient', () => {
   it('get: returns the parsed body directly, unwrapped', async () => {
     // Arrange
     stubFetch(jsonResponse(200, { id: 'order-1' }))
-    const client = createHttpClient({ baseUrl: BASE_URL })
+    const client = createHttpClient(baseConfig())
 
     // Act
     const result = await client.get('orders/order-1')
@@ -63,7 +70,7 @@ describe('createHttpClient', () => {
       return jsonResponse(201, { id: 'order-2' })
     })
     vi.stubGlobal('fetch', fetchMock)
-    const client = createHttpClient({ baseUrl: BASE_URL })
+    const client = createHttpClient(baseConfig())
 
     // Act
     const result = await client.post('orders', { total: 42 })
@@ -80,7 +87,7 @@ describe('createHttpClient', () => {
       jsonResponse(200, { ok: true }),
       jsonResponse(200, { ok: true })
     )
-    const client = createHttpClient({ baseUrl: BASE_URL })
+    const client = createHttpClient(baseConfig())
 
     // Act
     await client.put('orders/order-1', { total: 43 })
@@ -88,19 +95,21 @@ describe('createHttpClient', () => {
     await client.delete('orders/order-1')
 
     // Assert
-    expect(fetchMock.mock.calls.map((_, i) => requestOf(fetchMock, i).method))
-      .toEqual(['PUT', 'PATCH', 'DELETE'])
+    expect(
+      fetchMock.mock.calls.map((_, i) => requestOf(fetchMock, i).method)
+    ).toEqual(['PUT', 'PATCH', 'DELETE'])
   })
 
   it('401 with a session hint: refreshes once and retries', async () => {
     // Arrange
     signedIn()
+    const config = baseConfig()
     const fetchMock = stubFetch(
       jsonResponse(401, { message: 'Unauthorized' }),
       jsonResponse(200),
       jsonResponse(200, { id: 'order-1' })
     )
-    const client = createHttpClient({ baseUrl: BASE_URL })
+    const client = createHttpClient(config)
 
     // Act
     const result = await client.get('orders/order-1')
@@ -109,48 +118,51 @@ describe('createHttpClient', () => {
     expect(result).toEqual({ id: 'order-1' })
     expect(fetchMock).toHaveBeenCalledTimes(3)
     expect(requestOf(fetchMock, 1).url).toContain('auth/refresh')
-    expect(endSession).not.toHaveBeenCalled()
+    expect(config.onUnrecoverable).not.toHaveBeenCalled()
   })
 
-  it('401 with no prior session: ends it without a refresh', async () => {
+  it('401 with no prior session: reports it as unrecoverable without a refresh', async () => {
     // Arrange
+    const config = baseConfig()
     const fetchMock = stubFetch(jsonResponse(401, { message: 'Unauthorized' }))
-    const client = createHttpClient({ baseUrl: BASE_URL })
+    const client = createHttpClient(config)
 
     // Act
     const error = await client.get('orders/order-1').catch((err) => err)
 
     // Assert
     expect(fetchMock).toHaveBeenCalledTimes(1)
-    expect(endSession).toHaveBeenCalledTimes(1)
+    expect(config.onUnrecoverable).toHaveBeenCalledTimes(1)
     expectApiError(error, 401, 'Unauthorized')
   })
 
-  it('401 when the refresh itself fails: ends the session', async () => {
+  it('401 when the refresh itself fails: reports it as unrecoverable', async () => {
     // Arrange
     signedIn()
+    const config = baseConfig()
     const fetchMock = stubFetch(
       jsonResponse(401, { message: 'Unauthorized' }),
       jsonResponse(401)
     )
-    const client = createHttpClient({ baseUrl: BASE_URL })
+    const client = createHttpClient(config)
 
     // Act
     const error = await client.get('orders/order-1').catch((err) => err)
 
     // Assert
     expect(fetchMock).toHaveBeenCalledTimes(2)
-    expect(endSession).toHaveBeenCalledTimes(1)
+    expect(config.onUnrecoverable).toHaveBeenCalledTimes(1)
     expectApiError(error, 401, 'Unauthorized')
   })
 
-  it('401 on a credential path: neither refreshes nor ends it', async () => {
+  it('401 on an exempt path: neither refreshes nor reports unrecoverable', async () => {
     // Arrange
     signedIn()
+    const config = baseConfig()
     const fetchMock = stubFetch(
       jsonResponse(401, { message: 'Invalid credentials' })
     )
-    const client = createHttpClient({ baseUrl: BASE_URL })
+    const client = createHttpClient(config)
 
     // Act
     const error = await client
@@ -159,42 +171,42 @@ describe('createHttpClient', () => {
 
     // Assert
     expect(fetchMock).toHaveBeenCalledTimes(1)
-    expect(endSession).not.toHaveBeenCalled()
+    expect(config.onUnrecoverable).not.toHaveBeenCalled()
     expectApiError(error, 401, 'Invalid credentials')
   })
 
-  it('401 on the session probe: never ends the session', async () => {
+  it('401 on the session probe: never reports it as unrecoverable', async () => {
     // Arrange
     signedIn()
+    const config = baseConfig()
     stubFetch(jsonResponse(401), jsonResponse(401))
-    const client = createHttpClient({ baseUrl: BASE_URL })
+    const client = createHttpClient(config)
 
     // Act
     await client.get('auth/me').catch((err) => err)
 
     // Assert
-    expect(endSession).not.toHaveBeenCalled()
+    expect(config.onUnrecoverable).not.toHaveBeenCalled()
   })
 
   it('non-401 error: throws ApiError with the parsed message', async () => {
     // Arrange
+    const config = baseConfig()
     stubFetch(jsonResponse(404, { message: 'Order not found' }))
-    const client = createHttpClient({ baseUrl: BASE_URL })
+    const client = createHttpClient(config)
 
     // Act
     const error = await client.get('orders/missing').catch((err) => err)
 
     // Assert
     expectApiError(error, 404, 'Order not found')
-    expect(endSession).not.toHaveBeenCalled()
+    expect(config.onUnrecoverable).not.toHaveBeenCalled()
   })
 
   it('error with an array message: joins entries with a comma', async () => {
     // Arrange
-    stubFetch(
-      jsonResponse(400, { message: ['name is required', 'bad price'] })
-    )
-    const client = createHttpClient({ baseUrl: BASE_URL })
+    stubFetch(jsonResponse(400, { message: ['name is required', 'bad price'] }))
+    const client = createHttpClient(baseConfig())
 
     // Act
     const error = await client.post('orders', {}).catch((err) => err)
@@ -203,13 +215,13 @@ describe('createHttpClient', () => {
     expectApiError(error, 400, 'name is required, bad price')
   })
 
-  it('unparsable body: falls back to the HTTP_ERRORS label', async () => {
+  it('unparsable body: falls back to the configured http error label', async () => {
     // Arrange
-    const fetchMock = vi.fn().mockResolvedValueOnce(
-      new Response('not json', { status: 500 })
-    )
+    const fetchMock = vi
+      .fn()
+      .mockResolvedValueOnce(new Response('not json', { status: 500 }))
     vi.stubGlobal('fetch', fetchMock)
-    const client = createHttpClient({ baseUrl: BASE_URL })
+    const client = createHttpClient(baseConfig())
 
     // Act
     const error = await client.get('orders/order-1').catch((err) => err)
@@ -221,11 +233,8 @@ describe('createHttpClient', () => {
   it('a fetch that never settles: throws a timeout ApiError', async () => {
     // Arrange
     vi.useFakeTimers()
-    vi.stubGlobal(
-      'fetch',
-      vi.fn().mockReturnValue(new Promise(() => {}))
-    )
-    const client = createHttpClient({ baseUrl: BASE_URL })
+    vi.stubGlobal('fetch', vi.fn().mockReturnValue(new Promise(() => {})))
+    const client = createHttpClient(baseConfig())
 
     // Act
     const pending = client.get('orders/order-1').catch((err) => err)

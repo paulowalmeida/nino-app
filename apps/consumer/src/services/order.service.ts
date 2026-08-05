@@ -8,7 +8,7 @@ import { api } from '@services/http.service'
 export const createGuestOrder = (
   data: CreateGuestOrderRequest
 ): Promise<GuestOrderCreatedResponse> =>
-  api.post<CreateGuestOrderRequest, GuestOrderCreatedResponse>(
+  api.create<CreateGuestOrderRequest, GuestOrderCreatedResponse>(
     'orders/guest',
     data
   )
@@ -18,7 +18,7 @@ export const getGuestOrderStatus = (
   orderId: string,
   token: string
 ): Promise<GuestOrderStatus> =>
-  api.getWith<GuestOrderStatus>(`orders/guest/${orderId}/status`, { token })
+  api.getAll<GuestOrderStatus>(`orders/guest/${orderId}/status`, { token })
 
 /**
  * Histórico do cliente logado. A API pagina; a primeira página cobre o que

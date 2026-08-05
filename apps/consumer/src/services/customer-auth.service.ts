@@ -16,7 +16,7 @@ export type OtpCredentials = { phone?: string; email?: string }
 export const requestOtp = (
   credentials: OtpCredentials
 ): Promise<{ message: string }> =>
-  api.post<OtpCredentials, { message: string }>(
+  api.create<OtpCredentials, { message: string }>(
     'customer/auth/otp/request',
     credentials
   )
@@ -25,7 +25,7 @@ export const verifyOtp = (
   credentials: OtpCredentials,
   code: string
 ): Promise<Customer> =>
-  api.post<OtpCredentials & { code: string }, Customer>(
+  api.create<OtpCredentials & { code: string }, Customer>(
     'customer/auth/otp/verify',
     { ...credentials, code }
   )
@@ -38,7 +38,7 @@ export const updateMyProfile = (
   api.patch<UpdateMyProfileRequest, Customer>('my/customer', data)
 
 export const logout = (): Promise<{ message: string }> =>
-  api.post<Record<string, never>, { message: string }>(
+  api.create<Record<string, never>, { message: string }>(
     'customer/auth/logout',
     {}
   )

@@ -49,8 +49,7 @@ describe('OpeningHoursService', () => {
 
     // Assert
     expect(apiMock.patch).toHaveBeenCalledWith(
-      'tenants/tenant-1/opening-hours',
-      'hour-1',
+      'tenants/tenant-1/opening-hours/hour-1',
       { isOpen: false }
     )
   })
@@ -61,8 +60,7 @@ describe('OpeningHoursService', () => {
 
     // Assert
     expect(apiMock.remove).toHaveBeenCalledWith(
-      'tenants/tenant-1/opening-hours',
-      'hour-1'
+      'tenants/tenant-1/opening-hours/hour-1'
     )
   })
 

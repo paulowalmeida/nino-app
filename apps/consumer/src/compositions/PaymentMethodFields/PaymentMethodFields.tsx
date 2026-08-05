@@ -5,7 +5,7 @@ import { Input } from '@nino/ds/components/Input'
 import { RadioGroup } from '@nino/ds/components/RadioGroup'
 import type { PaymentMethod } from '@custom_types/order/payment-method'
 import type { CheckoutFormValues } from '@custom_types/checkout/checkout-form-values'
-import { PAYMENT_METHOD_LABEL } from '@utils/order-flow'
+import { PAYMENT_METHOD_LABEL } from '@constants/order.constants'
 
 import styles from './PaymentMethodFields.module.css'
 

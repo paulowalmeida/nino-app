@@ -27,7 +27,7 @@ describe('AccountService', () => {
     const result = await AccountService.updateProfile({ name: 'Weskley' })
 
     // Assert
-    expect(apiMock.patch).toHaveBeenCalledWith('my', 'profile', {
+    expect(apiMock.patch).toHaveBeenCalledWith('my/profile', {
       name: 'Weskley',
     })
     expect(result).toEqual({ id: 'u1', name: 'Weskley' })
@@ -38,7 +38,7 @@ describe('AccountService', () => {
     await AccountService.updateMyEmail('novo@nino.delivery')
 
     // Assert
-    expect(apiMock.patch).toHaveBeenCalledWith('my/profile', 'email', {
+    expect(apiMock.patch).toHaveBeenCalledWith('my/profile/email', {
       email: 'novo@nino.delivery',
     })
   })

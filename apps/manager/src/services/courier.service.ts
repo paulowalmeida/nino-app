@@ -9,5 +9,7 @@ export const CourierService = {
     tenantId: string,
     courierId: string
   ): Promise<{ message: string }> =>
-    api.remove<{ message: string }>(`tenants/${tenantId}/couriers`, courierId),
+    api.remove<{ message: string }>(
+      `tenants/${tenantId}/couriers/${courierId}`
+    ),
 }

@@ -75,7 +75,7 @@ describe('TenantService', () => {
     })
 
     // Assert
-    expect(apiMock.patch).toHaveBeenCalledWith('tenants', 'tenant-1', {
+    expect(apiMock.patch).toHaveBeenCalledWith('tenants/tenant-1', {
       customName: 'Novo nome',
     })
   })
@@ -98,8 +98,7 @@ describe('TenantService', () => {
 
     // Assert
     expect(apiMock.patch).toHaveBeenCalledWith(
-      'tenants',
-      'tenant-1/pause',
+      'tenants/tenant-1/pause',
       { reason: 'Fechado hoje' }
     )
   })
@@ -110,8 +109,7 @@ describe('TenantService', () => {
 
     // Assert
     expect(apiMock.patch).toHaveBeenCalledWith(
-      'tenants',
-      'tenant-1/resume',
+      'tenants/tenant-1/resume',
       {}
     )
   })
@@ -121,7 +119,7 @@ describe('TenantService', () => {
     await TenantService.removeTenant('tenant-1')
 
     // Assert
-    expect(apiMock.remove).toHaveBeenCalledWith('tenants', 'tenant-1')
+    expect(apiMock.remove).toHaveBeenCalledWith('tenants/tenant-1')
   })
 
   it('setMainTenant: patches the main sub-resource with an empty body', async () => {
@@ -129,7 +127,7 @@ describe('TenantService', () => {
     await TenantService.setMainTenant('tenant-1')
 
     // Assert
-    expect(apiMock.patch).toHaveBeenCalledWith('tenants', 'tenant-1/main', {})
+    expect(apiMock.patch).toHaveBeenCalledWith('tenants/tenant-1/main', {})
   })
 
   it('propagates the error when the request fails', async () => {

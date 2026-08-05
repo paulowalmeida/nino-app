@@ -5,7 +5,7 @@ import { OrderRail } from '@elements/OrderRail/OrderRail'
 import { useGuestOrderStatus } from '@hooks/useGuestOrderStatus'
 import { useMinutesUntil } from '@hooks/useMinutesUntil'
 import { clearLastOrder, readLastOrder } from '@utils/last-order'
-import { STATUS_LABEL } from '@utils/order-flow'
+import { STATUS_LABEL } from '@constants/order.constants'
 import { isTerminal, stageIcon } from '@utils/order-journey'
 
 import styles from './ActiveOrderBanner.module.css'

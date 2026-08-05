@@ -29,8 +29,7 @@ export const StaffService = {
     role: TenantRole
   ): Promise<StaffMember> =>
     api.patch<{ role: TenantRole }, StaffMember>(
-      `tenants/${tenantId}/staff/${userId}`,
-      'role',
+      `tenants/${tenantId}/staff/${userId}/role`,
       { role }
     ),
 
@@ -40,8 +39,7 @@ export const StaffService = {
     email: string
   ): Promise<CredentialInfo> =>
     api.patch<UpdateEmailRequest, CredentialInfo>(
-      `tenants/${tenantId}/staff/${userId}`,
-      'email',
+      `tenants/${tenantId}/staff/${userId}/email`,
       { email }
     ),
 
@@ -49,5 +47,5 @@ export const StaffService = {
     tenantId: string,
     userId: string
   ): Promise<{ message: string }> =>
-    api.remove<{ message: string }>(`tenants/${tenantId}/staff`, userId),
+    api.remove<{ message: string }>(`tenants/${tenantId}/staff/${userId}`),
 }

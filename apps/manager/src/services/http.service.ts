@@ -1,78 +1,43 @@
-import type { HttpClient } from '@custom_types/http/http-client'
-import { createHttpClient } from '@lib/http-client'
+import { createHttpClient } from '@nino/lib/lib/http-client'
+import { createApi } from '@nino/lib/services/http.service'
+import { HTTP_ERRORS } from '@constants/http.constants'
+import { endSession } from '@utils/end-session'
+import { hadSession } from '@utils/session-hint'
 
-type ApiFactoryType = {
-  getAll: <
-    ParamsType extends Record<string, string | number | boolean>,
-    ReturnType,
-  >(
-    url: string,
-    params?: ParamsType
-  ) => Promise<ReturnType>
-  get: <ReturnType>(url: string) => Promise<ReturnType>
-  create: <BodyType, ReturnType>(
-    url: string,
-    body?: BodyType
-  ) => Promise<ReturnType>
-  update: <BodyType, ReturnType>(
-    url: string,
-    id: string | number,
-    body: BodyType
-  ) => Promise<ReturnType>
-  patch: <BodyType, ReturnType>(
-    url: string,
-    id: string | number,
-    body: BodyType
-  ) => Promise<ReturnType>
-  remove: <ReturnType>(url: string, id: string | number) => Promise<ReturnType>
-}
+const BASE_URL = import.meta.env.VITE_BASE_URL
 
-const HttpFactory = (
-  client: HttpClient = createHttpClient()
-): ApiFactoryType => {
-  const getAll = <
-    ParamsType extends Record<string, string | number | boolean>,
-    ReturnType,
-  >(
-    url: string,
-    params?: ParamsType
-  ): Promise<ReturnType> =>
-    client.get<ReturnType>(url, { searchParams: params })
+/**
+ * Rotas onde 401 é resposta, não sessão expirada: credencial errada, e-mail já
+ * em uso, token de refresh vencido. Renovar e repetir aqui mascararia o erro
+ * real de quem está na tela.
+ */
+const EXEMPT_PATHS = [
+  'auth/login',
+  'auth/signup',
+  'auth/refresh',
+  'auth/check-availability',
+]
 
-  const get = <ReturnType>(url: string): Promise<ReturnType> =>
-    client.get<ReturnType>(url)
+/**
+ * A sondagem de sessão. Um 401 aqui pode ser das duas coisas — token expirado
+ * (renova e repete, como qualquer rota) ou visitante sem sessão (resposta
+ * legítima) —, então ela renova como as demais mas nunca derruba a sessão:
+ * telas públicas perguntam quem está logado e não podem ser expulsas por isso.
+ */
+const SESSION_PROBE_PATH = 'auth/me'
 
-  const create = <BodyType, ReturnType>(
-    url: string,
-    body?: BodyType
-  ): Promise<ReturnType> => client.post<ReturnType, BodyType>(url, body)
-
-  const update = <BodyType, ReturnType>(
-    url: string,
-    id: string | number,
-    body: BodyType
-  ): Promise<ReturnType> =>
-    client.put<ReturnType, BodyType>(`${url}/${id}`, body)
-
-  const patch = <BodyType, ReturnType>(
-    url: string,
-    id: string | number,
-    body: BodyType
-  ): Promise<ReturnType> =>
-    client.patch<ReturnType, BodyType>(`${url}/${id}`, body)
-
-  const remove = <ReturnType>(
-    url: string,
-    id: string | number
-  ): Promise<ReturnType> => client.delete<ReturnType>(`${url}/${id}`)
-
-  return { getAll, get, create, update, patch, remove }
-}
+const client = createHttpClient({
+  baseUrl: BASE_URL,
+  refreshPath: 'auth/refresh',
+  exemptPaths: EXEMPT_PATHS,
+  sessionProbePath: SESSION_PROBE_PATH,
+  hasPriorSession: hadSession,
+  onUnrecoverable: endSession,
+  httpErrorLabels: HTTP_ERRORS,
+})
 
 /**
  * Instância única, compartilhada por todo domain service — evita cada
- * `*.service.ts` criar seu próprio `HttpClient` (e, com ele, seu próprio
- * client `ky`) por baixo. Testes mockam o módulo inteiro (`vi.mock`) em vez
- * de injetar client — `HttpFactory` não precisa ser exportada pra isso.
+ * `*.service.ts` criar seu próprio client por baixo.
  */
-export const api = HttpFactory()
+export const api = createApi(client)

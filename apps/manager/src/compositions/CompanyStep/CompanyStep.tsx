@@ -10,7 +10,7 @@ import { useCheckAvailability } from '@hooks/auth/useCheckAvailability'
 import { useSignup } from '@hooks/auth/useSignup'
 import type { SignupAccount } from '@custom_types/auth/signup-account'
 import type { SignupCompany } from '@custom_types/auth/signup-company'
-import { ApiError } from '@utils/api-error'
+import { ApiError } from '@nino/lib/utils/api-error'
 import { riseDelay } from '@utils/rise-delay'
 
 import styles from '@styles/authForm.module.css'

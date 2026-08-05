@@ -6,7 +6,7 @@ import { useCustomerSession } from '@hooks/useCustomerSession'
 import { useMyOrders } from '@hooks/useMyOrders'
 import { clockLabel } from '@utils/clock'
 import { brl } from '@utils/money'
-import { STATUS_LABEL } from '@utils/order-flow'
+import { STATUS_LABEL } from '@constants/order.constants'
 import { isTerminal, stageIcon } from '@utils/order-journey'
 import { riseDelay } from '@utils/rise-delay'
 

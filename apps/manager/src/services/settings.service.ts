@@ -19,8 +19,7 @@ export const SettingsService = {
     data: UpdateTenantSettingsRequest
   ): Promise<TenantSettings> =>
     api.update<UpdateTenantSettingsRequest, TenantSettings>(
-      `tenants/${tenantId}`,
-      'settings',
+      `tenants/${tenantId}/settings`,
       data
     ),
 }

@@ -1,9 +1,9 @@
 import { useQuery } from '@tanstack/react-query'
 
+import { menuSections } from '@adapters/menuSections.adapter'
 import { queryKeys } from '@constants/query-keys'
 import type { MenuPage } from '@custom_types/menu/menu-page'
 import { listMenu } from '@services/menu.service'
-import { groupMenu } from '@utils/group-menu'
 
 export const useMenu = (tenantId: string | undefined) => {
   const query = useQuery<MenuPage>({
@@ -12,7 +12,7 @@ export const useMenu = (tenantId: string | undefined) => {
     enabled: !!tenantId,
   })
 
-  const sections = query.data ? groupMenu(query.data.data) : []
+  const sections = query.data ? menuSections(query.data.data) : []
 
   return { ...query, sections }
 }

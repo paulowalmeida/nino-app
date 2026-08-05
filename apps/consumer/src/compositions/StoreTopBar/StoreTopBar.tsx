@@ -7,7 +7,7 @@ import { Input } from '@nino/ds/components/Input'
 import { Button } from '@nino/ds/components/Button'
 import { useCustomerSession } from '@hooks/useCustomerSession'
 import { useLogout } from '@hooks/useLogout'
-import { displayName, initials } from '@utils/store-info'
+import { displayName, storeInitials } from '@utils/store-info'
 import { formatPhone } from '@utils/phone'
 import type { Store } from '@custom_types/store/store'
 
@@ -72,7 +72,7 @@ export const StoreTopBar = ({
               src={store.logoUrl}
               alt=""
               className={styles.logoImg}
-              placeholder={initials(store)}
+              placeholder={storeInitials(store)}
             />
           </span>
           <span className={styles.storeName}>{displayName(store)}</span>

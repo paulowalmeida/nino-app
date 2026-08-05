@@ -7,7 +7,7 @@ import type { MenuSection } from '@custom_types/menu/menu-section'
  * cada item dentro da sua categoria. Item inativo não vai para a vitrine —
  * o cliente só vê o que dá para pedir agora.
  */
-export const groupMenu = (items: MenuItem[]): MenuSection[] => {
+export const menuSections = (items: MenuItem[]): MenuSection[] => {
   const sections: MenuSection[] = []
   const byId = new Map<string, MenuSection>()
 

@@ -26,8 +26,7 @@ export const OpeningHoursService = {
     data: { openTime?: string; closeTime?: string; isOpen?: boolean }
   ): Promise<OpeningHours> =>
     api.patch<typeof data, OpeningHours>(
-      `tenants/${tenantId}/opening-hours`,
-      id,
+      `tenants/${tenantId}/opening-hours/${id}`,
       data
     ),
 
@@ -35,5 +34,7 @@ export const OpeningHoursService = {
     tenantId: string,
     id: string
   ): Promise<{ message: string }> =>
-    api.remove<{ message: string }>(`tenants/${tenantId}/opening-hours`, id),
+    api.remove<{ message: string }>(
+      `tenants/${tenantId}/opening-hours/${id}`
+    ),
 }

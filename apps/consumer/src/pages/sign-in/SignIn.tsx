@@ -14,7 +14,7 @@ import { useVerifyOtp } from '@hooks/useVerifyOtp'
 import { isCompletePhone, toE164 } from '@utils/phone'
 import { resolveSlug } from '@utils/resolve-slug'
 import { riseDelay } from '@utils/rise-delay'
-import { displayName, initials } from '@utils/store-info'
+import { displayName, storeInitials } from '@utils/store-info'
 
 import styles from './SignIn.module.css'
 import motion from '@styles/motion.module.css'
@@ -111,7 +111,7 @@ export const SignIn = () => {
               {store.logoUrl ? (
                 <img src={store.logoUrl} alt="" className={styles.logo} />
               ) : (
-                initials(store)
+                storeInitials(store)
               )}
             </div>
             <p className={styles.store}>{displayName(store)}</p>

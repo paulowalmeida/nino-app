@@ -113,8 +113,7 @@ describe('ProductService', () => {
 
     // Assert
     expect(apiMock.patch).toHaveBeenCalledWith(
-      'tenants/tenant-1/products',
-      'item-1',
+      'tenants/tenant-1/products/item-1',
       { isActive: false }
     )
   })
@@ -132,8 +131,7 @@ describe('ProductService', () => {
 
     // Assert
     expect(apiMock.patch).toHaveBeenCalledWith(
-      'tenants/tenant-1/products',
-      'item-1',
+      'tenants/tenant-1/products/item-1',
       { position: 3 }
     )
     expect(result).toEqual({ id: 'item-1', position: 3 })
@@ -154,8 +152,7 @@ describe('ProductService', () => {
 
     // Assert
     expect(apiMock.patch).toHaveBeenCalledWith(
-      'tenants/tenant-1/products',
-      'item-1',
+      'tenants/tenant-1/products/item-1',
       data
     )
   })
@@ -225,8 +222,7 @@ describe('ProductService', () => {
 
     // Assert
     expect(apiMock.remove).toHaveBeenCalledWith(
-      'tenants/tenant-1/products',
-      'item-1'
+      'tenants/tenant-1/products/item-1'
     )
   })
 
@@ -236,8 +232,7 @@ describe('ProductService', () => {
 
     // Assert
     expect(apiMock.remove).toHaveBeenCalledWith(
-      'tenants/tenant-1/products/item-1/images',
-      'image-1'
+      'tenants/tenant-1/products/item-1/images/image-1'
     )
   })
 

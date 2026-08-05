@@ -2,7 +2,7 @@ import { useRef, useState } from 'react'
 
 import { FormField } from '@nino/ds/components/FormField'
 import { Input } from '@nino/ds/components/Input'
-import { lookupZipCode, onlyDigits } from '@nino/lib/services/zip-code'
+import { lookupZipCode, onlyDigits } from '@nino/lib/services/zip-code.service'
 
 import styles from './AddressFields.module.css'
 

@@ -21,7 +21,7 @@ import { useUpdateCategory } from '@hooks/product/useUpdateCategory'
 import { useCurrentTenant } from '@hooks/session/useCurrentTenant'
 import type { CategoryWithCount } from '@custom_types/product/category-with-count'
 import { CATEGORIES_GHOST_ROWS } from '@constants/product.constants'
-import { ApiError } from '@utils/api-error'
+import { ApiError } from '@nino/lib/utils/api-error'
 import { riseDelay } from '@utils/rise-delay'
 
 import styles from './Categories.module.css'

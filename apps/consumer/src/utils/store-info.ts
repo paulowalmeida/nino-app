@@ -19,7 +19,7 @@ export const isOpen = (store: Store, hours: PublicOpeningHours[]): boolean =>
   (hours.length === 0 || isStoreOpen(hours, store.timezone))
 
 /** Duas iniciais para o logo-fallback quando a loja não subiu imagem. */
-export const initials = (store: Store): string =>
+export const storeInitials = (store: Store): string =>
   displayName(store)
     .split(' ')
     .slice(0, 2)

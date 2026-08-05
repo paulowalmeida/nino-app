@@ -4,7 +4,7 @@ import { MemoryRouter } from 'react-router'
 import { describe, expect, it, vi } from 'vitest'
 
 import { useLogin } from '@hooks/auth/useLogin'
-import { ApiError } from '@utils/api-error'
+import { ApiError } from '@nino/lib/utils/api-error'
 
 import { LoginForm } from '@components/LoginForm/LoginForm'
 

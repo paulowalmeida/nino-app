@@ -4,7 +4,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
 import { FirstStoreForm } from '@compositions/FirstStoreForm/FirstStoreForm'
 import type { FirstStoreFormValues } from '@custom_types/store/first-store-form-values'
-import { ApiError } from '@utils/api-error'
+import { ApiError } from '@nino/lib/utils/api-error'
 
 import { storeTypes } from './FirstStoreForm.mock'
 

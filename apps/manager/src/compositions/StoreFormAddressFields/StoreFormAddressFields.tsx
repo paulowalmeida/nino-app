@@ -10,7 +10,7 @@ import { FormField } from '@nino/ds/components/FormField'
 import { Input } from '@nino/ds/components/Input'
 import { MaskedInput } from '@nino/ds/components/MaskedInput'
 import { maskZipCode } from '@nino/ds/masks'
-import { lookupZipCode, onlyDigits } from '@nino/lib/services/zip-code'
+import { lookupZipCode, onlyDigits } from '@nino/lib/services/zip-code.service'
 import type { FirstStoreFormValues } from '@custom_types/store/first-store-form-values'
 import { riseDelay } from '@utils/rise-delay'
 

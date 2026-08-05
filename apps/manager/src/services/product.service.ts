@@ -7,12 +7,6 @@ import { api } from '@services/http.service'
 
 const PAGE_SIZE = 100
 
-type MenuParams = {
-  target: string
-  size: number
-  page: number
-}
-
 type ProductListParams = {
   page: number
   size: number
@@ -21,7 +15,7 @@ type ProductListParams = {
 }
 
 const fetchPage = (tenantId: string, page: number): Promise<MenuPage> =>
-  api.getAll<MenuParams, MenuPage>(`tenants/${tenantId}/products`, {
+  api.getAll<MenuPage>(`tenants/${tenantId}/products`, {
     target: 'position',
     size: PAGE_SIZE,
     page,
@@ -53,10 +47,7 @@ export const ProductService = {
     if (categoryId) params['categoryId'] = categoryId
     if (search) params['search'] = search
 
-    return api.getAll<Record<string, string | number>, MenuPage>(
-      `tenants/${tenantId}/products`,
-      params
-    )
+    return api.getAll<MenuPage>(`tenants/${tenantId}/products`, params)
   },
 
   createItem: (
@@ -74,8 +65,7 @@ export const ProductService = {
     isActive: boolean
   ): Promise<MenuItem> =>
     api.patch<{ isActive: boolean }, MenuItem>(
-      `tenants/${tenantId}/products`,
-      id,
+      `tenants/${tenantId}/products/${id}`,
       { isActive }
     ),
 
@@ -85,8 +75,7 @@ export const ProductService = {
     position: number
   ): Promise<MenuItem> =>
     api.patch<{ position: number }, MenuItem>(
-      `tenants/${tenantId}/products`,
-      id,
+      `tenants/${tenantId}/products/${id}`,
       { position }
     ),
 
@@ -96,8 +85,7 @@ export const ProductService = {
     data: UpdateMenuItemRequest
   ): Promise<MenuItem> =>
     api.patch<UpdateMenuItemRequest, MenuItem>(
-      `tenants/${tenantId}/products`,
-      id,
+      `tenants/${tenantId}/products/${id}`,
       data
     ),
 
@@ -126,7 +114,7 @@ export const ProductService = {
   },
 
   removeItem: (tenantId: string, id: string): Promise<{ message: string }> =>
-    api.remove<{ message: string }>(`tenants/${tenantId}/products`, id),
+    api.remove<{ message: string }>(`tenants/${tenantId}/products/${id}`),
 
   removeItemImage: (
     tenantId: string,
@@ -134,7 +122,6 @@ export const ProductService = {
     imageId: string
   ): Promise<{ message: string }> =>
     api.remove<{ message: string }>(
-      `tenants/${tenantId}/products/${productId}/images`,
-      imageId
+      `tenants/${tenantId}/products/${productId}/images/${imageId}`
     ),
 }

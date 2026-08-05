@@ -17,11 +17,10 @@ export const PhoneService = {
     phone: string
   ): Promise<TenantPhone> =>
     api.patch<{ phone: string }, TenantPhone>(
-      `tenants/${tenantId}/phones`,
-      id,
+      `tenants/${tenantId}/phones/${id}`,
       { phone }
     ),
 
   removePhone: (tenantId: string, id: string): Promise<{ message: string }> =>
-    api.remove<{ message: string }>(`tenants/${tenantId}/phones`, id),
+    api.remove<{ message: string }>(`tenants/${tenantId}/phones/${id}`),
 }

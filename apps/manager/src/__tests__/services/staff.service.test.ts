@@ -60,8 +60,7 @@ describe('StaffService', () => {
 
     // Assert
     expect(apiMock.patch).toHaveBeenCalledWith(
-      'tenants/tenant-1/staff/user-1',
-      'role',
+      'tenants/tenant-1/staff/user-1/role',
       { role: 'MANAGER' }
     )
   })
@@ -76,8 +75,7 @@ describe('StaffService', () => {
 
     // Assert
     expect(apiMock.patch).toHaveBeenCalledWith(
-      'tenants/tenant-1/staff/user-1',
-      'email',
+      'tenants/tenant-1/staff/user-1/email',
       { email: 'novo@nino.delivery' }
     )
   })
@@ -88,8 +86,7 @@ describe('StaffService', () => {
 
     // Assert
     expect(apiMock.remove).toHaveBeenCalledWith(
-      'tenants/tenant-1/staff',
-      'user-1'
+      'tenants/tenant-1/staff/user-1'
     )
   })
 

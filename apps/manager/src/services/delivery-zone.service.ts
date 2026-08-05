@@ -21,8 +21,7 @@ export const DeliveryZoneService = {
     data: { name?: string; fee?: number; isActive?: boolean }
   ): Promise<DeliveryZone> =>
     api.patch<typeof data, DeliveryZone>(
-      `tenants/${tenantId}/delivery-zones`,
-      id,
+      `tenants/${tenantId}/delivery-zones/${id}`,
       data
     ),
 
@@ -30,5 +29,7 @@ export const DeliveryZoneService = {
     tenantId: string,
     id: string
   ): Promise<{ message: string }> =>
-    api.remove<{ message: string }>(`tenants/${tenantId}/delivery-zones`, id),
+    api.remove<{ message: string }>(
+      `tenants/${tenantId}/delivery-zones/${id}`
+    ),
 }

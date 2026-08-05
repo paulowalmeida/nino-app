@@ -1,22 +1,22 @@
 import { describe, expect, it, vi } from 'vitest'
 
-const client = vi.hoisted(() => ({
+import { createApi } from '../../services/http.service'
+
+const buildClient = () => ({
   get: vi.fn().mockResolvedValue({ ok: true }),
   post: vi.fn().mockResolvedValue({ ok: true }),
   put: vi.fn().mockResolvedValue({ ok: true }),
   patch: vi.fn().mockResolvedValue({ ok: true }),
   delete: vi.fn().mockResolvedValue({ ok: true }),
-}))
+})
 
-vi.mock('@lib/http-client', () => ({
-  createHttpClient: () => client,
-}))
-
-const { api } = await import('@services/http.service')
-
-describe('http.service', () => {
+describe('createApi', () => {
   it('get: forwards the url to client.get', async () => {
-    // Arrange / Act
+    // Arrange
+    const client = buildClient()
+    const api = createApi(client)
+
+    // Act
     await api.get('tenants/1')
 
     // Assert
@@ -24,7 +24,11 @@ describe('http.service', () => {
   })
 
   it('getAll: forwards params as searchParams', async () => {
-    // Arrange / Act
+    // Arrange
+    const client = buildClient()
+    const api = createApi(client)
+
+    // Act
     await api.getAll('tenants/1/orders', { page: 1 })
 
     // Assert
@@ -34,7 +38,11 @@ describe('http.service', () => {
   })
 
   it('create: forwards the body to client.post as-is', async () => {
-    // Arrange / Act
+    // Arrange
+    const client = buildClient()
+    const api = createApi(client)
+
+    // Act
     await api.create('tenants/1/orders', { total: 10 })
 
     // Assert
@@ -43,9 +51,13 @@ describe('http.service', () => {
     })
   })
 
-  it('update: appends the id to the url and forwards the body to client.put', async () => {
-    // Arrange / Act
-    await api.update('tenants', '1', { name: 'Novo nome' })
+  it('update: forwards the url as-is and the body to client.put', async () => {
+    // Arrange
+    const client = buildClient()
+    const api = createApi(client)
+
+    // Act
+    await api.update('tenants/1', { name: 'Novo nome' })
 
     // Assert
     expect(client.put).toHaveBeenCalledWith('tenants/1', {
@@ -53,9 +65,13 @@ describe('http.service', () => {
     })
   })
 
-  it('patch: appends the id to the url and forwards the body to client.patch', async () => {
-    // Arrange / Act
-    await api.patch('tenants/1/staff', 'user-1', { role: 'STAFF' })
+  it('patch: forwards the url as-is and the body to client.patch', async () => {
+    // Arrange
+    const client = buildClient()
+    const api = createApi(client)
+
+    // Act
+    await api.patch('tenants/1/staff/user-1', { role: 'STAFF' })
 
     // Assert
     expect(client.patch).toHaveBeenCalledWith('tenants/1/staff/user-1', {
@@ -63,9 +79,13 @@ describe('http.service', () => {
     })
   })
 
-  it('remove: appends the id to the url and calls client.delete', async () => {
-    // Arrange / Act
-    await api.remove('tenants/1/staff', 'user-1')
+  it('remove: forwards the url as-is to client.delete', async () => {
+    // Arrange
+    const client = buildClient()
+    const api = createApi(client)
+
+    // Act
+    await api.remove('tenants/1/staff/user-1')
 
     // Assert
     expect(client.delete).toHaveBeenCalledWith('tenants/1/staff/user-1')
@@ -73,7 +93,9 @@ describe('http.service', () => {
 
   it('resolves with whatever the underlying client resolves', async () => {
     // Arrange
+    const client = buildClient()
     client.get.mockResolvedValueOnce({ id: 'order-1' })
+    const api = createApi(client)
 
     // Act
     const result = await api.get('tenants/1/orders/order-1')
@@ -84,7 +106,9 @@ describe('http.service', () => {
 
   it('rejects when the underlying client rejects', async () => {
     // Arrange
+    const client = buildClient()
     client.get.mockRejectedValueOnce(new Error('network error'))
+    const api = createApi(client)
 
     // Act / Assert
     await expect(api.get('tenants/1')).rejects.toThrow('network error')

@@ -44,8 +44,7 @@ describe('SettingsService', () => {
 
     // Assert
     expect(apiMock.update).toHaveBeenCalledWith(
-      'tenants/tenant-1',
-      'settings',
+      'tenants/tenant-1/settings',
       data
     )
     expect(result).toEqual({ id: 'settings-1', ...data })

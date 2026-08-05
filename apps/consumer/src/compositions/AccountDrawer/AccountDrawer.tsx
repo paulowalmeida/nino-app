@@ -9,7 +9,7 @@ import { useLogout } from '@hooks/useLogout'
 import { useMyAddresses } from '@hooks/useMyAddresses'
 import { useMyOrders } from '@hooks/useMyOrders'
 import { useStoreTint } from '@hooks/useStoreTint'
-import { firstName, initials } from '@utils/customer-name'
+import { customerInitials, firstName } from '@utils/customer-name'
 import { greeting } from '@utils/greeting'
 import { riseDelay } from '@utils/rise-delay'
 
@@ -69,7 +69,7 @@ export const AccountDrawer = ({
      como se chama, a saudação vai sozinha e o azulejo fica sem iniciais */
   const named = customer?.profileCompletedAt ? customer.name : null
   const name = firstName(named)
-  const mark = initials(named)
+  const mark = customerInitials(named)
 
   const ready = ACCOUNT_SECTIONS.filter((section) => !section.soon)
   const soon = ACCOUNT_SECTIONS.filter((section) => section.soon)

@@ -3,19 +3,12 @@ import type { CustomerHistoryPage } from '@custom_types/customer/customer-histor
 import type { CustomerPage } from '@custom_types/customer/customer-page'
 import { api } from '@services/http.service'
 
-type CustomerListParams = {
-  target: string
-  direction: string
-  size: number
-  page: number
-}
-
 export const CUSTOMER_PAGE_SIZE = 30
 export const HISTORY_PAGE_SIZE = 15
 
 export const CustomerService = {
   listCustomers: (tenantId: string, page: number): Promise<CustomerPage> =>
-    api.getAll<CustomerListParams, CustomerPage>(
+    api.getAll<CustomerPage>(
       `tenants/${tenantId}/customers`,
       {
         target: 'createdAt',
@@ -30,7 +23,7 @@ export const CustomerService = {
     customerId: string,
     page: number
   ): Promise<CustomerHistoryPage> =>
-    api.getAll<CustomerListParams, CustomerHistoryPage>(
+    api.getAll<CustomerHistoryPage>(
       `tenants/${tenantId}/customers/${customerId}/orders`,
       {
         target: 'createdAt',

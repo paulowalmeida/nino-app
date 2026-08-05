@@ -19,8 +19,7 @@ export const CategoryService = {
     position: number
   ): Promise<ProductCategory> =>
     api.patch<{ position: number }, ProductCategory>(
-      `tenants/${tenantId}/product-categories`,
-      id,
+      `tenants/${tenantId}/product-categories/${id}`,
       { position }
     ),
 
@@ -30,8 +29,7 @@ export const CategoryService = {
     name: string
   ): Promise<ProductCategory> =>
     api.patch<{ name: string }, ProductCategory>(
-      `tenants/${tenantId}/product-categories`,
-      id,
+      `tenants/${tenantId}/product-categories/${id}`,
       { name }
     ),
 
@@ -40,7 +38,6 @@ export const CategoryService = {
     id: string
   ): Promise<{ message: string }> =>
     api.remove<{ message: string }>(
-      `tenants/${tenantId}/product-categories`,
-      id
+      `tenants/${tenantId}/product-categories/${id}`
     ),
 }

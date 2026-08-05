@@ -50,8 +50,7 @@ describe('DeliveryZoneService', () => {
 
     // Assert
     expect(apiMock.patch).toHaveBeenCalledWith(
-      'tenants/tenant-1/delivery-zones',
-      'zone-1',
+      'tenants/tenant-1/delivery-zones/zone-1',
       { isActive: false }
     )
   })
@@ -62,8 +61,7 @@ describe('DeliveryZoneService', () => {
 
     // Assert
     expect(apiMock.remove).toHaveBeenCalledWith(
-      'tenants/tenant-1/delivery-zones',
-      'zone-1'
+      'tenants/tenant-1/delivery-zones/zone-1'
     )
   })
 

@@ -24,7 +24,7 @@ describe('CompanyService', () => {
     await CompanyService.updateMyCompany({ name: 'Novo nome' })
 
     // Assert
-    expect(apiMock.patch).toHaveBeenCalledWith('my', 'company', {
+    expect(apiMock.patch).toHaveBeenCalledWith('my/company', {
       name: 'Novo nome',
     })
   })

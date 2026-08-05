@@ -1,31 +1,31 @@
-import type { HttpClient } from '@custom_types/http/http-client'
-import type { HttpSearchParams } from '@custom_types/http/http-client'
-import { createHttpClient } from '@lib/http-client'
+import { createHttpClient } from '@nino/lib/lib/http-client'
+import { createApi } from '@nino/lib/services/http.service'
+import { HTTP_ERRORS } from '@constants/http.constants'
+import { hadSession } from '@utils/session-hint'
 
-const HttpFactory = (client: HttpClient = createHttpClient()) => ({
-  get: <ReturnType>(url: string): Promise<ReturnType> => client.get(url),
+const BASE_URL = import.meta.env.VITE_BASE_URL as string
 
-  getWith: <ReturnType>(
-    url: string,
-    searchParams: HttpSearchParams
-  ): Promise<ReturnType> => client.get(url, { searchParams }),
+/**
+ * Rotas onde 401 é credencial errada, não sessão vencida — renovar e repetir
+ * ali esconderia o erro real de quem digitou o código trocado.
+ */
+const EXEMPT_PATHS = [
+  'customer/auth/otp/request',
+  'customer/auth/otp/verify',
+  'customer/auth/refresh',
+  'customer/auth/logout',
+]
 
-  post: <BodyType, ReturnType>(
-    url: string,
-    body: BodyType
-  ): Promise<ReturnType> => client.post(url, body),
-
-  patch: <BodyType, ReturnType>(
-    url: string,
-    body: BodyType
-  ): Promise<ReturnType> => client.patch(url, body),
-
-  remove: <ReturnType>(url: string): Promise<ReturnType> => client.delete(url),
+const client = createHttpClient({
+  baseUrl: BASE_URL,
+  refreshPath: 'customer/auth/refresh',
+  exemptPaths: EXEMPT_PATHS,
+  hasPriorSession: hadSession,
+  httpErrorLabels: HTTP_ERRORS,
 })
 
 /**
  * Instância única, compartilhada por todo domain service — evita cada
- * `*.service.ts` criar seu próprio `HttpClient` (e, com ele, seu próprio
- * client `ky`) por baixo.
+ * `*.service.ts` criar seu próprio client por baixo.
  */
-export const api = HttpFactory()
+export const api = createApi(client)

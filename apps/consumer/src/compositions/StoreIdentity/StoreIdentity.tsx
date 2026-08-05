@@ -1,5 +1,5 @@
 import { Image } from '@nino/ds/components/Image'
-import { displayName, initials } from '@utils/store-info'
+import { displayName, storeInitials } from '@utils/store-info'
 import { riseDelay } from '@utils/rise-delay'
 import type { Store } from '@custom_types/store/store'
 
@@ -33,7 +33,7 @@ export const StoreIdentity = ({
         alt=""
         className={styles.logoImg}
         placeholder={
-          <span className={styles.logoFallback}>{initials(store)}</span>
+          <span className={styles.logoFallback}>{storeInitials(store)}</span>
         }
       />
     </div>

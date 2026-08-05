@@ -9,10 +9,10 @@ export const AccountService = {
   getProfile: (): Promise<Profile> => api.get<Profile>('my/profile'),
 
   updateProfile: (data: UpdateProfileRequest): Promise<Profile> =>
-    api.patch<UpdateProfileRequest, Profile>('my', 'profile', data),
+    api.patch<UpdateProfileRequest, Profile>('my/profile', data),
 
   updateMyEmail: (email: string): Promise<CredentialInfo> =>
-    api.patch<UpdateEmailRequest, CredentialInfo>('my/profile', 'email', {
+    api.patch<UpdateEmailRequest, CredentialInfo>('my/profile/email', {
       email,
     }),
 
