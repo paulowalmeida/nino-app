@@ -14,8 +14,9 @@
 
 /* o número é o alvo de edição — clicar nele abre a linha */
 .number {
-  @apply min-w-0 flex-1 cursor-pointer text-left text-sm font-semibold;
-  @apply text-body transition-colors duration-150 hover:text-brand-strong;
+  @apply min-w-0 flex-1 justify-start rounded-none bg-transparent p-0;
+  @apply text-left text-sm font-semibold text-body hover:bg-transparent;
+  @apply hover:text-brand-strong;
   font-variant-numeric: tabular-nums;
 
   @media (pointer: coarse) {

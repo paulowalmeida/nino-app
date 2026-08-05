@@ -33,22 +33,17 @@ export const StoreSelection = () => {
           {companies.map(({ companyId, companyName, units }, index) => (
             <Card
               key={companyId}
-              asChild
               variant="flat"
+              onClick={handleSelect(units)}
+              style={riseDelay(index * 80 + 100)}
               className={`${motion.settle} ${motion.lift} ${styles.store}`}
             >
-              <button
-                type="button"
-                onClick={handleSelect(units)}
-                style={riseDelay(index * 80 + 100)}
-              >
-                <span className={styles.storeName}>{companyName}</span>
-                <span className={styles.storeUnit}>
-                  {units.length > 1
-                    ? unitLabel(units.length)
-                    : units[0].tenantName}
-                </span>
-              </button>
+              <span className={styles.storeName}>{companyName}</span>
+              <span className={styles.storeUnit}>
+                {units.length > 1
+                  ? unitLabel(units.length)
+                  : units[0].tenantName}
+              </span>
             </Card>
           ))}
         </div>

@@ -1,6 +1,7 @@
 import { useState } from 'react'
 
 import { Button } from '@nino/ds/components/Button'
+import { Chip } from '@nino/ds/components/Chip'
 import { Input } from '@nino/ds/components/Input'
 import { Skeleton } from '@nino/ds/components/Skeleton'
 import { Switch } from '@nino/ds/components/Switch'
@@ -161,11 +162,11 @@ export const ServiceRules = ({
         <p className={styles.groupTitle}>Formas de pagamento aceitas</p>
         <div className={local.chips}>
           {METHODS.map((method) => (
-            <button
+            <Chip
               key={method}
-              type="button"
+              variant="toggle"
+              selected={draft.acceptedPaymentMethods.includes(method)}
               onClick={() => toggleMethod(method)}
-              aria-pressed={draft.acceptedPaymentMethods.includes(method)}
               className={`${motion.press} ${local.chip} ${
                 draft.acceptedPaymentMethods.includes(method)
                   ? local.chipOn
@@ -173,7 +174,7 @@ export const ServiceRules = ({
               }`}
             >
               {PAYMENT_METHOD_LABEL[method]}
-            </button>
+            </Chip>
           ))}
         </div>
       </div>

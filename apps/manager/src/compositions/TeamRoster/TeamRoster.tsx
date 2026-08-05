@@ -1,6 +1,7 @@
 import { Link } from 'react-router'
 
 import { Badge } from '@nino/ds/components/Badge'
+import { Button } from '@nino/ds/components/Button'
 import { Menu, type MenuItem } from '@nino/ds/components/Menu'
 import { EmptyState } from '@nino/ds/components/EmptyState'
 import { Skeleton } from '@nino/ds/components/Skeleton'
@@ -210,14 +211,15 @@ export const TeamRoster = ({
                   <Menu
                     contentClassName={styles.menuPanel}
                     trigger={
-                      <button
-                        type="button"
+                      <Button
+                        variant="ghost"
+                        size="icon"
                         className={styles.kebab}
                         disabled={isBusy}
                         aria-label={`Ações para ${entry.name}`}
                       >
                         <Icon name="kebab" />
-                      </button>
+                      </Button>
                     }
                     items={items}
                   />

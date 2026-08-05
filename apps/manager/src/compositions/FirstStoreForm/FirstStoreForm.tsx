@@ -8,29 +8,17 @@ import { useStoreTypes } from '@hooks/store/useStoreTypes'
 import { Alert } from '@nino/ds/components/Alert'
 import { Button } from '@nino/ds/components/Button'
 import { onlyDigits } from '@nino/lib/services/zip-code'
+import type { FirstStoreFormValues } from '@custom_types/store/first-store-form-values'
 import { ApiError } from '@utils/api-error'
 import { clearDraft, readDraft, writeDraft } from '@utils/form-draft'
 import { riseDelay } from '@utils/rise-delay'
 import { slugify } from '@utils/slugify'
 
-import { StoreAddressFields } from './StoreAddressFields/StoreAddressFields'
-import { StoreDetailsFields } from './StoreDetailsFields/StoreDetailsFields'
+import { StoreFormAddressFields } from '../StoreFormAddressFields/StoreFormAddressFields'
+import { StoreFormDetailsFields } from '../StoreFormDetailsFields/StoreFormDetailsFields'
 
 import styles from './FirstStoreForm.module.css'
 import motion from '@styles/rise.module.css'
-
-export type FirstStoreFormValues = {
-  customName: string
-  slug: string
-  typeId: string
-  zipCode: string
-  street: string
-  number: string
-  complement: string
-  neighborhood: string
-  city: string
-  state: string
-}
 
 type FirstStoreFormProps = {
   onChange?: (values: Partial<FirstStoreFormValues>) => void
@@ -124,7 +112,7 @@ export const FirstStoreForm = ({
         </p>
       )}
 
-      <StoreDetailsFields
+      <StoreFormDetailsFields
         register={register}
         errors={errors}
         control={control}
@@ -133,12 +121,14 @@ export const FirstStoreForm = ({
         typeOptions={typeOptions}
       />
 
-      <StoreAddressFields
-        register={register}
-        errors={errors}
-        setValue={setValue}
-        setError={setError}
-      />
+      <div className={styles.addressGroup}>
+        <StoreFormAddressFields
+          register={register}
+          errors={errors}
+          setValue={setValue}
+          setError={setError}
+        />
+      </div>
 
       {errors.root && (
         <div className={styles.error}>

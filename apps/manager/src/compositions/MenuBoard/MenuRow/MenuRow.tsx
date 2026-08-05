@@ -75,14 +75,15 @@ export const MenuRow = ({
       style={isEntering ? riseDelay(entranceDelay(index)) : {}}
     >
       {canReorder && (
-        <button
-          type="button"
+        <Button
+          variant="ghost"
+          size="icon"
           className={styles.dragHandle}
           aria-label={`Reordenar ${item.name}`}
           onPointerDown={(event) => dragControls.start(event)}
         >
           <Icon name="grip" />
-        </button>
+        </Button>
       )}
 
       <Link to={item.id} className={styles.itemLink}>

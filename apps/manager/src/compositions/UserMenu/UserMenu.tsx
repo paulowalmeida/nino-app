@@ -1,5 +1,6 @@
 import { useNavigate } from 'react-router'
 
+import { Button } from '@nino/ds/components/Button'
 import { Menu } from '@nino/ds/components/Menu'
 import { Icon } from '@nino/ds/components/Icon'
 import { PersonMark } from '@components/PersonMark/PersonMark'
@@ -37,7 +38,7 @@ export const UserMenu = ({
     <Menu
       contentClassName={styles.panel}
       trigger={
-        <button type="button" className={styles.trigger}>
+        <Button variant="ghost" className={styles.trigger}>
           <PersonMark name={name} tone="night" size="sm" />
           {!collapsed && (
             <>
@@ -45,7 +46,7 @@ export const UserMenu = ({
               <Icon name="settings" className={styles.icon} />
             </>
           )}
-        </button>
+        </Button>
       }
       items={[
         {

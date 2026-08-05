@@ -100,13 +100,13 @@ export const PhoneList = ({
                 </div>
               ) : (
                 <>
-                  <button
-                    type="button"
+                  <Button
+                    variant="ghost"
                     className={local.number}
                     onClick={() => startEdit(entry)}
                   >
                     {formatPhone(entry.phone)}
-                  </button>
+                  </Button>
                   <Button
                     variant="ghost"
                     size="sm"

@@ -5,6 +5,7 @@ import { NinoLogo } from '@elements/NinoLogo/NinoLogo'
 import { SidebarNavItem } from '@components/SidebarNavItem/SidebarNavItem'
 import { useQueueSummary } from '@hooks/order/useQueueSummary'
 import { useTenantRole } from '@hooks/session/useTenantRole'
+import { Button } from '@nino/ds/components/Button'
 import { Icon } from '@nino/ds/components/Icon'
 import { ScrollArea } from '@nino/ds/components/ScrollArea'
 import { useSessionStore } from '@states/useSessionStore'
@@ -67,14 +68,15 @@ export const Sidebar = ({
           to={`/${tenantId}/visao-geral`}
           hideWordmark={isCollapsed}
         />
-        <button
-          type="button"
+        <Button
+          variant="ghost"
+          size="icon"
           className={styles.collapseBtn}
           onClick={onToggleCollapse}
           aria-label={collapsed ? 'Expandir menu' : 'Recolher menu'}
         >
           <Icon name="chevron-down" className={styles.collapseIcon} />
-        </button>
+        </Button>
       </div>
 
       <div className={styles.switcherWrap}>

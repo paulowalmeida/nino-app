@@ -1,5 +1,6 @@
 import { useLocation, useNavigate } from 'react-router'
 
+import { Button } from '@nino/ds/components/Button'
 import { Menu, type MenuItem } from '@nino/ds/components/Menu'
 import { Icon } from '@nino/ds/components/Icon'
 import { useCompanyGroups } from '@hooks/session/useCompanyGroups'
@@ -77,8 +78,8 @@ export const StoreSwitcher = ({
     <div className={styles.wrap}>
       <Menu
         trigger={
-          <button
-            type="button"
+          <Button
+            variant="ghost"
             className={`${motion.press} ${styles.trigger}`}
           >
             <Icon name="store" className={styles.storeIcon} />
@@ -95,7 +96,7 @@ export const StoreSwitcher = ({
                 <span className={styles.caret} aria-hidden="true" />
               </>
             )}
-          </button>
+          </Button>
         }
         items={items}
         contentClassName={styles.panel}

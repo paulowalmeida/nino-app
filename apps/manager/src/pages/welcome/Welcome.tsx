@@ -141,13 +141,13 @@ export const Welcome = () => {
 
         <div className={styles.foot}>
           {index > 0 && (
-            <button
-              type="button"
+            <Button
+              variant="ghost"
               className={styles.back}
               onClick={() => setIndex((current) => current - 1)}
             >
               Voltar
-            </button>
+            </Button>
           )}
 
           <div className={styles.progress} aria-hidden="true">

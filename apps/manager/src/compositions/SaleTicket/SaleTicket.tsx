@@ -2,6 +2,7 @@ import { useState } from 'react'
 
 import { Alert } from '@nino/ds/components/Alert'
 import { Button } from '@nino/ds/components/Button'
+import { Chip } from '@nino/ds/components/Chip'
 import { ScrollArea } from '@nino/ds/components/ScrollArea'
 import { Dialog } from '@nino/ds/components/Dialog'
 import { EmptyState } from '@nino/ds/components/EmptyState'
@@ -188,17 +189,17 @@ export const SaleTicket = ({
 
             <div className={styles.choices}>
               {methods.map((value) => (
-                <button
+                <Chip
                   key={value}
-                  type="button"
-                  aria-pressed={method === value}
+                  variant="toggle"
+                  selected={method === value}
                   onClick={() => onMethod(value)}
                   className={`${motion.press} ${styles.choice} ${
                     method === value ? styles.choiceOn : ''
                   }`}
                 >
                   {paymentLabelFor(value, 'COUNTER')}
-                </button>
+                </Chip>
               ))}
             </div>
           </div>

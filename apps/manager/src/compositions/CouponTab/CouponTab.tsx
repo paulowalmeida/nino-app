@@ -1,3 +1,4 @@
+import { Button } from '@nino/ds/components/Button'
 import { Icon } from '@nino/ds/components/Icon'
 import { brl } from '@utils/money'
 
@@ -10,7 +11,7 @@ type CouponTabProps = {
 }
 
 export const CouponTab = ({ count, total, onOpen }: CouponTabProps) => (
-  <button type="button" className={styles.tab} onClick={onOpen}>
+  <Button variant="ghost" className={styles.tab} onClick={onOpen}>
     <span className={styles.perforation} aria-hidden="true" />
 
     <span className={styles.body}>
@@ -22,5 +23,5 @@ export const CouponTab = ({ count, total, onOpen }: CouponTabProps) => (
         <Icon name="chevron-up" />
       </span>
     </span>
-  </button>
+  </Button>
 )

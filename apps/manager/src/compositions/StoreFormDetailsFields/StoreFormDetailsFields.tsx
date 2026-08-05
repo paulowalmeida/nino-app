@@ -11,12 +11,11 @@ import { useCheckSlugAvailable } from '@hooks/store/useCheckSlugAvailable'
 import { FormField } from '@nino/ds/components/FormField'
 import { Input } from '@nino/ds/components/Input'
 import { Select } from '@nino/ds/components/Select'
+import type { FirstStoreFormValues } from '@custom_types/store/first-store-form-values'
 import { riseDelay } from '@utils/rise-delay'
 import { slugify } from '@utils/slugify'
 
-import type { FirstStoreFormValues } from '../FirstStoreForm'
-
-import styles from '../FirstStoreForm.module.css'
+import styles from './StoreFormDetailsFields.module.css'
 import motion from '@styles/rise.module.css'
 
 export type StoreDetailsFieldsProps = {
@@ -28,7 +27,7 @@ export type StoreDetailsFieldsProps = {
   typeOptions: { value: string; label: string }[]
 }
 
-export const StoreDetailsFields = ({
+export const StoreFormDetailsFields = ({
   register,
   errors,
   control,

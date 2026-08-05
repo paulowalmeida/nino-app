@@ -9,19 +9,10 @@
   display: none;
 }
 
-/* `min-h-11` é o piso de toque de 44px do celular */
+/* `min-h-11` é o piso de toque de 44px do celular; a aparência da pílula em
+   si (borda, cor, estado selecionado) é toda do Chip do DS */
 .chip {
-  @apply flex min-h-11 shrink-0 cursor-pointer snap-start items-center;
-  @apply rounded-full border border-sand bg-brand-foreground px-4 py-2;
-  @apply text-sm font-semibold text-subtle;
-  @apply transition-colors duration-200;
-  @apply hover:border-brand/30 hover:text-body;
-  @apply focus-visible:outline-none focus-visible:ring-2;
-  @apply focus-visible:ring-brand focus-visible:ring-offset-2;
-}
-
-.current {
-  @apply border-brand/40 bg-brand/10 text-brand-strong;
+  @apply min-h-11 snap-start;
 }
 
 .ghostChip {

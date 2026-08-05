@@ -1,3 +1,4 @@
+import { Chip } from '@nino/ds/components/Chip'
 import { CountUp } from '@nino/ds/components/CountUp'
 import { Icon } from '@nino/ds/components/Icon'
 import type { OrderStage } from '@custom_types/order/order-stage'
@@ -20,11 +21,10 @@ export type StageTrackProps = {
 export const StageTrack = ({ stages, value, onChange }: StageTrackProps) => (
   <div className={styles.track} role="tablist" aria-label="Etapas da fila">
     {stages.map(({ id, label, count, icon }, index) => (
-      <button
+      <Chip
         key={id}
-        type="button"
-        role="tab"
-        aria-selected={id === value}
+        variant="tab"
+        selected={id === value}
         onClick={() => onChange(id)}
         style={riseDelay(index * 60 + 60)}
         className={`${motion.deal} ${styles.stage} ${
@@ -36,7 +36,7 @@ export const StageTrack = ({ stages, value, onChange }: StageTrackProps) => (
         <span className={styles.count}>
           <CountUp value={count} />
         </span>
-      </button>
+      </Chip>
     ))}
   </div>
 )

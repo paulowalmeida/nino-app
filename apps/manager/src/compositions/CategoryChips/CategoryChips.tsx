@@ -1,3 +1,4 @@
+import { Chip } from '@nino/ds/components/Chip'
 import { Skeleton } from '@nino/ds/components/Skeleton'
 import type { ProductCategory } from '@custom_types/product/product-category'
 import styles from './CategoryChips.module.css'
@@ -29,27 +30,25 @@ export const CategoryChips = ({
 
   return (
     <div className={styles.track} role="tablist" aria-label="Categorias">
-      <button
-        type="button"
-        role="tab"
-        aria-selected={value === null}
+      <Chip
+        variant="tab"
+        selected={value === null}
         onClick={() => onChange(null)}
-        className={`${styles.chip} ${value === null ? styles.current : ''}`}
+        className={styles.chip}
       >
         Todas
-      </button>
+      </Chip>
 
       {categories.map(({ id, name }) => (
-        <button
+        <Chip
           key={id}
-          type="button"
-          role="tab"
-          aria-selected={id === value}
+          variant="tab"
+          selected={id === value}
           onClick={() => onChange(id)}
-          className={`${styles.chip} ${id === value ? styles.current : ''}`}
+          className={styles.chip}
         >
           {name}
-        </button>
+        </Chip>
       ))}
     </div>
   )

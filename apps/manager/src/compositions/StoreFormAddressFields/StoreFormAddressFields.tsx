@@ -11,26 +11,25 @@ import { Input } from '@nino/ds/components/Input'
 import { MaskedInput } from '@nino/ds/components/MaskedInput'
 import { maskZipCode } from '@nino/ds/masks'
 import { lookupZipCode, onlyDigits } from '@nino/lib/services/zip-code'
+import type { FirstStoreFormValues } from '@custom_types/store/first-store-form-values'
 import { riseDelay } from '@utils/rise-delay'
 
-import type { FirstStoreFormValues } from '../FirstStoreForm'
-
-import styles from '../FirstStoreForm.module.css'
+import styles from './StoreFormAddressFields.module.css'
 import motion from '@styles/rise.module.css'
 
-export type StoreAddressFieldsProps = {
+export type StoreFormAddressFieldsProps = {
   register: UseFormRegister<FirstStoreFormValues>
   errors: FieldErrors<FirstStoreFormValues>
   setValue: UseFormSetValue<FirstStoreFormValues>
   setError: UseFormSetError<FirstStoreFormValues>
 }
 
-export const StoreAddressFields = ({
+export const StoreFormAddressFields = ({
   register,
   errors,
   setValue,
   setError,
-}: StoreAddressFieldsProps) => {
+}: StoreFormAddressFieldsProps) => {
   const [isLookingUp, setIsLookingUp] = useState(false)
 
   const handleZipCodeBlur = async (event: React.FocusEvent<HTMLInputElement>) => {

@@ -138,13 +138,13 @@ export const ZoneList = ({
                 </div>
               ) : (
                 <>
-                  <button
-                    type="button"
+                  <Button
+                    variant="ghost"
                     className={local.zoneName}
                     onClick={() => startEdit(zone)}
                   >
                     {zone.name}
-                  </button>
+                  </Button>
                   <span className={local.fee}>{brl(zone.fee)}</span>
                   <Button
                     variant="ghost"

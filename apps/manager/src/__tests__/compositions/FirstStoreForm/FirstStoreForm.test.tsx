@@ -2,10 +2,8 @@ import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
-import {
-  FirstStoreForm,
-  type FirstStoreFormValues,
-} from '@compositions/FirstStoreForm/FirstStoreForm'
+import { FirstStoreForm } from '@compositions/FirstStoreForm/FirstStoreForm'
+import type { FirstStoreFormValues } from '@custom_types/store/first-store-form-values'
 import { ApiError } from '@utils/api-error'
 
 import { storeTypes } from './FirstStoreForm.mock'
@@ -24,9 +22,9 @@ vi.mock('@hooks/store/useCreateStore', () => ({
  * under test here is the form's own concern: draft restore/persist and
  * how submit success/error is handled. */
 vi.mock(
-  '@compositions/FirstStoreForm/StoreDetailsFields/StoreDetailsFields',
+  '@compositions/StoreFormDetailsFields/StoreFormDetailsFields',
   () => ({
-    StoreDetailsFields: ({
+    StoreFormDetailsFields: ({
       errors,
       register,
     }: {
@@ -44,9 +42,9 @@ vi.mock(
 )
 
 vi.mock(
-  '@compositions/FirstStoreForm/StoreAddressFields/StoreAddressFields',
+  '@compositions/StoreFormAddressFields/StoreFormAddressFields',
   () => ({
-    StoreAddressFields: ({
+    StoreFormAddressFields: ({
       register,
     }: {
       register: (name: keyof FirstStoreFormValues) => object

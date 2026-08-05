@@ -83,23 +83,25 @@ export const NewOrderTicket = ({
             >
               <span className={styles.lineName}>{line.name}</span>
               <div className={styles.stepper}>
-                <button
-                  type="button"
+                <Button
+                  size="icon"
+                  variant="outline"
                   className={styles.stepButton}
                   aria-label={`Tirar um ${line.name}`}
                   onClick={() => onStep(line.productId, -1)}
                 >
                   <Icon name="minus" />
-                </button>
+                </Button>
                 <span className={styles.quantity}>{line.quantity}</span>
-                <button
-                  type="button"
+                <Button
+                  size="icon"
+                  variant="outline"
                   className={styles.stepButton}
                   aria-label={`Mais um ${line.name}`}
                   onClick={() => onStep(line.productId, 1)}
                 >
                   <Icon name="plus" />
-                </button>
+                </Button>
               </div>
               <span className={styles.linePrice}>
                 {brl(Number(line.unitPrice) * line.quantity)}

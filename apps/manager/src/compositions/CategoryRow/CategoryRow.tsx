@@ -111,14 +111,15 @@ export const CategoryRow = ({
         <>
           {/* a alça vem antes do nome: é a ordem em que a lista aparece no
               app do cliente que se está mexendo aqui */}
-          <button
-            type="button"
+          <Button
+            variant="ghost"
+            size="icon"
             className={styles.dragHandle}
             aria-label={`Reordenar ${category.name}`}
             onPointerDown={(event) => dragControls.start(event)}
           >
             <Icon name="grip" />
-          </button>
+          </Button>
 
           <div className={styles.who}>
             <span className={styles.name}>{category.name}</span>
@@ -128,24 +129,26 @@ export const CategoryRow = ({
           </div>
 
           <div className={styles.actions}>
-            <button
-              type="button"
+            <Button
+              variant="ghost"
+              size="icon"
               className={`${motion.press} ${styles.action}`}
               aria-label={`Renomear ${category.name}`}
               disabled={disabled}
               onClick={() => setEditing(true)}
             >
               <Icon name="pencil" />
-            </button>
-            <button
-              type="button"
+            </Button>
+            <Button
+              variant="ghost"
+              size="icon"
               className={`${motion.press} ${styles.action} ${styles.danger}`}
               aria-label={`Excluir ${category.name}`}
               disabled={disabled}
               onClick={onDelete}
             >
               <Icon name="trash" />
-            </button>
+            </Button>
           </div>
         </>
       )}

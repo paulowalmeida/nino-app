@@ -15,19 +15,10 @@
   display: none;
 }
 
-/* `min-h-11` é o piso de toque de 44px do celular */
+/* `min-h-11` é o piso de toque de 44px do celular; a aparência da pílula é
+   toda do Chip do DS — aqui só o que é específico da trilha de etapas */
 .stage {
-  @apply flex min-h-11 shrink-0 cursor-pointer snap-start items-center gap-2;
-  @apply rounded-full border border-sand bg-brand-foreground px-4 py-2;
-  @apply text-sm font-semibold text-subtle;
-  @apply transition-colors duration-200;
-  @apply hover:border-brand/30 hover:text-body;
-  @apply focus-visible:outline-none focus-visible:ring-2;
-  @apply focus-visible:ring-brand focus-visible:ring-offset-2;
-}
-
-.current {
-  @apply border-brand/40 bg-brand/10 text-brand-strong;
+  @apply min-h-11 snap-start;
 }
 
 /* o ícone diz a etapa sem depender da leitura do rótulo — no trilho rolando

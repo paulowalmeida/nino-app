@@ -1,5 +1,6 @@
 import { useState } from 'react'
 
+import { Card } from '@nino/ds/components/Card'
 import { Modal } from '@nino/ds/components/Modal'
 import { ItemThumb } from '@components/ItemThumb/ItemThumb'
 import { useLongPress } from '@hooks/ui/useLongPress'
@@ -34,8 +35,8 @@ export const ProductCard = ({ item, index, onPick }: ProductCardProps) => {
 
   return (
     <>
-      <button
-        type="button"
+      <Card
+        variant="flat"
         onClick={() => onPick(item)}
         style={riseDelay(index * 25)}
         className={`${motion.settle} ${motion.press} ${styles.card} ${
@@ -46,7 +47,7 @@ export const ProductCard = ({ item, index, onPick }: ProductCardProps) => {
         <ItemThumb name={item.name} imageUrl={photo} className={styles.thumb} />
         <span className={styles.name}>{item.name}</span>
         <span className={styles.price}>{brl(item.price)}</span>
-      </button>
+      </Card>
 
       {/*
        * Centered on screen with a blurred backdrop, like Instagram's photo

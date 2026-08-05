@@ -19,8 +19,8 @@
 
 /* o nome é o alvo de edição — clicar nele abre a linha */
 .zoneName {
-  @apply min-w-0 flex-1 cursor-pointer truncate text-left;
-  @apply text-sm font-semibold text-body transition-colors duration-150;
+  @apply min-w-0 flex-1 justify-start truncate rounded-none bg-transparent;
+  @apply p-0 text-left text-sm font-semibold text-body hover:bg-transparent;
   @apply hover:text-brand-strong;
 }
 

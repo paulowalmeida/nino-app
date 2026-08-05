@@ -8,69 +8,12 @@
   container-type: inline-size;
 }
 
-/*
- * Dez campos empilhados são uma parede: quem preenche não sabe quanto
- * falta. Divididos em dois blocos — quem é a loja, onde ela fica — cada
- * trecho tem começo e fim, e a divisória basta para separá-los. Mesma
- * régua de grupo das seções de configurações.
- */
-.group {
-  @apply flex flex-col gap-4;
-}
-
-.group + .group {
+/* separa os dois blocos de campo — mesma régua de grupo das seções de
+   configurações. Cada bloco estiliza o próprio conteúdo; aqui só o espaço
+   entre eles, porque isso é decisão de quem monta o formulário, não de
+   quem preenche um bloco só. */
+.addressGroup {
   @apply mt-6 border-t border-sand pt-6;
-}
-
-.groupTitle {
-  @apply text-[0.7rem] font-bold uppercase tracking-[0.12em] text-faint;
-}
-
-.row {
-  @apply grid grid-cols-2 gap-4;
-}
-
-/*
- * Bairro e cidade são frases inteiras ("Jardim São Cristóvão"), o estado são
- * duas letras. Numa caixa estreita o bairro toma a linha sozinho e a cidade
- * divide com o UF — do jeito que o endereço se lê, "Belém, PA". Só quando
- * sobra largura os três entram lado a lado.
- */
-.rowAddress {
-  @apply grid gap-4;
-  grid-template-columns: 1fr 5.5rem;
-  grid-template-areas:
-    'neighborhood neighborhood'
-    'city state';
-}
-
-.neighborhoodField {
-  grid-area: neighborhood;
-}
-
-.cityField {
-  grid-area: city;
-}
-
-.stateField {
-  grid-area: state;
-}
-
-@container (min-width: 32rem) {
-  .rowAddress {
-    grid-template-columns: 1.3fr 1fr 5.5rem;
-    grid-template-areas: 'neighborhood city state';
-  }
-}
-
-/* o que o cliente vai digitar no navegador: o prefixo é parte do endereço,
-   não legenda — fica colado ao campo e com o mesmo peso do que se escreve */
-.slugField {
-  @apply flex items-center gap-1.5;
-}
-
-.slugPrefix {
-  @apply shrink-0 text-sm font-semibold tracking-[-0.01em] text-faint;
 }
 
 .draftNotice {
