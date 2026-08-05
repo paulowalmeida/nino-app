@@ -30,15 +30,36 @@
   @apply grid grid-cols-2 gap-4;
 }
 
-/* bairro e cidade são frases, o estado são duas letras: dar coluna igual aos
-   três deixava o campo de UF com o triplo da largura que ele usa */
+/*
+ * Bairro e cidade são frases inteiras ("Jardim São Cristóvão"), o estado são
+ * duas letras. Numa caixa estreita o bairro toma a linha sozinho e a cidade
+ * divide com o UF — do jeito que o endereço se lê, "Belém, PA". Só quando
+ * sobra largura os três entram lado a lado.
+ */
 .rowAddress {
-  @apply grid grid-cols-2 gap-4;
+  @apply grid gap-4;
+  grid-template-columns: 1fr 5.5rem;
+  grid-template-areas:
+    'neighborhood neighborhood'
+    'city state';
+}
+
+.neighborhoodField {
+  grid-area: neighborhood;
+}
+
+.cityField {
+  grid-area: city;
+}
+
+.stateField {
+  grid-area: state;
 }
 
 @container (min-width: 32rem) {
   .rowAddress {
     grid-template-columns: 1.3fr 1fr 5.5rem;
+    grid-template-areas: 'neighborhood city state';
   }
 }
 

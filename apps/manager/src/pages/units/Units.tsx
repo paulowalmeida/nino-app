@@ -1,9 +1,9 @@
 import { useCallback, useState } from 'react'
 import { Link } from 'react-router'
 
+import { BrandTopBar } from '@components/BrandTopBar/BrandTopBar'
 import { FirstStoreForm } from '@compositions/FirstStoreForm/FirstStoreForm'
 import { StorePreview } from '@compositions/StorePreview/StorePreview'
-import { NinoLogo } from '@elements/NinoLogo/NinoLogo'
 import { AuthService } from '@services/auth.service'
 import { useSessionStore } from '@states/useSessionStore'
 import { endSession } from '@utils/end-session'
@@ -11,13 +11,18 @@ import { endSession } from '@utils/end-session'
 import styles from './Units.module.css'
 
 /**
- * Unidades de quem ainda não tem nenhuma. A loja nasce aqui, na mesma tela em
- * que a segunda e a décima vão nascer — não numa tela de boas-vindas que só
- * existe uma vez na vida da conta.
+ * A primeira loja da conta. Quem já tem alguma nunca chega aqui — o
+ * `FirstStoreGuard` manda de volta pro painel, onde a segunda unidade nasce
+ * em Configurações › Unidades, com a navegação por perto.
  */
 export const Units = () => {
   const user = useSessionStore((state) => state.user)
   const [storeName, setStoreName] = useState('')
+
+  const firstName = user?.name?.split(' ')[0]
+  const title = firstName
+    ? `Sua primeira loja, ${firstName}`
+    : 'Sua primeira loja'
 
   /* Referência estável: o formulário chama isto a cada tecla, dentro de um
    * efeito que depende da própria função. */
@@ -37,25 +42,13 @@ export const Units = () => {
 
   return (
     <div className={styles.shell}>
-      <header className={styles.topBar}>
-        <NinoLogo />
-
-        <button
-          type="button"
-          className={styles.leave}
-          onClick={() => void handleLogout()}
-        >
-          Sair
-        </button>
-      </header>
+      <BrandTopBar actionLabel="Sair" onAction={() => void handleLogout()} />
 
       <main className={styles.page}>
         <div className={styles.head}>
           <div>
             <p className={styles.eyebrow}>Unidades</p>
-            <h1 className={styles.title}>
-              {user?.name ? `Sua primeira loja, ${user.name.split(' ')[0]}` : 'Sua primeira loja'}
-            </h1>
+            <h1 className={styles.title}>{title}</h1>
             <p className={styles.subtitle}>
               Cada unidade tem cardápio, horário e zonas próprios. A empresa e a
               assinatura ficam por cima de todas.

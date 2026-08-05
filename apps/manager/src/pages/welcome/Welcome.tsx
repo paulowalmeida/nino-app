@@ -2,10 +2,10 @@ import { Fragment, useState, type ReactNode } from 'react'
 import { useNavigate } from 'react-router'
 
 import { Button } from '@nino/ds/components/Button'
+import { BrandTopBar } from '@components/BrandTopBar/BrandTopBar'
 import { KitchenCard } from '@compositions/KitchenCard/KitchenCard'
 import { OrderTicket } from '@compositions/OrderTicket/OrderTicket'
 import { OrderTimeline } from '@compositions/OrderTimeline/OrderTimeline'
-import { NinoLogo } from '@elements/NinoLogo/NinoLogo'
 import { useSessionStore } from '@states/useSessionStore'
 import { rememberOnboarding } from '@utils/onboarding-seen'
 
@@ -94,13 +94,7 @@ export const Welcome = () => {
 
   return (
     <div className={styles.shell}>
-      <header className={styles.topBar}>
-        <NinoLogo />
-
-        <button type="button" className={styles.skip} onClick={leave}>
-          Pular
-        </button>
-      </header>
+      <BrandTopBar actionLabel="Pular" onAction={leave} />
 
       <main className={styles.page}>
         <div className={styles.body}>

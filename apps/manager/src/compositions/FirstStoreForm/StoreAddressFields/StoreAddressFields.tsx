@@ -97,21 +97,33 @@ export const StoreAddressFields = ({
         className={`${motion.rise} ${styles.rowAddress}`}
         style={riseDelay(420)}
       >
-        <FormField label="Bairro" error={errors.neighborhood?.message}>
+        <FormField
+          label="Bairro"
+          className={styles.neighborhoodField}
+          error={errors.neighborhood?.message}
+        >
           <Input
             placeholder="Centro"
             {...register('neighborhood', { required: 'Informe o bairro' })}
           />
         </FormField>
 
-        <FormField label="Cidade" error={errors.city?.message}>
+        <FormField
+          label="Cidade"
+          className={styles.cityField}
+          error={errors.city?.message}
+        >
           <Input
             placeholder="Belém"
             {...register('city', { required: 'Informe a cidade' })}
           />
         </FormField>
 
-        <FormField label="UF" error={errors.state?.message}>
+        <FormField
+          label="UF"
+          className={styles.stateField}
+          error={errors.state?.message}
+        >
           <Input
             placeholder="PA"
             maxLength={2}
