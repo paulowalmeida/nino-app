@@ -2,10 +2,8 @@ import { useQuery } from '@tanstack/react-query'
 
 import { queryKeys } from '@constants/query-keys'
 import type { ReportRangeParams } from '@custom_types/order/report-range-params'
-import type {
-  SalesSeries,
-  SeriesGranularity,
-} from '@custom_types/order/sales-series'
+import type { SalesSeries } from '@custom_types/order/sales-series'
+import type { SeriesGranularity } from '@custom_types/order/series-granularity'
 import { OrderService } from '@services/order.service'
 
 /**

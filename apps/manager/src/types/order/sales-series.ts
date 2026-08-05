@@ -1,6 +1,5 @@
 import type { SalesSeriesPoint } from './sales-series-point'
-
-export type SeriesGranularity = 'hour' | 'day'
+import type { SeriesGranularity } from './series-granularity'
 
 /**
  * Venda ao longo do tempo. Diferente de `SalesReport`, que fecha o período

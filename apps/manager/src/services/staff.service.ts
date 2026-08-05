@@ -4,7 +4,7 @@ import type { TenantRole } from '@custom_types/auth/tenant-role'
 import type { CreateInviteRequest } from '@custom_types/team/create-invite-request'
 import type { StaffDetail } from '@custom_types/team/staff-detail'
 import type { StaffMember } from '@custom_types/team/staff-member'
-import type { StaffPage } from '@custom_types/team/team-page'
+import type { StaffPage } from '@custom_types/team/staff-page'
 import { api } from '@services/http.service'
 
 export const StaffService = {

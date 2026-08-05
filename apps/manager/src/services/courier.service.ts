@@ -1,4 +1,4 @@
-import type { CourierPage } from '@custom_types/team/team-page'
+import type { CourierPage } from '@custom_types/team/courier-page'
 import { api } from '@services/http.service'
 
 export const CourierService = {

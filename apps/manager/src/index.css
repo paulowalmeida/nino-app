@@ -14,6 +14,30 @@
   }
 
   /*
+   * No toque grosso (celular/tablet, não mouse) o toque longo não deve abrir
+   * o menu nativo de selecionar/copiar/copiar link — é operação, não leitura
+   * de texto corrido.
+   */
+  @media (pointer: coarse) {
+    body {
+      -webkit-touch-callout: none;
+      -webkit-user-select: none;
+      user-select: none;
+    }
+
+    /*
+     * Link é destino a seguir ou dado a copiar (pedido, produto, unidade,
+     * telefone via tel:) — quem segura o dedo em cima quer o menu nativo, não
+     * fica bloqueado como o resto da tela.
+     */
+    a {
+      -webkit-touch-callout: default;
+      -webkit-user-select: text;
+      user-select: text;
+    }
+  }
+
+  /*
    * Mesmo grão da landing: atmosfera, não textura óbvia. É o que faz painel e
    * site parecerem o mesmo produto antes de qualquer outra coisa.
    */

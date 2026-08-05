@@ -10,7 +10,7 @@ import { curveMonotoneX } from '@visx/curve'
 
 import { useElementWidth } from '@hooks/ui/useElementWidth'
 import type { SalesSeriesPoint } from '@custom_types/order/sales-series-point'
-import type { SeriesGranularity } from '@custom_types/order/sales-series'
+import type { SeriesGranularity } from '@custom_types/order/series-granularity'
 import { brl } from '@utils/money'
 
 import styles from './SalesChart.module.css'

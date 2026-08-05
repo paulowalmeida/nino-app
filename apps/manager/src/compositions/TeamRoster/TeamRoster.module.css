@@ -48,6 +48,11 @@
 
 .email {
   @apply truncate text-xs text-faint;
+
+  @media (pointer: coarse) {
+    -webkit-user-select: text;
+    user-select: text;
+  }
 }
 
 .lastSeen {

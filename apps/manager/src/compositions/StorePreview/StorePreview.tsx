@@ -34,7 +34,7 @@ export const StorePreview = ({
       <span className={styles.text}>
         <span className={styles.name}>{typed || placeholder}</span>
         <span className={styles.link}>
-          nino.delivery/{typed ? slugify(typed) : placeholderSlug}
+          {typed ? slugify(typed) : placeholderSlug}.dev.nino.delivery
         </span>
       </span>
     </div>

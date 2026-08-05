@@ -4,10 +4,8 @@ import type { OrderPage } from '@custom_types/order/order-page'
 import type { OrderQueueSummary } from '@custom_types/order/order-queue-summary'
 import type { ReportRangeParams } from '@custom_types/order/report-range-params'
 import type { SalesReport } from '@custom_types/order/sales-report'
-import type {
-  SalesSeries,
-  SeriesGranularity,
-} from '@custom_types/order/sales-series'
+import type { SalesSeries } from '@custom_types/order/sales-series'
+import type { SeriesGranularity } from '@custom_types/order/series-granularity'
 import type { TimingReport } from '@custom_types/order/timing-report'
 import type { UpdateOrderStatusRequest } from '@custom_types/order/update-order-status-request'
 import { api } from '@services/http.service'

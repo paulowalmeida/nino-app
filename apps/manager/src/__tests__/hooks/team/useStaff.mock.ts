@@ -1,7 +1,7 @@
 import type { AuthUser } from '@custom_types/auth/auth-user'
 import type { TenantRole } from '@custom_types/auth/tenant-role'
 import type { StaffMember } from '@custom_types/team/staff-member'
-import type { StaffPage } from '@custom_types/team/team-page'
+import type { StaffPage } from '@custom_types/team/staff-page'
 const owner: AuthUser = {
   id: 'user-1',
   name: 'Ana Souza',

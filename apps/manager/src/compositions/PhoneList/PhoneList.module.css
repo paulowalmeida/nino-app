@@ -17,6 +17,11 @@
   @apply min-w-0 flex-1 cursor-pointer text-left text-sm font-semibold;
   @apply text-body transition-colors duration-150 hover:text-brand-strong;
   font-variant-numeric: tabular-nums;
+
+  @media (pointer: coarse) {
+    -webkit-user-select: text;
+    user-select: text;
+  }
 }
 
 .editRow {
