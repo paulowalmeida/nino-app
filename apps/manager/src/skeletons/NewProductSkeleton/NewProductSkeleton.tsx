@@ -3,6 +3,7 @@ import { PageHeader } from '@nino/ds/components/PageHeader'
 import { BackLink } from '@elements/BackLink/BackLink'
 
 import styles from '@pages/new-product/NewProduct.module.css'
+import fieldStyles from '@compositions/NewProductFields/NewProductFields.module.css'
 
 /**
  * Espelha o formulário vazio bloco a bloco: foto, nome, descrição, preço e
@@ -21,37 +22,37 @@ export const NewProductSkeleton = () => (
     />
 
     <div className={styles.form}>
-      <div className={styles.photoCol}>
+      <div className={fieldStyles.photoCol}>
         <Skeleton className={styles.bonePhoto} />
         <div className={styles.bonePhotoActions}>
           <Skeleton className={styles.bonePhotoAction} />
         </div>
       </div>
 
-      <div className={styles.fields}>
-        <div className={styles.field}>
+      <div className={fieldStyles.fields}>
+        <div className={fieldStyles.field}>
           <Skeleton className={styles.boneLabel} />
           <Skeleton className={styles.boneInput} />
         </div>
 
-        <div className={styles.field}>
+        <div className={fieldStyles.field}>
           <Skeleton className={styles.boneLabel} />
           <Skeleton className={styles.boneTextarea} />
           <Skeleton className={styles.boneHelper} />
         </div>
 
-        <div className={styles.row}>
-          <div className={styles.field}>
+        <div className={fieldStyles.row}>
+          <div className={fieldStyles.field}>
             <Skeleton className={styles.boneLabel} />
             <Skeleton className={styles.boneInput} />
           </div>
-          <div className={styles.field}>
+          <div className={fieldStyles.field}>
             <Skeleton className={styles.boneLabel} />
             <Skeleton className={styles.boneInput} />
           </div>
         </div>
 
-        <div className={styles.category}>
+        <div className={fieldStyles.category}>
           <Skeleton className={styles.boneCategoryButton} />
         </div>
       </div>

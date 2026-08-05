@@ -21,7 +21,7 @@ const navigate = vi.hoisted(() => vi.fn())
 
 vi.mock('react-router', () => ({ useNavigate: () => navigate }))
 
-vi.mock('@compositions/RegisterWizard/AccountStep/AccountStep', () => ({
+vi.mock('@compositions/AccountStep/AccountStep', () => ({
   AccountStep: ({
     defaultValues,
     onNext,
@@ -38,7 +38,7 @@ vi.mock('@compositions/RegisterWizard/AccountStep/AccountStep', () => ({
   },
 }))
 
-vi.mock('@compositions/RegisterWizard/CompanyStep/CompanyStep', () => ({
+vi.mock('@compositions/CompanyStep/CompanyStep', () => ({
   CompanyStep: ({
     account,
     onBack,

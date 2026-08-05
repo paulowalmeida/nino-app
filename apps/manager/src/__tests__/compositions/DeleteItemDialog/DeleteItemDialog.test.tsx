@@ -5,7 +5,7 @@ import { describe, expect, it, vi } from 'vitest'
 
 import type { MenuItem } from '@custom_types/product/menu-item'
 import { ProductService } from '@services/product.service'
-import { DeleteItemDialog } from '@compositions/MenuBoard/DeleteItemDialog/DeleteItemDialog'
+import { DeleteItemDialog } from '@compositions/DeleteItemDialog/DeleteItemDialog'
 
 vi.mock('@services/product.service')
 

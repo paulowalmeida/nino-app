@@ -24,6 +24,7 @@ import { ApiError } from '@utils/api-error'
 import { riseDelay } from '@utils/rise-delay'
 
 import styles from './Categories.module.css'
+import rowStyles from '@compositions/CategoryRow/CategoryRow.module.css'
 import motion from '@styles/motion.module.css'
 
 const HAS_PRODUCTS_HINT =
@@ -133,13 +134,13 @@ export const Categories = () => {
       {isPending && (
         <div className={styles.loading}>
           {GHOST_ROWS.map((row) => (
-            <div key={row} className={styles.row}>
+            <div key={row} className={rowStyles.row}>
               <Skeleton className={styles.ghostHandle} />
-              <div className={styles.who}>
+              <div className={rowStyles.who}>
                 <Skeleton className={styles.ghostName} />
                 <Skeleton className={styles.ghostHint} />
               </div>
-              <div className={styles.actions}>
+              <div className={rowStyles.actions}>
                 <Skeleton className={styles.ghostAction} />
                 <Skeleton className={styles.ghostAction} />
               </div>

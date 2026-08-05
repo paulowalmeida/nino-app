@@ -1,0 +1,57 @@
+@reference "@nino/ds/globals.css";
+
+.row {
+  @apply flex min-h-16 flex-wrap items-center gap-3 rounded-xl px-2 py-3;
+  @apply border-t border-sand transition-colors duration-150;
+  @apply hover:bg-surface-mute;
+}
+
+.dragHandle {
+  @apply flex shrink-0 cursor-grab touch-none items-center justify-center;
+  @apply rounded-lg p-1.5 text-faint transition-colors duration-150;
+  @apply hover:bg-surface-sunk hover:text-subtle active:cursor-grabbing;
+}
+
+.who {
+  @apply flex min-w-40 flex-1 flex-col;
+}
+
+.name {
+  @apply truncate text-sm font-semibold text-body;
+}
+
+.hint {
+  @apply text-xs text-faint;
+  font-variant-numeric: tabular-nums;
+}
+
+/* categoria vazia é a única segura de excluir — o texto sinaliza isso */
+.hintEmpty {
+  @apply text-xs font-medium text-brand/80;
+}
+
+.actions {
+  @apply flex shrink-0 items-center gap-1;
+}
+
+.action {
+  @apply flex size-9 items-center justify-center rounded-lg text-faint;
+  @apply transition-colors duration-150;
+  @apply hover:bg-sand hover:text-body;
+  @apply focus-visible:outline-none focus-visible:ring-2;
+  @apply focus-visible:ring-brand focus-visible:ring-offset-1;
+  @apply disabled:pointer-events-none disabled:opacity-40;
+}
+
+.danger {
+  @apply hover:bg-danger-surface hover:text-danger;
+}
+
+/* modo edição inline: input toma a linha, ações à direita */
+.editForm {
+  @apply flex w-full flex-wrap items-center gap-2;
+}
+
+.editForm > :first-child {
+  @apply min-w-40 flex-1;
+}

@@ -15,7 +15,7 @@ import { ItemPhoto } from '@compositions/ItemPhoto/ItemPhoto'
 import type { MenuItem } from '@custom_types/product/menu-item'
 import { riseDelay } from '@utils/rise-delay'
 
-import styles from '@pages/product-detail/ProductDetail.module.css'
+import styles from './ProductDetailFields.module.css'
 import motion from '@styles/motion.module.css'
 
 const DESCRIPTION_MAX_LENGTH = 300

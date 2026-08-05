@@ -15,7 +15,7 @@ import {
   PAYMENT_STATUS_LABEL,
 } from '@utils/order-flow'
 
-import styles from '@pages/order-detail/OrderDetail.module.css'
+import styles from './OrderDetailAside.module.css'
 import motion from '@styles/motion.module.css'
 
 export type OrderDetailAsideProps = {

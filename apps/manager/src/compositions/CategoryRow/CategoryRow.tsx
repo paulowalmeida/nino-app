@@ -9,7 +9,7 @@ import { REORDER_TRANSITION } from '@constants/reorder-transition'
 import type { CategoryWithCount } from '@custom_types/product/category-with-count'
 import { riseDelay } from '@utils/rise-delay'
 
-import styles from '@pages/categories/Categories.module.css'
+import styles from './CategoryRow.module.css'
 import motion from '@styles/motion.module.css'
 
 const countLabel = (count: number): string =>

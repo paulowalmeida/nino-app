@@ -15,7 +15,7 @@ import { Textarea } from '@nino/ds/components/Textarea'
 import { ItemPhoto } from '@compositions/ItemPhoto/ItemPhoto'
 import { riseDelay } from '@utils/rise-delay'
 
-import styles from '@pages/new-product/NewProduct.module.css'
+import styles from './NewProductFields.module.css'
 import motion from '@styles/motion.module.css'
 
 const DESCRIPTION_MAX_LENGTH = 300

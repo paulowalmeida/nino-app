@@ -3,8 +3,8 @@ import { useNavigate } from 'react-router'
 
 import { Stepper } from '@nino/ds/components/Stepper'
 import type { SignupAccount } from '@custom_types/auth/signup-account'
-import { AccountStep } from './AccountStep/AccountStep'
-import { CompanyStep } from './CompanyStep/CompanyStep'
+import { AccountStep } from '@compositions/AccountStep/AccountStep'
+import { CompanyStep } from '@compositions/CompanyStep/CompanyStep'
 
 import styles from '@styles/authForm.module.css'
 

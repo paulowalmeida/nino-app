@@ -2,6 +2,7 @@ import { Skeleton } from '@nino/ds/components/Skeleton'
 import { BackLink } from '@elements/BackLink/BackLink'
 
 import styles from '@pages/product-detail/ProductDetail.module.css'
+import fieldStyles from '@compositions/ProductDetailFields/ProductDetailFields.module.css'
 
 /**
  * Espelha a ficha carregada bloco a bloco: cabeçalho, fio, foto, campos e a
@@ -20,42 +21,42 @@ export const ProductDetailSkeleton = () => (
     </header>
 
     <div className={styles.form}>
-      <div className={styles.photoCol}>
+      <div className={fieldStyles.photoCol}>
         <Skeleton className={styles.bonePhoto} />
         <div className={styles.bonePhotoActions}>
           <Skeleton className={styles.bonePhotoAction} />
         </div>
       </div>
 
-      <div className={styles.fields}>
-        <div className={styles.field}>
+      <div className={fieldStyles.fields}>
+        <div className={fieldStyles.field}>
           <Skeleton className={styles.boneLabel} />
           <Skeleton className={styles.boneInput} />
         </div>
 
-        <div className={styles.field}>
+        <div className={fieldStyles.field}>
           <Skeleton className={styles.boneLabel} />
           <Skeleton className={styles.boneTextarea} />
           <Skeleton className={styles.boneHelper} />
         </div>
 
-        <div className={styles.row}>
-          <div className={styles.field}>
+        <div className={fieldStyles.row}>
+          <div className={fieldStyles.field}>
             <Skeleton className={styles.boneLabel} />
             <Skeleton className={styles.boneInput} />
           </div>
-          <div className={styles.field}>
+          <div className={fieldStyles.field}>
             <Skeleton className={styles.boneLabel} />
             <Skeleton className={styles.boneInput} />
           </div>
         </div>
 
-        <div className={styles.field}>
+        <div className={fieldStyles.field}>
           <Skeleton className={styles.boneLabel} />
           <Skeleton className={styles.boneInput} />
         </div>
 
-        <div className={styles.availability}>
+        <div className={fieldStyles.availability}>
           <Skeleton className={styles.boneSwitch} />
           <div className={styles.boneAvailabilityText}>
             <Skeleton className={styles.boneLabel} />

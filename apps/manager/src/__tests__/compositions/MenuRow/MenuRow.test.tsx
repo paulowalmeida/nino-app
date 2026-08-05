@@ -7,7 +7,7 @@ import userEvent from '@testing-library/user-event'
 import { describe, expect, it, vi } from 'vitest'
 
 import type { MenuItem } from '@custom_types/product/menu-item'
-import { MenuRow } from '@compositions/MenuBoard/MenuRow/MenuRow'
+import { MenuRow } from '@compositions/MenuRow/MenuRow'
 
 const build = (overrides: Partial<MenuItem> = {}): MenuItem => ({
   id: 'item-1',

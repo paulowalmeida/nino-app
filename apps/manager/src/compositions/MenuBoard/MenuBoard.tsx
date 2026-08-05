@@ -11,10 +11,11 @@ import { useItemAvailability } from '@hooks/product/useItemAvailability'
 import { useLoadMore } from '@hooks/ui/useLoadMore'
 import { useReorderMenuItems } from '@hooks/product/useReorderMenuItems'
 import type { MenuItem } from '@custom_types/product/menu-item'
-import { DeleteItemDialog } from './DeleteItemDialog/DeleteItemDialog'
-import { MenuRow } from './MenuRow/MenuRow'
+import { DeleteItemDialog } from '@compositions/DeleteItemDialog/DeleteItemDialog'
+import { MenuRow } from '@compositions/MenuRow/MenuRow'
 
 import styles from './MenuBoard.module.css'
+import rowStyles from '@compositions/MenuRow/MenuRow.module.css'
 import motion from '@styles/motion.module.css'
 
 /** Six rows: what fits on the first screen before scrolling is needed. */
@@ -100,10 +101,10 @@ export const MenuBoard = ({ tenantId, categoryId, search }: MenuBoardProps) => {
           <div className={styles.list}>
             <ul className={styles.items}>
               {GHOST_ROWS.map((row) => (
-                <li key={row} className={styles.item}>
-                  <div className={styles.itemLink}>
+                <li key={row} className={rowStyles.item}>
+                  <div className={rowStyles.itemLink}>
                     <Skeleton className={styles.ghostThumb} />
-                    <div className={styles.itemText}>
+                    <div className={rowStyles.itemText}>
                       <Skeleton className={styles.ghostName} />
                       <Skeleton className={styles.ghostDescription} />
                     </div>
