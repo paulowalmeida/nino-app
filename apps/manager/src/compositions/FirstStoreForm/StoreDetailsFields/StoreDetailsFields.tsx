@@ -78,7 +78,7 @@ export const StoreDetailsFields = ({
                 },
               })}
             />
-            <span className={styles.slugPrefix}>dev.nino.delivery</span>
+            <span className={styles.slugPrefix}>.dev.nino.delivery</span>
           </div>
         </FormField>
       </div>
