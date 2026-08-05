@@ -2,7 +2,7 @@ import { useQuery } from '@tanstack/react-query'
 
 import { queryKeys } from '@constants/query-keys'
 import type { PublicDeliveryZone } from '@custom_types/delivery-zone/public-delivery-zone'
-import { getPublicDeliveryZones } from '@services/delivery-zone/delivery-zone.service'
+import { getPublicDeliveryZones } from '@services/delivery-zone.service'
 
 export const useDeliveryZones = (tenantId: string | undefined) => {
   const query = useQuery<PublicDeliveryZone[]>({

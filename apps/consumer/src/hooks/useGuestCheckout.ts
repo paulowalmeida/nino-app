@@ -8,6 +8,7 @@ import type { GuestOrderCreatedResponse } from '@custom_types/order/guest-order-
 import type { PaymentMethod } from '@custom_types/order/payment-method'
 import type { Store } from '@custom_types/store/store'
 import { guestOrderRequest } from '@adapters/guestOrderRequest.adapter'
+import { useCheckoutTotals } from '@hooks/useCheckoutTotals'
 import { useCreateGuestOrder } from '@hooks/useCreateGuestOrder'
 
 type UseGuestCheckoutParams = {
@@ -69,18 +70,14 @@ export const useGuestCheckout = ({
   }, [created, clearCart])
 
   const isDelivery = channel === 'DELIVERY'
-
-  const subtotal = cartLines.reduce(
-    (total, line) => total + Number(line.item.price) * line.quantity,
-    0
-  )
   const zone = zones.find(({ id }) => id === deliveryZoneId)
-  const deliveryFee = isDelivery ? Number(zone?.fee ?? 0) : 0
-  const total = subtotal + deliveryFee
 
-  const deliveryNote = estimatedMinutes
-    ? `Chega em ~${estimatedMinutes} min`
-    : 'Levamos até você'
+  const { subtotal, deliveryFee, total, deliveryNote } = useCheckoutTotals({
+    cartLines,
+    isDelivery,
+    zone,
+    estimatedMinutes,
+  })
 
   const submit = handleSubmit((values) => {
     if (!store) return

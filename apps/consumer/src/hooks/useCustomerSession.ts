@@ -2,7 +2,7 @@ import { useQuery } from '@tanstack/react-query'
 
 import { queryKeys } from '@constants/query-keys'
 import type { Customer } from '@custom_types/customer/customer'
-import { getMe } from '@services/auth/customer-auth.service'
+import { getMe } from '@services/customer-auth.service'
 
 /**
  * Quem está usando a vitrine. Sem sessão a API responde 401 e o hook devolve

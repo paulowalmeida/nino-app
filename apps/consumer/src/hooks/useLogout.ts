@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 
 import { queryKeys } from '@constants/query-keys'
-import { logout } from '@services/auth/customer-auth.service'
+import { logout } from '@services/customer-auth.service'
 import { forgetSession } from '@utils/session-hint'
 
 /**

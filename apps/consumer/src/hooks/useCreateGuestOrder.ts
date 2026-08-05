@@ -1,6 +1,6 @@
 import { useMutation } from '@tanstack/react-query'
 
-import { createGuestOrder } from '@services/order/order.service'
+import { createGuestOrder } from '@services/order.service'
 
 export const useCreateGuestOrder = () =>
   useMutation({ mutationFn: createGuestOrder })

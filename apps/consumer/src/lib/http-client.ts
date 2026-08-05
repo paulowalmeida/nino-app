@@ -1,6 +1,12 @@
-import ky, { HTTPError, TimeoutError, type ResponsePromise } from 'ky'
+import ky, {
+  HTTPError,
+  TimeoutError,
+  type KyInstance,
+  type ResponsePromise,
+} from 'ky'
 
 import { HTTP_ERRORS } from '@constants/http.constants'
+import type { HttpClient } from '@custom_types/http/http-client'
 import { ApiError } from '@utils/api-error'
 import { hadSession } from '@utils/session-hint'
 
@@ -22,8 +28,9 @@ const isPublicPath = (url: string): boolean => {
   return PUBLIC_PATHS.some((path) => pathname.endsWith(`/${path}`))
 }
 
-/** Cliente pelado: renovar a sessão não pode disparar a própria renovação. */
-const plain = ky.create({ prefix: BASE_URL, credentials: 'include' })
+/** Client cru: renovar a sessão não pode disparar a própria renovação. */
+const createBareClient = (baseUrl: string): KyInstance =>
+  ky.create({ prefix: baseUrl, credentials: 'include' })
 
 /**
  * Uma renovação por vez: N requisições que batem 401 juntas dividem a mesma
@@ -31,8 +38,8 @@ const plain = ky.create({ prefix: BASE_URL, credentials: 'include' })
  */
 let refreshing: Promise<boolean> | null = null
 
-const refreshSession = (): Promise<boolean> => {
-  refreshing ??= plain
+const refreshSession = (bareClient: KyInstance): Promise<boolean> => {
+  refreshing ??= bareClient
     .post('customer/auth/refresh')
     .then(() => true)
     .catch(() => false)
@@ -50,28 +57,29 @@ const refreshSession = (): Promise<boolean> => {
  * pessoa perceber. Sem isto, fechar o app no meio da tarde e voltar à noite
  * jogava todo mundo de volta na tela de login.
  */
-const client = plain.extend({
-  retry: {
-    limit: 1,
-    methods: ['get', 'post', 'put', 'patch', 'delete', 'head'],
-    statusCodes: [401],
-  },
-  hooks: {
-    beforeRetry: [
-      async ({ request, error }) => {
-        if (isPublicPath(request.url)) throw error
+const withSessionRefresh = (bareClient: KyInstance): KyInstance =>
+  bareClient.extend({
+    retry: {
+      limit: 1,
+      methods: ['get', 'post', 'put', 'patch', 'delete', 'head'],
+      statusCodes: [401],
+    },
+    hooks: {
+      beforeRetry: [
+        async ({ request, error }) => {
+          if (isPublicPath(request.url)) throw error
 
-        /* a vitrine é feita para visitante anônimo: sem sessão anterior
-           neste navegador não há o que renovar, e cobrar um refresh de quem
-           só quer ver o cardápio é uma ida e volta jogada fora */
-        if (!hadSession()) throw error
+          /* a vitrine é feita para visitante anônimo: sem sessão anterior
+             neste navegador não há o que renovar, e cobrar um refresh de
+             quem só quer ver o cardápio é uma ida e volta jogada fora */
+          if (!hadSession()) throw error
 
-        const refreshed = await refreshSession()
-        if (!refreshed) throw error
-      },
-    ],
-  },
-})
+          const refreshed = await refreshSession(bareClient)
+          if (!refreshed) throw error
+        },
+      ],
+    },
+  })
 
 const messageOf = async (response: Response): Promise<string> => {
   const fallback = HTTP_ERRORS[response.status] ?? response.statusText
@@ -99,17 +107,19 @@ const run = async <T>(request: ResponsePromise): Promise<T> => {
   }
 }
 
-export const get = <T>(url: string): Promise<T> => run<T>(client.get(url))
+/**
+ * Client HTTP base, ciente de sessão — encapsula `ky` por completo, sem
+ * vazar nada dele pra fora. Todo `*.service.ts` consome os verbos aqui via
+ * `services/http.service.ts`, nunca `ky` direto.
+ */
+export const createHttpClient = (baseUrl: string = BASE_URL): HttpClient => {
+  const transport = withSessionRefresh(createBareClient(baseUrl))
 
-export const getWith = <T>(
-  url: string,
-  params: Record<string, string | number>
-): Promise<T> => run<T>(client.get(url, { searchParams: params }))
-
-export const post = <B, T>(url: string, body: B): Promise<T> =>
-  run<T>(client.post(url, { json: body }))
-
-export const patch = <B, T>(url: string, body: B): Promise<T> =>
-  run<T>(client.patch(url, { json: body }))
-
-export const del = <T>(url: string): Promise<T> => run<T>(client.delete(url))
+  return {
+    get: (url, options) =>
+      run(transport.get(url, { searchParams: options?.searchParams })),
+    post: (url, body) => run(transport.post(url, { json: body })),
+    patch: (url, body) => run(transport.patch(url, { json: body })),
+    delete: (url) => run(transport.delete(url)),
+  }
+}

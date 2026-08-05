@@ -2,7 +2,7 @@ import { useQuery } from '@tanstack/react-query'
 
 import { queryKeys } from '@constants/query-keys'
 import type { PublicTenantSettings } from '@custom_types/settings/public-tenant-settings'
-import { getPublicSettings } from '@services/settings/settings.service'
+import { getPublicSettings } from '@services/settings.service'
 
 export const usePublicSettings = (tenantId: string | undefined) => {
   const query = useQuery<PublicTenantSettings>({

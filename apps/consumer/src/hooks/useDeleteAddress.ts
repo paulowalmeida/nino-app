@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 
 import { queryKeys } from '@constants/query-keys'
-import { deleteMyAddress } from '@services/address/address.service'
+import { deleteMyAddress } from '@services/address.service'
 
 export const useDeleteAddress = () => {
   const queryClient = useQueryClient()

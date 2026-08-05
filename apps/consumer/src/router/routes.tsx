@@ -1,24 +1,22 @@
 import { createBrowserRouter, Navigate, type RouteObject } from 'react-router'
 
-const Home = () =>
-  import('@pages/home/Home').then(({ Home: Home }) => ({
-    Component: Home,
-  }))
+const homeLazy = () =>
+  import('@pages/home/Home').then(({ Home }) => ({ Component: Home }))
 
-const checkout = () =>
+const checkoutLazy = () =>
   import('@pages/checkout/Checkout').then(({ Checkout }) => ({
     Component: Checkout,
   }))
 
-const orderTracking = () =>
+const orderTrackingLazy = () =>
   import('@pages/order-tracking/OrderTracking').then(({ OrderTracking }) => ({
     Component: OrderTracking,
   }))
 
-const signIn = () =>
+const signInLazy = () =>
   import('@pages/sign-in/SignIn').then(({ SignIn }) => ({ Component: SignIn }))
 
-const account = () =>
+const accountLazy = () =>
   import('@pages/account/Account').then(({ Account }) => ({
     Component: Account,
   }))
@@ -66,44 +64,44 @@ const accountChildren: RouteObject[] = [
 export const router = createBrowserRouter([
   {
     path: '/',
-    lazy: Home,
+    lazy: homeLazy,
   },
   {
     path: '/:slug',
-    lazy: Home,
+    lazy: homeLazy,
   },
   {
     path: '/checkout',
-    lazy: checkout,
+    lazy: checkoutLazy,
   },
   {
     path: '/:slug/checkout',
-    lazy: checkout,
+    lazy: checkoutLazy,
   },
   {
     path: '/pedido/:orderId',
-    lazy: orderTracking,
+    lazy: orderTrackingLazy,
   },
   {
     path: '/:slug/pedido/:orderId',
-    lazy: orderTracking,
+    lazy: orderTrackingLazy,
   },
   {
     path: '/entrar',
-    lazy: signIn,
+    lazy: signInLazy,
   },
   {
     path: '/:slug/entrar',
-    lazy: signIn,
+    lazy: signInLazy,
   },
   {
     path: '/conta',
-    lazy: account,
+    lazy: accountLazy,
     children: accountChildren,
   },
   {
     path: '/:slug/conta',
-    lazy: account,
+    lazy: accountLazy,
     children: accountChildren,
   },
 ])

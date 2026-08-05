@@ -2,20 +2,23 @@ import type { CreateGuestOrderRequest } from '@custom_types/order/create-guest-o
 import type { GuestOrderCreatedResponse } from '@custom_types/order/guest-order-created-response'
 import type { GuestOrderStatus } from '@custom_types/order/guest-order-status'
 import type { MyOrder } from '@custom_types/order/my-order'
-import { get, getWith, post } from '@services/api/api.service'
+import { api } from '@services/http.service'
 
 /** Pedido sem conta — o único jeito de comprar até o login do cliente existir. */
 export const createGuestOrder = (
   data: CreateGuestOrderRequest
 ): Promise<GuestOrderCreatedResponse> =>
-  post<CreateGuestOrderRequest, GuestOrderCreatedResponse>('orders/guest', data)
+  api.post<CreateGuestOrderRequest, GuestOrderCreatedResponse>(
+    'orders/guest',
+    data
+  )
 
 /** O token prova que quem pergunta é quem pediu — sem ele, 404. */
 export const getGuestOrderStatus = (
   orderId: string,
   token: string
 ): Promise<GuestOrderStatus> =>
-  getWith<GuestOrderStatus>(`orders/guest/${orderId}/status`, { token })
+  api.getWith<GuestOrderStatus>(`orders/guest/${orderId}/status`, { token })
 
 /**
  * Histórico do cliente logado. A API pagina; a primeira página cobre o que
@@ -23,7 +26,7 @@ export const getGuestOrderStatus = (
  * está procurando um pedido específico, e para isso existe o link direto.
  */
 export const listMyOrders = async (): Promise<MyOrder[]> => {
-  const page = await get<{ data: MyOrder[] }>('my/orders')
+  const page = await api.get<{ data: MyOrder[] }>('my/orders')
   return page.data
 }
 
@@ -36,7 +39,7 @@ export const listMyOrders = async (): Promise<MyOrder[]> => {
 export const getMyOrderStatus = async (
   orderId: string
 ): Promise<GuestOrderStatus> => {
-  const order = await get<{
+  const order = await api.get<{
     id: string
     status: GuestOrderStatus['status']
     channel: GuestOrderStatus['channel']

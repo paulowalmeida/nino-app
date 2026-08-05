@@ -2,8 +2,8 @@ import { useMutation, useQueryClient } from '@tanstack/react-query'
 
 import { queryKeys } from '@constants/query-keys'
 import type { Customer } from '@custom_types/customer/customer'
-import type { OtpCredentials } from '@services/auth/customer-auth.service'
-import { verifyOtp } from '@services/auth/customer-auth.service'
+import type { OtpCredentials } from '@services/customer-auth.service'
+import { verifyOtp } from '@services/customer-auth.service'
 import { rememberSession } from '@utils/session-hint'
 
 /**

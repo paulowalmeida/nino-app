@@ -2,7 +2,7 @@ import { useQuery } from '@tanstack/react-query'
 
 import { queryKeys } from '@constants/query-keys'
 import type { Address } from '@custom_types/address/address'
-import { listMyAddresses } from '@services/address/address.service'
+import { listMyAddresses } from '@services/address.service'
 
 /**
  * O principal sobe para o topo: é o endereço que o checkout vai propor, e

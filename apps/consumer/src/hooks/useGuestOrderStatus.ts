@@ -5,7 +5,7 @@ import type { GuestOrderStatus } from '@custom_types/order/guest-order-status'
 import {
   getGuestOrderStatus,
   getMyOrderStatus,
-} from '@services/order/order.service'
+} from '@services/order.service'
 
 const TERMINAL = new Set(['DELIVERED', 'COMPLETED', 'CANCELLED'])
 

@@ -5,7 +5,7 @@ import type { SaveAddressRequest } from '@custom_types/address/save-address-requ
 import {
   createMyAddress,
   updateMyAddress,
-} from '@services/address/address.service'
+} from '@services/address.service'
 
 type SaveAddress = { id?: string; data: SaveAddressRequest }
 
