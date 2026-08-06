@@ -1,0 +1,104 @@
+@reference "../../styles/globals.css";
+
+.backdrop {
+  @apply fixed inset-0 z-40 bg-black/50 backdrop-blur-sm duration-200;
+  @apply data-[state=open]:animate-in data-[state=open]:fade-in-0;
+  @apply data-[state=closed]:animate-out data-[state=closed]:fade-out-0;
+}
+
+.positioner {
+  @apply fixed inset-0 z-50 flex overflow-hidden;
+}
+
+.alignRight {
+  @apply ml-auto;
+}
+
+.alignLeft {
+  @apply mr-auto;
+}
+
+.alignBottom {
+  @apply mt-auto;
+}
+
+.alignTop {
+  @apply mb-auto;
+}
+
+.sizeVertical {
+  @apply h-full;
+}
+
+.sizeHorizontal {
+  @apply w-full;
+}
+
+.animateRight {
+  @apply data-[state=open]:animate-in data-[state=closed]:animate-out;
+  @apply data-[state=closed]:slide-out-to-right;
+  @apply data-[state=open]:slide-in-from-right;
+}
+
+.animateLeft {
+  @apply data-[state=open]:animate-in data-[state=closed]:animate-out;
+  @apply data-[state=closed]:slide-out-to-left;
+  @apply data-[state=open]:slide-in-from-left;
+}
+
+.animateBottom {
+  @apply data-[state=open]:animate-in data-[state=closed]:animate-out;
+  @apply data-[state=closed]:slide-out-to-bottom;
+  @apply data-[state=open]:slide-in-from-bottom;
+}
+
+.animateTop {
+  @apply data-[state=open]:animate-in data-[state=closed]:animate-out;
+  @apply data-[state=closed]:slide-out-to-top;
+  @apply data-[state=open]:slide-in-from-top;
+}
+
+/* `max-w-full` guards against the default `size` (400px) overflowing
+   viewports narrower than that when the app doesn't pass a responsive one. */
+.content {
+  @apply flex max-w-full flex-col bg-white shadow-overlay outline-none;
+  @apply duration-300;
+}
+
+.header {
+  @apply flex items-center justify-between px-6 pb-2 pt-6;
+}
+
+.title {
+  @apply font-display text-base font-semibold tracking-[-0.01em] text-ink;
+}
+
+.description {
+  @apply mt-1 text-[0.8125rem] leading-[1.45] text-muted;
+}
+
+.body {
+  @apply flex-1 overflow-y-auto px-6 py-4;
+}
+
+/* p-3.5 around a 16px icon adds up to a 44px tap target — screens.md,
+   "Alvos de toque". */
+.closeButton {
+  @apply flex cursor-pointer rounded-full p-3.5 text-faint transition-colors;
+  @apply hover:bg-sand hover:text-ink;
+  @apply focus-visible:outline-2 focus-visible:outline-brand;
+  @apply focus-visible:outline-offset-2;
+}
+
+/*
+ * 44px touch target to grab, thinner pill inside. `touch-none` is required,
+ * not cosmetic: without it the phone reads the first finger movement as
+ * page scroll and cancels the pointer before the JS can accumulate offset.
+ */
+.dragHandleRow {
+  @apply flex h-11 shrink-0 touch-none cursor-grab items-center justify-center;
+}
+
+.dragHandlePill {
+  @apply h-1 w-9 rounded-full bg-black/15;
+}

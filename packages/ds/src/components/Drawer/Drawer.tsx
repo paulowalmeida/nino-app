@@ -2,79 +2,92 @@ import { PointerEvent, useRef } from 'react'
 
 import { Dialog as ArkDialog } from '@ark-ui/react/dialog'
 import { Portal } from '@ark-ui/react/portal'
+import { Icon } from '@ds/components/Icon/Icon'
 import { mergeClasses } from '@ds/lib/mergeClasses'
 
+import styles from './Drawer.module.css'
 import { DrawerPlacement, DrawerProps } from './Drawer.types'
 
-/** Distância mínima arrastando pra baixo pra soltar a comanda em vez de voltar. */
 const DISMISS_OFFSET_PX = 96
 const SPRING_BACK_MS = 200
-const SLIDE_OUT_MS = 180
+const SLIDE_OUT_MS = 260
 
-const backdropClass =
-  'fixed inset-0 z-40 bg-black/50 backdrop-blur-sm data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 duration-200'
-
-const positionerClass = 'fixed inset-0 z-50 flex overflow-hidden'
+/*
+ * Settling back decelerates (same entry curve as the rest of the app).
+ * Dismissing is the opposite: it starts slow and speeds up leaving, to read
+ * as something dropped rather than a hard cut at whatever speed the hand
+ * had when it let go.
+ */
+const EASE_SETTLE = 'cubic-bezier(0.16, 1, 0.3, 1)'
+const EASE_DISMISS = 'cubic-bezier(0.32, 0, 0.67, 0)'
+const SETTLE_TRANSITION = `transform ${SPRING_BACK_MS}ms ${EASE_SETTLE}`
+const DISMISS_TRANSITION = `transform ${SLIDE_OUT_MS}ms ${EASE_DISMISS}`
 
 const alignByPlacement: Record<DrawerPlacement, string> = {
-  right: 'ml-auto',
-  left: 'mr-auto',
-  bottom: 'mt-auto',
-  top: 'mb-auto',
+  right: styles.alignRight,
+  left: styles.alignLeft,
+  bottom: styles.alignBottom,
+  top: styles.alignTop,
 }
 
 const sizeByPlacement: Record<DrawerPlacement, string> = {
-  right: 'h-full',
-  left: 'h-full',
-  bottom: 'w-full',
-  top: 'w-full',
+  right: styles.sizeVertical,
+  left: styles.sizeVertical,
+  bottom: styles.sizeHorizontal,
+  top: styles.sizeHorizontal,
 }
 
 const animationByPlacement: Record<DrawerPlacement, string> = {
-  right:
-    'data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:slide-out-to-right data-[state=open]:slide-in-from-right',
-  left: 'data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:slide-out-to-left data-[state=open]:slide-in-from-left',
-  bottom:
-    'data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:slide-out-to-bottom data-[state=open]:slide-in-from-bottom',
-  top: 'data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:slide-out-to-top data-[state=open]:slide-in-from-top',
+  right: styles.animateRight,
+  left: styles.animateLeft,
+  bottom: styles.animateBottom,
+  top: styles.animateTop,
 }
 
-const baseContent =
-  'flex flex-col bg-white shadow-overlay outline-none duration-300'
+/*
+ * Imperative drag instead of framer-motion: `ArkDialog.Content` already
+ * owns the enter/exit animation (the `animate-in`/`animate-out` classes via
+ * `data-state`) — a `motion.div` would have to take over that role too,
+ * duplicating what Ark already does. Only the top handle gets the pointer
+ * down, so the scrollable body keeps its own scroll gesture.
+ */
+const useDrawerDrag = (onOpenChange: (open: boolean) => void) => {
+  const contentRef = useRef<HTMLDivElement>(null)
+  const dragStartY = useRef<number | null>(null)
 
-const baseHeader = 'flex items-center justify-between px-6 pb-2 pt-6'
+  const handleDragStart = (event: PointerEvent<HTMLDivElement>) => {
+    dragStartY.current = event.clientY
+    event.currentTarget.setPointerCapture(event.pointerId)
+  }
 
-const titleClass =
-  'font-display text-base font-semibold tracking-[-0.01em] text-ink'
-const descriptionClass = 'mt-1 text-[0.8125rem] leading-[1.45] text-muted'
-const baseBody = 'flex-1 overflow-y-auto px-6 py-4'
+  const handleDragMove = (event: PointerEvent<HTMLDivElement>) => {
+    if (dragStartY.current === null || !contentRef.current) return
+    const offset = Math.max(0, event.clientY - dragStartY.current)
+    contentRef.current.style.transform = `translateY(${offset}px)`
+  }
 
-const closeButtonClass =
-  'cursor-pointer rounded-full p-1.5 text-faint transition-colors ' +
-  'hover:bg-sand ' +
-  'hover:text-ink focus-visible:outline-2 focus-visible:outline-brand ' +
-  'focus-visible:outline-offset-2'
+  const handleDragEnd = (event: PointerEvent<HTMLDivElement>) => {
+    const content = contentRef.current
+    if (dragStartY.current === null || !content) return
+    const offset = Math.max(0, event.clientY - dragStartY.current)
+    dragStartY.current = null
 
-/* Alvo de toque de 44px pra segurar, pílula visual mais fina por dentro —
-   ver screens.md, "Alvos de toque". */
-const dragHandleRowClass =
-  'flex h-11 shrink-0 cursor-grab items-center justify-center'
-const dragHandlePillClass = 'h-1 w-9 rounded-full bg-black/15'
+    if (offset > DISMISS_OFFSET_PX) {
+      content.style.transition = DISMISS_TRANSITION
+      content.style.transform = 'translateY(100%)'
+      window.setTimeout(() => onOpenChange(false), SLIDE_OUT_MS)
+      return
+    }
 
-const CloseIcon = () => (
-  <svg
-    width="16"
-    height="16"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="2"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-  >
-    <path d="M18 6 6 18M6 6l12 12" />
-  </svg>
-)
+    content.style.transition = SETTLE_TRANSITION
+    content.style.transform = ''
+    window.setTimeout(() => {
+      content.style.transition = ''
+    }, SPRING_BACK_MS)
+  }
+
+  return { contentRef, handleDragStart, handleDragMove, handleDragEnd }
+}
 
 export function Drawer({
   open,
@@ -97,48 +110,8 @@ export function Drawer({
       ? { width: '400px' }
       : { height: '320px' }
 
-  const contentRef = useRef<HTMLDivElement>(null)
-  const dragStartY = useRef<number | null>(null)
-
-  /*
-   * Arraste imperativo em vez de framer-motion: o `ArkDialog.Content` já é
-   * quem controla a animação de entrada/saída (as classes `animate-in`/
-   * `animate-out` via `data-state`) — um `motion.div` teria que assumir esse
-   * papel também, duplicando o que o Ark já faz. Só a pílula do topo recebe
-   * o pointer down, então a lista rolável do corpo não perde o próprio
-   * gesto de scroll.
-   */
-  const handleDragStart = (event: PointerEvent<HTMLDivElement>) => {
-    dragStartY.current = event.clientY
-    event.currentTarget.setPointerCapture(event.pointerId)
-  }
-
-  const handleDragMove = (event: PointerEvent<HTMLDivElement>) => {
-    if (dragStartY.current === null || !contentRef.current) return
-    const offset = Math.max(0, event.clientY - dragStartY.current)
-    contentRef.current.style.transform = `translateY(${offset}px)`
-  }
-
-  const handleDragEnd = (event: PointerEvent<HTMLDivElement>) => {
-    const node = contentRef.current
-    if (dragStartY.current === null || !node) return
-    const offset = Math.max(0, event.clientY - dragStartY.current)
-    dragStartY.current = null
-
-    node.style.transition = `transform ${SPRING_BACK_MS}ms cubic-bezier(0.16, 1, 0.3, 1)`
-
-    if (offset > DISMISS_OFFSET_PX) {
-      node.style.transitionDuration = `${SLIDE_OUT_MS}ms`
-      node.style.transform = 'translateY(100%)'
-      window.setTimeout(() => onOpenChange(false), SLIDE_OUT_MS)
-      return
-    }
-
-    node.style.transform = ''
-    window.setTimeout(() => {
-      node.style.transition = ''
-    }, SPRING_BACK_MS)
-  }
+  const { contentRef, handleDragStart, handleDragMove, handleDragEnd } =
+    useDrawerDrag(onOpenChange)
 
   return (
     <ArkDialog.Root
@@ -148,12 +121,12 @@ export function Drawer({
       unmountOnExit
     >
       <Portal>
-        <ArkDialog.Backdrop className={backdropClass} />
-        <ArkDialog.Positioner className={positionerClass}>
+        <ArkDialog.Backdrop className={styles.backdrop} />
+        <ArkDialog.Positioner className={styles.positioner}>
           <ArkDialog.Content
             ref={contentRef}
             className={mergeClasses(
-              baseContent,
+              styles.content,
               sizeByPlacement[placement],
               alignByPlacement[placement],
               animationByPlacement[placement],
@@ -163,39 +136,39 @@ export function Drawer({
           >
             {isDraggable && (
               <div
-                className={dragHandleRowClass}
+                className={styles.dragHandleRow}
                 aria-hidden="true"
                 onPointerDown={handleDragStart}
                 onPointerMove={handleDragMove}
                 onPointerUp={handleDragEnd}
                 onPointerCancel={handleDragEnd}
               >
-                <div className={dragHandlePillClass} />
+                <div className={styles.dragHandlePill} />
               </div>
             )}
             {(title || description) && (
-              <div className={baseHeader}>
+              <div className={styles.header}>
                 <div>
                   {title && (
-                    <ArkDialog.Title className={titleClass}>
+                    <ArkDialog.Title className={styles.title}>
                       {title}
                     </ArkDialog.Title>
                   )}
                   {description && (
-                    <ArkDialog.Description className={descriptionClass}>
+                    <ArkDialog.Description className={styles.description}>
                       {description}
                     </ArkDialog.Description>
                   )}
                 </div>
                 <ArkDialog.CloseTrigger
-                  className={closeButtonClass}
-                  aria-label="Close"
+                  className={styles.closeButton}
+                  aria-label="Fechar"
                 >
-                  <CloseIcon />
+                  <Icon name="x" size="sm" />
                 </ArkDialog.CloseTrigger>
               </div>
             )}
-            <div className={mergeClasses(baseBody, bodyClassName ?? '')}>
+            <div className={mergeClasses(styles.body, bodyClassName ?? '')}>
               {children}
             </div>
           </ArkDialog.Content>
@@ -204,5 +177,3 @@ export function Drawer({
     </ArkDialog.Root>
   )
 }
-
-Drawer.displayName = 'Drawer'
