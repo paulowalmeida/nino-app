@@ -1,8 +1,15 @@
+import { PointerEvent, useRef } from 'react'
+
 import { Dialog as ArkDialog } from '@ark-ui/react/dialog'
 import { Portal } from '@ark-ui/react/portal'
 import { mergeClasses } from '@ds/lib/mergeClasses'
 
 import { DrawerPlacement, DrawerProps } from './Drawer.types'
+
+/** Distância mínima arrastando pra baixo pra soltar a comanda em vez de voltar. */
+const DISMISS_OFFSET_PX = 96
+const SPRING_BACK_MS = 200
+const SLIDE_OUT_MS = 180
 
 const backdropClass =
   'fixed inset-0 z-40 bg-black/50 backdrop-blur-sm data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 duration-200'
@@ -48,6 +55,12 @@ const closeButtonClass =
   'hover:text-ink focus-visible:outline-2 focus-visible:outline-brand ' +
   'focus-visible:outline-offset-2'
 
+/* Alvo de toque de 44px pra segurar, pílula visual mais fina por dentro —
+   ver screens.md, "Alvos de toque". */
+const dragHandleRowClass =
+  'flex h-11 shrink-0 cursor-grab items-center justify-center'
+const dragHandlePillClass = 'h-1 w-9 rounded-full bg-black/15'
+
 const CloseIcon = () => (
   <svg
     width="16"
@@ -75,6 +88,7 @@ export function Drawer({
   bodyClassName,
 }: DrawerProps) {
   const isHorizontal = placement === 'left' || placement === 'right'
+  const isDraggable = placement === 'bottom'
   const sizeStyle = size
     ? isHorizontal
       ? { width: size }
@@ -82,6 +96,49 @@ export function Drawer({
     : isHorizontal
       ? { width: '400px' }
       : { height: '320px' }
+
+  const contentRef = useRef<HTMLDivElement>(null)
+  const dragStartY = useRef<number | null>(null)
+
+  /*
+   * Arraste imperativo em vez de framer-motion: o `ArkDialog.Content` já é
+   * quem controla a animação de entrada/saída (as classes `animate-in`/
+   * `animate-out` via `data-state`) — um `motion.div` teria que assumir esse
+   * papel também, duplicando o que o Ark já faz. Só a pílula do topo recebe
+   * o pointer down, então a lista rolável do corpo não perde o próprio
+   * gesto de scroll.
+   */
+  const handleDragStart = (event: PointerEvent<HTMLDivElement>) => {
+    dragStartY.current = event.clientY
+    event.currentTarget.setPointerCapture(event.pointerId)
+  }
+
+  const handleDragMove = (event: PointerEvent<HTMLDivElement>) => {
+    if (dragStartY.current === null || !contentRef.current) return
+    const offset = Math.max(0, event.clientY - dragStartY.current)
+    contentRef.current.style.transform = `translateY(${offset}px)`
+  }
+
+  const handleDragEnd = (event: PointerEvent<HTMLDivElement>) => {
+    const node = contentRef.current
+    if (dragStartY.current === null || !node) return
+    const offset = Math.max(0, event.clientY - dragStartY.current)
+    dragStartY.current = null
+
+    node.style.transition = `transform ${SPRING_BACK_MS}ms cubic-bezier(0.16, 1, 0.3, 1)`
+
+    if (offset > DISMISS_OFFSET_PX) {
+      node.style.transitionDuration = `${SLIDE_OUT_MS}ms`
+      node.style.transform = 'translateY(100%)'
+      window.setTimeout(() => onOpenChange(false), SLIDE_OUT_MS)
+      return
+    }
+
+    node.style.transform = ''
+    window.setTimeout(() => {
+      node.style.transition = ''
+    }, SPRING_BACK_MS)
+  }
 
   return (
     <ArkDialog.Root
@@ -94,6 +151,7 @@ export function Drawer({
         <ArkDialog.Backdrop className={backdropClass} />
         <ArkDialog.Positioner className={positionerClass}>
           <ArkDialog.Content
+            ref={contentRef}
             className={mergeClasses(
               baseContent,
               sizeByPlacement[placement],
@@ -103,6 +161,18 @@ export function Drawer({
             )}
             style={sizeStyle}
           >
+            {isDraggable && (
+              <div
+                className={dragHandleRowClass}
+                aria-hidden="true"
+                onPointerDown={handleDragStart}
+                onPointerMove={handleDragMove}
+                onPointerUp={handleDragEnd}
+                onPointerCancel={handleDragEnd}
+              >
+                <div className={dragHandlePillClass} />
+              </div>
+            )}
             {(title || description) && (
               <div className={baseHeader}>
                 <div>

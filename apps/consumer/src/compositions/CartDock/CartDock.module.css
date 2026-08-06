@@ -6,7 +6,8 @@
  * cima. É a peça que empilha com o rodapé em vez de pairar solta sobre ele.
  */
 .dock {
-  @apply fixed inset-x-0 bottom-16 z-30 bg-brand-foreground px-4 py-3;
+  @apply fixed inset-x-0 bottom-16 z-30 cursor-pointer bg-brand-foreground;
+  @apply px-4 py-3;
   box-shadow: 0 -10px 30px -20px rgba(26, 18, 6, 0.45);
 }
 
