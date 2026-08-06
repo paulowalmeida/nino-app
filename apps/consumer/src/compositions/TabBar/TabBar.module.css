@@ -7,8 +7,8 @@
 }
 
 .tab {
-  @apply flex flex-1 flex-col items-center justify-center gap-1 text-faint;
-  @apply transition-colors;
+  @apply flex h-full flex-1 flex-col items-center justify-center gap-1;
+  @apply text-faint transition-colors;
 }
 
 .tabOn {
@@ -22,8 +22,8 @@
  * O destaque cabe dentro da altura da barra: mesma linha, outro peso.
  */
 .home {
-  @apply flex flex-1 flex-col items-center justify-center gap-0.5 text-faint;
-  @apply transition-colors;
+  @apply flex h-full flex-1 flex-col items-center justify-center gap-0.5;
+  @apply text-faint transition-colors;
 }
 
 .homeRing {

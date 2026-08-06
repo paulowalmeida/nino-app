@@ -25,9 +25,19 @@ const names = readdirSync(iconsDir)
 const symbols = names.map((name) => {
   const source = readFileSync(join(iconsDir, `${name}.svg`), 'utf8')
 
+  /*
+   * width/height do arquivo original (14x14 num viewBox 0 0 24 24, por
+   * exemplo) não podem ir pro <symbol>: um <use> que referencia um symbol
+   * com width/height próprios monta um viewport interno nesse tamanho,
+   * ancorado no canto superior-esquerdo em vez de preencher a caixa do
+   * <svg> que consome — o ícone renderiza deslocado. Só o viewBox deve
+   * reger a escala.
+   */
   const attributes = source
     .match(ROOT_ATTRIBUTES)[1]
     .replace(/\s+/g, ' ')
+    .replace(/\swidth="[^"]*"/, '')
+    .replace(/\sheight="[^"]*"/, '')
     .trim()
 
   const content = source
