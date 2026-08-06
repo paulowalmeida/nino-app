@@ -1,32 +1,67 @@
 import { Dialog as ArkDialog } from '@ark-ui/react/dialog'
 import { Portal } from '@ark-ui/react/portal'
-import { Icon } from '@ds/components/Icon/Icon'
 import { mergeClasses } from '@ds/lib/mergeClasses'
 
-import styles from './Drawer.module.css'
 import { DrawerPlacement, DrawerProps } from './Drawer.types'
-import { useDrawerDrag } from './useDragDrawer'
+
+const backdropClass =
+  'fixed inset-0 z-40 bg-black/50 backdrop-blur-sm data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 duration-200'
+
+const positionerClass = 'fixed inset-0 z-50 flex overflow-hidden'
 
 const alignByPlacement: Record<DrawerPlacement, string> = {
-  right: styles.alignRight,
-  left: styles.alignLeft,
-  bottom: styles.alignBottom,
-  top: styles.alignTop,
+  right: 'ml-auto',
+  left: 'mr-auto',
+  bottom: 'mt-auto',
+  top: 'mb-auto',
 }
 
 const sizeByPlacement: Record<DrawerPlacement, string> = {
-  right: styles.sizeVertical,
-  left: styles.sizeVertical,
-  bottom: styles.sizeHorizontal,
-  top: styles.sizeHorizontal,
+  right: 'h-full',
+  left: 'h-full',
+  bottom: 'w-full',
+  top: 'w-full',
 }
 
 const animationByPlacement: Record<DrawerPlacement, string> = {
-  right: styles.animateRight,
-  left: styles.animateLeft,
-  bottom: styles.animateBottom,
-  top: styles.animateTop,
+  right:
+    'data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:slide-out-to-right data-[state=open]:slide-in-from-right',
+  left: 'data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:slide-out-to-left data-[state=open]:slide-in-from-left',
+  bottom:
+    'data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:slide-out-to-bottom data-[state=open]:slide-in-from-bottom',
+  top: 'data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:slide-out-to-top data-[state=open]:slide-in-from-top',
 }
+
+const baseContent =
+  'flex flex-col bg-white shadow-overlay outline-none duration-300'
+
+const baseHeader = 'flex items-center justify-between px-6 pb-2 pt-6'
+
+const titleClass =
+  'font-display text-base font-semibold tracking-[-0.01em] text-ink'
+const descriptionClass = 'mt-1 text-[0.8125rem] leading-[1.45] text-muted'
+const baseBody = 'flex-1 overflow-y-auto px-6 py-4'
+
+const closeButtonClass =
+  'cursor-pointer rounded-full p-1.5 text-faint transition-colors ' +
+  'hover:bg-sand ' +
+  'hover:text-ink focus-visible:outline-2 focus-visible:outline-brand ' +
+  'focus-visible:outline-offset-2'
+
+const CloseIcon = () => (
+  <svg
+    width="16"
+    height="16"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  >
+    <path d="M18 6 6 18M6 6l12 12" />
+  </svg>
+)
 
 export function Drawer({
   open,
@@ -40,7 +75,6 @@ export function Drawer({
   bodyClassName,
 }: DrawerProps) {
   const isHorizontal = placement === 'left' || placement === 'right'
-  const isDraggable = placement === 'bottom'
   const sizeStyle = size
     ? isHorizontal
       ? { width: size }
@@ -48,9 +82,6 @@ export function Drawer({
     : isHorizontal
       ? { width: '400px' }
       : { height: '320px' }
-
-  const { contentRef, handleDragStart, handleDragMove, handleDragEnd } =
-    useDrawerDrag(onOpenChange)
 
   return (
     <ArkDialog.Root
@@ -60,12 +91,11 @@ export function Drawer({
       unmountOnExit
     >
       <Portal>
-        <ArkDialog.Backdrop className={styles.backdrop} />
-        <ArkDialog.Positioner className={styles.positioner}>
+        <ArkDialog.Backdrop className={backdropClass} />
+        <ArkDialog.Positioner className={positionerClass}>
           <ArkDialog.Content
-            ref={contentRef}
             className={mergeClasses(
-              styles.content,
+              baseContent,
               sizeByPlacement[placement],
               alignByPlacement[placement],
               animationByPlacement[placement],
@@ -73,41 +103,29 @@ export function Drawer({
             )}
             style={sizeStyle}
           >
-            {isDraggable && (
-              <div
-                className={styles.dragHandleRow}
-                aria-hidden="true"
-                onPointerDown={handleDragStart}
-                onPointerMove={handleDragMove}
-                onPointerUp={handleDragEnd}
-                onPointerCancel={handleDragEnd}
-              >
-                <div className={styles.dragHandlePill} />
-              </div>
-            )}
             {(title || description) && (
-              <div className={styles.header}>
+              <div className={baseHeader}>
                 <div>
                   {title && (
-                    <ArkDialog.Title className={styles.title}>
+                    <ArkDialog.Title className={titleClass}>
                       {title}
                     </ArkDialog.Title>
                   )}
                   {description && (
-                    <ArkDialog.Description className={styles.description}>
+                    <ArkDialog.Description className={descriptionClass}>
                       {description}
                     </ArkDialog.Description>
                   )}
                 </div>
                 <ArkDialog.CloseTrigger
-                  className={styles.closeButton}
-                  aria-label="Fechar"
+                  className={closeButtonClass}
+                  aria-label="Close"
                 >
-                  <Icon name="x" size="sm" />
+                  <CloseIcon />
                 </ArkDialog.CloseTrigger>
               </div>
             )}
-            <div className={mergeClasses(styles.body, bodyClassName ?? '')}>
+            <div className={mergeClasses(baseBody, bodyClassName ?? '')}>
               {children}
             </div>
           </ArkDialog.Content>
@@ -116,3 +134,5 @@ export function Drawer({
     </ArkDialog.Root>
   )
 }
+
+Drawer.displayName = 'Drawer'
