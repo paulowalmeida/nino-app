@@ -17,3 +17,6 @@ plugins.md
 .vercel/
 .vercel
 .env*
+
+# saída do build do Storybook
+storybook-static
