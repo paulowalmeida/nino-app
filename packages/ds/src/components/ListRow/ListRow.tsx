@@ -14,10 +14,18 @@ type ListRowPadding = 0 | 1 | 1.5 | 2 | 2.5 | 3 | 4
 
 type ListRowProps = HTMLAttributes<HTMLLIElement> &
   MarginProps & {
+    /** Which edge carries the rule. Default: `top` */
     divider?: ListRowDivider
+    /**
+     * How the content lines up. Default: `center`; reach for `baseline` when
+     * text of different sizes has to sit on the same line
+     */
     align?: AlignValue
+    /** Space between the blocks in the row. Default: `3` */
     gap?: GapValue
+    /** Vertical breathing room. Default: `3` */
     padding?: ListRowPadding
+    /** Lets the content fall to the line below */
     wrap?: boolean
   }
 
@@ -47,21 +55,10 @@ const paddingClasses = {
  * from the one above — instead of the last one being left with a stray line
  * hanging under it.
  *
- * @param divider - Which edge carries the rule. Default: `top`
+ * Margins come from `MarginProps`: `m` on every side, `mt`/`mb`/`mx`/`my`
+ * to narrow it to one axis or side.
  *
- * @param align - How the content lines up. Default: `center`; reach for
- * `baseline` when text of different sizes has to sit on the same line
- *
- * @param gap - Space between the blocks in the row. Default: `3`
- *
- * @param padding - Vertical breathing room. Default: `3`
- *
- * @param wrap - Lets the content fall to the line below
- *
- * @param m - Margin on every side. `mt`, `mb`, `mx` and `my` narrow it to
- * one axis or side
- *
- * @example
+ * ```tsx
  * <Flexbox as="ul">
  *   {zones.map((zone) => (
  *     <ListRow key={zone.id}>
@@ -70,6 +67,7 @@ const paddingClasses = {
  *     </ListRow>
  *   ))}
  * </Flexbox>
+ * ```
  */
 export function ListRow({
   divider = 'top',

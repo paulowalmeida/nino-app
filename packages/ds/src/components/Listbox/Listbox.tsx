@@ -15,11 +15,18 @@ type ListboxOption = {
 }
 
 type ListboxProps = {
+  /** What can be picked. `disabled` greys out one entry */
   options: ListboxOption[]
+  /**
+   * Controlled selection. Leave it out and pass `defaultValue` to let the
+   * component keep its own
+   */
   value?: string[]
   defaultValue?: string[]
   onValueChange?: (value: string[]) => void
+  /** `single` (default) or `multiple` */
   selectionMode?: 'single' | 'multiple'
+  /** Heading above the list, tied to it for screen readers */
   label?: string
   className?: string
 }
@@ -32,21 +39,13 @@ type ListboxProps = {
  * enough to show at once — picking a printer, a delivery zone. When the list
  * is long or the choice is one field among many, `Select` costs less space.
  *
- * @param options - What can be picked. `disabled` greys out one entry
- *
- * @param value - Controlled selection. Leave it out and pass `defaultValue`
- * to let the component keep its own
- *
- * @param selectionMode - `single` (default) or `multiple`
- *
- * @param label - Heading above the list, tied to it for screen readers
- *
- * @example
+ * ```tsx
  * <Listbox
  *   label="Impressora"
  *   options={printers}
  *   onValueChange={([id]) => setPrinter(id)}
  * />
+ * ```
  */
 export function Listbox({
   options,
