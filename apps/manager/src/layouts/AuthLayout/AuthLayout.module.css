@@ -2,30 +2,21 @@
 
 /* fine grain overlay; host element must be positioned */
 .grain::before {
-  content: "";
+  content: '';
   position: absolute;
   inset: 0;
-  z-index: 0;
+  z-index: var(--z-base);
   pointer-events: none;
-  background-image: url("/noise.svg");
+  background-image: url('/noise.svg');
   background-size: 160px 160px;
   mix-blend-mode: multiply;
-}
-
-/* warm cream wash with a glow seeping from the brand panel edge */
-.warmBackdrop {
-  background: linear-gradient(
-    180deg,
-    var(--color-cream) 0%,
-    var(--color-cream-deep) 100%
-  );
 }
 
 /* subtle dot grid for the dark brand panel */
 .dotGrid {
   background-image: radial-gradient(
     circle at center,
-    rgba(255, 255, 255, 0.07) 1px,
+    color-mix(in srgb, var(--color-white) 7%, transparent) 1px,
     transparent 1px
   );
   background-size: 26px 26px;
@@ -33,18 +24,18 @@
 
 /* tagline highlight bar echoing the landing hero */
 .highlight {
-  @apply relative whitespace-nowrap text-white;
+  @apply relative whitespace-nowrap text-fg-on-brand;
 }
 .highlight::after {
-  content: "";
+  content: '';
   position: absolute;
   left: 0;
   right: 0;
   bottom: 0.08em;
   height: 0.16em;
   background: var(--color-brand);
-  border-radius: 2px;
-  z-index: -1;
+  border-radius: var(--radius-1);
+  z-index: var(--z-below);
 }
 
 @keyframes mascotFloat {
@@ -86,31 +77,31 @@
 
 /* layout — compose with the effects above via className in JSX */
 
-.shell {
-  @apply min-h-screen bg-white lg:grid lg:grid-cols-[1.05fr_1fr];
+.authShell {
+  @apply min-h-screen bg-surface-page lg:grid lg:grid-cols-[1.05fr_1fr];
 }
 
 .brandPanel {
-  @apply relative hidden overflow-hidden bg-dark;
+  @apply relative hidden overflow-hidden bg-fg-cool;
   @apply lg:flex lg:flex-col lg:justify-between lg:p-12;
 }
 
 .glowTop {
   @apply pointer-events-none absolute -right-24 -top-24;
-  @apply h-[28rem] w-[28rem] rounded-full bg-brand/30 blur-3xl;
+  @apply size-112 rounded-full bg-brand-bold blur-3xl;
 }
 
 .glowBottom {
   @apply pointer-events-none absolute -bottom-32 -left-20;
-  @apply h-80 w-80 rounded-full bg-brand/10 blur-3xl;
+  @apply h-80 w-80 rounded-full bg-brand-soft blur-3xl;
 }
 
 .brandLogo {
-  @apply relative z-10;
+  @apply relative z-content;
 }
 
-.mascotWrap {
-  @apply relative z-10 flex flex-1 items-center justify-center py-10;
+.mascotArea {
+  @apply relative z-content flex-1 py-10;
 }
 
 .mascotStage {
@@ -118,7 +109,8 @@
 }
 
 .mascotHalo {
-  @apply absolute inset-6 rounded-full bg-white/5 backdrop-blur-sm;
+  @apply absolute inset-6 rounded-full bg-surface-page/5;
+  @apply backdrop-blur-sm;
 }
 
 .mascot {
@@ -126,34 +118,40 @@
 }
 
 .tagline {
-  @apply relative z-10 max-w-lg;
+  @apply relative z-content max-w-lg;
 }
 
+/* Tamanho e peso vêm do Heading/Text do DS — o módulo carrega só o que a
+   API deles não expõe: a cor sobre o painel escuro. */
 .taglineTitle {
-  @apply font-display text-5xl font-extrabold leading-tight text-white;
+  @apply leading-tight text-fg-on-brand;
 }
 
 .taglineText {
-  @apply mt-3 text-lg leading-relaxed text-white/60;
+  @apply leading-relaxed text-fg-on-brand/60;
 }
 
+/* Papel branco, como toda tela do app: o creme fica para o que se levanta
+   dele, nunca para o fundo. */
 .formPanel {
-  @apply relative flex min-h-screen items-center justify-center;
-  @apply overflow-hidden px-6 py-12;
+  @apply relative min-h-screen bg-surface-page;
+  @apply overflow-hidden px-5 py-10 sm:px-6 sm:py-12;
 }
 
-.formInner {
-  @apply relative z-10 w-full max-w-md rounded-[1.75rem];
-  @apply border border-white/70 bg-white/75 p-8;
-  @apply backdrop-blur-md sm:p-10;
+/* No celular o cartão não existe como peça: fundo branco sobre fundo branco.
+   O recuo lateral quem dá é a tela, e aqui ele só volta quando o cartão
+   passa a ter largura própria. */
+.formCard {
+  @apply relative z-content w-full max-w-md rounded-6;
+  @apply bg-surface-page px-0 py-2 sm:p-10;
 }
 
 .mobileBrand {
-  @apply mb-9 flex justify-center lg:hidden;
+  @apply mb-9 lg:hidden;
 }
 
 /* mascot fills the "n" slot — bigger than the circle since the viewBox
    has its own inner margin */
 .mobileMascot {
-  @apply h-20 w-20 drop-shadow-lg;
+  @apply size-14 drop-shadow-lg;
 }

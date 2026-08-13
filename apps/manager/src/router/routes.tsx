@@ -24,16 +24,18 @@ export const router = createBrowserRouter([
       {
         path: '/entrar',
         loader: GuestGuard,
-        lazy: () => import('@pages/login/Login').then(({ Login }) => ({
-          Component: Login,
-        })),
+        lazy: () =>
+          import('@pages/login/Login').then(({ Login }) => ({
+            Component: Login,
+          })),
       },
       {
         path: '/cadastrar',
         loader: GuestGuard,
-        lazy: () => import('@pages/register/Register').then(({ Register }) => ({
-          Component: Register,
-        })),
+        lazy: () =>
+          import('@pages/register/Register').then(({ Register }) => ({
+            Component: Register,
+          })),
       },
     ],
   },

@@ -1,4 +1,4 @@
-import type { AddressLookup } from '@nino/lib/types/address'
+import type { AddressLookup } from '@nino/lib/types/address/address-lookup'
 
 export const foundAddress: AddressLookup = {
   street: 'Rua das Flores',

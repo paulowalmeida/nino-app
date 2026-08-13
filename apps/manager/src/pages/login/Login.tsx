@@ -1,86 +1,77 @@
 import { Link } from 'react-router'
-import { useForm } from 'react-hook-form'
 
 import { Alert } from '@nino/ds/components/Alert'
 import { Button } from '@nino/ds/components/Button'
+import { Flexbox } from '@nino/ds/components/Flexbox'
 import { FormField } from '@nino/ds/components/FormField'
+import { Heading } from '@nino/ds/components/Heading'
 import { Input } from '@nino/ds/components/Input'
 import { PasswordInput } from '@nino/ds/components/PasswordInput'
-import type { LoginRequest } from '@custom_types/auth/login-request'
-import { useLogin } from '@hooks/auth/useLogin'
-import { authErrorMessage } from '@utils/auth-error-message'
-import { riseDelay } from '@utils/rise-delay'
+import { Text } from '@nino/ds/components/Text'
+import { LOGIN_FIELD_RULES } from '@constants/auth.constants'
+import { RiseIn } from '@elements/RiseIn/RiseIn'
+import { useLoginForm } from '@hooks/auth/useLoginForm'
 
 import styles from '@styles/authForm.module.css'
-import motion from '@styles/rise.module.css'
 
-export const LoginForm = () => {
-  const { mutateAsync: login } = useLogin()
+export const Login = () => {
   const {
     register,
-    handleSubmit,
-    setError,
+    submit,
     formState: { errors, isSubmitting },
-  } = useForm<LoginRequest>()
-
-  const onSubmit = async (data: LoginRequest) => {
-    try {
-      await login(data)
-    } catch (error) {
-      setError('root', { message: authErrorMessage(error) })
-    }
-  }
+  } = useLoginForm()
 
   return (
-    <div>
-      <header
-        className={`${motion.rise} ${styles.header}`}
-        style={riseDelay(0)}
-      >
-        <h1 className={styles.title}>Bem-vindo</h1>
-      </header>
+    <Flexbox direction="column">
+      <RiseIn as="header">
+        <Heading level={1} size="2xl" align="center">
+          Bem-vindo
+        </Heading>
+      </RiseIn>
 
-      <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
-        <div className={motion.rise} style={riseDelay(120)}>
+      <Flexbox as="form" direction="column" gap={4} mt={8} onSubmit={submit}>
+        <RiseIn delay={120}>
           <FormField label="Email" error={errors.email?.message}>
             <Input
               type="email"
               placeholder="seu@email.com"
-              {...register('email', { required: 'Informe o email' })}
+              {...register('email', LOGIN_FIELD_RULES.email)}
             />
           </FormField>
-        </div>
+        </RiseIn>
 
-        <div className={motion.rise} style={riseDelay(200)}>
+        <RiseIn delay={200}>
           <FormField label="Senha" error={errors.password?.message}>
             <PasswordInput
               placeholder="••••••••"
               error={!!errors.password}
-              {...register('password', { required: 'Informe a senha' })}
+              {...register('password', LOGIN_FIELD_RULES.password)}
             />
           </FormField>
-        </div>
+        </RiseIn>
 
         {errors.root && <Alert variant="error">{errors.root.message}</Alert>}
 
-        <div className={motion.rise} style={riseDelay(280)}>
+        <RiseIn delay={280}>
           <Button
             type="submit"
             loading={isSubmitting}
-            className={styles.submit}
+            className={styles.fullWidthAction}
             loadingIndicator="dots"
           >
             Entrar
           </Button>
-        </div>
-      </form>
+        </RiseIn>
+      </Flexbox>
 
-      <p className={`${motion.rise} ${styles.footer}`} style={riseDelay(360)}>
-        Não tem conta?{' '}
-        <Link to="/cadastrar" className={styles.footerLink}>
-          Criar conta
-        </Link>
-      </p>
-    </div>
+      <RiseIn delay={360}>
+        <Text size="sm" color="muted" align="center" mt={8}>
+          Não tem conta?{' '}
+          <Link to="/cadastrar" className={styles.footerLink}>
+            Criar conta
+          </Link>
+        </Text>
+      </RiseIn>
+    </Flexbox>
   )
 }

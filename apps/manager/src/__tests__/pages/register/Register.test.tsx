@@ -3,7 +3,7 @@ import userEvent from '@testing-library/user-event'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 
 import type { SignupAccount } from '@custom_types/auth/signup-account'
-import { RegisterWizard } from '@compositions/RegisterWizard/RegisterWizard'
+import { Register } from '@pages/register/Register'
 
 const ACCOUNT: SignupAccount = {
   name: 'Weskley Almeida',
@@ -65,12 +65,12 @@ const stepMarkers = () =>
     .getAllByRole('listitem')
     .map((item) => item.querySelector('button')?.getAttribute('aria-current'))
 
-describe(RegisterWizard.name, () => {
+describe(Register.name, () => {
   beforeEach(() => vi.clearAllMocks())
 
   it('opens on the account step', async () => {
     // Arrange / Act
-    render(<RegisterWizard />)
+    render(<Register />)
 
     // Assert
     expect(screen.getByText('avançar conta')).toBeInTheDocument()
@@ -79,7 +79,7 @@ describe(RegisterWizard.name, () => {
 
   it('moves to the company step carrying the account along', async () => {
     // Arrange
-    render(<RegisterWizard />)
+    render(<Register />)
 
     // Act
     await userEvent.click(screen.getByText('avançar conta'))
@@ -91,7 +91,7 @@ describe(RegisterWizard.name, () => {
 
   it('gives the typed account back when the person goes back', async () => {
     // Arrange
-    render(<RegisterWizard />)
+    render(<Register />)
 
     // Act
     await userEvent.click(screen.getByText('avançar conta'))
@@ -103,7 +103,7 @@ describe(RegisterWizard.name, () => {
 
   it('leaves for the panel once the account and company are created', async () => {
     // Arrange
-    render(<RegisterWizard />)
+    render(<Register />)
 
     // Act
     await userEvent.click(screen.getByText('avançar conta'))
@@ -115,7 +115,7 @@ describe(RegisterWizard.name, () => {
 
   it('walks back to the account step from the stepper marker', async () => {
     // Arrange
-    render(<RegisterWizard />)
+    render(<Register />)
 
     // Act
     await userEvent.click(screen.getByText('avançar conta'))

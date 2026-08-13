@@ -1,26 +1,22 @@
 import { Link } from 'react-router'
-import { useForm } from 'react-hook-form'
 
 import { Alert } from '@nino/ds/components/Alert'
 import { Button } from '@nino/ds/components/Button'
 import { CpfInput } from '@nino/ds/components/CpfInput'
+import { Flexbox } from '@nino/ds/components/Flexbox'
 import { FormField } from '@nino/ds/components/FormField'
+import { Heading } from '@nino/ds/components/Heading'
 import { Input } from '@nino/ds/components/Input'
 import { PasswordInput } from '@nino/ds/components/PasswordInput'
 import { PasswordStrength } from '@nino/ds/components/PasswordStrength'
 import { PhoneInput } from '@nino/ds/components/PhoneInput'
-import { isValidCpf } from '@nino/ds/validators'
-import { useCheckAvailability } from '@hooks/auth/useCheckAvailability'
-import { EMAIL_PATTERN } from '@constants/auth.constants'
+import { Text } from '@nino/ds/components/Text'
+import { ACCOUNT_FIELD_RULES } from '@constants/auth.constants'
 import type { SignupAccount } from '@custom_types/auth/signup-account'
-import { riseDelay } from '@utils/rise-delay'
+import { RiseIn } from '@elements/RiseIn/RiseIn'
+import { useAccountForm } from '@hooks/auth/useAccountForm'
 
 import styles from '@styles/authForm.module.css'
-import motion from '@styles/rise.module.css'
-
-type AccountFormValues = SignupAccount & {
-  confirmPassword: string
-}
 
 export type AccountStepProps = {
   defaultValues?: SignupAccount | null
@@ -28,133 +24,82 @@ export type AccountStepProps = {
 }
 
 export const AccountStep = ({ defaultValues, onNext }: AccountStepProps) => {
-  const { mutateAsync: checkAvailability } = useCheckAvailability()
   const {
     register,
-    handleSubmit,
+    submit,
     getValues,
-    setError,
     watch,
     formState: { errors, isSubmitting },
-  } = useForm<AccountFormValues>({
-    mode: 'onTouched',
-    defaultValues: defaultValues
-      ? { ...defaultValues, confirmPassword: defaultValues.password }
-      : undefined,
-  })
+  } = useAccountForm({ defaultValues, onValid: onNext })
 
   const password = watch('password')
 
-  const onSubmit = async (data: AccountFormValues) => {
-    try {
-      const availability = await checkAvailability({
-        email: data.email,
-        cpf: data.cpf,
-      })
-
-      let isTaken = false
-      if (availability.email === false) {
-        setError('email', { message: 'E-mail já cadastrado' })
-        isTaken = true
-      }
-      if (availability.cpf === false) {
-        setError('cpf', { message: 'CPF já cadastrado' })
-        isTaken = true
-      }
-      if (isTaken) return
-
-      onNext({
-        name: data.name,
-        email: data.email,
-        password: data.password,
-        cpf: data.cpf,
-        phone: data.phone,
-      })
-    } catch {
-      setError('root', {
-        message: 'Não foi possível validar os dados. Tente de novo.',
-      })
-    }
-  }
-
   return (
-    <div>
-      <header
-        className={`${motion.rise} ${styles.header}`}
-        style={riseDelay(0)}
-      >
-        <h1 className={styles.title}>Crie sua conta</h1>
-        <p className={styles.subtitle}>
+    <Flexbox direction="column">
+      <RiseIn as="header">
+        <Heading level={1} size="2xl" align="center">
+          Crie sua conta
+        </Heading>
+        <Text size="sm" color="muted" align="center" mt={2}>
           Comece pelos seus dados de responsável
-        </p>
-      </header>
+        </Text>
+      </RiseIn>
 
-      <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
-        <div className={motion.rise} style={riseDelay(120)}>
+      <Flexbox as="form" direction="column" gap={4} mt={8} onSubmit={submit}>
+        <RiseIn delay={120}>
           <FormField label="Nome" error={errors.name?.message}>
             <Input
               placeholder="Seu nome"
-              {...register('name', { required: 'Informe o nome' })}
+              {...register('name', ACCOUNT_FIELD_RULES.name)}
             />
           </FormField>
-        </div>
+        </RiseIn>
 
-        <div className={motion.rise} style={riseDelay(180)}>
+        <RiseIn delay={180}>
           <FormField label="Email" error={errors.email?.message}>
             <Input
               type="email"
               placeholder="seu@email.com"
-              {...register('email', {
-                required: 'Informe o email',
-                pattern: { value: EMAIL_PATTERN, message: 'E-mail inválido' },
-              })}
+              {...register('email', ACCOUNT_FIELD_RULES.email)}
             />
           </FormField>
-        </div>
+        </RiseIn>
 
-        <div className={motion.rise} style={riseDelay(240)}>
+        <RiseIn delay={240}>
           <FormField label="Telefone" error={errors.phone?.message}>
             <PhoneInput
               error={!!errors.phone}
-              {...register('phone', { required: 'Informe o telefone' })}
+              {...register('phone', ACCOUNT_FIELD_RULES.phone)}
             />
           </FormField>
-        </div>
+        </RiseIn>
 
-        <div className={motion.rise} style={riseDelay(300)}>
+        <RiseIn delay={300}>
           <FormField label="CPF" error={errors.cpf?.message}>
             <CpfInput
               error={!!errors.cpf}
-              {...register('cpf', {
-                required: 'Informe o CPF',
-                validate: (value) => isValidCpf(value) || 'CPF inválido',
-              })}
+              {...register('cpf', ACCOUNT_FIELD_RULES.cpf)}
             />
           </FormField>
-        </div>
+        </RiseIn>
 
-        <div className={motion.rise} style={riseDelay(360)}>
+        <RiseIn delay={360}>
           <FormField label="Senha" error={errors.password?.message}>
             <PasswordInput
               placeholder="••••••••"
               error={!!errors.password}
-              {...register('password', {
-                required: 'Informe a senha',
-                minLength: {
-                  value: 8,
-                  message: 'A senha deve ter ao menos 8 caracteres',
-                },
-                maxLength: {
-                  value: 16,
-                  message: 'A senha deve ter no máximo 16 caracteres',
-                },
-              })}
+              {...register('password', ACCOUNT_FIELD_RULES.password)}
             />
           </FormField>
-          {password && <PasswordStrength password={password} />}
-        </div>
+          {password && (
+            <PasswordStrength
+              password={password}
+              className={styles.strengthMeter}
+            />
+          )}
+        </RiseIn>
 
-        <div className={motion.rise} style={riseDelay(420)}>
+        <RiseIn delay={420}>
           <FormField
             label="Confirmar senha"
             error={errors.confirmPassword?.message}
@@ -169,28 +114,30 @@ export const AccountStep = ({ defaultValues, onNext }: AccountStepProps) => {
               })}
             />
           </FormField>
-        </div>
+        </RiseIn>
 
         {errors.root && <Alert variant="error">{errors.root.message}</Alert>}
 
-        <div className={motion.rise} style={riseDelay(480)}>
+        <RiseIn delay={480}>
           <Button
             type="submit"
             loading={isSubmitting}
-            className={styles.submit}
+            className={styles.fullWidthAction}
             loadingIndicator="dots"
           >
             Continuar
           </Button>
-        </div>
-      </form>
+        </RiseIn>
+      </Flexbox>
 
-      <p className={`${motion.rise} ${styles.footer}`} style={riseDelay(540)}>
-        Já tem conta?{' '}
-        <Link to="/entrar" className={styles.footerLink}>
-          Entrar
-        </Link>
-      </p>
-    </div>
+      <RiseIn delay={540}>
+        <Text size="sm" color="muted" align="center" mt={8}>
+          Já tem conta?{' '}
+          <Link to="/entrar" className={styles.footerLink}>
+            Entrar
+          </Link>
+        </Text>
+      </RiseIn>
+    </Flexbox>
   )
 }
