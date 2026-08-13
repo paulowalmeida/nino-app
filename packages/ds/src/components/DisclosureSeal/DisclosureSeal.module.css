@@ -5,7 +5,19 @@
   @apply group-data-[state=open]:text-fg-on-brand;
 }
 
+/* A rotação é escrita em CSS puro na propriedade `rotate` para não disputar
+   com o `transform` do `Stamp` ao redor. */
 .chevron {
-  @apply transition-transform duration-base;
-  @apply group-data-[state=open]:rotate-180;
+  rotate: 0deg;
+  transition: rotate var(--duration-slow) var(--ease-out-soft);
+}
+
+:global(.group[data-state='open']) .chevron {
+  rotate: 180deg;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .chevron {
+    transition-duration: 1ms;
+  }
 }

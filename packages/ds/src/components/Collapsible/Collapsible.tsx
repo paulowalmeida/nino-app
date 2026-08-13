@@ -25,8 +25,8 @@ type CollapsibleProps = {
 
 /**
  * Show/hide a block of content behind a trigger (Ark `Collapsible`).
- * Closed, the trigger wears the brand surface; open, it steps back so the
- * revealed content reads first.
+ * The trigger sits on the neutral surface scale and only steps one shade
+ * darker when open, so the revealed content reads first.
  *
  * @param trigger - Always-visible toggle element
  *
