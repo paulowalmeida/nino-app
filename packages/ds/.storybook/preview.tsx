@@ -2,7 +2,7 @@ import type { Preview } from '@storybook/react'
 import { MotionConfig } from 'framer-motion'
 import { createRoot } from 'react-dom/client'
 
-import { ToastContainer } from '../src/components/Toast'
+import { ToastContainer } from '../src/components/Toast/Toast'
 
 import './preview.css'
 
@@ -55,16 +55,22 @@ const preview: Preview = {
             'CpfInput',
             'DatePicker',
             'Dialog',
+            'DisclosureSeal',
             'Drawer',
             'EmptyState',
             'Eyebrow',
             'FileUpload',
+            'Flexbox',
             'FormField',
+            'Grid',
+            'Header',
+            'Heading',
             'HoverCard',
             'Icon',
             'Input',
             'Label',
             'Listbox',
+            'ListRow',
             'LoadingDots',
             'MaskedInput',
             'Menu',
@@ -73,7 +79,6 @@ const preview: Preview = {
             'NinoMascot',
             'NumberInput',
             'OTPInput',
-            'PageHeader',
             'Pagination',
             'PasswordInput',
             'PasswordStrength',
@@ -91,11 +96,13 @@ const preview: Preview = {
             'Slider',
             'Sparkline',
             'Spinner',
+            'Stamp',
             'Stepper',
             'Switch',
             'Table',
             'Tabs',
             'TagsInput',
+            'Text',
             'Textarea',
             'TimePicker',
             'Toast',

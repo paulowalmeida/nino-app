@@ -12,7 +12,7 @@ import { fileURLToPath } from 'node:url'
 const here = dirname(fileURLToPath(import.meta.url))
 const iconsDir = join(here, '..', 'src', 'assets', 'icons')
 const spritePath = join(here, '..', 'src', 'assets', 'icons.sprite.svg')
-const typesPath = join(here, '..', 'src', 'components', 'Icon', 'Icon.types.ts')
+const namesPath = join(here, '..', 'src', 'components', 'Icon', 'Icon.names.ts')
 
 const ROOT_ATTRIBUTES = /<svg([^>]*)>/
 const INNER_CONTENT = /<svg[^>]*>([\s\S]*)<\/svg>/
@@ -70,6 +70,6 @@ const iconNameType = [
   '',
 ].join('\n')
 
-writeFileSync(typesPath, iconNameType)
+writeFileSync(namesPath, iconNameType)
 
 console.log(`Sprite written with ${names.length} icons.`)
