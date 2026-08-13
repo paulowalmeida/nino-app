@@ -3,7 +3,7 @@ import { OrderTicket } from '@compositions/OrderTicket/OrderTicket'
 import { OrderTimeline } from '@compositions/OrderTimeline/OrderTimeline'
 import type { WelcomePanelDemoKey } from '@constants/welcome.constants'
 
-import { demoOrder, demoTimeline } from '@pages/welcome/demo-order'
+import { demoOrder, demoTimeline } from '@utils/welcome-demo-order'
 
 const noop = () => {}
 

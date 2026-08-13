@@ -6,7 +6,7 @@ import { FormField } from '@nino/ds/components/FormField'
 import { Heading } from '@nino/ds/components/Heading'
 import { Input } from '@nino/ds/components/Input'
 import { Text } from '@nino/ds/components/Text'
-import { isValidCnpj } from '@nino/ds/validators'
+import { COMPANY_FIELD_RULES } from '@constants/auth.constants'
 import type { SignupAccount } from '@custom_types/auth/signup-account'
 import { RiseIn } from '@elements/RiseIn/RiseIn'
 import { useCompanyForm } from '@hooks/auth/useCompanyForm'
@@ -46,7 +46,7 @@ export const CompanyStep = ({
           <FormField label="Nome" error={errors.company?.name?.message}>
             <Input
               placeholder="Lanchonete do Zé"
-              {...register('company.name', { required: 'Informe o nome' })}
+              {...register('company.name', COMPANY_FIELD_RULES.name)}
             />
           </FormField>
         </RiseIn>
@@ -55,10 +55,7 @@ export const CompanyStep = ({
           <FormField label="CNPJ" error={errors.company?.cnpj?.message}>
             <CnpjInput
               error={!!errors.company?.cnpj}
-              {...register('company.cnpj', {
-                required: 'Informe o CNPJ',
-                validate: (value) => isValidCnpj(value) || 'CNPJ inválido',
-              })}
+              {...register('company.cnpj', COMPANY_FIELD_RULES.cnpj)}
             />
           </FormField>
         </RiseIn>

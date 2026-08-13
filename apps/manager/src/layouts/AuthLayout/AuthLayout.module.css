@@ -3,13 +3,9 @@
 /* fine grain overlay; host element must be positioned */
 .grain::before {
   content: '';
-  position: absolute;
-  inset: 0;
-  z-index: var(--z-base);
-  pointer-events: none;
+  @apply pointer-events-none absolute inset-0 z-base mix-blend-multiply;
   background-image: url('/noise.svg');
   background-size: 160px 160px;
-  mix-blend-mode: multiply;
 }
 
 /* subtle dot grid for the dark brand panel */
@@ -28,14 +24,9 @@
 }
 .highlight::after {
   content: '';
-  position: absolute;
-  left: 0;
-  right: 0;
+  @apply absolute inset-x-0 z-below rounded-1 bg-brand;
   bottom: 0.08em;
   height: 0.16em;
-  background: var(--color-brand);
-  border-radius: var(--radius-1);
-  z-index: var(--z-below);
 }
 
 @keyframes mascotFloat {

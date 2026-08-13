@@ -1,0 +1,44 @@
+@reference "@nino/ds/globals.css";
+
+.body {
+  @apply flex flex-1 flex-col-reverse gap-8 lg:grid lg:items-center;
+  @apply lg:grid-cols-[minmax(0,1fr)_minmax(0,26rem)] lg:gap-14;
+}
+
+.copy {
+  @apply min-w-0;
+}
+
+.stage {
+  @apply text-xs font-bold uppercase tracking-widest text-brand-strong;
+}
+
+.title {
+  @apply mt-3 font-display text-3xl font-extrabold leading-display;
+  @apply tracking-tight text-fg-strong lg:text-5xl;
+}
+
+.text {
+  @apply mt-4 max-w-md text-base leading-relaxed text-fg-subtle;
+}
+
+.reveal {
+  animation: reveal 0.4s var(--ease-out) both;
+}
+
+@keyframes reveal {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    animation: none;
+  }
+}

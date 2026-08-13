@@ -51,12 +51,14 @@ describe(SidebarNavItem.name, () => {
     expect(link).toHaveAttribute('href', '/tenant-1/visao-geral')
   })
 
-  it('hides the label when collapsed', () => {
+  it('keeps the label as the accessible name when collapsed', () => {
     // Arrange / Act
     renderItem(leafItem, { isCollapsed: true })
 
     // Assert
-    expect(screen.queryByText('Visão geral')).not.toBeInTheDocument()
+    expect(
+      screen.getByRole('link', { name: 'Visão geral' })
+    ).toBeInTheDocument()
   })
 
   it('shows the waiting badge for pedidos when the count is positive', () => {

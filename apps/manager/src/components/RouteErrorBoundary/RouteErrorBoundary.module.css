@@ -10,9 +10,5 @@
 }
 
 .title {
-  @apply font-display text-2xl font-extrabold tracking-tight text-fg-cool;
-}
-
-.subtitle {
-  @apply text-sm text-fg-muted;
+  @apply text-fg-cool;
 }

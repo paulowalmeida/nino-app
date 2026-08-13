@@ -1,12 +1,3 @@
-/*
- * Largura máxima. Os dois grupos são independentes: `page-*` é a faixa que
- * segura uma seção inteira contra a borda da tela; `block-*` é o quanto um
- * bloco de conteúdo pode crescer antes de a linha ficar longa demais para
- * ler.
- *
- * Largura de texto corrido continua em `ch` no próprio arquivo — a medida
- * certa ali é quantos caracteres cabem na linha, não quantos pixels.
- */
 @theme static {
   --container-page: 71rem;
   --container-page-narrow: 60rem;
@@ -17,10 +8,10 @@
   --container-block-sm: 17rem;
 }
 
-/*
- * Altura de linha. A escala (`tight` a `loose`) é a do Tailwind; só o degrau
- * de título grande mora aqui, onde a linha fecha quase na própria altura.
- */
+@theme static {
+  --width-sidebar-collapsed: 4.75rem;
+}
+
 @theme static {
   --leading-display: 1.05;
 }

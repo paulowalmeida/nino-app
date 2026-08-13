@@ -3,13 +3,6 @@ import type { OrderItem } from '@custom_types/order/order-item'
 import type { OrderStatusEntry } from '@custom_types/order/order-status-entry'
 import type { OrderStatusKey } from '@custom_types/order/order-status-key'
 
-/**
- * Pedido de mentira para as telas de verdade. O onboarding mostra os próprios
- * componentes do painel — ficha, comanda, linha do tempo —, então precisa de um
- * pedido plausível para alimentá-los: X-Salada e refrigerante, o combo que
- * qualquer lanchonete reconhece. Valores em string porque é assim que a API
- * entrega (Decimal do Prisma).
- */
 const AT = '2026-08-02T20:12:00.000Z'
 
 const item = (

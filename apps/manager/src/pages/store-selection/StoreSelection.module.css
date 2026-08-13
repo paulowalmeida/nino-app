@@ -6,29 +6,11 @@
 }
 
 .panel {
-  @apply w-full max-w-md rounded-[1.75rem] border border-fg-on-brand/70;
+  @apply w-full max-w-md rounded-6 border border-fg-on-brand/70;
   @apply bg-surface-page/75 p-8 shadow-2xl shadow-brand/10;
   @apply backdrop-blur-md;
 }
 
 .title {
-  @apply font-display text-3xl font-extrabold tracking-tight text-fg-cool;
-}
-
-.subtitle {
-  @apply mt-2 text-sm text-fg-muted;
-}
-
-/* superfície vem do Card do DS; aqui fica o que ele não sabe */
-.store {
-  @apply flex w-full flex-col items-start text-left transition-colors;
-  @apply hover:border-brand-bold hover:bg-surface-2;
-}
-
-.storeName {
-  @apply font-semibold text-fg-cool;
-}
-
-.storeUnit {
-  @apply mt-0.5 text-sm text-fg-muted;
+  @apply text-fg-cool;
 }

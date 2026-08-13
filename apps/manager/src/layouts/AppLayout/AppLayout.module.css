@@ -18,10 +18,6 @@
   @apply hover:bg-surface-raised/10 hover:text-fg-on-brand;
 }
 
-.hamburgerIcon {
-  @apply h-[18px] w-[18px];
-}
-
 .storeName {
   @apply min-w-0 truncate text-sm font-semibold text-fg-on-brand/85;
 }
@@ -41,5 +37,5 @@
 }
 
 .mainCollapsed {
-  @apply lg:ml-[4.75rem];
+  @apply lg:ml-(--width-sidebar-collapsed);
 }

@@ -1,0 +1,14 @@
+@reference "@nino/ds/globals.css";
+
+.card {
+  @apply flex w-full flex-col items-start text-left transition-colors;
+  @apply hover:border-brand-bold hover:bg-surface-2;
+}
+
+.name {
+  @apply text-fg-cool;
+}
+
+.unit {
+  @apply mt-0.5;
+}

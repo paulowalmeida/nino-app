@@ -2,7 +2,9 @@ import { useEffect, useState } from 'react'
 import { Outlet } from 'react-router'
 
 import { Button } from '@nino/ds/components/Button'
+import { Flexbox } from '@nino/ds/components/Flexbox'
 import { Icon } from '@nino/ds/components/Icon'
+import { Text } from '@nino/ds/components/Text'
 import { Sidebar } from '@compositions/Sidebar/Sidebar'
 import { useCurrentTenant } from '@hooks/session/useCurrentTenant'
 import {
@@ -19,12 +21,6 @@ export const AppLayout = () => {
 
   const closeMenu = () => setMenuOpen(false)
 
-  /*
-   * With the menu open on mobile, the whole page used to scroll behind the
-   * veil: a finger drag on the menu would drag the content too, landing on
-   * a shifted screen. `overflow` restores whatever it was before, instead
-   * of a fixed `''` — height-locked screens depend on their own value.
-   */
   useEffect(() => {
     if (!menuOpen) return
 
@@ -37,6 +33,17 @@ export const AppLayout = () => {
     }
   }, [menuOpen])
 
+  useEffect(() => {
+    if (!menuOpen) return
+
+    const closeOnEscape = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') closeMenu()
+    }
+
+    document.addEventListener('keydown', closeOnEscape)
+    return () => document.removeEventListener('keydown', closeOnEscape)
+  }, [menuOpen])
+
   const toggleCollapsed = () => {
     setCollapsed((current) => {
       const next = !current
@@ -46,9 +53,8 @@ export const AppLayout = () => {
   }
 
   return (
-    <div className={styles.shell}>
-      {/* the brand already lives in the menu — here it's the active store */}
-      <header className={styles.topbar}>
+    <Flexbox direction="row" className={styles.shell}>
+      <Flexbox as="header" direction="row" className={styles.topbar}>
         <Button
           size="icon"
           variant="ghost"
@@ -56,10 +62,12 @@ export const AppLayout = () => {
           onClick={() => setMenuOpen(true)}
           aria-label="Abrir menu"
         >
-          <Icon name="menu" className={styles.hamburgerIcon} />
+          <Icon name="menu" size="md" />
         </Button>
-        <span className={styles.storeName}>{tenant?.tenantName}</span>
-      </header>
+        <Text as="span" className={styles.storeName}>
+          {tenant?.tenantName}
+        </Text>
+      </Flexbox>
 
       <Sidebar
         tenantId={tenant?.tenantId ?? null}
@@ -84,6 +92,6 @@ export const AppLayout = () => {
       >
         <Outlet />
       </main>
-    </div>
+    </Flexbox>
   )
 }

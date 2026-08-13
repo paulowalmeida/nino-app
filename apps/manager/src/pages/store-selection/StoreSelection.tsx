@@ -1,54 +1,49 @@
-import { Flexbox } from '@nino/ds/components/Flexbox'
 import { useNavigate } from 'react-router'
 
-import { Card } from '@nino/ds/components/Card'
+import { Flexbox } from '@nino/ds/components/Flexbox'
+import { Heading } from '@nino/ds/components/Heading'
+import { Text } from '@nino/ds/components/Text'
 import type { Membership } from '@custom_types/auth/membership'
+import { CompanyPickCard } from '@components/CompanyPickCard/CompanyPickCard'
 import { useCompanyGroups } from '@hooks/session/useCompanyGroups'
-import { riseDelay } from '@utils/rise-delay'
+import { currentOrFirstUnit } from '@utils/company-unit'
 
 import styles from './StoreSelection.module.css'
 import motion from '@styles/motion.module.css'
-
-const unitLabel = (total: number): string =>
-  total === 1 ? '1 unidade' : `${total} unidades`
-
-/** Resumes where the owner left off, falling back to the first unit. */
-const entryUnit = (units: Membership[]): Membership =>
-  units.find(({ isCurrent }) => isCurrent) ?? units[0]
 
 export const StoreSelection = () => {
   const navigate = useNavigate()
   const companies = useCompanyGroups()
 
-  const handleSelect = (units: Membership[]) => () => {
-    void navigate(`/${entryUnit(units).tenantId}/visao-geral`)
+  const handleSelectCompany = (units: Membership[]) => () => {
+    void navigate(`/${currentOrFirstUnit(units).tenantId}/visao-geral`)
   }
 
   return (
-    <div className={styles.shell}>
-      <div className={`${motion.settle} ${styles.panel}`}>
-        <h1 className={styles.title}>Seus restaurantes</h1>
-        <p className={styles.subtitle}>Escolha qual você quer gerenciar</p>
+    <Flexbox direction="row" className={styles.shell}>
+      <Flexbox
+        direction="column"
+        className={`${motion.settle} ${styles.panel}`}
+      >
+        <Heading level={1} size="2xl" className={styles.title}>
+          Seus restaurantes
+        </Heading>
+        <Text size="sm" color="muted" mt={2}>
+          Escolha qual você quer gerenciar
+        </Text>
 
         <Flexbox direction="column" gap={3} mt={8}>
           {companies.map(({ companyId, companyName, units }, index) => (
-            <Card
+            <CompanyPickCard
               key={companyId}
-              variant="flat"
-              onClick={handleSelect(units)}
-              style={riseDelay(index * 80 + 100)}
-              className={`${motion.settle} ${motion.lift} ${styles.store}`}
-            >
-              <span className={styles.storeName}>{companyName}</span>
-              <span className={styles.storeUnit}>
-                {units.length > 1
-                  ? unitLabel(units.length)
-                  : units[0].tenantName}
-              </span>
-            </Card>
+              companyName={companyName}
+              units={units}
+              index={index}
+              onClick={handleSelectCompany(units)}
+            />
           ))}
         </Flexbox>
-      </div>
-    </div>
+      </Flexbox>
+    </Flexbox>
   )
 }

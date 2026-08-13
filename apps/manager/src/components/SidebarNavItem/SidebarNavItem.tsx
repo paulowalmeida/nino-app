@@ -2,7 +2,9 @@ import type { CSSProperties } from 'react'
 import { NavLink } from 'react-router'
 
 import { Accordion } from '@nino/ds/components/Accordion'
+import { Flexbox } from '@nino/ds/components/Flexbox'
 import { Icon } from '@nino/ds/components/Icon'
+import { Text } from '@nino/ds/components/Text'
 import type { NavItem } from '@custom_types/ui/nav-item'
 
 import motion from '@styles/motion.module.css'
@@ -33,8 +35,10 @@ export const SidebarNavItem = ({
 }: SidebarNavItemProps) => {
   const content = (
     <>
-      <Icon name={icon} className={styles.navIcon} />
-      {!isCollapsed && <span>{label}</span>}
+      <Icon name={icon} size="md" />
+      <Text as="span" className={isCollapsed ? 'sr-only' : undefined}>
+        {label}
+      </Text>
       {section === 'pedidos' && waiting > 0 && (
         <span className={`${motion.pop} ${styles.tally}`}>{waiting}</span>
       )}
@@ -43,7 +47,7 @@ export const SidebarNavItem = ({
 
   if (!children) {
     return (
-      <div style={delay} className={motion.slide}>
+      <Flexbox style={delay} className={motion.slide}>
         <NavLink
           to={`/${tenantId}/${section}`}
           onClick={onNavigate}
@@ -55,21 +59,23 @@ export const SidebarNavItem = ({
         >
           {content}
         </NavLink>
-      </div>
+      </Flexbox>
     )
   }
 
   return (
-    <div style={delay} className={motion.slide}>
+    <Flexbox style={delay} className={motion.slide}>
       <Accordion
         items={[
           {
             value: section,
             trigger: (
-              <span className={styles.triggerContent}>{content}</span>
+              <Flexbox direction="row" className={styles.navGroupToggleRow}>
+                {content}
+              </Flexbox>
             ),
             content: (
-              <div className={styles.subNav}>
+              <Flexbox direction="column" className={styles.subNav}>
                 {children.map(({ to, label: childLabel, icon: childIcon }) => (
                   <NavLink
                     key={to}
@@ -81,25 +87,30 @@ export const SidebarNavItem = ({
                         : styles.subItem
                     }
                   >
-                    <Icon name={childIcon} className={styles.subIcon} />
-                    {!isCollapsed && <span>{childLabel}</span>}
+                    <Icon name={childIcon} size="sm" />
+                    <Text
+                      as="span"
+                      className={isCollapsed ? 'sr-only' : undefined}
+                    >
+                      {childLabel}
+                    </Text>
                   </NavLink>
                 ))}
-              </div>
+              </Flexbox>
             ),
           },
         ]}
         value={isOpen ? [section] : []}
         onValueChange={(values) => onOpenChange(values.includes(section))}
-        className={styles.accordionRoot}
-        itemClassName={styles.accordionItem}
+        className={styles.navGroup}
+        itemClassName={styles.navGroupItem}
         triggerClassName={
           isInside && isOpen
-            ? `${styles.navItemTrigger} ${styles.navItemActive}`
-            : styles.navItemTrigger
+            ? `${styles.navGroupToggle} ${styles.navItemActive}`
+            : styles.navGroupToggle
         }
-        contentClassName={styles.accordionContent}
+        contentClassName={styles.navGroupPanel}
       />
-    </div>
+    </Flexbox>
   )
 }

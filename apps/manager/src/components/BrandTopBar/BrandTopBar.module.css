@@ -1,9 +1,5 @@
 @reference "@nino/ds/globals.css";
 
-/*
- * Mesmo recuo da página abaixo (`p-4 lg:p-10`): o logo cai exatamente sobre a
- * margem esquerda do título, e a barra não parece uma faixa colada por cima.
- */
 .bar {
   @apply flex items-center justify-between gap-4 border-b border-border/60;
   @apply px-4 py-3 lg:px-10;

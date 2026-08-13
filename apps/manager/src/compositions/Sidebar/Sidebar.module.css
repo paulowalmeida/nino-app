@@ -34,16 +34,16 @@
 }
 
 .collapsed {
-  @apply lg:w-[4.75rem];
+  @apply lg:w-(--width-sidebar-collapsed);
 }
 
 .sidebar.collapsed .navItem,
-.sidebar.collapsed .navItemTrigger,
+.sidebar.collapsed .navGroupToggle,
 .sidebar.collapsed .subItem {
   @apply lg:justify-center lg:px-0;
 }
 
-.sidebar.collapsed .triggerContent {
+.sidebar.collapsed .navGroupToggleRow {
   @apply lg:justify-center;
 }
 
@@ -68,7 +68,7 @@
 }
 
 .collapseIcon {
-  @apply h-[14px] w-[14px] rotate-90 transition-transform duration-300;
+  @apply rotate-90 transition-transform duration-300;
 }
 
 .sidebar.collapsed .collapseIcon {
@@ -97,7 +97,7 @@
 }
 
 .groupTitle {
-  @apply mb-1 px-3 text-2xs font-bold uppercase tracking-[0.14em];
+  @apply mb-1 px-3 text-2xs font-bold uppercase tracking-caps;
   @apply text-fg-on-brand/28;
 }
 
@@ -130,7 +130,7 @@
 
 /* single wrapper for the trigger content — Accordion keeps it apart from
    the chevron */
-.triggerContent {
+.navGroupToggleRow {
   @apply flex items-center gap-3;
 }
 
@@ -140,7 +140,7 @@
  * block: here the trigger is just another nav item, with no fill of its
  * own.
  */
-.navItemTrigger {
+.navGroupToggle {
   @apply w-full rounded-3 px-3 py-2.5 text-left;
   @apply text-sm font-medium text-fg-on-brand/45;
   @apply transition-colors duration-150;
@@ -150,20 +150,20 @@
 }
 
 /* open on its own route: only then it carries the active item surface */
-.navItemTrigger.navItemActive {
+.navGroupToggle.navItemActive {
   @apply text-brand data-[state=open]:bg-brand-soft;
   @apply data-[state=open]:hover:bg-brand-soft hover:text-brand;
 }
 
-.accordionRoot {
+.navGroup {
   @apply w-full divide-y-0 rounded-none border-0;
 }
 
-.accordionItem {
+.navGroupItem {
   @apply bg-transparent;
 }
 
-.accordionContent {
+.navGroupPanel {
   @apply text-fg-on-brand/60;
 }
 
@@ -220,18 +220,8 @@
   @apply hover:bg-surface-raised/6 hover:text-fg-on-brand/75;
 }
 
-/* smaller than the parent item's icon: the subitem is a child, and the
-   stroke says so */
-.subIcon {
-  @apply h-[15px] w-[15px] shrink-0;
-}
-
 .subItemActive {
   @apply bg-surface-raised/8 font-semibold text-fg-on-brand/90;
-}
-
-.navIcon {
-  @apply h-[18px] w-[18px] shrink-0;
 }
 
 /* how many orders wait for acceptance — the one number that interrupts */

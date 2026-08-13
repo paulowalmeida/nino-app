@@ -1,21 +1,14 @@
 import { render, screen } from '@testing-library/react'
-import userEvent from '@testing-library/user-event'
 import { MemoryRouter } from 'react-router'
 import { describe, expect, it, vi } from 'vitest'
 
-import { useLogin } from '@hooks/auth/useLogin'
-import { ApiError } from '@nino/lib/utils/api-error'
-
 import { Login } from '@pages/login/Login'
 
-vi.mock('@hooks/auth/useLogin')
+vi.mock('@compositions/LoginForm/LoginForm', () => ({
+  LoginForm: () => <p>formulário de entrar</p>,
+}))
 
-const mockLogin = (mutateAsync = vi.fn()) =>
-  vi.mocked(useLogin).mockReturnValue({
-    mutateAsync,
-  } as unknown as ReturnType<typeof useLogin>)
-
-const renderForm = () =>
+const renderPage = () =>
   render(
     <MemoryRouter>
       <Login />
@@ -23,53 +16,32 @@ const renderForm = () =>
   )
 
 describe(Login.name, () => {
-  it('requires email and password before submitting', async () => {
-    // Arrange
-    const mutateAsync = vi.fn()
-    mockLogin(mutateAsync)
-    renderForm()
-
-    // Act
-    await userEvent.click(screen.getByRole('button', { name: 'Entrar' }))
-
-    // Assert
-    expect(screen.getByText('Informe o email')).toBeInTheDocument()
-    expect(screen.getByText('Informe a senha')).toBeInTheDocument()
-    expect(mutateAsync).not.toHaveBeenCalled()
-  })
-
-  it('submits the typed credentials', async () => {
-    // Arrange
-    const mutateAsync = vi.fn().mockResolvedValue(undefined)
-    mockLogin(mutateAsync)
-    renderForm()
-
-    // Act
-    await userEvent.type(screen.getByLabelText('Email'), 'ana@nino.com')
-    await userEvent.type(screen.getByLabelText('Senha'), 'segredo123')
-    await userEvent.click(screen.getByRole('button', { name: 'Entrar' }))
-
-    // Assert
-    expect(mutateAsync).toHaveBeenCalledWith({
-      email: 'ana@nino.com',
-      password: 'segredo123',
-    })
-  })
-
-  it('shows the translated message when credentials are rejected', async () => {
-    // Arrange
-    const mutateAsync = vi.fn().mockRejectedValue(new ApiError(401, 'nope'))
-    mockLogin(mutateAsync)
-    renderForm()
-    await userEvent.type(screen.getByLabelText('Email'), 'ana@nino.com')
-    await userEvent.type(screen.getByLabelText('Senha'), 'errada123')
-
-    // Act
-    await userEvent.click(screen.getByRole('button', { name: 'Entrar' }))
+  it('shows the welcome title', () => {
+    // Arrange / Act
+    renderPage()
 
     // Assert
     expect(
-      await screen.findByText('E-mail ou senha incorretos.')
+      screen.getByRole('heading', { name: 'Bem-vindo' })
     ).toBeInTheDocument()
+  })
+
+  it('renders the login form', () => {
+    // Arrange / Act
+    renderPage()
+
+    // Assert
+    expect(screen.getByText('formulário de entrar')).toBeInTheDocument()
+  })
+
+  it('links to the signup page for people with no account', () => {
+    // Arrange / Act
+    renderPage()
+
+    // Assert
+    expect(screen.getByRole('link', { name: 'Criar conta' })).toHaveAttribute(
+      'href',
+      '/cadastrar'
+    )
   })
 })

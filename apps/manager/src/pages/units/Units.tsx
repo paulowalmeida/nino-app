@@ -5,19 +5,14 @@ import { Flexbox } from '@nino/ds/components/Flexbox'
 import { BrandTopBar } from '@components/BrandTopBar/BrandTopBar'
 import { FirstStoreForm } from '@compositions/FirstStoreForm/FirstStoreForm'
 import { StorePreview } from '@compositions/StorePreview/StorePreview'
-import { AuthService } from '@services/auth.service'
+import { useLogout } from '@hooks/session/useLogout'
 import { useSessionStore } from '@states/useSessionStore'
-import { endSession } from '@utils/end-session'
 
 import styles from './Units.module.css'
 
-/**
- * A primeira loja da conta. Quem já tem alguma nunca chega aqui — o
- * `FirstStoreGuard` manda de volta pro painel, onde a segunda unidade nasce
- * em Configurações › Unidades, com a navegação por perto.
- */
 export const Units = () => {
   const user = useSessionStore((state) => state.user)
+  const { logout } = useLogout()
   const [storeName, setStoreName] = useState('')
 
   const firstName = user?.name?.split(' ')[0]
@@ -25,25 +20,14 @@ export const Units = () => {
     ? `Sua primeira loja, ${firstName}`
     : 'Sua primeira loja'
 
-  /* Referência estável: o formulário chama isto a cada tecla, dentro de um
-   * efeito que depende da própria função. */
   const handleFormChange = useCallback(
     (values: { customName?: string }) => setStoreName(values.customName ?? ''),
     []
   )
 
-  const handleLogout = async () => {
-    try {
-      await AuthService.logout()
-    } catch {
-      // a sessão local é encerrada mesmo se a API não responder
-    }
-    endSession()
-  }
-
   return (
     <div className={styles.shell}>
-      <BrandTopBar actionLabel="Sair" onAction={() => void handleLogout()} />
+      <BrandTopBar actionLabel="Sair" onAction={() => void logout()} />
 
       <main className={styles.page}>
         <Flexbox direction="row" wrap align="end" justify="between" gap={3}>

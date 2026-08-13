@@ -2,6 +2,9 @@ import { useEffect } from 'react'
 import { isRouteErrorResponse, useRouteError } from 'react-router'
 
 import { Button } from '@nino/ds/components/Button'
+import { Flexbox } from '@nino/ds/components/Flexbox'
+import { Heading } from '@nino/ds/components/Heading'
+import { Text } from '@nino/ds/components/Text'
 
 import styles from './RouteErrorBoundary.module.css'
 
@@ -14,33 +17,35 @@ const isStaleChunkError = (error: unknown): boolean =>
 
 export const RouteErrorBoundary = () => {
   const error = useRouteError()
-  const staleChunk = isStaleChunkError(error)
+  const isStaleChunk = isStaleChunkError(error)
 
   useEffect(() => {
-    if (!staleChunk) return
+    if (!isStaleChunk) return
 
     const lastReload = Number(sessionStorage.getItem(RELOAD_FLAG) ?? 0)
     if (Date.now() - lastReload < RELOAD_COOLDOWN_MS) return
 
     sessionStorage.setItem(RELOAD_FLAG, String(Date.now()))
     window.location.reload()
-  }, [staleChunk])
+  }, [isStaleChunk])
 
-  if (staleChunk) return null
+  if (isStaleChunk) return null
 
   const title = isRouteErrorResponse(error)
     ? 'Essa página não existe'
     : 'Essa tela travou'
 
   return (
-    <div className={styles.shell}>
-      <div className={styles.panel}>
-        <h1 className={styles.title}>{title}</h1>
-        <p className={styles.subtitle}>
+    <Flexbox direction="row" className={styles.shell}>
+      <Flexbox direction="column" className={styles.panel}>
+        <Heading level={1} size="2xl" className={styles.title}>
+          {title}
+        </Heading>
+        <Text size="sm" color="muted">
           Recarregue a página. Se continuar acontecendo, avise o suporte.
-        </p>
+        </Text>
         <Button onClick={() => window.location.reload()}>Recarregar</Button>
-      </div>
-    </div>
+      </Flexbox>
+    </Flexbox>
   )
 }

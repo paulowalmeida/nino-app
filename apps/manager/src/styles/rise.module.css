@@ -1,3 +1,5 @@
+@reference "@nino/ds/globals.css";
+
 @keyframes riseIn {
   from {
     opacity: 0;
@@ -10,7 +12,7 @@
 }
 
 .rise {
-  opacity: 0;
+  @apply opacity-0;
   animation: riseIn 0.6s var(--ease-out-soft) forwards;
   animation-delay: var(--d, 0ms);
 }

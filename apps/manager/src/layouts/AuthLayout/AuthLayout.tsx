@@ -19,18 +19,18 @@ export const AuthLayout = () => (
         `hidden lg:flex` do module — um Flexbox aqui fixaria `display: flex`
         e o painel apareceria no celular. */}
     <aside className={brandPanel}>
-      <div className={glowTop} />
-      <div className={styles.glowBottom} />
+      <div className={glowTop} aria-hidden="true" />
+      <div className={styles.glowBottom} aria-hidden="true" />
 
       <Flexbox direction="row" className={styles.brandLogo}>
         <NinoLogo tone="light" />
       </Flexbox>
 
       <Flexbox align="center" justify="center" className={styles.mascotArea}>
-        <div className={styles.mascotStage}>
-          <div className={styles.mascotHalo} />
+        <Flexbox direction="column" className={styles.mascotStage}>
+          <div className={styles.mascotHalo} aria-hidden="true" />
           <NinoMascot className={mascot} />
-        </div>
+        </Flexbox>
       </Flexbox>
 
       <Flexbox direction="column" className={styles.tagline}>

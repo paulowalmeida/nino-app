@@ -16,8 +16,8 @@ export const Register = () => {
   const [account, setAccount] = useState<SignupAccount | null>(null)
   const [step, setStep] = useState<RegisterStep>(1)
 
-  const handleAccountNext = (data: SignupAccount) => {
-    setAccount(data)
+  const handleAccountNext = (account: SignupAccount) => {
+    setAccount(account)
     setStep(2)
   }
 

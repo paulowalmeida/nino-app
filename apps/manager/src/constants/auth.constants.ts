@@ -1,4 +1,4 @@
-import { isValidCpf } from '@nino/ds/validators'
+import { isValidCnpj, isValidCpf } from '@nino/ds/validators'
 
 export const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
@@ -44,5 +44,14 @@ export const ACCOUNT_FIELD_RULES = {
       value: PASSWORD_MAX_LENGTH,
       message: `A senha deve ter no máximo ${PASSWORD_MAX_LENGTH} caracteres`,
     },
+  },
+} as const
+
+/** Regras dos campos da empresa, no formato que o `register` do RHF espera. */
+export const COMPANY_FIELD_RULES = {
+  name: { required: 'Informe o nome' },
+  cnpj: {
+    required: 'Informe o CNPJ',
+    validate: (value: string) => isValidCnpj(value) || 'CNPJ inválido',
   },
 } as const
