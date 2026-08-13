@@ -9,13 +9,25 @@ import styles from './Modal.module.css'
 import { ModalSize } from './Modal.types'
 
 type ModalProps = {
+  /** Title area. Names the dialog for screen readers */
   header?: ReactNode
+  /** The content */
   body?: ReactNode
+  /** Actions, aligned to the end */
   footer?: ReactNode
+  /** Maximum width. Default: `md` */
   size?: ModalSize
+  /**
+   * Name for screen readers. Required when there is no header, and wins over
+   * it when both are given
+   */
   ariaLabel?: string
   open?: boolean
   onOpenChange?: (open: boolean) => void
+  /**
+   * The X in the corner. Turn it off when whoever opened also closes — a
+   * preview that lives while the finger holds it has nowhere to put an X
+   */
   dismissible?: boolean
   backdropClassName?: string
   contentClassName?: string
@@ -39,22 +51,7 @@ const sizeClasses: Record<ModalSize, string> = {
  * nascem fechados` rule: mounting one already open leaves the Ark pointer
  * lock stuck on `<body>`, and the whole page stops taking clicks.
  *
- * @param header - Title area. Names the dialog for screen readers
- *
- * @param body - The content
- *
- * @param footer - Actions, aligned to the end
- *
- * @param size - Maximum width. Default: `md`
- *
- * @param ariaLabel - Name for screen readers. Required when there is no
- * header, and wins over it when both are given
- *
- * @param dismissible - The X in the corner. Turn it off when whoever opened
- * also closes — a preview that lives while the finger holds it has nowhere
- * to put an X
- *
- * @example
+ * ```tsx
  * <Modal
  *   open={isOpen}
  *   onOpenChange={setOpen}
@@ -62,6 +59,7 @@ const sizeClasses: Record<ModalSize, string> = {
  *   body={<Text>Essa ação não tem volta.</Text>}
  *   footer={<Button onClick={remove}>Excluir</Button>}
  * />
+ * ```
  */
 export function Modal({
   header,
@@ -118,9 +116,7 @@ export function Modal({
             {header && (
               <div
                 id={headerId}
-                className={
-                  dismissible ? styles.header : styles.headerFullWidth
-                }
+                className={dismissible ? styles.header : styles.headerFullWidth}
               >
                 {header}
               </div>

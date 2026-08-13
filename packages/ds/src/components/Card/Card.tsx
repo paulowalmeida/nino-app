@@ -10,6 +10,10 @@ type CardVariant = 'default' | 'flat' | 'elevated'
 type CardPadding = 'none' | 'sm' | 'md' | 'lg'
 
 type CardProps = HTMLAttributes<HTMLDivElement | HTMLButtonElement> & {
+  /**
+   * `default` (resting shadow), `flat` (border, no shadow), `elevated`
+   * (lifted shadow). Default: `default`
+   */
   variant?: CardVariant
   /** Respiro interno. Default: `md` */
   padding?: CardPadding
@@ -38,21 +42,7 @@ const paddingClasses: Record<CardPadding, string> = {
 /**
  * Surface container for grouping content (dashboards, list items, panels).
  *
- * @param variant - `default` (resting shadow), `flat` (border, no shadow),
- * `elevated` (lifted shadow). Default: `default`
- *
- * @param padding - Respiro interno: `none`, `sm`, `md` (padrão) ou `lg`
- *
- * @param asChild - Delegates rendering to the direct child via `Slot` — for
- * when the click target has its own semantics (a `Link`)
- *
- * @param onClick - When set (and `asChild` isn't), the card itself renders
- * as a native `<button>` instead of a `<div>` — the whole surface becomes
- * the click target with no native tag written at the call site
- *
- * @param className - Additional CSS classes
- *
- * @example
+ * ```tsx
  * <Card>content</Card>
  * <Card variant="elevated">highlighted</Card>
  *
@@ -63,6 +53,12 @@ const paddingClasses: Record<CardPadding, string> = {
  * <Card asChild>
  *   <Link to="/pedidos">the whole surface is the link</Link>
  * </Card>
+ *
+ * - `padding` — Respiro interno: `none`, `sm`, `md` (padrão) ou `lg`
+ * - `asChild` — Delegates rendering to the direct child via `Slot` — for when the click target has its own semantics (a `Link`)
+ * - `onClick` — When set (and `asChild` isn't), the card itself renders as a native `<button>` instead of a `<div>` — the whole surface becomes the click target with no native tag written at the call site
+ * - `className` — Additional CSS classes
+ * ```
  */
 export function Card({
   variant = 'default',

@@ -1,7 +1,9 @@
 import styles from './LoadingDots.module.css'
 
 type LoadingDotsProps = {
+  /** Renders nothing when false */
   visible: boolean
+  /** What a screen reader announces. Default: `Carregando` */
   label?: string
 }
 
@@ -12,12 +14,9 @@ type LoadingDotsProps = {
  * when the dots appear — which is why the label is product copy, in
  * Portuguese, and not a technical string.
  *
- * @param visible - Renders nothing when false
- *
- * @param label - What a screen reader announces. Default: `Carregando`
- *
- * @example
+ * ```tsx
  * <LoadingDots visible={isPending} label="Buscando pedidos" />
+ * ```
  */
 export function LoadingDots({
   visible,

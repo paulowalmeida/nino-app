@@ -12,19 +12,33 @@ import {
 import styles from './Text.module.css'
 
 type TextTag = 'p' | 'span' | 'strong' | 'em'
-type TextSize = 'xs' | 'sm' | 'base' | 'lg'
+type TextSize = 'xs' | 'sm' | 'base' | 'lg' | 'xl' | '2xl' | '3xl'
 type TextCase = 'uppercase' | 'lowercase' | 'capitalize'
 type TextWeight = 'normal' | 'medium' | 'semibold' | 'bold' | 'extrabold'
 type TextFont = 'sans' | 'display'
 
 type TextProps = HTMLAttributes<HTMLElement> &
   MarginProps & {
+    /**
+     * Tag to render: `p` (own block), `span` (inline, inside a sentence),
+     * `strong` or `em` (inline emphasis a screen reader announces). Default:
+     * `p`
+     */
     as?: TextTag
+    /** Entry from the DS type scale. Default: `base` */
     size?: TextSize
+    /** Entry from the DS text color tokens. Default: `default` */
     color?: TextColor
+    /** Text alignment. Default: `left` */
     align?: TextAlign
+    /** Letter case transform. Default: none, text as written */
     case?: TextCase
+    /** Font weight. Default: none, inherits from the surface */
     weight?: TextWeight
+    /**
+     * `sans` (default body face) or `display` (the heading face, for a label
+     * that carries a title's weight without being one)
+     */
     font?: TextFont
   }
 
@@ -33,6 +47,9 @@ const sizeClasses: Record<TextSize, string> = {
   sm: styles.sizeSmall,
   base: styles.sizeBase,
   lg: styles.sizeLarge,
+  xl: styles.sizeExtraLarge,
+  '2xl': styles.size2Xl,
+  '3xl': styles.size3Xl,
 }
 
 const weightClasses: Record<TextWeight, string> = {
@@ -59,32 +76,14 @@ const caseClasses: Record<TextCase, string> = {
  * document outline is `Heading`'s job, and keeping the two apart is what
  * stops a page from growing a second `h1`.
  *
- * @param as - Tag to render: `p` (own block), `span` (inline, inside a
- * sentence), `strong` or `em` (inline emphasis a screen reader announces).
- * Default: `p`
- *
- * @param size - Entry from the DS type scale. Default: `base`
- *
- * @param color - Entry from the DS text color tokens. Default: `default`
- *
- * @param align - Text alignment. Default: `left`
- *
- * @param case - Letter case transform. Default: none, text as written
- *
- * @param weight - Font weight. Default: none, inherits from the surface
- *
- * @param font - `sans` (default body face) or `display` (the heading face,
- * for a label that carries a title's weight without being one)
- *
- * @param m - Margin on every side, from the Tailwind spacing scale. `mt`,
- * `mb`, `mx` and `my` narrow it to one axis or side
- *
- * @param className - Additional CSS classes
- *
- * @example
+ * ```tsx
  * <Text>Pedido confirmado</Text>
  * <Text as="span" color="brand">R$ 42,00</Text>
  * <Text size="sm" color="faint" case="uppercase" mt={1}>Observações</Text>
+ *
+ * - `m` — Margin on every side, from the Tailwind spacing scale. `mt`, `mb`, `mx` and `my` narrow it to one axis or side
+ * - `className` — Additional CSS classes
+ * ```
  */
 export function Text({
   as: Component = 'p',

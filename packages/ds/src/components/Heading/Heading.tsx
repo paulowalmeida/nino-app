@@ -14,9 +14,16 @@ import { HeadingLevel, HeadingSize } from './Heading.types'
 
 type HeadingProps = HTMLAttributes<HTMLHeadingElement> &
   MarginProps & {
+    /** Heading rank, `1` to `6`. Renders the matching tag */
     level: HeadingLevel
+    /**
+     * Visual size (`sm`, `md`, `lg`, `xl`). Defaults to the size that matches
+     * `level`
+     */
     size?: HeadingSize
+    /** Entry from the DS text color tokens. Default: `strong` */
     color?: TextColor
+    /** Text alignment. Default: `left` */
     align?: TextAlign
   }
 
@@ -53,23 +60,13 @@ const sizeByLevel: Record<HeadingLevel, HeadingSize> = {
  * and the page that mounts it decides, which is what keeps a single `h1`
  * per page.
  *
- * @param level - Heading rank, `1` to `6`. Renders the matching tag
- *
- * @param size - Visual size (`sm`, `md`, `lg`, `xl`). Defaults to the size
- * that matches `level`
- *
- * @param color - Entry from the DS text color tokens. Default: `strong`
- *
- * @param align - Text alignment. Default: `left`
- *
- * @param m - Margin on every side, from the Tailwind spacing scale. `mt`,
- * `mb`, `mx` and `my` narrow it to one axis or side
- *
- * @param className - Additional CSS classes
- *
- * @example
+ * ```tsx
  * <Heading level={1}>Configurações</Heading>
  * <Heading level={3} size="xl" mb={4}>Resumo do dia</Heading>
+ *
+ * - `m` — Margin on every side, from the Tailwind spacing scale. `mt`, `mb`, `mx` and `my` narrow it to one axis or side
+ * - `className` — Additional CSS classes
+ * ```
  */
 export function Heading({
   level,

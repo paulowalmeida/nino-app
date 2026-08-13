@@ -19,9 +19,13 @@ type GridTag = 'div' | 'section' | 'ul' | 'ol' | 'li' | 'main' | 'article'
 
 type GridProps = HTMLAttributes<HTMLElement> &
   MarginProps & {
+    /** Tag to render. Default: `div` */
     as?: GridTag
+    /** How many columns. Accepts `{ mobile, desktop }` */
     columns?: Responsive<GridColumns>
+    /** Space between cells. Accepts `{ mobile, desktop }` */
     gap?: Responsive<GapValue>
+    /** How cells sit within their own row. Accepts `{ mobile, desktop }` */
     align?: Responsive<AlignValue>
   }
 
@@ -54,22 +58,13 @@ const columnsDesktop = {
  * in the screen's own CSS: there the measure belongs to that one layout, not
  * to a scale the whole product shares.
  *
- * @param as - Tag to render. Default: `div`
- *
- * @param columns - How many columns. Accepts `{ mobile, desktop }`
- *
- * @param gap - Space between cells. Accepts `{ mobile, desktop }`
- *
- * @param align - How cells sit within their own row. Accepts
- * `{ mobile, desktop }`
- *
- * @param m - Margin on every side. `mt`, `mb`, `mx` and `my` narrow it to
- * one axis or side. Accepts `{ mobile, desktop }`
- *
- * @example
+ * ```tsx
  * <Grid columns={{ mobile: 1, desktop: 3 }} gap={4}>
  *   <Card>…</Card>
  * </Grid>
+ *
+ * - `m` — Margin on every side. `mt`, `mb`, `mx` and `my` narrow it to one axis or side. Accepts `{ mobile, desktop }`
+ * ```
  */
 export function Grid({
   as: Component = 'div',

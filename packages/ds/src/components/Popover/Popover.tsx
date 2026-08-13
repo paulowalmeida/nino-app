@@ -20,10 +20,20 @@ type PopoverPlacement =
   | 'right-end'
 
 type PopoverProps = {
+  /**
+   * What opens the panel. Gets the open state through `asChild`, so pass a
+   * real `Button`
+   */
   trigger: ReactNode
   children: ReactNode
+  /** Heading inside the panel, announced with it */
   title?: ReactNode
+  /**
+   * Side it opens on, with `-start`/`-end` to align by an edge. Default:
+   * `bottom`
+   */
   placement?: PopoverPlacement
+  /** Controlled state. Leave it out to let the component keep its own */
   open?: boolean
   onOpenChange?: (open: boolean) => void
 }
@@ -36,21 +46,11 @@ type PopoverProps = {
  * closes when asked. Reach for `Tooltip` when the content is a short line
  * that needs no interaction, and for `Menu` when every entry is an action.
  *
- * @param trigger - What opens the panel. Gets the open state through
- * `asChild`, so pass a real `Button`
- *
- * @param title - Heading inside the panel, announced with it
- *
- * @param placement - Side it opens on, with `-start`/`-end` to align by an
- * edge. Default: `bottom`
- *
- * @param open - Controlled state. Leave it out to let the component keep
- * its own
- *
- * @example
+ * ```tsx
  * <Popover trigger={<Button variant="ghost">Filtros</Button>} title="Filtrar">
  *   <FilterForm />
  * </Popover>
+ * ```
  */
 export function Popover({
   trigger,

@@ -18,6 +18,7 @@ type CollapsibleProps = {
   indicator?: boolean
   open?: boolean
   defaultOpen?: boolean
+  /** Fired when the open state changes */
   onOpenChange?: (open: boolean) => void
   disabled?: boolean
   className?: string
@@ -28,12 +29,8 @@ type CollapsibleProps = {
  * The trigger sits on the neutral surface scale and only steps one shade
  * darker when open, so the revealed content reads first.
  *
- * @param trigger - Always-visible toggle element
- *
- * @param indicator - Draws the chevron seal; skip it when the trigger already
- * says "Ver itens"/"Ocultar" on its own
- *
- * @param onOpenChange - Fired when the open state changes
+ * - `trigger` — Always-visible toggle element
+ * - `indicator` — Draws the chevron seal; skip it when the trigger already says "Ver itens"/"Ocultar" on its own
  */
 export function Collapsible({
   trigger,
@@ -55,7 +52,9 @@ export function Collapsible({
     >
       {/* `group` fica literal: é o marcador que o selo lê para virar de tom
           quando o painel abre. */}
-      <ArkCollapsible.Trigger className={mergeClasses('group', styles.toggleHeader)}>
+      <ArkCollapsible.Trigger
+        className={mergeClasses('group', styles.toggleHeader)}
+      >
         {trigger}
         {indicator && <DisclosureSeal />}
       </ArkCollapsible.Trigger>

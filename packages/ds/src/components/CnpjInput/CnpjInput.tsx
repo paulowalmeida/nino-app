@@ -11,10 +11,11 @@ type CnpjInputProps = Omit<MaskedInputProps, 'mask'>
  * It only formats; it does not check the verifier digits. Use `isValidCnpj`
  * from `@nino/ds/validators` for that, in the form's own validation.
  *
- * @example
+ * ```tsx
  * <FormField label="CNPJ" error={errors.cnpj?.message}>
  *   <CnpjInput {...register('cnpj', { validate: isValidCnpj })} />
  * </FormField>
+ * ```
  */
 export function CnpjInput(props: CnpjInputProps) {
   return (

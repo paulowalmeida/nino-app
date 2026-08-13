@@ -27,28 +27,25 @@ const fallbackIconSize: Record<AvatarSize, IconSize> = {
 }
 
 type AvatarProps = HTMLAttributes<HTMLDivElement> & {
+  /** Image URL */
   src?: string
+  /** Image alt text */
   alt?: string
+  /** Initials or text shown when the image fails to load */
   fallback?: string
+  /** Avatar size. Default: `md` */
   size?: AvatarSize
 }
 
 /**
  * User avatar with image support and initials fallback.
  *
- * @param src - Image URL
- *
- * @param alt - Image alt text
- *
- * @param fallback - Initials or text shown when the image fails to load
- *
- * @param size - Avatar size. Default: `md`
- *
- * @param className - Additional CSS classes
- *
- * @example
+ * ```tsx
  * <Avatar src="/photo.jpg" alt="John" fallback="JD" />
  * <Avatar fallback="AB" size="lg" />
+ *
+ * - `className` — Additional CSS classes
+ * ```
  */
 export function Avatar({
   src,

@@ -10,9 +10,21 @@ import { MenuItem } from './Menu.types'
 export type { MenuItem } from './Menu.types'
 
 type MenuProps = {
+  /**
+   * What opens the menu. Gets the open state through `asChild`, so pass a
+   * real `Button`, not a `<div>`
+   */
   trigger: ReactNode
+  /**
+   * The entries, in order. `{ separator: true }` draws a rule between groups
+   */
   items: MenuItem[]
+  /**
+   * Extra classes on the panel, for an app that gives the menu its own
+   * surface
+   */
   contentClassName?: string
+  /** Extra classes per entry, for a themed surface */
   itemClassName?: string
 }
 
@@ -27,18 +39,7 @@ const isSeparator = (
  * Every entry is an action on the thing the trigger belongs to. A menu that
  * navigates somewhere is a nav; a menu that picks a value is a `Select`.
  *
- * @param trigger - What opens the menu. Gets the open state through
- * `asChild`, so pass a real `Button`, not a `<div>`
- *
- * @param items - The entries, in order. `{ separator: true }` draws a rule
- * between groups
- *
- * @param contentClassName - Extra classes on the panel, for an app that
- * gives the menu its own surface
- *
- * @param itemClassName - Extra classes per entry, for a themed surface
- *
- * @example
+ * ```tsx
  * <Menu
  *   trigger={<Button variant="ghost"><Icon name="more-vertical" /></Button>}
  *   items={[
@@ -47,6 +48,7 @@ const isSeparator = (
  *     { value: 'del', label: 'Excluir', destructive: true, onSelect: del },
  *   ]}
  * />
+ * ```
  */
 export function Menu({
   trigger,

@@ -8,10 +8,18 @@ import { IconName, IconSize } from './Icon.types'
 export type { IconName, IconSize }
 
 type IconProps = {
+  /** Icon from the DS catalog */
   name: IconName
+  /** `xs` to `xl`. Default: `md` */
   size?: IconSize
+  /**
+   * Entry from the DS text color tokens. Defaults to the surrounding text
+   * colour
+   */
   color?: TextColor
+  /** Announces the icon to screen readers. Omit for decoration */
   label?: string
+  /** Additional CSS classes */
   className?: string
 }
 
@@ -36,20 +44,10 @@ const sizeClasses: Record<IconSize, string> = {
  * surrounding text colour like any glyph — `color` overrides that with a
  * token when the icon has to carry its own.
  *
- * @param name - Icon from the DS catalog
- *
- * @param size - `xs` to `xl`. Default: `md`
- *
- * @param color - Entry from the DS text color tokens. Defaults to the
- * surrounding text colour
- *
- * @param label - Announces the icon to screen readers. Omit for decoration
- *
- * @param className - Additional CSS classes
- *
- * @example
+ * ```tsx
  * <Icon name="trash" />
  * <Icon name="trash" label="Excluir item" color="danger" />
+ * ```
  */
 export function Icon({
   name,

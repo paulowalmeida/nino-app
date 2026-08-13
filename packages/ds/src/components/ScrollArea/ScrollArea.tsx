@@ -33,15 +33,11 @@ const FADE = '2rem'
  * Scrollable region with a themed custom scrollbar (Ark `ScrollArea`).
  * Constrain the height via `className` (e.g. `h-64`).
  *
- * @param children - Scrollable content
- *
- * @param className - Root classes, typically a height constraint
- *
- * @param fadeEdges - Fade any edge the content can still scroll past
- *
- * @param style - Inline sizing when the height does not come from a class
- *
- * @param thumbColor - Scrollbar thumb colour; defaults to the brand orange
+ * - `children` — Scrollable content
+ * - `className` — Root classes, typically a height constraint
+ * - `fadeEdges` — Fade any edge the content can still scroll past
+ * - `style` — Inline sizing when the height does not come from a class
+ * - `thumbColor` — Scrollbar thumb colour; defaults to the brand orange
  */
 export function ScrollArea({
   children,
@@ -97,7 +93,10 @@ export function ScrollArea({
       <ArkScrollArea.Viewport
         ref={viewportRef}
         onScroll={fadeEdges ? paintEdges : undefined}
-        className={mergeClasses(styles.viewport, fadeEdges && styles.edgeFadeMask)}
+        className={mergeClasses(
+          styles.viewport,
+          fadeEdges && styles.edgeFadeMask
+        )}
       >
         <ArkScrollArea.Content>{children}</ArkScrollArea.Content>
       </ArkScrollArea.Viewport>

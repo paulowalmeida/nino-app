@@ -16,6 +16,18 @@
   @apply text-lg;
 }
 
+.sizeExtraLarge {
+  @apply text-xl;
+}
+
+.size2Xl {
+  @apply text-2xl;
+}
+
+.size3Xl {
+  @apply text-3xl;
+}
+
 .weightNormal {
   @apply font-normal;
 }

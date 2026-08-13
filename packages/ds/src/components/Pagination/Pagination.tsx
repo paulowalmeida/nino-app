@@ -5,10 +5,23 @@ import { Icon } from '../Icon/Icon'
 import styles from './Pagination.module.css'
 
 type PaginationProps = {
+  /**
+   * How many items there are in total, not how many pages — the pages come
+   * from dividing this by `pageSize`
+   */
   count: number
+  /** Items per page. Default: `10` */
   pageSize?: number
+  /**
+   * Current page, when the screen keeps it (in the URL, for instance). Leave
+   * it out and pass `defaultPage` to let the component keep its own
+   */
   page?: number
   defaultPage?: number
+  /**
+   * How many pages show on each side of the current one before the ellipsis.
+   * Default: `1`
+   */
   siblingCount?: number
   onPageChange?: (page: number) => void
   className?: string
@@ -20,20 +33,9 @@ type PaginationProps = {
  * Same object as the tabs: a lowered rail with a raised plate marking where
  * the person is in the sequence.
  *
- * @param count - How many items there are in total, not how many pages —
- * the pages come from dividing this by `pageSize`
- *
- * @param pageSize - Items per page. Default: `10`
- *
- * @param page - Current page, when the screen keeps it (in the URL, for
- * instance). Leave it out and pass `defaultPage` to let the component keep
- * its own
- *
- * @param siblingCount - How many pages show on each side of the current one
- * before the ellipsis. Default: `1`
- *
- * @example
+ * ```tsx
  * <Pagination count={total} pageSize={20} page={page} onPageChange={setPage} />
+ * ```
  */
 export function Pagination({
   count,
@@ -65,7 +67,11 @@ export function Pagination({
         {(pagination) =>
           pagination.pages.map((entry, i) =>
             entry.type === 'page' ? (
-              <ArkPagination.Item key={i} {...entry} className={styles.pageButton}>
+              <ArkPagination.Item
+                key={i}
+                {...entry}
+                className={styles.pageButton}
+              >
                 {entry.value}
               </ArkPagination.Item>
             ) : (

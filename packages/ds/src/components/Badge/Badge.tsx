@@ -29,22 +29,21 @@ const sizeClasses: Record<BadgeSize, string> = {
 }
 
 type BadgeProps = HTMLAttributes<HTMLSpanElement> & {
+  /** Color scheme of the badge. Default: `default` */
   variant?: BadgeVariant
+  /** Size of the badge. Default: `md` */
   size?: BadgeSize
 }
 
 /**
  * Status badge for labeling items with a visual category.
  *
- * @param variant - Color scheme of the badge. Default: `default`
- *
- * @param size - Size of the badge. Default: `md`
- *
- * @param className - Additional CSS classes
- *
- * @example
+ * ```tsx
  * <Badge variant="success">Ativo</Badge>
  * <Badge variant="error" size="sm">Cancelado</Badge>
+ *
+ * - `className` — Additional CSS classes
+ * ```
  */
 export function Badge({
   variant = 'default',

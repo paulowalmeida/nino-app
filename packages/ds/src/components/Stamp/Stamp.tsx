@@ -17,7 +17,9 @@ export type StampTone =
   | 'inverse'
 
 type StampProps = HTMLAttributes<HTMLSpanElement> & {
+  /** `sm` (24px), `md` (28px), `lg` (32px). Default: `sm` */
   size?: StampSize
+  /** Ink pair of the stamp. Default: `brandSoft` */
   tone?: StampTone
 }
 
@@ -46,17 +48,13 @@ const toneClasses: Record<StampTone, string> = {
  * caller picks the role, and the contrast comes with it. That is what stops
  * a strong fill from getting light ink on top of it.
  *
- * @param size - `sm` (24px), `md` (28px), `lg` (32px). Default: `sm`
- *
- * @param tone - Ink pair of the stamp. Default: `brandSoft`
- *
- * @param className - Additional classes, for when the stamp changes tone
- * along with the parent state (`group-data-[state=open]`, for instance)
- *
- * @example
+ * ```tsx
  * <Stamp tone="danger" size="md">
  *   <Icon name="status-error" size="sm" />
  * </Stamp>
+ *
+ * - `className` — Additional classes, for when the stamp changes tone along with the parent state (`group-data-[state=open]`, for instance)
+ * ```
  */
 export function Stamp({
   size = 'sm',

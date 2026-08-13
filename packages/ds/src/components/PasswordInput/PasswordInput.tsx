@@ -11,8 +11,11 @@ type PasswordInputProps = Omit<
   InputHTMLAttributes<HTMLInputElement>,
   'size'
 > & {
+  /** Height and padding. Default: `md` */
   size?: InputSize
+  /** Paints the invalid state */
   error?: boolean
+  /** Forwarded to the `<input>`, for focus and for form libraries */
   ref?: Ref<HTMLInputElement>
 }
 
@@ -29,16 +32,11 @@ const sizeClasses: Record<InputSize, string> = {
  * where people give up and reset it. It takes the same props as `Input`, so
  * `register` from react-hook-form drops straight in.
  *
- * @param size - Height and padding. Default: `md`
- *
- * @param error - Paints the invalid state
- *
- * @param ref - Forwarded to the `<input>`, for focus and for form libraries
- *
- * @example
+ * ```tsx
  * <FormField label="Senha" error={errors.password?.message}>
  *   <PasswordInput {...register('password')} />
  * </FormField>
+ * ```
  */
 export function PasswordInput({
   size = 'md',
@@ -58,7 +56,11 @@ export function PasswordInput({
           className
         )}
       >
-        <ArkPasswordInput.Input ref={ref} className={styles.passwordInput} {...props} />
+        <ArkPasswordInput.Input
+          ref={ref}
+          className={styles.passwordInput}
+          {...props}
+        />
         <ArkPasswordInput.VisibilityTrigger
           className={styles.revealButton}
           aria-label="Mostrar ou ocultar senha"

@@ -8,7 +8,10 @@ const meta: Meta<typeof Text> = {
   tags: ['autodocs'],
   argTypes: {
     as: { control: 'select', options: ['p', 'span', 'strong', 'em'] },
-    size: { control: 'select', options: ['xs', 'sm', 'base', 'lg'] },
+    size: {
+      control: 'select',
+      options: ['xs', 'sm', 'base', 'lg', 'xl', '2xl', '3xl'],
+    },
     color: {
       control: 'select',
       options: [
@@ -43,6 +46,9 @@ export const Default: Story = {
 export const Sizes: Story = {
   render: () => (
     <div className="flex flex-col gap-2">
+      <Text size="3xl">3xl — número que abre um painel</Text>
+      <Text size="2xl">2xl — destaque dentro de um bloco</Text>
+      <Text size="xl">xl — chamada curta</Text>
       <Text size="lg">lg — texto de apoio maior</Text>
       <Text size="base">base — corpo padrão do app</Text>
       <Text size="sm">sm — apoio, legenda de campo</Text>

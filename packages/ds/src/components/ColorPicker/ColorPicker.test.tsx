@@ -36,7 +36,9 @@ describe(ColorPicker.name, () => {
   it('emits the hex of the shade that was clicked', async () => {
     // Arrange
     const onValueChange = vi.fn()
-    render(<ColorPicker value={orange.tints[5]} onValueChange={onValueChange} />)
+    render(
+      <ColorPicker value={orange.tints[5]} onValueChange={onValueChange} />
+    )
 
     // Act
     await userEvent.click(
@@ -52,7 +54,9 @@ describe(ColorPicker.name, () => {
   it('keeps the shade when the hue changes', async () => {
     // Arrange
     const onValueChange = vi.fn()
-    render(<ColorPicker value={orange.tints[9]} onValueChange={onValueChange} />)
+    render(
+      <ColorPicker value={orange.tints[9]} onValueChange={onValueChange} />
+    )
 
     // Act
     await userEvent.click(screen.getByRole('button', { name: amber.name }))

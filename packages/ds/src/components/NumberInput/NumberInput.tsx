@@ -7,9 +7,14 @@ import styles from './NumberInput.module.css'
 type NumberInputProps = {
   value?: number
   defaultValue?: number
+  /**
+   * Called with the number. An empty or half-typed field (`-`, `1e`) does not
+   * call it, so it never reports `NaN`
+   */
   onValueChange?: (value: number) => void
   min?: number
   max?: number
+  /** How much each stepper press moves. Default: `1` */
   step?: number
   name?: string
   placeholder?: string
@@ -28,13 +33,9 @@ type NumberInputProps = {
  * number instead of a string, and the digits line up in columns, which is
  * what makes a list of prices readable.
  *
- * @param onValueChange - Called with the number. An empty or half-typed
- * field (`-`, `1e`) does not call it, so it never reports `NaN`
- *
- * @param step - How much each stepper press moves. Default: `1`
- *
- * @example
+ * ```tsx
  * <NumberInput value={qty} onValueChange={setQty} min={1} />
+ * ```
  */
 export function NumberInput({
   value,

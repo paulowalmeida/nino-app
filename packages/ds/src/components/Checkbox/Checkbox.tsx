@@ -9,17 +9,32 @@ import styles from './Checkbox.module.css'
 type CheckboxSize = 'sm' | 'md' | 'lg'
 
 type CheckboxProps = {
+  /** Size of the checkbox control. Default: `md` */
   size?: CheckboxSize
+  /** Applies error styles to indicate invalid state */
   error?: boolean
+  /** Controlled checked state (`true`, `false`, or `'indeterminate'`) */
   checked?: boolean | 'indeterminate'
+  /** Uncontrolled initial checked state */
   defaultChecked?: boolean
+  /** Fired when the checked state changes */
   onCheckedChange?: (checked: boolean | 'indeterminate') => void
+  /** Disables the checkbox */
   disabled?: boolean
+  /** Marks the checkbox as required in a form context */
   required?: boolean
+  /** Name attribute for form submission */
   name?: string
+  /** Value attribute for form submission */
   value?: string
+  /** Additional CSS classes for the control element */
   className?: string
+  /** Fired when focus leaves the control, for a form that validates on blur */
   onBlur?: FocusEventHandler<HTMLInputElement>
+  /**
+   * Points at the hidden input, which is what takes focus — a form library
+   * moving focus to the first invalid field lands here
+   */
   ref?: Ref<HTMLInputElement>
 }
 
@@ -38,32 +53,6 @@ const iconSizeClasses: Record<CheckboxSize, string> = {
 /**
  * Checkbox built on top of Ark UI Checkbox.
  *
- * @param size - Size of the checkbox control. Default: `md`
- *
- * @param error - Applies error styles to indicate invalid state
- *
- * @param checked - Controlled checked state (`true`, `false`, or
- * `'indeterminate'`)
- *
- * @param defaultChecked - Uncontrolled initial checked state
- *
- * @param onCheckedChange - Fired when the checked state changes
- *
- * @param disabled - Disables the checkbox
- *
- * @param required - Marks the checkbox as required in a form context
- *
- * @param name - Name attribute for form submission
- *
- * @param value - Value attribute for form submission
- *
- * @param className - Additional CSS classes for the control element
- *
- * @param onBlur - Fired when focus leaves the control, for a form that
- * validates on blur
- *
- * @param ref - Points at the hidden input, which is what takes focus — a
- * form library moving focus to the first invalid field lands here
  */
 export function Checkbox({
   size = 'md',

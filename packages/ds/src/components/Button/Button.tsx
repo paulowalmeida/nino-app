@@ -63,32 +63,19 @@ const disabledStyle = (variant: ButtonVariant): string =>
  * Primary action button. Supports visual variants, sizes,
  * loading state, and child element rendering via `asChild`.
  *
- * @param variant - Visual style of the button. Default: `primary`
- *
- * @param size - Height and padding of the button. Default: `md`
- *
- * @param loading - Shows a loading indicator and blocks interaction while
- * an action is in progress
- *
- * @param loadingIndicator - Style of the loading indicator. Default: `spinner`
- *
- * @param asChild - Delegates rendering to the direct child via `Slot`
- *
- * @param disabled - Disables the button
- *
- * @param className - Additional CSS classes merged with base styles
- *
- * @param onClick - Fired when the button is clicked
- *
- * @param onFocus - Fired when the button receives focus
- *
- * @param onBlur - Fired when the button loses focus
- *
- * @param onMouseEnter - Fired when the pointer enters the button
- *
- * @param onMouseLeave - Fired when the pointer leaves the button
- *
- * @param onKeyDown - Fired when a key is pressed while the button is focused
+ * - `variant` — Visual style of the button. Default: `primary`
+ * - `size` — Height and padding of the button. Default: `md`
+ * - `loading` — Shows a loading indicator and blocks interaction while an action is in progress
+ * - `loadingIndicator` — Style of the loading indicator. Default: `spinner`
+ * - `asChild` — Delegates rendering to the direct child via `Slot`
+ * - `disabled` — Disables the button
+ * - `className` — Additional CSS classes merged with base styles
+ * - `onClick` — Fired when the button is clicked
+ * - `onFocus` — Fired when the button receives focus
+ * - `onBlur` — Fired when the button loses focus
+ * - `onMouseEnter` — Fired when the pointer enters the button
+ * - `onMouseLeave` — Fired when the pointer leaves the button
+ * - `onKeyDown` — Fired when a key is pressed while the button is focused
  */
 export function Button({
   variant = 'primary',

@@ -7,12 +7,15 @@ import styles from './FileUpload.module.css'
 type FileUploadProps = {
   /** Accepted MIME types. E.g. `{ 'image/*': ['.png', '.jpg'] }` */
   accept?: Record<string, string[]>
+  /** How many files at once. Default: `1` */
   maxFiles?: number
   /** Max file size in bytes */
   maxFileSize?: number
   disabled?: boolean
   name?: string
+  /** Called with the accepted files */
   onFileChange?: (files: File[]) => void
+  /** Called with what was refused, and why */
   onFileReject?: (details: {
     files: { file: File; errors: string[] }[]
   }) => void
@@ -43,22 +46,16 @@ const formatBytes = (bytes: number) => {
 /**
  * Dropzone that takes a file by click or by drag, listing what came in.
  *
- * @param accept - Accepted MIME types
- *
- * @param maxFiles - How many files at once. Default: `1`
- *
- * @param maxFileSize - Ceiling in bytes. Shown under the trigger when set
- *
- * @param onFileChange - Called with the accepted files
- *
- * @param onFileReject - Called with what was refused, and why
- *
- * @example
+ * ```tsx
  * <FileUpload
  *   accept={{ 'image/*': ['.png', '.jpg'] }}
  *   maxFileSize={2 * 1024 * 1024}
  *   onFileChange={setFiles}
  * />
+ *
+ * - `accept` — Accepted MIME types
+ * - `maxFileSize` — Ceiling in bytes. Shown under the trigger when set
+ * ```
  */
 export function FileUpload({
   accept,

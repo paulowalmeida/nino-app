@@ -10,8 +10,8 @@ import { Text } from '@ds/components/Text/Text'
 import { mergeClasses } from '@ds/lib/mergeClasses/mergeClasses'
 import { readableInk } from '@ds/lib/readableInk/readableInk'
 
-import { COLOR_PALETTE } from './ColorPicker.palette'
 import styles from './ColorPicker.module.css'
+import { COLOR_PALETTE } from './ColorPicker.palette'
 
 const NINO_ORANGE = '#FF6B00'
 const MID_TINT_INDEX = 5
@@ -47,14 +47,13 @@ type ColorPickerProps = {
  * There is no free hex entry on purpose: an open picker let a store land on a
  * tint nobody had ever looked at against the product's cream surfaces.
  *
- * @param value - Currently selected hex
- *
- * @param onValueChange - Fired with the picked hex string
- *
- * @param label - Names the picker for assistive tech
- *
- * @example
+ * ```tsx
  * <ColorPicker value={color} onValueChange={setColor} />
+ *
+ * - `value` — Currently selected hex
+ * - `onValueChange` — Fired with the picked hex string
+ * - `label` — Names the picker for assistive tech
+ * ```
  */
 export function ColorPicker({
   value,
@@ -74,7 +73,9 @@ export function ColorPicker({
      e passa para o verde quer o verde fechado, não recomeçar do meio. */
   const pickFamily = (nextKey: string, tints: string[]) => {
     setOpenFamily(nextKey)
-    onValueChange?.(tints[selectedIndex === -1 ? MID_TINT_INDEX : selectedIndex])
+    onValueChange?.(
+      tints[selectedIndex === -1 ? MID_TINT_INDEX : selectedIndex]
+    )
   }
 
   return (

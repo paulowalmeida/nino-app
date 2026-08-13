@@ -37,7 +37,7 @@ export const AuthLayout = () => (
         <Heading level={2} size="2xl" className={styles.taglineTitle}>
           Gerencie sua loja,
           <br />
-          <Text as="span" className={styles.highlight}>
+          <Text as="span" size="3xl" className={styles.highlight}>
             do seu jeito.
           </Text>
         </Heading>

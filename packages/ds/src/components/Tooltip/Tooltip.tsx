@@ -7,10 +7,20 @@ import styles from './Tooltip.module.css'
 type TooltipPlacement = 'top' | 'bottom' | 'left' | 'right'
 
 type TooltipProps = {
+  /** The line to show. Keep it to a few words */
   content: ReactNode
+  /**
+   * What it hangs off. Gets the open state through `asChild`, so pass a real
+   * element
+   */
   children: ReactNode
+  /** Which side it opens on. Default: `top` */
   side?: TooltipPlacement
   sideOffset?: number
+  /**
+   * Milliseconds the pointer must rest before it opens. Default: `300` —
+   * enough that crossing the element does not open it
+   */
   delayDuration?: number
   open?: boolean
   onOpenChange?: (open: boolean) => void
@@ -30,20 +40,11 @@ type TooltipProps = {
  * one closes as soon as the pointer leaves, so there is no way to reach into
  * it.
  *
- * @param content - The line to show. Keep it to a few words
- *
- * @param children - What it hangs off. Gets the open state through
- * `asChild`, so pass a real element
- *
- * @param side - Which side it opens on. Default: `top`
- *
- * @param delayDuration - Milliseconds the pointer must rest before it opens.
- * Default: `300` — enough that crossing the element does not open it
- *
- * @example
+ * ```tsx
  * <Tooltip content="Excluir item">
  *   <Button variant="ghost"><Icon name="trash" /></Button>
  * </Tooltip>
+ * ```
  */
 export function Tooltip({
   content,

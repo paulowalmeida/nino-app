@@ -4,14 +4,26 @@ import { mergeClasses } from '@ds/lib/mergeClasses/mergeClasses'
 import styles from './Slider.module.css'
 
 type SliderProps = {
+  /**
+   * Controlled value. Leave it out and pass `defaultValue` to let the
+   * component keep its own
+   */
   value?: number
   defaultValue?: number
   onValueChange?: (value: number) => void
+  /** Floor. Default: `0` */
   min?: number
+  /** Ceiling. Default: `100` */
   max?: number
+  /** How much each notch moves. Default: `1` */
   step?: number
   disabled?: boolean
+  /** Text above the rail, tied to it for screen readers */
   label?: string
+  /**
+   * Puts the current number beside the label, which is the only way to read
+   * the exact value without dragging
+   */
   showValue?: boolean
   className?: string
 }
@@ -23,20 +35,6 @@ type SliderProps = {
  * Reach for it when the exact number matters less than the sense of more or
  * less. When the person knows the figure they want, a `NumberInput` gets
  * there in one gesture instead of a dozen.
- *
- * @param value - Controlled value. Leave it out and pass `defaultValue` to
- * let the component keep its own
- *
- * @param min - Floor. Default: `0`
- *
- * @param max - Ceiling. Default: `100`
- *
- * @param step - How much each notch moves. Default: `1`
- *
- * @param label - Text above the rail, tied to it for screen readers
- *
- * @param showValue - Puts the current number beside the label, which is the
- * only way to read the exact value without dragging
  *
  * @example
  * <Slider label="Raio de entrega" showValue max={20} onValueChange={setKm} />

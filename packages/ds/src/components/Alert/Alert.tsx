@@ -11,7 +11,9 @@ import styles from './Alert.module.css'
 type AlertVariant = 'info' | 'success' | 'warning' | 'error'
 
 type AlertProps = HTMLAttributes<HTMLDivElement> & {
+  /** Alert type. Default: `info` */
   variant?: AlertVariant
+  /** Optional bold heading */
   title?: string
 }
 
@@ -32,15 +34,12 @@ const stampTones: Record<AlertVariant, StampTone> = {
 /**
  * Inline alert message for status feedback.
  *
- * @param variant - Alert type. Default: `info`
- *
- * @param title - Optional bold heading
- *
- * @param children - Alert body content
- *
- * @example
+ * ```tsx
  * <Alert variant="success" title="Saved!">Your changes have been saved.</Alert>
  * <Alert variant="error">An unexpected error occurred.</Alert>
+ *
+ * - `children` — Alert body content
+ * ```
  */
 export function Alert({
   variant = 'info',

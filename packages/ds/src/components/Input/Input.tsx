@@ -17,14 +17,6 @@ const sizeClasses: Record<InputSize, string> = {
  * invalid state on its own — that is Ark's `Field` wiring, not something the
  * screen has to repeat. Standalone it behaves as a plain `<input>`.
  *
- * @param size - Height and padding. Default: `md`. `lg` is the one that
- * clears the 44px touch target on its own
- *
- * @param error - Paints the invalid state. Redundant inside a `FormField`
- * that already got an `error`
- *
- * @param ref - Forwarded to the `<input>`, for focus and for form libraries
- *
  * @example
  * <FormField label="E-mail" error={errors.email?.message}>
  *   <Input {...register('email')} />

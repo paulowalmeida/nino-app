@@ -2,6 +2,7 @@ import mascotSrc from '../../assets/mascot.svg'
 import { Image } from '../Image/Image'
 
 type NinoMascotProps = {
+  /** Sizing and placement, decided by whoever mounts it */
   className?: string
 }
 
@@ -16,10 +17,9 @@ type NinoMascotProps = {
  * browser reserves the right box while the file loads, and any class the
  * caller passes still wins.
  *
- * @param className - Sizing and placement, decided by whoever mounts it
- *
- * @example
+ * ```tsx
  * <NinoMascot className={styles.mascot} />
+ * ```
  */
 export function NinoMascot({ className }: NinoMascotProps) {
   return (

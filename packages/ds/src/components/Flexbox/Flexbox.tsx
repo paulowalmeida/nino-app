@@ -34,13 +34,30 @@ type FlexboxTag =
 
 type FlexboxProps = HTMLAttributes<HTMLElement> &
   MarginProps & {
+    /**
+     * Tag to render. Default: `div` — reach for `section`, `header` or `ul`
+     * when the block has a meaning a screen reader should announce
+     */
     as?: FlexboxTag
+    /**
+     * `column` (default) stacks downward, `row` lines up side by side.
+     * Accepts `{ mobile, desktop }`
+     */
     direction?: Responsive<FlexboxDirection>
+    /**
+     * Space between children, from the DS spacing scale. Accepts `{ mobile,
+     * desktop }`
+     */
     gap?: Responsive<GapValue>
+    /** Cross-axis alignment. Accepts `{ mobile, desktop }` */
     align?: Responsive<AlignValue>
+    /** Main-axis distribution. Accepts `{ mobile, desktop }` */
     justify?: Responsive<FlexboxJustify>
+    /** Lets children flow onto the next line when they run out of room */
     wrap?: boolean
+    /** Lets the stack take the free space of its own parent */
     grow?: boolean
+    /** Lets the stack be squeezed below its content size */
     shrink?: boolean
   }
 
@@ -75,37 +92,16 @@ const justifyDesktop = {
  * between them. Replaces the hand-written `<div className="flex flex-col
  * gap-…">` that every screen was repeating.
  *
- * @param as - Tag to render. Default: `div` — reach for `section`, `header`
- * or `ul` when the block has a meaning a screen reader should announce
- *
- * @param direction - `column` (default) stacks downward, `row` lines up
- * side by side. Accepts `{ mobile, desktop }`
- *
- * @param gap - Space between children, from the DS spacing scale. Accepts
- * `{ mobile, desktop }`
- *
- * @param align - Cross-axis alignment. Accepts `{ mobile, desktop }`
- *
- * @param justify - Main-axis distribution. Accepts
- * `{ mobile, desktop }`
- *
- * @param wrap - Lets children flow onto the next line when they run out of
- * room
- *
- * @param grow - Lets the stack take the free space of its own parent
- *
- * @param shrink - Lets the stack be squeezed below its content size
- *
- * @param m - Margin on every side. `mt`, `mb`, `mx` and `my` narrow it to
- * one axis or side. Accepts `{ mobile, desktop }`
- *
- * @example
+ * ```tsx
  * <Flexbox gap={1.5}>
  *   <Heading level={1}>Cardápio</Heading>
  *   <Text color="subtle">Desligue o que acabou.</Text>
  * </Flexbox>
  *
  * <Flexbox as="header" direction="row" justify="between" align="center">
+ *
+ * - `m` — Margin on every side. `mt`, `mb`, `mx` and `my` narrow it to one axis or side. Accepts `{ mobile, desktop }`
+ * ```
  */
 export function Flexbox({
   as: Component = 'div',

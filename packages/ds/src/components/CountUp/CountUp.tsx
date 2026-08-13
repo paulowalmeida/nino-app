@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react'
 
 type CountUpProps = {
+  /** Valor a exibir. Mudou, o número corre até ele */
   value: number
 }
 
@@ -17,7 +18,6 @@ const easeOutCubic = (progress: number): number => 1 - (1 - progress) ** 3
  * renderizasse a cada quadro custaria sessenta renders por segundo, e numa
  * tela de resumo há meia dúzia deles ao mesmo tempo.
  *
- * @param value - Valor a exibir. Mudou, o número corre até ele
  */
 export function CountUp({ value }: CountUpProps) {
   const nodeRef = useRef<HTMLSpanElement>(null)

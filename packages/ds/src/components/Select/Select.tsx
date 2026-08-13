@@ -15,9 +15,13 @@ type SelectOption = {
 }
 
 type SelectProps = {
+  /** What can be picked. `disabled` greys out one entry */
   options: SelectOption[]
+  /** Shown while nothing is picked */
   placeholder?: string
+  /** Height and padding, matching `Input`. Default: `md` */
   size?: InputSize
+  /** Paints the invalid state */
   error?: boolean
   disabled?: boolean
   value?: string
@@ -40,18 +44,11 @@ const sizeClasses: Record<InputSize, string> = {
  * It carries a hidden native `<select>`, so a form submits it and the phone
  * offers its own wheel picker.
  *
- * @param options - What can be picked. `disabled` greys out one entry
- *
- * @param placeholder - Shown while nothing is picked
- *
- * @param size - Height and padding, matching `Input`. Default: `md`
- *
- * @param error - Paints the invalid state
- *
- * @example
+ * ```tsx
  * <FormField label="Forma de pagamento">
  *   <Select options={methods} placeholder="Escolha" onValueChange={setPay} />
  * </FormField>
+ * ```
  */
 export function Select({
   options,

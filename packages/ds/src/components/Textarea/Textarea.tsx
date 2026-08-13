@@ -6,7 +6,12 @@ import { mergeClasses } from '@ds/lib/mergeClasses/mergeClasses'
 import styles from './Textarea.module.css'
 
 type TextareaProps = TextareaHTMLAttributes<HTMLTextAreaElement> & {
+  /**
+   * Paints the invalid state. Redundant inside a `FormField` that already got
+   * an `error`
+   */
   error?: boolean
+  /** Forwarded to the `<textarea>`, for focus and for form libraries */
   ref?: Ref<HTMLTextAreaElement>
 }
 
@@ -18,19 +23,13 @@ type TextareaProps = TextareaHTMLAttributes<HTMLTextAreaElement> & {
  * invalid state on its own. It grows only downward, by dragging the corner:
  * growing sideways would break the column of the form.
  *
- * @param error - Paints the invalid state. Redundant inside a `FormField`
- * that already got an `error`
- *
- * @param rows - Starting height in lines. The field never shrinks below
- * five lines of room
- *
- * @param ref - Forwarded to the `<textarea>`, for focus and for form
- * libraries
- *
- * @example
+ * ```tsx
  * <FormField label="Descrição" helperText="Aparece no cardápio">
  *   <Textarea rows={4} {...register('description')} />
  * </FormField>
+ *
+ * - `rows` — Starting height in lines. The field never shrinks below five lines of room
+ * ```
  */
 export function Textarea({
   error = false,

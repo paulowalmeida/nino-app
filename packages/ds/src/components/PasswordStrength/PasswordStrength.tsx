@@ -7,7 +7,9 @@ import {
 import styles from './PasswordStrength.module.css'
 
 type PasswordStrengthProps = {
+  /** What was typed. Read on every keystroke; nothing is stored */
   password: string
+  /** Spacing decided by whoever mounts it */
   className?: string
 }
 
@@ -43,13 +45,9 @@ const segmentsByLevel: Record<PasswordStrengthLevel, number> = {
  * the word carries the same message — and a screen reader hears the word
  * too, not "1 of 3".
  *
- * @param password - What was typed. Read on every keystroke; nothing is
- * stored
- *
- * @param className - Spacing decided by whoever mounts it
- *
- * @example
+ * ```tsx
  * <PasswordStrength password={password} className={styles.strength} />
+ * ```
  */
 export function PasswordStrength({
   password,
@@ -72,7 +70,9 @@ export function PasswordStrength({
         {[0, 1, 2].map((i) => (
           <div key={i} className={styles.segmentTrack}>
             {i < filled && (
-              <div className={mergeClasses(styles.segmentFill, fillClasses[level])} />
+              <div
+                className={mergeClasses(styles.segmentFill, fillClasses[level])}
+              />
             )}
           </div>
         ))}

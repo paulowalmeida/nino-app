@@ -10,14 +10,10 @@ import { MaskedInputProps } from './MaskedInput.types'
  * `onlyDigits` strips it before the request. It takes the same props as
  * `Input`, so `register` from react-hook-form drops straight in.
  *
- * @param mask - Formats the raw value. `maskCpf`, `maskPhone` and the others
- * live in `@nino/ds/masks`
- *
- * @param inputMode - Keyboard the phone opens. Default: `numeric`, since
- * every mask in the catalog is made of digits
- *
  * @example
  * <MaskedInput mask={maskCpf} {...register('cpf')} />
+ *
+ * - `inputMode` — Keyboard the phone opens. Default: `numeric`, since every mask in the catalog is made of digits
  */
 export function MaskedInput({
   mask,

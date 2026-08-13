@@ -6,6 +6,11 @@ import { mergeClasses } from '@ds/lib/mergeClasses/mergeClasses'
 import styles from './Label.module.css'
 
 type LabelProps = ComponentPropsWithoutRef<'label'> & {
+  /**
+   * Marks the field as required with an asterisk. The mark is decoration for
+   * a screen reader; what announces the requirement is the `required` on the
+   * control itself
+   */
   required?: boolean
 }
 
@@ -14,10 +19,6 @@ type LabelProps = ComponentPropsWithoutRef<'label'> & {
  *
  * Inside a `FormField` the connection is made for you — reach for this one
  * only when labelling something outside that wiring, and give it `htmlFor`.
- *
- * @param required - Marks the field as required with an asterisk. The mark
- * is decoration for a screen reader; what announces the requirement is the
- * `required` on the control itself
  *
  * @example
  * <Label htmlFor="cnpj" required>CNPJ</Label>

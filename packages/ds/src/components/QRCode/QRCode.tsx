@@ -6,9 +6,19 @@ import { mergeClasses } from '@ds/lib/mergeClasses/mergeClasses'
 import styles from './QRCode.module.css'
 
 type QRCodeProps = {
+  /** What gets encoded — a URL, a Pix payload */
   value: string
+  /**
+   * Side of the square in pixels, white margin included. The drawing itself
+   * comes out smaller than this. Default: `160`
+   */
   size?: number
+  /**
+   * Mark centred over the code. The pattern carries enough redundancy for a
+   * small one, but a large mark stops it from being read
+   */
   logo?: ReactNode
+  /** What a screen reader announces */
   label?: string
   className?: string
 }
@@ -22,18 +32,9 @@ type QRCodeProps = {
  * reachable as text or a link next to it, for whoever cannot point a camera
  * at it.
  *
- * @param value - What gets encoded — a URL, a Pix payload
- *
- * @param size - Side of the square in pixels, white margin included. The
- * drawing itself comes out smaller than this. Default: `160`
- *
- * @param logo - Mark centred over the code. The pattern carries enough
- * redundancy for a small one, but a large mark stops it from being read
- *
- * @param label - What a screen reader announces
- *
- * @example
+ * ```tsx
  * <QRCode value={storeUrl} label="Código do cardápio" />
+ * ```
  */
 export function QRCode({
   value,
@@ -54,7 +55,9 @@ export function QRCode({
         <ArkQrCode.Pattern />
       </ArkQrCode.Frame>
       {logo && (
-        <ArkQrCode.Overlay className={styles.logoBadge}>{logo}</ArkQrCode.Overlay>
+        <ArkQrCode.Overlay className={styles.logoBadge}>
+          {logo}
+        </ArkQrCode.Overlay>
       )}
     </ArkQrCode.Root>
   )

@@ -5,13 +5,23 @@ import { Icon } from '../Icon/Icon'
 import styles from './Rating.module.css'
 
 type RatingProps = {
+  /** How many stars. Default: `5` */
   count?: number
   value?: number
   defaultValue?: number
   onValueChange?: (value: number) => void
+  /**
+   * Lets the rating land on half a star, which is what an average needs: 4.5
+   * out of ten reviews is not 4 and is not 5
+   */
   allowHalf?: boolean
+  /**
+   * Shows a rating without taking one. Use it wherever the stars report a
+   * result instead of asking for one
+   */
   readOnly?: boolean
   disabled?: boolean
+  /** Field name, for when the stars are inside a form */
   name?: string
   className?: string
 }
@@ -19,19 +29,10 @@ type RatingProps = {
 /**
  * Star rating — given by the customer, shown on the store.
  *
- * @param count - How many stars. Default: `5`
- *
- * @param allowHalf - Lets the rating land on half a star, which is what an
- * average needs: 4.5 out of ten reviews is not 4 and is not 5
- *
- * @param readOnly - Shows a rating without taking one. Use it wherever the
- * stars report a result instead of asking for one
- *
- * @param name - Field name, for when the stars are inside a form
- *
- * @example
+ * ```tsx
  * <Rating value={store.rating} allowHalf readOnly />
  * <Rating name="rating" onValueChange={setRating} />
+ * ```
  */
 export function Rating({
   count = 5,

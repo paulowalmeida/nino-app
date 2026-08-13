@@ -8,7 +8,12 @@ import styles from './Switch.module.css'
 type SwitchSize = 'sm' | 'md'
 
 type SwitchProps = {
+  /** `sm` or `md` (default) */
   size?: SwitchSize
+  /**
+   * Controlled state. Leave it out and pass `defaultChecked` to let the
+   * component keep its own
+   */
   checked?: boolean
   defaultChecked?: boolean
   onCheckedChange?: (checked: boolean) => void
@@ -17,7 +22,12 @@ type SwitchProps = {
   name?: string
   value?: string
   className?: string
+  /** Fired when focus leaves the control, for a form that validates on blur */
   onBlur?: FocusEventHandler<HTMLInputElement>
+  /**
+   * Points at the hidden input, which is what takes focus — a form library
+   * moving focus to the first invalid field lands here
+   */
   ref?: Ref<HTMLInputElement>
 }
 
@@ -43,21 +53,11 @@ const thumbSizeClasses: Record<SwitchSize, string> = {
  * `orientation="horizontal"`, which ties the text to the control and makes
  * the text clickable too.
  *
- * @param size - `sm` or `md` (default)
- *
- * @param checked - Controlled state. Leave it out and pass `defaultChecked`
- * to let the component keep its own
- *
- * @param onBlur - Fired when focus leaves the control, for a form that
- * validates on blur
- *
- * @param ref - Points at the hidden input, which is what takes focus — a
- * form library moving focus to the first invalid field lands here
- *
- * @example
+ * ```tsx
  * <FormField label="Loja aberta" orientation="horizontal">
  *   <Switch checked={isOpen} onCheckedChange={setOpen} />
  * </FormField>
+ * ```
  */
 export function Switch({
   size = 'md',

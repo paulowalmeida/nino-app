@@ -14,8 +14,14 @@ type ImageProps = Omit<
   ImgHTMLAttributes<HTMLImageElement>,
   'src' | 'placeholder'
 > & {
+  /** Image URL. Empty or null keeps the placeholder for good */
   src?: string | null
+  /**
+   * Shown while the file downloads, and kept for good when there is no `src`
+   * or the download fails
+   */
   placeholder?: ReactNode
+  /** Classes for the element that stacks both layers */
   wrapperClassName?: string
 }
 
@@ -28,19 +34,13 @@ type ImageProps = Omit<
  * in the skeleton; it has to live in each slot and stay until that one file
  * is actually decoded.
  *
- * @param src - Image URL. Empty or null keeps the placeholder for good
- *
- * @param placeholder - Shown while the file downloads, and kept for good
- * when there is no `src` or the download fails
- *
- * @param wrapperClassName - Classes for the element that stacks both layers
- *
- * @example
+ * ```tsx
  * <Image
  *   src={product.photoUrl}
  *   alt={product.name}
  *   placeholder={<Skeleton />}
  * />
+ * ```
  */
 export function Image({
   src,

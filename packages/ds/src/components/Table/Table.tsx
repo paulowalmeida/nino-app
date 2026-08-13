@@ -32,7 +32,7 @@ type TableCellProps = TdHTMLAttributes<HTMLTableCellElement> & {
  * They live in one file because they only make sense together: a
  * `TableCell` outside a `Table` is not a component, it is a stray `<td>`.
  *
- * @example
+ * ```tsx
  * <Table>
  *   <TableHeader>
  *     <TableRow>
@@ -47,6 +47,7 @@ type TableCellProps = TdHTMLAttributes<HTMLTableCellElement> & {
  *     </TableRow>
  *   </TableBody>
  * </Table>
+ * ```
  */
 export function Table({ className, ref, ...props }: TableProps) {
   return (
@@ -88,12 +89,20 @@ export function TableRow({ className, ref, ...props }: TableRowProps) {
 
 export function TableHead({ className, ref, ...props }: TableHeadProps) {
   return (
-    <th ref={ref} className={mergeClasses(styles.headerCell, className)} {...props} />
+    <th
+      ref={ref}
+      className={mergeClasses(styles.headerCell, className)}
+      {...props}
+    />
   )
 }
 
 export function TableCell({ className, ref, ...props }: TableCellProps) {
   return (
-    <td ref={ref} className={mergeClasses(styles.bodyCell, className)} {...props} />
+    <td
+      ref={ref}
+      className={mergeClasses(styles.bodyCell, className)}
+      {...props}
+    />
   )
 }

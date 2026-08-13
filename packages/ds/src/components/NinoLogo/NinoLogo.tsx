@@ -9,13 +9,25 @@ type NinoLogoSize = 'sm' | 'md' | 'lg'
 
 type NinoLogoProps = {
   className?: string
+  /**
+   * Which ground it sits on. `dark` (default) for paper, `light` for a
+   * brand-coloured surface
+   */
   tone?: NinoLogoTone
+  /** `sm`, `md` or `lg` (default) */
   size?: NinoLogoSize
+  /** Replaces the round `n` — the mascot, a tenant's own mark */
   mark?: ReactNode
+  /** Small-caps line under the wordmark, naming the app */
   label?: ReactNode
+  /**
+   * Turns the whole thing into a link. Then `ariaLabel` is required: the mark
+   * alone gives a screen reader nothing to read
+   */
   href?: string
   onClick?: (event: MouseEvent<HTMLAnchorElement>) => void
   ariaLabel?: string
+  /** Keeps only the mark, for a collapsed sidebar */
   hideWordmark?: boolean
 }
 
@@ -34,22 +46,9 @@ const toneClasses: Record<NinoLogoTone, string> = {
  * The nino mark, with the wordmark beside it and an optional app name under
  * it — "GESTOR" in the manager, "ENTREGAS" in the courier app.
  *
- * @param tone - Which ground it sits on. `dark` (default) for paper,
- * `light` for a brand-coloured surface
- *
- * @param size - `sm`, `md` or `lg` (default)
- *
- * @param mark - Replaces the round `n` — the mascot, a tenant's own mark
- *
- * @param label - Small-caps line under the wordmark, naming the app
- *
- * @param href - Turns the whole thing into a link. Then `ariaLabel` is
- * required: the mark alone gives a screen reader nothing to read
- *
- * @param hideWordmark - Keeps only the mark, for a collapsed sidebar
- *
- * @example
+ * ```tsx
  * <NinoLogo size="sm" label="GESTOR" href="/" ariaLabel="Início" />
+ * ```
  */
 export function NinoLogo({
   className,
@@ -92,7 +91,10 @@ export function NinoLogo({
           href={href}
           onClick={onClick}
           aria-label={ariaLabel}
-          className={mergeClasses(styles.link, isMarkOnly && styles.markOnlyPadding)}
+          className={mergeClasses(
+            styles.link,
+            isMarkOnly && styles.markOnlyPadding
+          )}
         >
           {content}
         </a>

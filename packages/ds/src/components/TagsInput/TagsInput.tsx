@@ -8,13 +8,19 @@ import { InputSize } from '../Input/Input.types'
 import styles from './TagsInput.module.css'
 
 type TagsInputProps = {
+  /**
+   * Controlled tags. Leave it out and pass `defaultValue` to let the
+   * component keep its own
+   */
   value?: string[]
   defaultValue?: string[]
   onValueChange?: (value: string[]) => void
   placeholder?: string
+  /** Ceiling on how many chips. Reached it, the field stops taking new ones */
   max?: number
   disabled?: boolean
   error?: boolean
+  /** Height and typography, matching `Input`. Default: `md` */
   size?: InputSize
   className?: string
   ref?: Ref<HTMLInputElement>
@@ -32,18 +38,11 @@ const sizeClasses: Record<InputSize, string> = {
  *
  * Enter closes a chip, Backspace on an empty field takes back the last one.
  *
- * @param value - Controlled tags. Leave it out and pass `defaultValue` to
- * let the component keep its own
- *
- * @param max - Ceiling on how many chips. Reached it, the field stops taking
- * new ones
- *
- * @param size - Height and typography, matching `Input`. Default: `md`
- *
- * @example
+ * ```tsx
  * <FormField label="Categorias">
  *   <TagsInput value={tags} onValueChange={setTags} max={5} />
  * </FormField>
+ * ```
  */
 export function TagsInput({
   value,

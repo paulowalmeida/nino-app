@@ -8,11 +8,17 @@ import styles from './OTPInput.module.css'
 type OTPInputType = 'numeric' | 'alphabetic' | 'alphanumeric'
 
 type OTPInputProps = {
+  /** How many boxes. `4` or `6` */
   length?: 4 | 6
   value?: string[]
   onValueChange?: (value: string[]) => void
+  /**
+   * Called with the whole code once the last box is filled — this is what
+   * submits the form
+   */
   onValueComplete?: (value: string) => void
   placeholder?: string
+  /** What each box accepts. Default: `numeric` */
   type?: OTPInputType
   /** Enables SMS OTP autocomplete */
   otp?: boolean
@@ -41,18 +47,11 @@ const sanitizeByType: Record<OTPInputType, (value: string) => string> = {
 /**
  * The boxes for a code that arrives by SMS or e-mail.
  *
- * @param length - How many boxes. `4` or `6`
- *
- * @param type - What each box accepts. Default: `numeric`
- *
- * @param otp - Turns on the phone's one-time-code autofill, which offers the
- * code straight from the message
- *
- * @param onValueComplete - Called with the whole code once the last box is
- * filled — this is what submits the form
- *
- * @example
+ * ```tsx
  * <OTPInput length={6} otp onValueComplete={confirm} />
+ *
+ * - `otp` — Turns on the phone's one-time-code autofill, which offers the code straight from the message
+ * ```
  */
 export function OTPInput({
   length = 6,

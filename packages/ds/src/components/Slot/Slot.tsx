@@ -32,7 +32,9 @@ type SlotChild = ReactElement<{
 
 type SlotProps = {
   children: ReactNode
+  /** Classes merged with the child's own, the child winning a conflict */
   className?: string
+  /** Inline style merged with the child's own, the child winning a conflict */
   style?: CSSProperties
   ref?: Ref<HTMLElement>
   [prop: string]: unknown
@@ -45,14 +47,9 @@ type SlotProps = {
  * no colliding `className`/handlers, so a full Radix-parity implementation
  * (multiple children, `Slottable`, handler chaining) is more than is used.
  *
- * @param className - Classes merged with the child's own, the child winning
- * a conflict
- *
- * @param style - Inline style merged with the child's own, the child winning
- * a conflict
- *
- * @example
+ * ```tsx
  * <Slot className="btn"><Link to="/orders">See more</Link></Slot>
+ * ```
  */
 export function Slot({ children, className, style, ref, ...props }: SlotProps) {
   if (!isValidElement(children)) return children ?? null

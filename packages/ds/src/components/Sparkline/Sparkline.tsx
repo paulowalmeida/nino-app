@@ -11,9 +11,16 @@ type SparklineProps = Omit<
   SVGAttributes<SVGSVGElement>,
   'children' | 'values'
 > & {
+  /** The series, in time order. Fewer than two points draws nothing at all */
   values: number[]
+  /**
+   * What the line shows, for whoever cannot see it. Without it the chart is
+   * invisible to a screen reader
+   */
   label: string
+  /** Height in px; the width follows the container. Default: `32` */
   height?: number
+  /** Marks where the series ends with a dot. Default: `true` */
   showLastPoint?: boolean
 }
 
@@ -45,20 +52,9 @@ const toPoints = (values: number[], height: number): [number, number][] => {
  * class and the drawing follows the state of the block around it — no colour
  * prop involved.
  *
- * @param values - The series, in time order. Fewer than two points draws
- * nothing at all
- *
- * @param label - What the line shows, for whoever cannot see it. Without it
- * the chart is invisible to a screen reader
- *
- * @param height - Height in px; the width follows the container.
- * Default: `32`
- *
- * @param showLastPoint - Marks where the series ends with a dot.
- * Default: `true`
- *
- * @example
+ * ```tsx
  * <Sparkline values={[3, 8, 5, 12]} label="Faturamento nos últimos 7 dias" />
+ * ```
  */
 export function Sparkline({
   values,
@@ -76,7 +72,10 @@ export function Sparkline({
   const [, lastY] = points[points.length - 1]
 
   return (
-    <span className={mergeClasses(styles.sparkline, className)} style={{ height }}>
+    <span
+      className={mergeClasses(styles.sparkline, className)}
+      style={{ height }}
+    >
       <svg
         role="img"
         aria-label={label}

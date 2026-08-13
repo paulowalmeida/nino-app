@@ -42,7 +42,9 @@ describe(Heading.name, () => {
     render(<Heading level={2}>Seção</Heading>)
 
     // Assert
-    expect(screen.getByRole('heading', { level: 2 })).toHaveClass(styles.sizeLarge)
+    expect(screen.getByRole('heading', { level: 2 })).toHaveClass(
+      styles.sizeLarge
+    )
   })
 
   it.each(['strong', 'brand-strong', 'danger'] as const)(

@@ -66,6 +66,10 @@ const ToastStack = ({
   className,
 }: {
   placement: ToastPlacement
+  /**
+   * Extra classes on each deck, for an app that needs to dodge fixed chrome
+   * of its own
+   */
   className?: string
 }) => (
   <ArkToaster toaster={getToaster(placement)} className={className}>
@@ -126,9 +130,6 @@ export function ToastProvider({ children }: ToastProviderProps) {
  * Mounts the decks of toasts. One per app, near the root — the settings
  * given here (placement, duration, how many stack) apply to every toast
  * fired from anywhere.
- *
- * @param className - Extra classes on each deck, for an app that needs to
- * dodge fixed chrome of its own
  *
  * @example
  * <ToastContainer placement="bottom-end" duration={4000} />

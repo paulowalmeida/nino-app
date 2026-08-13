@@ -7,15 +7,25 @@ import { Text } from '@ds/components/Text/Text'
 import styles from './Dialog.module.css'
 
 type DialogProps = {
+  /** Controlled open state */
   open?: boolean
+  /** Fired when open state changes */
   onOpenChange?: (open: boolean) => void
+  /** Heading of the dialog */
   title: string
+  /** Body text explaining the action */
   description: string
+  /** Label for the confirm button. Default: `'Confirmar'` */
   confirmLabel?: string
+  /** Label for the cancel button. Default: `'Cancelar'` */
   cancelLabel?: string
+  /** Fired when the confirm button is clicked */
   onConfirm: () => void
+  /** Fired when the cancel button is clicked */
   onCancel: () => void
+  /** Shows loading dots on the confirm button and disables cancel */
   loading?: boolean
+  /** Width of the dialog. Default: `sm` */
   size?: ModalSize
 }
 
@@ -24,27 +34,7 @@ type DialogProps = {
  * Renders a title, description, and two action buttons (cancel + confirm).
  * The confirm button uses the tenant's primary brand color.
  *
- * @param title - Heading of the dialog
- *
- * @param description - Body text explaining the action
- *
- * @param confirmLabel - Label for the confirm button. Default: `'Confirmar'`
- *
- * @param cancelLabel - Label for the cancel button. Default: `'Cancelar'`
- *
- * @param onConfirm - Fired when the confirm button is clicked
- *
- * @param onCancel - Fired when the cancel button is clicked
- *
- * @param loading - Shows loading dots on the confirm button and disables cancel
- *
- * @param size - Width of the dialog. Default: `sm`
- *
- * @param open - Controlled open state
- *
- * @param onOpenChange - Fired when open state changes
- *
- * @example
+ * ```tsx
  * <Dialog
  *   open={open}
  *   onOpenChange={setOpen}
@@ -53,6 +43,7 @@ type DialogProps = {
  *   onConfirm={handleDelete}
  *   onCancel={() => setOpen(false)}
  * />
+ * ```
  */
 export function Dialog({
   title,

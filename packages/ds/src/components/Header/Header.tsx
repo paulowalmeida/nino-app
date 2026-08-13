@@ -10,15 +10,24 @@ import styles from './Header.module.css'
 
 type HeaderProps = HTMLAttributes<HTMLElement> &
   MarginProps & {
+    /** Screen title */
     title: string
+    /**
+     * Heading rank of the title. Default: `1` — the screen header is the
+     * screen's own title. Drop it when the header sits inside a page that
+     * already has an `h1`
+     */
     level?: HeadingLevel
+    /** Visual size of the title. Defaults to the size that matches `level` */
     size?: HeadingSize
     /**
      * Word or phrase inside `title` that gets the peach underline. Must
      * appear in `title` verbatim; ignored otherwise.
      */
     accent?: string
+    /** Supporting line under the title */
     description?: string
+    /** Right-aligned actions (buttons, menus) */
     actions?: ReactNode
   }
 
@@ -28,29 +37,14 @@ type HeaderProps = HTMLAttributes<HTMLElement> &
  * something else (filters, tabs, search inside the header) composes its own
  * from `Heading` and `Text` instead of growing this one.
  *
- * @param title - Screen title
- *
- * @param level - Heading rank of the title. Default: `1` — the screen
- * header is the screen's own title. Drop it when the header sits inside a
- * page that already has an `h1`
- *
- * @param size - Visual size of the title. Defaults to the size that matches
- * `level`
- *
- * @param accent - Word inside `title` that gets the peach underline
- *
- * @param description - Supporting line under the title
- *
- * @param actions - Right-aligned actions (buttons, menus)
- *
- * @param m - Margin on every side, from the Tailwind spacing scale. `mt`,
- * `mb`, `mx` and `my` narrow it to one axis or side
- *
- * @param className - Additional CSS classes
- *
- * @example
+ * ```tsx
  * <Header title="Quem toca a equipe" accent="equipe" />
  * <Header title="Pedidos" description="Um toque move o pedido adiante." />
+ *
+ * - `accent` — Word inside `title` that gets the peach underline
+ * - `m` — Margin on every side, from the Tailwind spacing scale. `mt`, `mb`, `mx` and `my` narrow it to one axis or side
+ * - `className` — Additional CSS classes
+ * ```
  */
 export function Header({
   title,

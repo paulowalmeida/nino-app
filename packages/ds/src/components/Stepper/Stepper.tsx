@@ -14,10 +14,23 @@ type StepperStep = {
 type StepperOrientation = 'horizontal' | 'vertical'
 
 type StepperProps = {
+  /** Title and optional description of each step, in order */
   steps: StepperStep[]
+  /**
+   * Current step, zero-based. Leave it out and pass `defaultStep` to let the
+   * component keep its own
+   */
   step?: number
   defaultStep?: number
+  /**
+   * Called when a marker is clicked. A step the person cannot reach yet
+   * should not be clickable — guard it here
+   */
   onStepChange?: (step: number) => void
+  /**
+   * `horizontal` (default) puts the steps side by side; `vertical` stacks
+   * them, which is what fits a narrow screen
+   */
   orientation?: StepperOrientation
   className?: string
 }
@@ -29,19 +42,9 @@ type StepperProps = {
  * in a sequence, and the state is told by how full it is — empty is a
  * lowered surface, done is solid ink.
  *
- * @param steps - Title and optional description of each step, in order
- *
- * @param step - Current step, zero-based. Leave it out and pass
- * `defaultStep` to let the component keep its own
- *
- * @param onStepChange - Called when a marker is clicked. A step the person
- * cannot reach yet should not be clickable — guard it here
- *
- * @param orientation - `horizontal` (default) puts the steps side by side;
- * `vertical` stacks them, which is what fits a narrow screen
- *
- * @example
+ * ```tsx
  * <Stepper steps={[{ title: 'Conta' }, { title: 'Empresa' }]} step={done} />
+ * ```
  */
 export function Stepper({
   steps,

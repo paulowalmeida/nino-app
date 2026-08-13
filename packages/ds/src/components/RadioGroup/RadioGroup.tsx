@@ -16,15 +16,18 @@ type RadioOption = {
 type RadioGroupVariant = 'default' | 'card'
 
 type RadioGroupProps = {
+  /** Choices, each with `value`, `label` and optional `description` */
   options: RadioOption[]
   /**
    * `card` turns each option into a surface of its own — for choices that
    * carry a description and deserve a bigger touch target.
    */
   variant?: RadioGroupVariant
+  /** Stacking direction. Default: `vertical` */
   orientation?: 'horizontal' | 'vertical'
   value?: string
   defaultValue?: string
+  /** Fired with the selected value */
   onValueChange?: (value: string) => void
   disabled?: boolean
   className?: string
@@ -48,17 +51,7 @@ const itemClasses: Record<RadioGroupVariant, string> = {
 /**
  * Single choice out of a short list.
  *
- * @param options - Choices, each with `value`, `label` and optional
- * `description`
- *
- * @param variant - `card` gives each option its own surface. Default:
- * `default`
- *
- * @param orientation - Stacking direction. Default: `vertical`
- *
- * @param onValueChange - Fired with the selected value
- *
- * @example
+ * ```tsx
  * <RadioGroup options={[{ value: 'pix', label: 'Pix' }]} />
  *
  * @example
@@ -71,6 +64,9 @@ const itemClasses: Record<RadioGroupVariant, string> = {
  * },
  *   ]}
  * />
+ *
+ * - `variant` — `card` gives each option its own surface. Default: `default`
+ * ```
  */
 export function RadioGroup({
   options,

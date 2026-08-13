@@ -1,8 +1,14 @@
 import styles from './Spinner.module.css'
 
 type SpinnerProps = {
+  /** Renders nothing when false */
   visible: boolean
+  /**
+   * Side in pixels. Default: `16`, the size that sits inside a button without
+   * changing its height
+   */
   size?: number
+  /** What a screen reader announces. Default: `Carregando` */
   label?: string
 }
 
@@ -12,15 +18,9 @@ type SpinnerProps = {
  * It announces itself as a live region, so a screen reader says the label
  * when it appears — which is why the label is product copy, in Portuguese.
  *
- * @param visible - Renders nothing when false
- *
- * @param size - Side in pixels. Default: `16`, the size that sits inside a
- * button without changing its height
- *
- * @param label - What a screen reader announces. Default: `Carregando`
- *
- * @example
+ * ```tsx
  * <Spinner visible={isPending} label="Salvando" />
+ * ```
  */
 export function Spinner({
   visible,

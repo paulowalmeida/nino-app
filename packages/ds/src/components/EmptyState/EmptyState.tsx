@@ -35,17 +35,7 @@ const sizeClasses: Record<EmptyStateSize, string> = {
  * absence of content, not a status, and it never announces itself to a screen
  * reader the way `role="alert"` does.
  *
- * @param illustration - Drawing above the title. Only rendered at `md`
- *
- * @param title - Short heading naming what is missing
- *
- * @param action - Button or link out of the dead end
- *
- * @param size - `sm` inside a card, `md` for a whole screen. Default: `sm`
- *
- * @param children - Supporting line explaining how to fill it
- *
- * @example
+ * ```tsx
  * <EmptyState>Nenhum telefone cadastrado.</EmptyState>
  *
  * @example
@@ -57,6 +47,13 @@ const sizeClasses: Record<EmptyStateSize, string> = {
  * >
  *   Volte ao cardápio e escolha o que vai pedir.
  * </EmptyState>
+ *
+ * - `illustration` — Drawing above the title. Only rendered at `md`
+ * - `title` — Short heading naming what is missing
+ * - `action` — Button or link out of the dead end
+ * - `size` — `sm` inside a card, `md` for a whole screen. Default: `sm`
+ * - `children` — Supporting line explaining how to fill it
+ * ```
  */
 export function EmptyState({
   illustration,

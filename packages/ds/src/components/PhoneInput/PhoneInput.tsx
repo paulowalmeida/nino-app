@@ -11,10 +11,11 @@ type PhoneInputProps = Omit<MaskedInputProps, 'mask'>
  * The mask takes both landline and mobile: it only settles on the ninth
  * digit once it is typed, instead of forcing a shape on what was entered.
  *
- * @example
+ * ```tsx
  * <FormField label="Telefone">
  *   <PhoneInput {...register('phone')} />
  * </FormField>
+ * ```
  */
 export function PhoneInput(props: PhoneInputProps) {
   return (

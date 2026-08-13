@@ -16,6 +16,7 @@ type BarListItem = {
 }
 
 type BarListProps = Omit<HTMLAttributes<HTMLOListElement>, 'children'> & {
+  /** Linhas do ranking, na ordem em que devem aparecer */
   items: BarListItem[]
   /**
    * Teto da escala. Ausente, é o maior valor da lista — a barra do topo
@@ -32,15 +33,14 @@ type BarListProps = Omit<HTMLAttributes<HTMLOListElement>, 'children'> & {
  * são o mesmo dado em tamanhos diferentes. Cor por item viraria decoração e
  * esconderia o que a ordem já diz.
  *
- * @param items - Linhas do ranking, na ordem em que devem aparecer
- *
- * @param max - Teto da escala. Default: o maior valor da lista
- *
- * @example
+ * ```tsx
  * <BarList
  *   className="text-brand"
  *   items={[{ id: '1', label: 'X-Burguer', value: 42, display: 'R$ 420' }]}
  * />
+ *
+ * - `max` — Teto da escala. Default: o maior valor da lista
+ * ```
  */
 export function BarList({ items, max, className, ...props }: BarListProps) {
   if (items.length === 0) return null

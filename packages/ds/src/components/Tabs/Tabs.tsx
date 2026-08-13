@@ -12,8 +12,13 @@ type TabItem = {
 }
 
 type TabsProps = {
+  /** Label and content of each tab, in order */
   tabs: TabItem[]
   defaultValue?: string
+  /**
+   * Controlled tab. Leave it out and pass `defaultValue` to let the component
+   * keep its own
+   */
   value?: string
   onValueChange?: (value: string) => void
   className?: string
@@ -28,13 +33,9 @@ type TabsProps = {
  * button, child routes beat tabs — the URL keeps the place, and going back
  * works. See screens.md, "Tela longa vira sub-rotas".
  *
- * @param tabs - Label and content of each tab, in order
- *
- * @param value - Controlled tab. Leave it out and pass `defaultValue` to let
- * the component keep its own
- *
- * @example
+ * ```tsx
  * <Tabs tabs={[{ value: 'day', label: 'Hoje', content: <Today /> }]} />
+ * ```
  */
 export function Tabs({
   tabs,

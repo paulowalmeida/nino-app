@@ -13,6 +13,7 @@ type ChipProps = Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'role'> & {
    * chip, exposed via `aria-pressed`.
    */
   variant: ChipVariant
+  /** Whether the chip is the current choice */
   selected: boolean
   ref?: Ref<HTMLButtonElement>
 }
@@ -22,14 +23,7 @@ type ChipProps = Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'role'> & {
  * exclusive choice inside a `role="tablist"` group, `toggle` for a
  * standalone on/off chip.
  *
- * @param variant - `tab` (exposes `aria-selected`) or `toggle` (exposes
- * `aria-pressed`)
- *
- * @param selected - Whether the chip is the current choice
- *
- * @param className - Additional CSS classes merged with base styles
- *
- * @example
+ * ```tsx
  * <div role="tablist">
  *   <Chip variant="tab" selected={value === 'a'} onClick={() => onChange('a')}>
  *     Categoria A
@@ -40,6 +34,10 @@ type ChipProps = Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'role'> & {
  * <Chip variant="toggle" selected={isOn} onClick={() => setIsOn(!isOn)}>
  *   Pix
  * </Chip>
+ *
+ * - `variant` — `tab` (exposes `aria-selected`) or `toggle` (exposes `aria-pressed`)
+ * - `className` — Additional CSS classes merged with base styles
+ * ```
  */
 export function Chip({
   variant,

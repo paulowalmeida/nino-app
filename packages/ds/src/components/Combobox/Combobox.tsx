@@ -17,16 +17,30 @@ type ComboboxOption = {
 }
 
 type ComboboxProps = {
+  /** Available options (value, label, optional disabled) */
   options: ComboboxOption[]
+  /** Placeholder shown when the input is empty */
   placeholder?: string
+  /** Height and padding of the input. Default: `md` */
   size?: ComboboxSize
+  /** Applies error styles to indicate invalid input */
   error?: boolean
+  /** Disables the combobox */
   disabled?: boolean
+  /** Controlled selected value */
   value?: string
+  /** Uncontrolled initial value */
   defaultValue?: string
+  /** Fired with the selected value */
   onValueChange?: (value: string) => void
+  /** Text shown when no option matches. Default: `Nenhum resultado` */
   emptyMessage?: string
+  /** Additional CSS classes merged into the input */
   className?: string
+  /**
+   * Accessible name for the input when no visible label wraps it (e.g.
+   * outside `FormField`)
+   */
   ariaLabel?: string
   ref?: Ref<HTMLInputElement>
 }
@@ -47,29 +61,6 @@ const filterOptions = (options: ComboboxOption[], query: string) => {
  * Searchable select: filters options as the user types.
  * Renders Ark Combobox. Place inside `FormField` for label + error wiring.
  *
- * @param options - Available options (value, label, optional disabled)
- *
- * @param placeholder - Placeholder shown when the input is empty
- *
- * @param size - Height and padding of the input. Default: `md`
- *
- * @param error - Applies error styles to indicate invalid input
- *
- * @param disabled - Disables the combobox
- *
- * @param value - Controlled selected value
- *
- * @param defaultValue - Uncontrolled initial value
- *
- * @param onValueChange - Fired with the selected value
- *
- * @param emptyMessage - Text shown when no option matches. Default: `Nenhum
- * resultado`
- *
- * @param className - Additional CSS classes merged into the input
- *
- * @param ariaLabel - Accessible name for the input when no visible label
- * wraps it (e.g. outside `FormField`)
  */
 export function Combobox({
   options,

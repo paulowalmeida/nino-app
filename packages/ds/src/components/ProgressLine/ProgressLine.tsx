@@ -6,10 +6,21 @@ import styles from './ProgressLine.module.css'
 type ProgressLineSize = 'sm' | 'md' | 'lg'
 
 type ProgressLineProps = {
+  /**
+   * How far along. `null` means the length is unknown, and a short stretch
+   * travels the bar instead of filling it
+   */
   value: number | null
+  /** Where the bar starts. Default: `0` */
   min?: number
+  /** Where it is full. Default: `100` */
   max?: number
+  /** Thickness. Default: `md` */
   size?: ProgressLineSize
+  /**
+   * What a screen reader announces. Without it the bar is read as a bare
+   * number, with no clue of what is progressing
+   */
   label?: string
   className?: string
 }
@@ -24,21 +35,10 @@ const trackSizeClasses: Record<ProgressLineSize, string> = {
  * Progress drawn as a bar — for what fills across a width: a step out of
  * many, a file being sent, a goal for the day.
  *
- * @param value - How far along. `null` means the length is unknown, and a
- * short stretch travels the bar instead of filling it
- *
- * @param min - Where the bar starts. Default: `0`
- *
- * @param max - Where it is full. Default: `100`
- *
- * @param size - Thickness. Default: `md`
- *
- * @param label - What a screen reader announces. Without it the bar is read
- * as a bare number, with no clue of what is progressing
- *
- * @example
+ * ```tsx
  * <ProgressLine value={60} label="Cadastro" />
  * <ProgressLine value={null} label="Enviando" size="sm" />
+ * ```
  */
 export function ProgressLine({
   value,

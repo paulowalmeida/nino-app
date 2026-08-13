@@ -16,9 +16,8 @@ type ClipboardProps = {
  * Read-only field with a one-click copy button (Ark `Clipboard`).
  * Useful for sharing a Pix code, invite link, or API key.
  *
- * @param value - Text copied and shown in the field
- *
- * @param onCopy - Fired when the value is copied
+ * - `value` — Text copied and shown in the field
+ * - `onCopy` — Fired when the value is copied
  */
 export function Clipboard({ value, onCopy, className }: ClipboardProps) {
   return (

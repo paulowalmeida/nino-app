@@ -8,7 +8,15 @@ type SkeletonVariant = 'rect' | 'circle' | 'text'
 type SkeletonAnimation = 'pulse' | 'wave' | 'none'
 
 type SkeletonProps = HTMLAttributes<HTMLDivElement> & {
+  /**
+   * Shape. `rect` (default), `circle` or `text` — only `text` brings its own
+   * size
+   */
   variant?: SkeletonVariant
+  /**
+   * `wave` (default) sweeps a shine across, `pulse` fades in place, `none`
+   * stays still. All three stop under `prefers-reduced-motion`
+   */
   animation?: SkeletonAnimation
 }
 
@@ -30,20 +38,13 @@ const animationClasses: Record<SkeletonAnimation, string> = {
  * It is always silent to a screen reader: what matters is announced by
  * whoever owns the loading state, not by each grey rectangle on the page.
  *
- * @param variant - Shape. `rect` (default), `circle` or `text` — only
- * `text` brings its own size
- *
- * @param animation - `wave` (default) sweeps a shine across, `pulse` fades
- * in place, `none` stays still. All three stop under
- * `prefers-reduced-motion`
- *
- * @param className - Width and height, which `rect` and `circle` do not
- * carry — a skeleton takes the measure of what it replaces
- *
- * @example
+ * ```tsx
  * <Skeleton variant="circle" className="w-10 h-10" />
  * <Skeleton variant="text" animation="wave" />
  * <Skeleton className="w-full h-32" animation="none" />
+ *
+ * - `className` — Width and height, which `rect` and `circle` do not carry — a skeleton takes the measure of what it replaces
+ * ```
  */
 export function Skeleton({
   variant = 'rect',

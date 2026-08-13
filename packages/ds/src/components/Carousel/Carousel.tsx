@@ -22,11 +22,9 @@ type CarouselProps = {
  * Slideshow with arrows and indicators (Ark `Carousel`). Indicators and
  * hover states use the brand color.
  *
- * @param slides - Slides rendered in order
- *
- * @param loop - Loop back to the start after the last slide
- *
- * @param slidesPerPage - Slides visible per page. Default: `1`
+ * - `slides` — Slides rendered in order
+ * - `loop` — Loop back to the start after the last slide
+ * - `slidesPerPage` — Slides visible per page. Default: `1`
  */
 export function Carousel({
   slides,

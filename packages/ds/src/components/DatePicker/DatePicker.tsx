@@ -96,7 +96,9 @@ export function DatePicker({
                       >
                         <Icon name="chevron-left" size="sm" />
                       </ArkDatePicker.PrevTrigger>
-                      <ArkDatePicker.ViewTrigger className={styles.viewSwitchButton}>
+                      <ArkDatePicker.ViewTrigger
+                        className={styles.viewSwitchButton}
+                      >
                         <ArkDatePicker.RangeText />
                       </ArkDatePicker.ViewTrigger>
                       <ArkDatePicker.NextTrigger
@@ -155,7 +157,9 @@ export function DatePicker({
                       >
                         <Icon name="chevron-left" size="sm" />
                       </ArkDatePicker.PrevTrigger>
-                      <ArkDatePicker.ViewTrigger className={styles.viewSwitchButton}>
+                      <ArkDatePicker.ViewTrigger
+                        className={styles.viewSwitchButton}
+                      >
                         <ArkDatePicker.RangeText />
                       </ArkDatePicker.ViewTrigger>
                       <ArkDatePicker.NextTrigger
@@ -204,7 +208,9 @@ export function DatePicker({
                       >
                         <Icon name="chevron-left" size="sm" />
                       </ArkDatePicker.PrevTrigger>
-                      <ArkDatePicker.ViewTrigger className={styles.viewSwitchButton}>
+                      <ArkDatePicker.ViewTrigger
+                        className={styles.viewSwitchButton}
+                      >
                         <ArkDatePicker.RangeText />
                       </ArkDatePicker.ViewTrigger>
                       <ArkDatePicker.NextTrigger

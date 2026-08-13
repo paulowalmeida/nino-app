@@ -10,11 +10,30 @@ type FormFieldOrientation = 'vertical' | 'horizontal'
 type FormFieldLabelVariant = 'default' | 'compact'
 
 type FormFieldProps = {
+  /**
+   * Text next to the control. Takes a node, for the muted "(opcional)" that
+   * some labels carry inline
+   */
   label?: ReactNode
+  /** Line below the control, explaining what to type */
   helperText?: string
+  /**
+   * Error message. Also puts the control in the invalid state, and replaces
+   * the helper text while it shows
+   */
   error?: string
+  /** Marks the label with the required indicator */
   required?: boolean
+  /**
+   * `vertical` (default) puts the label above; `horizontal` puts it beside
+   * the control — the shape of Checkbox and Switch
+   */
   orientation?: FormFieldOrientation
+  /**
+   * `default` for a form the screen is built around; `compact` for a data
+   * sheet, where the label is the caption of the value below it and must
+   * weigh less than it
+   */
   labelVariant?: FormFieldLabelVariant
   children: ReactNode
   className?: string
@@ -33,27 +52,11 @@ const labelClasses: Record<FormFieldLabelVariant, string> = {
  * control to invalid — none of which a hand-built `<label>` + `<span>` does
  * on its own.
  *
- * @param label - Text next to the control. Takes a node, for the muted
- * "(opcional)" that some labels carry inline
- *
- * @param helperText - Line below the control, explaining what to type
- *
- * @param error - Error message. Also puts the control in the invalid state,
- * and replaces the helper text while it shows
- *
- * @param required - Marks the label with the required indicator
- *
- * @param orientation - `vertical` (default) puts the label above;
- * `horizontal` puts it beside the control — the shape of Checkbox and Switch
- *
- * @param labelVariant - `default` for a form the screen is built around;
- * `compact` for a data sheet, where the label is the caption of the value
- * below it and must weigh less than it
- *
- * @example
+ * ```tsx
  * <FormField label="E-mail" error={errors.email?.message}>
  *   <Input {...register('email')} />
  * </FormField>
+ * ```
  */
 export function FormField({
   label,
@@ -77,7 +80,9 @@ export function FormField({
   const message = error ? (
     <Field.ErrorText className={styles.errorText}>{error}</Field.ErrorText>
   ) : helperText ? (
-    <Field.HelperText className={styles.helperText}>{helperText}</Field.HelperText>
+    <Field.HelperText className={styles.helperText}>
+      {helperText}
+    </Field.HelperText>
   ) : null
 
   return (

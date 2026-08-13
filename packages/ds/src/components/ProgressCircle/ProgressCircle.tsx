@@ -7,10 +7,21 @@ import styles from './ProgressCircle.module.css'
 type ProgressCircleSize = 'sm' | 'md' | 'lg'
 
 type ProgressCircleProps = {
+  /**
+   * How far along. `null` means the length is unknown, and the ring spins
+   * instead of filling
+   */
   value: number | null
+  /** Where the ring starts. Default: `0` */
   min?: number
+  /** Where it is full. Default: `100` */
   max?: number
+  /** `sm` (40px), `md` (56px) or `lg` (80px). Default: `md` */
   size?: ProgressCircleSize
+  /**
+   * What a screen reader announces. Without it the ring is read as a bare
+   * number, with no clue of what is progressing
+   */
   label?: string
   className?: string
 }
@@ -26,21 +37,10 @@ const sizeMap: Record<ProgressCircleSize, { size: string; thickness: string }> =
  * Progress drawn as a ring — for what fills up in place, where a bar would
  * take a whole line: an upload inside a card, a quota on a dashboard.
  *
- * @param value - How far along. `null` means the length is unknown, and the
- * ring spins instead of filling
- *
- * @param min - Where the ring starts. Default: `0`
- *
- * @param max - Where it is full. Default: `100`
- *
- * @param size - `sm` (40px), `md` (56px) or `lg` (80px). Default: `md`
- *
- * @param label - What a screen reader announces. Without it the ring is
- * read as a bare number, with no clue of what is progressing
- *
- * @example
+ * ```tsx
  * <ProgressCircle value={uploaded} label="Enviando a foto" />
  * <ProgressCircle value={null} label="Carregando" size="lg" />
+ * ```
  */
 export function ProgressCircle({
   value,

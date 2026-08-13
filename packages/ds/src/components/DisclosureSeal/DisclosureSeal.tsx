@@ -5,6 +5,7 @@ import { mergeClasses } from '@ds/lib/mergeClasses/mergeClasses'
 import styles from './DisclosureSeal.module.css'
 
 type DisclosureSealProps = {
+  /** Additional CSS classes for the seal */
   className?: string
 }
 
@@ -16,7 +17,6 @@ type DisclosureSealProps = {
  * element carrying the `group` class and the `data-state` Ark writes — which
  * is the case for `Accordion` and `Collapsible`.
  *
- * @param className - Additional CSS classes for the seal
  */
 export function DisclosureSeal({ className }: DisclosureSealProps) {
   return (

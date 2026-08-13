@@ -4,15 +4,25 @@ import { Combobox } from '@ds/components/Combobox/Combobox'
 import { ComboboxSize } from '@ds/components/Combobox/Combobox.types'
 
 type TimePickerProps = {
+  /**
+   * Minutes between one slot and the next. Default: `15` — a whole day at
+   * that step is 96 options, which is why the list searches
+   */
   step?: number
   placeholder?: string
+  /** Height and padding, matching the other fields. Default: `md` */
   size?: ComboboxSize
   error?: boolean
   disabled?: boolean
+  /**
+   * Selected time as `HH:mm`. Leave it out and pass `defaultValue` to let the
+   * component keep its own
+   */
   value?: string
   defaultValue?: string
   onValueChange?: (value: string) => void
   className?: string
+  /** Accessible name, for when no visible label wraps it */
   ariaLabel?: string
 }
 
@@ -35,20 +45,11 @@ const buildOptions = (step: number) => {
  * grid of slots: whatever reaches the API is always a valid time, so no
  * screen has to guard against "24:71" or "8h".
  *
- * @param step - Minutes between one slot and the next. Default: `15` — a
- * whole day at that step is 96 options, which is why the list searches
- *
- * @param value - Selected time as `HH:mm`. Leave it out and pass
- * `defaultValue` to let the component keep its own
- *
- * @param size - Height and padding, matching the other fields. Default: `md`
- *
- * @param ariaLabel - Accessible name, for when no visible label wraps it
- *
- * @example
+ * ```tsx
  * <FormField label="Abre às">
  *   <TimePicker value={opensAt} onValueChange={setOpensAt} step={30} />
  * </FormField>
+ * ```
  */
 export function TimePicker({
   step = 15,
