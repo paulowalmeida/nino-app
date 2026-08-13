@@ -61,8 +61,6 @@
   stroke-dasharray: 24;
 }
 
-/* 24 cobre o traço inteiro do check no viewBox de 24; o atraso deixa a tinta
-   chegar ao tamanho cheio antes da caneta começar a escrever. */
 @keyframes drawCheck {
   from {
     stroke-dashoffset: 24;

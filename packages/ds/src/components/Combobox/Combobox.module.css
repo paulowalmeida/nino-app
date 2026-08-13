@@ -24,8 +24,6 @@
   @apply overflow-y-auto overscroll-contain scrollbar-slim rounded-2;
   @apply bg-surface-raised;
   @apply shadow-warm-lg p-1;
-  /* A navegação por teclado rola a lista sozinha (`scrollIntoView`); o
-     deslize é o que mostra que a seleção andou, em vez de saltar. */
   scroll-behavior: smooth;
 }
 

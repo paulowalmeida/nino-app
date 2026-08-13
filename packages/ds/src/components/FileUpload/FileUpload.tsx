@@ -24,6 +24,13 @@ type FileUploadProps = {
   dropLabel?: string
   /** Label for the remove-file button. Default: `'Remover arquivo'` */
   removeLabel?: string
+  /**
+   * Percentage sent so far, keyed by file name. A file listed here draws a
+   * progress bar along the bottom of its row until it reaches 100. Files
+   * left out of the map show no bar — the component only selects files,
+   * whoever sends them owns the number.
+   */
+  uploadProgressByFile?: Record<string, number>
   className?: string
 }
 
@@ -65,6 +72,7 @@ export function FileUpload({
   dragLabel = 'ou arraste até aqui',
   dropLabel = 'Solte aqui',
   removeLabel = 'Remover arquivo',
+  uploadProgressByFile,
   className,
 }: FileUploadProps) {
   return (
@@ -78,7 +86,11 @@ export function FileUpload({
       onFileReject={onFileReject}
       className={mergeClasses(styles.fileUpload, className)}
     >
-      <ArkFileUpload.Dropzone className={styles.dropzone}>
+      {/* `group` fica literal: é o marcador que o ícone e as dicas leem para
+          reagir ao arquivo arrastado por cima. */}
+      <ArkFileUpload.Dropzone
+        className={mergeClasses('group', styles.dropzone)}
+      >
         <Icon name="upload" size="xl" className={styles.uploadIcon} />
         <div className={styles.restingPrompt}>
           <ArkFileUpload.Trigger className={styles.browseButton}>
@@ -100,27 +112,47 @@ export function FileUpload({
       <ArkFileUpload.ItemGroup className={styles.fileList}>
         <ArkFileUpload.Context>
           {({ acceptedFiles }) =>
-            acceptedFiles.map((file) => (
-              <ArkFileUpload.Item
-                key={`${file.name}-${file.size}-${file.type}`}
-                file={file}
-                className={styles.fileRow}
-              >
-                <ArkFileUpload.ItemPreview type="image/*">
-                  <ArkFileUpload.ItemPreviewImage
-                    className={styles.previewImage}
-                  />
-                </ArkFileUpload.ItemPreview>
-                <ArkFileUpload.ItemName className={styles.itemName} />
-                <ArkFileUpload.ItemSizeText className={styles.itemSize} />
-                <ArkFileUpload.ItemDeleteTrigger
-                  className={styles.deleteButton}
-                  aria-label={removeLabel}
+            acceptedFiles.map((file) => {
+              const percentSent = uploadProgressByFile?.[file.name]
+              const isSending = percentSent !== undefined && percentSent < 100
+
+              return (
+                <ArkFileUpload.Item
+                  key={`${file.name}-${file.size}-${file.type}`}
+                  file={file}
+                  className={styles.fileRow}
                 >
-                  <Icon name="x" size="sm" />
-                </ArkFileUpload.ItemDeleteTrigger>
-              </ArkFileUpload.Item>
-            ))
+                  {isSending && (
+                    <span
+                      role="progressbar"
+                      aria-label={`Enviando ${file.name}`}
+                      aria-valuenow={Math.round(percentSent)}
+                      aria-valuemin={0}
+                      aria-valuemax={100}
+                      className={styles.progressTrack}
+                    >
+                      <span
+                        className={styles.progressFill}
+                        style={{ width: `${percentSent}%` }}
+                      />
+                    </span>
+                  )}
+                  <ArkFileUpload.ItemPreview type="image/*">
+                    <ArkFileUpload.ItemPreviewImage
+                      className={styles.previewImage}
+                    />
+                  </ArkFileUpload.ItemPreview>
+                  <ArkFileUpload.ItemName className={styles.itemName} />
+                  <ArkFileUpload.ItemSizeText className={styles.itemSize} />
+                  <ArkFileUpload.ItemDeleteTrigger
+                    className={styles.deleteButton}
+                    aria-label={removeLabel}
+                  >
+                    <Icon name="x" size="sm" />
+                  </ArkFileUpload.ItemDeleteTrigger>
+                </ArkFileUpload.Item>
+              )
+            })
           }
         </ArkFileUpload.Context>
       </ArkFileUpload.ItemGroup>

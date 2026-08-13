@@ -16,11 +16,12 @@ export const useDrawerDrag = (onOpenChange: (open: boolean) => void) => {
   const SETTLE_TRANSITION = `transform ${SPRING_BACK_MS}ms ${EASE_SETTLE}`
   const DISMISS_TRANSITION = `transform ${SLIDE_OUT_MS}ms ${EASE_DISMISS}`
 
-  const contentRef = useRef<HTMLDivElement>(null)
+  const contentRef = useRef<HTMLElement | null>(null)
   const dragStartY = useRef<number | null>(null)
 
   const handleDragStart = (event: PointerEvent<HTMLDivElement>) => {
     dragStartY.current = event.clientY
+    contentRef.current = event.currentTarget.closest('[data-part="content"]')
     event.currentTarget.setPointerCapture(event.pointerId)
   }
 
@@ -50,5 +51,5 @@ export const useDrawerDrag = (onOpenChange: (open: boolean) => void) => {
     }, SPRING_BACK_MS)
   }
 
-  return { contentRef, handleDragStart, handleDragMove, handleDragEnd }
+  return { handleDragStart, handleDragMove, handleDragEnd }
 }

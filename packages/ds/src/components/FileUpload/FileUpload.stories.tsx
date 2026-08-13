@@ -1,3 +1,5 @@
+import { useState } from 'react'
+
 import type { Meta, StoryObj } from '@storybook/react'
 
 import { FileUpload } from './FileUpload'
@@ -44,4 +46,40 @@ export const MultipleFiles: Story = {
 
 export const Disabled: Story = {
   args: { disabled: true },
+}
+
+/**
+ * The component only picks files — whoever sends them owns the number. This
+ * story fakes the climb to show the bar; a real screen feeds it from its
+ * upload request.
+ */
+export const Uploading: Story = {
+  args: { maxFiles: 3, accept: { 'image/*': ['.png', '.jpg', '.jpeg'] } },
+  render: (args) => {
+    const [progressByFile, setProgressByFile] = useState<
+      Record<string, number>
+    >({})
+
+    const climbToDone = (files: File[]) => {
+      files.forEach((file) => {
+        let percent = 0
+        const step = setInterval(() => {
+          percent = Math.min(percent + 7, 100)
+          setProgressByFile((current) => ({
+            ...current,
+            [file.name]: percent,
+          }))
+          if (percent === 100) clearInterval(step)
+        }, 180)
+      })
+    }
+
+    return (
+      <FileUpload
+        {...args}
+        uploadProgressByFile={progressByFile}
+        onFileChange={climbToDone}
+      />
+    )
+  },
 }

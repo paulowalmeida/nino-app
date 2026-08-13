@@ -43,11 +43,11 @@ const sizeByPlacement: Record<DrawerPlacement, string> = {
   top: styles.sizeHorizontal,
 }
 
-const animationByPlacement: Record<DrawerPlacement, string> = {
-  right: styles.animateRight,
-  left: styles.animateLeft,
-  bottom: styles.animateBottom,
-  top: styles.animateTop,
+const slideByPlacement: Record<DrawerPlacement, string> = {
+  right: styles.slideFromRight,
+  left: styles.slideFromLeft,
+  bottom: styles.slideFromBottom,
+  top: styles.slideFromTop,
 }
 
 export function Drawer({
@@ -61,7 +61,7 @@ export function Drawer({
   contentClassName,
   bodyClassName,
 }: DrawerProps) {
-  const { contentRef, handleDragStart, handleDragMove, handleDragEnd } =
+  const { handleDragStart, handleDragMove, handleDragEnd } =
     useDrawerDrag(onOpenChange)
   const isHorizontal = placement === 'left' || placement === 'right'
   const sizeStyle = size
@@ -83,12 +83,11 @@ export function Drawer({
         <ArkDialog.Backdrop className={styles.backdrop} />
         <ArkDialog.Positioner className={styles.positioner}>
           <ArkDialog.Content
-            ref={contentRef}
             className={mergeClasses(
               styles.panel,
               sizeByPlacement[placement],
               alignByPlacement[placement],
-              animationByPlacement[placement],
+              slideByPlacement[placement],
               contentClassName ?? ''
             )}
             style={sizeStyle}
@@ -126,7 +125,9 @@ export function Drawer({
                 </ArkDialog.CloseTrigger>
               </div>
             )}
-            <div className={mergeClasses(styles.scrollArea, bodyClassName ?? '')}>
+            <div
+              className={mergeClasses(styles.scrollArea, bodyClassName ?? '')}
+            >
               {children}
             </div>
           </ArkDialog.Content>

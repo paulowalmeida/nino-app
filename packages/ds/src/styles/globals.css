@@ -66,6 +66,11 @@
   animation: modal-content-out 0.15s ease-in forwards;
 }
 
+html:has([data-scope='dialog'][data-part='content'][data-state='open']) {
+  overflow: hidden;
+  overscroll-behavior: none;
+}
+
 /* Menus e popovers: sobem do gatilho e assentam, sem piscar na tela. */
 @keyframes menu-in {
   from {

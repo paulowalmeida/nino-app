@@ -163,27 +163,27 @@ export const Counter = () => {
        * o cardápio todo — com sessenta bebidas, três telas.
        */}
       {!isDesktop && count > 0 && (
-        <>
-          <CouponTab
-            count={count}
-            total={total}
-            onOpen={() => setSheet(true)}
-          />
-
-          <Drawer
-            open={sheet}
-            onOpenChange={setSheet}
-            placement="bottom"
-            size="auto"
-            title="Comanda"
-            description={`${count} ${count === 1 ? 'item' : 'itens'}`}
-            contentClassName={styles.sheet}
-            bodyClassName={styles.sheetBody}
-          >
-            {ticketFor(true)}
-          </Drawer>
-        </>
+        <CouponTab count={count} total={total} onOpen={() => setSheet(true)} />
       )}
+
+      {/*
+       * A folha fica montada mesmo no desktop e com a comanda vazia: quem
+       * some com ela aberta — esvaziar a comanda, alargar a janela até o
+       * desktop — deixa o bloqueio de ponteiro do Ark preso no body, e a
+       * página inteira para de responder a clique até um F5.
+       */}
+      <Drawer
+        open={sheet && !isDesktop && count > 0}
+        onOpenChange={setSheet}
+        placement="bottom"
+        size="auto"
+        title="Comanda"
+        description={`${count} ${count === 1 ? 'item' : 'itens'}`}
+        contentClassName={styles.sheet}
+        bodyClassName={styles.sheetBody}
+      >
+        {ticketFor(true)}
+      </Drawer>
     </div>
   )
 }
