@@ -78,11 +78,7 @@ export function Switch({
       {...props}
     >
       <ArkSwitch.Control
-        className={mergeClasses(
-          styles.track,
-          rootSizeClasses[size],
-          className
-        )}
+        className={mergeClasses(styles.track, rootSizeClasses[size], className)}
       >
         <ArkSwitch.Thumb
           className={mergeClasses(styles.knob, thumbSizeClasses[size])}
