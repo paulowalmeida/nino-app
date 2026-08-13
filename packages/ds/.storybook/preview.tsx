@@ -55,7 +55,6 @@ const preview: Preview = {
             'CpfInput',
             'DatePicker',
             'Dialog',
-            'DisclosureSeal',
             'Drawer',
             'EmptyState',
             'Eyebrow',
