@@ -8,7 +8,6 @@ export default defineConfig({
   resolve: {
     alias: {
       '@forms': resolve(__dirname, 'src'),
-      '@nino/ds': resolve(__dirname, '../ds/src/index.ts'),
       '@ds': resolve(__dirname, '../ds/src'),
     },
   },

@@ -1,4 +1,4 @@
-import { Button } from '@nino/ds'
+import { Button } from '@nino/ds/components/Button'
 import { render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { describe, expect, it, vi } from 'vitest'
@@ -26,100 +26,170 @@ const schema: FieldConfig[] = [
   { name: 'ativo', type: 'switch', label: 'Ativo' },
 ]
 
-describe('FormBuilder', () => {
-  it('renderiza os campos do schema com seus labels', () => {
+describe(FormBuilder.name, () => {
+  it('renders every field of the schema with its label', () => {
+    // Arrange / Act
     render(<FormBuilder schema={schema} onSubmit={vi.fn()} />)
+
+    // Assert
     expect(screen.getByLabelText(/nome/i)).toBeInTheDocument()
     expect(screen.getByText('Categoria')).toBeInTheDocument()
     expect(screen.getByText('Ativo')).toBeInTheDocument()
   })
 
-  it('renderiza campo switch em layout horizontal (label ao lado)', () => {
-    const { container } = render(
-      <FormBuilder schema={schema} onSubmit={vi.fn()} />
+  it('lays a switch out with the label beside the control', () => {
+    // Arrange / Act
+    render(<FormBuilder schema={schema} onSubmit={vi.fn()} />)
+
+    // Assert
+    const label = screen.getByText('Ativo')
+    const row = label.parentElement
+    expect(row?.firstElementChild).toContainElement(
+      row?.querySelector('[data-part="control"]') as HTMLElement
     )
-    const rows = container.querySelectorAll('.flex.items-center')
-    const switchRow = Array.from(rows).find((r) =>
-      r.textContent?.includes('Ativo')
-    )
-    expect(switchRow).toBeTruthy()
-    expect(switchRow?.querySelector('[data-part="control"]')).toBeInTheDocument()
+    expect(row?.lastElementChild).toBe(label)
   })
 
-  it('valida required e bloqueia o submit', async () => {
+  it('fills the fields the schema declares as default values', () => {
+    // Arrange / Act
+    render(
+      <FormBuilder
+        schema={schema}
+        defaultValues={{ nome: 'Coxinha' }}
+        onSubmit={vi.fn()}
+      />
+    )
+
+    // Assert
+    expect(screen.getByLabelText(/nome/i)).toHaveValue('Coxinha')
+  })
+
+  it('blocks the submit while a required rule fails', async () => {
+    // Arrange
     const onSubmit = vi.fn()
     render(<FormBuilder schema={schema} onSubmit={onSubmit} />)
+
+    // Act
     await userEvent.click(screen.getByRole('button', { name: 'Salvar' }))
+
+    // Assert
     expect(await screen.findByText('Nome obrigatório')).toBeInTheDocument()
     expect(onSubmit).not.toHaveBeenCalled()
   })
 
-  it('liga o erro do campo ao input via FormField', async () => {
-    const onSubmit = vi.fn()
-    render(<FormBuilder schema={schema} onSubmit={onSubmit} />)
+  it('ties the error to its own input, not to the form', async () => {
+    // Arrange
+    render(<FormBuilder schema={schema} onSubmit={vi.fn()} />)
+
+    // Act
     await userEvent.click(screen.getByRole('button', { name: 'Salvar' }))
     await screen.findByText('Nome obrigatório')
-    expect(screen.getByLabelText(/nome/i)).toHaveAttribute('aria-invalid', 'true')
+
+    // Assert
+    expect(screen.getByLabelText(/nome/i)).toHaveAttribute(
+      'aria-invalid',
+      'true'
+    )
   })
 
-  it('submete os valores preenchidos', async () => {
+  it('hands the filled values over on submit', async () => {
+    // Arrange
     const onSubmit = vi.fn()
     render(<FormBuilder schema={schema} onSubmit={onSubmit} />)
+
+    // Act
     await userEvent.type(screen.getByLabelText(/nome/i), 'Pão de queijo')
     await userEvent.click(screen.getByRole('button', { name: 'Salvar' }))
+
+    // Assert
     await waitFor(() => expect(onSubmit).toHaveBeenCalled())
     expect(onSubmit.mock.calls[0][0]).toMatchObject({ nome: 'Pão de queijo' })
   })
 
-  it('footer customizado: submit + cancelar com labels próprios', async () => {
+  it('renders the default button with the label it was given', () => {
+    // Arrange / Act
+    render(
+      <FormBuilder
+        schema={schema}
+        onSubmit={vi.fn()}
+        submitLabel="Criar produto"
+      />
+    )
+
+    // Assert
+    expect(
+      screen.getByRole('button', { name: 'Criar produto' })
+    ).toBeInTheDocument()
+  })
+
+  it('drops the default button when a footer takes over', async () => {
+    // Arrange
     const onSubmit = vi.fn()
-    const onCancel = vi.fn()
     render(
       <FormBuilder
         schema={schema}
         onSubmit={onSubmit}
-        footer={({ reset }) => (
-          <div className='flex gap-2'>
-            <Button
-              type='button'
-              variant='ghost'
-              onClick={() => {
-                reset()
-                onCancel()
-              }}
-            >
-              Cancelar
-            </Button>
-            <Button type='submit'>Confirmar</Button>
-          </div>
-        )}
+        footer={() => <Button type="submit">Confirmar</Button>}
       />
     )
-    expect(screen.queryByRole('button', { name: 'Salvar' })).not.toBeInTheDocument()
-    expect(screen.getByRole('button', { name: 'Cancelar' })).toBeInTheDocument()
 
+    // Act
     await userEvent.type(screen.getByLabelText(/nome/i), 'Brigadeiro')
     await userEvent.click(screen.getByRole('button', { name: 'Confirmar' }))
+
+    // Assert
+    expect(screen.queryByRole('button', { name: 'Salvar' })).toBeNull()
     await waitFor(() => expect(onSubmit).toHaveBeenCalled())
     expect(onSubmit.mock.calls[0][0]).toMatchObject({ nome: 'Brigadeiro' })
   })
 
-  it('footer: cancelar reseta os valores preenchidos', async () => {
+  it('clears what was typed when the footer calls reset', async () => {
+    // Arrange
     render(
       <FormBuilder
         schema={schema}
         onSubmit={vi.fn()}
         footer={({ reset }) => (
-          <Button type='button' onClick={() => reset()}>
+          <Button type="button" onClick={() => reset()}>
             Cancelar
           </Button>
         )}
       />
     )
     const nome = screen.getByLabelText(/nome/i)
+
+    // Act
     await userEvent.type(nome, 'Texto')
-    expect(nome).toHaveValue('Texto')
     await userEvent.click(screen.getByRole('button', { name: 'Cancelar' }))
+
+    // Assert
     expect(nome).toHaveValue('')
+  })
+
+  it('hands the footer the form state it needs to guard the submit', () => {
+    // Arrange / Act
+    render(
+      <FormBuilder
+        schema={schema}
+        onSubmit={vi.fn()}
+        footer={({ formState }) => (
+          <Button type="submit" disabled={!formState.isDirty}>
+            Confirmar
+          </Button>
+        )}
+      />
+    )
+
+    // Assert
+    expect(screen.getByRole('button', { name: 'Confirmar' })).toBeDisabled()
+  })
+
+  it('renders no field at all when the schema is empty', () => {
+    // Arrange / Act
+    const { container } = render(<FormBuilder schema={[]} onSubmit={vi.fn()} />)
+
+    // Assert
+    expect(container.querySelectorAll('input')).toHaveLength(0)
+    expect(screen.getByRole('button', { name: 'Salvar' })).toBeInTheDocument()
   })
 })

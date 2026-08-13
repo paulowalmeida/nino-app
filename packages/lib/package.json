@@ -6,7 +6,7 @@
     "./enums": "./src/enums.ts",
     "./lib/*": "./src/lib/*.ts",
     "./services/*": "./src/services/*.ts",
-    "./types/*": "./src/types/*/index.ts",
+    "./types/*": "./src/types/*.ts",
     "./utils/*": "./src/utils/*.ts"
   },
   "scripts": {
