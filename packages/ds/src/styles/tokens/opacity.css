@@ -1,0 +1,19 @@
+/*
+ * Opacidade nomeada pelo papel. `0` e `100` continuam sendo os nativos do
+ * Tailwind: ali a opacidade é o estado de uma transição, não uma decisão de
+ * design.
+ */
+@theme static {
+  /* Marca d'água: presente o bastante para dar textura, apagada o bastante
+     para não competir com o conteúdo */
+  --opacity-watermark: 0.15;
+  /* Decoração que acompanha sem chamar: número gigante atrás do título,
+     ilustração de apoio */
+  --opacity-faint: 0.45;
+  /* Desligado — um valor só para todo o app */
+  --opacity-disabled: 0.5;
+  /* Presente mas recuado: legenda sobre foto, ícone em repouso */
+  --opacity-dim: 0.6;
+  /* Quase cheio, só tirando o peso */
+  --opacity-strong: 0.8;
+}

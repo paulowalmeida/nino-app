@@ -1,79 +1,15 @@
-/* Tokens globais — fonte única de verdade, consumida por todos os apps.
-   Importado pelo globals.css do DS e pelo theme.css dos apps. Só cores e
-   estruturais (fontes ficam no globals.css, ligadas à estratégia de load). */
-@theme {
-  /* Marca — override por tenant */
-  --color-brand: #ff6b00;
-  --color-brand-foreground: #ffffff;
-  --color-brand-hover: color-mix(in srgb, var(--color-brand) 85%, black);
-  --color-brand-active: color-mix(in srgb, var(--color-brand) 70%, black);
-  /* Laranja fechado p/ texto/ícone de marca sobre superfície clara */
-  --color-brand-strong: #e8540c;
-  /* Variação clara — fundos sutis, hovers (12% sobre transparente) */
-  --color-brand-soft: color-mix(in srgb, var(--color-brand) 12%, transparent);
-  --color-warm-light: #ff8a33;
-
-  /* Superfícies quentes (warm over white) */
-  --color-cream: #fff7ee;
-  --color-cream-deep: #ffebd6;
-  --color-paper: #fffbf5;
-  --color-surface-sunk: #fff3e9;
-  /* Rebaixado neutro: cinza claríssimo tirado do `ink`, para o trilho e a
-     faixa não puxarem para o pêssego contra o branco. */
-  --color-surface-mute: color-mix(in srgb, #1a1206 4%, transparent);
-  --color-sand: #f4ece0;
-  --color-sand-deep: #f1e7da;
-  --color-surface: #f1f3f5;
-  /* Borda: tinta, não superfície. Bege pastel some contra o branco e some de
-     vez contra cream — a linha vem do `ink` diluído, então é neutra escura,
-     e por ser translúcida assenta sobre qualquer fundo. */
-  --color-line: color-mix(in srgb, #1a1206 18%, transparent);
-
-  /* Texto — neutros quentes */
-  --color-ink: #1a1206;
-  --color-dark: #1a1a2e;
-  --color-text: #2d2d2d;
-  --color-body: #2d2418;
-  --color-muted: #6b5d4d;
-  --color-subtle: #7a6c59;
-  --color-faint: #8a7d6c;
-  --color-faintest: #9a8b78;
-
-  /* Acentos */
-  --color-peach-light: #ffe3cc;
-  --color-peach: #ffd9b8;
-  --color-peach-deep: #ffd9a8;
-  --color-lime: #b6ff6b;
-  --color-whatsapp: #25d366;
-  --color-terracotta: #b06a4a;
-  --color-charcoal: #14110c;
-
-  /*
-   * Status — família da paleta, não semáforo genérico. O vermelho fica entre
-   * brand e terracotta; o warning é mostarda porque laranja de aviso ao lado
-   * de uma marca laranja não comunica nada.
-   */
-  --color-success: #2c6e49;
-  --color-success-surface: #eaf3e3;
-  --color-danger: #b23a2b;
-  --color-danger-surface: #fdeae4;
-  --color-warning: #8a6114;
-  --color-warning-surface: #fbf0d8;
-  /* Mostarda cheia: o warning escuro serve a texto, não a fundo. Único status
-     claro o bastante para pedir texto ink por cima (toast). */
-  --color-warning-bright: #f2c14e;
-
-  /* Inputs — override por tenant. Contorno de marca diluído: o campo já se
-     anuncia como território da marca em repouso, e o foco é o mesmo laranja
-     cheio, então a diferença entre parado e ativo é de intensidade, não de
-     cor. */
-  --color-input-border: color-mix(in srgb, var(--color-brand) 35%, transparent);
-  --color-input-border-focus: var(--color-brand);
-
-  /* Estrutural */
-  /* Superfície é reta, só quebrada no canto; ação continua pílula — o
-     contraste entre as duas formas é o que separa "onde estou" de "o que
-     faço". */
-  --radius-button: 100px;
-  --radius-card: 8px;
-}
+/*
+ * Índice dos tokens. Os primitivos vêm primeiro porque os semânticos
+ * apontam para eles. Este arquivo continua sendo o caminho público
+ * (`@nino/ds/tokens.css`), então quem importa de fora não vê a divisão.
+ */
+@import './tokens/restrict.css';
+@import './tokens/primitives.css';
+@import './tokens/color.css';
+@import './tokens/typography.css';
+@import './tokens/radius.css';
+@import './tokens/layer.css';
+@import './tokens/elevation.css';
+@import './tokens/opacity.css';
+@import './tokens/motion.css';
+@import './tokens/layout.css';

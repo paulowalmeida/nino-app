@@ -1,0 +1,85 @@
+/*
+ * Camadas de empilhamento. Cada nível é um papel, não um número: quando algo
+ * aparecer atrás do que devia, a pergunta passa a ser "que camada é esta
+ * peça?" em vez de "que número eu chuto agora?".
+ *
+ * A ordem foi tirada do que o código já fazia — só ganhou nome.
+ */
+@theme static {
+  /* Um passo atrás do irmão: o filete que passa por trás do texto */
+  --z-below: -1;
+  --z-base: 0;
+  /* Sobe um passo dentro do próprio bloco: selo sobre foto, filete atrás do
+     título, alça de arrastar */
+  --z-raised: 1;
+  /* Conteúdo que se levanta na tela: cartão em foco, slide do carrossel */
+  --z-content: 10;
+  /* Barra que gruda enquanto a tela rola: filtro de categoria, rodapé de
+     checkout */
+  --z-sticky: 20;
+  /* Peça flutuante presa a uma borda da tela: sacola, dock */
+  --z-dock: 30;
+  /* Navegação principal: sidebar, barra de topo, barra de abas */
+  --z-nav: 40;
+  /* O véu que apaga a tela atrás de uma folha */
+  --z-overlay: 50;
+  /* A folha em si: modal, drawer, diálogo */
+  --z-modal: 60;
+  /* Sai de um gatilho e precisa vencer a folha: menu, tooltip, combobox */
+  --z-popover: 70;
+  /* Aviso que chega por cima de tudo que é interativo */
+  --z-toast: 80;
+  /* A textura do papel, acima de tudo e sem receber clique */
+  --z-grain: 90;
+}
+
+/* O Tailwind não tem namespace de z-index, então cada camada vira
+   utility à mão — as variáveis acima continuam servindo ao CSS puro. */
+
+@utility z-below {
+  z-index: var(--z-below);
+}
+
+@utility z-base {
+  z-index: var(--z-base);
+}
+
+@utility z-raised {
+  z-index: var(--z-raised);
+}
+
+@utility z-content {
+  z-index: var(--z-content);
+}
+
+@utility z-sticky {
+  z-index: var(--z-sticky);
+}
+
+@utility z-dock {
+  z-index: var(--z-dock);
+}
+
+@utility z-nav {
+  z-index: var(--z-nav);
+}
+
+@utility z-overlay {
+  z-index: var(--z-overlay);
+}
+
+@utility z-modal {
+  z-index: var(--z-modal);
+}
+
+@utility z-popover {
+  z-index: var(--z-popover);
+}
+
+@utility z-toast {
+  z-index: var(--z-toast);
+}
+
+@utility z-grain {
+  z-index: var(--z-grain);
+}

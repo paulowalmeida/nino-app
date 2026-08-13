@@ -1,0 +1,76 @@
+/*
+ * Fechamento do tema do Tailwind. Aqui só se APAGA — nada é definido.
+ *
+ * Sai tudo que não estava em uso: se a classe não é usada em lugar nenhum e
+ * não é uma decisão nossa, ela não deve estar disponível para alguém pegar
+ * sem pensar. Uma classe apagada falha o build com "Cannot apply unknown
+ * utility class", em vez de passar despercebida no review.
+ *
+ * Este arquivo é o PRIMEIRO import de `tokens.css`, antes dos nossos tokens:
+ * `initial` apaga tudo que foi declarado até a linha dele, então rodar depois
+ * levaria os nossos junto.
+ *
+ * Precisar de um degrau apagado é normal — a resposta é apagar a linha
+ * correspondente aqui, deliberadamente, não contornar com valor arbitrário.
+ */
+@theme static {
+  /*
+   * Cor — as famílias inteiras que não aparecem em nenhum arquivo. As que
+   * sobrevivem (`gray`, `emerald`, `sky`, `orange`) ainda estão em uso na
+   * demo da landing e nas stories do DS; sairão quando esses usos migrarem
+   * para o vocabulário semântico.
+   */
+  --color-slate-*: initial;
+  --color-zinc-*: initial;
+  --color-neutral-*: initial;
+  --color-stone-*: initial;
+  --color-amber-*: initial;
+  --color-teal-*: initial;
+  --color-cyan-*: initial;
+  --color-blue-*: initial;
+  --color-indigo-*: initial;
+  --color-violet-*: initial;
+  --color-purple-*: initial;
+  --color-fuchsia-*: initial;
+  --color-pink-*: initial;
+  --color-rose-*: initial;
+
+  /* Tipografia — o topo da escala que nenhuma tela usa */
+  --text-6xl: initial;
+  --text-6xl--line-height: initial;
+  --text-8xl: initial;
+  --text-8xl--line-height: initial;
+  --text-9xl: initial;
+  --text-9xl--line-height: initial;
+
+  /* Entrelinha e espaçamento de letra sem uso */
+  --leading-loose: initial;
+  --tracking-tighter: initial;
+  --tracking-normal: initial;
+
+  /* Sombra — sobram as cinco em uso (`xs`, `sm`, `md`, `lg`, `xl`, `2xl`).
+     As três famílias de sombra que nenhuma peça usa saem inteiras. */
+  --shadow-2xs: initial;
+  --inset-shadow-*: initial;
+  --text-shadow-*: initial;
+  --drop-shadow-xs: initial;
+  --drop-shadow-sm: initial;
+  --drop-shadow-md: initial;
+  --drop-shadow-xl: initial;
+
+  /* Desfoque — `sm`, `md` e `3xl` são os únicos usados */
+  --blur-xs: initial;
+  --blur-lg: initial;
+  --blur-xl: initial;
+  --blur-2xl: initial;
+
+  /* Animação pronta: só `pulse` é usado; o resto é do plugin ou não existe
+     em tela nenhuma */
+  /* --animate-spin: initial;
+  --animate-ping: initial;
+  --animate-bounce: initial; */
+
+  /* Namespaces inteiros que nenhuma tela toca */
+  --perspective-*: initial;
+  --aspect-video: initial;
+}

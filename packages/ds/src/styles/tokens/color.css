@@ -1,0 +1,103 @@
+/*
+ * Camada 2 — semânticos. O nome diz o papel, não a cor: é daqui que app e
+ * componente pintam. Trocar um tema significa repontar estes para outros
+ * primitivos, sem tocar em nenhum componente.
+ *
+ * `brand` e os dois de campo são sobrescritos por tenant.
+ */
+@theme static {
+  /* Marca. O laranja mora aqui, e não num primitivo `orange-*`: aquele nome é
+     do Tailwind, e a marca não pode depender de um nome que ele também
+     define. */
+  --color-brand: #ff6b00;
+  --color-brand-light: #ff8a33;
+  /* Laranja fechado, para texto e ícone de marca sobre superfície clara */
+  --color-brand-strong: #e8540c;
+  --color-brand-hover: color-mix(in srgb, var(--color-brand) 85%, black);
+  --color-brand-active: color-mix(in srgb, var(--color-brand) 70%, black);
+  /* O que assenta em cima da marca — vira escuro num tenant de marca clara.
+     Serve a texto e a ícone. */
+  --color-fg-on-brand: var(--color-white);
+
+  /* Superfície de marca: `ghost` mal se insinua, `soft` é o repouso, `muted`
+     é o hover dela */
+  --color-brand-ghost: color-mix(in srgb, var(--color-brand) 6%, transparent);
+  --color-brand-soft: color-mix(in srgb, var(--color-brand) 12%, transparent);
+  --color-brand-muted: color-mix(in srgb, var(--color-brand) 18%, transparent);
+  /* Contorno que precisa ser visto de longe: borda de peça escolhida */
+  --color-brand-bold: color-mix(in srgb, var(--color-brand) 35%, transparent);
+  /* Quase cheia, só tirando o peso: texto e ícone de marca em segundo plano */
+  --color-brand-vivid: color-mix(in srgb, var(--color-brand) 70%, transparent);
+
+  /*
+   * Superfícies, do papel para dentro. `page` é a tela e é branca; de `1` a
+   * `6` a tinta quente vai fechando. Na landing o clima manda e a tela
+   * inteira é quente, então lá a página começa numa superfície, não no papel.
+   */
+  --color-surface-page: var(--color-white);
+  /* O que se levanta do papel: cartão, folha, painel. Hoje coincide com a
+     página, mas é o par que muda junto num tema escuro. */
+  --color-surface-raised: var(--color-white);
+  --color-surface-1: var(--color-warm-50);
+  --color-surface-2: var(--color-warm-100);
+  --color-surface-3: var(--color-warm-200);
+  --color-surface-4: var(--color-warm-300);
+  --color-surface-5: var(--color-warm-400);
+  --color-surface-6: var(--color-warm-500);
+  /* Fora da família quente: cinza neutro para o que não deve puxar pêssego */
+  --color-surface-cool: var(--color-cool-100);
+  --color-surface-mute: color-mix(
+    in srgb,
+    var(--color-warm-950) 4%,
+    transparent
+  );
+
+  /* Borda é tinta, não superfície: bege pastel some contra o branco, e some
+     de vez contra superfície quente */
+  --color-border: color-mix(in srgb, var(--color-warm-950) 18%, transparent);
+
+  /* Texto, do mais firme ao mais apagado */
+  --color-fg-strong: var(--color-warm-950);
+  --color-fg-default: var(--color-warm-900);
+  --color-fg-muted: var(--color-warm-800);
+  --color-fg-subtle: var(--color-warm-750);
+  --color-fg-faint: var(--color-warm-700);
+  --color-fg-faintest: var(--color-warm-600);
+  --color-fg-cool: var(--color-cool-900);
+  /* Texto e ícone sobre superfície escura — badge preenchido, tooltip, faixa
+     de cozinha. Creme em vez de branco puro: sobre tinta escura o branco
+     estala, e a paleta inteira é quente. */
+  --color-fg-inverse: var(--color-warm-100);
+  /* Ícone apagado que ainda precisa ser visto: a estrela não preenchida, o
+     passo que não chegou. Claro o bastante para não competir, escuro o
+     bastante para não sumir contra o papel. */
+  --color-fg-ghost: var(--color-warm-500);
+
+  /* Acentos */
+  --color-accent-peach-light: var(--color-peach-100);
+  --color-accent-peach: var(--color-peach-200);
+  --color-accent-peach-deep: var(--color-peach-300);
+  --color-accent-lime: #b6ff6b;
+  --color-accent-clay: var(--color-clay-500);
+  --color-accent-whatsapp: var(--color-whatsapp-500);
+
+  /* Status: família da paleta, não semáforo. O vermelho fica entre brand e
+     terracota, e o aviso é mostarda porque laranja ao lado de uma marca
+     laranja não comunica nada. */
+  --color-success: #2c6e49;
+  --color-success-surface: #eaf3e3;
+  --color-danger: #b23a2b;
+  --color-danger-hover: color-mix(in srgb, var(--color-danger) 90%, black);
+  --color-danger-active: color-mix(in srgb, var(--color-danger) 80%, black);
+  --color-danger-surface: #fdeae4;
+  --color-warning: #8a6114;
+  --color-warning-surface: #fbf0d8;
+  /* O aviso escuro serve a texto, não a fundo — este é o único status claro
+     o bastante para pedir texto forte por cima */
+  --color-warning-bright: #f2c14e;
+
+  /* Campo: contorno de marca diluído em repouso, marca cheia no foco. A
+     diferença entre parado e ativo é de intensidade, não de cor. */
+  --color-input-border: color-mix(in srgb, var(--color-brand) 35%, transparent);
+  --color-input-border-focus: var(--color-brand);
+}

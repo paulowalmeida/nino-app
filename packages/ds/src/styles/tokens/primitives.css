@@ -1,0 +1,47 @@
+/*
+ * Camada 1 — primitivos. Só a tinta, sem nenhuma intenção de uso: o nome
+ * descreve a cor, não o papel. Nada no app consome daqui direto; quem pinta
+ * usa os semânticos de `color.css`, que apontam para estes.
+ *
+ * A escala segue o padrão do mercado: número menor é mais claro.
+ *
+ * Só mora aqui a família que o Tailwind não tem. Nome que existe na paleta
+ * dele (`orange-500`, `red-700`, `green-700`…) não é redefinido: o valor
+ * ficaria escondido atrás de um nome que a pessoa lê como sendo o padrão. A
+ * tinta do produto que caía nesses nomes foi para o semântico de `color.css`,
+ * onde o nome já diz o papel e não colide com nada.
+ */
+@theme static {
+  /* Neutros quentes — a família creme/areia que forma as superfícies */
+  --color-warm-50: #fffbf5;
+  --color-warm-100: #fff7ee;
+  --color-warm-200: #fff3e9;
+  --color-warm-300: #ffebd6;
+  --color-warm-400: #f4ece0;
+  --color-warm-500: #f1e7da;
+
+  /* Neutros quentes escuros — a família do texto */
+  --color-warm-600: #9a8b78;
+  --color-warm-700: #8a7d6c;
+  --color-warm-750: #7a6c59;
+  --color-warm-800: #6b5d4d;
+  --color-warm-900: #2d2418;
+  --color-warm-950: #1a1206;
+
+  /* Marrom queimado — a tinta da sombra sobre superfície quente: preto puro
+     acinzenta o creme e faz a peça parecer recortada em vez de assentada */
+  --color-burnt-900: #782800;
+
+  /* Frios — fora da família quente, usados em superfície neutra */
+  --color-cool-100: #f1f3f5;
+  --color-cool-900: #1a1a2e;
+
+  /* Pêssego — acento de destaque */
+  --color-peach-100: #ffe3cc;
+  --color-peach-200: #ffd9b8;
+  --color-peach-300: #ffd9a8;
+
+  /* Avulsos com identidade própria */
+  --color-clay-500: #b06a4a;
+  --color-whatsapp-500: #25d366;
+}
