@@ -29,8 +29,8 @@
 
 .chip {
   @apply flex shrink-0 cursor-pointer items-center rounded-full border;
-  @apply border-black/10 bg-white px-4 py-2 text-[0.82rem] font-bold;
-  @apply text-muted transition-colors duration-150;
+  @apply border-black/10 bg-surface-raised px-4 py-2 text-sm font-bold;
+  @apply text-fg-muted transition-colors duration-150;
 }
 
 /* feedback de toque em qualquer dispositivo: afunda de leve sem trocar cor,
@@ -47,10 +47,10 @@
   }
 
   .chipOn:hover {
-    @apply border-brand-hover bg-brand-hover text-white;
+    @apply border-brand-hover bg-brand-hover text-fg-on-brand;
   }
 }
 
 .chipOn {
-  @apply border-brand bg-brand text-white;
+  @apply border-brand bg-brand text-fg-on-brand;
 }

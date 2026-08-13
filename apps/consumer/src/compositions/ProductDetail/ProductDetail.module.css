@@ -11,7 +11,7 @@
  * e só rola quando passa do teto.
  */
 .drawer {
-  @apply max-h-[90dvh] rounded-t-3xl bg-brand-foreground;
+  @apply max-h-[90dvh] rounded-t-3xl bg-surface-page;
 }
 
 .media {
@@ -19,11 +19,11 @@
 }
 
 .modalTitle {
-  @apply font-display text-lg font-bold text-muted;
+  @apply font-display text-lg font-bold text-fg-muted;
 }
 
 .modalMedia {
-  @apply mb-4 overflow-hidden rounded-xl;
+  @apply mb-4 overflow-hidden rounded-3;
 }
 
 .photoWrap {
@@ -40,22 +40,22 @@
   @apply flex h-56 w-full items-center justify-center;
   background: radial-gradient(
     120% 100% at 30% 15%,
-    var(--color-cream),
-    var(--color-sand)
+    var(--color-surface-2),
+    var(--color-surface-5)
   );
 }
 
 .fallbackGlyph {
-  @apply text-[4.5rem] opacity-40;
+  @apply text-7xl opacity-faint;
 }
 
 .description {
-  @apply text-[0.95rem] leading-relaxed text-body;
+  @apply text-base leading-relaxed text-fg-default;
 }
 
 .footer {
   @apply sticky bottom-0 -mx-6 -mb-4 mt-4 flex items-center gap-3;
-  @apply border-t border-black/[0.08] bg-brand-foreground px-6 py-4;
+  @apply border-t border-black/[0.08] bg-surface-page px-6 py-4;
 }
 
 .modalFooter {
@@ -67,7 +67,7 @@
 }
 
 .stepperCount {
-  @apply w-4 text-center text-sm font-bold text-muted;
+  @apply w-4 text-center text-sm font-bold text-fg-muted;
   font-variant-numeric: tabular-nums;
 }
 

@@ -20,10 +20,14 @@
 
 .mark {
   @apply pointer-events-none absolute -right-10 -top-8 h-[150%] w-auto;
-  @apply select-none opacity-[0.13];
+  @apply select-none opacity-watermark;
 }
 
 .scrim {
   @apply absolute inset-x-0 bottom-0 h-24;
-  background: linear-gradient(to top, rgba(0, 0, 0, 0.3), transparent);
+  background: linear-gradient(
+    to top,
+    color-mix(in srgb, var(--color-warm-950) 30%, transparent),
+    transparent
+  );
 }

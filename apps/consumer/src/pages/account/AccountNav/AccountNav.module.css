@@ -27,10 +27,10 @@
 
 .link {
   @apply flex h-11 items-center gap-2.5 rounded-full border border-black/[0.08];
-  @apply bg-brand-foreground px-4 text-sm font-semibold text-muted;
+  @apply bg-surface-page px-4 text-sm font-semibold text-fg-muted;
   @apply whitespace-nowrap transition-colors;
-  @apply hover:border-peach hover:text-brand-strong;
-  @apply lg:h-auto lg:w-full lg:rounded-xl lg:border-transparent;
+  @apply hover:border-accent-peach hover:text-brand-strong;
+  @apply lg:h-auto lg:w-full lg:rounded-3 lg:border-transparent;
   @apply lg:bg-transparent lg:px-3 lg:py-2.5;
 }
 
@@ -42,9 +42,9 @@
 /* no desktop o aceso não muda de cor de texto — a coluna inteira fala num
    tom só, e quem marca a seção aberta é o fundo mais o filete de marca */
 .linkOn {
-  @apply border-transparent bg-brand text-brand-foreground;
-  @apply hover:border-transparent hover:text-brand-foreground;
-  @apply lg:relative lg:bg-black/[0.05] lg:text-muted;
+  @apply border-transparent bg-brand text-fg-on-brand;
+  @apply hover:border-transparent hover:text-fg-on-brand;
+  @apply lg:relative lg:bg-black/[0.05] lg:text-fg-muted;
   @apply lg:hover:border-transparent;
 }
 
@@ -64,7 +64,7 @@
 
 /* a contagem é dado, não enfeite: alinha em coluna com tabular-nums */
 .count {
-  @apply hidden text-xs font-bold text-faint lg:block;
+  @apply hidden text-xs font-bold text-fg-faint lg:block;
   font-variant-numeric: tabular-nums;
 }
 
@@ -73,13 +73,13 @@
 }
 
 .soon {
-  @apply hidden text-[0.62rem] font-bold uppercase tracking-[0.1em];
-  @apply text-faintest lg:block;
+  @apply hidden text-2xs font-bold uppercase tracking-[0.1em];
+  @apply text-fg-faintest lg:block;
 }
 
 .logout {
-  @apply mt-2 hidden h-auto w-full items-center gap-2.5 rounded-xl px-3;
-  @apply py-2.5 text-sm font-semibold text-muted transition-colors;
+  @apply mt-2 hidden h-auto w-full items-center gap-2.5 rounded-3 px-3;
+  @apply py-2.5 text-sm font-semibold text-fg-muted transition-colors;
   @apply hover:text-brand-strong lg:flex;
-  @apply disabled:cursor-not-allowed disabled:opacity-60;
+  @apply disabled:cursor-not-allowed disabled:opacity-dim;
 }

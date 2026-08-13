@@ -13,7 +13,7 @@
  * da conta.
  */
 .page {
-  @apply flex min-h-dvh w-full flex-col bg-white px-6;
+  @apply flex min-h-dvh w-full flex-col bg-surface-raised px-6;
   background-image: radial-gradient(
     100% 55% at 50% 0%,
     color-mix(in srgb, var(--store-tint, var(--color-brand)) 12%, transparent)
@@ -27,12 +27,12 @@
 /* a coluna é estreita de propósito: uma pergunta por vez não precisa de mais
    largura que a linha que a responde */
 .shell {
-  @apply mx-auto flex w-full max-w-[24rem] flex-1 flex-col lg:justify-center;
+  @apply mx-auto flex w-full max-w-block-md flex-1 flex-col lg:justify-center;
 }
 
 .back {
   @apply -ml-2 flex h-11 w-11 shrink-0 items-center justify-center;
-  @apply rounded-full text-lg text-muted transition-colors;
+  @apply rounded-full text-lg text-fg-muted transition-colors;
   @apply hover:bg-black/[0.04] hover:text-brand-strong;
 }
 
@@ -45,8 +45,8 @@
 
 .tile {
   @apply flex h-12 w-12 shrink-0 items-center justify-center overflow-hidden;
-  @apply rounded-2xl border-4 border-white font-display text-sm;
-  @apply font-extrabold text-white;
+  @apply rounded-2xl border-4 border-fg-on-brand font-display text-sm;
+  @apply font-extrabold text-fg-on-brand;
   background: var(--store-tint, var(--color-brand));
   box-shadow: 0 10px 24px -12px
     color-mix(in srgb, var(--store-tint, var(--color-brand)) 85%, transparent);
@@ -57,27 +57,27 @@
 }
 
 .store {
-  @apply min-w-0 truncate text-sm font-bold text-muted;
+  @apply min-w-0 truncate text-sm font-bold text-fg-muted;
 }
 
 /* ----- a pergunta ----- */
 .step {
-  @apply mt-9 text-[0.62rem] font-bold uppercase tracking-[0.16em];
-  @apply text-faintest;
+  @apply mt-9 text-2xs font-bold uppercase tracking-[0.16em];
+  @apply text-fg-faintest;
 }
 
 /* o herói da tela: a pergunta, no maior tipo da página */
 .headline {
-  @apply mt-2 font-display text-[1.75rem] font-extrabold leading-[1.1];
-  @apply text-muted;
+  @apply mt-2 font-display text-[1.75rem] font-extrabold leading-tight;
+  @apply text-fg-muted;
 }
 
 .note {
-  @apply mt-2.5 text-sm leading-relaxed text-muted;
+  @apply mt-2.5 text-sm leading-relaxed text-fg-muted;
 }
 
 .sentTo {
-  @apply font-bold text-muted;
+  @apply font-bold text-fg-muted;
 }
 
 /* ----- canais ----- */
@@ -91,19 +91,20 @@
 }
 
 .channel {
-  @apply flex-1 rounded-full py-2 text-[0.8rem] font-bold text-faint;
-  @apply transition-colors hover:text-muted;
+  @apply flex-1 rounded-full py-2 text-xs font-bold text-fg-faint;
+  @apply transition-colors hover:text-fg-muted;
 }
 
 .channelOn {
-  @apply flex-1 rounded-full bg-white py-2 text-[0.8rem] font-bold;
-  @apply text-muted shadow-[0_1px_3px_rgba(26,18,6,0.14)];
+  @apply flex-1 rounded-full bg-surface-raised py-2 text-xs font-bold;
+  @apply text-fg-muted shadow-xs;
 }
 
 /* ----- campo ----- */
 .field {
-  @apply mt-3 h-14 w-full rounded-xl border-black/10 bg-white text-base;
-  @apply text-muted;
+  @apply mt-3 h-14 w-full rounded-3 border-black/10 bg-surface-raised;
+  @apply text-base;
+  @apply text-fg-muted;
 }
 
 .field:focus {
@@ -118,8 +119,8 @@
 }
 
 .codeField input {
-  @apply h-14 w-full rounded-xl border-black/10 text-center;
-  @apply font-display text-xl font-extrabold text-muted;
+  @apply h-14 w-full rounded-3 border-black/10 text-center;
+  @apply font-display text-xl font-extrabold text-fg-muted;
   font-variant-numeric: tabular-nums;
 }
 
@@ -139,7 +140,7 @@
  * devolvia um CTA laranja vivo que não faz nada quando tocado.
  */
 .cta {
-  @apply mt-6 h-14 w-full rounded-button text-base font-bold;
+  @apply mt-6 h-14 w-full rounded-full text-base font-bold;
 }
 
 .cta:not(:disabled) {
@@ -156,6 +157,6 @@
 
 /* sair do passo é caminho de volta, não oferta: texto, sem moldura */
 .secondary {
-  @apply mt-2 h-12 w-full text-sm font-bold text-muted;
+  @apply mt-2 h-12 w-full text-sm font-bold text-fg-muted;
   @apply hover:text-brand-strong;
 }

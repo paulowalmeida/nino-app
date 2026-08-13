@@ -3,7 +3,7 @@
 /* página inteira e branca, como a vitrine — o cartão flutuante virava caixa
    dentro de caixa no celular e moldura sobrando no desktop */
 .page {
-  @apply flex min-h-dvh w-full flex-col bg-white pb-16;
+  @apply flex min-h-dvh w-full flex-col bg-surface-raised pb-16;
 }
 
 /* cresce para empurrar o rodapé até o fim da página em telas curtas */
@@ -17,27 +17,35 @@
  * não desenha linha nenhuma — a régua só existe quando há o que separar.
  */
 .header {
-  @apply sticky top-0 z-30 -mx-5 flex items-center gap-3 bg-white/95 px-5;
+  @apply sticky top-0 z-dock -mx-5 flex items-center gap-3;
+  @apply bg-surface-raised/95 px-5;
   @apply py-4 backdrop-blur;
   border-bottom: 1px solid
     color-mix(in srgb, black calc(var(--p, 0) * 8%), transparent);
-  box-shadow: 0 6px 20px -18px rgba(0, 0, 0, calc(var(--p, 0) * 0.9));
+  box-shadow: 0 6px 20px -18px
+    color-mix(
+      in srgb,
+      var(--color-warm-950) calc(var(--p, 0) * 90%),
+      transparent
+    );
 }
 
 .back {
   @apply flex h-11 w-11 shrink-0 items-center justify-center rounded-full;
-  @apply border border-black/[0.08] bg-brand-foreground text-lg text-muted;
-  @apply transition-colors hover:border-peach hover:text-brand-strong;
+  @apply border border-black/[0.08] bg-surface-page text-lg;
+  @apply text-fg-muted;
+  @apply transition-colors hover:border-accent-peach;
+  @apply hover:text-brand-strong;
 }
 
 .title {
-  @apply font-display text-xl font-extrabold leading-tight text-muted;
+  @apply font-display text-xl font-extrabold leading-tight text-fg-muted;
 }
 
 /* o código sai do rodapé e vira legenda do título: é a identidade do pedido,
    não uma nota de fim de página, onde ninguém rolava para ler */
 .code {
-  @apply text-xs uppercase tracking-wide text-faint;
+  @apply text-xs uppercase tracking-wide text-fg-faint;
   font-variant-numeric: tabular-nums;
 }
 
@@ -48,31 +56,31 @@
 /* sem caixa: uma segunda superfície clara logo abaixo do cartão competiria
    com ele, e isto aqui é uma nota de rodapé do cartão, não outro bloco */
 .reassurance {
-  @apply mt-3.5 flex items-center gap-2.5 px-1 text-[0.78rem] leading-snug;
-  @apply text-muted;
+  @apply mt-3.5 flex items-center gap-2.5 px-1 text-xs leading-snug;
+  @apply text-fg-muted;
 }
 
 .whatsappDot {
-  @apply h-2 w-2 shrink-0 rounded-full bg-whatsapp;
+  @apply h-2 w-2 shrink-0 rounded-full bg-accent-whatsapp;
 }
 
 .eyebrow {
-  @apply mt-8 pb-1 text-[0.68rem] font-bold uppercase tracking-[0.14em];
-  @apply text-faint;
+  @apply mt-8 pb-1 text-2xs font-bold uppercase tracking-[0.14em];
+  @apply text-fg-faint;
 }
 
 .again {
-  @apply mt-8 flex h-12 items-center justify-center rounded-button;
-  @apply bg-brand font-bold text-brand-foreground transition-colors;
+  @apply mt-8 flex h-12 items-center justify-center rounded-full;
+  @apply bg-brand font-bold text-fg-on-brand transition-colors;
   @apply hover:bg-brand-hover;
 }
 
 /* depois de um cancelamento a loja não empurra uma nova compra: o caminho de
    volta ao cardápio existe, mas em tom de saída, não de oferta */
 .againQuiet {
-  @apply mt-8 flex h-12 items-center justify-center rounded-button border;
-  @apply border-black/[0.08] font-bold text-muted transition-colors;
-  @apply hover:border-peach hover:text-brand-strong;
+  @apply mt-8 flex h-12 items-center justify-center rounded-full border;
+  @apply border-black/[0.08] font-bold text-fg-muted transition-colors;
+  @apply hover:border-accent-peach hover:text-brand-strong;
 }
 
 /* ----- não encontrado ----- */
@@ -94,14 +102,14 @@
 
 .skTitle {
   composes: nino-skeleton from global;
-  @apply h-6 w-32 rounded-lg bg-black/[0.06];
+  @apply h-6 w-32 rounded-2 bg-black/[0.06];
 }
 
 /* o cartão vivo é o bloco alto do topo: o placeholder reserva a altura dele
    inteira para a página não pular quando o pedido chega */
 .skStage {
   composes: nino-skeleton from global;
-  @apply h-[15.5rem] w-full rounded-card bg-black/[0.06];
+  @apply h-[15.5rem] w-full rounded-2 bg-black/[0.06];
 }
 
 .skJourney {
@@ -119,12 +127,12 @@
   left: 15px;
   top: calc(50% + 18px);
   bottom: calc(-50% + 18px);
-  background: var(--color-sand-deep);
+  background: var(--color-surface-6);
 }
 
 .skDot {
   composes: nino-skeleton from global;
-  @apply relative z-10 h-8 w-8 shrink-0 rounded-full bg-black/[0.06];
+  @apply relative z-content h-8 w-8 shrink-0 rounded-full bg-black/[0.06];
 }
 
 .skLabel {

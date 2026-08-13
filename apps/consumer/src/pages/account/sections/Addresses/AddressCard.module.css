@@ -5,18 +5,18 @@
 }
 
 .line {
-  @apply text-sm font-bold leading-snug text-muted;
+  @apply text-sm font-bold leading-snug text-fg-muted;
 }
 
 .city {
-  @apply mt-0.5 text-xs leading-snug text-faint;
+  @apply mt-0.5 text-xs leading-snug text-fg-faint;
 }
 
 /* o principal é o único estado que a lista precisa nomear — o resto é
    igual, e um selo em cada linha viraria ruído */
 .badge {
   @apply mt-2 inline-flex items-center rounded-full bg-brand-soft px-2.5;
-  @apply py-1 text-[0.62rem] font-bold uppercase tracking-[0.1em];
+  @apply py-1 text-2xs font-bold uppercase tracking-[0.1em];
   @apply text-brand-strong;
 }
 
@@ -25,18 +25,19 @@
 }
 
 .tool {
-  @apply flex h-9 w-9 items-center justify-center rounded-full text-faint;
+  @apply flex h-9 w-9 items-center justify-center rounded-full;
+  @apply text-fg-faint;
   @apply transition-colors hover:bg-black/[0.06] hover:text-brand-strong;
-  @apply disabled:cursor-not-allowed disabled:opacity-50;
+  @apply disabled:cursor-not-allowed disabled:opacity-disabled;
 }
 
 .confirm {
-  @apply mt-3 flex flex-wrap items-center justify-between gap-3 rounded-button;
+  @apply mt-3 flex flex-wrap items-center justify-between gap-3 rounded-full;
   @apply border border-black/[0.08] bg-black/[0.06] px-3.5 py-2.5;
 }
 
 .confirmText {
-  @apply text-xs font-bold text-muted;
+  @apply text-xs font-bold text-fg-muted;
 }
 
 .confirmActions {
@@ -44,12 +45,12 @@
 }
 
 .confirmNo {
-  @apply h-9 rounded-full px-3.5 text-xs font-bold text-muted;
+  @apply h-9 rounded-full px-3.5 text-xs font-bold text-fg-muted;
   @apply transition-colors hover:text-brand-strong;
 }
 
 .confirmYes {
   @apply h-9 rounded-full bg-brand px-3.5 text-xs font-bold;
-  @apply text-brand-foreground transition-colors hover:bg-brand-hover;
-  @apply disabled:cursor-not-allowed disabled:opacity-60;
+  @apply text-fg-on-brand transition-colors hover:bg-brand-hover;
+  @apply disabled:cursor-not-allowed disabled:opacity-dim;
 }

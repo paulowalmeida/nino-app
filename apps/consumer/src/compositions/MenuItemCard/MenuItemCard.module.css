@@ -3,27 +3,30 @@
 /* mobile: linha de lista contínua — sem moldura de card, separada da próxima
    por uma divisória fina. desktop: vira card emoldurado. */
 .card {
-  @apply relative flex cursor-pointer items-stretch gap-3.5 border-b border-black/[0.08];
+  @apply relative flex cursor-pointer items-stretch gap-3.5 border-b;
+  @apply border-black/[0.08];
   @apply py-4 outline-none transition-all duration-200;
   @apply focus-visible:ring-2 focus-visible:ring-brand;
   @apply last:border-b-0;
-  @apply lg:gap-4 lg:rounded-card lg:border lg:border-black/[0.08];
-  @apply lg:bg-brand-foreground;
+  @apply lg:gap-4 lg:rounded-2 lg:border lg:border-black/[0.08];
+  @apply lg:bg-surface-page;
   @apply lg:p-4 lg:pr-5 lg:last:border-b;
-  animation: settle 0.36s cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation: settle 0.36s var(--ease-out) both;
 }
 
 .card:hover {
-  @apply lg:-translate-y-0.5 lg:border-peach;
+  @apply lg:-translate-y-0.5 lg:border-accent-peach;
 }
 
 @media (min-width: 1024px) {
   .card {
-    box-shadow: 0 1px 2px rgba(26, 18, 6, 0.04);
+    box-shadow: 0 1px 2px
+      color-mix(in srgb, var(--color-warm-950) 4%, transparent);
   }
 
   .card:hover {
-    box-shadow: 0 10px 24px -12px rgba(26, 18, 6, 0.25);
+    box-shadow: 0 10px 24px -12px
+      color-mix(in srgb, var(--color-warm-950) 25%, transparent);
   }
 }
 
@@ -55,7 +58,8 @@
 
 .disabled:hover {
   @apply translate-y-0 border-black/[0.08];
-  box-shadow: 0 1px 2px rgba(26, 18, 6, 0.04);
+  box-shadow: 0 1px 2px
+    color-mix(in srgb, var(--color-warm-950) 4%, transparent);
 }
 
 .disabled .add {
@@ -67,11 +71,11 @@
 }
 
 .name {
-  @apply font-display text-[0.88rem] font-bold leading-snug text-muted;
+  @apply font-display text-sm font-bold leading-snug text-fg-muted;
 }
 
 .description {
-  @apply mt-1 line-clamp-2 text-[0.84rem] leading-snug text-muted;
+  @apply mt-1 line-clamp-2 text-sm leading-snug text-fg-muted;
 }
 
 /*
@@ -81,7 +85,7 @@
  * dos dois aparecia — agora o laranja quer dizer "dá pra agir aqui".
  */
 .price {
-  @apply mt-auto pt-2 font-display text-[0.8125rem] font-extrabold text-muted;
+  @apply mt-auto pt-2 font-display text-xs font-extrabold text-fg-muted;
   font-variant-numeric: tabular-nums;
 }
 
@@ -92,9 +96,10 @@
  * quebraria justamente o alinhamento que o numeral tabular constrói.
  */
 .tally {
-  @apply absolute -left-2 -top-2 z-10 flex min-w-7 items-center justify-center;
-  @apply rounded-full bg-brand-foreground px-1.5 py-0.5;
-  @apply font-display text-[0.78rem] font-extrabold text-brand-strong;
+  @apply absolute -left-2 -top-2 z-content flex min-w-7 items-center;
+  @apply justify-center;
+  @apply rounded-full bg-surface-page px-1.5 py-0.5;
+  @apply font-display text-xs font-extrabold text-brand-strong;
   border: 2px solid var(--color-brand);
   font-variant-numeric: tabular-nums;
 }
@@ -104,32 +109,34 @@
 }
 
 .photo {
-  @apply h-[5.4rem] w-[5.4rem] rounded-card object-cover;
+  @apply h-[5.4rem] w-[5.4rem] rounded-2 object-cover;
   @apply lg:h-[6.5rem] lg:w-[6.5rem];
-  box-shadow: inset 0 0 0 1px rgba(26, 18, 6, 0.06);
+  box-shadow: inset 0 0 0 1px
+    color-mix(in srgb, var(--color-warm-950) 6%, transparent);
 }
 
 .photoFallback {
-  @apply flex h-[5.4rem] w-[5.4rem] items-center justify-center rounded-card;
+  @apply flex h-[5.4rem] w-[5.4rem] items-center justify-center rounded-2;
   @apply lg:h-[6.5rem] lg:w-[6.5rem];
   background: radial-gradient(
     120% 120% at 30% 20%,
-    var(--color-cream),
-    var(--color-brand-foreground)
+    var(--color-surface-2),
+    var(--color-fg-on-brand)
   );
-  box-shadow: inset 0 0 0 1px var(--color-line);
+  box-shadow: inset 0 0 0 1px var(--color-border);
 }
 
 .fallbackGlyph {
-  @apply text-[2rem] opacity-45 grayscale-0;
+  @apply text-[2rem] opacity-faint grayscale-0;
   filter: saturate(0.85);
 }
 
 /* o botão de somar ancorado no canto da foto, estilo vitrine de delivery */
 .add {
   @apply absolute -bottom-2 -right-2 flex h-9 w-9 items-center justify-center;
-  @apply rounded-full bg-brand text-brand-foreground transition-transform;
+  @apply rounded-full bg-brand text-fg-on-brand transition-transform;
   @apply duration-150 active:scale-90;
-  border: 2.5px solid var(--color-brand-foreground);
-  box-shadow: 0 6px 14px -4px rgba(232, 84, 12, 0.55);
+  border: 2.5px solid var(--color-fg-on-brand);
+  box-shadow: 0 6px 14px -4px
+    color-mix(in srgb, var(--color-brand-strong) 55%, transparent);
 }

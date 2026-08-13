@@ -5,7 +5,7 @@
 }
 
 .blockLabel {
-  @apply text-[0.7rem] font-bold uppercase tracking-[0.14em] text-faint;
+  @apply text-xs font-bold uppercase tracking-[0.14em] text-fg-faint;
 }
 
 /* As setinhas do input number não têm uso num valor de troco digitado. */

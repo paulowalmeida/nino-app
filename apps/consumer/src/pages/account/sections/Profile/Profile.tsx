@@ -64,7 +64,7 @@ export const Profile = () => {
       <div className={section.card}>
         <FormField
           label="Nome"
-          labelClassName={section.label}
+          labelVariant="compact"
           error={
             !nameClean
               ? 'Esse nome vai ser lido em voz alta na cozinha — escolha outro.'
@@ -98,7 +98,7 @@ export const Profile = () => {
               E-mail <span className={section.hint}>(opcional)</span>
             </>
           }
-          labelClassName={section.label}
+          labelVariant="compact"
           helperText="Salvando o e-mail você também passa a entrar por ele, além do telefone."
         >
           <Input

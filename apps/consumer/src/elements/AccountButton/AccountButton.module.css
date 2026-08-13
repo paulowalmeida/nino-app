@@ -8,13 +8,14 @@
 
 .signIn {
   @apply flex h-11 shrink-0 items-center justify-center rounded-full border;
-  @apply border-black/[0.08] bg-brand-foreground px-4 text-[0.78rem] font-bold;
-  @apply text-muted transition-colors;
-  @apply hover:border-peach hover:text-brand-strong;
+  @apply border-black/[0.08] bg-surface-page px-4 text-xs font-bold;
+  @apply text-fg-muted transition-colors;
+  @apply hover:border-accent-peach hover:text-brand-strong;
 }
 
 .avatar {
   @apply flex h-11 w-11 shrink-0 items-center justify-center rounded-full;
-  @apply bg-brand-soft font-display text-[0.85rem] font-extrabold;
-  @apply text-brand-strong transition-colors hover:bg-peach-light;
+  @apply bg-brand-soft font-display text-sm font-extrabold;
+  @apply text-brand-strong transition-colors;
+  @apply hover:bg-accent-peach-light;
 }

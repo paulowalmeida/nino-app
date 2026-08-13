@@ -5,12 +5,12 @@
  * é que se alinha numa coluna central; a página não vira cartão.
  */
 .page {
-  @apply flex min-h-dvh w-full flex-col bg-white pb-24 lg:pb-10;
+  @apply flex min-h-dvh w-full flex-col bg-surface-raised pb-24 lg:pb-10;
 }
 
 /* cresce para empurrar o rodapé até o fim da página em telas curtas */
 .shell {
-  @apply mx-auto w-full max-w-[71rem] flex-1 px-4 sm:px-6;
+  @apply mx-auto w-full max-w-page flex-1 px-4 sm:px-6;
 }
 
 /*
@@ -23,11 +23,17 @@
  * quando há conteúdo passando por baixo.
  */
 .header {
-  @apply sticky top-0 z-30 -mx-4 hidden items-center gap-3 bg-white/95 px-4;
+  @apply sticky top-0 z-dock -mx-4 hidden items-center gap-3;
+  @apply bg-surface-raised/95 px-4;
   @apply py-4 backdrop-blur sm:-mx-6 sm:px-6 lg:flex;
   border-bottom: 1px solid
     color-mix(in srgb, black calc(var(--p, 0) * 8%), transparent);
-  box-shadow: 0 6px 20px -18px rgba(0, 0, 0, calc(var(--p, 0) * 0.9));
+  box-shadow: 0 6px 20px -18px
+    color-mix(
+      in srgb,
+      var(--color-warm-950) calc(var(--p, 0) * 90%),
+      transparent
+    );
 }
 
 /*
@@ -37,8 +43,10 @@
  */
 .back {
   @apply hidden h-11 w-11 shrink-0 items-center justify-center rounded-full;
-  @apply border border-black/[0.08] bg-brand-foreground text-lg text-muted;
-  @apply transition-colors hover:border-peach hover:text-brand-strong;
+  @apply border border-black/[0.08] bg-surface-page text-lg;
+  @apply text-fg-muted;
+  @apply transition-colors hover:border-accent-peach;
+  @apply hover:text-brand-strong;
   @apply lg:flex;
 }
 
@@ -47,13 +55,14 @@
 }
 
 .title {
-  @apply truncate font-display text-xl font-extrabold leading-tight text-muted;
+  @apply truncate font-display text-xl font-extrabold leading-tight;
+  @apply text-fg-muted;
 }
 
 /* a linha do freguês: diz há quanto tempo a pessoa é de casa, não o e-mail
    dela — isso está na gaveta de dados, a um toque daqui */
 .since {
-  @apply text-xs text-faint;
+  @apply text-xs text-fg-faint;
 }
 
 /* sem o cabeçalho no celular, o topo da seção é o topo da tela: o respiro
@@ -81,7 +90,7 @@
 
 .skTitle {
   composes: nino-skeleton from global;
-  @apply h-5 w-40 rounded-lg bg-black/[0.06];
+  @apply h-5 w-40 rounded-2 bg-black/[0.06];
 }
 
 .skSince {
@@ -91,12 +100,12 @@
 
 .skNavItem {
   composes: nino-skeleton from global;
-  @apply h-11 w-full rounded-xl bg-black/[0.06];
+  @apply h-11 w-full rounded-3 bg-black/[0.06];
 }
 
 .skPanelTitle {
   composes: nino-skeleton from global;
-  @apply h-6 w-56 rounded-lg bg-black/[0.06];
+  @apply h-6 w-56 rounded-2 bg-black/[0.06];
 }
 
 .skPanelLine {
@@ -106,5 +115,5 @@
 
 .skPanelCard {
   composes: nino-skeleton from global;
-  @apply mt-6 h-64 w-full rounded-card bg-black/[0.06];
+  @apply mt-6 h-64 w-full rounded-2 bg-black/[0.06];
 }

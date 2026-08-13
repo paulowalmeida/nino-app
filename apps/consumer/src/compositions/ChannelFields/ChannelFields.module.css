@@ -5,5 +5,5 @@
 }
 
 .blockLabel {
-  @apply text-[0.7rem] font-bold uppercase tracking-[0.14em] text-faint;
+  @apply text-xs font-bold uppercase tracking-[0.14em] text-fg-faint;
 }

@@ -1,28 +1,19 @@
 @reference "@nino/ds/globals.css";
 
 .panel {
-  @apply bg-white;
-  box-shadow: 24px 0 60px -30px rgba(26, 18, 6, 0.45);
+  @apply bg-surface-raised;
+  box-shadow: 24px 0 60px -30px
+    color-mix(in srgb, var(--color-warm-950) 45%, transparent);
 }
 
-/* o padding vem de dentro: o cabeçalho precisa sangrar até a borda para o
-   glow não terminar num degrau no meio do painel */
 .body {
   @apply flex flex-col overflow-y-auto p-0;
 }
 
-/* só carrega a cor da loja para dentro do portal — não desenha nada, e por
-   isso não entra no fluxo: os filhos continuam sendo filhos do `.body` */
 .tint {
   display: contents;
 }
 
-/*
- * A cor da loja entra como luz, não como laje. Uma faixa chapada de gradiente
- * transforma a marca do lojista num cabeçalho de sistema; um glow atrás do
- * azulejo deixa a mesma cor presente sem tomar a tela de quem só quer ver o
- * próprio nome.
- */
 .head {
   @apply relative px-6 pb-7 pt-8;
   padding-top: calc(2rem + env(safe-area-inset-top));
@@ -34,37 +25,32 @@
   );
 }
 
-/* a mesma peça que a loja tem na vitrine: moldura branca, canto arredondado,
-   sombra curta. De um lado o balcão se apresenta; deste, o freguês */
 .tile {
   @apply mb-4 flex h-14 w-14 items-center justify-center rounded-2xl;
-  @apply border-4 border-white font-display text-lg font-extrabold;
-  @apply text-white;
+  @apply border-4 border-fg-on-brand font-display text-lg font-extrabold;
+  @apply text-fg-on-brand;
   background: var(--store-tint, var(--color-brand));
   box-shadow: 0 10px 24px -12px
     color-mix(in srgb, var(--store-tint, var(--color-brand)) 85%, transparent);
 }
 
 .tileIcon {
-  @apply text-white;
+  @apply text-fg-on-brand;
 }
 
 .greeting {
-  @apply text-sm font-semibold text-muted;
+  @apply text-sm font-semibold text-fg-muted;
 }
 
-/* o nome é o maior tipo da gaveta: quem abre isto está procurando a si mesmo,
-   não uma lista de opções */
 .name {
   @apply truncate font-display text-[1.75rem] font-extrabold leading-none;
-  @apply text-muted;
+  @apply text-fg-muted;
 }
 
 .since {
-  @apply mt-2 text-xs text-faintest;
+  @apply mt-2 text-xs text-fg-faintest;
 }
 
-/* ----- gavetas ----- */
 .nav {
   @apply flex-1 px-3 pt-2;
 }
@@ -73,16 +59,12 @@
   @apply flex flex-col;
 }
 
-/* rótulo e ícone na mesma cor: a linha inteira é um objeto só, e o texto em
-   ink quase preto sobre o ícone claro partia cada linha em dois pesos */
 .item {
-  @apply relative flex h-12 w-full items-center gap-3 rounded-xl px-3;
-  @apply text-[0.95rem] font-semibold text-muted transition-colors;
+  @apply relative flex h-12 w-full items-center gap-3 rounded-3 px-3;
+  @apply text-base font-semibold text-fg-muted transition-colors;
   @apply hover:bg-black/[0.04];
 }
 
-/* o aceso se anuncia pelo filete e pelo fundo na cor da loja, não por um tom
-   de texto mais escuro: a gaveta inteira fala numa cor só */
 .itemOn {
   background: color-mix(
     in srgb,
@@ -91,7 +73,6 @@
   );
 }
 
-/* o mesmo filete que marca a seção aberta na coluna do desktop */
 .itemOn::before {
   content: '';
   @apply absolute bottom-2.5 left-0 top-2.5 w-[3px] rounded-full;
@@ -99,7 +80,7 @@
 }
 
 .icon {
-  @apply shrink-0 text-muted;
+  @apply shrink-0 text-fg-muted;
 }
 
 .itemOn .icon {
@@ -110,16 +91,14 @@
   @apply flex-1 truncate text-left;
 }
 
-/* a contagem responde metade da pergunta antes de abrir a gaveta */
 .count {
-  @apply text-sm font-bold text-faintest;
+  @apply text-sm font-bold text-fg-faintest;
   font-variant-numeric: tabular-nums;
 }
 
-/* ----- o que ainda não existe ----- */
 .eyebrow {
-  @apply mb-1 mt-5 px-3 text-[0.62rem] font-bold uppercase;
-  @apply tracking-[0.14em] text-faintest;
+  @apply mb-1 mt-5 px-3 text-2xs font-bold uppercase;
+  @apply tracking-[0.14em] text-fg-faintest;
 }
 
 .eyebrow::after {
@@ -127,39 +106,29 @@
   @apply mt-2 block h-px w-full bg-black/[0.07];
 }
 
-/* o grupo já está dito pelo "em breve" acima dele: apagar também a cor das
-   linhas seria dizer a mesma coisa duas vezes, e de um jeito que só parece
-   que essas três estão desabilitadas */
-
-/*
- * Sair mora no rodapé, separado por um filete: é a única ação da gaveta que
- * desfaz alguma coisa, e ela não pode dividir borda com as linhas que só
- * levam a algum lugar. O filete também ancora o vazio que sobra numa conta
- * com poucas gavetas — sem ele o botão parece ter escorregado até o fim.
- */
 .foot {
   @apply mt-6 border-t border-black/[0.07] px-3 pb-3 pt-3;
   padding-bottom: calc(0.75rem + env(safe-area-inset-bottom));
 }
 
 .logout {
-  @apply flex h-12 w-full items-center gap-3 rounded-xl px-3 text-sm;
-  @apply font-semibold text-muted transition-colors;
+  @apply flex h-12 w-full items-center gap-3 rounded-3 px-3 text-sm;
+  @apply font-semibold text-fg-muted transition-colors;
   @apply hover:bg-black/[0.04] hover:text-brand-strong;
-  @apply disabled:cursor-not-allowed disabled:opacity-60;
+  @apply disabled:cursor-not-allowed disabled:opacity-dim;
 }
 
-/* ----- visitante ----- */
 .guest {
   @apply flex flex-1 flex-col items-start gap-5 px-6 pb-6 pt-1;
 }
 
 .guestText {
-  @apply text-sm leading-relaxed text-muted;
+  @apply text-sm leading-relaxed text-fg-muted;
 }
 
 .enter {
-  @apply flex h-12 w-full items-center justify-center rounded-button;
-  @apply font-bold text-white transition-opacity hover:opacity-90;
+  @apply flex h-12 w-full items-center justify-center rounded-full;
+  @apply font-bold text-fg-on-brand transition-opacity;
+  @apply hover:opacity-strong;
   background: var(--store-tint, var(--color-brand));
 }

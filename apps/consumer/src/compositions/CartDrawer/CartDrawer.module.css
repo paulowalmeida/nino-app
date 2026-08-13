@@ -11,12 +11,13 @@
  * "Finalizar pedido" de ponta a ponta e cobria o cardápio inteiro.
  */
 .sheet {
-  @apply max-h-[85dvh] rounded-t-3xl bg-brand-foreground;
+  @apply max-h-[85dvh] rounded-t-3xl bg-surface-page;
 }
 
 .panel {
-  @apply bg-brand-foreground;
-  box-shadow: -24px 0 60px -30px rgba(26, 18, 6, 0.35);
+  @apply bg-surface-page;
+  box-shadow: -24px 0 60px -30px
+    color-mix(in srgb, var(--color-warm-950) 35%, transparent);
 }
 
 /*
@@ -29,7 +30,7 @@
 }
 
 .lines {
-  @apply flex flex-col divide-y divide-sand pb-4;
+  @apply flex flex-col divide-y divide-surface-5 pb-4;
 }
 
 .line {
@@ -41,18 +42,18 @@
 }
 
 .photo {
-  @apply h-14 w-14 shrink-0 rounded-xl object-cover;
-  box-shadow: inset 0 0 0 1px var(--color-sand);
+  @apply h-14 w-14 shrink-0 rounded-3 object-cover;
+  box-shadow: inset 0 0 0 1px var(--color-surface-5);
 }
 
 .photoFallback {
-  @apply flex h-14 w-14 shrink-0 items-center justify-center rounded-xl text-2xl;
+  @apply flex h-14 w-14 shrink-0 items-center justify-center rounded-3 text-2xl;
   background: radial-gradient(
     120% 120% at 30% 20%,
-    var(--color-brand-foreground),
-    var(--color-brand-foreground)
+    var(--color-fg-on-brand),
+    var(--color-fg-on-brand)
   );
-  box-shadow: inset 0 0 0 1px var(--color-brand-foreground);
+  box-shadow: inset 0 0 0 1px var(--color-fg-on-brand);
 }
 
 .lineText {
@@ -60,12 +61,12 @@
 }
 
 .lineName {
-  @apply truncate text-sm font-semibold text-muted;
+  @apply truncate text-sm font-semibold text-fg-muted;
 }
 
 /* A conta aberta: com 2 unidades, "2 × R$ 24,90" explica o total à direita. */
 .lineMath {
-  @apply mt-0.5 text-xs text-muted;
+  @apply mt-0.5 text-xs text-fg-muted;
   font-variant-numeric: tabular-nums;
 }
 
@@ -74,7 +75,7 @@
 }
 
 .lineTotal {
-  @apply font-display text-sm font-extrabold text-muted;
+  @apply font-display text-sm font-extrabold text-fg-muted;
   font-variant-numeric: tabular-nums;
 }
 
@@ -87,7 +88,7 @@
 }
 
 .stepperCount {
-  @apply w-4 text-sm font-bold text-muted;
+  @apply w-4 text-sm font-bold text-fg-muted;
   font-variant-numeric: tabular-nums;
 }
 
@@ -102,7 +103,7 @@
  */
 .footer {
   @apply sticky bottom-0 -mx-6 -mb-4 mt-auto flex flex-col gap-3;
-  @apply border-t border-black/[0.08] bg-brand-foreground px-6 pb-5 pt-4;
+  @apply border-t border-black/[0.08] bg-surface-page px-6 pb-5 pt-4;
 }
 
 .totalRow {
@@ -112,18 +113,18 @@
 /* mesma etiqueta em micro-caps do resto do app: o rótulo recua, o número
    manda */
 .totalLabel {
-  @apply text-[0.7rem] font-bold uppercase tracking-[0.14em] text-faint;
+  @apply text-xs font-bold uppercase tracking-[0.14em] text-fg-faint;
 }
 
 /* o prazo fecha a sacola com a mesma frase que a tela de acompanhamento vai
    repetir depois de pagar */
 .totalEta {
-  @apply mt-0.5 text-[0.72rem] font-semibold text-brand-strong;
+  @apply mt-0.5 text-xs font-semibold text-brand-strong;
   font-variant-numeric: tabular-nums;
 }
 
 .total {
-  @apply font-display text-[1.05rem] font-extrabold leading-none text-muted;
+  @apply font-display text-base font-extrabold leading-none text-fg-muted;
   font-variant-numeric: tabular-nums;
 }
 
@@ -132,5 +133,5 @@
 }
 
 .clear {
-  @apply h-10 w-full text-sm text-muted;
+  @apply h-10 w-full text-sm text-fg-muted;
 }

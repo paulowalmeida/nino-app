@@ -1,17 +1,20 @@
 @reference "@nino/ds/globals.css";
 
 .header {
-  @apply sticky top-0 z-20 flex items-center gap-3 border-b border-black/[0.08];
-  @apply bg-brand-foreground/90 px-5 py-3.5 backdrop-blur-md lg:rounded-t-[1.75rem];
+  @apply sticky top-0 z-sticky flex items-center gap-3 border-b;
+  @apply border-black/[0.08];
+  @apply bg-surface-page/90 px-5 py-3.5 backdrop-blur-md;
+  @apply lg:rounded-t-[1.75rem];
 }
 
 .back {
   @apply flex h-11 w-11 shrink-0 items-center justify-center rounded-full;
-  @apply border border-black/[0.08] bg-brand-foreground text-muted transition-colors duration-150;
-  @apply hover:border-peach hover:text-brand-strong;
+  @apply border border-black/[0.08] bg-surface-page text-fg-muted;
+  @apply transition-colors duration-150;
+  @apply hover:border-accent-peach hover:text-brand-strong;
   @apply focus-visible:outline-none focus-visible:ring-2;
   @apply focus-visible:ring-brand focus-visible:ring-offset-2;
-  @apply focus-visible:ring-offset-paper;
+  @apply focus-visible:ring-offset-surface-1;
 }
 
 .headText {
@@ -19,9 +22,10 @@
 }
 
 .title {
-  @apply truncate font-display text-lg font-extrabold leading-tight text-muted;
+  @apply truncate font-display text-lg font-extrabold leading-tight;
+  @apply text-fg-muted;
 }
 
 .storeLine {
-  @apply truncate text-xs text-faint;
+  @apply truncate text-xs text-fg-faint;
 }

@@ -5,12 +5,13 @@
 }
 
 .link {
-  @apply inline-flex items-baseline gap-1.5 text-xs text-faint;
+  @apply inline-flex items-baseline gap-1.5 text-xs text-fg-faint;
   @apply transition-colors hover:text-brand-strong;
 }
 
 .mark {
-  @apply font-display text-sm font-extrabold text-muted transition-colors;
+  @apply font-display text-sm font-extrabold text-fg-muted;
+  @apply transition-colors;
 }
 
 .link:hover .mark {

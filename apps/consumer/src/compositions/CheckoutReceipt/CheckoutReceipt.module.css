@@ -1,7 +1,8 @@
 @reference "@nino/ds/globals.css";
 
 .receipt {
-  @apply overflow-hidden rounded-2xl border border-black/[0.08] bg-brand-foreground;
+  @apply overflow-hidden rounded-2xl border border-black/[0.08];
+  @apply bg-surface-page;
 }
 
 .head {
@@ -9,11 +10,11 @@
 }
 
 .label {
-  @apply text-[0.7rem] font-bold uppercase tracking-[0.14em] text-faint;
+  @apply text-xs font-bold uppercase tracking-[0.14em] text-fg-faint;
 }
 
 .count {
-  @apply font-display text-[0.95rem] font-extrabold text-muted;
+  @apply font-display text-base font-extrabold text-fg-muted;
 }
 
 .toggle {
@@ -25,7 +26,7 @@
 }
 
 .item {
-  @apply flex items-baseline justify-between gap-3 text-sm text-body;
+  @apply flex items-baseline justify-between gap-3 text-sm text-fg-default;
   font-variant-numeric: tabular-nums;
 }
 
@@ -39,7 +40,7 @@
 
 .rule {
   @apply my-3;
-  border-top: 1.5px dashed var(--color-line);
+  border-top: 1.5px dashed var(--color-border);
 }
 
 .tally {
@@ -47,6 +48,6 @@
 }
 
 .tallyRow {
-  @apply flex items-center justify-between text-sm text-muted;
+  @apply flex items-center justify-between text-sm text-fg-muted;
   font-variant-numeric: tabular-nums;
 }

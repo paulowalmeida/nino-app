@@ -2,19 +2,20 @@
 
 /* traço interrompido: a gaveta existe, o conteúdo ainda não */
 .card {
-  @apply mt-5 flex flex-col items-center gap-3 rounded-card border;
-  @apply border-dashed border-black/[0.08] bg-white px-6 py-12 text-center;
+  @apply mt-5 flex flex-col items-center gap-3 rounded-2 border;
+  @apply border-dashed border-black/[0.08] bg-surface-raised px-6 py-12;
+  @apply text-center;
 }
 
 .icon {
-  @apply text-faintest;
+  @apply text-fg-faintest;
 }
 
 .note {
-  @apply max-w-xs text-sm leading-snug text-muted;
+  @apply max-w-xs text-sm leading-snug text-fg-muted;
 }
 
 .tag {
-  @apply rounded-full bg-black/[0.06] px-3 py-1 text-[0.62rem] font-bold uppercase;
-  @apply tracking-[0.12em] text-faint;
+  @apply rounded-full bg-black/[0.06] px-3 py-1 text-2xs font-bold uppercase;
+  @apply tracking-[0.12em] text-fg-faint;
 }

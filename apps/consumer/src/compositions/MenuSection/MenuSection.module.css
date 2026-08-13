@@ -15,11 +15,11 @@
 }
 
 .sectionTitle {
-  @apply font-display text-lg font-extrabold text-muted sm:text-xl;
+  @apply font-display text-lg font-extrabold text-fg-muted sm:text-xl;
 }
 
 .sectionCount {
-  @apply text-xs text-faint;
+  @apply text-xs text-fg-faint;
 }
 
 .items {

@@ -15,7 +15,7 @@
   left: 15px;
   top: calc(50% + 18px);
   bottom: calc(-50% + 18px);
-  background: var(--color-sand-deep);
+  background: var(--color-surface-6);
 }
 
 .done:not(:last-child)::before,
@@ -30,8 +30,9 @@
  * relance.
  */
 .node {
-  @apply relative z-10 flex h-8 w-8 items-center justify-center rounded-full;
-  @apply text-[1.05rem] leading-none;
+  @apply relative z-content flex h-8 w-8 items-center justify-center;
+  @apply rounded-full;
+  @apply text-base leading-none;
 }
 
 /*
@@ -41,19 +42,19 @@
  */
 .done .node,
 .final .node {
-  @apply bg-brand text-[0.8rem] font-bold text-brand-foreground;
+  @apply bg-brand text-xs font-bold text-fg-on-brand;
 }
 
 .done .label {
-  @apply text-sm font-medium text-muted;
+  @apply text-sm font-medium text-fg-muted;
 }
 
 .done .time {
-  @apply text-xs text-faint;
+  @apply text-xs text-fg-faint;
 }
 
 .current .node {
-  @apply bg-brand-foreground text-base;
+  @apply bg-surface-page text-base;
   box-shadow:
     inset 0 0 0 2px var(--color-brand),
     0 0 0 4px var(--color-brand-soft);
@@ -62,7 +63,7 @@
 
 .current .label,
 .final .label {
-  @apply font-display text-[0.95rem] font-extrabold leading-tight text-muted;
+  @apply font-display text-base font-extrabold leading-tight text-fg-muted;
 }
 
 .current .time,
@@ -71,16 +72,16 @@
 }
 
 .ahead .node {
-  @apply bg-surface-sunk opacity-75;
-  box-shadow: inset 0 0 0 1.5px var(--color-sand-deep);
+  @apply bg-surface-3 opacity-strong;
+  box-shadow: inset 0 0 0 1.5px var(--color-surface-6);
 }
 
 .ahead .label {
-  @apply text-sm font-medium text-faintest;
+  @apply text-sm font-medium text-fg-faintest;
 }
 
 .ahead .time {
-  @apply text-xs text-faintest;
+  @apply text-xs text-fg-faintest;
 }
 
 /* cancelado fecha a lista em tom de aviso, não de marca */

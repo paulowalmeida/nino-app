@@ -120,7 +120,7 @@ export const AddressForm = ({
     <form className={styles.form} onSubmit={handleSubmit}>
       <FormField
         label="CEP"
-        labelClassName={styles.label}
+        labelVariant="compact"
         error={
           lookup === 'notFound'
             ? 'Não achamos esse CEP. Preencha o endereço abaixo.'
@@ -142,7 +142,7 @@ export const AddressForm = ({
       </FormField>
 
       <div className={styles.pair}>
-        <FormField label="Rua" labelClassName={styles.label}>
+        <FormField label="Rua" labelVariant="compact">
           <Input
             autoComplete="address-line1"
             className={styles.input}
@@ -150,7 +150,7 @@ export const AddressForm = ({
             onChange={set('street')}
           />
         </FormField>
-        <FormField label="Nº" labelClassName={styles.label}>
+        <FormField label="Nº" labelVariant="compact">
           <Input
             ref={numberRef}
             inputMode="numeric"
@@ -167,7 +167,7 @@ export const AddressForm = ({
             Complemento <span className={styles.optional}>(opcional)</span>
           </>
         }
-        labelClassName={styles.label}
+        labelVariant="compact"
       >
         <Input
           placeholder="Apto, bloco ou ponto de referência"
@@ -178,7 +178,7 @@ export const AddressForm = ({
         />
       </FormField>
 
-      <FormField label="Bairro" labelClassName={styles.label}>
+      <FormField label="Bairro" labelVariant="compact">
         <Input
           autoComplete="address-level3"
           className={styles.input}
@@ -188,7 +188,7 @@ export const AddressForm = ({
       </FormField>
 
       <div className={styles.pairState}>
-        <FormField label="Cidade" labelClassName={styles.label}>
+        <FormField label="Cidade" labelVariant="compact">
           <Input
             autoComplete="address-level2"
             className={styles.input}
@@ -196,7 +196,7 @@ export const AddressForm = ({
             onChange={set('city')}
           />
         </FormField>
-        <FormField label="UF" labelClassName={styles.label}>
+        <FormField label="UF" labelVariant="compact">
           <Input
             maxLength={2}
             autoComplete="address-level1"

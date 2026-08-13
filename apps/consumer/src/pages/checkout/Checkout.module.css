@@ -7,10 +7,10 @@
  */
 
 .page {
-  @apply mx-auto flex min-h-dvh w-full max-w-xl flex-col bg-brand-foreground;
+  @apply mx-auto flex min-h-dvh w-full max-w-xl flex-col bg-surface-page;
   @apply lg:my-8 lg:min-h-[calc(100dvh-4rem)] lg:rounded-[1.75rem];
   @apply lg:border lg:border-black/[0.08];
-  @apply lg:shadow-[0_30px_80px_-40px_rgba(26,18,6,0.45)];
+  @apply lg:shadow-xl;
 }
 
 .form {
@@ -37,7 +37,7 @@
 
 .skTitle {
   composes: nino-skeleton from global;
-  @apply h-5 w-40 rounded-lg bg-black/[0.06];
+  @apply h-5 w-40 rounded-2 bg-black/[0.06];
 }
 
 .skLabel {
@@ -47,7 +47,7 @@
 
 .skField {
   composes: nino-skeleton from global;
-  @apply h-10 w-full rounded-md bg-black/[0.06];
+  @apply h-10 w-full rounded-2 bg-black/[0.06];
 }
 
 .skReceipt {

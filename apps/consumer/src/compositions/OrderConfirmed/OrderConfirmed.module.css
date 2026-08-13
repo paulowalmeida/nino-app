@@ -6,18 +6,23 @@
 }
 
 .mascot {
-  @apply h-36 w-36 drop-shadow-[0_12px_24px_rgba(232,84,12,0.22)];
+  @apply h-36 w-36;
+  filter: drop-shadow(
+    0 12px 24px color-mix(in srgb, var(--color-brand-strong) 22%, transparent)
+  );
 }
 
 .title {
-  @apply font-display text-3xl font-extrabold text-muted;
+  @apply font-display text-3xl font-extrabold text-fg-muted;
 }
 
 .text {
-  @apply max-w-xs text-sm leading-relaxed text-muted;
+  @apply max-w-xs text-sm leading-relaxed text-fg-muted;
 }
 
 .code {
-  @apply mb-2 rounded-full border border-black/[0.08] bg-black/[0.05] px-5 py-2 font-display;
-  @apply text-base font-extrabold uppercase tracking-widest text-brand-strong;
+  @apply mb-2 rounded-full border border-black/[0.08] bg-black/[0.05] px-5 py-2;
+  @apply font-display;
+  @apply text-base font-extrabold uppercase tracking-widest;
+  @apply text-brand-strong;
 }

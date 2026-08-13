@@ -5,10 +5,10 @@
 /* gruda logo abaixo da barra do topo, não no topo da janela: as duas são
    fixas, e sem o deslocamento a régua sumiria atrás do cabeçalho */
 .bar {
-  @apply sticky top-14 z-20 mt-4 bg-white/95;
+  @apply sticky top-14 z-sticky mt-4 bg-surface-raised/95;
   @apply backdrop-blur;
 }
 
 .inner {
-  @apply mx-auto w-full max-w-[71rem] px-4 sm:px-6;
+  @apply mx-auto w-full max-w-page px-4 sm:px-6;
 }
