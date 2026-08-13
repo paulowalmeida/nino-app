@@ -1,11 +1,10 @@
+import { Flexbox } from '@nino/ds/components/Flexbox'
 import { Breadcrumb } from '@elements/Breadcrumb/Breadcrumb'
 import { UnitCard } from '@compositions/UnitCard/UnitCard'
 import { useCurrentTenant } from '@hooks/session/useCurrentTenant'
 import { useSaveTenant } from '@hooks/store/useSaveTenant'
 import { useSetMainTenant } from '@hooks/store/useSetMainTenant'
 import { useTenantDetail } from '@hooks/store/useTenantDetail'
-
-import styles from './SettingsUnitDetailSection.module.css'
 
 /** Uma loja por vez: os dados dela e o posto de matriz. */
 export const SettingsUnitDetailSection = () => {
@@ -17,7 +16,7 @@ export const SettingsUnitDetailSection = () => {
   const { mutate: setMain, isPending: isPromoting } = useSetMainTenant(tenantId)
 
   return (
-    <div className={styles.stack}>
+    <Flexbox direction="column" gap={2}>
       <Breadcrumb
         trail={[
           { label: 'Unidades', to: '..' },
@@ -34,6 +33,6 @@ export const SettingsUnitDetailSection = () => {
         onSetMain={() => unit && setMain(unit.id)}
         onSave={save}
       />
-    </div>
+    </Flexbox>
   )
 }

@@ -1,11 +1,11 @@
 @reference "@nino/ds/globals.css";
 
 .block {
-  @apply flex flex-col gap-2 border-t border-dashed border-sand-deep pt-3;
+  @apply flex flex-col gap-2 border-t border-dashed border-border pt-3;
 }
 
 .title {
-  @apply text-[0.7rem] font-bold uppercase tracking-[0.12em] text-faint;
+  @apply text-xs font-bold uppercase tracking-[0.12em] text-fg-faint;
 }
 
 .pair {
@@ -17,5 +17,5 @@
 }
 
 .hint {
-  @apply text-xs leading-relaxed text-faint;
+  @apply text-xs leading-relaxed text-fg-faint;
 }

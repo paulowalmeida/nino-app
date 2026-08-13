@@ -1,3 +1,4 @@
+import { Flexbox } from '@nino/ds/components/Flexbox'
 import { useEffect, useRef, useState } from 'react'
 
 import { Reorder } from 'framer-motion'
@@ -97,7 +98,7 @@ export const MenuBoard = ({ tenantId, categoryId, search }: MenuBoardProps) => {
 
         <div className={styles.scroll}>
           <div className={styles.list}>
-            <ul className={styles.items}>
+            <Flexbox as="ul" direction="column">
               {MENU_BOARD_GHOST_ROWS.map((row) => (
                 <li key={row} className={rowStyles.item}>
                   <div className={rowStyles.itemLink}>
@@ -111,7 +112,7 @@ export const MenuBoard = ({ tenantId, categoryId, search }: MenuBoardProps) => {
                   <Skeleton className={styles.ghostSwitch} />
                 </li>
               ))}
-            </ul>
+            </Flexbox>
           </div>
         </div>
       </div>

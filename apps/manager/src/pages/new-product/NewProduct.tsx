@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router'
 import { useQueryClient } from '@tanstack/react-query'
 
 import { Button } from '@nino/ds/components/Button'
-import { PageHeader } from '@nino/ds/components/PageHeader'
+import { Header } from '@nino/ds/components/Header'
 import { toast } from '@nino/ds/components/Toast'
 import {
   NewProductFields,
@@ -102,8 +102,9 @@ export const NewProduct = () => {
     <div className={styles.page}>
       <BackLink>Cardápio</BackLink>
 
-      <PageHeader
+      <Header
         className={styles.header}
+        mb={5}
         title="Novo item"
         accent="item"
         description="O que o cliente vê no cardápio, tudo em um lugar só."

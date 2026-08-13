@@ -1,15 +1,16 @@
 @reference "@nino/ds/globals.css";
 
 .row {
-  @apply flex min-h-16 flex-wrap items-center gap-3 rounded-xl px-2 py-3;
-  @apply border-t border-sand transition-colors duration-150;
+  @apply flex min-h-16 flex-wrap items-center gap-3 rounded-3 px-2 py-3;
+  @apply border-t border-border transition-colors duration-150;
   @apply hover:bg-surface-mute;
 }
 
 .dragHandle {
   @apply flex shrink-0 cursor-grab touch-none items-center justify-center;
-  @apply rounded-lg p-1.5 text-faint transition-colors duration-150;
-  @apply hover:bg-surface-sunk hover:text-subtle active:cursor-grabbing;
+  @apply rounded-2 p-1.5 text-fg-faint transition-colors duration-150;
+  @apply hover:bg-surface-3 hover:text-fg-subtle;
+  @apply active:cursor-grabbing;
 }
 
 .who {
@@ -17,30 +18,26 @@
 }
 
 .name {
-  @apply truncate text-sm font-semibold text-body;
+  @apply truncate text-sm font-semibold text-fg-default;
 }
 
 .hint {
-  @apply text-xs text-faint;
+  @apply text-xs text-fg-faint;
   font-variant-numeric: tabular-nums;
 }
 
 /* categoria vazia é a única segura de excluir — o texto sinaliza isso */
 .hintEmpty {
-  @apply text-xs font-medium text-brand/80;
-}
-
-.actions {
-  @apply flex shrink-0 items-center gap-1;
+  @apply text-xs font-medium text-brand-vivid;
 }
 
 .action {
-  @apply flex size-9 items-center justify-center rounded-lg text-faint;
+  @apply flex size-9 items-center justify-center rounded-2 text-fg-faint;
   @apply transition-colors duration-150;
-  @apply hover:bg-sand hover:text-body;
+  @apply hover:bg-surface-5 hover:text-fg-default;
   @apply focus-visible:outline-none focus-visible:ring-2;
   @apply focus-visible:ring-brand focus-visible:ring-offset-1;
-  @apply disabled:pointer-events-none disabled:opacity-40;
+  @apply disabled:pointer-events-none disabled:opacity-disabled;
 }
 
 .danger {

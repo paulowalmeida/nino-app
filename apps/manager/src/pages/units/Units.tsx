@@ -1,6 +1,7 @@
 import { useCallback, useState } from 'react'
 import { Link } from 'react-router'
 
+import { Flexbox } from '@nino/ds/components/Flexbox'
 import { BrandTopBar } from '@components/BrandTopBar/BrandTopBar'
 import { FirstStoreForm } from '@compositions/FirstStoreForm/FirstStoreForm'
 import { StorePreview } from '@compositions/StorePreview/StorePreview'
@@ -45,7 +46,7 @@ export const Units = () => {
       <BrandTopBar actionLabel="Sair" onAction={() => void handleLogout()} />
 
       <main className={styles.page}>
-        <div className={styles.head}>
+        <Flexbox direction="row" wrap align="end" justify="between" gap={3}>
           <div>
             <p className={styles.eyebrow}>Unidades</p>
             <h1 className={styles.title}>{title}</h1>
@@ -58,7 +59,7 @@ export const Units = () => {
           <Link to="/boas-vindas" className={styles.guideAgain}>
             Ver como funciona
           </Link>
-        </div>
+        </Flexbox>
 
         <div className={styles.preview}>
           <StorePreview name={storeName} />

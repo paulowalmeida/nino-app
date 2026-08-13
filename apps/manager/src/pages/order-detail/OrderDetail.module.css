@@ -32,7 +32,7 @@
 }
 
 .ghostBadge {
-  @apply h-5 w-24 shrink-0 rounded-[4px];
+  @apply h-5 w-24 shrink-0 rounded-1;
 }
 
 .ghostQuantity {
@@ -65,7 +65,7 @@
  * é o que separa a identificação do conteúdo.
  */
 .hero {
-  @apply mt-2 flex items-start gap-4 border-b border-line/60 pb-5;
+  @apply mt-2 flex items-start gap-4 border-b border-border/60 pb-5;
 }
 
 .heroText {
@@ -78,13 +78,14 @@
 }
 
 .number {
-  @apply font-display text-2xl font-extrabold tracking-[-0.02em] text-ink;
+  @apply font-display text-2xl font-extrabold tracking-[-0.02em];
+  @apply text-fg-strong;
   @apply lg:text-3xl;
   font-variant-numeric: tabular-nums;
 }
 
 .opened {
-  @apply mt-1 text-sm text-subtle;
+  @apply mt-1 text-sm text-fg-subtle;
   font-variant-numeric: tabular-nums;
 }
 
@@ -124,11 +125,12 @@
 }
 
 .items {
-  @apply flex flex-col divide-y divide-line/50;
+  @apply flex flex-col divide-y divide-border/50;
 }
 
 .item {
-  @apply flex items-baseline gap-3 py-2.5 text-sm text-body first:pt-0;
+  @apply flex items-baseline gap-3 py-2.5 text-sm text-fg-default;
+  @apply first:pt-0;
 }
 
 .quantity {
@@ -141,7 +143,7 @@
 }
 
 .itemPrice {
-  @apply shrink-0 text-muted;
+  @apply shrink-0 text-fg-muted;
   font-variant-numeric: tabular-nums;
 }
 
@@ -150,32 +152,31 @@
  * voz alta para o cliente — merece o peso que as molduras genéricas gastavam.
  */
 .totals {
-  @apply mt-4 flex flex-col gap-1.5 rounded-[18px] bg-cream p-4;
+  @apply mt-4 flex flex-col gap-1.5 rounded-4 bg-surface-2 p-4;
 }
 
 .totalRow {
-  @apply flex items-baseline justify-between text-sm text-muted;
+  @apply flex items-baseline justify-between text-sm text-fg-muted;
   font-variant-numeric: tabular-nums;
 }
 
 .zone {
-  @apply text-faintest;
+  @apply text-fg-faintest;
 }
 
 .grandTotal {
-  @apply mt-1 border-t border-sand pt-2.5;
-  @apply font-display text-xl font-extrabold text-ink;
+  @apply mt-1 border-t border-border pt-2.5;
+  @apply font-display text-xl font-extrabold text-fg-strong;
 }
 
 /* mesma marcação da observação na comanda da fila: é o mesmo texto do
    cliente, e é o que a cozinha erra quando não lê */
 .notes {
-  @apply mt-4 rounded-lg bg-brand/8 p-3 text-sm leading-relaxed;
+  @apply mt-4 rounded-2 bg-brand-ghost p-3 text-sm leading-relaxed;
   @apply text-brand-strong;
 }
 
 .notesLabel {
-  @apply mb-0.5 block text-[0.65rem] font-bold uppercase tracking-[0.1em];
+  @apply mb-0.5 block text-2xs font-bold uppercase tracking-[0.1em];
   @apply text-brand-strong/70;
 }
-

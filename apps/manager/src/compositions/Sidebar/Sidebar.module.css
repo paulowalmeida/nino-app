@@ -21,8 +21,8 @@
  * when the menu grows taller than the screen.
  */
 .sidebar {
-  @apply fixed left-0 top-0 z-[70] flex h-dvh w-60 flex-col overflow-hidden;
-  @apply -translate-x-full bg-dark;
+  @apply fixed left-0 top-0 z-modal flex h-dvh w-60 flex-col overflow-hidden;
+  @apply -translate-x-full bg-fg-cool;
   /* `translate`, not `transform`: in Tailwind v4 translate-x-* writes to
      the translate property, and transitioning transform misses the slide. */
   @apply transition-[translate,width] duration-300 ease-in-out;
@@ -52,8 +52,8 @@
 }
 
 .logoWrap {
-  @apply relative z-10 flex shrink-0 items-center justify-between;
-  @apply border-b border-white/8 px-5 py-4;
+  @apply relative z-content flex shrink-0 items-center justify-between;
+  @apply border-b border-fg-on-brand/8 px-5 py-4;
 }
 
 .sidebar.collapsed .logoWrap {
@@ -62,8 +62,8 @@
 
 .collapseBtn {
   @apply flex h-6 w-6 shrink-0 cursor-pointer items-center justify-center;
-  @apply rounded-md text-white/35 transition-colors duration-150;
-  @apply hover:bg-white/10 hover:text-white/80;
+  @apply rounded-2 text-fg-on-brand/35 transition-colors duration-150;
+  @apply hover:bg-surface-raised/10 hover:text-fg-on-brand/80;
   @apply hidden lg:flex;
 }
 
@@ -76,13 +76,14 @@
 }
 
 .switcherWrap {
-  @apply relative z-20 shrink-0 border-b border-white/8 px-2 py-2;
+  @apply relative z-sticky shrink-0 border-b border-fg-on-brand/8 px-2;
+  @apply py-2;
 }
 
 /* scrolling belongs to the DS ScrollArea: this is just the space it takes
    in the column — the dark native scrollbar was cutting into the menu */
 .nav {
-  @apply relative z-10 min-h-0 flex-1;
+  @apply relative z-content min-h-0 flex-1;
 }
 
 .navInner {
@@ -91,27 +92,23 @@
 
 /* grouped by topic: what happens today on top, how the store is set up
    below */
-.group {
-  @apply flex flex-col gap-0.5;
-}
-
 .group + .group {
   @apply mt-5;
 }
 
 .groupTitle {
-  @apply mb-1 px-3 text-[0.6rem] font-bold uppercase tracking-[0.14em];
-  @apply text-white/28;
+  @apply mb-1 px-3 text-2xs font-bold uppercase tracking-[0.14em];
+  @apply text-fg-on-brand/28;
 }
 
 /* serves both link and button: an item with children opens the list
    instead of navigating */
 .navItem {
-  @apply relative flex w-full cursor-pointer items-center gap-3 rounded-xl;
+  @apply relative flex w-full cursor-pointer items-center gap-3 rounded-3;
   @apply px-3 py-2.5 text-left;
-  @apply text-sm font-medium text-white/45;
+  @apply text-sm font-medium text-fg-on-brand/45;
   @apply transition-colors duration-150;
-  @apply hover:bg-white/6 hover:text-white/80;
+  @apply hover:bg-surface-raised/6 hover:text-fg-on-brand/80;
 }
 
 /* left accent bar for active item */
@@ -127,8 +124,8 @@
 }
 
 .navItemActive {
-  @apply bg-brand/10 text-brand;
-  @apply hover:bg-brand/14 hover:text-brand;
+  @apply bg-brand-soft text-brand;
+  @apply hover:bg-brand-soft hover:text-brand;
 }
 
 /* single wrapper for the trigger content — Accordion keeps it apart from
@@ -144,18 +141,18 @@
  * own.
  */
 .navItemTrigger {
-  @apply w-full rounded-xl px-3 py-2.5 text-left;
-  @apply text-sm font-medium text-white/45;
+  @apply w-full rounded-3 px-3 py-2.5 text-left;
+  @apply text-sm font-medium text-fg-on-brand/45;
   @apply transition-colors duration-150;
   @apply bg-transparent data-[state=open]:bg-transparent;
-  @apply hover:bg-white/6 hover:text-white/80;
-  @apply data-[state=open]:hover:bg-white/6;
+  @apply hover:bg-surface-raised/6 hover:text-fg-on-brand/80;
+  @apply data-[state=open]:hover:bg-surface-raised/6;
 }
 
 /* open on its own route: only then it carries the active item surface */
 .navItemTrigger.navItemActive {
-  @apply text-brand data-[state=open]:bg-brand/10;
-  @apply data-[state=open]:hover:bg-brand/14 hover:text-brand;
+  @apply text-brand data-[state=open]:bg-brand-soft;
+  @apply data-[state=open]:hover:bg-brand-soft hover:text-brand;
 }
 
 .accordionRoot {
@@ -167,7 +164,7 @@
 }
 
 .accordionContent {
-  @apply text-white/60;
+  @apply text-fg-on-brand/60;
 }
 
 /* sections of the open screen, indented under the parent item */
@@ -192,7 +189,7 @@
 }
 
 .subNav > a {
-  animation: sub-in 0.34s cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation: sub-in 0.34s var(--ease-out) both;
 }
 
 .subNav > a:nth-child(2) {
@@ -218,9 +215,9 @@
 }
 
 .subItem {
-  @apply flex items-center gap-2.5 rounded-lg px-3 py-1.5;
-  @apply text-[0.8rem] text-white/40 transition-colors duration-150;
-  @apply hover:bg-white/6 hover:text-white/75;
+  @apply flex items-center gap-2.5 rounded-2 px-3 py-1.5;
+  @apply text-xs text-fg-on-brand/40 transition-colors duration-150;
+  @apply hover:bg-surface-raised/6 hover:text-fg-on-brand/75;
 }
 
 /* smaller than the parent item's icon: the subitem is a child, and the
@@ -230,7 +227,7 @@
 }
 
 .subItemActive {
-  @apply bg-white/8 font-semibold text-white/90;
+  @apply bg-surface-raised/8 font-semibold text-fg-on-brand/90;
 }
 
 .navIcon {
@@ -240,10 +237,10 @@
 /* how many orders wait for acceptance — the one number that interrupts */
 .tally {
   @apply ml-auto flex h-5 min-w-5 items-center justify-center rounded-full;
-  @apply bg-brand px-1.5 text-[0.65rem] font-bold text-brand-foreground;
+  @apply bg-brand px-1.5 text-2xs font-bold text-fg-on-brand;
   font-variant-numeric: tabular-nums;
 }
 
 .footer {
-  @apply relative z-10 shrink-0 border-t border-white/8 p-2;
+  @apply relative z-content shrink-0 border-t border-fg-on-brand/8 p-2;
 }

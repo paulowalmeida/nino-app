@@ -1,7 +1,7 @@
 @reference "@nino/ds/globals.css";
 
 .skeleton {
-  @apply h-64 w-full rounded-[24px];
+  @apply h-64 w-full rounded-6;
 }
 
 .zones {
@@ -9,18 +9,19 @@
 }
 
 .zone {
-  @apply flex flex-wrap items-center gap-3 border-t border-sand py-3;
+  @apply flex flex-wrap items-center gap-3 border-t border-border py-3;
   @apply transition-opacity duration-200;
 }
 
 .off {
-  @apply opacity-55;
+  @apply opacity-dim;
 }
 
 /* o nome é o alvo de edição — clicar nele abre a linha */
 .zoneName {
   @apply min-w-0 flex-1 justify-start truncate rounded-none bg-transparent;
-  @apply p-0 text-left text-sm font-semibold text-body hover:bg-transparent;
+  @apply p-0 text-left text-sm font-semibold text-fg-default;
+  @apply hover:bg-transparent;
   @apply hover:text-brand-strong;
 }
 
@@ -37,20 +38,21 @@
 }
 
 .edit {
-  @apply shrink-0 text-faint;
+  @apply shrink-0 text-fg-faint;
 }
 
 .fee {
-  @apply text-sm text-muted;
+  @apply text-sm text-fg-muted;
   font-variant-numeric: tabular-nums;
 }
 
 .remove {
-  @apply shrink-0 text-faint;
+  @apply shrink-0 text-fg-faint;
 }
 
 .add {
-  @apply mt-4 flex flex-wrap items-center gap-2 border-t border-sand pt-4;
+  @apply mt-4 flex flex-wrap items-center gap-2 border-t border-border;
+  @apply pt-4;
 }
 
 .addName {

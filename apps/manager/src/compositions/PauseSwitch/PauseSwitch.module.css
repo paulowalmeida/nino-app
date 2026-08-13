@@ -3,14 +3,14 @@
 /* the height of the button that will take its place, so the line doesn't
    jump */
 .skeleton {
-  @apply h-9 w-56 rounded-button;
+  @apply h-9 w-56 rounded-full;
 }
 
 /* closed is the exception state: strong warm background, impossible to
    ignore */
 .paused {
-  @apply flex flex-wrap items-center justify-between gap-3 rounded-[22px];
-  @apply border border-brand/35 bg-brand/10 p-4;
+  @apply flex flex-wrap items-center justify-between gap-3 rounded-5;
+  @apply border border-brand-bold bg-brand-soft p-4;
 }
 
 .text {
@@ -22,30 +22,22 @@
 }
 
 .hint {
-  @apply mt-0.5 text-sm leading-relaxed text-muted;
-}
-
-.open {
-  @apply flex;
+  @apply mt-0.5 text-sm leading-relaxed text-fg-muted;
 }
 
 .trigger {
-  @apply text-faint;
+  @apply text-fg-faint;
 }
 
 .form {
-  @apply flex w-full flex-col gap-2 rounded-[22px] border border-line;
-  @apply bg-brand-foreground/70 p-4 backdrop-blur-sm;
+  @apply flex w-full flex-col gap-2 rounded-5 border border-border;
+  @apply bg-surface-page/70 p-4 backdrop-blur-sm;
 }
 
 .formTitle {
-  @apply text-sm font-semibold text-body;
+  @apply text-sm font-semibold text-fg-default;
 }
 
 .reason {
   @apply max-w-sm;
-}
-
-.options {
-  @apply flex flex-wrap gap-2;
 }

@@ -6,7 +6,7 @@
 
 .thumb {
   @apply flex h-11 w-11 shrink-0 items-center justify-center;
-  @apply rounded-xl object-cover select-none;
+  @apply rounded-3 object-cover select-none;
 }
 
 .glyph {
@@ -14,25 +14,25 @@
 }
 
 .tone0 {
-  @apply bg-brand/12 text-brand-strong;
+  @apply bg-brand-soft text-brand-strong;
 }
 
 .tone1 {
-  @apply bg-peach text-terracotta;
+  @apply bg-accent-peach text-accent-clay;
 }
 
 .tone2 {
-  @apply bg-sand-deep text-ink/70;
+  @apply bg-surface-6 text-fg-strong/70;
 }
 
 .tone3 {
-  @apply bg-cream-deep text-brand-strong;
+  @apply bg-surface-4 text-brand-strong;
 }
 
 .tone4 {
-  @apply bg-peach-light text-terracotta;
+  @apply bg-accent-peach-light text-accent-clay;
 }
 
 .tone5 {
-  @apply bg-lime/20 text-ink/70;
+  @apply bg-accent-lime/20 text-fg-strong/70;
 }

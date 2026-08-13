@@ -1,3 +1,4 @@
+import { Flexbox } from '@nino/ds/components/Flexbox'
 import { useState } from 'react'
 
 import { Card } from '@nino/ds/components/Card'
@@ -69,7 +70,7 @@ export const ProductCard = ({ item, index, onPick }: ProductCardProps) => {
           ariaLabel={`Prévia de ${item.name}`}
           backdropClassName={styles.previewBackdrop}
           body={
-            <div className={styles.preview}>
+            <Flexbox direction="column" gap={2}>
               {/* Same tile as the card, sized to look at: with no photo it
                   falls back to the category emoji instead of leaving a
                   hole. */}
@@ -83,7 +84,7 @@ export const ProductCard = ({ item, index, onPick }: ProductCardProps) => {
                 <p className={styles.previewText}>{item.description}</p>
               )}
               <p className={styles.previewPrice}>{brl(item.price)}</p>
-            </div>
+            </Flexbox>
           }
         />
       )}

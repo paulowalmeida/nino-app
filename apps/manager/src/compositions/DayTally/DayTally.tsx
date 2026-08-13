@@ -1,3 +1,4 @@
+import { Flexbox } from '@nino/ds/components/Flexbox'
 import { Link } from 'react-router'
 
 import { Card } from '@nino/ds/components/Card'
@@ -45,7 +46,7 @@ export const DayTally = ({ tenantId, timezone }: DayTallyProps) => {
           the closed queue, revenue and average ticket open the day's
           report. */}
       <div className={styles.tally}>
-        <Card
+        <Card padding="lg"
           asChild
           className={`${motion.settle} ${motion.lift} ${styles.figure}`}
         >
@@ -66,7 +67,7 @@ export const DayTally = ({ tenantId, timezone }: DayTallyProps) => {
           </Link>
         </Card>
 
-        <Card
+        <Card padding="lg"
           asChild
           className={`${motion.settle} ${motion.lift} ${styles.figure}`}
         >
@@ -88,7 +89,7 @@ export const DayTally = ({ tenantId, timezone }: DayTallyProps) => {
           </Link>
         </Card>
 
-        <Card
+        <Card padding="lg"
           asChild
           className={`${motion.settle} ${motion.lift} ${styles.figure}`}
         >
@@ -112,7 +113,7 @@ export const DayTally = ({ tenantId, timezone }: DayTallyProps) => {
       </div>
 
       {isPending && (
-        <ul className={styles.recent}>
+        <Flexbox as="ul" direction="column" mt={4}>
           {DAY_TALLY_SKELETON_ROWS.map((row) => (
             <li key={row} className={styles.entry}>
               <div className={styles.skeletonRow}>
@@ -123,7 +124,7 @@ export const DayTally = ({ tenantId, timezone }: DayTallyProps) => {
               </div>
             </li>
           ))}
-        </ul>
+        </Flexbox>
       )}
 
       {!isPending && recent.length > 0 && (

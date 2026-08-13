@@ -24,7 +24,7 @@
 /* o ícone diz a etapa sem depender da leitura do rótulo — no trilho rolando
    no celular, metade dos nomes chega cortada */
 .icon {
-  @apply h-4 w-4 shrink-0 text-faintest transition-colors duration-200;
+  @apply h-4 w-4 shrink-0 text-fg-faintest transition-colors duration-200;
 }
 
 .current .icon {
@@ -38,7 +38,7 @@
 /* a contagem é número, não selo: uma pastilha dentro de outra pastilha é o
    que fazia a trilha destoar dos quadros da visão geral */
 .count {
-  @apply text-xs font-bold text-faintest;
+  @apply text-xs font-bold text-fg-faintest;
   font-variant-numeric: tabular-nums;
 }
 

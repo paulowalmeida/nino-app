@@ -16,7 +16,7 @@
 }
 
 .board {
-  @apply relative z-10 grid min-h-0 flex-1 gap-x-5 gap-y-4;
+  @apply relative z-content grid min-h-0 flex-1 gap-x-5 gap-y-4;
   @apply grid-cols-1 sm:grid-cols-2 xl:grid-cols-4;
 }
 
@@ -24,7 +24,7 @@
  * marca à esquerda, o primeiro inclusive — senão "Chegou agora" fica
  * desalinhado das demais etapas. */
 .column {
-  @apply flex min-h-0 flex-col sm:border-l sm:border-sand-deep sm:pl-5;
+  @apply flex min-h-0 flex-col sm:border-l sm:border-border sm:pl-5;
 }
 
 .columnHead {
@@ -32,18 +32,18 @@
 }
 
 .columnTitle {
-  @apply text-[0.8rem] font-bold uppercase tracking-[0.14em] text-faint;
+  @apply text-xs font-bold uppercase tracking-[0.14em] text-fg-faint;
 }
 
 .count {
   @apply flex h-6 min-w-6 items-center justify-center rounded-full px-1.5;
-  @apply bg-ink text-xs font-bold text-cream;
+  @apply bg-fg-strong text-xs font-bold text-fg-inverse;
   font-variant-numeric: tabular-nums;
 }
 
 /* o que espera aceite é o único trilho com dívida: a contagem acende */
 .waiting .count {
-  @apply bg-brand text-brand-foreground;
+  @apply bg-brand text-fg-on-brand;
 }
 
 .waiting .columnTitle {

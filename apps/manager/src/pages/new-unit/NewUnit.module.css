@@ -7,7 +7,7 @@
 }
 
 .eyebrow {
-  @apply mt-3 text-[0.7rem] font-bold uppercase tracking-[0.12em] text-faint;
+  @apply mt-3 text-xs font-bold uppercase tracking-[0.12em] text-fg-faint;
 }
 
 /*
@@ -15,16 +15,17 @@
  * ficha, e o fio fino basta para separar o cabeçalho do trabalho.
  */
 .head {
-  @apply mt-1 border-b border-line/60 pb-5;
+  @apply mt-1 border-b border-border/60 pb-5;
 }
 
 .title {
-  @apply font-display text-2xl font-extrabold tracking-[-0.02em] text-ink;
+  @apply font-display text-2xl font-extrabold tracking-[-0.02em];
+  @apply text-fg-strong;
   @apply lg:text-3xl;
 }
 
 .subtitle {
-  @apply mt-1.5 max-w-xl text-sm leading-relaxed text-subtle;
+  @apply mt-1.5 max-w-xl text-sm leading-relaxed text-fg-subtle;
 }
 
 /* Duas colunas no desktop: o formulário conduz à esquerda e o apoio acompanha
@@ -44,16 +45,17 @@
 }
 
 .asideLabel {
-  @apply text-[0.7rem] font-bold uppercase tracking-[0.12em] text-faint;
+  @apply text-xs font-bold uppercase tracking-[0.12em] text-fg-faint;
 }
 
 /* bloco de fatos: creme, porque é peça dentro da tela — o papel é que é branco */
 .facts {
-  @apply flex flex-col rounded-2xl bg-cream px-4 py-1;
+  @apply flex flex-col rounded-2xl bg-surface-2 px-4 py-1;
 }
 
 .fact {
-  @apply border-t border-sand-deep py-3 text-xs leading-relaxed text-body;
+  @apply border-t border-border py-3 text-xs leading-relaxed;
+  @apply text-fg-default;
 }
 
 .fact:first-child {
@@ -61,5 +63,5 @@
 }
 
 .factStrong {
-  @apply font-semibold text-ink;
+  @apply font-semibold text-fg-strong;
 }

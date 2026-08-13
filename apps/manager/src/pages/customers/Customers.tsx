@@ -1,3 +1,4 @@
+import { Flexbox } from '@nino/ds/components/Flexbox'
 import { Link } from 'react-router'
 
 import { Alert } from '@nino/ds/components/Alert'
@@ -48,7 +49,7 @@ export const Customers = () => {
       </header>
 
       {isPending && (
-        <div className={styles.loading}>
+        <Flexbox direction="column" gap={2} mt={6}>
           {CUSTOMERS_GHOST_ROWS.map((row) => (
             <div key={row} className={`${styles.grid} ${styles.ghostRow}`}>
               <span className={styles.who}>
@@ -67,7 +68,7 @@ export const Customers = () => {
               </span>
             </div>
           ))}
-        </div>
+        </Flexbox>
       )}
 
       {isError && (

@@ -1,3 +1,4 @@
+import { Flexbox } from '@nino/ds/components/Flexbox'
 import { Card } from '@nino/ds/components/Card'
 import { EmptyState } from '@nino/ds/components/EmptyState'
 import { Skeleton } from '@nino/ds/components/Skeleton'
@@ -49,8 +50,8 @@ export const SalesTrend = ({ tenantId }: SalesTrendProps) => {
         <Eyebrow className={styles.heading}>Os últimos 7 dias</Eyebrow>
       </div>
 
-      <Card className={`${motion.settle} ${styles.card}`}>
-        <header className={styles.head}>
+      <Card padding="lg" className={`${motion.settle} ${styles.card}`}>
+        <Flexbox as="header" gap={4} align="start" justify="between" mb={4}>
           <div>
             {isPending ? (
               <Skeleton className={styles.skeletonTotal} />
@@ -69,7 +70,7 @@ export const SalesTrend = ({ tenantId }: SalesTrendProps) => {
               <span className={styles.deltaNote}> vs. ontem</span>
             </p>
           )}
-        </header>
+        </Flexbox>
 
         {/* the chart shape to come: axis on the left, seven days at the base */}
         {isPending && (
@@ -82,11 +83,11 @@ export const SalesTrend = ({ tenantId }: SalesTrendProps) => {
             </div>
             <div className={styles.skeletonPlot}>
               <Skeleton className={styles.skeletonLine} />
-              <div className={styles.skeletonDays}>
+              <Flexbox justify="between" shrink={false} mt={2}>
                 {SALES_TREND_SKELETON_DAYS.map((day) => (
                   <Skeleton key={day} className={styles.skeletonDay} />
                 ))}
-              </div>
+              </Flexbox>
             </div>
           </div>
         )}

@@ -1,3 +1,4 @@
+import { Flexbox } from '@nino/ds/components/Flexbox'
 import { useState } from 'react'
 import { Link } from 'react-router'
 
@@ -45,7 +46,7 @@ export const SettingsUnitSection = () => {
 
   return (
     <section className={card.panel}>
-      <header className={`${motion.unroll} ${styles.head}`}>
+      <Flexbox as="header" gap={3} align="start" justify="between" wrap mb={4} className={motion.unroll}>
         <div>
           <h2 className={card.title}>Lojas da empresa</h2>
           <p className={card.hint}>
@@ -64,9 +65,9 @@ export const SettingsUnitSection = () => {
             </Link>
           </Button>
         )}
-      </header>
+      </Flexbox>
 
-      <ul className={styles.list}>
+      <Flexbox as="ul" direction="column">
         {units.map(({ tenantId: id, tenantName, companyName }, index) => {
           const isHere = id === tenantId
 
@@ -107,7 +108,7 @@ export const SettingsUnitSection = () => {
             </li>
           )
         })}
-      </ul>
+      </Flexbox>
 
       <RemoveUnitModal
         open={confirming !== null}

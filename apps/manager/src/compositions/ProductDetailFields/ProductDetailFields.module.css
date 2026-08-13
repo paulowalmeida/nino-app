@@ -19,13 +19,13 @@
 }
 
 .availability {
-  @apply flex items-start gap-3 rounded-2xl bg-cream p-4;
+  @apply flex items-start gap-3 rounded-2xl bg-surface-2 p-4;
 }
 
 .availabilityLabel {
-  @apply text-sm font-semibold text-ink;
+  @apply text-sm font-semibold text-fg-strong;
 }
 
 .availabilityHint {
-  @apply mt-0.5 text-xs leading-relaxed text-faint;
+  @apply mt-0.5 text-xs leading-relaxed text-fg-faint;
 }

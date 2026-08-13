@@ -3,15 +3,16 @@
 /* o convite é ação, não conteúdo: mantém superfície para se destacar da
    lista, mas sem a borda que o transformava em mais um cartão */
 .form {
-  @apply flex flex-col gap-4 rounded-[24px] bg-cream p-5 lg:p-6;
+  @apply flex flex-col gap-4 rounded-6 bg-surface-2 p-5 lg:p-6;
 }
 
 .title {
-  @apply font-display text-lg font-extrabold tracking-[-0.01em] text-ink;
+  @apply font-display text-lg font-extrabold tracking-[-0.01em];
+  @apply text-fg-strong;
 }
 
 .hint {
-  @apply mt-0.5 text-sm text-faint;
+  @apply mt-0.5 text-sm text-fg-faint;
 }
 
 .fields {

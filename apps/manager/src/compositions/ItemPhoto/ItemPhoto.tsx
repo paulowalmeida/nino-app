@@ -1,3 +1,4 @@
+import { Flexbox } from '@nino/ds/components/Flexbox'
 import { useEffect, useRef, useState } from 'react'
 
 import { Alert } from '@nino/ds/components/Alert'
@@ -89,7 +90,7 @@ export const ItemPhoto = ({
 
   if (chosen) {
     return (
-      <div className={styles.wrap}>
+      <Flexbox direction="column" gap={3}>
         <PhotoCropper
           key={`${chosen.name}-${chosen.size}`}
           file={chosen}
@@ -99,7 +100,7 @@ export const ItemPhoto = ({
           onRemove={removeFromCropper}
         />
         {error && <Alert variant="error">{error}</Alert>}
-      </div>
+      </Flexbox>
     )
   }
 
@@ -136,7 +137,7 @@ export const ItemPhoto = ({
         )}
       </div>
 
-      <div className={styles.actions}>
+      <Flexbox gap={2} align="center" wrap>
         <label className={`${motion.press} ${styles.trigger}`}>
           {stagedUrl || cover ? 'Trocar foto' : 'Escolher arquivo'}
           <input
@@ -170,7 +171,7 @@ export const ItemPhoto = ({
             Remover
           </Button>
         )}
-      </div>
+      </Flexbox>
 
       {error && <Alert variant="error">{error}</Alert>}
     </div>

@@ -5,9 +5,10 @@
  * do celular — sem isso o total fica embaixo do indicador do sistema.
  */
 .tab {
-  @apply fixed inset-x-0 bottom-0 z-10 flex w-full flex-col items-stretch;
-  @apply justify-start rounded-none border-t border-sand bg-paper text-left;
-  @apply shadow-[0_-8px_24px_rgba(26,18,6,0.08)];
+  @apply fixed inset-x-0 bottom-0 z-content flex w-full flex-col items-stretch;
+  @apply justify-start rounded-none border-t border-border;
+  @apply bg-surface-1 text-left;
+  @apply shadow-up;
   @apply transition-transform duration-200 active:translate-y-0.5;
   @apply focus-visible:outline-none focus-visible:ring-2;
   @apply focus-visible:ring-brand;
@@ -20,7 +21,7 @@
  */
 .perforation {
   --tooth: 8px;
-  @apply block h-2 w-full bg-sand;
+  @apply block h-2 w-full bg-surface-5;
   mask: radial-gradient(var(--tooth) at 50% 100%, #0000 98%, #000 100%) 50% 0 /
     calc(2 * var(--tooth)) var(--tooth) repeat-x;
 }
@@ -30,15 +31,15 @@
 }
 
 .count {
-  @apply flex-1 text-sm font-semibold text-subtle;
+  @apply flex-1 text-sm font-semibold text-fg-subtle;
 }
 
 .total {
-  @apply font-display text-xl font-extrabold tracking-tight text-ink;
+  @apply font-display text-xl font-extrabold tracking-tight text-fg-strong;
   font-variant-numeric: tabular-nums;
 }
 
 .hint {
   @apply grid size-7 shrink-0 place-items-center rounded-full;
-  @apply bg-brand text-brand-foreground;
+  @apply bg-brand text-fg-on-brand;
 }

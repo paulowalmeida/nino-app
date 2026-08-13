@@ -23,16 +23,16 @@
 }
 
 .grid {
-  @apply stroke-sand;
+  @apply stroke-surface-5;
   stroke-width: 1;
 }
 
 .axisLine {
-  @apply stroke-sand;
+  @apply stroke-surface-5;
 }
 
 .tickText {
-  @apply fill-faint text-xs;
+  @apply fill-fg-faint text-xs;
 }
 
 .line {
@@ -63,11 +63,12 @@
 }
 
 .tooltip {
-  @apply rounded-card border border-line bg-white px-3 py-2 shadow-card;
+  @apply rounded-2 border border-border bg-surface-raised px-3 py-2;
+  @apply shadow-sm;
 }
 
 .tooltipLabel {
-  @apply text-xs font-bold capitalize text-ink;
+  @apply text-xs font-bold capitalize text-fg-strong;
 }
 
 .tooltipValue {

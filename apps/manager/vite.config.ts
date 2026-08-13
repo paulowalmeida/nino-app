@@ -9,6 +9,16 @@ const API = 'https://api-dev.nino.delivery'
 export default defineConfig({
   plugins: [react(), tailwindcss()],
   /**
+   * O nome gerado carrega o arquivo de origem (`Alert-module__title___a1b2c`)
+   * em vez de só a classe: no DevTools o hash sozinho não diz de qual
+   * componente a regra veio, que é o que trava a busca ao depurar estilo.
+   */
+  css: {
+    modules: {
+      generateScopedName: '[name]__[local]___[hash:base64:5]',
+    },
+  },
+  /**
    * 3001 is the manager's port in dev (consumer owns 3002).
    *
    * The `/api` proxy exists so the browser sees a single origin while the app

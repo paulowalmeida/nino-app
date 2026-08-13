@@ -1,3 +1,4 @@
+import { Flexbox } from '@nino/ds/components/Flexbox'
 import { useNavigate } from 'react-router'
 
 import { Card } from '@nino/ds/components/Card'
@@ -29,7 +30,7 @@ export const StoreSelection = () => {
         <h1 className={styles.title}>Seus restaurantes</h1>
         <p className={styles.subtitle}>Escolha qual você quer gerenciar</p>
 
-        <div className={styles.list}>
+        <Flexbox direction="column" gap={3} mt={8}>
           {companies.map(({ companyId, companyName, units }, index) => (
             <Card
               key={companyId}
@@ -46,7 +47,7 @@ export const StoreSelection = () => {
               </span>
             </Card>
           ))}
-        </div>
+        </Flexbox>
       </div>
     </div>
   )

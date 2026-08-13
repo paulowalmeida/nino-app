@@ -20,11 +20,7 @@
 }
 
 .eyebrow {
-  @apply mt-3 text-[0.7rem] font-bold uppercase tracking-[0.12em] text-faint;
-}
-
-.hero {
-  @apply mt-1 flex items-center gap-4;
+  @apply mt-3 text-xs font-bold uppercase tracking-[0.12em] text-fg-faint;
 }
 
 .mark {
@@ -37,7 +33,7 @@
 
 .name {
   @apply truncate font-display text-2xl font-extrabold tracking-[-0.02em];
-  @apply text-ink lg:text-3xl;
+  @apply text-fg-strong lg:text-3xl;
 }
 
 .contact {
@@ -51,7 +47,7 @@
 }
 
 .email {
-  @apply truncate text-sm text-faint;
+  @apply truncate text-sm text-fg-faint;
 }
 
 /*
@@ -61,14 +57,14 @@
  */
 /* celular: faixa 2×2 entre fios. desktop: coluna à direita, um fato por linha */
 .facts {
-  @apply grid grid-cols-2 gap-y-4 border-y border-line/60 py-4;
+  @apply grid grid-cols-2 gap-y-4 border-y border-border/60 py-4;
   @apply lg:order-2 lg:grid-cols-1 lg:gap-0 lg:border-y-0 lg:py-0;
 }
 
 .fact {
   @apply flex flex-col gap-0.5;
   @apply lg:flex-row lg:items-baseline lg:justify-between lg:gap-3;
-  @apply lg:border-b lg:border-sand lg:py-2.5;
+  @apply lg:border-b lg:border-border lg:py-2.5;
 }
 
 .fact:last-child {
@@ -76,13 +72,14 @@
 }
 
 .factLabel {
-  @apply text-[0.68rem] font-bold uppercase tracking-[0.1em] text-faintest;
+  @apply text-2xs font-bold uppercase tracking-[0.1em] text-fg-faintest;
 }
 
 /* número em corpo de texto, não manchete: aqui ele é referência de apoio —
    quem manda na tela é a lista de pedidos */
 .factValue {
-  @apply font-display text-[0.95rem] font-extrabold text-ink lg:text-right;
+  @apply font-display text-base font-extrabold text-fg-strong;
+  @apply lg:text-right;
   font-variant-numeric: tabular-nums;
 }
 
@@ -94,15 +91,15 @@
    e dizer qual evita a pergunta "cadê o pedido de março?" */
 .historyHead {
   @apply flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1;
-  @apply border-b border-line/60 pb-3;
+  @apply border-b border-border/60 pb-3;
 }
 
 .historyTitle {
-  @apply text-[0.7rem] font-bold uppercase tracking-[0.12em] text-faint;
+  @apply text-xs font-bold uppercase tracking-[0.12em] text-fg-faint;
 }
 
 .historyWindow {
-  @apply text-xs text-faint;
+  @apply text-xs text-fg-faint;
 }
 
 .ordersScroll {
@@ -114,7 +111,7 @@
 }
 
 .order {
-  @apply border-b border-sand last:border-b-0;
+  @apply border-b border-border last:border-b-0;
 }
 
 /*
@@ -123,7 +120,7 @@
  */
 .orderLink {
   @apply grid grid-cols-[auto_1fr_auto] items-baseline gap-x-3 gap-y-1;
-  @apply rounded-xl px-2 py-3 transition-colors duration-150;
+  @apply rounded-3 px-2 py-3 transition-colors duration-150;
   @apply hover:bg-surface-mute focus-visible:outline-none;
   @apply focus-visible:ring-2 focus-visible:ring-brand;
   @apply focus-visible:ring-offset-1;
@@ -136,21 +133,22 @@
 }
 
 .orderNumber {
-  @apply font-display text-sm font-extrabold text-ink;
+  @apply font-display text-sm font-extrabold text-fg-strong;
   font-variant-numeric: tabular-nums;
 }
 
 .orderStatus {
-  @apply min-w-0 truncate text-sm text-muted;
+  @apply min-w-0 truncate text-sm text-fg-muted;
 }
 
 .orderAt {
-  @apply col-start-2 text-xs text-faint lg:col-auto lg:text-right;
+  @apply col-start-2 text-xs text-fg-faint lg:col-auto lg:text-right;
   font-variant-numeric: tabular-nums;
 }
 
 .orderTotal {
-  @apply col-start-3 row-start-1 text-right text-sm font-semibold text-body;
+  @apply col-start-3 row-start-1 text-right text-sm font-semibold;
+  @apply text-fg-default;
   @apply lg:col-auto lg:row-auto;
   font-variant-numeric: tabular-nums;
 }
@@ -160,7 +158,7 @@
 }
 
 .loadingMore {
-  @apply text-xs text-faint;
+  @apply text-xs text-fg-faint;
 }
 
 .empty {

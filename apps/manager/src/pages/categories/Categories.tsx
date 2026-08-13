@@ -3,12 +3,13 @@ import { useNavigate } from 'react-router'
 
 import { Reorder } from 'framer-motion'
 
+import { Flexbox } from '@nino/ds/components/Flexbox'
 import { Alert } from '@nino/ds/components/Alert'
 import { Button } from '@nino/ds/components/Button'
 import { Dialog } from '@nino/ds/components/Dialog'
 import { EmptyState } from '@nino/ds/components/EmptyState'
 import { Input } from '@nino/ds/components/Input'
-import { PageHeader } from '@nino/ds/components/PageHeader'
+import { Header } from '@nino/ds/components/Header'
 import { Skeleton } from '@nino/ds/components/Skeleton'
 import { CategoryRow } from '@compositions/CategoryRow/CategoryRow'
 import { BackLink } from '@elements/BackLink/BackLink'
@@ -98,8 +99,10 @@ export const Categories = () => {
     <div className={styles.page}>
       <BackLink>Cardápio</BackLink>
 
-      <PageHeader
-        className={`${motion.deal} ${styles.header}`}
+      <Header
+        mb={{ mobile: 5, desktop: 8 }}
+        mt={2}
+        className={motion.deal}
         title="Como o cardápio se organiza"
         accent="organiza"
         description="As categorias agrupam os itens no app do cliente. Arraste para mudar a ordem em que aparecem lá."
@@ -130,7 +133,7 @@ export const Categories = () => {
       </form>
 
       {isPending && (
-        <div className={styles.loading}>
+        <Flexbox gap={2}>
           {CATEGORIES_GHOST_ROWS.map((row) => (
             <div key={row} className={rowStyles.row}>
               <Skeleton className={styles.ghostHandle} />
@@ -144,7 +147,7 @@ export const Categories = () => {
               </div>
             </div>
           ))}
-        </div>
+        </Flexbox>
       )}
 
       {isError && (

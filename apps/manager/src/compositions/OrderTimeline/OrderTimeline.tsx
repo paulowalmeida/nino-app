@@ -1,3 +1,4 @@
+import { Flexbox } from '@nino/ds/components/Flexbox'
 import { riseDelay } from '@utils/rise-delay'
 import { STATUS_LABEL } from '@utils/order-flow'
 import { ORDER_TIMELINE_REALM_LABEL } from '@constants/order.constants'
@@ -21,7 +22,7 @@ export const OrderTimeline = ({ entries }: OrderTimelineProps) => {
   )
 
   return (
-    <ol className={styles.timeline}>
+    <Flexbox as="ol" direction="column">
       {sorted.map((entry, index) => (
         <li
           key={entry.id}
@@ -43,6 +44,6 @@ export const OrderTimeline = ({ entries }: OrderTimelineProps) => {
           </time>
         </li>
       ))}
-    </ol>
+    </Flexbox>
   )
 }

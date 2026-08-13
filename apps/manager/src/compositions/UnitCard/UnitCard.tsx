@@ -1,3 +1,4 @@
+import { Flexbox } from '@nino/ds/components/Flexbox'
 import { useState } from 'react'
 
 import { Badge } from '@nino/ds/components/Badge'
@@ -80,7 +81,7 @@ export const UnitCard = ({
 
   return (
     <section className={styles.panel}>
-      <header className={`${motion.unroll} ${local.head}`}>
+      <Flexbox as="header" gap={3} align="start" justify="between" wrap mb={4} className={motion.unroll}>
         <div>
           <h2 className={styles.title}>
             {unit?.customName || 'Esta unidade'}
@@ -106,7 +107,7 @@ export const UnitCard = ({
             Tornar matriz
           </Button>
         )}
-      </header>
+      </Flexbox>
 
       <div className={local.fields}>
         <FormField label="Nome da unidade">

@@ -1,28 +1,24 @@
 @reference "@nino/ds/globals.css";
 
 .shell {
-  @apply flex min-h-dvh flex-col bg-white;
+  @apply flex min-h-dvh flex-col bg-surface-raised;
 }
 
 .page {
   @apply mx-auto w-full max-w-3xl p-4 lg:p-10;
 }
 
-.head {
-  @apply flex flex-wrap items-end justify-between gap-3;
-}
-
 .eyebrow {
-  @apply text-[0.7rem] font-bold uppercase tracking-[0.12em] text-faint;
+  @apply text-xs font-bold uppercase tracking-[0.12em] text-fg-faint;
 }
 
 .title {
   @apply mt-1 font-display text-2xl font-extrabold tracking-[-0.02em];
-  @apply text-ink lg:text-3xl;
+  @apply text-fg-strong lg:text-3xl;
 }
 
 .subtitle {
-  @apply mt-1 max-w-lg text-sm text-subtle;
+  @apply mt-1 max-w-lg text-sm text-fg-subtle;
 }
 
 .guideAgain {

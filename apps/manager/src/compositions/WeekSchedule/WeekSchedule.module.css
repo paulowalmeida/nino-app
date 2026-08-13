@@ -1,7 +1,7 @@
 @reference "@nino/ds/globals.css";
 
 .skeleton {
-  @apply h-80 w-full rounded-[24px];
+  @apply h-80 w-full rounded-6;
 }
 
 .week {
@@ -20,11 +20,11 @@
 }
 
 .closed {
-  @apply opacity-55;
+  @apply opacity-dim;
 }
 
 .dayName {
-  @apply w-24 shrink-0 text-sm font-semibold text-body;
+  @apply w-24 shrink-0 text-sm font-semibold text-fg-default;
 }
 
 .times {
@@ -36,7 +36,7 @@
 }
 
 .until {
-  @apply text-xs text-faint;
+  @apply text-xs text-fg-faint;
 }
 
 .save {

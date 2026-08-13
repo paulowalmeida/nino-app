@@ -3,7 +3,7 @@ import type { ReactNode } from 'react'
 import { Alert } from '@nino/ds/components/Alert'
 import { Badge } from '@nino/ds/components/Badge'
 import { Card } from '@nino/ds/components/Card'
-import { PageHeader } from '@nino/ds/components/PageHeader'
+import { Header } from '@nino/ds/components/Header'
 import { Skeleton } from '@nino/ds/components/Skeleton'
 import { useSubscription } from '@hooks/account/useSubscription'
 import { ACCOUNT_SUBSCRIPTION_GHOST_FACTS } from '@constants/account.constants'
@@ -27,8 +27,8 @@ export const AccountSubscription = () => {
 
   return (
     <div className={styles.page}>
-      <PageHeader
-        className={styles.header}
+      <Header
+        mb={{ mobile: 5, desktop: 8 }}
         title="Assinatura e plano"
         accent="plano"
         description="A assinatura é da empresa e vale para todas as unidades."

@@ -11,41 +11,36 @@
  * página não pular de altura quando o item chega.
  */
 .boneName {
-  @apply h-8 w-2/3 rounded-lg lg:h-9;
+  @apply h-8 w-2/3 rounded-2 lg:h-9;
 }
 
 .boneBadge {
-  @apply h-5 w-28 shrink-0 rounded-[4px];
+  @apply h-5 w-28 shrink-0 rounded-1;
 }
 
 .bonePhoto {
-  @apply aspect-[4/3] h-auto w-full rounded-[20px];
-}
-
-/* a barra de trocar/remover foto que fica sob a moldura */
-.bonePhotoActions {
-  @apply mt-3 flex gap-2;
+  @apply aspect-[4/3] h-auto w-full rounded-5;
 }
 
 .bonePhotoAction {
-  @apply h-9 w-28 rounded-xl;
+  @apply h-9 w-28 rounded-3;
 }
 
 .boneLabel {
-  @apply mb-2 h-3.5 w-28 rounded-sm;
+  @apply mb-2 h-3.5 w-28 rounded-1;
 }
 
 .boneInput {
-  @apply h-10 w-full rounded-card;
+  @apply h-10 w-full rounded-2;
 }
 
 .boneTextarea {
-  @apply h-20 w-full rounded-card;
+  @apply h-20 w-full rounded-2;
 }
 
 /* linha de "42/300 · Aparece..." sob a descrição */
 .boneHelper {
-  @apply mt-1.5 h-3 w-64 max-w-full rounded-sm;
+  @apply mt-1.5 h-3 w-64 max-w-full rounded-1;
 }
 
 .boneSwitch {
@@ -57,15 +52,16 @@
 }
 
 .boneHint {
-  @apply h-3 w-full max-w-[42ch] rounded-sm;
+  @apply h-3 w-full max-w-[42ch] rounded-1;
 }
 
 .boneButton {
-  @apply h-10 w-full rounded-button sm:w-40;
+  @apply h-10 w-full rounded-full sm:w-40;
 }
 
 .backLink {
-  @apply inline-flex items-center gap-1.5 text-sm font-medium text-faint;
+  @apply inline-flex items-center gap-1.5 text-sm font-medium;
+  @apply text-fg-faint;
   @apply transition-colors duration-150 hover:text-brand-strong;
 }
 
@@ -74,7 +70,7 @@
 /* sem cartão: a ficha é a tela, e a divisória basta para separar o
    cabeçalho do formulário */
 .head {
-  @apply mt-2 flex items-center gap-4 border-b border-line/60 pb-5;
+  @apply mt-2 flex items-center gap-4 border-b border-border/60 pb-5;
 }
 
 .headText {
@@ -83,7 +79,7 @@
 
 .name {
   @apply truncate font-display text-2xl font-extrabold tracking-[-0.02em];
-  @apply text-ink lg:text-3xl;
+  @apply text-fg-strong lg:text-3xl;
 }
 
 .headBadge {
@@ -103,6 +99,6 @@
 /* ação fecha o bloco à direita, com a primária na ponta: é onde a mão vai
    depois de percorrer o formulário inteiro */
 .actions {
-  @apply flex flex-col gap-2 border-t border-line/60 pt-5;
+  @apply flex flex-col gap-2 border-t border-border/60 pt-5;
   @apply sm:flex-row sm:justify-end lg:col-span-2;
 }

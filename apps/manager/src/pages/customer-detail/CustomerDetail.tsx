@@ -1,3 +1,4 @@
+import { Flexbox } from '@nino/ds/components/Flexbox'
 import { Link, useParams } from 'react-router'
 
 import { EmptyState } from '@nino/ds/components/EmptyState'
@@ -77,7 +78,7 @@ export const CustomerDetail = () => {
 
       <p className={styles.eyebrow}>Cliente</p>
 
-      <header className={`${motion.settle} ${styles.hero}`}>
+      <Flexbox as="header" gap={4} align="center" mt={1} className={motion.settle}>
         <PersonMark name={customer.name} className={styles.mark} />
 
         <div className={styles.heroText}>
@@ -92,7 +93,7 @@ export const CustomerDetail = () => {
             )}
           </div>
         </div>
-      </header>
+      </Flexbox>
 
       <div className={styles.body}>
         <dl className={styles.facts}>

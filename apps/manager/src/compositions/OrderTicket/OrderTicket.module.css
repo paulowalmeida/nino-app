@@ -9,7 +9,7 @@
  */
 .ticket {
   @apply flex flex-col p-0 transition-all duration-300;
-  @apply hover:border-brand/60 hover:shadow-card-hover;
+  @apply hover:border-brand-vivid hover:shadow-md;
 }
 
 /*
@@ -18,7 +18,7 @@
  * quiet.
  */
 .waiting {
-  @apply border-brand/35 bg-brand/8;
+  @apply border-brand-bold bg-brand-ghost;
 }
 
 /* past the deadline while waiting for acceptance: the warm highlight
@@ -28,7 +28,7 @@
 }
 
 .cancelled {
-  @apply opacity-60;
+  @apply opacity-dim;
 }
 
 .head {
@@ -36,13 +36,14 @@
 }
 
 .number {
-  @apply font-display text-base font-extrabold tracking-[-0.01em] text-ink;
+  @apply font-display text-base font-extrabold tracking-[-0.01em];
+  @apply text-fg-strong;
   font-variant-numeric: tabular-nums;
 }
 
 /* closed order: no running timer, the data is the time it came in */
 .time {
-  @apply text-xs text-faint;
+  @apply text-xs text-fg-faint;
   font-variant-numeric: tabular-nums;
 }
 
@@ -56,7 +57,7 @@
  * and two badges side by side compete for the same reading.
  */
 .waited {
-  @apply text-xs font-semibold text-subtle;
+  @apply text-xs font-semibold text-fg-subtle;
   font-variant-numeric: tabular-nums;
 }
 
@@ -69,22 +70,22 @@
 }
 
 .body {
-  @apply block border-t border-line/60 px-4 py-3;
+  @apply block border-t border-border/60 px-4 py-3;
 }
 
 .customer {
-  @apply truncate text-sm font-semibold text-body;
+  @apply truncate text-sm font-semibold text-fg-default;
 }
 
 /* channel and table: supporting metadata, in the same tone as the address
    line in the order detail */
 .meta {
-  @apply mt-0.5 text-xs text-faint;
+  @apply mt-0.5 text-xs text-fg-faint;
 }
 
 /* one-line summary on mobile; full list from table size up */
 .summary {
-  @apply mt-1.5 truncate text-sm text-muted sm:hidden;
+  @apply mt-1.5 truncate text-sm text-fg-muted sm:hidden;
 }
 
 /*
@@ -93,12 +94,12 @@
  * order to find it doesn't happen during the rush.
  */
 .notes {
-  @apply mt-2 rounded-lg bg-brand/8 px-2.5 py-1.5 text-sm leading-snug;
+  @apply mt-2 rounded-2 bg-brand-ghost px-2.5 py-1.5 text-sm leading-snug;
   @apply text-brand-strong;
 }
 
 .notesLabel {
-  @apply mr-1.5 text-[0.65rem] font-bold uppercase tracking-[0.08em];
+  @apply mr-1.5 text-2xs font-bold uppercase tracking-[0.08em];
   @apply text-brand-strong/70;
 }
 
@@ -107,7 +108,7 @@
 }
 
 .item {
-  @apply flex min-w-0 items-baseline gap-2 text-sm text-muted;
+  @apply flex min-w-0 items-baseline gap-2 text-sm text-fg-muted;
 }
 
 .quantity {
@@ -120,25 +121,21 @@
 }
 
 .more {
-  @apply pl-8 text-xs italic text-faintest;
+  @apply pl-8 text-xs italic text-fg-faintest;
 }
 
 .foot {
   @apply mt-auto flex flex-wrap items-center justify-between gap-2.5;
-  @apply border-t border-line/60 px-4 py-3;
-}
-
-.money {
-  @apply flex flex-col;
+  @apply border-t border-border/60 px-4 py-3;
 }
 
 .total {
-  @apply font-display text-lg font-extrabold text-ink;
+  @apply font-display text-lg font-extrabold text-fg-strong;
   font-variant-numeric: tabular-nums;
 }
 
 .payment {
-  @apply text-[0.7rem] text-faint;
+  @apply text-xs text-fg-faint;
 }
 
 .action {
@@ -160,7 +157,7 @@
 
 /* the status badge: 4px radius, like the DS Badge */
 .ghostStatus {
-  @apply ml-auto h-[1.125rem] w-24 shrink-0 rounded-[4px];
+  @apply ml-auto h-[1.125rem] w-24 shrink-0 rounded-1;
 }
 
 .ghostCustomer {
@@ -193,5 +190,5 @@
 
 /* the advance button: pill radius, full width only on mobile */
 .ghostAction {
-  @apply h-8 w-full shrink-0 rounded-button sm:w-28;
+  @apply h-8 w-full shrink-0 rounded-full sm:w-28;
 }

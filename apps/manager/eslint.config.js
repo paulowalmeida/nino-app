@@ -46,11 +46,6 @@ export default defineConfig([
               message:
                 'Importe o arquivo direto em vez do barrel do pacote.',
             },
-            {
-              name: '@nino/api-types',
-              message:
-                'Importe o arquivo direto em vez do barrel do pacote.',
-            },
           ],
         },
       ],

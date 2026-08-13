@@ -12,12 +12,6 @@ const isStaleChunkError = (error: unknown): boolean =>
   error instanceof Error &&
   /dynamically imported module/i.test(error.message)
 
-/**
- * Depois de um deploy, uma aba aberta ainda referencia o hash antigo dos
- * chunks — o arquivo já não existe no servidor. Recarregar resolve sozinho
- * na quase totalidade dos casos; o cooldown em sessionStorage evita loop
- * infinito se o deploy realmente quebrou.
- */
 export const RouteErrorBoundary = () => {
   const error = useRouteError()
   const staleChunk = isStaleChunkError(error)

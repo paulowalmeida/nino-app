@@ -53,5 +53,5 @@
 }
 
 .skeleton {
-  @apply h-28 w-full rounded-[20px] lg:h-32;
+  @apply h-28 w-full rounded-5 lg:h-32;
 }

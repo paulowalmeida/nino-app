@@ -1,11 +1,7 @@
 @reference "@nino/ds/globals.css";
 
-.group {
-  @apply flex flex-col gap-4;
-}
-
 .groupTitle {
-  @apply text-[0.7rem] font-bold uppercase tracking-[0.12em] text-faint;
+  @apply text-xs font-bold uppercase tracking-[0.12em] text-fg-faint;
 }
 
 .row {

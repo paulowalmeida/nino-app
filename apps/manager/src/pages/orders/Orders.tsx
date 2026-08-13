@@ -1,3 +1,4 @@
+import { Flexbox } from '@nino/ds/components/Flexbox'
 import { useEffect, useState } from 'react'
 import { useSearchParams } from 'react-router'
 
@@ -5,7 +6,7 @@ import { Alert } from '@nino/ds/components/Alert'
 import { Button } from '@nino/ds/components/Button'
 import { EmptyState } from '@nino/ds/components/EmptyState'
 import { Input } from '@nino/ds/components/Input'
-import { PageHeader } from '@nino/ds/components/PageHeader'
+import { Header } from '@nino/ds/components/Header'
 import type { IconName } from '@nino/ds/components/Icon'
 import { OrderTicket } from '@compositions/OrderTicket/OrderTicket'
 import { OrderTicketSkeleton } from '@skeletons/OrderTicketSkeleton/OrderTicketSkeleton'
@@ -109,14 +110,15 @@ export const Orders = () => {
 
   return (
     <div className={styles.page}>
-      <PageHeader
+      <Header
+        mb={{ mobile: 3, desktop: 6 }}
         className={styles.header}
         title="Pedidos"
         accent="Pedidos"
         description="Cada comanda mostra o próximo passo. Um toque move o pedido adiante."
       />
 
-      <div className={styles.toolbar}>
+      <Flexbox shrink={false} mb={3}>
         <Input
           type="search"
           value={term}
@@ -125,7 +127,7 @@ export const Orders = () => {
           className={styles.search}
           onChange={(event) => setTerm(event.target.value)}
         />
-      </div>
+      </Flexbox>
 
       {isSearching ? (
         <p className={`${motion.unroll} ${styles.results}`} aria-live="polite">
@@ -190,7 +192,7 @@ export const Orders = () => {
         )}
 
         {(isSearching || stage === 'closed') && hasNextPage && (
-          <div className={styles.more}>
+          <Flexbox justify="center" mt={6}>
             <Button
               variant="outline"
               size="sm"
@@ -201,7 +203,7 @@ export const Orders = () => {
                 ? 'Carregar mais resultados'
                 : 'Carregar pedidos mais antigos'}
             </Button>
-          </div>
+          </Flexbox>
         )}
       </div>
     </div>

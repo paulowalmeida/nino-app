@@ -1,3 +1,4 @@
+import { Flexbox } from '@nino/ds/components/Flexbox'
 import { useState, type AnimationEvent } from 'react'
 
 import { Reorder, useDragControls } from 'framer-motion'
@@ -128,7 +129,7 @@ export const CategoryRow = ({
             </span>
           </div>
 
-          <div className={styles.actions}>
+          <Flexbox gap={1} align="center" shrink={false}>
             <Button
               variant="ghost"
               size="icon"
@@ -149,7 +150,7 @@ export const CategoryRow = ({
             >
               <Icon name="trash" />
             </Button>
-          </div>
+          </Flexbox>
         </>
       )}
     </Reorder.Item>

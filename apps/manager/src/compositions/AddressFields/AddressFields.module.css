@@ -33,7 +33,7 @@
 }
 
 .status {
-  @apply mt-1 text-xs text-muted;
+  @apply mt-1 text-xs text-fg-muted;
 }
 
 .statusError {

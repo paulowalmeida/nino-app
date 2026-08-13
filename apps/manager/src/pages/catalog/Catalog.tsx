@@ -1,9 +1,10 @@
+import { Flexbox } from '@nino/ds/components/Flexbox'
 import { useState } from 'react'
 import { Link } from 'react-router'
 
 import { Button } from '@nino/ds/components/Button'
 import { Input } from '@nino/ds/components/Input'
-import { PageHeader } from '@nino/ds/components/PageHeader'
+import { Header } from '@nino/ds/components/Header'
 import { CategoryChips } from '@compositions/CategoryChips/CategoryChips'
 import { MenuBoard } from '@compositions/MenuBoard/MenuBoard'
 import { useCategories } from '@hooks/product/useCategories'
@@ -28,7 +29,8 @@ export const Catalog = () => {
 
   return (
     <div className={styles.page}>
-      <PageHeader
+      <Header
+        mb={{ mobile: 3, desktop: 4 }}
         className={styles.header}
         title="Cardápio"
         accent="Cardápio"
@@ -37,9 +39,9 @@ export const Catalog = () => {
 
       {/*
         Busca e ações na mesma barra: no desktop as ações não cabiam no slot do
-        PageHeader sem espremer o título, e numa faixa própria ficavam soltas.
+        Header sem espremer o título, e numa faixa própria ficavam soltas.
       */}
-      <div className={styles.toolbar}>
+      <Flexbox direction={{ mobile: 'column', desktop: 'row' }} gap={{ mobile: 2, desktop: 4 }} align={{ desktop: 'center' }} shrink={false} mb={3}>
         <Input
           type="search"
           value={term}
@@ -63,7 +65,7 @@ export const Catalog = () => {
             </Button>
           </div>
         )}
-      </div>
+      </Flexbox>
 
       <div className={styles.chips}>
         <CategoryChips

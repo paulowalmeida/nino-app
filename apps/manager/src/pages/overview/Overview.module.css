@@ -5,22 +5,26 @@
 }
 
 .header {
-  @apply relative mb-5 overflow-hidden rounded-[28px] border border-line;
+  @apply relative mb-5 overflow-hidden rounded-6 border border-border;
   @apply px-5 py-4 lg:mb-8 lg:px-8 lg:py-7;
   background:
     radial-gradient(
       700px 260px at 90% -20%,
-      rgba(255, 126, 31, 0.16),
+      color-mix(in srgb, var(--color-brand-light) 16%, transparent),
       transparent 60%
     ),
-    linear-gradient(135deg, var(--color-brand-foreground) 0%, var(--color-cream) 100%);
+    linear-gradient(
+      135deg,
+      var(--color-fg-on-brand) 0%,
+      var(--color-surface-2) 100%
+    );
 }
 
 /* mesmo grão da landing, agora também no cabeçalho */
 .header::after {
-  content: "";
-  @apply pointer-events-none absolute inset-0 opacity-45 mix-blend-multiply;
-  background-image: url("/noise.svg");
+  content: '';
+  @apply pointer-events-none absolute inset-0 opacity-faint mix-blend-multiply;
+  background-image: url('/noise.svg');
 }
 
 /* warm light spilling from the top-right corner */
@@ -43,48 +47,39 @@
  * cadastrado — a margem dele ficava reservada para nada.
  */
 .headerText {
-  @apply relative z-10 flex flex-col items-start gap-1.5;
+  @apply relative z-content flex flex-col items-start gap-1.5;
   @apply sm:pr-32 lg:pr-40;
 }
 
 .greeting {
-  @apply mb-1 inline-flex items-center gap-2 text-[0.7rem] font-bold;
+  @apply mb-1 inline-flex items-center gap-2 text-xs font-bold;
   @apply uppercase tracking-[0.12em] text-brand-strong;
 }
 
 .greeting::before {
-  content: "";
-  @apply inline-block h-0.5 w-[22px] rounded-sm bg-brand;
+  content: '';
+  @apply inline-block h-0.5 w-[22px] rounded-1 bg-brand;
 }
 
 .title {
-  @apply font-display text-2xl font-extrabold tracking-[-0.02em] text-ink;
+  @apply font-display text-2xl font-extrabold tracking-[-0.02em];
+  @apply text-fg-strong;
   @apply lg:text-3xl;
 }
 
-/*
- * No celular a loja ganha linha própria: junto da data, o nome empurrava a
- * linha até a borda. A partir do desktop volta a caber ao lado, separado pelo
- * ponto médio.
- */
-.meta {
-  @apply flex flex-col items-start gap-1.5;
-  @apply lg:flex-row lg:items-baseline lg:gap-2;
-}
-
 .date {
-  @apply text-xs text-faint lg:text-sm;
+  @apply text-xs text-fg-faint lg:text-sm;
 }
 
 .store {
   @apply text-xs font-semibold text-brand-strong underline decoration-1;
-  @apply underline-offset-2 transition-opacity hover:opacity-70 lg:text-sm;
+  @apply underline-offset-2 transition-opacity hover:opacity-strong lg:text-sm;
 }
 
 /* O ponto médio só existe quando os dois dividem a linha. */
 .store::before {
-  @apply hidden text-faint no-underline lg:inline;
-  content: "· ";
+  @apply hidden text-fg-faint no-underline lg:inline;
+  content: '· ';
 }
 
 .tally {
@@ -102,7 +97,9 @@
   bottom: -1.5rem;
   width: 118px;
   height: 118px;
-  filter: drop-shadow(0 10px 18px rgba(120, 40, 0, 0.16));
+  filter: drop-shadow(
+    0 10px 18px color-mix(in srgb, var(--color-burnt-900) 16%, transparent)
+  );
 }
 
 @media (min-width: 1024px) {

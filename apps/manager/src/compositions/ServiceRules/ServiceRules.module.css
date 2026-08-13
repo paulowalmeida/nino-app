@@ -1,7 +1,7 @@
 @reference "@nino/ds/globals.css";
 
 .skeleton {
-  @apply h-64 w-full rounded-[24px];
+  @apply h-64 w-full rounded-6;
 }
 
 /* payment methods: a badge the store lights up */
@@ -10,18 +10,20 @@
 }
 
 .chip {
-  @apply rounded-full border border-sand bg-brand-foreground px-3.5 py-2;
+  @apply rounded-full border border-border bg-surface-page px-3.5;
+  @apply py-2;
   @apply cursor-pointer;
-  @apply text-sm text-subtle transition-colors duration-200;
-  @apply hover:border-brand/30 hover:text-body;
+  @apply text-sm text-fg-subtle transition-colors duration-200;
+  @apply hover:border-brand-bold hover:text-fg-default;
 }
 
 .chipOn {
-  @apply border-brand/40 bg-brand/10 font-semibold text-brand-strong;
+  @apply border-brand-bold bg-brand-soft font-semibold;
+  @apply text-brand-strong;
 }
 
 .minimum {
-  @apply flex flex-col gap-1.5 border-t border-sand pt-4;
+  @apply flex flex-col gap-1.5 border-t border-border pt-4;
 }
 
 .minimumInput {

@@ -1,3 +1,4 @@
+import { Flexbox } from '@nino/ds/components/Flexbox'
 import { useState } from 'react'
 import type {
   FieldErrors,
@@ -53,7 +54,7 @@ export const StoreFormAddressFields = ({
   }
 
   return (
-    <section className={styles.group}>
+    <Flexbox as="section" direction="column" gap={4}>
       <p className={`${motion.rise} ${styles.groupTitle}`}>Onde fica</p>
 
       <div className={`${motion.rise} ${styles.row}`} style={riseDelay(300)}>
@@ -130,6 +131,6 @@ export const StoreFormAddressFields = ({
           />
         </FormField>
       </div>
-    </section>
+    </Flexbox>
   )
 }

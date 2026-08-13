@@ -125,21 +125,19 @@ caminho único de bootstrap.
   busca por id é sempre `getById`, nunca `show`.
 - **Formulários**: `@nino/forms` (FormBuilder) para produto, categoria e dados
   da loja
-- **Tipos**: `@custom_types` para os types do app; types da API virão de
-  `@nino/api-types` (gerados do OpenAPI). **Não** usar `@nino/lib` — está stale,
-  de antes do refactor.
+- **Tipos**: `@custom_types` para os types do app, escritos à mão — inclusive os
+  de request e resposta da API. **Não** usar `@nino/lib` — está stale, de antes
+  do refactor.
 
 ## Contrato com a nino-api
 
 - **Memberships**: entregues por `GET /auth/me` (nino-api `feat/NAPI-10`), com
   `companyId`/`companyName` — sem eles o front não distingue troca de unidade de
   escolha de restaurante.
-- **Types gerados**: `@nino/api-types` cobre os **requests** (o plugin do Swagger
-  preenche os DTOs). As **respostas** ainda saem como `object` no OpenAPI, então
-  os shapes de retorno que o manager consome (`me`, `login`, `signup`) seguem
-  escritos à mão em `@custom_types/auth`. A conversão dos retornos em classes é
-  débito registrado no `docs/todo.md` da API, para ser feita conforme cada
-  controller for tocado.
+- **Types da API**: escritos à mão em `@custom_types`, request e resposta. Não
+  há geração automática — a `nino-api` não expõe OpenAPI desde que o Swagger foi
+  removido, e o pacote `@nino/api-types`, que guardava o último snapshot gerado,
+  foi apagado por não ser mais regerável.
 
 ## Setup de Tailwind e do `@nino/ds`
 
@@ -158,8 +156,7 @@ CORS por padrão.
 ## Roadmap (fases)
 
 1. ✅ **M0 — Fundação**: estrutura atomic + aliases, refresh transparente,
-   TanStack Query + query-keys, zustand, `@nino/api-types`, bootstrap de sessão
-   e guards
+   TanStack Query + query-keys, zustand, bootstrap de sessão e guards
 2. ✅ **M1 — Auth** (`/entrar`, `/cadastrar`) portado do `manager-legacy`
 3. ✅ **M0.6 — Memberships**: guard de tenant efetivo e regra de entrada por
    company (depende da nino-api `feat/NAPI-10`)

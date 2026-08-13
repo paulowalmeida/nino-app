@@ -1,55 +1,48 @@
 @reference "@nino/ds/globals.css";
 
-.head {
-  @apply mb-4 flex flex-wrap items-start justify-between gap-3;
-}
-
 .skeleton {
-  @apply h-52 w-full rounded-[24px];
+  @apply h-52 w-full rounded-6;
 }
 
 .add {
   @apply shrink-0;
 }
 
-.list {
-  @apply flex flex-col;
-}
-
 .item {
-  @apply flex flex-wrap items-center gap-3 border-t border-sand py-2;
+  @apply flex flex-wrap items-center gap-3 border-t border-border py-2;
 }
 
 .unit {
-  @apply flex min-w-0 flex-1 flex-col gap-0.5 rounded-xl px-2 py-2;
+  @apply flex min-w-0 flex-1 flex-col gap-0.5 rounded-3 px-2 py-2;
   @apply transition-colors duration-150;
   @apply focus-visible:outline-none focus-visible:ring-2;
   @apply focus-visible:ring-brand focus-visible:ring-offset-1;
 }
 
 a.unit {
-  @apply hover:bg-brand-foreground/70;
+  @apply hover:bg-surface-page/70;
 }
 
 .name {
-  @apply flex flex-wrap items-center gap-2 text-sm font-semibold text-body;
+  @apply flex flex-wrap items-center gap-2 text-sm font-semibold;
+  @apply text-fg-default;
 }
 
 .promote {
-  @apply shrink-0 text-faint;
+  @apply shrink-0 text-fg-faint;
 }
 
 /* onde a pessoa está agora — some a dúvida de qual loja ela edita */
 .company {
-  @apply text-xs text-faint;
+  @apply text-xs text-fg-faint;
 }
 
 .remove {
-  @apply shrink-0 text-faint;
+  @apply shrink-0 text-fg-faint;
 }
 
 /* limite do plano: informa a faixa antes de a API recusar */
 .full {
-  @apply mt-4 rounded-xl border border-brand/20 bg-brand/8 p-3;
+  @apply mt-4 rounded-3 border border-brand-muted bg-brand-ghost p-3;
   @apply text-sm leading-relaxed text-brand-strong;
 }

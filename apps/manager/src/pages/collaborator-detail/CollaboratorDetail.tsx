@@ -1,3 +1,4 @@
+import { Flexbox } from '@nino/ds/components/Flexbox'
 import { useParams } from 'react-router'
 
 import { Badge } from '@nino/ds/components/Badge'
@@ -72,7 +73,7 @@ export const CollaboratorDetail = () => {
 
       <p className={styles.eyebrow}>Equipe</p>
 
-      <header className={`${motion.settle} ${styles.hero}`}>
+      <Flexbox as="header" gap={4} align="center" mt={1} className={motion.settle}>
         <PersonMark name={member.user.name} className={styles.mark} />
 
         <div className={styles.heroText}>
@@ -90,7 +91,7 @@ export const CollaboratorDetail = () => {
         <Badge variant="info" className={styles.role}>
           {TEAM_ROLE_LABEL[member.role] ?? member.role}
         </Badge>
-      </header>
+      </Flexbox>
 
       <div className={styles.body}>
         <dl className={styles.facts}>

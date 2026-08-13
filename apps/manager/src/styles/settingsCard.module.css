@@ -20,20 +20,21 @@
 /* Mesma régua do PageHeader do DS: sem o cabeçalho da casca, o título da
    seção é o título da tela, e tem de pesar como o das outras páginas. */
 .title {
-  @apply font-display text-xl font-extrabold tracking-[-0.02em] text-ink;
+  @apply font-display text-xl font-extrabold tracking-[-0.02em];
+  @apply text-fg-strong;
   @apply lg:text-2xl;
 }
 
 .hint {
-  @apply mt-1 text-sm text-subtle;
+  @apply mt-1 text-sm text-fg-subtle;
 }
 
 .group {
-  @apply flex flex-col gap-3 border-t border-sand py-4;
+  @apply flex flex-col gap-3 border-t border-border py-4;
 }
 
 .groupTitle {
-  @apply text-[0.7rem] font-bold uppercase tracking-[0.12em] text-faint;
+  @apply text-xs font-bold uppercase tracking-[0.12em] text-fg-faint;
 }
 
 .row {
@@ -45,11 +46,11 @@
 }
 
 .rowLabel {
-  @apply text-sm font-semibold text-body;
+  @apply text-sm font-semibold text-fg-default;
 }
 
 .rowHint {
-  @apply mt-0.5 text-xs leading-relaxed text-faint;
+  @apply mt-0.5 text-xs leading-relaxed text-fg-faint;
 }
 
 /* No fim da leitura, não no começo: quem salva já percorreu o formulário

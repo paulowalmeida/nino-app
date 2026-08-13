@@ -1,6 +1,7 @@
 import { useState } from 'react'
 
-import { PageHeader } from '@nino/ds/components/PageHeader'
+import { Flexbox } from '@nino/ds/components/Flexbox'
+import { Header } from '@nino/ds/components/Header'
 import { EditEmailModal } from '@compositions/EditEmailModal/EditEmailModal'
 import { InviteForm } from '@compositions/InviteForm/InviteForm'
 import { TeamRoster } from '@compositions/TeamRoster/TeamRoster'
@@ -83,14 +84,14 @@ export const Employees = () => {
 
   return (
     <div className={styles.page}>
-      <PageHeader
-        className={styles.header}
+      <Header
+        mb={{ mobile: 6, desktop: 8 }}
         title="Quem toca a equipe"
         accent="equipe"
         description="Cada pessoa entra com a própria conta — e o painel registra quem mexeu em cada pedido."
       />
 
-      <div className={styles.stack}>
+      <Flexbox gap={{ mobile: 8, desktop: 10 }}>
         <InviteForm onInvite={invite} />
 
         <TeamRoster
@@ -117,7 +118,7 @@ export const Employees = () => {
           removingId={removing?.kind === 'COURIER' ? removing.id : undefined}
           onRemove={(id) => removeMember({ id, kind: 'COURIER' })}
         />
-      </div>
+      </Flexbox>
 
       <EditEmailModal
         open={!!editingStaff}

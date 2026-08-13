@@ -6,11 +6,11 @@
  */
 .ticket {
   --tooth: 10px;
-  @apply relative flex min-w-0 flex-col gap-3 rounded-t-[14px];
-  @apply bg-brand-foreground p-5;
+  @apply relative flex min-w-0 flex-col gap-3 rounded-t-3;
+  @apply bg-surface-page p-5;
   @apply lg:sticky lg:top-5;
   padding-bottom: calc(var(--tooth) + 0.75rem);
-  box-shadow: inset 0 0 0 1px var(--color-sand);
+  box-shadow: inset 0 0 0 1px var(--color-surface-5);
   mask:
     radial-gradient(var(--tooth) at 50% 0, #0000 98%, #000 100%) 50% 100% /
       calc(2 * var(--tooth)) var(--tooth) repeat-x,
@@ -18,68 +18,57 @@
 }
 
 .ticketTitle {
-  @apply text-[0.7rem] font-bold uppercase tracking-[0.12em] text-faint;
-}
-
-.lines {
-  @apply flex flex-col;
+  @apply text-xs font-bold uppercase tracking-[0.12em] text-fg-faint;
 }
 
 .line {
-  @apply flex items-center gap-2 border-t border-dashed border-sand-deep py-2;
+  @apply flex items-center gap-2 border-t border-dashed border-border py-2;
 }
 
 .lineName {
-  @apply min-w-0 flex-1 truncate text-sm text-body;
-}
-
-.stepper {
-  @apply flex shrink-0 items-center gap-1;
+  @apply min-w-0 flex-1 truncate text-sm text-fg-default;
 }
 
 .stepButton {
   @apply flex h-7 w-7 cursor-pointer items-center justify-center;
   @apply rounded-full;
-  @apply border border-sand bg-brand-foreground text-base leading-none;
-  @apply text-subtle;
+  @apply border border-border bg-surface-page text-base leading-none;
+  @apply text-fg-subtle;
   @apply transition-colors duration-150;
-  @apply hover:border-brand/35 hover:text-brand-strong;
+  @apply hover:border-brand-bold hover:text-brand-strong;
 }
 
 .quantity {
-  @apply w-6 text-center text-sm font-bold text-ink;
+  @apply w-6 text-center text-sm font-bold text-fg-strong;
   font-variant-numeric: tabular-nums;
 }
 
 .linePrice {
-  @apply w-20 shrink-0 text-right text-sm text-muted;
+  @apply w-20 shrink-0 text-right text-sm text-fg-muted;
   font-variant-numeric: tabular-nums;
 }
 
 .feeRow {
   @apply flex items-baseline justify-between;
-  @apply border-t border-dashed border-sand-deep pt-2 text-sm text-muted;
+  @apply border-t border-dashed border-border pt-2 text-sm;
+  @apply text-fg-muted;
   font-variant-numeric: tabular-nums;
 }
 
 .hint {
-  @apply text-xs leading-relaxed text-faint;
+  @apply text-xs leading-relaxed text-fg-faint;
 }
 
 /* aviso, não bloqueio: informa e deixa a decisão com quem atende */
 .total {
   @apply flex items-baseline justify-between;
-  @apply border-t border-dashed border-sand-deep pt-3;
-  @apply font-display text-lg font-extrabold text-ink;
+  @apply border-t border-dashed border-border pt-3;
+  @apply font-display text-lg font-extrabold text-fg-strong;
   font-variant-numeric: tabular-nums;
 }
 
-.field {
-  @apply flex flex-col gap-1.5;
-}
-
 .label {
-  @apply text-sm font-medium text-body;
+  @apply text-sm font-medium text-fg-default;
 }
 
 .place {

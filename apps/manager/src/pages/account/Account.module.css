@@ -7,20 +7,21 @@
 }
 
 .eyebrow {
-  @apply text-[0.7rem] font-bold uppercase tracking-[0.12em] text-faint;
+  @apply text-xs font-bold uppercase tracking-[0.12em] text-fg-faint;
 }
 
 .head {
-  @apply mt-1 flex flex-col gap-1.5 border-b border-line/60 pb-5;
+  @apply mt-1 flex flex-col gap-1.5 border-b border-border/60 pb-5;
 }
 
 .title {
-  @apply font-display text-2xl font-extrabold tracking-[-0.02em] text-ink;
+  @apply font-display text-2xl font-extrabold tracking-[-0.02em];
+  @apply text-fg-strong;
   @apply lg:text-3xl;
 }
 
 .subtitle {
-  @apply text-sm text-subtle;
+  @apply text-sm text-fg-subtle;
 }
 
 .ghostField {
@@ -28,7 +29,7 @@
 }
 
 .groupTitle {
-  @apply text-[0.7rem] font-bold uppercase tracking-[0.12em] text-faint;
+  @apply text-xs font-bold uppercase tracking-[0.12em] text-fg-faint;
 }
 
 .fields {
@@ -48,12 +49,12 @@
 
 /* ação fecha o bloco à direita, atrás de um fio — mesma régua da empresa */
 .actions {
-  @apply mt-6 flex flex-col border-t border-sand pt-5;
+  @apply mt-6 flex flex-col border-t border-border pt-5;
   @apply sm:flex-row sm:items-center sm:justify-end sm:gap-4;
 }
 
 .status {
-  @apply mb-2 text-xs text-faint sm:mb-0 sm:mr-auto;
+  @apply mb-2 text-xs text-fg-faint sm:mb-0 sm:mr-auto;
 }
 
 /*
@@ -67,14 +68,14 @@
 }
 
 .facts {
-  @apply mt-3 grid grid-cols-2 gap-y-4 border-y border-line/60 py-4;
+  @apply mt-3 grid grid-cols-2 gap-y-4 border-y border-border/60 py-4;
   @apply sm:grid-cols-1 sm:gap-0 sm:border-y-0 sm:py-0;
 }
 
 .fact {
   @apply flex flex-col gap-0.5;
   @apply sm:flex-row sm:items-baseline sm:justify-between sm:gap-3;
-  @apply sm:border-b sm:border-sand sm:py-2.5;
+  @apply sm:border-b sm:border-border sm:py-2.5;
 }
 
 .fact:last-child {
@@ -82,11 +83,11 @@
 }
 
 .factLabel {
-  @apply text-xs font-medium text-faint sm:text-sm;
+  @apply text-xs font-medium text-fg-faint sm:text-sm;
 }
 
 .factValue {
   @apply flex flex-wrap items-center gap-x-2 gap-y-1 text-sm font-semibold;
-  @apply text-ink;
+  @apply text-fg-strong;
   font-variant-numeric: tabular-nums;
 }

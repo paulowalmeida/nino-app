@@ -1,3 +1,4 @@
+import { Flexbox } from '@nino/ds/components/Flexbox'
 import { useState } from 'react'
 import { useLocation } from 'react-router'
 
@@ -86,7 +87,7 @@ export const Sidebar = ({
       <ScrollArea fadeEdges className={styles.nav}>
         <nav className={styles.navInner}>
           {SIDEMENU_GROUPS.map(({ title, items }) => (
-            <div key={title} className={styles.group}>
+            <Flexbox key={title} gap={0.5} className={styles.group}>
               {!isCollapsed && <p className={styles.groupTitle}>{title}</p>}
 
               {items
@@ -109,7 +110,7 @@ export const Sidebar = ({
                     onNavigate={onClose}
                   />
                 ))}
-            </div>
+            </Flexbox>
           ))}
         </nav>
       </ScrollArea>

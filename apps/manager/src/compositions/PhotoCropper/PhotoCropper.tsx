@@ -1,3 +1,4 @@
+import { Flexbox } from '@nino/ds/components/Flexbox'
 import { useRef, useState } from 'react'
 
 import { Button } from '@nino/ds/components/Button'
@@ -138,7 +139,7 @@ export const PhotoCropper = ({
         quadrado.
       </p>
 
-      <div className={styles.actions}>
+      <Flexbox direction="column" gap={2}>
         <Button
           loading={isSending}
           className={`${motion.press} ${styles.confirm}`}
@@ -147,7 +148,7 @@ export const PhotoCropper = ({
           Usar esta foto
         </Button>
 
-        <div className={styles.secondary}>
+        <Flexbox gap={2} align="center" justify="between">
           <Button
             variant="ghost"
             size="sm"
@@ -166,8 +167,8 @@ export const PhotoCropper = ({
           >
             Remover foto
           </Button>
-        </div>
-      </div>
+        </Flexbox>
+      </Flexbox>
     </div>
   )
 }

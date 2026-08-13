@@ -1,8 +1,9 @@
+import { Flexbox } from '@nino/ds/components/Flexbox'
 import { useMemo, useState } from 'react'
 import { useSearchParams } from 'react-router'
 
 import { DatePicker } from '@nino/ds/components/DatePicker'
-import { PageHeader } from '@nino/ds/components/PageHeader'
+import { Header } from '@nino/ds/components/Header'
 import { Skeleton } from '@nino/ds/components/Skeleton'
 import { Tabs } from '@nino/ds/components/Tabs'
 import { CountUp } from '@nino/ds/components/CountUp'
@@ -79,8 +80,9 @@ export const Reports = () => {
 
   return (
     <div className={styles.page}>
-      <PageHeader
-        className={`${motion.deal} ${styles.header}`}
+      <Header
+        mb={{ mobile: 4, desktop: 6 }}
+        className={motion.deal}
         title="Relatório de venda"
         accent="venda"
         description="O que a loja vendeu no período — só pedidos concluídos entram na conta."
@@ -98,8 +100,8 @@ export const Reports = () => {
       />
 
       {period === 'custom' && (
-        <div className={`${motion.unroll} ${styles.dates}`}>
-          <label className={styles.date}>
+        <Flexbox gap={3} align="end" wrap mb={{ mobile: 5, desktop: 6 }} className={motion.unroll}>
+          <Flexbox as="label" direction="column" gap={1}>
             <span className={styles.dateLabel}>De</span>
             <DatePicker
               value={customFrom ? parseInputDate(customFrom) : undefined}
@@ -108,7 +110,7 @@ export const Reports = () => {
               }
               endMonth={parseInputDate(customTo || todayInput())}
             />
-          </label>
+          </Flexbox>
           <label className={styles.date}>
             <span className={styles.dateLabel}>Até</span>
             <DatePicker
@@ -120,7 +122,7 @@ export const Reports = () => {
               endMonth={parseInputDate(todayInput())}
             />
           </label>
-        </div>
+        </Flexbox>
       )}
 
       <div className={styles.figures}>

@@ -41,7 +41,7 @@ export const TopProducts = ({ tenantId }: TopProductsProps) => {
         <Eyebrow className={styles.heading}>O que mais sai</Eyebrow>
       </div>
 
-      <Card className={`${motion.settle} ${styles.card}`}>
+      <Card padding="lg" className={`${motion.settle} ${styles.card}`}>
         {/* five bar rows, matching the ones that arrive — best seller on
             top */}
         {isPending && (

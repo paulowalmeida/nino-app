@@ -10,15 +10,15 @@
 }
 
 .block {
-  @apply border-t border-line/60 py-4 first:border-t-0 lg:first:pt-0;
+  @apply border-t border-border/60 py-4 first:border-t-0 lg:first:pt-0;
 }
 
 .cardTitle {
-  @apply mb-2 text-[0.7rem] font-bold uppercase tracking-[0.12em] text-faint;
+  @apply mb-2 text-xs font-bold uppercase tracking-[0.12em] text-fg-faint;
 }
 
 .customer {
-  @apply text-sm font-semibold text-ink;
+  @apply text-sm font-semibold text-fg-strong;
 }
 
 .phone {
@@ -27,19 +27,19 @@
 }
 
 .address {
-  @apply mt-1 text-sm leading-relaxed text-muted;
+  @apply mt-1 text-sm leading-relaxed text-fg-muted;
 }
 
 .payLine {
-  @apply text-sm font-semibold text-ink;
+  @apply text-sm font-semibold text-fg-strong;
 }
 
 .payState {
-  @apply font-normal text-faint;
+  @apply font-normal text-fg-faint;
 }
 
 .change {
-  @apply mt-1 text-sm text-muted;
+  @apply mt-1 text-sm text-fg-muted;
 }
 
 .payButton {
@@ -47,13 +47,14 @@
 }
 
 .cancelReason {
-  @apply mt-3 border-t border-line/60 pt-3 text-sm leading-relaxed text-muted;
+  @apply mt-3 border-t border-border/60 pt-3 text-sm leading-relaxed;
+  @apply text-fg-muted;
 }
 
 /* sem caixa: o botão primário já é o destaque da coluna, e uma moldura em
    volta dele só repete o que a cor do próprio botão diz */
 .actions {
-  @apply mt-2 flex flex-col gap-2 border-t border-line/60 pt-4;
+  @apply mt-2 flex flex-col gap-2 border-t border-border/60 pt-4;
 }
 
 .advance {
@@ -65,9 +66,5 @@
 }
 
 .cancelLabel {
-  @apply text-sm font-medium text-body;
-}
-
-.cancelActions {
-  @apply flex flex-wrap gap-2;
+  @apply text-sm font-medium text-fg-default;
 }

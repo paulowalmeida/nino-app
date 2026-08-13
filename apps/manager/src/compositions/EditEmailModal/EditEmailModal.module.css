@@ -1,7 +1,8 @@
 @reference "@nino/ds/globals.css";
 
 .title {
-  @apply font-display text-lg font-extrabold tracking-[-0.01em] text-ink;
+  @apply font-display text-lg font-extrabold tracking-[-0.01em];
+  @apply text-fg-strong;
 }
 
 .form {
@@ -9,6 +10,5 @@
 }
 
 .hint {
-  @apply text-sm leading-relaxed text-faint;
+  @apply text-sm leading-relaxed text-fg-faint;
 }
-

@@ -15,32 +15,32 @@
 
 /* comanda: revela de cima para baixo */
 .unroll {
-  animation: unroll 0.46s cubic-bezier(0.16, 1, 0.3, 1) var(--d, 0ms) both;
+  animation: unroll 0.46s var(--ease-out) var(--d, 0ms) both;
 }
 
 /* painéis e cartões: assentam no lugar */
 .settle {
-  animation: settle 0.52s cubic-bezier(0.16, 1, 0.3, 1) var(--d, 0ms) both;
+  animation: settle 0.52s var(--ease-out) var(--d, 0ms) both;
 }
 
 /* destaque que chega de cima e quica uma vez */
 .land {
-  animation: land 0.66s cubic-bezier(0.34, 1.42, 0.64, 1) var(--d, 0ms) both;
+  animation: land 0.66s var(--ease-back) var(--d, 0ms) both;
 }
 
 /* gavetas e menus: entram pela lateral */
 .slide {
-  animation: slide 0.4s cubic-bezier(0.16, 1, 0.3, 1) var(--d, 0ms) both;
+  animation: slide 0.4s var(--ease-out) var(--d, 0ms) both;
 }
 
 /* números e selos: crescem com um respiro */
 .pop {
-  animation: pop 0.42s cubic-bezier(0.34, 1.56, 0.64, 1) var(--d, 0ms) both;
+  animation: pop 0.42s var(--ease-back) var(--d, 0ms) both;
 }
 
 /* linhas de lista: entram deslizando da esquerda, curtas */
 .deal {
-  animation: deal 0.42s cubic-bezier(0.16, 1, 0.3, 1) var(--d, 0ms) both;
+  animation: deal 0.42s var(--ease-out) var(--d, 0ms) both;
 }
 
 @keyframes unroll {

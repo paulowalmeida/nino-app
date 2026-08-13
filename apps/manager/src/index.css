@@ -1,8 +1,8 @@
-@import "@nino/ds/globals.css";
+@import '@nino/ds/globals.css';
 
 @layer base {
   body {
-    background: var(--color-cream);
+    background: var(--color-surface-page);
 
     /*
      * `manipulation` corta o zoom do toque duplo e o atraso de 300ms que vem
@@ -42,13 +42,13 @@
    * site parecerem o mesmo produto antes de qualquer outra coisa.
    */
   body::after {
-    content: "";
+    content: '';
     position: fixed;
     inset: 0;
     pointer-events: none;
-    z-index: 9999;
+    z-index: var(--z-grain);
     opacity: 0.4;
     mix-blend-mode: multiply;
-    background-image: url("/noise.svg");
+    background-image: url('/noise.svg');
   }
 }

@@ -5,14 +5,14 @@
 }
 
 .single {
-  @apply truncate px-3 py-2 text-sm font-medium text-white/70;
+  @apply truncate px-3 py-2 text-sm font-medium text-fg-on-brand/70;
 }
 
 .trigger {
-  @apply flex w-full items-center justify-start gap-2 rounded-xl px-3 py-2;
-  @apply text-left text-sm font-medium text-white/70;
+  @apply flex w-full items-center justify-start gap-2 rounded-3 px-3 py-2;
+  @apply text-left text-sm font-medium text-fg-on-brand/70;
   @apply transition-colors duration-150;
-  @apply hover:bg-white/8 hover:text-white;
+  @apply hover:bg-surface-raised/8 hover:text-fg-on-brand;
 }
 
 .storeIcon {
@@ -29,7 +29,7 @@
 
 /* only shown when the owner has more than one company to tell apart */
 .company {
-  @apply truncate text-[11px] font-normal text-white/35;
+  @apply truncate text-2xs font-normal text-fg-on-brand/35;
 }
 
 .caret {
@@ -38,12 +38,12 @@
 }
 
 .panel {
-  @apply border border-white/10 bg-dark shadow-xl;
+  @apply border border-fg-on-brand/10 bg-fg-cool shadow-xl;
 }
 
 .option {
-  @apply text-white/60 data-[highlighted]:bg-white/8;
-  @apply data-[highlighted]:text-white;
+  @apply text-fg-on-brand/60 data-[highlighted]:bg-surface-raised/8;
+  @apply data-[highlighted]:text-fg-on-brand;
 }
 
 .checkIcon {

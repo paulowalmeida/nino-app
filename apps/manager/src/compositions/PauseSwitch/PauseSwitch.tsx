@@ -1,3 +1,4 @@
+import { Flexbox } from '@nino/ds/components/Flexbox'
 import { useState } from 'react'
 
 import { Button } from '@nino/ds/components/Button'
@@ -68,7 +69,7 @@ export const PauseSwitch = ({ tenantId, timezone }: PauseSwitchProps) => {
   }
 
   return (
-    <section className={styles.open}>
+    <Flexbox as="section">
       {!isOpen ? (
         <Button
           variant="outline"
@@ -89,7 +90,7 @@ export const PauseSwitch = ({ tenantId, timezone }: PauseSwitchProps) => {
             onChange={(event) => setReason(event.target.value)}
           />
 
-          <div className={styles.options}>
+          <Flexbox gap={2} wrap>
             {PAUSE_DURATION_OPTIONS.map(({ minutes, label }) => (
               <Button
                 key={label}
@@ -111,9 +112,9 @@ export const PauseSwitch = ({ tenantId, timezone }: PauseSwitchProps) => {
             <Button size="sm" variant="ghost" onClick={() => setOpen(false)}>
               Voltar
             </Button>
-          </div>
+          </Flexbox>
         </div>
       )}
-    </section>
+    </Flexbox>
   )
 }

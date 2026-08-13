@@ -15,7 +15,7 @@
 .tile {
   @apply flex flex-col gap-2 p-5;
   @apply transition-all duration-300;
-  @apply hover:border-brand/60 hover:shadow-card-hover;
+  @apply hover:border-brand-vivid hover:shadow-md;
   @apply focus-visible:outline-none focus-visible:ring-2;
   @apply focus-visible:ring-brand focus-visible:ring-offset-2;
 }
@@ -25,12 +25,12 @@
  * quiet. Attention is a budget, and it is spent here.
  */
 .urgent {
-  @apply border-brand/35 bg-brand/8;
+  @apply border-brand-bold bg-brand-ghost;
 }
 
 .value {
   @apply font-display text-3xl font-extrabold leading-none tracking-tight;
-  @apply text-ink lg:text-4xl;
+  @apply text-fg-strong lg:text-4xl;
   font-variant-numeric: tabular-nums;
 }
 
@@ -48,9 +48,9 @@
 }
 
 .label {
-  @apply text-xs leading-snug text-faint lg:text-sm;
+  @apply text-xs leading-snug text-fg-faint lg:text-sm;
 }
 
 .idle {
-  @apply mt-4 text-sm text-faint;
+  @apply mt-4 text-sm text-fg-faint;
 }

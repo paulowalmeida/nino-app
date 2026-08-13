@@ -1,16 +1,17 @@
 @reference "@nino/ds/globals.css";
 
 .top {
-  @apply rounded-[22px] border border-line bg-brand-foreground/70 p-4 lg:p-5;
+  @apply rounded-5 border border-border bg-surface-page/70 p-4 lg:p-5;
 }
 
 .topTitle {
-  @apply mb-3 font-display text-lg font-extrabold tracking-tight text-ink;
+  @apply mb-3 font-display text-lg font-extrabold tracking-tight;
+  @apply text-fg-strong;
 }
 
 /* a mesma ficha quadrada da posição no ranking */
 .ghostPosition {
-  @apply h-7 w-7 rounded-lg;
+  @apply h-7 w-7 rounded-2;
 }
 
 .ghostName {
@@ -31,8 +32,9 @@
 /* a posição no ranking é o gancho de leitura: ficha escura, como a
  * quantidade na comanda da cozinha */
 .position {
-  @apply flex h-7 w-7 shrink-0 items-center justify-center rounded-lg;
-  @apply bg-surface-mute font-display text-sm font-extrabold text-subtle;
+  @apply flex h-7 w-7 shrink-0 items-center justify-center rounded-2;
+  @apply bg-surface-mute font-display text-sm font-extrabold;
+  @apply text-fg-subtle;
   font-variant-numeric: tabular-nums;
 }
 
@@ -42,19 +44,19 @@
  * seriam mais um ranking, seriam três primeiros lugares.
  */
 .podium .position {
-  @apply bg-ink text-cream;
+  @apply bg-fg-strong text-fg-inverse;
 }
 
 .leader .position {
-  @apply bg-brand text-brand-foreground shadow-brand-glow;
+  @apply bg-brand text-fg-on-brand shadow-brand;
 }
 
 .rankName {
-  @apply min-w-40 text-body;
+  @apply min-w-40 text-fg-default;
 }
 
 .podium .rankName {
-  @apply font-semibold text-ink;
+  @apply font-semibold text-fg-strong;
 }
 
 .leader .rankName {
@@ -70,11 +72,11 @@
 }
 
 .colNumber {
-  @apply whitespace-nowrap text-right text-muted;
+  @apply whitespace-nowrap text-right text-fg-muted;
   font-variant-numeric: tabular-nums;
 }
 
 .colTotal {
-  @apply whitespace-nowrap text-right font-semibold text-ink;
+  @apply whitespace-nowrap text-right font-semibold text-fg-strong;
   font-variant-numeric: tabular-nums;
 }

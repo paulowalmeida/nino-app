@@ -1,19 +1,9 @@
 @reference "@nino/ds/globals.css";
 
-.group {
-  @apply flex flex-col gap-4;
-}
-
 .groupTitle {
-  @apply text-[0.7rem] font-bold uppercase tracking-[0.12em] text-faint;
-}
-
-/* o que o cliente vai digitar no navegador: o prefixo é parte do endereço,
-   não legenda — fica colado ao campo e com o mesmo peso do que se escreve */
-.slugField {
-  @apply flex items-center gap-1.5;
+  @apply text-xs font-bold uppercase tracking-[0.12em] text-fg-faint;
 }
 
 .slugPrefix {
-  @apply shrink-0 text-sm font-semibold tracking-[-0.01em] text-faint;
+  @apply shrink-0 text-sm font-semibold tracking-[-0.01em] text-fg-faint;
 }

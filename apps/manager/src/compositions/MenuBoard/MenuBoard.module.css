@@ -9,7 +9,7 @@
 /* the count row is also where the drag hint shows, and only when dragging
    actually works */
 .tally {
-  @apply mb-2 shrink-0 text-xs text-faint lg:text-sm;
+  @apply mb-2 shrink-0 text-xs text-fg-faint lg:text-sm;
 }
 
 /*
@@ -31,10 +31,6 @@
   @apply overflow-hidden;
 }
 
-.items {
-  @apply flex flex-col;
-}
-
 /*
  * Skeleton: the measurements match what will occupy each spot — the item
  * tile measures 44px, the name grows from `text-sm` to `text-base` on
@@ -45,7 +41,7 @@
 }
 
 .ghostThumb {
-  @apply h-11 w-11 shrink-0 rounded-xl;
+  @apply h-11 w-11 shrink-0 rounded-3;
 }
 
 .ghostName {
@@ -70,5 +66,5 @@
 }
 
 .loadingMore {
-  @apply text-xs text-faint;
+  @apply text-xs text-fg-faint;
 }

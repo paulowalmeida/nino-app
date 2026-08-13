@@ -2,7 +2,7 @@
 
 .shell {
   @apply flex min-h-screen items-center justify-center px-6 py-12;
-  @apply bg-white text-center;
+  @apply bg-surface-raised text-center;
 }
 
 .panel {
@@ -10,9 +10,9 @@
 }
 
 .title {
-  @apply font-display text-2xl font-extrabold tracking-tight text-dark;
+  @apply font-display text-2xl font-extrabold tracking-tight text-fg-cool;
 }
 
 .subtitle {
-  @apply text-sm text-text/60;
+  @apply text-sm text-fg-muted;
 }

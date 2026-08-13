@@ -64,20 +64,21 @@
  */
 .identity {
   @apply flex flex-wrap items-baseline gap-x-4 gap-y-1 rounded-2xl;
-  @apply bg-cream px-4 py-3.5;
+  @apply bg-surface-2 px-4 py-3.5;
 }
 
 .identityLabel {
-  @apply text-[0.7rem] font-bold uppercase tracking-[0.12em] text-faint;
+  @apply text-xs font-bold uppercase tracking-[0.12em] text-fg-faint;
 }
 
 .identityValue {
-  @apply font-display text-lg font-extrabold tracking-[-0.01em] text-ink;
+  @apply font-display text-lg font-extrabold tracking-[-0.01em];
+  @apply text-fg-strong;
   @apply tabular-nums;
 }
 
 .identityHint {
-  @apply w-full text-xs leading-relaxed text-faint;
+  @apply w-full text-xs leading-relaxed text-fg-faint;
 }
 
 .fields {
@@ -91,18 +92,18 @@
 }
 
 .address {
-  @apply mt-5 flex flex-col gap-3 border-t border-sand pt-5;
+  @apply mt-5 flex flex-col gap-3 border-t border-border pt-5;
 }
 
 /* ação fecha o bloco à direita, atrás de um fio: é onde a mão vai
    depois de percorrer o formulário inteiro */
 .actions {
-  @apply mt-6 flex flex-col border-t border-sand pt-5;
+  @apply mt-6 flex flex-col border-t border-border pt-5;
   @apply sm:flex-row sm:items-center sm:justify-end sm:gap-4;
 }
 
 /* diz por que o botão está apagado, em vez de deixar a pessoa
    clicando nele */
 .status {
-  @apply mb-2 text-xs text-faint sm:mb-0 sm:mr-auto;
+  @apply mb-2 text-xs text-fg-faint sm:mb-0 sm:mr-auto;
 }

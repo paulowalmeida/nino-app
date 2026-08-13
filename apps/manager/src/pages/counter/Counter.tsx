@@ -1,3 +1,4 @@
+import { Flexbox } from '@nino/ds/components/Flexbox'
 import { useState } from 'react'
 
 import { Drawer } from '@nino/ds/components/Drawer'
@@ -136,12 +137,12 @@ export const Counter = () => {
 
   return (
     <div className={styles.page}>
-      <header className={`${motion.deal} ${styles.header}`}>
+      <Flexbox as="header" direction="column" gap={1} shrink={false} mb={4} className={motion.deal}>
         <h1 className={styles.title}>Balcão</h1>
         <p className={styles.subtitle}>
           Monte o pedido de quem está na loja e feche a venda.
         </p>
-      </header>
+      </Flexbox>
 
       <div className={styles.floor}>
         <section className={styles.menu} aria-label="Cardápio">

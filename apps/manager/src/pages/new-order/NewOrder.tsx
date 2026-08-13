@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router'
 
-import { PageHeader } from '@nino/ds/components/PageHeader'
+import { Header } from '@nino/ds/components/Header'
 import { BackLink } from '@elements/BackLink/BackLink'
 import { NewOrderMenu } from '@compositions/NewOrderMenu/NewOrderMenu'
 import { NewOrderTicket } from '@compositions/NewOrderTicket/NewOrderTicket'
@@ -141,8 +141,9 @@ export const NewOrder = () => {
     <div className={styles.page}>
       <BackLink>Pedidos</BackLink>
 
-      <PageHeader
-        className={styles.header}
+      <Header
+        mt={4}
+        mb={5}
         title="Pedido na mão"
         accent="mão"
         description="Para quem pediu no balcão ou ligou para a loja. O pedido entra na fila do mesmo jeito que o do app."

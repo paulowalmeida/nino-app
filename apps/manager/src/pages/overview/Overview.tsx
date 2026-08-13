@@ -1,3 +1,5 @@
+import { Flexbox } from '@nino/ds/components/Flexbox'
+import { NinoMascot } from '@nino/ds/components/NinoMascot'
 import { DayTally } from '@compositions/DayTally/DayTally'
 import { PauseSwitch } from '@compositions/PauseSwitch/PauseSwitch'
 import { QueueBoard } from '@compositions/QueueBoard/QueueBoard'
@@ -6,8 +8,6 @@ import { TopProducts } from '@compositions/TopProducts/TopProducts'
 import { StoreSign } from '@compositions/StoreSign/StoreSign'
 import { useCurrentTenant } from '@hooks/session/useCurrentTenant'
 import { useSessionStore } from '@states/useSessionStore'
-
-import mascotSrc from '@nino/ds/mascot.svg'
 
 import styles from './Overview.module.css'
 import motion from '@styles/motion.module.css'
@@ -53,7 +53,11 @@ export const Overview = () => {
             {greetingFor(timezone)}
           </p>
           <h1 className={`${motion.deal} ${styles.title}`}>{firstName}</h1>
-          <div className={styles.meta}>
+          <Flexbox
+            direction={{ mobile: 'column', desktop: 'row' }}
+            align={{ mobile: 'start', desktop: 'baseline' }}
+            gap={{ mobile: 1.5, desktop: 2 }}
+          >
             <p className={styles.date}>{dateFor(timezone)}</p>
 
             {tenant && (
@@ -67,16 +71,11 @@ export const Overview = () => {
                 {tenant.tenantName}
               </a>
             )}
-          </div>
+          </Flexbox>
 
           <StoreSign tenantId={tenantId} timezone={timezone} />
         </div>
-        <img
-          src={mascotSrc}
-          alt=""
-          aria-hidden="true"
-          className={`${motion.land} ${styles.mascot}`}
-        />
+        <NinoMascot className={`${motion.land} ${styles.mascot}`} />
       </header>
 
       <div className={styles.pause}>

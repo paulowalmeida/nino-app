@@ -1,18 +1,14 @@
 @reference "@nino/ds/globals.css";
 
-.wrap {
-  @apply flex flex-col gap-3;
-}
-
 .frame {
-  @apply relative overflow-hidden rounded-[20px] border border-line;
-  @apply aspect-[4/3] w-full bg-brand-foreground/70 transition-colors;
+  @apply relative overflow-hidden rounded-5 border border-border;
+  @apply aspect-[4/3] w-full bg-surface-page/70 transition-colors;
   @apply duration-200;
 }
 
 /* arrastar por cima da foto já existente troca ela, não só a área vazia */
 .frameOver {
-  @apply border-brand bg-brand/8;
+  @apply border-brand bg-brand-ghost;
 }
 
 .photo {
@@ -22,20 +18,17 @@
 /* área de largar arquivo, quando ainda não há foto */
 .empty {
   @apply flex h-full w-full flex-col items-center justify-center gap-2;
-  @apply border-2 border-dashed border-sand-deep bg-cream/60 p-6 text-center;
+  @apply border-2 border-dashed border-border bg-surface-2/60 p-6;
+  @apply text-center;
   @apply transition-colors duration-200;
 }
 
 .emptyTitle {
-  @apply text-sm font-semibold text-ink;
+  @apply text-sm font-semibold text-fg-strong;
 }
 
 .emptyHint {
-  @apply text-xs leading-relaxed text-faint;
-}
-
-.actions {
-  @apply flex flex-wrap items-center gap-2;
+  @apply text-xs leading-relaxed text-fg-faint;
 }
 
 .fileInput {
@@ -43,8 +36,9 @@
 }
 
 .trigger {
-  @apply cursor-pointer rounded-xl border border-sand-deep;
-  @apply bg-brand-foreground/80 px-3;
-  @apply py-2 text-xs font-semibold text-ink transition-colors duration-150;
-  @apply hover:border-brand/40 hover:bg-brand/5;
+  @apply cursor-pointer rounded-3 border border-border;
+  @apply bg-surface-page/80 px-3;
+  @apply py-2 text-xs font-semibold text-fg-strong transition-colors;
+  @apply duration-150;
+  @apply hover:border-brand-bold hover:bg-brand-ghost;
 }

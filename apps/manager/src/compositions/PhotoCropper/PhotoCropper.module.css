@@ -1,14 +1,14 @@
 @reference "@nino/ds/globals.css";
 
 .editor {
-  @apply flex flex-col gap-3 rounded-[22px] border border-brand/15;
-  @apply bg-brand/5 p-4;
+  @apply flex flex-col gap-3 rounded-5 border border-brand-soft;
+  @apply bg-brand-ghost p-4;
 }
 
 /* a moldura é o que o cliente vai ver: quadrada, com a foto cobrindo */
 .frame {
   @apply relative aspect-square w-full cursor-grab overflow-hidden;
-  @apply rounded-[18px] bg-ink/90 touch-none select-none;
+  @apply rounded-4 bg-fg-strong/90 touch-none select-none;
 }
 
 .frame:active {
@@ -29,19 +29,19 @@
     linear-gradient(
       to right,
       transparent calc(33.33% - 1px),
-      rgba(255, 255, 255, 0.25) 33.33%,
+      color-mix(in srgb, var(--color-white) 25%, transparent) 33.33%,
       transparent calc(33.33% + 1px),
       transparent calc(66.66% - 1px),
-      rgba(255, 255, 255, 0.25) 66.66%,
+      color-mix(in srgb, var(--color-white) 25%, transparent) 66.66%,
       transparent calc(66.66% + 1px)
     ),
     linear-gradient(
       to bottom,
       transparent calc(33.33% - 1px),
-      rgba(255, 255, 255, 0.25) 33.33%,
+      color-mix(in srgb, var(--color-white) 25%, transparent) 33.33%,
       transparent calc(33.33% + 1px),
       transparent calc(66.66% - 1px),
-      rgba(255, 255, 255, 0.25) 66.66%,
+      color-mix(in srgb, var(--color-white) 25%, transparent) 66.66%,
       transparent calc(66.66% + 1px)
     );
 }
@@ -51,24 +51,9 @@
 }
 
 .hint {
-  @apply text-xs leading-relaxed text-faint;
-}
-
-/*
- * Hierarquia em dois andares, não três botões disputando a mesma linha: a
- * coluna da foto tem 20rem, e três botões lado a lado nunca cabiam sem
- * quebrar torto. A confirmação lidera sozinha; as duas saídas — trocar ou
- * remover — dividem uma linha menor embaixo, do mesmo porte da barra de
- * ações da foto já salva.
- */
-.actions {
-  @apply flex flex-col gap-2;
+  @apply text-xs leading-relaxed text-fg-faint;
 }
 
 .confirm {
   @apply w-full;
-}
-
-.secondary {
-  @apply flex items-center justify-between gap-2;
 }

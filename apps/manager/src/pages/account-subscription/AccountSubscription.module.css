@@ -4,22 +4,20 @@
   @apply relative max-w-2xl p-4 lg:p-10;
 }
 
-.header {
-  @apply mb-5 flex flex-col gap-1.5 lg:mb-8;
-}
-
 /* o plano é o assunto: nome grande, preço ao lado */
 .plan {
-  @apply flex flex-wrap items-end justify-between gap-3 border-b border-sand;
+  @apply flex flex-wrap items-end justify-between gap-3 border-b;
+  @apply border-border;
   @apply pb-4;
 }
 
 .planLabel {
-  @apply text-[0.7rem] font-bold uppercase tracking-[0.12em] text-faint;
+  @apply text-xs font-bold uppercase tracking-[0.12em] text-fg-faint;
 }
 
 .planName {
-  @apply font-display text-2xl font-extrabold tracking-[-0.02em] text-ink;
+  @apply font-display text-2xl font-extrabold tracking-[-0.02em];
+  @apply text-fg-strong;
 }
 
 .price {
@@ -28,7 +26,7 @@
 }
 
 .period {
-  @apply text-sm font-semibold text-faint;
+  @apply text-sm font-semibold text-fg-faint;
 }
 
 .facts {
@@ -36,19 +34,20 @@
 }
 
 .fact {
-  @apply flex items-baseline justify-between gap-3 border-b border-sand py-2.5;
+  @apply flex items-baseline justify-between gap-3 border-b border-border;
+  @apply py-2.5;
 }
 
 .factLabel {
-  @apply text-sm text-faint;
+  @apply text-sm text-fg-faint;
 }
 
 .factValue {
-  @apply text-sm font-semibold text-body;
+  @apply text-sm font-semibold text-fg-default;
 }
 
 .hint {
-  @apply mt-4 text-xs leading-relaxed text-faint;
+  @apply mt-4 text-xs leading-relaxed text-fg-faint;
 }
 
 .ghostPlanLabel {
@@ -70,4 +69,3 @@
 .ghostFactValue {
   @apply h-4 w-16;
 }
-

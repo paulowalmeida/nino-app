@@ -13,7 +13,7 @@
 }
 
 .header {
-  @apply mb-3 shrink-0 lg:mb-4;
+  @apply shrink-0;
 }
 
 .chips {
@@ -26,16 +26,6 @@
  */
 .scroller {
   @apply flex min-h-0 flex-1 flex-col;
-}
-
-/*
- * Busca antes das fichas, como no balcão: com o cardápio grande, digitar é
- * mais curto que lembrar em que categoria o item foi cadastrado. No desktop a
- * busca e as ações dividem a linha; no celular empilham.
- */
-.toolbar {
-  @apply mb-3 flex shrink-0 flex-col gap-2;
-  @apply lg:flex-row lg:items-center lg:gap-4;
 }
 
 .search {

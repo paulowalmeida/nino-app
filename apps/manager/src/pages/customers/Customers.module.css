@@ -12,21 +12,22 @@
 }
 
 .eyebrow {
-  @apply text-[0.7rem] font-bold uppercase tracking-[0.12em] text-faint;
+  @apply text-xs font-bold uppercase tracking-[0.12em] text-fg-faint;
 }
 
 /* a página é a lista: fio fino separa cabeçalho do conteúdo, sem moldura */
 .head {
-  @apply mt-1 border-b border-line/60 pb-5;
+  @apply mt-1 border-b border-border/60 pb-5;
 }
 
 .title {
-  @apply font-display text-2xl font-extrabold tracking-[-0.02em] text-ink;
+  @apply font-display text-2xl font-extrabold tracking-[-0.02em];
+  @apply text-fg-strong;
   @apply lg:text-3xl;
 }
 
 .subtitle {
-  @apply mt-1.5 text-sm text-subtle;
+  @apply mt-1.5 text-sm text-fg-subtle;
 }
 
 /*
@@ -56,7 +57,7 @@
 }
 
 .columnLabel {
-  @apply text-[0.68rem] font-bold uppercase tracking-[0.1em] text-faintest;
+  @apply text-2xs font-bold uppercase tracking-[0.1em] text-fg-faintest;
   @apply text-right;
 }
 
@@ -73,12 +74,12 @@
 }
 
 .item {
-  @apply border-t border-sand;
+  @apply border-t border-border;
 }
 
 /* alvo de toque de 56px no celular: lista longa se percorre com o polegar */
 .link {
-  @apply rounded-xl px-2 py-3 transition-colors duration-150 lg:px-3;
+  @apply rounded-3 px-2 py-3 transition-colors duration-150 lg:px-3;
   @apply lg:py-3.5 hover:bg-surface-mute;
   @apply focus-visible:outline-none focus-visible:ring-2;
   @apply focus-visible:ring-brand focus-visible:ring-offset-1;
@@ -93,11 +94,11 @@
 }
 
 .name {
-  @apply truncate text-[0.95rem] font-semibold text-body lg:text-sm;
+  @apply truncate text-base font-semibold text-fg-default lg:text-sm;
 }
 
 .phone {
-  @apply truncate text-xs text-faint;
+  @apply truncate text-xs text-fg-faint;
   font-variant-numeric: tabular-nums;
 }
 
@@ -112,19 +113,19 @@
 }
 
 .statValue {
-  @apply font-display text-base font-extrabold text-ink;
+  @apply font-display text-base font-extrabold text-fg-strong;
   font-variant-numeric: tabular-nums;
 }
 
 /* no celular a contagem de pedidos é legenda do valor, não outro número solto */
 .statOrders {
-  @apply text-xs font-medium text-faint lg:text-base lg:font-extrabold;
-  @apply lg:font-display lg:text-ink;
+  @apply text-xs font-medium text-fg-faint lg:text-base lg:font-extrabold;
+  @apply lg:font-display lg:text-fg-strong;
   font-variant-numeric: tabular-nums;
 }
 
 .statLabel {
-  @apply text-xs text-faint lg:hidden;
+  @apply text-xs text-fg-faint lg:hidden;
 }
 
 .statPoints {
@@ -132,11 +133,7 @@
 }
 
 .since {
-  @apply hidden text-right text-xs text-faintest lg:block;
-}
-
-.loading {
-  @apply mt-6 flex flex-col gap-2;
+  @apply hidden text-right text-xs text-fg-faintest lg:block;
 }
 
 .ghostRow {
@@ -168,5 +165,5 @@
 }
 
 .more {
-  @apply mt-4 flex shrink-0 justify-center border-t border-sand pt-4;
+  @apply mt-4 flex shrink-0 justify-center border-t border-border pt-4;
 }

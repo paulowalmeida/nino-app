@@ -1,7 +1,7 @@
 @reference "@nino/ds/globals.css";
 
 .skeleton {
-  @apply h-64 w-full rounded-[24px];
+  @apply h-64 w-full rounded-6;
 }
 
 .fields {
@@ -9,11 +9,7 @@
 }
 
 .address {
-  @apply mt-4 flex flex-col gap-2 border-t border-sand pt-4;
-}
-
-.head {
-  @apply mb-4 flex flex-wrap items-start justify-between gap-3;
+  @apply mt-4 flex flex-col gap-2 border-t border-border pt-4;
 }
 
 /* the rank sits next to the name, where the question shows up */

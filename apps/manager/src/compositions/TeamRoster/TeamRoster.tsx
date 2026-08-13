@@ -1,3 +1,4 @@
+import { Flexbox } from '@nino/ds/components/Flexbox'
 import { Link } from 'react-router'
 
 import { Badge } from '@nino/ds/components/Badge'
@@ -103,7 +104,7 @@ export const TeamRoster = ({
       {/* the same list, with the people yet to arrive: avatar, name, e-mail,
           role */}
       {isPending && (
-        <ul className={styles.list}>
+        <Flexbox as="ul" direction="column">
           {TEAM_ROSTER_GHOST_ROWS.map((row) => (
             <li key={row} className={styles.row}>
               <Skeleton className={styles.ghostMark} />
@@ -116,7 +117,7 @@ export const TeamRoster = ({
               <Skeleton className={styles.ghostRole} />
             </li>
           ))}
-        </ul>
+        </Flexbox>
       )}
 
       {!isPending && entries.length === 0 && <EmptyState>{empty}</EmptyState>}

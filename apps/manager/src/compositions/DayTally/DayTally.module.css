@@ -18,9 +18,9 @@
    O gap não é 1: o número usa leading-none, então não há entrelinha para
    servir de folga entre ele e o rótulo. */
 .figure {
-  @apply flex flex-col gap-2 p-5;
+  @apply flex flex-col gap-2;
   @apply transition-all duration-300;
-  @apply hover:border-brand/60 hover:shadow-card-hover;
+  @apply hover:border-brand-vivid hover:shadow-md;
   @apply focus-visible:outline-none focus-visible:ring-2;
   @apply focus-visible:ring-brand focus-visible:ring-offset-2;
 }
@@ -29,12 +29,12 @@
    "R$ 1.234,56" */
 .value {
   @apply font-display text-2xl font-extrabold leading-none tracking-tight;
-  @apply text-ink lg:text-3xl;
+  @apply text-fg-strong lg:text-3xl;
   font-variant-numeric: tabular-nums;
 }
 
 .label {
-  @apply text-xs leading-snug text-faint lg:text-sm;
+  @apply text-xs leading-snug text-fg-faint lg:text-sm;
 }
 
 /*
@@ -58,10 +58,6 @@
 
 .skeletonAverage {
   @apply w-20;
-}
-
-.recent {
-  @apply mt-4 flex flex-col;
 }
 
 /*
@@ -90,31 +86,31 @@
 }
 
 .entry {
-  @apply border-t border-sand;
+  @apply border-t border-border;
 }
 
 .link {
-  @apply flex items-baseline gap-3 rounded-xl px-2 py-2.5;
+  @apply flex items-baseline gap-3 rounded-3 px-2 py-2.5;
   @apply transition-colors duration-150 hover:bg-surface-mute;
   @apply focus-visible:outline-none focus-visible:ring-2;
   @apply focus-visible:ring-brand focus-visible:ring-offset-1;
 }
 
 .number {
-  @apply font-display text-sm font-extrabold text-ink;
+  @apply font-display text-sm font-extrabold text-fg-strong;
   font-variant-numeric: tabular-nums;
 }
 
 .state {
-  @apply min-w-0 flex-1 truncate text-sm text-muted;
+  @apply min-w-0 flex-1 truncate text-sm text-fg-muted;
 }
 
 .at {
-  @apply text-xs text-faint;
+  @apply text-xs text-fg-faint;
   font-variant-numeric: tabular-nums;
 }
 
 .total {
-  @apply text-sm font-semibold text-body;
+  @apply text-sm font-semibold text-fg-default;
   font-variant-numeric: tabular-nums;
 }

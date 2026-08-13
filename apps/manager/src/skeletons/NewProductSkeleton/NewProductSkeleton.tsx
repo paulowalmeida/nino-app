@@ -1,5 +1,6 @@
+import { Flexbox } from '@nino/ds/components/Flexbox'
 import { Skeleton } from '@nino/ds/components/Skeleton'
-import { PageHeader } from '@nino/ds/components/PageHeader'
+import { Header } from '@nino/ds/components/Header'
 import { BackLink } from '@elements/BackLink/BackLink'
 
 import styles from '@pages/new-product/NewProduct.module.css'
@@ -14,8 +15,9 @@ export const NewProductSkeleton = () => (
   <div className={styles.page}>
     <BackLink>Cardápio</BackLink>
 
-    <PageHeader
+    <Header
       className={styles.header}
+      mb={5}
       title="Novo item"
       accent="item"
       description="O que o cliente vê no cardápio, tudo em um lugar só."
@@ -24,9 +26,9 @@ export const NewProductSkeleton = () => (
     <div className={styles.form}>
       <div className={fieldStyles.photoCol}>
         <Skeleton className={styles.bonePhoto} />
-        <div className={styles.bonePhotoActions}>
+        <Flexbox gap={2} mt={3}>
           <Skeleton className={styles.bonePhotoAction} />
-        </div>
+        </Flexbox>
       </div>
 
       <div className={fieldStyles.fields}>

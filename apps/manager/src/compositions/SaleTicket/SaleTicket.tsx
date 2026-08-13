@@ -1,3 +1,4 @@
+import { Flexbox } from '@nino/ds/components/Flexbox'
 import { useState } from 'react'
 
 import { Alert } from '@nino/ds/components/Alert'
@@ -111,12 +112,12 @@ export const SaleTicket = ({
                       </span>
                     </div>
 
-                    <div className={styles.lineRight}>
+                    <Flexbox direction="column" gap={1.5} align="end" shrink={false}>
                       <span className={styles.lineTotal}>
                         {brl(Number(line.unitPrice) * line.quantity)}
                       </span>
 
-                      <div className={styles.stepper}>
+                      <Flexbox gap={1.5} align="center" shrink={false}>
                         <Button
                           size="icon"
                           variant="outline"
@@ -151,8 +152,8 @@ export const SaleTicket = ({
                         >
                           <Icon name="plus" />
                         </Button>
-                      </div>
-                    </div>
+                      </Flexbox>
+                    </Flexbox>
                   </li>
                 )
               })}
@@ -206,10 +207,10 @@ export const SaleTicket = ({
         )}
 
         <div className={styles.footer}>
-          <div className={styles.totalRow}>
+          <Flexbox align="baseline" justify="between">
             <span className={styles.totalLabel}>Total</span>
             <span className={styles.total}>{brl(total)}</span>
-          </div>
+          </Flexbox>
 
           {error && <Alert variant="error">{error}</Alert>}
 

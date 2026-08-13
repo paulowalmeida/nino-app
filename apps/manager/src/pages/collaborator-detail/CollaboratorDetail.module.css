@@ -10,11 +10,7 @@
 }
 
 .eyebrow {
-  @apply mt-3 text-[0.7rem] font-bold uppercase tracking-[0.12em] text-faint;
-}
-
-.hero {
-  @apply mt-1 flex items-center gap-4;
+  @apply mt-3 text-xs font-bold uppercase tracking-[0.12em] text-fg-faint;
 }
 
 .mark {
@@ -29,7 +25,7 @@
    página, o resto abaixo é metadado e lê melhor em peso normal */
 .name {
   @apply truncate font-display text-2xl font-extrabold tracking-[-0.02em];
-  @apply text-ink lg:text-3xl;
+  @apply text-fg-strong lg:text-3xl;
 }
 
 .contact {
@@ -54,14 +50,14 @@
 
 /* celular: faixa entre fios. desktop: coluna à direita, um fato por linha */
 .facts {
-  @apply grid grid-cols-2 gap-y-4 border-y border-line/60 py-4;
+  @apply grid grid-cols-2 gap-y-4 border-y border-border/60 py-4;
   @apply lg:order-2 lg:grid-cols-1 lg:gap-0 lg:border-y-0 lg:py-0;
 }
 
 .fact {
   @apply flex flex-col gap-0.5;
   @apply lg:flex-row lg:items-baseline lg:justify-between lg:gap-3;
-  @apply lg:border-b lg:border-sand lg:py-2.5;
+  @apply lg:border-b lg:border-border lg:py-2.5;
 }
 
 .fact:last-child {
@@ -69,13 +65,13 @@
 }
 
 .factLabel {
-  @apply text-[0.68rem] font-bold uppercase tracking-[0.1em] text-faintest;
+  @apply text-2xs font-bold uppercase tracking-[0.1em] text-fg-faintest;
 }
 
 /* metadado, não estatística de painel: peso normal, sem font-display — a
    régua que a ficha "Meus dados" já usa para o mesmo tipo de fato */
 .factValue {
-  @apply text-sm font-semibold text-ink;
+  @apply text-sm font-semibold text-fg-strong;
   font-variant-numeric: tabular-nums;
 }
 
@@ -85,15 +81,15 @@
 
 .activityHead {
   @apply flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1;
-  @apply border-b border-line/60 pb-3;
+  @apply border-b border-border/60 pb-3;
 }
 
 .activityTitle {
-  @apply text-[0.7rem] font-bold uppercase tracking-[0.12em] text-faint;
+  @apply text-xs font-bold uppercase tracking-[0.12em] text-fg-faint;
 }
 
 .activityHint {
-  @apply text-xs text-faint;
+  @apply text-xs text-fg-faint;
 }
 
 /*
@@ -119,7 +115,7 @@
 }
 
 .columnLabel {
-  @apply text-[0.68rem] font-bold uppercase tracking-[0.1em] text-faintest;
+  @apply text-2xs font-bold uppercase tracking-[0.1em] text-fg-faintest;
   @apply text-right;
 }
 
@@ -137,40 +133,40 @@
 }
 
 .entry {
-  @apply border-b border-sand last:border-b-0;
+  @apply border-b border-border last:border-b-0;
 }
 
 .entryRow {
-  @apply rounded-xl px-2 py-3 transition-colors duration-150;
+  @apply rounded-3 px-2 py-3 transition-colors duration-150;
   @apply hover:bg-surface-mute;
 }
 
 .entryTicket {
-  @apply text-sm font-semibold text-faint;
+  @apply text-sm font-semibold text-fg-faint;
   font-variant-numeric: tabular-nums;
 }
 
 .entryCustomer {
-  @apply min-w-0 truncate text-sm font-semibold text-ink;
+  @apply min-w-0 truncate text-sm font-semibold text-fg-strong;
 }
 
 /* no celular é a legenda da linha, embaixo de cliente+valor; no desktop
    dissolve na grade e cada pedaço vira sua própria coluna */
 .entryMeta {
   @apply col-span-2 col-start-2 flex min-w-0 items-center gap-1.5;
-  @apply text-xs text-faint lg:contents;
+  @apply text-xs text-fg-faint lg:contents;
 }
 
 .entryChannel {
-  @apply truncate lg:text-sm lg:text-muted;
+  @apply truncate lg:text-sm lg:text-fg-muted;
 }
 
 .entryStatus {
-  @apply shrink-0 truncate lg:text-sm lg:text-muted lg:text-right;
+  @apply shrink-0 truncate lg:text-sm lg:text-fg-muted lg:text-right;
 }
 
 .entryAt {
-  @apply shrink-0 lg:text-right lg:text-xs lg:text-faint;
+  @apply shrink-0 lg:text-right lg:text-xs lg:text-fg-faint;
   font-variant-numeric: tabular-nums;
 }
 
@@ -180,7 +176,7 @@
 
 /* o único número que merece destaque na linha */
 .entryTotal {
-  @apply text-right text-sm font-semibold text-ink;
+  @apply text-right text-sm font-semibold text-fg-strong;
   font-variant-numeric: tabular-nums;
 }
 
@@ -189,5 +185,5 @@
 }
 
 .skeleton {
-  @apply m-4 h-64 rounded-[24px] lg:m-8;
+  @apply m-4 h-64 rounded-6 lg:m-8;
 }
