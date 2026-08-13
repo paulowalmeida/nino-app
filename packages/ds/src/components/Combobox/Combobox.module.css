@@ -24,15 +24,25 @@
   @apply overflow-y-auto overscroll-contain scrollbar-slim rounded-2;
   @apply bg-surface-raised;
   @apply shadow-warm-lg p-1;
+  /* A navegação por teclado rola a lista sozinha (`scrollIntoView`); o
+     deslize é o que mostra que a seleção andou, em vez de saltar. */
+  scroll-behavior: smooth;
 }
 
 .option {
   @apply relative flex cursor-default select-none items-center rounded-1 px-3;
   @apply py-2 text-sm text-fg-strong outline-none;
-  @apply transition-field;
+  @apply transition-field duration-fast;
   @apply data-[highlighted]:bg-brand-soft;
   @apply data-[highlighted]:text-brand;
   @apply state-disabled;
+  transition-property: color, background-color, box-shadow, border-color;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .optionPanel {
+    scroll-behavior: auto;
+  }
 }
 
 .emptyMessage {

@@ -128,7 +128,14 @@ export function Combobox({
       </ArkCombobox.Control>
       <Portal>
         <ArkCombobox.Positioner>
-          <ArkCombobox.Content className={styles.optionPanel}>
+          {/* `menu-animated-content` é global: os keyframes de abrir e fechar
+              vivem em globals.css e não podem virar hash do CSS Module. */}
+          <ArkCombobox.Content
+            className={mergeClasses(
+              'menu-animated-content',
+              styles.optionPanel
+            )}
+          >
             <ArkCombobox.Empty className={styles.emptyMessage}>
               {emptyMessage}
             </ArkCombobox.Empty>
