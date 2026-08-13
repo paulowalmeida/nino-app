@@ -22,11 +22,12 @@ const steps = [
 ]
 
 export const Default: Story = {
-  render: () => {
+  args: { steps },
+  render: (args) => {
     const [step, setStep] = useState(1)
     return (
       <div className="w-full max-w-2xl space-y-6">
-        <Stepper steps={steps} step={step} onStepChange={setStep} />
+        <Stepper {...args} step={step} onStepChange={setStep} />
         <div className="flex gap-2">
           <Button
             variant="outline"

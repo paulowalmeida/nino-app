@@ -10,6 +10,9 @@ const meta: Meta<typeof Modal> = {
   component: Modal,
   tags: ['autodocs'],
   argTypes: {
+    body: { control: false },
+    footer: { control: false },
+    header: { control: false },
     size: { control: 'select', options: ['sm', 'md', 'lg'] },
   },
 }
@@ -18,12 +21,13 @@ export default meta
 type Story = StoryObj<typeof Modal>
 
 export const Default: Story = {
-  render: () => {
+  render: (args) => {
     const [open, setOpen] = useState(false)
     return (
       <>
         <Button onClick={() => setOpen(true)}>Open modal</Button>
         <Modal
+          {...args}
           open={open}
           onOpenChange={setOpen}
           header={

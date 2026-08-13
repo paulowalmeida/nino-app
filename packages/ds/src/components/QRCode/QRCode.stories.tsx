@@ -6,6 +6,9 @@ const meta: Meta<typeof QRCode> = {
   title: 'Components/QRCode',
   component: QRCode,
   tags: ['autodocs'],
+  argTypes: {
+    logo: { control: false },
+  },
 }
 
 export default meta

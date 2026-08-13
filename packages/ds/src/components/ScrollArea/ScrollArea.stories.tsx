@@ -6,6 +6,9 @@ const meta: Meta<typeof ScrollArea> = {
   title: 'Components/ScrollArea',
   component: ScrollArea,
   tags: ['autodocs'],
+  argTypes: {
+    children: { control: false },
+  },
 }
 
 export default meta
@@ -17,8 +20,9 @@ type Story = StoryObj<typeof ScrollArea>
  * never generated and the box would render unconstrained.
  */
 export const Default: Story = {
-  render: () => (
+  render: (args) => (
     <ScrollArea
+      {...args}
       className="rounded-2 border border-border"
       style={{ height: 192, width: 256 }}
     >

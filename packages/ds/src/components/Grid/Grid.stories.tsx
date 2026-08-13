@@ -31,8 +31,9 @@ const Cell = ({ children }: { children: string }) => (
 )
 
 export const Default: Story = {
-  render: () => (
-    <Grid columns={3} gap={3}>
+  args: { columns: 3, gap: 3 },
+  render: (args) => (
+    <Grid {...args}>
       <Cell>1</Cell>
       <Cell>2</Cell>
       <Cell>3</Cell>

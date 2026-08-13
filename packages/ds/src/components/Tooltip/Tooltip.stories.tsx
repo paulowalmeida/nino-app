@@ -17,6 +17,7 @@ const meta: Meta<typeof Tooltip> = {
     ),
   ],
   argTypes: {
+    children: { control: false },
     side: { control: 'select', options: ['top', 'bottom', 'left', 'right'] },
   },
 }

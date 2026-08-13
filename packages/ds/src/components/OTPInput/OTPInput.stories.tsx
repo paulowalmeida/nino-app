@@ -12,7 +12,8 @@ export default meta
 type Story = StoryObj<typeof OTPInput>
 
 export const Default: Story = {
-  render: () => <OTPInput otp />,
+  args: { otp: true },
+  render: (args) => <OTPInput {...args} />,
 }
 
 export const FourDigits: Story = {

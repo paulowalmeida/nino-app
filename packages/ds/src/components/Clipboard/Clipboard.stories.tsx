@@ -12,9 +12,10 @@ export default meta
 type Story = StoryObj<typeof Clipboard>
 
 export const Default: Story = {
-  render: () => (
+  args: { value: '00020126580014br.gov.bcb.pix0136...' },
+  render: (args) => (
     <div className="w-96">
-      <Clipboard value="00020126580014br.gov.bcb.pix0136..." />
+      <Clipboard {...args} />
     </div>
   ),
 }

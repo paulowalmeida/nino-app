@@ -18,16 +18,19 @@ export default meta
 type Story = StoryObj<typeof QuantityStepper>
 
 export const Default: Story = {
-  render: () => {
+  args: {
+    incrementLabel: 'Aumentar quantidade',
+    decrementLabel: 'Diminuir quantidade',
+  },
+  render: (args) => {
     const [quantity, setQuantity] = useState(1)
 
     return (
       <QuantityStepper
+        {...args}
         quantity={quantity}
         onIncrement={() => setQuantity((current) => current + 1)}
         onDecrement={() => setQuantity((current) => Math.max(1, current - 1))}
-        incrementLabel="Aumentar quantidade"
-        decrementLabel="Diminuir quantidade"
         isDecrementDisabled={quantity <= 1}
       />
     )

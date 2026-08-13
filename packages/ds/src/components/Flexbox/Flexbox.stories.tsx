@@ -37,8 +37,9 @@ const Block = ({ children }: { children: string }) => (
 )
 
 export const Default: Story = {
-  render: () => (
-    <Flexbox gap={2}>
+  args: { gap: 2 },
+  render: (args) => (
+    <Flexbox {...args}>
       <Block>Primeiro</Block>
       <Block>Segundo</Block>
       <Block>Terceiro</Block>

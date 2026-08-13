@@ -7,6 +7,9 @@ const meta: Meta<typeof Menu> = {
   title: 'Components/Menu',
   component: Menu,
   tags: ['autodocs'],
+  argTypes: {
+    trigger: { control: false },
+  },
 }
 
 export default meta

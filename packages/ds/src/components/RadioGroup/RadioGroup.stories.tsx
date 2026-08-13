@@ -23,15 +23,10 @@ const paymentOptions = [
 ]
 
 export const Default: Story = {
-  render: () => {
+  args: { options: paymentOptions },
+  render: (args) => {
     const [value, setValue] = useState('pix')
-    return (
-      <RadioGroup
-        options={paymentOptions}
-        value={value}
-        onValueChange={setValue}
-      />
-    )
+    return <RadioGroup {...args} value={value} onValueChange={setValue} />
   },
 }
 

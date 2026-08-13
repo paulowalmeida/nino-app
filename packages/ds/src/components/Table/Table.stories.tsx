@@ -44,9 +44,9 @@ const pedidos = [
 ]
 
 export const Default: Story = {
-  render: () => (
+  render: (args) => (
     <div className="w-full">
-      <Table>
+      <Table {...args}>
         <TableHeader>
           <TableRow>
             <TableHead>Pedido</TableHead>

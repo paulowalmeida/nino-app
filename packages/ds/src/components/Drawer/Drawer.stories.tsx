@@ -9,23 +9,25 @@ const meta: Meta<typeof Drawer> = {
   title: 'Components/Drawer',
   component: Drawer,
   tags: ['autodocs'],
+  argTypes: {
+    children: { control: false },
+  },
 }
 
 export default meta
 type Story = StoryObj<typeof Drawer>
 
 export const Default: Story = {
-  render: () => {
+  args: {
+    title: 'Order details',
+    description: 'Order #1234 — Ana Lima',
+  },
+  render: (args) => {
     const [open, setOpen] = useState(false)
     return (
       <>
         <Button onClick={() => setOpen(true)}>Open drawer</Button>
-        <Drawer
-          open={open}
-          onOpenChange={setOpen}
-          title="Order details"
-          description="Order #1234 — Ana Lima"
-        >
+        <Drawer {...args} open={open} onOpenChange={setOpen}>
           <p className="text-sm text-gray-600">
             Drawer content appears here. It can contain forms, lists, or any
             other content.

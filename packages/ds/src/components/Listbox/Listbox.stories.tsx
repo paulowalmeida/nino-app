@@ -19,13 +19,14 @@ const options = [
 ]
 
 export const Single: Story = {
-  render: () => (
+  args: {
+    label: 'Forma de pagamento',
+    options,
+    defaultValue: ['pix'],
+  },
+  render: (args) => (
     <div className="w-64">
-      <Listbox
-        label="Forma de pagamento"
-        options={options}
-        defaultValue={['pix']}
-      />
+      <Listbox {...args} />
     </div>
   ),
 }

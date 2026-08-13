@@ -6,6 +6,9 @@ const meta: Meta<typeof Carousel> = {
   title: 'Components/Carousel',
   component: Carousel,
   tags: ['autodocs'],
+  argTypes: {
+    slides: { control: false },
+  },
 }
 
 export default meta
@@ -21,16 +24,17 @@ const slide = (label: string, color: string) => (
 )
 
 export const Default: Story = {
-  render: () => (
+  args: {
+    loop: true,
+    slides: [
+      slide('Promo 1', '#FF6B00'),
+      slide('Promo 2', '#1f2937'),
+      slide('Promo 3', '#E8540C'),
+    ],
+  },
+  render: (args) => (
     <div className="w-[480px]">
-      <Carousel
-        loop
-        slides={[
-          slide('Promo 1', '#FF6B00'),
-          slide('Promo 2', '#1f2937'),
-          slide('Promo 3', '#E8540C'),
-        ]}
-      />
+      <Carousel {...args} />
     </div>
   ),
 }

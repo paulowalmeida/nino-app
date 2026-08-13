@@ -6,15 +6,19 @@ const meta: Meta<typeof Collapsible> = {
   title: 'Components/Collapsible',
   component: Collapsible,
   tags: ['autodocs'],
+  argTypes: {
+    children: { control: false },
+  },
 }
 
 export default meta
 type Story = StoryObj<typeof Collapsible>
 
 export const Default: Story = {
-  render: () => (
+  args: { trigger: 'Detalhes do pedido', indicator: true },
+  render: (args) => (
     <div className="w-80">
-      <Collapsible trigger="Detalhes do pedido" indicator>
+      <Collapsible {...args}>
         <p>2× X-Burgão Especial · R$ 57,80</p>
         <p>1× Combo Família · R$ 69,90</p>
       </Collapsible>

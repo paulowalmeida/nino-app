@@ -29,10 +29,10 @@ const zones = [
 ]
 
 export const Default: Story = {
-  render: () => (
+  render: (args) => (
     <Flexbox as="ul" className="w-96">
       {zones.map((zone) => (
-        <ListRow key={zone.name}>
+        <ListRow key={zone.name} {...args}>
           <Text className="flex-1">{zone.name}</Text>
           <Text color="muted">{zone.fee}</Text>
         </ListRow>

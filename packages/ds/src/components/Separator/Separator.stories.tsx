@@ -15,10 +15,10 @@ export default meta
 type Story = StoryObj<typeof Separator>
 
 export const Default: Story = {
-  render: () => (
+  render: (args) => (
     <div className="w-64">
       <p className="text-sm text-gray-600">Section A</p>
-      <Separator className="my-3" />
+      <Separator {...args} className="my-3" />
       <p className="text-sm text-gray-600">Section B</p>
     </div>
   ),

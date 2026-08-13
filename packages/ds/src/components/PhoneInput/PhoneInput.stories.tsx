@@ -12,9 +12,9 @@ export default meta
 type Story = StoryObj<typeof PhoneInput>
 
 export const Default: Story = {
-  render: () => (
+  render: (args) => (
     <div className="w-64">
-      <PhoneInput />
+      <PhoneInput {...args} />
     </div>
   ),
 }

@@ -12,9 +12,9 @@ export default meta
 type Story = StoryObj<typeof CpfInput>
 
 export const Default: Story = {
-  render: () => (
+  render: (args) => (
     <div className="w-64">
-      <CpfInput />
+      <CpfInput {...args} />
     </div>
   ),
 }

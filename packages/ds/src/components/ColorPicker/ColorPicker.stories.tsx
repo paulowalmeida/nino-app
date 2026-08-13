@@ -14,12 +14,12 @@ export default meta
 type Story = StoryObj<typeof ColorPicker>
 
 export const Default: Story = {
-  render: () => {
+  render: (args) => {
     const [color, setColor] = useState('#FF6B00')
 
     return (
       <div className="p-8">
-        <ColorPicker value={color} onValueChange={setColor} />
+        <ColorPicker {...args} value={color} onValueChange={setColor} />
       </div>
     )
   },

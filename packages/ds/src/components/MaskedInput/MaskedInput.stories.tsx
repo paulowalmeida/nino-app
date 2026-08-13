@@ -13,9 +13,10 @@ export default meta
 type Story = StoryObj<typeof MaskedInput>
 
 export const Default: Story = {
-  render: () => (
+  args: { mask: maskCpf, placeholder: '000.000.000-00' },
+  render: (args) => (
     <div className="w-64">
-      <MaskedInput mask={maskCpf} placeholder="000.000.000-00" />
+      <MaskedInput {...args} />
     </div>
   ),
 }

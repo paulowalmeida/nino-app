@@ -18,11 +18,12 @@ export default meta
 type Story = StoryObj<typeof Switch>
 
 export const Default: Story = {
-  render: () => {
+  render: (args) => {
     const [checked, setChecked] = useState(false)
     return (
       <div className="flex items-center gap-3">
         <Switch
+          {...args}
           id="switch-default"
           checked={checked}
           onCheckedChange={setChecked}

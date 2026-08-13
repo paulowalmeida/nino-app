@@ -6,15 +6,20 @@ const meta: Meta<typeof HoverCard> = {
   title: 'Components/HoverCard',
   component: HoverCard,
   tags: ['autodocs'],
+  argTypes: {
+    children: { control: false },
+    trigger: { control: false },
+  },
 }
 
 export default meta
 type Story = StoryObj<typeof HoverCard>
 
 export const Default: Story = {
-  render: () => (
+  render: (args) => (
     <div className="p-16">
       <HoverCard
+        {...args}
         trigger={
           <a href="#" className="font-medium text-brand underline">
             Burgão do Zé

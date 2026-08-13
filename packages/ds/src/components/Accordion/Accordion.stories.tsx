@@ -30,9 +30,10 @@ const items = [
 ]
 
 export const Default: Story = {
-  render: () => (
+  args: { items },
+  render: (args) => (
     <div className="w-full max-w-md">
-      <Accordion items={items} />
+      <Accordion {...args} />
     </div>
   ),
 }

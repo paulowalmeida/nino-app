@@ -18,16 +18,20 @@ export default meta
 type Story = StoryObj<typeof Dialog>
 
 export const Default: Story = {
-  render: () => {
+  args: {
+    title: 'Confirm action',
+    description:
+      'Are you sure you want to continue? This action cannot be undone.',
+  },
+  render: (args) => {
     const [open, setOpen] = useState(false)
     return (
       <>
         <Button onClick={() => setOpen(true)}>Open dialog</Button>
         <Dialog
+          {...args}
           open={open}
           onOpenChange={setOpen}
-          title="Confirm action"
-          description="Are you sure you want to continue? This action cannot be undone."
           onConfirm={() => setOpen(false)}
           onCancel={() => setOpen(false)}
         />

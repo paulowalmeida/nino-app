@@ -9,6 +9,7 @@ const meta: Meta<typeof FormField> = {
   component: FormField,
   tags: ['autodocs'],
   argTypes: {
+    children: { control: false },
     label: { control: 'text' },
     helperText: { control: 'text' },
     error: { control: 'text' },

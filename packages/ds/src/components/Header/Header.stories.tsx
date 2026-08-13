@@ -20,13 +20,13 @@ export default meta
 type Story = StoryObj<typeof Header>
 
 export const Default: Story = {
-  render: () => (
+  args: {
+    title: 'Pedidos',
+    description: 'Acompanhe e gerencie os pedidos da sua loja.',
+  },
+  render: (args) => (
     <div className="w-[640px]">
-      <Header
-        title="Pedidos"
-        description="Acompanhe e gerencie os pedidos da sua loja."
-        actions={<Button>Novo pedido</Button>}
-      />
+      <Header {...args} actions={<Button>Novo pedido</Button>} />
     </div>
   ),
 }

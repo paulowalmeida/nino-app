@@ -8,6 +8,7 @@ const meta: Meta<typeof NinoLogo> = {
   tags: ['autodocs'],
   args: { size: 'lg', tone: 'dark' },
   argTypes: {
+    mark: { control: false },
     size: { control: 'radio', options: ['sm', 'md', 'lg'] },
     tone: {
       control: 'radio',
