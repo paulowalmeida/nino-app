@@ -95,6 +95,13 @@ export const Categories = () => {
 
   const hasProducts = !!target && target.count > 0
 
+  /* Os diálogos ficam montados e fecham pela prop `open` — arrancá-los da
+   * árvore ainda abertos pula o teardown do Ark e deixa `pointer-events:
+   * none` preso no body. Como `target` zera no fechamento, o último alvo
+   * segura o nome no título durante a animação de saída. */
+  const [lastTarget, setLastTarget] = useState(target)
+  if (target && target !== lastTarget) setLastTarget(target)
+
   return (
     <div className={styles.page}>
       <BackLink>Cardápio</BackLink>
@@ -188,32 +195,28 @@ export const Categories = () => {
         </Reorder.Group>
       )}
 
-      {target && hasProducts && (
-        <Dialog
-          open
-          onOpenChange={(open) => !open && setTarget(null)}
-          title="Ainda não dá para excluir"
-          description={HAS_PRODUCTS_HINT}
-          confirmLabel="Ver itens no cardápio"
-          cancelLabel="Fechar"
-          onConfirm={() => void navigate('..', { relative: 'path' })}
-          onCancel={() => setTarget(null)}
-        />
-      )}
+      <Dialog
+        open={hasProducts}
+        onOpenChange={(open) => !open && setTarget(null)}
+        title="Ainda não dá para excluir"
+        description={HAS_PRODUCTS_HINT}
+        confirmLabel="Ver itens no cardápio"
+        cancelLabel="Fechar"
+        onConfirm={() => void navigate('..', { relative: 'path' })}
+        onCancel={() => setTarget(null)}
+      />
 
-      {target && !hasProducts && (
-        <Dialog
-          open
-          onOpenChange={(open) => !open && setTarget(null)}
-          title={`Excluir "${target.name}"`}
-          description="A categoria sai do painel e do app. Não dá para desfazer."
-          confirmLabel="Excluir"
-          cancelLabel="Cancelar"
-          loading={isDeleting}
-          onConfirm={() => void confirmDelete()}
-          onCancel={() => setTarget(null)}
-        />
-      )}
+      <Dialog
+        open={!!target && !hasProducts}
+        onOpenChange={(open) => !open && setTarget(null)}
+        title={`Excluir "${lastTarget?.name ?? ''}"`}
+        description="A categoria sai do painel e do app. Não dá para desfazer."
+        confirmLabel="Excluir"
+        cancelLabel="Cancelar"
+        loading={isDeleting}
+        onConfirm={() => void confirmDelete()}
+        onCancel={() => setTarget(null)}
+      />
 
       {deleteError && <Alert variant="error">{deleteError}</Alert>}
     </div>

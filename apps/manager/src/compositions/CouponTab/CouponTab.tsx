@@ -1,5 +1,4 @@
 import { Button } from '@nino/ds/components/Button'
-import { Icon } from '@nino/ds/components/Icon'
 import { brl } from '@utils/money'
 
 import styles from './CouponTab.module.css'
@@ -15,13 +14,14 @@ export const CouponTab = ({ count, total, onOpen }: CouponTabProps) => (
     <span className={styles.perforation} aria-hidden="true" />
 
     <span className={styles.body}>
-      <span className={styles.count}>
-        {count} {count === 1 ? 'item' : 'itens'}
+      <span className={styles.summary}>
+        <span className={styles.count}>
+          {count} {count === 1 ? 'item' : 'itens'}
+        </span>
+        <span className={styles.total}>{brl(total)}</span>
       </span>
-      <span className={styles.total}>{brl(total)}</span>
-      <span className={styles.hint} aria-hidden="true">
-        <Icon name="chevron-up" />
-      </span>
+
+      <span className={styles.cta}>Ver comanda</span>
     </span>
   </Button>
 )

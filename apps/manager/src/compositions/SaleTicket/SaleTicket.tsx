@@ -236,20 +236,16 @@ export const SaleTicket = ({
         </div>
       </div>
 
-      {confirmingClear && (
-        <Dialog
-          open
-          onOpenChange={(open) => !open && setConfirmingClear(false)}
-          title="Limpar a comanda?"
-          description={
-            'Os itens da venda serão removidos. Não dá para desfazer.'
-          }
-          confirmLabel="Limpar"
-          cancelLabel="Cancelar"
-          onConfirm={handleConfirmClear}
-          onCancel={() => setConfirmingClear(false)}
-        />
-      )}
+      <Dialog
+        open={confirmingClear}
+        onOpenChange={(open) => !open && setConfirmingClear(false)}
+        title="Limpar a comanda?"
+        description={'Os itens da venda serão removidos. Não dá para desfazer.'}
+        confirmLabel="Limpar"
+        cancelLabel="Cancelar"
+        onConfirm={handleConfirmClear}
+        onCancel={() => setConfirmingClear(false)}
+      />
     </aside>
   )
 }

@@ -5,6 +5,7 @@ import { AnimatedNumber } from '@elements/AnimatedNumber/AnimatedNumber'
 import { OrderRail } from '@elements/OrderRail/OrderRail'
 import { useMinutesUntil } from '@hooks/useMinutesUntil'
 import { clockLabel } from '@utils/clock'
+import { EXPO_OUT_EASE } from '@constants/motion.constants'
 import { STATUS_LABEL } from '@constants/order.constants'
 import { etaLead, isTerminal, stageNote } from '@utils/order-journey'
 import type { GuestOrderStatus } from '@custom_types/order/guest-order-status'
@@ -58,7 +59,7 @@ export const OrderStage = ({ order, className, style }: OrderStageProps) => {
           exit={reduceMotion ? undefined : { opacity: 0, y: -8 }}
           transition={{
             duration: reduceMotion ? 0 : 0.32,
-            ease: [0.16, 1, 0.3, 1],
+            ease: EXPO_OUT_EASE,
           }}
         >
           <h2 className={styles.headline}>{STATUS_LABEL[order.status]}</h2>

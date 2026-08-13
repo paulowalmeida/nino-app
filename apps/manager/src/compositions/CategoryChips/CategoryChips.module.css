@@ -1,7 +1,12 @@
 @reference "@nino/ds/globals.css";
 
+/* No celular a trilha rola no dedo, gesto natural do toque. No desktop ela
+   quebra linha: arrastar com mouse não rola container nenhum, e a barra
+   está escondida logo abaixo — sem o wrap, o chip que passasse da faixa
+   visível ficaria inalcançável para quem usa mouse. */
 .track {
   @apply flex snap-x gap-2 overflow-x-auto pb-1;
+  @apply lg:flex-wrap lg:overflow-x-visible;
   scrollbar-width: none;
 }
 

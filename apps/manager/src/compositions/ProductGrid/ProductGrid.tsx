@@ -3,9 +3,9 @@ import { useState } from 'react'
 import { EmptyState } from '@nino/ds/components/EmptyState'
 import { Input } from '@nino/ds/components/Input'
 import { Skeleton } from '@nino/ds/components/Skeleton'
-import { Tabs } from '@nino/ds/components/Tabs'
 import type { MenuItem } from '@custom_types/product/menu-item'
 import type { MenuSection } from '@custom_types/product/menu-section'
+import { CategoryChips } from '@compositions/CategoryChips/CategoryChips'
 import { ProductCard } from '@compositions/ProductCard/ProductCard'
 import {
   PRODUCT_GRID_SKELETON_CARDS,
@@ -106,18 +106,20 @@ export const ProductGrid = ({
         ))}
 
       {!searching && (
-        <Tabs
-          value={active ?? undefined}
-          onValueChange={setCurrent}
-          className={styles.tabsRoot}
-          tabs={sections.map((section) => ({
-            value: section.id,
-            label: section.name,
-            content: renderGrid(
-              section.items.filter(({ isActive }) => isActive)
-            ),
-          }))}
-        />
+        <>
+          <CategoryChips
+            categories={sections}
+            value={active}
+            onChange={setCurrent}
+            allowAll={false}
+          />
+
+          {renderGrid(
+            sections
+              .find(({ id }) => id === active)
+              ?.items.filter(({ isActive }) => isActive) ?? []
+          )}
+        </>
       )}
     </div>
   )

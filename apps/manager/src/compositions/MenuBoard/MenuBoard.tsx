@@ -179,13 +179,11 @@ export const MenuBoard = ({ tenantId, categoryId, search }: MenuBoardProps) => {
         </div>
       </ScrollArea>
 
-      {itemPendingDelete && (
-        <DeleteItemDialog
-          tenantId={tenantId}
-          item={itemPendingDelete}
-          onClose={() => setItemPendingDelete(null)}
-        />
-      )}
+      <DeleteItemDialog
+        tenantId={tenantId}
+        item={itemPendingDelete}
+        onClose={() => setItemPendingDelete(null)}
+      />
     </div>
   )
 }

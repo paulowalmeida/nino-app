@@ -82,6 +82,8 @@ export function Modal({
     <ArkDialog.Root
       open={open}
       onOpenChange={({ open: o }) => onOpenChange?.(o)}
+      lazyMount
+      unmountOnExit
     >
       <Portal>
         {/* `modal-animated-*` são ganchos globais: as regras de entrada e

@@ -95,7 +95,6 @@ const preview: Preview = {
             'Slider',
             'Sparkline',
             'Spinner',
-            'Stamp',
             'Stepper',
             'Switch',
             'Table',

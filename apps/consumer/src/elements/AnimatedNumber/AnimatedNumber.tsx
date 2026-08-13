@@ -1,5 +1,7 @@
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
 
+import { EXPO_OUT_EASE } from '@constants/motion.constants'
+
 import styles from './AnimatedNumber.module.css'
 
 type AnimatedNumberProps = {
@@ -25,7 +27,7 @@ export const AnimatedNumber = ({ value, className }: AnimatedNumberProps) => {
           exit={reduceMotion ? undefined : { opacity: 0, y: 6, scale: 0.9 }}
           transition={{
             duration: reduceMotion ? 0 : 0.22,
-            ease: [0.16, 1, 0.3, 1],
+            ease: EXPO_OUT_EASE,
           }}
         >
           {value}

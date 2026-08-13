@@ -6,6 +6,17 @@ window.HTMLElement.prototype.setPointerCapture = () => {}
 window.HTMLElement.prototype.releasePointerCapture = () => {}
 window.HTMLElement.prototype.scrollIntoView = () => {}
 
+// jsdom has no media query engine; `useIsDesktop` reads it on mount, and
+// reporting no match renders the mobile branch of whatever is under test
+window.matchMedia = ((query: string) => ({
+  matches: false,
+  media: query,
+  onchange: null,
+  addEventListener: () => {},
+  removeEventListener: () => {},
+  dispatchEvent: () => false,
+})) as unknown as typeof window.matchMedia
+
 globalThis.ResizeObserver = class ResizeObserver {
   observe() {}
   unobserve() {}

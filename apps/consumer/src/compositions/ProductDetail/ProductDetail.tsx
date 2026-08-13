@@ -5,8 +5,8 @@ import { Carousel } from '@nino/ds/components/Carousel'
 import { Drawer } from '@nino/ds/components/Drawer'
 import { Image } from '@nino/ds/components/Image'
 import { Modal } from '@nino/ds/components/Modal'
+import { QuantityStepper } from '@nino/ds/components/QuantityStepper'
 import { AnimatedNumber } from '@elements/AnimatedNumber/AnimatedNumber'
-import { Icon } from '@nino/ds/components/Icon'
 import { useIsDesktop } from '@hooks/useIsDesktop'
 import { categoryIcon } from '@utils/category-icon'
 import { brl } from '@utils/money'
@@ -41,14 +41,21 @@ export const ProductDetail = ({
     setQuantity(1)
   }
 
-  if (!shown) return null
+  /**
+   * Modal/Drawer ficam montados desde o primeiro render, fechados. Montar
+   * um diálogo do Ark já com `open` verdadeiro registra o bloqueio de
+   * ponteiro no body mas não a transição que o desfaz — o body fica com
+   * `pointer-events: none` para sempre e a página inteira para de
+   * responder ao clique.
+   */
+  const isOpen = item !== null
 
-  const images = shown.images.length > 0 ? shown.images : null
+  const images = shown && shown.images.length > 0 ? shown.images : null
 
   const fallback = (
     <div className={styles.photoFallback} aria-hidden="true">
       <span className={styles.fallbackGlyph}>
-        {categoryIcon(shown.name) ?? '🍽️'}
+        {(shown ? categoryIcon(shown.name) : null) ?? '🍽️'}
       </span>
     </div>
   )
@@ -74,7 +81,7 @@ export const ProductDetail = ({
    * `key={shown.id}` força o remount ao trocar de item: sem isso o CSS de
    * entrada não reinicia, porque o mesmo nó de DOM continua ali.
    */
-  const reveal = (
+  const reveal = shown ? (
     <div key={shown.id}>
       <div className={`${motion.riseIn} ${styles.media}`}>{media}</div>
       {shown.description && (
@@ -86,60 +93,56 @@ export const ProductDetail = ({
         </p>
       )}
     </div>
-  )
+  ) : null
 
   const stepper = (
-    <div className={styles.stepper}>
-      <Button
-        size="icon"
-        variant="outline"
-        aria-label="Diminuir quantidade"
-        disabled={quantity <= 1}
-        onClick={() => setQuantity((n) => Math.max(1, n - 1))}
-      >
-        <Icon name="minus" size="sm" />
-      </Button>
-      <AnimatedNumber value={quantity} className={styles.stepperCount} />
-      <Button
-        size="icon"
-        variant="outline"
-        aria-label="Aumentar quantidade"
-        onClick={() => setQuantity((n) => n + 1)}
-      >
-        <Icon name="plus" size="sm" />
-      </Button>
-    </div>
+    <QuantityStepper
+      quantity={quantity}
+      count={<AnimatedNumber value={quantity} />}
+      incrementLabel="Aumentar quantidade"
+      decrementLabel="Diminuir quantidade"
+      isDecrementDisabled={quantity <= 1}
+      onIncrement={() => setQuantity((current) => current + 1)}
+      onDecrement={() => setQuantity((current) => Math.max(1, current - 1))}
+    />
   )
 
-  const confirmButton = (
-    <Button className={styles.confirm} onClick={() => onConfirm(shown, quantity)}>
-      Adicionar —{' '}
+  const confirmButton = shown ? (
+    <Button
+      className={styles.confirm}
+      onClick={() => onConfirm(shown, quantity)}
+    >
+      Adicionar {' '}
       <AnimatedNumber value={brl(Number(shown.price) * quantity)} />
     </Button>
-  )
+  ) : null
 
   if (isDesktop) {
     return (
       <Modal
-        open={item !== null}
+        open={isOpen}
         onOpenChange={(open) => !open && onClose()}
         size="md"
-        ariaLabel={shown.name}
-        header={<h2 className={styles.modalTitle}>{shown.name}</h2>}
+        ariaLabel={shown?.name ?? ''}
+        header={
+          shown ? <h2 className={styles.modalTitle}>{shown.name}</h2> : null
+        }
         body={
-          <div key={shown.id}>
-            <div className={`${motion.riseIn} ${styles.modalMedia}`}>
-              {media}
+          shown ? (
+            <div key={shown.id}>
+              <div className={`${motion.riseIn} ${styles.modalMedia}`}>
+                {media}
+              </div>
+              {shown.description && (
+                <p
+                  className={`${motion.riseIn} ${styles.description}`}
+                  style={riseDelay(70)}
+                >
+                  {shown.description}
+                </p>
+              )}
             </div>
-            {shown.description && (
-              <p
-                className={`${motion.riseIn} ${styles.description}`}
-                style={riseDelay(70)}
-              >
-                {shown.description}
-              </p>
-            )}
-          </div>
+          ) : null
         }
         footer={
           <div className={styles.modalFooter}>
@@ -153,10 +156,10 @@ export const ProductDetail = ({
 
   return (
     <Drawer
-      open={item !== null}
+      open={isOpen}
       onOpenChange={(open) => !open && onClose()}
       placement="bottom"
-      title={shown.name}
+      title={shown?.name ?? ''}
       size="auto"
       contentClassName={styles.drawer}
     >
