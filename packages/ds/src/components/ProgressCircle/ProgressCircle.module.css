@@ -1,0 +1,38 @@
+@reference "../../styles/globals.css";
+
+.ring {
+  stroke: var(--color-surface-5);
+}
+
+.arc {
+  stroke: var(--color-brand);
+  stroke-linecap: round;
+}
+
+.arc[data-state='indeterminate'] {
+  stroke-dasharray: 25% 75%;
+  transform-origin: center;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(270deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .range[data-state='indeterminate'] {
+    animation: breathe 1.4s ease-in-out infinite;
+  }
+
+  @keyframes breathe {
+    0%,
+    100% {
+      opacity: 0.35;
+    }
+    50% {
+      opacity: 1;
+    }
+  }
+}

@@ -3,7 +3,7 @@ import { describe, expect, it } from 'vitest'
 
 import { EmptyState } from './EmptyState'
 
-describe(EmptyState.displayName!, () => {
+describe(EmptyState.name, () => {
   it('renders the supporting text', () => {
     render(<EmptyState>Nenhum telefone cadastrado.</EmptyState>)
     expect(screen.getByText('Nenhum telefone cadastrado.')).toBeInTheDocument()

@@ -1,45 +1,27 @@
+import type { ReactNode } from 'react'
+
 import { Collapsible as ArkCollapsible } from '@ark-ui/react/collapsible'
+import { DisclosureSeal } from '@ds/components/DisclosureSeal/DisclosureSeal'
+import { mergeClasses } from '@ds/lib/mergeClasses/mergeClasses'
 
-import { CollapsibleProps } from './Collapsible.types'
+import styles from './Collapsible.module.css'
 
-/*
- * Mesmo par de estados do Accordion: fechado, o gatilho é a superfície de
- * marca e chama para si; aberto, recua para um fio de laranja e devolve o peso
- * ao conteúdo que acabou de aparecer.
- */
-const triggerClass =
-  'group flex w-full cursor-pointer items-center justify-between gap-2 ' +
-  'rounded-card px-3 py-2 text-sm font-semibold outline-none ' +
-  'transition-colors duration-200 bg-brand-soft text-brand-strong ' +
-  'hover:bg-brand/18 focus-visible:outline-2 focus-visible:outline-brand ' +
-  'focus-visible:outline-offset-2 disabled:pointer-events-none ' +
-  'disabled:opacity-50 data-[state=open]:bg-brand/6 ' +
-  'data-[state=open]:text-ink data-[state=open]:hover:bg-brand/10'
-
-const sealClass =
-  'grid size-6 shrink-0 place-items-center rounded-[6px] ' +
-  'transition-colors duration-200 bg-brand/15 text-brand-strong ' +
-  'group-data-[state=open]:bg-brand group-data-[state=open]:text-brand-foreground'
-
-const contentClass = 'collapsible-content overflow-hidden text-sm text-muted'
-
-const ChevronSeal = () => (
-  <span className={sealClass}>
-    <svg
-      width="14"
-      height="14"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2.5"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      className="transition-transform duration-200 group-data-[state=open]:rotate-180"
-    >
-      <path d="m6 9 6 6 6-6" />
-    </svg>
-  </span>
-)
+type CollapsibleProps = {
+  /** Always-visible element that toggles the content */
+  trigger: ReactNode
+  /** Collapsible content revealed when open */
+  children: ReactNode
+  /**
+   * Draws the chevron seal on the right of the trigger. Leave it off when the
+   * trigger already carries its own open/close cue.
+   */
+  indicator?: boolean
+  open?: boolean
+  defaultOpen?: boolean
+  onOpenChange?: (open: boolean) => void
+  disabled?: boolean
+  className?: string
+}
 
 /**
  * Show/hide a block of content behind a trigger (Ark `Collapsible`).
@@ -69,17 +51,21 @@ export function Collapsible({
       defaultOpen={defaultOpen}
       disabled={disabled}
       onOpenChange={({ open: o }) => onOpenChange?.(o)}
-      className={'bg-brand-foreground' + className}
+      className={className}
     >
-      <ArkCollapsible.Trigger className={'bg-brand-foreground' + triggerClass}>
+      {/* `group` fica literal: é o marcador que o selo lê para virar de tom
+          quando o painel abre. */}
+      <ArkCollapsible.Trigger className={mergeClasses('group', styles.toggleHeader)}>
         {trigger}
-        {indicator && <ChevronSeal />}
+        {indicator && <DisclosureSeal />}
       </ArkCollapsible.Trigger>
-      <ArkCollapsible.Content className={'bg-brand-foreground' + contentClass}>
-        <div className="px-3 pb-3 pt-1">{children}</div>
+      {/* `collapsible-content` é global: é dela que o keyframe de abrir e
+          fechar depende, então não pode virar hash do CSS Module. */}
+      <ArkCollapsible.Content
+        className={mergeClasses('collapsible-content', styles.panel)}
+      >
+        <div className={styles.panelBody}>{children}</div>
       </ArkCollapsible.Content>
     </ArkCollapsible.Root>
   )
 }
-
-Collapsible.displayName = 'Collapsible'

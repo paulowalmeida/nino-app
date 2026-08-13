@@ -1,0 +1,9 @@
+@reference "../../styles/globals.css";
+
+.title {
+  @apply font-semibold;
+}
+
+.message {
+  @apply leading-normal;
+}

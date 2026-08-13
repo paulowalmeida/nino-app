@@ -1,0 +1,14 @@
+@reference "../../styles/globals.css";
+
+.codeCard {
+  @apply inline-block rounded-2 bg-surface-raised p-3;
+}
+
+.frame {
+  @apply h-full w-full [&_path]:fill-fg-strong;
+}
+
+.logoBadge {
+  @apply flex items-center justify-center rounded-2 bg-surface-raised p-1;
+  @apply shadow-warm-sm;
+}

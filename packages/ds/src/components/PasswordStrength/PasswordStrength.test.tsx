@@ -1,7 +1,8 @@
+import { getPasswordStrength } from '@ds/lib/passwordStrength/passwordStrength'
 import { render, screen } from '@testing-library/react'
 import { describe, expect, it } from 'vitest'
 
-import { getPasswordStrength, PasswordStrength } from './PasswordStrength'
+import { PasswordStrength } from './PasswordStrength'
 
 describe(PasswordStrength.name, () => {
   it('classifica senha curta como fraca', () => {
@@ -28,8 +29,8 @@ describe(PasswordStrength.name, () => {
 
   it('aplica className adicional', () => {
     const { container } = render(
-      <PasswordStrength password="abc" className="opacity-50" />
+      <PasswordStrength password="abc" className="opacity-disabled" />
     )
-    expect(container.firstChild).toHaveClass('opacity-50')
+    expect(container.firstChild).toHaveClass('opacity-disabled')
   })
 })

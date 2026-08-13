@@ -1,33 +1,44 @@
-import { mergeClasses } from '@ds/lib/mergeClasses'
+import { HTMLAttributes } from 'react'
 
-import {
-  SkeletonAnimation,
-  SkeletonProps,
-  SkeletonVariant,
-} from './Skeleton.types'
+import { mergeClasses } from '@ds/lib/mergeClasses/mergeClasses'
 
-const variantClasses: Record<SkeletonVariant, string> = {
-  rect: 'rounded-card',
-  circle: 'rounded-full',
-  text: 'rounded-[4px] w-full h-4',
+import styles from './Skeleton.module.css'
+
+type SkeletonVariant = 'rect' | 'circle' | 'text'
+type SkeletonAnimation = 'pulse' | 'wave' | 'none'
+
+type SkeletonProps = HTMLAttributes<HTMLDivElement> & {
+  variant?: SkeletonVariant
+  animation?: SkeletonAnimation
 }
 
-/* Cinza neutro: o placeholder não é conteúdo, e tingir de marca faz a página
- * parecer carregada de laranja antes de existir qualquer dado. */
+const variantClasses: Record<SkeletonVariant, string> = {
+  rect: styles.variantRect,
+  circle: styles.variantCircle,
+  text: styles.variantText,
+}
+
 const animationClasses: Record<SkeletonAnimation, string> = {
-  pulse: 'animate-pulse bg-ink/8',
-  wave: 'skeleton-wave bg-ink/8',
-  none: 'bg-ink/8',
+  pulse: styles.animationPulse,
+  wave: styles.animationWave,
+  none: '',
 }
 
 /**
- * Visual placeholder shown while content is loading.
+ * Grey block standing in for content that has not arrived.
  *
- * @param variant - Shape of the skeleton. Default: `rect`
+ * It is always silent to a screen reader: what matters is announced by
+ * whoever owns the loading state, not by each grey rectangle on the page.
  *
- * @param animation - Animation type. Default: `wave`
+ * @param variant - Shape. `rect` (default), `circle` or `text` — only
+ * `text` brings its own size
  *
- * @param className - Additional classes (width and height required for rect/circle)
+ * @param animation - `wave` (default) sweeps a shine across, `pulse` fades
+ * in place, `none` stays still. All three stop under
+ * `prefers-reduced-motion`
+ *
+ * @param className - Width and height, which `rect` and `circle` do not
+ * carry — a skeleton takes the measure of what it replaces
  *
  * @example
  * <Skeleton variant="circle" className="w-10 h-10" />
@@ -43,6 +54,7 @@ export function Skeleton({
   return (
     <div
       className={mergeClasses(
+        styles.skeleton,
         animationClasses[animation],
         variantClasses[variant],
         className

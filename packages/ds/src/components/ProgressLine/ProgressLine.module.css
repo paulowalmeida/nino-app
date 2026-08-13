@@ -1,0 +1,57 @@
+@reference "../../styles/globals.css";
+
+.progressLine {
+  @apply w-full;
+}
+
+.track {
+  @apply w-full overflow-hidden rounded-full bg-surface-5;
+}
+
+.fill {
+  @apply h-full rounded-full bg-brand transition-all duration-slower;
+  @apply ease-out-soft;
+}
+
+.fill[data-state='indeterminate'] {
+  @apply w-2/5 transition-none;
+  animation: slide 1.4s var(--ease-in-out) infinite;
+}
+
+@keyframes slide {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(250%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .range[data-state='indeterminate'] {
+    @apply w-full;
+    animation: breathe 1.4s var(--ease-in-out) infinite;
+  }
+
+  @keyframes breathe {
+    0%,
+    100% {
+      opacity: 0.35;
+    }
+    50% {
+      opacity: 1;
+    }
+  }
+}
+
+.trackSizeSmall {
+  @apply h-1;
+}
+
+.trackSizeMedium {
+  @apply h-2;
+}
+
+.trackSizeLarge {
+  @apply h-3;
+}

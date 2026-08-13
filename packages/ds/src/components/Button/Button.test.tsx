@@ -3,6 +3,7 @@ import userEvent from '@testing-library/user-event'
 import { describe, expect, it, vi } from 'vitest'
 
 import { Button } from './Button'
+import styles from './Button.module.css'
 
 describe('Button', () => {
   it('renders the text correctly', () => {
@@ -33,15 +34,15 @@ describe('Button', () => {
   it('drops the fill when a filled variant is disabled', () => {
     render(<Button disabled>Salvar</Button>)
     const button = screen.getByRole('button')
-    expect(button.className).toContain('bg-sand')
-    expect(button.className).not.toMatch(/(^|\s)bg-brand(\s|$)/)
+    expect(button.className).toContain(styles.disabledFilled)
+    expect(button.className).not.toContain(styles.variantPrimary)
   })
 
   it('keeps the fill while loading, since the action is running', () => {
     render(<Button loading>Salvar</Button>)
     const button = screen.getByRole('button')
-    expect(button.className).toMatch(/(^|\s)bg-brand(\s|$)/)
-    expect(button.className).toContain('opacity-50')
+    expect(button.className).toContain(styles.variantPrimary)
+    expect(button.className).toContain(styles.loadingDimmed)
   })
 
   it('fades a transparent variant instead of filling it', () => {
@@ -51,8 +52,8 @@ describe('Button', () => {
       </Button>
     )
     const button = screen.getByRole('button')
-    expect(button.className).toContain('opacity-50')
-    expect(button.className).not.toContain('bg-sand')
+    expect(button.className).toContain(styles.disabledTransparent)
+    expect(button.className).not.toContain(styles.disabledFilled)
   })
 
   it('does not call onClick when loading', async () => {
@@ -72,9 +73,12 @@ describe('Button', () => {
   })
 
   it('applies extra className without overriding base classes', () => {
+    // Arrange / Act
     render(<Button className="mt-4">Botão</Button>)
+
+    // Assert
     expect(screen.getByRole('button')).toHaveClass('mt-4')
-    expect(screen.getByRole('button')).toHaveClass('inline-flex')
+    expect(screen.getByRole('button')).toHaveClass(styles.button)
   })
 
   it.each([

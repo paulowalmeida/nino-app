@@ -1,9 +1,10 @@
 import { render, screen } from '@testing-library/react'
 import { describe, expect, it } from 'vitest'
 
-import { Input } from '../Input'
-import { Switch } from '../Switch'
+import { Input } from '../Input/Input'
+import { Switch } from '../Switch/Switch'
 import { FormField } from './FormField'
+import styles from './FormField.module.css'
 
 describe(FormField.name, () => {
   it('renders the label when provided', () => {
@@ -76,7 +77,7 @@ describe(FormField.name, () => {
         <Switch aria-label="ativo" />
       </FormField>
     )
-    const row = container.querySelector('.flex.items-center')
+    const row = container.querySelector(`.${styles.horizontalRow}`)
     expect(row).toBeInTheDocument()
     expect(row).toHaveTextContent('Ativo')
     expect(row?.querySelector('[data-part="control"]')).toBeInTheDocument()
@@ -89,7 +90,7 @@ describe(FormField.name, () => {
       </FormField>
     )
     expect(
-      container.querySelector('.flex.items-center')
+      container.querySelector(`.${styles.horizontalRow}`)
     ).not.toBeInTheDocument()
   })
 })

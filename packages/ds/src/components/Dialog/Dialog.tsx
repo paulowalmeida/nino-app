@@ -1,11 +1,23 @@
-import { Button } from '@ds/components/Button'
-import { Modal } from '@ds/components/Modal'
+import { Button } from '@ds/components/Button/Button'
+import { Heading } from '@ds/components/Heading/Heading'
+import { Modal } from '@ds/components/Modal/Modal'
+import { ModalSize } from '@ds/components/Modal/Modal.types'
+import { Text } from '@ds/components/Text/Text'
 
-import { DialogProps } from './Dialog.types'
+import styles from './Dialog.module.css'
 
-const headerClass =
-  'font-display text-base font-semibold tracking-[-0.01em] text-ink'
-const bodyClass = 'text-sm leading-[1.45] text-muted'
+type DialogProps = {
+  open?: boolean
+  onOpenChange?: (open: boolean) => void
+  title: string
+  description: string
+  confirmLabel?: string
+  cancelLabel?: string
+  onConfirm: () => void
+  onCancel: () => void
+  loading?: boolean
+  size?: ModalSize
+}
 
 /**
  * Confirmation dialog built on top of Modal.
@@ -56,8 +68,16 @@ export function Dialog({
   return (
     <Modal
       size={size}
-      header={<h2 className={headerClass}>{title}</h2>}
-      body={<p className={bodyClass}>{description}</p>}
+      header={
+        <Heading level={2} size="md" className={styles.title}>
+          {title}
+        </Heading>
+      }
+      body={
+        <Text size="sm" color="muted" className={styles.message}>
+          {description}
+        </Text>
+      }
       footer={
         <>
           <Button variant="ghost" onClick={onCancel} disabled={loading}>

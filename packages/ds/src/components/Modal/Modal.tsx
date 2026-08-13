@@ -1,34 +1,68 @@
+import { ReactNode, useId } from 'react'
+
 import { Dialog as ArkDialog } from '@ark-ui/react/dialog'
 import { Portal } from '@ark-ui/react/portal'
-import { mergeClasses } from '@ds/lib/mergeClasses'
+import { Icon } from '@ds/components/Icon/Icon'
+import { mergeClasses } from '@ds/lib/mergeClasses/mergeClasses'
 
-import { ModalProps, ModalSize } from './Modal.types'
+import styles from './Modal.module.css'
+import { ModalSize } from './Modal.types'
 
-const sizeClasses: Record<ModalSize, string> = {
-  sm: 'w-full max-w-sm',
-  md: 'w-full max-w-md',
-  lg: 'w-full max-w-lg',
+type ModalProps = {
+  header?: ReactNode
+  body?: ReactNode
+  footer?: ReactNode
+  size?: ModalSize
+  ariaLabel?: string
+  open?: boolean
+  onOpenChange?: (open: boolean) => void
+  dismissible?: boolean
+  backdropClassName?: string
+  contentClassName?: string
 }
 
-const baseBackdrop = 'modal-animated-overlay fixed inset-0 z-50 bg-ink/45'
+const sizeClasses: Record<ModalSize, string> = {
+  sm: styles.sizeSmall,
+  md: styles.sizeMedium,
+  lg: styles.sizeLarge,
+}
 
-const basePositioner = 'fixed inset-0 z-50 flex items-center justify-center p-4'
-
-const baseContent =
-  'modal-animated-content relative overflow-hidden rounded-card bg-white ' +
-  'shadow-overlay outline-none'
-
-const baseClose =
-  'absolute right-4 top-4 cursor-pointer rounded-card p-1 text-faint ' +
-  'transition-colors ' +
-  'hover:text-ink focus-visible:outline-2 focus-visible:outline-brand ' +
-  'focus-visible:outline-offset-2'
-
-const headerWrapper = 'px-6 pb-1 pt-6 pr-12'
-const headerWrapperBare = 'px-6 pb-1 pt-6'
-const bodyWrapper = 'px-6 py-5'
-const footerWrapper = 'flex items-center justify-end gap-3 px-6 pb-6 pt-2'
-
+/**
+ * Dialog that stops the screen until it is answered.
+ *
+ * A dialog has to announce itself by name, or a screen reader says only
+ * "dialog" and the person has no idea what opened. The name comes from the
+ * header when there is one, and `ariaLabel` covers the case where the header
+ * is a drawing, or there is no header at all.
+ *
+ * It is born closed and stays mounted — see the `Modal, Drawer e Dialog
+ * nascem fechados` rule: mounting one already open leaves the Ark pointer
+ * lock stuck on `<body>`, and the whole page stops taking clicks.
+ *
+ * @param header - Title area. Names the dialog for screen readers
+ *
+ * @param body - The content
+ *
+ * @param footer - Actions, aligned to the end
+ *
+ * @param size - Maximum width. Default: `md`
+ *
+ * @param ariaLabel - Name for screen readers. Required when there is no
+ * header, and wins over it when both are given
+ *
+ * @param dismissible - The X in the corner. Turn it off when whoever opened
+ * also closes — a preview that lives while the finger holds it has nowhere
+ * to put an X
+ *
+ * @example
+ * <Modal
+ *   open={isOpen}
+ *   onOpenChange={setOpen}
+ *   header={<Heading level={2}>Excluir item</Heading>}
+ *   body={<Text>Essa ação não tem volta.</Text>}
+ *   footer={<Button onClick={remove}>Excluir</Button>}
+ * />
+ */
 export function Modal({
   header,
   body,
@@ -41,48 +75,56 @@ export function Modal({
   backdropClassName,
   contentClassName,
 }: ModalProps) {
+  const headerId = useId()
+  const isNamedByHeader = !ariaLabel && !!header
+
   return (
     <ArkDialog.Root
       open={open}
       onOpenChange={({ open: o }) => onOpenChange?.(o)}
     >
       <Portal>
+        {/* `modal-animated-*` são ganchos globais: as regras de entrada e
+            saída vivem em globals.css e precisam do nome sem hash. */}
         <ArkDialog.Backdrop
-          className={mergeClasses(baseBackdrop, backdropClassName)}
+          className={mergeClasses(
+            'modal-animated-overlay',
+            styles.backdrop,
+            backdropClassName
+          )}
         />
-        <ArkDialog.Positioner className={basePositioner}>
+        <ArkDialog.Positioner className={styles.positioner}>
           <ArkDialog.Content
             aria-label={ariaLabel}
+            aria-labelledby={isNamedByHeader ? headerId : undefined}
             className={mergeClasses(
-              baseContent,
+              'modal-animated-content',
+              styles.panel,
               sizeClasses[size],
               contentClassName
             )}
           >
             {dismissible && (
-              <ArkDialog.CloseTrigger className={baseClose} aria-label="Close">
-                <svg
-                  width="16"
-                  height="16"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  <path d="M18 6 6 18M6 6l12 12" />
-                </svg>
+              <ArkDialog.CloseTrigger
+                className={styles.closeButton}
+                aria-label="Fechar"
+              >
+                <Icon name="x" size="sm" />
               </ArkDialog.CloseTrigger>
             )}
 
             {header && (
-              <div className={dismissible ? headerWrapper : headerWrapperBare}>
+              <div
+                id={headerId}
+                className={
+                  dismissible ? styles.header : styles.headerFullWidth
+                }
+              >
                 {header}
               </div>
             )}
-            {body && <div className={bodyWrapper}>{body}</div>}
-            {footer && <div className={footerWrapper}>{footer}</div>}
+            {body && <div className={styles.body}>{body}</div>}
+            {footer && <div className={styles.footer}>{footer}</div>}
           </ArkDialog.Content>
         </ArkDialog.Positioner>
       </Portal>

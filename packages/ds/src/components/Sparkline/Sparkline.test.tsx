@@ -3,7 +3,7 @@ import { describe, expect, it } from 'vitest'
 
 import { Sparkline } from './Sparkline'
 
-describe(Sparkline.displayName!, () => {
+describe(Sparkline.name, () => {
   it('names the chart for assistive tech', () => {
     render(<Sparkline values={[1, 2, 3]} label="Faturamento em 7 dias" />)
     expect(

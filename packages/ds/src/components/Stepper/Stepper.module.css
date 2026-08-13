@@ -1,0 +1,81 @@
+@reference "../../styles/globals.css";
+
+.stepper {
+  @apply flex w-full;
+}
+
+.stepperVertical {
+  @apply flex-col;
+}
+
+.stepperHorizontal {
+  @apply items-start;
+}
+
+.step {
+  @apply flex;
+}
+
+.stepVertical {
+  @apply flex-col;
+}
+
+.stepHorizontal {
+  @apply relative min-w-0 flex-1 flex-col items-center;
+}
+
+.stepButton {
+  @apply -m-1.5 flex cursor-pointer items-center gap-3 rounded-2 p-1.5;
+  @apply focus-ring;
+}
+
+.stepButtonHorizontal {
+  @apply justify-center;
+}
+
+.stepNumber {
+  @apply text-sm font-bold;
+}
+
+.separatorHorizontal {
+  @apply absolute top-4 h-1 -translate-y-1/2 rounded-full;
+  @apply transition-colors duration-fast;
+  @apply left-[calc(50%+1.5rem)] right-[calc(-50%+1.5rem)];
+}
+
+.separatorVertical {
+  @apply mb-1 ml-4 mt-1 h-6 w-1 rounded-full;
+  @apply transition-colors duration-fast;
+}
+
+.separatorDone {
+  @apply bg-fg-default;
+}
+
+.separatorPending {
+  @apply bg-surface-mute;
+}
+
+.labelHorizontal {
+  @apply mt-2 text-center;
+}
+
+.labelVertical {
+  @apply ml-11;
+}
+
+.titleActive {
+  @apply text-sm font-semibold text-brand-strong;
+}
+
+.titleCompleted {
+  @apply text-sm font-semibold text-fg-strong;
+}
+
+.titleDefault {
+  @apply text-sm font-medium text-fg-subtle;
+}
+
+.description {
+  @apply mt-0.5 text-xs text-fg-faint;
+}

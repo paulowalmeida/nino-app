@@ -2,7 +2,7 @@ import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { describe, expect, it, vi } from 'vitest'
 
-import { Button } from '../Button'
+import { Button } from '../Button/Button'
 import { Menu } from './Menu'
 
 function items(onSelect = vi.fn()) {
@@ -14,7 +14,7 @@ function items(onSelect = vi.fn()) {
   ]
 }
 
-describe(Menu.displayName!, () => {
+describe(Menu.name, () => {
   it('renders the trigger', () => {
     render(<Menu trigger={<Button>Ações</Button>} items={items()} />)
     expect(screen.getByRole('button', { name: 'Ações' })).toBeInTheDocument()
@@ -53,12 +53,12 @@ describe(Menu.displayName!, () => {
       <Menu
         trigger={<Button>Ações</Button>}
         items={items()}
-        itemClassName="text-white/70"
+        itemClassName="text-fg-on-brand/70"
       />
     )
     await user.click(screen.getByRole('button', { name: 'Ações' }))
     expect(await screen.findByRole('menuitem', { name: 'Editar' })).toHaveClass(
-      'text-white/70'
+      'text-fg-on-brand/70'
     )
   })
 })

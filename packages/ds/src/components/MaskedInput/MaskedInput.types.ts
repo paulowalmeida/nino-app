@@ -1,6 +1,5 @@
 import { InputProps } from '../Input/Input.types'
 
-export interface MaskedInputProps extends InputProps {
-  /** Formatting function applied to the value on every change */
+export type MaskedInputProps = InputProps & {
   mask: (value: string) => string
 }

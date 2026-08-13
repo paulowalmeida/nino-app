@@ -1,24 +1,34 @@
+import { ComponentPropsWithoutRef } from 'react'
+
 import { Field } from '@ark-ui/react/field'
-import { mergeClasses } from '@ds/lib/mergeClasses'
+import { mergeClasses } from '@ds/lib/mergeClasses/mergeClasses'
 
-import { LabelProps } from './Label.types'
+import styles from './Label.module.css'
 
-const baseLabel =
-  'text-sm font-medium text-body leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-50'
-
-const requiredMark = 'ml-1 text-danger'
+type LabelProps = ComponentPropsWithoutRef<'label'> & {
+  required?: boolean
+}
 
 /**
- * Form label. Renders Ark `Field.Label`: inside a `Field.Root` (via
- * `FormField`) the `htmlFor` connects to the field automatically; standalone
- * it behaves as a plain `<label>`.
+ * Name of a field, tied to it.
+ *
+ * Inside a `FormField` the connection is made for you — reach for this one
+ * only when labelling something outside that wiring, and give it `htmlFor`.
+ *
+ * @param required - Marks the field as required with an asterisk. The mark
+ * is decoration for a screen reader; what announces the requirement is the
+ * `required` on the control itself
+ *
+ * @example
+ * <Label htmlFor="cnpj" required>CNPJ</Label>
  */
+
 export function Label({ required, className, children, ...props }: LabelProps) {
   return (
-    <Field.Label className={mergeClasses(baseLabel, className)} {...props}>
+    <Field.Label className={mergeClasses(styles.label, className)} {...props}>
       {children}
       {required && (
-        <span aria-hidden="true" className={requiredMark}>
+        <span aria-hidden="true" className={styles.requiredMark}>
           *
         </span>
       )}

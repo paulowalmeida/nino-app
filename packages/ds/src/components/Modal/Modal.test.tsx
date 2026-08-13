@@ -2,7 +2,7 @@ import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { describe, expect, it, vi } from 'vitest'
 
-import { Button } from '../Button'
+import { Button } from '../Button/Button'
 import { Modal } from './Modal'
 
 describe(Modal.name, () => {
@@ -36,12 +36,34 @@ describe(Modal.name, () => {
     render(
       <Modal open onOpenChange={onOpenChange} header={<span>Título</span>} />
     )
-    await userEvent.click(screen.getByRole('button', { name: 'Close' }))
+    await userEvent.click(screen.getByRole('button', { name: 'Fechar' }))
     expect(onOpenChange).toHaveBeenCalledWith(false)
   })
 
+  it('takes its accessible name from the header', () => {
+    // Arrange / Act
+    render(<Modal open header={<span>Excluir item</span>} />)
+
+    // Assert
+    expect(
+      screen.getByRole('dialog', { name: 'Excluir item' })
+    ).toBeInTheDocument()
+  })
+
+  it('lets ariaLabel win over the header', () => {
+    // Arrange / Act
+    render(
+      <Modal open ariaLabel="Prévia do produto" header={<span>Burguer</span>} />
+    )
+
+    // Assert
+    expect(
+      screen.getByRole('dialog', { name: 'Prévia do produto' })
+    ).toBeInTheDocument()
+  })
+
   it.each(['sm', 'md', 'lg'] as const)(
-    'renderiza tamanho %s sem erros',
+    'renders size %s without errors',
     (size) => {
       render(<Modal open size={size} body={<span>Corpo</span>} />)
       expect(screen.getByText('Corpo')).toBeInTheDocument()

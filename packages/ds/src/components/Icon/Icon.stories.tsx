@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react'
 
 import { Icon } from './Icon'
-import { ICON_NAMES } from './Icon.types'
+import { ICON_NAMES } from './Icon.names'
 
 const meta: Meta<typeof Icon> = {
   title: 'Components/Icon',
@@ -45,10 +45,10 @@ export const FollowsTextColour: Story = {
       <span className="text-brand">
         <Icon name="heart" size="lg" />
       </span>
-      <span className="text-subtle">
+      <span className="text-fg-subtle">
         <Icon name="heart" size="lg" />
       </span>
-      <span className="text-ink">
+      <span className="text-fg-strong">
         <Icon name="heart" size="lg" />
       </span>
     </div>

@@ -1,28 +1,37 @@
-import { mergeClasses } from '@ds/lib/mergeClasses'
+import { HTMLAttributes } from 'react'
 
-import { BadgeProps, BadgeSize, BadgeVariant } from './Badge.types'
+import { mergeClasses } from '@ds/lib/mergeClasses/mergeClasses'
 
-/* The badge is a stamped label, not a small toast: the fill carries the state
- * so it survives being read at arm's length, but the form is its own — small
- * caps with wide tracking and a tight 4px corner, the way a ticket is marked,
- * against the 8px surfaces around it. */
+import styles from './Badge.module.css'
+
+export type BadgeVariant =
+  | 'default'
+  | 'brand'
+  | 'success'
+  | 'error'
+  | 'warning'
+  | 'info'
+
+type BadgeSize = 'sm' | 'md'
+
 const variantClasses: Record<BadgeVariant, string> = {
-  default: 'bg-body text-cream',
-  brand: 'bg-brand text-brand-foreground',
-  success: 'bg-success text-cream',
-  error: 'bg-danger text-cream',
-  warning: 'bg-warning-bright text-ink',
-  info: 'bg-warm-light text-ink',
+  default: styles.toneNeutral,
+  brand: styles.toneBrand,
+  success: styles.toneSuccess,
+  error: styles.toneDanger,
+  warning: styles.toneWarning,
+  info: styles.toneInfo,
 }
 
 const sizeClasses: Record<BadgeSize, string> = {
-  sm: 'px-1.5 py-0.5 text-[0.625rem]',
-  md: 'px-2 py-0.5 text-[0.6875rem]',
+  sm: styles.sizeSmall,
+  md: styles.sizeMedium,
 }
 
-const baseBadge =
-  'inline-flex items-center rounded-[4px] font-bold uppercase ' +
-  'tracking-[0.06em] leading-[1.4]'
+type BadgeProps = HTMLAttributes<HTMLSpanElement> & {
+  variant?: BadgeVariant
+  size?: BadgeSize
+}
 
 /**
  * Status badge for labeling items with a visual category.
@@ -47,7 +56,7 @@ export function Badge({
   return (
     <span
       className={mergeClasses(
-        baseBadge,
+        styles.badge,
         variantClasses[variant],
         sizeClasses[size],
         className

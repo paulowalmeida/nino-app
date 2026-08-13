@@ -1,16 +1,57 @@
+import { ReactNode } from 'react'
+
 import { Popover as ArkPopover } from '@ark-ui/react/popover'
 import { Portal } from '@ark-ui/react/portal'
 
-import { PopoverProps } from './Popover.types'
+import styles from './Popover.module.css'
 
-const baseContent =
-  'z-50 w-72 rounded-card bg-white p-4 shadow-overlay outline-none data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95'
+type PopoverPlacement =
+  | 'top'
+  | 'top-start'
+  | 'top-end'
+  | 'bottom'
+  | 'bottom-start'
+  | 'bottom-end'
+  | 'left'
+  | 'left-start'
+  | 'left-end'
+  | 'right'
+  | 'right-start'
+  | 'right-end'
 
-const arrowClass = 'fill-white'
+type PopoverProps = {
+  trigger: ReactNode
+  children: ReactNode
+  title?: ReactNode
+  placement?: PopoverPlacement
+  open?: boolean
+  onOpenChange?: (open: boolean) => void
+}
 
-const titleClass =
-  'mb-2 font-display text-sm font-semibold tracking-[-0.01em] text-ink'
-
+/**
+ * Panel that opens from a trigger and takes focus — for a small form, a
+ * filter, an explanation with a link inside.
+ *
+ * It is not a `Tooltip`: this one can be clicked into, holds focus and only
+ * closes when asked. Reach for `Tooltip` when the content is a short line
+ * that needs no interaction, and for `Menu` when every entry is an action.
+ *
+ * @param trigger - What opens the panel. Gets the open state through
+ * `asChild`, so pass a real `Button`
+ *
+ * @param title - Heading inside the panel, announced with it
+ *
+ * @param placement - Side it opens on, with `-start`/`-end` to align by an
+ * edge. Default: `bottom`
+ *
+ * @param open - Controlled state. Leave it out to let the component keep
+ * its own
+ *
+ * @example
+ * <Popover trigger={<Button variant="ghost">Filtros</Button>} title="Filtrar">
+ *   <FilterForm />
+ * </Popover>
+ */
 export function Popover({
   trigger,
   children,
@@ -30,19 +71,17 @@ export function Popover({
       <ArkPopover.Trigger asChild>{trigger}</ArkPopover.Trigger>
       <Portal>
         <ArkPopover.Positioner>
-          <ArkPopover.Content className={baseContent}>
-            <ArkPopover.Arrow className={arrowClass}>
+          <ArkPopover.Content className={styles.panel}>
+            <ArkPopover.Arrow className={styles.arrow}>
               <ArkPopover.ArrowTip />
             </ArkPopover.Arrow>
             {title && (
-              <ArkPopover.Title className={titleClass}>
+              <ArkPopover.Title className={styles.title}>
                 {title}
               </ArkPopover.Title>
             )}
-            <ArkPopover.Description asChild>
-              <div className="text-[0.8125rem] leading-[1.45] text-muted">
-                {children}
-              </div>
+            <ArkPopover.Description className={styles.description}>
+              {children}
             </ArkPopover.Description>
           </ArkPopover.Content>
         </ArkPopover.Positioner>
@@ -50,5 +89,3 @@ export function Popover({
     </ArkPopover.Root>
   )
 }
-
-Popover.displayName = 'Popover'

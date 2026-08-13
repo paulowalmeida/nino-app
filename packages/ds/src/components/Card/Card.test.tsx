@@ -2,8 +2,9 @@ import { render, screen } from '@testing-library/react'
 import { describe, expect, it } from 'vitest'
 
 import { Card } from './Card'
+import styles from './Card.module.css'
 
-describe(Card.displayName!, () => {
+describe(Card.name, () => {
   it('renders children', () => {
     render(<Card>Conteúdo</Card>)
     expect(screen.getByText('Conteúdo')).toBeInTheDocument()
@@ -11,19 +12,19 @@ describe(Card.displayName!, () => {
 
   it('applies the default variant (border + resting shadow)', () => {
     render(<Card>x</Card>)
-    expect(screen.getByText('x')).toHaveClass('shadow-card')
+    expect(screen.getByText('x')).toHaveClass(styles.elevationResting)
   })
 
   it('flat variant does not apply shadow', () => {
     render(<Card variant="flat">x</Card>)
     const card = screen.getByText('x')
-    expect(card).not.toHaveClass('shadow-card')
-    expect(card).not.toHaveClass('shadow-card-hover')
+    expect(card).not.toHaveClass(styles.elevationResting)
+    expect(card).not.toHaveClass(styles.elevationRaised)
   })
 
   it('elevated variant applies the lifted shadow', () => {
     render(<Card variant="elevated">x</Card>)
-    expect(screen.getByText('x')).toHaveClass('shadow-card-hover')
+    expect(screen.getByText('x')).toHaveClass(styles.elevationRaised)
   })
 
   it('merges additional className', () => {
@@ -49,8 +50,8 @@ describe(Card.displayName!, () => {
       </Card>
     )
     const link = screen.getByRole('link', { name: 'Ver pedidos' })
-    expect(link).toHaveClass('rounded-card')
-    expect(link).toHaveClass('shadow-card')
+    expect(link).toHaveClass(styles.card)
+    expect(link).toHaveClass(styles.elevationResting)
   })
 
   it('keeps the child as the only element when asChild is set', () => {

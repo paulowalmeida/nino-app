@@ -11,8 +11,8 @@ export const useDrawerDrag = (onOpenChange: (open: boolean) => void) => {
   const DISMISS_OFFSET_PX = 96
   const SPRING_BACK_MS = 200
   const SLIDE_OUT_MS = 260
-  const EASE_SETTLE = 'cubic-bezier(0.16, 1, 0.3, 1)'
-  const EASE_DISMISS = 'cubic-bezier(0.32, 0, 0.67, 0)'
+  const EASE_SETTLE = 'var(--ease-out)'
+  const EASE_DISMISS = 'var(--ease-in)'
   const SETTLE_TRANSITION = `transform ${SPRING_BACK_MS}ms ${EASE_SETTLE}`
   const DISMISS_TRANSITION = `transform ${SLIDE_OUT_MS}ms ${EASE_DISMISS}`
 

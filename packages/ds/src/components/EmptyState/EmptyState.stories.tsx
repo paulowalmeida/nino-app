@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react'
 
-import { Button } from '../Button'
+import { Button } from '../Button/Button'
 import { EmptyState } from './EmptyState'
 
 const meta: Meta<typeof EmptyState> = {
@@ -46,9 +46,9 @@ export const WithAction: Story = {
 
 const Mascot = () => (
   <svg viewBox="0 0 96 96" fill="none" aria-hidden="true">
-    <circle cx="48" cy="48" r="44" className="fill-cream-deep" />
-    <circle cx="36" cy="42" r="5" className="fill-ink" />
-    <circle cx="60" cy="42" r="5" className="fill-ink" />
+    <circle cx="48" cy="48" r="44" className="fill-surface-4" />
+    <circle cx="36" cy="42" r="5" className="fill-fg-strong" />
+    <circle cx="60" cy="42" r="5" className="fill-fg-strong" />
     <path
       d="M34 62c8 6 20 6 28 0"
       stroke="currentColor"
@@ -72,12 +72,12 @@ export const FullScreen: Story = {
 export const BothSizes: Story = {
   render: () => (
     <div className="flex flex-col gap-8">
-      <div className="rounded-card border border-line/60 bg-white p-4">
-        <p className="text-sm font-semibold text-ink">Telefones</p>
+      <div className="rounded-2 border border-border bg-surface-raised p-4">
+        <p className="text-sm font-semibold text-fg-strong">Telefones</p>
         <EmptyState>Nenhum telefone cadastrado.</EmptyState>
       </div>
 
-      <div className="rounded-card border border-line/60 bg-white">
+      <div className="rounded-2 border border-border bg-surface-raised">
         <EmptyState
           size="md"
           illustration={<Mascot />}

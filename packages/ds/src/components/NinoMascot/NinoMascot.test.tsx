@@ -16,7 +16,7 @@ describe(NinoMascot.name, () => {
     expect(image).toHaveAttribute('alt', '')
   })
 
-  it('has no className when none is provided', () => {
+  it('points at the mascot file', () => {
     // Arrange
     const { container } = render(<NinoMascot />)
 
@@ -24,7 +24,7 @@ describe(NinoMascot.name, () => {
     const image = container.querySelector('img')
 
     // Assert
-    expect(image).not.toHaveAttribute('class')
+    expect(image).toHaveAttribute('src', expect.stringContaining('mascot'))
   })
 
   it('applies the given className to the image', () => {

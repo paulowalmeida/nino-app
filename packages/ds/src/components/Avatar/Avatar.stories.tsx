@@ -34,7 +34,7 @@ export const FallbackIcone: Story = {
   args: { size: 'lg' },
 }
 
-export const Tamanhos: Story = {
+export const Sizes: Story = {
   render: () => (
     <div className="flex items-center gap-4">
       <Avatar size="sm" fallback="sm" />

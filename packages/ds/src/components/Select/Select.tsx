@@ -1,124 +1,123 @@
-import { forwardRef, useMemo } from 'react'
+import { Ref, useMemo } from 'react'
 
 import { Portal } from '@ark-ui/react/portal'
 import { createListCollection, Select as ArkSelect } from '@ark-ui/react/select'
-import { baseDisabled, baseFocus } from '@ds/lib/baseClasses'
-import { mergeClasses } from '@ds/lib/mergeClasses'
+import { mergeClasses } from '@ds/lib/mergeClasses/mergeClasses'
 
-import { SelectProps, SelectSize, SelectTriggerRef } from './Select.types'
+import { Icon } from '../Icon/Icon'
+import { InputSize } from '../Input/Input.types'
+import styles from './Select.module.css'
 
-const sizeClasses: Record<SelectSize, string> = {
-  sm: 'h-8 px-3 text-sm',
-  md: 'h-10 px-3 text-sm',
-  lg: 'h-12 px-4 text-base',
+type SelectOption = {
+  value: string
+  label: string
+  disabled?: boolean
 }
 
-const baseTrigger =
-  'w-full flex cursor-pointer items-center justify-between gap-2 rounded-card border bg-white text-ink transition-[color,box-shadow,border-color] duration-200 outline-none'
+type SelectProps = {
+  options: SelectOption[]
+  placeholder?: string
+  size?: InputSize
+  error?: boolean
+  disabled?: boolean
+  value?: string
+  defaultValue?: string
+  onValueChange?: (value: string) => void
+  className?: string
+  ref?: Ref<HTMLButtonElement>
+}
 
-const triggerDefault =
-  'border-input-border focus:border-brand focus:ring-1 focus:ring-inset focus:ring-brand'
+const sizeClasses: Record<InputSize, string> = {
+  sm: styles.sizeSmall,
+  md: styles.sizeMedium,
+  lg: styles.sizeLarge,
+}
 
-const triggerError =
-  'border-danger focus:border-danger focus:ring-1 focus:ring-inset focus:ring-danger'
+/**
+ * One choice out of a list that stays folded until asked — the field version
+ * of `Listbox`.
+ *
+ * It carries a hidden native `<select>`, so a form submits it and the phone
+ * offers its own wheel picker.
+ *
+ * @param options - What can be picked. `disabled` greys out one entry
+ *
+ * @param placeholder - Shown while nothing is picked
+ *
+ * @param size - Height and padding, matching `Input`. Default: `md`
+ *
+ * @param error - Paints the invalid state
+ *
+ * @example
+ * <FormField label="Forma de pagamento">
+ *   <Select options={methods} placeholder="Escolha" onValueChange={setPay} />
+ * </FormField>
+ */
+export function Select({
+  options,
+  placeholder,
+  size = 'md',
+  error = false,
+  disabled,
+  value,
+  defaultValue,
+  onValueChange,
+  className,
+  ref,
+}: SelectProps) {
+  const collection = useMemo(
+    () =>
+      createListCollection({
+        items: options,
+        itemToValue: (item) => item.value,
+        itemToString: (item) => item.label,
+      }),
+    [options]
+  )
 
-/* Mesmo teto do Combobox: o painel rola por dentro em vez de estourar a
- * viewport. */
-const baseContent =
-  'z-50 min-w-[var(--reference-width)] max-h-[min(18rem,var(--available-height))] ' +
-  'overflow-y-auto overscroll-contain scrollbar-slim rounded-card ' +
-  'bg-white shadow-overlay p-1'
-
-const baseItem =
-  'relative flex cursor-default select-none items-center rounded px-3 py-2 text-sm text-ink outline-none transition-[color,box-shadow,border-color] duration-200 data-[highlighted]:bg-[color-mix(in_srgb,var(--color-brand)_10%,white)] data-[highlighted]:text-brand data-[disabled]:pointer-events-none data-[disabled]:opacity-50'
-
-const chevronClass = 'shrink-0 text-faint'
-
-export const Select = forwardRef<SelectTriggerRef, SelectProps>(
-  (
-    {
-      options,
-      placeholder,
-      size = 'md',
-      error = false,
-      disabled,
-      value,
-      defaultValue,
-      onValueChange,
-      className,
-    },
-    ref
-  ) => {
-    const collection = useMemo(
-      () =>
-        createListCollection({
-          items: options,
-          itemToValue: (item) => item.value,
-          itemToString: (item) => item.label,
-        }),
-      [options]
-    )
-
-    return (
-      <ArkSelect.Root
-        collection={collection}
-        disabled={disabled}
-        value={value !== undefined ? [value] : undefined}
-        defaultValue={defaultValue !== undefined ? [defaultValue] : undefined}
-        onValueChange={({ value: values }) => onValueChange?.(values[0])}
-      >
-        <ArkSelect.Control>
-          <ArkSelect.Trigger
-            ref={ref}
-            className={mergeClasses(
-              baseTrigger,
-              baseFocus,
-              baseDisabled,
-              sizeClasses[size],
-              error ? triggerError : triggerDefault,
-              className
-            )}
-          >
-            <ArkSelect.ValueText
-              placeholder={placeholder}
-              className="data-placeholder-shown:text-faint"
-            />
-            <ArkSelect.Indicator>
-              <svg
-                width="16"
-                height="16"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                className={chevronClass}
+  return (
+    <ArkSelect.Root
+      collection={collection}
+      disabled={disabled}
+      value={value !== undefined ? [value] : undefined}
+      defaultValue={defaultValue !== undefined ? [defaultValue] : undefined}
+      onValueChange={({ value: values }) => onValueChange?.(values[0])}
+    >
+      <ArkSelect.Control>
+        <ArkSelect.Trigger
+          ref={ref}
+          className={mergeClasses(
+            styles.field,
+            sizeClasses[size],
+            error ? styles.fieldInvalid : styles.fieldResting,
+            className
+          )}
+        >
+          <ArkSelect.ValueText
+            placeholder={placeholder}
+            className={styles.placeholder}
+          />
+          <ArkSelect.Indicator>
+            <Icon name="chevron-down" size="sm" className={styles.chevron} />
+          </ArkSelect.Indicator>
+        </ArkSelect.Trigger>
+      </ArkSelect.Control>
+      <Portal>
+        <ArkSelect.Positioner>
+          <ArkSelect.Content className={styles.optionPanel}>
+            {options.map((option) => (
+              <ArkSelect.Item
+                key={option.value}
+                item={option}
+                className={styles.option}
               >
-                <path d="m6 9 6 6 6-6" />
-              </svg>
-            </ArkSelect.Indicator>
-          </ArkSelect.Trigger>
-        </ArkSelect.Control>
-        <Portal>
-          <ArkSelect.Positioner>
-            <ArkSelect.Content className={baseContent}>
-              {options.map((option) => (
-                <ArkSelect.Item
-                  key={option.value}
-                  item={option}
-                  className={baseItem}
-                >
-                  <ArkSelect.ItemText>{option.label}</ArkSelect.ItemText>
-                </ArkSelect.Item>
-              ))}
-            </ArkSelect.Content>
-          </ArkSelect.Positioner>
-        </Portal>
-        <ArkSelect.HiddenSelect />
-      </ArkSelect.Root>
-    )
-  }
-)
-
-Select.displayName = 'Select'
+                <ArkSelect.ItemText>{option.label}</ArkSelect.ItemText>
+              </ArkSelect.Item>
+            ))}
+          </ArkSelect.Content>
+        </ArkSelect.Positioner>
+      </Portal>
+      <ArkSelect.HiddenSelect />
+    </ArkSelect.Root>
+  )
+}

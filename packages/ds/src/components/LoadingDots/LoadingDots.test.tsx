@@ -16,7 +16,10 @@ describe(LoadingDots.name, () => {
 
   it('uses default label when not provided', () => {
     render(<LoadingDots visible />)
-    expect(screen.getByRole('status')).toHaveAttribute('aria-label', 'Loading')
+    expect(screen.getByRole('status')).toHaveAttribute(
+      'aria-label',
+      'Carregando'
+    )
   })
 
   it('applies custom label', () => {

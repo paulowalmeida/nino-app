@@ -1,0 +1,26 @@
+@reference "../../styles/globals.css";
+
+.label {
+  @apply mb-1.5 block text-sm font-medium text-fg-default;
+}
+
+.optionList {
+  @apply flex flex-col gap-0.5 rounded-2 bg-surface-raised p-1 shadow-warm-sm;
+  @apply outline-none;
+}
+
+.option {
+  @apply flex cursor-pointer select-none items-center justify-between gap-2;
+  @apply min-h-11 rounded-2 px-3 py-2 text-sm text-fg-strong outline-none;
+  @apply transition-colors duration-fast;
+  @apply data-[highlighted]:bg-surface-mute;
+  @apply data-[highlighted]:text-fg-strong;
+  @apply data-[state=checked]:font-semibold;
+  @apply data-[state=checked]:text-brand-strong;
+  @apply data-[disabled]:pointer-events-none;
+  @apply data-[disabled]:opacity-disabled;
+}
+
+.checkMark {
+  @apply text-brand;
+}

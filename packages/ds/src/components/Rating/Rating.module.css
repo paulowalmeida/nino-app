@@ -1,0 +1,39 @@
+@reference "../../styles/globals.css";
+
+.starRow {
+  @apply flex items-center gap-1;
+}
+
+.starButton {
+  @apply relative -mx-1 flex size-11 cursor-pointer items-center;
+  @apply justify-center rounded-1 text-fg-ghost outline-none;
+  @apply focus-ring;
+  @apply data-[disabled]:pointer-events-none data-[disabled]:opacity-disabled;
+}
+
+.starStatic {
+  @apply relative flex size-5 cursor-default items-center justify-center;
+  @apply text-fg-ghost;
+}
+
+.filledLayer {
+  @apply pointer-events-none absolute inset-0 flex w-0 items-center;
+  @apply justify-center overflow-hidden text-brand;
+  @apply transition-[width] duration-fast;
+}
+
+.starButton[data-highlighted] .filledLayer,
+.starButton[data-checked] .filledLayer,
+.starStatic[data-highlighted] .filledLayer,
+.starStatic[data-checked] .filledLayer {
+  @apply w-full;
+}
+
+.starButton[data-half] .filledLayer,
+.starStatic[data-half] .filledLayer {
+  @apply w-1/2;
+}
+
+.filledStar {
+  @apply min-w-5;
+}

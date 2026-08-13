@@ -1,9 +1,15 @@
-import { mergeClasses } from '@ds/lib/mergeClasses'
-
+import { mergeClasses } from '@ds/lib/mergeClasses/mergeClasses'
 import {
+  getPasswordStrength,
   PasswordStrengthLevel,
-  PasswordStrengthProps,
-} from './PasswordStrength.types'
+} from '@ds/lib/passwordStrength/passwordStrength'
+
+import styles from './PasswordStrength.module.css'
+
+type PasswordStrengthProps = {
+  password: string
+  className?: string
+}
 
 const labels: Record<PasswordStrengthLevel, string> = {
   weak: 'Fraca',
@@ -12,15 +18,15 @@ const labels: Record<PasswordStrengthLevel, string> = {
 }
 
 const fillClasses: Record<PasswordStrengthLevel, string> = {
-  weak: 'bg-danger',
-  medium: 'bg-warning',
-  strong: 'bg-success',
+  weak: styles.fillWeak,
+  medium: styles.fillMedium,
+  strong: styles.fillStrong,
 }
 
 const textClasses: Record<PasswordStrengthLevel, string> = {
-  weak: 'text-danger',
-  medium: 'text-warning',
-  strong: 'text-success',
+  weak: styles.labelWeak,
+  medium: styles.labelMedium,
+  strong: styles.labelStrong,
 }
 
 const segmentsByLevel: Record<PasswordStrengthLevel, number> = {
@@ -29,41 +35,21 @@ const segmentsByLevel: Record<PasswordStrengthLevel, number> = {
   strong: 3,
 }
 
-const baseTrack = 'h-1.5 flex-1 rounded-full bg-sand overflow-hidden'
-const baseFill = 'h-full w-full rounded-full transition-colors duration-300'
-
 /**
- * Computes password strength from length (8-16) and character
- * variety (lowercase, uppercase, number, symbol).
- */
-export function getPasswordStrength(password: string): {
-  score: number
-  level: PasswordStrengthLevel
-} {
-  let score = 0
-  if (password.length >= 8) score++
-  if (password.length >= 12) score++
-  if (/[a-z]/.test(password)) score++
-  if (/[A-Z]/.test(password)) score++
-  if (/\d/.test(password)) score++
-  if (/[^A-Za-z0-9]/.test(password)) score++
-
-  const level: PasswordStrengthLevel =
-    score <= 1 ? 'weak' : score <= 4 ? 'medium' : 'strong'
-
-  return { score, level }
-}
-
-/**
- * Visual indicator of password strength (fraca/média/forte) based on
- * length and character variety.
+ * Three bars filling up as the password gets stronger, with the verdict in
+ * words beside them.
  *
- * @param password - Password value to evaluate
+ * The colour alone would leave out whoever cannot tell red from green, so
+ * the word carries the same message — and a screen reader hears the word
+ * too, not "1 of 3".
  *
- * @param className - Additional CSS classes
+ * @param password - What was typed. Read on every keystroke; nothing is
+ * stored
+ *
+ * @param className - Spacing decided by whoever mounts it
  *
  * @example
- * <PasswordStrength password={password} />
+ * <PasswordStrength password={password} className={styles.strength} />
  */
 export function PasswordStrength({
   password,
@@ -73,24 +59,25 @@ export function PasswordStrength({
   const filled = segmentsByLevel[level]
 
   return (
-    <div className={mergeClasses('w-full mt-1', className)}>
+    <div className={mergeClasses(styles.meter, className)}>
       <div
-        className="flex gap-1.5"
+        className={styles.segmentRow}
         role="meter"
         aria-label="Força da senha"
         aria-valuenow={filled}
         aria-valuemin={0}
         aria-valuemax={3}
+        aria-valuetext={labels[level]}
       >
         {[0, 1, 2].map((i) => (
-          <div key={i} className={baseTrack}>
+          <div key={i} className={styles.segmentTrack}>
             {i < filled && (
-              <div className={mergeClasses(baseFill, fillClasses[level])} />
+              <div className={mergeClasses(styles.segmentFill, fillClasses[level])} />
             )}
           </div>
         ))}
       </div>
-      <span className={mergeClasses('mt-1 text-xs', textClasses[level])}>
+      <span className={mergeClasses(styles.label, textClasses[level])}>
         {labels[level]}
       </span>
     </div>

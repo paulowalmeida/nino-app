@@ -4,7 +4,7 @@ import { describe, expect, it, vi } from 'vitest'
 
 import { Pagination } from './Pagination'
 
-describe(Pagination.displayName!, () => {
+describe(Pagination.name, () => {
   it('renders pages (first and last)', () => {
     render(<Pagination count={50} pageSize={10} />)
     expect(screen.getByText('1')).toBeInTheDocument()
@@ -21,7 +21,9 @@ describe(Pagination.displayName!, () => {
   it('advances with the next page button', async () => {
     const onPageChange = vi.fn()
     render(<Pagination count={50} pageSize={10} onPageChange={onPageChange} />)
-    await userEvent.click(screen.getByRole('button', { name: 'Next page' }))
+    await userEvent.click(
+      screen.getByRole('button', { name: 'Próxima página' })
+    )
     expect(onPageChange).toHaveBeenCalledWith(2)
   })
 

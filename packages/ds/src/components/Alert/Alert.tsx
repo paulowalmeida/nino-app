@@ -1,48 +1,32 @@
-import { mergeClasses } from '@ds/lib/mergeClasses'
-import { statusIconPaths } from '@ds/lib/statusIconPaths'
+import { HTMLAttributes } from 'react'
 
-import { AlertProps, AlertVariant } from './Alert.types'
+import { Flexbox } from '@ds/components/Flexbox/Flexbox'
+import { Icon } from '@ds/components/Icon/Icon'
+import { Stamp, StampTone } from '@ds/components/Stamp/Stamp'
+import { Text } from '@ds/components/Text/Text'
+import { mergeClasses } from '@ds/lib/mergeClasses/mergeClasses'
 
-/**
- * An alert lives inside the page and often several sit on the same screen, so
- * flooding it with saturated fill — the toast's move — would leave nowhere to
- * rest. It keeps the pale surface and concentrates the solid colour in one
- * stamp: the icon block. Same language as the toast (flat fill, contrasting
- * mark on top, no border), applied to a square centimetre instead of the
- * whole card.
- */
+import styles from './Alert.module.css'
+
+type AlertVariant = 'info' | 'success' | 'warning' | 'error'
+
+type AlertProps = HTMLAttributes<HTMLDivElement> & {
+  variant?: AlertVariant
+  title?: string
+}
+
 const variantClasses: Record<AlertVariant, string> = {
-  info: 'bg-cream-deep text-body',
-  success: 'bg-success-surface text-success',
-  warning: 'bg-warning-surface text-warning',
-  error: 'bg-danger-surface text-danger',
+  info: styles.info,
+  success: styles.success,
+  warning: styles.warning,
+  error: styles.error,
 }
 
-const stampClasses: Record<AlertVariant, string> = {
-  info: 'bg-brand-strong text-cream',
-  success: 'bg-success text-cream',
-  warning: 'bg-warning-bright text-ink',
-  error: 'bg-danger text-cream',
-}
-
-const baseAlert = 'flex gap-3 rounded-card p-4'
-const stampClass = 'grid size-7 shrink-0 place-items-center rounded-[6px]'
-const titleClass = 'font-display text-sm font-semibold tracking-[-0.01em]'
-const bodyClass = 'text-[0.8125rem] leading-[1.45] opacity-80'
-
-function AlertStamp({ variant }: { variant: AlertVariant }) {
-  return (
-    <span className={mergeClasses(stampClass, stampClasses[variant])}>
-      <svg
-        viewBox="0 0 24 24"
-        fill="currentColor"
-        className="size-[15px]"
-        aria-hidden="true"
-      >
-        <path d={statusIconPaths[variant]} />
-      </svg>
-    </span>
-  )
+const stampTones: Record<AlertVariant, StampTone> = {
+  info: 'brandStrong',
+  success: 'success',
+  warning: 'warning',
+  error: 'danger',
 }
 
 /**
@@ -68,14 +52,29 @@ export function Alert({
   return (
     <div
       role="alert"
-      className={mergeClasses(baseAlert, variantClasses[variant], className)}
+      className={mergeClasses(styles.alert, variantClasses[variant], className)}
       {...props}
     >
-      <AlertStamp variant={variant} />
-      <div className="flex flex-col gap-1 pt-0.5">
-        {title && <p className={titleClass}>{title}</p>}
-        {children && <p className={bodyClass}>{children}</p>}
-      </div>
+      <Stamp size="md" tone={stampTones[variant]}>
+        <Icon name={`status-${variant}`} size="sm" />
+      </Stamp>
+      <Flexbox gap={1} className={styles.textStack}>
+        {title && (
+          <Text
+            size="sm"
+            weight="semibold"
+            font="display"
+            className={styles.title}
+          >
+            {title}
+          </Text>
+        )}
+        {children && (
+          <Text size="sm" className={styles.message}>
+            {children}
+          </Text>
+        )}
+      </Flexbox>
     </div>
   )
 }

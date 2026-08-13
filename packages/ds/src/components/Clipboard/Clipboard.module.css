@@ -1,0 +1,22 @@
+@reference "../../styles/globals.css";
+
+.field {
+  @apply flex items-center gap-2 w-full h-11 rounded-2 border;
+  @apply border-input-border;
+  @apply bg-surface-raised pl-3 pr-1 transition-field;
+  @apply focus-within:border-brand focus-within:ring-1;
+  @apply focus-within:ring-inset;
+  @apply focus-within:ring-brand;
+}
+
+.valueText {
+  @apply flex-1 min-w-0 bg-transparent text-sm text-fg-strong outline-none;
+}
+
+.copyButton {
+  @apply shrink-0 inline-flex h-8 items-center gap-1.5 rounded-2 px-2.5 text-sm;
+  @apply font-semibold text-brand-strong;
+  @apply transition-field;
+  @apply cursor-pointer hover:bg-surface-mute;
+  @apply focus-ring-inset;
+}

@@ -1,41 +1,51 @@
 import { Progress as ArkProgress } from '@ark-ui/react/progress'
-import { mergeClasses } from '@ds/lib/mergeClasses'
+import { mergeClasses } from '@ds/lib/mergeClasses/mergeClasses'
 
-import { ProgressLineProps, ProgressLineSize } from './ProgressLine.types'
+import styles from './ProgressLine.module.css'
 
-const trackSizeClasses: Record<ProgressLineSize, string> = {
-  sm: 'h-1',
-  md: 'h-2',
-  lg: 'h-3',
+type ProgressLineSize = 'sm' | 'md' | 'lg'
+
+type ProgressLineProps = {
+  value: number | null
+  min?: number
+  max?: number
+  size?: ProgressLineSize
+  label?: string
+  className?: string
 }
 
-/* Thin linear forms keep a radius equal to their own thickness — the 8px of a
- * surface would round a 4px bar into a lozenge. */
-const baseTrack = 'w-full overflow-hidden rounded-full bg-sand'
-const baseRange =
-  'h-full rounded-full bg-brand transition-all duration-[460ms] ' +
-  'ease-[cubic-bezier(0.22,1,0.36,1)]'
+const trackSizeClasses: Record<ProgressLineSize, string> = {
+  sm: styles.trackSizeSmall,
+  md: styles.trackSizeMedium,
+  lg: styles.trackSizeLarge,
+}
 
 /**
- * Linear progress bar themed via `--color-brand`.
+ * Progress drawn as a bar — for what fills across a width: a step out of
+ * many, a file being sent, a goal for the day.
  *
- * @param value - Current value (null for indeterminate)
+ * @param value - How far along. `null` means the length is unknown, and a
+ * short stretch travels the bar instead of filling it
  *
- * @param min - Minimum value. Default: `0`
+ * @param min - Where the bar starts. Default: `0`
  *
- * @param max - Maximum value. Default: `100`
+ * @param max - Where it is full. Default: `100`
  *
- * @param size - Bar thickness. Default: `md`
+ * @param size - Thickness. Default: `md`
+ *
+ * @param label - What a screen reader announces. Without it the bar is read
+ * as a bare number, with no clue of what is progressing
  *
  * @example
- * <ProgressLine value={60} />
- * <ProgressLine value={null} size="sm" />
+ * <ProgressLine value={60} label="Cadastro" />
+ * <ProgressLine value={null} label="Enviando" size="sm" />
  */
 export function ProgressLine({
   value,
   min = 0,
   max = 100,
   size = 'md',
+  label,
   className,
 }: ProgressLineProps) {
   return (
@@ -43,12 +53,13 @@ export function ProgressLine({
       value={value}
       min={min}
       max={max}
-      className={mergeClasses('w-full', className)}
+      aria-label={label}
+      className={mergeClasses(styles.progressLine, className)}
     >
       <ArkProgress.Track
-        className={mergeClasses(baseTrack, trackSizeClasses[size])}
+        className={mergeClasses(styles.track, trackSizeClasses[size])}
       >
-        <ArkProgress.Range className={baseRange} />
+        <ArkProgress.Range className={styles.fill} />
       </ArkProgress.Track>
     </ArkProgress.Root>
   )

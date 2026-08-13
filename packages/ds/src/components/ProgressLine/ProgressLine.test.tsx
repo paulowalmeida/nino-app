@@ -24,8 +24,8 @@ describe(ProgressLine.name, () => {
 
   it('applies additional className', () => {
     const { container } = render(
-      <ProgressLine value={50} className="opacity-50" />
+      <ProgressLine value={50} className="opacity-disabled" />
     )
-    expect(container.firstChild).toHaveClass('opacity-50')
+    expect(container.firstChild).toHaveClass('opacity-disabled')
   })
 })

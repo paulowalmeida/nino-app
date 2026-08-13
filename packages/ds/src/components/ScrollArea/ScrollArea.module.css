@@ -1,12 +1,6 @@
-/* Pistas de borda do ScrollArea, opt-in por `fadeEdges`.
- *
- * A máscara é estática: quem muda as quatro variáveis é o handler de scroll
- * do componente. A primeira versão disto usava `animation-timeline:
- * scroll(self)` e travava o renderer do Chrome quando um menu do Ark abria
- * (scroll lock + máscara no mesmo scroller = recálculo em loop). Não voltar
- * para scroll-driven animation aqui. */
+@reference "../../styles/globals.css";
 
-.fade {
+.edgeFadeMask {
   mask-image:
     linear-gradient(
       to bottom,
@@ -23,4 +17,61 @@
       transparent
     );
   mask-composite: intersect;
+}
+
+.scrollArea {
+  @apply relative overflow-hidden;
+}
+
+.viewport {
+  @apply h-full w-full rounded-[inherit] [scrollbar-width:none];
+  @apply [&::-webkit-scrollbar]:hidden;
+  @apply focus-ring-inset;
+}
+
+.scrollbar {
+  @apply flex touch-none select-none p-0.5;
+  @apply data-[orientation=vertical]:w-3;
+  @apply data-[orientation=horizontal]:h-3;
+  @apply data-[orientation=horizontal]:flex-col;
+}
+
+.scrollbarVertical {
+  @apply not-data-[overflow-y]:hidden;
+}
+
+.scrollbarHorizontal {
+  @apply not-data-[overflow-x]:hidden;
+}
+
+.thumb {
+  @apply rounded-full opacity-faint;
+  @apply transition-[width,height,opacity,box-shadow] duration-slow;
+  @apply ease-out-soft motion-reduce:transition-none;
+  background-color: var(--ds-scroll-thumb);
+}
+
+.scrollArea:hover .thumb {
+  @apply opacity-strong;
+}
+
+.scrollArea:hover .thumbVertical {
+  @apply w-1.5;
+}
+
+.scrollArea:hover .thumbHorizontal {
+  @apply h-1.5;
+}
+
+.thumb:active {
+  box-shadow: 0 0 0 4px
+    color-mix(in oklab, var(--ds-scroll-thumb) 20%, transparent);
+}
+
+.thumbVertical {
+  @apply mx-auto w-0.5;
+}
+
+.thumbHorizontal {
+  @apply my-auto h-0.5;
 }

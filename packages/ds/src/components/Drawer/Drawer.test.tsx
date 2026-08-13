@@ -55,13 +55,13 @@ describe(Drawer.name, () => {
         open
         onOpenChange={vi.fn()}
         title="Painel"
-        contentClassName="bg-paper"
+        contentClassName="bg-surface-1"
       >
         <p>x</p>
       </Drawer>
     )
     expect(screen.getByText('Painel').closest('[role="dialog"]')).toHaveClass(
-      'bg-paper'
+      'bg-surface-1'
     )
   })
 

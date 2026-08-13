@@ -1,61 +1,94 @@
-import { Switch as ArkSwitch } from '@ark-ui/react/switch'
-import { mergeClasses } from '@ds/lib/mergeClasses'
+import { FocusEventHandler, Ref } from 'react'
 
-import { SwitchProps, SwitchSize } from './Switch.types'
+import { Switch as ArkSwitch } from '@ark-ui/react/switch'
+import { mergeClasses } from '@ds/lib/mergeClasses/mergeClasses'
+
+import styles from './Switch.module.css'
+
+type SwitchSize = 'sm' | 'md'
+
+type SwitchProps = {
+  size?: SwitchSize
+  checked?: boolean
+  defaultChecked?: boolean
+  onCheckedChange?: (checked: boolean) => void
+  id?: string
+  disabled?: boolean
+  name?: string
+  value?: string
+  className?: string
+  onBlur?: FocusEventHandler<HTMLInputElement>
+  ref?: Ref<HTMLInputElement>
+}
 
 const rootSizeClasses: Record<SwitchSize, string> = {
-  sm: 'h-4 w-7',
-  md: 'h-5 w-9',
+  sm: styles.trackSizeSmall,
+  md: styles.trackSizeMedium,
 }
 
 const thumbSizeClasses: Record<SwitchSize, string> = {
-  sm: 'h-3 w-3 data-[state=checked]:translate-x-3',
-  md: 'h-4 w-4 data-[state=checked]:translate-x-4',
+  sm: styles.knobSizeSmall,
+  md: styles.knobSizeMedium,
 }
 
-const baseControl =
-  /* Trilho rebaixado com uma placa deslizando por cima — o mesmo par de
-   * superfícies das abas e da paginação, reduzido a um controle. */
-  'inline-flex shrink-0 cursor-pointer items-center rounded-full border-2 ' +
-  'border-transparent bg-surface-mute transition-colors ' +
-  'data-[state=checked]:bg-brand focus-visible:outline-2 ' +
-  'focus-visible:outline-brand focus-visible:outline-offset-2 ' +
-  'disabled:cursor-not-allowed disabled:opacity-50'
-
-const baseThumb =
-  'pointer-events-none block rounded-full bg-white shadow-card ring-0 ' +
-  'transition-transform data-[state=unchecked]:translate-x-0'
-
+/**
+ * Toggle that takes effect the moment it is flipped — the store opening,
+ * an item leaving the menu.
+ *
+ * That is what sets it apart from `Checkbox`: a checkbox is an answer that
+ * only counts when the form is submitted, a switch acts at once. If what
+ * you have is a choice to be confirmed later, it is a checkbox.
+ *
+ * It has no label of its own: wrap it in `FormField` with
+ * `orientation="horizontal"`, which ties the text to the control and makes
+ * the text clickable too.
+ *
+ * @param size - `sm` or `md` (default)
+ *
+ * @param checked - Controlled state. Leave it out and pass `defaultChecked`
+ * to let the component keep its own
+ *
+ * @param onBlur - Fired when focus leaves the control, for a form that
+ * validates on blur
+ *
+ * @param ref - Points at the hidden input, which is what takes focus — a
+ * form library moving focus to the first invalid field lands here
+ *
+ * @example
+ * <FormField label="Loja aberta" orientation="horizontal">
+ *   <Switch checked={isOpen} onCheckedChange={setOpen} />
+ * </FormField>
+ */
 export function Switch({
   size = 'md',
   className,
   onCheckedChange,
   checked,
   defaultChecked,
+  onBlur,
+  ref,
   ...props
 }: SwitchProps) {
   return (
     <ArkSwitch.Root
-      /*
-       * `relative` ancora o input escondido, que o Ark posiciona em absolute.
-       * Sem isso ele se prende ao primeiro ancestral posicionado — numa lista
-       * rolável, um contêiner acima do scroller: o input escapa do recorte e
-       * estica o documento na altura que teria no fluxo, uma linha por item.
-       */
-      className="relative"
+      className={styles.switch}
       checked={checked}
       defaultChecked={defaultChecked}
-      onCheckedChange={({ checked: c }) => onCheckedChange?.(c)}
+      onCheckedChange={({ checked: isChecked }) => onCheckedChange?.(isChecked)}
       {...props}
     >
       <ArkSwitch.Control
-        className={mergeClasses(baseControl, rootSizeClasses[size], className)}
+        className={mergeClasses(
+          styles.track,
+          rootSizeClasses[size],
+          className
+        )}
       >
         <ArkSwitch.Thumb
-          className={mergeClasses(baseThumb, thumbSizeClasses[size])}
+          className={mergeClasses(styles.knob, thumbSizeClasses[size])}
         />
       </ArkSwitch.Control>
-      <ArkSwitch.HiddenInput />
+      <ArkSwitch.HiddenInput ref={ref} onBlur={onBlur} />
     </ArkSwitch.Root>
   )
 }

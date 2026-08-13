@@ -1,32 +1,32 @@
-import { mergeClasses } from '@ds/lib/mergeClasses'
+import { HTMLAttributes, ReactNode } from 'react'
 
-import { EmptyStateProps, EmptyStateSize } from './EmptyState.types'
+import { Text } from '@ds/components/Text/Text'
+import { mergeClasses } from '@ds/lib/mergeClasses/mergeClasses'
+
+import styles from './EmptyState.module.css'
 
 /* Nothing here is not an error, so this takes none of the alert's language:
  * no fill, no border, no icon stamp. It is quiet type on the page itself.
  * The two sizes are two different rooms — `sm` is a line inside a card that
  * already has a heading, `md` is a screen with nothing else on it, and only
  * that one has the space to carry a drawing. */
-const baseRoot = 'flex flex-col items-center justify-center text-center'
+type EmptyStateSize = 'sm' | 'md'
 
-const sizeRoot: Record<EmptyStateSize, string> = {
-  sm: 'gap-1 py-6',
-  md: 'gap-1.5 py-10',
+type EmptyStateProps = HTMLAttributes<HTMLDivElement> & {
+  /** Illustration or icon shown above the title. Only rendered at `md`. */
+  illustration?: ReactNode
+  /** Short heading naming what is missing. */
+  title?: string
+  /** Call to action — a button or link out of the dead end. */
+  action?: ReactNode
+  /** `sm` sits inside a card or list; `md` fills the screen. Default: `sm` */
+  size?: EmptyStateSize
 }
 
-const titleClass: Record<EmptyStateSize, string> = {
-  sm: 'text-sm font-semibold text-subtle',
-  md: 'font-display text-lg font-bold text-ink',
+const sizeClasses: Record<EmptyStateSize, string> = {
+  sm: styles.sizeSmall,
+  md: styles.sizeMedium,
 }
-
-const bodyClass: Record<EmptyStateSize, string> = {
-  sm: 'text-sm leading-relaxed text-faint',
-  md: 'max-w-[34ch] text-sm leading-relaxed text-muted',
-}
-
-const illustrationClass = 'mb-2.5 [&_img]:h-24 [&_img]:w-24 [&_svg]:h-24'
-
-const actionClass = 'mt-4'
 
 /**
  * Placeholder for a list, panel or screen with nothing in it yet.
@@ -67,21 +67,38 @@ export function EmptyState({
   children,
   ...props
 }: EmptyStateProps) {
+  const isFullScreen = size === 'md'
+
   return (
     <div
-      className={mergeClasses(baseRoot, sizeRoot[size], className)}
+      className={mergeClasses(styles.emptyState, sizeClasses[size], className)}
       {...props}
     >
-      {size === 'md' && illustration && (
-        <div className={illustrationClass} aria-hidden="true">
+      {isFullScreen && illustration && (
+        <div className={styles.illustration} aria-hidden="true">
           {illustration}
         </div>
       )}
-      {title && <p className={titleClass[size]}>{title}</p>}
-      {children && <p className={bodyClass[size]}>{children}</p>}
-      {action && <div className={actionClass}>{action}</div>}
+      {title &&
+        (isFullScreen ? (
+          <Text size="lg" weight="bold" font="display" color="strong">
+            {title}
+          </Text>
+        ) : (
+          <Text size="sm" weight="semibold" color="subtle">
+            {title}
+          </Text>
+        ))}
+      {children && (
+        <Text
+          size="sm"
+          color={isFullScreen ? 'muted' : 'faint'}
+          className={isFullScreen ? styles.messageWide : styles.messageNarrow}
+        >
+          {children}
+        </Text>
+      )}
+      {action && <div className={styles.actionSlot}>{action}</div>}
     </div>
   )
 }
-
-EmptyState.displayName = 'EmptyState'

@@ -1,0 +1,209 @@
+@reference "../../styles/globals.css";
+
+.datePicker {
+  @apply flex w-full flex-col gap-1.5 text-fg-strong;
+  @apply lg:w-37.5;
+}
+
+.field {
+  @apply relative flex w-full items-center;
+}
+
+.dateInput {
+  @apply box-border h-10 w-full pl-3 pr-9;
+  @apply rounded-2 border border-input-border bg-surface-raised;
+  @apply text-sm text-fg-strong;
+  @apply cursor-pointer outline-none;
+  @apply transition-[border-color,box-shadow] duration-base ease-out-soft;
+
+  &::placeholder {
+    @apply text-fg-faint;
+  }
+
+  &:focus {
+    @apply cursor-text border-brand;
+    box-shadow: inset 0 0 0 1px var(--color-brand);
+  }
+
+  &[data-disabled] {
+    @apply cursor-not-allowed opacity-disabled;
+  }
+}
+
+.clearButton {
+  @apply absolute right-2 top-1/2 -translate-y-1/2;
+  @apply inline-flex size-6 items-center justify-center p-0;
+  @apply rounded-2 border-none bg-transparent text-fg-faint;
+  @apply cursor-pointer outline-none;
+  @apply transition-[color,background] duration-base ease-out-soft;
+
+  & svg {
+    @apply size-3;
+  }
+
+  &:hover {
+    @apply bg-fg-strong/5 text-fg-strong;
+  }
+
+  &:focus-visible {
+    @apply focus-ring-inset;
+  }
+
+  &[hidden] {
+    @apply hidden;
+  }
+}
+
+.calendarPanel {
+  @apply flex min-w-70 flex-col gap-3 p-3.5;
+  @apply rounded-2 border bg-surface-raised;
+  @apply border-border/60 outline-none z-popover;
+  box-shadow: 0 12px 32px -10px
+    color-mix(in srgb, var(--color-warm-950) 30%, transparent);
+
+  &[data-state='open'] {
+    animation: datepicker-in var(--duration-base) var(--ease-out-soft);
+  }
+
+  &[data-state='closed'] {
+    animation: datepicker-out var(--duration-fast) var(--ease-in);
+  }
+}
+
+.calendarView {
+  @apply flex flex-col gap-2;
+
+  &[hidden] {
+    @apply hidden;
+  }
+}
+
+.viewHeader {
+  @apply flex items-center justify-between gap-2;
+}
+
+.viewSwitchButton {
+  @apply inline-flex flex-1 items-center justify-center gap-1;
+  @apply px-2 py-1.5 rounded-2;
+  @apply font-display text-base font-semibold tracking-snug;
+  @apply border-none bg-transparent text-fg-strong;
+  @apply cursor-pointer outline-none;
+  @apply transition-[background] duration-base ease-out-soft;
+
+  &:hover {
+    @apply bg-fg-strong/5;
+  }
+
+  &:focus-visible {
+    @apply focus-ring-inset;
+  }
+}
+
+.prevMonthButton,
+.nextMonthButton {
+  @apply inline-flex size-8 items-center justify-center p-0;
+  @apply rounded-2 border-none bg-transparent;
+  @apply text-fg-muted;
+  @apply cursor-pointer outline-none;
+  @apply transition-[background,color] duration-base ease-out-soft;
+
+  & svg {
+    @apply size-4;
+  }
+
+  &:hover:not(:disabled, [data-disabled]) {
+    @apply bg-fg-strong/5 text-fg-strong;
+  }
+
+  &:focus-visible {
+    @apply focus-ring-inset;
+  }
+
+  &[data-disabled] {
+    @apply cursor-not-allowed opacity-faint;
+  }
+}
+
+.dayGrid {
+  @apply w-full border-separate border-spacing-0;
+}
+
+.weekdayLabel {
+  @apply py-1.5 text-center uppercase;
+  @apply text-xs font-bold tracking-wider text-fg-faint;
+}
+
+.dayCell {
+  @apply p-0 text-center;
+}
+
+.dayButton {
+  @apply inline-flex h-9 w-full items-center justify-center p-0;
+  @apply rounded-2 border-none bg-transparent;
+  @apply text-sm font-medium text-fg-strong;
+  @apply cursor-pointer select-none outline-none;
+  @apply transition-[background,color] duration-fast ease-out-soft;
+
+  &[data-view='day'] {
+    @apply w-10;
+  }
+
+  &:hover:not(:disabled, [data-disabled], [data-selected]) {
+    @apply bg-fg-strong/5;
+  }
+
+  &:is(:focus-visible, [data-focus]) {
+    @apply focus-ring-inset relative z-raised;
+  }
+
+  &[data-today]:not([data-selected]) {
+    @apply font-bold text-brand-strong;
+    box-shadow: inset 0 0 0 1px
+      color-mix(in srgb, var(--color-brand) 45%, transparent);
+  }
+
+  &[data-selected] {
+    @apply bg-brand font-bold text-fg-on-brand;
+  }
+
+  &[data-outside-range] {
+    @apply text-fg-faint opacity-dim;
+  }
+
+  &[data-outside-visible-range] {
+    @apply invisible;
+  }
+
+  &[data-disabled] {
+    @apply cursor-not-allowed text-fg-faint opacity-faint;
+  }
+}
+
+@keyframes datepicker-in {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes datepicker-out {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .calendarPanel[data-state='open'],
+  .calendarPanel[data-state='closed'] {
+    animation: none;
+  }
+}

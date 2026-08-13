@@ -1,0 +1,34 @@
+@reference "../../styles/globals.css";
+
+.tabBar {
+  @apply relative inline-flex items-center gap-0.5 rounded-2;
+  @apply bg-surface-mute;
+  @apply p-1;
+}
+
+.selectionPill {
+  @apply absolute rounded-2 bg-brand-soft;
+  @apply left-(--left) top-(--top) w-(--width) h-(--height);
+  @apply duration-base ease-out-soft;
+  transition-property: var(--transition-property);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .selectionPill {
+    @apply transition-none;
+  }
+}
+
+.tab {
+  @apply relative z-raised inline-flex min-h-11 cursor-pointer items-center;
+  @apply rounded-2 px-4 py-1.5 text-sm font-semibold whitespace-nowrap;
+  @apply text-fg-subtle transition-colors duration-base outline-none;
+  @apply hover:text-fg-strong;
+  @apply focus-ring-inset;
+  @apply disabled:pointer-events-none disabled:opacity-disabled;
+  @apply data-[selected]:text-brand-strong;
+}
+
+.panel {
+  @apply mt-4 outline-none;
+}

@@ -1,0 +1,92 @@
+@reference "../../styles/globals.css";
+
+.toast {
+  @apply relative flex w-[min(24rem,calc(100vw-2rem))];
+}
+
+.card {
+  @apply relative flex h-full w-full gap-3 overflow-hidden rounded-2;
+  @apply shadow-warm-lg;
+  @apply pb-3 pl-4 pr-11 pt-2.5;
+}
+
+.surfaceDefault,
+.surfaceLoading {
+  @apply bg-fg-default;
+  --toast-ink: var(--color-fg-on-brand);
+}
+
+.surfaceSuccess {
+  @apply bg-success;
+  --toast-ink: var(--color-fg-on-brand);
+}
+
+.surfaceError {
+  @apply bg-danger;
+  --toast-ink: var(--color-fg-on-brand);
+}
+
+.surfaceWarning {
+  @apply bg-warning-bright;
+  --toast-ink: var(--color-fg-strong);
+}
+
+.textStack {
+  @apply flex min-w-0 flex-col gap-0.5;
+}
+
+.statusIcon {
+  @apply mt-px size-5 shrink-0;
+  color: var(--toast-ink);
+}
+
+.title {
+  @apply font-display text-base font-semibold leading-tight tracking-snug;
+  color: var(--toast-ink);
+}
+
+.description {
+  @apply text-sm leading-normal;
+  color: color-mix(in srgb, var(--toast-ink) 80%, transparent);
+}
+
+.actionButton {
+  @apply mt-1.5 self-start rounded-full px-3 py-0.5 text-sm font-semibold;
+  @apply transition-colors duration-fast focus-visible:outline-none;
+  @apply focus-visible:ring-2;
+  color: var(--toast-ink);
+  background-color: color-mix(in srgb, var(--toast-ink) 20%, transparent);
+}
+
+.actionButton:hover {
+  background-color: color-mix(in srgb, var(--toast-ink) 30%, transparent);
+}
+
+.actionButton:focus-visible {
+  --tw-ring-color: color-mix(in srgb, var(--toast-ink) 70%, transparent);
+}
+
+.closeButton {
+  @apply absolute right-1 top-1 grid size-11 place-items-center rounded-full;
+  @apply transition-colors duration-fast focus-visible:outline-none;
+  @apply focus-visible:ring-2;
+  color: color-mix(in srgb, var(--toast-ink) 55%, transparent);
+}
+
+.closeButton:hover {
+  color: var(--toast-ink);
+  background-color: color-mix(in srgb, var(--toast-ink) 15%, transparent);
+}
+
+.closeButton:focus-visible {
+  --tw-ring-color: color-mix(in srgb, var(--toast-ink) 70%, transparent);
+}
+
+.timerTrack {
+  @apply absolute inset-x-0 bottom-0 h-0.5 bg-fg-strong/20;
+}
+
+.timerBar {
+  @apply block h-full w-full origin-left;
+  background-color: color-mix(in srgb, var(--toast-ink) 90%, transparent);
+}

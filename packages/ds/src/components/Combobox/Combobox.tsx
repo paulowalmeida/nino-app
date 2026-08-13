@@ -1,48 +1,43 @@
-import { forwardRef, useMemo, useState } from 'react'
+import { Ref, useMemo, useState } from 'react'
 
 import {
   Combobox as ArkCombobox,
   createListCollection,
 } from '@ark-ui/react/combobox'
 import { Portal } from '@ark-ui/react/portal'
-import { baseDisabled } from '@ds/lib/baseClasses'
-import { mergeClasses } from '@ds/lib/mergeClasses'
+import { mergeClasses } from '@ds/lib/mergeClasses/mergeClasses'
 
-import {
-  ComboboxInputRef,
-  ComboboxOption,
-  ComboboxProps,
-  ComboboxSize,
-} from './Combobox.types'
+import styles from './Combobox.module.css'
+import { ComboboxSize } from './Combobox.types'
 
-const sizeClasses: Record<ComboboxSize, string> = {
-  sm: 'h-8 px-3 text-sm',
-  md: 'h-10 px-3 text-sm',
-  lg: 'h-12 px-4 text-base',
+type ComboboxOption = {
+  value: string
+  label: string
+  disabled?: boolean
 }
 
-const baseInput =
-  'w-full rounded-card border bg-white text-ink placeholder:text-faint transition-[color,box-shadow,border-color] duration-200 outline-none'
+type ComboboxProps = {
+  options: ComboboxOption[]
+  placeholder?: string
+  size?: ComboboxSize
+  error?: boolean
+  disabled?: boolean
+  value?: string
+  defaultValue?: string
+  onValueChange?: (value: string) => void
+  emptyMessage?: string
+  className?: string
+  ariaLabel?: string
+  ref?: Ref<HTMLInputElement>
+}
 
-const inputDefault =
-  'border-input-border focus:border-brand focus:ring-1 focus:ring-inset focus:ring-brand'
+const sizeClasses: Record<ComboboxSize, string> = {
+  sm: styles.sizeSmall,
+  md: styles.sizeMedium,
+  lg: styles.sizeLarge,
+}
 
-const inputError =
-  'data-[invalid]:border-danger data-[invalid]:focus:ring-danger aria-[invalid]:border-danger aria-[invalid]:focus:border-danger aria-[invalid]:focus:ring-danger'
-
-/* Lista longa (o TimePicker manda 96 horários) precisa de teto: sem altura
- * máxima o painel cresce além da viewport e some por cima ou por baixo. */
-const baseContent =
-  'z-50 min-w-[var(--reference-width)] max-h-[min(18rem,var(--available-height))] ' +
-  'overflow-y-auto overscroll-contain scrollbar-slim rounded-card ' +
-  'bg-white shadow-overlay p-1'
-
-const baseItem =
-  'relative flex cursor-default select-none items-center rounded px-3 py-2 text-sm text-ink outline-none transition-[color,box-shadow,border-color] duration-200 data-[highlighted]:bg-[color-mix(in_srgb,var(--color-brand)_10%,white)] data-[highlighted]:text-brand data-[disabled]:pointer-events-none data-[disabled]:opacity-50'
-
-const baseEmpty = 'px-3 py-2 text-sm text-faint'
-
-function filterOptions(options: ComboboxOption[], query: string) {
+const filterOptions = (options: ComboboxOption[], query: string) => {
   if (!query) return options
   const q = query.toLowerCase()
   return options.filter((option) => option.label.toLowerCase().includes(q))
@@ -68,94 +63,87 @@ function filterOptions(options: ComboboxOption[], query: string) {
  *
  * @param onValueChange - Fired with the selected value
  *
- * @param emptyMessage - Text shown when no option matches. Default: `Nenhum resultado`
+ * @param emptyMessage - Text shown when no option matches. Default: `Nenhum
+ * resultado`
  *
  * @param className - Additional CSS classes merged into the input
  *
  * @param ariaLabel - Accessible name for the input when no visible label
  * wraps it (e.g. outside `FormField`)
  */
-export const Combobox = forwardRef<ComboboxInputRef, ComboboxProps>(
-  (
-    {
-      options,
-      placeholder,
-      size = 'md',
-      error = false,
-      disabled,
-      value,
-      defaultValue,
-      onValueChange,
-      emptyMessage = 'Nenhum resultado',
-      className,
-      ariaLabel,
-    },
-    ref
-  ) => {
-    const [query, setQuery] = useState('')
+export function Combobox({
+  options,
+  placeholder,
+  size = 'md',
+  error = false,
+  disabled,
+  value,
+  defaultValue,
+  onValueChange,
+  emptyMessage = 'Nenhum resultado',
+  className,
+  ariaLabel,
+  ref,
+}: ComboboxProps) {
+  const [query, setQuery] = useState('')
 
-    const filtered = useMemo(
-      () => filterOptions(options, query),
-      [options, query]
-    )
+  const filtered = useMemo(
+    () => filterOptions(options, query),
+    [options, query]
+  )
 
-    const collection = useMemo(
-      () =>
-        createListCollection({
-          items: filtered,
-          itemToValue: (item) => item.value,
-          itemToString: (item) => item.label,
-        }),
-      [filtered]
-    )
+  const collection = useMemo(
+    () =>
+      createListCollection({
+        items: filtered,
+        itemToValue: (item) => item.value,
+        itemToString: (item) => item.label,
+      }),
+    [filtered]
+  )
 
-    return (
-      <ArkCombobox.Root
-        collection={collection}
-        disabled={disabled}
-        value={value !== undefined ? [value] : undefined}
-        defaultValue={defaultValue !== undefined ? [defaultValue] : undefined}
-        onValueChange={({ value: values }) => onValueChange?.(values[0])}
-        onInputValueChange={({ inputValue }) => setQuery(inputValue)}
-      >
-        <ArkCombobox.Control>
-          <ArkCombobox.Input
-            ref={ref}
-            placeholder={placeholder}
-            aria-label={ariaLabel}
-            data-invalid={error || undefined}
-            aria-invalid={error || undefined}
-            className={mergeClasses(
-              baseInput,
-              baseDisabled,
-              sizeClasses[size],
-              inputDefault,
-              inputError,
-              className
-            )}
-          />
-        </ArkCombobox.Control>
-        <Portal>
-          <ArkCombobox.Positioner>
-            <ArkCombobox.Content className={baseContent}>
-              <ArkCombobox.Empty className={baseEmpty}>
-                {emptyMessage}
-              </ArkCombobox.Empty>
-              {filtered.map((option) => (
-                <ArkCombobox.Item
-                  key={option.value}
-                  item={option}
-                  className={baseItem}
-                >
-                  <ArkCombobox.ItemText>{option.label}</ArkCombobox.ItemText>
-                </ArkCombobox.Item>
-              ))}
-            </ArkCombobox.Content>
-          </ArkCombobox.Positioner>
-        </Portal>
-      </ArkCombobox.Root>
-    )
-  }
-)
-
-Combobox.displayName = 'Combobox'
+  return (
+    <ArkCombobox.Root
+      collection={collection}
+      disabled={disabled}
+      value={value !== undefined ? [value] : undefined}
+      defaultValue={defaultValue !== undefined ? [defaultValue] : undefined}
+      onValueChange={({ value: values }) => onValueChange?.(values[0])}
+      onInputValueChange={({ inputValue }) => setQuery(inputValue)}
+    >
+      <ArkCombobox.Control>
+        <ArkCombobox.Input
+          ref={ref}
+          placeholder={placeholder}
+          aria-label={ariaLabel}
+          data-invalid={error || undefined}
+          aria-invalid={error || undefined}
+          className={mergeClasses(
+            styles.searchField,
+            styles.invalidState,
+            sizeClasses[size],
+            className
+          )}
+        />
+      </ArkCombobox.Control>
+      <Portal>
+        <ArkCombobox.Positioner>
+          <ArkCombobox.Content className={styles.optionPanel}>
+            <ArkCombobox.Empty className={styles.emptyMessage}>
+              {emptyMessage}
+            </ArkCombobox.Empty>
+            {filtered.map((option) => (
+              <ArkCombobox.Item
+                key={option.value}
+                item={option}
+                className={styles.option}
+              >
+                <ArkCombobox.ItemText>{option.label}</ArkCombobox.ItemText>
+              </ArkCombobox.Item>
+            ))}
+          </ArkCombobox.Content>
+        </ArkCombobox.Positioner>
+      </Portal>
+    </ArkCombobox.Root>
+  )
+}

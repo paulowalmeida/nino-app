@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react'
 
-import { FormField } from '../FormField'
+import { FormField } from '../FormField/FormField'
 import { NumberInput } from './NumberInput'
 
 const meta: Meta<typeof NumberInput> = {

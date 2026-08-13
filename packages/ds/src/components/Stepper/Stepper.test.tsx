@@ -10,7 +10,7 @@ const steps = [
   { title: 'Pagamento' },
 ]
 
-describe(Stepper.displayName!, () => {
+describe(Stepper.name, () => {
   it('renders the step titles', () => {
     render(<Stepper steps={steps} />)
     expect(screen.getByText('Dados pessoais')).toBeInTheDocument()

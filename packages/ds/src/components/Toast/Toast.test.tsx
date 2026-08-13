@@ -38,7 +38,7 @@ describe(ToastContainer.name, () => {
     renderContainer()
     act(() => toast.default('Mensagem'))
     await screen.findByText('Mensagem')
-    await userEvent.click(screen.getByRole('button', { name: 'Close' }))
+    await userEvent.click(screen.getByRole('button', { name: 'Fechar' }))
     await waitFor(
       () => expect(screen.queryByText('Mensagem')).not.toBeInTheDocument(),
       { timeout: 3000 }
@@ -46,7 +46,7 @@ describe(ToastContainer.name, () => {
   })
 
   it.each(['default', 'success', 'error', 'warning', 'loading'] as const)(
-    'renderiza variant %s sem erros',
+    'renders variant %s without errors',
     async (variant) => {
       renderContainer()
       act(() => toast[variant]('Mensagem'))
@@ -77,7 +77,7 @@ describe(ToastContainer.name, () => {
     act(() => toast.default('Sem fechar', { closable: false }))
     await screen.findByText('Sem fechar')
     expect(
-      screen.queryByRole('button', { name: 'Close' })
+      screen.queryByRole('button', { name: 'Fechar' })
     ).not.toBeInTheDocument()
   })
 

@@ -1,0 +1,24 @@
+@reference "../../styles/globals.css";
+
+.panel {
+  @apply z-popover w-72 rounded-2 bg-surface-raised p-4 shadow-warm-lg;
+  @apply outline-none;
+  @apply data-[state=open]:animate-in;
+  @apply data-[state=closed]:animate-out data-[state=closed]:fade-out-0;
+  @apply data-[state=open]:fade-in-0;
+  @apply data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95;
+}
+
+.arrow {
+  --arrow-size: 8px;
+  --arrow-background: var(--color-surface-raised);
+}
+
+.title {
+  @apply mb-2 font-display text-sm font-semibold tracking-snug;
+  @apply text-fg-strong;
+}
+
+.description {
+  @apply text-sm leading-normal text-fg-muted;
+}

@@ -33,11 +33,11 @@ export const Default: Story = {
  */
 export const BesideAFigure: Story = {
   render: () => (
-    <div className="w-64 rounded-card border border-line/60 bg-white p-5">
-      <p className="text-xs font-bold uppercase tracking-[0.12em] text-faint">
+    <div className="w-64 rounded-2 border border-border bg-surface-raised p-5">
+      <p className="text-xs font-bold uppercase tracking-widest text-fg-faint">
         Faturamento
       </p>
-      <p className="mt-1 font-display text-3xl font-extrabold text-ink tabular-nums">
+      <p className="mt-1 font-display text-3xl font-extrabold text-fg-strong tabular-nums">
         R$ 2.340
       </p>
       <div className="mt-3">

@@ -1,14 +1,35 @@
 import mascotSrc from '../../assets/mascot.svg'
+import { Image } from '../Image/Image'
 
-export interface NinoMascotProps {
+type NinoMascotProps = {
   className?: string
 }
 
 /**
- * Every current usage pairs the mascot with visible brand text nearby
- * (wordmark, tagline) — it adds no information on its own, so it stays out
- * of the accessibility tree instead of announcing redundant alt text.
+ * The nino cat, as a picture.
+ *
+ * It stays out of the accessibility tree on purpose: every place it appears
+ * already has the brand in visible text next to it (the wordmark, a
+ * tagline), so announcing it would only repeat what was just read.
+ *
+ * `width` and `height` are the drawing's own proportion, not a size — the
+ * browser reserves the right box while the file loads, and any class the
+ * caller passes still wins.
+ *
+ * @param className - Sizing and placement, decided by whoever mounts it
+ *
+ * @example
+ * <NinoMascot className={styles.mascot} />
  */
 export function NinoMascot({ className }: NinoMascotProps) {
-  return <img src={mascotSrc} alt="" aria-hidden="true" className={className} />
+  return (
+    <Image
+      src={mascotSrc}
+      alt=""
+      aria-hidden="true"
+      width={300}
+      height={300}
+      className={className}
+    />
+  )
 }

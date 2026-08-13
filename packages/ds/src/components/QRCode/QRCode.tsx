@@ -1,39 +1,61 @@
+import { ReactNode } from 'react'
+
 import { QrCode as ArkQrCode } from '@ark-ui/react/qr-code'
-import { mergeClasses } from '@ds/lib/mergeClasses'
+import { mergeClasses } from '@ds/lib/mergeClasses/mergeClasses'
 
-import { QRCodeProps } from './QRCode.types'
+import styles from './QRCode.module.css'
 
-const baseRoot = 'inline-block rounded-card bg-white p-3'
-
-const frameClass = 'h-full w-full [&_path]:fill-ink'
-
-const overlayClass =
-  'flex items-center justify-center rounded-card bg-white p-1 shadow-card'
+type QRCodeProps = {
+  value: string
+  size?: number
+  logo?: ReactNode
+  label?: string
+  className?: string
+}
 
 /**
- * Renders a QR code (Ark `QrCode`) — share a store link, Pix, or menu.
+ * QR code for what has to jump from a screen to a phone — the store link,
+ * a Pix payload, the menu on a table.
  *
- * @param value - Data encoded in the QR code
+ * The code itself says nothing to a screen reader, so `label` is what names
+ * it. And a code is never the only way in: whatever it encodes has to be
+ * reachable as text or a link next to it, for whoever cannot point a camera
+ * at it.
  *
- * @param size - Pixel size of the square. Default: `160`
+ * @param value - What gets encoded — a URL, a Pix payload
  *
- * @param logo - Optional logo centered over the code
+ * @param size - Side of the square in pixels, white margin included. The
+ * drawing itself comes out smaller than this. Default: `160`
+ *
+ * @param logo - Mark centred over the code. The pattern carries enough
+ * redundancy for a small one, but a large mark stops it from being read
+ *
+ * @param label - What a screen reader announces
+ *
+ * @example
+ * <QRCode value={storeUrl} label="Código do cardápio" />
  */
-export function QRCode({ value, size = 160, logo, className }: QRCodeProps) {
+export function QRCode({
+  value,
+  size = 160,
+  logo,
+  label,
+  className,
+}: QRCodeProps) {
   return (
     <ArkQrCode.Root
       value={value}
-      className={mergeClasses(baseRoot, className)}
+      role="img"
+      aria-label={label}
+      className={mergeClasses(styles.codeCard, className)}
       style={{ width: size, height: size }}
     >
-      <ArkQrCode.Frame className={frameClass}>
+      <ArkQrCode.Frame className={styles.frame}>
         <ArkQrCode.Pattern />
       </ArkQrCode.Frame>
       {logo && (
-        <ArkQrCode.Overlay className={overlayClass}>{logo}</ArkQrCode.Overlay>
+        <ArkQrCode.Overlay className={styles.logoBadge}>{logo}</ArkQrCode.Overlay>
       )}
     </ArkQrCode.Root>
   )
 }
-
-QRCode.displayName = 'QRCode'

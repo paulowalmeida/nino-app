@@ -1,54 +1,33 @@
-import type { CSSProperties } from 'react'
-import { useCallback, useEffect, useRef } from 'react'
+import { CSSProperties, ReactNode, useCallback, useEffect, useRef } from 'react'
 
 import { ScrollArea as ArkScrollArea } from '@ark-ui/react/scroll-area'
-import { mergeClasses } from '@ds/lib/mergeClasses'
+import { mergeClasses } from '@ds/lib/mergeClasses/mergeClasses'
 
 import styles from './ScrollArea.module.css'
-import { ScrollAreaProps } from './ScrollArea.types'
 
-/** How much of the edge dissolves while the axis can still scroll. */
+type ScrollAreaProps = {
+  /** Scrollable content */
+  children: ReactNode
+  /** Classes for the root — typically a height/max-height constraint */
+  className?: string
+  /**
+   * Fades the content against any edge it can still scroll past. Opt-in: the
+   * mask is a paint effect over the whole viewport, so it is off by default
+   * and each caller decides. Defaults to `false`.
+   */
+  fadeEdges?: boolean
+  /** Inline sizing, for heights that do not come from a utility class */
+  style?: CSSProperties
+  /**
+   * Scrollbar thumb colour. Defaults to the brand orange; takes any CSS
+   * colour, so a tenant with its own palette can pass a hex (`#0f766e`) or a
+   * token (`var(--color-fg-strong)`).
+   */
+  thumbColor?: string
+}
+
+/** Quanto da borda se dissolve enquanto o eixo ainda pode rolar. */
 const FADE = '2rem'
-
-const rootClass = 'group relative overflow-hidden'
-
-/* A barra nativa precisa sumir explicitamente: o Ark desenha a dele por cima
- * do mesmo viewport, e sem isto as duas aparecem lado a lado. */
-const viewportClass =
-  'h-full w-full rounded-[inherit] [scrollbar-width:none] ' +
-  '[&::-webkit-scrollbar]:hidden focus-visible:outline-2 ' +
-  'focus-visible:outline-brand focus-visible:-outline-offset-2'
-
-/* A barra é uma marca de tinta na borda do conteúdo, não um trilho desenhado.
- * A área de clique é constante (nada de layout shift ao passar o ponteiro);
- * quem muda é a tinta dentro dela. Cada eixo some quando não há o que rolar
- * nele (`data-overflow-x/y`), senão sobra um traço solto no rodapé de toda
- * lista vertical. */
-const scrollbarClass =
-  'flex touch-none select-none p-[3px] ' +
-  'data-[orientation=vertical]:w-3 data-[orientation=horizontal]:h-3 ' +
-  'data-[orientation=horizontal]:flex-col'
-
-/* O gesto do componente: em repouso o polegar é um fio de 2px rente à borda;
- * com o ponteiro na região ele engrossa e ganha densidade, e sob arraste abre
- * um halo da própria cor. Toda a variação sai de `--ds-scroll-thumb` via
- * color-mix e opacidade — uma só decisão de cor por barra, como antes. */
-const thumbBaseClass =
-  'rounded-full bg-[color:var(--ds-scroll-thumb)] opacity-40 ' +
-  'transition-[width,height,opacity,box-shadow] duration-300 ' +
-  'ease-[cubic-bezier(0.2,0.9,0.25,1)] motion-reduce:transition-none ' +
-  'group-hover:opacity-80 ' +
-  'active:shadow-[0_0_0_4px_color-mix(in_oklab,var(--ds-scroll-thumb)_20%,transparent)]'
-
-const thumbVerticalClass = mergeClasses(
-  thumbBaseClass,
-  'mx-auto w-[2px] group-hover:w-1.5'
-)
-
-const thumbHorizontalClass = mergeClasses(
-  thumbBaseClass,
-  'my-auto h-[2px] group-hover:h-1.5'
-)
 
 /**
  * Scrollable region with a themed custom scrollbar (Ark `ScrollArea`).
@@ -112,30 +91,32 @@ export function ScrollArea({
 
   return (
     <ArkScrollArea.Root
-      className={mergeClasses(rootClass, className)}
+      className={mergeClasses(styles.scrollArea, className)}
       style={thumbStyle}
     >
       <ArkScrollArea.Viewport
         ref={viewportRef}
         onScroll={fadeEdges ? paintEdges : undefined}
-        className={mergeClasses(viewportClass, fadeEdges && styles.fade)}
+        className={mergeClasses(styles.viewport, fadeEdges && styles.edgeFadeMask)}
       >
         <ArkScrollArea.Content>{children}</ArkScrollArea.Content>
       </ArkScrollArea.Viewport>
       <ArkScrollArea.Scrollbar
-        className={mergeClasses(scrollbarClass, 'not-data-[overflow-y]:hidden')}
+        className={mergeClasses(styles.scrollbar, styles.scrollbarVertical)}
       >
-        <ArkScrollArea.Thumb className={thumbVerticalClass} />
+        <ArkScrollArea.Thumb
+          className={mergeClasses(styles.thumb, styles.thumbVertical)}
+        />
       </ArkScrollArea.Scrollbar>
       <ArkScrollArea.Scrollbar
         orientation="horizontal"
-        className={mergeClasses(scrollbarClass, 'not-data-[overflow-x]:hidden')}
+        className={mergeClasses(styles.scrollbar, styles.scrollbarHorizontal)}
       >
-        <ArkScrollArea.Thumb className={thumbHorizontalClass} />
+        <ArkScrollArea.Thumb
+          className={mergeClasses(styles.thumb, styles.thumbHorizontal)}
+        />
       </ArkScrollArea.Scrollbar>
       <ArkScrollArea.Corner />
     </ArkScrollArea.Root>
   )
 }
-
-ScrollArea.displayName = 'ScrollArea'

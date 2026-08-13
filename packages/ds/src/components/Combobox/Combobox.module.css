@@ -1,0 +1,52 @@
+@reference "../../styles/globals.css";
+
+.searchField {
+  @apply w-full rounded-2 border bg-surface-raised text-fg-strong;
+  @apply disabled:pointer-events-none state-disabled;
+  @apply placeholder:text-fg-faint;
+  @apply transition-field outline-none;
+  @apply border-input-border;
+  @apply focus:border-brand focus:ring-1 focus:ring-inset;
+  @apply focus:ring-brand;
+}
+
+.invalidState {
+  @apply data-[invalid]:border-danger;
+  @apply data-[invalid]:focus:ring-danger;
+  @apply aria-[invalid]:border-danger;
+  @apply aria-[invalid]:focus:border-danger;
+  @apply aria-[invalid]:focus:ring-danger;
+}
+
+.optionPanel {
+  @apply z-popover min-w-[var(--reference-width)];
+  @apply max-h-[min(18rem,var(--available-height))];
+  @apply overflow-y-auto overscroll-contain scrollbar-slim rounded-2;
+  @apply bg-surface-raised;
+  @apply shadow-warm-lg p-1;
+}
+
+.option {
+  @apply relative flex cursor-default select-none items-center rounded-1 px-3;
+  @apply py-2 text-sm text-fg-strong outline-none;
+  @apply transition-field;
+  @apply data-[highlighted]:bg-brand-soft;
+  @apply data-[highlighted]:text-brand;
+  @apply state-disabled;
+}
+
+.emptyMessage {
+  @apply px-3 py-2 text-sm text-fg-faint;
+}
+
+.sizeSmall {
+  @apply h-8 px-3 text-sm;
+}
+
+.sizeMedium {
+  @apply h-11 px-3 text-base;
+}
+
+.sizeLarge {
+  @apply h-12 px-4 text-base;
+}

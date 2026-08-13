@@ -1,38 +1,48 @@
+import { FocusEventHandler, Ref } from 'react'
+
 import { RadioGroup as ArkRadioGroup } from '@ark-ui/react/radio-group'
-import { mergeClasses } from '@ds/lib/mergeClasses'
+import { mergeClasses } from '@ds/lib/mergeClasses/mergeClasses'
 
-import { RadioGroupProps, RadioGroupVariant } from './RadioGroup.types'
+import styles from './RadioGroup.module.css'
 
-const baseRoot = 'flex gap-3'
-const rootVertical = 'flex-col'
-const rootHorizontal = 'flex-row flex-wrap'
+type RadioOption = {
+  value: string
+  label: string
+  /** Supporting line under the label — a price, a delay, a consequence. */
+  description?: string
+  disabled?: boolean
+}
 
-const baseControl =
-  'h-4 w-4 shrink-0 rounded-full border border-input-border bg-white ' +
-  'flex items-center justify-center outline-none transition-[color,box-shadow,border-color] duration-200 ' +
-  'focus-visible:outline-2 focus-visible:outline-brand ' +
-  'focus-visible:outline-offset-2 data-[state=checked]:border-brand ' +
-  'data-[state=checked]:bg-brand disabled:cursor-not-allowed ' +
-  'disabled:opacity-50'
+type RadioGroupVariant = 'default' | 'card'
 
-const baseIndicatorDot = 'h-1.5 w-1.5 rounded-full bg-white'
+type RadioGroupProps = {
+  options: RadioOption[]
+  /**
+   * `card` turns each option into a surface of its own — for choices that
+   * carry a description and deserve a bigger touch target.
+   */
+  variant?: RadioGroupVariant
+  orientation?: 'horizontal' | 'vertical'
+  value?: string
+  defaultValue?: string
+  onValueChange?: (value: string) => void
+  disabled?: boolean
+  className?: string
+  /** Names the group for assistive tech when no visible label points at it. */
+  'aria-label'?: string
+  /** Id of the visible element that already names the group. */
+  'aria-labelledby'?: string
+  onBlur?: FocusEventHandler<HTMLDivElement>
+  /**
+   * Points at the first option's input — the node a form library focuses
+   * when it walks to the first invalid field.
+   */
+  ref?: Ref<HTMLInputElement>
+}
 
-const baseLabelText = 'text-sm text-body leading-none cursor-pointer'
-
-/* No modo card o rótulo deixa de ser `leading-none`: ele passa a dividir a
- * linha com a descrição, e o texto colado no topo desalinharia do radio. */
-const cardLabelText = 'block text-sm font-semibold text-ink cursor-pointer'
-
-const descriptionText = 'mt-0.5 block text-xs leading-relaxed text-faint'
-
-const wrapperClasses: Record<RadioGroupVariant, string> = {
-  default: 'flex items-center gap-2 cursor-pointer',
-  card:
-    'flex flex-1 items-start gap-2.5 cursor-pointer rounded-card border ' +
-    'border-line/60 bg-white p-3 transition-colors ' +
-    'hover:border-brand/40 data-[state=checked]:border-brand ' +
-    'data-[state=checked]:bg-brand-soft ' +
-    'data-[disabled]:cursor-not-allowed data-[disabled]:opacity-50',
+const itemClasses: Record<RadioGroupVariant, string> = {
+  default: styles.optionRow,
+  card: styles.optionCard,
 }
 
 /**
@@ -57,7 +67,8 @@ const wrapperClasses: Record<RadioGroupVariant, string> = {
  *   orientation="horizontal"
  *   options={[
  *     { value: 'DELIVERY', label: 'Entrega', description: 'Chega em ~40 min' },
- *     { value: 'PICKUP', label: 'Retirada', description: 'Você busca na loja' },
+ *     { value: 'PICKUP', label: 'Retirada', description: 'Você busca na loja'
+ * },
  *   ]}
  * />
  */
@@ -67,6 +78,7 @@ export function RadioGroup({
   orientation = 'vertical',
   className,
   onValueChange,
+  ref,
   ...props
 }: RadioGroupProps) {
   const isCard = variant === 'card'
@@ -74,45 +86,52 @@ export function RadioGroup({
   return (
     <ArkRadioGroup.Root
       className={mergeClasses(
-        baseRoot,
-        orientation === 'vertical' ? rootVertical : rootHorizontal,
+        styles.radioGroup,
+        orientation === 'vertical'
+          ? styles.stackVertical
+          : styles.stackHorizontal,
         className
       )}
       onValueChange={({ value }) => value !== null && onValueChange?.(value)}
       orientation={orientation}
       {...props}
     >
-      {options.map((option) => (
+      {options.map((option, index) => (
         <ArkRadioGroup.Item
           key={option.value}
           value={option.value}
           disabled={option.disabled}
-          className={wrapperClasses[variant]}
+          className={itemClasses[variant]}
         >
           <ArkRadioGroup.ItemControl
-            className={mergeClasses(baseControl, isCard && 'mt-0.5')}
+            className={mergeClasses(
+              styles.radioCircle,
+              isCard && styles.radioCircleInCard
+            )}
           >
             <ArkRadioGroup.Indicator>
-              <span className={baseIndicatorDot} />
+              <span className={styles.selectedDot} />
             </ArkRadioGroup.Indicator>
           </ArkRadioGroup.ItemControl>
 
           {isCard ? (
-            <span className="min-w-0">
-              <ArkRadioGroup.ItemText className={cardLabelText}>
+            <span className={styles.cardTextBlock}>
+              <ArkRadioGroup.ItemText className={styles.cardLabelText}>
                 {option.label}
               </ArkRadioGroup.ItemText>
               {option.description && (
-                <span className={descriptionText}>{option.description}</span>
+                <span className={styles.descriptionText}>
+                  {option.description}
+                </span>
               )}
             </span>
           ) : (
-            <ArkRadioGroup.ItemText className={baseLabelText}>
+            <ArkRadioGroup.ItemText className={styles.labelText}>
               {option.label}
             </ArkRadioGroup.ItemText>
           )}
 
-          <ArkRadioGroup.ItemHiddenInput />
+          <ArkRadioGroup.ItemHiddenInput ref={index === 0 ? ref : undefined} />
         </ArkRadioGroup.Item>
       ))}
     </ArkRadioGroup.Root>

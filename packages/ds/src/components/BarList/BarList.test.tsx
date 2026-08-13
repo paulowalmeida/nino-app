@@ -8,7 +8,7 @@ const items = [
   { id: 'b', label: 'Batata', value: 10 },
 ]
 
-describe(BarList.displayName!, () => {
+describe(BarList.name, () => {
   it('lists every item as a row', () => {
     render(<BarList items={items} />)
     expect(screen.getAllByRole('listitem')).toHaveLength(2)

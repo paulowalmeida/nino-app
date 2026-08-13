@@ -1,13 +1,14 @@
 @reference "../../styles/globals.css";
 
 .backdrop {
-  @apply fixed inset-0 z-40 bg-black/50 backdrop-blur-sm duration-200;
+  @apply fixed inset-0 z-overlay bg-fg-strong/50 backdrop-blur-sm;
+  @apply duration-base;
   @apply data-[state=open]:animate-in data-[state=open]:fade-in-0;
   @apply data-[state=closed]:animate-out data-[state=closed]:fade-out-0;
 }
 
 .positioner {
-  @apply fixed inset-0 z-50 flex overflow-hidden;
+  @apply fixed inset-0 z-modal flex overflow-hidden;
 }
 
 .alignRight {
@@ -58,11 +59,9 @@
   @apply data-[state=open]:slide-in-from-top;
 }
 
-/* `max-w-full` guards against the default `size` (400px) overflowing
-   viewports narrower than that when the app doesn't pass a responsive one. */
-.content {
-  @apply flex max-w-full flex-col bg-white shadow-overlay outline-none;
-  @apply duration-300;
+.panel {
+  @apply flex max-w-full flex-col bg-surface-raised shadow-warm-lg outline-none;
+  @apply duration-slow;
 }
 
 .header {
@@ -70,35 +69,28 @@
 }
 
 .title {
-  @apply font-display text-base font-semibold tracking-[-0.01em] text-ink;
+  @apply font-display text-base font-semibold tracking-snug text-fg-strong;
 }
 
 .description {
-  @apply mt-1 text-[0.8125rem] leading-[1.45] text-muted;
+  @apply mt-1 text-sm leading-normal text-fg-muted;
 }
 
-.body {
+.scrollArea {
   @apply flex-1 overflow-y-auto px-6 py-4;
 }
 
-/* p-3.5 around a 16px icon adds up to a 44px tap target — screens.md,
-   "Alvos de toque". */
 .closeButton {
-  @apply flex cursor-pointer rounded-full p-3.5 text-faint transition-colors;
-  @apply hover:bg-sand hover:text-ink;
-  @apply focus-visible:outline-2 focus-visible:outline-brand;
-  @apply focus-visible:outline-offset-2;
+  @apply flex cursor-pointer rounded-full p-3.5 text-fg-faint;
+  @apply transition-colors;
+  @apply hover:bg-surface-5 hover:text-fg-strong;
+  @apply focus-ring;
 }
 
-/*
- * 44px touch target to grab, thinner pill inside. `touch-none` is required,
- * not cosmetic: without it the phone reads the first finger movement as
- * page scroll and cancels the pointer before the JS can accumulate offset.
- */
 .dragHandleRow {
   @apply flex h-11 shrink-0 touch-none cursor-grab items-center justify-center;
 }
 
 .dragHandlePill {
-  @apply h-1 w-9 rounded-full bg-black/15;
+  @apply h-1 w-9 rounded-full bg-fg-strong/15;
 }

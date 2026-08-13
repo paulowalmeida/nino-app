@@ -10,7 +10,7 @@ const items = [
   { value: 'c', trigger: 'Item C', content: 'Conteúdo C', disabled: true },
 ]
 
-describe(Accordion.displayName!, () => {
+describe(Accordion.name, () => {
   it('renders the triggers', () => {
     render(<Accordion items={items} />)
     expect(screen.getByText('Item A')).toBeInTheDocument()
@@ -46,11 +46,11 @@ describe(Accordion.displayName!, () => {
       <Accordion
         items={items}
         itemClassName="bg-transparent"
-        triggerClassName="text-white/80"
+        triggerClassName="text-fg-on-brand/80"
       />
     )
     const trigger = screen.getByText('Item A').closest('button')
-    expect(trigger).toHaveClass('text-white/80')
+    expect(trigger).toHaveClass('text-fg-on-brand/80')
     expect(trigger?.closest('[data-part="item"]')).toHaveClass('bg-transparent')
   })
 })

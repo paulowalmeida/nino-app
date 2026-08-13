@@ -1,0 +1,12 @@
+@reference "../../styles/globals.css";
+
+.bubble {
+  @apply z-popover max-w-xs rounded-2 bg-fg-strong px-2.5 py-1.5 text-xs;
+  @apply text-fg-inverse;
+  @apply shadow-warm-lg animate-in fade-in-0 zoom-in-95;
+}
+
+.arrow {
+  --arrow-size: 8px;
+  --arrow-background: var(--color-fg-strong);
+}

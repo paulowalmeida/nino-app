@@ -1,60 +1,63 @@
-import { ButtonHTMLAttributes, forwardRef } from 'react'
+import { ButtonHTMLAttributes, Ref } from 'react'
 
-import { LoadingDots } from '@ds/components/LoadingDots'
-import { Spinner } from '@ds/components/Spinner'
-import { baseFocus, baseLayout } from '@ds/lib/baseClasses'
-import { mergeClasses } from '@ds/lib/mergeClasses'
-import { Slot } from '@ds/lib/Slot'
-import { motion } from 'framer-motion'
+import { LoadingDots } from '@ds/components/LoadingDots/LoadingDots'
+import { Slot } from '@ds/components/Slot/Slot'
+import { Spinner } from '@ds/components/Spinner/Spinner'
+import { mergeClasses } from '@ds/lib/mergeClasses/mergeClasses'
 
-import { ButtonProps, ButtonSize, ButtonVariant } from './Button.types'
+import styles from './Button.module.css'
+
+type ButtonVariant =
+  | 'primary'
+  | 'secondary'
+  | 'outline'
+  | 'ghost'
+  | 'inverse'
+  | 'inverseOutline'
+  | 'danger'
+
+type ButtonSize = 'sm' | 'md' | 'lg' | 'icon'
+
+type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
+  ref?: Ref<HTMLButtonElement>
+  /** Visual style of the button. Default: `primary` */
+  variant?: ButtonVariant
+  /** Height and padding of the button. Default: `md` */
+  size?: ButtonSize
+  /** Shows a loading indicator and blocks interaction while an action is in progress */
+  loading?: boolean
+  /** Loading indicator style. Default: `spinner` */
+  loadingIndicator?: 'spinner' | 'dots'
+  /**
+   * Delegates rendering to the direct child via `Slot`.
+   * Useful for rendering the Button as `<a>`, `<Link>`, or another element.
+   * @example
+   * <Button asChild><a href="/route">See more</a></Button>
+   */
+  asChild?: boolean
+}
 
 const variantClasses: Record<ButtonVariant, string> = {
-  primary:
-    'bg-brand text-brand-foreground hover:bg-brand-hover active:bg-brand-active',
-  secondary: 'bg-sand text-ink hover:bg-sand-deep active:bg-line',
-  outline:
-    'border border-line text-ink bg-transparent hover:bg-cream ' +
-    'active:bg-cream-deep',
-  ghost: 'text-body bg-transparent hover:bg-cream active:bg-cream-deep',
-  /* Sem halo colorido: sobre o laranja da marca, o glow virava um segundo
-   * botão desfocado atrás do primeiro. */
-  inverse:
-    'bg-white text-brand-strong hover:bg-cream active:bg-cream-deep ' +
-    'shadow-card',
-  inverseOutline:
-    'border-[1.5px] border-white/55 text-white bg-transparent hover:bg-white hover:text-brand-strong hover:border-white',
-  /* Destrutivo é preenchimento cheio, como o toast de erro: um botão apagado
-   * que só fica vermelho no hover esconde a consequência até o último
-   * instante. */
-  danger: 'bg-danger text-cream hover:bg-danger/90 active:bg-danger/80',
+  primary: styles.variantPrimary,
+  secondary: styles.variantSecondary,
+  outline: styles.variantOutline,
+  ghost: styles.variantGhost,
+  inverse: styles.variantInverse,
+  inverseOutline: styles.variantInverseOutline,
+  danger: styles.variantDanger,
 }
 
 const sizeClasses: Record<ButtonSize, string> = {
-  sm: 'h-8 px-3 text-sm gap-1.5',
-  md: 'h-10 px-4 text-sm gap-2',
-  lg: 'h-12 px-6 text-base gap-2',
-  icon: 'h-10 w-10 shrink-0 p-0',
+  sm: styles.sizeSmall,
+  md: styles.sizeMedium,
+  lg: styles.sizeLarge,
+  icon: styles.sizeIcon,
 }
 
-const baseDisabledStyle = 'disabled:pointer-events-none'
-
-/**
- * Desligado é superfície apagada, não CTA translúcido: laranja de marca a
- * 50% sobre cream continua lendo como botão vivo — a pessoa clica, nada
- * acontece e a culpa parece ser do sistema. Variante com preenchimento
- * troca a tinta por `sand`; as de fundo transparente (outline, ghost) já
- * comunicam pelo apagamento e mantêm a opacidade.
- */
 const FILLED: ButtonVariant[] = ['primary', 'secondary', 'inverse', 'danger']
 
 const disabledStyle = (variant: ButtonVariant): string =>
-  FILLED.includes(variant) ? 'bg-sand text-subtle shadow-none' : 'opacity-50'
-
-/** Carregando não é desligado: a ação está em curso, a tinta continua. */
-const loadingOpacity = 'opacity-50'
-
-const MotionButton = motion.create('button')
+  FILLED.includes(variant) ? styles.disabledFilled : styles.disabledTransparent
 
 /**
  * Primary action button. Supports visual variants, sizes,
@@ -64,7 +67,8 @@ const MotionButton = motion.create('button')
  *
  * @param size - Height and padding of the button. Default: `md`
  *
- * @param loading - Shows a loading indicator and blocks interaction while an action is in progress
+ * @param loading - Shows a loading indicator and blocks interaction while
+ * an action is in progress
  *
  * @param loadingIndicator - Style of the loading indicator. Default: `spinner`
  *
@@ -86,67 +90,63 @@ const MotionButton = motion.create('button')
  *
  * @param onKeyDown - Fired when a key is pressed while the button is focused
  */
-export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
-  (
-    {
-      variant = 'primary',
-      size = 'md',
-      loading = false,
-      loadingIndicator = 'spinner',
-      asChild = false,
-      disabled,
-      className,
-      children,
-      ...props
-    },
-    ref
-  ) => {
-    const baseClassName = mergeClasses(
-      baseLayout,
-      baseFocus,
-      baseDisabledStyle,
-      variantClasses[variant],
-      sizeClasses[size],
-      /* depois da variante: é ela que o estado desligado precisa sobrescrever */
-      loading ? loadingOpacity : disabled && disabledStyle(variant),
-      className
-    )
+export function Button({
+  variant = 'primary',
+  size = 'md',
+  loading = false,
+  loadingIndicator = 'spinner',
+  asChild = false,
+  disabled,
+  className,
+  children,
+  ref,
+  ...props
+}: ButtonProps) {
+  const isMuted = !!disabled && !loading
 
-    if (asChild) {
-      return (
-        <Slot
-          ref={ref}
-          disabled={disabled || loading}
-          aria-busy={loading || undefined}
-          className={baseClassName}
-          {...(props as ButtonHTMLAttributes<HTMLButtonElement>)}
-        >
-          {children}
-        </Slot>
-      )
-    }
+  const baseClassName = mergeClasses(
+    styles.button,
+    /* Desligado troca a variante em vez de se somar a ela: com CSS Module
+         o `twMerge` não enxerga o que a classe carrega, então duas tintas
+         empilhadas ficariam as duas aplicadas, e venceria a ordem do arquivo
+         em vez da intenção. */
+    isMuted ? disabledStyle(variant) : variantClasses[variant],
+    sizeClasses[size],
+    /* Carregando não é desligado: a ação está em curso, então a tinta da
+         variante continua e só o conjunto recua. */
+    loading && styles.loadingDimmed,
+    className
+  )
 
+  if (asChild) {
     return (
-      <MotionButton
+      <Slot
         ref={ref}
         disabled={disabled || loading}
         aria-busy={loading || undefined}
         className={baseClassName}
-        /* Só escala: baixar a opacidade clareia a tinta e o botão pisca
-           desligado no meio do próprio clique. */
-        whileTap={disabled || loading ? {} : { scale: 0.96 }}
-        transition={{ type: 'spring', stiffness: 500, damping: 30 }}
-        {...props}
+        {...(props as ButtonHTMLAttributes<HTMLButtonElement>)}
       >
-        {loadingIndicator === 'dots' ? (
-          <LoadingDots visible={loading} />
-        ) : (
-          <Spinner visible={loading} />
-        )}
-        {!loading && children}
-      </MotionButton>
+        {children}
+      </Slot>
     )
   }
-)
 
-Button.displayName = 'Button'
+  return (
+    <button
+      ref={ref}
+      type="button"
+      disabled={disabled || loading}
+      aria-busy={loading || undefined}
+      className={baseClassName}
+      {...props}
+    >
+      {loadingIndicator === 'dots' ? (
+        <LoadingDots visible={loading} />
+      ) : (
+        <Spinner visible={loading} />
+      )}
+      {!loading && children}
+    </button>
+  )
+}

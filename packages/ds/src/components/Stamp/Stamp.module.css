@@ -1,0 +1,49 @@
+@reference "../../styles/globals.css";
+
+.stamp {
+  @apply grid shrink-0 place-items-center transition-colors duration-base;
+}
+
+.sizeSmall {
+  @apply size-6 rounded-1;
+}
+
+.sizeMedium {
+  @apply size-7 rounded-1;
+}
+
+.sizeLarge {
+  @apply size-8 rounded-2;
+}
+
+.toneBrand {
+  @apply bg-brand text-fg-on-brand;
+}
+
+.toneBrandSoft {
+  @apply bg-brand-soft text-brand-strong;
+}
+
+.toneBrandStrong {
+  @apply bg-brand-strong text-fg-on-brand;
+}
+
+.toneSuccess {
+  @apply bg-success text-fg-on-brand;
+}
+
+.toneWarning {
+  @apply bg-warning-bright text-fg-strong;
+}
+
+.toneDanger {
+  @apply bg-danger text-fg-on-brand;
+}
+
+.toneNeutral {
+  @apply bg-surface-mute text-fg-faint;
+}
+
+.toneInverse {
+  @apply bg-fg-default text-fg-inverse;
+}

@@ -1,26 +1,37 @@
-import { Avatar as ArkAvatar } from '@ark-ui/react/avatar'
-import { mergeClasses } from '@ds/lib/mergeClasses'
+import { HTMLAttributes } from 'react'
 
-import { AvatarProps, AvatarSize } from './Avatar.types'
+import { Avatar as ArkAvatar } from '@ark-ui/react/avatar'
+import { Icon } from '@ds/components/Icon/Icon'
+import { IconSize } from '@ds/components/Icon/Icon.types'
+import { mergeClasses } from '@ds/lib/mergeClasses/mergeClasses'
+
+import styles from './Avatar.module.css'
+
+type AvatarSize = 'sm' | 'md' | 'lg' | 'xl'
 
 const sizeClasses: Record<AvatarSize, string> = {
-  sm: 'h-8 w-8 text-xs',
-  md: 'h-10 w-10 text-sm',
-  lg: 'h-12 w-12 text-base',
-  xl: 'h-16 w-16 text-lg',
+  sm: styles.sizeSmall,
+  md: styles.sizeMedium,
+  lg: styles.sizeLarge,
+  xl: styles.sizeExtraLarge,
 }
 
-/* A cor do texto fica na raiz, não no fallback: assim quem passa `className`
- * consegue recolorir as iniciais junto com o fundo — o fallback herda. */
-const baseRoot =
-  'relative inline-flex shrink-0 items-center justify-center ' +
-  'overflow-hidden rounded-full bg-surface-mute text-muted select-none'
+/* O boneco ocupa metade do círculo em qualquer tamanho, e cada metade cai
+ * exata num degrau do Icon — então o tamanho vira prop, não fração por CSS
+ * disputando com a classe que o próprio Icon aplica. */
+const fallbackIconSize: Record<AvatarSize, IconSize> = {
+  sm: 'sm',
+  md: 'md',
+  lg: 'lg',
+  xl: 'xl',
+}
 
-const baseImage = 'h-full w-full object-cover'
-
-const baseFallback =
-  'flex h-full w-full items-center justify-center font-bold ' +
-  'tracking-[0.04em] uppercase'
+type AvatarProps = HTMLAttributes<HTMLDivElement> & {
+  src?: string
+  alt?: string
+  fallback?: string
+  size?: AvatarSize
+}
 
 /**
  * User avatar with image support and initials fallback.
@@ -49,20 +60,13 @@ export function Avatar({
 }: AvatarProps) {
   return (
     <ArkAvatar.Root
-      className={mergeClasses(baseRoot, sizeClasses[size], className)}
+      className={mergeClasses(styles.avatar, sizeClasses[size], className)}
       {...props}
     >
-      <ArkAvatar.Image src={src} alt={alt ?? ''} className={baseImage} />
-      <ArkAvatar.Fallback className={baseFallback}>
+      <ArkAvatar.Image src={src} alt={alt ?? ''} className={styles.photo} />
+      <ArkAvatar.Fallback className={styles.initials}>
         {fallback ?? (
-          <svg
-            viewBox="0 0 24 24"
-            fill="currentColor"
-            className="h-1/2 w-1/2 text-faint"
-            aria-hidden="true"
-          >
-            <path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z" />
-          </svg>
+          <Icon name="user" size={fallbackIconSize[size]} color="faint" />
         )}
       </ArkAvatar.Fallback>
     </ArkAvatar.Root>

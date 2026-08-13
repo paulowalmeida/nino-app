@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react'
 
-import { Button } from '../Button'
+import { Button } from '../Button/Button'
 import { Menu } from './Menu'
 
 const meta: Meta<typeof Menu> = {
@@ -33,8 +33,8 @@ export const OnDarkSurface: Story = {
     <div className="rounded-2xl bg-gray-900 p-8">
       <Menu
         trigger={<Button variant="inverseOutline">Store</Button>}
-        contentClassName="bg-gray-800 border-white/10"
-        itemClassName="text-white/70 data-[highlighted]:bg-white/10 data-[highlighted]:text-white"
+        contentClassName="bg-gray-800 border-fg-on-brand/10"
+        itemClassName="text-fg-on-brand/70 data-[highlighted]:bg-surface-raised/10 data-[highlighted]:text-fg-on-brand"
         items={[
           { value: 'unit-a', label: 'Unidade A' },
           { value: 'unit-b', label: 'Unidade B' },

@@ -1,12 +1,24 @@
 import { useMemo } from 'react'
 
-import { Combobox } from '@ds/components/Combobox'
+import { Combobox } from '@ds/components/Combobox/Combobox'
+import { ComboboxSize } from '@ds/components/Combobox/Combobox.types'
 
-import { TimePickerProps } from './TimePicker.types'
+type TimePickerProps = {
+  step?: number
+  placeholder?: string
+  size?: ComboboxSize
+  error?: boolean
+  disabled?: boolean
+  value?: string
+  defaultValue?: string
+  onValueChange?: (value: string) => void
+  className?: string
+  ariaLabel?: string
+}
 
 const pad = (value: number): string => String(value).padStart(2, '0')
 
-function buildOptions(step: number) {
+const buildOptions = (step: number) => {
   const options = []
   for (let minutes = 0; minutes < 24 * 60; minutes += step) {
     const label = `${pad(Math.floor(minutes / 60))}:${pad(minutes % 60)}`
@@ -16,31 +28,29 @@ function buildOptions(step: number) {
 }
 
 /**
- * Time-of-day picker: a searchable list of `HH:mm` slots (type "14" to jump
- * to 14:00). Renders `Combobox` — no free typing outside the step grid, so
- * the value sent to the API is always a valid, predictable time.
+ * Time of day picked from a searchable list of `HH:mm` slots — typing "14"
+ * jumps to 14:00.
  *
- * @param step - Minutes between each option in the list. Default: `15`
+ * It is a `Combobox` underneath, and there is no free typing outside the
+ * grid of slots: whatever reaches the API is always a valid time, so no
+ * screen has to guard against "24:71" or "8h".
  *
- * @param placeholder - Placeholder shown when empty
+ * @param step - Minutes between one slot and the next. Default: `15` — a
+ * whole day at that step is 96 options, which is why the list searches
  *
- * @param size - Height and padding of the input. Default: `md`
+ * @param value - Selected time as `HH:mm`. Leave it out and pass
+ * `defaultValue` to let the component keep its own
  *
- * @param error - Applies error styles to indicate invalid input
+ * @param size - Height and padding, matching the other fields. Default: `md`
  *
- * @param disabled - Disables the picker
+ * @param ariaLabel - Accessible name, for when no visible label wraps it
  *
- * @param value - Controlled selected time, `HH:mm`
- *
- * @param defaultValue - Uncontrolled initial time, `HH:mm`
- *
- * @param onValueChange - Fired with the selected time, `HH:mm`
- *
- * @param className - Additional CSS classes merged into the input
- *
- * @param ariaLabel - Accessible name when no visible label wraps it
+ * @example
+ * <FormField label="Abre às">
+ *   <TimePicker value={opensAt} onValueChange={setOpensAt} step={30} />
+ * </FormField>
  */
-export const TimePicker = ({
+export function TimePicker({
   step = 15,
   placeholder = '--:--',
   size = 'md',
@@ -51,7 +61,7 @@ export const TimePicker = ({
   onValueChange,
   className,
   ariaLabel,
-}: TimePickerProps) => {
+}: TimePickerProps) {
   const options = useMemo(() => buildOptions(step), [step])
 
   return (

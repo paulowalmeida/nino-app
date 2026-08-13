@@ -10,7 +10,7 @@ const options = [
   { value: 'c', label: 'Option C', disabled: true },
 ]
 
-describe(Combobox.displayName!, () => {
+describe(Combobox.name, () => {
   it('renders the input', () => {
     render(<Combobox options={options} />)
     expect(screen.getByRole('combobox')).toBeInTheDocument()

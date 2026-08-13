@@ -4,7 +4,7 @@ import { describe, expect, it, vi } from 'vitest'
 
 import { Popover } from './Popover'
 
-describe(Popover.displayName!, () => {
+describe(Popover.name, () => {
   it('does not show content initially', () => {
     render(
       <Popover trigger={<button>Abrir</button>}>

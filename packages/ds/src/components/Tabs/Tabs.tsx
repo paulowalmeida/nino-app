@@ -1,26 +1,41 @@
-import { useState } from 'react'
+import { ReactNode, useState } from 'react'
 
 import { Tabs as ArkTabs } from '@ark-ui/react/tabs'
-import { motion } from 'framer-motion'
 
-import { TabsProps } from './Tabs.types'
+import styles from './Tabs.module.css'
 
-/* O mesmo par de estados do Accordion, deitado: a aba ativa veste a superfície
- * de marca, as demais ficam em texto apagado sobre o trilho. Placa branca com
- * sombra era o segmented control de qualquer app; aqui o que marca a posição é
- * a tinta da casa. */
-const baseList =
-  'relative inline-flex items-center gap-0.5 rounded-card bg-surface-mute p-1'
+type TabItem = {
+  value: string
+  label: string
+  content: ReactNode
+  disabled?: boolean
+}
 
-const baseTrigger =
-  'relative cursor-pointer rounded-[6px] px-4 py-1.5 text-sm font-semibold ' +
-  'text-subtle transition-colors duration-200 outline-none whitespace-nowrap ' +
-  'hover:text-ink focus-visible:outline-2 focus-visible:outline-brand ' +
-  'focus-visible:-outline-offset-2 disabled:pointer-events-none ' +
-  'disabled:opacity-40 data-[selected]:text-brand-strong'
+type TabsProps = {
+  tabs: TabItem[]
+  defaultValue?: string
+  value?: string
+  onValueChange?: (value: string) => void
+  className?: string
+}
 
-const baseContent = 'mt-4 outline-none'
-
+/**
+ * Shallow switch between views of the same subject — the same pair of states
+ * as the Accordion, laid on its side: the active tab wears the brand
+ * surface, the others sit as dimmed text on the rail.
+ *
+ * For a long screen split into independent sections, each with its own save
+ * button, child routes beat tabs — the URL keeps the place, and going back
+ * works. See screens.md, "Tela longa vira sub-rotas".
+ *
+ * @param tabs - Label and content of each tab, in order
+ *
+ * @param value - Controlled tab. Leave it out and pass `defaultValue` to let
+ * the component keep its own
+ *
+ * @example
+ * <Tabs tabs={[{ value: 'day', label: 'Hoje', content: <Today /> }]} />
+ */
 export function Tabs({
   tabs,
   defaultValue,
@@ -32,9 +47,9 @@ export function Tabs({
   const [internalValue, setInternalValue] = useState(initial)
   const active = controlledValue ?? internalValue
 
-  function handleValueChange(v: string) {
-    setInternalValue(v)
-    onValueChange?.(v)
+  const handleValueChange = (next: string) => {
+    setInternalValue(next)
+    onValueChange?.(next)
   }
 
   return (
@@ -43,24 +58,16 @@ export function Tabs({
       onValueChange={({ value }) => handleValueChange(value)}
       {...props}
     >
-      <ArkTabs.List className={baseList}>
+      <ArkTabs.List className={styles.tabBar}>
+        <ArkTabs.Indicator className={styles.selectionPill} />
         {tabs.map((tab) => (
           <ArkTabs.Trigger
             key={tab.value}
             value={tab.value}
             disabled={tab.disabled}
-            className={baseTrigger}
+            className={styles.tab}
           >
-            {/* A própria superfície é o indicador: ela desliza de uma aba
-                para a outra em vez de um fio correndo por baixo. */}
-            {active === tab.value && (
-              <motion.span
-                layoutId="tab-indicator"
-                className="absolute inset-0 rounded-[6px] bg-brand-soft"
-                transition={{ type: 'spring', stiffness: 480, damping: 38 }}
-              />
-            )}
-            <span className="relative">{tab.label}</span>
+            {tab.label}
           </ArkTabs.Trigger>
         ))}
       </ArkTabs.List>
@@ -68,7 +75,7 @@ export function Tabs({
         <ArkTabs.Content
           key={tab.value}
           value={tab.value}
-          className={baseContent}
+          className={styles.panel}
         >
           {tab.content}
         </ArkTabs.Content>

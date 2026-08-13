@@ -1,0 +1,23 @@
+@reference "../../styles/globals.css";
+
+.textarea {
+  @apply w-full rounded-2 border border-input-border;
+  @apply bg-surface-raised;
+  @apply px-3 py-2 text-base text-fg-strong placeholder:text-fg-faint;
+  @apply transition-field outline-none;
+  @apply min-h-20 resize-y;
+  @apply focus:border-brand focus:ring-1 focus:ring-inset;
+  @apply focus:ring-brand;
+  @apply disabled:cursor-not-allowed disabled:pointer-events-none;
+  @apply state-disabled;
+}
+
+.textarea[data-invalid],
+.textarea[aria-invalid='true'] {
+  @apply border-danger;
+}
+
+.textarea[data-invalid]:focus,
+.textarea[aria-invalid='true']:focus {
+  @apply border-danger ring-danger;
+}

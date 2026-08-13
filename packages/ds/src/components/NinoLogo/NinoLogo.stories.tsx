@@ -48,7 +48,7 @@ export const MarkOnly: Story = {
 export const LightTone: Story = {
   args: { tone: 'light', label: 'GESTOR' },
   render: (args) => (
-    <div className="bg-ink p-6">
+    <div className="bg-fg-strong p-6">
       <NinoLogo {...args} />
     </div>
   ),

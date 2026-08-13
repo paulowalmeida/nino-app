@@ -1,16 +1,36 @@
+import { ClipboardEvent, useState } from 'react'
+
 import { PinInput as ArkPinInput } from '@ark-ui/react/pin-input'
-import { mergeClasses } from '@ds/lib/mergeClasses'
+import { mergeClasses } from '@ds/lib/mergeClasses/mergeClasses'
 
-import { OTPInputProps, OTPInputType } from './OTPInput.types'
+import styles from './OTPInput.module.css'
 
-const baseRoot = 'flex items-center gap-2'
+type OTPInputType = 'numeric' | 'alphabetic' | 'alphanumeric'
+
+type OTPInputProps = {
+  length?: 4 | 6
+  value?: string[]
+  onValueChange?: (value: string[]) => void
+  onValueComplete?: (value: string) => void
+  placeholder?: string
+  type?: OTPInputType
+  /** Enables SMS OTP autocomplete */
+  otp?: boolean
+  disabled?: boolean
+  invalid?: boolean
+  className?: string
+}
 
 /*
- * Ark validates a paste against `type` before inserting it (numeric here:
- * `/^[0-9]+$/`), with no built-in tolerance — a code copied straight out of
- * the SMS text ("Seu código é 123456") or with a stray space fails that
- * regex and the whole paste gets silently dropped. `sanitizeValue` runs
- * first, so each type strips down to exactly what its own regex accepts.
+ * O Ark valida o que foi colado contra o `type` antes de inserir, sem
+ * nenhuma tolerância: o código copiado direto da mensagem ("Seu código é
+ * 123456"), ou com um espaço sobrando, reprova na regex e a colagem inteira
+ * é descartada em silêncio.
+ *
+ * A prop `sanitizeValue` do Ark deveria rodar antes dessa validação, mas em
+ * @ark-ui/react 5.36 / @zag-js/pin-input 1.40 a função nunca é chamada
+ * (verificado no navegador em 2026-08-12, com colagem real). Por isso a
+ * limpeza é feita aqui, interceptando a colagem antes do Ark.
  */
 const sanitizeByType: Record<OTPInputType, (value: string) => string> = {
   numeric: (value) => value.replace(/\D/g, ''),
@@ -18,9 +38,22 @@ const sanitizeByType: Record<OTPInputType, (value: string) => string> = {
   alphanumeric: (value) => value.replace(/[^a-zA-Z0-9]/g, ''),
 }
 
-const baseInput =
-  'h-12 w-12 rounded-card border border-input-border bg-white text-center text-lg font-semibold text-ink outline-none transition-[color,box-shadow,border-color] duration-200 placeholder:text-faint focus:border-brand focus:ring-1 focus:ring-inset focus:ring-brand data-[invalid]:border-danger data-[invalid]:focus:ring-danger data-[invalid]:focus:border-danger data-[complete]:border-brand disabled:pointer-events-none disabled:opacity-50'
-
+/**
+ * The boxes for a code that arrives by SMS or e-mail.
+ *
+ * @param length - How many boxes. `4` or `6`
+ *
+ * @param type - What each box accepts. Default: `numeric`
+ *
+ * @param otp - Turns on the phone's one-time-code autofill, which offers the
+ * code straight from the message
+ *
+ * @param onValueComplete - Called with the whole code once the last box is
+ * filled — this is what submits the form
+ *
+ * @example
+ * <OTPInput length={6} otp onValueComplete={confirm} />
+ */
 export function OTPInput({
   length = 6,
   value,
@@ -33,10 +66,35 @@ export function OTPInput({
   invalid,
   className,
 }: OTPInputProps) {
+  const [ownValue, setOwnValue] = useState<string[]>(() =>
+    Array.from({ length }, () => '')
+  )
+  const currentValue = value ?? ownValue
+
+  /* Intercepta na fase de captura, antes de o Ark ver o evento. Colagem já
+   * limpa segue o caminho dele; só a suja é barrada e aplicada aqui. */
+  const handlePaste = (event: ClipboardEvent<HTMLDivElement>) => {
+    const pasted = event.clipboardData.getData('text/plain')
+    const cleaned = sanitizeByType[type](pasted).slice(0, length)
+    if (!cleaned || cleaned === pasted) return
+
+    event.preventDefault()
+    event.stopPropagation()
+
+    const next = Array.from({ length }, (_, index) => cleaned[index] ?? '')
+    setOwnValue(next)
+    onValueChange?.(next)
+    if (cleaned.length === length) onValueComplete?.(cleaned)
+  }
+
   return (
     <ArkPinInput.Root
-      value={value}
-      onValueChange={({ value: v }) => onValueChange?.(v)}
+      onPasteCapture={handlePaste}
+      value={currentValue}
+      onValueChange={({ value: v }) => {
+        setOwnValue(v)
+        onValueChange?.(v)
+      }}
       onValueComplete={({ valueAsString }) => onValueComplete?.(valueAsString)}
       placeholder={placeholder}
       type={type}
@@ -44,10 +102,10 @@ export function OTPInput({
       otp={otp}
       disabled={disabled}
       invalid={invalid}
-      className={mergeClasses(baseRoot, className)}
+      className={mergeClasses(styles.digitRow, className)}
     >
       {Array.from({ length }).map((_, i) => (
-        <ArkPinInput.Input key={i} index={i} className={baseInput} />
+        <ArkPinInput.Input key={i} index={i} className={styles.digitBox} />
       ))}
       <ArkPinInput.HiddenInput />
     </ArkPinInput.Root>

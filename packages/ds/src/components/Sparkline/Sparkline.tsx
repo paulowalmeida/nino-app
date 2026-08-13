@@ -1,31 +1,28 @@
-import { mergeClasses } from '@ds/lib/mergeClasses'
+import { SVGAttributes } from 'react'
 
-import { SparklineProps } from './Sparkline.types'
+import { mergeClasses } from '@ds/lib/mergeClasses/mergeClasses'
 
-/* A linha herda `currentColor`: quem usa escolhe o tom pela classe de texto,
- * e o gráfico acompanha o estado do bloco sem prop de cor. */
-const baseRoot = 'relative block w-full text-brand'
+import styles from './Sparkline.module.css'
 
-const baseSvg = 'block w-full overflow-visible'
-
-/*
- * O disco fica em CSS, não no SVG: o desenho estica na largura
- * (`preserveAspectRatio="none"`) para a linha ocupar o bloco, e dentro dessa
- * caixa esticada um `<circle>` viraria elipse.
- *
- * O anel na cor da superfície dá o respiro onde o disco cruza a própria linha.
- * Fundo diferente de branco sobrescreve `--chart-surface`.
- */
-const baseDot =
-  'absolute h-2 w-2 -translate-x-1/2 -translate-y-1/2 rounded-full ' +
-  'bg-current ring-2 ring-[var(--chart-surface,#fff)]'
+/* `values` is dropped from the SVG props on purpose: the native attribute
+ * exists for animation (`<animate values="...">`) and is a string, which
+ * would clash with the numeric series. */
+type SparklineProps = Omit<
+  SVGAttributes<SVGSVGElement>,
+  'children' | 'values'
+> & {
+  values: number[]
+  label: string
+  height?: number
+  showLastPoint?: boolean
+}
 
 const VIEW_WIDTH = 100
 const STROKE = 2
-/* Folga em cima e embaixo para o disco não ser cortado na borda. */
+/* Room above and below so the dot is not clipped at the edge. */
 const PADDING = 4
 
-/** Achata a série no espaço de desenho. Série reta assenta no meio. */
+/** Flattens the series onto the drawing space. A flat series sits mid-way. */
 const toPoints = (values: number[], height: number): [number, number][] => {
   const min = Math.min(...values)
   const max = Math.max(...values)
@@ -40,15 +37,25 @@ const toPoints = (values: number[], height: number): [number, number][] => {
 }
 
 /**
- * Linha de tendência sem eixo, para sentar ao lado de um número — não é
- * gráfico de leitura, é o formato da série. O valor exato vive no número que
- * ela acompanha.
+ * Trend line with no axes, made to sit beside a number — it is not a chart
+ * to read values off, it is the shape of the series. The exact figure lives
+ * in the number it accompanies.
  *
- * @param values - Série na ordem do tempo
+ * The line inherits `currentColor`, so the caller picks the tone with a text
+ * class and the drawing follows the state of the block around it — no colour
+ * prop involved.
  *
- * @param label - Nome acessível do gráfico
+ * @param values - The series, in time order. Fewer than two points draws
+ * nothing at all
  *
- * @param height - Altura em px. Default: `32`
+ * @param label - What the line shows, for whoever cannot see it. Without it
+ * the chart is invisible to a screen reader
+ *
+ * @param height - Height in px; the width follows the container.
+ * Default: `32`
+ *
+ * @param showLastPoint - Marks where the series ends with a dot.
+ * Default: `true`
  *
  * @example
  * <Sparkline values={[3, 8, 5, 12]} label="Faturamento nos últimos 7 dias" />
@@ -69,14 +76,14 @@ export function Sparkline({
   const [, lastY] = points[points.length - 1]
 
   return (
-    <span className={mergeClasses(baseRoot, className)} style={{ height }}>
+    <span className={mergeClasses(styles.sparkline, className)} style={{ height }}>
       <svg
         role="img"
         aria-label={label}
         viewBox={`0 0 ${VIEW_WIDTH} ${height}`}
         preserveAspectRatio="none"
         height={height}
-        className={baseSvg}
+        className={styles.chart}
         {...props}
       >
         <polygon points={area} fill="currentColor" opacity={0.1} />
@@ -94,12 +101,10 @@ export function Sparkline({
       {showLastPoint && (
         <span
           aria-hidden="true"
-          className={baseDot}
+          className={styles.lastPointDot}
           style={{ left: '100%', top: `${(lastY / height) * 100}%` }}
         />
       )}
     </span>
   )
 }
-
-Sparkline.displayName = 'Sparkline'

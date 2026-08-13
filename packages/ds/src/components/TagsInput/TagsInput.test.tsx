@@ -3,8 +3,9 @@ import userEvent from '@testing-library/user-event'
 import { describe, expect, it, vi } from 'vitest'
 
 import { TagsInput } from './TagsInput'
+import styles from './TagsInput.module.css'
 
-describe(TagsInput.displayName!, () => {
+describe(TagsInput.name, () => {
   it('renders the tags from value', () => {
     render(<TagsInput value={['react', 'tailwind']} onValueChange={vi.fn()} />)
     expect(screen.getByText('react')).toBeInTheDocument()
@@ -24,14 +25,14 @@ describe(TagsInput.displayName!, () => {
   it('removes a tag via the delete button', async () => {
     const onValueChange = vi.fn()
     render(<TagsInput value={['a', 'b']} onValueChange={onValueChange} />)
-    await userEvent.click(screen.getByRole('button', { name: 'Remove a' }))
+    await userEvent.click(screen.getByRole('button', { name: 'Remover a' }))
     expect(onValueChange).toHaveBeenCalledWith(['b'])
   })
 
   it('applies error state', () => {
     const { container } = render(<TagsInput error onValueChange={vi.fn()} />)
     expect(container.querySelector('[data-part="control"]')).toHaveClass(
-      'border-danger'
+      styles.fieldInvalid
     )
   })
 })

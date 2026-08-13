@@ -1,37 +1,47 @@
 import { Slider as ArkSlider } from '@ark-ui/react/slider'
-import { mergeClasses } from '@ds/lib/mergeClasses'
+import { mergeClasses } from '@ds/lib/mergeClasses/mergeClasses'
 
-import { SliderProps } from './Slider.types'
+import styles from './Slider.module.css'
 
-const baseControl = 'relative flex w-full items-center py-2'
-const baseTrack = 'relative h-1.5 w-full grow rounded-full bg-surface-mute'
-const baseRange = 'absolute h-full rounded-full bg-brand'
-const baseThumb =
-  'block size-4 rounded-full bg-brand shadow-card outline-none ' +
-  'transition-shadow focus-visible:outline-2 focus-visible:outline-brand ' +
-  'focus-visible:outline-offset-2 data-[disabled]:opacity-50'
-const baseLabel =
-  'flex items-center justify-between text-sm font-medium text-body'
-const baseValue = 'text-sm text-subtle tabular-nums'
+type SliderProps = {
+  value?: number
+  defaultValue?: number
+  onValueChange?: (value: number) => void
+  min?: number
+  max?: number
+  step?: number
+  disabled?: boolean
+  label?: string
+  showValue?: boolean
+  className?: string
+}
 
 /**
- * Slider for numeric values (price, quantity, percentage).
- * Wraps Ark Slider. Range and thumb use the tenant brand color.
+ * Handle dragged along a rail to pick a number — a price ceiling, a radius,
+ * a percentage.
  *
- * @param value - Controlled current value
+ * Reach for it when the exact number matters less than the sense of more or
+ * less. When the person knows the figure they want, a `NumberInput` gets
+ * there in one gesture instead of a dozen.
  *
- * @param onValueChange - Fired with the new value
+ * @param value - Controlled value. Leave it out and pass `defaultValue` to
+ * let the component keep its own
  *
- * @param min - Minimum value. Default: 0
+ * @param min - Floor. Default: `0`
  *
- * @param max - Maximum value. Default: 100
+ * @param max - Ceiling. Default: `100`
  *
- * @param step - Step increment. Default: 1
+ * @param step - How much each notch moves. Default: `1`
  *
- * @param label - Label displayed above the slider
+ * @param label - Text above the rail, tied to it for screen readers
  *
- * @param showValue - Shows the current value next to the label
+ * @param showValue - Puts the current number beside the label, which is the
+ * only way to read the exact value without dragging
+ *
+ * @example
+ * <Slider label="Raio de entrega" showValue max={20} onValueChange={setKm} />
  */
+
 export function Slider({
   value,
   defaultValue,
@@ -53,24 +63,22 @@ export function Slider({
       max={max}
       step={step}
       disabled={disabled}
-      className={mergeClasses('w-full', className)}
+      className={mergeClasses(styles.slider, className)}
     >
       {(label || showValue) && (
-        <ArkSlider.Label className={baseLabel}>
+        <ArkSlider.Label className={styles.labelRow}>
           <span>{label}</span>
-          {showValue && <ArkSlider.ValueText className={baseValue} />}
+          {showValue && <ArkSlider.ValueText className={styles.valueText} />}
         </ArkSlider.Label>
       )}
-      <ArkSlider.Control className={baseControl}>
-        <ArkSlider.Track className={baseTrack}>
-          <ArkSlider.Range className={baseRange} />
+      <ArkSlider.Control className={styles.trackRow}>
+        <ArkSlider.Track className={styles.track}>
+          <ArkSlider.Range className={styles.fill} />
         </ArkSlider.Track>
-        <ArkSlider.Thumb index={0} className={baseThumb}>
+        <ArkSlider.Thumb index={0} className={styles.handle}>
           <ArkSlider.HiddenInput />
         </ArkSlider.Thumb>
       </ArkSlider.Control>
     </ArkSlider.Root>
   )
 }
-
-Slider.displayName = 'Slider'

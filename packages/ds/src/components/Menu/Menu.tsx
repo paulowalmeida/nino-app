@@ -1,49 +1,52 @@
+import { ReactNode } from 'react'
+
 import { Menu as ArkMenu } from '@ark-ui/react/menu'
 import { Portal } from '@ark-ui/react/portal'
-import { mergeClasses } from '@ds/lib/mergeClasses'
+import { mergeClasses } from '@ds/lib/mergeClasses/mergeClasses'
 
-import { MenuItem, MenuProps } from './Menu.types'
+import styles from './Menu.module.css'
+import { MenuItem } from './Menu.types'
 
-const baseContent =
-  'menu-animated-content z-50 min-w-40 overflow-hidden rounded-card ' +
-  'bg-white shadow-overlay p-1 outline-none'
+export type { MenuItem } from './Menu.types'
 
-const baseItem =
-  'relative flex cursor-pointer select-none items-center gap-2 rounded-[6px] px-3 py-2.5 text-sm font-medium text-body outline-none transition-colors data-[highlighted]:bg-surface-mute data-[highlighted]:text-ink data-[disabled]:pointer-events-none data-[disabled]:opacity-50'
-
-const destructiveItem =
-  'text-danger data-[highlighted]:bg-danger-surface data-[highlighted]:text-danger'
-
-// `border-0`: o Ark usa <hr>, que traz borda do navegador por padrão
-const baseSeparator = 'my-1 h-px border-0 bg-sand'
-
-/* O Ark posiciona o portal com `z-index: var(--z-index)` e entrega 50. Cromo
- * fixo de app passa disso — o sidebar do gestor é z-70 — e o menu abre atrás
- * da coluna: aberto, mas invisível e sem receber clique.
- *
- * Tem de ser `!important`: o Ark reescreve o style inline do positioner a cada
- * reposicionamento, então passar `--z-index` via prop `style` dura até o
- * primeiro reflow e some. */
-const basePositioner = 'z-[100]!'
-
-function isSeparator(item: MenuItem): item is { separator: true } {
-  return 'separator' in item
+type MenuProps = {
+  trigger: ReactNode
+  items: MenuItem[]
+  contentClassName?: string
+  itemClassName?: string
 }
 
+const isSeparator = (
+  item: MenuItem
+): item is Extract<MenuItem, { separator: true }> => 'separator' in item
+
 /**
- * Dropdown menu for card/header actions. Wraps Ark Menu.
- * Item hover uses the tenant brand light variant.
+ * List of actions that opens from a trigger — the three dots of a card, the
+ * avatar in the header.
  *
- * @param trigger - Element that opens the menu (passed via asChild)
+ * Every entry is an action on the thing the trigger belongs to. A menu that
+ * navigates somewhere is a nav; a menu that picks a value is a `Select`.
  *
- * @param items - Action list; use `{ separator: true }` for dividers
+ * @param trigger - What opens the menu. Gets the open state through
+ * `asChild`, so pass a real `Button`, not a `<div>`
+ *
+ * @param items - The entries, in order. `{ separator: true }` draws a rule
+ * between groups
+ *
+ * @param contentClassName - Extra classes on the panel, for an app that
+ * gives the menu its own surface
+ *
+ * @param itemClassName - Extra classes per entry, for a themed surface
  *
  * @example
- * <Menu trigger={<Button>Actions</Button>} items={[
- *   { value: 'edit', label: 'Edit', onSelect: edit },
- *   { separator: true },
- *   { value: 'del', label: 'Delete', destructive: true, onSelect: del },
- * ]} />
+ * <Menu
+ *   trigger={<Button variant="ghost"><Icon name="more-vertical" /></Button>}
+ *   items={[
+ *     { value: 'edit', label: 'Editar', onSelect: edit },
+ *     { separator: true },
+ *     { value: 'del', label: 'Excluir', destructive: true, onSelect: del },
+ *   ]}
+ * />
  */
 export function Menu({
   trigger,
@@ -51,30 +54,44 @@ export function Menu({
   contentClassName,
   itemClassName,
 }: MenuProps) {
-  function handleSelect(value: string) {
-    const item = items.find((i) => !isSeparator(i) && i.value === value)
-    if (item && !isSeparator(item)) item.onSelect?.()
+  const handleSelect = (value: string) => {
+    const selected = items.find(
+      (item) => !isSeparator(item) && item.value === value
+    )
+    if (selected && !isSeparator(selected)) selected.onSelect?.()
   }
 
   return (
     <ArkMenu.Root onSelect={({ value }) => handleSelect(value)}>
       <ArkMenu.Trigger asChild>{trigger}</ArkMenu.Trigger>
       <Portal>
-        <ArkMenu.Positioner className={basePositioner}>
+        <ArkMenu.Positioner className={styles.positioner}>
+          {/* `menu-animated-content` é gancho global: as regras de entrada e
+              saída (e o corte delas em prefers-reduced-motion) vivem em
+              globals.css e precisam do nome literal, sem hash. */}
           <ArkMenu.Content
-            className={mergeClasses(baseContent, contentClassName ?? '')}
+            className={mergeClasses(
+              'menu-animated-content',
+              styles.panel,
+              contentClassName ?? ''
+            )}
           >
             {items.map((item, i) =>
               isSeparator(item) ? (
-                <ArkMenu.Separator key={`sep-${i}`} className={baseSeparator} />
+                <ArkMenu.Separator
+                  key={`sep-${i}`}
+                  className={styles.separator}
+                />
               ) : (
                 <ArkMenu.Item
                   key={item.value}
                   value={item.value}
                   disabled={item.disabled}
                   className={mergeClasses(
-                    baseItem,
-                    item.destructive ? destructiveItem : '',
+                    styles.option,
+                    item.destructive
+                      ? styles.optionDanger
+                      : styles.optionDefault,
                     itemClassName ?? ''
                   )}
                 >
@@ -89,5 +106,3 @@ export function Menu({
     </ArkMenu.Root>
   )
 }
-
-Menu.displayName = 'Menu'

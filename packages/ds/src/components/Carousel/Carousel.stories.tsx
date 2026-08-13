@@ -14,7 +14,7 @@ type Story = StoryObj<typeof Carousel>
 const slide = (label: string, color: string) => (
   <div
     style={{ height: 192, background: color }}
-    className="flex w-full items-center justify-center rounded-card text-xl font-semibold text-white"
+    className="flex w-full items-center justify-center rounded-2 text-xl font-semibold text-fg-on-brand"
   >
     {label}
   </div>

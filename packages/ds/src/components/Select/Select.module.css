@@ -1,0 +1,57 @@
+@reference "../../styles/globals.css";
+
+.field {
+  @apply flex w-full cursor-pointer items-center justify-between gap-2;
+  @apply rounded-2 border bg-surface-raised text-fg-strong;
+  @apply transition-field outline-none;
+  @apply focus-ring;
+  @apply disabled:pointer-events-none state-disabled;
+}
+
+.fieldResting {
+  @apply border-input-border focus:border-brand focus:ring-1;
+  @apply focus:ring-inset;
+  @apply focus:ring-brand;
+}
+
+.fieldInvalid {
+  @apply border-danger focus:border-danger focus:ring-1;
+  @apply focus:ring-inset;
+  @apply focus:ring-danger;
+}
+
+.placeholder {
+  @apply data-placeholder-shown:text-fg-faint;
+}
+
+.optionPanel {
+  @apply z-popover min-w-[var(--reference-width)];
+  @apply max-h-[min(18rem,var(--available-height))];
+  @apply overflow-y-auto overscroll-contain scrollbar-slim rounded-2;
+  @apply bg-surface-raised p-1 shadow-warm-lg;
+}
+
+.option {
+  @apply relative flex min-h-11 cursor-pointer select-none items-center;
+  @apply rounded-1 px-3 py-2 text-sm text-fg-strong outline-none;
+  @apply transition-field;
+  @apply data-[highlighted]:bg-brand-soft;
+  @apply data-[highlighted]:text-brand;
+  @apply data-[disabled]:pointer-events-none data-[disabled]:opacity-disabled;
+}
+
+.chevron {
+  @apply shrink-0 text-fg-faint;
+}
+
+.sizeSmall {
+  @apply h-8 px-3 text-sm;
+}
+
+.sizeMedium {
+  @apply h-11 px-3 text-base;
+}
+
+.sizeLarge {
+  @apply h-12 px-4 text-base;
+}

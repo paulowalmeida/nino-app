@@ -1,48 +1,47 @@
-import { forwardRef } from 'react'
+import { Ref, TextareaHTMLAttributes } from 'react'
 
 import { Field } from '@ark-ui/react/field'
-import { mergeClasses } from '@ds/lib/mergeClasses'
+import { mergeClasses } from '@ds/lib/mergeClasses/mergeClasses'
 
-import { TextareaProps } from './Textarea.types'
+import styles from './Textarea.module.css'
 
-const baseTextarea =
-  'w-full rounded-card border bg-white px-3 py-2 text-sm text-ink placeholder:text-faint transition-[color,box-shadow,border-color] duration-200 outline-none resize-y min-h-[80px] disabled:cursor-not-allowed disabled:opacity-50'
-
-const stateDefault =
-  'border-input-border focus:border-brand focus:ring-1 focus:ring-inset focus:ring-brand'
-
-const stateError =
-  'data-[invalid]:border-danger data-[invalid]:focus:ring-danger aria-[invalid]:border-danger aria-[invalid]:focus:border-danger aria-[invalid]:focus:ring-danger'
+type TextareaProps = TextareaHTMLAttributes<HTMLTextAreaElement> & {
+  error?: boolean
+  ref?: Ref<HTMLTextAreaElement>
+}
 
 /**
- * Multiline text input. Renders Ark `Field.Textarea`: inside a `Field.Root`
- * (via `FormField`) it inherits the field wiring; standalone it behaves as a
- * plain `<textarea>`.
+ * Multi-line field, for what does not fit on one line — a description, a
+ * note to the kitchen, an address complement.
  *
- * @param error - Applies error styles to indicate invalid state
+ * Inside a `FormField` it picks up the label, the description and the
+ * invalid state on its own. It grows only downward, by dragging the corner:
+ * growing sideways would break the column of the form.
  *
- * @param className - Additional CSS classes
+ * @param error - Paints the invalid state. Redundant inside a `FormField`
+ * that already got an `error`
  *
- * @param disabled - Disables the textarea
+ * @param rows - Starting height in lines. The field never shrinks below
+ * five lines of room
+ *
+ * @param ref - Forwarded to the `<textarea>`, for focus and for form
+ * libraries
  *
  * @example
- * <Textarea placeholder="Descrição..." rows={4} />
- * <Textarea error value={value} onChange={onChange} />
+ * <FormField label="Descrição" helperText="Aparece no cardápio">
+ *   <Textarea rows={4} {...register('description')} />
+ * </FormField>
  */
-export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
-  ({ error = false, className, ...props }, ref) => (
+export function Textarea({
+  error = false,
+  className,
+  ...props
+}: TextareaProps) {
+  return (
     <Field.Textarea
-      ref={ref}
       data-invalid={error || undefined}
-      className={mergeClasses(
-        baseTextarea,
-        stateDefault,
-        stateError,
-        className
-      )}
+      className={mergeClasses(styles.textarea, className)}
       {...props}
     />
   )
-)
-
-Textarea.displayName = 'Textarea'
+}

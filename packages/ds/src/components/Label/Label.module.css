@@ -1,0 +1,11 @@
+@reference "../../styles/globals.css";
+
+.label {
+  @apply text-sm font-medium text-fg-default leading-none;
+  @apply peer-disabled:cursor-not-allowed;
+  @apply peer-disabled:opacity-disabled;
+}
+
+.requiredMark {
+  @apply ml-1 text-danger;
+}

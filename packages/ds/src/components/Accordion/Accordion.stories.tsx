@@ -65,8 +65,8 @@ export const OnDarkSurface: Story = {
         items={items}
         className="border-0 bg-transparent divide-y-0"
         itemClassName="bg-transparent"
-        triggerClassName="text-white/80 hover:bg-white/10 rounded-lg"
-        contentClassName="text-white/60"
+        triggerClassName="text-fg-on-brand/80 hover:bg-surface-raised/10 rounded-2"
+        contentClassName="text-fg-on-brand/60"
       />
     </div>
   ),

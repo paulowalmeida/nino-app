@@ -1,37 +1,39 @@
-import { forwardRef } from 'react'
+import { FocusEventHandler, Ref } from 'react'
 
 import { Checkbox as ArkCheckbox } from '@ark-ui/react/checkbox'
-import { baseDisabled, baseFocus } from '@ds/lib/baseClasses'
-import { mergeClasses } from '@ds/lib/mergeClasses'
+import { mergeClasses } from '@ds/lib/mergeClasses/mergeClasses'
 
-import { CheckboxProps, CheckboxRef, CheckboxSize } from './Checkbox.types'
+import { Icon } from '../Icon/Icon'
+import styles from './Checkbox.module.css'
+
+type CheckboxSize = 'sm' | 'md' | 'lg'
+
+type CheckboxProps = {
+  size?: CheckboxSize
+  error?: boolean
+  checked?: boolean | 'indeterminate'
+  defaultChecked?: boolean
+  onCheckedChange?: (checked: boolean | 'indeterminate') => void
+  disabled?: boolean
+  required?: boolean
+  name?: string
+  value?: string
+  className?: string
+  onBlur?: FocusEventHandler<HTMLInputElement>
+  ref?: Ref<HTMLInputElement>
+}
 
 const sizeClasses: Record<CheckboxSize, string> = {
-  sm: 'h-4 w-4',
-  md: 'h-5 w-5',
-  lg: 'h-6 w-6',
+  sm: styles.sizeSmall,
+  md: styles.sizeMedium,
+  lg: styles.sizeLarge,
 }
 
 const iconSizeClasses: Record<CheckboxSize, string> = {
-  sm: 'h-2.5 w-2.5',
-  md: 'h-3 w-3',
-  lg: 'h-3.5 w-3.5',
+  sm: styles.checkSizeSmall,
+  md: styles.checkSizeMedium,
+  lg: styles.checkSizeLarge,
 }
-
-const baseControl =
-  /* Vazio é superfície rebaixada, marcado é tinta cheia — nada de caixinha
-   * contornada em cima de fundo claro. */
-  'flex shrink-0 items-center justify-center rounded-[4px] border ' +
-  'bg-white transition-[color,box-shadow,border-color] duration-200 cursor-pointer'
-
-const controlDefault =
-  'border-input-border data-[state=checked]:bg-brand ' +
-  'data-[state=checked]:border-brand'
-
-const controlError =
-  'border-danger data-[state=checked]:bg-danger data-[state=checked]:border-danger'
-
-const indicatorBase = 'flex items-center justify-center text-white'
 
 /**
  * Checkbox built on top of Ark UI Checkbox.
@@ -40,7 +42,8 @@ const indicatorBase = 'flex items-center justify-center text-white'
  *
  * @param error - Applies error styles to indicate invalid state
  *
- * @param checked - Controlled checked state (`true`, `false`, or `'indeterminate'`)
+ * @param checked - Controlled checked state (`true`, `false`, or
+ * `'indeterminate'`)
  *
  * @param defaultChecked - Uncontrolled initial checked state
  *
@@ -55,44 +58,40 @@ const indicatorBase = 'flex items-center justify-center text-white'
  * @param value - Value attribute for form submission
  *
  * @param className - Additional CSS classes for the control element
+ *
+ * @param onBlur - Fired when focus leaves the control, for a form that
+ * validates on blur
+ *
+ * @param ref - Points at the hidden input, which is what takes focus — a
+ * form library moving focus to the first invalid field lands here
  */
-export const Checkbox = forwardRef<CheckboxRef, CheckboxProps>(
-  (
-    { size = 'md', error = false, className, onCheckedChange, ...props },
-    ref
-  ) => (
+export function Checkbox({
+  size = 'md',
+  error = false,
+  className,
+  onCheckedChange,
+  onBlur,
+  ref,
+  ...props
+}: CheckboxProps) {
+  return (
     <ArkCheckbox.Root
       onCheckedChange={({ checked }) => onCheckedChange?.(checked)}
       {...props}
     >
       <ArkCheckbox.Control
-        ref={ref}
         className={mergeClasses(
-          baseControl,
-          baseFocus,
-          baseDisabled,
+          styles.box,
           sizeClasses[size],
-          error ? controlError : controlDefault,
+          error ? styles.boxInvalid : styles.boxResting,
           className
         )}
       >
-        <ArkCheckbox.Indicator className={indicatorBase}>
-          <svg
-            className={iconSizeClasses[size]}
-            viewBox="0 0 12 12"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth={2.5}
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          >
-            <polyline points="1.5 6 4.5 9.5 10.5 2.5" />
-          </svg>
+        <ArkCheckbox.Indicator className={styles.checkMark}>
+          <Icon name="check" className={iconSizeClasses[size]} />
         </ArkCheckbox.Indicator>
       </ArkCheckbox.Control>
-      <ArkCheckbox.HiddenInput />
+      <ArkCheckbox.HiddenInput ref={ref} onBlur={onBlur} />
     </ArkCheckbox.Root>
   )
-)
-
-Checkbox.displayName = 'Checkbox'
+}

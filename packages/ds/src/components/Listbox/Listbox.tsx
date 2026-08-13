@@ -1,48 +1,52 @@
+import { useMemo } from 'react'
+
 import {
   createListCollection,
   Listbox as ArkListbox,
 } from '@ark-ui/react/listbox'
+import { Icon } from '@ds/components/Icon/Icon'
 
-import { ListboxOption, ListboxProps } from './Listbox.types'
+import styles from './Listbox.module.css'
 
-const labelClass = 'mb-1.5 block text-sm font-medium text-body'
+type ListboxOption = {
+  value: string
+  label: string
+  disabled?: boolean
+}
 
-const contentClass =
-  'flex flex-col gap-0.5 rounded-card bg-white p-1 shadow-card outline-none'
-
-const itemClass =
-  'flex cursor-pointer select-none items-center justify-between gap-2 ' +
-  'rounded-[6px] px-3 py-2 text-sm text-ink outline-none transition-colors ' +
-  'data-[highlighted]:bg-surface-mute data-[highlighted]:text-ink ' +
-  'data-[state=checked]:font-semibold data-[state=checked]:text-brand-strong ' +
-  'data-[disabled]:pointer-events-none data-[disabled]:opacity-50'
-
-const indicatorClass = 'text-brand'
-
-const CheckIcon = () => (
-  <svg
-    width="15"
-    height="15"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="2.4"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-  >
-    <path d="M20 6 9 17l-5-5" />
-  </svg>
-)
+type ListboxProps = {
+  options: ListboxOption[]
+  value?: string[]
+  defaultValue?: string[]
+  onValueChange?: (value: string[]) => void
+  selectionMode?: 'single' | 'multiple'
+  label?: string
+  className?: string
+}
 
 /**
- * Always-visible selectable list (Ark `Listbox`). Single or multiple
- * selection; highlighted/selected items use the brand color.
+ * List of choices that stays open on the screen, instead of hiding behind a
+ * trigger like `Select` does.
  *
- * @param options - Selectable options
+ * Reach for it when the choice is the screen's job and the options are few
+ * enough to show at once — picking a printer, a delivery zone. When the list
+ * is long or the choice is one field among many, `Select` costs less space.
  *
- * @param selectionMode - `single` or `multiple`. Default: `single`
+ * @param options - What can be picked. `disabled` greys out one entry
  *
- * @param onValueChange - Fired with the selected values
+ * @param value - Controlled selection. Leave it out and pass `defaultValue`
+ * to let the component keep its own
+ *
+ * @param selectionMode - `single` (default) or `multiple`
+ *
+ * @param label - Heading above the list, tied to it for screen readers
+ *
+ * @example
+ * <Listbox
+ *   label="Impressora"
+ *   options={printers}
+ *   onValueChange={([id]) => setPrinter(id)}
+ * />
  */
 export function Listbox({
   options,
@@ -53,12 +57,19 @@ export function Listbox({
   label,
   className,
 }: ListboxProps) {
-  const collection = createListCollection<ListboxOption>({
-    items: options,
-    itemToString: (item) => item.label,
-    itemToValue: (item) => item.value,
-    isItemDisabled: (item) => Boolean(item.disabled),
-  })
+  /* A coleção precisa sobreviver ao render: recriada a cada ciclo, o Ark a
+   * lê como uma lista nova e descarta o item em foco no meio da navegação
+   * por teclado. */
+  const collection = useMemo(
+    () =>
+      createListCollection<ListboxOption>({
+        items: options,
+        itemToString: (item) => item.label,
+        itemToValue: (item) => item.value,
+        isItemDisabled: (item) => Boolean(item.disabled),
+      }),
+    [options]
+  )
 
   return (
     <ArkListbox.Root
@@ -70,14 +81,18 @@ export function Listbox({
       className={className}
     >
       {label && (
-        <ArkListbox.Label className={labelClass}>{label}</ArkListbox.Label>
+        <ArkListbox.Label className={styles.label}>{label}</ArkListbox.Label>
       )}
-      <ArkListbox.Content className={contentClass}>
+      <ArkListbox.Content className={styles.optionList}>
         {collection.items.map((item) => (
-          <ArkListbox.Item key={item.value} item={item} className={itemClass}>
+          <ArkListbox.Item
+            key={item.value}
+            item={item}
+            className={styles.option}
+          >
             <ArkListbox.ItemText>{item.label}</ArkListbox.ItemText>
-            <ArkListbox.ItemIndicator className={indicatorClass}>
-              <CheckIcon />
+            <ArkListbox.ItemIndicator className={styles.checkMark}>
+              <Icon name="check" size="sm" />
             </ArkListbox.ItemIndicator>
           </ArkListbox.Item>
         ))}
@@ -85,5 +100,3 @@ export function Listbox({
     </ArkListbox.Root>
   )
 }
-
-Listbox.displayName = 'Listbox'

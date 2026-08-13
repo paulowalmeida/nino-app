@@ -1,15 +1,9 @@
-import { InputHTMLAttributes } from 'react'
+import { InputHTMLAttributes, Ref } from 'react'
 
 export type InputSize = 'sm' | 'md' | 'lg'
 
-export interface InputProps extends Omit<
-  InputHTMLAttributes<HTMLInputElement>,
-  'size'
-> {
-  /** Height and padding of the input. Default: `md` */
+export type InputProps = Omit<InputHTMLAttributes<HTMLInputElement>, 'size'> & {
   size?: InputSize
-  /** Applies error styles to indicate invalid input */
   error?: boolean
-  /** Additional CSS classes merged with base styles */
-  className?: string
+  ref?: Ref<HTMLInputElement>
 }

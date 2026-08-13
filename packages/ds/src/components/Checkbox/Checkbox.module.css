@@ -1,0 +1,53 @@
+@reference "../../styles/globals.css";
+
+.box {
+  @apply relative flex shrink-0 cursor-pointer items-center justify-center;
+  @apply rounded-1 border bg-surface-raised;
+  @apply transition-field;
+  @apply focus-ring;
+  @apply disabled:pointer-events-none;
+  @apply data-[disabled]:pointer-events-none data-[disabled]:opacity-disabled;
+}
+
+.box::before {
+  content: '';
+  @apply absolute left-1/2 top-1/2 size-11 -translate-x-1/2 -translate-y-1/2;
+}
+
+.boxResting {
+  @apply border-input-border data-[state=checked]:bg-brand;
+  @apply data-[state=checked]:border-brand;
+}
+
+.boxInvalid {
+  @apply border-danger data-[state=checked]:bg-danger;
+  @apply data-[state=checked]:border-danger;
+}
+
+.checkMark {
+  @apply flex items-center justify-center text-fg-on-brand;
+}
+
+.sizeSmall {
+  @apply size-4;
+}
+
+.sizeMedium {
+  @apply size-5;
+}
+
+.sizeLarge {
+  @apply size-6;
+}
+
+.checkSizeSmall {
+  @apply size-2.5;
+}
+
+.checkSizeMedium {
+  @apply size-3;
+}
+
+.checkSizeLarge {
+  @apply size-3.5;
+}

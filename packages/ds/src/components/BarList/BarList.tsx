@@ -1,23 +1,28 @@
-import { mergeClasses } from '@ds/lib/mergeClasses'
+import { HTMLAttributes, ReactNode } from 'react'
 
-import { BarListProps } from './BarList.types'
+import { Flexbox } from '@ds/components/Flexbox/Flexbox'
+import { Text } from '@ds/components/Text/Text'
 
-const baseRoot = 'flex flex-col gap-2'
+import styles from './BarList.module.css'
 
-/* O rótulo fica sobre a barra, não numa coluna à esquerda: nome de produto é
- * longo e uma coluna de rótulo comeria a largura que a comparação precisa. */
-const baseRow = 'relative flex items-center gap-3 overflow-hidden rounded-[4px]'
+type BarListItem = {
+  /** Chave estável — o nome pode repetir. */
+  id: string
+  label: string
+  /** Grandeza que desenha a barra. Negativo não é suportado. */
+  value: number
+  /** O que aparece à direita. Ausente, mostra o próprio `value`. */
+  display?: ReactNode
+}
 
-/*
- * Trilho e barra na mesma altura da linha de texto. A ponta do dado é
- * arredondada e a base fica reta — a barra cresce de uma origem só, e
- * arredondar os dois lados faria a origem parecer flutuar.
- */
-const baseTrack = 'absolute inset-y-0 left-0 rounded-r-[4px] bg-current'
-
-const baseLabel = 'relative min-w-0 flex-1 truncate py-1.5 pl-2 text-sm'
-
-const baseValue = 'relative shrink-0 pr-2 text-sm font-semibold tabular-nums'
+type BarListProps = Omit<HTMLAttributes<HTMLOListElement>, 'children'> & {
+  items: BarListItem[]
+  /**
+   * Teto da escala. Ausente, é o maior valor da lista — a barra do topo
+   * enche, e as outras se leem em relação a ela.
+   */
+  max?: number
+}
 
 /**
  * Ranking por grandeza — barra horizontal, a forma que compara magnitude sem
@@ -43,25 +48,37 @@ export function BarList({ items, max, className, ...props }: BarListProps) {
   const ceiling = max ?? Math.max(...items.map(({ value }) => value))
 
   return (
-    <ol className={mergeClasses(baseRoot, className)} {...props}>
+    <Flexbox as="ol" gap={2} className={className} {...props}>
       {items.map(({ id, label, value, display }) => (
-        <li key={id} className={baseRow}>
+        <Flexbox
+          as="li"
+          key={id}
+          direction="row"
+          align="center"
+          gap={3}
+          className={styles.row}
+        >
           <span
             aria-hidden="true"
-            className={baseTrack}
+            className={styles.fillBar}
             style={{
               width: ceiling > 0 ? `${(value / ceiling) * 100}%` : 0,
-              opacity: 0.16,
             }}
           />
-          <span className={mergeClasses(baseLabel, 'text-ink')}>{label}</span>
-          <span className={mergeClasses(baseValue, 'text-subtle')}>
+          <Text as="span" size="sm" color="strong" className={styles.label}>
+            {label}
+          </Text>
+          <Text
+            as="span"
+            size="sm"
+            weight="semibold"
+            color="subtle"
+            className={styles.value}
+          >
             {display ?? value}
-          </span>
-        </li>
+          </Text>
+        </Flexbox>
       ))}
-    </ol>
+    </Flexbox>
   )
 }
-
-BarList.displayName = 'BarList'

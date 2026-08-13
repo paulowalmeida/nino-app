@@ -1,36 +1,52 @@
-import { mergeClasses } from '@ds/lib/mergeClasses'
+import { HTMLAttributes } from 'react'
 
-import { SeparatorOrientation, SeparatorProps } from './Separator.types'
+import { mergeClasses } from '@ds/lib/mergeClasses/mergeClasses'
 
-const orientationClasses: Record<SeparatorOrientation, string> = {
-  horizontal: 'w-full h-px',
-  vertical: 'h-full w-px',
+import styles from './Separator.module.css'
+
+type SeparatorOrientation = 'horizontal' | 'vertical'
+
+type SeparatorProps = HTMLAttributes<HTMLDivElement> & {
+  orientation?: SeparatorOrientation
+  semantic?: boolean
 }
 
-const baseSeparator = 'shrink-0 bg-line'
+const orientationClasses: Record<SeparatorOrientation, string> = {
+  horizontal: styles.orientationHorizontal,
+  vertical: styles.orientationVertical,
+}
 
 /**
- * Divider line to separate content sections.
+ * A line between two blocks.
  *
- * @param orientation - Separator direction. Default: `horizontal`
+ * By default it is silent to a screen reader: in a list of twenty rows, a
+ * rule announced twenty times is noise, and the separation is already told
+ * by the list itself. Turn on `semantic` for the rare line that carries
+ * meaning on its own — the divide between two groups of a menu, where
+ * nothing else says the group changed.
  *
- * @param className - Additional CSS classes
+ * @param orientation - `horizontal` (default) or `vertical`. A vertical one
+ * needs a height from whoever mounts it — it has none of its own
+ *
+ * @param semantic - Announces the line as a separator instead of hiding it
  *
  * @example
  * <Separator />
- * <Separator orientation="vertical" className="h-6" />
+ * <Separator orientation="vertical" className={styles.tall} />
  */
 export function Separator({
   orientation = 'horizontal',
+  semantic = false,
   className,
   ...props
 }: SeparatorProps) {
   return (
     <div
-      role="separator"
-      aria-orientation={orientation}
+      role={semantic ? 'separator' : undefined}
+      aria-orientation={semantic ? orientation : undefined}
+      aria-hidden={semantic ? undefined : true}
       className={mergeClasses(
-        baseSeparator,
+        styles.separator,
         orientationClasses[orientation],
         className
       )}

@@ -1,0 +1,23 @@
+@reference "../../styles/globals.css";
+
+.trail {
+  @apply flex items-center text-sm;
+}
+
+.link {
+  @apply inline-flex h-11 items-center transition-colors;
+  @apply focus-ring;
+  @apply rounded-1;
+}
+
+.restingLink {
+  @apply text-fg-subtle hover:text-brand;
+}
+
+.currentLink {
+  @apply pointer-events-none font-medium text-fg-strong;
+}
+
+.separator {
+  @apply mx-2 text-fg-faint select-none;
+}

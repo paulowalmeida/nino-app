@@ -2,7 +2,7 @@ import { useState } from 'react'
 
 import type { Meta, StoryObj } from '@storybook/react'
 
-import { Label } from '../Label'
+import { Label } from '../Label/Label'
 import { Switch } from './Switch'
 
 const meta: Meta<typeof Switch> = {

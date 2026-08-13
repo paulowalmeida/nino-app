@@ -3,6 +3,7 @@ import userEvent from '@testing-library/user-event'
 import { describe, expect, it, vi } from 'vitest'
 
 import { Input } from './Input'
+import styles from './Input.module.css'
 
 describe(Input.name, () => {
   it('renders the input element', () => {
@@ -30,13 +31,20 @@ describe(Input.name, () => {
   })
 
   it('applies error styles when error is true', () => {
+    // Arrange / Act
     render(<Input error />)
+
+    // Assert
     expect(screen.getByRole('textbox')).toHaveAttribute('data-invalid')
   })
 
-  it('applies default styles when error is false', () => {
+  it('leaves the invalid mark off when error is false', () => {
+    // Arrange / Act
     render(<Input />)
-    expect(screen.getByRole('textbox')).toHaveClass('border-input-border')
+
+    // Assert
+    expect(screen.getByRole('textbox')).not.toHaveAttribute('data-invalid')
+    expect(screen.getByRole('textbox')).toHaveClass(styles.input)
   })
 
   it.each(['sm', 'md', 'lg'] as const)(

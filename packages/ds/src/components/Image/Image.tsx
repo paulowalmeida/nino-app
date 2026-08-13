@@ -1,26 +1,46 @@
-import { useEffect, useRef, useState } from 'react'
+import {
+  ImgHTMLAttributes,
+  ReactNode,
+  useEffect,
+  useRef,
+  useState,
+} from 'react'
 
-import { mergeClasses } from '@ds/lib/mergeClasses'
+import { mergeClasses } from '@ds/lib/mergeClasses/mergeClasses'
 
-import { ImageProps } from './Image.types'
+import styles from './Image.module.css'
 
-const stackBase = 'grid [&>*]:col-start-1 [&>*]:row-start-1'
-const fadeBase = 'transition-opacity duration-300 ease-out'
+type ImageProps = Omit<
+  ImgHTMLAttributes<HTMLImageElement>,
+  'src' | 'placeholder'
+> & {
+  src?: string | null
+  placeholder?: ReactNode
+  wrapperClassName?: string
+}
 
 /**
  * Image that owns its own loading state.
  *
  * A list skeleton only knows about the JSON: the moment the data lands it
  * gives way to the real rows, and the files start downloading *then* —
- * leaving holes where the photos should be. So the placeholder can't live in
- * the skeleton, it has to live in each slot and stay until that file is
- * actually decoded.
+ * leaving holes where the photos should be. So the placeholder cannot live
+ * in the skeleton; it has to live in each slot and stay until that one file
+ * is actually decoded.
  *
  * @param src - Image URL. Empty or null keeps the placeholder for good
  *
- * @param placeholder - Rendered underneath until the file is ready
+ * @param placeholder - Shown while the file downloads, and kept for good
+ * when there is no `src` or the download fails
  *
- * @param wrapperClassName - Classes for the element stacking both layers
+ * @param wrapperClassName - Classes for the element that stacks both layers
+ *
+ * @example
+ * <Image
+ *   src={product.photoUrl}
+ *   alt={product.name}
+ *   placeholder={<Skeleton />}
+ * />
  */
 export function Image({
   src,
@@ -55,14 +75,18 @@ export function Image({
   const showsImage = !!src && !hasFailed
 
   return (
-    <span className={mergeClasses(stackBase, wrapperClassName)}>
+    <span className={mergeClasses(styles.stackLayer, wrapperClassName)}>
       {/*
         O placeholder some junto, em vez de ficar montado por baixo: foto com
         alpha (logo PNG, por exemplo) deixaria ele aparecendo através dela.
       */}
       {placeholder && (
         <span
-          className={mergeClasses(stackBase, fadeBase, isReady && 'opacity-0')}
+          className={mergeClasses(
+            styles.stackLayer,
+            styles.fadeTransition,
+            isReady && styles.hidden
+          )}
           aria-hidden={isReady || undefined}
         >
           {placeholder}
@@ -74,8 +98,8 @@ export function Image({
           ref={ref}
           src={src}
           className={mergeClasses(
-            fadeBase,
-            isReady ? 'opacity-100' : 'opacity-0',
+            styles.fadeTransition,
+            isReady ? styles.visible : styles.hidden,
             className
           )}
           onLoad={(event) => {
@@ -92,5 +116,3 @@ export function Image({
     </span>
   )
 }
-
-Image.displayName = 'Image'

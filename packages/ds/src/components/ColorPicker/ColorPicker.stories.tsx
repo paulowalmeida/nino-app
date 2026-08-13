@@ -14,23 +14,34 @@ export default meta
 type Story = StoryObj<typeof ColorPicker>
 
 export const Default: Story = {
-  render: () => (
-    <div className="p-8">
-      <ColorPicker defaultValue="#FF6B00" />
-    </div>
-  ),
-}
-
-export const Controlled: Story = {
   render: () => {
     const [color, setColor] = useState('#FF6B00')
+
     return (
-      <div className="flex flex-col gap-3 p-8">
+      <div className="p-8">
         <ColorPicker value={color} onValueChange={setColor} />
-        <p className="text-sm text-gray-600">
-          Cor da loja: <span className="font-mono">{color}</span>
-        </p>
       </div>
     )
   },
+}
+
+export const WithThePickedTintOnDisplay: Story = {
+  render: () => {
+    const [color, setColor] = useState('#FF6B00')
+
+    return (
+      <div className="flex flex-col gap-3 p-8">
+        <div className="h-16 rounded-2" style={{ backgroundColor: color }} />
+        <ColorPicker value={color} onValueChange={setColor} />
+      </div>
+    )
+  },
+}
+
+export const Disabled: Story = {
+  render: () => (
+    <div className="p-8">
+      <ColorPicker value="#FF6B00" disabled />
+    </div>
+  ),
 }

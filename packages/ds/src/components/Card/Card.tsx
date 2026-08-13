@@ -1,34 +1,47 @@
-import { forwardRef } from 'react'
+import { HTMLAttributes, Ref } from 'react'
 
-import { mergeClasses } from '@ds/lib/mergeClasses'
-import { Slot } from '@ds/lib/Slot'
+import { Slot } from '@ds/components/Slot/Slot'
+import { mergeClasses } from '@ds/lib/mergeClasses/mergeClasses'
 
-import { CardProps, CardVariant } from './Card.types'
+import styles from './Card.module.css'
 
-const baseCard = 'rounded-card border border-line/60 bg-white p-4'
+type CardVariant = 'default' | 'flat' | 'elevated'
 
-/* A borda fina fecha o cartão em qualquer fundo — sem ela a superfície branca
- * se dissolve na página. A variante diz só a altura: encostado, levantado, ou
- * sem sombra nenhuma. */
-const variantClasses: Record<CardVariant, string> = {
-  default: 'shadow-card',
-  flat: '',
-  elevated: 'shadow-card-hover',
+type CardPadding = 'none' | 'sm' | 'md' | 'lg'
+
+type CardProps = HTMLAttributes<HTMLDivElement | HTMLButtonElement> & {
+  variant?: CardVariant
+  /** Respiro interno. Default: `md` */
+  padding?: CardPadding
+  /**
+   * Delegates rendering to the direct child via Radix Slot — for when the
+   * click target is something with its own semantics (a `Link`, for a
+   * navigation card).
+   */
+  asChild?: boolean
+  ref?: Ref<HTMLDivElement & HTMLButtonElement>
 }
 
-/* Só entra quando o próprio Card é o alvo do clique — texto à esquerda
- * (botão centraliza por padrão), largura cheia (botão encolhe pro
- * conteúdo), e o afago de foco/hover que uma `<div>` nunca precisou ter. */
-const interactiveCard =
-  'w-full cursor-pointer text-left transition-shadow duration-150 ' +
-  'hover:shadow-card-hover focus-visible:outline-none ' +
-  'focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2'
+const variantClasses: Record<CardVariant, string> = {
+  default: styles.elevationResting,
+  flat: '',
+  elevated: styles.elevationRaised,
+}
+
+const paddingClasses: Record<CardPadding, string> = {
+  none: styles.paddingNone,
+  sm: styles.paddingSmall,
+  md: styles.paddingMedium,
+  lg: styles.paddingLarge,
+}
 
 /**
  * Surface container for grouping content (dashboards, list items, panels).
  *
  * @param variant - `default` (resting shadow), `flat` (border, no shadow),
  * `elevated` (lifted shadow). Default: `default`
+ *
+ * @param padding - Respiro interno: `none`, `sm`, `md` (padrão) ou `lg`
  *
  * @param asChild - Delegates rendering to the direct child via `Slot` — for
  * when the click target has its own semantics (a `Link`)
@@ -51,28 +64,34 @@ const interactiveCard =
  *   <Link to="/pedidos">the whole surface is the link</Link>
  * </Card>
  */
-export const Card = forwardRef<HTMLDivElement & HTMLButtonElement, CardProps>(
-  ({ variant = 'default', asChild, onClick, className, children, ...props }, ref) => {
-    const isButton = !asChild && !!onClick
-    const Root = asChild ? Slot : isButton ? 'button' : 'div'
+export function Card({
+  variant = 'default',
+  padding = 'md',
+  asChild,
+  onClick,
+  className,
+  children,
+  ref,
+  ...props
+}: CardProps) {
+  const isButton = !asChild && !!onClick
+  const Root = asChild ? Slot : isButton ? 'button' : 'div'
 
-    return (
-      <Root
-        ref={ref}
-        type={isButton ? 'button' : undefined}
-        onClick={onClick}
-        className={mergeClasses(
-          baseCard,
-          variantClasses[variant],
-          isButton && interactiveCard,
-          className
-        )}
-        {...props}
-      >
-        {children}
-      </Root>
-    )
-  }
-)
-
-Card.displayName = 'Card'
+  return (
+    <Root
+      ref={ref}
+      type={isButton ? 'button' : undefined}
+      onClick={onClick}
+      className={mergeClasses(
+        styles.card,
+        paddingClasses[padding],
+        variantClasses[variant],
+        isButton && styles.clickable,
+        className
+      )}
+      {...props}
+    >
+      {children}
+    </Root>
+  )
+}

@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react'
 
-import { Input } from '../Input'
+import { Flexbox } from '../Flexbox/Flexbox'
+import { Input } from '../Input/Input'
 import { FormField } from './FormField'
 
 const meta: Meta<typeof FormField> = {
@@ -70,14 +71,15 @@ export const WithoutLabel: Story = {
   ),
 }
 
-export const CustomLabelTypography: Story = {
-  args: {
-    label: 'Full name',
-    labelClassName: 'text-xs font-bold uppercase tracking-wide',
-  },
-  render: (args) => (
-    <FormField {...args}>
-      <Input placeholder="John Smith" />
-    </FormField>
+export const LabelVariants: Story = {
+  render: () => (
+    <Flexbox gap={6}>
+      <FormField label="Nome completo" helperText="Como aparece no pedido">
+        <Input placeholder="João da Silva" />
+      </FormField>
+      <FormField label="Nome completo" labelVariant="compact">
+        <Input placeholder="João da Silva" />
+      </FormField>
+    </Flexbox>
   ),
 }

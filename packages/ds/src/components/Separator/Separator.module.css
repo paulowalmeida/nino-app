@@ -1,0 +1,13 @@
+@reference "../../styles/globals.css";
+
+.separator {
+  @apply shrink-0 bg-border;
+}
+
+.orientationHorizontal {
+  @apply w-full h-px;
+}
+
+.orientationVertical {
+  @apply h-full w-px;
+}

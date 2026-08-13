@@ -1,67 +1,58 @@
 import { FileUpload as ArkFileUpload } from '@ark-ui/react/file-upload'
-import { mergeClasses } from '@ds/lib/mergeClasses'
+import { Icon } from '@ds/components/Icon/Icon'
+import { mergeClasses } from '@ds/lib/mergeClasses/mergeClasses'
 
-import { FileUploadProps } from './FileUpload.types'
+import styles from './FileUpload.module.css'
 
-const baseDropzone =
-  /* A área que recebe arquivo é a mesma superfície rebaixada dos campos: onde
-   * o fundo afunda, é onde se deposita algo. O tracejado marca que ainda está
-   * vazia. */
-  'group flex flex-col items-center justify-center gap-3 rounded-card ' +
-  'border-2 border-dashed border-line bg-surface-mute px-6 py-10 ' +
-  'text-center transition-colors cursor-pointer hover:border-brand ' +
-  'hover:bg-cream-deep data-[dragging]:border-brand ' +
-  'data-[dragging]:bg-cream-deep'
+type FileUploadProps = {
+  /** Accepted MIME types. E.g. `{ 'image/*': ['.png', '.jpg'] }` */
+  accept?: Record<string, string[]>
+  maxFiles?: number
+  /** Max file size in bytes */
+  maxFileSize?: number
+  disabled?: boolean
+  name?: string
+  onFileChange?: (files: File[]) => void
+  onFileReject?: (details: {
+    files: { file: File; errors: string[] }[]
+  }) => void
+  /** Clickable trigger label. Default: `'Escolher arquivo'` */
+  triggerLabel?: string
+  /** Hint shown next to the trigger. Default: `'ou arraste até aqui'` */
+  dragLabel?: string
+  /** Text shown while a file is dragged over. Default: `'Solte aqui'` */
+  dropLabel?: string
+  /** Label for the remove-file button. Default: `'Remover arquivo'` */
+  removeLabel?: string
+  className?: string
+}
 
-const baseItemGroup = 'mt-4 flex flex-col gap-2'
-
-const baseItem =
-  'flex items-center gap-3 rounded-card bg-surface-mute px-3 py-2 text-sm'
-
-const baseItemName = 'flex-1 truncate text-ink'
-const baseItemSize = 'shrink-0 text-xs text-faint'
-
-const baseDeleteButton =
-  'shrink-0 rounded p-0.5 text-faint transition-colors hover:bg-sand hover:text-muted focus-visible:outline-2 focus-visible:outline-brand focus-visible:outline-offset-2'
-
-const UploadIcon = () => (
-  <svg
-    width="32"
-    height="32"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="1.5"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-    className="text-faint"
-  >
-    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-    <polyline points="17 8 12 3 7 8" />
-    <line x1="12" y1="3" x2="12" y2="15" />
-  </svg>
-)
-
-const XIcon = () => (
-  <svg
-    width="14"
-    height="14"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="2"
-    strokeLinecap="round"
-  >
-    <path d="M18 6 6 18M6 6l12 12" />
-  </svg>
-)
-
-function formatBytes(bytes: number) {
+const formatBytes = (bytes: number) => {
   if (bytes < 1024) return `${bytes} B`
   if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(1)} KB`
   return `${(bytes / (1024 * 1024)).toFixed(1)} MB`
 }
 
+/**
+ * Dropzone that takes a file by click or by drag, listing what came in.
+ *
+ * @param accept - Accepted MIME types
+ *
+ * @param maxFiles - How many files at once. Default: `1`
+ *
+ * @param maxFileSize - Ceiling in bytes. Shown under the trigger when set
+ *
+ * @param onFileChange - Called with the accepted files
+ *
+ * @param onFileReject - Called with what was refused, and why
+ *
+ * @example
+ * <FileUpload
+ *   accept={{ 'image/*': ['.png', '.jpg'] }}
+ *   maxFileSize={2 * 1024 * 1024}
+ *   onFileChange={setFiles}
+ * />
+ */
 export function FileUpload({
   accept,
   maxFiles = 1,
@@ -70,10 +61,10 @@ export function FileUpload({
   name,
   onFileChange,
   onFileReject,
-  triggerLabel = 'Click to upload',
-  dragLabel = 'or drag and drop',
-  dropLabel = 'Drop here',
-  removeLabel = 'Remove file',
+  triggerLabel = 'Escolher arquivo',
+  dragLabel = 'ou arraste até aqui',
+  dropLabel = 'Solte aqui',
+  removeLabel = 'Remover arquivo',
   className,
 }: FileUploadProps) {
   return (
@@ -85,50 +76,48 @@ export function FileUpload({
       name={name}
       onFileChange={({ acceptedFiles }) => onFileChange?.(acceptedFiles)}
       onFileReject={onFileReject}
-      className={mergeClasses('w-full', className)}
+      className={mergeClasses(styles.fileUpload, className)}
     >
-      <ArkFileUpload.Dropzone className={baseDropzone}>
-        <UploadIcon />
-        <div className="group-data-dragging:hidden">
-          <ArkFileUpload.Trigger className="font-medium text-brand hover:underline focus-visible:outline-none">
+      <ArkFileUpload.Dropzone className={styles.dropzone}>
+        <Icon name="upload" size="xl" className={styles.uploadIcon} />
+        <div className={styles.restingPrompt}>
+          <ArkFileUpload.Trigger className={styles.browseButton}>
             {triggerLabel}
           </ArkFileUpload.Trigger>
-          <span className="text-sm text-subtle"> {dragLabel}</span>
+          <span className={styles.dragHint}> {dragLabel}</span>
         </div>
-        <p className="hidden text-sm font-medium text-brand group-data-dragging:block">
-          {dropLabel}
-        </p>
+        <p className={styles.dropHint}>{dropLabel}</p>
         {maxFileSize && (
-          <p className="text-xs text-faint group-data-dragging:hidden">
-            Max {formatBytes(maxFileSize)}
+          <p className={styles.limitHint}>
+            Até {formatBytes(maxFileSize)} por arquivo
           </p>
         )}
         {maxFiles > 1 && (
-          <p className="text-xs text-faint group-data-dragging:hidden">
-            Up to {maxFiles} files
-          </p>
+          <p className={styles.limitHint}>No máximo {maxFiles} arquivos</p>
         )}
       </ArkFileUpload.Dropzone>
 
-      <ArkFileUpload.ItemGroup className={baseItemGroup}>
+      <ArkFileUpload.ItemGroup className={styles.fileList}>
         <ArkFileUpload.Context>
           {({ acceptedFiles }) =>
             acceptedFiles.map((file) => (
               <ArkFileUpload.Item
                 key={`${file.name}-${file.size}-${file.type}`}
                 file={file}
-                className={baseItem}
+                className={styles.fileRow}
               >
                 <ArkFileUpload.ItemPreview type="image/*">
-                  <ArkFileUpload.ItemPreviewImage className="h-8 w-8 rounded object-cover" />
+                  <ArkFileUpload.ItemPreviewImage
+                    className={styles.previewImage}
+                  />
                 </ArkFileUpload.ItemPreview>
-                <ArkFileUpload.ItemName className={baseItemName} />
-                <ArkFileUpload.ItemSizeText className={baseItemSize} />
+                <ArkFileUpload.ItemName className={styles.itemName} />
+                <ArkFileUpload.ItemSizeText className={styles.itemSize} />
                 <ArkFileUpload.ItemDeleteTrigger
-                  className={baseDeleteButton}
+                  className={styles.deleteButton}
                   aria-label={removeLabel}
                 >
-                  <XIcon />
+                  <Icon name="x" size="sm" />
                 </ArkFileUpload.ItemDeleteTrigger>
               </ArkFileUpload.Item>
             ))
@@ -140,5 +129,3 @@ export function FileUpload({
     </ArkFileUpload.Root>
   )
 }
-
-FileUpload.displayName = 'FileUpload'

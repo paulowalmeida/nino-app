@@ -36,8 +36,8 @@ export const Default: Story = {
 /** Como aparece na Visão geral: dentro do cartão, sob um rótulo. */
 export const InACard: Story = {
   render: () => (
-    <div className="w-80 rounded-card border border-line/60 bg-white p-5">
-      <p className="mb-3 text-xs font-bold uppercase tracking-[0.12em] text-faint">
+    <div className="w-80 rounded-2 border border-border bg-surface-raised p-5">
+      <p className="mb-3 text-xs font-bold uppercase tracking-widest text-fg-faint">
         O que mais sai hoje
       </p>
       <BarList items={TOP} />

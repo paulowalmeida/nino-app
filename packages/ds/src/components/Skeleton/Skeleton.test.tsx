@@ -2,6 +2,7 @@ import { render } from '@testing-library/react'
 import { describe, expect, it } from 'vitest'
 
 import { Skeleton } from './Skeleton'
+import styles from './Skeleton.module.css'
 
 describe(Skeleton.name, () => {
   it('renders with aria-hidden', () => {
@@ -25,21 +26,21 @@ describe(Skeleton.name, () => {
     }
   )
 
-  it('applies skeleton-wave by default', () => {
+  it('sweeps the shine by default', () => {
     const { container } = render(<Skeleton />)
-    expect(container.firstChild).toHaveClass('skeleton-wave')
+    expect(container.firstChild).toHaveClass(styles.animationWave)
   })
 
-  it('applies skeleton-wave when animation=wave', () => {
+  it('sweeps the shine when animation is wave', () => {
     const { container } = render(<Skeleton animation="wave" />)
-    expect(container.firstChild).toHaveClass('skeleton-wave')
+    expect(container.firstChild).toHaveClass(styles.animationWave)
   })
 
   it('does not apply animation when animation=none', () => {
     const { container } = render(<Skeleton animation="none" />)
     expect(container.firstChild).not.toHaveClass(
       'animate-pulse',
-      'skeleton-wave'
+      styles.animationWave
     )
   })
 

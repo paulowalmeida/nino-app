@@ -1,0 +1,29 @@
+@reference "../../styles/globals.css";
+
+.pageBar {
+  @apply inline-flex items-center gap-1 rounded-2 bg-surface-mute p-1;
+}
+
+.stepButton,
+.pageButton {
+  @apply inline-flex size-11 cursor-pointer items-center justify-center;
+  @apply rounded-2 transition-colors duration-fast;
+  @apply hover:bg-surface-raised hover:text-brand-strong;
+  @apply focus-ring;
+}
+
+.stepButton {
+  @apply text-fg-muted;
+  @apply disabled:pointer-events-none state-disabled;
+}
+
+.pageButton {
+  @apply px-2 text-sm font-semibold text-fg-default;
+  @apply data-[selected]:bg-surface-raised;
+  @apply data-[selected]:text-fg-strong data-[selected]:shadow-warm-sm;
+}
+
+.ellipsis {
+  @apply inline-flex size-11 items-center justify-center text-sm;
+  @apply text-fg-faint;
+}

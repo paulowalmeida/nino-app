@@ -1,10 +1,26 @@
+import { FocusEventHandler, Ref } from 'react'
+
 import { DatePicker as ArkDatePicker } from '@ark-ui/react/date-picker'
 import { Portal } from '@ark-ui/react/portal'
+import { Icon } from '@ds/components/Icon/Icon'
 import { CalendarDate, type DateValue } from '@internationalized/date'
 
-import { DatePickerProps } from './DatePicker.types'
+import styles from './DatePicker.module.css'
 
-import './DatePicker.css'
+type DatePickerProps = {
+  name?: string
+  onBlur?: FocusEventHandler<HTMLInputElement>
+  /** Points at the text input, which is what takes focus. */
+  ref?: Ref<HTMLInputElement>
+  value?: Date
+  onValueChange?: (date: Date | undefined) => void
+  placeholder?: string
+  disabled?: boolean
+  /** Earliest available month in the calendar. Default: 10 years ago */
+  startMonth?: Date
+  /** Latest available month in the calendar. Default: 1 year ahead */
+  endMonth?: Date
+}
 
 function jsToCalendar(d: Date): CalendarDate {
   return new CalendarDate(d.getFullYear(), d.getMonth() + 1, d.getDate())
@@ -14,52 +30,10 @@ function calendarToJs(d: CalendarDate): Date {
   return new Date(d.year, d.month - 1, d.day)
 }
 
-const XIcon = () => (
-  <svg
-    width="12"
-    height="12"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="2.5"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-  >
-    <path d="M18 6 6 18M6 6l12 12" />
-  </svg>
-)
-
-const ChevronLeft = () => (
-  <svg
-    width="16"
-    height="16"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="2"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-  >
-    <path d="m15 18-6-6 6-6" />
-  </svg>
-)
-
-const ChevronRight = () => (
-  <svg
-    width="16"
-    height="16"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="2"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-  >
-    <path d="m9 18 6-6-6-6" />
-  </svg>
-)
-
 export function DatePicker({
+  name,
+  onBlur,
+  ref,
   value,
   onValueChange,
   placeholder = 'dd/mm/aaaa',
@@ -77,7 +51,7 @@ export function DatePicker({
 
   return (
     <ArkDatePicker.Root
-      className="nino-dp-root"
+      className={styles.datePicker}
       value={value ? [jsToCalendar(value)] : []}
       onValueChange={({ value: vals }) => {
         const d = vals[0] as CalendarDate | undefined
@@ -92,50 +66,53 @@ export function DatePicker({
       openOnClick
       positioning={{ placement: 'bottom', offset: { mainAxis: 4 } }}
     >
-      <ArkDatePicker.Control className="nino-dp-control">
+      <ArkDatePicker.Control className={styles.field}>
         <ArkDatePicker.Input
-          className="nino-dp-input"
+          ref={ref}
+          name={name}
+          onBlur={onBlur}
+          className={styles.dateInput}
           placeholder={placeholder}
         />
         <ArkDatePicker.ClearTrigger
-          className="nino-dp-clear"
+          className={styles.clearButton}
           aria-label="Clear date"
         >
-          <XIcon />
+          <Icon name="x" size="xs" />
         </ArkDatePicker.ClearTrigger>
       </ArkDatePicker.Control>
 
       <Portal>
         <ArkDatePicker.Positioner>
-          <ArkDatePicker.Content className="nino-dp-content">
-            <ArkDatePicker.View view="day" className="nino-dp-view">
+          <ArkDatePicker.Content className={styles.calendarPanel}>
+            <ArkDatePicker.View view="day" className={styles.calendarView}>
               <ArkDatePicker.Context>
                 {(dp) => (
                   <>
-                    <ArkDatePicker.ViewControl className="nino-dp-view-control">
+                    <ArkDatePicker.ViewControl className={styles.viewHeader}>
                       <ArkDatePicker.PrevTrigger
-                        className="nino-dp-prev-trigger"
+                        className={styles.prevMonthButton}
                         aria-label="Previous month"
                       >
-                        <ChevronLeft />
+                        <Icon name="chevron-left" size="sm" />
                       </ArkDatePicker.PrevTrigger>
-                      <ArkDatePicker.ViewTrigger className="nino-dp-view-trigger">
+                      <ArkDatePicker.ViewTrigger className={styles.viewSwitchButton}>
                         <ArkDatePicker.RangeText />
                       </ArkDatePicker.ViewTrigger>
                       <ArkDatePicker.NextTrigger
-                        className="nino-dp-next-trigger"
+                        className={styles.nextMonthButton}
                         aria-label="Next month"
                       >
-                        <ChevronRight />
+                        <Icon name="chevron-right" size="sm" />
                       </ArkDatePicker.NextTrigger>
                     </ArkDatePicker.ViewControl>
-                    <ArkDatePicker.Table className="nino-dp-table">
+                    <ArkDatePicker.Table className={styles.dayGrid}>
                       <ArkDatePicker.TableHead>
                         <ArkDatePicker.TableRow>
                           {dp.weekDays.map((wd, i) => (
                             <ArkDatePicker.TableHeader
                               key={i}
-                              className="nino-dp-table-header"
+                              className={styles.weekdayLabel}
                             >
                               {wd.short}
                             </ArkDatePicker.TableHeader>
@@ -149,9 +126,11 @@ export function DatePicker({
                               <ArkDatePicker.TableCell
                                 key={di}
                                 value={day as DateValue}
-                                className="nino-dp-table-cell"
+                                className={styles.dayCell}
                               >
-                                <ArkDatePicker.TableCellTrigger className="nino-dp-cell-trigger">
+                                <ArkDatePicker.TableCellTrigger
+                                  className={styles.dayButton}
+                                >
                                   {(day as CalendarDate).day}
                                 </ArkDatePicker.TableCellTrigger>
                               </ArkDatePicker.TableCell>
@@ -165,28 +144,28 @@ export function DatePicker({
               </ArkDatePicker.Context>
             </ArkDatePicker.View>
 
-            <ArkDatePicker.View view="month" className="nino-dp-view">
+            <ArkDatePicker.View view="month" className={styles.calendarView}>
               <ArkDatePicker.Context>
                 {(dp) => (
                   <>
-                    <ArkDatePicker.ViewControl className="nino-dp-view-control">
+                    <ArkDatePicker.ViewControl className={styles.viewHeader}>
                       <ArkDatePicker.PrevTrigger
-                        className="nino-dp-prev-trigger"
+                        className={styles.prevMonthButton}
                         aria-label="Previous year"
                       >
-                        <ChevronLeft />
+                        <Icon name="chevron-left" size="sm" />
                       </ArkDatePicker.PrevTrigger>
-                      <ArkDatePicker.ViewTrigger className="nino-dp-view-trigger">
+                      <ArkDatePicker.ViewTrigger className={styles.viewSwitchButton}>
                         <ArkDatePicker.RangeText />
                       </ArkDatePicker.ViewTrigger>
                       <ArkDatePicker.NextTrigger
-                        className="nino-dp-next-trigger"
+                        className={styles.nextMonthButton}
                         aria-label="Next year"
                       >
-                        <ChevronRight />
+                        <Icon name="chevron-right" size="sm" />
                       </ArkDatePicker.NextTrigger>
                     </ArkDatePicker.ViewControl>
-                    <ArkDatePicker.Table className="nino-dp-table">
+                    <ArkDatePicker.Table className={styles.dayGrid}>
                       <ArkDatePicker.TableBody>
                         {dp
                           .getMonthsGrid({ columns: 4, format: 'short' })
@@ -196,9 +175,11 @@ export function DatePicker({
                                 <ArkDatePicker.TableCell
                                   key={month.label}
                                   value={month.value as unknown as DateValue}
-                                  className="nino-dp-table-cell"
+                                  className={styles.dayCell}
                                 >
-                                  <ArkDatePicker.TableCellTrigger className="nino-dp-cell-trigger">
+                                  <ArkDatePicker.TableCellTrigger
+                                    className={styles.dayButton}
+                                  >
                                     {month.label}
                                   </ArkDatePicker.TableCellTrigger>
                                 </ArkDatePicker.TableCell>
@@ -212,28 +193,28 @@ export function DatePicker({
               </ArkDatePicker.Context>
             </ArkDatePicker.View>
 
-            <ArkDatePicker.View view="year" className="nino-dp-view">
+            <ArkDatePicker.View view="year" className={styles.calendarView}>
               <ArkDatePicker.Context>
                 {(dp) => (
                   <>
-                    <ArkDatePicker.ViewControl className="nino-dp-view-control">
+                    <ArkDatePicker.ViewControl className={styles.viewHeader}>
                       <ArkDatePicker.PrevTrigger
-                        className="nino-dp-prev-trigger"
+                        className={styles.prevMonthButton}
                         aria-label="Previous decade"
                       >
-                        <ChevronLeft />
+                        <Icon name="chevron-left" size="sm" />
                       </ArkDatePicker.PrevTrigger>
-                      <ArkDatePicker.ViewTrigger className="nino-dp-view-trigger">
+                      <ArkDatePicker.ViewTrigger className={styles.viewSwitchButton}>
                         <ArkDatePicker.RangeText />
                       </ArkDatePicker.ViewTrigger>
                       <ArkDatePicker.NextTrigger
-                        className="nino-dp-next-trigger"
+                        className={styles.nextMonthButton}
                         aria-label="Next decade"
                       >
-                        <ChevronRight />
+                        <Icon name="chevron-right" size="sm" />
                       </ArkDatePicker.NextTrigger>
                     </ArkDatePicker.ViewControl>
-                    <ArkDatePicker.Table className="nino-dp-table">
+                    <ArkDatePicker.Table className={styles.dayGrid}>
                       <ArkDatePicker.TableBody>
                         {dp.getYearsGrid({ columns: 4 }).map((row, ri) => (
                           <ArkDatePicker.TableRow key={ri}>
@@ -241,9 +222,11 @@ export function DatePicker({
                               <ArkDatePicker.TableCell
                                 key={year.label}
                                 value={year.value as unknown as DateValue}
-                                className="nino-dp-table-cell"
+                                className={styles.dayCell}
                               >
-                                <ArkDatePicker.TableCellTrigger className="nino-dp-cell-trigger">
+                                <ArkDatePicker.TableCellTrigger
+                                  className={styles.dayButton}
+                                >
                                   {year.label}
                                 </ArkDatePicker.TableCellTrigger>
                               </ArkDatePicker.TableCell>

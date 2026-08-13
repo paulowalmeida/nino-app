@@ -1,0 +1,67 @@
+@reference "../../styles/globals.css";
+
+.fileUpload {
+  @apply w-full;
+}
+
+.dropzone {
+  @apply group flex cursor-pointer flex-col items-center justify-center gap-3;
+  @apply rounded-2 border-2 border-dashed border-border;
+  @apply bg-surface-mute;
+  @apply px-6 py-10 text-center transition-colors duration-fast;
+  @apply hover:border-brand hover:bg-surface-4;
+  @apply data-[dragging]:border-brand data-[dragging]:bg-surface-4;
+}
+
+.uploadIcon {
+  @apply text-fg-faint;
+}
+
+.restingPrompt {
+  @apply group-data-dragging:hidden;
+}
+
+.browseButton {
+  @apply font-medium text-brand outline-none hover:underline;
+}
+
+.dragHint {
+  @apply text-sm text-fg-subtle;
+}
+
+.dropHint {
+  @apply hidden text-sm font-medium text-brand;
+  @apply group-data-dragging:block;
+}
+
+.limitHint {
+  @apply text-xs text-fg-faint group-data-dragging:hidden;
+}
+
+.fileList {
+  @apply mt-4 flex flex-col gap-2;
+}
+
+.fileRow {
+  @apply flex items-center gap-3 rounded-2 bg-surface-mute px-3 py-2;
+  @apply text-sm;
+}
+
+.previewImage {
+  @apply size-8 rounded-1 object-cover;
+}
+
+.itemName {
+  @apply flex-1 truncate text-fg-strong;
+}
+
+.itemSize {
+  @apply shrink-0 text-xs text-fg-faint;
+}
+
+.deleteButton {
+  @apply shrink-0 cursor-pointer rounded-full p-3.5 text-fg-faint;
+  @apply transition-colors duration-fast;
+  @apply hover:bg-surface-5 hover:text-fg-muted;
+  @apply focus-ring;
+}

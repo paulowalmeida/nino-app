@@ -1,53 +1,38 @@
-import { useId } from 'react'
-
 import { RatingGroup as ArkRating } from '@ark-ui/react/rating-group'
-import { mergeClasses } from '@ds/lib/mergeClasses'
+import { mergeClasses } from '@ds/lib/mergeClasses/mergeClasses'
 
-import { RatingProps } from './Rating.types'
+import { Icon } from '../Icon/Icon'
+import styles from './Rating.module.css'
 
-const baseControl = 'flex items-center gap-1'
-
-const baseItem =
-  'cursor-pointer rounded-[4px] text-sand-deep transition-colors ' +
-  'outline-none focus-visible:outline-2 focus-visible:outline-brand ' +
-  'focus-visible:outline-offset-2 data-[highlighted]:text-brand ' +
-  'data-[checked]:text-brand disabled:pointer-events-none ' +
-  'disabled:opacity-50'
-
-const readOnlyItem =
-  'cursor-default text-sand-deep data-[highlighted]:text-brand ' +
-  'data-[checked]:text-brand'
-
-function StarIcon({
-  half,
-  gradientId,
-}: {
-  half?: boolean
-  gradientId: string
-}) {
-  if (half) {
-    return (
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-        <defs>
-          <linearGradient id={gradientId}>
-            <stop offset="50%" stopColor="currentColor" />
-            <stop offset="50%" stopColor="#d1d5db" />
-          </linearGradient>
-        </defs>
-        <path
-          fill={`url(#${gradientId})`}
-          d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"
-        />
-      </svg>
-    )
-  }
-  return (
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-      <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
-    </svg>
-  )
+type RatingProps = {
+  count?: number
+  value?: number
+  defaultValue?: number
+  onValueChange?: (value: number) => void
+  allowHalf?: boolean
+  readOnly?: boolean
+  disabled?: boolean
+  name?: string
+  className?: string
 }
 
+/**
+ * Star rating — given by the customer, shown on the store.
+ *
+ * @param count - How many stars. Default: `5`
+ *
+ * @param allowHalf - Lets the rating land on half a star, which is what an
+ * average needs: 4.5 out of ten reviews is not 4 and is not 5
+ *
+ * @param readOnly - Shows a rating without taking one. Use it wherever the
+ * stars report a result instead of asking for one
+ *
+ * @param name - Field name, for when the stars are inside a form
+ *
+ * @example
+ * <Rating value={store.rating} allowHalf readOnly />
+ * <Rating name="rating" onValueChange={setRating} />
+ */
 export function Rating({
   count = 5,
   value,
@@ -59,33 +44,34 @@ export function Rating({
   name,
   className,
 }: RatingProps) {
-  const gradientId = useId()
-
   return (
     <ArkRating.Root
       count={count}
       value={value}
       defaultValue={defaultValue}
-      onValueChange={({ value: v }) => onValueChange?.(v)}
+      onValueChange={({ value: rating }) => onValueChange?.(rating)}
       allowHalf={allowHalf}
       readOnly={readOnly}
       disabled={disabled}
       name={name}
     >
-      <ArkRating.Control className={mergeClasses(baseControl, className)}>
+      <ArkRating.Control className={mergeClasses(styles.starRow, className)}>
         <ArkRating.Context>
           {() =>
-            Array.from({ length: count }, (_, i) => (
+            Array.from({ length: count }, (_, index) => (
               <ArkRating.Item
-                key={i}
-                index={i + 1}
-                className={readOnly ? readOnlyItem : baseItem}
+                key={index}
+                index={index + 1}
+                className={readOnly ? styles.starStatic : styles.starButton}
               >
-                <ArkRating.ItemContext>
-                  {({ half }) => (
-                    <StarIcon half={half} gradientId={gradientId} />
-                  )}
-                </ArkRating.ItemContext>
+                <Icon name="star" size="md" />
+                <span className={styles.filledLayer}>
+                  <Icon
+                    name="star-filled"
+                    size="md"
+                    className={styles.filledStar}
+                  />
+                </span>
               </ArkRating.Item>
             ))
           }
@@ -95,5 +81,3 @@ export function Rating({
     </ArkRating.Root>
   )
 }
-
-Rating.displayName = 'Rating'

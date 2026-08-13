@@ -1,24 +1,45 @@
+import type { ReactNode } from 'react'
+
 import { HoverCard as ArkHoverCard } from '@ark-ui/react/hover-card'
 import { Portal } from '@ark-ui/react/portal'
 
-import { HoverCardProps } from './HoverCard.types'
+import styles from './HoverCard.module.css'
 
-const contentClass =
-  'z-50 max-w-xs rounded-card bg-white p-4 text-sm ' +
-  'text-muted shadow-overlay outline-none data-[state=open]:animate-in ' +
-  'data-[state=closed]:animate-out data-[state=closed]:fade-out-0 ' +
-  'data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 ' +
-  'data-[state=open]:zoom-in-95'
+type HoverCardPlacement = 'top' | 'bottom' | 'left' | 'right'
 
-const arrowClass = 'fill-white'
+type HoverCardProps = {
+  trigger: ReactNode
+  children: ReactNode
+  placement?: HoverCardPlacement
+  openDelay?: number
+  closeDelay?: number
+}
 
 /**
- * Floating card revealed on hover/focus of a trigger (Ark `HoverCard`).
- * Good for previews — a product, a courier, a profile.
+ * Card that appears when the pointer rests on something, for a preview that
+ * would crowd the screen if it were always there — a product, a courier, a
+ * profile.
  *
- * @param trigger - Element that opens the card on hover
+ * Hover is not a gesture on a phone: the trigger has to work by tap or focus
+ * on its own, and what is inside the card can never be the only way to reach
+ * a piece of information.
  *
- * @param placement - Position relative to the trigger. Default: `bottom`
+ * @param trigger - Element that reveals the card on hover or focus
+ *
+ * @param children - Content shown inside the card
+ *
+ * @param placement - Side it opens on. Default: `bottom`
+ *
+ * @param openDelay - Milliseconds the pointer must rest before it opens.
+ * Default: `300` — enough that crossing the trigger does not open it
+ *
+ * @param closeDelay - Milliseconds before it closes. Default: `200` — the
+ * grace period to travel from the trigger into the card
+ *
+ * @example
+ * <HoverCard trigger={<Avatar name="Ana" />}>
+ *   <Text size="sm">Entregando desde março</Text>
+ * </HoverCard>
  */
 export function HoverCard({
   trigger,
@@ -38,8 +59,8 @@ export function HoverCard({
       <ArkHoverCard.Trigger asChild>{trigger}</ArkHoverCard.Trigger>
       <Portal>
         <ArkHoverCard.Positioner>
-          <ArkHoverCard.Content className={contentClass}>
-            <ArkHoverCard.Arrow className={arrowClass}>
+          <ArkHoverCard.Content className={styles.panel}>
+            <ArkHoverCard.Arrow className={styles.arrow}>
               <ArkHoverCard.ArrowTip />
             </ArkHoverCard.Arrow>
             {children}
@@ -49,5 +70,3 @@ export function HoverCard({
     </ArkHoverCard.Root>
   )
 }
-
-HoverCard.displayName = 'HoverCard'

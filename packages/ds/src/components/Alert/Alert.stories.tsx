@@ -29,7 +29,7 @@ export const ComTitulo: Story = {
   },
 }
 
-export const Variantes: Story = {
+export const Variants: Story = {
   render: () => (
     <div className="flex flex-col gap-3 w-96">
       <Alert variant="info" title="Informação">

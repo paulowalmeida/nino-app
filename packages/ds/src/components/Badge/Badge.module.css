@@ -1,0 +1,38 @@
+@reference "../../styles/globals.css";
+
+.badge {
+  @apply inline-flex items-center rounded-1 font-bold uppercase;
+  @apply tracking-wider leading-normal;
+}
+
+.toneNeutral {
+  @apply bg-fg-default text-fg-inverse;
+}
+
+.toneBrand {
+  @apply bg-brand text-fg-on-brand;
+}
+
+.toneSuccess {
+  @apply bg-success text-fg-inverse;
+}
+
+.toneDanger {
+  @apply bg-danger text-fg-inverse;
+}
+
+.toneWarning {
+  @apply bg-warning-bright text-fg-strong;
+}
+
+.toneInfo {
+  @apply bg-surface-cool text-fg-strong;
+}
+
+.sizeSmall {
+  @apply px-1.5 py-0.5 text-2xs;
+}
+
+.sizeMedium {
+  @apply px-2 py-0.5 text-xs;
+}

@@ -1,20 +1,26 @@
-import { mergeClasses } from '@ds/lib/mergeClasses'
+import { mergeClasses } from '@ds/lib/mergeClasses/mergeClasses'
+import { TextColor, textColorClasses } from '@ds/lib/textStyles/textStyles'
 
 import spriteUrl from '../../assets/icons.sprite.svg'
-import { IconName } from './Icon.types'
+import styles from './Icon.module.css'
+import { IconName, IconSize } from './Icon.types'
 
-const baseIcon = 'inline-block shrink-0'
+export type { IconName, IconSize }
 
-const sizeClass = {
-  sm: 'h-4 w-4',
-  md: 'h-5 w-5',
-  lg: 'h-6 w-6',
+type IconProps = {
+  name: IconName
+  size?: IconSize
+  color?: TextColor
+  label?: string
+  className?: string
 }
 
-export interface IconProps {
-  name: IconName
-  size?: 'sm' | 'md' | 'lg'
-  className?: string
+const sizeClasses: Record<IconSize, string> = {
+  xs: styles.sizeExtraSmall,
+  sm: styles.sizeSmall,
+  md: styles.sizeMedium,
+  lg: styles.sizeLarge,
+  xl: styles.sizeExtraLarge,
 }
 
 /**
@@ -27,13 +33,42 @@ export interface IconProps {
  * stays synchronous — no loading state, no pop-in.
  *
  * Colour comes from `currentColor` on each symbol, so the icon follows the
- * surrounding text colour like any glyph.
+ * surrounding text colour like any glyph — `color` overrides that with a
+ * token when the icon has to carry its own.
+ *
+ * @param name - Icon from the DS catalog
+ *
+ * @param size - `xs` to `xl`. Default: `md`
+ *
+ * @param color - Entry from the DS text color tokens. Defaults to the
+ * surrounding text colour
+ *
+ * @param label - Announces the icon to screen readers. Omit for decoration
+ *
+ * @param className - Additional CSS classes
+ *
+ * @example
+ * <Icon name="trash" />
+ * <Icon name="trash" label="Excluir item" color="danger" />
  */
-export function Icon({ name, size = 'md', className }: IconProps) {
+export function Icon({
+  name,
+  size = 'md',
+  color,
+  label,
+  className,
+}: IconProps) {
   return (
     <svg
-      className={mergeClasses(baseIcon, sizeClass[size], className)}
-      aria-hidden="true"
+      className={mergeClasses(
+        styles.icon,
+        sizeClasses[size],
+        color && textColorClasses[color],
+        className
+      )}
+      role={label ? 'img' : undefined}
+      aria-label={label}
+      aria-hidden={label ? undefined : true}
       focusable="false"
     >
       <use href={`${spriteUrl}#${name}`} />

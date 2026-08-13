@@ -1,0 +1,29 @@
+@reference "../../styles/globals.css";
+
+.field {
+  @apply flex flex-col gap-1.5;
+}
+
+.labelDefault {
+  @apply text-sm font-medium text-fg-default;
+}
+
+.labelCompact {
+  @apply text-xs font-bold text-fg-muted;
+}
+
+.requiredMark {
+  @apply ml-1 text-danger;
+}
+
+.helperText {
+  @apply text-sm text-fg-subtle;
+}
+
+.errorText {
+  @apply text-sm text-danger;
+}
+
+.horizontalRow {
+  @apply flex items-center gap-2;
+}

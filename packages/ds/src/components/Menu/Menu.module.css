@@ -1,0 +1,33 @@
+@reference "../../styles/globals.css";
+
+.option {
+  @apply relative flex cursor-pointer select-none items-center gap-2 rounded-2;
+  @apply min-h-11 px-3 py-2.5 text-sm font-medium outline-none;
+  @apply transition-colors duration-fast;
+  @apply data-[disabled]:pointer-events-none;
+  @apply data-[disabled]:opacity-disabled;
+}
+
+.optionDefault {
+  @apply text-fg-default;
+  @apply data-[highlighted]:bg-surface-mute;
+  @apply data-[highlighted]:text-fg-strong;
+}
+
+.optionDanger {
+  @apply text-danger data-[highlighted]:bg-danger-surface;
+  @apply data-[highlighted]:text-danger;
+}
+
+.separator {
+  @apply my-1 h-px border-0 bg-surface-5;
+}
+
+.positioner {
+  @apply z-popover!;
+}
+
+.panel {
+  @apply z-popover min-w-40 overflow-hidden rounded-2 bg-surface-raised;
+  @apply p-1 shadow-warm-lg outline-none;
+}

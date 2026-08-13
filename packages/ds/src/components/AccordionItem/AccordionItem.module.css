@@ -1,0 +1,26 @@
+@reference "../../styles/globals.css";
+
+.item {
+  @apply overflow-hidden rounded-2 bg-surface-raised;
+}
+
+/* `group` fica literal no JSX, não aqui: é o marcador que os filhos leem em
+   `group-data-[state=open]`, e precisa sobreviver ao hash do CSS Module. */
+.toggleHeader {
+  @apply flex w-full cursor-pointer items-center justify-between gap-3;
+  @apply px-4 py-3 text-sm font-semibold;
+  @apply transition-colors duration-base;
+  @apply bg-brand-soft text-brand-strong hover:bg-brand-muted;
+  @apply focus-ring-inset state-disabled;
+  @apply data-[state=open]:bg-brand-ghost;
+  @apply data-[state=open]:text-fg-strong;
+  @apply data-[state=open]:hover:bg-brand-soft;
+}
+
+.panel {
+  @apply overflow-hidden text-sm text-fg-muted;
+}
+
+.panelBody {
+  @apply px-4 pb-4;
+}
