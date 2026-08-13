@@ -6,7 +6,7 @@
 
 .track {
   @apply relative inline-flex shrink-0 cursor-pointer items-center;
-  @apply rounded-full border-2 border-transparent bg-surface-mute;
+  @apply rounded-full border-2 border-transparent bg-border;
   @apply transition-colors duration-fast;
   @apply data-[state=checked]:bg-brand;
   @apply focus-ring;
