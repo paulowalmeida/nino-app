@@ -10,16 +10,16 @@
 }
 
 .code {
-  @apply text-[0.68rem] font-bold tracking-[0.06em] text-faintest;
+  @apply text-2xs font-bold tracking-[0.06em] text-fg-faintest;
   @apply [font-family:var(--font-sans)];
 }
 
 .customer {
-  @apply font-bold text-[0.86rem] text-gray-900 truncate;
+  @apply font-bold text-sm text-gray-900 truncate;
 }
 
 .items {
-  @apply text-[0.75rem] text-gray-500 truncate;
+  @apply text-xs text-gray-500 truncate;
 }
 
 .state {
@@ -27,16 +27,16 @@
 }
 
 .status {
-  @apply px-2.5 py-1 rounded-full text-[0.68rem] font-bold;
+  @apply px-2.5 py-1 rounded-full text-2xs font-bold;
   @apply whitespace-nowrap;
 }
 
 .waiting {
-  @apply text-white bg-brand-strong;
+  @apply text-fg-on-brand bg-brand-strong;
 }
 
 .kitchen {
-  @apply text-brand-strong bg-brand/12;
+  @apply text-brand-strong bg-brand-soft;
 }
 
 .pickup {
@@ -48,9 +48,9 @@
 }
 
 .total {
-  @apply text-[0.8rem] font-bold text-gray-900;
+  @apply text-xs font-bold text-gray-900;
 }
 
 .trail {
-  @apply col-span-2 text-[0.7rem] text-gray-400;
+  @apply col-span-2 text-xs text-gray-400;
 }

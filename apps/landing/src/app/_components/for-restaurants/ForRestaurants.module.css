@@ -1,28 +1,28 @@
 @reference '../../theme.css';
 .section {
-  @apply relative overflow-hidden bg-paper py-[6.5rem] px-10;
+  @apply relative overflow-hidden bg-surface-1 py-[6.5rem] px-10;
 }
 
 .inner {
-  @apply max-w-[1100px] mx-auto grid items-center;
+  @apply max-w-page mx-auto grid items-center;
   @apply grid-cols-[1.05fr_0.95fr] gap-14;
 }
 
 .eyebrow {
   @apply inline-flex items-center gap-2 mb-4;
-  @apply [font-family:var(--font-sans)] text-[0.78rem] font-bold;
+  @apply [font-family:var(--font-sans)] text-xs font-bold;
   @apply tracking-[0.12em] uppercase text-brand-strong;
 }
 
 .eyebrow::before {
   content: "";
-  @apply inline-block w-[22px] h-0.5 bg-brand rounded-sm;
+  @apply inline-block w-[22px] h-0.5 bg-brand rounded-1;
 }
 
 .title {
   @apply [font-family:var(--font-display)] font-extrabold;
-  @apply text-[clamp(2rem,3.8vw,3rem)] leading-[1.05];
-  @apply tracking-[-0.02em] text-ink;
+  @apply text-[clamp(2rem,3.8vw,3rem)] leading-display;
+  @apply tracking-[-0.02em] text-fg-strong;
 }
 
 .titleAccent {
@@ -30,8 +30,8 @@
 }
 
 .lead {
-  @apply mt-[1.1rem] text-[1.05rem] leading-[1.65];
-  @apply text-muted max-w-[30rem];
+  @apply mt-[1.1rem] text-base leading-relaxed;
+  @apply text-fg-muted max-w-block-lg;
 }
 
 .list {
@@ -39,16 +39,16 @@
 }
 
 .comparisonCard {
-  @apply bg-white border border-brand/12;
-  @apply rounded-[22px] overflow-hidden;
-  @apply shadow-[0_18px_44px_rgba(120,60,0,0.08)];
+  @apply bg-surface-raised border border-brand-soft;
+  @apply rounded-5 overflow-hidden;
+  @apply shadow-warm-md;
 }
 
 .comparisonHead {
-  @apply flex justify-between bg-cream;
+  @apply flex justify-between bg-surface-2;
   @apply py-4 px-[1.4rem];
-  @apply border-b border-brand/10;
-  @apply text-[0.72rem] font-bold tracking-[0.08em] uppercase text-faintest;
+  @apply border-b border-brand-soft;
+  @apply text-xs font-bold tracking-[0.08em] uppercase text-fg-faintest;
 }
 
 @media (max-width: 860px) {

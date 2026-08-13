@@ -1,8 +1,8 @@
 @reference '../../../../theme.css';
 .notification {
-  @apply absolute z-[4] w-[220px] bg-white rounded-[16px];
-  @apply py-[0.8rem] px-[0.9rem] text-ink;
-  @apply shadow-[0_18px_40px_rgba(90,30,0,0.22)];
+  @apply absolute z-raised w-[220px] bg-surface-raised rounded-4;
+  @apply py-[0.8rem] px-[0.9rem] text-fg-strong;
+  @apply shadow-warm-lg;
   @apply flex gap-[0.6rem] items-center;
   @apply animate-[float_4s_ease-in-out_infinite];
 }
@@ -21,19 +21,19 @@
 }
 
 .whatsapp {
-  @apply rounded-full bg-whatsapp;
+  @apply rounded-full bg-accent-whatsapp;
 }
 
 .delivery {
-  @apply rounded-[10px] bg-peach-light text-[1.1rem];
+  @apply rounded-2 bg-accent-peach-light text-lg;
 }
 
 .title {
-  @apply text-[0.78rem] font-bold block;
+  @apply text-xs font-bold block;
 }
 
 .subtitle {
-  @apply text-[0.66rem] text-faint;
+  @apply text-2xs text-fg-faint;
 }
 
 @keyframes float {

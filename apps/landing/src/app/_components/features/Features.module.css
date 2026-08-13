@@ -4,40 +4,41 @@
   background: #fffbf5;
   background: radial-gradient(
     900px 380px at 50% -8%,
-    rgba(255, 126, 31, 0.12),
+    color-mix(in srgb, var(--color-brand-light) 12%, transparent),
     transparent 60%
   );
 }
 
 .section::after {
   content: "";
-  @apply absolute inset-0 pointer-events-none opacity-50 mix-blend-multiply;
+  @apply absolute inset-0 pointer-events-none opacity-disabled;
+  @apply mix-blend-multiply;
   background-image: url("/noise.svg");
 }
 
 .inner {
-  @apply relative z-[1] max-w-[1120px] mx-auto;
+  @apply relative z-raised max-w-page mx-auto;
 }
 
 .header {
-  @apply max-w-[620px] mb-14;
+  @apply max-w-block mb-14;
 }
 
 .eyebrow {
   @apply inline-flex items-center gap-2 mb-4;
-  @apply [font-family:var(--font-sans)] text-[0.78rem] font-bold;
+  @apply [font-family:var(--font-sans)] text-xs font-bold;
   @apply tracking-[0.12em] uppercase text-brand-strong;
 }
 
 .eyebrow::before {
   content: "";
-  @apply inline-block w-[22px] h-0.5 bg-brand rounded-sm;
+  @apply inline-block w-[22px] h-0.5 bg-brand rounded-1;
 }
 
 .title {
   @apply [font-family:var(--font-display)] font-extrabold;
-  @apply text-[clamp(2.1rem,4vw,3.1rem)] leading-[1.05];
-  @apply tracking-[-0.02em] text-ink;
+  @apply text-[clamp(2.1rem,4vw,3.1rem)] leading-display;
+  @apply tracking-[-0.02em] text-fg-strong;
 }
 
 .titleAccent {
@@ -45,7 +46,7 @@
 }
 
 .subtitle {
-  @apply mt-4 text-[1.08rem] leading-relaxed text-muted;
+  @apply mt-4 text-lg leading-relaxed text-fg-muted;
 }
 
 .grid {

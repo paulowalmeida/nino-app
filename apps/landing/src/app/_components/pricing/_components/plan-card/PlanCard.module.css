@@ -1,47 +1,49 @@
 @reference '../../../../theme.css';
 .plan {
-  @apply relative flex flex-col rounded-[20px] p-8 bg-white;
-  @apply border border-brand/14 transition-all duration-[250ms];
-  box-shadow: 0 4px 20px rgba(120, 60, 0, 0.05);
+  @apply relative flex flex-col rounded-5 p-8 bg-surface-raised;
+  @apply border border-brand-soft transition-all duration-[250ms];
+  box-shadow: 0 4px 20px
+    color-mix(in srgb, var(--color-burnt-900) 5%, transparent);
 }
 
 .plan:hover {
   @apply -translate-y-1;
-  box-shadow: 0 18px 38px rgba(232, 84, 12, 0.12);
+  box-shadow: 0 18px 38px
+    color-mix(in srgb, var(--color-brand-strong) 12%, transparent);
 }
 
 .planName {
-  @apply text-[0.78rem] font-bold uppercase tracking-[0.08em] mb-3;
+  @apply text-xs font-bold uppercase tracking-[0.08em] mb-3;
   @apply text-brand-strong [font-family:var(--font-sans)];
 }
 
 .price {
-  @apply font-extrabold text-[2.2rem] leading-[1.05] text-ink;
+  @apply font-extrabold text-4xl leading-display text-fg-strong;
   @apply [font-family:var(--font-display)];
 }
 
 .priceSmall {
-  @apply text-[1.5rem];
+  @apply text-2xl;
 }
 
 .period {
-  @apply font-semibold text-[0.95rem] text-faintest;
+  @apply font-semibold text-base text-fg-faintest;
   @apply [font-family:var(--font-sans)];
 }
 
 .description {
-  @apply mt-2.5 text-[0.88rem] leading-snug text-muted min-h-[2.6rem];
+  @apply mt-2.5 text-sm leading-snug text-fg-muted min-h-[2.6rem];
 }
 
 .inherits {
   @apply flex items-center gap-1.5 mt-5 pb-3.5;
-  @apply text-[0.82rem] font-bold text-brand-strong;
-  @apply border-b border-dashed border-brand/25;
+  @apply text-sm font-bold text-brand-strong;
+  @apply border-b border-dashed border-brand-muted;
   @apply [font-family:var(--font-sans)];
 }
 
 .inheritsMark {
-  @apply text-[0.9rem] leading-none shrink-0;
+  @apply text-sm leading-none shrink-0;
 }
 
 .featureList {
@@ -53,7 +55,7 @@
 }
 
 .featureItem {
-  @apply flex items-start gap-2 text-[0.85rem] leading-snug text-body;
+  @apply flex items-start gap-2 text-sm leading-snug text-fg-default;
 }
 
 .featureItem::before {
@@ -63,23 +65,25 @@
 
 .ctaButton {
   @apply block text-center py-3 px-4 rounded-full font-bold;
-  @apply text-[0.92rem] no-underline transition-all duration-200;
-  @apply border-[1.5px] border-brand/40 text-brand-strong bg-white;
+  @apply text-sm no-underline transition-all duration-200;
+  @apply border-2 border-brand-bold text-brand-strong;
+  @apply bg-surface-raised;
 }
 
 .ctaButton:hover {
-  @apply -translate-y-0.5 bg-brand text-white border-brand;
+  @apply -translate-y-0.5 bg-brand text-fg-on-brand border-brand;
 }
 
 .popularBadge {
   @apply absolute -top-3 left-1/2 -translate-x-1/2 rounded-full;
-  @apply text-[0.66rem] font-extrabold uppercase tracking-[0.08em];
-  @apply text-white whitespace-nowrap px-3 py-1 bg-ink;
+  @apply text-2xs font-extrabold uppercase tracking-[0.08em];
+  @apply text-fg-on-brand whitespace-nowrap px-3 py-1 bg-fg-strong;
 }
 
 .featured {
   @apply border-transparent -translate-y-3;
-  box-shadow: 0 24px 50px rgba(232, 84, 12, 0.32);
+  box-shadow: 0 24px 50px
+    color-mix(in srgb, var(--color-brand-strong) 32%, transparent);
   background:
     radial-gradient(120% 90% at 85% 0%, #ff8a33 0%, transparent 55%),
     linear-gradient(160deg, #ff7e1f 0%, #ec5a0e 100%);
@@ -87,43 +91,44 @@
 
 .featured:hover {
   @apply -translate-y-4;
-  box-shadow: 0 30px 60px rgba(232, 84, 12, 0.4);
+  box-shadow: 0 30px 60px
+    color-mix(in srgb, var(--color-brand-strong) 40%, transparent);
 }
 
 .featured .planName {
-  @apply text-white/[0.85];
+  @apply text-fg-on-brand/[0.85];
 }
 
 .featured .period {
-  @apply text-white/[0.85];
+  @apply text-fg-on-brand/[0.85];
 }
 
 .featured .price {
-  @apply text-white;
+  @apply text-fg-on-brand;
 }
 
 .featured .description {
-  @apply text-white;
+  @apply text-fg-on-brand;
 }
 
 .featured .inherits {
-  @apply text-white border-white/40;
+  @apply text-fg-on-brand border-fg-on-brand/40;
 }
 
 .featured .featureItem {
-  @apply text-white/[0.95];
+  @apply text-fg-on-brand/[0.95];
 }
 
 .featured .featureItem::before {
-  @apply text-white;
+  @apply text-fg-on-brand;
 }
 
 .featured .ctaButton {
-  @apply bg-white text-brand-strong border-white;
+  @apply bg-surface-raised text-brand-strong border-fg-on-brand;
 }
 
 .featured .ctaButton:hover {
-  @apply bg-ink text-white border-ink;
+  @apply bg-fg-strong text-fg-on-brand border-fg-strong;
 }
 
 @media (max-width: 980px) {

@@ -9,17 +9,17 @@
 
 .nodeDone {
   @apply w-8 h-8 rounded-full flex items-center justify-center;
-  @apply text-[0.8rem] font-bold bg-brand text-white;
+  @apply text-xs font-bold bg-brand text-fg-on-brand;
 }
 
 .nodeActive {
   @apply w-8 h-8 rounded-full flex items-center justify-center;
-  @apply text-[0.9rem] bg-brand animate-pulse;
+  @apply text-sm bg-brand animate-pulse;
 }
 
 .nodePending {
   @apply w-8 h-8 rounded-full flex items-center justify-center;
-  @apply text-[0.8rem] font-bold bg-gray-100;
+  @apply text-xs font-bold bg-gray-100;
   @apply border-2 border-gray-200 text-gray-300;
 }
 
@@ -36,21 +36,21 @@
 }
 
 .stepLabelDone {
-  @apply font-semibold text-[0.85rem] text-gray-900;
+  @apply font-semibold text-sm text-gray-900;
 }
 
 .stepLabelActive {
-  @apply font-bold text-[0.85rem] text-brand;
+  @apply font-bold text-sm text-brand;
 }
 
 .stepLabelPending {
-  @apply font-semibold text-[0.85rem] text-gray-300;
+  @apply font-semibold text-sm text-gray-300;
 }
 
 .stepTimeDone {
-  @apply text-[0.7rem] text-gray-400 mt-0.5;
+  @apply text-xs text-gray-400 mt-0.5;
 }
 
 .stepTimePending {
-  @apply text-[0.7rem] text-gray-200 mt-0.5;
+  @apply text-xs text-gray-200 mt-0.5;
 }

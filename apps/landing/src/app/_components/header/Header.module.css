@@ -1,15 +1,15 @@
 @reference '../../theme.css';
 .header {
-  @apply fixed top-0 left-0 right-0 z-[100];
+  @apply fixed top-0 left-0 right-0 z-nav;
   @apply py-[1.1rem] px-0 bg-transparent;
   @apply transition-[padding] duration-300;
 }
 
 .header::before {
   content: "";
-  @apply absolute inset-0 -z-[1] opacity-0 transition-opacity duration-300;
+  @apply absolute inset-0 z-below opacity-0 transition-opacity duration-300;
   background: linear-gradient(165deg, #ff7e1f 0%, #ec5a0e 100%);
-  @apply shadow-[0_6px_24px_rgba(120,40,0,0.22)];
+  @apply shadow-warm-md;
 }
 
 .scrolled::before {
@@ -38,7 +38,7 @@
 }
 
 .inner {
-  @apply max-w-[1200px] mx-auto px-10;
+  @apply max-w-page mx-auto px-10;
   @apply flex items-center justify-between;
 }
 
@@ -48,7 +48,9 @@
 
 .mascot {
   @apply block w-10 h-10;
-  @apply drop-shadow-[0_2px_6px_rgba(120,40,0,0.2)];
+  filter: drop-shadow(
+    0 2px 6px color-mix(in srgb, var(--color-burnt-900) 20%, transparent)
+  );
   @apply transition-[width,height] duration-300;
 }
 
@@ -58,11 +60,11 @@
 
 .wordmark {
   @apply [font-family:var(--font-display)] font-extrabold;
-  @apply text-[1.7rem] tracking-[-0.5px] text-white;
+  @apply text-[1.7rem] tracking-[-0.5px] text-fg-on-brand;
 }
 
 .wordmark i {
-  @apply text-cream-deep not-italic;
+  @apply text-fg-inverse not-italic;
 }
 
 .nav {
@@ -73,23 +75,23 @@
 }
 
 .navLink {
-  @apply text-white/85 no-underline font-medium;
-  @apply text-[0.94rem] transition-colors duration-200;
+  @apply text-fg-on-brand/85 no-underline font-medium;
+  @apply text-base transition-colors duration-200;
 }
 
 .navLink:hover {
-  @apply text-white;
+  @apply text-fg-on-brand;
 }
 
 .enterButton {
   @apply inline-flex items-center gap-[0.45rem];
-  @apply text-white no-underline font-medium text-[0.94rem];
-  @apply border-[1.5px] border-white/55 py-2 px-[1.2rem] rounded-full;
+  @apply text-fg-on-brand no-underline font-medium text-base;
+  @apply border-2 border-fg-on-brand/55 py-2 px-[1.2rem] rounded-full;
   @apply transition-all duration-200;
 }
 
 .enterButton:hover {
-  @apply bg-white text-brand-strong border-white;
+  @apply bg-surface-raised text-brand-strong border-fg-on-brand;
 }
 
 .enterIcon {
@@ -104,7 +106,7 @@
 }
 
 .burger span {
-  @apply block w-6 h-0.5 bg-white rounded-sm;
+  @apply block w-6 h-0.5 bg-surface-raised rounded-1;
   @apply transition-all duration-300 origin-center;
 }
 
@@ -121,7 +123,7 @@
 }
 
 .mobileMenu {
-  @apply fixed inset-0 z-[101];
+  @apply fixed inset-0 z-modal;
   @apply flex flex-col items-center justify-center gap-7;
   background: linear-gradient(165deg, #ff7e1f 0%, #ec5a0e 100%);
   @apply opacity-0 pointer-events-none;
@@ -134,13 +136,13 @@
 
 .mobileMenu a {
   @apply [font-family:var(--font-display)] text-[1.6rem];
-  @apply font-bold text-white no-underline;
+  @apply font-bold text-fg-on-brand no-underline;
 }
 
 .mobileClose {
   @apply absolute top-5 right-5;
-  @apply bg-white/[0.18] border-0 text-white;
-  @apply w-10 h-10 rounded-full text-[1.1rem] cursor-pointer;
+  @apply bg-surface-raised/[0.18] border-0 text-fg-on-brand;
+  @apply w-10 h-10 rounded-full text-lg cursor-pointer;
 }
 
 @media (max-width: 900px) {

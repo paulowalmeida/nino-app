@@ -1,75 +1,84 @@
 @reference '../../theme.css';
 
 @keyframes mascotFloat {
-  0%, 100% { transform: translateY(0) rotate(-2deg); }
-  50% { transform: translateY(-14px) rotate(2deg); }
+  0%,
+  100% {
+    transform: translateY(0) rotate(-2deg);
+  }
+  50% {
+    transform: translateY(-14px) rotate(2deg);
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .mascot { animation: none !important; }
+  .mascot {
+    animation: none !important;
+  }
 }
 
 .section {
-  @apply px-10 pb-24 pt-20 bg-paper;
+  @apply px-10 pb-24 pt-20 bg-surface-1;
 }
 
 .wrap {
-  @apply relative mx-auto max-w-[980px];
+  @apply relative mx-auto max-w-page-narrow;
 }
 
 .card {
-  @apply relative overflow-hidden rounded-[36px] px-10;
-  @apply py-20 text-center text-white;
+  @apply relative overflow-hidden rounded-6 px-10;
+  @apply py-20 text-center text-fg-on-brand;
   background:
     radial-gradient(80% 120% at 15% 0%, #ff8a33 0%, transparent 50%),
     radial-gradient(90% 130% at 100% 100%, #d94d08 0%, transparent 55%),
     linear-gradient(160deg, #ff7e1f 0%, #ec5a0e 100%);
-  @apply shadow-[0_30px_70px_rgba(232,84,12,0.34)];
+  @apply shadow-brand-lg;
 }
 
 .card::after {
   content: "";
-  @apply absolute inset-0 pointer-events-none opacity-50 mix-blend-overlay;
+  @apply absolute inset-0 pointer-events-none opacity-disabled;
+  @apply mix-blend-overlay;
   background-image: url("/noise.svg");
 }
 
 .inner {
-  @apply relative z-1;
+  @apply relative z-raised;
   /* cede espaço à direita para o mascote não sobrepor o texto */
   @apply lg:pr-44;
 }
 
 .pill {
   @apply inline-flex items-center gap-2 mb-6;
-  @apply rounded-full border border-white/30 bg-white/16;
-  @apply px-4 py-[0.4rem] text-[0.8rem] font-semibold backdrop-blur-sm;
+  @apply rounded-full border border-fg-on-brand/30;
+  @apply bg-surface-raised/16;
+  @apply px-4 py-[0.4rem] text-xs font-semibold backdrop-blur-sm;
 }
 
 .title {
   @apply [font-family:var(--font-display)] font-extrabold;
-  @apply text-[clamp(2.3rem,5vw,3.6rem)] leading-[1.02];
+  @apply text-[clamp(2.3rem,5vw,3.6rem)] leading-display;
   @apply tracking-[-0.02em];
 }
 
 .lead {
-  @apply mx-auto mt-[1.3rem] max-w-[34rem];
-  @apply text-[1.1rem] leading-relaxed text-white/92;
+  @apply mx-auto mt-[1.3rem] max-w-block-lg;
+  @apply text-lg leading-relaxed text-fg-on-brand/92;
 }
 
 .btn {
-  @apply mt-[2.2rem] inline-block rounded-full bg-white;
-  @apply px-[2.4rem] py-[1.1rem] font-bold text-[1.05rem];
+  @apply mt-[2.2rem] inline-block rounded-full bg-surface-raised;
+  @apply px-[2.4rem] py-[1.1rem] font-bold text-base;
   @apply text-brand-strong no-underline;
-  @apply shadow-[0_14px_30px_rgba(120,40,0,0.3)];
+  @apply shadow-warm-lg;
   @apply transition-all duration-200;
 }
 
 .btn:hover {
-  @apply translate-y-[-3px] shadow-[0_20px_40px_rgba(120,40,0,0.42)];
+  @apply translate-y-[-3px] shadow-warm-lg;
 }
 
 .fine {
-  @apply mt-[1.3rem] text-[0.85rem] text-white/80;
+  @apply mt-[1.3rem] text-sm text-fg-on-brand/80;
 }
 
 .mascot {
@@ -81,7 +90,9 @@
   width: 220px;
   height: 220px;
   animation: mascotFloat 6s ease-in-out infinite;
-  filter: drop-shadow(0 20px 32px rgba(120, 40, 0, 0.28));
+  filter: drop-shadow(
+    0 20px 32px color-mix(in srgb, var(--color-burnt-900) 28%, transparent)
+  );
 }
 
 @media (max-width: 720px) {
@@ -90,7 +101,7 @@
   }
 
   .card {
-    @apply rounded-[28px] px-6 py-14;
+    @apply rounded-6 px-6 py-14;
   }
 
   .inner {

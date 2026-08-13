@@ -1,7 +1,7 @@
 @reference '../../theme.css';
 
 .hero {
-  @apply relative overflow-hidden text-cream rounded-[0_0_36px_36px];
+  @apply relative overflow-hidden text-fg-inverse rounded-b-6;
   background:
     radial-gradient(120% 90% at 85% 0%, #ff8a33 0%, transparent 55%),
     linear-gradient(165deg, #ff7e1f 0%, #ec5a0e 100%);
@@ -9,12 +9,13 @@
 
 .hero::after {
   content: "";
-  @apply absolute inset-0 pointer-events-none opacity-50 mix-blend-overlay;
+  @apply absolute inset-0 pointer-events-none opacity-disabled;
+  @apply mix-blend-overlay;
   background-image: url("/noise.svg");
 }
 
 .container {
-  @apply max-w-[1200px] mx-auto px-10 relative z-[2];
+  @apply max-w-page mx-auto px-10 relative z-raised;
 }
 
 .grid {
@@ -24,37 +25,38 @@
 
 .badge {
   @apply inline-flex items-center gap-2;
-  @apply bg-white/[0.14] border border-white/[0.28];
+  @apply bg-surface-raised/[0.14] border border-fg-on-brand/[0.28];
   @apply py-[0.4rem] px-[0.95rem] rounded-full;
-  @apply text-[0.8rem] font-semibold backdrop-blur-sm;
+  @apply text-xs font-semibold backdrop-blur-sm;
   @apply animate-[fadeUp_0.6s_ease_both];
 }
 
 .badgeDot {
-  @apply w-[7px] h-[7px] rounded-full bg-lime;
-  @apply shadow-[0_0_0_3px_rgba(182,255,107,0.25)];
+  @apply w-[7px] h-[7px] rounded-full bg-accent-lime;
+  box-shadow: 0 0 0 3px
+    color-mix(in srgb, var(--color-accent-lime) 25%, transparent);
 }
 
 .headline {
   @apply [font-family:var(--font-display)] font-extrabold;
   @apply text-[clamp(2.8rem,5.6vw,4.6rem)] leading-none;
-  @apply tracking-[-0.02em] mt-6 text-white;
+  @apply tracking-[-0.02em] mt-6 text-fg-on-brand;
   @apply animate-[fadeUp_0.6s_0.05s_ease_both];
 }
 
 .underline {
-  @apply relative whitespace-nowrap text-white;
+  @apply relative whitespace-nowrap text-fg-on-brand;
 }
 
 .underline::after {
   content: "";
-  @apply absolute left-0 right-0 -z-[1] rounded-sm;
-  @apply bottom-[0.08em] h-[0.16em] bg-peach-deep;
+  @apply absolute left-0 right-0 z-below rounded-1;
+  @apply bottom-[0.08em] h-[0.16em] bg-accent-peach-deep;
 }
 
 .subtitle {
-  @apply mt-14 max-w-[30rem];
-  @apply text-[1.12rem] leading-[1.55] text-white/[0.92];
+  @apply mt-14 max-w-block-lg;
+  @apply text-lg leading-relaxed text-fg-on-brand/[0.92];
   @apply animate-[fadeUp_0.6s_0.1s_ease_both];
 }
 
@@ -64,18 +66,19 @@
 }
 
 .createButton {
-  @apply bg-white text-brand-strong [font-family:var(--font-sans)];
+  @apply bg-surface-raised text-brand-strong;
+  @apply [font-family:var(--font-sans)];
   @apply font-bold text-base border-0 cursor-pointer no-underline;
   @apply py-4 px-[1.7rem] rounded-full;
-  @apply shadow-[0_12px_28px_rgba(120,40,0,0.28)] transition-all duration-200;
+  @apply shadow-warm-lg transition-all duration-200;
 }
 
 .createButton:hover {
-  @apply -translate-y-0.5 shadow-[0_18px_36px_rgba(120,40,0,0.36)];
+  @apply -translate-y-0.5 shadow-warm-lg;
 }
 
 .demoLink {
-  @apply text-white font-semibold no-underline;
+  @apply text-fg-on-brand font-semibold no-underline;
   @apply inline-flex items-center gap-[0.4rem];
   @apply border-0 border-b-[1.5px] border-b-white/60;
   @apply rounded-none pb-[2px] bg-none bg-transparent cursor-pointer;
@@ -102,7 +105,7 @@
 }
 
 .proofLabel {
-  @apply text-[0.82rem] text-white/80 mt-[0.2rem];
+  @apply text-sm text-fg-on-brand/80 mt-[0.2rem];
 }
 
 .stage {

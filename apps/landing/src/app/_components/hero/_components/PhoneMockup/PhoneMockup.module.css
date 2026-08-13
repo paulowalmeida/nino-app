@@ -1,34 +1,34 @@
 @reference '../../../../theme.css';
 .phone {
-  @apply w-[270px] bg-charcoal rounded-[38px] p-[10px];
-  @apply relative z-[2] -rotate-3;
+  @apply w-[270px] bg-fg-strong rounded-6 p-[10px];
+  @apply relative z-raised -rotate-3;
   box-shadow:
-    0 40px 80px rgba(90, 30, 0, 0.4),
-    0 0 0 1px rgba(255, 255, 255, 0.06);
+    0 40px 80px color-mix(in srgb, var(--color-burnt-900) 40%, transparent),
+    0 0 0 1px color-mix(in srgb, var(--color-white) 6%, transparent);
 }
 
 .screen {
-  @apply bg-cream rounded-[30px] overflow-hidden;
+  @apply bg-surface-2 rounded-6 overflow-hidden;
   @apply h-[530px] flex flex-col;
 }
 
 .storeHeader {
-  @apply bg-white pt-[1.4rem] px-4 pb-[0.8rem];
-  @apply flex items-center gap-[0.6rem] border-b border-sand-deep;
+  @apply bg-surface-raised pt-[1.4rem] px-4 pb-[0.8rem];
+  @apply flex items-center gap-[0.6rem] border-b border-border;
 }
 
 .storeLogo {
-  @apply w-[38px] h-[38px] rounded-[11px];
+  @apply w-[38px] h-[38px] rounded-3;
   background: linear-gradient(135deg, #ff8a33, #ff6b00);
-  @apply flex items-center justify-center text-[1.1rem];
+  @apply flex items-center justify-center text-lg;
 }
 
 .storeName {
-  @apply font-extrabold text-[0.92rem] text-ink;
+  @apply font-extrabold text-sm text-fg-strong;
 }
 
 .storeMeta {
-  @apply text-[0.66rem] text-faint mt-px;
+  @apply text-2xs text-fg-faint mt-px;
 }
 
 .storeMeta b {
@@ -36,22 +36,22 @@
 }
 
 .freeShipping {
-  @apply m-[0.8rem] rounded-[14px] border border-peach;
+  @apply m-[0.8rem] rounded-3 border border-accent-peach;
   background: linear-gradient(120deg, #fff1e4, #ffe3cc);
   @apply py-[0.7rem] px-[0.85rem] flex justify-between items-center;
 }
 
 .freeShipping b {
-  @apply text-[0.74rem] text-ink;
+  @apply text-xs text-fg-strong;
 }
 
 .freeShipping span {
-  @apply text-[0.6rem] text-faintest;
+  @apply text-2xs text-fg-faintest;
 }
 
 .freeShippingTag {
-  @apply bg-brand text-white text-[0.6rem] font-bold;
-  @apply py-[0.25rem] px-[0.55rem] rounded-[6px];
+  @apply bg-brand text-fg-on-brand text-2xs font-bold;
+  @apply py-[0.25rem] px-[0.55rem] rounded-2;
 }
 
 .categories {
@@ -59,39 +59,39 @@
 }
 
 .categories div {
-  @apply text-[0.62rem] font-semibold py-[0.3rem] px-[0.7rem];
-  @apply rounded-[20px] bg-sand-deep text-subtle;
+  @apply text-2xs font-semibold py-[0.3rem] px-[0.7rem];
+  @apply rounded-5 bg-surface-6 text-fg-subtle;
 }
 
 .categoryActive {
-  @apply !bg-brand !text-white;
+  @apply !bg-brand !text-fg-on-brand;
 }
 
 .menuItem {
   @apply flex gap-[0.7rem] items-center;
-  @apply py-[0.7rem] px-[0.85rem] border-t border-sand;
+  @apply py-[0.7rem] px-[0.85rem] border-t border-border;
 }
 
 .itemThumb {
-  @apply w-[52px] h-[52px] rounded-[11px] bg-sand-deep;
+  @apply w-[52px] h-[52px] rounded-3 bg-surface-6;
   @apply flex items-center justify-center text-[1.6rem] shrink-0;
 }
 
 .itemTitle {
-  @apply text-[0.76rem] block text-ink font-bold;
+  @apply text-xs block text-fg-strong font-bold;
 }
 
 .itemDesc {
-  @apply text-[0.62rem] text-faint leading-[1.3] block mt-[2px];
+  @apply text-2xs text-fg-faint leading-snug block mt-[2px];
 }
 
 .itemPrice {
-  @apply text-brand font-extrabold text-[0.76rem] mt-[3px];
+  @apply text-brand font-extrabold text-xs mt-[3px];
 }
 
 .cartBar {
-  @apply mt-auto bg-brand text-white;
+  @apply mt-auto bg-brand text-fg-on-brand;
   @apply py-[0.85rem] px-4;
   @apply flex justify-between items-center;
-  @apply text-[0.78rem] font-bold;
+  @apply text-xs font-bold;
 }

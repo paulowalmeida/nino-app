@@ -5,21 +5,21 @@
 }
 
 .greeting {
-  @apply text-[0.72rem] font-bold uppercase tracking-[0.1em];
+  @apply text-xs font-bold uppercase tracking-[0.1em];
   @apply text-brand-strong [font-family:var(--font-sans)];
 }
 
 .owner {
-  @apply text-[1.35rem] font-extrabold leading-tight text-ink;
+  @apply text-[1.35rem] font-extrabold leading-tight text-fg-strong;
   @apply [font-family:var(--font-display)];
 }
 
 .date {
-  @apply text-[0.72rem] text-gray-500 mt-0.5;
+  @apply text-xs text-gray-500 mt-0.5;
 }
 
 .openBadge {
-  @apply shrink-0 px-3 py-1 rounded-full text-[0.68rem] font-bold;
+  @apply shrink-0 px-3 py-1 rounded-full text-2xs font-bold;
   @apply text-emerald-700 bg-emerald-500/12;
 }
 
@@ -28,14 +28,14 @@
 }
 
 .eyebrow {
-  @apply inline-flex items-center gap-2 text-[0.7rem] font-bold;
+  @apply inline-flex items-center gap-2 text-xs font-bold;
   @apply tracking-[0.12em] uppercase text-brand-strong;
   @apply [font-family:var(--font-sans)];
 }
 
 .eyebrow::before {
   content: "";
-  @apply inline-block w-[18px] h-0.5 bg-brand rounded-sm;
+  @apply inline-block w-[18px] h-0.5 bg-brand rounded-1;
 }
 
 .board {
@@ -43,16 +43,16 @@
 }
 
 .tile {
-  @apply flex flex-col gap-1 px-3 py-3 rounded-xl bg-white;
+  @apply flex flex-col gap-1 px-3 py-3 rounded-3 bg-surface-raised;
   @apply border border-gray-200;
 }
 
 .urgent {
-  @apply border-brand/40 bg-brand/6;
+  @apply border-brand-bold bg-brand-ghost;
 }
 
 .value {
-  @apply text-[1.6rem] font-extrabold leading-none text-ink;
+  @apply text-[1.6rem] font-extrabold leading-none text-fg-strong;
   @apply [font-family:var(--font-display)];
 }
 
@@ -61,11 +61,12 @@
 }
 
 .label {
-  @apply text-[0.68rem] leading-tight text-gray-500;
+  @apply text-2xs leading-tight text-gray-500;
 }
 
 .queue {
-  @apply bg-white border border-gray-200 rounded-xl overflow-hidden;
+  @apply bg-surface-raised border border-gray-200 rounded-3;
+  @apply overflow-hidden;
 }
 
 .queueHeader {
@@ -74,13 +75,13 @@
 }
 
 .queueTitle {
-  @apply font-bold text-[0.82rem] text-gray-900;
+  @apply font-bold text-sm text-gray-900;
 }
 
 .queueHint {
-  @apply text-[0.68rem] text-gray-400;
+  @apply text-2xs text-gray-400;
 }
 
 .audit {
-  @apply text-[0.72rem] leading-relaxed text-gray-500;
+  @apply text-xs leading-relaxed text-gray-500;
 }

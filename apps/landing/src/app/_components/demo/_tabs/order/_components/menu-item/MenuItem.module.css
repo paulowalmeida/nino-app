@@ -13,16 +13,16 @@
 }
 
 .itemName {
-  @apply font-bold text-[0.88rem] text-gray-900;
+  @apply font-bold text-sm text-gray-900;
 }
 
 .newBadge {
-  @apply bg-orange-50 text-brand text-[0.62rem] font-bold;
+  @apply bg-orange-50 text-brand text-2xs font-bold;
   @apply px-1.5 py-0.5 rounded;
 }
 
 .itemDescription {
-  @apply text-[0.73rem] text-gray-500 mt-0.5 leading-snug;
+  @apply text-xs text-gray-500 mt-0.5 leading-snug;
 }
 
 .itemPriceRow {
@@ -30,41 +30,41 @@
 }
 
 .itemPrice {
-  @apply font-extrabold text-brand text-[0.88rem];
+  @apply font-extrabold text-brand text-sm;
 }
 
 .itemStrikedPrice {
-  @apply text-[0.7rem] text-gray-300 line-through ml-1.5;
+  @apply text-xs text-gray-300 line-through ml-1.5;
 }
 
 .addToCartButton {
-  @apply w-7 h-7 bg-brand border-none rounded-lg;
-  @apply text-white text-base cursor-pointer;
+  @apply w-7 h-7 bg-brand border-none rounded-2;
+  @apply text-fg-on-brand text-base cursor-pointer;
   @apply flex items-center justify-center shrink-0;
 }
 
 .quantityControl {
-  @apply flex items-center gap-2 bg-gray-100 rounded-lg px-2 py-0.5;
+  @apply flex items-center gap-2 bg-gray-100 rounded-2 px-2 py-0.5;
 }
 
 .decreaseButton {
-  @apply w-5 h-5 bg-white border border-gray-200 rounded-md;
+  @apply w-5 h-5 bg-surface-raised border border-gray-200 rounded-2;
   @apply text-gray-900 text-sm cursor-pointer;
   @apply flex items-center justify-center;
 }
 
 .increaseButton {
-  @apply w-5 h-5 bg-brand border-none rounded-md;
-  @apply text-white text-sm cursor-pointer;
+  @apply w-5 h-5 bg-brand border-none rounded-2;
+  @apply text-fg-on-brand text-sm cursor-pointer;
   @apply flex items-center justify-center;
 }
 
 .quantityCount {
-  @apply font-bold text-[0.85rem] text-gray-900;
+  @apply font-bold text-sm text-gray-900;
   @apply min-w-[16px] text-center;
 }
 
 .itemThumbnail {
-  @apply w-[72px] h-[72px] bg-gray-100 rounded-xl;
-  @apply flex items-center justify-center text-[2.2rem] shrink-0;
+  @apply w-[72px] h-[72px] bg-gray-100 rounded-3;
+  @apply flex items-center justify-center text-4xl shrink-0;
 }

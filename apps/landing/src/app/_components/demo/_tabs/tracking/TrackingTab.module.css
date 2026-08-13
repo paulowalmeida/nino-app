@@ -5,15 +5,15 @@
 }
 
 .orderTitle {
-  @apply font-extrabold text-[0.95rem] text-gray-900;
+  @apply font-extrabold text-base text-gray-900;
 }
 
 .orderSubtitle {
-  @apply text-[0.7rem] text-gray-500 mt-0.5;
+  @apply text-xs text-gray-500 mt-0.5;
 }
 
 .statusBadge {
-  @apply bg-orange-50 text-brand text-[0.7rem] font-bold;
+  @apply bg-orange-50 text-brand text-xs font-bold;
   @apply px-3 py-1 rounded-full border border-orange-200;
   @apply flex items-center gap-1.5;
 }
@@ -21,16 +21,6 @@
 .statusPulseDot {
   @apply w-1.5 h-1.5 bg-brand rounded-full inline-block animate-pulse;
 }
-
-
-
-
-
-
-
-
-
-
 
 .deliveryTimeline {
   @apply px-6 py-5 flex flex-col;
@@ -41,7 +31,7 @@
 }
 
 .noticesTitle {
-  @apply text-[0.72rem] font-bold uppercase tracking-[0.1em];
+  @apply text-xs font-bold uppercase tracking-[0.1em];
   @apply text-brand-strong [font-family:var(--font-sans)];
 }
 
@@ -52,13 +42,13 @@
 }
 
 .bubbleText {
-  @apply text-[0.8rem] leading-snug text-gray-700;
+  @apply text-xs leading-snug text-gray-700;
 }
 
 .bubbleTime {
-  @apply block mt-1 text-[0.65rem] text-emerald-700/70 text-right;
+  @apply block mt-1 text-2xs text-emerald-700/70 text-right;
 }
 
 .noticesFine {
-  @apply mt-1 text-[0.7rem] leading-relaxed text-gray-500;
+  @apply mt-1 text-xs leading-relaxed text-gray-500;
 }

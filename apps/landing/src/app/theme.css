@@ -8,7 +8,7 @@
 
   body {
     font-family: var(--font-sans);
-    background: var(--color-cream);
+    background: var(--color-surface-2);
     color: #2d2d2d;
     overflow-x: hidden;
   }
@@ -19,7 +19,7 @@
     position: fixed;
     inset: 0;
     pointer-events: none;
-    z-index: 9999;
+    z-index: var(--z-grain);
     opacity: 0.4;
     mix-blend-mode: multiply;
     background-image: url("/noise.svg");

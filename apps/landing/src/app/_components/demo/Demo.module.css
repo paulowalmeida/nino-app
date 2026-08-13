@@ -1,32 +1,32 @@
 @reference '../../theme.css';
 .section {
-  @apply py-24 px-16 bg-white max-md:px-5 max-md:py-12;
+  @apply py-24 px-16 bg-surface-raised max-md:px-5 max-md:py-12;
 }
 
 .inner {
-  @apply max-w-[1000px] mx-auto;
+  @apply max-w-page-narrow mx-auto;
 }
 
 .header {
-  @apply text-center max-w-[620px] mx-auto mb-10;
+  @apply text-center max-w-block mx-auto mb-10;
 }
 
 .eyebrow {
   @apply inline-flex items-center gap-2 mb-4;
-  @apply [font-family:var(--font-sans)] text-[0.78rem] font-bold;
+  @apply [font-family:var(--font-sans)] text-xs font-bold;
   @apply tracking-[0.12em] uppercase text-brand-strong;
 }
 
 .eyebrow::before,
 .eyebrow::after {
   content: "";
-  @apply inline-block w-[22px] h-0.5 bg-brand rounded-sm;
+  @apply inline-block w-[22px] h-0.5 bg-brand rounded-1;
 }
 
 .title {
   @apply [font-family:var(--font-display)] font-extrabold;
-  @apply text-[clamp(2rem,3.6vw,2.8rem)] leading-[1.08];
-  @apply tracking-[-0.02em] text-ink;
+  @apply text-[clamp(2rem,3.6vw,2.8rem)] leading-display;
+  @apply tracking-[-0.02em] text-fg-strong;
 }
 
 .titleAccent {
@@ -34,7 +34,7 @@
 }
 
 .lead {
-  @apply mt-[0.9rem] text-[1.05rem] text-muted;
+  @apply mt-[0.9rem] text-base text-fg-muted;
 }
 
 .tabGroup {
@@ -43,53 +43,53 @@
 
 .tab {
   @apply px-5 py-2 rounded-full border-2 border-gray-200;
-  @apply bg-white text-gray-600 font-semibold text-[0.9rem];
+  @apply bg-surface-raised text-gray-600 font-semibold text-sm;
   @apply cursor-pointer transition-all;
 }
 
 .tab:hover {
-  @apply border-brand/40 text-brand-strong;
+  @apply border-brand-bold text-brand-strong;
 }
 
 .tabActive {
-  @apply border-brand bg-brand text-white;
+  @apply border-brand bg-brand text-fg-on-brand;
 }
 
 .tabActive:hover {
-  @apply border-brand text-white;
+  @apply border-brand text-fg-on-brand;
 }
 
 .caption {
-  @apply text-center text-[0.88rem] text-muted mb-6;
-  @apply max-w-[520px] mx-auto min-h-[2.4rem];
+  @apply text-center text-sm text-fg-muted mb-6;
+  @apply max-w-block-lg mx-auto min-h-[2.4rem];
 }
 
 .mockup {
-  @apply bg-white rounded-[20px] overflow-hidden;
-  @apply shadow-[0_8px_40px_rgba(0,0,0,0.08)];
-  @apply max-w-[420px] mx-auto border border-gray-200;
+  @apply bg-surface-raised rounded-5 overflow-hidden;
+  @apply shadow-md;
+  @apply max-w-block-md mx-auto border border-gray-200;
   @apply transition-[max-width] duration-500;
 }
 
 .mockupOwner {
-  @apply max-w-[680px];
+  @apply max-w-block;
 }
 
 .chrome {
   @apply flex items-center justify-between gap-3 px-4 py-2;
-  @apply bg-ink text-[0.68rem] [font-family:var(--font-sans)];
+  @apply bg-fg-strong text-2xs [font-family:var(--font-sans)];
 }
 
 .chromeLabel {
-  @apply font-bold tracking-[0.08em] uppercase text-white/90;
+  @apply font-bold tracking-[0.08em] uppercase text-fg-on-brand/90;
 }
 
 .chromeMeta {
-  @apply truncate text-white/50;
+  @apply truncate text-fg-on-brand/50;
 }
 
 .screen {
-  @apply bg-white;
+  @apply bg-surface-raised;
 }
 
 @media (prefers-reduced-motion: reduce) {

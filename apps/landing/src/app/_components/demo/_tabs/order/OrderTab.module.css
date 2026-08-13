@@ -5,7 +5,7 @@
 }
 
 .storeLogo {
-  @apply w-10 h-10 bg-gray-100 rounded-xl;
+  @apply w-10 h-10 bg-gray-100 rounded-3;
   @apply flex items-center justify-center text-xl shrink-0;
 }
 
@@ -14,11 +14,11 @@
 }
 
 .storeName {
-  @apply font-extrabold text-[0.95rem] text-gray-900;
+  @apply font-extrabold text-base text-gray-900;
 }
 
 .storeMetaInfo {
-  @apply flex items-center gap-2 text-[0.7rem] text-gray-500 mt-0.5;
+  @apply flex items-center gap-2 text-xs text-gray-500 mt-0.5;
 }
 
 .storeRating {
@@ -26,8 +26,8 @@
 }
 
 .searchButton {
-  @apply bg-gray-100 px-4 py-1.5 rounded-lg text-gray-600;
-  @apply text-[0.78rem] font-medium whitespace-nowrap shrink-0;
+  @apply bg-gray-100 px-4 py-1.5 rounded-2 text-gray-600;
+  @apply text-xs font-medium whitespace-nowrap shrink-0;
 }
 
 .searchBarWrapper {
@@ -35,21 +35,21 @@
 }
 
 .searchInputField {
-  @apply bg-white border border-gray-200 rounded-xl;
+  @apply bg-surface-raised border border-gray-200 rounded-3;
   @apply px-4 py-2 flex items-center gap-2;
 }
 
 .searchIcon {
-  @apply text-gray-300 text-[0.85rem];
+  @apply text-gray-300 text-sm;
 }
 
 .searchPlaceholder {
-  @apply text-[0.82rem] text-gray-400;
+  @apply text-sm text-gray-400;
 }
 
 .promo {
   @apply mx-6 my-4 bg-orange-50 border border-orange-200;
-  @apply rounded-xl p-3.5 flex justify-between items-center;
+  @apply rounded-3 p-3.5 flex justify-between items-center;
 }
 
 .promoDetails {
@@ -61,16 +61,16 @@
 }
 
 .promoTitle {
-  @apply font-bold text-[0.82rem] text-gray-900;
+  @apply font-bold text-sm text-gray-900;
 }
 
 .promoSubtitle {
-  @apply text-[0.7rem] text-gray-500 mt-0.5;
+  @apply text-xs text-gray-500 mt-0.5;
 }
 
 .promoActivateButton {
-  @apply bg-brand text-white text-[0.7rem] font-bold;
-  @apply px-2.5 py-1 rounded-md whitespace-nowrap shrink-0;
+  @apply bg-brand text-fg-on-brand text-xs font-bold;
+  @apply px-2.5 py-1 rounded-2 whitespace-nowrap shrink-0;
 }
 
 .categorySection {
@@ -83,15 +83,15 @@
 
 .categoryPill {
   @apply shrink-0 px-4 py-1.5 rounded-full;
-  @apply text-[0.75rem] font-medium bg-gray-100 text-gray-600;
+  @apply text-xs font-medium bg-gray-100 text-gray-600;
 }
 
 .categoryPillActive {
-  @apply bg-brand text-white font-bold;
+  @apply bg-brand text-fg-on-brand font-bold;
 }
 
 .menuSectionTitle {
-  @apply px-6 font-extrabold text-[0.82rem] text-gray-900;
+  @apply px-6 font-extrabold text-sm text-gray-900;
   @apply mb-3 flex items-center gap-1;
 }
 
@@ -100,7 +100,7 @@
 }
 
 .checkoutBar {
-  @apply bg-brand text-white px-6 py-4;
+  @apply bg-brand text-fg-on-brand px-6 py-4;
   @apply flex justify-between items-center cursor-pointer;
 }
 
@@ -109,14 +109,14 @@
 }
 
 .cartItemCount {
-  @apply bg-white/25 px-2.5 py-0.5 rounded-md;
-  @apply text-[0.78rem] font-bold;
+  @apply bg-surface-raised/25 px-2.5 py-0.5 rounded-2;
+  @apply text-xs font-bold;
 }
 
 .viewCartLabel {
-  @apply font-semibold text-[0.9rem];
+  @apply font-semibold text-sm;
 }
 
 .checkoutTotal {
-  @apply font-extrabold text-[0.9rem];
+  @apply font-extrabold text-sm;
 }
