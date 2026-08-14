@@ -31,7 +31,7 @@ export function Header() {
         <div className={styles.inner}>
           <a href="#" className={styles.brand}>
             <Image
-              src="/mascot.svg"
+              src="/novo-nino.svg"
               alt=""
               width={40}
               height={40}
@@ -50,7 +50,6 @@ export function Header() {
               </a>
             ))}
             <a href={ENTRAR_URL} className={styles.enterButton}>
-              <span className={styles.enterIcon} aria-hidden="true" />
               Entrar
             </a>
           </nav>
