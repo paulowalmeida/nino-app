@@ -1,27 +1,13 @@
 @reference "@nino/ds/globals.css";
 
-/*
- * Página inteira, branca, sem moldura — a mesma casca da vitrine. O conteúdo
- * é que se alinha numa coluna central; a página não vira cartão.
- */
 .page {
   @apply flex min-h-dvh w-full flex-col bg-surface-raised pb-24 lg:pb-10;
 }
 
-/* cresce para empurrar o rodapé até o fim da página em telas curtas */
 .shell {
   @apply mx-auto w-full max-w-page flex-1 px-4 sm:px-6;
 }
 
-/*
- * Só no desktop, e pelo mesmo motivo da seta: no celular a saudação já é o
- * cabeçalho da gaveta que abriu esta tela, e cada seção traz o próprio
- * título — repetir "Boa tarde, Paulo" acima de "Dados pessoais" era dizer
- * duas vezes onde a pessoa está.
- *
- * Colapsável como o da vitrine: gruda no topo e só ganha borda e sombra
- * quando há conteúdo passando por baixo.
- */
 .header {
   @apply sticky top-0 z-dock -mx-4 hidden items-center gap-3;
   @apply bg-surface-raised/95 px-4;
@@ -36,11 +22,6 @@
     );
 }
 
-/*
- * Só no desktop. No celular a barra de baixo tem o "Início", que é o mesmo
- * destino desta seta e fica onde o polegar já está — a seta era um segundo
- * caminho para a loja, no canto mais distante da mão.
- */
 .back {
   @apply hidden h-11 w-11 shrink-0 items-center justify-center rounded-full;
   @apply border border-black/[0.08] bg-surface-page text-lg;
@@ -59,14 +40,10 @@
   @apply text-fg-muted;
 }
 
-/* a linha do freguês: diz há quanto tempo a pessoa é de casa, não o e-mail
-   dela — isso está na gaveta de dados, a um toque daqui */
 .since {
   @apply text-xs text-fg-faint;
 }
 
-/* sem o cabeçalho no celular, o topo da seção é o topo da tela: o respiro
-   que era do header passa para cá, somado à faixa do sistema */
 .body {
   @apply lg:flex lg:items-start lg:gap-10;
   padding-top: calc(2rem + env(safe-area-inset-top));
