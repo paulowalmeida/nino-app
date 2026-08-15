@@ -1,7 +1,9 @@
 import { Flexbox } from '@nino/ds/components/Flexbox'
+import {
+  ORDER_TIMELINE_REALM_LABEL,
+  STATUS_LABEL,
+} from '@constants/order.constants'
 import { riseDelay } from '@utils/rise-delay'
-import { STATUS_LABEL } from '@utils/order-flow'
-import { ORDER_TIMELINE_REALM_LABEL } from '@constants/order.constants'
 import type { OrderStatusEntry } from '@custom_types/order/order-status-entry'
 import styles from './OrderTimeline.module.css'
 import motion from '@styles/motion.module.css'

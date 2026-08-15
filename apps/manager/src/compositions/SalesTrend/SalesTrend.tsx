@@ -47,11 +47,18 @@ export const SalesTrend = ({ tenantId }: SalesTrendProps) => {
   return (
     <section aria-label="Os últimos 7 dias" className={styles.section}>
       <div className={motion.unroll}>
-        <Eyebrow className={styles.heading}>Os últimos 7 dias</Eyebrow>
+        <Eyebrow className='mb-3'>Os últimos 7 dias</Eyebrow>
       </div>
 
       <Card padding="lg" className={`${motion.settle} ${styles.card}`}>
-        <Flexbox as="header" gap={4} align="start" justify="between" mb={4}>
+        <Flexbox
+          as="header"
+          direction="row"
+          gap={4}
+          align="start"
+          justify="between"
+          mb={4}
+        >
           <div>
             {isPending ? (
               <Skeleton className={styles.skeletonTotal} />
@@ -93,7 +100,7 @@ export const SalesTrend = ({ tenantId }: SalesTrendProps) => {
         )}
 
         {hasNoSales && (
-          <EmptyState>
+          <EmptyState className={styles.empty}>
             Nenhuma venda concluída nos últimos sete dias.
           </EmptyState>
         )}

@@ -65,9 +65,9 @@ export const QueueBoard = ({ tenantId }: QueueBoardProps) => {
   const isIdle = !isPending && tiles.every(({ value }) => value === 0)
 
   return (
-    <section aria-label="Fila de pedidos">
+    <section aria-label="Fila de pedidos" className='mb-8'>
       <div className={motion.unroll}>
-        <Eyebrow className={styles.heading}>Agora na loja</Eyebrow>
+        <Eyebrow className='mb-3'>Agora na loja</Eyebrow>
       </div>
 
       <div className={styles.board}>

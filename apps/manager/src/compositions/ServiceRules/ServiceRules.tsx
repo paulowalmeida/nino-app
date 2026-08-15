@@ -8,12 +8,12 @@ import { Switch } from '@nino/ds/components/Switch'
 import type { PaymentMethod } from '@custom_types/order/payment-method'
 import type { TenantSettings } from '@custom_types/settings/tenant-settings'
 import type { UpdateTenantSettingsRequest } from '@custom_types/settings/update-tenant-settings-request'
+import { PAYMENT_METHOD_LABEL } from '@constants/order.constants'
 import {
   EMPTY_SERVICE_RULES_DRAFT,
   SERVICE_RULES_CHANNELS,
   SERVICE_RULES_METHODS,
 } from '@constants/settings.constants'
-import { PAYMENT_METHOD_LABEL } from '@utils/order-flow'
 import { riseDelay } from '@utils/rise-delay'
 
 import local from './ServiceRules.module.css'

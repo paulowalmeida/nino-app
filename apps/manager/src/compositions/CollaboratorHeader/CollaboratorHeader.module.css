@@ -1,0 +1,28 @@
+@reference "@nino/ds/globals.css";
+
+.mark {
+  @apply h-14 w-14 shrink-0 text-base;
+}
+
+.heroText {
+  @apply min-w-0;
+}
+
+/* único texto que merece display+extrabold nesta tela: é a identidade da
+   página, o resto abaixo é metadado e lê melhor em peso normal */
+.name {
+  @apply truncate font-display text-2xl font-extrabold tracking-[-0.02em];
+  @apply text-fg-strong lg:text-3xl;
+}
+
+.contact {
+  @apply mt-0.5 flex flex-wrap items-baseline gap-x-3 gap-y-0.5;
+}
+
+.email {
+  @apply text-sm font-semibold text-brand-strong;
+}
+
+.role {
+  @apply shrink-0;
+}

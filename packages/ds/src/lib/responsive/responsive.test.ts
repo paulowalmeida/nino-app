@@ -3,8 +3,10 @@ import { describe, expect, it } from 'vitest'
 import {
   alignDesktop,
   alignMobile,
+  alignTablet,
   gapDesktop,
   gapMobile,
+  gapTablet,
   responsiveToClasses,
 } from './responsive'
 
@@ -75,5 +77,43 @@ describe(responsiveToClasses.name, () => {
 
     // Assert
     expect(classes).toEqual(['items-start', 'lg:items-center'])
+  })
+
+  it('prefixes the tablet value between mobile and desktop', () => {
+    // Arrange / Act
+    const classes = responsiveToClasses(
+      { mobile: 1, tablet: 4, desktop: 8 },
+      gapMobile,
+      gapDesktop,
+      gapTablet
+    )
+
+    // Assert
+    expect(classes).toEqual(['gap-1', 'sm:gap-4', 'lg:gap-8'])
+  })
+
+  it('drops the tablet value when no tablet scale was passed in', () => {
+    // Arrange / Act
+    const classes = responsiveToClasses(
+      { mobile: 'start', tablet: 'center' },
+      alignMobile,
+      alignDesktop
+    )
+
+    // Assert
+    expect(classes).toEqual(['items-start'])
+  })
+
+  it('emits only the tablet class when it is the only one declared', () => {
+    // Arrange / Act
+    const classes = responsiveToClasses(
+      { tablet: 'end' },
+      alignMobile,
+      alignDesktop,
+      alignTablet
+    )
+
+    // Assert
+    expect(classes).toEqual(['sm:items-end'])
   })
 })

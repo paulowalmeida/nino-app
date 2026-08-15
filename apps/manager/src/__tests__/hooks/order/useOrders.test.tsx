@@ -57,7 +57,29 @@ describe(useOrders.name, () => {
       expect(OrderService.listOrders).toHaveBeenCalledWith(
         'tenant-1',
         1,
-        'pizza'
+        'pizza',
+        undefined
+      )
+    )
+  })
+
+  it('forwards the stage statuses to the service', async () => {
+    // Arrange
+    vi.mocked(OrderService.listOrders).mockResolvedValue(oneOrderPage)
+
+    // Act
+    renderHook(
+      () => useOrders('tenant-1', undefined, ['DELIVERED', 'COMPLETED']),
+      { wrapper: wrapWithClient() }
+    )
+
+    // Assert
+    await waitFor(() =>
+      expect(OrderService.listOrders).toHaveBeenCalledWith(
+        'tenant-1',
+        1,
+        undefined,
+        ['DELIVERED', 'COMPLETED']
       )
     )
   })

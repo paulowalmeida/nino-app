@@ -1,7 +1,7 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "framework": "vite",
-  "ignoreCommand": "cd ../.. && npx turbo-ignore nino-consumer --fallback=develop",
+  "ignoreCommand": "cd ../.. && sh scripts/skip-unaffected-build.sh nino-consumer",
   "installCommand": "cd ../.. && npm install",
   "buildCommand": "cd ../.. && npx turbo run build --filter=nino-consumer",
   "outputDirectory": "dist",

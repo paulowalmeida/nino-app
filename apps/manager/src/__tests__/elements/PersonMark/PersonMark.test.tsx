@@ -1,4 +1,4 @@
-import { PersonMark } from '@components/PersonMark/PersonMark'
+import { PersonMark } from '@elements/PersonMark/PersonMark'
 
 import { render, screen } from '@testing-library/react'
 import { describe, expect, it } from 'vitest'

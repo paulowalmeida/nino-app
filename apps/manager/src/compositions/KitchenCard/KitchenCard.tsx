@@ -1,12 +1,8 @@
 import { Button } from '@nino/ds/components/Button'
+import { CHANNEL_LABEL } from '@constants/order.constants'
 import { useElapsed } from '@hooks/order/useElapsed'
 import { elapsedVar } from '@utils/elapsed-var'
-import {
-  CHANNEL_LABEL,
-  customerNameOf,
-  nextStep,
-  ticketNumber,
-} from '@utils/order-flow'
+import { customerNameOf, nextStep, ticketNumber } from '@utils/order-flow'
 import type { Order } from '@custom_types/order/order'
 import type { OrderStatusKey } from '@custom_types/order/order-status-key'
 

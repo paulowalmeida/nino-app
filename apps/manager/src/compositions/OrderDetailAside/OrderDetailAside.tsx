@@ -2,6 +2,10 @@ import { Flexbox } from '@nino/ds/components/Flexbox'
 import { Button } from '@nino/ds/components/Button'
 import { Textarea } from '@nino/ds/components/Textarea'
 import { OrderTimeline } from '@compositions/OrderTimeline/OrderTimeline'
+import {
+  PAYMENT_METHOD_LABEL,
+  PAYMENT_STATUS_LABEL,
+} from '@constants/order.constants'
 import type { Order } from '@custom_types/order/order'
 import type { OrderStatusKey } from '@custom_types/order/order-status-key'
 import { brl } from '@utils/money'
@@ -12,8 +16,6 @@ import {
   canCancel,
   customerNameOf,
   nextStep,
-  PAYMENT_METHOD_LABEL,
-  PAYMENT_STATUS_LABEL,
 } from '@utils/order-flow'
 
 import styles from './OrderDetailAside.module.css'

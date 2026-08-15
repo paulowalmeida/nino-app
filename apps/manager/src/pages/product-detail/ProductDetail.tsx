@@ -15,7 +15,9 @@ import { useDeleteMenuItem } from '@hooks/product/useDeleteMenuItem'
 import { useMenuItem } from '@hooks/product/useMenuItem'
 import { useUpdateMenuItem } from '@hooks/product/useUpdateMenuItem'
 import { useCurrentTenant } from '@hooks/session/useCurrentTenant'
-import { ProductDetailSkeleton } from '@skeletons/ProductDetailSkeleton/ProductDetailSkeleton'
+import {
+  ProductDetailSkeleton,
+} from '@skeletons/pages/ProductDetailSkeleton/ProductDetailSkeleton'
 import { riseDelay } from '@utils/rise-delay'
 
 import styles from './ProductDetail.module.css'

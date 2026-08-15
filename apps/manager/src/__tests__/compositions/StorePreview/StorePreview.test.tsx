@@ -11,7 +11,7 @@ describe(StorePreview.name, () => {
     // Assert
     expect(screen.getByText('O nome da sua loja')).toBeInTheDocument()
     expect(
-      screen.getByText('nino.delivery/sua-loja')
+      screen.getByText('sua-loja.dev.nino.delivery')
     ).toBeInTheDocument()
   })
 
@@ -22,7 +22,7 @@ describe(StorePreview.name, () => {
     // Assert
     expect(screen.getByText('Padaria do Zé')).toBeInTheDocument()
     expect(
-      screen.getByText('nino.delivery/padaria-do-ze')
+      screen.getByText('padaria-do-ze.dev.nino.delivery')
     ).toBeInTheDocument()
   })
 
@@ -48,6 +48,6 @@ describe(StorePreview.name, () => {
 
     // Assert
     expect(screen.getByText('Nome')).toBeInTheDocument()
-    expect(screen.getByText('nino.delivery/x')).toBeInTheDocument()
+    expect(screen.getByText('x.dev.nino.delivery')).toBeInTheDocument()
   })
 })

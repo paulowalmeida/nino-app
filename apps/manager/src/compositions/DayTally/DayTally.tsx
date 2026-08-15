@@ -5,13 +5,15 @@ import { Card } from '@nino/ds/components/Card'
 import { Skeleton } from '@nino/ds/components/Skeleton'
 import { CountUp } from '@nino/ds/components/CountUp'
 import { Eyebrow } from '@nino/ds/components/Eyebrow'
+import {
+  DAY_TALLY_SKELETON_ROWS,
+  STATUS_LABEL,
+} from '@constants/order.constants'
 import { useOrders } from '@hooks/order/useOrders'
 import { brl } from '@utils/money'
 import { tallyToday } from '@utils/day-tally'
 import { riseDelay } from '@utils/rise-delay'
 import { ticketNumber } from '@utils/order-flow'
-import { STATUS_LABEL } from '@utils/order-flow'
-import { DAY_TALLY_SKELETON_ROWS } from '@constants/order.constants'
 
 import styles from './DayTally.module.css'
 import motion from '@styles/motion.module.css'
@@ -37,16 +39,12 @@ export const DayTally = ({ tenantId, timezone }: DayTallyProps) => {
   const recent = orders.slice(0, RECENT)
 
   return (
-    <section aria-label="O dia até agora">
-      <div className={motion.unroll}>
-        <Eyebrow className={styles.heading}>O dia até agora</Eyebrow>
-      </div>
+    <section aria-label="O dia até agora" className='mb-8'>
+      <Eyebrow className="mb-3">O dia até agora</Eyebrow>
 
-      {/* Every number here links to its own drill-down: the count opens
-          the closed queue, revenue and average ticket open the day's
-          report. */}
       <div className={styles.tally}>
-        <Card padding="lg"
+        <Card
+          padding="lg"
           asChild
           className={`${motion.settle} ${motion.lift} ${styles.figure}`}
         >
@@ -67,7 +65,8 @@ export const DayTally = ({ tenantId, timezone }: DayTallyProps) => {
           </Link>
         </Card>
 
-        <Card padding="lg"
+        <Card
+          padding="lg"
           asChild
           className={`${motion.settle} ${motion.lift} ${styles.figure}`}
         >
@@ -89,7 +88,8 @@ export const DayTally = ({ tenantId, timezone }: DayTallyProps) => {
           </Link>
         </Card>
 
-        <Card padding="lg"
+        <Card
+          padding="lg"
           asChild
           className={`${motion.settle} ${motion.lift} ${styles.figure}`}
         >

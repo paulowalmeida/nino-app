@@ -4,9 +4,11 @@ import { mergeClasses } from '@ds/lib/mergeClasses/mergeClasses'
 import {
   alignDesktop,
   alignMobile,
+  alignTablet,
   AlignValue,
   gapDesktop,
   gapMobile,
+  gapTablet,
   GapValue,
   Responsive,
   responsiveToClasses,
@@ -41,17 +43,17 @@ type FlexboxProps = HTMLAttributes<HTMLElement> &
     as?: FlexboxTag
     /**
      * `column` (default) stacks downward, `row` lines up side by side.
-     * Accepts `{ mobile, desktop }`
+     * Accepts `{ mobile, tablet, desktop }`
      */
     direction?: Responsive<FlexboxDirection>
     /**
      * Space between children, from the DS spacing scale. Accepts `{ mobile,
-     * desktop }`
+     * tablet, desktop }`
      */
     gap?: Responsive<GapValue>
-    /** Cross-axis alignment. Accepts `{ mobile, desktop }` */
+    /** Cross-axis alignment. Accepts `{ mobile, tablet, desktop }` */
     align?: Responsive<AlignValue>
-    /** Main-axis distribution. Accepts `{ mobile, desktop }` */
+    /** Main-axis distribution. Accepts `{ mobile, tablet, desktop }` */
     justify?: Responsive<FlexboxJustify>
     /** Lets children flow onto the next line when they run out of room */
     wrap?: boolean
@@ -71,6 +73,11 @@ const directionDesktop = {
   row: 'lg:flex-row',
 } as const
 
+const directionTablet = {
+  column: 'sm:flex-col',
+  row: 'sm:flex-row',
+} as const
+
 const justifyMobile = {
   start: 'justify-start',
   center: 'justify-center',
@@ -85,6 +92,14 @@ const justifyDesktop = {
   end: 'lg:justify-end',
   between: 'lg:justify-between',
   around: 'lg:justify-around',
+} as const
+
+const justifyTablet = {
+  start: 'sm:justify-start',
+  center: 'sm:justify-center',
+  end: 'sm:justify-end',
+  between: 'sm:justify-between',
+  around: 'sm:justify-around',
 } as const
 
 /**
@@ -125,10 +140,20 @@ export function Flexbox({
     <Component
       className={mergeClasses(
         'flex',
-        responsiveToClasses(direction, directionMobile, directionDesktop),
-        responsiveToClasses(gap, gapMobile, gapDesktop),
-        responsiveToClasses(align, alignMobile, alignDesktop),
-        responsiveToClasses(justify, justifyMobile, justifyDesktop),
+        responsiveToClasses(
+          direction,
+          directionMobile,
+          directionDesktop,
+          directionTablet
+        ),
+        responsiveToClasses(gap, gapMobile, gapDesktop, gapTablet),
+        responsiveToClasses(align, alignMobile, alignDesktop, alignTablet),
+        responsiveToClasses(
+          justify,
+          justifyMobile,
+          justifyDesktop,
+          justifyTablet
+        ),
         wrap && 'flex-wrap',
         grow && 'grow',
         shrink && 'shrink',

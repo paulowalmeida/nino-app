@@ -1,44 +1,13 @@
 @reference "@nino/ds/globals.css";
 
-/* sem moldura: a página é a ficha, como a de empresa e a de cliente — um
-   cartão aqui só repetiria o contorno que a tela já dá */
 .page {
   @apply relative max-w-2xl p-4 lg:p-10;
 }
 
-.eyebrow {
-  @apply text-xs font-bold uppercase tracking-[0.12em] text-fg-faint;
-}
-
 .head {
-  @apply mt-1 flex flex-col gap-1.5 border-b border-border/60 pb-5;
+  @apply border-b border-border/60 pb-5;
 }
 
-.title {
-  @apply font-display text-2xl font-extrabold tracking-[-0.02em];
-  @apply text-fg-strong;
-  @apply lg:text-3xl;
-}
-
-.subtitle {
-  @apply text-sm text-fg-subtle;
-}
-
-.ghostField {
-  @apply h-10 w-full;
-}
-
-.groupTitle {
-  @apply text-xs font-bold uppercase tracking-[0.12em] text-fg-faint;
-}
-
-.fields {
-  @apply mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2;
-}
-
-/* nome abre a linha sozinho — é o campo mais lido da ficha; e-mail e telefone
-   dividem a linha de baixo, do mesmo jeito que CNPJ/inscrição dividem na
-   ficha da empresa */
 .wide {
   @apply sm:col-span-2;
 }
@@ -47,47 +16,10 @@
   @apply mt-4;
 }
 
-/* ação fecha o bloco à direita, atrás de um fio — mesma régua da empresa */
 .actions {
-  @apply mt-6 flex flex-col border-t border-border pt-5;
-  @apply sm:flex-row sm:items-center sm:justify-end sm:gap-4;
+  @apply border-t border-border pt-5;
 }
 
 .status {
-  @apply mb-2 text-xs text-fg-faint sm:mb-0 sm:mr-auto;
-}
-
-/*
- * "Sobre a conta" é o que o sistema sabe, não o que se digita: uma faixa
- * entre fios, só leitura. Diferente de nome/telefone/e-mail, estes três
- * fatos não têm equivalente editável em lugar nenhum — não são um formulário
- * escondido, são o retrato de como a conta chegou até aqui.
- */
-.about {
-  @apply mt-10;
-}
-
-.facts {
-  @apply mt-3 grid grid-cols-2 gap-y-4 border-y border-border/60 py-4;
-  @apply sm:grid-cols-1 sm:gap-0 sm:border-y-0 sm:py-0;
-}
-
-.fact {
-  @apply flex flex-col gap-0.5;
-  @apply sm:flex-row sm:items-baseline sm:justify-between sm:gap-3;
-  @apply sm:border-b sm:border-border sm:py-2.5;
-}
-
-.fact:last-child {
-  @apply sm:border-b-0;
-}
-
-.factLabel {
-  @apply text-xs font-medium text-fg-faint sm:text-sm;
-}
-
-.factValue {
-  @apply flex flex-wrap items-center gap-x-2 gap-y-1 text-sm font-semibold;
-  @apply text-fg-strong;
-  font-variant-numeric: tabular-nums;
+  @apply mb-2 sm:mb-0 sm:mr-auto;
 }

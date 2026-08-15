@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router'
 import { Button } from '@nino/ds/components/Button'
 import { Menu } from '@nino/ds/components/Menu'
 import { Icon } from '@nino/ds/components/Icon'
-import { PersonMark } from '@components/PersonMark/PersonMark'
+import { PersonMark } from '@elements/PersonMark/PersonMark'
 import { useLogout } from '@hooks/session/useLogout'
 
 import styles from './UserMenu.module.css'

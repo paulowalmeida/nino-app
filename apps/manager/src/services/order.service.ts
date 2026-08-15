@@ -1,7 +1,10 @@
-import type { CreateOrderRequest } from '@custom_types/order/create-order-request'
+import type {
+  CreateOrderRequest,
+} from '@custom_types/order/create-order-request'
 import type { Order } from '@custom_types/order/order'
 import type { OrderPage } from '@custom_types/order/order-page'
 import type { OrderQueueSummary } from '@custom_types/order/order-queue-summary'
+import type { OrderStatusKey } from '@custom_types/order/order-status-key'
 import type { ReportRangeParams } from '@custom_types/order/report-range-params'
 import type { SalesReport } from '@custom_types/order/sales-report'
 import type { SalesSeries } from '@custom_types/order/sales-series'
@@ -62,7 +65,8 @@ export const OrderService = {
   listOrders: (
     tenantId: string,
     page: number,
-    search?: string
+    search?: string,
+    statuses?: OrderStatusKey[]
   ): Promise<OrderPage> =>
     api.getAll<OrderPage>(`tenants/${tenantId}/orders`, {
       target: 'createdAt',
@@ -70,6 +74,7 @@ export const OrderService = {
       size: ORDER_PAGE_SIZE,
       page,
       ...(search ? { search } : {}),
+      ...(statuses?.length ? { status: statuses.join(',') } : {}),
     }),
 
   createOrder: (tenantId: string, data: CreateOrderRequest): Promise<Order> =>

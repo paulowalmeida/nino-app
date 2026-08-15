@@ -1,18 +1,14 @@
 import { Chip } from '@nino/ds/components/Chip'
+import { Flexbox } from '@nino/ds/components/Flexbox'
 import { Skeleton } from '@nino/ds/components/Skeleton'
 import { CATEGORY_CHIPS_GHOST_ITEMS } from '@constants/product.constants'
 import styles from './CategoryChips.module.css'
 
 type CategoryChipsProps = {
-  /**
-   * Só id e nome importam, então serve tanto para a categoria do cardápio
-   * quanto para a seção do balcão — são a mesma trilha de filtro.
-   */
   categories: { id: string; name: string }[]
   value: string | null
   onChange: (categoryId: string | null) => void
   isPending?: boolean
-  /** O balcão filtra sempre por uma categoria; não tem "Todas". */
   allowAll?: boolean
 }
 
@@ -25,16 +21,28 @@ export const CategoryChips = ({
 }: CategoryChipsProps) => {
   if (isPending) {
     return (
-      <div className={styles.track} role="tablist" aria-label="Categorias">
+      <Flexbox
+        direction="row"
+        gap={2}
+        className={styles.track}
+        role="tablist"
+        aria-label="Categorias"
+      >
         {CATEGORY_CHIPS_GHOST_ITEMS.map((chip) => (
           <Skeleton key={chip} className={styles.ghostChip} />
         ))}
-      </div>
+      </Flexbox>
     )
   }
 
   return (
-    <div className={styles.track} role="tablist" aria-label="Categorias">
+    <Flexbox
+      direction="row"
+      gap={2}
+      className={styles.track}
+      role="tablist"
+      aria-label="Categorias"
+    >
       {allowAll && (
         <Chip
           variant="tab"
@@ -57,6 +65,6 @@ export const CategoryChips = ({
           {name}
         </Chip>
       ))}
-    </div>
+    </Flexbox>
   )
 }

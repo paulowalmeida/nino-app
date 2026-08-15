@@ -7,7 +7,7 @@ import { Menu, type MenuItem } from '@nino/ds/components/Menu'
 import { EmptyState } from '@nino/ds/components/EmptyState'
 import { Skeleton } from '@nino/ds/components/Skeleton'
 import { Icon } from '@nino/ds/components/Icon'
-import { PersonMark } from '@components/PersonMark/PersonMark'
+import { PersonMark } from '@elements/PersonMark/PersonMark'
 import type { TenantRole } from '@custom_types/auth/tenant-role'
 import type { RosterEntry } from '@custom_types/team/roster-entry'
 import {

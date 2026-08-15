@@ -1,121 +1,70 @@
-import { useState } from 'react'
-
 import { Alert } from '@nino/ds/components/Alert'
 import { Button } from '@nino/ds/components/Button'
+import { Flexbox } from '@nino/ds/components/Flexbox'
 import { FormField } from '@nino/ds/components/FormField'
+import { Grid } from '@nino/ds/components/Grid'
+import { Heading } from '@nino/ds/components/Heading'
 import { Input } from '@nino/ds/components/Input'
-import { Skeleton } from '@nino/ds/components/Skeleton'
-import type { Profile } from '@custom_types/account/profile'
-import { EMAIL_PATTERN } from '@constants/auth.constants'
-import {
-  ACCOUNT_GHOST_FIELDS,
-  ACCOUNT_PROVIDER_LABEL,
-} from '@constants/account.constants'
+import { Text } from '@nino/ds/components/Text'
+import { AccountFacts } from '@compositions/AccountFacts/AccountFacts'
+import { useAccountForm } from '@hooks/account/useAccountForm'
 import { useProfile } from '@hooks/account/useProfile'
-import { useSaveProfile } from '@hooks/account/useSaveProfile'
-import { useUpdateMyEmail } from '@hooks/account/useUpdateMyEmail'
-import { formatPhone, toE164 } from '@utils/phone'
+import {
+  AccountFieldsSkeleton,
+} from '@skeletons/pages/AccountFieldsSkeleton/AccountFieldsSkeleton'
 
 import styles from './Account.module.css'
 import motion from '@styles/motion.module.css'
 
-const day = new Intl.DateTimeFormat('pt-BR', {
-  day: '2-digit',
-  month: 'long',
-  year: 'numeric',
-})
-
-const dateOf = (iso: string | null): string =>
-  iso ? day.format(new Date(iso)) : '—'
-
-type Draft = { name: string; phone: string; email: string }
-
 export const Account = () => {
   const { data: profile, isPending } = useProfile()
-  const { mutateAsync: saveProfile, isPending: isSavingProfile } =
-    useSaveProfile()
-  const { mutateAsync: saveEmail, isPending: isSavingEmail } =
-    useUpdateMyEmail()
-
-  const [draft, setDraft] = useState<Draft>({ name: '', phone: '', email: '' })
-  const [isDirty, setDirty] = useState(false)
-  const [seed, setSeed] = useState<Profile | undefined>(undefined)
-  const [emailError, setEmailError] = useState<string | null>(null)
-  const [saveError, setSaveError] = useState<string | null>(null)
-
-  if (profile && profile !== seed) {
-    setSeed(profile)
-    setDraft({
-      name: profile.name,
-      phone: profile.phone ? formatPhone(profile.phone) : '',
-      email: profile.credentials[0]?.email ?? '',
-    })
-    setDirty(false)
-  }
-
-  const change = (patch: Partial<Draft>) => {
-    setDraft((current) => ({ ...current, ...patch }))
-    setDirty(true)
-    setEmailError(null)
-    setSaveError(null)
-  }
-
-  const isSaving = isSavingProfile || isSavingEmail
-
-  /*
-   * Nome, telefone e e-mail moram no mesmo grupo e saem no mesmo "Salvar":
-   * para quem preenche, é um dado só, "meus dados" — mesmo o e-mail vivendo
-   * em outra tabela (credencial de login) e outro endpoint por trás. A troca
-   * de e-mail aqui não pede senha nem reverificação, então não há razão para
-   * um fluxo à parte só porque a API separa os dois.
-   */
-  const handleSave = async () => {
-    if (draft.email && !EMAIL_PATTERN.test(draft.email)) {
-      setEmailError('E-mail inválido')
-      return
-    }
-
-    const emailChanged = draft.email !== (profile?.credentials[0]?.email ?? '')
-
-    try {
-      await saveProfile({
-        name: draft.name,
-        phone: draft.phone ? toE164(draft.phone) : undefined,
-      })
-      if (emailChanged && draft.email) await saveEmail(draft.email)
-      setSaveError(null)
-    } catch {
-      setSaveError('Não foi possível salvar. Confira os dados e tente de novo.')
-    }
-  }
+  const {
+    draft,
+    isDirty,
+    isSaving,
+    emailError,
+    saveError,
+    change,
+    handleSave,
+  } = useAccountForm(profile)
 
   return (
     <div className={styles.page}>
-      <p className={`${motion.deal} ${styles.eyebrow}`}>Minha conta</p>
+      <Text
+        as="p"
+        size="xs"
+        weight="bold"
+        case="uppercase"
+        color="faint"
+        className={motion.deal}
+      >
+        Minha conta
+      </Text>
 
-      <header className={`${motion.deal} ${styles.head}`}>
-        <h1 className={styles.title}>Meus dados</h1>
-        <p className={styles.subtitle}>
+      <Flexbox
+        as="header"
+        gap={1.5}
+        mt={1}
+        className={`${motion.deal} ${styles.head}`}
+      >
+        <Heading level={1} size="2xl">
+          Meus dados
+        </Heading>
+        <Text as="p" size="sm" color="subtle">
           É como a equipe te identifica no painel e no histórico dos pedidos.
-        </p>
-      </header>
+        </Text>
+      </Flexbox>
 
       {isPending ? (
-        <div className={`${motion.settle} ${styles.fields}`}>
-          {ACCOUNT_GHOST_FIELDS.map((size, index) => (
-            <Skeleton
-              key={index}
-              className={
-                size === 'wide'
-                  ? `${styles.wide} ${styles.ghostField}`
-                  : styles.ghostField
-              }
-            />
-          ))}
-        </div>
+        <AccountFieldsSkeleton />
       ) : (
         <>
-          <div className={`${motion.settle} ${styles.fields}`}>
+          <Grid
+            columns={{ mobile: 1, tablet: 2 }}
+            gap={4}
+            mt={6}
+            className={motion.settle}
+          >
             <FormField label="Nome" className={styles.wide}>
               <Input
                 value={draft.name}
@@ -146,7 +95,7 @@ export const Account = () => {
                 onChange={(event) => change({ phone: event.target.value })}
               />
             </FormField>
-          </div>
+          </Grid>
 
           {saveError && (
             <Alert variant="error" className={styles.saveError}>
@@ -154,11 +103,22 @@ export const Account = () => {
             </Alert>
           )}
 
-          <div className={styles.actions}>
+          <Flexbox
+            direction={{ mobile: 'column', tablet: 'row' }}
+            align={{ tablet: 'center' }}
+            justify={{ tablet: 'end' }}
+            gap={{ tablet: 4 }}
+            className={styles.actions}
+          >
             {!isDirty && !saveError && (
-              <p className={styles.status}>
+              <Text
+                as="p"
+                size="xs"
+                color="faint"
+                className={styles.status}
+              >
                 Nada mudou desde o último salvamento.
-              </p>
+              </Text>
             )}
             <Button
               loading={isSaving}
@@ -168,35 +128,11 @@ export const Account = () => {
             >
               Salvar meus dados
             </Button>
-          </div>
+          </Flexbox>
         </>
       )}
 
-      {profile && (
-        <section className={`${motion.settle} ${styles.about}`}>
-          <p className={styles.groupTitle}>Sobre a conta</p>
-
-          <dl className={styles.facts}>
-            {[
-              [
-                'Login via',
-                ACCOUNT_PROVIDER_LABEL[
-                  profile.credentials[0]?.provider ?? ''
-                ] ??
-                  profile.credentials[0]?.provider ??
-                  '—',
-              ],
-              ['Membro desde', dateOf(profile.createdAt)],
-              ['Último acesso', dateOf(profile.lastLoginAt)],
-            ].map(([label, value]) => (
-              <div key={label} className={styles.fact}>
-                <dt className={styles.factLabel}>{label}</dt>
-                <dd className={styles.factValue}>{value}</dd>
-              </div>
-            ))}
-          </dl>
-        </section>
-      )}
+      {profile && <AccountFacts profile={profile} />}
     </div>
   )
 }

@@ -1,10 +1,9 @@
-import { Flexbox } from '@nino/ds/components/Flexbox'
 import { useState } from 'react'
-import { Link } from 'react-router'
 
-import { Button } from '@nino/ds/components/Button'
-import { Input } from '@nino/ds/components/Input'
+import { Flexbox } from '@nino/ds/components/Flexbox'
 import { Header } from '@nino/ds/components/Header'
+import { Input } from '@nino/ds/components/Input'
+import { CatalogActions } from '@components/CatalogActions/CatalogActions'
 import { CategoryChips } from '@compositions/CategoryChips/CategoryChips'
 import { MenuBoard } from '@compositions/MenuBoard/MenuBoard'
 import { useCategories } from '@hooks/product/useCategories'
@@ -13,35 +12,43 @@ import { useTenantRole } from '@hooks/session/useTenantRole'
 import { useDebouncedValue } from '@hooks/ui/useDebouncedValue'
 
 import styles from './Catalog.module.css'
-import motion from '@styles/motion.module.css'
+
+const DESCRIPTION =
+  'Desligue o que acabou — o item some do app do cliente na hora.'
 
 export const Catalog = () => {
   const tenant = useCurrentTenant()
   const tenantId = tenant?.tenantId ?? null
   const role = useTenantRole()
 
-  const { categories, isPending: isCategoriesPending } = useCategories(tenantId)
+  const { categories, isPending: isCategoriesPending } =
+    useCategories(tenantId)
   const [categoryId, setCategoryId] = useState<string | null>(null)
   const [term, setTerm] = useState('')
   const search = useDebouncedValue(term.trim())
 
-  const ordered = [...categories].sort((a, b) => a.position - b.position)
-
   return (
-    <div className={styles.page}>
+    <Flexbox className={styles.page}>
       <Header
         mb={{ mobile: 3, desktop: 4 }}
         className={styles.header}
         title="Cardápio"
         accent="Cardápio"
-        description="Desligue o que acabou — o item some do app do cliente na hora."
+        description={DESCRIPTION}
       />
 
       {/*
-        Busca e ações na mesma barra: no desktop as ações não cabiam no slot do
-        Header sem espremer o título, e numa faixa própria ficavam soltas.
+        Busca e ações na mesma barra: no desktop as ações não cabiam no
+        slot do Header sem espremer o título, e numa faixa própria ficavam
+        soltas.
       */}
-      <Flexbox direction={{ mobile: 'column', desktop: 'row' }} gap={{ mobile: 2, desktop: 4 }} align={{ desktop: 'center' }} shrink={false} mb={3}>
+      <Flexbox
+        direction={{ mobile: 'column', desktop: 'row' }}
+        gap={{ mobile: 2, desktop: 4 }}
+        align={{ desktop: 'center' }}
+        shrink={false}
+        mb={3}
+      >
         <Input
           type="search"
           value={term}
@@ -51,39 +58,25 @@ export const Catalog = () => {
           onChange={(event) => setTerm(event.target.value)}
         />
 
-        {role === 'TENANT_OWNER' && (
-          <div className={styles.actions}>
-            <Button
-              asChild
-              variant="outline"
-              className={`${motion.press} ${styles.manageCategories}`}
-            >
-              <Link to="categorias">Gerenciar categorias</Link>
-            </Button>
-            <Button asChild className={`${motion.press} ${styles.newItem}`}>
-              <Link to="novo">Novo item</Link>
-            </Button>
-          </div>
-        )}
+        {role === 'TENANT_OWNER' && <CatalogActions />}
       </Flexbox>
 
-      <div className={styles.chips}>
+      <Flexbox shrink={false} mb={3}>
         <CategoryChips
-          categories={ordered}
+          categories={categories}
           value={categoryId}
           onChange={setCategoryId}
           isPending={isCategoriesPending}
         />
-      </div>
+      </Flexbox>
 
-      {/* só a lista rola: título, busca e fichas ficam parados */}
-      <div className={styles.scroller}>
+      <Flexbox className={styles.scroller}>
         <MenuBoard
           tenantId={tenantId}
           categoryId={categoryId}
           search={search}
         />
-      </div>
-    </div>
+      </Flexbox>
+    </Flexbox>
   )
 }

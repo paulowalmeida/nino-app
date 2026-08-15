@@ -9,11 +9,14 @@ import { Input } from '@nino/ds/components/Input'
 import { Header } from '@nino/ds/components/Header'
 import type { IconName } from '@nino/ds/components/Icon'
 import { OrderTicket } from '@compositions/OrderTicket/OrderTicket'
-import { OrderTicketSkeleton } from '@skeletons/OrderTicketSkeleton/OrderTicketSkeleton'
+import {
+  OrderTicketSkeleton,
+} from '@skeletons/compositions/OrderTicketSkeleton/OrderTicketSkeleton'
 import { StageTrack } from '@compositions/StageTrack/StageTrack'
 import { useCurrentTenant } from '@hooks/session/useCurrentTenant'
 import { useOrders } from '@hooks/order/useOrders'
 import { useOrderStatus } from '@hooks/order/useOrderStatus'
+import { useQueueSummary } from '@hooks/order/useQueueSummary'
 import { useDebouncedValue } from '@hooks/ui/useDebouncedValue'
 import type { OrderStage } from '@custom_types/order/order-stage'
 import type { OrderStatusKey } from '@custom_types/order/order-status-key'
@@ -23,7 +26,7 @@ import {
   ORDERS_STAGES,
 } from '@constants/order.constants'
 import { riseDelay } from '@utils/rise-delay'
-import { stageOf } from '@utils/order-flow'
+import { statusesForStage } from '@utils/order-flow'
 
 import styles from './Orders.module.css'
 import motion from '@styles/motion.module.css'
@@ -75,31 +78,41 @@ export const Orders = () => {
     )
   }, [search, urlSearch, setParams])
 
+  /*
+   * A etapa filtra no servidor, não na página já carregada: um pedido
+   * antigo ainda aberto (fora das primeiras páginas por `createdAt`) não
+   * pode sumir da aba dele só porque não coube na janela recente.
+   * Procurando, a etapa sai do caminho — o servidor já devolveu só o que
+   * casa com o termo, então a lista é o resultado inteiro.
+   */
   const { orders, isPending, isError, hasNextPage, fetchNextPage } = useOrders(
     tenantId,
-    search
+    search,
+    isSearching ? undefined : statusesForStage(stage)
   )
   const {
     mutate: advance,
     isPending: isAdvancing,
     variables,
   } = useOrderStatus(tenantId)
+  const { data: summary } = useQueueSummary(tenantId)
 
+  /*
+   * As contagens da trilha vêm do mesmo agregado do servidor que a Visão
+   * Geral usa, não da lista paginada: a lista só carrega a etapa aberta
+   * agora, e contar por cima dela subcontaria as outras abas.
+   */
   const options: StageOption[] = ORDERS_STAGES.map(({ id, label, icon }) => ({
     id,
     label,
     icon,
-    count: orders.filter((order) => stageOf(order.status) === id).length,
+    count: statusesForStage(id).reduce(
+      (total, status) => total + (summary?.[status] ?? 0),
+      0
+    ),
   }))
 
-  /*
-   * Procurando, a etapa sai do caminho: quem digita um código quer o pedido,
-   * não quer descobrir em qual balde ele caiu. O servidor já devolveu só o
-   * que casa, então a lista é o resultado inteiro.
-   */
-  const shown = isSearching
-    ? orders
-    : orders.filter((order) => stageOf(order.status) === stage)
+  const shown = orders
 
   const empty = isSearching
     ? `Nenhum pedido encontrado para "${search}".`

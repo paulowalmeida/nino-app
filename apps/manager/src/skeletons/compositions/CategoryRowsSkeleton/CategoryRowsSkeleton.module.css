@@ -1,0 +1,26 @@
+@reference "@nino/ds/globals.css";
+
+.row {
+  @apply flex min-h-16 flex-wrap items-center gap-3 rounded-3 px-2 py-3;
+  @apply border-t border-border;
+}
+
+.who {
+  @apply flex min-w-40 flex-1 flex-col;
+}
+
+.ghostHandle {
+  @apply h-9 w-9 shrink-0 rounded-2;
+}
+
+.ghostName {
+  @apply h-4 w-32;
+}
+
+.ghostHint {
+  @apply mt-1.5 h-3 w-16;
+}
+
+.ghostAction {
+  @apply size-9 shrink-0 rounded-2;
+}

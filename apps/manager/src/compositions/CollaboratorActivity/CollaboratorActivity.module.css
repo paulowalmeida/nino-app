@@ -1,0 +1,107 @@
+@reference "@nino/ds/globals.css";
+
+.activity {
+  @apply flex min-h-0 flex-1 flex-col lg:order-1 lg:h-full;
+}
+
+.activityHead {
+  @apply flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1;
+  @apply border-b border-border/60 pb-3;
+}
+
+.activityTitle {
+  @apply text-xs font-bold uppercase tracking-[0.12em] text-fg-faint;
+}
+
+.activityHint {
+  @apply text-xs text-fg-faint;
+}
+
+/*
+ * A grade da tabela: mesma coluna para o cabeçalho e para cada linha, número
+ * sempre embaixo do rótulo. No celular vira duas linhas — pedido+valor em
+ * cima, cliente e o resto (canal, situação, hora) como legenda embaixo —
+ * mesma hierarquia "dinheiro lidera" da lista de clientes.
+ */
+.grid {
+  @apply grid items-center gap-x-3;
+  grid-template-columns: 3rem minmax(0, 1fr) auto;
+}
+
+@media (min-width: 1024px) {
+  .grid {
+    @apply gap-x-4;
+    grid-template-columns: 3rem minmax(0, 1fr) 6rem 7.5rem 6rem 5.5rem;
+  }
+}
+
+.columns {
+  @apply hidden px-2 pb-2 lg:grid;
+}
+
+.columnLabel {
+  @apply text-2xs font-bold uppercase tracking-[0.1em] text-fg-faintest;
+  @apply text-right;
+}
+
+.columnLabel:first-child,
+.columnLabel:nth-child(2) {
+  @apply text-left;
+}
+
+.listScroll {
+  @apply min-h-0 flex-1;
+}
+
+.entries {
+  @apply flex flex-col pr-1;
+}
+
+.entry {
+  @apply border-b border-border last:border-b-0;
+}
+
+.entryRow {
+  @apply rounded-3 px-2 py-3 transition-colors duration-150;
+  @apply hover:bg-surface-mute;
+}
+
+.entryTicket {
+  @apply text-sm font-semibold text-fg-faint tabular-nums;
+}
+
+.entryCustomer {
+  @apply min-w-0 truncate text-sm font-semibold text-fg-strong;
+}
+
+/* no celular é a legenda da linha, embaixo de cliente+valor; no desktop
+   dissolve na grade e cada pedaço vira sua própria coluna */
+.entryMeta {
+  @apply col-span-2 col-start-2 flex min-w-0 items-center gap-1.5;
+  @apply text-xs text-fg-faint lg:contents;
+}
+
+.entryChannel {
+  @apply truncate lg:text-sm lg:text-fg-muted;
+}
+
+.entryStatus {
+  @apply shrink-0 truncate lg:text-sm lg:text-fg-muted lg:text-right;
+}
+
+.entryAt {
+  @apply shrink-0 tabular-nums lg:text-right lg:text-xs lg:text-fg-faint;
+}
+
+.entryDot {
+  @apply shrink-0 lg:hidden;
+}
+
+/* o único número que merece destaque na linha */
+.entryTotal {
+  @apply text-right text-sm font-semibold text-fg-strong tabular-nums;
+}
+
+.empty {
+  @apply mt-4;
+}

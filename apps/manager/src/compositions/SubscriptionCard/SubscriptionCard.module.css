@@ -1,0 +1,34 @@
+@reference "@nino/ds/globals.css";
+
+/* o plano é o assunto: nome grande, preço ao lado */
+.plan {
+  @apply border-b border-border pb-4;
+}
+
+.planName {
+  @apply tracking-[-0.02em];
+}
+
+.price {
+  font-variant-numeric: tabular-nums;
+}
+
+.facts {
+  @apply flex flex-col pt-1;
+}
+
+.fact {
+  @apply border-b border-border py-2.5;
+}
+
+.factLabel {
+  @apply text-sm text-fg-faint;
+}
+
+.factValue {
+  @apply text-sm font-semibold text-fg-default;
+}
+
+.hint {
+  @apply leading-relaxed;
+}

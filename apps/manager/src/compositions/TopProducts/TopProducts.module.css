@@ -24,6 +24,12 @@
   @apply text-brand lg:flex-1;
 }
 
+/* Mesma régua do cartão ao lado: o vazio ocupa a faixa inteira do corpo em
+   vez de encostar no topo e deixar um vão morto embaixo. */
+.empty {
+  @apply flex-1;
+}
+
 .note {
   @apply mt-4 border-t border-border pt-3 text-xs leading-snug;
   @apply text-fg-faint;

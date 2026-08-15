@@ -1,17 +1,15 @@
 @reference "@nino/ds/globals.css";
 
-/* Column from desktop up: this lets the card fill the height the grid gave
-   the row, so the two blocks end together. */
 .section {
   @apply lg:flex lg:h-full lg:flex-col;
 }
 
-.heading {
-  @apply mb-3;
+.card {
+  @apply flex min-w-0 flex-col overflow-hidden lg:flex-1;
 }
 
-.card {
-  @apply min-w-0 overflow-hidden lg:flex-1;
+.empty {
+  @apply flex-1;
 }
 
 .total {

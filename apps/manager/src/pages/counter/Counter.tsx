@@ -107,6 +107,14 @@ export const Counter = () => {
   }
 
   const count = lines.reduce((sum, line) => sum + line.quantity, 0)
+
+  /* A Drawer fecha sozinha quando a comanda esvazia (`count > 0` some da
+   * condição de `open`), mas isso não passa pelo `onOpenChange` do Ark —
+   * é a prop mudando de fora, não um clique no backdrop. Sem isto, `sheet`
+   * continua `true` por baixo, e o próximo item picado reabre a folha
+   * sozinho em vez de esperar o toque no cupom. */
+  if (count === 0 && sheet) setSheet(false)
+
   const total = lines.reduce(
     (sum, line) => sum + Number(line.unitPrice) * line.quantity,
     0

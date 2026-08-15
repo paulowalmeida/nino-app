@@ -4,36 +4,9 @@
   @apply relative max-w-3xl p-4 lg:p-10;
 }
 
-/* linha de criação: input larga + botão que não encolhe */
-.create {
-  @apply mb-6 flex flex-col gap-2 sm:flex-row sm:items-center;
-}
-
-/* só a partir de `sm`, quando a linha é horizontal: em coluna, `flex-1` zera
-   o flex-basis no eixo vertical e achata o input contra o line-height */
-.create > :first-child {
-  @apply sm:flex-1;
-}
-
 /* sem moldura: a página já é a lista, como Clientes e Configurações — um
    cartão em volta só repetiria o contorno que a tela já dá */
 .list {
   @apply flex flex-col;
-}
-
-.ghostHandle {
-  @apply h-9 w-9 shrink-0 rounded-2;
-}
-
-.ghostName {
-  @apply h-4 w-32;
-}
-
-.ghostHint {
-  @apply mt-1.5 h-3 w-16;
-}
-
-.ghostAction {
-  @apply size-9 shrink-0 rounded-2;
 }
 

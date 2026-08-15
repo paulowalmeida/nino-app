@@ -4,12 +4,15 @@ import { describe, expect, it, vi } from 'vitest'
 
 import { useCurrentTenant } from '@hooks/session/useCurrentTenant'
 import { useStaffDetail } from '@hooks/team/useStaffDetail'
-
 import {
   CollaboratorDetail,
 } from '@pages/collaborator-detail/CollaboratorDetail'
 
-import { currentTenant, staffDetail } from './CollaboratorDetail.mock'
+import {
+  counterTicketEntry,
+  currentTenant,
+  staffDetail,
+} from './CollaboratorDetail.mock'
 
 vi.mock('@hooks/session/useCurrentTenant')
 vi.mock('@hooks/team/useStaffDetail')
@@ -60,5 +63,52 @@ describe(CollaboratorDetail.name, () => {
     expect(
       screen.getByText('Esta pessoa não está mais nesta loja.')
     ).toBeInTheDocument()
+  })
+
+  it('shows a skeleton while the request is pending', () => {
+    // Arrange
+    vi.mocked(useCurrentTenant).mockReturnValue(currentTenant)
+    vi.mocked(useStaffDetail).mockReturnValue({
+      data: undefined,
+      isPending: true,
+    } as unknown as ReturnType<typeof useStaffDetail>)
+
+    // Act
+    const { container } = renderDetail()
+
+    // Assert
+    expect(container.querySelector('[class*="skeleton"]')).toBeTruthy()
+  })
+
+  it('shows the empty activity message when nothing was handled yet', () => {
+    // Arrange
+    vi.mocked(useCurrentTenant).mockReturnValue(currentTenant)
+    vi.mocked(useStaffDetail).mockReturnValue({
+      data: staffDetail,
+      isPending: false,
+    } as unknown as ReturnType<typeof useStaffDetail>)
+
+    // Act
+    renderDetail()
+
+    // Assert
+    expect(
+      screen.getByText('Nenhum pedido passou pela mão desta pessoa ainda.')
+    ).toBeInTheDocument()
+  })
+
+  it('lists the activity entries when there is order history', () => {
+    // Arrange
+    vi.mocked(useCurrentTenant).mockReturnValue(currentTenant)
+    vi.mocked(useStaffDetail).mockReturnValue({
+      data: { ...staffDetail, activity: [counterTicketEntry] },
+      isPending: false,
+    } as unknown as ReturnType<typeof useStaffDetail>)
+
+    // Act
+    renderDetail()
+
+    // Assert
+    expect(screen.getByText('Maria Silva')).toBeInTheDocument()
   })
 })

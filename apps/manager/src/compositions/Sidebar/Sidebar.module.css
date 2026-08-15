@@ -1,30 +1,14 @@
 @reference "@nino/ds/globals.css";
 
-/* brand glow seeping from top-right */
 .sidebar::after {
   content: '';
-  position: absolute;
-  top: -4rem;
-  right: -4rem;
-  width: 14rem;
-  height: 14rem;
-  border-radius: 9999px;
-  background: var(--color-brand);
-  opacity: 0.12;
-  filter: blur(3.5rem);
-  pointer-events: none;
+  @apply pointer-events-none absolute -right-16 -top-16;
+  @apply size-56 rounded-full bg-brand/12 blur-3xl;
 }
 
-/*
- * Real screen height (dvh) and a single scrollable area: logo, store
- * switcher and footer stay anchored, and only the section list scrolls
- * when the menu grows taller than the screen.
- */
 .sidebar {
   @apply fixed left-0 top-0 z-modal flex h-dvh w-60 flex-col overflow-hidden;
   @apply -translate-x-full bg-fg-cool;
-  /* `translate`, not `transform`: in Tailwind v4 translate-x-* writes to
-     the translate property, and transitioning transform misses the slide. */
   @apply transition-[translate,width] duration-300 ease-in-out;
   @apply lg:translate-x-0;
 }
@@ -37,26 +21,12 @@
   @apply lg:w-(--width-sidebar-collapsed);
 }
 
-.sidebar.collapsed .navItem,
-.sidebar.collapsed .navGroupToggle,
-.sidebar.collapsed .subItem {
-  @apply lg:justify-center lg:px-0;
-}
-
-.sidebar.collapsed .navGroupToggleRow {
-  @apply lg:justify-center;
-}
-
-.sidebar.collapsed .subNav {
-  @apply lg:pl-0;
-}
-
-.logoWrap {
+.topBar {
   @apply relative z-content flex shrink-0 items-center justify-between;
   @apply border-b border-fg-on-brand/8 px-5 py-4;
 }
 
-.sidebar.collapsed .logoWrap {
+.sidebar.collapsed .topBar {
   @apply lg:px-3;
 }
 
@@ -80,155 +50,21 @@
   @apply py-2;
 }
 
-/* scrolling belongs to the DS ScrollArea: this is just the space it takes
-   in the column — the dark native scrollbar was cutting into the menu */
 .nav {
   @apply relative z-content min-h-0 flex-1;
 }
 
-.navInner {
+.navList {
   @apply flex flex-col gap-0.5 px-3 py-4;
 }
 
-/* grouped by topic: what happens today on top, how the store is set up
-   below */
-.group + .group {
+.navSection + .navSection {
   @apply mt-5;
 }
 
-.groupTitle {
+.navSectionTitle {
   @apply mb-1 px-3 text-2xs font-bold uppercase tracking-caps;
   @apply text-fg-on-brand/28;
-}
-
-/* serves both link and button: an item with children opens the list
-   instead of navigating */
-.navItem {
-  @apply relative flex w-full cursor-pointer items-center gap-3 rounded-3;
-  @apply px-3 py-2.5 text-left;
-  @apply text-sm font-medium text-fg-on-brand/45;
-  @apply transition-colors duration-150;
-  @apply hover:bg-surface-raised/6 hover:text-fg-on-brand/80;
-}
-
-/* left accent bar for active item */
-.navItemActive::before {
-  content: '';
-  position: absolute;
-  left: 0;
-  top: 0.375rem;
-  bottom: 0.375rem;
-  width: 3px;
-  border-radius: 0 3px 3px 0;
-  background: var(--color-brand);
-}
-
-.navItemActive {
-  @apply bg-brand-soft text-brand;
-  @apply hover:bg-brand-soft hover:text-brand;
-}
-
-/* single wrapper for the trigger content — Accordion keeps it apart from
-   the chevron */
-.navGroupToggleRow {
-  @apply flex items-center gap-3;
-}
-
-/*
- * The DS Accordion paints the header with the brand surface (closed) and
- * a diluted orange (open). On the menu's dark rail that turns into a loose
- * block: here the trigger is just another nav item, with no fill of its
- * own.
- */
-.navGroupToggle {
-  @apply w-full rounded-3 px-3 py-2.5 text-left;
-  @apply text-sm font-medium text-fg-on-brand/45;
-  @apply transition-colors duration-150;
-  @apply bg-transparent data-[state=open]:bg-transparent;
-  @apply hover:bg-surface-raised/6 hover:text-fg-on-brand/80;
-  @apply data-[state=open]:hover:bg-surface-raised/6;
-}
-
-/* open on its own route: only then it carries the active item surface */
-.navGroupToggle.navItemActive {
-  @apply text-brand data-[state=open]:bg-brand-soft;
-  @apply data-[state=open]:hover:bg-brand-soft hover:text-brand;
-}
-
-.navGroup {
-  @apply w-full divide-y-0 rounded-none border-0;
-}
-
-.navGroupItem {
-  @apply bg-transparent;
-}
-
-.navGroupPanel {
-  @apply text-fg-on-brand/60;
-}
-
-/* sections of the open screen, indented under the parent item */
-.subNav {
-  @apply mt-0.5 mb-1 flex flex-col gap-px pl-9;
-}
-
-/*
- * The staggered entrance lives in a CSS rule, not a NavLink class: the
- * link's class changes on every navigation (isActive) and would restart
- * the animation, making the items flicker.
- */
-@keyframes sub-in {
-  from {
-    opacity: 0;
-    transform: translateX(-8px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
-
-.subNav > a {
-  animation: sub-in 0.34s var(--ease-out) both;
-}
-
-.subNav > a:nth-child(2) {
-  animation-delay: 40ms;
-}
-.subNav > a:nth-child(3) {
-  animation-delay: 80ms;
-}
-.subNav > a:nth-child(4) {
-  animation-delay: 120ms;
-}
-.subNav > a:nth-child(5) {
-  animation-delay: 160ms;
-}
-.subNav > a:nth-child(6) {
-  animation-delay: 200ms;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .subNav > a {
-    animation: none;
-  }
-}
-
-.subItem {
-  @apply flex items-center gap-2.5 rounded-2 px-3 py-1.5;
-  @apply text-xs text-fg-on-brand/40 transition-colors duration-150;
-  @apply hover:bg-surface-raised/6 hover:text-fg-on-brand/75;
-}
-
-.subItemActive {
-  @apply bg-surface-raised/8 font-semibold text-fg-on-brand/90;
-}
-
-/* how many orders wait for acceptance — the one number that interrupts */
-.tally {
-  @apply ml-auto flex h-5 min-w-5 items-center justify-center rounded-full;
-  @apply bg-brand px-1.5 text-2xs font-bold text-fg-on-brand;
-  font-variant-numeric: tabular-nums;
 }
 
 .footer {

@@ -1,40 +1,13 @@
-import { Flexbox } from '@nino/ds/components/Flexbox'
-import { NinoMascot } from '@nino/ds/components/NinoMascot'
 import { DayTally } from '@compositions/DayTally/DayTally'
+import { OverviewHeader } from '@compositions/OverviewHeader/OverviewHeader'
 import { PauseSwitch } from '@compositions/PauseSwitch/PauseSwitch'
 import { QueueBoard } from '@compositions/QueueBoard/QueueBoard'
 import { SalesTrend } from '@compositions/SalesTrend/SalesTrend'
 import { TopProducts } from '@compositions/TopProducts/TopProducts'
-import { StoreSign } from '@compositions/StoreSign/StoreSign'
 import { useCurrentTenant } from '@hooks/session/useCurrentTenant'
 import { useSessionStore } from '@states/useSessionStore'
 
 import styles from './Overview.module.css'
-import motion from '@styles/motion.module.css'
-
-const resolveZone = (timezone: string | null): string =>
-  timezone ?? Intl.DateTimeFormat().resolvedOptions().timeZone
-
-const greetingFor = (timezone: string | null): string => {
-  const hour = Number(
-    new Date().toLocaleTimeString('en-US', {
-      hour: '2-digit',
-      hour12: false,
-      timeZone: resolveZone(timezone),
-    })
-  )
-  if (hour < 12) return 'Bom dia'
-  if (hour < 18) return 'Boa tarde'
-  return 'Boa noite'
-}
-
-const dateFor = (timezone: string | null): string =>
-  new Intl.DateTimeFormat('pt-BR', {
-    weekday: 'long',
-    day: 'numeric',
-    month: 'long',
-    timeZone: resolveZone(timezone),
-  }).format(new Date())
 
 export const Overview = () => {
   const user = useSessionStore(({ user }) => user)
@@ -46,37 +19,11 @@ export const Overview = () => {
 
   return (
     <div className={styles.page}>
-      <header className={`${motion.settle} ${styles.header}`}>
-        <div className={styles.glow} />
-        <div className={styles.headerText}>
-          <p className={`${motion.deal} ${styles.greeting}`}>
-            {greetingFor(timezone)}
-          </p>
-          <h1 className={`${motion.deal} ${styles.title}`}>{firstName}</h1>
-          <Flexbox
-            direction={{ mobile: 'column', desktop: 'row' }}
-            align={{ mobile: 'start', desktop: 'baseline' }}
-            gap={{ mobile: 1.5, desktop: 2 }}
-          >
-            <p className={styles.date}>{dateFor(timezone)}</p>
-
-            {tenant && (
-              <a
-                href={`https://${tenant.tenantSlug}.dev.nino.delivery`}
-                target="_blank"
-                rel="noopener noreferrer"
-                title="ir para a loja"
-                className={styles.store}
-              >
-                {tenant.tenantName}
-              </a>
-            )}
-          </Flexbox>
-
-          <StoreSign tenantId={tenantId} timezone={timezone} />
-        </div>
-        <NinoMascot className={`${motion.land} ${styles.mascot}`} />
-      </header>
+      <OverviewHeader
+        firstName={firstName}
+        timezone={timezone}
+        tenant={tenant}
+      />
 
       <div className={styles.pause}>
         <PauseSwitch tenantId={tenantId} timezone={timezone} />
@@ -84,7 +31,7 @@ export const Overview = () => {
 
       <QueueBoard tenantId={tenantId} />
 
-      <div className={styles.charts}>
+      <div className={`${styles.charts}`} >
         <SalesTrend tenantId={tenantId} />
         <TopProducts tenantId={tenantId} />
       </div>

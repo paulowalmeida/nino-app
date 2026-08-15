@@ -8,7 +8,8 @@ import { Text } from '@nino/ds/components/Text'
 import type { NavItem } from '@custom_types/ui/nav-item'
 
 import motion from '@styles/motion.module.css'
-import styles from '@compositions/Sidebar/Sidebar.module.css'
+
+import styles from './SidebarNavItem.module.css'
 
 type SidebarNavItemProps = {
   tenantId: string | null
@@ -33,10 +34,19 @@ export const SidebarNavItem = ({
   waiting,
   onNavigate,
 }: SidebarNavItemProps) => {
-  const content = (
+  const labelClassName = (isActive: boolean, inactiveColor: string) =>
+    [!isActive && inactiveColor, isCollapsed && 'sr-only']
+      .filter(Boolean)
+      .join(' ') || undefined
+
+  const iconAndLabel = (isActive: boolean) => (
     <>
       <Icon name={icon} size="md" />
-      <Text as="span" className={isCollapsed ? 'sr-only' : undefined}>
+      <Text
+        as="span"
+        color={isActive ? 'brand' : undefined}
+        className={labelClassName(isActive, 'text-fg-on-brand/45')}
+      >
         {label}
       </Text>
       {section === 'pedidos' && waiting > 0 && (
@@ -57,11 +67,13 @@ export const SidebarNavItem = ({
               : styles.navItem
           }
         >
-          {content}
+          {({ isActive }) => iconAndLabel(isActive)}
         </NavLink>
       </Flexbox>
     )
   }
+
+  const isGroupActive = isInside && isOpen
 
   return (
     <Flexbox style={delay} className={motion.slide}>
@@ -70,8 +82,8 @@ export const SidebarNavItem = ({
           {
             value: section,
             trigger: (
-              <Flexbox direction="row" className={styles.navGroupToggleRow}>
-                {content}
+              <Flexbox direction="row" className={styles.navGroupHeaderRow}>
+                {iconAndLabel(isGroupActive)}
               </Flexbox>
             ),
             content: (
@@ -87,13 +99,21 @@ export const SidebarNavItem = ({
                         : styles.subItem
                     }
                   >
-                    <Icon name={childIcon} size="sm" />
-                    <Text
-                      as="span"
-                      className={isCollapsed ? 'sr-only' : undefined}
-                    >
-                      {childLabel}
-                    </Text>
+                    {({ isActive }) => (
+                      <>
+                        <Icon name={childIcon} size="sm" />
+                        <Text
+                          as="span"
+                          color={isActive ? 'brand' : undefined}
+                          className={labelClassName(
+                            isActive,
+                            'text-fg-on-brand/40'
+                          )}
+                        >
+                          {childLabel}
+                        </Text>
+                      </>
+                    )}
                   </NavLink>
                 ))}
               </Flexbox>
@@ -103,9 +123,9 @@ export const SidebarNavItem = ({
         value={isOpen ? [section] : []}
         onValueChange={(values) => onOpenChange(values.includes(section))}
         className={styles.navGroup}
-        itemClassName={styles.navGroupItem}
+        itemClassName={styles.navGroupWrapper}
         triggerClassName={
-          isInside && isOpen
+          isGroupActive
             ? `${styles.navGroupToggle} ${styles.navItemActive}`
             : styles.navGroupToggle
         }

@@ -1,8 +1,47 @@
 import type { OrderChannel } from '@custom_types/order/order-channel'
 import type { OrderStage } from '@custom_types/order/order-stage'
+import type { OrderStatusKey } from '@custom_types/order/order-status-key'
+import type { PaymentMethod } from '@custom_types/order/payment-method'
+import type { PaymentStatus } from '@custom_types/order/payment-status'
 import type { Recipient } from '@custom_types/order/recipient'
 import type { PeriodChoice } from '@custom_types/ui/period-choice'
 import type { Stage } from '@pages/orders/Orders'
+
+/**
+ * The panel speaks the kitchen's language, not the database's. Every label
+ * below is what someone would say out loud on the floor.
+ */
+export const STATUS_LABEL: Record<OrderStatusKey, string> = {
+  PENDING: 'esperando aceite',
+  ACCEPTED: 'confirmado',
+  PREPARING: 'na cozinha',
+  OUT_FOR_DELIVERY: 'na rua',
+  READY_FOR_PICKUP: 'no balcão',
+  DELIVERED: 'entregue',
+  COMPLETED: 'retirado',
+  CANCELLED: 'cancelado',
+}
+
+export const CHANNEL_LABEL: Record<OrderChannel, string> = {
+  DELIVERY: 'Entrega',
+  PICKUP: 'Retirada',
+  COUNTER: 'Balcão',
+}
+
+export const PAYMENT_METHOD_LABEL: Record<PaymentMethod, string> = {
+  CASH: 'Dinheiro',
+  CARD_ON_DELIVERY: 'Cartão na entrega',
+  PIX_ONLINE: 'Pix online',
+  CARD_ONLINE: 'Cartão online',
+}
+
+export const PAYMENT_STATUS_LABEL: Record<PaymentStatus, string> = {
+  PENDING: 'a receber',
+  PAID: 'pago',
+  FAILED: 'falhou',
+  REFUNDED: 'estornado',
+  CANCELLED: 'cancelado',
+}
 
 /** Descending bars: the list arrives sorted, and the skeleton says so too. */
 export const TOP_PRODUCTS_SKELETON_WIDTHS = ['92%', '74%', '58%', '43%', '31%']
@@ -115,15 +154,6 @@ export const KITCHEN_COLUMNS: {
   { stage: 'kitchen', title: 'Na chapa', empty: 'Nenhum pedido em preparo.' },
   { stage: 'street', title: 'Saiu', empty: 'Nada na rua.' },
   { stage: 'counter', title: 'No balcão', empty: 'Nada esperando retirada.' },
-]
-
-export const COLLABORATOR_DETAIL_COLUMNS = [
-  'Pedido',
-  'Cliente',
-  'Canal',
-  'Situação',
-  'Quando',
-  'Valor',
 ]
 
 export const NEW_ORDER_EMPTY_RECIPIENT: Recipient = {

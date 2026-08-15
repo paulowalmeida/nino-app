@@ -134,6 +134,24 @@ describe('OrderService', () => {
     })
   })
 
+  it('listOrders: joins statuses into a single CSV param', async () => {
+    // Arrange / Act
+    await OrderService.listOrders('tenant-1', 1, undefined, [
+      'DELIVERED',
+      'COMPLETED',
+      'CANCELLED',
+    ])
+
+    // Assert
+    expect(apiMock.getAll).toHaveBeenCalledWith('tenants/tenant-1/orders', {
+      target: 'createdAt',
+      direction: 'desc',
+      size: ORDER_PAGE_SIZE,
+      page: 1,
+      status: 'DELIVERED,COMPLETED,CANCELLED',
+    })
+  })
+
   it('createOrder: creates an order under the tenant', async () => {
     // Arrange
     const data = {

@@ -6,7 +6,7 @@ import { Button } from '@nino/ds/components/Button'
 import { EmptyState } from '@nino/ds/components/EmptyState'
 import { ScrollArea } from '@nino/ds/components/ScrollArea'
 import { Skeleton } from '@nino/ds/components/Skeleton'
-import { PersonMark } from '@components/PersonMark/PersonMark'
+import { PersonMark } from '@elements/PersonMark/PersonMark'
 import { useCurrentTenant } from '@hooks/session/useCurrentTenant'
 import { useCustomers } from '@hooks/customer/useCustomers'
 import {

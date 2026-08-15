@@ -4,9 +4,11 @@ import { mergeClasses } from '@ds/lib/mergeClasses/mergeClasses'
 import {
   alignDesktop,
   alignMobile,
+  alignTablet,
   AlignValue,
   gapDesktop,
   gapMobile,
+  gapTablet,
   GapValue,
   Responsive,
   responsiveToClasses,
@@ -21,11 +23,14 @@ type GridProps = HTMLAttributes<HTMLElement> &
   MarginProps & {
     /** Tag to render. Default: `div` */
     as?: GridTag
-    /** How many columns. Accepts `{ mobile, desktop }` */
+    /** How many columns. Accepts `{ mobile, tablet, desktop }` */
     columns?: Responsive<GridColumns>
-    /** Space between cells. Accepts `{ mobile, desktop }` */
+    /** Space between cells. Accepts `{ mobile, tablet, desktop }` */
     gap?: Responsive<GapValue>
-    /** How cells sit within their own row. Accepts `{ mobile, desktop }` */
+    /**
+     * How cells sit within their own row. Accepts `{ mobile, tablet,
+     * desktop }`
+     */
     align?: Responsive<AlignValue>
   }
 
@@ -47,6 +52,16 @@ const columnsDesktop = {
   5: 'lg:grid-cols-5',
   6: 'lg:grid-cols-6',
   12: 'lg:grid-cols-12',
+} as const
+
+const columnsTablet = {
+  1: 'sm:grid-cols-1',
+  2: 'sm:grid-cols-2',
+  3: 'sm:grid-cols-3',
+  4: 'sm:grid-cols-4',
+  5: 'sm:grid-cols-5',
+  6: 'sm:grid-cols-6',
+  12: 'sm:grid-cols-12',
 } as const
 
 /**
@@ -84,9 +99,14 @@ export function Grid({
     <Component
       className={mergeClasses(
         'grid',
-        responsiveToClasses(columns, columnsMobile, columnsDesktop),
-        responsiveToClasses(gap, gapMobile, gapDesktop),
-        responsiveToClasses(align, alignMobile, alignDesktop),
+        responsiveToClasses(
+          columns,
+          columnsMobile,
+          columnsDesktop,
+          columnsTablet
+        ),
+        responsiveToClasses(gap, gapMobile, gapDesktop, gapTablet),
+        responsiveToClasses(align, alignMobile, alignDesktop, alignTablet),
         marginToClasses({ m, mt, mb, mx, my }),
         className
       )}

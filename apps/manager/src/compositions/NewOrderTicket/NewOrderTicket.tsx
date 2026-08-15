@@ -6,13 +6,16 @@ import { Icon } from '@nino/ds/components/Icon'
 import { Select } from '@nino/ds/components/Select'
 import { Textarea } from '@nino/ds/components/Textarea'
 import { RecipientFields } from '@compositions/RecipientFields/RecipientFields'
-import { NEW_ORDER_TICKET_CHANNELS } from '@constants/order.constants'
+import {
+  CHANNEL_LABEL,
+  NEW_ORDER_TICKET_CHANNELS,
+} from '@constants/order.constants'
 import type { CartLine } from '@custom_types/counter/cart-line'
 import type { OrderChannel } from '@custom_types/order/order-channel'
 import type { PaymentMethod } from '@custom_types/order/payment-method'
 import type { Recipient } from '@custom_types/order/recipient'
 import { brl } from '@utils/money'
-import { CHANNEL_LABEL, paymentLabelFor } from '@utils/order-flow'
+import { paymentLabelFor } from '@utils/order-flow'
 
 import styles from './NewOrderTicket.module.css'
 import motion from '@styles/motion.module.css'

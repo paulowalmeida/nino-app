@@ -1,0 +1,28 @@
+@reference "@nino/ds/globals.css";
+
+.about {
+  @apply mt-10;
+}
+
+.facts {
+  @apply mt-3 grid grid-cols-2 gap-y-4 border-y border-border/60 py-4;
+  @apply sm:grid-cols-1 sm:gap-0 sm:border-y-0 sm:py-0;
+}
+
+.fact {
+  @apply sm:border-b sm:border-border sm:py-2.5;
+}
+
+.fact:last-child {
+  @apply sm:border-b-0;
+}
+
+.factLabel {
+  @apply text-xs font-medium text-fg-faint sm:text-sm;
+}
+
+.factValue {
+  @apply flex flex-wrap items-center gap-x-2 gap-y-1 text-sm font-semibold;
+  @apply text-fg-strong;
+  font-variant-numeric: tabular-nums;
+}

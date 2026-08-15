@@ -15,7 +15,9 @@ export const useCategories = (tenantId: string | null) => {
     enabled: !!tenantId,
   })
 
-  const categories: ProductCategory[] = query.data?.data ?? []
+  const categories: ProductCategory[] = [...(query.data?.data ?? [])].sort(
+    (a, b) => a.position - b.position
+  )
 
   return { ...query, categories }
 }

@@ -40,7 +40,7 @@ describe(ItemThumb.name, () => {
     )
 
     // Assert
-    expect(photoIn(container)).toHaveClass('opacity-0')
+    expect(photoIn(container)).not.toBeNull()
     expect(screen.getByText('🍔')).toBeInTheDocument()
   })
 

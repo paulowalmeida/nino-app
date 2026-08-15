@@ -1,46 +1,10 @@
+import { PAYMENT_METHOD_LABEL } from '@constants/order.constants'
 import type { Order } from '@custom_types/order/order'
 import type { OrderChannel } from '@custom_types/order/order-channel'
 import type { OrderStage } from '@custom_types/order/order-stage'
 import type { OrderStep } from '@custom_types/order/order-step'
 import type { PaymentMethod } from '@custom_types/order/payment-method'
-import type { PaymentStatus } from '@custom_types/order/payment-status'
 import type { OrderStatusKey } from '@custom_types/order/order-status-key'
-
-/**
- * The panel speaks the kitchen's language, not the database's. Every label
- * below is what someone would say out loud on the floor.
- */
-export const STATUS_LABEL: Record<OrderStatusKey, string> = {
-  PENDING: 'esperando aceite',
-  ACCEPTED: 'confirmado',
-  PREPARING: 'na cozinha',
-  OUT_FOR_DELIVERY: 'na rua',
-  READY_FOR_PICKUP: 'no balcão',
-  DELIVERED: 'entregue',
-  COMPLETED: 'retirado',
-  CANCELLED: 'cancelado',
-}
-
-export const CHANNEL_LABEL: Record<OrderChannel, string> = {
-  DELIVERY: 'Entrega',
-  PICKUP: 'Retirada',
-  COUNTER: 'Balcão',
-}
-
-export const PAYMENT_METHOD_LABEL: Record<PaymentMethod, string> = {
-  CASH: 'Dinheiro',
-  CARD_ON_DELIVERY: 'Cartão na entrega',
-  PIX_ONLINE: 'Pix online',
-  CARD_ONLINE: 'Cartão online',
-}
-
-export const PAYMENT_STATUS_LABEL: Record<PaymentStatus, string> = {
-  PENDING: 'a receber',
-  PAID: 'pago',
-  FAILED: 'falhou',
-  REFUNDED: 'estornado',
-  CANCELLED: 'cancelado',
-}
 
 const STAGE_OF: Record<OrderStatusKey, OrderStage> = {
   PENDING: 'incoming',
@@ -57,6 +21,18 @@ export const stageOf = (status: OrderStatusKey): OrderStage => STAGE_OF[status]
 
 export const isOpen = (status: OrderStatusKey): boolean =>
   STAGE_OF[status] !== 'closed'
+
+/**
+ * Etapa aberta na URL, statuses na consulta ao servidor: "fechados" junta
+ * três statuses terminais, e filtrar isso no cliente exigiria ter a lista
+ * inteira carregada — um pedido antigo ainda aberto simplesmente não cabe
+ * na primeira página por `createdAt` e some da aba sem nunca ter saído da
+ * fila de verdade.
+ */
+export const statusesForStage = (stage: OrderStage): OrderStatusKey[] =>
+  (Object.keys(STAGE_OF) as OrderStatusKey[]).filter(
+    (status) => STAGE_OF[status] === stage
+  )
 
 /**
  * Mirrors the API's transition graph, including the channel branch: delivery

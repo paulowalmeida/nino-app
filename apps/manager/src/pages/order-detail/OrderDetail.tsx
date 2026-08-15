@@ -9,15 +9,21 @@ import {
   OrderDetailAside,
 } from '@compositions/OrderDetailAside/OrderDetailAside'
 import { BackLink } from '@elements/BackLink/BackLink'
+import {
+  CHANNEL_LABEL,
+  STATUS_LABEL,
+} from '@constants/order.constants'
 import { useCurrentTenant } from '@hooks/session/useCurrentTenant'
 import { useOrder } from '@hooks/order/useOrder'
 import { useOrderPayment } from '@hooks/order/useOrderPayment'
 import { useOrderStatus } from '@hooks/order/useOrderStatus'
-import { OrderDetailSkeleton } from '@skeletons/OrderDetailSkeleton/OrderDetailSkeleton'
+import {
+  OrderDetailSkeleton,
+} from '@skeletons/pages/OrderDetailSkeleton/OrderDetailSkeleton'
 import { brl } from '@utils/money'
 import { riseDelay } from '@utils/rise-delay'
 import { statusBadgeVariant } from '@utils/order-badge'
-import { CHANNEL_LABEL, STATUS_LABEL, ticketNumber } from '@utils/order-flow'
+import { ticketNumber } from '@utils/order-flow'
 
 import styles from './OrderDetail.module.css'
 import motion from '@styles/motion.module.css'

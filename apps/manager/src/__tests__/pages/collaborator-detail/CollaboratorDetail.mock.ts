@@ -1,6 +1,20 @@
 import type { Membership } from '@custom_types/auth/membership'
+import type {
+  StaffActivityEntry,
+} from '@custom_types/team/staff-activity-entry'
 import type { StaffDetail } from '@custom_types/team/staff-detail'
+
 export const currentTenant = { tenantId: 'tenant-1' } as Membership
+
+export const counterTicketEntry: StaffActivityEntry = {
+  id: 'activity-1',
+  orderId: 'order-abcd1234',
+  status: 'COMPLETED',
+  createdAt: '2026-08-10T14:32:00.000Z',
+  channel: 'COUNTER',
+  totalAmount: 3000,
+  customerName: 'Maria Silva',
+}
 
 export const staffDetail: StaffDetail = {
   tenantId: 'tenant-1',

@@ -1,0 +1,9 @@
+@reference "@nino/ds/globals.css";
+
+.wide {
+  @apply sm:col-span-2;
+}
+
+.ghostField {
+  @apply h-10 w-full;
+}

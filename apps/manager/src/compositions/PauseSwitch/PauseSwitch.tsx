@@ -73,8 +73,7 @@ export const PauseSwitch = ({ tenantId, timezone }: PauseSwitchProps) => {
       {!isOpen ? (
         <Button
           variant="outline"
-          size="sm"
-          className={`${motion.press} ${styles.trigger}`}
+          className={`${motion.press} ${styles.trigger} w-3xs`}
           onClick={() => setOpen(true)}
         >
           Fechar a loja por um tempo

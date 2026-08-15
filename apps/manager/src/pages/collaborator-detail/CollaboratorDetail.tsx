@@ -1,50 +1,18 @@
-import { Flexbox } from '@nino/ds/components/Flexbox'
 import { useParams } from 'react-router'
 
-import { Badge } from '@nino/ds/components/Badge'
-import { EmptyState } from '@nino/ds/components/EmptyState'
-import { ScrollArea } from '@nino/ds/components/ScrollArea'
-import { Skeleton } from '@nino/ds/components/Skeleton'
+import { CollaboratorActivity } from '@compositions/CollaboratorActivity/CollaboratorActivity'
+import { CollaboratorFacts } from '@compositions/CollaboratorFacts/CollaboratorFacts'
+import { CollaboratorHeader } from '@compositions/CollaboratorHeader/CollaboratorHeader'
 import { Breadcrumb } from '@elements/Breadcrumb/Breadcrumb'
-import { PersonMark } from '@components/PersonMark/PersonMark'
-import { COLLABORATOR_DETAIL_COLUMNS } from '@constants/order.constants'
-import { TEAM_ROLE_LABEL } from '@constants/team.constants'
 import { useCurrentTenant } from '@hooks/session/useCurrentTenant'
 import { useStaffDetail } from '@hooks/team/useStaffDetail'
-import { lastSeenLabel } from '@utils/last-seen'
-import { brl } from '@utils/money'
-import { CHANNEL_LABEL, STATUS_LABEL, ticketNumber } from '@utils/order-flow'
-import { formatPhone } from '@utils/phone'
-import { riseDelay } from '@utils/rise-delay'
+import { EmptyState } from '@nino/ds/components/EmptyState'
+import { Skeleton } from '@nino/ds/components/Skeleton'
 
+import { Eyebrow } from '@ds/components/Eyebrow/Eyebrow'
+import { Flexbox } from '@ds/components/Flexbox/Flexbox'
 import styles from './CollaboratorDetail.module.css'
-import motion from '@styles/motion.module.css'
 
-const stamp = new Intl.DateTimeFormat('pt-BR', {
-  day: '2-digit',
-  month: '2-digit',
-  hour: '2-digit',
-  minute: '2-digit',
-})
-
-/* mês abreviado, mesma régua da ficha do cliente: "14 de jul. de 2026" cabe
-   numa linha da coluna de resumo sem quebrar */
-const day = new Intl.DateTimeFormat('pt-BR', {
-  day: '2-digit',
-  month: 'short',
-  year: 'numeric',
-})
-
-/** "Nunca entrou" fala de login; aqui a ausência é outra coisa — sem trabalho. */
-const lastActivityLabel = (iso: string | null): string =>
-  iso ? lastSeenLabel(iso) : 'Nenhuma ainda'
-
-/**
- * A ficha do colaborador é feita do rastro que ele já deixa no sistema — quem
- * abriu no balcão vira `operatorId`, quem move o status vira `changedById`.
- * Nada aqui é inventado: é o mesmo trabalho que a cozinha e o balcão já
- * registram, só que lido pelo ângulo da pessoa em vez do pedido.
- */
 export const CollaboratorDetail = () => {
   const { userId } = useParams()
   const tenant = useCurrentTenant()
@@ -56,131 +24,29 @@ export const CollaboratorDetail = () => {
 
   if (!member) {
     return (
-      <div className={styles.page}>
+      <Flexbox className={styles.page}>
         <Breadcrumb trail={[{ label: 'Equipe', to: '..' }, { label: '—' }]} />
         <EmptyState className={styles.empty}>
           Esta pessoa não está mais nesta loja.
         </EmptyState>
-      </div>
+      </Flexbox>
     )
   }
 
   return (
-    <div className={styles.page}>
+    <Flexbox className={styles.page}>
       <Breadcrumb
         trail={[{ label: 'Equipe', to: '..' }, { label: member.user.name }]}
       />
 
-      <p className={styles.eyebrow}>Equipe</p>
+      <Eyebrow>Equipe</Eyebrow>
 
-      <Flexbox as="header" gap={4} align="center" mt={1} className={motion.settle}>
-        <PersonMark name={member.user.name} className={styles.mark} />
+      <CollaboratorHeader member={member} />
 
-        <div className={styles.heroText}>
-          <h1 className={styles.name}>{member.user.name}</h1>
-
-          <div className={styles.contact}>
-            {member.user.phone && (
-              <a href={`tel:${member.user.phone}`} className={styles.email}>
-                {formatPhone(member.user.phone)}
-              </a>
-            )}
-          </div>
-        </div>
-
-        <Badge variant="info" className={styles.role}>
-          {TEAM_ROLE_LABEL[member.role] ?? member.role}
-        </Badge>
+      <Flexbox className={styles.body}>
+        <CollaboratorFacts member={member} />
+        <CollaboratorActivity activity={member.activity} />
       </Flexbox>
-
-      <div className={styles.body}>
-        <dl className={styles.facts}>
-          {[
-            ['Pedidos abertos no balcão', String(member.ordersHandled)],
-            ['Última atividade', lastActivityLabel(member.lastActivityAt)],
-            ['Na equipe desde', day.format(new Date(member.createdAt))],
-          ].map(([label, value], index) => (
-            <div
-              key={label}
-              className={`${motion.settle} ${styles.fact}`}
-              style={riseDelay(index * 50 + 60)}
-            >
-              <dt className={styles.factLabel}>{label}</dt>
-              <dd className={styles.factValue}>{value}</dd>
-            </div>
-          ))}
-        </dl>
-
-        <section className={styles.activity} aria-label="Atividade recente">
-          <div className={styles.activityHead}>
-            <h2 className={styles.activityTitle}>Atividade recente</h2>
-            <p className={styles.activityHint}>Últimas 30 mudanças</p>
-          </div>
-
-          {member.activity.length === 0 ? (
-            <EmptyState className={styles.empty}>
-              Nenhum pedido passou pela mão desta pessoa ainda.
-            </EmptyState>
-          ) : (
-            <>
-              <div className={`${styles.grid} ${styles.columns}`} aria-hidden>
-                {COLLABORATOR_DETAIL_COLUMNS.map((label) => (
-                  <span key={label} className={styles.columnLabel}>
-                    {label}
-                  </span>
-                ))}
-              </div>
-
-              <ScrollArea className={styles.listScroll}>
-                <ul className={styles.entries}>
-                  {member.activity.map((entry, index) => (
-                    <li
-                      key={entry.id}
-                      className={`${motion.deal} ${styles.entry}`}
-                      style={riseDelay(index * 30 + 80)}
-                    >
-                      <div className={`${styles.grid} ${styles.entryRow}`}>
-                        <span className={styles.entryTicket}>
-                          #{ticketNumber(entry.orderId)}
-                        </span>
-
-                        <span className={styles.entryCustomer}>
-                          {entry.customerName ?? 'Visitante'}
-                        </span>
-
-                        <div className={styles.entryMeta}>
-                          <span className={styles.entryChannel}>
-                            {CHANNEL_LABEL[entry.channel]}
-                          </span>
-                          <span className={styles.entryDot} aria-hidden>
-                            ·
-                          </span>
-                          <span className={styles.entryStatus}>
-                            {STATUS_LABEL[entry.status]}
-                          </span>
-                          <span className={styles.entryDot} aria-hidden>
-                            ·
-                          </span>
-                          <time
-                            className={styles.entryAt}
-                            dateTime={entry.createdAt}
-                          >
-                            {stamp.format(new Date(entry.createdAt))}
-                          </time>
-                        </div>
-
-                        <span className={styles.entryTotal}>
-                          {brl(entry.totalAmount)}
-                        </span>
-                      </div>
-                    </li>
-                  ))}
-                </ul>
-              </ScrollArea>
-            </>
-          )}
-        </section>
-      </div>
-    </div>
+    </Flexbox>
   )
 }

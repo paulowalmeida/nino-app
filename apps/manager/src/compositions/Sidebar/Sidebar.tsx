@@ -51,7 +51,7 @@ export const Sidebar = ({
     return activeGroup?.section ?? null
   })
 
-  let order = 0
+  let staggerIndex = 0
 
   const asideClass = [
     styles.sidebar,
@@ -62,8 +62,13 @@ export const Sidebar = ({
     .join(' ')
 
   return (
-    <Flexbox as="aside" direction="column" className={asideClass}>
-      <Flexbox direction="row" className={styles.logoWrap}>
+    <Flexbox
+      as="aside"
+      direction="column"
+      className={asideClass}
+      data-collapsed={isCollapsed || undefined}
+    >
+      <Flexbox direction="row" className={styles.topBar}>
         <NinoLogo
           size="sm"
           tone="light"
@@ -81,16 +86,16 @@ export const Sidebar = ({
         </Button>
       </Flexbox>
 
-      <div className={styles.switcherWrap}>
+      <Flexbox className={styles.switcherWrap}>
         <StoreSwitcher currentTenantId={tenantId} collapsed={isCollapsed} />
-      </div>
+      </Flexbox>
 
       <ScrollArea fadeEdges className={styles.nav}>
-        <Flexbox as="nav" direction="column" className={styles.navInner}>
+        <Flexbox as="nav" direction="column" className={styles.navList}>
           {SIDEMENU_GROUPS.map(({ title, items }) => (
-            <Flexbox key={title} gap={0.5} className={styles.group}>
+            <Flexbox key={title} gap={0.5} className={styles.navSection}>
               {!isCollapsed && (
-                <Text as="p" className={styles.groupTitle}>
+                <Text as="p" className={styles.navSectionTitle}>
                   {title}
                 </Text>
               )}
@@ -110,7 +115,7 @@ export const Sidebar = ({
                     onOpenChange={(open) =>
                       setOpened(open ? item.section : null)
                     }
-                    delay={riseDelay(order++ * 55 + 120)}
+                    delay={riseDelay(staggerIndex++ * 55 + 120)}
                     waiting={waiting}
                     onNavigate={onClose}
                   />
@@ -120,14 +125,14 @@ export const Sidebar = ({
         </Flexbox>
       </ScrollArea>
 
-      <div className={styles.footer}>
+      <Flexbox className={styles.footer}>
         <UserMenu
           name={user?.name ?? ''}
           tenantId={tenantId}
           onNavigate={onClose}
           collapsed={isCollapsed}
         />
-      </div>
+      </Flexbox>
     </Flexbox>
   )
 }

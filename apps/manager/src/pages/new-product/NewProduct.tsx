@@ -18,7 +18,9 @@ import { useCreateMenuItem } from '@hooks/product/useCreateMenuItem'
 import { menuQueryKey } from '@hooks/product/useMenu'
 import { useCurrentTenant } from '@hooks/session/useCurrentTenant'
 import { ProductService } from '@services/product.service'
-import { NewProductSkeleton } from '@skeletons/NewProductSkeleton/NewProductSkeleton'
+import {
+  NewProductSkeleton,
+} from '@skeletons/pages/NewProductSkeleton/NewProductSkeleton'
 import { riseDelay } from '@utils/rise-delay'
 
 import styles from './NewProduct.module.css'

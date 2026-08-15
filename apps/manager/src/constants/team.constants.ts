@@ -30,3 +30,12 @@ export const TEAM_ROLE_OPTIONS = [
 
 /** Three people: a whole small team, which is the common case. */
 export const TEAM_ROSTER_GHOST_ROWS = ['first', 'second', 'third']
+
+export const COLLABORATOR_DETAIL_COLUMNS = [
+  'Pedido',
+  'Cliente',
+  'Canal',
+  'Situação',
+  'Quando',
+  'Valor',
+]

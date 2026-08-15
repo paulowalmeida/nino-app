@@ -57,7 +57,9 @@ export const TopProducts = ({ tenantId }: TopProductsProps) => {
         )}
 
         {!isPending && items.length === 0 && (
-          <EmptyState>Nenhuma venda concluída na semana.</EmptyState>
+          <EmptyState className={styles.empty}>
+            Nenhuma venda concluída na semana.
+          </EmptyState>
         )}
 
         {!isPending && items.length > 0 && (

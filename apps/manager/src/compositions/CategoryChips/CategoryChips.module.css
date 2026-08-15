@@ -5,8 +5,7 @@
    está escondida logo abaixo — sem o wrap, o chip que passasse da faixa
    visível ficaria inalcançável para quem usa mouse. */
 .track {
-  @apply flex snap-x gap-2 overflow-x-auto pb-1;
-  @apply lg:flex-wrap lg:overflow-x-visible;
+  @apply snap-x overflow-x-auto pb-1 lg:flex-wrap lg:overflow-x-visible;
   scrollbar-width: none;
 }
 

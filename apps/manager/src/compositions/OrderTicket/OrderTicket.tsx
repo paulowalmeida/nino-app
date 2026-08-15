@@ -4,17 +4,19 @@ import { Link } from 'react-router'
 import { Badge } from '@nino/ds/components/Badge'
 import { Button } from '@nino/ds/components/Button'
 import { Card } from '@nino/ds/components/Card'
+import {
+  CHANNEL_LABEL,
+  PAYMENT_METHOD_LABEL,
+  PAYMENT_STATUS_LABEL,
+  STATUS_LABEL,
+} from '@constants/order.constants'
 import { useElapsed } from '@hooks/order/useElapsed'
 import { brl } from '@utils/money'
 import { statusBadgeVariant } from '@utils/order-badge'
 import {
-  CHANNEL_LABEL,
   customerNameOf,
   nextStep,
-  PAYMENT_METHOD_LABEL,
-  PAYMENT_STATUS_LABEL,
   stageOf,
-  STATUS_LABEL,
   ticketNumber,
 } from '@utils/order-flow'
 import type { Order } from '@custom_types/order/order'
