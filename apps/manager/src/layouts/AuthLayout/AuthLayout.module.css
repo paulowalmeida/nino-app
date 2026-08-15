@@ -144,5 +144,5 @@
 /* mascot fills the "n" slot — bigger than the circle since the viewBox
    has its own inner margin */
 .mobileMascot {
-  @apply size-14 drop-shadow-lg;
+  @apply size-28 drop-shadow-lg;
 }
