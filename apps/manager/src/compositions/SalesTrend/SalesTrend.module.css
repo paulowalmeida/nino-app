@@ -4,6 +4,10 @@
   @apply lg:flex lg:h-full lg:flex-col;
 }
 
+.heading {
+  @apply mb-3;
+}
+
 .card {
   @apply flex min-w-0 flex-col overflow-hidden lg:flex-1;
 }
@@ -22,8 +26,6 @@
   @apply mt-1.5 text-xs leading-snug text-fg-faint lg:text-sm;
 }
 
-/* The delta is the judgment call the number alone lacks — green and red here
-   aren't decoration, they're the answer to "is it good or bad?". */
 .deltaUp,
 .deltaDown {
   @apply shrink-0 text-sm font-bold;
@@ -44,33 +46,4 @@
 
 .skeletonTotal {
   @apply h-8 w-40 lg:h-9 lg:w-48;
-}
-
-/*
- * The height matches the real chart, which shrinks on mobile (180px vs
- * 240px on desktop). The old block had a fixed 240px, so the page jumped
- * 60px when the data arrived on mobile.
- */
-.skeletonChart {
-  @apply flex h-[180px] w-full gap-3 lg:h-60;
-}
-
-.skeletonAxis {
-  @apply flex shrink-0 flex-col justify-between py-1;
-}
-
-.skeletonTick {
-  @apply h-2.5 w-8;
-}
-
-.skeletonPlot {
-  @apply flex min-w-0 flex-1 flex-col justify-between;
-}
-
-.skeletonLine {
-  @apply w-full flex-1 rounded-2;
-}
-
-.skeletonDay {
-  @apply h-2.5 w-6;
 }

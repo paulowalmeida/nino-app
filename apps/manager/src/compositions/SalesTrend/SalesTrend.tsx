@@ -1,15 +1,17 @@
-import { Flexbox } from '@nino/ds/components/Flexbox'
+import { SalesChart } from '@compositions/SalesChart/SalesChart'
+import { useSalesSeries } from '@hooks/order/useSalesSeries'
 import { Card } from '@nino/ds/components/Card'
 import { EmptyState } from '@nino/ds/components/EmptyState'
-import { Skeleton } from '@nino/ds/components/Skeleton'
 import { Eyebrow } from '@nino/ds/components/Eyebrow'
-import { useSalesSeries } from '@hooks/order/useSalesSeries'
+import { Flexbox } from '@nino/ds/components/Flexbox'
+import { Skeleton } from '@nino/ds/components/Skeleton'
+import { Tooltip } from '@nino/ds/components/Tooltip'
 import { brl } from '@utils/money'
-import { SalesChart } from '@compositions/SalesChart/SalesChart'
-import { SALES_TREND_SKELETON_DAYS } from '@constants/order.constants'
 
-import styles from './SalesTrend.module.css'
+import { Text } from '@ds/components/Text/Text'
+import { SalesTrendSkeleton } from '@skeletons/compositions/SalesTrendSkeleton/SalesTrendSkeleton'
 import motion from '@styles/motion.module.css'
+import styles from './SalesTrend.module.css'
 
 export type SalesTrendProps = {
   tenantId: string | null
@@ -21,11 +23,6 @@ const PERCENT = new Intl.NumberFormat('pt-BR', {
   signDisplay: 'exceptZero',
 })
 
-/**
- * Compares the last closed day against the previous one. Without this
- * reference the number alone doesn't answer the question the owner asks —
- * is it good or bad?
- */
 const deltaOf = (values: number[]): number | null => {
   if (values.length < 2) return null
 
@@ -46,9 +43,7 @@ export const SalesTrend = ({ tenantId }: SalesTrendProps) => {
 
   return (
     <section aria-label="Os últimos 7 dias" className={styles.section}>
-      <div className={motion.unroll}>
-        <Eyebrow className='mb-3'>Os últimos 7 dias</Eyebrow>
-      </div>
+      <Eyebrow className={styles.heading}>Os últimos 7 dias</Eyebrow>
 
       <Card padding="lg" className={`${motion.settle} ${styles.card}`}>
         <Flexbox
@@ -59,45 +54,26 @@ export const SalesTrend = ({ tenantId }: SalesTrendProps) => {
           justify="between"
           mb={4}
         >
-          <div>
+          <Flexbox>
             {isPending ? (
               <Skeleton className={styles.skeletonTotal} />
             ) : (
-              <p className={styles.total}>{brl(total)}</p>
+              <Text as="p">{brl(total)}</Text>
             )}
             <p className={styles.label}>faturamento na semana</p>
-          </div>
+          </Flexbox>
 
           {delta !== null && (
-            <p
-              className={delta < 0 ? styles.deltaDown : styles.deltaUp}
-              title="Variação do último dia sobre o anterior"
-            >
-              {PERCENT.format(delta)}
-              <span className={styles.deltaNote}> vs. ontem</span>
-            </p>
+            <Tooltip content="Variação do último dia sobre o anterior">
+              <Text as='p' className={delta < 0 ? styles.deltaDown : styles.deltaUp}>
+                {PERCENT.format(delta)}
+                <Text as='span' className={styles.deltaNote}> vs. ontem</Text>
+              </Text>
+            </Tooltip>
           )}
         </Flexbox>
 
-        {/* the chart shape to come: axis on the left, seven days at the base */}
-        {isPending && (
-          <div className={styles.skeletonChart}>
-            <div className={styles.skeletonAxis}>
-              <Skeleton className={styles.skeletonTick} />
-              <Skeleton className={styles.skeletonTick} />
-              <Skeleton className={styles.skeletonTick} />
-              <Skeleton className={styles.skeletonTick} />
-            </div>
-            <div className={styles.skeletonPlot}>
-              <Skeleton className={styles.skeletonLine} />
-              <Flexbox justify="between" shrink={false} mt={2}>
-                {SALES_TREND_SKELETON_DAYS.map((day) => (
-                  <Skeleton key={day} className={styles.skeletonDay} />
-                ))}
-              </Flexbox>
-            </div>
-          </div>
-        )}
+        {isPending && <SalesTrendSkeleton />}
 
         {hasNoSales && (
           <EmptyState className={styles.empty}>
