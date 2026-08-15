@@ -1,6 +1,12 @@
 import type { CustomerHistory } from '@custom_types/customer/customer-history'
-import type { CustomerHistoryPage } from '@custom_types/customer/customer-history-page'
+import type {
+  CustomerHistoryPage,
+} from '@custom_types/customer/customer-history-page'
 import type { CustomerPage } from '@custom_types/customer/customer-page'
+import type { TopCustomer } from '@custom_types/customer/top-customer'
+import type {
+  TopCustomerMetric,
+} from '@custom_types/customer/top-customer-metric'
 import { api } from '@services/http.service'
 
 export const CUSTOMER_PAGE_SIZE = 30
@@ -35,4 +41,14 @@ export const CustomerService = {
 
   getById: (tenantId: string, customerId: string): Promise<CustomerHistory> =>
     api.get<CustomerHistory>(`tenants/${tenantId}/customers/${customerId}`),
+
+  getTopCustomers: (
+    tenantId: string,
+    metric: TopCustomerMetric,
+    limit: number
+  ): Promise<TopCustomer[]> =>
+    api.getAll<TopCustomer[]>(`tenants/${tenantId}/customers/top`, {
+      metric,
+      limit,
+    }),
 }

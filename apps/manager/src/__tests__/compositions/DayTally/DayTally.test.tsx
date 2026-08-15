@@ -51,8 +51,12 @@ describe(DayTally.name, () => {
     renderTally()
 
     // Assert
-    expect(screen.getByText('R$ 30,00')).toBeInTheDocument()
-    expect(screen.getByText('R$ 15,00')).toBeInTheDocument()
+    expect(
+      screen.getByLabelText('Ver o relatório de faturamento de hoje')
+    ).toHaveTextContent('R$ 30,00')
+    expect(
+      screen.getByLabelText('Ver o ticket médio de hoje no relatório')
+    ).toHaveTextContent('R$ 15,00')
   })
 
   it('excludes cancelled orders from the tally', () => {
@@ -73,6 +77,50 @@ describe(DayTally.name, () => {
     expect(
       screen.getByLabelText('Ver o relatório de faturamento de hoje')
     ).toHaveTextContent('R$ 10,00')
+  })
+
+  it('groups revenue by payment method into the bar list', () => {
+    // Arrange
+    mockOrders([
+      buildOrder({
+        id: 'order-0001',
+        totalAmount: '10.00',
+        paymentMethod: 'PIX_ONLINE',
+      }),
+      buildOrder({
+        id: 'order-0002',
+        totalAmount: '20.00',
+        paymentMethod: 'CASH',
+      }),
+      buildOrder({
+        id: 'order-0003',
+        totalAmount: '5.00',
+        paymentMethod: 'CASH',
+      }),
+    ])
+
+    // Act
+    renderTally()
+
+    // Assert
+    const paymentSection = screen
+      .getByText('Por forma de pagamento')
+      .closest('div')
+    expect(paymentSection).toHaveTextContent('Dinheiro')
+    expect(paymentSection).toHaveTextContent('R$ 25,00')
+    expect(paymentSection).toHaveTextContent('Pix online')
+    expect(paymentSection).toHaveTextContent('R$ 10,00')
+  })
+
+  it('hides the payment breakdown with no orders today', () => {
+    // Arrange
+    mockOrders([])
+
+    // Act
+    renderTally()
+
+    // Assert
+    expect(screen.queryByText('Por forma de pagamento')).toBeNull()
   })
 
   it('shows skeletons instead of the recent list while pending', () => {

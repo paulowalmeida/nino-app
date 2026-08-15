@@ -42,6 +42,9 @@ vi.mock('@compositions/SalesTrend/SalesTrend', () => ({
 vi.mock('@compositions/TopProducts/TopProducts', () => ({
   TopProducts: () => <p>produtos mais vendidos</p>,
 }))
+vi.mock('@compositions/TopCustomers/TopCustomers', () => ({
+  TopCustomers: () => <p>quem mais compra</p>,
+}))
 
 const mockUser = (user: Pick<AuthUser, 'name' | 'timezone'> | null) =>
   vi
@@ -95,5 +98,6 @@ describe(Overview.name, () => {
     expect(screen.getByText('fila de pedidos')).toBeInTheDocument()
     expect(screen.getByText('tendência de vendas')).toBeInTheDocument()
     expect(screen.getByText('produtos mais vendidos')).toBeInTheDocument()
+    expect(screen.getByText('quem mais compra')).toBeInTheDocument()
   })
 })

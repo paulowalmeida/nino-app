@@ -20,3 +20,7 @@
 .charts > * {
   @apply min-w-0;
 }
+
+.customers {
+  @apply mb-8;
+}

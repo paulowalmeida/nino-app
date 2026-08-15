@@ -1,0 +1,29 @@
+@reference "@nino/ds/globals.css";
+
+.grid {
+  @apply grid grid-cols-1 items-stretch gap-4 lg:grid-cols-2 lg:gap-5;
+}
+
+.section {
+  @apply lg:flex lg:h-full lg:flex-col lg:min-w-0;
+}
+
+.heading {
+  @apply mb-3;
+}
+
+.card {
+  @apply flex min-w-0 flex-col lg:flex-1;
+}
+
+.empty {
+  @apply flex-1;
+}
+
+.skeletonBars {
+  @apply flex flex-1 flex-col gap-2;
+}
+
+.skeletonBar {
+  @apply h-8 rounded-1;
+}

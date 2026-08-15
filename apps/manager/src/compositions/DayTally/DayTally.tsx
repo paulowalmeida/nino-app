@@ -1,7 +1,9 @@
 import { Flexbox } from '@nino/ds/components/Flexbox'
 
 import { TallyCard } from '@components/TallyCard/TallyCard'
+import { PAYMENT_METHOD_LABEL } from '@constants/order.constants'
 import { useOrders } from '@hooks/order/useOrders'
+import { BarList } from '@nino/ds/components/BarList'
 import { CountUp } from '@nino/ds/components/CountUp'
 import { Eyebrow } from '@nino/ds/components/Eyebrow'
 import { tallyToday } from '@utils/day-tally'
@@ -22,8 +24,20 @@ export const DayTally = ({ tenantId, timezone }: DayTallyProps) => {
   const { orders, isPending } = useOrders(tenantId)
 
   const zone = timezone ?? Intl.DateTimeFormat().resolvedOptions().timeZone
-  const { orders: count, revenue, average } = tallyToday(orders, zone)
+  const {
+    orders: count,
+    revenue,
+    average,
+    byPaymentMethod,
+  } = tallyToday(orders, zone)
   const recent = orders.slice(0, RECENT)
+
+  const paymentBars = byPaymentMethod.map(({ method, amount }) => ({
+    id: method,
+    label: PAYMENT_METHOD_LABEL[method],
+    value: amount,
+    display: brl(amount),
+  }))
 
   return (
     <section aria-label="O dia até agora" className="mb-8">
@@ -61,6 +75,13 @@ export const DayTally = ({ tenantId, timezone }: DayTallyProps) => {
       </Flexbox>
 
       {isPending && <DayTallySkeleton />}
+
+      {!isPending && paymentBars.length > 0 && (
+        <div className={styles.payments}>
+          <Eyebrow className="mb-3">Por forma de pagamento</Eyebrow>
+          <BarList items={paymentBars} className="text-brand" />
+        </div>
+      )}
 
       {!isPending && recent.length > 0 && <TallyHistory recent={recent} />}
     </section>

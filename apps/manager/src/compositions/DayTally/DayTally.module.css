@@ -7,3 +7,7 @@
 .tally {
   @apply grid grid-cols-1 gap-2 lg:grid-cols-3 lg:gap-4 mb-6;
 }
+
+.payments {
+  @apply mb-6;
+}

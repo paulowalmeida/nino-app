@@ -88,6 +88,8 @@ export const queryKeys = {
       [...queryKeys.customers.all(tenantId), 'list'] as const,
     detail: (tenantId: string, customerId: string) =>
       [...queryKeys.customers.all(tenantId), 'detail', customerId] as const,
+    top: (tenantId: string, metric: string) =>
+      [...queryKeys.customers.all(tenantId), 'top', metric] as const,
   },
   team: {
     all: (tenantId: string) => ['team', tenantId] as const,

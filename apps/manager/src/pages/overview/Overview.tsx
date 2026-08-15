@@ -3,6 +3,7 @@ import { OverviewHeader } from '@compositions/OverviewHeader/OverviewHeader'
 import { PauseSwitch } from '@compositions/PauseSwitch/PauseSwitch'
 import { QueueBoard } from '@compositions/QueueBoard/QueueBoard'
 import { SalesTrend } from '@compositions/SalesTrend/SalesTrend'
+import { TopCustomers } from '@compositions/TopCustomers/TopCustomers'
 import { TopProducts } from '@compositions/TopProducts/TopProducts'
 import { useCurrentTenant } from '@hooks/session/useCurrentTenant'
 import { Flexbox } from '@nino/ds/components/Flexbox'
@@ -35,6 +36,10 @@ export const Overview = () => {
       <Flexbox className={`${styles.charts}`} >
         <SalesTrend tenantId={tenantId} />
         <TopProducts tenantId={tenantId} />
+      </Flexbox>
+
+      <Flexbox className={styles.customers}>
+        <TopCustomers tenantId={tenantId} />
       </Flexbox>
 
       <Flexbox className={styles.tally}>
