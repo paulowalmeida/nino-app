@@ -58,7 +58,7 @@ export const SalesTrend = ({ tenantId }: SalesTrendProps) => {
             {isPending ? (
               <Skeleton className={styles.skeletonTotal} />
             ) : (
-              <Text as="p">{brl(total)}</Text>
+              <Text as="p" className={styles.total}>{brl(total)}</Text>
             )}
             <p className={styles.label}>faturamento na semana</p>
           </Flexbox>

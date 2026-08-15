@@ -20,5 +20,5 @@
 }
 
 .label {
-  @apply text-xs leading-snug text-fg-faint lg:text-sm;
+  @apply leading-snug text-fg-faint;
 }

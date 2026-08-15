@@ -18,12 +18,12 @@
 
 .total {
   @apply font-display text-3xl font-extrabold leading-none tracking-tight;
-  @apply text-fg-strong lg:text-4xl;
+  @apply text-fg-strong lg:text-2xl;
   font-variant-numeric: tabular-nums;
 }
 
 .label {
-  @apply mt-1.5 text-xs leading-snug text-fg-faint lg:text-sm;
+  @apply mt-1.5 leading-snug text-fg-faint;
 }
 
 .deltaUp,
