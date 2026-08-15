@@ -1,0 +1,39 @@
+@reference "@nino/ds/globals.css";
+
+.skeletonCount,
+.skeletonMoney,
+.skeletonAverage {
+  @apply h-6 lg:h-[1.875rem];
+}
+
+.skeletonCount {
+  @apply w-10;
+}
+
+.skeletonMoney {
+  @apply w-24;
+}
+
+.skeletonAverage {
+  @apply w-20;
+}
+
+.skeletonRow {
+  @apply flex items-center gap-3 px-2 py-2.5;
+}
+
+.skeletonTicket {
+  @apply h-3.5 w-12;
+}
+
+.skeletonState {
+  @apply h-3.5 min-w-0 flex-1;
+}
+
+.skeletonAt {
+  @apply h-3 w-10;
+}
+
+.skeletonTotal {
+  @apply h-3.5 w-16;
+}
