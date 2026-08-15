@@ -2,7 +2,7 @@ import { SALES_TREND_SKELETON_DAYS } from "@constants/order.constants"
 import { Flexbox } from "@ds/components/Flexbox/Flexbox"
 import { Skeleton } from "@ds/components/Skeleton/Skeleton"
 
-import styles from './SalesTrend.module.css'
+import styles from './SalesTrendSkeleton.module.css'
 
 export const SalesTrendSkeleton = () => {
   return (
