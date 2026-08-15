@@ -5,6 +5,7 @@ import { QueueBoard } from '@compositions/QueueBoard/QueueBoard'
 import { SalesTrend } from '@compositions/SalesTrend/SalesTrend'
 import { TopProducts } from '@compositions/TopProducts/TopProducts'
 import { useCurrentTenant } from '@hooks/session/useCurrentTenant'
+import { Flexbox } from '@nino/ds/components/Flexbox'
 import { useSessionStore } from '@states/useSessionStore'
 
 import styles from './Overview.module.css'
@@ -18,27 +19,27 @@ export const Overview = () => {
   const tenantId = tenant?.tenantId ?? null
 
   return (
-    <div className={styles.page}>
+    <Flexbox className={styles.page}>
       <OverviewHeader
         firstName={firstName}
         timezone={timezone}
         tenant={tenant}
       />
 
-      <div className={styles.pause}>
+      <Flexbox className={styles.pause}>
         <PauseSwitch tenantId={tenantId} timezone={timezone} />
-      </div>
+      </Flexbox>
 
       <QueueBoard tenantId={tenantId} />
 
-      <div className={`${styles.charts}`} >
+      <Flexbox className={`${styles.charts}`} >
         <SalesTrend tenantId={tenantId} />
         <TopProducts tenantId={tenantId} />
-      </div>
+      </Flexbox>
 
-      <div className={styles.tally}>
+      <Flexbox className={styles.tally}>
         <DayTally tenantId={tenantId} timezone={timezone} />
-      </div>
-    </div>
+      </Flexbox>
+    </Flexbox>
   )
 }

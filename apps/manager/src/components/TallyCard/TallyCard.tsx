@@ -17,7 +17,6 @@ type TallyCardProps = {
   isPending: boolean
   value: ReactNode
   skeletonClassName: string
-  /** Stagger delay for the entrance animation. */
   delay?: number
 }
 
@@ -45,7 +44,9 @@ export const TallyCard = ({
       <Text as="span" className={styles.value}>
         {isPending ? <Skeleton className={skeletonClassName} /> : value}
       </Text>
-      <span className={styles.label}>{label}</span>
+      <Text as="span" className={styles.metricLabel}>
+        {label}
+      </Text>
     </Link>
   </Card>
 )

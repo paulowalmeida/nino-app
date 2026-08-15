@@ -1,26 +1,10 @@
 @reference "@nino/ds/globals.css";
 
 .board {
-  @apply grid gap-3 text-center;
-  grid-template-columns: repeat(2, minmax(0, 10rem));
-}
-
-@media (min-width: 640px) {
-  .board {
-    grid-template-columns: repeat(3, minmax(0, 10rem));
-  }
-}
-
-@media (min-width: 768px) {
-  .board {
-    grid-template-columns: repeat(5, minmax(0, 10rem));
-  }
-}
-
-@media (min-width: 1024px) {
-  .board {
-    @apply gap-4;
-  }
+  @apply grid gap-3 text-center lg:gap-4;
+  @apply grid-cols-[repeat(2,minmax(0,10rem))];
+  @apply sm:grid-cols-[repeat(3,minmax(0,10rem))];
+  @apply md:grid-cols-[repeat(5,minmax(0,10rem))];
 }
 
 /* superfície e sombra vêm do Card do DS; aqui fica o que ele não sabe.
@@ -42,7 +26,7 @@
   @apply border-brand-bold bg-brand-ghost;
 }
 
-.value {
+.tileValue {
   @apply font-display text-3xl font-extrabold leading-none tracking-tight;
   @apply text-fg-strong lg:text-4xl;
   font-variant-numeric: tabular-nums;
@@ -57,11 +41,11 @@
   @apply h-[1.875rem] w-10 lg:h-9;
 }
 
-.urgent .value {
+.urgent .tileValue {
   @apply text-brand-strong;
 }
 
-.label {
+.tileLabel {
   @apply text-xs leading-snug text-fg-faint lg:text-sm;
 }
 

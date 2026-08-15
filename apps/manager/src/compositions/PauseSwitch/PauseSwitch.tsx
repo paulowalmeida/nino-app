@@ -1,12 +1,15 @@
-import { Flexbox } from '@nino/ds/components/Flexbox'
 import { useState } from 'react'
 
 import { Button } from '@nino/ds/components/Button'
-import { Input } from '@nino/ds/components/Input'
+import { Flexbox } from '@nino/ds/components/Flexbox'
+import { Icon } from '@nino/ds/components/Icon'
 import { Skeleton } from '@nino/ds/components/Skeleton'
+import { Text } from '@nino/ds/components/Text'
+import {
+  PauseDurationModal,
+} from '@compositions/PauseDurationModal/PauseDurationModal'
 import { usePause } from '@hooks/store/usePause'
 import { usePauseActions } from '@hooks/store/usePauseActions'
-import { PAUSE_DURATION_OPTIONS } from '@constants/store.constants'
 
 import styles from './PauseSwitch.module.css'
 import motion from '@styles/motion.module.css'
@@ -16,17 +19,13 @@ export type PauseSwitchProps = {
   timezone: string | null
 }
 
-/**
- * The dining room's panic button: heavy rain, kitchen backed up, out of
- * dough. Closes before the scheduled time without touching the store's
- * fixed hours.
- */
 export const PauseSwitch = ({ tenantId, timezone }: PauseSwitchProps) => {
   const { data: pause, isPending } = usePause(tenantId)
   const { pause: doPause, resume } = usePauseActions(tenantId)
 
-  const [isOpen, setOpen] = useState(false)
+  const [openedAt, setOpenedAt] = useState<number | null>(null)
   const [reason, setReason] = useState('')
+  const isOpen = openedAt !== null
 
   if (isPending) {
     return <Skeleton className={styles.skeleton} />
@@ -46,16 +45,23 @@ export const PauseSwitch = ({ tenantId, timezone }: PauseSwitchProps) => {
 
   if (pause.isPaused) {
     return (
-      <section className={`${motion.settle} ${styles.paused}`}>
-        <div className={styles.text}>
-          <p className={styles.title}>
+      <Flexbox
+        as="section"
+        wrap
+        align="center"
+        justify="between"
+        gap={3}
+        className={`${motion.settle} ${styles.paused}`}
+      >
+        <Flexbox className={styles.pausedSummary}>
+          <Text as="p" className={styles.title}>
             {until ? `Fechada até ${until}` : 'Fechada até você reabrir'}
-          </p>
-          <p className={styles.hint}>
+          </Text>
+          <Text as="p" className={styles.hint}>
             {pause.pauseReason ||
               'O cliente vê a loja fechada e não consegue pedir.'}
-          </p>
-        </div>
+          </Text>
+        </Flexbox>
         <Button
           size="sm"
           loading={resume.isPending}
@@ -64,56 +70,43 @@ export const PauseSwitch = ({ tenantId, timezone }: PauseSwitchProps) => {
         >
           Reabrir agora
         </Button>
-      </section>
+      </Flexbox>
     )
+  }
+
+  const closeModal = () => {
+    setOpenedAt(null)
+    setReason('')
+  }
+
+  const handleSelectDuration = (minutes: number | undefined) => {
+    doPause.mutate({ minutes, reason: reason || undefined })
+    closeModal()
   }
 
   return (
     <Flexbox as="section">
-      {!isOpen ? (
-        <Button
-          variant="outline"
-          className={`${motion.press} ${styles.trigger} w-3xs`}
-          onClick={() => setOpen(true)}
-        >
-          Fechar a loja por um tempo
-        </Button>
-      ) : (
-        <div className={`${motion.unroll} ${styles.form}`}>
-          <p className={styles.formTitle}>Fechar por quanto tempo?</p>
+      <Button
+        variant="warning"
+        className={`${motion.press} ${styles.trigger} w-3xs`}
+        onClick={() => setOpenedAt(Date.now())}
+      >
+        <Icon name="pause" size="sm" />
+        Fechar a loja por um tempo
+      </Button>
 
-          <Input
-            placeholder="Motivo (o cliente vê)"
-            value={reason}
-            className={styles.reason}
-            onChange={(event) => setReason(event.target.value)}
-          />
-
-          <Flexbox gap={2} wrap>
-            {PAUSE_DURATION_OPTIONS.map(({ minutes, label }) => (
-              <Button
-                key={label}
-                size="sm"
-                variant="outline"
-                loading={
-                  doPause.isPending && doPause.variables?.minutes === minutes
-                }
-                className={motion.press}
-                onClick={() => {
-                  doPause.mutate({ minutes, reason: reason || undefined })
-                  setOpen(false)
-                  setReason('')
-                }}
-              >
-                {label}
-              </Button>
-            ))}
-            <Button size="sm" variant="ghost" onClick={() => setOpen(false)}>
-              Voltar
-            </Button>
-          </Flexbox>
-        </div>
-      )}
+      <PauseDurationModal
+        open={isOpen}
+        onOpenChange={(open) => (open ? setOpenedAt(Date.now()) : closeModal())}
+        openedAt={openedAt}
+        timezone={timezone}
+        reason={reason}
+        onReasonChange={setReason}
+        onSelectDuration={handleSelectDuration}
+        onCancel={closeModal}
+        isPending={doPause.isPending}
+        pendingMinutes={doPause.variables?.minutes}
+      />
     </Flexbox>
   )
 }

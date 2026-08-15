@@ -9,6 +9,11 @@ vi.mock('@compositions/StoreSign/StoreSign', () => ({
   StoreSign: () => <p>selo da loja</p>,
 }))
 
+vi.mock('@utils/greeting', () => ({
+  greetingFor: () => 'Bom dia',
+  dateFor: () => 'quinta-feira, 1 de janeiro',
+}))
+
 describe(OverviewHeader.name, () => {
   it('shows the first name and a link to the tenant store', () => {
     // Arrange / Act
@@ -22,7 +27,7 @@ describe(OverviewHeader.name, () => {
 
     // Assert
     expect(
-      screen.getByRole('heading', { name: 'Marina' })
+      screen.getByRole('heading', { name: 'Bom dia, Marina' })
     ).toBeInTheDocument()
     expect(
       screen.getByRole('link', { name: 'Padaria Boa' })
@@ -36,7 +41,9 @@ describe(OverviewHeader.name, () => {
     )
 
     // Assert
-    expect(screen.getByRole('heading', { name: '' })).toBeInTheDocument()
+    expect(
+      screen.getByRole('heading', { name: 'Bom dia,' })
+    ).toBeInTheDocument()
     expect(
       screen.queryByRole('link', { name: 'Padaria Boa' })
     ).not.toBeInTheDocument()

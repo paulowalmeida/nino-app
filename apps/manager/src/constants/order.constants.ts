@@ -5,7 +5,6 @@ import type { PaymentMethod } from '@custom_types/order/payment-method'
 import type { PaymentStatus } from '@custom_types/order/payment-status'
 import type { Recipient } from '@custom_types/order/recipient'
 import type { PeriodChoice } from '@custom_types/ui/period-choice'
-import { CountUp } from '@ds/components/CountUp/CountUp'
 import type { Stage } from '@pages/orders/Orders'
 
 /**

@@ -1,21 +1,54 @@
 @reference "@nino/ds/globals.css";
 
-/* the sign's own height and radius, so it doesn't change shape when it
-   arrives */
 .skeleton {
-  @apply h-7 w-32 rounded-full;
+  @apply h-8 w-32 rounded-2;
+  @apply lg:absolute lg:inset-y-0 lg:left-0 lg:h-auto lg:w-11 lg:rounded-none;
 }
 
-/* the sign on the door: the lit dot is what reads from a distance */
-.sign {
-  @apply gap-1.5;
+.rail {
+  @apply w-fit rounded-2 px-3 py-1.5;
+  @apply lg:absolute lg:inset-y-0 lg:left-0 lg:z-content;
+  @apply lg:w-11 lg:flex-col lg:justify-center lg:gap-3;
+  @apply lg:rounded-none lg:px-0 lg:py-4;
 }
 
-.bulb {
-  @apply h-2 w-2 rounded-full bg-current opacity-faint;
+.railOpen {
+  @apply bg-success-surface;
 }
 
-.bulbOn {
-  @apply opacity-100;
-  box-shadow: 0 0 0 3px currentColor;
+.railClosed {
+  @apply bg-surface-3;
+}
+
+.dot {
+  @apply h-2 w-2 shrink-0 rounded-full bg-fg-faint;
+}
+
+.dotOpen {
+  @apply bg-success;
+  animation: sign-glow 2.6s ease-in-out infinite;
+}
+
+@keyframes sign-glow {
+  0%,
+  100% {
+    box-shadow: 0 0 0 3px
+      color-mix(in srgb, var(--color-success) 20%, transparent);
+  }
+  50% {
+    box-shadow: 0 0 0 6px
+      color-mix(in srgb, var(--color-success) 6%, transparent);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dotOpen {
+    animation: none;
+    box-shadow: 0 0 0 3px
+      color-mix(in srgb, var(--color-success) 20%, transparent);
+  }
+}
+
+.railLabel {
+  @apply lg:[writing-mode:vertical-rl] lg:rotate-180;
 }

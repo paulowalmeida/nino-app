@@ -5,11 +5,13 @@ import { EmptyState } from '@nino/ds/components/EmptyState'
 import { Eyebrow } from '@nino/ds/components/Eyebrow'
 import { Flexbox } from '@nino/ds/components/Flexbox'
 import { Skeleton } from '@nino/ds/components/Skeleton'
+import { Text } from '@nino/ds/components/Text'
 import { Tooltip } from '@nino/ds/components/Tooltip'
+import {
+  SalesTrendSkeleton,
+} from '@skeletons/compositions/SalesTrendSkeleton/SalesTrendSkeleton'
 import { brl } from '@utils/money'
 
-import { Text } from '@ds/components/Text/Text'
-import { SalesTrendSkeleton } from '@skeletons/compositions/SalesTrendSkeleton/SalesTrendSkeleton'
 import motion from '@styles/motion.module.css'
 import styles from './SalesTrend.module.css'
 
@@ -60,7 +62,7 @@ export const SalesTrend = ({ tenantId }: SalesTrendProps) => {
             ) : (
               <Text as="p" className={styles.total}>{brl(total)}</Text>
             )}
-            <p className={styles.label}>faturamento na semana</p>
+            <Text className={styles.label}>faturamento na semana</Text>
           </Flexbox>
 
           {delta !== null && (

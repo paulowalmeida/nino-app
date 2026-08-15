@@ -1,19 +1,14 @@
 @reference "@nino/ds/globals.css";
 
-/* the height of the button that will take its place, so the line doesn't
-   jump */
 .skeleton {
   @apply h-9 w-56 rounded-full;
 }
 
-/* closed is the exception state: strong warm background, impossible to
-   ignore */
 .paused {
-  @apply flex flex-wrap items-center justify-between gap-3 rounded-5;
-  @apply border border-brand-bold bg-brand-soft p-4;
+  @apply rounded-5 border border-brand-bold bg-brand-soft p-4;
 }
 
-.text {
+.pausedSummary {
   @apply min-w-0;
 }
 
@@ -26,18 +21,5 @@
 }
 
 .trigger {
-  @apply text-fg-faint;
-}
-
-.form {
-  @apply flex w-full flex-col gap-2 rounded-5 border border-border;
-  @apply bg-surface-page/70 p-4 backdrop-blur-sm;
-}
-
-.formTitle {
-  @apply text-sm font-semibold text-fg-default;
-}
-
-.reason {
-  @apply max-w-sm;
+  @apply text-white font-extrabold;
 }

@@ -1,7 +1,5 @@
 @reference "@nino/ds/globals.css";
 
-/* Teto de largura do DS: sem ele o painel estica até a borda num monitor
-   largo — o gráfico vira uma faixa rasa e os cartões, retângulos achatados. */
 .page {
   @apply max-w-page p-4 lg:p-10;
 }
@@ -14,23 +12,11 @@
   @apply mb-4 lg:mb-8;
 }
 
-/* A linha do tempo pede mais largura que a lista de itens: 1.4 contra 1 dá
-   respiro ao eixo sem espremer os nomes dos produtos. */
 .charts {
   @apply mb-8 grid items-stretch gap-4 lg:gap-5;
+  @apply lg:grid-cols-[1.4fr_1fr];
 }
 
-@media (min-width: 1024px) {
-  .charts {
-    grid-template-columns: 1.4fr 1fr;
-  }
-}
-
-/*
- * Item de grid nasce com `min-width: auto` e não encolhe abaixo do próprio
- * conteúdo. Com um SVG medido em px dentro, isso vira um piso de largura: o
- * cartão estoura a tela e empurra a página inteira.
- */
 .charts > * {
   @apply min-w-0;
 }

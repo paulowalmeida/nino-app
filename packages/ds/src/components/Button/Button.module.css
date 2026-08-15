@@ -57,6 +57,11 @@
   @apply hover:bg-danger-hover active:bg-danger-active;
 }
 
+.variantWarning {
+  @apply bg-warning-bright text-fg-strong;
+  @apply hover:brightness-95 active:brightness-90;
+}
+
 .sizeSmall {
   @apply h-8 px-3 text-sm gap-1.5;
 }

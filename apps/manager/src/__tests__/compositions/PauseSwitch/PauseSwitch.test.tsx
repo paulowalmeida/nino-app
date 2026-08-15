@@ -4,7 +4,6 @@ import { describe, expect, it, vi } from 'vitest'
 
 import { usePause } from '@hooks/store/usePause'
 import { usePauseActions } from '@hooks/store/usePauseActions'
-
 import { PauseSwitch } from '@compositions/PauseSwitch/PauseSwitch'
 
 import {
@@ -94,12 +93,12 @@ describe(PauseSwitch.name, () => {
       screen.getByRole('button', { name: 'Fechar a loja por um tempo' })
     )
     await userEvent.type(
-      screen.getByPlaceholderText('Motivo (o cliente vê)'),
+      screen.getByPlaceholderText('Chuva forte, sem entregador...'),
       'Chuva forte'
     )
 
     // Act
-    await userEvent.click(screen.getByRole('button', { name: '30 min' }))
+    await userEvent.click(screen.getByRole('button', { name: /^30 min/ }))
 
     // Assert
     expect(pauseMutation.mutate).toHaveBeenCalledWith({

@@ -1,5 +1,6 @@
-import { Badge } from '@nino/ds/components/Badge'
+import { Flexbox } from '@nino/ds/components/Flexbox'
 import { Skeleton } from '@nino/ds/components/Skeleton'
+import { Text } from '@nino/ds/components/Text'
 import { useOpeningHours } from '@hooks/settings/useOpeningHours'
 import { usePause } from '@hooks/store/usePause'
 import { isStoreOpen } from '@utils/store-open'
@@ -12,19 +13,12 @@ export type StoreSignProps = {
   timezone: string | null
 }
 
-/**
- * The sign on the door, read from the same schedule the customer app reads.
- * Stays hidden when the schedule is unreadable — a role without access to
- * opening hours would otherwise see a store that is always closed.
- */
 export const StoreSign = ({ tenantId, timezone }: StoreSignProps) => {
   const { hours, isError, isPending } = useOpeningHours(tenantId)
   const { data: pause } = usePause(tenantId)
 
   if (isPending) {
-    return (
-      <Skeleton className={styles.skeleton} />
-    )
+    return <Skeleton className={styles.skeleton} />
   }
 
   if (isError || hours.length === 0) return null
@@ -33,15 +27,25 @@ export const StoreSign = ({ tenantId, timezone }: StoreSignProps) => {
   /** Manual pause beats the schedule: closing it by hand really closes it. */
   const isOpen = !pause?.isPaused && isStoreOpen(hours, zone)
 
+  const rail = isOpen
+    ? `${styles.rail} ${styles.railOpen}`
+    : `${styles.rail} ${styles.railClosed}`
+
   return (
-    <Badge
-      variant={isOpen ? 'success' : 'default'}
-      className={`${motion.pop} ${styles.sign}`}
-    >
+    <Flexbox align="center" gap={2} className={`${motion.pop} ${rail}`}>
       <span
-        className={isOpen ? `${styles.bulb} ${styles.bulbOn}` : styles.bulb}
+        aria-hidden="true"
+        className={isOpen ? `${styles.dot} ${styles.dotOpen}` : styles.dot}
       />
-      {isOpen ? 'Aberta agora' : 'Fechada agora'}
-    </Badge>
+      <Text
+        as="span"
+        size="xs"
+        weight="bold"
+        color={isOpen ? 'success' : 'faint'}
+        className={styles.railLabel}
+      >
+        {isOpen ? 'Aberta agora' : 'Fechada agora'}
+      </Text>
+    </Flexbox>
   )
 }

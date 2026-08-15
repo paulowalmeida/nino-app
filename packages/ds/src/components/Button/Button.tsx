@@ -15,25 +15,16 @@ type ButtonVariant =
   | 'inverse'
   | 'inverseOutline'
   | 'danger'
+  | 'warning'
 
 type ButtonSize = 'sm' | 'md' | 'lg' | 'icon'
 
 type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
   ref?: Ref<HTMLButtonElement>
-  /** Visual style of the button. Default: `primary` */
   variant?: ButtonVariant
-  /** Height and padding of the button. Default: `md` */
   size?: ButtonSize
-  /** Shows a loading indicator and blocks interaction while an action is in progress */
   loading?: boolean
-  /** Loading indicator style. Default: `spinner` */
   loadingIndicator?: 'spinner' | 'dots'
-  /**
-   * Delegates rendering to the direct child via `Slot`.
-   * Useful for rendering the Button as `<a>`, `<Link>`, or another element.
-   * @example
-   * <Button asChild><a href="/route">See more</a></Button>
-   */
   asChild?: boolean
 }
 
@@ -45,6 +36,7 @@ const variantClasses: Record<ButtonVariant, string> = {
   inverse: styles.variantInverse,
   inverseOutline: styles.variantInverseOutline,
   danger: styles.variantDanger,
+  warning: styles.variantWarning,
 }
 
 const sizeClasses: Record<ButtonSize, string> = {
@@ -54,7 +46,13 @@ const sizeClasses: Record<ButtonSize, string> = {
   icon: styles.sizeIcon,
 }
 
-const FILLED: ButtonVariant[] = ['primary', 'secondary', 'inverse', 'danger']
+const FILLED: ButtonVariant[] = [
+  'primary',
+  'secondary',
+  'inverse',
+  'danger',
+  'warning',
+]
 
 const disabledStyle = (variant: ButtonVariant): string =>
   FILLED.includes(variant) ? styles.disabledFilled : styles.disabledTransparent

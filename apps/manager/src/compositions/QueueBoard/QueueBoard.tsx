@@ -4,13 +4,16 @@ import { Card } from '@nino/ds/components/Card'
 import { Skeleton } from '@nino/ds/components/Skeleton'
 import { CountUp } from '@nino/ds/components/CountUp'
 import { Eyebrow } from '@nino/ds/components/Eyebrow'
+import { Text } from '@nino/ds/components/Text'
 import { useQueueSummary } from '@hooks/order/useQueueSummary'
 import { riseDelay } from '@utils/rise-delay'
 import type { OrderQueueSummary } from '@custom_types/order/order-queue-summary'
 import type { OrderStage } from '@custom_types/order/order-stage'
+
 import styles from './QueueBoard.module.css'
 import motion from '@styles/motion.module.css'
 import tile from '@styles/statTile.module.css'
+import { Flexbox } from '@ds/components/Flexbox/Flexbox'
 
 const sumByKeys = (summary: OrderQueueSummary | undefined, ...keys: string[]) =>
   keys.reduce(
@@ -27,7 +30,6 @@ export const QueueBoard = ({ tenantId }: QueueBoardProps) => {
 
   const waiting = sumByKeys(data, 'PENDING')
 
-  /** Each tile is the same stage the order queue filters by. */
   const tiles: {
     label: string
     value: number
@@ -66,11 +68,9 @@ export const QueueBoard = ({ tenantId }: QueueBoardProps) => {
 
   return (
     <section aria-label="Fila de pedidos" className='mb-8'>
-      <div className={motion.unroll}>
-        <Eyebrow className='mb-3'>Agora na loja</Eyebrow>
-      </div>
+      <Eyebrow className={`${motion.unroll} mb-3`}>Agora na loja</Eyebrow>
 
-      <div className={styles.board}>
+      <Flexbox className={styles.board}>
         {tiles.map(({ label, value, stage, urgent }, index) => (
           <Card
             key={label}
@@ -86,23 +86,25 @@ export const QueueBoard = ({ tenantId }: QueueBoardProps) => {
               style={riseDelay(index * 70 + 80)}
               className={tile.cardOverview}
             >
-              <span className={styles.value}>
+              <Text as="span" className={styles.tileValue}>
                 {isPending ? (
                   <Skeleton className={styles.skeletonValue} />
                 ) : (
                   <CountUp value={value} />
                 )}
-              </span>
-              <span className={styles.label}>{label}</span>
+              </Text>
+              <Text as="span" className={styles.tileLabel}>
+                {label}
+              </Text>
             </Link>
           </Card>
         ))}
-      </div>
+      </Flexbox>
 
       {isIdle && (
-        <p className={`${motion.unroll} ${styles.idle}`}>
+        <Text as="p" className={`${motion.unroll} ${styles.idle}`}>
           Nenhum pedido na fila. Assim que entrar um, ele aparece aqui.
-        </p>
+        </Text>
       )}
     </section>
   )

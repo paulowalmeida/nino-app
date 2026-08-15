@@ -17,6 +17,7 @@ const meta: Meta<typeof Button> = {
         'inverse',
         'inverseOutline',
         'danger',
+        'warning',
       ],
     },
     size: { control: 'select', options: ['sm', 'md', 'lg', 'icon'] },
@@ -47,6 +48,10 @@ export const Ghost: Story = {
 
 export const Danger: Story = {
   args: { variant: 'danger', children: 'Remover' },
+}
+
+export const Warning: Story = {
+  args: { variant: 'warning', children: 'Pausar loja' },
 }
 
 export const LoadingSpinner: Story = {
@@ -89,6 +94,7 @@ export const AllVariants: Story = {
       <Button variant="outline">Outline</Button>
       <Button variant="ghost">Ghost</Button>
       <Button variant="danger">Danger</Button>
+      <Button variant="warning">Warning</Button>
     </div>
   ),
 }
