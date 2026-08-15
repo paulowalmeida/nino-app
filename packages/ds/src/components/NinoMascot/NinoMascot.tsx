@@ -1,4 +1,4 @@
-import mascotSrc from '../../assets/mascot.svg'
+import mascotSrc from '../../assets/nino_gestor.svg'
 import { Image } from '../Image/Image'
 
 type NinoMascotProps = {
