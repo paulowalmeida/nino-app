@@ -10,8 +10,6 @@ export function Features() {
     <section className={styles.section} id="features">
       <div className={styles.inner}>
         <div className={styles.header}>
-          <Eyebrow>Plataforma completa</Eyebrow>
-
           <h2 className={styles.title}>
             Tudo que você precisa,{" "}
             <span className={styles.titleAccent}>nada que te atrapalha</span>

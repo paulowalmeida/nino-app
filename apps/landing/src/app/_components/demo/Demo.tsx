@@ -26,8 +26,6 @@ export function Demo() {
     <section id="demo" className={styles.section}>
       <div className={styles.inner}>
         <div className={styles.header}>
-          <Eyebrow>Os dois lados do balcão</Eyebrow>
-
           <h2 className={styles.title}>
             O que seu cliente vê,{" "}
             <span className={styles.titleAccent}>e o que você vê</span>

@@ -10,8 +10,6 @@ export function ForRestaurants() {
     <section id="para-restaurantes" className={styles.section}>
       <div className={styles.inner}>
         <div>
-          <Eyebrow>O Nino vs o mercado</Eyebrow>
-
           <h2 className={styles.title}>
             Mais completo.{" "}
             <span className={styles.titleAccent}>Mais justo.</span>

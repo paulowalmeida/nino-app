@@ -9,8 +9,6 @@ export function HowItWorks() {
     <section id="como-funciona" className={styles.section}>
       <div className={styles.inner}>
         <div className={styles.header}>
-          <Eyebrow>Simples assim</Eyebrow>
-
           <h2 className={styles.title}>Como o Nino funciona</h2>
 
           <p className={styles.subtitle}>

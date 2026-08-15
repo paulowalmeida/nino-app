@@ -9,8 +9,6 @@ export function Pricing() {
     <section id="precos" className={styles.section}>
       <div className={styles.inner}>
         <div className={styles.head}>
-          <Eyebrow>Planos e preços</Eyebrow>
-
           <h2 className={styles.title}>Preço simples, resultado real</h2>
 
           <p className={styles.lead}>
