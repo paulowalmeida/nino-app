@@ -10,5 +10,9 @@
     "lint": "eslint . --max-warnings=0",
     "type-check": "tsc --noEmit"
   },
-  "dependencies": {}
+  "dependencies": {
+    "@nino/ds": "*",
+    "@nino/forms": "*",
+    "@nino/lib": "*"
+  }
 }
