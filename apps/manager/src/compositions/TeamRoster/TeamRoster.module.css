@@ -62,17 +62,37 @@
   @apply truncate text-xs font-semibold text-fg-muted;
 }
 
-/* the badge only informs; the menu next to it is what changes things */
+/* locked or view-only roles: a plain label, nothing to click */
 .roleBadge {
   @apply shrink-0;
 }
 
 /*
- * One menu per person: changing role, editing e-mail and removing from the
- * store are the same question ("what to do with this person"), and a kebab
- * button fits any screen width without needing a different layout per
- * breakpoint. 40px touch target, circle instead of rectangle — same visual
- * weight as the avatar on the other side of the row.
+ * Same pill as `.roleBadge`, rebuilt on a `Button` so it can open the role
+ * menu — the chevron is the same "opens a list of values" cue `Select`
+ * uses elsewhere in the DS, borrowed here because changing a role is
+ * exactly that.
+ */
+.roleTrigger {
+  @apply inline-flex min-h-11 shrink-0 items-center gap-1 rounded-1;
+  @apply bg-surface-cool px-2 text-xs font-bold uppercase;
+  @apply tracking-wider text-fg-strong transition-colors duration-150;
+  @apply hover:bg-surface-mute;
+  @apply disabled:pointer-events-none disabled:opacity-disabled;
+  @apply focus-visible:outline-2 focus-visible:outline-brand;
+  @apply focus-visible:outline-offset-2;
+}
+
+.roleChevron {
+  @apply h-3 w-3 shrink-0 text-fg-faint;
+}
+
+/*
+ * One kebab per person for what's left: editing e-mail and removing from
+ * the store are the same question ("what to do with this person"), and a
+ * kebab button fits any screen width without needing a different layout
+ * per breakpoint. 40px touch target, circle instead of rectangle — same
+ * visual weight as the avatar on the other side of the row.
  */
 .kebab {
   @apply flex h-10 w-10 shrink-0 items-center justify-center rounded-full;

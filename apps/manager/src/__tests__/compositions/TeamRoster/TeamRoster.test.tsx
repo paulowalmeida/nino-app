@@ -1,4 +1,5 @@
 import { render, screen } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
 import { describe, expect, it, vi } from 'vitest'
 
 import { TeamRoster } from '@compositions/TeamRoster/TeamRoster'
@@ -11,6 +12,13 @@ const entry: RosterEntry = {
   role: 'Dono',
   lastLoginAt: null,
   removable: false,
+}
+
+const changeableEntry: RosterEntry = {
+  ...entry,
+  id: 'user-2',
+  role: 'Gerente',
+  roleKey: 'MANAGER',
 }
 
 const renderRoster = (
@@ -64,5 +72,31 @@ describe(TeamRoster.name, () => {
 
     // Assert
     expect(screen.getByText('Só você por enquanto.')).toBeInTheDocument()
+  })
+
+  it('shows the role as a plain label with no way to change it', () => {
+    // Arrange / Act
+    renderRoster({ entries: [entry] })
+
+    // Assert
+    expect(
+      screen.queryByRole('button', { name: 'Dono' })
+    ).not.toBeInTheDocument()
+    expect(screen.getByText('Dono')).toBeInTheDocument()
+  })
+
+  it('opens the role menu from the role pill, not the kebab', async () => {
+    // Arrange
+    const onChangeRole = vi.fn()
+    renderRoster({ entries: [changeableEntry], onChangeRole })
+
+    // Act
+    await userEvent.click(screen.getByRole('button', { name: /Gerente/ }))
+    await userEvent.click(
+      screen.getByRole('menuitem', { name: /Dono — Tudo/ })
+    )
+
+    // Assert
+    expect(onChangeRole).toHaveBeenCalledWith('user-2', 'TENANT_OWNER')
   })
 })

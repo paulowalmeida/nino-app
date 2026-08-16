@@ -48,32 +48,32 @@ export const TeamRoster = ({
   onChangeRole,
 }: TeamRosterProps) => {
   /*
-   * One menu per person, not three controls fighting for the same row:
-   * changing role, editing e-mail and removing from the store are the same
-   * question — "what to do with this person" — and the width budget is
-   * what works on any screen, from mobile to desktop, without needing a
-   * different layout per size.
+   * The role pill is its own menu, not folded into the kebab: a plain badge
+   * next to a generic "more actions" icon gave no hint that the role itself
+   * was the thing you could click. A chevron on the pill borrows the same
+   * cue `Select` already uses elsewhere in the DS for "this opens a list of
+   * values" — closer to what changing a role actually is.
    */
-  const actionsOf = (entry: RosterEntry): MenuItem[] => {
-    const items: MenuItem[] = []
-    const canChangeRole = onChangeRole && entry.roleKey && !entry.roleLocked
+  const roleItemsOf = (entry: RosterEntry): MenuItem[] => {
+    if (!onChangeRole || !entry.roleKey || entry.roleLocked) return []
 
-    if (canChangeRole) {
-      items.push(
-        ...TEAM_ROLE_OPTIONS.map(({ value, label, hint: roleHint }) => ({
-          value: `role-${value}`,
-          label:
-            entry.roleKey === value
-              ? `${label} — atual`
-              : `${label} — ${roleHint}`,
-          disabled: entry.roleKey === value,
-          onSelect: () => onChangeRole(entry.id, value),
-        }))
-      )
-    }
+    return TEAM_ROLE_OPTIONS.map(({ value, label, hint: roleHint }) => ({
+      value: `role-${value}`,
+      label:
+        entry.roleKey === value
+          ? `${label} — atual`
+          : `${label} — ${roleHint}`,
+      disabled: entry.roleKey === value,
+      onSelect: () => onChangeRole(entry.id, value),
+    }))
+  }
+
+  /* Everything left is a generic action on the person, not on their role —
+     these stay behind the kebab. */
+  const otherItemsOf = (entry: RosterEntry): MenuItem[] => {
+    const items: MenuItem[] = []
 
     if (entry.emailEditable && onEditEmail) {
-      if (items.length > 0) items.push({ separator: true })
       items.push({
         value: 'edit-email',
         label: 'Editar e-mail',
@@ -125,7 +125,8 @@ export const TeamRoster = ({
       {entries.length > 0 && (
         <ul className={styles.list}>
           {entries.map((entry, index) => {
-            const items = actionsOf(entry)
+            const roleItems = roleItemsOf(entry)
+            const otherItems = otherItemsOf(entry)
             const isBusy =
               changingRoleId === entry.id || removingId === entry.id
 
@@ -179,15 +180,36 @@ export const TeamRoster = ({
                   </div>
                 )}
 
-                <Badge
-                  variant="info"
-                  className={styles.roleBadge}
-                  title={entry.roleLocked}
-                >
-                  {entry.role}
-                </Badge>
+                {roleItems.length > 0 ? (
+                  <Menu
+                    contentClassName={styles.menuPanel}
+                    trigger={
+                      <Button
+                        variant="ghost"
+                        disabled={isBusy}
+                        className={`${motion.press} ${styles.roleTrigger}`}
+                      >
+                        {entry.role}
+                        <Icon
+                          name="chevron-down"
+                          size="sm"
+                          className={styles.roleChevron}
+                        />
+                      </Button>
+                    }
+                    items={roleItems}
+                  />
+                ) : (
+                  <Badge
+                    variant="info"
+                    className={styles.roleBadge}
+                    title={entry.roleLocked}
+                  >
+                    {entry.role}
+                  </Badge>
+                )}
 
-                {items.length > 0 && (
+                {otherItems.length > 0 && (
                   <Menu
                     contentClassName={styles.menuPanel}
                     trigger={
@@ -196,12 +218,12 @@ export const TeamRoster = ({
                         size="icon"
                         className={styles.kebab}
                         disabled={isBusy}
-                        aria-label={`Ações para ${entry.name}`}
+                        aria-label={`Mais ações para ${entry.name}`}
                       >
                         <Icon name="kebab" />
                       </Button>
                     }
-                    items={items}
+                    items={otherItems}
                   />
                 )}
               </li>
