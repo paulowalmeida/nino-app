@@ -32,18 +32,6 @@ const sizeClasses: Record<IconSize, string> = {
 }
 
 /**
- * Single source of icons for every app — apps never import an `.svg` file
- * themselves, only `<Icon name="..." />`.
- *
- * The whole catalog ships as one `<symbol>` sprite (~12 kB gzipped) fetched
- * once and cached under a hashed URL, instead of one JS chunk per icon: a
- * screen with twenty icons costs one request, not twenty, and rendering
- * stays synchronous — no loading state, no pop-in.
- *
- * Colour comes from `currentColor` on each symbol, so the icon follows the
- * surrounding text colour like any glyph — `color` overrides that with a
- * token when the icon has to carry its own.
- *
  * ```tsx
  * <Icon name="trash" />
  * <Icon name="trash" label="Excluir item" color="danger" />

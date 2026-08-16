@@ -1,0 +1,14 @@
+<svg viewBox="0 0 24 24" fill="none">
+  <rect x="1.5" y="5.5" width="17" height="10" rx="1.6" fill="#9CCFA9" />
+  <rect x="5.5" y="8.5" width="17" height="10" rx="1.6" fill="#1FA463" />
+  <rect
+    x="7.25"
+    y="10.25"
+    width="13.5"
+    height="6.5"
+    rx="0.9"
+    stroke="#0E7A46"
+    stroke-width="0.9"
+  />
+  <circle cx="14" cy="13.5" r="2" fill="#B7E7C9" />
+</svg>

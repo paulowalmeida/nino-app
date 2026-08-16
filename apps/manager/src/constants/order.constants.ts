@@ -37,10 +37,10 @@ export const PAYMENT_METHOD_LABEL: Record<PaymentMethod, string> = {
 }
 
 export const PAYMENT_METHOD_ICON: Record<PaymentMethod, IconName> = {
-  CASH: 'banknote',
-  CARD_ON_DELIVERY: 'card-chip',
-  PIX: 'pix',
-  CARD_ONLINE: 'card-chip',
+  CASH: 'payment-cash',
+  CARD_ON_DELIVERY: 'payment-card',
+  PIX: 'payment-pix',
+  CARD_ONLINE: 'payment-card',
 }
 
 export const PAYMENT_STATUS_LABEL: Record<PaymentStatus, string> = {
