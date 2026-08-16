@@ -1,14 +1,17 @@
 import { Flexbox } from '@nino/ds/components/Flexbox'
+import { useState } from 'react'
 import { Link } from 'react-router'
 
 import { Alert } from '@nino/ds/components/Alert'
 import { Button } from '@nino/ds/components/Button'
 import { EmptyState } from '@nino/ds/components/EmptyState'
+import { Input } from '@nino/ds/components/Input'
 import { ScrollArea } from '@nino/ds/components/ScrollArea'
 import { Skeleton } from '@nino/ds/components/Skeleton'
 import { PersonMark } from '@elements/PersonMark/PersonMark'
 import { useCurrentTenant } from '@hooks/session/useCurrentTenant'
 import { useCustomers } from '@hooks/customer/useCustomers'
+import { useDebouncedValue } from '@hooks/ui/useDebouncedValue'
 import {
   CUSTOMERS_COLUMNS,
   CUSTOMERS_GHOST_ROWS,
@@ -32,8 +35,11 @@ export const Customers = () => {
   const tenant = useCurrentTenant()
   const tenantId = tenant?.tenantId ?? null
 
+  const [term, setTerm] = useState('')
+  const search = useDebouncedValue(term.trim())
+
   const { customers, total, isPending, isError, hasNextPage, fetchNextPage } =
-    useCustomers(tenantId)
+    useCustomers(tenantId, search)
 
   return (
     <div className={styles.page}>
@@ -43,9 +49,19 @@ export const Customers = () => {
         <h1 className={styles.title}>Quem já comprou e volta</h1>
         <p className={styles.subtitle}>
           {total !== undefined
-            ? `${total} ${total === 1 ? 'pessoa' : 'pessoas'} com pedido nesta loja. Abra alguém para ver o histórico.`
+            ? `${total} ${total === 1 ? 'pessoa' : 'pessoas'} com pedido ` +
+              'nesta loja. Abra alguém para ver o histórico.'
             : 'Quem pede pelo app entra nesta lista.'}
         </p>
+
+        <Input
+          type="search"
+          value={term}
+          placeholder="Buscar por nome, telefone ou e-mail"
+          aria-label="Buscar por nome, telefone ou e-mail"
+          className={styles.search}
+          onChange={(event) => setTerm(event.target.value)}
+        />
       </header>
 
       {isPending && (
@@ -79,8 +95,10 @@ export const Customers = () => {
 
       {!isPending && !isError && customers.length === 0 && (
         <EmptyState className={`${motion.unroll} ${styles.empty}`}>
-          Ninguém por aqui ainda. Quem fizer o primeiro pedido pelo app aparece
-          nesta lista.
+          {search
+            ? `Nenhum cliente com "${search}". Tente outro nome ou telefone.`
+            : 'Ninguém por aqui ainda. Quem fizer o primeiro pedido pelo ' +
+              'app aparece nesta lista.'}
         </EmptyState>
       )}
 

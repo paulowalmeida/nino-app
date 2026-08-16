@@ -1,8 +1,10 @@
+import { Flexbox } from '@nino/ds/components/Flexbox'
 import { Skeleton } from '@nino/ds/components/Skeleton'
 import { Breadcrumb } from '@elements/Breadcrumb/Breadcrumb'
 
 import styles from '@pages/customer-detail/CustomerDetail.module.css'
 
+const GHOST_PERSONAL_DATA = ['phone', 'email', 'cpf']
 const GHOST_FACTS = ['first', 'second', 'third', 'fourth']
 const GHOST_ORDERS = ['first', 'second', 'third']
 
@@ -12,24 +14,47 @@ export const CustomerDetailSkeleton = () => (
 
     <p className={styles.eyebrow}>Cliente</p>
 
-    <header className={styles.hero}>
+    <Flexbox as="header" direction="row" gap={4} align="center" mt={1}>
       <Skeleton variant="circle" className={styles.mark} />
 
       <div className={styles.heroText}>
         <Skeleton className={styles.ghostName} />
-        <Skeleton className={styles.ghostPhone} />
       </div>
-    </header>
+    </Flexbox>
 
     <div className={styles.body}>
-      <dl className={styles.facts}>
-        {GHOST_FACTS.map((fact) => (
-          <div key={fact} className={styles.fact}>
-            <Skeleton className={styles.ghostFactLabel} />
-            <Skeleton className={styles.ghostFactValue} />
+      <div className={styles.summary}>
+        <section aria-label="Dados pessoais">
+          <Skeleton className={styles.ghostEyebrow} />
+
+          <div className={styles.facts}>
+            {GHOST_PERSONAL_DATA.map((fact) => (
+              <div key={fact} className={styles.fact}>
+                <Skeleton className={styles.ghostFactLabel} />
+                <Skeleton className={styles.ghostFactValue} />
+              </div>
+            ))}
           </div>
-        ))}
-      </dl>
+        </section>
+
+        <section aria-label="Resumo">
+          <Skeleton className={styles.ghostEyebrow} />
+
+          <dl className={styles.facts}>
+            {GHOST_FACTS.map((fact) => (
+              <div key={fact} className={styles.fact}>
+                <Skeleton className={styles.ghostFactLabel} />
+                <Skeleton className={styles.ghostFactValue} />
+              </div>
+            ))}
+          </dl>
+        </section>
+
+        <section aria-label="Endereços registrados">
+          <Skeleton className={styles.ghostEyebrow} />
+          <Skeleton className={styles.ghostAddress} />
+        </section>
+      </div>
 
       <section className={styles.history} aria-label="Últimos pedidos">
         <div className={styles.historyHead}>

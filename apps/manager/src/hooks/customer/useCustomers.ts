@@ -6,11 +6,15 @@ import type { TenantCustomer } from '@custom_types/customer/tenant-customer'
 import { CUSTOMER_PAGE_SIZE, CustomerService } from '@services/customer.service'
 import { nextPageParam } from '@utils/next-page-param'
 
-export const useCustomers = (tenantId: string | null) => {
+export const useCustomers = (tenantId: string | null, search = '') => {
   const query = useInfiniteQuery<CustomerPage>({
-    queryKey: [...queryKeys.customers.list(tenantId ?? '')],
+    queryKey: [...queryKeys.customers.list(tenantId ?? '', search)],
     queryFn: ({ pageParam }) =>
-      CustomerService.listCustomers(tenantId as string, pageParam as number),
+      CustomerService.listCustomers(
+        tenantId as string,
+        pageParam as number,
+        search || undefined
+      ),
     initialPageParam: 1,
     getNextPageParam: ({ pagination }) =>
       nextPageParam(pagination, CUSTOMER_PAGE_SIZE),

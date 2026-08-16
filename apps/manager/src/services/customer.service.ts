@@ -13,16 +13,21 @@ export const CUSTOMER_PAGE_SIZE = 30
 export const HISTORY_PAGE_SIZE = 15
 
 export const CustomerService = {
-  listCustomers: (tenantId: string, page: number): Promise<CustomerPage> =>
-    api.getAll<CustomerPage>(
-      `tenants/${tenantId}/customers`,
-      {
-        target: 'createdAt',
-        direction: 'desc',
-        size: CUSTOMER_PAGE_SIZE,
-        page,
-      }
-    ),
+  listCustomers: (
+    tenantId: string,
+    page: number,
+    search?: string
+  ): Promise<CustomerPage> => {
+    const params: Record<string, string | number> = {
+      target: 'createdAt',
+      direction: 'desc',
+      size: CUSTOMER_PAGE_SIZE,
+      page,
+    }
+    if (search) params['search'] = search
+
+    return api.getAll<CustomerPage>(`tenants/${tenantId}/customers`, params)
+  },
 
   listCustomerOrders: (
     tenantId: string,

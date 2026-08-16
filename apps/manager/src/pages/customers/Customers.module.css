@@ -30,6 +30,10 @@
   @apply mt-1.5 text-sm text-fg-subtle;
 }
 
+.search {
+  @apply mt-4 h-11 w-full lg:max-w-sm;
+}
+
 /*
  * Duas leituras diferentes, não uma encolhida.
  *

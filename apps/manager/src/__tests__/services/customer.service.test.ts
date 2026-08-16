@@ -28,6 +28,26 @@ describe('CustomerService', () => {
     expect(result).toEqual({ data: [], pagination: { total: 0 } })
   })
 
+  it('listCustomers: sends the search term when there is one', async () => {
+    // Arrange
+    apiMock.getAll.mockResolvedValueOnce({
+      data: [],
+      pagination: { total: 0 },
+    })
+
+    // Act
+    await CustomerService.listCustomers('tenant-1', 1, 'maria')
+
+    // Assert
+    expect(apiMock.getAll).toHaveBeenCalledWith('tenants/tenant-1/customers', {
+      target: 'createdAt',
+      direction: 'desc',
+      size: CUSTOMER_PAGE_SIZE,
+      page: 1,
+      search: 'maria',
+    })
+  })
+
   it('listCustomerOrders: reads the order history of a customer', async () => {
     // Arrange
     apiMock.getAll.mockResolvedValueOnce({

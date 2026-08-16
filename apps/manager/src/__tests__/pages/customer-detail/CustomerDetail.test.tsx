@@ -47,6 +47,33 @@ describe(CustomerDetail.name, () => {
       screen.getByRole('heading', { name: 'Ana Souza' })
     ).toBeInTheDocument()
     expect(screen.getByText('R$ 150,00')).toBeInTheDocument()
+    expect(screen.getByText('123.456.789-00')).toBeInTheDocument()
+    expect(screen.getByText(/Av\. Paulista, 1000/)).toBeInTheDocument()
+    expect(screen.getByText('Principal')).toBeInTheDocument()
+  })
+
+  it('shows an empty note when the customer has no address', () => {
+    // Arrange
+    vi.mocked(useCurrentTenant).mockReturnValue(currentTenant)
+    vi.mocked(useCustomer).mockReturnValue({
+      data: { ...customerHistory, addresses: [] },
+      isPending: false,
+    } as unknown as ReturnType<typeof useCustomer>)
+    vi.mocked(useCustomerOrders).mockReturnValue({
+      orders: [],
+      total: 0,
+      hasNextPage: false,
+      isFetchingNextPage: false,
+      fetchNextPage: vi.fn(),
+    } as unknown as ReturnType<typeof useCustomerOrders>)
+
+    // Act
+    renderDetail()
+
+    // Assert
+    expect(
+      screen.getByText('Nenhum endereço registrado ainda.')
+    ).toBeInTheDocument()
   })
 
   it('shows the empty state when the customer has no order here', () => {

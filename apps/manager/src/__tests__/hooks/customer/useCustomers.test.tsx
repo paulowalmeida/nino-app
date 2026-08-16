@@ -45,4 +45,25 @@ describe(useCustomers.name, () => {
     // Assert
     expect(CustomerService.listCustomers).not.toHaveBeenCalled()
   })
+
+  it('forwards the search term to the service', async () => {
+    // Arrange
+    vi.mocked(CustomerService.listCustomers).mockResolvedValue(
+      oneCustomerPage
+    )
+
+    // Act
+    renderHook(() => useCustomers('tenant-1', 'maria'), {
+      wrapper: wrapWithClient(),
+    })
+
+    // Assert
+    await waitFor(() =>
+      expect(CustomerService.listCustomers).toHaveBeenCalledWith(
+        'tenant-1',
+        1,
+        'maria'
+      )
+    )
+  })
 })

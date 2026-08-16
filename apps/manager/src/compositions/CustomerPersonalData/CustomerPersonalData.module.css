@@ -1,0 +1,27 @@
+@reference "@nino/ds/globals.css";
+
+.eyebrow {
+  @apply text-2xs font-bold uppercase tracking-[0.1em] text-fg-faintest;
+}
+
+.facts {
+  @apply mt-2 flex flex-col gap-2.5;
+}
+
+.fact {
+  @apply flex items-baseline justify-between gap-3 border-b border-border;
+  @apply py-2;
+}
+
+.fact:last-child {
+  @apply border-b-0 pb-0;
+}
+
+.factLabel {
+  @apply shrink-0 text-xs font-semibold text-fg-faint;
+}
+
+.factValue {
+  @apply truncate text-sm font-semibold text-fg-strong;
+  font-variant-numeric: tabular-nums;
+}

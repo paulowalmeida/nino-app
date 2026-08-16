@@ -6,6 +6,12 @@ import { EmptyState } from '@nino/ds/components/EmptyState'
 import { ScrollArea } from '@nino/ds/components/ScrollArea'
 import { Breadcrumb } from '@elements/Breadcrumb/Breadcrumb'
 import { PersonMark } from '@elements/PersonMark/PersonMark'
+import {
+  CustomerAddresses,
+} from '@compositions/CustomerAddresses/CustomerAddresses'
+import {
+  CustomerPersonalData,
+} from '@compositions/CustomerPersonalData/CustomerPersonalData'
 import { STATUS_LABEL } from '@constants/order.constants'
 import { useCurrentTenant } from '@hooks/session/useCurrentTenant'
 import { useCustomer } from '@hooks/customer/useCustomer'
@@ -13,7 +19,6 @@ import { useCustomerOrders } from '@hooks/customer/useCustomerOrders'
 import { useLoadMore } from '@hooks/ui/useLoadMore'
 import { brl } from '@utils/money'
 import { statusBadgeVariant } from '@utils/order-badge'
-import { formatPhone } from '@utils/phone'
 import { riseDelay } from '@utils/rise-delay'
 import {
   CustomerDetailSkeleton,
@@ -95,36 +100,37 @@ export const CustomerDetail = () => {
 
         <div className={styles.heroText}>
           <h1 className={styles.name}>{customer.name}</h1>
-
-          <div className={styles.contact}>
-            <a href={`tel:${customer.phone}`} className={styles.phone}>
-              {formatPhone(customer.phone)}
-            </a>
-            {customer.email && (
-              <span className={styles.email}>{customer.email}</span>
-            )}
-          </div>
         </div>
       </Flexbox>
 
       <div className={styles.body}>
-        <dl className={styles.facts}>
-        {[
-          ['Pedidos', String(customer.orders)],
-          ['Gastos', brl(customer.spent)],
-          ['Pontos', String(customer.loyaltyPoints)],
-          ['Cliente desde', day.format(new Date(customer.since))],
-        ].map(([label, value], index) => (
-          <div
-            key={label}
-            className={`${motion.settle} ${styles.fact}`}
-            style={riseDelay(index * 50 + 60)}
-          >
-            <dt className={styles.factLabel}>{label}</dt>
-            <dd className={styles.factValue}>{value}</dd>
-          </div>
-        ))}
-        </dl>
+        <div className={styles.summary}>
+          <CustomerPersonalData customer={customer} />
+
+          <section aria-label="Resumo">
+            <p className={styles.eyebrowSmall}>Resumo</p>
+
+            <dl className={styles.facts}>
+              {[
+                ['Pedidos', String(customer.orders)],
+                ['Gastos', brl(customer.spent)],
+                ['Pontos', String(customer.loyaltyPoints)],
+                ['Cliente desde', day.format(new Date(customer.since))],
+              ].map(([label, value], index) => (
+                <div
+                  key={label}
+                  className={`${motion.settle} ${styles.fact}`}
+                  style={riseDelay(index * 50 + 60)}
+                >
+                  <dt className={styles.factLabel}>{label}</dt>
+                  <dd className={styles.factValue}>{value}</dd>
+                </div>
+              ))}
+            </dl>
+          </section>
+
+          <CustomerAddresses addresses={customer.addresses} />
+        </div>
 
         <section className={styles.history} aria-label="Últimos pedidos">
         <div className={styles.historyHead}>

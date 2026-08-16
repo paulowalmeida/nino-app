@@ -23,11 +23,13 @@ export const customerHistory: CustomerHistory = {
   name: 'Ana Souza',
   phone: '11999990000',
   email: 'ana@example.com',
+  cpf: null,
   loyaltyPoints: 10,
   since: '2026-01-01T00:00:00.000Z',
   orders: 3,
   spent: 150,
   lastOrderAt: '2026-07-01T00:00:00.000Z',
+  addresses: [],
   history: [],
 }
 

@@ -106,8 +106,12 @@ export const queryKeys = {
   },
   customers: {
     all: (tenantId: string) => ['customers', tenantId] as const,
-    list: (tenantId: string) =>
-      [...queryKeys.customers.all(tenantId), 'list'] as const,
+    list: (tenantId: string, search?: string) =>
+      [
+        ...queryKeys.customers.all(tenantId),
+        'list',
+        search ?? null,
+      ] as const,
     detail: (tenantId: string, customerId: string) =>
       [...queryKeys.customers.all(tenantId), 'detail', customerId] as const,
     top: (tenantId: string, metric: string) =>
