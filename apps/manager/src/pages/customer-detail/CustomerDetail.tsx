@@ -1,6 +1,7 @@
 import { Flexbox } from '@nino/ds/components/Flexbox'
 import { Link, useParams } from 'react-router'
 
+import { Badge } from '@nino/ds/components/Badge'
 import { EmptyState } from '@nino/ds/components/EmptyState'
 import { ScrollArea } from '@nino/ds/components/ScrollArea'
 import { Breadcrumb } from '@elements/Breadcrumb/Breadcrumb'
@@ -11,6 +12,7 @@ import { useCustomer } from '@hooks/customer/useCustomer'
 import { useCustomerOrders } from '@hooks/customer/useCustomerOrders'
 import { useLoadMore } from '@hooks/ui/useLoadMore'
 import { brl } from '@utils/money'
+import { statusBadgeVariant } from '@utils/order-badge'
 import { formatPhone } from '@utils/phone'
 import { riseDelay } from '@utils/rise-delay'
 import {
@@ -81,7 +83,14 @@ export const CustomerDetail = () => {
 
       <p className={styles.eyebrow}>Cliente</p>
 
-      <Flexbox as="header" gap={4} align="center" mt={1} className={motion.settle}>
+      <Flexbox
+        as="header"
+        direction="row"
+        gap={4}
+        align="center"
+        mt={1}
+        className={motion.settle}
+      >
         <PersonMark name={customer.name} className={styles.mark} />
 
         <div className={styles.heroText}>
@@ -148,9 +157,13 @@ export const CustomerDetail = () => {
                   <span className={styles.orderNumber}>
                     #{ticketNumber(order.id)}
                   </span>
-                  <span className={styles.orderStatus}>
+                  <Badge
+                    size="sm"
+                    variant={statusBadgeVariant(order.status)}
+                    className={styles.orderStatus}
+                  >
                     {STATUS_LABEL[order.status]}
-                  </span>
+                  </Badge>
                   <time className={styles.orderAt} dateTime={order.createdAt}>
                     {stamp.format(new Date(order.createdAt))}
                   </time>

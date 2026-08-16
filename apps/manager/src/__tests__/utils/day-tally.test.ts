@@ -98,7 +98,7 @@ describe(tallyToday.name, () => {
     // Assert
     expect(byPaymentMethod).toEqual([
       { method: 'CASH', amount: 25 },
-      { method: 'PIX_ONLINE', amount: 10 },
+      { method: 'PIX', amount: 10 },
     ])
   })
 })

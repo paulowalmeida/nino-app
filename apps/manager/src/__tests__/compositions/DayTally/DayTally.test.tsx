@@ -85,7 +85,7 @@ describe(DayTally.name, () => {
       buildOrder({
         id: 'order-0001',
         totalAmount: '10.00',
-        paymentMethod: 'PIX_ONLINE',
+        paymentMethod: 'PIX',
       }),
       buildOrder({
         id: 'order-0002',
@@ -108,7 +108,7 @@ describe(DayTally.name, () => {
       .closest('div')
     expect(paymentSection).toHaveTextContent('Dinheiro')
     expect(paymentSection).toHaveTextContent('R$ 25,00')
-    expect(paymentSection).toHaveTextContent('Pix online')
+    expect(paymentSection).toHaveTextContent('Pix')
     expect(paymentSection).toHaveTextContent('R$ 10,00')
   })
 

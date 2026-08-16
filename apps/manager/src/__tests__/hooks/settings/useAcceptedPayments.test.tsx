@@ -35,7 +35,7 @@ describe(useAcceptedPayments.name, () => {
     await waitFor(() => expect(result.current.isSuccess).toBe(true))
 
     // Assert
-    expect(result.current.methods).toEqual(['PIX_ONLINE', 'CARD_ONLINE'])
+    expect(result.current.methods).toEqual(['PIX', 'CARD_ONLINE'])
   })
 
   it('falls back to cash when nothing is configured', async () => {

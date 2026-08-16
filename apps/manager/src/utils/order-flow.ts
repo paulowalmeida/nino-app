@@ -77,15 +77,37 @@ export const ticketNumber = (id: string): string => id.slice(-4).toUpperCase()
 export const customerNameOf = (order: Order): string =>
   order.guestName ?? 'Cliente sem cadastro'
 
-export const addressOf = (order: Order): string | null => {
-  if (!order.guestStreet) return null
-
-  const line = [order.guestStreet, order.guestNumber].filter(Boolean).join(', ')
-  const rest = [order.guestComplement, order.guestNeighborhood]
-    .filter(Boolean)
-    .join(' · ')
+const formatAddress = (
+  street: string,
+  number: string | null,
+  complement: string | null,
+  neighborhood: string | null
+): string => {
+  const line = [street, number].filter(Boolean).join(', ')
+  const rest = [complement, neighborhood].filter(Boolean).join(' · ')
 
   return rest ? `${line} — ${rest}` : line
+}
+
+/**
+ * A saved address (`deliveryAddress`) comes from a customer's account; the
+ * `guest*` fields hold what a guest checkout typed by hand. A delivery
+ * order carries one or the other, never both.
+ */
+export const addressOf = (order: Order): string | null => {
+  if (order.deliveryAddress) {
+    const { street, number, complement, neighborhood } = order.deliveryAddress
+    return formatAddress(street, number, complement, neighborhood)
+  }
+
+  if (!order.guestStreet) return null
+
+  return formatAddress(
+    order.guestStreet,
+    order.guestNumber,
+    order.guestComplement,
+    order.guestNeighborhood
+  )
 }
 
 /**

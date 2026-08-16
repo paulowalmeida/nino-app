@@ -1,3 +1,4 @@
+import type { DeliveryAddress } from './delivery-address'
 import type { OrderChannel } from './order-channel'
 import type { OrderItem } from './order-item'
 import type { OrderStatusEntry } from './order-status-entry'
@@ -17,6 +18,7 @@ export type Order = {
   status: OrderStatusKey
   channel: OrderChannel
   courierId: string | null
+  deliveryAddress: DeliveryAddress | null
   tableNumber: string | null
   notes: string | null
   subtotal: string

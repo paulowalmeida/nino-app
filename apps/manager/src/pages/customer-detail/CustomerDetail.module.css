@@ -55,10 +55,16 @@
  * ("17 pedidos, R$ 2.831, desde julho"), e cartão em volta de cada um quebra
  * essa leitura em quatro paradas. No celular quebram em duas colunas.
  */
-/* celular: faixa 2×2 entre fios. desktop: coluna à direita, um fato por linha */
+/*
+ * celular: faixa 2×2 entre fios. desktop: coluna à direita, um fato por
+ * linha, com um fio vertical que separa de vez o resumo do histórico — sem
+ * ele a barra de rolagem do histórico, quando aparece, caía bem na emenda
+ * das duas colunas e parecia ela mesma o divisor.
+ */
 .facts {
   @apply grid grid-cols-2 gap-y-4 border-y border-border/60 py-4;
   @apply lg:order-2 lg:grid-cols-1 lg:gap-0 lg:border-y-0 lg:py-0;
+  @apply lg:border-l lg:border-border lg:pl-6;
 }
 
 .fact {
@@ -138,7 +144,7 @@
 }
 
 .orderStatus {
-  @apply min-w-0 truncate text-sm text-fg-muted;
+  @apply min-w-0 justify-self-start;
 }
 
 .orderAt {
