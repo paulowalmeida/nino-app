@@ -7,4 +7,6 @@ export const salesReport: SalesReport = {
   orderCount: 30,
   averageTicket: 50,
   topProducts: [],
+  byChannel: [],
+  byPaymentMethod: [],
 }

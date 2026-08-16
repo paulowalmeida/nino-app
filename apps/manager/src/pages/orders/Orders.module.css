@@ -56,6 +56,14 @@
   @apply min-w-0;
 }
 
+.sentinel {
+  @apply flex h-10 items-center justify-center;
+}
+
+.loadingMore {
+  @apply text-xs text-fg-faint;
+}
+
 .search {
   @apply w-full lg:max-w-sm;
 }

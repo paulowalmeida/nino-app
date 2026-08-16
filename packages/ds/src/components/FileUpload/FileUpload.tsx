@@ -83,8 +83,6 @@ export function FileUpload({
       onFileReject={onFileReject}
       className={mergeClasses(styles.fileUpload, className)}
     >
-      {/* `group` fica literal: é o marcador que o ícone e as dicas leem para
-          reagir ao arquivo arrastado por cima. */}
       <ArkFileUpload.Dropzone
         className={mergeClasses('group', styles.dropzone)}
       >

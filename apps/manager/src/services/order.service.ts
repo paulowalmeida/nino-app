@@ -7,6 +7,9 @@ import type { OrderQueueSummary } from '@custom_types/order/order-queue-summary'
 import type { OrderStatusKey } from '@custom_types/order/order-status-key'
 import type { ReportRangeParams } from '@custom_types/order/report-range-params'
 import type { SalesReport } from '@custom_types/order/sales-report'
+import type {
+  SalesSeriesBreakdown,
+} from '@custom_types/order/sales-series-breakdown'
 import type { SalesSeries } from '@custom_types/order/sales-series'
 import type { SeriesGranularity } from '@custom_types/order/series-granularity'
 import type { TimingReport } from '@custom_types/order/timing-report'
@@ -50,6 +53,26 @@ export const OrderService = {
   ): Promise<SalesSeries> =>
     api.getAll<SalesSeries>(
       `tenants/${tenantId}/orders/report/series`,
+      rangeQuery(params, granularity)
+    ),
+
+  getSalesSeriesByChannel: (
+    tenantId: string,
+    params: ReportRangeParams,
+    granularity?: SeriesGranularity
+  ): Promise<SalesSeriesBreakdown> =>
+    api.getAll<SalesSeriesBreakdown>(
+      `tenants/${tenantId}/orders/report/series/by-channel`,
+      rangeQuery(params, granularity)
+    ),
+
+  getSalesSeriesByPaymentMethod: (
+    tenantId: string,
+    params: ReportRangeParams,
+    granularity?: SeriesGranularity
+  ): Promise<SalesSeriesBreakdown> =>
+    api.getAll<SalesSeriesBreakdown>(
+      `tenants/${tenantId}/orders/report/series/by-payment-method`,
       rangeQuery(params, granularity)
     ),
 

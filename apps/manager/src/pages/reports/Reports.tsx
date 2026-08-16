@@ -7,10 +7,16 @@ import { Header } from '@nino/ds/components/Header'
 import { Skeleton } from '@nino/ds/components/Skeleton'
 import { Tabs } from '@nino/ds/components/Tabs'
 import { CountUp } from '@nino/ds/components/CountUp'
+import { SalesBreakdown } from '@compositions/SalesBreakdown/SalesBreakdown'
+import {
+  SalesPeriodTrend,
+} from '@compositions/SalesPeriodTrend/SalesPeriodTrend'
 import { TopSalesTable } from '@compositions/TopSalesTable/TopSalesTable'
 import type { ReportRangeParams } from '@custom_types/order/report-range-params'
 import type { PeriodChoice } from '@custom_types/ui/period-choice'
 import {
+  CHANNEL_LABEL,
+  PAYMENT_METHOD_LABEL,
   REPORTS_FIGURES,
   REPORTS_PERIODS,
   REPORTS_TIMING_FIGURES,
@@ -77,6 +83,28 @@ export const Reports = () => {
 
   const noSales =
     !isPending && !isError && !awaitingDates && report?.orderCount === 0
+
+  const channelItems = (report?.byChannel ?? []).map(
+    ({ channel, revenue, orderCount }) => ({
+      id: channel,
+      label: CHANNEL_LABEL[channel],
+      value: revenue,
+      display: `${brl(revenue)} · ${orderCount} ${
+        orderCount === 1 ? 'pedido' : 'pedidos'
+      }`,
+    })
+  )
+
+  const paymentItems = (report?.byPaymentMethod ?? []).map(
+    ({ method, revenue, orderCount }) => ({
+      id: method,
+      label: PAYMENT_METHOD_LABEL[method],
+      value: revenue,
+      display: `${brl(revenue)} · ${orderCount} ${
+        orderCount === 1 ? 'pedido' : 'pedidos'
+      }`,
+    })
+  )
 
   return (
     <div className={styles.page}>
@@ -149,6 +177,13 @@ export const Reports = () => {
       </div>
 
       {!awaitingDates && (
+        <SalesPeriodTrend
+          tenantId={range ? tenantId : null}
+          range={range ?? { period: 'today' }}
+        />
+      )}
+
+      {!awaitingDates && (
         <div className={styles.timingFigures}>
           {REPORTS_TIMING_FIGURES.map(
             ({ key, sampleKey, label, empty }, index) => {
@@ -175,6 +210,23 @@ export const Reports = () => {
               )
             }
           )}
+        </div>
+      )}
+
+      {!awaitingDates && (
+        <div className={styles.breakdowns}>
+          <SalesBreakdown
+            title="Por canal"
+            items={channelItems}
+            isPending={isPending}
+            emptyMessage="Nenhuma venda concluída no período."
+          />
+          <SalesBreakdown
+            title="Por forma de pagamento"
+            items={paymentItems}
+            isPending={isPending}
+            emptyMessage="Nenhuma venda concluída no período."
+          />
         </div>
       )}
 

@@ -19,6 +19,8 @@ export const salesReportWithProducts: SalesReport = {
       revenue: 120,
     },
   ],
+  byChannel: [],
+  byPaymentMethod: [],
 }
 
 export const salesReportWithoutProducts: SalesReport = {
@@ -26,4 +28,6 @@ export const salesReportWithoutProducts: SalesReport = {
   orderCount: 0,
   averageTicket: 0,
   topProducts: [],
+  byChannel: [],
+  byPaymentMethod: [],
 }

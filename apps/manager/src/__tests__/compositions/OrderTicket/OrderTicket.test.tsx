@@ -78,4 +78,32 @@ describe(OrderTicket.name, () => {
     expect(screen.queryByRole('button')).not.toBeInTheDocument()
     expect(screen.queryByText('2 min')).not.toBeInTheDocument()
   })
+
+  it('shows only the clock for a closed order from today', () => {
+    // Arrange / Act
+    renderTicket({
+      order: {
+        ...pendingOrder,
+        status: 'COMPLETED',
+        createdAt: new Date().toISOString(),
+      },
+    })
+
+    // Assert
+    expect(screen.queryByText('·')).not.toBeInTheDocument()
+  })
+
+  it('adds the date for a closed order from a previous day', () => {
+    // Arrange / Act
+    renderTicket({
+      order: {
+        ...pendingOrder,
+        status: 'COMPLETED',
+        createdAt: '2026-01-05T14:30:00.000Z',
+      },
+    })
+
+    // Assert
+    expect(screen.getByText(/05\/01 ·/)).toBeInTheDocument()
+  })
 })

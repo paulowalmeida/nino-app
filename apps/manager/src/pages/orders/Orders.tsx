@@ -18,6 +18,7 @@ import { useOrders } from '@hooks/order/useOrders'
 import { useOrderStatus } from '@hooks/order/useOrderStatus'
 import { useQueueSummary } from '@hooks/order/useQueueSummary'
 import { useDebouncedValue } from '@hooks/ui/useDebouncedValue'
+import { useLoadMore } from '@hooks/ui/useLoadMore'
 import type { OrderStage } from '@custom_types/order/order-stage'
 import type { OrderStatusKey } from '@custom_types/order/order-status-key'
 import type { StageOption } from '@custom_types/order/stage-option'
@@ -85,10 +86,39 @@ export const Orders = () => {
    * Procurando, a etapa sai do caminho — o servidor já devolveu só o que
    * casa com o termo, então a lista é o resultado inteiro.
    */
-  const { orders, isPending, isError, hasNextPage, fetchNextPage } = useOrders(
+  const {
+    orders,
+    isPending,
+    isError,
+    hasNextPage,
+    isFetchingNextPage,
+    fetchNextPage,
+  } = useOrders(
     tenantId,
     search,
     isSearching ? undefined : statusesForStage(stage)
+  )
+
+  /*
+   * A entrada em cascata é para o que já mostra na tela ao abrir — quem
+   * carrega mais rolando até o fim já está olhando pra lá, e um atraso
+   * de propósito só segurava o card pronto atrás de um `opacity: 0`
+   * sem motivo. `null` enquanto a primeira leva ainda carrega; trava no
+   * tamanho dela assim que chega, e destrava nulo de novo se a etapa ou
+   * a busca mudam e uma lista nova começa a carregar.
+   */
+  const [firstBatchSize, setFirstBatchSize] = useState<number | null>(null)
+  if (isPending && firstBatchSize !== null) setFirstBatchSize(null)
+  else if (!isPending && firstBatchSize === null) {
+    setFirstBatchSize(orders.length)
+  }
+
+  /* Só "Fechados" e a busca paginam — as outras etapas cabem inteiras numa
+     página, então não têm sentinela pra carregar. */
+  const paginates = isSearching || stage === 'closed'
+  const sentinelRef = useLoadMore(
+    paginates && !!hasNextPage,
+    () => void fetchNextPage()
   )
   const {
     mutate: advance,
@@ -188,11 +218,25 @@ export const Orders = () => {
 
         {shown.length > 0 && (
           <ul className={styles.board}>
+            {/*
+             * Cascata só na primeira leva (`firstBatchSize`): quem já vê o
+             * card na tela ao abrir ganha a entrada em sequência, mas quem
+             * carregou mais rolando até o fim já está olhando pra lá — um
+             * atraso de propósito aí só segurava o card pronto atrás de um
+             * `opacity: 0` (o `fill-mode: both` do `.settle` mantém esse
+             * estado durante o atraso), ocupando o lugar na grade sem
+             * mostrar nada: o "espaço em branco parado" era exatamente
+             * isso.
+             */}
             {shown.map((order, index) => (
               <li
                 key={order.id}
                 className={motion.settle}
-                style={riseDelay(index * 55 + 80)}
+                style={riseDelay(
+                  index < (firstBatchSize ?? 0)
+                    ? Math.min(index, 11) * 55 + 80
+                    : 0
+                )}
               >
                 <OrderTicket
                   order={order}
@@ -204,19 +248,18 @@ export const Orders = () => {
           </ul>
         )}
 
-        {(isSearching || stage === 'closed') && hasNextPage && (
-          <Flexbox justify="center" mt={6}>
-            <Button
-              variant="outline"
-              size="sm"
-              className={motion.press}
-              onClick={() => void fetchNextPage()}
-            >
-              {isSearching
-                ? 'Carregar mais resultados'
-                : 'Carregar pedidos mais antigos'}
-            </Button>
-          </Flexbox>
+        {/*
+         * Sentinela, não botão: some do fluxo sem chamar atenção, e só o
+         * texto de "carregando" ocupa esse espaço — os cards novos entram
+         * no `<ul>` de cima, então o espaço só cresce quando eles já estão
+         * prontos para renderizar, não antes.
+         */}
+        {paginates && hasNextPage && (
+          <div ref={sentinelRef} className={styles.sentinel}>
+            {isFetchingNextPage && (
+              <span className={styles.loadingMore}>Carregando mais…</span>
+            )}
+          </div>
         )}
       </div>
     </div>

@@ -30,6 +30,19 @@ const time = new Intl.DateTimeFormat('pt-BR', {
   minute: '2-digit',
 })
 
+const dayMonth = new Intl.DateTimeFormat('pt-BR', {
+  day: '2-digit',
+  month: '2-digit',
+})
+
+const startOfDay = (date: Date): number =>
+  new Date(date.getFullYear(), date.getMonth(), date.getDate()).getTime()
+
+/** "Fechados" holds orders from any day — the clock alone reads as today's,
+ *  so a closed ticket from before today needs the date too. */
+const isFromToday = (date: Date): boolean =>
+  startOfDay(date) === startOfDay(new Date())
+
 /** Up to three lines, then a count — the ticket stays readable at a
  * glance. */
 const VISIBLE_ITEMS = 3
@@ -49,7 +62,11 @@ export const OrderTicket = ({ order, onAdvance, isBusy }: OrderTicketProps) => {
   /** A closed order has no timer: the full clock time matters again. */
   const isDone = isCancelled || stageOf(order.status) === 'closed'
   const { label: elapsed, isLate } = useElapsed(order.createdAt)
-  const clock = time.format(new Date(order.createdAt))
+  const createdAt = new Date(order.createdAt)
+  const clock = time.format(createdAt)
+  const clockLabel = isFromToday(createdAt)
+    ? clock
+    : `${dayMonth.format(createdAt)} · ${clock}`
 
   const classes = [
     styles.ticket,
@@ -69,7 +86,7 @@ export const OrderTicket = ({ order, onAdvance, isBusy }: OrderTicketProps) => {
           <span className={styles.number}>#{ticketNumber(order.id)}</span>
           {isDone ? (
             <time className={styles.time} dateTime={order.createdAt}>
-              {clock}
+              {clockLabel}
             </time>
           ) : (
             <time
