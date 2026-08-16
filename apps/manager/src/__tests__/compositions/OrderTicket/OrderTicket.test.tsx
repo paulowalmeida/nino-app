@@ -106,4 +106,28 @@ describe(OrderTicket.name, () => {
     // Assert
     expect(screen.getByText(/05\/01 ·/)).toBeInTheDocument()
   })
+
+  it('names the card payment "na entrega" for a delivery order', () => {
+    // Arrange / Act
+    renderTicket({
+      order: { ...pendingOrder, paymentMethod: 'CARD_ON_DELIVERY' },
+    })
+
+    // Assert
+    expect(screen.getByText(/Cartão na entrega/)).toBeInTheDocument()
+  })
+
+  it('drops "na entrega" for the same card method at the counter', () => {
+    // Arrange / Act
+    renderTicket({
+      order: {
+        ...pendingOrder,
+        channel: 'COUNTER',
+        paymentMethod: 'CARD_ON_DELIVERY',
+      },
+    })
+
+    // Assert
+    expect(screen.getByText(/^Cartão ·/)).toBeInTheDocument()
+  })
 })

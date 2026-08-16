@@ -16,14 +16,14 @@ vi.mock('@hooks/product/useMenu')
 vi.mock('@hooks/settings/useAcceptedPayments')
 vi.mock('@hooks/order/useCreateOrder')
 
-const renderCounter = () => {
+const renderCounter = (methods: string[] = ['CASH']) => {
   vi.mocked(useCurrentTenant).mockReturnValue(currentTenant)
   vi.mocked(useMenu).mockReturnValue({
     sections,
     isPending: false,
   } as unknown as ReturnType<typeof useMenu>)
   vi.mocked(useAcceptedPayments).mockReturnValue({
-    methods: ['CASH'],
+    methods,
   } as unknown as ReturnType<typeof useAcceptedPayments>)
   vi.mocked(useCreateOrder).mockReturnValue({
     mutateAsync: vi.fn(),
@@ -99,5 +99,24 @@ describe(Counter.name, () => {
     await user.click(screen.getByRole('button', { name: /1 item/ }))
     const name = await screen.findByPlaceholderText('Nome de quem pediu')
     expect(name).toHaveValue('')
+  })
+
+  it('hides online card from the payment choices at the counter', async () => {
+    // Arrange
+    const user = userEvent.setup()
+    renderCounter(['CASH', 'CARD_ON_DELIVERY', 'CARD_ONLINE'])
+
+    // Act
+    await pickItem(user)
+    await user.click(screen.getByRole('button', { name: /1 item/ }))
+    await screen.findByText('Comanda')
+
+    // Assert
+    expect(
+      screen.queryByRole('button', { name: 'Cartão online' })
+    ).not.toBeInTheDocument()
+    expect(
+      screen.getByRole('button', { name: 'Cartão' })
+    ).toBeInTheDocument()
   })
 })

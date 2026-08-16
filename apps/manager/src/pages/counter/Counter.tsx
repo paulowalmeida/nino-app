@@ -15,6 +15,7 @@ import { ApiError } from '@nino/lib/utils/api-error'
 import type { CartLine } from '@custom_types/counter/cart-line'
 import type { MenuItem } from '@custom_types/product/menu-item'
 import type { PaymentMethod } from '@custom_types/order/payment-method'
+import { paymentMethodsFor } from '@utils/order-flow'
 import styles from './Counter.module.css'
 import motion from '@styles/motion.module.css'
 
@@ -28,7 +29,8 @@ export const Counter = () => {
   const tenantId = tenant?.tenantId ?? null
 
   const { sections, isPending } = useMenu(tenantId)
-  const { methods } = useAcceptedPayments(tenantId)
+  const { methods: acceptedMethods } = useAcceptedPayments(tenantId)
+  const methods = paymentMethodsFor(acceptedMethods, 'COUNTER')
   const { mutateAsync: placeOrder, isPending: isSending } =
     useCreateOrder(tenantId)
 

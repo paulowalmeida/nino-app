@@ -6,7 +6,6 @@ import { Button } from '@nino/ds/components/Button'
 import { Card } from '@nino/ds/components/Card'
 import {
   CHANNEL_LABEL,
-  PAYMENT_METHOD_LABEL,
   PAYMENT_STATUS_LABEL,
   STATUS_LABEL,
 } from '@constants/order.constants'
@@ -16,6 +15,7 @@ import { statusBadgeVariant } from '@utils/order-badge'
 import {
   customerNameOf,
   nextStep,
+  paymentLabelFor,
   stageOf,
   ticketNumber,
 } from '@utils/order-flow'
@@ -151,7 +151,7 @@ export const OrderTicket = ({ order, onAdvance, isBusy }: OrderTicketProps) => {
           <Flexbox direction="column">
             <span className={styles.total}>{brl(order.totalAmount)}</span>
             <span className={styles.payment}>
-              {PAYMENT_METHOD_LABEL[order.paymentMethod]} ·{' '}
+              {paymentLabelFor(order.paymentMethod, order.channel)} ·{' '}
               {PAYMENT_STATUS_LABEL[order.paymentStatus]}
             </span>
           </Flexbox>

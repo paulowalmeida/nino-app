@@ -111,6 +111,19 @@ export const addressOf = (order: Order): string | null => {
 }
 
 /**
+ * `CARD_ONLINE` is charged during checkout, before the order exists — at
+ * the counter someone is already standing there with a card or cash, so
+ * there's no "online" step left to offer.
+ */
+export const paymentMethodsFor = (
+  methods: PaymentMethod[],
+  channel: OrderChannel
+): PaymentMethod[] =>
+  channel === 'COUNTER'
+    ? methods.filter((method) => method !== 'CARD_ONLINE')
+    : methods
+
+/**
  * O mesmo meio de pagamento tem nome diferente conforme o canal: no balcão
  * ninguém fala "cartão na entrega".
  */

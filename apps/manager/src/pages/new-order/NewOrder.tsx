@@ -18,6 +18,7 @@ import type { PaymentMethod } from '@custom_types/order/payment-method'
 import type { Recipient } from '@custom_types/order/recipient'
 import { NEW_ORDER_EMPTY_RECIPIENT } from '@constants/order.constants'
 import { brl } from '@utils/money'
+import { paymentMethodsFor } from '@utils/order-flow'
 import { toE164 } from '@utils/phone'
 import { isStoreOpen } from '@utils/store-open'
 
@@ -31,7 +32,7 @@ export const NewOrder = () => {
   const { sections, isPending } = useMenu(tenantId)
   const { zones } = useDeliveryZones(tenantId)
   const { hours } = useOpeningHours(tenantId)
-  const { methods } = useAcceptedPayments(tenantId)
+  const { methods: acceptedMethods } = useAcceptedPayments(tenantId)
   const { data: pause } = usePause(tenantId)
   const { mutateAsync: placeOrder, isPending: isPlacing } =
     useCreateOrder(tenantId)
@@ -39,6 +40,8 @@ export const NewOrder = () => {
   const [lines, setLines] = useState<CartLine[]>([])
   const [channel, setChannel] = useState<OrderChannel>('COUNTER')
   const [chosenMethod, setChosenMethod] = useState<PaymentMethod | null>(null)
+
+  const methods = paymentMethodsFor(acceptedMethods, channel)
 
   /** A forma escolhida só vale enquanto a loja aceitar. */
   const method =
