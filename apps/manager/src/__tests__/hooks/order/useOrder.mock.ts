@@ -6,6 +6,7 @@ export const openOrder: Order = {
   status: 'PENDING',
   channel: 'DELIVERY',
   courierId: null,
+  deliveryAddress: null,
   tableNumber: null,
   notes: null,
   subtotal: '10.00',

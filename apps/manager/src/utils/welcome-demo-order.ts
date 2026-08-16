@@ -28,6 +28,7 @@ export const demoOrder = (
   status,
   channel: 'DELIVERY',
   courierId: null,
+  deliveryAddress: null,
   tableNumber: null,
   notes: 'Sem cebola',
   subtotal: '49.80',
