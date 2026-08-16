@@ -6,10 +6,23 @@
   @apply flex min-h-0 flex-1 flex-col;
 }
 
+/* holds the item count and, in selection mode, the bulk-delete actions.
+   `px-2` matches `.item`'s own padding so the toggle button lines up with
+   the checkbox column that appears below it once selecting starts. */
+.toolbar {
+  @apply mb-2 shrink-0 gap-2 px-2;
+}
+
+/* same 44px footprint as `.selectCheckbox` in MenuRow, so the toggle
+   button's icon sits directly above the row checkboxes below it */
+.toolbarLead {
+  @apply flex h-11 w-11 shrink-0 items-center justify-center;
+}
+
 /* the count row is also where the drag hint shows, and only when dragging
    actually works */
 .tally {
-  @apply mb-2 shrink-0 text-xs text-fg-faint lg:text-sm;
+  @apply text-xs text-fg-faint lg:text-sm;
 }
 
 /*

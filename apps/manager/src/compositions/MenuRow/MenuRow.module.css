@@ -13,6 +13,10 @@
   @apply active:cursor-grabbing;
 }
 
+.selectCheckbox {
+  @apply flex h-11 w-11 shrink-0 items-center justify-center;
+}
+
 /*
  * Sold out reads as absence, not as a badge: the row fades and the price is
  * struck through, so the owner sees the menu the way the customer will.

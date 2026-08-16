@@ -29,6 +29,12 @@ const item: MenuItem = {
   images: [],
 }
 
+const secondItem: MenuItem = {
+  ...item,
+  id: 'item-2',
+  name: 'Pastel',
+}
+
 const renderBoard = () => {
   const client = new QueryClient({
     defaultOptions: { mutations: { retry: false } },
@@ -66,5 +72,64 @@ describe(MenuBoard.name, () => {
     // Assert
     expect(screen.getByText('Excluir item')).toBeInTheDocument()
     expect(screen.getByText(/"Coxinha" será removido/)).toBeInTheDocument()
+  })
+
+  it('enters selection mode and opens the bulk delete dialog', async () => {
+    // Arrange
+    renderBoard()
+
+    // Act
+    await userEvent.click(
+      screen.getByRole('button', { name: 'Selecionar itens' })
+    )
+    await userEvent.click(screen.getByLabelText('Selecionar Coxinha'))
+    await userEvent.click(screen.getByRole('button', { name: 'Excluir' }))
+
+    // Assert
+    expect(screen.getByText('Excluir item')).toBeInTheDocument()
+    expect(screen.getByText(/1 item será removido/)).toBeInTheDocument()
+    expect(
+      screen.queryByLabelText('Excluir Coxinha')
+    ).not.toBeInTheDocument()
+  })
+
+  it('cancels selection without opening the bulk delete dialog', async () => {
+    // Arrange
+    renderBoard()
+
+    // Act
+    await userEvent.click(
+      screen.getByRole('button', { name: 'Selecionar itens' })
+    )
+    await userEvent.click(screen.getByLabelText('Selecionar Coxinha'))
+    await userEvent.click(screen.getByRole('button', { name: 'Cancelar' }))
+
+    // Assert
+    expect(screen.queryByText('Excluir itens')).not.toBeInTheDocument()
+    expect(screen.getByLabelText('Excluir Coxinha')).toBeInTheDocument()
+  })
+
+  it('selects every loaded item through the select-all checkbox', async () => {
+    // Arrange
+    vi.mocked(useCatalog).mockReturnValue({
+      items: [item, secondItem],
+      total: 2,
+      isPending: false,
+      isError: false,
+      hasNextPage: false,
+      isFetchingNextPage: false,
+      fetchNextPage: vi.fn(),
+    } as unknown as ReturnType<typeof useCatalog>)
+    renderBoard()
+
+    // Act
+    await userEvent.click(
+      screen.getByRole('button', { name: 'Selecionar itens' })
+    )
+    await userEvent.click(screen.getByLabelText('Selecionar todos'))
+
+    // Assert
+    expect(screen.getByText('2 selecionados')).toBeInTheDocument()
+    expect(screen.getByLabelText('Desmarcar todos')).toBeInTheDocument()
   })
 })

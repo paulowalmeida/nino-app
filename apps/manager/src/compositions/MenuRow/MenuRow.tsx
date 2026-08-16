@@ -4,6 +4,7 @@ import { Link } from 'react-router'
 import { Reorder, useDragControls } from 'framer-motion'
 
 import { Button } from '@nino/ds/components/Button'
+import { Checkbox } from '@nino/ds/components/Checkbox'
 import { Switch } from '@nino/ds/components/Switch'
 import { Icon } from '@nino/ds/components/Icon'
 import { ItemThumb } from '@components/ItemThumb/ItemThumb'
@@ -39,6 +40,10 @@ export type MenuRowProps = {
    * disappears.
    */
   canReorder: boolean
+  /** Selection mode for bulk delete: swaps the drag handle for a checkbox. */
+  isSelecting: boolean
+  isSelected: boolean
+  onToggleSelect: (id: string) => void
   onToggleAvailability: (id: string, isActive: boolean) => void
   /** Desktop only: on mobile deleting lives on the item's own screen. */
   onDelete: (item: MenuItem) => void
@@ -49,6 +54,9 @@ export const MenuRow = ({
   item,
   index,
   canReorder,
+  isSelecting,
+  isSelected,
+  onToggleSelect,
   onToggleAvailability,
   onDelete,
   onDragEnd,
@@ -74,16 +82,27 @@ export const MenuRow = ({
       }`}
       style={isEntering ? riseDelay(entranceDelay(index)) : {}}
     >
-      {canReorder && (
-        <Button
-          variant="ghost"
-          size="icon"
-          className={styles.dragHandle}
-          aria-label={`Reordenar ${item.name}`}
-          onPointerDown={(event) => dragControls.start(event)}
-        >
-          <Icon name="grip" />
-        </Button>
+      {isSelecting ? (
+        <div className={styles.selectCheckbox}>
+          <Checkbox
+            size="sm"
+            checked={isSelected}
+            onCheckedChange={() => onToggleSelect(item.id)}
+            aria-label={`Selecionar ${item.name}`}
+          />
+        </div>
+      ) : (
+        canReorder && (
+          <Button
+            variant="ghost"
+            size="icon"
+            className={styles.dragHandle}
+            aria-label={`Reordenar ${item.name}`}
+            onPointerDown={(event) => dragControls.start(event)}
+          >
+            <Icon name="grip" />
+          </Button>
+        )
       )}
 
       <Link to={item.id} className={styles.itemLink}>
@@ -100,21 +119,24 @@ export const MenuRow = ({
       <Switch
         size="sm"
         checked={item.isActive}
+        disabled={isSelecting}
         onCheckedChange={(isActive) => onToggleAvailability(item.id, isActive)}
         aria-label={`${item.name} disponível`}
       />
 
       {/* only where width allows: on mobile, delete lives on the
-        item's own screen */}
-      <Button
-        variant="ghost"
-        size="icon"
-        className={`${motion.press} ${styles.delete}`}
-        aria-label={`Excluir ${item.name}`}
-        onClick={() => onDelete(item)}
-      >
-        <Icon name="trash" />
-      </Button>
+        item's own screen. Hidden while selecting: bulk delete replaces it. */}
+      {!isSelecting && (
+        <Button
+          variant="ghost"
+          size="icon"
+          className={`${motion.press} ${styles.delete}`}
+          aria-label={`Excluir ${item.name}`}
+          onClick={() => onDelete(item)}
+        >
+          <Icon name="trash" />
+        </Button>
+      )}
     </Reorder.Item>
   )
 }

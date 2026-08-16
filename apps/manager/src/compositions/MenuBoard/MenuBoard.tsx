@@ -4,7 +4,10 @@ import { useEffect, useRef, useState } from 'react'
 import { Reorder } from 'framer-motion'
 
 import { Alert } from '@nino/ds/components/Alert'
+import { Button } from '@nino/ds/components/Button'
+import { Checkbox } from '@nino/ds/components/Checkbox'
 import { EmptyState } from '@nino/ds/components/EmptyState'
+import { Icon } from '@nino/ds/components/Icon'
 import { ScrollArea } from '@nino/ds/components/ScrollArea'
 import { Skeleton } from '@nino/ds/components/Skeleton'
 import { useCatalog } from '@hooks/product/useCatalog'
@@ -12,7 +15,12 @@ import { useItemAvailability } from '@hooks/product/useItemAvailability'
 import { useLoadMore } from '@hooks/ui/useLoadMore'
 import { useReorderMenuItems } from '@hooks/product/useReorderMenuItems'
 import type { MenuItem } from '@custom_types/product/menu-item'
-import { DeleteItemDialog } from '@compositions/DeleteItemDialog/DeleteItemDialog'
+import {
+  DeleteItemDialog,
+} from '@compositions/DeleteItemDialog/DeleteItemDialog'
+import {
+  DeleteItemsDialog,
+} from '@compositions/DeleteItemsDialog/DeleteItemsDialog'
 import { MenuRow } from '@compositions/MenuRow/MenuRow'
 import { MENU_BOARD_GHOST_ROWS } from '@constants/product.constants'
 
@@ -44,6 +52,42 @@ export const MenuBoard = ({ tenantId, categoryId, search }: MenuBoardProps) => {
   )
   const { mutate: reorder } = useReorderMenuItems(tenantId, categoryId)
   const sentinelRef = useLoadMore(!!hasNextPage, () => void fetchNextPage())
+
+  const [isSelecting, setIsSelecting] = useState(false)
+  const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set())
+  const [idsPendingDelete, setIdsPendingDelete] = useState<string[]>([])
+
+  const handleToggleSelect = (id: string) => {
+    setSelectedIds((current) => {
+      const next = new Set(current)
+      if (next.has(id)) next.delete(id)
+      else next.add(id)
+      return next
+    })
+  }
+
+  /** "All" means every item loaded so far — more loads in as the list is
+   *  scrolled, same as the rows a person can currently see and check one
+   *  by one. */
+  const allLoadedSelected =
+    items.length > 0 && selectedIds.size === items.length
+  const someLoadedSelected = selectedIds.size > 0 && !allLoadedSelected
+
+  const handleToggleSelectAll = () => {
+    setSelectedIds(
+      allLoadedSelected ? new Set() : new Set(items.map(({ id }) => id))
+    )
+  }
+
+  const handleCancelSelection = () => {
+    setIsSelecting(false)
+    setSelectedIds(new Set())
+  }
+
+  const handleCloseDeleteItemsDialog = () => {
+    setIdsPendingDelete([])
+    handleCancelSelection()
+  }
 
   /**
    * Dragging only makes sense within a category: an item's position is
@@ -140,10 +184,86 @@ export const MenuBoard = ({ tenantId, categoryId, search }: MenuBoardProps) => {
 
   return (
     <div className={styles.wrap}>
-      <p className={styles.tally}>
-        {total === 1 ? '1 item' : `${total} itens`}
-        {canReorder && ' · arraste para mudar a ordem no app do cliente'}
-      </p>
+      <Flexbox
+        direction="row"
+        align="center"
+        gap={2}
+        shrink={false}
+        className={styles.toolbar}
+      >
+        <div className={styles.toolbarLead}>
+          {isSelecting ? (
+            <Checkbox
+              size="sm"
+              checked={
+                allLoadedSelected
+                  ? true
+                  : someLoadedSelected
+                    ? 'indeterminate'
+                    : false
+              }
+              onCheckedChange={handleToggleSelectAll}
+              className={motion.press}
+              aria-label={
+                allLoadedSelected ? 'Desmarcar todos' : 'Selecionar todos'
+              }
+            />
+          ) : (
+            <Button
+              variant="ghost"
+              size="icon"
+              className={motion.press}
+              aria-label="Selecionar itens"
+              onClick={() => setIsSelecting(true)}
+            >
+              <Icon name="check-square" />
+            </Button>
+          )}
+        </div>
+
+        <p className={styles.tally}>
+          {isSelecting
+            ? selectedIds.size === 1
+              ? '1 selecionado'
+              : `${selectedIds.size} selecionados`
+            : total === 1
+              ? '1 item'
+              : `${total} itens`}
+          {canReorder &&
+            !isSelecting &&
+            ' · arraste para mudar a ordem no app do cliente'}
+        </p>
+
+        {isSelecting && (
+          <Flexbox
+            direction="row"
+            align="center"
+            gap={2}
+            shrink={false}
+            className={motion.unroll}
+          >
+            <Button
+              variant="ghost"
+              size="sm"
+              className={motion.press}
+              onClick={handleCancelSelection}
+            >
+              Cancelar
+            </Button>
+
+            {selectedIds.size > 0 && (
+              <Button
+                variant="danger"
+                size="sm"
+                className={`${motion.pop} ${motion.press}`}
+                onClick={() => setIdsPendingDelete(Array.from(selectedIds))}
+              >
+                Excluir
+              </Button>
+            )}
+          </Flexbox>
+        )}
+      </Flexbox>
 
       {/* scrolling starts here: the count above stays put */}
       <ScrollArea className={styles.scroll}>
@@ -160,7 +280,10 @@ export const MenuBoard = ({ tenantId, categoryId, search }: MenuBoardProps) => {
                 key={item.id}
                 item={item}
                 index={index}
-                canReorder={canReorder}
+                canReorder={canReorder && !isSelecting}
+                isSelecting={isSelecting}
+                isSelected={selectedIds.has(item.id)}
+                onToggleSelect={handleToggleSelect}
                 onToggleAvailability={(itemId, isActive) =>
                   setAvailability({ id: itemId, isActive })
                 }
@@ -183,6 +306,12 @@ export const MenuBoard = ({ tenantId, categoryId, search }: MenuBoardProps) => {
         tenantId={tenantId}
         item={itemPendingDelete}
         onClose={() => setItemPendingDelete(null)}
+      />
+
+      <DeleteItemsDialog
+        tenantId={tenantId}
+        itemIds={idsPendingDelete}
+        onClose={handleCloseDeleteItemsDialog}
       />
     </div>
   )

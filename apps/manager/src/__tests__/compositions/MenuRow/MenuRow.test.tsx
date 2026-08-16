@@ -32,6 +32,9 @@ const renderRow = (
           item={item}
           index={0}
           canReorder={false}
+          isSelecting={false}
+          isSelected={false}
+          onToggleSelect={vi.fn()}
           onToggleAvailability={vi.fn()}
           onDelete={vi.fn()}
           onDragEnd={vi.fn()}
@@ -65,5 +68,27 @@ describe(MenuRow.name, () => {
 
     // Assert
     expect(onToggleAvailability).not.toHaveBeenCalled()
+  })
+
+  it('shows a checkbox instead of the trash button while selecting', () => {
+    // Arrange / Act
+    renderRow(build(), { isSelecting: true })
+
+    // Assert
+    expect(screen.getByLabelText('Selecionar Coxinha')).toBeInTheDocument()
+    expect(screen.queryByLabelText('Excluir Coxinha')).not.toBeInTheDocument()
+  })
+
+  it('reports the toggled item id when the checkbox is clicked', async () => {
+    // Arrange
+    const onToggleSelect = vi.fn()
+    const item = build({ id: 'item-42' })
+    renderRow(item, { isSelecting: true, onToggleSelect })
+
+    // Act
+    await userEvent.click(screen.getByLabelText('Selecionar Coxinha'))
+
+    // Assert
+    expect(onToggleSelect).toHaveBeenCalledWith('item-42')
   })
 })
