@@ -136,6 +136,7 @@ export const Reports = () => {
 
       {period === 'custom' && (
         <Flexbox
+          direction="row"
           gap={3}
           align="end"
           wrap
