@@ -1,0 +1,133 @@
+import { render, screen } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
+import { MemoryRouter } from 'react-router'
+import { beforeEach, describe, expect, it, vi } from 'vitest'
+
+import { OrderTicket } from '@organisms/OrderTicket/OrderTicket'
+
+import { pendingOrder } from './OrderTicket.mock'
+
+const useElapsed = vi.hoisted(() => vi.fn())
+
+vi.mock('@hooks/order/useElapsed', () => ({ useElapsed }))
+
+const renderTicket = (
+  props: Partial<React.ComponentProps<typeof OrderTicket>>
+) =>
+  render(
+    <MemoryRouter>
+      <OrderTicket order={pendingOrder} onAdvance={vi.fn()} {...props} />
+    </MemoryRouter>
+  )
+
+describe(OrderTicket.name, () => {
+  beforeEach(() => {
+    useElapsed.mockReturnValue({ label: '2 min', isLate: false })
+  })
+
+  it('shows the customer, status and next step for an open order', () => {
+    // Arrange / Act
+    renderTicket({})
+
+    // Assert
+    expect(screen.getByText('Weskley Almeida')).toBeInTheDocument()
+    expect(screen.getByText('esperando aceite')).toBeInTheDocument()
+    expect(
+      screen.getByRole('button', { name: 'Confirmar pedido' })
+    ).toBeInTheDocument()
+  })
+
+  it('caps the visible items and counts the rest', () => {
+    // Arrange / Act
+    renderTicket({})
+
+    // Assert
+    expect(screen.getAllByRole('listitem')).toHaveLength(4)
+    expect(screen.getByText('e mais 1 item')).toBeInTheDocument()
+  })
+
+  it('links to the order detail route', () => {
+    // Arrange / Act
+    renderTicket({})
+
+    // Assert
+    expect(
+      screen.getByRole('link', { name: /Abrir pedido/ })
+    ).toHaveAttribute('href', `/${pendingOrder.id}`)
+  })
+
+  it('advances the order to the next status on click', async () => {
+    // Arrange
+    const onAdvance = vi.fn()
+    renderTicket({ onAdvance })
+
+    // Act
+    await userEvent.click(
+      screen.getByRole('button', { name: 'Confirmar pedido' })
+    )
+
+    // Assert
+    expect(onAdvance).toHaveBeenCalledWith(pendingOrder.id, 'ACCEPTED')
+  })
+
+  it('hides the timer and the action once the order is closed', () => {
+    // Arrange / Act
+    renderTicket({ order: { ...pendingOrder, status: 'COMPLETED' } })
+
+    // Assert
+    expect(screen.queryByRole('button')).not.toBeInTheDocument()
+    expect(screen.queryByText('2 min')).not.toBeInTheDocument()
+  })
+
+  it('shows only the clock for a closed order from today', () => {
+    // Arrange / Act
+    renderTicket({
+      order: {
+        ...pendingOrder,
+        status: 'COMPLETED',
+        createdAt: new Date().toISOString(),
+      },
+    })
+
+    // Assert
+    expect(screen.queryByText('·')).not.toBeInTheDocument()
+  })
+
+  it('adds the date for a closed order from a previous day', () => {
+    // Arrange / Act
+    renderTicket({
+      order: {
+        ...pendingOrder,
+        status: 'COMPLETED',
+        createdAt: '2026-01-05T14:30:00.000Z',
+      },
+    })
+
+    // Assert
+    expect(screen.getByText(/05\/01 ·/)).toBeInTheDocument()
+  })
+
+  it('names the card payment "na entrega" for a delivery order', () => {
+    // Arrange / Act
+    renderTicket({
+      order: { ...pendingOrder, paymentMethod: 'CARD_ON_DELIVERY' },
+    })
+
+    // Assert
+    expect(screen.getByText(/Cartão na entrega/)).toBeInTheDocument()
+  })
+
+  it('drops "na entrega" for the same card method at the counter', () => {
+    // Arrange / Act
+    renderTicket({
+      order: {
+        ...pendingOrder,
+        channel: 'COUNTER',
+        paymentMethod: 'CARD_ON_DELIVERY',
+      },
+    })
+
+    // Assert
+    expect(screen.getByText(/^Cartão ·/)).toBeInTheDocument()
+  })
+})

@@ -1,10 +1,10 @@
 import { Flexbox } from '@nino/ds/components/Flexbox'
 import { Skeleton } from '@nino/ds/components/Skeleton'
 import { Header } from '@nino/ds/components/Header'
-import { BackLink } from '@elements/BackLink/BackLink'
+import { BackLink } from '@atoms/BackLink/BackLink'
 
 import styles from '@pages/new-product/NewProduct.module.css'
-import fieldStyles from '@compositions/NewProductFields/NewProductFields.module.css'
+import fieldStyles from '@organisms/NewProductFields/NewProductFields.module.css'
 
 /**
  * Espelha o formulário vazio bloco a bloco: foto, nome, descrição, preço e

@@ -1,5 +1,5 @@
 import type { PaymentMethod } from '@custom_types/order/payment-method'
-import type { ServiceRulesDraft } from '@compositions/ServiceRules/ServiceRules'
+import type { ServiceRulesDraft } from '@organisms/ServiceRules/ServiceRules'
 
 export const WEEK_SCHEDULE_DAYS = [
   'Domingo',

@@ -1,13 +1,13 @@
 import { Flexbox } from '@nino/ds/components/Flexbox'
 import { Skeleton } from '@nino/ds/components/Skeleton'
-import { Breadcrumb } from '@elements/Breadcrumb/Breadcrumb'
+import { Breadcrumb } from '@atoms/Breadcrumb/Breadcrumb'
 
 import addressStyles from
-  '@components/CustomerAddresses/CustomerAddresses.module.css'
+  '@molecules/CustomerAddresses/CustomerAddresses.module.css'
 import personalDataStyles from
-  '@compositions/CustomerPersonalData/CustomerPersonalData.module.css'
+  '@organisms/CustomerPersonalData/CustomerPersonalData.module.css'
 import summaryStyles from
-  '@compositions/CustomerSummary/CustomerSummary.module.css'
+  '@organisms/CustomerSummary/CustomerSummary.module.css'
 import styles from '@pages/customer-detail/CustomerDetail.module.css'
 
 const GHOST_PERSONAL_DATA = ['phone', 'email', 'cpf']

@@ -1,4 +1,4 @@
-import type { UnitDraft } from '@compositions/UnitCard/UnitCard'
+import type { UnitDraft } from '@organisms/UnitCard/UnitCard'
 
 /** Time zones covering Brazil — the store operates in one, not any of
     them. */

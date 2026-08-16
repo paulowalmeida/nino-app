@@ -1,8 +1,8 @@
 import { createBrowserRouter, Navigate } from 'react-router'
 
-import { AppLayout } from '@layouts/AppLayout/AppLayout'
-import { AuthLayout } from '@layouts/AuthLayout/AuthLayout'
-import { RouteErrorBoundary } from '@components/RouteErrorBoundary/RouteErrorBoundary'
+import { AppTemplate } from '@templates/AppTemplate/AppTemplate'
+import { AuthTemplate } from '@templates/AuthTemplate/AuthTemplate'
+import { RouteErrorBoundary } from '@molecules/RouteErrorBoundary/RouteErrorBoundary'
 import { MANAGERS } from '@constants/roles'
 import { AuthGuard } from '@guards/auth-guard'
 import { FirstStoreGuard } from '@guards/first-store-guard'
@@ -18,7 +18,7 @@ export const router = createBrowserRouter([
     errorElement: <RouteErrorBoundary />,
   },
   {
-    element: <AuthLayout />,
+    element: <AuthTemplate />,
     errorElement: <RouteErrorBoundary />,
     children: [
       {
@@ -65,7 +65,7 @@ export const router = createBrowserRouter([
       import('@pages/units/Units').then(({ Units }) => ({ Component: Units })),
   },
   {
-    element: <AppLayout />,
+    element: <AppTemplate />,
     path: '/:tenantId',
     loader: AuthGuard,
     errorElement: <RouteErrorBoundary />,

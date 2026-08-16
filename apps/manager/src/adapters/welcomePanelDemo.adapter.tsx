@@ -1,6 +1,6 @@
-import { KitchenCard } from '@compositions/KitchenCard/KitchenCard'
-import { OrderTicket } from '@compositions/OrderTicket/OrderTicket'
-import { OrderTimeline } from '@compositions/OrderTimeline/OrderTimeline'
+import { KitchenCard } from '@organisms/KitchenCard/KitchenCard'
+import { OrderTicket } from '@organisms/OrderTicket/OrderTicket'
+import { OrderTimeline } from '@organisms/OrderTimeline/OrderTimeline'
 import type { WelcomePanelDemoKey } from '@constants/welcome.constants'
 
 import { demoOrder, demoTimeline } from '@utils/welcome-demo-order'

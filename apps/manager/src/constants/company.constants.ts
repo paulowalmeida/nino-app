@@ -1,4 +1,4 @@
-import type { CompanyDraft } from '@compositions/CompanyCard/CompanyCard'
+import type { CompanyDraft } from '@organisms/CompanyCard/CompanyCard'
 
 export const EMPTY_COMPANY_DRAFT: CompanyDraft = {
   name: '',

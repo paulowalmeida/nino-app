@@ -1,9 +1,9 @@
 import { Flexbox } from '@nino/ds/components/Flexbox'
 import { Skeleton } from '@nino/ds/components/Skeleton'
-import { BackLink } from '@elements/BackLink/BackLink'
+import { BackLink } from '@atoms/BackLink/BackLink'
 
 import styles from '@pages/product-detail/ProductDetail.module.css'
-import fieldStyles from '@compositions/ProductDetailFields/ProductDetailFields.module.css'
+import fieldStyles from '@organisms/ProductDetailFields/ProductDetailFields.module.css'
 
 /**
  * Espelha a ficha carregada bloco a bloco: cabeçalho, fio, foto, campos e a
