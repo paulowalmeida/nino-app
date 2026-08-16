@@ -30,7 +30,7 @@ describe(useCreateOrder.name, () => {
     // Act
     result.current.mutate({
       channel: 'DELIVERY',
-      paymentMethod: 'PIX_ONLINE',
+      paymentMethod: 'PIX',
       items: [{ productId: 'p1', quantity: 1, unitPrice: 10 }],
     })
 

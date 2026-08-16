@@ -9,7 +9,7 @@
  * vez de virar duas faixas vazias.
  */
 .page {
-  @apply flex min-h-dvh w-full max-w-7xl flex-col p-4;
+  @apply flex min-h-dvh w-full max-w-page flex-col p-4;
   @apply lg:h-dvh lg:p-10;
 }
 
@@ -27,7 +27,7 @@
    vale nos dois tamanhos, já que a pastilha do desktop também flutua. */
 .floor {
   @apply grid flex-1 gap-4 pb-24;
-  @apply lg:min-h-0;
+  @apply lg:min-h-0 lg:grid-cols-[1fr_23rem] lg:pb-0;
 }
 
 /* A folha para antes do topo: o cardápio continua aparecendo atrás, e é isso
@@ -53,6 +53,15 @@
   @apply flex min-h-0 flex-col overflow-y-hidden;
 }
 
+/*
+ * `container-type: inline-size` so ProductGrid's column count reads the
+ * width this column actually has, not the viewport's. At 1024px viewport
+ * with the sidebar expanded, this column is squeezed to ~320px — a
+ * viewport-keyed `md:grid-cols-3` doesn't know that and forces three
+ * columns into it anyway. The container query in ProductGrid.module.css
+ * reads the real number instead.
+ */
 .menu {
   @apply flex min-w-0 flex-col lg:min-h-0;
+  container-type: inline-size;
 }

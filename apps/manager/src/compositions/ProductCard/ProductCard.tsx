@@ -32,12 +32,18 @@ export const ProductCard = ({ item, index, onPick }: ProductCardProps) => {
     onRelease: () => setIsPreviewOpen(false),
   })
 
-  const photo = item.images?.[0]?.url
+  // TEMP: forcing a real photo to preview the new card design — revert
+  // before shipping.
+  const demoPhoto =
+    'https://images.unsplash.com/photo-1568901346375-23c9450c58cd' +
+    '?w=600&q=80&auto=format&fit=crop'
+  const photo = item.images?.[0]?.url ?? demoPhoto
 
   return (
     <>
       <Card
         variant="flat"
+        padding="none"
         onClick={() => onPick(item)}
         style={riseDelay(index * 25)}
         className={`${motion.settle} ${motion.press} ${styles.card} ${
@@ -45,22 +51,19 @@ export const ProductCard = ({ item, index, onPick }: ProductCardProps) => {
         }`}
         {...handlers}
       >
-        <ItemThumb name={item.name} imageUrl={photo} className={styles.thumb} />
-        <span className={styles.name}>{item.name}</span>
-        <span className={styles.price}>{brl(item.price)}</span>
+        <ItemThumb
+          name={item.name}
+          imageUrl={photo}
+          className={styles.photo}
+          wrapperClassName={styles.photoWrap}
+        />
+
+        <div className={styles.footer}>
+          <span className={styles.name}>{item.name}</span>
+          <span className={styles.price}>{brl(item.price)}</span>
+        </div>
       </Card>
 
-      {/*
-       * Centered on screen with a blurred backdrop, like Instagram's photo
-       * preview — and with no close button: the finger opened it, and
-       * releasing closes it. An X here would be an impossible target to hit
-       * without letting go of the gesture.
-       *
-       * Mounted only while open: Ark keeps dialog content in the DOM even
-       * when closed, and the grid has dozens of items — that would mean
-       * dozens of idle dialogs on the page for a preview shown one at a
-       * time.
-       */}
       {isPreviewOpen && (
         <Modal
           open
@@ -71,9 +74,6 @@ export const ProductCard = ({ item, index, onPick }: ProductCardProps) => {
           backdropClassName={styles.previewBackdrop}
           body={
             <Flexbox direction="column" gap={2}>
-              {/* Same tile as the card, sized to look at: with no photo it
-                  falls back to the category emoji instead of leaving a
-                  hole. */}
               <ItemThumb
                 name={item.name}
                 imageUrl={photo}

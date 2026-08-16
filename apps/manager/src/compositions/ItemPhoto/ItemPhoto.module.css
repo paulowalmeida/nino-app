@@ -12,7 +12,7 @@
 }
 
 .photo {
-  @apply h-full w-full object-cover;
+  @apply max-h-16 w-full object-cover;
 }
 
 /* área de largar arquivo, quando ainda não há foto */

@@ -129,7 +129,7 @@ export const CategoryRow = ({
             </span>
           </div>
 
-          <Flexbox gap={1} align="center" shrink={false}>
+          <Flexbox direction="row" gap={1} align="center" shrink={false}>
             <Button
               variant="ghost"
               size="icon"

@@ -12,7 +12,7 @@ export const openOrder: Order = {
   deliveryFee: '0.00',
   totalAmount: '10.00',
   deliveryZoneName: null,
-  paymentMethod: 'PIX_ONLINE',
+  paymentMethod: 'PIX',
   paymentStatus: 'PAID',
   changeFor: null,
   cancelReason: null,

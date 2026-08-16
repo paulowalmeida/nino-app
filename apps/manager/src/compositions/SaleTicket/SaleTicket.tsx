@@ -3,13 +3,13 @@ import { useState } from 'react'
 
 import { Alert } from '@nino/ds/components/Alert'
 import { Button } from '@nino/ds/components/Button'
-import { Chip } from '@nino/ds/components/Chip'
 import { ScrollArea } from '@nino/ds/components/ScrollArea'
 import { Dialog } from '@nino/ds/components/Dialog'
 import { EmptyState } from '@nino/ds/components/EmptyState'
 import { Input } from '@nino/ds/components/Input'
 import { Icon } from '@nino/ds/components/Icon'
 import { ItemThumb } from '@components/ItemThumb/ItemThumb'
+import { PAYMENT_METHOD_ICON } from '@constants/order.constants'
 import type { CartLine } from '@custom_types/counter/cart-line'
 import type { PaymentMethod } from '@custom_types/order/payment-method'
 import { brl } from '@utils/money'
@@ -117,10 +117,15 @@ export const SaleTicket = ({
                         {brl(Number(line.unitPrice) * line.quantity)}
                       </span>
 
-                      <Flexbox gap={1.5} align="center" shrink={false}>
+                      <Flexbox
+                        direction="row"
+                        gap={1.5}
+                        align="center"
+                        shrink={false}
+                      >
                         <Button
                           size="icon"
-                          variant="outline"
+                          variant={isLast ? 'danger' : 'outline'}
                           className={styles.stepperBtn}
                           aria-label={
                             isLast
@@ -190,17 +195,19 @@ export const SaleTicket = ({
 
             <div className={styles.choices}>
               {methods.map((value) => (
-                <Chip
+                <Button
                   key={value}
-                  variant="toggle"
-                  selected={method === value}
+                  type="button"
+                  variant="ghost"
+                  aria-pressed={method === value}
                   onClick={() => onMethod(value)}
                   className={`${motion.press} ${styles.choice} ${
                     method === value ? styles.choiceOn : ''
                   }`}
                 >
+                  <Icon name={PAYMENT_METHOD_ICON[value]} />
                   {paymentLabelFor(value, 'COUNTER')}
-                </Chip>
+                </Button>
               ))}
             </div>
           </div>

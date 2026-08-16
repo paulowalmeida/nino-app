@@ -76,7 +76,7 @@ describe(tallyToday.name, () => {
         ...baseOrder,
         id: 'order-0001',
         totalAmount: '10.00',
-        paymentMethod: 'PIX_ONLINE',
+        paymentMethod: 'PIX',
       },
       {
         ...baseOrder,

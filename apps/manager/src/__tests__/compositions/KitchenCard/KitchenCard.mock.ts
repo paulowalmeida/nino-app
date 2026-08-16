@@ -12,7 +12,7 @@ export const pendingOrder: Order = {
   deliveryFee: '5.00',
   totalAmount: '35.00',
   deliveryZoneName: null,
-  paymentMethod: 'PIX_ONLINE',
+  paymentMethod: 'PIX',
   paymentStatus: 'PAID',
   changeFor: null,
   cancelReason: null,

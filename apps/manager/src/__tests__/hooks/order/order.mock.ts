@@ -13,7 +13,7 @@ export const baseOrder: Order = {
   deliveryFee: '0.00',
   totalAmount: '10.00',
   deliveryZoneName: null,
-  paymentMethod: 'PIX_ONLINE',
+  paymentMethod: 'PIX',
   paymentStatus: 'PENDING',
   changeFor: null,
   cancelReason: null,

@@ -66,12 +66,23 @@
  * `basis: auto` on purpose: on the mobile sheet the height comes from the
  * content, and with plain `flex-1` (basis 0) the list would contribute no
  * height at all and collapse. This way it grows to the sheet's ceiling and
- * only then scrolls.
+ * only then scrolls. It's also what keeps "who"/payment/footer pinned to
+ * the bottom of the ticket: the list already claims all the leftover space
+ * with few items, it just doesn't fill it visually, instead of shrinking to
+ * content and letting the rest of the panel drift up after it.
+ *
+ * `ScrollArea`'s own root only takes a height constraint through its
+ * `className` — without one here it sized to content instead, and
+ * flexbox had to squeeze it back down through plain shrinking, which is
+ * what let "who"/footer chase the list down the page as items were added.
  */
+.linesScroll {
+  @apply min-h-0 flex-[1_1_auto];
+}
+
 .lines {
-  @apply flex min-h-0 flex-col divide-y divide-surface-5 overflow-y-auto;
-  @apply pb-4;
-  @apply flex-[1_1_auto];
+  @apply flex flex-col divide-y divide-surface-5 pb-4 pr-1;
+  scrollbar-gutter: stable;
 }
 
 .line {
@@ -141,15 +152,17 @@
 }
 
 .choice {
-  @apply cursor-pointer rounded-full border border-border px-2 py-2;
-  @apply sm:px-3;
-  @apply text-xs font-semibold text-fg-subtle transition-colors;
-  @apply duration-150;
-  @apply hover:border-brand-bold hover:text-brand-strong sm:text-sm;
+  @apply gap-1.5 rounded-3 px-2 py-2 sm:px-3;
+  @apply text-xs font-semibold text-fg-subtle;
+  @apply hover:text-brand-strong sm:text-sm;
+}
+
+.choice svg {
+  @apply h-4 w-4 shrink-0;
 }
 
 .choiceOn {
-  @apply border-brand bg-brand-soft text-brand-strong;
+  @apply bg-brand-soft text-brand-strong;
 }
 
 .totalLabel {

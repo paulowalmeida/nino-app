@@ -36,7 +36,7 @@ export const SERVICE_RULES_CHANNELS: {
 export const SERVICE_RULES_METHODS: PaymentMethod[] = [
   'CASH',
   'CARD_ON_DELIVERY',
-  'PIX_ONLINE',
+  'PIX',
   'CARD_ONLINE',
 ]
 

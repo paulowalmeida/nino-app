@@ -7,6 +7,10 @@ type ItemThumbProps = {
   name: string
   imageUrl?: string | null
   className?: string
+  /** Classes for the element that stacks image and placeholder — lets a
+   *  consumer size the whole tile (a full-bleed card photo), not just the
+   *  image inside it. */
+  wrapperClassName?: string
 }
 
 const TONES = 6
@@ -19,7 +23,12 @@ const toneOf = (name: string): number => {
   return Math.abs(hash) % TONES
 }
 
-export const ItemThumb = ({ name, imageUrl, className }: ItemThumbProps) => {
+export const ItemThumb = ({
+  name,
+  imageUrl,
+  className,
+  wrapperClassName,
+}: ItemThumbProps) => {
   const thumbClasses = className
     ? `${styles.thumb} ${className}`
     : styles.thumb
@@ -35,7 +44,9 @@ export const ItemThumb = ({ name, imageUrl, className }: ItemThumbProps) => {
       alt=""
       aria-hidden="true"
       className={thumbClasses}
-      wrapperClassName={styles.thumbWrapper}
+      wrapperClassName={[styles.thumbWrapper, wrapperClassName]
+        .filter(Boolean)
+        .join(' ')}
       placeholder={
         <span className={glyphClasses} aria-hidden="true">
           {categoryIcon(name) ?? '🍽️'}

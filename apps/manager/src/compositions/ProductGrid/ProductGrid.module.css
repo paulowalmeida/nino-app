@@ -10,11 +10,35 @@
   @apply flex min-h-0 flex-1 flex-col gap-3;
 }
 
-/* Large targets: finger, not cursor. */
+/*
+ * Large targets: finger, not cursor. Column count answers to the menu
+ * column's own width (`container-type` set on the wrapping `.menu` in
+ * Counter.module.css), not the viewport — the counter's ticket panel and
+ * the app sidebar both eat into that width before the grid ever sees it,
+ * so a viewport-keyed breakpoint would size columns for space the grid
+ * doesn't actually have.
+ */
 .grid {
-  @apply grid flex-1 auto-rows-min gap-3 pb-2;
-  @apply grid-cols-2 md:grid-cols-3 xl:grid-cols-4;
-  @apply lg:min-h-0 lg:overflow-y-auto;
+  @apply grid flex-1 auto-rows-min grid-cols-2 gap-4 pb-2;
+  @apply lg:min-h-0 lg:gap-5 lg:overflow-y-auto;
+}
+
+@container (max-width: 21.9rem) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@container (min-width: 34rem) {
+  .grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@container (min-width: 46rem) {
+  .grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
 }
 
 /* Search results and tab content sit below the search bar/tab rail, so

@@ -1,5 +1,5 @@
 export type PaymentMethod =
   | 'CASH'
   | 'CARD_ON_DELIVERY'
-  | 'PIX_ONLINE'
+  | 'PIX'
   | 'CARD_ONLINE'

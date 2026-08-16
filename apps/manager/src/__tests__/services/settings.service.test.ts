@@ -35,7 +35,7 @@ describe('SettingsService', () => {
   it('saveSettings: updates tenants/:id with settings as the id segment', async () => {
     // Arrange
     const data: { acceptedPaymentMethods: PaymentMethod[] } = {
-      acceptedPaymentMethods: ['PIX_ONLINE', 'CASH'],
+      acceptedPaymentMethods: ['PIX', 'CASH'],
     }
     apiMock.update.mockResolvedValueOnce({ id: 'settings-1', ...data })
 

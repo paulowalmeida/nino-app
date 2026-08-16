@@ -1,8 +1,8 @@
 @reference "@nino/ds/globals.css";
 
 .card {
-  @apply flex cursor-pointer flex-col items-start gap-2 rounded-5;
-  @apply border border-border bg-surface-page p-3 text-left shadow-sm;
+  @apply flex cursor-pointer flex-col overflow-hidden rounded-5;
+  @apply border border-border bg-surface-page text-left shadow-md;
   @apply transition-all duration-150;
 
   /*
@@ -18,20 +18,37 @@
   @apply hover:shadow-md;
   @apply focus-visible:outline-none focus-visible:ring-2;
   @apply focus-visible:ring-brand focus-visible:ring-offset-2;
-  @apply min-h-28 lg:min-h-32;
 }
 
-.thumb {
-  @apply h-10 w-10 text-base lg:h-12 lg:w-12;
+.photoWrap {
+  @apply w-full;
+}
+
+/*
+ * `h-auto` is load-bearing: ItemThumb's own `.thumb` pins height to 44px
+ * for its usual row-icon use. With an explicit height still in effect,
+ * `aspect-square` has nothing to compute against — the box just stays a
+ * 44px-tall strip stretched full width no matter what ratio is set here.
+ * `text-6xl` doesn't exist — that step of the scale was deliberately
+ * deleted in restrict.css ("topo da escala que nenhuma tela usa"), so a
+ * build using it fails outright and every rule after it in the file is
+ * dropped along with it.
+ */
+.photo {
+  @apply aspect-[3/2] h-auto w-full rounded-none text-4xl lg:text-5xl;
+}
+
+.footer {
+  @apply flex flex-col gap-1 p-3.5 lg:p-4;
 }
 
 .name {
-  @apply line-clamp-2 flex-1 text-base font-semibold leading-tight;
-  @apply text-fg-default;
+  @apply line-clamp-2 text-sm font-semibold leading-tight text-fg-default;
+  @apply lg:text-base;
 }
 
 .price {
-  @apply font-display text-lg font-extrabold text-fg-strong;
+  @apply font-display text-lg font-extrabold text-fg-strong lg:text-xl;
   font-variant-numeric: tabular-nums;
 }
 
@@ -52,7 +69,7 @@
    exists. The fallback emoji grows along with it so it doesn't get lost in
    the middle of the frame. */
 .previewPhoto {
-  @apply h-56 w-full rounded-2 object-cover text-7xl;
+  @apply h-80 w-full rounded-2 object-cover text-7xl;
 }
 
 .previewName {

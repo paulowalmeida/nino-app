@@ -34,7 +34,7 @@ export const demoOrder = (
   deliveryFee: '7.00',
   totalAmount: '56.80',
   deliveryZoneName: 'Centro',
-  paymentMethod: 'PIX_ONLINE',
+  paymentMethod: 'PIX',
   paymentStatus: 'PAID',
   changeFor: null,
   cancelReason: null,

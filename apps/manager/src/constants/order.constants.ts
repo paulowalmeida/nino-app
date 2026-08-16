@@ -1,3 +1,4 @@
+import type { IconName } from '@nino/ds/components/Icon'
 import type { OrderChannel } from '@custom_types/order/order-channel'
 import type { OrderStage } from '@custom_types/order/order-stage'
 import type { OrderStatusKey } from '@custom_types/order/order-status-key'
@@ -31,8 +32,15 @@ export const CHANNEL_LABEL: Record<OrderChannel, string> = {
 export const PAYMENT_METHOD_LABEL: Record<PaymentMethod, string> = {
   CASH: 'Dinheiro',
   CARD_ON_DELIVERY: 'Cartão na entrega',
-  PIX_ONLINE: 'Pix online',
+  PIX: 'Pix',
   CARD_ONLINE: 'Cartão online',
+}
+
+export const PAYMENT_METHOD_ICON: Record<PaymentMethod, IconName> = {
+  CASH: 'banknote',
+  CARD_ON_DELIVERY: 'card-chip',
+  PIX: 'pix',
+  CARD_ONLINE: 'card-chip',
 }
 
 export const PAYMENT_STATUS_LABEL: Record<PaymentStatus, string> = {
