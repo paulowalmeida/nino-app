@@ -3,7 +3,7 @@ import { describe, expect, it } from 'vitest'
 
 import {
   CustomerAddresses,
-} from '@compositions/CustomerAddresses/CustomerAddresses'
+} from '@components/CustomerAddresses/CustomerAddresses'
 
 import { primaryAddress, secondaryAddress } from './CustomerAddresses.mock'
 

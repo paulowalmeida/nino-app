@@ -1,0 +1,37 @@
+@reference "@nino/ds/globals.css";
+
+.eyebrow {
+  @apply text-2xs font-bold uppercase tracking-[0.1em] text-fg-faintest;
+}
+
+/*
+ * Os números viram uma faixa, não quatro cartõezinhos: eles se leem juntos
+ * ("17 pedidos, R$ 2.831, desde julho"), e cartão em volta de cada um quebra
+ * essa leitura em quatro paradas. No celular quebram em duas colunas.
+ */
+.facts {
+  @apply mt-2 grid grid-cols-2 gap-y-4;
+  @apply lg:grid-cols-1 lg:gap-0;
+}
+
+.fact {
+  @apply flex flex-col gap-0.5;
+  @apply lg:flex-row lg:items-baseline lg:justify-between lg:gap-3;
+  @apply lg:border-b lg:border-border lg:py-2.5;
+}
+
+.fact:last-child {
+  @apply lg:border-b-0;
+}
+
+.factLabel {
+  @apply text-2xs font-bold uppercase tracking-[0.1em] text-fg-faintest;
+}
+
+/* número em corpo de texto, não manchete: aqui ele é referência de apoio —
+   quem manda na tela é a lista de pedidos */
+.factValue {
+  @apply font-display text-base font-extrabold text-fg-strong;
+  @apply lg:text-right;
+  font-variant-numeric: tabular-nums;
+}

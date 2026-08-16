@@ -1,11 +1,12 @@
-import { render, screen } from '@testing-library/react'
 import { MemoryRouter } from 'react-router'
+
+import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 
+import type { Membership } from '@custom_types/auth/membership'
 import { useCurrentTenant } from '@hooks/session/useCurrentTenant'
 import { useCustomers } from '@hooks/customer/useCustomers'
-
 import { Customers } from '@pages/customers/Customers'
 
 import { currentTenant, oneCustomer } from './Customers.mock'
@@ -14,7 +15,9 @@ vi.mock('@hooks/session/useCurrentTenant')
 vi.mock('@hooks/customer/useCustomers')
 
 const renderCustomers = () => {
-  vi.mocked(useCurrentTenant).mockReturnValue(currentTenant)
+  vi.mocked(useCurrentTenant).mockReturnValue(
+    currentTenant as unknown as Membership
+  )
 
   return render(
     <MemoryRouter>

@@ -2,10 +2,17 @@ import { Flexbox } from '@nino/ds/components/Flexbox'
 import { Skeleton } from '@nino/ds/components/Skeleton'
 import { Breadcrumb } from '@elements/Breadcrumb/Breadcrumb'
 
+import addressStyles from
+  '@components/CustomerAddresses/CustomerAddresses.module.css'
+import personalDataStyles from
+  '@compositions/CustomerPersonalData/CustomerPersonalData.module.css'
+import summaryStyles from
+  '@compositions/CustomerSummary/CustomerSummary.module.css'
 import styles from '@pages/customer-detail/CustomerDetail.module.css'
 
 const GHOST_PERSONAL_DATA = ['phone', 'email', 'cpf']
 const GHOST_FACTS = ['first', 'second', 'third', 'fourth']
+const GHOST_ADDRESSES = ['first', 'second']
 const GHOST_ORDERS = ['first', 'second', 'third']
 
 export const CustomerDetailSkeleton = () => (
@@ -27,22 +34,22 @@ export const CustomerDetailSkeleton = () => (
         <section aria-label="Dados pessoais">
           <Skeleton className={styles.ghostEyebrow} />
 
-          <div className={styles.facts}>
+          <dl className={personalDataStyles.facts}>
             {GHOST_PERSONAL_DATA.map((fact) => (
-              <div key={fact} className={styles.fact}>
+              <div key={fact} className={personalDataStyles.fact}>
                 <Skeleton className={styles.ghostFactLabel} />
                 <Skeleton className={styles.ghostFactValue} />
               </div>
             ))}
-          </div>
+          </dl>
         </section>
 
         <section aria-label="Resumo">
           <Skeleton className={styles.ghostEyebrow} />
 
-          <dl className={styles.facts}>
+          <dl className={summaryStyles.facts}>
             {GHOST_FACTS.map((fact) => (
-              <div key={fact} className={styles.fact}>
+              <div key={fact} className={summaryStyles.fact}>
                 <Skeleton className={styles.ghostFactLabel} />
                 <Skeleton className={styles.ghostFactValue} />
               </div>
@@ -52,7 +59,23 @@ export const CustomerDetailSkeleton = () => (
 
         <section aria-label="Endereços registrados">
           <Skeleton className={styles.ghostEyebrow} />
-          <Skeleton className={styles.ghostAddress} />
+
+          <Flexbox as="ul" gap={3} className={addressStyles.list}>
+            {GHOST_ADDRESSES.map((address) => (
+              <li key={address} className={addressStyles.addressItem}>
+                <Skeleton
+                  variant="circle"
+                  className={styles.ghostAddressIcon}
+                />
+
+                <div className={addressStyles.lines}>
+                  <Skeleton className={styles.ghostAddressLine} />
+                  <Skeleton className={styles.ghostAddressLineShort} />
+                  <Skeleton className={styles.ghostAddressLineShort} />
+                </div>
+              </li>
+            ))}
+          </Flexbox>
         </section>
       </div>
 

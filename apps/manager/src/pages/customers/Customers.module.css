@@ -37,8 +37,8 @@
 /*
  * Duas leituras diferentes, não uma encolhida.
  *
- * No desktop é tabela: cabeçalho de coluna e valores sempre na mesma posição,
- * porque ali se compara gente com gente, de cima a baixo.
+ * No desktop é tabela: cabeçalho de coluna e valores sempre na mesma
+ * posição, porque ali se compara gente com gente, de cima a baixo.
  *
  * No celular é extrato: nome à esquerda, dinheiro à direita, e o número de
  * pedidos como legenda embaixo do valor. Pontos e "cliente desde" saem — não
@@ -121,7 +121,8 @@
   font-variant-numeric: tabular-nums;
 }
 
-/* no celular a contagem de pedidos é legenda do valor, não outro número solto */
+/* no celular a contagem de pedidos é legenda do valor, não outro número
+   solto */
 .statOrders {
   @apply text-xs font-medium text-fg-faint lg:text-base lg:font-extrabold;
   @apply lg:font-display lg:text-fg-strong;

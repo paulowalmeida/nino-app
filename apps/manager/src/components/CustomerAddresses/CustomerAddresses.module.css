@@ -9,10 +9,10 @@
 }
 
 .list {
-  @apply mt-2 flex flex-col gap-3;
+  @apply mt-2;
 }
 
-.item {
+.addressItem {
   @apply flex items-start gap-2.5 rounded-3 bg-surface-cool p-3;
 }
 
@@ -24,7 +24,7 @@
   @apply min-w-0 flex-1;
 }
 
-.line {
+.streetLine {
   @apply flex flex-wrap items-center gap-x-2 gap-y-1;
   @apply text-sm font-semibold text-fg-strong;
 }

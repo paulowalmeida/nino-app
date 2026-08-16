@@ -1,8 +1,8 @@
-import { Flexbox } from '@nino/ds/components/Flexbox'
 import { useState } from 'react'
 import { Link } from 'react-router'
 
 import { Alert } from '@nino/ds/components/Alert'
+import { Flexbox } from '@nino/ds/components/Flexbox'
 import { Button } from '@nino/ds/components/Button'
 import { EmptyState } from '@nino/ds/components/EmptyState'
 import { Input } from '@nino/ds/components/Input'
@@ -36,7 +36,7 @@ export const Customers = () => {
   const tenantId = tenant?.tenantId ?? null
 
   const [term, setTerm] = useState('')
-  const search = useDebouncedValue(term.trim())
+  const search = useDebouncedValue(term)
 
   const { customers, total, isPending, isError, hasNextPage, fetchNextPage } =
     useCustomers(tenantId, search)

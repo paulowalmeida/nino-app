@@ -8,10 +8,11 @@ import { Breadcrumb } from '@elements/Breadcrumb/Breadcrumb'
 import { PersonMark } from '@elements/PersonMark/PersonMark'
 import {
   CustomerAddresses,
-} from '@compositions/CustomerAddresses/CustomerAddresses'
+} from '@components/CustomerAddresses/CustomerAddresses'
 import {
   CustomerPersonalData,
 } from '@compositions/CustomerPersonalData/CustomerPersonalData'
+import { CustomerSummary } from '@compositions/CustomerSummary/CustomerSummary'
 import { STATUS_LABEL } from '@constants/order.constants'
 import { useCurrentTenant } from '@hooks/session/useCurrentTenant'
 import { useCustomer } from '@hooks/customer/useCustomer'
@@ -34,14 +35,6 @@ const stamp = new Intl.DateTimeFormat('pt-BR', {
   year: 'numeric',
   hour: '2-digit',
   minute: '2-digit',
-})
-
-/* mês abreviado: "14 de julho de 2026" quebrava em duas linhas na coluna de
-   resumo e desalinhava os quatro números */
-const day = new Intl.DateTimeFormat('pt-BR', {
-  day: '2-digit',
-  month: 'short',
-  year: 'numeric',
 })
 
 export const CustomerDetail = () => {
@@ -107,27 +100,7 @@ export const CustomerDetail = () => {
         <div className={styles.summary}>
           <CustomerPersonalData customer={customer} />
 
-          <section aria-label="Resumo">
-            <p className={styles.eyebrowSmall}>Resumo</p>
-
-            <dl className={styles.facts}>
-              {[
-                ['Pedidos', String(customer.orders)],
-                ['Gastos', brl(customer.spent)],
-                ['Pontos', String(customer.loyaltyPoints)],
-                ['Cliente desde', day.format(new Date(customer.since))],
-              ].map(([label, value], index) => (
-                <div
-                  key={label}
-                  className={`${motion.settle} ${styles.fact}`}
-                  style={riseDelay(index * 50 + 60)}
-                >
-                  <dt className={styles.factLabel}>{label}</dt>
-                  <dd className={styles.factValue}>{value}</dd>
-                </div>
-              ))}
-            </dl>
-          </section>
+          <CustomerSummary customer={customer} />
 
           <CustomerAddresses addresses={customer.addresses} />
         </div>

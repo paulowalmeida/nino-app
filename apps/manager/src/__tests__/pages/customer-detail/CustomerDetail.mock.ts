@@ -1,6 +1,9 @@
 import type { CustomerHistory } from '@custom_types/customer/customer-history'
 import type { Membership } from '@custom_types/auth/membership'
-export const currentTenant = { tenantId: 'tenant-1' } as Membership
+
+export const currentTenant: Pick<Membership, 'tenantId'> = {
+  tenantId: 'tenant-1',
+}
 
 export const customerHistory: CustomerHistory = {
   id: 'customer-1',
