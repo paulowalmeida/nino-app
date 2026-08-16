@@ -1,0 +1,64 @@
+@reference "@nino/ds/globals.css";
+
+.figure {
+  @apply m-0 w-full min-w-0;
+}
+
+.canvas {
+  @apply relative w-full min-w-0 overflow-hidden;
+}
+
+.touchArea {
+  @apply touch-none;
+}
+
+.cursor {
+  @apply stroke-surface-6 stroke-1;
+  stroke-dasharray: 3 3;
+}
+
+.chart1 {
+  @apply stroke-chart-1;
+  fill: none;
+}
+
+.chart2 {
+  @apply stroke-chart-2;
+  fill: none;
+}
+
+.chart3 {
+  @apply stroke-chart-3;
+  fill: none;
+}
+
+.chart4 {
+  @apply stroke-chart-4;
+  fill: none;
+}
+
+.dot {
+  @apply stroke-white;
+  fill: currentColor;
+}
+
+.dot.chart1 {
+  @apply fill-chart-1;
+}
+
+.dot.chart2 {
+  @apply fill-chart-2;
+}
+
+.dot.chart3 {
+  @apply fill-chart-3;
+}
+
+.dot.chart4 {
+  @apply fill-chart-4;
+}
+
+.tooltip {
+  @apply rounded-2 border border-border bg-surface-raised px-3 py-2;
+  @apply shadow-sm;
+}

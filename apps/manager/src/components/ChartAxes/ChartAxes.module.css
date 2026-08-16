@@ -1,0 +1,13 @@
+@reference "@nino/ds/globals.css";
+
+.grid {
+  @apply stroke-surface-5 stroke-1;
+}
+
+.axisLine {
+  @apply stroke-surface-5;
+}
+
+.tickText {
+  @apply fill-fg-faint text-xs;
+}

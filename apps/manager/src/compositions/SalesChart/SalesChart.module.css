@@ -12,27 +12,10 @@
   @apply relative w-full min-w-0 overflow-hidden;
 }
 
-/*
- * Recessed grid: solid 1px, one step off the surface. Never dashed — a
- * dashed line competes with the data for attention.
- */
 /* The gesture over the chart is reading, not scrolling: without this the
    finger drags the page and the point never gets picked. */
 .touchArea {
-  touch-action: none;
-}
-
-.grid {
-  @apply stroke-surface-5;
-  stroke-width: 1;
-}
-
-.axisLine {
-  @apply stroke-surface-5;
-}
-
-.tickText {
-  @apply fill-fg-faint text-xs;
+  @apply touch-none;
 }
 
 .line {
@@ -65,13 +48,4 @@
 .tooltip {
   @apply rounded-2 border border-border bg-surface-raised px-3 py-2;
   @apply shadow-sm;
-}
-
-.tooltipLabel {
-  @apply text-xs font-bold capitalize text-fg-strong;
-}
-
-.tooltipValue {
-  @apply mt-0.5 text-sm font-semibold text-brand-strong;
-  font-variant-numeric: tabular-nums;
 }

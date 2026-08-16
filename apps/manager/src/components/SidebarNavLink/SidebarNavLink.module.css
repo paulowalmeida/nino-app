@@ -1,0 +1,25 @@
+@reference "@nino/ds/globals.css";
+
+.navItem {
+  @apply relative flex w-full cursor-pointer items-center gap-3 rounded-3;
+  @apply px-3 py-2.5 text-left;
+  @apply text-sm font-medium text-fg-on-brand/45;
+  @apply transition-colors duration-150;
+  @apply hover:bg-surface-raised/6 hover:text-fg-on-brand/80;
+}
+
+:global([data-collapsed]) .navItem {
+  @apply lg:justify-center lg:px-0;
+}
+
+.navItemActive::before {
+  content: '';
+  @apply absolute left-0 top-1.5 bottom-1.5 bg-brand;
+  width: 3px;
+  border-radius: 0 3px 3px 0;
+}
+
+.navItemActive {
+  @apply bg-brand-soft text-brand;
+  @apply hover:bg-brand-soft hover:text-brand;
+}

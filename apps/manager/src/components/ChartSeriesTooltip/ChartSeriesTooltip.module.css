@@ -1,0 +1,38 @@
+@reference "@nino/ds/globals.css";
+
+.label {
+  @apply text-xs font-bold capitalize text-fg-strong;
+}
+
+.row {
+  @apply mt-1 flex items-center gap-2 text-sm text-fg-default;
+  @apply tabular-nums;
+}
+
+.dot {
+  @apply block size-2 shrink-0 rounded-full;
+}
+
+.dot.chart1 {
+  @apply bg-chart-1;
+}
+
+.dot.chart2 {
+  @apply bg-chart-2;
+}
+
+.dot.chart3 {
+  @apply bg-chart-3;
+}
+
+.dot.chart4 {
+  @apply bg-chart-4;
+}
+
+.name {
+  @apply flex-1 text-fg-muted;
+}
+
+.value {
+  @apply font-semibold text-fg-strong;
+}

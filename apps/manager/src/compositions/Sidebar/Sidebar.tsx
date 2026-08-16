@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { useLocation } from 'react-router'
 
 import { NinoLogo } from '@elements/NinoLogo/NinoLogo'
-import { SidebarNavItem } from '@components/SidebarNavItem/SidebarNavItem'
+import { SidebarNavLink } from '@components/SidebarNavLink/SidebarNavLink'
 import { useQueueSummary } from '@hooks/order/useQueueSummary'
 import { useTenantRole } from '@hooks/session/useTenantRole'
 import { Button } from '@nino/ds/components/Button'
@@ -14,6 +14,7 @@ import { useSessionStore } from '@states/useSessionStore'
 import { riseDelay } from '@utils/rise-delay'
 import { SIDEMENU_GROUPS } from '@constants/sidemenu.constants'
 
+import { SidebarNavGroup } from '../SidebarNavGroup/SidebarNavGroup'
 import { StoreSwitcher } from '../StoreSwitcher/StoreSwitcher'
 import { UserMenu } from '../UserMenu/UserMenu'
 
@@ -102,24 +103,38 @@ export const Sidebar = ({
 
               {items
                 .filter(({ roles }) => !roles || (role && roles.includes(role)))
-                .map((item) => (
-                  <SidebarNavItem
-                    key={item.section}
-                    tenantId={tenantId}
-                    item={item}
-                    isCollapsed={isCollapsed}
-                    isInside={pathname.includes(`/${item.section}`)}
-                    isOpen={
-                      item.children ? opened === item.section : false
-                    }
-                    onOpenChange={(open) =>
-                      setOpened(open ? item.section : null)
-                    }
-                    delay={riseDelay(staggerIndex++ * 55 + 120)}
-                    waiting={waiting}
-                    onNavigate={onClose}
-                  />
-                ))}
+                .map((item) =>
+                  item.children ? (
+                    <SidebarNavGroup
+                      key={item.section}
+                      tenantId={tenantId}
+                      section={item.section}
+                      label={item.label}
+                      icon={item.icon}
+                      items={item.children}
+                      isCollapsed={isCollapsed}
+                      isInside={pathname.includes(`/${item.section}`)}
+                      isOpen={opened === item.section}
+                      onOpenChange={(open) =>
+                        setOpened(open ? item.section : null)
+                      }
+                      delay={riseDelay(staggerIndex++ * 55 + 120)}
+                      onNavigate={onClose}
+                    />
+                  ) : (
+                    <SidebarNavLink
+                      key={item.section}
+                      tenantId={tenantId}
+                      section={item.section}
+                      label={item.label}
+                      icon={item.icon}
+                      isCollapsed={isCollapsed}
+                      waiting={waiting}
+                      delay={riseDelay(staggerIndex++ * 55 + 120)}
+                      onNavigate={onClose}
+                    />
+                  )
+                )}
             </Flexbox>
           ))}
         </Flexbox>

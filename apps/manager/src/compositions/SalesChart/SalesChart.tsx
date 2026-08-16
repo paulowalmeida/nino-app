@@ -1,20 +1,19 @@
 import { useCallback, useMemo } from 'react'
 
-import { AxisBottom, AxisLeft } from '@visx/axis'
-import { localPoint } from '@visx/event'
 import { Group } from '@visx/group'
 import { scaleLinear, scaleTime } from '@visx/scale'
 import { AreaClosed, Bar, LinePath } from '@visx/shape'
 import { useTooltip, useTooltipInPortal } from '@visx/tooltip'
 import { curveMonotoneX } from '@visx/curve'
 
+import { ChartAxes } from '@components/ChartAxes/ChartAxes'
+import { ChartTooltip } from '@components/ChartTooltip/ChartTooltip'
+import { useChartGeometry } from '@hooks/ui/useChartGeometry'
 import { useElementWidth } from '@hooks/ui/useElementWidth'
-import {
-  SALES_CHART_MARGIN,
-  SALES_CHART_NARROW_MARGIN,
-} from '@constants/order.constants'
 import type { SalesSeriesPoint } from '@custom_types/order/sales-series-point'
 import type { SeriesGranularity } from '@custom_types/order/series-granularity'
+import { chartCompactNumber } from '@utils/chart-format'
+import { nearestIndexByTime, pointerTime } from '@utils/chart-pointer'
 import { brl } from '@utils/money'
 
 import styles from './SalesChart.module.css'
@@ -32,51 +31,14 @@ export type SalesChartProps = {
   label: string
 }
 
-/* Below this the chart is narrow: fewer axis marks and a smaller margin. */
-const NARROW_WIDTH = 420
-
 const STROKE = 2
 const DOT_RADIUS = 4
-
-const hourLabel = new Intl.DateTimeFormat('pt-BR', {
-  hour: '2-digit',
-  minute: '2-digit',
-})
-
-const dayLabel = new Intl.DateTimeFormat('pt-BR', {
-  day: '2-digit',
-  month: '2-digit',
-})
-
-const fullLabel = new Intl.DateTimeFormat('pt-BR', {
-  weekday: 'short',
-  day: '2-digit',
-  month: '2-digit',
-  hour: '2-digit',
-  minute: '2-digit',
-})
-
-const compact = new Intl.NumberFormat('pt-BR', {
-  notation: 'compact',
-  maximumFractionDigits: 1,
-})
 
 type SalesPoint = { at: Date; value: number }
 
 const formatMetricValue = (value: number, metric: SalesMetric): string =>
   metric === 'revenue' ? brl(value) : String(value)
 
-/**
- * Sales evolution over the period: closed area with a line on top, a single
- * series.
- *
- * No legend on purpose — a single series is named by the block's title, and
- * a box with a little square would repeat what's already written above it.
- *
- * The area exists to give the line body without inventing a second color; it
- * stays in a faint gradient so it doesn't compete with the stroke, which is
- * what actually gets read.
- */
 export const SalesChart = ({
   points,
   granularity,
@@ -109,12 +71,8 @@ export const SalesChart = ({
     [points, metric]
   )
 
-  const isNarrow = width > 0 && width < NARROW_WIDTH
-  const margin = isNarrow ? SALES_CHART_NARROW_MARGIN : SALES_CHART_MARGIN
-  const drawHeight = isNarrow ? Math.min(height, 180) : height
-
-  const innerWidth = Math.max(width - margin.left - margin.right, 0)
-  const innerHeight = Math.max(drawHeight - margin.top - margin.bottom, 0)
+  const { isNarrow, margin, drawHeight, innerWidth, innerHeight } =
+    useChartGeometry(width, height)
 
   const xScale = useMemo(
     () =>
@@ -128,9 +86,6 @@ export const SalesChart = ({
     [data, innerWidth]
   )
 
-  /* The axis starts at zero even when the series never gets close to it:
-     starting from the minimum would make a cents-sized swing look like a
-     jump. */
   const yScale = useMemo(
     () =>
       scaleLinear({
@@ -143,18 +98,13 @@ export const SalesChart = ({
 
   const handleMove = useCallback(
     (event: React.PointerEvent) => {
-      const point = localPoint(event)
-      if (!point || data.length === 0) return
+      if (data.length === 0) return
 
-      const x = point.x - margin.left
-      const time = xScale.invert(x).getTime()
+      const time = pointerTime(event, xScale, margin.left)
+      if (time === null) return
 
-      const nearest = data.reduce((best, current) =>
-        Math.abs(current.at.getTime() - time) <
-        Math.abs(best.at.getTime() - time)
-          ? current
-          : best
-      )
+      const nearestIndex = nearestIndexByTime(data, time)
+      const nearest = data[nearestIndex]
 
       showTooltip({
         tooltipData: nearest,
@@ -179,17 +129,6 @@ export const SalesChart = ({
           </defs>
 
           <Group left={margin.left} top={margin.top}>
-            {yScale.ticks(isNarrow ? 3 : 4).map((tick) => (
-              <line
-                key={tick}
-                x1={0}
-                x2={innerWidth}
-                y1={yScale(tick)}
-                y2={yScale(tick)}
-                className={styles.grid}
-              />
-            ))}
-
             <AreaClosed<SalesPoint>
               data={data}
               x={(point) => xScale(point.at) ?? 0}
@@ -221,31 +160,19 @@ export const SalesChart = ({
               />
             ))}
 
-            <AxisLeft
-              scale={yScale}
-              numTicks={isNarrow ? 3 : 4}
-              hideAxisLine
-              hideTicks
-              tickFormat={(value) =>
+            <ChartAxes
+              xScale={xScale}
+              yScale={yScale}
+              innerWidth={innerWidth}
+              innerHeight={innerHeight}
+              isNarrow={isNarrow}
+              pointCount={data.length}
+              granularity={granularity}
+              yTickFormat={(value) =>
                 metric === 'revenue'
-                  ? compact.format(Number(value))
+                  ? chartCompactNumber.format(value)
                   : String(value)
               }
-              tickLabelProps={() => ({ className: styles.tickText, dx: -8 })}
-            />
-
-            <AxisBottom
-              scale={xScale}
-              top={innerHeight}
-              numTicks={Math.min(data.length, isNarrow ? 3 : 6)}
-              hideTicks
-              tickFormat={(value) =>
-                (granularity === 'hour' ? hourLabel : dayLabel).format(
-                  value as Date
-                )
-              }
-              axisLineClassName={styles.axisLine}
-              tickLabelProps={() => ({ className: styles.tickText, dy: 4 })}
             />
 
             {tooltipOpen && tooltipData && (
@@ -258,22 +185,11 @@ export const SalesChart = ({
               />
             )}
 
-            {/* Mouse target over the whole area: aiming at the exact point
-                would need precision nobody has on a phone. */}
             <Bar
               width={innerWidth}
               height={innerHeight}
               fill="transparent"
               className={styles.touchArea}
-              /*
-               * Pointer, not separate mouse+touch: a plain tap doesn't fire
-               * `touchmove`, so listening only to movement left the phone
-               * unresponsive. `pointerdown` covers touch, click and pen with
-               * a single path.
-               *
-               * Leaving doesn't hide on touch — the finger lifts right after,
-               * and the info would disappear before it could be read.
-               */
               onPointerDown={handleMove}
               onPointerMove={handleMove}
               onPointerLeave={(event) =>
@@ -289,12 +205,10 @@ export const SalesChart = ({
             top={tooltipTop}
             className={styles.tooltip}
           >
-            <p className={styles.tooltipLabel}>
-              {fullLabel.format(tooltipData.at)}
-            </p>
-            <p className={styles.tooltipValue}>
-              {formatMetricValue(tooltipData.value, metric)}
-            </p>
+            <ChartTooltip
+              at={tooltipData.at}
+              value={formatMetricValue(tooltipData.value, metric)}
+            />
           </TooltipInPortal>
         )}
       </div>

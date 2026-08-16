@@ -1,6 +1,5 @@
 @reference "@nino/ds/globals.css";
 
-/* `ml-auto` empurra as ações pra direita só quando a linha é horizontal */
 .actions {
   @apply lg:ml-auto;
 }

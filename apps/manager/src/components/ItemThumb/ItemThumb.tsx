@@ -7,9 +7,6 @@ type ItemThumbProps = {
   name: string
   imageUrl?: string | null
   className?: string
-  /** Classes for the element that stacks image and placeholder — lets a
-   *  consumer size the whole tile (a full-bleed card photo), not just the
-   *  image inside it. */
   wrapperClassName?: string
 }
 

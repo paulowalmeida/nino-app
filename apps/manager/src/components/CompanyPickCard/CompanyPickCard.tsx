@@ -10,7 +10,6 @@ import motion from '@styles/motion.module.css'
 type CompanyPickCardProps = {
   companyName: string
   units: Membership[]
-  /** Position in the list, only to stagger the entrance. */
   index: number
   onClick: () => void
 }

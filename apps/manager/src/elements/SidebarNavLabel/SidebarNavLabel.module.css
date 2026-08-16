@@ -1,0 +1,6 @@
+@reference "@nino/ds/globals.css";
+
+.tally {
+  @apply ml-auto flex h-5 min-w-5 items-center justify-center rounded-full;
+  @apply bg-brand px-1.5 text-2xs font-bold text-fg-on-brand tabular-nums;
+}

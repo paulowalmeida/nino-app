@@ -81,6 +81,14 @@
   --color-accent-clay: var(--color-clay-500);
   --color-accent-whatsapp: var(--color-whatsapp-500);
 
+  /* Série de gráfico: diferenciar linhas por identidade, não por status —
+     por isso não reaproveita success/danger/warning, que carregam
+     significado próprio (bom/ruim/atenção) que não se aplica aqui. */
+  --color-chart-1: var(--color-brand);
+  --color-chart-2: var(--color-cool-900);
+  --color-chart-3: var(--color-clay-500);
+  --color-chart-4: var(--color-warning-bright);
+
   /* Status: família da paleta, não semáforo. O vermelho fica entre brand e
      terracota, e o aviso é mostarda porque laranja ao lado de uma marca
      laranja não comunica nada. */

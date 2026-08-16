@@ -70,6 +70,28 @@ export const queryKeys = {
         rangeKey(range),
         granularity ?? null,
       ] as const,
+    seriesByChannel: (
+      tenantId: string,
+      range: ReportRangeParams,
+      granularity?: string
+    ) =>
+      [
+        ...queryKeys.orders.all(tenantId),
+        'series-by-channel',
+        rangeKey(range),
+        granularity ?? null,
+      ] as const,
+    seriesByPaymentMethod: (
+      tenantId: string,
+      range: ReportRangeParams,
+      granularity?: string
+    ) =>
+      [
+        ...queryKeys.orders.all(tenantId),
+        'series-by-payment-method',
+        rangeKey(range),
+        granularity ?? null,
+      ] as const,
     timingReport: (tenantId: string, range: ReportRangeParams) =>
       [
         ...queryKeys.orders.all(tenantId),

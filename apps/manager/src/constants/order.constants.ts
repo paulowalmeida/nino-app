@@ -84,6 +84,14 @@ export const SALES_CHART_NARROW_MARGIN = {
   left: 38,
 }
 
+/**
+ * Rotating slots for a multi-series chart — the CSS class suffix each
+ * consumer (line stroke, dot fill, legend chip, tooltip dot) maps to its
+ * own `chart-1`..`chart-4` token. One source, so every piece of a chart
+ * agrees on which series gets which color.
+ */
+export const CHART_PALETTE = ['chart1', 'chart2', 'chart3', 'chart4'] as const
+
 /** Seven days at the chart's base — the same slice the series brings. */
 export const SALES_TREND_SKELETON_DAYS = [
   'mon',
