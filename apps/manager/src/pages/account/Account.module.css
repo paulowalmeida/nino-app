@@ -4,10 +4,6 @@
   @apply relative max-w-2xl p-4 lg:p-10;
 }
 
-.head {
-  @apply border-b border-border/60 pb-5;
-}
-
 .wide {
   @apply sm:col-span-2;
 }
@@ -17,7 +13,7 @@
 }
 
 .actions {
-  @apply border-t border-border pt-5;
+  @apply mt-8 border-t border-border pt-5;
 }
 
 .status {

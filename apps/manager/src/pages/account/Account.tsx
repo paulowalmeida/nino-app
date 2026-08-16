@@ -1,12 +1,13 @@
 import { Alert } from '@nino/ds/components/Alert'
 import { Button } from '@nino/ds/components/Button'
+import { Eyebrow } from '@nino/ds/components/Eyebrow'
 import { Flexbox } from '@nino/ds/components/Flexbox'
 import { FormField } from '@nino/ds/components/FormField'
 import { Grid } from '@nino/ds/components/Grid'
-import { Heading } from '@nino/ds/components/Heading'
 import { Input } from '@nino/ds/components/Input'
+import { PhoneInput } from '@nino/ds/components/PhoneInput'
 import { Text } from '@nino/ds/components/Text'
-import { AccountFacts } from '@compositions/AccountFacts/AccountFacts'
+import { AccountBadge } from '@compositions/AccountBadge/AccountBadge'
 import { useAccountForm } from '@hooks/account/useAccountForm'
 import { useProfile } from '@hooks/account/useProfile'
 import {
@@ -30,30 +31,9 @@ export const Account = () => {
 
   return (
     <div className={styles.page}>
-      <Text
-        as="p"
-        size="xs"
-        weight="bold"
-        case="uppercase"
-        color="faint"
-        className={motion.deal}
-      >
-        Minha conta
-      </Text>
+      <Eyebrow className={motion.deal}>Meus dados</Eyebrow>
 
-      <Flexbox
-        as="header"
-        gap={1.5}
-        mt={1}
-        className={`${motion.deal} ${styles.head}`}
-      >
-        <Heading level={1} size="2xl">
-          Meus dados
-        </Heading>
-        <Text as="p" size="sm" color="subtle">
-          É como a equipe te identifica no painel e no histórico dos pedidos.
-        </Text>
-      </Flexbox>
+      <AccountBadge profile={profile} />
 
       {isPending ? (
         <AccountFieldsSkeleton />
@@ -62,10 +42,14 @@ export const Account = () => {
           <Grid
             columns={{ mobile: 1, tablet: 2 }}
             gap={4}
-            mt={6}
+            mt={8}
             className={motion.settle}
           >
-            <FormField label="Nome" className={styles.wide}>
+            <FormField
+              label="Nome"
+              helperText="Como a equipe te vê no painel e no histórico"
+              className={styles.wide}
+            >
               <Input
                 value={draft.name}
                 onChange={(event) => change({ name: event.target.value })}
@@ -89,8 +73,7 @@ export const Account = () => {
               label="Telefone"
               helperText="Usado para recuperar o acesso"
             >
-              <Input
-                inputMode="tel"
+              <PhoneInput
                 value={draft.phone}
                 onChange={(event) => change({ phone: event.target.value })}
               />
@@ -117,7 +100,7 @@ export const Account = () => {
                 color="faint"
                 className={styles.status}
               >
-                Nada mudou desde o último salvamento.
+                Nada mudou ainda.
               </Text>
             )}
             <Button
@@ -131,8 +114,6 @@ export const Account = () => {
           </Flexbox>
         </>
       )}
-
-      {profile && <AccountFacts profile={profile} />}
     </div>
   )
 }
