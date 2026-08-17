@@ -35,6 +35,7 @@ export const SidebarNavLabel = ({
       <Icon name={icon} size={size} />
       <Text
         as="span"
+        size="sm"
         color={isActive ? 'brand' : undefined}
         className={labelClassName}
       >
