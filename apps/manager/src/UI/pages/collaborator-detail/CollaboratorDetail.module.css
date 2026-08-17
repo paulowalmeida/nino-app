@@ -7,7 +7,7 @@
  * fora da tela no celular.
  */
 .page {
-  @apply flex h-[calc(100dvh-3.5rem)] max-w-3xl flex-col p-4;
+  @apply flex h-[calc(100dvh-3.5rem)] max-w-5xl flex-col p-4;
   @apply lg:h-dvh lg:p-10;
 }
 

@@ -115,58 +115,60 @@ export const WeekSchedule = ({
         </p>
       </header>
 
-      <ul className={local.week}>
-        {week.map((entry, index) => (
-          <li
-            key={entry.dayOfWeek}
-            className={`${motion.deal} ${local.day} ${
-              entry.isOpen ? '' : local.closed
-            }`}
-            style={riseDelay(index * 45 + 60)}
-          >
-            <Switch
-              checked={entry.isOpen}
-              onCheckedChange={(checked) =>
-                change(entry.dayOfWeek, { isOpen: checked })
-              }
-              aria-label={WEEK_SCHEDULE_DAYS[entry.dayOfWeek]}
-            />
-
-            <span className={local.dayName}>
-              {WEEK_SCHEDULE_DAYS[entry.dayOfWeek]}
-            </span>
-
-            <div className={local.times}>
-              <TimePicker
-                size="sm"
-                ariaLabel={`Abre ${WEEK_SCHEDULE_DAYS[entry.dayOfWeek]}`}
-                value={entry.openTime}
-                onValueChange={(openTime) =>
-                  change(entry.dayOfWeek, { openTime })
+      <div className={local.body}>
+        <ul className={local.week}>
+          {week.map((entry, index) => (
+            <li
+              key={entry.dayOfWeek}
+              className={`${motion.deal} ${local.day} ${
+                entry.isOpen ? '' : local.closed
+              }`}
+              style={riseDelay(index * 45 + 60)}
+            >
+              <Switch
+                checked={entry.isOpen}
+                onCheckedChange={(checked) =>
+                  change(entry.dayOfWeek, { isOpen: checked })
                 }
+                aria-label={WEEK_SCHEDULE_DAYS[entry.dayOfWeek]}
               />
-              <span className={local.until}>às</span>
-              <TimePicker
-                size="sm"
-                ariaLabel={`Fecha ${WEEK_SCHEDULE_DAYS[entry.dayOfWeek]}`}
-                value={entry.closeTime}
-                onValueChange={(closeTime) =>
-                  change(entry.dayOfWeek, { closeTime })
-                }
-              />
-            </div>
-          </li>
-        ))}
-      </ul>
 
-      <Button
-        loading={isSaving}
-        disabled={changed.length === 0}
-        className={`${motion.press} ${styles.save}`}
-        onClick={() => void handleSave()}
-      >
-        Salvar horários
-      </Button>
+              <span className={local.dayName}>
+                {WEEK_SCHEDULE_DAYS[entry.dayOfWeek]}
+              </span>
+
+              <div className={local.times}>
+                <TimePicker
+                  size="sm"
+                  ariaLabel={`Abre ${WEEK_SCHEDULE_DAYS[entry.dayOfWeek]}`}
+                  value={entry.openTime}
+                  onValueChange={(openTime) =>
+                    change(entry.dayOfWeek, { openTime })
+                  }
+                />
+                <span className={local.until}>às</span>
+                <TimePicker
+                  size="sm"
+                  ariaLabel={`Fecha ${WEEK_SCHEDULE_DAYS[entry.dayOfWeek]}`}
+                  value={entry.closeTime}
+                  onValueChange={(closeTime) =>
+                    change(entry.dayOfWeek, { closeTime })
+                  }
+                />
+              </div>
+            </li>
+          ))}
+        </ul>
+
+        <Button
+          loading={isSaving}
+          disabled={changed.length === 0}
+          className={`${motion.press} ${styles.save}`}
+          onClick={() => void handleSave()}
+        >
+          Salvar horários
+        </Button>
+      </div>
     </section>
   )
 }
