@@ -27,7 +27,10 @@ describe(CollaboratorSummary.name, () => {
 
     // Assert
     expect(
-      screen.getByText('4 de 130 mudanças foram cancelamento')
+      screen.getByText(/4 de 130 mudanças foram cancelamento/)
+    ).toBeInTheDocument()
+    expect(
+      screen.getByText(/Tocando em pedido desde 03 de fev. de 2026/)
     ).toBeInTheDocument()
   })
 
@@ -36,6 +39,9 @@ describe(CollaboratorSummary.name, () => {
     render(<CollaboratorSummary member={untouchedCollaborator} />)
 
     // Assert
-    expect(screen.getByText('Nenhum cancelamento')).toBeInTheDocument()
+    expect(screen.getByText(/Nenhum cancelamento/)).toBeInTheDocument()
+    expect(
+      screen.getByText(/Ainda não tocou em nenhum pedido/)
+    ).toBeInTheDocument()
   })
 })

@@ -1,3 +1,4 @@
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { render, screen } from '@testing-library/react'
 import { MemoryRouter, Route, Routes } from 'react-router'
 import { describe, expect, it, vi } from 'vitest'
@@ -19,14 +20,16 @@ vi.mock('@hooks/team/useStaffDetail')
 
 const renderDetail = () =>
   render(
-    <MemoryRouter initialEntries={['/colaboradores/user-1']}>
-      <Routes>
-        <Route
-          path="/colaboradores/:userId"
-          element={<CollaboratorDetail />}
-        />
-      </Routes>
-    </MemoryRouter>
+    <QueryClientProvider client={new QueryClient()}>
+      <MemoryRouter initialEntries={['/colaboradores/user-1']}>
+        <Routes>
+          <Route
+            path="/colaboradores/:userId"
+            element={<CollaboratorDetail />}
+          />
+        </Routes>
+      </MemoryRouter>
+    </QueryClientProvider>
   )
 
 describe(CollaboratorDetail.name, () => {

@@ -5,11 +5,22 @@ import { riseDelay } from '@utils/rise-delay'
 import styles from './CollaboratorSummary.module.css'
 import motion from '@styles/motion.module.css'
 
+const day = new Intl.DateTimeFormat('pt-BR', {
+  day: '2-digit',
+  month: 'short',
+  year: 'numeric',
+})
+
 const cancellationShare = (member: StaffDetail): string =>
   member.statusChanges === 0
     ? 'Nenhum cancelamento'
     : `${member.cancellations} de ${member.statusChanges} mudanças ` +
       'foram cancelamento'
+
+const workSpan = (member: StaffDetail): string =>
+  member.firstActivityAt
+    ? `Tocando em pedido desde ${day.format(new Date(member.firstActivityAt))}`
+    : 'Ainda não tocou em nenhum pedido'
 
 type CollaboratorSummaryProps = {
   member: StaffDetail
@@ -34,6 +45,10 @@ export const CollaboratorSummary = ({ member }: CollaboratorSummaryProps) => (
       ))}
     </dl>
 
-    <p className={styles.footnote}>{cancellationShare(member)}</p>
+    <p className={styles.footnote}>
+      {workSpan(member)}
+      {' · '}
+      {cancellationShare(member)}
+    </p>
   </section>
 )

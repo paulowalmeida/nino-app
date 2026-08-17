@@ -48,3 +48,8 @@ export const invitedStaff: StaffDetail = {
     credentials: [],
   },
 }
+
+export const ownerStaff: StaffDetail = {
+  ...staffWithLogin,
+  role: 'TENANT_OWNER',
+}
