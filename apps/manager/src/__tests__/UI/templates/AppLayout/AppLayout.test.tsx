@@ -6,7 +6,7 @@ import { describe, expect, it, vi } from 'vitest'
 
 import { useCurrentTenant } from '@hooks/session/useCurrentTenant'
 
-import { AppTemplate } from '@templates/AppTemplate/AppTemplate'
+import { AppLayout } from '@layouts/AppLayout/AppLayout'
 
 import { activeTenant } from './AppLayout.mock'
 
@@ -25,14 +25,14 @@ const renderLayout = () =>
   render(
     <MemoryRouter initialEntries={['/tenant-1/visao-geral']}>
       <Routes>
-        <Route path="/:tenantId/*" element={<AppTemplate />}>
+        <Route path="/:tenantId/*" element={<AppLayout />}>
           <Route path="visao-geral" element={<div>Conteúdo</div>} />
         </Route>
       </Routes>
     </MemoryRouter>
   )
 
-describe(AppTemplate.name, () => {
+describe(AppLayout.name, () => {
   it('shows the active tenant name in the mobile topbar', () => {
     // Arrange
     mockTenant(activeTenant as ReturnType<typeof useCurrentTenant>)

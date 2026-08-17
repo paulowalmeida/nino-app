@@ -6,14 +6,14 @@ import { Heading } from '@nino/ds/components/Heading'
 import { NinoMascot } from '@nino/ds/components/NinoMascot'
 import { Text } from '@nino/ds/components/Text'
 
-import styles from './AuthTemplate.module.css'
+import styles from './AuthLayout.module.css'
 
 const brandPanel = `${styles.brandPanel} ${styles.dotGrid} ${styles.grain}`
 const glowTop = `${styles.glowTop} ${styles.glowPulse}`
 const mascot = `${styles.mascot} ${styles.mascotFloat}`
 const mobileMascot = `${styles.mobileMascot} ${styles.mascotFloat}`
 
-export const AuthTemplate = () => (
+export const AuthLayout = () => (
   <div className={styles.authShell}>
     <aside className={brandPanel}>
       <div className={glowTop} aria-hidden="true" />

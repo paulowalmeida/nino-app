@@ -12,9 +12,9 @@ import {
   writeSidebarCollapsed,
 } from '@utils/sidebar-collapse'
 
-import styles from './AppTemplate.module.css'
+import styles from './AppLayout.module.css'
 
-export const AppTemplate = () => {
+export const AppLayout = () => {
   const tenant = useCurrentTenant()
   const [menuOpen, setMenuOpen] = useState(false)
   const [collapsed, setCollapsed] = useState(readSidebarCollapsed)
