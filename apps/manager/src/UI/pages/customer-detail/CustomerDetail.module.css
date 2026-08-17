@@ -1,30 +1,23 @@
 @reference "@nino/ds/globals.css";
 
 /*
- * Mesma régua da lista: a tela ocupa a altura da janela, o topo fica parado e
- * o histórico rola por dentro. Cartão nenhum — a página é a ficha, e fio fino
- * separa cada bloco.
+ * Uma coluna só, em qualquer largura. O topo é quem a pessoa é — nome, o que
+ * já rendeu, como falar com ela — e fica parado: só o painel da aba rola. O
+ * que cresce (pedidos, endereços) fica atrás de abas, porque em coluna
+ * empilhada quem ficasse embaixo de 500 pedidos nunca mais seria alcançado
+ * no celular.
  */
 .page {
-  @apply flex h-[calc(100dvh-3.5rem)] max-w-5xl flex-col p-4;
+  @apply flex h-[calc(100dvh-3.5rem)] max-w-3xl flex-col p-4;
   @apply lg:h-dvh lg:p-10;
 }
 
-/* Duas colunas no desktop: o histórico é o assunto e fica com a largura; a
-   ficha acompanha à direita, parada. No celular a ficha vem primeiro, em
-   faixa, porque é o que se lê antes de rolar pedido por pedido. */
-.body {
-  @apply mt-5 flex min-h-0 flex-1 flex-col gap-5;
-  @apply lg:grid lg:grid-cols-[minmax(0,1fr)_18rem] lg:items-start lg:gap-8;
-  @apply lg:overflow-hidden;
-}
-
-.eyebrow {
-  @apply mt-3 text-xs font-bold uppercase tracking-[0.12em] text-fg-faint;
+.hero {
+  @apply mt-4;
 }
 
 .mark {
-  @apply h-14 w-14 shrink-0 text-base;
+  @apply h-14 w-14 shrink-0 text-base lg:h-16 lg:w-16 lg:text-lg;
 }
 
 .heroText {
@@ -32,141 +25,58 @@
 }
 
 .name {
-  @apply truncate font-display text-2xl font-extrabold tracking-[-0.02em];
-  @apply text-fg-strong lg:text-3xl;
+  @apply truncate;
 }
 
-/*
- * A ficha inteira — dados pessoais, resumo e endereços — mora nesta coluna,
- * com um fio vertical que separa de vez o histórico dela. Sem ele a barra
- * de rolagem do histórico, quando aparece, caía bem na emenda das duas
- * colunas e parecia ela mesma o divisor.
- */
-.summary {
-  @apply flex flex-col gap-5 border-y border-border/60 py-5;
-  @apply lg:order-2 lg:border-y-0 lg:border-l lg:py-0 lg:pl-6;
+/* A distância desde o último pedido é o que decide se vale ligar pra essa
+   pessoa — por isso ela fica sob o nome, não perdida na lista de números. */
+.cadence {
+  @apply mt-1 truncate text-xs text-fg-faint;
 }
 
-.history {
-  @apply flex min-h-0 flex-1 flex-col lg:order-1 lg:h-full;
+.panels {
+  @apply mt-6 flex min-h-0 flex-1 flex-col;
 }
 
-/* o título e a régua da janela na mesma linha: o que se lê abaixo tem limite,
-   e dizer qual evita a pergunta "cadê o pedido de março?" */
-.historyHead {
-  @apply flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1;
-  @apply border-b border-border/60 pb-3;
-}
-
-.historyTitle {
-  @apply text-xs font-bold uppercase tracking-[0.12em] text-fg-faint;
-}
-
-.historyWindow {
-  @apply text-xs text-fg-faint;
-}
-
-.ordersScroll {
-  @apply min-h-0 flex-1;
-}
-
-.orders {
-  @apply flex flex-col pr-1;
-}
-
-.order {
-  @apply border-b border-border last:border-b-0;
-}
-
-/*
- * No celular: número e valor na primeira linha, situação e data na segunda —
- * a mesma hierarquia do extrato da lista. No desktop tudo cabe numa linha só.
- */
-.orderLink {
-  @apply grid grid-cols-[auto_1fr_auto] items-baseline gap-x-3 gap-y-1;
-  @apply rounded-3 px-2 py-3 transition-colors duration-150;
-  @apply hover:bg-surface-mute focus-visible:outline-none;
-  @apply focus-visible:ring-2 focus-visible:ring-brand;
-  @apply focus-visible:ring-offset-1;
-}
-
-@media (min-width: 1024px) {
-  .orderLink {
-    grid-template-columns: 4.5rem minmax(0, 1fr) auto 6rem;
-  }
-}
-
-.orderNumber {
-  @apply font-display text-sm font-extrabold text-fg-strong;
-  font-variant-numeric: tabular-nums;
-}
-
-.orderStatus {
-  @apply min-w-0 justify-self-start;
-}
-
-.orderAt {
-  @apply col-start-2 text-xs text-fg-faint lg:col-auto lg:text-right;
-  font-variant-numeric: tabular-nums;
-}
-
-.orderTotal {
-  @apply col-start-3 row-start-1 text-right text-sm font-semibold;
-  @apply text-fg-default;
-  @apply lg:col-auto lg:row-auto;
-  font-variant-numeric: tabular-nums;
-}
-
-.sentinel {
-  @apply flex h-10 items-center justify-center;
-}
-
-.loadingMore {
-  @apply text-xs text-fg-faint;
-}
-
-.empty {
-  @apply mt-4;
+/* O painel ativo é quem herda a altura que sobrou. O alvo é a parte do Ark,
+   não a classe do DS: hash de CSS Module não é API, `data-part` é. O
+   `:not([hidden])` protege os painéis fechados — sem ele, o `display: flex`
+   ganharia do `hidden` e os dois apareceriam juntos. */
+.panels > [data-part='content']:not([hidden]) {
+  @apply flex min-h-0 flex-1 flex-col;
 }
 
 .ghostName {
   @apply h-7 w-40 lg:h-8 lg:w-56;
 }
 
+.ghostCadence {
+  @apply mt-1.5 h-3 w-52;
+}
+
 .ghostEyebrow {
   @apply mb-2 h-3 w-24;
 }
 
-.ghostAddressIcon {
-  @apply mt-0.5 h-4 w-4 shrink-0;
+.ghostContactAction {
+  @apply h-9 w-40 rounded-full;
 }
 
-.ghostAddressLine {
-  @apply h-3.5 w-full;
-}
-
-.ghostAddressLineShort {
-  @apply mt-1.5 h-3 w-2/3;
+.ghostTab {
+  @apply h-9 w-28 rounded-full;
 }
 
 .ghostFactLabel {
   @apply h-3 w-16;
 }
 
-.ghostFactValue {
-  @apply mt-1 h-5 w-20 lg:mt-0;
-}
-
-.ghostHistoryTitle {
-  @apply h-3 w-24;
-}
-
-.ghostHistoryWindow {
-  @apply h-3 w-32;
+.ghostStripValue {
+  @apply h-6 w-24 lg:h-7;
 }
 
 .ghostOrderLink {
-  @apply grid grid-cols-[auto_1fr_auto] items-baseline gap-x-3 px-2 py-3;
+  @apply grid w-full grid-cols-[auto_1fr_auto] items-baseline gap-x-3;
+  @apply px-2 py-3;
 }
 
 @media (min-width: 1024px) {

@@ -88,7 +88,10 @@ export const Employees = () => {
         mb={{ mobile: 6, desktop: 8 }}
         title="Quem toca a equipe"
         accent="equipe"
-        description="Cada pessoa entra com a própria conta — e o painel registra quem mexeu em cada pedido."
+        description={
+          'Cada pessoa entra com a própria conta — e o painel registra ' +
+          'quem mexeu em cada pedido.'
+        }
       />
 
       <Flexbox gap={{ mobile: 8, desktop: 10 }}>
@@ -99,6 +102,7 @@ export const Employees = () => {
           hint="Quem recebe, aceita e acompanha os pedidos."
           entries={staffEntries}
           empty="Só você por enquanto. Chame alguém pelo convite acima."
+          searchLabel="Buscar quem está no painel"
           isPending={isStaffPending}
           removingId={removing?.kind === 'STAFF' ? removing.id : undefined}
           onRemove={(id) => removeMember({ id, kind: 'STAFF' })}
@@ -114,6 +118,7 @@ export const Employees = () => {
           hint="Quem leva o pedido até a porta do cliente."
           entries={courierEntries}
           empty="Nenhum entregador cadastrado nesta loja."
+          searchLabel="Buscar quem está na rua"
           isPending={isCourierPending}
           removingId={removing?.kind === 'COURIER' ? removing.id : undefined}
           onRemove={(id) => removeMember({ id, kind: 'COURIER' })}

@@ -3,23 +3,12 @@ import userEvent from '@testing-library/user-event'
 import { describe, expect, it, vi } from 'vitest'
 
 import { TeamRoster } from '@organisms/TeamRoster/TeamRoster'
-import type { RosterEntry } from '@custom_types/team/roster-entry'
 
-const entry: RosterEntry = {
-  id: 'user-1',
-  name: 'Weskley Almeida',
-  email: 'weskley@nino.delivery',
-  role: 'Dono',
-  lastLoginAt: null,
-  removable: false,
-}
-
-const changeableEntry: RosterEntry = {
-  ...entry,
-  id: 'user-2',
-  role: 'Gerente',
-  roleKey: 'MANAGER',
-}
+import {
+  changeableEntry,
+  ownerEntry,
+  teammateEntry,
+} from './TeamRoster.mock'
 
 const renderRoster = (
   props: Partial<React.ComponentProps<typeof TeamRoster>>
@@ -59,7 +48,7 @@ describe(TeamRoster.name, () => {
 
   it('replaces the ghosts with people once they arrive', () => {
     // Arrange / Act
-    renderRoster({ isPending: false, entries: [entry] })
+    renderRoster({ isPending: false, entries: [ownerEntry] })
 
     // Assert
     expect(screen.getByText('Weskley Almeida')).toBeInTheDocument()
@@ -76,7 +65,7 @@ describe(TeamRoster.name, () => {
 
   it('shows the role as a plain label with no way to change it', () => {
     // Arrange / Act
-    renderRoster({ entries: [entry] })
+    renderRoster({ entries: [ownerEntry] })
 
     // Assert
     expect(
@@ -98,5 +87,60 @@ describe(TeamRoster.name, () => {
 
     // Assert
     expect(onChangeRole).toHaveBeenCalledWith('user-2', 'TENANT_OWNER')
+  })
+
+  it('hides the search field when the group has nobody to filter', () => {
+    // Arrange / Act
+    renderRoster({ entries: [], searchLabel: 'Buscar quem está no painel' })
+
+    // Assert
+    expect(
+      screen.queryByRole('searchbox', { name: 'Buscar quem está no painel' })
+    ).not.toBeInTheDocument()
+  })
+
+  it('narrows the group to the people matching the typed name', async () => {
+    // Arrange
+    renderRoster({
+      entries: [ownerEntry, teammateEntry],
+      searchLabel: 'Buscar quem está no painel',
+    })
+
+    // Act
+    await userEvent.type(screen.getByRole('searchbox'), 'bruna')
+
+    // Assert
+    expect(screen.getByText('Bruna Carvalho')).toBeInTheDocument()
+    expect(screen.queryByText('Weskley Almeida')).not.toBeInTheDocument()
+  })
+
+  it('matches the e-mail as well as the name', async () => {
+    // Arrange
+    renderRoster({
+      entries: [ownerEntry, teammateEntry],
+      searchLabel: 'Buscar quem está no painel',
+    })
+
+    // Act
+    await userEvent.type(screen.getByRole('searchbox'), 'weskley@nino')
+
+    // Assert
+    expect(screen.getByText('Weskley Almeida')).toBeInTheDocument()
+    expect(screen.queryByText('Bruna Carvalho')).not.toBeInTheDocument()
+  })
+
+  it('keeps the search field up when the term matches nobody', async () => {
+    // Arrange
+    renderRoster({
+      entries: [ownerEntry],
+      searchLabel: 'Buscar quem está no painel',
+    })
+
+    // Act
+    await userEvent.type(screen.getByRole('searchbox'), 'ninguém')
+
+    // Assert
+    expect(screen.getByRole('searchbox')).toBeInTheDocument()
+    expect(screen.getByText(/Ninguém com "ninguém"/)).toBeInTheDocument()
   })
 })

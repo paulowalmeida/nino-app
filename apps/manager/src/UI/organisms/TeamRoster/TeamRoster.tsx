@@ -1,8 +1,10 @@
-import { Flexbox } from '@nino/ds/components/Flexbox'
+import { useState } from 'react'
 import { Link } from 'react-router'
 
 import { Badge } from '@nino/ds/components/Badge'
 import { Button } from '@nino/ds/components/Button'
+import { Flexbox } from '@nino/ds/components/Flexbox'
+import { Input } from '@nino/ds/components/Input'
 import { Menu, type MenuItem } from '@nino/ds/components/Menu'
 import { EmptyState } from '@nino/ds/components/EmptyState'
 import { Skeleton } from '@nino/ds/components/Skeleton'
@@ -29,6 +31,8 @@ export type TeamRosterProps = {
   hint: string
   entries: RosterEntry[]
   empty: string
+  /** Enables filtering this group. Reads as the field's accessible name. */
+  searchLabel?: string
   isPending?: boolean
   removingId?: string
   onRemove: (id: string) => void
@@ -40,6 +44,7 @@ export const TeamRoster = ({
   hint,
   entries,
   empty,
+  searchLabel,
   isPending,
   removingId,
   changingRoleId,
@@ -47,6 +52,23 @@ export const TeamRoster = ({
   onEditEmail,
   onChangeRole,
 }: TeamRosterProps) => {
+  const [term, setTerm] = useState('')
+  const query = term.trim().toLowerCase()
+
+  /* The field is measured against the group it heads, never the filtered
+     result — it must not vanish under the cursor when a search matches
+     nobody. */
+  const isSearchable = !!searchLabel && entries.length > 0
+
+  const matches = (entry: RosterEntry): boolean =>
+    entry.name.toLowerCase().includes(query) ||
+    !!entry.email?.toLowerCase().includes(query)
+
+  const visibleEntries = query ? entries.filter(matches) : entries
+
+  const emptyMessage = query
+    ? `Ninguém com "${term}". Tente outro nome ou e-mail.`
+    : empty
   /*
    * The role pill is its own menu, not folded into the kebab: a plain badge
    * next to a generic "more actions" icon gave no hint that the role itself
@@ -97,8 +119,21 @@ export const TeamRoster = ({
   return (
     <section className={styles.roster}>
       <header className={`${motion.unroll} ${styles.head}`}>
-        <h2 className={styles.title}>{title}</h2>
-        <p className={styles.hint}>{hint}</p>
+        <div className={styles.headings}>
+          <h2 className={styles.title}>{title}</h2>
+          <p className={styles.hint}>{hint}</p>
+        </div>
+
+        {isSearchable && (
+          <Input
+            type="search"
+            value={term}
+            placeholder="Nome ou e-mail"
+            aria-label={searchLabel}
+            className={styles.search}
+            onChange={(event) => setTerm(event.target.value)}
+          />
+        )}
       </header>
 
       {/* the same list, with the people yet to arrive: avatar, name, e-mail,
@@ -120,11 +155,13 @@ export const TeamRoster = ({
         </Flexbox>
       )}
 
-      {!isPending && entries.length === 0 && <EmptyState>{empty}</EmptyState>}
+      {!isPending && visibleEntries.length === 0 && (
+        <EmptyState>{emptyMessage}</EmptyState>
+      )}
 
-      {entries.length > 0 && (
+      {visibleEntries.length > 0 && (
         <ul className={styles.list}>
-          {entries.map((entry, index) => {
+          {visibleEntries.map((entry, index) => {
             const roleItems = roleItemsOf(entry)
             const otherItems = otherItemsOf(entry)
             const isBusy =

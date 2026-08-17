@@ -1,37 +1,43 @@
 @reference "@nino/ds/globals.css";
 
-.eyebrow {
-  @apply text-2xs font-bold uppercase tracking-[0.1em] text-fg-faintest;
+/*
+ * O extrato do cliente: uma faixa só, quente sobre o papel branco, atravessando
+ * a largura da ficha. Cartão por número quebraria em três paradas o que se lê
+ * de uma vez — "R$ 2.831 em 17 pedidos" —, e fio vertical separa sem cercar.
+ */
+.strip {
+  @apply mt-5 rounded-4 bg-surface-1;
 }
 
-/*
- * Os números viram uma faixa, não quatro cartõezinhos: eles se leem juntos
- * ("17 pedidos, R$ 2.831, desde julho"), e cartão em volta de cada um quebra
- * essa leitura em quatro paradas. No celular quebram em duas colunas.
- */
 .facts {
-  @apply mt-2 grid grid-cols-2 gap-y-4;
-  @apply lg:grid-cols-1 lg:gap-0;
+  @apply grid grid-cols-2 lg:grid-cols-3;
 }
 
 .fact {
-  @apply flex flex-col gap-0.5;
-  @apply lg:flex-row lg:items-baseline lg:justify-between lg:gap-3;
-  @apply lg:border-b lg:border-border lg:py-2.5;
+  @apply flex flex-col gap-1 px-4 py-3.5 lg:px-6 lg:py-4;
+}
+
+/* Gastos é o número que se procura primeiro: no celular ele fica com a faixa
+   inteira, porque moeda não cabe em terço de tela sem encolher a fonte. */
+.fact:first-child {
+  @apply col-span-2 border-b border-border/50;
+  @apply lg:col-span-1 lg:border-b-0;
+}
+
+.fact + .fact {
+  @apply lg:border-l lg:border-border/50;
 }
 
 .fact:last-child {
-  @apply lg:border-b-0;
+  @apply border-l border-border/50;
 }
 
 .factLabel {
   @apply text-2xs font-bold uppercase tracking-[0.1em] text-fg-faintest;
 }
 
-/* número em corpo de texto, não manchete: aqui ele é referência de apoio —
-   quem manda na tela é a lista de pedidos */
 .factValue {
-  @apply font-display text-base font-extrabold text-fg-strong;
-  @apply lg:text-right;
+  @apply font-display text-xl font-extrabold tracking-[-0.02em];
+  @apply text-fg-strong lg:text-2xl;
   font-variant-numeric: tabular-nums;
 }

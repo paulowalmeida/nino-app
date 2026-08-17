@@ -1,0 +1,23 @@
+@reference "@nino/ds/globals.css";
+
+.address {
+  @apply flex min-w-0 flex-1 items-start gap-2.5;
+}
+
+.icon {
+  @apply mt-0.5 h-4 w-4 shrink-0 text-fg-faint;
+}
+
+.lines {
+  @apply min-w-0 flex-1;
+}
+
+.streetLine {
+  @apply flex flex-wrap items-center gap-x-2 gap-y-1;
+  @apply text-sm font-semibold text-fg-strong;
+}
+
+.cityLine {
+  @apply mt-0.5 text-xs text-fg-subtle;
+  font-variant-numeric: tabular-nums;
+}

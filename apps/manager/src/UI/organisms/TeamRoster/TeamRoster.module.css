@@ -7,8 +7,19 @@
   @apply min-w-0;
 }
 
+/* the search heads the group it filters: title and hint hold the left, the
+   field takes the right and drops below them when the row runs out of room */
 .head {
-  @apply mb-3;
+  @apply mb-3 flex flex-col gap-3;
+  @apply sm:flex-row sm:items-end sm:justify-between sm:gap-4;
+}
+
+.headings {
+  @apply min-w-0;
+}
+
+.search {
+  @apply h-11 w-full shrink-0 sm:w-56;
 }
 
 .title {

@@ -50,7 +50,7 @@ describe(CustomerDetail.name, () => {
       screen.getByRole('heading', { name: 'Ana Souza' })
     ).toBeInTheDocument()
     expect(screen.getByText('R$ 150,00')).toBeInTheDocument()
-    expect(screen.getByText('123.456.789-00')).toBeInTheDocument()
+    expect(screen.getByText('CPF 123.456.789-00')).toBeInTheDocument()
     expect(screen.getByText(/Av\. Paulista, 1000/)).toBeInTheDocument()
     expect(screen.getByText('Principal')).toBeInTheDocument()
   })

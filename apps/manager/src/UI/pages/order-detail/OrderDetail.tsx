@@ -13,6 +13,7 @@ import {
   CHANNEL_LABEL,
   STATUS_LABEL,
 } from '@constants/order.constants'
+import { useBackTarget } from '@hooks/ui/useBackTarget'
 import { useCurrentTenant } from '@hooks/session/useCurrentTenant'
 import { useOrder } from '@hooks/order/useOrder'
 import { useOrderPayment } from '@hooks/order/useOrderPayment'
@@ -37,6 +38,7 @@ const stamp = new Intl.DateTimeFormat('pt-BR', {
 
 export const OrderDetail = () => {
   const { orderId } = useParams()
+  const back = useBackTarget({ to: '..', label: 'Pedidos' })
   const tenant = useCurrentTenant()
   const tenantId = tenant?.tenantId ?? null
 
@@ -53,7 +55,7 @@ export const OrderDetail = () => {
     return (
       <div className={styles.page}>
         <div className={styles.backBar}>
-          <BackLink>Pedidos</BackLink>
+          <BackLink to={back.to}>{back.label}</BackLink>
         </div>
         <Alert variant="info">
           Este pedido não está mais nesta loja. Ele pode ter sido removido.
@@ -71,7 +73,7 @@ export const OrderDetail = () => {
   return (
     <div className={styles.page}>
       <div className={styles.backBar}>
-        <BackLink>Pedidos</BackLink>
+        <BackLink to={back.to}>{back.label}</BackLink>
       </div>
 
       <header className={`${motion.settle} ${styles.hero}`}>

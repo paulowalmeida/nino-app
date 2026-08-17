@@ -1,7 +1,10 @@
 @reference "../../styles/globals.css";
 
+/* `self-start` protege o trilho de um pai flex/grid: sem ele o `inline-flex`
+   é esticado pelo stretch do pai e a faixa cinza sobra ao lado das abas, sem
+   nada dentro. Fora de um pai desses, não muda nada. */
 .tabBar {
-  @apply relative inline-flex items-center gap-0.5 rounded-2;
+  @apply relative inline-flex items-center gap-0.5 self-start rounded-2;
   @apply bg-surface-mute;
   @apply p-1;
 }

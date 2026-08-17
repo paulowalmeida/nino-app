@@ -1,43 +1,6 @@
 @reference "@nino/ds/globals.css";
 
-.eyebrow {
-  @apply text-2xs font-bold uppercase tracking-[0.1em] text-fg-faintest;
-}
-
-.empty {
-  @apply mt-2;
-}
-
-.list {
-  @apply mt-2;
-}
-
-.addressItem {
-  @apply flex items-start gap-2.5 rounded-3 bg-surface-cool p-3;
-}
-
-.icon {
-  @apply mt-0.5 h-4 w-4 shrink-0 text-fg-faint;
-}
-
-.lines {
-  @apply min-w-0 flex-1;
-}
-
-.streetLine {
-  @apply flex flex-wrap items-center gap-x-2 gap-y-1;
-  @apply text-sm font-semibold text-fg-strong;
-}
-
-.badge {
-  @apply shrink-0;
-}
-
-.cityLine {
-  @apply mt-0.5 text-xs text-fg-subtle;
-}
-
-.zipCode {
-  @apply mt-0.5 text-xs text-fg-faint;
-  font-variant-numeric: tabular-nums;
+/* A ficha acima fica parada: é esta lista que rola, em qualquer largura. */
+.scroll {
+  @apply min-h-0 flex-1;
 }
