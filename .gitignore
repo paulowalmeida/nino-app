@@ -8,7 +8,6 @@ out/
 coverage/
 *.tsbuildinfo
 CLAUDE.md
-.claude/
 TODO.md
 STATUS.md
 FRONTEND.md
