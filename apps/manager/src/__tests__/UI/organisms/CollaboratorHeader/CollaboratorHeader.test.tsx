@@ -5,10 +5,14 @@ import {
   CollaboratorHeader,
 } from '@organisms/CollaboratorHeader/CollaboratorHeader'
 
-import { staffMember, staffMemberWithoutPhone } from './CollaboratorHeader.mock'
+import {
+  deactivatedStaffMember,
+  staffMember,
+  staffMemberWithoutPhone,
+} from './CollaboratorHeader.mock'
 
 describe(CollaboratorHeader.name, () => {
-  it('shows the name, phone and role of the collaborator', () => {
+  it('shows the name, role and how long they have been around', () => {
     // Arrange / Act
     render(<CollaboratorHeader member={staffMember} />)
 
@@ -16,18 +20,25 @@ describe(CollaboratorHeader.name, () => {
     expect(
       screen.getByRole('heading', { name: 'João Pereira' })
     ).toBeInTheDocument()
-    expect(screen.getByText('(11) 98888-7777')).toBeInTheDocument()
-    expect(screen.getByText('Atendente')).toBeInTheDocument()
+    expect(screen.getByText(/Atendente/)).toBeInTheDocument()
+    expect(screen.getByText(/Na equipe desde/)).toBeInTheDocument()
   })
 
-  it('omits the phone link when the collaborator has none', () => {
-    // Arrange
+  it('keeps the header intact for someone without a phone', () => {
+    // Arrange / Act
     render(<CollaboratorHeader member={staffMemberWithoutPhone} />)
 
-    // Act
-    const phoneLink = screen.queryByRole('link')
+    // Assert
+    expect(
+      screen.getByRole('heading', { name: 'João Pereira' })
+    ).toBeInTheDocument()
+  })
+
+  it('flags a deactivated account right next to the name', () => {
+    // Arrange / Act
+    render(<CollaboratorHeader member={deactivatedStaffMember} />)
 
     // Assert
-    expect(phoneLink).not.toBeInTheDocument()
+    expect(screen.getByText('Acesso desativado')).toBeInTheDocument()
   })
 })

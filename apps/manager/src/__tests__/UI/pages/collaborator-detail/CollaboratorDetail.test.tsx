@@ -45,7 +45,9 @@ describe(CollaboratorDetail.name, () => {
     expect(
       screen.getByRole('heading', { name: 'João Pereira' })
     ).toBeInTheDocument()
-    expect(screen.getByText('Atendente')).toBeInTheDocument()
+    expect(screen.getAllByText(/Atendente/).length).toBeGreaterThan(0)
+    expect(screen.getByText('R$ 1.284,50')).toBeInTheDocument()
+    expect(screen.getByRole('tab', { name: 'Acesso' })).toBeInTheDocument()
   })
 
   it('shows the empty state when the person left the store', () => {

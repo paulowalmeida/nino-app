@@ -1,10 +1,10 @@
 import type { StaffDetail } from '@custom_types/team/staff-detail'
 
-export const staffMember: StaffDetail = {
+export const busyCollaborator: StaffDetail = {
   tenantId: 'tenant-1',
   role: 'STAFF',
   isCurrent: true,
-  createdAt: '2026-01-01T12:00:00.000Z',
+  createdAt: '2026-01-01T00:00:00.000Z',
   user: {
     id: 'user-1',
     name: 'João Pereira',
@@ -19,11 +19,20 @@ export const staffMember: StaffDetail = {
     credentials: [],
   },
   ordersHandled: 12,
-  lastActivityAt: '2026-08-10T14:32:00.000Z',
+  revenueHandled: 1284.5,
+  statusChanges: 130,
+  cancellations: 4,
+  firstActivityAt: '2026-02-03T12:00:00.000Z',
+  lastActivityAt: '2026-07-01T00:00:00.000Z',
   activity: [],
 }
 
-export const staffMemberNeverActive: StaffDetail = {
-  ...staffMember,
+export const untouchedCollaborator: StaffDetail = {
+  ...busyCollaborator,
+  ordersHandled: 0,
+  revenueHandled: 0,
+  statusChanges: 0,
+  cancellations: 0,
+  firstActivityAt: null,
   lastActivityAt: null,
 }

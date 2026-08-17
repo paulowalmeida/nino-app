@@ -1,28 +1,27 @@
 @reference "@nino/ds/globals.css";
 
+.hero {
+  @apply mt-4;
+}
+
 .mark {
-  @apply h-14 w-14 shrink-0 text-base;
+  @apply h-14 w-14 shrink-0 text-base lg:h-16 lg:w-16 lg:text-lg;
 }
 
 .heroText {
   @apply min-w-0;
 }
 
-/* único texto que merece display+extrabold nesta tela: é a identidade da
-   página, o resto abaixo é metadado e lê melhor em peso normal */
 .name {
-  @apply truncate font-display text-2xl font-extrabold tracking-[-0.02em];
-  @apply text-fg-strong lg:text-3xl;
+  @apply truncate;
 }
 
-.contact {
-  @apply mt-0.5 flex flex-wrap items-baseline gap-x-3 gap-y-0.5;
+/* Função, tempo de casa e último acesso decidem se essa pessoa ainda deveria
+   ter a chave da loja — por isso ficam sob o nome, não perdidos numa aba. */
+.cadence {
+  @apply mt-1 truncate text-xs text-fg-faint;
 }
 
-.email {
-  @apply text-sm font-semibold text-brand-strong;
-}
-
-.role {
+.status {
   @apply shrink-0;
 }

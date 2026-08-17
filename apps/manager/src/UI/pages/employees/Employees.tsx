@@ -14,13 +14,10 @@ import { useUpdateStaffEmail } from '@hooks/team/useUpdateStaffEmail'
 import { useUpdateStaffRole } from '@hooks/team/useUpdateStaffRole'
 import { useSessionStore } from '@states/useSessionStore'
 import { TEAM_ROLE_LABEL } from '@constants/team.constants'
-import type { AuthUser } from '@custom_types/auth/auth-user'
 import type { RosterEntry } from '@custom_types/team/roster-entry'
+import { loginEmailOf } from '@utils/login-email'
 
 import styles from './Employees.module.css'
-
-const emailOf = (user: AuthUser): string | null =>
-  user.credentials.find(({ email }) => !!email)?.email ?? null
 
 export const Employees = () => {
   const tenant = useCurrentTenant()
@@ -56,7 +53,7 @@ export const Employees = () => {
     ({ user, role }) => ({
       id: user.id,
       name: user.name,
-      email: emailOf(user),
+      email: loginEmailOf(user),
       role: TEAM_ROLE_LABEL[role],
       roleKey: role,
       roleLocked:
@@ -74,7 +71,7 @@ export const Employees = () => {
     ({ courier, isActive }) => ({
       id: courier.id,
       name: courier.name,
-      email: emailOf(courier),
+      email: loginEmailOf(courier),
       role: isActive ? 'Ativo' : 'Parado',
       lastLoginAt: courier.lastLoginAt,
       quiet: true,

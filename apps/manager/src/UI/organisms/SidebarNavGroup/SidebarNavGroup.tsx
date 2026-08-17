@@ -39,7 +39,8 @@ export const SidebarNavGroup = ({
   delay,
   onNavigate,
 }: SidebarNavGroupProps) => {
-  const isGroupActive = isInside && isOpen
+  const isRouteActive = isInside
+  const isGroupOpenOnly = isOpen && !isRouteActive
 
   return (
     <Flexbox style={delay} className={motion.slide}>
@@ -53,9 +54,13 @@ export const SidebarNavGroup = ({
                   icon={icon}
                   label={label}
                   size="md"
-                  isActive={isGroupActive}
+                  isActive={isRouteActive}
                   isCollapsed={isCollapsed}
-                  inactiveColor="text-fg-on-brand/45"
+                  inactiveColor={
+                    isGroupOpenOnly
+                      ? 'text-fg-on-brand/80'
+                      : 'text-fg-on-brand/45'
+                  }
                 />
               </Flexbox>
             ),
@@ -92,11 +97,13 @@ export const SidebarNavGroup = ({
         onValueChange={(values) => onOpenChange(values.includes(section))}
         className={styles.navGroup}
         itemClassName={styles.navGroupWrapper}
-        triggerClassName={
-          isGroupActive
-            ? `${styles.navGroupToggle} ${styles.navItemActive}`
-            : styles.navGroupToggle
-        }
+        triggerClassName={[
+          styles.navGroupToggle,
+          isRouteActive && styles.navItemActive,
+          isGroupOpenOnly && styles.navGroupOpen,
+        ]
+          .filter(Boolean)
+          .join(' ')}
         contentClassName={styles.navGroupPanel}
       />
     </Flexbox>

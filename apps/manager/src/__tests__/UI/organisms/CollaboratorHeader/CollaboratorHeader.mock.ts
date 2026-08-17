@@ -16,9 +16,23 @@ export const staffMember: StaffDetail = {
     timezone: 'America/Sao_Paulo',
     createdAt: '2026-01-01T00:00:00.000Z',
     updatedAt: '2026-01-01T00:00:00.000Z',
-    credentials: [],
+    credentials: [
+      {
+        id: 'credential-1',
+        userId: 'user-1',
+        email: 'joao@lojateste.com.br',
+        provider: 'local',
+        providerCode: null,
+        createdAt: '2026-01-01T00:00:00.000Z',
+        updatedAt: '2026-01-01T00:00:00.000Z',
+      },
+    ],
   },
   ordersHandled: 12,
+  revenueHandled: 1284.5,
+  statusChanges: 130,
+  cancellations: 4,
+  firstActivityAt: '2026-02-03T12:00:00.000Z',
   lastActivityAt: null,
   activity: [],
 }
@@ -26,4 +40,9 @@ export const staffMember: StaffDetail = {
 export const staffMemberWithoutPhone: StaffDetail = {
   ...staffMember,
   user: { ...staffMember.user, phone: '' },
+}
+
+export const deactivatedStaffMember: StaffDetail = {
+  ...staffMember,
+  user: { ...staffMember.user, isActive: false },
 }

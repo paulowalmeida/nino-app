@@ -1,0 +1,37 @@
+@reference "@nino/ds/globals.css";
+
+.access {
+  @apply flex min-h-0 flex-1 flex-col gap-4 overflow-y-auto pt-4;
+}
+
+/* A função é a única coisa desta aba que muda o que a pessoa pode fazer na
+   loja — por isso ela é bloco, e o resto é lista de fatos. */
+.role {
+  @apply rounded-4 bg-surface-1 px-4 py-3.5 lg:px-6;
+}
+
+.roleName {
+  @apply font-display text-lg font-extrabold tracking-[-0.02em] text-fg-strong;
+}
+
+.roleHint {
+  @apply mt-0.5 text-sm text-fg-subtle;
+}
+
+.facts {
+  @apply grid grid-cols-1 sm:grid-cols-2 sm:gap-x-8;
+}
+
+.fact {
+  @apply flex items-baseline justify-between gap-3 border-b border-border/60;
+  @apply py-2.5;
+}
+
+.factLabel {
+  @apply text-2xs font-bold uppercase tracking-[0.1em] text-fg-faintest;
+}
+
+.factValue {
+  @apply min-w-0 truncate text-sm font-semibold text-fg-strong;
+  font-variant-numeric: tabular-nums;
+}

@@ -1,16 +1,29 @@
 import { useParams } from 'react-router'
 
-import { CollaboratorActivity } from '@organisms/CollaboratorActivity/CollaboratorActivity'
-import { CollaboratorFacts } from '@organisms/CollaboratorFacts/CollaboratorFacts'
-import { CollaboratorHeader } from '@organisms/CollaboratorHeader/CollaboratorHeader'
+import { EmptyState } from '@nino/ds/components/EmptyState'
+import { Tabs } from '@nino/ds/components/Tabs'
 import { Breadcrumb } from '@atoms/Breadcrumb/Breadcrumb'
+import {
+  CollaboratorAccess,
+} from '@organisms/CollaboratorAccess/CollaboratorAccess'
+import {
+  CollaboratorActivity,
+} from '@organisms/CollaboratorActivity/CollaboratorActivity'
+import {
+  CollaboratorContact,
+} from '@organisms/CollaboratorContact/CollaboratorContact'
+import {
+  CollaboratorHeader,
+} from '@organisms/CollaboratorHeader/CollaboratorHeader'
+import {
+  CollaboratorSummary,
+} from '@organisms/CollaboratorSummary/CollaboratorSummary'
 import { useCurrentTenant } from '@hooks/session/useCurrentTenant'
 import { useStaffDetail } from '@hooks/team/useStaffDetail'
-import { EmptyState } from '@nino/ds/components/EmptyState'
-import { Skeleton } from '@nino/ds/components/Skeleton'
+import {
+  CollaboratorDetailSkeleton,
+} from '@skeletons/pages/CollaboratorDetailSkeleton/CollaboratorDetailSkeleton'
 
-import { Eyebrow } from '@ds/components/Eyebrow/Eyebrow'
-import { Flexbox } from '@ds/components/Flexbox/Flexbox'
 import styles from './CollaboratorDetail.module.css'
 
 export const CollaboratorDetail = () => {
@@ -20,33 +33,44 @@ export const CollaboratorDetail = () => {
 
   const { data: member, isPending } = useStaffDetail(tenantId, userId as string)
 
-  if (isPending) return <Skeleton className={styles.skeleton} />
+  if (isPending) return <CollaboratorDetailSkeleton />
 
   if (!member) {
     return (
-      <Flexbox className={styles.page}>
+      <div className={styles.page}>
         <Breadcrumb trail={[{ label: 'Equipe', to: '..' }, { label: '—' }]} />
-        <EmptyState className={styles.empty}>
-          Esta pessoa não está mais nesta loja.
-        </EmptyState>
-      </Flexbox>
+        <EmptyState>Esta pessoa não está mais nesta loja.</EmptyState>
+      </div>
     )
   }
 
   return (
-    <Flexbox className={styles.page}>
+    <div className={styles.page}>
       <Breadcrumb
         trail={[{ label: 'Equipe', to: '..' }, { label: member.user.name }]}
       />
 
-      <Eyebrow>Equipe</Eyebrow>
-
       <CollaboratorHeader member={member} />
 
-      <Flexbox className={styles.body}>
-        <CollaboratorFacts member={member} />
-        <CollaboratorActivity activity={member.activity} />
-      </Flexbox>
-    </Flexbox>
+      <CollaboratorSummary member={member} />
+
+      <CollaboratorContact member={member} />
+
+      <Tabs
+        className={styles.panels}
+        tabs={[
+          {
+            value: 'activity',
+            label: `Atividade · ${member.activity.length}`,
+            content: <CollaboratorActivity activity={member.activity} />,
+          },
+          {
+            value: 'access',
+            label: 'Acesso',
+            content: <CollaboratorAccess member={member} />,
+          },
+        ]}
+      />
+    </div>
   )
 }

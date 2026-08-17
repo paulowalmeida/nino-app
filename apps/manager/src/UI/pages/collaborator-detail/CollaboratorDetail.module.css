@@ -1,24 +1,71 @@
 @reference "@nino/ds/globals.css";
 
+/*
+ * Uma coluna só, como a ficha do cliente: o topo diz quem é a pessoa e o que
+ * ela rendeu, e fica parado — só o painel da aba rola. Atividade e acesso
+ * ficam atrás de abas porque 30 linhas de pedido empurrariam o resto pra
+ * fora da tela no celular.
+ */
 .page {
-  @apply flex h-[calc(100dvh-3.5rem)] max-w-5xl flex-col p-4;
+  @apply flex h-[calc(100dvh-3.5rem)] max-w-3xl flex-col p-4;
   @apply lg:h-dvh lg:p-10;
 }
 
-.eyebrow {
-  @apply mt-3 text-xs font-bold uppercase tracking-[0.12em] text-fg-faint;
+.panels {
+  @apply mt-6 flex min-h-0 flex-1 flex-col;
 }
 
-.body {
-  @apply mt-5 flex min-h-0 flex-1 flex-col gap-5;
-  @apply lg:grid lg:grid-cols-[minmax(0,1fr)_15rem] lg:items-start lg:gap-8;
-  @apply lg:overflow-hidden;
+/* O painel ativo herda a altura que sobrou. O alvo é a parte do Ark, não a
+   classe do DS: hash de CSS Module não é API, `data-part` é. */
+.panels > [data-part='content']:not([hidden]) {
+  @apply flex min-h-0 flex-1 flex-col;
 }
 
-.empty {
-  @apply mt-4;
+.ghostEyebrow {
+  @apply mb-2 h-3 w-20;
 }
 
-.skeleton {
-  @apply m-4 h-64 rounded-6 lg:m-8;
+.ghostName {
+  @apply h-7 w-40 lg:h-8 lg:w-56;
+}
+
+.ghostCadence {
+  @apply mt-1.5 h-3 w-64;
+}
+
+.ghostFactLabel {
+  @apply h-3 w-24;
+}
+
+.ghostStripValue {
+  @apply h-6 w-24 lg:h-7;
+}
+
+.ghostFootnote {
+  @apply h-3 w-48;
+}
+
+.ghostContactAction {
+  @apply h-9 w-40 rounded-full;
+}
+
+.ghostTab {
+  @apply h-9 w-28 rounded-full;
+}
+
+.ghostEntry {
+  @apply grid w-full grid-cols-[3rem_minmax(0,1fr)_auto] items-center gap-x-3;
+  @apply px-2 py-3;
+}
+
+.ghostEntryTicket {
+  @apply h-4 w-10;
+}
+
+.ghostEntryCustomer {
+  @apply h-4 w-32;
+}
+
+.ghostEntryTotal {
+  @apply h-4 w-14 justify-self-end;
 }

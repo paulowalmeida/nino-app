@@ -33,6 +33,10 @@
   @apply data-[state=open]:hover:bg-brand-soft hover:text-brand;
 }
 
+.navGroupToggle.navGroupOpen {
+  @apply text-fg-on-brand/80;
+}
+
 .navGroup {
   @apply w-full divide-y-0 rounded-none border-0;
 }

@@ -1,7 +1,7 @@
 @reference "@nino/ds/globals.css";
 
 .activity {
-  @apply flex min-h-0 flex-1 flex-col lg:order-1 lg:h-full;
+  @apply flex min-h-0 flex-1 flex-col pt-4;
 }
 
 .activityHead {
