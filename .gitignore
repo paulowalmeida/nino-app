@@ -13,6 +13,7 @@ FRONTEND.md
 line-length-check.skill
 plugins.md
 .vercel/
+.vscode/
 .vercel
 .env*
 
