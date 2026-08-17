@@ -7,7 +7,6 @@ out/
 .turbo/
 coverage/
 *.tsbuildinfo
-CLAUDE.md
 TODO.md
 STATUS.md
 FRONTEND.md
