@@ -85,7 +85,6 @@ Every confirmed finding MUST include exact file/line, traced data path, current 
 
 - UI layer → `architecture-review`.
 - Hook/state → `hook-state-review`.
-- Component/Composition presentation boundary → `component-review` / `composition-review`.
 - Naming/abstraction → `code-quality-review`.
 - Structural decomposition → `complexity-refactoring`.
 - Mechanical import/type/structure → `enforce-*`.
