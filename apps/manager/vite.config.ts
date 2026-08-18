@@ -67,6 +67,7 @@ export default defineConfig({
       '@skeletons': resolve(__dirname, 'src/skeletons'),
       '@states': resolve(__dirname, 'src/states'),
       '@styles': resolve(__dirname, 'src/styles'),
+      '@templates': resolve(__dirname, 'src/UI/templates'),
       '@layouts': resolve(__dirname, 'src/UI/layouts'),
       '@utils': resolve(__dirname, 'src/utils'),
     },

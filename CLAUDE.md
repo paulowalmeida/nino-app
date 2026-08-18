@@ -209,34 +209,3 @@ The agent **MUST NOT**:
 **Investigate first. Decide second. Implement third. Verify fourth. Report precisely.**
 
 Never reverse this order when the preceding step is necessary to perform the task correctly.
-
-
-nino-app — Project Context
-
-Turborepo monorepo (React 19). Shared packages live in packages/,
-applications live in apps/.
-
-Product: Multi-tenant delivery SaaS (white-label) — not a single-business
-website. The 4 apps (manager, consumer, courier, backoffice) are
-packaged as WebViews via Capacitor (iOS/Android), using the same web codebase.
-Only consumer supports custom domains, and only on Pro and Custom plans.
-
-Stack rule: An authenticated app (behind login) = React SPA + Vite
-(React Router data router + react-query) — manager, consumer, courier,
-backoffice. Next.js is only used for public surfaces where SEO
-matters — landing. (manager-legacy is the old Next.js manager, now
-deprecated.)
-
-Packages: @nino/ds (design system; see packages/ds/README.md),
-@nino/forms (config-driven forms built on RHF), @nino/lib (domain types
-and utils).
-
-Rules
-
-@.claude/rules/code-style.md
-@.claude/rules/css.md
-@.claude/rules/components.md
-@.claude/rules/screens.md
-@.claude/rules/gitflow.md
-@.claude/rules/workflow.md
-@.claude/rules/testing.md
