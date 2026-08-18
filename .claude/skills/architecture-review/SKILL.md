@@ -7,7 +7,7 @@ description: Review nino-app UI architecture, Atomic Design layer placement, res
 
 ## Purpose
 
-Determine whether each unit owns the right responsibility at the right UI layer. Review behavior and dependency direction, not folder names alone.
+Determine whether each UI unit owns the right responsibility at the right Atomic Design layer. Review behavior and dependency direction, not folder names alone.
 
 ## Authority
 
@@ -15,41 +15,44 @@ Apply `CLAUDE.md`, applicable `rules/*`, then objective `enforce-*` results. A m
 
 ## Mandatory Review Sequence
 
-1. Define the review scope and affected units.
+1. Define the review scope and affected UI units.
 2. Read the applicable architecture and coding rules.
 3. Inspect the target unit completely enough to understand its public contract.
 4. Inspect immediate callers/callees when ownership is ambiguous.
 5. Determine the unit's actual responsibility from behavior, not location or name.
-6. Classify the unit: Element, Component, Composition, Page, or Layout.
+6. Classify the unit as Atom, Molecule, Organism, Template, Page, or Layout according to `rules/architecture.md`.
 7. Compare imports, rendered children, state, effects, data access, decisions, and exposed API with that layer.
 8. Check whether a proposed correction restores ownership or merely relocates code.
-9. Record each finding with evidence and a final disposition.
+9. Record each finding and final disposition.
 
 ## Layer Contract
 
-- **Element:** small UI unit; may use DS primitives and narrow router/interaction glue. No app-level composition or domain policy.
-- **Component:** coherent UI unit from Elements/DS primitives. No sibling app Components, API orchestration, or business policy.
-- **Composition:** named application section. May own local interaction/form state; no direct services, route governance, or application-wide orchestration.
-- **Page:** route governance: params, redirects, top-level loading/error coordination, and selecting the Composition. It wires; it does not implement domain policy.
-- **Layout:** shared chrome plus route outlet. It must not inspect or select the active Page.
+- **Atom:** smallest UI unit with one clear responsibility. No higher UI-layer composition, application state, Services, APIs, or business logic.
+- **Molecule:** small coherent unit composed from Atoms. No Organisms, Templates, Pages, application state, Services, APIs, or business logic.
+- **Organism:** significant UI section composed from Molecules and/or Atoms. No Templates, Pages, application state, Services, APIs, or business logic.
+- **Template:** reusable page structure composed from lower UI layers; no concrete route selection, direct Service/API access, or business logic.
+- **Page:** concrete route/context and UI governance layer; follows the architectural composition and state rules defined by `rules/architecture.md` and `rules/hooks.md`.
+- **Layout:** application structure outside Atomic Design; provides persistent chrome and renders the active Page through the route-composition mechanism.
+
+The exact dependency direction is defined by the normative architecture rule, not by this Skill.
 
 ## 9/10 Gates
 
 Report a confirmed violation when evidence shows at least one of:
 
-- responsibility belongs to another layer;
+- responsibility belongs to another Atomic Design layer;
 - a boundary hides materially different reasons to change;
-- a Page implements business rules, validation, transport, or composition behavior;
-- a Composition becomes a hidden Page controller or service boundary;
-- an Element behaves like a Component/Composition;
-- a Layout contains page-specific behavior;
+- a Page owns visual composition that belongs to a Template;
+- a Template owns route-specific governance;
+- an Atom, Molecule, or Organism crosses a prohibited state/data/infrastructure boundary;
+- a Layout contains Page-specific behavior;
 - a boundary change would only move coupling without improving ownership;
 - the public contract is misleading enough that correct reuse/extension decisions require reconstructing unrelated context.
 
 Do **not** report a violation solely because:
 
 - a file is large;
-- a unit has several sequential steps in one coherent workflow;
+- a UI unit has several sequential steps in one coherent workflow;
 - an alternate architecture is imaginable;
 - a folder/name is unconventional but behavior is correct.
 
@@ -84,7 +87,7 @@ For retrospective audits, inspect the complete relevant unit and required depend
 ## Handoffs
 
 - Mechanical import/type/CSS/structure rule → corresponding `enforce-*`.
-- Component/Composition boundary or DS usage → `component-review` / `composition-review`.
+- Atomic Design layer responsibility → `architecture-review`.
 - Hook/state/effect/provider ownership → `hook-state-review`.
 - API/service/router/adapter/data flow → `data-boundary-review`.
 - Naming/cohesion/abstraction → `code-quality-review`.
