@@ -5,11 +5,8 @@
         "matcher": "Edit|Write",
         "hooks": [
           { "type": "command", "command": "node \"$CLAUDE_PROJECT_DIR/.claude/hooks/enforce-architecture-boundaries.mjs\"" },
-          { "type": "command", "command": "node \"$CLAUDE_PROJECT_DIR/.claude/hooks/enforce-components.mjs\"" },
-          { "type": "command", "command": "node \"$CLAUDE_PROJECT_DIR/.claude/hooks/enforce-compositions.mjs\"" },
           { "type": "command", "command": "node \"$CLAUDE_PROJECT_DIR/.claude/hooks/enforce-constants.mjs\"" },
           { "type": "command", "command": "node \"$CLAUDE_PROJECT_DIR/.claude/hooks/enforce-css.mjs\"" },
-          { "type": "command", "command": "node \"$CLAUDE_PROJECT_DIR/.claude/hooks/enforce-elements.mjs\"" },
           { "type": "command", "command": "node \"$CLAUDE_PROJECT_DIR/.claude/hooks/enforce-guards-loaders.mjs\"" },
           { "type": "command", "command": "node \"$CLAUDE_PROJECT_DIR/.claude/hooks/enforce-hooks.mjs\"" },
           { "type": "command", "command": "node \"$CLAUDE_PROJECT_DIR/.claude/hooks/enforce-imports.mjs\"" },
@@ -34,11 +31,8 @@
         "matcher": "Edit|Write",
         "hooks": [
           { "type": "command", "command": "node \"$CLAUDE_PROJECT_DIR/.claude/hooks/enforce-architecture-boundaries.mjs\"" },
-          { "type": "command", "command": "node \"$CLAUDE_PROJECT_DIR/.claude/hooks/enforce-components.mjs\"" },
-          { "type": "command", "command": "node \"$CLAUDE_PROJECT_DIR/.claude/hooks/enforce-compositions.mjs\"" },
           { "type": "command", "command": "node \"$CLAUDE_PROJECT_DIR/.claude/hooks/enforce-constants.mjs\"" },
           { "type": "command", "command": "node \"$CLAUDE_PROJECT_DIR/.claude/hooks/enforce-css.mjs\"" },
-          { "type": "command", "command": "node \"$CLAUDE_PROJECT_DIR/.claude/hooks/enforce-elements.mjs\"" },
           { "type": "command", "command": "node \"$CLAUDE_PROJECT_DIR/.claude/hooks/enforce-guards-loaders.mjs\"" },
           { "type": "command", "command": "node \"$CLAUDE_PROJECT_DIR/.claude/hooks/enforce-hooks.mjs\"" },
           { "type": "command", "command": "node \"$CLAUDE_PROJECT_DIR/.claude/hooks/enforce-imports.mjs\"" },
