@@ -36,6 +36,8 @@ When a rule names an external implementation, tool, algorithm, or measurement, t
 
 When a project-specific rule is stricter than an external standard, **the project rule wins**.
 
+For any task whose correctness depends on an external standard, the agent MUST verify the relevant primary documentation before calling the result compliant. The verification MUST be specific to the rule being evaluated; a general memory of the standard is insufficient.
+
 ## Mandatory Preflight Before Any Change
 
 Before any `Write`, `Edit`, file creation, deletion, rename, or move, the agent **MUST complete these steps in order**:
@@ -150,7 +152,7 @@ Before stating that the task is complete, the agent **MUST**:
 
 The label **"9/10" is a verification result, not an opinion**.
 
-The agent **MUST NOT** call a rule, Skill, or rule set "9/10" unless the following gate has been evaluated explicitly:
+The agent **MUST NOT** call a rule, Skill, or rule set "9/10" unless every **applicable** gate below has been evaluated explicitly:
 
 ```text
 [ ] Rules are normative and unambiguous.
@@ -160,16 +162,20 @@ The agent **MUST NOT** call a rule, Skill, or rule set "9/10" unless the followi
 [ ] Exceptions are explicit and narrowly scoped.
 [ ] Common bypasses are explicitly prohibited.
 [ ] Dependencies and layer/state boundaries are explicit.
-[ ] Relevant external standards were checked against primary technical documentation.
-[ ] Relevant repository conventions were inspected.
-[ ] Mechanically verifiable rules have a concrete enforcement path.
+[ ] When an external standard is the basis for the rule, the relevant primary technical documentation was checked and the project-specific deviation, if any, is explicit.
+[ ] Relevant repository conventions for the scoped task were inspected.
+[ ] Mechanically verifiable rules have a concrete enforcement path, or the rule is explicitly documented as semantic/non-mechanical and therefore requires Skill review.
 [ ] The final written rule was reread after editing.
-[ ] An adversarial review found no known high-impact ambiguity or contradiction.
+[ ] An adversarial review found no known high-impact ambiguity or contradiction in the scoped rule set.
 ```
 
-If any applicable item cannot be established, the agent **MUST NOT** claim 9/10.
+A gate item is **applicable** when the rule or task actually depends on it. For example, an external-standard check is not applicable to a purely project-specific convention. A mechanical-enforcement check is not applicable when the rule is inherently semantic and cannot be verified reliably without judgment.
 
-The agent **MUST** report which gate items remain unresolved instead of replacing the missing evidence with confidence, familiarity, or subjective judgment.
+If an applicable gate item cannot be established, the agent **MUST NOT** claim 9/10.
+
+The agent **MUST** report which applicable gate items remain unresolved instead of replacing missing evidence with confidence, familiarity, or subjective judgment.
+
+A 9/10 claim MUST be supported by evidence from the scoped repository/rule inspection and, when applicable, primary external documentation. The claim applies only to the inspected scope; it does not certify unrelated rules or the entire repository.
 
 ## Fail-Closed Mode
 
