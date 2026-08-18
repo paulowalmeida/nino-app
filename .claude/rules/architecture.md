@@ -147,24 +147,29 @@ A Page represents a concrete application route/context and is the **UI governanc
 
 **MUST:**
 - coordinate page context, state, data, and dependencies;
-- use **exactly one Template as its visual composition layer**;
+- use **one or more Templates as its visual composition layer(s)**;
 - consume application state through the authorized Zustand Store Hook when required;
-- pass the Template the required data, actions, and dependencies.
+- pass each Template the required data, actions, and dependencies.
 
 **MUST NOT:**
 - import, render, or directly compose Organisms, Molecules, or Atoms;
-- implement visual composition that belongs to the Template;
+- implement visual composition that belongs to a Template;
 - become a monolithic visual component;
-- manually choose visual components below the Template;
-- render multiple Templates as a workaround for avoiding the composition of a suitable Template;
+- manually choose visual components below the Template layer;
+- introduce multiple Templates solely as a workaround for avoiding the composition of a suitable Template;
 - pass the Zustand Store Hook to a prohibited lower UI layer.
 
 **Allowed:**
 
 ```tsx
-// ✅ Page → Zustand Store Hook → Template
+// ✅ Page → Zustand Store Hook → Template(s)
 const user = useUserStore((state) => state.user)
-return <UserTemplate user={user} />
+return (
+  <>
+    <UserTemplate user={user} />
+    <OrdersTemplate userId={user.id} />
+  </>
+)
 ```
 
 **Forbidden:**
@@ -308,7 +313,7 @@ The agent **MUST NOT** claim that the current codebase already conforms unless t
 
 Atomic Design provides the terminology and mental model. The following are **Nino-specific architectural constraints** and are intentionally stricter than the external methodology:
 
-- Page MUST compose through exactly one Template;
+- Page MUST compose through **one or more Templates**;
 - Pages, Templates, Layouts, Guards, Loaders, Providers, and approved Custom Hooks may consume Zustand application state;
 - Atoms, Molecules, and Organisms MUST NOT consume Zustand application state;
 - UI composition dependencies MUST follow the matrix above.
