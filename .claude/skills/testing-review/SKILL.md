@@ -68,7 +68,7 @@ Each item MUST be exactly one of `VIOLATION`, `LEGACY`, `EXCEPTION`, `NEEDS-EVID
 - **VIOLATION:** provide the concrete risk and focused correction.
 - **LEGACY:** identify the out-of-scope defect; it MUST NOT justify new weak tests.
 - **EXCEPTION:** record explicit project authorization and scope. Do not infer exceptions from convenience.
-- **NEEDS-EVIDENCE:** identify the missing contract/execution evidence and next concrete inspection. It remains unresolved until obtained or explicitly closed as incomplete.
+- **NEEDS-EVIDENCE:** identify the missing contract/execution evidence and next concrete inspection. It remains unresolved until evidence is obtained or explicitly closed as incomplete.
 - **PASS:** may be declared only after the Final Review Gate is satisfied.
 
 An unresolved `NEEDS-EVIDENCE` item MUST NOT be silently treated as PASS. If required evidence cannot be obtained, final status is **INCOMPLETE**.
@@ -81,7 +81,7 @@ Every confirmed finding MUST include exact test location, intended contract, cur
 
 - Objective test structure → `enforce-tests`.
 - Hook/state behavior → `hook-state-review`.
-- Component/Composition behavior → `component-review` / `composition-review`.
+- UI layer/architectural boundary → `architecture-review`.
 - API/service boundary → `data-boundary-review`.
 - Test-setup complexity → `complexity-refactoring` only when structural evidence is material.
 
