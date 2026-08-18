@@ -81,7 +81,6 @@ Every confirmed finding MUST include exact file/line, what the reader must infer
 ## Handoffs
 
 - Responsibility/layer → `architecture-review`.
-- Component/Composition boundary → `component-review` / `composition-review`.
 - Hook/state → `hook-state-review`.
 - Data/service → `data-boundary-review`.
 - Structural complexity → `complexity-refactoring`.
