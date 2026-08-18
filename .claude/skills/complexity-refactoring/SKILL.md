@@ -61,7 +61,7 @@ A lower metric with worse cohesion, readability, or coupling is a failed refacto
 
 ## TSX Exception
 
-Do not split a coherent component because JSX is verbose. Extract UI only when it has semantic identity, meaningful contract, independent behavior, or a clear architectural boundary. Arbitrary JSX fragments are not valid extraction targets merely because they are long.
+Do not split a coherent UI unit because JSX is verbose. Extract UI only when it has semantic identity, meaningful contract, independent behavior, or a clear architectural boundary. Arbitrary JSX fragments are not valid extraction targets merely because they are long.
 
 ## Hook and Service Guidance
 
@@ -115,7 +115,6 @@ Every confirmed finding MUST identify the structural signal, why it matters sema
 ## Handoffs
 
 - UI layer mismatch → `architecture-review`.
-- Component/Composition extraction → `component-review` / `composition-review`.
 - Hook/state decomposition → `hook-state-review`.
 - Service/data boundary → `data-boundary-review`.
 - Naming/cohesion/abstraction → `code-quality-review`.
