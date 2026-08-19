@@ -6,10 +6,10 @@ import { describe, expect, it, vi } from 'vitest'
 
 import type { TenantRole } from '@custom_types/auth/tenant-role'
 import { useQueueSummary } from '@hooks/order/useQueueSummary'
+import { useCurrentTenant } from '@hooks/session/useCurrentTenant'
 import { useTenantRole } from '@hooks/session/useTenantRole'
 import { useSessionStore } from '@states/useSessionStore'
-
-import { Sidebar } from '@organisms/Sidebar/Sidebar'
+import { Sidebar } from '@templates/Sidebar/Sidebar'
 
 vi.mock('@organisms/StoreSwitcher/StoreSwitcher', () => ({
   StoreSwitcher: () => null,
@@ -18,24 +18,33 @@ vi.mock('@organisms/UserMenu/UserMenu', () => ({
   UserMenu: () => null,
 }))
 vi.mock('@hooks/order/useQueueSummary')
+vi.mock('@hooks/session/useCurrentTenant')
 vi.mock('@hooks/session/useTenantRole')
 vi.mock('@states/useSessionStore')
 
-const mockRole = (role: TenantRole | null) =>
+const mockRole = (role: TenantRole | null) => {
   vi.mocked(useTenantRole).mockReturnValue(role)
+  vi.mocked(useCurrentTenant).mockReturnValue({
+    tenantId: 'tenant-1',
+  } as ReturnType<typeof useCurrentTenant>)
+}
 
 const mockWaiting = (pending: number) =>
   vi.mocked(useQueueSummary).mockReturnValue({
     data: { PENDING: pending },
   } as unknown as ReturnType<typeof useQueueSummary>)
 
-const renderSidebar = (
+const mockSignedInUser = () =>
+  vi.mocked(useSessionStore).mockImplementation((selector) =>
+    selector({ user: { name: 'Ana' } } as Parameters<typeof selector>[0])
+  )
+
+const renderAppSidebar = (
   overrides: Partial<{ isOpen: boolean; collapsed: boolean }> = {}
 ) =>
   render(
     <MemoryRouter>
       <Sidebar
-        tenantId="tenant-1"
         isOpen={overrides.isOpen ?? false}
         onClose={vi.fn()}
         collapsed={overrides.collapsed ?? false}
@@ -49,12 +58,10 @@ describe(Sidebar.name, () => {
     // Arrange
     mockRole('TENANT_OWNER')
     mockWaiting(0)
-    vi.mocked(useSessionStore).mockImplementation((selector) =>
-      selector({ user: { name: 'Ana' } } as never)
-    )
+    mockSignedInUser()
 
     // Act
-    renderSidebar()
+    renderAppSidebar()
 
     // Assert
     expect(screen.getByText('Configurações')).toBeInTheDocument()
@@ -64,12 +71,10 @@ describe(Sidebar.name, () => {
     // Arrange
     mockRole('STAFF')
     mockWaiting(0)
-    vi.mocked(useSessionStore).mockImplementation((selector) =>
-      selector({ user: { name: 'Ana' } } as never)
-    )
+    mockSignedInUser()
 
     // Act
-    renderSidebar()
+    renderAppSidebar()
 
     // Assert
     expect(screen.queryByText('Configurações')).not.toBeInTheDocument()
@@ -80,16 +85,13 @@ describe(Sidebar.name, () => {
     // Arrange
     mockRole('TENANT_OWNER')
     mockWaiting(0)
-    vi.mocked(useSessionStore).mockImplementation((selector) =>
-      selector({ user: { name: 'Ana' } } as never)
-    )
+    mockSignedInUser()
     const onToggleCollapse = vi.fn()
 
     // Act
     render(
       <MemoryRouter>
         <Sidebar
-          tenantId="tenant-1"
           isOpen={false}
           onClose={vi.fn()}
           collapsed={false}

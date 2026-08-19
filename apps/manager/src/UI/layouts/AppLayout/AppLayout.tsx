@@ -5,7 +5,7 @@ import { Button } from '@nino/ds/components/Button'
 import { Flexbox } from '@nino/ds/components/Flexbox'
 import { Icon } from '@nino/ds/components/Icon'
 import { Text } from '@nino/ds/components/Text'
-import { Sidebar } from '@organisms/Sidebar/Sidebar'
+import { Sidebar } from '@templates/Sidebar/Sidebar'
 import { useCurrentTenant } from '@hooks/session/useCurrentTenant'
 import {
   readSidebarCollapsed,
@@ -70,7 +70,6 @@ export const AppLayout = () => {
       </Flexbox>
 
       <Sidebar
-        tenantId={tenant?.tenantId ?? null}
         isOpen={menuOpen}
         onClose={closeMenu}
         collapsed={collapsed}

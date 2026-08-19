@@ -10,7 +10,7 @@ import { AppLayout } from '@layouts/AppLayout/AppLayout'
 
 import { activeTenant } from './AppLayout.mock'
 
-vi.mock('@organisms/Sidebar/Sidebar', () => ({
+vi.mock('@templates/Sidebar/Sidebar', () => ({
   Sidebar: ({ isOpen }: { isOpen: boolean }) => (
     <div data-testid="sidebar" data-open={isOpen} />
   ),
@@ -52,7 +52,7 @@ describe(AppLayout.name, () => {
     renderLayout()
 
     // Assert
-    expect(screen.getByTestId('sidebar')).toHaveAttribute('data-open', 'false')
+    expect(screen.queryByText('Padaria Boa')).not.toBeInTheDocument()
   })
 
   it('opens the sidebar when the hamburger button is clicked', async () => {

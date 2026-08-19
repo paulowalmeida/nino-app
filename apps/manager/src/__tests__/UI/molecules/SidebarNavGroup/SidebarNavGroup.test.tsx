@@ -3,7 +3,7 @@ import { MemoryRouter } from 'react-router'
 import { render, screen } from '@testing-library/react'
 import { describe, expect, it, vi } from 'vitest'
 
-import { SidebarNavGroup } from '@organisms/SidebarNavGroup/SidebarNavGroup'
+import { SidebarNavGroup } from '@molecules/SidebarNavGroup/SidebarNavGroup'
 
 describe(SidebarNavGroup.name, () => {
   it('renders the trigger and its child links', () => {
