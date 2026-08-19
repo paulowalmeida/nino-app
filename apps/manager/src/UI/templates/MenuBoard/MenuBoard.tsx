@@ -30,7 +30,6 @@ import motion from '@styles/motion.module.css'
 
 export type MenuBoardProps = {
   tenantId: string | null
-  /** `null` is the whole menu; with a category chosen, dragging turns on. */
   categoryId: string | null
   search: string
 }
@@ -66,9 +65,6 @@ export const MenuBoard = ({ tenantId, categoryId, search }: MenuBoardProps) => {
     })
   }
 
-  /** "All" means every item loaded so far — more loads in as the list is
-   *  scrolled, same as the rows a person can currently see and check one
-   *  by one. */
   const allLoadedSelected =
     items.length > 0 && selectedIds.size === items.length
   const someLoadedSelected = selectedIds.size > 0 && !allLoadedSelected
@@ -89,19 +85,12 @@ export const MenuBoard = ({ tenantId, categoryId, search }: MenuBoardProps) => {
     handleCancelSelection()
   }
 
-  /**
-   * Dragging only makes sense within a category: an item's position is
-   * relative to its siblings. In "All" the list spans categories, and in a
-   * search it's a slice — moving the third row of a result doesn't say
-   * where the item should go in the menu.
-   */
   const canReorder = !!categoryId && !search
 
   const [sortedItems, setSortedItems] = useState(items)
   const [prevItems, setPrevItems] = useState(items)
   const sortedItemsRef = useRef(sortedItems)
 
-  /** Re-seeds only when the API sends a different slice than what we have. */
   if (items !== prevItems) {
     setPrevItems(items)
     setSortedItems(items)
@@ -111,12 +100,6 @@ export const MenuBoard = ({ tenantId, categoryId, search }: MenuBoardProps) => {
     sortedItemsRef.current = sortedItems
   }, [sortedItems])
 
-  /**
-   * Positions are fixed (the same set, just reassigned): the list loads the
-   * category in order, so swapping two rows swaps two positions that
-   * already exist — it never invents a new position or shifts what hasn't
-   * loaded yet.
-   */
   const persist = () => {
     const slots = items.map((item) => item.position).sort((a, b) => a - b)
     const previousPositionById = new Map(
@@ -129,12 +112,6 @@ export const MenuBoard = ({ tenantId, categoryId, search }: MenuBoardProps) => {
     if (changes.length > 0) reorder({ positions: changes })
   }
 
-  /*
-   * The skeleton reuses the real list's classes — same card, same
-   * dividers, same row height. Three loose blocks with spacing between
-   * them, like before, had their own geometry and the list jumped on
-   * arrival.
-   */
   if (isPending) {
     return (
       <div className={styles.wrap}>

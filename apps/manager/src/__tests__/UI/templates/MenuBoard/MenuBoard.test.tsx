@@ -7,7 +7,7 @@ import { beforeEach, describe, expect, it, vi } from 'vitest'
 
 import type { MenuItem } from '@custom_types/product/menu-item'
 import { useCatalog } from '@hooks/product/useCatalog'
-import { MenuBoard } from '@organisms/MenuBoard/MenuBoard'
+import { MenuBoard } from '@templates/MenuBoard/MenuBoard'
 
 vi.mock('@hooks/product/useCatalog')
 vi.mock('@hooks/product/useItemAvailability', () => ({

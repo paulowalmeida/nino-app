@@ -4,11 +4,11 @@ import { Flexbox } from '@nino/ds/components/Flexbox'
 import { Header } from '@nino/ds/components/Header'
 import { CategoryChips } from '@organisms/CategoryChips/CategoryChips'
 import { CatalogToolbar } from '@organisms/CatalogToolbar/CatalogToolbar'
-import { MenuBoard } from '@organisms/MenuBoard/MenuBoard'
 import { useCategories } from '@hooks/product/useCategories'
 import { useCurrentTenant } from '@hooks/session/useCurrentTenant'
 import { useTenantRole } from '@hooks/session/useTenantRole'
 import { useDebouncedValue } from '@hooks/ui/useDebouncedValue'
+import { MenuBoard } from '@templates/MenuBoard/MenuBoard'
 
 import styles from './Catalog.module.css'
 
