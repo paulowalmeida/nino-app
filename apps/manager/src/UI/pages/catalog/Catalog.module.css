@@ -1,11 +1,5 @@
 @reference "@nino/ds/globals.css";
 
-/*
- * Mesmo casco da fila de pedidos: a tela é fixa e só a lista rola por
- * dentro. O desconto de 3.5rem é a barra fixa do AppLayout, compensada por
- * um `pt-14` no `main`. O teto de largura acompanha o do balcão
- * (`max-w-page`) — as duas telas mostram o mesmo cardápio.
- */
 .page {
   @apply relative h-[calc(100dvh-3.5rem)] max-w-page p-4;
   @apply lg:h-dvh lg:p-10;
@@ -13,16 +7,4 @@
 
 .header {
   @apply shrink-0;
-}
-
-/*
- * O espaço que sobra depois do cabeçalho e dos filtros. Quem rola é a lista
- * lá dentro, não esta caixa — a contagem de itens fica parada acima dela.
- */
-.scroller {
-  @apply min-h-0 flex-1;
-}
-
-.search {
-  @apply h-11 w-full lg:max-w-sm;
 }
