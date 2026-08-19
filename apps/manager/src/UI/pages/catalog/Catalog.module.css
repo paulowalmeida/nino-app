@@ -12,7 +12,3 @@
 .scroller {
   @apply min-h-0 flex-1;
 }
-
-.search {
-  @apply h-11 w-full lg:max-w-sm;
-}

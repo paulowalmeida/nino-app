@@ -2,9 +2,8 @@ import { useState } from 'react'
 
 import { Flexbox } from '@nino/ds/components/Flexbox'
 import { Header } from '@nino/ds/components/Header'
-import { Input } from '@nino/ds/components/Input'
-import { CatalogActions } from '@molecules/CatalogActions/CatalogActions'
 import { CategoryChips } from '@organisms/CategoryChips/CategoryChips'
+import { CatalogToolbar } from '@organisms/CatalogToolbar/CatalogToolbar'
 import { MenuBoard } from '@organisms/MenuBoard/MenuBoard'
 import { useCategories } from '@hooks/product/useCategories'
 import { useCurrentTenant } from '@hooks/session/useCurrentTenant'
@@ -36,24 +35,11 @@ export const Catalog = () => {
         description={DESCRIPTION}
       />
 
-      <Flexbox
-        direction={{ mobile: 'column', desktop: 'row' }}
-        gap={{ mobile: 2, desktop: 4 }}
-        align={{ desktop: 'center' }}
-        shrink={false}
-        mb={3}
-      >
-        <Input
-          type="search"
-          value={term}
-          placeholder="Buscar item pelo nome"
-          aria-label="Buscar item pelo nome"
-          className={styles.search}
-          onChange={(event) => setTerm(event.target.value)}
-        />
-
-        {role === 'TENANT_OWNER' && <CatalogActions />}
-      </Flexbox>
+      <CatalogToolbar
+        term={term}
+        onTermChange={setTerm}
+        canManageCategories={role === 'TENANT_OWNER'}
+      />
 
       <Flexbox shrink={false} mb={3}>
         <CategoryChips
