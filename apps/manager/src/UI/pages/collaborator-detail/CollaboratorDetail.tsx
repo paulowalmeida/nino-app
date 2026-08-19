@@ -1,6 +1,7 @@
 import { useParams } from 'react-router'
 
 import { EmptyState } from '@nino/ds/components/EmptyState'
+import { Flexbox } from '@nino/ds/components/Flexbox'
 import { Tabs } from '@nino/ds/components/Tabs'
 import { Breadcrumb } from '@atoms/Breadcrumb/Breadcrumb'
 import {
@@ -37,15 +38,15 @@ export const CollaboratorDetail = () => {
 
   if (!member) {
     return (
-      <div className={styles.page}>
+      <Flexbox className={styles.page}>
         <Breadcrumb trail={[{ label: 'Equipe', to: '..' }, { label: '—' }]} />
         <EmptyState>Esta pessoa não está mais nesta loja.</EmptyState>
-      </div>
+      </Flexbox>
     )
   }
 
   return (
-    <div className={styles.page}>
+    <Flexbox className={styles.page}>
       <Breadcrumb
         trail={[{ label: 'Equipe', to: '..' }, { label: member.user.name }]}
       />
@@ -71,6 +72,6 @@ export const CollaboratorDetail = () => {
           },
         ]}
       />
-    </div>
+    </Flexbox>
   )
 }
