@@ -1,8 +1,7 @@
 {
   "permissions": {
     "allow": [
-      "WebFetch(domain:whatsmenu.com.br)",
-      "Read(//home/pw/.claude/projects/-home-pw-workspace-nino/memory/**)"
+      "WebFetch(domain:whatsmenu.com.br)"
     ]
   }
 }
