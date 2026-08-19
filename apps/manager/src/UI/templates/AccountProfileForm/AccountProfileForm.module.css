@@ -1,0 +1,17 @@
+@reference "@nino/ds/globals.css";
+
+.wide {
+  @apply sm:col-span-2;
+}
+
+.saveError {
+  @apply mt-4;
+}
+
+.actions {
+  @apply mt-8 border-t border-border pt-5;
+}
+
+.status {
+  @apply mb-2 sm:mb-0 sm:mr-auto;
+}
