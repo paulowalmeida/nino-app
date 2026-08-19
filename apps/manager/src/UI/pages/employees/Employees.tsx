@@ -2,82 +2,48 @@ import { useState } from 'react'
 
 import { Flexbox } from '@nino/ds/components/Flexbox'
 import { Header } from '@nino/ds/components/Header'
+import {
+  courierRosterEntries,
+  staffRosterEntries,
+} from '@adapters/team-roster.adapter'
 import { EditEmailModal } from '@organisms/EditEmailModal/EditEmailModal'
 import { InviteForm } from '@organisms/InviteForm/InviteForm'
 import { TeamRoster } from '@organisms/TeamRoster/TeamRoster'
-import { useCouriers } from '@hooks/team/useCouriers'
 import { useCurrentTenant } from '@hooks/session/useCurrentTenant'
+import { useCouriers } from '@hooks/team/useCouriers'
 import { useInvite } from '@hooks/team/useInvite'
 import { useRemoveMember } from '@hooks/team/useRemoveMember'
 import { useStaff } from '@hooks/team/useStaff'
 import { useUpdateStaffEmail } from '@hooks/team/useUpdateStaffEmail'
 import { useUpdateStaffRole } from '@hooks/team/useUpdateStaffRole'
 import { useSessionStore } from '@states/useSessionStore'
-import { TEAM_ROLE_LABEL } from '@constants/team.constants'
-import type { RosterEntry } from '@custom_types/team/roster-entry'
-import { loginEmailOf } from '@utils/login-email'
 
 import styles from './Employees.module.css'
 
 export const Employees = () => {
   const tenant = useCurrentTenant()
   const tenantId = tenant?.tenantId ?? null
-
   const { data: staff, isPending: isStaffPending } = useStaff(tenantId)
   const { data: couriers, isPending: isCourierPending } = useCouriers(tenantId)
   const { mutateAsync: invite } = useInvite(tenantId)
+  const { mutateAsync: updateStaffEmail } = useUpdateStaffEmail(tenantId)
   const {
     mutate: removeMember,
     variables: removingVariables,
     isPending: isRemoving,
   } = useRemoveMember(tenantId)
-
-  /* `variables` sobrevive à falha: sem o isPending o botão gira pra sempre. */
-  const removing = isRemoving ? removingVariables : undefined
-  const { mutateAsync: updateStaffEmail } = useUpdateStaffEmail(tenantId)
-
-  const [editingStaffId, setEditingStaffId] = useState<string | null>(null)
-
   const {
     mutate: changeRole,
     isPending: isChangingRole,
     variables: roleVars,
   } = useUpdateStaffRole(tenantId)
-
-  /* Só o dono troca cargo — a API recusa o resto, e mostrar o menu para quem
-   * vai levar 403 é prometer o que não se cumpre. */
-  const isOwner = tenant?.role === 'TENANT_OWNER'
+  const [editingStaffId, setEditingStaffId] = useState<string | null>(null)
   const meId = useSessionStore((state) => state.user?.id)
-
-  const staffEntries: RosterEntry[] = (staff?.data ?? []).map(
-    ({ user, role }) => ({
-      id: user.id,
-      name: user.name,
-      email: loginEmailOf(user),
-      role: TEAM_ROLE_LABEL[role],
-      roleKey: role,
-      roleLocked:
-        user.id === meId ? 'Você não pode mudar o próprio cargo' : undefined,
-      lastLoginAt: user.lastLoginAt,
-      removable: role !== 'TENANT_OWNER',
-      emailEditable: true,
-      href: user.id,
-    })
-  )
-
+  const staffEntries = staffRosterEntries(staff?.data ?? [], meId)
+  const courierEntries = courierRosterEntries(couriers?.data ?? [])
   const editingStaff = staffEntries.find(({ id }) => id === editingStaffId)
-
-  const courierEntries: RosterEntry[] = (couriers?.data ?? []).map(
-    ({ courier, isActive }) => ({
-      id: courier.id,
-      name: courier.name,
-      email: loginEmailOf(courier),
-      role: isActive ? 'Ativo' : 'Parado',
-      lastLoginAt: courier.lastLoginAt,
-      quiet: true,
-      removable: true,
-    })
-  )
+  const removing = isRemoving ? removingVariables : undefined
+  const canChangeRole = tenant?.role === 'TENANT_OWNER'
 
   return (
     <div className={styles.page}>
@@ -91,7 +57,7 @@ export const Employees = () => {
         }
       />
 
-      <Flexbox gap={{ mobile: 8, desktop: 10 }}>
+      <Flexbox direction="column" gap={{ mobile: 8, desktop: 10 }}>
         <InviteForm onInvite={invite} />
 
         <TeamRoster
@@ -105,7 +71,9 @@ export const Employees = () => {
           onRemove={(id) => removeMember({ id, kind: 'STAFF' })}
           onEditEmail={setEditingStaffId}
           onChangeRole={
-            isOwner ? (userId, role) => changeRole({ userId, role }) : undefined
+            canChangeRole
+              ? (userId, role) => changeRole({ userId, role })
+              : undefined
           }
           changingRoleId={isChangingRole ? roleVars?.userId : undefined}
         />
