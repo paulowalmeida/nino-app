@@ -4,9 +4,3 @@
   @apply relative max-w-3xl p-4 lg:p-10;
 }
 
-/* sem moldura: a página já é a lista, como Clientes e Configurações — um
-   cartão em volta só repetiria o contorno que a tela já dá */
-.list {
-  @apply flex flex-col;
-}
-
