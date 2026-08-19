@@ -1,4 +1,5 @@
 import { Alert } from '@nino/ds/components/Alert'
+import { Flexbox } from '@nino/ds/components/Flexbox'
 import { Header } from '@nino/ds/components/Header'
 import {
   SubscriptionCard,
@@ -14,7 +15,7 @@ export const AccountSubscription = () => {
   const { data, isPending, isError } = useSubscription()
 
   return (
-    <div className={styles.page}>
+    <Flexbox className={styles.page}>
       <Header
         mb={{ mobile: 5, desktop: 8 }}
         title="Assinatura e plano"
@@ -31,6 +32,6 @@ export const AccountSubscription = () => {
       )}
 
       {data && <SubscriptionCard subscription={data} />}
-    </div>
+    </Flexbox>
   )
 }
