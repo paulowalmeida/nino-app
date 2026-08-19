@@ -304,6 +304,10 @@ Names **MUST communicate intent, responsibility, or domain meaning**.
 
 The agent **MUST** prefer explicit names over abbreviations, name functions by the operation they perform, and name boolean values with boolean intent (`is`, `has`, `can`, `should`, etc.) when applicable.
 
+The `Template` and `Page` suffixes are optional. A UI unit's layer is defined
+by its responsibility and directory, not by a naming suffix; the absence of
+either suffix **MUST NOT** be treated as a naming or architecture violation.
+
 ## Abstractions
 
 An abstraction **MUST have a current, concrete reason to exist**.
@@ -350,9 +354,15 @@ The agent **MUST NOT** introduce barrel files, `index.ts` aggregators, or altern
 
 ## Comments
 
-Comments **MUST explain intent, constraints, or non-obvious reasoning**, not restate the code.
+Source comments are prohibited by default. A comment is allowed only when code
+cannot express a relevant fact and the comment begins with `WHY:`,
+`CONSTRAINT:`, or `WORKAROUND:`. It **MUST** explain that non-obvious reason,
+constraint, or workaround; it **MUST NOT** restate mechanics, summarize a
+function, explain an obvious prop, or compensate for unclear naming or
+unnecessarily complex code.
 
-The agent **MUST NOT** add comments that compensate for unclear naming or unnecessarily complex code.
+Arrange/Act/Assert markers are also allowed inside test files. The comment
+enforcement hook blocks any other newly written source comment.
 
 ## Dead Code and Temporary Code
 
@@ -363,6 +373,12 @@ The agent **MUST NOT** leave unused imports, unreachable code, obsolete commente
 There is no universal maximum number of lines that automatically makes a file incorrect.
 
 Growing file size **MUST** be treated as a signal to reassess responsibility and cohesion, not as an automatic decomposition command.
+
+At **250 lines**, a file **MUST** receive an explicit semantic review of its
+responsibility and cohesion. This is a review trigger, not a mechanical limit:
+the file may remain larger when that review establishes that it is one coherent
+unit, and it may require decomposition below 250 lines when it mixes distinct
+responsibilities.
 
 ## Refactoring During Feature Work
 

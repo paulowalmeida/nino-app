@@ -48,10 +48,10 @@ The checker enforces direct UI-composition edges and transitive prohibited state
 
 - **Atom:** smallest UI unit with one clear responsibility. No higher UI-layer composition, application state, Services, APIs, or business logic.
 - **Molecule:** small coherent unit composed from Atoms. No Organisms, Templates, Pages, application state, Services, APIs, or business logic.
-- **Organism:** significant UI section composed from Molecules and/or Atoms. No Templates, Pages, application state, Services, APIs, or business logic.
-- **Template:** reusable page structure composed from lower UI layers; no concrete route selection, direct Service/API access, or business logic.
-- **Page:** concrete route/context and UI governance layer; follows the architectural composition and state rules defined by `.agents/rules/architecture.md` and `.agents/rules/hooks.md`.
-- **Layout:** application structure outside Atomic Design; provides persistent chrome and renders the active Page through the route-composition mechanism.
+- **Organism:** significant UI section composed from Molecules and/or Atoms. It receives data and callbacks from its parent; it does not query application state, decide which feature mounts, call Services/APIs, or implement domain decisions.
+- **Template:** optional high-level page module. It is justified when its visual structure is large and stable, reusable across contexts, or has a distinct responsibility and reason to change. It composes lower UI layers, owns its visual states and local interaction, and may call authorized feature Hooks. It does not select a route or call Services/APIs directly; domain rules and integrations remain in Hooks, Adapters, Services, and Constants. Never create it merely to mirror a Page or satisfy a layer rule.
+- **Page:** concrete route/context and screen-composition layer. It owns params, redirects, access, screen-level states, and composes the Templates and/or lower UI layers that form its screen. It does not own domain rules, payload transformations, or API orchestration.
+- **Layout:** application structure outside Atomic Design. It provides persistent chrome and route composition around the active Page, and may directly compose the Atoms, Molecules, Organisms, and route-agnostic shell Templates needed by that chrome.
 
 The exact dependency direction is defined by the normative architecture rule, not by this Skill.
 
@@ -61,7 +61,13 @@ Classify from the smallest coherent responsibility, then apply the dependency ma
 
 Reject as a workaround an empty bridge component, a layer rename, a barrel/alias/wrapper that hides a forbidden edge, or moving a dependency to non-TSX without preserving the boundary. Treat the current app's conflicting imports as legacy evidence, never as a new precedent.
 
-For a Layout, distinguish persistent application chrome from Page-specific visual composition. A shell may own route composition and persistent navigation, but it may not import a lower UI layer merely because that UI happens to be persistent.
+For a proposed Template, identify the qualifying boundary: a large and stable
+visual structure, reuse across contexts, or a distinct responsibility and
+reason to change. Reject it when it merely mirrors Page JSX, props, and
+handlers. A Page may render lower UI layers directly when it is the clearest
+owner.
+
+For a Layout, distinguish persistent application chrome from Page-specific visual composition. A shell may directly compose the lower UI layers required by its chrome; reject the dependency only when the unit belongs to the active Page or introduces route-specific feature behavior.
 
 ## 9/10 Gates
 
@@ -69,7 +75,7 @@ Report a confirmed violation when evidence shows at least one of:
 
 - responsibility belongs to another Atomic Design layer;
 - a boundary hides materially different reasons to change;
-- a Page owns visual composition that belongs to a Template;
+- a Template exists only to relocate Page composition;
 - a Template owns route-specific governance;
 - an Atom, Molecule, or Organism crosses a prohibited state/data/infrastructure boundary;
 - a Layout contains Page-specific behavior;

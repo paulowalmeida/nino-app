@@ -32,8 +32,8 @@ try {
   write("UI/molecules/Search.tsx", "export function Search() { return null; }\n");
   write("UI/organisms/Table.tsx", "export function Table() { return null; }\n");
   write("UI/templates/User.tsx", 'import { Table } from "../organisms/Table";\nexport function User() { return <Table />; }\n');
-  write("UI/pages/User.tsx", 'import { User } from "../templates/User";\nexport function UserPage() { return <User />; }\n');
-  write("UI/layouts/App.tsx", 'import { UserPage } from "../pages/User";\nexport function AppLayout() { return <UserPage />; }\n');
+  write("UI/pages/User.tsx", 'import { User } from "../templates/User";\nexport function UserRoute() { return <User />; }\n');
+  write("UI/layouts/App.tsx", 'import { UserRoute } from "../pages/User";\nexport function AppLayout() { return <UserRoute />; }\n');
   write("states/useSessionStore.ts", "export const store = {};\n");
   write("tsconfig.json", JSON.stringify({ compilerOptions: { baseUrl: ".", paths: {
     "@states/*": ["states/*"],
@@ -83,9 +83,14 @@ try {
   result = run();
   assert.equal(result.status, 0, "A Page importing its Template must remain valid.");
 
-  write("UI/pages/InvalidPage.tsx", 'import { Table } from "../organisms/Table";\n');
+  write("UI/pages/OrganismPage.tsx", 'import { Table } from "../organisms/Table";\n');
   result = run();
-  assert.equal(result.status, 1, "A Page importing an Organism directly must fail.");
+  assert.equal(result.status, 0, "A Page may import an Organism directly.");
+
+  fs.rmSync(path.join(tempRoot, "UI/pages/OrganismPage.tsx"));
+  write("UI/pages/InvalidPage.tsx", 'import { UserRoute } from "./User";\n');
+  result = run();
+  assert.equal(result.status, 1, "A Page importing another Page must fail.");
 
   fs.rmSync(path.join(tempRoot, "UI/pages/InvalidPage.tsx"));
   write("UI/pages/IndirectPage.tsx", 'import { User } from "../templates/User";\n');
@@ -93,11 +98,24 @@ try {
   assert.equal(result.status, 0, "A Page may reach an Organism through its Template.");
 
   fs.rmSync(path.join(tempRoot, "UI/pages/IndirectPage.tsx"));
-  write("UI/layouts/InvalidLayout.tsx", 'import { Table } from "../organisms/Table";\n');
+  write("UI/layouts/ValidLayout.tsx", 'import { Table } from "../organisms/Table";\n');
   result = run();
-  assert.equal(result.status, 1, "A Layout importing an Organism directly must fail.");
+  assert.equal(
+    result.status,
+    0,
+    "A Layout composing chrome from a lower UI layer must remain valid."
+  );
 
-  fs.rmSync(path.join(tempRoot, "UI/layouts/InvalidLayout.tsx"));
+  fs.rmSync(path.join(tempRoot, "UI/layouts/ValidLayout.tsx"));
+  write("UI/layouts/TemplateLayout.tsx", 'import { User } from "../templates/User";\n');
+  result = run();
+  assert.equal(
+    result.status,
+    0,
+    "A Layout may import a Template; semantic review restricts it to a route-agnostic shell Template."
+  );
+
+  fs.rmSync(path.join(tempRoot, "UI/layouts/TemplateLayout.tsx"));
   write("UI/atoms/Unresolved.tsx", 'import thing from "@states/missing";\n');
   result = run();
   assert.equal(result.status, 2, "Unresolved local imports must fail closed.");

@@ -41,20 +41,20 @@
       "message": "Templates must not directly compose templates or pages."
     },
     {
-      "id": "page-cannot-compose-peer-or-below-template",
+      "id": "page-cannot-compose-peer-page",
       "severity": "block",
       "mode": "direct",
       "sourceDirectories": ["UI/pages"],
-      "targetDirectories": ["UI/pages", "UI/organisms", "UI/molecules", "UI/atoms"],
-      "message": "Pages must not directly compose another Page or lower UI layers; lower-level composition belongs in a Template."
+      "targetDirectories": ["UI/pages"],
+      "message": "Pages must not directly compose another Page. Pages may compose Templates or lower UI layers."
     },
     {
-      "id": "layout-cannot-compose-lower-ui",
+      "id": "layout-cannot-compose-peer-layout",
       "severity": "block",
       "mode": "direct",
       "sourceDirectories": ["UI/layouts"],
-      "targetDirectories": ["UI/layouts", "UI/templates", "UI/organisms", "UI/molecules", "UI/atoms"],
-      "message": "Layouts must not directly compose another Layout or lower UI layer; they may compose Pages."
+      "targetDirectories": ["UI/layouts"],
+      "message": "Layouts must not directly compose another Layout. They may compose a route-agnostic shell Template as documented in rules/architecture.md."
     }
   ]
 }

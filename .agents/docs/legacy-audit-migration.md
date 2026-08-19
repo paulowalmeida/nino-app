@@ -22,6 +22,20 @@ Rule / architectural intent
 
 A metric or static signal is not a maintainability verdict. A refactor is not successful merely because a metric decreased.
 
+## Authority and legacy compatibility
+
+The current authority order is: `AGENTS.md`, `.agents/rules/`, semantic
+Skills in `.agents/skills/`, then mechanical enforcement. The legacy
+`audit-*` hooks and Skills may remain installed during migration, but only as
+compatibility adapters: they must point to the current sources of truth and
+must not introduce independent architecture rules, stale paths, or conflicting
+layer definitions.
+
+When a current rule changes, update its corresponding legacy adapter in the
+same change. If an adapter conflicts with `.agents/rules/` or the replacement
+semantic Skill, the adapter is stale and must be corrected before it is used
+as audit evidence.
+
 ## Migration matrix
 
 | Legacy audit | Legacy concern | Target in current model | Initial disposition |
@@ -66,8 +80,6 @@ It must not be converted into a universal hard gate based on an arbitrary number
 ## Legacy infrastructure
 
 `hook-kit.mjs` is shared infrastructure for the old `audit-*` family. It should not be treated as proof that the old audits are still the desired enforcement architecture.
-
-`nino-api-rules.mjs` was not part of the `audit-*` migration matrix. It was removed because it belonged to a separate repository and had no applicable scope in Nino App.
 
 ## Removal policy
 

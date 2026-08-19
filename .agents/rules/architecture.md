@@ -20,7 +20,7 @@ The repository is a monorepo. Shared packages, including the Design System, are 
 
 ## External Methodology Foundation
 
-The Atomic Design terminology used by this project follows the model introduced by Brad Frost: Atoms, Molecules, Organisms, Templates, and Pages describe progressively larger levels of interface composition. Molecules combine Atoms into relatively simple modules, Organisms form distinct interface sections, Templates provide page-level structures, and Pages are concrete instances of Templates.
+The Atomic Design terminology used by this project follows the model introduced by Brad Frost: Atoms, Molecules, Organisms, Templates, and Pages describe progressively larger levels of interface composition. Molecules combine Atoms into relatively simple modules, Organisms form distinct interface sections, Templates provide page-level structures, and Pages are concrete instances of Templates. Nino intentionally treats the Template layer as optional; a Page may compose its own screen when no Template boundary is justified.
 
 Authoritative references:
 
@@ -49,7 +49,7 @@ Molecule
 Atom
 ```
 
-`Layout` is an application-structure responsibility and sits outside the Atomic Design hierarchy.
+`Layout` is an application-structure responsibility and sits outside the Atomic Design hierarchy. The diagram describes a possible composition path, not a mandatory path: a Page may compose lower UI layers directly when no Template is justified. A Layout may use a route-agnostic shell Template to arrange persistent chrome and the route outlet.
 
 ### Atom
 
@@ -108,6 +108,10 @@ An Organism is a significant UI section composed of Molecules and/or Atoms.
 - skip the Molecule layer when there is no Molecule-level functional unit to represent;
 - own local UI state and interactions belonging exclusively to the section itself.
 
+An Organism receives the data and callbacks it needs from its parent Template.
+It may express a rich UI interaction, but it does not decide which feature is
+mounted, query application state, or implement a domain decision.
+
 **MUST NOT:**
 - import or render another Organism;
 - import or render Templates or Pages;
@@ -121,53 +125,62 @@ Local React state is allowed only when it belongs exclusively to the Organism's 
 
 ### Template
 
-A Template is responsible for the visual and structural composition of a page.
+A Template is an **optional**, coherent, high-level page module. Use one only
+when the visual structure is large and stable, reusable across contexts, **or**
+has a distinct responsibility and reason to change that warrants its own
+boundary. It may encapsulate visual composition, feature-scoped Hooks, local UI
+state, and loading/empty/error states.
+
+A Template is not a mandatory proxy for a Page or a Page feature. Moving a
+Page's JSX, props, and handlers wholesale into a Template without creating a
+real boundary is forbidden. A Page may compose the lower UI layers directly
+when that is the clearest owner.
 
 **MUST:**
 - compose Organisms, Molecules, and/or Atoms;
-- skip lower levels only when necessary to represent the structure correctly;
-- represent a reusable page structure without directly depending on a concrete route;
-- consume application state only when explicitly authorized by `rules/hooks.md`.
+- represent one coherent responsibility with one reason to change;
+- own the visual composition, feature-scoped loading/empty/error states, and local UI interactions of its module;
+- use authorized feature Hooks to obtain data and actions for that module;
+- pass data and callbacks to Organisms, keeping them independent from application state;
+- remain independent from route selection and route parameters.
 
 **MUST NOT:**
 - import or render another Template;
 - access Services or APIs directly;
-- contain business logic;
-- assume responsibilities specific to a Page;
+- define domain rules, payload transformations, or API orchestration that belongs in a Hook, Adapter, Service, or Constant;
 - decide which concrete route is active;
+- exist merely to mirror the whole Page or satisfy a layering rule;
 - pass the Zustand Store Hook to a prohibited lower UI layer.
 
-A Template **MAY** consume a Zustand Store Hook directly because Templates are explicitly authorized application-state consumers under `rules/hooks.md`. The Template **MUST** still keep business rules outside the presentation layer and **MUST** select only the state required by its responsibility.
-
-Local React UI state is allowed when it belongs exclusively to the Template's own structural interaction.
+A Template **MAY** consume a Zustand Store Hook directly because Templates are explicitly authorized application-state consumers under `rules/hooks.md`. Calling a feature Hook does not make the Template the owner of business rules: Hooks, Adapters, and Services continue to own those rules and integrations. Local React UI state is allowed when it belongs exclusively to the Template's interaction.
 
 ### Page
 
-A Page represents a concrete application route/context and is the **UI governance layer** for that route.
+A Page represents a concrete application route/context and owns that screen's
+governance and composition.
 
 **MUST:**
-- coordinate page context, state, data, and dependencies;
-- use **one or more Templates as its visual composition layer(s)**;
-- consume application state through the authorized Zustand Store Hook when required;
-- pass each Template the required data, actions, and dependencies.
+- govern the concrete route: route params, redirects, access decisions, and route-level concerns;
+- compose the Templates and/or lower UI layers that make up its screen;
+- own screen-level loading, error, empty, and local interaction states;
+- consume application state only when required for route governance and authorized by `rules/hooks.md`.
 
 **MUST NOT:**
-- import, render, or directly compose Organisms, Molecules, or Atoms;
-- implement visual composition that belongs to a Template;
+- import or render another Page;
+- create a Template merely to move its own JSX, props, or handlers elsewhere;
+- implement domain rules, payload transformations, or API orchestration that belongs in a Hook, Adapter, Service, or Constant;
 - become a monolithic visual component;
-- manually choose visual components below the Template layer;
-- introduce multiple Templates solely as a workaround for avoiding the composition of a suitable Template;
 - pass the Zustand Store Hook to a prohibited lower UI layer.
 
 **Allowed:**
 
 ```tsx
-// ✅ Page → Zustand Store Hook → Template(s)
+// ✅ Page → Zustand Store Hook → lower UI composition
 const user = useUserStore((state) => state.user)
 return (
   <>
-    <UserTemplate user={user} />
-    <OrdersTemplate userId={user.id} />
+    <UserProfile user={user} />
+    <UserOrders userId={user.id} />
   </>
 )
 ```
@@ -175,18 +188,8 @@ return (
 **Forbidden:**
 
 ```tsx
-// ❌ Page → Organism
-return <UserProfile user={user} />
-```
-
-```tsx
-// ❌ Page → Molecule
-return <UserSearch />
-```
-
-```tsx
-// ❌ Page → Atom
-return <Button onClick={handleClick}>Save</Button>
+// ❌ Empty Template used only to move Page JSX
+return <UserScreen user={user} />
 ```
 
 ### Layout
@@ -198,26 +201,31 @@ Layout is a structural layer outside Atomic Design.
 - wrap Pages;
 - control shared structure such as header, sidebar, navigation, and persistent content areas;
 - use the application's route-composition mechanism to render the active Page;
+- freely compose the Organisms, Molecules, Atoms, and optional route-agnostic shell Templates needed by that chrome;
 - consume Zustand application state directly only when the responsibility requires it and as authorized by `rules/hooks.md`.
 
 **MUST NOT:**
+- import or render another Layout;
 - implement Page-specific visual composition;
 - manually import and choose which Page is active;
 - contain route-specific business logic;
 - depend on internal details of a specific Page;
 - pass the Zustand Store Hook to a prohibited UI layer.
 
+A Template used by a Layout **MUST** remain route-agnostic: it receives the active content through the route outlet, `children`, or explicit slots. It **MUST NOT** import Pages, inspect the active route to choose content, fetch route data, redirect, or contain Page-specific business rules. This permission is for application-shell structure such as `AppShell` or `AuthShell`; it does not allow moving a Page's content Template into a Layout.
+
 ## Dependency Matrix
 
 The only permitted **UI composition** dependencies are:
 
 ```text
-Page       → Template
+Page       → Template | Organism | Molecule | Atom
 Template   → Organism | Molecule | Atom
 Organism   → Molecule | Atom
 Molecule   → Atom
 Atom       → no UI layer
-Layout     → Page
+Layout     → Page | Organism | Molecule | Atom
+Layout     → Template (route-agnostic application-shell structure only)
 ```
 
 State consumption is governed separately by `rules/hooks.md` and is **not** a UI composition dependency.
@@ -227,9 +235,7 @@ Any UI composition dependency outside this matrix is **FORBIDDEN**.
 In particular:
 
 ```text
-Page      → Organism   ❌
-Page      → Molecule   ❌
-Page      → Atom       ❌
+Page      → Page       ❌
 Template  → Template   ❌
 Organism  → Organism   ❌
 Molecule  → Molecule   ❌
@@ -313,7 +319,7 @@ The agent **MUST NOT** claim that the current codebase already conforms unless t
 
 Atomic Design provides the terminology and mental model. The following are **Nino-specific architectural constraints** and are intentionally stricter than the external methodology:
 
-- Page MUST compose through **one or more Templates**;
+- Templates are optional and must have a real, distinct boundary; they are never required per Page or per Page feature;
 - Pages, Templates, Layouts, Guards, Loaders, Providers, and approved Custom Hooks may consume Zustand application state;
 - Atoms, Molecules, and Organisms MUST NOT consume Zustand application state;
 - UI composition dependencies MUST follow the matrix above.

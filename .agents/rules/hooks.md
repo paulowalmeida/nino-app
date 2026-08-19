@@ -139,19 +139,19 @@ An authorized consumer **MAY** pass application-state data and actions to a lowe
 Allowed:
 
 ```tsx
-function UserPage() {
+function User() {
   const user = useUserStore((state) => state.user)
   const saveUser = useUserStore((state) => state.saveUser)
 
-  return <UserTemplate user={user} onSave={saveUser} />
+  return <UserProfile user={user} onSave={saveUser} />
 }
 ```
 
 Forbidden:
 
 ```tsx
-function UserPage() {
-  return <UserTemplate storeHook={useUserStore} />
+function User() {
+  return <UserProfile storeHook={useUserStore} />
 }
 ```
 
