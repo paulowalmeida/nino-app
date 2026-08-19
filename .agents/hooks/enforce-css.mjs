@@ -1,0 +1,37 @@
+#!/usr/bin/env node
+
+import { runSkillHook } from './hook-kit.mjs'
+
+const match = (path) => /\/apps\/manager\/src\/.*\.module\.css$/.test(path)
+
+const TOKEN_BY_HEX = {
+  '#ff6b00': 'brand',
+  '#e8540c': 'brand-strong',
+  '#fff7ee': 'cream',
+  '#ffebd6': 'cream-deep',
+  '#1a1206': 'ink',
+}
+
+const violations = (path, toolName, lines) => {
+  const found = []
+  lines.forEach((line, index) => {
+    const at = `linha ${index + 1} do trecho escrito`
+    if (line.length > 80) found.push(`${at}: mais de 80 caracteres`)
+
+    const selector = line.match(/^\.([A-Za-z0-9_-]+)/)
+    if (selector?.[1].includes('-')) found.push(`${at}: classe .${selector[1]} — usar camelCase`)
+
+    for (const [hex, token] of Object.entries(TOKEN_BY_HEX)) {
+      if (line.toLowerCase().includes(hex)) found.push(`${at}: ${hex} é o token ${token} — usar o token`)
+    }
+    if (/!important\b/.test(line)) found.push(`${at}: !important — corrigir a cascata ou a composição`)
+  })
+
+  if (lines[0]?.trim() !== '@reference "@nino/ds/globals.css";') {
+    found.push('linha 1: falta @reference "@nino/ds/globals.css"; no topo')
+  }
+
+  return found
+}
+
+await runSkillHook({ name: 'enforce-css', match, violations })

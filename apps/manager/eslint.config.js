@@ -22,6 +22,8 @@ export default defineConfig([
   {
     files: ['**/*.{ts,tsx}'],
     rules: {
+      'no-console': 'error',
+      'no-debugger': 'error',
       /*
        * Barrel de pacote do workspace é proibido: um único import dele amarra
        * o pacote inteiro num chunk só — no manager isso dobrava o JS da tela

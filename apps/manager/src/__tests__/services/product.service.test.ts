@@ -160,12 +160,7 @@ describe('ProductService', () => {
   it('uploadItemImage: posts the file as multipart form data', async () => {
     // Arrange
     const response = { id: 'image-1', url: 'https://cdn/image-1.png' }
-    const fetchMock = vi
-      .fn()
-      .mockResolvedValueOnce(
-        new Response(JSON.stringify(response), { status: 200 })
-      )
-    vi.stubGlobal('fetch', fetchMock)
+    apiMock.createFormData.mockResolvedValueOnce(response)
     const file = new File(['conteudo'], 'foto.png', { type: 'image/png' })
 
     // Act
@@ -176,44 +171,23 @@ describe('ProductService', () => {
     )
 
     // Assert
-    const [url, options] = fetchMock.mock.calls[0]
-    expect(url).toContain('/tenants/tenant-1/products/item-1/images')
-    expect(options).toMatchObject({
-      method: 'POST',
-      credentials: 'include',
-    })
-    expect(options.body.get('file')).toBe(file)
+    const [url, body] = apiMock.createFormData.mock.calls[0]
+    expect(url).toBe('tenants/tenant-1/products/item-1/images')
+    expect(body.get('file')).toBe(file)
     expect(result).toEqual(response)
   })
 
-  it('uploadItemImage: throws with the API message when the upload fails', async () => {
+  it('uploadItemImage: propagates the shared client error', async () => {
     // Arrange
-    const fetchMock = vi.fn().mockResolvedValueOnce(
-      new Response(JSON.stringify({ message: 'Arquivo muito grande' }), {
-        status: 400,
-      })
+    apiMock.createFormData.mockRejectedValueOnce(
+      new Error('Arquivo muito grande')
     )
-    vi.stubGlobal('fetch', fetchMock)
     const file = new File(['conteudo'], 'foto.png', { type: 'image/png' })
 
     // Act / Assert
     await expect(
       ProductService.uploadItemImage('tenant-1', 'item-1', file)
     ).rejects.toThrow('Arquivo muito grande')
-  })
-
-  it('uploadItemImage: falls back to a default message when the body is not JSON', async () => {
-    // Arrange
-    const fetchMock = vi
-      .fn()
-      .mockResolvedValueOnce(new Response('not json', { status: 500 }))
-    vi.stubGlobal('fetch', fetchMock)
-    const file = new File(['conteudo'], 'foto.png', { type: 'image/png' })
-
-    // Act / Assert
-    await expect(
-      ProductService.uploadItemImage('tenant-1', 'item-1', file)
-    ).rejects.toThrow('Não foi possível enviar a imagem')
   })
 
   it('removeItem: removes the item by id', async () => {

@@ -80,6 +80,28 @@ describe('createHttpClient', () => {
     expect(JSON.parse(sentBody)).toEqual({ total: 42 })
   })
 
+  it('postFormData: sends a multipart body and returns the response', async () => {
+    // Arrange
+    const fetchMock = vi
+      .fn()
+      .mockResolvedValue(jsonResponse(201, { id: 'image-1' }))
+    vi.stubGlobal('fetch', fetchMock)
+    const client = createHttpClient(baseConfig())
+    const body = new FormData()
+    body.append('file', new Blob(['image']), 'image.png')
+
+    // Act
+    const result = await client.postFormData('products/1/images', body)
+
+    // Assert
+    expect(result).toEqual({ id: 'image-1' })
+    const request = requestOf(fetchMock)
+    expect(request.method).toBe('POST')
+    expect(request.headers.get('content-type')).toMatch(
+      /^multipart\/form-data;/
+    )
+  })
+
   it('put/patch/delete: hit the matching ky verb', async () => {
     // Arrange
     const fetchMock = stubFetch(

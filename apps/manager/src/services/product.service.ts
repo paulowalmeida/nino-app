@@ -97,20 +97,10 @@ export const ProductService = {
     const body = new FormData()
     body.append('file', file)
 
-    const baseUrl = import.meta.env.VITE_BASE_URL
-    const response = await fetch(
-      `${baseUrl}/tenants/${tenantId}/products/${productId}/images`,
-      { method: 'POST', body, credentials: 'include' }
+    return api.createFormData<MenuItemImage>(
+      `tenants/${tenantId}/products/${productId}/images`,
+      body
     )
-
-    if (!response.ok) {
-      const detail = (await response.json().catch(() => ({}))) as {
-        message?: string
-      }
-      throw new Error(detail.message ?? 'Não foi possível enviar a imagem')
-    }
-
-    return response.json() as Promise<MenuItemImage>
   },
 
   removeItem: (tenantId: string, id: string): Promise<{ message: string }> =>

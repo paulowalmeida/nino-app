@@ -5,6 +5,7 @@ import { createApi } from '../../services/http.service'
 const buildClient = () => ({
   get: vi.fn().mockResolvedValue({ ok: true }),
   post: vi.fn().mockResolvedValue({ ok: true }),
+  postFormData: vi.fn().mockResolvedValue({ ok: true }),
   put: vi.fn().mockResolvedValue({ ok: true }),
   patch: vi.fn().mockResolvedValue({ ok: true }),
   delete: vi.fn().mockResolvedValue({ ok: true }),
@@ -49,6 +50,23 @@ describe('createApi', () => {
     expect(client.post).toHaveBeenCalledWith('tenants/1/orders', {
       total: 10,
     })
+  })
+
+  it('createFormData: forwards the form body to client.postFormData', async () => {
+    // Arrange
+    const client = buildClient()
+    const api = createApi(client)
+    const body = new FormData()
+    body.append('file', new Blob(['image']), 'image.png')
+
+    // Act
+    await api.createFormData('tenants/1/products/1/images', body)
+
+    // Assert
+    expect(client.postFormData).toHaveBeenCalledWith(
+      'tenants/1/products/1/images',
+      body
+    )
   })
 
   it('update: forwards the url as-is and the body to client.put', async () => {

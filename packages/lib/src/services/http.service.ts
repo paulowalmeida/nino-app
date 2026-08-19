@@ -18,6 +18,11 @@ export const createApi = (client: HttpClient) => ({
     body?: BodyType
   ): Promise<ReturnType> => client.post(url, body),
 
+  createFormData: <ReturnType>(
+    url: string,
+    body: FormData
+  ): Promise<ReturnType> => client.postFormData(url, body),
+
   update: <BodyType, ReturnType>(
     url: string,
     body: BodyType

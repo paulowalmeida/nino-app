@@ -15,6 +15,7 @@ export type HttpClient = {
     url: string,
     body?: BodyType
   ) => Promise<ReturnType>
+  postFormData: <ReturnType>(url: string, body: FormData) => Promise<ReturnType>
   put: <ReturnType, BodyType = unknown>(
     url: string,
     body: BodyType
