@@ -1,60 +1,41 @@
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import { MemoryRouter } from 'react-router'
-import { beforeEach, describe, expect, it, vi } from 'vitest'
+import { describe, expect, it, vi } from 'vitest'
 
 import {
   CollaboratorAccess,
 } from '@organisms/CollaboratorAccess/CollaboratorAccess'
-import { useCollaboratorAdmin } from '@hooks/team/useCollaboratorAdmin'
-
 import {
   invitedStaff,
   ownerStaff,
   staffWithLogin,
 } from './CollaboratorAccess.mock'
 
-vi.mock('@hooks/team/useCollaboratorAdmin')
-
-type AdminHandle = ReturnType<typeof useCollaboratorAdmin>
-
 const openRemovalConfirm = vi.fn()
+const openEmailModal = vi.fn()
 
-const unlockedAdmin: AdminHandle = {
-  isEmailModalOpen: false,
-  openEmailModal: vi.fn(),
-  closeEmailModal: vi.fn(),
-  saveEmail: vi.fn(),
-  roleLockHint: undefined,
-  changeRole: vi.fn(),
-  isChangingRole: false,
-  removalLockHint: undefined,
-  isRemovalConfirmOpen: false,
-  openRemovalConfirm,
-  closeRemovalConfirm: vi.fn(),
-  confirmRemoval: vi.fn(),
-  isRemoving: false,
-}
-
-const lockedAdmin: AdminHandle = {
-  ...unlockedAdmin,
-  roleLockHint: 'Só o dono da loja muda o cargo de alguém.',
-  removalLockHint: 'A loja precisa de um dono — passe o cargo antes.',
-}
-
-const renderAccess = (member = staffWithLogin) =>
+const renderAccess = ({
+  member = staffWithLogin,
+  roleLockHint,
+  removalLockHint,
+}: {
+  member?: typeof staffWithLogin
+  roleLockHint?: string
+  removalLockHint?: string
+} = {}) =>
   render(
-    <MemoryRouter>
-      <CollaboratorAccess member={member} />
-    </MemoryRouter>
+    <CollaboratorAccess
+      member={member}
+      roleLockHint={roleLockHint}
+      isChangingRole={false}
+      onChangeRole={vi.fn()}
+      removalLockHint={removalLockHint}
+      onOpenEmailModal={openEmailModal}
+      onOpenRemovalConfirm={openRemovalConfirm}
+    />
   )
 
 describe(CollaboratorAccess.name, () => {
-  beforeEach(() => {
-    vi.clearAllMocks()
-    vi.mocked(useCollaboratorAdmin).mockReturnValue(unlockedAdmin)
-  })
-
   it('offers the three ways to administer this person', () => {
     // Arrange / Act
     renderAccess()
@@ -85,10 +66,12 @@ describe(CollaboratorAccess.name, () => {
 
   it('says why the role and the removal are locked', () => {
     // Arrange
-    vi.mocked(useCollaboratorAdmin).mockReturnValue(lockedAdmin)
-
     // Act
-    renderAccess(ownerStaff)
+    renderAccess({
+      member: ownerStaff,
+      roleLockHint: 'Só o dono da loja muda o cargo de alguém.',
+      removalLockHint: 'A loja precisa de um dono — passe o cargo antes.',
+    })
 
     // Assert
     expect(
@@ -99,7 +82,7 @@ describe(CollaboratorAccess.name, () => {
 
   it('warns that a pending invite still has no access', () => {
     // Arrange / Act
-    renderAccess(invitedStaff)
+    renderAccess({ member: invitedStaff })
 
     // Assert
     expect(screen.getByText(/Convite ainda não aceito/)).toBeInTheDocument()

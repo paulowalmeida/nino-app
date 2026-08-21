@@ -1,18 +1,24 @@
 import { Button } from '@nino/ds/components/Button'
 import { Flexbox } from '@nino/ds/components/Flexbox'
 import { Input } from '@nino/ds/components/Input'
-import { useCreateCategoryInline } from '@hooks/product/useCreateCategoryInline'
 import { riseDelay } from '@utils/rise-delay'
 
 import styles from './CreateCategoryForm.module.css'
 import motion from '@styles/motion.module.css'
 
-type CreateCategoryFormProps = { tenantId: string | null }
+type CreateCategoryFormProps = {
+  name: string
+  isPending: boolean
+  onNameChange: (name: string) => void
+  onSubmit: () => Promise<void>
+}
 
-export const CreateCategoryForm = ({ tenantId }: CreateCategoryFormProps) => {
-  const create = useCreateCategoryInline(tenantId)
-
-  return (
+export const CreateCategoryForm = ({
+  name,
+  isPending,
+  onNameChange,
+  onSubmit,
+}: CreateCategoryFormProps) => (
     <Flexbox
       as="form"
       direction={{ mobile: 'column', tablet: 'row' }}
@@ -23,23 +29,22 @@ export const CreateCategoryForm = ({ tenantId }: CreateCategoryFormProps) => {
       style={riseDelay(40)}
       onSubmit={(event) => {
         event.preventDefault()
-        void create.submit()
+        void onSubmit()
       }}
     >
       <Input
-        value={create.name}
+        value={name}
         placeholder="Nova categoria — ex.: Sobremesas"
         aria-label="Nome da nova categoria"
-        onChange={(event) => create.setName(event.target.value)}
+        onChange={(event) => onNameChange(event.target.value)}
       />
       <Button
         type="submit"
         className={motion.press}
-        loading={create.isPending}
-        disabled={!create.name.trim()}
+        loading={isPending}
+        disabled={!name.trim()}
       >
         Adicionar
       </Button>
     </Flexbox>
   )
-}

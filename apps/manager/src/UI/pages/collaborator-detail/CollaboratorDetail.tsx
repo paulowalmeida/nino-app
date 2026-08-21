@@ -5,8 +5,8 @@ import { Flexbox } from '@nino/ds/components/Flexbox'
 import { Tabs } from '@nino/ds/components/Tabs'
 import { Breadcrumb } from '@atoms/Breadcrumb/Breadcrumb'
 import {
-  CollaboratorAccess,
-} from '@organisms/CollaboratorAccess/CollaboratorAccess'
+  CollaboratorAccessContainer,
+} from '@containers/CollaboratorAccessContainer/CollaboratorAccessContainer'
 import {
   CollaboratorActivity,
 } from '@organisms/CollaboratorActivity/CollaboratorActivity'
@@ -68,7 +68,7 @@ export const CollaboratorDetail = () => {
           {
             value: 'access',
             label: 'Acesso',
-            content: <CollaboratorAccess member={member} />,
+            content: <CollaboratorAccessContainer member={member} />,
           },
         ]}
       />

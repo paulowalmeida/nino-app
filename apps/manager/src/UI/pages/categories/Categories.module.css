@@ -3,7 +3,3 @@
 .page {
   @apply relative max-w-3xl p-4 lg:p-10;
 }
-
-.list {
-  @apply flex flex-col;
-}

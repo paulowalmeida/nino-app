@@ -1,13 +1,10 @@
 import { Alert } from '@nino/ds/components/Alert'
 import { Button } from '@nino/ds/components/Button'
-import { Dialog } from '@nino/ds/components/Dialog'
 import { Icon } from '@nino/ds/components/Icon'
 import { RadioGroup } from '@nino/ds/components/RadioGroup'
-import { EditEmailModal } from '@organisms/EditEmailModal/EditEmailModal'
 import { TEAM_ROLE_OPTIONS } from '@constants/team.constants'
 import type { StaffDetail } from '@custom_types/team/staff-detail'
 import type { TenantRole } from '@custom_types/auth/tenant-role'
-import { useCollaboratorAdmin } from '@hooks/team/useCollaboratorAdmin'
 import { loginEmailOf } from '@utils/login-email'
 
 import styles from './CollaboratorAccess.module.css'
@@ -22,10 +19,23 @@ const ROLE_LABEL_ID = 'collaborator-role-choice'
 
 type CollaboratorAccessProps = {
   member: StaffDetail
+  roleLockHint?: string
+  isChangingRole: boolean
+  onChangeRole: (role: TenantRole) => void
+  removalLockHint?: string
+  onOpenEmailModal: () => void
+  onOpenRemovalConfirm: () => void
 }
 
-export const CollaboratorAccess = ({ member }: CollaboratorAccessProps) => {
-  const admin = useCollaboratorAdmin(member)
+export const CollaboratorAccess = ({
+  member,
+  roleLockHint,
+  isChangingRole,
+  onChangeRole,
+  removalLockHint,
+  onOpenEmailModal,
+  onOpenRemovalConfirm,
+}: CollaboratorAccessProps) => {
   const email = loginEmailOf(member.user)
   const firstName = member.user.name.split(' ')[0]
 
@@ -54,16 +64,16 @@ export const CollaboratorAccess = ({ member }: CollaboratorAccessProps) => {
           variant="card"
           options={ROLE_REACH}
           value={member.role}
-          disabled={!!admin.roleLockHint || admin.isChangingRole}
-          onValueChange={(role) => admin.changeRole(role as TenantRole)}
+          disabled={!!roleLockHint || isChangingRole}
+          onValueChange={(role) => onChangeRole(role as TenantRole)}
           aria-labelledby={ROLE_LABEL_ID}
           className={styles.roleChoice}
         />
 
-        {admin.roleLockHint && (
+        {roleLockHint && (
           <p className={styles.lockHint}>
             <Icon name="lock" size="sm" aria-hidden />
-            {admin.roleLockHint}
+            {roleLockHint}
           </p>
         )}
       </div>
@@ -76,7 +86,7 @@ export const CollaboratorAccess = ({ member }: CollaboratorAccessProps) => {
             {email ?? 'Nenhum e-mail cadastrado'}
           </p>
 
-          <Button variant="outline" size="sm" onClick={admin.openEmailModal}>
+          <Button variant="outline" size="sm" onClick={onOpenEmailModal}>
             Editar e-mail
           </Button>
         </div>
@@ -91,43 +101,20 @@ export const CollaboratorAccess = ({ member }: CollaboratorAccessProps) => {
         <Button
           variant="ghost"
           size="sm"
-          disabled={!!admin.removalLockHint}
-          onClick={admin.openRemovalConfirm}
+          disabled={!!removalLockHint}
+          onClick={onOpenRemovalConfirm}
           className={styles.revokeButton}
         >
           Tirar da loja
         </Button>
 
-        {admin.removalLockHint && (
+        {removalLockHint && (
           <p className={styles.lockHint}>
             <Icon name="lock" size="sm" aria-hidden />
-            {admin.removalLockHint}
+            {removalLockHint}
           </p>
         )}
       </footer>
-
-      <EditEmailModal
-        open={admin.isEmailModalOpen}
-        onOpenChange={(open) => !open && admin.closeEmailModal()}
-        title="Editar e-mail"
-        hint={`Usado por ${member.user.name} para entrar no painel.`}
-        currentEmail={email}
-        onSave={admin.saveEmail}
-      />
-
-      <Dialog
-        open={admin.isRemovalConfirmOpen}
-        onOpenChange={(open) => !open && admin.closeRemovalConfirm()}
-        title="Tirar da loja"
-        description={
-          `${member.user.name} perde o acesso ao painel desta loja. ` +
-          'O histórico de pedidos continua registrado.'
-        }
-        confirmLabel="Tirar da loja"
-        loading={admin.isRemoving}
-        onConfirm={() => void admin.confirmRemoval()}
-        onCancel={admin.closeRemovalConfirm}
-      />
     </section>
   )
 }
