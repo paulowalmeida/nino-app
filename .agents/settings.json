@@ -6,6 +6,7 @@
         "hooks": [
           { "type": "command", "command": "node \"$CLAUDE_PROJECT_DIR/.agents/hooks/enforce-comments.mjs\"" },
           { "type": "command", "command": "node \"$CLAUDE_PROJECT_DIR/.agents/hooks/enforce-constants.mjs\"" },
+          { "type": "command", "command": "node \"$CLAUDE_PROJECT_DIR/.agents/hooks/enforce-containers.mjs\"" },
           { "type": "command", "command": "node \"$CLAUDE_PROJECT_DIR/.agents/hooks/enforce-css.mjs\"" },
           { "type": "command", "command": "node \"$CLAUDE_PROJECT_DIR/.agents/hooks/enforce-guards-loaders.mjs\"" },
           { "type": "command", "command": "node \"$CLAUDE_PROJECT_DIR/.agents/hooks/enforce-hooks.mjs\"" },
@@ -32,6 +33,7 @@
           { "type": "command", "command": "node \"$CLAUDE_PROJECT_DIR/.agents/hooks/enforce-architecture-boundaries.mjs\"" },
           { "type": "command", "command": "node \"$CLAUDE_PROJECT_DIR/.agents/hooks/enforce-comments.mjs\"" },
           { "type": "command", "command": "node \"$CLAUDE_PROJECT_DIR/.agents/hooks/enforce-constants.mjs\"" },
+          { "type": "command", "command": "node \"$CLAUDE_PROJECT_DIR/.agents/hooks/enforce-containers.mjs\"" },
           { "type": "command", "command": "node \"$CLAUDE_PROJECT_DIR/.agents/hooks/enforce-circular-dependencies.mjs\"" },
           { "type": "command", "command": "node \"$CLAUDE_PROJECT_DIR/.agents/hooks/enforce-css.mjs\"" },
           { "type": "command", "command": "node \"$CLAUDE_PROJECT_DIR/.agents/hooks/enforce-guards-loaders.mjs\"" },
