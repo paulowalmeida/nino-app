@@ -2,8 +2,10 @@ import { useState } from 'react'
 
 import { Button } from '@nino/ds/components/Button'
 import { EmptyState } from '@nino/ds/components/EmptyState'
+import { Heading } from '@nino/ds/components/Heading'
 import { PhoneInput } from '@nino/ds/components/PhoneInput'
 import { Skeleton } from '@nino/ds/components/Skeleton'
+import { Text } from '@nino/ds/components/Text'
 import type { TenantPhone } from '@custom_types/settings/tenant-phone'
 import { formatPhone, toE164 } from '@utils/phone'
 import { riseDelay } from '@utils/rise-delay'
@@ -56,11 +58,11 @@ export const PhoneList = ({
   return (
     <section className={styles.panel}>
       <header className={`${motion.unroll} ${styles.head}`}>
-        <h2 className={styles.title}>Telefones da loja</h2>
-        <p className={styles.hint}>
+        <Heading level={2} size="xl">Telefones da loja</Heading>
+        <Text size="sm" color="subtle" mt={1}>
           É por onde o cliente liga quando o pedido some — e onde a equipe
           atende o pedido por telefone.
-        </p>
+        </Text>
       </header>
 
       {phones.length === 0 && (

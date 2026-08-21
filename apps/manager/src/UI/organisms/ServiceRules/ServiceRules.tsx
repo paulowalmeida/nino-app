@@ -1,9 +1,11 @@
 import { useState } from 'react'
 
 import { Button } from '@nino/ds/components/Button'
+import { Heading } from '@nino/ds/components/Heading'
 import { Input } from '@nino/ds/components/Input'
 import { Skeleton } from '@nino/ds/components/Skeleton'
 import { Switch } from '@nino/ds/components/Switch'
+import { Text } from '@nino/ds/components/Text'
 import type { PaymentMethod } from '@custom_types/order/payment-method'
 import type { TenantSettings } from '@custom_types/settings/tenant-settings'
 import type { UpdateTenantSettingsRequest } from '@custom_types/settings/update-tenant-settings-request'
@@ -98,10 +100,10 @@ export const ServiceRules = ({
   return (
     <section className={styles.panel}>
       <header className={`${motion.unroll} ${styles.head}`}>
-        <h2 className={styles.title}>Como a loja atende</h2>
-        <p className={styles.hint}>
+        <Heading level={2} size="xl">Como a loja atende</Heading>
+        <Text size="sm" color="subtle" mt={1}>
           Vale para o app do cliente e para o pedido aberto no painel.
-        </p>
+        </Text>
       </header>
 
       <div className={styles.group}>

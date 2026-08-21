@@ -1,67 +1,24 @@
 @reference "@nino/ds/globals.css";
 
-/*
- * No desktop a tela é fixa e as colunas rolam por dentro; no celular a
- * página rola inteira, com a comanda logo abaixo do cardápio.
- *
- * Teto de largura sem centralizar: o conteúdo fica ancorado à esquerda, na
- * mesma prumada do menu, e a sobra em tela larga vai toda para a direita em
- * vez de virar duas faixas vazias.
- */
 .page {
-  @apply flex min-h-dvh w-full max-w-page flex-col p-4;
+  @apply min-h-dvh w-full max-w-page p-4;
   @apply lg:h-dvh lg:p-10;
 }
 
-.title {
-  @apply font-display text-2xl font-extrabold tracking-[-0.02em];
-  @apply text-fg-strong;
-  @apply lg:text-3xl;
-}
-
-.subtitle {
-  @apply mt-1 text-sm text-fg-faint;
-}
-
-/* `pb-24` abre espaço para o cupom não cobrir a última linha de produtos —
-   vale nos dois tamanhos, já que a pastilha do desktop também flutua. */
 .floor {
-  @apply grid flex-1 gap-4 pb-24;
+  @apply flex-1 gap-4 pb-24;
   @apply lg:min-h-0 lg:grid-cols-[1fr_23rem] lg:pb-0;
 }
 
-/* A folha para antes do topo: o cardápio continua aparecendo atrás, e é isso
-   que diz que dá para fechar e voltar a escolher. */
-/*
- * Quase a tela toda: a comanda é o que se está fazendo enquanto está aberta,
- * e a folha baixa deixava três itens à vista. A faixa de cima segue livre
- * para se ver o cardápio atrás e entender que dá para fechar.
- */
 .sheet {
-  @apply max-h-[92dvh];
-  /* Encostada à direita no desktop, a folha ocupa a altura inteira e o teto
-     da versão de baixo passaria a cortá-la. */
-  @apply lg:max-h-none;
+  @apply max-h-[92dvh] lg:max-h-none;
 }
 
-/*
- * Quem rola aqui dentro é a lista de itens da comanda, não a folha. Escrito
- * como seletor composto de propósito: o corpo do Drawer já vem com
- * `overflow-y-auto`, e uma classe só perde para o utilitário do DS na cascata.
- */
 .sheet .sheetBody {
   @apply flex min-h-0 flex-col overflow-y-hidden;
 }
 
-/*
- * `container-type: inline-size` so ProductGrid's column count reads the
- * width this column actually has, not the viewport's. At 1024px viewport
- * with the sidebar expanded, this column is squeezed to ~320px — a
- * viewport-keyed `md:grid-cols-3` doesn't know that and forces three
- * columns into it anyway. The container query in ProductGrid.module.css
- * reads the real number instead.
- */
 .menu {
-  @apply flex min-w-0 flex-col lg:min-h-0;
+  @apply min-w-0 lg:min-h-0;
   container-type: inline-size;
 }

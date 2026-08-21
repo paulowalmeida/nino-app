@@ -1,4 +1,5 @@
 import { Button } from '@nino/ds/components/Button'
+import { mergeClasses } from '@nino/ds/mergeClasses'
 import { CHANNEL_LABEL } from '@constants/order.constants'
 import { useElapsed } from '@hooks/order/useElapsed'
 import { elapsedVar } from '@utils/elapsed-var'
@@ -29,7 +30,7 @@ export const KitchenCard = ({ order, onAdvance, isBusy }: KitchenCardProps) => {
     ratio,
   } = useElapsed(order.acceptedAt ?? order.createdAt)
 
-  const card = `${motion.settle} ${styles.card} ${isLate ? styles.late : ''}`
+  const card = mergeClasses(motion.settle, styles.card, isLate && styles.late)
 
   return (
     <article className={card} style={elapsedVar(ratio)}>
@@ -40,6 +41,7 @@ export const KitchenCard = ({ order, onAdvance, isBusy }: KitchenCardProps) => {
       <header className={styles.head}>
         <span className={styles.number}>{ticketNumber(order.id)}</span>
         <span className={styles.clock}>{elapsed}</span>
+        {isLate && <span className="sr-only">Pedido atrasado</span>}
       </header>
 
       <p className={styles.who}>
@@ -70,7 +72,7 @@ export const KitchenCard = ({ order, onAdvance, isBusy }: KitchenCardProps) => {
         <Button
           size="lg"
           loading={isBusy}
-          className={`${motion.press} ${styles.action}`}
+          className={mergeClasses(motion.press, styles.action)}
           onClick={() => onAdvance(order.id, step.target)}
         >
           {step.label}

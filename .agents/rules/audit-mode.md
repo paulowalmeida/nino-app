@@ -7,7 +7,7 @@ When the user asks for an audit, review, inspection, assessment, retrospective a
 - modify source code;
 - create, delete, rename, or move files;
 - add or remove imports;
-- create Templates, Components, Hooks, Services, utilities, tests, or configuration;
+- create Components, Hooks, Services, utilities, tests, or configuration;
 - add comments, documentation comments, TODOs, annotations, or explanatory text inside source files;
 - refactor code merely to make the audit result cleaner;
 - implement a proposed correction without explicit authorization.

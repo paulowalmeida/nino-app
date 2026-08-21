@@ -6,6 +6,7 @@
     "./globals.css": "./src/styles/globals.css",
     "./tokens.css": "./src/styles/tokens.css",
     "./masks": "./src/lib/masks/masks.ts",
+    "./mergeClasses": "./src/lib/mergeClasses/mergeClasses.ts",
     "./validators": "./src/lib/validators/validators.ts",
     "./components/*": "./src/components/*/*.tsx",
     "./mascot.svg": "./src/assets/mascot.svg"

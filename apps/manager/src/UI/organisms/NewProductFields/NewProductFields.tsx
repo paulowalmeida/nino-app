@@ -30,7 +30,6 @@ const toPrice = (value: string): number =>
   Number(value.replace(/\./g, '').replace(',', '.'))
 
 export type NewProductFieldsProps = {
-  tenantId: string | null
   name: string
   description: string
   onStagedFile: (file: File | null) => void
@@ -44,7 +43,6 @@ export type NewProductFieldsProps = {
 }
 
 export const NewProductFields = ({
-  tenantId,
   name,
   description,
   onStagedFile,
@@ -80,7 +78,6 @@ export const NewProductFields = ({
         style={riseDelay(40)}
       >
         <ItemPhoto
-          tenantId={tenantId}
           productId={null}
           name={name || 'Novo item'}
           images={[]}

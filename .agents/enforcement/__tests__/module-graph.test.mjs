@@ -52,7 +52,7 @@ const imports = extractImports(`
   const z = require("./runtime");
   const lazy = import("./lazy");
   const meta = import.meta.url;
-  const template = \`import ignored from "./template"\`;
+  const sourceText = \`import ignored from "./source"\`;
 `);
 
 assert.deepEqual(imports.map(({ specifier }) => specifier), [

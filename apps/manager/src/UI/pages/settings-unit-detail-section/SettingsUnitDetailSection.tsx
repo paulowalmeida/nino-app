@@ -6,23 +6,17 @@ import { useSaveTenant } from '@hooks/store/useSaveTenant'
 import { useSetMainTenant } from '@hooks/store/useSetMainTenant'
 import { useTenantDetail } from '@hooks/store/useTenantDetail'
 
-/** Uma loja por vez: os dados dela e o posto de matriz. */
 export const SettingsUnitDetailSection = () => {
-  const current = useCurrentTenant()
-  const tenantId = current?.tenantId ?? null
-
+  const tenant = useCurrentTenant()
+  const tenantId = tenant?.tenantId ?? null
+  const tenantName = tenant?.tenantName ?? 'Unidade'
   const { data: unit, isPending } = useTenantDetail(tenantId)
   const { mutate: save, isPending: isSaving } = useSaveTenant(tenantId)
   const { mutate: setMain, isPending: isPromoting } = useSetMainTenant(tenantId)
 
   return (
     <Flexbox direction="column" gap={2}>
-      <Breadcrumb
-        trail={[
-          { label: 'Unidades', to: '..' },
-          { label: current?.tenantName ?? 'Unidade' },
-        ]}
-      />
+      <Breadcrumb trail={[{ label: 'Unidades', to: '..' }, { label: tenantName }]} />
 
       <UnitCard
         unit={unit}

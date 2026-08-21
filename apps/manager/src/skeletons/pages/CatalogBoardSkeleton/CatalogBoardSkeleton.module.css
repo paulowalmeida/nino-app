@@ -1,0 +1,37 @@
+@reference "@nino/ds/globals.css";
+
+.wrap {
+  @apply flex min-h-0 flex-1 flex-col;
+}
+
+.tally {
+  @apply mb-2 h-3 w-24 shrink-0 lg:h-3.5 lg:w-32;
+}
+
+.scroll {
+  @apply min-h-0 flex-1;
+}
+
+.list {
+  @apply overflow-hidden;
+}
+
+.thumb {
+  @apply h-11 w-11 shrink-0 rounded-3;
+}
+
+.name {
+  @apply h-3.5 w-40 lg:h-4;
+}
+
+.description {
+  @apply mt-1 hidden h-2.5 w-56 sm:block;
+}
+
+.price {
+  @apply h-3.5 w-16 shrink-0 lg:h-4;
+}
+
+.switch {
+  @apply h-4 w-7 shrink-0 rounded-full;
+}

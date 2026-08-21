@@ -9,7 +9,7 @@ import { useQueueSummary } from '@hooks/order/useQueueSummary'
 import { useCurrentTenant } from '@hooks/session/useCurrentTenant'
 import { useTenantRole } from '@hooks/session/useTenantRole'
 import { useSessionStore } from '@states/useSessionStore'
-import { Sidebar } from '@templates/Sidebar/Sidebar'
+import { Sidebar } from '@layouts/AppLayout/Sidebar/Sidebar'
 
 vi.mock('@organisms/StoreSwitcher/StoreSwitcher', () => ({
   StoreSwitcher: () => null,

@@ -4,6 +4,7 @@ import type {
 import type { Order } from '@custom_types/order/order'
 import type { OrderPage } from '@custom_types/order/order-page'
 import type { OrderQueueSummary } from '@custom_types/order/order-queue-summary'
+import type { OrderAvailability } from '@custom_types/order/order-availability'
 import type { OrderStatusKey } from '@custom_types/order/order-status-key'
 import type { ReportRangeParams } from '@custom_types/order/report-range-params'
 import type { SalesReport } from '@custom_types/order/sales-report'
@@ -34,6 +35,9 @@ const rangeQuery = (
 })
 
 export const OrderService = {
+  getAvailability: (tenantId: string): Promise<OrderAvailability> =>
+    api.get<OrderAvailability>(`tenants/${tenantId}/orders/availability`),
+
   getQueueSummary: (tenantId: string): Promise<OrderQueueSummary> =>
     api.get<OrderQueueSummary>(`tenants/${tenantId}/orders/summary`),
 

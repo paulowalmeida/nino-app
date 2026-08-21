@@ -1,14 +1,11 @@
 import { Eyebrow } from '@nino/ds/components/Eyebrow'
 import { Flexbox } from '@nino/ds/components/Flexbox'
 import { AccountBadge } from '@organisms/AccountBadge/AccountBadge'
+import { AccountProfileForm } from '@organisms/AccountProfileForm/AccountProfileForm'
 import { useProfile } from '@hooks/account/useProfile'
 import {
   AccountFieldsSkeleton,
 } from '@skeletons/pages/AccountFieldsSkeleton/AccountFieldsSkeleton'
-import {
-  AccountProfileForm,
-} from '@templates/AccountProfileForm/AccountProfileForm'
-
 import styles from './Account.module.css'
 import motion from '@styles/motion.module.css'
 

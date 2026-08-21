@@ -3,7 +3,7 @@
 import { runSkillHook } from './hook-kit.mjs'
 
 const match = (path) =>
-  /\/apps\/manager\/src\/UI\/(atoms|molecules|organisms|templates|pages|layouts)\//.test(path) &&
+  /\/apps\/manager\/src\/UI\/(atoms|molecules|organisms|pages|layouts)\//.test(path) &&
   (path.endsWith('.tsx') || path.endsWith('.module.css'))
 
 const violations = (path, toolName, lines) => {

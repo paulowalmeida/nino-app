@@ -64,11 +64,24 @@ describe(KitchenCard.name, () => {
     useElapsed.mockReturnValue({ label: '40 min', isLate: true, ratio: 1 })
 
     // Act
-    const { container } = render(
+    render(
       <KitchenCard order={pendingOrder} onAdvance={vi.fn()} isBusy={false} />
     )
 
     // Assert
-    expect(container.querySelector('article')?.className).toMatch(/late/)
+    expect(screen.getByText('Pedido atrasado')).toBeInTheDocument()
+  })
+
+  it('does not announce lateness while the ticket is on time', () => {
+    // Arrange
+    useElapsed.mockReturnValue({ label: '4 min', isLate: false, ratio: 0.2 })
+
+    // Act
+    render(
+      <KitchenCard order={pendingOrder} onAdvance={vi.fn()} isBusy={false} />
+    )
+
+    // Assert
+    expect(screen.queryByText('Pedido atrasado')).not.toBeInTheDocument()
   })
 })

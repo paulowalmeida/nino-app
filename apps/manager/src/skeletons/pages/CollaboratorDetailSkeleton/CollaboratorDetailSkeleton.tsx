@@ -2,15 +2,7 @@ import { Flexbox } from '@nino/ds/components/Flexbox'
 import { Skeleton } from '@nino/ds/components/Skeleton'
 import { Breadcrumb } from '@atoms/Breadcrumb/Breadcrumb'
 
-import activityStyles from
-  '@organisms/CollaboratorActivity/CollaboratorActivity.module.css'
-import contactStyles from
-  '@organisms/CollaboratorContact/CollaboratorContact.module.css'
-import headerStyles from
-  '@organisms/CollaboratorHeader/CollaboratorHeader.module.css'
-import summaryStyles from
-  '@organisms/CollaboratorSummary/CollaboratorSummary.module.css'
-import styles from '@pages/collaborator-detail/CollaboratorDetail.module.css'
+import styles from './CollaboratorDetailSkeleton.module.css'
 
 const GHOST_FACTS = ['revenue', 'orders', 'changes']
 const GHOST_CONTACT_ACTIONS = ['phone', 'email']
@@ -21,41 +13,45 @@ export const CollaboratorDetailSkeleton = () => (
   <div className={styles.page}>
     <Breadcrumb trail={[{ label: 'Equipe', to: '..' }, { label: '—' }]} />
 
+    <p role="status" className="sr-only">
+      Carregando colaborador
+    </p>
+
     <Flexbox
       as="header"
       direction="row"
       gap={4}
       align="center"
-      className={headerStyles.hero}
+      className={styles.hero}
     >
-      <Skeleton variant="circle" className={headerStyles.mark} />
+      <Skeleton variant="circle" className={styles.mark} />
 
-      <div className={headerStyles.heroText}>
-        <Skeleton className={styles.ghostEyebrow} />
-        <Skeleton className={styles.ghostName} />
-        <Skeleton className={styles.ghostCadence} />
+      <div className={styles.heroText}>
+        <Skeleton className={styles.eyebrow} />
+        <Skeleton className={styles.name} />
+        <Skeleton className={styles.cadence} />
       </div>
     </Flexbox>
 
-    <section aria-label="Resumo do trabalho" className={summaryStyles.strip}>
-      <dl className={summaryStyles.facts}>
+    <section aria-label="Resumo do trabalho" className={styles.strip}>
+      <dl className={styles.facts}>
         {GHOST_FACTS.map((fact) => (
-          <div key={fact} className={summaryStyles.fact}>
-            <Skeleton className={styles.ghostFactLabel} />
-            <Skeleton className={styles.ghostStripValue} />
+          <div key={fact} className={styles.fact}>
+            <Skeleton className={styles.factLabel} />
+            <Skeleton className={styles.factValue} />
           </div>
         ))}
       </dl>
 
-      <div className={summaryStyles.footnote}>
-        <Skeleton className={styles.ghostFootnote} />
+      <div className={styles.footnote}>
+        <Skeleton className={styles.footnoteBar} />
       </div>
     </section>
 
-    <div className={contactStyles.contact}>
-      <div className={contactStyles.actions}>
+    <div className={styles.contact}>
+      <div className={styles.actions}>
         {GHOST_CONTACT_ACTIONS.map((action) => (
-          <Skeleton key={action} className={styles.ghostContactAction} />
+          <Skeleton key={action} className={styles.action} />
         ))}
       </div>
     </div>
@@ -63,17 +59,17 @@ export const CollaboratorDetailSkeleton = () => (
     <div className={styles.panels}>
       <Flexbox direction="row" gap={2}>
         {GHOST_TABS.map((tab) => (
-          <Skeleton key={tab} className={styles.ghostTab} />
+          <Skeleton key={tab} className={styles.tab} />
         ))}
       </Flexbox>
 
-      <ul className={activityStyles.entries}>
+      <ul className={styles.entries}>
         {GHOST_ENTRIES.map((entry) => (
-          <li key={entry} className={activityStyles.entry}>
-            <div className={styles.ghostEntry}>
-              <Skeleton className={styles.ghostEntryTicket} />
-              <Skeleton className={styles.ghostEntryCustomer} />
-              <Skeleton className={styles.ghostEntryTotal} />
+          <li key={entry} className={styles.entry}>
+            <div className={styles.entryRow}>
+              <Skeleton className={styles.entryTicket} />
+              <Skeleton className={styles.entryCustomer} />
+              <Skeleton className={styles.entryTotal} />
             </div>
           </li>
         ))}

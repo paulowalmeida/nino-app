@@ -1,113 +1,90 @@
-import { Flexbox } from '@nino/ds/components/Flexbox'
 import { useState } from 'react'
 import { Link } from 'react-router'
 
-import { Badge } from '@nino/ds/components/Badge'
 import { Button } from '@nino/ds/components/Button'
+import { EmptyState } from '@nino/ds/components/EmptyState'
+import { Flexbox } from '@nino/ds/components/Flexbox'
+import { Heading } from '@nino/ds/components/Heading'
 import { Skeleton } from '@nino/ds/components/Skeleton'
-import { useSubscription } from '@hooks/account/useSubscription'
+import { Text } from '@nino/ds/components/Text'
+import { mergeClasses } from '@nino/ds/mergeClasses'
+import { RemoveUnitModal } from '@organisms/RemoveUnitModal/RemoveUnitModal'
+import { UnitRow } from '@organisms/UnitRow/UnitRow'
 import { useCompanyGroups } from '@hooks/session/useCompanyGroups'
 import { useCurrentTenant } from '@hooks/session/useCurrentTenant'
-import { RemoveUnitModal } from '@organisms/RemoveUnitModal/RemoveUnitModal'
 import { useRemoveTenant } from '@hooks/store/useRemoveTenant'
 import { useTenantDetail } from '@hooks/store/useTenantDetail'
+import { useUnitLimit } from '@hooks/store/useUnitLimit'
 import { riseDelay } from '@utils/rise-delay'
 
 import styles from './SettingsUnitSection.module.css'
 import motion from '@styles/motion.module.css'
 import card from '@styles/settingsCard.module.css'
 
-/**
- * A lista das lojas, não o formulário de uma delas: a linha leva ao detalhe
- * e a tela cabe de uma vez. O plano diz quantas cabem, então o limite
- * aparece antes de virar erro da API.
- */
 export const SettingsUnitSection = () => {
-  const current = useCurrentTenant()
-  const tenantId = current?.tenantId ?? null
-
+  const tenantId = useCurrentTenant()?.tenantId ?? null
   const { data: unit } = useTenantDetail(tenantId)
   const { mutate: removeUnit, isPending: isRemoving } = useRemoveTenant()
-  const { data: subscription, isPending: isSubscriptionPending } =
-    useSubscription()
-
-  /* a loja escolhida vive aqui até a modal confirmar: o nome vai junto do id
-     porque é ele que a pessoa vai ter de digitar para fechar */
   const [confirming, setConfirming] = useState<{
     id: string
     name: string
   } | null>(null)
-
   const units = useCompanyGroups().flatMap(({ units: list }) => list)
-  const limit = subscription?.plan.maxTenants ?? null
-  const isFull = limit !== null && units.length >= limit
+  const { limit, planName, isFull, isPending } = useUnitLimit(units.length)
+  const unitDetailTo = (unitTenantId: string) =>
+    unitTenantId === tenantId
+      ? 'detalhe'
+      : `/${unitTenantId}/configuracoes/unidade/detalhe`
 
-  if (isSubscriptionPending) return <Skeleton className={styles.skeleton} />
+  if (isPending) return <Skeleton className={styles.skeleton} />
 
   return (
     <section className={card.panel}>
-      <Flexbox as="header" gap={3} align="start" justify="between" wrap mb={4} className={motion.unroll}>
-        <div>
-          <h2 className={card.title}>Lojas da empresa</h2>
-          <p className={card.hint}>
+      <Flexbox
+        as="header"
+        gap={3}
+        align="start"
+        justify="between"
+        wrap
+        mb={4}
+        className={motion.unroll}
+      >
+        <Flexbox direction="column">
+          <Heading level={2} size="xl">
+            Lojas da empresa
+          </Heading>
+
+          <Text size="sm" color="subtle" mt={1}>
             {limit === null
               ? `${units.length} em operação, sem limite no seu plano.`
-              : `${units.length} de ${limit} inclusas no plano ${
-                  subscription?.plan.name ?? ''
-                }.`}
-          </p>
-        </div>
+              : `${units.length} de ${limit} inclusas no plano ${planName}.`}
+          </Text>
+        </Flexbox>
 
         {!isFull && (
-          <Button asChild className={`${motion.press} ${styles.add}`}>
-            <Link to="../../unidades/nova" relative="path">
-              Abrir unidade
-            </Link>
+          <Button asChild className={mergeClasses(motion.press, styles.add)}>
+            <Link to={`/${tenantId}/unidades/nova`}>Abrir unidade</Link>
           </Button>
         )}
       </Flexbox>
 
+      {units.length === 0 && (
+        <EmptyState>Nenhuma loja cadastrada.</EmptyState>
+      )}
+
       <Flexbox as="ul" direction="column">
-        {units.map(({ tenantId: id, tenantName, companyName }, index) => {
-          const isHere = id === tenantId
-
-          return (
-            <li
-              key={id}
-              className={`${motion.deal} ${styles.item}`}
-              style={riseDelay(index * 40 + 60)}
-            >
-              <Link
-                to={isHere ? 'detalhe' : `/${id}/configuracoes/unidade/detalhe`}
-                className={`${motion.lift} ${styles.unit}`}
-              >
-                <span className={styles.name}>
-                  {tenantName}
-                  {isHere && (
-                    <Badge variant="brand" size="sm">
-                      aqui
-                    </Badge>
-                  )}
-                  {isHere && unit?.isMain && (
-                    <Badge size="sm">matriz</Badge>
-                  )}
-                </span>
-                <span className={styles.company}>{companyName}</span>
-              </Link>
-
-              {!isHere && (
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  className={`${motion.press} ${styles.remove}`}
-                  onClick={() => setConfirming({ id, name: tenantName })}
-                >
-                  Excluir
-                </Button>
-              )}
-            </li>
-          )
-        })}
+        {units.map(({ tenantId: id, tenantName, companyName }, index) => (
+          <UnitRow
+            key={id}
+            name={tenantName}
+            companyName={companyName}
+            to={unitDetailTo(id)}
+            isCurrent={id === tenantId}
+            isMain={id === tenantId && (unit?.isMain ?? false)}
+            delay={riseDelay(index * 40 + 60)}
+            onRemove={() => setConfirming({ id, name: tenantName })}
+          />
+        ))}
       </Flexbox>
 
       <RemoveUnitModal
@@ -122,11 +99,11 @@ export const SettingsUnitSection = () => {
       />
 
       {isFull && (
-        <p className={styles.full}>
-          O plano {subscription?.plan.name} cobre {limit}{' '}
+        <Text size="sm" className={styles.full}>
+          O plano {planName} cobre {limit}{' '}
           {limit === 1 ? 'unidade' : 'unidades'}. Para abrir outra, fale com a
           gente sobre a próxima faixa.
-        </p>
+        </Text>
       )}
     </section>
   )

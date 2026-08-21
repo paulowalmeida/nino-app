@@ -33,7 +33,7 @@ baseline    → mechanical health and enforcement integrity
 tests       → test location, isolation, behavior, and regression quality
 data        → Services, query Hooks, router, loaders, providers, adapters, types
 state       → Hooks, Zustand, Providers, Guards, and Loaders
-ui          → Layout, Page, Template, Organism, Molecule, Atom, accessibility
+ui          → Layout, Page, Organism, Molecule, Atom, accessibility
 quality     → naming, comments, duplication, cohesion, maintainability
 complexity  → structural hotspots and semantic refactoring decisions
 full        → run baseline, then offer each later phase one at a time
@@ -83,7 +83,7 @@ quality     → code-quality-review
 complexity  → complexity-refactoring
 ```
 
-For UI, start with Page/Template composition and proceed downward only after the
+For UI, start with Page composition and proceed downward only after the
 user accepts the disposition of findings. Treat the known pre-standardization UI
 implementation as legacy; do not mass-migrate it during an audit.
 

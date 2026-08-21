@@ -10,7 +10,7 @@ import { AppLayout } from '@layouts/AppLayout/AppLayout'
 
 import { activeTenant } from './AppLayout.mock'
 
-vi.mock('@templates/Sidebar/Sidebar', () => ({
+vi.mock('@layouts/AppLayout/Sidebar/Sidebar', () => ({
   Sidebar: ({ isOpen }: { isOpen: boolean }) => (
     <div data-testid="sidebar" data-open={isOpen} />
   ),

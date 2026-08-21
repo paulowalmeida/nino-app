@@ -45,7 +45,7 @@ Nino's state categories, authorized Zustand consumers, and layer boundaries are 
 - **Provider:** installs one coherent technical/shared capability, such as the Query client. It must not create a second application-state source, bundle unrelated workflows, or smuggle a Store Hook into a prohibited UI layer.
 - **Guard/Loader:** owns route-entry gating, loading coordination, redirects, and necessary authorized store reads/writes. It must not become a route-specific business workflow, UI controller, or Service substitute.
 
-Only Pages, Templates, Layouts, Guards, Loaders, Providers, and Custom Hooks may consume Zustand directly. Atoms, Molecules, and Organisms may receive selected values/actions through props, but never the Store Hook, a wrapper around it, or an equivalent indirect dependency.
+Only Pages, Layouts, Guards, Loaders, Providers, and Custom Hooks may consume Zustand directly. Atoms, Molecules, and Organisms may receive selected values/actions through props, but never the Store Hook, a wrapper around it, or an equivalent indirect dependency.
 
 ## 9/10 Gates
 

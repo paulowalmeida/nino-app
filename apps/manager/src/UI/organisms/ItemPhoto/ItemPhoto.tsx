@@ -3,9 +3,8 @@ import { useEffect, useRef, useState } from 'react'
 
 import { Alert } from '@nino/ds/components/Alert'
 import { Button } from '@nino/ds/components/Button'
-import { ItemThumb } from '@molecules/ItemThumb/ItemThumb'
+import { ItemThumb } from '@atoms/ItemThumb/ItemThumb'
 import { PhotoCropper } from '@organisms/PhotoCropper/PhotoCropper'
-import { useItemImages } from '@hooks/product/useItemImages'
 import type { MenuItemImage } from '@custom_types/product/menu-item-image'
 import styles from './ItemPhoto.module.css'
 import motion from '@styles/motion.module.css'
@@ -14,21 +13,29 @@ const MAX_BYTES = 4 * 1024 * 1024
 const ACCEPT = 'image/jpeg,image/png,image/webp,image/avif'
 
 export type ItemPhotoProps = {
-  tenantId: string | null
   productId: string | null
   name: string
   images: MenuItemImage[]
   onStagedFile?: (file: File | null) => void
+  isUploading?: boolean
+  isRemoving?: boolean
+  onUpload?: (
+    file: File,
+    callbacks: { onSuccess: () => void; onError: (cause: Error) => void }
+  ) => void
+  onRemove?: (imageId: string) => void
 }
 
 export const ItemPhoto = ({
-  tenantId,
   productId,
   name,
   images,
   onStagedFile,
+  isUploading = false,
+  isRemoving = false,
+  onUpload,
+  onRemove,
 }: ItemPhotoProps) => {
-  const { upload, remove } = useItemImages(tenantId, productId ?? '')
   const inputRef = useRef<HTMLInputElement>(null)
   const [isDragging, setIsDragging] = useState(false)
   const [error, setError] = useState<string | null>(null)
@@ -64,7 +71,7 @@ export const ItemPhoto = ({
       return
     }
 
-    upload.mutate(edited, {
+    onUpload?.(edited, {
       onSuccess: () => setChosen(null),
       onError: (cause) => setError(cause.message),
     })
@@ -78,7 +85,7 @@ export const ItemPhoto = ({
 
   const removeFromCropper = () => {
     if (stagedUrl) removeStaged()
-    if (cover) remove.mutate(cover.id)
+    if (cover) onRemove?.(cover.id)
     setChosen(null)
   }
 
@@ -94,7 +101,7 @@ export const ItemPhoto = ({
         <PhotoCropper
           key={`${chosen.name}-${chosen.size}`}
           file={chosen}
-          isSending={upload.isPending}
+          isSending={isUploading}
           onConfirm={send}
           onCancel={() => setChosen(null)}
           onRemove={removeFromCropper}
@@ -165,8 +172,8 @@ export const ItemPhoto = ({
             variant="danger"
             size="sm"
             className={motion.press}
-            onClick={() => remove.mutate(cover.id)}
-            loading={remove.isPending}
+            onClick={() => onRemove?.(cover.id)}
+            loading={isRemoving}
           >
             Remover
           </Button>

@@ -5,14 +5,18 @@ import { ProductService } from '@services/product.service'
 
 import { menuQueryKey } from './useMenu'
 
+type CreateMenuItemInput = {
+  data: CreateMenuItemRequest
+  image: File | null
+}
+
 export const useCreateMenuItem = (tenantId: string | null) => {
   const queryClient = useQueryClient()
 
   return useMutation({
-    /* Error shows at the bottom of the form; success navigates to the menu. */
     meta: { success: 'Item adicionado ao cardápio', silentError: true },
-    mutationFn: (data: CreateMenuItemRequest) =>
-      ProductService.createItem(tenantId as string, data),
+    mutationFn: ({ data, image }: CreateMenuItemInput) =>
+      ProductService.createItemWithImage(tenantId as string, data, image),
     onSuccess: () => {
       void queryClient.invalidateQueries({ queryKey: menuQueryKey(tenantId) })
     },

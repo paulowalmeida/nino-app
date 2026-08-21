@@ -3,7 +3,7 @@ import { useState } from 'react'
 
 import { Card } from '@nino/ds/components/Card'
 import { Modal } from '@nino/ds/components/Modal'
-import { ItemThumb } from '@molecules/ItemThumb/ItemThumb'
+import { ItemThumb } from '@atoms/ItemThumb/ItemThumb'
 import { useLongPress } from '@hooks/ui/useLongPress'
 import type { MenuItem } from '@custom_types/product/menu-item'
 import { brl } from '@utils/money'

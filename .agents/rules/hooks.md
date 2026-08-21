@@ -90,7 +90,6 @@ The following component or execution categories are authorized to consume Zustan
 
 ```text
 Page        ✅
-Template    ✅
 Layout      ✅
 Guard       ✅
 Loader      ✅

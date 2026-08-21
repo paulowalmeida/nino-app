@@ -21,7 +21,10 @@ const wrapWithClient = (client: QueryClient) => {
 describe(useCreateMenuItem.name, () => {
   it('sends the new item to the service and invalidates the menu', async () => {
     // Arrange
-    vi.mocked(ProductService.createItem).mockResolvedValue(createdItem)
+    vi.mocked(ProductService.createItemWithImage).mockResolvedValue({
+      item: createdItem,
+      imageUploadFailed: false,
+    })
     const client = new QueryClient()
     const invalidateSpy = vi.spyOn(client, 'invalidateQueries')
     const { result } = renderHook(() => useCreateMenuItem('tenant-1'), {
@@ -29,13 +32,14 @@ describe(useCreateMenuItem.name, () => {
     })
 
     // Act
-    result.current.mutate(newItemRequest)
+    result.current.mutate({ data: newItemRequest, image: null })
     await waitFor(() => expect(result.current.isSuccess).toBe(true))
 
     // Assert
-    expect(ProductService.createItem).toHaveBeenCalledWith(
+    expect(ProductService.createItemWithImage).toHaveBeenCalledWith(
       'tenant-1',
-      newItemRequest
+      newItemRequest,
+      null
     )
     expect(invalidateSpy).toHaveBeenCalledWith({
       queryKey: ['menu', 'tenant-1'],
@@ -44,7 +48,7 @@ describe(useCreateMenuItem.name, () => {
 
   it('surfaces the failure through isError with no thrown exception', async () => {
     // Arrange
-    vi.mocked(ProductService.createItem).mockRejectedValue(
+    vi.mocked(ProductService.createItemWithImage).mockRejectedValue(
       new Error('slug taken')
     )
     const client = new QueryClient()
@@ -53,7 +57,7 @@ describe(useCreateMenuItem.name, () => {
     })
 
     // Act
-    result.current.mutate(newItemRequest)
+    result.current.mutate({ data: newItemRequest, image: null })
 
     // Assert
     await waitFor(() => expect(result.current.isError).toBe(true))

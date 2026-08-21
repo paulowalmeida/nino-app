@@ -2,8 +2,10 @@ import { useState } from 'react'
 
 import { Button } from '@nino/ds/components/Button'
 import { FormField } from '@nino/ds/components/FormField'
+import { Heading } from '@nino/ds/components/Heading'
 import { Input } from '@nino/ds/components/Input'
 import { Skeleton } from '@nino/ds/components/Skeleton'
+import { Text } from '@nino/ds/components/Text'
 import { AddressFields } from '@organisms/AddressFields/AddressFields'
 import { EMPTY_COMPANY_DRAFT } from '@constants/company.constants'
 import type { Company } from '@custom_types/company/company'
@@ -110,10 +112,10 @@ export const CompanyCard = ({
   return (
     <section className={styles.panel}>
       <header className={`${motion.unroll} ${styles.head}`}>
-        <h2 className={styles.title}>A empresa</h2>
-        <p className={styles.hint}>
+        <Heading level={2} size="xl">A empresa</Heading>
+        <Text size="sm" color="subtle" mt={1}>
           O CNPJ é o dono da assinatura. Vale para todas as unidades.
-        </p>
+        </Text>
       </header>
 
       <div className={local.identity}>

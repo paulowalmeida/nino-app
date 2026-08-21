@@ -304,9 +304,8 @@ Names **MUST communicate intent, responsibility, or domain meaning**.
 
 The agent **MUST** prefer explicit names over abbreviations, name functions by the operation they perform, and name boolean values with boolean intent (`is`, `has`, `can`, `should`, etc.) when applicable.
 
-The `Template` and `Page` suffixes are optional. A UI unit's layer is defined
-by its responsibility and directory, not by a naming suffix; the absence of
-either suffix **MUST NOT** be treated as a naming or architecture violation.
+The `Page` suffix is optional. A UI unit's layer is defined by its
+responsibility and directory, not by a naming suffix.
 
 ## Abstractions
 

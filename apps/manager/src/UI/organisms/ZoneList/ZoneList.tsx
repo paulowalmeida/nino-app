@@ -2,9 +2,11 @@ import { useState } from 'react'
 
 import { Button } from '@nino/ds/components/Button'
 import { EmptyState } from '@nino/ds/components/EmptyState'
+import { Heading } from '@nino/ds/components/Heading'
 import { Input } from '@nino/ds/components/Input'
 import { Skeleton } from '@nino/ds/components/Skeleton'
 import { Switch } from '@nino/ds/components/Switch'
+import { Text } from '@nino/ds/components/Text'
 import type { DeliveryZone } from '@custom_types/settings/delivery-zone'
 import { brl } from '@utils/money'
 import { riseDelay } from '@utils/rise-delay'
@@ -67,11 +69,11 @@ export const ZoneList = ({
   return (
     <section className={styles.panel}>
       <header className={`${motion.unroll} ${styles.head}`}>
-        <h2 className={styles.title}>Onde a loja entrega</h2>
-        <p className={styles.hint}>
+        <Heading level={2} size="xl">Onde a loja entrega</Heading>
+        <Text size="sm" color="subtle" mt={1}>
           A taxa do bairro entra no pedido no momento em que ele é feito — mudar
           o valor depois não mexe em pedido já fechado.
-        </p>
+        </Text>
       </header>
 
       {zones.length === 0 && (

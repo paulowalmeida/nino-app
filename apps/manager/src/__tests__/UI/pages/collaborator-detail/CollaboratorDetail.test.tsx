@@ -79,10 +79,12 @@ describe(CollaboratorDetail.name, () => {
     } as unknown as ReturnType<typeof useStaffDetail>)
 
     // Act
-    const { container } = renderDetail()
+    renderDetail()
 
     // Assert
-    expect(container.querySelector('[class*="skeleton"]')).toBeTruthy()
+    expect(screen.getByRole('status')).toHaveTextContent(
+      'Carregando colaborador'
+    )
   })
 
   it('shows the empty activity message when nothing was handled yet', () => {

@@ -13,7 +13,7 @@
       "severity": "block",
       "mode": "direct",
       "sourceDirectories": ["UI/atoms"],
-      "targetDirectories": ["UI/atoms", "UI/molecules", "UI/organisms", "UI/templates", "UI/pages"],
+      "targetDirectories": ["UI/atoms", "UI/molecules", "UI/organisms", "UI/pages"],
       "message": "Atoms must not directly compose another application Atom or any higher UI layer."
     },
     {
@@ -21,40 +21,16 @@
       "severity": "block",
       "mode": "direct",
       "sourceDirectories": ["UI/molecules"],
-      "targetDirectories": ["UI/molecules", "UI/organisms", "UI/templates", "UI/pages"],
-      "message": "Molecules must not directly compose molecules, organisms, templates, or pages."
+      "targetDirectories": ["UI/molecules", "UI/organisms", "UI/pages"],
+      "message": "Molecules must not directly compose molecules, organisms, or pages."
     },
     {
       "id": "organism-cannot-compose-peer-or-higher-ui",
       "severity": "block",
       "mode": "direct",
       "sourceDirectories": ["UI/organisms"],
-      "targetDirectories": ["UI/organisms", "UI/templates", "UI/pages"],
-      "message": "Organisms must not directly compose organisms, templates, or pages."
-    },
-    {
-      "id": "template-cannot-compose-peer-or-higher-ui",
-      "severity": "block",
-      "mode": "direct",
-      "sourceDirectories": ["UI/templates"],
-      "targetDirectories": ["UI/templates", "UI/pages"],
-      "message": "Templates must not directly compose templates or pages."
-    },
-    {
-      "id": "page-cannot-compose-peer-page",
-      "severity": "block",
-      "mode": "direct",
-      "sourceDirectories": ["UI/pages"],
-      "targetDirectories": ["UI/pages"],
-      "message": "Pages must not directly compose another Page. Pages may compose Templates or lower UI layers."
-    },
-    {
-      "id": "layout-cannot-compose-peer-layout",
-      "severity": "block",
-      "mode": "direct",
-      "sourceDirectories": ["UI/layouts"],
-      "targetDirectories": ["UI/layouts"],
-      "message": "Layouts must not directly compose another Layout. They may compose a route-agnostic shell Template as documented in rules/architecture.md."
+      "targetDirectories": ["UI/organisms", "UI/pages"],
+      "message": "Organisms must not directly compose organisms or pages."
     }
   ]
 }

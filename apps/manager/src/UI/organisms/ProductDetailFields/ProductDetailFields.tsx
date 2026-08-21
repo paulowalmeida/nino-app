@@ -12,6 +12,7 @@ import { Select } from '@nino/ds/components/Select'
 import { Switch } from '@nino/ds/components/Switch'
 import { Textarea } from '@nino/ds/components/Textarea'
 import { ItemPhoto } from '@organisms/ItemPhoto/ItemPhoto'
+import type { ItemPhotoProps } from '@organisms/ItemPhoto/ItemPhoto'
 import { DESCRIPTION_MAX_LENGTH } from '@constants/product.constants'
 import type { MenuItem } from '@custom_types/product/menu-item'
 import { riseDelay } from '@utils/rise-delay'
@@ -32,31 +33,40 @@ const toPrice = (value: string): number =>
   Number(value.replace(/\./g, '').replace(',', '.'))
 
 export type ProductDetailFieldsProps = {
-  tenantId: string | null
   item: MenuItem
   categories: { value: string; label: string }[]
   description: string
   register: UseFormRegister<ProductFormValues>
   control: Control<ProductFormValues>
   errors: FieldErrors<ProductFormValues>
+  isUploadingImage: boolean
+  isRemovingImage: boolean
+  onUploadImage: ItemPhotoProps['onUpload']
+  onRemoveImage: ItemPhotoProps['onRemove']
 }
 
 export const ProductDetailFields = ({
-  tenantId,
   item,
   categories,
   description,
   register,
   control,
   errors,
+  isUploadingImage,
+  isRemovingImage,
+  onUploadImage,
+  onRemoveImage,
 }: ProductDetailFieldsProps) => (
   <>
     <div className={`${motion.deal} ${styles.photoCol}`} style={riseDelay(80)}>
       <ItemPhoto
-        tenantId={tenantId}
         productId={item.id}
         name={item.name}
         images={item.images ?? []}
+        isUploading={isUploadingImage}
+        isRemoving={isRemovingImage}
+        onUpload={onUploadImage}
+        onRemove={onRemoveImage}
       />
     </div>
 

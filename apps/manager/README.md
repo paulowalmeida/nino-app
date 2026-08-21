@@ -116,7 +116,7 @@ caminho único de bootstrap.
 
 ## Decisões técnicas
 
-- **Atomic design**: `atoms` → `molecules` → `organisms` → `templates` → `@pages`. Componente burro recebe
+- **Atomic design**: `atoms` → `molecules` → `organisms` → `@pages`. Componente burro recebe
   por props, não busca dado.
 - **Fluxo de dados**: service (`ky`) → hook (TanStack Query/zustand) →
   componente (apresentação).

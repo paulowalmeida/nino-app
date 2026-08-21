@@ -2,7 +2,7 @@ import { Flexbox } from '@nino/ds/components/Flexbox'
 import { Button } from '@nino/ds/components/Button'
 import { EmptyState } from '@nino/ds/components/EmptyState'
 import { Skeleton } from '@nino/ds/components/Skeleton'
-import { ItemThumb } from '@molecules/ItemThumb/ItemThumb'
+import { ItemThumb } from '@atoms/ItemThumb/ItemThumb'
 import {
   NEW_ORDER_MENU_GHOST_ITEMS,
   NEW_ORDER_MENU_GHOST_SECTIONS,

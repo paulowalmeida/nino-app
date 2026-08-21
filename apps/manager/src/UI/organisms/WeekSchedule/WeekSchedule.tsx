@@ -1,8 +1,10 @@
 import { useState } from 'react'
 
 import { Button } from '@nino/ds/components/Button'
+import { Heading } from '@nino/ds/components/Heading'
 import { Skeleton } from '@nino/ds/components/Skeleton'
 import { Switch } from '@nino/ds/components/Switch'
+import { Text } from '@nino/ds/components/Text'
 import { TimePicker } from '@nino/ds/components/TimePicker'
 import type { OpeningHours } from '@custom_types/settings/opening-hours'
 import type { HoursDraft } from '@custom_types/settings/hours-draft'
@@ -109,10 +111,10 @@ export const WeekSchedule = ({
   return (
     <section className={styles.panel}>
       <header className={`${motion.unroll} ${styles.head}`}>
-        <h2 className={styles.title}>Quando a loja abre</h2>
-        <p className={styles.hint}>
+        <Heading level={2} size="xl">Quando a loja abre</Heading>
+        <Text size="sm" color="subtle" mt={1}>
           Fora do horário, o cliente vê a loja fechada e não consegue pedir.
-        </p>
+        </Text>
       </header>
 
       <div className={local.body}>

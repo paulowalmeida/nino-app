@@ -1,187 +1,116 @@
-import { Flexbox } from '@nino/ds/components/Flexbox'
 import { useState } from 'react'
 
 import { Drawer } from '@nino/ds/components/Drawer'
+import { Flexbox } from '@nino/ds/components/Flexbox'
+import { Grid } from '@nino/ds/components/Grid'
+import { Heading } from '@nino/ds/components/Heading'
+import { Text } from '@nino/ds/components/Text'
 import { toast } from '@nino/ds/components/Toast'
-import { ProductGrid } from '@organisms/ProductGrid/ProductGrid'
 import { CouponTab } from '@organisms/CouponTab/CouponTab'
+import { ProductGrid } from '@organisms/ProductGrid/ProductGrid'
 import { SaleTicket } from '@organisms/SaleTicket/SaleTicket'
-import { useCreateOrder } from '@hooks/order/useCreateOrder'
-import { useCurrentTenant } from '@hooks/session/useCurrentTenant'
-import { useIsDesktop } from '@hooks/ui/useIsDesktop'
+import { useCounterCart } from '@hooks/counter/useCounterCart'
+import { useCounterSale } from '@hooks/counter/useCounterSale'
 import { useMenu } from '@hooks/product/useMenu'
+import { useCurrentTenant } from '@hooks/session/useCurrentTenant'
 import { useAcceptedPayments } from '@hooks/settings/useAcceptedPayments'
-import { ApiError } from '@nino/lib/utils/api-error'
-import type { CartLine } from '@custom_types/counter/cart-line'
-import type { MenuItem } from '@custom_types/product/menu-item'
+import { useIsDesktop } from '@hooks/ui/useIsDesktop'
 import type { PaymentMethod } from '@custom_types/order/payment-method'
-import { paymentMethodsFor } from '@utils/order-flow'
+import { paymentMethodsFor, ticketNumber } from '@utils/order-flow'
+
 import styles from './Counter.module.css'
 import motion from '@styles/motion.module.css'
 
-/**
- * O balcão: atender quem está na loja sem passar pelo resto do painel.
- * Alvos grandes, comanda sempre à vista e tela limpa a cada venda — quem
- * opera aqui repete o mesmo gesto o expediente inteiro.
- */
 export const Counter = () => {
-  const tenant = useCurrentTenant()
-  const tenantId = tenant?.tenantId ?? null
-
+  const tenantId = useCurrentTenant()?.tenantId ?? null
   const { sections, isPending } = useMenu(tenantId)
   const { methods: acceptedMethods } = useAcceptedPayments(tenantId)
   const methods = paymentMethodsFor(acceptedMethods, 'COUNTER')
-  const { mutateAsync: placeOrder, isPending: isSending } =
-    useCreateOrder(tenantId)
-
-  const [lines, setLines] = useState<CartLine[]>([])
-  const [sheet, setSheet] = useState(false)
+  const { lines, count, total, add, step, clear } = useCounterCart()
+  const { error, isSending, sell } = useCounterSale(tenantId)
   const isDesktop = useIsDesktop()
+  const [sheet, setSheet] = useState(false)
   const [chosen, setChosen] = useState<PaymentMethod | null>(null)
-
-  /** A escolha só vale enquanto a loja aceitar aquela forma. */
-  const method = chosen && methods.includes(chosen) ? chosen : methods[0]
   const [customerName, setCustomerName] = useState('')
   const [tableNumber, setTableNumber] = useState('')
-  const [error, setError] = useState<string | null>(null)
+  const method = chosen && methods.includes(chosen) ? chosen : methods[0]
 
-  const pick = (item: MenuItem) =>
-    setLines((current) => {
-      const found = current.find(({ productId }) => productId === item.id)
-      if (!found) {
-        return [
-          ...current,
-          {
-            productId: item.id,
-            name: item.name,
-            unitPrice: item.price,
-            quantity: 1,
-          },
-        ]
-      }
-      return current.map((line) =>
-        line.productId === item.id
-          ? { ...line, quantity: line.quantity + 1 }
-          : line
-      )
-    })
-
-  const step = (productId: string, by: number) =>
-    setLines((current) =>
-      current
-        .map((line) =>
-          line.productId === productId
-            ? { ...line, quantity: line.quantity + by }
-            : line
-        )
-        .filter(({ quantity }) => quantity > 0)
-    )
-
-  const finish = async () => {
-    setError(null)
-    if (!customerName && !tableNumber) {
-      setError('Informe o nome do cliente ou o número da mesa.')
-      return
-    }
-    try {
-      const order = await placeOrder({
-        channel: 'COUNTER',
-        paymentMethod: method,
-        guestName: customerName || undefined,
-        tableNumber: tableNumber || undefined,
-        items: lines.map(({ productId, quantity, unitPrice }) => ({
-          productId,
-          quantity,
-          unitPrice: Number(unitPrice),
-        })),
-      })
-      setLines([])
-      setCustomerName('')
-      setTableNumber('')
-      toast.success(`Venda #${order.id.slice(-4).toUpperCase()} fechada`)
-    } catch (caught) {
-      if (caught instanceof ApiError && caught.status < 500) {
-        setError(caught.message)
-        return
-      }
-      setError('Não foi possível fechar a venda. Tente de novo.')
-    }
+  const emptyTicket = () => {
+    clear()
+    setSheet(false)
+    setCustomerName('')
+    setTableNumber('')
   }
 
-  const count = lines.reduce((sum, line) => sum + line.quantity, 0)
+  const handleStep = (productId: string, by: number) => {
+    const line = lines.find((current) => current.productId === productId)
+    const isRemovingLastLine =
+      lines.length === 1 && line && line.quantity + by <= 0
 
-  /* A Drawer fecha sozinha quando a comanda esvazia (`count > 0` some da
-   * condição de `open`), mas isso não passa pelo `onOpenChange` do Ark —
-   * é a prop mudando de fora, não um clique no backdrop. Sem isto, `sheet`
-   * continua `true` por baixo, e o próximo item picado reabre a folha
-   * sozinho em vez de esperar o toque no cupom. */
-  if (count === 0 && sheet) setSheet(false)
+    if (isRemovingLastLine) setSheet(false)
+    step(productId, by)
+  }
 
-  const total = lines.reduce(
-    (sum, line) => sum + Number(line.unitPrice) * line.quantity,
-    0
-  )
+  const finish = async () => {
+    const orderId = await sell({
+      lines,
+      paymentMethod: method,
+      customerName,
+      tableNumber,
+    })
 
-  const ticketFor = (bare: boolean) => (
-    <SaleTicket
-      bare={bare}
-      lines={lines}
-      methods={methods}
-      customerName={customerName}
-      tableNumber={tableNumber}
-      onCustomerName={setCustomerName}
-      onTableNumber={setTableNumber}
-      method={method}
-      isSending={isSending}
-      error={error}
-      onStep={step}
-      onMethod={setChosen}
-      onClear={() => {
-        setLines([])
-        setCustomerName('')
-        setTableNumber('')
-      }}
-      onFinish={finish}
-    />
-  )
+    if (!orderId) return
+
+    emptyTicket()
+    toast.success(`Venda #${ticketNumber(orderId)} fechada`)
+  }
 
   return (
-    <div className={styles.page}>
-      <Flexbox as="header" direction="column" gap={1} shrink={false} mb={4} className={motion.deal}>
-        <h1 className={styles.title}>Balcão</h1>
-        <p className={styles.subtitle}>
+    <Flexbox className={styles.page}>
+      <Flexbox
+        as="header"
+        direction="column"
+        gap={1}
+        shrink={false}
+        mb={4}
+        className={motion.deal}
+      >
+        <Heading level={1} size="xl">
+          Balcão
+        </Heading>
+        <Text size="sm" color="subtle">
           Monte o pedido de quem está na loja e feche a venda.
-        </p>
+        </Text>
       </Flexbox>
 
-      <div className={styles.floor}>
-        <section className={styles.menu} aria-label="Cardápio">
-          <ProductGrid
-            sections={sections}
-            isPending={isPending}
-            onPick={pick}
+      <Grid columns={{ mobile: 1, desktop: 2 }} className={styles.floor}>
+        <Flexbox as="section" className={styles.menu} aria-label="Cardápio">
+          <ProductGrid sections={sections} isPending={isPending} onPick={add} />
+        </Flexbox>
+
+        {isDesktop && (
+          <SaleTicket
+            lines={lines}
+            methods={methods}
+            customerName={customerName}
+            tableNumber={tableNumber}
+            onCustomerName={setCustomerName}
+            onTableNumber={setTableNumber}
+            method={method}
+            isSending={isSending}
+            error={error}
+            onStep={handleStep}
+            onMethod={setChosen}
+            onClear={emptyTicket}
+            onFinish={finish}
           />
-        </section>
+        )}
+      </Grid>
 
-        {/* No desktop a comanda mora na coluna ao lado, sempre aberta. */}
-        {isDesktop && ticketFor(false)}
-      </div>
-
-      {/*
-       * No celular ela vira cupom: a ponta fica presa no rodapé com o total,
-       * e puxar abre a comanda inteira. Sem isso, fechar a venda exigia rolar
-       * o cardápio todo — com sessenta bebidas, três telas.
-       */}
       {!isDesktop && count > 0 && (
         <CouponTab count={count} total={total} onOpen={() => setSheet(true)} />
       )}
 
-      {/*
-       * A folha fica montada mesmo no desktop e com a comanda vazia: quem
-       * some com ela aberta — esvaziar a comanda, alargar a janela até o
-       * desktop — deixa o bloqueio de ponteiro do Ark preso no body, e a
-       * página inteira para de responder a clique até um F5.
-       */}
       <Drawer
         open={sheet && !isDesktop && count > 0}
         onOpenChange={setSheet}
@@ -192,8 +121,23 @@ export const Counter = () => {
         contentClassName={styles.sheet}
         bodyClassName={styles.sheetBody}
       >
-        {ticketFor(true)}
+        <SaleTicket
+          bare
+          lines={lines}
+          methods={methods}
+          customerName={customerName}
+          tableNumber={tableNumber}
+          onCustomerName={setCustomerName}
+          onTableNumber={setTableNumber}
+          method={method}
+          isSending={isSending}
+          error={error}
+          onStep={handleStep}
+          onMethod={setChosen}
+          onClear={emptyTicket}
+          onFinish={finish}
+        />
       </Drawer>
-    </div>
+    </Flexbox>
   )
 }

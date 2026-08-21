@@ -1,13 +1,15 @@
-import { Flexbox } from '@nino/ds/components/Flexbox'
-import { useState } from 'react'
-
 import { Badge } from '@nino/ds/components/Badge'
-import { ColorPicker } from '@nino/ds/components/ColorPicker'
 import { Button } from '@nino/ds/components/Button'
+import { ColorPicker } from '@nino/ds/components/ColorPicker'
+import { Flexbox } from '@nino/ds/components/Flexbox'
 import { FormField } from '@nino/ds/components/FormField'
+import { Heading } from '@nino/ds/components/Heading'
 import { Input } from '@nino/ds/components/Input'
 import { Select } from '@nino/ds/components/Select'
 import { Skeleton } from '@nino/ds/components/Skeleton'
+import { Text } from '@nino/ds/components/Text'
+import { useState } from 'react'
+
 import { AddressFields } from '@organisms/AddressFields/AddressFields'
 import { EMPTY_UNIT_DRAFT, UNIT_TIMEZONES } from '@constants/store.constants'
 import type { TenantDetail } from '@custom_types/store/tenant-detail'
@@ -83,17 +85,17 @@ export const UnitCard = ({
     <section className={styles.panel}>
       <Flexbox as="header" gap={3} align="start" justify="between" wrap mb={4} className={motion.unroll}>
         <div>
-          <h2 className={styles.title}>
+          <Heading level={2} size="xl">
             {unit?.customName || 'Esta unidade'}
             {isMain && (
               <Badge size="sm" className={local.main}>
                 matriz
               </Badge>
             )}
-          </h2>
-          <p className={styles.hint}>
+          </Heading>
+          <Text size="sm" color="subtle" mt={1}>
             É o endereço de onde o pedido sai — e o que o cliente vê na loja.
-          </p>
+          </Text>
         </div>
 
         {!isMain && (

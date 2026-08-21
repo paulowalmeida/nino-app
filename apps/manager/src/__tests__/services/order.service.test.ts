@@ -9,6 +9,16 @@ const { OrderService, ORDER_PAGE_SIZE } = await import(
 )
 
 describe('OrderService', () => {
+  it('getAvailability: reads GET tenants/:id/orders/availability', async () => {
+    apiMock.get.mockResolvedValue({ isOpen: true })
+
+    await OrderService.getAvailability('tenant-1')
+
+    expect(apiMock.get).toHaveBeenCalledWith(
+      'tenants/tenant-1/orders/availability'
+    )
+  })
+
   it('getQueueSummary: reads GET tenants/:id/orders/summary', async () => {
     // Arrange
     apiMock.get.mockResolvedValueOnce({ pending: 0 })

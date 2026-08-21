@@ -14,6 +14,11 @@ type ProductListParams = {
   search?: string
 }
 
+export type CreateMenuItemWithImageResult = {
+  item: MenuItem
+  imageUploadFailed: boolean
+}
+
 const fetchPage = (tenantId: string, page: number): Promise<MenuPage> =>
   api.getAll<MenuPage>(`tenants/${tenantId}/products`, {
     target: 'position',
@@ -58,6 +63,23 @@ export const ProductService = {
       `tenants/${tenantId}/products`,
       data
     ),
+
+  createItemWithImage: async (
+    tenantId: string,
+    data: CreateMenuItemRequest,
+    image: File | null
+  ): Promise<CreateMenuItemWithImageResult> => {
+    const item = await ProductService.createItem(tenantId, data)
+
+    if (!image) return { item, imageUploadFailed: false }
+
+    try {
+      await ProductService.uploadItemImage(tenantId, item.id, image)
+      return { item, imageUploadFailed: false }
+    } catch {
+      return { item, imageUploadFailed: true }
+    }
+  },
 
   setItemAvailability: (
     tenantId: string,

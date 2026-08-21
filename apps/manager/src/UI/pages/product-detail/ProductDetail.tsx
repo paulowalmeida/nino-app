@@ -14,7 +14,13 @@ import { BackLink } from '@atoms/BackLink/BackLink'
 import { useDeleteMenuItem } from '@hooks/product/useDeleteMenuItem'
 import { useMenuItem } from '@hooks/product/useMenuItem'
 import { useUpdateMenuItem } from '@hooks/product/useUpdateMenuItem'
+import { useRemoveMenuItemImage } from '@hooks/product/useRemoveMenuItemImage'
+import { useUploadMenuItemImage } from '@hooks/product/useUploadMenuItemImage'
 import { useCurrentTenant } from '@hooks/session/useCurrentTenant'
+import {
+  toProductFormValues,
+  toUpdateMenuItemRequest,
+} from '@adapters/product-form.adapter'
 import {
   ProductDetailSkeleton,
 } from '@skeletons/pages/ProductDetailSkeleton/ProductDetailSkeleton'
@@ -22,12 +28,6 @@ import { riseDelay } from '@utils/rise-delay'
 
 import styles from './ProductDetail.module.css'
 import motion from '@styles/motion.module.css'
-
-const toPrice = (value: string): number =>
-  Number(value.replace(/\./g, '').replace(',', '.'))
-
-const fromPrice = (value: string): string =>
-  Number(value).toFixed(2).replace('.', ',')
 
 export const ProductDetail = () => {
   const { productId } = useParams()
@@ -41,6 +41,8 @@ export const ProductDetail = () => {
     tenantId,
     productId as string
   )
+  const uploadImage = useUploadMenuItemImage(tenantId, productId as string)
+  const removeImage = useRemoveMenuItemImage(tenantId, productId as string)
   const [isDeleteOpen, setIsDeleteOpen] = useState(false)
 
   const {
@@ -56,14 +58,7 @@ export const ProductDetail = () => {
 
   useEffect(() => {
     if (!item) return
-    reset({
-      name: item.name,
-      description: item.description ?? '',
-      price: fromPrice(item.price),
-      categoryId: item.category.id,
-      position: item.position,
-      isActive: item.isActive,
-    })
+    reset(toProductFormValues(item))
   }, [item, reset])
 
   /* O erro vira toast: a página some ao excluir e a mensagem iria junto. */
@@ -91,14 +86,7 @@ export const ProductDetail = () => {
 
   const onSubmit = async (values: ProductFormValues) => {
     try {
-      await save({
-        name: values.name,
-        description: values.description || undefined,
-        price: toPrice(values.price),
-        categoryId: values.categoryId,
-        position: Number(values.position),
-        isActive: values.isActive,
-      })
+      await save(toUpdateMenuItemRequest(values))
       void navigate('..', { relative: 'path' })
     } catch {
       setError('root', {
@@ -125,13 +113,18 @@ export const ProductDetail = () => {
 
       <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
         <ProductDetailFields
-          tenantId={tenantId}
           item={item}
           categories={categories}
           description={description}
           register={register}
           control={control}
           errors={errors}
+          isUploadingImage={uploadImage.isPending}
+          isRemovingImage={removeImage.isPending}
+          onUploadImage={(file, callbacks) =>
+            uploadImage.mutate(file, callbacks)
+          }
+          onRemoveImage={(imageId) => removeImage.mutate(imageId)}
         />
 
         <div

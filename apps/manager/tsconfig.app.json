@@ -43,7 +43,6 @@
       "@skeletons/*": ["src/skeletons/*"],
       "@states/*": ["src/states/*"],
       "@styles/*": ["src/styles/*"],
-      "@templates/*": ["src/UI/templates/*"],
       "@layouts/*": ["src/UI/layouts/*"],
       "@utils/*": ["src/utils/*"]
     }

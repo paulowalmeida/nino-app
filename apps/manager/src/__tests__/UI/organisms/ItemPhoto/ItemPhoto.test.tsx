@@ -6,15 +6,8 @@ import { ItemPhoto } from '@organisms/ItemPhoto/ItemPhoto'
 
 import { coverImage } from './ItemPhoto.mock'
 
-const uploadMutate = vi.fn()
-const removeMutate = vi.fn()
-
-vi.mock('@hooks/product/useItemImages', () => ({
-  useItemImages: () => ({
-    upload: { mutate: uploadMutate, isPending: false },
-    remove: { mutate: removeMutate, isPending: false },
-  }),
-}))
+const uploadImage = vi.fn()
+const removeImage = vi.fn()
 
 /* The cropper has its own confirm/cancel/remove flow — what's under test
  * here is who calls it and what ItemPhoto does with the result. */
@@ -51,7 +44,14 @@ describe(ItemPhoto.name, () => {
 
   it('shows the drop hint with no existing photo', () => {
     // Arrange / Act
-    render(<ItemPhoto tenantId="t1" productId="p1" name="Pizza" images={[]} />)
+    render(
+      <ItemPhoto
+        productId="p1"
+        name="Pizza"
+        images={[]}
+        onUpload={uploadImage}
+      />
+    )
 
     // Assert
     expect(screen.getByText('Arraste uma foto aqui')).toBeInTheDocument()
@@ -61,10 +61,10 @@ describe(ItemPhoto.name, () => {
     // Arrange / Act
     render(
       <ItemPhoto
-        tenantId="t1"
         productId="p1"
         name="Pizza"
         images={[coverImage]}
+        onRemove={removeImage}
       />
     )
 
@@ -74,7 +74,7 @@ describe(ItemPhoto.name, () => {
 
   it('opens the cropper for a file under the size limit', async () => {
     // Arrange
-    render(<ItemPhoto tenantId="t1" productId="p1" name="Pizza" images={[]} />)
+    render(<ItemPhoto productId="p1" name="Pizza" images={[]} />)
 
     // Act
     await userEvent.upload(fileInput(), image)
@@ -85,7 +85,7 @@ describe(ItemPhoto.name, () => {
 
   it('rejects a file over 4 MB without opening the cropper', async () => {
     // Arrange
-    render(<ItemPhoto tenantId="t1" productId="p1" name="Pizza" images={[]} />)
+    render(<ItemPhoto productId="p1" name="Pizza" images={[]} />)
 
     // Act
     await userEvent.upload(fileInput(), oversizedImage)
@@ -99,14 +99,14 @@ describe(ItemPhoto.name, () => {
 
   it('uploads the cropped file when a product already exists', async () => {
     // Arrange
-    render(<ItemPhoto tenantId="t1" productId="p1" name="Pizza" images={[]} />)
+    render(<ItemPhoto productId="p1" name="Pizza" images={[]} onUpload={uploadImage} />)
     await userEvent.upload(fileInput(), image)
 
     // Act
     await userEvent.click(screen.getByText('confirmar corte'))
 
     // Assert
-    expect(uploadMutate).toHaveBeenCalledWith(
+    expect(uploadImage).toHaveBeenCalledWith(
       expect.any(File),
       expect.any(Object)
     )
@@ -117,7 +117,6 @@ describe(ItemPhoto.name, () => {
     const onStagedFile = vi.fn()
     render(
       <ItemPhoto
-        tenantId="t1"
         productId={null}
         name="Pizza"
         images={[]}
@@ -130,7 +129,7 @@ describe(ItemPhoto.name, () => {
     await userEvent.click(screen.getByText('confirmar corte'))
 
     // Assert
-    expect(uploadMutate).not.toHaveBeenCalled()
+    expect(uploadImage).not.toHaveBeenCalled()
     expect(onStagedFile).toHaveBeenCalledWith(expect.any(File))
   })
 
@@ -138,10 +137,10 @@ describe(ItemPhoto.name, () => {
     // Arrange
     render(
       <ItemPhoto
-        tenantId="t1"
         productId="p1"
         name="Pizza"
         images={[coverImage]}
+        onRemove={removeImage}
       />
     )
 
@@ -149,6 +148,6 @@ describe(ItemPhoto.name, () => {
     await userEvent.click(screen.getByRole('button', { name: 'Remover' }))
 
     // Assert
-    expect(removeMutate).toHaveBeenCalledWith(coverImage.id)
+    expect(removeImage).toHaveBeenCalledWith(coverImage.id)
   })
 })

@@ -1,7 +1,7 @@
 import { fireEvent, render, screen } from '@testing-library/react'
 import { describe, expect, it } from 'vitest'
 
-import { ItemThumb } from '@molecules/ItemThumb/ItemThumb'
+import { ItemThumb } from '@atoms/ItemThumb/ItemThumb'
 
 /** The tile is decorative (`aria-hidden`), so it has no accessible role. */
 const photoIn = (container: HTMLElement) => container.querySelector('img')

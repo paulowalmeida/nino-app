@@ -2,8 +2,6 @@ import { useState } from 'react'
 import { useForm, useWatch } from 'react-hook-form'
 import { useNavigate } from 'react-router'
 
-import { useQueryClient } from '@tanstack/react-query'
-
 import { Button } from '@nino/ds/components/Button'
 import { Header } from '@nino/ds/components/Header'
 import { toast } from '@nino/ds/components/Toast'
@@ -15,9 +13,8 @@ import { BackLink } from '@atoms/BackLink/BackLink'
 import { useCategories } from '@hooks/product/useCategories'
 import { useCreateCategory } from '@hooks/product/useCreateCategory'
 import { useCreateMenuItem } from '@hooks/product/useCreateMenuItem'
-import { menuQueryKey } from '@hooks/product/useMenu'
 import { useCurrentTenant } from '@hooks/session/useCurrentTenant'
-import { ProductService } from '@services/product.service'
+import { toCreateMenuItemRequest } from '@adapters/product-form.adapter'
 import {
   NewProductSkeleton,
 } from '@skeletons/pages/NewProductSkeleton/NewProductSkeleton'
@@ -26,14 +23,10 @@ import { riseDelay } from '@utils/rise-delay'
 import styles from './NewProduct.module.css'
 import motion from '@styles/motion.module.css'
 
-const toPrice = (value: string): number =>
-  Number(value.replace(/\./g, '').replace(',', '.'))
-
 export const NewProduct = () => {
   const tenant = useCurrentTenant()
   const tenantId = tenant?.tenantId ?? null
   const navigate = useNavigate()
-  const queryClient = useQueryClient()
 
   const { categories, isPending: isCategoriesPending } = useCategories(tenantId)
   const { mutateAsync: addCategory, isPending: isAddingCategory } =
@@ -65,30 +58,16 @@ export const NewProduct = () => {
 
   const onSubmit = async (values: NewProductFormValues) => {
     try {
-      const item = await addItem({
-        name: values.name,
-        description: values.description || undefined,
-        price: toPrice(values.price),
-        categoryId: values.categoryId,
+      const result = await addItem({
+        data: toCreateMenuItemRequest(values),
+        image: photoFile,
       })
 
-      if (photoFile) {
-        try {
-          await ProductService.uploadItemImage(
-            tenantId as string,
-            item.id,
-            photoFile
-          )
-          void queryClient.invalidateQueries({
-            queryKey: menuQueryKey(tenantId),
-          })
-        } catch {
-          /* O item já foi criado: avisar da foto é melhor que falhar tudo. */
-          toast.warning(
-            'Item criado, mas a foto não subiu',
-            'Abra o item no cardápio e envie a foto de novo.'
-          )
-        }
+      if (result.imageUploadFailed) {
+        toast.warning(
+          'Item criado, mas a foto não subiu',
+          'Abra o item no cardápio e envie a foto de novo.'
+        )
       }
 
       void navigate('..', { relative: 'path' })
@@ -114,7 +93,6 @@ export const NewProduct = () => {
 
       <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
         <NewProductFields
-          tenantId={tenantId}
           name={name}
           description={description}
           onStagedFile={setPhotoFile}
