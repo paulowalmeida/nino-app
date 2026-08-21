@@ -1,6 +1,6 @@
 import { Link } from 'react-router'
 
-import { Flexbox } from '@nino/ds/components/Flexbox'
+import { Box } from '@nino/ds/components/Box'
 import { Heading } from '@nino/ds/components/Heading'
 import { Text } from '@nino/ds/components/Text'
 import { RiseIn } from '@atoms/RiseIn/RiseIn'
@@ -9,7 +9,7 @@ import { LoginForm } from '@organisms/LoginForm/LoginForm'
 import styles from '@styles/authForm.module.css'
 
 export const Login = () => (
-  <Flexbox direction="column">
+  <Box direction="column">
     <RiseIn as="header">
       <Heading level={1} size="2xl" align="center">
         Bem-vindo
@@ -26,5 +26,5 @@ export const Login = () => (
         </Link>
       </Text>
     </RiseIn>
-  </Flexbox>
+  </Box>
 )

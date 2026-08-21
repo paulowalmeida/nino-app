@@ -1,6 +1,6 @@
 import { Alert } from '@nino/ds/components/Alert'
 import { Button } from '@nino/ds/components/Button'
-import { Flexbox } from '@nino/ds/components/Flexbox'
+import { Box } from '@nino/ds/components/Box'
 import { FormField } from '@nino/ds/components/FormField'
 import { Input } from '@nino/ds/components/Input'
 import { PasswordInput } from '@nino/ds/components/PasswordInput'
@@ -18,7 +18,7 @@ export const LoginForm = () => {
   } = useLoginForm()
 
   return (
-    <Flexbox as="form" direction="column" gap={4} mt={8} onSubmit={submit}>
+    <Box as="form" direction="column" gap={4} mt={8} onSubmit={submit}>
       <RiseIn delay={120}>
         <FormField label="Email" error={errors.email?.message}>
           <Input
@@ -51,6 +51,6 @@ export const LoginForm = () => {
           Entrar
         </Button>
       </RiseIn>
-    </Flexbox>
+    </Box>
   )
 }

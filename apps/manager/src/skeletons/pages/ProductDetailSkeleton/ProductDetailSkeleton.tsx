@@ -1,4 +1,4 @@
-import { Flexbox } from '@nino/ds/components/Flexbox'
+import { Box } from '@nino/ds/components/Box'
 import { Skeleton } from '@nino/ds/components/Skeleton'
 import { BackLink } from '@atoms/BackLink/BackLink'
 
@@ -24,9 +24,9 @@ export const ProductDetailSkeleton = () => (
     <div className={styles.form}>
       <div className={fieldStyles.photoCol}>
         <Skeleton className={styles.bonePhoto} />
-        <Flexbox gap={2} mt={3}>
+        <Box gap={2} mt={3}>
           <Skeleton className={styles.bonePhotoAction} />
-        </Flexbox>
+        </Box>
       </div>
 
       <div className={fieldStyles.fields}>

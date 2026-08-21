@@ -1,13 +1,13 @@
 @reference "@nino/ds/globals.css";
 
 .toolbar {
-  @apply mb-2 shrink-0 gap-2 px-2;
+  @apply mb-2 px-2;
 }
 
 .toolbarLead {
-  @apply flex h-11 w-11 shrink-0 items-center justify-center;
+  @apply h-11 w-11;
 }
 
 .tally {
-  @apply text-xs text-fg-faint lg:text-sm;
+  @apply lg:text-sm;
 }

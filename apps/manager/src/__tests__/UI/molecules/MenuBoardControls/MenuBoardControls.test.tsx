@@ -9,14 +9,14 @@ describe(MenuBoardControls.name, () => {
     const onStartSelection = vi.fn()
     render(
       <MenuBoardControls
-        loadedItemCount={2}
         total={2}
         canReorder
         selection={{
           isSelecting: false,
-          selectedIds: new Set(),
+          selectedItemCount: 0,
+          isAllLoadedSelected: false,
+          isSomeLoadedSelected: false,
           onStartSelection,
-          onToggleSelection: vi.fn(),
           onToggleAllSelection: vi.fn(),
           onCancelSelection: vi.fn(),
           onRequestBulkDelete: vi.fn(),
@@ -36,14 +36,14 @@ describe(MenuBoardControls.name, () => {
     const onRequestBulkDelete = vi.fn()
     render(
       <MenuBoardControls
-        loadedItemCount={2}
         total={2}
         canReorder={false}
         selection={{
           isSelecting: true,
-          selectedIds: new Set(['item-1']),
+          selectedItemCount: 1,
+          isAllLoadedSelected: false,
+          isSomeLoadedSelected: true,
           onStartSelection: vi.fn(),
-          onToggleSelection: vi.fn(),
           onToggleAllSelection: vi.fn(),
           onCancelSelection: vi.fn(),
           onRequestBulkDelete,
@@ -55,5 +55,33 @@ describe(MenuBoardControls.name, () => {
 
     expect(screen.getByText('1 selecionado')).toBeInTheDocument()
     expect(onRequestBulkDelete).toHaveBeenCalledOnce()
+  })
+
+  it('delegates select-all from a partial selection', async () => {
+    // Arrange
+    const onToggleAllSelection = vi.fn()
+    const user = userEvent.setup()
+    render(
+      <MenuBoardControls
+        total={2}
+        canReorder={false}
+        selection={{
+          isSelecting: true,
+          selectedItemCount: 1,
+          isAllLoadedSelected: false,
+          isSomeLoadedSelected: true,
+          onStartSelection: vi.fn(),
+          onToggleAllSelection,
+          onCancelSelection: vi.fn(),
+          onRequestBulkDelete: vi.fn(),
+        }}
+      />
+    )
+
+    // Act
+    await user.click(screen.getByRole('checkbox', { name: 'Selecionar todos' }))
+
+    // Assert
+    expect(onToggleAllSelection).toHaveBeenCalledOnce()
   })
 })

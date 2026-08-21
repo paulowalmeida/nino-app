@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router'
 
-import { Flexbox } from '@nino/ds/components/Flexbox'
+import { Box } from '@nino/ds/components/Box'
 import { BrandTopBar } from '@molecules/BrandTopBar/BrandTopBar'
 import {
   WelcomeOnboardingPanel,
@@ -29,10 +29,10 @@ export const Welcome = () => {
   const back = () => setIndex((current) => current - 1)
 
   return (
-    <Flexbox direction="column" className={styles.shell}>
+    <Box direction="column" className={styles.shell}>
       <BrandTopBar actionLabel="Pular" onAction={leave} />
 
-      <Flexbox as="main" direction="column" className={styles.page}>
+      <Box as="main" direction="column" className={styles.page}>
         <WelcomeOnboardingPanel
           panels={WELCOME_PANELS}
           index={index}
@@ -41,7 +41,7 @@ export const Welcome = () => {
           onAdvance={advance}
           onBack={back}
         />
-      </Flexbox>
-    </Flexbox>
+      </Box>
+    </Box>
   )
 }

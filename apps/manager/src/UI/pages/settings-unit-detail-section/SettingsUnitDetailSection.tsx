@@ -1,4 +1,4 @@
-import { Flexbox } from '@nino/ds/components/Flexbox'
+import { Box } from '@nino/ds/components/Box'
 import { Breadcrumb } from '@atoms/Breadcrumb/Breadcrumb'
 import { UnitCard } from '@organisms/UnitCard/UnitCard'
 import { useCurrentTenant } from '@hooks/session/useCurrentTenant'
@@ -15,7 +15,7 @@ export const SettingsUnitDetailSection = () => {
   const { mutate: setMain, isPending: isPromoting } = useSetMainTenant(tenantId)
 
   return (
-    <Flexbox direction="column" gap={2}>
+    <Box direction="column" gap={2}>
       <Breadcrumb trail={[{ label: 'Unidades', to: '..' }, { label: tenantName }]} />
 
       <UnitCard
@@ -27,6 +27,6 @@ export const SettingsUnitDetailSection = () => {
         onSetMain={() => unit && setMain(unit.id)}
         onSave={save}
       />
-    </Flexbox>
+    </Box>
   )
 }

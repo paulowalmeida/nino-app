@@ -1,5 +1,5 @@
 import { Chip } from '@nino/ds/components/Chip'
-import { Flexbox } from '@nino/ds/components/Flexbox'
+import { Box } from '@nino/ds/components/Box'
 import { Skeleton } from '@nino/ds/components/Skeleton'
 import { CATEGORY_CHIPS_GHOST_ITEMS } from '@constants/product.constants'
 
@@ -22,7 +22,7 @@ export const CategoryChips = ({
 }: CategoryChipsProps) => {
   if (isPending) {
     return (
-      <Flexbox
+      <Box
         direction="row"
         gap={2}
         className={styles.track}
@@ -32,12 +32,12 @@ export const CategoryChips = ({
         {CATEGORY_CHIPS_GHOST_ITEMS.map((chip) => (
           <Skeleton key={chip} className={styles.ghostChip} />
         ))}
-      </Flexbox>
+      </Box>
     )
   }
 
   return (
-    <Flexbox
+    <Box
       direction="row"
       gap={2}
       className={styles.track}
@@ -66,6 +66,6 @@ export const CategoryChips = ({
           {name}
         </Chip>
       ))}
-    </Flexbox>
+    </Box>
   )
 }

@@ -6,7 +6,7 @@ import { useQueueSummary } from '@hooks/order/useQueueSummary'
 import { useCurrentTenant } from '@hooks/session/useCurrentTenant'
 import { useSidemenu } from '@hooks/session/useSidemenu'
 import { Button } from '@nino/ds/components/Button'
-import { Flexbox } from '@nino/ds/components/Flexbox'
+import { Box } from '@nino/ds/components/Box'
 import { Icon } from '@nino/ds/components/Icon'
 import { mergeClasses } from '@nino/ds/mergeClasses'
 import { useSessionStore } from '@states/useSessionStore'
@@ -41,13 +41,13 @@ export const Sidebar = ({
   )
 
   return (
-    <Flexbox
+    <Box
       as="aside"
       direction="column"
       className={asideClass}
       data-collapsed={isCollapsed || undefined}
     >
-      <Flexbox direction="row" className={styles.topBar}>
+      <Box direction="row" className={styles.topBar}>
         <NinoLogo
           size="sm"
           tone="light"
@@ -63,11 +63,11 @@ export const Sidebar = ({
         >
           <Icon name="chevron-down" size="sm" className={styles.collapseIcon} />
         </Button>
-      </Flexbox>
+      </Box>
 
-      <Flexbox className={styles.switcherWrap}>
+      <Box className={styles.switcherWrap}>
         <StoreSwitcher currentTenantId={tenantId} collapsed={isCollapsed} />
-      </Flexbox>
+      </Box>
 
       <SidebarNavigation
         groups={groups}
@@ -80,14 +80,14 @@ export const Sidebar = ({
         onNavigate={onClose}
       />
 
-      <Flexbox className={styles.footer}>
+      <Box className={styles.footer}>
         <UserMenu
           name={user?.name ?? ''}
           tenantId={tenantId}
           onNavigate={onClose}
           collapsed={isCollapsed}
         />
-      </Flexbox>
-    </Flexbox>
+      </Box>
+    </Box>
   )
 }

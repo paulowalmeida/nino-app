@@ -91,4 +91,28 @@ describe(QuantityStepper.name, () => {
     // Assert
     expect(onDecrement).not.toHaveBeenCalled()
   })
+
+  it('keeps a destructive removal action interactive', async () => {
+    // Arrange
+    const user = userEvent.setup()
+    const onDecrement = vi.fn()
+    render(
+      <QuantityStepper
+        quantity={1}
+        decrementIcon="trash"
+        decrementVariant="danger"
+        onIncrement={vi.fn()}
+        onDecrement={onDecrement}
+        {...labels}
+      />
+    )
+
+    // Act
+    await user.click(
+      screen.getByRole('button', { name: labels.decrementLabel })
+    )
+
+    // Assert
+    expect(onDecrement).toHaveBeenCalledTimes(1)
+  })
 })

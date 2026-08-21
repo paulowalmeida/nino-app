@@ -2,7 +2,7 @@ import type { ReactNode } from 'react'
 
 import { Badge } from '@nino/ds/components/Badge'
 import { Card } from '@nino/ds/components/Card'
-import { Flexbox } from '@nino/ds/components/Flexbox'
+import { Box } from '@nino/ds/components/Box'
 import { Text } from '@nino/ds/components/Text'
 import type { Subscription } from '@custom_types/account/subscription'
 import { brl } from '@utils/money'
@@ -24,14 +24,14 @@ type SubscriptionCardProps = { subscription: Subscription }
 
 export const SubscriptionCard = ({ subscription }: SubscriptionCardProps) => (
   <Card className={motion.settle}>
-    <Flexbox
+    <Box
       wrap
       align="end"
       justify="between"
       gap={3}
       className={styles.plan}
     >
-      <Flexbox>
+      <Box>
         <Text as="p" size="xs" weight="bold" case="uppercase" color="faint">
           Plano atual
         </Text>
@@ -45,7 +45,7 @@ export const SubscriptionCard = ({ subscription }: SubscriptionCardProps) => (
         >
           {subscription.plan.name}
         </Text>
-      </Flexbox>
+      </Box>
       <Text
         as="p"
         size="xl"
@@ -59,7 +59,7 @@ export const SubscriptionCard = ({ subscription }: SubscriptionCardProps) => (
           /mês
         </Text>
       </Text>
-    </Flexbox>
+    </Box>
 
     <dl className={styles.facts}>
       {(
@@ -81,7 +81,7 @@ export const SubscriptionCard = ({ subscription }: SubscriptionCardProps) => (
           ],
         ] satisfies [string, ReactNode][]
       ).map(([label, value], index) => (
-        <Flexbox
+        <Box
           key={label}
           align="baseline"
           justify="between"
@@ -91,7 +91,7 @@ export const SubscriptionCard = ({ subscription }: SubscriptionCardProps) => (
         >
           <dt className={styles.factLabel}>{label}</dt>
           <dd className={styles.factValue}>{value}</dd>
-        </Flexbox>
+        </Box>
       ))}
     </dl>
 

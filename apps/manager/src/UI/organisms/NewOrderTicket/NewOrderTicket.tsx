@@ -1,4 +1,4 @@
-import { Flexbox } from '@nino/ds/components/Flexbox'
+import { Box } from '@nino/ds/components/Box'
 import { Alert } from '@nino/ds/components/Alert'
 import { Button } from '@nino/ds/components/Button'
 import { EmptyState } from '@nino/ds/components/EmptyState'
@@ -78,14 +78,14 @@ export const NewOrderTicket = ({
       )}
 
       {lines.length > 0 && (
-        <Flexbox as="ul" direction="column">
+        <Box as="ul" direction="column">
           {lines.map((line) => (
             <li
               key={line.productId}
               className={`${motion.deal} ${styles.line}`}
             >
               <span className={styles.lineName}>{line.name}</span>
-              <Flexbox gap={1} align="center" shrink={false}>
+              <Box gap={1} align="center" shrink={false}>
                 <Button
                   size="icon"
                   variant="outline"
@@ -105,13 +105,13 @@ export const NewOrderTicket = ({
                 >
                   <Icon name="plus" />
                 </Button>
-              </Flexbox>
+              </Box>
               <span className={styles.linePrice}>
                 {brl(Number(line.unitPrice) * line.quantity)}
               </span>
             </li>
           ))}
-        </Flexbox>
+        </Box>
       )}
 
       {isDelivery && fee > 0 && (
@@ -126,7 +126,7 @@ export const NewOrderTicket = ({
         <span>{brl(subtotal + fee)}</span>
       </div>
 
-      <Flexbox direction="column" gap={1.5}>
+      <Box direction="column" gap={1.5}>
         <span className={styles.label} id="channel-label">
           Como sai
         </span>
@@ -139,7 +139,7 @@ export const NewOrderTicket = ({
           aria-labelledby="channel-label"
           onValueChange={(value) => onChannelChange(value as OrderChannel)}
         />
-      </Flexbox>
+      </Box>
 
       <RecipientFields
         value={recipient}

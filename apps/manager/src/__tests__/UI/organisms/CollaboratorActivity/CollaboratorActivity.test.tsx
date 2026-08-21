@@ -1,9 +1,7 @@
 import { render, screen } from '@testing-library/react'
 import { describe, expect, it } from 'vitest'
 
-import {
-  CollaboratorActivity,
-} from '@organisms/CollaboratorActivity/CollaboratorActivity'
+import { CollaboratorActivity } from '@organisms/CollaboratorActivity/CollaboratorActivity'
 
 import {
   counterTicketEntry,
@@ -13,7 +11,7 @@ import {
 describe(CollaboratorActivity.name, () => {
   it('shows the empty message when there is no activity', () => {
     // Arrange / Act
-    render(<CollaboratorActivity activity={[]} />)
+    render(<CollaboratorActivity activity={[]} headingLevel={2} />)
 
     // Assert
     expect(
@@ -23,7 +21,9 @@ describe(CollaboratorActivity.name, () => {
 
   it('lists each entry with the customer name', () => {
     // Arrange / Act
-    render(<CollaboratorActivity activity={[counterTicketEntry]} />)
+    render(
+      <CollaboratorActivity activity={[counterTicketEntry]} headingLevel={2} />
+    )
 
     // Assert
     expect(screen.getByText('Maria Silva')).toBeInTheDocument()
@@ -31,7 +31,9 @@ describe(CollaboratorActivity.name, () => {
 
   it('falls back to "Visitante" when the entry has no customer name', () => {
     // Arrange / Act
-    render(<CollaboratorActivity activity={[guestOrderEntry]} />)
+    render(
+      <CollaboratorActivity activity={[guestOrderEntry]} headingLevel={2} />
+    )
 
     // Assert
     expect(screen.getByText('Visitante')).toBeInTheDocument()
@@ -39,12 +41,24 @@ describe(CollaboratorActivity.name, () => {
 
   it('describes the row for screen readers via aria-label', () => {
     // Arrange
-    render(<CollaboratorActivity activity={[counterTicketEntry]} />)
+    render(
+      <CollaboratorActivity activity={[counterTicketEntry]} headingLevel={2} />
+    )
 
     // Act
     const row = screen.getByRole('listitem')
 
     // Assert
     expect(row).toHaveAccessibleName(/Pedido #.*Maria Silva.*Balcão/)
+  })
+
+  it('uses the heading level supplied by its composition', () => {
+    // Arrange / Act
+    render(<CollaboratorActivity activity={[]} headingLevel={3} />)
+
+    // Assert
+    expect(
+      screen.getByRole('heading', { name: 'Atividade recente', level: 3 })
+    ).toBeInTheDocument()
   })
 })

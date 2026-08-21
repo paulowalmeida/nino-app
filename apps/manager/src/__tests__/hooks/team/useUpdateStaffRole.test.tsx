@@ -15,7 +15,7 @@ const wrapWithClient = () => {
   const wrapper = ({ children }: { children: ReactNode }) => (
     <QueryClientProvider client={client}>{children}</QueryClientProvider>
   )
-  return wrapper
+  return { client, wrapper }
 }
 
 describe(useUpdateStaffRole.name, () => {
@@ -24,8 +24,10 @@ describe(useUpdateStaffRole.name, () => {
     vi.mocked(StaffService.updateStaffRole).mockResolvedValue(
       {} as unknown as StaffMember
     )
+    const { client, wrapper } = wrapWithClient()
+    const invalidateQueries = vi.spyOn(client, 'invalidateQueries')
     const { result } = renderHook(() => useUpdateStaffRole('tenant-1'), {
-      wrapper: wrapWithClient(),
+      wrapper,
     })
 
     // Act
@@ -38,6 +40,9 @@ describe(useUpdateStaffRole.name, () => {
       'user-1',
       'MANAGER'
     )
+    expect(invalidateQueries).toHaveBeenCalledWith({
+      queryKey: ['team', 'tenant-1'],
+    })
   })
 
   it('reports the error so the store can require an owner', async () => {
@@ -45,8 +50,9 @@ describe(useUpdateStaffRole.name, () => {
     vi.mocked(StaffService.updateStaffRole).mockRejectedValue(
       new Error('tenant needs at least one owner')
     )
+    const { wrapper } = wrapWithClient()
     const { result } = renderHook(() => useUpdateStaffRole('tenant-1'), {
-      wrapper: wrapWithClient(),
+      wrapper,
     })
 
     // Act

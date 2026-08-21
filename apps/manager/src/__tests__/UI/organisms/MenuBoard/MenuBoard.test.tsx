@@ -23,17 +23,23 @@ const secondItem: MenuItem = { ...item, id: 'item-2', name: 'Pastel' }
 
 type BoardHarnessProps = {
   items?: MenuItem[]
+  isFetchingNextPage?: boolean
+  initialIsSelecting?: boolean
+  initialSelectedIds?: Set<string>
   onRequestDelete?: (item: MenuItem) => void
   onRequestBulkDelete?: () => void
 }
 
 const BoardHarness = ({
   items = [item],
+  isFetchingNextPage = false,
+  initialIsSelecting = false,
+  initialSelectedIds = new Set<string>(),
   onRequestDelete = vi.fn(),
   onRequestBulkDelete = vi.fn(),
 }: BoardHarnessProps) => {
-  const [isSelecting, setIsSelecting] = useState(false)
-  const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set())
+  const [isSelecting, setIsSelecting] = useState(initialIsSelecting)
+  const [selectedIds, setSelectedIds] = useState(initialSelectedIds)
 
   const toggleSelection = (id: string) => {
     setSelectedIds((current) => {
@@ -55,7 +61,7 @@ const BoardHarness = ({
         board={{
           items,
           total: items.length,
-          isFetchingNextPage: false,
+          isFetchingNextPage,
           canReorder: true,
           loadMoreSentinelRef: vi.fn(),
           onRequestDelete,
@@ -138,5 +144,28 @@ describe(MenuBoard.name, () => {
     // Assert
     expect(screen.getByText('2 selecionados')).toBeInTheDocument()
     expect(screen.getByLabelText('Desmarcar todos')).toBeInTheDocument()
+  })
+
+  it('does not count a selection from another list as a loaded selection', () => {
+    // Arrange / Act
+    render(
+      <BoardHarness
+        initialIsSelecting
+        initialSelectedIds={new Set(['item-from-another-list'])}
+      />
+    )
+
+    // Assert
+    expect(screen.getByText('0 selecionados')).toBeInTheDocument()
+    expect(screen.getByLabelText('Selecionar todos')).toBeInTheDocument()
+    expect(screen.queryByLabelText('Desmarcar todos')).not.toBeInTheDocument()
+  })
+
+  it('announces when another page is loading', () => {
+    // Arrange / Act
+    render(<BoardHarness isFetchingNextPage />)
+
+    // Assert
+    expect(screen.getByText('Carregando mais itens…')).toBeInTheDocument()
   })
 })

@@ -3,10 +3,12 @@ import { useState } from 'react'
 import { EmptyState } from '@nino/ds/components/EmptyState'
 import { Input } from '@nino/ds/components/Input'
 import { Skeleton } from '@nino/ds/components/Skeleton'
+import { Box } from '@nino/ds/components/Box'
 import type { MenuItem } from '@custom_types/product/menu-item'
 import type { MenuSection } from '@custom_types/product/menu-section'
-import { ProductCard } from '@organisms/ProductCard/ProductCard'
 import { CategoryChips } from '@molecules/CategoryChips/CategoryChips'
+import { ProductCard } from '@molecules/ProductCard/ProductCard'
+import { ProductPreviewModal } from '@molecules/ProductPreviewModal/ProductPreviewModal'
 import {
   PRODUCT_GRID_SKELETON_CARDS,
   PRODUCT_GRID_SKELETON_TABS,
@@ -20,27 +22,18 @@ export type ProductGridProps = {
   onPick: (item: MenuItem) => void
 }
 
-/**
- * The counter's menu: large targets, price readable from a distance, and
- * categories as a filter — whoever is operating doesn't scroll to find the
- * item, they pick the tab and tap.
- */
 export const ProductGrid = ({
   sections,
   isPending,
   onPick,
 }: ProductGridProps) => {
   const [current, setCurrent] = useState<string | null>(null)
+  const [previewedItem, setPreviewedItem] = useState<MenuItem | null>(null)
   const [term, setTerm] = useState('')
 
   const active = current ?? sections[0]?.id ?? null
   const searching = term.trim().length > 0
 
-  /*
-   * While searching, categories step out and the whole menu becomes a
-   * single list: with sixty drinks nobody wants to remember which tab an
-   * item was registered under — they want to type "coke" and tap.
-   */
   const query = term.trim().toLowerCase()
   const searchResults = sections
     .flatMap(({ items: list }) => list)
@@ -48,35 +41,37 @@ export const ProductGrid = ({
     .filter(({ isActive }) => isActive)
 
   const renderGrid = (items: MenuItem[]) => (
-    <div className={`${styles.grid} ${styles.resultsTop}`}>
+    <Box className={`${styles.grid} ${styles.resultsTop}`}>
       {items.map((item, index) => (
-        <ProductCard key={item.id} item={item} index={index} onPick={onPick} />
+        <ProductCard
+          key={item.id}
+          item={item}
+          index={index}
+          onPick={onPick}
+          onPreviewStart={setPreviewedItem}
+          onPreviewEnd={() => setPreviewedItem(null)}
+        />
       ))}
-    </div>
+    </Box>
   )
 
-  /*
-   * Search and tabs stay drawn while loading: they don't depend on the
-   * request, and hiding them to bring them back later makes the whole tray
-   * jump half a screen mid-service.
-   */
   if (isPending) {
     return (
-      <div className={styles.wrap}>
+      <Box className={styles.wrap}>
         <Skeleton className={styles.skeletonSearch} />
 
-        <div className={styles.skeletonTabsRow}>
+        <Box direction="row" className={styles.skeletonTabsRow}>
           {PRODUCT_GRID_SKELETON_TABS.map((tab) => (
             <Skeleton key={tab} className={styles.skeletonTab} />
           ))}
-        </div>
+        </Box>
 
-        <div className={styles.grid}>
+        <Box className={styles.grid}>
           {PRODUCT_GRID_SKELETON_CARDS.map((card) => (
             <Skeleton key={card} className={styles.skeleton} />
           ))}
-        </div>
-      </div>
+        </Box>
+      </Box>
     )
   }
 
@@ -89,7 +84,7 @@ export const ProductGrid = ({
   }
 
   return (
-    <div className={styles.wrap}>
+    <Box className={styles.wrap}>
       <Input
         value={term}
         onChange={(event) => setTerm(event.target.value)}
@@ -121,6 +116,11 @@ export const ProductGrid = ({
           )}
         </>
       )}
-    </div>
+
+      <ProductPreviewModal
+        item={previewedItem}
+        onOpenChange={(open) => !open && setPreviewedItem(null)}
+      />
+    </Box>
   )
 }

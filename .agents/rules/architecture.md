@@ -133,13 +133,19 @@ Local React state is allowed only when it belongs exclusively to the Organism's 
 
 A Container is a Nino-specific application orchestration layer for one coherent semantic/functional region of a screen. It exists outside Atomic Design.
 
-A Container should be used when a region needs application integration that would otherwise bloat a Page or improperly couple an Organism to application/server state.
+A Container should be used when a region needs application integration that
+would otherwise bloat a Page or improperly couple an Organism to
+application/server state. It is also appropriate for a substantial,
+independently coherent Header, Content, or Footer region as defined by the
+Page Region Composition rule.
 
 **MUST:**
 - own one coherent screen-region responsibility;
 - compose Organisms, Molecules, and/or Atoms needed by that region;
-- obtain server/application data through approved Hooks/state boundaries;
-- convert integration results into presentation props, callbacks, and UI-state flags;
+- when its region needs server/application data, obtain it through approved
+  Hooks/state boundaries;
+- when it consumes integration, convert its results into presentation props,
+  callbacks, and UI-state flags;
 - keep transport and cache mechanics inside their authoritative Hook/Service layers;
 - use the `Container` suffix when represented by a component file.
 
@@ -157,7 +163,10 @@ A Container should be used when a region needs application integration that woul
 - become a generic dumping ground for unrelated Page logic;
 - own route-level governance that determines the screen as a whole.
 
-A Container is justified by **scoped orchestration**, not by file size. If a region is purely presentational, keep it in Atom/Molecule/Organism rather than introducing a Container.
+A Container is justified by **scoped orchestration or a substantial named Page
+region**, not by file size. A small purely presentational fragment without a
+Header, Content, or Footer responsibility belongs in Atom/Molecule/Organism,
+not in a Container.
 
 ### Page
 
@@ -183,6 +192,35 @@ A Page represents a concrete application route/context and owns that screen's go
 - pass Store Hooks, query Hooks, Services, or other integration interfaces into prohibited presentation layers.
 
 A Page's core question is **"which parts of this screen exist and how are they governed?"** A Container's core question is **"how does this coherent part of the screen obtain data and expose presentation-ready behavior?"**
+
+### Page Region Composition
+
+Before finalizing a Page's composition, identify its actual semantic regions in
+this order when they exist:
+
+```text
+Header  → screen context, navigation, identity, summary, and primary context
+Content → the screen's main task, sections, lists, panels, or tabs
+Footer  → page-specific closing actions, summary, or supplementary controls
+```
+
+These are responsibility boundaries, not automatic HTML elements or mandatory
+visual wrappers. A Page MUST NOT flatten substantial, independently coherent
+regions merely because they receive data from the same Page-level query.
+
+When a region has a stable screen-region responsibility, it MAY be represented
+by a named Container such as `FeatureHeaderContainer`,
+`FeatureContentContainer`, or `FeatureFooterContainer`. That Container MAY
+compose the presentation units that form the region and receive
+presentation-ready data from its Page when the query remains Page-level
+governance. If the region also needs application/server integration, the
+Container remains its narrowest authorized consumer.
+
+This does not authorize generic wrappers: a region Container MUST still name a
+real semantic region, own its composition, and give the Page a clearer macro
+structure. A `ContentContainer` that merely hides unrelated regions, or a
+Container that forwards one child without a region responsibility, is
+FORBIDDEN.
 
 ### Layout
 

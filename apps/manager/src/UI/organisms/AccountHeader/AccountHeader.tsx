@@ -1,4 +1,5 @@
 import { Avatar } from '@nino/ds/components/Avatar'
+import { Box } from '@nino/ds/components/Box'
 import { Heading } from '@nino/ds/components/Heading'
 import { Skeleton } from '@nino/ds/components/Skeleton'
 import { Text } from '@nino/ds/components/Text'
@@ -37,14 +38,20 @@ const factsOf = (profile: Profile): string[] => {
 }
 
 export const AccountHeader = ({ profile }: AccountHeaderProps) => (
-  <header className={`${motion.deal} ${styles.header}`}>
+  <Box
+    as="header"
+    direction="row"
+    align="center"
+    gap={{ mobile: 4, tablet: 5 }}
+    className={`${motion.deal} ${styles.header}`}
+  >
     <Avatar
       size="xl"
       fallback={profile ? initialsOf(profile.name) : undefined}
       className={styles.portrait}
     />
 
-    <div className={styles.identity}>
+    <Box gap={1.5} className={styles.identity}>
       {profile ? (
         <Heading level={1} size="2xl" className={styles.name}>
           {profile.name}
@@ -54,21 +61,27 @@ export const AccountHeader = ({ profile }: AccountHeaderProps) => (
       )}
 
       {profile ? (
-        <Text as="p" size="xs" color="faint" className={styles.byline}>
+        <Box direction="row" align="center" wrap className={styles.byline}>
           {factsOf(profile).map((fact, index) => (
-            <span key={fact} className={styles.fact}>
+            <Text
+              key={fact}
+              as="span"
+              size="xs"
+              color="faint"
+              className={styles.fact}
+            >
               {index > 0 && (
-                <span aria-hidden="true" className={styles.separator}>
+                <Text as="span" size="xs" color="faintest" aria-hidden>
                   ·
-                </span>
+                </Text>
               )}
               {fact}
-            </span>
+            </Text>
           ))}
-        </Text>
+        </Box>
       ) : (
         <Skeleton className={styles.bylineGhost} />
       )}
-    </div>
-  </header>
+    </Box>
+  </Box>
 )

@@ -1,22 +1,6 @@
 @reference "@nino/ds/globals.css";
 
-/*
- * Uma coluna só, como a ficha do cliente: o topo diz quem é a pessoa e o que
- * ela rendeu, e fica parado — só o painel da aba rola. Atividade e acesso
- * ficam atrás de abas porque 30 linhas de pedido empurrariam o resto pra
- * fora da tela no celular.
- */
 .page {
   @apply flex h-[calc(100dvh-3.5rem)] max-w-5xl flex-col p-4;
   @apply lg:h-dvh lg:p-10;
-}
-
-.panels {
-  @apply mt-6 flex min-h-0 flex-1 flex-col;
-}
-
-/* O painel ativo herda a altura que sobrou. O alvo é a parte do Ark, não a
-   classe do DS: hash de CSS Module não é API, `data-part` é. */
-.panels > [data-part='content']:not([hidden]) {
-  @apply flex min-h-0 flex-1 flex-col;
 }

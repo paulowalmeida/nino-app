@@ -10,11 +10,6 @@ export type DeleteItemDialogProps = {
   onClose: () => void
 }
 
-/**
- * Stays mounted and closes through `open`: removing it while open skips Ark's
- * exit teardown and can leave `pointer-events: none` on the body. Holding the
- * last item preserves its name through that exit animation.
- */
 export const DeleteItemDialog = ({
   item,
   isPending,

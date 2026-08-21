@@ -9,11 +9,6 @@ export type DeleteItemsDialogProps = {
   onClose: () => void
 }
 
-/**
- * Mirrors `DeleteItemDialog`: stays mounted, closes through `open`. Holding
- * the last non-empty selection keeps the count stable while the exit
- * animation plays, after `onClose` has already emptied `itemIds`.
- */
 export const DeleteItemsDialog = ({
   itemIds,
   isPending,

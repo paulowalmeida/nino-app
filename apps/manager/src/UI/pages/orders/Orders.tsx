@@ -1,4 +1,4 @@
-import { Flexbox } from '@nino/ds/components/Flexbox'
+import { Box } from '@nino/ds/components/Box'
 import { useEffect, useState } from 'react'
 import { useSearchParams } from 'react-router'
 
@@ -161,7 +161,7 @@ export const Orders = () => {
         description="Cada comanda mostra o próximo passo. Um toque move o pedido adiante."
       />
 
-      <Flexbox shrink={false} mb={3}>
+      <Box shrink={false} mb={3}>
         <Input
           type="search"
           value={term}
@@ -170,7 +170,7 @@ export const Orders = () => {
           className={styles.search}
           onChange={(event) => setTerm(event.target.value)}
         />
-      </Flexbox>
+      </Box>
 
       {isSearching ? (
         <p className={`${motion.unroll} ${styles.results}`} aria-live="polite">

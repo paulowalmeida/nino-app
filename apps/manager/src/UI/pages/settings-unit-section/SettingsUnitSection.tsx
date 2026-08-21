@@ -3,7 +3,7 @@ import { Link } from 'react-router'
 
 import { Button } from '@nino/ds/components/Button'
 import { EmptyState } from '@nino/ds/components/EmptyState'
-import { Flexbox } from '@nino/ds/components/Flexbox'
+import { Box } from '@nino/ds/components/Box'
 import { Heading } from '@nino/ds/components/Heading'
 import { Skeleton } from '@nino/ds/components/Skeleton'
 import { Text } from '@nino/ds/components/Text'
@@ -40,7 +40,7 @@ export const SettingsUnitSection = () => {
 
   return (
     <section className={card.panel}>
-      <Flexbox
+      <Box
         as="header"
         gap={3}
         align="start"
@@ -49,7 +49,7 @@ export const SettingsUnitSection = () => {
         mb={4}
         className={motion.unroll}
       >
-        <Flexbox direction="column">
+        <Box direction="column">
           <Heading level={2} size="xl">
             Lojas da empresa
           </Heading>
@@ -59,20 +59,20 @@ export const SettingsUnitSection = () => {
               ? `${units.length} em operação, sem limite no seu plano.`
               : `${units.length} de ${limit} inclusas no plano ${planName}.`}
           </Text>
-        </Flexbox>
+        </Box>
 
         {!isFull && (
           <Button asChild className={mergeClasses(motion.press, styles.add)}>
             <Link to={`/${tenantId}/unidades/nova`}>Abrir unidade</Link>
           </Button>
         )}
-      </Flexbox>
+      </Box>
 
       {units.length === 0 && (
         <EmptyState>Nenhuma loja cadastrada.</EmptyState>
       )}
 
-      <Flexbox as="ul" direction="column">
+      <Box as="ul" direction="column">
         {units.map(({ tenantId: id, tenantName, companyName }, index) => (
           <UnitRow
             key={id}
@@ -85,7 +85,7 @@ export const SettingsUnitSection = () => {
             onRemove={() => setConfirming({ id, name: tenantName })}
           />
         ))}
-      </Flexbox>
+      </Box>
 
       <RemoveUnitModal
         open={confirming !== null}

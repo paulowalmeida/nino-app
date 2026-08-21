@@ -1,5 +1,5 @@
 import { Button } from '@nino/ds/components/Button'
-import { Flexbox } from '@nino/ds/components/Flexbox'
+import { Box } from '@nino/ds/components/Box'
 import { FormField } from '@nino/ds/components/FormField'
 import { Grid } from '@nino/ds/components/Grid'
 import { Heading } from '@nino/ds/components/Heading'
@@ -49,17 +49,17 @@ export const PauseDurationModal = ({
       open={open}
       onOpenChange={onOpenChange}
       header={
-        <Flexbox align="center" gap={3}>
+        <Box align="center" gap={3}>
           <Stamp tone="warning" size="lg">
             <Icon name="pause" size="sm" />
           </Stamp>
           <Heading level={2} size="lg">
             Fechar por quanto tempo?
           </Heading>
-        </Flexbox>
+        </Box>
       }
       body={
-        <Flexbox direction="column" gap={5}>
+        <Box direction="column" gap={5}>
           <Text size="sm" color="muted">
             O cliente vê a loja fechada nesse período e não consegue pedir.
           </Text>
@@ -97,7 +97,7 @@ export const PauseDurationModal = ({
               )
             })}
           </Grid>
-        </Flexbox>
+        </Box>
       }
       footer={
         <Button variant="ghost" onClick={onCancel}>

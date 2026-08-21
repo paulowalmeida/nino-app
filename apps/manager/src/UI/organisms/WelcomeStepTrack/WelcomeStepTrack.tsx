@@ -1,6 +1,6 @@
 import { Fragment } from 'react'
 
-import { Flexbox } from '@nino/ds/components/Flexbox'
+import { Box } from '@nino/ds/components/Box'
 import { Text } from '@nino/ds/components/Text'
 import type { WelcomePanel } from '@constants/welcome.constants'
 
@@ -12,13 +12,13 @@ type WelcomeStepTrackProps = {
 }
 
 export const WelcomeStepTrack = ({ panels, index }: WelcomeStepTrackProps) => (
-  <Flexbox as="ol" direction="row" className={styles.track}>
+  <Box as="ol" direction="row" className={styles.track}>
     {panels.map(({ leg }, position) => (
       <Fragment key={leg}>
         {position > 0 && (
           <span className={styles.stepLine} aria-hidden="true" />
         )}
-        <Flexbox
+        <Box
           as="li"
           direction="row"
           className={styles.step}
@@ -28,8 +28,8 @@ export const WelcomeStepTrack = ({ panels, index }: WelcomeStepTrackProps) => (
           <Text as="span" className={styles.stepLabel}>
             {leg}
           </Text>
-        </Flexbox>
+        </Box>
       </Fragment>
     ))}
-  </Flexbox>
+  </Box>
 )

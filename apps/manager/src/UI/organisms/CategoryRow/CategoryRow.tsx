@@ -1,4 +1,4 @@
-import { Flexbox } from '@nino/ds/components/Flexbox'
+import { Box } from '@nino/ds/components/Box'
 import { useState, type AnimationEvent } from 'react'
 
 import { Reorder, useDragControls } from 'framer-motion'
@@ -41,12 +41,6 @@ export const CategoryRow = ({
   const [draft, setDraft] = useState(category.name)
   const empty = category.count === 0
 
-  /**
-   * A entrada é uma animação CSS com `fill-mode: both`, então o `transform`
-   * final dela fica grudado no elemento e ganha do `transform` inline que o
-   * framer usa para mover a linha — sem soltar a classe no fim, o arraste
-   * reordena sem animar nada.
-   */
   const handleEntranceEnd = (event: AnimationEvent<HTMLLIElement>) => {
     if (event.target === event.currentTarget) setIsEntering(false)
   }
@@ -56,7 +50,6 @@ export const CategoryRow = ({
     setDraft(category.name)
   }
 
-  /* Em falha o formulário fica aberto com o texto digitado; o toast explica. */
   const submit = async () => {
     const name = draft.trim()
     if (!name || name === category.name) return closeEditing()
@@ -64,7 +57,6 @@ export const CategoryRow = ({
       await onRename(name)
       setEditing(false)
     } catch {
-      /* nada a fazer aqui: o nome antigo continua valendo na lista */
     }
   }
 
@@ -110,8 +102,6 @@ export const CategoryRow = ({
         </form>
       ) : (
         <>
-          {/* a alça vem antes do nome: é a ordem em que a lista aparece no
-              app do cliente que se está mexendo aqui */}
           <Button
             variant="ghost"
             size="icon"
@@ -129,7 +119,7 @@ export const CategoryRow = ({
             </span>
           </div>
 
-          <Flexbox direction="row" gap={1} align="center" shrink={false}>
+          <Box direction="row" gap={1} align="center" shrink={false}>
             <Button
               variant="ghost"
               size="icon"
@@ -150,7 +140,7 @@ export const CategoryRow = ({
             >
               <Icon name="trash" />
             </Button>
-          </Flexbox>
+          </Box>
         </>
       )}
     </Reorder.Item>

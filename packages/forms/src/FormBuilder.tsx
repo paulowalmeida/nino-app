@@ -39,7 +39,7 @@ export function FormBuilder({
   const { control, handleSubmit, formState, reset } = useForm({ defaultValues })
 
   return (
-    /* Not `Flexbox as="form"`: it types its props as a generic
+    /* Not `Box as="form"`: it types its props as a generic
      * `HTMLAttributes`, so `noValidate` cannot reach the element. And that
      * attribute is the point — the browser's own validation stays off so the
      * messages the schema declares are the ones that show, in the app's

@@ -24,7 +24,8 @@ describe(useUpdateStaffEmail.name, () => {
     vi.mocked(StaffService.updateStaffEmail).mockResolvedValue(
       {} as unknown as CredentialInfo
     )
-    const { wrapper } = wrapWithClient()
+    const { client, wrapper } = wrapWithClient()
+    const invalidateQueries = vi.spyOn(client, 'invalidateQueries')
     const { result } = renderHook(() => useUpdateStaffEmail('tenant-1'), {
       wrapper,
     })
@@ -39,6 +40,9 @@ describe(useUpdateStaffEmail.name, () => {
       'user-1',
       'ana@nino.delivery'
     )
+    expect(invalidateQueries).toHaveBeenCalledWith({
+      queryKey: ['team', 'tenant-1'],
+    })
   })
 
   it('surfaces the failure without a toast for the caller to render inline', async () => {

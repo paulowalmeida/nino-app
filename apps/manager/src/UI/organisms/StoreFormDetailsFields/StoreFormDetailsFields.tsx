@@ -1,4 +1,4 @@
-import { Flexbox } from '@nino/ds/components/Flexbox'
+import { Box } from '@nino/ds/components/Box'
 import { Controller } from 'react-hook-form'
 import type {
   Control,
@@ -44,7 +44,7 @@ export const StoreFormDetailsFields = ({
   }
 
   return (
-    <Flexbox as="section" direction="column" gap={4}>
+    <Box as="section" direction="column" gap={4}>
       <p className={`${motion.rise} ${styles.groupTitle}`}>A loja</p>
 
       <div className={motion.rise} style={riseDelay(180)}>
@@ -65,7 +65,7 @@ export const StoreFormDetailsFields = ({
           helperText="É o link que seus clientes vão acessar"
           error={errors.slug?.message}
         >
-          <Flexbox gap={1.5} align="center">
+          <Box gap={1.5} align="center">
             <Input
               placeholder="lanchonete-do-ze"
               {...register('slug', {
@@ -79,7 +79,7 @@ export const StoreFormDetailsFields = ({
               })}
             />
             <span className={styles.slugPrefix}>.dev.nino.delivery</span>
-          </Flexbox>
+          </Box>
         </FormField>
       </div>
 
@@ -101,6 +101,6 @@ export const StoreFormDetailsFields = ({
           />
         </FormField>
       </div>
-    </Flexbox>
+    </Box>
   )
 }

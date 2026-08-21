@@ -1,5 +1,5 @@
 import { CountUp } from '@nino/ds/components/CountUp'
-import { Flexbox } from '@nino/ds/components/Flexbox'
+import { Box } from '@nino/ds/components/Box'
 import { Grid } from '@nino/ds/components/Grid'
 import { Skeleton } from '@nino/ds/components/Skeleton'
 import { Text } from '@nino/ds/components/Text'
@@ -26,7 +26,7 @@ export const SalesFiguresGrid = ({
     mb={{ mobile: 4, desktop: 8 }}
   >
     {REPORTS_FIGURES.map(({ key, label, money }, index) => (
-      <Flexbox
+      <Box
         key={key}
         gap={1}
         className={`${motion.settle} ${styles.figure}`}
@@ -46,7 +46,7 @@ export const SalesFiguresGrid = ({
         <Text as="span" className={styles.label}>
           {label}
         </Text>
-      </Flexbox>
+      </Box>
     ))}
   </Grid>
 )

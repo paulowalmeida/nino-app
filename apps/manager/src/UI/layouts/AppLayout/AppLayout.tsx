@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { Outlet } from 'react-router'
 
 import { Button } from '@nino/ds/components/Button'
-import { Flexbox } from '@nino/ds/components/Flexbox'
+import { Box } from '@nino/ds/components/Box'
 import { Icon } from '@nino/ds/components/Icon'
 import { Text } from '@nino/ds/components/Text'
 import { Sidebar } from './Sidebar/Sidebar'
@@ -53,8 +53,8 @@ export const AppLayout = () => {
   }
 
   return (
-    <Flexbox direction="row" className={styles.shell}>
-      <Flexbox as="header" direction="row" className={styles.topbar}>
+    <Box direction="row" className={styles.shell}>
+      <Box as="header" direction="row" className={styles.topbar}>
         <Button
           size="icon"
           variant="ghost"
@@ -67,7 +67,7 @@ export const AppLayout = () => {
         <Text as="span" className={styles.storeName}>
           {tenant?.tenantName}
         </Text>
-      </Flexbox>
+      </Box>
 
       <Sidebar
         isOpen={menuOpen}
@@ -91,6 +91,6 @@ export const AppLayout = () => {
       >
         <Outlet />
       </main>
-    </Flexbox>
+    </Box>
   )
 }

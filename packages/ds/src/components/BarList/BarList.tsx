@@ -1,6 +1,6 @@
 import { HTMLAttributes, ReactNode } from 'react'
 
-import { Flexbox } from '@ds/components/Flexbox/Flexbox'
+import { Box } from '@ds/components/Box/Box'
 import { Text } from '@ds/components/Text/Text'
 
 import styles from './BarList.module.css'
@@ -48,9 +48,9 @@ export function BarList({ items, max, className, ...props }: BarListProps) {
   const ceiling = max ?? Math.max(...items.map(({ value }) => value))
 
   return (
-    <Flexbox as="ol" gap={2} className={className} {...props}>
+    <Box as="ol" gap={2} className={className} {...props}>
       {items.map(({ id, label, value, display }) => (
-        <Flexbox
+        <Box
           as="li"
           key={id}
           direction="row"
@@ -77,8 +77,8 @@ export function BarList({ items, max, className, ...props }: BarListProps) {
           >
             {display ?? value}
           </Text>
-        </Flexbox>
+        </Box>
       ))}
-    </Flexbox>
+    </Box>
   )
 }

@@ -1,7 +1,7 @@
 import { useState } from 'react'
 
 import { Button } from '@nino/ds/components/Button'
-import { Flexbox } from '@nino/ds/components/Flexbox'
+import { Box } from '@nino/ds/components/Box'
 import { Icon } from '@nino/ds/components/Icon'
 import { Skeleton } from '@nino/ds/components/Skeleton'
 import { Text } from '@nino/ds/components/Text'
@@ -45,7 +45,7 @@ export const PauseSwitch = ({ tenantId, timezone }: PauseSwitchProps) => {
 
   if (pause.isPaused) {
     return (
-      <Flexbox
+      <Box
         as="section"
         wrap
         align="center"
@@ -53,7 +53,7 @@ export const PauseSwitch = ({ tenantId, timezone }: PauseSwitchProps) => {
         gap={3}
         className={`${motion.settle} ${styles.paused}`}
       >
-        <Flexbox className={styles.pausedSummary}>
+        <Box className={styles.pausedSummary}>
           <Text as="p" className={styles.title}>
             {until ? `Fechada até ${until}` : 'Fechada até você reabrir'}
           </Text>
@@ -61,7 +61,7 @@ export const PauseSwitch = ({ tenantId, timezone }: PauseSwitchProps) => {
             {pause.pauseReason ||
               'O cliente vê a loja fechada e não consegue pedir.'}
           </Text>
-        </Flexbox>
+        </Box>
         <Button
           size="sm"
           loading={resume.isPending}
@@ -70,7 +70,7 @@ export const PauseSwitch = ({ tenantId, timezone }: PauseSwitchProps) => {
         >
           Reabrir agora
         </Button>
-      </Flexbox>
+      </Box>
     )
   }
 
@@ -85,7 +85,7 @@ export const PauseSwitch = ({ tenantId, timezone }: PauseSwitchProps) => {
   }
 
   return (
-    <Flexbox as="section">
+    <Box as="section">
       <Button
         variant="warning"
         className={`${motion.press} ${styles.trigger} w-3xs`}
@@ -107,6 +107,6 @@ export const PauseSwitch = ({ tenantId, timezone }: PauseSwitchProps) => {
         isPending={doPause.isPending}
         pendingMinutes={doPause.variables?.minutes}
       />
-    </Flexbox>
+    </Box>
   )
 }

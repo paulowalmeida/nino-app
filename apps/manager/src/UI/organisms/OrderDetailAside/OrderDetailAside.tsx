@@ -1,4 +1,4 @@
-import { Flexbox } from '@nino/ds/components/Flexbox'
+import { Box } from '@nino/ds/components/Box'
 import { Button } from '@nino/ds/components/Button'
 import { Textarea } from '@nino/ds/components/Textarea'
 import { OrderTimeline } from '@organisms/OrderTimeline/OrderTimeline'
@@ -146,7 +146,7 @@ export const OrderDetailAside = ({
                 placeholder="O cliente vê este motivo"
                 onChange={(event) => onReasonChange(event.target.value)}
               />
-              <Flexbox gap={2} wrap>
+              <Box gap={2} wrap>
                 <Button
                   size="sm"
                   loading={isAdvancing}
@@ -158,7 +158,7 @@ export const OrderDetailAside = ({
                 <Button size="sm" variant="ghost" onClick={onAbortCancel}>
                   Voltar
                 </Button>
-              </Flexbox>
+              </Box>
             </div>
           )}
         </section>

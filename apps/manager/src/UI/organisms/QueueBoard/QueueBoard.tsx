@@ -13,7 +13,7 @@ import type { OrderStage } from '@custom_types/order/order-stage'
 import styles from './QueueBoard.module.css'
 import motion from '@styles/motion.module.css'
 import tile from '@styles/statTile.module.css'
-import { Flexbox } from '@ds/components/Flexbox/Flexbox'
+import { Box } from '@ds/components/Box/Box'
 
 const sumByKeys = (summary: OrderQueueSummary | undefined, ...keys: string[]) =>
   keys.reduce(
@@ -70,7 +70,7 @@ export const QueueBoard = ({ tenantId }: QueueBoardProps) => {
     <section aria-label="Fila de pedidos" className='mb-8'>
       <Eyebrow className={`${motion.unroll} mb-3`}>Agora na loja</Eyebrow>
 
-      <Flexbox className={styles.board}>
+      <Box className={styles.board}>
         {tiles.map(({ label, value, stage, urgent }, index) => (
           <Card
             key={label}
@@ -99,7 +99,7 @@ export const QueueBoard = ({ tenantId }: QueueBoardProps) => {
             </Link>
           </Card>
         ))}
-      </Flexbox>
+      </Box>
 
       {isIdle && (
         <Text as="p" className={`${motion.unroll} ${styles.idle}`}>

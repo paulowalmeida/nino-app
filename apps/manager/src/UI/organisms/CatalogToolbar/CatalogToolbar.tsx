@@ -1,4 +1,4 @@
-import { Flexbox } from '@nino/ds/components/Flexbox'
+import { Box } from '@nino/ds/components/Box'
 import { Input } from '@nino/ds/components/Input'
 import { CatalogActions } from '@molecules/CatalogActions/CatalogActions'
 
@@ -15,7 +15,7 @@ export const CatalogToolbar = ({
   onTermChange,
   canManageCategories,
 }: CatalogToolbarProps) => (
-  <Flexbox
+  <Box
     direction={{ mobile: 'column', desktop: 'row' }}
     gap={{ mobile: 2, desktop: 4 }}
     align={{ desktop: 'center' }}
@@ -32,5 +32,5 @@ export const CatalogToolbar = ({
     />
 
     {canManageCategories && <CatalogActions />}
-  </Flexbox>
+  </Box>
 )

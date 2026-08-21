@@ -3,7 +3,7 @@ import { Link } from 'react-router'
 
 import { Badge } from '@nino/ds/components/Badge'
 import { Button } from '@nino/ds/components/Button'
-import { Flexbox } from '@nino/ds/components/Flexbox'
+import { Box } from '@nino/ds/components/Box'
 import { ListRow } from '@nino/ds/components/ListRow'
 import { Text } from '@nino/ds/components/Text'
 import { mergeClasses } from '@nino/ds/mergeClasses'
@@ -32,7 +32,7 @@ export const UnitRow = ({
 }: UnitRowProps) => (
   <ListRow gap={3} padding={2} wrap className={motion.deal} style={delay}>
     <Link to={to} className={mergeClasses(motion.lift, styles.unit)}>
-      <Flexbox align="center" gap={2} wrap>
+      <Box align="center" gap={2} wrap>
         <Text as="span" size="sm" weight="semibold">
           {name}
         </Text>
@@ -44,7 +44,7 @@ export const UnitRow = ({
         )}
 
         {isMain && <Badge size="sm">matriz</Badge>}
-      </Flexbox>
+      </Box>
 
       <Text as="span" size="xs" color="faint">
         {companyName}

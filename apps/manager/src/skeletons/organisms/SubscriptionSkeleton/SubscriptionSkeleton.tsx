@@ -1,5 +1,5 @@
 import { Card } from '@nino/ds/components/Card'
-import { Flexbox } from '@nino/ds/components/Flexbox'
+import { Box } from '@nino/ds/components/Box'
 import { Skeleton } from '@nino/ds/components/Skeleton'
 import { ACCOUNT_SUBSCRIPTION_GHOST_FACTS } from '@constants/account.constants'
 
@@ -12,23 +12,23 @@ export const SubscriptionSkeleton = () => (
     </p>
 
     <Card>
-      <Flexbox
+      <Box
         wrap
         align="end"
         justify="between"
         gap={3}
         className={styles.plan}
       >
-        <Flexbox>
+        <Box>
           <Skeleton variant="text" className={styles.ghostPlanLabel} />
           <Skeleton variant="text" className={styles.ghostPlanName} />
-        </Flexbox>
+        </Box>
         <Skeleton variant="text" className={styles.ghostPrice} />
-      </Flexbox>
+      </Box>
 
       <dl className={styles.facts}>
         {ACCOUNT_SUBSCRIPTION_GHOST_FACTS.map((fact) => (
-          <Flexbox
+          <Box
             key={fact}
             align="baseline"
             justify="between"
@@ -37,7 +37,7 @@ export const SubscriptionSkeleton = () => (
           >
             <Skeleton variant="text" className={styles.ghostFactLabel} />
             <Skeleton variant="text" className={styles.ghostFactValue} />
-          </Flexbox>
+          </Box>
         ))}
       </dl>
     </Card>

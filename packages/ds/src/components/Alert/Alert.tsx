@@ -1,6 +1,6 @@
 import { HTMLAttributes } from 'react'
 
-import { Flexbox } from '@ds/components/Flexbox/Flexbox'
+import { Box } from '@ds/components/Box/Box'
 import { Icon } from '@ds/components/Icon/Icon'
 import { Stamp, StampTone } from '@ds/components/Stamp/Stamp'
 import { Text } from '@ds/components/Text/Text'
@@ -57,7 +57,7 @@ export function Alert({
       <Stamp size="md" tone={stampTones[variant]}>
         <Icon name={`status-${variant}`} size="sm" />
       </Stamp>
-      <Flexbox gap={1} className={styles.textStack}>
+      <Box gap={1} className={styles.textStack}>
         {title && (
           <Text
             size="sm"
@@ -73,7 +73,7 @@ export function Alert({
             {children}
           </Text>
         )}
-      </Flexbox>
+      </Box>
     </div>
   )
 }

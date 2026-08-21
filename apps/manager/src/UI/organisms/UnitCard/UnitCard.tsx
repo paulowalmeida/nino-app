@@ -1,7 +1,7 @@
 import { Badge } from '@nino/ds/components/Badge'
 import { Button } from '@nino/ds/components/Button'
 import { ColorPicker } from '@nino/ds/components/ColorPicker'
-import { Flexbox } from '@nino/ds/components/Flexbox'
+import { Box } from '@nino/ds/components/Box'
 import { FormField } from '@nino/ds/components/FormField'
 import { Heading } from '@nino/ds/components/Heading'
 import { Input } from '@nino/ds/components/Input'
@@ -83,7 +83,7 @@ export const UnitCard = ({
 
   return (
     <section className={styles.panel}>
-      <Flexbox as="header" gap={3} align="start" justify="between" wrap mb={4} className={motion.unroll}>
+      <Box as="header" gap={3} align="start" justify="between" wrap mb={4} className={motion.unroll}>
         <div>
           <Heading level={2} size="xl">
             {unit?.customName || 'Esta unidade'}
@@ -109,7 +109,7 @@ export const UnitCard = ({
             Tornar matriz
           </Button>
         )}
-      </Flexbox>
+      </Box>
 
       <div className={local.fields}>
         <FormField label="Nome da unidade">

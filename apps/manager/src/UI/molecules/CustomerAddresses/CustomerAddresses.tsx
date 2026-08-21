@@ -1,5 +1,5 @@
 import { EmptyState } from '@nino/ds/components/EmptyState'
-import { Flexbox } from '@nino/ds/components/Flexbox'
+import { Box } from '@nino/ds/components/Box'
 import { ListRow } from '@nino/ds/components/ListRow'
 import { ScrollArea } from '@nino/ds/components/ScrollArea'
 import { AddressLines } from '@molecules/AddressLines/AddressLines'
@@ -24,7 +24,7 @@ export const CustomerAddresses = ({ addresses }: CustomerAddressesProps) => {
 
   return (
     <ScrollArea className={styles.scroll}>
-      <Flexbox as="ul" gap={0}>
+      <Box as="ul" gap={0}>
         {primaryFirst(addresses).map((address, index) => (
           <ListRow
             key={address.id}
@@ -34,7 +34,7 @@ export const CustomerAddresses = ({ addresses }: CustomerAddressesProps) => {
             <AddressLines address={address} />
           </ListRow>
         ))}
-      </Flexbox>
+      </Box>
     </ScrollArea>
   )
 }

@@ -1,4 +1,4 @@
-import { Flexbox } from '@nino/ds/components/Flexbox'
+import { Box } from '@nino/ds/components/Box'
 
 import { TallyCard } from '@molecules/TallyCard/TallyCard'
 import { PAYMENT_METHOD_LABEL } from '@constants/order.constants'
@@ -43,7 +43,7 @@ export const DayTally = ({ tenantId, timezone }: DayTallyProps) => {
     <section aria-label="O dia até agora" className="mb-8">
       <Eyebrow className="mb-3">O dia até agora</Eyebrow>
 
-      <Flexbox className={styles.tally}>
+      <Box className={styles.tally}>
         <TallyCard
           to="../pedidos?etapa=closed"
           ariaLabel="Ver os pedidos fechados"
@@ -72,7 +72,7 @@ export const DayTally = ({ tenantId, timezone }: DayTallyProps) => {
           skeletonClassName={styles.skeletonAverage}
           delay={140}
         />
-      </Flexbox>
+      </Box>
 
       {isPending && <DayTallySkeleton />}
 

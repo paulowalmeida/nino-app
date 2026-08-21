@@ -1,4 +1,4 @@
-import { Flexbox } from '@nino/ds/components/Flexbox'
+import { Box } from '@nino/ds/components/Box'
 import { Skeleton } from '@nino/ds/components/Skeleton'
 import { Breadcrumb } from '@atoms/Breadcrumb/Breadcrumb'
 
@@ -19,7 +19,7 @@ export const CustomerDetailSkeleton = () => (
   <div className={styles.page}>
     <Breadcrumb trail={[{ label: 'Clientes', to: '..' }, { label: '—' }]} />
 
-    <Flexbox
+    <Box
       as="header"
       direction="row"
       gap={4}
@@ -33,7 +33,7 @@ export const CustomerDetailSkeleton = () => (
         <Skeleton className={styles.ghostName} />
         <Skeleton className={styles.ghostCadence} />
       </div>
-    </Flexbox>
+    </Box>
 
     <section aria-label="Resumo" className={summaryStyles.strip}>
       <dl className={summaryStyles.facts}>
@@ -55,11 +55,11 @@ export const CustomerDetailSkeleton = () => (
     </div>
 
     <div className={styles.panels}>
-      <Flexbox direction="row" gap={2}>
+      <Box direction="row" gap={2}>
         {GHOST_TABS.map((tab) => (
           <Skeleton key={tab} className={styles.ghostTab} />
         ))}
-      </Flexbox>
+      </Box>
 
       <ul>
         {GHOST_ORDERS.map((order) => (

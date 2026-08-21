@@ -2,7 +2,7 @@ import { useState } from 'react'
 
 import { Alert } from '@nino/ds/components/Alert'
 import { EmptyState } from '@nino/ds/components/EmptyState'
-import { Flexbox } from '@nino/ds/components/Flexbox'
+import { Box } from '@nino/ds/components/Box'
 import { DeleteItemDialog } from '@organisms/DeleteItemDialog/DeleteItemDialog'
 import { DeleteItemsDialog } from '@organisms/DeleteItemsDialog/DeleteItemsDialog'
 import { MenuBoard } from '@organisms/MenuBoard/MenuBoard'
@@ -29,6 +29,10 @@ export const CatalogBoardContainer = ({
   const catalogBoard = useCatalogBoard(tenantId, categoryId, search)
   const [isSelecting, setIsSelecting] = useState(false)
   const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set())
+  const [previousSelectionScope, setPreviousSelectionScope] = useState({
+    categoryId,
+    search,
+  })
   const [itemPendingDelete, setItemPendingDelete] = useState<MenuItem | null>(
     null
   )
@@ -37,6 +41,15 @@ export const CatalogBoardContainer = ({
     useDeleteMenuItem(tenantId, itemPendingDelete?.id ?? '')
   const { mutateAsync: deleteItems, isPending: isDeletingItems } =
     useDeleteMenuItems(tenantId)
+
+  if (
+    previousSelectionScope.categoryId !== categoryId ||
+    previousSelectionScope.search !== search
+  ) {
+    setPreviousSelectionScope({ categoryId, search })
+    setIsSelecting(false)
+    setSelectedIds(new Set())
+  }
 
   const handleToggleSelection = (id: string) => {
     setSelectedIds((current) => {
@@ -48,10 +61,12 @@ export const CatalogBoardContainer = ({
   }
 
   const handleToggleAllSelection = () => {
+    const itemIds = catalogBoard.items.map(({ id }) => id)
+
     setSelectedIds((current) =>
-      current.size === catalogBoard.items.length
+      itemIds.length > 0 && itemIds.every((id) => current.has(id))
         ? new Set()
-        : new Set(catalogBoard.items.map(({ id }) => id))
+        : new Set(itemIds)
     )
   }
 
@@ -89,7 +104,7 @@ export const CatalogBoardContainer = ({
 
   return (
     <>
-      <Flexbox className={styles.scroller}>
+      <Box className={styles.scroller}>
         {catalogBoard.isPending && <CatalogBoardSkeleton />}
 
         {catalogBoard.isError && (
@@ -132,7 +147,7 @@ export const CatalogBoardContainer = ({
             }}
           />
         )}
-      </Flexbox>
+      </Box>
 
       <DeleteItemDialog
         item={itemPendingDelete}

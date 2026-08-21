@@ -15,10 +15,10 @@ import {
 } from '@ds/lib/responsive/responsive'
 import { MarginProps, marginToClasses } from '@ds/lib/spacing/spacing'
 
-type FlexboxDirection = 'column' | 'row'
-type FlexboxJustify = 'start' | 'center' | 'end' | 'between' | 'around'
+type BoxDirection = 'column' | 'row'
+type BoxJustify = 'start' | 'center' | 'end' | 'between' | 'around'
 
-type FlexboxTag =
+type BoxTag =
   | 'div'
   | 'section'
   | 'header'
@@ -34,18 +34,18 @@ type FlexboxTag =
   | 'fieldset'
   | 'label'
 
-type FlexboxProps = HTMLAttributes<HTMLElement> &
+type BoxProps = HTMLAttributes<HTMLElement> &
   MarginProps & {
     /**
      * Tag to render. Default: `div` — reach for `section`, `header` or `ul`
      * when the block has a meaning a screen reader should announce
      */
-    as?: FlexboxTag
+    as?: BoxTag
     /**
      * `column` (default) stacks downward, `row` lines up side by side.
      * Accepts `{ mobile, tablet, desktop }`
      */
-    direction?: Responsive<FlexboxDirection>
+    direction?: Responsive<BoxDirection>
     /**
      * Space between children, from the DS spacing scale. Accepts `{ mobile,
      * tablet, desktop }`
@@ -54,7 +54,7 @@ type FlexboxProps = HTMLAttributes<HTMLElement> &
     /** Cross-axis alignment. Accepts `{ mobile, tablet, desktop }` */
     align?: Responsive<AlignValue>
     /** Main-axis distribution. Accepts `{ mobile, tablet, desktop }` */
-    justify?: Responsive<FlexboxJustify>
+    justify?: Responsive<BoxJustify>
     /** Lets children flow onto the next line when they run out of room */
     wrap?: boolean
     /** Lets the stack take the free space of its own parent */
@@ -108,17 +108,17 @@ const justifyTablet = {
  * gap-…">` that every screen was repeating.
  *
  * ```tsx
- * <Flexbox gap={1.5}>
+ * <Box gap={1.5}>
  *   <Heading level={1}>Cardápio</Heading>
  *   <Text color="subtle">Desligue o que acabou.</Text>
- * </Flexbox>
+ * </Box>
  *
- * <Flexbox as="header" direction="row" justify="between" align="center">
+ * <Box as="header" direction="row" justify="between" align="center">
  *
  * - `m` — Margin on every side. `mt`, `mb`, `mx` and `my` narrow it to one axis or side. Accepts `{ mobile, desktop }`
  * ```
  */
-export function Flexbox({
+export function Box({
   as: Component = 'div',
   direction = 'column',
   gap,
@@ -135,7 +135,7 @@ export function Flexbox({
   className,
   children,
   ...props
-}: FlexboxProps) {
+}: BoxProps) {
   return (
     <Component
       className={mergeClasses(

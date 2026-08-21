@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router'
 
-import { Flexbox } from '@nino/ds/components/Flexbox'
+import { Box } from '@nino/ds/components/Box'
 import { Heading } from '@nino/ds/components/Heading'
 import { Text } from '@nino/ds/components/Text'
 import type { Membership } from '@custom_types/auth/membership'
@@ -20,8 +20,8 @@ export const StoreSelection = () => {
   }
 
   return (
-    <Flexbox direction="row" className={styles.shell}>
-      <Flexbox
+    <Box direction="row" className={styles.shell}>
+      <Box
         direction="column"
         className={`${motion.settle} ${styles.panel}`}
       >
@@ -32,7 +32,7 @@ export const StoreSelection = () => {
           Escolha qual você quer gerenciar
         </Text>
 
-        <Flexbox direction="column" gap={3} mt={8}>
+        <Box direction="column" gap={3} mt={8}>
           {companies.map(({ companyId, companyName, units }, index) => (
             <CompanyPickCard
               key={companyId}
@@ -42,8 +42,8 @@ export const StoreSelection = () => {
               onClick={handleSelectCompany(units)}
             />
           ))}
-        </Flexbox>
-      </Flexbox>
-    </Flexbox>
+        </Box>
+      </Box>
+    </Box>
   )
 }

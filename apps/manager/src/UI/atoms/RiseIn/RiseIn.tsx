@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react'
 
-import { Flexbox } from '@nino/ds/components/Flexbox'
+import { Box } from '@nino/ds/components/Box'
 
 import { riseDelay } from '@utils/rise-delay'
 
@@ -21,12 +21,12 @@ export const RiseIn = ({
   className,
   children,
 }: RiseInProps) => (
-  <Flexbox
+  <Box
     as={as}
     direction="column"
     className={className ? `${motion.rise} ${className}` : motion.rise}
     style={riseDelay(delay)}
   >
     {children}
-  </Flexbox>
+  </Box>
 )

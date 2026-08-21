@@ -1,7 +1,7 @@
 import { Outlet } from 'react-router'
 
 import { NinoLogo } from '@atoms/NinoLogo/NinoLogo'
-import { Flexbox } from '@nino/ds/components/Flexbox'
+import { Box } from '@nino/ds/components/Box'
 import { Heading } from '@nino/ds/components/Heading'
 import { NinoMascot } from '@nino/ds/components/NinoMascot'
 import { Text } from '@nino/ds/components/Text'
@@ -21,19 +21,19 @@ export const AuthLayout = () => (
 
       <div className={styles.glowBottom} aria-hidden="true" />
 
-      <Flexbox direction="row" className={styles.brandLogo}>
+      <Box direction="row" className={styles.brandLogo}>
         <NinoLogo tone="light" />
-      </Flexbox>
+      </Box>
 
-      <Flexbox align="center" justify="center" className={styles.mascotArea}>
-        <Flexbox direction="column" className={styles.mascotStage}>
+      <Box align="center" justify="center" className={styles.mascotArea}>
+        <Box direction="column" className={styles.mascotStage}>
           <div className={styles.mascotHalo} aria-hidden="true" />
 
           <NinoMascot className={mascot} />
-        </Flexbox>
-      </Flexbox>
+        </Box>
+      </Box>
 
-      <Flexbox direction="column" className={styles.tagline}>
+      <Box direction="column" className={styles.tagline}>
         <Heading level={2} size="2xl" className={styles.taglineTitle}>
           Gerencie sua loja,
           <br />
@@ -45,26 +45,26 @@ export const AuthLayout = () => (
         <Text size="lg" mt={3} className={styles.taglineText}>
           Pedidos, cardápio, vendas e faturamento — tudo num só lugar.
         </Text>
-      </Flexbox>
+      </Box>
     </aside>
 
-    <Flexbox
+    <Box
       as="main"
       align="center"
       justify="center"
       className={styles.formPanel}
     >
-      <Flexbox direction="column" className={styles.formCard}>
-        <Flexbox
+      <Box direction="column" className={styles.formCard}>
+        <Box
           direction="row"
           justify="center"
           className={styles.mobileBrand}
         >
           <NinoLogo size="md" mark={<NinoMascot className={mobileMascot} />} />
-        </Flexbox>
+        </Box>
 
         <Outlet />
-      </Flexbox>
-    </Flexbox>
+      </Box>
+    </Box>
   </div>
 )

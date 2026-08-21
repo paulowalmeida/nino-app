@@ -1,0 +1,13 @@
+@reference "@nino/ds/globals.css";
+
+.removal {
+  @apply mt-auto border-t border-border/60 pt-4;
+}
+
+.description {
+  @apply max-w-prose;
+}
+
+.button {
+  @apply text-danger hover:bg-danger-surface hover:text-danger-hover;
+}

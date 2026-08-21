@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-import { Flexbox } from '@nino/ds/components/Flexbox'
+import { Box } from '@nino/ds/components/Box'
 import { useDebouncedValue } from '@hooks/ui/useDebouncedValue'
 
 import { CatalogBoardContainer } from '@containers/CatalogBoardContainer/CatalogBoardContainer'
@@ -13,7 +13,7 @@ export const Catalog = () => {
   const search = useDebouncedValue(term.trim())
 
   return (
-    <Flexbox className={styles.page}>
+    <Box className={styles.page}>
       <CatalogHeaderContainer
         term={term}
         categoryId={categoryId}
@@ -21,6 +21,6 @@ export const Catalog = () => {
         onCategoryChange={setCategoryId}
       />
       <CatalogBoardContainer categoryId={categoryId} search={search} />
-    </Flexbox>
+    </Box>
   )
 }

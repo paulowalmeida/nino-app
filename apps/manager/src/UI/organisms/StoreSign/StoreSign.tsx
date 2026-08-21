@@ -1,4 +1,4 @@
-import { Flexbox } from '@nino/ds/components/Flexbox'
+import { Box } from '@nino/ds/components/Box'
 import { Skeleton } from '@nino/ds/components/Skeleton'
 import { Text } from '@nino/ds/components/Text'
 import { useStoreOpen } from '@hooks/store/useStoreOpen'
@@ -21,7 +21,7 @@ export const StoreSign = ({ tenantId, timezone }: StoreSignProps) => {
   if (!hasSchedule) return null
 
   return (
-    <Flexbox
+    <Box
       align="center"
       gap={1.5}
       className={`${motion.pop} ${styles.sign}`}
@@ -39,6 +39,6 @@ export const StoreSign = ({ tenantId, timezone }: StoreSignProps) => {
       >
         {isOpen ? 'Aberta agora' : 'Fechada agora'}
       </Text>
-    </Flexbox>
+    </Box>
   )
 }

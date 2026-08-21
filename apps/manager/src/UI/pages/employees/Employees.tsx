@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-import { Flexbox } from '@nino/ds/components/Flexbox'
+import { Box } from '@nino/ds/components/Box'
 import { Header } from '@nino/ds/components/Header'
 import {
   courierRosterEntries,
@@ -57,7 +57,7 @@ export const Employees = () => {
         }
       />
 
-      <Flexbox direction="column" gap={{ mobile: 8, desktop: 10 }}>
+      <Box direction="column" gap={{ mobile: 8, desktop: 10 }}>
         <InviteForm onInvite={invite} />
 
         <TeamRoster
@@ -88,7 +88,7 @@ export const Employees = () => {
           removingId={removing?.kind === 'COURIER' ? removing.id : undefined}
           onRemove={(id) => removeMember({ id, kind: 'COURIER' })}
         />
-      </Flexbox>
+      </Box>
 
       <EditEmailModal
         open={!!editingStaff}

@@ -1,4 +1,4 @@
-import { Flexbox } from '@nino/ds/components/Flexbox'
+import { Box } from '@nino/ds/components/Box'
 import { Skeleton } from '@nino/ds/components/Skeleton'
 import { Breadcrumb } from '@atoms/Breadcrumb/Breadcrumb'
 
@@ -17,7 +17,7 @@ export const CollaboratorDetailSkeleton = () => (
       Carregando colaborador
     </p>
 
-    <Flexbox
+    <Box
       as="header"
       direction="row"
       gap={4}
@@ -31,7 +31,7 @@ export const CollaboratorDetailSkeleton = () => (
         <Skeleton className={styles.name} />
         <Skeleton className={styles.cadence} />
       </div>
-    </Flexbox>
+    </Box>
 
     <section aria-label="Resumo do trabalho" className={styles.strip}>
       <dl className={styles.facts}>
@@ -57,11 +57,11 @@ export const CollaboratorDetailSkeleton = () => (
     </div>
 
     <div className={styles.panels}>
-      <Flexbox direction="row" gap={2}>
+      <Box direction="row" gap={2}>
         {GHOST_TABS.map((tab) => (
           <Skeleton key={tab} className={styles.tab} />
         ))}
-      </Flexbox>
+      </Box>
 
       <ul className={styles.entries}>
         {GHOST_ENTRIES.map((entry) => (

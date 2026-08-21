@@ -22,13 +22,6 @@ type DeleteCategoryDialogProps = {
   onClose: () => void
 }
 
-/**
- * Dois diálogos, um alvo: se a categoria tem produtos, mostra o aviso
- * de bloqueio; senão, o de confirmação. Nasce fechada nas duas — quem
- * manda é `category`, e o `target` congelado segura o nome durante a
- * saída, mesmo
- * padrão do `DeleteItemDialog`.
- */
 export const DeleteCategoryDialog = ({
   category,
   isPending,

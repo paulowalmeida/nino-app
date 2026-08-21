@@ -1,4 +1,4 @@
-import { Flexbox } from '@nino/ds/components/Flexbox'
+import { Box } from '@nino/ds/components/Box'
 import { ScrollArea } from '@nino/ds/components/ScrollArea'
 import { Text } from '@nino/ds/components/Text'
 import { SidebarNavGroup } from '@molecules/SidebarNavGroup/SidebarNavGroup'
@@ -33,9 +33,9 @@ export const SidebarNavigation = ({
 
   return (
     <ScrollArea fadeEdges className={styles.navigation}>
-      <Flexbox as="nav" direction="column" className={styles.list}>
+      <Box as="nav" direction="column" className={styles.list}>
         {groups.map(({ title, items }) => (
-          <Flexbox key={title} gap={0.5} className={styles.section}>
+          <Box key={title} gap={0.5} className={styles.section}>
             {!isCollapsed && (
               <Text as="p" className={styles.sectionTitle}>
                 {title}
@@ -74,9 +74,9 @@ export const SidebarNavigation = ({
                 />
               )
             )}
-          </Flexbox>
+          </Box>
         ))}
-      </Flexbox>
+      </Box>
     </ScrollArea>
   )
 }

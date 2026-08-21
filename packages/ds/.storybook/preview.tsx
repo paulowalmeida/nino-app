@@ -59,7 +59,7 @@ const preview: Preview = {
             'EmptyState',
             'Eyebrow',
             'FileUpload',
-            'Flexbox',
+            'Box',
             'FormField',
             'Grid',
             'Header',

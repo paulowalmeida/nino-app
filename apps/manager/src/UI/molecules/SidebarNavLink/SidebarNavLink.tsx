@@ -1,7 +1,7 @@
 import type { CSSProperties } from 'react'
 import { NavLink } from 'react-router'
 
-import { Flexbox } from '@nino/ds/components/Flexbox'
+import { Box } from '@nino/ds/components/Box'
 import type { IconName } from '@nino/ds/components/Icon'
 import { SidebarNavLabel } from '@atoms/SidebarNavLabel/SidebarNavLabel'
 
@@ -30,7 +30,7 @@ export const SidebarNavLink = ({
   delay,
   onNavigate,
 }: SidebarNavLinkProps) => (
-  <Flexbox style={delay} className={motion.slide}>
+  <Box style={delay} className={motion.slide}>
     <NavLink
       to={`/${tenantId}/${section}`}
       onClick={onNavigate}
@@ -50,5 +50,5 @@ export const SidebarNavLink = ({
         />
       )}
     </NavLink>
-  </Flexbox>
+  </Box>
 )

@@ -3,7 +3,7 @@ import { useSalesSeries } from '@hooks/order/useSalesSeries'
 import { Card } from '@nino/ds/components/Card'
 import { EmptyState } from '@nino/ds/components/EmptyState'
 import { Eyebrow } from '@nino/ds/components/Eyebrow'
-import { Flexbox } from '@nino/ds/components/Flexbox'
+import { Box } from '@nino/ds/components/Box'
 import { Skeleton } from '@nino/ds/components/Skeleton'
 import { Text } from '@nino/ds/components/Text'
 import { Tooltip } from '@nino/ds/components/Tooltip'
@@ -48,7 +48,7 @@ export const SalesTrend = ({ tenantId }: SalesTrendProps) => {
       <Eyebrow className={styles.heading}>Os últimos 7 dias</Eyebrow>
 
       <Card padding="lg" className={`${motion.settle} ${styles.card}`}>
-        <Flexbox
+        <Box
           as="header"
           direction="row"
           gap={4}
@@ -56,14 +56,14 @@ export const SalesTrend = ({ tenantId }: SalesTrendProps) => {
           justify="between"
           mb={4}
         >
-          <Flexbox>
+          <Box>
             {isPending ? (
               <Skeleton className={styles.skeletonTotal} />
             ) : (
               <Text as="p" className={styles.total}>{brl(total)}</Text>
             )}
             <Text className={styles.label}>faturamento na semana</Text>
-          </Flexbox>
+          </Box>
 
           {delta !== null && (
             <Tooltip content="Variação do último dia sobre o anterior">
@@ -73,7 +73,7 @@ export const SalesTrend = ({ tenantId }: SalesTrendProps) => {
               </Text>
             </Tooltip>
           )}
-        </Flexbox>
+        </Box>
 
         {isPending && <SalesTrendSkeleton />}
 

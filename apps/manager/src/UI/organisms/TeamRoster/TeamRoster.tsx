@@ -3,7 +3,7 @@ import { Link } from 'react-router'
 
 import { Badge } from '@nino/ds/components/Badge'
 import { Button } from '@nino/ds/components/Button'
-import { Flexbox } from '@nino/ds/components/Flexbox'
+import { Box } from '@nino/ds/components/Box'
 import { Input } from '@nino/ds/components/Input'
 import { Menu, type MenuItem } from '@nino/ds/components/Menu'
 import { EmptyState } from '@nino/ds/components/EmptyState'
@@ -139,7 +139,7 @@ export const TeamRoster = ({
       {/* the same list, with the people yet to arrive: avatar, name, e-mail,
           role */}
       {isPending && (
-        <Flexbox as="ul" direction="column">
+        <Box as="ul" direction="column">
           {TEAM_ROSTER_GHOST_ROWS.map((row) => (
             <li key={row} className={styles.row}>
               <Skeleton className={styles.ghostMark} />
@@ -152,7 +152,7 @@ export const TeamRoster = ({
               <Skeleton className={styles.ghostRole} />
             </li>
           ))}
-        </Flexbox>
+        </Box>
       )}
 
       {!isPending && visibleEntries.length === 0 && (

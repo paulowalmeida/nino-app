@@ -1,6 +1,6 @@
 import { Alert } from '@nino/ds/components/Alert'
 import { Button } from '@nino/ds/components/Button'
-import { Flexbox } from '@nino/ds/components/Flexbox'
+import { Box } from '@nino/ds/components/Box'
 import { FormField } from '@nino/ds/components/FormField'
 import { Grid } from '@nino/ds/components/Grid'
 import { Input } from '@nino/ds/components/Input'
@@ -78,7 +78,7 @@ export const AccountProfileForm = ({
       </Alert>
     )}
 
-    <Flexbox
+    <Box
       direction={{ mobile: 'column', tablet: 'row' }}
       align={{ tablet: 'center' }}
       justify={{ tablet: 'end' }}
@@ -98,6 +98,6 @@ export const AccountProfileForm = ({
       >
         Salvar meus dados
       </Button>
-    </Flexbox>
+    </Box>
   </>
 )

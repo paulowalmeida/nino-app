@@ -66,7 +66,7 @@ const columnsTablet = {
 
 /**
  * Layout primitive for content laid out in columns — cards, form fields,
- * slices of a summary. The sibling of `Flexbox`: one lays children along a
+ * slices of a summary. The sibling of `Box`: one lays children along a
  * direction, this one across a grid.
  *
  * Column widths that are not equal fractions (`[20rem_1fr]`, `minmax`) stay

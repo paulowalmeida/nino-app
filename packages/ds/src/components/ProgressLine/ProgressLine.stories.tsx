@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react'
 
-import { Flexbox } from '../Flexbox/Flexbox'
+import { Box } from '../Box/Box'
 import { ProgressLine } from './ProgressLine'
 
 const meta: Meta<typeof ProgressLine> = {
@@ -22,11 +22,11 @@ export const Default: Story = {
 
 export const Sizes: Story = {
   render: () => (
-    <Flexbox gap={4}>
+    <Box gap={4}>
       <ProgressLine value={30} size="sm" label="Fino" />
       <ProgressLine value={60} size="md" label="Padrão" />
       <ProgressLine value={80} size="lg" label="Grosso" />
-    </Flexbox>
+    </Box>
   ),
 }
 

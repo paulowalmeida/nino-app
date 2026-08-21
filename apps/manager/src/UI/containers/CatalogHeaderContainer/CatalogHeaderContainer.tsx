@@ -1,4 +1,4 @@
-import { Flexbox } from '@nino/ds/components/Flexbox'
+import { Box } from '@nino/ds/components/Box'
 import { Header } from '@nino/ds/components/Header'
 import { CatalogToolbar } from '@organisms/CatalogToolbar/CatalogToolbar'
 import { useCategories } from '@hooks/product/useCategories'
@@ -44,14 +44,14 @@ export const CatalogHeaderContainer = ({
         canManageCategories={role === 'TENANT_OWNER'}
       />
 
-      <Flexbox shrink={false} mb={3}>
+      <Box shrink={false} mb={3}>
         <CategoryChips
           categories={categories}
           value={categoryId}
           onChange={onCategoryChange}
           isPending={isPending}
         />
-      </Flexbox>
+      </Box>
     </>
   )
 }

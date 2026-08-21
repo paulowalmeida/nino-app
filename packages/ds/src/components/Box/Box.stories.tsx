@@ -2,11 +2,11 @@ import type { Meta, StoryObj } from '@storybook/react'
 
 import { Heading } from '../Heading/Heading'
 import { Text } from '../Text/Text'
-import { Flexbox } from './Flexbox'
+import { Box } from './Box'
 
-const meta: Meta<typeof Flexbox> = {
-  title: 'Components/Flexbox',
-  component: Flexbox,
+const meta: Meta<typeof Box> = {
+  title: 'Components/Box',
+  component: Box,
   tags: ['autodocs'],
   argTypes: {
     as: {
@@ -30,7 +30,7 @@ const meta: Meta<typeof Flexbox> = {
 }
 
 export default meta
-type Story = StoryObj<typeof Flexbox>
+type Story = StoryObj<typeof Box>
 
 const Block = ({ children }: { children: string }) => (
   <div className="rounded-2 bg-surface-2 px-4 py-2">{children}</div>
@@ -39,21 +39,21 @@ const Block = ({ children }: { children: string }) => (
 export const Default: Story = {
   args: { gap: 2 },
   render: (args) => (
-    <Flexbox {...args}>
+    <Box {...args}>
       <Block>Primeiro</Block>
       <Block>Segundo</Block>
       <Block>Terceiro</Block>
-    </Flexbox>
+    </Box>
   ),
 }
 
 export const Row: Story = {
   render: () => (
-    <Flexbox direction="row" gap={2}>
+    <Box direction="row" gap={2}>
       <Block>Primeiro</Block>
       <Block>Segundo</Block>
       <Block>Terceiro</Block>
-    </Flexbox>
+    </Box>
   ),
 }
 
@@ -63,12 +63,12 @@ export const Row: Story = {
  */
 export const ScreenHeading: Story = {
   render: () => (
-    <Flexbox gap={1.5}>
+    <Box gap={1.5}>
       <Heading level={1}>Cardápio</Heading>
       <Text color="subtle">
         Desligue o que acabou — o item some do app do cliente na hora.
       </Text>
-    </Flexbox>
+    </Box>
   ),
 }
 
@@ -78,22 +78,22 @@ export const ScreenHeading: Story = {
  */
 export const Responsive: Story = {
   render: () => (
-    <Flexbox
+    <Box
       direction={{ mobile: 'column', desktop: 'row' }}
       gap={{ mobile: 2, desktop: 6 }}
     >
       <Block>Primeiro</Block>
       <Block>Segundo</Block>
       <Block>Terceiro</Block>
-    </Flexbox>
+    </Box>
   ),
 }
 
 export const Justify: Story = {
   render: () => (
-    <Flexbox direction="row" justify="between" align="center">
+    <Box direction="row" justify="between" align="center">
       <Heading level={2}>Pedidos</Heading>
       <Block>ação</Block>
-    </Flexbox>
+    </Box>
   ),
 }

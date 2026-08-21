@@ -1,4 +1,5 @@
 import { Image } from '@nino/ds/components/Image'
+import { mergeClasses } from '@nino/ds/mergeClasses'
 import { categoryIcon } from '@utils/category-icon'
 
 import styles from './ItemThumb.module.css'
@@ -26,14 +27,12 @@ export const ItemThumb = ({
   className,
   wrapperClassName,
 }: ItemThumbProps) => {
-  const thumbClasses = className
-    ? `${styles.thumb} ${className}`
-    : styles.thumb
-  const glyphClasses = [
+  const thumbClasses = mergeClasses(styles.thumb, className)
+  const glyphClasses = mergeClasses(
     thumbClasses,
     styles.glyph,
-    styles[`tone${toneOf(name)}`],
-  ].join(' ')
+    styles[`tone${toneOf(name)}`]
+  )
 
   return (
     <Image
@@ -41,9 +40,7 @@ export const ItemThumb = ({
       alt=""
       aria-hidden="true"
       className={thumbClasses}
-      wrapperClassName={[styles.thumbWrapper, wrapperClassName]
-        .filter(Boolean)
-        .join(' ')}
+      wrapperClassName={mergeClasses(styles.thumbWrapper, wrapperClassName)}
       placeholder={
         <span className={glyphClasses} aria-hidden="true">
           {categoryIcon(name) ?? '🍽️'}

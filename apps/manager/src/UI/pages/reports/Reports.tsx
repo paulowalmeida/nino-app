@@ -2,7 +2,7 @@ import { useMemo, useState } from 'react'
 import { useSearchParams } from 'react-router'
 
 import { DatePicker } from '@nino/ds/components/DatePicker'
-import { Flexbox } from '@nino/ds/components/Flexbox'
+import { Box } from '@nino/ds/components/Box'
 import { Grid } from '@nino/ds/components/Grid'
 import { Header } from '@nino/ds/components/Header'
 import { Tabs } from '@nino/ds/components/Tabs'
@@ -135,7 +135,7 @@ export const Reports = () => {
       />
 
       {period === 'custom' && (
-        <Flexbox
+        <Box
           direction="row"
           gap={3}
           align="end"
@@ -143,7 +143,7 @@ export const Reports = () => {
           mb={{ mobile: 5, desktop: 6 }}
           className={motion.unroll}
         >
-          <Flexbox as="label" direction="column" gap={1}>
+          <Box as="label" direction="column" gap={1}>
             <span className={styles.dateLabel}>De</span>
             <DatePicker
               value={customFrom ? parseInputDate(customFrom) : undefined}
@@ -152,8 +152,8 @@ export const Reports = () => {
               }
               endMonth={parseInputDate(customTo || todayInput())}
             />
-          </Flexbox>
-          <Flexbox as="label" direction="column" gap={1}>
+          </Box>
+          <Box as="label" direction="column" gap={1}>
             <span className={styles.dateLabel}>Até</span>
             <DatePicker
               value={customTo ? parseInputDate(customTo) : undefined}
@@ -163,8 +163,8 @@ export const Reports = () => {
               startMonth={customFrom ? parseInputDate(customFrom) : undefined}
               endMonth={parseInputDate(todayInput())}
             />
-          </Flexbox>
-        </Flexbox>
+          </Box>
+        </Box>
       )}
 
       <SalesFiguresGrid report={report} isPending={isPending} />

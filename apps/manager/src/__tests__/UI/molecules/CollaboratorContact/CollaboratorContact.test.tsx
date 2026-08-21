@@ -1,9 +1,7 @@
 import { render, screen } from '@testing-library/react'
 import { describe, expect, it } from 'vitest'
 
-import {
-  CollaboratorContact,
-} from '@organisms/CollaboratorContact/CollaboratorContact'
+import { CollaboratorContact } from '@molecules/CollaboratorContact/CollaboratorContact'
 
 import {
   staffWithLogin,
@@ -33,11 +31,12 @@ describe(CollaboratorContact.name, () => {
     expect(screen.getByText(/Entra com/)).toBeInTheDocument()
   })
 
-  it('drops both links when there is no phone and no email', () => {
+  it('falls back to email and password when there is no contact credential', () => {
     // Arrange / Act
     render(<CollaboratorContact member={staffWithoutContact} />)
 
     // Assert
     expect(screen.queryByRole('link')).not.toBeInTheDocument()
+    expect(screen.getByText('Entra com e-mail e senha')).toBeInTheDocument()
   })
 })

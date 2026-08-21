@@ -1,13 +1,15 @@
+import type { ComponentProps } from 'react'
+
+import { Box } from '@nino/ds/components/Box'
 import { EmptyState } from '@nino/ds/components/EmptyState'
+import { Grid } from '@nino/ds/components/Grid'
+import { Heading } from '@nino/ds/components/Heading'
+import { ListRow } from '@nino/ds/components/ListRow'
 import { ScrollArea } from '@nino/ds/components/ScrollArea'
-import {
-  CHANNEL_LABEL,
-  STATUS_LABEL,
-} from '@constants/order.constants'
+import { Text } from '@nino/ds/components/Text'
+import { CHANNEL_LABEL, STATUS_LABEL } from '@constants/order.constants'
 import { COLLABORATOR_DETAIL_COLUMNS } from '@constants/team.constants'
-import type {
-  StaffActivityEntry,
-} from '@custom_types/team/staff-activity-entry'
+import type { StaffActivityEntry } from '@custom_types/team/staff-activity-entry'
 import { brl } from '@utils/money'
 import { ticketNumber } from '@utils/order-flow'
 import { riseDelay } from '@utils/rise-delay'
@@ -28,18 +30,42 @@ const activityEntryAriaLabel = (entry: StaffActivityEntry): string =>
   `${CHANNEL_LABEL[entry.channel]}, ${STATUS_LABEL[entry.status]}, ` +
   `${stamp.format(new Date(entry.createdAt))}, ${brl(entry.totalAmount)}`
 
-type CollaboratorActivityProps = {
+export type CollaboratorActivityProps = {
   activity: StaffActivityEntry[]
+  headingLevel: ComponentProps<typeof Heading>['level']
 }
 
 export const CollaboratorActivity = ({
   activity,
+  headingLevel,
 }: CollaboratorActivityProps) => (
-  <section className={styles.activity} aria-label="Atividade recente">
-    <div className={styles.activityHead}>
-      <h2 className={styles.activityTitle}>Atividade recente</h2>
-      <p className={styles.activityHint}>Últimas 30 mudanças</p>
-    </div>
+  <Box
+    as="section"
+    direction="column"
+    grow
+    shrink
+    className={styles.activity}
+    aria-label="Atividade recente"
+  >
+    <Box
+      direction="row"
+      align="baseline"
+      justify="between"
+      wrap
+      className={styles.activityHead}
+    >
+      <Heading
+        level={headingLevel}
+        size="sm"
+        color="faint"
+        className={styles.activityTitle}
+      >
+        Atividade recente
+      </Heading>
+      <Text as="p" size="xs" color="faint">
+        Últimas 30 mudanças
+      </Text>
+    </Box>
 
     {activity.length === 0 ? (
       <EmptyState className={styles.empty}>
@@ -47,58 +73,126 @@ export const CollaboratorActivity = ({
       </EmptyState>
     ) : (
       <>
-        <div className={`${styles.grid} ${styles.columns}`} aria-hidden>
+        <Grid
+          align="center"
+          className={`${styles.grid} ${styles.columns}`}
+          aria-hidden
+        >
           {COLLABORATOR_DETAIL_COLUMNS.map((label) => (
-            <span key={label} className={styles.columnLabel}>
+            <Text
+              key={label}
+              as="span"
+              size="xs"
+              color="faintest"
+              weight="bold"
+              case="uppercase"
+              align="right"
+              className={styles.columnLabel}
+            >
               {label}
-            </span>
+            </Text>
           ))}
-        </div>
+        </Grid>
 
         <ScrollArea className={styles.listScroll}>
-          <ul className={styles.entries}>
+          <Box as="ul" gap={0} className={styles.entries}>
             {activity.map((entry, index) => (
-              <li
+              <ListRow
                 key={entry.id}
-                className={`${motion.deal} ${styles.entry}`}
+                divider={index === activity.length - 1 ? 'none' : 'bottom'}
+                padding={0}
+                className={motion.deal}
                 style={riseDelay(index * 30 + 80)}
                 aria-label={activityEntryAriaLabel(entry)}
               >
-                <div
+                <Grid
+                  align="center"
                   className={`${styles.grid} ${styles.entryRow}`}
                   aria-hidden
                 >
-                  <span className={styles.entryTicket}>
+                  <Text
+                    as="span"
+                    size="sm"
+                    color="faint"
+                    weight="semibold"
+                    className={styles.entryTicket}
+                  >
                     #{ticketNumber(entry.orderId)}
-                  </span>
+                  </Text>
 
-                  <span className={styles.entryCustomer}>
+                  <Text
+                    as="span"
+                    size="sm"
+                    color="strong"
+                    weight="semibold"
+                    className={styles.entryCustomer}
+                  >
                     {entry.customerName ?? 'Visitante'}
-                  </span>
+                  </Text>
 
-                  <div className={styles.entryMeta}>
-                    <span className={styles.entryChannel}>
+                  <Box
+                    direction="row"
+                    align="center"
+                    gap={1.5}
+                    className={styles.entryMeta}
+                  >
+                    <Text
+                      as="span"
+                      size="xs"
+                      color="faint"
+                      className={styles.entryChannel}
+                    >
                       {CHANNEL_LABEL[entry.channel]}
-                    </span>
-                    <span className={styles.entryDot}>·</span>
-                    <span className={styles.entryStatus}>
+                    </Text>
+                    <Text
+                      as="span"
+                      size="xs"
+                      color="faint"
+                      aria-hidden
+                      className={styles.entryDot}
+                    >
+                      ·
+                    </Text>
+                    <Text
+                      as="span"
+                      size="xs"
+                      color="faint"
+                      className={styles.entryStatus}
+                    >
                       {STATUS_LABEL[entry.status]}
-                    </span>
-                    <span className={styles.entryDot}>·</span>
+                    </Text>
+                    <Text
+                      as="span"
+                      size="xs"
+                      color="faint"
+                      aria-hidden
+                      className={styles.entryDot}
+                    >
+                      ·
+                    </Text>
                     <time className={styles.entryAt} dateTime={entry.createdAt}>
-                      {stamp.format(new Date(entry.createdAt))}
+                      <Text as="span" size="xs" color="faint">
+                        {stamp.format(new Date(entry.createdAt))}
+                      </Text>
                     </time>
-                  </div>
+                  </Box>
 
-                  <span className={styles.entryTotal}>
+                  <Text
+                    as="span"
+                    size="sm"
+                    color="strong"
+                    weight="semibold"
+                    align="right"
+                    className={styles.entryTotal}
+                  >
                     {brl(entry.totalAmount)}
-                  </span>
-                </div>
-              </li>
+                  </Text>
+                </Grid>
+              </ListRow>
             ))}
-          </ul>
+          </Box>
         </ScrollArea>
       </>
     )}
-  </section>
+  </Box>
 )

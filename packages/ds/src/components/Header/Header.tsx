@@ -2,7 +2,7 @@ import { HTMLAttributes, ReactNode } from 'react'
 
 import { MarginProps } from '@ds/lib/spacing/spacing'
 
-import { Flexbox } from '../Flexbox/Flexbox'
+import { Box } from '../Box/Box'
 import { Heading } from '../Heading/Heading'
 import { HeadingLevel, HeadingSize } from '../Heading/Heading.types'
 import { Text } from '../Text/Text'
@@ -67,7 +67,7 @@ export function Header({
   const accentAt = accent ? title.indexOf(accent) : -1
 
   return (
-    <Flexbox
+    <Box
       direction="row"
       align="start"
       justify="between"
@@ -80,7 +80,7 @@ export function Header({
       className={className}
       {...props}
     >
-      <Flexbox gap={1}>
+      <Box gap={1}>
         <Heading level={level} size={size}>
           {accent && accentAt >= 0 ? (
             <>
@@ -97,12 +97,12 @@ export function Header({
             {description}
           </Text>
         )}
-      </Flexbox>
+      </Box>
       {actions && (
-        <Flexbox direction="row" align="center" gap={2} shrink={false}>
+        <Box direction="row" align="center" gap={2} shrink={false}>
           {actions}
-        </Flexbox>
+        </Box>
       )}
-    </Flexbox>
+    </Box>
   )
 }

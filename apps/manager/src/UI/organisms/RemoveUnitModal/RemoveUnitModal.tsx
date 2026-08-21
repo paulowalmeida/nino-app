@@ -1,4 +1,4 @@
-import { Flexbox } from '@nino/ds/components/Flexbox'
+import { Box } from '@nino/ds/components/Box'
 import { useState } from 'react'
 
 import { Alert } from '@nino/ds/components/Alert'
@@ -71,7 +71,7 @@ export const RemoveUnitModal = ({
           {/* The hint sits above the field, next to the label: the name
               needs to stay visible while typing, not below what was
               already typed. */}
-          <Flexbox direction="column" gap={1.5}>
+          <Box direction="column" gap={1.5}>
             <label className={styles.label} htmlFor="remove-unit-name">
               Para confirmar, digite <code className={styles.code}>
                 {unitName}
@@ -85,7 +85,7 @@ export const RemoveUnitModal = ({
               value={typed}
               onChange={(event) => setTyped(event.target.value)}
             />
-          </Flexbox>
+          </Box>
         </form>
       }
       footer={

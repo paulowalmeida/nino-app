@@ -1,6 +1,6 @@
 import { Badge } from '@nino/ds/components/Badge'
 import { Eyebrow } from '@nino/ds/components/Eyebrow'
-import { Flexbox } from '@nino/ds/components/Flexbox'
+import { Box } from '@nino/ds/components/Box'
 import { Heading } from '@nino/ds/components/Heading'
 import { Text } from '@nino/ds/components/Text'
 import { PersonMark } from '@atoms/PersonMark/PersonMark'
@@ -21,7 +21,7 @@ type CollaboratorHeaderProps = {
 }
 
 export const CollaboratorHeader = ({ member }: CollaboratorHeaderProps) => (
-  <Flexbox
+  <Box
     as="header"
     direction="row"
     gap={4}
@@ -30,7 +30,7 @@ export const CollaboratorHeader = ({ member }: CollaboratorHeaderProps) => (
   >
     <PersonMark name={member.user.name} className={styles.mark} />
 
-    <div className={styles.heroText}>
+    <Box className={styles.heroText}>
       <Eyebrow>Equipe</Eyebrow>
       <Heading level={1} size="xl" className={styles.name}>
         {member.user.name}
@@ -42,12 +42,12 @@ export const CollaboratorHeader = ({ member }: CollaboratorHeaderProps) => (
         {' · '}
         {lastSeenLabel(member.user.lastLoginAt)}
       </Text>
-    </div>
+    </Box>
 
     {!member.user.isActive && (
       <Badge variant="error" className={styles.status}>
         Acesso desativado
       </Badge>
     )}
-  </Flexbox>
+  </Box>
 )

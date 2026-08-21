@@ -1,12 +1,12 @@
 import { render, screen } from '@testing-library/react'
 import { describe, expect, it } from 'vitest'
 
-import { Flexbox } from './Flexbox'
+import { Box } from './Box'
 
-describe(Flexbox.name, () => {
+describe(Box.name, () => {
   it('stacks downward by default', () => {
     // Arrange / Act
-    render(<Flexbox>conteúdo</Flexbox>)
+    render(<Box>conteúdo</Box>)
 
     // Assert
     const stack = screen.getByText('conteúdo')
@@ -16,7 +16,7 @@ describe(Flexbox.name, () => {
 
   it('renders a div unless another tag is asked for', () => {
     // Arrange / Act
-    render(<Flexbox>conteúdo</Flexbox>)
+    render(<Box>conteúdo</Box>)
 
     // Assert
     expect(screen.getByText('conteúdo').tagName).toBe('DIV')
@@ -26,7 +26,7 @@ describe(Flexbox.name, () => {
     'renders tag %s when asked',
     (as) => {
       // Arrange / Act
-      render(<Flexbox as={as}>conteúdo</Flexbox>)
+      render(<Box as={as}>conteúdo</Box>)
 
       // Assert
       expect(screen.getByText('conteúdo').tagName).toBe(as.toUpperCase())
@@ -35,7 +35,7 @@ describe(Flexbox.name, () => {
 
   it('lines children up side by side on direction row', () => {
     // Arrange / Act
-    render(<Flexbox direction="row">conteúdo</Flexbox>)
+    render(<Box direction="row">conteúdo</Box>)
 
     // Assert
     expect(screen.getByText('conteúdo')).toHaveClass('flex-row')
@@ -43,7 +43,7 @@ describe(Flexbox.name, () => {
 
   it('accepts a gap with a half step', () => {
     // Arrange / Act
-    render(<Flexbox gap={1.5}>conteúdo</Flexbox>)
+    render(<Box gap={1.5}>conteúdo</Box>)
 
     // Assert
     expect(screen.getByText('conteúdo')).toHaveClass('gap-1.5')
@@ -51,7 +51,7 @@ describe(Flexbox.name, () => {
 
   it('prefixes the desktop half of a responsive gap', () => {
     // Arrange / Act
-    render(<Flexbox gap={{ mobile: 3, desktop: 6 }}>conteúdo</Flexbox>)
+    render(<Box gap={{ mobile: 3, desktop: 6 }}>conteúdo</Box>)
 
     // Assert
     const stack = screen.getByText('conteúdo')
@@ -62,9 +62,9 @@ describe(Flexbox.name, () => {
   it('changes direction between mobile and desktop', () => {
     // Arrange / Act
     render(
-      <Flexbox direction={{ mobile: 'column', desktop: 'row' }}>
+      <Box direction={{ mobile: 'column', desktop: 'row' }}>
         conteúdo
-      </Flexbox>
+      </Box>
     )
 
     // Assert
@@ -76,7 +76,7 @@ describe(Flexbox.name, () => {
   it('changes alignment between mobile and desktop', () => {
     // Arrange / Act
     render(
-      <Flexbox align={{ mobile: 'center', desktop: 'start' }}>conteúdo</Flexbox>
+      <Box align={{ mobile: 'center', desktop: 'start' }}>conteúdo</Box>
     )
 
     // Assert
@@ -87,7 +87,7 @@ describe(Flexbox.name, () => {
 
   it('holds its size when shrink is turned off', () => {
     // Arrange / Act
-    render(<Flexbox shrink={false}>conteúdo</Flexbox>)
+    render(<Box shrink={false}>conteúdo</Box>)
 
     // Assert
     expect(screen.getByText('conteúdo')).toHaveClass('shrink-0')
@@ -96,20 +96,20 @@ describe(Flexbox.name, () => {
   it('changes justify between mobile and desktop', () => {
     // Arrange / Act
     render(
-      <Flexbox justify={{ mobile: 'start', desktop: 'center' }}>
+      <Box justify={{ mobile: 'start', desktop: 'center' }}>
         conteúdo
-      </Flexbox>
+      </Box>
     )
 
     // Assert
-    const flexbox = screen.getByText('conteúdo')
-    expect(flexbox).toHaveClass('justify-start')
-    expect(flexbox).toHaveClass('lg:justify-center')
+    const Box = screen.getByText('conteúdo')
+    expect(Box).toHaveClass('justify-start')
+    expect(Box).toHaveClass('lg:justify-center')
   })
 
   it('applies the margin props', () => {
     // Arrange / Act
-    render(<Flexbox mb={{ mobile: 3, desktop: 6 }}>conteúdo</Flexbox>)
+    render(<Box mb={{ mobile: 3, desktop: 6 }}>conteúdo</Box>)
 
     // Assert
     const stack = screen.getByText('conteúdo')

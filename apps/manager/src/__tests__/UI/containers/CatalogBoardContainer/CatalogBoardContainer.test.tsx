@@ -26,10 +26,19 @@ const item = {
   images: [],
 }
 
+const secondScopeItem = {
+  ...item,
+  id: 'item-2',
+  name: 'Água',
+  category: { id: 'cat-2', name: 'Bebidas geladas', position: 2 },
+}
+
 describe(CatalogBoardContainer.name, () => {
   beforeEach(() => {
     vi.clearAllMocks()
-    vi.mocked(useCurrentTenant).mockReturnValue({ tenantId: 'tenant-1' } as Membership)
+    vi.mocked(useCurrentTenant).mockReturnValue({
+      tenantId: 'tenant-1',
+    } as Membership)
     vi.mocked(useCatalogBoard).mockReturnValue({
       items: [item],
       total: 1,
@@ -91,7 +100,48 @@ describe(CatalogBoardContainer.name, () => {
     )
 
     expect(
-      screen.getByText('Não foi possível carregar o cardápio. Recarregue a página para tentar de novo.')
+      screen.getByText(
+        'Não foi possível carregar o cardápio. Recarregue a página para tentar de novo.'
+      )
     ).toBeInTheDocument()
+  })
+
+  it('clears the selection when the catalog scope changes', async () => {
+    // Arrange
+    const user = userEvent.setup()
+    const { rerender } = render(
+      <MemoryRouter>
+        <CatalogBoardContainer categoryId="cat-1" search="" />
+      </MemoryRouter>
+    )
+    await user.click(screen.getByRole('button', { name: 'Selecionar itens' }))
+    await user.click(screen.getByLabelText('Selecionar Suco'))
+
+    vi.mocked(useCatalogBoard).mockReturnValue({
+      items: [secondScopeItem],
+      total: 1,
+      isPending: false,
+      isError: false,
+      isFetchingNextPage: false,
+      loadMoreSentinelRef: vi.fn(),
+      setAvailability: vi.fn(),
+      reorderItems: vi.fn(),
+    } as unknown as ReturnType<typeof useCatalogBoard>)
+
+    // Act
+    rerender(
+      <MemoryRouter>
+        <CatalogBoardContainer categoryId="cat-2" search="" />
+      </MemoryRouter>
+    )
+
+    // Assert
+    expect(screen.getByText('Água')).toBeInTheDocument()
+    expect(
+      screen.getByRole('button', { name: 'Selecionar itens' })
+    ).toBeInTheDocument()
+    expect(
+      screen.queryByRole('button', { name: 'Excluir' })
+    ).not.toBeInTheDocument()
   })
 })

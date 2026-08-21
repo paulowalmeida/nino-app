@@ -2,7 +2,7 @@ import { Link, useLocation } from 'react-router'
 
 import { Badge } from '@nino/ds/components/Badge'
 import { EmptyState } from '@nino/ds/components/EmptyState'
-import { Flexbox } from '@nino/ds/components/Flexbox'
+import { Box } from '@nino/ds/components/Box'
 import { ListRow } from '@nino/ds/components/ListRow'
 import { ScrollArea } from '@nino/ds/components/ScrollArea'
 import { Text } from '@nino/ds/components/Text'
@@ -53,7 +53,7 @@ export const CustomerOrderHistory = ({
 
   return (
     <ScrollArea className={styles.scroll}>
-      <Flexbox as="ul" gap={0}>
+      <Box as="ul" gap={0}>
         {orders.map((order, index) => (
           <ListRow
             key={order.id}
@@ -87,7 +87,7 @@ export const CustomerOrderHistory = ({
             </Link>
           </ListRow>
         ))}
-      </Flexbox>
+      </Box>
 
       {/* sentinela: entra em cena e puxa a próxima página sozinha */}
       <div ref={sentinelRef} className={styles.sentinel}>

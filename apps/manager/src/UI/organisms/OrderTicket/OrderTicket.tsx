@@ -1,4 +1,4 @@
-import { Flexbox } from '@nino/ds/components/Flexbox'
+import { Box } from '@nino/ds/components/Box'
 import { Link } from 'react-router'
 
 import { Badge } from '@nino/ds/components/Badge'
@@ -148,13 +148,13 @@ export const OrderTicket = ({ order, onAdvance, isBusy }: OrderTicketProps) => {
         </Link>
 
         <footer className={styles.foot}>
-          <Flexbox direction="column">
+          <Box direction="column">
             <span className={styles.total}>{brl(order.totalAmount)}</span>
             <span className={styles.payment}>
               {paymentLabelFor(order.paymentMethod, order.channel)} ·{' '}
               {PAYMENT_STATUS_LABEL[order.paymentStatus]}
             </span>
-          </Flexbox>
+          </Box>
 
           {step && (
             <Button

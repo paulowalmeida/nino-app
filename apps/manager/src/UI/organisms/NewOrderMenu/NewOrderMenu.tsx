@@ -1,4 +1,4 @@
-import { Flexbox } from '@nino/ds/components/Flexbox'
+import { Box } from '@nino/ds/components/Box'
 import { Button } from '@nino/ds/components/Button'
 import { EmptyState } from '@nino/ds/components/EmptyState'
 import { Skeleton } from '@nino/ds/components/Skeleton'
@@ -31,7 +31,7 @@ export const NewOrderMenu = ({
         <div key={section} className={styles.section}>
           <Skeleton variant="text" className={styles.ghostSectionName} />
 
-          <Flexbox as="ul" direction="column">
+          <Box as="ul" direction="column">
             {NEW_ORDER_MENU_GHOST_ITEMS.map((item) => (
               <li key={item} className={styles.item}>
                 <Skeleton className={styles.ghostThumb} />
@@ -40,7 +40,7 @@ export const NewOrderMenu = ({
                 <Skeleton className={styles.ghostAddButton} />
               </li>
             ))}
-          </Flexbox>
+          </Box>
         </div>
       ))}
 

@@ -1,13 +1,18 @@
-import { Flexbox } from '@nino/ds/components/Flexbox'
+import { Box } from '@nino/ds/components/Box'
 import { useState } from 'react'
 
 import { Alert } from '@nino/ds/components/Alert'
 import { Button } from '@nino/ds/components/Button'
-import { ScrollArea } from '@nino/ds/components/ScrollArea'
 import { Dialog } from '@nino/ds/components/Dialog'
 import { EmptyState } from '@nino/ds/components/EmptyState'
+import { Heading } from '@nino/ds/components/Heading'
 import { Input } from '@nino/ds/components/Input'
 import { Icon } from '@nino/ds/components/Icon'
+import { ListRow } from '@nino/ds/components/ListRow'
+import { QuantityStepper } from '@nino/ds/components/QuantityStepper'
+import { ScrollArea } from '@nino/ds/components/ScrollArea'
+import { Text } from '@nino/ds/components/Text'
+import { mergeClasses } from '@nino/ds/mergeClasses'
 import { ItemThumb } from '@atoms/ItemThumb/ItemThumb'
 import { PAYMENT_METHOD_ICON } from '@constants/order.constants'
 import type { CartLine } from '@custom_types/counter/cart-line'
@@ -20,12 +25,10 @@ import motion from '@styles/motion.module.css'
 
 export type SaleTicketProps = {
   lines: CartLine[]
-  /** Who will pick up the order once it's ready. */
   customerName: string
   tableNumber: string
   onCustomerName: (name: string) => void
   onTableNumber: (table: string) => void
-  /** Methods the unit accepts, coming from the store's rules. */
   methods: PaymentMethod[]
   method: PaymentMethod
   isSending: boolean
@@ -34,23 +37,9 @@ export type SaleTicketProps = {
   onMethod: (method: PaymentMethod) => void
   onClear: () => void
   onFinish: () => void
-  /**
-   * Inside the mobile sheet the frame and the title belong to the sheet
-   * itself — repeating them here would be a box inside a box.
-   */
   bare?: boolean
 }
 
-/**
- * The counter's ticket, in the same shape as the customer app's cart: a row
- * with photo, name and running total on the left; value and quantity
- * stacked on the right. This is what lets the name fit on a narrow screen —
- * with the counter next to the name, it used to be the first thing
- * squeezed.
- *
- * What the counter has on top: who ordered, payment method and closing the
- * sale.
- */
 export const SaleTicket = ({
   lines,
   customerName,
@@ -80,99 +69,86 @@ export const SaleTicket = ({
   }
 
   return (
-    <aside className={bare ? styles.ticketBare : styles.ticket}>
+    <Box as="aside" className={bare ? styles.ticketBare : styles.ticket}>
       {!bare && (
-        <header className={styles.head}>
-          <h2 className={styles.title}>Venda</h2>
-        </header>
+        <Box as="header" direction="row" className={styles.head}>
+          <Heading level={2} size="lg" className={styles.title}>
+            Venda
+          </Heading>
+        </Box>
       )}
 
-      <div className={styles.body}>
+      <Box className={styles.body}>
         {lines.length === 0 ? (
           <EmptyState className={styles.empty}>
             Toque nos itens para montar a venda.
           </EmptyState>
         ) : (
           <ScrollArea className={styles.linesScroll}>
-            <ul className={styles.lines}>
+            <Box as="ul" className={styles.lines}>
               {lines.map((line) => {
                 const isLast = line.quantity === 1
 
                 return (
-                  <li
+                  <ListRow
                     key={line.productId}
-                    className={`${motion.deal} ${styles.line}`}
+                    divider="top"
+                    gap={2.5}
+                    padding={3}
+                    className={mergeClasses(motion.deal, styles.line)}
                   >
                     <ItemThumb name={line.name} className={styles.photo} />
 
-                    <div className={styles.lineText}>
-                      <span className={styles.lineName}>{line.name}</span>
-                      <span className={styles.lineMath}>
+                    <Box className={styles.lineText}>
+                      <Text as="span" size="sm" weight="semibold" className={styles.lineName}>
+                        {line.name}
+                      </Text>
+                      <Text as="span" size="xs" color="muted" className={styles.lineMath}>
                         {line.quantity} × {brl(line.unitPrice)}
-                      </span>
-                    </div>
+                      </Text>
+                    </Box>
 
-                    <Flexbox direction="column" gap={1.5} align="end" shrink={false}>
-                      <span className={styles.lineTotal}>
-                        {brl(Number(line.unitPrice) * line.quantity)}
-                      </span>
-
-                      <Flexbox
-                        direction="row"
-                        gap={1.5}
-                        align="center"
-                        shrink={false}
+                    <Box direction="column" gap={1.5} align="end" shrink={false}>
+                      <Text
+                        as="span"
+                        size="sm"
+                        weight="extrabold"
+                        font="display"
+                        className={styles.lineTotal}
                       >
-                        <Button
-                          size="icon"
-                          variant={isLast ? 'danger' : 'outline'}
-                          className={styles.stepperBtn}
-                          aria-label={
-                            isLast
-                              ? `Tirar ${line.name} da comanda`
-                              : `Tirar um ${line.name}`
-                          }
-                          onClick={() => onStep(line.productId, -1)}
-                        >
-                          {/* On the last unit the dash turns into a trash
-                            icon: tapping again removes it, and the icon
-                            warns beforehand. */}
-                          {isLast ? (
-                            <Icon name="trash-thin" />
-                          ) : (
-                            <Icon name="minus" />
-                          )}
-                        </Button>
+                        {brl(Number(line.unitPrice) * line.quantity)}
+                      </Text>
 
-                        <span className={styles.stepperCount}>
+                      <QuantityStepper
+                        quantity={line.quantity}
+                        decrementIcon={isLast ? 'trash' : 'minus'}
+                        decrementVariant={isLast ? 'danger' : 'outline'}
+                        decrementLabel={
+                          isLast
+                            ? `Tirar ${line.name} da comanda`
+                            : `Tirar um ${line.name}`
+                        }
+                        incrementLabel={`Mais um ${line.name}`}
+                        onDecrement={() => onStep(line.productId, -1)}
+                        onIncrement={() => onStep(line.productId, 1)}
+                        size="sm"
+                        className={styles.stepper}
+                        count={
+                          <Text as="span" size="sm" weight="bold" className={styles.stepperCount}>
                           {line.quantity}
-                        </span>
-
-                        <Button
-                          size="icon"
-                          variant="outline"
-                          className={styles.stepperBtn}
-                          aria-label={`Mais um ${line.name}`}
-                          onClick={() => onStep(line.productId, 1)}
-                        >
-                          <Icon name="plus" />
-                        </Button>
-                      </Flexbox>
-                    </Flexbox>
-                  </li>
+                          </Text>
+                        }
+                      />
+                    </Box>
+                  </ListRow>
                 )
               })}
-            </ul>
+            </Box>
           </ScrollArea>
         )}
 
-        {/*
-         * Identification after the items: at the counter the order is
-         * assembled before anyone asks for the name, and at the top these
-         * fields used to push the list down.
-         */}
         {lines.length > 0 && (
-          <div className={styles.who}>
+          <Box className={styles.who}>
             <Input
               placeholder="Nome de quem pediu"
               aria-label="Nome de quem pediu"
@@ -186,14 +162,17 @@ export const SaleTicket = ({
               onChange={(event) => onTableNumber(event.target.value)}
             />
 
-            {/*
-             * Payment lives here, not in the fixed footer: it's filler like
-             * the name, and pinned at the bottom it used to take up half
-             * the phone screen — space the item list needs.
-             */}
-            <p className={styles.payLabel}>Como vai pagar</p>
+            <Text
+              size="xs"
+              weight="bold"
+              case="uppercase"
+              color="faint"
+              className={styles.payLabel}
+            >
+              Como vai pagar
+            </Text>
 
-            <div className={styles.choices}>
+            <Box className={styles.choices}>
               {methods.map((value) => (
                 <Button
                   key={value}
@@ -201,30 +180,36 @@ export const SaleTicket = ({
                   variant="ghost"
                   aria-pressed={method === value}
                   onClick={() => onMethod(value)}
-                  className={`${motion.press} ${styles.choice} ${
-                    method === value ? styles.choiceOn : ''
-                  }`}
+                  className={mergeClasses(
+                    motion.press,
+                    styles.choice,
+                    method === value && styles.choiceOn
+                  )}
                 >
                   <Icon name={PAYMENT_METHOD_ICON[value]} />
                   {paymentLabelFor(value, 'COUNTER')}
                 </Button>
               ))}
-            </div>
-          </div>
+            </Box>
+          </Box>
         )}
 
-        <div className={styles.footer}>
-          <Flexbox align="baseline" justify="between">
-            <span className={styles.totalLabel}>Total</span>
-            <span className={styles.total}>{brl(total)}</span>
-          </Flexbox>
+        <Box className={styles.footer}>
+          <Box align="baseline" justify="between">
+            <Text as="span" size="sm" weight="semibold" color="muted" className={styles.totalLabel}>
+              Total
+            </Text>
+            <Text as="span" size="2xl" weight="extrabold" font="display" className={styles.total}>
+              {brl(total)}
+            </Text>
+          </Box>
 
           {error && <Alert variant="error">{error}</Alert>}
 
           <Button
             loading={isSending}
             disabled={lines.length === 0}
-            className={`${motion.press} ${styles.finish}`}
+            className={mergeClasses(motion.press, styles.finish)}
             onClick={onFinish}
           >
             Fechar venda
@@ -240,8 +225,8 @@ export const SaleTicket = ({
               Limpar comanda
             </Button>
           )}
-        </div>
-      </div>
+        </Box>
+      </Box>
 
       <Dialog
         open={confirmingClear}
@@ -253,6 +238,6 @@ export const SaleTicket = ({
         onConfirm={handleConfirmClear}
         onCancel={() => setConfirmingClear(false)}
       />
-    </aside>
+    </Box>
   )
 }

@@ -1,5 +1,5 @@
 import { Eyebrow } from '@nino/ds/components/Eyebrow'
-import { Flexbox } from '@nino/ds/components/Flexbox'
+import { Box } from '@nino/ds/components/Box'
 import { AccountProfileContainer } from '../../containers/AccountProfileContainer/AccountProfileContainer'
 import { AccountHeader } from '@organisms/AccountHeader/AccountHeader'
 import { useProfile } from '@hooks/account/useProfile'
@@ -13,7 +13,7 @@ export const Account = () => {
   const { data: profile, isPending } = useProfile()
 
   return (
-    <Flexbox className={styles.page}>
+    <Box className={styles.page}>
       <Eyebrow className={motion.deal}>Meus dados</Eyebrow>
 
       <AccountHeader profile={profile} />
@@ -23,6 +23,6 @@ export const Account = () => {
       ) : (
         <AccountProfileContainer profile={profile} />
       )}
-    </Flexbox>
+    </Box>
   )
 }

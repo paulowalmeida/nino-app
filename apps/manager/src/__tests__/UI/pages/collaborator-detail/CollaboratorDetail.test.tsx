@@ -70,6 +70,27 @@ describe(CollaboratorDetail.name, () => {
     ).toBeInTheDocument()
   })
 
+  it('shows an error instead of treating a failed request as a missing person', () => {
+    // Arrange
+    vi.mocked(useCurrentTenant).mockReturnValue(currentTenant)
+    vi.mocked(useStaffDetail).mockReturnValue({
+      data: undefined,
+      isPending: false,
+      isError: true,
+    } as unknown as ReturnType<typeof useStaffDetail>)
+
+    // Act
+    renderDetail()
+
+    // Assert
+    expect(screen.getByRole('alert')).toHaveTextContent(
+      'Não foi possível carregar a pessoa'
+    )
+    expect(
+      screen.queryByText('Esta pessoa não está mais nesta loja.')
+    ).not.toBeInTheDocument()
+  })
+
   it('shows a skeleton while the request is pending', () => {
     // Arrange
     vi.mocked(useCurrentTenant).mockReturnValue(currentTenant)

@@ -6,7 +6,7 @@ import { SalesTrend } from '@organisms/SalesTrend/SalesTrend'
 import { TopCustomers } from '@organisms/TopCustomers/TopCustomers'
 import { TopProducts } from '@organisms/TopProducts/TopProducts'
 import { useCurrentTenant } from '@hooks/session/useCurrentTenant'
-import { Flexbox } from '@nino/ds/components/Flexbox'
+import { Box } from '@nino/ds/components/Box'
 import { useSessionStore } from '@states/useSessionStore'
 
 import styles from './Overview.module.css'
@@ -20,31 +20,31 @@ export const Overview = () => {
   const tenantId = tenant?.tenantId ?? null
 
   return (
-    <Flexbox className={styles.page}>
+    <Box className={styles.page}>
       <OverviewHeader
         firstName={firstName}
         timezone={timezone}
         tenant={tenant}
       />
 
-      <Flexbox className={styles.pause}>
+      <Box className={styles.pause}>
         <PauseSwitch tenantId={tenantId} timezone={timezone} />
-      </Flexbox>
+      </Box>
 
       <QueueBoard tenantId={tenantId} />
 
-      <Flexbox className={`${styles.charts}`} >
+      <Box className={`${styles.charts}`} >
         <SalesTrend tenantId={tenantId} />
         <TopProducts tenantId={tenantId} />
-      </Flexbox>
+      </Box>
 
-      <Flexbox className={styles.customers}>
+      <Box className={styles.customers}>
         <TopCustomers tenantId={tenantId} />
-      </Flexbox>
+      </Box>
 
-      <Flexbox className={styles.tally}>
+      <Box className={styles.tally}>
         <DayTally tenantId={tenantId} timezone={timezone} />
-      </Flexbox>
-    </Flexbox>
+      </Box>
+    </Box>
   )
 }

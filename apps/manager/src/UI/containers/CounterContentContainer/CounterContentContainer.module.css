@@ -1,0 +1,19 @@
+@reference "@nino/ds/globals.css";
+
+.floor {
+  @apply flex-1 gap-4 pb-24;
+  @apply lg:min-h-0 lg:grid lg:grid-cols-[1fr_23rem] lg:pb-0;
+}
+
+.sheet {
+  @apply max-h-[92dvh] lg:max-h-none;
+}
+
+.sheet .sheetBody {
+  @apply flex min-h-0 flex-col overflow-y-hidden;
+}
+
+.menu {
+  @apply min-w-0 lg:min-h-0;
+  container-type: inline-size;
+}

@@ -1,4 +1,4 @@
-import { Flexbox } from '@nino/ds/components/Flexbox'
+import { Box } from '@nino/ds/components/Box'
 import {
   ORDER_TIMELINE_REALM_LABEL,
   STATUS_LABEL,
@@ -24,7 +24,7 @@ export const OrderTimeline = ({ entries }: OrderTimelineProps) => {
   )
 
   return (
-    <Flexbox as="ol" direction="column">
+    <Box as="ol" direction="column">
       {sorted.map((entry, index) => (
         <li
           key={entry.id}
@@ -46,6 +46,6 @@ export const OrderTimeline = ({ entries }: OrderTimelineProps) => {
           </time>
         </li>
       ))}
-    </Flexbox>
+    </Box>
   )
 }

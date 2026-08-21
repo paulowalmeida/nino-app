@@ -1,5 +1,5 @@
 import { Order } from '@custom_types/order/order'
-import { Flexbox } from '@ds/components/Flexbox/Flexbox'
+import { Box } from '@ds/components/Box/Box'
 import { ListRow } from '@ds/components/ListRow/ListRow'
 import { Text } from '@ds/components/Text/Text'
 import { Link } from 'react-router'
@@ -23,7 +23,7 @@ const clock = new Intl.DateTimeFormat('pt-BR', {
 
 export const TallyHistory = ({ recent }: TallyHistoy) => {
   return (
-    <Flexbox as="ul" direction="column">
+    <Box as="ul" direction="column">
       {recent.map((order, index) => (
         <ListRow
           key={order.id}
@@ -45,6 +45,6 @@ export const TallyHistory = ({ recent }: TallyHistoy) => {
           </Link>
         </ListRow>
       ))}
-    </Flexbox>
+    </Box>
   )
 }

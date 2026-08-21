@@ -2,8 +2,10 @@ import type { StaffDetail } from '@custom_types/team/staff-detail'
 import { brl } from '@utils/money'
 import { riseDelay } from '@utils/rise-delay'
 
-import styles from './CollaboratorSummary.module.css'
+import { Box } from '@ds/components/Box/Box'
+import { Text } from '@ds/components/Text/Text'
 import motion from '@styles/motion.module.css'
+import styles from './CollaboratorSummary.module.css'
 
 const day = new Intl.DateTimeFormat('pt-BR', {
   day: '2-digit',
@@ -34,21 +36,21 @@ export const CollaboratorSummary = ({ member }: CollaboratorSummaryProps) => (
         ['Pedidos no balcão', String(member.ordersHandled)],
         ['Mudanças de pedido', String(member.statusChanges)],
       ].map(([label, value], index) => (
-        <div
+        <Box
           key={label}
           className={`${motion.settle} ${styles.fact}`}
           style={riseDelay(index * 60 + 120)}
         >
           <dt className={styles.factLabel}>{label}</dt>
           <dd className={styles.factValue}>{value}</dd>
-        </div>
+        </Box>
       ))}
     </dl>
 
-    <p className={styles.footnote}>
+    <Text className={styles.footnote}>
       {workSpan(member)}
       {' · '}
       {cancellationShare(member)}
-    </p>
+    </Text>
   </section>
 )

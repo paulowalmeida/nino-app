@@ -36,6 +36,7 @@ export const QuantityStepper = forwardRef<HTMLDivElement, QuantityStepperProps>(
       incrementLabel,
       decrementLabel,
       decrementIcon = 'minus',
+      decrementVariant = 'outline',
       isDecrementDisabled = false,
       size = 'md',
       count,
@@ -51,7 +52,7 @@ export const QuantityStepper = forwardRef<HTMLDivElement, QuantityStepperProps>(
     >
       <Button
         size="icon"
-        variant="outline"
+        variant={decrementVariant}
         className={buttonClasses[size]}
         aria-label={decrementLabel}
         disabled={isDecrementDisabled}

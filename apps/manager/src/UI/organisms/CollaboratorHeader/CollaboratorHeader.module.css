@@ -16,8 +16,6 @@
   @apply truncate;
 }
 
-/* Função, tempo de casa e último acesso decidem se essa pessoa ainda deveria
-   ter a chave da loja — por isso ficam sob o nome, não perdidos numa aba. */
 .cadence {
   @apply mt-1 truncate text-xs text-fg-faint;
 }

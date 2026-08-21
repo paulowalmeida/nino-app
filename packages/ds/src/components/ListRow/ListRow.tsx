@@ -59,14 +59,14 @@ const paddingClasses = {
  * to narrow it to one axis or side.
  *
  * ```tsx
- * <Flexbox as="ul">
+ * <Box as="ul">
  *   {zones.map((zone) => (
  *     <ListRow key={zone.id}>
  *       <Text>{zone.name}</Text>
  *       <Text color="muted">{zone.fee}</Text>
  *     </ListRow>
  *   ))}
- * </Flexbox>
+ * </Box>
  * ```
  */
 export function ListRow({

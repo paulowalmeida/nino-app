@@ -1,6 +1,6 @@
 import { Fragment, MouseEvent, ReactNode } from 'react'
 
-import { Flexbox } from '@ds/components/Flexbox/Flexbox'
+import { Box } from '@ds/components/Box/Box'
 import { Icon } from '@ds/components/Icon/Icon'
 import { mergeClasses } from '@ds/lib/mergeClasses/mergeClasses'
 
@@ -30,7 +30,7 @@ export function Breadcrumb({
       aria-label={ariaLabel}
       className={mergeClasses(styles.trail, className)}
     >
-      <Flexbox as="ol" direction="row" align="center">
+      <Box as="ol" direction="row" align="center">
         {items.map((item, index) => {
           const isLast = index === items.length - 1
           return (
@@ -56,7 +56,7 @@ export function Breadcrumb({
             </Fragment>
           )
         })}
-      </Flexbox>
+      </Box>
     </nav>
   )
 }

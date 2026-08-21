@@ -1,10 +1,5 @@
 @reference "@nino/ds/globals.css";
 
-/*
- * Mesma faixa quente da ficha do cliente: o que essa pessoa rendeu se lê de
- * uma vez, sem cartão por número. A nota embaixo mora fora da faixa porque
- * cancelamento é ressalva, não conquista.
- */
 .strip {
   @apply mt-5 rounded-4 bg-surface-1;
 }
@@ -17,7 +12,6 @@
   @apply flex flex-col gap-1 px-4 py-3.5 lg:px-6 lg:py-4;
 }
 
-/* Moeda não cabe em terço de tela no celular sem encolher a fonte. */
 .fact:first-child {
   @apply col-span-2 border-b border-border/50;
   @apply lg:col-span-1 lg:border-b-0;

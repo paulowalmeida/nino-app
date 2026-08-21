@@ -2,7 +2,7 @@ import { useParams } from 'react-router'
 
 import { EmptyState } from '@nino/ds/components/EmptyState'
 import { Eyebrow } from '@nino/ds/components/Eyebrow'
-import { Flexbox } from '@nino/ds/components/Flexbox'
+import { Box } from '@nino/ds/components/Box'
 import { Heading } from '@nino/ds/components/Heading'
 import { Tabs } from '@nino/ds/components/Tabs'
 import { Text } from '@nino/ds/components/Text'
@@ -72,7 +72,7 @@ export const CustomerDetail = () => {
         ]}
       />
 
-      <Flexbox
+      <Box
         as="header"
         direction="row"
         gap={4}
@@ -92,7 +92,7 @@ export const CustomerDetail = () => {
             {lastOrderLabel(customer.lastOrderAt)}
           </Text>
         </div>
-      </Flexbox>
+      </Box>
 
       <CustomerSummary customer={customer} />
 

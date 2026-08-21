@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react'
 
-import { Flexbox } from '../Flexbox/Flexbox'
+import { Box } from '../Box/Box'
 import { Input } from '../Input/Input'
 import { FormField } from './FormField'
 
@@ -74,13 +74,13 @@ export const WithoutLabel: Story = {
 
 export const LabelVariants: Story = {
   render: () => (
-    <Flexbox gap={6}>
+    <Box gap={6}>
       <FormField label="Nome completo" helperText="Como aparece no pedido">
         <Input placeholder="João da Silva" />
       </FormField>
       <FormField label="Nome completo" labelVariant="compact">
         <Input placeholder="João da Silva" />
       </FormField>
-    </Flexbox>
+    </Box>
   ),
 }

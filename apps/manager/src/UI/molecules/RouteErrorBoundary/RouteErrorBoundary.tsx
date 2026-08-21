@@ -2,7 +2,7 @@ import { useEffect } from 'react'
 import { isRouteErrorResponse, useRouteError } from 'react-router'
 
 import { Button } from '@nino/ds/components/Button'
-import { Flexbox } from '@nino/ds/components/Flexbox'
+import { Box } from '@nino/ds/components/Box'
 import { Heading } from '@nino/ds/components/Heading'
 import { Text } from '@nino/ds/components/Text'
 
@@ -36,8 +36,8 @@ export const RouteErrorBoundary = () => {
     : 'Essa tela travou'
 
   return (
-    <Flexbox direction="row" className={styles.shell}>
-      <Flexbox direction="column" className={styles.panel}>
+    <Box direction="row" className={styles.shell}>
+      <Box direction="column" className={styles.panel}>
         <Heading level={1} size="2xl" className={styles.title}>
           {title}
         </Heading>
@@ -45,7 +45,7 @@ export const RouteErrorBoundary = () => {
           Recarregue a página. Se continuar acontecendo, avise o suporte.
         </Text>
         <Button onClick={() => window.location.reload()}>Recarregar</Button>
-      </Flexbox>
-    </Flexbox>
+      </Box>
+    </Box>
   )
 }

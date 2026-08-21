@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react'
 
-import { Flexbox } from '../Flexbox/Flexbox'
+import { Box } from '../Box/Box'
 import { Text } from '../Text/Text'
 import { ListRow } from './ListRow'
 
@@ -30,14 +30,14 @@ const zones = [
 
 export const Default: Story = {
   render: (args) => (
-    <Flexbox as="ul" className="w-96">
+    <Box as="ul" className="w-96">
       {zones.map((zone) => (
         <ListRow key={zone.name} {...args}>
           <Text className="flex-1">{zone.name}</Text>
           <Text color="muted">{zone.fee}</Text>
         </ListRow>
       ))}
-    </Flexbox>
+    </Box>
   ),
 }
 
@@ -47,22 +47,22 @@ export const Default: Story = {
  */
 export const Dividers: Story = {
   render: () => (
-    <Flexbox gap={8} className="w-96">
-      <Flexbox as="ul">
+    <Box gap={8} className="w-96">
+      <Box as="ul">
         {zones.map((zone) => (
           <ListRow key={zone.name}>
             <Text>{zone.name}</Text>
           </ListRow>
         ))}
-      </Flexbox>
-      <Flexbox as="ul">
+      </Box>
+      <Box as="ul">
         {zones.map((zone) => (
           <ListRow key={zone.name} divider="bottom">
             <Text>{zone.name}</Text>
           </ListRow>
         ))}
-      </Flexbox>
-    </Flexbox>
+      </Box>
+    </Box>
   ),
 }
 
@@ -72,7 +72,7 @@ export const Dividers: Story = {
  */
 export const Baseline: Story = {
   render: () => (
-    <Flexbox as="ul" className="w-96">
+    <Box as="ul" className="w-96">
       <ListRow align="baseline">
         <Text size="lg" weight="semibold" className="flex-1">
           X-Burguer
@@ -81,6 +81,6 @@ export const Baseline: Story = {
           42 vendidos
         </Text>
       </ListRow>
-    </Flexbox>
+    </Box>
   ),
 }

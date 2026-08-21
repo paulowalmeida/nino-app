@@ -1,0 +1,21 @@
+@reference "@nino/ds/globals.css";
+
+.backdrop {
+  @apply bg-fg-strong/40 backdrop-blur-md;
+}
+
+.photo {
+  @apply h-80 w-full rounded-2 object-cover text-7xl;
+}
+
+.name {
+  @apply mt-1 leading-tight;
+}
+
+.description {
+  @apply leading-relaxed;
+}
+
+.price {
+  font-variant-numeric: tabular-nums;
+}

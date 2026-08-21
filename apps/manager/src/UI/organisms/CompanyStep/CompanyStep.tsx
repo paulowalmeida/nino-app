@@ -1,7 +1,7 @@
 import { Alert } from '@nino/ds/components/Alert'
 import { Button } from '@nino/ds/components/Button'
 import { CnpjInput } from '@nino/ds/components/CnpjInput'
-import { Flexbox } from '@nino/ds/components/Flexbox'
+import { Box } from '@nino/ds/components/Box'
 import { FormField } from '@nino/ds/components/FormField'
 import { Heading } from '@nino/ds/components/Heading'
 import { Input } from '@nino/ds/components/Input'
@@ -31,7 +31,7 @@ export const CompanyStep = ({
   } = useCompanyForm({ account, onSignedUp })
 
   return (
-    <Flexbox direction="column">
+    <Box direction="column">
       <RiseIn as="header">
         <Heading level={1} size="2xl" align="center">
           Sua empresa
@@ -41,7 +41,7 @@ export const CompanyStep = ({
         </Text>
       </RiseIn>
 
-      <Flexbox as="form" direction="column" gap={4} mt={8} onSubmit={submit}>
+      <Box as="form" direction="column" gap={4} mt={8} onSubmit={submit}>
         <RiseIn delay={120}>
           <FormField label="Nome" error={errors.company?.name?.message}>
             <Input
@@ -93,7 +93,7 @@ export const CompanyStep = ({
             Voltar
           </Button>
         </RiseIn>
-      </Flexbox>
-    </Flexbox>
+      </Box>
+    </Box>
   )
 }

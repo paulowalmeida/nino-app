@@ -1,5 +1,5 @@
 import { Button } from '@nino/ds/components/Button'
-import { Flexbox } from '@nino/ds/components/Flexbox'
+import { Box } from '@nino/ds/components/Box'
 import { Input } from '@nino/ds/components/Input'
 import { riseDelay } from '@utils/rise-delay'
 
@@ -19,7 +19,7 @@ export const CreateCategoryForm = ({
   onNameChange,
   onSubmit,
 }: CreateCategoryFormProps) => (
-    <Flexbox
+    <Box
       as="form"
       direction={{ mobile: 'column', tablet: 'row' }}
       align={{ tablet: 'center' }}
@@ -46,5 +46,5 @@ export const CreateCategoryForm = ({
       >
         Adicionar
       </Button>
-    </Flexbox>
+    </Box>
   )

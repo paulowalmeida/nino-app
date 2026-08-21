@@ -1,29 +1,14 @@
 import { useParams } from 'react-router'
 
-import { EmptyState } from '@nino/ds/components/EmptyState'
-import { Flexbox } from '@nino/ds/components/Flexbox'
-import { Tabs } from '@nino/ds/components/Tabs'
 import { Breadcrumb } from '@atoms/Breadcrumb/Breadcrumb'
-import {
-  CollaboratorAccessContainer,
-} from '@containers/CollaboratorAccessContainer/CollaboratorAccessContainer'
-import {
-  CollaboratorActivity,
-} from '@organisms/CollaboratorActivity/CollaboratorActivity'
-import {
-  CollaboratorContact,
-} from '@organisms/CollaboratorContact/CollaboratorContact'
-import {
-  CollaboratorHeader,
-} from '@organisms/CollaboratorHeader/CollaboratorHeader'
-import {
-  CollaboratorSummary,
-} from '@organisms/CollaboratorSummary/CollaboratorSummary'
+import { CollaboratorContentContainer } from '@containers/CollaboratorContentContainer/CollaboratorContentContainer'
+import { CollaboratorHeaderContainer } from '@containers/CollaboratorHeaderContainer/CollaboratorHeaderContainer'
 import { useCurrentTenant } from '@hooks/session/useCurrentTenant'
 import { useStaffDetail } from '@hooks/team/useStaffDetail'
-import {
-  CollaboratorDetailSkeleton,
-} from '@skeletons/pages/CollaboratorDetailSkeleton/CollaboratorDetailSkeleton'
+import { Alert } from '@nino/ds/components/Alert'
+import { EmptyState } from '@nino/ds/components/EmptyState'
+import { Box } from '@nino/ds/components/Box'
+import { CollaboratorDetailSkeleton } from '@skeletons/pages/CollaboratorDetailSkeleton/CollaboratorDetailSkeleton'
 
 import styles from './CollaboratorDetail.module.css'
 
@@ -32,46 +17,39 @@ export const CollaboratorDetail = () => {
   const tenant = useCurrentTenant()
   const tenantId = tenant?.tenantId ?? null
 
-  const { data: member, isPending } = useStaffDetail(tenantId, userId as string)
+  const {
+    data: member,
+    isPending,
+    isError,
+  } = useStaffDetail(tenantId, userId as string)
 
   if (isPending) return <CollaboratorDetailSkeleton />
 
+  if (isError) {
+    return (
+      <Box className={styles.page}>
+        <Breadcrumb trail={[{ label: 'Equipe', to: '..' }, { label: '—' }]} />
+        <Alert variant="error" title="Não foi possível carregar a pessoa">
+          Tente novamente em alguns instantes.
+        </Alert>
+      </Box>
+    )
+  }
+
   if (!member) {
     return (
-      <Flexbox className={styles.page}>
+      <Box className={styles.page}>
         <Breadcrumb trail={[{ label: 'Equipe', to: '..' }, { label: '—' }]} />
         <EmptyState>Esta pessoa não está mais nesta loja.</EmptyState>
-      </Flexbox>
+      </Box>
     )
   }
 
   return (
-    <Flexbox className={styles.page}>
-      <Breadcrumb
-        trail={[{ label: 'Equipe', to: '..' }, { label: member.user.name }]}
-      />
+    <Box className={styles.page}>
+      <CollaboratorHeaderContainer member={member} />
 
-      <CollaboratorHeader member={member} />
-
-      <CollaboratorSummary member={member} />
-
-      <CollaboratorContact member={member} />
-
-      <Tabs
-        className={styles.panels}
-        tabs={[
-          {
-            value: 'activity',
-            label: `Atividade · ${member.activity.length}`,
-            content: <CollaboratorActivity activity={member.activity} />,
-          },
-          {
-            value: 'access',
-            label: 'Acesso',
-            content: <CollaboratorAccessContainer member={member} />,
-          },
-        ]}
-      />
-    </Flexbox>
+      <CollaboratorContentContainer member={member} activityHeadingLevel={2} />
+    </Box>
   )
 }

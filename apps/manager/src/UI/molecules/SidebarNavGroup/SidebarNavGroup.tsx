@@ -2,7 +2,7 @@ import type { CSSProperties } from 'react'
 import { NavLink } from 'react-router'
 
 import { Accordion } from '@nino/ds/components/Accordion'
-import { Flexbox } from '@nino/ds/components/Flexbox'
+import { Box } from '@nino/ds/components/Box'
 import type { IconName } from '@nino/ds/components/Icon'
 import { SidebarNavLabel } from '@atoms/SidebarNavLabel/SidebarNavLabel'
 
@@ -43,13 +43,13 @@ export const SidebarNavGroup = ({
   const isGroupOpenOnly = isOpen && !isRouteActive
 
   return (
-    <Flexbox style={delay} className={motion.slide}>
+    <Box style={delay} className={motion.slide}>
       <Accordion
         items={[
           {
             value: section,
             trigger: (
-              <Flexbox direction="row" className={styles.navGroupHeaderRow}>
+              <Box direction="row" className={styles.navGroupHeaderRow}>
                 <SidebarNavLabel
                   icon={icon}
                   label={label}
@@ -62,10 +62,10 @@ export const SidebarNavGroup = ({
                       : 'text-fg-on-brand/45'
                   }
                 />
-              </Flexbox>
+              </Box>
             ),
             content: (
-              <Flexbox direction="column" className={styles.subNav}>
+              <Box direction="column" className={styles.subNav}>
                 {items.map((item) => (
                   <NavLink
                     key={item.to}
@@ -89,7 +89,7 @@ export const SidebarNavGroup = ({
                     )}
                   </NavLink>
                 ))}
-              </Flexbox>
+              </Box>
             ),
           },
         ]}
@@ -106,6 +106,6 @@ export const SidebarNavGroup = ({
           .join(' ')}
         contentClassName={styles.navGroupPanel}
       />
-    </Flexbox>
+    </Box>
   )
 }

@@ -4,7 +4,7 @@ import {
   ColorPicker as ArkColorPicker,
   parseColor,
 } from '@ark-ui/react/color-picker'
-import { Flexbox } from '@ds/components/Flexbox/Flexbox'
+import { Box } from '@ds/components/Box/Box'
 import { Icon } from '@ds/components/Icon/Icon'
 import { Text } from '@ds/components/Text/Text'
 import { mergeClasses } from '@ds/lib/mergeClasses/mergeClasses'
@@ -86,8 +86,8 @@ export function ColorPicker({
       onValueChange={(e) => onValueChange?.(e.value.toString('hex'))}
       className={mergeClasses(styles.picker, className)}
     >
-      <Flexbox direction="column" gap={4}>
-        <Flexbox direction="column" gap={2}>
+      <Box direction="column" gap={4}>
+        <Box direction="column" gap={2}>
           <Text size="xs" weight="bold" color="faint" case="uppercase">
             Matiz
           </Text>
@@ -111,9 +111,9 @@ export function ColorPicker({
               </button>
             ))}
           </div>
-        </Flexbox>
+        </Box>
 
-        <Flexbox direction="column" gap={2}>
+        <Box direction="column" gap={2}>
           <Text size="xs" weight="bold" color="faint" case="uppercase">
             {family.name}
           </Text>
@@ -143,8 +143,8 @@ export function ColorPicker({
               </ArkColorPicker.SwatchTrigger>
             ))}
           </ArkColorPicker.SwatchGroup>
-        </Flexbox>
-      </Flexbox>
+        </Box>
+      </Box>
     </ArkColorPicker.Root>
   )
 }

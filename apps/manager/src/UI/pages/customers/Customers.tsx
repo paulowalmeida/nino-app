@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { Link } from 'react-router'
 
 import { Alert } from '@nino/ds/components/Alert'
-import { Flexbox } from '@nino/ds/components/Flexbox'
+import { Box } from '@nino/ds/components/Box'
 import { Button } from '@nino/ds/components/Button'
 import { EmptyState } from '@nino/ds/components/EmptyState'
 import { Input } from '@nino/ds/components/Input'
@@ -65,7 +65,7 @@ export const Customers = () => {
       </header>
 
       {isPending && (
-        <Flexbox direction="column" gap={2} mt={6}>
+        <Box direction="column" gap={2} mt={6}>
           {CUSTOMERS_GHOST_ROWS.map((row) => (
             <div key={row} className={`${styles.grid} ${styles.ghostRow}`}>
               <span className={styles.who}>
@@ -84,7 +84,7 @@ export const Customers = () => {
               </span>
             </div>
           ))}
-        </Flexbox>
+        </Box>
       )}
 
       {isError && (

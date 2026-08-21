@@ -1,13 +1,13 @@
 import { Link } from 'react-router'
 
 import { Button } from '@nino/ds/components/Button'
-import { Flexbox } from '@nino/ds/components/Flexbox'
+import { Box } from '@nino/ds/components/Box'
 
 import styles from './CatalogActions.module.css'
 import motion from '@styles/motion.module.css'
 
 export const CatalogActions = () => (
-  <Flexbox
+  <Box
     direction={{ mobile: 'column', tablet: 'row' }}
     gap={{ mobile: 2, tablet: 3 }}
     className={styles.actions}
@@ -22,5 +22,5 @@ export const CatalogActions = () => (
     <Button asChild className={`${motion.press} ${styles.newItem}`}>
       <Link to="novo">Novo item</Link>
     </Button>
-  </Flexbox>
+  </Box>
 )

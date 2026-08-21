@@ -57,6 +57,30 @@ The checker enforces configured composition and prohibited integration access. I
 
 The exact dependency direction is defined by the normative architecture rule, not by this Skill.
 
+## Page Region Map
+
+Before deciding whether individual Page children need Containers, map the
+screen's macro composition from top to bottom:
+
+```text
+Header  → navigation, identity, summary, and contextual controls
+Content → the main screen task, sections, lists, panels, or tabs
+Footer  → page-specific closing actions or supplementary controls, when present
+```
+
+Treat these as semantic boundaries, not an automatic requirement for HTML
+elements or wrappers. Do not flatten substantial regions just because a
+Page-level query provides their data. Review whether each region has one stable
+reason to change and whether representing it with a named regional Container
+would make the Page's macro composition clearer.
+
+A regional Container may receive presentation-ready data from the Page when
+the query genuinely controls the screen as a whole. It must still own a real
+Header, Content, or Footer responsibility; reject generic wrappers, one-child
+pass-through components, and `ContentContainer`s that conceal unrelated
+regions. Apply the normal integration-ownership test to every region that
+consumes application/server state.
+
 ## Page vs. Container Decision Test
 
 For each integration owned by a Page, ask:

@@ -1,69 +1,72 @@
 import { Button } from '@nino/ds/components/Button'
 import { Checkbox } from '@nino/ds/components/Checkbox'
-import { Flexbox } from '@nino/ds/components/Flexbox'
+import { Box } from '@nino/ds/components/Box'
 import { Icon } from '@nino/ds/components/Icon'
+import { Text } from '@nino/ds/components/Text'
 
 import styles from './MenuBoardControls.module.css'
 import motion from '@styles/motion.module.css'
 
-export type MenuBoardSelection = {
+export type MenuBoardControlsSelection = {
   isSelecting: boolean
-  selectedIds: Set<string>
+  selectedItemCount: number
+  isAllLoadedSelected: boolean
+  isSomeLoadedSelected: boolean
   onStartSelection: () => void
-  onToggleSelection: (id: string) => void
   onToggleAllSelection: () => void
   onCancelSelection: () => void
   onRequestBulkDelete: () => void
 }
 
 type MenuBoardControlsProps = {
-  loadedItemCount: number
   total: number
   canReorder: boolean
-  selection: MenuBoardSelection
+  selection: MenuBoardControlsSelection
 }
 
 export const MenuBoardControls = ({
-  loadedItemCount,
   total,
   canReorder,
   selection,
 }: MenuBoardControlsProps) => {
   const {
     isSelecting,
-    selectedIds,
+    selectedItemCount,
+    isAllLoadedSelected,
+    isSomeLoadedSelected,
     onStartSelection,
     onToggleAllSelection,
     onCancelSelection,
     onRequestBulkDelete,
   } = selection
-  const allLoadedSelected =
-    loadedItemCount > 0 && selectedIds.size === loadedItemCount
-  const someLoadedSelected = selectedIds.size > 0 && !allLoadedSelected
-
   return (
-    <Flexbox
+    <Box
       direction="row"
       align="center"
       gap={2}
       shrink={false}
       className={styles.toolbar}
     >
-      <Flexbox className={styles.toolbarLead}>
+      <Box
+        align="center"
+        justify="center"
+        shrink={false}
+        className={styles.toolbarLead}
+      >
         {isSelecting ? (
           <Checkbox
             size="sm"
             checked={
-              allLoadedSelected
+              isAllLoadedSelected
                 ? true
-                : someLoadedSelected
+                : isSomeLoadedSelected
                   ? 'indeterminate'
                   : false
             }
             onCheckedChange={onToggleAllSelection}
             className={motion.press}
             aria-label={
-              allLoadedSelected ? 'Desmarcar todos' : 'Selecionar todos'
+              isAllLoadedSelected ? 'Desmarcar todos' : 'Selecionar todos'
             }
           />
         ) : (
@@ -77,23 +80,23 @@ export const MenuBoardControls = ({
             <Icon name="check-square" />
           </Button>
         )}
-      </Flexbox>
+      </Box>
 
-      <p className={styles.tally}>
+      <Text as="p" size="xs" color="faint" className={styles.tally}>
         {isSelecting
-          ? selectedIds.size === 1
+          ? selectedItemCount === 1
             ? '1 selecionado'
-            : `${selectedIds.size} selecionados`
+            : `${selectedItemCount} selecionados`
           : total === 1
             ? '1 item'
             : `${total} itens`}
         {canReorder &&
           !isSelecting &&
           ' · arraste para mudar a ordem no app do cliente'}
-      </p>
+      </Text>
 
       {isSelecting && (
-        <Flexbox
+        <Box
           direction="row"
           align="center"
           gap={2}
@@ -109,7 +112,7 @@ export const MenuBoardControls = ({
             Cancelar
           </Button>
 
-          {selectedIds.size > 0 && (
+          {selectedItemCount > 0 && (
             <Button
               variant="danger"
               size="sm"
@@ -119,8 +122,8 @@ export const MenuBoardControls = ({
               Excluir
             </Button>
           )}
-        </Flexbox>
+        </Box>
       )}
-    </Flexbox>
+    </Box>
   )
 }
