@@ -5,8 +5,8 @@ import { Input } from '@nino/ds/components/Input'
 import { Skeleton } from '@nino/ds/components/Skeleton'
 import type { MenuItem } from '@custom_types/product/menu-item'
 import type { MenuSection } from '@custom_types/product/menu-section'
-import { CategoryChips } from '@organisms/CategoryChips/CategoryChips'
 import { ProductCard } from '@organisms/ProductCard/ProductCard'
+import { CategoryChips } from '@molecules/CategoryChips/CategoryChips'
 import {
   PRODUCT_GRID_SKELETON_CARDS,
   PRODUCT_GRID_SKELETON_TABS,

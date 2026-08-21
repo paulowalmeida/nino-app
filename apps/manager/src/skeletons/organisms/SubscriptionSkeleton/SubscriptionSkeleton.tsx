@@ -6,34 +6,40 @@ import { ACCOUNT_SUBSCRIPTION_GHOST_FACTS } from '@constants/account.constants'
 import styles from './SubscriptionSkeleton.module.css'
 
 export const SubscriptionSkeleton = () => (
-  <Card>
-    <Flexbox
-      wrap
-      align="end"
-      justify="between"
-      gap={3}
-      className={styles.plan}
-    >
-      <Flexbox>
-        <Skeleton variant="text" className={styles.ghostPlanLabel} />
-        <Skeleton variant="text" className={styles.ghostPlanName} />
-      </Flexbox>
-      <Skeleton variant="text" className={styles.ghostPrice} />
-    </Flexbox>
+  <>
+    <p role="status" aria-label="Carregando assinatura" className="sr-only">
+      Carregando assinatura
+    </p>
 
-    <dl className={styles.facts}>
-      {ACCOUNT_SUBSCRIPTION_GHOST_FACTS.map((fact) => (
-        <Flexbox
-          key={fact}
-          align="baseline"
-          justify="between"
-          gap={3}
-          className={styles.fact}
-        >
-          <Skeleton variant="text" className={styles.ghostFactLabel} />
-          <Skeleton variant="text" className={styles.ghostFactValue} />
+    <Card>
+      <Flexbox
+        wrap
+        align="end"
+        justify="between"
+        gap={3}
+        className={styles.plan}
+      >
+        <Flexbox>
+          <Skeleton variant="text" className={styles.ghostPlanLabel} />
+          <Skeleton variant="text" className={styles.ghostPlanName} />
         </Flexbox>
-      ))}
-    </dl>
-  </Card>
+        <Skeleton variant="text" className={styles.ghostPrice} />
+      </Flexbox>
+
+      <dl className={styles.facts}>
+        {ACCOUNT_SUBSCRIPTION_GHOST_FACTS.map((fact) => (
+          <Flexbox
+            key={fact}
+            align="baseline"
+            justify="between"
+            gap={3}
+            className={styles.fact}
+          >
+            <Skeleton variant="text" className={styles.ghostFactLabel} />
+            <Skeleton variant="text" className={styles.ghostFactValue} />
+          </Flexbox>
+        ))}
+      </dl>
+    </Card>
+  </>
 )

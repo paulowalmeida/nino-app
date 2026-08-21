@@ -1,16 +1,14 @@
 import { render, screen } from '@testing-library/react'
 import { describe, expect, it } from 'vitest'
 
-import { AccountBadge } from '@organisms/AccountBadge/AccountBadge'
+import { AccountHeader } from '@organisms/AccountHeader/AccountHeader'
 
-import { googleProfile, neverLoggedProfile } from './AccountBadge.mock'
+import { googleProfile, neverLoggedProfile } from './AccountHeader.mock'
 
-describe(AccountBadge.name, () => {
+describe(AccountHeader.name, () => {
   it('titles the screen with the name and lists the account facts', () => {
-    // Arrange / Act
-    render(<AccountBadge profile={googleProfile} />)
+    render(<AccountHeader profile={googleProfile} />)
 
-    // Assert
     expect(
       screen.getByRole('heading', { name: 'Marina Prado' })
     ).toBeInTheDocument()
@@ -22,19 +20,15 @@ describe(AccountBadge.name, () => {
   })
 
   it('says the person never signed in instead of showing a dash', () => {
-    // Arrange / Act
-    render(<AccountBadge profile={neverLoggedProfile} />)
+    render(<AccountHeader profile={neverLoggedProfile} />)
 
-    // Assert
     expect(screen.getByText('Ainda não entrou por aqui')).toBeInTheDocument()
     expect(screen.getByText('Entra com E-mail e senha')).toBeInTheDocument()
   })
 
   it('holds the space with skeletons while the profile loads', () => {
-    // Arrange / Act
-    render(<AccountBadge profile={undefined} />)
+    render(<AccountHeader profile={undefined} />)
 
-    // Assert
     expect(screen.queryByRole('heading')).not.toBeInTheDocument()
     expect(screen.queryByText(/Entra com/)).not.toBeInTheDocument()
   })

@@ -1,31 +1,26 @@
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-import { render, screen, waitFor } from '@testing-library/react'
+import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { describe, expect, it, vi } from 'vitest'
 
-import { ProductService } from '@services/product.service'
 import {
   DeleteItemsDialog,
 } from '@organisms/DeleteItemsDialog/DeleteItemsDialog'
 
-vi.mock('@services/product.service')
-
-const renderDialog = (itemIds: string[], onClose = vi.fn()) => {
-  const client = new QueryClient({
-    defaultOptions: { mutations: { retry: false } },
-  })
-
+const renderDialog = (
+  itemIds: string[],
+  onClose = vi.fn(),
+  onConfirm = vi.fn().mockResolvedValue(undefined)
+) => {
   render(
-    <QueryClientProvider client={client}>
-      <DeleteItemsDialog
-        tenantId="tenant-1"
-        itemIds={itemIds}
-        onClose={onClose}
-      />
-    </QueryClientProvider>
+    <DeleteItemsDialog
+      itemIds={itemIds}
+      isPending={false}
+      onConfirm={onConfirm}
+      onClose={onClose}
+    />
   )
 
-  return { onClose }
+  return { onClose, onConfirm }
 }
 
 describe(DeleteItemsDialog.name, () => {
@@ -36,43 +31,28 @@ describe(DeleteItemsDialog.name, () => {
     // Assert
     expect(screen.getByText('Excluir itens')).toBeInTheDocument()
     expect(screen.getByText(/2 itens serão removidos/)).toBeInTheDocument()
-    expect(ProductService.removeItem).not.toHaveBeenCalled()
   })
 
-  it('deletes every selected item only after the confirm button', async () => {
+  it('requests deletion only after the confirm button', async () => {
     // Arrange
-    vi.mocked(ProductService.removeItem).mockResolvedValue({
-      message: 'ok',
-    })
-    const { onClose } = renderDialog(['item-1', 'item-2'])
+    const { onConfirm } = renderDialog(['item-1', 'item-2'])
 
     // Act
     await userEvent.click(screen.getByRole('button', { name: 'Excluir' }))
 
     // Assert
-    await waitFor(() =>
-      expect(ProductService.removeItem).toHaveBeenCalledWith(
-        'tenant-1',
-        'item-1'
-      )
-    )
-    expect(ProductService.removeItem).toHaveBeenCalledWith(
-      'tenant-1',
-      'item-2'
-    )
-    await waitFor(() => expect(onClose).toHaveBeenCalled())
+    expect(onConfirm).toHaveBeenCalledOnce()
   })
 
-  it('closes without deleting when the person backs out', async () => {
+  it('closes without requesting deletion when the person backs out', async () => {
     // Arrange
-    vi.mocked(ProductService.removeItem).mockClear()
-    const { onClose } = renderDialog(['item-1'])
+    const { onClose, onConfirm } = renderDialog(['item-1'])
 
     // Act
     await userEvent.click(screen.getByRole('button', { name: /cancelar/i }))
 
     // Assert
-    expect(ProductService.removeItem).not.toHaveBeenCalled()
+    expect(onConfirm).not.toHaveBeenCalled()
     expect(onClose).toHaveBeenCalled()
   })
 

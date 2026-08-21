@@ -1,11 +1,11 @@
 import { useState } from 'react'
 
 import { Dialog } from '@nino/ds/components/Dialog'
-import { useDeleteMenuItems } from '@hooks/product/useDeleteMenuItems'
 
 export type DeleteItemsDialogProps = {
-  tenantId: string | null
   itemIds: string[]
+  isPending: boolean
+  onConfirm: () => Promise<void>
   onClose: () => void
 }
 
@@ -15,28 +15,20 @@ export type DeleteItemsDialogProps = {
  * animation plays, after `onClose` has already emptied `itemIds`.
  */
 export const DeleteItemsDialog = ({
-  tenantId,
   itemIds,
+  isPending,
+  onConfirm,
   onClose,
 }: DeleteItemsDialogProps) => {
   const [target, setTarget] = useState(itemIds)
   if (itemIds.length > 0 && itemIds !== target) setTarget(itemIds)
 
-  const { mutateAsync: deleteItems, isPending } = useDeleteMenuItems(tenantId)
   const count = target.length
   const description =
     (count === 1
       ? '1 item será removido do cardápio.'
       : `${count} itens serão removidos do cardápio.`) +
     ' Esta ação não pode ser desfeita.'
-
-  const handleConfirm = async () => {
-    try {
-      await deleteItems(target)
-    } finally {
-      onClose()
-    }
-  }
 
   return (
     <Dialog
@@ -45,7 +37,7 @@ export const DeleteItemsDialog = ({
       title={count === 1 ? 'Excluir item' : 'Excluir itens'}
       description={description}
       confirmLabel="Excluir"
-      onConfirm={() => void handleConfirm()}
+      onConfirm={() => void onConfirm()}
       onCancel={onClose}
       loading={isPending}
     />

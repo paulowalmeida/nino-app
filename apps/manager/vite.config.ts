@@ -53,6 +53,7 @@ export default defineConfig({
       '@assets': resolve(__dirname, 'src/assets'),
       '@atoms': resolve(__dirname, 'src/UI/atoms'),
       '@constants': resolve(__dirname, 'src/constants'),
+      '@containers': resolve(__dirname, 'src/UI/containers'),
       '@custom_types': resolve(__dirname, 'src/types'),
       '@guards': resolve(__dirname, 'src/guards'),
       '@hooks': resolve(__dirname, 'src/hooks'),

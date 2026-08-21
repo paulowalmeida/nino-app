@@ -7,7 +7,7 @@ import { ACCOUNT_PROVIDER_LABEL } from '@constants/account.constants'
 import { initialsOf } from '@utils/initials'
 import { lastSeenLabel } from '@utils/last-seen'
 
-import styles from './AccountBadge.module.css'
+import styles from './AccountHeader.module.css'
 import motion from '@styles/motion.module.css'
 
 const memberDay = new Intl.DateTimeFormat('pt-BR', {
@@ -16,7 +16,7 @@ const memberDay = new Intl.DateTimeFormat('pt-BR', {
   year: 'numeric',
 })
 
-type AccountBadgeProps = {
+type AccountHeaderProps = {
   profile: Profile | undefined
 }
 
@@ -36,13 +36,8 @@ const factsOf = (profile: Profile): string[] => {
   ]
 }
 
-/**
- * Quem está logado, no topo da própria ficha: retrato, nome e os fatos da
- * conta como uma linha só. São dados que se leem uma vez e não se editam —
- * ficam acima do formulário, não numa tabela depois do botão de salvar.
- */
-export const AccountBadge = ({ profile }: AccountBadgeProps) => (
-  <header className={`${motion.deal} ${styles.badge}`}>
+export const AccountHeader = ({ profile }: AccountHeaderProps) => (
+  <header className={`${motion.deal} ${styles.header}`}>
     <Avatar
       size="xl"
       fallback={profile ? initialsOf(profile.name) : undefined}

@@ -29,6 +29,7 @@
       "@assets/*": ["src/assets/*"],
       "@atoms/*": ["src/UI/atoms/*"],
       "@constants/*": ["src/constants/*"],
+      "@containers/*": ["src/UI/containers/*"],
       "@custom_types/*": ["src/types/*"],
       "@guards/*": ["src/guards/*"],
       "@hooks/*": ["src/hooks/*"],

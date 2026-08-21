@@ -1,4 +1,5 @@
 import type { ProductCategory } from '@custom_types/product/product-category'
+
 export const twoCategories: ProductCategory[] = [
   {
     id: 'cat-1',

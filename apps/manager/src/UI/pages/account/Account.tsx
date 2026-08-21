@@ -1,7 +1,7 @@
 import { Eyebrow } from '@nino/ds/components/Eyebrow'
 import { Flexbox } from '@nino/ds/components/Flexbox'
-import { AccountBadge } from '@organisms/AccountBadge/AccountBadge'
-import { AccountProfileForm } from '@organisms/AccountProfileForm/AccountProfileForm'
+import { AccountProfileContainer } from '../../containers/AccountProfileContainer/AccountProfileContainer'
+import { AccountHeader } from '@organisms/AccountHeader/AccountHeader'
 import { useProfile } from '@hooks/account/useProfile'
 import {
   AccountFieldsSkeleton,
@@ -16,12 +16,12 @@ export const Account = () => {
     <Flexbox className={styles.page}>
       <Eyebrow className={motion.deal}>Meus dados</Eyebrow>
 
-      <AccountBadge profile={profile} />
+      <AccountHeader profile={profile} />
 
       {isPending ? (
         <AccountFieldsSkeleton />
       ) : (
-        <AccountProfileForm profile={profile} />
+        <AccountProfileContainer profile={profile} />
       )}
     </Flexbox>
   )

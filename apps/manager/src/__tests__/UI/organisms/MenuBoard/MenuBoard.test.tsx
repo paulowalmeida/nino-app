@@ -52,27 +52,30 @@ const BoardHarness = ({
   return (
     <MemoryRouter>
       <MenuBoard
-        items={items}
-        total={items.length}
-        isFetchingNextPage={false}
-        isSelecting={isSelecting}
-        selectedIds={selectedIds}
-        canReorder
-        loadMoreSentinelRef={vi.fn()}
-        onStartSelection={() => setIsSelecting(true)}
-        onToggleSelection={toggleSelection}
-        onToggleAllSelection={() =>
-          setSelectedIds(
-            selectedIds.size === items.length
-              ? new Set()
-              : new Set(items.map(({ id }) => id))
-          )
-        }
-        onCancelSelection={cancelSelection}
-        onRequestDelete={onRequestDelete}
-        onRequestBulkDelete={onRequestBulkDelete}
-        onAvailabilityChange={vi.fn()}
-        onReorder={vi.fn()}
+        board={{
+          items,
+          total: items.length,
+          isFetchingNextPage: false,
+          canReorder: true,
+          loadMoreSentinelRef: vi.fn(),
+          onRequestDelete,
+          onAvailabilityChange: vi.fn(),
+          onReorder: vi.fn(),
+        }}
+        selection={{
+          isSelecting,
+          selectedIds,
+          onStartSelection: () => setIsSelecting(true),
+          onToggleSelection: toggleSelection,
+          onToggleAllSelection: () =>
+            setSelectedIds(
+              selectedIds.size === items.length
+                ? new Set()
+                : new Set(items.map(({ id }) => id))
+            ),
+          onCancelSelection: cancelSelection,
+          onRequestBulkDelete,
+        }}
       />
     </MemoryRouter>
   )

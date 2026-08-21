@@ -1,5 +1,8 @@
 export const DESCRIPTION_MAX_LENGTH = 300
 
+/** Number of menu items fetched per catalog page. */
+export const CATALOG_PAGE_SIZE = 20
+
 /** Duas seções de três itens: o que cabe na primeira tela do cardápio. */
 export const NEW_ORDER_MENU_GHOST_SECTIONS = ['first', 'second']
 export const NEW_ORDER_MENU_GHOST_ITEMS = ['first', 'second', 'third']

@@ -2,6 +2,7 @@ import { Chip } from '@nino/ds/components/Chip'
 import { Flexbox } from '@nino/ds/components/Flexbox'
 import { Skeleton } from '@nino/ds/components/Skeleton'
 import { CATEGORY_CHIPS_GHOST_ITEMS } from '@constants/product.constants'
+
 import styles from './CategoryChips.module.css'
 
 type CategoryChipsProps = {

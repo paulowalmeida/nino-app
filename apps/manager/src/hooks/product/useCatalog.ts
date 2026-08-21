@@ -2,17 +2,11 @@ import { useMemo } from 'react'
 
 import { useInfiniteQuery } from '@tanstack/react-query'
 
+import { CATALOG_PAGE_SIZE } from '@constants/product.constants'
 import { queryKeys } from '@constants/query-keys'
 import type { MenuItem } from '@custom_types/product/menu-item'
 import type { MenuPage } from '@custom_types/product/menu-page'
 import { ProductService } from '@services/product.service'
-
-/**
- * Twenty at a time: fits a screen and a half on mobile, which is roughly
- * how far someone scrolls before deciding to filter instead. A bigger page
- * only postpones the same problem.
- */
-export const CATALOG_PAGE_SIZE = 20
 
 type CatalogFilter = {
   categoryId: string | null
