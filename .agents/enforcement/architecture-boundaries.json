@@ -1,36 +1,53 @@
 {
   "rules": [
     {
-      "id": "presentation-cannot-import-state",
+      "id": "presentation-cannot-import-application-integration",
       "severity": "block",
       "mode": "transitive",
       "sourceDirectories": ["UI/atoms", "UI/molecules", "UI/organisms"],
-      "targetDirectories": ["states"],
-      "message": "Presentation components must not depend on state modules, directly or transitively."
+      "targetDirectories": ["states", "hooks", "services"],
+      "excludedTargetDirectories": ["hooks/ui"],
+      "message": "Presentation components must not depend on application/server-state integration. Pure presentation hooks under hooks/ui remain allowed."
     },
     {
       "id": "atom-cannot-compose-peer-or-higher-ui",
       "severity": "block",
       "mode": "direct",
       "sourceDirectories": ["UI/atoms"],
-      "targetDirectories": ["UI/atoms", "UI/molecules", "UI/organisms", "UI/pages"],
-      "message": "Atoms must not directly compose another application Atom or any higher UI layer."
+      "targetDirectories": ["UI/atoms", "UI/molecules", "UI/organisms", "UI/containers", "UI/pages", "UI/layouts"],
+      "message": "Atoms must not directly compose another application Atom or any higher application UI layer."
     },
     {
       "id": "molecule-cannot-compose-peer-or-higher-ui",
       "severity": "block",
       "mode": "direct",
       "sourceDirectories": ["UI/molecules"],
-      "targetDirectories": ["UI/molecules", "UI/organisms", "UI/pages"],
-      "message": "Molecules must not directly compose molecules, organisms, or pages."
+      "targetDirectories": ["UI/molecules", "UI/organisms", "UI/containers", "UI/pages", "UI/layouts"],
+      "message": "Molecules must not directly compose molecules, organisms, containers, pages, or layouts."
     },
     {
       "id": "organism-cannot-compose-peer-or-higher-ui",
       "severity": "block",
       "mode": "direct",
       "sourceDirectories": ["UI/organisms"],
-      "targetDirectories": ["UI/organisms", "UI/pages"],
-      "message": "Organisms must not directly compose organisms or pages."
+      "targetDirectories": ["UI/organisms", "UI/containers", "UI/pages", "UI/layouts"],
+      "message": "Organisms must not directly compose organisms, containers, pages, or layouts."
+    },
+    {
+      "id": "container-cannot-compose-peer-or-higher-ui",
+      "severity": "block",
+      "mode": "direct",
+      "sourceDirectories": ["UI/containers"],
+      "targetDirectories": ["UI/containers", "UI/pages", "UI/layouts"],
+      "message": "Containers must not directly compose other containers, pages, or layouts."
+    },
+    {
+      "id": "page-cannot-compose-page-or-layout",
+      "severity": "block",
+      "mode": "direct",
+      "sourceDirectories": ["UI/pages"],
+      "targetDirectories": ["UI/pages", "UI/layouts"],
+      "message": "Pages must not directly compose other pages or layouts."
     }
   ]
 }
