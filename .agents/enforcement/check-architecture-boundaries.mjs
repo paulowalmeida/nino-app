@@ -46,6 +46,9 @@ function loadPolicy(file) {
       if (!Array.isArray(rule.targetDirectories) || rule.targetDirectories.length === 0) {
         throw new Error(`rule ${rule.id} requires a non-empty targetDirectories array`);
       }
+      if (rule.excludedTargetDirectories !== undefined && !Array.isArray(rule.excludedTargetDirectories)) {
+        throw new Error(`rule ${rule.id} excludedTargetDirectories must be an array when provided`);
+      }
       ids.add(rule.id);
     }
     return policy.rules;
@@ -87,6 +90,12 @@ function inDirectory(file, directory) {
   return value === directory || value.startsWith(`${directory}/`);
 }
 
+function isForbiddenTarget(file, targetDirectories, excludedTargetDirectories = []) {
+  const isTarget = targetDirectories.some((directory) => inDirectory(file, directory));
+  if (!isTarget) return false;
+  return !excludedTargetDirectories.some((directory) => inDirectory(file, directory));
+}
+
 function sourceOf(file) {
   if (!sourceCache.has(file)) sourceCache.set(file, fs.readFileSync(file, "utf8"));
   return sourceCache.get(file);
@@ -109,22 +118,32 @@ function dependenciesOf(file) {
   return dependencies;
 }
 
-function directForbiddenDependency(startFile, targetDirectories) {
+function directForbiddenDependency(startFile, targetDirectories, excludedTargetDirectories) {
   return dependenciesOf(startFile).find((dependency) =>
-    targetDirectories.some((directory) => inDirectory(dependency.resolved, directory)),
+    isForbiddenTarget(dependency.resolved, targetDirectories, excludedTargetDirectories),
   ) ?? null;
 }
 
-function transitiveForbiddenDependency(startFile, targetDirectories, visited = new Set()) {
+function transitiveForbiddenDependency(
+  startFile,
+  targetDirectories,
+  excludedTargetDirectories,
+  visited = new Set(),
+) {
   if (visited.has(startFile)) return null;
   visited.add(startFile);
 
   for (const dependency of dependenciesOf(startFile)) {
-    if (targetDirectories.some((directory) => inDirectory(dependency.resolved, directory))) {
+    if (isForbiddenTarget(dependency.resolved, targetDirectories, excludedTargetDirectories)) {
       return { ...dependency, target: dependency.resolved };
     }
 
-    const nested = transitiveForbiddenDependency(dependency.resolved, targetDirectories, visited);
+    const nested = transitiveForbiddenDependency(
+      dependency.resolved,
+      targetDirectories,
+      excludedTargetDirectories,
+      visited,
+    );
     if (nested) return nested;
   }
 
@@ -135,9 +154,10 @@ for (const file of targetFile ? [targetFile] : files) {
   for (const rule of layerRules) {
     if (!rule.sourceDirectories.some((directory) => inDirectory(file, directory))) continue;
 
+    const excludedTargetDirectories = rule.excludedTargetDirectories ?? [];
     const dependency = rule.mode === "transitive"
-      ? transitiveForbiddenDependency(file, rule.targetDirectories)
-      : directForbiddenDependency(file, rule.targetDirectories);
+      ? transitiveForbiddenDependency(file, rule.targetDirectories, excludedTargetDirectories)
+      : directForbiddenDependency(file, rule.targetDirectories, excludedTargetDirectories);
     if (!dependency) continue;
 
     const diagnosticSource = sourceOf(dependency.file ?? file);
