@@ -1,6 +1,6 @@
 # Hooks Rules
 
-This file defines mandatory rules for React Hooks, custom Hooks, local UI state, and Zustand application-state consumption.
+This file defines mandatory rules for React Hooks, custom Hooks, local UI state, Zustand application-state consumption, and the component categories authorized to consume integrated state.
 
 React-specific rules in this file are grounded in the official React documentation. Zustand-specific implementation facts are grounded in the official Zustand documentation. Nino-specific rules define application-state boundaries and are additional project constraints.
 
@@ -56,7 +56,7 @@ When a Custom Hook accumulates distinct responsibilities or independent reasons 
 
 A Custom Hook **MUST NOT** be used as an architectural escape hatch to bypass component-layer restrictions defined by `rules/architecture.md`.
 
-## Local UI State
+## Local UI State and UI Hooks
 
 Local UI state is state that exists solely to control the local interaction or presentation behavior of the component that owns it.
 
@@ -70,7 +70,11 @@ Examples include:
 
 Local UI state **MAY** use React state mechanisms such as `useState` or `useReducer` when that state belongs exclusively to the component's own UI behavior.
 
-Local UI state **MUST NOT** be used to hide application state, domain state, server state, or shared state merely to avoid the approved state-management boundary.
+Pure UI Custom Hooks may also be consumed by Atoms, Molecules, and Organisms when they encapsulate presentation-only behavior and do not read application/server state, call Services/APIs, use TanStack Query, or hide an otherwise prohibited dependency. In the current repository, `hooks/ui` is the designated location for such application UI Hooks.
+
+Examples of acceptable presentation-only responsibilities include disclosure state, media-query behavior, local keyboard/focus behavior, or reusable local interaction mechanics.
+
+Local UI state or a UI Hook **MUST NOT** be used to hide application state, domain state, server state, shared state, or endpoint integration merely to avoid an approved boundary.
 
 ## Application State — Zustand
 
@@ -90,6 +94,7 @@ The following component or execution categories are authorized to consume Zustan
 
 ```text
 Page        ✅
+Container   ✅
 Layout      ✅
 Guard       ✅
 Loader      ✅
@@ -101,9 +106,11 @@ These categories may select application-state data and actions from the Zustand 
 
 Authorization to consume Zustand **does NOT** authorize a category to expose the Store Hook itself to a prohibited UI layer.
 
+A Page SHOULD consume Zustand only when the selected state affects Page-level governance or screen-level rendering. Region-specific application-state consumption SHOULD live in the narrowest coherent Container instead of accumulating in the Page.
+
 ## Forbidden Direct Consumers of Zustand Application State
 
-The following UI layers **MUST NOT** consume Zustand Store Hooks directly:
+The following presentation layers **MUST NOT** consume Zustand Store Hooks directly:
 
 ```text
 Atom       ❌
@@ -138,7 +145,7 @@ An authorized consumer **MAY** pass application-state data and actions to a lowe
 Allowed:
 
 ```tsx
-function User() {
+function UserContainer() {
   const user = useUserStore((state) => state.user)
   const saveUser = useUserStore((state) => state.saveUser)
 
@@ -149,7 +156,7 @@ function User() {
 Forbidden:
 
 ```tsx
-function User() {
+function UserContainer() {
   return <UserProfile storeHook={useUserStore} />
 }
 ```
@@ -164,17 +171,30 @@ A component **MUST NOT** subscribe to a broad portion of the store merely becaus
 
 When using Zustand selectors, the agent **SHOULD** select the smallest relevant state required by the component or Hook.
 
-The agent **MUST NOT** move application-state logic into Atoms, Molecules, or Organisms merely to reduce code in the authorized consumer.
+The agent **MUST NOT** move application-state logic into Atoms, Molecules, or Organisms merely to reduce code in an authorized consumer.
+
+When Page state usage grows because multiple independent regions have distinct integration needs, the agent MUST evaluate whether those regions belong in separate Containers rather than leaving the Page as a broad integration owner.
 
 ## Endpoint and Server-State Boundary
 
-This file does not redefine the project's server-state or endpoint architecture.
+Hooks that consume server state, endpoint state, or tools such as TanStack Query **MUST** follow `rules/data-boundaries.md` and `rules/architecture.md`.
 
-Hooks that consume server state, endpoint state, or tools such as TanStack Query **MUST** follow the dedicated endpoint/server-state rules when those rules are present.
+For component consumption:
+
+```text
+Page        ✅ only for Page-level governance/render decisions
+Container   ✅ for its coherent region responsibility
+Layout      ✅ only when persistent chrome genuinely requires it
+Atom        ❌
+Molecule    ❌
+Organism    ❌
+```
+
+Atoms, Molecules, and Organisms MAY consume presentation-ready values, status flags, and callbacks produced by an authorized Page/Container boundary; they MUST NOT consume domain/query Hooks, Services, or APIs directly.
+
+A Page MUST NOT absorb region-specific endpoint orchestration merely because it is the route component. Prefer the narrowest coherent Container when the integration exists to operate one semantic region of the screen.
 
 The agent **MUST NOT** infer that every endpoint request belongs in Zustand solely because both can be accessed through Hooks.
-
-Until an explicit server-state rule exists, do not invent an additional endpoint-to-Zustand requirement.
 
 ## Hook-to-Hook Composition
 
@@ -197,8 +217,10 @@ Before a new or modified Hook/component consumes state, the agent **MUST** be ab
 1. What kind of state is this?
 2. Is it local UI state, application state, server/remote state, or another category defined by project rules?
 3. Which source of truth owns that state?
-4. Is the current layer authorized to consume that source directly?
-5. Can the same requirement be satisfied through props/actions without creating a new state dependency?
+4. Is the current layer/category authorized to consume that source directly?
+5. If this is a Page, does the state affect screen governance as a whole, or should it move to a coherent Container?
+6. If this is a Container, is the state actually scoped to that Container's responsibility?
+7. Can the presentation requirement be satisfied through values/actions without exposing the integration source to an Atom, Molecule, or Organism?
 
 If the source-of-truth category or authorization cannot be established from the repository rules, the agent **MUST** investigate before editing and **MUST NOT** invent a boundary exception.
 
@@ -211,12 +233,13 @@ Before completing Hook or state-related work, the agent **MUST**:
 3. inspect applicable structural complexity signals when the changed Hook is a relevant hotspot;
 4. identify every direct Zustand Store Hook consumer introduced or modified;
 5. verify that each direct consumer is an authorized category;
-6. verify that no prohibited component receives or obtains a Store Hook indirectly;
-7. verify that only necessary application state is selected;
-8. run the relevant React Hooks linting and project checks;
-9. inspect the final diff for unrelated state-management changes.
+6. identify endpoint/query Hook consumers introduced or modified and verify Page-vs-Container ownership;
+7. verify that no prohibited presentation component receives or obtains an integration Hook indirectly;
+8. verify that only necessary application state is selected;
+9. run the relevant React Hooks linting and project checks;
+10. inspect the final diff for unrelated state-management changes.
 
-Passing the Rules of Hooks lint alone does **NOT** prove compliance with Nino's Zustand boundary rules.
+Passing the Rules of Hooks lint alone does **NOT** prove compliance with Nino's application-state or endpoint-consumption boundaries.
 
 ## Enforcement
 
@@ -224,7 +247,8 @@ The following rules **MUST** be protected mechanically whenever technically poss
 
 - React Rules of Hooks through the official `eslint-plugin-react-hooks` rules;
 - prohibited Zustand imports by layer/path;
-- indirect Store Hook access where objective AST analysis can identify it;
+- prohibited domain/query Hook or Service access from presentation layers;
+- indirect Store Hook/integration access where objective dependency analysis can identify it;
 - forbidden re-exports or wrapper-based boundary circumvention;
 - Custom Hook naming and location conventions where the project defines them;
 - structural-complexity signals through the project's complexity analyzer.
@@ -245,4 +269,4 @@ Nino-specific application-state rules in this file are project constraints and a
 
 ## Final Rule
 
-> **Use React Hooks according to React's official rules, keep each Custom Hook single-purpose, and allow direct Zustand application-state consumption only from the explicitly authorized categories. Atoms, Molecules, and Organisms MUST remain decoupled from the Zustand Store Hook and MUST NOT bypass that boundary indirectly.**
+> **Use React Hooks according to React's official rules. Keep Atoms, Molecules, and Organisms presentation-focused. Put coherent region-level application/server integration in Containers, and keep Page integration limited to screen governance or Page-level render decisions.**
