@@ -34,7 +34,7 @@ export function GetStarted() {
         </div>
 
         <Image
-          src="/mascot.svg"
+          src="/nino_com_sacolinha.svg"
           alt="Nino"
           width={220}
           height={220}
