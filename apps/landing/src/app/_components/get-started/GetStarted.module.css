@@ -21,7 +21,7 @@
 }
 
 .wrap {
-  @apply relative mx-auto max-w-page-narrow;
+  @apply relative mx-auto max-w-[980px];
 }
 
 .card {
@@ -61,12 +61,12 @@
 }
 
 .lead {
-  @apply mx-auto mt-[1.3rem] max-w-block-lg;
+  @apply mx-auto mt-[1.3rem] max-w-[544px];
   @apply text-lg leading-relaxed text-fg-on-brand/92;
 }
 
 .btn {
-  @apply mt-[2.2rem] inline-block rounded-full bg-surface-raised;
+  @apply mt-[2.2rem] inline-box rounded-full bg-surface-raised;
   @apply px-[2.4rem] py-[1.1rem] font-bold text-base;
   @apply text-brand-strong no-underline;
   @apply shadow-warm-lg;

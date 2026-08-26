@@ -1,6 +1,12 @@
 @import "tailwindcss";
 @import "@nino/ds/tokens.css";
 
+/* WHY: o token --container-block do DS faz o Tailwind resolver `inline-block`
+   como inline-size: 42rem em vez de display. Esta utility entrega o display. */
+@utility inline-box {
+  display: inline-block;
+}
+
 @layer base {
   html {
     scroll-behavior: smooth;

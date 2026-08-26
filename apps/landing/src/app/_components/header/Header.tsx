@@ -50,6 +50,7 @@ export function Header() {
               </a>
             ))}
             <a href={ENTRAR_URL} className={styles.enterButton}>
+              <span className={styles.enterIcon} aria-hidden="true" />
               Entrar
             </a>
           </nav>

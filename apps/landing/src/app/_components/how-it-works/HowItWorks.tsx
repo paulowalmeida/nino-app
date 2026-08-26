@@ -2,13 +2,14 @@ import { StepCard } from "@how-it-works/_components/step-card/StepCard"
 
 import { steps } from "./howItWorks.constants"
 import styles from "./HowItWorks.module.css"
-import { Eyebrow } from "@ds/components/Eyebrow/Eyebrow"
 
 export function HowItWorks() {
   return (
     <section id="como-funciona" className={styles.section}>
       <div className={styles.inner}>
         <div className={styles.header}>
+          <span className={styles.eyebrow}>Simples assim</span>
+
           <h2 className={styles.title}>Como o Nino funciona</h2>
 
           <p className={styles.subtitle}>

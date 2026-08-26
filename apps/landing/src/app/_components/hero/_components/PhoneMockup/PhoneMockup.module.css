@@ -1,7 +1,7 @@
 @reference '../../../../theme.css';
 .phone {
   @apply w-[270px] bg-fg-strong rounded-6 p-[10px];
-  @apply relative z-raised -rotate-3;
+  @apply relative z-[2] -rotate-3;
   box-shadow:
     0 40px 80px color-mix(in srgb, var(--color-burnt-900) 40%, transparent),
     0 0 0 1px color-mix(in srgb, var(--color-white) 6%, transparent);
@@ -42,16 +42,16 @@
 }
 
 .freeShipping b {
-  @apply text-xs text-fg-strong;
+  @apply text-xs text-fg-strong block;
 }
 
 .freeShipping span {
-  @apply text-2xs text-fg-faintest;
+  @apply text-2xs text-fg-faintest block mt-px;
 }
 
 .freeShippingTag {
   @apply bg-brand text-fg-on-brand text-2xs font-bold;
-  @apply py-[0.25rem] px-[0.55rem] rounded-2;
+  @apply py-[0.25rem] px-[0.55rem] rounded-2 animate-pulse;
 }
 
 .categories {
@@ -60,7 +60,7 @@
 
 .categories div {
   @apply text-2xs font-semibold py-[0.3rem] px-[0.7rem];
-  @apply rounded-5 bg-surface-6 text-fg-subtle;
+  @apply rounded-5 bg-surface-6 text-fg-subtle whitespace-nowrap;
 }
 
 .categoryActive {

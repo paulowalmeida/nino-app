@@ -1,5 +1,3 @@
-import { Eyebrow } from "@nino/ds/components/Eyebrow"
-
 import { FeatureCard } from "@features/_components/feature-card/FeatureCard"
 
 import { features } from "./features.constants"
@@ -10,6 +8,8 @@ export function Features() {
     <section className={styles.section} id="features">
       <div className={styles.inner}>
         <div className={styles.header}>
+          <span className={styles.eyebrow}>Plataforma completa</span>
+
           <h2 className={styles.title}>
             Tudo que você precisa,{" "}
             <span className={styles.titleAccent}>nada que te atrapalha</span>

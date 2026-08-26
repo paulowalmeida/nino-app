@@ -3,13 +3,14 @@ import { BillingRow } from "@for-restaurants/_components/billing-row/BillingRow"
 
 import { benefits, billing } from "./forRestaurants.constants"
 import styles from "./ForRestaurants.module.css"
-import { Eyebrow } from "@ds/components/Eyebrow/Eyebrow"
 
 export function ForRestaurants() {
   return (
     <section id="para-restaurantes" className={styles.section}>
       <div className={styles.inner}>
         <div>
+          <span className={styles.eyebrow}>O Nino vs o mercado</span>
+
           <h2 className={styles.title}>
             Mais completo.{" "}
             <span className={styles.titleAccent}>Mais justo.</span>

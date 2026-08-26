@@ -38,7 +38,7 @@
 }
 
 .inner {
-  @apply max-w-page mx-auto px-10;
+  @apply max-w-[1200px] mx-auto px-10;
   @apply flex items-center justify-between;
 }
 
@@ -95,7 +95,7 @@
 }
 
 .enterIcon {
-  @apply inline-block w-4 h-4 shrink-0 bg-current;
+  @apply inline-box w-4 h-4 shrink-0 bg-current;
   -webkit-mask: url(/assets/icon-login.svg) no-repeat center / contain;
   mask: url(/assets/icon-login.svg) no-repeat center / contain;
 }

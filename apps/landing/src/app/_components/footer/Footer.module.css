@@ -4,7 +4,7 @@
 }
 
 .inner {
-  @apply max-w-page mx-auto;
+  @apply max-w-[1120px] mx-auto;
 }
 
 .top {
@@ -13,7 +13,7 @@
 }
 
 .brand {
-  @apply max-w-block-sm;
+  @apply max-w-[240px];
 }
 
 .logo {

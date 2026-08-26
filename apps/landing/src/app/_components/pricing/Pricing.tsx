@@ -2,13 +2,14 @@ import { PlanCard } from "@pricing/_components/plan-card/PlanCard"
 
 import { plans } from "./pricing.constants"
 import styles from "./Pricing.module.css"
-import { Eyebrow } from "@ds/components/Eyebrow/Eyebrow"
 
 export function Pricing() {
   return (
     <section id="precos" className={styles.section}>
       <div className={styles.inner}>
         <div className={styles.head}>
+          <span className={styles.eyebrow}>Planos e preços</span>
+
           <h2 className={styles.title}>Preço simples, resultado real</h2>
 
           <p className={styles.lead}>

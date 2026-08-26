@@ -6,7 +6,6 @@ import { DemoTab } from "@demo/_tabs/tab.type"
 import { type TabId, tabs } from "@demo/demo-tabs"
 
 import styles from "./Demo.module.css"
-import { Eyebrow } from "@ds/components/Eyebrow/Eyebrow"
 
 export function Demo() {
   const [active, setActive] = useState<TabId>("order")
@@ -26,6 +25,8 @@ export function Demo() {
     <section id="demo" className={styles.section}>
       <div className={styles.inner}>
         <div className={styles.header}>
+          <span className={styles.eyebrow}>Os dois lados do balcão</span>
+
           <h2 className={styles.title}>
             O que seu cliente vê,{" "}
             <span className={styles.titleAccent}>e o que você vê</span>

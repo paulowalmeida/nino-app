@@ -1,6 +1,6 @@
 @reference '../../../../theme.css';
 .notification {
-  @apply absolute z-raised w-[220px] bg-surface-raised rounded-4;
+  @apply absolute z-[4] w-[220px] bg-surface-raised rounded-4;
   @apply py-[0.8rem] px-[0.9rem] text-fg-strong;
   @apply shadow-warm-lg;
   @apply flex gap-[0.6rem] items-center;

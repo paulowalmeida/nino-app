@@ -4,7 +4,7 @@
 }
 
 .inner {
-  @apply max-w-page mx-auto grid items-center;
+  @apply max-w-[1100px] mx-auto grid items-center;
   @apply grid-cols-[1.05fr_0.95fr] gap-14;
 }
 
@@ -16,7 +16,7 @@
 
 .eyebrow::before {
   content: "";
-  @apply inline-block w-[22px] h-0.5 bg-brand rounded-1;
+  @apply inline-box w-[22px] h-0.5 bg-brand rounded-1;
 }
 
 .title {
@@ -31,7 +31,7 @@
 
 .lead {
   @apply mt-[1.1rem] text-base leading-relaxed;
-  @apply text-fg-muted max-w-block-lg;
+  @apply text-fg-muted max-w-[480px];
 }
 
 .list {

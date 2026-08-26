@@ -15,7 +15,7 @@
 }
 
 .container {
-  @apply max-w-page mx-auto px-10 relative z-raised;
+  @apply max-w-[1200px] mx-auto px-10 relative z-raised;
 }
 
 .grid {
@@ -55,7 +55,7 @@
 }
 
 .subtitle {
-  @apply mt-14 max-w-block-lg;
+  @apply mt-14 max-w-[480px];
   @apply text-lg leading-relaxed text-fg-on-brand/[0.92];
   @apply animate-[fadeUp_0.6s_0.1s_ease_both];
 }
@@ -111,6 +111,10 @@
 .stage {
   @apply relative flex justify-center items-center min-h-[460px];
   @apply animate-[fadeUp_0.8s_0.15s_ease_both];
+}
+
+.phoneFrame {
+  @apply relative w-[270px];
 }
 
 @keyframes fadeUp {

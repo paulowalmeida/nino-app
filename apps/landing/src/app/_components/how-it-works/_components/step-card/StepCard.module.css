@@ -17,5 +17,5 @@
 }
 
 .body {
-  @apply text-base leading-relaxed text-fg-muted max-w-block-sm;
+  @apply text-base leading-relaxed text-fg-muted max-w-[272px];
 }

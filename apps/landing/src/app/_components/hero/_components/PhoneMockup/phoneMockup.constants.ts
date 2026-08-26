@@ -14,7 +14,7 @@ export const menuItems = [
   {
     thumb: "🍟",
     title: "Combo Família",
-    desc: "2 X-Burgão + fritas + refri",
+    desc: "2 X-Burgão Especial + fritas + refri",
     price: "R$ 69,90",
   },
 ]

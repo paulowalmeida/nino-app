@@ -17,11 +17,11 @@
 }
 
 .inner {
-  @apply relative z-raised max-w-page mx-auto;
+  @apply relative z-raised max-w-[1120px] mx-auto;
 }
 
 .header {
-  @apply max-w-block mb-14;
+  @apply max-w-[620px] mb-14;
 }
 
 .eyebrow {
@@ -32,7 +32,7 @@
 
 .eyebrow::before {
   content: "";
-  @apply inline-block w-[22px] h-0.5 bg-brand rounded-1;
+  @apply inline-box w-[22px] h-0.5 bg-brand rounded-1;
 }
 
 .title {
