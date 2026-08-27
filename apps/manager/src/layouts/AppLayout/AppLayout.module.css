@@ -9,5 +9,5 @@
 }
 
 .overlay.overlay {
-  @apply h-dvh;
+  @apply h-dvh rounded-none;
 }
