@@ -24,14 +24,10 @@ export const MenuSection = ({
   onAdd,
   onSelect,
 }: MenuSectionProps) => {
-  const icon = categoryIcon(section.name)
+  const icon = categoryIcon(section.name, section.icon)
 
   return (
-    <section
-      id={domId}
-      className={styles.section}
-      aria-label={section.name}
-    >
+    <section id={domId} className={styles.section} aria-label={section.name}>
       <div className={styles.sectionHead}>
         <h2 className={styles.sectionTitle}>{section.name}</h2>
         <span className={styles.sectionCount}>

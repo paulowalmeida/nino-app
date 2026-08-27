@@ -55,6 +55,6 @@ describe(CreateCategoryForm.name, () => {
 
     render(<CreateCategoryForm />)
 
-    expect(screen.getByRole('button')).toBeDisabled()
+    expect(screen.getByRole('button', { name: 'Carregando' })).toBeDisabled()
   })
 })

@@ -15,6 +15,8 @@ export type MenuItem = {
     id: string
     name: string
     position: number
+    icon?: ProductCategoryIcon | null
   }
   images: MenuItemImage[]
 }
+import type { ProductCategoryIcon } from '@nino/lib/types/product/product-category-icon'

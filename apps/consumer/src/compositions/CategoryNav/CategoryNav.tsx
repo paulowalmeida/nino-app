@@ -2,6 +2,7 @@ import { useEffect, useRef } from 'react'
 
 import { Chip } from '@nino/ds/components/Chip'
 import type { MenuSection } from '@custom_types/menu/menu-section'
+import { categoryIcon } from '@utils/category-icon'
 
 import styles from './CategoryNav.module.css'
 
@@ -49,6 +50,11 @@ export const CategoryNav = ({
               selected={isActive}
               onClick={() => onSelect(section.id)}
               className={`${styles.chip} ${isActive ? styles.chipOn : ''}`}
+              leadingIcon={
+                <span aria-hidden="true">
+                  {categoryIcon(section.name, section.icon) ?? '🍽️'}
+                </span>
+              }
             >
               {section.name}
             </Chip>

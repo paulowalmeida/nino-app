@@ -1,4 +1,4 @@
-import { ButtonHTMLAttributes, Ref } from 'react'
+import { ButtonHTMLAttributes, ReactNode, Ref } from 'react'
 
 import { mergeClasses } from '@ds/lib/mergeClasses/mergeClasses'
 
@@ -15,6 +15,10 @@ type ChipProps = Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'role'> & {
   variant: ChipVariant
   /** Whether the chip is the current choice */
   selected: boolean
+  /** Content rendered before the chip label, such as an icon or emoji */
+  leadingIcon?: ReactNode
+  /** Content rendered after the chip label, such as a chevron */
+  trailingIcon?: ReactNode
   ref?: Ref<HTMLButtonElement>
 }
 
@@ -37,11 +41,14 @@ type ChipProps = Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'role'> & {
  *
  * - `variant` — `tab` (exposes `aria-selected`) or `toggle` (exposes `aria-pressed`)
  * - `className` — Additional CSS classes merged with base styles
+ * - `leadingIcon` / `trailingIcon` — Optional content beside the label
  * ```
  */
 export function Chip({
   variant,
   selected,
+  leadingIcon,
+  trailingIcon,
   className,
   children,
   ref,
@@ -61,7 +68,9 @@ export function Chip({
       )}
       {...props}
     >
+      {leadingIcon}
       {children}
+      {trailingIcon}
     </button>
   )
 }

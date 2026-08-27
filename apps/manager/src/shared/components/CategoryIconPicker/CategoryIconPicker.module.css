@@ -1,0 +1,24 @@
+@reference "@nino/ds/globals.css";
+
+.fieldset {
+  @apply min-w-0 border-0 p-0;
+}
+
+.legend {
+  @apply mb-1 text-xs font-medium text-fg-subtle;
+}
+
+.options {
+  @apply flex max-w-full flex-wrap gap-1;
+}
+
+.option {
+  @apply flex size-9 items-center justify-center rounded-2 border border-border;
+  @apply bg-surface-page text-lg transition-colors duration-150;
+  @apply hover:border-brand-muted hover:bg-brand-soft;
+  @apply focus-ring;
+}
+
+.selected {
+  @apply border-brand bg-brand-soft;
+}

@@ -71,5 +71,14 @@ const KEYWORD_ICON: [RegExp, string][] = [
   [/bebid/i, '🥤'],
 ]
 
-export const toCategoryIcon = (name: string): string | null =>
-  KEYWORD_ICON.find(([pattern]) => pattern.test(name))?.[1] ?? null
+export const toCategoryIcon = (
+  name: string,
+  icon?: ProductCategoryIcon | null
+): string | null =>
+  productCategoryIconEmoji(icon) ??
+  KEYWORD_ICON.find(([pattern]) => pattern.test(name))?.[1] ??
+  null
+import {
+  type ProductCategoryIcon,
+  productCategoryIconEmoji,
+} from '@nino/lib/types/product/product-category-icon'

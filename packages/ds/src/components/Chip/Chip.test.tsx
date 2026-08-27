@@ -14,6 +14,22 @@ describe(Chip.name, () => {
     expect(screen.getByText('Pix')).toBeInTheDocument()
   })
 
+  it('renders optional content on either side of the label', () => {
+    render(
+      <Chip
+        variant="toggle"
+        selected={false}
+        leadingIcon={<span data-testid="leading-icon" />}
+        trailingIcon={<span data-testid="trailing-icon" />}
+      >
+        Pix
+      </Chip>
+    )
+
+    expect(screen.getByTestId('leading-icon')).toBeInTheDocument()
+    expect(screen.getByTestId('trailing-icon')).toBeInTheDocument()
+  })
+
   it('exposes aria-selected, not aria-pressed, when variant is tab', () => {
     render(
       <Chip variant="tab" selected>

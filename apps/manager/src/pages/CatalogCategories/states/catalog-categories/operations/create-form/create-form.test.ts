@@ -14,6 +14,9 @@ describe('catalog category create-form operations', () => {
     clearCreateName(set)
 
     expect(set).toHaveBeenNthCalledWith(1, { createName: 'Bebidas' })
-    expect(set).toHaveBeenNthCalledWith(2, { createName: '' })
+    expect(set).toHaveBeenNthCalledWith(2, {
+      createName: '',
+      createIcon: null,
+    })
   })
 })

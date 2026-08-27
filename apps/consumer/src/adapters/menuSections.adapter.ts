@@ -20,6 +20,7 @@ export const menuSections = (items: MenuItem[]): MenuSection[] => {
         id: item.category.id,
         name: item.category.name,
         position: item.category.position,
+        icon: item.category.icon,
         items: [],
       }
       byId.set(section.id, section)

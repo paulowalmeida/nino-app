@@ -1,5 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 
+import type { ProductCategoryIcon } from '@nino/lib/types/product/product-category-icon'
 import { toCategoryDeleteError } from '@pages/CatalogCategories/adapters/catalog-categories.adapter/catalog-categories.adapter'
 import { useCatalogCategoriesStore } from '@pages/CatalogCategories/states/catalog-categories/catalog-categories.store'
 import { queryKeys } from '@shared/lib/query-keys'
@@ -23,8 +24,17 @@ const useCreateCategoryMutation = (tenantId: string | null) => {
   const queryClient = useQueryClient()
 
   return useMutation({
-    mutationFn: (name: string) =>
-      CategoryService.createCategory(tenantId as string, name),
+    mutationFn: (
+      variables: string | { name: string; icon: ProductCategoryIcon | null }
+    ) => {
+      const { name, icon } =
+        typeof variables === 'string'
+          ? { name: variables, icon: undefined }
+          : variables
+      return icon == null
+        ? CategoryService.createCategory(tenantId as string, name)
+        : CategoryService.createCategory(tenantId as string, name, icon)
+    },
     onSuccess: () => invalidateCategories(queryClient, tenantId),
   })
 }
@@ -60,8 +70,18 @@ const useUpdateCategoryMutation = (tenantId: string | null) => {
   const queryClient = useQueryClient()
 
   return useMutation({
-    mutationFn: ({ id, name }: { id: string; name: string }) =>
-      CategoryService.updateCategory(tenantId as string, id, name),
+    mutationFn: ({
+      id,
+      name,
+      icon,
+    }: {
+      id: string
+      name: string
+      icon?: ProductCategoryIcon | null
+    }) =>
+      icon === undefined
+        ? CategoryService.updateCategory(tenantId as string, id, name)
+        : CategoryService.updateCategory(tenantId as string, id, name, icon),
     onSuccess: () => invalidateCategories(queryClient, tenantId),
   })
 }
@@ -77,7 +97,7 @@ export const useCatalogCategoriesMutations = (tenantId: string | null) => {
     const name = clientState.createName.trim()
     if (!name) return
 
-    await create.mutateAsync(name)
+    await create.mutateAsync({ name, icon: clientState.createIcon })
     clientState.clearCreateName()
   }
 

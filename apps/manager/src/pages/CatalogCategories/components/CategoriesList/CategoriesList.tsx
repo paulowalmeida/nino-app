@@ -32,8 +32,8 @@ export const CategoriesList = () => {
           index={index}
           isRenaming={isRenaming && renamingId === category.id}
           disabled={isDeleting}
-          onRename={async (name) => {
-            await rename({ id: category.id, name })
+          onRename={async (name, icon) => {
+            await rename({ id: category.id, name, icon })
           }}
           onDelete={() => requestDelete(category)}
           onDragEnd={persistOrder}

@@ -18,7 +18,9 @@ export const useCatalogCategoriesFacade = () => {
 
   return {
     createName: clientState.createName,
+    createIcon: clientState.createIcon,
     setCreateName: clientState.setCreateName,
+    setCreateIcon: clientState.setCreateIcon,
     deleteTarget: clientState.deleteTarget,
     deleteError: clientState.deleteError,
     requestDelete: clientState.requestDelete,

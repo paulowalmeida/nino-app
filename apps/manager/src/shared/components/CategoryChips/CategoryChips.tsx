@@ -1,12 +1,19 @@
 import { Box } from '@nino/ds/components/Box'
 import { Chip } from '@nino/ds/components/Chip'
+import { Icon } from '@nino/ds/components/Icon'
 import { Skeleton } from '@nino/ds/components/Skeleton'
+import type { ProductCategoryIcon } from '@nino/lib/types/product/product-category-icon'
+import { toCategoryIcon } from '@shared/adapters/category-icon.adapter/category-icon.adapter'
 import { CATEGORY_CHIPS_GHOST_ITEMS } from '@shared/constants/product.constants'
 
 import styles from './CategoryChips.module.css'
 
 type CategoryChipsProps = {
-  categories: { id: string; name: string }[]
+  categories: {
+    id: string
+    name: string
+    icon?: ProductCategoryIcon | null
+  }[]
   value: string | null
   onChange: (categoryId: string | null) => void
   isPending?: boolean
@@ -50,18 +57,22 @@ export const CategoryChips = ({
           selected={value === null}
           onClick={() => onChange(null)}
           className={styles.chip}
+          leadingIcon={<Icon name="grid" size="sm" />}
         >
           Todas
         </Chip>
       )}
 
-      {categories.map(({ id, name }) => (
+      {categories.map(({ id, name, icon }) => (
         <Chip
           key={id}
           variant="tab"
           selected={id === value}
           onClick={() => onChange(id)}
           className={styles.chip}
+          leadingIcon={
+            <span aria-hidden="true">{toCategoryIcon(name, icon) ?? '🍽️'}</span>
+          }
         >
           {name}
         </Chip>

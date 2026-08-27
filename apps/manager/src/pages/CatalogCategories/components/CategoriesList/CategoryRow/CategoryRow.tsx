@@ -1,4 +1,4 @@
-import { type AnimationEvent,useState } from 'react'
+import { type AnimationEvent, useState } from 'react'
 
 import { Reorder, useDragControls } from 'framer-motion'
 
@@ -7,6 +7,8 @@ import { Button } from '@nino/ds/components/Button'
 import { Icon } from '@nino/ds/components/Icon'
 import { Input } from '@nino/ds/components/Input'
 import { Text } from '@nino/ds/components/Text'
+import type { ProductCategoryIcon } from '@nino/lib/types/product/product-category-icon'
+import { CategoryIconPicker } from '@shared/components/CategoryIconPicker/CategoryIconPicker'
 import { REORDER_TRANSITION } from '@shared/constants/reorder-transition.constants'
 import type { CategoryWithCount } from '@shared/types/product/category-with-count'
 import { riseDelay } from '@shared/utils/rise-delay/rise-delay'
@@ -21,7 +23,10 @@ type CategoryRowProps = {
   category: CategoryWithCount
   index: number
   isRenaming: boolean
-  onRename: (name: string) => Promise<void>
+  onRename: (
+    name: string,
+    icon?: ProductCategoryIcon | null
+  ) => Promise<void>
   onDelete: () => void
   onDragEnd: () => void
   disabled: boolean
@@ -40,6 +45,7 @@ export const CategoryRow = ({
   const [editing, setEditing] = useState(false)
   const [isEntering, setIsEntering] = useState(true)
   const [draft, setDraft] = useState(category.name)
+  const [draftIcon, setDraftIcon] = useState(category.icon ?? null)
   const empty = category.count === 0
 
   const handleEntranceEnd = (event: AnimationEvent<HTMLLIElement>) => {
@@ -49,13 +55,22 @@ export const CategoryRow = ({
   const closeEditing = () => {
     setEditing(false)
     setDraft(category.name)
+    setDraftIcon(category.icon ?? null)
   }
 
   const submit = async () => {
     const name = draft.trim()
-    if (!name || name === category.name) return closeEditing()
+    if (
+      !name ||
+      (name === category.name && draftIcon === (category.icon ?? null))
+    )
+      return closeEditing()
     try {
-      await onRename(name)
+      if (category.icon === undefined && draftIcon === null) {
+        await onRename(name)
+      } else {
+        await onRename(name, draftIcon)
+      }
       setEditing(false)
     } catch {
       return
@@ -90,6 +105,11 @@ export const CategoryRow = ({
             onChange={(event) => setDraft(event.target.value)}
             onKeyDown={(event) => event.key === 'Escape' && closeEditing()}
           />
+          <CategoryIconPicker
+            value={draftIcon}
+            onChange={setDraftIcon}
+            disabled={isRenaming}
+          />
           <Button size="sm" type="submit" loading={isRenaming}>
             Salvar
           </Button>
@@ -116,7 +136,9 @@ export const CategoryRow = ({
           </Button>
 
           <Box className={styles.who}>
-            <Text as="span" className={styles.name}>{category.name}</Text>
+            <Text as="span" className={styles.name}>
+              {category.name}
+            </Text>
             <Text as="span" className={empty ? styles.hintEmpty : styles.hint}>
               {empty ? 'Vazia — nenhum item ainda' : countLabel(category.count)}
             </Text>
