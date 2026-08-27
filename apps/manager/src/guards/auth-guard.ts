@@ -1,6 +1,6 @@
-import { redirect, type LoaderFunctionArgs } from 'react-router'
+import { type LoaderFunctionArgs,redirect } from 'react-router'
 
-import { useSessionStore } from '@states/useSessionStore'
+import { useSessionStore } from '@shared/states/session/session.state'
 
 /**
  * Guards the `/:tenantId` group: requires a live session and a membership in

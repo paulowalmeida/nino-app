@@ -1,11 +1,58 @@
-@import "../src/styles/globals.css";
+@import '../src/styles/globals.css';
 
-/* Storybook usa cinza (#F8F8F8) no canvas e na página de Docs. Forçamos branco
-   para os componentes com superfície branca (ex.: Table) não destoarem.
-   Fica só aqui — não é estilo do DS, não vai para os apps. */
+/* A apresentação do Storybook é uma ferramenta de trabalho, não uma superfície
+   do produto. Ela usa os tokens do DS para que o componente seja avaliado no
+   mesmo clima visual das aplicações. */
+body {
+  color: var(--color-fg-default);
+  background: var(--color-surface-page);
+  font-family: var(--font-sans);
+}
+
 .sb-show-main,
 .docs-story,
 .sbdocs-wrapper,
 .sbdocs-preview {
-  background-color: #ffffff !important;
+  color: var(--color-fg-default);
+  background-color: var(--color-surface-page) !important;
+}
+
+.storybook-stage {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  min-height: 12rem;
+  padding: clamp(1rem, 3vw, 2rem);
+}
+
+.storybook-stage > * {
+  max-width: 100%;
+}
+
+.sbdocs-preview {
+  overflow: hidden;
+  border: 1px solid var(--color-border) !important;
+  border-radius: var(--radius-2) !important;
+  box-shadow: var(--shadow-warm-sm);
+}
+
+.sbdocs-content {
+  max-width: var(--container-page-narrow) !important;
+}
+
+.sbdocs-title,
+.sbdocs-h1,
+.sbdocs-h2,
+.sbdocs-h3 {
+  font-family: var(--font-display) !important;
+  letter-spacing: var(--tracking-snug);
+}
+
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+  outline: 2px solid var(--color-brand) !important;
+  outline-offset: 3px;
 }

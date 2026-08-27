@@ -1,0 +1,5 @@
+@reference "@nino/ds/globals.css";
+
+.dateLabel {
+  @apply text-xs font-semibold uppercase tracking-[0.08em] text-fg-subtle;
+}

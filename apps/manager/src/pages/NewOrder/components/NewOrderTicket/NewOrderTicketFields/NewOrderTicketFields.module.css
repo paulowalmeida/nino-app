@@ -1,0 +1,9 @@
+@reference "@nino/ds/globals.css";
+
+.field {
+  @apply flex flex-col gap-3;
+}
+
+.label {
+  @apply text-sm font-medium text-fg-default;
+}

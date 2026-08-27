@@ -19,14 +19,8 @@ const buttonClasses: Record<QuantityStepperSize, string> = {
   md: '',
 }
 
-/* Largura fixa e tabular: sem isso o par de botões anda de lado sozinho
- * quando a quantidade passa de 9 para 10. */
 const countClasses = 'w-4 text-center text-sm font-bold text-muted tabular-nums'
 
-/**
- * Quantity control: decrement, current amount, increment. The `count` slot
- * takes any node so an animated counter can replace the plain number.
- */
 export const QuantityStepper = forwardRef<HTMLDivElement, QuantityStepperProps>(
   (
     {
@@ -75,5 +69,3 @@ export const QuantityStepper = forwardRef<HTMLDivElement, QuantityStepperProps>(
     </div>
   )
 )
-
-QuantityStepper.displayName = 'QuantityStepper'

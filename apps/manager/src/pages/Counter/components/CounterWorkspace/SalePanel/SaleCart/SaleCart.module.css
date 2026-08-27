@@ -1,0 +1,37 @@
+@reference "@nino/ds/globals.css";
+
+.empty {
+  @apply flex-1;
+}
+.linesScroll {
+  @apply min-h-0 flex-[1_1_auto];
+}
+.lines {
+  @apply pb-4 pr-3;
+}
+.line {
+  @apply shrink-0 first:border-t-0 first:pt-0 sm:gap-3;
+}
+.photo {
+  @apply h-12 w-12 shrink-0 rounded-3 text-xl sm:h-14 sm:w-14 sm:text-2xl;
+}
+.lineText {
+  @apply min-w-0 flex-1;
+}
+.lineName {
+  @apply truncate;
+}
+.lineMath {
+  @apply mt-0.5 truncate whitespace-nowrap;
+  font-variant-numeric: tabular-nums;
+}
+.lineTotal {
+  font-variant-numeric: tabular-nums;
+}
+.stepper {
+  @apply sm:gap-1.5;
+}
+.stepperCount {
+  @apply w-4 text-center;
+  font-variant-numeric: tabular-nums;
+}

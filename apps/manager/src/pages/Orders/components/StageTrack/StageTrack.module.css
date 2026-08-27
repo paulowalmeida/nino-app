@@ -1,0 +1,35 @@
+@reference "@nino/ds/globals.css";
+
+.track {
+  @apply relative flex snap-x gap-2 overflow-x-auto pb-1;
+  scrollbar-width: none;
+}
+
+.track::-webkit-scrollbar {
+  display: none;
+}
+
+.stage {
+  @apply min-h-11 snap-start;
+}
+
+.icon {
+  @apply h-4 w-4 shrink-0 text-fg-faintest transition-colors duration-200;
+}
+
+.current .icon {
+  @apply text-brand;
+}
+
+.label {
+  @apply whitespace-nowrap;
+}
+
+.count {
+  @apply text-xs font-bold text-fg-faintest;
+  font-variant-numeric: tabular-nums;
+}
+
+.current .count {
+  @apply text-brand-strong;
+}

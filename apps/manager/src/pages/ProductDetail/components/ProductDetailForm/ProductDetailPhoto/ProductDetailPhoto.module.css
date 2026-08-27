@@ -1,0 +1,5 @@
+@reference "@nino/ds/globals.css";
+
+.photoCol {
+  @apply min-w-0;
+}

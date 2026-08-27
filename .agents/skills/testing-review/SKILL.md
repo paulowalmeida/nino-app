@@ -11,7 +11,11 @@ Determine whether tests protect important contracts, fail for the right reasons,
 
 ## Scope
 
-Apply this Skill to `apps/manager/src/__tests__/`, adjacent test fixtures/mocks, `src/test/setup.ts`, and `vitest.config.ts`, together with the implementation contract under test. Manager tests use the declared `npm run test` workflow, Vitest `jsdom`, and the shared setup file; do not assume a different runner or test environment.
+Apply this Skill to colocated `*.test.*` and `*.mock.*` files, their source
+units, `src/test/setup.ts`, and `vitest.config.ts`. Legacy `src/__tests__`
+content follows the migration rule in `.agents/rules/testing.md`. Manager tests
+use the declared `npm run test` workflow, Vitest `jsdom`, and the shared setup
+file; do not assume a different runner or environment.
 
 ## Authority
 
@@ -28,16 +32,28 @@ Nino's test locations, required regression behavior, and architectural boundarie
 ## Mandatory Review Sequence
 
 1. State the behavior/contract the test claims to protect.
-2. Identify the narrowest stable boundary that can prove it.
-3. Inspect setup, mocks, fixtures, selectors, assertions, and cleanup.
-4. Inspect the configured environment, shared setup, state/cache reset, and mock lifecycle when they affect the scenario.
-5. Check success, failure, boundary, permission, loading/empty, and concurrency-sensitive behavior where relevant.
-6. Determine whether failures correspond to meaningful regressions.
-7. Check for duplicate coverage or missing risk coverage.
-8. Run applicable configured tests and `enforce-tests`; record what each result proves.
-9. Record each finding and disposition.
+2. Inventory every folder and executable source file in scope and pair each
+   with its same-name test and mandatory mock file inside the unit's own
+   folder. Search and coverage are supporting evidence only.
+3. Identify the narrowest stable boundary that can prove it.
+4. Inspect setup, mocks, fixtures, selectors, assertions, and cleanup.
+5. Inspect the configured environment, shared setup, state/cache reset, and mock lifecycle when they affect the scenario.
+6. Check success, failure, boundary, permission, loading/empty, and concurrency-sensitive behavior where relevant.
+7. Determine whether failures correspond to meaningful regressions.
+8. Check for duplicate coverage or missing risk coverage.
+9. Run applicable configured tests and `enforce-tests`; for a completed page
+   refactor, run scoped coverage and require 100% in all four metrics unless an
+   explicit documented exception exists.
+10. Record each finding and disposition.
 
 ## Nino Test-Boundary Contracts
+
+Before semantic review, require this structural contract for every tested
+unit: `<Unit>/<Unit>.ts[x]`, `<Unit>/<Unit>.test.ts[x]`, and
+`<Unit>/<Unit>.mock.ts[x]`. A Hook uses `hooks/<useHookName>/`. The mock file
+contains only meaningful typed props and immutable fixture/input data. It must
+never contain behavioral mocks, `vi.fn`, callbacks, factories, functions,
+dependency implementations, or configured returns; those remain in the test.
 
 - **pure utility/domain rule:** test input/output and edge cases directly; do not mock the pure unit.
 - **Service:** mock the shared HTTP/API boundary and assert the public request/response/error contract, not the transport implementation beneath it.

@@ -1,0 +1,64 @@
+@reference "@nino/ds/globals.css";
+
+.panel {
+  @apply flex min-w-0 flex-col;
+}
+
+.head {
+  @apply mb-4 lg:mb-6;
+}
+
+.group {
+  @apply flex flex-col gap-3 border-t border-border py-4;
+}
+
+.groupTitle {
+  @apply text-xs font-bold uppercase tracking-[0.12em] text-fg-faint;
+}
+
+.row {
+  @apply flex items-start gap-3;
+}
+
+.rowText {
+  @apply min-w-0;
+}
+
+.rowLabel {
+  @apply text-sm font-semibold text-fg-default;
+}
+
+.rowHint {
+  @apply mt-0.5 text-xs leading-relaxed text-fg-faint;
+}
+
+.save {
+  @apply mt-4 self-end;
+}
+
+.skeleton {
+  @apply h-64 w-full rounded-6;
+}
+
+/* payment methods: a badge the store lights up */
+.chips {
+  @apply flex flex-wrap gap-2;
+}
+
+.chip {
+  @apply rounded-3 px-3.5 py-2;
+  @apply text-sm text-fg-subtle;
+  @apply hover:text-fg-default;
+}
+
+.chipOn {
+  @apply bg-brand-soft font-semibold text-brand-strong;
+}
+
+.minimum {
+  @apply flex flex-col gap-1.5 border-t border-border pt-4;
+}
+
+.minimumInput {
+  @apply max-w-40;
+}

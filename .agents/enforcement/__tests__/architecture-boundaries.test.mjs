@@ -15,100 +15,59 @@ function write(relativePath, content) {
   fs.writeFileSync(target, content);
 }
 
+function remove(relativePath) {
+  fs.rmSync(path.join(tempRoot, relativePath));
+}
+
 function run() {
   return spawnSync(process.execPath, [checker, tempRoot], { encoding: "utf8" });
 }
 
 try {
-  write("UI/atoms/Button.module.css", ".button {}\n");
-  write("styles/Button.module.css", ".button {}\n");
-  write("UI/atoms/Button.tsx", [
-    'import { Button as DsButton } from "@nino/ds/components/Button";',
-    'import "./Button.module.css";',
-    'import "@styles/Button.module.css";',
-    'export function Button() { return DsButton; }',
-  ].join("\n"));
-  write("UI/molecules/Search.tsx", "export function Search() { return null; }\n");
-  write("UI/organisms/Table.tsx", "export function Table() { return null; }\n");
-  write("UI/containers/OrdersContainer.tsx", 'import { Table } from "../organisms/Table";\nexport function OrdersContainer() { return <Table />; }\n');
-  write("UI/pages/User.tsx", 'import { OrdersContainer } from "../containers/OrdersContainer";\nexport function UserPage() { return <OrdersContainer />; }\n');
-  write("UI/layouts/App.tsx", 'import { UserPage } from "../pages/User";\nexport function AppLayout() { return <UserPage />; }\n');
-  write("states/useSessionStore.ts", "export const store = {};\n");
-  write("services/order.service.ts", "export const getOrders = async () => [];\n");
-  write("hooks/order/useOrders.ts", 'import { getOrders } from "../../services/order.service";\nexport const useOrders = () => getOrders;\n');
-  write("hooks/ui/useDisclosure.ts", "export const useDisclosure = () => ({ open: false });\n");
-  write("tsconfig.json", JSON.stringify({ compilerOptions: { baseUrl: ".", paths: {
-    "@states/*": ["states/*"],
-    "@styles/*": ["styles/*"],
-    "@hooks/*": ["hooks/*"],
-  } } }));
+  write("tsconfig.json", JSON.stringify({ compilerOptions: { baseUrl: ".", paths: { "@/*": ["*"] } } }));
+  write("shared/services/http.service.ts", "export const api = {};");
+  write("pages/catalog/hooks/useCatalogQuery/useCatalogQuery.ts", "export const useCatalogQuery = () => [];");
+  write("pages/catalog/facades/useCatalogFacade/useCatalogFacade.ts", 'import { useCatalogQuery } from "../../hooks/useCatalogQuery/useCatalogQuery"; export const useCatalogFacade = useCatalogQuery;');
+  write("pages/catalog/components/CatalogList/CatalogList.tsx", 'import { useCatalogFacade } from "../../facades/useCatalogFacade/useCatalogFacade"; export const CatalogList = useCatalogFacade;');
+  write("pages/catalog/Catalog.tsx", 'import { CatalogList } from "./components/CatalogList/CatalogList"; export const Catalog = CatalogList;');
+  write("layouts/AppLayout/AppLayout.tsx", "export const AppLayout = () => null;");
+  write("shared/utils/identity.ts", "export const identity = (value) => value;");
 
   let result = run();
   assert.equal(result.status, 0, result.stderr);
 
-  write("UI/atoms/InvalidRelative.tsx", 'import useStore from "../../states/useSessionStore";\n');
+  write("pages/catalog/components/InvalidService/InvalidService.tsx", 'import { api } from "../../../../shared/services/http.service"; export const InvalidService = api;');
   result = run();
-  assert.equal(result.status, 1, "A relative state import must fail.");
+  assert.equal(result.status, 1, `${result.stderr}\n${result.stdout}\nA domain component importing a Service must fail.`);
 
-  fs.rmSync(path.join(tempRoot, "UI/atoms/InvalidRelative.tsx"));
-  write("UI/atoms/InvalidAlias.tsx", 'import useStore from "@states/useSessionStore";\n');
+  remove("pages/catalog/components/InvalidService/InvalidService.tsx");
+  write("pages/catalog/components/ExternalService/ExternalService.tsx", 'import { lookupZipCode } from "@nino/lib/services/zip-code.service"; export const ExternalService = lookupZipCode;');
   result = run();
-  assert.equal(result.status, 1, "A tsconfig path alias to state must fail.");
+  assert.equal(result.status, 1, `${result.stderr}\nAn external integration package must fail in a domain component.`);
 
-  fs.rmSync(path.join(tempRoot, "UI/atoms/InvalidAlias.tsx"));
-  write("UI/atoms/InvalidReExport.ts", 'export { store } from "@states/useSessionStore";\n');
+  remove("pages/catalog/components/ExternalService/ExternalService.tsx");
+  write("pages/catalog/InvalidHook.tsx", 'import { useCatalogQuery } from "./hooks/useCatalogQuery/useCatalogQuery"; export const InvalidHook = useCatalogQuery;');
   result = run();
-  assert.equal(result.status, 1, "A re-export of state must fail.");
+  assert.equal(result.status, 1, `${result.stderr}\nA Page source importing a raw integration Hook must fail.`);
 
-  fs.rmSync(path.join(tempRoot, "UI/atoms/InvalidReExport.ts"));
-  write("UI/atoms/Barrel.ts", 'export { store } from "@states/useSessionStore";\n');
-  write("UI/atoms/Indirect.tsx", 'import { store } from "./Barrel";\n');
+  remove("pages/catalog/InvalidHook.tsx");
+  write("pages/orders/Orders.tsx", "export const Orders = () => null;");
+  write("pages/catalog/components/CrossDomain/CrossDomain.tsx", 'import { Orders } from "../../../orders/Orders"; export const CrossDomain = Orders;');
   result = run();
-  assert.equal(result.status, 1, "A transitive state dependency through a barrel must fail.");
+  assert.equal(result.status, 1, "A Page domain importing another Page domain must fail.");
 
-  fs.rmSync(path.join(tempRoot, "UI/atoms/Barrel.ts"));
-  fs.rmSync(path.join(tempRoot, "UI/atoms/Indirect.tsx"));
-  write("UI/organisms/InvalidDomainHook.tsx", 'import { useOrders } from "@hooks/order/useOrders";\nexport function InvalidDomainHook() { return useOrders(); }\n');
+  remove("pages/catalog/components/CrossDomain/CrossDomain.tsx");
+  write("layouts/AppLayout/AppLayout.tsx", 'import { Catalog } from "../../pages/catalog/Catalog"; export const AppLayout = Catalog;');
   result = run();
-  assert.equal(result.status, 1, "An Organism importing a domain/integration Hook must fail.");
+  assert.equal(result.status, 1, "A Layout importing a Page must fail.");
 
-  fs.rmSync(path.join(tempRoot, "UI/organisms/InvalidDomainHook.tsx"));
-  write("UI/organisms/ValidUiHook.tsx", 'import { useDisclosure } from "@hooks/ui/useDisclosure";\nexport function ValidUiHook() { return useDisclosure(); }\n');
+  write("layouts/AppLayout/AppLayout.tsx", "export const AppLayout = () => null;");
+  write("shared/utils/identity.ts", 'export { Catalog } from "../../pages/catalog/Catalog";');
   result = run();
-  assert.equal(result.status, 0, "An Organism may consume a pure presentation Hook from hooks/ui.");
+  assert.equal(result.status, 1, "Shared code importing a Page must fail.");
 
-  fs.rmSync(path.join(tempRoot, "UI/organisms/ValidUiHook.tsx"));
-  write("UI/atoms/InvalidComposition.tsx", 'import { Search } from "../molecules/Search";\n');
-  result = run();
-  assert.equal(result.status, 1, "An Atom importing a Molecule must fail.");
-
-  fs.rmSync(path.join(tempRoot, "UI/atoms/InvalidComposition.tsx"));
-  write("UI/atoms/InvalidAtomPeer.tsx", 'import { Button } from "./Button";\n');
-  result = run();
-  assert.equal(result.status, 1, "An application Atom importing another Atom must fail.");
-
-  fs.rmSync(path.join(tempRoot, "UI/atoms/InvalidAtomPeer.tsx"));
-  write("UI/organisms/InvalidContainer.tsx", 'import { OrdersContainer } from "../containers/OrdersContainer";\n');
-  result = run();
-  assert.equal(result.status, 1, "An Organism importing a Container must fail.");
-
-  fs.rmSync(path.join(tempRoot, "UI/organisms/InvalidContainer.tsx"));
-  write("UI/containers/InvalidContainerPeer.tsx", 'import { OrdersContainer } from "./OrdersContainer";\n');
-  result = run();
-  assert.equal(result.status, 1, "A Container importing another Container must fail.");
-
-  fs.rmSync(path.join(tempRoot, "UI/containers/InvalidContainerPeer.tsx"));
-  write("UI/pages/OrganismPage.tsx", 'import { Table } from "../organisms/Table";\n');
-  result = run();
-  assert.equal(result.status, 0, "A Page may import an Organism directly when no Container is needed.");
-
-  fs.rmSync(path.join(tempRoot, "UI/pages/OrganismPage.tsx"));
-  write("UI/layouts/ValidLayout.tsx", 'import { Table } from "../organisms/Table";\n');
-  result = run();
-  assert.equal(result.status, 0, "A Layout composing chrome from a lower UI layer must remain valid.");
-
-  fs.rmSync(path.join(tempRoot, "UI/layouts/ValidLayout.tsx"));
-  write("UI/atoms/Unresolved.tsx", 'import thing from "@states/missing";\n');
+  write("shared/utils/identity.ts", "export const identity = (value) => value;");
+  write("pages/catalog/components/Unresolved/Unresolved.tsx", 'import thing from "@/shared/missing"; export const Unresolved = thing;');
   result = run();
   assert.equal(result.status, 2, "Unresolved local imports must fail closed.");
 } finally {

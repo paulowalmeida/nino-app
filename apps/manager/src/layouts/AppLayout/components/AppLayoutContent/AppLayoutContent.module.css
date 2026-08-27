@@ -1,0 +1,10 @@
+@reference "@nino/ds/globals.css";
+
+.main {
+  @apply min-h-dvh w-full min-w-0 flex-1 pt-14 lg:ml-60 lg:pt-0;
+  @apply transition-[margin] duration-300 ease-in-out;
+}
+
+.mainCollapsed {
+  @apply lg:ml-(--width-sidebar-collapsed);
+}

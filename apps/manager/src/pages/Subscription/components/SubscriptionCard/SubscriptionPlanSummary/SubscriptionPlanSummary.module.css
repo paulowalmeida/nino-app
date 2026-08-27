@@ -1,0 +1,5 @@
+@reference "@nino/ds/globals.css";
+
+.plan { @apply border-b border-border pb-4; }
+.planName { @apply tracking-[-0.02em]; }
+.price { font-variant-numeric: tabular-nums; }

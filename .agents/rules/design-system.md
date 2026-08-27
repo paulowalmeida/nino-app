@@ -76,7 +76,7 @@ Do not force a DS component when it does not satisfy the actual requirement.
 When the DS has no suitable solution:
 
 - an application-specific component MAY be created;
-- it MUST follow the Atomic Design rules;
+- it MUST follow the domain-first Page-feature architecture rules;
 - the missing capability must be identifiable from the current DS implementation or API;
 - personal preference, convenience, or lack of knowledge of the DS is NOT justification.
 
@@ -166,7 +166,7 @@ Before writing UI TSX, the agent MUST complete:
 [ ] Existing application components searched
 [ ] Public DS API verified
 [ ] DS vs. local decision made with concrete evidence
-[ ] Atomic Design layer determined
+[ ] Page-feature owner and component responsibility determined
 [ ] Only then: implementation
 ```
 
@@ -201,7 +201,8 @@ Objective rules MUST be protected by automated mechanisms whenever technically p
 1. reject root-barrel `@nino/ds`, direct `packages/ds/src/**` imports, and `@ds/*` consumer imports; require an explicit exported `@nino/ds/*` subpath;
 2. maintain a machine-readable representation of DS components and their official public exports;
 3. detect clear local recreations of DS primitives/components where AST or semantic analysis can do so reliably;
-4. block objective violations.
+4. scan Page-domain TSX for native tags with known DS equivalents and block objective violations;
+5. block objective violations.
 
 Where possible, failure output should include file, line, violated rule, expected DS component, and official package API.
 

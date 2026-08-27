@@ -1,0 +1,10 @@
+@reference "@nino/ds/globals.css";
+
+/*
+ * Três blocos, uma pilha só: eram três cartões empilhados, cada um com sua
+ * borda, o que dava à coluna a aparência de lista de caixas. Divisória entre
+ * eles diz a mesma coisa com um traço.
+ */
+.aside {
+  @apply flex min-w-0 flex-col;
+}

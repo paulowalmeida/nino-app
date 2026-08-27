@@ -1,0 +1,10 @@
+@reference "@nino/ds/globals.css";
+
+.body { @apply mt-6 flex flex-col-reverse gap-6 lg:grid lg:grid-cols-[minmax(0,1fr)_18rem] lg:items-start lg:gap-x-10; }
+.form { @apply min-w-0; }
+.aside { @apply flex min-w-0 flex-col gap-4 lg:sticky lg:top-10; }
+.asideLabel { @apply uppercase tracking-[0.12em]; }
+.facts { @apply flex flex-col rounded-2xl bg-surface-2 px-4 py-1; }
+.fact { @apply border-t border-border py-3 leading-relaxed text-fg-default; }
+.fact:first-child { @apply border-t-0; }
+.factStrong { @apply inline; }

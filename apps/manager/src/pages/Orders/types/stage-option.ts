@@ -1,0 +1,9 @@
+import type { IconName } from '@nino/ds/components/Icon'
+import type { OrderStage } from '@shared/types/order/order-stage'
+
+export type StageOption = {
+  id: OrderStage
+  label: string
+  count: number
+  icon: IconName
+}

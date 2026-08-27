@@ -1,0 +1,25 @@
+@reference "@nino/ds/globals.css";
+
+/* WHY: a ficha acima fica parada — é esta lista que rola, em qualquer
+ * largura.
+ */
+.scroll {
+  @apply min-h-0 flex-1;
+}
+
+.address {
+  @apply flex min-w-0 flex-1 items-start gap-2.5;
+}
+
+.lines {
+  @apply min-w-0 flex-1;
+}
+
+.streetLine {
+  @apply flex flex-wrap items-center gap-x-2 gap-y-1;
+}
+
+.cityLine {
+  @apply mt-0.5;
+  font-variant-numeric: tabular-nums;
+}

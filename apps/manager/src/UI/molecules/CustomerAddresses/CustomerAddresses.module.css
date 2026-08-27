@@ -1,6 +1,0 @@
-@reference "@nino/ds/globals.css";
-
-/* A ficha acima fica parada: é esta lista que rola, em qualquer largura. */
-.scroll {
-  @apply min-h-0 flex-1;
-}

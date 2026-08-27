@@ -1,0 +1,46 @@
+@reference "@nino/ds/globals.css";
+
+/*
+ * Duas leituras diferentes, não uma encolhida.
+ *
+ * No desktop é tabela: cabeçalho de coluna e valores sempre na mesma
+ * posição, porque ali se compara gente com gente, de cima a baixo.
+ *
+ * No celular é extrato, e a régua de colunas nem aparece.
+ */
+.grid {
+  @apply grid items-center gap-x-3;
+  grid-template-columns: minmax(0, 1fr) auto;
+}
+
+@media (min-width: 1024px) {
+  .grid {
+    @apply gap-x-4;
+    grid-template-columns: minmax(0, 1fr) 5rem 7.5rem 5rem 7.5rem;
+  }
+}
+
+.columns {
+  @apply hidden px-3 pb-2 pt-5 lg:grid;
+}
+
+.columnLabel {
+  @apply text-2xs font-bold uppercase tracking-[0.1em] text-fg-faintest;
+  @apply text-right;
+}
+
+.columnLabel:first-child {
+  @apply text-left;
+}
+
+.listScroll {
+  @apply min-h-0 flex-1;
+}
+
+.list {
+  @apply flex flex-col pr-1;
+}
+
+.more {
+  @apply mt-4 flex shrink-0 justify-center border-t border-border pt-4;
+}

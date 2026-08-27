@@ -1,5 +1,4 @@
 import { resolve } from 'node:path'
-
 import { defineConfig, mergeConfig } from 'vitest/config'
 
 import viteConfig from './vite.config'
@@ -14,6 +13,7 @@ export default mergeConfig(
       coverage: {
         provider: 'v8',
         reporter: ['text', 'lcov'],
+        exclude: ['**/*.mock.ts', '**/*.mock.tsx'],
       },
     },
   })

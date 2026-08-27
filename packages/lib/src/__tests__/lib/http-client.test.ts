@@ -122,6 +122,24 @@ describe('createHttpClient', () => {
     ).toEqual(['PUT', 'PATCH', 'DELETE'])
   })
 
+  it('delete: sends a json body when one is given', async () => {
+    // Arrange
+    let sentBody = ''
+    const fetchMock = vi.fn(async (request: Request) => {
+      sentBody = await request.clone().text()
+      return jsonResponse(200, { count: 2 })
+    })
+    vi.stubGlobal('fetch', fetchMock)
+    const client = createHttpClient(baseConfig())
+
+    // Act
+    await client.delete('products/bulk', { ids: ['p1', 'p2'] })
+
+    // Assert
+    expect(requestOf(fetchMock).method).toBe('DELETE')
+    expect(JSON.parse(sentBody)).toEqual({ ids: ['p1', 'p2'] })
+  })
+
   it('401 with a session hint: refreshes once and retries', async () => {
     // Arrange
     signedIn()

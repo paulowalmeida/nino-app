@@ -1,17 +1,17 @@
 ---
 name: hook-state-review
-description: Review React Hooks, local UI state, application/server state, Containers/Pages, providers, guards, loaders, effects, and store consumers in nino-app for correct ownership, lifecycle, data flow, and coherent contracts.
+description: Review React Hooks, local UI state, application/server state, Page features, facades, providers, guards, loaders, effects, and store consumers in nino-app for correct ownership, lifecycle, data flow, and coherent contracts.
 ---
 
 # Hook and State Review
 
 ## Purpose
 
-Determine whether state and side effects live at the narrowest stable boundary, whether a Hook has one coherent responsibility, and whether application/server-state consumers respect the Nino presentation, Container, and Page boundaries.
+Determine whether state and side effects live at the narrowest stable boundary, whether a Hook has one coherent responsibility, and whether application/server-state consumers respect the Nino Page-feature, facade, Hook, store, and component boundaries.
 
 ## Scope
 
-Apply this Skill to `apps/manager/src/{hooks,states,providers,guards,loaders}`, their direct consumers, `UI/containers`, `UI/pages`, and presentation components with relevant local state/effects. Hand off transport/cache ownership to `data-boundary-review` and UI composition/classification to `architecture-review`.
+Apply this Skill to `apps/manager/src/{hooks,states,providers,guards,loaders,pages,layouts,shared}`, including Page-local `facades`, `hooks`, `states`, `operations`, and components with relevant local state/effects. Inspect `src/UI` only when legacy code participates in the traced path; it is not a destination for new or refactored code. Hand off transport/cache ownership to `data-boundary-review` and UI composition/classification to `architecture-review`.
 
 ## Authority
 
@@ -23,7 +23,7 @@ Apply `AGENTS.md`, applicable `.agents/rules/*`, `.agents/rules/hooks.md`, `.age
 - React Effects synchronize with systems outside React and need accurate dependencies/cleanup: https://react.dev/learn/synchronizing-with-effects
 - Zustand stores expose a Hook-shaped consumer and selectors subscribe consumers to selected state: https://zustand.docs.pmnd.rs/learn/getting-started/introduction
 
-Nino's state categories, authorized consumers, Container/Page responsibilities, and presentation boundaries are project decisions. React or Zustand documentation does not authorize a prohibited UI layer to consume application/server state.
+Nino's state categories, Page/facade/Hook/store responsibilities, and component boundaries are project decisions. React or Zustand documentation does not authorize a prohibited consumer to bypass them.
 
 ## Mandatory Review Sequence
 
@@ -32,7 +32,7 @@ Nino's state categories, authorized consumers, Container/Page responsibilities, 
 3. Identify authoritative source of truth and smallest stable owner.
 4. Trace reads, writes, mutations, effects, provider boundaries, and callers.
 5. Determine whether each Hook coordinates one coherent behavior.
-6. For component consumers, determine whether the responsibility is presentation-only, Container-scoped orchestration, or Page-level governance.
+6. For consumers, determine whether the responsibility is local component interaction, facade composition, Hook orchestration, store transition, or Page-level governance.
 7. For each effect, identify the external system it synchronizes with.
 8. Check the returned contract for unnecessary coupling or unstable breadth.
 9. Run applicable Hook/state enforcement and lint; record what each result proves.
@@ -41,61 +41,58 @@ Nino's state categories, authorized consumers, Container/Page responsibilities, 
 ## Nino State and Execution Contracts
 
 - **local component/UI state:** owns one component's interaction or presentation state. Keep it local unless multiple consumers require one stable shared owner.
-- **presentation-only UI Hook (`hooks/ui`):** may encapsulate reusable local presentation behavior and may be consumed by Atoms, Molecules, or Organisms only when it does not reach application/server state, Services, or domain/query Hooks.
-- **Custom domain/query Hook:** owns one reusable application/server-state behavior or Hook composition. It may be consumed by authorized Pages/Containers/Layouts/other Hooks according to architecture rules, but must not return JSX or act as a layer escape hatch.
+- **presentation-only UI Hook (`hooks/ui`):** may encapsulate reusable local presentation behavior and may be consumed by components only when it does not reach application/server state, Services, stores, or domain/query Hooks.
+- **Custom domain/query Hook:** owns one reusable application/server-state behavior or cohesive Hook composition. Page-feature integration exposes it through the composition-only facade. It must not return JSX or act as a layer escape hatch.
 - **`states/` Zustand Store:** owns shared client/application state and named actions. It must not host TanStack Query or become a generic transport/cache boundary.
-- **Container:** owns state/integration for one coherent semantic region of a screen. It is the preferred consumer when state or endpoint integration belongs to that region rather than the whole Page.
-- **Page:** owns route/screen governance. It may consume state/integration when the result affects route access, redirect, top-level screen state, or whether major screen regions render.
+- **facade:** selects/renames ready values and exposes existing command references from Hooks/store. It must not create callbacks, validate, transform, branch, catch, await, or sequence behavior.
+- **Page:** owns route/screen governance, macro composition, and screen-wide branches. It consumes the facade instead of raw Hooks/store.
+- **domain component:** owns a named visual region and local interaction state. It may consume the feature facade but not raw Hooks/store/Services/QueryClient.
 - **Provider:** installs one coherent technical/shared capability. It must not create a second application-state source, bundle unrelated workflows, or smuggle state into prohibited presentation layers.
 - **Guard/Loader:** owns route-entry gating, loading coordination, redirects, and necessary authorized state reads/writes. It must not become a route-specific business workflow, UI controller, or Service substitute.
 
-Atoms, Molecules, and Organisms may receive selected values/actions through props and may use presentation-only Hooks/local React state, but they must never consume Zustand, domain/query Hooks, Services, or equivalent integration indirectly.
+Domain components may consume selected ready values/actions through their feature facade and may use presentation-only Hooks/local React state, but they must never consume Zustand, domain/query Hooks, Services, QueryClient, or equivalent integration directly.
 
 ## Authorized Direct Consumers
 
 For Zustand/application state:
 
 ```text
-Page        ✅
-Container   ✅
-Layout      ✅
-Guard       ✅
-Loader      ✅
-Provider    ✅
-Custom Hook ✅
-Atom        ❌
-Molecule    ❌
-Organism    ❌
+Facade          ✅ composition-only selection/exposure
+Custom Hook     ✅ cohesive state behavior
+Guard/Loader    ✅ route-entry responsibility only
+Provider        ✅ approved application infrastructure only
+Layout          ✅ persistent shell responsibility only
+Page            ❌ consume through facade
+Domain component❌ consume through facade
 ```
 
 For domain/query server-state Hooks:
 
 ```text
-Page        ✅ only for Page-level governance/render decisions
-Container   ✅ for its coherent region
-Layout      ✅ only for persistent chrome responsibility
-Custom Hook ✅ when composition is cohesive
-Atom        ❌
-Molecule    ❌
-Organism    ❌
+Facade          ✅ composition-only selection/exposure
+Custom Hook     ✅ when composition is cohesive
+Guard/Loader    ✅ route-entry responsibility only
+Layout          ✅ persistent shell responsibility only
+Page            ❌ consume through facade
+Domain component❌ consume through facade
 ```
 
-## Page vs. Container Ownership Test
+## State Ownership Test
 
 Ask:
 
 > What is the smallest stable semantic owner that needs this state for correct product behavior?
 
-If the state/query controls the screen as a whole, Page is appropriate. If it primarily serves one coherent region, prefer a Container. Do not use line count as the extraction criterion.
+Classify the state before choosing its owner. Page governs screen-wide branches, the facade exposes ready state, Hooks own server/async state, store operations own shared client-only transitions, and components own local interaction. Do not use line count as the extraction criterion.
 
 Examples:
 
 ```text
-screen access permission → Page
-route-dependent top-level not-found decision → Page
-orders list query → OrdersContainer
-selected order remote details → OrderDetailsContainer
-local row expansion → Organism/local UI state
+screen access permission → route Hook/Guard exposed to Page governance
+route-dependent top-level not-found decision → query Hook exposed by facade to Page
+orders list query → query Hook exposed by facade to OrdersList
+selected order remote details → query Hook exposed by facade to OrderDetails
+local row expansion → domain component local UI state
 ```
 
 ## 9/10 Gates
@@ -106,9 +103,9 @@ Report a confirmed violation when evidence shows:
 - derived state is stored despite safe derivation from authoritative inputs;
 - state is lifted/globalized beyond the actual consumer set;
 - a Custom Hook combines unrelated domains or independent reasons to change;
-- an Atom/Molecule/Organism consumes application/server integration directly or through a disguised wrapper;
-- a Page accumulates region-specific state/query ownership despite a clear cohesive Container boundary;
-- a Container combines unrelated regions or owns screen-wide route governance;
+- a Page or domain component consumes application/server integration directly instead of through its facade;
+- a facade contains callbacks, validation, transformation, branching, error handling, awaiting, or command sequencing;
+- a Page accumulates state/query orchestration instead of screen governance;
 - a Hook contains presentation composition or bypasses component-layer boundaries;
 - a Provider owns unrelated workflows or side effects instead of a coherent shared capability;
 - an effect mirrors values that should be derived or responds to an event that should be handled at the event boundary;
@@ -135,14 +132,14 @@ Split when responsibilities have materially different reasons to change or can b
 
 Do not infer state category from API shape alone. Confirm whether the value is authoritative, derived, temporary UI state, form state, application-shared state, or server state from its lifecycle and consumers.
 
-For a Zustand consumer, identify selected fields/actions and why a narrower selector cannot express the need. For a query consumer, identify why the current Page/Container scope is the narrowest stable semantic owner.
+For a Zustand consumer, identify selected fields/actions and why a narrower selector cannot express the need. For a query consumer, identify why the current Hook is the narrowest stable semantic owner and how the facade exposes it.
 
 ## Enforcement Map
 
 Run applicable checks and interpret them narrowly:
 
 - `eslint-plugin-react-hooks` enforces Hook call/dependency rules; it cannot determine Nino ownership.
-- architecture boundary enforcement can detect configured presentation-to-state/domain-hook/service dependencies, but it cannot prove Page-vs-Container semantic ownership.
+- architecture boundary enforcement can detect configured Page/component-to-state/domain-hook/service dependencies, but it cannot prove facade purity or Hook cohesion.
 - `enforce-hooks` checks configured Hook structure/naming constraints; it does not prove Hook cohesion.
 - `enforce-states` checks configured store constraints; it does not prove state is authoritative.
 
@@ -164,7 +161,7 @@ Each item MUST be exactly one of `VIOLATION`, `LEGACY`, `EXCEPTION`, `NEEDS-EVID
 
 ## User Decision Gate
 
-After confirming a `VIOLATION` or identifying a `LEGACY`, stop the dependent review/implementation flow and present exact evidence, applicable rule, impact, compliant options, and one recommended option. Do not silently choose between materially different Page/Container ownership directions.
+After confirming a `VIOLATION` or identifying a `LEGACY`, stop the dependent review/implementation flow and present exact evidence, applicable rule, impact, compliant options, and one recommended option. Do not silently choose between materially different ownership directions.
 
 ## Evidence Standard
 
@@ -172,7 +169,7 @@ Every confirmed finding MUST include exact file/line, state/effect category, cur
 
 ## Handoffs
 
-- UI/category responsibility and Page-vs-Container composition → `architecture-review`.
+- Page/domain component/facade/Layout responsibility → `architecture-review`.
 - API/service/cache/data ownership → `data-boundary-review`.
 - Test consequences → `testing-review`.
 - Structural decomposition → `complexity-refactoring`.
@@ -182,10 +179,17 @@ The receiving Skill owns final disposition; do not bounce findings without new e
 
 ## Non-Goals
 
-Do not split Hooks because they are long, create Containers only to reduce Page line count, globalize state for convenience, or replace an approved server-state boundary with local/global state without a concrete requirement.
+Do not split Hooks because they are long, create facade callbacks or wrapper components only to reduce Page line count, globalize state for convenience, or replace an approved server-state boundary with local/global state without a concrete requirement.
 
 Do not prohibit local React state or presentation-only Hooks in presentation layers when they genuinely own only UI interaction.
 
+## Self-explanatory names and code
+
+Hook, selector, action, state, effect helper, facade field, fixture, and test
+names must expose their owner and behavior without opening unrelated files.
+Do not use comments to compensate for unclear names or structure; follow the
+comment policy in `.agents/rules/coding.md`.
+
 ## Final Review Gate
 
-Before PASS, confirm authoritative source, state category, narrowest semantic owner, Page-vs-Container scope when applicable, presentation-layer decoupling, effects/lifecycle, Hook cohesion, provider/store responsibility, returned contract, relevant consumer graph, and objective enforcement results were inspected. A PASS applies only to the inspected scope; unresolved required evidence produces **INCOMPLETE**.
+Before PASS, confirm authoritative source, state category, narrowest semantic owner, Page/component/facade/Hook/store ownership, facade purity, presentation decoupling, effects/lifecycle, Hook cohesion, provider/store responsibility, returned contract, relevant consumer graph, and objective enforcement results were inspected. A PASS applies only to the inspected scope; unresolved required evidence produces **INCOMPLETE**.

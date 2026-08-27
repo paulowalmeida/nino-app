@@ -1,0 +1,25 @@
+@reference "@nino/ds/globals.css";
+
+.section {
+  @apply lg:flex lg:h-full lg:min-w-0 lg:flex-col;
+}
+
+.heading {
+  @apply mb-3;
+}
+
+.card {
+  @apply flex min-w-0 flex-col lg:flex-1;
+}
+
+.empty {
+  @apply flex-1;
+}
+
+.skeletonBars {
+  @apply flex flex-1 flex-col gap-2;
+}
+
+.skeletonBar {
+  @apply h-8 rounded-1;
+}

@@ -1,0 +1,26 @@
+@reference "@nino/ds/globals.css";
+
+.details {
+  @apply shrink-0 gap-2 border-t border-border py-2.5 sm:py-3;
+}
+
+.payLabel {
+  @apply mt-1 tracking-[0.1em];
+}
+
+.choices {
+  @apply grid-cols-3 gap-1.5 sm:gap-2;
+}
+
+.choice {
+  @apply gap-1.5 rounded-3 px-2 py-2 text-xs font-semibold text-fg-subtle;
+  @apply hover:text-brand-strong sm:px-3 sm:text-sm;
+}
+
+.choice svg {
+  @apply h-4 w-4 shrink-0;
+}
+
+.choiceOn {
+  @apply bg-brand-soft text-brand-strong;
+}

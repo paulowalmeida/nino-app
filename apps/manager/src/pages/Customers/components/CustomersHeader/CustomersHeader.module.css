@@ -1,0 +1,24 @@
+@reference "@nino/ds/globals.css";
+
+.eyebrow {
+  @apply text-xs font-bold uppercase tracking-[0.12em] text-fg-faint;
+}
+
+/* a página é a lista: fio fino separa cabeçalho do conteúdo, sem moldura */
+.head {
+  @apply mt-1 border-b border-border/60 pb-5;
+}
+
+.title {
+  @apply font-display text-2xl font-extrabold tracking-[-0.02em];
+  @apply text-fg-strong;
+  @apply lg:text-3xl;
+}
+
+.subtitle {
+  @apply mt-1.5 text-sm text-fg-subtle;
+}
+
+.search {
+  @apply mt-4 h-11 w-full lg:max-w-sm;
+}

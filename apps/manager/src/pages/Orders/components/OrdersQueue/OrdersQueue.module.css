@@ -1,0 +1,18 @@
+@reference "@nino/ds/globals.css";
+
+.board {
+  @apply mt-1 grid items-start gap-4 lg:mt-3;
+  @apply sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4;
+}
+
+.board > li {
+  @apply min-w-0;
+}
+
+.sentinel {
+  @apply flex h-10 items-center justify-center;
+}
+
+.loadingMore {
+  @apply text-xs text-fg-faint;
+}

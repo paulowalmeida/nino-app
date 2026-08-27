@@ -1,10 +1,5 @@
 import type { HttpClient, HttpSearchParams } from '../types/http/http-client'
 
-/**
- * Verbos parametrizados sobre um `HttpClient` já configurado. A URL chega
- * pronta de quem chama — este factory não monta nem `${url}/${id}` nem nada
- * parecido, só repassa pro verbo certo do client.
- */
 export const createApi = (client: HttpClient) => ({
   get: <ReturnType>(url: string): Promise<ReturnType> => client.get(url),
 
@@ -33,5 +28,8 @@ export const createApi = (client: HttpClient) => ({
     body: BodyType
   ): Promise<ReturnType> => client.patch(url, body),
 
-  remove: <ReturnType>(url: string): Promise<ReturnType> => client.delete(url),
+  remove: <ReturnType, BodyType = unknown>(
+    url: string,
+    body?: BodyType
+  ): Promise<ReturnType> => client.delete(url, body),
 })

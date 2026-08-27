@@ -1,0 +1,16 @@
+@reference "@nino/ds/globals.css";
+
+.topbar {
+  @apply fixed left-0 right-0 top-0 z-dock flex h-14 items-center gap-3;
+  @apply border-b border-fg-on-brand/10 bg-fg-cool px-4 lg:hidden;
+}
+
+.hamburger {
+  @apply flex h-11 w-11 shrink-0 cursor-pointer items-center justify-center;
+  @apply rounded-2 text-fg-on-brand/70 transition-colors duration-150;
+  @apply hover:bg-surface-raised/10 hover:text-fg-on-brand;
+}
+
+.storeName {
+  @apply min-w-0 truncate text-sm font-semibold text-fg-on-brand/85;
+}

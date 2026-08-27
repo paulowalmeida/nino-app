@@ -1,0 +1,21 @@
+@reference "@nino/ds/globals.css";
+
+.contact {
+  @apply mt-5;
+}
+
+.actions {
+  @apply min-w-0;
+}
+
+.action {
+  @apply min-w-0;
+}
+
+.email {
+  @apply truncate;
+}
+
+.document {
+  font-variant-numeric: tabular-nums;
+}

@@ -22,9 +22,9 @@ Interpret an explicit phase in the user's request. If none is supplied, begin wi
 ```text
 baseline    → mechanical health and enforcement integrity
 tests       → test location, isolation, behavior, and regression quality
-data        → Services, query Hooks, Containers/Pages as consumers, router, loaders, providers, adapters, types
-state       → Hooks, Zustand, Containers/Pages, Providers, Guards, and Loaders
-ui          → Layout, Page, Container, Organism, Molecule, Atom, accessibility
+data        → Services, query Hooks, facades/Pages as consumers, router, loaders, providers, adapters, types
+state       → Hooks, Zustand, facades/Pages, Providers, Guards, and Loaders
+ui          → Layout, Page, domain components, facades, accessibility
 quality     → naming, comments, duplication, cohesion, maintainability
 complexity  → structural hotspots and semantic refactoring decisions
 full        → run baseline, then offer each later phase one at a time
@@ -54,7 +54,7 @@ node tools/__tests__/complexity-analyzer.test.mjs
 node tools/__tests__/complexity-baseline.test.mjs
 ```
 
-5. Report each result narrowly: new failure, known warning, legacy inventory, or verification limitation. Do not run the global architecture checker as a cleanliness claim; its existing UI output is a legacy inventory until the UI phase has explicit scope.
+5. Report each result narrowly: new failure, known warning, legacy inventory, or verification limitation. Do not run the global architecture checker as a cleanliness claim. When a Page or component imports a pre-standardization `src/UI` resource, that resource is in scope for ownership analysis; inspect its consumers and report a shared-ownership violation when it serves more than one Page domain.
 
 ## Specialized Phases
 
@@ -76,25 +76,25 @@ For UI, inspect responsibilities from governance downward:
 ```text
 Page governance
   ↓
-Container ownership for coherent integrated regions
+Domain components for named visual/interaction regions
   ↓
-Organism presentation boundary
+Composition-only feature facade
   ↓
-Molecule
+Query/command Hooks or feature store/operations
   ↓
-Atom
+Adapters/Services or deterministic state transitions
 ```
 
 For each Page:
 
 1. identify route/screen-governance responsibilities;
-2. identify every application/server-state integration consumed directly;
-3. classify each integration as genuinely Page-level or region-specific;
-4. inspect the corresponding Container when region-specific orchestration exists or should exist;
-5. verify Organisms below the boundary are presentation-only except for local UI state/presentation Hooks;
+2. identify every application/server-state integration and its facade field;
+3. verify the Page and domain components do not bypass the facade;
+4. verify the facade only selects/renames ready values and exposes existing commands;
+5. trace behavior to the owning Hook, store operation, Adapter, or Service;
 6. proceed downward only after required finding dispositions are resolved.
 
-Do not require a Container for a purely presentational region or for a Page-level governance query. Do not accept a Container merely because it reduces Page line count.
+Do not introduce Atomic Design categories, `src/UI`, or Containers as the target architecture. Do not accept a component or facade merely because it reduces Page line count; require a named responsibility and correct ownership.
 
 Treat known pre-standardization UI implementation as legacy; do not mass-migrate it during an audit.
 
@@ -112,6 +112,13 @@ Unresolved limitations
 Recommended next phase or required user decision
 ```
 
-For UI/data/state findings involving integration ownership, explicitly state whether the expected owner is Page, Container, or a presentation layer receiving props.
+For UI/data/state findings involving integration ownership, explicitly state whether the expected owner is Page, domain component, facade, Hook, store/operation, Adapter, Service, or Layout.
+
+## Self-explanatory names and code
+
+Every phase audits names across folders, layers, exports, state, commands,
+props, fixtures, and tests. The `quality` phase additionally audits whether
+comments violate `.agents/rules/coding.md` or compensate for unclear code.
+Removing Atomic Design terminology never authorizes removing these rules.
 
 Do not combine separate phase results into a repository-wide compliance claim.

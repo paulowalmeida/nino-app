@@ -1,0 +1,24 @@
+@reference "@nino/ds/globals.css";
+
+.column {
+  @apply flex min-h-0 flex-col sm:border-l sm:border-border sm:pl-5;
+}
+.columnHead {
+  @apply mb-3 flex shrink-0 items-center gap-2.5 px-0.5;
+}
+.columnTitle {
+  @apply text-xs font-bold uppercase tracking-[0.14em] text-fg-faint;
+}
+.count {
+  @apply flex h-6 min-w-6 items-center justify-center rounded-full px-1.5 bg-fg-strong text-xs font-bold text-fg-inverse;
+  font-variant-numeric: tabular-nums;
+}
+.waiting .count {
+  @apply bg-brand text-fg-on-brand;
+}
+.waiting .columnTitle {
+  @apply text-brand-strong;
+}
+.stack {
+  @apply flex min-h-0 flex-1 flex-col gap-4 pb-4 pr-1 sm:overflow-y-auto;
+}

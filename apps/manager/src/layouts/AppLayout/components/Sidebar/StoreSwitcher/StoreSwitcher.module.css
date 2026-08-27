@@ -1,0 +1,54 @@
+@reference "@nino/ds/globals.css";
+
+.wrap {
+  @apply relative;
+}
+
+.single {
+  @apply truncate px-3 py-2 text-sm font-medium text-fg-on-brand/70;
+}
+
+.trigger {
+  @apply flex w-full items-center justify-start gap-2 rounded-3 px-3 py-2;
+  @apply text-left text-sm font-medium text-fg-on-brand/70;
+  @apply transition-colors duration-150;
+  @apply hover:bg-surface-raised/8 hover:text-fg-on-brand;
+}
+
+.storeIcon {
+  @apply h-4 w-4 shrink-0 text-brand;
+}
+
+.triggerText {
+  @apply flex min-w-0 flex-1 flex-col;
+}
+
+.name {
+  @apply truncate;
+}
+
+.company {
+  @apply truncate text-2xs font-normal text-fg-on-brand/35;
+}
+
+.caret {
+  @apply h-0 w-0 shrink-0 border-x-4 border-t-4;
+  @apply border-x-transparent border-t-white/40;
+}
+
+.panel {
+  @apply border border-fg-on-brand/10 bg-fg-cool shadow-xl;
+}
+
+.option {
+  @apply text-fg-on-brand/60 data-[highlighted]:bg-surface-raised/8;
+  @apply data-[highlighted]:text-fg-on-brand;
+}
+
+.checkIcon {
+  @apply h-4 w-4 shrink-0 text-brand;
+}
+
+.checkOff {
+  @apply invisible;
+}

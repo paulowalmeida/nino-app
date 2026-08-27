@@ -1,0 +1,9 @@
+@reference "@nino/ds/globals.css";
+
+.cancelBox {
+  @apply flex flex-col gap-2;
+}
+
+.cancelLabel {
+  @apply text-sm font-medium text-fg-default;
+}

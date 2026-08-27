@@ -1,15 +1,18 @@
 #!/usr/bin/env node
 
-import { runSkillHook } from './hook-kit.mjs'
+import { runSkillHook, sourceOnly } from './hook-kit.mjs'
 
-const match = (path) => /\/src\/hooks\//.test(path)
+const matchesSource = (path) =>
+  /\/src\/hooks\//.test(path) || /\/src\/pages\/[^/]+\/hooks\//.test(path)
+
+const match = sourceOnly(matchesSource)
 
 const violations = (path, toolName, lines) => {
   const found = []
   lines.forEach((line, index) => {
     const at = `linha ${index + 1} do trecho escrito`
 
-    if (/<[A-Z][A-Za-z]*[\s/>]/.test(line)) {
+    if (/(?:^|[^A-Za-z0-9_$])<[A-Z][A-Za-z]*[\s/>]/.test(line)) {
       found.push(`${at}: JSX dentro de hook — hook não retorna UI`)
     }
 

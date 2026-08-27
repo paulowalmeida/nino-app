@@ -1,0 +1,55 @@
+@reference "@nino/ds/globals.css";
+
+.sidebar::after {
+  content: '';
+  @apply pointer-events-none absolute -right-16 -top-16;
+  @apply size-56 rounded-full bg-brand/12 blur-3xl;
+}
+
+.sidebar {
+  @apply fixed left-0 top-0 z-modal flex h-dvh w-60 flex-col overflow-hidden;
+  @apply -translate-x-full bg-fg-cool;
+  @apply transition-[translate,width] duration-300 ease-in-out;
+  @apply lg:translate-x-0;
+}
+
+.open {
+  @apply translate-x-0;
+}
+
+.collapsed {
+  @apply lg:w-(--width-sidebar-collapsed);
+}
+
+.topBar {
+  @apply relative z-content flex shrink-0 items-center justify-between;
+  @apply border-b border-fg-on-brand/8 px-5 py-4;
+}
+
+.sidebar.collapsed .topBar {
+  @apply lg:px-3;
+}
+
+.collapseBtn {
+  @apply flex h-11 w-11 shrink-0 cursor-pointer items-center justify-center;
+  @apply rounded-2 text-fg-on-brand/35 transition-colors duration-150;
+  @apply hover:bg-surface-raised/10 hover:text-fg-on-brand/80;
+  @apply hidden lg:flex;
+}
+
+.collapseIcon {
+  @apply rotate-90 transition-transform duration-300;
+}
+
+.sidebar.collapsed .collapseIcon {
+  @apply -rotate-90;
+}
+
+.switcherWrap {
+  @apply relative z-sticky shrink-0 border-b border-fg-on-brand/8 px-2;
+  @apply py-2;
+}
+
+.footer {
+  @apply relative z-content shrink-0 border-t border-fg-on-brand/8 p-2;
+}

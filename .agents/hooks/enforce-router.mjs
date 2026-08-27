@@ -1,6 +1,8 @@
 #!/usr/bin/env node
-import { runSkillHook } from './hook-kit.mjs'
-const match = (path) => /\/src\/router\//.test(path)
+import { runSkillHook, sourceOnly } from './hook-kit.mjs'
+const matchesSource = (path) => /\/src\/router\//.test(path)
+const match = sourceOnly(matchesSource)
+
 const violations = (path, toolName, lines) => {
   const found = []
   if (toolName === 'Write' && !/\/router\/routes\.tsx$/.test(path) && !/\.test\.tsx?$/.test(path)) found.push('router/ só pode conter routes.tsx e testes')

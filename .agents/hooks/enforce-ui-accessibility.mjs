@@ -1,13 +1,25 @@
 #!/usr/bin/env node
 
-import { runSkillHook } from './hook-kit.mjs'
+import path from 'node:path'
+import { fileURLToPath } from 'node:url'
 
-const match = (path) =>
-  /\/apps\/manager\/src\/UI\/(atoms|molecules|organisms|pages|layouts)\//.test(path) &&
+import { runSkillHook, sourceOnly } from './hook-kit.mjs'
+
+const matchesUiSource = (path) =>
+  /\/apps\/manager\/src\/(?:pages|layouts|shared\/components|skeletons)\//.test(path) &&
   (path.endsWith('.tsx') || path.endsWith('.module.css'))
 
-const violations = (path, toolName, lines) => {
+export const match = sourceOnly(matchesUiSource)
+
+export const violations = (path, toolName, lines) => {
   const found = []
+  const source = lines.join('\n')
+  const phoneInputs = source.match(/<PhoneInput\b[\s\S]*?>/g) ?? []
+  phoneInputs.forEach((openingTag) => {
+    if (!/(?:aria-label|aria-labelledby)=/.test(openingTag)) {
+      found.push('PhoneInput sem nome acessível — fornecer aria-label/aria-labelledby ou envolver em FormField')
+    }
+  })
   lines.forEach((line, index) => {
     const at = `linha ${index + 1} do trecho escrito`
     const removesOutline = /outline:\s*none/.test(line) || /\boutline-none\b/.test(line)
@@ -21,4 +33,9 @@ const violations = (path, toolName, lines) => {
   return found
 }
 
-await runSkillHook({ name: 'enforce-ui-accessibility', match, violations })
+const isDirectExecution =
+  process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)
+
+if (isDirectExecution) {
+  await runSkillHook({ name: 'enforce-ui-accessibility', match, violations })
+}

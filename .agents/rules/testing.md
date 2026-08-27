@@ -14,9 +14,50 @@ Run the declared package script from the manager package when the relevant suite
 
 ## Test Location
 
-For application source under `src/`, tests and test fixtures (`*.mock.ts`/`*.mock.tsx`) MUST live under a dedicated `__tests__/` tree that mirrors the tested source structure, unless a package-specific rule explicitly states otherwise. A legacy colocated test or fixture MUST be migrated into that tree before it is edited.
+Every tested application unit under `src/` MUST own one folder. Its source,
+test, and mock/fixture file MUST live together and share the unit name:
 
-Existing colocated tests in the Design System are package-specific precedent only and MUST NOT silently become the manager convention.
+```text
+useOrders/
+├── useOrders.ts
+├── useOrders.test.tsx
+└── useOrders.mock.ts
+
+OrderCard/
+├── OrderCard.tsx
+├── OrderCard.test.tsx
+├── OrderCard.mock.ts
+└── OrderCard.module.css
+```
+
+This applies to Hooks, components, Pages, facades, adapters, services, stores,
+operations, utilities, skeletons, and every other unit with a test. A directory
+such as `hooks/` MUST NOT contain several loose Hook source/test pairs; each
+Hook owns `hooks/<hook-name>/`.
+
+A unit MAY own a second test file named `<Unit>.behavior.test.tsx` when
+separating interaction from render keeps both readable. It is the same unit:
+same folder, same `<Unit>.mock.ts`, and no source file of its own.
+
+Every `*.test.ts`/`*.test.tsx` MUST have its same-name
+`*.mock.ts`/`*.mock.tsx` sibling. The mock file is declarative only: it owns
+typed props and immutable fixture/input data for that unit. It MUST NOT contain
+`vi.fn`, spies, callbacks, factories, functions, Service/Hook implementations,
+mock return configuration, or any other behavioral double. All behavioral
+mocking and scenario-specific setup remain inside the test. The mock file MUST
+NOT be empty or exist only to satisfy structure.
+
+A legacy test or fixture still under `src/__tests__/` MUST be migrated into
+the unit folder before it is edited.
+
+The manager package is migrating away from the centralized `src/__tests__/` tree domain by domain; a domain not yet migrated MUST NOT be moved wholesale just to clean up legacy layout — migrate its tests when that domain's source is migrated.
+
+The required Page verification command is
+`node .agents/enforcement/verify-page-feature.mjs <feature>` from `nino-app/`.
+It MUST complete the global source-to-test-to-mock inventory before running
+Vitest with 100% statements, branches, functions, and lines for the selected
+Page domain. It is owned by `.agents/enforcement`; consuming apps MUST NOT
+mirror it as a package script.
 
 ## Observable Behavior
 
@@ -56,7 +97,9 @@ When Zustand application state is introduced:
 - each test MUST isolate or reset relevant application state;
 - tests MUST NOT depend on state leaked by another test.
 
-Atoms, Molecules, and Organisms MUST remain testable without direct application-level Zustand consumption.
+Pages and domain components MUST remain testable through their public facade
+boundary without direct application-level Zustand, Service, QueryClient, or
+raw integration-Hook consumption.
 
 ## Business Logic and Regression
 
@@ -102,6 +145,15 @@ The agent MUST:
 8. verify no test was weakened, skipped, or removed without explicit justification;
 9. verify async assertions are awaited;
 10. inspect the final diff.
+
+For a refactored page domain, the agent MUST additionally inventory every
+folder and executable source file, pair it with a colocated test, and run
+coverage scoped to `src/pages/<feature>/**/*`. Completion requires 100%
+statements, branches, functions, and lines unless the user explicitly approves
+a documented exclusion. Type-only files, CSS, declarations, behaviorless
+barrels, and mocks are not executable coverage targets. Search results and a
+coverage percentage do not replace file-by-file inspection or meaningful
+behavior assertions.
 
 Passing a suite does not prove every requirement was implemented correctly.
 

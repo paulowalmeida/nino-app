@@ -109,6 +109,7 @@ export const createHttpClient = (config: HttpClientConfig): HttpClient => {
     postFormData: (url, body) => run(transport.post(url, { body })),
     put: (url, body) => run(transport.put(url, { json: body })),
     patch: (url, body) => run(transport.patch(url, { json: body })),
-    delete: (url) => run(transport.delete(url)),
+    delete: (url, body) =>
+      run(transport.delete(url, body ? { json: body } : undefined)),
   }
 }

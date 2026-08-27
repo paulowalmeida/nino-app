@@ -3,6 +3,11 @@
 Painel de gestão do lojista — aplicação **autenticada** (atrás de login).
 SPA React + Vite, React Router (data router) + react-query.
 
+A arquitetura atual é organizada por domínio. As regras normativas ficam em
+[`/.agents/rules/architecture.md`](../../.agents/rules/architecture.md): a
+Page governa a composição da tela, componentes do domínio acessam sua facade e
+não há cascata de props para transportar estado entre arquivos.
+
 ## Por que Vite SPA e não Next.js
 
 Decisão de 2026-06-12: **todo app autenticado fica em SPA React puro**; Next.js
@@ -45,7 +50,7 @@ reimplementar tudo isso à mão.
 - **Nunca** copiar cache para `useState` via `useEffect` — destrói o sync.
 - Config global sã de `staleTime`/refetch, para não "piscar" loading.
 
-### Client state global → Zustand
+### Client/application state → Zustand
 
 Sidebar colapsada, tema, tenant selecionado. **Não** Redux (RTK é cerimônia
 demais para o tamanho do app). Instalado na fundação (M0), quando surgiram os
@@ -56,7 +61,9 @@ dois primeiros client states reais — stores em `src/states` (`@states`):
   `useCurrentTenant`), para não duplicar verdade.
 - `useUiStore` — `sidebarOpen`.
 
-Regra: estado de servidor (pedidos, produtos, zonas) **nunca** entra em store.
+Regra: estado de servidor fica no react-query. Um domínio pode usar Zustand
+para estado client-side compartilhado, como seleção, modais, rascunhos e
+preferências locais. Dados do backend não devem ser copiados para o Zustand.
 
 ## Contexto e autenticação
 
@@ -116,10 +123,20 @@ caminho único de bootstrap.
 
 ## Decisões técnicas
 
-- **Atomic design**: `atoms` → `molecules` → `organisms` → `@pages`. Componente burro recebe
-  por props, não busca dado.
-- **Fluxo de dados**: service (`ky`) → hook (TanStack Query/zustand) →
-  componente (apresentação).
+- **Arquitetura por domínio**: código específico fica no próprio domínio;
+  somente código realmente usado por múltiplos domínios vai para `shared`.
+- **Governança**: somente a Page governa a composição da tela. Componentes do
+  domínio acessam a facade; somente a facade coordena Zustand, API e adapters.
+  Não há prop drilling de estado entre arquivos.
+- **Operations do store**: funções que implementam transições de estado do
+  cliente ficam em `states/<feature>/operations`, uma operação por arquivo.
+  Store não chama endpoint nem mantém cache de dados do backend.
+- **Fluxo remoto**: UI → facade → query/mutation hook → adapter → service →
+  API. A resposta passa pelo adapter, entra no cache do React Query e retorna
+  pela facade até a UI.
+- **Fluxo client-side**: UI → facade → action/operation → Zustand → facade →
+  UI. Quando uma intenção envolve os dois, a mutation cuida do backend e o
+  Zustand cuida somente dos efeitos visuais/client-side.
 - **API client**: módulos por domínio (`auth`, `tenant`, `catalog`, `orders`);
   busca por id é sempre `getById`, nunca `show`.
 - **Formulários**: `@nino/forms` (FormBuilder) para produto, categoria e dados

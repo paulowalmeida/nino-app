@@ -1,8 +1,10 @@
 #!/usr/bin/env node
 
-import { runSkillHook } from './hook-kit.mjs'
+import { runSkillHook, sourceOnly } from './hook-kit.mjs'
 
-const match = (path) => /\/src\/UI\/layouts\//.test(path)
+const matchesSource = (path) => /\/src\/UI\/layouts\//.test(path)
+
+const match = sourceOnly(matchesSource)
 
 const violations = (path, toolName, lines) => {
   const found = []

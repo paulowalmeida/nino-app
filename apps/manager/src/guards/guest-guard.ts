@@ -1,9 +1,9 @@
-import { redirect, type LoaderFunctionArgs } from 'react-router'
+import { type LoaderFunctionArgs,redirect } from 'react-router'
 
-import { STORE_DRAFT_KEY } from '@constants/drafts'
-import { useSessionStore } from '@states/useSessionStore'
-import { clearDraft } from '@utils/form-draft'
-import { hadSession } from '@utils/session-hint'
+import { STORE_DRAFT_KEY } from '@shared/constants/store-draft.constants'
+import { useSessionStore } from '@shared/states/session/session.state'
+import { clearDraft } from '@shared/utils/form-draft/form-draft'
+import { hadSession } from '@shared/utils/session-hint/session-hint'
 
 /**
  * Guarda das telas de entrada. Sessão viva aqui tem três leituras, e a rota é

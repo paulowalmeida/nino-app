@@ -1,0 +1,47 @@
+import { Box } from '@nino/ds/components/Box'
+import { DatePicker } from '@nino/ds/components/DatePicker'
+import { Tabs } from '@nino/ds/components/Tabs'
+import { Text } from '@nino/ds/components/Text'
+import { REPORTS_PERIODS } from '@pages/Reports/constants/reports.constants'
+import type { PeriodChoice } from '@shared/types/ui/period-choice'
+
+import motion from '@styles/motion.module.css'
+import styles from './ReportsPeriodControls.module.css'
+
+type ReportsPeriodControlsProps = {
+  period: PeriodChoice
+  onPeriodChange: (period: PeriodChoice) => void
+  custom: {
+    fromDate?: Date
+    toDate?: Date
+    fromEndMonth: Date
+    toStartMonth?: Date
+    toEndMonth: Date
+    awaitingDates: boolean
+    setFrom: (date: Date | undefined) => void
+    setTo: (date: Date | undefined) => void
+  }
+}
+
+export const ReportsPeriodControls = ({ period, onPeriodChange, custom }: ReportsPeriodControlsProps) => (
+  <Box direction="column" gap={4}>
+    <Tabs
+      className={motion.unroll}
+      tabs={REPORTS_PERIODS.map(({ id, label }) => ({ value: id, label, content: null }))}
+      value={period}
+      onValueChange={(value) => onPeriodChange(value as PeriodChoice)}
+    />
+    {period === 'custom' && (
+      <Box direction="row" gap={3} align="end" wrap mb={{ mobile: 5, desktop: 6 }} className={motion.unroll}>
+        <Box as="label" direction="column" gap={1}>
+          <Text className={styles.dateLabel}>De</Text>
+          <DatePicker value={custom.fromDate} onValueChange={custom.setFrom} endMonth={custom.fromEndMonth} />
+        </Box>
+        <Box as="label" direction="column" gap={1}>
+          <Text className={styles.dateLabel}>Até</Text>
+          <DatePicker value={custom.toDate} onValueChange={custom.setTo} startMonth={custom.toStartMonth} endMonth={custom.toEndMonth} />
+        </Box>
+      </Box>
+    )}
+  </Box>
+)

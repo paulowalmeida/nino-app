@@ -25,27 +25,15 @@
     "baseUrl": ".",
     "paths": {
       "@ds/*": ["../../packages/ds/src/*"],
-      "@adapters/*": ["src/adapters/*"],
-      "@assets/*": ["src/assets/*"],
-      "@atoms/*": ["src/UI/atoms/*"],
-      "@constants/*": ["src/constants/*"],
-      "@containers/*": ["src/UI/containers/*"],
-      "@custom_types/*": ["src/types/*"],
       "@guards/*": ["src/guards/*"],
-      "@hooks/*": ["src/hooks/*"],
       "@lib/*": ["src/lib/*"],
       "@loaders/*": ["src/loaders/*"],
-      "@molecules/*": ["src/UI/molecules/*"],
-      "@organisms/*": ["src/UI/organisms/*"],
-      "@pages/*": ["src/UI/pages/*"],
+      "@pages/*": ["src/pages/*"],
       "@providers/*": ["src/providers/*"],
       "@router/*": ["src/router/*"],
-      "@services/*": ["src/services/*"],
-      "@skeletons/*": ["src/skeletons/*"],
-      "@states/*": ["src/states/*"],
       "@styles/*": ["src/styles/*"],
-      "@layouts/*": ["src/UI/layouts/*"],
-      "@utils/*": ["src/utils/*"]
+      "@layouts/*": ["src/layouts/*"],
+      "@shared/*": ["src/shared/*"]
     }
   },
   "include": ["src"]

@@ -1,0 +1,38 @@
+@reference "@nino/ds/globals.css";
+
+.itemLink {
+  @apply flex min-w-0 flex-1 items-center gap-3 rounded-2 py-2.5 pl-1 pr-2;
+  @apply hover:bg-surface-3 hover:-translate-y-0.5;
+  @apply active:translate-y-0;
+  @apply focus-visible:outline-none focus-visible:ring-2;
+  @apply focus-visible:ring-brand focus-visible:ring-offset-1;
+  transition:
+    background-color 150ms ease-out,
+    transform 200ms var(--ease-out);
+}
+
+.itemText {
+  @apply flex min-w-0 flex-1 flex-col;
+}
+
+.itemName {
+  @apply truncate text-sm font-semibold text-fg-strong lg:text-base;
+}
+
+.itemNameInactive {
+  @apply font-normal;
+}
+
+.itemDescription {
+  @apply mt-0.5 hidden truncate text-xs text-fg-faint sm:block;
+}
+
+.price {
+  @apply shrink-0 font-display text-sm font-bold text-fg-strong;
+  @apply lg:text-base;
+  font-variant-numeric: tabular-nums;
+}
+
+.priceInactive {
+  @apply font-medium text-fg-faint line-through;
+}

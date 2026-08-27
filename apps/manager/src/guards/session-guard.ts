@@ -1,6 +1,6 @@
 import { redirect } from 'react-router'
 
-import { useSessionStore } from '@states/useSessionStore'
+import { useSessionStore } from '@shared/states/session/session.state'
 
 /** Requires a live session, without tying the route to a tenant. */
 export const SessionGuard = async () => {

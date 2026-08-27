@@ -1,0 +1,143 @@
+@reference "@nino/ds/globals.css";
+
+/*
+ * The ticket is a DS Card: same white surface, same radius and same
+ * shadow as the overview and counter menu cards. What's left here is only
+ * what the Card doesn't know — the internal dividers and the queue
+ * states. `p-0` unsets the Card's padding on purpose: each strip has its
+ * own, and the divider line needs to run edge to edge.
+ */
+.ticket {
+  @apply flex flex-col p-0 transition-all duration-300;
+  @apply hover:border-brand-vivid hover:shadow-md;
+}
+
+/*
+ * An order waiting for acceptance is the only one that calls for action:
+ * it wears the brand color, like the queue's urgent card. The rest stay
+ * quiet.
+ */
+.waiting {
+  @apply border-brand-bold bg-brand-ghost;
+}
+
+/* past the deadline while waiting for acceptance: the warm highlight
+   cools into alert */
+.waiting.late {
+  @apply border-danger/40 bg-danger-surface/60;
+}
+
+.cancelled {
+  @apply opacity-dim;
+}
+
+.head {
+  @apply flex min-w-0 items-center gap-2.5 px-4 pt-3.5 pb-2.5;
+}
+
+.number {
+  @apply font-display text-base font-extrabold tracking-[-0.01em];
+  @apply text-fg-strong;
+  font-variant-numeric: tabular-nums;
+}
+
+/* closed order: no running timer, the data is the time it came in */
+.time {
+  @apply text-xs text-fg-faint;
+  font-variant-numeric: tabular-nums;
+}
+
+/*
+ * In the queue what matters is how long the order has been waiting, not
+ * what time it came in: "12 min" answers on its own, "17:00" demands
+ * mental math in the middle of the rush. The full time still lives in
+ * `dateTime` and the title.
+ *
+ * Bare number, no pill: the status badge is already the header's stamp,
+ * and two badges side by side compete for the same reading.
+ */
+.waited {
+  @apply text-xs font-semibold text-fg-subtle;
+  font-variant-numeric: tabular-nums;
+}
+
+.overdue {
+  @apply text-danger;
+}
+
+.status {
+  @apply ml-auto shrink-0;
+}
+
+.body {
+  @apply block border-t border-border/60 px-4 py-3;
+}
+
+.customer {
+  @apply truncate text-sm font-semibold text-fg-default;
+}
+
+/* channel and table: supporting metadata, in the same tone as the address
+   line in the order detail */
+.meta {
+  @apply mt-0.5 text-xs text-fg-faint;
+}
+
+/* one-line summary on mobile; full list from table size up */
+.summary {
+  @apply mt-1.5 truncate text-sm text-fg-muted sm:hidden;
+}
+
+/*
+ * The note comes before the items and with its own background: it's what
+ * the kitchen gets wrong when it doesn't read it, and reading the whole
+ * order to find it doesn't happen during the rush.
+ */
+.notes {
+  @apply mt-2 rounded-2 bg-brand-ghost px-2.5 py-1.5 text-sm leading-snug;
+  @apply text-brand-strong;
+}
+
+.notesLabel {
+  @apply mr-1.5 text-2xs font-bold uppercase tracking-[0.08em];
+  @apply text-brand-strong/70;
+}
+
+.items {
+  @apply mt-2.5 hidden flex-col gap-1 sm:flex;
+}
+
+.item {
+  @apply flex min-w-0 items-baseline gap-2 text-sm text-fg-muted;
+}
+
+.quantity {
+  @apply w-6 shrink-0 text-right font-bold text-brand-strong;
+  font-variant-numeric: tabular-nums;
+}
+
+.itemName {
+  @apply min-w-0 flex-1 truncate;
+}
+
+.more {
+  @apply pl-8 text-xs italic text-fg-faintest;
+}
+
+.foot {
+  @apply mt-auto flex flex-wrap items-center justify-between gap-2.5;
+  @apply border-t border-border/60 px-4 py-3;
+}
+
+.total {
+  @apply font-display text-lg font-extrabold text-fg-strong;
+  font-variant-numeric: tabular-nums;
+}
+
+.payment {
+  @apply text-xs text-fg-faint;
+}
+
+.action {
+  @apply w-full shrink-0 sm:w-auto;
+}

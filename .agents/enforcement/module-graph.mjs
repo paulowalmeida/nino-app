@@ -3,6 +3,10 @@ import path from "node:path";
 import ts from "typescript";
 
 export const SOURCE_EXTENSIONS = [".ts", ".tsx", ".js", ".jsx", ".mts", ".cts", ".mjs", ".cjs"];
+const NON_SOURCE_EXTENSIONS = new Set([
+  ".css", ".scss", ".sass", ".less", ".json", ".svg", ".png", ".jpg",
+  ".jpeg", ".gif", ".webp", ".avif", ".woff", ".woff2", ".ttf", ".ico",
+]);
 
 export function readJson(file) {
   const result = ts.parseConfigFileTextToJson(file, fs.readFileSync(file, "utf8"));
@@ -53,10 +57,10 @@ export function isConfiguredAlias(specifier, paths) {
 
 export function isLocalSourceSpecifier(specifier, config) {
   const extension = path.extname(specifier);
-  if (extension !== "" && !SOURCE_EXTENSIONS.includes(extension)) return false;
+  if (NON_SOURCE_EXTENSIONS.has(extension)) return false;
 
   if (specifier.startsWith(".")) {
-    return extension === "" || SOURCE_EXTENSIONS.includes(extension);
+    return true;
   }
   return isConfiguredAlias(specifier, config.paths);
 }

@@ -1,0 +1,9 @@
+@reference "@nino/ds/globals.css";
+
+.hint {
+  @apply text-xs leading-relaxed text-fg-faint;
+}
+
+.place {
+  @apply mt-1 w-full;
+}

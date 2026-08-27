@@ -1,9 +1,9 @@
 import { redirect } from 'react-router'
 
-import { HOME_OF } from '@constants/roles'
-import type { Membership } from '@custom_types/auth/membership'
-import { useSessionStore } from '@states/useSessionStore'
-import { sawOnboarding } from '@utils/onboarding-seen'
+import { HOME_OF } from '@shared/constants/roles.constants'
+import { useSessionStore } from '@shared/states/session/session.state'
+import type { Membership } from '@shared/types/auth/membership'
+import { sawOnboarding } from '@shared/utils/onboarding-seen/onboarding-seen'
 
 const entryUnit = (memberships: Membership[]): Membership =>
   memberships.find(({ isCurrent }) => isCurrent) ?? memberships[0]

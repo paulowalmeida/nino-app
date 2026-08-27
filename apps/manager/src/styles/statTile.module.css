@@ -1,8 +1,0 @@
-@reference "@nino/ds/globals.css";
-
-/* Shared chrome between the overview's stat tiles (DayTally, QueueBoard):
-   each tile is a Card wrapping a Link, and this is what lines up the icon
-   row inside it. */
-.cardOverview {
-  @apply flex flex-row items-center gap-x-2;
-}

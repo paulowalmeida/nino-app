@@ -1,0 +1,15 @@
+@reference "@nino/ds/globals.css";
+
+.fullWidthAction {
+  @apply mt-2 w-full;
+}
+
+/* O medidor de força não traz margem própria — o espaço até o campo acima é
+   decisão desta tela. */
+.strengthMeter {
+  @apply mt-1;
+}
+
+.footerLink {
+  @apply font-semibold text-brand hover:underline;
+}

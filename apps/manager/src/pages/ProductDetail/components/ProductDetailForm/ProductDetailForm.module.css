@@ -1,0 +1,44 @@
+@reference "@nino/ds/globals.css";
+
+/*
+ * Duas colunas no desktop: a foto tem largura fixa à esquerda e os campos
+ * ocupam o resto. Empilhada, a moldura 4/3 nascia com a largura inteira da
+ * página — quase 500px de altura antes do primeiro campo.
+ */
+.form {
+  @apply mt-6 flex flex-col gap-5;
+  @apply lg:grid lg:grid-cols-[20rem_1fr] lg:items-start lg:gap-x-10;
+}
+
+.fields {
+  @apply flex min-w-0 flex-col gap-5;
+}
+
+.field {
+  @apply min-w-0;
+}
+
+/* preço e posição são campos curtos: a largura acompanha o que se digita
+   ("16,90", "13"), não a coluna inteira do formulário */
+.row {
+  @apply grid grid-cols-2 gap-4 sm:grid-cols-[9rem_7rem];
+}
+
+.availability {
+  @apply flex items-start gap-3 rounded-2xl bg-surface-2 p-4;
+}
+
+.availabilityLabel {
+  @apply text-sm font-semibold text-fg-strong;
+}
+
+.availabilityHint {
+  @apply mt-0.5 text-xs leading-relaxed text-fg-faint;
+}
+
+/* ação fecha o bloco à direita, com a primária na ponta: é onde a mão vai
+   depois de percorrer o formulário inteiro */
+.actions {
+  @apply flex flex-col gap-2 border-t border-border/60 pt-5;
+  @apply sm:flex-row sm:justify-end lg:col-span-2;
+}

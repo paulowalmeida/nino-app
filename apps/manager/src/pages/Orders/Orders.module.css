@@ -1,0 +1,15 @@
+@reference "@nino/ds/globals.css";
+
+/*
+ * A tela é fixa e só a bobina rola por dentro — mais ainda no celular, onde
+ * cabem duas comandas por vez: trocar de etapa não pode exigir rolar a fila
+ * inteira de volta.
+ *
+ * O desconto de 3.5rem é a barra fixa do AppLayout, que no celular vive fora
+ * do fluxo e é compensada por um `pt-14` no `main`. Sem descontar, a página
+ * ficaria uma barra mais alta que a tela.
+ */
+.page {
+  @apply relative flex h-[calc(100dvh-3.5rem)] flex-col p-4;
+  @apply lg:h-dvh lg:p-10;
+}

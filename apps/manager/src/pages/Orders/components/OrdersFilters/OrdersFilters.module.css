@@ -1,0 +1,14 @@
+@reference "@nino/ds/globals.css";
+
+.track {
+  @apply shrink-0 pb-2 lg:pb-0;
+}
+
+.search {
+  @apply w-full lg:max-w-sm;
+}
+
+.results {
+  @apply mb-3 flex shrink-0 flex-wrap items-center gap-x-2 gap-y-1 text-sm;
+  @apply text-fg-muted;
+}

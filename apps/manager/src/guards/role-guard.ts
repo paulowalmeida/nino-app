@@ -1,8 +1,8 @@
-import { redirect, type LoaderFunctionArgs } from 'react-router'
+import { type LoaderFunctionArgs,redirect } from 'react-router'
 
-import { HOME_OF } from '@constants/roles'
-import type { TenantRole } from '@custom_types/auth/tenant-role'
-import { useSessionStore } from '@states/useSessionStore'
+import { HOME_OF } from '@shared/constants/roles.constants'
+import { useSessionStore } from '@shared/states/session/session.state'
+import type { TenantRole } from 'src/shared/types/auth/tenant-role'
 
 /**
  * Esconder o item do menu não basta: quem digita a URL entra do mesmo

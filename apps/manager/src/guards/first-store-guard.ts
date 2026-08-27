@@ -1,6 +1,6 @@
 import { redirect } from 'react-router'
 
-import { useSessionStore } from '@states/useSessionStore'
+import { useSessionStore } from '@shared/states/session/session.state'
 
 /**
  * `/unidades` é a tela de quem ainda não tem loja nenhuma. Quem já tem cadastra

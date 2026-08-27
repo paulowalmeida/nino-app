@@ -1,0 +1,56 @@
+@reference "@nino/ds/globals.css";
+
+.panel {
+  @apply flex min-w-0 flex-col;
+}
+
+.head {
+  @apply mb-4 lg:mb-6;
+}
+
+.save {
+  @apply mt-4 self-end;
+}
+
+.skeleton {
+  @apply h-80 w-full rounded-6;
+}
+
+.week {
+  @apply flex flex-col gap-1;
+}
+
+/*
+ * One row per day — a closed day recedes into the background. No divider:
+ * outside the card, the rule used to run the page's full width while the
+ * fields stopped halfway, leaving a stroke on the right pointing at
+ * nothing. What separates the days is the rows' own rhythm.
+ */
+.day {
+  @apply flex flex-wrap items-center gap-3 py-2;
+  @apply transition-opacity duration-200;
+}
+
+.closed {
+  @apply opacity-dim;
+}
+
+.dayName {
+  @apply w-24 shrink-0 text-sm font-semibold text-fg-default;
+}
+
+.times {
+  @apply flex items-center gap-2;
+}
+
+.timeInput {
+  @apply w-24;
+}
+
+.until {
+  @apply text-xs text-fg-faint;
+}
+
+.save {
+  @apply ml-auto shrink-0;
+}

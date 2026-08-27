@@ -1,0 +1,9 @@
+@reference "@nino/ds/globals.css";
+
+.list {
+  @apply overflow-hidden;
+}
+
+.sentinel {
+  @apply flex h-10 items-center justify-center;
+}

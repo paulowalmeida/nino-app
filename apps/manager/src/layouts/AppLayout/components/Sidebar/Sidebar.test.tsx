@@ -1,0 +1,38 @@
+import { MemoryRouter } from 'react-router'
+
+import { render, screen } from '@testing-library/react'
+import { describe, expect, it, vi } from 'vitest'
+
+import { Sidebar } from './Sidebar'
+
+vi.mock('@shared/hooks/session/useCurrentTenant/useCurrentTenant', () => ({
+  useCurrentTenant: () => ({ tenantId: 'tenant-1' }),
+}))
+vi.mock('@shared/hooks/order/useQueueSummary/useQueueSummary', () => ({
+  useQueueSummary: () => ({ data: { PENDING: 2 } }),
+}))
+vi.mock('@layouts/AppLayout/hooks/useSidemenu/useSidemenu', () => ({
+  useSidemenu: () => ({ groups: [], openSection: null, setOpenSection: vi.fn(), isInside: vi.fn() }),
+}))
+vi.mock('@shared/states/session/session.state', () => ({
+  useSessionStore: () => ({ name: 'Marina Silva' }),
+}))
+vi.mock('./SidebarNavigation/SidebarNavigation', () => ({ SidebarNavigation: () => <nav /> }))
+vi.mock('./StoreSwitcher/StoreSwitcher', () => ({ StoreSwitcher: () => null }))
+vi.mock('./UserMenu/UserMenu', () => ({ UserMenu: () => null }))
+
+describe('Sidebar', () => {
+  it('renders the sidebar landmark', () => {
+    render(
+      <MemoryRouter>
+        <Sidebar
+          isOpen={false}
+          onClose={() => undefined}
+          collapsed={false}
+          onToggleCollapse={() => undefined}
+        />
+      </MemoryRouter>
+    )
+    expect(screen.getByRole('complementary')).toBeInTheDocument()
+  })
+})

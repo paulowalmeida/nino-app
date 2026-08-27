@@ -2,7 +2,7 @@
 
 import { runSkillHook } from './hook-kit.mjs'
 
-const match = (path) => /\/apps\/manager\/src\/.*\.module\.css$/.test(path)
+const match = (path) => /\/apps\/manager\/src\/.*\.(?:module\.css|tsx?)$/.test(path)
 
 const TOKEN_BY_HEX = {
   '#ff6b00': 'brand',
@@ -14,6 +14,14 @@ const TOKEN_BY_HEX = {
 
 const violations = (path, toolName, lines) => {
   const found = []
+  if (!path.endsWith('.css')) {
+    lines.forEach((line, index) => {
+      if (/from ['"]@styles\/(?!motion\.module\.css)[^'"]+\.module\.css['"]/.test(line)) {
+        found.push(`linha ${index + 1} do trecho escrito: stylesheet estrutural compartilhado — mover as classes para o CSS do componente`)
+      }
+    })
+    return found
+  }
   lines.forEach((line, index) => {
     const at = `linha ${index + 1} do trecho escrito`
     if (line.length > 80) found.push(`${at}: mais de 80 caracteres`)

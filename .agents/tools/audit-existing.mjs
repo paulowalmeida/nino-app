@@ -21,7 +21,7 @@ const hookFiles = () =>
     .map((name) => path.join(HOOKS_DIR, name))
 
 const shouldExclude = (entry, excludes) =>
-  excludes.some((segment) => entry.split(path.sep).includes(segment))
+  [...excludes].some((segment) => entry.split(path.sep).includes(segment))
 
 const collectFiles = (target, excludes, files = []) => {
   const stat = fs.statSync(target)
@@ -96,8 +96,8 @@ const printTextReport = ({ root, files, hooks, violations, hookErrors, semanticS
   console.log(`Audit root: ${root}`)
   console.log(`Files scanned: ${files}`)
   console.log(`Enforcement hooks: ${hooks}`)
-  console.log(`Mechanical violations: ${violations}`)
-  console.log(`Hook errors: ${hookErrors}`)
+  console.log(`Mechanical violations: ${violations.length}`)
+  console.log(`Hook errors: ${hookErrors.length}`)
   console.log(`Complexity functions analyzed: ${complexity.metrics.length}`)
   if (complexity.error) console.log(`Complexity analyzer error: ${complexity.error}`)
   console.log('')

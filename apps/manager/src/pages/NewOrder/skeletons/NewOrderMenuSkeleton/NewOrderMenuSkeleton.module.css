@@ -1,0 +1,32 @@
+@reference "@nino/ds/globals.css";
+
+/* mesma moldura do cardápio: o esqueleto ocupa o lugar que os itens vão ter */
+.menu {
+  @apply flex min-w-0 flex-col gap-6 rounded-6 border border-border;
+  @apply bg-surface-page/70;
+  @apply p-5 backdrop-blur-sm lg:p-6;
+}
+
+.item {
+  @apply flex min-w-0 items-center gap-3 border-b border-border/60 py-2.5;
+}
+
+.ghostSectionName {
+  @apply mb-2 h-5 w-32;
+}
+
+.ghostThumb {
+  @apply h-11 w-11 shrink-0;
+}
+
+.ghostItemName {
+  @apply h-4 min-w-0 flex-1;
+}
+
+.ghostItemPrice {
+  @apply h-4 w-12 shrink-0;
+}
+
+.ghostAddButton {
+  @apply h-8 w-24 shrink-0;
+}

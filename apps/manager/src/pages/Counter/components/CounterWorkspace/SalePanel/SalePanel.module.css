@@ -1,0 +1,17 @@
+@reference "@nino/ds/globals.css";
+
+.panel {
+  @apply flex h-full w-full flex-col bg-surface-page;
+}
+
+.bare {
+  @apply flex min-h-0 w-full flex-1 flex-col;
+}
+
+.header {
+  @apply shrink-0 items-center justify-between border-b border-border px-4 py-3;
+}
+
+.title {
+  @apply tracking-[-0.01em];
+}

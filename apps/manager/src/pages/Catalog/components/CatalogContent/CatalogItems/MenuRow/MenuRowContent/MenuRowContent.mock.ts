@@ -1,0 +1,12 @@
+import type { MenuItem } from '@shared/types/product/menu-item'
+
+export const item: MenuItem = {
+  id: 'item-1',
+  name: 'Coxinha',
+  description: 'Massa crocante com recheio de frango',
+  price: '8.50',
+  position: 0,
+  isActive: true,
+  category: { id: 'cat-1', name: 'Salgados', position: 0 },
+  images: [],
+}

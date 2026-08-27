@@ -1,7 +1,14 @@
 ---
 name: architecture-review
-description: Review nino-app UI architecture, Atomic Design layer placement, Container/Page governance, responsibility boundaries, and cross-layer behavior. Use when semantic judgment is required beyond enforce-* checks.
+description: Review nino-app domain-first Page features, Layouts, facades, components, Hooks, state, responsibility boundaries, and cross-layer behavior. Use when semantic judgment is required beyond enforce-* checks.
 ---
+
+Facade gate (9/10 rule): Pages and Page components always access data and
+commands through a screen-specific facade, never through raw integration
+Hooks. Creating one facade per domain is not mandatory. The facade must provide
+a real UI contract; `return useX()`, `() => useX()`, a spread/rename-only
+wrapper, and a wrapper without composition are pass-through patterns and do not
+justify a facade.
 
 # Architecture Review
 
@@ -13,13 +20,17 @@ Determine whether each UI/application unit owns the right responsibility at the 
 
 Apply `AGENTS.md`, applicable `.agents/rules/*`, then objective `enforce-*` results. A mechanical violation is a defect, not a semantic preference. Existing code is evidence, never permission.
 
-## External Authorities
+## External Authorities and Project Model
 
-- Atomic Design terminology: https://atomicdesign.bradfrost.com/chapter-2/
 - Application Shell model: https://developer.chrome.com/docs/workbox/app-shell-model
 - React Router layout routes: https://reactrouter.com/start/declarative/routing
 
-Nino uses Atom, Molecule, Organism, and Page from Atomic Design. Container and Layout are Nino application layers outside that methodology. Container owns scoped application/server-state orchestration for one coherent region; Layout owns persistent chrome and route composition around the active Page. Nino's explicit architectural rules remain authoritative when they are stricter than an external source.
+Nino uses a domain-first Page-feature architecture. Atomic Design and `src/UI`
+are legacy, not destinations for new or refactored code. The implemented
+reference is `references/catalog-page-model.md`; read it completely for every
+construction, edit, refactor, or audit under `apps/manager/src/pages/**`.
+Layouts are direct children of `src` and own persistent chrome plus route
+composition around the active Page.
 
 ## Mandatory Review Sequence
 
@@ -28,13 +39,23 @@ Nino uses Atom, Molecule, Organism, and Page from Atomic Design. Container and L
 3. Inspect the target unit completely enough to understand its public contract.
 4. Inspect immediate callers/callees when ownership is ambiguous.
 5. Determine the unit's actual responsibility from behavior, not location or name.
-6. Classify the unit as Atom, Molecule, Organism, Container, Page, or Layout according to `.agents/rules/architecture.md`.
+6. Classify the unit as Page, domain component, composition-only facade, Hook, store/operation, Adapter, Service, shared unit, or Layout according to `.agents/rules/architecture.md`.
 7. Compare imports, rendered children, state, effects, data access, decisions, and exposed API with that category.
-8. For every Page with application/server-state integration, ask whether the integration affects screen governance or belongs to one coherent Container.
-9. For every Organism, verify that any Hooks are presentation-only and that no endpoint/query/state integration leaks into the presentation layer.
-10. Run `node .agents/enforcement/check-architecture-boundaries.mjs apps/manager/src` when the reviewed scope is in `apps/manager`; record its exact result.
-11. Check whether a proposed correction restores ownership or merely relocates code.
-12. Record each finding and final disposition.
+8. When the target is a Page (new, edited, or under audit), list every direct
+   JSX child in its return statement and give each one an explicit
+   disposition: route governance, one facade invocation, a macro-state
+   branch, a named domain component, or a shell primitive carrying no static
+   copy of its own. A DS primitive rendering literal text (a `Heading`,
+   `Text`, `Label`, even one word) is content, not shell, and fails this step
+   regardless of size. Do not classify the unit as `Page`-compliant until
+   every listed child has a disposition; a passing mechanical check in step 11
+   does not substitute for this enumeration — it does not inspect JSX content
+   depth.
+9. For every Page feature, trace Page → domain components → facade → Hooks/store → adapters/Services or operations.
+10. Verify facade purity and that Page/domain components do not bypass it to consume raw integration dependencies.
+11. Run `node .agents/enforcement/check-architecture-boundaries.mjs apps/manager/src` when the reviewed scope is in `apps/manager`; record its exact result.
+12. Check whether a proposed correction restores ownership or merely relocates code.
+13. Record each finding and final disposition.
 
 ## Mechanical Boundary Evidence
 
@@ -44,22 +65,63 @@ Interpret the architecture checker narrowly:
 - exit `1` confirms the reported policy violation. Classify a finding that intersects the review scope as `VIOLATION` or `LEGACY` according to scope; record unrelated results as mechanical context, without treating the target as a clean PASS;
 - exit `2` is `NEEDS-EVIDENCE`/incomplete because local source imports could not be resolved or policy execution failed.
 
-The checker enforces configured composition and prohibited integration access. It does not determine responsibility, whether a Page-level query is truly governance, whether a Container is cohesive, business-logic ownership, or whether a permitted import is a good design. Never turn a checker pass into a semantic PASS.
+The checker enforces configured composition and prohibited integration access. It does not determine responsibility, facade purity, Hook cohesion, business-logic ownership, or whether a permitted import is a good design. Never turn a checker pass into a semantic PASS.
+
+For a Page feature, also run `node .agents/enforcement/check-page-governance.mjs
+apps/manager/src/pages/<Feature>`. Any result other than exit `0` is blocking
+evidence. A pass proves only the allowlisted Page source shape; the semantic
+review must still inspect every named child for real responsibility ownership.
 
 ## Layer Contract
 
-- **Atom:** smallest UI unit with one clear responsibility. No higher UI-layer composition, application/server state, Services, APIs, or business logic. Local UI Hooks/state are allowed when they belong only to the Atom's presentation behavior.
-- **Molecule:** small coherent unit composed from Atoms. No Molecules, Organisms, Containers, Pages, application/server state, Services, APIs, or business logic. Local UI Hooks/state are allowed for its own interaction.
-- **Organism:** significant presentation section composed from Molecules and/or Atoms. It receives presentation-ready data, flags, and callbacks; it does not query application/server state, call domain/query Hooks, call Services/APIs, decide screen governance, or implement domain decisions. Presentation-only Hooks are allowed.
-- **Container:** scoped orchestration layer outside Atomic Design. It owns one coherent region, consumes approved application/server-state Hooks, and translates them into props/callbacks for presentation units. It does not own raw transport, domain policy, cache policy, or route-level governance.
-- **Page:** concrete route/context and screen-governance layer. It owns params, redirects, access, macro screen composition, and Page-level states. It may consume approved application/server-state Hooks only when the result affects screen governance or Page-level rendering. Region-specific integration belongs in the narrowest coherent Container.
-- **Layout:** application structure outside Atomic Design. It provides persistent chrome and route composition around the active Page, and may directly compose lower layers needed by that chrome.
+- **Page:** concrete route/context and screen-governance layer. It owns params, redirects, access, macro composition, and Page-level loading/error/empty branches. It consumes its facade instead of raw Hooks, stores, Services, or QueryClient. Accept it only when its source is reducible to route/access decisions, one facade invocation, macro-state branches, root-shell markup, and an ordered screen map. A domain `.map`, form wiring, table/list row markup, named visual region, region handler/state, formatter, validator, payload builder, or workflow helper is a delegation signal even when written with DS primitives.
+- **domain component:** one self-explanatory visual/interaction region inside a Page feature. It may consume the feature facade and own local UI state. It does not own transport, cache, store access, or raw integration Hooks.
+- **facade:** composition-only UI-facing domain boundary. It may select or rename ready values and expose existing command references. It never validates, transforms, branches, catches errors, awaits, creates callbacks, or sequences behavior.
+- **one facade per domain when needed:** a Page domain may have one canonical
+  facade when it composes several cohesive responsibilities such as queries,
+  client state, selection, status, and mutation commands. This is not a reason
+  to invent a facade for a single-consumer workflow; the 9/10 rule gate below
+  wins and pass-through facades must be removed.
+- **query/command Hook:** owns React Query, async workflow, mutation lifecycle, cache decisions, and coordination that crosses integration boundaries.
+- **store/operation:** the store declares state and delegates deterministic
+  client-only transitions; each meaningful transition lives in one operation
+  under `states/<state>/operations/<operation>/`. Operations are scoped to
+  their owning state, never collected in a root `states/operations/` folder.
+  Neither store nor operation mirrors server data or calls Services/QueryClient.
+- **Adapter:** owns pure request, response, domain, or view representation conversion.
+- **Service:** owns named API transport through the shared HTTP client.
+- **Layout:** direct child of `src`; owns persistent application chrome and route composition through `Outlet`, never Page-specific behavior.
+- **shared unit:** reusable across Page domains and forbidden from importing Page internals.
 
 The exact dependency direction is defined by the normative architecture rule, not by this Skill.
 
+## Cross-domain ownership gate
+
+For every resource touched during construction, editing, or audit, inspect its
+actual consumers before deciding its location. A resource required by more than
+one Page domain MUST live in the corresponding approved `src/shared` boundary
+and be consumed by each domain from that shared contract. This includes
+components, Hooks, Services, adapters, utilities, types, state resources, and
+other domain-supporting files. A resource exclusive to one Page remains inside
+that Page domain. Duplication, aliases, re-export bridges, and wrapper
+components do not satisfy this rule and must not hide shared ownership.
+
+When a component or other resource is moved or promoted to `src/shared`, the
+destination boundary requires a fresh audit. For a shared TSX component, run
+the complete `audit-components` review, including every rendered JSX tag and
+its DS-first decision. A prior Page or composition audit does not transfer
+across an ownership change.
+
+External-dependency ownership is part of every Page review. Inspect all
+components and supporting resources imported from outside the Page domain,
+including legacy `src/UI` resources. If a resource serves more than one Page
+domain, its `src/UI` location is an ownership violation and the resource MUST
+be owned by `src/shared`; legacy status never makes it ignorable. Trace and
+classify its transitive dependencies before closing the review.
+
 ## Page Region Map
 
-Before deciding whether individual Page children need Containers, map the
+Before deciding component boundaries, map the
 screen's macro composition from top to bottom:
 
 ```text
@@ -71,38 +133,37 @@ Footer  → page-specific closing actions or supplementary controls, when presen
 Treat these as semantic boundaries, not an automatic requirement for HTML
 elements or wrappers. Do not flatten substantial regions just because a
 Page-level query provides their data. Review whether each region has one stable
-reason to change and whether representing it with a named regional Container
+reason to change and whether representing it with a self-explanatory domain component
 would make the Page's macro composition clearer.
 
-A regional Container may receive presentation-ready data from the Page when
-the query genuinely controls the screen as a whole. It must still own a real
-Header, Content, or Footer responsibility; reject generic wrappers, one-child
-pass-through components, and `ContentContainer`s that conceal unrelated
-regions. Apply the normal integration-ownership test to every region that
-consumes application/server state.
+A domain component must own a real Header, Content, Footer, section, list, or
+dialog responsibility. Reject generic wrappers, one-child pass-through
+components, and names such as `ContentComponent` that conceal unrelated
+regions. Integration flows through the composition-only feature facade.
 
-## Page vs. Container Decision Test
+## Page Feature Ownership Test
 
-For each integration owned by a Page, ask:
+For each Page integration, ask:
 
 1. Does this data/action decide whether the screen, a major Page branch, access rule, redirect, or Page-level state exists?
-2. Or does it primarily operate one coherent semantic region such as orders list, order details, catalog, account summary, or another self-contained part of the screen?
+2. Which domain component presents or triggers it?
+3. Which Hook owns its async/cache behavior?
+4. Is the facade only exposing ready values or existing commands?
+5. Does any client-only shared state belong to a feature store/operation?
 
-If the second answer is stronger, prefer a Container.
-
-Do not extract a Container merely because the Page is long. A Container is valid only when the extracted region has one coherent integration responsibility and a distinct reason to change.
+Do not extract a component merely because the Page is long. A domain component is valid only when it has one coherent named responsibility and a distinct reason to change.
 
 Examples:
 
 ```text
-usePermissions() controls whether the whole screen is accessible → Page
-useOrders() feeds only the orders region → OrdersContainer
-useOrderDetails(id) feeds only details region → OrderDetailsContainer
+usePermissions() controls whether the whole screen is accessible → Page governance Hook/facade value
+useOrders() owns orders server state → query Hook exposed by the facade to OrdersList
+useOrderDetails(id) owns details server state → query Hook exposed by the facade to OrderDetails
 ```
 
-## Organism Presentation Test
+## Domain Component Test
 
-An Organism may own rich UI behavior such as local expansion, selection, disclosure, focus, drag/drop presentation state, or similar interaction.
+A domain component may own rich local UI behavior such as expansion, selection, disclosure, focus, drag/drop presentation state, or similar interaction.
 
 It MUST NOT own:
 
@@ -113,26 +174,32 @@ It MUST NOT own:
 - domain/business decisions;
 - route/screen governance.
 
-If an Organism needs remote/application data, require values/actions through props from an authorized Page/Container boundary.
+If a domain component needs remote/application data, require ready values/actions through its feature facade.
 
 ## Classification and Correction Test
 
 Classify from the smallest coherent responsibility, then apply the dependency matrix; never choose a category to legalize an intended import. An extraction is valid only when it gives the extracted unit a stable responsibility and leaves the caller with clearer ownership.
 
-Reject as a workaround an empty Container, bridge component, category rename, barrel/alias/wrapper that hides a forbidden edge, or moving a dependency to non-TSX without preserving the boundary. Treat the current app's conflicting imports as legacy evidence, never as a new precedent.
+Reject as a workaround an empty facade, bridge component, category rename, barrel/alias/wrapper that hides a forbidden edge, or moving a dependency to non-TSX without preserving the boundary. Treat the current app's conflicting imports as legacy evidence, never as a new precedent.
 
 For a Layout, distinguish persistent application chrome from Page-specific visual composition. A shell may directly compose lower layers required by its chrome; reject the dependency only when the unit belongs to the active Page or introduces route-specific feature behavior.
 
 ## 9/10 Gates
 
+Before creating a facade, apply the 9/10 rule: in nine out of ten cases, a
+facade wrapping a single Hook is only a pass-through layer. Mentally remove the
+facade: if the consumer would only replace `useFacade()` with `useHook()`
+without losing ownership, composition, or encapsulation, do not create it.
+Accept the layer only when it provides real composition of two or more cohesive
+sources and a UI contract that hides their integration.
+
 Report a confirmed violation when evidence shows at least one of:
 
 - responsibility belongs to another architectural category;
 - a boundary hides materially different reasons to change;
-- an Atom, Molecule, or Organism crosses a prohibited application/server-state/infrastructure boundary;
-- a Page owns region-specific integration that has a clear, cohesive Container boundary and materially contributes to Page responsibility overload;
-- a Container combines unrelated screen regions or becomes a generic integration dump;
-- a Container owns route-level governance rather than scoped orchestration;
+- a Page or domain component crosses the facade to consume a prohibited application/server-state/infrastructure dependency;
+- a facade owns callbacks, validation, transformation, branching, error handling, awaiting, or command sequencing;
+- a Page owns query/mutation/store orchestration instead of screen governance;
 - a Layout contains Page-specific behavior;
 - a boundary change would only move coupling without improving ownership;
 - the public contract is misleading enough that correct reuse/extension decisions require reconstructing unrelated context.
@@ -141,18 +208,18 @@ Do **not** report a violation solely because:
 
 - a file is large;
 - a Page consumes one or more endpoint Hooks when those results genuinely govern Page-level rendering;
-- a Container consumes multiple Hooks when they form one coherent regional workflow;
+- a composition-only facade exposes multiple cohesive feature Hooks/store slices;
 - a UI unit has several sequential steps in one coherent workflow;
 - an alternate architecture is imaginable;
 - a folder/name is unconventional but behavior is correct.
 
-Do **not** require an artificial Molecule or Container merely to satisfy a visual hierarchy.
+Do **not** require an artificial wrapper or layer merely to satisfy a visual hierarchy.
 
 ## Boundary Test
 
 Ask: **what has the same reason to change?** Responsibilities with materially different reasons to change should not be forced behind one boundary. Conversely, do not split a coherent workflow merely because it contains several steps.
 
-For Page/Container boundaries also ask: **what is the scope of the decision?** Screen-wide governance belongs to Page; coherent region-level orchestration belongs to Container.
+For Page-feature boundaries also ask: **what is the scope of the decision?** Screen-wide governance belongs to Page; presentation/local interaction belongs to domain components; integration composition belongs to the facade; async/cache behavior belongs to Hooks.
 
 ## Finding Classification
 
@@ -174,7 +241,7 @@ After confirming a `VIOLATION` or identifying a `LEGACY`, stop the review or imp
 
 Do not edit the affected code, accept a deviation, choose an option, convert the item to `PASS`, or continue to another target until the user makes an explicit decision. A proposed `EXCEPTION` also requires explicit user authorization and must use this same decision format.
 
-Apply the same gate before choosing between materially different compliant alternatives, including scope, layer classification, Page-vs-Container ownership, or correction direction. Routine evidence gathering and an outcome mechanically required by an explicit rule do not require a decision request.
+Apply the same gate before choosing between materially different compliant alternatives, including scope, layer classification, ownership, or correction direction. Routine evidence gathering and an outcome mechanically required by an explicit rule do not require a decision request.
 
 A `NEEDS-EVIDENCE` item MUST name the missing evidence and the next concrete inspection. It remains unresolved until that evidence is obtained or the review is explicitly closed as incomplete.
 
@@ -191,7 +258,7 @@ For retrospective audits, inspect the complete relevant unit and required depend
 ## Handoffs
 
 - Mechanical import/type/CSS/structure rule → corresponding `enforce-*`.
-- Atom/Molecule/Organism/Container/Page/Layout responsibility → `architecture-review`.
+- Page/domain component/facade/Hook/store/Adapter/Service/Layout responsibility → `architecture-review`.
 - Hook/state/effect/provider ownership → `hook-state-review`.
 - API/service/router/adapter/data flow → `data-boundary-review`.
 - Naming/cohesion/abstraction → `code-quality-review`.
@@ -203,8 +270,15 @@ The receiving Skill owns the final disposition. Do not bounce a finding back wit
 
 Do not create layers for convenience, introduce speculative abstractions, or use folder structure as proof. Do not fix code during review unless implementation was explicitly requested.
 
-Do not interpret Container as a requirement that every Page must route all presentation through Containers. Direct Page → presentation composition is valid when no scoped application integration exists.
+Do not introduce Atomic Design categories, `src/UI`, or Containers in new or refactored Page features. Direct Page → domain-component composition is valid; integration remains behind the feature facade.
+
+## Self-explanatory names and code
+
+Folders, files, exports, facade fields, commands, state, operations, props,
+fixtures, and tests must communicate domain and responsibility without opening
+unrelated files. Do not use comments to compensate for unclear names or
+structure; follow the comment policy in `.agents/rules/coding.md`.
 
 ## Final Review Gate
 
-Before PASS/complete, confirm scope was fully inspected, applicable enforcement was considered, every finding has a disposition, Page-vs-Container ownership was checked where integration exists, Organism integration boundaries were checked, no mechanical failure was reclassified as subjective, all `NEEDS-EVIDENCE` items are resolved or explicitly reported as INCOMPLETE, and proposed corrections restore responsibility instead of relocating it.
+Before PASS/complete, confirm scope was fully inspected, applicable enforcement was considered, every finding has a disposition, Page/component/facade/Hook/store ownership was checked where integration exists, facade purity was checked, no mechanical failure was reclassified as subjective, all `NEEDS-EVIDENCE` items are resolved or explicitly reported as INCOMPLETE, and proposed corrections restore responsibility instead of relocating it.

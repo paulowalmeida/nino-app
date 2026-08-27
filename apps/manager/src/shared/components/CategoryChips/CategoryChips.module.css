@@ -1,0 +1,18 @@
+@reference "@nino/ds/globals.css";
+
+.track {
+  @apply snap-x overflow-x-auto pb-1;
+  scrollbar-width: none;
+}
+
+.track::-webkit-scrollbar {
+  display: none;
+}
+
+.chip {
+  @apply min-h-11 snap-start;
+}
+
+.ghostChip {
+  @apply h-11 w-24 shrink-0 rounded-full;
+}

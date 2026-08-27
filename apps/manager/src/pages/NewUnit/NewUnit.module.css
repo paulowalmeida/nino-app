@@ -1,0 +1,33 @@
+@reference "@nino/ds/globals.css";
+
+/* mais larga que o formulário sozinho: a coluna de apoio à direita mostra a
+   loja como o cliente vai vê-la enquanto os campos são preenchidos */
+.page {
+  @apply max-w-5xl p-4 lg:p-10;
+}
+
+.eyebrow {
+  @apply mt-3 text-xs font-bold uppercase tracking-[0.12em] text-fg-faint;
+}
+
+/*
+ * Sem moldura, como a ficha do produto e a tela de empresa: a página já é a
+ * ficha, e o fio fino basta para separar o cabeçalho do trabalho.
+ */
+.head {
+  @apply mt-1 border-b border-border/60 pb-5;
+}
+
+.title {
+  @apply font-display text-2xl font-extrabold tracking-[-0.02em];
+  @apply text-fg-strong;
+  @apply lg:text-3xl;
+}
+
+.subtitle {
+  @apply mt-1.5 max-w-xl text-sm leading-relaxed text-fg-subtle;
+}
+
+/* Duas colunas no desktop: o formulário conduz à esquerda e o apoio acompanha
+   à direita, grudado no topo enquanto a pessoa rola o endereço. No celular o
+   apoio sobe — ver a loja antes ajuda a nomear. */

@@ -1,0 +1,7 @@
+@reference "@nino/ds/globals.css";
+
+/* mais largo que os formulários simples: a ficha tem foto e campos lado a
+   lado no desktop, e em 3xl a foto sozinha comia meia tela de altura */
+.page {
+  @apply max-w-5xl p-4 lg:p-10;
+}

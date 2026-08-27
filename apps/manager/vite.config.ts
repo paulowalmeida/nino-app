@@ -1,8 +1,7 @@
-import { resolve } from 'node:path'
-
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
 import tailwindcss from '@tailwindcss/vite'
+import react from '@vitejs/plugin-react'
+import { resolve } from 'node:path'
+import { defineConfig } from 'vite'
 
 const API = 'https://api-dev.nino.delivery'
 
@@ -49,27 +48,15 @@ export default defineConfig({
   resolve: {
     alias: {
       '@ds': resolve(__dirname, '../../packages/ds/src'),
-      '@adapters': resolve(__dirname, 'src/adapters'),
-      '@assets': resolve(__dirname, 'src/assets'),
-      '@atoms': resolve(__dirname, 'src/UI/atoms'),
-      '@constants': resolve(__dirname, 'src/constants'),
-      '@containers': resolve(__dirname, 'src/UI/containers'),
-      '@custom_types': resolve(__dirname, 'src/types'),
       '@guards': resolve(__dirname, 'src/guards'),
-      '@hooks': resolve(__dirname, 'src/hooks'),
       '@lib': resolve(__dirname, 'src/lib'),
       '@loaders': resolve(__dirname, 'src/loaders'),
-      '@molecules': resolve(__dirname, 'src/UI/molecules'),
-      '@organisms': resolve(__dirname, 'src/UI/organisms'),
-      '@pages': resolve(__dirname, 'src/UI/pages'),
+      '@pages': resolve(__dirname, 'src/pages'),
       '@providers': resolve(__dirname, 'src/providers'),
       '@router': resolve(__dirname, 'src/router'),
-      '@services': resolve(__dirname, 'src/services'),
-      '@skeletons': resolve(__dirname, 'src/skeletons'),
-      '@states': resolve(__dirname, 'src/states'),
       '@styles': resolve(__dirname, 'src/styles'),
-      '@layouts': resolve(__dirname, 'src/UI/layouts'),
-      '@utils': resolve(__dirname, 'src/utils'),
+      '@layouts': resolve(__dirname, 'src/layouts'),
+      '@shared': resolve(__dirname, 'src/shared'),
     },
   },
 })

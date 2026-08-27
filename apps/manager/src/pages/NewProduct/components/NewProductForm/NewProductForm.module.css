@@ -1,0 +1,39 @@
+@reference "@nino/ds/globals.css";
+
+/*
+ * Duas colunas no desktop, como a ficha de editar: a foto tem largura fixa
+ * à esquerda e os campos ocupam o resto. Empilhada no celular, a moldura
+ * 4/3 nasceria com a largura inteira da tela antes do primeiro campo.
+ */
+.form {
+  @apply mt-6 flex flex-col gap-5;
+  @apply lg:grid lg:grid-cols-[20rem_1fr] lg:items-start lg:gap-x-10;
+}
+
+.photoCol {
+  @apply min-w-0;
+}
+
+.fields {
+  @apply flex min-w-0 flex-col gap-5;
+}
+
+.field {
+  @apply min-w-0;
+}
+
+/* preço é campo curto ("24,90"); categoria acompanha o nome mais longo */
+.row {
+  @apply grid grid-cols-1 gap-4 sm:grid-cols-[9rem_1fr];
+}
+
+.category {
+  @apply -mt-2;
+}
+
+/* ação fecha o bloco à direita, com a primária na ponta: é onde a mão vai
+   depois de percorrer o formulário inteiro */
+.actions {
+  @apply flex flex-col gap-2 border-t border-border/60 pt-5;
+  @apply sm:flex-row sm:justify-end lg:col-span-2;
+}

@@ -1,0 +1,5 @@
+@reference "@nino/ds/globals.css";
+
+.eyebrow { @apply text-xs font-bold uppercase tracking-[0.12em] text-fg-faint; }
+.subtitle { @apply mt-1 max-w-lg; }
+.guideAgain { @apply shrink-0 text-sm font-semibold text-brand-strong underline underline-offset-4 hover:text-brand focus-visible:outline-2 focus-visible:outline-brand; }

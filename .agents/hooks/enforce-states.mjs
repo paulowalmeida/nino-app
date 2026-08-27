@@ -1,6 +1,9 @@
 #!/usr/bin/env node
-import { runSkillHook } from './hook-kit.mjs'
-const match = (path) => /\/src\/states\//.test(path)
+import { runSkillHook, sourceOnly } from './hook-kit.mjs'
+const matchesSource = (path) =>
+  /\/src\/states\//.test(path) || /\/src\/pages\/[^/]+\/states\//.test(path)
+const match = sourceOnly(matchesSource)
+
 const violations = (path, toolName, lines) => lines.flatMap((line, index) => {
   const at = `linha ${index + 1} do trecho escrito`
   if (/\bcreateContext\(/.test(line)) return [`${at}: createContext em states — usar zustand`]

@@ -1,6 +1,7 @@
+import { createRoot } from 'react-dom/client'
+
 import type { Preview } from '@storybook/react'
 import { MotionConfig } from 'framer-motion'
-import { createRoot } from 'react-dom/client'
 
 import { ToastContainer } from '../src/components/Toast/Toast'
 
@@ -23,8 +24,10 @@ if (
 const preview: Preview = {
   decorators: [
     (Story) => (
-      <MotionConfig reducedMotion="never">
-        <Story />
+      <MotionConfig reducedMotion="user">
+        <div className="storybook-stage">
+          <Story />
+        </div>
       </MotionConfig>
     ),
   ],

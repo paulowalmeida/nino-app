@@ -1,5 +1,15 @@
 // Shared runtime for executable enforcement hooks.
 
+/**
+ * Regras de fonte nao valem para o arquivo de teste ou de mock da unidade:
+ * o wrapper JSX de um renderHook, o titulo de um it() e o fixture declarativo
+ * sao do teste, e quem manda neles e o enforce-tests.
+ */
+export const isTestArtifact = (path) => /\.(?:test|mock)\.[cm]?[jt]sx?$/.test(path)
+
+export const sourceOnly = (match) => (path) =>
+  !isTestArtifact(path) && match(path)
+
 export const readStdin = async () => {
   const chunks = []
   for await (const chunk of process.stdin) chunks.push(chunk)

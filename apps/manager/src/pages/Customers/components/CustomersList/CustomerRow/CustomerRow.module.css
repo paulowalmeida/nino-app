@@ -1,0 +1,79 @@
+@reference "@nino/ds/globals.css";
+
+/* mesma grade da régua de colunas: no celular nome e dinheiro, no desktop
+   uma coluna por número */
+.grid {
+  @apply grid items-center gap-x-3;
+  grid-template-columns: minmax(0, 1fr) auto;
+}
+
+@media (min-width: 1024px) {
+  .grid {
+    @apply gap-x-4;
+    grid-template-columns: minmax(0, 1fr) 5rem 7.5rem 5rem 7.5rem;
+  }
+}
+
+.item {
+  @apply border-t border-border;
+}
+
+/* alvo de toque de 56px no celular: lista longa se percorre com o polegar */
+.link {
+  @apply rounded-3 px-2 py-3 transition-colors duration-150 lg:px-3;
+  @apply lg:py-3.5 hover:bg-surface-mute;
+  @apply focus-visible:outline-none focus-visible:ring-2;
+  @apply focus-visible:ring-brand focus-visible:ring-offset-1;
+}
+
+.who {
+  @apply flex min-w-0 items-center gap-3;
+}
+
+.identity {
+  @apply flex min-w-0 flex-col;
+}
+
+.name {
+  @apply truncate text-base font-semibold text-fg-default lg:text-sm;
+}
+
+.phone {
+  @apply truncate text-xs text-fg-faint;
+  font-variant-numeric: tabular-nums;
+}
+
+/* no celular vira a coluna de dinheiro à direita; no desktop dissolve na
+   grade para cada número cair sob seu rótulo */
+.stats {
+  @apply flex flex-col items-end lg:contents;
+}
+
+.stat {
+  @apply lg:block lg:text-right;
+}
+
+.statValue {
+  @apply font-display text-base font-extrabold text-fg-strong;
+  font-variant-numeric: tabular-nums;
+}
+
+/* no celular a contagem de pedidos é legenda do valor, não outro número
+   solto */
+.statOrders {
+  @apply text-xs font-medium text-fg-faint lg:text-base lg:font-extrabold;
+  @apply lg:font-display lg:text-fg-strong;
+  font-variant-numeric: tabular-nums;
+}
+
+.statLabel {
+  @apply text-xs text-fg-faint lg:hidden;
+}
+
+.statPoints {
+  @apply hidden lg:block lg:text-right;
+}
+
+.since {
+  @apply hidden text-right text-xs text-fg-faintest lg:block;
+}

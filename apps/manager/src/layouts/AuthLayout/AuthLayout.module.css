@@ -1,0 +1,5 @@
+@reference "@nino/ds/globals.css";
+
+.authShell {
+  @apply min-h-screen bg-surface-page lg:grid lg:grid-cols-[1.05fr_1fr];
+}

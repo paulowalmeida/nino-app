@@ -1,0 +1,17 @@
+@reference "@nino/ds/globals.css";
+
+.scroll {
+  @apply min-h-0 flex-1;
+}
+
+.order {
+  @apply px-0;
+}
+
+.sentinel {
+  @apply flex h-10 items-center justify-center;
+}
+
+.loadingMore {
+  @apply text-center;
+}

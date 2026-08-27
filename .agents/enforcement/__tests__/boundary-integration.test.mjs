@@ -12,8 +12,8 @@ const enforcement = path.resolve(new URL("..", import.meta.url).pathname);
 const checker = path.join(enforcement, "check-architecture-boundaries.mjs");
 const policy = path.join(enforcement, "architecture-boundaries.json");
 
-function write(relative, content) {
-  const file = path.join(src, relative);
+function write(relativePath, content) {
+  const file = path.join(src, relativePath);
   fs.mkdirSync(path.dirname(file), { recursive: true });
   fs.writeFileSync(file, content);
 }
@@ -24,24 +24,17 @@ function run() {
 
 try {
   fs.writeFileSync(path.join(root, "tsconfig.app.json"), JSON.stringify({ compilerOptions: { baseUrl: ".", paths: { "@/*": ["src/*"] } } }));
+  write("shared/services/http.service.ts", "export const api = {};");
+  write("pages/catalog/hooks/useCatalog/useCatalog.ts", "export const useCatalog = () => [];");
+  write("pages/catalog/facades/useCatalogFacade/useCatalogFacade.ts", 'import { useCatalog } from "../../hooks/useCatalog/useCatalog"; export const useCatalogFacade = useCatalog;');
+  write("pages/catalog/components/CatalogList/CatalogList.tsx", 'import { useCatalogFacade } from "../../facades/useCatalogFacade/useCatalogFacade"; export const CatalogList = useCatalogFacade;');
+  write("pages/catalog/Catalog.tsx", 'import { CatalogList } from "./components/CatalogList/CatalogList"; export const Catalog = CatalogList;');
+  assert.equal(run().status, 0, "The canonical facade flow must pass.");
 
-  write("states/store.ts", "export const store = {};\n");
-  write("UI/atoms/Button.tsx", "import { store } from \"@/states/store\"; export const Button = () => store;\n");
-  let result = run();
-  assert.equal(result.status, 1);
-
-  fs.rmSync(path.join(src, "UI/atoms/Button.tsx"));
-  write("UI/atoms/Button.tsx", "export const Button = () => null;\n");
-  write("UI/molecules/Form.tsx", "import { Button } from \"@/UI/atoms/Button\"; export const Form = () => Button;\n");
-  write("UI/organisms/PanelWithState.tsx", "import { Form } from \"@/UI/molecules/Form\"; import { store } from \"@/states/store\"; export const PanelWithState = () => [Form, store];\n");
-  result = run();
-  assert.equal(result.status, 1);
-
-  fs.rmSync(path.join(src, "UI/organisms/PanelWithState.tsx"));
-  result = run();
-  assert.equal(result.status, 0, result.stderr);
-
-  console.log("architecture boundary integration tests passed.");
+  write("pages/catalog/components/CatalogList/CatalogList.tsx", 'import { api } from "@/shared/services/http.service"; export const CatalogList = api;');
+  assert.equal(run().status, 1, "A component bypassing the facade must fail.");
 } finally {
   fs.rmSync(root, { recursive: true, force: true });
 }
+
+console.log("Architecture boundary integration tests passed.");

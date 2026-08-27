@@ -20,7 +20,9 @@ Mechanical enforcement must:
 
 Each architecture rule declares one dependency mode:
 
-- `direct`: checks only the source module's immediate imports. Use this for UI composition rules where valid hierarchy paths are intentionally transitive (for example, `Page → Organism`).
+- `direct`: checks only the source module's immediate imports. Use this when a
+  boundary concerns the consumer's own dependency, such as Page/domain
+  component → facade.
 - `transitive`: checks the reachable dependency graph. Use this for boundaries that must not be bypassed through barrels, wrappers, aliases, or intermediary modules (for example, prohibited application-state access from lower UI layers).
 
 This distinction is intentional. A generic transitive ban on UI layers would incorrectly reject valid composition through an authorized intermediate layer.
@@ -36,3 +38,36 @@ executable runtime in `hooks/hook-kit.mjs`.
 Semantic responsibilities such as component responsibility, cohesion, abstraction quality, and maintainability remain owned by Skills and rules rather than being encoded as brittle blocking regexes.
 
 Complexity remains diagnostic: `tools/complexity-analyzer.mjs` produces structural signals that feed semantic review. It is not a universal hard gate based on arbitrary thresholds.
+
+## Repository checkers
+
+Run these from `.agents/`:
+
+```bash
+node enforcement/check-architecture-boundaries.mjs ../apps/manager/src
+node enforcement/check-circular-dependencies.mjs ../apps/manager/src
+node enforcement/check-module-paths.mjs ../apps/manager/src
+node enforcement/check-test-structure.mjs ../apps/manager/src/pages/<Feature>
+node enforcement/check-css-ownership.mjs ../apps/manager/src [Feature]
+node enforcement/check-page-governance.mjs ../apps/manager/src/pages/<Feature>
+node enforcement/verify-page-feature.mjs <Feature>
+```
+
+`verify-page-feature.mjs` is the composed Page-feature gate referenced by the
+`audit-pages` skill. Keep it in `.agents/enforcement`; consuming apps must not
+mirror it in package scripts. It also runs the scoped ESLint check before the
+coverage gate.
+
+`check-module-paths.mjs` covers what neither TypeScript nor Vitest reports:
+a `@pages/...` specifier whose folder no longer exists (a page renamed from
+`new-order` to `NewOrder` keeps compiling through a stale alias on a
+case-insensitive resolve) and a `vi.mock('<local alias>')` string pointing at
+a module nobody imports, which silently stops mocking instead of failing.
+The `enforce-page-paths` hook applies the same check to each written chunk.
+
+Every checker has a regression test in `enforcement/__tests__/`. Run them all
+with:
+
+```bash
+for test in enforcement/__tests__/*.test.mjs; do node "$test" || break; done
+```

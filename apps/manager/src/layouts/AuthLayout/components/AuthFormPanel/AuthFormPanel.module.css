@@ -1,0 +1,36 @@
+@reference "@nino/ds/globals.css";
+
+.formPanel {
+  @apply relative min-h-screen overflow-hidden bg-surface-page;
+  @apply px-5 py-10 sm:px-6 sm:py-12;
+}
+
+.formCard {
+  @apply relative z-content w-full max-w-md rounded-6;
+  @apply bg-surface-page px-0 py-2 sm:p-10;
+}
+
+.mobileBrand {
+  @apply mb-9 lg:hidden;
+}
+
+.mobileMascot {
+  @apply size-36 drop-shadow-lg;
+  animation: mascotFloat 6s ease-in-out infinite;
+}
+
+@keyframes mascotFloat {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mobileMascot {
+    animation: none;
+  }
+}

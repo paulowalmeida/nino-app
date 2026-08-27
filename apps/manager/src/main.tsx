@@ -1,11 +1,12 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 
+import { dismissSplashWhenReady } from '@lib/dismiss-splash'
 import { router } from '@router/routes'
-import { dismissSplashWhenReady } from '@utils/dismiss-splash'
+
+import { App } from './App.tsx'
 
 import './index.css'
-import { App } from './App.tsx'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
