@@ -4,8 +4,9 @@ import { Card } from '@nino/ds/components/Card'
 import { EmptyState } from '@nino/ds/components/EmptyState'
 import { Eyebrow } from '@nino/ds/components/Eyebrow'
 import { Skeleton } from '@nino/ds/components/Skeleton'
-import { Text } from '@nino/ds/components/Text'
-import { TOP_PRODUCTS_SKELETON_WIDTHS } from '@pages/Overview/constants/overview.constants'
+import {
+  TOP_PRODUCTS_SKELETON_WIDTHS,
+} from '@pages/Overview/constants/overview.constants'
 import { useOverviewFacade } from '@pages/Overview/facades/useOverviewFacade/useOverviewFacade'
 import { brl } from '@shared/utils/money/money'
 
@@ -22,7 +23,7 @@ export const TopProducts = () => {
     id: product.productId,
     label: product.name,
     value: product.quantity,
-    display: brl(product.revenue),
+    display: `${product.quantity} un · ${brl(product.revenue)}`,
   }))
 
   return (
@@ -51,12 +52,7 @@ export const TopProducts = () => {
         )}
 
         {!isPending && items.length > 0 && (
-          <>
-            <BarList items={items} highlightTop={3} className={styles.bars} />
-            <Text as="p" className={styles.note}>
-              Barra por quantidade vendida; o valor é a receita do item.
-            </Text>
-          </>
+          <BarList items={items} highlightTop={3} className={styles.bars} />
         )}
       </Card>
     </Box>

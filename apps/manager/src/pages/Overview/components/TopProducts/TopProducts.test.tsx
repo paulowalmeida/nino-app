@@ -42,6 +42,6 @@ describe('TopProducts', () => {
     render(<TopProducts />)
 
     expect(screen.getByText('Pastel')).toBeInTheDocument()
-    expect(screen.getByText(/Barra por quantidade/)).toBeInTheDocument()
+    expect(screen.getByText('3 un · R$ 30,00')).toBeInTheDocument()
   })
 })
