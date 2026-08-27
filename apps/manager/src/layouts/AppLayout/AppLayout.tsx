@@ -6,7 +6,9 @@ import {
 } from '@layouts/AppLayout/utils/sidebar-collapse'
 import { Box } from '@nino/ds/components/Box'
 import { Button } from '@nino/ds/components/Button'
-import { useCurrentTenant } from '@shared/hooks/session/useCurrentTenant/useCurrentTenant'
+import {
+  useCurrentTenant,
+} from '@shared/hooks/session/useCurrentTenant/useCurrentTenant'
 
 import { AppLayoutContent } from './components/AppLayoutContent/AppLayoutContent'
 import { AppLayoutHeader } from './components/AppLayoutHeader/AppLayoutHeader'
