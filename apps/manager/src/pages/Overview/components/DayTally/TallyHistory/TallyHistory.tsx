@@ -1,6 +1,7 @@
 import { Link } from 'react-router'
 
 import { Box } from '@ds/components/Box/Box'
+import { Eyebrow } from '@ds/components/Eyebrow/Eyebrow'
 import { ListRow } from '@ds/components/ListRow/ListRow'
 import { Text } from '@ds/components/Text/Text'
 import { STATUS_LABEL } from '@shared/constants/order.constants'
@@ -23,28 +24,36 @@ const clock = new Intl.DateTimeFormat('pt-BR', {
 
 export const TallyHistory = ({ recent }: TallyHistoy) => {
   return (
-    <Box as="ul" direction="column">
-      {recent.map((order, index) => (
-        <ListRow
-          key={order.id}
-          padding={0}
-          className={motion.deal}
-          style={riseDelay(index * 50 + 120)}
-        >
-          <Link
-            to={`../pedidos/${order.id}`}
-            relative="path"
-            className={`${motion.lift} ${styles.link}`}
+    <Box as="section" aria-label="Últimos pedidos" className={styles.section}>
+      <Eyebrow className="mb-3">Últimos pedidos</Eyebrow>
+
+      <Box as="ul" direction="column">
+        {recent.map((order, index) => (
+          <ListRow
+            key={order.id}
+            padding={0}
+            className={motion.deal}
+            style={riseDelay(index * 50 + 120)}
           >
-            <Text className={styles.number}>#{ticketNumber(order.id)}</Text>
-            <Text className={styles.state}>{STATUS_LABEL[order.status]}</Text>
-            <time className={styles.at} dateTime={order.createdAt}>
-              {clock.format(new Date(order.createdAt))}
-            </time>
-            <Text className={styles.total}>{brl(order.totalAmount)}</Text>
-          </Link>
-        </ListRow>
-      ))}
+            <Link
+              to={`../pedidos/${order.id}`}
+              relative="path"
+              className={`${motion.lift} ${styles.link}`}
+            >
+              <Text className={styles.number}>
+                #{ticketNumber(order.id)}
+              </Text>
+              <Text className={styles.state}>
+                {STATUS_LABEL[order.status]}
+              </Text>
+              <time className={styles.at} dateTime={order.createdAt}>
+                {clock.format(new Date(order.createdAt))}
+              </time>
+              <Text className={styles.total}>{brl(order.totalAmount)}</Text>
+            </Link>
+          </ListRow>
+        ))}
+      </Box>
     </Box>
   )
 }

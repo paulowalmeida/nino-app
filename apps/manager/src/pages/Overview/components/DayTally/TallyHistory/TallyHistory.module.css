@@ -1,5 +1,9 @@
 @reference "@nino/ds/globals.css";
 
+.section {
+  @apply mt-6;
+}
+
 .link {
   @apply flex items-baseline gap-3 rounded-3 px-2 py-2.5;
   @apply transition-colors duration-150 hover:bg-surface-mute;

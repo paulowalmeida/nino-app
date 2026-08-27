@@ -12,4 +12,12 @@ describe('TallyHistory', () => {
 
     expect(screen.getByRole('link')).toHaveAttribute('href', '/pedidos/order-1')
   })
+
+  it('names the list so it reads apart from the payments above', () => {
+    render(<TallyHistory {...tallyHistoryMock} />, { wrapper: MemoryRouter })
+
+    expect(
+      screen.getByRole('region', { name: 'Últimos pedidos' })
+    ).toBeInTheDocument()
+  })
 })

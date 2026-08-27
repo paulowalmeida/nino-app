@@ -45,7 +45,11 @@ export const CustomerRankingCard = ({
       )}
 
       {!isPending && items.length > 0 && (
-        <BarList items={items} className="text-brand" />
+        <BarList
+          items={items}
+          highlightTop={3}
+          className="text-brand"
+        />
       )}
     </Card>
   </Box>

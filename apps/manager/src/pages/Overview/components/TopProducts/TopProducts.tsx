@@ -52,7 +52,7 @@ export const TopProducts = () => {
 
         {!isPending && items.length > 0 && (
           <>
-            <BarList items={items} className={styles.bars} />
+            <BarList items={items} highlightTop={3} className={styles.bars} />
             <Text as="p" className={styles.note}>
               Barra por quantidade vendida; o valor é a receita do item.
             </Text>
