@@ -23,6 +23,11 @@ export const useUpdateProduct = (
       void queryClient.invalidateQueries({
         queryKey: queryKeys.productCategories.all(tenantId ?? ''),
       })
+      /* WHY: a lista de itens do Cardápio é filtrada por categoria — sem
+       * isso, o item some da categoria antiga só depois de outro gatilho. */
+      void queryClient.invalidateQueries({
+        queryKey: queryKeys.products.all(tenantId ?? ''),
+      })
     },
   })
 }

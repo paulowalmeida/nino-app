@@ -24,6 +24,11 @@ export const useCreateProduct = (tenantId: string | null) => {
       void queryClient.invalidateQueries({
         queryKey: queryKeys.productCategories.all(tenantId ?? ''),
       })
+      /* WHY: a lista de itens do Cardápio é filtrada por categoria — o item
+       * novo só apareceria nela depois de outro gatilho, sem isso. */
+      void queryClient.invalidateQueries({
+        queryKey: queryKeys.products.all(tenantId ?? ''),
+      })
     },
   })
 }

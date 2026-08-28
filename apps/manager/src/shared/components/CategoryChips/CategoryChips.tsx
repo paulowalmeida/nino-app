@@ -1,10 +1,10 @@
-import { Box } from '@nino/ds/components/Box'
 import { Chip } from '@nino/ds/components/Chip'
 import { Icon } from '@nino/ds/components/Icon'
 import { Skeleton } from '@nino/ds/components/Skeleton'
 import type { ProductCategoryIcon } from '@nino/lib/types/product/product-category-icon'
 import { toCategoryIcon } from '@shared/adapters/category-icon.adapter/category-icon.adapter'
 import { CATEGORY_CHIPS_GHOST_ITEMS } from '@shared/constants/product.constants'
+import { useHorizontalDragScroll } from '@shared/hooks/ui/useHorizontalDragScroll/useHorizontalDragScroll'
 
 import styles from './CategoryChips.module.css'
 
@@ -27,26 +27,21 @@ export const CategoryChips = ({
   isPending,
   allowAll = true,
 }: CategoryChipsProps) => {
+  const trackRef = useHorizontalDragScroll<HTMLDivElement>()
+
   if (isPending) {
     return (
-      <Box
-        direction="row"
-        gap={2}
-        className={styles.track}
-        role="tablist"
-        aria-label="Categorias"
-      >
+      <div className={styles.track} role="tablist" aria-label="Categorias">
         {CATEGORY_CHIPS_GHOST_ITEMS.map((chip) => (
           <Skeleton key={chip} className={styles.ghostChip} />
         ))}
-      </Box>
+      </div>
     )
   }
 
   return (
-    <Box
-      direction="row"
-      gap={2}
+    <div
+      ref={trackRef}
       className={styles.track}
       role="tablist"
       aria-label="Categorias"
@@ -77,6 +72,6 @@ export const CategoryChips = ({
           {name}
         </Chip>
       ))}
-    </Box>
+    </div>
   )
 }

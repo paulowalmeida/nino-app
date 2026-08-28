@@ -16,7 +16,12 @@ export type StageTrackProps = {
 }
 
 export const StageTrack = ({ stages, value, onChange }: StageTrackProps) => (
-  <Box className={styles.track} role="tablist" aria-label="Etapas da fila">
+  <Box
+    direction="row"
+    className={styles.track}
+    role="tablist"
+    aria-label="Etapas da fila"
+  >
     {stages.map(({ id, label, count, icon }, index) => (
       <Chip
         key={id}

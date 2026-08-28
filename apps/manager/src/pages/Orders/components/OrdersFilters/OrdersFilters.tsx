@@ -48,13 +48,13 @@ export const OrdersFilters = () => {
           </Button>
         </Text>
       ) : (
-        <div className={`${motion.unroll} ${styles.track}`}>
+        <Box shrink={false} className={`${motion.unroll} ${styles.track}`}>
           <StageTrack
             stages={stageOptions}
             value={stage}
             onChange={setStage}
           />
-        </div>
+        </Box>
       )}
     </Box>
   )

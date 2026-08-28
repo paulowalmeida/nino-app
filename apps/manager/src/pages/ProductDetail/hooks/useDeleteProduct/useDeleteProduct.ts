@@ -24,6 +24,11 @@ export const useDeleteProduct = (
       void queryClient.invalidateQueries({
         queryKey: queryKeys.productCategories.all(tenantId ?? ''),
       })
+      /* WHY: a lista de itens do Cardápio é filtrada por categoria — o item
+       * excluído continuaria nela até outro gatilho, sem isso. */
+      void queryClient.invalidateQueries({
+        queryKey: queryKeys.products.all(tenantId ?? ''),
+      })
     },
   })
 }

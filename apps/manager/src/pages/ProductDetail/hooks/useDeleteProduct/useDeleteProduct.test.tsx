@@ -54,6 +54,9 @@ describe('useDeleteProduct', () => {
     expect(invalidate).toHaveBeenCalledWith({
       queryKey: queryKeys.productCategories.all(deleteProductMock.tenantId),
     })
+    expect(invalidate).toHaveBeenCalledWith({
+      queryKey: queryKeys.products.all(deleteProductMock.tenantId),
+    })
   })
 
   it('falls back to an empty tenant scope without a tenant', async () => {
@@ -73,6 +76,9 @@ describe('useDeleteProduct', () => {
     await waitFor(() => expect(result.current.isSuccess).toBe(true))
     expect(invalidate).toHaveBeenCalledWith({
       queryKey: queryKeys.productCategories.all(''),
+    })
+    expect(invalidate).toHaveBeenCalledWith({
+      queryKey: queryKeys.products.all(''),
     })
   })
 })
