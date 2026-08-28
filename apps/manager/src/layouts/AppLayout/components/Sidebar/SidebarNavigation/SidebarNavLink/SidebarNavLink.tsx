@@ -44,7 +44,7 @@ export const SidebarNavLink = ({
           size="md"
           isActive={isActive}
           isCollapsed={isCollapsed}
-          inactiveColor="text-fg-on-brand/45"
+          inactiveColor="text-fg-on-brand/90"
           tally={section === 'pedidos' ? waiting : undefined}
         />
       )}

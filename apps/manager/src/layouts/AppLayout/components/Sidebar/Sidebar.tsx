@@ -49,21 +49,34 @@ export const Sidebar = ({
       data-collapsed={isCollapsed || undefined}
     >
       <Box direction="row" className={styles.topBar}>
-        <NinoLogo
-          size="sm"
-          tone="light"
-          to={`/${tenantId}/visao-geral`}
-          hideWordmark={isCollapsed}
-        />
-        <Button
-          variant="ghost"
-          size="icon"
-          className={styles.collapseBtn}
-          onClick={onToggleCollapse}
-          aria-label={collapsed ? 'Expandir menu' : 'Recolher menu'}
-        >
-          <Icon name="chevron-down" size="sm" className={styles.collapseIcon} />
-        </Button>
+        {isCollapsed ? (
+          <Button
+            variant="ghost"
+            size="icon"
+            className={styles.collapseBtn}
+            onClick={onToggleCollapse}
+            aria-label="Expandir menu"
+          >
+            <Icon name="menu" size="md" />
+          </Button>
+        ) : (
+          <>
+            <NinoLogo size="sm" tone="light" to={`/${tenantId}/visao-geral`} />
+            <Button
+              variant="ghost"
+              size="icon"
+              className={styles.collapseBtn}
+              onClick={onToggleCollapse}
+              aria-label="Recolher menu"
+            >
+              <Icon
+                name="chevron-down"
+                size="sm"
+                className={styles.collapseIcon}
+              />
+            </Button>
+          </>
+        )}
       </Box>
 
       <Box className={styles.switcherWrap}>
@@ -79,6 +92,7 @@ export const Sidebar = ({
         onOpenSectionChange={setOpenSection}
         isInside={isInside}
         onNavigate={onClose}
+        onExpand={onToggleCollapse}
       />
 
       <Box className={styles.footer}>

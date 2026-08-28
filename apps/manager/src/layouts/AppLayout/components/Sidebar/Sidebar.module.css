@@ -27,7 +27,7 @@
 }
 
 .sidebar.collapsed .topBar {
-  @apply lg:px-3;
+  @apply lg:justify-center lg:px-2;
 }
 
 .collapseBtn {
@@ -39,10 +39,6 @@
 
 .collapseIcon {
   @apply rotate-90 transition-transform duration-300;
-}
-
-.sidebar.collapsed .collapseIcon {
-  @apply -rotate-90;
 }
 
 .switcherWrap {

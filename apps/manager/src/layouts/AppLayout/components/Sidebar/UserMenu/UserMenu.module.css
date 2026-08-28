@@ -8,6 +8,10 @@
   @apply focus-visible:ring-brand;
 }
 
+:global([data-collapsed]) .trigger {
+  @apply lg:justify-center lg:px-0;
+}
+
 .name {
   @apply min-w-0 flex-1 truncate text-sm font-medium text-fg-on-brand/70;
 }

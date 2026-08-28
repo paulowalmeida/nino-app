@@ -10,10 +10,10 @@
 
 .navGroupToggle {
   @apply w-full rounded-3 px-3 py-2.5 text-left;
-  @apply text-sm font-medium text-fg-on-brand/45;
+  @apply text-sm font-medium text-fg-on-brand/90;
   @apply transition-colors duration-150;
   @apply bg-transparent data-[state=open]:bg-transparent;
-  @apply hover:bg-surface-raised/6 hover:text-fg-on-brand/80;
+  @apply hover:bg-surface-raised/6 hover:text-fg-on-brand;
   @apply data-[state=open]:hover:bg-surface-raised/6;
 }
 
@@ -34,7 +34,7 @@
 }
 
 .navGroupToggle.navGroupOpen {
-  @apply text-fg-on-brand/80;
+  @apply text-fg-on-brand/90;
 }
 
 .navGroup {
@@ -47,6 +47,10 @@
 
 .navGroupPanel {
   @apply text-fg-on-brand/60;
+}
+
+:global([data-collapsed]) .navGroupPanel {
+  @apply lg:hidden;
 }
 
 .subNav {
@@ -96,8 +100,8 @@
 
 .subItem {
   @apply flex items-center gap-2.5 rounded-2 px-3 py-1.5;
-  @apply text-xs text-fg-on-brand/40 transition-colors duration-150;
-  @apply hover:bg-surface-raised/6 hover:text-fg-on-brand/75;
+  @apply text-xs text-fg-on-brand/90 transition-colors duration-150;
+  @apply hover:bg-surface-raised/6 hover:text-fg-on-brand;
 }
 
 :global([data-collapsed]) .subItem {

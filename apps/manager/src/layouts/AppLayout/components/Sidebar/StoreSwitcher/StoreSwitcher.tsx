@@ -34,7 +34,14 @@ export const StoreSwitcher = ({
   const hasOtherCompanies = groups.length > 1
 
   if (units.length <= 1 && !hasOtherCompanies) {
-    return collapsed ? null : (
+    return collapsed ? (
+      <Box
+        className={styles.singleCollapsed}
+        aria-label={`Unidade: ${current?.tenantName ?? 'Sua loja'}`}
+      >
+        <Icon name="store" className={styles.storeIcon} />
+      </Box>
+    ) : (
       <Text as="p" className={styles.single}>
         {current?.tenantName ?? 'Sua loja'}
       </Text>

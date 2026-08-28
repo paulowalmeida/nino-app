@@ -12,12 +12,19 @@ vi.mock('@shared/hooks/order/useQueueSummary/useQueueSummary', () => ({
   useQueueSummary: () => ({ data: { PENDING: 2 } }),
 }))
 vi.mock('@layouts/AppLayout/hooks/useSidemenu/useSidemenu', () => ({
-  useSidemenu: () => ({ groups: [], openSection: null, setOpenSection: vi.fn(), isInside: vi.fn() }),
+  useSidemenu: () => ({
+    groups: [],
+    openSection: null,
+    setOpenSection: vi.fn(),
+    isInside: vi.fn(),
+  }),
 }))
 vi.mock('@shared/states/session/session.state', () => ({
   useSessionStore: () => ({ name: 'Marina Silva' }),
 }))
-vi.mock('./SidebarNavigation/SidebarNavigation', () => ({ SidebarNavigation: () => <nav /> }))
+vi.mock('./SidebarNavigation/SidebarNavigation', () => ({
+  SidebarNavigation: () => <nav />,
+}))
 vi.mock('./StoreSwitcher/StoreSwitcher', () => ({ StoreSwitcher: () => null }))
 vi.mock('./UserMenu/UserMenu', () => ({ UserMenu: () => null }))
 
@@ -34,5 +41,25 @@ describe('Sidebar', () => {
       </MemoryRouter>
     )
     expect(screen.getByRole('complementary')).toBeInTheDocument()
+  })
+
+  it('keeps the expand control available when collapsed', () => {
+    render(
+      <MemoryRouter>
+        <Sidebar
+          isOpen={false}
+          onClose={() => undefined}
+          collapsed
+          onToggleCollapse={() => undefined}
+        />
+      </MemoryRouter>
+    )
+
+    expect(
+      screen.getByRole('button', { name: 'Expandir menu' })
+    ).toBeInTheDocument()
+    expect(
+      screen.queryByRole('link', { name: 'Ir para a visão geral' })
+    ).not.toBeInTheDocument()
   })
 })

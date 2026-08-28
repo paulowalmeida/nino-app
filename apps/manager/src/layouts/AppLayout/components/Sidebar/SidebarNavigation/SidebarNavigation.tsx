@@ -18,6 +18,7 @@ type SidebarNavigationProps = {
   onOpenSectionChange: (section: string | null) => void
   isInside: (section: string) => boolean
   onNavigate: () => void
+  onExpand: () => void
 }
 
 export const SidebarNavigation = ({
@@ -29,6 +30,7 @@ export const SidebarNavigation = ({
   onOpenSectionChange,
   isInside,
   onNavigate,
+  onExpand,
 }: SidebarNavigationProps) => {
   let staggerIndex = 0
 
@@ -55,9 +57,10 @@ export const SidebarNavigation = ({
                   isCollapsed={isCollapsed}
                   isInside={isInside(item.section)}
                   isOpen={openSection === item.section}
-                  onOpenChange={(open) =>
+                  onOpenChange={(open) => {
+                    if (open && isCollapsed) onExpand()
                     onOpenSectionChange(open ? item.section : null)
-                  }
+                  }}
                   delay={riseDelay(staggerIndex++ * 55 + 120)}
                   onNavigate={onNavigate}
                 />

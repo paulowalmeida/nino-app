@@ -55,11 +55,7 @@ export const SidebarNavGroup = ({
                   size="md"
                   isActive={isRouteActive}
                   isCollapsed={isCollapsed}
-                  inactiveColor={
-                    isGroupOpenOnly
-                      ? 'text-fg-on-brand/80'
-                      : 'text-fg-on-brand/45'
-                  }
+                  inactiveColor="text-fg-on-brand/90"
                 />
               </Box>
             ),
@@ -83,7 +79,7 @@ export const SidebarNavGroup = ({
                         size="sm"
                         isActive={isActive}
                         isCollapsed={isCollapsed}
-                        inactiveColor="text-fg-on-brand/40"
+                        inactiveColor="text-fg-on-brand/90"
                       />
                     )}
                   </NavLink>

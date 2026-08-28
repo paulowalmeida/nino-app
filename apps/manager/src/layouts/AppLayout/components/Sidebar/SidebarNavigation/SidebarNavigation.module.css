@@ -12,7 +12,11 @@
   @apply mt-5;
 }
 
+:global([data-collapsed]) .section + .section {
+  @apply lg:mt-1;
+}
+
 .sectionTitle {
   @apply mb-1 px-3 text-2xs font-bold uppercase tracking-caps;
-  @apply text-fg-on-brand/28;
+  @apply text-fg-on-brand/40;
 }
