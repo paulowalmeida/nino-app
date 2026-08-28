@@ -82,23 +82,8 @@
   @apply h-9 w-28 rounded-full;
 }
 
-.orders {
-  @apply flex flex-col pr-1;
-}
-
-.order {
-  @apply border-b border-border last:border-b-0;
-}
-
-.orderRow {
-  @apply grid w-full grid-cols-[auto_1fr_auto] items-baseline gap-x-3;
-  @apply px-2 py-3;
-}
-
-@media (min-width: 1024px) {
-  .orderRow {
-    grid-template-columns: 4.5rem minmax(0, 1fr) 6rem;
-  }
+.colRight {
+  @apply text-right;
 }
 
 .orderNumber {
@@ -109,6 +94,10 @@
   @apply h-4 w-24;
 }
 
+.orderAt {
+  @apply ml-auto h-3.5 w-20;
+}
+
 .orderTotal {
-  @apply h-4 w-14 justify-self-end;
+  @apply ml-auto h-4 w-14;
 }

@@ -1,17 +1,20 @@
 import { useLocation } from 'react-router'
 
-import { Box } from '@nino/ds/components/Box'
 import { EmptyState } from '@nino/ds/components/EmptyState'
-import { ListRow } from '@nino/ds/components/ListRow'
 import { ScrollArea } from '@nino/ds/components/ScrollArea'
+import {
+  Table,
+  TableBody,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@nino/ds/components/Table'
 import { Text } from '@nino/ds/components/Text'
 import { CustomerOrderRow } from '@pages/CustomerDetail/components/CustomerWorkspace/CustomerOrderHistory/CustomerOrderRow/CustomerOrderRow'
 import { useCustomerDetailFacade } from '@pages/CustomerDetail/facades/useCustomerDetailFacade/useCustomerDetailFacade'
 import { customerFirstName } from '@pages/CustomerDetail/utils/customerFirstName/customerFirstName'
 import { useLoadMore } from '@shared/hooks/ui/useLoadMore/useLoadMore'
-import { riseDelay } from '@shared/utils/rise-delay/rise-delay'
 
-import motion from '@styles/motion.module.css'
 import styles from './CustomerOrderHistory.module.css'
 
 export const CustomerOrderHistory = () => {
@@ -36,23 +39,27 @@ export const CustomerOrderHistory = () => {
 
   return (
     <ScrollArea className={styles.scroll}>
-      <Box as="ul" gap={0}>
-        {orderRows.map((order, index) => (
-          <ListRow
-            key={order.href}
-            padding={0}
-            divider={index === 0 ? 'none' : 'top'}
-            className={`${motion.deal} ${styles.order}`}
-            style={riseDelay(index * 40 + 80)}
-          >
+      <Table>
+        <TableHeader className={styles.stickyHeader}>
+          <TableRow>
+            <TableHead>Pedido</TableHead>
+            <TableHead>Status</TableHead>
+            <TableHead className={styles.colRight}>Data</TableHead>
+            <TableHead className={styles.colRight}>Total</TableHead>
+          </TableRow>
+        </TableHeader>
+
+        <TableBody>
+          {orderRows.map((order, index) => (
             <CustomerOrderRow
+              key={order.href}
               order={order}
               backToCustomer={backToCustomer}
               index={index}
             />
-          </ListRow>
-        ))}
-      </Box>
+          ))}
+        </TableBody>
+      </Table>
 
       <div ref={sentinelRef} className={styles.sentinel}>
         {isFetchingNextPage && (

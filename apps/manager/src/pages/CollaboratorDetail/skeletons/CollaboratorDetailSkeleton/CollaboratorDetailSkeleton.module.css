@@ -90,17 +90,8 @@
   @apply h-9 w-28 rounded-full;
 }
 
-.entries {
-  @apply flex flex-col pr-1;
-}
-
-.entry {
-  @apply border-b border-border last:border-b-0;
-}
-
-.entryRow {
-  @apply grid w-full grid-cols-[3rem_minmax(0,1fr)_auto] items-center;
-  @apply gap-x-3 px-2 py-3;
+.colRight {
+  @apply text-right;
 }
 
 .entryTicket {
@@ -111,6 +102,10 @@
   @apply h-4 w-32;
 }
 
+.entryMeta {
+  @apply ml-auto h-3.5 w-14;
+}
+
 .entryTotal {
-  @apply h-4 w-14 justify-self-end;
+  @apply ml-auto h-4 w-14;
 }

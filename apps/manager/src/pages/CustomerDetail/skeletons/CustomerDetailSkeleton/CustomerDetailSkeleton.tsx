@@ -1,5 +1,11 @@
 import { Box } from '@nino/ds/components/Box'
 import { Skeleton } from '@nino/ds/components/Skeleton'
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableRow,
+} from '@nino/ds/components/Table'
 import { Breadcrumb } from '@shared/components/Breadcrumb/Breadcrumb'
 
 import styles from './CustomerDetailSkeleton.module.css'
@@ -59,17 +65,26 @@ export const CustomerDetailSkeleton = () => (
         ))}
       </Box>
 
-      <ul className={styles.orders}>
-        {GHOST_ORDERS.map((order) => (
-          <li key={order} className={styles.order}>
-            <div className={styles.orderRow}>
-              <Skeleton className={styles.orderNumber} />
-              <Skeleton className={styles.orderStatus} />
-              <Skeleton className={styles.orderTotal} />
-            </div>
-          </li>
-        ))}
-      </ul>
+      <Table>
+        <TableBody>
+          {GHOST_ORDERS.map((order) => (
+            <TableRow key={order}>
+              <TableCell>
+                <Skeleton className={styles.orderNumber} />
+              </TableCell>
+              <TableCell>
+                <Skeleton className={styles.orderStatus} />
+              </TableCell>
+              <TableCell className={styles.colRight}>
+                <Skeleton className={styles.orderAt} />
+              </TableCell>
+              <TableCell className={styles.colRight}>
+                <Skeleton className={styles.orderTotal} />
+              </TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
     </div>
   </div>
 )

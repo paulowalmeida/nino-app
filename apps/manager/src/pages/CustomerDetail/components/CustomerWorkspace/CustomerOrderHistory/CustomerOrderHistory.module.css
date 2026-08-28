@@ -4,8 +4,12 @@
   @apply min-h-0 flex-1;
 }
 
-.order {
-  @apply px-0;
+.stickyHeader {
+  @apply sticky top-0 z-10 bg-surface-raised;
+}
+
+.colRight {
+  @apply text-right;
 }
 
 .sentinel {

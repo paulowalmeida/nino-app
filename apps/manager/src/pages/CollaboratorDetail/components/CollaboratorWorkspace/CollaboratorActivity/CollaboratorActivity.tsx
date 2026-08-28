@@ -2,10 +2,16 @@ import type { ComponentProps } from 'react'
 
 import { Box } from '@nino/ds/components/Box'
 import { EmptyState } from '@nino/ds/components/EmptyState'
-import { Grid } from '@nino/ds/components/Grid'
 import { Heading } from '@nino/ds/components/Heading'
-import { ListRow } from '@nino/ds/components/ListRow'
 import { ScrollArea } from '@nino/ds/components/ScrollArea'
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@nino/ds/components/Table'
 import { Text } from '@nino/ds/components/Text'
 import { COLLABORATOR_DETAIL_COLUMNS } from '@pages/CollaboratorDetail/constants/collaborator-detail.constants'
 import { CHANNEL_LABEL, STATUS_LABEL } from '@shared/constants/order.constants'
@@ -72,127 +78,59 @@ export const CollaboratorActivity = ({
         Nenhum pedido passou pela mão desta pessoa ainda.
       </EmptyState>
     ) : (
-      <>
-        <Grid
-          align="center"
-          className={`${styles.grid} ${styles.columns}`}
-          aria-hidden
-        >
-          {COLLABORATOR_DETAIL_COLUMNS.map((label) => (
-            <Text
-              key={label}
-              as="span"
-              size="xs"
-              color="faintest"
-              weight="bold"
-              case="uppercase"
-              align="right"
-              className={styles.columnLabel}
-            >
-              {label}
-            </Text>
-          ))}
-        </Grid>
+      <ScrollArea className={styles.listScroll}>
+        <Table>
+          <TableHeader className={styles.stickyHeader}>
+            <TableRow>
+              {COLLABORATOR_DETAIL_COLUMNS.map((label, index) => (
+                <TableHead
+                  key={label}
+                  className={index > 1 ? styles.colRight : undefined}
+                >
+                  {label}
+                </TableHead>
+              ))}
+            </TableRow>
+          </TableHeader>
 
-        <ScrollArea className={styles.listScroll}>
-          <Box as="ul" gap={0} className={styles.entries}>
+          <TableBody>
             {activity.map((entry, index) => (
-              <ListRow
+              <TableRow
                 key={entry.id}
-                divider={index === activity.length - 1 ? 'none' : 'bottom'}
-                padding={0}
                 className={motion.deal}
                 style={riseDelay(index * 30 + 80)}
                 aria-label={activityEntryAriaLabel(entry)}
               >
-                <Grid
-                  align="center"
-                  className={`${styles.grid} ${styles.entryRow}`}
-                  aria-hidden
-                >
-                  <Text
-                    as="span"
-                    size="sm"
-                    color="faint"
-                    weight="semibold"
-                    className={styles.entryTicket}
-                  >
-                    #{ticketNumber(entry.orderId)}
-                  </Text>
+                <TableCell className={styles.entryTicket}>
+                  #{ticketNumber(entry.orderId)}
+                </TableCell>
 
-                  <Text
-                    as="span"
-                    size="sm"
-                    color="strong"
-                    weight="semibold"
-                    className={styles.entryCustomer}
-                  >
-                    {entry.customerName ?? 'Visitante'}
-                  </Text>
+                <TableCell className={styles.entryCustomer}>
+                  {entry.customerName ?? 'Visitante'}
+                </TableCell>
 
-                  <Box
-                    direction="row"
-                    align="center"
-                    gap={1.5}
-                    className={styles.entryMeta}
-                  >
-                    <Text
-                      as="span"
-                      size="xs"
-                      color="faint"
-                      className={styles.entryChannel}
-                    >
-                      {CHANNEL_LABEL[entry.channel]}
-                    </Text>
-                    <Text
-                      as="span"
-                      size="xs"
-                      color="faint"
-                      aria-hidden
-                      className={styles.entryDot}
-                    >
-                      ·
-                    </Text>
-                    <Text
-                      as="span"
-                      size="xs"
-                      color="faint"
-                      className={styles.entryStatus}
-                    >
-                      {STATUS_LABEL[entry.status]}
-                    </Text>
-                    <Text
-                      as="span"
-                      size="xs"
-                      color="faint"
-                      aria-hidden
-                      className={styles.entryDot}
-                    >
-                      ·
-                    </Text>
-                    <time className={styles.entryAt} dateTime={entry.createdAt}>
-                      <Text as="span" size="xs" color="faint">
-                        {stamp.format(new Date(entry.createdAt))}
-                      </Text>
-                    </time>
-                  </Box>
+                <TableCell className={styles.colRight}>
+                  {CHANNEL_LABEL[entry.channel]}
+                </TableCell>
 
-                  <Text
-                    as="span"
-                    size="sm"
-                    color="strong"
-                    weight="semibold"
-                    align="right"
-                    className={styles.entryTotal}
-                  >
-                    {brl(entry.totalAmount)}
-                  </Text>
-                </Grid>
-              </ListRow>
+                <TableCell className={styles.colRight}>
+                  {STATUS_LABEL[entry.status]}
+                </TableCell>
+
+                <TableCell className={styles.colRight}>
+                  <time dateTime={entry.createdAt}>
+                    {stamp.format(new Date(entry.createdAt))}
+                  </time>
+                </TableCell>
+
+                <TableCell className={styles.entryTotal}>
+                  {brl(entry.totalAmount)}
+                </TableCell>
+              </TableRow>
             ))}
-          </Box>
-        </ScrollArea>
-      </>
+          </TableBody>
+        </Table>
+      </ScrollArea>
     )}
   </Box>
 )

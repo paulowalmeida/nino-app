@@ -1,6 +1,7 @@
 import { Link } from 'react-router'
 
 import { Badge } from '@nino/ds/components/Badge'
+import { TableCell, TableRow } from '@nino/ds/components/Table'
 import { Text } from '@nino/ds/components/Text'
 import type { CustomerBackLink } from '@pages/CustomerDetail/types/CustomerBackLink.type'
 import type { CustomerOrderRowModel } from '@pages/CustomerDetail/types/CustomerOrderRowModel.type'
@@ -20,38 +21,36 @@ export const CustomerOrderRow = ({
   backToCustomer,
   index,
 }: CustomerOrderRowProps) => (
-  <Link
-    to={order.href}
-    relative="path"
-    state={{ from: backToCustomer }}
-    className={`${motion.lift} ${styles.orderLink}`}
-    style={riseDelay(index * 40 + 80)}
-  >
-    <Text
-      as="span"
-      size="sm"
-      weight="extrabold"
-      font="display"
-      color="strong"
-      className={styles.orderNumber}
-    >
-      #{order.number}
-    </Text>
+  <TableRow className={motion.deal} style={riseDelay(index * 40 + 80)}>
+    <TableCell>
+      <Link
+        to={order.href}
+        relative="path"
+        state={{ from: backToCustomer }}
+        className={styles.orderLink}
+      >
+        <Text
+          as="span"
+          size="sm"
+          weight="extrabold"
+          font="display"
+          color="strong"
+        >
+          #{order.number}
+        </Text>
+      </Link>
+    </TableCell>
 
-    <Badge
-      size="sm"
-      variant={order.statusVariant}
-      className={styles.orderStatus}
-    >
-      {order.statusLabel}
-    </Badge>
+    <TableCell>
+      <Badge size="sm" variant={order.statusVariant}>
+        {order.statusLabel}
+      </Badge>
+    </TableCell>
 
-    <time className={styles.orderAt} dateTime={order.createdAt}>
-      {order.createdAtLabel}
-    </time>
+    <TableCell className={styles.orderAt}>
+      <time dateTime={order.createdAt}>{order.createdAtLabel}</time>
+    </TableCell>
 
-    <Text as="span" size="sm" weight="semibold" className={styles.orderTotal}>
-      {order.total}
-    </Text>
-  </Link>
+    <TableCell className={styles.orderTotal}>{order.total}</TableCell>
+  </TableRow>
 )

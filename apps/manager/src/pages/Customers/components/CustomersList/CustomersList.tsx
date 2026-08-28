@@ -1,8 +1,13 @@
 import { Box } from '@nino/ds/components/Box'
 import { Button } from '@nino/ds/components/Button'
-import { Grid } from '@nino/ds/components/Grid'
 import { ScrollArea } from '@nino/ds/components/ScrollArea'
-import { Text } from '@nino/ds/components/Text'
+import {
+  Table,
+  TableBody,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@nino/ds/components/Table'
 import { CustomerRow } from '@pages/Customers/components/CustomersList/CustomerRow/CustomerRow'
 import { CUSTOMERS_COLUMNS } from '@pages/Customers/constants/customers.constants'
 import { useCustomersFacade } from '@pages/Customers/facades/useCustomersFacade/useCustomersFacade'
@@ -15,20 +20,27 @@ export const CustomersList = () => {
 
   return (
     <>
-      <Grid className={`${styles.grid} ${styles.columns}`} aria-hidden>
-        {CUSTOMERS_COLUMNS.map((label) => (
-          <Text as="span" key={label} className={styles.columnLabel}>
-            {label}
-          </Text>
-        ))}
-      </Grid>
-
       <ScrollArea className={styles.listScroll}>
-        <Box as="ul" className={styles.list}>
-          {rows.map((row, index) => (
-            <CustomerRow key={row.id} customer={row} index={index} />
-          ))}
-        </Box>
+        <Table>
+          <TableHeader className={styles.stickyHeader}>
+            <TableRow>
+              {CUSTOMERS_COLUMNS.map((label, index) => (
+                <TableHead
+                  key={label}
+                  className={index > 0 ? styles.colHeadNumber : undefined}
+                >
+                  {label}
+                </TableHead>
+              ))}
+            </TableRow>
+          </TableHeader>
+
+          <TableBody>
+            {rows.map((row, index) => (
+              <CustomerRow key={row.id} customer={row} index={index} />
+            ))}
+          </TableBody>
+        </Table>
       </ScrollArea>
 
       {hasNextPage && (

@@ -10,15 +10,15 @@
 }
 
 .ghostHandle {
-  @apply h-9 w-9 shrink-0 rounded-2;
+  @apply size-10 shrink-0 rounded-2;
 }
 
 .ghostName {
-  @apply h-4 w-32;
+  @apply h-5 w-32;
 }
 
 .ghostHint {
-  @apply mt-1.5 h-3 w-16;
+  @apply h-4 w-16;
 }
 
 .ghostAction {

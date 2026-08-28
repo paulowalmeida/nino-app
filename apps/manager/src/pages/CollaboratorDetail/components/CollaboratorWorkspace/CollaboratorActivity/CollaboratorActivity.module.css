@@ -13,75 +13,32 @@
   @apply text-xs font-bold uppercase tracking-[0.12em];
 }
 
-.grid {
-  @apply gap-x-3;
-  grid-template-columns: 3rem minmax(0, 1fr) auto;
-}
-
-@media (min-width: 1024px) {
-  .grid {
-    @apply gap-x-4;
-    grid-template-columns: 3rem minmax(0, 1fr) 6rem 7.5rem 6rem 5.5rem;
-  }
-}
-
-.columns {
-  @apply hidden px-2 pb-2 lg:grid;
-}
-
-.columnLabel {
-  @apply text-2xs;
-}
-
-.columnLabel:first-child,
-.columnLabel:nth-child(2) {
-  @apply text-left;
-}
-
 .listScroll {
   @apply min-h-0 flex-1;
 }
 
-.entries {
-  @apply pr-1;
+/* cabeçalho fixo: rola só o corpo, a régua de coluna não some da tela */
+.stickyHeader {
+  @apply sticky top-0 z-10 bg-surface-raised;
 }
 
-.entryRow {
-  @apply w-full rounded-3 px-2 py-3 transition-colors duration-150;
-  @apply hover:bg-surface-mute;
+.colRight {
+  @apply whitespace-nowrap text-right text-fg-muted;
 }
 
 .entryTicket {
-  @apply tabular-nums;
+  @apply whitespace-nowrap text-sm font-semibold text-fg-faint;
+  font-variant-numeric: tabular-nums;
 }
 
 .entryCustomer {
-  @apply min-w-0 truncate;
-}
-
-.entryMeta {
-  @apply col-span-2 col-start-2 min-w-0;
-  @apply lg:contents;
-}
-
-.entryChannel {
-  @apply truncate lg:text-sm lg:text-fg-muted;
-}
-
-.entryStatus {
-  @apply shrink-0 truncate lg:text-sm lg:text-fg-muted lg:text-right;
-}
-
-.entryAt {
-  @apply shrink-0 tabular-nums lg:text-right;
-}
-
-.entryDot {
-  @apply shrink-0 lg:hidden;
+  @apply min-w-0 truncate text-sm font-semibold text-fg-strong;
 }
 
 .entryTotal {
-  @apply tabular-nums;
+  @apply whitespace-nowrap text-right text-sm font-semibold;
+  @apply text-fg-strong;
+  font-variant-numeric: tabular-nums;
 }
 
 .empty {

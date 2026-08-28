@@ -65,6 +65,23 @@
   @apply h-11 w-24 shrink-0 rounded-full;
 }
 
-.skeleton {
-  @apply h-28 w-full rounded-5 lg:h-32;
+/* Mirrors ProductCard's photo + footer structure, not a flat block. */
+.skeletonCard {
+  @apply flex flex-col overflow-hidden rounded-5 border border-border;
+}
+
+.skeletonPhoto {
+  @apply aspect-[3/2] h-auto w-full rounded-none;
+}
+
+.skeletonFooter {
+  @apply flex flex-col gap-1 p-3.5 lg:p-4;
+}
+
+.skeletonName {
+  @apply w-3/4;
+}
+
+.skeletonPrice {
+  @apply w-1/3;
 }

@@ -1,7 +1,7 @@
 import { Link } from 'react-router'
 
 import { Box } from '@nino/ds/components/Box'
-import { ListRow } from '@nino/ds/components/ListRow'
+import { TableCell, TableRow } from '@nino/ds/components/Table'
 import { Text } from '@nino/ds/components/Text'
 import type { CustomerRowModel } from '@pages/Customers/types/CustomerRowModel.type'
 import { PersonMark } from '@shared/components/PersonMark/PersonMark'
@@ -16,52 +16,36 @@ type CustomerRowProps = {
 }
 
 export const CustomerRow = ({ customer, index }: CustomerRowProps) => (
-  <ListRow
-    divider="none"
-    padding={0}
-    className={`${motion.deal} ${styles.item}`}
+  <TableRow
+    className={`${motion.deal} ${styles.row}`}
     style={riseDelay(index * 35 + 60)}
   >
-    <Link to={customer.id} className={`${styles.grid} ${styles.link}`}>
+    <TableCell>
       <Box direction="row" align="center" className={styles.who}>
         <PersonMark name={customer.name} />
 
         <Box className={styles.identity}>
-          <Text as="span" className={styles.name}>
+          <Link to={customer.id} className={styles.nameLink}>
             {customer.name}
-          </Text>
+          </Link>
           <Text as="span" size="xs" color="faint" className={styles.phone}>
             {customer.phoneLabel}
           </Text>
         </Box>
       </Box>
+    </TableCell>
 
-      <Box direction="column" align="end" className={styles.stats}>
-        <Box className={styles.stat}>
-          <Text as="span" className={styles.statValue}>
-            {customer.spentLabel}
-          </Text>
-        </Box>
+    <TableCell className={styles.colNumber}>{customer.spentLabel}</TableCell>
 
-        <Box className={styles.stat}>
-          <Text as="span" className={styles.statOrders}>
-            {customer.ordersCount}
-          </Text>
-          <Text as="span" size="xs" color="faint" className={styles.statLabel}>
-            {customer.ordersLabel}
-          </Text>
-        </Box>
+    <TableCell className={styles.colNumber}>
+      {customer.ordersCount}
+      {customer.ordersLabel}
+    </TableCell>
 
-        <Box className={styles.statPoints}>
-          <Text as="span" className={styles.statValue}>
-            {customer.pointsLabel}
-          </Text>
-        </Box>
+    <TableCell className={styles.colNumber}>{customer.pointsLabel}</TableCell>
 
-        <Text as="span" size="xs" color="faintest" className={styles.since}>
-          {customer.sinceLabel}
-        </Text>
-      </Box>
-    </Link>
-  </ListRow>
+    <TableCell className={`${styles.colNumber} ${styles.since}`}>
+      {customer.sinceLabel}
+    </TableCell>
+  </TableRow>
 )

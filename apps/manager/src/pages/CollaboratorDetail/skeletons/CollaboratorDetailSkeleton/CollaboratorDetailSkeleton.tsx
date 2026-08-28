@@ -1,5 +1,11 @@
 import { Box } from '@nino/ds/components/Box'
 import { Skeleton } from '@nino/ds/components/Skeleton'
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableRow,
+} from '@nino/ds/components/Table'
 import { Breadcrumb } from '@shared/components/Breadcrumb/Breadcrumb'
 
 import styles from './CollaboratorDetailSkeleton.module.css'
@@ -63,17 +69,32 @@ export const CollaboratorDetailSkeleton = () => (
         ))}
       </Box>
 
-      <ul className={styles.entries}>
-        {GHOST_ENTRIES.map((entry) => (
-          <li key={entry} className={styles.entry}>
-            <div className={styles.entryRow}>
-              <Skeleton className={styles.entryTicket} />
-              <Skeleton className={styles.entryCustomer} />
-              <Skeleton className={styles.entryTotal} />
-            </div>
-          </li>
-        ))}
-      </ul>
+      <Table>
+        <TableBody>
+          {GHOST_ENTRIES.map((entry) => (
+            <TableRow key={entry}>
+              <TableCell>
+                <Skeleton className={styles.entryTicket} />
+              </TableCell>
+              <TableCell>
+                <Skeleton className={styles.entryCustomer} />
+              </TableCell>
+              <TableCell className={styles.colRight}>
+                <Skeleton className={styles.entryMeta} />
+              </TableCell>
+              <TableCell className={styles.colRight}>
+                <Skeleton className={styles.entryMeta} />
+              </TableCell>
+              <TableCell className={styles.colRight}>
+                <Skeleton className={styles.entryMeta} />
+              </TableCell>
+              <TableCell className={styles.colRight}>
+                <Skeleton className={styles.entryTotal} />
+              </TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
     </div>
   </div>
 )

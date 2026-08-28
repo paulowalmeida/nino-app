@@ -60,7 +60,13 @@ export const ProductGrid = () => {
 
         <Box className={styles.grid}>
           {PRODUCT_GRID_SKELETON_CARDS.map((card) => (
-            <Skeleton key={card} className={styles.skeleton} />
+            <Box key={card} className={styles.skeletonCard}>
+              <Skeleton className={styles.skeletonPhoto} />
+              <Box className={styles.skeletonFooter}>
+                <Skeleton variant="text" className={styles.skeletonName} />
+                <Skeleton variant="text" className={styles.skeletonPrice} />
+              </Box>
+            </Box>
           ))}
         </Box>
       </Box>

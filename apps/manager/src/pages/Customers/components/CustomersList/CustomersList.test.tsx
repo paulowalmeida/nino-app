@@ -36,7 +36,7 @@ describe('CustomersList', () => {
 
     renderList()
 
-    expect(screen.getAllByRole('listitem')).toHaveLength(2)
+    expect(screen.getAllByRole('row')).toHaveLength(3)
     expect(screen.getByText('Cliente desde')).toBeInTheDocument()
   })
 

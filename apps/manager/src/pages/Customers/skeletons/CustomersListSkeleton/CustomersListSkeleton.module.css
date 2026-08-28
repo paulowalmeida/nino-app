@@ -1,32 +1,11 @@
 @reference "@nino/ds/globals.css";
 
-/* mesma grade da lista: o esqueleto ocupa as colunas que os dados vão ocupar */
-.grid {
-  @apply grid items-center gap-x-3;
-  grid-template-columns: minmax(0, 1fr) auto;
-}
-
-@media (min-width: 1024px) {
-  .grid {
-    @apply gap-x-4;
-    grid-template-columns: minmax(0, 1fr) 5rem 7.5rem 5rem 7.5rem;
-  }
-}
-
-.ghostRow {
-  @apply px-2 py-3 lg:px-3 lg:py-3.5;
-}
-
 .who {
   @apply flex min-w-0 items-center gap-3;
 }
 
 .identity {
-  @apply flex min-w-0 flex-col;
-}
-
-.stats {
-  @apply flex flex-col items-end lg:contents;
+  @apply flex min-w-0 flex-col gap-1.5;
 }
 
 .ghostMark {
@@ -38,13 +17,14 @@
 }
 
 .ghostPhone {
-  @apply mt-1.5 h-3 w-20;
+  @apply h-3 w-20;
 }
 
-.ghostStat {
-  @apply h-4 w-14 lg:h-4 lg:w-12 lg:justify-self-end;
+.colNumber {
+  @apply text-right;
 }
 
-.ghostStatDesktop {
-  @apply hidden lg:block lg:h-4 lg:w-12 lg:justify-self-end;
+/* coluna numérica é alinhada à direita: o bloco encosta na borda da célula */
+.ghostCell {
+  @apply ml-auto h-3.5 w-14;
 }
