@@ -8,11 +8,7 @@ export const DeliveryZoneService = {
 
   createDeliveryZone: (
     tenantId: string,
-    data: {
-      minRadiusKm: number
-      maxRadiusKm: number
-      fee: number
-    }
+    data: { maxRadiusKm: number; fee: number }
   ): Promise<DeliveryZone> =>
     api.create<typeof data, DeliveryZone>(
       `tenants/${tenantId}/delivery-zones`,
@@ -23,7 +19,6 @@ export const DeliveryZoneService = {
     tenantId: string,
     id: string,
     data: {
-      minRadiusKm?: number
       maxRadiusKm?: number
       fee?: number
       isActive?: boolean

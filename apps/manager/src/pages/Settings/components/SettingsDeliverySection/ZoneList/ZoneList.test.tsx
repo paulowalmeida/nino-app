@@ -78,13 +78,12 @@ describe('ZoneList', () => {
     await user.click(screen.getByRole('button', { name: 'Editar' }))
     await user.clear(screen.getByLabelText('Valor da faixa'))
     await user.type(screen.getByLabelText('Valor da faixa'), '8,50')
-    await user.clear(screen.getByLabelText('Distância final'))
-    await user.type(screen.getByLabelText('Distância final'), '6')
+    await user.clear(screen.getByLabelText('Até (km)'))
+    await user.type(screen.getByLabelText('Até (km)'), '6')
     await user.click(screen.getByRole('button', { name: 'Salvar' }))
 
     expect(onEdit).toHaveBeenCalledWith({
       id: deliveryZoneMock.id,
-      minRadiusKm: 0,
       maxRadiusKm: 6,
       fee: 8.5,
     })

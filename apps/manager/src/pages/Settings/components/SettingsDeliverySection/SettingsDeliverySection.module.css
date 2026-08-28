@@ -1,9 +1,9 @@
 @reference "@nino/ds/globals.css";
 
 .panel {
-  @apply flex min-w-0 flex-col;
+  @apply flex min-w-0 flex-col gap-5 lg:gap-6;
 }
 
 .head {
-  @apply mb-5 lg:mb-6;
+  @apply min-w-0;
 }

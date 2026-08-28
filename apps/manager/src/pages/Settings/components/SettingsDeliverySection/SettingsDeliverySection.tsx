@@ -31,7 +31,7 @@ export const SettingsDeliverySection = () => {
     <Box as="section" className={local.panel}>
       <Box as="header" className={`${motion.unroll} ${local.head}`}>
         <Heading level={2} size="xl">
-          Taxa por distância
+          Entrega
         </Heading>
         <Text size="sm" color="subtle" mt={1}>
           Defina as faixas de distância e o valor de cada uma.
@@ -39,7 +39,11 @@ export const SettingsDeliverySection = () => {
       </Box>
 
       <DeliveryMap zones={zones} unit={unit} />
-      <ZoneForm isAdding={add.isPending} onAdd={add.mutate} />
+      <ZoneForm
+        isAdding={add.isPending}
+        lastMaxRadiusKm={zones.at(-1)?.maxRadiusKm}
+        onAdd={add.mutate}
+      />
       <ZoneList
         zones={zones}
         isPending={isPending}
@@ -50,11 +54,7 @@ export const SettingsDeliverySection = () => {
       <RemoveZoneModal
         open={!!removingZone}
         onOpenChange={(open) => !open && setRemovingZone(null)}
-        zoneLabel={
-          removingZone
-            ? `${removingZone.minRadiusKm}–${removingZone.maxRadiusKm} km`
-            : ''
-        }
+        zoneLabel={removingZone ? `até ${removingZone.maxRadiusKm} km` : ''}
         onConfirm={confirmRemoval}
       />
     </Box>

@@ -16,7 +16,12 @@ export const useDeliveryZones = (tenantId: string | null) => {
     enabled: !!tenantId,
   })
 
-  const zones: DeliveryZone[] = query.data?.data ?? []
+  const zones: DeliveryZone[] = [...(query.data?.data ?? [])]
+    .sort((left, right) => left.maxRadiusKm - right.maxRadiusKm)
+    .map((zone, index, sortedZones) => ({
+      ...zone,
+      minRadiusKm: index === 0 ? 0 : sortedZones[index - 1].maxRadiusKm,
+    }))
 
   return { ...query, zones }
 }

@@ -32,9 +32,7 @@ describe('SettingsDeliverySection', () => {
 
     render(<SettingsDeliverySection />)
 
-    expect(
-      screen.getByRole('heading', { name: 'Taxa por distância' })
-    ).toBeInTheDocument()
+    expect(screen.getByRole('heading', { name: 'Entrega' })).toBeInTheDocument()
     expect(
       screen.getByRole('heading', { name: 'Adicionar faixa' })
     ).toBeInTheDocument()

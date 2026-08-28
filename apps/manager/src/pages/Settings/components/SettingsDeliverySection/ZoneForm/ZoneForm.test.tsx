@@ -12,12 +12,18 @@ describe('ZoneForm', () => {
 
     render(<ZoneForm {...zoneFormMock} onAdd={onAdd} />)
 
+    expect(
+      screen.getByRole('button', { name: 'Adicionar faixa' })
+    ).toBeDisabled()
+
     await user.type(screen.getByLabelText('Até (km)'), '5')
-    await user.type(screen.getByLabelText('Taxa (R$)'), '7,50')
+    await user.type(screen.getByLabelText('Taxa de entrega (R$)'), '7,50')
+    expect(
+      screen.getByRole('button', { name: 'Adicionar faixa' })
+    ).toBeEnabled()
     await user.click(screen.getByRole('button', { name: 'Adicionar faixa' }))
 
     expect(onAdd).toHaveBeenCalledWith({
-      minRadiusKm: 0,
       maxRadiusKm: 5,
       fee: 7.5,
     })

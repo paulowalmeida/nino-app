@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import type { CSSProperties } from 'react'
 
 import { Box } from '@nino/ds/components/Box'
 import { Button } from '@nino/ds/components/Button'
@@ -18,12 +19,7 @@ import local from './ZoneList.module.css'
 export type ZoneListProps = {
   zones: DeliveryZone[]
   isPending: boolean
-  onEdit: (data: {
-    id: string
-    minRadiusKm: number
-    maxRadiusKm: number
-    fee: number
-  }) => void
+  onEdit: (data: { id: string; maxRadiusKm: number; fee: number }) => void
   onToggle: (data: { id: string; isActive: boolean }) => void
   onRemove: (zone: DeliveryZone) => void
 }
@@ -37,7 +33,6 @@ export const ZoneList = ({
 }: ZoneListProps) => {
   const [editingId, setEditingId] = useState<string | null>(null)
   const [draft, setDraft] = useState({
-    minRadiusKm: '',
     maxRadiusKm: '',
     fee: '',
   })
@@ -45,22 +40,41 @@ export const ZoneList = ({
   const startEdit = (zone: DeliveryZone) => {
     setEditingId(zone.id)
     setDraft({
-      minRadiusKm: String(zone.minRadiusKm),
       maxRadiusKm: String(zone.maxRadiusKm),
       fee: Number(zone.fee).toFixed(2).replace('.', ','),
     })
   }
 
+  const farthestKm = Math.max(...zones.map((zone) => zone.maxRadiusKm), 1)
+
+  const rulerSpan = (zone: DeliveryZone) =>
+    ({
+      '--zone-start': zone.minRadiusKm / farthestKm,
+      '--zone-span': (zone.maxRadiusKm - zone.minRadiusKm) / farthestKm,
+    }) as CSSProperties
+
   const commitEdit = () => {
     if (!editingId) return
-    const min = Number(draft.minRadiusKm)
     const max = Number(draft.maxRadiusKm)
-    if (min < 0 || max <= min) return
+    const currentIndex = zones.findIndex((zone) => zone.id === editingId)
+    const previousMax =
+      currentIndex > 0 ? zones[currentIndex - 1].maxRadiusKm : 0
+    const nextMax = zones[currentIndex + 1]?.maxRadiusKm
+    const fee = Number(draft.fee.replace(',', '.'))
+    if (
+      !Number.isInteger(max) ||
+      max <= previousMax ||
+      (nextMax !== undefined && max >= nextMax) ||
+      draft.fee.trim() === '' ||
+      !Number.isFinite(fee) ||
+      fee < 0 ||
+      Math.round(fee * 100) !== fee * 100
+    )
+      return
     onEdit({
       id: editingId,
-      minRadiusKm: min,
       maxRadiusKm: max,
-      fee: Number(draft.fee.replace(',', '.')) || 0,
+      fee,
     })
     setEditingId(null)
   }
@@ -84,116 +98,123 @@ export const ZoneList = ({
         </Text>
       </Box>
 
-          {zones.length === 0 && (
+      {zones.length === 0 && (
         <EmptyState className={local.empty}>
           Adicione a primeira faixa para definir onde a loja atende.
         </EmptyState>
       )}
 
       {zones.length > 0 && (
-        <ul className={local.zones}>
-          {zones.map((zone, index) => (
-            <li
-              key={zone.id}
-              className={`${motion.deal} ${local.zone} ${
-                zone.isActive ? '' : local.off
-              }`}
-              style={riseDelay(index * 45 + 60)}
-            >
-              <Switch
-                size="sm"
-                checked={zone.isActive}
-                onCheckedChange={(isActive) =>
-                  onToggle({ id: zone.id, isActive })
-                }
-                aria-label={`Faixa de até ${zone.maxRadiusKm} km atendida`}
-              />
+        <>
+          <ul className={local.zones}>
+            {zones.map((zone, index) => (
+              <li
+                key={zone.id}
+                className={`${motion.deal} ${local.zone} ${
+                  zone.isActive ? '' : local.off
+                }`}
+                style={riseDelay(index * 45 + 60)}
+              >
+                <Switch
+                  size="sm"
+                  className={local.switch}
+                  checked={zone.isActive}
+                  onCheckedChange={(isActive) =>
+                    onToggle({ id: zone.id, isActive })
+                  }
+                  aria-label={`Faixa de até ${zone.maxRadiusKm} km atendida`}
+                />
 
-              {editingId === zone.id ? (
-                <Box className={local.editRow}>
-                  <Input
-                    aria-label="Distância inicial"
-                    inputMode="numeric"
-                    className={local.editRadius}
-                    value={draft.minRadiusKm}
-                    onChange={(event) =>
-                      setDraft((current) => ({
-                        ...current,
-                        minRadiusKm: event.target.value,
-                      }))
-                    }
-                  />
-                  <Input
-                    aria-label="Distância final"
-                    inputMode="numeric"
-                    className={local.editRadius}
-                    value={draft.maxRadiusKm}
-                    onChange={(event) =>
-                      setDraft((current) => ({
-                        ...current,
-                        maxRadiusKm: event.target.value,
-                      }))
-                    }
-                  />
-                  <Input
-                    inputMode="decimal"
-                    aria-label="Valor da faixa"
-                    className={local.editFee}
-                    value={draft.fee}
-                    onChange={(event) =>
-                      setDraft((current) => ({
-                        ...current,
-                        fee: event.target.value,
-                      }))
-                    }
-                  />
-                  <Button
-                    size="sm"
-                    className={motion.press}
-                    onClick={commitEdit}
-                  >
-                    Salvar
-                  </Button>
-                  <Button
-                    size="sm"
-                    variant="ghost"
-                    onClick={() => setEditingId(null)}
-                  >
-                    Cancelar
-                  </Button>
-                </Box>
-              ) : (
-                <>
-                  <Box className={local.zoneSummary}>
-                    <Text className={local.zoneStatus}>
-                      De {zone.minRadiusKm} até {zone.maxRadiusKm} km ·{' '}
-                      {zone.isActive ? 'Atende pedidos' : 'Pausada'}
-                    </Text>
-                  </Box>
-                  <Text className={local.fee}>{brl(zone.fee)}</Text>
-                  <Box direction="row" className={local.actions}>
+                {editingId === zone.id ? (
+                  <Box direction="row" className={local.editRow}>
+                    <Input
+                      aria-label="Até (km)"
+                      inputMode="numeric"
+                      className={local.editRadius}
+                      value={draft.maxRadiusKm}
+                      onChange={(event) =>
+                        setDraft((current) => ({
+                          ...current,
+                          maxRadiusKm: event.target.value,
+                        }))
+                      }
+                    />
+                    <Input
+                      inputMode="decimal"
+                      aria-label="Valor da faixa"
+                      className={local.editFee}
+                      value={draft.fee}
+                      onChange={(event) =>
+                        setDraft((current) => ({
+                          ...current,
+                          fee: event.target.value,
+                        }))
+                      }
+                    />
                     <Button
-                      variant="ghost"
                       size="sm"
-                      className={`${motion.press} ${local.edit}`}
-                      onClick={() => startEdit(zone)}
+                      className={motion.press}
+                      onClick={commitEdit}
                     >
-                      Editar
+                      Salvar
                     </Button>
                     <Button
-                      variant="ghost"
                       size="sm"
-                      className={`${motion.press} ${local.remove}`}
-                      onClick={() => onRemove(zone)}
+                      variant="ghost"
+                      onClick={() => setEditingId(null)}
                     >
-                      Remover
+                      Cancelar
                     </Button>
                   </Box>
-                </>
-              )}
-            </li>
-          ))}
-        </ul>
+                ) : (
+                  <>
+                    <Box className={local.range}>
+                      <Text className={local.rangeValue}>
+                        {zone.minRadiusKm}–{zone.maxRadiusKm} km
+                      </Text>
+                      <Text className={local.rangeStatus}>
+                        {zone.isActive ? 'Atende pedidos' : 'Pausada'}
+                      </Text>
+                    </Box>
+                    <Box
+                      className={local.ruler}
+                      aria-hidden
+                      title={`De ${zone.minRadiusKm} até ${zone.maxRadiusKm} km`}
+                    >
+                      <Box
+                        className={local.rulerSpan}
+                        style={rulerSpan(zone)}
+                      />
+                    </Box>
+                    <Text className={local.fee}>{brl(zone.fee)}</Text>
+                    <Box direction="row" className={local.actions}>
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        className={`${motion.press} ${local.edit}`}
+                        onClick={() => startEdit(zone)}
+                      >
+                        Editar
+                      </Button>
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        className={`${motion.press} ${local.remove}`}
+                        onClick={() => onRemove(zone)}
+                      >
+                        Remover
+                      </Button>
+                    </Box>
+                  </>
+                )}
+              </li>
+            ))}
+          </ul>
+          <Text size="xs" color="subtle" className={local.scale}>
+            As barras estão na escala de 0 a {farthestKm} km. Espaço vazio entre
+            elas é distância sem atendimento.
+          </Text>
+        </>
       )}
     </Box>
   )

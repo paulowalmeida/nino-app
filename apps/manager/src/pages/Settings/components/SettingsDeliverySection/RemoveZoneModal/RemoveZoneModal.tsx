@@ -20,13 +20,20 @@ export const RemoveZoneModal = ({
   <Modal
     open={open}
     onOpenChange={onOpenChange}
-    header={<Heading level={2} size="lg">Remover faixa?</Heading>}
+    header={
+      <Heading level={2} size="lg">
+        Remover faixa?
+      </Heading>
+    }
     body={
       <Box direction="column" gap={3}>
         <Text size="sm" color="muted">
           A faixa {zoneLabel} deixará de aparecer nas opções de entrega da loja.
+          As faixas seguintes serão recalculadas.
         </Text>
-        <Text size="sm" color="muted">Esta ação não pode ser desfeita.</Text>
+        <Text size="sm" color="muted">
+          Esta ação não pode ser desfeita.
+        </Text>
       </Box>
     }
     footer={

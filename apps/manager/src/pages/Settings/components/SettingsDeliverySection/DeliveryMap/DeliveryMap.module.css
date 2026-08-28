@@ -1,13 +1,42 @@
 @reference "@nino/ds/globals.css";
 
 .wrapper {
-  @apply overflow-hidden rounded-xl border border-border bg-surface-2;
+  @apply flex min-w-0 flex-col gap-2;
 }
 
 .header {
-  @apply flex items-center justify-between gap-4 border-b border-border px-4 py-3;
+  @apply flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1;
+}
+
+.frame {
+  @apply overflow-hidden rounded-xl border border-border;
 }
 
 .map {
-  @apply h-72 w-full;
+  @apply h-64 w-full sm:h-80 lg:h-96;
+}
+
+/* WHY: Leaflet escreve cor como atributo de apresentação no SVG, e atributo
+   não resolve var(); por isso o desenho das faixas vive no CSS. */
+.unitDot {
+  stroke: var(--color-fg-inverse);
+  fill: var(--color-brand);
+}
+
+.zoneRing {
+  stroke: var(--color-brand);
+  fill: var(--color-brand);
+}
+
+.zoneRingOff {
+  stroke: var(--color-fg-faint);
+  fill: var(--color-fg-faint);
+}
+
+.error {
+  @apply flex h-40 items-center justify-center rounded-xl border border-dashed border-border px-6 text-center;
+}
+
+.skeleton {
+  @apply h-64 w-full rounded-xl sm:h-80 lg:h-96;
 }

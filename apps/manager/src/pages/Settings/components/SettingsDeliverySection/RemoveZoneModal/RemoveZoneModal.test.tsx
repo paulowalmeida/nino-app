@@ -8,7 +8,10 @@ import { removeZoneModalMock } from './RemoveZoneModal.mock'
 
 vi.mock('@nino/ds/components/Modal', () => ({
   Modal: ({ body, footer }: { body: ReactNode; footer: ReactNode }) => (
-    <div>{body}{footer}</div>
+    <div>
+      {body}
+      {footer}
+    </div>
   ),
 }))
 
@@ -24,7 +27,9 @@ describe('RemoveZoneModal', () => {
       />
     )
 
-    expect(screen.getByText(/A faixa Centro deixará de aparecer/)).toBeInTheDocument()
+    expect(
+      screen.getByText(/A faixa Centro deixará de aparecer/)
+    ).toBeInTheDocument()
     fireEvent.click(screen.getByRole('button', { name: 'Remover faixa' }))
     expect(onConfirm).toHaveBeenCalledOnce()
   })

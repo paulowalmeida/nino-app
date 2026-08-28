@@ -4,17 +4,36 @@
   @apply h-64 w-full rounded-6;
 }
 
+.section {
+  @apply min-w-0;
+}
+
+.zonesHeader {
+  @apply mb-1;
+}
+
+.zonesMeta {
+  @apply shrink-0 tabular-nums;
+}
+
 .zones {
   @apply flex flex-col;
 }
 
 .zone {
-  @apply grid grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-x-3 gap-y-1;
-  @apply border-t border-border py-3;
-  @apply transition-opacity duration-200;
+  @apply items-center gap-x-3 gap-y-2 border-t border-border py-3;
+  @apply transition-colors duration-200;
+
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  grid-template-areas:
+    'switch range fee'
+    'ruler ruler ruler'
+    'actions actions actions';
 
   @media (min-width: 640px) {
-    grid-template-columns: auto minmax(0, 1fr) auto auto;
+    grid-template-columns: auto 8.5rem minmax(6rem, 1fr) 5.5rem auto;
+    grid-template-areas: 'switch range ruler fee actions';
   }
 }
 
@@ -22,19 +41,69 @@
   @apply opacity-dim;
 }
 
-.zoneSummary {
-  @apply col-start-2 min-w-0;
+.switch {
+  grid-area: switch;
 }
 
-.zoneStatus {
-  @apply mt-0.5 text-xs text-fg-faint;
+.range {
+  @apply flex min-w-0 flex-col;
+
+  grid-area: range;
+}
+
+.rangeValue {
+  @apply text-sm font-semibold text-fg-default tabular-nums;
+}
+
+.rangeStatus {
+  @apply text-xs text-fg-faint;
+}
+
+.fee {
+  @apply justify-self-end text-sm font-semibold text-fg-default tabular-nums;
+
+  grid-area: fee;
+}
+
+.ruler {
+  @apply relative h-1.5 w-full overflow-hidden rounded-full bg-surface-3;
+
+  grid-area: ruler;
+}
+
+.rulerSpan {
+  @apply absolute inset-y-0 rounded-full bg-brand;
+
+  left: calc(var(--zone-start) * 100%);
+  width: calc(var(--zone-span) * 100%);
+}
+
+.off .rulerSpan {
+  @apply bg-fg-faint;
+}
+
+.actions {
+  @apply justify-self-end gap-1;
+
+  grid-area: actions;
+}
+
+.edit {
+  @apply shrink-0 text-fg-faint;
+}
+
+.remove {
+  @apply shrink-0 text-danger;
+  @apply hover:bg-danger-surface hover:text-danger;
 }
 
 .editRow {
-  @apply col-span-2 min-w-0 flex flex-wrap items-center gap-2;
+  @apply min-w-0 flex-wrap items-center gap-2;
+
+  grid-area: range / range / actions / actions;
 
   @media (min-width: 640px) {
-    grid-column: 2 / -1;
+    grid-area: range / range / range / actions;
   }
 }
 
@@ -46,41 +115,10 @@
   @apply w-20;
 }
 
-.actions {
-  @apply col-start-2 col-span-2 justify-self-end gap-1;
-
-  @media (min-width: 640px) {
-    grid-column: auto;
-  }
-}
-
-.edit {
-  @apply shrink-0 text-fg-faint;
-}
-
-.fee {
-  @apply self-start pt-0.5 sm:self-auto sm:pt-0;
-  @apply text-sm text-fg-muted;
-  font-variant-numeric: tabular-nums;
-}
-
-.remove {
-  @apply shrink-0 text-danger;
-  @apply hover:bg-danger-surface hover:text-danger;
-}
-
-.section {
-  @apply mt-6;
-}
-
-.zonesHeader {
-  @apply mb-2;
-}
-
-.zonesMeta {
-  @apply shrink-0 tabular-nums;
-}
-
 .empty {
   @apply border-t border-border py-6;
+}
+
+.scale {
+  @apply mt-2;
 }
