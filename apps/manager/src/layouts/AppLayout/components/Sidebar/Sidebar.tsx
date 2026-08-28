@@ -30,15 +30,10 @@ export const Sidebar = ({
   const user = useSessionStore(({ user }) => user)
   const tenantId = useCurrentTenant()?.tenantId ?? null
   const { data: summary } = useQueueSummary(tenantId)
-  const { groups, openSection, setOpenSection, isInside } = useSidemenu()
+  const { groups } = useSidemenu()
 
   const waiting = summary?.PENDING ?? 0
   const isCollapsed = collapsed && !isOpen
-
-  const toggleCollapse = () => {
-    if (!isCollapsed) setOpenSection(null)
-    onToggleCollapse()
-  }
 
   const asideClass = mergeClasses(
     styles.sidebar,
@@ -59,7 +54,7 @@ export const Sidebar = ({
             variant="ghost"
             size="icon"
             className={styles.collapseBtn}
-            onClick={toggleCollapse}
+            onClick={onToggleCollapse}
             aria-label="Expandir menu"
           >
             <Icon name="menu" size="md" />
@@ -71,7 +66,7 @@ export const Sidebar = ({
               variant="ghost"
               size="icon"
               className={styles.collapseBtn}
-              onClick={toggleCollapse}
+              onClick={onToggleCollapse}
               aria-label="Recolher menu"
             >
               <Icon
@@ -93,11 +88,7 @@ export const Sidebar = ({
         tenantId={tenantId}
         isCollapsed={isCollapsed}
         waiting={waiting}
-        openSection={openSection}
-        onOpenSectionChange={setOpenSection}
-        isInside={isInside}
         onNavigate={onClose}
-        onExpand={toggleCollapse}
       />
 
       <Box className={styles.footer}>

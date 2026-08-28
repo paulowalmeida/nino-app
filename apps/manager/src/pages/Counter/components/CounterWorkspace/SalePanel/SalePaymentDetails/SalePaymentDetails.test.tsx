@@ -18,6 +18,10 @@ describe(SalePaymentDetails.name, () => {
         onCustomerName={onCustomerName}
         onTableNumber={onTableNumber}
         onMethod={onMethod}
+        changeFor=""
+        changeAmount={0}
+        isChangeValid={false}
+        onChangeFor={vi.fn()}
       />
     )
     fireEvent.change(
@@ -31,5 +35,35 @@ describe(SalePaymentDetails.name, () => {
     expect(onCustomerName).toHaveBeenCalledWith('Ana')
     expect(onTableNumber).toHaveBeenCalledWith('4')
     expect(onMethod).toHaveBeenCalledWith('PIX')
+  })
+
+  it('shows the change for cash payments', () => {
+    const onChangeFor = vi.fn()
+
+    render(
+      <SalePaymentDetails
+        {...salePaymentDetailsMock}
+        customerName=""
+        tableNumber=""
+        onCustomerName={vi.fn()}
+        onTableNumber={vi.fn()}
+        onMethod={vi.fn()}
+        changeFor="50.00"
+        changeAmount={10}
+        isChangeValid
+        onChangeFor={onChangeFor}
+      />
+    )
+
+    fireEvent.change(
+      screen.getByRole('spinbutton', { name: 'Valor recebido' }),
+      {
+      target: { value: '60.00' },
+      }
+    )
+
+    expect(screen.getByText('Troco')).toBeInTheDocument()
+    expect(screen.getByText('R$ 10,00')).toBeInTheDocument()
+    expect(onChangeFor).toHaveBeenCalledWith('60.00')
   })
 })

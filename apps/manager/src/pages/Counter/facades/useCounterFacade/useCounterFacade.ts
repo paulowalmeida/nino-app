@@ -12,16 +12,18 @@ export const useCounterFacade = () => {
   const menu = useMenu(tenantId)
   const payments = useCounterPaymentMethods(tenantId)
   const cart = useCounterCart()
-  const selection = useCounterPaymentSelection(payments.methods)
+  const selection = useCounterPaymentSelection(payments.methods, cart.total)
   const commands = useCounterCommands(tenantId, selection.method)
   const responsive = useCounterResponsive()
   const sheet = useCounterStore((state) => state.sheet)
   const customerName = useCounterStore((state) => state.customerName)
   const tableNumber = useCounterStore((state) => state.tableNumber)
+  const changeFor = useCounterStore((state) => state.changeFor)
   const setSheet = useCounterStore((state) => state.setSheet)
   const setChosen = useCounterStore((state) => state.setChosenPaymentMethod)
   const setCustomerName = useCounterStore((state) => state.setCustomerName)
   const setTableNumber = useCounterStore((state) => state.setTableNumber)
+  const setChangeFor = useCounterStore((state) => state.setChangeFor)
 
   return {
     ...menu,
@@ -33,9 +35,11 @@ export const useCounterFacade = () => {
     sheet,
     customerName,
     tableNumber,
+    changeFor,
     setSheet,
     setChosen,
     setCustomerName,
     setTableNumber,
+    setChangeFor,
   }
 }

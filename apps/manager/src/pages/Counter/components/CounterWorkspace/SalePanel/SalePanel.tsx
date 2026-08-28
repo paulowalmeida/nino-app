@@ -17,11 +17,15 @@ export const SalePanel = ({ bare = false }: { bare?: boolean }) => {
     method,
     customerName,
     tableNumber,
+    changeFor,
+    changeAmount,
+    isChangeValid,
     error,
     isSending,
     handleStep,
     setCustomerName,
     setTableNumber,
+    setChangeFor,
     setChosen,
     emptyTicket,
     finish,
@@ -41,8 +45,12 @@ export const SalePanel = ({ bare = false }: { bare?: boolean }) => {
         <SalePaymentDetails
           customerName={customerName}
           tableNumber={tableNumber}
+          changeFor={changeFor}
+          changeAmount={changeAmount}
+          isChangeValid={isChangeValid}
           onCustomerName={setCustomerName}
           onTableNumber={setTableNumber}
+          onChangeFor={setChangeFor}
           methods={methods}
           method={method}
           onMethod={setChosen}
@@ -51,7 +59,8 @@ export const SalePanel = ({ bare = false }: { bare?: boolean }) => {
       <SaleFinishActions
         bare={bare}
         hasLines={count > 0}
-        isPaymentAvailable={method !== null}
+        isPaymentAvailable={method !== null && isChangeValid}
+        isCash={method === 'CASH'}
         total={total}
         isSending={isSending}
         error={error}

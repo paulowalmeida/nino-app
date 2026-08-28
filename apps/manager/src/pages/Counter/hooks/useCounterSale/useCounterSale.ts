@@ -25,6 +25,7 @@ export const useCounterSale = (tenantId: string | null): CounterSale => {
     paymentMethod,
     customerName,
     tableNumber,
+    changeFor,
   }: CounterSaleInput) => {
     setError(null)
 
@@ -40,6 +41,7 @@ export const useCounterSale = (tenantId: string | null): CounterSale => {
           paymentMethod,
           customerName,
           tableNumber,
+          changeFor,
         })
       )
 

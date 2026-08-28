@@ -2,6 +2,7 @@ import { create } from 'zustand'
 
 import { addItem } from '@pages/Counter/states/counter/operations/add-item/add-item'
 import { clearTicket } from '@pages/Counter/states/counter/operations/clear-ticket/clear-ticket'
+import { setChangeFor } from '@pages/Counter/states/counter/operations/set-change-for/set-change-for'
 import { setCustomerName } from '@pages/Counter/states/counter/operations/set-customer-name/set-customer-name'
 import { setPaymentMethod } from '@pages/Counter/states/counter/operations/set-payment-method/set-payment-method'
 import { setSheet } from '@pages/Counter/states/counter/operations/set-sheet/set-sheet'
@@ -15,6 +16,7 @@ export const useCounterStore = create<CounterState>((set) => ({
   chosenPaymentMethod: null,
   customerName: '',
   tableNumber: '',
+  changeFor: '',
   add: (item) => addItem(set, item),
   step: (productId, by) => stepLine(set, productId, by),
   clear: () => clearTicket(set),
@@ -22,4 +24,5 @@ export const useCounterStore = create<CounterState>((set) => ({
   setChosenPaymentMethod: (method) => setPaymentMethod(set, method),
   setCustomerName: (name) => setCustomerName(set, name),
   setTableNumber: (table) => setTableNumber(set, table),
+  setChangeFor: (value) => setChangeFor(set, value),
 }))

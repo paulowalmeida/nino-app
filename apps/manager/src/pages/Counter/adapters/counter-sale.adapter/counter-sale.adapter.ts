@@ -6,11 +6,16 @@ export const toCounterSaleRequest = ({
   paymentMethod,
   customerName,
   tableNumber,
+  changeFor,
 }: CounterSaleInput): CreateOrderRequest => ({
   channel: 'COUNTER',
   paymentMethod,
   guestName: customerName || undefined,
   tableNumber: tableNumber || undefined,
+  changeFor:
+    paymentMethod === 'CASH' && changeFor?.trim()
+      ? Number(changeFor)
+      : undefined,
   items: lines.map(({ productId, quantity, unitPrice }) => ({
     productId,
     quantity,

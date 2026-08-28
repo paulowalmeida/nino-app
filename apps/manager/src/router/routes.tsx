@@ -89,6 +89,13 @@ export const router = createBrowserRouter([
           })),
       },
       {
+        path: 'comandas',
+        lazy: () =>
+          import('@pages/TableTabs/TableTabs').then(({ TableTabs }) => ({
+            Component: TableTabs,
+          })),
+      },
+      {
         path: 'cozinha',
         lazy: () =>
           import('@pages/Kitchen/Kitchen').then(({ Kitchen }) => ({
@@ -217,6 +224,14 @@ export const router = createBrowserRouter([
           ),
       },
       {
+        path: 'empresa',
+        loader: roleGuard(['TENANT_OWNER']),
+        lazy: () =>
+          import('@pages/Company/Company').then(({ Company }) => ({
+            Component: Company,
+          })),
+      },
+      {
         path: 'configuracoes',
         loader: roleGuard(MANAGERS),
         lazy: () =>
@@ -224,16 +239,7 @@ export const router = createBrowserRouter([
             Component: Settings,
           })),
         children: [
-          { index: true, element: <Navigate to="empresa" replace /> },
-          {
-            path: 'empresa',
-            lazy: () =>
-              import('@pages/Settings/components/SettingsCompanySection/SettingsCompanySection').then(
-                ({ SettingsCompanySection }) => ({
-                  Component: SettingsCompanySection,
-                })
-              ),
-          },
+          { index: true, element: <Navigate to="unidade" replace /> },
           {
             path: 'unidade',
             lazy: () =>

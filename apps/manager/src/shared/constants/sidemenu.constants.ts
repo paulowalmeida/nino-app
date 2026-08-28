@@ -1,49 +1,9 @@
 import { MANAGERS } from '@shared/constants/roles.constants'
 import type { SidemenuItem } from '@shared/types/ui/sidemenu-item.type'
-import { SettingsSection } from 'src/shared/types/ui/settings-section'
-
-const SETTINGS_SECTIONS: SettingsSection[] = [
-  {
-    to: 'empresa',
-    label: 'Empresa',
-    hint: 'CNPJ, razão social e endereço',
-    icon: 'building',
-  },
-  {
-    to: 'unidade',
-    label: 'Unidades',
-    hint: 'Esta loja e as outras da empresa',
-    icon: 'store',
-  },
-  {
-    to: 'atendimento',
-    label: 'Atendimento',
-    hint: 'Canais, pagamento e pedido mínimo',
-    icon: 'credit-card',
-  },
-  {
-    to: 'horarios',
-    label: 'Horários',
-    hint: 'Quando a loja abre e fecha',
-    icon: 'clock',
-  },
-  {
-    to: 'entrega',
-    label: 'Entrega',
-    hint: 'Regiões atendidas e taxa',
-    icon: 'pin',
-  },
-  {
-    to: 'contato',
-    label: 'Contato',
-    hint: 'Telefones da loja',
-    icon: 'phone',
-  },
-]
 
 export const SIDEMENU_GROUPS: SidemenuItem[] = [
   {
-    title: 'Do dia',
+    title: 'Dia a dia',
     items: [
       {
         section: 'visao-geral',
@@ -52,13 +12,14 @@ export const SIDEMENU_GROUPS: SidemenuItem[] = [
         roles: MANAGERS,
       },
       { section: 'balcao', label: 'Balcão', icon: 'cash-register' },
+      { section: 'comandas', label: 'Comandas', icon: 'clipboard' },
       { section: 'cozinha', label: 'Cozinha', icon: 'chef-hat' },
       { section: 'pedidos', label: 'Pedidos', icon: 'bag' },
       { section: 'catalogo', label: 'Cardápio', icon: 'book' },
     ],
   },
   {
-    title: 'Da loja',
+    title: 'Gestão',
     items: [
       {
         section: 'relatorios',
@@ -78,11 +39,39 @@ export const SIDEMENU_GROUPS: SidemenuItem[] = [
         icon: 'badge',
         roles: MANAGERS,
       },
+    ],
+  },
+  {
+    title: 'Configurações',
+    items: [
       {
-        section: 'configuracoes',
-        label: 'Configurações',
-        icon: 'settings',
-        children: SETTINGS_SECTIONS,
+        section: 'configuracoes/unidade',
+        label: 'Unidades',
+        icon: 'store',
+        roles: MANAGERS,
+      },
+      {
+        section: 'configuracoes/atendimento',
+        label: 'Atendimento',
+        icon: 'credit-card',
+        roles: MANAGERS,
+      },
+      {
+        section: 'configuracoes/horarios',
+        label: 'Horários',
+        icon: 'clock',
+        roles: MANAGERS,
+      },
+      {
+        section: 'configuracoes/entrega',
+        label: 'Entrega',
+        icon: 'pin',
+        roles: MANAGERS,
+      },
+      {
+        section: 'configuracoes/contato',
+        label: 'Contato',
+        icon: 'phone',
         roles: MANAGERS,
       },
     ],

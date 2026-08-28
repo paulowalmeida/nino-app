@@ -7,4 +7,5 @@ export const clearTicket = (set: SetCounterState) =>
     chosenPaymentMethod: null,
     customerName: '',
     tableNumber: '',
+    changeFor: '',
   })

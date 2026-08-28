@@ -7,7 +7,6 @@ export type SidemenuItem = {
     section: string
     label: string
     icon: IconName
-    children?: { to: string; label: string; icon: IconName }[]
     roles?: TenantRole[]
   }[]
 }

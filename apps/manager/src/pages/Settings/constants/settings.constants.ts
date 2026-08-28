@@ -1,20 +1,6 @@
-import type { CompanyDraft } from '@shared/types/company/company-draft'
 import type { PaymentMethod } from '@shared/types/order/payment-method'
 import type { ServiceRulesDraft } from '@shared/types/settings/service-rules-draft'
 import type { UnitDraft } from '@shared/types/store/unit-draft'
-
-export const EMPTY_COMPANY_DRAFT: CompanyDraft = {
-  name: '',
-  legalName: '',
-  stateRegistration: '',
-  zipCode: '',
-  street: '',
-  number: '',
-  complement: '',
-  neighborhood: '',
-  city: '',
-  state: '',
-}
 
 export const WEEK_SCHEDULE_DAYS = [
   'Domingo',

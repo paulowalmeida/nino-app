@@ -1,11 +1,19 @@
 @reference "@nino/ds/globals.css";
 
+.actions {
+  @apply w-full items-center gap-1;
+}
+
 .trigger {
-  @apply flex w-full cursor-pointer items-center justify-start gap-2.5;
+  @apply flex min-w-0 flex-1 cursor-pointer items-center justify-start gap-2.5;
   @apply rounded-3 px-2 py-2 text-left transition-colors duration-150;
   @apply hover:bg-surface-raised/8 focus-visible:outline-none;
   @apply focus-visible:ring-2;
   @apply focus-visible:ring-brand;
+}
+
+.logout {
+  @apply shrink-0 text-fg-on-brand/70 hover:bg-surface-raised/8 hover:text-fg-on-brand;
 }
 
 :global([data-collapsed]) .trigger {
@@ -14,10 +22,6 @@
 
 .name {
   @apply min-w-0 flex-1 truncate text-sm font-medium text-fg-on-brand/70;
-}
-
-.icon {
-  @apply h-4 w-4 shrink-0 text-fg-on-brand/35;
 }
 
 .itemIcon {

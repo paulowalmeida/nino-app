@@ -26,4 +26,10 @@ describe(toCounterSaleRequest.name, () => {
       tableNumber: undefined,
     })
   })
+
+  it('sends the amount received for cash payments', () => {
+    expect(
+      toCounterSaleRequest({ ...counterSaleInputMock, changeFor: '25.50' })
+    ).toMatchObject({ changeFor: 25.5 })
+  })
 })

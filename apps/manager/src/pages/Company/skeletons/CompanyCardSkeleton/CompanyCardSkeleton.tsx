@@ -4,8 +4,8 @@ import { Text } from '@nino/ds/components/Text'
 import { mergeClasses } from '@nino/ds/mergeClasses'
 
 import ghost from './CompanyCardSkeleton.module.css'
-import address from '@pages/Settings/components/AddressFields/AddressFields.module.css'
-import card from '@pages/Settings/components/SettingsCompanySection/CompanyCard/CompanyCard.module.css'
+import address from '@shared/components/AddressFields/AddressFields.module.css'
+import card from '@pages/Company/components/CompanyCard/CompanyCard.module.css'
 
 const COMPANY_FIELDS = [
   { span: card.wide, label: ghost.labelName },

@@ -18,7 +18,11 @@ export type SalePaymentDetailsProps = {
   tableNumber: string
   onCustomerName: (name: string) => void
   onTableNumber: (table: string) => void
-  methods: PaymentMethod[]
+  changeFor: string
+  changeAmount: number
+  isChangeValid: boolean
+  onChangeFor: (value: string) => void
+  methods: readonly PaymentMethod[]
   method: PaymentMethod
   onMethod: (method: PaymentMethod) => void
 }
@@ -28,6 +32,10 @@ export const SalePaymentDetails = ({
   tableNumber,
   onCustomerName,
   onTableNumber,
+  changeFor,
+  changeAmount,
+  isChangeValid,
+  onChangeFor,
   methods,
   method,
   onMethod,
@@ -73,5 +81,46 @@ export const SalePaymentDetails = ({
         </Button>
       ))}
     </Box>
+    {method === 'CASH' && (
+      <Box direction="column" className={styles.cashDetails}>
+        <Text size="sm" weight="bold">
+          Valor recebido
+        </Text>
+        <Input
+          type="number"
+          min="0"
+          step="0.01"
+          placeholder="0,00"
+          aria-label="Valor recebido"
+          value={changeFor}
+          onChange={(event) => onChangeFor(event.target.value)}
+        />
+        <Box
+          direction="row"
+          justify="between"
+          align="center"
+          className={styles.changeSummary}
+        >
+          <Text size="sm" weight="bold">
+            Troco
+          </Text>
+          <Text
+            size="lg"
+            weight="bold"
+            color={isChangeValid ? 'brand-strong' : 'danger'}
+            aria-live="polite"
+          >
+            {isChangeValid
+              ? `R$ ${changeAmount.toFixed(2).replace('.', ',')}`
+              : '—'}
+          </Text>
+        </Box>
+        {!isChangeValid && (
+          <Text size="sm" color="danger">
+            Informe um valor igual ou maior que o total.
+          </Text>
+        )}
+      </Box>
+    )}
   </Box>
 )

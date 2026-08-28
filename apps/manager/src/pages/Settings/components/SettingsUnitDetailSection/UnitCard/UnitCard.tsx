@@ -20,7 +20,7 @@ import {
 import type { TenantDetail } from '@shared/types/store/tenant-detail'
 import type { UnitDraft } from '@shared/types/store/unit-draft'
 
-import { AddressFields } from '../../AddressFields/AddressFields'
+import { AddressFields } from '@shared/components/AddressFields/AddressFields'
 import { StorePreview } from '../StorePreview/StorePreview'
 
 import motion from '@styles/motion.module.css'

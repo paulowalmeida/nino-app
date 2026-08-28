@@ -9,12 +9,6 @@ const hook = vi.hoisted(() => () => ({
   mutate: vi.fn(),
   mutateAsync: vi.fn(),
 }))
-vi.mock('@pages/Settings/hooks/useCompany/useCompany', () => ({
-  useCompany: hook,
-}))
-vi.mock('@pages/Settings/hooks/useSaveCompany/useSaveCompany', () => ({
-  useSaveCompany: hook,
-}))
 vi.mock('@shared/hooks/session/useCompanyGroups/useCompanyGroups', () => ({
   useCompanyGroups: () => [],
 }))
@@ -68,7 +62,6 @@ describe(useSettingsFacade.name, () => {
   it('composes all settings domains behind one contract', () => {
     const { result } = renderHook(() => useSettingsFacade())
     expect(result.current.tenant?.tenantId).toBe('tenant-1')
-    expect(result.current.company.query).toBeDefined()
     expect(result.current.units.limit).toBeDefined()
   })
 })

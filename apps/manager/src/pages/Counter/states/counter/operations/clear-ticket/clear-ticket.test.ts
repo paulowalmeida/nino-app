@@ -12,6 +12,7 @@ describe(clearTicket.name, () => {
       chosenPaymentMethod: null,
       customerName: '',
       tableNumber: '',
+      changeFor: '',
     })
   })
 })

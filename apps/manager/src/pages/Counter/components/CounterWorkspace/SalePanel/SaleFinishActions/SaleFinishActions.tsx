@@ -14,6 +14,7 @@ import styles from './SaleFinishActions.module.css'
 export type SaleFinishActionsProps = {
   hasLines: boolean
   isPaymentAvailable: boolean
+  isCash?: boolean
   total: number
   isSending: boolean
   error: string | null
@@ -25,6 +26,7 @@ export type SaleFinishActionsProps = {
 export const SaleFinishActions = ({
   hasLines,
   isPaymentAvailable,
+  isCash = false,
   total,
   isSending,
   error,
@@ -74,7 +76,7 @@ export const SaleFinishActions = ({
           className={mergeClasses(motion.press, styles.finish)}
           onClick={onFinish}
         >
-          Fechar venda
+          {isCash ? 'Confirmar recebimento e fechar venda' : 'Fechar venda'}
         </Button>
         {hasLines && (
           <Button

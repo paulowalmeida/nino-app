@@ -8,6 +8,7 @@ export type CounterState = {
   chosenPaymentMethod: PaymentMethod | null
   customerName: string
   tableNumber: string
+  changeFor: string
   add: (item: MenuItem) => void
   step: (productId: string, by: number) => void
   clear: () => void
@@ -15,4 +16,5 @@ export type CounterState = {
   setChosenPaymentMethod: (method: PaymentMethod | null) => void
   setCustomerName: (name: string) => void
   setTableNumber: (table: string) => void
+  setChangeFor: (value: string) => void
 }

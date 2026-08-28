@@ -6,4 +6,5 @@ export type CounterSaleInput = {
   paymentMethod: PaymentMethod
   customerName: string
   tableNumber: string
+  changeFor?: string
 }

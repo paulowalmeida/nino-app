@@ -48,12 +48,20 @@ export const queryKeys = {
   },
   orders: {
     all: (tenantId: string) => ['orders', tenantId] as const,
-    list: (tenantId: string, status?: string, search?: string) =>
+    list: (
+      tenantId: string,
+      status?: string,
+      search?: string,
+      channel?: string,
+      paymentStatus?: string
+    ) =>
       [
         ...queryKeys.orders.all(tenantId),
         'list',
         status ?? null,
         search ?? null,
+        channel ?? null,
+        paymentStatus ?? null,
       ] as const,
     detail: (tenantId: string, orderId: string) =>
       [...queryKeys.orders.all(tenantId), 'detail', orderId] as const,

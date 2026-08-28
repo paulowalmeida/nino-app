@@ -4,9 +4,11 @@ import type {
 } from '@shared/types/order/create-order-request'
 import type { Order } from '@shared/types/order/order'
 import type { OrderAvailability } from '@shared/types/order/order-availability'
+import type { OrderChannel } from '@shared/types/order/order-channel'
 import type { OrderPage } from '@shared/types/order/order-page'
 import type { OrderQueueSummary } from '@shared/types/order/order-queue-summary'
 import type { OrderStatusKey } from '@shared/types/order/order-status-key'
+import type { PaymentStatus } from '@shared/types/order/payment-status'
 import type { ReportRangeParams } from '@shared/types/order/report-range-params'
 import type { SalesReport } from '@shared/types/order/sales-report'
 import type { SalesSeries } from '@shared/types/order/sales-series'
@@ -93,7 +95,9 @@ export const OrderService = {
     tenantId: string,
     page: number,
     search?: string,
-    statuses?: OrderStatusKey[]
+    statuses?: OrderStatusKey[],
+    channel?: OrderChannel,
+    paymentStatus?: PaymentStatus
   ): Promise<OrderPage> =>
     api.getAll<OrderPage>(`tenants/${tenantId}/orders`, {
       target: 'createdAt',
@@ -102,6 +106,8 @@ export const OrderService = {
       page,
       ...(search ? { search } : {}),
       ...(statuses?.length ? { status: statuses.join(',') } : {}),
+      ...(channel ? { channel } : {}),
+      ...(paymentStatus ? { paymentStatus } : {}),
     }),
 
   createOrder: (tenantId: string, data: CreateOrderRequest): Promise<Order> =>

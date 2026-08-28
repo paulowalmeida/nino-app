@@ -15,6 +15,7 @@ export const useCounterCommands = (
   const setSheet = useCounterStore((state) => state.setSheet)
   const customerName = useCounterStore((state) => state.customerName)
   const tableNumber = useCounterStore((state) => state.tableNumber)
+  const changeFor = useCounterStore((state) => state.changeFor)
 
   const emptyTicket = () => {
     clear()
@@ -34,6 +35,7 @@ export const useCounterCommands = (
       paymentMethod: method,
       customerName,
       tableNumber,
+      changeFor,
     })
     if (!orderNumber) return
     emptyTicket()

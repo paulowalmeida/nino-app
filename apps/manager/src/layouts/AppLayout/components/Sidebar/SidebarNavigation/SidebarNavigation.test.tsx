@@ -1,71 +1,46 @@
 import { MemoryRouter } from 'react-router'
 
 import { render, screen } from '@testing-library/react'
-import userEvent from '@testing-library/user-event'
-import { describe, expect, it, vi } from 'vitest'
+import { describe, expect, it } from 'vitest'
 
 import { SidebarNavigation } from './SidebarNavigation'
+import {
+  settingsGroupMock,
+  sidebarNavigationMock,
+} from './SidebarNavigation.mock'
 
 describe('SidebarNavigation', () => {
   it('renders the navigation landmark', () => {
     render(
       <SidebarNavigation
-        groups={[]}
-        tenantId={null}
-        isCollapsed={false}
-        waiting={0}
-        openSection={null}
-        onOpenSectionChange={() => undefined}
-        isInside={() => false}
+        {...sidebarNavigationMock}
         onNavigate={() => undefined}
-        onExpand={() => undefined}
       />
     )
 
     expect(screen.getByRole('navigation')).toBeInTheDocument()
   })
 
-  it('expands the sidebar before opening a collapsed group', async () => {
-    const onExpand = vi.fn()
-    const onOpenSectionChange = vi.fn()
-
+  it('links every settings section straight from the menu', () => {
     render(
       <MemoryRouter>
         <SidebarNavigation
-          groups={[
-            {
-              title: 'Gestão',
-              items: [
-                {
-                  section: 'configuracoes',
-                  label: 'Configurações',
-                  icon: 'settings',
-                  children: [
-                    {
-                      to: 'empresa',
-                      label: 'Empresa',
-                      icon: 'building',
-                    },
-                  ],
-                },
-              ],
-            },
-          ]}
+          {...sidebarNavigationMock}
+          groups={settingsGroupMock}
           tenantId="tenant-1"
-          isCollapsed
-          waiting={0}
-          openSection={null}
-          onOpenSectionChange={onOpenSectionChange}
-          isInside={() => false}
           onNavigate={() => undefined}
-          onExpand={onExpand}
         />
       </MemoryRouter>
     )
 
-    await userEvent.click(screen.getByRole('button', { name: /Configurações/ }))
-
-    expect(onExpand).toHaveBeenCalledOnce()
-    expect(onOpenSectionChange).toHaveBeenCalledWith('configuracoes')
+    expect(screen.getByRole('link', { name: /Empresa/ })).toHaveAttribute(
+      'href',
+      '/tenant-1/configuracoes/empresa'
+    )
+    expect(screen.getByRole('link', { name: /Entrega/ })).toHaveAttribute(
+      'href',
+      '/tenant-1/configuracoes/entrega'
+    )
+    expect(screen.getByText('Configurações')).toBeInTheDocument()
   })
 })
