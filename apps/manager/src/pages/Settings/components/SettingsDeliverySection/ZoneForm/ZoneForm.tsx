@@ -20,6 +20,7 @@ export type ZoneFormProps = {
 }
 
 const MAX_RADIUS_KM = 15
+const MIN_RADIUS_KM = 1
 const RADIUS_STEP_KM = 0.1
 
 export const ZoneForm = ({
@@ -30,10 +31,9 @@ export const ZoneForm = ({
 }: ZoneFormProps) => {
   const [maxRadiusKm, setMaxRadiusKm] = useState<number | undefined>()
 
-  const nearestKm = Number((lastMaxRadiusKm + RADIUS_STEP_KM).toFixed(1))
   const farthestKm = MAX_RADIUS_KM
   const draggedKm = Math.min(
-    Math.max(maxRadiusKm ?? nearestKm, nearestKm),
+    Math.max(maxRadiusKm ?? MIN_RADIUS_KM, MIN_RADIUS_KM),
     farthestKm
   )
   const [fee, setFee] = useState('')
@@ -81,8 +81,9 @@ export const ZoneForm = ({
         className={local.slider}
         label="Raio em Km da faixa"
         showValue
-        min={nearestKm}
+        min={MIN_RADIUS_KM}
         max={farthestKm}
+        step={RADIUS_STEP_KM}
         value={draggedKm}
         onValueChange={previewRadius}
       />
@@ -90,7 +91,7 @@ export const ZoneForm = ({
       <Box className={local.form}>
         <FormField label="Até (km)" className={local.radius}>
           <NumberInput
-            min={nearestKm}
+            min={MIN_RADIUS_KM}
             max={MAX_RADIUS_KM}
             step={RADIUS_STEP_KM}
             placeholder="Ex.: 5"
