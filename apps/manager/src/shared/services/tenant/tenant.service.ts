@@ -6,12 +6,46 @@ import type { StoreTypeOption } from '@shared/types/store/store-type-option'
 import type { TenantDetail } from '@shared/types/store/tenant-detail'
 import type { TenantPause } from '@shared/types/store/tenant-pause'
 import type { UpdateTenantRequest } from '@shared/types/store/update-tenant-request'
+import type { UnitDraft } from '@shared/types/store/unit-draft'
 
 type SlugAvailabilityResponse = {
   available: boolean
 }
 
 export const TenantService = {
+  uploadBrandAsset: async (
+    tenantId: string,
+    asset: 'logo' | 'banner',
+    file: File
+  ): Promise<TenantDetail> => {
+    const body = new FormData()
+    body.append('file', file)
+    return api.createFormData<TenantDetail>(
+      `tenants/${tenantId}/branding/${asset}`,
+      body
+    )
+  },
+
+  saveTenant: async (
+    tenantId: string,
+    draft: UnitDraft
+  ): Promise<TenantDetail> => {
+    const { logoFile, bannerFile, ...data } = draft
+    let logoUrl: string | undefined
+    let bannerUrl: string | undefined
+
+    if (logoFile)
+      logoUrl = (
+        await TenantService.uploadBrandAsset(tenantId, 'logo', logoFile)
+      ).logoUrl
+    if (bannerFile)
+      bannerUrl = (
+        await TenantService.uploadBrandAsset(tenantId, 'banner', bannerFile)
+      ).bannerUrl
+
+    return TenantService.updateTenant(tenantId, { ...data, logoUrl, bannerUrl })
+  },
+
   createStore: (data: CreateStoreRequest): Promise<CreatedStore> =>
     api.create<CreateStoreRequest, CreatedStore>('my/company/tenants', data),
 
