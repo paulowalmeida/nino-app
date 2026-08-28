@@ -76,20 +76,22 @@ export function BarList({
           gap={3}
           className={styles.row}
         >
-          <span
-            aria-hidden="true"
-            className={styles.fillBar}
-            style={{
-              width: ceiling > 0 ? `${(value / ceiling) * 100}%` : 0,
-              ...(highlightTop &&
-                index < highlightTop && {
-                  opacity: TOP_OPACITIES[index] ?? TOP_OPACITIES.at(-1),
-                }),
-            }}
-          />
-          <Text as="span" size="sm" color="strong" className={styles.label}>
-            {label}
-          </Text>
+          <span className={styles.track}>
+            <span
+              aria-hidden="true"
+              className={styles.fillBar}
+              style={{
+                width: ceiling > 0 ? `${(value / ceiling) * 100}%` : 0,
+                ...(highlightTop &&
+                  index < highlightTop && {
+                    opacity: TOP_OPACITIES[index] ?? TOP_OPACITIES.at(-1),
+                  }),
+              }}
+            />
+            <Text as="span" size="sm" color="strong" className={styles.label}>
+              {label}
+            </Text>
+          </span>
           <Text
             as="span"
             size="sm"
