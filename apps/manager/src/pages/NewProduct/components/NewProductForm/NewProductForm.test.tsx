@@ -105,6 +105,7 @@ describe('NewProductForm', () => {
           description: '',
           price: newProductFormMock.typedPrice,
           categoryId: 'category-1',
+          requiresPreparation: true,
         },
         expect.any(File)
       )

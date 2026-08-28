@@ -5,4 +5,5 @@ export type UpdateMenuItemRequest = {
   categoryId: string
   position: number
   isActive: boolean
+  requiresPreparation?: boolean
 }

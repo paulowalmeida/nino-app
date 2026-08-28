@@ -24,10 +24,10 @@ describe(KitchenBoard.name, () => {
     } as never)
     render(<KitchenBoard isCompact={false} />)
     expect(
-      screen.getByRole('region', { name: kitchenBoardMock.incomingColumn })
+      screen.getByRole('region', { name: kitchenBoardMock.waitingColumn })
     ).toBeInTheDocument()
     expect(
-      screen.getByRole('region', { name: kitchenBoardMock.counterColumn })
+      screen.getByRole('region', { name: kitchenBoardMock.preparingColumn })
     ).toBeInTheDocument()
     expect(screen.getAllByText(/Nada|Nenhum/).length).toBe(
       kitchenBoardMock.columnCount

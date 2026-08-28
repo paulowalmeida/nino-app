@@ -97,7 +97,8 @@ export const OrderService = {
     search?: string,
     statuses?: OrderStatusKey[],
     channel?: OrderChannel,
-    paymentStatus?: PaymentStatus
+    paymentStatus?: PaymentStatus,
+    requiresPreparation?: boolean
   ): Promise<OrderPage> =>
     api.getAll<OrderPage>(`tenants/${tenantId}/orders`, {
       target: 'createdAt',
@@ -108,6 +109,7 @@ export const OrderService = {
       ...(statuses?.length ? { status: statuses.join(',') } : {}),
       ...(channel ? { channel } : {}),
       ...(paymentStatus ? { paymentStatus } : {}),
+      ...(requiresPreparation ? { requiresPreparation: 'true' } : {}),
     }),
 
   createOrder: (tenantId: string, data: CreateOrderRequest): Promise<Order> =>

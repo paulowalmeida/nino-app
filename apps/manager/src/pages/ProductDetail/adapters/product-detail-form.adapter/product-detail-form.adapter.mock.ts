@@ -5,6 +5,7 @@ export const productDetailFormMock = {
   categoryId: 'burgers',
   position: 2,
   isActive: true,
+  requiresPreparation: true,
 }
 
 export const menuItemMock = {
@@ -14,6 +15,7 @@ export const menuItemMock = {
   price: '25.9',
   position: 2,
   isActive: true,
+  requiresPreparation: true,
   category: { id: 'burgers', name: 'Hambúrgueres', position: 1 },
   images: [],
 }

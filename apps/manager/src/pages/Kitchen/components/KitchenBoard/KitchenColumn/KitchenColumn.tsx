@@ -6,32 +6,29 @@ import { KITCHEN_LOADING_CARDS } from '@pages/Kitchen/constants/kitchen.constant
 import { useKitchenFacade } from '@pages/Kitchen/facades/useKitchenFacade/useKitchenFacade'
 import { KitchenCardSkeleton } from '@pages/Kitchen/skeletons/KitchenCardSkeleton/KitchenCardSkeleton'
 import { KitchenCard } from '@shared/components/KitchenCard/KitchenCard'
-import type { OrderStage } from '@shared/types/order/order-stage'
-import { stageTitle } from '@pages/Kitchen/utils/stage-title/stage-title'
-import { stageOf } from '@shared/utils/order-stage/order-stage'
+import type { OrderStatusKey } from '@shared/types/order/order-status-key'
 import { riseDelay } from '@shared/utils/rise-delay/rise-delay'
 
 import motion from '@styles/motion.module.css'
 import styles from './KitchenColumn.module.css'
 
 export type KitchenColumnProps = {
-  stage: OrderStage
+  statuses: OrderStatusKey[]
+  title: string
   empty: string
   isCompact: boolean
 }
 
 export const KitchenColumn = ({
-  stage,
+  statuses,
+  title,
   empty,
   isCompact,
 }: KitchenColumnProps) => {
   const { orders, isPending, advanceOrder, isAdvancing, advancingOrderId } =
     useKitchenFacade()
-  const title = stageTitle(stage)
-  const ordersInStage = orders.filter(
-    (order) => stageOf(order.status) === stage
-  )
-  const columnClassName = `${styles.column} ${stage === 'incoming' ? styles.waiting : ''}`
+  const ordersInStage = orders.filter((order) => statuses.includes(order.status))
+  const columnClassName = `${styles.column} ${statuses.includes('ACCEPTED') ? styles.waiting : ''}`
 
   return (
     <Box as="section" className={columnClassName} aria-label={title}>
@@ -59,6 +56,9 @@ export const KitchenColumn = ({
             <KitchenCard
               order={order}
               onAdvance={advanceOrder}
+              actionLabel={
+                order.status === 'PREPARING' ? 'Finalizar preparo' : undefined
+              }
               isBusy={isAdvancing && advancingOrderId === order.id}
               isCompact={isCompact}
             />

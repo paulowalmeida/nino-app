@@ -3,4 +3,5 @@ export type NewProductFormValues = {
   description: string
   price: string
   categoryId: string
+  requiresPreparation: boolean
 }

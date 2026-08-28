@@ -7,6 +7,7 @@ export const productDetailValuesMock: ProductDetailFormValues = {
   categoryId: 'category-1',
   position: 1,
   isActive: true,
+  requiresPreparation: true,
 }
 
 export const productSubmissionMock = {

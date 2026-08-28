@@ -3,4 +3,5 @@ export type CreateMenuItemRequest = {
   description?: string
   price: number
   categoryId: string
+  requiresPreparation?: boolean
 }

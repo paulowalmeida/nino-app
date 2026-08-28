@@ -10,6 +10,7 @@ describe(toCreateMenuItemRequest.name, () => {
       description: 'Hambúrguer com queijo',
       price: 25.9,
       categoryId: 'burgers',
+      requiresPreparation: true,
     })
   })
 

@@ -197,6 +197,27 @@ describe('OrderService', () => {
     })
   })
 
+  it('listOrders: can limit the kitchen queue to prepared items', async () => {
+    await OrderService.listOrders(
+      tenantIdMock,
+      1,
+      undefined,
+      ['ACCEPTED', 'PREPARING'],
+      undefined,
+      undefined,
+      true
+    )
+
+    expect(api.getAll).toHaveBeenCalledWith(`tenants/${tenantIdMock}/orders`, {
+      target: 'createdAt',
+      direction: 'desc',
+      size: 40,
+      page: 1,
+      status: 'ACCEPTED,PREPARING',
+      requiresPreparation: 'true',
+    })
+  })
+
   it('createOrder: posts a new order for the tenant', async () => {
     // Arrange
     vi.mocked(api.create).mockResolvedValue(orderMock)

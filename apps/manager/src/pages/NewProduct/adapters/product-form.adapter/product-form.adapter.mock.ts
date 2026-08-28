@@ -3,4 +3,5 @@ export const productFormMock = {
   description: 'Hambúrguer com queijo',
   price: '25,90',
   categoryId: 'burgers',
+  requiresPreparation: true,
 }

@@ -12,7 +12,7 @@ export const KitchenBoard = ({ isCompact }: KitchenBoardProps) => {
   return (
     <Grid className={styles.board}>
       {KITCHEN_COLUMNS.map((column) => (
-        <KitchenColumn key={column.stage} {...column} isCompact={isCompact} />
+        <KitchenColumn key={column.title} {...column} isCompact={isCompact} />
       ))}
     </Grid>
   )

@@ -53,7 +53,8 @@ export const queryKeys = {
       status?: string,
       search?: string,
       channel?: string,
-      paymentStatus?: string
+      paymentStatus?: string,
+      requiresPreparation?: boolean
     ) =>
       [
         ...queryKeys.orders.all(tenantId),
@@ -62,6 +63,7 @@ export const queryKeys = {
         search ?? null,
         channel ?? null,
         paymentStatus ?? null,
+        requiresPreparation ?? null,
       ] as const,
     detail: (tenantId: string, orderId: string) =>
       [...queryKeys.orders.all(tenantId), 'detail', orderId] as const,

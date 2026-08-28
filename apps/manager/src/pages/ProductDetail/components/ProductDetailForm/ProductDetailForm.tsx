@@ -145,12 +145,40 @@ export const ProductDetailForm = () => {
           </Box>
         </Box>
 
+        <FormField
+          className={`${motion.deal} ${styles.availability}`}
+          label={
+            <Box>
+              <Text as="span" className={styles.availabilityLabel}>
+                Envia para a cozinha
+              </Text>
+              <Text as="span" className={styles.availabilityHint}>
+                Desligue para itens prontos, como bebidas e produtos de
+                prateleira.
+              </Text>
+            </Box>
+          }
+          orientation="horizontal"
+        >
+          <Controller
+            name="requiresPreparation"
+            control={control}
+            render={({ field }) => (
+              <Switch
+                checked={field.value}
+                onCheckedChange={field.onChange}
+                aria-label="Envia para a cozinha"
+              />
+            )}
+          />
+        </FormField>
+
         {errors.root && <Alert variant="error">{errors.root.message}</Alert>}
       </Box>
 
       <Box
         className={`${motion.deal} ${styles.actions}`}
-        style={riseDelay(420)}
+        style={riseDelay(460)}
       >
         <ProductDeleteAction />
         <Button type="button" variant="ghost" onClick={cancel}>

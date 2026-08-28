@@ -1,11 +1,22 @@
-import type { OrderStage } from '@shared/types/order/order-stage'
+import type { OrderStatusKey } from '@shared/types/order/order-status-key'
 
 export const KITCHEN_LOADING_CARDS = ['first', 'second']
 
-export const KITCHEN_COLUMNS: { stage: OrderStage; empty: string }[] = [
-  { stage: 'incoming', empty: 'Nada esperando aceite.' },
-  { stage: 'confirmed', empty: 'Nada confirmado esperando a chapa.' },
-  { stage: 'kitchen', empty: 'Nenhum pedido em preparo.' },
-  { stage: 'street', empty: 'Nada na rua.' },
-  { stage: 'counter', empty: 'Nada esperando retirada.' },
+export const KITCHEN_STATUSES: OrderStatusKey[] = ['ACCEPTED', 'PREPARING']
+
+export const KITCHEN_COLUMNS: {
+  statuses: OrderStatusKey[]
+  title: string
+  empty: string
+}[] = [
+  {
+    statuses: ['ACCEPTED'],
+    title: 'Aguardando preparo',
+    empty: 'Nenhum pedido aguardando preparo.',
+  },
+  {
+    statuses: ['PREPARING'],
+    title: 'Em preparo',
+    empty: 'Nenhum pedido em preparo.',
+  },
 ]

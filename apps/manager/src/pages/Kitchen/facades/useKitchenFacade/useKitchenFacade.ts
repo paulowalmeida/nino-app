@@ -1,3 +1,4 @@
+import { KITCHEN_STATUSES } from '@pages/Kitchen/constants/kitchen.constants'
 import { useKitchenCommands } from '@pages/Kitchen/hooks/useKitchenCommands/useKitchenCommands'
 import { useOrders } from '@shared/hooks/order/useOrders/useOrders'
 import { useOrderStatus } from '@shared/hooks/order/useOrderStatus/useOrderStatus'
@@ -5,7 +6,14 @@ import { useCurrentTenant } from '@shared/hooks/session/useCurrentTenant/useCurr
 
 export const useKitchenFacade = () => {
   const tenantId = useCurrentTenant()?.tenantId ?? null
-  const ordersQuery = useOrders(tenantId)
+  const ordersQuery = useOrders(
+    tenantId,
+    undefined,
+    KITCHEN_STATUSES,
+    undefined,
+    undefined,
+    true
+  )
   const statusMutation = useOrderStatus(tenantId)
   const commands = useKitchenCommands(statusMutation.mutate)
 

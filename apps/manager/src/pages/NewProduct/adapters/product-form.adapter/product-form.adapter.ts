@@ -5,6 +5,7 @@ type ProductFormInput = {
   description: string
   price: string
   categoryId: string
+  requiresPreparation: boolean
 }
 
 export const toCreateMenuItemRequest = ({
@@ -12,9 +13,11 @@ export const toCreateMenuItemRequest = ({
   description,
   price,
   categoryId,
+  requiresPreparation,
 }: ProductFormInput): CreateMenuItemRequest => ({
   name,
   description: description || undefined,
   price: Number(price.replace(/\./g, '').replace(',', '.')),
   categoryId,
+  requiresPreparation,
 })

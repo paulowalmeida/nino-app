@@ -39,12 +39,12 @@ describe(KitchenHeader.name, () => {
       <KitchenHeader isCompact={false} onToggleCompact={onToggleCompact} />
     )
 
-    await user.click(screen.getByRole('button', { name: 'Compactar comandas' }))
+    await user.click(screen.getByRole('button', { name: 'Compactar pedidos' }))
     expect(onToggleCompact).toHaveBeenCalled()
 
     rerender(<KitchenHeader isCompact onToggleCompact={onToggleCompact} />)
     expect(
-      screen.getByRole('button', { name: 'Ver comanda inteira' })
+      screen.getByRole('button', { name: 'Ver pedido inteiro' })
     ).toHaveAttribute('aria-pressed', 'true')
   })
 })

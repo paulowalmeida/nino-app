@@ -33,7 +33,7 @@ export const KitchenHeader = ({
           Cozinha
         </Heading>
         <Text size="sm" color="subtle">
-          Acompanhe cada pedido do aceite até a entrega.
+          Acompanhe apenas os itens que precisam de preparo.
         </Text>
       </Box>
 
@@ -63,7 +63,7 @@ export const KitchenHeader = ({
           aria-pressed={isCompact}
           onClick={onToggleCompact}
         >
-          {isCompact ? 'Ver comanda inteira' : 'Compactar comandas'}
+          {isCompact ? 'Ver pedido inteiro' : 'Compactar pedidos'}
         </Button>
       </Box>
     </Box>

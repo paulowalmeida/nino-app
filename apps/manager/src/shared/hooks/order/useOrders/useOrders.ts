@@ -14,7 +14,8 @@ export const useOrders = (
   search?: string,
   statuses?: OrderStatusKey[],
   channel?: OrderChannel,
-  paymentStatus?: PaymentStatus
+  paymentStatus?: PaymentStatus,
+  requiresPreparation?: boolean
 ) => {
   const term = search?.trim() || undefined
   const statusKey = statuses?.length ? statuses.join(',') : undefined
@@ -25,7 +26,8 @@ export const useOrders = (
       statusKey,
       term,
       channel,
-      paymentStatus
+      paymentStatus,
+      requiresPreparation
     ),
     queryFn: ({ pageParam }) =>
       OrderService.listOrders(
@@ -34,7 +36,8 @@ export const useOrders = (
         term,
         statuses,
         channel,
-        paymentStatus
+        paymentStatus,
+        requiresPreparation
       ),
     initialPageParam: 1,
     getNextPageParam: ({ pagination }) =>

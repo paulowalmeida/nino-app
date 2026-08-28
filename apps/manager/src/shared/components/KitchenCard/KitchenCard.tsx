@@ -20,6 +20,7 @@ export type KitchenCardProps = {
   onAdvance: (orderId: string, target: OrderStatusKey) => void
   isBusy: boolean
   isCompact?: boolean
+  actionLabel?: string
 }
 
 export const KitchenCard = ({
@@ -27,6 +28,7 @@ export const KitchenCard = ({
   onAdvance,
   isBusy,
   isCompact = false,
+  actionLabel,
 }: KitchenCardProps) => {
   const step = nextStep(order)
   const itemCount = order.items.reduce(
@@ -122,7 +124,7 @@ export const KitchenCard = ({
           className={mergeClasses(motion.press, styles.action)}
           onClick={() => onAdvance(order.id, step.target)}
         >
-          {step.label}
+          {actionLabel ?? step.label}
         </Button>
       )}
     </Box>

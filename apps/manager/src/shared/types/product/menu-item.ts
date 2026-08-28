@@ -7,6 +7,7 @@ export type MenuItem = {
   description: string | null
   price: string
   isActive: boolean
+  requiresPreparation?: boolean
   position: number
   category: ProductCategory
   images: MenuItemImage[]

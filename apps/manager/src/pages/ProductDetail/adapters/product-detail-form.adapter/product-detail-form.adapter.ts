@@ -8,6 +8,7 @@ type ProductDetailFormInput = {
   categoryId: string
   position: number
   isActive: boolean
+  requiresPreparation: boolean
 }
 
 export const toUpdateMenuItemRequest = ({
@@ -17,6 +18,7 @@ export const toUpdateMenuItemRequest = ({
   categoryId,
   position,
   isActive,
+  requiresPreparation,
 }: ProductDetailFormInput): UpdateMenuItemRequest => ({
   name,
   description: description || undefined,
@@ -24,6 +26,7 @@ export const toUpdateMenuItemRequest = ({
   categoryId,
   position: Number(position),
   isActive,
+  requiresPreparation,
 })
 
 export const toProductFormValues = (item: MenuItem) => ({
@@ -33,4 +36,5 @@ export const toProductFormValues = (item: MenuItem) => ({
   categoryId: item.category.id,
   position: item.position,
   isActive: item.isActive,
+  requiresPreparation: item.requiresPreparation ?? true,
 })

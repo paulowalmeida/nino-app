@@ -31,6 +31,18 @@
   @apply -mt-2;
 }
 
+.preparation {
+  @apply rounded-2xl bg-surface-2 p-4;
+}
+
+.preparationLabel {
+  @apply block text-sm font-semibold text-fg-strong;
+}
+
+.preparationHint {
+  @apply mt-0.5 block text-xs leading-relaxed text-fg-faint;
+}
+
 /* ação fecha o bloco à direita, com a primária na ponta: é onde a mão vai
    depois de percorrer o formulário inteiro */
 .actions {

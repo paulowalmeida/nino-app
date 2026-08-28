@@ -1,5 +1,6 @@
 export const kitchenColumnMock = {
-  stage: 'incoming' as const,
-  empty: 'Nada esperando aceite.',
+  statuses: ['ACCEPTED' as const],
+  title: 'Aguardando preparo',
+  empty: 'Nenhum pedido aguardando preparo.',
   isCompact: false,
 }

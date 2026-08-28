@@ -5,4 +5,5 @@ export type ProductDetailFormValues = {
   categoryId: string
   position: number
   isActive: boolean
+  requiresPreparation: boolean
 }

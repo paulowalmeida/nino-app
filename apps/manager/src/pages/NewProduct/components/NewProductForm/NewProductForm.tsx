@@ -8,6 +8,8 @@ import { Button } from '@nino/ds/components/Button'
 import { FormField } from '@nino/ds/components/FormField'
 import { Input } from '@nino/ds/components/Input'
 import { Select } from '@nino/ds/components/Select'
+import { Switch } from '@nino/ds/components/Switch'
+import { Text } from '@nino/ds/components/Text'
 import { Textarea } from '@nino/ds/components/Textarea'
 import { ProductCategoryCreator } from '@pages/NewProduct/components/NewProductForm/ProductCategoryCreator/ProductCategoryCreator'
 import { useNewProductFacade } from '@pages/NewProduct/facades/useNewProductFacade/useNewProductFacade'
@@ -35,7 +37,13 @@ export const NewProductForm = () => {
     setError,
     formState: { errors, isSubmitting },
   } = useForm<NewProductFormValues>({
-    defaultValues: { name: '', description: '', price: '', categoryId: '' },
+    defaultValues: {
+      name: '',
+      description: '',
+      price: '',
+      categoryId: '',
+      requiresPreparation: true,
+    },
   })
 
   const name = useWatch({ control, name: 'name' })
@@ -136,12 +144,44 @@ export const NewProductForm = () => {
           />
         </Box>
 
+        <Box
+          className={`${motion.deal} ${styles.preparation}`}
+          style={riseDelay(300)}
+        >
+          <Controller
+            name="requiresPreparation"
+            control={control}
+            render={({ field }) => (
+              <FormField
+                label={
+                  <Box>
+                    <Text as="span" className={styles.preparationLabel}>
+                      Envia para a cozinha
+                    </Text>
+                    <Text as="span" className={styles.preparationHint}>
+                      Desligue para itens prontos, como bebidas e produtos de
+                      prateleira.
+                    </Text>
+                  </Box>
+                }
+                orientation="horizontal"
+              >
+                <Switch
+                  checked={field.value}
+                  onCheckedChange={field.onChange}
+                  aria-label="Envia para a cozinha"
+                />
+              </FormField>
+            )}
+          />
+        </Box>
+
         {errors.root && <Alert variant="error">{errors.root.message}</Alert>}
       </Box>
 
       <Box
         className={`${motion.deal} ${styles.actions}`}
-        style={riseDelay(320)}
+        style={riseDelay(360)}
       >
         <Button type="button" variant="ghost" onClick={cancel}>
           Cancelar

@@ -8,6 +8,7 @@ export const menuItemMock: MenuItem = {
   price: '24.90',
   position: 1,
   isActive: true,
+  requiresPreparation: true,
   category: { id: 'category-1', name: 'Lanches', position: 1 },
   images: [],
 }

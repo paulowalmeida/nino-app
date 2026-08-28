@@ -5,6 +5,7 @@ export const newProductValuesMock: NewProductFormValues = {
   description: 'Com tudo dentro',
   price: '24,90',
   categoryId: 'category-1',
+  requiresPreparation: true,
 }
 
 export const createdProductMock = { id: 'product-1', imageUploadFailed: false }
