@@ -41,11 +41,9 @@ export const TallyHistory = ({ recent }: TallyHistoy) => {
               className={`${motion.lift} ${styles.link}`}
             >
               <Text className={styles.number}>
-                #{ticketNumber(order.id)}
+                #{ticketNumber(order.orderNumber)}
               </Text>
-              <Text className={styles.state}>
-                {STATUS_LABEL[order.status]}
-              </Text>
+              <Text className={styles.state}>{STATUS_LABEL[order.status]}</Text>
               <time className={styles.at} dateTime={order.createdAt}>
                 {clock.format(new Date(order.createdAt))}
               </time>

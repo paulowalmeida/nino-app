@@ -8,6 +8,7 @@ import type { OrderStatus } from './order-status'
  */
 export type MyOrder = {
   id: string
+  orderNumber: number
   status: OrderStatus
   channel: OrderChannel
   totalAmount: string

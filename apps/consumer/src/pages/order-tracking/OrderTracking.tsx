@@ -91,7 +91,7 @@ export const OrderTracking = () => {
           </Link>
           <div>
             <h1 className={styles.title}>Seu pedido</h1>
-            <p className={styles.code}>#{order.id.slice(0, 8)}</p>
+            <p className={styles.code}>#{order.orderNumber}</p>
           </div>
         </header>
 

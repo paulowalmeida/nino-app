@@ -7,6 +7,7 @@ import { useKitchenFacade } from '@pages/Kitchen/facades/useKitchenFacade/useKit
 import { KitchenCardSkeleton } from '@pages/Kitchen/skeletons/KitchenCardSkeleton/KitchenCardSkeleton'
 import { KitchenCard } from '@shared/components/KitchenCard/KitchenCard'
 import type { OrderStage } from '@shared/types/order/order-stage'
+import { stageTitle } from '@pages/Kitchen/utils/stage-title/stage-title'
 import { stageOf } from '@shared/utils/order-stage/order-stage'
 import { riseDelay } from '@shared/utils/rise-delay/rise-delay'
 
@@ -15,13 +16,18 @@ import styles from './KitchenColumn.module.css'
 
 export type KitchenColumnProps = {
   stage: OrderStage
-  title: string
   empty: string
+  isCompact: boolean
 }
 
-export const KitchenColumn = ({ stage, title, empty }: KitchenColumnProps) => {
+export const KitchenColumn = ({
+  stage,
+  empty,
+  isCompact,
+}: KitchenColumnProps) => {
   const { orders, isPending, advanceOrder, isAdvancing, advancingOrderId } =
     useKitchenFacade()
+  const title = stageTitle(stage)
   const ordersInStage = orders.filter(
     (order) => stageOf(order.status) === stage
   )
@@ -54,6 +60,7 @@ export const KitchenColumn = ({ stage, title, empty }: KitchenColumnProps) => {
               order={order}
               onAdvance={advanceOrder}
               isBusy={isAdvancing && advancingOrderId === order.id}
+              isCompact={isCompact}
             />
           </Box>
         ))}

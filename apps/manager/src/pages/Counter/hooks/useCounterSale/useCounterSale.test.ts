@@ -26,14 +26,14 @@ describe(useCounterSale.name, () => {
     expect(result.current.error).toContain('nome do cliente')
   })
 
-  it('returns the created order id', async () => {
-    const mutateAsync = vi.fn().mockResolvedValue({ id: 'order-7' })
+  it('returns the created order number', async () => {
+    const mutateAsync = vi.fn().mockResolvedValue({ orderNumber: 7 })
     vi.mocked(useCreateOrder).mockReturnValue({
       mutateAsync,
       isPending: false,
     } as never)
     const { result } = renderHook(() => useCounterSale('tenant-1'))
-    const id = await act(() =>
+    const orderNumber = await act(() =>
       result.current.sell({
         lines: [],
         paymentMethod: 'CASH',
@@ -41,7 +41,7 @@ describe(useCounterSale.name, () => {
         tableNumber: '',
       })
     )
-    expect(id).toBe('order-7')
+    expect(orderNumber).toBe(7)
   })
 
   it('translates API errors and resets them', async () => {

@@ -81,7 +81,9 @@ export const OrderTicket = ({ order, onAdvance, isBusy }: OrderTicketProps) => {
     <Card asChild className={classes.filter(Boolean).join(' ')}>
       <article>
         <header className={styles.head}>
-          <span className={styles.number}>#{ticketNumber(order.id)}</span>
+          <span className={styles.number}>
+            #{ticketNumber(order.orderNumber)}
+          </span>
           {isDone ? (
             <time className={styles.time} dateTime={order.createdAt}>
               {clockLabel}
@@ -107,7 +109,7 @@ export const OrderTicket = ({ order, onAdvance, isBusy }: OrderTicketProps) => {
         <Link
           to={order.id}
           className={`${motion.lift} ${styles.body}`}
-          aria-label={`Abrir pedido ${ticketNumber(order.id)}`}
+          aria-label={`Abrir pedido ${ticketNumber(order.orderNumber)}`}
         >
           <p className={styles.customer}>{customerNameOf(order)}</p>
           <p className={styles.meta}>
@@ -149,8 +151,12 @@ export const OrderTicket = ({ order, onAdvance, isBusy }: OrderTicketProps) => {
           <Box direction="column">
             <span className={styles.total}>{brl(order.totalAmount)}</span>
             <span className={styles.payment}>
-              {PAYMENT_METHOD_LABEL_BY_CHANNEL[order.channel][order.paymentMethod]} ·{' '}
-              {PAYMENT_STATUS_LABEL[order.paymentStatus]}
+              {
+                PAYMENT_METHOD_LABEL_BY_CHANNEL[order.channel][
+                  order.paymentMethod
+                ]
+              }{' '}
+              · {PAYMENT_STATUS_LABEL[order.paymentStatus]}
             </span>
           </Box>
 

@@ -8,7 +8,7 @@ describe('toCustomerOrderRows', () => {
     const [pending, cancelled] = toCustomerOrderRows(customerOrderEntriesMock)
 
     expect(pending.href).toBe('../../pedidos/order-9f3a2b7c')
-    expect(pending.number).toBe('2B7C')
+    expect(pending.number).toBe('1042')
     expect(pending.statusLabel).toBe('esperando aceite')
     expect(pending.statusVariant).toBe('brand')
     expect(pending.total).toMatch(/^R\$\s89,90$/)

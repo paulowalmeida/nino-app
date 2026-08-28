@@ -1,4 +1,5 @@
 export const kitchenBoardMock = {
-  incomingColumn: 'Chegou agora',
-  confirmedColumn: 'Na fila',
+  incomingColumn: 'esperando aceite',
+  counterColumn: 'no balcão',
+  columnCount: 5,
 }

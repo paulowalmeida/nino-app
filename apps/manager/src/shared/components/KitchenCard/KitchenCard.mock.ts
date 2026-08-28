@@ -2,6 +2,7 @@ import type { Order } from '@shared/types/order/order'
 
 export const kitchenCardOrderMock: Order = {
   id: 'order-1234',
+  orderNumber: 1234,
   tenantId: 'tenant-1',
   customerId: null,
   status: 'PENDING',

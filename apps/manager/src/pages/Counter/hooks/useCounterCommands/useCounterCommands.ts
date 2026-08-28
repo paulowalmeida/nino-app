@@ -29,15 +29,15 @@ export const useCounterCommands = (
 
   const finish = async () => {
     if (!method) return
-    const orderId = await sell({
+    const orderNumber = await sell({
       lines,
       paymentMethod: method,
       customerName,
       tableNumber,
     })
-    if (!orderId) return
+    if (!orderNumber) return
     emptyTicket()
-    toast.success(`Venda #${ticketNumber(orderId)} fechada`)
+    toast.success(`Venda #${ticketNumber(orderNumber)} fechada`)
   }
 
   return { error, isSending, handleStep, emptyTicket, finish }

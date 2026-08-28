@@ -34,7 +34,7 @@ export const OrderConfirmed = ({
           ? 'A loja já recebeu e vai preparar. Guarde o código para retirar no balcão.'
           : 'A loja já recebeu e vai preparar. Guarde o código para acompanhar a entrega.'}
       </p>
-      <p className={styles.code}>{order.id.slice(0, 8)}</p>
+      <p className={styles.code}>#{order.orderNumber}</p>
       <Button onClick={onTrack}>Acompanhar pedido</Button>
       <Button variant="ghost" onClick={onBackToStore}>
         Voltar para a loja

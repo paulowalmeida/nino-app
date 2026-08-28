@@ -18,7 +18,7 @@ describe(KitchenColumn.name, () => {
     render(<KitchenColumn {...kitchenColumnMock} />)
 
     expect(
-      screen.getByRole('region', { name: 'Chegou agora' })
+      screen.getByRole('region', { name: 'esperando aceite' })
     ).toBeInTheDocument()
     expect(screen.getByText('Nada esperando aceite.')).toBeInTheDocument()
     expect(screen.getByText('0')).toBeInTheDocument()

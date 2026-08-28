@@ -31,7 +31,7 @@ const stamp = new Intl.DateTimeFormat('pt-BR', {
 })
 
 const activityEntryAriaLabel = (entry: StaffActivityEntry): string =>
-  `Pedido #${ticketNumber(entry.orderId)}, ` +
+  `Pedido #${ticketNumber(entry.orderNumber)}, ` +
   `${entry.customerName ?? 'Visitante'}, ` +
   `${CHANNEL_LABEL[entry.channel]}, ${STATUS_LABEL[entry.status]}, ` +
   `${stamp.format(new Date(entry.createdAt))}, ${brl(entry.totalAmount)}`
@@ -102,7 +102,7 @@ export const CollaboratorActivity = ({
                 aria-label={activityEntryAriaLabel(entry)}
               >
                 <TableCell className={styles.entryTicket}>
-                  #{ticketNumber(entry.orderId)}
+                  #{ticketNumber(entry.orderNumber)}
                 </TableCell>
 
                 <TableCell className={styles.entryCustomer}>

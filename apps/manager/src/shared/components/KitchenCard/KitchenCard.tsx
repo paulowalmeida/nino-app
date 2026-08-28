@@ -19,27 +19,43 @@ export type KitchenCardProps = {
   order: Order
   onAdvance: (orderId: string, target: OrderStatusKey) => void
   isBusy: boolean
+  isCompact?: boolean
 }
 
-export const KitchenCard = ({ order, onAdvance, isBusy }: KitchenCardProps) => {
+export const KitchenCard = ({
+  order,
+  onAdvance,
+  isBusy,
+  isCompact = false,
+}: KitchenCardProps) => {
   const step = nextStep(order)
+  const itemCount = order.items.reduce(
+    (total, { quantity }) => total + quantity,
+    0
+  )
   const {
     label: elapsed,
     isLate,
     ratio,
+    overdueRatio,
   } = useElapsed(order.acceptedAt ?? order.createdAt)
 
-  const card = mergeClasses(motion.settle, styles.card, isLate && styles.late)
+  const card = mergeClasses(
+    motion.settle,
+    styles.card,
+    isLate && styles.late,
+    isCompact && styles.compact
+  )
 
   return (
-    <Box as="article" className={card} style={elapsedVar(ratio)}>
+    <Box as="article" className={card} style={elapsedVar(ratio, overdueRatio)}>
       <Box className={styles.ribbon} aria-hidden="true">
         <Box className={styles.fill} />
       </Box>
 
       <Box as="header" className={styles.head}>
         <Text as="span" className={styles.number}>
-          {ticketNumber(order.id)}
+          {ticketNumber(order.orderNumber)}
         </Text>
         <Text as="span" className={styles.clock}>
           {elapsed}
@@ -65,7 +81,7 @@ export const KitchenCard = ({ order, onAdvance, isBusy }: KitchenCardProps) => {
         )}
       </Text>
 
-      {order.notes && (
+      {order.notes && !isCompact && (
         <Text as="p" className={styles.notes}>
           <Text as="span" className={styles.notesLabel}>
             Observação
@@ -74,24 +90,30 @@ export const KitchenCard = ({ order, onAdvance, isBusy }: KitchenCardProps) => {
         </Text>
       )}
 
-      <Box as="ul" className={styles.items}>
-        {order.items.map((item) => (
-          <ListRow
-            key={item.id}
-            divider="none"
-            padding={0}
-            gap={0}
-            className={styles.item}
-          >
-            <Text as="span" className={styles.quantity}>
-              {item.quantity}
-            </Text>
-            <Text as="span" className={styles.itemName}>
-              {item.product.name}
-            </Text>
-          </ListRow>
-        ))}
-      </Box>
+      {isCompact ? (
+        <Text as="p" className={styles.summary}>
+          {itemCount === 1 ? '1 item' : `${itemCount} itens`}
+        </Text>
+      ) : (
+        <Box as="ul" className={styles.items}>
+          {order.items.map((item) => (
+            <ListRow
+              key={item.id}
+              divider="none"
+              padding={0}
+              gap={0}
+              className={styles.item}
+            >
+              <Text as="span" className={styles.quantity}>
+                {item.quantity}
+              </Text>
+              <Text as="span" className={styles.itemName}>
+                {item.product.name}
+              </Text>
+            </ListRow>
+          ))}
+        </Box>
+      )}
 
       {step && (
         <Button

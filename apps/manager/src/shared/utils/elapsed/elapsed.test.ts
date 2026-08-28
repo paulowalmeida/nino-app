@@ -14,6 +14,7 @@ describe('elapsedSince', () => {
       label: '5 min',
       isLate: false,
       ratio: 0.25,
+      overdueRatio: 0,
     })
   })
 
@@ -22,6 +23,12 @@ describe('elapsedSince', () => {
     const result = elapsedSince(iso)
     expect(result.isLate).toBe(true)
     expect(result.ratio).toBe(1)
+    expect(result.overdueRatio).toBe(0)
+  })
+
+  it('scales the overdue ribbon by how long the delay lasts', () => {
+    const iso = new Date(NOW.getTime() - 50 * 60_000).toISOString()
+    expect(elapsedSince(iso).overdueRatio).toBe(0.5)
   })
 
   it('switches to hour formatting past sixty minutes', () => {
@@ -30,6 +37,7 @@ describe('elapsedSince', () => {
       label: '1h30',
       isLate: true,
       ratio: 1,
+      overdueRatio: 1,
     })
   })
 })

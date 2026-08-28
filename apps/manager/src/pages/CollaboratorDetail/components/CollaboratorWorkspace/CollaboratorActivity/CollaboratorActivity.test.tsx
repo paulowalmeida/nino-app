@@ -7,6 +7,7 @@ const activity = [
   {
     id: 'activity-1',
     orderId: 'order-123',
+    orderNumber: 1042,
     status: 'COMPLETED',
     createdAt: '2024-01-02T10:30:00.000Z',
     channel: 'COUNTER',
@@ -16,6 +17,7 @@ const activity = [
   {
     id: 'activity-2',
     orderId: 'order-456',
+    orderNumber: 1043,
     status: 'PENDING',
     createdAt: '2024-01-03T10:30:00.000Z',
     channel: 'DELIVERY',

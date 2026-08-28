@@ -1,1 +1,4 @@
-export const kitchenPageMock = { columnLabel: 'Chegou agora' }
+export const kitchenPageMock = {
+  columnLabel: 'esperando aceite',
+  compactLabel: 'Compactar comandas',
+}

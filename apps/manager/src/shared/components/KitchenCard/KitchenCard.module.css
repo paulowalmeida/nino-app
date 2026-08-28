@@ -35,7 +35,7 @@
   transition: width 900ms linear;
 }
 
-/* past the deadline: the paper heats up and the strip breathes */
+/* past the deadline: the paper heats up and the strip restarts its scale */
 .late {
   box-shadow: inset 0 0 0 2px var(--color-brand);
   background: linear-gradient(
@@ -45,19 +45,33 @@
   );
 }
 
+/*
+ * WHY: no atraso a fita recomeça na escala do próprio atraso — cheia trava
+ * em 20 min e deixaria de distinguir quem estourou agora de quem estourou
+ * faz uma hora.
+ */
 .late .fill {
+  width: calc(var(--o, 0) * 100%);
   background: var(--color-brand-strong);
-  animation: breathe 2.4s ease-in-out infinite;
 }
 
-@keyframes breathe {
-  50% {
-    opacity: 0.45;
+/* WHY: um único aceno quando o prazo estoura; alarme que nunca desliga vira
+   ruído de fundo na parede da cozinha. */
+.late .ribbon {
+  animation: flare 620ms var(--ease-out-soft) 1;
+}
+
+@keyframes flare {
+  0% {
+    background: var(--color-brand-strong);
+  }
+  100% {
+    background: var(--color-surface-5);
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .late .fill {
+  .late .ribbon {
     animation: none;
   }
 
@@ -146,6 +160,35 @@
 
 .action {
   @apply mx-4 h-14 text-base;
+}
+
+/*
+ * Modo compacto: em pico a coluna precisa caber mais comanda na altura, e o
+ * que a cozinha ainda precisa ler de longe é número, relógio e ação.
+ */
+.compact .head {
+  @apply pt-2;
+}
+
+.compact .number {
+  @apply text-2xl;
+}
+
+.compact .clock {
+  @apply text-lg;
+}
+
+.compact .who {
+  @apply pb-2;
+}
+
+.summary {
+  @apply mx-4 mb-1 border-t border-dashed border-border pt-2;
+  @apply text-sm font-semibold text-fg-muted;
+}
+
+.compact .action {
+  @apply h-11;
 }
 
 .ghostNumber {

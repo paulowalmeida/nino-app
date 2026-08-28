@@ -41,6 +41,7 @@ export const getMyOrderStatus = async (
 ): Promise<GuestOrderStatus> => {
   const order = await api.get<{
     id: string
+    orderNumber: number
     status: GuestOrderStatus['status']
     channel: GuestOrderStatus['channel']
     estimatedDeliveryAt: string | null
@@ -50,6 +51,7 @@ export const getMyOrderStatus = async (
 
   return {
     id: order.id,
+    orderNumber: order.orderNumber,
     status: order.status,
     channel: order.channel,
     estimatedDeliveryAt: order.estimatedDeliveryAt,

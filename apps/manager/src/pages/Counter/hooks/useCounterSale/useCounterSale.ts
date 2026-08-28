@@ -8,7 +8,7 @@ import { useCreateOrder } from '@shared/hooks/order/useCreateOrder/useCreateOrde
 type CounterSale = {
   error: string | null
   isSending: boolean
-  sell: (input: CounterSaleInput) => Promise<string | null>
+  sell: (input: CounterSaleInput) => Promise<number | null>
   reset: () => void
 }
 
@@ -43,7 +43,7 @@ export const useCounterSale = (tenantId: string | null): CounterSale => {
         })
       )
 
-      return order.id
+      return order.orderNumber
     } catch (caught) {
       setError(
         caught instanceof ApiError && caught.status < 500

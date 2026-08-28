@@ -23,6 +23,7 @@ export const demoOrder = (
   elapsedMinutes = 0
 ): Order => ({
   id: 'demo-1042',
+  orderNumber: 1042,
   tenantId: 'demo-tenant',
   customerId: null,
   status,

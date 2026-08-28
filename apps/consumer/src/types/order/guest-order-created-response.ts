@@ -4,6 +4,7 @@ import type { PaymentMethod } from './payment-method'
 
 export type GuestOrderCreatedResponse = {
   id: string
+  orderNumber: number
   status: OrderStatus
   channel: OrderChannel
   paymentMethod: PaymentMethod

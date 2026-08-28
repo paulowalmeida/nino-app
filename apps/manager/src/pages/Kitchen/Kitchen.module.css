@@ -14,3 +14,7 @@
   @apply px-3 pt-3 sm:h-[calc(100dvh-3.5rem)] sm:overflow-hidden;
   @apply lg:h-dvh lg:px-5 lg:pt-4;
 }
+
+.failure {
+  @apply flex-1 border border-dashed border-border;
+}

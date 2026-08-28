@@ -1,1 +1,1 @@
-export const ticketNumber = (id: string): string => id.slice(-4).toUpperCase()
+export const ticketNumber = (orderNumber: number): string => String(orderNumber)

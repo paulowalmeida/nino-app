@@ -70,7 +70,7 @@ export const OrderDetail = () => {
             {CHANNEL_LABEL[order.channel]}
           </Eyebrow>
           <Heading level={1} className={`${motion.land} ${styles.number}`}>
-            #{ticketNumber(order.id)}
+            #{ticketNumber(order.orderNumber)}
           </Heading>
           <Text className={styles.opened}>
             aberto em {stamp.format(new Date(order.createdAt))}

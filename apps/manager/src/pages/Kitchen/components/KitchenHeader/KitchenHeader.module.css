@@ -1,0 +1,34 @@
+@reference "@nino/ds/globals.css";
+
+.header {
+  @apply mb-4 shrink-0 flex-wrap gap-x-6 gap-y-3;
+}
+
+.identity {
+  @apply flex min-w-0 flex-col gap-1;
+}
+
+.tally {
+  @apply shrink-0 flex-wrap gap-x-5 gap-y-2;
+}
+
+.metric {
+  @apply flex items-baseline gap-1.5;
+}
+
+.metricValue {
+  @apply text-2xl leading-none font-bold text-fg-strong tabular-nums;
+}
+
+.metricLabel {
+  @apply text-xs font-bold uppercase tracking-[0.12em] text-fg-faint;
+}
+
+.alert .metricValue,
+.alert .metricLabel {
+  @apply text-brand-strong;
+}
+
+.density {
+  @apply shrink-0;
+}

@@ -4,6 +4,7 @@ import { describe, expect, it, vi } from 'vitest'
 import { useKitchenFacade } from '@pages/Kitchen/facades/useKitchenFacade/useKitchenFacade'
 
 import { KitchenBoard } from './KitchenBoard'
+import { kitchenBoardMock } from './KitchenBoard.mock'
 
 vi.mock('@pages/Kitchen/facades/useKitchenFacade/useKitchenFacade')
 vi.mock('@shared/components/KitchenCard/KitchenCard', () => ({
@@ -21,13 +22,15 @@ describe(KitchenBoard.name, () => {
       isPending: false,
       isAdvancing: false,
     } as never)
-    render(<KitchenBoard />)
+    render(<KitchenBoard isCompact={false} />)
     expect(
-      screen.getByRole('region', { name: 'Chegou agora' })
+      screen.getByRole('region', { name: kitchenBoardMock.incomingColumn })
     ).toBeInTheDocument()
     expect(
-      screen.getByRole('region', { name: 'No balcão' })
+      screen.getByRole('region', { name: kitchenBoardMock.counterColumn })
     ).toBeInTheDocument()
-    expect(screen.getAllByText(/Nada|Nenhum/).length).toBe(5)
+    expect(screen.getAllByText(/Nada|Nenhum/).length).toBe(
+      kitchenBoardMock.columnCount
+    )
   })
 })

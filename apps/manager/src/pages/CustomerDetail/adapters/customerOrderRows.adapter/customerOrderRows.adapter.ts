@@ -18,7 +18,7 @@ export const toCustomerOrderRows = (
 ): CustomerOrderRowModel[] =>
   entries.map((entry) => ({
     href: `../../pedidos/${entry.id}`,
-    number: ticketNumber(entry.id),
+    number: ticketNumber(entry.orderNumber),
     statusLabel: STATUS_LABEL[entry.status],
     statusVariant: toOrderBadgeVariant(entry.status),
     createdAt: entry.createdAt,

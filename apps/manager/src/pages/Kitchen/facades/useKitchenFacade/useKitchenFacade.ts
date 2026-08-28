@@ -12,6 +12,7 @@ export const useKitchenFacade = () => {
   return {
     orders: ordersQuery.orders,
     isPending: ordersQuery.isPending,
+    isError: ordersQuery.isError,
     advanceOrder: commands.advanceOrder,
     isAdvancing: statusMutation.isPending,
     advancingOrderId: statusMutation.variables?.orderId,

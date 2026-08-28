@@ -4,6 +4,7 @@ import type { OrderTimelineEntry } from './order-timeline-entry'
 
 export type GuestOrderStatus = {
   id: string
+  orderNumber: number
   status: OrderStatus
   /** Ausente enquanto o endpoint público não expõe o canal do pedido. */
   channel?: OrderChannel

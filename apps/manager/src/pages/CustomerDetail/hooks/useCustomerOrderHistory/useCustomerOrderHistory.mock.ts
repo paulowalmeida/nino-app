@@ -9,6 +9,7 @@ export const customerOrderHistoryPageMock: CustomerHistoryPage = {
   data: [
     {
       id: 'order-9f3a2b7c',
+      orderNumber: 1042,
       status: 'DELIVERED',
       totalAmount: 89.9,
       createdAt: '2026-02-10T18:30:00.000Z',

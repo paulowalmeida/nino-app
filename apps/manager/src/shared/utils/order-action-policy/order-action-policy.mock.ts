@@ -2,6 +2,7 @@ import type { Order } from '@shared/types/order/order'
 
 export const baseOrderMock: Order = {
   id: 'order-1',
+  orderNumber: 1,
   tenantId: 'tenant-1',
   customerId: 'customer-1',
   status: 'PENDING',
