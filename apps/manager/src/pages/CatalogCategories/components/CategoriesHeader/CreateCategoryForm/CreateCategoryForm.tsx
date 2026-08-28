@@ -21,9 +21,7 @@ export const CreateCategoryForm = () => {
   return (
     <Box
       as="form"
-      direction={{ mobile: 'column', tablet: 'row' }}
-      align={{ tablet: 'center' }}
-      gap={2}
+      gap={3}
       mb={6}
       className={`${motion.deal} ${styles.create}`}
       style={riseDelay(40)}
@@ -32,25 +30,31 @@ export const CreateCategoryForm = () => {
         void submitCreate()
       }}
     >
-      <Input
-        value={createName}
-        placeholder="Nova categoria — ex.: Sobremesas"
-        aria-label="Nome da nova categoria"
-        onChange={(event) => setCreateName(event.target.value)}
-      />
+      <Box
+        direction={{ mobile: 'column', tablet: 'row' }}
+        align={{ tablet: 'center' }}
+        gap={2}
+      >
+        <Input
+          value={createName}
+          placeholder="Nova categoria — ex.: Sobremesas"
+          aria-label="Nome da nova categoria"
+          onChange={(event) => setCreateName(event.target.value)}
+        />
+        <Button
+          type="submit"
+          className={motion.press}
+          loading={isCreating}
+          disabled={!createName.trim()}
+        >
+          Adicionar
+        </Button>
+      </Box>
       <CategoryIconPicker
         value={createIcon}
         onChange={setCreateIcon}
         disabled={isCreating}
       />
-      <Button
-        type="submit"
-        className={motion.press}
-        loading={isCreating}
-        disabled={!createName.trim()}
-      >
-        Adicionar
-      </Button>
     </Box>
   )
 }

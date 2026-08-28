@@ -2,6 +2,6 @@
 
 /* só a partir de `sm`, quando a linha é horizontal: em coluna, `flex-1` zera
    o flex-basis no eixo vertical e achata o input contra o line-height */
-.create > :first-child {
+.create > :first-child > :first-child {
   @apply sm:flex-1;
 }

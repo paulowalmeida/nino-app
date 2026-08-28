@@ -8,8 +8,12 @@
   @apply mb-1 text-xs font-medium text-fg-subtle;
 }
 
+/* grade fixa em vez de wrap: as 24 células (✨ + 23 ícones) dividem 6, 8 e 12
+   exatos, então nenhuma fileira sobra pela metade. `w-fit` faz as colunas
+   colarem no tamanho do botão em vez de esticarem pela largura do form. */
 .options {
-  @apply flex max-w-full flex-wrap gap-1;
+  @apply grid w-fit gap-1;
+  @apply grid-cols-6 sm:grid-cols-8 lg:grid-cols-12;
 }
 
 .option {
