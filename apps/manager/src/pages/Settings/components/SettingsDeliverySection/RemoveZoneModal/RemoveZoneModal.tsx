@@ -7,24 +7,24 @@ import { Text } from '@nino/ds/components/Text'
 export type RemoveZoneModalProps = {
   open: boolean
   onOpenChange: (open: boolean) => void
-  zoneName: string
+  zoneLabel: string
   onConfirm: () => void
 }
 
 export const RemoveZoneModal = ({
   open,
   onOpenChange,
-  zoneName,
+  zoneLabel,
   onConfirm,
 }: RemoveZoneModalProps) => (
   <Modal
     open={open}
     onOpenChange={onOpenChange}
-    header={<Heading level={2} size="lg">Remover região?</Heading>}
+    header={<Heading level={2} size="lg">Remover faixa?</Heading>}
     body={
       <Box direction="column" gap={3}>
         <Text size="sm" color="muted">
-          A região {zoneName} deixará de aparecer nas opções de entrega da loja.
+          A faixa {zoneLabel} deixará de aparecer nas opções de entrega da loja.
         </Text>
         <Text size="sm" color="muted">Esta ação não pode ser desfeita.</Text>
       </Box>
@@ -35,7 +35,7 @@ export const RemoveZoneModal = ({
           Cancelar
         </Button>
         <Button variant="danger" onClick={onConfirm}>
-          Remover região
+          Remover faixa
         </Button>
       </>
     }

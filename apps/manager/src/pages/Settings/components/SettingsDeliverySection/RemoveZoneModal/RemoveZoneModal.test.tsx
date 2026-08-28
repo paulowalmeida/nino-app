@@ -24,8 +24,8 @@ describe('RemoveZoneModal', () => {
       />
     )
 
-    expect(screen.getByText(/A região Centro deixará de aparecer/)).toBeInTheDocument()
-    fireEvent.click(screen.getByRole('button', { name: 'Remover região' }))
+    expect(screen.getByText(/A faixa Centro deixará de aparecer/)).toBeInTheDocument()
+    fireEvent.click(screen.getByRole('button', { name: 'Remover faixa' }))
     expect(onConfirm).toHaveBeenCalledOnce()
   })
 })

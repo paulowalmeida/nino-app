@@ -1,4 +1,4 @@
 export const removeZoneModalMock = {
   open: true,
-  zoneName: 'Centro',
+  zoneLabel: 'Centro',
 }

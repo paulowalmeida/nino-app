@@ -92,7 +92,7 @@ export const DeliveryMap = ({ zones, unit }: DeliveryMapProps) => {
         dashArray: zone.isActive ? undefined : '6 6',
       })
         .bindTooltip(
-          `${zone.name}: ${zone.minRadiusKm}–${zone.maxRadiusKm} km`,
+          `De ${zone.minRadiusKm} até ${zone.maxRadiusKm} km`,
         )
         .addTo(layerGroup)
     })

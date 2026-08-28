@@ -20,7 +20,6 @@ export type ZoneListProps = {
   isPending: boolean
   onEdit: (data: {
     id: string
-    name: string
     minRadiusKm: number
     maxRadiusKm: number
     fee: number
@@ -38,7 +37,6 @@ export const ZoneList = ({
 }: ZoneListProps) => {
   const [editingId, setEditingId] = useState<string | null>(null)
   const [draft, setDraft] = useState({
-    name: '',
     minRadiusKm: '',
     maxRadiusKm: '',
     fee: '',
@@ -47,7 +45,6 @@ export const ZoneList = ({
   const startEdit = (zone: DeliveryZone) => {
     setEditingId(zone.id)
     setDraft({
-      name: zone.name,
       minRadiusKm: String(zone.minRadiusKm),
       maxRadiusKm: String(zone.maxRadiusKm),
       fee: Number(zone.fee).toFixed(2).replace('.', ','),
@@ -55,13 +52,12 @@ export const ZoneList = ({
   }
 
   const commitEdit = () => {
-    if (!editingId || !draft.name.trim()) return
+    if (!editingId) return
     const min = Number(draft.minRadiusKm)
     const max = Number(draft.maxRadiusKm)
     if (min < 0 || max <= min) return
     onEdit({
       id: editingId,
-      name: draft.name.trim(),
       minRadiusKm: min,
       maxRadiusKm: max,
       fee: Number(draft.fee.replace(',', '.')) || 0,
@@ -84,13 +80,13 @@ export const ZoneList = ({
           Faixas configuradas
         </Heading>
         <Text size="sm" color="subtle" className={local.zonesMeta}>
-          {zones.length === 1 ? '1 região' : `${zones.length} regiões`}
+          {zones.length === 1 ? '1 faixa' : `${zones.length} faixas`}
         </Text>
       </Box>
 
-      {zones.length === 0 && (
+          {zones.length === 0 && (
         <EmptyState className={local.empty}>
-          Adicione a primeira região para definir onde a loja atende.
+          Adicione a primeira faixa para definir onde a loja atende.
         </EmptyState>
       )}
 
@@ -110,7 +106,7 @@ export const ZoneList = ({
                 onCheckedChange={(isActive) =>
                   onToggle({ id: zone.id, isActive })
                 }
-                aria-label={`${zone.name} atendido`}
+                aria-label={`Faixa de até ${zone.maxRadiusKm} km atendida`}
               />
 
               {editingId === zone.id ? (
@@ -140,19 +136,8 @@ export const ZoneList = ({
                     }
                   />
                   <Input
-                    aria-label="Nome da região"
-                    className={local.editName}
-                    value={draft.name}
-                    onChange={(event) =>
-                      setDraft((current) => ({
-                        ...current,
-                        name: event.target.value,
-                      }))
-                    }
-                  />
-                  <Input
                     inputMode="decimal"
-                    aria-label="Taxa da região"
+                    aria-label="Valor da faixa"
                     className={local.editFee}
                     value={draft.fee}
                     onChange={(event) =>
@@ -180,15 +165,8 @@ export const ZoneList = ({
               ) : (
                 <>
                   <Box className={local.zoneSummary}>
-                    <Button
-                      variant="ghost"
-                      className={local.zoneName}
-                      onClick={() => startEdit(zone)}
-                    >
-                      {zone.name}
-                    </Button>
                     <Text className={local.zoneStatus}>
-                      {zone.minRadiusKm}–{zone.maxRadiusKm} km ·{' '}
+                      De {zone.minRadiusKm} até {zone.maxRadiusKm} km ·{' '}
                       {zone.isActive ? 'Atende pedidos' : 'Pausada'}
                     </Text>
                   </Box>

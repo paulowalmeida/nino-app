@@ -44,7 +44,7 @@ describe('SettingsDeliverySection', () => {
 
     const dialog = await screen.findByRole('dialog')
     await user.click(
-      within(dialog).getByRole('button', { name: 'Remover região' })
+      within(dialog).getByRole('button', { name: 'Remover faixa' })
     )
 
     expect(delivery.drop.mutate).toHaveBeenCalledWith(deliveryZoneMock.id)

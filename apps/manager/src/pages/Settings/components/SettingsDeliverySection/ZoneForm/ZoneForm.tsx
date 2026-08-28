@@ -13,7 +13,6 @@ import local from './ZoneForm.module.css'
 export type ZoneFormProps = {
   isAdding: boolean
   onAdd: (data: {
-    name: string
     minRadiusKm: number
     maxRadiusKm: number
     fee: number
@@ -21,7 +20,6 @@ export type ZoneFormProps = {
 }
 
 export const ZoneForm = ({ isAdding, onAdd }: ZoneFormProps) => {
-  const [name, setName] = useState('')
   const [minRadiusKm, setMinRadiusKm] = useState('0')
   const [maxRadiusKm, setMaxRadiusKm] = useState('')
   const [fee, setFee] = useState('')
@@ -30,9 +28,8 @@ export const ZoneForm = ({ isAdding, onAdd }: ZoneFormProps) => {
     const value = Number(fee.replace(',', '.'))
     const min = Number(minRadiusKm)
     const max = Number(maxRadiusKm)
-    if (!name.trim() || Number.isNaN(value) || min < 0 || max <= min) return
-    onAdd({ name: name.trim(), minRadiusKm: min, maxRadiusKm: max, fee: value })
-    setName('')
+    if (Number.isNaN(value) || min < 0 || max <= min) return
+    onAdd({ minRadiusKm: min, maxRadiusKm: max, fee: value })
     setMinRadiusKm('0')
     setMaxRadiusKm('')
     setFee('')
@@ -45,18 +42,11 @@ export const ZoneForm = ({ isAdding, onAdd }: ZoneFormProps) => {
           Adicionar faixa
         </Heading>
         <Text size="sm" color="subtle">
-          Crie faixas de distância. Use 0,00 para entrega grátis.
+          Defina o intervalo em quilômetros e o valor da entrega.
         </Text>
       </Box>
 
       <Box className={local.form}>
-        <FormField label="Nome da região" className={local.name}>
-          <Input
-            placeholder="Ex.: Centro"
-            value={name}
-            onChange={(event) => setName(event.target.value)}
-          />
-        </FormField>
         <FormField label="Taxa (R$)" className={local.fee}>
           <Input
             inputMode="decimal"
@@ -82,7 +72,6 @@ export const ZoneForm = ({ isAdding, onAdd }: ZoneFormProps) => {
         </FormField>
         <Button
           loading={isAdding}
-          disabled={!name.trim()}
           className={`${motion.press} ${local.submit}`}
           onClick={addZone}
         >

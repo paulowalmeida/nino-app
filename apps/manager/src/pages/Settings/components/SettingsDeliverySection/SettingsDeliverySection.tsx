@@ -34,7 +34,7 @@ export const SettingsDeliverySection = () => {
           Taxa por distância
         </Heading>
         <Text size="sm" color="subtle" mt={1}>
-          Defina o raio de atendimento e a taxa de cada faixa.
+          Defina as faixas de distância e o valor de cada uma.
         </Text>
       </Box>
 
@@ -50,7 +50,11 @@ export const SettingsDeliverySection = () => {
       <RemoveZoneModal
         open={!!removingZone}
         onOpenChange={(open) => !open && setRemovingZone(null)}
-        zoneName={removingZone?.name ?? ''}
+        zoneLabel={
+          removingZone
+            ? `${removingZone.minRadiusKm}–${removingZone.maxRadiusKm} km`
+            : ''
+        }
         onConfirm={confirmRemoval}
       />
     </Box>

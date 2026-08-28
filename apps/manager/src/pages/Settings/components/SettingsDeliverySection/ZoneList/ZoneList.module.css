@@ -22,14 +22,6 @@
   @apply opacity-dim;
 }
 
-/* o nome é o alvo de edição — clicar nele abre a linha */
-.zoneName {
-  @apply h-auto min-w-0 justify-start truncate rounded-none bg-transparent;
-  @apply p-0 text-left text-sm font-semibold text-fg-default;
-  @apply hover:bg-transparent;
-  @apply hover:text-brand-strong;
-}
-
 .zoneSummary {
   @apply col-start-2 min-w-0;
 }
@@ -44,10 +36,6 @@
   @media (min-width: 640px) {
     grid-column: 2 / -1;
   }
-}
-
-.editName {
-  @apply min-w-32 flex-1;
 }
 
 .editFee {

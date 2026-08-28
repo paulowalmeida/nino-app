@@ -9,7 +9,6 @@ export const DeliveryZoneService = {
   createDeliveryZone: (
     tenantId: string,
     data: {
-      name: string
       minRadiusKm: number
       maxRadiusKm: number
       fee: number
@@ -24,7 +23,6 @@ export const DeliveryZoneService = {
     tenantId: string,
     id: string,
     data: {
-      name?: string
       minRadiusKm?: number
       maxRadiusKm?: number
       fee?: number
