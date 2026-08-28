@@ -77,7 +77,7 @@ export const AppLayout = () => {
         />
       )}
 
-      <AppLayoutContent collapsed={collapsed} />
+      <AppLayoutContent />
     </Box>
   )
 }

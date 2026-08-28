@@ -1,0 +1,27 @@
+@reference "@nino/ds/globals.css";
+
+.section {
+  @apply border-y border-border py-5;
+}
+
+.intro {
+  @apply flex flex-col gap-1;
+}
+
+.form {
+  @apply mt-4 grid grid-cols-1 gap-3;
+
+  @media (min-width: 640px) {
+    grid-template-columns: minmax(0, 1fr) 14rem auto;
+    align-items: end;
+  }
+}
+
+.name,
+.fee {
+  @apply min-w-0;
+}
+
+.submit {
+  @apply self-start sm:self-end;
+}

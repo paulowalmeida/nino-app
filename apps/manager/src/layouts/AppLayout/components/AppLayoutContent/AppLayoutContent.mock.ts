@@ -1,3 +1,4 @@
 export const appLayoutContentMock = {
-  collapsed: false,
+  routePath: 'active',
+  routeContent: 'Conteúdo ativo',
 }

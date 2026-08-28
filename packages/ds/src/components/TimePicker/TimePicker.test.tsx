@@ -53,4 +53,32 @@ describe(TimePicker.name, () => {
     render(<TimePicker error />)
     expect(screen.getByRole('combobox')).toHaveAttribute('data-invalid')
   })
+
+  it('strips letters and stray symbols while typing', async () => {
+    const user = userEvent.setup({ delay: 5 })
+    render(<TimePicker />)
+    await user.type(screen.getByRole('combobox'), 'a1b:c2!!!zz')
+    expect(screen.getByRole('combobox')).toHaveValue('1:2')
+  })
+
+  it('caps the typed search at 4 digits, not a 5th raw digit', async () => {
+    const user = userEvent.setup({ delay: 5 })
+    render(<TimePicker />)
+    await user.type(screen.getByRole('combobox'), '0123456789')
+    expect(screen.getByRole('combobox')).toHaveValue('0123')
+  })
+
+  it('accepts a single colon among the 4 digits', async () => {
+    const user = userEvent.setup({ delay: 5 })
+    render(<TimePicker />)
+    await user.type(screen.getByRole('combobox'), '01:2345')
+    expect(screen.getByRole('combobox')).toHaveValue('01:23')
+  })
+
+  it('rejects a second colon', async () => {
+    const user = userEvent.setup({ delay: 5 })
+    render(<TimePicker />)
+    await user.type(screen.getByRole('combobox'), '01::23')
+    expect(screen.getByRole('combobox')).toHaveValue('01:23')
+  })
 })

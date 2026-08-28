@@ -1,13 +1,5 @@
 @reference "@nino/ds/globals.css";
 
-.panel {
-  @apply flex min-w-0 flex-col;
-}
-
-.head {
-  @apply mb-4 lg:mb-6;
-}
-
 .skeleton {
   @apply h-64 w-full rounded-6;
 }
@@ -17,8 +9,13 @@
 }
 
 .zone {
-  @apply flex flex-wrap items-center gap-3 border-t border-border py-3;
+  @apply grid grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-x-3 gap-y-1;
+  @apply border-t border-border py-3;
   @apply transition-opacity duration-200;
+
+  @media (min-width: 640px) {
+    grid-template-columns: auto minmax(0, 1fr) auto auto;
+  }
 }
 
 .off {
@@ -27,14 +24,26 @@
 
 /* o nome é o alvo de edição — clicar nele abre a linha */
 .zoneName {
-  @apply min-w-0 flex-1 justify-start truncate rounded-none bg-transparent;
+  @apply h-auto min-w-0 justify-start truncate rounded-none bg-transparent;
   @apply p-0 text-left text-sm font-semibold text-fg-default;
   @apply hover:bg-transparent;
   @apply hover:text-brand-strong;
 }
 
+.zoneSummary {
+  @apply col-start-2 min-w-0;
+}
+
+.zoneStatus {
+  @apply mt-0.5 text-xs text-fg-faint;
+}
+
 .editRow {
-  @apply flex min-w-0 flex-1 flex-wrap items-center gap-2;
+  @apply col-span-2 min-w-0 flex flex-wrap items-center gap-2;
+
+  @media (min-width: 640px) {
+    grid-column: 2 / -1;
+  }
 }
 
 .editName {
@@ -45,28 +54,41 @@
   @apply w-24;
 }
 
+.actions {
+  @apply col-start-2 col-span-2 justify-self-end gap-1;
+
+  @media (min-width: 640px) {
+    grid-column: auto;
+  }
+}
+
 .edit {
   @apply shrink-0 text-fg-faint;
 }
 
 .fee {
+  @apply self-start pt-0.5 sm:self-auto sm:pt-0;
   @apply text-sm text-fg-muted;
   font-variant-numeric: tabular-nums;
 }
 
 .remove {
-  @apply shrink-0 text-fg-faint;
+  @apply shrink-0 text-danger;
+  @apply hover:bg-danger-surface hover:text-danger;
 }
 
-.add {
-  @apply mt-4 flex flex-wrap items-center gap-2 border-t border-border;
-  @apply pt-4;
+.section {
+  @apply mt-6;
 }
 
-.addName {
-  @apply min-w-40 flex-1;
+.zonesHeader {
+  @apply mb-2;
 }
 
-.addFee {
-  @apply w-28;
+.zonesMeta {
+  @apply shrink-0 tabular-nums;
+}
+
+.empty {
+  @apply border-t border-border py-6;
 }

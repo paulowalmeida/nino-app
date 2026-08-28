@@ -7,7 +7,7 @@
  * `3.5rem` é a barra superior do celular, que o `.main` já reserva.
  */
 .page {
-  @apply relative flex h-[calc(100dvh-3.5rem)] max-w-page flex-col p-4;
+  @apply relative mx-auto flex h-[calc(100dvh-3.5rem)] max-w-page flex-col p-4;
   @apply lg:h-dvh lg:p-10;
 }
 

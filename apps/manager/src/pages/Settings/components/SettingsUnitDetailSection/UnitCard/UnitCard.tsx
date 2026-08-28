@@ -4,12 +4,12 @@ import { Badge } from '@nino/ds/components/Badge'
 import { Box } from '@nino/ds/components/Box'
 import { Button } from '@nino/ds/components/Button'
 import { ColorPicker } from '@nino/ds/components/ColorPicker'
-import { FormField } from '@nino/ds/components/FormField'
 import { FileUpload } from '@nino/ds/components/FileUpload'
+import { FormField } from '@nino/ds/components/FormField'
 import { Heading } from '@nino/ds/components/Heading'
 import { Input } from '@nino/ds/components/Input'
-import { Select } from '@nino/ds/components/Select'
 import { RadioGroup } from '@nino/ds/components/RadioGroup'
+import { Select } from '@nino/ds/components/Select'
 import { Skeleton } from '@nino/ds/components/Skeleton'
 import { Tabs } from '@nino/ds/components/Tabs'
 import { Text } from '@nino/ds/components/Text'
@@ -21,6 +21,7 @@ import type { TenantDetail } from '@shared/types/store/tenant-detail'
 import type { UnitDraft } from '@shared/types/store/unit-draft'
 
 import { AddressFields } from '../../AddressFields/AddressFields'
+import { StorePreview } from '../StorePreview/StorePreview'
 
 import motion from '@styles/motion.module.css'
 import local from './UnitCard.module.css'
@@ -178,44 +179,16 @@ export const UnitCard = ({
                   </Text>
                 </Box>
 
-                <Box
-                  className={local.storePreview}
-                  style={
-                    {
-                      '--preview-primary': draft.primaryColor,
-                      '--preview-secondary': draft.secondaryColor,
-                      '--preview-tertiary': draft.tertiaryColor,
-                      '--preview-banner': draft.bannerFile
-                        ? `url(${URL.createObjectURL(draft.bannerFile)})`
-                        : unit?.bannerUrl
-                          ? `url(${unit.bannerUrl})`
-                          : 'none',
-                    } as React.CSSProperties
-                  }
-                >
-                  <Box className={local.previewBanner}>
-                    {draft.logoFile || unit?.logoUrl ? (
-                      <img
-                        className={local.previewLogo}
-                        src={
-                          draft.logoFile
-                            ? URL.createObjectURL(draft.logoFile)
-                            : unit?.logoUrl
-                        }
-                        alt="Prévia do logo"
-                      />
-                    ) : (
-                      <Text className={local.logoFallback}>sua marca</Text>
-                    )}
-                  </Box>
-                  <Box className={local.previewBody}>
-                    <Text className={local.previewEyebrow}>Loja online</Text>
-                    <Text className={local.previewName}>
-                      {draft.customName || 'Nome da unidade'}
-                    </Text>
-                    <span className={local.previewAction}>Ver cardápio</span>
-                  </Box>
-                </Box>
+                <StorePreview
+                  storeName={draft.customName}
+                  primaryColor={draft.primaryColor}
+                  secondaryColor={draft.secondaryColor}
+                  tertiaryColor={draft.tertiaryColor}
+                  logoUrl={unit?.logoUrl}
+                  bannerUrl={unit?.bannerUrl}
+                  logoFile={draft.logoFile}
+                  bannerFile={draft.bannerFile}
+                />
 
                 <Box className={local.assetGrid}>
                   <FormField

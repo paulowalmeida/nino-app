@@ -17,21 +17,16 @@ import local from './PhoneList.module.css'
 export type PhoneListProps = {
   phones: TenantPhone[]
   isPending: boolean
-  isAdding: boolean
-  onAdd: (phone: string) => void
-  onEdit: (id: string, phone: string) => void
-  onRemove: (id: string) => void
+  onEdit: (data: { id: string; phone: string }) => void
+  onRemove: (phone: TenantPhone) => void
 }
 
 export const PhoneList = ({
   phones,
   isPending,
-  isAdding,
-  onAdd,
   onEdit,
   onRemove,
 }: PhoneListProps) => {
-  const [phone, setPhone] = useState('')
   const [editingId, setEditingId] = useState<string | null>(null)
   const [draft, setDraft] = useState('')
 
@@ -42,110 +37,97 @@ export const PhoneList = ({
 
   const commitEdit = () => {
     if (!editingId || draft.replace(/\D/g, '').length < 10) return
-    onEdit(editingId, toE164(draft))
+    onEdit({ id: editingId, phone: toE164(draft) })
     setEditingId(null)
-  }
-
-  const handleAdd = () => {
-    const digits = phone.replace(/\D/g, '')
-    if (digits.length < 10) return
-    onAdd(toE164(phone))
-    setPhone('')
   }
 
   if (isPending) return <Skeleton className={local.skeleton} />
 
   return (
-    <Box as="section" className={local.panel}>
-      <Box as="header" className={`${motion.unroll} ${local.head}`}>
-        <Heading level={2} size="xl">
-          Telefones da loja
-        </Heading>
-        <Text size="sm" color="subtle" mt={1}>
-          Cadastre os números que os clientes podem usar para falar com a loja.
+    <Box as="section" className={local.section}>
+      <Box
+        as="header"
+        direction="row"
+        align="center"
+        justify="between"
+        className={local.phonesHeader}
+      >
+        <Heading level={3} size="md">Telefones cadastrados</Heading>
+        <Text size="sm" color="subtle" className={local.phonesMeta}>
+          {phones.length === 1 ? '1 telefone' : `${phones.length} telefones`}
         </Text>
       </Box>
 
-      {phones.length === 0 && (
-        <EmptyState>Nenhum telefone cadastrado.</EmptyState>
-      )}
+        {phones.length === 0 && (
+          <EmptyState className={local.empty}>
+            Adicione um número para que os clientes saibam como falar com a loja.
+          </EmptyState>
+        )}
 
-      {phones.length > 0 && (
-        <ul className={local.phones}>
-          {phones.map((entry, index) => (
-            <li
-              key={entry.id}
-              className={`${motion.deal} ${local.phone}`}
-              style={riseDelay(index * 45 + 60)}
-            >
-              {editingId === entry.id ? (
-                <Box direction="row" wrap className={local.editRow}>
-                  <PhoneInput
-                    aria-label="Telefone da loja"
-                    className={local.input}
-                    value={draft}
-                    onChange={(event) => setDraft(event.target.value)}
-                  />
-                  <Button
-                    size="sm"
-                    className={motion.press}
-                    onClick={commitEdit}
-                  >
-                    Salvar
-                  </Button>
-                  <Button
-                    size="sm"
-                    variant="ghost"
-                    onClick={() => setEditingId(null)}
-                  >
-                    Voltar
-                  </Button>
-                </Box>
-              ) : (
-                <>
-                  <Button
-                    variant="ghost"
-                    className={local.number}
-                    onClick={() => startEdit(entry)}
-                  >
-                    {formatPhone(entry.phone)}
-                  </Button>
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    className={`${motion.press} ${local.edit}`}
-                    onClick={() => startEdit(entry)}
-                  >
-                    Editar
-                  </Button>
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    className={`${motion.press} ${local.remove}`}
-                    onClick={() => onRemove(entry.id)}
-                  >
-                    Remover
-                  </Button>
-                </>
-              )}
-            </li>
-          ))}
-        </ul>
-      )}
-
-      <Box
-        direction={{ mobile: 'column', tablet: 'row' }}
-        className={local.add}
-      >
-        <PhoneInput
-          value={phone}
-          className={local.input}
-          onChange={(event) => setPhone(event.target.value)}
-        />
-        <Button loading={isAdding} className={motion.press} onClick={handleAdd}>
-          Adicionar telefone
-        </Button>
-      </Box>
+        {phones.length > 0 && (
+          <ul className={local.phones}>
+            {phones.map((entry, index) => (
+              <li
+                key={entry.id}
+                className={`${motion.deal} ${local.phone}`}
+                style={riseDelay(index * 45 + 60)}
+              >
+                {editingId === entry.id ? (
+                  <Box direction="row" wrap className={local.editRow}>
+                    <PhoneInput
+                      aria-label="Telefone da loja"
+                      className={local.input}
+                      value={draft}
+                      onChange={(event) => setDraft(event.target.value)}
+                    />
+                    <Button
+                      size="sm"
+                      className={motion.press}
+                      onClick={commitEdit}
+                    >
+                      Salvar
+                    </Button>
+                    <Button
+                      size="sm"
+                      variant="ghost"
+                      onClick={() => setEditingId(null)}
+                    >
+                      Cancelar
+                    </Button>
+                  </Box>
+                ) : (
+                  <>
+                    <Button
+                      variant="ghost"
+                      className={local.number}
+                      onClick={() => startEdit(entry)}
+                    >
+                      {formatPhone(entry.phone)}
+                    </Button>
+                    <Box direction="row" className={local.actions}>
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        className={`${motion.press} ${local.edit}`}
+                        onClick={() => startEdit(entry)}
+                      >
+                        Editar
+                      </Button>
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        className={`${motion.press} ${local.remove}`}
+                        onClick={() => onRemove(entry)}
+                      >
+                        Remover
+                      </Button>
+                    </Box>
+                  </>
+                )}
+              </li>
+            ))}
+          </ul>
+        )}
     </Box>
   )
 }

@@ -5,8 +5,8 @@ import type { PauseRequest } from '@shared/types/store/pause-request'
 import type { StoreTypeOption } from '@shared/types/store/store-type-option'
 import type { TenantDetail } from '@shared/types/store/tenant-detail'
 import type { TenantPause } from '@shared/types/store/tenant-pause'
-import type { UpdateTenantRequest } from '@shared/types/store/update-tenant-request'
 import type { UnitDraft } from '@shared/types/store/unit-draft'
+import type { UpdateTenantRequest } from '@shared/types/store/update-tenant-request'
 
 type SlugAvailabilityResponse = {
   available: boolean

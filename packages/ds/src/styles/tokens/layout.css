@@ -1,8 +1,5 @@
 @theme static {
-  /* 96rem = 1536px, o teto do breakpoint 2xl do Tailwind — acima dele a
-     media query 2xl nunca dispara, então nada estica além do que a escala
-     de breakpoints já prevê. */
-  --container-page: 96rem;
+  --container-page: 110rem;
   --container-page-narrow: 60rem;
 
   --container-block: 42rem;

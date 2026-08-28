@@ -1,6 +1,6 @@
 @reference "@nino/ds/globals.css";
 
 .page {
-  @apply min-h-dvh w-full max-w-page p-4;
+  @apply mx-auto min-h-dvh w-full max-w-page p-4;
   @apply lg:h-dvh lg:p-10;
 }

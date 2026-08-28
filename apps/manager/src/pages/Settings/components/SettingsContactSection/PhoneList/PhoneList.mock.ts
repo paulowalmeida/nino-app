@@ -1,1 +1,4 @@
-export const phoneListMock = { phones: [], isPending: false, isAdding: false, onAdd: () => undefined, onEdit: () => undefined, onRemove: () => undefined }
+export const tenantPhoneMock = {
+  id: 'phone-1',
+  phone: '+5591999999999',
+}

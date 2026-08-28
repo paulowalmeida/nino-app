@@ -1,1 +1,6 @@
-export const zoneListMock = { zones: [], isPending: false, isAdding: false, onAdd: () => undefined, onEdit: () => undefined, onToggle: () => undefined, onRemove: () => undefined }
+export const deliveryZoneMock = {
+  id: 'zone-centro',
+  name: 'Centro',
+  fee: 7,
+  isActive: true,
+}

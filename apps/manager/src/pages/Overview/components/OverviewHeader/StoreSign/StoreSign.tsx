@@ -18,6 +18,7 @@ export const StoreSign = () => {
 
   return (
     <Box
+      direction="row"
       align="center"
       gap={1.5}
       className={`${motion.pop} ${styles.sign}`}

@@ -44,47 +44,6 @@
   @apply flex max-w-2xl flex-col gap-1;
 }
 
-.storePreview {
-  @apply overflow-hidden rounded-5 border border-border bg-surface-raised shadow-sm;
-}
-
-.previewBanner {
-  @apply flex min-h-40 items-end bg-cover bg-center p-5;
-  background-color: var(--preview-primary);
-  background-image:
-    linear-gradient(
-      90deg,
-      color-mix(in srgb, var(--preview-secondary) 72%, transparent),
-      transparent
-    ),
-    var(--preview-banner);
-}
-
-.previewLogo {
-  @apply h-16 max-w-40 rounded-3 bg-white object-contain p-2 shadow-md;
-}
-
-.logoFallback {
-  @apply rounded-full bg-white px-4 py-2 text-sm font-bold;
-  color: var(--preview-secondary);
-}
-
-.previewBody {
-  @apply grid grid-cols-[1fr_auto] items-center gap-x-4 p-5;
-  background: var(--preview-tertiary);
-  color: var(--preview-secondary);
-}
-
-.previewEyebrow {
-  @apply col-span-2 text-xs font-bold uppercase tracking-[0.14em] opacity-60;
-}
-.previewName {
-  @apply text-lg font-bold;
-}
-.previewAction {
-  @apply rounded-full px-4 py-2 text-sm font-bold text-white;
-  background: var(--preview-primary);
-}
 .assetGrid {
   @apply grid grid-cols-1 gap-4 md:grid-cols-2;
 }

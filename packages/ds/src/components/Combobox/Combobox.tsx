@@ -1,4 +1,4 @@
-import { Ref, useMemo, useState } from 'react'
+import { KeyboardEvent, Ref, useMemo, useState } from 'react'
 
 import {
   Combobox as ArkCombobox,
@@ -38,6 +38,15 @@ type ComboboxProps = {
   /** Additional CSS classes merged into the input */
   className?: string
   /**
+   * Validates the input's prospective value before a keystroke is applied
+   * — e.g. to keep a time search shaped like `HH:mm`, not just any digits
+   * and `:`. Leave it out for a normal free-text search. Paste isn't run
+   * through this; pair it with `maxLength` to also cap a paste.
+   */
+  isValidQuery?: (nextValue: string) => boolean
+  /** Caps how many characters the input accepts, including a paste. */
+  maxLength?: number
+  /**
    * Accessible name for the input when no visible label wraps it (e.g.
    * outside `FormField`)
    */
@@ -73,10 +82,24 @@ export function Combobox({
   onValueChange,
   emptyMessage = 'Nenhum resultado',
   className,
+  isValidQuery,
+  maxLength,
   ariaLabel,
   ref,
 }: ComboboxProps) {
   const [query, setQuery] = useState('')
+
+  const handleKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
+    if (!isValidQuery || event.key.length !== 1) return
+
+    const input = event.currentTarget
+    const nextValue =
+      input.value.slice(0, input.selectionStart ?? input.value.length) +
+      event.key +
+      input.value.slice(input.selectionEnd ?? input.value.length)
+
+    if (!isValidQuery(nextValue)) event.preventDefault()
+  }
 
   const filtered = useMemo(
     () => filterOptions(options, query),
@@ -106,6 +129,8 @@ export function Combobox({
         <ArkCombobox.Input
           ref={ref}
           placeholder={placeholder}
+          maxLength={maxLength}
+          onKeyDown={handleKeyDown}
           aria-label={ariaLabel}
           data-invalid={error || undefined}
           aria-invalid={error || undefined}

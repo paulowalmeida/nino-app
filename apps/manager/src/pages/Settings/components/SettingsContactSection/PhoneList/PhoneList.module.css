@@ -1,28 +1,21 @@
 @reference "@nino/ds/globals.css";
 
-.panel {
-  @apply flex min-w-0 flex-col;
-}
-
-.head {
-  @apply mb-4 lg:mb-6;
-}
-
 .skeleton {
   @apply h-48 w-full rounded-6;
 }
 
 .phones {
-  @apply flex max-w-xl flex-col;
+  @apply flex flex-col;
 }
 
 .phone {
-  @apply grid min-h-14 grid-cols-[minmax(0,1fr)_auto_auto] items-center gap-2 border-t border-border py-2;
+  @apply grid grid-cols-[minmax(0,1fr)_auto] items-center gap-x-3 gap-y-1;
+  @apply border-t border-border py-3;
 }
 
 /* o número é o alvo de edição — clicar nele abre a linha */
 .number {
-  @apply min-w-0 flex-1 justify-start rounded-none bg-transparent p-0;
+  @apply h-auto min-w-0 justify-start truncate rounded-none bg-transparent p-0;
   @apply text-left text-sm font-semibold text-fg-default;
   @apply hover:bg-transparent;
   @apply hover:text-brand-strong;
@@ -38,16 +31,33 @@
   @apply col-span-full min-w-0 items-center gap-2 py-1;
 }
 
+.actions {
+  @apply col-span-2 justify-self-end gap-1 sm:col-auto;
+}
+
 .edit {
   @apply shrink-0 text-fg-faint;
 }
 
 .remove {
-  @apply shrink-0 text-fg-faint;
+  @apply shrink-0 text-danger;
+  @apply hover:bg-danger-surface hover:text-danger;
 }
 
-.add {
-  @apply mt-4 max-w-xl items-stretch gap-2 border-t border-border pt-4 sm:items-center;
+.section {
+  @apply mt-6;
+}
+
+.phonesHeader {
+  @apply mb-2;
+}
+
+.phonesMeta {
+  @apply shrink-0 tabular-nums;
+}
+
+.empty {
+  @apply border-t border-border py-6;
 }
 
 .input {

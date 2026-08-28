@@ -28,6 +28,16 @@ type TimePickerProps = {
 
 const pad = (value: number): string => String(value).padStart(2, '0')
 
+/** Keeps a typed search shaped like `HH:mm`: digits and `:` only, at most
+ * 4 digits and one `:`. The committed value still only ever comes from
+ * picking a grid slot, so this only guards what the search can look like. */
+const isValidTimeQuery = (value: string): boolean => {
+  if (!/^[\d:]*$/.test(value)) return false
+  const digitCount = value.replace(/:/g, '').length
+  const colonCount = value.length - digitCount
+  return digitCount <= 4 && colonCount <= 1
+}
+
 const buildOptions = (step: number) => {
   const options = []
   for (let minutes = 0; minutes < 24 * 60; minutes += step) {
@@ -77,6 +87,8 @@ export function TimePicker({
       onValueChange={onValueChange}
       emptyMessage="Nenhum horário encontrado"
       className={className}
+      isValidQuery={isValidTimeQuery}
+      maxLength={5}
       ariaLabel={ariaLabel}
     />
   )

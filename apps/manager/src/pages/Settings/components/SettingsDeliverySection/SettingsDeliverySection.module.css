@@ -1,0 +1,9 @@
+@reference "@nino/ds/globals.css";
+
+.panel {
+  @apply flex min-w-0 flex-col;
+}
+
+.head {
+  @apply mb-5 lg:mb-6;
+}

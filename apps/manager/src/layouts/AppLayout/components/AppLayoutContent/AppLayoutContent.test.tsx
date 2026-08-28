@@ -4,19 +4,22 @@ import { render, screen } from '@testing-library/react'
 import { describe, expect, it } from 'vitest'
 
 import { AppLayoutContent } from './AppLayoutContent'
+import { appLayoutContentMock } from './AppLayoutContent.mock'
 
 describe('AppLayoutContent', () => {
   it('renders the active route through the outlet', () => {
+    const { routePath, routeContent } = appLayoutContentMock
+
     render(
-      <MemoryRouter initialEntries={['/active']}>
+      <MemoryRouter initialEntries={[`/${routePath}`]}>
         <Routes>
-          <Route element={<AppLayoutContent collapsed={false} />} path="/">
-            <Route element={<p>Conteúdo ativo</p>} path="active" />
+          <Route element={<AppLayoutContent />} path="/">
+            <Route element={<p>{routeContent}</p>} path={routePath} />
           </Route>
         </Routes>
       </MemoryRouter>
     )
 
-    expect(screen.getByText('Conteúdo ativo')).toBeInTheDocument()
+    expect(screen.getByText(routeContent)).toBeInTheDocument()
   })
 })
