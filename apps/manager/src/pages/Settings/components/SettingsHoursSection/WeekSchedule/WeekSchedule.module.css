@@ -12,10 +12,6 @@
   @apply mt-4 ml-[15.5rem] shrink-0 self-start;
 }
 
-.skeleton {
-  @apply h-80 w-full rounded-6;
-}
-
 .week {
   @apply flex flex-col gap-1;
 }

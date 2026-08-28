@@ -1,4 +1,4 @@
 export const customerDetailSkeletonMock = {
-  placeholderOrderRowCount: 5,
+  placeholderRegionCount: 4,
   placeholderBoneCount: 35,
 }

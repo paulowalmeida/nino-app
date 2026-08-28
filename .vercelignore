@@ -1,0 +1,13 @@
+.git
+.github
+.playwright-mcp
+.vscode
+**/node_modules
+**/dist
+**/coverage
+**/.turbo
+apps/backoffice
+apps/consumer
+apps/courier
+apps/landing
+apps/nino-api

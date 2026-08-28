@@ -1,4 +1,4 @@
 export const collaboratorDetailSkeletonMock = {
-  placeholderEntryCount: 5,
-  placeholderTabCount: 2,
+  placeholderRegionCount: 4,
+  placeholderBoneCount: 46,
 }

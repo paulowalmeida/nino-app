@@ -2,9 +2,7 @@ import { render, screen } from '@testing-library/react'
 import { describe, expect, it } from 'vitest'
 
 import { SettingsUnitSkeleton } from './SettingsUnitSkeleton'
-import {
-  settingsUnitSkeletonMock,
-} from './SettingsUnitSkeleton.mock'
+import { settingsUnitSkeletonMock } from './SettingsUnitSkeleton.mock'
 
 describe('SettingsUnitSkeleton', () => {
   it('announces loading and mirrors the header and unit rows', () => {

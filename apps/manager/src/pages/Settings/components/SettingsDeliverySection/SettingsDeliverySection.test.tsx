@@ -22,6 +22,10 @@ vi.mock('@pages/Settings/facades/useSettingsFacade/useSettingsFacade', () => ({
   }),
 }))
 
+vi.mock('@shared/services/tenant/tenant.service', () => ({
+  TenantService: { getMapLocation: vi.fn().mockResolvedValue(null) },
+}))
+
 describe('SettingsDeliverySection', () => {
   it('composes the delivery flow and confirms a removal', async () => {
     const user = userEvent.setup()

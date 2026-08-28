@@ -3,11 +3,11 @@ import { useState } from 'react'
 import { Box } from '@nino/ds/components/Box'
 import { Button } from '@nino/ds/components/Button'
 import { Heading } from '@nino/ds/components/Heading'
-import { Skeleton } from '@nino/ds/components/Skeleton'
 import { Switch } from '@nino/ds/components/Switch'
 import { Text } from '@nino/ds/components/Text'
 import { TimePicker } from '@nino/ds/components/TimePicker'
 import { WEEK_SCHEDULE_DAYS } from '@pages/Settings/constants/settings.constants'
+import { WeekScheduleSkeleton } from '@pages/Settings/skeletons/WeekScheduleSkeleton/WeekScheduleSkeleton'
 import type { HoursDraft } from '@shared/types/settings/hours-draft'
 import type { OpeningHours } from '@shared/types/settings/opening-hours'
 import { riseDelay } from '@shared/utils/rise-delay/rise-delay'
@@ -85,7 +85,7 @@ export const WeekSchedule = ({
     setSaved(sent)
   }
 
-  if (isPending) return <Skeleton className={local.skeleton} />
+  if (isPending) return <WeekScheduleSkeleton />
 
   return (
     <Box as="section" className={local.panel}>

@@ -4,16 +4,12 @@ import L from 'leaflet'
 
 import { Box } from '@nino/ds/components/Box'
 import { Text } from '@nino/ds/components/Text'
+import { TenantService } from '@shared/services/tenant/tenant.service'
 import type { DeliveryZone } from '@shared/types/settings/delivery-zone'
 import type { TenantDetail } from '@shared/types/store/tenant-detail'
 
 import local from './DeliveryMap.module.css'
 import 'leaflet/dist/leaflet.css'
-
-type Coordinates = {
-  latitude: number
-  longitude: number
-}
 
 type DeliveryMapProps = {
   zones: DeliveryZone[]
@@ -22,54 +18,6 @@ type DeliveryMapProps = {
 
 const DEFAULT_CENTER: L.LatLngExpression = [-15.78, -47.93]
 const MAP_ZOOM = 13
-
-const getZipCoordinates = async (zipCode: string) => {
-  const digits = zipCode.replace(/\D/g, '')
-  if (digits.length !== 8) return null
-
-  const response = await fetch(`https://brasilapi.com.br/api/cep/v2/${digits}`)
-  if (!response.ok) return null
-
-  const data = (await response.json()) as {
-    location?: { coordinates?: { latitude?: string; longitude?: string } }
-  }
-  const latitude = Number(data.location?.coordinates?.latitude)
-  const longitude = Number(data.location?.coordinates?.longitude)
-  if (!Number.isFinite(latitude) || !Number.isFinite(longitude)) return null
-
-  return { latitude, longitude }
-}
-
-const getAddressCoordinates = async (
-  unit: TenantDetail,
-): Promise<Coordinates | null> => {
-  const query = new URLSearchParams({
-    format: 'jsonv2',
-    addressdetails: '1',
-    countrycodes: 'br',
-    limit: '5',
-    q: `${unit.street} ${unit.number}, ${unit.neighborhood}, ${unit.city}, ${unit.state}, ${unit.zipCode}, Brazil`,
-  })
-  const response = await fetch(
-    `https://nominatim.openstreetmap.org/search?${query.toString()}`,
-  )
-  if (!response.ok) return null
-
-  const data = (await response.json()) as Array<{
-    lat?: string
-    lon?: string
-    address?: { house_number?: string }
-  }>
-  const number = unit.number.replace(/\D/g, '')
-  const result = data.find(
-    (item) => item.address?.house_number?.replace(/\D/g, '') === number,
-  )
-  const latitude = Number(result?.lat)
-  const longitude = Number(result?.lon)
-  if (!Number.isFinite(latitude) || !Number.isFinite(longitude)) return null
-
-  return { latitude, longitude }
-}
 
 export const DeliveryMap = ({ zones, unit }: DeliveryMapProps) => {
   const mapElement = useRef<HTMLDivElement>(null)
@@ -82,9 +30,7 @@ export const DeliveryMap = ({ zones, unit }: DeliveryMapProps) => {
     let active = true
     if (!unit) return
 
-    void getAddressCoordinates(unit)
-      .catch(() => null)
-      .then((coordinates) => coordinates ?? getZipCoordinates(unit.zipCode))
+    void TenantService.getMapLocation(unit.id)
       .then((coordinates) => {
         if (!active || !coordinates) return
         setCenter([coordinates.latitude, coordinates.longitude])

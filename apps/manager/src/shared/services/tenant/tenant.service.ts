@@ -4,6 +4,7 @@ import type { CreatedStore } from '@shared/types/store/created-store'
 import type { PauseRequest } from '@shared/types/store/pause-request'
 import type { StoreTypeOption } from '@shared/types/store/store-type-option'
 import type { TenantDetail } from '@shared/types/store/tenant-detail'
+import type { TenantMapLocation } from '@shared/types/store/tenant-map-location'
 import type { TenantPause } from '@shared/types/store/tenant-pause'
 import type { UnitDraft } from '@shared/types/store/unit-draft'
 import type { UpdateTenantRequest } from '@shared/types/store/update-tenant-request'
@@ -60,6 +61,9 @@ export const TenantService = {
 
   getById: (tenantId: string): Promise<TenantDetail> =>
     api.get<TenantDetail>(`tenants/${tenantId}`),
+
+  getMapLocation: (tenantId: string): Promise<TenantMapLocation | null> =>
+    api.get<TenantMapLocation | null>(`tenants/${tenantId}/map-location`),
 
   updateTenant: (
     tenantId: string,
