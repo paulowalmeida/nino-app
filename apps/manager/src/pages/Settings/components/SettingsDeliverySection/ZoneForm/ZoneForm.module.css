@@ -12,13 +12,14 @@
   @apply mt-4 grid grid-cols-1 gap-3;
 
   @media (min-width: 640px) {
-    grid-template-columns: minmax(0, 1fr) 14rem auto;
+    grid-template-columns: minmax(0, 1fr) 7rem 7rem 8rem auto;
     align-items: end;
   }
 }
 
 .name,
-.fee {
+.fee,
+.radius {
   @apply min-w-0;
 }
 

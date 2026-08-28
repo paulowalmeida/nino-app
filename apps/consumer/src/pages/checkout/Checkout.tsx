@@ -61,6 +61,7 @@ export const Checkout = () => {
     created,
     isSubmitting,
     submitFailed,
+    isQuoting,
   } = useGuestCheckout({
     store,
     zones,
@@ -160,7 +161,8 @@ export const Checkout = () => {
               control={control}
               register={register}
               errors={errors}
-              zones={zones}
+              quote={zone}
+              isQuoting={isQuoting}
             />
           </section>
         )}

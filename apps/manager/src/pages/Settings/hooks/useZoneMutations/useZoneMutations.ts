@@ -17,8 +17,12 @@ export const useZoneMutations = (tenantId: string | null) => {
       success: 'Região adicionada',
       errorTitle: 'A região não foi adicionada',
     },
-    mutationFn: (data: { name: string; fee: number }) =>
-      DeliveryZoneService.createDeliveryZone(tenantId as string, data),
+    mutationFn: (data: {
+      name: string
+      minRadiusKm: number
+      maxRadiusKm: number
+      fee: number
+    }) => DeliveryZoneService.createDeliveryZone(tenantId as string, data),
     onSuccess: invalidate,
   })
 
@@ -30,6 +34,8 @@ export const useZoneMutations = (tenantId: string | null) => {
     }: {
       id: string
       name: string
+      minRadiusKm: number
+      maxRadiusKm: number
       fee: number
     }) => DeliveryZoneService.updateDeliveryZone(tenantId as string, id, data),
     onSuccess: invalidate,

@@ -28,9 +28,11 @@ export const SettingsDeliverySection = () => {
   return (
     <Box as="section" className={local.panel}>
       <Box as="header" className={`${motion.unroll} ${local.head}`}>
-        <Heading level={2} size="xl">Entrega por região</Heading>
+        <Heading level={2} size="xl">
+          Taxa por distância
+        </Heading>
         <Text size="sm" color="subtle" mt={1}>
-          Defina onde a loja atende e qual taxa entra em cada pedido.
+          Defina o raio de atendimento e a taxa de cada faixa.
         </Text>
       </Box>
 

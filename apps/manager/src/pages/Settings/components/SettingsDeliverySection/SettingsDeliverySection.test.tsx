@@ -27,8 +27,12 @@ describe('SettingsDeliverySection', () => {
 
     render(<SettingsDeliverySection />)
 
-    expect(screen.getByRole('heading', { name: 'Entrega por região' })).toBeInTheDocument()
-    expect(screen.getByRole('heading', { name: 'Adicionar região' })).toBeInTheDocument()
+    expect(
+      screen.getByRole('heading', { name: 'Taxa por distância' })
+    ).toBeInTheDocument()
+    expect(
+      screen.getByRole('heading', { name: 'Adicionar faixa' })
+    ).toBeInTheDocument()
 
     await user.click(screen.getByRole('button', { name: 'Remover' }))
     expect(delivery.drop.mutate).not.toHaveBeenCalled()

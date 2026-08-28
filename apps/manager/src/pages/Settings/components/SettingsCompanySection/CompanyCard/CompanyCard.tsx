@@ -5,10 +5,16 @@ import { Button } from '@nino/ds/components/Button'
 import { FormField } from '@nino/ds/components/FormField'
 import { Heading } from '@nino/ds/components/Heading'
 import { Input } from '@nino/ds/components/Input'
-import { Skeleton } from '@nino/ds/components/Skeleton'
 import { Text } from '@nino/ds/components/Text'
-import { AddressFields } from '@pages/Settings/components/AddressFields/AddressFields'
-import { EMPTY_COMPANY_DRAFT } from '@pages/Settings/constants/settings.constants'
+import {
+  AddressFields,
+} from '@pages/Settings/components/AddressFields/AddressFields'
+import {
+  EMPTY_COMPANY_DRAFT,
+} from '@pages/Settings/constants/settings.constants'
+import {
+  CompanyCardSkeleton,
+} from '@pages/Settings/skeletons/CompanyCardSkeleton/CompanyCardSkeleton'
 import { formatCnpj } from '@pages/Settings/utils/document'
 import type { Company } from '@shared/types/company/company'
 import type { CompanyDraft } from '@shared/types/company/company-draft'
@@ -58,44 +64,7 @@ export const CompanyCard = ({
     setDirty(true)
   }
 
-  if (isPending) {
-    return (
-      <Box as="section" className={local.panel}>
-        <Box as="header" className={local.head}>
-          <Skeleton variant="text" className={local.ghostTitle} />
-          <Skeleton variant="text" className={local.ghostHint} />
-        </Box>
-
-        <Box className={local.identity}>
-          <Skeleton variant="text" className={local.ghostIdentityLabel} />
-          <Skeleton variant="text" className={local.ghostIdentityValue} />
-        </Box>
-
-        <Box className={local.fields}>
-          <Skeleton className={`${local.wide} ${local.ghostField}`} />
-          <Skeleton className={`${local.wide} ${local.ghostField}`} />
-          <Skeleton className={local.ghostField} />
-        </Box>
-
-        <Box className={local.address}>
-          <Skeleton variant="text" className={local.ghostGroupTitle} />
-          <Box className={local.ghostAddressGrid}>
-            <Skeleton className={`${local.ghostField} ${local.ghostZip}`} />
-            <Skeleton className={`${local.ghostField} ${local.ghostStreet}`} />
-            <Skeleton className={`${local.ghostField} ${local.ghostNumber}`} />
-            <Skeleton
-              className={`${local.ghostField} ${local.ghostComplement}`}
-            />
-            <Skeleton
-              className={`${local.ghostField} ${local.ghostNeighborhood}`}
-            />
-            <Skeleton className={`${local.ghostField} ${local.ghostCity}`} />
-            <Skeleton className={`${local.ghostField} ${local.ghostState}`} />
-          </Box>
-        </Box>
-      </Box>
-    )
-  }
+  if (isPending) return <CompanyCardSkeleton />
 
   return (
     <Box as="section" className={local.panel}>

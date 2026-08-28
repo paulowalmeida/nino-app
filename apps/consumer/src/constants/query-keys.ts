@@ -21,6 +21,11 @@ export const queryKeys = {
     byTenant: (tenantId: string) =>
       [...queryKeys.deliveryZones.all, tenantId] as const,
   },
+  deliveryQuote: {
+    all: ['delivery-quote'] as const,
+    byTenantAndZip: (tenantId: string, zipCode: string) =>
+      [...queryKeys.deliveryQuote.all, tenantId, zipCode] as const,
+  },
   openingHours: {
     all: ['opening-hours'] as const,
     byTenant: (tenantId: string) =>

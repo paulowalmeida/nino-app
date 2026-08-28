@@ -165,11 +165,11 @@ export const UnitCard = ({
           },
           {
             value: 'brand',
-            label: 'Identidade da loja',
+            label: 'Personalizar loja',
             content: (
               <Box className={local.brandStudio}>
                 <Box className={local.brandIntro}>
-                  <Text className={local.groupTitle}>Identidade da loja</Text>
+                  <Text className={local.groupTitle}>Personalizar loja</Text>
                   <Heading level={3} size="lg">
                     A fachada que o cliente reconhece
                   </Heading>

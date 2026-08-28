@@ -1,0 +1,82 @@
+@reference "@nino/ds/globals.css";
+
+.panel {
+  @apply flex min-w-0 flex-col;
+}
+
+.head {
+  @apply mb-4 lg:mb-6;
+}
+
+.identity {
+  @apply flex flex-wrap items-baseline gap-x-4 gap-y-1 rounded-2xl;
+  @apply bg-surface-2 px-4 py-3.5;
+}
+
+.fields {
+  @apply mt-5 grid grid-cols-1 gap-4 sm:grid-cols-2;
+}
+
+.wide {
+  @apply sm:col-span-2;
+}
+
+.address {
+  @apply mt-5 flex flex-col gap-3 border-t border-border pt-5;
+}
+
+.ghostTitle {
+  @apply h-3.5 w-16;
+}
+
+.ghostHint {
+  @apply mt-1.5 h-4 w-64;
+}
+
+.ghostIdentityLabel {
+  @apply h-3 w-10;
+}
+
+.ghostIdentityValue {
+  @apply h-5 w-40;
+}
+
+.ghostField {
+  @apply h-10 w-full;
+}
+
+.ghostGroupTitle {
+  @apply mb-3 h-3.5 w-32;
+}
+
+.ghostAddressGrid {
+  @apply grid grid-cols-2 gap-3 sm:grid-cols-6;
+}
+
+.ghostZip {
+  @apply col-span-2 sm:col-span-2;
+}
+
+.ghostStreet {
+  @apply col-span-2 sm:col-span-4;
+}
+
+.ghostNumber {
+  @apply col-span-1 sm:col-span-2;
+}
+
+.ghostComplement {
+  @apply col-span-1 sm:col-span-4;
+}
+
+.ghostNeighborhood {
+  @apply col-span-2 sm:col-span-3;
+}
+
+.ghostCity {
+  @apply col-span-1 sm:col-span-2;
+}
+
+.ghostState {
+  @apply col-span-1;
+}

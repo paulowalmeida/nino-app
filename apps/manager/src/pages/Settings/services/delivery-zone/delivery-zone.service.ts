@@ -8,7 +8,12 @@ export const DeliveryZoneService = {
 
   createDeliveryZone: (
     tenantId: string,
-    data: { name: string; fee: number }
+    data: {
+      name: string
+      minRadiusKm: number
+      maxRadiusKm: number
+      fee: number
+    }
   ): Promise<DeliveryZone> =>
     api.create<typeof data, DeliveryZone>(
       `tenants/${tenantId}/delivery-zones`,
@@ -18,7 +23,13 @@ export const DeliveryZoneService = {
   updateDeliveryZone: (
     tenantId: string,
     id: string,
-    data: { name?: string; fee?: number; isActive?: boolean }
+    data: {
+      name?: string
+      minRadiusKm?: number
+      maxRadiusKm?: number
+      fee?: number
+      isActive?: boolean
+    }
   ): Promise<DeliveryZone> =>
     api.patch<typeof data, DeliveryZone>(
       `tenants/${tenantId}/delivery-zones/${id}`,
@@ -29,7 +40,5 @@ export const DeliveryZoneService = {
     tenantId: string,
     id: string
   ): Promise<{ message: string }> =>
-    api.remove<{ message: string }>(
-      `tenants/${tenantId}/delivery-zones/${id}`
-    ),
+    api.remove<{ message: string }>(`tenants/${tenantId}/delivery-zones/${id}`),
 }

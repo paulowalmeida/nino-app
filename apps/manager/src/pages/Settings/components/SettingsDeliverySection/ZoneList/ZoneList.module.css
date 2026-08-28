@@ -54,6 +54,10 @@
   @apply w-24;
 }
 
+.editRadius {
+  @apply w-20;
+}
+
 .actions {
   @apply col-start-2 col-span-2 justify-self-end gap-1;
 

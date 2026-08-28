@@ -5,9 +5,11 @@ import { Box } from '@nino/ds/components/Box'
 import { Button } from '@nino/ds/components/Button'
 import { EmptyState } from '@nino/ds/components/EmptyState'
 import { Heading } from '@nino/ds/components/Heading'
-import { Skeleton } from '@nino/ds/components/Skeleton'
 import { Text } from '@nino/ds/components/Text'
 import { mergeClasses } from '@nino/ds/mergeClasses'
+import {
+  SettingsUnitSkeleton,
+} from '@pages/Settings/skeletons/SettingsUnitSkeleton/SettingsUnitSkeleton'
 import { riseDelay } from '@shared/utils/rise-delay/rise-delay'
 
 import { useSettingsFacade } from '../../facades/useSettingsFacade/useSettingsFacade'
@@ -34,7 +36,7 @@ export const SettingsUnitSection = () => {
       ? 'detalhe'
       : `/${unitTenantId}/configuracoes/unidade/detalhe`
 
-  if (isPending) return <Skeleton className={local.skeleton} />
+  if (isPending) return <SettingsUnitSkeleton />
 
   return (
     <Box as="section" className={local.panel}>

@@ -1,10 +1,15 @@
-import { Controller, type Control, type FieldErrors, type UseFormRegister } from 'react-hook-form'
+import {
+  Controller,
+  type Control,
+  type FieldErrors,
+  type UseFormRegister,
+} from 'react-hook-form'
 
 import { Collapsible } from '@nino/ds/components/Collapsible'
 import { FormField } from '@nino/ds/components/FormField'
 import { Input } from '@nino/ds/components/Input'
 import { MaskedInput } from '@nino/ds/components/MaskedInput'
-import { Select } from '@nino/ds/components/Select'
+import { Text } from '@nino/ds/components/Text'
 import { maskZipCode } from '@nino/ds/masks'
 import { DisclosureTrigger } from '@elements/DisclosureTrigger/DisclosureTrigger'
 import type { PublicDeliveryZone } from '@custom_types/delivery-zone/public-delivery-zone'
@@ -17,7 +22,8 @@ type DeliveryAddressFieldsProps = {
   control: Control<CheckoutFormValues>
   register: UseFormRegister<CheckoutFormValues>
   errors: FieldErrors<CheckoutFormValues>
-  zones: PublicDeliveryZone[]
+  quote?: PublicDeliveryZone
+  isQuoting: boolean
 }
 
 /** Zona de entrega + endereço — a metade do formulário que só existe quando
@@ -26,7 +32,8 @@ export const DeliveryAddressFields = ({
   control,
   register,
   errors,
-  zones,
+  quote,
+  isQuoting,
 }: DeliveryAddressFieldsProps) => (
   <div className={styles.block}>
     <p className={styles.blockLabel}>Onde entregar</p>
@@ -35,18 +42,15 @@ export const DeliveryAddressFields = ({
       <Controller
         name="deliveryZoneId"
         control={control}
-        rules={{ required: 'Escolha a região da entrega' }}
-        render={({ field }) => (
-          <Select
-            placeholder="Região da entrega"
-            error={!!errors.deliveryZoneId}
-            options={zones.map((zone) => ({
-              value: zone.id,
-              label: `${zone.name} — ${brl(zone.fee)}`,
-            }))}
-            value={field.value}
-            onValueChange={field.onChange}
-          />
+        rules={{ required: 'Informe um CEP atendido pela loja' }}
+        render={() => (
+          <Text color={quote ? 'default' : 'subtle'} aria-live="polite">
+            {isQuoting
+              ? 'Calculando a taxa de entrega…'
+              : quote
+                ? `${quote.name} · ${brl(quote.fee)}`
+                : 'Informe o CEP para calcular a taxa de entrega.'}
+          </Text>
         )}
       />
     </FormField>

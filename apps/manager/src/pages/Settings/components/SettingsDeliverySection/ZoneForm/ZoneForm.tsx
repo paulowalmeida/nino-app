@@ -12,27 +12,40 @@ import local from './ZoneForm.module.css'
 
 export type ZoneFormProps = {
   isAdding: boolean
-  onAdd: (data: { name: string; fee: number }) => void
+  onAdd: (data: {
+    name: string
+    minRadiusKm: number
+    maxRadiusKm: number
+    fee: number
+  }) => void
 }
 
 export const ZoneForm = ({ isAdding, onAdd }: ZoneFormProps) => {
   const [name, setName] = useState('')
+  const [minRadiusKm, setMinRadiusKm] = useState('0')
+  const [maxRadiusKm, setMaxRadiusKm] = useState('')
   const [fee, setFee] = useState('')
 
   const addZone = () => {
     const value = Number(fee.replace(',', '.'))
-    if (!name.trim() || Number.isNaN(value)) return
-    onAdd({ name: name.trim(), fee: value })
+    const min = Number(minRadiusKm)
+    const max = Number(maxRadiusKm)
+    if (!name.trim() || Number.isNaN(value) || min < 0 || max <= min) return
+    onAdd({ name: name.trim(), minRadiusKm: min, maxRadiusKm: max, fee: value })
     setName('')
+    setMinRadiusKm('0')
+    setMaxRadiusKm('')
     setFee('')
   }
 
   return (
     <Box className={local.section}>
       <Box className={local.intro}>
-        <Heading level={3} size="md">Adicionar região</Heading>
+        <Heading level={3} size="md">
+          Adicionar faixa
+        </Heading>
         <Text size="sm" color="subtle">
-          Cada região recebe uma taxa. Use 0,00 para entrega grátis.
+          Crie faixas de distância. Use 0,00 para entrega grátis.
         </Text>
       </Box>
 
@@ -52,13 +65,28 @@ export const ZoneForm = ({ isAdding, onAdd }: ZoneFormProps) => {
             onChange={(event) => setFee(event.target.value)}
           />
         </FormField>
+        <FormField label="De (km)" className={local.radius}>
+          <Input
+            inputMode="numeric"
+            value={minRadiusKm}
+            onChange={(event) => setMinRadiusKm(event.target.value)}
+          />
+        </FormField>
+        <FormField label="Até (km)" className={local.radius}>
+          <Input
+            inputMode="numeric"
+            placeholder="Ex.: 5"
+            value={maxRadiusKm}
+            onChange={(event) => setMaxRadiusKm(event.target.value)}
+          />
+        </FormField>
         <Button
           loading={isAdding}
           disabled={!name.trim()}
           className={`${motion.press} ${local.submit}`}
           onClick={addZone}
         >
-          Adicionar região
+          Adicionar faixa
         </Button>
       </Box>
     </Box>

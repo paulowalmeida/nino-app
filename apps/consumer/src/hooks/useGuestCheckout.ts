@@ -10,6 +10,7 @@ import type { Store } from '@custom_types/store/store'
 import { guestOrderRequest } from '@adapters/guestOrderRequest.adapter'
 import { useCheckoutTotals } from '@hooks/useCheckoutTotals'
 import { useCreateGuestOrder } from '@hooks/useCreateGuestOrder'
+import { useDeliveryQuote } from '@hooks/useDeliveryQuote'
 
 type UseGuestCheckoutParams = {
   store: Store | undefined
@@ -54,6 +55,15 @@ export const useGuestCheckout = ({
   const channel = useWatch({ control, name: 'channel' })
   const paymentMethod = useWatch({ control, name: 'paymentMethod' })
   const deliveryZoneId = useWatch({ control, name: 'deliveryZoneId' })
+  const guestZipCode = useWatch({ control, name: 'guestZipCode' })
+  const { quote, isFetching: isQuoting } = useDeliveryQuote(
+    store?.id,
+    guestZipCode
+  )
+
+  useEffect(() => {
+    setValue('deliveryZoneId', quote?.id)
+  }, [quote?.id, setValue])
 
   /** Loja que não entrega não pode ficar com "Entrega" marcado por padrão. */
   useEffect(() => {
@@ -70,7 +80,7 @@ export const useGuestCheckout = ({
   }, [created, clearCart])
 
   const isDelivery = channel === 'DELIVERY'
-  const zone = zones.find(({ id }) => id === deliveryZoneId)
+  const zone = zones.find(({ id }) => id === deliveryZoneId) ?? quote
 
   const { subtotal, deliveryFee, total, deliveryNote } = useCheckoutTotals({
     cartLines,
@@ -102,5 +112,6 @@ export const useGuestCheckout = ({
     created,
     isSubmitting,
     submitFailed,
+    isQuoting,
   }
 }
