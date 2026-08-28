@@ -17,7 +17,10 @@ export type StorePreviewProps = {
 }
 
 const useFilePreview = (file?: File) => {
-  const url = useMemo(() => (file ? URL.createObjectURL(file) : undefined), [file])
+  const url = useMemo(
+    () => (file ? URL.createObjectURL(file) : undefined),
+    [file]
+  )
 
   useEffect(() => {
     return () => {

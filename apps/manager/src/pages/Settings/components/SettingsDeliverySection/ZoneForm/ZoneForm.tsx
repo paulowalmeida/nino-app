@@ -15,6 +15,7 @@ export type ZoneFormProps = {
   isAdding: boolean
   lastMaxRadiusKm?: number
   onAdd: (data: { maxRadiusKm: number; fee: number }) => void
+  onPreviewRadius?: (maxRadiusKm: number | null) => void
 }
 
 const RADIUS_WINDOW_KM = 20
@@ -23,6 +24,7 @@ export const ZoneForm = ({
   isAdding,
   lastMaxRadiusKm = 0,
   onAdd,
+  onPreviewRadius,
 }: ZoneFormProps) => {
   const [maxRadiusKm, setMaxRadiusKm] = useState('')
 
@@ -43,6 +45,12 @@ export const ZoneForm = ({
     Number.isFinite(feeValue) &&
     feeValue >= 0 &&
     Math.round(feeValue * 100) === feeValue * 100
+
+  const previewRadius = (typed: string) => {
+    setMaxRadiusKm(typed)
+    const km = Number(typed)
+    onPreviewRadius?.(Number.isInteger(km) && km > lastMaxRadiusKm ? km : null)
+  }
 
   const addZone = () => {
     if (!canAdd) return
@@ -70,7 +78,7 @@ export const ZoneForm = ({
         min={nearestKm}
         max={farthestKm}
         value={draggedKm}
-        onValueChange={(km) => setMaxRadiusKm(String(km))}
+        onValueChange={(km) => previewRadius(String(km))}
       />
 
       <Box className={local.form}>
@@ -81,7 +89,7 @@ export const ZoneForm = ({
             step={1}
             placeholder="Ex.: 5"
             value={maxRadiusKm}
-            onChange={(event) => setMaxRadiusKm(event.target.value)}
+            onChange={(event) => previewRadius(event.target.value)}
           />
         </FormField>
         <FormField label="Taxa de entrega (R$)" className={local.fee}>

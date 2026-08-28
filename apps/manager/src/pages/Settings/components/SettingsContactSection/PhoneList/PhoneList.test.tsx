@@ -7,7 +7,14 @@ import { tenantPhoneMock } from './PhoneList.mock'
 
 describe('PhoneList', () => {
   it('shows the empty state', () => {
-    render(<PhoneList phones={[]} isPending={false} onEdit={() => undefined} onRemove={() => undefined} />)
+    render(
+      <PhoneList
+        phones={[]}
+        isPending={false}
+        onEdit={() => undefined}
+        onRemove={() => undefined}
+      />
+    )
     expect(
       screen.getByText(/Adicione um número para que os clientes saibam/)
     ).toBeInTheDocument()

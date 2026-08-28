@@ -40,16 +40,12 @@ describe('PhoneService', () => {
     vi.mocked(api.create).mockResolvedValue(phoneMock)
 
     // Act
-    const result = await PhoneService.createPhone(
-      tenantIdMock,
-      '11999990000'
-    )
+    const result = await PhoneService.createPhone(tenantIdMock, '11999990000')
 
     // Assert
-    expect(api.create).toHaveBeenCalledWith(
-      `tenants/${tenantIdMock}/phones`,
-      { phone: '11999990000' }
-    )
+    expect(api.create).toHaveBeenCalledWith(`tenants/${tenantIdMock}/phones`, {
+      phone: '11999990000',
+    })
     expect(result).toBe(phoneMock)
   })
 

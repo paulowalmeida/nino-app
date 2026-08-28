@@ -16,14 +16,10 @@ vi.mock('@pages/Settings/facades/useSettingsFacade/useSettingsFacade', () => ({
   useSettingsFacade: () => ({
     delivery: {
       query: { zones: [deliveryZoneMock], isPending: false },
+      location: { coordinates: null, isResolved: true },
       mutations: delivery,
     },
-    units: { detail: { data: undefined } },
   }),
-}))
-
-vi.mock('@shared/services/tenant/tenant.service', () => ({
-  TenantService: { getMapLocation: vi.fn().mockResolvedValue(null) },
 }))
 
 describe('SettingsDeliverySection', () => {

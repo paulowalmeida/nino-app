@@ -1,5 +1,6 @@
 import { useCompany } from '@pages/Settings/hooks/useCompany/useCompany'
 import { useDeliveryZones } from '@pages/Settings/hooks/useDeliveryZones/useDeliveryZones'
+import { useMapLocation } from '@pages/Settings/hooks/useMapLocation/useMapLocation'
 import { usePhoneMutations } from '@pages/Settings/hooks/usePhoneMutations/usePhoneMutations'
 import { usePhones } from '@pages/Settings/hooks/usePhones/usePhones'
 import { useRemoveTenant } from '@pages/Settings/hooks/useRemoveTenant/useRemoveTenant'
@@ -25,8 +26,15 @@ export const useSettingsFacade = () => {
   return {
     tenant,
     company: { query: useCompany(), save: useSaveCompany() },
-    contact: { query: usePhones(tenantId), mutations: usePhoneMutations(tenantId) },
-    delivery: { query: useDeliveryZones(tenantId), mutations: useZoneMutations(tenantId) },
+    contact: {
+      query: usePhones(tenantId),
+      mutations: usePhoneMutations(tenantId),
+    },
+    delivery: {
+      query: useDeliveryZones(tenantId),
+      location: useMapLocation(tenantId),
+      mutations: useZoneMutations(tenantId),
+    },
     hours: { query: useOpeningHours(tenantId), save: useSaveWeek(tenantId) },
     service: { query: useSettings(tenantId), save: useSaveSettings(tenantId) },
     units: {

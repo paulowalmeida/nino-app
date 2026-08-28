@@ -7,9 +7,7 @@ import { EmptyState } from '@nino/ds/components/EmptyState'
 import { Heading } from '@nino/ds/components/Heading'
 import { Text } from '@nino/ds/components/Text'
 import { mergeClasses } from '@nino/ds/mergeClasses'
-import {
-  SettingsUnitSkeleton,
-} from '@pages/Settings/skeletons/SettingsUnitSkeleton/SettingsUnitSkeleton'
+import { SettingsUnitSkeleton } from '@pages/Settings/skeletons/SettingsUnitSkeleton/SettingsUnitSkeleton'
 import { riseDelay } from '@shared/utils/rise-delay/rise-delay'
 
 import { useSettingsFacade } from '../../facades/useSettingsFacade/useSettingsFacade'
@@ -68,9 +66,7 @@ export const SettingsUnitSection = () => {
         )}
       </Box>
 
-      {units.length === 0 && (
-        <EmptyState>Nenhuma loja cadastrada.</EmptyState>
-      )}
+      {units.length === 0 && <EmptyState>Nenhuma loja cadastrada.</EmptyState>}
 
       <Box as="ul" direction="column">
         {units.map(({ tenantId: id, tenantName, companyName }, index) => (

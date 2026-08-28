@@ -46,17 +46,30 @@
 }
 
 .range {
-  @apply flex min-w-0 flex-col;
+  @apply flex min-w-0 flex-col items-start;
 
   grid-area: range;
 }
 
-.rangeValue {
+.rangeButton {
+  @apply -ml-2 h-auto justify-start px-2 py-0.5;
   @apply text-sm font-semibold text-fg-default tabular-nums;
 }
 
+.zoneFocused .rangeButton {
+  @apply text-brand;
+}
+
+.zoneFocused .rulerSpan {
+  @apply bg-brand-strong;
+}
+
+.zoneFocused .ruler {
+  @apply h-2;
+}
+
 .rangeStatus {
-  @apply text-xs text-fg-faint;
+  @apply px-0 text-xs text-fg-faint;
 }
 
 .fee {

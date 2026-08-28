@@ -28,6 +28,11 @@
   fill: var(--color-brand);
 }
 
+.previewRing {
+  stroke: var(--color-accent-clay);
+  fill: var(--color-accent-clay);
+}
+
 .zoneRingOff {
   stroke: var(--color-fg-faint);
   fill: var(--color-fg-faint);

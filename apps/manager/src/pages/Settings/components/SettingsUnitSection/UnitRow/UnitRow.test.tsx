@@ -7,7 +7,19 @@ import { UnitRow } from './UnitRow'
 
 describe('UnitRow', () => {
   it('renders the unit name', () => {
-    render(<MemoryRouter><UnitRow name="Centro" companyName="Nino" to="." isCurrent isMain={false} delay={{}} onRemove={() => undefined} /></MemoryRouter>)
+    render(
+      <MemoryRouter>
+        <UnitRow
+          name="Centro"
+          companyName="Nino"
+          to="."
+          isCurrent
+          isMain={false}
+          delay={{}}
+          onRemove={() => undefined}
+        />
+      </MemoryRouter>
+    )
     expect(screen.getByText('Centro')).toBeInTheDocument()
   })
 })

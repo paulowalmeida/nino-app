@@ -34,7 +34,5 @@ export const OpeningHoursService = {
     tenantId: string,
     id: string
   ): Promise<{ message: string }> =>
-    api.remove<{ message: string }>(
-      `tenants/${tenantId}/opening-hours/${id}`
-    ),
+    api.remove<{ message: string }>(`tenants/${tenantId}/opening-hours/${id}`),
 }

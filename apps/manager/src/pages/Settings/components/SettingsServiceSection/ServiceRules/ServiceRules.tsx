@@ -95,7 +95,9 @@ export const ServiceRules = ({
   return (
     <Box as="section" className={local.panel}>
       <Box as="header" className={`${motion.unroll} ${local.head}`}>
-        <Heading level={2} size="xl">Como a loja atende</Heading>
+        <Heading level={2} size="xl">
+          Como a loja atende
+        </Heading>
         <Text size="sm" color="subtle" mt={1}>
           Vale para o app do cliente e para o pedido aberto no painel.
         </Text>
@@ -167,7 +169,9 @@ export const ServiceRules = ({
           />
           <Box className={local.rowText}>
             <Text className={local.rowLabel}>Pedir CPF na nota</Text>
-            <Text className={local.rowHint}>Some do checkout quando desligado.</Text>
+            <Text className={local.rowHint}>
+              Some do checkout quando desligado.
+            </Text>
           </Box>
         </Box>
       </Box>
@@ -183,7 +187,9 @@ export const ServiceRules = ({
           value={draft.minOrderAmount}
           onChange={(event) => change({ minOrderAmount: event.target.value })}
         />
-        <Text className={local.rowHint}>Deixe em 0 para não exigir mínimo.</Text>
+        <Text className={local.rowHint}>
+          Deixe em 0 para não exigir mínimo.
+        </Text>
       </Box>
 
       <Box className={local.minimum}>

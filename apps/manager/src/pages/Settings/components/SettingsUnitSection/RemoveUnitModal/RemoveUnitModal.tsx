@@ -74,9 +74,8 @@ export const RemoveUnitModal = ({
               already typed. */}
           <Box direction="column" gap={1.5}>
             <Label className={styles.label} htmlFor="remove-unit-name">
-              Para confirmar, digite <code className={styles.code}>
-                {unitName}
-              </code> abaixo:
+              Para confirmar, digite{' '}
+              <code className={styles.code}>{unitName}</code> abaixo:
             </Label>
             <Input
               id="remove-unit-name"

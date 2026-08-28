@@ -4,6 +4,8 @@ import { Box } from '@nino/ds/components/Box'
 import { Heading } from '@nino/ds/components/Heading'
 import { Text } from '@nino/ds/components/Text'
 import { useSettingsFacade } from '@pages/Settings/facades/useSettingsFacade/useSettingsFacade'
+import { DeliveryMapSkeleton } from '@pages/Settings/skeletons/DeliveryMapSkeleton/DeliveryMapSkeleton'
+import { ZoneFormSkeleton } from '@pages/Settings/skeletons/ZoneFormSkeleton/ZoneFormSkeleton'
 import type { DeliveryZone } from '@shared/types/settings/delivery-zone'
 
 import { DeliveryMap } from './DeliveryMap/DeliveryMap'
@@ -15,11 +17,13 @@ import motion from '@styles/motion.module.css'
 import local from './SettingsDeliverySection.module.css'
 
 export const SettingsDeliverySection = () => {
-  const { delivery, units } = useSettingsFacade()
+  const { delivery } = useSettingsFacade()
   const { zones, isPending } = delivery.query
-  const unit = units.detail.data
+  const { coordinates, isResolved } = delivery.location
   const { add, edit, toggle, drop } = delivery.mutations
   const [removingZone, setRemovingZone] = useState<DeliveryZone | null>(null)
+  const [previewKm, setPreviewKm] = useState<number | null>(null)
+  const [focusedZoneId, setFocusedZoneId] = useState<string | null>(null)
 
   const confirmRemoval = () => {
     if (!removingZone) return
@@ -38,18 +42,35 @@ export const SettingsDeliverySection = () => {
         </Text>
       </Box>
 
-      <DeliveryMap zones={zones} unit={unit} />
-      <ZoneForm
-        isAdding={add.isPending}
-        lastMaxRadiusKm={zones.at(-1)?.maxRadiusKm}
-        onAdd={add.mutate}
-      />
+      {isResolved ? (
+        <>
+          <DeliveryMap
+            zones={zones}
+            coordinates={coordinates}
+            previewKm={previewKm}
+            focusedZoneId={focusedZoneId}
+          />
+          <ZoneForm
+            isAdding={add.isPending}
+            lastMaxRadiusKm={zones.at(-1)?.maxRadiusKm}
+            onAdd={add.mutate}
+            onPreviewRadius={setPreviewKm}
+          />
+        </>
+      ) : (
+        <>
+          <DeliveryMapSkeleton />
+          <ZoneFormSkeleton />
+        </>
+      )}
       <ZoneList
         zones={zones}
         isPending={isPending}
         onEdit={edit.mutate}
         onToggle={toggle.mutate}
         onRemove={setRemovingZone}
+        focusedZoneId={focusedZoneId}
+        onFocusZone={setFocusedZoneId}
       />
       <RemoveZoneModal
         open={!!removingZone}

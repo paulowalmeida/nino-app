@@ -112,4 +112,39 @@ describe('ZoneList', () => {
       isActive: false,
     })
   })
+
+  it('focuses and unfocuses a range for the map', async () => {
+    const onFocusZone = vi.fn()
+    const user = userEvent.setup()
+
+    const { rerender } = render(
+      <ZoneList
+        zones={[deliveryZoneMock]}
+        isPending={false}
+        onEdit={() => undefined}
+        onToggle={() => undefined}
+        onRemove={() => undefined}
+        focusedZoneId={null}
+        onFocusZone={onFocusZone}
+      />
+    )
+
+    await user.click(screen.getByRole('button', { name: '0–5 km' }))
+    expect(onFocusZone).toHaveBeenCalledWith(deliveryZoneMock.id)
+
+    rerender(
+      <ZoneList
+        zones={[deliveryZoneMock]}
+        isPending={false}
+        onEdit={() => undefined}
+        onToggle={() => undefined}
+        onRemove={() => undefined}
+        focusedZoneId={deliveryZoneMock.id}
+        onFocusZone={onFocusZone}
+      />
+    )
+
+    await user.click(screen.getByRole('button', { name: '0–5 km' }))
+    expect(onFocusZone).toHaveBeenLastCalledWith(null)
+  })
 })

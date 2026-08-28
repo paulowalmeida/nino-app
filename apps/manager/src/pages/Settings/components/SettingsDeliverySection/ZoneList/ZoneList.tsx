@@ -22,6 +22,8 @@ export type ZoneListProps = {
   onEdit: (data: { id: string; maxRadiusKm: number; fee: number }) => void
   onToggle: (data: { id: string; isActive: boolean }) => void
   onRemove: (zone: DeliveryZone) => void
+  focusedZoneId?: string | null
+  onFocusZone?: (zoneId: string | null) => void
 }
 
 export const ZoneList = ({
@@ -30,6 +32,8 @@ export const ZoneList = ({
   onEdit,
   onToggle,
   onRemove,
+  focusedZoneId = null,
+  onFocusZone,
 }: ZoneListProps) => {
   const [editingId, setEditingId] = useState<string | null>(null)
   const [draft, setDraft] = useState({
@@ -112,7 +116,7 @@ export const ZoneList = ({
                 key={zone.id}
                 className={`${motion.deal} ${local.zone} ${
                   zone.isActive ? '' : local.off
-                }`}
+                } ${focusedZoneId === zone.id ? local.zoneFocused : ''}`}
                 style={riseDelay(index * 45 + 60)}
               >
                 <Switch
@@ -169,9 +173,19 @@ export const ZoneList = ({
                 ) : (
                   <>
                     <Box className={local.range}>
-                      <Text className={local.rangeValue}>
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        className={`${motion.press} ${local.rangeButton}`}
+                        aria-pressed={focusedZoneId === zone.id}
+                        onClick={() =>
+                          onFocusZone?.(
+                            focusedZoneId === zone.id ? null : zone.id
+                          )
+                        }
+                      >
                         {zone.minRadiusKm}–{zone.maxRadiusKm} km
-                      </Text>
+                      </Button>
                       <Text className={local.rangeStatus}>
                         {zone.isActive ? 'Atende pedidos' : 'Pausada'}
                       </Text>

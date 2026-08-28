@@ -6,9 +6,7 @@ import { storePreviewMock } from './StorePreview.mock'
 
 describe(StorePreview.name, () => {
   it('shows the store identity and a representative menu', () => {
-    render(
-      <StorePreview {...storePreviewMock} />
-    )
+    render(<StorePreview {...storePreviewMock} />)
 
     expect(
       screen.getByRole('region', { name: 'Prévia da loja para o cliente' })

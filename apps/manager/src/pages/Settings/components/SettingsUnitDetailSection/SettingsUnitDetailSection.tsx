@@ -13,7 +13,9 @@ export const SettingsUnitDetailSection = () => {
 
   return (
     <Box direction="column" gap={2}>
-      <Breadcrumb trail={[{ label: 'Unidades', to: '..' }, { label: tenantName }]} />
+      <Breadcrumb
+        trail={[{ label: 'Unidades', to: '..' }, { label: tenantName }]}
+      />
 
       <UnitCard
         unit={unit}

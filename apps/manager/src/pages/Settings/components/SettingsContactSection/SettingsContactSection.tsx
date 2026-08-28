@@ -29,7 +29,9 @@ export const SettingsContactSection = () => {
   return (
     <Box as="section" className={local.panel}>
       <Box as="header" className={`${motion.unroll} ${local.head}`}>
-        <Heading level={2} size="xl">Contato da loja</Heading>
+        <Heading level={2} size="xl">
+          Contato da loja
+        </Heading>
         <Text size="sm" color="subtle" mt={1}>
           Cadastre os números que os clientes podem usar para falar com você.
         </Text>

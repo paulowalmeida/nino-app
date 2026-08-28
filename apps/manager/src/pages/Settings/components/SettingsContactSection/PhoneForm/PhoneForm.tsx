@@ -29,7 +29,9 @@ export const PhoneForm = ({ isAdding, onAdd }: PhoneFormProps) => {
   return (
     <Box className={local.section}>
       <Box className={local.intro}>
-        <Heading level={3} size="md">Adicionar telefone</Heading>
+        <Heading level={3} size="md">
+          Adicionar telefone
+        </Heading>
         <Text size="sm" color="subtle">
           Use um número que sua equipe acompanha durante o atendimento.
         </Text>

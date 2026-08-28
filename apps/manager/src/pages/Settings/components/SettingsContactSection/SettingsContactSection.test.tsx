@@ -26,8 +26,12 @@ describe('SettingsContactSection', () => {
 
     render(<SettingsContactSection />)
 
-    expect(screen.getByRole('heading', { name: 'Contato da loja' })).toBeInTheDocument()
-    expect(screen.getByRole('heading', { name: 'Adicionar telefone' })).toBeInTheDocument()
+    expect(
+      screen.getByRole('heading', { name: 'Contato da loja' })
+    ).toBeInTheDocument()
+    expect(
+      screen.getByRole('heading', { name: 'Adicionar telefone' })
+    ).toBeInTheDocument()
 
     await user.click(screen.getByRole('button', { name: 'Remover' }))
     expect(contact.drop.mutate).not.toHaveBeenCalled()

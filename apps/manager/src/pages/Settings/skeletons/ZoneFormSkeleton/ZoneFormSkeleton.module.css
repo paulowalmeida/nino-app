@@ -1,0 +1,21 @@
+@reference "@nino/ds/globals.css";
+
+.title {
+  @apply h-5 w-40 rounded-2;
+}
+
+.description {
+  @apply h-4 w-full max-w-lg rounded-2;
+}
+
+.slider {
+  @apply h-9 w-full rounded-2;
+}
+
+.field {
+  @apply h-16 w-full rounded-2;
+}
+
+.submit {
+  @apply h-10 w-full self-start rounded-3 sm:w-36 sm:self-end;
+}

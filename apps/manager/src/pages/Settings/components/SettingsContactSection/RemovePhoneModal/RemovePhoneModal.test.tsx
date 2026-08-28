@@ -8,7 +8,10 @@ import { removePhoneModalMock } from './RemovePhoneModal.mock'
 
 vi.mock('@nino/ds/components/Modal', () => ({
   Modal: ({ body, footer }: { body: ReactNode; footer: ReactNode }) => (
-    <div>{body}{footer}</div>
+    <div>
+      {body}
+      {footer}
+    </div>
   ),
 }))
 

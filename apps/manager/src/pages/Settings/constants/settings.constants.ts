@@ -31,9 +31,21 @@ export const SERVICE_RULES_CHANNELS: {
   label: string
   hint: string
 }[] = [
-  { key: 'isDeliveryEnabled', label: 'Entrega', hint: 'A loja leva o pedido até o cliente.' },
-  { key: 'isPickupEnabled', label: 'Retirada', hint: 'O cliente pede pelo app e busca na loja.' },
-  { key: 'isCounterEnabled', label: 'Balcão', hint: 'Alguém da equipe registra o pedido no painel.' },
+  {
+    key: 'isDeliveryEnabled',
+    label: 'Entrega',
+    hint: 'A loja leva o pedido até o cliente.',
+  },
+  {
+    key: 'isPickupEnabled',
+    label: 'Retirada',
+    hint: 'O cliente pede pelo app e busca na loja.',
+  },
+  {
+    key: 'isCounterEnabled',
+    label: 'Balcão',
+    hint: 'Alguém da equipe registra o pedido no painel.',
+  },
 ]
 
 export const SERVICE_RULES_METHODS: PaymentMethod[] = [

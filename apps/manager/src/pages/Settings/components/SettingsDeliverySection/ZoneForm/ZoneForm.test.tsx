@@ -28,4 +28,21 @@ describe('ZoneForm', () => {
       fee: 7.5,
     })
   })
+
+  it('previews the radius while the range is typed', async () => {
+    const onPreviewRadius = vi.fn()
+    const user = userEvent.setup()
+
+    render(
+      <ZoneForm
+        {...zoneFormMock}
+        onAdd={vi.fn()}
+        onPreviewRadius={onPreviewRadius}
+      />
+    )
+
+    await user.type(screen.getByLabelText('Até (km)'), '5')
+
+    expect(onPreviewRadius).toHaveBeenLastCalledWith(5)
+  })
 })

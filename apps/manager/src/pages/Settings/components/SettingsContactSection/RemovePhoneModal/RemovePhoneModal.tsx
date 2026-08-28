@@ -20,13 +20,19 @@ export const RemovePhoneModal = ({
   <Modal
     open={open}
     onOpenChange={onOpenChange}
-    header={<Heading level={2} size="lg">Remover telefone?</Heading>}
+    header={
+      <Heading level={2} size="lg">
+        Remover telefone?
+      </Heading>
+    }
     body={
       <Box direction="column" gap={3}>
         <Text size="sm" color="muted">
           O número {phone} deixará de ser exibido como contato da loja.
         </Text>
-        <Text size="sm" color="muted">Esta ação não pode ser desfeita.</Text>
+        <Text size="sm" color="muted">
+          Esta ação não pode ser desfeita.
+        </Text>
       </Box>
     }
     footer={

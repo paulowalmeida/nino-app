@@ -1,58 +1,36 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef } from 'react'
 
 import L from 'leaflet'
 
 import { Box } from '@nino/ds/components/Box'
-import { Skeleton } from '@nino/ds/components/Skeleton'
 import { Text } from '@nino/ds/components/Text'
-import { TenantService } from '@shared/services/tenant/tenant.service'
 import type { DeliveryZone } from '@shared/types/settings/delivery-zone'
-import type { TenantDetail } from '@shared/types/store/tenant-detail'
+import type { TenantMapLocation } from '@shared/types/store/tenant-map-location'
 
 import local from './DeliveryMap.module.css'
 import 'leaflet/dist/leaflet.css'
 
 type DeliveryMapProps = {
   zones: DeliveryZone[]
-  unit?: TenantDetail
+  coordinates: TenantMapLocation | null
+  previewKm?: number | null
+  focusedZoneId?: string | null
 }
 
 const MAP_ZOOM = 13
 
-export const DeliveryMap = ({ zones, unit }: DeliveryMapProps) => {
+export const DeliveryMap = ({
+  zones,
+  coordinates,
+  previewKm = null,
+  focusedZoneId = null,
+}: DeliveryMapProps) => {
   const mapElement = useRef<HTMLDivElement>(null)
   const map = useRef<L.Map | null>(null)
   const layers = useRef<L.LayerGroup | null>(null)
-  const [center, setCenter] = useState<L.LatLngExpression | null>(null)
-  const [hasLocation, setHasLocation] = useState(false)
-  const [locationError, setLocationError] = useState(false)
-
-  useEffect(() => {
-    let active = true
-    setCenter(null)
-    setHasLocation(false)
-    setLocationError(false)
-    if (!unit) return
-
-    void TenantService.getMapLocation(unit.id)
-      .then((coordinates) => {
-        if (!active) return
-        if (!coordinates) {
-          setLocationError(true)
-          return
-        }
-        setCenter([coordinates.latitude, coordinates.longitude])
-        setHasLocation(true)
-        setLocationError(false)
-      })
-      .catch(() => {
-        if (active) setLocationError(true)
-      })
-
-    return () => {
-      active = false
-    }
-  }, [unit])
+  const center: L.LatLngExpression | null = coordinates
+    ? [coordinates.latitude, coordinates.longitude]
+    : null
 
   useEffect(() => {
     if (!mapElement.current || map.current || !center) return
@@ -74,11 +52,6 @@ export const DeliveryMap = ({ zones, unit }: DeliveryMapProps) => {
   }, [center])
 
   useEffect(() => {
-    if (!map.current || !center) return
-    map.current.setView(center, MAP_ZOOM)
-  }, [center])
-
-  useEffect(() => {
     if (!map.current || !layers.current || !center) return
     const layerGroup = layers.current
     layerGroup.clearLayers()
@@ -93,17 +66,39 @@ export const DeliveryMap = ({ zones, unit }: DeliveryMapProps) => {
       .addTo(layerGroup)
 
     zones.forEach((zone) => {
+      const isFocused = focusedZoneId === zone.id
       L.circle(center, {
         radius: zone.maxRadiusKm * 1000,
-        weight: zone.isActive ? 2 : 1,
-        fillOpacity: zone.isActive ? 0.1 : 0.03,
+        weight: isFocused ? 3 : zone.isActive ? 2 : 1,
+        fillOpacity: isFocused ? 0.2 : zone.isActive ? 0.1 : 0.03,
         dashArray: zone.isActive ? undefined : '6 6',
         className: zone.isActive ? local.zoneRing : local.zoneRingOff,
       })
         .bindTooltip(`De ${zone.minRadiusKm} até ${zone.maxRadiusKm} km`)
         .addTo(layerGroup)
     })
-  }, [center, zones])
+
+    if (previewKm) {
+      L.circle(center, {
+        radius: previewKm * 1000,
+        weight: 2,
+        fillOpacity: 0.06,
+        dashArray: '4 6',
+        className: local.previewRing,
+      })
+        .bindTooltip(`Nova faixa: até ${previewKm} km`)
+        .addTo(layerGroup)
+    }
+
+    const outerKm = Math.max(
+      previewKm ?? 0,
+      ...zones.map((zone) => zone.maxRadiusKm),
+      1
+    )
+    map.current.fitBounds(L.circle(center, outerKm * 1000).getBounds(), {
+      padding: [16, 16],
+    })
+  }, [center, zones, previewKm, focusedZoneId])
 
   return (
     <Box className={local.wrapper}>
@@ -112,15 +107,13 @@ export const DeliveryMap = ({ zones, unit }: DeliveryMapProps) => {
           Área de atendimento
         </Text>
         <Text size="xs" color="subtle">
-          {hasLocation
+          {center
             ? 'Centrado no endereço da unidade'
-            : locationError
-              ? 'Endereço não localizado'
-              : 'Aguardando localização'}
+            : 'Endereço não localizado'}
         </Text>
       </Box>
 
-      {hasLocation && center ? (
+      {center ? (
         <Box className={local.frame}>
           <div
             ref={mapElement}
@@ -129,15 +122,13 @@ export const DeliveryMap = ({ zones, unit }: DeliveryMapProps) => {
             aria-label="Mapa das áreas de entrega"
           />
         </Box>
-      ) : locationError ? (
+      ) : (
         <Box className={local.error}>
           <Text size="sm" color="subtle">
             Não foi possível localizar o endereço da unidade. O mapa não está
             disponível.
           </Text>
         </Box>
-      ) : (
-        <Skeleton className={local.skeleton} />
       )}
     </Box>
   )
