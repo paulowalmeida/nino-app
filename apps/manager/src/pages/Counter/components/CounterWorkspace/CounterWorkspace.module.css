@@ -2,7 +2,7 @@
 
 .floor {
   @apply flex-1 gap-4 pb-24;
-  @apply lg:min-h-0 lg:grid lg:grid-cols-[1fr_23rem] lg:pb-0;
+  @apply lg:min-h-0 lg:grid lg:grid-cols-[1fr_23rem] lg:gap-8 lg:pb-0;
 }
 
 .sheet {
