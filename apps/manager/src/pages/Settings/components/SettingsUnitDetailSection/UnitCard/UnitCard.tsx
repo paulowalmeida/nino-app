@@ -11,6 +11,7 @@ import { Input } from '@nino/ds/components/Input'
 import { Select } from '@nino/ds/components/Select'
 import { RadioGroup } from '@nino/ds/components/RadioGroup'
 import { Skeleton } from '@nino/ds/components/Skeleton'
+import { Tabs } from '@nino/ds/components/Tabs'
 import { Text } from '@nino/ds/components/Text'
 import {
   EMPTY_UNIT_DRAFT,
@@ -115,167 +116,198 @@ export const UnitCard = ({
         )}
       </Box>
 
-      <Box className={local.fields}>
-        <FormField label="Nome da unidade">
-          <Input
-            placeholder="Matriz, Centro, Unidade 2…"
-            value={draft.customName}
-            onChange={(event) => change({ customName: event.target.value })}
-          />
-        </FormField>
+      <Tabs
+        className={local.tabs}
+        tabs={[
+          {
+            value: 'unit',
+            label: 'Dados da unidade',
+            content: (
+              <Box className={local.tabContent}>
+                <Box className={local.fields}>
+                  <FormField label="Nome da unidade">
+                    <Input
+                      placeholder="Matriz, Centro, Unidade 2…"
+                      value={draft.customName}
+                      onChange={(event) =>
+                        change({ customName: event.target.value })
+                      }
+                    />
+                  </FormField>
 
-        <FormField
-          label="Link da loja"
-          helperText="Muda só pelo suporte — links já divulgados quebrariam"
-        >
-          <Input value={unit?.slug ?? ''} disabled readOnly />
-        </FormField>
+                  <FormField
+                    label="Link da loja"
+                    helperText="Muda só pelo suporte — links já divulgados quebrariam"
+                  >
+                    <Input value={unit?.slug ?? ''} disabled readOnly />
+                  </FormField>
 
-        <FormField
-          label="Fuso horário"
-          helperText="Define a virada do dia e o horário de funcionamento"
-        >
-          <Select
-            options={UNIT_TIMEZONES}
-            value={draft.timezone}
-            aria-label="Fuso horário da unidade"
-            onValueChange={(timezone) => change({ timezone })}
-          />
-        </FormField>
-      </Box>
+                  <FormField
+                    label="Fuso horário"
+                    helperText="Define a virada do dia e o horário de funcionamento"
+                  >
+                    <Select
+                      options={UNIT_TIMEZONES}
+                      value={draft.timezone}
+                      aria-label="Fuso horário da unidade"
+                      onValueChange={(timezone) => change({ timezone })}
+                    />
+                  </FormField>
+                </Box>
 
-      <Box className={local.brandStudio}>
-        <Box className={local.brandIntro}>
-          <Text className={local.groupTitle}>Identidade da loja</Text>
-          <Heading level={3} size="lg">
-            A fachada que o cliente reconhece
-          </Heading>
-          <Text size="sm" color="subtle">
-            Combine imagens e cores. A prévia muda enquanto você escolhe.
-          </Text>
-        </Box>
+                <Box className={local.address}>
+                  <Text className={local.groupTitle}>Endereço da unidade</Text>
+                  <AddressFields value={draft} onChange={change} />
+                </Box>
+              </Box>
+            ),
+          },
+          {
+            value: 'brand',
+            label: 'Identidade da loja',
+            content: (
+              <Box className={local.brandStudio}>
+                <Box className={local.brandIntro}>
+                  <Text className={local.groupTitle}>Identidade da loja</Text>
+                  <Heading level={3} size="lg">
+                    A fachada que o cliente reconhece
+                  </Heading>
+                  <Text size="sm" color="subtle">
+                    Combine imagens e cores. A prévia muda enquanto você
+                    escolhe.
+                  </Text>
+                </Box>
 
-        <Box
-          className={local.storePreview}
-          style={
-            {
-              '--preview-primary': draft.primaryColor,
-              '--preview-secondary': draft.secondaryColor,
-              '--preview-tertiary': draft.tertiaryColor,
-              '--preview-banner': draft.bannerFile
-                ? `url(${URL.createObjectURL(draft.bannerFile)})`
-                : unit?.bannerUrl
-                  ? `url(${unit.bannerUrl})`
-                  : 'none',
-            } as React.CSSProperties
-          }
-        >
-          <Box className={local.previewBanner}>
-            {draft.logoFile || unit?.logoUrl ? (
-              <img
-                className={local.previewLogo}
-                src={
-                  draft.logoFile
-                    ? URL.createObjectURL(draft.logoFile)
-                    : unit?.logoUrl
-                }
-                alt="Prévia do logo"
-              />
-            ) : (
-              <Text className={local.logoFallback}>sua marca</Text>
-            )}
-          </Box>
-          <Box className={local.previewBody}>
-            <Text className={local.previewEyebrow}>Loja online</Text>
-            <Text className={local.previewName}>
-              {draft.customName || 'Nome da unidade'}
-            </Text>
-            <span className={local.previewAction}>Ver cardápio</span>
-          </Box>
-        </Box>
+                <Box
+                  className={local.storePreview}
+                  style={
+                    {
+                      '--preview-primary': draft.primaryColor,
+                      '--preview-secondary': draft.secondaryColor,
+                      '--preview-tertiary': draft.tertiaryColor,
+                      '--preview-banner': draft.bannerFile
+                        ? `url(${URL.createObjectURL(draft.bannerFile)})`
+                        : unit?.bannerUrl
+                          ? `url(${unit.bannerUrl})`
+                          : 'none',
+                    } as React.CSSProperties
+                  }
+                >
+                  <Box className={local.previewBanner}>
+                    {draft.logoFile || unit?.logoUrl ? (
+                      <img
+                        className={local.previewLogo}
+                        src={
+                          draft.logoFile
+                            ? URL.createObjectURL(draft.logoFile)
+                            : unit?.logoUrl
+                        }
+                        alt="Prévia do logo"
+                      />
+                    ) : (
+                      <Text className={local.logoFallback}>sua marca</Text>
+                    )}
+                  </Box>
+                  <Box className={local.previewBody}>
+                    <Text className={local.previewEyebrow}>Loja online</Text>
+                    <Text className={local.previewName}>
+                      {draft.customName || 'Nome da unidade'}
+                    </Text>
+                    <span className={local.previewAction}>Ver cardápio</span>
+                  </Box>
+                </Box>
 
-        <Box className={local.assetGrid}>
-          <FormField
-            label="Logo"
-            helperText="PNG, JPG, WebP ou AVIF · até 4 MB"
-          >
-            <FileUpload
-              accept={{
-                'image/*': ['.png', '.jpg', '.jpeg', '.webp', '.avif'],
-              }}
-              maxFileSize={4 * 1024 * 1024}
-              triggerLabel="Escolher logo"
-              onFileChange={(files) => change({ logoFile: files[0] })}
-            />
-          </FormField>
-          <FormField
-            label="Banner"
-            helperText="Prefira uma imagem horizontal · até 4 MB"
-          >
-            <FileUpload
-              accept={{
-                'image/*': ['.png', '.jpg', '.jpeg', '.webp', '.avif'],
-              }}
-              maxFileSize={4 * 1024 * 1024}
-              triggerLabel="Escolher banner"
-              onFileChange={(files) => change({ bannerFile: files[0] })}
-            />
-          </FormField>
-        </Box>
+                <Box className={local.assetGrid}>
+                  <FormField
+                    label="Logo"
+                    helperText="PNG, JPG, WebP ou AVIF · até 4 MB"
+                  >
+                    <FileUpload
+                      accept={{
+                        'image/*': ['.png', '.jpg', '.jpeg', '.webp', '.avif'],
+                      }}
+                      maxFileSize={4 * 1024 * 1024}
+                      triggerLabel="Escolher logo"
+                      onFileChange={(files) => change({ logoFile: files[0] })}
+                    />
+                  </FormField>
+                  <FormField
+                    label="Banner"
+                    helperText="Prefira uma imagem horizontal · até 4 MB"
+                  >
+                    <FileUpload
+                      accept={{
+                        'image/*': ['.png', '.jpg', '.jpeg', '.webp', '.avif'],
+                      }}
+                      maxFileSize={4 * 1024 * 1024}
+                      triggerLabel="Escolher banner"
+                      onFileChange={(files) => change({ bannerFile: files[0] })}
+                    />
+                  </FormField>
+                </Box>
 
-        <Box className={local.palette}>
-          <FormField label="Cor primária">
-            <ColorPicker
-              value={draft.primaryColor}
-              onValueChange={(primaryColor) => change({ primaryColor })}
-            />
-          </FormField>
-          <FormField label="Cor secundária">
-            <ColorPicker
-              value={draft.secondaryColor}
-              onValueChange={(secondaryColor) => change({ secondaryColor })}
-            />
-          </FormField>
-          <FormField label="Cor terciária">
-            <ColorPicker
-              value={draft.tertiaryColor}
-              onValueChange={(tertiaryColor) => change({ tertiaryColor })}
-            />
-          </FormField>
-        </Box>
+                <Box className={local.palette}>
+                  <FormField label="Cor primária">
+                    <ColorPicker
+                      value={draft.primaryColor}
+                      onValueChange={(primaryColor) => change({ primaryColor })}
+                    />
+                  </FormField>
+                  <FormField label="Cor secundária">
+                    <ColorPicker
+                      value={draft.secondaryColor}
+                      onValueChange={(secondaryColor) =>
+                        change({ secondaryColor })
+                      }
+                    />
+                  </FormField>
+                  <FormField label="Cor terciária">
+                    <ColorPicker
+                      value={draft.tertiaryColor}
+                      onValueChange={(tertiaryColor) =>
+                        change({ tertiaryColor })
+                      }
+                    />
+                  </FormField>
+                </Box>
 
-        <FormField
-          label="Carregamento da loja"
-          helperText="O que aparece enquanto o cardápio é preparado"
-        >
-          <RadioGroup
-            variant="card"
-            orientation="horizontal"
-            value={draft.loadingType}
-            options={[
-              {
-                value: 'MASCOT',
-                label: 'Nino',
-                description: 'O mascote da marca',
-              },
-              {
-                value: 'SPINNER',
-                label: 'Spinner',
-                description: 'Discreto e direto',
-              },
-              { value: 'DOTS', label: 'Pontos', description: 'Leve e ritmado' },
-            ]}
-            onValueChange={(loadingType) =>
-              change({ loadingType: loadingType as UnitDraft['loadingType'] })
-            }
-          />
-        </FormField>
-      </Box>
-
-      <Box className={local.address}>
-        <Text className={local.groupTitle}>Endereço da unidade</Text>
-        <AddressFields value={draft} onChange={change} />
-      </Box>
+                <FormField
+                  label="Carregamento da loja"
+                  helperText="O que aparece enquanto o cardápio é preparado"
+                >
+                  <RadioGroup
+                    variant="card"
+                    orientation="horizontal"
+                    value={draft.loadingType}
+                    options={[
+                      {
+                        value: 'MASCOT',
+                        label: 'Nino',
+                        description: 'O mascote da marca',
+                      },
+                      {
+                        value: 'SPINNER',
+                        label: 'Spinner',
+                        description: 'Discreto e direto',
+                      },
+                      {
+                        value: 'DOTS',
+                        label: 'Pontos',
+                        description: 'Leve e ritmado',
+                      },
+                    ]}
+                    onValueChange={(loadingType) =>
+                      change({
+                        loadingType: loadingType as UnitDraft['loadingType'],
+                      })
+                    }
+                  />
+                </FormField>
+              </Box>
+            ),
+          },
+        ]}
+      />
 
       <Button
         loading={isSaving}
