@@ -296,14 +296,14 @@ describe(useCatalogCategoriesMutations.name, () => {
 
     await act(() => result.current.create.mutateAsync('Bebidas'))
     await act(() =>
-      result.current.create.mutateAsync({ name: 'Sobremesas', icon: 'cake' })
+      result.current.create.mutateAsync({ name: 'Sobremesas', icon: 'dessert' })
     )
     await act(() => result.current.reorder.mutateAsync({ ids: ['drinks'] }))
 
     expect(CategoryService.createCategory).toHaveBeenCalledWith(
       null,
       'Sobremesas',
-      'cake'
+      'dessert'
     )
     expect(invalidateQueries).toHaveBeenCalledWith({
       queryKey: queryKeys.productCategories.all(''),

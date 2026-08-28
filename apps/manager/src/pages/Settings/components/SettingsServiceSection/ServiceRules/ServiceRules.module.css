@@ -42,13 +42,16 @@
 
 /* payment methods: a badge the store lights up */
 .chips {
-  @apply flex flex-wrap gap-2;
+  @apply gap-2;
 }
 
 .chip {
-  @apply rounded-3 px-3.5 py-2;
-  @apply text-sm text-fg-subtle;
+  @apply gap-1.5 rounded-3 px-3 py-2 text-sm text-fg-subtle;
   @apply hover:text-fg-default;
+}
+
+.chip svg {
+  @apply h-4 w-4 shrink-0;
 }
 
 .chipOn {

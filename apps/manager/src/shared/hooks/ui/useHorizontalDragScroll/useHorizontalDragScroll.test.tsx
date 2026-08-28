@@ -28,7 +28,7 @@ const renderOverflowingTrack = () => {
   })
   track.scrollBy = vi.fn(({ left }: ScrollToOptions) => {
     track.scrollLeft += left ?? 0
-  })
+  }) as unknown as typeof track.scrollBy
   return track
 }
 

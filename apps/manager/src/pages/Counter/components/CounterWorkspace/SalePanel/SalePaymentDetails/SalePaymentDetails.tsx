@@ -54,7 +54,7 @@ export const SalePaymentDetails = ({
     >
       Como vai pagar
     </Text>
-    <Box className={styles.choices}>
+    <Box direction="row" wrap className={styles.choices}>
       {methods.map((value) => (
         <Button
           key={value}

@@ -59,7 +59,7 @@ describe(CategoryChips.name, () => {
     /* WHY: jsdom não implementa scroll suave. */
     track.scrollBy = vi.fn(({ left }: ScrollToOptions) => {
       track.scrollLeft += left ?? 0
-    })
+    }) as unknown as typeof track.scrollBy
 
     fireEvent.wheel(track, { deltaY: 120, deltaX: 0 })
 

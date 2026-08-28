@@ -3,6 +3,7 @@ import { useState } from 'react'
 import { Box } from '@nino/ds/components/Box'
 import { Button } from '@nino/ds/components/Button'
 import { Heading } from '@nino/ds/components/Heading'
+import { Icon } from '@nino/ds/components/Icon'
 import { Input } from '@nino/ds/components/Input'
 import { Label } from '@nino/ds/components/Label'
 import { Skeleton } from '@nino/ds/components/Skeleton'
@@ -13,7 +14,10 @@ import {
   SERVICE_RULES_CHANNELS,
   SERVICE_RULES_METHODS,
 } from '@pages/Settings/constants/settings.constants'
-import { PAYMENT_METHOD_LABEL } from '@shared/constants/order.constants'
+import {
+  PAYMENT_METHOD_ICON,
+  PAYMENT_METHOD_LABEL,
+} from '@shared/constants/order.constants'
 import type { PaymentMethod } from '@shared/types/order/payment-method'
 import type { ServiceRulesDraft } from '@shared/types/settings/service-rules-draft'
 import type { TenantSettings } from '@shared/types/settings/tenant-settings'
@@ -119,7 +123,7 @@ export const ServiceRules = ({
 
       <Box className={local.group}>
         <Text className={local.groupTitle}>Formas de pagamento aceitas</Text>
-        <Box className={local.chips}>
+        <Box direction="row" wrap className={local.chips}>
           {SERVICE_RULES_METHODS.map((method) => (
             <Button
               key={method}
@@ -133,6 +137,7 @@ export const ServiceRules = ({
                   : ''
               }`}
             >
+              <Icon name={PAYMENT_METHOD_ICON[method]} />
               {PAYMENT_METHOD_LABEL[method]}
             </Button>
           ))}
