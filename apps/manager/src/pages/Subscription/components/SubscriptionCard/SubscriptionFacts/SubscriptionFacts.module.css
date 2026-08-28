@@ -1,6 +1,17 @@
 @reference "@nino/ds/globals.css";
 
-.facts { @apply flex flex-col pt-1; }
-.fact { @apply border-b border-border py-2.5; }
-.factLabel { @apply text-sm text-fg-faint; }
-.factValue { @apply text-sm font-semibold text-fg-default; }
+.facts {
+  @apply flex flex-col pt-2;
+}
+
+.fact {
+  @apply border-b border-border py-3;
+}
+
+.factLabel {
+  @apply w-36 shrink-0 text-sm text-fg-faint;
+}
+
+.factValue {
+  @apply min-w-0 text-sm font-semibold text-fg-default;
+}

@@ -1,5 +1,9 @@
 @reference "@nino/ds/globals.css";
 
+.subscription {
+  @apply max-w-xl;
+}
+
 .plan {
   @apply border-b border-border pb-4;
 }
@@ -25,7 +29,7 @@
 }
 
 .ghostFactLabel {
-  @apply h-4 w-24;
+  @apply h-4 w-36 shrink-0;
 }
 
 .ghostFactValue {

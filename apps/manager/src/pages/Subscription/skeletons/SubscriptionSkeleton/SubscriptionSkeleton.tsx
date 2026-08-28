@@ -1,5 +1,4 @@
 import { Box } from '@nino/ds/components/Box'
-import { Card } from '@nino/ds/components/Card'
 import { Skeleton } from '@nino/ds/components/Skeleton'
 
 import styles from './SubscriptionSkeleton.module.css'
@@ -12,8 +11,15 @@ export const SubscriptionSkeleton = () => (
       Carregando assinatura
     </p>
 
-    <Card>
-      <Box wrap align="end" justify="between" gap={3} className={styles.plan}>
+    <Box className={styles.subscription}>
+      <Box
+        direction="row"
+        wrap
+        align="end"
+        justify="between"
+        gap={3}
+        className={styles.plan}
+      >
         <Box>
           <Skeleton variant="text" className={styles.ghostPlanLabel} />
           <Skeleton variant="text" className={styles.ghostPlanName} />
@@ -25,8 +31,8 @@ export const SubscriptionSkeleton = () => (
         {SUBSCRIPTION_GHOST_FACTS.map((fact) => (
           <Box
             key={fact}
+            direction="row"
             align="baseline"
-            justify="between"
             gap={3}
             className={styles.fact}
           >
@@ -35,6 +41,6 @@ export const SubscriptionSkeleton = () => (
           </Box>
         ))}
       </dl>
-    </Card>
+    </Box>
   </>
 )

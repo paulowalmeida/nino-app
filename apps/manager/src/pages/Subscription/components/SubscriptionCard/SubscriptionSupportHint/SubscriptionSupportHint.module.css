@@ -1,3 +1,5 @@
 @reference "@nino/ds/globals.css";
 
-.hint { @apply leading-relaxed; }
+.hint {
+  @apply leading-relaxed;
+}

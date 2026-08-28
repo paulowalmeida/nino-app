@@ -1,4 +1,4 @@
-import { Card } from '@nino/ds/components/Card'
+import { Box } from '@nino/ds/components/Box'
 import type { Subscription } from '@shared/types/profile/subscription'
 
 import { SubscriptionFacts } from './SubscriptionFacts/SubscriptionFacts'
@@ -6,13 +6,14 @@ import { SubscriptionPlanSummary } from './SubscriptionPlanSummary/SubscriptionP
 import { SubscriptionSupportHint } from './SubscriptionSupportHint/SubscriptionSupportHint'
 
 import motion from '@styles/motion.module.css'
+import styles from './SubscriptionCard.module.css'
 
 type SubscriptionCardProps = { subscription: Subscription }
 
 export const SubscriptionCard = ({ subscription }: SubscriptionCardProps) => (
-  <Card className={motion.settle}>
+  <Box as="section" className={`${motion.settle} ${styles.subscription}`}>
     <SubscriptionPlanSummary plan={subscription.plan} />
     <SubscriptionFacts subscription={subscription} />
     <SubscriptionSupportHint />
-  </Card>
+  </Box>
 )

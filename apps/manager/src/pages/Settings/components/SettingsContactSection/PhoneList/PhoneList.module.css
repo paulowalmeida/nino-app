@@ -13,11 +13,11 @@
 }
 
 .phones {
-  @apply flex flex-col;
+  @apply flex max-w-xl flex-col;
 }
 
 .phone {
-  @apply flex items-center gap-3 border-t border-border py-3;
+  @apply grid min-h-14 grid-cols-[minmax(0,1fr)_auto_auto] items-center gap-2 border-t border-border py-2;
 }
 
 /* o número é o alvo de edição — clicar nele abre a linha */
@@ -35,7 +35,7 @@
 }
 
 .editRow {
-  @apply flex min-w-0 flex-1 flex-wrap items-center gap-2;
+  @apply col-span-full min-w-0 items-center gap-2 py-1;
 }
 
 .edit {
@@ -47,10 +47,9 @@
 }
 
 .add {
-  @apply mt-4 flex flex-wrap items-center gap-2 border-t border-border;
-  @apply pt-4;
+  @apply mt-4 max-w-xl items-stretch gap-2 border-t border-border pt-4 sm:items-center;
 }
 
 .input {
-  @apply min-w-48 flex-1;
+  @apply w-full min-w-48 sm:w-72 sm:flex-none;
 }

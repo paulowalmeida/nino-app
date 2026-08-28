@@ -4,7 +4,6 @@ import styles from './SubscriptionSupportHint.module.css'
 
 export const SubscriptionSupportHint = () => (
   <Text as="p" size="xs" color="faint" mt={4} className={styles.hint}>
-    Mudança de plano e cancelamento passam pelo suporte enquanto a troca
-    automática não está no ar.
+    Para mudar ou cancelar seu plano, fale com o suporte.
   </Text>
 )

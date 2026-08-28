@@ -10,7 +10,14 @@ type SubscriptionPlanSummaryProps = { plan: Subscription['plan'] }
 export const SubscriptionPlanSummary = ({
   plan,
 }: SubscriptionPlanSummaryProps) => (
-  <Box wrap align="end" justify="between" gap={3} className={styles.plan}>
+  <Box
+    direction="row"
+    wrap
+    align="end"
+    justify="between"
+    gap={3}
+    className={styles.plan}
+  >
     <Box>
       <Text as="p" size="xs" weight="bold" case="uppercase" color="faint">
         Plano atual

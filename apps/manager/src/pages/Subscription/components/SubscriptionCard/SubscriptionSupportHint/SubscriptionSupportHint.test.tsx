@@ -7,6 +7,6 @@ describe(SubscriptionSupportHint.name, () => {
   it('explains how plan changes are handled', () => {
     render(<SubscriptionSupportHint />)
 
-    expect(screen.getByText(/passam pelo suporte/)).toBeInTheDocument()
+    expect(screen.getByText(/fale com o suporte/)).toBeInTheDocument()
   })
 })

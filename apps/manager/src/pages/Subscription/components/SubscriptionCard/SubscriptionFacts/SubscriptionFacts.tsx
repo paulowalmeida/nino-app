@@ -40,8 +40,8 @@ export const SubscriptionFacts = ({ subscription }: SubscriptionFactsProps) => {
       {facts.map(([label, value], index) => (
         <Box
           key={label}
+          direction="row"
           align="baseline"
-          justify="between"
           gap={3}
           className={`${motion.deal} ${styles.fact}`}
           style={riseDelay(index * 45 + 60)}

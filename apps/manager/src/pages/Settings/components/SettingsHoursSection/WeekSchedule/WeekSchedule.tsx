@@ -90,7 +90,9 @@ export const WeekSchedule = ({
   return (
     <Box as="section" className={local.panel}>
       <Box as="header" className={`${motion.unroll} ${local.head}`}>
-        <Heading level={2} size="xl">Quando a loja abre</Heading>
+        <Heading level={2} size="xl">
+          Quando a loja abre
+        </Heading>
         <Text size="sm" color="subtle" mt={1}>
           Fora do horário, o cliente vê a loja fechada e não consegue pedir.
         </Text>
@@ -121,6 +123,7 @@ export const WeekSchedule = ({
               <Box className={local.times}>
                 <TimePicker
                   size="sm"
+                  className={local.timeInput}
                   ariaLabel={`Abre ${WEEK_SCHEDULE_DAYS[entry.dayOfWeek]}`}
                   value={entry.openTime}
                   onValueChange={(openTime) =>
@@ -130,6 +133,7 @@ export const WeekSchedule = ({
                 <Text className={local.until}>às</Text>
                 <TimePicker
                   size="sm"
+                  className={local.timeInput}
                   ariaLabel={`Fecha ${WEEK_SCHEDULE_DAYS[entry.dayOfWeek]}`}
                   value={entry.closeTime}
                   onValueChange={(closeTime) =>

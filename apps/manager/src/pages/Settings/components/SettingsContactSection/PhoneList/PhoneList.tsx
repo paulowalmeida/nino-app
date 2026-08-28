@@ -58,10 +58,11 @@ export const PhoneList = ({
   return (
     <Box as="section" className={local.panel}>
       <Box as="header" className={`${motion.unroll} ${local.head}`}>
-        <Heading level={2} size="xl">Telefones da loja</Heading>
+        <Heading level={2} size="xl">
+          Telefones da loja
+        </Heading>
         <Text size="sm" color="subtle" mt={1}>
-          É por onde o cliente liga quando o pedido some — e onde a equipe
-          atende o pedido por telefone.
+          Cadastre os números que os clientes podem usar para falar com a loja.
         </Text>
       </Box>
 
@@ -78,7 +79,7 @@ export const PhoneList = ({
               style={riseDelay(index * 45 + 60)}
             >
               {editingId === entry.id ? (
-                <Box className={local.editRow}>
+                <Box direction="row" wrap className={local.editRow}>
                   <PhoneInput
                     aria-label="Telefone da loja"
                     className={local.input}
@@ -132,7 +133,10 @@ export const PhoneList = ({
         </ul>
       )}
 
-      <Box className={local.add}>
+      <Box
+        direction={{ mobile: 'column', tablet: 'row' }}
+        className={local.add}
+      >
         <PhoneInput
           value={phone}
           className={local.input}

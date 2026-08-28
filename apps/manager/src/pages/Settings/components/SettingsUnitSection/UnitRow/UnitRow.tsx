@@ -32,7 +32,7 @@ export const UnitRow = ({
 }: UnitRowProps) => (
   <ListRow gap={3} padding={2} wrap className={motion.deal} style={delay}>
     <Link to={to} className={mergeClasses(motion.lift, styles.unit)}>
-      <Box align="center" gap={2} wrap>
+      <Box direction="row" align="center" gap={2} wrap>
         <Text as="span" size="sm" weight="semibold">
           {name}
         </Text>
