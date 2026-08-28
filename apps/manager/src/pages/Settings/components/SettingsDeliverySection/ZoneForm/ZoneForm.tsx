@@ -29,16 +29,16 @@ export const ZoneForm = ({
   onAdd,
   onPreviewRadius,
 }: ZoneFormProps) => {
-  const [maxRadiusKm, setMaxRadiusKm] = useState<number | undefined>()
+  const [maxRadiusKm, setMaxRadiusKm] = useState<number | ''>('')
 
   const farthestKm = MAX_RADIUS_KM
   const draggedKm = Math.min(
-    Math.max(maxRadiusKm ?? MIN_RADIUS_KM, MIN_RADIUS_KM),
+    Math.max(maxRadiusKm || MIN_RADIUS_KM, MIN_RADIUS_KM),
     farthestKm
   )
   const [fee, setFee] = useState('')
   const feeValue = Number(fee.replace(',', '.'))
-  const maxValue = maxRadiusKm ?? 0
+  const maxValue = maxRadiusKm || 0
   const canAdd =
     Number.isFinite(maxValue) &&
     Number.isInteger(maxValue * 10) &&
@@ -61,7 +61,7 @@ export const ZoneForm = ({
   const addZone = () => {
     if (!canAdd) return
     onAdd({ maxRadiusKm: maxValue, fee: feeValue })
-    setMaxRadiusKm(undefined)
+    setMaxRadiusKm('')
     setFee('')
   }
 

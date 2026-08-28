@@ -5,7 +5,7 @@ import { InputSize } from '../Input/Input.types'
 import styles from './NumberInput.module.css'
 
 type NumberInputProps = {
-  value?: number
+  value?: number | ''
   defaultValue?: number
   /**
    * Called with the number. An empty or half-typed field (`-`, `1e`) does not
