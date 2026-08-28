@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useMemo, useRef } from 'react'
 
 import L from 'leaflet'
 
@@ -28,9 +28,10 @@ export const DeliveryMap = ({
   const mapElement = useRef<HTMLDivElement>(null)
   const map = useRef<L.Map | null>(null)
   const layers = useRef<L.LayerGroup | null>(null)
-  const center: L.LatLngExpression | null = coordinates
-    ? [coordinates.latitude, coordinates.longitude]
-    : null
+  const center = useMemo<L.LatLngExpression | null>(
+    () => (coordinates ? [coordinates.latitude, coordinates.longitude] : null),
+    [coordinates]
+  )
 
   useEffect(() => {
     if (!mapElement.current || map.current || !center) return
@@ -95,7 +96,7 @@ export const DeliveryMap = ({
       ...zones.map((zone) => zone.maxRadiusKm),
       1
     )
-    map.current.fitBounds(L.circle(center, outerKm * 1000).getBounds(), {
+    map.current.fitBounds(L.latLng(center).toBounds(outerKm * 1000), {
       padding: [16, 16],
     })
   }, [center, zones, previewKm, focusedZoneId])
