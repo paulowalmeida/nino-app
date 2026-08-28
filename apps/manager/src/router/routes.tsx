@@ -9,6 +9,7 @@ import { roleGuard } from '@guards/role-guard'
 import { SessionGuard } from '@guards/session-guard'
 import { AppLayout } from '@layouts/AppLayout/AppLayout'
 import { AuthLayout } from '@layouts/AuthLayout/AuthLayout'
+import { Skeleton } from '@nino/ds/components/Skeleton'
 import { RouteErrorBoundary } from '@shared/components/RouteErrorBoundary/RouteErrorBoundary'
 import { MANAGERS } from '@shared/constants/roles.constants'
 
@@ -16,6 +17,7 @@ export const router = createBrowserRouter([
   {
     path: '/',
     loader: RootLoader,
+    hydrateFallbackElement: <Skeleton />,
     errorElement: <RouteErrorBoundary />,
   },
   {
@@ -134,17 +136,21 @@ export const router = createBrowserRouter([
         path: 'catalogo/categorias',
         loader: roleGuard(MANAGERS),
         lazy: () =>
-          import('@pages/CatalogCategories/CatalogCategories').then(({ CatalogCategories }) => ({
-            Component: CatalogCategories,
-          })),
+          import('@pages/CatalogCategories/CatalogCategories').then(
+            ({ CatalogCategories }) => ({
+              Component: CatalogCategories,
+            })
+          ),
       },
       {
         path: 'catalogo/:productId',
         loader: roleGuard(MANAGERS),
         lazy: () =>
-          import('@pages/ProductDetail/ProductDetail').then(({ ProductDetail }) => ({
-            Component: ProductDetail,
-          })),
+          import('@pages/ProductDetail/ProductDetail').then(
+            ({ ProductDetail }) => ({
+              Component: ProductDetail,
+            })
+          ),
       },
       {
         path: 'unidades/nova',
@@ -205,7 +211,9 @@ export const router = createBrowserRouter([
         path: 'assinatura',
         lazy: () =>
           import('@pages/Subscription/Subscription').then(
-            ({ Subscription: AccountSubscription }) => ({ Component: AccountSubscription })
+            ({ Subscription: AccountSubscription }) => ({
+              Component: AccountSubscription,
+            })
           ),
       },
       {
@@ -230,17 +238,19 @@ export const router = createBrowserRouter([
             path: 'unidade',
             lazy: () =>
               import('@pages/Settings/components/SettingsUnitSection/SettingsUnitSection').then(
-                ({ SettingsUnitSection }) => ({ Component: SettingsUnitSection })
+                ({ SettingsUnitSection }) => ({
+                  Component: SettingsUnitSection,
+                })
               ),
           },
           {
             path: 'unidade/detalhe',
             lazy: () =>
-              import(
-                '@pages/Settings/components/SettingsUnitDetailSection/SettingsUnitDetailSection'
-              ).then(({ SettingsUnitDetailSection }) => ({
-                Component: SettingsUnitDetailSection,
-              })),
+              import('@pages/Settings/components/SettingsUnitDetailSection/SettingsUnitDetailSection').then(
+                ({ SettingsUnitDetailSection }) => ({
+                  Component: SettingsUnitDetailSection,
+                })
+              ),
           },
           {
             path: 'atendimento',
@@ -255,7 +265,9 @@ export const router = createBrowserRouter([
             path: 'horarios',
             lazy: () =>
               import('@pages/Settings/components/SettingsHoursSection/SettingsHoursSection').then(
-                ({ SettingsHoursSection }) => ({ Component: SettingsHoursSection })
+                ({ SettingsHoursSection }) => ({
+                  Component: SettingsHoursSection,
+                })
               ),
           },
           {

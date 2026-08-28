@@ -35,6 +35,11 @@ export const Sidebar = ({
   const waiting = summary?.PENDING ?? 0
   const isCollapsed = collapsed && !isOpen
 
+  const toggleCollapse = () => {
+    if (!isCollapsed) setOpenSection(null)
+    onToggleCollapse()
+  }
+
   const asideClass = mergeClasses(
     styles.sidebar,
     isOpen && styles.open,
@@ -54,7 +59,7 @@ export const Sidebar = ({
             variant="ghost"
             size="icon"
             className={styles.collapseBtn}
-            onClick={onToggleCollapse}
+            onClick={toggleCollapse}
             aria-label="Expandir menu"
           >
             <Icon name="menu" size="md" />
@@ -66,7 +71,7 @@ export const Sidebar = ({
               variant="ghost"
               size="icon"
               className={styles.collapseBtn}
-              onClick={onToggleCollapse}
+              onClick={toggleCollapse}
               aria-label="Recolher menu"
             >
               <Icon
@@ -92,7 +97,7 @@ export const Sidebar = ({
         onOpenSectionChange={setOpenSection}
         isInside={isInside}
         onNavigate={onClose}
-        onExpand={onToggleCollapse}
+        onExpand={toggleCollapse}
       />
 
       <Box className={styles.footer}>
