@@ -6,18 +6,44 @@ import { describe, expect, it } from 'vitest'
 import { CustomerDetailSkeleton } from './CustomerDetailSkeleton'
 import { customerDetailSkeletonMock } from './CustomerDetailSkeleton.mock'
 
-describe('CustomerDetailSkeleton', () => {
-  it('announces loading and mirrors the customer detail layout', () => {
-    const { container } = render(
-      <MemoryRouter>
-        <CustomerDetailSkeleton />
-      </MemoryRouter>
-    )
+const { placeholderOrderRowCount, placeholderBoneCount } =
+  customerDetailSkeletonMock
 
-    expect(screen.getByRole('status')).toHaveTextContent('Carregando cliente')
-    expect(
-      container.querySelectorAll('[aria-hidden="true"]').length
-    ).toBeGreaterThan(customerDetailSkeletonMock.placeholderOrderCount)
-    expect(screen.getByRole('region', { name: 'Resumo' })).toBeInTheDocument()
+const renderSkeleton = () =>
+  render(
+    <MemoryRouter>
+      <CustomerDetailSkeleton />
+    </MemoryRouter>
+  )
+
+describe('CustomerDetailSkeleton', () => {
+  it('announces that the customer is loading', () => {
+    renderSkeleton()
+
+    expect(screen.getByRole('status')).toHaveTextContent('Carregando o cliente')
+  })
+
+  it('keeps the order columns readable while the rows are bones', () => {
+    // Arrange
+    const { container } = renderSkeleton()
+
+    // Act
+    const rows = container.querySelectorAll('tbody tr')
+
+    // Assert
+    expect(screen.getByRole('columnheader', { name: 'Pedido' })).toBeVisible()
+    expect(screen.getByRole('columnheader', { name: 'Total' })).toBeVisible()
+    expect(rows).toHaveLength(placeholderOrderRowCount)
+  })
+
+  it('mirrors every region of the loaded customer sheet', () => {
+    // Arrange
+    const { container } = renderSkeleton()
+
+    // Act
+    const bones = container.querySelectorAll('[class*="skeleton"]')
+
+    // Assert
+    expect(bones).toHaveLength(placeholderBoneCount)
   })
 })

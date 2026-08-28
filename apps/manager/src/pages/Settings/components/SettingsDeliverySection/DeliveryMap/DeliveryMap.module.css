@@ -1,0 +1,13 @@
+@reference "@nino/ds/globals.css";
+
+.wrapper {
+  @apply overflow-hidden rounded-xl border border-border bg-surface-2;
+}
+
+.header {
+  @apply flex items-center justify-between gap-4 border-b border-border px-4 py-3;
+}
+
+.map {
+  @apply h-72 w-full;
+}

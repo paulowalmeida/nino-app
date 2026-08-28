@@ -18,6 +18,7 @@ vi.mock('@pages/Settings/facades/useSettingsFacade/useSettingsFacade', () => ({
       query: { zones: [deliveryZoneMock], isPending: false },
       mutations: delivery,
     },
+    units: { detail: { data: undefined } },
   }),
 }))
 

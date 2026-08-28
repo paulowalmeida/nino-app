@@ -6,6 +6,7 @@ import { Text } from '@nino/ds/components/Text'
 import { useSettingsFacade } from '@pages/Settings/facades/useSettingsFacade/useSettingsFacade'
 import type { DeliveryZone } from '@shared/types/settings/delivery-zone'
 
+import { DeliveryMap } from './DeliveryMap/DeliveryMap'
 import { RemoveZoneModal } from './RemoveZoneModal/RemoveZoneModal'
 import { ZoneForm } from './ZoneForm/ZoneForm'
 import { ZoneList } from './ZoneList/ZoneList'
@@ -14,8 +15,9 @@ import motion from '@styles/motion.module.css'
 import local from './SettingsDeliverySection.module.css'
 
 export const SettingsDeliverySection = () => {
-  const { delivery } = useSettingsFacade()
+  const { delivery, units } = useSettingsFacade()
   const { zones, isPending } = delivery.query
+  const unit = units.detail.data
   const { add, edit, toggle, drop } = delivery.mutations
   const [removingZone, setRemovingZone] = useState<DeliveryZone | null>(null)
 
@@ -36,6 +38,7 @@ export const SettingsDeliverySection = () => {
         </Text>
       </Box>
 
+      <DeliveryMap zones={zones} unit={unit} />
       <ZoneForm isAdding={add.isPending} onAdd={add.mutate} />
       <ZoneList
         zones={zones}
