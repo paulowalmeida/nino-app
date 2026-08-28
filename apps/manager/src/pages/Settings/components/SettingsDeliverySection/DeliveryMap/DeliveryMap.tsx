@@ -25,6 +25,7 @@ export const DeliveryMap = ({ zones, unit }: DeliveryMapProps) => {
   const layers = useRef<L.LayerGroup | null>(null)
   const [center, setCenter] = useState<L.LatLngExpression>(DEFAULT_CENTER)
   const [hasLocation, setHasLocation] = useState(false)
+  const [locationError, setLocationError] = useState(false)
 
   useEffect(() => {
     let active = true
@@ -32,11 +33,18 @@ export const DeliveryMap = ({ zones, unit }: DeliveryMapProps) => {
 
     void TenantService.getMapLocation(unit.id)
       .then((coordinates) => {
-        if (!active || !coordinates) return
+        if (!active) return
+        if (!coordinates) {
+          setLocationError(true)
+          return
+        }
         setCenter([coordinates.latitude, coordinates.longitude])
         setHasLocation(true)
+        setLocationError(false)
       })
-      .catch(() => undefined)
+      .catch(() => {
+        if (active) setLocationError(true)
+      })
 
     return () => {
       active = false
@@ -110,7 +118,11 @@ export const DeliveryMap = ({ zones, unit }: DeliveryMapProps) => {
           </Text>
         </Box>
         <Text size="xs" color="subtle">
-          {hasLocation ? 'Endereço da unidade' : 'Aguardando localização'}
+          {hasLocation
+            ? 'Endereço da unidade'
+            : locationError
+              ? 'Não foi possível localizar o endereço'
+              : 'Aguardando localização'}
         </Text>
       </Box>
       <div
