@@ -7,6 +7,9 @@ export type CatalogCategoriesState = {
   order: CategoryWithCount[]
   deleteTarget: CategoryWithCount | null
   deleteError: string | null
+  editTarget: CategoryWithCount | null
+  editName: string
+  editIcon: ProductCategoryIcon | null
   setCreateName: (name: string) => void
   setCreateIcon: (icon: ProductCategoryIcon | null) => void
   clearCreateName: () => void
@@ -14,4 +17,8 @@ export type CatalogCategoriesState = {
   requestDelete: (category: CategoryWithCount) => void
   setDeleteError: (error: string | null) => void
   closeDelete: () => void
+  requestEdit: (category: CategoryWithCount) => void
+  setEditName: (name: string) => void
+  setEditIcon: (icon: ProductCategoryIcon | null) => void
+  closeEdit: () => void
 }

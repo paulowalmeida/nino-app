@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query'
 
-import { toProductCategoryOptions } from '@pages/NewProduct/adapters/categoryOptions.adapter/categoryOptions.adapter'
+import { toProductCategoryOptions } from '@shared/adapters/product-category-options.adapter/product-category-options.adapter'
 import { queryKeys } from '@shared/lib/query-keys'
 import { CategoryService } from '@shared/services/category/category.service'
 

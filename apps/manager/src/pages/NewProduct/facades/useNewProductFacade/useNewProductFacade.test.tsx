@@ -3,7 +3,7 @@ import { describe, expect, it, vi } from 'vitest'
 
 import { useCreateCategory } from '@pages/NewProduct/hooks/useCreateCategory/useCreateCategory'
 import { useNewProductSubmission } from '@pages/NewProduct/hooks/useNewProductSubmission/useNewProductSubmission'
-import { useProductCategoryOptions } from '@pages/NewProduct/hooks/useProductCategoryOptions/useProductCategoryOptions'
+import { useProductCategoryOptions } from '@shared/hooks/product/useProductCategoryOptions/useProductCategoryOptions'
 import { useCurrentTenant } from '@shared/hooks/session/useCurrentTenant/useCurrentTenant'
 
 import { useNewProductFacade } from './useNewProductFacade'
@@ -15,7 +15,7 @@ vi.mock(
   '@pages/NewProduct/hooks/useNewProductSubmission/useNewProductSubmission'
 )
 vi.mock(
-  '@pages/NewProduct/hooks/useProductCategoryOptions/useProductCategoryOptions'
+  '@shared/hooks/product/useProductCategoryOptions/useProductCategoryOptions'
 )
 
 const submitProduct = vi.fn()

@@ -24,4 +24,14 @@ describe('product detail form adapters', () => {
       price: '25,90',
     })
   })
+
+  it('sends no description when the form field is left blank', () => {
+    expect(
+      toUpdateMenuItemRequest({ ...productDetailFormMock, description: '' })
+    ).toEqual({
+      ...productDetailFormMock,
+      description: undefined,
+      price: 25.9,
+    })
+  })
 })

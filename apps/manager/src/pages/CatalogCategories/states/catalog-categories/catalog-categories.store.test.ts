@@ -3,7 +3,11 @@ import { beforeEach, describe, expect, it } from 'vitest'
 import { useCatalogCategoriesStore } from '@pages/CatalogCategories/states/catalog-categories/catalog-categories.store'
 import type { CategoryWithCount } from '@shared/types/product/category-with-count'
 
-const category = { id: 'drinks', name: 'Bebidas', count: 0 } as CategoryWithCount
+const category = {
+  id: 'drinks',
+  name: 'Bebidas',
+  count: 0,
+} as CategoryWithCount
 
 describe('useCatalogCategoriesStore', () => {
   beforeEach(() => {
@@ -12,6 +16,9 @@ describe('useCatalogCategoriesStore', () => {
       order: [],
       deleteTarget: null,
       deleteError: null,
+      editTarget: null,
+      editName: '',
+      editIcon: null,
     })
   })
 
@@ -19,10 +26,12 @@ describe('useCatalogCategoriesStore', () => {
     const store = useCatalogCategoriesStore.getState()
 
     store.setCreateName('Bebidas')
+    store.setCreateIcon('beer')
     store.setOrder([category])
 
     expect(useCatalogCategoriesStore.getState()).toMatchObject({
       createName: 'Bebidas',
+      createIcon: 'beer',
       order: [category],
     })
 
@@ -45,6 +54,27 @@ describe('useCatalogCategoriesStore', () => {
     expect(useCatalogCategoriesStore.getState()).toMatchObject({
       deleteTarget: null,
       deleteError: null,
+    })
+  })
+
+  it('coordinates the edit target, draft fields, and reset', () => {
+    const store = useCatalogCategoriesStore.getState()
+
+    store.requestEdit(category)
+    store.setEditName('Geladas')
+    store.setEditIcon('beer')
+
+    expect(useCatalogCategoriesStore.getState()).toMatchObject({
+      editTarget: category,
+      editName: 'Geladas',
+      editIcon: 'beer',
+    })
+
+    useCatalogCategoriesStore.getState().closeEdit()
+    expect(useCatalogCategoriesStore.getState()).toMatchObject({
+      editTarget: null,
+      editName: '',
+      editIcon: null,
     })
   })
 })

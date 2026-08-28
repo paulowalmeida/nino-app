@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest'
 
-import { toProductCategoryOptions } from './categoryOptions.adapter'
-import { productCategoriesMock } from './categoryOptions.adapter.mock'
+import { toProductCategoryOptions } from './product-category-options.adapter'
+import { productCategoriesMock } from './product-category-options.adapter.mock'
 
 describe('toProductCategoryOptions', () => {
   it('turns each category into a select option', () => {

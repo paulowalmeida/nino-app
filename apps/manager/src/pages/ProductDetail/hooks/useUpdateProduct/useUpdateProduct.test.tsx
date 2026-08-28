@@ -5,6 +5,7 @@ import { renderHook, waitFor } from '@testing-library/react'
 import { afterEach, describe, expect, it, vi } from 'vitest'
 
 import { menuQueryKey } from '@shared/hooks/product/useMenu/useMenu'
+import { queryKeys } from '@shared/lib/query-keys'
 import { ProductService } from '@shared/services/product/product.service'
 
 import { useUpdateProduct } from './useUpdateProduct'
@@ -66,6 +67,29 @@ describe('useUpdateProduct', () => {
     await waitFor(() => expect(result.current.isSuccess).toBe(true))
     expect(invalidate).toHaveBeenCalledWith({
       queryKey: menuQueryKey(updateProductMock.tenantId),
+    })
+    expect(invalidate).toHaveBeenCalledWith({
+      queryKey: queryKeys.productCategories.all(updateProductMock.tenantId),
+    })
+  })
+
+  it('falls back to an empty tenant scope without a tenant', async () => {
+    vi.mocked(ProductService.updateItem).mockResolvedValue(
+      undefined as unknown as Awaited<
+        ReturnType<typeof ProductService.updateItem>
+      >
+    )
+    const invalidate = vi.spyOn(queryClient, 'invalidateQueries')
+    const { result } = renderHook(
+      () => useUpdateProduct(null, updateProductMock.productId),
+      { wrapper }
+    )
+
+    result.current.mutate(updateProductRequestMock)
+
+    await waitFor(() => expect(result.current.isSuccess).toBe(true))
+    expect(invalidate).toHaveBeenCalledWith({
+      queryKey: queryKeys.productCategories.all(''),
     })
   })
 })

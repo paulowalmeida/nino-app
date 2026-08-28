@@ -20,7 +20,11 @@ const motionEvents = vi.hoisted(() => ({
 
 vi.mock('framer-motion', () => ({
   Reorder: {
-    Item: ({ children, onAnimationEnd, ...props }: HTMLAttributes<HTMLLIElement>) => {
+    Item: ({
+      children,
+      onAnimationEnd,
+      ...props
+    }: HTMLAttributes<HTMLLIElement>) => {
       motionEvents.onAnimationEnd = onAnimationEnd
       return <li {...props}>{children}</li>
     },
@@ -40,15 +44,21 @@ const renderRow = (
   const props = {
     category,
     index: 0,
-    isRenaming: false,
-    onRename: vi.fn().mockResolvedValue(undefined),
+    onEdit: vi.fn(),
     onDelete: vi.fn(),
     onDragEnd: vi.fn(),
     disabled: false,
     ...overrides,
   }
 
-  return { ...render(<ul><CategoryRow {...props} /></ul>), props }
+  return {
+    ...render(
+      <ul>
+        <CategoryRow {...props} />
+      </ul>
+    ),
+    props,
+  }
 }
 
 describe(CategoryRow.name, () => {
@@ -59,11 +69,15 @@ describe(CategoryRow.name, () => {
     const { props } = renderRow()
 
     expect(screen.getByText('2 itens')).toBeInTheDocument()
-    fireEvent.pointerDown(screen.getByRole('button', { name: 'Reordenar Bebidas' }))
+    fireEvent.pointerDown(
+      screen.getByRole('button', { name: 'Reordenar Bebidas' })
+    )
     await user.click(screen.getByRole('button', { name: 'Excluir Bebidas' }))
+    await user.click(screen.getByRole('button', { name: 'Renomear Bebidas' }))
 
     expect(startDrag).toHaveBeenCalled()
     expect(props.onDelete).toHaveBeenCalledOnce()
+    expect(props.onEdit).toHaveBeenCalledOnce()
   })
 
   it('uses singular and empty count guidance', () => {
@@ -77,8 +91,7 @@ describe(CategoryRow.name, () => {
         <CategoryRow
           category={{ ...category, count: 0 }}
           index={0}
-          isRenaming={false}
-          onRename={vi.fn()}
+          onEdit={vi.fn()}
           onDelete={vi.fn()}
           onDragEnd={vi.fn()}
           disabled={false}
@@ -88,62 +101,15 @@ describe(CategoryRow.name, () => {
     expect(screen.getByText('Vazia — nenhum item ainda')).toBeInTheDocument()
   })
 
-  it('renames a category after trimming the edited value', async () => {
-    const user = userEvent.setup()
-    const onRename = vi.fn().mockResolvedValue(undefined)
-    renderRow({ onRename })
+  it('disables row actions while a mutation is in flight', () => {
+    renderRow({ disabled: true })
 
-    await user.click(screen.getByRole('button', { name: 'Renomear Bebidas' }))
-    const input = screen.getByRole('textbox', { name: 'Novo nome para Bebidas' })
-    await user.clear(input)
-    await user.type(input, '  Geladas  ')
-    await user.click(screen.getByRole('button', { name: 'Salvar' }))
-
-    expect(onRename).toHaveBeenCalledWith('Geladas')
-    expect(screen.queryByRole('textbox')).not.toBeInTheDocument()
-  })
-
-  it('cancels empty, unchanged, explicit, and Escape edits', async () => {
-    const user = userEvent.setup()
-    const onRename = vi.fn()
-    renderRow({ onRename })
-
-    await user.click(screen.getByRole('button', { name: 'Renomear Bebidas' }))
-    await user.click(screen.getByRole('button', { name: 'Salvar' }))
-    expect(onRename).not.toHaveBeenCalled()
-
-    await user.click(screen.getByRole('button', { name: 'Renomear Bebidas' }))
-    const input = screen.getByRole('textbox')
-    await user.clear(input)
-    await user.click(screen.getByRole('button', { name: 'Salvar' }))
-
-    await user.click(screen.getByRole('button', { name: 'Renomear Bebidas' }))
-    await user.click(screen.getByRole('button', { name: 'Cancelar' }))
-
-    await user.click(screen.getByRole('button', { name: 'Renomear Bebidas' }))
-    await user.keyboard('{Escape}')
-
-    expect(onRename).not.toHaveBeenCalled()
-    expect(screen.queryByRole('textbox')).not.toBeInTheDocument()
-  })
-
-  it('keeps editing open when renaming fails and disables row actions as requested', async () => {
-    const user = userEvent.setup()
-    const onRename = vi.fn().mockRejectedValue(new Error('offline'))
-    renderRow({ onRename, disabled: true, isRenaming: true })
-
-    expect(screen.getByRole('button', { name: 'Renomear Bebidas' })).toBeDisabled()
-    expect(screen.getByRole('button', { name: 'Excluir Bebidas' })).toBeDisabled()
-
-    renderRow({ onRename })
-    const renameButtons = screen.getAllByRole('button', { name: 'Renomear Bebidas' })
-    await user.click(renameButtons[1])
-    const inputs = screen.getAllByRole('textbox')
-    await user.clear(inputs[0])
-    await user.type(inputs[0], 'Geladas')
-    await user.click(screen.getByRole('button', { name: 'Salvar' }))
-
-    expect(screen.getByRole('textbox')).toBeInTheDocument()
+    expect(
+      screen.getByRole('button', { name: 'Renomear Bebidas' })
+    ).toBeDisabled()
+    expect(
+      screen.getByRole('button', { name: 'Excluir Bebidas' })
+    ).toBeDisabled()
   })
 
   it('finishes entrance animation only for the row itself and forwards drag end', () => {

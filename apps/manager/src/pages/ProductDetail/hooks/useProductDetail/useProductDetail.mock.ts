@@ -1,5 +1,5 @@
 import type { MenuItem } from '@shared/types/product/menu-item'
-import type { MenuSection } from '@shared/types/product/menu-section'
+import type { ProductCategoryOption } from '@shared/types/product/product-category-option'
 
 export const menuItemMock: MenuItem = {
   id: 'product-1',
@@ -12,9 +12,9 @@ export const menuItemMock: MenuItem = {
   images: [],
 }
 
-export const menuSectionsMock: MenuSection[] = [
-  { id: 'category-1', name: 'Lanches', position: 1, items: [menuItemMock] },
-  { id: 'category-2', name: 'Bebidas', position: 2, items: [] },
+export const categoryOptionsMock: ProductCategoryOption[] = [
+  { value: 'category-1', label: 'Lanches' },
+  { value: 'category-2', label: 'Bebidas' },
 ]
 
 export const productDetailMock = {

@@ -113,6 +113,23 @@ export const useCatalogCategoriesMutations = (tenantId: string | null) => {
     }
   }
 
+  const submitEdit = async () => {
+    const target = clientState.editTarget
+    const name = clientState.editName.trim()
+    if (!target || !name) return
+
+    try {
+      await update.mutateAsync({
+        id: target.id,
+        name,
+        icon: clientState.editIcon,
+      })
+      clientState.closeEdit()
+    } catch {
+      return
+    }
+  }
+
   return {
     create,
     remove,
@@ -120,5 +137,6 @@ export const useCatalogCategoriesMutations = (tenantId: string | null) => {
     update,
     submitCreate,
     confirmDelete,
+    submitEdit,
   }
 }

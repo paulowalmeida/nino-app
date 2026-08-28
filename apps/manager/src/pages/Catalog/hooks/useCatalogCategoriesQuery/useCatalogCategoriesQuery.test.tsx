@@ -28,8 +28,8 @@ describe(useCatalogCategoriesQuery.name, () => {
   it('loads categories sorted by their persisted position', async () => {
     vi.mocked(CategoryService.listCategories).mockResolvedValue({
       data: [
-        { id: 'cat-2', position: 2, productCount: 0 },
-        { id: 'cat-1', position: 1, productCount: 0 },
+        { id: 'cat-2', position: 2, productCount: 1 },
+        { id: 'cat-1', position: 1, productCount: 3 },
       ],
     } as unknown as { data: CategoryWithProductCount[] })
 

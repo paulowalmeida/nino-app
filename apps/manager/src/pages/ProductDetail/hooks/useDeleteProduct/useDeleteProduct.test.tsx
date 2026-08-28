@@ -5,6 +5,7 @@ import { renderHook, waitFor } from '@testing-library/react'
 import { afterEach, describe, expect, it, vi } from 'vitest'
 
 import { menuQueryKey } from '@shared/hooks/product/useMenu/useMenu'
+import { queryKeys } from '@shared/lib/query-keys'
 import { ProductService } from '@shared/services/product/product.service'
 
 import { useDeleteProduct } from './useDeleteProduct'
@@ -49,6 +50,29 @@ describe('useDeleteProduct', () => {
     )
     expect(invalidate).toHaveBeenCalledWith({
       queryKey: menuQueryKey(deleteProductMock.tenantId),
+    })
+    expect(invalidate).toHaveBeenCalledWith({
+      queryKey: queryKeys.productCategories.all(deleteProductMock.tenantId),
+    })
+  })
+
+  it('falls back to an empty tenant scope without a tenant', async () => {
+    vi.mocked(ProductService.removeItem).mockResolvedValue(
+      undefined as unknown as Awaited<
+        ReturnType<typeof ProductService.removeItem>
+      >
+    )
+    const invalidate = vi.spyOn(queryClient, 'invalidateQueries')
+    const { result } = renderHook(
+      () => useDeleteProduct(null, deleteProductMock.productId),
+      { wrapper }
+    )
+
+    result.current.mutate()
+
+    await waitFor(() => expect(result.current.isSuccess).toBe(true))
+    expect(invalidate).toHaveBeenCalledWith({
+      queryKey: queryKeys.productCategories.all(''),
     })
   })
 })

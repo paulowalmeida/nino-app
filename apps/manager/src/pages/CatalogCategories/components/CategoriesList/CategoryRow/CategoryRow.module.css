@@ -43,12 +43,3 @@
 .danger {
   @apply hover:bg-danger-surface hover:text-danger;
 }
-
-/* modo edição inline: input toma a linha, ações à direita */
-.editForm {
-  @apply flex w-full flex-wrap items-center gap-2;
-}
-
-.editForm > :first-child {
-  @apply min-w-40 flex-1;
-}

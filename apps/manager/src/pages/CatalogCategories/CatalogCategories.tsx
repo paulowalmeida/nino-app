@@ -4,6 +4,7 @@ import { EmptyState } from '@nino/ds/components/EmptyState'
 import { CategoriesHeader } from '@pages/CatalogCategories/components/CategoriesHeader/CategoriesHeader'
 import { CategoriesList } from '@pages/CatalogCategories/components/CategoriesList/CategoriesList'
 import { DeleteCategoryDialog } from '@pages/CatalogCategories/components/DeleteCategoryDialog/DeleteCategoryDialog'
+import { EditCategoryDialog } from '@pages/CatalogCategories/components/EditCategoryDialog/EditCategoryDialog'
 import { useCatalogCategoriesFacade } from '@pages/CatalogCategories/facades/useCatalogCategoriesFacade/useCatalogCategoriesFacade'
 import { CategoryRowsSkeleton } from '@pages/CatalogCategories/skeletons/CategoryRowsSkeleton/CategoryRowsSkeleton'
 
@@ -28,14 +29,15 @@ export const CatalogCategories = () => {
 
       {isEmpty && (
         <EmptyState className={motion.unroll}>
-          Nenhuma categoria ainda. Crie a primeira acima — depois cadastre
-          itens dentro dela.
+          Nenhuma categoria ainda. Crie a primeira acima — depois cadastre itens
+          dentro dela.
         </EmptyState>
       )}
 
       {!isPending && !isError && !isEmpty && <CategoriesList />}
 
       <DeleteCategoryDialog />
+      <EditCategoryDialog />
     </Box>
   )
 }

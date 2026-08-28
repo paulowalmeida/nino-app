@@ -31,9 +31,10 @@ describe('useProductCategoryOptions', () => {
       >
     )
 
-    const { result } = renderHook(() => useProductCategoryOptions('tenant-1'), {
-      wrapper,
-    })
+    const { result } = renderHook(
+      () => useProductCategoryOptions('tenant-1'),
+      { wrapper }
+    )
 
     await waitFor(() => expect(result.current.isPending).toBe(false))
     expect(result.current.categoryOptions).toEqual([

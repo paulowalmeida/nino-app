@@ -1,14 +1,15 @@
-import { MemoryRouter } from 'react-router'
-
 import { render, screen } from '@testing-library/react'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 
 import { useNewProductFacade } from '@pages/NewProduct/facades/useNewProductFacade/useNewProductFacade'
 
 import { NewProduct } from './NewProduct'
-import { newProductPageMock } from './NewProduct.mock'
 
 vi.mock('@pages/NewProduct/facades/useNewProductFacade/useNewProductFacade')
+vi.mock(
+  '@pages/NewProduct/components/NewProductHeader/NewProductHeader',
+  () => ({ NewProductHeader: () => <div>header</div> })
+)
 vi.mock('@pages/NewProduct/components/NewProductForm/NewProductForm', () => ({
   NewProductForm: () => <div>form</div>,
 }))
@@ -17,12 +18,7 @@ vi.mock(
   () => ({ NewProductFormSkeleton: () => <div>loading form</div> })
 )
 
-const renderPage = () =>
-  render(
-    <MemoryRouter>
-      <NewProduct />
-    </MemoryRouter>
-  )
+const renderPage = () => render(<NewProduct />)
 
 describe('NewProduct', () => {
   beforeEach(() => vi.clearAllMocks())
@@ -34,12 +30,7 @@ describe('NewProduct', () => {
 
     renderPage()
 
-    expect(
-      screen.getByRole('heading', { name: newProductPageMock.title })
-    ).toBeInTheDocument()
-    expect(
-      screen.getByRole('link', { name: newProductPageMock.backLabel })
-    ).toBeInTheDocument()
+    expect(screen.getByText('header')).toBeInTheDocument()
     expect(screen.getByText('form')).toBeInTheDocument()
   })
 

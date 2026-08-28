@@ -6,9 +6,9 @@ import {
   toCatalogListParams,
   toCatalogTotal,
 } from '@pages/Catalog/adapters/catalog.adapter'
+import type { CategoryWithProductCount } from '@shared/types/product/category-with-product-count'
 import type { MenuItem } from '@shared/types/product/menu-item'
 import type { MenuPage } from '@shared/types/product/menu-page'
-import type { ProductCategory } from '@shared/types/product/product-category'
 
 const item = { id: 'item-1' } as MenuItem
 const secondItem = { id: 'item-2' } as MenuItem
@@ -49,14 +49,23 @@ describe('catalog.adapter', () => {
 
   it('sorts categories by their persisted position without mutating the response', () => {
     const categories = [
-      { id: 'cat-2', position: 2 },
-      { id: 'cat-1', position: 1 },
-    ] as ProductCategory[]
+      { id: 'cat-2', position: 2, productCount: 1 },
+      { id: 'cat-1', position: 1, productCount: 3 },
+    ] as CategoryWithProductCount[]
 
     expect(toCatalogCategories({ data: categories })).toEqual([
       categories[1],
       categories[0],
     ])
     expect(categories.map(({ id }) => id)).toEqual(['cat-2', 'cat-1'])
+  })
+
+  it('drops categories without a product from the filter chips', () => {
+    const categories = [
+      { id: 'cat-1', position: 1, productCount: 2 },
+      { id: 'cat-2', position: 2, productCount: 0 },
+    ] as CategoryWithProductCount[]
+
+    expect(toCatalogCategories({ data: categories })).toEqual([categories[0]])
   })
 })

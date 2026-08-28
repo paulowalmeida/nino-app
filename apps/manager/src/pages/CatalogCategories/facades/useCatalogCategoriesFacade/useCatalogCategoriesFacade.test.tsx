@@ -10,10 +10,18 @@ import { useCatalogCategoriesStore } from '@pages/CatalogCategories/states/catal
 import { useCurrentTenant } from '@shared/hooks/session/useCurrentTenant/useCurrentTenant'
 
 vi.mock('@shared/hooks/session/useCurrentTenant/useCurrentTenant')
-vi.mock('@pages/CatalogCategories/hooks/useCatalogCategoriesMutations/useCatalogCategoriesMutations')
-vi.mock('@pages/CatalogCategories/hooks/useCatalogCategoriesOrder/useCatalogCategoriesOrder')
-vi.mock('@pages/CatalogCategories/hooks/useCatalogCategoriesQuery/useCatalogCategoriesQuery')
-vi.mock('@pages/CatalogCategories/states/catalog-categories/catalog-categories.store')
+vi.mock(
+  '@pages/CatalogCategories/hooks/useCatalogCategoriesMutations/useCatalogCategoriesMutations'
+)
+vi.mock(
+  '@pages/CatalogCategories/hooks/useCatalogCategoriesOrder/useCatalogCategoriesOrder'
+)
+vi.mock(
+  '@pages/CatalogCategories/hooks/useCatalogCategoriesQuery/useCatalogCategoriesQuery'
+)
+vi.mock(
+  '@pages/CatalogCategories/states/catalog-categories/catalog-categories.store'
+)
 
 const clearCreateName = vi.fn()
 const closeDelete = vi.fn()
@@ -22,6 +30,8 @@ const createCategory = vi.fn().mockResolvedValue(undefined)
 const removeCategory = vi.fn().mockResolvedValue(undefined)
 const submitCreate = vi.fn().mockResolvedValue(undefined)
 const confirmDelete = vi.fn().mockResolvedValue(undefined)
+const submitEdit = vi.fn().mockResolvedValue(undefined)
+const closeEdit = vi.fn()
 const reorder = vi.fn()
 const setOrder = vi.fn()
 
@@ -30,12 +40,19 @@ const clientState = {
   order: [],
   deleteTarget: catalogCategoriesFacadeMock.category,
   deleteError: null,
+  editTarget: null,
+  editName: '',
+  editIcon: null,
   setCreateName: vi.fn(),
   requestDelete: vi.fn(),
   clearCreateName,
   closeDelete,
   setDeleteError,
   setOrder,
+  requestEdit: vi.fn(),
+  setEditName: vi.fn(),
+  setEditIcon: vi.fn(),
+  closeEdit,
 }
 
 describe(useCatalogCategoriesFacade.name, () => {
@@ -57,13 +74,10 @@ describe(useCatalogCategoriesFacade.name, () => {
       create: { isPending: false, mutateAsync: createCategory },
       remove: { isPending: false, mutateAsync: removeCategory },
       reorder: { mutate: reorder },
-      update: {
-        isPending: true,
-        variables: { id: catalogCategoriesFacadeMock.category.id },
-        mutateAsync: vi.fn(),
-      },
+      update: { isPending: true, mutateAsync: vi.fn() },
       submitCreate,
       confirmDelete,
+      submitEdit,
     } as unknown as ReturnType<typeof useCatalogCategoriesMutations>)
     vi.mocked(useCatalogCategoriesOrder).mockReturnValue({
       order: clientState.order,
@@ -88,9 +102,10 @@ describe(useCatalogCategoriesFacade.name, () => {
       categories: [catalogCategoriesFacadeMock.category],
       isPending: false,
       isRenaming: true,
-      renamingId: catalogCategoriesFacadeMock.category.id,
       submitCreate,
       confirmDelete,
+      submitEdit,
+      closeEdit,
     })
   })
 

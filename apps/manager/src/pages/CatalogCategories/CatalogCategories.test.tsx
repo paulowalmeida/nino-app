@@ -4,19 +4,39 @@ import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { CatalogCategories } from '@pages/CatalogCategories/CatalogCategories'
 import { useCatalogCategoriesFacade } from '@pages/CatalogCategories/facades/useCatalogCategoriesFacade/useCatalogCategoriesFacade'
 
-vi.mock('@pages/CatalogCategories/facades/useCatalogCategoriesFacade/useCatalogCategoriesFacade')
-vi.mock('@pages/CatalogCategories/components/CategoriesHeader/CategoriesHeader', () => ({
-  CategoriesHeader: () => <div>categories-header</div>,
-}))
-vi.mock('@pages/CatalogCategories/components/CategoriesList/CategoriesList', () => ({
-  CategoriesList: () => <div>categories-list</div>,
-}))
-vi.mock('@pages/CatalogCategories/components/DeleteCategoryDialog/DeleteCategoryDialog', () => ({
-  DeleteCategoryDialog: () => <div>delete-category-dialog</div>,
-}))
-vi.mock('@pages/CatalogCategories/skeletons/CategoryRowsSkeleton/CategoryRowsSkeleton', () => ({
-  CategoryRowsSkeleton: () => <div>category-rows-skeleton</div>,
-}))
+vi.mock(
+  '@pages/CatalogCategories/facades/useCatalogCategoriesFacade/useCatalogCategoriesFacade'
+)
+vi.mock(
+  '@pages/CatalogCategories/components/CategoriesHeader/CategoriesHeader',
+  () => ({
+    CategoriesHeader: () => <div>categories-header</div>,
+  })
+)
+vi.mock(
+  '@pages/CatalogCategories/components/CategoriesList/CategoriesList',
+  () => ({
+    CategoriesList: () => <div>categories-list</div>,
+  })
+)
+vi.mock(
+  '@pages/CatalogCategories/components/DeleteCategoryDialog/DeleteCategoryDialog',
+  () => ({
+    DeleteCategoryDialog: () => <div>delete-category-dialog</div>,
+  })
+)
+vi.mock(
+  '@pages/CatalogCategories/components/EditCategoryDialog/EditCategoryDialog',
+  () => ({
+    EditCategoryDialog: () => <div>edit-category-dialog</div>,
+  })
+)
+vi.mock(
+  '@pages/CatalogCategories/skeletons/CategoryRowsSkeleton/CategoryRowsSkeleton',
+  () => ({
+    CategoryRowsSkeleton: () => <div>category-rows-skeleton</div>,
+  })
+)
 
 describe(CatalogCategories.name, () => {
   beforeEach(() => {
@@ -33,6 +53,7 @@ describe(CatalogCategories.name, () => {
     expect(screen.getByText('categories-header')).toBeInTheDocument()
     expect(screen.getByText('categories-list')).toBeInTheDocument()
     expect(screen.getByText('delete-category-dialog')).toBeInTheDocument()
+    expect(screen.getByText('edit-category-dialog')).toBeInTheDocument()
   })
 
   it('governs the screen loading branch', () => {

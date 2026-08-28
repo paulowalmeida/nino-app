@@ -39,6 +39,9 @@ describe(useCatalogCategoriesMutations.name, () => {
       order: [],
       deleteTarget: null,
       deleteError: null,
+      editTarget: null,
+      editName: '',
+      editIcon: null,
     })
   })
   afterEach(() => vi.clearAllMocks())
@@ -181,6 +184,77 @@ describe(useCatalogCategoriesMutations.name, () => {
     )
   })
 
+  it('edits the selected category and closes the dialog', async () => {
+    vi.mocked(CategoryService.updateCategory).mockResolvedValue(
+      {} as ProductCategory
+    )
+    useCatalogCategoriesStore.getState().requestEdit({
+      id: 'drinks',
+      name: 'Bebidas',
+      count: 0,
+    } as CategoryWithCount)
+    useCatalogCategoriesStore.getState().setEditName('  Geladas  ')
+    const { wrapper } = createHarness()
+    const { result } = renderHook(
+      () => useCatalogCategoriesMutations('tenant-1'),
+      { wrapper }
+    )
+
+    await act(() => result.current.submitEdit())
+
+    expect(CategoryService.updateCategory).toHaveBeenCalledWith(
+      'tenant-1',
+      'drinks',
+      'Geladas',
+      null
+    )
+    expect(useCatalogCategoriesStore.getState().editTarget).toBeNull()
+  })
+
+  it('ignores edit without a target or an empty name', async () => {
+    const { wrapper } = createHarness()
+    const { result } = renderHook(
+      () => useCatalogCategoriesMutations('tenant-1'),
+      { wrapper }
+    )
+
+    await act(() => result.current.submitEdit())
+    expect(CategoryService.updateCategory).not.toHaveBeenCalled()
+
+    act(() =>
+      useCatalogCategoriesStore.getState().requestEdit({
+        id: 'drinks',
+        name: 'Bebidas',
+        count: 0,
+      } as CategoryWithCount)
+    )
+    act(() => useCatalogCategoriesStore.getState().setEditName('   '))
+    await act(() => result.current.submitEdit())
+
+    expect(CategoryService.updateCategory).not.toHaveBeenCalled()
+  })
+
+  it('keeps the edit dialog open when the update fails', async () => {
+    vi.mocked(CategoryService.updateCategory).mockRejectedValue(
+      new ApiError(400, 'nome duplicado')
+    )
+    useCatalogCategoriesStore.getState().requestEdit({
+      id: 'drinks',
+      name: 'Bebidas',
+      count: 0,
+    } as CategoryWithCount)
+    useCatalogCategoriesStore.getState().setEditName('Geladas')
+    const { wrapper } = createHarness()
+    const { result } = renderHook(
+      () => useCatalogCategoriesMutations('tenant-1'),
+      { wrapper }
+    )
+
+    await act(() => result.current.submitEdit())
+
+    expect(useCatalogCategoriesStore.getState().editTarget).not.toBeNull()
+  })
+
   it('delegates category ordering to one backend command and invalidates affected data', async () => {
     vi.mocked(CategoryService.reorderCategories).mockResolvedValue({
       message: 'ok',
@@ -204,6 +278,41 @@ describe(useCatalogCategoriesMutations.name, () => {
     expect(invalidateQueries).toHaveBeenCalledWith({ queryKey: key })
     expect(invalidateQueries).toHaveBeenCalledWith({
       queryKey: queryKeys.products.all('tenant-1'),
+    })
+  })
+
+  it('falls back to an empty tenant scope without a current tenant', async () => {
+    vi.mocked(CategoryService.createCategory).mockResolvedValue(
+      {} as ProductCategory
+    )
+    vi.mocked(CategoryService.reorderCategories).mockResolvedValue({
+      message: 'ok',
+    })
+    const { queryClient, wrapper } = createHarness()
+    const invalidateQueries = vi.spyOn(queryClient, 'invalidateQueries')
+    const { result } = renderHook(() => useCatalogCategoriesMutations(null), {
+      wrapper,
+    })
+
+    await act(() => result.current.create.mutateAsync('Bebidas'))
+    await act(() =>
+      result.current.create.mutateAsync({ name: 'Sobremesas', icon: 'cake' })
+    )
+    await act(() => result.current.reorder.mutateAsync({ ids: ['drinks'] }))
+
+    expect(CategoryService.createCategory).toHaveBeenCalledWith(
+      null,
+      'Sobremesas',
+      'cake'
+    )
+    expect(invalidateQueries).toHaveBeenCalledWith({
+      queryKey: queryKeys.productCategories.all(''),
+    })
+    expect(invalidateQueries).toHaveBeenCalledWith({
+      queryKey: queryKeys.productCategories.list(''),
+    })
+    expect(invalidateQueries).toHaveBeenCalledWith({
+      queryKey: queryKeys.products.all(''),
     })
   })
 })

@@ -9,11 +9,9 @@ export const CategoriesList = () => {
   const {
     order,
     isDeleting,
-    isRenaming,
-    renamingId,
     setOrder,
     persistOrder,
-    rename,
+    requestEdit,
     requestDelete,
   } = useCatalogCategoriesFacade()
 
@@ -30,11 +28,8 @@ export const CategoriesList = () => {
           key={category.id}
           category={category}
           index={index}
-          isRenaming={isRenaming && renamingId === category.id}
           disabled={isDeleting}
-          onRename={async (name, icon) => {
-            await rename({ id: category.id, name, icon })
-          }}
+          onEdit={() => requestEdit(category)}
           onDelete={() => requestDelete(category)}
           onDragEnd={persistOrder}
         />
