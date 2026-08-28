@@ -5,6 +5,7 @@ import { Button } from '@nino/ds/components/Button'
 import { FormField } from '@nino/ds/components/FormField'
 import { Heading } from '@nino/ds/components/Heading'
 import { Input } from '@nino/ds/components/Input'
+import { NumberInput } from '@nino/ds/components/NumberInput'
 import { Slider } from '@nino/ds/components/Slider'
 import { Text } from '@nino/ds/components/Text'
 
@@ -18,7 +19,8 @@ export type ZoneFormProps = {
   onPreviewRadius?: (maxRadiusKm: number | null) => void
 }
 
-const RADIUS_WINDOW_KM = 20
+const MAX_RADIUS_KM = 15
+const RADIUS_STEP_KM = 0.1
 
 export const ZoneForm = ({
   isAdding,
@@ -26,36 +28,40 @@ export const ZoneForm = ({
   onAdd,
   onPreviewRadius,
 }: ZoneFormProps) => {
-  const [maxRadiusKm, setMaxRadiusKm] = useState('')
+  const [maxRadiusKm, setMaxRadiusKm] = useState<number | undefined>()
 
-  const nearestKm = lastMaxRadiusKm + 1
-  const farthestKm = lastMaxRadiusKm + RADIUS_WINDOW_KM
+  const nearestKm = Number((lastMaxRadiusKm + RADIUS_STEP_KM).toFixed(1))
+  const farthestKm = MAX_RADIUS_KM
   const draggedKm = Math.min(
-    Math.max(Number(maxRadiusKm) || nearestKm, nearestKm),
+    Math.max(maxRadiusKm ?? nearestKm, nearestKm),
     farthestKm
   )
   const [fee, setFee] = useState('')
   const feeValue = Number(fee.replace(',', '.'))
-  const maxValue = Number(maxRadiusKm)
+  const maxValue = maxRadiusKm ?? 0
   const canAdd =
-    maxRadiusKm.trim() !== '' &&
-    Number.isInteger(maxValue) &&
+    Number.isFinite(maxValue) &&
+    Number.isInteger(maxValue * 10) &&
     maxValue > lastMaxRadiusKm &&
+    maxValue <= MAX_RADIUS_KM &&
     fee.trim() !== '' &&
     Number.isFinite(feeValue) &&
     feeValue >= 0 &&
     Math.round(feeValue * 100) === feeValue * 100
 
-  const previewRadius = (typed: string) => {
-    setMaxRadiusKm(typed)
-    const km = Number(typed)
-    onPreviewRadius?.(Number.isInteger(km) && km > lastMaxRadiusKm ? km : null)
+  const previewRadius = (km: number) => {
+    setMaxRadiusKm(km)
+    onPreviewRadius?.(
+      Number.isInteger(km * 10) && km > lastMaxRadiusKm && km <= MAX_RADIUS_KM
+        ? km
+        : null
+    )
   }
 
   const addZone = () => {
     if (!canAdd) return
     onAdd({ maxRadiusKm: maxValue, fee: feeValue })
-    setMaxRadiusKm('')
+    setMaxRadiusKm(undefined)
     setFee('')
   }
 
@@ -78,18 +84,18 @@ export const ZoneForm = ({
         min={nearestKm}
         max={farthestKm}
         value={draggedKm}
-        onValueChange={(km) => previewRadius(String(km))}
+        onValueChange={previewRadius}
       />
 
       <Box className={local.form}>
         <FormField label="Até (km)" className={local.radius}>
-          <Input
-            inputMode="numeric"
-            min={1}
-            step={1}
+          <NumberInput
+            min={nearestKm}
+            max={MAX_RADIUS_KM}
+            step={RADIUS_STEP_KM}
             placeholder="Ex.: 5"
             value={maxRadiusKm}
-            onChange={(event) => previewRadius(event.target.value)}
+            onValueChange={previewRadius}
           />
         </FormField>
         <FormField label="Taxa de entrega (R$)" className={local.fee}>
