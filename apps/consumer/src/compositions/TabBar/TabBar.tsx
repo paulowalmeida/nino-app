@@ -8,22 +8,9 @@ import { AccountDrawer } from '@compositions/AccountDrawer/AccountDrawer'
 import styles from './TabBar.module.css'
 
 type TabBarProps = {
-  /** Prefixo de rota da loja: `/slug` no atalho local, vazio no subdomínio. */
   base: string
 }
 
-/**
- * A barra de ações do celular — três alvos, com a vitrine no meio.
- *
- * Três e não seis: o resto da conta mora na gaveta que o "Perfil" abre, e uma
- * barra que repete o que a gaveta já lista gasta o lugar mais valioso da tela
- * com atalhos para o que quase ninguém abre duas vezes. Ficam aqui os dois
- * destinos de uso repetido — o cardápio e os pedidos — e a porta da conta.
- *
- * "Pedidos" à esquerda e "Perfil" à direita porque é onde a mão já procura:
- * a conta no canto direito é convenção de quase todo app de celular, e
- * contrariá-la custaria um reflexo aprendido sem devolver nada.
- */
 export const TabBar = ({ base }: TabBarProps) => {
   const navigate = useNavigate()
   const { pathname } = useLocation()
@@ -33,18 +20,10 @@ export const TabBar = ({ base }: TabBarProps) => {
   const isHome = pathname === home || pathname === `${home}/`
   const orders = `${base}/conta/pedidos`
 
-  /* um aceso por vez: "Pedidos" tem alvo próprio, então o "Perfil" só se
-     acende pelas gavetas que não estão na barra — e enquanto a sua está
-     aberta, porque é ela que a pessoa está olhando */
   const isAccount =
     isAccountOpen ||
     (pathname.startsWith(`${base}/conta`) && !pathname.startsWith(orders))
 
-  /*
-   * Tocar na aba da tela em que já se está sobe ao topo, em vez de recarregar
-   * a mesma rota — o mesmo gesto que o celular ensinou em todo app de lista.
-   * Fora da vitrine, o mesmo botão é o caminho de volta para o cardápio.
-   */
   const handleHome = () => {
     if (!isHome) {
       navigate(home)
@@ -70,8 +49,6 @@ export const TabBar = ({ base }: TabBarProps) => {
           <span className={styles.label}>Pedidos</span>
         </NavLink>
 
-        {/* o único alvo que veste a cor da loja: a vitrine é a casa, e o anel
-            é a marca do cliente aparecendo na navegação do freguês dele */}
         <Button
           variant="ghost"
           onClick={handleHome}

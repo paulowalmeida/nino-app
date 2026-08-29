@@ -1,0 +1,49 @@
+@reference "@nino/ds/globals.css";
+
+/* o código é o dado da tela: as casas têm a altura do campo do passo 1, para
+   as duas telas serem a mesma conversa em dois momentos */
+.codeField {
+  @apply mt-3 justify-between gap-2;
+}
+
+.codeField input {
+  @apply h-14 w-full rounded-3 border-black/10 text-center;
+  @apply font-display text-xl font-extrabold text-fg-muted;
+  font-variant-numeric: tabular-nums;
+}
+
+.codeField input:focus {
+  border-color: var(--store-tint, var(--color-brand));
+  box-shadow: inset 0 0 0 1px var(--store-tint, var(--color-brand));
+}
+
+.alert {
+  @apply mt-4;
+}
+
+/*
+ * A cor da loja só na ação viva. Desligado é `sand` com texto apagado — a
+ * regra é do próprio Button do DS, e pintar o fundo aqui sem essa ressalva
+ * devolvia um CTA laranja vivo que não faz nada quando tocado.
+ */
+.cta {
+  @apply mt-6 h-14 w-full rounded-full text-base font-bold;
+}
+
+.cta:not(:disabled) {
+  background: var(--store-tint, var(--color-brand));
+}
+
+.cta:not(:disabled):hover {
+  background: color-mix(
+    in srgb,
+    var(--store-tint, var(--color-brand)) 88%,
+    black
+  );
+}
+
+/* sair do passo é caminho de volta, não oferta: texto, sem moldura */
+.secondary {
+  @apply mt-2 h-12 w-full text-sm font-bold text-fg-muted;
+  @apply hover:text-brand-strong;
+}
