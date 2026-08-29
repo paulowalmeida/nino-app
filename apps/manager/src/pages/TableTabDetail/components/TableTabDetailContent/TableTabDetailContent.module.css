@@ -55,7 +55,7 @@
 }
 
 .selectedItem {
-  @apply bg-surface-sunken;
+  @apply bg-brand-soft;
 }
 
 .itemActions {
