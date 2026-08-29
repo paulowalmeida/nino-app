@@ -94,9 +94,9 @@ describe(Box.name, () => {
     render(<Box justify={{ mobile: 'start', desktop: 'center' }}>conteúdo</Box>)
 
     // Assert
-    const Box = screen.getByText('conteúdo')
-    expect(Box).toHaveClass('justify-start')
-    expect(Box).toHaveClass('lg:justify-center')
+    const box = screen.getByText('conteúdo')
+    expect(box).toHaveClass('justify-start')
+    expect(box).toHaveClass('lg:justify-center')
   })
 
   it('applies the margin props', () => {
