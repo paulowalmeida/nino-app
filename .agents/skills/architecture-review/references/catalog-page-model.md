@@ -81,6 +81,10 @@ src/
     ├── types/                            # reusable types owned by this domain
     │   └── <TypeName>.type.ts            # one named type per file
     └── utils/
+        └── <utilName>/
+            ├── <utilName>.ts
+            ├── <utilName>.test.ts
+            └── <utilName>.mock.ts
 ```
 
 A Hook is named after the data or command it returns, never after the
@@ -105,8 +109,17 @@ folder. Source,
 test, and mandatory meaningful props/data mock file share the unit name and
 live together. A `.mock.ts[x]` is declarative only: no `vi.fn`, callbacks,
 factories, functions, dependency implementations, or configured behavior.
-Never keep several loose Hook/test pairs directly in `hooks/` and never create
-an empty mock merely to satisfy the tree.
+Never keep several loose Hook/test pairs directly in `hooks/`, `adapters/`,
+or `utils/` — each of these folders is a bucket of one-unit-per-subfolder
+entries, exactly like `components/`; a file sitting directly inside them,
+sibling to its own `.test.ts`/`.mock.ts` with no wrapping folder, is a
+violation even when the tree diagram's leaf line for that folder (e.g.
+`└── utils/`) does not spell out the nested example again for brevity — the
+"every tested unit owns one folder" rule above applies uniformly regardless
+of how compactly a given branch is drawn. `types/` and `constants/` are the
+only folders that stay flat, because their entries are pure declarations with
+no colocated test/mock contract. Never create an empty mock merely to satisfy
+the tree.
 
 Component folders preserve the direct composition hierarchy. `components/`
 contains the Page's root components. A component used exclusively by one

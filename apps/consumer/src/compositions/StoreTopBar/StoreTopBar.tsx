@@ -5,8 +5,10 @@ import { Icon } from '@nino/ds/components/Icon'
 import { Image } from '@nino/ds/components/Image'
 import { Input } from '@nino/ds/components/Input'
 import { Button } from '@nino/ds/components/Button'
-import { useCustomerSession } from '@hooks/useCustomerSession'
-import { useLogout } from '@hooks/useLogout'
+import {
+  useCustomerSession,
+} from '@shared/hooks/useCustomerSession/useCustomerSession'
+import { useLogout } from '@shared/hooks/useLogout/useLogout'
 import { displayName, storeInitials } from '@utils/store-info'
 import { formatPhone } from '@utils/phone'
 import type { Store } from '@custom_types/store/store'

@@ -5,7 +5,9 @@ import { Icon } from '@nino/ds/components/Icon'
 import { OrderJourney } from '@compositions/OrderJourney/OrderJourney'
 import { OrderStage } from '@compositions/OrderStage/OrderStage'
 import { PoweredBy } from '@elements/PoweredBy/PoweredBy'
-import { useCustomerSession } from '@hooks/useCustomerSession'
+import {
+  useCustomerSession,
+} from '@shared/hooks/useCustomerSession/useCustomerSession'
 import { useGuestOrderStatus } from '@hooks/useGuestOrderStatus'
 import { useScrollProgress } from '@hooks/useScrollProgress'
 import { OrderTrackingSkeleton } from '@skeletons/OrderTrackingSkeleton/OrderTrackingSkeleton'

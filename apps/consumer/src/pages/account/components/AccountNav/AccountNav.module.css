@@ -1,0 +1,77 @@
+@reference "@nino/ds/globals.css";
+
+/* CONSTRAINT: só desktop — no celular quem lista as gavetas é a
+   `AccountDrawer` da barra, e duplicar aqui ensinaria dois caminhos para o
+   mesmo menu. Ambas leem de `ACCOUNT_SECTIONS`. */
+.nav {
+  @apply hidden;
+  @apply lg:mx-0 lg:mb-0 lg:flex lg:w-56 lg:shrink-0 lg:flex-col lg:px-0;
+}
+
+.list {
+  @apply flex gap-2 overflow-x-auto pb-2;
+  @apply lg:flex-col lg:gap-1 lg:overflow-visible lg:pb-0;
+  scrollbar-width: none;
+}
+
+.list::-webkit-scrollbar {
+  display: none;
+}
+
+.item {
+  @apply shrink-0 lg:shrink;
+}
+
+.link {
+  @apply flex h-11 items-center gap-2.5 rounded-full border border-black/[0.08];
+  @apply bg-surface-page px-4 text-sm font-semibold text-fg-muted;
+  @apply whitespace-nowrap transition-colors;
+  @apply hover:border-accent-peach hover:text-brand-strong;
+  @apply lg:h-auto lg:w-full lg:rounded-3 lg:border-transparent;
+  @apply lg:bg-transparent lg:px-3 lg:py-2.5;
+}
+
+/* WHY: no celular a pílula ativa preenche; no desktop ganha só um filete de
+   marca à esquerda — um preenchimento inteiro em cada linha da coluna
+   brigaria visualmente com o painel ao lado. */
+.linkOn {
+  @apply border-transparent bg-brand text-fg-on-brand;
+  @apply hover:border-transparent hover:text-fg-on-brand;
+  @apply lg:relative lg:bg-black/[0.05] lg:text-fg-muted;
+  @apply lg:hover:border-transparent;
+}
+
+.linkOn::before {
+  content: '';
+  @apply hidden lg:block;
+  @apply absolute left-0 top-2 bottom-2 w-[3px] rounded-full bg-brand;
+}
+
+.icon {
+  @apply shrink-0;
+}
+
+.label {
+  @apply flex-1 text-left;
+}
+
+.count {
+  @apply hidden text-xs font-bold text-fg-faint lg:block;
+  font-variant-numeric: tabular-nums;
+}
+
+.linkOn .count {
+  @apply text-brand-strong;
+}
+
+.soon {
+  @apply hidden text-2xs font-bold uppercase tracking-[0.1em];
+  @apply text-fg-faintest lg:block;
+}
+
+.logout {
+  @apply mt-2 hidden h-auto w-full items-center gap-2.5 rounded-3 px-3;
+  @apply py-2.5 text-sm font-semibold text-fg-muted transition-colors;
+  @apply hover:text-brand-strong lg:flex;
+  @apply disabled:cursor-not-allowed disabled:opacity-dim;
+}

@@ -1,6 +1,8 @@
 import { Link } from 'react-router'
 
-import { useCustomerSession } from '@hooks/useCustomerSession'
+import {
+  useCustomerSession,
+} from '@shared/hooks/useCustomerSession/useCustomerSession'
 import { formatPhone } from '@utils/phone'
 
 import styles from './AccountButton.module.css'

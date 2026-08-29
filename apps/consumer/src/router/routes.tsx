@@ -22,34 +22,34 @@ const accountLazy = () =>
   }))
 
 const profileLazy = () =>
-  import('@pages/account/sections/Profile/Profile').then(({ Profile }) => ({
+  import('@pages/account/components/Profile/Profile').then(({ Profile }) => ({
     Component: Profile,
   }))
 
 const addressesLazy = () =>
-  import('@pages/account/sections/Addresses/Addresses').then(
+  import('@pages/account/components/Addresses/Addresses').then(
     ({ Addresses }) => ({ Component: Addresses })
   )
 
 const ordersLazy = () =>
-  import('@pages/account/sections/Orders/Orders').then(({ Orders }) => ({
+  import('@pages/account/components/Orders/Orders').then(({ Orders }) => ({
     Component: Orders,
   }))
 
 const paymentLazy = () =>
-  import('@pages/account/sections/Soon/Payment').then(({ Payment }) => ({
+  import('@pages/account/components/Payment/Payment').then(({ Payment }) => ({
     Component: Payment,
   }))
 
 const chatsLazy = () =>
-  import('@pages/account/sections/Soon/Chats').then(({ Chats }) => ({
+  import('@pages/account/components/Chats/Chats').then(({ Chats }) => ({
     Component: Chats,
   }))
 
 const invoicesLazy = () =>
-  import('@pages/account/sections/Soon/Invoices').then(({ Invoices }) => ({
-    Component: Invoices,
-  }))
+  import('@pages/account/components/Invoices/Invoices').then(
+    ({ Invoices }) => ({ Component: Invoices })
+  )
 
 const accountChildren: RouteObject[] = [
   { index: true, element: <Navigate to="dados" replace /> },

@@ -1,0 +1,40 @@
+@reference "@nino/ds/globals.css";
+
+.note {
+  @apply mt-1 text-sm leading-snug text-fg-muted;
+}
+
+.card {
+  @apply mt-5 rounded-2 border border-black/[0.08] bg-surface-raised p-5;
+}
+
+.field {
+  @apply mt-4 first:mt-0;
+}
+
+/* WHY: mostra o valor e diz por quê em vez de um campo desabilitado, que
+   pareceria um bug em vez de uma regra de negócio. */
+.readonly {
+  @apply flex h-11 items-center rounded-full border border-black/[0.08];
+  @apply bg-black/[0.06];
+  @apply px-3.5 text-sm font-semibold text-fg-muted;
+}
+
+.hint {
+  @apply mt-1.5 text-xs leading-snug text-fg-faint;
+}
+
+.actions {
+  @apply mt-6 flex flex-col gap-2.5 sm:flex-row-reverse;
+}
+
+/* WORKAROUND: largura por `w-full`, nunca por `flex-1` — no celular
+   `.actions` é coluna, e em coluna o `flex-1` zera a altura-base do botão e
+   passa por cima do `h-12`, esmagando-o numa faixa de texto. */
+.primary {
+  @apply flex h-12 w-full items-center justify-center rounded-full;
+  @apply bg-brand;
+  @apply font-bold text-fg-on-brand transition-colors;
+  @apply hover:bg-brand-hover sm:w-auto sm:px-7;
+  @apply disabled:cursor-not-allowed disabled:opacity-dim;
+}

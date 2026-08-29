@@ -1,0 +1,41 @@
+@reference "@nino/ds/globals.css";
+
+.note {
+  @apply mt-1 text-sm leading-snug text-fg-muted;
+}
+
+.skRow {
+  composes: nino-skeleton from global;
+  @apply mt-3 h-16 w-full rounded-2 bg-black/[0.06];
+}
+
+.list {
+  @apply mt-5 flex flex-col gap-3;
+}
+
+.item {
+  @apply relative rounded-2 border border-black/[0.08] bg-surface-raised;
+  @apply p-4;
+  @apply transition-colors hover:border-accent-peach;
+}
+
+.empty {
+  @apply mt-5;
+}
+
+/* WHY: sem moldura — com a mesma borda dos itens, o formulário de novo
+   endereço lia como mais um endereço já salvo no fim da lista. */
+.newForm {
+  @apply mt-6 border-t border-black/[0.07] pt-6;
+}
+
+.newTitle {
+  @apply mb-4 text-2xs font-bold uppercase tracking-[0.14em] text-fg-faint;
+}
+
+.add {
+  @apply mt-5 flex h-12 w-full items-center justify-center rounded-full;
+  @apply border border-dashed border-black/[0.08] font-bold text-fg-muted;
+  @apply transition-colors hover:border-accent-peach;
+  @apply hover:text-brand-strong;
+}

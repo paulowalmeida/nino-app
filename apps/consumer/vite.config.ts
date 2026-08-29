@@ -66,6 +66,7 @@ export default defineConfig({
       '@providers': resolve(__dirname, 'src/providers'),
       '@router': resolve(__dirname, 'src/router'),
       '@services': resolve(__dirname, 'src/services'),
+      '@shared': resolve(__dirname, 'src/shared'),
       '@skeletons': resolve(__dirname, 'src/skeletons'),
       '@states': resolve(__dirname, 'src/states'),
       '@utils': resolve(__dirname, 'src/utils'),

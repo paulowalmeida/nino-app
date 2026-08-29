@@ -3,14 +3,19 @@ import { useLocation, useNavigate } from 'react-router'
 import { Drawer } from '@nino/ds/components/Drawer'
 import { Icon, type IconName } from '@nino/ds/components/Icon'
 import { Button } from '@nino/ds/components/Button'
-import { ACCOUNT_SECTIONS } from '@constants/account-sections'
-import { useCustomerSession } from '@hooks/useCustomerSession'
-import { useLogout } from '@hooks/useLogout'
-import { useMyAddresses } from '@hooks/useMyAddresses'
-import { useMyOrders } from '@hooks/useMyOrders'
-import { useStoreTint } from '@hooks/useStoreTint'
-import { customerInitials, firstName } from '@utils/customer-name'
-import { greeting } from '@utils/greeting'
+import { ACCOUNT_SECTIONS } from '@shared/constants/account-sections'
+import {
+  useCustomerSession,
+} from '@shared/hooks/useCustomerSession/useCustomerSession'
+import { useLogout } from '@shared/hooks/useLogout/useLogout'
+import { useMyAddresses } from '@shared/hooks/useMyAddresses/useMyAddresses'
+import { useMyOrders } from '@shared/hooks/useMyOrders/useMyOrders'
+import { useStoreTint } from '@shared/hooks/useStoreTint/useStoreTint'
+import {
+  customerInitials,
+  firstName,
+} from '@shared/utils/customer-name/customer-name'
+import { greeting } from '@shared/utils/greeting/greeting'
 import { riseDelay } from '@utils/rise-delay'
 
 import styles from './AccountDrawer.module.css'

@@ -38,6 +38,7 @@
       "@providers/*": ["src/providers/*"],
       "@router/*": ["src/router/*"],
       "@services/*": ["src/services/*"],
+      "@shared/*": ["src/shared/*"],
       "@skeletons/*": ["src/skeletons/*"],
       "@states/*": ["src/states/*"],
       "@utils/*": ["src/utils/*"]
