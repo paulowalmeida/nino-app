@@ -1,4 +1,4 @@
-import { HTMLAttributes } from 'react'
+import { type ElementType, forwardRef, HTMLAttributes } from 'react'
 
 import { mergeClasses } from '@ds/lib/mergeClasses/mergeClasses'
 import {
@@ -118,26 +118,32 @@ const justifyTablet = {
  * - `m` — Margin on every side. `mt`, `mb`, `mx` and `my` narrow it to one axis or side. Accepts `{ mobile, desktop }`
  * ```
  */
-export function Box({
-  as: Component = 'div',
-  direction = 'column',
-  gap,
-  align,
-  justify,
-  wrap,
-  grow,
-  shrink,
-  m,
-  mt,
-  mb,
-  mx,
-  my,
-  className,
-  children,
-  ...props
-}: BoxProps) {
+export const Box = forwardRef<HTMLElement, BoxProps>(function Box(
+  {
+    as: Component = 'div',
+    direction = 'column',
+    gap,
+    align,
+    justify,
+    wrap,
+    grow,
+    shrink,
+    m,
+    mt,
+    mb,
+    mx,
+    my,
+    className,
+    children,
+    ...props
+  },
+  ref
+) {
+  const BoxElement = Component as ElementType
+
   return (
-    <Component
+    <BoxElement
+      ref={ref}
       className={mergeClasses(
         'flex',
         responsiveToClasses(
@@ -164,6 +170,6 @@ export function Box({
       {...props}
     >
       {children}
-    </Component>
+    </BoxElement>
   )
-}
+})

@@ -18,8 +18,12 @@ describe('useKitchenOrders', () => {
   beforeEach(() => {
     vi.setSystemTime(new Date('2026-08-01T13:00:00.000Z'))
     vi.mocked(useOrders)
-      .mockReturnValueOnce({ orders: [waitingOrderMock, preparingOrderMock] })
-      .mockReturnValueOnce({ orders: [finishedOrderMock] })
+      .mockReturnValueOnce({
+        orders: [waitingOrderMock, preparingOrderMock],
+      } as unknown as ReturnType<typeof useOrders>)
+      .mockReturnValueOnce({
+        orders: [finishedOrderMock],
+      } as unknown as ReturnType<typeof useOrders>)
   })
 
   afterEach(() => vi.useRealTimers())

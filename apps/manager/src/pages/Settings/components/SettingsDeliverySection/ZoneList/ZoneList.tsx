@@ -17,7 +17,6 @@ import {
   TableHeader,
   TableRow,
 } from '@nino/ds/components/Table'
-import { Text } from '@nino/ds/components/Text'
 import type { DeliveryZone } from '@shared/types/settings/delivery-zone'
 import { brl } from '@shared/utils/money/money'
 
@@ -95,8 +94,6 @@ export const ZoneList = ({
   ]
 
   if (isPending) return <Skeleton className={local.skeleton} />
-
-  const farthestKm = Math.max(...zones.map((zone) => zone.maxRadiusKm), 0)
 
   return (
     <Box as="section" className={local.section}>

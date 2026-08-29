@@ -102,7 +102,6 @@ describe(CategoryRow.name, () => {
             index={0}
             onEdit={vi.fn()}
             onDelete={vi.fn()}
-            onDragEnd={vi.fn()}
             disabled={false}
           />
         </tbody>

@@ -9,7 +9,6 @@ export const useCatalogCategoriesOrder = (
   reorder: (input: { ids: string[] }) => void
 ) => {
   const signature = rows.map(({ id }) => id).join()
-  const orderSignature = order.map(({ id }) => id).join()
   const syncedRowsSignature = useRef<string | null>(null)
 
   useEffect(() => {
