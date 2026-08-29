@@ -24,3 +24,9 @@
 .submit {
   @apply self-start sm:self-end;
 }
+
+@media (min-width: 2560px) {
+  .submit {
+    @apply w-fit;
+  }
+}

@@ -12,6 +12,7 @@ describe('resetWizard', () => {
     expect(set).toHaveBeenCalledWith({
       step: resetWizardMock.expectedStep,
       account: null,
+      company: null,
     })
   })
 })

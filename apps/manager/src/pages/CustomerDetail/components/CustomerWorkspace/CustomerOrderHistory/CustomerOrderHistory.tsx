@@ -1,10 +1,11 @@
 import { useLocation } from 'react-router'
 
+import { Box } from '@nino/ds/components/Box'
 import { EmptyState } from '@nino/ds/components/EmptyState'
-import { ScrollArea } from '@nino/ds/components/ScrollArea'
 import {
   Table,
   TableBody,
+  TableCell,
   TableHead,
   TableHeader,
   TableRow,
@@ -38,10 +39,16 @@ export const CustomerOrderHistory = () => {
   }
 
   return (
-    <ScrollArea className={styles.scroll}>
+    <Box className={styles.shell}>
       <Table>
-        <TableHeader className={styles.stickyHeader}>
-          <TableRow>
+        <colgroup>
+          <col className={styles.colOrder} />
+          <col className={styles.colStatus} />
+          <col className={styles.colDate} />
+          <col className={styles.colTotal} />
+        </colgroup>
+        <TableHeader>
+          <TableRow className={styles.headRow}>
             <TableHead>Pedido</TableHead>
             <TableHead>Status</TableHead>
             <TableHead className={styles.colRight}>Data</TableHead>
@@ -58,16 +65,20 @@ export const CustomerOrderHistory = () => {
               index={index}
             />
           ))}
+
+          <TableRow className={styles.sentinelRow}>
+            <TableCell colSpan={4} className={styles.sentinelCell}>
+              <div ref={sentinelRef} className={styles.sentinel}>
+                {isFetchingNextPage && (
+                  <Text size="xs" color="faint" className={styles.loadingMore}>
+                    Carregando mais pedidos…
+                  </Text>
+                )}
+              </div>
+            </TableCell>
+          </TableRow>
         </TableBody>
       </Table>
-
-      <div ref={sentinelRef} className={styles.sentinel}>
-        {isFetchingNextPage && (
-          <Text size="xs" color="faint" className={styles.loadingMore}>
-            Carregando mais pedidos…
-          </Text>
-        )}
-      </div>
-    </ScrollArea>
+    </Box>
   )
 }

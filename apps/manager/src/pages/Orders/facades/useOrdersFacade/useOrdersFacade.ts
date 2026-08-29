@@ -11,11 +11,12 @@ export const useOrdersFacade = () => {
     search,
     stage,
     statuses,
+    channel,
     term,
     setStage,
     setTerm,
   } = useOrdersFilters()
-  const ordersQuery = useOrders(tenantId, search, statuses)
+  const ordersQuery = useOrders(tenantId, search, statuses, channel)
   const statusMutation = useOrderStatus(tenantId)
   const queueSummary = useQueueSummary(tenantId)
 

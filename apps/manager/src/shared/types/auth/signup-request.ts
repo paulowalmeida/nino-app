@@ -11,4 +11,17 @@ export type SignupRequest = {
     cnpj: string
     legalName?: string
   }
+  tenant: {
+    customName?: string
+    slug: string
+    zipCode: string
+    street: string
+    number: string
+    complement?: string
+    neighborhood: string
+    city: string
+    state: string
+    country?: string
+    timezone?: string
+  }
 }

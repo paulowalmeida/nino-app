@@ -1,6 +1,5 @@
 import { Box } from '@nino/ds/components/Box'
 import { Button } from '@nino/ds/components/Button'
-import { ScrollArea } from '@nino/ds/components/ScrollArea'
 import {
   Table,
   TableBody,
@@ -20,10 +19,17 @@ export const CustomersList = () => {
 
   return (
     <>
-      <ScrollArea className={styles.listScroll}>
+      <Box className={styles.listShell}>
         <Table>
-          <TableHeader className={styles.stickyHeader}>
-            <TableRow>
+          <colgroup>
+            <col className={styles.colCustomer} />
+            <col className={styles.colSpent} />
+            <col className={styles.colOrders} />
+            <col className={styles.colPoints} />
+            <col className={styles.colSince} />
+          </colgroup>
+          <TableHeader>
+            <TableRow className={styles.headRow}>
               {CUSTOMERS_COLUMNS.map((label, index) => (
                 <TableHead
                   key={label}
@@ -41,7 +47,7 @@ export const CustomersList = () => {
             ))}
           </TableBody>
         </Table>
-      </ScrollArea>
+      </Box>
 
       {hasNextPage && (
         <Box direction="row" justify="center" className={styles.more}>

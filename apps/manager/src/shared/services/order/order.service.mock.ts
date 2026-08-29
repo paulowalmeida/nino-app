@@ -36,3 +36,7 @@ export const createOrderRequestMock = {
 export const orderMock = { id: orderIdMock, status: 'PENDING', total: 50 }
 
 export const updateOrderStatusRequestMock = { status: 'PREPARING' as const }
+
+export const assignKitchenAssigneeRequestMock = {
+  kitchenAssigneeId: 'staff-1',
+}

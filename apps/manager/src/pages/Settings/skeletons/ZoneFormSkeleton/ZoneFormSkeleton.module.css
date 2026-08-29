@@ -17,5 +17,5 @@
 }
 
 .submit {
-  @apply h-10 w-full self-start rounded-3 sm:w-36 sm:self-end;
+  @apply h-10 rounded-3;
 }

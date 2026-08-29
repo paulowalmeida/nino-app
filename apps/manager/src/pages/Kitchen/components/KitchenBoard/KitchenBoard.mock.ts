@@ -1,5 +1,6 @@
 export const kitchenBoardMock = {
   waitingColumn: 'Aguardando preparo',
   preparingColumn: 'Em preparo',
-  columnCount: 2,
+  finishedColumn: 'Saiu da cozinha',
+  columnCount: 3,
 }

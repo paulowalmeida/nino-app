@@ -12,7 +12,7 @@ type CounterSale = {
   reset: () => void
 }
 
-const NO_RECIPIENT = 'Informe o nome do cliente ou o número da mesa.'
+const NO_RECIPIENT = 'Informe o nome de quem pediu.'
 const UNEXPECTED = 'Não foi possível fechar a venda. Tente de novo.'
 
 export const useCounterSale = (tenantId: string | null): CounterSale => {
@@ -29,7 +29,7 @@ export const useCounterSale = (tenantId: string | null): CounterSale => {
   }: CounterSaleInput) => {
     setError(null)
 
-    if (!customerName && !tableNumber) {
+    if (!customerName.trim()) {
       setError(NO_RECIPIENT)
       return null
     }

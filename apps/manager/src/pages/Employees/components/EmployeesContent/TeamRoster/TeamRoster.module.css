@@ -31,10 +31,43 @@
   @apply mt-0.5 text-sm text-fg-faint;
 }
 
-/* full name gets priority: the badge and the menu never shrink */
-.row {
-  @apply flex items-center gap-x-3;
-  @apply border-t border-border py-3;
+/* CONSTRAINT: Table já envolve a <table> no seu próprio scroller, e o cabeçalho
+   sticky só gruda se a rolagem vertical acontecer nesse mesmo elemento. */
+.tableShell > div {
+  max-height: 22rem;
+  overflow-y: auto;
+}
+
+.headRow > th {
+  @apply border-b border-border bg-surface-raised;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+.colPerson {
+  width: auto;
+}
+
+.colSeen {
+  width: 10rem;
+}
+
+.colRole {
+  width: 10rem;
+}
+
+.colActions {
+  width: 4rem;
+}
+
+.colRight {
+  @apply text-right;
+}
+
+/* avatar, nome e e-mail truncam antes de disputar espaço com papel e menu */
+.identityCell {
+  @apply flex min-w-0 items-center gap-3;
 }
 
 .person {
@@ -44,7 +77,7 @@
 /* identity is a link: avatar, name and email truncate before competing for
    space with the badge and the menu, which never shrink */
 .identity {
-  @apply flex min-w-0 flex-1 items-center gap-3 rounded-2;
+  @apply flex min-w-0 items-center gap-3 rounded-2;
   @apply transition-colors duration-150 hover:bg-surface-mute;
   @apply focus-visible:outline-none focus-visible:ring-2;
   @apply focus-visible:ring-brand focus-visible:ring-offset-1;
@@ -64,13 +97,13 @@
 }
 
 .lastSeen {
-  @apply truncate text-xs text-fg-faint;
+  @apply truncate whitespace-nowrap text-xs text-fg-faint;
 }
 
 /* an account that never signed in is what an audit looks for — it doesn't
    hide */
 .neverSeen {
-  @apply truncate text-xs font-semibold text-fg-muted;
+  @apply truncate whitespace-nowrap text-xs font-semibold text-fg-muted;
 }
 
 /* locked or view-only roles: a plain label, nothing to click */
@@ -138,4 +171,9 @@
 
 .ghostRole {
   @apply ml-auto h-[1.125rem] w-20 shrink-0 rounded-1;
+}
+
+.roleTrigger,
+.kebab {
+  @apply ml-auto;
 }

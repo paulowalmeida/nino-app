@@ -21,22 +21,31 @@ describe('useOrdersFacade', () => {
     const setStage = vi.fn()
     const setTerm = vi.fn()
     const advanceOrder = vi.fn()
-    vi.mocked(useCurrentTenant).mockReturnValue({ tenantId: useOrdersFacadeMock.tenantId } as never)
+    vi.mocked(useCurrentTenant).mockReturnValue({
+      tenantId: useOrdersFacadeMock.tenantId,
+    } as never)
     vi.mocked(useOrdersFilters).mockReturnValue({
       isSearching: true,
       search: useOrdersFacadeMock.search,
       stage: useOrdersFacadeMock.stage,
       statuses: undefined,
+      channel: undefined,
       term: useOrdersFacadeMock.search,
       setStage,
       setTerm,
     })
     vi.mocked(useOrders).mockReturnValue({
-      orders: [], isPending: false, isError: false, hasNextPage: false,
-      isFetchingNextPage: false, fetchNextPage: vi.fn(),
+      orders: [],
+      isPending: false,
+      isError: false,
+      hasNextPage: false,
+      isFetchingNextPage: false,
+      fetchNextPage: vi.fn(),
     } as never)
     vi.mocked(useOrderStatus).mockReturnValue({
-      mutate: advanceOrder, isPending: false, variables: undefined,
+      mutate: advanceOrder,
+      isPending: false,
+      variables: undefined,
     } as never)
     vi.mocked(useQueueSummary).mockReturnValue({ data: undefined } as never)
 
@@ -45,6 +54,7 @@ describe('useOrdersFacade', () => {
     expect(useOrders).toHaveBeenCalledWith(
       useOrdersFacadeMock.tenantId,
       useOrdersFacadeMock.search,
+      undefined,
       undefined
     )
     expect(result.current.setStage).toBe(setStage)
@@ -59,22 +69,34 @@ describe('useOrdersFacade', () => {
       search: '',
       stage: 'incoming',
       statuses: ['PENDING'],
+      channel: ['DELIVERY', 'PICKUP', 'COUNTER'],
       term: '',
       setStage: vi.fn(),
       setTerm: vi.fn(),
     })
     vi.mocked(useOrders).mockReturnValue({
-      orders: [], isPending: false, isError: false, hasNextPage: false,
-      isFetchingNextPage: false, fetchNextPage: vi.fn(),
+      orders: [],
+      isPending: false,
+      isError: false,
+      hasNextPage: false,
+      isFetchingNextPage: false,
+      fetchNextPage: vi.fn(),
     } as never)
     vi.mocked(useOrderStatus).mockReturnValue({
-      mutate: vi.fn(), isPending: true, variables: { orderId: 'order-1' },
+      mutate: vi.fn(),
+      isPending: true,
+      variables: { orderId: 'order-1' },
     } as never)
     vi.mocked(useQueueSummary).mockReturnValue({ data: undefined } as never)
 
     renderHook(() => useOrdersFacade())
 
-    expect(useOrders).toHaveBeenLastCalledWith(null, '', ['PENDING'])
+    expect(useOrders).toHaveBeenLastCalledWith(
+      null,
+      '',
+      ['PENDING'],
+      ['DELIVERY', 'PICKUP', 'COUNTER']
+    )
     expect(useOrderStatus).toHaveBeenLastCalledWith(null)
     expect(useQueueSummary).toHaveBeenLastCalledWith(null)
   })

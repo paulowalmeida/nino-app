@@ -16,6 +16,12 @@
   @apply grid-cols-6 sm:grid-cols-8 lg:grid-cols-12;
 }
 
+@media (min-width: 2560px) {
+  .singleRowAt4k {
+    grid-template-columns: repeat(24, minmax(0, 1fr));
+  }
+}
+
 .option {
   @apply flex size-9 items-center justify-center rounded-2 border border-border;
   @apply bg-surface-page text-lg transition-colors duration-150;

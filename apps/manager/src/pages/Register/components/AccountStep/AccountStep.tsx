@@ -1,5 +1,3 @@
-import { Link } from 'react-router'
-
 import { Alert } from '@nino/ds/components/Alert'
 import { Box } from '@nino/ds/components/Box'
 import { Button } from '@nino/ds/components/Button'
@@ -41,8 +39,15 @@ export const AccountStep = () => {
         </Text>
       </RiseIn>
 
-      <Box as="form" direction="column" gap={4} mt={8} onSubmit={submit}>
-        <RiseIn delay={120}>
+      <Box
+        as="form"
+        direction="column"
+        gap={4}
+        mt={12}
+        onSubmit={submit}
+        className={styles.form}
+      >
+        <RiseIn delay={120} className={styles.primaryField}>
           <FormField label="Nome" error={errors.name?.message}>
             <Input
               placeholder="Seu nome"
@@ -51,7 +56,16 @@ export const AccountStep = () => {
           </FormField>
         </RiseIn>
 
-        <RiseIn delay={180}>
+        <RiseIn delay={180} className={styles.compactField}>
+          <FormField label="Telefone" error={errors.phone?.message}>
+            <PhoneInput
+              error={!!errors.phone}
+              {...register('phone', ACCOUNT_FIELD_RULES.phone)}
+            />
+          </FormField>
+        </RiseIn>
+
+        <RiseIn delay={240} className={styles.primaryField}>
           <FormField label="Email" error={errors.email?.message}>
             <Input
               type="email"
@@ -61,16 +75,7 @@ export const AccountStep = () => {
           </FormField>
         </RiseIn>
 
-        <RiseIn delay={240}>
-          <FormField label="Telefone" error={errors.phone?.message}>
-            <PhoneInput
-              error={!!errors.phone}
-              {...register('phone', ACCOUNT_FIELD_RULES.phone)}
-            />
-          </FormField>
-        </RiseIn>
-
-        <RiseIn delay={300}>
+        <RiseIn delay={300} className={styles.compactField}>
           <FormField label="CPF" error={errors.cpf?.message}>
             <CpfInput
               error={!!errors.cpf}
@@ -79,7 +84,7 @@ export const AccountStep = () => {
           </FormField>
         </RiseIn>
 
-        <RiseIn delay={360}>
+        <RiseIn delay={360} className={styles.halfField}>
           <FormField label="Senha" error={errors.password?.message}>
             <PasswordInput
               placeholder="••••••••"
@@ -95,7 +100,7 @@ export const AccountStep = () => {
           )}
         </RiseIn>
 
-        <RiseIn delay={420}>
+        <RiseIn delay={420} className={styles.halfField}>
           <FormField
             label="Confirmar senha"
             error={errors.confirmPassword?.message}
@@ -112,28 +117,23 @@ export const AccountStep = () => {
           </FormField>
         </RiseIn>
 
-        {errors.root && <Alert variant="error">{errors.root.message}</Alert>}
+        {errors.root && (
+          <Alert variant="error" className={styles.formFeedback}>
+            {errors.root.message}
+          </Alert>
+        )}
 
-        <RiseIn delay={480}>
+        <RiseIn delay={480} className={styles.actions}>
           <Button
             type="submit"
             loading={isSubmitting}
-            className={styles.fullWidthAction}
+            className={styles.continueButton}
             loadingIndicator="dots"
           >
             Continuar
           </Button>
         </RiseIn>
       </Box>
-
-      <RiseIn delay={540}>
-        <Text size="sm" color="muted" align="center" mt={8}>
-          Já tem conta?{' '}
-          <Link to="/entrar" className={styles.footerLink}>
-            Entrar
-          </Link>
-        </Text>
-      </RiseIn>
     </Box>
   )
 }

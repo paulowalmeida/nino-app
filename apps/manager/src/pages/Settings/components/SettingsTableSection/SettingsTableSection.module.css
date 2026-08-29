@@ -1,19 +1,31 @@
 @reference "@nino/ds/globals.css";
 
 .panel {
-  @apply flex min-w-0 flex-col;
+  @apply flex min-h-0 min-w-0 flex-1 flex-col;
 }
 
 .head {
-  @apply mb-5 lg:mb-6;
+  @apply mb-5 shrink-0 lg:mb-6;
 }
 
-.options {
-  @apply grid gap-3 sm:grid-cols-2;
+.tabs {
+  @apply mt-3 flex min-h-0 flex-1 flex-col overflow-hidden;
+}
+
+.tabs > [data-part='content']:not([hidden]) {
+  @apply flex min-h-0 flex-1 flex-col;
+}
+
+.tabContent {
+  @apply flex min-h-0 flex-1 flex-col gap-6 overflow-hidden;
+}
+
+.tabIntro {
+  @apply gap-1;
 }
 
 .option {
-  @apply min-h-44 border-border bg-surface-raised;
+  @apply border-border bg-surface-raised;
 }
 
 .optionBody {

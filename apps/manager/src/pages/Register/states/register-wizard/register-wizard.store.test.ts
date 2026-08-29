@@ -2,7 +2,10 @@ import { act } from '@testing-library/react'
 import { beforeEach, describe, expect, it } from 'vitest'
 
 import { useRegisterWizardStore } from './register-wizard.store'
-import { storeAccountMock } from './register-wizard.store.mock'
+import {
+  storeAccountMock,
+  storeCompanyMock,
+} from './register-wizard.store.mock'
 
 describe('useRegisterWizardStore', () => {
   beforeEach(() => act(() => useRegisterWizardStore.getState().reset()))
@@ -27,6 +30,20 @@ describe('useRegisterWizardStore', () => {
 
     expect(useRegisterWizardStore.getState().step).toBe(1)
     expect(useRegisterWizardStore.getState().account).toBe(storeAccountMock)
+  })
+
+  it('returns to the company step', () => {
+    act(() => useRegisterWizardStore.getState().goToTenant(storeCompanyMock))
+    act(() => useRegisterWizardStore.getState().goToCompanyStep())
+
+    expect(useRegisterWizardStore.getState().step).toBe(2)
+  })
+
+  it('carries the company into the tenant step', () => {
+    act(() => useRegisterWizardStore.getState().goToTenant(storeCompanyMock))
+
+    expect(useRegisterWizardStore.getState().step).toBe(3)
+    expect(useRegisterWizardStore.getState().company).toBe(storeCompanyMock)
   })
 
   it('starts over when the wizard is reset', () => {

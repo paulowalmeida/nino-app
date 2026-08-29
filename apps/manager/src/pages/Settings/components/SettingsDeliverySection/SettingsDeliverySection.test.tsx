@@ -30,7 +30,7 @@ describe('SettingsDeliverySection', () => {
 
     expect(screen.getByRole('heading', { name: 'Entrega' })).toBeInTheDocument()
     expect(
-      screen.getByRole('heading', { name: 'Adicionar faixa' })
+      screen.getByRole('heading', { name: 'Nova faixa' })
     ).toBeInTheDocument()
 
     await user.click(screen.getByRole('button', { name: 'Remover' }))

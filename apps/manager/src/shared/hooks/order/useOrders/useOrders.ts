@@ -13,19 +13,24 @@ export const useOrders = (
   tenantId: string | null,
   search?: string,
   statuses?: OrderStatusKey[],
-  channel?: OrderChannel,
+  channel?: OrderChannel | OrderChannel[],
   paymentStatus?: PaymentStatus,
   requiresPreparation?: boolean
 ) => {
   const term = search?.trim() || undefined
   const statusKey = statuses?.length ? statuses.join(',') : undefined
+  const channelKey = channel
+    ? Array.isArray(channel)
+      ? channel.join(',')
+      : channel
+    : undefined
 
   const query = useInfiniteQuery<OrderPage>({
     queryKey: queryKeys.orders.list(
       tenantId ?? '',
       statusKey,
       term,
-      channel,
+      channelKey,
       paymentStatus,
       requiresPreparation
     ),

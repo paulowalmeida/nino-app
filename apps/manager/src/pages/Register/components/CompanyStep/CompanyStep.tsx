@@ -37,8 +37,15 @@ export const CompanyStep = () => {
         </Text>
       </RiseIn>
 
-      <Box as="form" direction="column" gap={4} mt={8} onSubmit={submit}>
-        <RiseIn delay={120}>
+      <Box
+        as="form"
+        direction="column"
+        gap={4}
+        mt={12}
+        onSubmit={submit}
+        className={styles.form}
+      >
+        <RiseIn delay={120} className={styles.primaryField}>
           <FormField label="Nome" error={errors.company?.name?.message}>
             <Input
               placeholder="Lanchonete do Zé"
@@ -47,7 +54,7 @@ export const CompanyStep = () => {
           </FormField>
         </RiseIn>
 
-        <RiseIn delay={180}>
+        <RiseIn delay={180} className={styles.compactField}>
           <FormField label="CNPJ" error={errors.company?.cnpj?.message}>
             <CnpjInput
               error={!!errors.company?.cnpj}
@@ -56,7 +63,7 @@ export const CompanyStep = () => {
           </FormField>
         </RiseIn>
 
-        <RiseIn delay={240}>
+        <RiseIn delay={240} className={styles.legalNameField}>
           <FormField
             label="Razão social (opcional)"
             error={errors.company?.legalName?.message}
@@ -68,26 +75,30 @@ export const CompanyStep = () => {
           </FormField>
         </RiseIn>
 
-        {errors.root && <Alert variant="error">{errors.root.message}</Alert>}
+        {errors.root && (
+          <Alert variant="error" className={styles.formFeedback}>
+            {errors.root.message}
+          </Alert>
+        )}
 
-        <RiseIn delay={300}>
-          <Button
-            type="submit"
-            loading={isSubmitting}
-            className={styles.fullWidthAction}
-            loadingIndicator="dots"
-          >
-            Continuar
-          </Button>
-          <Button
-            type="button"
-            variant="ghost"
-            onClick={goToAccount}
-            disabled={isSubmitting}
-            className={styles.fullWidthAction}
-          >
-            Voltar
-          </Button>
+        <RiseIn delay={300} className={styles.actions}>
+          <Box direction="row" justify="end" gap={2}>
+            <Button
+              type="button"
+              variant="ghost"
+              onClick={goToAccount}
+              disabled={isSubmitting}
+            >
+              Voltar
+            </Button>
+            <Button
+              type="submit"
+              loading={isSubmitting}
+              loadingIndicator="dots"
+            >
+              Continuar
+            </Button>
+          </Box>
         </RiseIn>
       </Box>
     </Box>

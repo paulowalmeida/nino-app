@@ -20,9 +20,10 @@ export const STATUS_LABEL: Record<OrderStatusKey, string> = {
 }
 
 export const CHANNEL_LABEL: Record<OrderChannel, string> = {
-  DELIVERY: 'Entrega',
+  DELIVERY: 'Delivery',
   PICKUP: 'Retirada',
   COUNTER: 'Balcão',
+  TABLE_TAB: 'Comanda',
 }
 
 export const PAYMENT_METHOD_LABEL: Record<PaymentMethod, string> = {
@@ -42,6 +43,10 @@ export const PAYMENT_METHOD_LABEL_BY_CHANNEL: Record<
     CARD_ON_DELIVERY: 'Cartão',
   },
   COUNTER: {
+    ...PAYMENT_METHOD_LABEL,
+    CARD_ON_DELIVERY: 'Cartão',
+  },
+  TABLE_TAB: {
     ...PAYMENT_METHOD_LABEL,
     CARD_ON_DELIVERY: 'Cartão',
   },

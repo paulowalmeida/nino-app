@@ -17,10 +17,16 @@ const GHOST_ORDERS = ['first', 'second', 'third', 'fourth', 'fifth']
 /* WHY: a régua de colunas não vira osso — já funciona sem os pedidos e
  * sumiria da tela se virasse barra cinza. */
 export const CustomerOrderHistorySkeleton = () => (
-  <Box className={orders.scroll}>
+  <Box className={orders.shell}>
     <Table>
-      <TableHeader className={orders.stickyHeader}>
-        <TableRow>
+      <colgroup>
+        <col className={orders.colOrder} />
+        <col className={orders.colStatus} />
+        <col className={orders.colDate} />
+        <col className={orders.colTotal} />
+      </colgroup>
+      <TableHeader>
+        <TableRow className={orders.headRow}>
           <TableHead>Pedido</TableHead>
           <TableHead>Status</TableHead>
           <TableHead className={orders.colRight}>Data</TableHead>

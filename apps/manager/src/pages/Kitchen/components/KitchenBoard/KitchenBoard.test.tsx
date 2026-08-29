@@ -18,16 +18,21 @@ vi.mock(
 describe(KitchenBoard.name, () => {
   it('presents all workflow columns and empty states', () => {
     vi.mocked(useKitchenFacade).mockReturnValue({
-      orders: [],
+      ordersByStage: { waiting: [], preparing: [], finished: [] },
+      arrangement: {},
+      salesFormats: ['DELIVERY'],
       isPending: false,
       isAdvancing: false,
-    } as never)
+    } as unknown as ReturnType<typeof useKitchenFacade>)
     render(<KitchenBoard isCompact={false} />)
     expect(
       screen.getByRole('region', { name: kitchenBoardMock.waitingColumn })
     ).toBeInTheDocument()
     expect(
       screen.getByRole('region', { name: kitchenBoardMock.preparingColumn })
+    ).toBeInTheDocument()
+    expect(
+      screen.getByRole('region', { name: kitchenBoardMock.finishedColumn })
     ).toBeInTheDocument()
     expect(screen.getAllByText(/Nada|Nenhum/).length).toBe(
       kitchenBoardMock.columnCount

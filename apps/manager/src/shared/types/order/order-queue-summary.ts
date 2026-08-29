@@ -1,3 +1,5 @@
 import type { OrderStatusKey } from './order-status-key'
 
-export type OrderQueueSummary = Partial<Record<OrderStatusKey, number>>
+export type OrderQueueSummary = Partial<Record<OrderStatusKey, number>> & {
+  TABLE_TAB?: number
+}

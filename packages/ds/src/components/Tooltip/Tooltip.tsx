@@ -1,6 +1,7 @@
 import { ReactNode } from 'react'
 
 import { Tooltip as ArkTooltip } from '@ark-ui/react/tooltip'
+import { Portal } from '@ark-ui/react/portal'
 
 import styles from './Tooltip.module.css'
 
@@ -66,14 +67,16 @@ export function Tooltip({
       positioning={{ placement: side, offset: { mainAxis: sideOffset } }}
     >
       <ArkTooltip.Trigger asChild>{children}</ArkTooltip.Trigger>
-      <ArkTooltip.Positioner>
-        <ArkTooltip.Content className={styles.bubble}>
-          <ArkTooltip.Arrow className={styles.arrow}>
-            <ArkTooltip.ArrowTip />
-          </ArkTooltip.Arrow>
-          {content}
-        </ArkTooltip.Content>
-      </ArkTooltip.Positioner>
+      <Portal>
+        <ArkTooltip.Positioner>
+          <ArkTooltip.Content className={styles.bubble}>
+            <ArkTooltip.Arrow className={styles.arrow}>
+              <ArkTooltip.ArrowTip />
+            </ArkTooltip.Arrow>
+            {content}
+          </ArkTooltip.Content>
+        </ArkTooltip.Positioner>
+      </Portal>
     </ArkTooltip.Root>
   )
 }

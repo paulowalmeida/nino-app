@@ -25,7 +25,8 @@ export const welcomePanelDemo = (key: WelcomePanelDemoKey) => {
       return (
         <KitchenCard
           order={demoOrder('PREPARING', 6)}
-          onAdvance={noop}
+          destination={{ kind: 'delivery', label: 'Delivery' }}
+          onStep={noop}
           isBusy={false}
         />
       )

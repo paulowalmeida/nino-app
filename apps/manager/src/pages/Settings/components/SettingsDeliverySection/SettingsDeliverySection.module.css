@@ -1,9 +1,49 @@
 @reference "@nino/ds/globals.css";
 
 .panel {
-  @apply flex min-w-0 flex-col gap-5 lg:gap-6;
+  @apply flex min-h-0 min-w-0 flex-1 flex-col gap-5 overflow-y-auto;
+  @apply lg:gap-6 lg:overflow-hidden;
 }
 
 .head {
-  @apply min-w-0;
+  @apply min-w-0 shrink-0;
+}
+
+.territory {
+  @apply flex min-w-0 shrink-0 flex-col;
+}
+
+.split {
+  @apply flex min-w-0 flex-col gap-6;
+}
+
+.rail {
+  @apply flex min-w-0 flex-col;
+}
+
+.zones {
+  @apply flex min-w-0 flex-col;
+}
+
+@media (min-width: 1024px) {
+  .split {
+    @apply grid min-h-0 flex-1 items-stretch gap-8;
+
+    /* WHY: com a sidebar recolhida sobra largura no painel; quem deve crescer
+       é o card do formulário, não a tabela — que já tem o tamanho ideal com
+       a sidebar aberta. */
+    grid-template-columns: minmax(21rem, 1fr) minmax(0, 44.5rem);
+  }
+
+  .rail {
+    @apply self-start;
+  }
+
+  /* WHY: sem isso a tabela estica pra preencher a linha do grid inteira mesmo
+     com poucas faixas (telas grandes sobram muita altura); self-start deixa
+     ela abraçar o conteúdo e max-h-full mantém o teto de altura de hoje,
+     onde o próprio scroll interno da tabela assume. */
+  .zones {
+    @apply min-h-0 max-h-full self-start;
+  }
 }

@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query'
 
-import { TenantService } from '@shared/services/tenant/tenant.service'
 import { queryKeys } from '@shared/lib/query-keys'
+import { TenantService } from '@shared/services/tenant/tenant.service'
 
 export const mapLocationKey = (tenantId: string) => [
   ...queryKeys.tenant.all(tenantId),

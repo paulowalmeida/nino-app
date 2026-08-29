@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 
-import { nextStep } from './order-action-policy'
+import { nextStep, previousStep } from './order-action-policy'
 import { baseOrderMock } from './order-action-policy.mock'
 
 describe('nextStep', () => {
@@ -48,5 +48,33 @@ describe('nextStep', () => {
   it('has no next step for a finished or cancelled order', () => {
     expect(nextStep({ ...baseOrderMock, status: 'DELIVERED' })).toBeNull()
     expect(nextStep({ ...baseOrderMock, status: 'CANCELLED' })).toBeNull()
+  })
+})
+
+describe('previousStep', () => {
+  it('sends a preparing order back to the queue', () => {
+    const step = previousStep({ ...baseOrderMock, status: 'PREPARING' })
+    expect(step).toEqual({ target: 'ACCEPTED', label: 'Voltar para a fila' })
+  })
+
+  it('pulls an order back from the street into preparation', () => {
+    const step = previousStep({ ...baseOrderMock, status: 'OUT_FOR_DELIVERY' })
+    expect(step?.target).toBe('PREPARING')
+  })
+
+  it('pulls an order back from the counter into preparation', () => {
+    const step = previousStep({ ...baseOrderMock, status: 'READY_FOR_PICKUP' })
+    expect(step?.target).toBe('PREPARING')
+  })
+
+  it('never undoes the acceptance itself', () => {
+    expect(previousStep({ ...baseOrderMock, status: 'ACCEPTED' })).toBeNull()
+    expect(previousStep({ ...baseOrderMock, status: 'PENDING' })).toBeNull()
+  })
+
+  it('never undoes a terminal order', () => {
+    expect(previousStep({ ...baseOrderMock, status: 'DELIVERED' })).toBeNull()
+    expect(previousStep({ ...baseOrderMock, status: 'COMPLETED' })).toBeNull()
+    expect(previousStep({ ...baseOrderMock, status: 'CANCELLED' })).toBeNull()
   })
 })

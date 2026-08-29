@@ -1,12 +1,12 @@
 import { useNavigate } from 'react-router'
 
+import { useTenantRole } from '@layouts/AppLayout/hooks/useTenantRole/useTenantRole'
 import { Box } from '@nino/ds/components/Box'
 import { Button } from '@nino/ds/components/Button'
 import { Icon } from '@nino/ds/components/Icon'
 import { Menu } from '@nino/ds/components/Menu'
 import { Text } from '@nino/ds/components/Text'
 import { Tooltip } from '@nino/ds/components/Tooltip'
-import { useTenantRole } from '@layouts/AppLayout/hooks/useTenantRole/useTenantRole'
 import { PersonMark } from '@shared/components/PersonMark/PersonMark'
 import { useLogout } from '@shared/hooks/session/useLogout/useLogout'
 
@@ -38,6 +38,7 @@ export const UserMenu = ({
     <Box direction="row" className={styles.actions}>
       <Menu
         contentClassName={styles.panel}
+        triggerTooltip={collapsed ? 'Abrir menu da conta' : undefined}
         trigger={
           <Button variant="ghost" className={styles.trigger}>
             <PersonMark name={name} tone="night" size="sm" />
@@ -53,7 +54,7 @@ export const UserMenu = ({
             value: 'profile',
             label: 'Meus dados',
             icon: <Icon name="user" className={styles.itemIcon} />,
-            onSelect: () => go('profile'),
+            onSelect: () => go('perfil'),
           },
           ...(isOwner
             ? [

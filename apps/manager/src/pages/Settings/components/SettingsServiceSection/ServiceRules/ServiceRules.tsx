@@ -41,7 +41,8 @@ const toDraft = (settings: TenantSettings): ServiceRulesDraft => ({
   allowGuestOrder: settings.allowGuestOrder,
   requireCpf: settings.requireCpf,
   minOrderAmount: Number(settings.minOrderAmount).toFixed(2).replace('.', ','),
-  estimatedMinutes: String(settings.estimatedMinutes),
+  preparationMinutes: String(settings.preparationMinutes),
+  deliveryMinutes: String(settings.deliveryMinutes),
   acceptedPaymentMethods: settings.acceptedPaymentMethods,
 })
 
@@ -84,7 +85,8 @@ export const ServiceRules = ({
       allowGuestOrder: draft.allowGuestOrder,
       requireCpf: draft.requireCpf,
       minOrderAmount: Number(draft.minOrderAmount.replace(',', '.')) || 0,
-      estimatedMinutes: Number(draft.estimatedMinutes) || 1,
+      preparationMinutes: Number(draft.preparationMinutes) || 1,
+      deliveryMinutes: Number(draft.deliveryMinutes) || 0,
       acceptedPaymentMethods: draft.acceptedPaymentMethods,
     })
     setDirty(false)
@@ -107,7 +109,7 @@ export const ServiceRules = ({
         {SERVICE_RULES_CHANNELS.map(({ key, label, hint }, index) => (
           <Box
             key={key}
-            className={`${motion.deal} ${local.row}`}
+            className={`${motion.deal} ${local.channelRow}`}
             style={riseDelay(index * 50 + 60)}
           >
             <Switch
@@ -115,10 +117,12 @@ export const ServiceRules = ({
               onCheckedChange={(checked) => change({ [key]: checked })}
               aria-label={label}
             />
-            <Box className={local.rowText}>
-              <Text className={local.rowLabel}>{label}</Text>
-              <Text className={local.rowHint}>{hint}</Text>
-            </Box>
+            <Text className={`${local.rowLabel} ${local.channelTextCell}`}>
+              {label}
+            </Text>
+            <Text className={`${local.rowHint} ${local.channelTextCell}`}>
+              {hint}
+            </Text>
           </Box>
         ))}
       </Box>
@@ -147,32 +151,32 @@ export const ServiceRules = ({
       </Box>
 
       <Box className={local.group}>
-        <Box className={local.row}>
+        <Box className={local.channelRow}>
           <Switch
             checked={draft.allowGuestOrder}
             onCheckedChange={(checked) => change({ allowGuestOrder: checked })}
             aria-label="Pedido sem cadastro"
           />
-          <Box className={local.rowText}>
-            <Text className={local.rowLabel}>Pedido sem cadastro</Text>
-            <Text className={local.rowHint}>
-              O cliente pede informando só nome, telefone e endereço.
-            </Text>
-          </Box>
+          <Text className={`${local.rowLabel} ${local.channelTextCell}`}>
+            Pedido sem cadastro
+          </Text>
+          <Text className={`${local.rowHint} ${local.channelTextCell}`}>
+            O cliente pede informando só nome, telefone e endereço.
+          </Text>
         </Box>
 
-        <Box className={local.row}>
+        <Box className={local.channelRow}>
           <Switch
             checked={draft.requireCpf}
             onCheckedChange={(checked) => change({ requireCpf: checked })}
             aria-label="Pedir CPF na nota"
           />
-          <Box className={local.rowText}>
-            <Text className={local.rowLabel}>Pedir CPF na nota</Text>
-            <Text className={local.rowHint}>
-              Some do checkout quando desligado.
-            </Text>
-          </Box>
+          <Text className={`${local.rowLabel} ${local.channelTextCell}`}>
+            Pedir CPF na nota
+          </Text>
+          <Text className={`${local.rowHint} ${local.channelTextCell}`}>
+            Some do checkout quando desligado.
+          </Text>
         </Box>
       </Box>
 
@@ -193,18 +197,36 @@ export const ServiceRules = ({
       </Box>
 
       <Box className={local.minimum}>
-        <Label className={local.rowLabel} htmlFor="estimated-minutes">
-          Tempo estimado (min)
+        <Label className={local.rowLabel} htmlFor="preparation-minutes">
+          Tempo de preparo (min)
         </Label>
         <Input
-          id="estimated-minutes"
+          id="preparation-minutes"
           inputMode="numeric"
           className={local.minimumInput}
-          value={draft.estimatedMinutes}
-          onChange={(event) => change({ estimatedMinutes: event.target.value })}
+          value={draft.preparationMinutes}
+          onChange={(event) =>
+            change({ preparationMinutes: event.target.value })
+          }
         />
         <Text className={local.rowHint}>
-          Preparo + entrega. Aparece pro cliente na vitrine.
+          Tempo usado pela cozinha para preparar o pedido.
+        </Text>
+      </Box>
+
+      <Box className={local.minimum}>
+        <Label className={local.rowLabel} htmlFor="delivery-minutes">
+          Tempo de entrega (min)
+        </Label>
+        <Input
+          id="delivery-minutes"
+          inputMode="numeric"
+          className={local.minimumInput}
+          value={draft.deliveryMinutes}
+          onChange={(event) => change({ deliveryMinutes: event.target.value })}
+        />
+        <Text className={local.rowHint}>
+          Tempo adicional para o pedido chegar ao cliente.
         </Text>
       </Box>
 

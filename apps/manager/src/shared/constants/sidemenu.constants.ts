@@ -35,7 +35,7 @@ export const SIDEMENU_GROUPS: SidemenuItem[] = [
       },
       {
         section: 'colaboradores',
-        label: 'Equipe',
+        label: 'Colaboradores',
         icon: 'badge',
         roles: MANAGERS,
       },

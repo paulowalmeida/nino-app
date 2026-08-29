@@ -1,6 +1,7 @@
 import { MemoryRouter } from 'react-router'
 
 import { render, screen } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
 import { describe, expect, it } from 'vitest'
 
 import { SidebarNavLink } from './SidebarNavLink'
@@ -23,5 +24,28 @@ describe('SidebarNavLink', () => {
     )
 
     expect(screen.getByText('Pedidos')).toBeInTheDocument()
+  })
+
+  it('shows the destination label in a tooltip when collapsed', async () => {
+    const user = userEvent.setup()
+
+    render(
+      <MemoryRouter>
+        <SidebarNavLink
+          tenantId="tenant-1"
+          section="pedidos"
+          label="Pedidos"
+          icon="receipt"
+          isCollapsed
+          waiting={0}
+          delay={{}}
+          onNavigate={() => undefined}
+        />
+      </MemoryRouter>
+    )
+
+    await user.hover(screen.getByRole('link', { name: 'Pedidos' }))
+
+    expect(await screen.findByRole('tooltip')).toHaveTextContent('Pedidos')
   })
 })

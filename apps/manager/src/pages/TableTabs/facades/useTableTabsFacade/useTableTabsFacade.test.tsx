@@ -6,24 +6,12 @@ import { useTableTabsFacade } from './useTableTabsFacade'
 vi.mock('@shared/hooks/session/useCurrentTenant/useCurrentTenant', () => ({
   useCurrentTenant: () => ({ tenantId: 'tenant-1' }),
 }))
-vi.mock('react-router', () => ({
-  useParams: () => ({}),
-}))
 vi.mock('@shared/hooks/order/useOrders/useOrders', () => ({
   useOrders: vi.fn(() => ({ orders: [], isPending: false, isError: false })),
 }))
-vi.mock(
-  '@pages/TableTabDetail/hooks/useTableTabItemCancellation/useTableTabItemCancellation',
-  () => ({
-    useTableTabItemCancellation: () => ({
-      cancelItem: vi.fn(),
-      isCancelling: false,
-    }),
-  })
-)
 
 describe(useTableTabsFacade.name, () => {
-  it('requests open counter orders for the current tenant', async () => {
+  it('requests open and closed table-tab orders for the current tenant', async () => {
     const { useOrders } =
       await import('@shared/hooks/order/useOrders/useOrders')
     renderHook(() => useTableTabsFacade())
@@ -33,7 +21,7 @@ describe(useTableTabsFacade.name, () => {
       'tenant-1',
       undefined,
       ['PENDING', 'ACCEPTED', 'PREPARING', 'READY_FOR_PICKUP'],
-      'COUNTER',
+      'TABLE_TAB',
       undefined
     )
     expect(useOrders).toHaveBeenNthCalledWith(
@@ -41,7 +29,7 @@ describe(useTableTabsFacade.name, () => {
       'tenant-1',
       undefined,
       ['DELIVERED', 'COMPLETED', 'CANCELLED'],
-      'COUNTER',
+      'TABLE_TAB',
       undefined
     )
   })

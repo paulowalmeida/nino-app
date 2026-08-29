@@ -41,6 +41,15 @@
   }
 }
 
+/* Em telas 4K, o painel de produtos ganha largura suficiente para uma quinta
+   coluna. A redução é só desse estágio amplo e preserva os alvos grandes nos
+   tamanhos de balcão mais comuns. */
+@container (min-width: 58rem) {
+  .grid {
+    grid-template-columns: repeat(5, 1fr);
+  }
+}
+
 /* Search results and tab content sit below the search bar/tab rail, so
    they need breathing room the skeleton grid doesn't. */
 .resultsTop {

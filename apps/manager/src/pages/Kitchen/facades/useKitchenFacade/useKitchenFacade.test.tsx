@@ -6,8 +6,23 @@ import { useKitchenFacade } from './useKitchenFacade'
 vi.mock('@shared/hooks/session/useCurrentTenant/useCurrentTenant', () => ({
   useCurrentTenant: () => ({ tenantId: 'tenant-1' }),
 }))
-vi.mock('@shared/hooks/order/useOrders/useOrders', () => ({
-  useOrders: vi.fn(() => ({ orders: [], isPending: false })),
+vi.mock('@pages/Kitchen/hooks/useKitchenOrders/useKitchenOrders', () => ({
+  useKitchenOrders: vi.fn(() => ({
+    orders: [],
+    finishedOrders: [],
+    ordersByStage: { waiting: [], preparing: [], finished: [] },
+    isPending: false,
+    isError: false,
+  })),
+}))
+vi.mock('@shared/hooks/settings/useSalesFormats/useSalesFormats', () => ({
+  useSalesFormats: () => ({ formats: ['DELIVERY', 'COUNTER'] }),
+}))
+vi.mock('@shared/hooks/team/useStaff/useStaff', () => ({
+  useStaff: () => ({ data: { data: [] } }),
+}))
+vi.mock('@pages/Kitchen/hooks/useKitchenAssignee/useKitchenAssignee', () => ({
+  useKitchenAssignee: () => ({ mutate: vi.fn(), isPending: false }),
 }))
 vi.mock('@shared/hooks/order/useOrderStatus/useOrderStatus', () => ({
   useOrderStatus: () => ({
@@ -27,18 +42,12 @@ describe(useKitchenFacade.name, () => {
     expect(result.current.advanceOrder).toBeTypeOf('function')
   })
 
-  it('requests only preparation orders in the kitchen stages', async () => {
-    const { useOrders } = await import('@shared/hooks/order/useOrders/useOrders')
+  it('requests kitchen orders through the dedicated orders hook', async () => {
+    const { useKitchenOrders } =
+      await import('@pages/Kitchen/hooks/useKitchenOrders/useKitchenOrders')
 
     renderHook(() => useKitchenFacade())
 
-    expect(useOrders).toHaveBeenCalledWith(
-      'tenant-1',
-      undefined,
-      ['ACCEPTED', 'PREPARING'],
-      undefined,
-      undefined,
-      true
-    )
+    expect(useKitchenOrders).toHaveBeenCalledWith('tenant-1')
   })
 })

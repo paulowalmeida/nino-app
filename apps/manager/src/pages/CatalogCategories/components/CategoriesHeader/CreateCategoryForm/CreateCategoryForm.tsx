@@ -54,6 +54,7 @@ export const CreateCategoryForm = () => {
         value={createIcon}
         onChange={setCreateIcon}
         disabled={isCreating}
+        singleRowAt4k
       />
     </Box>
   )

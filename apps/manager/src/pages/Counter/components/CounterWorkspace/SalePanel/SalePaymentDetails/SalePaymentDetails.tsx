@@ -15,9 +15,7 @@ import styles from './SalePaymentDetails.module.css'
 
 export type SalePaymentDetailsProps = {
   customerName: string
-  tableNumber: string
   onCustomerName: (name: string) => void
-  onTableNumber: (table: string) => void
   changeFor: string
   changeAmount: number
   isChangeValid: boolean
@@ -29,9 +27,7 @@ export type SalePaymentDetailsProps = {
 
 export const SalePaymentDetails = ({
   customerName,
-  tableNumber,
   onCustomerName,
-  onTableNumber,
   changeFor,
   changeAmount,
   isChangeValid,
@@ -46,12 +42,6 @@ export const SalePaymentDetails = ({
       aria-label="Nome de quem pediu"
       value={customerName}
       onChange={(event) => onCustomerName(event.target.value)}
-    />
-    <Input
-      placeholder="Mesa ou comanda"
-      aria-label="Mesa ou comanda"
-      value={tableNumber}
-      onChange={(event) => onTableNumber(event.target.value)}
     />
     <Text
       size="xs"

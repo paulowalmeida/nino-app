@@ -2,10 +2,12 @@ import { type AnimationEvent, useState } from 'react'
 
 import { Reorder, useDragControls } from 'framer-motion'
 
-import { Box } from '@nino/ds/components/Box'
 import { Button } from '@nino/ds/components/Button'
 import { Icon } from '@nino/ds/components/Icon'
+import { Menu, type MenuItem } from '@nino/ds/components/Menu'
+import { TableCell } from '@nino/ds/components/Table'
 import { Text } from '@nino/ds/components/Text'
+import { mergeClasses } from '@nino/ds/mergeClasses'
 import { REORDER_TRANSITION } from '@shared/constants/reorder-transition.constants'
 import type { CategoryWithCount } from '@shared/types/product/category-with-count'
 import { riseDelay } from '@shared/utils/rise-delay/rise-delay'
@@ -21,7 +23,6 @@ type CategoryRowProps = {
   index: number
   onEdit: () => void
   onDelete: () => void
-  onDragEnd: () => void
   disabled: boolean
 }
 
@@ -30,70 +31,75 @@ export const CategoryRow = ({
   index,
   onEdit,
   onDelete,
-  onDragEnd,
   disabled,
 }: CategoryRowProps) => {
   const dragControls = useDragControls()
   const [isEntering, setIsEntering] = useState(true)
   const empty = category.count === 0
 
-  const handleEntranceEnd = (event: AnimationEvent<HTMLLIElement>) => {
+  const handleEntranceEnd = (event: AnimationEvent<HTMLTableRowElement>) => {
     if (event.target === event.currentTarget) setIsEntering(false)
   }
 
+  const actionItems: MenuItem[] = [
+    { value: 'edit', label: 'Renomear', onSelect: onEdit },
+    { separator: true },
+    {
+      value: 'delete',
+      label: 'Excluir',
+      destructive: true,
+      onSelect: onDelete,
+    },
+  ]
+
   return (
     <Reorder.Item
-      as="li"
+      as="tr"
       value={category}
       dragListener={false}
       dragControls={dragControls}
-      onDragEnd={onDragEnd}
       onAnimationEnd={handleEntranceEnd}
       transition={REORDER_TRANSITION}
-      className={`${isEntering ? motion.deal : ''} ${styles.row}`}
+      className={mergeClasses(styles.row, isEntering && motion.deal)}
       style={isEntering ? riseDelay(index * 35 + 60) : {}}
     >
-      <Button
-        variant="ghost"
-        size="icon"
-        className={styles.dragHandle}
-        aria-label={`Reordenar ${category.name}`}
-        onPointerDown={(event) => dragControls.start(event)}
-      >
-        <Icon name="grip" />
-      </Button>
+      <TableCell className={styles.dragCell}>
+        <Button
+          variant="ghost"
+          size="icon"
+          className={styles.dragHandle}
+          aria-label={`Reordenar ${category.name}`}
+          onPointerDown={(event) => dragControls.start(event)}
+        >
+          <Icon name="grip" />
+        </Button>
+      </TableCell>
 
-      <Box className={styles.who}>
+      <TableCell className={styles.who}>
         <Text as="span" className={styles.name}>
           {category.name}
         </Text>
         <Text as="span" className={empty ? styles.hintEmpty : styles.hint}>
           {empty ? 'Vazia — nenhum item ainda' : countLabel(category.count)}
         </Text>
-      </Box>
+      </TableCell>
 
-      <Box direction="row" gap={1} align="center" shrink={false}>
-        <Button
-          variant="ghost"
-          size="icon"
-          className={`${motion.press} ${styles.action}`}
-          aria-label={`Renomear ${category.name}`}
-          disabled={disabled}
-          onClick={onEdit}
-        >
-          <Icon name="pencil" />
-        </Button>
-        <Button
-          variant="ghost"
-          size="icon"
-          className={`${motion.press} ${styles.action} ${styles.danger}`}
-          aria-label={`Excluir ${category.name}`}
-          disabled={disabled}
-          onClick={onDelete}
-        >
-          <Icon name="trash" />
-        </Button>
-      </Box>
+      <TableCell className={styles.actionsCell}>
+        <Menu
+          trigger={
+            <Button
+              variant="ghost"
+              size="icon"
+              className={motion.press}
+              disabled={disabled}
+              aria-label={`Mais ações para ${category.name}`}
+            >
+              <Icon name="kebab" />
+            </Button>
+          }
+          items={actionItems}
+        />
+      </TableCell>
     </Reorder.Item>
   )
 }

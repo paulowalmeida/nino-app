@@ -1,3 +1,4 @@
+import { Box } from '@nino/ds/components/Box'
 import { Skeleton } from '@nino/ds/components/Skeleton'
 
 import styles from '@shared/components/KitchenCard/KitchenCard.module.css'
@@ -5,27 +6,27 @@ import styles from '@shared/components/KitchenCard/KitchenCard.module.css'
 const GHOST_ITEMS = ['first', 'second']
 
 export const KitchenCardSkeleton = () => (
-  <article className={styles.card}>
-    <div className={styles.ribbon} aria-hidden="true" />
-
-    <header className={styles.head}>
+  <article className={`${styles.card} ${styles.paperPlain}`}>
+    <Box as="header" className={styles.head}>
       <Skeleton className={styles.ghostNumber} />
       <Skeleton className={styles.ghostClock} />
-    </header>
+    </Box>
 
-    <div className={styles.who}>
-      <Skeleton className={styles.ghostChannel} />
+    <Box className={styles.who}>
+      <Skeleton className={styles.ghostDestination} />
       <Skeleton className={styles.ghostName} />
-    </div>
+    </Box>
 
-    <div className={styles.items}>
+    <Box className={styles.ruler} aria-hidden="true" />
+
+    <Box className={styles.items}>
       {GHOST_ITEMS.map((item) => (
-        <div key={item} className={styles.item}>
+        <Box key={item} className={styles.item}>
           <Skeleton className={styles.ghostQuantity} />
           <Skeleton className={styles.ghostItemName} />
-        </div>
+        </Box>
       ))}
-    </div>
+    </Box>
 
     <Skeleton className={styles.ghostAction} />
   </article>

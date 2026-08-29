@@ -3,6 +3,7 @@ import { ReactNode } from 'react'
 import { Menu as ArkMenu } from '@ark-ui/react/menu'
 import { Portal } from '@ark-ui/react/portal'
 import { mergeClasses } from '@ds/lib/mergeClasses/mergeClasses'
+import { Tooltip } from '../Tooltip/Tooltip'
 
 import styles from './Menu.module.css'
 import { MenuItem } from './Menu.types'
@@ -15,6 +16,8 @@ type MenuProps = {
    * real `Button`, not a `<div>`
    */
   trigger: ReactNode
+  /** Short description shown when the trigger is icon-only. */
+  triggerTooltip?: ReactNode
   /**
    * The entries, in order. `{ separator: true }` draws a rule between groups
    */
@@ -52,6 +55,7 @@ const isSeparator = (
  */
 export function Menu({
   trigger,
+  triggerTooltip,
   items,
   contentClassName,
   itemClassName,
@@ -65,7 +69,13 @@ export function Menu({
 
   return (
     <ArkMenu.Root onSelect={({ value }) => handleSelect(value)}>
-      <ArkMenu.Trigger asChild>{trigger}</ArkMenu.Trigger>
+      {triggerTooltip ? (
+        <Tooltip content={triggerTooltip} side="right" delayDuration={0}>
+          <ArkMenu.Trigger asChild>{trigger}</ArkMenu.Trigger>
+        </Tooltip>
+      ) : (
+        <ArkMenu.Trigger asChild>{trigger}</ArkMenu.Trigger>
+      )}
       <Portal>
         <ArkMenu.Positioner className={styles.positioner}>
           {/* `menu-animated-content` é gancho global: as regras de entrada e

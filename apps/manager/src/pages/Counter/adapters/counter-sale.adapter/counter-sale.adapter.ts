@@ -5,13 +5,11 @@ export const toCounterSaleRequest = ({
   lines,
   paymentMethod,
   customerName,
-  tableNumber,
   changeFor,
 }: CounterSaleInput): CreateOrderRequest => ({
   channel: 'COUNTER',
   paymentMethod,
   guestName: customerName || undefined,
-  tableNumber: tableNumber || undefined,
   changeFor:
     paymentMethod === 'CASH' && changeFor?.trim()
       ? Number(changeFor)

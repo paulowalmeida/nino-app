@@ -50,14 +50,9 @@ describe('AccountStep', () => {
     expect(
       screen.getByRole('heading', { name: accountStepMock.heading })
     ).toBeInTheDocument()
-    expect(
-      screen.getByLabelText(accountStepMock.nameLabel)
-    ).toBeInTheDocument()
+    expect(screen.getByLabelText(accountStepMock.nameLabel)).toBeInTheDocument()
     expect(
       screen.getByLabelText(accountStepMock.emailLabel)
-    ).toBeInTheDocument()
-    expect(
-      screen.getByRole('link', { name: accountStepMock.loginLink })
     ).toBeInTheDocument()
   })
 
@@ -117,8 +112,6 @@ describe('AccountStep', () => {
 
     renderStep()
 
-    expect(
-      screen.getByRole('button', { name: 'Carregando' })
-    ).toBeDisabled()
+    expect(screen.getByRole('button', { name: 'Carregando' })).toBeDisabled()
   })
 })

@@ -7,7 +7,10 @@ import { Box } from '@nino/ds/components/Box'
 import { Chip } from '@nino/ds/components/Chip'
 import { EmptyState } from '@nino/ds/components/EmptyState'
 import { Header } from '@nino/ds/components/Header'
+import { Input } from '@nino/ds/components/Input'
 import { Text } from '@nino/ds/components/Text'
+import { TableTabsListSkeleton } from '@pages/TableTabs/skeletons/TableTabsListSkeleton/TableTabsListSkeleton'
+import { filterTableTabs } from '@pages/TableTabs/utils/filterTableTabs/filterTableTabs'
 import type { Order } from '@shared/types/order/order'
 import { brl } from '@shared/utils/money/money'
 
@@ -28,7 +31,13 @@ export const TableTabsList = ({
   isError,
 }: TableTabsListProps) => {
   const [selectedTab, setSelectedTab] = useState<'open' | 'closed'>('open')
-  const orders = selectedTab === 'open' ? openOrders : closedOrders
+  const [search, setSearch] = useState('')
+  const selectedOrders = selectedTab === 'open' ? openOrders : closedOrders
+  const isSearching = search.trim().length > 0
+  const searchableOrders = isSearching
+    ? [...openOrders, ...closedOrders]
+    : selectedOrders
+  const orders = filterTableTabs(searchableOrders, search)
 
   return (
     <Box className={styles.page}>
@@ -37,6 +46,14 @@ export const TableTabsList = ({
         title="Comandas"
         accent="Comandas"
         description="Acompanhe as mesas abertas e feche a conta quando o cliente pedir."
+      />
+      <Input
+        type="search"
+        value={search}
+        placeholder="Buscar por nome, mesa ou número da comanda"
+        aria-label="Buscar comandas por nome, mesa ou número da comanda"
+        className={styles.search}
+        onChange={(event) => setSearch(event.target.value)}
       />
       <Box
         direction="row"
@@ -59,7 +76,7 @@ export const TableTabsList = ({
           Fechadas ({closedOrders.length})
         </Chip>
       </Box>
-      {isPending && <Text color="muted">Carregando comandas…</Text>}
+      {isPending && <TableTabsListSkeleton />}
       {isError && (
         <Alert variant="error">
           Não foi possível carregar as comandas. Tente novamente.
@@ -67,9 +84,11 @@ export const TableTabsList = ({
       )}
       {!isPending && !isError && orders.length === 0 && (
         <EmptyState size="md" className={motion.settle}>
-          {selectedTab === 'open'
-            ? 'Nenhuma comanda aberta.'
-            : 'Nenhuma comanda fechada.'}
+          {search.trim()
+            ? 'Nenhuma comanda encontrada para esta busca.'
+            : selectedTab === 'open'
+              ? 'Nenhuma comanda aberta.'
+              : 'Nenhuma comanda fechada.'}
         </EmptyState>
       )}
       {!isPending && !isError && orders.length > 0 && (
@@ -93,10 +112,16 @@ export const TableTabsList = ({
                     </Text>
                   </Box>
                   <Badge
-                    variant={selectedTab === 'open' ? 'brand' : 'default'}
+                    variant={
+                      openOrders.some(({ id }) => id === order.id)
+                        ? 'brand'
+                        : 'default'
+                    }
                     size="sm"
                   >
-                    {selectedTab === 'open' ? 'Aberta' : 'Fechada'}
+                    {openOrders.some(({ id }) => id === order.id)
+                      ? 'Aberta'
+                      : 'Fechada'}
                   </Badge>
                 </Box>
                 <Box direction="row" justify="between" align="end">

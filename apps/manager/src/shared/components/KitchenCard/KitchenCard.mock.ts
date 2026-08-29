@@ -1,4 +1,10 @@
 import type { Order } from '@shared/types/order/order'
+import type { OrderDestination } from '@shared/types/order/order-destination'
+
+export const tableDestinationMock: OrderDestination = {
+  kind: 'table',
+  label: 'Mesa 7',
+}
 
 export const kitchenCardOrderMock: Order = {
   id: 'order-1234',
@@ -21,7 +27,7 @@ export const kitchenCardOrderMock: Order = {
   cancelReason: null,
   cancelledBy: null,
   guestName: 'Cliente teste',
-  guestPhone: null,
+  guestPhone: '11999999999',
   guestStreet: null,
   guestNumber: null,
   guestComplement: null,
@@ -43,4 +49,25 @@ export const kitchenCardOrderMock: Order = {
     },
   ],
   statusHistory: [],
+}
+
+/** Relógio de referência dos pedidos abaixo — o teste fixa a hora nele. */
+export const kitchenCardNowMock = '2026-08-01T12:00:00.000Z'
+
+/** Entrou 8 min atrás: dentro do prazo de 20, com 12 pela frente. */
+export const kitchenCardFreshOrderMock: Order = {
+  ...kitchenCardOrderMock,
+  id: 'order-fresh',
+  orderNumber: 1235,
+  status: 'ACCEPTED',
+  createdAt: '2026-08-01T11:52:00.000Z',
+}
+
+/** Entrou 40 min atrás: 20 minutos além do prazo. */
+export const kitchenCardLateOrderMock: Order = {
+  ...kitchenCardOrderMock,
+  id: 'order-late',
+  orderNumber: 1237,
+  status: 'PREPARING',
+  createdAt: '2026-08-01T11:20:00.000Z',
 }

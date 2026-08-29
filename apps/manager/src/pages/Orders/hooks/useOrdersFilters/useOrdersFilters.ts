@@ -2,6 +2,7 @@ import { useSearchParams } from 'react-router'
 
 import { ORDERS_STAGES } from '@pages/Orders/constants/orders.constants'
 import { useDebouncedValue } from '@shared/hooks/ui/useDebouncedValue/useDebouncedValue'
+import type { OrderChannel } from '@shared/types/order/order-channel'
 import type { OrderStage } from '@shared/types/order/order-stage'
 import { statusesForStage } from '@shared/utils/order-stage/order-stage'
 
@@ -43,7 +44,28 @@ export const useOrdersFilters = () => {
     isSearching,
     search,
     stage,
-    statuses: isSearching ? undefined : statusesForStage(stage),
+    statuses:
+      isSearching
+        ? undefined
+        : stage === 'table'
+          ? [
+              ...statusesForStage('incoming'),
+              ...statusesForStage('confirmed'),
+              ...statusesForStage('kitchen'),
+              ...statusesForStage('street'),
+              ...statusesForStage('counter'),
+            ]
+          : statusesForStage(stage),
+    channel: (isSearching
+      ? undefined
+      : stage === 'table'
+        ? 'TABLE_TAB'
+        : stage === 'closed'
+          ? undefined
+          : (['DELIVERY', 'PICKUP', 'COUNTER'] as OrderChannel[])) as
+      | OrderChannel
+      | OrderChannel[]
+      | undefined,
     term,
     setStage,
     setTerm,

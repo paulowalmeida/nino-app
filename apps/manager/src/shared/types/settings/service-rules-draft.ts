@@ -7,6 +7,7 @@ export type ServiceRulesDraft = {
   allowGuestOrder: boolean
   requireCpf: boolean
   minOrderAmount: string
-  estimatedMinutes: string
+  preparationMinutes: string
+  deliveryMinutes: string
   acceptedPaymentMethods: PaymentMethod[]
 }

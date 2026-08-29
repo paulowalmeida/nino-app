@@ -1,38 +1,54 @@
 import type { Elapsed } from '@shared/types/ui/elapsed'
+import type { ElapsedPace } from '@shared/types/ui/elapsed-pace'
 
-/** A partir daqui o pedido está demorando o bastante para incomodar. */
-const LATE_MINUTES = 20
+/** Piso de quem não configurou prazo — o antigo limite fixo da parede. */
+const DEFAULT_DUE_MINUTES = 20
 
-/** Depois do prazo, o atraso volta a ter escala até esta duração. */
-const OVERDUE_MINUTES = 60
+/**
+ * WHY: a régua muda de cor em degraus, não num gradiente — na parede a
+ * cozinha precisa bater o olho e nomear ("aquela está vermelha"), e um tom
+ * intermediário não se nomeia a três metros.
+ */
+const CLOSING_RATIO = 0.5
+const DUE_RATIO = 0.75
 
-/** Quanto tempo passou, em linguagem de cozinha: minutos até virar hora. */
-export const elapsedSince = (iso: string): Elapsed => {
+const paceOf = (ratio: number, isLate: boolean): ElapsedPace => {
+  if (isLate) return 'late'
+  if (ratio >= DUE_RATIO) return 'due'
+  if (ratio >= CLOSING_RATIO) return 'closing'
+
+  return 'fresh'
+}
+
+/** Minutos em linguagem de cozinha: minutos até virar hora. */
+const clockLabel = (minutes: number): string => {
+  if (minutes < 60) return `${minutes} min`
+
+  const rest = String(minutes % 60).padStart(2, '0')
+
+  return `${Math.floor(minutes / 60)}h${rest}`
+}
+
+/** Quanto tempo passou desde que o pedido entrou no prazo de preparo. */
+export const elapsedSince = (
+  iso: string,
+  dueMinutes = DEFAULT_DUE_MINUTES
+): Elapsed => {
   const minutes = Math.max(
     0,
     Math.floor((Date.now() - new Date(iso).getTime()) / 60_000)
   )
 
-  const ratio = Math.min(1, minutes / LATE_MINUTES)
-  const overdueRatio = Math.min(
-    1,
-    Math.max(0, minutes - LATE_MINUTES) / OVERDUE_MINUTES
-  )
+  const isLate = minutes >= dueMinutes
+  const ratio = Math.min(1, minutes / dueMinutes)
+  const left = dueMinutes - minutes
 
-  if (minutes < 60) {
-    return {
-      label: `${minutes} min`,
-      isLate: minutes >= LATE_MINUTES,
-      ratio,
-      overdueRatio,
-    }
-  }
-
-  const rest = String(minutes % 60).padStart(2, '0')
   return {
-    label: `${Math.floor(minutes / 60)}h${rest}`,
-    isLate: true,
+    label: clockLabel(minutes),
+    remaining: isLate ? `-${clockLabel(-left)}` : clockLabel(left),
+    isLate,
+    pace: paceOf(ratio, isLate),
     ratio,
-    overdueRatio,
+    overdueRatio: 0,
   }
 }

@@ -13,13 +13,53 @@
   @apply text-xs font-bold uppercase tracking-[0.12em];
 }
 
-.listScroll {
+.listShell {
   @apply min-h-0 flex-1;
 }
 
-/* cabeçalho fixo: rola só o corpo, a régua de coluna não some da tela */
-.stickyHeader {
-  @apply sticky top-0 z-10 bg-surface-raised;
+/* CONSTRAINT: Table já envolve a <table> no seu próprio scroller, e o cabeçalho
+   sticky só gruda se a rolagem vertical acontecer nesse mesmo elemento. */
+.listShell > div {
+  max-height: 26rem;
+  overflow-y: auto;
+}
+
+/* Em 4K, ocupa a altura restante depois de cabeçalho, resumo e abas. */
+@media (min-width: 2560px) {
+  .listShell > div {
+    max-height: calc(100dvh - 26rem);
+  }
+}
+
+.headRow > th {
+  @apply border-b border-border bg-surface-raised;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+.colTicket {
+  width: 5.5rem;
+}
+
+.colCustomer {
+  width: auto;
+}
+
+.colChannel {
+  width: 7rem;
+}
+
+.colStatus {
+  width: 8rem;
+}
+
+.colWhen {
+  width: 8rem;
+}
+
+.colAmount {
+  width: 7rem;
 }
 
 .colRight {

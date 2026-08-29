@@ -9,8 +9,8 @@ const FALLBACK: PaymentMethod[] = ['CASH']
 
 export const useAcceptedPayments = (tenantId: string | null) => {
   const query = useQuery({
-    queryKey: [...queryKeys.tenant.all(tenantId ?? ''), 'accepted-payments'],
-    queryFn: () => SettingsService.getAcceptedPayments(tenantId as string),
+    queryKey: queryKeys.tenant.publicSettings(tenantId ?? ''),
+    queryFn: () => SettingsService.getPublicSettings(tenantId as string),
     enabled: !!tenantId,
   })
 

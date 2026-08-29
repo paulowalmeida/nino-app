@@ -3,6 +3,7 @@ import { NavLink } from 'react-router'
 
 import { Box } from '@nino/ds/components/Box'
 import type { IconName } from '@nino/ds/components/Icon'
+import { Tooltip } from '@nino/ds/components/Tooltip'
 import { SidebarNavLabel } from '@shared/components/SidebarNavLabel/SidebarNavLabel'
 
 import motion from '@styles/motion.module.css'
@@ -28,8 +29,8 @@ export const SidebarNavLink = ({
   waiting,
   delay,
   onNavigate,
-}: SidebarNavLinkProps) => (
-  <Box style={delay} className={motion.slide}>
+}: SidebarNavLinkProps) => {
+  const link = (
     <NavLink
       to={`/${tenantId}/${section}`}
       onClick={onNavigate}
@@ -49,5 +50,17 @@ export const SidebarNavLink = ({
         />
       )}
     </NavLink>
-  </Box>
-)
+  )
+
+  return (
+    <Box style={delay} className={motion.slide}>
+      {isCollapsed ? (
+        <Tooltip content={label} side="right" delayDuration={0}>
+          {link}
+        </Tooltip>
+      ) : (
+        link
+      )}
+    </Box>
+  )
+}

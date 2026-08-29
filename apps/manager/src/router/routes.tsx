@@ -9,6 +9,7 @@ import { roleGuard } from '@guards/role-guard'
 import { SessionGuard } from '@guards/session-guard'
 import { AppLayout } from '@layouts/AppLayout/AppLayout'
 import { AuthLayout } from '@layouts/AuthLayout/AuthLayout'
+import { RegisterLayout } from '@layouts/RegisterLayout/RegisterLayout'
 import { Skeleton } from '@nino/ds/components/Skeleton'
 import { RouteErrorBoundary } from '@shared/components/RouteErrorBoundary/RouteErrorBoundary'
 import { MANAGERS } from '@shared/constants/roles.constants'
@@ -32,6 +33,12 @@ export const router = createBrowserRouter([
             Component: Login,
           })),
       },
+    ],
+  },
+  {
+    element: <RegisterLayout />,
+    errorElement: <RouteErrorBoundary />,
+    children: [
       {
         path: '/cadastrar',
         loader: GuestGuard,
@@ -215,7 +222,7 @@ export const router = createBrowserRouter([
           ),
       },
       {
-        path: 'profile',
+        path: 'perfil',
         lazy: () =>
           import('@pages/Profile/Profile').then(({ Profile }) => ({
             Component: Profile,

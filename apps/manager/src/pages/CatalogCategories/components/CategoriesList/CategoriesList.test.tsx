@@ -12,7 +12,18 @@ vi.mock(
 )
 vi.mock('framer-motion', () => ({
   Reorder: {
-    Group: ({ children }: { children: ReactNode }) => <ul>{children}</ul>,
+    Group: ({
+      children,
+      onDragEnd,
+    }: {
+      children: ReactNode
+      onDragEnd: () => void
+    }) => (
+      <ul>
+        {children}
+        <button onClick={onDragEnd}>finish-drag</button>
+      </ul>
+    ),
   },
 }))
 vi.mock(
@@ -23,19 +34,16 @@ vi.mock(
       disabled,
       onEdit,
       onDelete,
-      onDragEnd,
     }: {
       category: { id: string; name: string }
       disabled: boolean
       onEdit: () => void
       onDelete: () => void
-      onDragEnd: () => void
     }) => (
       <li>
         <span>{`${category.name}:${disabled}`}</span>
         <button onClick={onEdit}>edit-{category.id}</button>
         <button onClick={onDelete}>delete-{category.id}</button>
-        <button onClick={onDragEnd}>drag-{category.id}</button>
       </li>
     ),
   })
@@ -70,7 +78,7 @@ describe(CategoriesList.name, () => {
 
     await user.click(screen.getByRole('button', { name: 'edit-drinks' }))
     await user.click(screen.getByRole('button', { name: 'delete-drinks' }))
-    await user.click(screen.getByRole('button', { name: 'drag-drinks' }))
+    await user.click(screen.getByRole('button', { name: 'finish-drag' }))
 
     expect(requestEdit).toHaveBeenCalledWith(
       expect.objectContaining({ id: 'drinks' })

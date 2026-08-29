@@ -4,12 +4,23 @@
   @apply flex min-h-full flex-col gap-5 p-4 lg:gap-7 lg:p-10;
 }
 
+/* Em painéis 4K, evita que a leitura fique espalhada pela área inteira do app. */
+@media (min-width: 2560px) {
+  .page {
+    @apply mx-auto max-w-[120rem];
+  }
+}
+
 .list {
   @apply grid gap-4 sm:grid-cols-2 xl:grid-cols-3;
 }
 
 .tabs {
   @apply w-fit gap-2;
+}
+
+.search {
+  @apply w-full sm:max-w-md;
 }
 
 .card {

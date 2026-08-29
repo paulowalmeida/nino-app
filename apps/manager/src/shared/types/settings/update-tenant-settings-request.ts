@@ -7,6 +7,7 @@ export type UpdateTenantSettingsRequest = {
   allowGuestOrder: boolean
   requireCpf: boolean
   minOrderAmount: number
-  estimatedMinutes: number
+  preparationMinutes: number
+  deliveryMinutes: number
   acceptedPaymentMethods: PaymentMethod[]
 }

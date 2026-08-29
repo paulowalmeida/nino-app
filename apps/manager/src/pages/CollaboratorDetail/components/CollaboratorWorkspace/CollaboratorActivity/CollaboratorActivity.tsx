@@ -3,7 +3,6 @@ import type { ComponentProps } from 'react'
 import { Box } from '@nino/ds/components/Box'
 import { EmptyState } from '@nino/ds/components/EmptyState'
 import { Heading } from '@nino/ds/components/Heading'
-import { ScrollArea } from '@nino/ds/components/ScrollArea'
 import {
   Table,
   TableBody,
@@ -78,10 +77,18 @@ export const CollaboratorActivity = ({
         Nenhum pedido passou pela mão desta pessoa ainda.
       </EmptyState>
     ) : (
-      <ScrollArea className={styles.listScroll}>
+      <Box className={styles.listShell}>
         <Table>
-          <TableHeader className={styles.stickyHeader}>
-            <TableRow>
+          <colgroup>
+            <col className={styles.colTicket} />
+            <col className={styles.colCustomer} />
+            <col className={styles.colChannel} />
+            <col className={styles.colStatus} />
+            <col className={styles.colWhen} />
+            <col className={styles.colAmount} />
+          </colgroup>
+          <TableHeader>
+            <TableRow className={styles.headRow}>
               {COLLABORATOR_DETAIL_COLUMNS.map((label, index) => (
                 <TableHead
                   key={label}
@@ -130,7 +137,7 @@ export const CollaboratorActivity = ({
             ))}
           </TableBody>
         </Table>
-      </ScrollArea>
+      </Box>
     )}
   </Box>
 )

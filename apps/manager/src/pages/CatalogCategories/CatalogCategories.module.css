@@ -3,3 +3,10 @@
 .page {
   @apply relative max-w-3xl p-4 lg:p-10;
 }
+
+/* O conteúdo já é estreito; em 4K só o centraliza no canvas disponível. */
+@media (min-width: 2560px) {
+  .page {
+    @apply mx-auto max-w-[96rem];
+  }
+}

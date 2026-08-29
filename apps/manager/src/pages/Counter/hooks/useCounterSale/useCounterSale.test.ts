@@ -1,4 +1,4 @@
-import { act,renderHook } from '@testing-library/react'
+import { act, renderHook } from '@testing-library/react'
 import { describe, expect, it, vi } from 'vitest'
 
 import { ApiError } from '@nino/lib/utils/api-error'
@@ -6,10 +6,12 @@ import { useCreateOrder } from '@shared/hooks/order/useCreateOrder/useCreateOrde
 
 import { useCounterSale } from './useCounterSale'
 
-vi.mock('@shared/hooks/order/useCreateOrder/useCreateOrder', () => ({ useCreateOrder: vi.fn() }))
+vi.mock('@shared/hooks/order/useCreateOrder/useCreateOrder', () => ({
+  useCreateOrder: vi.fn(),
+}))
 
 describe(useCounterSale.name, () => {
-  it('requires a customer or table recipient', async () => {
+  it('requires a customer name', async () => {
     vi.mocked(useCreateOrder).mockReturnValue({
       mutateAsync: vi.fn(),
       isPending: false,
@@ -23,7 +25,7 @@ describe(useCounterSale.name, () => {
         tableNumber: '',
       })
     )
-    expect(result.current.error).toContain('nome do cliente')
+    expect(result.current.error).toContain('nome de quem pediu')
   })
 
   it('returns the created order number', async () => {

@@ -1,8 +1,8 @@
 import { TableTabDetailContent } from '@pages/TableTabDetail/components/TableTabDetailContent/TableTabDetailContent'
-import { useTableTabsFacade } from '@pages/TableTabs/facades/useTableTabsFacade/useTableTabsFacade'
+import { useTableTabDetailFacade } from '@pages/TableTabDetail/facades/useTableTabDetailFacade/useTableTabDetailFacade'
 
 export const TableTabDetail = () => {
-  const domain = useTableTabsFacade()
+  const domain = useTableTabDetailFacade()
 
   return <TableTabDetailContent {...domain} />
 }

@@ -1,11 +1,7 @@
 @reference "@nino/ds/globals.css";
 
 .section {
-  @apply mt-8 border-t border-border pt-6;
-}
-
-.head {
-  @apply mb-4;
+  @apply mt-8 min-w-0 border-t border-border pt-6 lg:mt-0 lg:border-t-0 lg:pt-0;
 }
 
 .form {
@@ -20,28 +16,51 @@
   @apply min-w-0 sm:w-56;
 }
 
-.list {
-  @apply mt-5 flex flex-col;
+.actions {
+  @apply flex-nowrap items-center justify-end gap-2;
 }
 
-.row {
-  @apply grid grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-4 border-b border-border py-4;
-}
-
-.rowInfo {
+.colName {
   @apply min-w-0;
 }
 
-.name {
-  @apply min-w-0 font-semibold;
+.colStatus {
+  @apply w-28 text-right;
 }
 
-.meta {
-  @apply mt-1 truncate;
+.colActions {
+  @apply w-72 text-right;
 }
 
-.actions {
-  @apply flex items-center gap-2;
+.tableName {
+  @apply block truncate text-sm font-semibold text-fg-default;
+}
+
+.qrPreview {
+  @apply items-center justify-center py-4;
+}
+
+/* CONSTRAINT: Table já envolve a <table> no seu próprio scroller, e o cabeçalho
+   sticky só gruda se a rolagem vertical acontecer nesse mesmo elemento. */
+.tableShell > div {
+  max-height: 28rem;
+  overflow-y: auto;
+}
+
+/* Em 4K, o teto fixo de 28rem deixava um grande vazio antes do rodapé. Reserva
+   apenas o espaço do cabeçalho, abas e paddings; a tabela só passa a rolar
+   quando alcança o limite vertical real da tela. */
+@media (min-width: 2560px) {
+  .tableShell > div {
+    max-height: calc(100dvh - 22rem);
+  }
+}
+
+.headRow > th {
+  @apply border-b border-border bg-surface-raised;
+  position: sticky;
+  top: 0;
+  z-index: 1;
 }
 
 .empty {

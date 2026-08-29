@@ -20,6 +20,32 @@
   @apply flex items-start gap-3;
 }
 
+.channelRow {
+  @apply grid items-center gap-x-5 gap-y-0;
+  grid-template-columns: auto max-content minmax(0, 1fr);
+}
+
+.channelRow .rowLabel {
+  @apply whitespace-nowrap;
+}
+
+.channelTextCell {
+  @apply self-center;
+  position: relative;
+  top: -4px;
+}
+
+@media (max-width: 640px) {
+  .channelRow {
+    grid-template-columns: auto minmax(0, 1fr);
+  }
+
+  .channelRow .rowHint {
+    grid-column: 2;
+    @apply mt-1;
+  }
+}
+
 .rowText {
   @apply min-w-0;
 }

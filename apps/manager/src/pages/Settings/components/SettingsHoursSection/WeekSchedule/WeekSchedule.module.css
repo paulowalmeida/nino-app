@@ -46,3 +46,10 @@
 .until {
   @apply text-xs text-fg-faint;
 }
+
+/* Em 4K, mantém a leitura semanal em uma coluna e centraliza o bloco. */
+@media (min-width: 2560px) {
+  .panel {
+    @apply mx-auto w-full max-w-2xl;
+  }
+}

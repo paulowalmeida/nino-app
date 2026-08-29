@@ -107,11 +107,6 @@ export const DeliveryMap = ({
         <Text size="sm" weight="semibold">
           Área de atendimento
         </Text>
-        <Text size="xs" color="subtle">
-          {center
-            ? 'Centrado no endereço da unidade'
-            : 'Endereço não localizado'}
-        </Text>
       </Box>
 
       {center ? (

@@ -20,7 +20,7 @@ export type ZoneFormProps = {
 }
 
 const MAX_RADIUS_KM = 15
-const MIN_RADIUS_KM = 1
+const MIN_RADIUS_KM = 0.5
 const RADIUS_STEP_KM = 0.1
 
 export const ZoneForm = ({
@@ -30,15 +30,14 @@ export const ZoneForm = ({
   onPreviewRadius,
 }: ZoneFormProps) => {
   const [maxRadiusKm, setMaxRadiusKm] = useState<number | ''>('')
-
-  const farthestKm = MAX_RADIUS_KM
-  const draggedKm = Math.min(
-    Math.max(maxRadiusKm || MIN_RADIUS_KM, MIN_RADIUS_KM),
-    farthestKm
-  )
   const [fee, setFee] = useState('')
+
   const feeValue = Number(fee.replace(',', '.'))
   const maxValue = maxRadiusKm || 0
+  const draggedKm = Math.min(
+    Math.max(maxRadiusKm || MIN_RADIUS_KM, MIN_RADIUS_KM),
+    MAX_RADIUS_KM
+  )
   const canAdd =
     Number.isFinite(maxValue) &&
     Number.isInteger(maxValue * 10) &&
@@ -66,14 +65,15 @@ export const ZoneForm = ({
   }
 
   return (
-    <Box className={local.section}>
+    <Box as="section" className={local.section}>
       <Box className={local.intro}>
         <Heading level={3} size="md">
-          Adicionar faixa
+          Nova faixa
         </Heading>
         <Text size="sm" color="subtle">
-          Cada nova faixa começa onde termina a anterior. Acima do último
-          limite, a loja não realiza entregas.
+          {lastMaxRadiusKm > 0
+            ? `Começa em ${lastMaxRadiusKm} km, onde a última faixa termina.`
+            : 'A primeira faixa começa na porta da loja.'}
         </Text>
       </Box>
 
@@ -82,24 +82,23 @@ export const ZoneForm = ({
         label="Raio em Km da faixa"
         showValue
         min={MIN_RADIUS_KM}
-        max={farthestKm}
+        max={MAX_RADIUS_KM}
         step={RADIUS_STEP_KM}
         value={draggedKm}
         onValueChange={previewRadius}
       />
 
       <Box className={local.form}>
-        <FormField label="Até (km)" className={local.radius}>
+        <FormField className={local.field} label="Até (km)">
           <NumberInput
             min={MIN_RADIUS_KM}
             max={MAX_RADIUS_KM}
             step={RADIUS_STEP_KM}
-            placeholder="Ex.: 5"
             value={maxRadiusKm}
             onValueChange={previewRadius}
           />
         </FormField>
-        <FormField label="Taxa de entrega (R$)" className={local.fee}>
+        <FormField className={local.field} label="Taxa de entrega (R$)">
           <Input
             inputMode="decimal"
             placeholder="0,00"

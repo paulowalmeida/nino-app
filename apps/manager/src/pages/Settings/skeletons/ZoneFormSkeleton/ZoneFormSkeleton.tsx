@@ -21,7 +21,8 @@ export const ZoneFormSkeleton = () => (
     <Box className={form.form}>
       <Skeleton className={ghost.field} />
       <Skeleton className={ghost.field} />
-      <Skeleton className={ghost.submit} />
     </Box>
+
+    <Skeleton className={`${form.submit} ${ghost.submit}`} />
   </Box>
 )

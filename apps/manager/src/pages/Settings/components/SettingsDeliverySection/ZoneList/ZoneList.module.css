@@ -5,133 +5,129 @@
 }
 
 .section {
-  @apply min-w-0;
+  @apply flex min-h-0 min-w-0 flex-1 flex-col;
 }
 
-.zonesHeader {
-  @apply mb-1;
+.head {
+  @apply mb-2 shrink-0 gap-x-3;
 }
 
-.zonesMeta {
+.summary {
   @apply shrink-0 tabular-nums;
 }
 
-.zones {
-  @apply flex flex-col;
+/* WHY: o Table do DS embrulha a tabela num scroller próprio; limitar a altura
+   nele é o que deixa o thead grudar no topo em vez de rolar junto. A largura
+   real dessa coluna depende da sidebar estar aberta ou não, não só do
+   viewport — por isso ações usa container query, não media query. */
+.scroll {
+  @apply min-h-0 flex-1 overflow-hidden rounded-xl border border-border;
+  container-type: inline-size;
 }
 
-.zone {
-  @apply items-center gap-x-3 gap-y-2 border-t border-border py-3;
-  @apply transition-colors duration-200;
+.scroll > div {
+  @apply h-full overflow-y-auto;
+}
 
-  display: grid;
-  grid-template-columns: auto minmax(0, 1fr) auto;
-  grid-template-areas:
-    'switch range fee'
-    'ruler ruler ruler'
-    'actions actions actions';
+.tableHeader {
+  @apply sticky top-0 z-sticky bg-surface-raised;
+}
 
-  @media (min-width: 640px) {
-    grid-template-columns: auto 8.5rem minmax(6rem, 1fr) 5.5rem auto;
-    grid-template-areas: 'switch range ruler fee actions';
+.rangeCell {
+  @apply w-40 pr-6;
+}
+
+.rangeButton {
+  @apply -ml-1.5 h-auto justify-start px-1.5 py-0.5;
+  @apply text-sm font-semibold tabular-nums text-fg-default;
+}
+
+.feeCell {
+  @apply whitespace-nowrap font-semibold tabular-nums;
+}
+
+.switchCell {
+  @apply w-24;
+}
+
+.actionsCell {
+  @apply w-40 text-right;
+}
+
+.actions {
+  @apply items-center justify-end gap-0.5;
+}
+
+.edit {
+  @apply h-auto shrink-0 px-2 py-1 text-xs text-fg-faint;
+}
+
+.remove {
+  @apply h-auto shrink-0 px-2 py-1 text-xs text-danger;
+  @apply hover:bg-danger-surface hover:text-danger;
+}
+
+.kebab {
+  @apply hidden h-8 w-8;
+}
+
+/* WORKAROUND: sem token de breakpoint pra "coluna de ações sem espaço"; abaixo
+   disso os dois botões não cabem lado a lado, então troca pro menu compacto e
+   encolhe a coluna pro texto da faixa respirar. */
+@container (max-width: 26.5rem) {
+  .actions {
+    display: none;
   }
+
+  .kebab {
+    display: inline-flex;
+  }
+
+  .actionsCell {
+    @apply w-10;
+  }
+
+  .switchCell {
+    @apply w-16;
+  }
+
+  .rangeCell {
+    @apply w-auto pr-2;
+  }
+}
+
+.gapCell {
+  @apply bg-surface-1 py-1.5 text-center text-xs text-fg-faint;
+}
+
+.editRow {
+  @apply min-w-0 flex-wrap items-center gap-2 md:flex-nowrap;
+}
+
+.editRadius {
+  @apply w-20 md:w-16;
+}
+
+.editFee {
+  @apply w-24 md:w-20;
+}
+
+.editButton {
+  @apply shrink-0;
+}
+
+.empty {
+  @apply mt-1;
+}
+
+.focused .rangeButton {
+  @apply text-brand-strong;
+}
+
+.focused {
+  @apply bg-brand-ghost;
 }
 
 .off {
   @apply opacity-dim;
-}
-
-.switch {
-  grid-area: switch;
-}
-
-.range {
-  @apply flex min-w-0 flex-col items-start;
-
-  grid-area: range;
-}
-
-.rangeButton {
-  @apply -ml-2 h-auto justify-start px-2 py-0.5;
-  @apply text-sm font-semibold text-fg-default tabular-nums;
-}
-
-.zoneFocused .rangeButton {
-  @apply text-brand;
-}
-
-.zoneFocused .rulerSpan {
-  @apply bg-brand-strong;
-}
-
-.zoneFocused .ruler {
-  @apply h-2;
-}
-
-.rangeStatus {
-  @apply px-0 text-xs text-fg-faint;
-}
-
-.fee {
-  @apply justify-self-end text-sm font-semibold text-fg-default tabular-nums;
-
-  grid-area: fee;
-}
-
-.ruler {
-  @apply relative h-1.5 w-full overflow-hidden rounded-full bg-surface-3;
-
-  grid-area: ruler;
-}
-
-.rulerSpan {
-  @apply absolute inset-y-0 rounded-full bg-brand;
-
-  left: calc(var(--zone-start) * 100%);
-  width: calc(var(--zone-span) * 100%);
-}
-
-.off .rulerSpan {
-  @apply bg-fg-faint;
-}
-
-.actions {
-  @apply justify-self-end gap-1;
-
-  grid-area: actions;
-}
-
-.edit {
-  @apply shrink-0 text-fg-faint;
-}
-
-.remove {
-  @apply shrink-0 text-danger;
-  @apply hover:bg-danger-surface hover:text-danger;
-}
-
-.editRow {
-  @apply min-w-0 flex-wrap items-center gap-2;
-
-  grid-area: range / range / actions / actions;
-
-  @media (min-width: 640px) {
-    grid-area: range / range / range / actions;
-  }
-}
-
-.editFee {
-  @apply w-24;
-}
-
-.editRadius {
-  @apply w-20;
-}
-
-.empty {
-  @apply border-t border-border py-6;
-}
-
-.scale {
-  @apply mt-2;
 }

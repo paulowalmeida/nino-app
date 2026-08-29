@@ -16,6 +16,7 @@ import { BackLink } from '@shared/components/BackLink/BackLink'
 import { PAYMENT_METHOD_LABEL } from '@shared/constants/order.constants'
 import type { Order } from '@shared/types/order/order'
 import { brl } from '@shared/utils/money/money'
+import { cancellationDescription } from '@pages/TableTabDetail/utils/cancellationDescription/cancellationDescription'
 
 import motion from '@styles/motion.module.css'
 import styles from './TableTabDetailContent.module.css'
@@ -55,6 +56,10 @@ export const TableTabDetailContent = ({
       .filter((item) => selectedItemIds.includes(item.id))
       .map((item) => item.product.name)
       .join(', ') ?? ''
+  const selectedItemsCancellationDescription = cancellationDescription(
+    selectedItemIds.length,
+    selectedItemNames
+  )
 
   const toggleItem = (itemId: string, checked: boolean | 'indeterminate') => {
     setSelectedItemIds((current) =>
@@ -285,8 +290,8 @@ export const TableTabDetailContent = ({
         open={isConfirmingCancellation}
         onOpenChange={(open) => !open && setConfirmingCancellation(false)}
         title="Cancelar itens da comanda?"
-        description={`${selectedItemIds.length} ${selectedItemIds.length === 1 ? 'item será retirado' : 'itens serão retirados'} da comanda: ${selectedItemNames}. O total será recalculado. Esta ação não pode ser desfeita.`}
-        confirmLabel="Confirmar cancelamento"
+        description={selectedItemsCancellationDescription}
+        confirmLabel="Confirmar"
         cancelLabel="Voltar"
         onConfirm={() => void cancelSelectedItems()}
         onCancel={() => setConfirmingCancellation(false)}

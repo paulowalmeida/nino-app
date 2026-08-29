@@ -10,8 +10,11 @@ export const ordersStageOptions = (
     id,
     label,
     icon,
-    count: statusesForStage(id).reduce(
-      (total, status) => total + (summary?.[status] ?? 0),
-      0
-    ),
+    count:
+      id === 'table'
+        ? (summary?.TABLE_TAB ?? 0)
+        : statusesForStage(id).reduce(
+            (total, status) => total + (summary?.[status] ?? 0),
+            0
+          ),
   }))

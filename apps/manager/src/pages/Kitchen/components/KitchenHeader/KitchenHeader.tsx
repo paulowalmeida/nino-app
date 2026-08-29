@@ -23,8 +23,8 @@ export const KitchenHeader = ({
   return (
     <Box
       as="header"
-      direction="row"
-      align="end"
+      direction={{ mobile: 'column', tablet: 'row' }}
+      align={{ mobile: 'start', tablet: 'end' }}
       justify="between"
       className={`${motion.deal} ${styles.header}`}
     >
@@ -37,23 +37,29 @@ export const KitchenHeader = ({
         </Text>
       </Box>
 
-      <Box direction="row" align="center" className={styles.tally}>
-        <Box className={styles.metric}>
-          <Text as="span" className={styles.metricValue}>
-            {orders.length}
-          </Text>
-          <Text as="span" className={styles.metricLabel}>
-            em aberto
-          </Text>
-        </Box>
+      <Box
+        direction={{ mobile: 'column', tablet: 'row' }}
+        align={{ mobile: 'start', tablet: 'center' }}
+        className={styles.tally}
+      >
+        <Box direction="row" align="center" className={styles.metrics}>
+          <Box className={styles.metric}>
+            <Text as="span" className={styles.metricValue}>
+              {orders.length}
+            </Text>
+            <Text as="span" className={styles.metricLabel}>
+              em aberto
+            </Text>
+          </Box>
 
-        <Box className={`${styles.metric} ${lateCount ? styles.alert : ''}`}>
-          <Text as="span" className={styles.metricValue}>
-            {lateCount}
-          </Text>
-          <Text as="span" className={styles.metricLabel}>
-            atrasados
-          </Text>
+          <Box className={`${styles.metric} ${lateCount ? styles.alert : ''}`}>
+            <Text as="span" className={styles.metricValue}>
+              {lateCount}
+            </Text>
+            <Text as="span" className={styles.metricLabel}>
+              atrasados
+            </Text>
+          </Box>
         </Box>
 
         <Button

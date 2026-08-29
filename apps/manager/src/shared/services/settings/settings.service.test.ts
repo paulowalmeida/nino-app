@@ -4,7 +4,7 @@ import { api } from '@shared/services/http/http.service'
 
 import { SettingsService } from './settings.service'
 import {
-  acceptedPaymentsMock,
+  publicTenantSettingsMock,
   tenantIdMock,
   tenantSettingsMock,
   updateTenantSettingsRequestMock,
@@ -32,18 +32,18 @@ describe('SettingsService', () => {
     expect(result).toBe(tenantSettingsMock)
   })
 
-  it('getAcceptedPayments: reads the public accepted payments', async () => {
+  it('getPublicSettings: reads the public store settings', async () => {
     // Arrange
-    vi.mocked(api.get).mockResolvedValue(acceptedPaymentsMock)
+    vi.mocked(api.get).mockResolvedValue(publicTenantSettingsMock)
 
     // Act
-    const result = await SettingsService.getAcceptedPayments(tenantIdMock)
+    const result = await SettingsService.getPublicSettings(tenantIdMock)
 
     // Assert
     expect(api.get).toHaveBeenCalledWith(
       `tenants/${tenantIdMock}/settings/public`
     )
-    expect(result).toBe(acceptedPaymentsMock)
+    expect(result).toBe(publicTenantSettingsMock)
   })
 
   it('saveSettings: updates the tenant settings', async () => {

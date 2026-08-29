@@ -13,3 +13,10 @@
   @apply relative flex h-[calc(100dvh-3.5rem)] flex-col p-4;
   @apply lg:h-dvh lg:p-10;
 }
+
+/* Em 4K, concentra a fila e seus controles em vez de esticá-los pelo painel. */
+@media (min-width: 2560px) {
+  .page {
+    @apply mx-auto w-full max-w-[120rem];
+  }
+}

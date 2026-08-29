@@ -1,28 +1,20 @@
-import { useNavigate } from 'react-router'
-
 import { useForm } from 'react-hook-form'
 
 import { useCheckAvailability } from '@pages/Register/hooks/useCheckAvailability/useCheckAvailability'
-import { useSignup } from '@pages/Register/hooks/useSignup/useSignup'
 import type { CompanyFormValues } from '@pages/Register/types/CompanyFormValues.type'
-import { signupErrorMessage } from '@pages/Register/utils/signupErrorMessage/signupErrorMessage'
-import type { SignupAccount } from '@shared/types/auth/signup-account'
+import type { SignupCompany } from '@shared/types/auth/signup-company'
 
 type UseCompanyFormParams = {
-  account: SignupAccount | null
+  goToTenant: (company: SignupCompany) => void
 }
 
-export const useCompanyForm = ({ account }: UseCompanyFormParams) => {
-  const navigate = useNavigate()
+export const useCompanyForm = ({ goToTenant }: UseCompanyFormParams) => {
   const { mutateAsync: checkAvailability } = useCheckAvailability()
-  const { mutateAsync: signup } = useSignup()
 
   const form = useForm<CompanyFormValues>()
   const { setError, handleSubmit } = form
 
   const submit = handleSubmit(async (data) => {
-    if (!account) return
-
     try {
       const availability = await checkAvailability({ cnpj: data.company.cnpj })
 
@@ -31,10 +23,11 @@ export const useCompanyForm = ({ account }: UseCompanyFormParams) => {
         return
       }
 
-      await signup({ account, company: data.company })
-      void navigate('/')
-    } catch (error) {
-      setError('root', { message: signupErrorMessage(error) })
+      goToTenant(data.company)
+    } catch {
+      setError('root', {
+        message: 'Não foi possível validar o CNPJ. Tente de novo.',
+      })
     }
   })
 

@@ -1,4 +1,4 @@
-import { useCallback, useEffect } from 'react'
+import { useCallback, useEffect, useRef } from 'react'
 
 import type { CategoryWithCount } from '@shared/types/product/category-with-count'
 
@@ -10,16 +10,32 @@ export const useCatalogCategoriesOrder = (
 ) => {
   const signature = rows.map(({ id }) => id).join()
   const orderSignature = order.map(({ id }) => id).join()
+  const syncedRowsSignature = useRef<string | null>(null)
 
   useEffect(() => {
-    if (signature !== orderSignature) setOrder(rows)
-  }, [orderSignature, rows, setOrder, signature])
+    const isFirstQueryResult = syncedRowsSignature.current === null
+    const serverOrderChanged = syncedRowsSignature.current !== signature
 
-  const persistOrder = useCallback(() => {
-    if (signature !== orderSignature) {
-      reorder({ ids: order.map(({ id }) => id) })
+    if (
+      (isFirstQueryResult && order.length === 0) ||
+      (!isFirstQueryResult && serverOrderChanged)
+    ) {
+      setOrder(rows)
     }
-  }, [order, orderSignature, reorder, signature])
+
+    syncedRowsSignature.current = signature
+  }, [order.length, rows, setOrder, signature])
+
+  const persistOrder = useCallback(
+    (nextOrder = order) => {
+      const nextSignature = nextOrder.map(({ id }) => id).join()
+
+      if (signature !== nextSignature) {
+        reorder({ ids: nextOrder.map(({ id }) => id) })
+      }
+    },
+    [order, reorder, signature]
+  )
 
   return { order, setOrder, persistOrder }
 }

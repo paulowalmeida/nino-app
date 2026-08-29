@@ -34,8 +34,8 @@ const getSnapshot = (): number => now
  * Elapsed time that keeps ticking: without this the card freezes at the
  * minute the list loaded, and the kitchen ends up reading a dead number.
  */
-export const useElapsed = (iso: string): Elapsed => {
+export const useElapsed = (iso: string, dueMinutes?: number): Elapsed => {
   useSyncExternalStore(subscribe, getSnapshot, getSnapshot)
 
-  return elapsedSince(iso)
+  return elapsedSince(iso, dueMinutes)
 }

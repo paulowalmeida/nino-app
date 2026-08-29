@@ -1,3 +1,5 @@
+import { createRef } from 'react'
+
 import { render, screen } from '@testing-library/react'
 import { describe, expect, it } from 'vitest'
 
@@ -61,11 +63,7 @@ describe(Box.name, () => {
 
   it('changes direction between mobile and desktop', () => {
     // Arrange / Act
-    render(
-      <Box direction={{ mobile: 'column', desktop: 'row' }}>
-        conteúdo
-      </Box>
-    )
+    render(<Box direction={{ mobile: 'column', desktop: 'row' }}>conteúdo</Box>)
 
     // Assert
     const stack = screen.getByText('conteúdo')
@@ -75,9 +73,7 @@ describe(Box.name, () => {
 
   it('changes alignment between mobile and desktop', () => {
     // Arrange / Act
-    render(
-      <Box align={{ mobile: 'center', desktop: 'start' }}>conteúdo</Box>
-    )
+    render(<Box align={{ mobile: 'center', desktop: 'start' }}>conteúdo</Box>)
 
     // Assert
     const stack = screen.getByText('conteúdo')
@@ -95,11 +91,7 @@ describe(Box.name, () => {
 
   it('changes justify between mobile and desktop', () => {
     // Arrange / Act
-    render(
-      <Box justify={{ mobile: 'start', desktop: 'center' }}>
-        conteúdo
-      </Box>
-    )
+    render(<Box justify={{ mobile: 'start', desktop: 'center' }}>conteúdo</Box>)
 
     // Assert
     const Box = screen.getByText('conteúdo')
@@ -115,5 +107,13 @@ describe(Box.name, () => {
     const stack = screen.getByText('conteúdo')
     expect(stack).toHaveClass('mb-3')
     expect(stack).toHaveClass('lg:mb-6')
+  })
+
+  it('forwards a ref to the rendered element', () => {
+    const ref = createRef<HTMLElement>()
+
+    render(<Box ref={ref}>conteúdo</Box>)
+
+    expect(ref.current).toBe(screen.getByText('conteúdo'))
   })
 })

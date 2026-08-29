@@ -1,5 +1,12 @@
+import { useRef } from 'react'
 import { Reorder } from 'framer-motion'
 
+import {
+  Table,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@nino/ds/components/Table'
 import { CategoryRow } from '@pages/CatalogCategories/components/CategoriesList/CategoryRow/CategoryRow'
 import { useCatalogCategoriesFacade } from '@pages/CatalogCategories/facades/useCatalogCategoriesFacade/useCatalogCategoriesFacade'
 
@@ -14,26 +21,44 @@ export const CategoriesList = () => {
     requestEdit,
     requestDelete,
   } = useCatalogCategoriesFacade()
+  const latestOrder = useRef(order)
 
   return (
-    <Reorder.Group
-      as="ul"
-      axis="y"
-      values={order}
-      onReorder={setOrder}
-      className={styles.list}
-    >
-      {order.map((category, index) => (
-        <CategoryRow
-          key={category.id}
-          category={category}
-          index={index}
-          disabled={isDeleting}
-          onEdit={() => requestEdit(category)}
-          onDelete={() => requestDelete(category)}
-          onDragEnd={persistOrder}
-        />
-      ))}
-    </Reorder.Group>
+    <Table>
+      <TableHeader>
+        <TableRow>
+          <TableHead>
+            <span className="sr-only">Reordenar</span>
+          </TableHead>
+          <TableHead>Categoria</TableHead>
+          <TableHead>
+            <span className="sr-only">Ações</span>
+          </TableHead>
+        </TableRow>
+      </TableHeader>
+
+      <Reorder.Group
+        as="tbody"
+        axis="y"
+        values={order}
+        onReorder={(nextOrder) => {
+          latestOrder.current = nextOrder
+          setOrder(nextOrder)
+        }}
+        onDragEnd={() => persistOrder(latestOrder.current)}
+        className={styles.body}
+      >
+        {order.map((category, index) => (
+          <CategoryRow
+            key={category.id}
+            category={category}
+            index={index}
+            disabled={isDeleting}
+            onEdit={() => requestEdit(category)}
+            onDelete={() => requestDelete(category)}
+          />
+        ))}
+      </Reorder.Group>
+    </Table>
   )
 }

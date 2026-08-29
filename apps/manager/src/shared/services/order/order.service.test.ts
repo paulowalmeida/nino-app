@@ -4,6 +4,7 @@ import { api } from '@shared/services/http/http.service'
 
 import { OrderService } from './order.service'
 import {
+  assignKitchenAssigneeRequestMock,
   createOrderRequestMock,
   customRangeParamsMock,
   orderAvailabilityMock,
@@ -25,6 +26,7 @@ vi.mock('@shared/services/http/http.service', () => ({
     get: vi.fn(),
     getAll: vi.fn(),
     create: vi.fn(),
+    remove: vi.fn(),
     patch: vi.fn(),
   },
 }))
@@ -269,15 +271,42 @@ describe('OrderService', () => {
     expect(result).toBe(orderMock)
   })
 
+  it('assignKitchenAssignee: assigns a staff member to the kitchen order', async () => {
+    vi.mocked(api.patch).mockResolvedValue(orderMock)
+
+    const result = await OrderService.assignKitchenAssignee(
+      tenantIdMock,
+      orderIdMock,
+      assignKitchenAssigneeRequestMock
+    )
+
+    expect(api.patch).toHaveBeenCalledWith(
+      `tenants/${tenantIdMock}/orders/${orderIdMock}/kitchen-assignee`,
+      assignKitchenAssigneeRequestMock
+    )
+    expect(result).toBe(orderMock)
+  })
+
+  it('clearKitchenAssignee: removes the staff member from the kitchen order', async () => {
+    vi.mocked(api.remove).mockResolvedValue(orderMock)
+
+    const result = await OrderService.clearKitchenAssignee(
+      tenantIdMock,
+      orderIdMock
+    )
+
+    expect(api.remove).toHaveBeenCalledWith(
+      `tenants/${tenantIdMock}/orders/${orderIdMock}/kitchen-assignee`
+    )
+    expect(result).toBe(orderMock)
+  })
+
   it('markOrderPaid: patches the payment status to PAID', async () => {
     // Arrange
     vi.mocked(api.patch).mockResolvedValue(orderMock)
 
     // Act
-    const result = await OrderService.markOrderPaid(
-      tenantIdMock,
-      orderIdMock
-    )
+    const result = await OrderService.markOrderPaid(tenantIdMock, orderIdMock)
 
     // Assert
     expect(api.patch).toHaveBeenCalledWith(

@@ -9,7 +9,6 @@ describe(toCounterSaleRequest.name, () => {
       channel: 'COUNTER',
       paymentMethod: 'CASH',
       guestName: 'Ana',
-      tableNumber: '4',
       items: [{ productId: 'item-1', quantity: 2, unitPrice: 10 }],
     })
   })
@@ -23,7 +22,6 @@ describe(toCounterSaleRequest.name, () => {
       })
     ).toMatchObject({
       guestName: undefined,
-      tableNumber: undefined,
     })
   })
 

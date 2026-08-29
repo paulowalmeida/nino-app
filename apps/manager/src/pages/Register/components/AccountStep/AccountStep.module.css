@@ -1,15 +1,35 @@
 @reference "@nino/ds/globals.css";
 
-.fullWidthAction {
-  @apply mt-2 w-full;
+.form {
+  @apply grid grid-cols-1 gap-x-5 gap-y-4 sm:grid-cols-12;
+}
+
+.primaryField {
+  @apply sm:col-span-8;
+}
+
+.compactField {
+  @apply sm:col-span-4;
+}
+
+.halfField {
+  @apply sm:col-span-6;
+}
+
+.formFeedback {
+  @apply sm:col-span-12;
+}
+
+.actions {
+  @apply mt-2 items-end sm:col-span-12;
+}
+
+.continueButton {
+  @apply self-end;
 }
 
 /* O medidor de força não traz margem própria — o espaço até o campo acima é
    decisão desta tela. */
 .strengthMeter {
   @apply mt-1;
-}
-
-.footerLink {
-  @apply font-semibold text-brand hover:underline;
 }

@@ -10,6 +10,7 @@ vi.mock('@pages/Settings/facades/useSettingsFacade/useSettingsFacade', () => ({
       mutations: {
         add: { isPending: false, mutate: vi.fn() },
         toggle: { isPending: false, variables: undefined, mutate: vi.fn() },
+        drop: { isPending: false, variables: undefined, mutate: vi.fn() },
       },
     },
   }),
@@ -26,7 +27,8 @@ describe(SettingsTableSection.name, () => {
       screen.getByRole('heading', { name: 'Mesas e QR Codes' })
     ).toBeInTheDocument()
     expect(
-      screen.getByRole('heading', { name: 'Comandas físicas' })
+      screen.getByRole('tab', { name: 'Comandas físicas' })
     ).toBeInTheDocument()
+    expect(screen.getByText('Em breve')).toBeInTheDocument()
   })
 })

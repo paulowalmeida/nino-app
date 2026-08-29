@@ -1,0 +1,30 @@
+@reference "@nino/ds/globals.css";
+
+.list {
+  @apply grid gap-4 sm:grid-cols-2 xl:grid-cols-3;
+}
+
+.card {
+  @apply flex min-h-36 flex-col justify-between gap-6 rounded-4 border;
+  @apply border-border bg-surface-raised p-5;
+}
+
+.orderNumber {
+  @apply h-4 w-24;
+}
+
+.tableName {
+  @apply mt-2 h-6 w-32;
+}
+
+.status {
+  @apply h-6 w-16 rounded-full;
+}
+
+.itemCount {
+  @apply h-4 w-14;
+}
+
+.total {
+  @apply h-6 w-20;
+}

@@ -1,0 +1,26 @@
+@reference "@nino/ds/globals.css";
+
+.addressGroup {
+  @apply border-t border-border pt-6 sm:col-span-12;
+}
+
+.form {
+  @apply grid grid-cols-1 gap-x-5 gap-y-4 sm:grid-cols-12;
+}
+
+.identityField {
+  @apply sm:col-span-6;
+}
+
+.slugPrefix {
+  @apply shrink-0 text-sm font-semibold tracking-[-0.01em] text-fg-faint;
+}
+
+.formFeedback,
+.actions {
+  @apply sm:col-span-12;
+}
+
+.actions {
+  @apply mt-2;
+}

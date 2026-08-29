@@ -48,10 +48,18 @@ export const CollaboratorActivitySkeleton = () => (
       </Text>
     </Box>
 
-    <Box className={activity.listScroll}>
+    <Box className={activity.listShell}>
       <Table>
-        <TableHeader className={activity.stickyHeader}>
-          <TableRow>
+        <colgroup>
+          <col className={activity.colTicket} />
+          <col className={activity.colCustomer} />
+          <col className={activity.colChannel} />
+          <col className={activity.colStatus} />
+          <col className={activity.colWhen} />
+          <col className={activity.colAmount} />
+        </colgroup>
+        <TableHeader>
+          <TableRow className={activity.headRow}>
             {COLLABORATOR_DETAIL_COLUMNS.map((label, index) => (
               <TableHead
                 key={label}

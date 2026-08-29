@@ -35,11 +35,14 @@ describe('ZoneList', () => {
     )
 
     expect(screen.getByText('Faixas configuradas')).toBeInTheDocument()
-    expect(screen.getByText('1 faixa')).toBeInTheDocument()
-    expect(screen.getByText(/Atende pedidos/)).toBeInTheDocument()
     expect(screen.getByText(/R\$\s*7,00/)).toBeInTheDocument()
     expect(screen.getByRole('button', { name: 'Editar' })).toBeInTheDocument()
     expect(screen.getByRole('button', { name: 'Remover' })).toBeInTheDocument()
+    expect(
+      screen.getByRole('button', {
+        name: 'Mais ações para a faixa de 0 a 5 km',
+      })
+    ).toBeInTheDocument()
   })
 
   it('requests removal for the selected range', async () => {

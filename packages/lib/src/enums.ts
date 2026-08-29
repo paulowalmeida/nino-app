@@ -99,4 +99,5 @@ export enum OrderChannel {
   DELIVERY = 'DELIVERY',
   PICKUP = 'PICKUP',
   COUNTER = 'COUNTER',
+  TABLE_TAB = 'TABLE_TAB',
 }

@@ -33,6 +33,6 @@ describe('UnitCard', () => {
     )
 
     expect(screen.getByRole('tab', { name: 'Dados da unidade' })).toBeTruthy()
-    expect(screen.getByRole('tab', { name: 'Identidade da loja' })).toBeTruthy()
+    expect(screen.getByRole('tab', { name: 'Personalizar loja' })).toBeTruthy()
   })
 })

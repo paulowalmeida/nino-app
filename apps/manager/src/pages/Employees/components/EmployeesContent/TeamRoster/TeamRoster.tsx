@@ -9,6 +9,14 @@ import { Icon } from '@nino/ds/components/Icon'
 import { Input } from '@nino/ds/components/Input'
 import { Menu, type MenuItem } from '@nino/ds/components/Menu'
 import { Skeleton } from '@nino/ds/components/Skeleton'
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@nino/ds/components/Table'
 import { TEAM_ROSTER_GHOST_ROWS } from '@pages/Employees/constants/employees.constants'
 import { PersonMark } from '@shared/components/PersonMark/PersonMark'
 import {
@@ -120,7 +128,7 @@ export const TeamRoster = ({
     <section className={styles.roster}>
       <header className={`${motion.unroll} ${styles.head}`}>
         <div className={styles.headings}>
-          <h2 className={styles.title}>{title}</h2>
+          <h2 className="sr-only">{title}</h2>
           <p className={styles.hint}>{hint}</p>
         </div>
 
@@ -139,19 +147,48 @@ export const TeamRoster = ({
       {/* the same list, with the people yet to arrive: avatar, name, e-mail,
           role */}
       {isPending && (
-        <Box as="ul" direction="column">
-          {TEAM_ROSTER_GHOST_ROWS.map((row) => (
-            <li key={row} className={styles.row}>
-              <Skeleton className={styles.ghostMark} />
+        <Box className={styles.tableShell}>
+          <Table>
+            <colgroup>
+              <col className={styles.colPerson} />
+              <col className={styles.colSeen} />
+              <col className={styles.colRole} />
+              <col className={styles.colActions} />
+            </colgroup>
+            <TableHeader>
+              <TableRow className={styles.headRow}>
+                <TableHead>Pessoa</TableHead>
+                <TableHead>Último acesso</TableHead>
+                <TableHead className={styles.colRight}>Papel</TableHead>
+                <TableHead>
+                  <span className="sr-only">Ações</span>
+                </TableHead>
+              </TableRow>
+            </TableHeader>
 
-              <div className={styles.person}>
-                <Skeleton className={styles.ghostName} />
-                <Skeleton className={styles.ghostEmail} />
-              </div>
-
-              <Skeleton className={styles.ghostRole} />
-            </li>
-          ))}
+            <TableBody>
+              {TEAM_ROSTER_GHOST_ROWS.map((row) => (
+                <TableRow key={row}>
+                  <TableCell>
+                    <div className={styles.identityCell}>
+                      <Skeleton className={styles.ghostMark} />
+                      <div className={styles.person}>
+                        <Skeleton className={styles.ghostName} />
+                        <Skeleton className={styles.ghostEmail} />
+                      </div>
+                    </div>
+                  </TableCell>
+                  <TableCell>
+                    <Skeleton className={styles.ghostEmail} />
+                  </TableCell>
+                  <TableCell className={styles.colRight}>
+                    <Skeleton className={styles.ghostRole} />
+                  </TableCell>
+                  <TableCell />
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
         </Box>
       )}
 
@@ -160,21 +197,33 @@ export const TeamRoster = ({
       )}
 
       {visibleEntries.length > 0 && (
-        <ul className={styles.list}>
-          {visibleEntries.map((entry, index) => {
-            const roleItems = roleItemsOf(entry)
-            const otherItems = otherItemsOf(entry)
-            const isBusy =
-              changingRoleId === entry.id || removingId === entry.id
+        <Box className={styles.tableShell}>
+          <Table>
+            <colgroup>
+              <col className={styles.colPerson} />
+              <col className={styles.colSeen} />
+              <col className={styles.colRole} />
+              <col className={styles.colActions} />
+            </colgroup>
+            <TableHeader>
+              <TableRow className={styles.headRow}>
+                <TableHead>Pessoa</TableHead>
+                <TableHead>Último acesso</TableHead>
+                <TableHead className={styles.colRight}>Papel</TableHead>
+                <TableHead>
+                  <span className="sr-only">Ações</span>
+                </TableHead>
+              </TableRow>
+            </TableHeader>
 
-            return (
-              <li
-                key={entry.id}
-                className={`${motion.deal} ${styles.row}`}
-                style={riseDelay(index * 50 + 60)}
-              >
-                {entry.href ? (
-                  <Link to={entry.href} className={styles.identity}>
+            <TableBody>
+              {visibleEntries.map((entry, index) => {
+                const roleItems = roleItemsOf(entry)
+                const otherItems = otherItemsOf(entry)
+                const isBusy =
+                  changingRoleId === entry.id || removingId === entry.id
+                const identity = (
+                  <>
                     <PersonMark
                       name={entry.name}
                       tone={entry.quiet ? 'quiet' : 'brand'}
@@ -185,89 +234,92 @@ export const TeamRoster = ({
                       {entry.email && (
                         <p className={styles.email}>{entry.email}</p>
                       )}
-                      <p
-                        className={
-                          entry.lastLoginAt ? styles.lastSeen : styles.neverSeen
-                        }
-                      >
-                        Último acesso: {lastSeenLabel(entry.lastLoginAt)}
-                      </p>
                     </div>
-                  </Link>
-                ) : (
-                  <div className={styles.identity}>
-                    <PersonMark
-                      name={entry.name}
-                      tone={entry.quiet ? 'quiet' : 'brand'}
-                    />
+                  </>
+                )
 
-                    <div className={styles.person}>
-                      <p className={styles.name}>{entry.name}</p>
-                      {entry.email && (
-                        <p className={styles.email}>{entry.email}</p>
-                      )}
-                      <p
-                        className={
-                          entry.lastLoginAt ? styles.lastSeen : styles.neverSeen
-                        }
-                      >
-                        Último acesso: {lastSeenLabel(entry.lastLoginAt)}
-                      </p>
-                    </div>
-                  </div>
-                )}
-
-                {roleItems.length > 0 ? (
-                  <Menu
-                    contentClassName={styles.menuPanel}
-                    trigger={
-                      <Button
-                        variant="ghost"
-                        disabled={isBusy}
-                        className={`${motion.press} ${styles.roleTrigger}`}
-                      >
-                        {entry.role}
-                        <Icon
-                          name="chevron-down"
-                          size="sm"
-                          className={styles.roleChevron}
-                        />
-                      </Button>
-                    }
-                    items={roleItems}
-                  />
-                ) : (
-                  <Badge
-                    variant="info"
-                    className={styles.roleBadge}
-                    title={entry.roleLocked}
+                return (
+                  <TableRow
+                    key={entry.id}
+                    className={motion.deal}
+                    style={riseDelay(index * 50 + 60)}
                   >
-                    {entry.role}
-                  </Badge>
-                )}
+                    <TableCell>
+                      {entry.href ? (
+                        <Link to={entry.href} className={styles.identity}>
+                          {identity}
+                        </Link>
+                      ) : (
+                        <div className={styles.identityCell}>{identity}</div>
+                      )}
+                    </TableCell>
 
-                {otherItems.length > 0 && (
-                  <Menu
-                    contentClassName={styles.menuPanel}
-                    trigger={
-                      <Button
-                        variant="ghost"
-                        size="icon"
-                        className={styles.kebab}
-                        disabled={isBusy}
-                        aria-label={`Mais ações para ${entry.name}`}
-                      >
-                        <Icon name="kebab" />
-                      </Button>
-                    }
-                    items={otherItems}
-                  />
-                )}
-              </li>
-            )
-          })}
-        </ul>
+                    <TableCell
+                      className={
+                        entry.lastLoginAt ? styles.lastSeen : styles.neverSeen
+                      }
+                    >
+                      {lastSeenLabel(entry.lastLoginAt)}
+                    </TableCell>
+
+                    <TableCell className={styles.colRight}>
+                      {roleItems.length > 0 ? (
+                        <Menu
+                          contentClassName={styles.menuPanel}
+                          trigger={
+                            <Button
+                              variant="ghost"
+                              disabled={isBusy}
+                              className={`${motion.press} ${styles.roleTrigger}`}
+                            >
+                              {entry.role}
+                              <Icon
+                                name="chevron-down"
+                                size="sm"
+                                className={styles.roleChevron}
+                              />
+                            </Button>
+                          }
+                          items={roleItems}
+                        />
+                      ) : (
+                        <Badge
+                          variant="info"
+                          className={styles.roleBadge}
+                          title={entry.roleLocked}
+                        >
+                          {entry.role}
+                        </Badge>
+                      )}
+                    </TableCell>
+
+                    <TableCell className={styles.colRight}>
+                      {otherItems.length > 0 && (
+                        <Menu
+                          contentClassName={styles.menuPanel}
+                          trigger={
+                            <Button
+                              variant="ghost"
+                              size="icon"
+                              className={styles.kebab}
+                              disabled={isBusy}
+                              aria-label={`Mais ações para ${entry.name}`}
+                            >
+                              <Icon name="kebab" />
+                            </Button>
+                          }
+                          items={otherItems}
+                        />
+                      )}
+                    </TableCell>
+                  </TableRow>
+                )
+              })}
+            </TableBody>
+          </Table>
+        </Box>
       )}
+
     </section>
   )
 }

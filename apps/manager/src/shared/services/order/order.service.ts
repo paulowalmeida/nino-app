@@ -1,4 +1,5 @@
 import { api } from '@shared/services/http/http.service'
+import type { AssignKitchenAssigneeRequest } from '@shared/types/order/assign-kitchen-assignee-request'
 import type { CreateOrderRequest } from '@shared/types/order/create-order-request'
 import type { Order } from '@shared/types/order/order'
 import type { OrderAvailability } from '@shared/types/order/order-availability'
@@ -92,7 +93,7 @@ export const OrderService = {
     page: number,
     search?: string,
     statuses?: OrderStatusKey[],
-    channel?: OrderChannel,
+    channel?: OrderChannel | OrderChannel[],
     paymentStatus?: PaymentStatus,
     requiresPreparation?: boolean
   ): Promise<OrderPage> =>
@@ -103,7 +104,9 @@ export const OrderService = {
       page,
       ...(search ? { search } : {}),
       ...(statuses?.length ? { status: statuses.join(',') } : {}),
-      ...(channel ? { channel } : {}),
+      ...(channel
+        ? { channel: Array.isArray(channel) ? channel.join(',') : channel }
+        : {}),
       ...(paymentStatus ? { paymentStatus } : {}),
       ...(requiresPreparation ? { requiresPreparation: 'true' } : {}),
     }),
@@ -123,6 +126,19 @@ export const OrderService = {
       `tenants/${tenantId}/orders/${orderId}/status`,
       data
     ),
+
+  assignKitchenAssignee: (
+    tenantId: string,
+    orderId: string,
+    data: AssignKitchenAssigneeRequest
+  ): Promise<Order> =>
+    api.patch<AssignKitchenAssigneeRequest, Order>(
+      `tenants/${tenantId}/orders/${orderId}/kitchen-assignee`,
+      data
+    ),
+
+  clearKitchenAssignee: (tenantId: string, orderId: string): Promise<Order> =>
+    api.remove<Order>(`tenants/${tenantId}/orders/${orderId}/kitchen-assignee`),
 
   markOrderPaid: (tenantId: string, orderId: string): Promise<Order> =>
     api.patch<{ paymentStatus: string }, Order>(

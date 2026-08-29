@@ -17,6 +17,11 @@ export const useDeliveryZones = (tenantId: string | null) => {
   })
 
   const zones: DeliveryZone[] = [...(query.data?.data ?? [])]
+    .map((zone) => ({
+      ...zone,
+      maxRadiusKm: Number(zone.maxRadiusKm),
+      fee: Number(zone.fee),
+    }))
     .sort((left, right) => left.maxRadiusKm - right.maxRadiusKm)
     .map((zone, index, sortedZones) => ({
       ...zone,

@@ -1,7 +1,7 @@
 @reference "@nino/ds/globals.css";
 
 .header {
-  @apply mb-4 shrink-0 flex-wrap gap-x-6 gap-y-3;
+  @apply mb-4 shrink-0 flex-wrap gap-x-6 gap-y-4;
 }
 
 .identity {
@@ -9,7 +9,11 @@
 }
 
 .tally {
-  @apply shrink-0 flex-wrap gap-x-5 gap-y-2;
+  @apply w-full shrink-0 flex-wrap gap-x-5 gap-y-4 sm:w-auto;
+}
+
+.metrics {
+  @apply flex-wrap gap-x-6 gap-y-2;
 }
 
 .metric {
@@ -26,9 +30,14 @@
 
 .alert .metricValue,
 .alert .metricLabel {
-  @apply text-brand-strong;
+  @apply text-fg-strong;
+}
+
+/* WHY: atraso se anuncia por peso, não por cor — o mesmo sinal da comanda. */
+.alert .metricValue {
+  @apply underline decoration-2 underline-offset-4;
 }
 
 .density {
-  @apply shrink-0;
+  @apply w-full shrink-0 sm:w-auto;
 }

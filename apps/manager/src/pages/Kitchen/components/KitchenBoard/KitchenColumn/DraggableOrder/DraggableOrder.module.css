@@ -1,0 +1,5 @@
+@reference "@nino/ds/globals.css";
+
+.dragger {
+  @apply cursor-grab touch-none active:cursor-grabbing;
+}

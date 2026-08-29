@@ -1,9 +1,10 @@
 @reference "@nino/ds/globals.css";
 
 .page {
-  @apply relative max-w-5xl p-4 lg:p-10;
+  @apply relative mx-auto flex h-[calc(100dvh-3.5rem)] w-full flex-col;
+  @apply max-w-page overflow-hidden p-4 lg:h-dvh lg:p-10;
 }
 
 .panel {
-  @apply min-w-0;
+  @apply flex min-h-0 min-w-0 flex-1 flex-col overflow-hidden;
 }

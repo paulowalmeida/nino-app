@@ -14,6 +14,7 @@ export type Order = {
   status: OrderStatusKey
   channel: OrderChannel
   courierId: string | null
+  kitchenAssigneeId?: string | null
   deliveryAddress: DeliveryAddress | null
   tableNumber: string | null
   notes: string | null

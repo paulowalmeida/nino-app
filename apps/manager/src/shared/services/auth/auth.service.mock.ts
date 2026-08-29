@@ -15,6 +15,15 @@ export const signupRequestMock = {
     name: 'Padoca do Bairro',
     cnpj: '12345678000199',
   },
+  tenant: {
+    slug: 'padoca-do-bairro',
+    zipCode: '66000000',
+    street: 'Rua das Flores',
+    number: '123',
+    neighborhood: 'Centro',
+    city: 'Belém',
+    state: 'PA',
+  },
 }
 
 export const checkAvailabilityRequestMock = {

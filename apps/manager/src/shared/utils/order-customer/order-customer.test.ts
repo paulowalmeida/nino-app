@@ -9,8 +9,8 @@ describe('order-customer', () => {
     expect(customerNameOf(order)).toBe('Ana Silva')
   })
 
-  it('customerNameOf falls back to a generic label without one', () => {
-    expect(customerNameOf(baseOrderMock)).toBe('Cliente sem cadastro')
+  it('reads the name used by a counter or pickup order', () => {
+    expect(customerNameOf(baseOrderMock)).toBe('Cliente teste')
   })
 
   it('addressOf formats the structured delivery address', () => {

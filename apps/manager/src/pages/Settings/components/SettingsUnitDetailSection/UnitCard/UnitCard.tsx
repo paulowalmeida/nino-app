@@ -17,10 +17,10 @@ import {
   EMPTY_UNIT_DRAFT,
   UNIT_TIMEZONES,
 } from '@pages/Settings/constants/settings.constants'
+import { AddressFields } from '@shared/components/AddressFields/AddressFields'
 import type { TenantDetail } from '@shared/types/store/tenant-detail'
 import type { UnitDraft } from '@shared/types/store/unit-draft'
 
-import { AddressFields } from '@shared/components/AddressFields/AddressFields'
 import { StorePreview } from '../StorePreview/StorePreview'
 
 import motion from '@styles/motion.module.css'

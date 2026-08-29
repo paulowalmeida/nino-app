@@ -38,40 +38,51 @@ export const SettingsDeliverySection = () => {
           Entrega
         </Heading>
         <Text size="sm" color="subtle" mt={1}>
-          Defina as faixas de distância e o valor de cada uma.
+          A loja entrega em faixas de distância a partir da unidade. Cada faixa
+          tem a sua taxa.
         </Text>
       </Box>
 
-      {isResolved ? (
-        <>
+      <Box className={local.territory}>
+        {isResolved ? (
           <DeliveryMap
             zones={zones}
             coordinates={coordinates}
             previewKm={previewKm}
             focusedZoneId={focusedZoneId}
           />
-          <ZoneForm
-            isAdding={add.isPending}
-            lastMaxRadiusKm={zones.at(-1)?.maxRadiusKm}
-            onAdd={add.mutate}
-            onPreviewRadius={setPreviewKm}
-          />
-        </>
-      ) : (
-        <>
+        ) : (
           <DeliveryMapSkeleton />
-          <ZoneFormSkeleton />
-        </>
-      )}
-      <ZoneList
-        zones={zones}
-        isPending={isPending}
-        onEdit={edit.mutate}
-        onToggle={toggle.mutate}
-        onRemove={setRemovingZone}
-        focusedZoneId={focusedZoneId}
-        onFocusZone={setFocusedZoneId}
-      />
+        )}
+      </Box>
+
+      <Box className={local.split}>
+        <Box className={local.rail}>
+          {isResolved ? (
+            <ZoneForm
+              isAdding={add.isPending}
+              lastMaxRadiusKm={zones.at(-1)?.maxRadiusKm}
+              onAdd={add.mutate}
+              onPreviewRadius={setPreviewKm}
+            />
+          ) : (
+            <ZoneFormSkeleton />
+          )}
+        </Box>
+
+        <Box className={local.zones}>
+          <ZoneList
+            zones={zones}
+            isPending={isPending}
+            onEdit={edit.mutate}
+            onToggle={toggle.mutate}
+            onRemove={setRemovingZone}
+            focusedZoneId={focusedZoneId}
+            onFocusZone={setFocusedZoneId}
+          />
+        </Box>
+      </Box>
+
       <RemoveZoneModal
         open={!!removingZone}
         onOpenChange={(open) => !open && setRemovingZone(null)}

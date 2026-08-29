@@ -42,6 +42,12 @@ export const ORDERS_STAGES: OrderStageOption[] = [
     icon: 'cash-register',
   },
   {
+    id: 'table',
+    label: 'Na mesa',
+    empty: 'Nenhuma comanda aberta.',
+    icon: 'clipboard',
+  },
+  {
     id: 'closed',
     label: 'Fechados',
     empty: 'Os pedidos concluídos aparecem aqui.',

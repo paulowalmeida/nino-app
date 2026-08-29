@@ -10,16 +10,24 @@ type CategoryIconPickerProps = {
   value: ProductCategoryIcon | null | undefined
   onChange: (value: ProductCategoryIcon | null) => void
   disabled?: boolean
+  singleRowAt4k?: boolean
 }
 
 export const CategoryIconPicker = ({
   value,
   onChange,
   disabled = false,
+  singleRowAt4k = false,
 }: CategoryIconPickerProps) => (
   <fieldset className={styles.fieldset} disabled={disabled}>
     <legend className={styles.legend}>Ícone da categoria</legend>
-    <div className={styles.options}>
+    <div
+      className={
+        singleRowAt4k
+          ? `${styles.options} ${styles.singleRowAt4k}`
+          : styles.options
+      }
+    >
       <button
         type="button"
         className={`${styles.option} ${!value ? styles.selected : ''}`}

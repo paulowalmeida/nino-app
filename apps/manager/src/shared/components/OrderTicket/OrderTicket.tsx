@@ -17,6 +17,7 @@ import type { OrderStatusKey } from '@shared/types/order/order-status-key'
 import { brl } from '@shared/utils/money/money'
 import { nextStep } from '@shared/utils/order-action-policy/order-action-policy'
 import { customerNameOf } from '@shared/utils/order-customer/order-customer'
+import { orderDestination } from '@shared/utils/order-destination/order-destination'
 import { stageOf } from '@shared/utils/order-stage/order-stage'
 import { ticketNumber } from '@shared/utils/order-ticket/order-ticket'
 
@@ -65,6 +66,7 @@ export const OrderTicket = ({ order, onAdvance, isBusy }: OrderTicketProps) => {
   const clockLabel = isFromToday(createdAt)
     ? clock
     : `${dayMonth.format(createdAt)} · ${clock}`
+  const destination = orderDestination(order, [])
 
   const classes = [
     styles.ticket,
@@ -114,7 +116,7 @@ export const OrderTicket = ({ order, onAdvance, isBusy }: OrderTicketProps) => {
           <p className={styles.customer}>{customerNameOf(order)}</p>
           <p className={styles.meta}>
             {CHANNEL_LABEL[order.channel]}
-            {order.tableNumber && ` · Mesa ${order.tableNumber}`}
+            {destination?.kind === 'table' && ` · ${destination.label}`}
           </p>
 
           {/* the whole ticket doesn't fit on mobile: the count matters,

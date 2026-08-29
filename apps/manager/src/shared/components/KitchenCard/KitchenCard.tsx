@@ -1,14 +1,25 @@
+import { Avatar } from '@nino/ds/components/Avatar'
+import { Badge } from '@nino/ds/components/Badge'
 import { Box } from '@nino/ds/components/Box'
 import { Button } from '@nino/ds/components/Button'
 import { ListRow } from '@nino/ds/components/ListRow'
+import { Menu } from '@nino/ds/components/Menu'
+import { Stamp } from '@nino/ds/components/Stamp'
 import { Text } from '@nino/ds/components/Text'
 import { mergeClasses } from '@nino/ds/mergeClasses'
-import { CHANNEL_LABEL } from '@shared/constants/order.constants'
 import { useElapsed } from '@shared/hooks/order/useElapsed/useElapsed'
 import type { Order } from '@shared/types/order/order'
+import type { OrderDestination } from '@shared/types/order/order-destination'
+import type { OrderDestinationKind } from '@shared/types/order/order-destination-kind'
 import type { OrderStatusKey } from '@shared/types/order/order-status-key'
+import type { StaffMember } from '@shared/types/team/staff-member'
+import type { ElapsedPace } from '@shared/types/ui/elapsed-pace'
 import { elapsedVar } from '@shared/utils/elapsed-var/elapsed-var'
-import { nextStep } from '@shared/utils/order-action-policy/order-action-policy'
+import { initialsOf } from '@shared/utils/initials/initials'
+import {
+  nextStep,
+  previousStep,
+} from '@shared/utils/order-action-policy/order-action-policy'
 import { customerNameOf } from '@shared/utils/order-customer/order-customer'
 import { ticketNumber } from '@shared/utils/order-ticket/order-ticket'
 
@@ -17,50 +28,87 @@ import styles from './KitchenCard.module.css'
 
 export type KitchenCardProps = {
   order: Order
-  onAdvance: (orderId: string, target: OrderStatusKey) => void
+  destination: OrderDestination | null
+  onStep?: (orderId: string, target: OrderStatusKey) => void
   isBusy: boolean
+  /** `rollback` desfaz o passo que a cozinha deu, em vez de avançar. */
+  direction?: 'advance' | 'rollback'
+  /** Prazo de preparo da loja; sem ele a régua cai no piso da parede. */
+  dueMinutes?: number
   isCompact?: boolean
   actionLabel?: string
+  cookName?: string
+  staff?: StaffMember[]
+  onCookChange?: (kitchenAssigneeId: string | null) => void
+  isChangingCook?: boolean
+}
+
+const paperClasses: Record<OrderDestinationKind, string> = {
+  delivery: styles.paperDelivery,
+  pickup: styles.paperPickup,
+  counter: styles.paperCounter,
+  table: styles.paperTable,
+}
+
+const paceClasses: Record<ElapsedPace, string> = {
+  fresh: styles.paceFresh,
+  closing: styles.paceClosing,
+  due: styles.paceDue,
+  late: styles.paceLate,
 }
 
 export const KitchenCard = ({
   order,
-  onAdvance,
+  destination,
+  onStep,
   isBusy,
+  direction = 'advance',
+  dueMinutes,
   isCompact = false,
   actionLabel,
+  cookName,
+  staff = [],
+  onCookChange,
+  isChangingCook = false,
 }: KitchenCardProps) => {
-  const step = nextStep(order)
+  const step = direction === 'rollback' ? previousStep(order) : nextStep(order)
   const itemCount = order.items.reduce(
     (total, { quantity }) => total + quantity,
     0
   )
-  const {
-    label: elapsed,
-    isLate,
-    ratio,
-    overdueRatio,
-  } = useElapsed(order.acceptedAt ?? order.createdAt)
+  const { remaining, isLate, pace, ratio, overdueRatio } = useElapsed(
+    order.acceptedAt ?? order.createdAt,
+    dueMinutes
+  )
 
   const card = mergeClasses(
     motion.settle,
     styles.card,
-    isLate && styles.late,
+    destination ? paperClasses[destination.kind] : styles.paperPlain,
+    paceClasses[pace],
     isCompact && styles.compact
+  )
+  const canChangeCook = !!onCookChange && staff.length > 0
+  const cookLabel = cookName
+    ? `Alterar chapista: ${cookName}`
+    : 'Atribuir chapista'
+  const cookAvatar = (
+    <Avatar
+      aria-hidden="true"
+      size="sm"
+      fallback={cookName ? initialsOf(cookName) : undefined}
+      className={styles.cookAvatar}
+    />
   )
 
   return (
     <Box as="article" className={card} style={elapsedVar(ratio, overdueRatio)}>
-      <Box className={styles.ribbon} aria-hidden="true">
-        <Box className={styles.fill} />
-      </Box>
-
-      <Box as="header" className={styles.head}>
+      <Box as="header" direction="row" className={styles.head}>
         <Text as="span" className={styles.number}>
           {ticketNumber(order.orderNumber)}
         </Text>
         <Text as="span" className={styles.clock}>
-          {elapsed}
+          {remaining}
         </Text>
         {isLate && (
           <Text as="span" className="sr-only">
@@ -69,28 +117,64 @@ export const KitchenCard = ({
         )}
       </Box>
 
-      <Text as="p" className={styles.who}>
-        <Text as="span" className={styles.channel}>
-          {CHANNEL_LABEL[order.channel]}
-        </Text>
+      <Box direction="row" align="center" className={styles.who}>
+        {destination && (
+          <Badge size="sm" className={styles.destination}>
+            {destination.label}
+          </Badge>
+        )}
         <Text as="span" className={styles.name}>
           {customerNameOf(order)}
         </Text>
-        {order.tableNumber && (
-          <Text as="span" className={styles.table}>
-            mesa {order.tableNumber}
-          </Text>
+        {canChangeCook ? (
+          <Menu
+            trigger={
+              <Button
+                variant="ghost"
+                size="icon"
+                className={styles.cook}
+                aria-label={cookLabel}
+                title={cookLabel}
+                disabled={isChangingCook}
+              >
+                {cookAvatar}
+              </Button>
+            }
+            items={[
+              ...staff.map(({ user }) => ({
+                value: user.id,
+                label: user.name,
+                disabled: user.name === cookName,
+                onSelect: () => onCookChange(user.id),
+              })),
+              ...(cookName
+                ? [
+                    { separator: true } as const,
+                    {
+                      value: 'clear-cook',
+                      label: 'Remover responsável',
+                      onSelect: () => onCookChange(null),
+                    },
+                  ]
+                : []),
+            ]}
+          />
+        ) : (
+          cookName && (
+            <span
+              className={styles.cook}
+              title={`Em preparo com ${cookName}`}
+              aria-label={`Em preparo com ${cookName}`}
+            >
+              {cookAvatar}
+            </span>
+          )
         )}
-      </Text>
+      </Box>
 
-      {order.notes && !isCompact && (
-        <Text as="p" className={styles.notes}>
-          <Text as="span" className={styles.notesLabel}>
-            Observação
-          </Text>
-          {order.notes}
-        </Text>
-      )}
+      <Box className={styles.ruler} aria-hidden="true">
+        <Box className={styles.fill} />
+      </Box>
 
       {isCompact ? (
         <Text as="p" className={styles.summary}>
@@ -106,9 +190,9 @@ export const KitchenCard = ({
               gap={0}
               className={styles.item}
             >
-              <Text as="span" className={styles.quantity}>
+              <Stamp size="lg" tone="neutral" className={styles.quantity}>
                 {item.quantity}
-              </Text>
+              </Stamp>
               <Text as="span" className={styles.itemName}>
                 {item.product.name}
               </Text>
@@ -117,12 +201,18 @@ export const KitchenCard = ({
         </Box>
       )}
 
-      {step && (
+      {order.notes && !isCompact && (
+        <Text as="p" className={styles.notes}>
+          {order.notes}
+        </Text>
+      )}
+
+      {step && onStep && (
         <Button
           size="lg"
           loading={isBusy}
           className={mergeClasses(motion.press, styles.action)}
-          onClick={() => onAdvance(order.id, step.target)}
+          onClick={() => onStep(order.id, step.target)}
         >
           {actionLabel ?? step.label}
         </Button>

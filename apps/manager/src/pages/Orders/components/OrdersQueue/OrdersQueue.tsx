@@ -27,7 +27,7 @@ export const OrdersQueue = () => {
     isAdvancing,
     advancingOrderId,
   } = useOrdersFacade()
-  const paginates = isSearching || stage === 'closed'
+  const paginates = isSearching || stage === 'closed' || stage === 'table'
   const sentinelRef = useLoadMore(
     paginates && !!hasNextPage,
     () => void fetchNextPage()

@@ -48,7 +48,8 @@ export const EMPTY_SERVICE_RULES_DRAFT: ServiceRulesDraft = {
   allowGuestOrder: true,
   requireCpf: false,
   minOrderAmount: '0',
-  estimatedMinutes: '30',
+  preparationMinutes: '30',
+  deliveryMinutes: '0',
   acceptedPaymentMethods: [],
 }
 

@@ -113,6 +113,8 @@ export const queryKeys = {
     all: (tenantId: string) => ['tenant', tenantId] as const,
     settings: (tenantId: string) =>
       [...queryKeys.tenant.all(tenantId), 'settings'] as const,
+    publicSettings: (tenantId: string) =>
+      [...queryKeys.tenant.all(tenantId), 'settings', 'public'] as const,
     diningTables: (tenantId: string) =>
       [...queryKeys.tenant.all(tenantId), 'dining-tables'] as const,
   },

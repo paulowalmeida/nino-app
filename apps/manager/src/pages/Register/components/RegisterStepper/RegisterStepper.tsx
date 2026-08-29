@@ -8,7 +8,7 @@ export const RegisterStepper = () => {
   const { step, goToAccount } = useRegisterFacade()
 
   const handleStepChange = (next: number) => {
-    if (step === 2 && next === 0) goToAccount()
+    if (next === 0 && step > 1) goToAccount()
   }
 
   return (

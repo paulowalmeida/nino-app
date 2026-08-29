@@ -1,31 +1,46 @@
 @reference "@nino/ds/globals.css";
 
+/* WHY: com a sidebar recolhida o rail cresce (ver SettingsDeliverySection) —
+   os campos e o botão respondem à largura real do próprio card, não ao
+   viewport, então usam container query pra aproveitar esse espaço extra. */
 .section {
-  @apply rounded-xl border border-border p-4 sm:p-5;
+  @apply flex min-w-0 flex-col gap-3 rounded-xl border border-border p-4;
+  @apply md:p-3;
+  container-type: inline-size;
 }
 
 .intro {
   @apply flex flex-col gap-1;
 }
 
-.form {
-  @apply mt-4 grid grid-cols-1 gap-3;
-
-  @media (min-width: 640px) {
-    grid-template-columns: 7rem 7rem 8rem auto;
-    align-items: end;
-  }
+.slider {
+  @apply mt-1;
 }
 
-.fee,
-.radius {
-  @apply min-w-0;
+.form {
+  @apply grid grid-cols-2 items-end gap-3;
+  @apply md:flex md:flex-row md:flex-nowrap md:gap-2;
+}
+
+.field {
+  @apply md:w-20 md:flex-none;
 }
 
 .submit {
-  @apply self-start sm:self-end;
+  @apply col-span-2 w-full;
+  @apply md:ml-2 md:w-auto md:shrink-0 md:px-3;
 }
 
-.slider {
-  @apply mt-4;
+@container (min-width: 26rem) {
+  .form {
+    @apply gap-3;
+  }
+
+  .field {
+    @apply w-28;
+  }
+
+  .submit {
+    @apply ml-3 px-4;
+  }
 }

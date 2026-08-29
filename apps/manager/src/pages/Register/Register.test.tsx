@@ -16,10 +16,13 @@ vi.mock('@pages/Register/components/AccountStep/AccountStep', () => ({
 vi.mock('@pages/Register/components/CompanyStep/CompanyStep', () => ({
   CompanyStep: () => <div>passo empresa</div>,
 }))
+vi.mock('@pages/Register/components/TenantStep/TenantStep', () => ({
+  TenantStep: () => <div>passo unidade</div>,
+}))
 
 const resetWizard = vi.fn()
 
-const mockStep = (step: 1 | 2) =>
+const mockStep = (step: 1 | 2 | 3) =>
   vi.mocked(useRegisterFacade).mockReturnValue({
     step,
     resetWizard,
@@ -53,5 +56,13 @@ describe('Register', () => {
     expect(
       screen.queryByText(registerPageMock.accountStepLabel)
     ).not.toBeInTheDocument()
+  })
+
+  it('shows the tenant step once the company step passed', () => {
+    mockStep(3)
+
+    render(<Register />)
+
+    expect(screen.getByText('passo unidade')).toBeInTheDocument()
   })
 })

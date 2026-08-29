@@ -14,7 +14,7 @@ import type { CategoryWithCount } from '@shared/types/product/category-with-coun
 const startDrag = vi.fn()
 const motionEvents = vi.hoisted(() => ({
   onAnimationEnd: undefined as
-    | ((event: ReactAnimationEvent<HTMLLIElement>) => void)
+    | ((event: ReactAnimationEvent<HTMLTableRowElement>) => void)
     | undefined,
 }))
 
@@ -24,9 +24,9 @@ vi.mock('framer-motion', () => ({
       children,
       onAnimationEnd,
       ...props
-    }: HTMLAttributes<HTMLLIElement>) => {
+    }: HTMLAttributes<HTMLTableRowElement>) => {
       motionEvents.onAnimationEnd = onAnimationEnd
-      return <li {...props}>{children}</li>
+      return <tr {...props}>{children}</tr>
     },
   },
   useDragControls: () => ({ start: startDrag }),
@@ -53,9 +53,11 @@ const renderRow = (
 
   return {
     ...render(
-      <ul>
-        <CategoryRow {...props} />
-      </ul>
+      <table>
+        <tbody>
+          <CategoryRow {...props} />
+        </tbody>
+      </table>
     ),
     props,
   }
@@ -72,8 +74,14 @@ describe(CategoryRow.name, () => {
     fireEvent.pointerDown(
       screen.getByRole('button', { name: 'Reordenar Bebidas' })
     )
-    await user.click(screen.getByRole('button', { name: 'Excluir Bebidas' }))
-    await user.click(screen.getByRole('button', { name: 'Renomear Bebidas' }))
+    await user.click(
+      screen.getByRole('button', { name: 'Mais ações para Bebidas' })
+    )
+    await user.click(screen.getByRole('menuitem', { name: 'Excluir' }))
+    await user.click(
+      screen.getByRole('button', { name: 'Mais ações para Bebidas' })
+    )
+    await user.click(screen.getByRole('menuitem', { name: 'Renomear' }))
 
     expect(startDrag).toHaveBeenCalled()
     expect(props.onDelete).toHaveBeenCalledOnce()
@@ -87,47 +95,43 @@ describe(CategoryRow.name, () => {
     expect(screen.getByText('1 item')).toBeInTheDocument()
 
     rerender(
-      <ul>
-        <CategoryRow
-          category={{ ...category, count: 0 }}
-          index={0}
-          onEdit={vi.fn()}
-          onDelete={vi.fn()}
-          onDragEnd={vi.fn()}
-          disabled={false}
-        />
-      </ul>
+      <table>
+        <tbody>
+          <CategoryRow
+            category={{ ...category, count: 0 }}
+            index={0}
+            onEdit={vi.fn()}
+            onDelete={vi.fn()}
+            onDragEnd={vi.fn()}
+            disabled={false}
+          />
+        </tbody>
+      </table>
     )
     expect(screen.getByText('Vazia — nenhum item ainda')).toBeInTheDocument()
   })
 
-  it('disables row actions while a mutation is in flight', () => {
+  it('disables the actions menu while a mutation is in flight', () => {
     renderRow({ disabled: true })
 
     expect(
-      screen.getByRole('button', { name: 'Renomear Bebidas' })
-    ).toBeDisabled()
-    expect(
-      screen.getByRole('button', { name: 'Excluir Bebidas' })
+      screen.getByRole('button', { name: 'Mais ações para Bebidas' })
     ).toBeDisabled()
   })
 
-  it('finishes entrance animation only for the row itself and forwards drag end', () => {
-    const { props } = renderRow()
-    const row = screen.getByRole('listitem')
+  it('finishes entrance animation only for the row itself', () => {
+    renderRow()
+    const row = screen.getByRole('row')
 
     act(() => {
       motionEvents.onAnimationEnd?.({
         target: screen.getByText('Bebidas'),
         currentTarget: row,
-      } as unknown as ReactAnimationEvent<HTMLLIElement>)
+      } as unknown as ReactAnimationEvent<HTMLTableRowElement>)
       motionEvents.onAnimationEnd?.({
         target: row,
         currentTarget: row,
-      } as unknown as ReactAnimationEvent<HTMLLIElement>)
+      } as unknown as ReactAnimationEvent<HTMLTableRowElement>)
     })
-    fireEvent.dragEnd(row)
-
-    expect(props.onDragEnd).toHaveBeenCalledOnce()
   })
 })

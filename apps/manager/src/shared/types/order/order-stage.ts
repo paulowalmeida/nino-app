@@ -4,4 +4,5 @@ export type OrderStage =
   | 'kitchen'
   | 'street'
   | 'counter'
+  | 'table'
   | 'closed'
