@@ -96,6 +96,13 @@ export const router = createBrowserRouter([
           })),
       },
       {
+        path: 'comandas/:tabId',
+        lazy: () =>
+          import('@pages/TableTabDetail/TableTabDetail').then(
+            ({ TableTabDetail }) => ({ Component: TableTabDetail })
+          ),
+      },
+      {
         path: 'cozinha',
         lazy: () =>
           import('@pages/Kitchen/Kitchen').then(({ Kitchen }) => ({
@@ -264,6 +271,15 @@ export const router = createBrowserRouter([
               import('@pages/Settings/components/SettingsServiceSection/SettingsServiceSection').then(
                 ({ SettingsServiceSection }) => ({
                   Component: SettingsServiceSection,
+                })
+              ),
+          },
+          {
+            path: 'salao-comandas',
+            lazy: () =>
+              import('@pages/Settings/components/SettingsTableSection/SettingsTableSection').then(
+                ({ SettingsTableSection }) => ({
+                  Component: SettingsTableSection,
                 })
               ),
           },

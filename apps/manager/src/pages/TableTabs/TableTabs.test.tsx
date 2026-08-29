@@ -4,7 +4,12 @@ import { describe, expect, it, vi } from 'vitest'
 import { TableTabs } from './TableTabs'
 
 vi.mock('@pages/TableTabs/facades/useTableTabsFacade/useTableTabsFacade', () => ({
-  useTableTabsFacade: () => ({ orders: [], isPending: false, isError: false }),
+  useTableTabsFacade: () => ({
+    openOrders: [],
+    closedOrders: [],
+    isPending: false,
+    isError: false,
+  }),
 }))
 
 describe(TableTabs.name, () => {

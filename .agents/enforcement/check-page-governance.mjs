@@ -16,12 +16,43 @@ if (!fs.existsSync(domainRoot) || !fs.statSync(domainRoot).isDirectory()) {
   process.exit(2)
 }
 
-const pageName = path.basename(domainRoot)
-const pagePath = path.join(domainRoot, `${pageName}.tsx`)
-if (!fs.existsSync(pagePath)) {
-  console.error(`Page entry does not exist: ${pagePath}`)
-  process.exit(2)
+// Different apps name a Page folder differently: apps/manager uses PascalCase
+// folders that match the component name exactly (pages/Catalog/Catalog.tsx),
+// while apps/consumer uses lowercase/kebab route-style folders around a
+// PascalCase component file (pages/account/Account.tsx, pages/sign-in/SignIn.tsx).
+// Both are valid per their app's own convention, so this resolver tries the
+// folder name as-is, then its PascalCase form, before falling back to the
+// single top-level .tsx file in the domain (excluding test/mock files).
+const folderName = path.basename(domainRoot)
+const toPascalCase = (value) =>
+  value
+    .split(/[-_]+/)
+    .filter(Boolean)
+    .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
+    .join('')
+
+const nameCandidates = [...new Set([folderName, toPascalCase(folderName)])]
+let pagePath = nameCandidates
+  .map((candidate) => path.join(domainRoot, `${candidate}.tsx`))
+  .find((candidatePath) => fs.existsSync(candidatePath))
+
+if (!pagePath) {
+  const rootTsxFiles = fs
+    .readdirSync(domainRoot)
+    .filter((file) => file.endsWith('.tsx') && !file.includes('.test.') && !file.includes('.mock.'))
+  if (rootTsxFiles.length === 1) {
+    pagePath = path.join(domainRoot, rootTsxFiles[0])
+  } else {
+    const tried = nameCandidates.map((candidate) => `${candidate}.tsx`).join(', ')
+    const ambiguous = rootTsxFiles.length > 1
+      ? ` Multiple .tsx candidates found in the folder root (${rootTsxFiles.join(', ')}) — name is ambiguous.`
+      : ''
+    console.error(`Page entry does not exist: tried ${tried} in ${domainRoot}.${ambiguous}`)
+    process.exit(2)
+  }
 }
+
+const pageName = path.basename(pagePath, '.tsx')
 
 const source = fs.readFileSync(pagePath, 'utf8')
 const ast = ts.createSourceFile(pagePath, source, ts.ScriptTarget.Latest, true, ts.ScriptKind.TSX)

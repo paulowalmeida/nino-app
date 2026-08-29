@@ -57,6 +57,12 @@ export const SIDEMENU_GROUPS: SidemenuItem[] = [
         roles: MANAGERS,
       },
       {
+        section: 'configuracoes/salao-comandas',
+        label: 'Salão e comandas',
+        icon: 'table',
+        roles: MANAGERS,
+      },
+      {
         section: 'configuracoes/horarios',
         label: 'Horários',
         icon: 'clock',

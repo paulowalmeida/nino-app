@@ -1,14 +1,21 @@
 @reference "@nino/ds/globals.css";
 
 .page {
-  @apply flex min-h-full flex-col p-4 lg:p-10;
+  @apply flex min-h-full flex-col gap-5 p-4 lg:gap-7 lg:p-10;
 }
 
 .list {
-  @apply grid gap-3 sm:grid-cols-2 xl:grid-cols-3;
+  @apply grid gap-4 sm:grid-cols-2 xl:grid-cols-3;
+}
+
+.tabs {
+  @apply w-fit gap-2;
 }
 
 .card {
-  @apply block rounded-4 border border-border bg-surface-raised p-4;
-  @apply transition-colors hover:border-brand hover:bg-surface-1;
+  @apply flex min-h-36 flex-col justify-between gap-6 rounded-4 border;
+  @apply border-border bg-surface-raised p-5;
+  @apply transition-[border-color,background-color,transform] duration-base;
+  @apply hover:-translate-y-0.5 hover:border-brand hover:bg-surface-1;
+  @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand;
 }

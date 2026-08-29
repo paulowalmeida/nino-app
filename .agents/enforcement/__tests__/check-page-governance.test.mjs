@@ -34,6 +34,22 @@ try {
   `)
   result = spawnSync(process.execPath, [checker, pageRoot], { encoding: 'utf8' })
   assert.equal(result.status, 1, 'DS primitives must not hide Page region markup')
+
+  // apps/consumer names Page folders lowercase/kebab around a PascalCase
+  // component file (pages/account/Account.tsx) instead of apps/manager's
+  // matching-PascalCase convention (pages/Catalog/Catalog.tsx). The resolver
+  // must find the entry either way and match it to the exported const.
+  const lowercasePageRoot = path.join(root, 'account')
+  fs.mkdirSync(lowercasePageRoot, { recursive: true })
+  fs.writeFileSync(path.join(lowercasePageRoot, 'Account.tsx'), `
+    export const Account = () => {
+      const facade = useAccountFacade()
+      if (facade.isPending) return <AccountSkeleton />
+      return <Box><AccountHeader /><AccountNav /></Box>
+    }
+  `)
+  result = spawnSync(process.execPath, [checker, lowercasePageRoot], { encoding: 'utf8' })
+  assert.equal(result.status, 0, result.stderr)
 } finally {
   fs.rmSync(root, { recursive: true, force: true })
 }

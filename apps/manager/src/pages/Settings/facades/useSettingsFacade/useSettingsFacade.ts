@@ -1,4 +1,6 @@
 import { useDeliveryZones } from '@pages/Settings/hooks/useDeliveryZones/useDeliveryZones'
+import { useDiningTableMutations } from '@pages/Settings/hooks/useDiningTableMutations/useDiningTableMutations'
+import { useDiningTables } from '@pages/Settings/hooks/useDiningTables/useDiningTables'
 import { useMapLocation } from '@pages/Settings/hooks/useMapLocation/useMapLocation'
 import { usePhoneMutations } from '@pages/Settings/hooks/usePhoneMutations/usePhoneMutations'
 import { usePhones } from '@pages/Settings/hooks/usePhones/usePhones'
@@ -34,6 +36,10 @@ export const useSettingsFacade = () => {
     },
     hours: { query: useOpeningHours(tenantId), save: useSaveWeek(tenantId) },
     service: { query: useSettings(tenantId), save: useSaveSettings(tenantId) },
+    diningTables: {
+      query: useDiningTables(tenantId),
+      mutations: useDiningTableMutations(tenantId),
+    },
     units: {
       groups,
       detail: useTenantDetail(tenantId),

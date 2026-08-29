@@ -1,0 +1,49 @@
+@reference "@nino/ds/globals.css";
+
+.section {
+  @apply mt-8 border-t border-border pt-6;
+}
+
+.head {
+  @apply mb-4;
+}
+
+.form {
+  @apply flex flex-col gap-3 border-b border-border pb-5 sm:flex-row sm:items-end;
+}
+
+.quantity {
+  @apply min-w-0 sm:w-32;
+}
+
+.prefix {
+  @apply min-w-0 sm:w-56;
+}
+
+.list {
+  @apply mt-5 flex flex-col;
+}
+
+.row {
+  @apply grid grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-4 border-b border-border py-4;
+}
+
+.rowInfo {
+  @apply min-w-0;
+}
+
+.name {
+  @apply min-w-0 font-semibold;
+}
+
+.meta {
+  @apply mt-1 truncate;
+}
+
+.actions {
+  @apply flex items-center gap-2;
+}
+
+.empty {
+  @apply border-0 py-6;
+}
