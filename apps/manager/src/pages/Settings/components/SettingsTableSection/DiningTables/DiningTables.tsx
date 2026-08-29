@@ -98,7 +98,7 @@ export const DiningTables = ({
               <Box className={local.rowInfo}>
                 <Text className={local.name}>{table.name}</Text>
                 <Text size="sm" color="muted" className={local.meta}>
-                  Escaneie para abrir o cardápio desta mesa.
+                  Escaneie para testar o cardápio desta mesa.
                 </Text>
               </Box>
               <Box className={local.actions}>
