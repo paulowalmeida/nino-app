@@ -5,10 +5,6 @@
   @apply w-full;
 }
 
-.back {
-  @apply self-start;
-}
-
 .hero {
   @apply grid gap-6 border-b border-border pb-6 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-end;
 }

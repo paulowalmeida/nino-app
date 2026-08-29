@@ -1,7 +1,6 @@
 import { useState } from 'react'
 
 import { Alert } from '@nino/ds/components/Alert'
-import { BackLink } from '@nino/ds/components/BackLink'
 import { Badge } from '@nino/ds/components/Badge'
 import { Box } from '@nino/ds/components/Box'
 import { Button } from '@nino/ds/components/Button'
@@ -13,6 +12,7 @@ import { Label } from '@nino/ds/components/Label'
 import { ListRow } from '@nino/ds/components/ListRow'
 import { Text } from '@nino/ds/components/Text'
 import { Textarea } from '@nino/ds/components/Textarea'
+import { BackLink } from '@shared/components/BackLink/BackLink'
 import { PAYMENT_METHOD_LABEL } from '@shared/constants/order.constants'
 import type { Order } from '@shared/types/order/order'
 import { brl } from '@shared/utils/money/money'
@@ -77,9 +77,7 @@ export const TableTabDetailContent = ({
 
   return (
     <Box as="main" className={styles.page}>
-      <BackLink href=".." className={styles.back}>
-        Voltar para comandas
-      </BackLink>
+      <BackLink>Voltar para comandas</BackLink>
       {isPending && <Text color="muted">Carregando comanda…</Text>}
       {isError && (
         <Alert variant="error">
