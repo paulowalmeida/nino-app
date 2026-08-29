@@ -8,5 +8,4 @@
 **/.turbo
 apps/backoffice
 apps/courier
-apps/landing
 apps/nino-api
