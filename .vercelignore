@@ -7,7 +7,6 @@
 **/coverage
 **/.turbo
 apps/backoffice
-apps/consumer
 apps/courier
 apps/landing
 apps/nino-api
