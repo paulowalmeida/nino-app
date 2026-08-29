@@ -1,11 +1,10 @@
 @reference "../../styles/globals.css";
 
 .link {
-  @apply -ml-2 inline-flex h-11 items-center gap-2 rounded-full px-3 text-base;
-  @apply font-semibold text-fg-subtle transition-colors duration-fast;
-  @apply hover:bg-brand-ghost;
+  @apply -ml-2 inline-flex h-11 w-fit items-center gap-2 rounded-full px-3;
+  @apply self-start text-base font-semibold text-fg-subtle;
+  @apply transition-colors duration-fast;
   @apply hover:text-brand-strong;
   @apply focus-ring;
-  @apply active:scale-[0.97];
-  @apply motion-reduce:transition-none motion-reduce:active:scale-100;
+  @apply motion-reduce:transition-none;
 }

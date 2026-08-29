@@ -26,6 +26,7 @@ export const CollaboratorLoginAccess = ({
       color="faintest"
       id={LOGIN_LABEL_ID}
       className={styles.title}
+      mt={3}
     >
       Como entra no painel
     </Heading>
@@ -59,8 +60,8 @@ export const CollaboratorLoginAccess = ({
 
     {emailLockHint && (
       <Box direction="row" align="center" gap={1.5}>
-        <Icon name="lock" size="sm" aria-hidden />
-        <Text as="span" size="xs" color="faint">
+        <Icon name="lock" size="sm" aria-hidden className='mt-3'/>
+        <Text as="span" size="xs" color="faint" mt={3}>
           {emailLockHint}
         </Text>
       </Box>

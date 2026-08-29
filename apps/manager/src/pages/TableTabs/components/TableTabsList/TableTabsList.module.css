@@ -13,7 +13,7 @@
 }
 
 .card {
-  @apply flex min-h-36 flex-col justify-between gap-6 rounded-4 border;
+  @apply flex min-h-36 flex-col justify-between gap-6 rounded-4 border mt-1;
   @apply border-border bg-surface-raised p-5;
   @apply transition-[border-color,background-color,transform] duration-base;
   @apply hover:-translate-y-0.5 hover:border-brand hover:bg-surface-1;

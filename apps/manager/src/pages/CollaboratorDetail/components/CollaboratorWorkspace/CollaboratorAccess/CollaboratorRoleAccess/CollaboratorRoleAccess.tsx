@@ -55,8 +55,8 @@ export const CollaboratorRoleAccess = ({
 
     {roleLockHint && (
       <Box direction="row" align="center" gap={1.5}>
-        <Icon name="lock" size="sm" aria-hidden />
-        <Text as="span" size="xs" color="faint">
+        <Icon name="lock" size="sm" aria-hidden className='mt-3'/>
+        <Text as="span" size="xs" color="faint" mt={3}>
           {roleLockHint}
         </Text>
       </Box>
