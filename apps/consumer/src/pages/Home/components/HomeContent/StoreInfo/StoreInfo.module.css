@@ -1,0 +1,35 @@
+@reference "@nino/ds/globals.css";
+
+.body {
+  @apply flex flex-col gap-6 pb-2;
+}
+
+.label {
+  @apply mb-1 text-2xs font-bold uppercase tracking-[0.12em] text-fg-faint;
+}
+
+.value {
+  @apply text-sm font-bold text-fg-muted;
+}
+
+.sub {
+  @apply text-sm text-fg-muted;
+}
+
+.hours {
+  @apply flex flex-col;
+}
+
+.row {
+  @apply flex items-center justify-between border-b border-black/[0.06] py-2;
+  @apply text-sm text-fg-muted last:border-0;
+}
+
+.rowToday {
+  @apply flex items-center justify-between border-b border-black/[0.06] py-2;
+  @apply text-sm font-bold text-fg-muted last:border-0;
+}
+
+.time {
+  font-variant-numeric: tabular-nums;
+}

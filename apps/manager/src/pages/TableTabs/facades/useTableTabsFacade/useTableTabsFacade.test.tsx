@@ -12,10 +12,20 @@ vi.mock('react-router', () => ({
 vi.mock('@shared/hooks/order/useOrders/useOrders', () => ({
   useOrders: vi.fn(() => ({ orders: [], isPending: false, isError: false })),
 }))
+vi.mock(
+  '@pages/TableTabDetail/hooks/useTableTabItemCancellation/useTableTabItemCancellation',
+  () => ({
+    useTableTabItemCancellation: () => ({
+      cancelItem: vi.fn(),
+      isCancelling: false,
+    }),
+  })
+)
 
 describe(useTableTabsFacade.name, () => {
   it('requests open counter orders for the current tenant', async () => {
-    const { useOrders } = await import('@shared/hooks/order/useOrders/useOrders')
+    const { useOrders } =
+      await import('@shared/hooks/order/useOrders/useOrders')
     renderHook(() => useTableTabsFacade())
 
     expect(useOrders).toHaveBeenNthCalledWith(
@@ -30,7 +40,7 @@ describe(useTableTabsFacade.name, () => {
       2,
       'tenant-1',
       undefined,
-      ['COMPLETED', 'CANCELLED'],
+      ['DELIVERED', 'COMPLETED', 'CANCELLED'],
       'COUNTER',
       undefined
     )

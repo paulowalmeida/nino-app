@@ -11,6 +11,7 @@ import { Text } from '@nino/ds/components/Text'
 import type { Order } from '@shared/types/order/order'
 import { brl } from '@shared/utils/money/money'
 
+import motion from '@styles/motion.module.css'
 import styles from './TableTabsList.module.css'
 
 type TableTabsListProps = {
@@ -32,6 +33,7 @@ export const TableTabsList = ({
   return (
     <Box className={styles.page}>
       <Header
+        className={motion.deal}
         title="Comandas"
         accent="Comandas"
         description="Acompanhe as mesas abertas e feche a conta quando o cliente pedir."
@@ -40,7 +42,7 @@ export const TableTabsList = ({
         direction="row"
         role="tablist"
         aria-label="Estado das comandas"
-        className={styles.tabs}
+        className={`${motion.unroll} ${styles.tabs}`}
       >
         <Chip
           variant="tab"
@@ -64,16 +66,20 @@ export const TableTabsList = ({
         </Alert>
       )}
       {!isPending && !isError && orders.length === 0 && (
-        <EmptyState size="md">
+        <EmptyState size="md" className={motion.settle}>
           {selectedTab === 'open'
             ? 'Nenhuma comanda aberta.'
             : 'Nenhuma comanda fechada.'}
         </EmptyState>
       )}
       {!isPending && !isError && orders.length > 0 && (
-        <Box as="ul" className={styles.list}>
+        <Box
+          key={selectedTab}
+          as="ul"
+          className={`${motion.unroll} ${styles.list}`}
+        >
           {orders.map((order) => (
-            <li key={order.id}>
+            <li key={order.id} className={motion.deal}>
               <Link className={styles.card} to={`../comandas/${order.id}`}>
                 <Box direction="row" justify="between" align="start">
                   <Box direction="column" gap={0.5}>

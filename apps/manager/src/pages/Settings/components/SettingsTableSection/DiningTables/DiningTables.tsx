@@ -20,7 +20,7 @@ type DiningTablesProps = {
   tenantSlug: string
   isPending: boolean
   isAdding: boolean
-  isToggling: boolean
+  togglingId?: string
   onAdd: (data: { quantity: number; prefix?: string }) => void
   onToggle: (data: { id: string; isActive: boolean }) => void
 }
@@ -30,7 +30,7 @@ export const DiningTables = ({
   tenantSlug,
   isPending,
   isAdding,
-  isToggling,
+  togglingId,
   onAdd,
   onToggle,
 }: DiningTablesProps) => {
@@ -111,7 +111,7 @@ export const DiningTables = ({
                 <Button
                   size="sm"
                   variant="ghost"
-                  loading={isToggling}
+                  loading={togglingId === table.id}
                   onClick={() =>
                     onToggle({ id: table.id, isActive: !table.isActive })
                   }

@@ -1,0 +1,56 @@
+@reference "@nino/ds/globals.css";
+
+.skSectionHead {
+  @apply mb-4 mt-8 flex items-baseline gap-3;
+}
+
+.skSectionTitle {
+  composes: nino-skeleton from global;
+  @apply h-5 w-40 rounded bg-black/[0.06];
+}
+
+.skSectionCount {
+  composes: nino-skeleton from global;
+  @apply h-3 w-16 rounded bg-black/[0.06];
+}
+
+.skItems {
+  @apply grid gap-3 sm:grid-cols-2 xl:grid-cols-3;
+}
+
+.skRow {
+  @apply flex items-center gap-4 rounded-3 border border-black/[0.07] p-3;
+}
+
+.skText {
+  @apply min-w-0 flex-1;
+}
+
+.skItemName {
+  composes: nino-skeleton from global;
+  @apply h-4 w-32 rounded bg-black/[0.06];
+}
+
+.skItemDesc {
+  composes: nino-skeleton from global;
+  @apply mt-2 h-3 w-44 rounded bg-black/[0.06];
+}
+
+.skItemPrice {
+  composes: nino-skeleton from global;
+  @apply mt-3 h-4 w-16 rounded bg-black/[0.06];
+}
+
+.skMedia {
+  @apply shrink-0;
+}
+
+.skPhoto {
+  composes: nino-skeleton from global;
+  @apply h-20 w-20 rounded-2 bg-black/[0.06];
+}
+
+.skAdd {
+  composes: nino-skeleton from global;
+  @apply mt-2 h-8 w-20 rounded-full bg-black/[0.06];
+}

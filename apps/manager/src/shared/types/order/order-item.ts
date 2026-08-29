@@ -3,6 +3,10 @@ export type OrderItem = {
   productId: string
   quantity: number
   unitPrice: string
+  status?: 'ACTIVE' | 'CANCELLED'
+  cancelReason?: string | null
+  cancelledAt?: string | null
+  cancelledBy?: string | null
   product: {
     id: string
     name: string

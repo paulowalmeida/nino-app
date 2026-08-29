@@ -1,4 +1,7 @@
+import { Box } from '@nino/ds/components/Box'
 import styles from '@pages/order-tracking/OrderTracking.module.css'
+import headerStyles from '@pages/order-tracking/components/OrderTrackingHeader/OrderTrackingHeader.module.css'
+import stepsStyles from '@pages/order-tracking/components/OrderTrackingSteps/OrderTrackingSteps.module.css'
 
 /**
  * Espelha a forma real: cabeçalho com a volta e o título, o cartão vivo do
@@ -6,24 +9,24 @@ import styles from '@pages/order-tracking/OrderTracking.module.css'
  * substituí-la, pra não haver salto quando o pedido chega.
  */
 export const OrderTrackingSkeleton = () => (
-  <div
+  <Box
     className={styles.page}
     aria-busy="true"
     aria-label="Carregando o pedido"
   >
-    <header className={styles.header}>
-      <div className={styles.skBack} />
-      <div className={styles.skTitle} />
-    </header>
-    <div className={styles.skStage} />
-    <div className={styles.skJourney}>
+    <Box as="header" className={headerStyles.header}>
+      <Box className={headerStyles.skBack} />
+      <Box className={headerStyles.skTitle} />
+    </Box>
+    <Box className={styles.skStage} />
+    <Box className={stepsStyles.skJourney}>
       {Array.from({ length: 5 }).map((_, i) => (
-        <div key={i} className={styles.skRow}>
-          <div className={styles.skDot} />
-          <div className={styles.skLabel} />
-          <div className={styles.skTime} />
-        </div>
+        <Box key={i} className={stepsStyles.skRow}>
+          <Box className={stepsStyles.skDot} />
+          <Box className={stepsStyles.skLabel} />
+          <Box className={stepsStyles.skTime} />
+        </Box>
       ))}
-    </div>
-  </div>
+    </Box>
+  </Box>
 )

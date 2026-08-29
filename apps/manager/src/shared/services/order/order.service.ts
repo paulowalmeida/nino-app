@@ -1,7 +1,5 @@
 import { api } from '@shared/services/http/http.service'
-import type {
-  CreateOrderRequest,
-} from '@shared/types/order/create-order-request'
+import type { CreateOrderRequest } from '@shared/types/order/create-order-request'
 import type { Order } from '@shared/types/order/order'
 import type { OrderAvailability } from '@shared/types/order/order-availability'
 import type { OrderChannel } from '@shared/types/order/order-channel'
@@ -12,9 +10,7 @@ import type { PaymentStatus } from '@shared/types/order/payment-status'
 import type { ReportRangeParams } from '@shared/types/order/report-range-params'
 import type { SalesReport } from '@shared/types/order/sales-report'
 import type { SalesSeries } from '@shared/types/order/sales-series'
-import type {
-  SalesSeriesBreakdown,
-} from '@shared/types/order/sales-series-breakdown'
+import type { SalesSeriesBreakdown } from '@shared/types/order/sales-series-breakdown'
 import type { SeriesGranularity } from '@shared/types/order/series-granularity'
 import type { TimingReport } from '@shared/types/order/timing-report'
 import type { UpdateOrderStatusRequest } from '@shared/types/order/update-order-status-request'
@@ -132,5 +128,16 @@ export const OrderService = {
     api.patch<{ paymentStatus: string }, Order>(
       `tenants/${tenantId}/orders/${orderId}/payment`,
       { paymentStatus: 'PAID' }
+    ),
+
+  cancelOrderItem: (
+    tenantId: string,
+    orderId: string,
+    itemId: string,
+    cancelReason: string
+  ): Promise<Order> =>
+    api.patch<{ cancelReason: string }, Order>(
+      `tenants/${tenantId}/orders/${orderId}/items/${itemId}/cancel`,
+      { cancelReason }
     ),
 }

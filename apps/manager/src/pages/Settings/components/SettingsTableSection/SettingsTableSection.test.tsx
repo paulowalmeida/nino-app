@@ -9,7 +9,7 @@ vi.mock('@pages/Settings/facades/useSettingsFacade/useSettingsFacade', () => ({
       query: { tables: [], isPending: false },
       mutations: {
         add: { isPending: false, mutate: vi.fn() },
-        toggle: { isPending: false, mutate: vi.fn() },
+        toggle: { isPending: false, variables: undefined, mutate: vi.fn() },
       },
     },
   }),

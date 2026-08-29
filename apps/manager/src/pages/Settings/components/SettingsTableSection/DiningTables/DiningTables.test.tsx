@@ -15,7 +15,7 @@ describe(DiningTables.name, () => {
         tenantSlug="burgão-do-nino"
         isPending={false}
         isAdding={false}
-        isToggling={false}
+        togglingId={undefined}
         onAdd={onAdd}
         onToggle={() => undefined}
       />

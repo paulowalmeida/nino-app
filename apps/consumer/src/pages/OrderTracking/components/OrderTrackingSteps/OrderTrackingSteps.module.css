@@ -1,0 +1,40 @@
+@reference "@nino/ds/globals.css";
+
+.eyebrow {
+  @apply mt-8 pb-1 text-2xs font-bold uppercase tracking-[0.14em];
+  @apply text-fg-faint;
+}
+
+/* ----- skeleton ----- */
+.skJourney {
+  @apply mt-14 flex flex-col;
+}
+
+.skRow {
+  @apply relative grid items-center gap-x-3.5 py-2;
+  grid-template-columns: 2rem minmax(0, 1fr) auto;
+}
+
+.skRow:not(:last-child)::before {
+  content: '';
+  @apply absolute w-0.5 rounded-full;
+  left: 15px;
+  top: calc(50% + 18px);
+  bottom: calc(-50% + 18px);
+  background: var(--color-surface-6);
+}
+
+.skDot {
+  composes: nino-skeleton from global;
+  @apply relative z-content h-8 w-8 shrink-0 rounded-full bg-black/[0.06];
+}
+
+.skLabel {
+  composes: nino-skeleton from global;
+  @apply h-3.5 w-40 rounded bg-black/[0.06];
+}
+
+.skTime {
+  composes: nino-skeleton from global;
+  @apply h-3 w-10 justify-self-end rounded bg-black/[0.06];
+}

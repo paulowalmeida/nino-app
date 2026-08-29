@@ -95,7 +95,7 @@ export const SettingsTableSection = () => {
         tenantSlug={tenant?.tenantSlug ?? ''}
         isPending={isPending}
         isAdding={add.isPending}
-        isToggling={toggle.isPending}
+        togglingId={toggle.isPending ? toggle.variables?.id : undefined}
         onAdd={add.mutate}
         onToggle={toggle.mutate}
       />

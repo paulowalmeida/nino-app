@@ -1,0 +1,12 @@
+@reference "@nino/ds/globals.css";
+
+/* sem caixa: uma segunda superfície clara logo abaixo do cartão competiria
+   com ele, e isto aqui é uma nota de rodapé do cartão, não outro bloco */
+.reassurance {
+  @apply mt-3.5 flex items-center gap-2.5 px-1 text-xs leading-snug;
+  @apply text-fg-muted;
+}
+
+.whatsappDot {
+  @apply h-2 w-2 shrink-0 rounded-full bg-accent-whatsapp;
+}

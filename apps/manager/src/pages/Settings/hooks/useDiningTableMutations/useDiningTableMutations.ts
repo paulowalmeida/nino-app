@@ -2,6 +2,8 @@ import { useMutation, useQueryClient } from '@tanstack/react-query'
 
 import { DiningTableService } from '@pages/Settings/services/dining-table/dining-table.service'
 import { queryKeys } from '@shared/lib/query-keys'
+import type { Page } from '@shared/types/http/page'
+import type { DiningTable } from '@shared/types/settings/dining-table'
 
 export const useDiningTableMutations = (tenantId: string | null) => {
   const queryClient = useQueryClient()
@@ -25,7 +27,18 @@ export const useDiningTableMutations = (tenantId: string | null) => {
     meta: { errorTitle: 'A mesa não foi atualizada' },
     mutationFn: ({ id, isActive }: { id: string; isActive: boolean }) =>
       DiningTableService.update(tenantId as string, id, { isActive }),
-    onSuccess: invalidate,
+    onSuccess: (updated) => {
+      queryClient.setQueryData<Page<DiningTable>>(queryKey, (current) =>
+        current
+          ? {
+              ...current,
+              data: current.data.map((table) =>
+                table.id === updated.id ? updated : table
+              ),
+            }
+          : current
+      )
+    },
   })
 
   const drop = useMutation({

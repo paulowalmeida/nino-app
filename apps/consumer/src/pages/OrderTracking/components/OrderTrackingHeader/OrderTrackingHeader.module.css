@@ -1,0 +1,51 @@
+@reference "@nino/ds/globals.css";
+
+/*
+ * O mesmo header colapsável da vitrine: gruda no topo e só ganha borda e
+ * sombra quando há conteúdo passando por baixo. Parado no alto da página ele
+ * não desenha linha nenhuma — a régua só existe quando há o que separar.
+ */
+.header {
+  @apply sticky top-0 z-dock -mx-5 flex items-center gap-3;
+  @apply bg-surface-raised/95 px-5;
+  @apply py-4 backdrop-blur;
+  border-bottom: 1px solid
+    color-mix(in srgb, black calc(var(--p, 0) * 8%), transparent);
+  box-shadow: 0 6px 20px -18px
+    color-mix(
+      in srgb,
+      var(--color-warm-950) calc(var(--p, 0) * 90%),
+      transparent
+    );
+}
+
+.back {
+  @apply flex h-11 w-11 shrink-0 items-center justify-center rounded-full;
+  @apply border border-black/[0.08] bg-surface-page text-lg;
+  @apply text-fg-muted;
+  @apply transition-colors hover:border-accent-peach;
+  @apply hover:text-brand-strong;
+}
+
+.title {
+  @apply font-display text-xl font-extrabold leading-tight text-fg-muted;
+}
+
+/* o código sai do rodapé e vira legenda do título: é a identidade do pedido,
+   não uma nota de fim de página, onde ninguém rolava para ler */
+.code {
+  @apply text-xs uppercase tracking-wide text-fg-faint;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ----- skeleton ----- */
+/* usa o mesmo `.header` do real; back e título viram placeholder */
+.skBack {
+  composes: nino-skeleton from global;
+  @apply h-11 w-11 shrink-0 rounded-full bg-black/[0.06];
+}
+
+.skTitle {
+  composes: nino-skeleton from global;
+  @apply h-6 w-32 rounded-2 bg-black/[0.06];
+}

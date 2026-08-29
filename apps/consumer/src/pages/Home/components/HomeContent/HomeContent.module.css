@@ -1,0 +1,26 @@
+@reference "@nino/ds/globals.css";
+
+.page {
+  @apply relative flex min-h-dvh w-full flex-col bg-surface-raised pb-24;
+  @apply lg:pb-12;
+}
+
+.pageWithCart {
+  @apply pb-40 lg:pb-28;
+}
+
+.main {
+  @apply flex-1;
+}
+
+.shell {
+  @apply mx-auto w-full max-w-page px-4 sm:px-6;
+}
+
+.menu {
+  @apply mt-4;
+}
+
+.empty {
+  @apply mt-10;
+}

@@ -1,7 +1,7 @@
 import { createBrowserRouter, Navigate, type RouteObject } from 'react-router'
 
 const homeLazy = () =>
-  import('@pages/home/Home').then(({ Home }) => ({ Component: Home }))
+  import('@pages/Home/Home').then(({ Home }) => ({ Component: Home }))
 
 const checkoutLazy = () =>
   import('@pages/checkout/Checkout').then(({ Checkout }) => ({
@@ -22,33 +22,33 @@ const accountLazy = () =>
   }))
 
 const profileLazy = () =>
-  import('@pages/account/components/Profile/Profile').then(({ Profile }) => ({
-    Component: Profile,
-  }))
+  import('@pages/account/components/AccountProfile/AccountProfile').then(
+    ({ AccountProfile }) => ({ Component: AccountProfile })
+  )
 
 const addressesLazy = () =>
-  import('@pages/account/components/Addresses/Addresses').then(
-    ({ Addresses }) => ({ Component: Addresses })
+  import('@pages/account/components/AccountAddresses/AccountAddresses').then(
+    ({ AccountAddresses }) => ({ Component: AccountAddresses })
   )
 
 const ordersLazy = () =>
-  import('@pages/account/components/Orders/Orders').then(({ Orders }) => ({
-    Component: Orders,
-  }))
+  import('@pages/account/components/AccountOrders/AccountOrders').then(
+    ({ AccountOrders }) => ({ Component: AccountOrders })
+  )
 
 const paymentLazy = () =>
-  import('@pages/account/components/Payment/Payment').then(({ Payment }) => ({
-    Component: Payment,
-  }))
+  import('@pages/account/components/AccountPayment/AccountPayment').then(
+    ({ AccountPayment }) => ({ Component: AccountPayment })
+  )
 
 const chatsLazy = () =>
-  import('@pages/account/components/Chats/Chats').then(({ Chats }) => ({
-    Component: Chats,
-  }))
+  import('@pages/account/components/AccountChats/AccountChats').then(
+    ({ AccountChats }) => ({ Component: AccountChats })
+  )
 
 const invoicesLazy = () =>
-  import('@pages/account/components/Invoices/Invoices').then(
-    ({ Invoices }) => ({ Component: Invoices })
+  import('@pages/account/components/AccountInvoices/AccountInvoices').then(
+    ({ AccountInvoices }) => ({ Component: AccountInvoices })
   )
 
 const accountChildren: RouteObject[] = [

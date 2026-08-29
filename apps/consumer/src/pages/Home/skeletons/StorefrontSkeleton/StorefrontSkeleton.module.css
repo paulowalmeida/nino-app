@@ -1,0 +1,61 @@
+@reference "@nino/ds/globals.css";
+
+.page {
+  @apply relative flex min-h-dvh w-full flex-col bg-surface-raised pb-24;
+  @apply lg:pb-12;
+}
+
+.shell {
+  @apply mx-auto w-full max-w-page px-4 sm:px-6;
+}
+
+.skBanner {
+  composes: nino-skeleton from global;
+  @apply h-24 w-full bg-black/[0.06] sm:h-32 lg:h-40;
+}
+
+.skLogo {
+  composes: nino-skeleton from global;
+  @apply relative z-content -mt-12 h-20 w-20 shrink-0 rounded-2xl;
+  @apply bg-black/[0.06] sm:-mt-14 sm:h-24 sm:w-24;
+}
+
+.skLines {
+  @apply flex-1 pt-2;
+}
+
+.skName {
+  composes: nino-skeleton from global;
+  @apply h-6 w-52 rounded-2 bg-black/[0.06];
+}
+
+.skMeta {
+  composes: nino-skeleton from global;
+  @apply mt-2 h-3.5 w-36 rounded bg-black/[0.06];
+}
+
+.skSearch {
+  composes: nino-skeleton from global;
+  @apply mt-5 h-14 w-full rounded-3 bg-black/[0.06];
+}
+
+.skTrack {
+  @apply mt-6 flex gap-2 border-y border-black/[0.07] py-3;
+}
+
+.skChip {
+  composes: nino-skeleton from global;
+  @apply h-8 rounded-full bg-black/[0.06];
+}
+
+.skChipS {
+  @apply w-20;
+}
+
+.skChipM {
+  @apply w-28;
+}
+
+.skChipL {
+  @apply w-24;
+}

@@ -1,0 +1,64 @@
+@reference "@nino/ds/globals.css";
+
+.drawer {
+  @apply max-h-[90dvh] rounded-t-3xl bg-surface-page;
+}
+
+.media {
+  @apply -mx-6 -mt-4 mb-4;
+}
+
+.modalTitle {
+  @apply font-display text-lg font-bold text-fg-muted;
+}
+
+.modalMedia {
+  @apply mb-4 overflow-hidden rounded-3;
+}
+
+.photoWrap {
+  @apply w-full;
+}
+
+.photo {
+  @apply h-56 w-full object-cover;
+}
+
+.photoFallback {
+  @apply flex h-56 w-full items-center justify-center;
+  background: radial-gradient(
+    120% 100% at 30% 15%,
+    var(--color-surface-2),
+    var(--color-surface-5)
+  );
+}
+
+.fallbackGlyph {
+  @apply text-7xl opacity-faint;
+}
+
+.description {
+  @apply text-base leading-relaxed text-fg-default;
+}
+
+.footer {
+  @apply sticky bottom-0 -mx-6 -mb-4 mt-4 flex items-center gap-3;
+  @apply border-t border-black/[0.08] bg-surface-page px-6 py-4;
+}
+
+.modalFooter {
+  @apply flex w-full items-center gap-3;
+}
+
+.stepper {
+  @apply flex shrink-0 items-center gap-2;
+}
+
+.stepperCount {
+  @apply w-4 text-center text-sm font-bold text-fg-muted;
+  font-variant-numeric: tabular-nums;
+}
+
+.confirm {
+  @apply flex-1;
+}

@@ -1,0 +1,11 @@
+@reference "@nino/ds/globals.css";
+
+/* ----- não encontrado ----- */
+.notFound {
+  @apply mx-auto flex min-h-dvh max-w-md flex-col items-center justify-center;
+  @apply gap-3 px-6 text-center;
+}
+
+.backLink {
+  @apply mt-2 font-bold text-brand-strong;
+}
