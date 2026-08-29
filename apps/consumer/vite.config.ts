@@ -51,6 +51,10 @@ export default defineConfig({
   resolve: {
     alias: {
       '@ds': resolve(__dirname, '../../packages/ds/src'),
+      '@pages/account': resolve(__dirname, 'src/pages/Account'),
+      '@pages/checkout': resolve(__dirname, 'src/pages/Checkout'),
+      '@pages/order-tracking': resolve(__dirname, 'src/pages/OrderTracking'),
+      '@pages/sign-in': resolve(__dirname, 'src/pages/SignIn'),
       '@adapters': resolve(__dirname, 'src/adapters'),
       '@assets': resolve(__dirname, 'src/assets'),
       '@components': resolve(__dirname, 'src/components'),
