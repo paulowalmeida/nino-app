@@ -1,6 +1,4 @@
-import type {
-  SaveAddressRequest,
-} from '@custom_types/address/save-address-request'
+import type { SaveAddressRequest } from '@custom_types/address/save-address-request'
 
 export const useSaveAddressMock: { data: SaveAddressRequest } = {
   data: {

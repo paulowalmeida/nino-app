@@ -11,7 +11,7 @@ import { Box } from '@nino/ds/components/Box'
 import { Text } from '@nino/ds/components/Text'
 import { useHomeFacade } from '@pages/Home/facades/useHomeFacade/useHomeFacade'
 import { useHomeSlug } from '@pages/Home/hooks/useHomeSlug/useHomeSlug'
-import { AnimatedNumber } from '@elements/AnimatedNumber/AnimatedNumber'
+import { AnimatedNumber } from '@shared/components/AnimatedNumber/AnimatedNumber'
 import { brl } from '@utils/money'
 
 import styles from './CartDock.module.css'

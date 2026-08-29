@@ -2,9 +2,7 @@ import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { describe, expect, it, vi } from 'vitest'
 
-import {
-  useSignInFacade,
-} from '@pages/sign-in/facades/useSignInFacade/useSignInFacade'
+import { useSignInFacade } from '@pages/sign-in/facades/useSignInFacade/useSignInFacade'
 
 import { SignInIdentifyForm } from './SignInIdentifyForm'
 import { signInIdentifyFormMock } from './SignInIdentifyForm.mock'
@@ -31,9 +29,7 @@ describe('SignInIdentifyForm', () => {
 
     render(<SignInIdentifyForm />)
 
-    expect(
-      screen.getByRole('button', { name: 'Enviar código' })
-    ).toBeDisabled()
+    expect(screen.getByRole('button', { name: 'Enviar código' })).toBeDisabled()
   })
 
   it('requests the code once the phone is complete', async () => {
@@ -46,9 +42,7 @@ describe('SignInIdentifyForm', () => {
     render(<SignInIdentifyForm />)
 
     // Act
-    await userEvent.click(
-      screen.getByRole('button', { name: 'Enviar código' })
-    )
+    await userEvent.click(screen.getByRole('button', { name: 'Enviar código' }))
 
     // Assert
     expect(requestCode).toHaveBeenCalledWith({ phone: '+5511987654321' })

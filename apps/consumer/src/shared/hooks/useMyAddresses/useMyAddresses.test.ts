@@ -2,12 +2,12 @@ import { renderHook } from '@testing-library/react'
 import { describe, expect, it, vi } from 'vitest'
 
 import { queryKeys } from '@constants/query-keys'
-import { listMyAddresses } from '@services/address.service'
+import { addressService } from '@pages/Account/services/address/address.service'
 
 import { useMyAddresses } from './useMyAddresses'
 import { useMyAddressesMock } from './useMyAddresses.mock'
 
-vi.mock('@services/address.service')
+vi.mock('@pages/Account/services/address/address.service')
 
 let queryOptions:
   | {
@@ -37,7 +37,7 @@ describe('useMyAddresses', () => {
 
     // Assert
     expect(queryOptions?.queryKey).toEqual(queryKeys.myAddresses.all)
-    expect(queryOptions?.queryFn).toBe(listMyAddresses)
+    expect(queryOptions?.queryFn).toBe(addressService.listMine)
   })
 
   it('stays disabled while there is no customer session', () => {

@@ -1,0 +1,60 @@
+@reference "@nino/ds/globals.css";
+
+.page {
+  @apply mx-auto flex min-h-dvh w-full max-w-xl flex-col bg-surface-page;
+  @apply lg:my-8 lg:min-h-[calc(100dvh-4rem)] lg:rounded-[1.75rem];
+  @apply lg:border lg:border-black/[0.08] lg:shadow-xl;
+}
+
+.skBack,
+.skTitle,
+.skLabel,
+.skField,
+.skReceipt,
+.skChoice,
+.skChoiceCompact,
+.skTotal,
+.skSubmit {
+  composes: nino-skeleton from global;
+  @apply bg-black/[0.06];
+}
+
+.skBack {
+  @apply h-11 w-11 shrink-0 rounded-full;
+}
+
+.skTitle {
+  @apply h-5 w-40 rounded-2;
+}
+
+.skLabel {
+  @apply h-3 w-24 rounded;
+}
+
+.skField {
+  @apply h-10 w-full rounded-2;
+}
+
+.skReceipt {
+  @apply h-14 w-full rounded-2xl;
+}
+
+.skChoices {
+  @apply grid grid-cols-2 gap-2;
+}
+
+.skChoice {
+  @apply h-16 rounded-2xl;
+}
+
+.skChoiceCompact {
+  @apply h-11 rounded-2xl;
+}
+
+.skTotal {
+  @apply h-7 w-32 rounded;
+}
+
+.skSubmit {
+  @apply h-13 w-full rounded-full;
+}

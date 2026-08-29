@@ -2,7 +2,7 @@ import { useQuery } from '@tanstack/react-query'
 
 import { queryKeys } from '@constants/query-keys'
 import type { Address } from '@custom_types/address/address'
-import { listMyAddresses } from '@services/address.service'
+import { addressService } from '@pages/Account/services/address/address.service'
 
 /**
  * O principal sobe para o topo: é o endereço que o checkout vai propor, e
@@ -16,7 +16,7 @@ const primaryFirst = (addresses: Address[]): Address[] =>
 export const useMyAddresses = (enabled: boolean) =>
   useQuery<Address[]>({
     queryKey: queryKeys.myAddresses.all,
-    queryFn: listMyAddresses,
+    queryFn: addressService.listMine,
     select: primaryFirst,
     enabled,
   })

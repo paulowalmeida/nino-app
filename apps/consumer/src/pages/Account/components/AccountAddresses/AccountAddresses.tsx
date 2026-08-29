@@ -4,9 +4,7 @@ import { EmptyState } from '@nino/ds/components/EmptyState'
 import { Eyebrow } from '@nino/ds/components/Eyebrow'
 import { Heading } from '@nino/ds/components/Heading'
 import { Text } from '@nino/ds/components/Text'
-import {
-  useAccountFacade,
-} from '@pages/account/facades/useAccountFacade/useAccountFacade'
+import { useAccountFacade } from '@pages/account/facades/useAccountFacade/useAccountFacade'
 import { riseDelay } from '@utils/rise-delay'
 
 import { AddressCard } from './AddressCard/AddressCard'
@@ -33,8 +31,8 @@ export const AccountAddresses = () => {
         Para onde a loja entrega
       </Heading>
       <Text className={styles.note}>
-        O principal já vem preenchido no checkout. Os outros ficam a um toque
-        na hora de pedir.
+        O principal já vem preenchido no checkout. Os outros ficam a um toque na
+        hora de pedir.
       </Text>
 
       {isAddressesPending && (
@@ -48,8 +46,8 @@ export const AccountAddresses = () => {
         addresses?.length === 0 &&
         editingAddressId !== NEW && (
           <EmptyState size="md" className={styles.empty}>
-            Você ainda não salvou nenhum endereço. O primeiro que salvar vira
-            o principal.
+            Você ainda não salvou nenhum endereço. O primeiro que salvar vira o
+            principal.
           </EmptyState>
         )}
 

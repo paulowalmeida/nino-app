@@ -2,15 +2,12 @@ import { renderHook } from '@testing-library/react'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 
 import { queryKeys } from '@constants/query-keys'
-import {
-  createMyAddress,
-  updateMyAddress,
-} from '@services/address.service'
+import { addressService } from '@pages/Account/services/address/address.service'
 
 import { useSaveAddress } from './useSaveAddress'
 import { useSaveAddressMock } from './useSaveAddress.mock'
 
-vi.mock('@services/address.service')
+vi.mock('@pages/Account/services/address/address.service')
 
 const invalidateQueries = vi.fn()
 
@@ -46,8 +43,10 @@ describe('useSaveAddress', () => {
     mutationFn?.({ data: useSaveAddressMock.data })
 
     // Assert
-    expect(createMyAddress).toHaveBeenCalledWith(useSaveAddressMock.data)
-    expect(updateMyAddress).not.toHaveBeenCalled()
+    expect(addressService.createMine).toHaveBeenCalledWith(
+      useSaveAddressMock.data
+    )
+    expect(addressService.updateMine).not.toHaveBeenCalled()
   })
 
   it('updates the existing address when an id is given', () => {
@@ -58,11 +57,11 @@ describe('useSaveAddress', () => {
     mutationFn?.({ id: 'address-1', data: useSaveAddressMock.data })
 
     // Assert
-    expect(updateMyAddress).toHaveBeenCalledWith(
+    expect(addressService.updateMine).toHaveBeenCalledWith(
       'address-1',
       useSaveAddressMock.data
     )
-    expect(createMyAddress).not.toHaveBeenCalled()
+    expect(addressService.createMine).not.toHaveBeenCalled()
   })
 
   it('invalidates the addresses cache on success', () => {

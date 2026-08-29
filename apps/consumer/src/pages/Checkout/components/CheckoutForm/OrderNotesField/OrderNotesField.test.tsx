@@ -10,10 +10,14 @@ vi.mock('@pages/checkout/facades/useCheckoutFacade/useCheckoutFacade')
 
 describe('OrderNotesField', () => {
   it('offers an optional note for the store', () => {
-    vi.mocked(useCheckoutFacade).mockReturnValue({ register: () => ({}) } as never)
+    vi.mocked(useCheckoutFacade).mockReturnValue({
+      register: () => ({}),
+    } as never)
 
     render(<OrderNotesField />)
 
-    expect(screen.getByText(orderNotesFieldMock.triggerLabel)).toBeInTheDocument()
+    expect(
+      screen.getByText(orderNotesFieldMock.triggerLabel)
+    ).toBeInTheDocument()
   })
 })

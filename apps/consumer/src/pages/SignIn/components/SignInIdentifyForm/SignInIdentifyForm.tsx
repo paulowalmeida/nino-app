@@ -9,12 +9,8 @@ import { Text } from '@nino/ds/components/Text'
 import { isCompletePhone } from '@utils/phone'
 import { riseDelay } from '@utils/rise-delay'
 import { SIGN_IN_CHANNELS } from '@pages/sign-in/constants/sign-in.constants'
-import {
-  useSignInFacade,
-} from '@pages/sign-in/facades/useSignInFacade/useSignInFacade'
-import {
-  resolveOtpCredentials,
-} from '@pages/sign-in/utils/resolveOtpCredentials/resolveOtpCredentials'
+import { useSignInFacade } from '@pages/sign-in/facades/useSignInFacade/useSignInFacade'
+import { resolveOtpCredentials } from '@pages/sign-in/utils/resolveOtpCredentials/resolveOtpCredentials'
 
 import styles from './SignInIdentifyForm.module.css'
 import motion from '@styles/motion.module.css'

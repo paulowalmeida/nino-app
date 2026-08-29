@@ -61,8 +61,7 @@ const EXACT_B64 = [
   'YWwsYW51cyxzZXhvLHhhbmEsbmF6aSxuaWdhLG5pZ2VyLGNvY2ssc2hpdCxkaWNr',
 ].join('')
 
-const decode = (value: string): string[] =>
-  atob(value).split(',')
+const decode = (value: string): string[] => atob(value).split(',')
 
 const SUBSTRING_TERMS = decode(SUBSTRING_B64).map(normalizeForProfanity)
 

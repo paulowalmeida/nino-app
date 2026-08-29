@@ -1,7 +1,11 @@
 import { create } from 'zustand'
 
 import type { HomeInteractionState } from '@pages/Home/types/HomeInteractionState.type'
-import { setHomeCartOpen, setHomeInfoOpen, setHomeSelectedItem } from './operations/visibility/visibility'
+import {
+  setHomeCartOpen,
+  setHomeInfoOpen,
+  setHomeSelectedItem,
+} from './operations/visibility/visibility'
 import { setHomeSearch } from './operations/search/search'
 
 export const useHomeInteractionStore = create<HomeInteractionState>((set) => ({

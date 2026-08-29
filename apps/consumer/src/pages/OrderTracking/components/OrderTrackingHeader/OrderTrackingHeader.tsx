@@ -17,11 +17,7 @@ export const OrderTrackingHeader = ({
   orderNumber,
 }: OrderTrackingHeaderProps) => (
   <Box as="header" className={styles.header}>
-    <Link
-      to={backHref}
-      className={styles.back}
-      aria-label="Voltar para a loja"
-    >
+    <Link to={backHref} className={styles.back} aria-label="Voltar para a loja">
       <Icon name="arrow-left" />
     </Link>
     <Box>

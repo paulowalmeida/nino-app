@@ -7,7 +7,7 @@ import { Input } from '@nino/ds/components/Input'
 import { MaskedInput } from '@nino/ds/components/MaskedInput'
 import { Text } from '@nino/ds/components/Text'
 import { maskZipCode } from '@nino/ds/masks'
-import { DisclosureTrigger } from '@elements/DisclosureTrigger/DisclosureTrigger'
+import { DisclosureTrigger } from '../DisclosureTrigger/DisclosureTrigger'
 import { useCheckoutFacade } from '@pages/checkout/facades/useCheckoutFacade/useCheckoutFacade'
 import { brl } from '@utils/money'
 

@@ -1,8 +1,8 @@
 import { useState } from 'react'
 
 import type { MenuItem } from '@custom_types/menu/menu-item'
-import { AnimatedNumber } from '@elements/AnimatedNumber/AnimatedNumber'
-import { useIsDesktop } from '@hooks/useIsDesktop'
+import { AnimatedNumber } from '@shared/components/AnimatedNumber/AnimatedNumber'
+import { useIsDesktop } from '@pages/Home/hooks/useIsDesktop/useIsDesktop'
 import { Box } from '@nino/ds/components/Box'
 import { Button } from '@nino/ds/components/Button'
 import { Carousel } from '@nino/ds/components/Carousel'

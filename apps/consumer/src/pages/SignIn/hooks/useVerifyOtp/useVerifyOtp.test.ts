@@ -3,13 +3,13 @@ import { describe, expect, it, vi } from 'vitest'
 
 import { queryKeys } from '@constants/query-keys'
 import type { Customer } from '@custom_types/customer/customer'
-import { verifyOtp } from '@services/customer-auth.service'
+import { customerAuthService } from '@shared/services/customer-auth/customer-auth.service'
 import { rememberSession } from '@utils/session-hint'
 
 import { useVerifyOtp } from './useVerifyOtp'
 import { useVerifyOtpMock } from './useVerifyOtp.mock'
 
-vi.mock('@services/customer-auth.service')
+vi.mock('@shared/services/customer-auth/customer-auth.service')
 vi.mock('@utils/session-hint')
 
 const setQueryData = vi.fn()
@@ -43,7 +43,7 @@ describe('useVerifyOtp', () => {
       code: useVerifyOtpMock.code,
     })
     // Assert
-    expect(verifyOtp).toHaveBeenCalledWith(
+    expect(customerAuthService.verifyOtp).toHaveBeenCalledWith(
       useVerifyOtpMock.credentials,
       useVerifyOtpMock.code
     )
@@ -57,9 +57,6 @@ describe('useVerifyOtp', () => {
     onSuccess?.(customer)
     // Assert
     expect(rememberSession).toHaveBeenCalled()
-    expect(setQueryData).toHaveBeenCalledWith(
-      queryKeys.session.all,
-      customer
-    )
+    expect(setQueryData).toHaveBeenCalledWith(queryKeys.session.all, customer)
   })
 })

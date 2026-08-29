@@ -9,7 +9,9 @@ import { Checkout } from './Checkout'
 import { checkoutMock } from './Checkout.mock'
 
 vi.mock('react-router', () => ({
-  Link: ({ children, to }: { children: ReactNode; to: string }) => <a href={to}>{children}</a>,
+  Link: ({ children, to }: { children: ReactNode; to: string }) => (
+    <a href={to}>{children}</a>
+  ),
   useNavigate: () => vi.fn(),
   useParams: () => ({ slug: checkoutMock.pathSlug }),
 }))

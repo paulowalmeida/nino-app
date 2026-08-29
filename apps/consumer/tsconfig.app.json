@@ -27,11 +27,17 @@
       "@assets/*": ["src/assets/*"],
       "@components/*": ["src/components/*"],
       "@compositions/*": ["src/compositions/*"],
-      "@constants/*": ["src/constants/*"],
-      "@custom_types/*": ["src/types/*"],
+      "@constants/*": ["src/shared/constants/*"],
+      "@custom_types/account/*": ["src/pages/Account/types/account/*"],
+      "@custom_types/checkout/*": ["src/pages/Checkout/types/checkout/*"],
+      "@custom_types/delivery-zone/*": [
+        "src/pages/Checkout/types/delivery-zone/*"
+      ],
+      "@custom_types/menu/*": ["src/pages/Home/types/menu/*"],
+      "@custom_types/*": ["src/shared/types/*"],
       "@styles/*": ["src/styles/*"],
       "@elements/*": ["src/elements/*"],
-      "@hooks/*": ["src/hooks/*"],
+      "@hooks/*": ["src/shared/hooks/*"],
       "@layouts/*": ["src/layouts/*"],
       "@lib/*": ["src/lib/*"],
       "@pages/*": ["src/pages/*"],
@@ -45,11 +51,13 @@
       "@pages/sign-in/*": ["src/pages/SignIn/*"],
       "@providers/*": ["src/providers/*"],
       "@router/*": ["src/router/*"],
-      "@services/*": ["src/services/*"],
       "@shared/*": ["src/shared/*"],
-      "@skeletons/*": ["src/skeletons/*"],
-      "@states/*": ["src/states/*"],
-      "@utils/*": ["src/utils/*"]
+      "@utils/category-icon": ["src/pages/Home/utils/category-icon"],
+      "@utils/last-order": ["src/shared/lib/last-order"],
+      "@utils/menu-image": ["src/pages/Home/utils/menu-image"],
+      "@utils/resolve-slug": ["src/shared/lib/resolve-slug"],
+      "@utils/session-hint": ["src/shared/lib/session-hint"],
+      "@utils/*": ["src/shared/utils/*"]
     }
   },
   "include": ["src"]

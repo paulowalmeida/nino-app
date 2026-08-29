@@ -6,12 +6,8 @@ import { OTPInput } from '@nino/ds/components/OTPInput'
 import { Text } from '@nino/ds/components/Text'
 import { riseDelay } from '@utils/rise-delay'
 import { OTP_CODE_LENGTH } from '@pages/sign-in/constants/sign-in.constants'
-import {
-  useSignInFacade,
-} from '@pages/sign-in/facades/useSignInFacade/useSignInFacade'
-import {
-  resolveOtpCredentials,
-} from '@pages/sign-in/utils/resolveOtpCredentials/resolveOtpCredentials'
+import { useSignInFacade } from '@pages/sign-in/facades/useSignInFacade/useSignInFacade'
+import { resolveOtpCredentials } from '@pages/sign-in/utils/resolveOtpCredentials/resolveOtpCredentials'
 
 import styles from './SignInCodeForm.module.css'
 import motion from '@styles/motion.module.css'

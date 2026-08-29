@@ -2,9 +2,7 @@ import { fireEvent, render, screen, waitFor } from '@testing-library/react'
 import { describe, expect, it, vi } from 'vitest'
 
 import { lookupZipCode } from '@nino/lib/services/zip-code.service'
-import {
-  useAccountFacade,
-} from '@pages/account/facades/useAccountFacade/useAccountFacade'
+import { useAccountFacade } from '@pages/account/facades/useAccountFacade/useAccountFacade'
 
 import { AddressForm } from './AddressForm'
 import { addressFormMock } from './AddressForm.mock'

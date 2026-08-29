@@ -2,7 +2,7 @@ import { renderHook } from '@testing-library/react'
 import { describe, expect, it, vi } from 'vitest'
 import { useParams } from 'react-router'
 
-import { useStore } from '@hooks/useStore'
+import { useStore } from '@hooks/useStore/useStore'
 import { resolveSlug } from '@utils/resolve-slug'
 
 import { useStoreTint } from './useStoreTint'
@@ -12,7 +12,7 @@ vi.mock('react-router', async (importOriginal) => {
   const actual = await importOriginal<typeof import('react-router')>()
   return { ...actual, useParams: vi.fn() }
 })
-vi.mock('@hooks/useStore')
+vi.mock('@hooks/useStore/useStore')
 vi.mock('@utils/resolve-slug')
 
 describe('useStoreTint', () => {

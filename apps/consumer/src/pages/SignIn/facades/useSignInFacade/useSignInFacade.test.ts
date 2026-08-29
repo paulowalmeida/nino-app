@@ -1,12 +1,8 @@
 import { renderHook } from '@testing-library/react'
 import { describe, expect, it, vi } from 'vitest'
 
-import {
-  useSignInBrand,
-} from '@pages/sign-in/hooks/useSignInBrand/useSignInBrand'
-import {
-  useSignInMutations,
-} from '@pages/sign-in/hooks/useSignInMutations/useSignInMutations'
+import { useSignInBrand } from '@pages/sign-in/hooks/useSignInBrand/useSignInBrand'
+import { useSignInMutations } from '@pages/sign-in/hooks/useSignInMutations/useSignInMutations'
 import { useSignInStore } from '@pages/sign-in/states/sign-in/sign-in.store'
 
 import { useSignInFacade } from './useSignInFacade'

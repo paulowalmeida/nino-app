@@ -3,9 +3,9 @@ import { Link } from 'react-router'
 import { Box } from '@nino/ds/components/Box'
 import { Text } from '@nino/ds/components/Text'
 
-import { OrderRail } from '@elements/OrderRail/OrderRail'
-import { useGuestOrderStatus } from '@hooks/useGuestOrderStatus'
-import { useMinutesUntil } from '@hooks/useMinutesUntil'
+import { OrderRail } from '@shared/components/OrderRail/OrderRail'
+import { useGuestOrderStatus } from '@hooks/useGuestOrderStatus/useGuestOrderStatus'
+import { useMinutesUntil } from '@hooks/useMinutesUntil/useMinutesUntil'
 import { clearLastOrder, readLastOrder } from '@utils/last-order'
 import { STATUS_LABEL } from '@constants/order.constants'
 import { isTerminal, stageIcon } from '@utils/order-journey'
@@ -52,8 +52,12 @@ export const ActiveOrderBanner = ({ slug }: ActiveOrderBannerProps) => {
 
       {minutes !== null && minutes > 0 && (
         <Text className={styles.eta}>
-          <Text as="span" className={styles.etaValue}>{minutes}</Text>
-          <Text as="span" className={styles.etaUnit}>min</Text>
+          <Text as="span" className={styles.etaValue}>
+            {minutes}
+          </Text>
+          <Text as="span" className={styles.etaUnit}>
+            min
+          </Text>
         </Text>
       )}
 

@@ -8,7 +8,8 @@ import { channelFieldsMock } from './ChannelFields.mock'
 
 vi.mock('@pages/checkout/facades/useCheckoutFacade/useCheckoutFacade')
 vi.mock('react-hook-form', () => ({
-  Controller: ({ render }: { render: (args: unknown) => unknown }) => render({ field: { value: 'PICKUP', onChange: vi.fn() } }),
+  Controller: ({ render }: { render: (args: unknown) => unknown }) =>
+    render({ field: { value: 'PICKUP', onChange: vi.fn() } }),
 }))
 
 describe('ChannelFields', () => {
@@ -22,6 +23,8 @@ describe('ChannelFields', () => {
     render(<ChannelFields />)
 
     expect(screen.getByText(channelFieldsMock.pickupLabel)).toBeInTheDocument()
-    expect(screen.queryByText(channelFieldsMock.deliveryNote)).not.toBeInTheDocument()
+    expect(
+      screen.queryByText(channelFieldsMock.deliveryNote)
+    ).not.toBeInTheDocument()
   })
 })

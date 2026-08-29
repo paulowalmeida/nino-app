@@ -7,6 +7,8 @@ import { storefrontSkeletonMock } from './StorefrontSkeleton.mock'
 describe('StorefrontSkeleton', () => {
   it('announces that the store is loading', () => {
     render(<StorefrontSkeleton />)
-    expect(screen.getByLabelText(storefrontSkeletonMock.label)).toBeInTheDocument()
+    expect(
+      screen.getByLabelText(storefrontSkeletonMock.label)
+    ).toBeInTheDocument()
   })
 })

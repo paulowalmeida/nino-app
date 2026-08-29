@@ -3,12 +3,12 @@ import { describe, expect, it, vi } from 'vitest'
 
 import { queryKeys } from '@constants/query-keys'
 import type { Customer } from '@custom_types/customer/customer'
-import { updateMyProfile } from '@services/customer-auth.service'
+import { customerAuthService } from '@shared/services/customer-auth/customer-auth.service'
 
 import { useCompleteProfile } from './useCompleteProfile'
 import { useCompleteProfileMock } from './useCompleteProfile.mock'
 
-vi.mock('@services/customer-auth.service')
+vi.mock('@shared/services/customer-auth/customer-auth.service')
 
 const setQueryData = vi.fn()
 
@@ -40,7 +40,9 @@ describe('useCompleteProfile', () => {
     mutationFn?.(useCompleteProfileMock.request)
 
     // Assert
-    expect(updateMyProfile).toHaveBeenCalledWith(useCompleteProfileMock.request)
+    expect(customerAuthService.updateMyProfile).toHaveBeenCalledWith(
+      useCompleteProfileMock.request
+    )
   })
 
   it('caches the updated customer as the current session on success', () => {

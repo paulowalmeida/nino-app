@@ -1,17 +1,13 @@
 import { Navigate, Outlet, useLocation, useParams } from 'react-router'
 
 import { Box } from '@nino/ds/components/Box'
-import {
-  useAccountFacade,
-} from '@pages/account/facades/useAccountFacade/useAccountFacade'
-import { useScrollProgress } from '@hooks/useScrollProgress'
-import {
-  AccountSkeleton,
-} from '@pages/account/skeletons/AccountSkeleton/AccountSkeleton'
+import { useAccountFacade } from '@pages/account/facades/useAccountFacade/useAccountFacade'
+import { useScrollProgress } from '@hooks/useScrollProgress/useScrollProgress'
+import { AccountSkeleton } from '@pages/account/skeletons/AccountSkeleton/AccountSkeleton'
 import { riseDelay } from '@utils/rise-delay'
 
-import { PoweredBy } from '@elements/PoweredBy/PoweredBy'
-import { TabBar } from '@compositions/TabBar/TabBar'
+import { PoweredBy } from '@shared/components/PoweredBy/PoweredBy'
+import { TabBar } from '@shared/components/TabBar/TabBar/TabBar'
 
 import { AccountHeader } from './components/AccountHeader/AccountHeader'
 import { AccountNav } from './components/AccountNav/AccountNav'

@@ -1,19 +1,13 @@
 import { Box } from '@nino/ds/components/Box'
 
-import headerStyles from
-  '@pages/account/components/AccountHeader/AccountHeader.module.css'
-import navStyles from
-  '@pages/account/components/AccountNav/AccountNav.module.css'
+import headerStyles from '@pages/account/components/AccountHeader/AccountHeader.module.css'
+import navStyles from '@pages/account/components/AccountNav/AccountNav.module.css'
 import styles from '@pages/account/Account.module.css'
 
 const NAV_ITEMS = Array.from({ length: 4 })
 
 export const AccountSkeleton = () => (
-  <Box
-    className={styles.page}
-    aria-busy="true"
-    aria-label="Carregando a conta"
-  >
+  <Box className={styles.page} aria-busy="true" aria-label="Carregando a conta">
     <Box className={styles.shell}>
       <Box as="header" className={headerStyles.header}>
         <Box className={headerStyles.skBack} />

@@ -2,6 +2,7 @@ import type { ReactNode } from 'react'
 import { Link } from 'react-router'
 
 import { EmptyState } from '@nino/ds/components/EmptyState'
+import { Image } from '@nino/ds/components/Image'
 
 import styles from './OrderNotFound.module.css'
 
@@ -14,7 +15,7 @@ export const OrderNotFound = ({ backHref, children }: OrderNotFoundProps) => (
   <EmptyState
     size="md"
     className={styles.notFound}
-    illustration={<img src="/mascot-consumer-sad.svg" alt="" />}
+    illustration={<Image src="/mascot-consumer-sad.svg" alt="" />}
     title="Pedido não encontrado"
     action={
       <Link to={backHref} className={styles.backLink}>

@@ -9,19 +9,14 @@ import { Input } from '@nino/ds/components/Input'
 import { Label } from '@nino/ds/components/Label'
 import { Text } from '@nino/ds/components/Text'
 import { toast } from '@nino/ds/components/Toast'
-import {
-  useAccountFacade,
-} from '@pages/account/facades/useAccountFacade/useAccountFacade'
+import { useAccountFacade } from '@pages/account/facades/useAccountFacade/useAccountFacade'
 import { formatPhone } from '@utils/phone'
-import {
-  hasProfanity,
-} from '@pages/account/utils/profanity/profanity'
+import { hasProfanity } from '@pages/account/utils/profanity/profanity'
 
 import styles from './AccountProfile.module.css'
 
 export const AccountProfile = () => {
-  const { customer, completeProfile, isCompletingProfile } =
-    useAccountFacade()
+  const { customer, completeProfile, isCompletingProfile } = useAccountFacade()
 
   // CONSTRAINT: conta aberta por telefone guarda o número no campo `name`
   // até a pessoa dizer como se chama — o formulário nasce vazio, não com o
@@ -40,8 +35,7 @@ export const AccountProfile = () => {
   const nameClean = !hasProfanity(trimmedName)
   const changed =
     trimmedName !== savedName || trimmedEmail !== (customer?.email ?? '')
-  const ready =
-    trimmedName.length >= 2 && nameClean && emailValid && changed
+  const ready = trimmedName.length >= 2 && nameClean && emailValid && changed
 
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault()
@@ -63,8 +57,8 @@ export const AccountProfile = () => {
         Como a loja te encontra
       </Heading>
       <Text className={styles.note}>
-        O nome vai na comanda, para a cozinha e o entregador saberem de quem é
-        o pedido.
+        O nome vai na comanda, para a cozinha e o entregador saberem de quem é o
+        pedido.
       </Text>
 
       <Box className={styles.card}>
@@ -91,8 +85,8 @@ export const AccountProfile = () => {
             {formatPhone(customer?.phone ?? '')}
           </Text>
           <Text className={styles.hint}>
-            É por ele que você entra na conta. Para usar outro número, entre
-            com ele — a loja abre uma conta nova.
+            É por ele que você entra na conta. Para usar outro número, entre com
+            ele — a loja abre uma conta nova.
           </Text>
         </Box>
 

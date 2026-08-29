@@ -1,7 +1,7 @@
 import { Box } from '@nino/ds/components/Box'
 import { Button } from '@nino/ds/components/Button'
 import { Text } from '@nino/ds/components/Text'
-import { AnimatedNumber } from '@elements/AnimatedNumber/AnimatedNumber'
+import { AnimatedNumber } from '@shared/components/AnimatedNumber/AnimatedNumber'
 import { useCheckoutFacade } from '@pages/checkout/facades/useCheckoutFacade/useCheckoutFacade'
 import { brl } from '@utils/money'
 

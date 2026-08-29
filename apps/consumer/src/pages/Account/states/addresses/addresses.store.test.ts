@@ -1,8 +1,6 @@
 import { beforeEach, describe, expect, it } from 'vitest'
 
-import {
-  useAddressesStore,
-} from '@pages/account/states/addresses/addresses.store'
+import { useAddressesStore } from '@pages/account/states/addresses/addresses.store'
 
 describe('useAddressesStore', () => {
   beforeEach(() => {

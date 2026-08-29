@@ -8,7 +8,8 @@ import { deliveryAddressFieldsMock } from './DeliveryAddressFields.mock'
 
 vi.mock('@pages/checkout/facades/useCheckoutFacade/useCheckoutFacade')
 vi.mock('react-hook-form', () => ({
-  Controller: ({ render }: { render: (args: unknown) => unknown }) => render({ field: { value: '', onChange: vi.fn() } }),
+  Controller: ({ render }: { render: (args: unknown) => unknown }) =>
+    render({ field: { value: '', onChange: vi.fn() } }),
 }))
 
 describe('DeliveryAddressFields', () => {
@@ -17,7 +18,10 @@ describe('DeliveryAddressFields', () => {
       control: {},
       register: () => ({}),
       errors: {},
-      zone: { name: deliveryAddressFieldsMock.zoneName, fee: deliveryAddressFieldsMock.zoneFee },
+      zone: {
+        name: deliveryAddressFieldsMock.zoneName,
+        fee: deliveryAddressFieldsMock.zoneFee,
+      },
       isQuoting: false,
     } as never)
 

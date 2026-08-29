@@ -1,24 +1,14 @@
 import { renderHook } from '@testing-library/react'
 import { describe, expect, it, vi } from 'vitest'
 
-import {
-  useCompleteProfile,
-} from '@pages/account/hooks/useCompleteProfile/useCompleteProfile'
-import {
-  useCustomerSession,
-} from '@shared/hooks/useCustomerSession/useCustomerSession'
-import {
-  useDeleteAddress,
-} from '@pages/account/hooks/useDeleteAddress/useDeleteAddress'
+import { useCompleteProfile } from '@pages/account/hooks/useCompleteProfile/useCompleteProfile'
+import { useCustomerSession } from '@shared/hooks/useCustomerSession/useCustomerSession'
+import { useDeleteAddress } from '@pages/account/hooks/useDeleteAddress/useDeleteAddress'
 import { useLogout } from '@shared/hooks/useLogout/useLogout'
 import { useMyAddresses } from '@shared/hooks/useMyAddresses/useMyAddresses'
 import { useMyOrders } from '@shared/hooks/useMyOrders/useMyOrders'
-import {
-  useSaveAddress,
-} from '@pages/account/hooks/useSaveAddress/useSaveAddress'
-import {
-  useAddressesStore,
-} from '@pages/account/states/addresses/addresses.store'
+import { useSaveAddress } from '@pages/account/hooks/useSaveAddress/useSaveAddress'
+import { useAddressesStore } from '@pages/account/states/addresses/addresses.store'
 import { useStoreTint } from '@shared/hooks/useStoreTint/useStoreTint'
 
 import { useAccountFacade } from './useAccountFacade'

@@ -36,7 +36,12 @@ export const StorefrontSkeleton = () => (
 
       <Box className={styles.skTrack}>
         {chipWidths.map((width, index) => (
-          <Text as="span" key={index} className={`${styles.skChip} ${width}`} aria-hidden="true" />
+          <Text
+            as="span"
+            key={index}
+            className={`${styles.skChip} ${width}`}
+            aria-hidden="true"
+          />
         ))}
       </Box>
 

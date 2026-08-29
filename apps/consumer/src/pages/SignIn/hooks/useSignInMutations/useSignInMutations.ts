@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router'
 
-import type { OtpCredentials } from '@services/customer-auth.service'
+import type { OtpCredentials } from '@shared/types/customer/otp-credentials'
 import { useRequestOtp } from '@pages/sign-in/hooks/useRequestOtp/useRequestOtp'
 import { useVerifyOtp } from '@pages/sign-in/hooks/useVerifyOtp/useVerifyOtp'
 

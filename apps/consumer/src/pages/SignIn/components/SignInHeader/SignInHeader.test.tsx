@@ -2,9 +2,7 @@ import { render, screen } from '@testing-library/react'
 import { describe, expect, it, vi } from 'vitest'
 import { MemoryRouter } from 'react-router'
 
-import {
-  useSignInFacade,
-} from '@pages/sign-in/facades/useSignInFacade/useSignInFacade'
+import { useSignInFacade } from '@pages/sign-in/facades/useSignInFacade/useSignInFacade'
 
 import { SignInHeader } from './SignInHeader'
 import { signInHeaderMock } from './SignInHeader.mock'

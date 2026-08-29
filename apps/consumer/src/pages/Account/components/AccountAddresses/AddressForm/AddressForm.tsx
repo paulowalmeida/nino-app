@@ -12,12 +12,8 @@ import { maskZipCode } from '@nino/ds/masks'
 import { lookupZipCode, onlyDigits } from '@nino/lib/services/zip-code.service'
 import type { Address } from '@custom_types/address/address'
 import type { SaveAddressRequest } from '@custom_types/address/save-address-request'
-import {
-  addressSaveRequest,
-} from '@pages/account/adapters/addressSaveRequest.adapter/addressSaveRequest.adapter'
-import {
-  useAccountFacade,
-} from '@pages/account/facades/useAccountFacade/useAccountFacade'
+import { addressSaveRequest } from '@pages/account/adapters/addressSaveRequest.adapter/addressSaveRequest.adapter'
+import { useAccountFacade } from '@pages/account/facades/useAccountFacade/useAccountFacade'
 
 import styles from './AddressForm.module.css'
 
@@ -39,7 +35,11 @@ type AddressFormProps = {
   onDone: () => void
 }
 
-export const AddressForm = ({ address, onCancel, onDone }: AddressFormProps) => {
+export const AddressForm = ({
+  address,
+  onCancel,
+  onDone,
+}: AddressFormProps) => {
   const { saveAddress, isSavingAddress, hasSaveAddressError } =
     useAccountFacade()
 

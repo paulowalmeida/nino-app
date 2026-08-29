@@ -6,9 +6,7 @@ import { Button } from '@nino/ds/components/Button'
 import { Icon } from '@nino/ds/components/Icon'
 import { Text } from '@nino/ds/components/Text'
 import { ACCOUNT_SECTIONS } from '@shared/constants/account-sections'
-import {
-  useAccountFacade,
-} from '@pages/account/facades/useAccountFacade/useAccountFacade'
+import { useAccountFacade } from '@pages/account/facades/useAccountFacade/useAccountFacade'
 import { riseDelay } from '@utils/rise-delay'
 
 import styles from './AccountNav.module.css'

@@ -1,7 +1,5 @@
-import {
-  useCustomerSession,
-} from '@shared/hooks/useCustomerSession/useCustomerSession'
-import { useGuestOrderStatus } from '@hooks/useGuestOrderStatus'
+import { useCustomerSession } from '@shared/hooks/useCustomerSession/useCustomerSession'
+import { useGuestOrderStatus } from '@hooks/useGuestOrderStatus/useGuestOrderStatus'
 import { isTerminal } from '@utils/order-journey'
 
 /**

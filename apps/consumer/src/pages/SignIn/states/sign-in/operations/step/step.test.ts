@@ -3,6 +3,7 @@ import { describe, expect, it, vi } from 'vitest'
 import type { SetSignInState } from '@pages/sign-in/types/SetSignInState.type'
 
 import { goToCode, goToIdentify } from './step'
+import { stepMock } from './step.mock'
 
 describe('step operations', () => {
   it('advances to the code step', () => {
@@ -11,7 +12,7 @@ describe('step operations', () => {
     // Act
     goToCode(set)
     // Assert
-    expect(set).toHaveBeenCalledWith({ step: 'code' })
+    expect(set).toHaveBeenCalledWith({ step: stepMock.codeStep })
   })
 
   it('returns to the identify step and clears the code draft', () => {
@@ -20,6 +21,6 @@ describe('step operations', () => {
     // Act
     goToIdentify(set)
     // Assert
-    expect(set).toHaveBeenCalledWith({ step: 'identify', code: '' })
+    expect(set).toHaveBeenCalledWith({ step: stepMock.identifyStep, code: '' })
   })
 })

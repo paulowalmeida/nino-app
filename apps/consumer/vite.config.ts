@@ -59,21 +59,36 @@ export default defineConfig({
       '@assets': resolve(__dirname, 'src/assets'),
       '@components': resolve(__dirname, 'src/components'),
       '@compositions': resolve(__dirname, 'src/compositions'),
-      '@constants': resolve(__dirname, 'src/constants'),
-      '@custom_types': resolve(__dirname, 'src/types'),
+      '@constants': resolve(__dirname, 'src/shared/constants'),
+      '@custom_types/account': resolve(
+        __dirname,
+        'src/pages/Account/types/account'
+      ),
+      '@custom_types/checkout': resolve(
+        __dirname,
+        'src/pages/Checkout/types/checkout'
+      ),
+      '@custom_types/delivery-zone': resolve(
+        __dirname,
+        'src/pages/Checkout/types/delivery-zone'
+      ),
+      '@custom_types/menu': resolve(__dirname, 'src/pages/Home/types/menu'),
+      '@custom_types': resolve(__dirname, 'src/shared/types'),
       '@styles': resolve(__dirname, 'src/styles'),
       '@elements': resolve(__dirname, 'src/elements'),
-      '@hooks': resolve(__dirname, 'src/hooks'),
+      '@hooks': resolve(__dirname, 'src/shared/hooks'),
       '@layouts': resolve(__dirname, 'src/layouts'),
       '@lib': resolve(__dirname, 'src/lib'),
       '@pages': resolve(__dirname, 'src/pages'),
       '@providers': resolve(__dirname, 'src/providers'),
       '@router': resolve(__dirname, 'src/router'),
-      '@services': resolve(__dirname, 'src/services'),
       '@shared': resolve(__dirname, 'src/shared'),
-      '@skeletons': resolve(__dirname, 'src/skeletons'),
-      '@states': resolve(__dirname, 'src/states'),
-      '@utils': resolve(__dirname, 'src/utils'),
+      '@utils/category-icon': resolve(__dirname, 'src/pages/Home/utils/category-icon'),
+      '@utils/last-order': resolve(__dirname, 'src/shared/lib/last-order'),
+      '@utils/menu-image': resolve(__dirname, 'src/pages/Home/utils/menu-image'),
+      '@utils/resolve-slug': resolve(__dirname, 'src/shared/lib/resolve-slug'),
+      '@utils/session-hint': resolve(__dirname, 'src/shared/lib/session-hint'),
+      '@utils': resolve(__dirname, 'src/shared/utils'),
     },
   },
 })

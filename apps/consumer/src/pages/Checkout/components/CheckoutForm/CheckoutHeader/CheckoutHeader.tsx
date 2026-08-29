@@ -1,6 +1,7 @@
 import { Link } from 'react-router'
 
 import { Box } from '@nino/ds/components/Box'
+import { Heading } from '@nino/ds/components/Heading'
 import { Icon } from '@nino/ds/components/Icon'
 import { Text } from '@nino/ds/components/Text'
 
@@ -20,7 +21,9 @@ export const CheckoutHeader = ({
       <Icon name="arrow-left" />
     </Link>
     <Box className={styles.headText}>
-      <h1 className={styles.title}>Finalizar pedido</h1>
+      <Heading level={1} size="md" className={styles.title}>
+        Finalizar pedido
+      </Heading>
       <Text className={styles.storeLine}>{storeName}</Text>
     </Box>
   </Box>

@@ -2,7 +2,7 @@ import { useQuery } from '@tanstack/react-query'
 
 import { queryKeys } from '@constants/query-keys'
 import type { Customer } from '@custom_types/customer/customer'
-import { getMe } from '@services/customer-auth.service'
+import { customerAuthService } from '@shared/services/customer-auth/customer-auth.service'
 
 /**
  * Quem está usando a vitrine. Sem sessão a API responde 401 e o hook devolve
@@ -12,7 +12,7 @@ import { getMe } from '@services/customer-auth.service'
 export const useCustomerSession = () => {
   const query = useQuery<Customer | null>({
     queryKey: queryKeys.session.all,
-    queryFn: () => getMe().catch(() => null),
+    queryFn: () => customerAuthService.getMe().catch(() => null),
     staleTime: 5 * 60_000,
     retry: false,
   })

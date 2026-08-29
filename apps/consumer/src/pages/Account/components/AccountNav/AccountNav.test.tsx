@@ -2,9 +2,7 @@ import { fireEvent, render, screen } from '@testing-library/react'
 import { describe, expect, it, vi } from 'vitest'
 import { MemoryRouter } from 'react-router'
 
-import {
-  useAccountFacade,
-} from '@pages/account/facades/useAccountFacade/useAccountFacade'
+import { useAccountFacade } from '@pages/account/facades/useAccountFacade/useAccountFacade'
 
 import { AccountNav } from './AccountNav'
 import { accountNavMock } from './AccountNav.mock'

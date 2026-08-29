@@ -1,4 +1,4 @@
-import { OrderJourney } from '@compositions/OrderJourney/OrderJourney'
+import { OrderJourney } from './OrderJourney/OrderJourney'
 import { Text } from '@nino/ds/components/Text'
 import type { GuestOrderStatus } from '@custom_types/order/guest-order-status'
 import { riseDelay } from '@utils/rise-delay'

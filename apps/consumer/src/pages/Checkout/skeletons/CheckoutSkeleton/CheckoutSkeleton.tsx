@@ -1,9 +1,10 @@
+import { Box } from '@nino/ds/components/Box'
 import headerStyles from '@pages/checkout/components/CheckoutForm/CheckoutHeader/CheckoutHeader.module.css'
 import addressStyles from '@pages/checkout/components/CheckoutForm/DeliveryAddressFields/DeliveryAddressFields.module.css'
 import blockStyles from '@pages/checkout/components/CheckoutForm/ChannelFields/ChannelFields.module.css'
 import footerStyles from '@pages/checkout/components/CheckoutForm/CheckoutFooter/CheckoutFooter.module.css'
 import formStyles from '@pages/checkout/components/CheckoutForm/CheckoutForm.module.css'
-import styles from '@pages/checkout/Checkout.module.css'
+import styles from './CheckoutSkeleton.module.css'
 
 /**
  * Espelha a forma real: comanda dobrada no topo, os blocos de campos e a
@@ -66,4 +67,3 @@ export const CheckoutSkeleton = () => (
     </Box>
   </Box>
 )
-import { Box } from '@nino/ds/components/Box'

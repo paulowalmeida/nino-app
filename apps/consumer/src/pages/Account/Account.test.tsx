@@ -2,17 +2,17 @@ import { render, screen } from '@testing-library/react'
 import { describe, expect, it, vi } from 'vitest'
 import { MemoryRouter, Route, Routes } from 'react-router'
 
-import {
-  useAccountFacade,
-} from '@pages/account/facades/useAccountFacade/useAccountFacade'
-import { useScrollProgress } from '@hooks/useScrollProgress'
+import { useAccountFacade } from '@pages/account/facades/useAccountFacade/useAccountFacade'
+import { useScrollProgress } from '@hooks/useScrollProgress/useScrollProgress'
 
 import { Account } from './Account'
 import { accountMock } from './Account.mock'
 
 vi.mock('@pages/account/facades/useAccountFacade/useAccountFacade')
-vi.mock('@hooks/useScrollProgress')
-vi.mock('@compositions/TabBar/TabBar', () => ({ TabBar: () => null }))
+vi.mock('@hooks/useScrollProgress/useScrollProgress')
+vi.mock('@shared/components/TabBar/TabBar/TabBar', () => ({
+  TabBar: () => null,
+}))
 
 const facadeWith = (overrides: Record<string, unknown>) =>
   vi.mocked(useAccountFacade).mockReturnValue({

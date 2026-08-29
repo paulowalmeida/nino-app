@@ -1,5 +1,7 @@
 import { Button } from '@nino/ds/components/Button'
 import { Box } from '@nino/ds/components/Box'
+import { Heading } from '@nino/ds/components/Heading'
+import { Image } from '@nino/ds/components/Image'
 import { Text } from '@nino/ds/components/Text'
 import type { GuestOrderCreatedResponse } from '@custom_types/order/guest-order-created-response'
 
@@ -21,7 +23,7 @@ export const OrderConfirmed = ({
 
   return (
     <Box className={styles.confirmed}>
-      <img
+      <Image
         src={
           isPickup
             ? '/mascot-consumer-pickup.svg'
@@ -30,7 +32,9 @@ export const OrderConfirmed = ({
         alt=""
         className={styles.mascot}
       />
-      <h1 className={styles.title}>Pedido enviado!</h1>
+      <Heading level={1} size="2xl" className={styles.title}>
+        Pedido enviado!
+      </Heading>
       <Text className={styles.text}>
         {isPickup
           ? 'A loja já recebeu e vai preparar. Guarde o código para retirar no balcão.'

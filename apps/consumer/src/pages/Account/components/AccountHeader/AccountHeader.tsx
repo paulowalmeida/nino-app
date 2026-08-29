@@ -4,9 +4,7 @@ import { Box } from '@nino/ds/components/Box'
 import { Heading } from '@nino/ds/components/Heading'
 import { Icon } from '@nino/ds/components/Icon'
 import { Text } from '@nino/ds/components/Text'
-import {
-  useAccountFacade,
-} from '@pages/account/facades/useAccountFacade/useAccountFacade'
+import { useAccountFacade } from '@pages/account/facades/useAccountFacade/useAccountFacade'
 import { firstName } from '@shared/utils/customer-name/customer-name'
 import { greeting } from '@shared/utils/greeting/greeting'
 

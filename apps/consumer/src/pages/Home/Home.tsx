@@ -1,7 +1,7 @@
 import { useParams } from 'react-router'
 
 import { Box } from '@nino/ds/components/Box'
-import { StoreLookupEmptyState } from '@elements/StoreLookupEmptyState/StoreLookupEmptyState'
+import { StoreLookupEmptyState } from '@pages/Home/components/StoreLookupEmptyState/StoreLookupEmptyState'
 import { HomeContent } from '@pages/Home/components/HomeContent/HomeContent'
 import { useHomeFacade } from '@pages/Home/facades/useHomeFacade/useHomeFacade'
 import { StorefrontSkeleton } from '@pages/Home/skeletons/StorefrontSkeleton/StorefrontSkeleton'

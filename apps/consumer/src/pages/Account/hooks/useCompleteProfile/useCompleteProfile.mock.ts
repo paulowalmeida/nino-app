@@ -1,7 +1,5 @@
 import type { Customer } from '@custom_types/customer/customer'
-import type {
-  UpdateMyProfileRequest,
-} from '@custom_types/customer/update-my-profile-request'
+import type { UpdateMyProfileRequest } from '@custom_types/customer/update-my-profile-request'
 
 export const useCompleteProfileMock: {
   request: UpdateMyProfileRequest

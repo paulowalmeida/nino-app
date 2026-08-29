@@ -6,7 +6,7 @@ import { ListRow } from '@nino/ds/components/ListRow'
 import { useHomeFacade } from '@pages/Home/facades/useHomeFacade/useHomeFacade'
 import { useHomeSlug } from '@pages/Home/hooks/useHomeSlug/useHomeSlug'
 import { storeWeekSchedule } from '@pages/Home/adapters/storeWeekSchedule.adapter/storeWeekSchedule.adapter'
-import { useIsDesktop } from '@hooks/useIsDesktop'
+import { useIsDesktop } from '@pages/Home/hooks/useIsDesktop/useIsDesktop'
 import { displayName } from '@utils/store-info'
 
 import styles from './StoreInfo.module.css'

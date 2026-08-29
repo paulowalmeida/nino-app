@@ -17,9 +17,13 @@ describe('OrderConfirmed', () => {
       />
     )
 
-    expect(screen.getByRole('heading', { name: 'Pedido enviado!' })).toBeInTheDocument()
+    expect(
+      screen.getByRole('heading', { name: 'Pedido enviado!' })
+    ).toBeInTheDocument()
     expect(screen.getByText('#42')).toBeInTheDocument()
-    await userEvent.click(screen.getByRole('button', { name: 'Acompanhar pedido' }))
+    await userEvent.click(
+      screen.getByRole('button', { name: 'Acompanhar pedido' })
+    )
     expect(onTrack).toHaveBeenCalledOnce()
   })
 })

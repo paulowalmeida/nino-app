@@ -8,7 +8,8 @@ import { paymentMethodFieldsMock } from './PaymentMethodFields.mock'
 
 vi.mock('@pages/checkout/facades/useCheckoutFacade/useCheckoutFacade')
 vi.mock('react-hook-form', () => ({
-  Controller: ({ render }: { render: (args: unknown) => unknown }) => render({ field: { value: 'CASH', onChange: vi.fn() } }),
+  Controller: ({ render }: { render: (args: unknown) => unknown }) =>
+    render({ field: { value: 'CASH', onChange: vi.fn() } }),
 }))
 
 describe('PaymentMethodFields', () => {
@@ -22,7 +23,11 @@ describe('PaymentMethodFields', () => {
 
     render(<PaymentMethodFields />)
 
-    expect(screen.getByText(paymentMethodFieldsMock.cashLabel)).toBeInTheDocument()
-    expect(screen.getByLabelText(paymentMethodFieldsMock.changeLabel)).toBeInTheDocument()
+    expect(
+      screen.getByText(paymentMethodFieldsMock.cashLabel)
+    ).toBeInTheDocument()
+    expect(
+      screen.getByLabelText(paymentMethodFieldsMock.changeLabel)
+    ).toBeInTheDocument()
   })
 })

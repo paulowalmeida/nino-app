@@ -6,7 +6,9 @@ import { menuSectionsMock } from './useMenuSections.mock'
 
 describe('useMenuSections', () => {
   it('marks the result as a search when a query is provided', () => {
-    const { result } = renderHook(() => useMenuSections([], menuSectionsMock.search))
+    const { result } = renderHook(() =>
+      useMenuSections([], menuSectionsMock.search)
+    )
     expect(result.current.isSearching).toBe(true)
     expect(result.current.visibleSections).toEqual([])
   })

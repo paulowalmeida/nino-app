@@ -1,6 +1,6 @@
 import { useParams } from 'react-router'
 
-import { useStore } from '@hooks/useStore'
+import { useStore } from '@hooks/useStore/useStore'
 import { resolveSlug } from '@utils/resolve-slug'
 
 export const useSignInBrand = () => {

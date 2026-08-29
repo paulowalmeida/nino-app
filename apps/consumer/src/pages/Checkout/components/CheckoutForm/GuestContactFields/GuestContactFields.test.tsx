@@ -17,7 +17,11 @@ describe('GuestContactFields', () => {
 
     render(<GuestContactFields />)
 
-    expect(screen.getByLabelText(guestContactFieldsMock.nameLabel)).toBeInTheDocument()
-    expect(screen.getByLabelText(guestContactFieldsMock.phoneLabel)).toBeInTheDocument()
+    expect(
+      screen.getByLabelText(guestContactFieldsMock.nameLabel)
+    ).toBeInTheDocument()
+    expect(
+      screen.getByLabelText(guestContactFieldsMock.phoneLabel)
+    ).toBeInTheDocument()
   })
 })

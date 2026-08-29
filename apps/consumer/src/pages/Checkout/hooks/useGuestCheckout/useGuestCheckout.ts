@@ -6,10 +6,10 @@ import type { CheckoutFormValues } from '@custom_types/checkout/checkout-form-va
 import type { PublicDeliveryZone } from '@custom_types/delivery-zone/public-delivery-zone'
 import type { PaymentMethod } from '@custom_types/order/payment-method'
 import type { Store } from '@custom_types/store/store'
-import { guestOrderRequest } from '@adapters/guestOrderRequest.adapter'
-import { useCheckoutTotals } from '@hooks/useCheckoutTotals'
-import { useCreateGuestOrder } from '@hooks/useCreateGuestOrder'
-import { useDeliveryQuote } from '@hooks/useDeliveryQuote'
+import { guestOrderRequest } from '@pages/checkout/adapters/guestOrderRequest.adapter/guestOrderRequest.adapter'
+import { useCheckoutTotals } from '@pages/checkout/hooks/useCheckoutTotals/useCheckoutTotals'
+import { useCreateGuestOrder } from '@pages/checkout/hooks/useCreateGuestOrder/useCreateGuestOrder'
+import { useDeliveryQuote } from '@pages/checkout/hooks/useDeliveryQuote/useDeliveryQuote'
 import { writeLastOrder } from '@utils/last-order'
 
 type UseGuestCheckoutParams = {

@@ -2,16 +2,14 @@ import { renderHook } from '@testing-library/react'
 import { describe, expect, it, vi } from 'vitest'
 
 import { queryKeys } from '@constants/query-keys'
-import { getMe } from '@services/customer-auth.service'
+import { customerAuthService } from '@shared/services/customer-auth/customer-auth.service'
 
 import { useCustomerSession } from './useCustomerSession'
 import { useCustomerSessionMock } from './useCustomerSession.mock'
 
-vi.mock('@services/customer-auth.service')
+vi.mock('@shared/services/customer-auth/customer-auth.service')
 
-let queryOptions:
-  | { queryKey: unknown; queryFn: () => unknown }
-  | undefined
+let queryOptions: { queryKey: unknown; queryFn: () => unknown } | undefined
 
 vi.mock('@tanstack/react-query', async (importOriginal) => {
   const actual = await importOriginal<typeof import('@tanstack/react-query')>()
@@ -36,7 +34,7 @@ describe('useCustomerSession', () => {
 
   it('resolves to null when the session request fails', async () => {
     // Arrange
-    vi.mocked(getMe).mockRejectedValue(new Error('401'))
+    vi.mocked(customerAuthService.getMe).mockRejectedValue(new Error('401'))
     renderHook(() => useCustomerSession())
 
     // Act
@@ -48,7 +46,9 @@ describe('useCustomerSession', () => {
 
   it('resolves to the customer when the session request succeeds', async () => {
     // Arrange
-    vi.mocked(getMe).mockResolvedValue(useCustomerSessionMock.customer)
+    vi.mocked(customerAuthService.getMe).mockResolvedValue(
+      useCustomerSessionMock.customer
+    )
     renderHook(() => useCustomerSession())
 
     // Act

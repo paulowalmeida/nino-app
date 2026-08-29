@@ -2,12 +2,12 @@ import { renderHook } from '@testing-library/react'
 import { describe, expect, it, vi } from 'vitest'
 
 import { queryKeys } from '@constants/query-keys'
-import { deleteMyAddress } from '@services/address.service'
+import { addressService } from '@pages/Account/services/address/address.service'
 
 import { useDeleteAddress } from './useDeleteAddress'
 import { useDeleteAddressMock } from './useDeleteAddress.mock'
 
-vi.mock('@services/address.service')
+vi.mock('@pages/Account/services/address/address.service')
 
 const invalidateQueries = vi.fn()
 
@@ -39,7 +39,7 @@ describe('useDeleteAddress', () => {
     mutationFn?.(useDeleteAddressMock.addressId)
 
     // Assert
-    expect(deleteMyAddress).toHaveBeenCalledWith(
+    expect(addressService.deleteMine).toHaveBeenCalledWith(
       useDeleteAddressMock.addressId
     )
   })

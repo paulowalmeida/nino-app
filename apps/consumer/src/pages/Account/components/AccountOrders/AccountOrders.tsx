@@ -7,9 +7,7 @@ import { Eyebrow } from '@nino/ds/components/Eyebrow'
 import { Heading } from '@nino/ds/components/Heading'
 import { Icon } from '@nino/ds/components/Icon'
 import { Text } from '@nino/ds/components/Text'
-import {
-  useAccountFacade,
-} from '@pages/account/facades/useAccountFacade/useAccountFacade'
+import { useAccountFacade } from '@pages/account/facades/useAccountFacade/useAccountFacade'
 import { clockLabel } from '@utils/clock'
 import { brl } from '@utils/money'
 import { STATUS_LABEL } from '@constants/order.constants'

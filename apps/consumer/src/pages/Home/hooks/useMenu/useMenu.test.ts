@@ -3,7 +3,9 @@ import { describe, expect, it, vi } from 'vitest'
 import { useMenu } from './useMenu'
 import { useMenuMock } from './useMenu.mock'
 
-vi.mock('@tanstack/react-query', () => ({ useQuery: () => ({ data: undefined, isPending: false }) }))
+vi.mock('@tanstack/react-query', () => ({
+  useQuery: () => ({ data: undefined, isPending: false }),
+}))
 
 describe('useMenu', () => {
   it('returns no sections before the menu response exists', () => {

@@ -3,14 +3,12 @@ import { create } from 'zustand'
 import {
   cancelDelete,
   requestDelete,
-} from '@pages/account/states/addresses/operations/delete-confirmation'
+} from '@pages/account/states/addresses/operations/delete-confirmation/delete-confirmation'
 import {
   cancelEditing,
   startEditing,
-} from '@pages/account/states/addresses/operations/editing'
-import type {
-  AccountAddressesState,
-} from '@pages/account/types/AccountAddressesState.type'
+} from '@pages/account/states/addresses/operations/editing/editing'
+import type { AccountAddressesState } from '@pages/account/types/AccountAddressesState.type'
 
 export const useAddressesStore = create<AccountAddressesState>((set) => ({
   editingId: null,

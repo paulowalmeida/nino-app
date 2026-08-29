@@ -1,4 +1,4 @@
-import { MenuItemCard } from '@compositions/MenuItemCard/MenuItemCard'
+import { MenuItemCard } from './MenuItemCard/MenuItemCard'
 import { Box } from '@nino/ds/components/Box'
 import { Text } from '@nino/ds/components/Text'
 import { useHomeFacade } from '@pages/Home/facades/useHomeFacade/useHomeFacade'

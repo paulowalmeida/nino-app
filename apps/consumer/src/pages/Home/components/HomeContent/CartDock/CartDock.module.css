@@ -7,7 +7,6 @@
     color-mix(in srgb, var(--color-warm-950) 45%, transparent);
 }
 
-
 .dock::before {
   content: '';
   @apply pointer-events-none absolute inset-x-0 bottom-full h-9;

@@ -2,9 +2,7 @@ import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { describe, expect, it, vi } from 'vitest'
 
-import {
-  useSignInFacade,
-} from '@pages/sign-in/facades/useSignInFacade/useSignInFacade'
+import { useSignInFacade } from '@pages/sign-in/facades/useSignInFacade/useSignInFacade'
 
 import { SignInCodeForm } from './SignInCodeForm'
 import { signInCodeFormMock } from './SignInCodeForm.mock'

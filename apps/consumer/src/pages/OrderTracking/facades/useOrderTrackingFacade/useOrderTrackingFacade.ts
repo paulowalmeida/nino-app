@@ -1,9 +1,7 @@
 import { useParams, useSearchParams } from 'react-router'
 
-import {
-  useOrderTrackingStatus,
-} from '@pages/order-tracking/hooks/useOrderTrackingStatus/useOrderTrackingStatus'
-import { useScrollProgress } from '@hooks/useScrollProgress'
+import { useOrderTrackingStatus } from '@pages/order-tracking/hooks/useOrderTrackingStatus/useOrderTrackingStatus'
+import { useScrollProgress } from '@hooks/useScrollProgress/useScrollProgress'
 import { resolveBackHref } from '@utils/resolve-back-href'
 
 export const useOrderTrackingFacade = () => {

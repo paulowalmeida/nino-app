@@ -2,12 +2,12 @@ import { renderHook } from '@testing-library/react'
 import { describe, expect, it, vi } from 'vitest'
 
 import { queryKeys } from '@constants/query-keys'
-import { listMyOrders } from '@services/order.service'
+import { orderService } from '@shared/services/order/order.service'
 
 import { useMyOrders } from './useMyOrders'
 import { useMyOrdersMock } from './useMyOrders.mock'
 
-vi.mock('@services/order.service')
+vi.mock('@shared/services/order/order.service')
 
 let queryOptions:
   | { queryKey: unknown; queryFn: unknown; enabled: boolean }
@@ -32,12 +32,12 @@ describe('useMyOrders', () => {
 
     // Assert
     expect(queryOptions?.queryKey).toEqual(queryKeys.myOrders.all)
-    expect(queryOptions?.queryFn).toBe(listMyOrders)
+    expect(queryOptions?.queryFn).toBe(orderService.listMine)
   })
 
   it('resolves to the orders the service returns', async () => {
     // Arrange
-    vi.mocked(listMyOrders).mockResolvedValue(useMyOrdersMock.orders)
+    vi.mocked(orderService.listMine).mockResolvedValue(useMyOrdersMock.orders)
     renderHook(() => useMyOrders(true))
 
     // Act

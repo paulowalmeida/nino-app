@@ -1,8 +1,8 @@
-import { useCartSummary } from '@hooks/useCartSummary'
+import { useCartSummary } from '@hooks/useCartSummary/useCartSummary'
 import { useMenu } from '@pages/Home/hooks/useMenu/useMenu'
-import { useOpeningHours } from '@hooks/useOpeningHours'
-import { usePublicSettings } from '@hooks/usePublicSettings'
-import { useStore } from '@hooks/useStore'
+import { useOpeningHours } from '@hooks/useOpeningHours/useOpeningHours'
+import { usePublicSettings } from '@hooks/usePublicSettings/usePublicSettings'
+import { useStore } from '@hooks/useStore/useStore'
 import { useHomeInteractionStore } from '@pages/Home/states/home/home.state'
 
 export const useHomeFacade = (slug: string | undefined) => {
@@ -19,7 +19,9 @@ export const useHomeFacade = (slug: string | undefined) => {
   const isInfoOpen = useHomeInteractionStore((state) => state.isInfoOpen)
   const setInfoOpen = useHomeInteractionStore((state) => state.setInfoOpen)
   const selectedItem = useHomeInteractionStore((state) => state.selectedItem)
-  const setSelectedItem = useHomeInteractionStore((state) => state.setSelectedItem)
+  const setSelectedItem = useHomeInteractionStore(
+    (state) => state.setSelectedItem
+  )
 
   return {
     store: storeQuery.store,
@@ -29,7 +31,7 @@ export const useHomeFacade = (slug: string | undefined) => {
     isMenuPending: menuQuery.isPending,
     hours: hoursQuery.hours,
     isHoursPending: hoursQuery.isPending,
-    estimatedMinutes: settingsQuery.settings?.estimatedMinutes,
+    estimatedMinutes: settingsQuery.estimatedMinutes,
     cart: cart.lines,
     cartLines: cart.cartLines,
     cartCount: cart.count,

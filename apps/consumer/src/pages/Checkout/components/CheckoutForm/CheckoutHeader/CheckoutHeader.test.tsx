@@ -13,7 +13,9 @@ describe('CheckoutHeader', () => {
       </MemoryRouter>
     )
 
-    expect(screen.getByRole('heading', { name: 'Finalizar pedido' })).toBeInTheDocument()
+    expect(
+      screen.getByRole('heading', { name: 'Finalizar pedido' })
+    ).toBeInTheDocument()
     expect(screen.getByText(checkoutHeaderMock.storeName)).toBeInTheDocument()
     expect(screen.getByRole('link', { name: 'Voltar' })).toHaveAttribute(
       'href',

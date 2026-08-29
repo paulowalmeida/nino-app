@@ -1,12 +1,12 @@
 import { renderHook } from '@testing-library/react'
 import { describe, expect, it, vi } from 'vitest'
 
-import { requestOtp } from '@services/customer-auth.service'
+import { customerAuthService } from '@shared/services/customer-auth/customer-auth.service'
 
 import { useRequestOtp } from './useRequestOtp'
 import { useRequestOtpMock } from './useRequestOtp.mock'
 
-vi.mock('@services/customer-auth.service')
+vi.mock('@shared/services/customer-auth/customer-auth.service')
 
 let mutationFn: ((credentials: unknown) => unknown) | undefined
 
@@ -28,6 +28,8 @@ describe('useRequestOtp', () => {
     // Act
     mutationFn?.(useRequestOtpMock.credentials)
     // Assert
-    expect(requestOtp).toHaveBeenCalledWith(useRequestOtpMock.credentials)
+    expect(customerAuthService.requestOtp).toHaveBeenCalledWith(
+      useRequestOtpMock.credentials
+    )
   })
 })

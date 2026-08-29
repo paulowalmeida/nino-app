@@ -8,9 +8,8 @@ describe('CheckoutSkeleton', () => {
   it('announces that checkout content is loading', () => {
     render(<CheckoutSkeleton />)
 
-    expect(screen.getByLabelText(checkoutSkeletonMock.accessibleName)).toHaveAttribute(
-      'aria-busy',
-      'true'
-    )
+    expect(
+      screen.getByLabelText(checkoutSkeletonMock.accessibleName)
+    ).toHaveAttribute('aria-busy', 'true')
   })
 })

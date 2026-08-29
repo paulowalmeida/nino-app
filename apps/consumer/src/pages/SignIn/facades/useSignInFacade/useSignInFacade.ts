@@ -1,9 +1,5 @@
-import {
-  useSignInBrand,
-} from '@pages/sign-in/hooks/useSignInBrand/useSignInBrand'
-import {
-  useSignInMutations,
-} from '@pages/sign-in/hooks/useSignInMutations/useSignInMutations'
+import { useSignInBrand } from '@pages/sign-in/hooks/useSignInBrand/useSignInBrand'
+import { useSignInMutations } from '@pages/sign-in/hooks/useSignInMutations/useSignInMutations'
 import { useSignInStore } from '@pages/sign-in/states/sign-in/sign-in.store'
 
 export const useSignInFacade = () => {

@@ -18,6 +18,8 @@ describe('CheckoutFooter', () => {
     render(<CheckoutFooter disabled={false} />)
 
     expect(screen.getByText('Total')).toBeInTheDocument()
-    expect(screen.getByRole('button', { name: 'Confirmar pedido' })).toBeEnabled()
+    expect(
+      screen.getByRole('button', { name: 'Confirmar pedido' })
+    ).toBeEnabled()
   })
 })

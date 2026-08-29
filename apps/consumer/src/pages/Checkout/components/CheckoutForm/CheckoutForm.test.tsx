@@ -41,6 +41,8 @@ describe('CheckoutForm', () => {
 
     expect(screen.getByText('header')).toBeInTheDocument()
     expect(screen.getByText('receipt')).toBeInTheDocument()
-    expect(screen.getByRole('button', { name: 'Confirmar pedido' })).toBeInTheDocument()
+    expect(
+      screen.getByRole('button', { name: 'Confirmar pedido' })
+    ).toBeInTheDocument()
   })
 })

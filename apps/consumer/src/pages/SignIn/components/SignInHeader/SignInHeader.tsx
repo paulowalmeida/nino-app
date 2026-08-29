@@ -3,9 +3,7 @@ import { Link } from 'react-router'
 import { Box } from '@nino/ds/components/Box'
 import { Icon } from '@nino/ds/components/Icon'
 import { Text } from '@nino/ds/components/Text'
-import {
-  useSignInFacade,
-} from '@pages/sign-in/facades/useSignInFacade/useSignInFacade'
+import { useSignInFacade } from '@pages/sign-in/facades/useSignInFacade/useSignInFacade'
 import { displayName, storeInitials } from '@utils/store-info'
 
 import styles from './SignInHeader.module.css'
@@ -33,12 +31,7 @@ export const SignInHeader = () => {
               storeInitials(store)
             )}
           </Box>
-          <Text
-            size="sm"
-            weight="bold"
-            color="muted"
-            className={styles.store}
-          >
+          <Text size="sm" weight="bold" color="muted" className={styles.store}>
             {displayName(store)}
           </Text>
         </Box>

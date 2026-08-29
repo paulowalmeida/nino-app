@@ -1,25 +1,15 @@
 import type { CSSProperties } from 'react'
 
 import { Box } from '@nino/ds/components/Box'
-import { OrderStage } from '@compositions/OrderStage/OrderStage'
-import { PoweredBy } from '@elements/PoweredBy/PoweredBy'
+import { OrderStage } from '@pages/order-tracking/components/OrderStage/OrderStage'
+import { PoweredBy } from '@shared/components/PoweredBy/PoweredBy'
 import { OrderNotFound } from '@pages/order-tracking/components/OrderNotFound/OrderNotFound'
-import {
-  OrderTrackingAgainLink,
-} from '@pages/order-tracking/components/OrderTrackingAgainLink/OrderTrackingAgainLink'
-import {
-  OrderTrackingHeader,
-} from '@pages/order-tracking/components/OrderTrackingHeader/OrderTrackingHeader'
-import {
-  OrderTrackingReassurance,
-} from '@pages/order-tracking/components/OrderTrackingReassurance/OrderTrackingReassurance'
-import {
-  OrderTrackingSteps,
-} from '@pages/order-tracking/components/OrderTrackingSteps/OrderTrackingSteps'
-import {
-  useOrderTrackingFacade,
-} from '@pages/order-tracking/facades/useOrderTrackingFacade/useOrderTrackingFacade'
-import { OrderTrackingSkeleton } from '@skeletons/OrderTrackingSkeleton/OrderTrackingSkeleton'
+import { OrderTrackingAgainLink } from '@pages/order-tracking/components/OrderTrackingAgainLink/OrderTrackingAgainLink'
+import { OrderTrackingHeader } from '@pages/order-tracking/components/OrderTrackingHeader/OrderTrackingHeader'
+import { OrderTrackingReassurance } from '@pages/order-tracking/components/OrderTrackingReassurance/OrderTrackingReassurance'
+import { OrderTrackingSteps } from '@pages/order-tracking/components/OrderTrackingSteps/OrderTrackingSteps'
+import { useOrderTrackingFacade } from '@pages/order-tracking/facades/useOrderTrackingFacade/useOrderTrackingFacade'
+import { OrderTrackingSkeleton } from '@pages/OrderTracking/skeletons/OrderTrackingSkeleton/OrderTrackingSkeleton'
 import { riseDelay } from '@utils/rise-delay'
 
 import styles from './OrderTracking.module.css'
@@ -59,10 +49,7 @@ export const OrderTracking = () => {
   }
 
   return (
-    <Box
-      className={styles.page}
-      style={{ '--p': progress } as CSSProperties}
-    >
+    <Box className={styles.page} style={{ '--p': progress } as CSSProperties}>
       <Box className={styles.shell}>
         <OrderTrackingHeader
           backHref={backHref}

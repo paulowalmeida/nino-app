@@ -10,18 +10,25 @@ import { homePathMock, homeStoreMock } from './Home.mock'
 vi.mock('react-router', () => ({
   useParams: () => ({ slug: homePathMock.slug }),
 }))
-vi.mock('@pages/Home/facades/useHomeFacade/useHomeFacade', () => ({ useHomeFacade: vi.fn() }))
+vi.mock('@pages/Home/facades/useHomeFacade/useHomeFacade', () => ({
+  useHomeFacade: vi.fn(),
+}))
 vi.mock('@nino/ds/components/Box', () => ({
   Box: ({ children }: { children: ReactNode }) => <div>{children}</div>,
 }))
-vi.mock('@elements/StoreLookupEmptyState/StoreLookupEmptyState', () => ({
-  StoreLookupEmptyState: ({ title }: { title: string }) => <div>{title}</div>,
-}))
+vi.mock(
+  '@pages/Home/components/StoreLookupEmptyState/StoreLookupEmptyState',
+  () => ({
+    StoreLookupEmptyState: ({ title }: { title: string }) => <div>{title}</div>,
+  })
+)
 vi.mock('@pages/Home/skeletons/StorefrontSkeleton/StorefrontSkeleton', () => ({
   StorefrontSkeleton: () => <div>carregando loja</div>,
 }))
 vi.mock('@pages/Home/components/HomeContent/HomeContent', () => ({
-  HomeContent: ({ pathSlug }: { pathSlug?: string }) => <div>conteúdo {pathSlug}</div>,
+  HomeContent: ({ pathSlug }: { pathSlug?: string }) => (
+    <div>conteúdo {pathSlug}</div>
+  ),
 }))
 
 describe('Home', () => {

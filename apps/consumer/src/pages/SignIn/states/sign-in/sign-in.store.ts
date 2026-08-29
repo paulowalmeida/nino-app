@@ -5,9 +5,7 @@ import {
   setPhone,
   setChannel,
 } from '@pages/sign-in/states/sign-in/operations/identify-form/identify-form'
-import {
-  setCode,
-} from '@pages/sign-in/states/sign-in/operations/code-form/code-form'
+import { setCode } from '@pages/sign-in/states/sign-in/operations/code-form/code-form'
 import {
   goToCode,
   goToIdentify,
