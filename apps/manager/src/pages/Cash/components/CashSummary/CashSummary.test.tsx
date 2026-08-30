@@ -29,6 +29,26 @@ describe(CashSummary.name, () => {
     expect(screen.getByText('R$ 180,00')).toBeInTheDocument()
   })
 
+  it('names when a closed drawer was counted, and how it landed', () => {
+    render(
+      <CashSummary
+        session={{
+          ...openSessionMock,
+          closedAt: '2026-08-29T22:00:00.000Z',
+          countedAmount: 178,
+          difference: -2,
+        }}
+      />
+    )
+
+    expect(screen.getByText('Caixa fechado')).toBeInTheDocument()
+    expect(screen.getByText(/Fechado às/)).toBeInTheDocument()
+    expect(screen.getByText('Devia ter na gaveta')).toBeInTheDocument()
+    expect(screen.getByText('Contado no fechamento')).toBeInTheDocument()
+    expect(screen.getByText('R$ 178,00')).toBeInTheDocument()
+    expect(screen.getByText('Faltou R$ 2,00')).toBeInTheDocument()
+  })
+
   it('shows an untouched drawer as its float alone', () => {
     render(
       <CashSummary

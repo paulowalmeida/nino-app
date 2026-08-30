@@ -1,5 +1,7 @@
 import type { CashSession } from '@shared/types/cash/cash-session'
 
+export const closedSessionDateKeyMock = '2026-08-29'
+
 export const openSessionMock: CashSession = {
   id: 'session-1',
   tenantId: 'tenant-1',
@@ -34,4 +36,14 @@ export const openSessionMock: CashSession = {
       createdAt: '2026-08-30T12:00:00.000Z',
     },
   ],
+}
+
+export const closedSessionMock: CashSession = {
+  ...openSessionMock,
+  id: 'session-0',
+  closedById: 'staff-2',
+  countedAmount: 178,
+  difference: -2,
+  openedAt: '2026-08-29T10:00:00.000Z',
+  closedAt: '2026-08-29T22:00:00.000Z',
 }

@@ -12,6 +12,9 @@ const facadeWith = (overrides: Record<string, unknown>) =>
     session: null,
     isLoadingSession: false,
     isSessionError: false,
+    date: new Date('2026-08-30T00:00:00'),
+    isToday: true,
+    setDate: vi.fn(),
     submitOpen: vi.fn(),
     submitMovement: vi.fn(),
     submitClose: vi.fn(),
@@ -59,6 +62,31 @@ describe(Cash.name, () => {
 
     expect(screen.getByText('Caixa aberto')).toBeInTheDocument()
     expect(screen.getByRole('button', { name: 'Sangria' })).toBeInTheDocument()
+    expect(screen.getByText('Movimentações')).toBeInTheDocument()
+  })
+
+  it('says plainly when no drawer was opened on a past date', () => {
+    facadeWith({ isToday: false })
+
+    render(<Cash />)
+
+    expect(
+      screen.getByText('Nenhum caixa foi aberto nesse dia.')
+    ).toBeInTheDocument()
+    expect(
+      screen.queryByRole('button', { name: 'Abrir caixa' })
+    ).not.toBeInTheDocument()
+  })
+
+  it('hides the drawer actions while looking at a past date', () => {
+    facadeWith({ session: cashPageSessionMock, isToday: false })
+
+    render(<Cash />)
+
+    expect(screen.getByText('Caixa aberto')).toBeInTheDocument()
+    expect(
+      screen.queryByRole('button', { name: 'Sangria' })
+    ).not.toBeInTheDocument()
     expect(screen.getByText('Movimentações')).toBeInTheDocument()
   })
 })

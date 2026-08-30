@@ -140,6 +140,8 @@ export const queryKeys = {
     all: (tenantId: string) => ['cash', tenantId] as const,
     current: (tenantId: string) =>
       [...queryKeys.cash.all(tenantId), 'current'] as const,
+    byDate: (tenantId: string, date: string) =>
+      [...queryKeys.cash.all(tenantId), 'by-date', date] as const,
   },
   account: {
     all: () => ['account'] as const,

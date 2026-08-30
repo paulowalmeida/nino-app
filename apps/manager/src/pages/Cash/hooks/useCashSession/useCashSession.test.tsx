@@ -7,7 +7,11 @@ import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { CashService } from '@shared/services/cash/cash.service'
 
 import { useCashSession } from './useCashSession'
-import { openSessionMock } from './useCashSession.mock'
+import {
+  closedSessionDateKeyMock,
+  closedSessionMock,
+  openSessionMock,
+} from './useCashSession.mock'
 
 vi.mock('@shared/services/cash/cash.service')
 
@@ -21,38 +25,94 @@ const wrapper = ({ children }: { children: ReactNode }) => {
 describe(useCashSession.name, () => {
   beforeEach(() => vi.clearAllMocks())
 
-  it('reads the open session of the store', async () => {
+  it('reads the open session of the store when viewing today', async () => {
     // Arrange
     vi.mocked(CashService.getCurrentSession).mockResolvedValue(
       openSessionMock
     )
 
     // Act
-    const { result } = renderHook(() => useCashSession('tenant-1'), { wrapper })
+    const { result } = renderHook(
+      () => useCashSession('tenant-1', true, '2026-08-30'),
+      { wrapper }
+    )
 
     // Assert
     await waitFor(() => expect(result.current.session).toEqual(
       openSessionMock
     ))
     expect(CashService.getCurrentSession).toHaveBeenCalledWith('tenant-1')
+    expect(CashService.getSessionByDate).not.toHaveBeenCalled()
   })
 
-  it('reports no session when the drawer is closed', async () => {
+  it('reports no session when the drawer is closed today', async () => {
     // Arrange
     vi.mocked(CashService.getCurrentSession).mockResolvedValue(null)
 
     // Act
-    const { result } = renderHook(() => useCashSession('tenant-1'), { wrapper })
+    const { result } = renderHook(
+      () => useCashSession('tenant-1', true, '2026-08-30'),
+      { wrapper }
+    )
 
     // Assert
     await waitFor(() => expect(result.current.isLoadingSession).toBe(false))
     expect(result.current.session).toBeNull()
   })
 
+  it('reads the session that covered a past date', async () => {
+    // Arrange
+    vi.mocked(CashService.getCurrentSession).mockResolvedValue(null)
+    vi.mocked(CashService.getSessionByDate).mockResolvedValue(
+      closedSessionMock
+    )
+
+    // Act
+    const { result } = renderHook(
+      () => useCashSession('tenant-1', false, closedSessionDateKeyMock),
+      { wrapper }
+    )
+
+    // Assert
+    await waitFor(() => expect(result.current.session).toEqual(
+      closedSessionMock
+    ))
+    expect(CashService.getSessionByDate).toHaveBeenCalledWith(
+      'tenant-1',
+      closedSessionDateKeyMock
+    )
+  })
+
+  it('still exposes the open session for a past date, for commands', async () => {
+    // Arrange
+    vi.mocked(CashService.getCurrentSession).mockResolvedValue(
+      openSessionMock
+    )
+    vi.mocked(CashService.getSessionByDate).mockResolvedValue(
+      closedSessionMock
+    )
+
+    // Act
+    const { result } = renderHook(
+      () => useCashSession('tenant-1', false, closedSessionDateKeyMock),
+      { wrapper }
+    )
+
+    // Assert
+    await waitFor(() => expect(result.current.currentSession).toEqual(
+      openSessionMock
+    ))
+    expect(result.current.session).toEqual(closedSessionMock)
+  })
+
   it('asks for nothing while the store is unknown', () => {
-    const { result } = renderHook(() => useCashSession(null), { wrapper })
+    const { result } = renderHook(
+      () => useCashSession(null, true, '2026-08-30'),
+      { wrapper }
+    )
 
     expect(CashService.getCurrentSession).not.toHaveBeenCalled()
+    expect(CashService.getSessionByDate).not.toHaveBeenCalled()
     expect(result.current.session).toBeNull()
   })
 
@@ -63,7 +123,10 @@ describe(useCashSession.name, () => {
     )
 
     // Act
-    const { result } = renderHook(() => useCashSession('tenant-1'), { wrapper })
+    const { result } = renderHook(
+      () => useCashSession('tenant-1', true, '2026-08-30'),
+      { wrapper }
+    )
 
     // Assert
     await waitFor(() => expect(result.current.isSessionError).toBe(true))

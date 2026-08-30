@@ -8,6 +8,14 @@ export const CashService = {
   getCurrentSession: (tenantId: string): Promise<CashSession | null> =>
     api.get<CashSession | null>(`tenants/${tenantId}/cash-sessions/current`),
 
+  getSessionByDate: (
+    tenantId: string,
+    date: string
+  ): Promise<CashSession | null> =>
+    api.getAll<CashSession | null>(`tenants/${tenantId}/cash-sessions/by-date`, {
+      date,
+    }),
+
   openSession: (
     tenantId: string,
     data: OpenCashRequest

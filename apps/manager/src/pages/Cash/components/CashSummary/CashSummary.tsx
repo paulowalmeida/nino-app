@@ -10,8 +10,8 @@ export type CashSummaryProps = {
   session: CashSession
 }
 
-const openedAtLabel = (openedAt: string): string =>
-  new Date(openedAt).toLocaleTimeString('pt-BR', {
+const timeLabel = (isoDate: string): string =>
+  new Date(isoDate).toLocaleTimeString('pt-BR', {
     hour: '2-digit',
     minute: '2-digit',
   })
@@ -20,10 +20,12 @@ export const CashSummary = ({ session }: CashSummaryProps) => (
   <Box as="section" direction="column" className={styles.summary}>
     <Box direction="row" justify="between" align="baseline">
       <Heading level={2} size="lg">
-        Caixa aberto
+        {session.closedAt ? 'Caixa fechado' : 'Caixa aberto'}
       </Heading>
       <Text size="sm" color="muted">
-        {session.openedByName} · desde {openedAtLabel(session.openedAt)}
+        {session.closedAt
+          ? `Fechado às ${timeLabel(session.closedAt)}`
+          : `${session.openedByName} · desde ${timeLabel(session.openedAt)}`}
       </Text>
     </Box>
 
@@ -68,10 +70,32 @@ export const CashSummary = ({ session }: CashSummaryProps) => (
       align="center"
       className={styles.expected}
     >
-      <Text weight="bold">Deve ter na gaveta</Text>
+      <Text weight="bold">
+        {session.closedAt ? 'Devia ter na gaveta' : 'Deve ter na gaveta'}
+      </Text>
       <Text size="2xl" weight="extrabold" font="display">
         {brl(session.expectedAmount)}
       </Text>
     </Box>
+
+    {session.countedAmount !== null && session.difference !== null && (
+      <Box direction="column" gap={1} className={styles.expected}>
+        <Box direction="row" justify="between" align="center">
+          <Text weight="bold">Contado no fechamento</Text>
+          <Text size="2xl" weight="extrabold" font="display">
+            {brl(session.countedAmount)}
+          </Text>
+        </Box>
+        {session.difference !== 0 && (
+          <Text
+            size="sm"
+            color={session.difference < 0 ? 'danger' : 'success'}
+          >
+            {session.difference > 0 ? 'Sobrou' : 'Faltou'}{' '}
+            {brl(Math.abs(session.difference))}
+          </Text>
+        )}
+      </Box>
+    )}
   </Box>
 )

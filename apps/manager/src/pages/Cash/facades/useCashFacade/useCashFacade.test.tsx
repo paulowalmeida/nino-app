@@ -3,6 +3,7 @@ import { beforeEach, describe, expect, it, vi } from 'vitest'
 
 import { useCurrentTenant } from '@shared/hooks/session/useCurrentTenant/useCurrentTenant'
 
+import { useCashDate } from '../../hooks/useCashDate/useCashDate'
 import { useCashSession } from '../../hooks/useCashSession/useCashSession'
 import { openSessionMock } from '../../hooks/useCashSession/useCashSession.mock'
 import { useCashFacade } from './useCashFacade'
@@ -17,7 +18,12 @@ const commands = {
   isClosing: false,
 }
 
+const today = new Date('2026-08-30T00:00:00')
+const setDate = vi.fn()
+
 vi.mock('@shared/hooks/session/useCurrentTenant/useCurrentTenant')
+
+vi.mock('../../hooks/useCashDate/useCashDate')
 
 vi.mock('../../hooks/useCashSession/useCashSession')
 
@@ -30,14 +36,21 @@ describe(useCashFacade.name, () => {
     vi.mocked(useCurrentTenant).mockReturnValue({
       tenantId: 'tenant-1',
     } as unknown as ReturnType<typeof useCurrentTenant>)
+    vi.mocked(useCashDate).mockReturnValue({
+      date: today,
+      dateKey: '2026-08-30',
+      isToday: true,
+      setDate,
+    })
     vi.mocked(useCashSession).mockReturnValue({
       session: openSessionMock,
       isLoadingSession: false,
       isSessionError: false,
+      currentSession: openSessionMock,
     })
   })
 
-  it('exposes the session and every command of the feature', () => {
+  it('exposes the session, the date selection, and every command of the feature', () => {
     const { result } = renderHook(() => useCashFacade())
 
     cashFacadeShapeMock.forEach((field) => {
@@ -58,6 +71,19 @@ describe(useCashFacade.name, () => {
     expect(result.current.submitClose).toBe(commands.submitClose)
   })
 
+  it('binds commands to the currently open session, not the displayed one', () => {
+    vi.mocked(useCashDate).mockReturnValue({
+      date: new Date('2026-08-29T00:00:00'),
+      dateKey: '2026-08-29',
+      isToday: false,
+      setDate,
+    })
+
+    renderHook(() => useCashFacade())
+
+    expect(useCashSession).toHaveBeenCalledWith('tenant-1', false, '2026-08-29')
+  })
+
   it('works without a store and without an open session', () => {
     // Arrange
     vi.mocked(useCurrentTenant).mockReturnValue(
@@ -67,6 +93,7 @@ describe(useCashFacade.name, () => {
       session: null,
       isLoadingSession: true,
       isSessionError: false,
+      currentSession: null,
     })
 
     // Act
@@ -74,6 +101,6 @@ describe(useCashFacade.name, () => {
 
     // Assert
     expect(result.current.session).toBeNull()
-    expect(useCashSession).toHaveBeenCalledWith(null)
+    expect(useCashSession).toHaveBeenCalledWith(null, true, '2026-08-30')
   })
 })
