@@ -8,6 +8,7 @@ describe('customerOrderRequest', () => {
     const request = customerOrderRequest(
       {
         ...customerOrderRequestAdapterMock.values,
+        channel: 'DELIVERY',
         deliveryAddressId: customerOrderRequestAdapterMock.deliveryAddressId,
       },
       customerOrderRequestAdapterMock.store,

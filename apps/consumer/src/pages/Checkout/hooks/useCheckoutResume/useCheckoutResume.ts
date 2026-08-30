@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router'
 
-import type { GuestOrderCreatedResponse } from '@custom_types/order/guest-order-created-response'
+import type { OrderCreatedResponse } from '@custom_types/order/order-created-response'
 import { readLastOrder } from '@utils/last-order'
 
 export const useCheckoutResume = (
   pathSlug: string | null,
-  created: GuestOrderCreatedResponse | undefined,
+  created: OrderCreatedResponse | undefined,
   cartItemCount: number
 ) => {
   const navigate = useNavigate()

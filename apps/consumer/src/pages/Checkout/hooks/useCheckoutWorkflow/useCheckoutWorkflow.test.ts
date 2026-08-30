@@ -2,26 +2,26 @@ import { renderHook } from '@testing-library/react'
 import { describe, expect, it, vi } from 'vitest'
 
 import { useCheckoutTotals } from '@pages/checkout/hooks/useCheckoutTotals/useCheckoutTotals'
-import { useCreateGuestOrder } from '@pages/checkout/hooks/useCreateGuestOrder/useCreateGuestOrder'
 import { useDeliveryQuote } from '@pages/checkout/hooks/useDeliveryQuote/useDeliveryQuote'
+import { usePlaceOrder } from '@pages/checkout/hooks/usePlaceOrder/usePlaceOrder'
 
-import { useGuestCheckout } from './useGuestCheckout'
-import { useGuestCheckoutMock } from './useGuestCheckout.mock'
+import { useCheckoutWorkflow } from './useCheckoutWorkflow'
+import { useCheckoutWorkflowMock } from './useCheckoutWorkflow.mock'
 
 vi.mock('@pages/checkout/hooks/useCheckoutTotals/useCheckoutTotals')
-vi.mock('@pages/checkout/hooks/useCreateGuestOrder/useCreateGuestOrder')
+vi.mock('@pages/checkout/hooks/usePlaceOrder/usePlaceOrder')
 vi.mock('@pages/checkout/hooks/useDeliveryQuote/useDeliveryQuote')
 vi.mock('@utils/last-order')
 
-describe('useGuestCheckout', () => {
+describe('useCheckoutWorkflow', () => {
   it('exposes form state and calculated totals for the checkout screen', () => {
     const clearCart = vi.fn()
-    vi.mocked(useCreateGuestOrder).mockReturnValue({
+    vi.mocked(usePlaceOrder).mockReturnValue({
       mutate: vi.fn(),
       isPending: false,
       isError: false,
       data: undefined,
-    } as unknown as ReturnType<typeof useCreateGuestOrder>)
+    } as unknown as ReturnType<typeof usePlaceOrder>)
     vi.mocked(useDeliveryQuote).mockReturnValue({
       quote: undefined,
       isFetching: false,
@@ -34,20 +34,22 @@ describe('useGuestCheckout', () => {
     })
 
     const { result } = renderHook(() =>
-      useGuestCheckout({
+      useCheckoutWorkflow({
         store: { id: 'store-1' } as unknown as Parameters<
-          typeof useGuestCheckout
+          typeof useCheckoutWorkflow
         >[0]['store'],
+        customer: null,
+        addresses: [],
         zones: [],
         isLoadingZones: false,
         cartLines: [
           {
             item: {
               id: 'item-1',
-              name: useGuestCheckoutMock.cartItemName,
-              price: useGuestCheckoutMock.cartItemPrice,
+              name: useCheckoutWorkflowMock.cartItemName,
+              price: useCheckoutWorkflowMock.cartItemPrice,
             } as unknown as Parameters<
-              typeof useGuestCheckout
+              typeof useCheckoutWorkflow
             >[0]['cartLines'][number]['item'],
             quantity: 2,
           },
@@ -55,7 +57,7 @@ describe('useGuestCheckout', () => {
         estimatedMinutes: 40,
         paymentOptions: ['CASH'],
         clearCart,
-        slug: useGuestCheckoutMock.slug,
+        slug: useCheckoutWorkflowMock.slug,
       })
     )
 

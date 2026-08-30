@@ -37,14 +37,15 @@ export const Checkout = () => {
   if (!store) return null
 
   if (created) {
+    const trackingPath = `${pathSlug ? `/${pathSlug}` : ''}/pedido/${created.id}`
+    const trackingHref = created.trackingToken
+      ? `${trackingPath}?token=${created.trackingToken}`
+      : trackingPath
+
     return (
       <OrderConfirmed
         order={created}
-        onTrack={() =>
-          void navigate(
-            `${pathSlug ? `/${pathSlug}` : ''}/pedido/${created.id}?token=${created.trackingToken}`
-          )
-        }
+        onTrack={() => void navigate(trackingHref)}
         onBackToStore={() => void navigate(backHref)}
       />
     )

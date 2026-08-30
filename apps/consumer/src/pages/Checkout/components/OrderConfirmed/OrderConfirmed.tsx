@@ -3,12 +3,12 @@ import { Box } from '@nino/ds/components/Box'
 import { Heading } from '@nino/ds/components/Heading'
 import { Image } from '@nino/ds/components/Image'
 import { Text } from '@nino/ds/components/Text'
-import type { GuestOrderCreatedResponse } from '@custom_types/order/guest-order-created-response'
+import type { OrderCreatedResponse } from '@custom_types/order/order-created-response'
 
 import styles from './OrderConfirmed.module.css'
 
 type OrderConfirmedProps = {
-  order: GuestOrderCreatedResponse
+  order: OrderCreatedResponse
   onTrack: () => void
   onBackToStore: () => void
 }

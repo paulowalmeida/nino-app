@@ -6,8 +6,10 @@ import { useDeliveryZones } from '@pages/checkout/hooks/useDeliveryZones/useDeli
 import { useOpeningHours } from '@hooks/useOpeningHours/useOpeningHours'
 import { usePublicSettings } from '@hooks/usePublicSettings/usePublicSettings'
 import { useStore } from '@hooks/useStore/useStore'
-import { useGuestCheckout } from '@pages/checkout/hooks/useGuestCheckout/useGuestCheckout'
+import { useCheckoutWorkflow } from '@pages/checkout/hooks/useCheckoutWorkflow/useCheckoutWorkflow'
 import { useCheckoutStore } from '@pages/checkout/states/checkout/checkout.state'
+import { useCustomerSession } from '@shared/hooks/useCustomerSession/useCustomerSession'
+import { useMyAddresses } from '@shared/hooks/useMyAddresses/useMyAddresses'
 
 import { useCheckoutFacade } from './useCheckoutFacade'
 import { useCheckoutFacadeMock } from './useCheckoutFacade.mock'
@@ -17,8 +19,10 @@ vi.mock('@pages/checkout/hooks/useDeliveryZones/useDeliveryZones')
 vi.mock('@hooks/useOpeningHours/useOpeningHours')
 vi.mock('@hooks/usePublicSettings/usePublicSettings')
 vi.mock('@hooks/useStore/useStore')
-vi.mock('@pages/checkout/hooks/useGuestCheckout/useGuestCheckout')
+vi.mock('@pages/checkout/hooks/useCheckoutWorkflow/useCheckoutWorkflow')
 vi.mock('@pages/checkout/states/checkout/checkout.state')
+vi.mock('@shared/hooks/useCustomerSession/useCustomerSession')
+vi.mock('@shared/hooks/useMyAddresses/useMyAddresses')
 
 describe('useCheckoutFacade', () => {
   it('composes checkout data and exposes the existing workflow contract', () => {
@@ -46,6 +50,12 @@ describe('useCheckoutFacade', () => {
       hours: [],
       isPending: false,
     } as unknown as ReturnType<typeof useOpeningHours>)
+    vi.mocked(useCustomerSession).mockReturnValue({
+      customer: null,
+    } as unknown as ReturnType<typeof useCustomerSession>)
+    vi.mocked(useMyAddresses).mockReturnValue({
+      data: [],
+    } as unknown as ReturnType<typeof useMyAddresses>)
     vi.mocked(useCartSummary).mockReturnValue({
       tenantId: 'another-store',
       lines: {},
@@ -65,8 +75,8 @@ describe('useCheckoutFacade', () => {
       clear: vi.fn(),
     } as unknown as ReturnType<typeof useCartSummary>)
     const checkout = { submit: vi.fn(), created: undefined }
-    vi.mocked(useGuestCheckout).mockReturnValue(
-      checkout as unknown as ReturnType<typeof useGuestCheckout>
+    vi.mocked(useCheckoutWorkflow).mockReturnValue(
+      checkout as unknown as ReturnType<typeof useCheckoutWorkflow>
     )
 
     const { result } = renderHook(() => useCheckoutFacade())
@@ -76,7 +86,7 @@ describe('useCheckoutFacade', () => {
     expect(result.current.setSlug).toBe(setSlug)
     expect(result.current.submit).toBe(checkout.submit)
     expect(result.current.cartLines).toEqual([])
-    expect(useGuestCheckout).toHaveBeenCalledWith(
+    expect(useCheckoutWorkflow).toHaveBeenCalledWith(
       expect.objectContaining({ cartLines: [] })
     )
   })
