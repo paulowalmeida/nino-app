@@ -3,10 +3,22 @@
 .page {
   @apply relative flex min-h-dvh w-full flex-col bg-surface-raised pb-24;
   @apply lg:pb-12;
+  padding-bottom: calc(6rem + env(safe-area-inset-bottom));
 }
 
 .pageWithCart {
   @apply pb-40 lg:pb-28;
+  padding-bottom: calc(10rem + env(safe-area-inset-bottom));
+}
+
+@media (min-width: 1024px) {
+  .page {
+    padding-bottom: 3rem;
+  }
+
+  .pageWithCart {
+    padding-bottom: 7rem;
+  }
 }
 
 .main {

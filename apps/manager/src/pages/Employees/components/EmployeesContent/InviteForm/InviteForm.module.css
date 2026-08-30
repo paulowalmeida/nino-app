@@ -11,10 +11,6 @@
   @apply text-fg-strong;
 }
 
-.hint {
-  @apply mt-0.5 text-sm text-fg-faint;
-}
-
 .fields {
   @apply grid gap-4 sm:grid-cols-2;
 }

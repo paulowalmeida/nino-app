@@ -101,6 +101,46 @@ describe(KitchenCard.name, () => {
     expect(screen.getByText('MS')).toBeInTheDocument()
   })
 
+  it('opens the order details when the card is clicked', () => {
+    const onOpenDetails = vi.fn()
+    const onStep = vi.fn()
+    render(
+      <KitchenCard
+        order={kitchenCardOrderMock}
+        destination={tableDestinationMock}
+        onStep={onStep}
+        isBusy={false}
+        onOpenDetails={onOpenDetails}
+      />
+    )
+
+    fireEvent.click(screen.getByText('Cliente teste'))
+    expect(onOpenDetails).toHaveBeenCalledTimes(1)
+    expect(onStep).not.toHaveBeenCalled()
+  })
+
+  it('advances the order without also opening the details', () => {
+    // Arrange: o botão de ação fica dentro do card clicável
+    const onOpenDetails = vi.fn()
+    const onStep = vi.fn()
+    render(
+      <KitchenCard
+        order={kitchenCardOrderMock}
+        destination={tableDestinationMock}
+        onStep={onStep}
+        isBusy={false}
+        onOpenDetails={onOpenDetails}
+      />
+    )
+
+    // Act
+    fireEvent.click(screen.getByRole('button', { name: 'Confirmar pedido' }))
+
+    // Assert
+    expect(onStep).toHaveBeenCalledWith('order-1234', 'ACCEPTED')
+    expect(onOpenDetails).not.toHaveBeenCalled()
+  })
+
   it('assigns and removes the cook from the avatar menu', async () => {
     const onCookChange = vi.fn()
     const user = userEvent.setup()

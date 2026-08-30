@@ -1,0 +1,9 @@
+@reference "@nino/ds/globals.css";
+
+.content {
+  @apply flex flex-col gap-6;
+}
+
+.intro {
+  @apply gap-1;
+}

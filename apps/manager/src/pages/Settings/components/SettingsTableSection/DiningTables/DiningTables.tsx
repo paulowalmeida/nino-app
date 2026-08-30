@@ -139,6 +139,7 @@ export const DiningTablesList = ({
               <TableRow className={local.headRow}>
                 <TableHead className={local.colName}>Mesa</TableHead>
                 <TableHead className={local.colStatus}>Status</TableHead>
+                <TableHead className={local.colQr}>QR Code</TableHead>
                 <TableHead className={local.colActions}>Ações</TableHead>
               </TableRow>
             </TableHeader>
@@ -156,16 +157,18 @@ export const DiningTablesList = ({
                       {table.isActive ? 'Ativa' : 'Inativa'}
                     </Badge>
                   </TableCell>
+                  <TableCell className={local.colQr}>
+                    <Button
+                      size="icon"
+                      variant="ghost"
+                      aria-label={`Ver QR Code da ${table.name}`}
+                      onClick={() => setTableToPreview(table)}
+                    >
+                      <Icon name="eye" size="sm" />
+                    </Button>
+                  </TableCell>
                   <TableCell className={local.colActions}>
                     <Box direction="row" className={local.actions}>
-                      <Button
-                        size="icon"
-                        variant="ghost"
-                        aria-label={`Ver QR Code da ${table.name}`}
-                        onClick={() => setTableToPreview(table)}
-                      >
-                        <Icon name="eye" size="sm" />
-                      </Button>
                       <Button
                         size="sm"
                         variant="ghost"

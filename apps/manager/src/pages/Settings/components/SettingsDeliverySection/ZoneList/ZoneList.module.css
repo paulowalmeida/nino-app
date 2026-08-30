@@ -16,17 +16,13 @@
   @apply shrink-0 tabular-nums;
 }
 
-/* WHY: o Table do DS embrulha a tabela num scroller próprio; limitar a altura
-   nele é o que deixa o thead grudar no topo em vez de rolar junto. A largura
-   real dessa coluna depende da sidebar estar aberta ou não, não só do
-   viewport — por isso ações usa container query, não media query. */
+/* WHY: a largura real dessa coluna depende da sidebar estar aberta ou não,
+   não só do viewport — por isso ações usa container query, não media query.
+   O scroll é o do painel da seção; o cabeçalho gruda nele mesmo assim, já
+   que sticky funciona contra o ancestral rolável mais próximo. */
 .scroll {
-  @apply min-h-0 flex-1 overflow-hidden rounded-xl border border-border;
+  @apply rounded-xl border border-border;
   container-type: inline-size;
-}
-
-.scroll > div {
-  @apply h-full overflow-y-auto;
 }
 
 .tableHeader {

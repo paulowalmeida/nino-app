@@ -18,6 +18,7 @@ import {
   PAYMENT_METHOD_ICON,
   PAYMENT_METHOD_LABEL,
 } from '@shared/constants/order.constants'
+import { FieldHint } from '@shared/components/FieldHint/FieldHint'
 import type { PaymentMethod } from '@shared/types/order/payment-method'
 import type { ServiceRulesDraft } from '@shared/types/settings/service-rules-draft'
 import type { TenantSettings } from '@shared/types/settings/tenant-settings'
@@ -181,8 +182,11 @@ export const ServiceRules = ({
       </Box>
 
       <Box className={local.minimum}>
-        <Label className={local.rowLabel} htmlFor="min-order">
-          Pedido mínimo
+        <Label htmlFor="min-order">
+          <FieldHint
+            label="Pedido mínimo"
+            hint="Deixe em 0 para não exigir mínimo."
+          />
         </Label>
         <Input
           id="min-order"
@@ -191,14 +195,14 @@ export const ServiceRules = ({
           value={draft.minOrderAmount}
           onChange={(event) => change({ minOrderAmount: event.target.value })}
         />
-        <Text className={local.rowHint}>
-          Deixe em 0 para não exigir mínimo.
-        </Text>
       </Box>
 
       <Box className={local.minimum}>
-        <Label className={local.rowLabel} htmlFor="preparation-minutes">
-          Tempo de preparo (min)
+        <Label htmlFor="preparation-minutes">
+          <FieldHint
+            label="Tempo de preparo (min)"
+            hint="Tempo usado pela cozinha para preparar o pedido."
+          />
         </Label>
         <Input
           id="preparation-minutes"
@@ -209,14 +213,14 @@ export const ServiceRules = ({
             change({ preparationMinutes: event.target.value })
           }
         />
-        <Text className={local.rowHint}>
-          Tempo usado pela cozinha para preparar o pedido.
-        </Text>
       </Box>
 
       <Box className={local.minimum}>
-        <Label className={local.rowLabel} htmlFor="delivery-minutes">
-          Tempo de entrega (min)
+        <Label htmlFor="delivery-minutes">
+          <FieldHint
+            label="Tempo de entrega (min)"
+            hint="Tempo adicional para o pedido chegar ao cliente."
+          />
         </Label>
         <Input
           id="delivery-minutes"
@@ -225,9 +229,6 @@ export const ServiceRules = ({
           value={draft.deliveryMinutes}
           onChange={(event) => change({ deliveryMinutes: event.target.value })}
         />
-        <Text className={local.rowHint}>
-          Tempo adicional para o pedido chegar ao cliente.
-        </Text>
       </Box>
 
       <Button

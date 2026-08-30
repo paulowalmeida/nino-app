@@ -1,7 +1,7 @@
 @reference "@nino/ds/globals.css";
 
 .list {
-  @apply overflow-hidden;
+  @apply overflow-hidden pr-3;
 }
 
 .sentinel {

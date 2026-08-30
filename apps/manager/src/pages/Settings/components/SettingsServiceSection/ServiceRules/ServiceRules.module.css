@@ -59,7 +59,7 @@
 }
 
 .save {
-  @apply mt-4 self-end;
+  @apply mt-4 w-full min-[425px]:w-auto min-[425px]:self-end;
 }
 
 .skeleton {
@@ -85,7 +85,7 @@
 }
 
 .minimum {
-  @apply flex flex-col gap-1.5 border-t border-border pt-4;
+  @apply mt-4 flex flex-col gap-1.5;
 }
 
 .minimumInput {

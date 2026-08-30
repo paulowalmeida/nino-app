@@ -44,6 +44,7 @@ export type KitchenColumnProps = {
     orderId: string
     kitchenAssigneeId: string | null
   }) => void
+  onOpenOrderDetails: (order: Order) => void
 }
 
 export const KitchenColumn = ({
@@ -64,6 +65,7 @@ export const KitchenColumn = ({
   activeOrder,
   onAdvanceOrder,
   onChangeKitchenAssignee,
+  onOpenOrderDetails,
 }: KitchenColumnProps) => {
   const { isOver, setNodeRef } = useDroppable({ id: stage })
   const keepsOrderInStage =
@@ -149,6 +151,7 @@ export const KitchenColumn = ({
                 }
                 isBusy={isAdvancing && advancingOrderId === order.id}
                 isCompact={isCompact}
+                onOpenDetails={() => onOpenOrderDetails(order)}
               />
             </DraggableOrder>
           ))}

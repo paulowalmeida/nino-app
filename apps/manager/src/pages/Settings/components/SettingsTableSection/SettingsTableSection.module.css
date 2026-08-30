@@ -1,45 +1,27 @@
 @reference "@nino/ds/globals.css";
 
 .panel {
-  @apply flex min-h-0 min-w-0 flex-1 flex-col;
+  @apply flex min-w-0 flex-col;
 }
 
 .head {
-  @apply mb-5 shrink-0 lg:mb-6;
+  @apply mb-5 lg:mb-6;
 }
 
 .tabs {
-  @apply mt-3 flex min-h-0 flex-1 flex-col overflow-hidden;
+  @apply flex min-w-0 flex-col;
 }
 
-.tabs > [data-part='content']:not([hidden]) {
-  @apply flex min-h-0 flex-1 flex-col;
+.tabs > [data-part='list'] {
+  @apply w-fit;
 }
 
-.tabContent {
-  @apply flex min-h-0 flex-1 flex-col gap-6 overflow-hidden;
-}
+@media (max-width: 374px) {
+  .tabs > [data-part='list'] {
+    @apply flex w-full;
+  }
 
-.tabIntro {
-  @apply gap-1;
-}
-
-.option {
-  @apply border-border bg-surface-raised;
-}
-
-.optionBody {
-  @apply flex h-full flex-col justify-between gap-8;
-}
-
-.optionCopy {
-  @apply flex flex-col gap-2;
-}
-
-.optionTitle {
-  @apply flex items-center justify-between gap-3;
-}
-
-.next {
-  @apply border-t border-border pt-4;
+  .tabs > [data-part='list'] > [role='tab'] {
+    @apply min-w-0 flex-1 justify-center px-2 text-xs;
+  }
 }

@@ -33,6 +33,7 @@ const columnProps = {
   isPending: false,
   onAdvanceOrder: vi.fn(),
   onChangeKitchenAssignee: vi.fn(),
+  onOpenOrderDetails: vi.fn(),
   preparationMinutes: undefined,
   salesFormats: ['DELIVERY', 'PICKUP'] satisfies OrderChannel[],
   staff: [],

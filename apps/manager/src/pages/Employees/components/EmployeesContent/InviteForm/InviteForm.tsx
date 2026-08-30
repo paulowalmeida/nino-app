@@ -11,7 +11,10 @@ import {
   INVITE_FORM_REQUEST_OF,
   INVITE_FORM_SEATS,
 } from '@pages/Employees/constants/employees.constants'
-import type { CreateInviteRequest } from '@shared/types/team/create-invite-request'
+import { FieldHint } from '@shared/components/FieldHint/FieldHint'
+import type {
+  CreateInviteRequest,
+} from '@shared/types/team/create-invite-request'
 
 import motion from '@styles/motion.module.css'
 import styles from './InviteForm.module.css'
@@ -66,13 +69,21 @@ export const InviteForm = ({ onInvite }: InviteFormProps) => {
     >
       <div className={styles.copy}>
         <h2 className={styles.title}>Chamar alguém para a loja</h2>
-        <p className={styles.hint}>
-          A pessoa recebe um convite por e-mail e entra com a própria senha.
-        </p>
       </div>
 
       <div className={styles.fields}>
-        <FormField label="E-mail" error={errors.email?.message}>
+        <FormField
+          label={
+            <FieldHint
+              label="E-mail"
+              hint={
+                'A pessoa recebe um convite por e-mail e ' +
+                'entra com a própria senha.'
+              }
+            />
+          }
+          error={errors.email?.message}
+        >
           <Input
             type="email"
             placeholder="nome@exemplo.com"

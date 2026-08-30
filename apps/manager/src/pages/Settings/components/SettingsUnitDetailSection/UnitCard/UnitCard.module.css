@@ -4,20 +4,12 @@
   @apply flex min-w-0 flex-col;
 }
 
-.head {
-  @apply mb-4 lg:mb-6;
-}
-
 .groupTitle {
   @apply text-xs font-bold uppercase tracking-[0.12em] text-fg-faint;
 }
 
 .save {
-  @apply mt-4 self-end;
-}
-
-.skeleton {
-  @apply h-64 w-full rounded-6;
+  @apply mt-4 w-full sm:w-auto sm:self-end;
 }
 
 .fields {
@@ -29,7 +21,7 @@
 }
 
 .tabContent {
-  @apply flex flex-col pt-5;
+  @apply flex flex-col;
 }
 
 .address {
@@ -37,7 +29,7 @@
 }
 
 .brandStudio {
-  @apply flex flex-col gap-5 pt-5;
+  @apply flex flex-col gap-5;
 }
 
 .brandIntro {

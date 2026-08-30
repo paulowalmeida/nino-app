@@ -9,7 +9,12 @@ import {
 } from '@dnd-kit/core'
 
 import { Grid } from '@nino/ds/components/Grid'
-import { KitchenColumn } from '@pages/Kitchen/components/KitchenBoard/KitchenColumn/KitchenColumn'
+import {
+  KitchenColumn,
+} from '@pages/Kitchen/components/KitchenBoard/KitchenColumn/KitchenColumn'
+import {
+  KitchenOrderModal,
+} from '@pages/Kitchen/components/KitchenOrderModal/KitchenOrderModal'
 import { KITCHEN_COLUMNS } from '@pages/Kitchen/constants/kitchen.constants'
 import { useKitchenFacade } from '@pages/Kitchen/facades/useKitchenFacade/useKitchenFacade'
 import type { KitchenStage } from '@pages/Kitchen/types/KitchenStage.type'
@@ -44,6 +49,7 @@ export const KitchenBoard = ({ isCompact }: KitchenBoardProps) => {
     dropOrder,
   } = useKitchenFacade()
   const [activeOrder, setActiveOrder] = useState<Order | null>(null)
+  const [detailOrder, setDetailOrder] = useState<Order | null>(null)
   const sensors = useSensors(
     useSensor(PointerSensor, { activationConstraint: { distance: 8 } })
   )
@@ -103,6 +109,7 @@ export const KitchenBoard = ({ isCompact }: KitchenBoardProps) => {
             activeOrder={activeOrder}
             onAdvanceOrder={advanceOrder}
             onChangeKitchenAssignee={changeKitchenAssignee}
+            onOpenOrderDetails={setDetailOrder}
           />
         ))}
       </Grid>
@@ -119,6 +126,12 @@ export const KitchenBoard = ({ isCompact }: KitchenBoardProps) => {
           />
         )}
       </DragOverlay>
+
+      <KitchenOrderModal
+        order={detailOrder}
+        salesFormats={salesFormats}
+        onOpenChange={(open) => !open && setDetailOrder(null)}
+      />
     </DndContext>
   )
 }

@@ -10,14 +10,17 @@ import { Heading } from '@nino/ds/components/Heading'
 import { Input } from '@nino/ds/components/Input'
 import { RadioGroup } from '@nino/ds/components/RadioGroup'
 import { Select } from '@nino/ds/components/Select'
-import { Skeleton } from '@nino/ds/components/Skeleton'
 import { Tabs } from '@nino/ds/components/Tabs'
 import { Text } from '@nino/ds/components/Text'
 import {
   EMPTY_UNIT_DRAFT,
   UNIT_TIMEZONES,
 } from '@pages/Settings/constants/settings.constants'
+import {
+  UnitCardSkeleton,
+} from '@pages/Settings/skeletons/UnitCardSkeleton/UnitCardSkeleton'
 import { AddressFields } from '@shared/components/AddressFields/AddressFields'
+import { FieldHint } from '@shared/components/FieldHint/FieldHint'
 import type { TenantDetail } from '@shared/types/store/tenant-detail'
 import type { UnitDraft } from '@shared/types/store/unit-draft'
 
@@ -77,7 +80,7 @@ export const UnitCard = ({
     setDirty(true)
   }
 
-  if (isPending) return <Skeleton className={local.skeleton} />
+  if (isPending) return <UnitCardSkeleton />
 
   return (
     <Box as="section" className={local.panel}>
@@ -137,15 +140,29 @@ export const UnitCard = ({
                   </FormField>
 
                   <FormField
-                    label="Link da loja"
-                    helperText="Muda só pelo suporte — links já divulgados quebrariam"
+                    label={
+                      <FieldHint
+                        label="Link da loja"
+                        hint={
+                          'Muda só pelo suporte — ' +
+                          'links já divulgados quebrariam'
+                        }
+                      />
+                    }
                   >
                     <Input value={unit?.slug ?? ''} disabled readOnly />
                   </FormField>
 
                   <FormField
-                    label="Fuso horário"
-                    helperText="Define a virada do dia e o horário de funcionamento"
+                    label={
+                      <FieldHint
+                        label="Fuso horário"
+                        hint={
+                          'Define a virada do dia e ' +
+                          'o horário de funcionamento'
+                        }
+                      />
+                    }
                   >
                     <Select
                       options={UNIT_TIMEZONES}

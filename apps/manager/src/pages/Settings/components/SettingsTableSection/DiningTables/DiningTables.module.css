@@ -1,11 +1,11 @@
 @reference "@nino/ds/globals.css";
 
 .section {
-  @apply mt-8 min-w-0 border-t border-border pt-6 lg:mt-0 lg:border-t-0 lg:pt-0;
+  @apply min-w-0 lg:mt-0;
 }
 
 .form {
-  @apply flex flex-col gap-3 border-b border-border pb-5 sm:flex-row sm:items-end;
+  @apply flex flex-col gap-3 sm:flex-row sm:items-end;
 }
 
 .quantity {
@@ -28,8 +28,12 @@
   @apply w-28 text-right;
 }
 
+.colQr {
+  @apply w-24 whitespace-nowrap text-center;
+}
+
 .colActions {
-  @apply w-72 text-right;
+  @apply w-48 text-right;
 }
 
 .tableName {

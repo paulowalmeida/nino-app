@@ -1,3 +1,5 @@
+import type { KeyboardEvent } from 'react'
+
 import { Avatar } from '@nino/ds/components/Avatar'
 import { Badge } from '@nino/ds/components/Badge'
 import { Box } from '@nino/ds/components/Box'
@@ -41,6 +43,7 @@ export type KitchenCardProps = {
   staff?: StaffMember[]
   onCookChange?: (kitchenAssigneeId: string | null) => void
   isChangingCook?: boolean
+  onOpenDetails?: () => void
 }
 
 const paperClasses: Record<OrderDestinationKind, string> = {
@@ -70,6 +73,7 @@ export const KitchenCard = ({
   staff = [],
   onCookChange,
   isChangingCook = false,
+  onOpenDetails,
 }: KitchenCardProps) => {
   const step = direction === 'rollback' ? previousStep(order) : nextStep(order)
   const itemCount = order.items.reduce(
@@ -101,8 +105,27 @@ export const KitchenCard = ({
     />
   )
 
+  const handleDetailsKeyDown = (event: KeyboardEvent) => {
+    if (event.key !== 'Enter' && event.key !== ' ') return
+    event.preventDefault()
+    onOpenDetails?.()
+  }
+
   return (
-    <Box as="article" className={card} style={elapsedVar(ratio, overdueRatio)}>
+    <Box
+      as="article"
+      className={card}
+      style={elapsedVar(ratio, overdueRatio)}
+      role={onOpenDetails ? 'button' : undefined}
+      tabIndex={onOpenDetails ? 0 : undefined}
+      aria-label={
+        onOpenDetails
+          ? `Ver detalhes do pedido ${ticketNumber(order.orderNumber)}`
+          : undefined
+      }
+      onClick={onOpenDetails}
+      onKeyDown={onOpenDetails ? handleDetailsKeyDown : undefined}
+    >
       <Box as="header" direction="row" className={styles.head}>
         <Text as="span" className={styles.number}>
           {ticketNumber(order.orderNumber)}
@@ -136,6 +159,7 @@ export const KitchenCard = ({
                 aria-label={cookLabel}
                 title={cookLabel}
                 disabled={isChangingCook}
+                onClick={(event) => event.stopPropagation()}
               >
                 {cookAvatar}
               </Button>
@@ -212,7 +236,10 @@ export const KitchenCard = ({
           size="lg"
           loading={isBusy}
           className={mergeClasses(motion.press, styles.action)}
-          onClick={() => onStep(order.id, step.target)}
+          onClick={(event) => {
+            event.stopPropagation()
+            onStep(order.id, step.target)
+          }}
         >
           {actionLabel ?? step.label}
         </Button>

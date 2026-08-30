@@ -14,6 +14,12 @@
   @apply mb-4 flex items-baseline gap-3;
 }
 
+@media (max-width: 1023px) {
+  .sectionHead {
+    @apply mb-2;
+  }
+}
+
 .sectionTitle {
   @apply font-display text-lg font-extrabold text-fg-muted sm:text-xl;
 }

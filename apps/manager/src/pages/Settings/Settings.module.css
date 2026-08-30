@@ -8,3 +8,13 @@
 .panel {
   @apply flex min-h-0 min-w-0 flex-1 flex-col overflow-hidden;
 }
+
+/* abas sem painel interno com scroll próprio — deixa a página inteira rolar
+   em vez de recortar o conteúdo no shell fixo. */
+.pageFlow {
+  @apply h-auto overflow-visible lg:h-auto;
+}
+
+.panelFlow {
+  @apply min-h-0 overflow-visible;
+}

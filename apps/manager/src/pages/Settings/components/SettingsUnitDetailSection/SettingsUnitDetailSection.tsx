@@ -1,8 +1,12 @@
 import { Box } from '@nino/ds/components/Box'
 import { Breadcrumb } from '@shared/components/Breadcrumb/Breadcrumb'
 
-import { useSettingsFacade } from '../../facades/useSettingsFacade/useSettingsFacade'
+import {
+  useSettingsFacade,
+} from '../../facades/useSettingsFacade/useSettingsFacade'
 import { UnitCard } from './UnitCard/UnitCard'
+
+import local from './SettingsUnitDetailSection.module.css'
 
 export const SettingsUnitDetailSection = () => {
   const { tenant, units } = useSettingsFacade()
@@ -12,7 +16,7 @@ export const SettingsUnitDetailSection = () => {
   const { mutate: setMain, isPending: isPromoting } = units.setMain
 
   return (
-    <Box direction="column" gap={2}>
+    <Box className={local.panel}>
       <Breadcrumb
         trail={[{ label: 'Unidades', to: '..' }, { label: tenantName }]}
       />

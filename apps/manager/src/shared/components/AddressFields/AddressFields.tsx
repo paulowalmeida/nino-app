@@ -3,8 +3,10 @@ import { useRef, useState } from 'react'
 import { Box } from '@nino/ds/components/Box'
 import { FormField } from '@nino/ds/components/FormField'
 import { Input } from '@nino/ds/components/Input'
+import { Select } from '@nino/ds/components/Select'
 import { Text } from '@nino/ds/components/Text'
 import { lookupZipCode, onlyDigits } from '@nino/lib/services/zip-code.service'
+import { BRAZIL_STATES } from '@shared/constants/address.constants'
 
 import styles from './AddressFields.module.css'
 
@@ -116,12 +118,11 @@ export const AddressFields = ({ value, onChange }: AddressFieldsProps) => {
       </FormField>
 
       <FormField label="UF" className={styles.state}>
-        <Input
-          maxLength={2}
+        <Select
+          options={BRAZIL_STATES}
           value={value.state}
-          onChange={(event) =>
-            onChange({ state: event.target.value.toUpperCase() })
-          }
+          aria-label="Estado do endereço"
+          onValueChange={(state) => onChange({ state })}
         />
       </FormField>
     </Box>

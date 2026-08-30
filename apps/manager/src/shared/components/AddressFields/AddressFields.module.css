@@ -1,35 +1,64 @@
 @reference "@nino/ds/globals.css";
 
+/* col-span sozinho não dá pra reagrupar os campos por breakpoint (CEP+Número
+   juntos no mobile, Número+Complemento juntos no desktop) — só com áreas
+   nomeadas. Nomes curtos porque a linha da área não pode quebrar. */
 .grid {
-  @apply grid grid-cols-2 gap-3 sm:grid-cols-6;
+  @apply grid gap-3;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  grid-template-areas:
+    'z z z z z z z z n n n n'
+    'st st st st st st st st st st st st'
+    'co co co co co co co co co co co co'
+    'h h h h h h h h h h h h'
+    'ci ci ci ci ci ci ci ci ci sa sa sa';
+}
+
+@media (min-width: 640px) {
+  .grid {
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    grid-template-areas:
+      'z z z z st st st st st st st st'
+      'n n co co co co co co co co co co'
+      'h h h h h h ci ci ci ci sa sa';
+  }
+}
+
+@media (min-width: 768px) {
+  .grid {
+    grid-template-areas:
+      'z z st st st st st st st st st st'
+      'n n co co co co co co co co co co'
+      'h h h h h ci ci ci ci ci sa sa';
+  }
 }
 
 .zip {
-  @apply col-span-2 sm:col-span-2;
+  grid-area: z;
 }
 
 .street {
-  @apply col-span-2 sm:col-span-4;
+  grid-area: st;
 }
 
 .number {
-  @apply col-span-1 sm:col-span-2;
+  grid-area: n;
 }
 
 .complement {
-  @apply col-span-1 sm:col-span-4;
+  grid-area: co;
 }
 
 .neighborhood {
-  @apply col-span-2 sm:col-span-3;
+  grid-area: h;
 }
 
 .city {
-  @apply col-span-1 sm:col-span-2;
+  grid-area: ci;
 }
 
 .state {
-  @apply col-span-1;
+  grid-area: sa;
 }
 
 .status {
