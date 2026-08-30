@@ -9,7 +9,8 @@
 }
 
 .save {
-  @apply mt-4 ml-[15.5rem] shrink-0 self-start;
+  @apply mt-4 w-full shrink-0 self-start;
+  @apply min-[425px]:ml-[15.5rem] min-[425px]:w-auto;
 }
 
 .week {

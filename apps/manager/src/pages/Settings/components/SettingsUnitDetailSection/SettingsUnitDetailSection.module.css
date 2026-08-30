@@ -1,5 +1,5 @@
 @reference "@nino/ds/globals.css";
 
 .panel {
-  @apply flex min-h-0 min-w-0 flex-1 flex-col gap-2 overflow-y-auto;
+  @apply flex min-w-0 flex-col gap-2;
 }

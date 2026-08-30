@@ -1,21 +1,29 @@
 @reference "@nino/ds/globals.css";
 
+/*
+ * A barra flutua sobre o banner em vez de empurrá-lo pra baixo: fixed em
+ * todo tamanho de tela, sem reservar altura própria. Fundo e borda nascem
+ * transparentes (o banner colorido é o que se vê atrás) e ganham corpo
+ * conforme --p sobe, junto com o resto da transição de rolagem.
+ */
 .bar {
-  @apply sticky top-0 z-nav w-full border-b border-black/[0.07];
-  @apply bg-surface-raised;
+  @apply fixed top-0 z-nav w-full border-b;
+  border-color: rgb(0 0 0 / calc(0.07 * var(--p, 1)));
+  background-color: color-mix(
+    in srgb,
+    var(--color-surface-raised) calc(var(--p, 1) * 100%),
+    transparent
+  );
 }
 
-@media (min-width: 1024px) {
-  .bar {
-    @apply fixed;
-    transform: translateY(calc((var(--p, 0) - 1) * 100%));
-    opacity: var(--p, 0);
-  }
-}
-
+/*
+ * No celular a barra não existe no topo da página: sem sacola e sem "Entrar"
+ * (que moram no rodapé), e com a logo e a busca ainda na vitrine, ela seria
+ * 56px de branco vazio empurrando o banner para baixo. Ela sai de cena e
+ * desce conforme a rolagem, trazendo justamente o que a página perdeu.
+ */
 @media (max-width: 1023px) {
   .bar {
-    @apply fixed;
     transform: translateY(calc((var(--p, 0) - 1) * 100%));
     opacity: var(--p, 0);
   }
@@ -32,10 +40,9 @@
 
 .logo {
   @apply flex h-8 w-8 shrink-0 items-center justify-center overflow-hidden;
-  @apply rounded-2 bg-brand text-xs font-extrabold text-fg-on-brand;
+  @apply origin-left rounded-2 bg-brand text-xs font-extrabold text-fg-on-brand;
   opacity: clamp(0, calc((var(--p, 0) - 0.45) * 2.6), 1);
   transform: scale(clamp(0.7, calc(0.7 + (var(--p, 0) - 0.45) * 1.3), 1));
-  transform-origin: left center;
 }
 
 .logoImg {
@@ -49,10 +56,9 @@
 }
 
 .search {
-  @apply relative flex flex-1 items-center overflow-hidden;
+  @apply relative flex flex-1 items-center overflow-hidden transition-none;
   max-width: calc(var(--p, 0) * 26rem);
   opacity: clamp(0, calc((var(--p, 0) - 0.35) * 2.2), 1);
-  transition: none;
 }
 
 .searchIcon {
@@ -79,9 +85,16 @@
   @apply ml-auto hidden shrink-0 items-center gap-1 lg:flex;
 }
 
+/* WHY: sobre o banner (--p baixo) o ícone cinza some no laranja — clareia
+   pra branco e escurece de volta conforme a barra ganha fundo sólido. */
 .iconBtn {
   @apply relative flex h-10 w-10 items-center justify-center rounded-full;
-  @apply text-fg-muted transition-colors hover:bg-black/[0.05];
+  @apply transition-colors hover:bg-black/[0.05];
+  color: color-mix(
+    in srgb,
+    white calc((1 - var(--p, 1)) * 100%),
+    var(--color-fg-muted) calc(var(--p, 1) * 100%)
+  );
 }
 
 .badge {
@@ -90,9 +103,16 @@
   @apply text-fg-on-brand;
 }
 
+/* no celular só o ícone: o nome come a barra inteira e a loja perde o topo.
+   Mesma leitura de cor do .iconBtn contra o banner. */
 .account {
-  @apply flex h-10 items-center gap-2 rounded-full px-2.5 text-fg-muted;
+  @apply flex h-10 items-center gap-2 rounded-full px-2.5;
   @apply transition-colors hover:bg-black/[0.05];
+  color: color-mix(
+    in srgb,
+    white calc((1 - var(--p, 1)) * 100%),
+    var(--color-fg-muted) calc(var(--p, 1) * 100%)
+  );
 }
 
 .accountName {
@@ -103,8 +123,21 @@
   @apply min-w-56;
 }
 
+/* WHY: sólido sobre o banner laranja é laranja em cima de laranja — outline
+   branco lê contra o banner e funde pra preenchido conforme --p sobe e a
+   barra ganha fundo sólido. */
 .signIn {
-  @apply h-9 rounded-full bg-brand px-4 text-sm font-bold;
-  @apply text-fg-on-brand;
+  @apply h-9 rounded-full px-4 text-sm font-bold text-fg-on-brand;
   @apply transition-colors hover:bg-brand-hover;
+  background-color: color-mix(
+    in srgb,
+    var(--color-brand) calc(var(--p, 1) * 100%),
+    transparent
+  );
+  border: 1.5px solid
+    color-mix(
+      in srgb,
+      white calc((1 - var(--p, 1)) * 100%),
+      var(--color-brand) calc(var(--p, 1) * 100%)
+    );
 }

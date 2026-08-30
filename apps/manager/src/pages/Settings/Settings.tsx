@@ -5,7 +5,13 @@ import { Box } from '@nino/ds/components/Box'
 import motion from '@styles/motion.module.css'
 import styles from './Settings.module.css'
 
-const FLOW_SCROLL_ROUTES = ['/atendimento', '/salao-comandas', '/entrega']
+const FLOW_SCROLL_ROUTES = [
+  '/atendimento',
+  '/salao-comandas',
+  '/entrega',
+  '/unidade/detalhe',
+  '/horarios',
+]
 
 export const Settings = () => {
   const { pathname } = useLocation()
