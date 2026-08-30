@@ -1,0 +1,24 @@
+@reference "@nino/ds/globals.css";
+
+.page {
+  @apply flex min-h-dvh w-full flex-col bg-surface-raised pb-24 lg:pb-10;
+}
+
+.shell {
+  @apply mx-auto w-full max-w-page flex-1 px-4 sm:px-6;
+}
+
+.body {
+  @apply lg:flex lg:items-start lg:gap-10;
+  padding-top: calc(2rem + env(safe-area-inset-top));
+}
+
+@media (min-width: 1024px) {
+  .body {
+    padding-top: 1.5rem;
+  }
+}
+
+.panel {
+  @apply min-w-0 flex-1;
+}

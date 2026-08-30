@@ -2,12 +2,12 @@ import { renderHook } from '@testing-library/react'
 import { describe, expect, it, vi } from 'vitest'
 
 import { queryKeys } from '@constants/query-keys'
-import { addressService } from '@pages/Account/services/address/address.service'
+import { addressService } from '@shared/services/address/address.service'
 
 import { useMyAddresses } from './useMyAddresses'
 import { useMyAddressesMock } from './useMyAddresses.mock'
 
-vi.mock('@pages/Account/services/address/address.service')
+vi.mock('@shared/services/address/address.service')
 
 let queryOptions:
   | {

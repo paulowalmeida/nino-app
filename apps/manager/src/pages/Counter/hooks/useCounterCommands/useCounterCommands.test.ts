@@ -9,11 +9,13 @@ const spies = vi.hoisted(() => ({
   step: vi.fn(),
   sell: vi.fn(),
   setSheet: vi.fn(),
+  setLastSale: vi.fn(),
 }))
 
 vi.mock('@pages/Counter/hooks/useCounterCart/useCounterCart', () => ({
   useCounterCart: () => ({
     lines: [{ productId: 'item-1', quantity: 1 }],
+    total: 20,
     step: spies.step,
   }),
 }))
@@ -30,8 +32,10 @@ vi.mock('@pages/Counter/states/counter/counter.store', () => ({
     selector({
       clear: spies.clear,
       setSheet: spies.setSheet,
+      setLastSale: spies.setLastSale,
       customerName: 'Ana',
       tableNumber: '',
+      changeFor: '50,00',
     }),
 }))
 vi.mock('@nino/ds/components/Toast', () => ({
@@ -59,6 +63,26 @@ describe(useCounterCommands.name, () => {
     await act(() => result.current.finish())
     expect(spies.clear).toHaveBeenCalled()
     expect(spies.reset).toHaveBeenCalled()
+  })
+
+  it('captures the sale as a receipt before clearing the ticket', async () => {
+    // Arrange
+    spies.sell.mockResolvedValue(128)
+    const { result } = renderHook(() => useCounterCommands('tenant-1', 'CASH'))
+
+    // Act
+    await act(() => result.current.finish())
+
+    // Assert
+    expect(spies.setLastSale).toHaveBeenCalledWith(
+      expect.objectContaining({
+        orderNumber: 128,
+        total: 20,
+        paymentMethod: 'CASH',
+        receivedAmount: 50,
+        changeAmount: 30,
+      })
+    )
   })
 
   it('does not sell without a payment method', async () => {

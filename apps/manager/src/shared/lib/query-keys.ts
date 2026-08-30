@@ -136,6 +136,11 @@ export const queryKeys = {
     list: (tenantId: string) =>
       [...queryKeys.team.all(tenantId), 'list'] as const,
   },
+  cash: {
+    all: (tenantId: string) => ['cash', tenantId] as const,
+    current: (tenantId: string) =>
+      [...queryKeys.cash.all(tenantId), 'current'] as const,
+  },
   account: {
     all: () => ['account'] as const,
     subscription: () => [...queryKeys.account.all(), 'subscription'] as const,

@@ -4,6 +4,7 @@ import type { PaymentMethod } from '@custom_types/order/payment-method'
 export type CheckoutFormValues = {
   channel: OrderChannel
   deliveryZoneId?: string
+  deliveryAddressId?: string
   guestName: string
   guestPhone: string
   guestZipCode?: string

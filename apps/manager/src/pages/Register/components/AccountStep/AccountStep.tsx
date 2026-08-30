@@ -51,6 +51,7 @@ export const AccountStep = () => {
           <FormField label="Nome" error={errors.name?.message}>
             <Input
               placeholder="Seu nome"
+              autoComplete="name"
               {...register('name', ACCOUNT_FIELD_RULES.name)}
             />
           </FormField>
@@ -59,6 +60,7 @@ export const AccountStep = () => {
         <RiseIn delay={180} className={styles.compactField}>
           <FormField label="Telefone" error={errors.phone?.message}>
             <PhoneInput
+              autoComplete="tel"
               error={!!errors.phone}
               {...register('phone', ACCOUNT_FIELD_RULES.phone)}
             />
@@ -70,6 +72,7 @@ export const AccountStep = () => {
             <Input
               type="email"
               placeholder="seu@email.com"
+              autoComplete="email"
               {...register('email', ACCOUNT_FIELD_RULES.email)}
             />
           </FormField>
@@ -78,6 +81,7 @@ export const AccountStep = () => {
         <RiseIn delay={300} className={styles.compactField}>
           <FormField label="CPF" error={errors.cpf?.message}>
             <CpfInput
+              autoComplete="off"
               error={!!errors.cpf}
               {...register('cpf', ACCOUNT_FIELD_RULES.cpf)}
             />
@@ -88,6 +92,7 @@ export const AccountStep = () => {
           <FormField label="Senha" error={errors.password?.message}>
             <PasswordInput
               placeholder="••••••••"
+              autoComplete="new-password"
               error={!!errors.password}
               {...register('password', ACCOUNT_FIELD_RULES.password)}
             />
@@ -107,6 +112,7 @@ export const AccountStep = () => {
           >
             <PasswordInput
               placeholder="••••••••"
+              autoComplete="new-password"
               error={!!errors.confirmPassword}
               {...register('confirmPassword', {
                 required: 'Confirme a senha',

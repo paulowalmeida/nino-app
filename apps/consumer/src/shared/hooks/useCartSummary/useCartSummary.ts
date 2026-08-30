@@ -2,8 +2,10 @@ import { useCartStore } from '@shared/states/cart/cart.state'
 
 /** A sacola pronta pro consumo da tela — já com contagem e total somados. */
 export const useCartSummary = () => {
+  const tenantId = useCartStore((state) => state.tenantId)
   const lines = useCartStore((state) => state.lines)
   const add = useCartStore((state) => state.add)
+  const replace = useCartStore((state) => state.replace)
   const increment = useCartStore((state) => state.increment)
   const decrement = useCartStore((state) => state.decrement)
   const clear = useCartStore((state) => state.clear)
@@ -15,5 +17,16 @@ export const useCartSummary = () => {
     0
   )
 
-  return { lines, cartLines, count, total, add, increment, decrement, clear }
+  return {
+    tenantId,
+    lines,
+    cartLines,
+    count,
+    total,
+    add,
+    replace,
+    increment,
+    decrement,
+    clear,
+  }
 }

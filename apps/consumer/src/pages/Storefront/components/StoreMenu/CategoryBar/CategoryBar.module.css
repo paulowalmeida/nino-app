@@ -1,0 +1,16 @@
+@reference "@nino/ds/globals.css";
+
+/* gruda no topo ao rolar: é o índice do cardápio, e índice que sai de vista
+   deixa de ser índice */
+/* gruda logo abaixo da barra do topo, não no topo da janela: as duas são
+   fixas, e sem o deslocamento a régua sumiria atrás do cabeçalho */
+.bar {
+  @apply sticky top-14 z-sticky mt-4 border-y border-black/[0.06];
+  @apply bg-surface-raised/95 backdrop-blur;
+  box-shadow: 0 8px 20px -20px
+    color-mix(in srgb, var(--color-warm-950) 50%, transparent);
+}
+
+.inner {
+  @apply mx-auto w-full max-w-page px-4 sm:px-6;
+}

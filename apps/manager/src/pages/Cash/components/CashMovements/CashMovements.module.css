@@ -1,0 +1,13 @@
+@reference "@nino/ds/globals.css";
+
+.movements {
+  @apply gap-2 rounded-4 border border-border bg-surface-raised p-5;
+}
+
+.row {
+  @apply gap-3 border-b border-border/60 py-2 last:border-b-0;
+}
+
+.what {
+  @apply gap-0.5;
+}

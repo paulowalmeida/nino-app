@@ -47,8 +47,19 @@ describe('useCheckoutFacade', () => {
       isPending: false,
     } as unknown as ReturnType<typeof useOpeningHours>)
     vi.mocked(useCartSummary).mockReturnValue({
+      tenantId: 'another-store',
       lines: {},
-      cartLines: [],
+      cartLines: [
+        {
+          item: {
+            id: 'item-1',
+            name: 'Item de outra loja',
+            price: '10',
+            imageUrl: null,
+          },
+          quantity: 1,
+        },
+      ],
       count: useCheckoutFacadeMock.cartCount,
       total: useCheckoutFacadeMock.total,
       clear: vi.fn(),
@@ -64,5 +75,9 @@ describe('useCheckoutFacade', () => {
     expect(result.current.store?.id).toBe(useCheckoutFacadeMock.storeId)
     expect(result.current.setSlug).toBe(setSlug)
     expect(result.current.submit).toBe(checkout.submit)
+    expect(result.current.cartLines).toEqual([])
+    expect(useGuestCheckout).toHaveBeenCalledWith(
+      expect.objectContaining({ cartLines: [] })
+    )
   })
 })

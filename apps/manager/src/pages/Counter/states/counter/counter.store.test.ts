@@ -18,6 +18,7 @@ const item: MenuItem = {
 describe(useCounterStore.name, () => {
   beforeEach(() => {
     useCounterStore.getState().clear()
+    useCounterStore.getState().clearLastSale()
   })
 
   it('adds products and increments an existing line', () => {
@@ -60,5 +61,57 @@ describe(useCounterStore.name, () => {
       customerName: '',
       tableNumber: '',
     })
+  })
+
+  it('remembers the receipt of the last closed sale until dismissed', () => {
+    const store = useCounterStore.getState()
+
+    store.setLastSale({
+      orderNumber: 128,
+      closedAt: '2026-08-30T12:00:00.000Z',
+      lines: [],
+      total: 20,
+      paymentMethod: 'CASH',
+      receivedAmount: 50,
+      changeAmount: 30,
+    })
+    expect(useCounterStore.getState().lastSale?.orderNumber).toBe(128)
+
+    store.clearLastSale()
+    expect(useCounterStore.getState().lastSale).toBeNull()
+  })
+
+  it('dismisses the previous receipt once a new sale starts', () => {
+    const store = useCounterStore.getState()
+    store.setLastSale({
+      orderNumber: 128,
+      closedAt: '2026-08-30T12:00:00.000Z',
+      lines: [],
+      total: 20,
+      paymentMethod: 'CASH',
+      receivedAmount: 50,
+      changeAmount: 30,
+    })
+
+    store.add(item)
+
+    expect(useCounterStore.getState().lastSale).toBeNull()
+  })
+
+  it('keeps the receipt available after clearing the ticket', () => {
+    const store = useCounterStore.getState()
+    store.setLastSale({
+      orderNumber: 128,
+      closedAt: '2026-08-30T12:00:00.000Z',
+      lines: [],
+      total: 20,
+      paymentMethod: 'CASH',
+      receivedAmount: 50,
+      changeAmount: 30,
+    })
+
+    store.clear()
+
+    expect(useCounterStore.getState().lastSale?.orderNumber).toBe(128)
   })
 })

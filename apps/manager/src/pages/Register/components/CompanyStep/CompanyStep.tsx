@@ -49,6 +49,7 @@ export const CompanyStep = () => {
           <FormField label="Nome" error={errors.company?.name?.message}>
             <Input
               placeholder="Lanchonete do Zé"
+              autoComplete="organization"
               {...register('company.name', COMPANY_FIELD_RULES.name)}
             />
           </FormField>
@@ -57,6 +58,7 @@ export const CompanyStep = () => {
         <RiseIn delay={180} className={styles.compactField}>
           <FormField label="CNPJ" error={errors.company?.cnpj?.message}>
             <CnpjInput
+              autoComplete="off"
               error={!!errors.company?.cnpj}
               {...register('company.cnpj', COMPANY_FIELD_RULES.cnpj)}
             />
@@ -70,6 +72,7 @@ export const CompanyStep = () => {
           >
             <Input
               placeholder="Zé Alimentos LTDA"
+              autoComplete="off"
               {...register('company.legalName')}
             />
           </FormField>

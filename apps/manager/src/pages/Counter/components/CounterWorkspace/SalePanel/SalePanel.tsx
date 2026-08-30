@@ -5,6 +5,7 @@ import { useCounterFacade } from '@pages/Counter/facades/useCounterFacade/useCou
 import { SaleCart } from './SaleCart/SaleCart'
 import { SaleFinishActions } from './SaleFinishActions/SaleFinishActions'
 import { SalePaymentDetails } from './SalePaymentDetails/SalePaymentDetails'
+import { SaleReceiptButton } from './SaleReceiptButton/SaleReceiptButton'
 
 import styles from './SalePanel.module.css'
 
@@ -18,7 +19,9 @@ export const SalePanel = ({ bare = false }: { bare?: boolean }) => {
     customerName,
     changeFor,
     changeAmount,
+    hasChange,
     isChangeValid,
+    suggestedNotes,
     error,
     isSending,
     handleStep,
@@ -27,6 +30,8 @@ export const SalePanel = ({ bare = false }: { bare?: boolean }) => {
     setChosen,
     emptyTicket,
     finish,
+    lastSale,
+    dismissReceipt,
   } = useCounterFacade()
 
   return (
@@ -44,7 +49,9 @@ export const SalePanel = ({ bare = false }: { bare?: boolean }) => {
           customerName={customerName}
           changeFor={changeFor}
           changeAmount={changeAmount}
+          hasChange={hasChange}
           isChangeValid={isChangeValid}
+          suggestedNotes={suggestedNotes}
           onCustomerName={setCustomerName}
           onChangeFor={setChangeFor}
           methods={methods}
@@ -63,6 +70,7 @@ export const SalePanel = ({ bare = false }: { bare?: boolean }) => {
         onClear={emptyTicket}
         onFinish={finish}
       />
+      <SaleReceiptButton saleReceipt={lastSale} onDismiss={dismissReceipt} />
     </Box>
   )
 }

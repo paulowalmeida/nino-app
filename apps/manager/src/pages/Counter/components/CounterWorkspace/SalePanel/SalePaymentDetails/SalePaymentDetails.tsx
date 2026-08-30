@@ -9,6 +9,9 @@ import {
   PAYMENT_METHOD_LABEL_BY_CHANNEL,
 } from '@shared/constants/order.constants'
 import type { PaymentMethod } from '@shared/types/order/payment-method'
+import { brl, maskMoney } from '@shared/utils/money/money'
+
+import { CashShortcuts } from './CashShortcuts/CashShortcuts'
 
 import motion from '@styles/motion.module.css'
 import styles from './SalePaymentDetails.module.css'
@@ -18,7 +21,9 @@ export type SalePaymentDetailsProps = {
   onCustomerName: (name: string) => void
   changeFor: string
   changeAmount: number
+  hasChange: boolean
   isChangeValid: boolean
+  suggestedNotes: number[]
   onChangeFor: (value: string) => void
   methods: readonly PaymentMethod[]
   method: PaymentMethod
@@ -30,7 +35,9 @@ export const SalePaymentDetails = ({
   onCustomerName,
   changeFor,
   changeAmount,
+  hasChange,
   isChangeValid,
+  suggestedNotes,
   onChangeFor,
   methods,
   method,
@@ -76,14 +83,17 @@ export const SalePaymentDetails = ({
         <Text size="sm" weight="bold">
           Valor recebido
         </Text>
+        <CashShortcuts
+          notes={suggestedNotes}
+          hasChange={hasChange}
+          onSelect={onChangeFor}
+        />
         <Input
-          type="number"
-          min="0"
-          step="0.01"
+          inputMode="decimal"
           placeholder="0,00"
           aria-label="Valor recebido"
           value={changeFor}
-          onChange={(event) => onChangeFor(event.target.value)}
+          onChange={(event) => onChangeFor(maskMoney(event.target.value))}
         />
         <Box
           direction="row"
@@ -100,9 +110,9 @@ export const SalePaymentDetails = ({
             color={isChangeValid ? 'brand-strong' : 'danger'}
             aria-live="polite"
           >
-            {isChangeValid
-              ? `R$ ${changeAmount.toFixed(2).replace('.', ',')}`
-              : '—'}
+            {isChangeValid && !hasChange && 'Sem troco'}
+            {isChangeValid && hasChange && brl(changeAmount)}
+            {!isChangeValid && '—'}
           </Text>
         </Box>
         {!isChangeValid && (

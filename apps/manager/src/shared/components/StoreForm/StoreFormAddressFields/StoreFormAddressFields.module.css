@@ -1,42 +1,61 @@
 @reference "@nino/ds/globals.css";
 
+/*
+ * WHY: o bloco decide as próprias quebras a partir da largura que recebe, e não
+ * da janela — ele aparece tanto na coluna estreita do cadastro quanto no
+ * formulário largo de unidade.
+ */
+.fields {
+  container-type: inline-size;
+}
+
 .groupTitle {
   @apply text-xs font-bold uppercase tracking-[0.12em] text-fg-faint;
 }
 
-.row {
-  @apply grid grid-cols-2 gap-4;
+/*
+ * CEP e número são valores curtos de tamanho conhecido: a caixa acompanha o
+ * conteúdo, e a rua toma a sobra da linha. Numa coluna estreita a rua desce
+ * sozinha, porque um nome de rua não cabe no que resta.
+ */
+.rowLocator {
+  @apply grid gap-4;
+  grid-template-columns: 9rem 7rem;
+  grid-template-areas:
+    'zipCode number'
+    'street street';
 }
 
-/*
- * Bairro e cidade são frases inteiras ("Jardim São Cristóvão"), o estado são
- * duas letras. Numa caixa estreita o bairro toma a linha sozinho e a cidade
- * divide com o UF — do jeito que o endereço se lê, "Belém, PA". Só quando
- * sobra largura os três entram lado a lado.
- */
-.rowAddress {
+.zipCodeField {
+  grid-area: zipCode;
+}
+
+.numberField {
+  grid-area: number;
+}
+
+.streetField {
+  grid-area: street;
+}
+
+.rowPlace {
+  @apply grid gap-4;
+  grid-template-columns: 1fr;
+}
+
+/* O estado são duas letras; a cidade é uma frase inteira. */
+.rowCity {
   @apply grid gap-4;
   grid-template-columns: 1fr 5.5rem;
-  grid-template-areas:
-    'neighborhood neighborhood'
-    'city state';
-}
-
-.neighborhoodField {
-  grid-area: neighborhood;
-}
-
-.cityField {
-  grid-area: city;
-}
-
-.stateField {
-  grid-area: state;
 }
 
 @container (min-width: 32rem) {
-  .rowAddress {
-    grid-template-columns: 1.3fr 1fr 5.5rem;
-    grid-template-areas: 'neighborhood city state';
+  .rowLocator {
+    grid-template-columns: 9rem 7rem 1fr;
+    grid-template-areas: 'zipCode number street';
+  }
+
+  .rowPlace {
+    grid-template-columns: 1fr 1.4fr;
   }
 }

@@ -29,6 +29,10 @@
   @apply focus-ring;
 }
 
+.stepMarker {
+  @apply flex items-center gap-3;
+}
+
 .stepButtonHorizontal {
   @apply justify-center;
 }

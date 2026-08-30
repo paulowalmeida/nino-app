@@ -1,6 +1,6 @@
-import type { MenuItem } from '@custom_types/menu/menu-item'
+import type { CartItem } from './cart-item'
 
 export type CartLine = {
-  item: MenuItem
+  item: CartItem
   quantity: number
 }

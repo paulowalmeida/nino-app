@@ -1,0 +1,36 @@
+@reference "@nino/ds/globals.css";
+
+.header {
+  @apply sticky top-0 z-dock -mx-4 hidden items-center gap-3;
+  @apply bg-surface-raised/95 px-4;
+  @apply py-4 backdrop-blur sm:-mx-6 sm:px-6 lg:flex;
+  border-bottom: 1px solid
+    color-mix(in srgb, black calc(var(--p, 0) * 8%), transparent);
+  box-shadow: 0 6px 20px -18px
+    color-mix(
+      in srgb,
+      var(--color-warm-950) calc(var(--p, 0) * 90%),
+      transparent
+    );
+}
+
+.back {
+  @apply hidden h-11 w-11 shrink-0 items-center justify-center rounded-full;
+  @apply border border-black/[0.08] bg-surface-page text-lg;
+  @apply text-fg-muted;
+  @apply transition-colors hover:border-accent-peach;
+  @apply hover:text-brand-strong;
+  @apply lg:flex;
+}
+
+.identity {
+  @apply min-w-0;
+}
+
+.title {
+  @apply truncate;
+}
+
+.since {
+  @apply text-xs text-fg-faint;
+}

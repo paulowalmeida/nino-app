@@ -1,0 +1,30 @@
+@reference "@nino/ds/globals.css";
+
+.banner {
+  @apply relative w-full overflow-hidden;
+  @apply h-40 sm:h-48 lg:h-56;
+  background: linear-gradient(
+    124deg,
+    var(--store-tint, var(--color-brand)) 0%,
+    color-mix(
+        in srgb,
+        var(--store-tint, var(--color-brand)) 76%,
+        var(--color-warm-950)
+      )
+      100%
+  );
+}
+
+.mark {
+  @apply pointer-events-none absolute -right-8 -top-10 h-[145%] w-auto;
+  @apply select-none opacity-watermark;
+  filter: saturate(0.85);
+}
+
+.monogram {
+  @apply pointer-events-none absolute -right-2 -top-8 select-none;
+  @apply font-display text-[13rem] font-black leading-none text-fg-on-brand;
+  @apply sm:text-[16rem];
+  opacity: 0.12;
+  letter-spacing: -0.12em;
+}

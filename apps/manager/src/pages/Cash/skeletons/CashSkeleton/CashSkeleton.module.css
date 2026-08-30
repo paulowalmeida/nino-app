@@ -1,0 +1,33 @@
+@reference "@nino/ds/globals.css";
+
+.page {
+  @apply gap-4 p-4 lg:p-10;
+}
+
+.card {
+  @apply gap-4 rounded-4 border border-border bg-surface-raised p-5;
+}
+
+.title {
+  @apply h-6 w-40;
+}
+
+.figures {
+  @apply gap-4 sm:gap-8;
+}
+
+.figure {
+  @apply h-12 w-32;
+}
+
+.expected {
+  @apply h-14 w-full rounded-3;
+}
+
+.actions {
+  @apply gap-2;
+}
+
+.action {
+  @apply h-11 w-32 rounded-3;
+}

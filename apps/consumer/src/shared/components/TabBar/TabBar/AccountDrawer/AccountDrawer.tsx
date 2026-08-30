@@ -6,8 +6,6 @@ import { Button } from '@nino/ds/components/Button'
 import { ACCOUNT_SECTIONS } from '@shared/constants/account-sections'
 import { useCustomerSession } from '@shared/hooks/useCustomerSession/useCustomerSession'
 import { useLogout } from '@shared/hooks/useLogout/useLogout'
-import { useMyAddresses } from '@shared/hooks/useMyAddresses/useMyAddresses'
-import { useMyOrders } from '@shared/hooks/useMyOrders/useMyOrders'
 import { useStoreTint } from '@shared/hooks/useStoreTint/useStoreTint'
 import {
   customerInitials,
@@ -60,14 +58,6 @@ export const AccountDrawer = ({
   const tint = useStoreTint()
   const logout = useLogout()
 
-  const { data: orders } = useMyOrders(!!customer)
-  const { data: addresses } = useMyAddresses(!!customer)
-
-  const counts: Record<string, number | undefined> = {
-    enderecos: addresses?.length,
-    pedidos: orders?.length,
-  }
-
   /* conta aberta por telefone nasce sem nome de verdade: até a pessoa dizer
      como se chama, a saudação vai sozinha e o azulejo fica sem iniciais */
   const named = customer?.profileCompletedAt ? customer.name : null
@@ -103,9 +93,6 @@ export const AccountDrawer = ({
         >
           <Icon name={icon} className={styles.icon} />
           <span className={styles.label}>{label}</span>
-          {counts[to] !== undefined && (
-            <span className={styles.count}>{counts[to]}</span>
-          )}
         </Button>
       </li>
     )

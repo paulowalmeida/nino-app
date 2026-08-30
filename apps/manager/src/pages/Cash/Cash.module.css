@@ -1,0 +1,5 @@
+@reference "@nino/ds/globals.css";
+
+.page {
+  @apply gap-4 p-4 lg:p-10;
+}

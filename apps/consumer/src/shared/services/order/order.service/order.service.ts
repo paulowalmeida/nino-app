@@ -1,5 +1,7 @@
 import type { CreateGuestOrderRequest } from '@custom_types/order/create-guest-order-request'
+import type { CreateCustomerOrderRequest } from '@custom_types/order/create-customer-order-request'
 import type { GuestOrderCreatedResponse } from '@custom_types/order/guest-order-created-response'
+import type { OrderCreatedResponse } from '@custom_types/order/order-created-response'
 import type { GuestOrderStatus } from '@custom_types/order/guest-order-status'
 import type { MyOrder } from '@custom_types/order/my-order'
 import { myOrderStatus } from '@shared/adapters/myOrderStatus/myOrderStatus.adapter'
@@ -7,6 +9,13 @@ import { api } from '@shared/services/http/http.service'
 
 /** Pedido sem conta — o único jeito de comprar até o login do cliente existir. */
 export const orderService = {
+  createMine: (
+    data: CreateCustomerOrderRequest
+  ): Promise<OrderCreatedResponse> =>
+    api.create<CreateCustomerOrderRequest, OrderCreatedResponse>(
+      'my/orders',
+      data
+    ),
   createGuest: (
     data: CreateGuestOrderRequest
   ): Promise<GuestOrderCreatedResponse> =>

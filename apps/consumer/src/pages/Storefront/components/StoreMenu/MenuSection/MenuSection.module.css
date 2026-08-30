@@ -1,0 +1,35 @@
+@reference "@nino/ds/globals.css";
+
+/* o alvo do "ir para a categoria" precisa parar abaixo do topo fixo + régua,
+   senão o título da seção chega escondido atrás delas */
+.section {
+  @apply scroll-mt-[8.5rem] pt-2;
+}
+
+.section + .section {
+  @apply mt-12 sm:mt-14;
+}
+
+.sectionHead {
+  @apply mb-4 flex items-end justify-between gap-3 border-b;
+  @apply border-black/[0.07] pb-3;
+}
+
+@media (max-width: 1023px) {
+  .sectionHead {
+    @apply mb-2;
+  }
+}
+
+.sectionTitle {
+  @apply font-display text-xl font-extrabold tracking-tight text-fg-muted;
+  @apply sm:text-2xl;
+}
+
+.sectionCount {
+  @apply text-xs text-fg-faint;
+}
+
+.items {
+  @apply grid gap-3 sm:grid-cols-2 xl:grid-cols-3;
+}

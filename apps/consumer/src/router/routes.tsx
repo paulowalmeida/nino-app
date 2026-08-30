@@ -1,7 +1,9 @@
 import { createBrowserRouter, Navigate, type RouteObject } from 'react-router'
 
-const homeLazy = () =>
-  import('@pages/Home/Home').then(({ Home }) => ({ Component: Home }))
+const storefrontLazy = () =>
+  import('@pages/Storefront/Storefront').then(({ Storefront }) => ({
+    Component: Storefront,
+  }))
 
 const checkoutLazy = () =>
   import('@pages/checkout/Checkout').then(({ Checkout }) => ({
@@ -16,40 +18,50 @@ const orderTrackingLazy = () =>
 const signInLazy = () =>
   import('@pages/sign-in/SignIn').then(({ SignIn }) => ({ Component: SignIn }))
 
-const accountLazy = () =>
-  import('@pages/account/Account').then(({ Account }) => ({
-    Component: Account,
+const storeLayoutLazy = () =>
+  import('@layouts/StoreLayout/StoreLayout').then(({ StoreLayout }) => ({
+    Component: StoreLayout,
+  }))
+
+const authenticatedLayoutLazy = () =>
+  import('@layouts/AuthenticatedLayout/AuthenticatedLayout').then(
+    ({ AuthenticatedLayout }) => ({ Component: AuthenticatedLayout })
+  )
+
+const accountLayoutLazy = () =>
+  import('@layouts/AccountLayout/AccountLayout').then(({ AccountLayout }) => ({
+    Component: AccountLayout,
   }))
 
 const profileLazy = () =>
-  import('@pages/account/components/AccountProfile/AccountProfile').then(
-    ({ AccountProfile }) => ({ Component: AccountProfile })
-  )
+  import('@pages/Profile/AccountProfile').then(({ AccountProfile }) => ({
+    Component: AccountProfile,
+  }))
 
 const addressesLazy = () =>
-  import('@pages/account/components/AccountAddresses/AccountAddresses').then(
-    ({ AccountAddresses }) => ({ Component: AccountAddresses })
-  )
+  import('@pages/Addresses/AccountAddresses').then(({ AccountAddresses }) => ({
+    Component: AccountAddresses,
+  }))
 
 const ordersLazy = () =>
-  import('@pages/account/components/AccountOrders/AccountOrders').then(
-    ({ AccountOrders }) => ({ Component: AccountOrders })
-  )
+  import('@pages/Orders/AccountOrders').then(({ AccountOrders }) => ({
+    Component: AccountOrders,
+  }))
 
 const paymentLazy = () =>
-  import('@pages/account/components/AccountPayment/AccountPayment').then(
-    ({ AccountPayment }) => ({ Component: AccountPayment })
-  )
+  import('@pages/Payment/AccountPayment').then(({ AccountPayment }) => ({
+    Component: AccountPayment,
+  }))
 
-const chatsLazy = () =>
-  import('@pages/account/components/AccountChats/AccountChats').then(
-    ({ AccountChats }) => ({ Component: AccountChats })
-  )
+const conversationsLazy = () =>
+  import('@pages/Conversations/AccountChats').then(({ AccountChats }) => ({
+    Component: AccountChats,
+  }))
 
 const invoicesLazy = () =>
-  import('@pages/account/components/AccountInvoices/AccountInvoices').then(
-    ({ AccountInvoices }) => ({ Component: AccountInvoices })
-  )
+  import('@pages/Invoices/AccountInvoices').then(({ AccountInvoices }) => ({
+    Component: AccountInvoices,
+  }))
 
 const accountChildren: RouteObject[] = [
   { index: true, element: <Navigate to="dados" replace /> },
@@ -57,51 +69,28 @@ const accountChildren: RouteObject[] = [
   { path: 'enderecos', lazy: addressesLazy },
   { path: 'pedidos', lazy: ordersLazy },
   { path: 'pagamento', lazy: paymentLazy },
-  { path: 'conversas', lazy: chatsLazy },
+  { path: 'conversas', lazy: conversationsLazy },
   { path: 'notas', lazy: invoicesLazy },
 ]
 
-export const router = createBrowserRouter([
-  {
-    path: '/',
-    lazy: homeLazy,
-  },
-  {
-    path: '/:slug',
-    lazy: homeLazy,
-  },
-  {
-    path: '/checkout',
-    lazy: checkoutLazy,
-  },
-  {
-    path: '/:slug/checkout',
-    lazy: checkoutLazy,
-  },
-  {
-    path: '/pedido/:orderId',
-    lazy: orderTrackingLazy,
-  },
-  {
-    path: '/:slug/pedido/:orderId',
-    lazy: orderTrackingLazy,
-  },
-  {
-    path: '/entrar',
-    lazy: signInLazy,
-  },
-  {
-    path: '/:slug/entrar',
-    lazy: signInLazy,
-  },
-  {
-    path: '/conta',
-    lazy: accountLazy,
-    children: accountChildren,
-  },
-  {
-    path: '/:slug/conta',
-    lazy: accountLazy,
-    children: accountChildren,
-  },
-])
+const customerAccountRoute: RouteObject = {
+  path: 'conta',
+  lazy: authenticatedLayoutLazy,
+  children: [{ lazy: accountLayoutLazy, children: accountChildren }],
+}
+
+const storeChildren: RouteObject[] = [
+  { index: true, lazy: storefrontLazy },
+  { path: 'checkout', lazy: checkoutLazy },
+  { path: 'pedido/:orderId', lazy: orderTrackingLazy },
+  { path: 'entrar', lazy: signInLazy },
+  customerAccountRoute,
+]
+
+const storeRoute = (path?: string): RouteObject => ({
+  ...(path ? { path } : {}),
+  lazy: storeLayoutLazy,
+  children: storeChildren,
+})
+
+export const router = createBrowserRouter([storeRoute(), storeRoute(':slug')])

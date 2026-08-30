@@ -1,0 +1,9 @@
+@reference "@nino/ds/globals.css";
+
+.fields {
+  @apply gap-3;
+}
+
+.actions {
+  @apply justify-end gap-2;
+}

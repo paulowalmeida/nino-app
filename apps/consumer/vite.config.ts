@@ -51,7 +51,6 @@ export default defineConfig({
   resolve: {
     alias: {
       '@ds': resolve(__dirname, '../../packages/ds/src'),
-      '@pages/account': resolve(__dirname, 'src/pages/Account'),
       '@pages/checkout': resolve(__dirname, 'src/pages/Checkout'),
       '@pages/order-tracking': resolve(__dirname, 'src/pages/OrderTracking'),
       '@pages/sign-in': resolve(__dirname, 'src/pages/SignIn'),
@@ -60,10 +59,7 @@ export default defineConfig({
       '@components': resolve(__dirname, 'src/components'),
       '@compositions': resolve(__dirname, 'src/compositions'),
       '@constants': resolve(__dirname, 'src/shared/constants'),
-      '@custom_types/account': resolve(
-        __dirname,
-        'src/pages/Account/types/account'
-      ),
+  '@custom_types/account': resolve(__dirname, 'src/shared/types/account'),
       '@custom_types/checkout': resolve(
         __dirname,
         'src/pages/Checkout/types/checkout'
@@ -72,7 +68,7 @@ export default defineConfig({
         __dirname,
         'src/pages/Checkout/types/delivery-zone'
       ),
-      '@custom_types/menu': resolve(__dirname, 'src/pages/Home/types/menu'),
+      '@custom_types/menu': resolve(__dirname, 'src/pages/Storefront/types/menu'),
       '@custom_types': resolve(__dirname, 'src/shared/types'),
       '@styles': resolve(__dirname, 'src/styles'),
       '@elements': resolve(__dirname, 'src/elements'),
@@ -83,9 +79,9 @@ export default defineConfig({
       '@providers': resolve(__dirname, 'src/providers'),
       '@router': resolve(__dirname, 'src/router'),
       '@shared': resolve(__dirname, 'src/shared'),
-      '@utils/category-icon': resolve(__dirname, 'src/pages/Home/utils/category-icon'),
+      '@utils/category-icon': resolve(__dirname, 'src/pages/Storefront/utils/category-icon'),
       '@utils/last-order': resolve(__dirname, 'src/shared/lib/last-order'),
-      '@utils/menu-image': resolve(__dirname, 'src/pages/Home/utils/menu-image'),
+      '@utils/menu-image': resolve(__dirname, 'src/pages/Storefront/utils/menu-image'),
       '@utils/resolve-slug': resolve(__dirname, 'src/shared/lib/resolve-slug'),
       '@utils/session-hint': resolve(__dirname, 'src/shared/lib/session-hint'),
       '@utils': resolve(__dirname, 'src/shared/utils'),

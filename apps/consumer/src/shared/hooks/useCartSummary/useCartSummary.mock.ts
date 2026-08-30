@@ -1,13 +1,11 @@
-import type { MenuItem } from '@custom_types/menu/menu-item'
+import type { CartItem } from '@custom_types/cart/cart-item'
 
-export const useCartSummaryMock: { menuItem: MenuItem } = {
-  menuItem: {
+export const useCartSummaryMock: { tenantId: string; cartItem: CartItem } = {
+  tenantId: 'store-1',
+  cartItem: {
     id: 'item-1',
     name: 'Hambúrguer',
-    description: null,
     price: '25.5',
-    isActive: true,
-    category: { id: 'category-1', name: 'Lanches', position: 1 },
-    images: [],
+    imageUrl: null,
   },
 }

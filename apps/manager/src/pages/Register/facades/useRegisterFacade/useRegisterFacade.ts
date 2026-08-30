@@ -1,6 +1,6 @@
 import { useAccountForm } from '@pages/Register/hooks/useAccountForm/useAccountForm'
 import { useCompanyForm } from '@pages/Register/hooks/useCompanyForm/useCompanyForm'
-import { useSignup } from '@pages/Register/hooks/useSignup/useSignup'
+import { useTenantForm } from '@pages/Register/hooks/useTenantForm/useTenantForm'
 import { useRegisterWizardStore } from '@pages/Register/states/register-wizard/register-wizard.store'
 
 export const useRegisterFacade = () => {
@@ -20,7 +20,7 @@ export const useRegisterFacade = () => {
     onValid: goToCompany,
   })
   const companyForm = useCompanyForm({ goToTenant })
-  const signup = useSignup()
+  const tenantForm = useTenantForm({ account, company })
 
   return {
     step,
@@ -31,6 +31,6 @@ export const useRegisterFacade = () => {
     resetWizard,
     accountForm,
     companyForm,
-    signup,
+    tenantForm,
   }
 }

@@ -1,4 +1,5 @@
 import { toast } from '@nino/ds/components/Toast'
+import { toSaleReceipt } from '@pages/Counter/adapters/sale-receipt.adapter/sale-receipt.adapter'
 import { useCounterCart } from '@pages/Counter/hooks/useCounterCart/useCounterCart'
 import { useCounterSale } from '@pages/Counter/hooks/useCounterSale/useCounterSale'
 import { useCounterStore } from '@pages/Counter/states/counter/counter.store'
@@ -9,10 +10,11 @@ export const useCounterCommands = (
   tenantId: string | null,
   method: PaymentMethod | null
 ) => {
-  const { lines, step } = useCounterCart()
+  const { lines, total, step } = useCounterCart()
   const { error, isSending, sell, reset } = useCounterSale(tenantId)
   const clear = useCounterStore((state) => state.clear)
   const setSheet = useCounterStore((state) => state.setSheet)
+  const setLastSale = useCounterStore((state) => state.setLastSale)
   const customerName = useCounterStore((state) => state.customerName)
   const tableNumber = useCounterStore((state) => state.tableNumber)
   const changeFor = useCounterStore((state) => state.changeFor)
@@ -38,6 +40,16 @@ export const useCounterCommands = (
       changeFor,
     })
     if (!orderNumber) return
+    setLastSale(
+      toSaleReceipt({
+        orderNumber,
+        lines,
+        total,
+        paymentMethod: method,
+        changeFor,
+        closedAt: new Date(),
+      })
+    )
     emptyTicket()
     toast.success(`Venda #${ticketNumber(orderNumber)} fechada`)
   }

@@ -24,7 +24,10 @@ type StepperProps = {
   defaultStep?: number
   /**
    * Called when a marker is clicked. A step the person cannot reach yet
-   * should not be clickable — guard it here
+   * should not be clickable — guard it here.
+   *
+   * Leave it out on a controlled Stepper and the markers stop being
+   * buttons: the path becomes a read-only progress indicator
    */
   onStepChange?: (step: number) => void
   /**
@@ -57,6 +60,7 @@ export function Stepper({
   const [internalStep, setInternalStep] = useState(defaultStep)
   const current = controlledStep ?? internalStep
   const isVertical = orientation === 'vertical'
+  const isInteractive = !!onStepChange || controlledStep === undefined
 
   const handleClick = (index: number) => {
     if (controlledStep === undefined) setInternalStep(index)
@@ -119,20 +123,34 @@ export function Stepper({
               isVertical ? styles.stepVertical : styles.stepHorizontal
             )}
           >
-            <button
-              type="button"
-              aria-label={step.title}
-              aria-current={isCurrent ? 'step' : undefined}
-              onClick={() => handleClick(index)}
-              className={mergeClasses(
-                styles.stepButton,
-                !isVertical && styles.stepButtonHorizontal
-              )}
-            >
-              <Stamp size="lg" tone={tone} className={styles.stepNumber}>
-                {isCompleted ? <Icon name="check" size="sm" /> : index + 1}
-              </Stamp>
-            </button>
+            {isInteractive ? (
+              <button
+                type="button"
+                aria-label={step.title}
+                aria-current={isCurrent ? 'step' : undefined}
+                onClick={() => handleClick(index)}
+                className={mergeClasses(
+                  styles.stepButton,
+                  !isVertical && styles.stepButtonHorizontal
+                )}
+              >
+                <Stamp size="lg" tone={tone} className={styles.stepNumber}>
+                  {isCompleted ? <Icon name="check" size="sm" /> : index + 1}
+                </Stamp>
+              </button>
+            ) : (
+              <div
+                aria-current={isCurrent ? 'step' : undefined}
+                className={mergeClasses(
+                  styles.stepMarker,
+                  !isVertical && styles.stepButtonHorizontal
+                )}
+              >
+                <Stamp size="lg" tone={tone} className={styles.stepNumber}>
+                  {isCompleted ? <Icon name="check" size="sm" /> : index + 1}
+                </Stamp>
+              </div>
+            )}
             {!isVertical && separator}
             {label}
             {isVertical && separator}

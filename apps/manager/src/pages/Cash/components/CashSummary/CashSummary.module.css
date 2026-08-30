@@ -1,0 +1,17 @@
+@reference "@nino/ds/globals.css";
+
+.summary {
+  @apply gap-4 rounded-4 border border-border bg-surface-raised p-5;
+}
+
+.figures {
+  @apply gap-4 sm:gap-8;
+}
+
+.figure {
+  @apply min-w-32 gap-0.5;
+}
+
+.expected {
+  @apply rounded-3 bg-surface-mute px-4 py-3;
+}

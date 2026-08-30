@@ -23,6 +23,9 @@ vi.mock('@pages/Counter/hooks/useCounterPaymentSelection/useCounterPaymentSelect
 vi.mock('@pages/Counter/hooks/useCounterCommands/useCounterCommands', () => ({
   useCounterCommands: () => ({ error: null, isSending: false }),
 }))
+vi.mock('@pages/Counter/hooks/useCounterReceipt/useCounterReceipt', () => ({
+  useCounterReceipt: () => ({ lastSale: null, dismissReceipt: vi.fn() }),
+}))
 vi.mock('@pages/Counter/hooks/useCounterResponsive/useCounterResponsive', () => ({
   useCounterResponsive: () => ({ isDesktop: true }),
 }))

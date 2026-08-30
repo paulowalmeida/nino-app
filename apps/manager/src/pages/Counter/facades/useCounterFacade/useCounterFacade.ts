@@ -2,6 +2,7 @@ import { useCounterCart } from '@pages/Counter/hooks/useCounterCart/useCounterCa
 import { useCounterCommands } from '@pages/Counter/hooks/useCounterCommands/useCounterCommands'
 import { useCounterPaymentMethods } from '@pages/Counter/hooks/useCounterPaymentMethods/useCounterPaymentMethods'
 import { useCounterPaymentSelection } from '@pages/Counter/hooks/useCounterPaymentSelection/useCounterPaymentSelection'
+import { useCounterReceipt } from '@pages/Counter/hooks/useCounterReceipt/useCounterReceipt'
 import { useCounterResponsive } from '@pages/Counter/hooks/useCounterResponsive/useCounterResponsive'
 import { useCounterStore } from '@pages/Counter/states/counter/counter.store'
 import { useMenu } from '@shared/hooks/product/useMenu/useMenu'
@@ -14,6 +15,7 @@ export const useCounterFacade = () => {
   const cart = useCounterCart()
   const selection = useCounterPaymentSelection(payments.methods, cart.total)
   const commands = useCounterCommands(tenantId, selection.method)
+  const receipt = useCounterReceipt()
   const responsive = useCounterResponsive()
   const sheet = useCounterStore((state) => state.sheet)
   const customerName = useCounterStore((state) => state.customerName)
@@ -31,6 +33,7 @@ export const useCounterFacade = () => {
     ...cart,
     ...selection,
     ...commands,
+    ...receipt,
     ...responsive,
     sheet,
     customerName,

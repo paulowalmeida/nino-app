@@ -34,7 +34,9 @@ export const StoreFormAddressFields = ({
 }: StoreFormAddressFieldsProps) => {
   const [isLookingUp, setIsLookingUp] = useState(false)
 
-  const handleZipCodeBlur = async (event: React.FocusEvent<HTMLInputElement>) => {
+  const handleZipCodeBlur = async (
+    event: React.FocusEvent<HTMLInputElement>
+  ) => {
     const zipCode = event.target.value
     if (onlyDigits(zipCode).length !== 8) return
 
@@ -55,14 +57,22 @@ export const StoreFormAddressFields = ({
   }
 
   return (
-    <Box as="section" direction="column" gap={4}>
+    <Box as="section" direction="column" gap={4} className={styles.fields}>
       <p className={`${motion.rise} ${styles.groupTitle}`}>Onde fica</p>
 
-      <div className={`${motion.rise} ${styles.row}`} style={riseDelay(300)}>
-        <FormField label="CEP" error={errors.zipCode?.message}>
+      <div
+        className={`${motion.rise} ${styles.rowLocator}`}
+        style={riseDelay(300)}
+      >
+        <FormField
+          label="CEP"
+          className={styles.zipCodeField}
+          error={errors.zipCode?.message}
+        >
           <MaskedInput
             mask={maskZipCode}
             placeholder="00000-000"
+            autoComplete="postal-code"
             error={!!errors.zipCode}
             {...register('zipCode', {
               required: 'Informe o CEP',
@@ -71,63 +81,69 @@ export const StoreFormAddressFields = ({
           />
         </FormField>
 
-        <FormField label="Número" error={errors.number?.message}>
+        <FormField
+          label="Número"
+          className={styles.numberField}
+          error={errors.number?.message}
+        >
           <Input
             placeholder="123"
+            autoComplete="off"
             {...register('number', { required: 'Informe o número' })}
           />
         </FormField>
-      </div>
 
-      <div className={motion.rise} style={riseDelay(340)}>
-        <FormField label="Rua" error={errors.street?.message}>
+        <FormField
+          label="Logradouro"
+          className={styles.streetField}
+          error={errors.street?.message}
+        >
           <Input
             placeholder={isLookingUp ? 'Buscando…' : 'Rua das Flores'}
-            {...register('street', { required: 'Informe a rua' })}
+            autoComplete="address-line1"
+            {...register('street', { required: 'Informe o logradouro' })}
           />
-        </FormField>
-      </div>
-
-      <div className={motion.rise} style={riseDelay(380)}>
-        <FormField label="Complemento (opcional)">
-          <Input placeholder="Loja 2" {...register('complement')} />
         </FormField>
       </div>
 
       <div
-        className={`${motion.rise} ${styles.rowAddress}`}
-        style={riseDelay(420)}
+        className={`${motion.rise} ${styles.rowPlace}`}
+        style={riseDelay(380)}
       >
-        <FormField
-          label="Bairro"
-          className={styles.neighborhoodField}
-          error={errors.neighborhood?.message}
-        >
+        <FormField label="Complemento (opcional)">
           <Input
-            placeholder="Centro"
-            {...register('neighborhood', { required: 'Informe o bairro' })}
+            placeholder="Loja 2"
+            autoComplete="address-line2"
+            {...register('complement')}
           />
         </FormField>
 
-        <FormField
-          label="Cidade"
-          className={styles.cityField}
-          error={errors.city?.message}
-        >
+        <FormField label="Bairro" error={errors.neighborhood?.message}>
+          <Input
+            placeholder="Centro"
+            autoComplete="address-level3"
+            {...register('neighborhood', { required: 'Informe o bairro' })}
+          />
+        </FormField>
+      </div>
+
+      <div
+        className={`${motion.rise} ${styles.rowCity}`}
+        style={riseDelay(420)}
+      >
+        <FormField label="Cidade" error={errors.city?.message}>
           <Input
             placeholder="Belém"
+            autoComplete="address-level2"
             {...register('city', { required: 'Informe a cidade' })}
           />
         </FormField>
 
-        <FormField
-          label="UF"
-          className={styles.stateField}
-          error={errors.state?.message}
-        >
+        <FormField label="UF" error={errors.state?.message}>
           <Input
             placeholder="PA"
             maxLength={2}
+            autoComplete="address-level1"
             {...register('state', { required: 'Informe o estado' })}
           />
         </FormField>

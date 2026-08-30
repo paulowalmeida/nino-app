@@ -34,4 +34,13 @@ describe(Stepper.name, () => {
     render(<Stepper steps={steps} />)
     expect(screen.getAllByRole('button')).toHaveLength(steps.length)
   })
+
+  it('drops the buttons when a controlled path has no step handler', () => {
+    // Arrange / Act: caminho controlado e sem onStepChange é só progresso
+    render(<Stepper steps={steps} step={1} />)
+
+    // Assert
+    expect(screen.queryAllByRole('button')).toHaveLength(0)
+    expect(screen.getByText('Endereço')).toBeInTheDocument()
+  })
 })

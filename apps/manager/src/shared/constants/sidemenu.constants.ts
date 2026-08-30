@@ -21,6 +21,7 @@ export const SIDEMENU_GROUPS: SidemenuItem[] = [
   {
     title: 'Gestão',
     items: [
+      { section: 'caixa', label: 'Caixa', icon: 'banknote' },
       {
         section: 'relatorios',
         label: 'Relatórios',

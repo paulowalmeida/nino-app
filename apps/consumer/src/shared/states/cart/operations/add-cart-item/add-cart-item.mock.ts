@@ -1,13 +1,10 @@
-import type { MenuItem } from '@custom_types/menu/menu-item'
+import type { CartItem } from '@custom_types/cart/cart-item'
 
-export const addCartItemMock: { item: MenuItem } = {
+export const addCartItemMock: { item: CartItem } = {
   item: {
     id: 'item-1',
     name: 'Café',
-    description: null,
     price: '5',
-    isActive: true,
-    category: { id: 'drinks', name: 'Bebidas', position: 1 },
-    images: [],
+    imageUrl: null,
   },
 }

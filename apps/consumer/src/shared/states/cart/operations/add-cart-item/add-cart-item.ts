@@ -1,9 +1,9 @@
 import type { CartLine } from '@custom_types/cart/cart-line'
-import type { MenuItem } from '@custom_types/menu/menu-item'
+import type { CartItem } from '@custom_types/cart/cart-item'
 
 export const addCartItem = (
   lines: Record<string, CartLine>,
-  item: MenuItem,
+  item: CartItem,
   quantity: number
 ): Record<string, CartLine> => ({
   ...lines,

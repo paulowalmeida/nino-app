@@ -5,17 +5,12 @@ import { useRegisterFacade } from '@pages/Register/facades/useRegisterFacade/use
 import styles from './RegisterStepper.module.css'
 
 export const RegisterStepper = () => {
-  const { step, goToAccount } = useRegisterFacade()
-
-  const handleStepChange = (next: number) => {
-    if (next === 0 && step > 1) goToAccount()
-  }
+  const { step } = useRegisterFacade()
 
   return (
     <Stepper
       steps={REGISTER_WIZARD_STEPS}
       step={step - 1}
-      onStepChange={handleStepChange}
       className={styles.stepper}
     />
   )

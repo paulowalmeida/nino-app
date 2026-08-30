@@ -1,5 +1,6 @@
 import type { CounterSaleInput } from '@pages/Counter/types/CounterSaleInput.type'
 import type { CreateOrderRequest } from '@shared/types/order/create-order-request'
+import { moneyValue } from '@shared/utils/money/money'
 
 export const toCounterSaleRequest = ({
   lines,
@@ -12,7 +13,7 @@ export const toCounterSaleRequest = ({
   guestName: customerName || undefined,
   changeFor:
     paymentMethod === 'CASH' && changeFor?.trim()
-      ? Number(changeFor)
+      ? moneyValue(changeFor)
       : undefined,
   items: lines.map(({ productId, quantity, unitPrice }) => ({
     productId,

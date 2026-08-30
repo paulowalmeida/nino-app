@@ -1,5 +1,4 @@
 import { render, screen } from '@testing-library/react'
-import userEvent from '@testing-library/user-event'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 
 import { useRegisterFacade } from '@pages/Register/facades/useRegisterFacade/useRegisterFacade'
@@ -9,12 +8,9 @@ import { registerStepperMock } from './RegisterStepper.mock'
 
 vi.mock('@pages/Register/facades/useRegisterFacade/useRegisterFacade')
 
-const goToAccount = vi.fn()
-
 const mockStep = (step: 1 | 2) =>
   vi.mocked(useRegisterFacade).mockReturnValue({
     step,
-    goToAccount,
   } as unknown as ReturnType<typeof useRegisterFacade>)
 
 describe('RegisterStepper', () => {
@@ -33,29 +29,14 @@ describe('RegisterStepper', () => {
     ).toBeInTheDocument()
   })
 
-  it('walks back to the account step from the company step', async () => {
+  it('tracks progress without offering the steps as controls', () => {
+    // Arrange: o cadastro avançou para o segundo passo
     mockStep(2)
 
+    // Act
     render(<RegisterStepper />)
-    await userEvent.click(
-      screen.getByRole('button', {
-        name: registerStepperMock.accountStepLabel,
-      })
-    )
 
-    expect(goToAccount).toHaveBeenCalled()
-  })
-
-  it('does not skip ahead from the account step', async () => {
-    mockStep(1)
-
-    render(<RegisterStepper />)
-    await userEvent.click(
-      screen.getByRole('button', {
-        name: registerStepperMock.companyStepLabel,
-      })
-    )
-
-    expect(goToAccount).not.toHaveBeenCalled()
+    // Assert: o caminho é indicador, não navegação
+    expect(screen.queryAllByRole('button')).toHaveLength(0)
   })
 })

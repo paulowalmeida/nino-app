@@ -91,11 +91,6 @@
   @apply flex-1 truncate text-left;
 }
 
-.count {
-  @apply text-sm font-bold text-fg-faintest;
-  font-variant-numeric: tabular-nums;
-}
-
 .eyebrow {
   @apply mb-1 mt-5 px-3 text-2xs font-bold uppercase;
   @apply tracking-[0.14em] text-fg-faintest;

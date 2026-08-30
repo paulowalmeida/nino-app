@@ -96,6 +96,13 @@ export const router = createBrowserRouter([
           })),
       },
       {
+        path: 'caixa',
+        lazy: () =>
+          import('@pages/Cash/Cash').then(({ Cash }) => ({
+            Component: Cash,
+          })),
+      },
+      {
         path: 'comandas',
         lazy: () =>
           import('@pages/TableTabs/TableTabs').then(({ TableTabs }) => ({

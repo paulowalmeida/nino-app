@@ -1,0 +1,13 @@
+@reference "@nino/ds/globals.css";
+
+.fields {
+  @apply gap-3;
+}
+
+.difference {
+  @apply rounded-2 bg-surface-mute px-3 py-2;
+}
+
+.actions {
+  @apply justify-end gap-2;
+}

@@ -1,3 +1,4 @@
+import type { SaleReceipt } from '@pages/Counter/types/SaleReceipt.type'
 import type { CartLine } from '@shared/types/counter/cart-line'
 import type { PaymentMethod } from '@shared/types/order/payment-method'
 import type { MenuItem } from '@shared/types/product/menu-item'
@@ -9,6 +10,7 @@ export type CounterState = {
   customerName: string
   tableNumber: string
   changeFor: string
+  lastSale: SaleReceipt | null
   add: (item: MenuItem) => void
   step: (productId: string, by: number) => void
   clear: () => void
@@ -17,4 +19,6 @@ export type CounterState = {
   setCustomerName: (name: string) => void
   setTableNumber: (table: string) => void
   setChangeFor: (value: string) => void
+  setLastSale: (receipt: SaleReceipt) => void
+  clearLastSale: () => void
 }

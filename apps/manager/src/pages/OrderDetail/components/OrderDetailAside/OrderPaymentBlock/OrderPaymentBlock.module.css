@@ -16,10 +16,6 @@
   @apply font-normal text-fg-faint;
 }
 
-.change {
-  @apply mt-1 text-sm text-fg-muted;
-}
-
 .payButton {
   @apply mt-3;
 }

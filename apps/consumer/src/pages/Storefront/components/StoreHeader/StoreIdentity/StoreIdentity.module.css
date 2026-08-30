@@ -1,0 +1,78 @@
+@reference "@nino/ds/globals.css";
+
+.identityRow {
+  @apply relative z-content -mt-12 flex items-center gap-4 rounded-3;
+  @apply border border-black/[0.07] bg-surface-page px-4 py-4 shadow-lg;
+  @apply sm:-mt-16 sm:gap-5 sm:px-6 sm:py-5;
+}
+
+.logoTile {
+  @apply relative h-20 w-20 shrink-0 overflow-hidden rounded-2;
+  @apply border border-black/10 bg-surface-raised shadow-sm;
+  @apply sm:h-24 sm:w-24;
+  transform-origin: top left;
+  transform: scale(calc(1 - var(--p, 0) * 0.48));
+  opacity: clamp(0, calc(1 - var(--p, 0) * 1.45), 1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .logoTile {
+    transform: none;
+    opacity: 1;
+  }
+}
+
+.logoImg {
+  @apply h-full w-full object-cover;
+}
+
+.logoStack {
+  @apply h-full w-full;
+}
+
+.logoFallback {
+  @apply flex h-full w-full items-center justify-center bg-brand;
+  @apply font-display text-2xl font-extrabold text-fg-on-brand;
+}
+
+.identity {
+  @apply min-w-0 flex-1;
+}
+
+.name {
+  @apply line-clamp-2 font-display text-2xl font-extrabold leading-tight;
+  @apply tracking-tight text-fg-muted sm:text-3xl;
+}
+
+.identityMeta {
+  @apply mt-2 flex flex-wrap items-center gap-2 text-sm;
+  @apply text-fg-muted;
+}
+
+.more {
+  @apply order-last basis-full justify-start px-0 font-bold text-fg-muted;
+  @apply underline-offset-4 hover:underline sm:order-none sm:basis-auto;
+}
+
+.sep {
+  @apply hidden;
+}
+
+.status {
+  @apply inline-flex min-h-8 items-center gap-1.5 rounded-full;
+  @apply border border-black/[0.07] bg-surface-raised px-3 font-semibold;
+}
+
+.dot {
+  @apply h-1.5 w-1.5 rounded-full bg-black/25;
+}
+
+.dotOn {
+  @apply bg-success;
+}
+
+.time {
+  @apply inline-flex min-h-8 items-center rounded-full border;
+  @apply border-black/[0.07] bg-surface-raised px-3 font-semibold;
+  font-variant-numeric: tabular-nums;
+}

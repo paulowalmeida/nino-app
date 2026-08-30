@@ -27,7 +27,19 @@ describe(toCounterSaleRequest.name, () => {
 
   it('sends the amount received for cash payments', () => {
     expect(
-      toCounterSaleRequest({ ...counterSaleInputMock, changeFor: '25.50' })
+      toCounterSaleRequest({ ...counterSaleInputMock, changeFor: '25,50' })
     ).toMatchObject({ changeFor: 25.5 })
+  })
+
+  it('reads the thousands separator the mask writes', () => {
+    expect(
+      toCounterSaleRequest({ ...counterSaleInputMock, changeFor: '1.250,00' })
+    ).toMatchObject({ changeFor: 1250 })
+  })
+
+  it('sends no change for an exact cash payment', () => {
+    expect(
+      toCounterSaleRequest({ ...counterSaleInputMock, changeFor: '' })
+    ).toMatchObject({ changeFor: undefined })
   })
 })
