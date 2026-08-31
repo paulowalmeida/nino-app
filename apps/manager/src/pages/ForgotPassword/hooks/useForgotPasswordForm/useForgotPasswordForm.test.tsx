@@ -43,7 +43,9 @@ describe('useForgotPasswordForm', () => {
     await act(() => result.current.submit())
 
     expect(mutateAsync).toHaveBeenCalledWith(forgotPasswordFormCredentialsMock)
-    expect(result.current.isSent).toBe(true)
+    expect(result.current.sentTo).toBe(
+      forgotPasswordFormCredentialsMock.email
+    )
   })
 
   it('reports a failed request on the form, not as sent', async () => {
@@ -58,7 +60,18 @@ describe('useForgotPasswordForm', () => {
         forgotPasswordFormFailureMessageMock
       )
     )
-    expect(result.current.isSent).toBe(false)
+    expect(result.current.sentTo).toBeNull()
+  })
+
+  it('returns to the form when the address needs fixing', async () => {
+    mutateAsync.mockResolvedValue({ message: 'ok' })
+    const { result } = renderHook(() => useForgotPasswordForm())
+
+    typeEmail(result)
+    await act(() => result.current.submit())
+    act(() => result.current.useAnotherEmail())
+
+    expect(result.current.sentTo).toBeNull()
   })
 
   it('keeps sending while the mutation is pending', () => {

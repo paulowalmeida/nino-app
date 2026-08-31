@@ -3,6 +3,7 @@ import { Box } from '@nino/ds/components/Box'
 import { Button } from '@nino/ds/components/Button'
 import { FormField } from '@nino/ds/components/FormField'
 import { Input } from '@nino/ds/components/Input'
+import { ForgotPasswordSent } from '@pages/ForgotPassword/components/ForgotPasswordSent/ForgotPasswordSent'
 import { FORGOT_PASSWORD_FIELD_RULES } from '@pages/ForgotPassword/constants/forgotPassword.constants'
 import { useForgotPasswordFacade } from '@pages/ForgotPassword/facades/useForgotPasswordFacade/useForgotPasswordFacade'
 import { RiseIn } from '@shared/components/RiseIn/RiseIn'
@@ -10,16 +11,12 @@ import { RiseIn } from '@shared/components/RiseIn/RiseIn'
 import styles from './ForgotPasswordForm.module.css'
 
 export const ForgotPasswordForm = () => {
-  const { register, submit, fieldErrors, isSending, isSent } =
+  const { register, submit, fieldErrors, isSending, sentTo, useAnotherEmail } =
     useForgotPasswordFacade()
 
-  if (isSent) {
+  if (sentTo) {
     return (
-      <RiseIn>
-        <Alert variant="success">
-          Se o e-mail existir, enviamos instruções de recuperação.
-        </Alert>
-      </RiseIn>
+      <ForgotPasswordSent email={sentTo} onUseAnotherEmail={useAnotherEmail} />
     )
   }
 

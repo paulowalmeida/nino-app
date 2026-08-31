@@ -1,5 +1,7 @@
 import { EMAIL_PATTERN } from '@shared/constants/auth.constants'
 
+export const RESET_LINK_TTL_LABEL = '1 hora'
+
 export const FORGOT_PASSWORD_FIELD_RULES = {
   email: {
     required: 'Informe o email',

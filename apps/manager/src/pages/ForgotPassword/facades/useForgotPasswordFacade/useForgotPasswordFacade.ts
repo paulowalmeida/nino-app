@@ -1,7 +1,7 @@
 import { useForgotPasswordForm } from '@pages/ForgotPassword/hooks/useForgotPasswordForm/useForgotPasswordForm'
 
 export const useForgotPasswordFacade = () => {
-  const { register, submit, formState, isSending, isSent } =
+  const { register, submit, formState, isSending, sentTo, useAnotherEmail } =
     useForgotPasswordForm()
 
   return {
@@ -9,6 +9,7 @@ export const useForgotPasswordFacade = () => {
     submit,
     fieldErrors: formState.errors,
     isSending,
-    isSent,
+    sentTo,
+    useAnotherEmail,
   }
 }

@@ -16,7 +16,8 @@ const facadeWith = (overrides: Record<string, unknown>) =>
     submit: vi.fn(),
     fieldErrors: {},
     isSending: false,
-    isSent: false,
+    sentTo: null,
+    useAnotherEmail: vi.fn(),
     ...overrides,
   } as unknown as ReturnType<typeof useForgotPasswordFacade>)
 
@@ -65,15 +66,15 @@ describe('ForgotPasswordForm', () => {
   })
 
   it('replaces the form with a confirmation once the request is sent', () => {
-    facadeWith({ isSent: true })
+    facadeWith({ sentTo: forgotPasswordFormMock.sentEmail })
 
     render(<ForgotPasswordForm />)
 
     expect(
       screen.queryByLabelText(forgotPasswordFormMock.emailLabel)
     ).not.toBeInTheDocument()
-    expect(screen.getByRole('alert')).toHaveTextContent(
-      'Se o e-mail existir, enviamos instruções de recuperação.'
+    expect(screen.getByRole('status')).toHaveTextContent(
+      forgotPasswordFormMock.sentEmail
     )
   })
 

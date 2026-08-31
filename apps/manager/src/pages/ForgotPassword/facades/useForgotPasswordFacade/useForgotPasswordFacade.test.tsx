@@ -19,7 +19,8 @@ describe('useForgotPasswordFacade', () => {
         errors: { root: { message: forgotPasswordFacadeMock.rootErrorMessage } },
       },
       isSending: false,
-      isSent: false,
+      sentTo: null,
+      useAnotherEmail: vi.fn(),
     } as unknown as ReturnType<typeof useForgotPasswordForm>)
 
     const { result } = renderHook(() => useForgotPasswordFacade())
@@ -30,20 +31,21 @@ describe('useForgotPasswordFacade', () => {
       forgotPasswordFacadeMock.rootErrorMessage
     )
     expect(result.current.isSending).toBe(false)
-    expect(result.current.isSent).toBe(false)
+    expect(result.current.sentTo).toBeNull()
   })
 
-  it('reports the request as sent', () => {
+  it('names the address the request was sent to', () => {
     vi.mocked(useForgotPasswordForm).mockReturnValue({
       register: vi.fn(),
       submit: vi.fn(),
       formState: { errors: {} },
       isSending: false,
-      isSent: true,
+      sentTo: 'ana@example.com',
+      useAnotherEmail: vi.fn(),
     } as unknown as ReturnType<typeof useForgotPasswordForm>)
 
     const { result } = renderHook(() => useForgotPasswordFacade())
 
-    expect(result.current.isSent).toBe(true)
+    expect(result.current.sentTo).toBe('ana@example.com')
   })
 })
