@@ -4,12 +4,17 @@ import { Input } from '@nino/ds/components/Input'
 import { PhoneInput } from '@nino/ds/components/PhoneInput'
 import { Text } from '@nino/ds/components/Text'
 import { useCheckoutFacade } from '@pages/checkout/facades/useCheckoutFacade/useCheckoutFacade'
+import type { CheckoutFacade } from '@pages/checkout/facades/useCheckoutFacade/useCheckoutFacade'
 import { isCompletePhone } from '@utils/phone'
 
 import styles from './GuestContactFields.module.css'
 
-export const GuestContactFields = () => {
-  const { register, errors } = useCheckoutFacade()
+export const GuestContactFields = ({
+  checkout,
+}: {
+  checkout?: CheckoutFacade
+}) => {
+  const { register, errors } = useCheckoutFacade(checkout)
 
   return (
     <Box className={styles.block}>

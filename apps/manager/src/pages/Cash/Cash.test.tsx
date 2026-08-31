@@ -70,9 +70,7 @@ describe(Cash.name, () => {
 
     render(<Cash />)
 
-    expect(
-      screen.getByText('Nenhum caixa foi aberto nesse dia.')
-    ).toBeInTheDocument()
+    expect(screen.getByText('Nenhum caixa nesse dia')).toBeInTheDocument()
     expect(
       screen.queryByRole('button', { name: 'Abrir caixa' })
     ).not.toBeInTheDocument()

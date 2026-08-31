@@ -3,17 +3,19 @@ import { Button } from '@nino/ds/components/Button'
 import { Text } from '@nino/ds/components/Text'
 import { AnimatedNumber } from '@shared/components/AnimatedNumber/AnimatedNumber'
 import { useCheckoutFacade } from '@pages/checkout/facades/useCheckoutFacade/useCheckoutFacade'
+import type { CheckoutFacade } from '@pages/checkout/facades/useCheckoutFacade/useCheckoutFacade'
 import { brl } from '@utils/money'
 
 import styles from './CheckoutFooter.module.css'
 
 type CheckoutFooterProps = {
   disabled: boolean
+  checkout?: CheckoutFacade
 }
 
 /** O picote + a barra de confirmar: o total sobe junto pra não haver susto. */
-export const CheckoutFooter = ({ disabled }: CheckoutFooterProps) => {
-  const { total, isSubmitting } = useCheckoutFacade()
+export const CheckoutFooter = ({ disabled, checkout }: CheckoutFooterProps) => {
+  const { total, isSubmitting } = useCheckoutFacade(checkout)
 
   return (
     <Box className={styles.tearBar}>

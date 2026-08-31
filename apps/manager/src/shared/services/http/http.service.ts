@@ -16,6 +16,8 @@ const EXEMPT_PATHS = [
   'auth/signup',
   'auth/refresh',
   'auth/check-availability',
+  'auth/forgot-password',
+  'auth/reset-password',
 ]
 
 /**

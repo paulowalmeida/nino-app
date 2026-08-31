@@ -1,0 +1,10 @@
+@reference "@nino/ds/globals.css";
+
+.empty {
+  @apply mx-auto flex min-h-dvh max-w-md flex-col items-center justify-center;
+  @apply gap-3 px-6 text-center;
+}
+
+.emptyLink {
+  @apply font-bold text-brand-strong;
+}

@@ -23,10 +23,20 @@ const facadeWith = (overrides: Record<string, unknown>) =>
     hasSaveAddressError: false,
     deleteAddress: vi.fn(),
     isDeletingAddress: false,
+    lookupAddress: vi.fn(),
+    isLookingUpAddress: false,
     ...overrides,
   } as unknown as ReturnType<typeof useAddressesFacade>)
 
 describe('AccountAddresses', () => {
+  it('shows the addresses loading state', () => {
+    facadeWith({ isAddressesPending: true })
+
+    render(<AccountAddresses />)
+
+    expect(screen.getByLabelText('Carregando endereços')).toBeInTheDocument()
+  })
+
   it('shows the empty state when there is no address saved', () => {
     // Arrange
     facadeWith({ addresses: [] })

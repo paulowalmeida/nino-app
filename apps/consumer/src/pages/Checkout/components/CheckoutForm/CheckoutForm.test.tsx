@@ -1,4 +1,5 @@
 import { render, screen } from '@testing-library/react'
+import type { ReactNode } from 'react'
 import { describe, expect, it, vi } from 'vitest'
 
 import { useCheckoutFacade } from '@pages/checkout/facades/useCheckoutFacade/useCheckoutFacade'
@@ -7,6 +8,11 @@ import { CheckoutForm } from './CheckoutForm'
 import { checkoutFormMock } from './CheckoutForm.mock'
 
 vi.mock('@pages/checkout/facades/useCheckoutFacade/useCheckoutFacade')
+vi.mock('@nino/forms/FormBuilder', () => ({
+  FormBuilder: ({ children }: { children: () => ReactNode }) => (
+    <form>{children()}</form>
+  ),
+}))
 vi.mock('./CheckoutHeader/CheckoutHeader', () => ({
   CheckoutHeader: () => <div>header</div>,
 }))
@@ -32,7 +38,8 @@ vi.mock('./CheckoutFooter/CheckoutFooter', () => ({
 describe('CheckoutForm', () => {
   it('composes the checkout regions through the facade contract', () => {
     vi.mocked(useCheckoutFacade).mockReturnValue({
-      submit: vi.fn(),
+      onSubmit: vi.fn(),
+      form: {} as never,
       isDelivery: false,
       submitFailed: false,
     } as never)

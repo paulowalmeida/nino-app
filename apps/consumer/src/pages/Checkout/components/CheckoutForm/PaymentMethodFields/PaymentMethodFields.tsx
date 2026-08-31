@@ -6,13 +6,18 @@ import { Input } from '@nino/ds/components/Input'
 import { RadioGroup } from '@nino/ds/components/RadioGroup'
 import { Text } from '@nino/ds/components/Text'
 import { useCheckoutFacade } from '@pages/checkout/facades/useCheckoutFacade/useCheckoutFacade'
+import type { CheckoutFacade } from '@pages/checkout/facades/useCheckoutFacade/useCheckoutFacade'
 import { PAYMENT_METHOD_LABEL } from '@pages/checkout/constants/paymentMethodLabel.constants'
 
 import styles from './PaymentMethodFields.module.css'
 
-export const PaymentMethodFields = () => {
+export const PaymentMethodFields = ({
+  checkout,
+}: {
+  checkout?: CheckoutFacade
+}) => {
   const { control, register, paymentMethod, paymentOptions } =
-    useCheckoutFacade()
+    useCheckoutFacade(checkout)
 
   return (
     <Box className={styles.block}>

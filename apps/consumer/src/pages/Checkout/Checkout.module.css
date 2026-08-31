@@ -12,14 +12,3 @@
   @apply lg:border lg:border-black/[0.08];
   @apply lg:shadow-xl;
 }
-
-/* ----- vazio / confirmado ----- */
-
-.empty {
-  @apply mx-auto flex min-h-dvh max-w-md flex-col items-center justify-center;
-  @apply gap-3 px-6 text-center;
-}
-
-.emptyLink {
-  @apply font-bold text-brand-strong;
-}

@@ -17,6 +17,9 @@ export const useCreateOrder = (tenantId: string | null) => {
       void queryClient.invalidateQueries({
         queryKey: ['order-queue-summary', tenantId],
       })
+      void queryClient.invalidateQueries({
+        queryKey: queryKeys.cash.all(tenantId ?? ''),
+      })
     },
   })
 }

@@ -7,8 +7,11 @@ import {
   authUserMock,
   checkAvailabilityRequestMock,
   checkAvailabilityResponseMock,
+  forgotPasswordRequestMock,
   loginRequestMock,
   meResponseMock,
+  messageResponseMock,
+  resetPasswordRequestMock,
   signupRequestMock,
 } from './auth.service.mock'
 
@@ -81,5 +84,35 @@ describe('AuthService', () => {
 
     // Assert
     expect(api.create).toHaveBeenCalledWith('auth/logout')
+  })
+
+  it('forgotPassword: posts the email to auth/forgot-password', async () => {
+    // Arrange
+    vi.mocked(api.create).mockResolvedValue(messageResponseMock)
+
+    // Act
+    const result = await AuthService.forgotPassword(forgotPasswordRequestMock)
+
+    // Assert
+    expect(api.create).toHaveBeenCalledWith(
+      'auth/forgot-password',
+      forgotPasswordRequestMock
+    )
+    expect(result).toBe(messageResponseMock)
+  })
+
+  it('resetPassword: posts the token and new password to auth/reset-password', async () => {
+    // Arrange
+    vi.mocked(api.create).mockResolvedValue(messageResponseMock)
+
+    // Act
+    const result = await AuthService.resetPassword(resetPasswordRequestMock)
+
+    // Assert
+    expect(api.create).toHaveBeenCalledWith(
+      'auth/reset-password',
+      resetPasswordRequestMock
+    )
+    expect(result).toBe(messageResponseMock)
   })
 })

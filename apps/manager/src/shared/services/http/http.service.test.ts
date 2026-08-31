@@ -33,6 +33,8 @@ describe('http.service', () => {
           'auth/signup',
           'auth/refresh',
           'auth/check-availability',
+          'auth/forgot-password',
+          'auth/reset-password',
         ],
         sessionProbePath: 'auth/me',
         hasPriorSession: hadSession,

@@ -3,7 +3,7 @@ import userEvent from '@testing-library/user-event'
 import type { ReactNode } from 'react'
 import { describe, expect, it, vi } from 'vitest'
 
-import { useCheckoutFacade } from '@pages/checkout/facades/useCheckoutFacade/useCheckoutFacade'
+import { useCheckoutFacadeValue } from '@pages/checkout/facades/useCheckoutFacade/useCheckoutFacade'
 import { useCheckoutResume } from '@pages/checkout/hooks/useCheckoutResume/useCheckoutResume'
 
 import { Checkout } from './Checkout'
@@ -35,7 +35,7 @@ vi.mock('@pages/checkout/skeletons/CheckoutSkeleton/CheckoutSkeleton', () => ({
 describe('Checkout', () => {
   it('shows the empty-bag direction when there is no active order', () => {
     const setSlug = vi.fn()
-    vi.mocked(useCheckoutFacade).mockReturnValue({
+    vi.mocked(useCheckoutFacadeValue).mockReturnValue({
       store: { id: 'store-1', company: { name: 'Bistrô do Zé' } },
       isStorePending: false,
       cartLines: [],
@@ -53,7 +53,7 @@ describe('Checkout', () => {
   })
 
   it('tracks an authenticated order without adding an undefined token', async () => {
-    vi.mocked(useCheckoutFacade).mockReturnValue({
+    vi.mocked(useCheckoutFacadeValue).mockReturnValue({
       store: { id: 'store-1', company: { name: 'Bistrô do Zé' } },
       isStorePending: false,
       cartLines: [],

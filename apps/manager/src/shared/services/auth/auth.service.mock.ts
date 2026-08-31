@@ -44,3 +44,16 @@ export const meResponseMock = {
 export const checkAvailabilityResponseMock = {
   emailAvailable: true,
 }
+
+export const forgotPasswordRequestMock = {
+  email: 'dono@padoca.com',
+}
+
+export const resetPasswordRequestMock = {
+  token: 'raw-token',
+  password: 'nova-senha',
+}
+
+export const messageResponseMock = {
+  message: 'ok',
+}

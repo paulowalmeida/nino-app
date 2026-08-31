@@ -13,12 +13,13 @@ import { RadioGroup } from '@nino/ds/components/RadioGroup'
 import { Select } from '@nino/ds/components/Select'
 import { Switch } from '@nino/ds/components/Switch'
 import { Textarea } from '@nino/ds/components/Textarea'
-import {
+import type {
   Control,
-  Controller,
   ControllerRenderProps,
+  FieldPath,
   FieldValues,
 } from 'react-hook-form'
+import { Controller } from 'react-hook-form'
 
 import { FieldConfig } from './types'
 
@@ -30,9 +31,9 @@ import { FieldConfig } from './types'
  * value arrives as `undefined`, and React would take the input as
  * uncontrolled, then warn the moment the first key is typed.
  */
-const renderControl = (
-  field: FieldConfig,
-  controllerField: ControllerRenderProps<FieldValues, string>
+const renderControl = <TFieldValues extends FieldValues>(
+  field: FieldConfig<TFieldValues>,
+  controllerField: ControllerRenderProps<TFieldValues, FieldPath<TFieldValues>>
 ) => {
   switch (field.type) {
     case 'text':
@@ -200,9 +201,9 @@ const isInlineControl = (type: FieldConfig['type']) =>
  * error) wrapping the DS control its `type` selects. The accessibility
  * wiring comes from the `Field.Root` inside FormField.
  */
-export const renderField = (
-  field: FieldConfig,
-  control: Control<FieldValues>,
+export const renderField = <TFieldValues extends FieldValues>(
+  field: FieldConfig<TFieldValues>,
+  control: Control<TFieldValues>,
   error?: string
 ) => (
   <Controller

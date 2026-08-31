@@ -1,0 +1,13 @@
+@reference "@nino/ds/globals.css";
+
+.zip {
+  @apply grid gap-1.5;
+  grid-template-columns: minmax(0, 11rem);
+}
+.input {
+  @apply h-12 w-full rounded-3 border-black/10 bg-surface-raised text-base text-fg-muted;
+}
+.input:focus {
+  border-color: var(--store-tint, var(--color-brand));
+  box-shadow: inset 0 0 0 1px var(--store-tint, var(--color-brand));
+}

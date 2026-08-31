@@ -2,6 +2,8 @@ import { useMutation, useQueryClient } from '@tanstack/react-query'
 
 import { queryKeys } from '@constants/query-keys'
 import type { SaveAddressRequest } from '@custom_types/address/save-address-request'
+import type { Address } from '@custom_types/address/address'
+import { addressSaveRequest } from '@pages/Addresses/adapters/addressSaveRequest.adapter/addressSaveRequest.adapter'
 import { addressService } from '@shared/services/address/address.service'
 
 type SaveAddress = { id?: string; data: SaveAddressRequest }
@@ -11,7 +13,7 @@ type SaveAddress = { id?: string; data: SaveAddressRequest }
 export const useSaveAddress = () => {
   const queryClient = useQueryClient()
 
-  return useMutation({
+  const mutation = useMutation({
     mutationFn: ({ id, data }: SaveAddress) =>
       id
         ? addressService.updateMine(id, data)
@@ -19,4 +21,13 @@ export const useSaveAddress = () => {
     onSuccess: () =>
       queryClient.invalidateQueries({ queryKey: queryKeys.myAddresses.all }),
   })
+
+  return {
+    ...mutation,
+    makePrimary: (address: Address) =>
+      mutation.mutate({
+        id: address.id,
+        data: { ...addressSaveRequest(address), isPrimary: true },
+      }),
+  }
 }

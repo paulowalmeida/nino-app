@@ -1,0 +1,19 @@
+@reference "@nino/ds/globals.css";
+
+.body {
+  @apply pr-24;
+}
+
+.line {
+  @apply text-sm font-bold leading-snug text-fg-muted;
+}
+
+.city {
+  @apply mt-0.5 text-xs leading-snug text-fg-faint;
+}
+
+.badge {
+  @apply mt-2 inline-flex items-center rounded-full bg-brand-soft px-2.5;
+  @apply py-1 text-2xs font-bold uppercase tracking-[0.1em];
+  @apply text-brand-strong;
+}

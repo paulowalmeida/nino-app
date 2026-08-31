@@ -21,13 +21,12 @@ type UseCheckoutWorkflowParams = {
   isLoadingZones: boolean
   cartLines: CartLine[]
   estimatedMinutes: number | undefined
-  paymentOptions: PaymentMethod[]
+  paymentOptions: PaymentMethod[] | undefined
   clearCart: () => void
   slug: string | undefined
 }
 
-/** Formulário do pedido e o cálculo do que ele custa — a página só orquestra
-    qual tela mostrar com o que este hook devolve. */
+/** WHY: concentra o formulário, a cotação e a criação em uma única instância. */
 export const useCheckoutWorkflow = ({
   store,
   customer,
@@ -36,11 +35,15 @@ export const useCheckoutWorkflow = ({
   isLoadingZones,
   cartLines,
   estimatedMinutes,
-  paymentOptions,
+  paymentOptions: configuredPaymentOptions,
   clearCart,
   slug,
 }: UseCheckoutWorkflowParams) => {
   const isAuthenticated = customer !== null
+  const paymentOptions = configuredPaymentOptions ?? ['CASH']
+  const form = useForm<CheckoutFormValues>({
+    defaultValues: { channel: 'DELIVERY', paymentMethod: 'CASH' },
+  })
   const {
     mutate: createOrder,
     isPending: isSubmitting,
@@ -50,13 +53,10 @@ export const useCheckoutWorkflow = ({
 
   const {
     register,
-    handleSubmit,
     control,
     setValue,
     formState: { errors },
-  } = useForm<CheckoutFormValues>({
-    defaultValues: { channel: 'DELIVERY', paymentMethod: 'CASH' },
-  })
+  } = form
 
   const channel = useWatch({ control, name: 'channel' })
   const paymentMethod = useWatch({ control, name: 'paymentMethod' })
@@ -79,13 +79,13 @@ export const useCheckoutWorkflow = ({
     setValue('deliveryZoneId', quote?.id)
   }, [quote?.id, setValue])
 
-  /** Loja que não entrega não pode ficar com "Entrega" marcado por padrão. */
+  /** WHY: loja sem zona de entrega deve iniciar em retirada. */
   useEffect(() => {
     if (!isLoadingZones && zones.length === 0) setValue('channel', 'PICKUP')
   }, [isLoadingZones, zones.length, setValue])
 
   /**
-   * A sacola só esvazia depois que a confirmação existe. Limpar junto com o
+   * WHY: a sacola só esvazia depois que a confirmação existe. Limpar junto com o
    * envio faz a tela de sacola vazia piscar no intervalo entre o carrinho
    * (store externa) e o `created` (estado da mutation) se atualizarem.
    */
@@ -103,7 +103,7 @@ export const useCheckoutWorkflow = ({
     estimatedMinutes,
   })
 
-  const submit = handleSubmit((values) => {
+  const onSubmit = (values: CheckoutFormValues) => {
     if (!store) return
 
     createOrder(
@@ -111,21 +111,22 @@ export const useCheckoutWorkflow = ({
       {
         onSuccess: (order) => {
           if (!order.trackingToken) return
-        writeLastOrder({
-          orderId: order.id,
-          token: order.trackingToken,
-          slug: slug ?? '',
+          writeLastOrder({
+            orderId: order.id,
+            token: order.trackingToken,
+            slug: slug ?? '',
           })
         },
       }
     )
-  })
+  }
 
   return {
+    form,
     register,
     control,
     errors,
-    submit,
+    onSubmit,
     isDelivery,
     isAuthenticated,
     customer,

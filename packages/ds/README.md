@@ -24,6 +24,7 @@ exportada como `@nino/ds/tokens.css`. O `globals.css` do DS faz
 `@import './tokens.css'` e mantém só as fontes no próprio `@theme`.
 
 Apps consomem de duas formas:
+
 - **Import JS no entry:** `import '@nino/ds/globals.css'`.
 - **Tailwind v4 (ex.: landing):** `@import "@nino/ds/tokens.css"` no CSS de
   tema — resolve cross-package, inclusive pelo `@reference`.
@@ -136,17 +137,19 @@ label↔input wiram sozinhos dentro do FormField).
 A lógica config-driven de formulário (schema → controle) **não** mora no DS —
 fica no pacote `packages/forms` (`@nino/forms`), que depende de `@nino/ds` +
 react-hook-form. O DS continua composição burra; o forms é a ergonomia
-"descrevo campo como dado" para os forms repetitivos. Layout atípico → compor
-`FormField` direto.
+"descrevo campo como dado" para os forms repetitivos. Layout atípico usa o
+modo composto do `FormBuilder`, ainda com `FormField` e controles do DS.
 
 - `FieldConfig` — union discriminada por `type` (`text`/`textarea`/`select`/
   `combobox`/`checkbox`/`switch`).
 - `renderField(field, control, error)` — mapeia o type para o controle do DS,
   embrulha em `FormField`, liga ao RHF via `Controller`.
-- `FormBuilder({ schema, defaultValues, onSubmit, footer, submitLabel })` —
-  `useForm` + render dos campos. Botões via render-prop `footer`
-  (`({ formState, reset }) => ReactNode`); sem `footer`, cai no default de 1
-  botão submit (`submitLabel`). Toggle sai horizontal automaticamente.
+- `FormBuilder` em modo schema — `useForm` + render dos campos. Botões via
+  render-prop `footer`; sem `footer`, cai no default de 1 botão submit
+  (`submitLabel`). Toggle sai horizontal automaticamente.
+- `FormBuilder` em modo composto — render prop com o `UseFormReturn` tipado
+  completo, `FormProvider` para descendentes e layout livre com os controles
+  do DS. `formOptions` configura o RHF e `formProps` configura o `<form>`.
 - vitest do forms usa alias `@nino/ds`→`../ds/src/index.ts`, `@ds`→`../ds/src`,
   reaproveita o `setup.ts` do ds. Tipos do jest-dom via `src/jest-dom.d.ts`.
 

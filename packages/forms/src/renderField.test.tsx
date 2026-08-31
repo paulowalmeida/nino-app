@@ -5,6 +5,7 @@ import { Control, FieldValues, useForm } from 'react-hook-form'
 import { describe, expect, it } from 'vitest'
 
 import { renderField } from './renderField'
+import { renderFieldMock } from './renderField.mock'
 import { FieldConfig } from './types'
 
 const FieldHarness = ({
@@ -69,7 +70,7 @@ describe(renderField.name, () => {
       name: 'category',
       type: 'select',
       label: 'Categoria',
-      options: [{ value: 'drinks', label: 'Bebidas' }],
+      options: [renderFieldMock.categoryOption],
     }
 
     // Act
@@ -77,6 +78,19 @@ describe(renderField.name, () => {
 
     // Assert
     expect(screen.getByText('Categoria')).toBeInTheDocument()
+    expect(screen.getByRole('combobox')).toBeInTheDocument()
+  })
+
+  it('renders a combobox with its searchable input', () => {
+    const field: FieldConfig = {
+      name: 'category',
+      type: 'combobox',
+      label: 'Categoria pesquisável',
+      options: [renderFieldMock.categoryOption],
+    }
+
+    render(<FieldHarness field={field} />)
+
     expect(screen.getByRole('combobox')).toBeInTheDocument()
   })
 

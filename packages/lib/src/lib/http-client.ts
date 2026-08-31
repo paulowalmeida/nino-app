@@ -99,8 +99,16 @@ export const createHttpClient = (config: HttpClientConfig): HttpClient => {
     throw error
   }
 
-  const run = async <T>(request: ResponsePromise): Promise<T> =>
-    request.json<T>().catch(handleError)
+  // WHY: corpo vazio (Nest manda `response.send()` sem corpo pra `null`/`undefined`) faz `response.json()` lançar; ler como texto primeiro deixa isso virar `null` de verdade.
+  const run = async <T>(request: ResponsePromise): Promise<T> => {
+    try {
+      const response = await request
+      const text = await response.text()
+      return (text ? JSON.parse(text) : null) as T
+    } catch (error) {
+      return handleError(error)
+    }
+  }
 
   return {
     get: (url, options) =>

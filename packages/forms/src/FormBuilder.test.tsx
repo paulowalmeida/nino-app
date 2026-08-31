@@ -1,30 +1,29 @@
 import { Button } from '@nino/ds/components/Button'
+import { Input } from '@nino/ds/components/Input'
 import { render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
+import { useFormContext } from 'react-hook-form'
 import { describe, expect, it, vi } from 'vitest'
 
 import { FormBuilder } from './FormBuilder'
-import { FieldConfig } from './types'
+import { formBuilderMock } from './FormBuilder.mock'
+import type { FieldConfig } from './types'
 
-const schema: FieldConfig[] = [
-  {
-    name: 'nome',
-    type: 'text',
-    label: 'Nome',
-    required: true,
-    rules: { required: 'Nome obrigatório' },
-  },
-  {
-    name: 'categoria',
-    type: 'select',
-    label: 'Categoria',
-    options: [
-      { value: 'a', label: 'Alimento' },
-      { value: 'b', label: 'Bebida' },
-    ],
-  },
-  { name: 'ativo', type: 'switch', label: 'Ativo' },
-]
+const schema = formBuilderMock.schema
+
+type ComposedFormValues = {
+  address: {
+    street: string
+  }
+}
+
+const ContextField = () => {
+  const { register } = useFormContext<ComposedFormValues>()
+
+  return (
+    <Input aria-label="Rua pelo contexto" {...register('address.street')} />
+  )
+}
 
 describe(FormBuilder.name, () => {
   it('renders every field of the schema with its label', () => {
@@ -55,7 +54,7 @@ describe(FormBuilder.name, () => {
     render(
       <FormBuilder
         schema={schema}
-        defaultValues={{ nome: 'Coxinha' }}
+        defaultValues={{ ...formBuilderMock.defaultValues, nome: 'Coxinha' }}
         onSubmit={vi.fn()}
       />
     )
@@ -191,5 +190,123 @@ describe(FormBuilder.name, () => {
     // Assert
     expect(container.querySelectorAll('input')).toHaveLength(0)
     expect(screen.getByRole('button', { name: 'Salvar' })).toBeInTheDocument()
+  })
+
+  it('supports a fully composed form with typed form methods', async () => {
+    const onSubmit = vi.fn()
+
+    render(
+      <FormBuilder<ComposedFormValues>
+        defaultValues={{ address: { street: '' } }}
+        onSubmit={onSubmit}
+        formProps={{ className: 'custom-form', 'aria-label': 'Endereço' }}
+      >
+        {({ register, setValue }) => (
+          <>
+            <Input aria-label="Rua" {...register('address.street')} />
+            <Button
+              type="button"
+              onClick={() => setValue('address.street', 'Rua das Flores')}
+            >
+              Preencher
+            </Button>
+            <Button type="submit">Enviar</Button>
+          </>
+        )}
+      </FormBuilder>
+    )
+
+    await userEvent.click(screen.getByRole('button', { name: 'Preencher' }))
+    await userEvent.click(screen.getByRole('button', { name: 'Enviar' }))
+
+    expect(screen.getByRole('form', { name: 'Endereço' })).toHaveClass(
+      'custom-form'
+    )
+    await waitFor(() =>
+      expect(onSubmit).toHaveBeenCalledWith(
+        { address: { street: 'Rua das Flores' } },
+        expect.anything()
+      )
+    )
+  })
+
+  it('provides the same form instance through form context', async () => {
+    const onSubmit = vi.fn()
+
+    render(
+      <FormBuilder<ComposedFormValues>
+        defaultValues={{ address: { street: '' } }}
+        onSubmit={onSubmit}
+      >
+        {() => (
+          <>
+            <ContextField />
+            <Button type="submit">Enviar</Button>
+          </>
+        )}
+      </FormBuilder>
+    )
+
+    await userEvent.type(screen.getByLabelText('Rua pelo contexto'), 'Travessa')
+    await userEvent.click(screen.getByRole('button', { name: 'Enviar' }))
+
+    await waitFor(() =>
+      expect(onSubmit).toHaveBeenCalledWith(
+        { address: { street: 'Travessa' } },
+        expect.anything()
+      )
+    )
+  })
+
+  it('reports invalid composed submissions without calling onSubmit', async () => {
+    const onSubmit = vi.fn()
+    const onInvalid = vi.fn()
+
+    render(
+      <FormBuilder<{ name: string }>
+        defaultValues={{ name: '' }}
+        onSubmit={onSubmit}
+        onInvalid={onInvalid}
+      >
+        {({ register }) => (
+          <>
+            <Input
+              aria-label="Nome"
+              {...register('name', { required: 'Informe o nome' })}
+            />
+            <Button type="submit">Enviar</Button>
+          </>
+        )}
+      </FormBuilder>
+    )
+
+    await userEvent.click(screen.getByRole('button', { name: 'Enviar' }))
+
+    await waitFor(() => expect(onInvalid).toHaveBeenCalled())
+    expect(onSubmit).not.toHaveBeenCalled()
+  })
+
+  it('supports nested field names and resolves their validation error', async () => {
+    const nestedSchema: FieldConfig<ComposedFormValues>[] = [
+      {
+        name: 'address.street',
+        type: 'text',
+        label: 'Rua',
+        rules: { required: 'Informe a rua' },
+      },
+    ]
+
+    render(
+      <FormBuilder<ComposedFormValues>
+        schema={nestedSchema}
+        defaultValues={{ address: { street: '' } }}
+        onSubmit={vi.fn()}
+      />
+    )
+
+    await userEvent.click(screen.getByRole('button', { name: 'Salvar' }))
+
+    expect(await screen.findByText('Informe a rua')).toBeInTheDocument()
+    expect(screen.getByLabelText('Rua')).toHaveAttribute('aria-invalid', 'true')
   })
 })

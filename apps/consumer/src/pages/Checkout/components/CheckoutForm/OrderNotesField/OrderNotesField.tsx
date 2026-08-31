@@ -2,11 +2,16 @@ import { Collapsible } from '@nino/ds/components/Collapsible'
 import { Textarea } from '@nino/ds/components/Textarea'
 import { DisclosureTrigger } from '../DisclosureTrigger/DisclosureTrigger'
 import { useCheckoutFacade } from '@pages/checkout/facades/useCheckoutFacade/useCheckoutFacade'
+import type { CheckoutFacade } from '@pages/checkout/facades/useCheckoutFacade/useCheckoutFacade'
 
 import styles from './OrderNotesField.module.css'
 
-export const OrderNotesField = () => {
-  const { register } = useCheckoutFacade()
+export const OrderNotesField = ({
+  checkout,
+}: {
+  checkout?: CheckoutFacade
+}) => {
+  const { register } = useCheckoutFacade(checkout)
 
   return (
     <Collapsible

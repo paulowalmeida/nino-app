@@ -62,6 +62,18 @@ describe('createHttpClient', () => {
     expect(result).toEqual({ id: 'order-1' })
   })
 
+  it('get: resolves an empty body as null, instead of failing to parse', async () => {
+    // Arrange
+    stubFetch(new Response(null, { status: 200 }))
+    const client = createHttpClient(baseConfig())
+
+    // Act
+    const result = await client.get('cash-sessions/current')
+
+    // Assert
+    expect(result).toBeNull()
+  })
+
   it('post: sends the body as json and returns the response', async () => {
     // Arrange
     let sentBody = ''

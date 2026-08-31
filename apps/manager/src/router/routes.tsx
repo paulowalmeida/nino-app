@@ -33,6 +33,21 @@ export const router = createBrowserRouter([
             Component: Login,
           })),
       },
+      {
+        path: '/esqueci-senha',
+        loader: GuestGuard,
+        lazy: () =>
+          import('@pages/ForgotPassword/ForgotPassword').then(
+            ({ ForgotPassword }) => ({ Component: ForgotPassword })
+          ),
+      },
+      {
+        path: '/redefinir-senha',
+        lazy: () =>
+          import('@pages/ResetPassword/ResetPassword').then(
+            ({ ResetPassword }) => ({ Component: ResetPassword })
+          ),
+      },
     ],
   },
   {

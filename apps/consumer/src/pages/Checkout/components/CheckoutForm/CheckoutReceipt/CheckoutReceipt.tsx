@@ -4,14 +4,19 @@ import { Box } from '@nino/ds/components/Box'
 import { Collapsible } from '@nino/ds/components/Collapsible'
 import { Text } from '@nino/ds/components/Text'
 import { useCheckoutFacade } from '@pages/checkout/facades/useCheckoutFacade/useCheckoutFacade'
+import type { CheckoutFacade } from '@pages/checkout/facades/useCheckoutFacade/useCheckoutFacade'
 import { brl } from '@utils/money'
 
 import styles from './CheckoutReceipt.module.css'
 
 /** A comanda dobrável: item a item, com o total no rodapé. */
-export const CheckoutReceipt = () => {
+export const CheckoutReceipt = ({
+  checkout,
+}: {
+  checkout?: CheckoutFacade
+}) => {
   const { cartLines, subtotal, isDelivery, zone, deliveryFee } =
-    useCheckoutFacade()
+    useCheckoutFacade(checkout)
   const [isOpen, setIsOpen] = useState(false)
   const itemCount = cartLines.reduce((total, line) => total + line.quantity, 0)
   const hasZone = !!zone

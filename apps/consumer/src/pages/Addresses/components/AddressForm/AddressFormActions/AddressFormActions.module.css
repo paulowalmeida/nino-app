@@ -1,0 +1,11 @@
+@reference "@nino/ds/globals.css";
+
+.actions {
+  @apply mt-6 flex flex-col gap-2.5 sm:flex-row-reverse;
+}
+.primary {
+  @apply flex h-12 w-full items-center justify-center rounded-full bg-brand font-bold text-fg-on-brand transition-colors hover:bg-brand-hover sm:w-auto sm:px-7 disabled:cursor-not-allowed disabled:opacity-dim;
+}
+.ghost {
+  @apply flex h-12 w-full items-center justify-center rounded-full border border-black/[0.08] font-bold text-fg-muted transition-colors hover:border-accent-peach hover:text-brand-strong sm:w-auto sm:px-7 disabled:cursor-not-allowed disabled:opacity-dim;
+}

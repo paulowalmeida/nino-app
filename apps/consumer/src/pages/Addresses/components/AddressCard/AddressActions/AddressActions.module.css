@@ -1,0 +1,12 @@
+@reference "@nino/ds/globals.css";
+
+.tools {
+  @apply absolute right-3 top-3 flex gap-1;
+}
+
+.tool {
+  @apply flex h-11 w-11 items-center justify-center rounded-full;
+  @apply text-fg-faint;
+  @apply transition-colors hover:bg-black/[0.06] hover:text-brand-strong;
+  @apply disabled:cursor-not-allowed disabled:opacity-disabled;
+}
