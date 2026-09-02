@@ -1,4 +1,3 @@
-import type { ReactNode } from 'react'
 import { Link } from 'react-router'
 
 import { EmptyState } from '@nino/ds/components/EmptyState'
@@ -8,21 +7,29 @@ import styles from './OrderNotFound.module.css'
 
 type OrderNotFoundProps = {
   backHref: string
-  children: ReactNode
+  reason: 'access' | 'invalid-link'
 }
 
-export const OrderNotFound = ({ backHref, children }: OrderNotFoundProps) => (
-  <EmptyState
-    size="md"
-    className={styles.notFound}
-    illustration={<Image src="/mascot-consumer-sad.svg" alt="" />}
-    title="Pedido não encontrado"
-    action={
-      <Link to={backHref} className={styles.backLink}>
-        Voltar para a loja
-      </Link>
-    }
-  >
-    {children}
-  </EmptyState>
-)
+export const OrderNotFound = ({ backHref, reason }: OrderNotFoundProps) => {
+  const message =
+    reason === 'access'
+      ? 'Abra pelo link que apareceu na hora do pedido, ou entre na sua conta ' +
+        'para ver seus pedidos.'
+      : 'Confira o link — ele é o mesmo que apareceu na hora do pedido.'
+
+  return (
+    <EmptyState
+      size="md"
+      className={styles.notFound}
+      illustration={<Image src="/mascot-consumer-sad.svg" alt="" />}
+      title="Pedido não encontrado"
+      action={
+        <Link to={backHref} className={styles.backLink}>
+          Voltar para a loja
+        </Link>
+      }
+    >
+      {message}
+    </EmptyState>
+  )
+}

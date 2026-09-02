@@ -24,4 +24,6 @@ export const useSignInStore = create<SignInState>((set) => ({
   setCode: (code) => setCode(set, code),
   goToCode: () => goToCode(set),
   goToIdentify: () => goToIdentify(set),
+  reset: () =>
+    set({ step: 'identify', channel: 'phone', phone: '', email: '', code: '' }),
 }))

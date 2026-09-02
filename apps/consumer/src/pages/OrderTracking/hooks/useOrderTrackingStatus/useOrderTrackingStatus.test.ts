@@ -1,19 +1,44 @@
 import { renderHook } from '@testing-library/react'
-import { describe, expect, it, vi } from 'vitest'
+import { beforeEach, describe, expect, it, vi } from 'vitest'
+
 import { useOrderTrackingStatus } from './useOrderTrackingStatus'
 import { useOrderTrackingStatusMock } from './useOrderTrackingStatus.mock'
+
+const sessionState = vi.hoisted(() => ({
+  customer: null as unknown,
+  pending: false,
+}))
+const orderState = vi.hoisted(() => ({
+  data: undefined as unknown,
+  pending: false,
+  error: false,
+}))
+
 vi.mock('@shared/hooks/useCustomerSession/useCustomerSession', () => ({
-  useCustomerSession: () => ({ customer: null, isPending: false }),
+  useCustomerSession: () => ({
+    customer: sessionState.customer,
+    isPending: sessionState.pending,
+  }),
 }))
 vi.mock('@hooks/useGuestOrderStatus/useGuestOrderStatus', () => ({
   useGuestOrderStatus: () => ({
-    data: undefined,
-    isPending: false,
-    isError: false,
+    data: orderState.data,
+    isPending: orderState.pending,
+    isError: orderState.error,
   }),
 }))
-vi.mock('@utils/order-journey', () => ({ isTerminal: () => false }))
+vi.mock('@utils/order-journey', () => ({
+  isTerminal: (status: string) => status === 'DELIVERED',
+}))
 describe('useOrderTrackingStatus', () => {
+  beforeEach(() => {
+    sessionState.customer = null
+    sessionState.pending = false
+    orderState.data = undefined
+    orderState.pending = false
+    orderState.error = false
+  })
+
   it('allows lookup when a tracking token is present', () => {
     const { result } = renderHook(() =>
       useOrderTrackingStatus(
@@ -23,5 +48,33 @@ describe('useOrderTrackingStatus', () => {
     )
     expect(result.current.canAsk).toBe(true)
     expect(result.current.done).toBe(false)
+  })
+
+  it('allows lookup for an authenticated customer without a token', () => {
+    sessionState.customer = { id: 'customer-1' }
+
+    const { result } = renderHook(() =>
+      useOrderTrackingStatus(useOrderTrackingStatusMock.orderId, undefined)
+    )
+
+    expect(result.current.canAsk).toBe(true)
+  })
+
+  it('exposes the completed state from the returned order', () => {
+    orderState.data = { status: 'DELIVERED' }
+
+    const { result } = renderHook(() =>
+      useOrderTrackingStatus(useOrderTrackingStatusMock.orderId, undefined)
+    )
+
+    expect(result.current.done).toBe(true)
+  })
+
+  it('keeps lookup disabled without a token or customer', () => {
+    const { result } = renderHook(() =>
+      useOrderTrackingStatus(useOrderTrackingStatusMock.orderId, undefined)
+    )
+
+    expect(result.current.canAsk).toBe(false)
   })
 })

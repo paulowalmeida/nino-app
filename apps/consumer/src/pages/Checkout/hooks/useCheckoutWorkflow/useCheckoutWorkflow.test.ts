@@ -1,14 +1,14 @@
 import { renderHook } from '@testing-library/react'
 import { describe, expect, it, vi } from 'vitest'
 
-import { useCheckoutTotals } from '@pages/checkout/hooks/useCheckoutTotals/useCheckoutTotals'
+import { checkoutTotals } from '@pages/checkout/utils/checkout-totals/checkout-totals'
 import { useDeliveryQuote } from '@pages/checkout/hooks/useDeliveryQuote/useDeliveryQuote'
 import { usePlaceOrder } from '@pages/checkout/hooks/usePlaceOrder/usePlaceOrder'
 
 import { useCheckoutWorkflow } from './useCheckoutWorkflow'
 import { useCheckoutWorkflowMock } from './useCheckoutWorkflow.mock'
 
-vi.mock('@pages/checkout/hooks/useCheckoutTotals/useCheckoutTotals')
+vi.mock('@pages/checkout/utils/checkout-totals/checkout-totals')
 vi.mock('@pages/checkout/hooks/usePlaceOrder/usePlaceOrder')
 vi.mock('@pages/checkout/hooks/useDeliveryQuote/useDeliveryQuote')
 vi.mock('@utils/last-order')
@@ -26,7 +26,7 @@ describe('useCheckoutWorkflow', () => {
       quote: undefined,
       isFetching: false,
     } as unknown as ReturnType<typeof useDeliveryQuote>)
-    vi.mocked(useCheckoutTotals).mockReturnValue({
+    vi.mocked(checkoutTotals).mockReturnValue({
       subtotal: 36,
       deliveryFee: 6.5,
       total: 42.5,

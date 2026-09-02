@@ -70,6 +70,14 @@
   @apply flex min-w-0 flex-1 flex-col py-0.5;
 }
 
+.bodyButton {
+  @apply flex min-w-0 flex-1 cursor-pointer appearance-none border-0 bg-transparent p-0 text-left;
+}
+
+.bodyButton:disabled {
+  @apply cursor-not-allowed;
+}
+
 .name {
   @apply font-display text-sm font-bold leading-snug text-fg-muted;
 }

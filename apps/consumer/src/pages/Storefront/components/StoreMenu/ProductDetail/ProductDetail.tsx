@@ -29,37 +29,36 @@ export const ProductDetail = () => {
     addToCart,
     replaceCart,
   } = useStorefrontFacade(slug)
-  const onClose = () => setSelectedItem(null)
+  const onClose = () => {
+    setQuantity(1)
+    setSelectedItem(null)
+  }
   const [pendingReplacement, setPendingReplacement] = useState<{
     item: MenuItem
     quantity: number
   } | null>(null)
   const onConfirm = (selected: MenuItem, quantity: number) => {
     if (addToCart(selected, quantity)) {
+      setQuantity(1)
       setSelectedItem(null)
       return
     }
 
+    setQuantity(1)
     setSelectedItem(null)
     setPendingReplacement({ item: selected, quantity })
   }
   const [quantity, setQuantity] = useState(1)
   const isDesktop = useIsDesktop()
 
-  const [shown, setShown] = useState(item)
-  if (item && item !== shown) {
-    setShown(item)
-    setQuantity(1)
-  }
-
   const isOpen = item !== null
 
-  const images = shown && shown.images.length > 0 ? shown.images : null
+  const images = item && item.images.length > 0 ? item.images : null
 
   const fallback = (
     <Box className={styles.photoFallback} aria-hidden="true">
       <Text as="span" className={styles.fallbackGlyph}>
-        {(shown ? categoryIcon(shown.name) : null) ?? '🍽️'}
+        {(item ? categoryIcon(item.name) : null) ?? '🍽️'}
       </Text>
     </Box>
   )
@@ -81,15 +80,15 @@ export const ProductDetail = () => {
     fallback
   )
 
-  const reveal = shown ? (
-    <Box key={shown.id}>
+  const reveal = item ? (
+    <Box key={item.id}>
       <Box className={`${motion.riseIn} ${styles.media}`}>{media}</Box>
-      {shown.description && (
+      {item.description && (
         <Text
           className={`${motion.riseIn} ${styles.description}`}
           style={riseDelay(70)}
         >
-          {shown.description}
+          {item.description}
         </Text>
       )}
     </Box>
@@ -107,18 +106,18 @@ export const ProductDetail = () => {
     />
   )
 
-  const confirmButton = shown ? (
+  const confirmButton = item ? (
     <Button
       className={styles.confirm}
-      onClick={() => onConfirm(shown, quantity)}
+      onClick={() => onConfirm(item, quantity)}
     >
-      Adicionar <AnimatedNumber value={brl(Number(shown.price) * quantity)} />
+      Adicionar <AnimatedNumber value={brl(Number(item.price) * quantity)} />
     </Button>
   ) : null
 
   const detail = isDesktop ? (
     <ProductDetailModal
-      item={shown}
+      item={item}
       isOpen={isOpen}
       media={media}
       stepper={stepper}
@@ -130,7 +129,7 @@ export const ProductDetail = () => {
       open={isOpen}
       onOpenChange={(open) => !open && onClose()}
       placement="bottom"
-      title={shown?.name ?? ''}
+      title={item?.name ?? ''}
       size="auto"
       contentClassName={styles.drawer}
     >

@@ -23,4 +23,14 @@ describe('resolveOtpCredentials', () => {
 
     expect(credentials).toEqual({ email: resolveOtpCredentialsMock.email })
   })
+
+  it('trims email credentials', () => {
+    const credentials = resolveOtpCredentials(
+      'email',
+      resolveOtpCredentialsMock.phone,
+      ` ${resolveOtpCredentialsMock.email} `
+    )
+
+    expect(credentials).toEqual({ email: resolveOtpCredentialsMock.email })
+  })
 })

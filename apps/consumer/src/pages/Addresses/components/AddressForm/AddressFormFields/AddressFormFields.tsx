@@ -5,9 +5,9 @@ import { FormField } from '@nino/ds/components/FormField'
 import { Input } from '@nino/ds/components/Input'
 import { Text } from '@nino/ds/components/Text'
 import type { SaveAddressRequest } from '@custom_types/address/save-address-request'
+import type { AddressLookupStatus } from '@pages/Addresses/types/AddressLookupStatus.type'
 
 import { AddressZipCodeField } from '../AddressZipCodeField/AddressZipCodeField'
-import type { AddressLookupStatus } from '../AddressZipCodeField/AddressZipCodeField'
 import styles from './AddressFormFields.module.css'
 
 type AddressFormFieldsProps = {

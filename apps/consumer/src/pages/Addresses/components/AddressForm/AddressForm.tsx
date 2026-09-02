@@ -10,7 +10,7 @@ import { useAddressesFacade } from '@pages/Addresses/facades/useAddressesFacade/
 
 import { AddressFormActions } from './AddressFormActions/AddressFormActions'
 import { AddressFormFields } from './AddressFormFields/AddressFormFields'
-import type { AddressLookupStatus } from './AddressZipCodeField/AddressZipCodeField'
+import type { AddressLookupStatus } from '@pages/Addresses/types/AddressLookupStatus.type'
 import styles from './AddressForm.module.css'
 
 const EMPTY: SaveAddressRequest = {
@@ -50,7 +50,7 @@ export const AddressForm = ({
     saveAddress(
       {
         id: address?.id,
-        data: { ...form, complement: form.complement?.trim() || undefined },
+        data: form,
       },
       {
         onSuccess: () => {

@@ -1,20 +1,9 @@
 @reference "@nino/ds/globals.css";
 
-/* página inteira e branca, como a vitrine — o cartão flutuante virava caixa
-   dentro de caixa no celular e moldura sobrando no desktop */
 .page {
   @apply flex min-h-dvh w-full flex-col bg-surface-raised pb-16;
 }
 
-/* cresce para empurrar o rodapé até o fim da página em telas curtas */
 .shell {
   @apply mx-auto w-full max-w-xl flex-1 px-5;
-}
-
-/* ----- skeleton ----- */
-/* o cartão vivo é o bloco alto do topo: o placeholder reserva a altura dele
-   inteira para a página não pular quando o pedido chega */
-.skStage {
-  composes: nino-skeleton from global;
-  @apply h-[15.5rem] w-full rounded-2 bg-black/[0.06];
 }

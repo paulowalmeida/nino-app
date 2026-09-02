@@ -43,6 +43,8 @@ export const useStorefrontFacade = (slug: string | undefined) => {
     isStoreError: storeQuery.isError,
     sections: menuQuery.sections,
     isMenuPending: menuQuery.isPending,
+    isMenuError: menuQuery.isError,
+    retryMenu: menuQuery.refetch,
     hours: hoursQuery.hours,
     isHoursPending: hoursQuery.isPending,
     estimatedMinutes: settingsQuery.estimatedMinutes,
@@ -63,6 +65,7 @@ export const useStorefrontFacade = (slug: string | undefined) => {
     setInfoOpen,
     selectedItem,
     setSelectedItem,
+    reset: useHomeInteractionStore((state) => state.reset),
   }
 }
 

@@ -9,4 +9,5 @@ export type StorefrontInteractionState = {
   setCartOpen: (open: boolean) => void
   setInfoOpen: (open: boolean) => void
   setSelectedItem: (item: MenuItem | null) => void
+  reset: () => void
 }

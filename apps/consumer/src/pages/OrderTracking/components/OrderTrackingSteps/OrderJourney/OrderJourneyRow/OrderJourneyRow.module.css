@@ -1,6 +1,6 @@
 @reference "@nino/ds/globals.css";
 
-/* três colunas fixas: marcador, passo, hora — as horas alinham à direita,
+/* Três colunas fixas: marcador, passo e hora; a hora alinha à direita,
    então dá para ler a coluna inteira sem varrer o texto */
 .row {
   @apply relative grid items-center gap-x-3.5 py-2;

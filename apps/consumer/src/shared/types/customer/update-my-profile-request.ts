@@ -1,5 +1,5 @@
 export type UpdateMyProfileRequest = {
   name?: string
-  email?: string
+  email?: string | null
   cpf?: string
 }

@@ -9,9 +9,12 @@ import { homeContentMock } from './StorefrontContent.mock'
 import { storefrontStoreMock as homeStoreMock } from '../../Storefront.mock'
 
 vi.mock('react-router', () => ({ useNavigate: () => vi.fn() }))
-vi.mock('@pages/Storefront/facades/useStorefrontFacade/useStorefrontFacade', () => ({
-  useStorefrontFacade: vi.fn(),
-}))
+vi.mock(
+  '@pages/Storefront/facades/useStorefrontFacade/useStorefrontFacade',
+  () => ({
+    useStorefrontFacade: vi.fn(),
+  })
+)
 vi.mock('@pages/Storefront/hooks/useMenuSections/useMenuSections', () => ({
   useMenuSections: () => ({
     visibleSections: [],
@@ -21,7 +24,9 @@ vi.mock('@pages/Storefront/hooks/useMenuSections/useMenuSections', () => ({
     isSearching: false,
   }),
 }))
-vi.mock('@hooks/useScrollProgress/useScrollProgress', () => ({ useScrollProgress: () => 0 }))
+vi.mock('@hooks/useScrollProgress/useScrollProgress', () => ({
+  useScrollProgress: () => 0,
+}))
 vi.mock('@nino/ds/components/Box', () => ({
   Box: ({ children }: { children: ReactNode }) => <div>{children}</div>,
 }))
@@ -38,12 +43,18 @@ vi.mock(
 vi.mock('@pages/Storefront/components/StoreCart/StoreCart', () => ({
   StoreCart: emptyComponent,
 }))
-vi.mock('@pages/Storefront/components/StoreMenu/CategoryNav/CategoryNav', () => ({
-  CategoryNav: emptyComponent,
-}))
-vi.mock('@pages/Storefront/components/StoreMenu/MenuSection/MenuSection', () => ({
-  MenuSection: emptyComponent,
-}))
+vi.mock(
+  '@pages/Storefront/components/StoreMenu/CategoryNav/CategoryNav',
+  () => ({
+    CategoryNav: emptyComponent,
+  })
+)
+vi.mock(
+  '@pages/Storefront/components/StoreMenu/MenuSection/MenuSection',
+  () => ({
+    MenuSection: emptyComponent,
+  })
+)
 vi.mock(
   '@pages/Storefront/components/StoreMenu/ProductDetail/ProductDetail',
   () => ({ ProductDetail: emptyComponent })
@@ -59,15 +70,21 @@ vi.mock(
 vi.mock('@pages/Storefront/components/StoreHeader/StoreInfo/StoreInfo', () => ({
   StoreInfo: emptyComponent,
 }))
-vi.mock('@pages/Storefront/components/StoreHeader/StoreTopBar/StoreTopBar', () => ({
-  StoreTopBar: emptyComponent,
-}))
+vi.mock(
+  '@pages/Storefront/components/StoreHeader/StoreTopBar/StoreTopBar',
+  () => ({
+    StoreTopBar: emptyComponent,
+  })
+)
 vi.mock('@shared/components/TabBar/TabBar/TabBar', () => ({
   TabBar: emptyComponent,
 }))
-vi.mock('@pages/Storefront/components/StoreMenu/CategoryBar/CategoryBar', () => ({
-  CategoryBar: emptyComponent,
-}))
+vi.mock(
+  '@pages/Storefront/components/StoreMenu/CategoryBar/CategoryBar',
+  () => ({
+    CategoryBar: emptyComponent,
+  })
+)
 vi.mock(
   '@pages/Storefront/components/StoreMenu/MenuSearchField/MenuSearchField',
   () => ({ MenuSearchField: emptyComponent })
@@ -75,12 +92,18 @@ vi.mock(
 vi.mock('@shared/components/PoweredBy/PoweredBy', () => ({
   PoweredBy: emptyComponent,
 }))
-vi.mock('@pages/Storefront/components/StoreHeader/StoreBanner/StoreBanner', () => ({
-  StoreBanner: emptyComponent,
-}))
-vi.mock('@pages/Storefront/skeletons/MenuRowsSkeleton/MenuRowsSkeleton', () => ({
-  MenuRowsSkeleton: emptyComponent,
-}))
+vi.mock(
+  '@pages/Storefront/components/StoreHeader/StoreBanner/StoreBanner',
+  () => ({
+    StoreBanner: emptyComponent,
+  })
+)
+vi.mock(
+  '@pages/Storefront/skeletons/MenuRowsSkeleton/MenuRowsSkeleton',
+  () => ({
+    MenuRowsSkeleton: emptyComponent,
+  })
+)
 
 vi.mock('@nino/ds/components/EmptyState', () => ({
   EmptyState: emptyComponent,
@@ -99,6 +122,9 @@ describe('StorefrontContent', () => {
       cartLines: [],
       cartCount: 0,
       cartTotal: 0,
+      isMenuError: false,
+      retryMenu: vi.fn(),
+      reset: vi.fn(),
     } as never)
 
     render(<StorefrontContent pathSlug={homeContentMock.pathSlug} />)

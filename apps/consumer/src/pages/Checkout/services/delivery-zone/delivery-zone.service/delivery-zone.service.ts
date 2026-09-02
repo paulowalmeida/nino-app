@@ -1,4 +1,4 @@
-import type { PublicDeliveryZone } from '@custom_types/delivery-zone/public-delivery-zone'
+import type { PublicDeliveryZone } from '@pages/checkout/types/delivery-zone/PublicDeliveryZone.type'
 import { api } from '@shared/services/http/http.service'
 
 export const deliveryZoneService = {
@@ -9,6 +9,8 @@ export const deliveryZoneService = {
     zipCode: string
   ): Promise<PublicDeliveryZone | null> =>
     api.get<PublicDeliveryZone | null>(
-      `orders/guest/quote?tenantId=${encodeURIComponent(tenantId)}&zipCode=${encodeURIComponent(zipCode)}`
+      'orders/guest/quote?' +
+        `tenantId=${encodeURIComponent(tenantId)}&` +
+        `zipCode=${encodeURIComponent(zipCode)}`
     ),
 }

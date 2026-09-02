@@ -24,11 +24,7 @@ export const CategoryNav = () => {
   }, [activeId])
 
   return (
-    <nav
-      className={styles.nav}
-      role="tablist"
-      aria-label="Categorias do cardápio"
-    >
+    <nav className={styles.nav} aria-label="Categorias do cardápio">
       <Text className={styles.railLabel}>Cardápio</Text>
       <Box direction="row" className={styles.track}>
         {sections.map((section) => {
@@ -37,7 +33,7 @@ export const CategoryNav = () => {
             <Chip
               key={section.id}
               ref={isActive ? activeRef : undefined}
-              variant="tab"
+              variant="toggle"
               selected={isActive}
               onClick={() => goToSection(section.id)}
               className={`${styles.chip} ${isActive ? styles.chipOn : ''}`}

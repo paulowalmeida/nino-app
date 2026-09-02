@@ -39,27 +39,33 @@ const profileLazy = () =>
   }))
 
 const addressesLazy = () =>
-  import('@pages/Addresses/AccountAddresses').then(({ AccountAddresses }) => ({
-    Component: AccountAddresses,
-  }))
+  import('@pages/Addresses/Addresses').then(
+    ({ Addresses: AccountAddresses }) => ({
+      Component: AccountAddresses,
+    })
+  )
 
 const ordersLazy = () =>
-  import('@pages/Orders/AccountOrders').then(({ AccountOrders }) => ({
-    Component: AccountOrders,
-  }))
+  import('@pages/Orders/AccountOrders/AccountOrders').then(
+    ({ AccountOrders }) => ({
+      Component: AccountOrders,
+    })
+  )
 
 const paymentLazy = () =>
-  import('@pages/Payment/AccountPayment').then(({ AccountPayment }) => ({
-    Component: AccountPayment,
-  }))
+  import('@pages/AccountPayment/AccountPayment').then(
+    ({ AccountPayment }) => ({
+      Component: AccountPayment,
+    })
+  )
 
 const conversationsLazy = () =>
-  import('@pages/Conversations/AccountChats').then(({ AccountChats }) => ({
+  import('@pages/AccountChats/AccountChats').then(({ AccountChats }) => ({
     Component: AccountChats,
   }))
 
 const invoicesLazy = () =>
-  import('@pages/Invoices/AccountInvoices').then(({ AccountInvoices }) => ({
+  import('@pages/AccountInvoices/AccountInvoices').then(({ AccountInvoices }) => ({
     Component: AccountInvoices,
   }))
 

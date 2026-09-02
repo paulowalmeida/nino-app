@@ -2,6 +2,7 @@ import type { CSSProperties } from 'react'
 
 import type { GuestOrderStatus } from '@custom_types/order/guest-order-status'
 import { orderJourneyRows } from '@pages/order-tracking/adapters/orderJourneyRows.adapter/orderJourneyRows.adapter'
+
 import { OrderJourneyRow } from './OrderJourneyRow/OrderJourneyRow'
 
 import styles from './OrderJourney.module.css'

@@ -1,8 +1,8 @@
 import type { OrderJourneyRow as OrderJourneyRowData } from '@custom_types/order/order-journey-row'
 import { ListRow } from '@nino/ds/components/ListRow'
 import { Text } from '@nino/ds/components/Text'
-import { clockLabel } from '@utils/clock'
 import { STATUS_LABEL } from '@constants/order.constants'
+import { clockLabel } from '@utils/clock'
 import { stageIcon } from '@utils/order-journey'
 import { riseDelay } from '@utils/rise-delay'
 

@@ -1,4 +1,3 @@
-import type { CSSProperties } from 'react'
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
 
 import { Box } from '@nino/ds/components/Box'
@@ -12,19 +11,19 @@ import { EXPO_OUT_EASE } from '@constants/motion.constants'
 import { STATUS_LABEL } from '@constants/order.constants'
 import { etaLead, isTerminal, stageNote } from '@utils/order-journey'
 import type { GuestOrderStatus } from '@custom_types/order/guest-order-status'
+import { riseDelay } from '@utils/rise-delay'
 
 import styles from './OrderStage.module.css'
+import motionStyles from '@styles/motion.module.css'
 
 type OrderStageProps = {
   order: GuestOrderStatus
-  className?: string
-  style?: CSSProperties
 }
 
 /** Acima disso a contagem regressiva vira ansiedade: só o horário basta. */
 const COUNTDOWN_CEILING = 90
 
-export const OrderStage = ({ order, className, style }: OrderStageProps) => {
+export const OrderStage = ({ order }: OrderStageProps) => {
   const reduceMotion = useReducedMotion()
   const minutes = useMinutesUntil(order.estimatedDeliveryAt)
   const isDone = isTerminal(order.status)
@@ -40,13 +39,13 @@ export const OrderStage = ({ order, className, style }: OrderStageProps) => {
     <Box
       as="section"
       className={[
+        motionStyles.riseIn,
         styles.stage,
         isCancelled ? styles.stageCancelled : '',
-        className ?? '',
       ]
         .filter(Boolean)
         .join(' ')}
-      style={style}
+      style={riseDelay(60)}
       aria-live="polite"
     >
       <Text as="p" className={isDone ? styles.flagDone : styles.flag}>

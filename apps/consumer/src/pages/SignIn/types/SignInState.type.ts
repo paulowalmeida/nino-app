@@ -13,4 +13,5 @@ export type SignInState = {
   setCode: (code: string) => void
   goToCode: () => void
   goToIdentify: () => void
+  reset: () => void
 }

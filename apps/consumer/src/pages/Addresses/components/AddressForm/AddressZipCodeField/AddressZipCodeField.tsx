@@ -6,10 +6,9 @@ import { FormField } from '@nino/ds/components/FormField'
 import { MaskedInput } from '@nino/ds/components/MaskedInput'
 import { maskZipCode, onlyDigits } from '@nino/ds/masks'
 import type { SaveAddressRequest } from '@custom_types/address/save-address-request'
+import type { AddressLookupStatus } from '@pages/Addresses/types/AddressLookupStatus.type'
 
 import styles from './AddressZipCodeField.module.css'
-
-export type AddressLookupStatus = 'idle' | 'done' | 'notFound'
 
 type AddressZipCodeFieldProps = {
   form: UseFormReturn<SaveAddressRequest>

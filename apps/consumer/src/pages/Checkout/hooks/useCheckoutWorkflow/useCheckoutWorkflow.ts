@@ -3,12 +3,12 @@ import { useForm, useWatch } from 'react-hook-form'
 
 import type { Address } from '@custom_types/address/address'
 import type { CartLine } from '@custom_types/cart/cart-line'
-import type { CheckoutFormValues } from '@custom_types/checkout/checkout-form-values'
+import type { CheckoutFormValues } from '@pages/checkout/types/checkout/CheckoutFormValues.type'
 import type { Customer } from '@custom_types/customer/customer'
-import type { PublicDeliveryZone } from '@custom_types/delivery-zone/public-delivery-zone'
+import type { PublicDeliveryZone } from '@pages/checkout/types/delivery-zone/PublicDeliveryZone.type'
 import type { PaymentMethod } from '@custom_types/order/payment-method'
 import type { Store } from '@custom_types/store/store'
-import { useCheckoutTotals } from '@pages/checkout/hooks/useCheckoutTotals/useCheckoutTotals'
+import { checkoutTotals } from '@pages/checkout/utils/checkout-totals/checkout-totals'
 import { useDeliveryQuote } from '@pages/checkout/hooks/useDeliveryQuote/useDeliveryQuote'
 import { usePlaceOrder } from '@pages/checkout/hooks/usePlaceOrder/usePlaceOrder'
 import { writeLastOrder } from '@utils/last-order'
@@ -96,7 +96,7 @@ export const useCheckoutWorkflow = ({
   const isDelivery = channel === 'DELIVERY'
   const zone = zones.find(({ id }) => id === deliveryZoneId) ?? quote
 
-  const { subtotal, deliveryFee, total, deliveryNote } = useCheckoutTotals({
+  const { subtotal, deliveryFee, total, deliveryNote } = checkoutTotals({
     cartLines,
     isDelivery,
     zone,

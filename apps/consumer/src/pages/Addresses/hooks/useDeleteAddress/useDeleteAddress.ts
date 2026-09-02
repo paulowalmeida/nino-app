@@ -2,13 +2,16 @@ import { useMutation, useQueryClient } from '@tanstack/react-query'
 
 import { queryKeys } from '@constants/query-keys'
 import { addressService } from '@shared/services/address/address.service'
+import { useAddressesStore } from '@pages/Addresses/states/addresses/addresses.store'
 
 export const useDeleteAddress = () => {
   const queryClient = useQueryClient()
 
   return useMutation({
     mutationFn: (id: string) => addressService.deleteMine(id),
-    onSuccess: () =>
-      queryClient.invalidateQueries({ queryKey: queryKeys.myAddresses.all }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: queryKeys.myAddresses.all })
+      useAddressesStore.getState().cancelDelete()
+    },
   })
 }

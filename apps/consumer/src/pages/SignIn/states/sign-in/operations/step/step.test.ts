@@ -21,6 +21,11 @@ describe('step operations', () => {
     // Act
     goToIdentify(set)
     // Assert
-    expect(set).toHaveBeenCalledWith({ step: stepMock.identifyStep, code: '' })
+    expect(set).toHaveBeenCalledWith({
+      step: stepMock.identifyStep,
+      phone: '',
+      email: '',
+      code: '',
+    })
   })
 })

@@ -37,8 +37,10 @@ export const OrderConfirmed = ({
       </Heading>
       <Text className={styles.text}>
         {isPickup
-          ? 'A loja já recebeu e vai preparar. Guarde o código para retirar no balcão.'
-          : 'A loja já recebeu e vai preparar. Guarde o código para acompanhar a entrega.'}
+          ? 'A loja já recebeu e vai preparar. Guarde o código para '
+            + 'retirar no balcão.'
+          : 'A loja já recebeu e vai preparar. Guarde o código para '
+            + 'acompanhar a entrega.'}
       </Text>
       <Text className={styles.code}>#{order.orderNumber}</Text>
       <Button onClick={onTrack}>Acompanhar pedido</Button>

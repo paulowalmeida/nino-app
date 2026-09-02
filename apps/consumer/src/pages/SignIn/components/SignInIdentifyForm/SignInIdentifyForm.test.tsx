@@ -67,4 +67,20 @@ describe('SignInIdentifyForm', () => {
 
     expect(screen.getByRole('alert')).toBeInTheDocument()
   })
+
+  it('trims an email before requesting the code', async () => {
+    const requestCode = vi.fn()
+    facadeWith({
+      channel: 'email',
+      email: `  ${signInIdentifyFormMock.validEmail}  `,
+      requestCode,
+    })
+    render(<SignInIdentifyForm />)
+
+    await userEvent.click(screen.getByRole('button', { name: 'Enviar código' }))
+
+    expect(requestCode).toHaveBeenCalledWith({
+      email: signInIdentifyFormMock.validEmail,
+    })
+  })
 })

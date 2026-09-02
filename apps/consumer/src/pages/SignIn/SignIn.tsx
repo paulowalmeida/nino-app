@@ -1,3 +1,5 @@
+import { useLayoutEffect } from 'react'
+
 import { SignInCodeForm } from '@pages/sign-in/components/SignInCodeForm/SignInCodeForm'
 import { SignInHeader } from '@pages/sign-in/components/SignInHeader/SignInHeader'
 import { SignInIdentifyForm } from '@pages/sign-in/components/SignInIdentifyForm/SignInIdentifyForm'
@@ -7,7 +9,11 @@ import { Box } from '@nino/ds/components/Box'
 import styles from './SignIn.module.css'
 
 export const SignIn = () => {
-  const { store, step } = useSignInFacade()
+  const { store, step, reset } = useSignInFacade()
+
+  useLayoutEffect(() => {
+    reset()
+  }, [reset])
 
   return (
     <Box

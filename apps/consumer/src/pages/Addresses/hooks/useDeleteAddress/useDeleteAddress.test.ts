@@ -1,15 +1,18 @@
 import { renderHook } from '@testing-library/react'
-import { describe, expect, it, vi } from 'vitest'
+import { beforeEach, describe, expect, it, vi } from 'vitest'
 
 import { queryKeys } from '@constants/query-keys'
 import { addressService } from '@shared/services/address/address.service'
+import { useAddressesStore } from '@pages/Addresses/states/addresses/addresses.store'
 
 import { useDeleteAddress } from './useDeleteAddress'
 import { useDeleteAddressMock } from './useDeleteAddress.mock'
 
 vi.mock('@shared/services/address/address.service')
+vi.mock('@pages/Addresses/states/addresses/addresses.store')
 
 const invalidateQueries = vi.fn()
+const cancelDelete = vi.fn()
 
 let onSuccess: (() => void) | undefined
 let mutationFn: ((input: unknown) => unknown) | undefined
@@ -31,6 +34,11 @@ vi.mock('@tanstack/react-query', async (importOriginal) => {
 })
 
 describe('useDeleteAddress', () => {
+  beforeEach(() => {
+    vi.mocked(useAddressesStore.getState).mockReturnValue({
+      cancelDelete,
+    } as never)
+  })
   it('sends the address id to the delete service', () => {
     // Arrange
     renderHook(() => useDeleteAddress())
@@ -55,5 +63,6 @@ describe('useDeleteAddress', () => {
     expect(invalidateQueries).toHaveBeenCalledWith({
       queryKey: queryKeys.myAddresses.all,
     })
+    expect(cancelDelete).toHaveBeenCalledOnce()
   })
 })

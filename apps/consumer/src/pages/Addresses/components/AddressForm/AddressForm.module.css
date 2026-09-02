@@ -10,7 +10,7 @@
   @apply grid w-full gap-4 lg:max-w-block-lg;
 }
 
-/* WHY: largura por proporção, não por número fixo — número da casa cabe em
+/* WHY: largura por proporção, não por número fixo — o número cabe em
    quatro dígitos e UF em duas letras; a mesma caixa de um nome de rua para
    os dois é o que fazia o formulário parecer desmontado. */
 .pair {

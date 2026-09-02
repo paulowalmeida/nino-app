@@ -1,0 +1,10 @@
+@reference "@nino/ds/globals.css";
+
+.page {
+  @apply flex min-h-dvh w-full flex-col bg-surface-raised pb-16;
+}
+
+.stage {
+  composes: nino-skeleton from global;
+  @apply h-[15.5rem] w-full rounded-2 bg-black/[0.06];
+}

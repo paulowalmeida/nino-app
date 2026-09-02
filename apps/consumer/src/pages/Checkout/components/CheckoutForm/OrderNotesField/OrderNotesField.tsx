@@ -1,8 +1,9 @@
 import { Collapsible } from '@nino/ds/components/Collapsible'
 import { Textarea } from '@nino/ds/components/Textarea'
-import { DisclosureTrigger } from '../DisclosureTrigger/DisclosureTrigger'
 import { useCheckoutFacade } from '@pages/checkout/facades/useCheckoutFacade/useCheckoutFacade'
 import type { CheckoutFacade } from '@pages/checkout/facades/useCheckoutFacade/useCheckoutFacade'
+
+import { DisclosureTrigger } from '../DisclosureTrigger/DisclosureTrigger'
 
 import styles from './OrderNotesField.module.css'
 

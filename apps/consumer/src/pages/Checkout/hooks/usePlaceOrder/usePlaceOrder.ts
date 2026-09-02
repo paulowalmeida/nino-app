@@ -1,7 +1,7 @@
 import { useMutation } from '@tanstack/react-query'
 
 import type { CartLine } from '@custom_types/cart/cart-line'
-import type { CheckoutFormValues } from '@custom_types/checkout/checkout-form-values'
+import type { CheckoutFormValues } from '@pages/checkout/types/checkout/CheckoutFormValues.type'
 import type { Store } from '@custom_types/store/store'
 import { customerOrderRequest } from '@pages/checkout/adapters/customerOrderRequest.adapter/customerOrderRequest.adapter'
 import { guestOrderRequest } from '@pages/checkout/adapters/guestOrderRequest.adapter/guestOrderRequest.adapter'

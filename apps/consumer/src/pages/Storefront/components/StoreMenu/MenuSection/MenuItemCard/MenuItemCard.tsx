@@ -54,27 +54,30 @@ export const MenuItemCard = ({
   return (
     <Box
       className={disabled ? `${styles.card} ${styles.disabled}` : styles.card}
-      onClick={() => !disabled && onSelect(item)}
-      role="button"
-      tabIndex={disabled ? -1 : 0}
+      role="group"
       aria-disabled={disabled}
-      onKeyDown={(event) =>
-        !disabled && event.key === 'Enter' && onSelect(item)
-      }
     >
-      <Box className={styles.body}>
-        <Heading level={3} className={styles.name}>
-          {item.name}
-        </Heading>
-        {item.description && (
-          <Text as="p" className={styles.description}>
-            {item.description}
+      <button
+        type="button"
+        className={styles.bodyButton}
+        disabled={disabled}
+        aria-label={`Ver detalhes de ${item.name}`}
+        onClick={() => onSelect(item)}
+      >
+        <Box className={styles.body}>
+          <Heading level={3} className={styles.name}>
+            {item.name}
+          </Heading>
+          {item.description && (
+            <Text as="p" className={styles.description}>
+              {item.description}
+            </Text>
+          )}
+          <Text as="span" className={styles.price}>
+            {brl(item.price)}
           </Text>
-        )}
-        <Text as="span" className={styles.price}>
-          {brl(item.price)}
-        </Text>
-      </Box>
+        </Box>
+      </button>
 
       <Box className={styles.media}>
         {quantity > 0 && (

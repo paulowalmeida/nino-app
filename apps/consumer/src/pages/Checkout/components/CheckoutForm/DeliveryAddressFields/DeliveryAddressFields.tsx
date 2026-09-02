@@ -8,10 +8,11 @@ import { MaskedInput } from '@nino/ds/components/MaskedInput'
 import { Text } from '@nino/ds/components/Text'
 import { RadioGroup } from '@nino/ds/components/RadioGroup'
 import { maskZipCode } from '@nino/ds/masks'
-import { DisclosureTrigger } from '../DisclosureTrigger/DisclosureTrigger'
 import { useCheckoutFacade } from '@pages/checkout/facades/useCheckoutFacade/useCheckoutFacade'
 import type { CheckoutFacade } from '@pages/checkout/facades/useCheckoutFacade/useCheckoutFacade'
 import { brl } from '@utils/money'
+
+import { DisclosureTrigger } from '../DisclosureTrigger/DisclosureTrigger'
 
 import styles from './DeliveryAddressFields.module.css'
 
@@ -67,7 +68,8 @@ export const DeliveryAddressFields = ({
                 options={addresses.map((address) => ({
                   value: address.id,
                   label: `${address.street}, ${address.number}`,
-                  description: `${address.neighborhood} · ${address.city}/${address.state}`,
+                  description: `${address.neighborhood} · ${address.city}/` +
+                    address.state,
                 }))}
               />
             )}

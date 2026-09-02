@@ -6,7 +6,6 @@ import { Eyebrow } from '@nino/ds/components/Eyebrow'
 import { FormField } from '@nino/ds/components/FormField'
 import { Heading } from '@nino/ds/components/Heading'
 import { Input } from '@nino/ds/components/Input'
-import { Label } from '@nino/ds/components/Label'
 import { Text } from '@nino/ds/components/Text'
 import { toast } from '@nino/ds/components/Toast'
 import { useProfileFacade } from '@pages/Profile/facades/useProfileFacade/useProfileFacade'
@@ -21,7 +20,9 @@ export const AccountProfile = () => {
   // CONSTRAINT: conta aberta por telefone guarda o número no campo `name`
   // até a pessoa dizer como se chama — o formulário nasce vazio, não com o
   // telefone.
-  const savedName = customer?.profileCompletedAt ? (customer?.name ?? '') : ''
+  const savedName = customer?.profileCompletedAt
+    ? (customer?.name ?? '').trim()
+    : ''
 
   const [name, setName] = useState(savedName)
   const [email, setEmail] = useState(customer?.email ?? '')
@@ -42,7 +43,7 @@ export const AccountProfile = () => {
     if (!ready) return
 
     completeProfile(
-      { name: trimmedName, email: trimmedEmail || undefined },
+      { name: trimmedName, email: trimmedEmail || null },
       {
         onSuccess: () => toast.success('Dados salvos.'),
         onError: () => toast.error('Não deu para salvar agora.'),
@@ -79,8 +80,18 @@ export const AccountProfile = () => {
           />
         </FormField>
 
-        <Box className={styles.field}>
-          <Label htmlFor="profile-phone">Telefone</Label>
+        <Box
+          className={styles.field}
+          role="group"
+          aria-labelledby="profile-phone-label"
+        >
+          <Text
+            as="span"
+            className={styles.fieldLabel}
+            id="profile-phone-label"
+          >
+            Telefone
+          </Text>
           <Text className={styles.readonly} id="profile-phone">
             {formatPhone(customer?.phone ?? '')}
           </Text>
@@ -104,6 +115,7 @@ export const AccountProfile = () => {
             'Salvando o e-mail você também passa a entrar por ele, ' +
             'além do telefone.'
           }
+          error={!emailValid ? 'Digite um e-mail válido.' : undefined}
         >
           <Input
             type="email"

@@ -1,5 +1,5 @@
 import type { CartLine } from '@custom_types/cart/cart-line'
-import type { CheckoutFormValues } from '@custom_types/checkout/checkout-form-values'
+import type { CheckoutFormValues } from '@pages/checkout/types/checkout/CheckoutFormValues.type'
 import type { CreateGuestOrderRequest } from '@custom_types/order/create-guest-order-request'
 import type { Store } from '@custom_types/store/store'
 

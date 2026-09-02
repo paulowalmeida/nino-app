@@ -16,7 +16,8 @@ export const useCheckoutResume = (
     if (created || cartItemCount > 0 || !lastOrder) return
 
     void navigate(
-      `${pathSlug ? `/${pathSlug}` : ''}/pedido/${lastOrder.orderId}?token=${lastOrder.token}`,
+      `${pathSlug ? `/${pathSlug}` : ''}/pedido/` +
+        `${lastOrder.orderId}?token=${lastOrder.token}`,
       { replace: true }
     )
   }, [created, cartItemCount, lastOrder, navigate, pathSlug])

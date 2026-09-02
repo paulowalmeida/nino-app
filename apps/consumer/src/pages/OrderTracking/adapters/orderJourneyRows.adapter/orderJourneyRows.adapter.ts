@@ -2,7 +2,7 @@ import type { GuestOrderStatus } from '@custom_types/order/guest-order-status'
 import type { OrderJourneyRow } from '@custom_types/order/order-journey-row'
 import { isTerminal, journeyFor } from '@utils/order-journey'
 
-/** O que já aconteceu, na ordem em que aconteceu, com o último em destaque. */
+/** Histórico ocorrido, com o último evento em destaque. */
 const historyRows = (order: GuestOrderStatus): OrderJourneyRow[] =>
   order.timeline.map((entry, i) => ({
     status: entry.status,

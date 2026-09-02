@@ -7,4 +7,4 @@ export const resolveOtpCredentials = (
   phone: string,
   email: string
 ): OtpCredentials =>
-  channel === 'email' ? { email } : { phone: toE164(phone) }
+  channel === 'email' ? { email: email.trim() } : { phone: toE164(phone) }

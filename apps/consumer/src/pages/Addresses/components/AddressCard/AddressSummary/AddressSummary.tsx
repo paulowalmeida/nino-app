@@ -5,7 +5,7 @@ import type { Address } from '@custom_types/address/address'
 import {
   addressCityLine,
   addressStreetLine,
-} from '@shared/utils/address-line/address-line'
+} from '@pages/Addresses/utils/address-line/address-line'
 
 import styles from './AddressSummary.module.css'
 

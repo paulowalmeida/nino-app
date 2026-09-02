@@ -33,7 +33,8 @@ export const CheckoutReceipt = ({
               Seu pedido
             </Text>
             <Text as="span" className={styles.count}>
-              {itemCount} {itemCount === 1 ? 'item' : 'itens'} · {brl(subtotal)}
+              {itemCount} {itemCount === 1 ? 'item' : 'itens'} ·{' '}
+              {brl(subtotal)}
             </Text>
           </Text>
           <Text as="span" className={styles.toggle}>

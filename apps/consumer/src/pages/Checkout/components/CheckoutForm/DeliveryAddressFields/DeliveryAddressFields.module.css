@@ -6,7 +6,7 @@
 
 /*
  * Microrótulo em caixa alta com tracking largo: é a voz impressa da comanda,
- * não um título de seção de formulário. Substitui a barrinha colorida antes
+ * não um título de seção. Substitui a barrinha colorida antes
  * do título — aquilo decorava, isto informa.
  */
 .blockLabel {

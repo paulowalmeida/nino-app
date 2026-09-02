@@ -10,10 +10,8 @@ import { OrderTrackingReassurance } from '@pages/order-tracking/components/Order
 import { OrderTrackingSteps } from '@pages/order-tracking/components/OrderTrackingSteps/OrderTrackingSteps'
 import { useOrderTrackingFacade } from '@pages/order-tracking/facades/useOrderTrackingFacade/useOrderTrackingFacade'
 import { OrderTrackingSkeleton } from '@pages/OrderTracking/skeletons/OrderTrackingSkeleton/OrderTrackingSkeleton'
-import { riseDelay } from '@utils/rise-delay'
 
 import styles from './OrderTracking.module.css'
-import motion from '@styles/motion.module.css'
 
 export const OrderTracking = () => {
   const {
@@ -27,25 +25,14 @@ export const OrderTracking = () => {
     done,
   } = useOrderTrackingFacade()
 
-  /* Sem token e sem sessão não há como provar de quem é o pedido: a consulta
-     nem sai, então esperar por ela seria um esqueleto eterno. */
   if (!isSessionPending && !canAsk) {
-    return (
-      <OrderNotFound backHref={backHref}>
-        Abra pelo link que apareceu na hora do pedido, ou entre na sua conta
-        para ver seus pedidos.
-      </OrderNotFound>
-    )
+    return <OrderNotFound backHref={backHref} reason="access" />
   }
 
   if (isPending || isSessionPending) return <OrderTrackingSkeleton />
 
   if (isError || !order) {
-    return (
-      <OrderNotFound backHref={backHref}>
-        Confira o link — ele é o mesmo que apareceu na hora do pedido.
-      </OrderNotFound>
-    )
+    return <OrderNotFound backHref={backHref} reason="invalid-link" />
   }
 
   return (
@@ -56,11 +43,7 @@ export const OrderTracking = () => {
           orderNumber={order.orderNumber}
         />
 
-        <OrderStage
-          order={order}
-          className={motion.riseIn}
-          style={riseDelay(60)}
-        />
+        <OrderStage order={order} />
 
         {!done && <OrderTrackingReassurance />}
 

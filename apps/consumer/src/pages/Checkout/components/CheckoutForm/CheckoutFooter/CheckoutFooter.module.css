@@ -46,7 +46,9 @@
       transparent 0 5px,
       var(--color-fg-on-brand) 5px
     ),
-    radial-gradient(circle at 7px 0, transparent 0 5px, var(--color-border) 5px);
+    radial-gradient(
+      circle at 7px 0, transparent 0 5px, var(--color-border) 5px
+    );
   background-size:
     14px 7px,
     14px 7px;

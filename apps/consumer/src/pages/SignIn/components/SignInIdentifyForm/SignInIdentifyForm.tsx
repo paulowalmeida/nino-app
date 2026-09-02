@@ -29,13 +29,16 @@ export const SignInIdentifyForm = () => {
   } = useSignInFacade()
 
   const isEmail = channel === 'email'
-  const ready = isEmail ? /.+@.+\..+/.test(email) : isCompletePhone(phone)
+  const normalizedEmail = email.trim()
+  const ready = isEmail
+    ? /.+@.+\..+/.test(normalizedEmail)
+    : isCompletePhone(phone)
 
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault()
     if (!ready) return
 
-    requestCode(resolveOtpCredentials(channel, phone, email))
+    requestCode(resolveOtpCredentials(channel, phone, normalizedEmail))
   }
 
   return (
@@ -70,7 +73,12 @@ export const SignInIdentifyForm = () => {
       {/* a escolha do canal vem antes do campo: é ela que decide o que
           digitar, e um campo que aceita as duas coisas não sabe mascarar
           nenhuma das duas */}
-      <Box direction="row" className={styles.channels} role="tablist">
+      <Box
+        direction="row"
+        className={styles.channels}
+        role="tablist"
+        aria-label="Canal de login"
+      >
         {SIGN_IN_CHANNELS.map(({ id, label }) => (
           <Chip
             key={id}

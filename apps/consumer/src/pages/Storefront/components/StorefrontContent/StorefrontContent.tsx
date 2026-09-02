@@ -1,7 +1,9 @@
-import { useRef } from 'react'
+import { useLayoutEffect } from 'react'
 
+import { Alert } from '@nino/ds/components/Alert'
 import { EmptyState } from '@nino/ds/components/EmptyState'
 import { Box } from '@nino/ds/components/Box'
+import { Button } from '@nino/ds/components/Button'
 import { ActiveOrderBanner } from '@pages/Storefront/components/ActiveOrderBanner/ActiveOrderBanner'
 import { StoreCart } from '@pages/Storefront/components/StoreCart/StoreCart'
 import { CategoryNav } from '@pages/Storefront/components/StoreMenu/CategoryNav/CategoryNav'
@@ -35,7 +37,7 @@ type StorefrontContentProps = {
 export const StorefrontContent = ({ pathSlug }: StorefrontContentProps) => {
   const slug = resolveSlug(pathSlug)
   const home = useStorefrontFacade(slug ?? undefined)
-  const searchRef = useRef<HTMLInputElement>(null)
+  const { reset } = home
   const progress = useScrollProgress(HEADER_TRANSITION_PX)
   const { search } = home
 
@@ -43,6 +45,10 @@ export const StorefrontContent = ({ pathSlug }: StorefrontContentProps) => {
     home.sections,
     search
   )
+
+  useLayoutEffect(() => {
+    reset()
+  }, [reset, slug])
 
   const base = pathSlug ? `/${pathSlug}` : ''
 
@@ -73,7 +79,7 @@ export const StorefrontContent = ({ pathSlug }: StorefrontContentProps) => {
 
         <ActiveOrderBanner slug={slug ?? ''} />
 
-        {home.sections.length > 0 && <MenuSearchField ref={searchRef} />}
+        {home.sections.length > 0 && <MenuSearchField />}
       </Box>
 
       {home.sections.length > 0 && !isSearching && (
@@ -89,13 +95,30 @@ export const StorefrontContent = ({ pathSlug }: StorefrontContentProps) => {
         >
           {home.isMenuPending && <MenuRowsSkeleton />}
 
-          {!home.isMenuPending && home.sections.length === 0 && (
-            <EmptyState className={styles.empty}>
-              Esta loja ainda não publicou itens no cardápio.
-            </EmptyState>
+          {!home.isMenuPending && home.isMenuError && (
+            <>
+              <Alert
+                variant="error"
+                title="Não foi possível carregar o cardápio"
+              >
+                Tente novamente em instantes.
+              </Alert>
+              <Button variant="outline" onClick={() => void home.retryMenu()}>
+                Tentar novamente
+              </Button>
+            </>
           )}
 
           {!home.isMenuPending &&
+            !home.isMenuError &&
+            home.sections.length === 0 && (
+              <EmptyState className={styles.empty}>
+                Esta loja ainda não publicou itens no cardápio.
+              </EmptyState>
+            )}
+
+          {!home.isMenuPending &&
+            !home.isMenuError &&
             isSearching &&
             visibleSections.length === 0 && (
               <EmptyState className={styles.empty}>

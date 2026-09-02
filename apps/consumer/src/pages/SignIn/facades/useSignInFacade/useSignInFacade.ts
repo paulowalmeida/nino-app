@@ -20,6 +20,7 @@ export const useSignInFacade = () => {
     code: clientState.code,
     setCode: clientState.setCode,
     goToIdentify: clientState.goToIdentify,
+    reset: clientState.reset,
     requestCode: mutations.requestCode,
     isRequesting: mutations.isRequesting,
     requestFailed: mutations.requestFailed,

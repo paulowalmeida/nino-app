@@ -1,3 +1,5 @@
+import { Text } from '@nino/ds/components/Text'
+
 import styles from './DisclosureTrigger.module.css'
 
 type DisclosureTriggerProps = {
@@ -13,4 +15,3 @@ export const DisclosureTrigger = ({ children }: DisclosureTriggerProps) => (
     {children}
   </Text>
 )
-import { Text } from '@nino/ds/components/Text'

@@ -31,7 +31,11 @@ export const Checkout = () => {
   if (!store) return null
 
   if (created) {
-    const trackingPath = `${pathSlug ? `/${pathSlug}` : ''}/pedido/${created.id}`
+    const trackingPath = [
+      pathSlug ? `/${pathSlug}` : '',
+      '/pedido/',
+      created.id,
+    ].join('')
     const trackingHref = created.trackingToken
       ? `${trackingPath}?token=${created.trackingToken}`
       : trackingPath

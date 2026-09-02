@@ -12,7 +12,8 @@
   @apply font-medium text-fg-faintest;
 }
 .input {
-  @apply h-12 w-full rounded-3 border-black/10 bg-surface-raised text-base text-fg-muted;
+  @apply h-12 w-full rounded-3 border-black/10 bg-surface-raised;
+  @apply text-base text-fg-muted;
 }
 .input:focus {
   border-color: var(--store-tint, var(--color-brand));

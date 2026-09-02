@@ -1,7 +1,7 @@
 @reference "@nino/ds/globals.css";
 
 /*
- * O cartão vivo é um toast grande: mesma gramática do aviso que o app já dá
+ * O cartão vivo usa a mesma gramática dos avisos do app
  * em todo lugar — superfície chapada, canto de `radius-card`, tudo por cima
  * numa tinta só, e o prazo desenhado como a barra que drena na borda de
  * baixo. Aqui a superfície é laranja bem claro em vez de saturada porque

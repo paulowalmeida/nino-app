@@ -14,10 +14,16 @@ export const useSaveAddress = () => {
   const queryClient = useQueryClient()
 
   const mutation = useMutation({
-    mutationFn: ({ id, data }: SaveAddress) =>
-      id
-        ? addressService.updateMine(id, data)
-        : addressService.createMine(data),
+    mutationFn: ({ id, data }: SaveAddress) => {
+      const normalizedData = {
+        ...data,
+        complement: data.complement?.trim() || undefined,
+      }
+
+      return id
+        ? addressService.updateMine(id, normalizedData)
+        : addressService.createMine(normalizedData)
+    },
     onSuccess: () =>
       queryClient.invalidateQueries({ queryKey: queryKeys.myAddresses.all }),
   })

@@ -12,6 +12,10 @@
   @apply mt-4 first:mt-0;
 }
 
+.fieldLabel {
+  @apply text-xs font-bold text-fg-muted;
+}
+
 /* WHY: mostra o valor e diz por quê em vez de um campo desabilitado, que
    pareceria um bug em vez de uma regra de negócio. */
 .readonly {

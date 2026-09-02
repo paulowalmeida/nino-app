@@ -1,3 +1,10 @@
+import type { CheckoutFacade } from '@pages/checkout/facades/useCheckoutFacade/useCheckoutFacade'
+import { useCheckoutFacade } from '@pages/checkout/facades/useCheckoutFacade/useCheckoutFacade'
+import { riseDelay } from '@utils/rise-delay'
+import { Box } from '@nino/ds/components/Box'
+import { FormBuilder } from '@nino/forms/FormBuilder'
+import type { CheckoutFormValues } from '@pages/checkout/types/checkout/CheckoutFormValues.type'
+
 import { ChannelFields } from './ChannelFields/ChannelFields'
 import { CheckoutAlerts } from './CheckoutAlerts/CheckoutAlerts'
 import { CheckoutFooter } from './CheckoutFooter/CheckoutFooter'
@@ -7,12 +14,6 @@ import { DeliveryAddressFields } from './DeliveryAddressFields/DeliveryAddressFi
 import { GuestContactFields } from './GuestContactFields/GuestContactFields'
 import { OrderNotesField } from './OrderNotesField/OrderNotesField'
 import { PaymentMethodFields } from './PaymentMethodFields/PaymentMethodFields'
-import type { CheckoutFacade } from '@pages/checkout/facades/useCheckoutFacade/useCheckoutFacade'
-import { useCheckoutFacade } from '@pages/checkout/facades/useCheckoutFacade/useCheckoutFacade'
-import { riseDelay } from '@utils/rise-delay'
-import { Box } from '@nino/ds/components/Box'
-import { FormBuilder } from '@nino/forms/FormBuilder'
-import type { CheckoutFormValues } from '@custom_types/checkout/checkout-form-values'
 
 import styles from './CheckoutForm.module.css'
 import motion from '@styles/motion.module.css'

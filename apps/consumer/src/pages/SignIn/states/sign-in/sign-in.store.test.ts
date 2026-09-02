@@ -41,6 +41,28 @@ describe('useSignInStore', () => {
     useSignInStore.getState().goToIdentify()
     expect(useSignInStore.getState()).toMatchObject({
       step: 'identify',
+      phone: '',
+      email: '',
+      code: '',
+    })
+  })
+
+  it('resets a previous login attempt to the initial state', () => {
+    useSignInStore.setState({
+      step: 'code',
+      channel: 'email',
+      phone: signInStoreMock.phone,
+      email: signInStoreMock.email,
+      code: signInStoreMock.code,
+    })
+
+    useSignInStore.getState().reset()
+
+    expect(useSignInStore.getState()).toMatchObject({
+      step: 'identify',
+      channel: 'phone',
+      phone: '',
+      email: '',
       code: '',
     })
   })

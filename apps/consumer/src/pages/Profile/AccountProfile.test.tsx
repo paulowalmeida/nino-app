@@ -74,4 +74,39 @@ describe('AccountProfile', () => {
     // Assert
     expect(screen.getByRole('button', { name: 'Salvar' })).toBeDisabled()
   })
+
+  it('shows a text error for an invalid email', () => {
+    // Arrange
+    facadeWith({})
+
+    // Act
+    render(<AccountProfile />)
+    fireEvent.change(screen.getByLabelText(/E-mail/), {
+      target: { value: 'not-an-email' },
+    })
+
+    // Assert
+    expect(screen.getByText('Digite um e-mail válido.')).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: 'Salvar' })).toBeDisabled()
+  })
+
+  it('sends null when clearing a saved email', () => {
+    // Arrange
+    const completeProfile = vi.fn()
+    facadeWith({ completeProfile })
+
+    // Act
+    render(<AccountProfile />)
+    fireEvent.change(screen.getByLabelText(/E-mail/), { target: { value: '' } })
+    fireEvent.change(screen.getByLabelText('Nome'), {
+      target: { value: 'Maria Atualizada' },
+    })
+    fireEvent.click(screen.getByRole('button', { name: 'Salvar' }))
+
+    // Assert
+    expect(completeProfile).toHaveBeenCalledWith(
+      { name: 'Maria Atualizada', email: null },
+      expect.any(Object)
+    )
+  })
 })

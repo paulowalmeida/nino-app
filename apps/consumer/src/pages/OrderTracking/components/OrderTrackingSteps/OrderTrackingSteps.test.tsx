@@ -1,7 +1,9 @@
 import { render, screen } from '@testing-library/react'
 import { describe, expect, it, vi } from 'vitest'
+
 import { OrderTrackingSteps } from './OrderTrackingSteps'
 import { orderTrackingStepsMock } from './OrderTrackingSteps.mock'
+
 vi.mock('./OrderJourney/OrderJourney', () => ({
   OrderJourney: () => <p>Jornada</p>,
 }))

@@ -29,6 +29,7 @@ const facadeWith = (overrides: Record<string, unknown>) =>
     isVerifying: false,
     verifyFailed: false,
     goToIdentify: vi.fn(),
+    reset: vi.fn(),
     ...overrides,
   } as unknown as ReturnType<typeof useSignInFacade>)
 
