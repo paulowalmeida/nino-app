@@ -6,11 +6,11 @@
 }
 
 .sheet {
-  @apply max-h-[92dvh] lg:max-h-none;
+  @apply max-h-[92dvh] overflow-hidden lg:max-h-none;
 }
 
 .sheet .sheetBody {
-  @apply flex min-h-0 flex-col overflow-y-hidden;
+  @apply flex min-h-0 flex-col overflow-y-auto;
 }
 
 .menu {
@@ -21,4 +21,8 @@
 .sale {
   @apply flex w-full flex-col bg-surface-page;
   @apply lg:h-full lg:min-h-0;
+}
+
+.saleBare {
+  @apply flex min-h-0 w-full flex-1 flex-col;
 }

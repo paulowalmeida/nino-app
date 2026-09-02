@@ -15,9 +15,10 @@ import styles from './SaleCart.module.css'
 export type SaleCartProps = {
   lines: CartLine[]
   onStep: (productId: string, by: number) => void
+  bare?: boolean
 }
 
-export const SaleCart = ({ lines, onStep }: SaleCartProps) => {
+export const SaleCart = ({ lines, onStep, bare = false }: SaleCartProps) => {
   if (lines.length === 0) {
     return (
       <EmptyState className={styles.empty}>
@@ -27,7 +28,12 @@ export const SaleCart = ({ lines, onStep }: SaleCartProps) => {
   }
 
   return (
-    <ScrollArea className={styles.linesScroll}>
+    <ScrollArea
+      className={mergeClasses(
+        styles.linesScroll,
+        bare && styles.linesScrollBare
+      )}
+    >
       <Box as="ul" className={styles.lines}>
         {lines.map((line) => {
           const isLast = line.quantity === 1

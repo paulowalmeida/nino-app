@@ -43,7 +43,7 @@ export const SalePanel = ({ bare = false }: { bare?: boolean }) => {
           </Heading>
         </Box>
       )}
-      <SaleCart lines={lines} onStep={handleStep} />
+      <SaleCart lines={lines} onStep={handleStep} bare={bare} />
       {count > 0 && method && (
         <SalePaymentDetails
           customerName={customerName}
