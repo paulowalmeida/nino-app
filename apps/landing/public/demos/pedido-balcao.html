@@ -1666,38 +1666,11 @@ body {
       '</div><div class="dashed"></div>' + printedHtml() + "</div></div>";
   }
 
-  /* A frase que o atendente lê de volta para o cliente antes de fechar.
-     Só existe no desktop: no celular não há altura para ela competir com o
-     resumo, e lá o próprio papel já faz esse papel. */
-  function readback() {
-    var who = state.name.trim() || "o cliente";
-    var head;
-
-    if (state.type === "delivery") {
-      head = "Entrega para " + who + ", na " + addressLine() +
-        (state.district.trim() ? ", " + state.district.trim() : "") + ".";
-    } else if (state.type === "local") {
-      head = "No local" + (state.table.trim() ? ", mesa " + state.table.trim() : "") +
-        (state.name.trim() ? ", para " + who : "") + ".";
-    } else {
-      head = "Retirada no balcão para " + who + ".";
-    }
-
-    var pay = "Paga com " + (state.pay ? PAYS[state.pay].spoken : "—");
-    if (state.pay === "card" && state.type === "delivery") pay = "Paga com cartão na entrega";
-    if (state.pay === "cash" && state.received !== null && state.received > total()) {
-      pay += ", troco de " + brl(state.received - total());
-    }
-
-    return '<div class="panel"><div class="readback"><b>Confirme com o cliente</b>' +
-      "<p>" + esc(head) + " " + esc(pay) + ". Total de <em>" + brl(total()) + "</em>.</p></div></div>";
-  }
-
   function panelFor(key) {
     if (key === "items") return panelItems();
     if (key === "type") return panelType();
     if (key === "pay") return panelPay();
-    return isDesktop() ? readback() + panelClose() : panelClose();
+    return panelClose();
   }
 
   /* ---- totais ---------------------------------------------------------- */

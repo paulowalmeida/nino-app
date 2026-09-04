@@ -5,10 +5,11 @@ import { reviewStepMock } from './ReviewStep.mock'
 import { ReviewStep } from './ReviewStep'
 
 describe('ReviewStep', () => {
-  it('shows the order line and total for confirmation', () => {
+  it('shows the order line without the redundant confirmation', () => {
     render(<ReviewStep {...reviewStepMock} />)
 
     expect(screen.getByText('Café')).toBeInTheDocument()
-    expect(screen.getByText(/Total de/)).toBeInTheDocument()
+    expect(screen.queryByText(/Confirme com o cliente/)).not.toBeInTheDocument()
+    expect(screen.queryByText(/Total de/)).not.toBeInTheDocument()
   })
 })

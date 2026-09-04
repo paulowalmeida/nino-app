@@ -2,30 +2,8 @@
 
 .step {
   @apply min-h-0 flex-1 gap-3.5 overflow-y-auto px-6 py-4;
-}
-
-/*
- * A frase que o atendente lê em voz alta antes de fechar. Só cabe na janela:
- * no celular o próprio papel já faz esse papel.
- */
-.readback {
-  @apply hidden rounded-4 border border-border bg-surface-page p-[22px];
-  @apply gap-3 lg:flex;
-}
-
-.microLabel {
-  @apply font-bold uppercase text-fg-faint;
-  font-size: 10px;
-  letter-spacing: 0.14em;
-}
-
-.readbackLine {
-  @apply font-display font-bold text-fg-strong;
-  max-width: 46ch;
-  font-size: 21px;
-  line-height: 1.32;
-  letter-spacing: -0.015em;
-  text-wrap: balance;
+  padding-inline: var(--checkout-gutter, 1.5rem);
+  overscroll-behavior: contain;
 }
 
 /* O papel do pedido: aqui a borda é o próprio recibo, não decoração. */

@@ -142,7 +142,6 @@ export const SalePanel = ({ bare = false }: { bare?: boolean }) => {
       {step === 'review' && (
         <ReviewStep
           lines={lines}
-          total={total}
           channel={channel}
           customerName={
             channel === 'DELIVERY' || channel === 'PICKUP'
