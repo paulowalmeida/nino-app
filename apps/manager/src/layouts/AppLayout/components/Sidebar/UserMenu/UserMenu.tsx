@@ -37,6 +37,7 @@ export const UserMenu = ({
   return (
     <Box direction="row" className={styles.actions}>
       <Menu
+        placement="top-start"
         contentClassName={styles.panel}
         triggerTooltip={collapsed ? 'Abrir menu da conta' : undefined}
         trigger={
@@ -73,7 +74,7 @@ export const UserMenu = ({
                 {
                   value: 'personalize',
                   label: 'Personalizar loja',
-                  icon: <Icon name="droplet" className={styles.itemIcon} />,
+                  icon: <Icon name="sliders" className={styles.itemIcon} />,
                   onSelect: () => go('personalizar'),
                 },
               ]

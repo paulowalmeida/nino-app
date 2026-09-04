@@ -8,6 +8,8 @@
   @apply flex min-w-0 flex-1 cursor-pointer items-center justify-start gap-2.5;
   @apply rounded-3 px-2 py-2 text-left transition-colors duration-150;
   @apply hover:bg-surface-raised/8 focus-visible:outline-none;
+  @apply active:bg-brand-soft active:text-brand;
+  @apply data-[state=open]:bg-brand-soft data-[state=open]:text-brand;
   @apply focus-visible:ring-2;
   @apply focus-visible:ring-brand;
 }

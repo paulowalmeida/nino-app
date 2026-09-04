@@ -1,5 +1,3 @@
-import { useEffect, useState } from 'react'
-
 import { Box } from '@nino/ds/components/Box'
 import { Combobox } from '@nino/ds/components/Combobox'
 import { FieldHint } from '@nino/ds/components/FieldHint'
@@ -30,10 +28,7 @@ export const DeliveryRecipientFields = ({
   isSearchingAddress,
   onChange,
 }: DeliveryRecipientFieldsProps) => {
-  const [streetQuery, setStreetQuery] = useState('')
-  useEffect(() => {
-    setStreetQuery(value.street)
-  }, [value.street])
+  const streetQuery = value.street
   const suggestions = addressSuggestions
 
   const addressOptions = suggestions.map((suggestion) => ({
@@ -59,10 +54,13 @@ export const DeliveryRecipientFields = ({
       inputValue={streetQuery}
       placeholder="Digite o logradouro"
       ariaLabel="Logradouro"
-      emptyMessage="Nenhum endereço encontrado"
+      emptyMessage={
+        streetQuery.trim().length < 3
+          ? 'Digite pelo menos 3 caracteres'
+          : 'Nenhum endereço encontrado'
+      }
       loading={isSearchingAddress}
       onInputValueChange={(query) => {
-        setStreetQuery(query)
         onChange({ street: query })
       }}
       onValueChange={(zipCode) => {
@@ -71,7 +69,6 @@ export const DeliveryRecipientFields = ({
         if (!suggestion) return
 
         onChange(suggestion)
-        setStreetQuery(suggestion.street)
       }}
     />
   )

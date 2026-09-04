@@ -18,7 +18,7 @@ export const OpenOrderBar = () => {
     >
       <span className={styles.perforation} aria-hidden="true" />
 
-      <Box className={styles.body}>
+      <Box direction="row" className={styles.body}>
         <Text as="span" className={styles.count}>
           {count} {count === 1 ? 'item' : 'itens'}
         </Text>

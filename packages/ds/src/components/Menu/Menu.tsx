@@ -10,6 +10,20 @@ import { MenuItem } from './Menu.types'
 
 export type { MenuItem } from './Menu.types'
 
+type MenuPlacement =
+  | 'top'
+  | 'top-start'
+  | 'top-end'
+  | 'bottom'
+  | 'bottom-start'
+  | 'bottom-end'
+  | 'left'
+  | 'left-start'
+  | 'left-end'
+  | 'right'
+  | 'right-start'
+  | 'right-end'
+
 type MenuProps = {
   /**
    * What opens the menu. Gets the open state through `asChild`, so pass a
@@ -29,6 +43,11 @@ type MenuProps = {
   contentClassName?: string
   /** Extra classes per entry, for a themed surface */
   itemClassName?: string
+  /**
+   * Side it opens on, with `-start`/`-end` to align by an edge. Default:
+   * `bottom-start`
+   */
+  placement?: MenuPlacement
 }
 
 const isSeparator = (
@@ -59,6 +78,7 @@ export function Menu({
   items,
   contentClassName,
   itemClassName,
+  placement = 'bottom-start',
 }: MenuProps) {
   const handleSelect = (value: string) => {
     const selected = items.find(
@@ -68,10 +88,20 @@ export function Menu({
   }
 
   return (
-    <ArkMenu.Root onSelect={({ value }) => handleSelect(value)}>
+    <ArkMenu.Root
+      onSelect={({ value }) => handleSelect(value)}
+      positioning={{ placement, gutter: 8, strategy: 'fixed' }}
+      lazyMount
+      unmountOnExit
+    >
       {triggerTooltip ? (
         <Tooltip content={triggerTooltip} side="right" delayDuration={0}>
-          <ArkMenu.Trigger asChild>{trigger}</ArkMenu.Trigger>
+          {/* WHY: dois `asChild` no mesmo elemento colidem — o tooltip vence o
+              merge e o menu fica sem âncora, abrindo em 0,0. O span dá a cada
+              máquina um elemento próprio. */}
+          <span className={styles.triggerWrap}>
+            <ArkMenu.Trigger asChild>{trigger}</ArkMenu.Trigger>
+          </span>
         </Tooltip>
       ) : (
         <ArkMenu.Trigger asChild>{trigger}</ArkMenu.Trigger>

@@ -19,11 +19,12 @@ describe(useCounterAddressSearch.name, () => {
   it('debounces the street before searching', async () => {
     vi.useFakeTimers()
     vi.mocked(searchAddress).mockResolvedValue(addressSuggestionsMock)
-    renderHook(({ street }) => useCounterAddressSearch('Belém', 'PA', street), {
-      initialProps: { street: 'Rua das' },
-      wrapper,
-    })
+    const { result } = renderHook(
+      ({ street }) => useCounterAddressSearch('Belém', 'PA', street),
+      { initialProps: { street: 'Rua das' }, wrapper }
+    )
     expect(searchAddress).not.toHaveBeenCalled()
+    expect(result.current.isSearching).toBe(true)
     await act(async () => {
       vi.advanceTimersByTime(350)
       await Promise.resolve()

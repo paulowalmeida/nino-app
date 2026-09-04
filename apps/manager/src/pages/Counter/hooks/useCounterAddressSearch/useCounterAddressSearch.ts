@@ -8,6 +8,7 @@ export const useCounterAddressSearch = (
   state: string,
   street: string
 ) => {
+  const normalizedStreet = street.trim()
   const [debouncedStreet, setDebouncedStreet] = useState('')
 
   useEffect(() => {
@@ -26,5 +27,11 @@ export const useCounterAddressSearch = (
     staleTime: 60_000,
   })
 
-  return { suggestions: query.data ?? [], isSearching: query.isFetching }
+  const isWaitingForDebounce =
+    normalizedStreet.length >= 3 && normalizedStreet !== debouncedStreet
+
+  return {
+    suggestions: query.data ?? [],
+    isSearching: isWaitingForDebounce || query.isFetching,
+  }
 }

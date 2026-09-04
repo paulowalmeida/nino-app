@@ -77,12 +77,16 @@
 @media (min-width: 768px) {
   .tab {
     @apply inset-x-auto bottom-6 left-1/2 z-content -translate-x-1/2;
-    @apply flex-row rounded-full bg-fg-strong px-0 text-left shadow-warm-lg;
+    @apply flex-row rounded-full bg-brand px-0 text-left shadow-warm-lg;
     @apply transition-transform duration-200 hover:-translate-x-1/2 hover:-translate-y-0.5;
     @apply w-max max-w-[calc(100vw-2rem)] whitespace-nowrap;
     filter: drop-shadow(
       0 8px 20px color-mix(in srgb, var(--color-brand) 30%, transparent)
     );
+  }
+
+  .tab:hover {
+    background-color: var(--color-brand-hover);
   }
 
   .perforation {
@@ -94,11 +98,15 @@
   }
 
   .count {
-    @apply text-fg-muted;
+    @apply text-fg-on-brand opacity-80;
   }
 
   .total {
-    @apply text-fg-inverse;
+    @apply text-fg-on-brand;
+  }
+
+  .hint {
+    @apply bg-surface-page text-brand;
   }
 
   .shortcut {
