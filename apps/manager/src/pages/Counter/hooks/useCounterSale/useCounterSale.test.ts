@@ -74,7 +74,11 @@ describe(useCounterSale.name, () => {
     )
 
     expect(mutateAsync).toHaveBeenCalledWith(
-      expect.objectContaining({ channel: 'DELIVERY', guestName: 'Ana' })
+      expect.objectContaining({
+        channel: 'DELIVERY',
+        guestName: 'Ana',
+        deliveryZoneId: 'zone-1',
+      })
     )
   })
 

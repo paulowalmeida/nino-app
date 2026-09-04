@@ -1,11 +1,13 @@
-import { act, renderHook } from '@testing-library/react'
 import { createElement, type ReactNode } from 'react'
+
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-import { describe, expect, it, vi } from 'vitest'
+import { act, renderHook } from '@testing-library/react'
+import { beforeEach, describe, expect, it, vi } from 'vitest'
 
 import { useCounterCommands } from './useCounterCommands'
 
 const spies = vi.hoisted(() => ({
+  channel: 'COUNTER',
   clear: vi.fn(),
   reset: vi.fn(),
   step: vi.fn(),
@@ -13,6 +15,13 @@ const spies = vi.hoisted(() => ({
   setSheet: vi.fn(),
   setLastSale: vi.fn(),
 }))
+
+vi.mock(
+  '@pages/Counter/hooks/useCounterDeliveryQuote/useCounterDeliveryQuote',
+  () => ({
+    useCounterDeliveryQuote: () => ({ quote: { id: 'quoted-zone', fee: 3 } }),
+  })
+)
 
 vi.mock('@pages/Counter/hooks/useCounterCart/useCounterCart', () => ({
   useCounterCart: () => ({
@@ -44,7 +53,8 @@ vi.mock('@pages/Counter/states/counter/counter.store', () => ({
       customerName: 'Ana',
       tableNumber: '',
       changeFor: '50,00',
-      channel: 'COUNTER',
+      channel: spies.channel,
+      recipient: { name: 'Ana', zipCode: '67143450', zoneId: 'stale-zone' },
     }),
 }))
 vi.mock('@nino/ds/components/Toast', () => ({
@@ -52,6 +62,25 @@ vi.mock('@nino/ds/components/Toast', () => ({
 }))
 
 describe(useCounterCommands.name, () => {
+  beforeEach(() => {
+    vi.clearAllMocks()
+    spies.channel = 'COUNTER'
+  })
+
+  it('sends the current quoted zone instead of the previous recipient zone', async () => {
+    spies.channel = 'DELIVERY'
+    spies.sell.mockResolvedValue(null)
+    const { result } = renderHook(() => useCounterCommands('tenant-1', 'PIX'))
+
+    await act(() => result.current.finish())
+
+    expect(spies.sell).toHaveBeenCalledWith(
+      expect.objectContaining({
+        recipient: expect.objectContaining({ zoneId: 'quoted-zone' }),
+      })
+    )
+  })
+
   const wrapper = ({ children }: { children: ReactNode }) =>
     createElement(QueryClientProvider, { client: new QueryClient() }, children)
 

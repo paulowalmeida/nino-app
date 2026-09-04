@@ -17,6 +17,8 @@ export const toCounterSaleRequest = ({
     (channel === 'DELIVERY' || channel === 'PICKUP'
       ? recipient?.name
       : customerName) || undefined,
+  deliveryZoneId:
+    channel === 'DELIVERY' ? recipient?.zoneId || undefined : undefined,
   tableNumber: channel === 'COUNTER' && tableNumber ? tableNumber : undefined,
   guestPhone:
     channel === 'DELIVERY' || channel === 'PICKUP'

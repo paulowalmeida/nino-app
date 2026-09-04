@@ -1,7 +1,7 @@
 import { toast } from '@nino/ds/components/Toast'
 import { toSaleReceipt } from '@pages/Counter/adapters/sale-receipt.adapter/sale-receipt.adapter'
-import { useCounterDeliveryQuote } from '@pages/Counter/hooks/useCounterDeliveryQuote/useCounterDeliveryQuote'
 import { useCounterCart } from '@pages/Counter/hooks/useCounterCart/useCounterCart'
+import { useCounterDeliveryQuote } from '@pages/Counter/hooks/useCounterDeliveryQuote/useCounterDeliveryQuote'
 import { useCounterSale } from '@pages/Counter/hooks/useCounterSale/useCounterSale'
 import { useCounterStore } from '@pages/Counter/states/counter/counter.store'
 import type { PaymentMethod } from '@shared/types/order/payment-method'
@@ -48,7 +48,10 @@ export const useCounterCommands = (
       tableNumber,
       changeFor,
       channel: channel ?? 'COUNTER',
-      recipient,
+      recipient:
+        channel === 'DELIVERY' && recipient
+          ? { ...recipient, zoneId: deliveryQuote.quote?.id ?? '' }
+          : recipient,
     })
     if (!orderNumber) return
     setLastSale(

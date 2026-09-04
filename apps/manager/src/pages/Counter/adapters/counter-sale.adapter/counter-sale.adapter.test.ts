@@ -55,6 +55,7 @@ describe(toCounterSaleRequest.name, () => {
         guestNeighborhood: 'Centro',
         guestCity: 'Ananindeua',
         guestState: 'PA',
+        deliveryZoneId: channel === 'DELIVERY' ? 'zone-1' : undefined,
       })
     }
   )
