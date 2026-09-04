@@ -13,11 +13,9 @@ import { Image } from '@nino/ds/components/Image'
 import { QuantityStepper } from '@nino/ds/components/QuantityStepper'
 import { AnimatedNumber } from '@shared/components/AnimatedNumber/AnimatedNumber'
 import { EXPO_OUT_EASE } from '@constants/motion.constants'
-import { useIsDesktop } from '@pages/Storefront/hooks/useIsDesktop/useIsDesktop'
 import { categoryIcon } from '@utils/category-icon'
 import { brl } from '@utils/money'
 import { useStorefrontFacade } from '@pages/Storefront/facades/useStorefrontFacade/useStorefrontFacade'
-import { useStorefrontSlug } from '@pages/Storefront/hooks/useStorefrontSlug/useStorefrontSlug'
 
 import styles from './CartDrawer.module.css'
 import motionStyles from '@styles/motion.module.css'
@@ -25,7 +23,7 @@ import motionStyles from '@styles/motion.module.css'
 export const CartDrawer = () => {
   const navigate = useNavigate()
   const { slug } = useParams()
-  const home = useStorefrontFacade(useStorefrontSlug())
+  const home = useStorefrontFacade()
   const {
     isCartOpen: open,
     setCartOpen: onOpenChange,
@@ -41,7 +39,7 @@ export const CartDrawer = () => {
     void navigate(slug ? `/${slug}/checkout` : '/checkout')
   }
   const itemCount = lines.reduce((sum, line) => sum + line.quantity, 0)
-  const isDesktop = useIsDesktop()
+  const { isDesktop } = home
   const [isConfirmingClear, setIsConfirmingClear] = useState(false)
 
   const handleConfirmClear = () => {

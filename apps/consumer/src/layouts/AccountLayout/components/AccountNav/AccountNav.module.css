@@ -6,6 +6,7 @@
 .nav {
   @apply hidden;
   @apply lg:mx-0 lg:mb-0 lg:flex lg:w-56 lg:shrink-0 lg:flex-col lg:px-0;
+  @apply lg:sticky lg:top-24;
 }
 
 .list {
@@ -27,8 +28,8 @@
   @apply bg-surface-page px-4 text-sm font-semibold text-fg-muted;
   @apply whitespace-nowrap transition-colors;
   @apply hover:border-accent-peach hover:text-brand-strong;
-  @apply lg:h-auto lg:w-full lg:rounded-3 lg:border-transparent;
-  @apply lg:bg-transparent lg:px-3 lg:py-2.5;
+  @apply lg:h-12 lg:w-full lg:rounded-3 lg:border-transparent;
+  @apply lg:bg-transparent lg:px-3.5 lg:py-2.5;
 }
 
 /* WHY: no celular a pílula ativa preenche; no desktop ganha só um filete de
@@ -37,7 +38,7 @@
 .linkOn {
   @apply border-transparent bg-brand text-fg-on-brand;
   @apply hover:border-transparent hover:text-fg-on-brand;
-  @apply lg:relative lg:bg-black/[0.05] lg:text-fg-muted;
+  @apply lg:relative lg:bg-surface-raised lg:text-fg-strong lg:shadow-xs;
   @apply lg:hover:border-transparent;
 }
 

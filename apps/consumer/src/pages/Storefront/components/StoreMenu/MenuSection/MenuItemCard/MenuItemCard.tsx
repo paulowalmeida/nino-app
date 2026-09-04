@@ -53,12 +53,13 @@ export const MenuItemCard = ({
 
   return (
     <Box
+      direction="row"
       className={disabled ? `${styles.card} ${styles.disabled}` : styles.card}
       role="group"
       aria-disabled={disabled}
     >
-      <button
-        type="button"
+      <Button
+        variant="ghost"
         className={styles.bodyButton}
         disabled={disabled}
         aria-label={`Ver detalhes de ${item.name}`}
@@ -77,7 +78,7 @@ export const MenuItemCard = ({
             {brl(item.price)}
           </Text>
         </Box>
-      </button>
+      </Button>
 
       <Box className={styles.media}>
         {quantity > 0 && (

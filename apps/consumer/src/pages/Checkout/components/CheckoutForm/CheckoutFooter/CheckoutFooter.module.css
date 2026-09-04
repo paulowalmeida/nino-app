@@ -3,7 +3,7 @@
 .tearBar {
   @apply sticky bottom-0 z-sticky flex flex-col gap-3 bg-surface-page px-5;
   @apply pb-5 pt-3;
-  @apply lg:rounded-b-[1.75rem];
+  @apply lg:rounded-b-5;
   box-shadow: 0 -10px 30px -20px
     color-mix(in srgb, var(--color-warm-950) 45%, transparent);
 }
@@ -67,7 +67,7 @@
 }
 
 .total {
-  @apply font-display text-2xl font-extrabold text-fg-muted;
+  @apply font-display text-2xl font-extrabold text-fg-strong;
   font-variant-numeric: tabular-nums;
 }
 

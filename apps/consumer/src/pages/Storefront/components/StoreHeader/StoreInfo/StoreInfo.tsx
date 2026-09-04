@@ -4,9 +4,7 @@ import { Text } from '@nino/ds/components/Text'
 import { Heading } from '@nino/ds/components/Heading'
 import { ListRow } from '@nino/ds/components/ListRow'
 import { useStorefrontFacade } from '@pages/Storefront/facades/useStorefrontFacade/useStorefrontFacade'
-import { useStorefrontSlug } from '@pages/Storefront/hooks/useStorefrontSlug/useStorefrontSlug'
 import { storeWeekSchedule } from '@pages/Storefront/adapters/storeWeekSchedule.adapter/storeWeekSchedule.adapter'
-import { useIsDesktop } from '@pages/Storefront/hooks/useIsDesktop/useIsDesktop'
 import { displayName } from '@utils/store-info'
 
 import styles from './StoreInfo.module.css'
@@ -18,8 +16,8 @@ export const StoreInfo = () => {
     estimatedMinutes,
     isInfoOpen: open,
     setInfoOpen: onOpenChange,
-  } = useStorefrontFacade(useStorefrontSlug())
-  const isDesktop = useIsDesktop()
+    isDesktop,
+  } = useStorefrontFacade()
   if (!store) return null
   const week = storeWeekSchedule(hours, new Date().getDay())
 

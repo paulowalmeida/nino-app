@@ -2,7 +2,6 @@ import { useState } from 'react'
 
 import type { MenuItem } from '@custom_types/menu/menu-item'
 import { AnimatedNumber } from '@shared/components/AnimatedNumber/AnimatedNumber'
-import { useIsDesktop } from '@pages/Storefront/hooks/useIsDesktop/useIsDesktop'
 import { Box } from '@nino/ds/components/Box'
 import { Button } from '@nino/ds/components/Button'
 import { Carousel } from '@nino/ds/components/Carousel'
@@ -12,7 +11,6 @@ import { Image } from '@nino/ds/components/Image'
 import { QuantityStepper } from '@nino/ds/components/QuantityStepper'
 import { Text } from '@nino/ds/components/Text'
 import { useStorefrontFacade } from '@pages/Storefront/facades/useStorefrontFacade/useStorefrontFacade'
-import { useStorefrontSlug } from '@pages/Storefront/hooks/useStorefrontSlug/useStorefrontSlug'
 import { categoryIcon } from '@utils/category-icon'
 import { brl } from '@utils/money'
 import { riseDelay } from '@utils/rise-delay'
@@ -22,13 +20,13 @@ import styles from './ProductDetail.module.css'
 import { ProductDetailModal } from './ProductDetailModal/ProductDetailModal'
 
 export const ProductDetail = () => {
-  const slug = useStorefrontSlug()
   const {
     selectedItem: item,
     setSelectedItem,
     addToCart,
     replaceCart,
-  } = useStorefrontFacade(slug)
+    isDesktop,
+  } = useStorefrontFacade()
   const onClose = () => {
     setQuantity(1)
     setSelectedItem(null)
@@ -49,8 +47,6 @@ export const ProductDetail = () => {
     setPendingReplacement({ item: selected, quantity })
   }
   const [quantity, setQuantity] = useState(1)
-  const isDesktop = useIsDesktop()
-
   const isOpen = item !== null
 
   const images = item && item.images.length > 0 ? item.images : null

@@ -2,7 +2,7 @@
 
 .header {
   @apply sticky top-0 z-dock -mx-4 hidden items-center gap-3;
-  @apply bg-surface-raised/95 px-4;
+  @apply bg-surface-1/95 px-4;
   @apply py-4 backdrop-blur sm:-mx-6 sm:px-6 lg:flex;
   border-bottom: 1px solid
     color-mix(in srgb, black calc(var(--p, 0) * 8%), transparent);
@@ -28,7 +28,7 @@
 }
 
 .title {
-  @apply truncate;
+  @apply truncate text-fg-strong;
 }
 
 .since {

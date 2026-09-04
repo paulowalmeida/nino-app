@@ -10,7 +10,6 @@ import { Button } from '@nino/ds/components/Button'
 import { Box } from '@nino/ds/components/Box'
 import { Text } from '@nino/ds/components/Text'
 import { useStorefrontFacade } from '@pages/Storefront/facades/useStorefrontFacade/useStorefrontFacade'
-import { useStorefrontSlug } from '@pages/Storefront/hooks/useStorefrontSlug/useStorefrontSlug'
 import { AnimatedNumber } from '@shared/components/AnimatedNumber/AnimatedNumber'
 import { brl } from '@utils/money'
 
@@ -21,7 +20,7 @@ export const CartDock = () => {
     cartCount: count,
     cartTotal: total,
     setCartOpen,
-  } = useStorefrontFacade(useStorefrontSlug())
+  } = useStorefrontFacade()
   const onOpenCart = () => setCartOpen(true)
   const reduceMotion = useReducedMotion()
 

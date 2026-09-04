@@ -8,14 +8,6 @@
   @apply -mx-6 -mt-4 mb-4;
 }
 
-.modalTitle {
-  @apply font-display text-lg font-bold text-fg-muted;
-}
-
-.modalMedia {
-  @apply mb-4 overflow-hidden rounded-3;
-}
-
 .photoWrap {
   @apply w-full;
 }
@@ -44,10 +36,6 @@
 .footer {
   @apply sticky bottom-0 -mx-6 -mb-4 mt-4 flex items-center gap-3;
   @apply border-t border-black/[0.08] bg-surface-page px-6 py-4;
-}
-
-.modalFooter {
-  @apply flex w-full items-center gap-3;
 }
 
 .stepper {

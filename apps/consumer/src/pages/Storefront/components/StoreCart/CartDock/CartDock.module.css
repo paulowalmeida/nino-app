@@ -1,7 +1,7 @@
 @reference "@nino/ds/globals.css";
 
 .dock {
-  @apply fixed inset-x-0 bottom-16 z-dock cursor-pointer bg-surface-page;
+  @apply fixed inset-x-0 bottom-[4.5rem] z-dock cursor-pointer bg-surface-page;
   @apply px-4 py-3;
   box-shadow: 0 -10px 30px -20px
     color-mix(in srgb, var(--color-warm-950) 45%, transparent);
@@ -60,11 +60,8 @@
 @media (min-width: 1024px) {
   .dock {
     @apply bottom-8 mx-auto w-fit;
-    @apply rounded-full border border-black/[0.07] py-2.5 pl-6 pr-2.5;
-    box-shadow:
-      0 18px 40px -14px
-        color-mix(in srgb, var(--color-warm-950) 50%, transparent),
-      0 2px 8px -2px color-mix(in srgb, var(--color-warm-950) 18%, transparent);
+    @apply rounded-4 border border-border py-2.5 pl-6 pr-2.5;
+    box-shadow: var(--shadow-warm-lg);
   }
 
   .dock::before,

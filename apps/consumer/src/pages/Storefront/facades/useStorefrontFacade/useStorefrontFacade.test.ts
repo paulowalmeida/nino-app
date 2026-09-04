@@ -1,25 +1,34 @@
 import { renderHook } from '@testing-library/react'
 import { describe, expect, it, vi } from 'vitest'
 
-import { useCartSummary } from '@hooks/useCartSummary/useCartSummary'
 import { useMenu } from '@pages/Storefront/hooks/useMenu/useMenu'
 import { useOpeningHours } from '@hooks/useOpeningHours/useOpeningHours'
 import { usePublicSettings } from '@hooks/usePublicSettings/usePublicSettings'
 import { useStore } from '@hooks/useStore/useStore'
-import { cartItemAdapterMock } from '@pages/Storefront/adapters/cartItem.adapter/cartItem.adapter.mock'
+import { useIsDesktop } from '@pages/Storefront/hooks/useIsDesktop/useIsDesktop'
+import { useMenuSections } from '@pages/Storefront/hooks/useMenuSections/useMenuSections'
+import { useStorefrontCart } from '@pages/Storefront/hooks/useStorefrontCart/useStorefrontCart'
+import { useStorefrontSlug } from '@pages/Storefront/hooks/useStorefrontSlug/useStorefrontSlug'
+import { useCustomerSession } from '@shared/hooks/useCustomerSession/useCustomerSession'
+import { useLogout } from '@shared/hooks/useLogout/useLogout'
 
 import { useStorefrontFacade } from './useStorefrontFacade'
 import { storefrontFacadeMock } from './useStorefrontFacade.mock'
 
-vi.mock('@hooks/useCartSummary/useCartSummary')
 vi.mock('@pages/Storefront/hooks/useMenu/useMenu', () => ({ useMenu: vi.fn() }))
 vi.mock('@hooks/useOpeningHours/useOpeningHours')
 vi.mock('@hooks/usePublicSettings/usePublicSettings')
 vi.mock('@hooks/useStore/useStore')
+vi.mock('@pages/Storefront/hooks/useIsDesktop/useIsDesktop')
+vi.mock('@pages/Storefront/hooks/useMenuSections/useMenuSections')
+vi.mock('@pages/Storefront/hooks/useStorefrontCart/useStorefrontCart')
+vi.mock('@pages/Storefront/hooks/useStorefrontSlug/useStorefrontSlug')
+vi.mock('@shared/hooks/useCustomerSession/useCustomerSession')
+vi.mock('@shared/hooks/useLogout/useLogout')
 
 describe('useStorefrontFacade', () => {
   it('exposes the composed home contract for the requested store', () => {
-    const add = vi.fn(() => true)
+    vi.mocked(useStorefrontSlug).mockReturnValue(storefrontFacadeMock.slug)
     vi.mocked(useStore).mockReturnValue({
       store: { id: storefrontFacadeMock.storeId },
       isPending: false,
@@ -39,15 +48,28 @@ describe('useStorefrontFacade', () => {
       },
       estimatedMinutes: 35,
     } as unknown as ReturnType<typeof usePublicSettings>)
-    vi.mocked(useCartSummary).mockReturnValue({
-      tenantId: storefrontFacadeMock.storeId,
-      lines: {},
+    vi.mocked(useStorefrontCart).mockReturnValue({
+      cart: {},
       cartLines: [],
-      count: 0,
-      total: 0,
-      add,
-      replace: vi.fn(),
-    } as unknown as ReturnType<typeof useCartSummary>)
+      cartCount: 0,
+      cartTotal: 0,
+    } as unknown as ReturnType<typeof useStorefrontCart>)
+    vi.mocked(useMenuSections).mockReturnValue({
+      visibleSections: [],
+      activeId: null,
+      goToSection: vi.fn(),
+      sectionDomId: vi.fn(),
+      isSearching: false,
+    })
+    vi.mocked(useIsDesktop).mockReturnValue(true)
+    vi.mocked(useCustomerSession).mockReturnValue({
+      customer: null,
+      isPending: false,
+    })
+    vi.mocked(useLogout).mockReturnValue({
+      mutate: vi.fn(),
+      isPending: false,
+    } as unknown as ReturnType<typeof useLogout>)
 
     const { result } = renderHook(() =>
       useStorefrontFacade(storefrontFacadeMock.slug)
@@ -59,17 +81,6 @@ describe('useStorefrontFacade', () => {
       storefrontFacadeMock.estimatedMinutes
     )
     expect(result.current.cartCount).toBe(0)
-
-    expect(result.current.addToCart(cartItemAdapterMock.item, 2)).toBe(true)
-    expect(add).toHaveBeenCalledWith(
-      storefrontFacadeMock.storeId,
-      {
-        id: cartItemAdapterMock.item.id,
-        name: cartItemAdapterMock.item.name,
-        price: cartItemAdapterMock.item.price,
-        imageUrl: cartItemAdapterMock.item.images[0].url,
-      },
-      2
-    )
+    expect(result.current.isDesktop).toBe(true)
   })
 })

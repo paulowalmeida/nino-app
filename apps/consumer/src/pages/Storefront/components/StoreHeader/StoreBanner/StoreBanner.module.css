@@ -2,13 +2,18 @@
 
 .banner {
   @apply relative w-full overflow-hidden;
-  @apply h-40 sm:h-48 lg:h-56;
+  @apply h-36 sm:h-44 lg:h-52;
   background: linear-gradient(
     124deg,
-    var(--store-tint, var(--color-brand)) 0%,
     color-mix(
         in srgb,
-        var(--store-tint, var(--color-brand)) 76%,
+        var(--store-tint, var(--color-brand)) 88%,
+        var(--color-surface-raised)
+      )
+      0%,
+    color-mix(
+        in srgb,
+        var(--store-tint, var(--color-brand)) 72%,
         var(--color-warm-950)
       )
       100%

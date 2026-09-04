@@ -8,9 +8,6 @@ import { Image } from '@nino/ds/components/Image'
 import { Input } from '@nino/ds/components/Input'
 import { Button } from '@nino/ds/components/Button'
 import { useStorefrontFacade } from '@pages/Storefront/facades/useStorefrontFacade/useStorefrontFacade'
-import { useStorefrontSlug } from '@pages/Storefront/hooks/useStorefrontSlug/useStorefrontSlug'
-import { useCustomerSession } from '@shared/hooks/useCustomerSession/useCustomerSession'
-import { useLogout } from '@shared/hooks/useLogout/useLogout'
 import { displayName, storeInitials } from '@utils/store-info'
 import { formatPhone } from '@utils/phone'
 
@@ -21,11 +18,17 @@ type StoreTopBarProps = {
   progress: number
 }
 export const StoreTopBar = ({ slug, progress }: StoreTopBarProps) => {
-  const { store, cartCount, setCartOpen, sections, search, setSearch } =
-    useStorefrontFacade(useStorefrontSlug())
+  const {
+    store,
+    cartCount,
+    setCartOpen,
+    sections,
+    search,
+    setSearch,
+    customer,
+    logout,
+  } = useStorefrontFacade()
   const navigate = useNavigate()
-  const { customer } = useCustomerSession()
-  const logout = useLogout()
   if (!store) return null
 
   const base = slug ? `/${slug}` : ''
@@ -134,7 +137,7 @@ export const StoreTopBar = ({ slug, progress }: StoreTopBarProps) => {
                   label: 'Sair',
                   icon: <Icon name="logout" />,
                   destructive: true,
-                  onSelect: () => logout.mutate(),
+                  onSelect: logout,
                 },
               ]}
             />

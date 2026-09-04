@@ -1,3 +1,5 @@
+import { Text } from '@nino/ds/components/Text'
+
 import styles from './PoweredBy.module.css'
 
 const LANDING_URL = 'https://dev.nino.delivery'
@@ -10,7 +12,10 @@ export const PoweredBy = () => (
       rel="noopener noreferrer"
       className={styles.link}
     >
-      powered by <span className={styles.mark}>nino</span>
+      powered by{' '}
+      <Text as="span" className={styles.mark}>
+        nino
+      </Text>
     </a>
   </footer>
 )

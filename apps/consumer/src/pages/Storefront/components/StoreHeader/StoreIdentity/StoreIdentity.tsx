@@ -4,7 +4,6 @@ import { Text } from '@nino/ds/components/Text'
 import { Button } from '@nino/ds/components/Button'
 import { Heading } from '@nino/ds/components/Heading'
 import { useStorefrontFacade } from '@pages/Storefront/facades/useStorefrontFacade/useStorefrontFacade'
-import { useStorefrontSlug } from '@pages/Storefront/hooks/useStorefrontSlug/useStorefrontSlug'
 import { isOpen } from '@utils/store-info'
 import { displayName, storeInitials } from '@utils/store-info'
 import { riseDelay } from '@utils/rise-delay'
@@ -14,7 +13,7 @@ import motion from '@styles/motion.module.css'
 
 export const StoreIdentity = () => {
   const { store, isHoursPending, hours, estimatedMinutes, setInfoOpen } =
-    useStorefrontFacade(useStorefrontSlug())
+    useStorefrontFacade()
   if (!store) return null
   const isStoreOpen = isHoursPending || isOpen(store, hours)
   return (

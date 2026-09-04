@@ -2,9 +2,9 @@
 
 .header {
   @apply sticky top-0 z-sticky flex items-center gap-3 border-b;
-  @apply border-black/[0.08];
+  @apply border-border;
   @apply bg-surface-page/90 px-5 py-3.5 backdrop-blur-md;
-  @apply lg:rounded-t-[1.75rem];
+  @apply lg:rounded-t-5;
 }
 
 .back {
@@ -23,7 +23,7 @@
 
 .title {
   @apply truncate font-display text-lg font-extrabold leading-tight;
-  @apply text-fg-muted;
+  @apply text-fg-strong;
 }
 
 .storeLine {

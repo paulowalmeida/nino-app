@@ -1,9 +1,9 @@
 @reference "@nino/ds/globals.css";
 
 .page {
-  @apply flex min-h-dvh w-full flex-col bg-surface-raised pb-16;
+  @apply flex min-h-dvh w-full flex-col bg-surface-1 pb-16;
 }
 
 .shell {
-  @apply mx-auto w-full max-w-xl flex-1 px-5;
+  @apply mx-auto w-full max-w-2xl flex-1 px-5 sm:px-6;
 }

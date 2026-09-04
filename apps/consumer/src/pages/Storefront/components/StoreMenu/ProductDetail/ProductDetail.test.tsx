@@ -4,14 +4,10 @@ import { describe, expect, it, vi } from 'vitest'
 
 import type { MenuItem } from '@custom_types/menu/menu-item'
 import { useStorefrontFacade } from '@pages/Storefront/facades/useStorefrontFacade/useStorefrontFacade'
-import { useIsDesktop } from '@pages/Storefront/hooks/useIsDesktop/useIsDesktop'
-import { useStorefrontSlug } from '@pages/Storefront/hooks/useStorefrontSlug/useStorefrontSlug'
 import { ProductDetail } from './ProductDetail'
 import { productDetailMock } from './ProductDetail.mock'
 
 vi.mock('@pages/Storefront/facades/useStorefrontFacade/useStorefrontFacade')
-vi.mock('@pages/Storefront/hooks/useIsDesktop/useIsDesktop')
-vi.mock('@pages/Storefront/hooks/useStorefrontSlug/useStorefrontSlug')
 
 describe('ProductDetail', () => {
   it('asks for confirmation before replacing another store cart', async () => {
@@ -20,8 +16,6 @@ describe('ProductDetail', () => {
     const setSelectedItem = vi.fn((item) => {
       selectedItem = item
     })
-    vi.mocked(useIsDesktop).mockReturnValue(true)
-    vi.mocked(useStorefrontSlug).mockReturnValue('loja-2')
     vi.mocked(useStorefrontFacade).mockImplementation(
       () =>
         ({
@@ -29,6 +23,7 @@ describe('ProductDetail', () => {
           setSelectedItem,
           addToCart: vi.fn(() => false),
           replaceCart,
+          isDesktop: true,
         }) as never
     )
 

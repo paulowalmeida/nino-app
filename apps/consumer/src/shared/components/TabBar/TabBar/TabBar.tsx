@@ -3,6 +3,7 @@ import { NavLink, useLocation, useNavigate } from 'react-router'
 
 import { Icon } from '@nino/ds/components/Icon'
 import { Button } from '@nino/ds/components/Button'
+import { Text } from '@nino/ds/components/Text'
 import { AccountDrawer } from './AccountDrawer/AccountDrawer'
 
 import styles from './TabBar.module.css'
@@ -46,7 +47,9 @@ export const TabBar = ({ base }: TabBarProps) => {
           }
         >
           <Icon name="bag" />
-          <span className={styles.label}>Pedidos</span>
+          <Text as="span" className={styles.label}>
+            Pedidos
+          </Text>
         </NavLink>
 
         <Button
@@ -56,10 +59,12 @@ export const TabBar = ({ base }: TabBarProps) => {
           aria-label={isHome ? 'Voltar ao topo do cardápio' : 'Ir ao cardápio'}
           className={isHome ? `${styles.home} ${styles.homeOn}` : styles.home}
         >
-          <span className={styles.homeRing}>
+          <Text as="span" className={styles.homeRing}>
             <Icon name="home" />
-          </span>
-          <span className={styles.label}>Início</span>
+          </Text>
+          <Text as="span" className={styles.label}>
+            Início
+          </Text>
         </Button>
 
         <Button
@@ -70,7 +75,9 @@ export const TabBar = ({ base }: TabBarProps) => {
           className={isAccount ? `${styles.tab} ${styles.tabOn}` : styles.tab}
         >
           <Icon name="user" />
-          <span className={styles.label}>Perfil</span>
+          <Text as="span" className={styles.label}>
+            Perfil
+          </Text>
         </Button>
       </nav>
 

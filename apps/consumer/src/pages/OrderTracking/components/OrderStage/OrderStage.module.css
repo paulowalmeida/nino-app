@@ -8,8 +8,8 @@
  * este cartão não pisca e some: fica na tela o tempo inteiro da espera.
  */
 .stage {
-  @apply relative overflow-hidden rounded-2 border border-brand-soft;
-  @apply bg-black/[0.07] px-5 pb-7 pt-4 text-fg-muted shadow-sm;
+  @apply relative overflow-hidden rounded-4 border border-brand-muted;
+  @apply bg-surface-page px-5 pb-7 pt-5 text-fg-muted shadow-warm-sm;
 }
 
 /* Cancelado sai do laranja: nada está acontecendo para acompanhar. */
@@ -49,7 +49,7 @@
 
 .headline {
   @apply font-display text-[1.4rem] font-extrabold leading-tight;
-  @apply text-fg-muted;
+  @apply text-fg-strong;
   @apply sm:text-2xl;
 }
 
@@ -72,7 +72,7 @@
 
 .etaValue {
   @apply flex items-baseline gap-2 font-display text-[3.1rem] font-extrabold;
-  @apply leading-none text-fg-muted;
+  @apply leading-none text-fg-strong;
   font-variant-numeric: tabular-nums;
 }
 

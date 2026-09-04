@@ -1,6 +1,7 @@
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
 
 import { EXPO_OUT_EASE } from '@constants/motion.constants'
+import { Text } from '@nino/ds/components/Text'
 
 import styles from './AnimatedNumber.module.css'
 
@@ -18,7 +19,7 @@ export const AnimatedNumber = ({ value, className }: AnimatedNumberProps) => {
   const reduceMotion = useReducedMotion()
 
   return (
-    <span className={`${styles.wrap} ${className ?? ''}`}>
+    <Text as="span" className={`${styles.wrap} ${className ?? ''}`}>
       <AnimatePresence mode="popLayout" initial={false}>
         <motion.span
           key={value}
@@ -33,6 +34,6 @@ export const AnimatedNumber = ({ value, className }: AnimatedNumberProps) => {
           {value}
         </motion.span>
       </AnimatePresence>
-    </span>
+    </Text>
   )
 }

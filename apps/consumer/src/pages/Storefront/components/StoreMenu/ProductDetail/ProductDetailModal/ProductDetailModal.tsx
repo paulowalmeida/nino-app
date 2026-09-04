@@ -6,7 +6,7 @@ import { Modal } from '@nino/ds/components/Modal'
 import { Text } from '@nino/ds/components/Text'
 import type { MenuItem } from '@custom_types/menu/menu-item'
 
-import styles from '../ProductDetail.module.css'
+import styles from './ProductDetailModal.module.css'
 import motion from '@styles/motion.module.css'
 import { riseDelay } from '@utils/rise-delay'
 

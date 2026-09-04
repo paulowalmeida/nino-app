@@ -5,7 +5,7 @@
 }
 
 .card {
-  @apply mt-5 rounded-2 border border-black/[0.08] bg-surface-raised p-5;
+  @apply mt-6 rounded-4 border border-border bg-surface-1 p-5 sm:p-6;
 }
 
 .field {

@@ -4,7 +4,6 @@ import { Icon } from '@nino/ds/components/Icon'
 import { Input } from '@nino/ds/components/Input'
 import { Box } from '@nino/ds/components/Box'
 import { useStorefrontFacade } from '@pages/Storefront/facades/useStorefrontFacade/useStorefrontFacade'
-import { useStorefrontSlug } from '@pages/Storefront/hooks/useStorefrontSlug/useStorefrontSlug'
 
 import styles from './MenuSearchField.module.css'
 
@@ -13,7 +12,7 @@ import styles from './MenuSearchField.module.css'
  * busca em dois lugares, nunca duas visíveis ao mesmo tempo.
  */
 export const MenuSearchField = forwardRef<HTMLInputElement>((_, ref) => {
-  const { search, setSearch } = useStorefrontFacade(useStorefrontSlug())
+  const { search, setSearch } = useStorefrontFacade()
   return (
     <Box className={styles.toolbar}>
       <Box className={styles.field}>

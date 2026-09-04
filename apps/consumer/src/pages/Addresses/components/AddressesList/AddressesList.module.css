@@ -5,7 +5,7 @@
 }
 
 .item {
-  @apply relative rounded-2 border border-black/[0.08] bg-surface-raised;
+  @apply relative rounded-3 border border-border bg-surface-raised;
   @apply p-4;
-  @apply transition-colors hover:border-accent-peach;
+  @apply transition-all hover:border-brand-muted hover:shadow-xs;
 }

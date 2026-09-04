@@ -1,14 +1,14 @@
 @reference "@nino/ds/globals.css";
 
 .bar {
-  @apply fixed inset-x-0 bottom-0 z-nav flex h-16 items-stretch;
-  @apply border-t border-black/[0.07] bg-surface-raised lg:hidden;
+  @apply fixed inset-x-0 bottom-0 z-nav flex h-[4.5rem] items-stretch;
+  @apply border-t border-border bg-surface-raised/95 backdrop-blur lg:hidden;
   padding-bottom: env(safe-area-inset-bottom);
 }
 
 .tab {
   @apply flex h-full flex-1 flex-col items-center justify-center gap-1;
-  @apply text-fg-faint transition-colors;
+  @apply min-h-12 text-fg-subtle transition-colors;
 }
 
 .tabOn {
@@ -23,11 +23,11 @@
  */
 .home {
   @apply flex h-full flex-1 flex-col items-center justify-center gap-0.5;
-  @apply text-fg-faint transition-colors;
+  @apply min-h-12 text-fg-subtle transition-colors;
 }
 
 .homeRing {
-  @apply flex h-10 w-10 items-center justify-center rounded-full border-2;
+  @apply flex h-9 w-9 items-center justify-center rounded-3 border;
   @apply transition-all;
   border-color: color-mix(
     in srgb,
@@ -43,8 +43,7 @@
   border-color: var(--store-tint, var(--color-brand));
   background: var(--store-tint, var(--color-brand));
   @apply text-fg-on-brand;
-  box-shadow: 0 6px 16px -8px
-    color-mix(in srgb, var(--store-tint, var(--color-brand)) 90%, transparent);
+  box-shadow: var(--shadow-warm-sm);
 }
 
 .homeOn {
@@ -53,5 +52,5 @@
 
 /* três alvos numa tela de 360px: o rótulo aperta antes do ícone */
 .label {
-  @apply text-2xs font-semibold;
+  @apply text-xs font-semibold;
 }

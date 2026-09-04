@@ -1,3 +1,5 @@
+import { Box } from '@nino/ds/components/Box'
+import { Text } from '@nino/ds/components/Text'
 import { isTerminal, journeyFor } from '@utils/order-journey'
 import type { GuestOrderStatus } from '@custom_types/order/guest-order-status'
 
@@ -28,9 +30,10 @@ export const OrderRail = ({ order, className }: OrderRailProps) => {
     : journey.indexOf(order.status)
 
   return (
-    <div className={`${styles.rail} ${className ?? ''}`} aria-hidden="true">
+    <Box className={`${styles.rail} ${className ?? ''}`} aria-hidden="true">
       {journey.map((step, i) => (
-        <span
+        <Text
+          as="span"
           key={step}
           className={
             i < index
@@ -41,6 +44,6 @@ export const OrderRail = ({ order, className }: OrderRailProps) => {
           }
         />
       ))}
-    </div>
+    </Box>
   )
 }

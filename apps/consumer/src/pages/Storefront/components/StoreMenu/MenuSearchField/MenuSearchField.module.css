@@ -23,11 +23,10 @@
 }
 
 .input {
-  @apply h-14 w-full rounded-2 border border-black/10 bg-surface-page;
+  @apply h-14 w-full rounded-3 border border-border bg-surface-page;
   @apply pl-12 pr-4;
   @apply text-base text-fg-muted outline-none transition-colors;
-  @apply placeholder:text-fg-faint hover:border-black/20;
+  @apply placeholder:text-fg-faint hover:border-fg-faintest;
   @apply focus-visible:border-brand focus-visible:ring-2 focus-visible:ring-brand-soft;
-  box-shadow: 0 6px 18px -16px
-    color-mix(in srgb, var(--color-warm-950) 45%, transparent);
+  box-shadow: var(--shadow-warm-sm);
 }

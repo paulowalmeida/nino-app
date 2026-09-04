@@ -1,14 +1,14 @@
 @reference "@nino/ds/globals.css";
 
 .identityRow {
-  @apply relative z-content -mt-12 flex items-center gap-4 rounded-3;
-  @apply border border-black/[0.07] bg-surface-page px-4 py-4 shadow-lg;
+  @apply relative z-content -mt-10 flex items-center gap-4 rounded-4;
+  @apply border border-border bg-surface-page px-4 py-4 shadow-warm-sm;
   @apply sm:-mt-16 sm:gap-5 sm:px-6 sm:py-5;
 }
 
 .logoTile {
-  @apply relative h-20 w-20 shrink-0 overflow-hidden rounded-2;
-  @apply border border-black/10 bg-surface-raised shadow-sm;
+  @apply relative h-20 w-20 shrink-0 overflow-hidden rounded-3;
+  @apply border border-border bg-surface-raised shadow-xs;
   @apply sm:h-24 sm:w-24;
   transform-origin: top left;
   transform: scale(calc(1 - var(--p, 0) * 0.48));
@@ -41,7 +41,7 @@
 
 .name {
   @apply line-clamp-2 font-display text-2xl font-extrabold leading-tight;
-  @apply tracking-tight text-fg-muted sm:text-3xl;
+  @apply tracking-tight text-fg-strong sm:text-3xl;
 }
 
 .identityMeta {

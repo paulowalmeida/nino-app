@@ -1,8 +1,8 @@
 import { MenuItemCard } from './MenuItemCard/MenuItemCard'
 import { Box } from '@nino/ds/components/Box'
+import { Heading } from '@nino/ds/components/Heading'
 import { Text } from '@nino/ds/components/Text'
 import { useStorefrontFacade } from '@pages/Storefront/facades/useStorefrontFacade/useStorefrontFacade'
-import { useStorefrontSlug } from '@pages/Storefront/hooks/useStorefrontSlug/useStorefrontSlug'
 import { isOpen } from '@utils/store-info'
 import type { MenuSection as MenuSectionType } from '@custom_types/menu/menu-section'
 import { categoryIcon } from '@utils/category-icon'
@@ -16,7 +16,7 @@ type MenuSectionProps = {
 /** Uma categoria do cardápio: título, contagem de opções e a grade de itens. */
 export const MenuSection = ({ section }: MenuSectionProps) => {
   const { cart, isHoursPending, hours, store, addToCart, setSelectedItem } =
-    useStorefrontFacade(useStorefrontSlug())
+    useStorefrontFacade()
   if (!store) return null
   const storeOpen = isHoursPending || isOpen(store, hours)
   const domId = `section-${section.id}`
@@ -29,8 +29,10 @@ export const MenuSection = ({ section }: MenuSectionProps) => {
       className={styles.section}
       aria-label={section.name}
     >
-      <Box className={styles.sectionHead}>
-        <h2 className={styles.sectionTitle}>{section.name}</h2>
+      <Box direction="row" className={styles.sectionHead}>
+        <Heading level={2} className={styles.sectionTitle}>
+          {section.name}
+        </Heading>
         <Text as="span" className={styles.sectionCount}>
           {section.items.length}{' '}
           {section.items.length === 1 ? 'opção' : 'opções'}

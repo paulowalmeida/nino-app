@@ -19,7 +19,6 @@ import { MenuSearchField } from '@pages/Storefront/components/StoreMenu/MenuSear
 import { MenuRowsSkeleton } from '@pages/Storefront/skeletons/MenuRowsSkeleton/MenuRowsSkeleton'
 import { PoweredBy } from '@shared/components/PoweredBy/PoweredBy'
 import { StoreBanner } from '@pages/Storefront/components/StoreHeader/StoreBanner/StoreBanner'
-import { useMenuSections } from '@pages/Storefront/hooks/useMenuSections/useMenuSections'
 import { useScrollProgress } from '@hooks/useScrollProgress/useScrollProgress'
 import { useStorefrontFacade } from '@pages/Storefront/facades/useStorefrontFacade/useStorefrontFacade'
 import { resolveSlug } from '@utils/resolve-slug'
@@ -39,12 +38,7 @@ export const StorefrontContent = ({ pathSlug }: StorefrontContentProps) => {
   const home = useStorefrontFacade(slug ?? undefined)
   const { reset } = home
   const progress = useScrollProgress(HEADER_TRANSITION_PX)
-  const { search } = home
-
-  const { visibleSections, isSearching } = useMenuSections(
-    home.sections,
-    search
-  )
+  const { search, visibleSections, isSearching } = home
 
   useLayoutEffect(() => {
     reset()

@@ -2,11 +2,10 @@ import styles from './StoreBanner.module.css'
 import { Box } from '@nino/ds/components/Box'
 import { Text } from '@nino/ds/components/Text'
 import { useStorefrontFacade } from '@pages/Storefront/facades/useStorefrontFacade/useStorefrontFacade'
-import { useStorefrontSlug } from '@pages/Storefront/hooks/useStorefrontSlug/useStorefrontSlug'
 import { storeInitials } from '@utils/store-info'
 
 export const StoreBanner = () => {
-  const { store } = useStorefrontFacade(useStorefrontSlug())
+  const { store } = useStorefrontFacade()
   return (
     <Box className={styles.banner}>
       {store?.logoUrl && (

@@ -2,16 +2,16 @@
 
 @layer base {
   body {
-    background: var(--color-surface-page);
+    background: var(--color-surface-1);
+    color: var(--color-fg-default);
     -webkit-font-smoothing: antialiased;
-    font-size: var(--text-xs);
+    text-rendering: optimizeLegibility;
+    font-size: var(--text-sm);
   }
 
   @media (min-width: 1024px) {
     body {
-      background:
-        radial-gradient(80% 60% at 50% -10%, #f6ead8 0%, transparent 60%),
-        var(--color-white);
+      background: var(--color-surface-1);
     }
   }
 
@@ -21,9 +21,14 @@
     inset: 0;
     pointer-events: none;
     z-index: var(--z-grain);
-    opacity: 0.4;
+    opacity: 0.12;
     mix-blend-mode: multiply;
     background-image: url('/noise.svg');
+  }
+
+  ::selection {
+    color: var(--color-fg-strong);
+    background: var(--color-brand-soft);
   }
 }
 

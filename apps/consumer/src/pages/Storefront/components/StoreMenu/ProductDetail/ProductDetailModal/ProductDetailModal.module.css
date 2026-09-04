@@ -1,0 +1,17 @@
+@reference "@nino/ds/globals.css";
+
+.modalTitle {
+  @apply font-display text-lg font-bold text-fg-muted;
+}
+
+.modalMedia {
+  @apply mb-4 overflow-hidden rounded-3;
+}
+
+.description {
+  @apply text-base leading-relaxed text-fg-default;
+}
+
+.modalFooter {
+  @apply flex w-full items-center gap-3;
+}

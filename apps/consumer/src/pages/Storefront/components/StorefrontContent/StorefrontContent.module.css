@@ -1,7 +1,7 @@
 @reference "@nino/ds/globals.css";
 
 .page {
-  @apply relative flex min-h-dvh w-full flex-col bg-surface-raised pb-24;
+  @apply relative flex min-h-dvh w-full flex-col bg-surface-1 pb-24;
   @apply lg:pb-12;
   padding-bottom: calc(6rem + env(safe-area-inset-bottom));
 }
@@ -30,7 +30,7 @@
 }
 
 .menu {
-  @apply mt-6 sm:mt-8;
+  @apply mt-8 sm:mt-10;
 }
 
 .empty {

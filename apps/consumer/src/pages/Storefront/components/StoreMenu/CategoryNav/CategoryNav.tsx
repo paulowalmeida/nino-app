@@ -4,15 +4,12 @@ import { Chip } from '@nino/ds/components/Chip'
 import { Box } from '@nino/ds/components/Box'
 import { Text } from '@nino/ds/components/Text'
 import { useStorefrontFacade } from '@pages/Storefront/facades/useStorefrontFacade/useStorefrontFacade'
-import { useStorefrontSlug } from '@pages/Storefront/hooks/useStorefrontSlug/useStorefrontSlug'
-import { useMenuSections } from '@pages/Storefront/hooks/useMenuSections/useMenuSections'
 import { categoryIcon } from '@utils/category-icon'
 
 import styles from './CategoryNav.module.css'
 
 export const CategoryNav = () => {
-  const { sections, search } = useStorefrontFacade(useStorefrontSlug())
-  const { activeId, goToSection } = useMenuSections(sections, search)
+  const { sections, activeId, goToSection } = useStorefrontFacade()
   const activeRef = useRef<HTMLButtonElement>(null)
 
   useEffect(() => {

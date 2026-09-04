@@ -5,9 +5,9 @@
 }
 
 .item {
-  @apply rounded-2 border border-black/[0.08] bg-surface-raised;
+  @apply rounded-3 border border-border bg-surface-raised;
   @apply transition-colors;
-  @apply hover:border-accent-peach;
+  @apply hover:border-brand-muted hover:shadow-xs;
 }
 
 .link {

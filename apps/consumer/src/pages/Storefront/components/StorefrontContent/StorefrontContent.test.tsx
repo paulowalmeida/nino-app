@@ -15,15 +15,6 @@ vi.mock(
     useStorefrontFacade: vi.fn(),
   })
 )
-vi.mock('@pages/Storefront/hooks/useMenuSections/useMenuSections', () => ({
-  useMenuSections: () => ({
-    visibleSections: [],
-    activeId: undefined,
-    goToSection: vi.fn(),
-    sectionDomId: (id: string) => id,
-    isSearching: false,
-  }),
-}))
 vi.mock('@hooks/useScrollProgress/useScrollProgress', () => ({
   useScrollProgress: () => 0,
 }))
@@ -122,6 +113,8 @@ describe('StorefrontContent', () => {
       cartLines: [],
       cartCount: 0,
       cartTotal: 0,
+      visibleSections: [],
+      isSearching: false,
       isMenuError: false,
       retryMenu: vi.fn(),
       reset: vi.fn(),

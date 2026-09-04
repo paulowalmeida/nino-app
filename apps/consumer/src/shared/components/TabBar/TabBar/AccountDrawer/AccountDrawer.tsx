@@ -3,6 +3,9 @@ import { useLocation, useNavigate } from 'react-router'
 import { Drawer } from '@nino/ds/components/Drawer'
 import { Icon, type IconName } from '@nino/ds/components/Icon'
 import { Button } from '@nino/ds/components/Button'
+import { Box } from '@nino/ds/components/Box'
+import { ListRow } from '@nino/ds/components/ListRow'
+import { Text } from '@nino/ds/components/Text'
 import { ACCOUNT_SECTIONS } from '@shared/constants/account-sections'
 import { useCustomerSession } from '@shared/hooks/useCustomerSession/useCustomerSession'
 import { useLogout } from '@shared/hooks/useLogout/useLogout'
@@ -83,7 +86,7 @@ export const AccountDrawer = ({
     const className = isOn ? `${styles.item} ${styles.itemOn}` : styles.item
 
     return (
-      <li key={to}>
+      <ListRow key={to} divider="none" padding={0}>
         <Button
           variant="ghost"
           onClick={() => go(href)}
@@ -92,9 +95,11 @@ export const AccountDrawer = ({
           style={riseDelay(120 + index * 45)}
         >
           <Icon name={icon} className={styles.icon} />
-          <span className={styles.label}>{label}</span>
+          <Text as="span" className={styles.label}>
+            {label}
+          </Text>
         </Button>
-      </li>
+      </ListRow>
     )
   }
 
@@ -109,63 +114,63 @@ export const AccountDrawer = ({
     >
       {/* a gaveta sai por um portal, fora da árvore da página: a cor da loja
           precisa ser declarada de novo aqui para chegar às peças de dentro */}
-      <div
+      <Box
         className={styles.tint}
         style={tint ? ({ '--store-tint': tint } as React.CSSProperties) : {}}
       >
-        <header className={styles.head}>
-          <div className={`${motion.land} ${styles.tile}`}>
+        <Box as="header" className={styles.head}>
+          <Box className={`${motion.land} ${styles.tile}`}>
             {mark ?? <Icon name="user" className={styles.tileIcon} />}
-          </div>
+          </Box>
 
-          <p
+          <Text
             className={`${motion.deal} ${styles.greeting}`}
             style={riseDelay(60)}
           >
             {greeting()}
             {name ? ',' : ''}
-          </p>
+          </Text>
 
           {name && (
-            <p
+            <Text
               className={`${motion.deal} ${styles.name}`}
               style={riseDelay(90)}
             >
               {name}
-            </p>
+            </Text>
           )}
 
           {customer && (
-            <p
+            <Text
               className={`${motion.deal} ${styles.since}`}
               style={riseDelay(120)}
             >
               na casa desde {since.format(new Date(customer.createdAt))}
-            </p>
+            </Text>
           )}
-        </header>
+        </Box>
 
         {customer ? (
           <>
             <nav className={styles.nav} aria-label="Seções da conta">
-              <ul className={styles.list}>
+              <Box as="ul" className={styles.list}>
                 {ready.map(({ to, label, icon }, index) =>
                   sectionRow(to, label, icon, index)
                 )}
-              </ul>
+              </Box>
 
               {/* dito uma vez, no alto do grupo: o selo repetido em cada linha
                   dizia três vezes a mesma coisa e roubava a leitura do nome */}
-              <p className={styles.eyebrow}>em breve</p>
+              <Text className={styles.eyebrow}>em breve</Text>
 
-              <ul className={`${styles.list} ${styles.listSoon}`}>
+              <Box as="ul" className={`${styles.list} ${styles.listSoon}`}>
                 {soon.map(({ to, label, icon }, index) =>
                   sectionRow(to, label, icon, ready.length + index)
                 )}
-              </ul>
+              </Box>
             </nav>
 
-            <div className={styles.foot}>
+            <Box className={styles.foot}>
               <Button
                 variant="ghost"
                 className={`${motion.press} ${styles.logout}`}
@@ -175,16 +180,16 @@ export const AccountDrawer = ({
                 <Icon name="logout" className={styles.icon} />
                 {logout.isPending ? 'Saindo…' : 'Sair da conta'}
               </Button>
-            </div>
+            </Box>
           </>
         ) : (
           /* visitante é estado normal aqui: a loja inteira funciona sem conta,
              então a gaveta diz o que a conta guarda em vez de barrar caminho */
-          <div className={styles.guest}>
-            <p className={styles.guestText}>
+          <Box className={styles.guest}>
+            <Text className={styles.guestText}>
               Entre para acompanhar seus pedidos e guardar seus endereços de
               entrega.
-            </p>
+            </Text>
             <Button
               variant="ghost"
               className={`${motion.press} ${styles.enter}`}
@@ -192,9 +197,9 @@ export const AccountDrawer = ({
             >
               Entrar
             </Button>
-          </div>
+          </Box>
         )}
-      </div>
+      </Box>
     </Drawer>
   )
 }
