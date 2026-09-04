@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react'
+import { fireEvent, render, screen } from '@testing-library/react'
 import { describe, expect, it, vi } from 'vitest'
 
 import { DestinationStep } from './DestinationStep'
@@ -9,6 +9,28 @@ vi.mock('../DeliveryRecipientFields/DeliveryRecipientFields', () => ({
 }))
 
 describe('DestinationStep', () => {
+  it.each([
+    ['91982071243', '(91) 98207-1243'],
+    ['9132071243', '(91) 3207-1243'],
+  ])('masks pickup phone %s', (phone, maskedPhone) => {
+    const onRecipient = vi.fn()
+    render(
+      <DestinationStep
+        {...destinationStepMock}
+        channel="PICKUP"
+        onChannel={vi.fn()}
+        onCustomerName={vi.fn()}
+        onTableNumber={vi.fn()}
+        onRecipient={onRecipient}
+        addressSuggestions={[]}
+        isSearchingAddress={false}
+      />
+    )
+    fireEvent.change(screen.getByRole('textbox', { name: 'Telefone' }), {
+      target: { value: phone },
+    })
+    expect(onRecipient).toHaveBeenCalledWith({ phone: maskedPhone })
+  })
   it('requests only name and phone for pickup', () => {
     render(
       <DestinationStep

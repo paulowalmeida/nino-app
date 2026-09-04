@@ -26,6 +26,40 @@ vi.mock('@nino/ds/components/Dialog', () => ({
 }))
 
 describe(SaleFinishActions.name, () => {
+  it('requires confirmation before finishing a cash payment', () => {
+    const onFinish = vi.fn()
+    render(
+      <SaleFinishActions
+        {...saleFinishActionsMock}
+        isCash
+        error={null}
+        isSending={false}
+        onFinish={onFinish}
+        onClear={vi.fn()}
+      />
+    )
+    fireEvent.click(screen.getByRole('button', { name: 'Concluir pedido' }))
+    expect(onFinish).not.toHaveBeenCalled()
+    fireEvent.click(screen.getByRole('button', { name: 'confirm-clear' }))
+    expect(onFinish).toHaveBeenCalledOnce()
+  })
+
+  it('does not finish cash payment when confirmation is cancelled', () => {
+    const onFinish = vi.fn()
+    render(
+      <SaleFinishActions
+        {...saleFinishActionsMock}
+        isCash
+        error={null}
+        isSending={false}
+        onFinish={onFinish}
+        onClear={vi.fn()}
+      />
+    )
+    fireEvent.click(screen.getByRole('button', { name: 'Concluir pedido' }))
+    fireEvent.click(screen.getByRole('button', { name: 'cancel-clear' }))
+    expect(onFinish).not.toHaveBeenCalled()
+  })
   it('finishes and confirms clearing a sale', () => {
     const onFinish = vi.fn()
     const onClear = vi.fn()

@@ -1,6 +1,7 @@
 import { Box } from '@nino/ds/components/Box'
 import { FormField } from '@nino/ds/components/FormField'
 import { Input } from '@nino/ds/components/Input'
+import { PhoneInput } from '@nino/ds/components/PhoneInput'
 import { Text } from '@nino/ds/components/Text'
 import type { AddressSearchResult } from '@nino/lib/types/address/address-lookup'
 import { COUNTER_CHANNEL_HINT } from '@pages/Counter/constants/counter.constants'
@@ -90,7 +91,7 @@ export const DestinationStep = ({
           />
         </FormField>
         <FormField label="Telefone">
-          <Input
+          <PhoneInput
             aria-label="Telefone"
             type="tel"
             value={recipient.phone}

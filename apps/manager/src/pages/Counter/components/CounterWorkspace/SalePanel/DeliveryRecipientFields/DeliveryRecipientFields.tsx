@@ -3,11 +3,12 @@ import { Combobox } from '@nino/ds/components/Combobox'
 import { FieldHint } from '@nino/ds/components/FieldHint'
 import { FormField } from '@nino/ds/components/FormField'
 import { Input } from '@nino/ds/components/Input'
+import { PhoneInput } from '@nino/ds/components/PhoneInput'
 import { Select } from '@nino/ds/components/Select'
+import type { AddressSearchResult } from '@nino/lib/types/address/address-lookup'
 import { AddressFields } from '@shared/components/AddressFields/AddressFields'
 import type { Recipient } from '@shared/types/order/recipient'
 import type { DeliveryCity } from '@shared/types/store/delivery-city'
-import type { AddressSearchResult } from '@nino/lib/types/address/address-lookup'
 
 import styles from './DeliveryRecipientFields.module.css'
 
@@ -87,7 +88,7 @@ export const DeliveryRecipientFields = ({
           />
         </FormField>
         <FormField label="Telefone">
-          <Input
+          <PhoneInput
             inputMode="tel"
             placeholder="(91) 98888-0000"
             aria-label="Telefone"

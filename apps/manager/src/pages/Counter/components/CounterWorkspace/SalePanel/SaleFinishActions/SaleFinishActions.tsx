@@ -35,6 +35,7 @@ export const SaleFinishActions = ({
   bare = false,
 }: SaleFinishActionsProps) => {
   const [confirmingClear, setConfirmingClear] = useState(false)
+  const [confirmingCash, setConfirmingCash] = useState(false)
 
   const handleConfirmClear = () => {
     setConfirmingClear(false)
@@ -74,9 +75,9 @@ export const SaleFinishActions = ({
           loading={isSending}
           disabled={!hasLines || !isPaymentAvailable}
           className={mergeClasses(motion.press, styles.finish)}
-          onClick={onFinish}
+          onClick={() => (isCash ? setConfirmingCash(true) : onFinish())}
         >
-          {isCash ? 'Confirmar recebimento e concluir pedido' : 'Concluir pedido'}
+          Concluir pedido
         </Button>
         {hasLines && (
           <Button
@@ -90,6 +91,21 @@ export const SaleFinishActions = ({
           </Button>
         )}
       </Box>
+      <Dialog
+        open={confirmingCash && isCash}
+        onOpenChange={(open) => !open && setConfirmingCash(false)}
+        title="Confirmar pagamento em dinheiro"
+        description={`Confirme que recebeu o pagamento de ${brl(total)} em dinheiro antes de concluir o pedido.`}
+        confirmLabel="Confirmar pagamento"
+        cancelLabel="Voltar"
+        loading={isSending}
+        onConfirm={() => {
+          if (isSending || !hasLines || !isPaymentAvailable) return
+          setConfirmingCash(false)
+          onFinish()
+        }}
+        onCancel={() => setConfirmingCash(false)}
+      />
       <Dialog
         open={confirmingClear}
         onOpenChange={(open) => !open && setConfirmingClear(false)}

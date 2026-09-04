@@ -13,6 +13,7 @@ export const toCounterSaleRequest = ({
 }: CounterSaleInput): CreateOrderRequest => ({
   channel,
   paymentMethod,
+  cashReceived: paymentMethod === 'CASH' ? true : undefined,
   guestName:
     (channel === 'DELIVERY' || channel === 'PICKUP'
       ? recipient?.name

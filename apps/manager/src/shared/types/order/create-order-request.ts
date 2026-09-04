@@ -5,6 +5,7 @@ import type { PaymentMethod } from './payment-method'
 export type CreateOrderRequest = {
   channel: OrderChannel
   paymentMethod: PaymentMethod
+  cashReceived?: boolean
   items: CreateOrderItem[]
   deliveryZoneId?: string
   tableNumber?: string

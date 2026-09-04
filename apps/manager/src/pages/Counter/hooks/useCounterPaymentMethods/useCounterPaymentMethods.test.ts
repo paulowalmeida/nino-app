@@ -10,11 +10,11 @@ vi.mock('@pages/Counter/hooks/useAcceptedPayments/useAcceptedPayments', () => ({
 }))
 
 describe(useCounterPaymentMethods.name, () => {
-  it('removes online card payments from counter methods', () => {
+  it('only offers cash at the counter', () => {
     vi.mocked(useAcceptedPayments).mockReturnValue({
-      methods: ['CASH', 'CARD_ONLINE', 'PIX'],
+      methods: ['CASH', 'CARD_ONLINE', 'PIX', 'CARD_ON_DELIVERY'],
     } as never)
     const { result } = renderHook(() => useCounterPaymentMethods('tenant-1'))
-    expect(result.current.methods).toEqual(['CASH', 'PIX'])
+    expect(result.current.methods).toEqual(['CASH'])
   })
 })

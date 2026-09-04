@@ -1,8 +1,8 @@
-import { useCounterAvailability } from '@pages/Counter/hooks/useCounterAvailability/useCounterAvailability'
 import { useCounterAddressSearch } from '@pages/Counter/hooks/useCounterAddressSearch/useCounterAddressSearch'
-import { useCounterDeliveryQuote } from '@pages/Counter/hooks/useCounterDeliveryQuote/useCounterDeliveryQuote'
+import { useCounterAvailability } from '@pages/Counter/hooks/useCounterAvailability/useCounterAvailability'
 import { useCounterCart } from '@pages/Counter/hooks/useCounterCart/useCounterCart'
 import { useCounterCommands } from '@pages/Counter/hooks/useCounterCommands/useCounterCommands'
+import { useCounterDeliveryQuote } from '@pages/Counter/hooks/useCounterDeliveryQuote/useCounterDeliveryQuote'
 import { useCounterPaymentMethods } from '@pages/Counter/hooks/useCounterPaymentMethods/useCounterPaymentMethods'
 import { useCounterPaymentSelection } from '@pages/Counter/hooks/useCounterPaymentSelection/useCounterPaymentSelection'
 import { useCounterReceipt } from '@pages/Counter/hooks/useCounterReceipt/useCounterReceipt'
@@ -77,7 +77,7 @@ export const useCounterFacade = () => {
           : true
 
   useCounterShortcuts({
-    isOpen: cart.count > 0,
+    isOpen: cart.count > 0 && (step !== 'review' || selection.method !== 'CASH'),
     canAdvance: canContinue && !commands.isSending,
     onAdvance: () => {
       if (!sheet) {

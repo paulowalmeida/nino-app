@@ -8,6 +8,7 @@ describe(toCounterSaleRequest.name, () => {
     expect(toCounterSaleRequest(counterSaleInputMock)).toEqual({
       channel: 'COUNTER',
       paymentMethod: 'CASH',
+      cashReceived: true,
       guestName: 'Ana',
       tableNumber: '4',
       changeFor: undefined,
