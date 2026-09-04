@@ -8,16 +8,11 @@ describe('toStoreTheme', () => {
     expect(toStoreTheme()).toEqual({})
   })
 
-  it('maps all eight saved colors to the storefront', () => {
+  it('maps the store brand color to the storefront', () => {
     expect(toStoreTheme(storeThemeMock)).toMatchObject({
       '--store-tint': '#111111',
-      '--store-secondary': '#222222',
-      '--store-highlight': '#333333',
-      '--color-surface-page': '#444444',
-      '--color-fg-default': '#555555',
-      '--color-surface-raised': '#666666',
-      '--color-border': '#777777',
-      '--color-fg-subtle': '#888888',
+      '--color-brand': '#111111',
+      '--color-brand-strong': '#111111',
     })
   })
 })
