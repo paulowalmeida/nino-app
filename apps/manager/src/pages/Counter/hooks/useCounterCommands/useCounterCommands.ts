@@ -41,7 +41,7 @@ export const useCounterCommands = (
 
   const finish = async () => {
     if (!method) return
-    const orderNumber = await sell({
+    const sale = await sell({
       lines,
       paymentMethod: method,
       customerName,
@@ -53,10 +53,12 @@ export const useCounterCommands = (
           ? { ...recipient, zoneId: deliveryQuote.quote?.id ?? '' }
           : recipient,
     })
-    if (!orderNumber) return
+    if (!sale) return
+    const { orderNumber, pickupCode } = sale
     setLastSale(
       toSaleReceipt({
         orderNumber,
+        pickupCode,
         lines,
         total: saleTotal,
         paymentMethod: method,

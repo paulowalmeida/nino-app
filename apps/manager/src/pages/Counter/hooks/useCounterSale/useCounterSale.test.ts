@@ -43,7 +43,7 @@ describe(useCounterSale.name, () => {
         tableNumber: '',
       })
     )
-    expect(orderNumber).toBe(7)
+    expect(orderNumber).toEqual({ orderNumber: 7 })
   })
 
   it('accepts delivery sales identified by the recipient name', async () => {

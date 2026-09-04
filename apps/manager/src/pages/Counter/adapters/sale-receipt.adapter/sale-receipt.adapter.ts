@@ -6,6 +6,7 @@ import { moneyValue } from '@shared/utils/money/money'
 
 type ToSaleReceiptInput = {
   orderNumber: number
+  pickupCode?: string | null
   lines: CartLine[]
   total: number
   paymentMethod: PaymentMethod
@@ -15,6 +16,7 @@ type ToSaleReceiptInput = {
 
 export const toSaleReceipt = ({
   orderNumber,
+  pickupCode,
   lines,
   total,
   paymentMethod,
@@ -27,6 +29,7 @@ export const toSaleReceipt = ({
 
   return {
     orderNumber,
+    pickupCode,
     closedAt: closedAt.toISOString(),
     lines,
     total,

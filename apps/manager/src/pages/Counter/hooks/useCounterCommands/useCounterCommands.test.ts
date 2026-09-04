@@ -105,7 +105,7 @@ describe(useCounterCommands.name, () => {
   })
 
   it('clears the ticket after a successful sale', async () => {
-    spies.sell.mockResolvedValue('order-7')
+    spies.sell.mockResolvedValue({ orderNumber: 7 })
     const { result } = renderHook(
       () => useCounterCommands('tenant-1', 'CASH'),
       { wrapper }
@@ -117,7 +117,7 @@ describe(useCounterCommands.name, () => {
 
   it('captures the sale as a receipt before clearing the ticket', async () => {
     // Arrange
-    spies.sell.mockResolvedValue(128)
+    spies.sell.mockResolvedValue({ orderNumber: 128, pickupCode: '123456' })
     const { result } = renderHook(
       () => useCounterCommands('tenant-1', 'CASH'),
       { wrapper }
@@ -130,6 +130,7 @@ describe(useCounterCommands.name, () => {
     expect(spies.setLastSale).toHaveBeenCalledWith(
       expect.objectContaining({
         orderNumber: 128,
+        pickupCode: '123456',
         total: 20,
         paymentMethod: 'CASH',
         receivedAmount: 50,

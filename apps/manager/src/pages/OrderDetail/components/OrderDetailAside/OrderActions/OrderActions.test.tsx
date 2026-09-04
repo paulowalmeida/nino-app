@@ -46,6 +46,26 @@ const facadeWith = (overrides: Record<string, unknown>) =>
 describe('OrderActions', () => {
   beforeEach(() => vi.clearAllMocks())
 
+  it('requires the customer code and submits it to confirm pickup', async () => {
+    facadeWith({
+      order: { ...pendingOrderMock, channel: 'PICKUP', pickupCode: '012345' },
+      nextStep: { label: 'Confirmar retirada', target: 'COMPLETED' },
+    })
+    render(<OrderActions />)
+    const confirm = screen.getByRole('button', { name: 'Confirmar retirada' })
+    expect(confirm).toBeDisabled()
+    await userEvent.type(
+      screen.getByRole('textbox', { name: 'Código de retirada' }),
+      '012345'
+    )
+    await userEvent.click(confirm)
+    expect(advanceOrder).toHaveBeenCalledWith({
+      orderId: pendingOrderMock.id,
+      status: 'COMPLETED',
+      pickupCode: '012345',
+    })
+  })
+
   it('names the stage the order goes to next', async () => {
     facadeWith({})
 

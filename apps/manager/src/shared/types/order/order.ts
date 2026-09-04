@@ -9,6 +9,7 @@ import type { PaymentStatus } from './payment-status'
 export type Order = {
   id: string
   orderNumber: number
+  pickupCode?: string | null
   tenantId: string
   customerId: string | null
   status: OrderStatusKey

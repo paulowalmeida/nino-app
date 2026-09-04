@@ -2,14 +2,14 @@ import { Box } from '@nino/ds/components/Box'
 import { FormField } from '@nino/ds/components/FormField'
 import { Input } from '@nino/ds/components/Input'
 import { Text } from '@nino/ds/components/Text'
+import type { AddressSearchResult } from '@nino/lib/types/address/address-lookup'
 import { COUNTER_CHANNEL_HINT } from '@pages/Counter/constants/counter.constants'
-import { DeliveryRecipientFields } from '../DeliveryRecipientFields/DeliveryRecipientFields'
 import type { OrderChannel } from '@shared/types/order/order-channel'
 import type { Recipient } from '@shared/types/order/recipient'
 import type { DeliveryCity } from '@shared/types/store/delivery-city'
-import type { AddressSearchResult } from '@nino/lib/types/address/address-lookup'
 
 import { ChoiceCard } from '../ChoiceCard/ChoiceCard'
+import { DeliveryRecipientFields } from '../DeliveryRecipientFields/DeliveryRecipientFields'
 
 import styles from './DestinationStep.module.css'
 
@@ -80,7 +80,25 @@ export const DestinationStep = ({
       </Text>
     )}
 
-    {channel === 'DELIVERY' || channel === 'PICKUP' ? (
+    {channel === 'PICKUP' ? (
+      <Box className={styles.identity}>
+        <FormField label="Nome de quem pediu">
+          <Input
+            aria-label="Nome de quem pediu"
+            value={recipient.name}
+            onChange={(event) => onRecipient({ name: event.target.value })}
+          />
+        </FormField>
+        <FormField label="Telefone">
+          <Input
+            aria-label="Telefone"
+            type="tel"
+            value={recipient.phone}
+            onChange={(event) => onRecipient({ phone: event.target.value })}
+          />
+        </FormField>
+      </Box>
+    ) : channel === 'DELIVERY' ? (
       <DeliveryRecipientFields
         isDelivery={channel === 'DELIVERY'}
         value={recipient}

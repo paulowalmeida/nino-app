@@ -162,15 +162,24 @@ export const OrderTicket = ({ order, onAdvance, isBusy }: OrderTicketProps) => {
             </span>
           </Box>
 
-          {step && (
-            <Button
-              size="sm"
-              loading={isBusy}
-              className={`${motion.press} ${styles.action}`}
-              onClick={() => onAdvance(order.id, step.target)}
-            >
-              {step.label}
+          {step &&
+          order.channel === 'PICKUP' &&
+          order.pickupCode &&
+          step.target === 'COMPLETED' ? (
+            <Button asChild size="sm">
+              <Link to={order.id}>Confirmar retirada</Link>
             </Button>
+          ) : (
+            step && (
+              <Button
+                size="sm"
+                loading={isBusy}
+                className={`${motion.press} ${styles.action}`}
+                onClick={() => onAdvance(order.id, step.target)}
+              >
+                {step.label}
+              </Button>
+            )
           )}
         </footer>
       </article>

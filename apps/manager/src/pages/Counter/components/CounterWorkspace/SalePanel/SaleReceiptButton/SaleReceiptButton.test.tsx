@@ -10,6 +10,18 @@ import { saleReceiptButtonMock } from './SaleReceiptButton.mock'
 vi.mock('@pages/Counter/utils/downloadSaleReceipt/downloadSaleReceipt')
 
 describe(SaleReceiptButton.name, () => {
+  it('displays the pickup code returned by the server', () => {
+    render(
+      <SaleReceiptButton
+        saleReceipt={{
+          ...saleReceiptButtonMock.saleReceipt!,
+          pickupCode: '012345',
+        }}
+        onDismiss={vi.fn()}
+      />
+    )
+    expect(screen.getByText(/Código de retirada: 012345/)).toBeInTheDocument()
+  })
   it('announces the sale that just closed', () => {
     render(<SaleReceiptButton {...saleReceiptButtonMock} onDismiss={vi.fn()} />)
 

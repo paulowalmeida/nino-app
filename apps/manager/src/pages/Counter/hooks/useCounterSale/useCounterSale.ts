@@ -5,11 +5,14 @@ import { toCounterSaleRequest } from '@pages/Counter/adapters/counter-sale.adapt
 import type { CounterSaleInput } from '@pages/Counter/types/CounterSaleInput.type'
 import { hasPickupRecipient } from '@pages/Counter/utils/hasPickupRecipient/hasPickupRecipient'
 import { useCreateOrder } from '@shared/hooks/order/useCreateOrder/useCreateOrder'
+import type { Order } from '@shared/types/order/order'
 
 type CounterSale = {
   error: string | null
   isSending: boolean
-  sell: (input: CounterSaleInput) => Promise<number | null>
+  sell: (
+    input: CounterSaleInput
+  ) => Promise<Pick<Order, 'orderNumber' | 'pickupCode'> | null>
   reset: () => void
 }
 
@@ -36,9 +39,7 @@ export const useCounterSale = (tenantId: string | null): CounterSale => {
       channel === 'PICKUP' &&
       (!recipient || !hasPickupRecipient(recipient))
     ) {
-      setError(
-        'Preencha nome, telefone, logradouro, número, bairro, cidade e UF.'
-      )
+      setError('Preencha nome e telefone para retirada.')
       return null
     }
 
@@ -65,7 +66,7 @@ export const useCounterSale = (tenantId: string | null): CounterSale => {
         })
       )
 
-      return order.orderNumber
+      return { orderNumber: order.orderNumber, pickupCode: order.pickupCode }
     } catch (caught) {
       setError(
         caught instanceof ApiError && caught.status < 500

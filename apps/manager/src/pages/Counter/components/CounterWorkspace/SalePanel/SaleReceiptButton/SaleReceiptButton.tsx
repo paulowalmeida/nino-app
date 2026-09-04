@@ -23,6 +23,8 @@ export const SaleReceiptButton = ({
     <Box direction="row" align="center" className={styles.bar}>
       <Text size="sm" weight="semibold" className={styles.label}>
         Venda #{ticketNumber(saleReceipt.orderNumber)} fechada
+        {saleReceipt.pickupCode &&
+          ` · Código de retirada: ${saleReceipt.pickupCode}`}
       </Text>
       <Button
         variant="outline"

@@ -19,15 +19,19 @@ describe('hasPickupRecipient', () => {
     expect(hasPickupRecipient(recipient)).toBe(true)
   })
 
-  it.each([
-    'name',
-    'phone',
-    'street',
-    'number',
-    'neighborhood',
-    'city',
-    'state',
-  ])('rejects missing %s', (field) => {
+  it.each(['name', 'phone'])('rejects missing %s', (field) => {
     expect(hasPickupRecipient({ ...recipient, [field]: '   ' })).toBe(false)
+  })
+  it('accepts name and phone without an address', () => {
+    expect(
+      hasPickupRecipient({
+        ...recipient,
+        street: '',
+        number: '',
+        neighborhood: '',
+        city: '',
+        state: '',
+      })
+    ).toBe(true)
   })
 })

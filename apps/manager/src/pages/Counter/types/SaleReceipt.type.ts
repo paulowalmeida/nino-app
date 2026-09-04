@@ -3,6 +3,7 @@ import type { PaymentMethod } from '@shared/types/order/payment-method'
 
 export type SaleReceipt = {
   orderNumber: number
+  pickupCode?: string | null
   closedAt: string
   lines: CartLine[]
   total: number

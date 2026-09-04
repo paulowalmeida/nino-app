@@ -1,9 +1,7 @@
 import { jsPDF } from 'jspdf'
 
 import type { SaleReceipt } from '@pages/Counter/types/SaleReceipt.type'
-import {
-  PAYMENT_METHOD_LABEL_BY_CHANNEL,
-} from '@shared/constants/order.constants'
+import { PAYMENT_METHOD_LABEL_BY_CHANNEL } from '@shared/constants/order.constants'
 import { brl } from '@shared/utils/money/money'
 import { ticketNumber } from '@shared/utils/order-ticket/order-ticket'
 
@@ -23,7 +21,11 @@ const LINE_HEIGHT_MM = 5
  * recibo sem calcular a altura da página com antecedência.
  */
 export const downloadSaleReceipt = (receipt: SaleReceipt): void => {
-  const lineCount = 6 + receipt.lines.length + (receipt.receivedAmount ? 2 : 0)
+  const lineCount =
+    7 +
+    receipt.lines.length * 2 +
+    (receipt.receivedAmount !== null ? 2 : 0) +
+    (receipt.pickupCode ? 2 : 0)
   const heightMm = lineCount * LINE_HEIGHT_MM + MARGIN_MM * 2
 
   const doc = new jsPDF({
@@ -40,6 +42,10 @@ export const downloadSaleReceipt = (receipt: SaleReceipt): void => {
 
   write('Recibo de venda')
   write(`#${ticketNumber(receipt.orderNumber)}`)
+  if (receipt.pickupCode) {
+    write(`Código de retirada: ${receipt.pickupCode}`)
+    write('Apresente este código no balcão.')
+  }
   write(closedAtLabel(receipt.closedAt))
   write('-'.repeat(30))
 
