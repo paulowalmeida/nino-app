@@ -5,7 +5,7 @@
 }
 
 .bare {
-  @apply flex min-h-0 w-full flex-1 flex-col;
+  @apply flex min-h-0 min-w-0 w-full flex-1 flex-col overflow-hidden;
 }
 
 .header {
@@ -18,4 +18,5 @@
 
 .stepName {
   @apply shrink-0 px-6 pb-4 pt-1;
+  padding-inline: var(--checkout-gutter, 1.5rem);
 }

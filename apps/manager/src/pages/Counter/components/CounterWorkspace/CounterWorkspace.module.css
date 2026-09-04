@@ -13,6 +13,7 @@
 .sheet {
   @apply fixed inset-0 h-[100dvh] w-full max-w-none;
   @apply overflow-hidden rounded-none p-0;
+  --checkout-gutter: 1rem;
 }
 
 .sheet > div:last-child {
@@ -24,11 +25,13 @@
 }
 
 .sheetTitle {
-  @apply shrink-0 px-4 pb-2 pt-5;
+  @apply shrink-0 pb-2 pr-14;
+  padding-left: var(--checkout-gutter);
+  padding-top: max(1rem, env(safe-area-inset-top));
 }
 
 .sheetBack {
-  @apply size-9 shrink-0 rounded-full p-0 text-fg-faint;
+  @apply size-11 shrink-0 rounded-full p-0 text-fg-faint;
 }
 
 .menu {
@@ -41,22 +44,11 @@
   @apply lg:h-full lg:min-h-0;
 }
 
-.modal {
-  @apply fixed inset-0 h-[100dvh] w-screen max-w-none rounded-none p-0;
-}
-
-.modal > div:last-child {
-  @apply h-full p-0;
-}
-
-.modalBody {
-  @apply flex h-full min-h-0 flex-col;
-}
-
-.modalTitle {
-  @apply shrink-0 px-6 pb-2 pt-5;
-}
-
-.modalBack {
-  @apply size-9 shrink-0 rounded-full p-0 text-fg-faint;
+@media (min-width: 640px) and (min-height: 480px) {
+  .sheet {
+    @apply relative inset-auto w-full rounded-4;
+    max-width: 60rem;
+    height: min(51rem, calc(100dvh - 3rem));
+    --checkout-gutter: 1.5rem;
+  }
 }

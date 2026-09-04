@@ -30,8 +30,10 @@
 }
 
 .footerBare {
-  @apply gap-3 bg-surface-page px-6 pb-5 pt-3;
+  @apply shrink-0 gap-2 bg-surface-page px-6 pb-5 pt-3;
   filter: drop-shadow(0 -1px 0 var(--color-border));
+  padding-inline: var(--checkout-gutter, 1.5rem);
+  padding-bottom: max(1rem, env(safe-area-inset-bottom));
 }
 
 .totalLabel {
@@ -47,5 +49,21 @@
 }
 
 .clear {
-  @apply h-10 w-full text-sm text-fg-muted hover:text-danger;
+  @apply h-11 w-full text-sm text-fg-muted hover:text-danger;
+}
+
+@media (min-width: 640px) {
+  .footerBare {
+    @apply grid items-center gap-x-4;
+    grid-template-columns: minmax(0, 1fr) auto auto;
+  }
+
+  .footerBare > [role='alert'] {
+    grid-column: 1 / -1;
+  }
+
+  .footerBare .finish,
+  .footerBare .clear {
+    @apply w-auto px-4;
+  }
 }

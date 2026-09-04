@@ -5,6 +5,12 @@
 .footer {
   @apply relative shrink-0 gap-3 bg-surface-page px-6 pb-4 pt-3;
   filter: drop-shadow(0 -1px 0 var(--color-border));
+  padding-inline: var(--checkout-gutter, 1.5rem);
+  padding-bottom: max(1rem, env(safe-area-inset-bottom));
+}
+
+.actions {
+  @apply w-full justify-end;
 }
 
 .footer::before {
@@ -25,7 +31,7 @@
 
 .back,
 .continue {
-  @apply w-24 shrink-0;
+  @apply min-h-11 flex-1;
 }
 
 .tabular {
@@ -48,7 +54,12 @@
   }
 
   .actions {
-    @apply gap-3.5;
+    @apply w-auto gap-3.5;
+  }
+
+  .back,
+  .continue {
+    @apply w-24 flex-none;
   }
 
   .keys {

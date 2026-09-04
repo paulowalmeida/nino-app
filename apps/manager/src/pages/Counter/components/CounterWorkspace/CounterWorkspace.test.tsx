@@ -106,6 +106,18 @@ describe(CounterWorkspace.name, () => {
     ).toBeDisabled()
   })
 
+  it('keeps a single checkout mounted across screen sizes', () => {
+    mockFacade({ sheet: true, step: 'items', isDesktop: false })
+    const { rerender } = render(<CounterWorkspace />)
+    const sale = screen.getByRole('button', { name: 'sale' })
+    mockFacade({ sheet: true, step: 'items', isDesktop: true })
+    rerender(<CounterWorkspace />)
+    expect(screen.getByRole('button', { name: 'sale' })).toBe(sale)
+    expect(
+      screen.getByRole('button', { name: 'Voltar um passo' })
+    ).toBeDisabled()
+  })
+
   it('enables the back button past the first step', () => {
     mockFacade({ sheet: true, step: 'payment' })
     render(<CounterWorkspace />)

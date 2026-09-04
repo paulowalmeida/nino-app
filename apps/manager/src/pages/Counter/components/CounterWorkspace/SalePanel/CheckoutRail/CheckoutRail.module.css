@@ -1,7 +1,8 @@
 @reference "@nino/ds/globals.css";
 
 .rail {
-  @apply shrink-0 items-center px-6 pb-2 pt-1 lg:max-w-80;
+  @apply shrink-0 items-center px-6 pb-2 pt-1;
+  padding-inline: var(--checkout-gutter, 1.5rem);
 }
 
 .item {
@@ -13,7 +14,7 @@
 }
 
 .item button {
-  @apply size-[26px] shrink-0 rounded-2 p-0 text-xs font-bold;
+  @apply size-11 shrink-0 rounded-2 p-0 text-xs font-bold;
 }
 
 .active {

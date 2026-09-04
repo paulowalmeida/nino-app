@@ -28,17 +28,16 @@ export const CounterWorkspace = () => {
 
   return (
     <>
-        <Box className={styles.floor}>
+      <Box className={styles.floor}>
         <Box as="section" className={styles.menu} aria-label="Cardápio">
           <ProductGrid />
         </Box>
-
       </Box>
 
       {counter.count > 0 && <OpenOrderBar />}
 
       <Modal
-        open={counter.sheet && !counter.isDesktop && counter.count > 0}
+        open={counter.sheet && counter.count > 0}
         onOpenChange={counter.setSheet}
         ariaLabel="Pedido"
         size="lg"
@@ -58,38 +57,6 @@ export const CounterWorkspace = () => {
                 onClick={previousStep}
                 disabled={isFirstStep}
                 className={styles.sheetBack}
-              >
-                <Icon name="arrow-left" size="sm" />
-              </Button>
-              <Box direction="column" gap={0.5}>
-                <Heading level={2} size="lg">
-                  Pedido
-                </Heading>
-                <Text size="sm" color="muted">
-                  {counter.count} {counter.count === 1 ? 'item' : 'itens'}
-                </Text>
-              </Box>
-            </Box>
-            <SalePanel bare />
-          </Box>
-        }
-      />
-
-      <Modal
-        open={counter.sheet && counter.isDesktop && counter.count > 0}
-        onOpenChange={counter.setSheet}
-        ariaLabel="Pedido"
-        size="lg"
-        contentClassName={styles.modal}
-        body={
-          <Box className={styles.modalBody}>
-            <Box direction="row" align="start" gap={2} className={styles.modalTitle}>
-              <Button
-                type="button"
-                variant="ghost"
-                aria-label="Voltar um passo"
-                onClick={previousStep}
-                className={styles.modalBack}
               >
                 <Icon name="arrow-left" size="sm" />
               </Button>
