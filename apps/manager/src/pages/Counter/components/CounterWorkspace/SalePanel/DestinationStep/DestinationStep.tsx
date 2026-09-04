@@ -80,8 +80,9 @@ export const DestinationStep = ({
       </Text>
     )}
 
-    {channel === 'DELIVERY' ? (
+    {channel === 'DELIVERY' || channel === 'PICKUP' ? (
       <DeliveryRecipientFields
+        isDelivery={channel === 'DELIVERY'}
         value={recipient}
         storeAddress={storeAddress}
         deliveryCities={deliveryCities}

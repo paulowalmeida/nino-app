@@ -12,6 +12,7 @@ import type { AddressSearchResult } from '@nino/lib/types/address/address-lookup
 import styles from './DeliveryRecipientFields.module.css'
 
 type DeliveryRecipientFieldsProps = {
+  isDelivery?: boolean
   value: Recipient
   storeAddress: { city: string; state: string }
   deliveryCities: DeliveryCity[]
@@ -21,6 +22,7 @@ type DeliveryRecipientFieldsProps = {
 }
 
 export const DeliveryRecipientFields = ({
+  isDelivery = true,
   value,
   storeAddress,
   deliveryCities,
@@ -95,27 +97,35 @@ export const DeliveryRecipientFields = ({
         </FormField>
       </Box>
 
-      <FormField
-        label={
-          <FieldHint
-            label="Cidade"
-            hint="A unidade atende toda a cidade principal e pode cobrir parcialmente as cidades adicionais."
+      {isDelivery && (
+        <FormField
+          label={
+            <FieldHint
+              label="Cidade"
+              hint="A unidade atende toda a cidade principal e pode cobrir parcialmente as cidades adicionais."
+            />
+          }
+        >
+          <Select
+            options={deliveryCities.map((item) => ({
+              value: `${item.city}|${item.state}`,
+              label: `${item.city} · ${item.state}`,
+            }))}
+            value={`${value.city || storeAddress.city}|${value.state || storeAddress.state}`}
+            aria-label="Cidade de entrega"
+            onValueChange={(selected) => {
+              const [city, state] = selected.split('|')
+              onChange({
+                city,
+                state,
+                zipCode: '',
+                street: '',
+                neighborhood: '',
+              })
+            }}
           />
-        }
-      >
-        <Select
-          options={deliveryCities.map((item) => ({
-            value: `${item.city}|${item.state}`,
-            label: `${item.city} · ${item.state}`,
-          }))}
-          value={`${value.city || storeAddress.city}|${value.state || storeAddress.state}`}
-          aria-label="Cidade de entrega"
-          onValueChange={(selected) => {
-            const [city, state] = selected.split('|')
-            onChange({ city, state, zipCode: '', street: '', neighborhood: '' })
-          }}
-        />
-      </FormField>
+        </FormField>
+      )}
 
       <AddressFields
         value={{
@@ -128,7 +138,7 @@ export const DeliveryRecipientFields = ({
           state: value.state ?? '',
         }}
         streetField={streetField}
-        showCityAndState={false}
+        showCityAndState={!isDelivery}
         zipCodeLabel={
           <FieldHint
             label="CEP"

@@ -9,12 +9,14 @@ import { useCounterReceipt } from '@pages/Counter/hooks/useCounterReceipt/useCou
 import { useCounterResponsive } from '@pages/Counter/hooks/useCounterResponsive/useCounterResponsive'
 import { useCounterShortcuts } from '@pages/Counter/hooks/useCounterShortcuts/useCounterShortcuts'
 import { useCounterStore } from '@pages/Counter/states/counter/counter.store'
+import { hasPickupRecipient } from '@pages/Counter/utils/hasPickupRecipient/hasPickupRecipient'
 import { useMenu } from '@shared/hooks/product/useMenu/useMenu'
 import { useCurrentTenant } from '@shared/hooks/session/useCurrentTenant/useCurrentTenant'
 
 export const useCounterFacade = () => {
   const tenantId = useCurrentTenant()?.tenantId ?? null
   const recipient = useCounterStore((state) => state.recipient)
+  const channel = useCounterStore((state) => state.channel)
   const menu = useMenu(tenantId)
   const payments = useCounterPaymentMethods(tenantId)
   const availability = useCounterAvailability(tenantId, recipient.zoneId)
@@ -25,7 +27,7 @@ export const useCounterFacade = () => {
   )
   const deliveryQuote = useCounterDeliveryQuote(
     tenantId,
-    recipient.zipCode ?? ''
+    channel === 'DELIVERY' ? (recipient.zipCode ?? '') : ''
   )
   const cart = useCounterCart()
   const deliveryFee =
@@ -41,7 +43,6 @@ export const useCounterFacade = () => {
   const responsive = useCounterResponsive()
   const sheet = useCounterStore((state) => state.sheet)
   const step = useCounterStore((state) => state.step)
-  const channel = useCounterStore((state) => state.channel)
   const customerName = useCounterStore((state) => state.customerName)
   const tableNumber = useCounterStore((state) => state.tableNumber)
   const changeFor = useCounterStore((state) => state.changeFor)
@@ -67,8 +68,10 @@ export const useCounterFacade = () => {
               recipient.number.trim() &&
               deliveryQuote.quote
             )
-          : channel !== null &&
-            Boolean(customerName.trim() || tableNumber.trim())
+          : channel === 'PICKUP'
+            ? hasPickupRecipient(recipient)
+            : channel === 'COUNTER' &&
+              Boolean(customerName.trim() || tableNumber.trim())
         : step === 'payment'
           ? selection.method !== null && selection.isChangeValid
           : true
@@ -101,6 +104,7 @@ export const useCounterFacade = () => {
     ...receipt,
     ...responsive,
     sheet,
+    canContinue,
     step,
     channel,
     customerName,

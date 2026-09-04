@@ -27,30 +27,37 @@ describe(toCounterSaleRequest.name, () => {
     ).toMatchObject({ tableNumber: undefined })
   })
 
-  it('translates delivery recipient data and zone', () => {
-    expect(
-      toCounterSaleRequest({
-        ...counterSaleInputMock,
-        channel: 'DELIVERY',
-        recipient: {
-          name: 'Bia',
-          phone: '91999990000',
-          street: 'Rua A',
-          number: '12',
-          complement: 'Apto 2',
-          neighborhood: 'Centro',
-          zoneId: 'zone-1',
-        },
+  it.each(['DELIVERY', 'PICKUP'] as const)(
+    'sends recipient fields for %s',
+    (channel) => {
+      expect(
+        toCounterSaleRequest({
+          ...counterSaleInputMock,
+          channel,
+          recipient: {
+            name: 'Bia',
+            phone: '91999990000',
+            street: 'Rua A',
+            number: '12',
+            complement: 'Apto 2',
+            neighborhood: 'Centro',
+            city: 'Ananindeua',
+            state: 'PA',
+            zoneId: 'zone-1',
+          },
+        })
+      ).toMatchObject({
+        guestName: 'Bia',
+        guestPhone: '91999990000',
+        guestStreet: 'Rua A',
+        guestNumber: '12',
+        guestComplement: 'Apto 2',
+        guestNeighborhood: 'Centro',
+        guestCity: 'Ananindeua',
+        guestState: 'PA',
       })
-    ).toMatchObject({
-      guestName: 'Bia',
-      guestPhone: '91999990000',
-      guestStreet: 'Rua A',
-      guestNumber: '12',
-      guestComplement: 'Apto 2',
-      guestNeighborhood: 'Centro',
-    })
-  })
+    }
+  )
 
   it('omits empty recipient fields', () => {
     expect(

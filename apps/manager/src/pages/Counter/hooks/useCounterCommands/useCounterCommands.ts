@@ -23,7 +23,7 @@ export const useCounterCommands = (
   const recipient = useCounterStore((state) => state.recipient)
   const deliveryQuote = useCounterDeliveryQuote(
     tenantId,
-    recipient?.zipCode ?? ''
+    channel === 'DELIVERY' ? (recipient?.zipCode ?? '') : ''
   )
   const saleTotal =
     channel === 'DELIVERY' ? total + (deliveryQuote.quote?.fee ?? 0) : total

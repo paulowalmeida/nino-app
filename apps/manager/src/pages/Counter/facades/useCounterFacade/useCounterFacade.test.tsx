@@ -3,6 +3,10 @@ import { describe, expect, it, vi } from 'vitest'
 
 import { useCounterFacade } from './useCounterFacade'
 
+const stateOverride = vi.hoisted(() => ({
+  value: {} as Record<string, unknown>,
+}))
+
 const tenant = vi.hoisted(() => ({
   value: { tenantId: 'tenant-1' } as { tenantId: string } | null,
 }))
@@ -82,10 +86,41 @@ vi.mock('@pages/Counter/states/counter/counter.store', () => ({
       setChosenPaymentMethod: vi.fn(),
       setCustomerName: vi.fn(),
       setTableNumber: vi.fn(),
+      ...stateOverride.value,
     }),
 }))
 
 describe(useCounterFacade.name, () => {
+  it('enables pickup with a complete recipient even without a delivery quote', () => {
+    stateOverride.value = {
+      step: 'destination',
+      channel: 'PICKUP',
+      recipient: {
+        name: 'Ana',
+        phone: '91980326878',
+        street: 'Travessa We-26',
+        number: '471',
+        neighborhood: 'Cidade Nova V',
+        city: 'Ananindeua',
+        state: 'PA',
+        complement: '',
+        zoneId: '',
+      },
+    }
+    const { result, rerender } = renderHook(() => useCounterFacade())
+    expect(result.current.canContinue).toBe(true)
+    stateOverride.value = {
+      ...stateOverride.value,
+      recipient: {
+        ...(stateOverride.value.recipient as object),
+        phone: '',
+      },
+    }
+    rerender()
+    expect(result.current.canContinue).toBe(false)
+    stateOverride.value = {}
+  })
+
   it('composes the counter feature contract', () => {
     const { result } = renderHook(() => useCounterFacade())
     expect(result.current).toMatchObject({

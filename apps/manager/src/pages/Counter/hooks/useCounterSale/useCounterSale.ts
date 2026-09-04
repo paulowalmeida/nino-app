@@ -3,6 +3,7 @@ import { useState } from 'react'
 import { ApiError } from '@nino/lib/utils/api-error'
 import { toCounterSaleRequest } from '@pages/Counter/adapters/counter-sale.adapter/counter-sale.adapter'
 import type { CounterSaleInput } from '@pages/Counter/types/CounterSaleInput.type'
+import { hasPickupRecipient } from '@pages/Counter/utils/hasPickupRecipient/hasPickupRecipient'
 import { useCreateOrder } from '@shared/hooks/order/useCreateOrder/useCreateOrder'
 
 type CounterSale = {
@@ -31,7 +32,20 @@ export const useCounterSale = (tenantId: string | null): CounterSale => {
   }: CounterSaleInput) => {
     setError(null)
 
-    const orderCustomerName = channel === 'DELIVERY' ? recipient?.name ?? '' : customerName
+    if (
+      channel === 'PICKUP' &&
+      (!recipient || !hasPickupRecipient(recipient))
+    ) {
+      setError(
+        'Preencha nome, telefone, logradouro, número, bairro, cidade e UF.'
+      )
+      return null
+    }
+
+    const orderCustomerName =
+      channel === 'DELIVERY' || channel === 'PICKUP'
+        ? (recipient?.name ?? '')
+        : customerName
 
     if (!orderCustomerName.trim()) {
       setError(NO_RECIPIENT)

@@ -14,23 +14,42 @@ export const toCounterSaleRequest = ({
   channel,
   paymentMethod,
   guestName:
-    (channel === 'DELIVERY' ? recipient?.name : customerName) || undefined,
+    (channel === 'DELIVERY' || channel === 'PICKUP'
+      ? recipient?.name
+      : customerName) || undefined,
   tableNumber: channel === 'COUNTER' && tableNumber ? tableNumber : undefined,
   guestPhone:
-    channel === 'DELIVERY' ? recipient?.phone || undefined : undefined,
+    channel === 'DELIVERY' || channel === 'PICKUP'
+      ? recipient?.phone || undefined
+      : undefined,
   guestZipCode:
-    channel === 'DELIVERY' ? recipient?.zipCode || undefined : undefined,
+    channel === 'DELIVERY' || channel === 'PICKUP'
+      ? recipient?.zipCode || undefined
+      : undefined,
   guestStreet:
-    channel === 'DELIVERY' ? recipient?.street || undefined : undefined,
+    channel === 'DELIVERY' || channel === 'PICKUP'
+      ? recipient?.street || undefined
+      : undefined,
   guestNumber:
-    channel === 'DELIVERY' ? recipient?.number || undefined : undefined,
+    channel === 'DELIVERY' || channel === 'PICKUP'
+      ? recipient?.number || undefined
+      : undefined,
   guestComplement:
-    channel === 'DELIVERY' ? recipient?.complement || undefined : undefined,
+    channel === 'DELIVERY' || channel === 'PICKUP'
+      ? recipient?.complement || undefined
+      : undefined,
   guestNeighborhood:
-    channel === 'DELIVERY' ? recipient?.neighborhood || undefined : undefined,
-  guestCity: channel === 'DELIVERY' ? recipient?.city || undefined : undefined,
+    channel === 'DELIVERY' || channel === 'PICKUP'
+      ? recipient?.neighborhood || undefined
+      : undefined,
+  guestCity:
+    channel === 'DELIVERY' || channel === 'PICKUP'
+      ? recipient?.city || undefined
+      : undefined,
   guestState:
-    channel === 'DELIVERY' ? recipient?.state || undefined : undefined,
+    channel === 'DELIVERY' || channel === 'PICKUP'
+      ? recipient?.state || undefined
+      : undefined,
   changeFor:
     paymentMethod === 'CASH' && changeFor?.trim()
       ? moneyValue(changeFor)

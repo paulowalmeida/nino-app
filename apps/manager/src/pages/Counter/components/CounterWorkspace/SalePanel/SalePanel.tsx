@@ -57,7 +57,7 @@ export const SalePanel = ({ bare = false }: { bare?: boolean }) => {
     setRecipient,
     storeAddress,
     deliveryCities,
-    deliveryQuote,
+    canContinue,
     addressSuggestions,
     isSearchingAddress,
   } = useCounterFacade()
@@ -76,25 +76,6 @@ export const SalePanel = ({ bare = false }: { bare?: boolean }) => {
   }
 
   const isReview = step === 'review'
-
-  const canContinue =
-    step === 'items'
-      ? count > 0
-      : step === 'destination'
-        ? channel === 'DELIVERY'
-          ? Boolean(
-              recipient.name.trim() &&
-              recipient.phone.trim() &&
-              recipient.zipCode?.replace(/\D/g, '').length === 8 &&
-              recipient.street.trim() &&
-              recipient.number.trim() &&
-              deliveryQuote
-            )
-          : channel !== null &&
-            Boolean(customerName.trim() || tableNumber.trim())
-        : step === 'payment'
-          ? method !== null && isChangeValid
-          : true
 
   return (
     <Box className={bare ? styles.bare : styles.panel}>
@@ -163,7 +144,11 @@ export const SalePanel = ({ bare = false }: { bare?: boolean }) => {
           lines={lines}
           total={total}
           channel={channel}
-          customerName={channel === 'DELIVERY' ? recipient.name : customerName}
+          customerName={
+            channel === 'DELIVERY' || channel === 'PICKUP'
+              ? recipient.name
+              : customerName
+          }
           tableNumber={tableNumber}
           recipient={recipient}
           method={method}
