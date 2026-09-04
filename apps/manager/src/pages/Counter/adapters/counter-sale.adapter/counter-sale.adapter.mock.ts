@@ -1,6 +1,9 @@
-export const counterSaleInputMock = {
+import type { CounterSaleInput } from '@pages/Counter/types/CounterSaleInput.type'
+
+export const counterSaleInputMock: CounterSaleInput = {
   lines: [{ productId: 'item-1', name: 'Café', unitPrice: '10', quantity: 2 }],
-  paymentMethod: 'CASH' as const,
+  channel: 'COUNTER',
+  paymentMethod: 'CASH',
   customerName: 'Ana',
   tableNumber: '4',
 }

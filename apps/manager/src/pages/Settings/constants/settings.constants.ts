@@ -1,6 +1,5 @@
 import type { PaymentMethod } from '@shared/types/order/payment-method'
 import type { ServiceRulesDraft } from '@shared/types/settings/service-rules-draft'
-import type { UnitDraft } from '@shared/types/store/unit-draft'
 
 export const WEEK_SCHEDULE_DAYS = [
   'Domingo',
@@ -51,31 +50,4 @@ export const EMPTY_SERVICE_RULES_DRAFT: ServiceRulesDraft = {
   preparationMinutes: '30',
   deliveryMinutes: '0',
   acceptedPaymentMethods: [],
-}
-
-export const UNIT_TIMEZONES = [
-  { value: 'America/Sao_Paulo', label: 'Brasília (GMT-3)' },
-  { value: 'America/Belem', label: 'Belém (GMT-3)' },
-  { value: 'America/Fortaleza', label: 'Fortaleza (GMT-3)' },
-  { value: 'America/Manaus', label: 'Manaus (GMT-4)' },
-  { value: 'America/Cuiaba', label: 'Cuiabá (GMT-4)' },
-  { value: 'America/Porto_Velho', label: 'Porto Velho (GMT-4)' },
-  { value: 'America/Rio_Branco', label: 'Rio Branco (GMT-5)' },
-  { value: 'America/Noronha', label: 'Fernando de Noronha (GMT-2)' },
-]
-
-export const EMPTY_UNIT_DRAFT: UnitDraft = {
-  customName: '',
-  timezone: 'America/Sao_Paulo',
-  primaryColor: '#FF6B00',
-  secondaryColor: '#1F2937',
-  tertiaryColor: '#FFF7ED',
-  loadingType: 'MASCOT',
-  zipCode: '',
-  street: '',
-  number: '',
-  complement: '',
-  neighborhood: '',
-  city: '',
-  state: '',
 }

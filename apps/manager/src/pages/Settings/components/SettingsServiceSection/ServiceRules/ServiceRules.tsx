@@ -18,7 +18,7 @@ import {
   PAYMENT_METHOD_ICON,
   PAYMENT_METHOD_LABEL,
 } from '@shared/constants/order.constants'
-import { FieldHint } from '@shared/components/FieldHint/FieldHint'
+import { FieldHint } from '@nino/ds/components/FieldHint'
 import type { PaymentMethod } from '@shared/types/order/payment-method'
 import type { ServiceRulesDraft } from '@shared/types/settings/service-rules-draft'
 import type { TenantSettings } from '@shared/types/settings/tenant-settings'

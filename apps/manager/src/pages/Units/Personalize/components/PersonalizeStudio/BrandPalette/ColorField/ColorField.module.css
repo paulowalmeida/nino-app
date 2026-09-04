@@ -1,0 +1,36 @@
+@reference "@nino/ds/globals.css";
+
+.tile {
+  @apply w-full cursor-pointer text-left transition-shadow duration-fast;
+  @apply hover:shadow-warm-sm focus-ring;
+}
+
+.row {
+  @apply min-w-0;
+}
+
+.swatch {
+  @apply h-11 w-11 shrink-0 rounded-2 border border-border;
+  box-shadow: inset 0 0 0 2px var(--color-surface-raised);
+}
+
+.meta {
+  @apply flex min-w-0 flex-col;
+}
+
+.label {
+  @apply truncate leading-tight;
+}
+
+.hint {
+  @apply leading-snug;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+}
+
+.hex {
+  @apply mt-0.5 font-bold uppercase leading-none text-fg-faintest;
+  font-variant-numeric: tabular-nums;
+}

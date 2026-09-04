@@ -4,8 +4,19 @@ export const clearTicket = (set: SetCounterState) =>
   set({
     lines: [],
     sheet: false,
+    step: 'items',
+    channel: null,
     chosenPaymentMethod: null,
     customerName: '',
     tableNumber: '',
+    recipient: {
+      name: '',
+      phone: '',
+      street: '',
+      number: '',
+      complement: '',
+      neighborhood: '',
+      zoneId: '',
+    },
     changeFor: '',
   })

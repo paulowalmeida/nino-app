@@ -6,6 +6,7 @@ import {
 } from '@ark-ui/react/combobox'
 import { Portal } from '@ark-ui/react/portal'
 import { mergeClasses } from '@ds/lib/mergeClasses/mergeClasses'
+import { Spinner } from '../Spinner/Spinner'
 
 import styles from './Combobox.module.css'
 import { ComboboxSize } from './Combobox.types'
@@ -29,12 +30,18 @@ type ComboboxProps = {
   disabled?: boolean
   /** Controlled selected value */
   value?: string
+  /** Controlled search text */
+  inputValue?: string
   /** Uncontrolled initial value */
   defaultValue?: string
   /** Fired with the selected value */
   onValueChange?: (value: string) => void
+  /** Fired whenever the user changes the search text */
+  onInputValueChange?: (value: string) => void
   /** Text shown when no option matches. Default: `Nenhum resultado` */
   emptyMessage?: string
+  /** Shows an inline loading indicator while options are being fetched. */
+  loading?: boolean
   /** Additional CSS classes merged into the input */
   className?: string
   /**
@@ -78,9 +85,12 @@ export function Combobox({
   error = false,
   disabled,
   value,
+  inputValue,
   defaultValue,
   onValueChange,
+  onInputValueChange,
   emptyMessage = 'Nenhum resultado',
+  loading = false,
   className,
   isValidQuery,
   maxLength,
@@ -121,11 +131,15 @@ export function Combobox({
       collection={collection}
       disabled={disabled}
       value={value !== undefined ? [value] : undefined}
+      inputValue={inputValue}
       defaultValue={defaultValue !== undefined ? [defaultValue] : undefined}
       onValueChange={({ value: values }) => onValueChange?.(values[0])}
-      onInputValueChange={({ inputValue }) => setQuery(inputValue)}
+      onInputValueChange={({ inputValue }) => {
+        setQuery(inputValue)
+        onInputValueChange?.(inputValue)
+      }}
     >
-      <ArkCombobox.Control>
+      <ArkCombobox.Control className={styles.control}>
         <ArkCombobox.Input
           ref={ref}
           placeholder={placeholder}
@@ -138,9 +152,13 @@ export function Combobox({
             styles.searchField,
             styles.invalidState,
             sizeClasses[size],
+            loading && styles.loadingInput,
             className
           )}
         />
+        <span className={styles.loadingIndicator} aria-hidden="true">
+          <Spinner visible={loading} size={16} />
+        </span>
       </ArkCombobox.Control>
       <Portal>
         <ArkCombobox.Positioner>
@@ -152,9 +170,11 @@ export function Combobox({
               styles.optionPanel
             )}
           >
-            <ArkCombobox.Empty className={styles.emptyMessage}>
-              {emptyMessage}
-            </ArkCombobox.Empty>
+            {!loading && (
+              <ArkCombobox.Empty className={styles.emptyMessage}>
+                {emptyMessage}
+              </ArkCombobox.Empty>
+            )}
             {filtered.map((option) => (
               <ArkCombobox.Item
                 key={option.value}

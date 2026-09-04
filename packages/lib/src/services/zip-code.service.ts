@@ -1,14 +1,40 @@
 import ky from 'ky'
 
-import type { AddressLookup } from '../types/address/address-lookup'
+import type {
+  AddressLookup,
+  AddressSearchResult,
+} from '../types/address/address-lookup'
 
 type ViaCepResponse = {
+  cep?: string
   logradouro?: string
   bairro?: string
   localidade?: string
   uf?: string
   erro?: boolean | string
 }
+
+type CepRuaAddress = {
+  cep?: string
+  logradouro?: string
+  nome?: string
+  bairro?: string
+  cidade?: string
+  uf?: string
+}
+
+type CepRuaSearchResponse = {
+  resultados?: CepRuaAddress[]
+}
+
+const comparable = (value: string): string =>
+  value
+    .normalize('NFD')
+    .replace(/\p{Diacritic}/gu, '')
+    .toLocaleLowerCase('pt-BR')
+
+const addressSearchQuery = (street: string): string =>
+  street.trim().replace(/([A-Za-zÀ-ÿ])\s+(\d)/g, '$1-$2')
 
 export const onlyDigits = (value: string): string => value.replace(/\D/g, '')
 
@@ -39,4 +65,45 @@ export const lookupZipCode = async (
     city: data.localidade ?? '',
     state: data.uf ?? '',
   }
+}
+
+export const searchAddress = async (
+  state: string,
+  city: string,
+  street: string
+): Promise<AddressSearchResult[]> => {
+  if (!state || !city || street.trim().length < 3) return []
+
+  const query = addressSearchQuery(street)
+  const data = await ky
+    .get('https://ceprua.com.br/api/buscar', { searchParams: { q: query } })
+    .json<CepRuaSearchResponse>()
+    .catch(() => null)
+
+  const seen = new Set<string>()
+  return (data?.resultados ?? []).flatMap((item) => {
+    const zipCode = item.cep ?? ''
+    const resultCity = item.cidade ?? ''
+    const resultState = item.uf ?? ''
+
+    if (
+      !zipCode ||
+      seen.has(zipCode) ||
+      comparable(resultCity) !== comparable(city) ||
+      resultState !== state.toUpperCase()
+    ) {
+      return []
+    }
+
+    seen.add(zipCode)
+    return [
+      {
+        zipCode,
+        street: item.logradouro ?? item.nome ?? '',
+        neighborhood: item.bairro ?? '',
+        city: resultCity,
+        state: resultState,
+      },
+    ]
+  })
 }

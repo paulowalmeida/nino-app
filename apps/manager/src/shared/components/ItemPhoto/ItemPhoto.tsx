@@ -7,9 +7,8 @@ import { Image } from '@nino/ds/components/Image'
 import { Label } from '@nino/ds/components/Label'
 import { Text } from '@nino/ds/components/Text'
 import { ItemThumb } from '@shared/components/ItemThumb/ItemThumb'
+import { PhotoCropper } from '@shared/components/PhotoCropper/PhotoCropper'
 import type { MenuItemImage } from '@shared/types/product/menu-item-image'
-
-import { PhotoCropper } from './PhotoCropper/PhotoCropper'
 
 import motion from '@styles/motion.module.css'
 import styles from './ItemPhoto.module.css'

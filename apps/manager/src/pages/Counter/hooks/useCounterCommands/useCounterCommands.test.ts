@@ -1,4 +1,6 @@
 import { act, renderHook } from '@testing-library/react'
+import { createElement, type ReactNode } from 'react'
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { describe, expect, it, vi } from 'vitest'
 
 import { useCounterCommands } from './useCounterCommands'
@@ -16,9 +18,15 @@ vi.mock('@pages/Counter/hooks/useCounterCart/useCounterCart', () => ({
   useCounterCart: () => ({
     lines: [{ productId: 'item-1', quantity: 1 }],
     total: 20,
-    step: spies.step,
+    updateQuantity: spies.step,
   }),
 }))
+vi.mock(
+  '@pages/Counter/hooks/useCounterAvailability/useCounterAvailability',
+  () => ({
+    useCounterAvailability: () => ({ fee: 0, zones: [] }),
+  })
+)
 vi.mock('@pages/Counter/hooks/useCounterSale/useCounterSale', () => ({
   useCounterSale: () => ({
     error: null,
@@ -36,6 +44,7 @@ vi.mock('@pages/Counter/states/counter/counter.store', () => ({
       customerName: 'Ana',
       tableNumber: '',
       changeFor: '50,00',
+      channel: 'COUNTER',
     }),
 }))
 vi.mock('@nino/ds/components/Toast', () => ({
@@ -43,8 +52,14 @@ vi.mock('@nino/ds/components/Toast', () => ({
 }))
 
 describe(useCounterCommands.name, () => {
+  const wrapper = ({ children }: { children: ReactNode }) =>
+    createElement(QueryClientProvider, { client: new QueryClient() }, children)
+
   it('closes the sheet when the last line is removed', () => {
-    const { result } = renderHook(() => useCounterCommands('tenant-1', 'CASH'))
+    const { result } = renderHook(
+      () => useCounterCommands('tenant-1', 'CASH'),
+      { wrapper }
+    )
     act(() => result.current.handleStep('item-1', -1))
     expect(spies.setSheet).toHaveBeenCalledWith(false)
     expect(spies.step).toHaveBeenCalledWith('item-1', -1)
@@ -52,14 +67,20 @@ describe(useCounterCommands.name, () => {
 
   it('keeps the sheet open when stepping a non-final line', () => {
     spies.setSheet.mockClear()
-    const { result } = renderHook(() => useCounterCommands('tenant-1', 'CASH'))
+    const { result } = renderHook(
+      () => useCounterCommands('tenant-1', 'CASH'),
+      { wrapper }
+    )
     act(() => result.current.handleStep('other-item', 1))
     expect(spies.setSheet).not.toHaveBeenCalled()
   })
 
   it('clears the ticket after a successful sale', async () => {
     spies.sell.mockResolvedValue('order-7')
-    const { result } = renderHook(() => useCounterCommands('tenant-1', 'CASH'))
+    const { result } = renderHook(
+      () => useCounterCommands('tenant-1', 'CASH'),
+      { wrapper }
+    )
     await act(() => result.current.finish())
     expect(spies.clear).toHaveBeenCalled()
     expect(spies.reset).toHaveBeenCalled()
@@ -68,7 +89,10 @@ describe(useCounterCommands.name, () => {
   it('captures the sale as a receipt before clearing the ticket', async () => {
     // Arrange
     spies.sell.mockResolvedValue(128)
-    const { result } = renderHook(() => useCounterCommands('tenant-1', 'CASH'))
+    const { result } = renderHook(
+      () => useCounterCommands('tenant-1', 'CASH'),
+      { wrapper }
+    )
 
     // Act
     await act(() => result.current.finish())
@@ -87,7 +111,9 @@ describe(useCounterCommands.name, () => {
 
   it('does not sell without a payment method', async () => {
     spies.sell.mockClear()
-    const { result } = renderHook(() => useCounterCommands('tenant-1', null))
+    const { result } = renderHook(() => useCounterCommands('tenant-1', null), {
+      wrapper,
+    })
     await act(() => result.current.finish())
     expect(spies.sell).not.toHaveBeenCalled()
   })
@@ -96,7 +122,10 @@ describe(useCounterCommands.name, () => {
     spies.sell.mockClear()
     spies.clear.mockClear()
     spies.sell.mockResolvedValue(null)
-    const { result } = renderHook(() => useCounterCommands('tenant-1', 'CASH'))
+    const { result } = renderHook(
+      () => useCounterCommands('tenant-1', 'CASH'),
+      { wrapper }
+    )
     await act(() => result.current.finish())
     expect(spies.clear).not.toHaveBeenCalled()
   })

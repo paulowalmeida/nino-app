@@ -1,0 +1,14 @@
+@reference "@nino/ds/globals.css";
+
+.panel {
+  @apply relative mx-auto flex min-h-dvh w-full max-w-page flex-col overflow-visible p-4 lg:p-10;
+}
+
+.add {
+  @apply shrink-0;
+}
+
+.full {
+  @apply mt-4 rounded-3 border border-brand-muted bg-brand-ghost p-3;
+  @apply text-sm leading-relaxed text-brand-strong;
+}

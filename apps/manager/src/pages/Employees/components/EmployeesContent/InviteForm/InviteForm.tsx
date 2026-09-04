@@ -11,10 +11,8 @@ import {
   INVITE_FORM_REQUEST_OF,
   INVITE_FORM_SEATS,
 } from '@pages/Employees/constants/employees.constants'
-import { FieldHint } from '@shared/components/FieldHint/FieldHint'
-import type {
-  CreateInviteRequest,
-} from '@shared/types/team/create-invite-request'
+import { FieldHint } from '@nino/ds/components/FieldHint'
+import type { CreateInviteRequest } from '@shared/types/team/create-invite-request'
 
 import motion from '@styles/motion.module.css'
 import styles from './InviteForm.module.css'

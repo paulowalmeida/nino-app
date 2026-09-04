@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 
-const QUERY = '(min-width: 1024px)'
+const QUERY = '(min-width: 768px)'
 
 export const useIsDesktop = (
   onChange?: (isDesktop: boolean) => void

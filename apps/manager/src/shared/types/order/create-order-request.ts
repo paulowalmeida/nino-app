@@ -12,8 +12,11 @@ export type CreateOrderRequest = {
   changeFor?: number
   guestName?: string
   guestPhone?: string
+  guestZipCode?: string
   guestStreet?: string
   guestNumber?: string
   guestComplement?: string
   guestNeighborhood?: string
+  guestCity?: string
+  guestState?: string
 }

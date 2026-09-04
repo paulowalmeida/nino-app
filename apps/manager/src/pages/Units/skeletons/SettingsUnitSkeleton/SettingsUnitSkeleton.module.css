@@ -1,0 +1,37 @@
+@reference "@nino/ds/globals.css";
+
+.panel {
+  @apply relative mx-auto flex min-h-dvh w-full max-w-page flex-col overflow-visible p-4 lg:p-10;
+}
+
+.loadingLabel {
+  @apply sr-only;
+}
+
+.title {
+  @apply h-6 w-40;
+}
+
+.subtitle {
+  @apply h-4 w-52;
+}
+
+.add {
+  @apply h-9 w-32 shrink-0 rounded-3;
+}
+
+.unit {
+  @apply min-w-0 flex-1 px-2 py-2;
+}
+
+.name {
+  @apply h-4 w-36;
+}
+
+.company {
+  @apply h-3 w-24;
+}
+
+.remove {
+  @apply h-8 w-16 shrink-0 rounded-3;
+}

@@ -1,0 +1,1936 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Protótipo operável do pedido no balcão do Nino Manager.">
+<title>Pedido no Balcão</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Hanken+Grotesk:wght@400..800&display=swap">
+
+<style>
+/* ---------------------------------------------------------------------------
+   Bancada (a página em volta do protótipo). Cinza frio do DS (cool-100 /
+   cool-900) de propósito: o papel quente do pedido só lê como papel se a
+   superfície atrás dele for fria.
+   --------------------------------------------------------------------------- */
+:root {
+  --canvas: #f1f3f5;
+  --canvas-2: #e7eaee;
+  --canvas-ink: #1a1a2e;
+  --canvas-ink-soft: #5b5b6e;
+  --canvas-line: rgba(26, 26, 46, 0.14);
+  --canvas-raised: #ffffff;
+
+  /* Paleta do produto — literais do Nino DS, iguais em qualquer tema:
+     é a tinta real da tela, não a da página. */
+  --paper: #ffffff;
+  --paper-1: #fffbf5;
+  --paper-2: #fff7ee;
+  --paper-3: #fff3e9;
+  --ink: #1a1206;
+  --ink-2: #2d2418;
+  --ink-muted: #6b5d4d;
+  --ink-faint: #8a7d6c;
+  --ink-ghost: #9a8b78;
+  --brand: #ff6b00;
+  --brand-strong: #e8540c;
+  --brand-soft: color-mix(in srgb, var(--brand) 12%, transparent);
+  --brand-ghost: color-mix(in srgb, var(--brand) 6%, transparent);
+  --brand-bold: color-mix(in srgb, var(--brand) 35%, transparent);
+  --line: color-mix(in srgb, var(--ink) 18%, transparent);
+  --mute: color-mix(in srgb, var(--ink) 4%, transparent);
+  --success: #2c6e49;
+  --success-surface: #eaf3e3;
+  --danger: #b23a2b;
+  --danger-surface: #fdeae4;
+  --shadow-brand: 0 8px 20px color-mix(in srgb, var(--brand) 30%, transparent);
+  --shadow-up: 0 -8px 24px color-mix(in srgb, var(--ink) 8%, transparent);
+
+  --font-body: "Hanken Grotesk", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Bricolage Grotesque", "Hanken Grotesk", sans-serif;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --canvas: #14141f;
+    --canvas-2: #1d1d2b;
+    --canvas-ink: #fff7ee;
+    --canvas-ink-soft: #a8a4b5;
+    --canvas-line: rgba(255, 247, 238, 0.16);
+    --canvas-raised: #1d1d2b;
+  }
+}
+
+:root[data-theme="dark"] {
+  --canvas: #14141f;
+  --canvas-2: #1d1d2b;
+  --canvas-ink: #fff7ee;
+  --canvas-ink-soft: #a8a4b5;
+  --canvas-line: rgba(255, 247, 238, 0.16);
+  --canvas-raised: #1d1d2b;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--canvas);
+  color: var(--canvas-ink);
+  font-family: var(--font-body);
+  font-size: 15px;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+}
+
+:where(button, input, select) { font: inherit; color: inherit; }
+
+:where(a, button, input, [tabindex]):focus-visible {
+  outline: 2px solid var(--brand);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* --- cabeçalho da página ------------------------------------------------ */
+.masthead {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 48px 24px 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.eyebrow {
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: var(--brand-strong);
+}
+
+.masthead h1 {
+  font-family: var(--font-display);
+  font-size: clamp(30px, 5vw, 44px);
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  font-weight: 800;
+  margin: 0;
+  text-wrap: balance;
+}
+
+.masthead p {
+  margin: 0;
+  max-width: 62ch;
+  color: var(--canvas-ink-soft);
+}
+
+/* --- controles ---------------------------------------------------------- */
+.controls {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 20px 24px 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+}
+
+.seg {
+  display: inline-flex;
+  padding: 3px;
+  gap: 2px;
+  background: var(--canvas-2);
+  border: 1px solid var(--canvas-line);
+  border-radius: 999px;
+}
+
+.seg button {
+  border: 0;
+  background: transparent;
+  color: var(--canvas-ink-soft);
+  padding: 7px 15px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 160ms, color 160ms;
+}
+
+.seg button[aria-pressed="true"] {
+  background: var(--canvas-raised);
+  color: var(--canvas-ink);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.12);
+}
+
+.hint { font-size: 13px; color: var(--canvas-ink-soft); }
+
+/* --- palco -------------------------------------------------------------- */
+.stage {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 24px;
+  display: flex;
+  justify-content: center;
+}
+
+.device {
+  position: relative;
+  background: var(--paper);
+  color: var(--ink);
+  border-radius: 26px;
+  border: 1px solid var(--canvas-line);
+  box-shadow: 0 24px 60px rgba(20, 20, 31, 0.22);
+  overflow: hidden;
+  width: 390px;
+  height: 780px;
+}
+
+.device[data-viewport="desktop"] { width: 100%; max-width: 1060px; }
+
+@media (max-width: 460px) {
+  .device { width: 100%; height: 720px; border-radius: 20px; }
+  .stage, .masthead, .controls, .notes { padding-left: 14px; padding-right: 14px; }
+}
+
+.screen { position: absolute; inset: 0; display: flex; flex-direction: column; }
+
+/* --- topo do app -------------------------------------------------------- */
+.appbar {
+  flex: none;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 18px;
+  background: var(--ink);
+  color: var(--paper-2);
+}
+
+.appbar .burger { display: grid; gap: 3px; }
+.appbar .burger i { display: block; width: 17px; height: 2px; background: currentColor; border-radius: 2px; }
+.appbar strong { font-size: 14px; font-weight: 700; letter-spacing: -0.01em; }
+
+.pagehead { flex: none; padding: 18px 18px 10px; display: flex; flex-direction: column; gap: 3px; }
+.pagehead h2 {
+  font-family: var(--font-display);
+  font-size: 24px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  margin: 0;
+}
+.pagehead span { font-size: 13px; color: var(--ink-muted); }
+
+.device[data-viewport="desktop"] .pagehead { padding: 22px 26px 12px; }
+.device[data-viewport="desktop"] .pagehead h2 { font-size: 28px; }
+
+.search {
+  flex: none;
+  margin: 6px 18px 12px;
+  padding: 12px 14px;
+  border: 1px solid var(--brand-bold);
+  border-radius: 12px;
+  color: var(--ink-ghost);
+  font-size: 14px;
+}
+.device[data-viewport="desktop"] .search { margin: 6px 26px 12px; max-width: 460px; }
+
+.cats { flex: none; display: flex; gap: 8px; padding: 0 18px 14px; overflow-x: auto; scrollbar-width: none; }
+.cats::-webkit-scrollbar { display: none; }
+.device[data-viewport="desktop"] .cats { padding: 0 26px 16px; }
+
+.cat {
+  flex: none;
+  border: 1px solid var(--line);
+  background: var(--paper);
+  border-radius: 999px;
+  padding: 8px 14px;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--ink-muted);
+  cursor: pointer;
+  white-space: nowrap;
+}
+.cat[aria-pressed="true"] { border-color: var(--brand); background: var(--brand-soft); color: var(--brand-strong); }
+
+/* --- grade de produtos -------------------------------------------------- */
+.grid {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  padding: 0 18px 132px;
+  scrollbar-width: thin;
+}
+
+.device[data-viewport="desktop"] .grid {
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 14px;
+  padding: 0 26px 120px;
+}
+
+@media (max-width: 900px) {
+  .device[data-viewport="desktop"] .grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+
+.tile {
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: var(--paper);
+  padding: 0 0 10px;
+  text-align: left;
+  cursor: pointer;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: transform 140ms, border-color 140ms, box-shadow 140ms;
+}
+.tile:hover { border-color: var(--brand-bold); }
+.tile:active { transform: scale(0.98); }
+.tile.tile--picked { border-color: var(--brand); box-shadow: 0 0 0 1px var(--brand); }
+
+.tile .thumb { height: 84px; display: grid; place-items: center; font-size: 30px; background: var(--paper-3); }
+.device[data-viewport="desktop"] .tile .thumb { height: 104px; font-size: 36px; }
+.tile:nth-child(3n) .thumb { background: #f0f7e8; }
+.tile .name { padding: 8px 10px 0; font-size: 13px; font-weight: 600; color: var(--ink-2); }
+.tile .price {
+  padding: 2px 10px 0;
+  font-family: var(--font-display);
+  font-size: 15px;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  font-variant-numeric: tabular-nums;
+}
+
+/* --- gatilhos: cupom no celular, pílula no desktop ---------------------- */
+.trigger { position: absolute; left: 0; right: 0; bottom: 0; }
+
+.coupon {
+  position: relative;
+  width: 100%;
+  border: 0;
+  background: var(--paper-1);
+  padding: 14px 20px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  text-align: left;
+  /* box-shadow só conhece o retângulo e contornaria os dentes com uma reta;
+     drop-shadow segue a silhueta que a máscara recortou. */
+  filter: drop-shadow(0 -1px 0 var(--line)) drop-shadow(var(--shadow-up));
+}
+
+/* Dente triangular de guilhotina, não festão: o setor de 135°–225° em conic
+   dá as duas retas a 45° e a base de cada dente fecha na do vizinho. */
+.coupon::before {
+  content: "";
+  position: absolute;
+  inset-inline: 0;
+  bottom: 100%;
+  height: 8px;
+  background: var(--paper-1);
+  mask: conic-gradient(from 0deg at 50% 0, #0000 0 135deg, #000 135deg 225deg, #0000 225deg) 50% 0 / 16px 8px repeat-x;
+}
+
+.coupon .count { flex: 1; font-size: 13px; font-weight: 600; color: var(--ink-faint); }
+.coupon .sum {
+  font-family: var(--font-display);
+  font-size: 20px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+}
+.coupon .go {
+  width: 28px; height: 28px;
+  border-radius: 999px;
+  background: var(--brand);
+  color: #fff;
+  display: grid;
+  place-items: center;
+  font-size: 13px;
+}
+
+.pill {
+  position: absolute;
+  left: 50%;
+  bottom: 24px;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 12px 14px 12px 24px;
+  border: 0;
+  border-radius: 999px;
+  background: var(--ink);
+  color: var(--paper-2);
+  cursor: pointer;
+  white-space: nowrap;
+  /* halo da marca: a peça não é levantada, é acesa */
+  box-shadow: var(--shadow-brand), 0 10px 30px rgba(26, 18, 6, 0.28);
+  transition: transform 160ms;
+}
+.pill:hover { transform: translateX(-50%) translateY(-2px); }
+.pill .count { font-size: 13px; font-weight: 600; opacity: 0.72; }
+.pill .sum { font-family: var(--font-display); font-size: 19px; font-weight: 800; font-variant-numeric: tabular-nums; }
+.pill .go {
+  width: 30px; height: 30px;
+  border-radius: 999px;
+  background: var(--brand);
+  color: #fff;
+  display: grid;
+  place-items: center;
+  font-size: 14px;
+}
+.pill kbd {
+  font-family: inherit;
+  font-size: 11px;
+  font-weight: 700;
+  opacity: 0.6;
+  border: 1px solid currentColor;
+  border-radius: 5px;
+  padding: 1px 5px;
+}
+
+/* --- véu ---------------------------------------------------------------- */
+.scrim {
+  position: absolute;
+  inset: 0;
+  background: rgba(26, 18, 6, 0.5);
+  backdrop-filter: blur(2px);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 220ms;
+}
+.screen[data-open="true"] .scrim { opacity: 1; pointer-events: auto; }
+
+/* --- gaveta (celular) --------------------------------------------------- */
+.sheet {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  background: var(--paper);
+  transform: translateY(100%);
+  transition: transform 340ms cubic-bezier(0.2, 0.7, 0.3, 1);
+}
+.screen[data-open="true"] .sheet { transform: translateY(0); }
+.device[data-viewport="desktop"] .sheet { display: none; }
+
+.sheet__head { flex: none; display: flex; align-items: flex-start; gap: 10px; padding: 16px 18px 12px; }
+.sheet__head h3 {
+  font-family: var(--font-display);
+  font-size: 19px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  margin: 0;
+  flex: 1;
+}
+.sheet__head .sub { display: block; font-family: var(--font-body); font-size: 12px; font-weight: 500; color: var(--ink-faint); letter-spacing: 0; }
+
+.iconbtn {
+  flex: none;
+  width: 34px; height: 34px;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--ink-faint);
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  font-size: 17px;
+}
+.iconbtn:hover { background: var(--mute); color: var(--ink); }
+.iconbtn[disabled] { opacity: 0.3; cursor: default; }
+
+/* trilho de passos: carimbos ligados, rótulo só do passo corrente */
+.rail { flex: none; display: flex; align-items: center; }
+.rail__step { display: flex; align-items: center; flex: 1; }
+.rail__step:last-child { flex: none; }
+
+.stamp {
+  flex: none;
+  width: 26px; height: 26px;
+  border-radius: 8px;
+  display: grid;
+  place-items: center;
+  font-size: 12px;
+  font-weight: 700;
+  background: var(--mute);
+  color: var(--ink-faint);
+  border: 0;
+  padding: 0;
+  transition: background 200ms, color 200ms, transform 200ms;
+}
+.stamp[data-state="current"] { background: var(--brand); color: #fff; }
+.stamp[data-state="done"] { background: var(--ink-2); color: var(--paper-2); cursor: pointer; }
+.stamp[data-state="done"]:hover { transform: scale(1.08); }
+
+.rail__bar {
+  flex: 1;
+  height: 3px;
+  margin: 0 6px;
+  border-radius: 999px;
+  background: var(--mute);
+  transition: background 240ms;
+}
+.rail__bar[data-done="true"] { background: var(--ink-2); }
+
+.sheet .rail { padding: 0 18px 4px; }
+
+.stepname { flex: none; display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap; }
+.stepname b { font-family: var(--font-display); font-size: 17px; font-weight: 800; letter-spacing: -0.01em; }
+.stepname span { font-size: 12px; color: var(--ink-faint); }
+.sheet .stepname { padding: 10px 18px 14px; }
+
+.sheet__body {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  padding: 0 18px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.panel { display: flex; flex-direction: column; gap: 14px; animation: slidein 260ms cubic-bezier(0.2, 0.7, 0.3, 1); }
+
+@keyframes slidein {
+  from { opacity: 0; transform: translateX(14px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+/* --- itens -------------------------------------------------------------- */
+/* Espelha o SaleCart real: ListRow (divider top, gap 2.5, padding 3) +
+   ItemThumb + QuantityStepper size sm. Medidas conferidas nos componentes,
+   não estimadas. */
+.lines { display: flex; flex-direction: column; list-style: none; margin: 0; padding: 0 12px 16px 0; }
+
+.line {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 0;
+  border-top: 1px solid var(--line);
+  flex-shrink: 0;
+}
+.line:first-child { border-top: 0; padding-top: 0; }
+
+.line .thumb {
+  width: 48px;
+  height: 48px;
+  flex-shrink: 0;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  line-height: 1;
+  user-select: none;
+}
+.tone0 { background: var(--brand-soft); color: var(--brand-strong); }
+.tone1 { background: #ffd9b8; color: #b06a4a; }
+.tone2 { background: #f1e7da; color: color-mix(in srgb, var(--ink) 70%, transparent); }
+.tone3 { background: #ffebd6; color: var(--brand-strong); }
+.tone4 { background: #ffe3cc; color: #b06a4a; }
+.tone5 { background: color-mix(in srgb, #b6ff6b 20%, transparent); color: color-mix(in srgb, var(--ink) 70%, transparent); }
+
+.line .who { min-width: 0; flex: 1; display: flex; flex-direction: column; }
+.line .who b {
+  font-size: 14px;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.line .who span {
+  margin-top: 2px;
+  font-size: 12px;
+  color: var(--ink-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-variant-numeric: tabular-nums;
+}
+
+.line .right { display: flex; flex-direction: column; align-items: flex-end; gap: 6px; flex-shrink: 0; }
+.line .money {
+  font-family: var(--font-display);
+  font-size: 14px;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+}
+
+.qty { display: flex; align-items: center; gap: 6px; flex-shrink: 0; }
+.qty button {
+  width: 32px;
+  height: 32px;
+  flex-shrink: 0;
+  padding: 0;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: transparent;
+  color: var(--ink);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 160ms, scale 160ms;
+}
+.qty button svg { width: 16px; height: 16px; display: block; }
+.qty button:hover { background: #fff7ee; }
+.qty button:active { scale: 0.96; }
+.qty button.rm {
+  border-color: transparent;
+  background: var(--danger);
+  color: var(--paper-2);
+}
+.qty button.rm:hover { background: #a03427; }
+.qty b {
+  width: 16px;
+  text-align: center;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--ink-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.addmore {
+  align-self: flex-start;
+  border: 1px dashed var(--brand-bold);
+  background: var(--brand-ghost);
+  color: var(--brand-strong);
+  border-radius: 999px;
+  padding: 9px 16px;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+}
+.addmore:hover { background: var(--brand-soft); }
+
+/* --- escolhas ----------------------------------------------------------- */
+.choices { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+
+.choice {
+  border: 1px solid var(--line);
+  background: var(--paper);
+  border-radius: 14px;
+  padding: 12px 8px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  transition: border-color 140ms, background 140ms, transform 140ms;
+}
+.choice:hover { border-color: var(--brand-bold); }
+.choice:active { transform: scale(0.97); }
+.choice em { font-style: normal; font-size: 20px; line-height: 1; }
+.choice .payicon { display: block; width: 26px; height: 26px; }
+.choice .payicon svg { width: 100%; height: 100%; display: block; }
+.choice b { font-size: 12.5px; font-weight: 700; color: var(--ink-2); }
+.choice i { font-style: normal; font-size: 11px; color: var(--ink-faint); }
+.choice[aria-pressed="true"] { border-color: var(--brand); background: var(--brand-soft); }
+.choice[aria-pressed="true"] b { color: var(--brand-strong); }
+
+.modal .choice { padding: 16px 10px; gap: 7px; }
+.modal .choice em { font-size: 26px; }
+.modal .choice b { font-size: 14px; }
+
+/* 12 colunas como no AddressFields: no celular quase tudo toma a linha
+   inteira; na janela os campos se distribuem e o passo encurta. */
+.fields {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: 10px;
+  align-items: start;
+}
+.fields > * { grid-column: 1 / -1; }
+.fields > .half { grid-column: span 6; }
+.fields > .zip { grid-column: span 8; }
+.fields > .num { grid-column: span 4; }
+
+.modal .fields > .zip { grid-column: span 3; }
+.modal .fields > .num { grid-column: span 2; }
+.modal .fields > .street { grid-column: span 7; }
+.modal .fields > .comp { grid-column: span 6; }
+.modal .fields > .bairro { grid-column: span 6; }
+
+.field { display: flex; flex-direction: column; gap: 5px; }
+.field label {
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: var(--ink-faint);
+}
+
+/* rótulo com o (i) do FieldHint ao lado: a explicação fica guardada no ícone
+   em vez de ocupar uma linha própria embaixo do campo */
+.labelrow { display: flex; align-items: center; gap: 4px; }
+
+.fieldhint { position: relative; display: inline-flex; }
+
+.fieldhint > button {
+  width: 20px;
+  height: 20px;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--ink-ghost);
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  padding: 0;
+  transition: background 140ms, color 140ms;
+}
+.fieldhint > button:hover { background: var(--mute); color: var(--ink-muted); }
+
+.fieldhint > button svg { width: 14px; height: 14px; display: block; }
+
+.fieldhint__card {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: -6px;
+  z-index: 3;
+  width: max-content;
+  max-width: 240px;
+  padding: 10px 12px;
+  border-radius: 12px;
+  border: 1px solid var(--line);
+  background: var(--paper);
+  box-shadow: 0 10px 26px rgba(26, 18, 6, 0.16);
+  font-size: 12.5px;
+  line-height: 1.4;
+  letter-spacing: 0;
+  text-transform: none;
+  font-weight: 500;
+  color: var(--ink-muted);
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(-3px);
+  transition: opacity 140ms, transform 140ms;
+}
+
+.fieldhint:hover .fieldhint__card,
+.fieldhint:focus-within .fieldhint__card {
+  opacity: 1;
+  transform: translateY(0);
+}
+.field input {
+  border: 1px solid var(--brand-bold);
+  border-radius: 12px;
+  padding: 12px 14px;
+  background: var(--paper);
+  font-size: 14px;
+  width: 100%;
+}
+.field input::placeholder { color: var(--ink-ghost); }
+.field input:focus { border-color: var(--brand); outline: none; box-shadow: 0 0 0 3px var(--brand-soft); }
+.field.row2 { display: grid; grid-template-columns: 1fr 96px; gap: 10px; align-items: end; }
+
+
+.status { margin-top: 4px; font-size: 12px; letter-spacing: 0; text-transform: none; font-weight: 500; color: var(--ink-muted); }
+.status--error { color: var(--danger); }
+
+.note {
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+  padding: 10px 12px;
+  border-radius: 12px;
+  background: var(--paper-2);
+  font-size: 12.5px;
+  color: var(--ink-muted);
+  margin: 0;
+}
+.note b { color: var(--ink-2); }
+
+/* Resultado do cálculo de distância: cabe numa zona, ou não cabe. */
+.strip {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 11px 14px;
+  border-radius: 12px;
+  font-size: 13px;
+  font-variant-numeric: tabular-nums;
+}
+.strip b { font-weight: 700; }
+
+.strip--in { background: var(--success-surface); color: var(--success); }
+.strip--out { background: var(--danger-surface); color: var(--danger); }
+
+/* --- pagamento ---------------------------------------------------------- */
+.pays { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+
+.quick { display: flex; gap: 8px; flex-wrap: wrap; }
+.quick button {
+  border: 1px solid var(--line);
+  background: var(--paper);
+  border-radius: 999px;
+  padding: 8px 14px;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--ink-muted);
+  cursor: pointer;
+  font-variant-numeric: tabular-nums;
+}
+.quick button:hover { border-color: var(--brand-bold); }
+.quick button[aria-pressed="true"] { border-color: var(--brand); background: var(--brand-soft); color: var(--brand-strong); }
+
+.change { display: flex; justify-content: space-between; align-items: baseline; padding-top: 2px; }
+.change b { font-size: 13px; }
+.change span { font-family: var(--font-display); font-size: 15px; font-weight: 800; color: var(--brand-strong); font-variant-numeric: tabular-nums; }
+
+/* --- pedido impresso ---------------------------------------------------- */
+.ticket {
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.ticket__items { display: flex; flex-direction: column; gap: 6px; }
+.ticket__item { display: flex; justify-content: space-between; gap: 10px; font-size: 13px; font-variant-numeric: tabular-nums; }
+.ticket__item i { font-style: normal; color: var(--ink-faint); }
+
+.printed { display: flex; flex-direction: column; gap: 9px; }
+
+.printed__row { display: flex; flex-direction: column; gap: 1px; animation: print 320ms ease-out backwards; }
+.printed__row:nth-child(2) { animation-delay: 60ms; }
+.printed__row:nth-child(3) { animation-delay: 120ms; }
+.printed__row:nth-child(4) { animation-delay: 180ms; }
+
+@keyframes print {
+  from { opacity: 0; transform: translateY(-5px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.printed__row > b {
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: var(--ink-faint);
+}
+.printed__row > span { font-size: 13.5px; color: var(--ink-2); font-weight: 600; }
+
+.dashed { height: 1px; background: repeating-linear-gradient(to right, var(--line) 0 5px, transparent 5px 10px); }
+
+/* --- pé da gaveta: picote + total + ação -------------------------------- */
+.foot {
+  flex: none;
+  position: relative;
+  background: var(--paper);
+  padding: 12px 18px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  /* o papel é branco, então o corte só existe se for desenhado: drop-shadow
+     segue a silhueta que a máscara recortou, como no CouponTab */
+  filter: drop-shadow(0 -1px 0 var(--line));
+}
+
+/* mesma guilhotina do cupom: aqui ela marca onde o pedido termina e a
+   transação começa */
+.foot::before {
+  content: "";
+  position: absolute;
+  inset-inline: 0;
+  bottom: 100%;
+  height: 8px;
+  background: var(--paper);
+  mask: conic-gradient(from 0deg at 50% 0, #0000 0 135deg, #000 135deg 225deg, #0000 225deg) 50% 0 / 16px 8px repeat-x;
+}
+
+.totals { display: flex; flex-direction: column; gap: 2px; }
+.totals__row { display: flex; justify-content: space-between; align-items: baseline; font-size: 13px; color: var(--ink-muted); font-variant-numeric: tabular-nums; }
+.totals__row--grand b { font-size: 13px; font-weight: 600; color: var(--ink-muted); }
+.totals__row--grand span {
+  font-family: var(--font-display);
+  font-size: 21px;
+  font-weight: 800;
+  letter-spacing: -0.025em;
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+}
+
+.cta {
+  border: 0;
+  border-radius: 999px;
+  background: var(--brand);
+  color: #fff;
+  padding: 15px 20px;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 140ms, transform 120ms;
+}
+.cta:hover { background: var(--brand-strong); }
+.cta:active { transform: scale(0.99); }
+.cta[disabled] { background: var(--mute); color: var(--ink-ghost); cursor: not-allowed; }
+.cta--done { background: var(--success); }
+.cta--done:hover { background: #22563a; }
+
+/* --- janela do pedido (desktop) ----------------------------------------- */
+/* Uma coluna só: os itens são o primeiro passo, como no celular. A janela é
+   a mesma gaveta, em formato de tela grande. */
+.modal {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: min(920px, calc(100% - 56px));
+  height: min(712px, calc(100% - 48px));
+  display: flex;
+  flex-direction: column;
+  background: var(--paper);
+  border-radius: 22px;
+  overflow: hidden;
+  box-shadow: 0 40px 90px rgba(26, 18, 6, 0.38);
+  opacity: 0;
+  pointer-events: none;
+  transform: translate(-50%, -47%) scale(0.985);
+  transition: opacity 200ms, transform 260ms cubic-bezier(0.2, 0.7, 0.3, 1);
+}
+.device[data-viewport="mobile"] .modal { display: none; }
+.device[data-viewport="desktop"] .screen[data-open="true"] .modal {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translate(-50%, -50%) scale(1);
+}
+
+.modal__head { flex: none; padding: 20px 26px 0; display: flex; flex-direction: column; gap: 12px; }
+
+.modal__title { display: flex; align-items: flex-start; gap: 10px; }
+.modal__title h3 {
+  flex: 1;
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 20px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+.modal__title .sub {
+  display: block;
+  font-family: var(--font-body);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0;
+  color: var(--ink-faint);
+}
+
+.modal .rail { max-width: 320px; }
+.modal .sheet__body { padding: 16px 26px 20px; }
+
+/* mesmo corte da gaveta: o pé é a parte que se destaca do pedido */
+.modal__foot {
+  flex: none;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 12px 26px 14px;
+  background: var(--paper);
+  filter: drop-shadow(0 -1px 0 var(--line));
+}
+.modal__foot::before {
+  content: "";
+  position: absolute;
+  inset-inline: 0;
+  bottom: 100%;
+  height: 8px;
+  background: var(--paper);
+  mask: conic-gradient(from 0deg at 50% 0, #0000 0 135deg, #000 135deg 225deg, #0000 225deg) 50% 0 / 16px 8px repeat-x;
+}
+.modal__foot .totals { flex: 1; }
+.modal__actions { display: flex; flex-direction: row-reverse; align-items: center; gap: 14px; }
+.modal__actions .cta { min-width: 220px; }
+
+.keys { display: flex; gap: 12px; font-size: 11.5px; color: var(--ink-faint); }
+.keys span { display: inline-flex; align-items: center; gap: 5px; }
+.keys kbd {
+  font-family: inherit;
+  font-size: 10.5px;
+  font-weight: 700;
+  border: 1px solid var(--line);
+  border-bottom-width: 2px;
+  border-radius: 5px;
+  padding: 1px 5px;
+  color: var(--ink-muted);
+}
+
+/* leitura em voz alta — o passo final no desktop */
+.readback {
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.readback > b {
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: var(--ink-faint);
+}
+.readback p {
+  margin: 0;
+  max-width: 46ch;
+  font-family: var(--font-display);
+  font-size: 21px;
+  line-height: 1.32;
+  font-weight: 700;
+  letter-spacing: -0.015em;
+  color: var(--ink);
+  text-wrap: balance;
+}
+.readback p em { font-style: normal; color: var(--brand-strong); font-variant-numeric: tabular-nums; }
+
+/* --- venda fechada ------------------------------------------------------ */
+.done {
+  position: absolute;
+  inset: 0;
+  background: var(--paper);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 32px;
+  text-align: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 240ms;
+}
+.screen[data-done="true"] .done { opacity: 1; pointer-events: auto; }
+.done .seal {
+  width: 62px; height: 62px;
+  border-radius: 18px;
+  background: var(--success);
+  color: #fff;
+  display: grid;
+  place-items: center;
+  font-size: 30px;
+  margin-bottom: 6px;
+}
+.done h4 { font-family: var(--font-display); font-size: 21px; font-weight: 800; margin: 0; }
+.done p { margin: 0; font-size: 13.5px; color: var(--ink-muted); max-width: 34ch; }
+.done button { margin-top: 14px; }
+
+/* --- notas -------------------------------------------------------------- */
+.notes {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 8px 24px 72px;
+  display: grid;
+  gap: 18px;
+  grid-template-columns: repeat(auto-fit, minmax(268px, 1fr));
+}
+
+.card {
+  background: var(--canvas-raised);
+  border: 1px solid var(--canvas-line);
+  border-radius: 16px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.card h3 { font-family: var(--font-display); font-size: 16px; font-weight: 800; margin: 0; letter-spacing: -0.01em; }
+.card p { margin: 0; font-size: 13.5px; color: var(--canvas-ink-soft); }
+.card code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 12px;
+  background: var(--canvas-2);
+  padding: 1px 5px;
+  border-radius: 4px;
+}
+
+.card--flag { border-color: color-mix(in srgb, var(--brand) 40%, transparent); }
+.card--flag h3 { color: var(--brand-strong); }
+
+.tag {
+  align-self: flex-start;
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: var(--canvas-ink-soft);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+</style>
+</head>
+<body>
+<header class="masthead">
+  <span class="eyebrow">Manager · Balcão</span>
+  <h1>Pedido no Balcão</h1>
+  <p>
+    O pedido deixa de ser uma coluna fixa à direita e vira papel que sobe por
+    cima do cardápio. A mesma sequência de quatro passos nos dois tamanhos:
+    gaveta de tela inteira no celular, janela no desktop — e o cardápio fica
+    com toda a largura enquanto ninguém está fechando venda.
+  </p>
+</header>
+
+<div class="controls">
+  <div class="seg" role="group" aria-label="Tamanho de tela">
+    <button type="button" data-vp="mobile" aria-pressed="true">Celular</button>
+    <button type="button" data-vp="desktop" aria-pressed="false">Acima de 768px</button>
+  </div>
+  <span class="hint">Toque nos lanches para montar o pedido — o protótipo é operável.</span>
+</div>
+
+<div class="stage">
+  <div class="device" data-viewport="mobile">
+    <div class="screen" id="screen" data-open="false" data-done="false">
+
+      <div class="appbar">
+        <span class="burger" aria-hidden="true"><i></i><i></i><i></i></span>
+        <strong>Burgão do Nino — Centro</strong>
+      </div>
+
+      <div class="pagehead">
+        <h2>Balcão</h2>
+        <span>Monte o pedido de quem está na loja e feche a venda.</span>
+      </div>
+
+      <div class="search">Buscar no cardápio…</div>
+
+      <div class="cats">
+        <button type="button" class="cat" aria-pressed="true">Lanches</button>
+        <button type="button" class="cat" aria-pressed="false">Porções</button>
+        <button type="button" class="cat" aria-pressed="false">Pizzas</button>
+        <button type="button" class="cat" aria-pressed="false">Bebidas</button>
+        <button type="button" class="cat" aria-pressed="false">Sobremesas</button>
+      </div>
+
+      <div class="grid" id="grid"></div>
+
+      <div class="trigger" id="trigger"></div>
+
+      <div class="scrim" id="scrim"></div>
+
+      <!-- celular: gaveta de tela inteira, um passo por vez -->
+      <section class="sheet" id="sheet" aria-label="Pedido">
+        <div class="sheet__head">
+          <button type="button" class="iconbtn" id="back" aria-label="Voltar um passo">←</button>
+          <h3>Pedido <span class="sub" id="sheetSub">4 itens</span></h3>
+          <button type="button" class="iconbtn" data-close-sheet aria-label="Fechar pedido">✕</button>
+        </div>
+        <div class="rail" id="rail"></div>
+        <div class="stepname">
+          <b id="stepTitle">Itens</b>
+          <span id="stepHint">Confira o que o cliente pediu</span>
+        </div>
+        <div class="sheet__body" id="body"></div>
+        <div class="foot">
+          <div class="totals" id="totals"></div>
+          <button type="button" class="cta" id="cta">Continuar</button>
+        </div>
+      </section>
+
+      <!-- desktop: mesma sequência do celular, em janela -->
+      <section class="modal" id="modal" aria-label="Pedido">
+        <div class="modal__head">
+          <div class="modal__title">
+            <button type="button" class="iconbtn" id="dBack" aria-label="Voltar um passo">←</button>
+            <h3>Pedido <span class="sub" id="dSub">4 itens</span></h3>
+            <button type="button" class="iconbtn" data-close-sheet aria-label="Fechar pedido">✕</button>
+          </div>
+          <div class="rail" id="dRail"></div>
+          <div class="stepname">
+            <b id="dStepTitle">Itens</b>
+            <span id="dStepHint">Confira o que o cliente pediu</span>
+          </div>
+        </div>
+        <div class="sheet__body" id="dBody"></div>
+        <div class="modal__foot">
+          <div class="totals" id="dTotals"></div>
+          <div class="modal__actions">
+            <button type="button" class="cta" id="dCta">Continuar</button>
+            <div class="keys">
+              <span><kbd>Enter</kbd> continuar</span>
+              <span><kbd>Esc</kbd> fechar</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div class="done">
+        <div class="seal" aria-hidden="true">✓</div>
+        <h4>Venda fechada</h4>
+        <p id="doneMsg">Pedido #184 saiu para a cozinha.</p>
+        <button type="button" class="cta" id="newSale">Abrir outro pedido</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<section class="notes">
+  <div class="card">
+    <span class="tag">Passos</span>
+    <h3>Quatro, porque são quatro decisões</h3>
+    <p>
+      A ordem não é enfeite: a zona de entrega muda o total, então o tipo do
+      pedido vem antes do pagamento. E a sequência é a mesma nos dois
+      tamanhos — o passo é uma chave, não um índice, então trocar de tamanho
+      com o pedido aberto não perde onde você estava.
+    </p>
+  </div>
+
+  <div class="card">
+    <span class="tag">Desktop</span>
+    <h3>O último passo é o que você fala</h3>
+    <p>
+      Atendente repete o pedido antes de fechar. Com espaço sobrando, o passo
+      final monta essa frase pronta em corpo grande, para ler em voz alta — e
+      só depois dela vem o botão.
+    </p>
+  </div>
+
+  <div class="card">
+    <span class="tag">Endereço</span>
+    <h3>O CEP faz o trabalho</h3>
+    <p>
+      Oito dígitos e a rua e o bairro vêm preenchidos, com o foco pulando para
+      o número — mesmo comportamento e mesmos textos do
+      <code>AddressFields</code> que o manager já tem. A zona é escolha à
+      parte: <code>DeliveryZone</code> é faixa de raio em km, não bairro.
+    </p>
+  </div>
+
+  <div class="card">
+    <span class="tag">Desktop</span>
+    <h3>A coluna da direita vira pílula</h3>
+    <p>
+      Acima de 768px o cardápio ocupa a largura inteira e o pedido em aberto
+      vira uma pílula flutuante no rodapé. Sem segunda tela de venda para
+      manter — a pílula abre a mesma janela.
+    </p>
+  </div>
+
+  <div class="card card--flag">
+    <span class="tag">Preciso da sua permissão</span>
+    <h3>Crédito e débito não existem no domínio</h3>
+    <p>
+      <code>PaymentMethod</code> tem <code>CASH</code>, <code>PIX</code>,
+      <code>CARD_ON_DELIVERY</code> e <code>CARD_ONLINE</code> — não separa
+      crédito de débito. Para oferecer os dois é migração de schema no
+      nino-api, não ajuste de tela.
+    </p>
+  </div>
+
+  <div class="card card--flag">
+    <span class="tag">Preciso da sua permissão</span>
+    <h3>O Stepper do DS não cabe em 390px</h3>
+    <p>
+      O <code>Stepper</code> horizontal põe rótulo <code>text-sm</code> sob
+      cada carimbo de 32px: com quatro passos o texto quebra e o trilho come
+      altura. Aqui usei carimbo de 26px e rótulo só do passo corrente —
+      pediria uma variante <code>compact</code> no DS.
+    </p>
+  </div>
+
+  <div class="card card--flag">
+    <span class="tag">Preciso da sua permissão</span>
+    <h3>O picote deveria virar peça do DS</h3>
+    <p>
+      Hoje ele é CSS local do <code>OpenOrderBar</code>. Com a gaveta e a
+      janela usando o mesmo corte, viram três lugares — candidato a
+      <code>TearLine</code> no Nino DS em vez de máscara copiada.
+    </p>
+  </div>
+</section>
+
+<script>
+(function () {
+  "use strict";
+
+  var MINUS = "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.2\" stroke-linecap=\"round\" aria-hidden=\"true\"><path d=\"M5 12h14\" /></svg>";
+  var PLUS = "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.2\" stroke-linecap=\"round\" aria-hidden=\"true\"><path d=\"M12 5v14\" /> <path d=\"M5 12h14\" /></svg>";
+  var TRASH = "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M3 6h18\" /> <path d=\"M8 6V4a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2\" /> <path d=\"M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6\" /> <path d=\"M10 11v6\" /> <path d=\"M14 11v6\" /></svg>";
+
+  var MENU = [
+    { id: "salada", name: "X-Salada", price: 24.9, emoji: "🍔" },
+    { id: "bacon", name: "X-Bacon", price: 28.9, emoji: "🍔" },
+    { id: "tudo", name: "X-Tudo", price: 34.9, emoji: "🍔" },
+    { id: "egg", name: "X-Egg", price: 26.5, emoji: "🍔" },
+    { id: "calabresa", name: "X-Calabresa", price: 27.9, emoji: "🍔" },
+    { id: "frango", name: "X-Frango", price: 26.9, emoji: "🍔" },
+    { id: "costela", name: "X-Costela", price: 36.9, emoji: "🍔" },
+    { id: "simples", name: "Hambúrguer Simples", price: 18.9, emoji: "🍔" },
+    { id: "cheddar", name: "Duplo Cheddar", price: 38.9, emoji: "🍔" },
+    { id: "smash", name: "Smash Clássico", price: 25.9, emoji: "🍔" }
+  ];
+
+  var TYPES = {
+    pickup: { label: "Retirada", emoji: "🛍️", hint: "Cliente retira no balcão" },
+    local: { label: "No local", emoji: "🍽️", hint: "Cliente consome no local" },
+    delivery: { label: "Entrega", emoji: "🛵", hint: "Cliente recebe no endereço" }
+  };
+
+  /* `spoken` é a forma que entra no meio da frase de leitura em voz alta:
+     Pix é nome próprio e mantém a maiúscula, os outros dois não. */
+  /* `spoken` é a forma que entra na frase de leitura em voz alta: Pix é
+     nome próprio e mantém a maiúscula. Os ícones são os mesmos do sprite
+     do DS que a tela de balcão já usa (PAYMENT_METHOD_ICON). */
+  var PAYS = {
+    pix: { label: "Pix", spoken: "Pix", icon: "<svg viewBox=\"0 0 24 24\" fill=\"#32BCAD\" fill-rule=\"nonzero\" aria-hidden=\"true\"><g transform=\"translate(-130.20737 -4.28095) scale(0.2473804)\"> <path d=\"m 610.61844,57.378776 -9.03922,-9.03922 c -0.19897,0.0797 -0.41452,0.12946 -0.64206,0.12946 h -4.10986 c -2.12478,0 -4.20476,0.86184 -5.70618,2.36432 l -11.77643,11.77678 c -1.10207,1.10208 -2.55022,1.65347 -3.99697,1.65347 -1.44815,0 -2.89524,-0.55139 -3.99697,-1.65241 l -11.82088,-11.82088 c -1.50142,-1.50283 -3.5814,-2.36431 -5.70618,-2.36431 h -5.05354 c -0.21555,0 -0.41698,-0.0508 -0.60713,-0.12242 l -9.07521,9.07521 c -4.65843,4.65843 -4.65843,12.2107 0,16.86913 l 9.07486,9.07485 c 0.1905,-0.0716 0.39193,-0.12241 0.60748,-0.12241 h 5.05354 c 2.12478,0 4.20476,-0.86148 5.70618,-2.36396 l 11.81982,-11.81982 c 2.13643,-2.13466 5.8607,-2.13537 7.995,0.001 l 11.77643,11.77573 c 1.50142,1.50248 3.5814,2.36431 5.70618,2.36431 h 4.10986 c 0.22754,0 0.44309,0.0497 0.64206,0.12947 l 9.03922,-9.03922 c 4.65808,-4.65843 4.65808,-12.2107 0,-16.86913\" /> <path d=\"m 553.82362,44.963326 c 3.08046,0 5.97782,1.19944 8.15622,3.37679 l 11.81982,11.82193 c 0.85125,0.85161 2.2412,0.85479 3.09457,-10e-4 l 11.77678,-11.77784 c 2.1784,-2.17735 5.07576,-3.37679 8.15622,-3.37679 h 1.41852 l -14.95778,-14.95813 c -4.65878,-4.658432 -12.2114,-4.658432 -16.86948,0 l -14.91509,14.91509 z\" /> <path d=\"m 596.82737,86.620206 c -3.08045,0 -5.97782,-1.19944 -8.15622,-3.37679 l -11.77678,-11.77713 c -0.82691,-0.82903 -2.26801,-0.82656 -3.09456,0 l -11.81982,11.82017 c -2.17841,2.17734 -5.07577,3.37679 -8.15623,3.37679 h -2.32092 l 14.9158,14.915444 c 4.65807,4.65808 12.21069,4.65808 16.86912,0 l 14.95813,-14.958484 z\" /> </g></svg>" },
+    cash: { label: "Dinheiro", spoken: "dinheiro", icon: "<svg viewBox=\"0 0 24 24\" fill=\"none\" aria-hidden=\"true\"><rect x=\"1.5\" y=\"5.5\" width=\"17\" height=\"10\" rx=\"1.6\" fill=\"#9CCFA9\" /> <rect x=\"5.5\" y=\"8.5\" width=\"17\" height=\"10\" rx=\"1.6\" fill=\"#1FA463\" /> <rect x=\"7.25\" y=\"10.25\" width=\"13.5\" height=\"6.5\" rx=\"0.9\" stroke=\"#0E7A46\" stroke-width=\"0.9\" /> <circle cx=\"14\" cy=\"13.5\" r=\"2\" fill=\"#B7E7C9\" /></svg>" },
+    card: { label: "Cartão", spoken: "cartão", icon: "<svg viewBox=\"0 0 24 24\" fill=\"none\" aria-hidden=\"true\"><rect x=\"1.5\" y=\"4.5\" width=\"21\" height=\"15\" rx=\"2.5\" fill=\"#2F3B52\" /> <rect x=\"1.5\" y=\"7.75\" width=\"21\" height=\"3.25\" fill=\"#161D2B\" /> <rect x=\"4\" y=\"13\" width=\"4.75\" height=\"3.5\" rx=\"0.8\" fill=\"#F0B429\" /> <path d=\"M4 14.75h4.75M6.375 13v3.5\" stroke=\"#B77C0C\" stroke-width=\"0.7\" /> <path d=\"M16.4 13.1a3.4 3.4 0 0 1 0 4.4M18.5 12a5.5 5.5 0 0 1 0 6.6\" stroke=\"#6FD9C7\" stroke-width=\"1.2\" stroke-linecap=\"round\" /></svg>" }
+  };
+
+  var STEP = {
+    items: { name: "Itens", hint: "Confira o que o cliente pediu" },
+    type: { name: "Pedido", hint: "Como esse pedido sai da loja" },
+    pay: { name: "Pagamento", hint: "Como o cliente vai pagar" },
+    close: { name: "Fechar", hint: "Confira e feche a venda" }
+  };
+
+  /* Uma sequência só, nos dois tamanhos: a lista é o primeiro passo, não uma
+     coluna fixa ocupando espaço. */
+  var FLOW = ["items", "type", "pay", "close"];
+
+  /* DeliveryZone no domínio é faixa de raio + taxa, com nome por loja. Nada
+     no endereço deduz isso: quem escolhe é quem está atendendo, e é o
+     `deliveryZoneId` que vai no pedido. */
+  var ZONES = [
+    { id: "z1", name: "Até 3 km", min: 0, max: 3, fee: 6 },
+    { id: "z2", name: "3 a 6 km", min: 3, max: 6, fee: 9 },
+    { id: "z3", name: "6 a 10 km", min: 6, max: 10, fee: 13 }
+  ];
+
+
+  var state = {
+    step: "items",
+    lines: [],
+    type: null,
+    name: "",
+    table: "",
+    phone: "",
+    zip: "",
+    street: "",
+    number: "",
+    complement: "",
+    district: "",
+    km: null,
+    lookup: "idle",
+    pay: null,
+    received: null
+  };
+
+  var $ = function (id) { return document.getElementById(id); };
+  var screenEl = $("screen");
+  var deviceEl = document.querySelector(".device");
+
+  function viewport() { return deviceEl.dataset.viewport; }
+  function isDesktop() { return viewport() === "desktop"; }
+  function flow() { return FLOW; }
+  function stepIndex() { return Math.max(0, flow().indexOf(state.step)); }
+  function isLastStep() { return stepIndex() === flow().length - 1; }
+
+  function brl(v) { return "R$ " + v.toFixed(2).replace(".", ","); }
+  function subtotal() { return state.lines.reduce(function (s, l) { return s + l.price * l.qty; }, 0); }
+  /* A zona é achada, não escolhida: DeliveryZone é faixa de raio, então quem
+     decide é a distância entre o endereço e a loja. */
+  function zone() {
+    if (state.km == null) return null;
+    return ZONES.filter(function (z) { return state.km >= z.min && state.km < z.max; })[0] || null;
+  }
+
+  function isOutOfRange() { return state.km != null && !zone(); }
+
+  function fee() { return state.type === "delivery" && zone() ? zone().fee : 0; }
+  function total() { return subtotal() + fee(); }
+  function count() { return state.lines.reduce(function (n, l) { return n + l.qty; }, 0); }
+  function countLabel() { return count() + (count() === 1 ? " item" : " itens"); }
+
+  function esc(s) {
+    return String(s).replace(/[&<>"]/g, function (c) {
+      return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c];
+    });
+  }
+
+  /* ---- cardápio -------------------------------------------------------- */
+  function renderGrid() {
+    $("grid").innerHTML = MENU.map(function (p) {
+      var picked = state.lines.some(function (l) { return l.id === p.id; });
+      return (
+        '<button type="button" class="tile' + (picked ? " tile--picked" : "") + '" data-add="' + p.id + '">' +
+        '<span class="thumb" aria-hidden="true">' + p.emoji + "</span>" +
+        '<span class="name">' + esc(p.name) + "</span>" +
+        '<span class="price">' + brl(p.price) + "</span></button>"
+      );
+    }).join("");
+  }
+
+  function addItem(id) {
+    var product = MENU.filter(function (p) { return p.id === id; })[0];
+    if (!product) return;
+    var line = state.lines.filter(function (l) { return l.id === id; })[0];
+    if (line) line.qty += 1;
+    else state.lines.push({ id: product.id, name: product.name, price: product.price, emoji: product.emoji, qty: 1 });
+    render();
+  }
+
+  function stepLine(id, by) {
+    state.lines = state.lines
+      .map(function (l) { return l.id === id ? Object.assign({}, l, { qty: l.qty + by }) : l; })
+      .filter(function (l) { return l.qty > 0; });
+    if (!state.lines.length) {
+      screenEl.dataset.open = "false";
+      state.step = flow()[0];
+    }
+    render();
+  }
+
+  /* ---- gatilho: cupom ou pílula ---------------------------------------- */
+  function renderTrigger() {
+    var el = $("trigger");
+    if (!state.lines.length) { el.innerHTML = ""; return; }
+    el.innerHTML = isDesktop()
+      ? '<button type="button" class="pill" data-open-sheet>' +
+        '<span class="count">' + countLabel() + "</span>" +
+        '<span class="sum">' + brl(total()) + "</span>" +
+        "<kbd>Enter</kbd>" +
+        '<span class="go" aria-hidden="true">↑</span></button>'
+      : '<button type="button" class="coupon" data-open-sheet>' +
+        '<span class="count">' + countLabel() + "</span>" +
+        '<span class="sum">' + brl(total()) + "</span>" +
+        '<span class="go" aria-hidden="true">↑</span></button>';
+  }
+
+  /* ---- trilho ---------------------------------------------------------- */
+  function railHtml() {
+    var keys = flow();
+    var here = stepIndex();
+    return keys.map(function (k, i) {
+      var st = i < here ? "done" : i === here ? "current" : "todo";
+      var stamp = st === "done"
+        ? '<button type="button" class="stamp" data-state="done" data-goto="' + k + '" aria-label="Voltar para ' + STEP[k].name + '">✓</button>'
+        : '<span class="stamp" data-state="' + st + '"' + (st === "current" ? ' aria-current="step"' : "") + ">" + (i + 1) + "</span>";
+      var bar = i < keys.length - 1 ? '<span class="rail__bar" data-done="' + (i < here) + '"></span>' : "";
+      return '<span class="rail__step">' + stamp + bar + "</span>";
+    }).join("");
+  }
+
+  /* ---- painéis --------------------------------------------------------- */
+  /* Mesmo hash de tom do ItemThumb: o mesmo lanche pinta igual aqui e lá. */
+  function toneOf(name) {
+    var hash = 0;
+    for (var i = 0; i < name.length; i++) hash = (hash * 31 + name.charCodeAt(i)) | 0;
+    return Math.abs(hash) % 6;
+  }
+
+  function linesHtml() {
+    return '<ul class="lines">' + state.lines.map(function (l) {
+      var last = l.qty === 1;
+      return (
+        '<li class="line">' +
+        '<span class="thumb tone' + toneOf(l.name) + '" aria-hidden="true">' + l.emoji + "</span>" +
+        '<span class="who"><b>' + esc(l.name) + "</b><span>" + l.qty + " \u00d7 " + brl(l.price) + "</span></span>" +
+        '<span class="right"><span class="money">' + brl(l.price * l.qty) + "</span>" +
+        '<span class="qty">' +
+        '<button type="button" class="' + (last ? "rm" : "") + '" data-step="' + l.id + '" data-by="-1" aria-label="' +
+        (last ? "Tirar " + esc(l.name) + " do pedido" : "Tirar um " + esc(l.name)) + '">' + (last ? TRASH : MINUS) + "</button>" +
+        "<b>" + l.qty + "</b>" +
+        '<button type="button" data-step="' + l.id + '" data-by="1" aria-label="Mais um ' + esc(l.name) + '">' + PLUS + "</button>" +
+        "</span></span></li>"
+      );
+    }).join("") + "</ul>";
+  }
+
+  function panelItems() {
+    return '<div class="panel">' + linesHtml() +
+      '<button type="button" class="addmore" data-close-sheet>+ Adicionar mais itens</button></div>';
+  }
+
+  /* No app quem resolve isso é `lookupZipCode` (@nino/lib). Aqui vai uma base
+     fixa só para o protótipo responder como o AddressFields real responde. */
+  var ZIPS = {
+    "66017000": { street: "Rua Ó de Almeida", district: "Campina", km: 1.2 },
+    "66035000": { street: "Avenida Presidente Vargas", district: "Campina", km: 2.4 },
+    "66040000": { street: "Travessa Padre Eutíquio", district: "Batista Campos", km: 4.1 },
+    "66055000": { street: "Avenida Nazaré", district: "Nazaré", km: 7.3 },
+    "67005000": { street: "Rodovia BR-316, km 8", district: "Ananindeua", km: 14.6 }
+  };
+
+  function onlyDigits(v) { return String(v).replace(/\D/g, ""); }
+
+  function formatZip(v) {
+    var d = onlyDigits(v).slice(0, 8);
+    return d.length > 5 ? d.slice(0, 5) + "-" + d.slice(5) : d;
+  }
+
+  /* Uma linha só a partir dos campos separados: é assim que o endereço entra
+     no papel e na frase de leitura. */
+  function addressLine() {
+    var line = state.street.trim();
+    if (state.number.trim()) line += ", " + state.number.trim();
+    if (state.complement.trim()) line += " — " + state.complement.trim();
+    return line;
+  }
+
+  /* Mesmo desenho do FieldHint do manager: rótulo + botão (i) que revela a
+     explicação num cartão, em vez de gastar uma linha fixa embaixo do campo. */
+  function fieldHint(label, text) {
+    return (
+      '<span class="fieldhint">' +
+      '<button type="button" aria-label="Mais informações sobre ' + esc(label) + '">' +
+      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" ' +
+      'stroke-linecap="round" aria-hidden="true">' +
+      '<circle cx="12" cy="12" r="9"></circle><path d="M12 11v5"></path>' +
+      '<path d="M12 7.6v.2"></path></svg></button>' +
+      '<span class="fieldhint__card" role="tooltip">' + esc(text) + "</span></span>"
+    );
+  }
+
+  /* Do cálculo só sai o que se faz com ele: o valor do frete, ou o aviso de
+     que não dá para entregar. Distância e zona são como a conta é feita. */
+  function zoneStrip() {
+    if (state.km == null) {
+      return '<p class="note">Informe o CEP para calcular o frete.</p>';
+    }
+    if (isOutOfRange()) {
+      return '<div class="strip strip--out"><span><b>Fora da área de entrega.</b> ' +
+        "Ofereça retirada ou consumo no local.</span></div>";
+    }
+    return '<div class="strip strip--in"><span>Frete</span><span><b>' + brl(zone().fee) + "</b></span></div>";
+  }
+
+  function panelType() {
+    var t = state.type;
+    var fields;
+
+    if (t === "pickup") {
+      fields =
+        '<div class="fields"><div class="field"><label for="f-name">Nome de quem pediu</label>' +
+        '<input id="f-name" data-bind="name" value="' + esc(state.name) + '" placeholder="Ana"></div>' +
+        '<p class="note">O nome é o que a cozinha chama quando o pedido fica pronto.</p></div>';
+    } else if (t === "local") {
+      fields =
+        '<div class="fields"><div class="field row2">' +
+        '<span class="field"><label for="f-name">Nome de quem pediu</label>' +
+        '<input id="f-name" data-bind="name" value="' + esc(state.name) + '" placeholder="Ana"></span>' +
+        '<span class="field"><label for="f-table">Mesa</label>' +
+        '<input id="f-table" data-bind="table" value="' + esc(state.table) + '" placeholder="12" inputmode="numeric"></span>' +
+        '</div><p class="note">Preencha <b>nome ou mesa</b> — um dos dois já identifica o pedido no salão.</p></div>';
+    } else if (t === "delivery") {
+      var status =
+        state.lookup === "loading"
+          ? '<small class="status">Buscando endereço…</small>'
+          : state.lookup === "notFound"
+            ? '<small class="status status--error">Não achamos esse CEP. Preencha o endereço abaixo.</small>'
+            : "";
+
+      fields =
+        '<div class="fields">' +
+        '<span class="field half"><label for="f-name">Quem recebe</label>' +
+        '<input id="f-name" data-bind="name" value="' + esc(state.name) + '" placeholder="Ana"></span>' +
+        '<span class="field half"><label for="f-phone">Telefone</label>' +
+        '<input id="f-phone" data-bind="phone" value="' + esc(state.phone) + '" placeholder="(91) 98888-0000" inputmode="tel"></span>' +
+
+        '<span class="field zip"><span class="labelrow"><label for="f-zip">CEP</label>' +
+        fieldHint("CEP", "Digite o CEP e a rua e o bairro vêm preenchidos — sobra só o número.") +
+        '</span><input id="f-zip" data-bind="zip" value="' + esc(state.zip) +
+        '" placeholder="66017-000" inputmode="numeric" autocomplete="postal-code" maxlength="9">' + status + "</span>" +
+        '<span class="field num"><label for="f-number">Número</label>' +
+        '<input id="f-number" data-bind="number" value="' + esc(state.number) + '" placeholder="42" inputmode="numeric"></span>' +
+
+        '<span class="field street"><label for="f-street">Rua</label>' +
+        '<input id="f-street" data-bind="street" value="' + esc(state.street) + '" placeholder="Rua Ó de Almeida" autocomplete="address-line1"></span>' +
+        '<span class="field comp"><label for="f-complement">Complemento</label>' +
+        '<input id="f-complement" data-bind="complement" value="' + esc(state.complement) + '" placeholder="apto 301"></span>' +
+        '<span class="field bairro"><label for="f-district">Bairro</label>' +
+        '<input id="f-district" data-bind="district" value="' + esc(state.district) + '" placeholder="Campina"></span>' +
+        zoneStrip() +
+        "</div>";
+    } else {
+      fields = '<p class="note">Escolha como o pedido sai para saber o que precisa perguntar ao cliente.</p>';
+    }
+
+    return '<div class="panel"><div class="choices">' +
+      Object.keys(TYPES).map(function (k) {
+        return '<button type="button" class="choice" data-type="' + k + '" aria-pressed="' + (t === k) + '">' +
+          "<em>" + TYPES[k].emoji + "</em><b>" + TYPES[k].label + "</b>" +
+          (isDesktop() ? "<i>" + TYPES[k].hint + "</i>" : "") + "</button>";
+      }).join("") + "</div>" + fields + "</div>";
+  }
+
+  function panelPay() {
+    var p = state.pay;
+    var extra = "";
+
+    if (p === "cash") {
+      var due = total();
+      extra =
+        '<div class="fields"><div class="field"><label>Valor recebido</label><div class="quick">' +
+        '<button type="button" data-cash="exact" aria-pressed="' + (state.received === due) + '">Valor exato</button>' +
+        [50, 100, 200].filter(function (n) { return n >= due; }).map(function (n) {
+          return '<button type="button" data-cash="' + n + '" aria-pressed="' + (state.received === n) + '">' + brl(n) + "</button>";
+        }).join("") +
+        "</div></div>" +
+        (state.received !== null
+          ? '<div class="change"><b>Troco</b><span>' + (state.received - due <= 0 ? "Sem troco" : brl(state.received - due)) + "</span></div>"
+          : '<p class="note">Escolha quanto o cliente entregou e o troco aparece aqui.</p>') +
+        "</div>";
+    } else if (p === "card" && state.type === "delivery") {
+      extra = '<p class="note"><b>Cartão na entrega.</b> A maquininha vai com o entregador — o pedido fecha como não pago e baixa quando ele voltar.</p>';
+    } else if (p === "pix") {
+      extra = '<p class="note">Confirme o comprovante antes de fechar. O pedido só entra na cozinha depois.</p>';
+    }
+
+    return '<div class="panel"><div class="pays">' +
+      Object.keys(PAYS).map(function (k) {
+        return '<button type="button" class="choice" data-pay="' + k + '" aria-pressed="' + (p === k) + '">' +
+          '<em class="payicon">' + PAYS[k].icon + "</em><b>" + PAYS[k].label + "</b></button>";
+      }).join("") + "</div>" + extra + "</div>";
+  }
+
+  /* O papel imprime conforme as decisões acontecem: uma linha só existe
+     depois que a pergunta dela foi respondida. */
+  function printedRows() {
+    var rows = [];
+    if (!state.type) return rows;
+
+    rows.push({ label: "Como sai", value: TYPES[state.type].hint });
+
+    if (state.type === "delivery") {
+      if (state.name.trim() || state.phone.trim()) {
+        rows.push({ label: "Quem recebe", value: [state.name.trim(), state.phone.trim()].filter(Boolean).join(" · ") });
+      }
+      if (state.street.trim()) {
+        rows.push({ label: "Endereço", value: addressLine() + (state.district.trim() ? ", " + state.district.trim() : "") });
+      }
+      /* Zona e distância não entram aqui: são como a taxa é calculada, não o
+         que o cliente precisa conferir. O valor dela já aparece no total. */
+    } else if (state.type === "local") {
+      if (state.table.trim() || state.name.trim()) {
+        rows.push({
+          label: "Identificação",
+          value: state.table.trim()
+            ? "Mesa " + state.table.trim() + (state.name.trim() ? " · " + state.name.trim() : "")
+            : state.name.trim()
+        });
+      }
+    } else if (state.name.trim()) {
+      rows.push({ label: "Chamar por", value: state.name.trim() });
+    }
+
+    if (state.pay) {
+      var payLabel = PAYS[state.pay].label;
+      if (state.pay === "cash" && state.received !== null) {
+        payLabel += state.received > total() ? " · troco de " + brl(state.received - total()) : " · sem troco";
+      }
+      if (state.pay === "card" && state.type === "delivery") payLabel = "Cartão na entrega";
+      rows.push({ label: "Pagamento", value: payLabel });
+    }
+
+    return rows;
+  }
+
+  function printedHtml() {
+    var rows = printedRows();
+    if (!rows.length) return "";
+    return '<div class="printed">' + rows.map(function (r) {
+      return '<span class="printed__row"><b>' + esc(r.label) + "</b><span>" + esc(r.value) + "</span></span>";
+    }).join("") + "</div>";
+  }
+
+  function panelClose() {
+    return '<div class="panel"><div class="ticket"><div class="ticket__items">' +
+      state.lines.map(function (l) {
+        return '<span class="ticket__item"><i>' + l.qty + "×</i> " + esc(l.name) +
+          '<span style="flex:1"></span>' + brl(l.price * l.qty) + "</span>";
+      }).join("") +
+      '</div><div class="dashed"></div>' + printedHtml() + "</div></div>";
+  }
+
+  /* A frase que o atendente lê de volta para o cliente antes de fechar.
+     Só existe no desktop: no celular não há altura para ela competir com o
+     resumo, e lá o próprio papel já faz esse papel. */
+  function readback() {
+    var who = state.name.trim() || "o cliente";
+    var head;
+
+    if (state.type === "delivery") {
+      head = "Entrega para " + who + ", na " + addressLine() +
+        (state.district.trim() ? ", " + state.district.trim() : "") + ".";
+    } else if (state.type === "local") {
+      head = "No local" + (state.table.trim() ? ", mesa " + state.table.trim() : "") +
+        (state.name.trim() ? ", para " + who : "") + ".";
+    } else {
+      head = "Retirada no balcão para " + who + ".";
+    }
+
+    var pay = "Paga com " + (state.pay ? PAYS[state.pay].spoken : "—");
+    if (state.pay === "card" && state.type === "delivery") pay = "Paga com cartão na entrega";
+    if (state.pay === "cash" && state.received !== null && state.received > total()) {
+      pay += ", troco de " + brl(state.received - total());
+    }
+
+    return '<div class="panel"><div class="readback"><b>Confirme com o cliente</b>' +
+      "<p>" + esc(head) + " " + esc(pay) + ". Total de <em>" + brl(total()) + "</em>.</p></div></div>";
+  }
+
+  function panelFor(key) {
+    if (key === "items") return panelItems();
+    if (key === "type") return panelType();
+    if (key === "pay") return panelPay();
+    return isDesktop() ? readback() + panelClose() : panelClose();
+  }
+
+  /* ---- totais ---------------------------------------------------------- */
+  function totalsHtml() {
+    var rows = "";
+    if (fee()) {
+      rows =
+        '<span class="totals__row"><span>Itens</span><span>' + brl(subtotal()) + "</span></span>" +
+        '<span class="totals__row"><span>Entrega</span><span>' + brl(fee()) + "</span></span>";
+    }
+    return rows + '<span class="totals__row totals__row--grand"><b>Total</b><span>' + brl(total()) + "</span></span>";
+  }
+
+  function canAdvance() {
+    var key = state.step;
+    if (key === "items") return state.lines.length > 0;
+    if (key === "type") {
+      if (state.type === "pickup") return state.name.trim().length > 0;
+      if (state.type === "local") return state.name.trim().length > 0 || state.table.trim().length > 0;
+      if (state.type === "delivery") {
+        // o CEP é atalho, não exigência: endereço conhecido se digita direto
+        return !!(
+          state.name.trim() && state.phone.trim() &&
+          state.street.trim() && state.number.trim() && zone()
+        );
+      }
+      return false;
+    }
+    if (key === "pay") return state.pay === "cash" ? state.received !== null : state.pay !== null;
+    return true;
+  }
+
+  /* ---- pintura --------------------------------------------------------- */
+  function render() {
+    if (flow().indexOf(state.step) === -1) state.step = flow()[0];
+
+    renderGrid();
+    renderTrigger();
+
+    var meta = STEP[state.step];
+    var ctaLabel = isLastStep() ? "Fechar venda" : "Continuar";
+    var ctaClass = isLastStep() ? "cta cta--done" : "cta";
+    var blocked = !canAdvance();
+
+    if (isDesktop()) {
+      $("dSub").textContent = countLabel();
+      $("dTotals").innerHTML = totalsHtml();
+      $("dRail").innerHTML = railHtml();
+      $("dBack").disabled = stepIndex() === 0;
+      $("dStepTitle").textContent = meta.name;
+      $("dStepHint").textContent = meta.hint;
+      $("dBody").innerHTML = panelFor(state.step);
+      $("dCta").textContent = ctaLabel;
+      $("dCta").className = ctaClass;
+      $("dCta").disabled = blocked;
+    } else {
+      $("sheetSub").textContent = countLabel();
+      $("rail").innerHTML = railHtml();
+      $("stepTitle").textContent = meta.name;
+      $("stepHint").textContent = meta.hint;
+      $("body").innerHTML = panelFor(state.step);
+      $("totals").innerHTML = totalsHtml();
+      $("back").disabled = stepIndex() === 0;
+      $("cta").textContent = ctaLabel;
+      $("cta").className = ctaClass;
+      $("cta").disabled = blocked;
+    }
+  }
+
+  /* Espelha o AddressFields: só busca com 8 dígitos, mostra o estado da
+     busca, preenche o que veio e joga o foco no número — que é o único
+     campo que o atendente ainda precisa digitar. */
+  var zipTimer = null;
+
+  function lookupZip() {
+    clearTimeout(zipTimer);
+    var digits = onlyDigits(state.zip);
+
+    if (digits.length !== 8) {
+      if (state.lookup !== "idle" || state.km != null) {
+        state.lookup = "idle";
+        state.km = null;
+        repaintPanel("f-zip");
+      }
+      return;
+    }
+
+    state.lookup = "loading";
+    repaintPanel("f-zip");
+
+    zipTimer = setTimeout(function () {
+      var found = ZIPS[digits];
+      if (!found) {
+        state.lookup = "notFound";
+        state.km = null;
+        repaintPanel("f-zip");
+        return;
+      }
+      state.lookup = "done";
+      state.street = found.street;
+      state.district = found.district;
+      state.km = found.km;
+      render();
+      var el = $("f-number");
+      if (el) el.focus();
+    }, 450);
+  }
+
+  /* Repinta o passo mantendo o cursor onde estava: repintar é o que faz o
+     estado da busca e o chip da zona aparecerem. */
+  function repaintPanel(focusId) {
+    var active = document.activeElement;
+    var pos = active && active.selectionStart;
+    var id = focusId || (active && active.id);
+    (isDesktop() ? $("dBody") : $("body")).innerHTML = panelFor(state.step);
+    var el = id && $(id);
+    if (!el) return;
+    el.focus();
+    if (pos != null && el.setSelectionRange) {
+      try { el.setSelectionRange(pos, pos); } catch (err) { /* input sem seleção */ }
+    }
+  }
+
+  function advance() {
+    if (!canAdvance()) return;
+    if (!isLastStep()) {
+      state.step = flow()[stepIndex() + 1];
+      render();
+      return;
+    }
+    screenEl.dataset.done = "true";
+    $("doneMsg").textContent = state.type === "delivery"
+      ? "Pedido #184 saiu para a cozinha e entra na fila de entrega."
+      : "Pedido #184 saiu para a cozinha.";
+  }
+
+  function goBack() {
+    if (stepIndex() > 0) { state.step = flow()[stepIndex() - 1]; render(); }
+  }
+
+  /* ---- eventos --------------------------------------------------------- */
+  document.addEventListener("click", function (e) {
+    var t = e.target.closest(
+      "[data-add],[data-open-sheet],[data-close-sheet],[data-step],[data-goto],[data-type],[data-pay],[data-cash],[data-vp]"
+    );
+    if (!t) return;
+
+    if (t.dataset.vp) {
+      deviceEl.dataset.viewport = t.dataset.vp;
+      document.querySelectorAll("[data-vp]").forEach(function (b) {
+        b.setAttribute("aria-pressed", String(b === t));
+      });
+      render();
+      return;
+    }
+    if (t.dataset.add) { addItem(t.dataset.add); return; }
+    if (t.hasAttribute("data-open-sheet")) { screenEl.dataset.open = "true"; return; }
+    if (t.hasAttribute("data-close-sheet")) { screenEl.dataset.open = "false"; return; }
+    if (t.dataset.step) { stepLine(t.dataset.step, Number(t.dataset.by)); return; }
+    if (t.dataset.goto) { state.step = t.dataset.goto; render(); return; }
+
+    if (t.dataset.type) {
+      state.type = t.dataset.type;
+      if (state.pay === "card" && state.type !== "delivery") state.pay = null;
+      render();
+      return;
+    }
+    if (t.dataset.pay) { state.pay = t.dataset.pay; state.received = null; render(); return; }
+    if (t.dataset.cash) {
+      state.received = t.dataset.cash === "exact" ? total() : Number(t.dataset.cash);
+      render();
+    }
+  });
+
+  document.addEventListener("input", function (e) {
+    var bind = e.target.dataset && e.target.dataset.bind;
+    if (!bind) return;
+    state[bind] = e.target.value;
+
+    // repintar o painel inteiro roubaria o foco do campo: só o que depende do
+    // texto é atualizado à mão
+    var cta = isDesktop() ? $("dCta") : $("cta");
+    cta.disabled = !canAdvance();
+    (isDesktop() ? $("dTotals") : $("totals")).innerHTML = totalsHtml();
+    renderTrigger();
+
+    if (bind === "zip") {
+      e.target.value = state.zip = formatZip(e.target.value);
+      lookupZip();
+      return;
+    }
+
+  });
+
+  document.addEventListener("keydown", function (e) {
+    if (screenEl.dataset.done === "true") return;
+    if (e.key === "Escape" && screenEl.dataset.open === "true") { screenEl.dataset.open = "false"; return; }
+    if (e.key !== "Enter") return;
+    if (screenEl.dataset.open !== "true") {
+      if (state.lines.length) { screenEl.dataset.open = "true"; e.preventDefault(); }
+      return;
+    }
+    e.preventDefault();
+    advance();
+  });
+
+  $("cta").addEventListener("click", advance);
+  $("dCta").addEventListener("click", advance);
+  $("back").addEventListener("click", goBack);
+  $("dBack").addEventListener("click", goBack);
+  $("scrim").addEventListener("click", function () { screenEl.dataset.open = "false"; });
+
+  $("newSale").addEventListener("click", function () {
+    state = {
+      step: flow()[0], lines: [], type: null, name: "", table: "", phone: "",
+      zip: "", street: "", number: "", complement: "", district: "",
+      km: null, lookup: "idle", pay: null, received: null
+    };
+    screenEl.dataset.done = "false";
+    screenEl.dataset.open = "false";
+    render();
+  });
+
+  document.querySelectorAll(".cat").forEach(function (b) {
+    b.addEventListener("click", function () {
+      document.querySelectorAll(".cat").forEach(function (o) { o.setAttribute("aria-pressed", String(o === b)); });
+    });
+  });
+
+  // começa com o pedido do print real: quatro lanches, R$ 115,20
+  ["salada", "bacon", "tudo", "egg"].forEach(addItem);
+  render();
+})();
+</script>
+</body>
+</html>

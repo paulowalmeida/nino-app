@@ -4,19 +4,48 @@
   @apply flex-1;
 }
 .linesScroll {
-  @apply min-h-0 flex-[1_1_auto];
+  @apply min-h-0 flex-[1_1_auto] px-6;
 }
 .linesScrollBare {
-  @apply shrink-0;
+  @apply min-h-0 flex-1 px-6;
 }
+
+.addMore {
+  @apply mt-3.5 h-auto self-start rounded-full border border-dashed;
+  @apply border-brand-bold bg-brand-ghost px-4 font-bold text-brand-strong;
+  @apply hover:bg-brand-soft;
+  padding-block: 9px;
+  font-size: 13px;
+}
+
+/*
+ * WHY: o carimbo do QuantityStepper chega em 40px porque o `size="icon"` do
+ * Button vence o `h-8 w-8` do próprio stepper. A linha do pedido é ritmo de
+ * cupom, não de formulário: em 40px ela cresce 6px e desalinha do papel.
+ */
+.stepper button {
+  @apply size-8;
+}
+
+/*
+ * WHY: o QuantityStepper pinta a contagem com `text-muted`, que não existe
+ * na escala do DS (o token é `fg-muted`) — sem isso o número herda preto e
+ * briga com o nome do item.
+ */
+.stepper > :not(button) {
+  @apply text-fg-muted;
+}
+
+/* WHY: a folga da direita é a calha da barra de rolagem — sem ela o valor da
+   linha encosta no fio quando a lista passa da altura do papel. */
 .lines {
   @apply pb-4 pr-3;
 }
 .line {
-  @apply shrink-0 first:border-t-0 first:pt-0 sm:gap-3;
+  @apply shrink-0 first:border-t-0 first:pt-0;
 }
 .photo {
-  @apply h-12 w-12 shrink-0 rounded-3 text-xl sm:h-14 sm:w-14 sm:text-2xl;
+  @apply h-12 w-12 shrink-0 rounded-3 text-xl;
 }
 .lineText {
   @apply min-w-0 flex-1;
@@ -29,12 +58,5 @@
   font-variant-numeric: tabular-nums;
 }
 .lineTotal {
-  font-variant-numeric: tabular-nums;
-}
-.stepper {
-  @apply sm:gap-1.5;
-}
-.stepperCount {
-  @apply w-4 text-center;
   font-variant-numeric: tabular-nums;
 }

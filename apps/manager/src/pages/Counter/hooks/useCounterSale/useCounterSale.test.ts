@@ -46,6 +46,38 @@ describe(useCounterSale.name, () => {
     expect(orderNumber).toBe(7)
   })
 
+  it('accepts delivery sales identified by the recipient name', async () => {
+    const mutateAsync = vi.fn().mockResolvedValue({ orderNumber: 8 })
+    vi.mocked(useCreateOrder).mockReturnValue({
+      mutateAsync,
+      isPending: false,
+    } as never)
+    const { result } = renderHook(() => useCounterSale('tenant-1'))
+
+    await act(() =>
+      result.current.sell({
+        lines: [],
+        channel: 'DELIVERY',
+        paymentMethod: 'PIX',
+        customerName: '',
+        tableNumber: '',
+        recipient: {
+          name: 'Ana',
+          phone: '91999999999',
+          street: 'Rua A',
+          number: '10',
+          complement: '',
+          neighborhood: 'Centro',
+          zoneId: 'zone-1',
+        },
+      })
+    )
+
+    expect(mutateAsync).toHaveBeenCalledWith(
+      expect.objectContaining({ channel: 'DELIVERY', guestName: 'Ana' })
+    )
+  })
+
   it('translates API errors and resets them', async () => {
     const mutateAsync = vi.fn().mockRejectedValue(new Error('failed'))
     vi.mocked(useCreateOrder).mockReturnValue({

@@ -5,3 +5,7 @@ export type AddressLookup = {
   city: string
   state: string
 }
+
+export type AddressSearchResult = AddressLookup & {
+  zipCode: string
+}

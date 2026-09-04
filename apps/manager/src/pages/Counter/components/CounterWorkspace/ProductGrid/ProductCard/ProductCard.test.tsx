@@ -1,4 +1,4 @@
-import { fireEvent, render, screen } from '@testing-library/react'
+import { act, fireEvent, render, screen } from '@testing-library/react'
 import { describe, expect, it, vi } from 'vitest'
 
 import { ProductCard } from './ProductCard'
@@ -6,19 +6,6 @@ import { ProductCard } from './ProductCard'
 vi.mock('@shared/components/ItemThumb/ItemThumb', () => ({
   ItemThumb: () => <span>thumb</span>,
 }))
-vi.mock('@pages/Counter/hooks/useLongPress/useLongPress', () => ({
-  useLongPress: ({
-    onLongPress,
-    onRelease,
-  }: {
-    onLongPress: () => void
-    onRelease: () => void
-  }) => ({
-    isPressing: true,
-    handlers: { onPointerDown: onLongPress, onPointerUp: onRelease },
-  }),
-}))
-
 const item = {
   id: 'item-1',
   name: 'Café',
@@ -32,6 +19,7 @@ const item = {
 
 describe(ProductCard.name, () => {
   it('renders and selects a product', () => {
+    vi.useFakeTimers()
     const onPick = vi.fn()
     const onPreviewStart = vi.fn()
     const onPreviewEnd = vi.fn()
@@ -48,8 +36,10 @@ describe(ProductCard.name, () => {
     fireEvent.click(screen.getByText('Café'))
     expect(onPick).toHaveBeenCalledWith(item)
     fireEvent.pointerDown(screen.getByText('Café').closest('div') as Element)
+    act(() => vi.advanceTimersByTime(450))
     fireEvent.pointerUp(screen.getByText('Café').closest('div') as Element)
     expect(onPreviewStart).toHaveBeenCalledWith(item)
     expect(onPreviewEnd).toHaveBeenCalledOnce()
+    vi.useRealTimers()
   })
 })

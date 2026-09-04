@@ -14,4 +14,6 @@ export type UpdateTenantRequest = {
   neighborhood: string
   city: string
   state: string
+  deliveryCities: DeliveryCity[]
 }
+import type { DeliveryCity } from './delivery-city'

@@ -1,0 +1,9 @@
+@reference "@nino/ds/globals.css";
+
+.section {
+  @apply flex min-w-0 flex-col;
+}
+
+.body {
+  @apply flex min-w-0 flex-col gap-4 pt-2;
+}

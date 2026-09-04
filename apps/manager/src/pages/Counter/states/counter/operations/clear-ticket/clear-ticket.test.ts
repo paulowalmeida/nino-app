@@ -9,9 +9,20 @@ describe(clearTicket.name, () => {
     expect(set).toHaveBeenCalledWith({
       lines: [],
       sheet: false,
+      step: 'items',
+      channel: null,
       chosenPaymentMethod: null,
       customerName: '',
       tableNumber: '',
+      recipient: {
+        name: '',
+        phone: '',
+        street: '',
+        number: '',
+        complement: '',
+        neighborhood: '',
+        zoneId: '',
+      },
       changeFor: '',
     })
   })

@@ -1,16 +1,24 @@
 @reference "@nino/ds/globals.css";
 
+/*
+ * WHY: cartão sem sombra de propósito. A grade é uma folha de cardápio, não
+ * uma pilha de cartões flutuando: o que separa um item do outro é o fio da
+ * borda, e a única elevação da tela é o cupom do pedido.
+ */
 .card {
-  @apply flex cursor-pointer flex-col overflow-hidden rounded-5;
-  @apply border border-border bg-surface-page text-left shadow-md;
-  @apply transition-all duration-150;
+  @apply flex cursor-pointer flex-col overflow-hidden rounded-3;
+  @apply border border-border bg-surface-page text-left;
+  @apply transition-colors duration-150;
   @apply select-none;
   -webkit-touch-callout: none;
-  @apply hover:-translate-y-0.5 hover:border-brand-vivid;
-  @apply hover:bg-surface-page;
-  @apply hover:shadow-md;
-  @apply focus-visible:outline-none focus-visible:ring-2;
-  @apply focus-visible:ring-brand focus-visible:ring-offset-2;
+  @apply hover:border-brand-bold hover:bg-surface-page;
+  @apply focus-ring;
+}
+
+/* Já está no pedido: o atendente enxerga o que somou sem abrir o cupom. */
+.picked {
+  @apply border-brand;
+  box-shadow: 0 0 0 1px var(--color-brand);
 }
 
 .photoWrap {
@@ -18,16 +26,15 @@
 }
 
 .photo {
-  @apply aspect-[3/2] h-auto w-full rounded-none text-4xl lg:text-5xl;
+  @apply h-[84px] w-full rounded-none text-3xl lg:h-[104px] lg:text-4xl;
 }
 
 .footer {
-  @apply flex flex-col gap-1 p-3.5 lg:p-4;
+  @apply flex flex-col gap-0.5 px-2.5 pb-2.5 pt-2;
 }
 
 .name {
   @apply line-clamp-2 leading-tight;
-  @apply lg:text-base;
 }
 
 .price {
@@ -35,5 +42,5 @@
 }
 
 .pressing {
-  @apply scale-[0.97] transition-transform duration-150;
+  @apply scale-[0.98] transition-transform duration-150;
 }

@@ -9,7 +9,46 @@ describe(toCounterSaleRequest.name, () => {
       channel: 'COUNTER',
       paymentMethod: 'CASH',
       guestName: 'Ana',
+      tableNumber: '4',
+      changeFor: undefined,
       items: [{ productId: 'item-1', quantity: 2, unitPrice: 10 }],
+    })
+  })
+
+  it('sends the chosen channel', () => {
+    expect(
+      toCounterSaleRequest({ ...counterSaleInputMock, channel: 'PICKUP' })
+    ).toMatchObject({ channel: 'PICKUP' })
+  })
+
+  it('keeps the table number out of a channel that has no tables', () => {
+    expect(
+      toCounterSaleRequest({ ...counterSaleInputMock, channel: 'DELIVERY' })
+    ).toMatchObject({ tableNumber: undefined })
+  })
+
+  it('translates delivery recipient data and zone', () => {
+    expect(
+      toCounterSaleRequest({
+        ...counterSaleInputMock,
+        channel: 'DELIVERY',
+        recipient: {
+          name: 'Bia',
+          phone: '91999990000',
+          street: 'Rua A',
+          number: '12',
+          complement: 'Apto 2',
+          neighborhood: 'Centro',
+          zoneId: 'zone-1',
+        },
+      })
+    ).toMatchObject({
+      guestName: 'Bia',
+      guestPhone: '91999990000',
+      guestStreet: 'Rua A',
+      guestNumber: '12',
+      guestComplement: 'Apto 2',
+      guestNeighborhood: 'Centro',
     })
   })
 
@@ -22,6 +61,7 @@ describe(toCounterSaleRequest.name, () => {
       })
     ).toMatchObject({
       guestName: undefined,
+      tableNumber: undefined,
     })
   })
 

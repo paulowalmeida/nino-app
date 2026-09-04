@@ -18,6 +18,11 @@ import type { UpdateOrderStatusRequest } from '@shared/types/order/update-order-
 
 export const ORDER_PAGE_SIZE = 40
 
+type DeliveryQuote = { id: string; name: string; fee: number }
+type DeliveryQuoteResponse = Omit<DeliveryQuote, 'fee'> & {
+  fee: number | string
+}
+
 const isCustomRange = (
   params: ReportRangeParams
 ): params is Extract<ReportRangeParams, { from: string }> =>
@@ -36,6 +41,20 @@ const rangeQuery = (
 export const OrderService = {
   getAvailability: (tenantId: string): Promise<OrderAvailability> =>
     api.get<OrderAvailability>(`tenants/${tenantId}/orders/availability`),
+
+  getDeliveryQuote: (
+    tenantId: string,
+    zipCode: string
+  ): Promise<DeliveryQuote | null> =>
+    api
+      .get<DeliveryQuote | null>(
+        `orders/guest/quote?tenantId=${encodeURIComponent(tenantId)}&zipCode=${encodeURIComponent(zipCode)}`
+      )
+      .then((quote) =>
+        quote
+          ? { ...quote, fee: Number((quote as DeliveryQuoteResponse).fee) }
+          : null
+      ),
 
   getQueueSummary: (tenantId: string): Promise<OrderQueueSummary> =>
     api.get<OrderQueueSummary>(`tenants/${tenantId}/orders/summary`),

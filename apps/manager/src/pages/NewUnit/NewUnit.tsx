@@ -14,16 +14,26 @@ export const NewUnit = () => {
     <Box className={styles.page}>
       <Breadcrumb
         trail={[
-          { label: 'Configurações', to: '../../configuracoes/empresa' },
-          { label: 'Unidades', to: '../../configuracoes/unidade' },
+          { label: 'Empresa', to: '../../empresa' },
+          { label: 'Unidades', to: '../../unidades' },
           { label: 'Nova unidade' },
         ]}
       />
 
-      <Text as="p" size="xs" weight="bold" color="faint" className={styles.eyebrow}>Unidades</Text>
+      <Text
+        as="p"
+        size="xs"
+        weight="bold"
+        color="faint"
+        className={styles.eyebrow}
+      >
+        Unidades
+      </Text>
 
       <Box as="header" className={`${motion.deal} ${styles.head}`}>
-        <Heading level={1} size="2xl" className={styles.title}>Abrir nova unidade</Heading>
+        <Heading level={1} size="2xl" className={styles.title}>
+          Abrir nova unidade
+        </Heading>
         <Text size="sm" color="muted" className={styles.subtitle}>
           Uma unidade é uma loja com endereço próprio. Preencha o que os
           clientes vão ver e onde ela fica — o resto se ajusta depois, no painel

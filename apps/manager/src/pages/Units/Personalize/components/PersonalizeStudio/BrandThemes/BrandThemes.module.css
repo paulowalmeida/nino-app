@@ -1,0 +1,19 @@
+@reference "@nino/ds/globals.css";
+
+.row {
+  @apply -mx-1 min-w-0 flex-nowrap overflow-x-auto px-1 pb-1;
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-border) transparent;
+}
+
+.theme {
+  @apply shrink-0 gap-2 py-1.5 pl-1.5 pr-3;
+}
+
+.swatches {
+  @apply overflow-hidden rounded-full border border-border;
+}
+
+.swatch {
+  @apply h-5 w-3 first:w-4 last:w-4;
+}

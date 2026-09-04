@@ -268,6 +268,40 @@ export const router = createBrowserRouter([
           })),
       },
       {
+        path: 'unidades',
+        loader: roleGuard(['TENANT_OWNER']),
+        lazy: () =>
+          import('@pages/Units/SettingsUnitSection/SettingsUnitSection').then(
+            ({ SettingsUnitSection }) => ({ Component: SettingsUnitSection })
+          ),
+      },
+      {
+        path: 'unidades/detalhe',
+        loader: roleGuard(['TENANT_OWNER']),
+        lazy: () =>
+          import('@pages/Units/SettingsUnitDetailSection/SettingsUnitDetailSection').then(
+            ({ SettingsUnitDetailSection }) => ({
+              Component: SettingsUnitDetailSection,
+            })
+          ),
+      },
+      {
+        path: 'personalizar',
+        loader: roleGuard(['TENANT_OWNER']),
+        lazy: () =>
+          import('@pages/Units/Personalize/Personalize').then(
+            ({ Personalize }) => ({ Component: Personalize })
+          ),
+      },
+      {
+        path: 'unidades/nova',
+        loader: roleGuard(['TENANT_OWNER']),
+        lazy: () =>
+          import('@pages/NewUnit/NewUnit').then(({ NewUnit }) => ({
+            Component: NewUnit,
+          })),
+      },
+      {
         path: 'configuracoes',
         loader: roleGuard(MANAGERS),
         lazy: () =>
@@ -278,21 +312,13 @@ export const router = createBrowserRouter([
           { index: true, element: <Navigate to="unidade" replace /> },
           {
             path: 'unidade',
-            lazy: () =>
-              import('@pages/Settings/components/SettingsUnitSection/SettingsUnitSection').then(
-                ({ SettingsUnitSection }) => ({
-                  Component: SettingsUnitSection,
-                })
-              ),
+            loader: roleGuard(['TENANT_OWNER']),
+            element: <Navigate to="../../unidades" replace />,
           },
           {
             path: 'unidade/detalhe',
-            lazy: () =>
-              import('@pages/Settings/components/SettingsUnitDetailSection/SettingsUnitDetailSection').then(
-                ({ SettingsUnitDetailSection }) => ({
-                  Component: SettingsUnitDetailSection,
-                })
-              ),
+            loader: roleGuard(['TENANT_OWNER']),
+            element: <Navigate to="../../unidades/detalhe" replace />,
           },
           {
             path: 'atendimento',

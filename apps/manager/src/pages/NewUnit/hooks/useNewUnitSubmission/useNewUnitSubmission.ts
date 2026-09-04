@@ -8,7 +8,7 @@ import type { StoreSubmitResult } from 'src/shared/types/store/store-submit-resu
 
 export const useNewUnitSubmission = () => {
   const { mutateAsync: createStore } = useCreateStore(
-    ({ id }) => `/${id}/configuracoes/unidade`
+    ({ id }) => `/${id}/unidades`
   )
 
   const submitStore = useCallback(

@@ -46,12 +46,6 @@ export const SIDEMENU_GROUPS: SidemenuItem[] = [
     title: 'Configurações',
     items: [
       {
-        section: 'configuracoes/unidade',
-        label: 'Unidades',
-        icon: 'store',
-        roles: MANAGERS,
-      },
-      {
         section: 'configuracoes/atendimento',
         label: 'Atendimento',
         icon: 'credit-card',

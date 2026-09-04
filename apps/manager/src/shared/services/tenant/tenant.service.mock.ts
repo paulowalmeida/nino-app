@@ -9,6 +9,7 @@ export const createStoreRequestMock = {
   neighborhood: 'Centro',
   city: 'São Paulo',
   state: 'SP',
+  deliveryCities: [{ city: 'São Paulo', state: 'SP' }],
 }
 
 export const createdStoreMock = { id: tenantIdMock, name: 'Padoca do Bairro' }
@@ -28,6 +29,7 @@ export const updateTenantRequestMock = {
   neighborhood: 'Centro',
   city: 'São Paulo',
   state: 'SP',
+  deliveryCities: [{ city: 'São Paulo', state: 'SP' }],
 }
 
 export const tenantPauseMock = { isPaused: false }

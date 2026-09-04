@@ -1,0 +1,80 @@
+@reference "@nino/ds/globals.css";
+
+.editor {
+  @apply flex min-w-0 flex-col gap-3;
+}
+
+.framed {
+  @apply rounded-5 border border-brand-soft bg-brand-ghost p-4;
+}
+
+.stage {
+  @apply relative mx-auto flex w-full items-center justify-center;
+  @apply overflow-hidden rounded-4 bg-fg-strong;
+}
+
+.image {
+  @apply block max-h-[52vh] w-auto max-w-full select-none;
+}
+
+.selection {
+  @apply absolute cursor-move touch-none outline-none;
+  box-shadow: 0 0 0 9999px
+    color-mix(in srgb, var(--color-warm-950) 62%, transparent);
+}
+
+.selection:focus-visible {
+  @apply ring-2 ring-brand ring-offset-0;
+}
+
+.guide {
+  @apply pointer-events-none absolute inset-0 border-2 border-white/90;
+  background-image:
+    linear-gradient(
+      to right,
+      transparent calc(33.33% - 1px),
+      color-mix(in srgb, var(--color-white) 40%, transparent) 33.33%,
+      transparent calc(33.33% + 1px),
+      transparent calc(66.66% - 1px),
+      color-mix(in srgb, var(--color-white) 40%, transparent) 66.66%,
+      transparent calc(66.66% + 1px)
+    ),
+    linear-gradient(
+      to bottom,
+      transparent calc(33.33% - 1px),
+      color-mix(in srgb, var(--color-white) 40%, transparent) 33.33%,
+      transparent calc(33.33% + 1px),
+      transparent calc(66.66% - 1px),
+      color-mix(in srgb, var(--color-white) 40%, transparent) 66.66%,
+      transparent calc(66.66% + 1px)
+    );
+}
+
+.handle {
+  @apply absolute h-5 w-5 touch-none rounded-full border-2 border-white;
+  @apply bg-brand shadow-md;
+}
+
+.nw {
+  @apply -left-2.5 -top-2.5 cursor-nwse-resize;
+}
+
+.ne {
+  @apply -right-2.5 -top-2.5 cursor-nesw-resize;
+}
+
+.sw {
+  @apply -bottom-2.5 -left-2.5 cursor-nesw-resize;
+}
+
+.se {
+  @apply -bottom-2.5 -right-2.5 cursor-nwse-resize;
+}
+
+.hint {
+  @apply text-xs leading-relaxed text-fg-faint;
+}
+
+.confirm {
+  @apply w-full;
+}

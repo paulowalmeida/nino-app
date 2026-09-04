@@ -1,0 +1,9 @@
+@reference "@nino/ds/globals.css";
+
+.header {
+  @apply flex min-w-0 flex-col;
+}
+
+.subtitle {
+  @apply mt-1 max-w-prose text-pretty;
+}

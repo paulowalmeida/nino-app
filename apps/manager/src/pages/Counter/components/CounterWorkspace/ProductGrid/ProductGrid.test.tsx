@@ -1,9 +1,11 @@
 import { fireEvent, render, screen } from '@testing-library/react'
 import { describe, expect, it, vi } from 'vitest'
 
+import type { CartLine } from '@shared/types/counter/cart-line'
 import type { MenuSection } from '@shared/types/product/menu-section'
 
 import { ProductGrid } from './ProductGrid'
+import { productGridPickedLines } from './ProductGrid.mock'
 
 vi.mock('@shared/components/CategoryChips/CategoryChips', () => ({
   CategoryChips: ({ onChange }: { onChange: (id: string) => void }) => (
@@ -13,16 +15,19 @@ vi.mock('@shared/components/CategoryChips/CategoryChips', () => ({
 vi.mock('./ProductCard/ProductCard', () => ({
   ProductCard: ({
     item,
+    isPicked,
     onPick,
     onPreviewStart,
     onPreviewEnd,
   }: {
     item: { name: string }
+    isPicked: boolean
     onPick: (item: unknown) => void
     onPreviewStart: (item: unknown) => void
     onPreviewEnd: () => void
   }) => (
     <button
+      aria-pressed={isPicked}
       onClick={() => onPick(item)}
       onMouseEnter={() => onPreviewStart(item)}
       onMouseLeave={onPreviewEnd}
@@ -41,6 +46,7 @@ vi.mock('./ProductPreviewModal/ProductPreviewModal', () => ({
 const facadeState = vi.hoisted(() => ({
   sections: [] as MenuSection[],
   isPending: false,
+  lines: [] as CartLine[],
   add: vi.fn(),
 }))
 vi.mock('@pages/Counter/facades/useCounterFacade/useCounterFacade', () => ({
@@ -94,5 +100,20 @@ describe(ProductGrid.name, () => {
     fireEvent.click(screen.getByRole('button', { name: 'preview-close' }))
     facadeState.sections = [{ ...sections[0], id: 'other' }]
     rerender(<ProductGrid />)
+  })
+
+  it('marks a product already on the ticket', () => {
+    // Arrange
+    facadeState.sections = sections
+    facadeState.lines = productGridPickedLines
+
+    // Act
+    render(<ProductGrid />)
+
+    // Assert
+    expect(screen.getByRole('button', { name: 'Café' })).toHaveAttribute(
+      'aria-pressed',
+      'true'
+    )
   })
 })

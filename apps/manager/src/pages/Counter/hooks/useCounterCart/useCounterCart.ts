@@ -7,14 +7,14 @@ type CounterCart = {
   count: number
   total: number
   add: (item: MenuItem) => void
-  step: (productId: string, by: number) => void
+  updateQuantity: (productId: string, by: number) => void
   clear: () => void
 }
 
 export const useCounterCart = (): CounterCart => {
   const lines = useCounterStore((state) => state.lines)
   const add = useCounterStore((state) => state.add)
-  const step = useCounterStore((state) => state.step)
+  const updateQuantity = useCounterStore((state) => state.updateQuantity)
   const clear = useCounterStore((state) => state.clear)
 
   return {
@@ -25,7 +25,7 @@ export const useCounterCart = (): CounterCart => {
       0
     ),
     add,
-    step,
+    updateQuantity,
     clear,
   }
 }

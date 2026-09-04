@@ -32,10 +32,10 @@ describe(useCounterStore.name, () => {
 
   it('steps quantities and removes lines at zero', () => {
     useCounterStore.getState().add(item)
-    useCounterStore.getState().step(item.id, 1)
+    useCounterStore.getState().updateQuantity(item.id, 1)
     expect(useCounterStore.getState().lines[0]?.quantity).toBe(2)
 
-    useCounterStore.getState().step(item.id, -2)
+    useCounterStore.getState().updateQuantity(item.id, -2)
     expect(useCounterStore.getState().lines).toEqual([])
   })
 

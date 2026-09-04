@@ -10,6 +10,7 @@ const FLOW_SCROLL_ROUTES = [
   '/salao-comandas',
   '/entrega',
   '/unidade/detalhe',
+  '/unidades/detalhe',
   '/horarios',
 ]
 

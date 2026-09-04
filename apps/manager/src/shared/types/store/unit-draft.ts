@@ -4,6 +4,11 @@ export type UnitDraft = {
   primaryColor: string
   secondaryColor: string
   tertiaryColor: string
+  backgroundColor: string
+  textColor: string
+  cardColor: string
+  borderColor: string
+  mutedTextColor: string
   logoFile?: File
   bannerFile?: File
   loadingType: 'MASCOT' | 'SPINNER' | 'DOTS'
@@ -14,4 +19,6 @@ export type UnitDraft = {
   neighborhood: string
   city: string
   state: string
+  deliveryCities: DeliveryCity[]
 }
+import type { DeliveryCity } from './delivery-city'

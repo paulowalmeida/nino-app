@@ -22,14 +22,18 @@ export const useCounterSale = (tenantId: string | null): CounterSale => {
 
   const sell = async ({
     lines,
+    channel = 'COUNTER',
     paymentMethod,
     customerName,
     tableNumber,
+    recipient,
     changeFor,
   }: CounterSaleInput) => {
     setError(null)
 
-    if (!customerName.trim()) {
+    const orderCustomerName = channel === 'DELIVERY' ? recipient?.name ?? '' : customerName
+
+    if (!orderCustomerName.trim()) {
       setError(NO_RECIPIENT)
       return null
     }
@@ -38,9 +42,11 @@ export const useCounterSale = (tenantId: string | null): CounterSale => {
       const order = await placeOrder(
         toCounterSaleRequest({
           lines,
+          channel,
           paymentMethod,
           customerName,
           tableNumber,
+          recipient,
           changeFor,
         })
       )

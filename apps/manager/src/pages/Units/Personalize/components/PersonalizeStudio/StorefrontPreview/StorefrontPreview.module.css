@@ -1,0 +1,260 @@
+@reference "@nino/ds/globals.css";
+
+.dock {
+  @apply flex min-w-0 flex-col gap-3;
+}
+
+.dockBar {
+  @apply min-w-0;
+}
+
+.dockTitle {
+  @apply uppercase tracking-[0.14em] text-fg-faint;
+}
+
+.devices {
+  @apply shrink-0;
+}
+
+.device {
+  @apply gap-1.5 px-2.5 py-1 text-xs;
+}
+
+.frame {
+  @apply relative mx-auto flex w-full min-w-0 flex-col overflow-hidden;
+  @apply bg-surface-raised shadow-lg;
+  transition:
+    max-width var(--duration-slow) var(--ease-out-soft),
+    border-width var(--duration-slow) var(--ease-out-soft),
+    border-radius var(--duration-slow) var(--ease-out-soft);
+}
+
+.mobile {
+  @apply max-w-[21rem] rounded-6 border-[6px] border-fg-strong;
+}
+
+.desktop {
+  @apply rounded-4 border border-border;
+}
+
+.chrome {
+  @apply relative flex h-8 shrink-0 items-center gap-1.5 px-3;
+  @apply border-b border-border bg-surface-mute;
+}
+
+.mobile .chrome {
+  @apply h-6 justify-center bg-fg-strong;
+}
+
+.chromeDots {
+  @apply flex items-center gap-1.5;
+}
+
+.mobile .chromeDots,
+.mobile .chromeAddress {
+  @apply hidden;
+}
+
+.chromeDot {
+  @apply h-2 w-2 rounded-full bg-border;
+}
+
+.chromeAddress {
+  @apply mx-auto rounded-full bg-surface-raised px-10 py-0.5;
+  @apply text-[10px] text-fg-faint;
+}
+
+.chromeNotch {
+  @apply hidden h-1.5 w-16 rounded-full bg-surface-mute opacity-40;
+}
+
+.mobile .chromeNotch {
+  @apply block;
+}
+
+.storefront {
+  --color-fg-default: var(--preview-text);
+  --color-fg-strong: var(--preview-text);
+  --color-fg-subtle: var(--preview-muted);
+  --color-border: var(--preview-border);
+  @apply flex min-h-0 w-full flex-1 flex-col overflow-y-auto;
+  transition: max-height var(--duration-slow) var(--ease-out-soft);
+  background-color: var(--preview-background);
+  color: var(--preview-text);
+  scrollbar-width: thin;
+  scrollbar-color: var(--preview-border) transparent;
+  max-height: 48vh;
+}
+
+@media (min-width: 1024px) {
+  .storefront {
+    max-height: min(30rem, calc(100dvh - 17rem));
+  }
+
+  .desktop .storefront {
+    max-height: min(36rem, calc(100dvh - 15rem));
+  }
+}
+
+.desktop .banner {
+  @apply h-28 sm:h-36;
+}
+
+.desktop .identity,
+.desktop .search,
+.desktop .categories,
+.desktop .menu {
+  @apply px-6;
+}
+
+.desktop .products {
+  @apply grid grid-cols-2 gap-3;
+}
+
+.banner {
+  @apply h-20 shrink-0 bg-cover bg-center sm:h-24;
+  background-color: var(--preview-primary);
+  background-image:
+    linear-gradient(
+      118deg,
+      color-mix(in srgb, var(--preview-primary) 22%, transparent),
+      color-mix(in srgb, var(--preview-secondary) 34%, transparent)
+    ),
+    var(--preview-banner);
+}
+
+.identity {
+  @apply flex shrink-0 items-start gap-3 px-4 pb-3;
+  background: var(--preview-tertiary);
+}
+
+.logoTile {
+  @apply -mt-7 flex h-14 w-14 shrink-0 items-center justify-center;
+  @apply overflow-hidden rounded-4 border-4 shadow-md;
+  border-color: var(--preview-background);
+  background: var(--preview-background);
+}
+
+.logo {
+  @apply h-full w-full object-cover;
+}
+
+.logoFallback {
+  @apply flex h-full w-full items-center justify-center;
+  @apply text-base font-extrabold;
+  background: var(--preview-primary);
+  color: var(--preview-tertiary);
+}
+
+.identityText {
+  @apply min-w-0 pt-1.5;
+}
+
+.storeName {
+  @apply truncate text-base font-extrabold;
+  color: var(--preview-secondary);
+}
+
+.status {
+  @apply mt-0.5 flex items-center gap-1.5 text-[11px] font-semibold;
+  color: var(--preview-muted);
+}
+
+.statusDot {
+  @apply h-1.5 w-1.5 shrink-0 rounded-full;
+  background: var(--preview-primary);
+}
+
+.search {
+  @apply mx-4 my-3 shrink-0 truncate rounded-full border px-3 py-1.5;
+  @apply text-[11px];
+  border-color: var(--preview-border);
+  background: var(--preview-card);
+  color: var(--preview-muted);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .frame,
+  .storefront {
+    transition: none;
+  }
+}
+
+.categories {
+  @apply flex shrink-0 gap-2 overflow-hidden border-y px-4 py-2;
+  border-color: var(--preview-border);
+}
+
+.category {
+  @apply shrink-0 rounded-full border px-2.5 py-1 text-[11px] font-bold;
+  border-color: var(--preview-border);
+  background: var(--preview-card);
+}
+
+.current {
+  @apply border-transparent;
+  background: var(--preview-primary);
+  color: var(--preview-tertiary);
+}
+
+.menu {
+  @apply flex flex-col gap-2 p-4;
+}
+
+.menuTitle {
+  @apply text-sm font-extrabold;
+  color: var(--preview-secondary);
+}
+
+.products {
+  @apply flex flex-col gap-2;
+}
+
+.product {
+  @apply flex gap-3 rounded-3 border p-3;
+  border-color: var(--preview-border);
+  background-color: var(--preview-card);
+}
+
+.productCopy {
+  @apply flex min-w-0 flex-1 flex-col;
+}
+
+.productName {
+  @apply text-[13px] font-bold;
+}
+
+.productNote {
+  @apply mt-0.5 text-[11px] leading-snug;
+  color: var(--preview-muted);
+}
+
+.price {
+  @apply mt-2 text-xs font-extrabold;
+  font-variant-numeric: tabular-nums;
+}
+
+.productImage {
+  @apply relative flex h-16 w-16 shrink-0 items-center justify-center;
+  @apply rounded-2;
+  background: color-mix(in srgb, var(--preview-tertiary) 70%, white);
+  color: var(--preview-secondary);
+}
+
+.add {
+  @apply absolute -bottom-1.5 -right-1.5 flex h-6 w-6 items-center;
+  @apply justify-center rounded-full shadow-sm;
+  background: var(--preview-primary);
+  color: var(--preview-tertiary);
+}
+
+.cartBar {
+  @apply sticky bottom-0 mt-auto flex shrink-0 items-center;
+  @apply justify-between gap-3 px-4 py-3 text-xs font-extrabold;
+  background: var(--preview-primary);
+  color: var(--preview-tertiary);
+}
+
+.cartTotal {
+  font-variant-numeric: tabular-nums;
+}

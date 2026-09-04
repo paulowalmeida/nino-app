@@ -76,7 +76,7 @@ export const SaleFinishActions = ({
           className={mergeClasses(motion.press, styles.finish)}
           onClick={onFinish}
         >
-          {isCash ? 'Confirmar recebimento e fechar venda' : 'Fechar venda'}
+          {isCash ? 'Confirmar recebimento e concluir pedido' : 'Concluir pedido'}
         </Button>
         {hasLines && (
           <Button
@@ -86,14 +86,14 @@ export const SaleFinishActions = ({
             className={styles.clear}
             onClick={() => setConfirmingClear(true)}
           >
-            Limpar comanda
+            Limpar Pedido
           </Button>
         )}
       </Box>
       <Dialog
         open={confirmingClear}
         onOpenChange={(open) => !open && setConfirmingClear(false)}
-        title="Limpar a comanda?"
+        title="Limpar o pedido?"
         description="Os itens da venda serão removidos. Não dá para desfazer."
         confirmLabel="Limpar"
         cancelLabel="Cancelar"

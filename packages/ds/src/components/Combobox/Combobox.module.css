@@ -10,6 +10,18 @@
   @apply focus:ring-brand;
 }
 
+.control {
+  @apply relative;
+}
+
+.loadingInput {
+  @apply pr-10;
+}
+
+.loadingIndicator {
+  @apply pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-fg-muted;
+}
+
 .invalidState {
   @apply data-[invalid]:border-danger;
   @apply data-[invalid]:focus:ring-danger;

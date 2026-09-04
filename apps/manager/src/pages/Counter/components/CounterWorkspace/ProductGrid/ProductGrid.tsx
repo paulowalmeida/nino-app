@@ -18,7 +18,7 @@ import { ProductPreviewModal } from './ProductPreviewModal/ProductPreviewModal'
 import styles from './ProductGrid.module.css'
 
 export const ProductGrid = () => {
-  const { sections, isPending, add: onPick } = useCounterFacade()
+  const { sections, isPending, lines, add: onPick } = useCounterFacade()
   const [current, setCurrent] = useState<string | null>(null)
   const [previewedItem, setPreviewedItem] = useState<MenuItem | null>(null)
   const [term, setTerm] = useState('')
@@ -32,6 +32,8 @@ export const ProductGrid = () => {
     .filter(({ name }) => name.toLowerCase().includes(query))
     .filter(({ isActive }) => isActive)
 
+  const pickedIds = new Set(lines.map(({ productId }) => productId))
+
   const renderGrid = (items: MenuItem[]) => (
     <Box className={`${styles.grid} ${styles.resultsTop}`}>
       {items.map((item, index) => (
@@ -39,6 +41,7 @@ export const ProductGrid = () => {
           key={item.id}
           item={item}
           index={index}
+          isPicked={pickedIds.has(item.id)}
           onPick={onPick}
           onPreviewStart={setPreviewedItem}
           onPreviewEnd={() => setPreviewedItem(null)}

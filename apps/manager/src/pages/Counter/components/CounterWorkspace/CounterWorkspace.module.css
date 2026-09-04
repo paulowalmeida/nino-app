@@ -2,15 +2,33 @@
 
 .floor {
   @apply flex-1 gap-4 pb-24;
-  @apply lg:min-h-0 lg:grid lg:grid-cols-[1fr_23rem] lg:gap-8 lg:pb-0;
+  @apply lg:min-h-0 lg:pb-0;
 }
 
+/*
+ * WHY: o positioner do Modal centraliza o painel dentro de um p-4; `fixed
+ * inset-0` tira o painel desse fluxo para ele encostar nas quatro bordas da
+ * tela, que é o que a venda no celular pede.
+ */
 .sheet {
-  @apply max-h-[92dvh] overflow-hidden lg:max-h-none;
+  @apply fixed inset-0 h-[100dvh] w-full max-w-none;
+  @apply overflow-hidden rounded-none p-0;
 }
 
-.sheet .sheetBody {
-  @apply flex min-h-0 flex-col overflow-y-auto;
+.sheet > div:last-child {
+  @apply h-full min-h-0 p-0;
+}
+
+.sheetBody {
+  @apply flex h-full min-h-0 flex-col;
+}
+
+.sheetTitle {
+  @apply shrink-0 px-4 pb-2 pt-5;
+}
+
+.sheetBack {
+  @apply size-9 shrink-0 rounded-full p-0 text-fg-faint;
 }
 
 .menu {
@@ -23,6 +41,22 @@
   @apply lg:h-full lg:min-h-0;
 }
 
-.saleBare {
-  @apply flex min-h-0 w-full flex-1 flex-col;
+.modal {
+  @apply fixed inset-0 h-[100dvh] w-screen max-w-none rounded-none p-0;
+}
+
+.modal > div:last-child {
+  @apply h-full p-0;
+}
+
+.modalBody {
+  @apply flex h-full min-h-0 flex-col;
+}
+
+.modalTitle {
+  @apply shrink-0 px-6 pb-2 pt-5;
+}
+
+.modalBack {
+  @apply size-9 shrink-0 rounded-full p-0 text-fg-faint;
 }

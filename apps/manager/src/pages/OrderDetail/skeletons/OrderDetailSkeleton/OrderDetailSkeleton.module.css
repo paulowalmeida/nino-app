@@ -1,0 +1,62 @@
+@reference "@nino/ds/globals.css";
+
+.page {
+  @apply mx-auto flex max-w-page flex-col p-4 lg:p-10;
+}
+.backBar {
+  @apply shrink-0 pb-1;
+}
+.hero {
+  @apply mt-2 flex items-start gap-4 border-b border-border/60 pb-5;
+}
+.heroText {
+  @apply min-w-0 flex-1;
+}
+.columns {
+  @apply mt-6 grid items-start gap-5 lg:grid-cols-[1.1fr_1fr] lg:gap-12;
+}
+.receipt {
+  @apply min-w-0;
+}
+.items {
+  @apply flex flex-col divide-y divide-border/50;
+}
+.item {
+  @apply flex items-baseline gap-3 py-2.5 first:pt-0;
+}
+.totals {
+  @apply mt-4 flex flex-col gap-1.5 rounded-4 bg-surface-2 p-4;
+}
+.aside {
+  @apply flex min-w-0 flex-col;
+}
+.block {
+  @apply border-b border-border/60 py-4 first:pt-0 last:border-b-0;
+}
+.ghostEyebrow {
+  @apply mb-2 h-2.5 w-24;
+}
+.ghostNumber {
+  @apply h-7 w-32 lg:h-8;
+}
+.ghostLine {
+  @apply mt-2 h-3.5 w-40;
+}
+.ghostLineShort {
+  @apply mt-2 h-3.5 w-24;
+}
+.ghostBadge {
+  @apply h-5 w-24 shrink-0 rounded-1;
+}
+.ghostQuantity {
+  @apply h-3.5 w-7 shrink-0;
+}
+.ghostItemName {
+  @apply h-3.5 flex-1;
+}
+.ghostPrice {
+  @apply h-3.5 w-14 shrink-0;
+}
+.ghostTotal {
+  @apply h-5 w-full;
+}

@@ -1,0 +1,5 @@
+@reference "@nino/ds/globals.css";
+
+.stateField {
+  @apply w-16;
+}

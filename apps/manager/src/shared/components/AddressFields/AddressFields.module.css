@@ -60,11 +60,3 @@
 .state {
   grid-area: sa;
 }
-
-.status {
-  @apply mt-1 text-xs text-fg-muted;
-}
-
-.statusError {
-  @apply mt-1 text-xs text-danger;
-}

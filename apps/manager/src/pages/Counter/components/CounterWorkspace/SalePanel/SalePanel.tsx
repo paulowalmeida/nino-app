@@ -1,18 +1,32 @@
 import { Box } from '@nino/ds/components/Box'
 import { Heading } from '@nino/ds/components/Heading'
+import { Text } from '@nino/ds/components/Text'
 import { useCounterFacade } from '@pages/Counter/facades/useCounterFacade/useCounterFacade'
 
+import { CheckoutRail } from './CheckoutRail/CheckoutRail'
+import { DestinationStep } from './DestinationStep/DestinationStep'
+import { ReviewStep } from './ReviewStep/ReviewStep'
 import { SaleCart } from './SaleCart/SaleCart'
 import { SaleFinishActions } from './SaleFinishActions/SaleFinishActions'
 import { SalePaymentDetails } from './SalePaymentDetails/SalePaymentDetails'
 import { SaleReceiptButton } from './SaleReceiptButton/SaleReceiptButton'
+import { StepActions } from './StepActions/StepActions'
 
 import styles from './SalePanel.module.css'
+
+const stepCopy = {
+  items: { title: 'Itens', hint: 'Confira o que o cliente pediu' },
+  destination: { title: 'Destino', hint: 'Como esse pedido sai da loja' },
+  payment: { title: 'Pagamento', hint: 'Como o cliente vai pagar' },
+  review: { title: 'Fechar', hint: 'Confira e feche a venda' },
+} as const
 
 export const SalePanel = ({ bare = false }: { bare?: boolean }) => {
   const {
     lines,
     count,
+    subtotal,
+    deliveryFee,
     total,
     methods,
     method,
@@ -32,7 +46,55 @@ export const SalePanel = ({ bare = false }: { bare?: boolean }) => {
     finish,
     lastSale,
     dismissReceipt,
+    step,
+    channel,
+    setStep,
+    setSheet,
+    setChannel,
+    tableNumber,
+    setTableNumber,
+    recipient,
+    setRecipient,
+    storeAddress,
+    deliveryCities,
+    deliveryQuote,
+    addressSuggestions,
+    isSearchingAddress,
   } = useCounterFacade()
+
+  const goNext = () => {
+    if (step === 'items') setStep('destination')
+    else if (step === 'destination') setStep('payment')
+    else if (step === 'payment') setStep('review')
+    else finish()
+  }
+
+  const goBack = () => {
+    if (step === 'destination') setStep('items')
+    if (step === 'payment') setStep('destination')
+    if (step === 'review') setStep('payment')
+  }
+
+  const isReview = step === 'review'
+
+  const canContinue =
+    step === 'items'
+      ? count > 0
+      : step === 'destination'
+        ? channel === 'DELIVERY'
+          ? Boolean(
+              recipient.name.trim() &&
+              recipient.phone.trim() &&
+              recipient.zipCode?.replace(/\D/g, '').length === 8 &&
+              recipient.street.trim() &&
+              recipient.number.trim() &&
+              deliveryQuote
+            )
+          : channel !== null &&
+            Boolean(customerName.trim() || tableNumber.trim())
+        : step === 'payment'
+          ? method !== null && isChangeValid
+          : true
 
   return (
     <Box className={bare ? styles.bare : styles.panel}>
@@ -43,33 +105,95 @@ export const SalePanel = ({ bare = false }: { bare?: boolean }) => {
           </Heading>
         </Box>
       )}
-      <SaleCart lines={lines} onStep={handleStep} bare={bare} />
-      {count > 0 && method && (
-        <SalePaymentDetails
+      {bare && <CheckoutRail current={step} onStep={setStep} />}
+      {bare && (
+        <Box
+          direction="row"
+          align="baseline"
+          gap={1.5}
+          className={styles.stepName}
+        >
+          <Heading level={3} size="md">
+            {stepCopy[step].title}
+          </Heading>
+          <Text size="xs" color="muted">
+            {stepCopy[step].hint}
+          </Text>
+        </Box>
+      )}
+      {step === 'items' && (
+        <SaleCart
+          lines={lines}
+          onStep={handleStep}
+          bare={bare}
+          onAddMore={() => setSheet(false)}
+        />
+      )}
+      {step === 'destination' && (
+        <DestinationStep
+          channel={channel}
           customerName={customerName}
+          tableNumber={tableNumber}
+          recipient={recipient}
+          storeAddress={storeAddress}
+          deliveryCities={deliveryCities}
+          addressSuggestions={addressSuggestions}
+          isSearchingAddress={isSearchingAddress}
+          onChannel={setChannel}
+          onCustomerName={setCustomerName}
+          onTableNumber={setTableNumber}
+          onRecipient={setRecipient}
+        />
+      )}
+      {step === 'payment' && count > 0 && (
+        <SalePaymentDetails
           changeFor={changeFor}
           changeAmount={changeAmount}
           hasChange={hasChange}
           isChangeValid={isChangeValid}
           suggestedNotes={suggestedNotes}
-          onCustomerName={setCustomerName}
           onChangeFor={setChangeFor}
           methods={methods}
           method={method}
           onMethod={setChosen}
         />
       )}
-      <SaleFinishActions
-        bare={bare}
-        hasLines={count > 0}
-        isPaymentAvailable={method !== null && isChangeValid}
-        isCash={method === 'CASH'}
-        total={total}
-        isSending={isSending}
-        error={error}
-        onClear={emptyTicket}
-        onFinish={finish}
-      />
+      {step === 'review' && (
+        <ReviewStep
+          lines={lines}
+          total={total}
+          channel={channel}
+          customerName={channel === 'DELIVERY' ? recipient.name : customerName}
+          tableNumber={tableNumber}
+          recipient={recipient}
+          method={method}
+          changeFor={changeFor}
+          changeAmount={changeAmount}
+        />
+      )}
+      {step === 'payment' && error && <Text color="danger">{error}</Text>}
+      {!isReview ? (
+        <StepActions
+          subtotal={subtotal}
+          deliveryFee={deliveryFee}
+          total={total}
+          canContinue={canContinue}
+          onBack={step !== 'items' ? goBack : undefined}
+          onContinue={goNext}
+        />
+      ) : (
+        <SaleFinishActions
+          bare={bare}
+          hasLines={count > 0}
+          isPaymentAvailable={method !== null && isChangeValid}
+          isCash={method === 'CASH'}
+          total={total}
+          isSending={isSending}
+          error={error}
+          onClear={emptyTicket}
+          onFinish={finish}
+        />
+      )}
       <SaleReceiptButton saleReceipt={lastSale} onDismiss={dismissReceipt} />
     </Box>
   )

@@ -7,6 +7,8 @@ export const availabilityResponseMock: OrderAvailability = {
     { id: 'zone-1', name: 'Centro', fee: 5 },
     { id: 'zone-2', name: 'Zona Sul', fee: 12 },
   ],
+  storeAddress: { city: 'São Paulo', state: 'SP' },
+  deliveryCities: [{ city: 'São Paulo', state: 'SP' }],
   isPaused: false,
   isOpen: true,
 }

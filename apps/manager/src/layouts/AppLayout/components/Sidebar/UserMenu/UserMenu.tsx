@@ -64,6 +64,18 @@ export const UserMenu = ({
                   icon: <Icon name="building" className={styles.itemIcon} />,
                   onSelect: () => go('empresa'),
                 },
+                {
+                  value: 'units',
+                  label: 'Unidades',
+                  icon: <Icon name="store" className={styles.itemIcon} />,
+                  onSelect: () => go('unidades'),
+                },
+                {
+                  value: 'personalize',
+                  label: 'Personalizar loja',
+                  icon: <Icon name="droplet" className={styles.itemIcon} />,
+                  onSelect: () => go('personalizar'),
+                },
               ]
             : []),
           {

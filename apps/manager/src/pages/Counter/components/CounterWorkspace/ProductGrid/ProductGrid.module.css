@@ -3,7 +3,7 @@
 /* Busca antes das abas: com sessenta bebidas, digitar é mais curto que
    lembrar em que categoria o item foi cadastrado. */
 .search {
-  @apply mb-3 h-11;
+  @apply mb-3 h-11 lg:max-w-[460px];
 }
 
 .wrap {
@@ -19,14 +19,8 @@
  * doesn't actually have.
  */
 .grid {
-  @apply grid flex-1 auto-rows-min grid-cols-2 gap-4 pb-2;
-  @apply lg:min-h-0 lg:gap-5 lg:overflow-y-auto;
-}
-
-@container (max-width: 21.9rem) {
-  .grid {
-    grid-template-columns: 1fr;
-  }
+  @apply grid flex-1 auto-rows-min grid-cols-2 gap-3 pb-2;
+  @apply lg:min-h-0 lg:gap-3.5 lg:overflow-y-auto;
 }
 
 @container (min-width: 34rem) {
@@ -47,6 +41,14 @@
 @container (min-width: 58rem) {
   .grid {
     grid-template-columns: repeat(5, 1fr);
+  }
+}
+
+/* Monitor largo ganha coluna, não cartão esticado: o item do cardápio tem um
+   tamanho de leitura próprio e cresce mal quando vira uma faixa deitada. */
+@container (min-width: 70rem) {
+  .grid {
+    grid-template-columns: repeat(6, 1fr);
   }
 }
 
@@ -76,15 +78,15 @@
 
 /* Mirrors ProductCard's photo + footer structure, not a flat block. */
 .skeletonCard {
-  @apply flex flex-col overflow-hidden rounded-5 border border-border;
+  @apply flex flex-col overflow-hidden rounded-3 border border-border;
 }
 
 .skeletonPhoto {
-  @apply aspect-[3/2] h-auto w-full rounded-none;
+  @apply h-[84px] w-full rounded-none lg:h-[104px];
 }
 
 .skeletonFooter {
-  @apply flex flex-col gap-1 p-3.5 lg:p-4;
+  @apply flex flex-col gap-0.5 px-2.5 pb-2.5 pt-2;
 }
 
 .skeletonName {

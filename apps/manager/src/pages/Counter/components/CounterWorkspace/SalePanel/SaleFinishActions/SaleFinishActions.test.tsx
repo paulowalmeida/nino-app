@@ -38,8 +38,8 @@ describe(SaleFinishActions.name, () => {
         onClear={onClear}
       />
     )
-    fireEvent.click(screen.getByRole('button', { name: 'Fechar venda' }))
-    fireEvent.click(screen.getByRole('button', { name: 'Limpar comanda' }))
+    fireEvent.click(screen.getByRole('button', { name: 'Concluir pedido' }))
+    fireEvent.click(screen.getByRole('button', { name: 'Limpar Pedido' }))
     fireEvent.click(screen.getByRole('button', { name: 'confirm-clear' }))
     expect(onFinish).toHaveBeenCalledOnce()
     expect(onClear).toHaveBeenCalledOnce()
@@ -72,7 +72,7 @@ describe(SaleFinishActions.name, () => {
       />
     )
     expect(
-      screen.queryByRole('button', { name: 'Limpar comanda' })
+      screen.queryByRole('button', { name: 'Limpar Pedido' })
     ).not.toBeInTheDocument()
   })
 
@@ -86,12 +86,12 @@ describe(SaleFinishActions.name, () => {
         onClear={vi.fn()}
       />
     )
-    fireEvent.click(screen.getByRole('button', { name: 'Limpar comanda' }))
+    fireEvent.click(screen.getByRole('button', { name: 'Limpar Pedido' }))
     fireEvent.click(screen.getByRole('button', { name: 'dismiss-clear' }))
     expect(
       screen.queryByRole('button', { name: 'confirm-clear' })
     ).not.toBeInTheDocument()
-    fireEvent.click(screen.getByRole('button', { name: 'Limpar comanda' }))
+    fireEvent.click(screen.getByRole('button', { name: 'Limpar Pedido' }))
     fireEvent.click(screen.getByRole('button', { name: 'cancel-clear' }))
   })
 

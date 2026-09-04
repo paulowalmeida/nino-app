@@ -1,10 +1,11 @@
-import { useRef, useState } from 'react'
+import { ReactNode, useRef, useState } from 'react'
 
 import { Box } from '@nino/ds/components/Box'
 import { FormField } from '@nino/ds/components/FormField'
 import { Input } from '@nino/ds/components/Input'
+import { MaskedInput } from '@nino/ds/components/MaskedInput'
 import { Select } from '@nino/ds/components/Select'
-import { Text } from '@nino/ds/components/Text'
+import { maskZipCode } from '@nino/ds/masks'
 import { lookupZipCode, onlyDigits } from '@nino/lib/services/zip-code.service'
 import { BRAZIL_STATES } from '@shared/constants/address.constants'
 
@@ -25,9 +26,20 @@ type AddressValue = {
 type AddressFieldsProps = {
   value: AddressValue
   onChange: (patch: Partial<AddressValue>) => void
+  streetField?: ReactNode
+  zipCodeLabel?: ReactNode
+  streetLabel?: ReactNode
+  showCityAndState?: boolean
 }
 
-export const AddressFields = ({ value, onChange }: AddressFieldsProps) => {
+export const AddressFields = ({
+  value,
+  onChange,
+  streetField,
+  zipCodeLabel = 'CEP',
+  streetLabel = 'Logradouro',
+  showCityAndState = true,
+}: AddressFieldsProps) => {
   const [lookup, setLookup] = useState<Lookup>('idle')
   const numberRef = useRef<HTMLInputElement>(null)
 
@@ -62,29 +74,25 @@ export const AddressFields = ({ value, onChange }: AddressFieldsProps) => {
 
   return (
     <Box className={styles.grid}>
-      <FormField label="CEP" className={styles.zip}>
-        <Input
+      <FormField label={zipCodeLabel} className={styles.zip}>
+        <MaskedInput
+          mask={maskZipCode}
           inputMode="numeric"
           autoComplete="postal-code"
           value={value.zipCode}
           onChange={handleZipChange}
         />
-        {lookup === 'loading' && (
-          <Text className={styles.status}>Buscando endereço…</Text>
-        )}
-        {lookup === 'notFound' && (
-          <Text className={styles.statusError}>
-            Não achamos esse CEP. Preencha o endereço abaixo.
-          </Text>
-        )}
       </FormField>
 
-      <FormField label="Rua" className={styles.street}>
-        <Input
-          autoComplete="address-line1"
-          value={value.street}
-          onChange={(event) => onChange({ street: event.target.value })}
-        />
+      <FormField label={streetLabel} className={styles.street}>
+        {streetField ?? (
+          <Input
+            autoComplete="address-line1"
+            disabled={lookup === 'loading'}
+            value={value.street}
+            onChange={(event) => onChange({ street: event.target.value })}
+          />
+        )}
       </FormField>
 
       <FormField label="Número" className={styles.number}>
@@ -105,26 +113,33 @@ export const AddressFields = ({ value, onChange }: AddressFieldsProps) => {
 
       <FormField label="Bairro" className={styles.neighborhood}>
         <Input
+          disabled={lookup === 'loading'}
           value={value.neighborhood}
           onChange={(event) => onChange({ neighborhood: event.target.value })}
         />
       </FormField>
 
-      <FormField label="Cidade" className={styles.city}>
-        <Input
-          value={value.city}
-          onChange={(event) => onChange({ city: event.target.value })}
-        />
-      </FormField>
+      {showCityAndState && (
+        <>
+          <FormField label="Cidade" className={styles.city}>
+            <Input
+              disabled={lookup === 'loading'}
+              value={value.city}
+              onChange={(event) => onChange({ city: event.target.value })}
+            />
+          </FormField>
 
-      <FormField label="UF" className={styles.state}>
-        <Select
-          options={BRAZIL_STATES}
-          value={value.state}
-          aria-label="Estado do endereço"
-          onValueChange={(state) => onChange({ state })}
-        />
-      </FormField>
+          <FormField label="UF" className={styles.state}>
+            <Select
+              disabled={lookup === 'loading'}
+              options={BRAZIL_STATES}
+              value={value.state}
+              aria-label="Estado do endereço"
+              onValueChange={(state) => onChange({ state })}
+            />
+          </FormField>
+        </>
+      )}
     </Box>
   )
 }

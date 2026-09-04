@@ -1,8 +1,8 @@
 import { describe, expect, it } from 'vitest'
 
-import { cropToSquare } from './crop-image'
+import { cropToArea } from './crop-image'
 
-describe('cropToSquare', () => {
+describe('cropToArea', () => {
   it('rejects when the canvas has no 2d drawing context', async () => {
     // Arrange: jsdom ships no canvas backend, so getContext('2d') is null —
     // exactly the environment this guard exists for.
@@ -10,7 +10,7 @@ describe('cropToSquare', () => {
 
     // Act / Assert
     await expect(
-      cropToSquare(image, { offsetX: 0, offsetY: 0, zoom: 1 }, 'photo.jpg')
+      cropToArea(image, { x: 0, y: 0, width: 1, height: 1 }, 'photo.jpg')
     ).rejects.toThrow('canvas indisponível')
   })
 })

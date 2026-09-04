@@ -1,4 +1,5 @@
 import { Box } from '@nino/ds/components/Box'
+import { Button } from '@nino/ds/components/Button'
 import { EmptyState } from '@nino/ds/components/EmptyState'
 import { ListRow } from '@nino/ds/components/ListRow'
 import { QuantityStepper } from '@nino/ds/components/QuantityStepper'
@@ -16,9 +17,15 @@ export type SaleCartProps = {
   lines: CartLine[]
   onStep: (productId: string, by: number) => void
   bare?: boolean
+  onAddMore?: () => void
 }
 
-export const SaleCart = ({ lines, onStep, bare = false }: SaleCartProps) => {
+export const SaleCart = ({
+  lines,
+  onStep,
+  bare = false,
+  onAddMore,
+}: SaleCartProps) => {
   if (lines.length === 0) {
     return (
       <EmptyState className={styles.empty}>
@@ -89,22 +96,22 @@ export const SaleCart = ({ lines, onStep, bare = false }: SaleCartProps) => {
                   onIncrement={() => onStep(line.productId, 1)}
                   size="sm"
                   className={styles.stepper}
-                  count={
-                    <Text
-                      as="span"
-                      size="sm"
-                      weight="bold"
-                      className={styles.stepperCount}
-                    >
-                      {line.quantity}
-                    </Text>
-                  }
                 />
               </Box>
             </ListRow>
           )
         })}
       </Box>
+      {onAddMore && (
+        <Button
+          type="button"
+          variant="ghost"
+          className={styles.addMore}
+          onClick={onAddMore}
+        >
+          + Adicionar mais itens
+        </Button>
+      )}
     </ScrollArea>
   )
 }

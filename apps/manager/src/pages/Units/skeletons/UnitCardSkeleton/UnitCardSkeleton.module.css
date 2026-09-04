@@ -1,0 +1,100 @@
+@reference "@nino/ds/globals.css";
+
+.title {
+  @apply h-7 w-48;
+}
+
+.panel {
+  @apply flex min-w-0 flex-col;
+}
+
+.fields {
+  @apply grid grid-cols-1 gap-3 sm:grid-cols-2;
+}
+
+.address {
+  @apply mt-4 flex flex-col gap-2 border-t border-border pt-4;
+}
+
+.addressGrid {
+  @apply grid gap-3;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  grid-template-areas:
+    'z z z z z z z z n n n n'
+    'st st st st st st st st st st st st'
+    'co co co co co co co co co co co co'
+    'h h h h h h h h h h h h'
+    'ci ci ci ci ci ci ci ci ci ci sa sa sa';
+}
+
+@media (min-width: 640px) {
+  .addressGrid {
+    grid-template-areas:
+      'z z z z st st st st st st st st'
+      'n n co co co co co co co co co co'
+      'h h h h ci ci ci ci ci ci sa sa';
+  }
+}
+
+@media (min-width: 768px) {
+  .addressGrid {
+    grid-template-areas:
+      'z z st st st st st st st st st st'
+      'n n co co co co co co co co co co'
+      'h h h h ci ci ci ci ci ci sa sa';
+  }
+}
+
+.zip {
+  grid-area: z;
+}
+.street {
+  grid-area: st;
+}
+.number {
+  grid-area: n;
+}
+.complement {
+  grid-area: co;
+}
+.neighborhood {
+  grid-area: h;
+}
+.city {
+  grid-area: ci;
+}
+.state {
+  grid-area: sa;
+}
+
+.loadingLabel {
+  @apply sr-only;
+}
+
+.promote {
+  @apply h-9 w-36 shrink-0 rounded-full;
+}
+
+.tabs {
+  @apply mb-4;
+}
+
+.tab {
+  @apply h-9 w-32 rounded-2;
+}
+
+.label {
+  @apply h-3.5 w-24;
+}
+
+.input {
+  @apply h-11 w-full;
+}
+
+.groupTitle {
+  @apply mb-2 h-3.5 w-40;
+}
+
+.save {
+  @apply mt-4 h-11 w-40 self-end rounded-full;
+}
