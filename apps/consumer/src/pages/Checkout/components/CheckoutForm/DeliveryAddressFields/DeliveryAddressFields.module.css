@@ -14,28 +14,9 @@
 }
 
 .zipRow,
-.row,
-.streetSearchRow {
+.row {
   @apply grid gap-3;
   grid-template-columns: 1fr 5.5rem;
-}
-
-.entryModes {
-  @apply grid rounded-2 bg-surface-mute p-1;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-}
-
-.entryMode,
-.entryModeActive {
-  @apply min-w-0 justify-center px-2 text-xs;
-}
-
-.entryMode {
-  @apply text-fg-subtle;
-}
-
-.entryModeActive {
-  @apply bg-brand-soft text-brand-strong;
 }
 
 .lookupStatus {
@@ -60,8 +41,7 @@
 
 @media (max-width: 420px) {
   .zipRow,
-  .row,
-  .streetSearchRow {
+  .row {
     grid-template-columns: minmax(0, 1fr) 4.75rem;
   }
 }
