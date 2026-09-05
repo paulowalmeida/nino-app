@@ -9,7 +9,17 @@ import { SubscriptionSkeleton } from './skeletons/SubscriptionSkeleton/Subscript
 import styles from './Subscription.module.css'
 
 export const Subscription = () => {
-  const { subscription, isPending, isError } = useSubscriptionFacade()
+  const {
+    subscription,
+    isPending,
+    isError,
+    plans,
+    isPlansPending,
+    isPlansError,
+    isUpdating,
+    changePlan,
+    cancelPlan,
+  } = useSubscriptionFacade()
 
   return (
     <Box className={styles.page}>
@@ -28,7 +38,23 @@ export const Subscription = () => {
         </Alert>
       )}
 
-      {subscription && <SubscriptionCard subscription={subscription} />}
+      {subscription && (
+        <SubscriptionCard
+          subscription={subscription}
+          plans={plans}
+          isUpdating={isUpdating}
+          onChangePlan={changePlan}
+          onCancel={cancelPlan}
+        />
+      )}
+      {isPlansError && (
+        <Alert variant="error">
+          Não foi possível carregar os planos disponíveis.
+        </Alert>
+      )}
+      {isPlansPending && !isPending && (
+        <Alert variant="info">Carregando planos disponíveis...</Alert>
+      )}
     </Box>
   )
 }

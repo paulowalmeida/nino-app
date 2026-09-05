@@ -121,11 +121,7 @@ export const queryKeys = {
   customers: {
     all: (tenantId: string) => ['customers', tenantId] as const,
     list: (tenantId: string, search?: string) =>
-      [
-        ...queryKeys.customers.all(tenantId),
-        'list',
-        search ?? null,
-      ] as const,
+      [...queryKeys.customers.all(tenantId), 'list', search ?? null] as const,
     detail: (tenantId: string, customerId: string) =>
       [...queryKeys.customers.all(tenantId), 'detail', customerId] as const,
     top: (tenantId: string, metric: string) =>
@@ -146,5 +142,6 @@ export const queryKeys = {
   account: {
     all: () => ['account'] as const,
     subscription: () => [...queryKeys.account.all(), 'subscription'] as const,
+    plans: () => [...queryKeys.account.all(), 'plans'] as const,
   },
 } as const

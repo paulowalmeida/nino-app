@@ -2,7 +2,7 @@ import { Controller } from 'react-hook-form'
 
 import { Box } from '@nino/ds/components/Box'
 import { RadioGroup } from '@nino/ds/components/RadioGroup'
-import { Text } from '@nino/ds/components/Text'
+import { Heading } from '@nino/ds/components/Heading'
 import { useCheckoutFacade } from '@pages/checkout/facades/useCheckoutFacade/useCheckoutFacade'
 import type { CheckoutFacade } from '@pages/checkout/facades/useCheckoutFacade/useCheckoutFacade'
 
@@ -15,7 +15,9 @@ export const ChannelFields = ({ checkout }: { checkout?: CheckoutFacade }) => {
 
   return (
     <Box className={styles.block}>
-      <Text className={styles.blockLabel}>Como receber</Text>
+      <Heading level={2} size="md" className={styles.blockLabel}>
+        Como você quer receber?
+      </Heading>
       <Controller
         name="channel"
         control={control}

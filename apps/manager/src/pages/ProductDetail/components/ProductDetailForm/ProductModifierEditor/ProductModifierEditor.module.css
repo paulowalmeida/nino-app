@@ -21,5 +21,9 @@
 }
 
 .groups {
-  @apply flex flex-col gap-4;
+  @apply flex flex-col gap-3;
+}
+
+.accordionTrigger {
+  @apply truncate text-left text-sm font-semibold text-fg-strong;
 }

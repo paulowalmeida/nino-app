@@ -12,7 +12,10 @@ describe('identify-form operations', () => {
     // Act
     setChannel(set, identifyFormMock.channel)
     // Assert
-    expect(set).toHaveBeenCalledWith({ channel: identifyFormMock.channel })
+    expect(set).toHaveBeenCalledWith({
+      channel: identifyFormMock.channel,
+      step: 'identify',
+    })
   })
 
   it('sets the phone draft through the store setter', () => {

@@ -1,0 +1,5 @@
+@reference "@nino/ds/globals.css";
+
+.actions {
+  @apply border-t border-border pt-5;
+}

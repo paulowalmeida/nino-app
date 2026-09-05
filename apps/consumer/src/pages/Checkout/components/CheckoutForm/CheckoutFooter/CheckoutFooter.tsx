@@ -10,11 +10,21 @@ import styles from './CheckoutFooter.module.css'
 
 type CheckoutFooterProps = {
   disabled: boolean
+  isLastStep?: boolean
+  canGoBack?: boolean
+  onBack?: () => void
+  onContinue?: () => void
   checkout?: CheckoutFacade
 }
 
-/** O picote + a barra de confirmar: o total sobe junto pra não haver susto. */
-export const CheckoutFooter = ({ disabled, checkout }: CheckoutFooterProps) => {
+export const CheckoutFooter = ({
+  disabled,
+  isLastStep = true,
+  canGoBack = false,
+  onBack,
+  onContinue,
+  checkout,
+}: CheckoutFooterProps) => {
   const { total, isSubmitting } = useCheckoutFacade(checkout)
 
   return (
@@ -25,14 +35,27 @@ export const CheckoutFooter = ({ disabled, checkout }: CheckoutFooterProps) => {
         </Text>
         <AnimatedNumber value={brl(total)} className={styles.total} />
       </Box>
-      <Button
-        type="submit"
-        loading={isSubmitting}
-        disabled={disabled}
-        className={styles.submit}
-      >
-        Confirmar pedido
-      </Button>
+      <Box direction="row" gap={2} className={styles.actions}>
+        {canGoBack && (
+          <Button
+            type="button"
+            variant="outline"
+            onClick={onBack}
+            className={styles.back}
+          >
+            Voltar
+          </Button>
+        )}
+        <Button
+          type={isLastStep ? 'submit' : 'button'}
+          loading={isLastStep && isSubmitting}
+          disabled={isLastStep && disabled}
+          onClick={isLastStep ? undefined : onContinue}
+          className={styles.submit}
+        >
+          {isLastStep ? 'Confirmar pedido' : 'Continuar'}
+        </Button>
+      </Box>
     </Box>
   )
 }

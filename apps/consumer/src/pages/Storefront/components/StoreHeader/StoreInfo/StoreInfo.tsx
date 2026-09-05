@@ -14,6 +14,7 @@ export const StoreInfo = () => {
     store,
     hours,
     estimatedMinutes,
+    showAddressOnStoreInfo,
     isInfoOpen: open,
     setInfoOpen: onOpenChange,
     isDesktop,
@@ -33,13 +34,15 @@ export const StoreInfo = () => {
       size={isDesktop ? '25rem' : 'auto'}
     >
       <Box className={styles.body}>
-        <Box as="section">
-          <Heading level={3} className={styles.label}>
-            Endereço
-          </Heading>
-          <Text className={styles.value}>{address}</Text>
-          <Text className={styles.sub}>{city}</Text>
-        </Box>
+        {showAddressOnStoreInfo ? (
+          <Box as="section">
+            <Heading level={3} className={styles.label}>
+              Endereço
+            </Heading>
+            <Text className={styles.value}>{address}</Text>
+            <Text className={styles.sub}>{city}</Text>
+          </Box>
+        ) : null}
 
         {estimatedMinutes ? (
           <Box as="section">

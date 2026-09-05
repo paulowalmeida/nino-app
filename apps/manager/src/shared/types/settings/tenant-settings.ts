@@ -4,6 +4,7 @@ export type TenantSettings = {
   isDeliveryEnabled: boolean
   isPickupEnabled: boolean
   isCounterEnabled: boolean
+  showAddressOnStoreInfo: boolean
   allowGuestOrder: boolean
   requireCpf: boolean
   minOrderAmount: number

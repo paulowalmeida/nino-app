@@ -9,6 +9,7 @@ import { useCheckoutFacadeValue } from '@pages/checkout/facades/useCheckoutFacad
 import { CheckoutSkeleton } from '@pages/checkout/skeletons/CheckoutSkeleton/CheckoutSkeleton'
 import { resolveBackHref } from '@utils/resolve-back-href'
 import { resolveSlug } from '@utils/resolve-slug'
+import { toStoreTheme } from '@utils/toStoreTheme/toStoreTheme'
 
 import styles from './Checkout.module.css'
 
@@ -56,10 +57,11 @@ export const Checkout = () => {
   }
 
   return (
-    <Box className={styles.page}>
+    <Box className={styles.page} style={toStoreTheme(store)}>
       <CheckoutForm
         backHref={backHref}
         storeName={store.customName ?? store.company.name}
+        storeLogoUrl={store.logoUrl}
         isStoreOpen={checkout.isStoreOpen}
         checkout={checkout}
       />

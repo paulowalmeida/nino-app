@@ -1,0 +1,57 @@
+@reference "@nino/ds/globals.css";
+
+.title {
+  @apply mt-8 text-center font-display text-[1.65rem] font-extrabold;
+  @apply leading-[1.15] text-fg-strong sm:text-[1.85rem];
+  letter-spacing: -0.025em;
+  text-wrap: balance;
+}
+
+.subtitle {
+  @apply mt-2.5 text-center leading-relaxed text-fg-default;
+}
+
+/*
+ * Celular é o único caminho que já sai do login com o contato confirmado —
+ * é por isso que ele carrega a cor da loja e os outros dois não.
+ */
+.primary {
+  @apply mt-6 h-13 w-full rounded-3 text-sm font-bold;
+}
+
+.primary:not(:disabled) {
+  background: var(--store-tint, var(--color-brand));
+}
+
+.primary:not(:disabled):hover {
+  background: color-mix(
+    in srgb,
+    var(--store-tint, var(--color-brand)) 88%,
+    black
+  );
+}
+
+.divider {
+  @apply mt-5 flex items-center gap-3;
+}
+
+.divider::before,
+.divider::after {
+  @apply h-px flex-1 bg-black/[0.08];
+  content: '';
+}
+
+.dividerLabel {
+  @apply shrink-0 uppercase tracking-[0.16em];
+}
+
+.secondary {
+  @apply mt-3 flex h-13 w-full items-center justify-center gap-2.5;
+  @apply rounded-3 border border-border bg-surface-raised text-sm font-bold;
+  @apply text-fg-strong transition-colors hover:border-black/20;
+  @apply hover:bg-black/[0.02];
+}
+
+.secondaryIcon {
+  @apply text-lg text-fg-default;
+}

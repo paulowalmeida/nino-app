@@ -5,6 +5,13 @@ export type Store = {
   customName: string | null
   logoUrl: string | null
   primaryColor: string | null
+  secondaryColor?: string | null
+  tertiaryColor?: string | null
+  backgroundColor?: string | null
+  textColor?: string | null
+  cardColor?: string | null
+  borderColor?: string | null
+  mutedTextColor?: string | null
   isPaused: boolean
   timezone: string
   street: string

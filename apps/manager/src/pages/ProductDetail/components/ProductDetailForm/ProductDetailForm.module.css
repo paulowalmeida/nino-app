@@ -7,10 +7,25 @@
  */
 .form {
   @apply mt-6 flex flex-col gap-5;
-  @apply lg:grid lg:grid-cols-[20rem_1fr] lg:items-start lg:gap-x-10;
 }
 
 .fields {
+  @apply flex min-w-0 flex-col gap-5;
+}
+
+.tabs {
+  @apply min-w-0;
+}
+
+.tabContent {
+  @apply flex min-w-0 flex-col gap-5 pt-5;
+}
+
+.informationLayout {
+  @apply lg:grid lg:grid-cols-[20rem_1fr] lg:items-start lg:gap-x-10;
+}
+
+.informationFields {
   @apply flex min-w-0 flex-col gap-5;
 }
 
@@ -48,5 +63,5 @@
    depois de percorrer o formulário inteiro */
 .actions {
   @apply flex flex-col gap-2 border-t border-border/60 pt-5;
-  @apply sm:flex-row sm:justify-end lg:col-span-2;
+  @apply sm:flex-row sm:justify-end;
 }

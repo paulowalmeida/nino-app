@@ -1,4 +1,4 @@
-import type { KeyboardEvent } from 'react'
+import type { KeyboardEvent, MouseEvent } from 'react'
 
 import { Avatar } from '@nino/ds/components/Avatar'
 import { Badge } from '@nino/ds/components/Badge'
@@ -111,6 +111,14 @@ export const KitchenCard = ({
     onOpenDetails?.()
   }
 
+  const handleCardClick = (event: MouseEvent<HTMLElement>) => {
+    const target = event.target
+    if (target instanceof Element && target.closest('[role="menuitem"]')) {
+      return
+    }
+    onOpenDetails?.()
+  }
+
   return (
     <Box
       as="article"
@@ -123,7 +131,7 @@ export const KitchenCard = ({
           ? `Ver detalhes do pedido ${ticketNumber(order.orderNumber)}`
           : undefined
       }
-      onClick={onOpenDetails}
+      onClick={onOpenDetails ? handleCardClick : undefined}
       onKeyDown={onOpenDetails ? handleDetailsKeyDown : undefined}
     >
       <Box as="header" direction="row" className={styles.head}>
@@ -159,7 +167,9 @@ export const KitchenCard = ({
                 aria-label={cookLabel}
                 title={cookLabel}
                 disabled={isChangingCook}
-                onClick={(event) => event.stopPropagation()}
+                onClick={(event) => {
+                  event.stopPropagation()
+                }}
               >
                 {cookAvatar}
               </Button>
@@ -233,10 +243,12 @@ export const KitchenCard = ({
 
       {step && onStep && (
         <Button
+          type="button"
           size="lg"
           loading={isBusy}
           className={mergeClasses(motion.press, styles.action)}
           onClick={(event) => {
+            event.preventDefault()
             event.stopPropagation()
             onStep(order.id, step.target)
           }}

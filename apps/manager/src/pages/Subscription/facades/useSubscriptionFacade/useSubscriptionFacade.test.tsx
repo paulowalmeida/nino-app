@@ -1,3 +1,6 @@
+import type { ReactNode } from 'react'
+
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { renderHook } from '@testing-library/react'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 
@@ -7,6 +10,18 @@ import { useSubscriptionFacade } from './useSubscriptionFacade'
 import { subscriptionFacadeMock } from './useSubscriptionFacade.mock'
 
 vi.mock('@shared/hooks/account/useSubscription/useSubscription')
+vi.mock(
+  '@shared/hooks/account/useSubscriptionPlans/useSubscriptionPlans',
+  () => ({
+    useSubscriptionPlans: () => ({ data: [], isPending: false }),
+  })
+)
+
+const wrapper = ({ children }: { children: ReactNode }) => (
+  <QueryClientProvider client={new QueryClient()}>
+    {children}
+  </QueryClientProvider>
+)
 
 describe('useSubscriptionFacade', () => {
   beforeEach(() => vi.clearAllMocks())
@@ -18,7 +33,7 @@ describe('useSubscriptionFacade', () => {
       isError: false,
     } as unknown as ReturnType<typeof useSubscription>)
 
-    const { result } = renderHook(() => useSubscriptionFacade())
+    const { result } = renderHook(() => useSubscriptionFacade(), { wrapper })
 
     expect(result.current.subscription?.plan.name).toBe(
       subscriptionFacadeMock.planName
@@ -34,7 +49,7 @@ describe('useSubscriptionFacade', () => {
       isError: true,
     } as unknown as ReturnType<typeof useSubscription>)
 
-    const { result } = renderHook(() => useSubscriptionFacade())
+    const { result } = renderHook(() => useSubscriptionFacade(), { wrapper })
 
     expect(result.current.subscription).toBeUndefined()
     expect(result.current.isPending).toBe(true)

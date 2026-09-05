@@ -17,3 +17,8 @@ export type Subscription = {
     name: string
   }
 }
+
+export type SubscriptionPlan = Pick<
+  Subscription['plan'],
+  'id' | 'name' | 'slug' | 'price' | 'maxTenants'
+>

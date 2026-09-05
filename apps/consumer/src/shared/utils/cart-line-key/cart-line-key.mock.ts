@@ -12,9 +12,7 @@ export const cartLineKeyMock = {
   plain: base,
   withBacon: {
     ...base,
-    modifiers: [
-      { optionId: 'bacon', name: 'Bacon', price: '4', quantity: 1 },
-    ],
+    modifiers: [{ optionId: 'bacon', name: 'Bacon', price: '4', quantity: 1 }],
   },
   withBaconReversed: {
     ...base,

@@ -1,7 +1,7 @@
 export type Customer = {
   id: string
   name: string
-  phone: string
+  phone: string | null
   email: string | null
   cpf: string | null
   isActive: boolean

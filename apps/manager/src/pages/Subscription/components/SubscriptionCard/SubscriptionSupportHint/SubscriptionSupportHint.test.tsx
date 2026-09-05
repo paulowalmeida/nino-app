@@ -4,9 +4,9 @@ import { describe, expect, it } from 'vitest'
 import { SubscriptionSupportHint } from './SubscriptionSupportHint'
 
 describe(SubscriptionSupportHint.name, () => {
-  it('explains how plan changes are handled', () => {
+  it('explains that changes affect every company unit', () => {
     render(<SubscriptionSupportHint />)
 
-    expect(screen.getByText(/fale com o suporte/)).toBeInTheDocument()
+    expect(screen.getByText(/afetam todas as unidades/)).toBeInTheDocument()
   })
 })

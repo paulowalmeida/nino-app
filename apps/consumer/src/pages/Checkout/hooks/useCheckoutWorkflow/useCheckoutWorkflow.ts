@@ -22,6 +22,7 @@ type UseCheckoutWorkflowParams = {
   cartLines: CartLine[]
   estimatedMinutes: number | undefined
   paymentOptions: PaymentMethod[] | undefined
+  minimumOrderAmount?: number | undefined
   clearCart: () => void
   slug: string | undefined
 }
@@ -36,6 +37,7 @@ export const useCheckoutWorkflow = ({
   cartLines,
   estimatedMinutes,
   paymentOptions: configuredPaymentOptions,
+  minimumOrderAmount,
   clearCart,
   slug,
 }: UseCheckoutWorkflowParams) => {
@@ -102,9 +104,11 @@ export const useCheckoutWorkflow = ({
     zone,
     estimatedMinutes,
   })
+  const minimum = minimumOrderAmount ?? 0
+  const isBelowMinimum = minimum > 0 && subtotal < minimum
 
   const onSubmit = (values: CheckoutFormValues) => {
-    if (!store) return
+    if (!store || isBelowMinimum) return
 
     createOrder(
       { values, store, cartLines },
@@ -142,5 +146,7 @@ export const useCheckoutWorkflow = ({
     isSubmitting,
     submitFailed,
     isQuoting,
+    minimumOrderAmount: minimum,
+    isBelowMinimum,
   }
 }

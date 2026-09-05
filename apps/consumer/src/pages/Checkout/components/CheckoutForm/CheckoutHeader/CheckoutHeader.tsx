@@ -10,16 +10,27 @@ import styles from './CheckoutHeader.module.css'
 type CheckoutHeaderProps = {
   backHref: string
   storeName: string
+  storeLogoUrl?: string | null
 }
 
 export const CheckoutHeader = ({
   backHref,
   storeName,
+  storeLogoUrl,
 }: CheckoutHeaderProps) => (
-  <Box as="header" className={styles.header}>
+  <Box as="header" direction="row" className={styles.header}>
     <Link to={backHref} className={styles.back} aria-label="Voltar">
       <Icon name="arrow-left" />
     </Link>
+    <Box className={styles.storeMark} aria-hidden="true">
+      {storeLogoUrl ? (
+        <img src={storeLogoUrl} alt="" className={styles.logo} />
+      ) : (
+        <Text as="span" className={styles.logoFallback}>
+          {storeName.slice(0, 2).toUpperCase()}
+        </Text>
+      )}
+    </Box>
     <Box className={styles.headText}>
       <Heading level={1} size="md" className={styles.title}>
         Finalizar pedido

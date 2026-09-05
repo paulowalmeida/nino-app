@@ -4,7 +4,7 @@ import { FormField } from '@nino/ds/components/FormField'
 import { Box } from '@nino/ds/components/Box'
 import { Input } from '@nino/ds/components/Input'
 import { RadioGroup } from '@nino/ds/components/RadioGroup'
-import { Text } from '@nino/ds/components/Text'
+import { Heading } from '@nino/ds/components/Heading'
 import { useCheckoutFacade } from '@pages/checkout/facades/useCheckoutFacade/useCheckoutFacade'
 import type { CheckoutFacade } from '@pages/checkout/facades/useCheckoutFacade/useCheckoutFacade'
 import { PAYMENT_METHOD_LABEL } from '@pages/checkout/constants/paymentMethodLabel.constants'
@@ -21,7 +21,9 @@ export const PaymentMethodFields = ({
 
   return (
     <Box className={styles.block}>
-      <Text className={styles.blockLabel}>Pagamento na entrega</Text>
+      <Heading level={2} size="md" className={styles.blockLabel}>
+        Pagamento
+      </Heading>
 
       <Controller
         name="paymentMethod"

@@ -1,7 +1,7 @@
 @reference "@nino/ds/globals.css";
 
 .block {
-  @apply flex flex-col gap-3;
+  @apply flex flex-col gap-4;
 }
 
 /*
@@ -10,12 +10,44 @@
  * do título — aquilo decorava, isto informa.
  */
 .blockLabel {
-  @apply text-xs font-bold uppercase tracking-[0.14em] text-fg-faint;
+  @apply font-display text-xl font-extrabold tracking-snug text-fg-strong;
 }
 
-.row {
+.zipRow,
+.row,
+.streetSearchRow {
   @apply grid gap-3;
   grid-template-columns: 1fr 5.5rem;
+}
+
+.entryModes {
+  @apply grid rounded-2 bg-surface-mute p-1;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.entryMode,
+.entryModeActive {
+  @apply min-w-0 justify-center px-2 text-xs;
+}
+
+.entryMode {
+  @apply text-fg-subtle;
+}
+
+.entryModeActive {
+  @apply bg-brand-soft text-brand-strong;
+}
+
+.lookupStatus {
+  @apply min-h-5;
+}
+
+.deliveryConfirmed {
+  @apply text-success;
+}
+
+.deliveryFee {
+  @apply rounded-full bg-success-surface px-3 py-1 text-sm font-semibold text-success;
 }
 
 .disclosure {
@@ -24,4 +56,12 @@
 
 .disclosureFields {
   @apply flex flex-col gap-3;
+}
+
+@media (max-width: 420px) {
+  .zipRow,
+  .row,
+  .streetSearchRow {
+    grid-template-columns: minmax(0, 1fr) 4.75rem;
+  }
 }

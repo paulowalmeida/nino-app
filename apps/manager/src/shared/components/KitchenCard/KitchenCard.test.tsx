@@ -143,22 +143,34 @@ describe(KitchenCard.name, () => {
 
   it('assigns and removes the cook from the avatar menu', async () => {
     const onCookChange = vi.fn()
+    const onOpenDetails = vi.fn()
     const user = userEvent.setup()
     render(
       <KitchenCard
         order={kitchenCardOrderMock}
         destination={tableDestinationMock}
         isBusy={false}
-        cookName="Marina Silva"
+        cookName="João Silva"
         staff={[
           { role: 'STAFF', user: { id: 'staff-1', name: 'Marina Silva' } },
         ]}
         onCookChange={onCookChange}
+        onOpenDetails={onOpenDetails}
       />
     )
 
     await user.click(
-      screen.getByRole('button', { name: 'Alterar chapista: Marina Silva' })
+      screen.getByRole('button', { name: 'Alterar chapista: João Silva' })
+    )
+    await user.click(
+      await screen.findByRole('menuitem', { name: 'Marina Silva' })
+    )
+
+    expect(onCookChange).toHaveBeenCalledWith('staff-1')
+    expect(onOpenDetails).not.toHaveBeenCalled()
+
+    await user.click(
+      screen.getByRole('button', { name: 'Alterar chapista: João Silva' })
     )
     await user.click(
       await screen.findByRole('menuitem', { name: 'Remover responsável' })

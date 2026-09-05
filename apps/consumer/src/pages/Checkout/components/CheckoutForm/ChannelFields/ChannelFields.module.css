@@ -1,9 +1,9 @@
 @reference "@nino/ds/globals.css";
 
 .block {
-  @apply flex flex-col gap-3;
+  @apply flex flex-col gap-4;
 }
 
 .blockLabel {
-  @apply text-xs font-bold uppercase tracking-[0.14em] text-fg-faint;
+  @apply font-display text-xl font-extrabold tracking-snug text-fg-strong;
 }

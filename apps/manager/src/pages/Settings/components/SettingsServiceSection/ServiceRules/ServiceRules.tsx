@@ -39,6 +39,7 @@ const toDraft = (settings: TenantSettings): ServiceRulesDraft => ({
   isDeliveryEnabled: settings.isDeliveryEnabled,
   isPickupEnabled: settings.isPickupEnabled,
   isCounterEnabled: settings.isCounterEnabled,
+  showAddressOnStoreInfo: settings.showAddressOnStoreInfo,
   allowGuestOrder: settings.allowGuestOrder,
   requireCpf: settings.requireCpf,
   minOrderAmount: Number(settings.minOrderAmount).toFixed(2).replace('.', ','),
@@ -83,6 +84,7 @@ export const ServiceRules = ({
       isDeliveryEnabled: draft.isDeliveryEnabled,
       isPickupEnabled: draft.isPickupEnabled,
       isCounterEnabled: draft.isCounterEnabled,
+      showAddressOnStoreInfo: draft.showAddressOnStoreInfo,
       allowGuestOrder: draft.allowGuestOrder,
       requireCpf: draft.requireCpf,
       minOrderAmount: Number(draft.minOrderAmount.replace(',', '.')) || 0,
@@ -126,6 +128,24 @@ export const ServiceRules = ({
             </Text>
           </Box>
         ))}
+      </Box>
+
+      <Box className={local.group}>
+        <Box className={local.channelRow}>
+          <Switch
+            checked={draft.showAddressOnStoreInfo}
+            onCheckedChange={(checked) =>
+              change({ showAddressOnStoreInfo: checked })
+            }
+            aria-label="Exibir endereço nos detalhes da loja"
+          />
+          <Text className={`${local.rowLabel} ${local.channelTextCell}`}>
+            Exibir endereço nos detalhes da loja
+          </Text>
+          <Text className={`${local.rowHint} ${local.channelTextCell}`}>
+            Mostra o endereço no painel de informações do cliente.
+          </Text>
+        </Box>
       </Box>
 
       <Box className={local.group}>

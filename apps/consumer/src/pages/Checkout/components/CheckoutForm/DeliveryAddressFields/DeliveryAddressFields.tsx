@@ -1,20 +1,30 @@
-import { Controller } from 'react-hook-form'
+import { useState } from 'react'
+import type { ChangeEvent } from 'react'
+import { Controller, useWatch } from 'react-hook-form'
 
 import { Collapsible } from '@nino/ds/components/Collapsible'
 import { Box } from '@nino/ds/components/Box'
+import { Button } from '@nino/ds/components/Button'
+import { Combobox } from '@nino/ds/components/Combobox'
 import { FormField } from '@nino/ds/components/FormField'
 import { Input } from '@nino/ds/components/Input'
 import { MaskedInput } from '@nino/ds/components/MaskedInput'
 import { Text } from '@nino/ds/components/Text'
+import { Heading } from '@nino/ds/components/Heading'
 import { RadioGroup } from '@nino/ds/components/RadioGroup'
-import { maskZipCode } from '@nino/ds/masks'
+import { Spinner } from '@nino/ds/components/Spinner'
+import { maskZipCode, onlyDigits } from '@nino/ds/masks'
 import { useCheckoutFacade } from '@pages/checkout/facades/useCheckoutFacade/useCheckoutFacade'
 import type { CheckoutFacade } from '@pages/checkout/facades/useCheckoutFacade/useCheckoutFacade'
+import { useGuestAddressLookup } from '@pages/checkout/hooks/useGuestAddressLookup/useGuestAddressLookup'
+import { useGuestAddressSearch } from '@pages/checkout/hooks/useGuestAddressSearch/useGuestAddressSearch'
 import { brl } from '@utils/money'
 
 import { DisclosureTrigger } from '../DisclosureTrigger/DisclosureTrigger'
 
 import styles from './DeliveryAddressFields.module.css'
+
+type AddressEntryMode = 'zipCode' | 'street' | 'manual'
 
 /** WHY: apresenta a zona e o endereço adequado ao tipo de cliente. */
 export const DeliveryAddressFields = ({
@@ -23,6 +33,7 @@ export const DeliveryAddressFields = ({
   checkout?: CheckoutFacade
 }) => {
   const {
+    form,
     control,
     register,
     errors,
@@ -31,10 +42,75 @@ export const DeliveryAddressFields = ({
     isAuthenticated,
     addresses,
   } = useCheckoutFacade(checkout)
+  const { mutate: lookupAddress, isPending: isLookingUpAddress } =
+    useGuestAddressLookup()
+  const [lookupStatus, setLookupStatus] = useState<
+    'idle' | 'done' | 'notFound'
+  >('idle')
+  const [entryMode, setEntryMode] = useState<AddressEntryMode>('zipCode')
+  const zipCodeField = register('guestZipCode', {
+    required: 'Informe o CEP',
+  })
+  const guestZipCode = useWatch({ control, name: 'guestZipCode' })
+  const guestStreet = useWatch({ control, name: 'guestStreet' })
+  const guestCity = useWatch({ control, name: 'guestCity' })
+  const guestState = useWatch({ control, name: 'guestState' })
+  const { suggestions, isSearching: isSearchingStreet } =
+    useGuestAddressSearch(guestCity, guestState, guestStreet)
+  const hasDeliveryQuote =
+    !!quote && !isLookingUpAddress && !isQuoting
+
+  const applySuggestion = (zipCode: string) => {
+    const suggestion = suggestions.find((item) => item.zipCode === zipCode)
+    if (!suggestion) return
+
+    const options = { shouldDirty: true, shouldValidate: true }
+    form.setValue('guestZipCode', suggestion.zipCode, options)
+    form.setValue('guestStreet', suggestion.street, options)
+    form.setValue('guestNeighborhood', suggestion.neighborhood, options)
+    form.setValue('guestCity', suggestion.city, options)
+    form.setValue('guestState', suggestion.state, options)
+    form.setFocus('guestNumber')
+  }
+
+  const handleZipCodeChange = (event: ChangeEvent<HTMLInputElement>) => {
+    void zipCodeField.onChange(event)
+    const zipCode = event.target.value
+
+    if (onlyDigits(zipCode).length !== 8) {
+      setLookupStatus('idle')
+      return
+    }
+
+    lookupAddress(zipCode, {
+      onSuccess: (found) => {
+        if (!found) {
+          setLookupStatus('notFound')
+          return
+        }
+
+        const current = form.getValues()
+        const options = { shouldDirty: true, shouldValidate: true }
+        setLookupStatus('done')
+        form.setValue('guestStreet', found.street || current.guestStreet, options)
+        form.setValue(
+          'guestNeighborhood',
+          found.neighborhood || current.guestNeighborhood,
+          options
+        )
+        form.setValue('guestCity', found.city || current.guestCity, options)
+        form.setValue('guestState', found.state || current.guestState, options)
+        form.setFocus('guestNumber')
+      },
+      onError: () => setLookupStatus('notFound'),
+    })
+  }
 
   return (
     <Box className={styles.block}>
-      <Text className={styles.blockLabel}>Onde entregar</Text>
+      <Heading level={2} size="md" className={styles.blockLabel}>
+        Endereço de entrega
+      </Heading>
 
       <FormField error={errors.deliveryZoneId?.message}>
         <Controller
@@ -42,13 +118,35 @@ export const DeliveryAddressFields = ({
           control={control}
           rules={{ required: 'Informe um CEP atendido pela loja' }}
           render={() => (
-            <Text color={quote ? 'default' : 'subtle'} aria-live="polite">
-              {isQuoting
-                ? 'Calculando a taxa de entrega…'
-                : quote
-                  ? `${quote.name} · ${brl(quote.fee)}`
-                  : 'Informe o CEP para calcular a taxa de entrega.'}
-            </Text>
+            <Box
+              direction="row"
+              align="center"
+              gap={2}
+              className={`${styles.lookupStatus} ${
+                hasDeliveryQuote ? styles.deliveryConfirmed : ''
+              }`}
+              aria-live="polite"
+            >
+              <Spinner
+                visible={isLookingUpAddress || isQuoting}
+                label="Buscando endereço e entrega"
+              />
+              {hasDeliveryQuote ? (
+                <Text as="span" className={styles.deliveryFee}>
+                  Taxa de entrega · {brl(quote.fee)}
+                </Text>
+              ) : (
+                <Text color="subtle">
+                  {isLookingUpAddress
+                    ? 'Buscando endereço pelo CEP…'
+                    : isQuoting
+                      ? 'Calculando a taxa de entrega…'
+                      : lookupStatus === 'done'
+                        ? 'Endereço preenchido. Verificando a entrega…'
+                        : 'Informe o CEP para buscar o endereço e a entrega.'}
+                </Text>
+              )}
+            </Box>
           )}
         />
       </FormField>
@@ -68,7 +166,8 @@ export const DeliveryAddressFields = ({
                 options={addresses.map((address) => ({
                   value: address.id,
                   label: `${address.street}, ${address.number}`,
-                  description: `${address.neighborhood} · ${address.city}/` +
+                  description:
+                    `${address.neighborhood} · ${address.city}/` +
                     address.state,
                 }))}
               />
@@ -77,40 +176,142 @@ export const DeliveryAddressFields = ({
         </FormField>
       ) : (
         <>
-          <MaskedInput
-            mask={maskZipCode}
-            placeholder="CEP"
-            aria-label="CEP"
-            autoComplete="postal-code"
-            {...register('guestZipCode', { required: 'Informe o CEP' })}
-          />
+          <Box
+            role="tablist"
+            aria-label="Como encontrar o endereço"
+            className={styles.entryModes}
+          >
+            {[
+              { value: 'zipCode', label: 'Por CEP' },
+              { value: 'street', label: 'Logradouro' },
+              { value: 'manual', label: 'Manual' },
+            ].map(({ value, label }) => (
+              <Button
+                key={value}
+                type="button"
+                variant="ghost"
+                size="sm"
+                role="tab"
+                aria-selected={entryMode === value}
+                onClick={() => setEntryMode(value as AddressEntryMode)}
+                className={
+                  entryMode === value ? styles.entryModeActive : styles.entryMode
+                }
+              >
+                {label}
+              </Button>
+            ))}
+          </Box>
 
-          <Box className={styles.row}>
+          {entryMode !== 'street' && (
+            <Box className={styles.zipRow}>
+              <FormField
+                error={
+                  lookupStatus === 'notFound'
+                    ? 'CEP não encontrado. Preencha o endereço.'
+                    : errors.guestZipCode?.message
+                }
+              >
+                <MaskedInput
+                  {...zipCodeField}
+                  mask={maskZipCode}
+                  placeholder="CEP"
+                  aria-label="CEP"
+                  autoComplete="postal-code"
+                  inputMode="numeric"
+                  onChange={
+                    entryMode === 'zipCode'
+                      ? handleZipCodeChange
+                      : zipCodeField.onChange
+                  }
+                />
+              </FormField>
+              <FormField error={errors.guestNumber?.message}>
+                <Input
+                  placeholder="Nº"
+                  aria-label="Número"
+                  inputMode="numeric"
+                  error={!!errors.guestNumber}
+                  {...register('guestNumber', { required: 'Informe o nº' })}
+                />
+              </FormField>
+            </Box>
+          )}
+
+          {entryMode === 'street' && (
+            <>
+              <Box className={styles.row}>
+                <Input
+                  placeholder="Cidade"
+                  aria-label="Cidade"
+                  autoComplete="address-level2"
+                  error={!!errors.guestCity}
+                  {...register('guestCity', { required: 'Informe a cidade' })}
+                />
+                <Input
+                  placeholder="UF"
+                  aria-label="Estado"
+                  autoComplete="address-level1"
+                  maxLength={2}
+                  error={!!errors.guestState}
+                  {...register('guestState', { required: 'Informe o estado' })}
+                />
+              </Box>
+              <Box className={styles.streetSearchRow}>
+                <Combobox
+                  options={suggestions.map((suggestion) => ({
+                    value: suggestion.zipCode,
+                    label: `${suggestion.street} · ${suggestion.neighborhood}`,
+                  }))}
+                  value={guestZipCode}
+                  inputValue={guestStreet}
+                  placeholder="Digite o logradouro"
+                  ariaLabel="Logradouro"
+                  loading={isSearchingStreet}
+                  emptyMessage={
+                    (guestStreet?.trim().length ?? 0) >= 3
+                      ? 'Nenhum endereço encontrado'
+                      : 'Digite pelo menos 3 caracteres'
+                  }
+                  onInputValueChange={(street) =>
+                    form.setValue('guestStreet', street, { shouldDirty: true })
+                  }
+                  onValueChange={applySuggestion}
+                />
+                <FormField error={errors.guestNumber?.message}>
+                  <Input
+                    placeholder="Nº"
+                    aria-label="Número"
+                    inputMode="numeric"
+                    error={!!errors.guestNumber}
+                    {...register('guestNumber', { required: 'Informe o nº' })}
+                  />
+                </FormField>
+              </Box>
+            </>
+          )}
+
+          {entryMode !== 'street' && (
             <FormField error={errors.guestStreet?.message}>
               <Input
-                placeholder="Rua"
-                aria-label="Rua"
+                placeholder="Endereço"
+                aria-label="Endereço"
                 autoComplete="address-line1"
+                disabled={isLookingUpAddress}
                 error={!!errors.guestStreet}
-                {...register('guestStreet', { required: 'Informe a rua' })}
+                {...register('guestStreet', {
+                  required: 'Informe o endereço',
+                })}
               />
             </FormField>
-            <FormField error={errors.guestNumber?.message}>
-              <Input
-                placeholder="Nº"
-                aria-label="Número"
-                inputMode="numeric"
-                error={!!errors.guestNumber}
-                {...register('guestNumber', { required: 'Informe o nº' })}
-              />
-            </FormField>
-          </Box>
+          )}
 
           <FormField error={errors.guestNeighborhood?.message}>
             <Input
               placeholder="Bairro"
               aria-label="Bairro"
               autoComplete="address-level3"
+              disabled={isLookingUpAddress}
               error={!!errors.guestNeighborhood}
               {...register('guestNeighborhood', {
                 required: 'Informe o bairro',
@@ -118,12 +319,13 @@ export const DeliveryAddressFields = ({
             />
           </FormField>
 
-          {!isAuthenticated && (
+          {entryMode !== 'street' && (
             <Box className={styles.row}>
               <Input
                 placeholder="Cidade"
                 aria-label="Cidade"
                 autoComplete="address-level2"
+                disabled={isLookingUpAddress}
                 error={!!errors.guestCity}
                 {...register('guestCity', { required: 'Informe a cidade' })}
               />
@@ -131,6 +333,7 @@ export const DeliveryAddressFields = ({
                 placeholder="UF"
                 aria-label="Estado"
                 autoComplete="address-level1"
+                disabled={isLookingUpAddress}
                 error={!!errors.guestState}
                 {...register('guestState', { required: 'Informe o estado' })}
               />

@@ -56,7 +56,7 @@ describe('SignInCodeForm', () => {
 
     // Act
     await userEvent.click(
-      screen.getByRole('button', { name: 'Usar outro telefone' })
+      screen.getByRole('button', { name: 'Usar outro celular' })
     )
 
     // Assert

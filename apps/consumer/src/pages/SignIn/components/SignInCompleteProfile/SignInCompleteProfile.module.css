@@ -1,0 +1,36 @@
+@reference "@nino/ds/globals.css";
+
+.title {
+  @apply mt-8 text-center font-display text-[1.65rem] font-extrabold;
+  @apply leading-[1.15] text-fg-strong sm:text-[1.85rem];
+  letter-spacing: -0.025em;
+  text-wrap: balance;
+}
+
+.subtitle {
+  @apply mt-2.5 text-center leading-relaxed text-fg-default;
+}
+
+.field {
+  @apply mt-5;
+}
+
+.alert {
+  @apply mt-4;
+}
+
+.cta {
+  @apply mt-6 h-14 w-full rounded-full text-base font-bold;
+}
+
+.cta:not(:disabled) {
+  background: var(--store-tint, var(--color-brand));
+}
+
+.cta:not(:disabled):hover {
+  background: color-mix(
+    in srgb,
+    var(--store-tint, var(--color-brand)) 88%,
+    black
+  );
+}

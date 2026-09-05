@@ -1,5 +1,6 @@
 import type { Customer } from '@custom_types/customer/customer'
 import type { UpdateMyProfileRequest } from '@custom_types/customer/update-my-profile-request'
+import type { LinkPhoneRequest } from '@shared/types/customer/link-phone-request'
 import type { OtpCredentials } from '@shared/types/customer/otp-credentials'
 import { api } from '@shared/services/http/http.service'
 
@@ -21,6 +22,22 @@ export const customerAuthService = {
     api.create<OtpCredentials & { code: string }, Customer>(
       'customer/auth/otp/verify',
       { ...credentials, code }
+    ),
+  signInWithGoogle: (idToken: string): Promise<Customer> =>
+    api.create<{ idToken: string }, Customer>('customer/auth/google', {
+      idToken,
+    }),
+  requestPhoneLink: (data: LinkPhoneRequest): Promise<{ message: string }> =>
+    api.create<LinkPhoneRequest, { message: string }>(
+      'customer/auth/phone/link/request',
+      data
+    ),
+  verifyPhoneLink: (
+    data: LinkPhoneRequest & { code: string }
+  ): Promise<Customer> =>
+    api.create<LinkPhoneRequest & { code: string }, Customer>(
+      'customer/auth/phone/link/verify',
+      data
     ),
   getMe: (): Promise<Customer> => api.get<Customer>('my/customer'),
   updateMyProfile: (data: UpdateMyProfileRequest): Promise<Customer> =>

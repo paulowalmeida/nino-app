@@ -28,9 +28,9 @@ type MenuItemCardProps = {
 }
 
 /**
- * O item do cardápio. Abaixo de 640 é uma linha larga com a foto à direita;
- * na grade a foto sobe para o topo e o card vira vertical. O botão de abrir
- * cobre foto e texto, e o somar fica sempre no mesmo canto.
+ * O item do cardápio: sempre uma linha com a foto à esquerda, em todo
+ * breakpoint. O botão de abrir cobre foto e texto, e o somar fica sempre no
+ * mesmo canto.
  */
 export const MenuItemCard = ({
   item,

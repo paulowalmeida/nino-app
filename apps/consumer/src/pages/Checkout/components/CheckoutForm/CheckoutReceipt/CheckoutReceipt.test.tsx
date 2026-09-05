@@ -29,14 +29,7 @@ describe('CheckoutReceipt', () => {
 
     render(<CheckoutReceipt />)
 
-    expect(
-      screen.getByText(
-        (_, element) =>
-          element?.textContent?.includes('2') === true &&
-          element.textContent.includes('itens') === true &&
-          element.textContent.includes('Seu pedido') === false
-      )
-    ).toBeInTheDocument()
-    expect(screen.getByText('Seu pedido')).toBeInTheDocument()
+    expect(screen.getByRole('button')).toHaveTextContent('2 itens')
+    expect(screen.getByText('Resumo do pedido')).toBeInTheDocument()
   })
 })

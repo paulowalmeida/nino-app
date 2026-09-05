@@ -13,7 +13,7 @@ const facadeWith = (overrides: Record<string, unknown>) =>
   vi.mocked(useSignInFacade).mockReturnValue({
     home: '/',
     store: undefined,
-    step: 'identify',
+    step: 'method',
     channel: 'phone',
     setChannel: vi.fn(),
     phone: '',
@@ -29,13 +29,19 @@ const facadeWith = (overrides: Record<string, unknown>) =>
     isVerifying: false,
     verifyFailed: false,
     goToIdentify: vi.fn(),
+    goToMethods: vi.fn(),
+    setGoogleDraft: vi.fn(),
+    googleDraft: null,
+    signInWithGoogle: vi.fn(),
+    isSigningInWithGoogle: false,
+    googleFailed: false,
     reset: vi.fn(),
     ...overrides,
   } as unknown as ReturnType<typeof useSignInFacade>)
 
 describe('SignIn', () => {
-  it('renders the identify step first', () => {
-    facadeWith({ step: 'identify' })
+  it('renders the method choice first', () => {
+    facadeWith({ step: 'method' })
 
     render(
       <MemoryRouter>
@@ -43,7 +49,7 @@ describe('SignIn', () => {
       </MemoryRouter>
     )
 
-    expect(screen.getByText('Passo 1 de 2')).toBeInTheDocument()
+    expect(screen.getByText(signInMock.identifyTitle)).toBeInTheDocument()
     expect(screen.queryByText('Digite o código')).not.toBeInTheDocument()
   })
 
@@ -57,7 +63,7 @@ describe('SignIn', () => {
     )
 
     expect(screen.getByText('Digite o código')).toBeInTheDocument()
-    expect(screen.queryByText('Passo 1 de 2')).not.toBeInTheDocument()
+    expect(screen.queryByText(signInMock.identifyTitle)).not.toBeInTheDocument()
   })
 
   it('tints the shell with the store color once the store loads', () => {

@@ -1,12 +1,12 @@
 import { renderHook } from '@testing-library/react'
 import { describe, expect, it, vi } from 'vitest'
 
-import { useCompleteProfile } from '@pages/Profile/hooks/useCompleteProfile/useCompleteProfile'
+import { useCompleteProfile } from '@shared/hooks/useCompleteProfile/useCompleteProfile'
 import { useCustomerSession } from '@shared/hooks/useCustomerSession/useCustomerSession'
 import { useProfileFacade } from './useProfileFacade'
 import { useProfileFacadeMock } from './useProfileFacade.mock'
 
-vi.mock('@pages/Profile/hooks/useCompleteProfile/useCompleteProfile')
+vi.mock('@shared/hooks/useCompleteProfile/useCompleteProfile')
 vi.mock('@shared/hooks/useCustomerSession/useCustomerSession')
 
 describe('useProfileFacade', () => {

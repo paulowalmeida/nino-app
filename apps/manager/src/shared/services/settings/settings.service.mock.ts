@@ -4,6 +4,7 @@ export const tenantSettingsMock = {
   isDeliveryEnabled: true,
   isPickupEnabled: true,
   isCounterEnabled: true,
+  showAddressOnStoreInfo: true,
   allowGuestOrder: true,
   requireCpf: false,
   minOrderAmount: 20,

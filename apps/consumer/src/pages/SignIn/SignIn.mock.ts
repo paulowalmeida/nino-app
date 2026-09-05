@@ -1,4 +1,5 @@
 export const signInMock = {
+  identifyTitle: 'Bora pedir?',
   store: {
     customName: 'Padaria Boa',
     company: { name: 'Padaria Boa Ltda' },

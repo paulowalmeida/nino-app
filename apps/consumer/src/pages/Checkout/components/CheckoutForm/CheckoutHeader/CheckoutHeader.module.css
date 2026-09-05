@@ -1,20 +1,31 @@
 @reference "@nino/ds/globals.css";
 
 .header {
-  @apply sticky top-0 z-sticky flex items-center gap-3 border-b;
-  @apply border-border;
-  @apply bg-surface-page/90 px-5 py-3.5 backdrop-blur-md;
-  @apply lg:rounded-t-5;
+  @apply sticky top-0 z-sticky flex items-center gap-3 border-b border-border;
+  @apply bg-surface-page px-4 py-3 sm:px-6;
 }
 
 .back {
   @apply flex h-11 w-11 shrink-0 items-center justify-center rounded-full;
-  @apply border border-black/[0.08] bg-surface-page text-fg-muted;
+  @apply border border-border bg-surface-raised text-fg-muted;
   @apply transition-colors duration-150;
-  @apply hover:border-accent-peach hover:text-brand-strong;
+  @apply hover:border-brand hover:text-brand-strong;
   @apply focus-visible:outline-none focus-visible:ring-2;
   @apply focus-visible:ring-brand focus-visible:ring-offset-2;
   @apply focus-visible:ring-offset-surface-1;
+}
+
+.storeMark {
+  @apply flex h-10 w-10 shrink-0 items-center justify-center overflow-hidden;
+  @apply rounded-3 bg-brand text-fg-on-brand;
+}
+
+.logo {
+  @apply h-full w-full object-cover;
+}
+
+.logoFallback {
+  @apply font-display text-sm font-extrabold;
 }
 
 .headText {
@@ -22,10 +33,20 @@
 }
 
 .title {
-  @apply truncate font-display text-lg font-extrabold leading-tight;
+  @apply truncate font-display text-xl font-extrabold leading-tight;
   @apply text-fg-strong;
 }
 
 .storeLine {
-  @apply truncate text-xs text-fg-faint;
+  @apply truncate text-sm text-fg-muted;
+}
+
+@media (min-width: 1024px) {
+  .header {
+    @apply px-0 py-5;
+  }
+
+  .back {
+    @apply mr-1;
+  }
 }

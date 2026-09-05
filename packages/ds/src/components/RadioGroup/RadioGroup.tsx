@@ -10,6 +10,8 @@ type RadioOption = {
   label: string
   /** Supporting line under the label — a price, a delay, a consequence. */
   description?: string
+  /** Optional value aligned to the right of the option. */
+  trailing?: string
   disabled?: boolean
 }
 
@@ -125,6 +127,10 @@ export function RadioGroup({
             <ArkRadioGroup.ItemText className={styles.labelText}>
               {option.label}
             </ArkRadioGroup.ItemText>
+          )}
+
+          {option.trailing && (
+            <span className={styles.trailing}>{option.trailing}</span>
           )}
 
           <ArkRadioGroup.ItemHiddenInput ref={index === 0 ? ref : undefined} />

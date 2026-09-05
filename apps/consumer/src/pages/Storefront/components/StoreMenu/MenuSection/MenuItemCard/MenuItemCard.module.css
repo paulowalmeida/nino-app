@@ -1,12 +1,6 @@
 @reference "@nino/ds/globals.css";
 
 /*
- * WHY: um DOM, duas composições. A foto fica sempre à esquerda; o que muda é
- * se ela ocupa uma coluna da linha ou o topo do card. Entre 640 e 1024 há duas
- * colunas estreitas e a foto sobe para o topo, onde ganha área; fora dessa
- * faixa o item é uma linha e a foto abre a leitura pela esquerda.
- */
-/*
  * A superfície, o anel e a elevação vêm do `Card` do Design System. Aqui fica
  * só o que é do cardápio: o canto mais largo que o padrão e o realce na cor da
  * loja ao passar o mouse.
@@ -56,15 +50,9 @@
  * não um link escondido no nome.
  */
 .open {
-  @apply flex w-full cursor-pointer appearance-none gap-3 border-0 bg-transparent;
-  @apply p-0 text-left;
+  @apply flex w-full cursor-pointer appearance-none gap-3 border-0;
+  @apply bg-transparent p-0 text-left;
   @apply flex-row items-stretch;
-  @apply sm:flex-col sm:gap-0;
-  /* WHY: com duas colunas numa coluna de 1280px o card tem 630px. Vertical,
-     a foto viraria um pôster de 420px de altura — então a partir de lg ele
-     volta à composição de linha, com a foto à esquerda abrindo a leitura e o
-     texto ocupando a largura restante. */
-  @apply lg:flex-row lg:items-stretch lg:gap-4;
   height: auto;
   border-radius: inherit;
 }
@@ -87,8 +75,7 @@
 .media {
   @apply relative shrink-0 overflow-hidden rounded-3 bg-surface-cool;
   @apply h-28 w-28;
-  @apply sm:aspect-[3/2] sm:h-auto sm:w-full;
-  @apply lg:aspect-auto lg:h-36 lg:w-36;
+  @apply lg:h-36 lg:w-36;
 }
 
 .photo {
@@ -103,7 +90,7 @@
 }
 
 .body {
-  @apply flex min-w-0 flex-1 flex-col pr-10 sm:pr-10 sm:pt-3 lg:pt-0;
+  @apply flex min-w-0 flex-1 flex-col pr-10;
 }
 
 .name {
@@ -134,16 +121,13 @@
   font-variant-numeric: tabular-nums;
 }
 
-/*
- * WHY: o somar fica no mesmo canto nas duas composições, mas no celular ele
- * encosta na quina da foto em vez de cobrir o meio dela — o anel branco é o
- * que separa o controle da comida.
- */
+/* o somar fica no mesmo canto do card em todo breakpoint; o anel branco
+   separa o controle da foto por baixo dele. */
 .add {
   @apply absolute bottom-2 right-2 z-content flex h-9 w-9 items-center;
   @apply justify-center rounded-full border-0 text-fg-on-brand;
   @apply ring-2 ring-surface-page;
-  @apply sm:bottom-3 sm:right-3 sm:h-10 sm:w-10 sm:ring-0;
+  @apply sm:bottom-3 sm:right-3 sm:h-10 sm:w-10;
   background-color: var(--store-tint, var(--color-brand));
   box-shadow: 0 4px 12px -4px color-mix(in srgb, var(--store-tint, var(--color-brand)) 55%, transparent);
   transition: transform var(--duration-fast) var(--ease-out), filter var(--duration-fast) var(--ease-out);

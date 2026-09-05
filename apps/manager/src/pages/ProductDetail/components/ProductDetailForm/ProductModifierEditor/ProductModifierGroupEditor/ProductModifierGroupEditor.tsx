@@ -5,7 +5,6 @@ import { Button } from '@nino/ds/components/Button'
 import { FormField } from '@nino/ds/components/FormField'
 import { Input } from '@nino/ds/components/Input'
 import { Select } from '@nino/ds/components/Select'
-import { Text } from '@nino/ds/components/Text'
 import type { ProductDetailFormValues } from '@pages/ProductDetail/types/ProductDetailFormValues.type'
 
 import styles from './ProductModifierGroupEditor.module.css'
@@ -33,9 +32,6 @@ export const ProductModifierGroupEditor = ({
   return (
     <Box className={styles.group}>
       <Box direction="row" className={styles.groupHeader}>
-        <Text as="p" className={styles.groupTitle}>
-          Seção {groupIndex + 1}
-        </Text>
         <Button type="button" variant="ghost" size="sm" onClick={removeGroup}>
           Remover seção
         </Button>
@@ -103,7 +99,10 @@ export const ProductModifierGroupEditor = ({
                 )}
               />
             </FormField>
-            <FormField label="Preço" className={styles.optionPrice}>
+            <FormField
+              label="Preço adicional (opcional)"
+              className={styles.optionPrice}
+            >
               <Input
                 inputMode="decimal"
                 {...register(

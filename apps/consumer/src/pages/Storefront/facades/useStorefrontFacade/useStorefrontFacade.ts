@@ -47,6 +47,8 @@ export const useStorefrontFacade = (requestedSlug?: string) => {
     hours: hoursQuery.hours,
     isHoursPending: hoursQuery.isPending,
     estimatedMinutes: settingsQuery.estimatedMinutes,
+    showAddressOnStoreInfo:
+      settingsQuery.settings?.showAddressOnStoreInfo ?? true,
     ...cart,
     ...menuItemAction,
     ...menuSections,

@@ -31,6 +31,7 @@ export const useCheckoutFacadeValue = (pathSlug?: string | null) => {
     cartLines,
     estimatedMinutes: settingsQuery.estimatedMinutes,
     paymentOptions: settingsQuery.settings?.acceptedPaymentMethods,
+    minimumOrderAmount: settingsQuery.settings?.minOrderAmount,
     clearCart: cart.clear,
     slug,
   })

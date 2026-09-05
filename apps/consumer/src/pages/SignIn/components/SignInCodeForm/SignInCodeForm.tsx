@@ -42,26 +42,12 @@ export const SignInCodeForm = () => {
       style={riseDelay(60)}
       onSubmit={handleSubmit}
     >
-      <Text
-        size="xs"
-        weight="bold"
-        case="uppercase"
-        color="faintest"
-        className="mt-9 text-2xs tracking-[0.16em]"
-      >
-        Passo 2 de 2
-      </Text>
-      <Heading
-        level={1}
-        color="muted"
-        className="mt-2 font-display text-[1.75rem] font-extrabold
-          leading-tight"
-      >
+      <Heading level={1} className={styles.title}>
         Digite o código
       </Heading>
-      <Text size="sm" color="muted" className="mt-2.5 leading-relaxed">
+      <Text size="sm" className={styles.subtitle}>
         Enviamos para{' '}
-        <Text as="span" weight="bold" color="muted">
+        <Text as="span" weight="bold" color="strong">
           {sentTo}
         </Text>
         . Ele vale por poucos minutos.
@@ -106,7 +92,7 @@ export const SignInCodeForm = () => {
         className={`${motion.press} ${styles.secondary}`}
         onClick={goToIdentify}
       >
-        {isEmail ? 'Usar outro e-mail' : 'Usar outro telefone'}
+        {isEmail ? 'Usar outro e-mail' : 'Usar outro celular'}
       </Button>
     </Box>
   )

@@ -1,15 +1,11 @@
 @reference "@nino/ds/globals.css";
 
 .group {
-  @apply flex flex-col gap-4 rounded-2xl bg-surface-2 p-4;
+  @apply flex flex-col gap-4;
 }
 
 .groupHeader {
-  @apply items-center justify-between gap-3;
-}
-
-.groupTitle {
-  @apply text-sm font-semibold text-fg-strong;
+  @apply justify-end gap-3;
 }
 
 .groupFields {

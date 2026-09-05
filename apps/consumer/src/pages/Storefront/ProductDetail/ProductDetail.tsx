@@ -1,3 +1,6 @@
+import { useLayoutEffect } from 'react'
+import { useParams } from 'react-router'
+
 import { Box } from '@nino/ds/components/Box'
 
 import { ProductAddBar } from './components/ProductAddBar/ProductAddBar'
@@ -12,8 +15,13 @@ import { ProductDetailSkeleton } from './skeletons/ProductDetailSkeleton/Product
 import styles from './ProductDetail.module.css'
 
 export const ProductDetail = () => {
+  const { productId } = useParams()
   const { product, isProductPending, isProductError, isStorePending } =
     useProductDetailFacade()
+
+  useLayoutEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: 'auto' })
+  }, [productId])
 
   if (isStorePending || isProductPending) return <ProductDetailSkeleton />
   if (isProductError || !product) return <ProductUnavailable />

@@ -14,7 +14,7 @@
 }
 
 .identity {
-  @apply flex min-w-0 flex-col;
+  @apply min-w-0 flex-1;
 }
 
 .name {
@@ -22,6 +22,6 @@
 }
 
 .price {
-  @apply mt-0.5 text-sm text-fg-subtle;
+  @apply shrink-0 text-sm text-fg-subtle;
   font-variant-numeric: tabular-nums;
 }

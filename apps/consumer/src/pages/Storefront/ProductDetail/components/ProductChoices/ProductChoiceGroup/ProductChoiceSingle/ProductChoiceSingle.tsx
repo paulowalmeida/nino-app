@@ -21,7 +21,7 @@ export const ProductChoiceSingle = ({ group }: ProductChoiceSingleProps) => {
       options={group.options.map((option) => ({
         value: option.id,
         label: option.name,
-        description:
+        trailing:
           Number(option.price) > 0
             ? `${group.role !== 'COMPOSITION' ? '+ ' : ''}${brl(option.price)}`
             : undefined,

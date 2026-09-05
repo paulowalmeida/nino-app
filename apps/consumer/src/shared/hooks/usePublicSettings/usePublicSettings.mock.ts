@@ -5,5 +5,6 @@ export const usePublicSettingsMock: { settings: PublicTenantSettings } = {
     acceptedPaymentMethods: ['CASH'],
     preparationMinutes: 20,
     deliveryMinutes: 35,
+    minOrderAmount: 0,
   },
 }

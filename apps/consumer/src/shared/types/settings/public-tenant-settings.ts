@@ -4,4 +4,6 @@ export type PublicTenantSettings = {
   acceptedPaymentMethods: PaymentMethod[]
   preparationMinutes: number
   deliveryMinutes: number
+  showAddressOnStoreInfo?: boolean
+  minOrderAmount: number
 }

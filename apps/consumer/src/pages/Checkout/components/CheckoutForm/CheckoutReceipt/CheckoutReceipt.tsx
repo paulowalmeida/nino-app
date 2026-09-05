@@ -10,7 +10,6 @@ import { cartItemPrice } from '@utils/cart-item-price/cart-item-price'
 
 import styles from './CheckoutReceipt.module.css'
 
-/** A comanda dobrável: item a item, com o total no rodapé. */
 export const CheckoutReceipt = ({
   checkout,
 }: {
@@ -18,7 +17,9 @@ export const CheckoutReceipt = ({
 }) => {
   const { cartLines, subtotal, isDelivery, zone, deliveryFee } =
     useCheckoutFacade(checkout)
-  const [isOpen, setIsOpen] = useState(false)
+  const [isOpen, setIsOpen] = useState(
+    () => window.matchMedia?.('(min-width: 1024px)').matches ?? false
+  )
   const itemCount = cartLines.reduce((total, line) => total + line.quantity, 0)
   const hasZone = !!zone
 
@@ -31,11 +32,10 @@ export const CheckoutReceipt = ({
         <>
           <Text as="span" className={styles.head}>
             <Text as="span" className={styles.label}>
-              Seu pedido
+              Resumo do pedido
             </Text>
             <Text as="span" className={styles.count}>
-              {itemCount} {itemCount === 1 ? 'item' : 'itens'} ·{' '}
-              {brl(subtotal)}
+              {itemCount} {itemCount === 1 ? 'item' : 'itens'} · {brl(subtotal)}
             </Text>
           </Text>
           <Text as="span" className={styles.toggle}>
@@ -46,7 +46,7 @@ export const CheckoutReceipt = ({
     >
       <Box className={styles.items}>
         {cartLines.map(({ id, item, quantity }) => (
-          <Text as="p" key={id} className={styles.item}>
+          <Text as="p" key={id ?? item.id} className={styles.item}>
             <Text as="span" className={styles.name}>
               <Text as="span" className={styles.qty}>
                 {quantity}×

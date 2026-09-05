@@ -76,6 +76,14 @@ describe(RadioGroup.name, () => {
     expect(screen.queryByText('nota')).not.toBeInTheDocument()
   })
 
+  it('renders an optional trailing value on row options', () => {
+    render(
+      <RadioGroup options={[{ value: 'a', label: 'A', trailing: 'R$ 4,00' }]} />
+    )
+
+    expect(screen.getByText('R$ 4,00')).toBeInTheDocument()
+  })
+
   it('selects a card option by click', async () => {
     const onValueChange = vi.fn()
     render(

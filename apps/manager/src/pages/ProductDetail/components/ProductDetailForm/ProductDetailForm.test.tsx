@@ -1,4 +1,4 @@
-import { render, screen, waitFor } from '@testing-library/react'
+import { render, screen, waitFor, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 
@@ -34,6 +34,11 @@ const mockForm = (item: typeof menuItemMock | null) =>
 const nameField = () =>
   screen.getByLabelText(productDetailFormMock.nameLabel) as HTMLInputElement
 
+const priceField = () =>
+  within(screen.getByRole('tabpanel', { name: 'Preço' })).getByLabelText(
+    productDetailFormMock.priceLabel
+  ) as HTMLInputElement
+
 const submit = async () =>
   userEvent.click(
     screen.getByRole('button', { name: productDetailFormMock.submitLabel })
@@ -50,10 +55,8 @@ describe('ProductDetailForm', () => {
     render(<ProductDetailForm />)
 
     await waitFor(() => expect(nameField().value).toBe(menuItemMock.name))
-    expect(
-      (screen.getByLabelText(productDetailFormMock.priceLabel) as HTMLInputElement)
-        .value
-    ).toBe('24,90')
+    await userEvent.click(screen.getByRole('tab', { name: 'Preço' }))
+    expect(priceField().value).toBe('24,90')
     expect(
       screen.getByLabelText(productDetailFormMock.availabilityLabel)
     ).toBeInTheDocument()
@@ -100,7 +103,8 @@ describe('ProductDetailForm', () => {
     render(<ProductDetailForm />)
     await waitFor(() => expect(nameField().value).toBe(menuItemMock.name))
 
-    const price = screen.getByLabelText(productDetailFormMock.priceLabel)
+    await userEvent.click(screen.getByRole('tab', { name: 'Preço' }))
+    const price = priceField()
     await userEvent.clear(price)
     await userEvent.type(price, '0,00')
     await submit()
@@ -118,9 +122,8 @@ describe('ProductDetailForm', () => {
     } as typeof menuItemMock)
     render(<ProductDetailForm />)
 
-    await waitFor(() =>
-      expect(screen.getByLabelText(productDetailFormMock.priceLabel)).toBeDisabled()
-    )
+    await userEvent.click(screen.getByRole('tab', { name: 'Preço' }))
+    await waitFor(() => expect(priceField()).toBeDisabled())
     expect(
       screen.getByText(
         'O total será a soma das escolhas de composição e dos adicionais.'

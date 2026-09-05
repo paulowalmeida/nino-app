@@ -2,7 +2,13 @@ import { describe, expect, it, vi } from 'vitest'
 
 import type { SetSignInState } from '@pages/sign-in/types/SetSignInState.type'
 
-import { goToCode, goToIdentify } from './step'
+import {
+  goToCode,
+  goToCompletePhoneCode,
+  goToCompleteProfile,
+  goToIdentify,
+  goToMethods,
+} from './step'
 import { stepMock } from './step.mock'
 
 describe('step operations', () => {
@@ -15,16 +21,51 @@ describe('step operations', () => {
     expect(set).toHaveBeenCalledWith({ step: stepMock.codeStep })
   })
 
-  it('returns to the identify step and clears the code draft', () => {
+  it('returns to the field of the chosen channel', () => {
     // Arrange
     const set = vi.fn() as unknown as SetSignInState
     // Act
     goToIdentify(set)
     // Assert
+    expect(set).toHaveBeenCalledWith({ step: stepMock.identifyStep })
+  })
+
+  it('clears every draft when going back to the method choice', () => {
+    // Arrange
+    const set = vi.fn() as unknown as SetSignInState
+    // Act
+    goToMethods(set)
+    // Assert
     expect(set).toHaveBeenCalledWith({
-      step: stepMock.identifyStep,
+      step: stepMock.methodStep,
       phone: '',
       email: '',
+      code: '',
+    })
+  })
+
+  it('opens the profile completion step with the given name', () => {
+    // Arrange
+    const set = vi.fn() as unknown as SetSignInState
+    // Act
+    goToCompleteProfile(set, stepMock.name)
+    // Assert
+    expect(set).toHaveBeenCalledWith({
+      step: stepMock.completeProfileStep,
+      code: '',
+      phone: '',
+      name: stepMock.name,
+    })
+  })
+
+  it('opens the phone confirmation step with an empty code', () => {
+    // Arrange
+    const set = vi.fn() as unknown as SetSignInState
+    // Act
+    goToCompletePhoneCode(set)
+    // Assert
+    expect(set).toHaveBeenCalledWith({
+      step: stepMock.completePhoneCodeStep,
       code: '',
     })
   })

@@ -5,6 +5,13 @@
   @apply aspect-[4/3] sm:aspect-[16/9];
 }
 
+/* Tablet has enough width to make a 16:9 hero unnecessarily dominant. */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .hero {
+    aspect-ratio: 2.4 / 1;
+  }
+}
+
 .photoWrap,
 .photo {
   @apply h-full w-full object-cover;

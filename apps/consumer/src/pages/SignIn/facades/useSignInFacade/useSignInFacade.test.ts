@@ -1,6 +1,7 @@
 import { renderHook } from '@testing-library/react'
 import { describe, expect, it, vi } from 'vitest'
 
+import { useCustomerSession } from '@shared/hooks/useCustomerSession/useCustomerSession'
 import { useSignInBrand } from '@pages/sign-in/hooks/useSignInBrand/useSignInBrand'
 import { useSignInMutations } from '@pages/sign-in/hooks/useSignInMutations/useSignInMutations'
 import { useSignInStore } from '@pages/sign-in/states/sign-in/sign-in.store'
@@ -11,6 +12,7 @@ import { useSignInFacadeMock } from './useSignInFacade.mock'
 vi.mock('@pages/sign-in/hooks/useSignInBrand/useSignInBrand')
 vi.mock('@pages/sign-in/hooks/useSignInMutations/useSignInMutations')
 vi.mock('@pages/sign-in/states/sign-in/sign-in.store')
+vi.mock('@shared/hooks/useCustomerSession/useCustomerSession')
 
 describe('useSignInFacade', () => {
   it('exposes the brand, client-state fields, and mutation commands', () => {
@@ -20,11 +22,18 @@ describe('useSignInFacade', () => {
     const setChannel = vi.fn()
     const goToCode = vi.fn()
     const goToIdentify = vi.fn()
+    const goToCompleteProfile = vi.fn()
+    const signInWithGoogle = vi.fn()
 
     vi.mocked(useSignInBrand).mockReturnValue({
       home: useSignInFacadeMock.home,
       store: useSignInFacadeMock.store,
     } as unknown as ReturnType<typeof useSignInBrand>)
+
+    vi.mocked(useCustomerSession).mockReturnValue({
+      customer: useSignInFacadeMock.customer,
+      isPending: false,
+    } as unknown as ReturnType<typeof useCustomerSession>)
 
     vi.mocked(useSignInStore).mockReturnValue({
       step: useSignInFacadeMock.step,
@@ -36,8 +45,13 @@ describe('useSignInFacade', () => {
       setEmail: vi.fn(),
       code: useSignInFacadeMock.code,
       setCode: vi.fn(),
+      name: useSignInFacadeMock.name,
+      setName: vi.fn(),
       goToCode,
       goToIdentify,
+      goToMethods: vi.fn(),
+      goToCompleteProfile,
+      goToCompletePhoneCode: vi.fn(),
     } as unknown as ReturnType<typeof useSignInStore>)
 
     vi.mocked(useSignInMutations).mockReturnValue({
@@ -47,23 +61,39 @@ describe('useSignInFacade', () => {
       verifyCode,
       isVerifying: false,
       verifyFailed: false,
+      signInWithGoogle,
+      isSigningInWithGoogle: false,
+      googleFailed: false,
+      requestPhoneCode: vi.fn(),
+      isRequestingPhoneCode: false,
+      requestPhoneCodeFailed: false,
+      verifyPhoneCode: vi.fn(),
+      isVerifyingPhoneCode: false,
+      verifyPhoneCodeFailed: false,
+      finishProfile: vi.fn(),
+      isFinishingProfile: false,
+      finishProfileFailed: false,
+      skipPhone: vi.fn(),
     } as unknown as ReturnType<typeof useSignInMutations>)
 
     // Act
     const { result } = renderHook(() => useSignInFacade())
 
     // Assert
-    expect(useSignInMutations).toHaveBeenCalledWith(
-      useSignInFacadeMock.home,
-      goToCode
-    )
+    expect(useSignInMutations).toHaveBeenCalledWith(useSignInFacadeMock.home, {
+      onCodeRequested: goToCode,
+      goToCompleteProfile,
+      onPhoneCodeRequested: expect.any(Function),
+    })
     expect(result.current.home).toBe(useSignInFacadeMock.home)
     expect(result.current.store).toBe(useSignInFacadeMock.store)
+    expect(result.current.customer).toBe(useSignInFacadeMock.customer)
     expect(result.current.step).toBe(useSignInFacadeMock.step)
     expect(result.current.channel).toBe(useSignInFacadeMock.channel)
     expect(result.current.setChannel).toBe(setChannel)
     expect(result.current.requestCode).toBe(requestCode)
     expect(result.current.verifyCode).toBe(verifyCode)
     expect(result.current.goToIdentify).toBe(goToIdentify)
+    expect(result.current.signInWithGoogle).toBe(signInWithGoogle)
   })
 })

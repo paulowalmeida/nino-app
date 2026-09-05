@@ -1,5 +1,104 @@
 @reference "@nino/ds/globals.css";
 
 .form {
-  @apply flex flex-1 flex-col gap-6 px-5 pb-8 pt-5;
+  @apply mx-auto flex min-h-dvh w-full max-w-7xl flex-col;
+}
+
+.workspace {
+  @apply flex flex-1 flex-col px-4 pb-28 pt-4 sm:px-6;
+}
+
+.summary {
+  display: contents;
+}
+
+.receiptArea {
+  @apply hidden;
+}
+
+.details {
+  @apply order-2 min-w-0;
+}
+
+.stepper {
+  @apply mb-5;
+}
+
+.stepContent {
+  @apply rounded-4 border border-border bg-surface-raised p-5 sm:p-7;
+}
+
+.stepFields {
+  @apply flex flex-col gap-8;
+}
+
+.review {
+  @apply flex flex-col gap-6;
+}
+
+.mobileReceipt {
+  @apply block;
+}
+
+.reviewList {
+  @apply m-0 flex flex-col divide-y divide-border rounded-3 border border-border;
+}
+
+.reviewRow {
+  @apply flex items-start justify-between gap-5 px-4 py-4;
+}
+
+.reviewRow dt {
+  @apply m-0;
+}
+
+.reviewRow dd {
+  @apply m-0 text-right;
+}
+
+.alertsArea {
+  @apply order-3 flex flex-col gap-3 pt-5;
+}
+
+.footerArea {
+  display: contents;
+}
+
+@media (min-width: 1024px) {
+  .form {
+    @apply min-h-dvh px-10 pb-14;
+  }
+
+  .workspace {
+    @apply grid flex-none gap-12 px-0 pb-0 pt-10;
+    grid-template-columns: minmax(0, 1fr) 23rem;
+  }
+
+  .details {
+    @apply order-1 max-w-3xl;
+  }
+
+  .summary {
+    @apply order-2 flex flex-col gap-4 self-start;
+    display: flex;
+    position: sticky;
+    top: 6.75rem;
+  }
+
+  .receiptArea {
+    @apply order-1 mb-0 block;
+  }
+
+  .alertsArea {
+    @apply order-2 pt-0;
+  }
+
+  .footerArea {
+    @apply order-3;
+    display: block;
+  }
+
+  .mobileReceipt {
+    @apply hidden;
+  }
 }

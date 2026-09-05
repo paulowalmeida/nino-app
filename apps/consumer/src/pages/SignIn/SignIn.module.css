@@ -1,19 +1,27 @@
 @reference "@nino/ds/globals.css";
 
+/*
+ * Duas faixas: a fachada da loja e a conversa. No celular elas se empilham —
+ * a mancha colorida no alto, o conteúdo branco embaixo; em tela larga viram
+ * colunas, com a fachada segurando o lado esquerdo.
+ */
 .page {
-  @apply flex min-h-dvh w-full flex-col bg-surface-1 px-5 sm:px-6;
-  background-image: radial-gradient(
-    100% 55% at 50% 0%,
-    color-mix(in srgb, var(--store-tint, var(--color-brand)) 12%, transparent)
-      0%,
-    transparent 58%
-  );
-  padding-top: calc(1.5rem + env(safe-area-inset-top));
+  @apply flex min-h-dvh w-full flex-col bg-surface-raised;
+  @apply lg:grid lg:grid-cols-[minmax(0,24rem)_1fr] lg:items-stretch;
+  @apply xl:grid-cols-[minmax(0,30rem)_1fr];
+}
+
+.content {
+  @apply flex w-full flex-1 flex-col px-5 sm:px-6 lg:justify-center lg:px-0;
   padding-bottom: calc(2.5rem + env(safe-area-inset-bottom));
 }
 
 .shell {
-  @apply mx-auto flex w-full max-w-block-md flex-1 flex-col lg:justify-center;
-  @apply lg:my-auto lg:min-h-0 lg:flex-none lg:rounded-5 lg:border;
-  @apply lg:border-border lg:bg-surface-raised lg:p-8 lg:shadow-warm-md;
+  @apply mx-auto flex w-full max-w-[24rem] flex-col;
+  /*
+   * No celular a área branca já é o cartão; em tela grande o formulário
+   * precisa de corpo próprio, ou fica boiando no meio do branco.
+   */
+  @apply lg:max-w-[25rem] lg:rounded-5 lg:border lg:border-border;
+  @apply lg:bg-surface-raised lg:px-9 lg:pb-9 lg:pt-1 lg:shadow-warm-md;
 }

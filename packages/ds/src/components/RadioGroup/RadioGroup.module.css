@@ -44,7 +44,11 @@
 }
 
 .labelText {
-  @apply cursor-pointer text-sm leading-none text-fg-default;
+  @apply min-w-0 flex-1 cursor-pointer text-sm leading-none text-fg-default;
+}
+
+.trailing {
+  @apply shrink-0 text-sm font-medium tabular-nums text-fg-subtle;
 }
 
 .cardLabelText {

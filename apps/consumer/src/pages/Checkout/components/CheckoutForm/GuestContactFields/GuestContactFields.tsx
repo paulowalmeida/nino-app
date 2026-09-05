@@ -2,7 +2,7 @@ import { FormField } from '@nino/ds/components/FormField'
 import { Box } from '@nino/ds/components/Box'
 import { Input } from '@nino/ds/components/Input'
 import { PhoneInput } from '@nino/ds/components/PhoneInput'
-import { Text } from '@nino/ds/components/Text'
+import { Heading } from '@nino/ds/components/Heading'
 import { useCheckoutFacade } from '@pages/checkout/facades/useCheckoutFacade/useCheckoutFacade'
 import type { CheckoutFacade } from '@pages/checkout/facades/useCheckoutFacade/useCheckoutFacade'
 import { isCompletePhone } from '@utils/phone'
@@ -18,7 +18,9 @@ export const GuestContactFields = ({
 
   return (
     <Box className={styles.block}>
-      <Text className={styles.blockLabel}>Quem recebe</Text>
+      <Heading level={2} size="md" className={styles.blockLabel}>
+        Seus dados
+      </Heading>
 
       <FormField error={errors.guestName?.message}>
         <Input

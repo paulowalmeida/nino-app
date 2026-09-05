@@ -44,6 +44,7 @@ export const EMPTY_SERVICE_RULES_DRAFT: ServiceRulesDraft = {
   isDeliveryEnabled: true,
   isPickupEnabled: false,
   isCounterEnabled: false,
+  showAddressOnStoreInfo: true,
   allowGuestOrder: true,
   requireCpf: false,
   minOrderAmount: '0',

@@ -26,13 +26,13 @@ export const ProductChoiceMultiple = ({
             <Text as="span" className={styles.name}>
               {option.name}
             </Text>
-            {Number(option.price) > 0 && (
-              <Text as="span" className={styles.price}>
-                {group.role !== 'COMPOSITION' ? '+ ' : ''}
-                {brl(option.price)}
-              </Text>
-            )}
           </Box>
+          {Number(option.price) > 0 && (
+            <Text as="span" className={styles.price}>
+              {group.role !== 'COMPOSITION' ? '+ ' : ''}
+              {brl(option.price)}
+            </Text>
+          )}
           <Checkbox
             checked={chosen.includes(option.id)}
             onCheckedChange={() =>

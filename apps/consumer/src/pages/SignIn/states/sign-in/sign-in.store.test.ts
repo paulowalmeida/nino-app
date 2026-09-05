@@ -6,11 +6,12 @@ import { signInStoreMock } from './sign-in.store.mock'
 describe('useSignInStore', () => {
   beforeEach(() => {
     useSignInStore.setState({
-      step: 'identify',
+      step: 'method',
       channel: 'phone',
       phone: '',
       email: '',
       code: '',
+      name: '',
     })
   })
 
@@ -38,9 +39,9 @@ describe('useSignInStore', () => {
       code: signInStoreMock.code,
     })
 
-    useSignInStore.getState().goToIdentify()
+    useSignInStore.getState().goToMethods()
     expect(useSignInStore.getState()).toMatchObject({
-      step: 'identify',
+      step: 'method',
       phone: '',
       email: '',
       code: '',
@@ -59,7 +60,7 @@ describe('useSignInStore', () => {
     useSignInStore.getState().reset()
 
     expect(useSignInStore.getState()).toMatchObject({
-      step: 'identify',
+      step: 'method',
       channel: 'phone',
       phone: '',
       email: '',

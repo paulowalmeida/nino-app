@@ -16,5 +16,5 @@ export const ordersStageOptions = (
         : statusesForStage(id).reduce(
             (total, status) => total + (summary?.[status] ?? 0),
             0
-          ),
+          ) + (id === 'closed' ? (summary?.TABLE_TAB_CLOSED ?? 0) : 0),
   }))

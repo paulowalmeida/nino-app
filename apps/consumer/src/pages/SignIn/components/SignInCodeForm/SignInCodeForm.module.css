@@ -1,5 +1,15 @@
 @reference "@nino/ds/globals.css";
 
+.title {
+  @apply mt-7 text-center font-display text-[1.6rem] font-extrabold;
+  @apply leading-tight text-fg-strong;
+  letter-spacing: -0.02em;
+}
+
+.subtitle {
+  @apply mt-2 text-center leading-relaxed text-fg-default;
+}
+
 /* o código é o dado da tela: as casas têm a altura do campo do passo 1, para
    as duas telas serem a mesma conversa em dois momentos */
 .codeField {
@@ -8,7 +18,7 @@
 
 .codeField input {
   @apply h-14 w-full rounded-3 border-black/10 text-center;
-  @apply font-display text-xl font-extrabold text-fg-muted;
+  @apply font-display text-xl font-extrabold text-fg-strong;
   font-variant-numeric: tabular-nums;
 }
 

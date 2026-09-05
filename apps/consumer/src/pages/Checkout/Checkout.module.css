@@ -1,13 +1,5 @@
 @reference "@nino/ds/globals.css";
 
-/*
- * O checkout é a comanda: o cliente preenche a via que a cozinha imprime.
- * Daí o papel quente, os fios tracejados, o numeral tabular e o picote que
- * separa "o que você está dizendo à loja" de "enviar isso".
- */
-
 .page {
-  @apply mx-auto flex min-h-dvh w-full max-w-2xl flex-col bg-surface-page;
-  @apply lg:my-10 lg:min-h-[calc(100dvh-5rem)] lg:rounded-5;
-  @apply lg:border lg:border-border lg:shadow-warm-lg;
+  @apply min-h-dvh w-full bg-surface-page text-fg-default;
 }
