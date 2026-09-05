@@ -5,7 +5,6 @@ import { AnimatedNumber } from '@shared/components/AnimatedNumber/AnimatedNumber
 import { Box } from '@nino/ds/components/Box'
 import { Button } from '@nino/ds/components/Button'
 import { Carousel } from '@nino/ds/components/Carousel'
-import { Drawer } from '@nino/ds/components/Drawer'
 import { Dialog } from '@nino/ds/components/Dialog'
 import { Image } from '@nino/ds/components/Image'
 import { QuantityStepper } from '@nino/ds/components/QuantityStepper'
@@ -13,9 +12,7 @@ import { Text } from '@nino/ds/components/Text'
 import { useStorefrontFacade } from '@pages/Storefront/facades/useStorefrontFacade/useStorefrontFacade'
 import { categoryIcon } from '@utils/category-icon'
 import { brl } from '@utils/money'
-import { riseDelay } from '@utils/rise-delay'
 
-import motion from '@styles/motion.module.css'
 import styles from './ProductDetail.module.css'
 import { ProductDetailModal } from './ProductDetailModal/ProductDetailModal'
 
@@ -25,7 +22,6 @@ export const ProductDetail = () => {
     setSelectedItem,
     addToCart,
     replaceCart,
-    isDesktop,
   } = useStorefrontFacade()
   const onClose = () => {
     setQuantity(1)
@@ -76,20 +72,6 @@ export const ProductDetail = () => {
     fallback
   )
 
-  const reveal = item ? (
-    <Box key={item.id}>
-      <Box className={`${motion.riseIn} ${styles.media}`}>{media}</Box>
-      {item.description && (
-        <Text
-          className={`${motion.riseIn} ${styles.description}`}
-          style={riseDelay(70)}
-        >
-          {item.description}
-        </Text>
-      )}
-    </Box>
-  ) : null
-
   const stepper = (
     <QuantityStepper
       quantity={quantity}
@@ -111,7 +93,7 @@ export const ProductDetail = () => {
     </Button>
   ) : null
 
-  const detail = isDesktop ? (
+  const detail = (
     <ProductDetailModal
       item={item}
       isOpen={isOpen}
@@ -120,22 +102,6 @@ export const ProductDetail = () => {
       confirmButton={confirmButton}
       onClose={onClose}
     />
-  ) : (
-    <Drawer
-      open={isOpen}
-      onOpenChange={(open) => !open && onClose()}
-      placement="bottom"
-      title={item?.name ?? ''}
-      size="auto"
-      contentClassName={styles.drawer}
-    >
-      {reveal}
-
-      <Box className={styles.footer}>
-        {stepper}
-        {confirmButton}
-      </Box>
-    </Drawer>
   )
 
   return (
