@@ -98,11 +98,11 @@ describe('useHorizontalDragScroll', () => {
     expect(track.scrollLeft).toBe(0)
   })
 
-  it('does not cancel a click when the pointer barely moved', () => {
+  it('does not cancel a click when the pointer moved within the drag tolerance', () => {
     const track = renderOverflowingTrack()
 
     fireEvent.pointerDown(track, { pointerId: 1, clientX: 200 })
-    fireEvent.pointerMove(track, { pointerId: 1, clientX: 201 })
+    fireEvent.pointerMove(track, { pointerId: 1, clientX: 208 })
     fireEvent.pointerUp(track, { pointerId: 1, clientX: 201 })
     const click = fireEvent.click(screen.getByRole('button'))
 

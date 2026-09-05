@@ -10,6 +10,8 @@
 
 .card {
   @apply flex min-w-0 flex-col overflow-hidden lg:flex-1;
+  --card-ring: 0 0 0 1px
+    color-mix(in srgb, var(--color-warm-950) 14%, transparent);
 }
 
 .empty {

@@ -1,8 +1,8 @@
 import { render, screen } from '@testing-library/react'
 import { describe, expect, it } from 'vitest'
 
-import { reviewStepMock } from './ReviewStep.mock'
 import { ReviewStep } from './ReviewStep'
+import { reviewStepMock } from './ReviewStep.mock'
 
 describe('ReviewStep', () => {
   it('shows the order line without the redundant confirmation', () => {

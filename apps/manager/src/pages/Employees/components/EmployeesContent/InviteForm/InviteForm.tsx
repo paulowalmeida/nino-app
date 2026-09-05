@@ -4,6 +4,7 @@ import { Controller, useForm } from 'react-hook-form'
 
 import { Alert } from '@nino/ds/components/Alert'
 import { Button } from '@nino/ds/components/Button'
+import { FieldHint } from '@nino/ds/components/FieldHint'
 import { FormField } from '@nino/ds/components/FormField'
 import { Input } from '@nino/ds/components/Input'
 import { Select } from '@nino/ds/components/Select'
@@ -11,7 +12,6 @@ import {
   INVITE_FORM_REQUEST_OF,
   INVITE_FORM_SEATS,
 } from '@pages/Employees/constants/employees.constants'
-import { FieldHint } from '@nino/ds/components/FieldHint'
 import type { CreateInviteRequest } from '@shared/types/team/create-invite-request'
 
 import motion from '@styles/motion.module.css'

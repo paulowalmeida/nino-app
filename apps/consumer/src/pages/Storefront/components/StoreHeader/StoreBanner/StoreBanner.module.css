@@ -8,7 +8,7 @@
  */
 .banner {
   @apply relative w-full overflow-hidden;
-  @apply h-32;
+  @apply h-36;
   @apply sm:mx-auto sm:mt-4 sm:h-auto sm:w-[calc(100%-3rem)];
   @apply sm:aspect-[1300/250] sm:max-h-60 sm:rounded-4;
   max-width: var(--storefront-column);
@@ -24,17 +24,50 @@
   );
 }
 
+.banner::before {
+  content: '';
+  @apply pointer-events-none absolute -inset-y-12 -inset-x-8;
+  background: radial-gradient(
+    ellipse at 72% 45%,
+    color-mix(in srgb, var(--color-fg-on-brand) 38%, transparent) 0%,
+    transparent 64%
+  );
+  transform: translate3d(
+    0,
+    calc(var(--banner-parallax, 0px) * -0.32),
+    0
+  );
+  transition: transform 70ms linear;
+  will-change: transform;
+}
+
 .mark {
   @apply pointer-events-none absolute -bottom-4 right-2 h-[135%] w-auto;
   @apply select-none;
-  opacity: 0.12;
+  opacity: 0.3;
   filter: saturate(0);
+  transform: translate3d(0, var(--banner-parallax, 0px), 0) scale(1.06);
+  transition: transform 70ms linear;
+  will-change: transform;
+  z-index: 1;
 }
 
 .monogram {
   @apply pointer-events-none absolute -bottom-4 right-4 select-none;
   @apply font-display text-[8rem] font-black leading-none text-fg-on-brand;
   @apply sm:text-[10rem];
-  opacity: 0.16;
+  opacity: 0.28;
   letter-spacing: -0.08em;
+  transform: translate3d(0, var(--banner-parallax, 0px), 0) scale(1.06);
+  transition: transform 70ms linear;
+  will-change: transform;
+  z-index: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mark,
+  .monogram,
+  .banner::before {
+    transform: none;
+  }
 }

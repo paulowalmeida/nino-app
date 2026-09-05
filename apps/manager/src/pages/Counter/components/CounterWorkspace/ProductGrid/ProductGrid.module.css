@@ -19,7 +19,7 @@
  * doesn't actually have.
  */
 .grid {
-  @apply grid flex-1 auto-rows-min grid-cols-2 gap-3 pb-2;
+  @apply grid flex-1 auto-rows-min grid-cols-2 gap-3 px-1.5 pb-2;
   @apply lg:min-h-0 lg:gap-3.5 lg:overflow-y-auto;
 }
 

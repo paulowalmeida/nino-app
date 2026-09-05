@@ -70,6 +70,7 @@ export const QueueBoard = () => {
         {tiles.map(({ label, value, stage, urgent }, index) => (
           <Card
             key={label}
+            variant="flat"
             asChild
             className={`${motion.settle} ${motion.lift} ${
               urgent ? `${styles.tile} ${styles.urgent}` : styles.tile

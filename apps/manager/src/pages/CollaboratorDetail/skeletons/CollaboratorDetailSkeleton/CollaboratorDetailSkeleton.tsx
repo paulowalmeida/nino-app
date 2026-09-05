@@ -6,12 +6,12 @@ import { CollaboratorSummarySkeleton } from '@pages/CollaboratorDetail/skeletons
 import { CollaboratorWorkspaceSkeleton } from '@pages/CollaboratorDetail/skeletons/CollaboratorDetailSkeleton/CollaboratorWorkspaceSkeleton/CollaboratorWorkspaceSkeleton'
 import { Breadcrumb } from '@shared/components/Breadcrumb/Breadcrumb'
 
-import page from '@pages/CollaboratorDetail/CollaboratorDetail.module.css'
+import styles from './CollaboratorDetailSkeleton.module.css'
 
 /* WHY: o Breadcrumb não vira osso — já navega sem a pessoa carregada e
  * sumiria da tela se virasse barra cinza. */
 export const CollaboratorDetailSkeleton = () => (
-  <Box className={page.page}>
+  <Box className={styles.page}>
     <Breadcrumb trail={[{ label: 'Equipe', to: '..' }, { label: '—' }]} />
 
     <Text as="p" role="status" className="sr-only">

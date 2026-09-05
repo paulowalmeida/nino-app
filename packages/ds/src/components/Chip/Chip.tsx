@@ -15,6 +15,8 @@ type ChipProps = Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'role'> & {
   variant: ChipVariant
   /** Whether the chip is the current choice */
   selected: boolean
+  /** Removes the outline while keeping the chip's interaction states. Defaults to true. */
+  borderless?: boolean
   /** Content rendered before the chip label, such as an icon or emoji */
   leadingIcon?: ReactNode
   /** Content rendered after the chip label, such as a chevron */
@@ -40,6 +42,7 @@ type ChipProps = Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'role'> & {
  * </Chip>
  *
  * - `variant` — `tab` (exposes `aria-selected`) or `toggle` (exposes `aria-pressed`)
+ * - `borderless` — Removes the outline; defaults to `true`. Pass `false` for an outlined chip
  * - `className` — Additional CSS classes merged with base styles
  * - `leadingIcon` / `trailingIcon` — Optional content beside the label
  * ```
@@ -47,6 +50,7 @@ type ChipProps = Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'role'> & {
 export function Chip({
   variant,
   selected,
+  borderless = true,
   leadingIcon,
   trailingIcon,
   className,
@@ -63,6 +67,7 @@ export function Chip({
       aria-pressed={variant === 'toggle' ? selected : undefined}
       className={mergeClasses(
         styles.chip,
+        borderless ? styles.borderless : styles.outlined,
         selected ? styles.selected : styles.resting,
         className
       )}

@@ -2,6 +2,7 @@ import { useState } from 'react'
 
 import { Box } from '@nino/ds/components/Box'
 import { Button } from '@nino/ds/components/Button'
+import { FieldHint } from '@nino/ds/components/FieldHint'
 import { Heading } from '@nino/ds/components/Heading'
 import { Icon } from '@nino/ds/components/Icon'
 import { Input } from '@nino/ds/components/Input'
@@ -18,7 +19,6 @@ import {
   PAYMENT_METHOD_ICON,
   PAYMENT_METHOD_LABEL,
 } from '@shared/constants/order.constants'
-import { FieldHint } from '@nino/ds/components/FieldHint'
 import type { PaymentMethod } from '@shared/types/order/payment-method'
 import type { ServiceRulesDraft } from '@shared/types/settings/service-rules-draft'
 import type { TenantSettings } from '@shared/types/settings/tenant-settings'

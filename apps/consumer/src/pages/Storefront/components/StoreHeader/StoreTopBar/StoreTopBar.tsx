@@ -95,7 +95,14 @@ export const StoreTopBar = ({ slug, isDocked }: StoreTopBarProps) => {
 
         <Box direction="row" className={styles.tools}>
           <Box direction="row" className={styles.storeMeta}>
-            <Text as="span" className={styles.metaStatus}>
+            <Text
+              as="span"
+              className={
+                isStoreOpen
+                  ? `${styles.metaStatus} ${styles.metaStatusOn}`
+                  : styles.metaStatus
+              }
+            >
               <span
                 className={
                   isStoreOpen ? `${styles.dot} ${styles.dotOn}` : styles.dot
@@ -122,7 +129,7 @@ export const StoreTopBar = ({ slug, isDocked }: StoreTopBarProps) => {
           <Button
             variant="ghost"
             size="icon"
-            className={`${styles.iconBtn} ${styles.accountEntry}`}
+            className={`${styles.iconBtn} ${styles.infoEntry}`}
             onClick={() => setInfoOpen(true)}
             aria-label="Informações da loja"
           >
@@ -132,7 +139,7 @@ export const StoreTopBar = ({ slug, isDocked }: StoreTopBarProps) => {
           <Button
             variant="ghost"
             size="icon"
-            className={`${styles.iconBtn} ${styles.accountEntry}`}
+            className={`${styles.iconBtn} ${styles.notificationsEntry}`}
             onClick={go('/conta/conversas')}
             aria-label="Conversas com a loja"
           >
@@ -142,7 +149,7 @@ export const StoreTopBar = ({ slug, isDocked }: StoreTopBarProps) => {
           <Button
             variant="ghost"
             size="icon"
-            className={`${styles.iconBtn} ${styles.accountEntry}`}
+            className={`${styles.iconBtn} ${styles.cartEntry}`}
             onClick={() => setCartOpen(true)}
             aria-label={
               cartCount > 0

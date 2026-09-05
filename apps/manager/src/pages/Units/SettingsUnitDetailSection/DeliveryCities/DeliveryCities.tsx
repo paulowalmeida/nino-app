@@ -7,8 +7,8 @@ import { Combobox } from '@nino/ds/components/Combobox'
 import { FormField } from '@nino/ds/components/FormField'
 import { Select } from '@nino/ds/components/Select'
 import { Text } from '@nino/ds/components/Text'
-import type { DeliveryCity } from '@shared/types/store/delivery-city'
 import type { useDeliveryLocation } from '@pages/Units/hooks/useDeliveryLocation/useDeliveryLocation'
+import type { DeliveryCity } from '@shared/types/store/delivery-city'
 
 import styles from './DeliveryCities.module.css'
 

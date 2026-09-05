@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { NavLink, useLocation, useNavigate } from 'react-router'
+import { useLocation, useNavigate } from 'react-router'
 
 import { Icon } from '@nino/ds/components/Icon'
 import { Button } from '@nino/ds/components/Button'
@@ -23,11 +23,11 @@ export const TabBar = ({ base, cartCount = 0, onOpenCart }: TabBarProps) => {
 
   const home = base || '/'
   const isHome = pathname === home || pathname === `${home}/`
-  const orders = `${base}/conta/pedidos`
-
+  const notifications = `${base}/conta/conversas`
+  const isNotifications = pathname.startsWith(notifications)
   const isAccount =
     isAccountOpen ||
-    (pathname.startsWith(`${base}/conta`) && !pathname.startsWith(orders))
+    (pathname.startsWith(`${base}/conta`) && !isNotifications)
 
   const handleHome = () => {
     if (!isHome) {
@@ -42,6 +42,31 @@ export const TabBar = ({ base, cartCount = 0, onOpenCart }: TabBarProps) => {
   return (
     <>
       <nav className={styles.bar} aria-label="Atalhos">
+        {onOpenCart && (
+          <Button
+            variant="ghost"
+            onClick={onOpenCart}
+            className={styles.tab}
+            aria-label={
+              cartCount > 0
+                ? `Sacola com ${cartCount} ${cartCount === 1 ? 'item' : 'itens'}`
+                : 'Sacola vazia'
+            }
+          >
+            <Text as="span" className={styles.cartIcon}>
+              <Icon name="bag" />
+              {cartCount > 0 && (
+                <Text as="span" className={styles.cartBadge}>
+                  {cartCount}
+                </Text>
+              )}
+            </Text>
+            <Text as="span" className={styles.label}>
+              Sacola
+            </Text>
+          </Button>
+        )}
+
         <Button
           variant="ghost"
           onClick={handleHome}
@@ -57,44 +82,19 @@ export const TabBar = ({ base, cartCount = 0, onOpenCart }: TabBarProps) => {
           </Text>
         </Button>
 
-        {onOpenCart && (
-          <Button
-            variant="ghost"
-            onClick={onOpenCart}
-            className={styles.tab}
-            aria-label={
-              cartCount > 0
-                ? `Sacola com ${cartCount} ${cartCount === 1 ? 'item' : 'itens'}`
-                : 'Sacola vazia'
-            }
-          >
-            <Text as="span" className={styles.cartIcon}>
-              <Icon name="shopping-cart" />
-              {cartCount > 0 && (
-                <Text as="span" className={styles.cartBadge}>
-                  {cartCount}
-                </Text>
-              )}
-            </Text>
-            <Text as="span" className={styles.label}>
-              Sacola
-            </Text>
-          </Button>
-        )}
-
-        <NavLink
-          to={orders}
-          className={({ isActive }) =>
-            isActive && !isAccountOpen
-              ? `${styles.tab} ${styles.tabOn}`
-              : styles.tab
+        <Button
+          variant="ghost"
+          onClick={() => void navigate(notifications)}
+          aria-current={isNotifications ? 'page' : undefined}
+          className={
+            isNotifications ? `${styles.tab} ${styles.tabOn}` : styles.tab
           }
         >
-          <Icon name="bag" />
+          <Icon name="bell" />
           <Text as="span" className={styles.label}>
-            Pedidos
+            Notificações
           </Text>
-        </NavLink>
+        </Button>
 
         <Button
           variant="ghost"

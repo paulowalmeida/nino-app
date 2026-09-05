@@ -3,6 +3,7 @@ import { Skeleton } from '@nino/ds/components/Skeleton'
 import { Text } from '@nino/ds/components/Text'
 
 import { tableTabsListSkeletonMock } from './TableTabsListSkeleton.mock'
+
 import styles from './TableTabsListSkeleton.module.css'
 
 export const TableTabsListSkeleton = () => (

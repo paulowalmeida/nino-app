@@ -3,11 +3,11 @@ import { describe, expect, it } from 'vitest'
 import type { CounterState } from '@pages/Counter/types/CounterState.type'
 import type { SetCounterState } from '@pages/Counter/types/SetCounterState.type'
 
+import { setRecipient } from './set-recipient'
 import {
   recipientBeforeChangeMock,
   recipientPatchMock,
 } from './set-recipient.mock'
-import { setRecipient } from './set-recipient'
 
 describe('setRecipient', () => {
   it('merges the recipient patch without dropping existing fields', () => {

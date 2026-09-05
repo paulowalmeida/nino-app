@@ -2,8 +2,7 @@ import { Box } from '@nino/ds/components/Box'
 import { Skeleton } from '@nino/ds/components/Skeleton'
 import { BackLink } from '@shared/components/BackLink/BackLink'
 
-import asideStyles from '@pages/OrderDetail/components/OrderDetailAside/OrderDetailAside.module.css'
-import styles from '@pages/OrderDetail/OrderDetail.module.css'
+import styles from './OrderDetailSkeleton.module.css'
 
 const GHOST_ITEMS = ['first', 'second', 'third', 'fourth']
 const GHOST_CARDS = ['customer', 'payment', 'timeline']
@@ -43,9 +42,9 @@ export const OrderDetailSkeleton = () => (
         </div>
       </Box>
 
-      <div className={asideStyles.aside}>
+      <div className={styles.aside}>
         {GHOST_CARDS.map((card) => (
-          <div key={card} className={asideStyles.block}>
+          <div key={card} className={styles.block}>
             <Skeleton variant="text" className={styles.ghostEyebrow} />
             <Skeleton variant="text" className={styles.ghostLine} />
             <Skeleton variant="text" className={styles.ghostLineShort} />

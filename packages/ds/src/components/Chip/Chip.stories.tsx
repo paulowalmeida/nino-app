@@ -24,10 +24,16 @@ type Story = StoryObj<typeof Chip>
 type ChipPlaygroundProps = {
   variant: 'tab' | 'toggle'
   selected: boolean
+  borderless: boolean
   label: ReactNode
 }
 
-const ChipPlayground = ({ variant, selected, label }: ChipPlaygroundProps) => {
+const ChipPlayground = ({
+  variant,
+  selected,
+  borderless,
+  label,
+}: ChipPlaygroundProps) => {
   const [isPressed, setIsPressed] = useState(selected)
   const [activeTab, setActiveTab] = useState(selected ? 'delivery' : 'pickup')
 
@@ -37,6 +43,7 @@ const ChipPlayground = ({ variant, selected, label }: ChipPlaygroundProps) => {
         <Chip
           variant="tab"
           selected={activeTab === 'delivery'}
+          borderless={borderless}
           onClick={() => setActiveTab('delivery')}
         >
           Entrega
@@ -44,6 +51,7 @@ const ChipPlayground = ({ variant, selected, label }: ChipPlaygroundProps) => {
         <Chip
           variant="tab"
           selected={activeTab === 'pickup'}
+          borderless={borderless}
           onClick={() => setActiveTab('pickup')}
         >
           Retirada
@@ -56,6 +64,7 @@ const ChipPlayground = ({ variant, selected, label }: ChipPlaygroundProps) => {
     <Chip
       variant="toggle"
       selected={isPressed}
+      borderless={borderless}
       onClick={() => setIsPressed((current) => !current)}
     >
       {label}
@@ -64,12 +73,13 @@ const ChipPlayground = ({ variant, selected, label }: ChipPlaygroundProps) => {
 }
 
 export const Default: Story = {
-  args: { variant: 'toggle', selected: false, children: 'Pix' },
-  render: ({ variant, selected, children }) => (
+  args: { variant: 'toggle', selected: false, borderless: true, children: 'Pix' },
+  render: ({ variant, selected, borderless, children }) => (
     <ChipPlayground
-      key={`${variant}-${String(selected)}`}
+      key={`${variant}-${String(selected)}-${String(borderless)}`}
       variant={variant}
       selected={selected}
+      borderless={borderless}
       label={children}
     />
   ),

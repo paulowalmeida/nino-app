@@ -1,6 +1,8 @@
 import { useEffect, useRef } from 'react'
 
-const DRAG_THRESHOLD_PX = 4
+/* Clique de mouse quase sempre desloca alguns pixels. Com 4px, o gesto comum
+   já virava arrasto e o listener em captura cancelava a ativação do Chip. */
+const DRAG_THRESHOLD_PX = 12
 
 /* WHY: no touch a lista arrasta com o dedo; no mouse não existe gesto
  * equivalente. React trata onWheel/onPointer como listener passivo, então

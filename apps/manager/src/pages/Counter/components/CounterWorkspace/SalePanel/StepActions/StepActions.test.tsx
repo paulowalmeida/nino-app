@@ -1,8 +1,8 @@
 import { fireEvent, render, screen } from '@testing-library/react'
 import { describe, expect, it, vi } from 'vitest'
 
-import { stepActionsMock } from './StepActions.mock'
 import { StepActions } from './StepActions'
+import { stepActionsMock } from './StepActions.mock'
 
 describe('StepActions', () => {
   it('fires continue and back actions', () => {

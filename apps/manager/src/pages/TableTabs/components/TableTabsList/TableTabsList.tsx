@@ -4,10 +4,12 @@ import { Link } from 'react-router'
 import { Alert } from '@nino/ds/components/Alert'
 import { Badge } from '@nino/ds/components/Badge'
 import { Box } from '@nino/ds/components/Box'
+import { Card } from '@nino/ds/components/Card'
 import { Chip } from '@nino/ds/components/Chip'
 import { EmptyState } from '@nino/ds/components/EmptyState'
 import { Header } from '@nino/ds/components/Header'
 import { Input } from '@nino/ds/components/Input'
+import { ListRow } from '@nino/ds/components/ListRow'
 import { Text } from '@nino/ds/components/Text'
 import { TableTabsListSkeleton } from '@pages/TableTabs/skeletons/TableTabsListSkeleton/TableTabsListSkeleton'
 import { filterTableTabs } from '@pages/TableTabs/utils/filterTableTabs/filterTableTabs'
@@ -98,43 +100,50 @@ export const TableTabsList = ({
           className={`${motion.unroll} ${styles.list}`}
         >
           {orders.map((order) => (
-            <li key={order.id} className={motion.deal}>
-              <Link className={styles.card} to={`../comandas/${order.id}`}>
-                <Box direction="row" justify="between" align="start">
-                  <Box direction="column" gap={0.5}>
+            <ListRow key={order.id} divider="none" padding={0} className={motion.deal}>
+              <Card
+                variant="flat"
+                padding="none"
+                asChild
+                className={`${styles.card} w-full`}
+              >
+                <Link to={`../comandas/${order.id}`}>
+                  <Box direction="row" justify="between" align="start">
+                    <Box direction="column" gap={0.5}>
+                      <Text size="sm" color="muted">
+                        Comanda #{order.orderNumber}
+                      </Text>
+                      <Text weight="bold" size="lg">
+                        {order.tableNumber ||
+                          order.guestName ||
+                          'Sem identificação'}
+                      </Text>
+                    </Box>
+                    <Badge
+                      variant={
+                        openOrders.some(({ id }) => id === order.id)
+                          ? 'brand'
+                          : 'default'
+                      }
+                      size="sm"
+                    >
+                      {openOrders.some(({ id }) => id === order.id)
+                        ? 'Aberta'
+                        : 'Fechada'}
+                    </Badge>
+                  </Box>
+                  <Box direction="row" justify="between" align="end">
                     <Text size="sm" color="muted">
-                      Comanda #{order.orderNumber}
+                      {order.items.length}{' '}
+                      {order.items.length === 1 ? 'item' : 'itens'}
                     </Text>
                     <Text weight="bold" size="lg">
-                      {order.tableNumber ||
-                        order.guestName ||
-                        'Sem identificação'}
+                      {brl(Number(order.totalAmount))}
                     </Text>
                   </Box>
-                  <Badge
-                    variant={
-                      openOrders.some(({ id }) => id === order.id)
-                        ? 'brand'
-                        : 'default'
-                    }
-                    size="sm"
-                  >
-                    {openOrders.some(({ id }) => id === order.id)
-                      ? 'Aberta'
-                      : 'Fechada'}
-                  </Badge>
-                </Box>
-                <Box direction="row" justify="between" align="end">
-                  <Text size="sm" color="muted">
-                    {order.items.length}{' '}
-                    {order.items.length === 1 ? 'item' : 'itens'}
-                  </Text>
-                  <Text weight="bold" size="lg">
-                    {brl(Number(order.totalAmount))}
-                  </Text>
-                </Box>
-              </Link>
-            </li>
+                </Link>
+              </Card>
+            </ListRow>
           ))}
         </Box>
       )}

@@ -25,7 +25,7 @@ export const CustomerRankingCard = ({
       <Eyebrow className={styles.heading}>{label}</Eyebrow>
     </Box>
 
-    <Card padding="lg" className={`${motion.settle} ${styles.card}`}>
+    <Card variant="flat" padding="lg" className={`${motion.settle} ${styles.card}`}>
       {isPending && (
         <Box className={styles.skeletonBars}>
           {TOP_CUSTOMERS_SKELETON_WIDTHS.map((width) => (

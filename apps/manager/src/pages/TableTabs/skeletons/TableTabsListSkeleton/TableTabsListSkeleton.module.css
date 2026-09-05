@@ -5,8 +5,9 @@
 }
 
 .card {
-  @apply flex min-h-36 flex-col justify-between gap-6 rounded-4 border;
-  @apply border-border bg-surface-raised p-5;
+  @apply mb-1.5 ml-1.5 flex min-h-36 flex-col justify-between gap-6 rounded-4 bg-surface-raised p-5;
+  box-shadow: 0 0 0 1px
+    color-mix(in srgb, var(--color-warm-950) 14%, transparent);
 }
 
 .orderNumber {

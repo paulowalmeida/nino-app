@@ -14,6 +14,19 @@ describe(CategoryChips.name, () => {
     expect(onChange).toHaveBeenCalledWith('drinks')
   })
 
+  it('keeps chip presses out of the drag-scroll handler', () => {
+    render(
+      <CategoryChips {...categoryChipsMock} value={null} onChange={vi.fn()} />
+    )
+    const track = screen.getByRole('tablist')
+    const onTrackPointerDown = vi.fn()
+    track.addEventListener('pointerdown', onTrackPointerDown)
+
+    fireEvent.pointerDown(screen.getByRole('tab', { name: 'Bebidas' }))
+
+    expect(onTrackPointerDown).not.toHaveBeenCalled()
+  })
+
   it('renders loading placeholders and all option', () => {
     const { container, rerender } = render(
       <CategoryChips

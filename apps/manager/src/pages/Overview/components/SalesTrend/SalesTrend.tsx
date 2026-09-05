@@ -44,7 +44,7 @@ export const SalesTrend = () => {
     <Box as="section" aria-label="Os últimos 7 dias" className={styles.section}>
       <Eyebrow className={styles.heading}>Os últimos 7 dias</Eyebrow>
 
-      <Card padding="lg" className={`${motion.settle} ${styles.card}`}>
+      <Card variant="flat" padding="lg" className={`${motion.settle} ${styles.card}`}>
         <Box
           as="header"
           direction="row"

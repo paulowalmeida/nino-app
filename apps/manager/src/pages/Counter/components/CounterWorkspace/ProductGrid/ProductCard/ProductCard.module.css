@@ -7,17 +7,18 @@
  */
 .card {
   @apply flex cursor-pointer flex-col overflow-hidden rounded-3;
-  @apply border border-border bg-surface-page text-left;
+  @apply bg-surface-page text-left;
   @apply transition-colors duration-150;
   @apply select-none;
+  --card-ring: 0 0 0 1px
+    color-mix(in srgb, var(--color-warm-950) 14%, transparent);
   -webkit-touch-callout: none;
-  @apply hover:border-brand-bold hover:bg-surface-page;
+  @apply hover:bg-surface-page;
   @apply focus-ring;
 }
 
 /* Já está no pedido: o atendente enxerga o que somou sem abrir o cupom. */
 .picked {
-  @apply border-brand;
   box-shadow: 0 0 0 1px var(--color-brand);
 }
 

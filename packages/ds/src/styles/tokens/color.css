@@ -57,10 +57,10 @@
   --color-border: color-mix(in srgb, var(--color-warm-950) 18%, transparent);
 
   /* Texto, do mais firme ao mais apagado */
-  --color-fg-strong: var(--color-warm-950);
-  --color-fg-default: var(--color-warm-900);
-  --color-fg-muted: var(--color-warm-800);
-  --color-fg-subtle: var(--color-warm-750);
+  --color-fg-strong: #645e56;
+  --color-fg-default: #777067;
+  --color-fg-muted: #898178;
+  --color-fg-subtle: #9b9186;
   --color-fg-faint: var(--color-warm-700);
   --color-fg-faintest: var(--color-warm-600);
   --color-fg-cool: var(--color-cool-900);

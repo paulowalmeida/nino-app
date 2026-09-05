@@ -1,8 +1,8 @@
 import { render, screen } from '@testing-library/react'
 import { describe, expect, it } from 'vitest'
 
-import { counterHeaderMock } from './CounterHeader.mock'
 import { CounterHeader } from './CounterHeader'
+import { counterHeaderMock } from './CounterHeader.mock'
 
 describe('CounterHeader', () => {
   it('renders the counter heading and description', () => {

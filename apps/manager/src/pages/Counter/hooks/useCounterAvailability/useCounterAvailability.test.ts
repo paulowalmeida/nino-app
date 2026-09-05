@@ -1,12 +1,13 @@
+import { createElement, type ReactNode } from 'react'
+
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { renderHook, waitFor } from '@testing-library/react'
-import { createElement, type ReactNode } from 'react'
 import { describe, expect, it, vi } from 'vitest'
 
 import { OrderService } from '@shared/services/order/order.service'
 
-import { availabilityMock } from './useCounterAvailability.mock'
 import { useCounterAvailability } from './useCounterAvailability'
+import { availabilityMock } from './useCounterAvailability.mock'
 
 vi.mock('@shared/services/order/order.service', () => ({
   OrderService: { getAvailability: vi.fn() },

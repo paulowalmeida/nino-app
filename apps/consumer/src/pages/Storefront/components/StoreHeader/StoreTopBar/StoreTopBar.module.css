@@ -83,6 +83,10 @@
   @apply inline-flex items-center gap-1.5 font-semibold text-fg-default;
 }
 
+.metaStatusOn {
+  color: var(--color-success);
+}
+
 .dot {
   @apply relative h-1.5 w-1.5 shrink-0 rounded-full bg-fg-ghost;
 }
@@ -206,6 +210,18 @@
    largura do nome da loja */
 .accountEntry {
   @apply hidden lg:flex;
+}
+
+.cartEntry {
+  @apply !hidden lg:!flex;
+}
+
+.infoEntry {
+  @apply !hidden lg:!flex;
+}
+
+.notificationsEntry {
+  @apply !hidden lg:!flex;
 }
 
 .iconBtn {

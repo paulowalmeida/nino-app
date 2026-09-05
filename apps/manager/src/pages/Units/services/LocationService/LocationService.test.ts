@@ -1,10 +1,10 @@
 import { afterEach, describe, expect, it, vi } from 'vitest'
 
+import { LocationService } from './LocationService'
 import {
   municipalityLocationMock,
   stateLocationMock,
 } from './LocationService.mock'
-import { LocationService } from './LocationService'
 
 describe('LocationService', () => {
   afterEach(() => vi.unstubAllGlobals())

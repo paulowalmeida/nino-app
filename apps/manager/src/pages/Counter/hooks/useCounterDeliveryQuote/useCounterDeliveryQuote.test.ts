@@ -1,12 +1,13 @@
+import { createElement, type ReactNode } from 'react'
+
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { renderHook, waitFor } from '@testing-library/react'
-import { createElement, type ReactNode } from 'react'
 import { describe, expect, it, vi } from 'vitest'
 
 import { OrderService } from '@shared/services/order/order.service'
 
-import { deliveryQuoteMock } from './useCounterDeliveryQuote.mock'
 import { useCounterDeliveryQuote } from './useCounterDeliveryQuote'
+import { deliveryQuoteMock } from './useCounterDeliveryQuote.mock'
 
 vi.mock('@shared/services/order/order.service', () => ({
   OrderService: { getDeliveryQuote: vi.fn() },

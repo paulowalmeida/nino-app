@@ -41,7 +41,12 @@ export const StoreIdentity = () => {
           className={`${motion.deal} ${styles.identityMeta}`}
           style={riseDelay(70)}
         >
-          <Text as="span" className={styles.status}>
+          <Text
+            as="span"
+            className={
+              isStoreOpen ? `${styles.status} ${styles.statusOn}` : styles.status
+            }
+          >
             <span
               className={
                 isStoreOpen ? `${styles.dot} ${styles.dotOn}` : styles.dot

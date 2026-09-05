@@ -1,11 +1,11 @@
 import { render, screen } from '@testing-library/react'
 import { describe, expect, it, vi } from 'vitest'
 
+import { DeliveryCities } from './DeliveryCities'
 import {
   deliveryCitiesMock,
   primaryDeliveryCityMock,
 } from './DeliveryCities.mock'
-import { DeliveryCities } from './DeliveryCities'
 
 describe('DeliveryCities', () => {
   it('keeps the unit city and renders configured coverage chips', () => {

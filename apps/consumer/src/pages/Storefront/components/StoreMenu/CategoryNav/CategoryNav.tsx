@@ -37,6 +37,7 @@ export const CategoryNav = () => {
               ref={isActive ? activeRef : undefined}
               variant="toggle"
               selected={isActive}
+              borderless
               onClick={() => goToSection(section.id)}
               className={`${styles.chip} ${isActive ? styles.chipOn : ''}`}
               leadingIcon={

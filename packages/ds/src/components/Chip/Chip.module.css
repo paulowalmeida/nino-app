@@ -2,16 +2,40 @@
 
 .chip {
   @apply inline-flex shrink-0 cursor-pointer items-center gap-2 rounded-full;
-  @apply min-h-11 border px-4 py-2 text-sm font-semibold;
+  @apply min-h-11 px-4 py-2 text-sm font-semibold;
   @apply transition-colors duration-base;
-  @apply hover:border-brand-muted hover:text-fg-default;
+  @apply hover:text-fg-default;
   @apply focus-ring;
 }
 
+.outlined {
+  @apply border;
+}
+
+.borderless {
+  @apply border border-transparent;
+}
+
+.outlined:hover {
+  @apply border-brand-muted;
+}
+
 .resting {
-  @apply border-border bg-surface-page text-fg-subtle;
+  @apply bg-surface-page text-fg-subtle;
 }
 
 .selected {
-  @apply border-brand-muted bg-brand-soft text-brand-strong;
+  @apply bg-brand-soft text-brand-strong;
+}
+
+.outlined.resting {
+  @apply border-border;
+}
+
+.borderless.resting {
+  @apply bg-surface-cool;
+}
+
+.outlined.selected {
+  @apply border-brand-muted;
 }

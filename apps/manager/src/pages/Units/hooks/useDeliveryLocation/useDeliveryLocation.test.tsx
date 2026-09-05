@@ -1,15 +1,16 @@
+import type { ReactNode } from 'react'
+
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { renderHook, waitFor } from '@testing-library/react'
-import type { ReactNode } from 'react'
 import { describe, expect, it, vi } from 'vitest'
 
 import { LocationService } from '@pages/Units/services/LocationService/LocationService'
 
+import { useDeliveryLocation } from './useDeliveryLocation'
 import {
   deliveryMunicipalitiesMock,
   deliveryStatesMock,
 } from './useDeliveryLocation.mock'
-import { useDeliveryLocation } from './useDeliveryLocation'
 
 vi.mock('@pages/Units/services/LocationService/LocationService', () => ({
   LocationService: {

@@ -1,12 +1,13 @@
+import { createElement, type ReactNode } from 'react'
+
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { act, renderHook, waitFor } from '@testing-library/react'
-import { createElement, type ReactNode } from 'react'
 import { describe, expect, it, vi } from 'vitest'
 
 import { searchAddress } from '@nino/lib/services/zip-code.service'
 
-import { addressSuggestionsMock } from './useCounterAddressSearch.mock'
 import { useCounterAddressSearch } from './useCounterAddressSearch'
+import { addressSuggestionsMock } from './useCounterAddressSearch.mock'
 
 vi.mock('@nino/lib/services/zip-code.service', () => ({
   searchAddress: vi.fn(),

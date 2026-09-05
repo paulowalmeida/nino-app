@@ -3,6 +3,7 @@ import userEvent from '@testing-library/user-event'
 import { describe, expect, it, vi } from 'vitest'
 
 import { Chip } from './Chip'
+import styles from './Chip.module.css'
 
 describe(Chip.name, () => {
   it('renders the content', () => {
@@ -12,6 +13,22 @@ describe(Chip.name, () => {
       </Chip>
     )
     expect(screen.getByText('Pix')).toBeInTheDocument()
+  })
+
+  it('is borderless by default and supports an outlined opt-in', () => {
+    const { rerender } = render(
+      <Chip variant="toggle" selected={false}>
+        Pix
+      </Chip>
+    )
+    expect(screen.getByRole('button')).toHaveClass(styles.borderless)
+
+    rerender(
+      <Chip variant="toggle" selected={false} borderless={false}>
+        Pix
+      </Chip>
+    )
+    expect(screen.getByRole('button')).toHaveClass(styles.outlined)
   })
 
   it('renders optional content on either side of the label', () => {

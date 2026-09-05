@@ -1,8 +1,8 @@
 import { renderHook } from '@testing-library/react'
 import { describe, expect, it, vi } from 'vitest'
 
-import { desktopMediaQueryMock } from './useIsDesktop.mock'
 import { useIsDesktop } from './useIsDesktop'
+import { desktopMediaQueryMock } from './useIsDesktop.mock'
 
 describe('useIsDesktop', () => {
   it('reflects the current desktop media query', () => {

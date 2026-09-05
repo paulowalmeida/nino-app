@@ -45,7 +45,7 @@ export const StoreForm = ({
     setValue,
     getValues,
     setError,
-    watch,
+    subscribe,
     formState: { errors, isSubmitting },
   } = useForm<FirstStoreFormValues>({
     mode: 'onBlur',
@@ -58,13 +58,14 @@ export const StoreForm = ({
   }, [draft, onChange])
 
   useEffect(() => {
-    const { unsubscribe } = watch((values) => {
+    return subscribe({
+      formState: { values: true },
+      callback: ({ values }) => {
       writeDraft<FirstStoreFormValues>(STORE_DRAFT_KEY, values)
       onChange?.(values)
+      },
     })
-
-    return unsubscribe
-  }, [watch, onChange])
+  }, [subscribe, onChange])
 
   const onSubmit = async (data: FirstStoreFormValues) => {
     const result = await onSubmitStore(data)

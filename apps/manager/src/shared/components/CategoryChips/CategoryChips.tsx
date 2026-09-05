@@ -50,6 +50,7 @@ export const CategoryChips = ({
         <Chip
           variant="tab"
           selected={value === null}
+          onPointerDownCapture={(event) => event.stopPropagation()}
           onClick={() => onChange(null)}
           className={styles.chip}
           leadingIcon={<Icon name="grid" size="sm" />}
@@ -63,6 +64,7 @@ export const CategoryChips = ({
           key={id}
           variant="tab"
           selected={id === value}
+          onPointerDownCapture={(event) => event.stopPropagation()}
           onClick={() => onChange(id)}
           className={styles.chip}
           leadingIcon={

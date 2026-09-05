@@ -1,5 +1,6 @@
-import type { PaymentMethod } from './payment-method'
 import type { DeliveryCity } from '@shared/types/store/delivery-city'
+
+import type { PaymentMethod } from './payment-method'
 
 export type OrderAvailability = {
   acceptedPaymentMethods: PaymentMethod[]

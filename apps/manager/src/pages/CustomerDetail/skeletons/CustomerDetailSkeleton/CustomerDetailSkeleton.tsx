@@ -6,12 +6,12 @@ import { CustomerSummarySkeleton } from '@pages/CustomerDetail/skeletons/Custome
 import { CustomerWorkspaceSkeleton } from '@pages/CustomerDetail/skeletons/CustomerDetailSkeleton/CustomerWorkspaceSkeleton/CustomerWorkspaceSkeleton'
 import { Breadcrumb } from '@shared/components/Breadcrumb/Breadcrumb'
 
-import page from '@pages/CustomerDetail/CustomerDetail.module.css'
+import styles from './CustomerDetailSkeleton.module.css'
 
 /* WHY: o Breadcrumb não vira osso — já navega sem o cliente carregado e
  * sumiria da tela se virasse barra cinza. */
 export const CustomerDetailSkeleton = () => (
-  <Box className={page.page}>
+  <Box className={styles.page}>
     <Breadcrumb trail={[{ label: 'Clientes', to: '..' }, { label: '—' }]} />
 
     <Text as="p" role="status" className="sr-only">

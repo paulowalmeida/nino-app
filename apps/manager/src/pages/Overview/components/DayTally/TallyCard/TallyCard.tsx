@@ -29,6 +29,7 @@ export const TallyCard = ({
   delay = 0,
 }: TallyCardProps) => (
   <Card
+    variant="flat"
     padding="lg"
     asChild
     className={`${motion.settle} ${motion.lift} ${styles.figure}`}
