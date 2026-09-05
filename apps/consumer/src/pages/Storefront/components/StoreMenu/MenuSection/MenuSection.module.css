@@ -1,24 +1,18 @@
 @reference "@nino/ds/globals.css";
 
-/* o alvo do "ir para a categoria" precisa parar abaixo do topo fixo + régua,
-   senão o título da seção chega escondido atrás delas */
+/* WHY: o alvo do "ir para a categoria" precisa parar abaixo do topo fixo e da
+   régua, senão o título da seção chega escondido atrás delas. No desktop as
+   duas são mais altas, então a margem cresce junto. */
 .section {
-  @apply scroll-mt-[8.5rem] pt-2;
+  @apply scroll-mt-[8.5rem] lg:scroll-mt-[10.5rem];
 }
 
 .section + .section {
-  @apply mt-12 sm:mt-14;
+  @apply mt-10 sm:mt-12;
 }
 
 .sectionHead {
-  @apply mb-4 flex items-end justify-between gap-3 border-b;
-  @apply border-border pb-3;
-}
-
-@media (max-width: 1023px) {
-  .sectionHead {
-    @apply mb-2;
-  }
+  @apply mb-4 flex items-baseline justify-between gap-3;
 }
 
 .sectionTitle {
@@ -27,9 +21,18 @@
 }
 
 .sectionCount {
-  @apply text-xs text-fg-faint;
+  @apply shrink-0 text-xs text-fg-faint;
+  font-variant-numeric: tabular-nums;
 }
 
+/* WHY: duas colunas do notebook ao monitor comum, três só em tela muito larga.
+   Mais colunas espremem a descrição do produto, que é o que ajuda a escolher. */
 .items {
-  @apply grid gap-3 sm:grid-cols-2 xl:grid-cols-3;
+  @apply grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4;
+}
+
+@media (min-width: 2560px) {
+  .items {
+    @apply grid-cols-3;
+  }
 }

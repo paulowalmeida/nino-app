@@ -2,28 +2,19 @@
 
 @layer base {
   body {
-    background: var(--color-surface-1);
+    background: var(--color-surface-page);
     color: var(--color-fg-default);
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
     font-size: var(--text-sm);
   }
 
-  @media (min-width: 1024px) {
-    body {
-      background: var(--color-surface-1);
-    }
-  }
-
-  body::after {
-    content: '';
-    position: fixed;
-    inset: 0;
-    pointer-events: none;
-    z-index: var(--z-grain);
-    opacity: 0.12;
-    mix-blend-mode: multiply;
-    background-image: url('/noise.svg');
+  /* WHY: o Chrome desenha um "x" nativo dentro de todo input[type=search] —
+     azul no Linux, cinza no macOS — que não pertence a nenhum design system e
+     aparece ao lado do nosso próprio botão de limpar. */
+  input[type='search']::-webkit-search-cancel-button,
+  input[type='search']::-webkit-search-decoration {
+    appearance: none;
   }
 
   ::selection {

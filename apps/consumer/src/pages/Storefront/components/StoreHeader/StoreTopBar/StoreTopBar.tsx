@@ -1,3 +1,4 @@
+import { useEffect, useRef, useState } from 'react'
 import { useNavigate } from 'react-router'
 
 import { Menu } from '@nino/ds/components/Menu'
@@ -8,27 +9,45 @@ import { Image } from '@nino/ds/components/Image'
 import { Input } from '@nino/ds/components/Input'
 import { Button } from '@nino/ds/components/Button'
 import { useStorefrontFacade } from '@pages/Storefront/facades/useStorefrontFacade/useStorefrontFacade'
-import { displayName, storeInitials } from '@utils/store-info'
+import { displayName, isOpen, storeInitials } from '@utils/store-info'
 import { formatPhone } from '@utils/phone'
 
 import styles from './StoreTopBar.module.css'
 
 type StoreTopBarProps = {
   slug: string
-  progress: number
+  /** Verdadeiro quando a busca da página já passou por baixo do topo. */
+  isDocked: boolean
 }
-export const StoreTopBar = ({ slug, progress }: StoreTopBarProps) => {
+export const StoreTopBar = ({ slug, isDocked }: StoreTopBarProps) => {
   const {
     store,
+    sections,
     cartCount,
     setCartOpen,
-    sections,
     search,
     setSearch,
     customer,
     logout,
+    hours,
+    isHoursPending,
+    setInfoOpen,
   } = useStorefrontFacade()
   const navigate = useNavigate()
+  const [isSearchOpen, setSearchOpen] = useState(false)
+  const searchRef = useRef<HTMLInputElement>(null)
+
+  useEffect(() => {
+    if (isSearchOpen) searchRef.current?.focus()
+  }, [isSearchOpen])
+
+  /* WHY: fechar sem limpar deixava o cardápio filtrado por um texto que não
+     está mais em lugar nenhum da tela, com a régua de categorias escondida. */
+  const closeSearch = () => {
+    setSearch('')
+    setSearchOpen(false)
+  }
+
   if (!store) return null
 
   const base = slug ? `/${slug}` : ''
@@ -38,13 +57,14 @@ export const StoreTopBar = ({ slug, progress }: StoreTopBarProps) => {
     ? customer.name
     : formatPhone(customer?.phone ?? '')
 
+  const isStoreOpen = isHoursPending || isOpen(store, hours)
+
   return (
     <Box
       as="header"
-      className={styles.bar}
-      style={{ '--p': progress } as React.CSSProperties}
+      className={isDocked ? `${styles.bar} ${styles.barDocked}` : styles.bar}
     >
-      <Box className={styles.inner}>
+      <Box direction="row" className={styles.inner}>
         <a href={base || '/'} className={styles.brand}>
           <Box className={styles.logo} aria-hidden="true">
             <Image
@@ -60,7 +80,7 @@ export const StoreTopBar = ({ slug, progress }: StoreTopBarProps) => {
         </a>
 
         {sections.length > 0 && (
-          <Box className={styles.search}>
+          <Box className={styles.deskSearch}>
             <Icon name="search" className={styles.searchIcon} />
             <Input
               type="search"
@@ -73,19 +93,66 @@ export const StoreTopBar = ({ slug, progress }: StoreTopBarProps) => {
           </Box>
         )}
 
-        <Box className={styles.tools}>
+        <Box direction="row" className={styles.tools}>
+          <Box direction="row" className={styles.storeMeta}>
+            <Text as="span" className={styles.metaStatus}>
+              <span
+                className={
+                  isStoreOpen ? `${styles.dot} ${styles.dotOn}` : styles.dot
+                }
+                aria-hidden="true"
+              />
+              {isStoreOpen ? 'Aberto agora' : 'Fechado'}
+            </Text>
+          </Box>
+
+          {sections.length > 0 && (
+            <Button
+              variant="ghost"
+              size="icon"
+              className={`${styles.iconBtn} ${styles.searchTrigger}`}
+              onClick={() => setSearchOpen(true)}
+              aria-label="Buscar no cardápio"
+              aria-expanded={isSearchOpen}
+            >
+              <Icon name="search" />
+            </Button>
+          )}
+
           <Button
             variant="ghost"
             size="icon"
-            className={styles.iconBtn}
-            onClick={() => setCartOpen(true)}
-            aria-label={`Sacola com ${cartCount} ${
-              cartCount === 1 ? 'item' : 'itens'
-            }`}
+            className={`${styles.iconBtn} ${styles.accountEntry}`}
+            onClick={() => setInfoOpen(true)}
+            aria-label="Informações da loja"
           >
-            <Icon name="bag" />
+            <Icon name="info" />
+          </Button>
+
+          <Button
+            variant="ghost"
+            size="icon"
+            className={`${styles.iconBtn} ${styles.accountEntry}`}
+            onClick={go('/conta/conversas')}
+            aria-label="Conversas com a loja"
+          >
+            <Icon name="bell" />
+          </Button>
+
+          <Button
+            variant="ghost"
+            size="icon"
+            className={`${styles.iconBtn} ${styles.accountEntry}`}
+            onClick={() => setCartOpen(true)}
+            aria-label={
+              cartCount > 0
+                ? `Sacola com ${cartCount} ${cartCount === 1 ? 'item' : 'itens'}`
+                : 'Sacola vazia'
+            }
+          >
+            <Icon name="shopping-cart" />
             {cartCount > 0 && (
-              <Text as="span" className={styles.badge}>
+              <Text as="span" className={styles.cartBadge}>
                 {cartCount}
               </Text>
             )}
@@ -97,7 +164,7 @@ export const StoreTopBar = ({ slug, progress }: StoreTopBarProps) => {
               trigger={
                 <Button
                   variant="ghost"
-                  className={styles.account}
+                  className={`${styles.account} ${styles.accountEntry}`}
                   aria-label={`Sua conta — ${named}`}
                 >
                   <Icon name="user" />
@@ -144,13 +211,52 @@ export const StoreTopBar = ({ slug, progress }: StoreTopBarProps) => {
           ) : (
             <Button
               variant="ghost"
-              className={styles.signIn}
+              className={`${styles.signIn} ${styles.accountEntry}`}
               onClick={go('/entrar')}
             >
               Entrar
             </Button>
           )}
         </Box>
+
+        {sections.length > 0 && (
+          <Box
+            direction="row"
+            className={
+              isSearchOpen
+                ? `${styles.searchPanel} ${styles.searchPanelOpen}`
+                : styles.searchPanel
+            }
+            aria-hidden={!isSearchOpen}
+          >
+            <Box className={styles.searchField}>
+              <Icon name="search" className={styles.searchIcon} />
+              <Input
+                ref={searchRef}
+                type="search"
+                aria-label="Buscar no cardápio"
+                placeholder="Buscar no cardápio"
+                className={styles.searchInput}
+                value={search}
+                tabIndex={isSearchOpen ? undefined : -1}
+                onChange={(event) => setSearch(event.target.value)}
+                onKeyDown={(event) => {
+                  if (event.key === 'Escape') closeSearch()
+                }}
+              />
+            </Box>
+            <Button
+              variant="ghost"
+              size="icon"
+              className={styles.iconBtn}
+              onClick={closeSearch}
+              aria-label="Fechar busca"
+              tabIndex={isSearchOpen ? undefined : -1}
+            >
+              <Icon name="x" />
+            </Button>
+          </Box>
+        )}
       </Box>
     </Box>
   )

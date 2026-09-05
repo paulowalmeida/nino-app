@@ -1,16 +1,10 @@
 @reference "@nino/ds/globals.css";
 
-/* a busca da página desaparece à medida que a do topo assume — é a mesma
-   busca em dois lugares, nunca duas visíveis ao mesmo tempo */
+/* WHY: a busca da página não some no scroll — sumir deixava um buraco branco
+   do tamanho dela no lugar. Ela rola para baixo da barra fixa, que só fica
+   sólida depois que a busca já saiu de vista. */
 .toolbar {
-  @apply mt-4 flex flex-col gap-3 sm:mt-5 sm:flex-row sm:items-stretch;
-  opacity: clamp(0, calc(1 - var(--p, 0) * 1.6), 1);
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .toolbar {
-    opacity: 1;
-  }
+  @apply mt-4 flex flex-col gap-3 sm:flex-row sm:items-stretch lg:hidden;
 }
 
 .field {
@@ -18,15 +12,16 @@
 }
 
 .icon {
-  @apply pointer-events-none absolute left-4 top-1/2 -translate-y-1/2;
+  @apply pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2;
   @apply text-fg-faint;
 }
 
 .input {
-  @apply h-14 w-full rounded-3 border border-border bg-surface-page;
-  @apply pl-12 pr-4;
-  @apply text-base text-fg-muted outline-none transition-colors;
-  @apply placeholder:text-fg-faint hover:border-fg-faintest;
-  @apply focus-visible:border-brand focus-visible:ring-2 focus-visible:ring-brand-soft;
-  box-shadow: var(--shadow-warm-sm);
+  @apply h-12 w-full rounded-3 border border-border bg-surface-cool;
+  @apply pl-11 pr-4;
+  @apply text-base text-fg-default outline-none transition-field;
+  @apply placeholder:text-fg-faint;
+  @apply hover:border-fg-faintest;
+  @apply focus-visible:border-brand focus-visible:bg-surface-page;
+  @apply focus-visible:ring-2 focus-visible:ring-brand-soft;
 }

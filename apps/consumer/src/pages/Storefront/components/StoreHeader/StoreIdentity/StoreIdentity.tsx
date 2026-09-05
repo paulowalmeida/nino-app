@@ -36,21 +36,11 @@ export const StoreIdentity = () => {
         <Heading level={1} className={`${motion.deal} ${styles.name}`}>
           {displayName(store)}
         </Heading>
-        <Text
+        <Box
+          direction="row"
           className={`${motion.deal} ${styles.identityMeta}`}
           style={riseDelay(70)}
         >
-          <Button
-            variant="ghost"
-            size="sm"
-            className={styles.more}
-            onClick={() => setInfoOpen(true)}
-          >
-            Detalhes da loja
-          </Button>
-          <Text as="span" className={styles.sep}>
-            ·
-          </Text>
           <Text as="span" className={styles.status}>
             <span
               className={
@@ -61,16 +51,19 @@ export const StoreIdentity = () => {
             {isStoreOpen ? 'Aberto agora' : 'Fechado'}
           </Text>
           {isStoreOpen && estimatedMinutes ? (
-            <>
-              <Text as="span" className={styles.sep}>
-                ·
-              </Text>
-              <Text as="span" className={styles.time}>
-                ~{estimatedMinutes} min
-              </Text>
-            </>
+            <Text as="span" className={styles.time}>
+              ~{estimatedMinutes} min
+            </Text>
           ) : null}
-        </Text>
+          <Button
+            variant="ghost"
+            size="sm"
+            className={styles.more}
+            onClick={() => setInfoOpen(true)}
+          >
+            Detalhes da loja
+          </Button>
+        </Box>
       </Box>
     </Box>
   )

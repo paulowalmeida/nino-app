@@ -16,10 +16,10 @@
 }
 
 /*
- * O alvo do meio é a casa, e ele se anuncia por um anel — não por um botão
- * que estoura para cima. A barra da sacola mora logo acima desta, e um disco
- * flutuante entre as duas empilharia dois pesos no mesmo canto da tela.
- * O destaque cabe dentro da altura da barra: mesma linha, outro peso.
+ * A casa abre a barra e se anuncia por um anel — não por um botão que estoura
+ * para cima. O destaque cabe dentro da altura da barra: mesma linha, outro
+ * peso. A sacola é um atalho como os outros; ela deixou de flutuar sobre o
+ * conteúdo quando virou item daqui.
  */
 .home {
   @apply flex h-full flex-1 flex-col items-center justify-center gap-0.5;
@@ -53,4 +53,17 @@
 /* três alvos numa tela de 360px: o rótulo aperta antes do ícone */
 .label {
   @apply text-xs font-semibold;
+}
+
+/* a contagem da sacola marca o ícone, não a linha inteira */
+.cartIcon {
+  @apply relative inline-flex items-center justify-center;
+}
+
+.cartBadge {
+  @apply absolute -right-2.5 -top-1.5 flex h-4 min-w-4 items-center;
+  @apply justify-center rounded-full px-1 text-2xs font-extrabold;
+  @apply text-fg-on-brand;
+  background-color: var(--store-tint, var(--color-brand));
+  font-variant-numeric: tabular-nums;
 }

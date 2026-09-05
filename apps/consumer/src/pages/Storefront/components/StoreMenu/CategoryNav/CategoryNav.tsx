@@ -12,11 +12,16 @@ export const CategoryNav = () => {
   const { sections, activeId, goToSection } = useStorefrontFacade()
   const activeRef = useRef<HTMLButtonElement>(null)
 
+  /* WHY: scrollIntoView centraliza o chip, mas também rola a página na
+     vertical quando ele está parcialmente sob a barra fixa — o cardápio
+     saltava sozinho ao rolar. Aqui só a trilha horizontal se move. */
   useEffect(() => {
-    activeRef.current?.scrollIntoView({
+    const chip = activeRef.current
+    const track = chip?.parentElement
+    if (!chip || !track) return
+    track.scrollTo({
+      left: chip.offsetLeft - (track.clientWidth - chip.clientWidth) / 2,
       behavior: 'smooth',
-      inline: 'center',
-      block: 'nearest',
     })
   }, [activeId])
 

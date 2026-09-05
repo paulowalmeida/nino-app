@@ -1,149 +1,171 @@
 @reference "@nino/ds/globals.css";
 
-/* mobile: linha de lista contínua — sem moldura de card, separada da próxima
-   por uma divisória fina. desktop: vira card emoldurado. */
+/*
+ * WHY: um DOM, duas composições. A foto fica sempre à esquerda; o que muda é
+ * se ela ocupa uma coluna da linha ou o topo do card. Entre 640 e 1024 há duas
+ * colunas estreitas e a foto sobe para o topo, onde ganha área; fora dessa
+ * faixa o item é uma linha e a foto abre a leitura pela esquerda.
+ */
+/*
+ * A superfície, o anel e a elevação vêm do `Card` do Design System. Aqui fica
+ * só o que é do cardápio: o canto mais largo que o padrão e o realce na cor da
+ * loja ao passar o mouse.
+ */
 .card {
-  @apply relative flex cursor-pointer items-stretch gap-3.5 border-b;
-  @apply border-black/[0.08];
-  @apply py-4 outline-none transition-all duration-200;
-  @apply focus-visible:ring-2 focus-visible:ring-brand;
-  @apply last:border-b-0;
-  @apply lg:gap-4 lg:rounded-4 lg:border lg:border-border;
-  @apply lg:bg-surface-page;
-  @apply lg:p-4 lg:pr-5 lg:last:border-b;
-  animation: settle 0.36s var(--ease-out) both;
+  @apply relative isolate rounded-4;
+  @apply transition-[box-shadow,transform] duration-base;
 }
 
-.card:hover {
-  @apply lg:-translate-y-0.5 lg:border-brand-muted;
-}
-
-@media (min-width: 1024px) {
-  .card {
-    box-shadow: 0 1px 2px
-      color-mix(in srgb, var(--color-warm-950) 4%, transparent);
-  }
-
+@media (hover: hover) {
   .card:hover {
-    box-shadow: var(--shadow-warm-md);
-  }
-}
-
-@keyframes settle {
-  from {
-    opacity: 0;
-    transform: translateY(6px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
+    box-shadow:
+      0 0 0 1px
+        color-mix(in srgb, var(--store-tint, var(--color-brand)) 45%, transparent),
+      0 8px 20px -12px color-mix(in srgb, var(--color-warm-950) 20%, transparent);
+    transform: translateY(-2px);
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .card {
-    animation: none;
-  }
+  .card,
   .card:hover {
-    @apply translate-y-0;
+    transform: none;
   }
 }
 
-/* loja fechada: item continua legível, só sai do caminho de quem clica */
+.card:has(.open:focus-visible) {
+  outline: 2px solid var(--store-tint, var(--color-brand));
+  outline-offset: 2px;
+}
+
+/* loja fechada: o item continua legível, só sai do caminho de quem clica */
 .disabled {
-  @apply cursor-not-allowed grayscale;
-  opacity: 0.5;
+  @apply grayscale;
+  opacity: 0.55;
 }
 
-.disabled:hover {
-  @apply translate-y-0 border-black/[0.08];
-  box-shadow: 0 1px 2px
-    color-mix(in srgb, var(--color-warm-950) 4%, transparent);
+@media (hover: hover) {
+  .disabled:hover {
+    transform: none;
+    box-shadow: var(--card-ring);
+  }
 }
 
-.disabled .add {
-  @apply cursor-not-allowed active:scale-100;
+/*
+ * O botão que abre o detalhe cobre foto e texto: o alvo é o item inteiro,
+ * não um link escondido no nome.
+ */
+.open {
+  @apply flex w-full cursor-pointer appearance-none gap-3 border-0 bg-transparent;
+  @apply p-0 text-left;
+  @apply flex-row items-stretch;
+  @apply sm:flex-col sm:gap-0;
+  /* WHY: com duas colunas numa coluna de 1280px o card tem 630px. Vertical,
+     a foto viraria um pôster de 420px de altura — então a partir de lg ele
+     volta à composição de linha, com a foto à esquerda abrindo a leitura e o
+     texto ocupando a largura restante. */
+  @apply lg:flex-row lg:items-stretch lg:gap-4;
+  height: auto;
+  border-radius: inherit;
 }
 
-.body {
-  @apply flex min-w-0 flex-1 flex-col py-0.5;
-}
-
-.bodyButton {
-  @apply flex min-w-0 flex-1 cursor-pointer appearance-none border-0 bg-transparent p-0 text-left;
-}
-
-.bodyButton:disabled {
+.open:disabled {
   @apply cursor-not-allowed;
 }
 
-.name {
-  @apply font-display text-base font-bold leading-snug text-fg-strong;
+/* WHY: o ghost do DS pinta o fundo no hover; aqui o alvo cobre o card inteiro,
+   então esse fundo tingiria o card todo. Quem responde ao hover é o card. */
+.open:hover,
+.open:active {
+  background-color: transparent;
 }
 
-.description {
-  @apply mt-1 line-clamp-2 text-sm leading-snug text-fg-subtle;
-}
-
-/*
- * Preço em tinta, não em laranja. Num cardápio impresso o preço nunca é
- * colorido: é a mesma tinta, alinhada, e é o numeral tabular que faz a coluna
- * ler. Com vinte preços laranja competindo com vinte botões laranja, nenhum
- * dos dois aparecia — agora o laranja quer dizer "dá pra agir aqui".
- */
-.price {
-  @apply mt-auto pt-2 font-display text-sm font-extrabold text-fg-strong;
-  font-variant-numeric: tabular-nums;
-}
-
-/*
- * A mesma marca `2×` do resumo do pedido, ancorada no canto oposto ao "+".
- * Fica fora da coluna de preços de propósito: um prefixo antes do valor
- * empurraria o preço pra direita só nos itens que estão na sacola e
- * quebraria justamente o alinhamento que o numeral tabular constrói.
- */
-.tally {
-  @apply absolute -left-2 -top-2 z-content flex min-w-7 items-center;
-  @apply justify-center;
-  @apply rounded-full bg-surface-page px-1.5 py-0.5;
-  @apply font-display text-xs font-extrabold text-brand-strong;
-  border: 2px solid var(--color-brand);
-  font-variant-numeric: tabular-nums;
+.open:focus-visible {
+  outline: none;
 }
 
 .media {
-  @apply relative shrink-0 self-center;
+  @apply relative shrink-0 overflow-hidden rounded-3 bg-surface-cool;
+  @apply h-28 w-28;
+  @apply sm:aspect-[3/2] sm:h-auto sm:w-full;
+  @apply lg:aspect-auto lg:h-36 lg:w-36;
 }
 
 .photo {
-  @apply h-[5.4rem] w-[5.4rem] rounded-2 object-cover;
-  @apply lg:h-[6.5rem] lg:w-[6.5rem];
-  box-shadow: inset 0 0 0 1px
-    color-mix(in srgb, var(--color-warm-950) 6%, transparent);
+  @apply h-full w-full object-cover;
 }
 
-.photoFallback {
-  @apply flex h-[5.4rem] w-[5.4rem] items-center justify-center rounded-2;
-  @apply lg:h-[6.5rem] lg:w-[6.5rem];
-  background: radial-gradient(
-    120% 120% at 30% 20%,
-    var(--color-surface-2),
-    var(--color-fg-on-brand)
-  );
-  box-shadow: inset 0 0 0 1px var(--color-border);
+/* sem foto o item não finge uma: campo calmo com o glifo da categoria */
+.noPhoto {
+  @apply flex h-full w-full items-center justify-center bg-surface-cool;
+  @apply text-3xl sm:text-5xl;
+  opacity: 0.45;
 }
 
-.fallbackGlyph {
-  @apply text-[2rem] opacity-faint grayscale-0;
-  filter: saturate(0.85);
+.body {
+  @apply flex min-w-0 flex-1 flex-col pr-10 sm:pr-10 sm:pt-3 lg:pt-0;
 }
 
-/* o botão de somar ancorado no canto da foto, estilo vitrine de delivery */
+.name {
+  @apply font-display text-[0.9375rem] font-bold leading-snug text-fg-strong;
+  @apply sm:text-base;
+}
+
+.description {
+  @apply mt-2 line-clamp-2 text-[0.8125rem] leading-relaxed text-fg-subtle;
+  @apply lg:mt-2.5 lg:line-clamp-3 lg:text-sm;
+}
+
+/* WHY: o preço ancora no rodapé do card, não logo abaixo da descrição — com
+   descrições de tamanhos diferentes ele dançava de altura de um card para o
+   outro, e é ele que o olho procura para comparar. */
+.price {
+  @apply mt-auto pt-2 font-display text-[0.9375rem] font-medium;
+  color: var(--color-success);
+  font-variant-numeric: tabular-nums;
+}
+
+/* a marca de quantas unidades já estão na sacola */
+.tally {
+  @apply absolute left-1.5 top-1.5 z-content inline-flex h-6 min-w-6;
+  @apply items-center justify-center rounded-full px-1.5;
+  @apply text-xs font-extrabold text-fg-on-brand;
+  background-color: var(--store-tint, var(--color-brand));
+  font-variant-numeric: tabular-nums;
+}
+
+/*
+ * WHY: o somar fica no mesmo canto nas duas composições, mas no celular ele
+ * encosta na quina da foto em vez de cobrir o meio dela — o anel branco é o
+ * que separa o controle da comida.
+ */
 .add {
-  @apply absolute -bottom-2 -right-2 flex h-9 w-9 items-center justify-center;
-  @apply rounded-full bg-brand text-fg-on-brand transition-transform;
-  @apply duration-150 active:scale-90;
-  border: 2.5px solid var(--color-fg-on-brand);
-  box-shadow: 0 6px 14px -4px
-    color-mix(in srgb, var(--color-brand-strong) 55%, transparent);
+  @apply absolute bottom-2 right-2 z-content flex h-9 w-9 items-center;
+  @apply justify-center rounded-full border-0 text-fg-on-brand;
+  @apply ring-2 ring-surface-page;
+  @apply sm:bottom-3 sm:right-3 sm:h-10 sm:w-10 sm:ring-0;
+  background-color: var(--store-tint, var(--color-brand));
+  box-shadow: 0 4px 12px -4px color-mix(in srgb, var(--store-tint, var(--color-brand)) 55%, transparent);
+  transition: transform var(--duration-fast) var(--ease-out), filter var(--duration-fast) var(--ease-out);
+}
+
+@media (hover: hover) {
+  .add:hover {
+    filter: brightness(0.94);
+  }
+}
+
+.add:active {
+  transform: scale(0.9);
+}
+
+.add:disabled {
+  @apply cursor-not-allowed;
+  filter: grayscale(1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .add:active {
+    transform: none;
+  }
 }

@@ -1,36 +1,63 @@
 @reference "@nino/ds/globals.css";
 
+/*
+ * WHY: a troca tem um limite, não uma rampa. Enquanto a busca da página está
+ * visível a barra não existe; quando ela passa por baixo do topo, a barra
+ * desliza inteira e já sólida, e é ela que passa a oferecer a lupa. Nada aqui
+ * interpola cor ou opacidade com a rolagem.
+ */
 .bar {
-  @apply fixed top-0 z-nav w-full border-b;
-  border-color: rgb(0 0 0 / calc(0.07 * var(--p, 1)));
-  background-color: color-mix(
-    in srgb,
-    var(--color-surface-raised) calc(var(--p, 1) * 100%),
-    transparent
-  );
+  @apply fixed top-0 z-nav w-full bg-surface-page;
+  @apply lg:h-20;
+  /* WHY: sombra difusa no lugar do fio — a linha sólida cortava a barra do
+     conteúdo como um corte de papel, sem sugerir que ela está por cima. */
+  box-shadow:
+    0 1px 2px color-mix(in srgb, var(--color-warm-950) 4%, transparent),
+    0 10px 28px -18px color-mix(in srgb, var(--color-warm-950) 30%, transparent);
+  transform: translateY(-100%);
+  transition: transform 240ms var(--ease-out);
+  will-change: transform;
 }
 
-@media (max-width: 1023px) {
+.barDocked {
+  transform: translateY(0);
+}
+
+/* WHY: no desktop a barra é permanente, como a do iFood — ela carrega a
+   entrada de conta, e escondê-la no topo da página deixaria o visitante sem
+   como entrar. O encaixe por rolagem é comportamento de tela estreita. */
+@media (min-width: 1024px) {
   .bar {
-    transform: translateY(calc((var(--p, 0) - 1) * 100%));
-    opacity: var(--p, 0);
+    transform: none;
   }
 }
 
+@media (prefers-reduced-motion: reduce) {
+  .bar {
+    transition: none;
+  }
+}
+
+/* WHY: o header não segue a coluna do cardápio — ele é a moldura da aplicação
+   e ocupa a largura da página, limitado só pelo container máximo do app. */
 .inner {
-  @apply mx-auto flex h-14 w-full max-w-page items-center gap-3 px-4;
-  @apply sm:px-6;
+  @apply relative mx-auto flex h-14 w-full max-w-page items-center gap-3;
+  @apply px-4 sm:px-6 lg:h-20 lg:gap-5;
 }
 
 .brand {
-  @apply flex min-w-0 items-center gap-2.5;
+  @apply flex min-w-0 items-center gap-2.5 lg:gap-3.5;
+  /* WHY: no desktop a marca não cede espaço para a busca — cedia dois pixels e
+     o nome truncava com a barra inteira sobrando. Ela só trunca depois do teto,
+     que é largo o bastante para um nome de loja de verdade. */
+  @apply lg:max-w-[26rem] lg:shrink-0;
 }
 
 .logo {
   @apply flex h-8 w-8 shrink-0 items-center justify-center overflow-hidden;
-  @apply origin-left rounded-2 bg-brand text-xs font-extrabold text-fg-on-brand;
-  opacity: clamp(0, calc((var(--p, 0) - 0.45) * 2.6), 1);
-  transform: scale(clamp(0.7, calc(0.7 + (var(--p, 0) - 0.45) * 1.3), 1));
+  @apply lg:h-14 lg:w-14 lg:rounded-3 lg:text-sm;
+  @apply origin-left rounded-2 text-xs font-extrabold text-fg-on-brand;
+  background-color: var(--store-tint, var(--color-brand));
 }
 
 .logoImg {
@@ -38,65 +65,157 @@
 }
 
 .storeName {
-  @apply hidden truncate font-display text-sm font-extrabold text-fg-muted;
-  @apply sm:block;
-  opacity: clamp(0, calc((var(--p, 0) - 0.6) * 3), 1);
+  @apply block min-w-0 truncate font-display text-sm font-extrabold;
+  @apply text-fg-strong lg:text-2xl lg:tracking-tight;
 }
 
-.search {
-  @apply relative flex flex-1 items-center overflow-hidden transition-none;
-  max-width: calc(var(--p, 0) * 26rem);
-  opacity: clamp(0, calc((var(--p, 0) - 0.35) * 2.2), 1);
+/*
+ * A identidade da loja mora no header a partir de lg: nome, estado, tempo e
+ * informações numa linha só. Abaixo disso ela continua no cartão sobre a
+ * faixa, que é o que cabe numa tela estreita.
+ */
+.storeMeta {
+  @apply hidden shrink-0 items-center gap-3 text-[0.8125rem];
+  @apply text-fg-subtle lg:mr-2 lg:flex;
 }
 
-.searchIcon {
-  @apply pointer-events-none absolute left-3 text-fg-faint;
+.metaStatus {
+  @apply inline-flex items-center gap-1.5 font-semibold text-fg-default;
 }
 
-.searchInput {
-  @apply h-9 w-full rounded-full border border-black/10 bg-black/[0.03];
-  @apply pl-9 pr-3 text-sm text-fg-muted outline-none transition-colors;
-  @apply placeholder:text-fg-faint;
-  @apply focus:border-brand focus:bg-surface-raised;
+.dot {
+  @apply relative h-1.5 w-1.5 shrink-0 rounded-full bg-fg-ghost;
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .logo,
-  .storeName,
-  .search {
-    opacity: 1;
-    transform: none;
+.dotOn {
+  background-color: var(--color-success);
+}
+
+/*
+ * WHY: "aberto agora" é um estado ao vivo, e um ponto parado não diz isso. O
+ * anel sai do próprio ponto e se dissipa, como sinal de transmissão — o ponto
+ * em si não pisca, porque estado que some e volta lê como falha, não como vida.
+ */
+.dotOn::after {
+  content: '';
+  @apply absolute inset-0 rounded-full;
+  background-color: var(--color-success);
+  animation: statusPing 2.4s var(--ease-out) infinite;
+}
+
+@keyframes statusPing {
+  0% {
+    transform: scale(1);
+    opacity: 0.55;
+  }
+  70%,
+  100% {
+    transform: scale(3.2);
+    opacity: 0;
   }
 }
 
+@media (prefers-reduced-motion: reduce) {
+  .dotOn::after {
+    animation: none;
+  }
+}
+
+
+/*
+ * A busca permanente do desktop. WHY: encostada à direita, junto das ações, em
+ * vez de centrada — centrada ela disputa espaço com o nome da loja, e um nome
+ * longo passaria por cima dela. Aqui o nome fica com toda a folga da esquerda e
+ * o campo encolhe só quando ela acaba.
+ */
+.deskSearch {
+  @apply relative hidden min-w-0 items-center lg:mr-8 lg:flex;
+  /* WHY: encolhe seis vezes mais rápido que a marca. Com o mesmo fator, a base
+     larga do campo espremia o nome da loja e ele truncava mesmo sobrando
+     espaço na barra. */
+  flex: 0 6 44rem;
+  min-width: 14rem;
+  margin-left: auto;
+}
+
+/* em tela estreita a lupa abre o painel; no desktop o campo já está lá.
+   WHY: precisa de duas classes na regra — sozinha ela perde para o `flex` do
+   .iconBtn, escrito depois no arquivo, e media query não soma especificidade. */
+@media (min-width: 1024px) {
+  .iconBtn.searchTrigger {
+    display: none;
+  }
+}
+
+/*
+ * WHY: a barra não carrega um segundo campo de busca — dois inputs na tela
+ * sempre acabavam visíveis juntos em alguma altura da rolagem. Aqui existe um
+ * ícone; ao tocá-lo o painel se abre por cima da barra, revelado da direita
+ * para a esquerda, e o campo edita o mesmo estado de busca da página.
+ */
+.searchPanel {
+  @apply absolute inset-y-0 left-0 right-0 z-content flex items-center gap-2;
+  @apply bg-surface-page px-4 sm:px-6 lg:hidden;
+  clip-path: inset(0 0 0 100%);
+  pointer-events: none;
+  transition: clip-path 320ms var(--ease-out);
+}
+
+.searchPanelOpen {
+  clip-path: inset(0 0 0 0);
+  pointer-events: auto;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .searchPanel {
+    transition: none;
+  }
+}
+
+/* o campo do painel é o mesmo da página: a lupa mora dentro dele */
+.searchField {
+  @apply relative min-w-0 flex-1;
+}
+
+.searchIcon {
+  @apply pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2;
+  @apply text-fg-faint;
+}
+
+.searchInput {
+  @apply h-10 w-full rounded-3 border border-border bg-surface-cool lg:h-12;
+  @apply pl-11 pr-3 text-base text-fg-default outline-none transition-field;
+  @apply placeholder:text-fg-faint;
+  @apply focus-visible:border-brand focus-visible:bg-surface-page;
+  @apply focus-visible:ring-2 focus-visible:ring-brand-soft;
+}
+
 .tools {
-  @apply ml-auto hidden shrink-0 items-center gap-1 lg:flex;
+  @apply ml-auto flex shrink-0 items-center gap-1;
+}
+
+/* WHY: no desktop quem empurra para a direita é a busca; deixar o auto aqui
+   também faria a folga se dividir entre os dois e nenhum encostaria na borda. */
+@media (min-width: 1024px) {
+  .tools {
+    margin-left: 0;
+  }
+}
+
+/* WHY: no celular a conta mora na TabBar de baixo; repetir aqui só rouba a
+   largura do nome da loja */
+.accountEntry {
+  @apply hidden lg:flex;
 }
 
 .iconBtn {
   @apply relative flex h-10 w-10 items-center justify-center rounded-full;
-  @apply transition-colors hover:bg-black/[0.05];
-  color: color-mix(
-    in srgb,
-    white calc((1 - var(--p, 1)) * 100%),
-    var(--color-fg-muted) calc(var(--p, 1) * 100%)
-  );
-}
-
-.badge {
-  @apply absolute right-1 top-1 flex h-4 min-w-4 items-center justify-center;
-  @apply rounded-full bg-brand px-1 text-2xs font-extrabold;
-  @apply text-fg-on-brand;
+  @apply text-fg-muted transition-colors hover:bg-surface-2;
 }
 
 .account {
   @apply flex h-10 items-center gap-2 rounded-full px-2.5;
-  @apply transition-colors hover:bg-black/[0.05];
-  color: color-mix(
-    in srgb,
-    white calc((1 - var(--p, 1)) * 100%),
-    var(--color-fg-muted) calc(var(--p, 1) * 100%)
-  );
+  @apply text-fg-muted transition-colors hover:bg-surface-2;
 }
 
 .accountName {
@@ -110,15 +229,14 @@
 .signIn {
   @apply h-9 rounded-full px-4 text-sm font-bold text-fg-on-brand;
   @apply transition-colors hover:bg-brand-hover;
-  background-color: color-mix(
-    in srgb,
-    var(--color-brand) calc(var(--p, 1) * 100%),
-    transparent
-  );
-  border: 1.5px solid
-    color-mix(
-      in srgb,
-      white calc((1 - var(--p, 1)) * 100%),
-      var(--color-brand) calc(var(--p, 1) * 100%)
-    );
+  background-color: var(--store-tint, var(--color-brand));
+  border: 0;
+}
+
+/* a contagem marca o ícone da sacola, no canto dele */
+.cartBadge {
+  @apply absolute right-1 top-1 flex h-4 min-w-4 items-center justify-center;
+  @apply rounded-full px-1 text-2xs font-extrabold text-fg-on-brand;
+  background-color: var(--store-tint, var(--color-brand));
+  font-variant-numeric: tabular-nums;
 }

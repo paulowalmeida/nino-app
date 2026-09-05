@@ -1,4 +1,4 @@
-import { useLayoutEffect } from 'react'
+import { useLayoutEffect, useState } from 'react'
 
 import { Alert } from '@nino/ds/components/Alert'
 import { EmptyState } from '@nino/ds/components/EmptyState'
@@ -19,7 +19,7 @@ import { MenuSearchField } from '@pages/Storefront/components/StoreMenu/MenuSear
 import { MenuRowsSkeleton } from '@pages/Storefront/skeletons/MenuRowsSkeleton/MenuRowsSkeleton'
 import { PoweredBy } from '@shared/components/PoweredBy/PoweredBy'
 import { StoreBanner } from '@pages/Storefront/components/StoreHeader/StoreBanner/StoreBanner'
-import { useScrollProgress } from '@hooks/useScrollProgress/useScrollProgress'
+import { useDockedHeader } from '@pages/Storefront/hooks/useDockedHeader/useDockedHeader'
 import { useStorefrontFacade } from '@pages/Storefront/facades/useStorefrontFacade/useStorefrontFacade'
 import { resolveSlug } from '@utils/resolve-slug'
 import { riseDelay } from '@utils/rise-delay'
@@ -27,7 +27,7 @@ import { riseDelay } from '@utils/rise-delay'
 import styles from './StorefrontContent.module.css'
 import motion from '@styles/motion.module.css'
 
-const HEADER_TRANSITION_PX = 140
+const DOCKED_HEADER_OFFSET_PX = 56
 
 type StorefrontContentProps = {
   pathSlug: string | undefined
@@ -37,7 +37,8 @@ export const StorefrontContent = ({ pathSlug }: StorefrontContentProps) => {
   const slug = resolveSlug(pathSlug)
   const home = useStorefrontFacade(slug ?? undefined)
   const { reset } = home
-  const progress = useScrollProgress(HEADER_TRANSITION_PX)
+  const [searchField, setSearchField] = useState<HTMLInputElement | null>(null)
+  const isHeaderDocked = useDockedHeader(searchField, DOCKED_HEADER_OFFSET_PX)
   const { search, visibleSections, isSearching } = home
 
   useLayoutEffect(() => {
@@ -48,21 +49,14 @@ export const StorefrontContent = ({ pathSlug }: StorefrontContentProps) => {
 
   return (
     <Box
-      className={
-        home.cartCount > 0
-          ? `${styles.page} ${styles.pageWithCart}`
-          : styles.page
-      }
+      className={styles.page}
       style={
-        {
-          '--p': progress,
-          ...(home.store?.primaryColor
-            ? { '--store-tint': home.store.primaryColor }
-            : {}),
-        } as React.CSSProperties
+        home.store?.primaryColor
+          ? ({ '--store-tint': home.store.primaryColor } as React.CSSProperties)
+          : undefined
       }
     >
-      <StoreTopBar slug={pathSlug ?? ''} progress={progress} />
+      <StoreTopBar slug={pathSlug ?? ''} isDocked={isHeaderDocked} />
 
       <StoreBanner />
 
@@ -73,7 +67,7 @@ export const StorefrontContent = ({ pathSlug }: StorefrontContentProps) => {
 
         <ActiveOrderBanner slug={slug ?? ''} />
 
-        {home.sections.length > 0 && <MenuSearchField />}
+        {home.sections.length > 0 && <MenuSearchField ref={setSearchField} />}
       </Box>
 
       {home.sections.length > 0 && !isSearching && (
@@ -129,7 +123,11 @@ export const StorefrontContent = ({ pathSlug }: StorefrontContentProps) => {
       <StoreCart />
 
       <PoweredBy />
-      <TabBar base={base} />
+      <TabBar
+        base={base}
+        cartCount={home.cartCount}
+        onOpenCart={() => home.setCartOpen(true)}
+      />
 
       <StoreInfo />
 

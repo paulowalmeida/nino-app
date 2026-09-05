@@ -8,11 +8,15 @@ import { useEffect, useState } from 'react'
  * dispara durante o layout instável do carregamento e não se corrige sozinho.
  * Ativa é a última seção cujo topo já passou da linha de leitura.
  *
- * A linha fica abaixo das duas barras fixas (topo + régua): acender a
- * categoria seguinte enquanto o título dela ainda está escondido atrás delas
- * faz a régua apontar para o que ninguém está vendo.
+ * A linha sai do `scroll-margin-top` da própria seção, que já é a distância
+ * necessária para o título escapar das barras fixas. Fixá-la num número aqui
+ * criava três constantes que precisavam concordar entre si — header, margem e
+ * linha — e elas divergiam a cada mudança de altura do header.
+ *
+ * WHY: a folga existe porque uma seção alcançada por clique para exatamente
+ * sobre a margem; sem ela o chip da categoria anterior continuava aceso.
  */
-const READING_LINE = 130
+const READING_LINE_SLACK = 8
 
 export const useActiveSection = (ids: string[]): string | null => {
   const [active, setActive] = useState<string | null>(ids[0] ?? null)
@@ -28,7 +32,10 @@ export const useActiveSection = (ids: string[]): string | null => {
       for (const id of ids) {
         const el = document.getElementById(id)
         if (!el) continue
-        if (el.getBoundingClientRect().top - READING_LINE > 1) break
+        const readingLine =
+          (parseFloat(getComputedStyle(el).scrollMarginTop) || 0) +
+          READING_LINE_SLACK
+        if (el.getBoundingClientRect().top - readingLine > 1) break
         current = id
       }
       setActive((previous) => (previous === current ? previous : current))

@@ -1,19 +1,23 @@
 @reference "@nino/ds/globals.css";
 
+/*
+ * WHY: no celular a faixa vai de borda a borda, que é o certo numa tela
+ * estreita. A partir de sm ela entra na coluna de conteúdo e vira um cartão
+ * de imagem com canto arredondado — esticada na largura inteira de um monitor
+ * ela vira uma tarja, não uma capa de loja.
+ */
 .banner {
   @apply relative w-full overflow-hidden;
-  @apply h-36 sm:h-44 lg:h-52;
+  @apply h-32;
+  @apply sm:mx-auto sm:mt-4 sm:h-auto sm:w-[calc(100%-3rem)];
+  @apply sm:aspect-[1300/250] sm:max-h-60 sm:rounded-4;
+  max-width: var(--storefront-column);
   background: linear-gradient(
-    124deg,
+    180deg,
+    var(--store-tint, var(--color-brand)) 0%,
     color-mix(
         in srgb,
-        var(--store-tint, var(--color-brand)) 88%,
-        var(--color-surface-raised)
-      )
-      0%,
-    color-mix(
-        in srgb,
-        var(--store-tint, var(--color-brand)) 72%,
+        var(--store-tint, var(--color-brand)) 82%,
         var(--color-warm-950)
       )
       100%
@@ -21,15 +25,16 @@
 }
 
 .mark {
-  @apply pointer-events-none absolute -right-8 -top-10 h-[145%] w-auto;
-  @apply select-none opacity-watermark;
-  filter: saturate(0.85);
+  @apply pointer-events-none absolute -bottom-4 right-2 h-[135%] w-auto;
+  @apply select-none;
+  opacity: 0.12;
+  filter: saturate(0);
 }
 
 .monogram {
-  @apply pointer-events-none absolute -right-2 -top-8 select-none;
-  @apply font-display text-[13rem] font-black leading-none text-fg-on-brand;
-  @apply sm:text-[16rem];
-  opacity: 0.12;
-  letter-spacing: -0.12em;
+  @apply pointer-events-none absolute -bottom-4 right-4 select-none;
+  @apply font-display text-[8rem] font-black leading-none text-fg-on-brand;
+  @apply sm:text-[10rem];
+  opacity: 0.16;
+  letter-spacing: -0.08em;
 }

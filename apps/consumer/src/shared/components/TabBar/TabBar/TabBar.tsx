@@ -10,9 +10,13 @@ import styles from './TabBar.module.css'
 
 type TabBarProps = {
   base: string
+  /** Quantos itens estão na sacola. Sem `onOpenCart`, o atalho não existe. */
+  cartCount?: number
+  /** Abre a sacola. Só a vitrine tem sacola, então o atalho é opcional. */
+  onOpenCart?: () => void
 }
 
-export const TabBar = ({ base }: TabBarProps) => {
+export const TabBar = ({ base, cartCount = 0, onOpenCart }: TabBarProps) => {
   const navigate = useNavigate()
   const { pathname } = useLocation()
   const [isAccountOpen, setIsAccountOpen] = useState(false)
@@ -38,20 +42,6 @@ export const TabBar = ({ base }: TabBarProps) => {
   return (
     <>
       <nav className={styles.bar} aria-label="Atalhos">
-        <NavLink
-          to={orders}
-          className={({ isActive }) =>
-            isActive && !isAccountOpen
-              ? `${styles.tab} ${styles.tabOn}`
-              : styles.tab
-          }
-        >
-          <Icon name="bag" />
-          <Text as="span" className={styles.label}>
-            Pedidos
-          </Text>
-        </NavLink>
-
         <Button
           variant="ghost"
           onClick={handleHome}
@@ -66,6 +56,45 @@ export const TabBar = ({ base }: TabBarProps) => {
             Início
           </Text>
         </Button>
+
+        {onOpenCart && (
+          <Button
+            variant="ghost"
+            onClick={onOpenCart}
+            className={styles.tab}
+            aria-label={
+              cartCount > 0
+                ? `Sacola com ${cartCount} ${cartCount === 1 ? 'item' : 'itens'}`
+                : 'Sacola vazia'
+            }
+          >
+            <Text as="span" className={styles.cartIcon}>
+              <Icon name="shopping-cart" />
+              {cartCount > 0 && (
+                <Text as="span" className={styles.cartBadge}>
+                  {cartCount}
+                </Text>
+              )}
+            </Text>
+            <Text as="span" className={styles.label}>
+              Sacola
+            </Text>
+          </Button>
+        )}
+
+        <NavLink
+          to={orders}
+          className={({ isActive }) =>
+            isActive && !isAccountOpen
+              ? `${styles.tab} ${styles.tabOn}`
+              : styles.tab
+          }
+        >
+          <Icon name="bag" />
+          <Text as="span" className={styles.label}>
+            Pedidos
+          </Text>
+        </NavLink>
 
         <Button
           variant="ghost"

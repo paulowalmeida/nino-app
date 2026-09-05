@@ -1,15 +1,29 @@
 @reference "../../styles/globals.css";
 
+/*
+ * WHY: o limite do card é um anel de sombra, não um `border` desenhado. A linha
+ * de 1px cortava a peça do fundo como um recorte; o anel dá o mesmo contorno
+ * sem endurecer a borda, e cada elevação carrega o anel junto porque as duas
+ * escrevem `box-shadow` e a última venceria a outra.
+ */
 .card {
-  @apply rounded-2 border border-border bg-surface-raised;
+  @apply rounded-2 bg-surface-raised;
+  --card-ring: 0 0 0 1px
+    color-mix(in srgb, var(--color-warm-950) 10%, transparent);
+  box-shadow: var(--card-ring);
 }
 
 .elevationResting {
-  @apply shadow-warm-sm;
+  box-shadow:
+    var(--card-ring),
+    0 1px 2px color-mix(in srgb, var(--color-warm-950) 4%, transparent),
+    0 4px 12px -8px color-mix(in srgb, var(--color-warm-950) 14%, transparent);
 }
 
 .elevationRaised {
-  @apply shadow-warm-md;
+  box-shadow:
+    var(--card-ring),
+    0 8px 20px -12px color-mix(in srgb, var(--color-warm-950) 20%, transparent);
 }
 
 .paddingNone {
@@ -30,5 +44,11 @@
 
 .clickable {
   @apply w-full cursor-pointer text-left transition-shadow duration-fast;
-  @apply hover:shadow-warm-md focus-ring;
+  @apply focus-ring;
+}
+
+.clickable:hover {
+  box-shadow:
+    var(--card-ring),
+    0 8px 20px -12px color-mix(in srgb, var(--color-warm-950) 20%, transparent);
 }
