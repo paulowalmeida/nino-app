@@ -11,7 +11,7 @@ export const cartItem = (
 ): CartItem => ({
   id: item.id,
   name: item.name,
-  price: item.price,
+  price: item.pricingType === 'COMPOSED' ? '0' : item.price,
   imageUrl: primaryImage(item),
   ...(choices.modifiers.length > 0 ? { modifiers: choices.modifiers } : {}),
   ...(choices.notes?.trim() ? { notes: choices.notes.trim() } : {}),

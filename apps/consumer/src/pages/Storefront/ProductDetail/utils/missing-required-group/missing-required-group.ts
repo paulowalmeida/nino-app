@@ -7,5 +7,7 @@ export const missingRequiredGroup = (
   selections: ProductChoiceSelections
 ): MenuItemModifier | null =>
   product.modifiers.find(
-    (group) => group.isRequired && (selections[group.id] ?? []).length === 0
+    (group) =>
+      (selections[group.id] ?? []).length <
+      (group.minSelections ?? (group.isRequired ? 1 : 0))
   ) ?? null

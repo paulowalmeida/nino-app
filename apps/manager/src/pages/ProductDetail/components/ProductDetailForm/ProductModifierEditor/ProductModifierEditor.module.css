@@ -1,0 +1,25 @@
+@reference "@nino/ds/globals.css";
+
+.editor {
+  @apply flex flex-col gap-4 border-t border-border/60 pt-6;
+}
+
+.header {
+  @apply flex-wrap items-start justify-between gap-3;
+}
+
+.title {
+  @apply text-lg text-fg-strong;
+}
+
+.hint {
+  @apply mt-1 text-sm leading-relaxed text-fg-muted;
+}
+
+.empty {
+  @apply rounded-2xl bg-surface-2 px-4 py-5 text-sm text-fg-muted;
+}
+
+.groups {
+  @apply flex flex-col gap-4;
+}

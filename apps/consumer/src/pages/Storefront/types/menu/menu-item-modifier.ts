@@ -5,6 +5,8 @@ export type MenuItemModifier = {
   name: string
   description: string | null
   isRequired: boolean
+  role?: 'COMPOSITION' | 'ADDITION'
+  minSelections?: number
   maxSelections: number
   options: MenuItemModifierOption[]
 }

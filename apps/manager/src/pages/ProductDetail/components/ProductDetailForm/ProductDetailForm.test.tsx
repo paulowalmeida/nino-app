@@ -111,6 +111,23 @@ describe('ProductDetailForm', () => {
     expect(submitProduct).not.toHaveBeenCalled()
   })
 
+  it('disables the base price when choices compose the total', async () => {
+    mockForm({
+      ...menuItemMock,
+      pricingType: 'COMPOSED',
+    } as typeof menuItemMock)
+    render(<ProductDetailForm />)
+
+    await waitFor(() =>
+      expect(screen.getByLabelText(productDetailFormMock.priceLabel)).toBeDisabled()
+    )
+    expect(
+      screen.getByText(
+        'O total será a soma das escolhas de composição e dos adicionais.'
+      )
+    ).toBeInTheDocument()
+  })
+
   it('leaves the card behind when the attendant gives up', async () => {
     render(<ProductDetailForm />)
 

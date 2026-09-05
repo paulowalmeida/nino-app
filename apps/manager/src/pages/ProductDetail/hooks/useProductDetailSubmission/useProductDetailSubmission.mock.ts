@@ -8,6 +8,8 @@ export const productDetailValuesMock: ProductDetailFormValues = {
   position: 1,
   isActive: true,
   requiresPreparation: true,
+  pricingType: 'FIXED',
+  modifiers: [],
 }
 
 export const productSubmissionMock = {

@@ -3,6 +3,7 @@ import { MemoryRouter } from 'react-router'
 import { act, renderHook } from '@testing-library/react'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 
+import { useReplaceProductModifiers } from '@pages/ProductDetail/hooks/useReplaceProductModifiers/useReplaceProductModifiers'
 import { useUpdateProduct } from '@pages/ProductDetail/hooks/useUpdateProduct/useUpdateProduct'
 
 import { useProductDetailSubmission } from './useProductDetailSubmission'
@@ -18,8 +19,12 @@ vi.mock('react-router', async (importOriginal) => ({
   useNavigate: () => navigate,
 }))
 vi.mock('@pages/ProductDetail/hooks/useUpdateProduct/useUpdateProduct')
+vi.mock(
+  '@pages/ProductDetail/hooks/useReplaceProductModifiers/useReplaceProductModifiers'
+)
 
 const mutateAsync = vi.fn()
+const replaceModifiers = vi.fn()
 
 const renderSubmission = () =>
   renderHook(
@@ -37,6 +42,10 @@ describe('useProductDetailSubmission', () => {
     vi.mocked(useUpdateProduct).mockReturnValue({
       mutateAsync,
     } as unknown as ReturnType<typeof useUpdateProduct>)
+    vi.mocked(useReplaceProductModifiers).mockReturnValue({
+      mutateAsync: replaceModifiers,
+    } as unknown as ReturnType<typeof useReplaceProductModifiers>)
+    replaceModifiers.mockResolvedValue(undefined)
   })
 
   it('saves the edited item and goes back to the menu', async () => {
@@ -52,6 +61,7 @@ describe('useProductDetailSubmission', () => {
     expect(mutateAsync).toHaveBeenCalledWith(
       expect.objectContaining({ name: 'X-Tudo', price: 24.9, isActive: true })
     )
+    expect(replaceModifiers).toHaveBeenCalledWith([])
     expect(navigate).toHaveBeenCalledWith('..', { relative: 'path' })
   })
 

@@ -22,7 +22,9 @@ export const ProductChoiceSingle = ({ group }: ProductChoiceSingleProps) => {
         value: option.id,
         label: option.name,
         description:
-          Number(option.price) > 0 ? `+ ${brl(option.price)}` : undefined,
+          Number(option.price) > 0
+            ? `${group.role !== 'COMPOSITION' ? '+ ' : ''}${brl(option.price)}`
+            : undefined,
       }))}
     />
   )

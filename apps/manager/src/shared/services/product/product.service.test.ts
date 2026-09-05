@@ -12,6 +12,7 @@ import {
   removeManyMessageMock,
   removeMessageMock,
   reorderIdsMock,
+  replaceProductModifiersRequestMock,
   tenantIdMock,
   updateMenuItemRequestMock,
 } from './product.service.mock'
@@ -209,6 +210,22 @@ describe('ProductService', () => {
     expect(api.patch).toHaveBeenCalledWith(
       `tenants/${tenantIdMock}/products/${productIdMock}`,
       updateMenuItemRequestMock
+    )
+    expect(result).toBe(menuItemMock)
+  })
+
+  it('replaceItemModifiers: patches every configured choice', async () => {
+    vi.mocked(api.patch).mockResolvedValue(menuItemMock)
+
+    const result = await ProductService.replaceItemModifiers(
+      tenantIdMock,
+      productIdMock,
+      replaceProductModifiersRequestMock
+    )
+
+    expect(api.patch).toHaveBeenCalledWith(
+      `tenants/${tenantIdMock}/products/${productIdMock}/modifiers`,
+      { modifiers: replaceProductModifiersRequestMock }
     )
     expect(result).toBe(menuItemMock)
   })

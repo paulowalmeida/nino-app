@@ -31,6 +31,16 @@ export const updateMenuItemRequestMock = {
   isActive: true,
 }
 
+export const replaceProductModifiersRequestMock = [
+  {
+    name: 'Primeiro sabor',
+    role: 'COMPOSITION' as const,
+    minSelections: 1,
+    maxSelections: 1,
+    options: [{ name: 'Queijo', price: 20 }],
+  },
+]
+
 export const removeMessageMock = { message: 'Produto removido.' }
 
 export const removeManyMessageMock = {

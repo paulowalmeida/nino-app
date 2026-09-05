@@ -1,0 +1,33 @@
+@reference "@nino/ds/globals.css";
+
+.group {
+  @apply flex flex-col gap-4 rounded-2xl bg-surface-2 p-4;
+}
+
+.groupHeader {
+  @apply items-center justify-between gap-3;
+}
+
+.groupTitle {
+  @apply text-sm font-semibold text-fg-strong;
+}
+
+.groupFields {
+  @apply grid gap-3 sm:grid-cols-2;
+}
+
+.options {
+  @apply flex flex-col items-start gap-3 border-t border-border/60 pt-4;
+}
+
+.option {
+  @apply w-full flex-wrap items-end gap-3;
+}
+
+.optionName {
+  @apply min-w-48 flex-1;
+}
+
+.optionPrice {
+  @apply w-28;
+}

@@ -28,7 +28,8 @@ export const ProductChoiceMultiple = ({
             </Text>
             {Number(option.price) > 0 && (
               <Text as="span" className={styles.price}>
-                + {brl(option.price)}
+                {group.role !== 'COMPOSITION' ? '+ ' : ''}
+                {brl(option.price)}
               </Text>
             )}
           </Box>

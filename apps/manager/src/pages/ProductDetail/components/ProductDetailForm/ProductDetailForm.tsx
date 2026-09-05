@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 
-import { Controller, useForm, useWatch } from 'react-hook-form'
+import { Controller, FormProvider, useForm, useWatch } from 'react-hook-form'
 
 import { Alert } from '@nino/ds/components/Alert'
 import { Box } from '@nino/ds/components/Box'
@@ -14,6 +14,7 @@ import { Textarea } from '@nino/ds/components/Textarea'
 import { toProductFormValues } from '@pages/ProductDetail/adapters/product-detail-form.adapter/product-detail-form.adapter'
 import { ProductDeleteAction } from '@pages/ProductDetail/components/ProductDetailForm/ProductDeleteAction/ProductDeleteAction'
 import { ProductDetailPhoto } from '@pages/ProductDetail/components/ProductDetailForm/ProductDetailPhoto/ProductDetailPhoto'
+import { ProductModifierEditor } from '@pages/ProductDetail/components/ProductDetailForm/ProductModifierEditor/ProductModifierEditor'
 import { useProductDetailFacade } from '@pages/ProductDetail/facades/useProductDetailFacade/useProductDetailFacade'
 import type { ProductDetailFormValues } from '@pages/ProductDetail/types/ProductDetailFormValues.type'
 import { DESCRIPTION_MAX_LENGTH } from '@shared/constants/product.constants'
@@ -29,6 +30,7 @@ export const ProductDetailForm = () => {
   const { item, categoryOptions, submitProduct, cancel } =
     useProductDetailFacade()
 
+  const form = useForm<ProductDetailFormValues>()
   const {
     register,
     handleSubmit,
@@ -36,9 +38,10 @@ export const ProductDetailForm = () => {
     reset,
     setError,
     formState: { errors, isSubmitting, isDirty },
-  } = useForm<ProductDetailFormValues>()
+  } = form
 
   const description = useWatch({ control, name: 'description' })
+  const pricingType = useWatch({ control, name: 'pricingType' })
 
   useEffect(() => {
     if (!item) return
@@ -51,7 +54,8 @@ export const ProductDetailForm = () => {
   })
 
   return (
-    <Box as="form" onSubmit={onSubmit} className={styles.form}>
+    <FormProvider {...form}>
+      <Box as="form" onSubmit={onSubmit} className={styles.form}>
       <ProductDetailPhoto />
 
       <Box className={styles.fields}>
@@ -80,18 +84,47 @@ export const ProductDetailForm = () => {
           </FormField>
         </Box>
 
-        <Box className={`${motion.deal} ${styles.row}`} style={riseDelay(240)}>
+        <Box className={`${motion.deal} ${styles.pricing}`} style={riseDelay(240)}>
+          <FormField label="Modelo de preço" error={errors.pricingType?.message}>
+            <Controller
+              name="pricingType"
+              control={control}
+              render={({ field }) => (
+                <Select
+                  options={[
+                    { value: 'FIXED', label: 'Preço fixo + adicionais' },
+                    { value: 'COMPOSED', label: 'Soma das escolhas' },
+                  ]}
+                  value={field.value}
+                  onValueChange={field.onChange}
+                />
+              )}
+            />
+          </FormField>
+
           <FormField label="Preço" error={errors.price?.message}>
             <Input
               inputMode="decimal"
+              disabled={pricingType === 'COMPOSED'}
               {...register('price', {
-                required: 'Informe o preço',
+                required:
+                  pricingType === 'COMPOSED' ? false : 'Informe o preço',
                 validate: (value) =>
+                  pricingType === 'COMPOSED' ||
                   parsedProductPrice(value) > 0 ||
                   'O preço precisa ser maior que zero',
               })}
             />
           </FormField>
+
+          <Text as="p" className={styles.pricingHint}>
+            {pricingType === 'COMPOSED'
+              ? 'O total será a soma das escolhas de composição e dos adicionais.'
+              : 'O preço do item será somado somente aos adicionais escolhidos.'}
+          </Text>
+        </Box>
+
+        <Box className={`${motion.deal} ${styles.row}`} style={riseDelay(280)}>
 
           <FormField label="Posição" error={errors.position?.message}>
             <Input
@@ -102,7 +135,7 @@ export const ProductDetailForm = () => {
           </FormField>
         </Box>
 
-        <Box className={`${motion.deal} ${styles.field}`} style={riseDelay(300)}>
+        <Box className={`${motion.deal} ${styles.field}`} style={riseDelay(320)}>
           <FormField label="Categoria" error={errors.categoryId?.message}>
             <Controller
               name="categoryId"
@@ -173,6 +206,8 @@ export const ProductDetailForm = () => {
           />
         </FormField>
 
+        <ProductModifierEditor />
+
         {errors.root && <Alert variant="error">{errors.root.message}</Alert>}
       </Box>
 
@@ -188,6 +223,7 @@ export const ProductDetailForm = () => {
           Salvar alterações
         </Button>
       </Box>
-    </Box>
+      </Box>
+    </FormProvider>
   )
 }

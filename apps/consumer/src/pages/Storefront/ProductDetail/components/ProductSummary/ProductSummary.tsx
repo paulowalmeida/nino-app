@@ -2,6 +2,7 @@ import { Box } from '@nino/ds/components/Box'
 import { Heading } from '@nino/ds/components/Heading'
 import { Text } from '@nino/ds/components/Text'
 import { useProductDetailFacade } from '@pages/Storefront/ProductDetail/facades/useProductDetailFacade/useProductDetailFacade'
+import { minimumProductPrice } from '@pages/Storefront/utils/minimum-product-price/minimum-product-price'
 import { brl } from '@utils/money'
 
 import styles from './ProductSummary.module.css'
@@ -21,7 +22,8 @@ export const ProductSummary = () => {
         </Text>
       )}
       <Text as="span" className={styles.price}>
-        {brl(product.price)}
+        {product.pricingType === 'COMPOSED' ? 'A partir de ' : ''}
+        {brl(minimumProductPrice(product))}
       </Text>
     </Box>
   )

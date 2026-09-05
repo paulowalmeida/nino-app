@@ -27,7 +27,7 @@ export const ProductChoiceHeader = ({ group }: ProductChoiceHeaderProps) => {
         </Text>
       </Box>
 
-      {group.isRequired && chosen === 0 ? (
+      {chosen < (group.minSelections ?? (group.isRequired ? 1 : 0)) ? (
         <Badge variant="default" size="sm">
           Obrigatório
         </Badge>

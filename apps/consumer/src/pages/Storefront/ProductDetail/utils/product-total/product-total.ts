@@ -9,5 +9,5 @@ export const productTotal = (
 ): number =>
   chosenModifiers(product, selections).reduce(
     (sum, modifier) => sum + Number(modifier.price) * modifier.quantity,
-    Number(product.price)
+    product.pricingType === 'COMPOSED' ? 0 : Number(product.price)
   ) * quantity

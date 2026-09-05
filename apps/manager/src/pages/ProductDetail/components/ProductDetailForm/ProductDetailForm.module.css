@@ -24,6 +24,14 @@
   @apply grid grid-cols-2 gap-4 sm:grid-cols-[9rem_7rem];
 }
 
+.pricing {
+  @apply grid gap-4 rounded-2xl bg-surface-2 p-4 sm:grid-cols-2;
+}
+
+.pricingHint {
+  @apply text-xs leading-relaxed text-fg-faint sm:col-span-2;
+}
+
 .availability {
   @apply flex items-start gap-3 rounded-2xl bg-surface-2 p-4;
 }

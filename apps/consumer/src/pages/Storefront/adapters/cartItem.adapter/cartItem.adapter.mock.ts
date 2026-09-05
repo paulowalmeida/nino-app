@@ -6,6 +6,7 @@ export const cartItemAdapterMock: { item: MenuItem } = {
     name: 'Café',
     description: 'Café coado',
     price: '5',
+    pricingType: 'FIXED',
     isActive: true,
     category: { id: 'drinks', name: 'Bebidas', position: 1 },
     images: [

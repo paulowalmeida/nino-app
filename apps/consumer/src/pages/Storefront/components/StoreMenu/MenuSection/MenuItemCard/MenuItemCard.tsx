@@ -9,6 +9,7 @@ import { Button } from '@nino/ds/components/Button'
 import { Text } from '@nino/ds/components/Text'
 import { categoryIcon } from '@utils/category-icon'
 import { brl } from '@utils/money'
+import { minimumProductPrice } from '@pages/Storefront/utils/minimum-product-price/minimum-product-price'
 import { primaryImage } from '@utils/menu-image'
 import type { MenuItem } from '@custom_types/menu/menu-item'
 
@@ -95,7 +96,8 @@ export const MenuItemCard = ({
             </Text>
           )}
           <Text as="span" className={styles.price}>
-            {brl(item.price)}
+            {item.pricingType === 'COMPOSED' ? 'A partir de ' : ''}
+            {brl(minimumProductPrice(item))}
           </Text>
         </Box>
       </Button>

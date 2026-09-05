@@ -3,6 +3,7 @@ import type { CreateMenuItemRequest } from '@shared/types/product/create-menu-it
 import type { MenuItem } from '@shared/types/product/menu-item'
 import type { MenuItemImage } from '@shared/types/product/menu-item-image'
 import type { MenuPage } from '@shared/types/product/menu-page'
+import type { ReplaceProductModifierRequest } from '@shared/types/product/replace-product-modifier-request'
 import type { UpdateMenuItemRequest } from '@shared/types/product/update-menu-item-request'
 
 const PAGE_SIZE = 100
@@ -118,6 +119,16 @@ export const ProductService = {
     api.patch<UpdateMenuItemRequest, MenuItem>(
       `tenants/${tenantId}/products/${id}`,
       data
+    ),
+
+  replaceItemModifiers: (
+    tenantId: string,
+    id: string,
+    modifiers: ReplaceProductModifierRequest[]
+  ): Promise<MenuItem> =>
+    api.patch<{ modifiers: ReplaceProductModifierRequest[] }, MenuItem>(
+      `tenants/${tenantId}/products/${id}/modifiers`,
+      { modifiers }
     ),
 
   uploadItemImage: async (
