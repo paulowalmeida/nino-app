@@ -1,0 +1,20 @@
+@reference "@nino/ds/globals.css";
+
+.summary {
+  @apply flex flex-col px-4 pb-5 pt-5 sm:px-6;
+}
+
+.name {
+  @apply font-display text-2xl font-extrabold leading-tight tracking-tight;
+  @apply text-fg-strong;
+}
+
+.description {
+  @apply mt-2 text-[0.9375rem] leading-relaxed text-fg-subtle;
+}
+
+.price {
+  @apply mt-4 font-display text-xl font-medium;
+  color: var(--color-success);
+  font-variant-numeric: tabular-nums;
+}

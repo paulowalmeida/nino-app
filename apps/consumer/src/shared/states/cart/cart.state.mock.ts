@@ -12,5 +12,6 @@ export const cartStateMock: {
     name: 'Café',
     price: '5',
     imageUrl: null,
+    modifiers: [],
   },
 }

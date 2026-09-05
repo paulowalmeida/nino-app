@@ -1,0 +1,17 @@
+@reference "@nino/ds/globals.css";
+
+.notes {
+  @apply flex flex-col gap-2 border-t border-border px-4 py-5 sm:px-6;
+}
+
+.head {
+  @apply flex items-baseline justify-between gap-3;
+}
+
+.label {
+  @apply font-display text-base font-bold text-fg-strong;
+}
+
+.counter {
+  @apply text-xs text-fg-subtle tabular-nums;
+}

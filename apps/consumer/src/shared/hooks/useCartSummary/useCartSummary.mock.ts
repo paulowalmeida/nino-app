@@ -7,5 +7,6 @@ export const useCartSummaryMock: { tenantId: string; cartItem: CartItem } = {
     name: 'Hambúrguer',
     price: '25.5',
     imageUrl: null,
+    modifiers: [],
   },
 }

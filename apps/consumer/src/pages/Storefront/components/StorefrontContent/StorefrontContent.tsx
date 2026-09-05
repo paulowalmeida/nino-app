@@ -8,7 +8,6 @@ import { ActiveOrderBanner } from '@pages/Storefront/components/ActiveOrderBanne
 import { StoreCart } from '@pages/Storefront/components/StoreCart/StoreCart'
 import { CategoryNav } from '@pages/Storefront/components/StoreMenu/CategoryNav/CategoryNav'
 import { MenuSection } from '@pages/Storefront/components/StoreMenu/MenuSection/MenuSection'
-import { ProductDetail } from '@pages/Storefront/components/StoreMenu/ProductDetail/ProductDetail'
 import { StoreIdentity } from '@pages/Storefront/components/StoreHeader/StoreIdentity/StoreIdentity'
 import { StoreAvailabilityBanner } from '@pages/Storefront/components/StoreHeader/StoreAvailabilityBanner/StoreAvailabilityBanner'
 import { StoreInfo } from '@pages/Storefront/components/StoreHeader/StoreInfo/StoreInfo'
@@ -131,7 +130,6 @@ export const StorefrontContent = ({ pathSlug }: StorefrontContentProps) => {
 
       <StoreInfo />
 
-      <ProductDetail />
     </Box>
   )
 }

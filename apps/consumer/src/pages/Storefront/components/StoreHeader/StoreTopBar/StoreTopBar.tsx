@@ -218,10 +218,12 @@ export const StoreTopBar = ({ slug, isDocked }: StoreTopBarProps) => {
           ) : (
             <Button
               variant="ghost"
+              size="icon"
               className={`${styles.signIn} ${styles.accountEntry}`}
               onClick={go('/entrar')}
+              aria-label="Entrar na sua conta"
             >
-              Entrar
+              <Icon name="user" />
             </Button>
           )}
         </Box>

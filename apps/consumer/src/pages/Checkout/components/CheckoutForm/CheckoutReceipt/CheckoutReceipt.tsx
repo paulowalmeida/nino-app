@@ -6,6 +6,7 @@ import { Text } from '@nino/ds/components/Text'
 import { useCheckoutFacade } from '@pages/checkout/facades/useCheckoutFacade/useCheckoutFacade'
 import type { CheckoutFacade } from '@pages/checkout/facades/useCheckoutFacade/useCheckoutFacade'
 import { brl } from '@utils/money'
+import { cartItemPrice } from '@utils/cart-item-price/cart-item-price'
 
 import styles from './CheckoutReceipt.module.css'
 
@@ -44,15 +45,20 @@ export const CheckoutReceipt = ({
       }
     >
       <Box className={styles.items}>
-        {cartLines.map(({ item, quantity }) => (
-          <Text as="p" key={item.id} className={styles.item}>
+        {cartLines.map(({ id, item, quantity }) => (
+          <Text as="p" key={id} className={styles.item}>
             <Text as="span" className={styles.name}>
               <Text as="span" className={styles.qty}>
                 {quantity}×
               </Text>
               {item.name}
+              {item.modifiers && item.modifiers.length > 0 && (
+                <Text as="span" className={styles.choices}>
+                  {item.modifiers.map((modifier) => modifier.name).join(', ')}
+                </Text>
+              )}
             </Text>
-            <Text as="span">{brl(Number(item.price) * quantity)}</Text>
+            <Text as="span">{brl(cartItemPrice(item) * quantity)}</Text>
           </Text>
         ))}
 

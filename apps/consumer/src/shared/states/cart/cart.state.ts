@@ -13,8 +13,8 @@ type CartState = {
   lines: Record<string, CartLine>
   add: (tenantId: string, item: CartItem, quantity?: number) => boolean
   replace: (tenantId: string, item: CartItem, quantity?: number) => void
-  increment: (itemId: string) => void
-  decrement: (itemId: string) => void
+  increment: (lineId: string) => void
+  decrement: (lineId: string) => void
   clear: () => void
 }
 
@@ -45,12 +45,12 @@ export const useCartStore = create<CartState>()(
       replace: (tenantId, item, quantity = 1) =>
         set({ tenantId, lines: addCartItem({}, item, quantity) }),
 
-      increment: (itemId) =>
-        set((state) => ({ lines: incrementCartItem(state.lines, itemId) })),
+      increment: (lineId) =>
+        set((state) => ({ lines: incrementCartItem(state.lines, lineId) })),
 
-      decrement: (itemId) =>
+      decrement: (lineId) =>
         set((state) => {
-          const lines = decrementCartItem(state.lines, itemId)
+          const lines = decrementCartItem(state.lines, lineId)
           return {
             lines,
             tenantId: Object.keys(lines).length === 0 ? null : state.tenantId,
@@ -61,9 +61,9 @@ export const useCartStore = create<CartState>()(
     }),
     {
       name: 'nino.cart',
-      version: 2,
+      version: 3,
       migrate: (persisted, version) =>
-        version < 2 ? { tenantId: null, lines: {} } : (persisted as CartState),
+        version < 3 ? { tenantId: null, lines: {} } : (persisted as CartState),
       partialize: (state) => ({
         tenantId: state.tenantId,
         lines: state.lines,

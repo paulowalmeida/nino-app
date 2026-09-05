@@ -44,6 +44,7 @@ describe('useCheckoutWorkflow', () => {
         isLoadingZones: false,
         cartLines: [
           {
+            id: 'item-1||',
             item: {
               id: 'item-1',
               name: useCheckoutWorkflowMock.cartItemName,

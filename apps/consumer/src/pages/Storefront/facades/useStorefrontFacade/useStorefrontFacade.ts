@@ -4,6 +4,7 @@ import { usePublicSettings } from '@hooks/usePublicSettings/usePublicSettings'
 import { useStore } from '@hooks/useStore/useStore'
 import { useIsDesktop } from '@pages/Storefront/hooks/useIsDesktop/useIsDesktop'
 import { useMenuSections } from '@pages/Storefront/hooks/useMenuSections/useMenuSections'
+import { useMenuItemAction } from '@pages/Storefront/hooks/useMenuItemAction/useMenuItemAction'
 import { useStorefrontCart } from '@pages/Storefront/hooks/useStorefrontCart/useStorefrontCart'
 import { useStorefrontSlug } from '@pages/Storefront/hooks/useStorefrontSlug/useStorefrontSlug'
 import { useHomeInteractionStore } from '@pages/Storefront/states/storefront/storefront.state'
@@ -19,6 +20,7 @@ export const useStorefrontFacade = (requestedSlug?: string) => {
   const hoursQuery = useOpeningHours(tenantId)
   const settingsQuery = usePublicSettings(tenantId)
   const cart = useStorefrontCart(tenantId)
+  const menuItemAction = useMenuItemAction(tenantId)
   const search = useHomeInteractionStore((state) => state.search)
   const setSearch = useHomeInteractionStore((state) => state.setSearch)
   const isCartOpen = useHomeInteractionStore((state) => state.isCartOpen)
@@ -46,6 +48,7 @@ export const useStorefrontFacade = (requestedSlug?: string) => {
     isHoursPending: hoursQuery.isPending,
     estimatedMinutes: settingsQuery.estimatedMinutes,
     ...cart,
+    ...menuItemAction,
     ...menuSections,
     isDesktop,
     customer,

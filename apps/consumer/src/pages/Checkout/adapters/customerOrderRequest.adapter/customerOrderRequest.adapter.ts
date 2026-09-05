@@ -2,6 +2,7 @@ import type { CartLine } from '@custom_types/cart/cart-line'
 import type { CheckoutFormValues } from '@pages/checkout/types/checkout/CheckoutFormValues.type'
 import type { CreateCustomerOrderRequest } from '@custom_types/order/create-customer-order-request'
 import type { Store } from '@custom_types/store/store'
+import { orderItemsRequest } from '@pages/checkout/adapters/orderItemsRequest.adapter/orderItemsRequest.adapter'
 
 export const customerOrderRequest = (
   values: CheckoutFormValues,
@@ -17,9 +18,5 @@ export const customerOrderRequest = (
   paymentMethod: values.paymentMethod,
   changeFor: values.paymentMethod === 'CASH' ? values.changeFor : undefined,
   notes: values.notes,
-  items: cartLines.map(({ item, quantity }) => ({
-    productId: item.id,
-    quantity,
-    unitPrice: Number(item.price),
-  })),
+  items: orderItemsRequest(cartLines),
 })

@@ -1,6 +1,7 @@
 import type { ProductCategoryIcon } from '@nino/lib/types/product/product-category-icon'
 
 import type { MenuItemImage } from './menu-item-image'
+import type { MenuItemModifier } from './menu-item-modifier'
 
 /** Item do cardápio como o consumidor o vê. Preço em string decimal. */
 export type MenuItem = {
@@ -16,4 +17,5 @@ export type MenuItem = {
     icon?: ProductCategoryIcon | null
   }
   images: MenuItemImage[]
+  modifiers: MenuItemModifier[]
 }

@@ -1,0 +1,27 @@
+@reference "@nino/ds/globals.css";
+
+.options {
+  @apply flex flex-col px-4 pb-2 sm:px-6;
+}
+
+/*
+ * WHY: a linha inteira é o label do checkbox — no toque de um celular, mirar
+ * só a caixinha de 20px erra mais do que acerta.
+ */
+.option {
+  @apply flex min-h-12 cursor-pointer items-center justify-between gap-4;
+  @apply border-b border-border py-3 last:border-b-0;
+}
+
+.identity {
+  @apply flex min-w-0 flex-col;
+}
+
+.name {
+  @apply text-[0.9375rem] font-medium leading-snug text-fg-strong;
+}
+
+.price {
+  @apply mt-0.5 text-sm text-fg-subtle;
+  font-variant-numeric: tabular-nums;
+}

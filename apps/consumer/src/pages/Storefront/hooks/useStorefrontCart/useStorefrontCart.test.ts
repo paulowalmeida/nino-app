@@ -45,8 +45,8 @@ describe('useStorefrontCart', () => {
   it('hides lines that belong to another storefront', () => {
     vi.mocked(useCartSummary).mockReturnValue({
       tenantId: 'other-store',
-      lines: { item: { item: {} as never, quantity: 1 } },
-      cartLines: [{ item: {} as never, quantity: 1 }],
+      lines: { item: { id: 'item', item: {} as never, quantity: 1 } },
+      cartLines: [{ id: 'item', item: {} as never, quantity: 1 }],
       count: 1,
       total: 25,
       add: vi.fn(),

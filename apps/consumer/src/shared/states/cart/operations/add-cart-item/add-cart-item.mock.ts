@@ -6,5 +6,6 @@ export const addCartItemMock: { item: CartItem } = {
     name: 'Café',
     price: '5',
     imageUrl: null,
+    modifiers: [],
   },
 }

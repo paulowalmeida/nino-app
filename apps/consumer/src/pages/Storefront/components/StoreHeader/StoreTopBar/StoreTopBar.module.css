@@ -74,9 +74,15 @@
  * informações numa linha só. Abaixo disso ela continua no cartão sobre a
  * faixa, que é o que cabe numa tela estreita.
  */
+/*
+ * WHY: em 1024px o "Aberto agora" disputava espaço com a busca — a base do
+ * campo já encolhe seis vezes mais rápido que a marca, e mesmo assim ficava
+ * espremida a 256px com o status ocupando ~107px ao lado dela. A partir de
+ * 1280px sobra largura para os dois convivendo à vontade.
+ */
 .storeMeta {
   @apply hidden shrink-0 items-center gap-3 text-[0.8125rem];
-  @apply text-fg-subtle lg:mr-2 lg:flex;
+  @apply text-fg-subtle xl:mr-2 xl:flex;
 }
 
 .metaStatus {
@@ -206,22 +212,33 @@
   }
 }
 
-/* WHY: no celular a conta mora na TabBar de baixo; repetir aqui só rouba a
-   largura do nome da loja */
+/*
+ * WHY: no celular e no tablet estreito a conta, a sacola e as informações
+ * moram na TabBar de baixo; repetir aqui só rouba a largura do nome da loja.
+ *
+ * WHY 769px, não 768: `md:` do Tailwind é `min-width: 768px` — inclui o
+ * próprio 768, que é a largura real do iPad em retrato. O pedido foi "acima
+ * de 768px", ou seja, 768 continua no grupo estreito e só 769px em diante
+ * entra no grupo largo. `min-[769px]` expressa esse limite estrito.
+ *
+ * WHY !important: `.account` e `.signIn` vêm depois desta regra no arquivo e
+ * escrevem `flex` sem qualificador — sem o `!`, o `hidden` daqui nunca vence,
+ * em nenhuma largura. É o mesmo bug de especificidade do `.searchTrigger`.
+ */
 .accountEntry {
-  @apply hidden lg:flex;
+  @apply !hidden min-[769px]:!flex;
 }
 
 .cartEntry {
-  @apply !hidden lg:!flex;
+  @apply !hidden min-[769px]:!flex;
 }
 
 .infoEntry {
-  @apply !hidden lg:!flex;
+  @apply !hidden min-[769px]:!flex;
 }
 
 .notificationsEntry {
-  @apply !hidden lg:!flex;
+  @apply !hidden min-[769px]:!flex;
 }
 
 .iconBtn {
@@ -242,11 +259,23 @@
   @apply min-w-56;
 }
 
+/*
+ * WHY: ícone, não botão com rótulo. Em 1024px o header já disputa espaço entre
+ * o nome da loja e a busca, e "Entrar" era o único alvo com texto na fila de
+ * ações — as outras três já eram ícones. O disco na cor da loja mantém a
+ * entrada de conta como a ação de maior peso da fila.
+ */
 .signIn {
-  @apply h-9 rounded-full px-4 text-sm font-bold text-fg-on-brand;
-  @apply transition-colors hover:bg-brand-hover;
+  @apply flex h-10 w-10 items-center justify-center rounded-full border-0;
+  @apply text-fg-on-brand;
   background-color: var(--store-tint, var(--color-brand));
-  border: 0;
+  transition: filter var(--duration-fast) var(--ease-out);
+}
+
+@media (hover: hover) {
+  .signIn:hover {
+    filter: brightness(0.94);
+  }
 }
 
 /* a contagem marca o ícone da sacola, no canto dele */

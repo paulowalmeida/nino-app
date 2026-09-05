@@ -27,6 +27,12 @@ type DrawerProps = {
    * the item list needs the body to stop scrolling and hand over its height.
    */
   bodyClassName?: string
+  /**
+   * The X in the corner. Turn it off when the drawer already closes by other
+   * means — a bottom sheet closes by dragging the handle down, by the backdrop
+   * and by Escape, so the X earns nothing there. Mirrors `Modal`.
+   */
+  dismissible?: boolean
 }
 
 const alignByPlacement: Record<DrawerPlacement, string> = {
@@ -58,6 +64,7 @@ export function Drawer({
   description,
   children,
   size,
+  dismissible = true,
   contentClassName,
   bodyClassName,
 }: DrawerProps) {
@@ -117,12 +124,14 @@ export function Drawer({
                     </ArkDialog.Description>
                   )}
                 </div>
-                <ArkDialog.CloseTrigger
-                  className={styles.closeButton}
-                  aria-label="Fechar"
-                >
-                  <Icon name="x" size="sm" />
-                </ArkDialog.CloseTrigger>
+                {dismissible && (
+                  <ArkDialog.CloseTrigger
+                    className={styles.closeButton}
+                    aria-label="Fechar"
+                  >
+                    <Icon name="x" size="sm" />
+                  </ArkDialog.CloseTrigger>
+                )}
               </div>
             )}
             <div

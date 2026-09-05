@@ -51,3 +51,7 @@
   @apply flex items-center justify-between text-sm text-fg-muted;
   font-variant-numeric: tabular-nums;
 }
+
+.choices {
+  @apply block text-xs leading-snug text-fg-subtle;
+}

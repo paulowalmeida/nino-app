@@ -1,0 +1,10 @@
+@reference "@nino/ds/globals.css";
+
+/*
+ * WHY: o padding do rodapé reserva a altura da barra fixa de adicionar, que
+ * sai do fluxo e cobriria o fim do conteúdo.
+ */
+.page {
+  @apply flex flex-col bg-surface-page;
+  padding-bottom: calc(5.5rem + env(safe-area-inset-bottom));
+}

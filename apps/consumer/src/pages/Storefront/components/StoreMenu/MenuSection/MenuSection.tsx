@@ -15,8 +15,14 @@ type MenuSectionProps = {
 
 /** Uma categoria do cardápio: título, contagem de opções e a grade de itens. */
 export const MenuSection = ({ section }: MenuSectionProps) => {
-  const { cart, isHoursPending, hours, store, addToCart, setSelectedItem } =
-    useStorefrontFacade()
+  const {
+    quantityByProduct,
+    isHoursPending,
+    hours,
+    store,
+    addFromMenu,
+    openProduct,
+  } = useStorefrontFacade()
   if (!store) return null
   const storeOpen = isHoursPending || isOpen(store, hours)
   const domId = `section-${section.id}`
@@ -43,11 +49,11 @@ export const MenuSection = ({ section }: MenuSectionProps) => {
           <MenuItemCard
             key={item.id}
             item={item}
-            onAdd={addToCart}
-            onSelect={setSelectedItem}
+            onAdd={addFromMenu}
+            onSelect={openProduct}
             disabled={!storeOpen}
             fallbackIcon={icon}
-            quantity={cart[item.id]?.quantity ?? 0}
+            quantity={quantityByProduct[item.id] ?? 0}
           />
         ))}
       </Box>

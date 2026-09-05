@@ -1,0 +1,17 @@
+@reference "@nino/ds/globals.css";
+
+.page {
+  @apply flex flex-col;
+}
+
+.name {
+  @apply h-7 w-3/4 rounded-2;
+}
+
+.description {
+  @apply mt-2 h-4 w-full rounded-2;
+}
+
+.price {
+  @apply mt-4 h-6 w-24 rounded-2;
+}

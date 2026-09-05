@@ -2,6 +2,7 @@ import type { CartLine } from '@custom_types/cart/cart-line'
 import type { CheckoutFormValues } from '@pages/checkout/types/checkout/CheckoutFormValues.type'
 import type { CreateGuestOrderRequest } from '@custom_types/order/create-guest-order-request'
 import type { Store } from '@custom_types/store/store'
+import { orderItemsRequest } from '@pages/checkout/adapters/orderItemsRequest.adapter/orderItemsRequest.adapter'
 
 import { toE164 } from '@utils/phone'
 
@@ -29,10 +30,6 @@ export const guestOrderRequest = (
     guestCity: values.guestCity,
     guestState: values.guestState,
     notes: values.notes,
-    items: cartLines.map(({ item, quantity }) => ({
-      productId: item.id,
-      quantity,
-      unitPrice: Number(item.price),
-    })),
+    items: orderItemsRequest(cartLines),
   }
 }

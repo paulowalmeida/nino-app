@@ -15,6 +15,7 @@ import { AnimatedNumber } from '@shared/components/AnimatedNumber/AnimatedNumber
 import { EXPO_OUT_EASE } from '@constants/motion.constants'
 import { categoryIcon } from '@utils/category-icon'
 import { brl } from '@utils/money'
+import { cartItemPrice } from '@utils/cart-item-price/cart-item-price'
 import { useStorefrontFacade } from '@pages/Storefront/facades/useStorefrontFacade/useStorefrontFacade'
 
 import styles from './CartDrawer.module.css'
@@ -42,9 +43,20 @@ export const CartDrawer = () => {
   const { isDesktop } = home
   const [isConfirmingClear, setIsConfirmingClear] = useState(false)
 
+  /*
+   * WHY: esvaziar fecha. Ver a sacola se esvaziar na frente e virar tela vazia
+   * é um beco — o empty state existe para quem abre a sacola já vazia, não
+   * como destino de quem acabou de remover o último item.
+   */
   const handleConfirmClear = () => {
     setIsConfirmingClear(false)
     onClear()
+    onOpenChange(false)
+  }
+
+  const handleDecrement = (itemId: string, isLastOfCart: boolean) => {
+    onDecrement(itemId)
+    if (isLastOfCart) onOpenChange(false)
   }
 
   return (
@@ -53,13 +65,20 @@ export const CartDrawer = () => {
         open={open}
         onOpenChange={onOpenChange}
         placement={isDesktop ? 'right' : 'bottom'}
-        title="Sua sacola"
-        description={
-          lines.length === 0
-            ? undefined
-            : `${itemCount} ${itemCount === 1 ? 'item' : 'itens'}`
+        dismissible={isDesktop}
+        title={
+          <Box className={styles.head}>
+            <Text as="span" className={styles.headTitle}>
+              Sua sacola
+            </Text>
+            {lines.length > 0 && (
+              <Text as="span" className={styles.headCount}>
+                {itemCount} {itemCount === 1 ? 'item' : 'itens'}
+              </Text>
+            )}
+          </Box>
         }
-        size={isDesktop ? '25rem' : 'auto'}
+        size={isDesktop ? '25rem' : 'var(--cart-drawer-height)'}
         contentClassName={isDesktop ? styles.panel : styles.sheet}
       >
         <Box className={styles.body}>
@@ -69,19 +88,27 @@ export const CartDrawer = () => {
               className={`${motionStyles.riseIn} ${styles.empty}`}
               illustration={<img src="/mascot-consumer.svg" alt="" />}
               title="Sua sacola está vazia"
+              action={
+                <Button
+                  className={styles.emptyAction}
+                  onClick={() => onOpenChange(false)}
+                >
+                  Ver cardápio
+                </Button>
+              }
             >
-              Volte ao cardápio e escolha o que vai pedir.
+              Escolha um item do cardápio para começar.
             </EmptyState>
           ) : (
             <>
               <Box className={styles.lines}>
                 <AnimatePresence initial={false}>
-                  {lines.map(({ item, quantity }, index) => {
+                  {lines.map(({ id, item, quantity }, index) => {
                     const isLastUnit = quantity === 1
 
                     return (
                       <motion.div
-                        key={item.id}
+                        key={id}
                         layout
                         initial={{ opacity: 0, y: 12 }}
                         animate={{ opacity: 1, y: 0 }}
@@ -117,19 +144,25 @@ export const CartDrawer = () => {
                           <Text as="span" className={styles.lineName}>
                             {item.name}
                           </Text>
+                          {item.modifiers && item.modifiers.length > 0 && (
+                            <Text as="span" className={styles.lineChoices}>
+                              {item.modifiers
+                                .map((modifier) => modifier.name)
+                                .join(', ')}
+                            </Text>
+                          )}
+                          {item.notes && (
+                            <Text as="span" className={styles.lineChoices}>
+                              {item.notes}
+                            </Text>
+                          )}
                           <Text as="span" className={styles.lineMath}>
-                            {quantity} × {brl(item.price)}
+                            {brl(cartItemPrice(item))} cada
                           </Text>
-                        </Box>
-
-                        <Box className={styles.lineRight}>
-                          <AnimatedNumber
-                            value={brl(Number(item.price) * quantity)}
-                            className={styles.lineTotal}
-                          />
 
                           <QuantityStepper
                             size="sm"
+                            className={styles.stepper}
                             quantity={quantity}
                             count={<AnimatedNumber value={quantity} />}
                             decrementIcon={isLastUnit ? 'trash' : 'minus'}
@@ -139,10 +172,20 @@ export const CartDrawer = () => {
                                 : `Remover uma unidade de ${item.name}`
                             }
                             incrementLabel={`Adicionar mais uma unidade de ${item.name}`}
-                            onDecrement={() => onDecrement(item.id)}
-                            onIncrement={() => onIncrement(item.id)}
+                            onDecrement={() =>
+                              handleDecrement(
+                                id,
+                                isLastUnit && lines.length === 1
+                              )
+                            }
+                            onIncrement={() => onIncrement(id)}
                           />
                         </Box>
+
+                        <AnimatedNumber
+                          value={brl(cartItemPrice(item) * quantity)}
+                          className={styles.lineTotal}
+                        />
                       </motion.div>
                     )
                   })}
@@ -150,7 +193,7 @@ export const CartDrawer = () => {
               </Box>
 
               <Box className={styles.footer}>
-                <Box className={styles.totalRow}>
+                <Box direction="row" className={styles.totalRow}>
                   <Box>
                     <Text className={styles.totalLabel}>Total</Text>
                     {estimatedMinutes ? (

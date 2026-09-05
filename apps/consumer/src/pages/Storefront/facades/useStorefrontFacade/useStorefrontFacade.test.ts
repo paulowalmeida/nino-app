@@ -7,6 +7,7 @@ import { usePublicSettings } from '@hooks/usePublicSettings/usePublicSettings'
 import { useStore } from '@hooks/useStore/useStore'
 import { useIsDesktop } from '@pages/Storefront/hooks/useIsDesktop/useIsDesktop'
 import { useMenuSections } from '@pages/Storefront/hooks/useMenuSections/useMenuSections'
+import { useMenuItemAction } from '@pages/Storefront/hooks/useMenuItemAction/useMenuItemAction'
 import { useStorefrontCart } from '@pages/Storefront/hooks/useStorefrontCart/useStorefrontCart'
 import { useStorefrontSlug } from '@pages/Storefront/hooks/useStorefrontSlug/useStorefrontSlug'
 import { useCustomerSession } from '@shared/hooks/useCustomerSession/useCustomerSession'
@@ -21,6 +22,7 @@ vi.mock('@hooks/usePublicSettings/usePublicSettings')
 vi.mock('@hooks/useStore/useStore')
 vi.mock('@pages/Storefront/hooks/useIsDesktop/useIsDesktop')
 vi.mock('@pages/Storefront/hooks/useMenuSections/useMenuSections')
+vi.mock('@pages/Storefront/hooks/useMenuItemAction/useMenuItemAction')
 vi.mock('@pages/Storefront/hooks/useStorefrontCart/useStorefrontCart')
 vi.mock('@pages/Storefront/hooks/useStorefrontSlug/useStorefrontSlug')
 vi.mock('@shared/hooks/useCustomerSession/useCustomerSession')
@@ -60,6 +62,10 @@ describe('useStorefrontFacade', () => {
       goToSection: vi.fn(),
       sectionDomId: vi.fn(),
       isSearching: false,
+    })
+    vi.mocked(useMenuItemAction).mockReturnValue({
+      addFromMenu: vi.fn(),
+      openProduct: vi.fn(),
     })
     vi.mocked(useIsDesktop).mockReturnValue(true)
     vi.mocked(useCustomerSession).mockReturnValue({

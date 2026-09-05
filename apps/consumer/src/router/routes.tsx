@@ -5,6 +5,11 @@ const storefrontLazy = () =>
     Component: Storefront,
   }))
 
+const productDetailLazy = () =>
+  import('@pages/Storefront/ProductDetail/ProductDetail').then(
+    ({ ProductDetail }) => ({ Component: ProductDetail })
+  )
+
 const checkoutLazy = () =>
   import('@pages/checkout/Checkout').then(({ Checkout }) => ({
     Component: Checkout,
@@ -87,6 +92,7 @@ const customerAccountRoute: RouteObject = {
 
 const storeChildren: RouteObject[] = [
   { index: true, lazy: storefrontLazy },
+  { path: 'produto/:productId', lazy: productDetailLazy },
   { path: 'checkout', lazy: checkoutLazy },
   { path: 'pedido/:orderId', lazy: orderTrackingLazy },
   { path: 'entrar', lazy: signInLazy },

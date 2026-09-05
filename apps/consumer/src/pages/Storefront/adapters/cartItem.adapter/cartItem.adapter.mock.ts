@@ -15,5 +15,6 @@ export const cartItemAdapterMock: { item: MenuItem } = {
         isPrimary: true,
       },
     ],
+    modifiers: [],
   },
 }
