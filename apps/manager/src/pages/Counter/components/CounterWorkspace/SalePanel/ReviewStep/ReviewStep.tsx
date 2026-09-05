@@ -22,7 +22,6 @@ type ReviewStepProps = {
 
 export const ReviewStep = ({
   lines,
-  total,
   channel,
   customerName,
   tableNumber,
