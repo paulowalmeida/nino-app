@@ -32,8 +32,6 @@ const facadeWith = (overrides: Record<string, unknown>) =>
     goToMethods: vi.fn(),
     setGoogleDraft: vi.fn(),
     googleDraft: null,
-    signInWithGoogle: vi.fn(),
-    isSigningInWithGoogle: false,
     googleFailed: false,
     reset: vi.fn(),
     ...overrides,

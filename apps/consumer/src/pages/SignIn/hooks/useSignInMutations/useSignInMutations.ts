@@ -1,11 +1,11 @@
-import { useNavigate } from 'react-router'
+import { useEffect, useRef } from 'react'
+import { useNavigate, useSearchParams } from 'react-router'
 
 import type { Customer } from '@custom_types/customer/customer'
 import type { OtpCredentials } from '@shared/types/customer/otp-credentials'
 import { useCompleteProfile } from '@shared/hooks/useCompleteProfile/useCompleteProfile'
 import { useRequestPhoneLink } from '@shared/hooks/useRequestPhoneLink/useRequestPhoneLink'
 import { useVerifyPhoneLink } from '@shared/hooks/useVerifyPhoneLink/useVerifyPhoneLink'
-import { useGoogleSignIn } from '@pages/sign-in/hooks/useGoogleSignIn/useGoogleSignIn'
 import { useRequestOtp } from '@pages/sign-in/hooks/useRequestOtp/useRequestOtp'
 import { useVerifyOtp } from '@pages/sign-in/hooks/useVerifyOtp/useVerifyOtp'
 import { resolveProfileName } from '@pages/sign-in/utils/resolveProfileName/resolveProfileName'
@@ -17,11 +17,15 @@ type SignInMutationsHandlers = {
 }
 
 /**
- * Onde os três jeitos de entrar terminam no mesmo lugar: uma conta com
- * cadastro completo cai direto na loja; uma conta nova ou incompleta cai na
- * tela de completar cadastro. A decisão mora aqui porque as duas coisas que
- * ela precisa — o resultado da mutação e a navegação — são coisas que um
- * Hook coordena, nunca um facade.
+ * Onde os jeitos de entrar terminam no mesmo lugar: uma conta com cadastro
+ * completo cai direto na loja; uma conta nova ou incompleta cai na tela de
+ * completar cadastro. A decisão mora aqui porque as duas coisas que ela
+ * precisa — o resultado da mutação e a navegação — são coisas que um Hook
+ * coordena, nunca um facade.
+ *
+ * O Google não passa por aqui como mutação: é redirect (ver
+ * `SignInGoogleButton`/`buildGoogleAuthUrl`), então quando ele termina a
+ * sessão já chega pronta em `customer`, sem nenhum clique interno.
  */
 export const useSignInMutations = (
   home: string,
@@ -29,12 +33,13 @@ export const useSignInMutations = (
     onCodeRequested,
     goToCompleteProfile,
     onPhoneCodeRequested,
-  }: SignInMutationsHandlers
+  }: SignInMutationsHandlers,
+  customer: Customer | null
 ) => {
   const navigate = useNavigate()
+  const [searchParams] = useSearchParams()
   const request = useRequestOtp()
   const verify = useVerifyOtp()
-  const google = useGoogleSignIn()
   const requestLink = useRequestPhoneLink()
   const verifyLink = useVerifyPhoneLink()
   const completeProfile = useCompleteProfile()
@@ -49,14 +54,18 @@ export const useSignInMutations = (
     goToCompleteProfile(resolveProfileName(customer.name))
   }
 
+  const handledInitialSession = useRef(false)
+  useEffect(() => {
+    if (handledInitialSession.current || !customer) return
+    handledInitialSession.current = true
+    handleLoggedIn(customer)
+  }, [customer, handleLoggedIn])
+
   const requestCode = (credentials: OtpCredentials) =>
     request.mutate(credentials, { onSuccess: onCodeRequested })
 
   const verifyCode = (credentials: OtpCredentials, code: string) =>
     verify.mutate({ credentials, code }, { onSuccess: handleLoggedIn })
-
-  const signInWithGoogle = (idToken: string) =>
-    google.mutate(idToken, { onSuccess: handleLoggedIn })
 
   const requestPhoneCode = (phone: string) =>
     requestLink.mutate({ phone }, { onSuccess: onPhoneCodeRequested })
@@ -84,9 +93,7 @@ export const useSignInMutations = (
     verifyCode,
     isVerifying: verify.isPending,
     verifyFailed: verify.isError,
-    signInWithGoogle,
-    isSigningInWithGoogle: google.isPending,
-    googleFailed: google.isError,
+    googleFailed: searchParams.get('googleError') === '1',
     requestPhoneCode,
     isRequestingPhoneCode: requestLink.isPending,
     requestPhoneCodeFailed: requestLink.isError,

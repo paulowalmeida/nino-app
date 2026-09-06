@@ -7,11 +7,15 @@ export const useSignInFacade = () => {
   const { home, store } = useSignInBrand()
   const { customer } = useCustomerSession()
   const clientState = useSignInStore()
-  const mutations = useSignInMutations(home, {
-    onCodeRequested: clientState.goToCode,
-    goToCompleteProfile: clientState.goToCompleteProfile,
-    onPhoneCodeRequested: clientState.goToCompletePhoneCode,
-  })
+  const mutations = useSignInMutations(
+    home,
+    {
+      onCodeRequested: clientState.goToCode,
+      goToCompleteProfile: clientState.goToCompleteProfile,
+      onPhoneCodeRequested: clientState.goToCompletePhoneCode,
+    },
+    customer
+  )
 
   return {
     home,
@@ -37,8 +41,6 @@ export const useSignInFacade = () => {
     verifyCode: mutations.verifyCode,
     isVerifying: mutations.isVerifying,
     verifyFailed: mutations.verifyFailed,
-    signInWithGoogle: mutations.signInWithGoogle,
-    isSigningInWithGoogle: mutations.isSigningInWithGoogle,
     googleFailed: mutations.googleFailed,
     requestPhoneCode: mutations.requestPhoneCode,
     isRequestingPhoneCode: mutations.isRequestingPhoneCode,

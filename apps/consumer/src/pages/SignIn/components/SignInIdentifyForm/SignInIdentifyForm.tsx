@@ -50,7 +50,7 @@ export const SignInIdentifyForm = () => {
         {isEmail ? 'Qual é o seu e-mail?' : 'Qual é o seu celular?'}
       </Heading>
       <Text size="sm" className={styles.subtitle}>
-        Mandamos um código de 6 dígitos para confirmar que é você.
+        Mandaremos um código de 6 dígitos para confirmar que é você.
       </Text>
 
       {isEmail ? (

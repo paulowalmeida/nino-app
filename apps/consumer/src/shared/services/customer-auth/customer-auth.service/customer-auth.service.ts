@@ -23,10 +23,6 @@ export const customerAuthService = {
       'customer/auth/otp/verify',
       { ...credentials, code }
     ),
-  signInWithGoogle: (idToken: string): Promise<Customer> =>
-    api.create<{ idToken: string }, Customer>('customer/auth/google', {
-      idToken,
-    }),
   requestPhoneLink: (data: LinkPhoneRequest): Promise<{ message: string }> =>
     api.create<LinkPhoneRequest, { message: string }>(
       'customer/auth/phone/link/request',

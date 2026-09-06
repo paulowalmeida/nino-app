@@ -1,78 +1,64 @@
 import { render, screen } from '@testing-library/react'
-import { beforeEach, describe, expect, it, vi } from 'vitest'
+import { describe, expect, it, vi } from 'vitest'
 
-import { useGoogleIdentity } from '@pages/sign-in/hooks/useGoogleIdentity/useGoogleIdentity'
+import { buildGoogleAuthUrl } from '@pages/sign-in/utils/buildGoogleAuthUrl/buildGoogleAuthUrl'
 import { useSignInFacade } from '@pages/sign-in/facades/useSignInFacade/useSignInFacade'
 
 import { SignInGoogleButton } from './SignInGoogleButton'
 import { signInGoogleButtonMock } from './SignInGoogleButton.mock'
 
 vi.mock('@pages/sign-in/facades/useSignInFacade/useSignInFacade')
-vi.mock('@pages/sign-in/hooks/useGoogleIdentity/useGoogleIdentity')
-
-const signInWithGoogle = vi.fn()
+vi.mock('@pages/sign-in/utils/buildGoogleAuthUrl/buildGoogleAuthUrl')
 
 const facadeWith = (overrides: Record<string, unknown>) =>
   vi.mocked(useSignInFacade).mockReturnValue({
-    signInWithGoogle,
-    isSigningInWithGoogle: false,
     googleFailed: false,
     ...overrides,
   } as unknown as ReturnType<typeof useSignInFacade>)
 
-const identityWith = (isConfigured: boolean) =>
-  vi.mocked(useGoogleIdentity).mockReturnValue({
-    containerRef: { current: null },
-    isReady: isConfigured,
-    isConfigured,
-  } as unknown as ReturnType<typeof useGoogleIdentity>)
-
 describe('SignInGoogleButton', () => {
-  beforeEach(() => {
-    vi.clearAllMocks()
-  })
-
   it('offers no google path when the client id is missing', () => {
     // Arrange
     facadeWith({})
-    identityWith(false)
+    vi.mocked(buildGoogleAuthUrl).mockReturnValue(null)
+
     // Act
     const { container } = render(<SignInGoogleButton />)
+
     // Assert
     expect(container).toBeEmptyDOMElement()
   })
 
-  it('renders the container the sdk paints its button into', () => {
-    facadeWith({})
-    identityWith(true)
-
-    const { container } = render(<SignInGoogleButton />)
-
-    expect(container).not.toBeEmptyDOMElement()
-  })
-
-  it('sends the credential from google to the sign-in command', () => {
+  it('links straight to the google authorization url', () => {
     // Arrange
     facadeWith({})
-    identityWith(true)
-    render(<SignInGoogleButton />)
+    vi.mocked(buildGoogleAuthUrl).mockReturnValue(
+      'https://accounts.google.com/o/oauth2/v2/auth?client_id=1'
+    )
 
     // Act
-    const [onCredential] = vi.mocked(useGoogleIdentity).mock.calls[0]
-    onCredential(signInGoogleButtonMock.idToken)
+    render(<SignInGoogleButton />)
 
     // Assert
-    expect(signInWithGoogle).toHaveBeenCalledWith(
-      signInGoogleButtonMock.idToken
+    expect(
+      screen.getByRole('link', { name: 'Continuar com Google' })
+    ).toHaveAttribute(
+      'href',
+      'https://accounts.google.com/o/oauth2/v2/auth?client_id=1'
     )
   })
 
-  it('explains the failure and points to the code path', () => {
+  it('explains the failure reported by the api redirect', () => {
+    // Arrange
     facadeWith({ googleFailed: true })
-    identityWith(true)
+    vi.mocked(buildGoogleAuthUrl).mockReturnValue(
+      'https://accounts.google.com/o/oauth2/v2/auth?client_id=1'
+    )
 
+    // Act
     render(<SignInGoogleButton />)
 
+    // Assert
     expect(
       screen.getByText(signInGoogleButtonMock.errorMessage)
     ).toBeInTheDocument()

@@ -4,10 +4,9 @@
   @apply flex flex-col;
 }
 
-/* o SDK do Google injeta o botão aqui dentro e centraliza a largura que
-   pedimos — o container só reserva a linha e a altura de toque */
 .button {
-  @apply flex min-h-11 w-full justify-center;
+  @apply flex h-11 w-full items-center justify-center rounded-full;
+  @apply text-sm font-bold;
 }
 
 .alert {

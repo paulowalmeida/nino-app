@@ -16,9 +16,4 @@ export const useSignInMutationsMock = {
     name: 'Ana Souza',
     profileCompletedAt: null,
   } as Customer,
-  incompleteEmailPlaceholder: {
-    id: 'cust-3',
-    name: 'ana@nino.dev',
-    profileCompletedAt: null,
-  } as Customer,
 }

@@ -4,7 +4,6 @@ import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { useCompleteProfile } from '@shared/hooks/useCompleteProfile/useCompleteProfile'
 import { useRequestPhoneLink } from '@shared/hooks/useRequestPhoneLink/useRequestPhoneLink'
 import { useVerifyPhoneLink } from '@shared/hooks/useVerifyPhoneLink/useVerifyPhoneLink'
-import { useGoogleSignIn } from '@pages/sign-in/hooks/useGoogleSignIn/useGoogleSignIn'
 import { useRequestOtp } from '@pages/sign-in/hooks/useRequestOtp/useRequestOtp'
 import { useVerifyOtp } from '@pages/sign-in/hooks/useVerifyOtp/useVerifyOtp'
 
@@ -14,22 +13,45 @@ import { useSignInMutationsMock } from './useSignInMutations.mock'
 const navigate = vi.fn()
 const requestMutate = vi.fn()
 const verifyMutate = vi.fn()
-const googleMutate = vi.fn()
 const requestLinkMutate = vi.fn()
 const verifyLinkMutate = vi.fn()
 const completeProfileMutate = vi.fn()
+let searchParams = new URLSearchParams()
 
-vi.mock('react-router', () => ({ useNavigate: () => navigate }))
+vi.mock('react-router', () => ({
+  useNavigate: () => navigate,
+  useSearchParams: () => [searchParams],
+}))
 vi.mock('@pages/sign-in/hooks/useRequestOtp/useRequestOtp')
 vi.mock('@pages/sign-in/hooks/useVerifyOtp/useVerifyOtp')
-vi.mock('@pages/sign-in/hooks/useGoogleSignIn/useGoogleSignIn')
 vi.mock('@shared/hooks/useRequestPhoneLink/useRequestPhoneLink')
 vi.mock('@shared/hooks/useVerifyPhoneLink/useVerifyPhoneLink')
 vi.mock('@shared/hooks/useCompleteProfile/useCompleteProfile')
 
+const renderMutations = (
+  handlers: {
+    onCodeRequested?: () => void
+    goToCompleteProfile?: (name: string) => void
+    onPhoneCodeRequested?: () => void
+  } = {},
+  customer: Parameters<typeof useSignInMutations>[2] = null
+) =>
+  renderHook(() =>
+    useSignInMutations(
+      useSignInMutationsMock.home,
+      {
+        onCodeRequested: handlers.onCodeRequested ?? vi.fn(),
+        goToCompleteProfile: handlers.goToCompleteProfile ?? vi.fn(),
+        onPhoneCodeRequested: handlers.onPhoneCodeRequested ?? vi.fn(),
+      },
+      customer
+    )
+  )
+
 describe('useSignInMutations', () => {
   beforeEach(() => {
     vi.clearAllMocks()
+    searchParams = new URLSearchParams()
 
     vi.mocked(useRequestOtp).mockReturnValue({
       mutate: requestMutate,
@@ -41,11 +63,6 @@ describe('useSignInMutations', () => {
       isPending: false,
       isError: false,
     } as unknown as ReturnType<typeof useVerifyOtp>)
-    vi.mocked(useGoogleSignIn).mockReturnValue({
-      mutate: googleMutate,
-      isPending: false,
-      isError: false,
-    } as unknown as ReturnType<typeof useGoogleSignIn>)
     vi.mocked(useRequestPhoneLink).mockReturnValue({
       mutate: requestLinkMutate,
       isPending: false,
@@ -66,13 +83,7 @@ describe('useSignInMutations', () => {
   it('requests the code and advances the step on success', () => {
     // Arrange
     const onCodeRequested = vi.fn()
-    const { result } = renderHook(() =>
-      useSignInMutations(useSignInMutationsMock.home, {
-        onCodeRequested,
-        goToCompleteProfile: vi.fn(),
-        onPhoneCodeRequested: vi.fn(),
-      })
-    )
+    const { result } = renderMutations({ onCodeRequested })
 
     // Act
     result.current.requestCode(useSignInMutationsMock.credentials)
@@ -89,13 +100,7 @@ describe('useSignInMutations', () => {
 
   it('sends a completed account home after verifying the code', () => {
     // Arrange
-    const { result } = renderHook(() =>
-      useSignInMutations(useSignInMutationsMock.home, {
-        onCodeRequested: vi.fn(),
-        goToCompleteProfile: vi.fn(),
-        onPhoneCodeRequested: vi.fn(),
-      })
-    )
+    const { result } = renderMutations()
 
     // Act
     result.current.verifyCode(
@@ -121,13 +126,7 @@ describe('useSignInMutations', () => {
   it('sends an incomplete account to complete the profile instead', () => {
     // Arrange
     const goToCompleteProfile = vi.fn()
-    const { result } = renderHook(() =>
-      useSignInMutations(useSignInMutationsMock.home, {
-        onCodeRequested: vi.fn(),
-        goToCompleteProfile,
-        onPhoneCodeRequested: vi.fn(),
-      })
-    )
+    const { result } = renderMutations({ goToCompleteProfile })
 
     // Act
     result.current.verifyCode(
@@ -144,41 +143,26 @@ describe('useSignInMutations', () => {
     expect(navigate).not.toHaveBeenCalled()
   })
 
-  it('clears a placeholder name before completing the profile', () => {
+  it('sends an already-completed session home without any click', () => {
     // Arrange
-    const goToCompleteProfile = vi.fn()
-    const { result } = renderHook(() =>
-      useSignInMutations(useSignInMutationsMock.home, {
-        onCodeRequested: vi.fn(),
-        goToCompleteProfile,
-        onPhoneCodeRequested: vi.fn(),
-      })
-    )
-
     // Act
-    result.current.signInWithGoogle('id-token')
-    const [, options] = googleMutate.mock.calls[0]
-    options.onSuccess(useSignInMutationsMock.incompleteEmailPlaceholder)
+    renderMutations({}, useSignInMutationsMock.completedCustomer)
 
     // Assert
-    expect(goToCompleteProfile).toHaveBeenCalledWith('')
+    expect(navigate).toHaveBeenCalledWith(useSignInMutationsMock.home, {
+      replace: true,
+    })
   })
 
-  it('keeps a real name when google already sent one', () => {
+  it('sends an already-logged-in incomplete session to complete', () => {
     // Arrange
     const goToCompleteProfile = vi.fn()
-    const { result } = renderHook(() =>
-      useSignInMutations(useSignInMutationsMock.home, {
-        onCodeRequested: vi.fn(),
-        goToCompleteProfile,
-        onPhoneCodeRequested: vi.fn(),
-      })
-    )
 
     // Act
-    result.current.signInWithGoogle('id-token')
-    const [, options] = googleMutate.mock.calls[0]
-    options.onSuccess(useSignInMutationsMock.incompleteCustomer)
+    renderMutations(
+      { goToCompleteProfile },
+      useSignInMutationsMock.incompleteCustomer
+    )
 
     // Assert
     expect(goToCompleteProfile).toHaveBeenCalledWith(
@@ -186,16 +170,21 @@ describe('useSignInMutations', () => {
     )
   })
 
+  it('reports the google failure carried by the api redirect', () => {
+    // Arrange
+    searchParams = new URLSearchParams('googleError=1')
+
+    // Act
+    const { result } = renderMutations()
+
+    // Assert
+    expect(result.current.googleFailed).toBe(true)
+  })
+
   it('requests a phone link code and advances the step on success', () => {
     // Arrange
     const onPhoneCodeRequested = vi.fn()
-    const { result } = renderHook(() =>
-      useSignInMutations(useSignInMutationsMock.home, {
-        onCodeRequested: vi.fn(),
-        goToCompleteProfile: vi.fn(),
-        onPhoneCodeRequested,
-      })
-    )
+    const { result } = renderMutations({ onPhoneCodeRequested })
 
     // Act
     result.current.requestPhoneCode(useSignInMutationsMock.phone)
@@ -212,13 +201,7 @@ describe('useSignInMutations', () => {
 
   it('navigates home once the phone link code is verified', () => {
     // Arrange
-    const { result } = renderHook(() =>
-      useSignInMutations(useSignInMutationsMock.home, {
-        onCodeRequested: vi.fn(),
-        goToCompleteProfile: vi.fn(),
-        onPhoneCodeRequested: vi.fn(),
-      })
-    )
+    const { result } = renderMutations()
 
     // Act
     result.current.verifyPhoneCode(
@@ -236,13 +219,7 @@ describe('useSignInMutations', () => {
 
   it('goes home right away when the completed profile has no phone', () => {
     // Arrange
-    const { result } = renderHook(() =>
-      useSignInMutations(useSignInMutationsMock.home, {
-        onCodeRequested: vi.fn(),
-        goToCompleteProfile: vi.fn(),
-        onPhoneCodeRequested: vi.fn(),
-      })
-    )
+    const { result } = renderMutations()
 
     // Act
     result.current.finishProfile(useSignInMutationsMock.name, '')
@@ -261,13 +238,7 @@ describe('useSignInMutations', () => {
 
   it('asks for a phone code when the profile includes a phone', () => {
     // Arrange
-    const { result } = renderHook(() =>
-      useSignInMutations(useSignInMutationsMock.home, {
-        onCodeRequested: vi.fn(),
-        goToCompleteProfile: vi.fn(),
-        onPhoneCodeRequested: vi.fn(),
-      })
-    )
+    const { result } = renderMutations()
 
     // Act
     result.current.finishProfile(

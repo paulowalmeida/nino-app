@@ -23,7 +23,6 @@ describe('useSignInFacade', () => {
     const goToCode = vi.fn()
     const goToIdentify = vi.fn()
     const goToCompleteProfile = vi.fn()
-    const signInWithGoogle = vi.fn()
 
     vi.mocked(useSignInBrand).mockReturnValue({
       home: useSignInFacadeMock.home,
@@ -61,8 +60,6 @@ describe('useSignInFacade', () => {
       verifyCode,
       isVerifying: false,
       verifyFailed: false,
-      signInWithGoogle,
-      isSigningInWithGoogle: false,
       googleFailed: false,
       requestPhoneCode: vi.fn(),
       isRequestingPhoneCode: false,
@@ -80,11 +77,15 @@ describe('useSignInFacade', () => {
     const { result } = renderHook(() => useSignInFacade())
 
     // Assert
-    expect(useSignInMutations).toHaveBeenCalledWith(useSignInFacadeMock.home, {
-      onCodeRequested: goToCode,
-      goToCompleteProfile,
-      onPhoneCodeRequested: expect.any(Function),
-    })
+    expect(useSignInMutations).toHaveBeenCalledWith(
+      useSignInFacadeMock.home,
+      {
+        onCodeRequested: goToCode,
+        goToCompleteProfile,
+        onPhoneCodeRequested: expect.any(Function),
+      },
+      useSignInFacadeMock.customer
+    )
     expect(result.current.home).toBe(useSignInFacadeMock.home)
     expect(result.current.store).toBe(useSignInFacadeMock.store)
     expect(result.current.customer).toBe(useSignInFacadeMock.customer)
@@ -94,6 +95,5 @@ describe('useSignInFacade', () => {
     expect(result.current.requestCode).toBe(requestCode)
     expect(result.current.verifyCode).toBe(verifyCode)
     expect(result.current.goToIdentify).toBe(goToIdentify)
-    expect(result.current.signInWithGoogle).toBe(signInWithGoogle)
   })
 })
