@@ -1,0 +1,49 @@
+@reference "@nino/ds/globals.css";
+
+.field {
+  @apply mt-4 first:mt-0;
+}
+
+.fieldLabel {
+  @apply text-xs font-bold text-fg-muted;
+}
+
+.readonly {
+  @apply flex h-11 items-center rounded-full border border-black/[0.08];
+  @apply bg-black/[0.06];
+  @apply px-3.5 text-sm font-semibold text-fg-muted;
+}
+
+.hint {
+  @apply mt-1.5 text-xs leading-snug text-fg-faint;
+}
+
+.row {
+  @apply mt-2 flex flex-col gap-2 sm:flex-row;
+}
+
+.input {
+  @apply sm:flex-1;
+}
+
+.codeInput {
+  @apply mt-2 justify-between gap-2;
+}
+
+.codeInput input {
+  @apply h-11 w-full rounded-3 border-black/10 text-center;
+  @apply font-display text-lg font-extrabold text-fg-strong;
+  font-variant-numeric: tabular-nums;
+}
+
+.alert {
+  @apply mt-2;
+}
+
+.action {
+  @apply h-11 rounded-full px-5 text-sm font-bold;
+}
+
+.ghost {
+  @apply mt-1 h-9 text-xs font-bold text-fg-faint;
+}

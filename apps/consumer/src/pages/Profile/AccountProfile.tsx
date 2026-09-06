@@ -8,8 +8,8 @@ import { Heading } from '@nino/ds/components/Heading'
 import { Input } from '@nino/ds/components/Input'
 import { Text } from '@nino/ds/components/Text'
 import { toast } from '@nino/ds/components/Toast'
+import { AccountProfilePhoneField } from '@pages/Profile/components/AccountProfilePhoneField/AccountProfilePhoneField'
 import { useProfileFacade } from '@pages/Profile/facades/useProfileFacade/useProfileFacade'
-import { formatPhone } from '@utils/phone'
 import { hasProfanity } from '@pages/Profile/utils/profanity/profanity'
 
 import styles from './AccountProfile.module.css'
@@ -80,26 +80,7 @@ export const AccountProfile = () => {
           />
         </FormField>
 
-        <Box
-          className={styles.field}
-          role="group"
-          aria-labelledby="profile-phone-label"
-        >
-          <Text
-            as="span"
-            className={styles.fieldLabel}
-            id="profile-phone-label"
-          >
-            Telefone
-          </Text>
-          <Text className={styles.readonly} id="profile-phone">
-            {formatPhone(customer?.phone ?? '')}
-          </Text>
-          <Text className={styles.hint}>
-            É por ele que você entra na conta. Para usar outro número, entre com
-            ele — a loja abre uma conta nova.
-          </Text>
-        </Box>
+        <AccountProfilePhoneField />
 
         <FormField
           label={

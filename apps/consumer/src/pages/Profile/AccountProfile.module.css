@@ -8,22 +8,6 @@
   @apply mt-6 rounded-4 border border-border bg-surface-1 p-5 sm:p-6;
 }
 
-.field {
-  @apply mt-4 first:mt-0;
-}
-
-.fieldLabel {
-  @apply text-xs font-bold text-fg-muted;
-}
-
-/* WHY: mostra o valor e diz por quê em vez de um campo desabilitado, que
-   pareceria um bug em vez de uma regra de negócio. */
-.readonly {
-  @apply flex h-11 items-center rounded-full border border-black/[0.08];
-  @apply bg-black/[0.06];
-  @apply px-3.5 text-sm font-semibold text-fg-muted;
-}
-
 .hint {
   @apply mt-1.5 text-xs leading-snug text-fg-faint;
 }

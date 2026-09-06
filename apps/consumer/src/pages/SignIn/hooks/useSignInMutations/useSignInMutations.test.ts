@@ -2,11 +2,11 @@ import { renderHook } from '@testing-library/react'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 
 import { useCompleteProfile } from '@shared/hooks/useCompleteProfile/useCompleteProfile'
+import { useRequestPhoneLink } from '@shared/hooks/useRequestPhoneLink/useRequestPhoneLink'
+import { useVerifyPhoneLink } from '@shared/hooks/useVerifyPhoneLink/useVerifyPhoneLink'
 import { useGoogleSignIn } from '@pages/sign-in/hooks/useGoogleSignIn/useGoogleSignIn'
 import { useRequestOtp } from '@pages/sign-in/hooks/useRequestOtp/useRequestOtp'
-import { useRequestPhoneLink } from '@pages/sign-in/hooks/useRequestPhoneLink/useRequestPhoneLink'
 import { useVerifyOtp } from '@pages/sign-in/hooks/useVerifyOtp/useVerifyOtp'
-import { useVerifyPhoneLink } from '@pages/sign-in/hooks/useVerifyPhoneLink/useVerifyPhoneLink'
 
 import { useSignInMutations } from './useSignInMutations'
 import { useSignInMutationsMock } from './useSignInMutations.mock'
@@ -23,8 +23,8 @@ vi.mock('react-router', () => ({ useNavigate: () => navigate }))
 vi.mock('@pages/sign-in/hooks/useRequestOtp/useRequestOtp')
 vi.mock('@pages/sign-in/hooks/useVerifyOtp/useVerifyOtp')
 vi.mock('@pages/sign-in/hooks/useGoogleSignIn/useGoogleSignIn')
-vi.mock('@pages/sign-in/hooks/useRequestPhoneLink/useRequestPhoneLink')
-vi.mock('@pages/sign-in/hooks/useVerifyPhoneLink/useVerifyPhoneLink')
+vi.mock('@shared/hooks/useRequestPhoneLink/useRequestPhoneLink')
+vi.mock('@shared/hooks/useVerifyPhoneLink/useVerifyPhoneLink')
 vi.mock('@shared/hooks/useCompleteProfile/useCompleteProfile')
 
 describe('useSignInMutations', () => {

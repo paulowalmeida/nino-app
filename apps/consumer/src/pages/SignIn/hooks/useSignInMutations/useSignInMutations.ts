@@ -3,11 +3,11 @@ import { useNavigate } from 'react-router'
 import type { Customer } from '@custom_types/customer/customer'
 import type { OtpCredentials } from '@shared/types/customer/otp-credentials'
 import { useCompleteProfile } from '@shared/hooks/useCompleteProfile/useCompleteProfile'
+import { useRequestPhoneLink } from '@shared/hooks/useRequestPhoneLink/useRequestPhoneLink'
+import { useVerifyPhoneLink } from '@shared/hooks/useVerifyPhoneLink/useVerifyPhoneLink'
 import { useGoogleSignIn } from '@pages/sign-in/hooks/useGoogleSignIn/useGoogleSignIn'
 import { useRequestOtp } from '@pages/sign-in/hooks/useRequestOtp/useRequestOtp'
-import { useRequestPhoneLink } from '@pages/sign-in/hooks/useRequestPhoneLink/useRequestPhoneLink'
 import { useVerifyOtp } from '@pages/sign-in/hooks/useVerifyOtp/useVerifyOtp'
-import { useVerifyPhoneLink } from '@pages/sign-in/hooks/useVerifyPhoneLink/useVerifyPhoneLink'
 import { resolveProfileName } from '@pages/sign-in/utils/resolveProfileName/resolveProfileName'
 
 type SignInMutationsHandlers = {
