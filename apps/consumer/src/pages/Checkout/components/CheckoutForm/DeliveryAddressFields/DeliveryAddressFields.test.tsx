@@ -50,12 +50,12 @@ describe('DeliveryAddressFields', () => {
     return { setValue, setFocus }
   }
 
-  it('shows the quoted delivery zone', () => {
+  it('shows the quoted delivery fee', () => {
     setup()
 
     render(<DeliveryAddressFields />)
 
-    expect(screen.getByText(/Centro/)).toBeInTheDocument()
+    expect(screen.getByText(/Taxa de entrega/)).toBeInTheDocument()
     expect(screen.getByLabelText('Endereço')).toBeInTheDocument()
   })
 
