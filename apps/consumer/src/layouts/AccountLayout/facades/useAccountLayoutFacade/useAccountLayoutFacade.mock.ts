@@ -6,6 +6,7 @@ export const useAccountLayoutFacadeMock = {
     name: 'Maria Silva',
     phone: '11999999999',
     email: 'maria@example.com',
+    photoUrl: null,
     cpf: null,
     isActive: true,
     lastLoginAt: '2026-08-27T12:00:00.000Z',

@@ -6,6 +6,7 @@ export const useCustomerSessionMock: { customer: Customer } = {
     name: 'Maria Silva',
     email: 'maria@example.com',
     phone: '11987654321',
+    photoUrl: null,
     cpf: null,
     isActive: true,
     lastLoginAt: '2026-08-27T12:00:00.000Z',

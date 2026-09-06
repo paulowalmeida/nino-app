@@ -10,6 +10,7 @@ export const useVerifyPhoneLinkMock: {
     name: 'Maria Silva',
     email: null,
     phone: '+5591988881234',
+    photoUrl: null,
     cpf: null,
     isActive: true,
     lastLoginAt: '2026-08-27T12:00:00.000Z',
