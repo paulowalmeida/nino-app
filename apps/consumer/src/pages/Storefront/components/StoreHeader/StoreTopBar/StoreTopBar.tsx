@@ -10,6 +10,7 @@ import { Input } from '@nino/ds/components/Input'
 import { Button } from '@nino/ds/components/Button'
 import { useStorefrontFacade } from '@pages/Storefront/facades/useStorefrontFacade/useStorefrontFacade'
 import { displayName, isOpen, storeInitials } from '@utils/store-info'
+import { firstName } from '@shared/utils/customer-name/customer-name'
 import { formatPhone } from '@utils/phone'
 
 import styles from './StoreTopBar.module.css'
@@ -53,8 +54,10 @@ export const StoreTopBar = ({ slug, isDocked }: StoreTopBarProps) => {
   const base = slug ? `/${slug}` : ''
   const go = (path: string) => () => void navigate(`${base}${path}`)
 
+  /* o primeiro nome basta na barra: nome inteiro estoura a coluna e vira
+     reticências, que não identificam ninguém */
   const named = customer?.profileCompletedAt
-    ? customer.name
+    ? (firstName(customer.name) ?? customer.name)
     : formatPhone(customer?.phone ?? '')
 
   const isStoreOpen = isHoursPending || isOpen(store, hours)
@@ -174,7 +177,16 @@ export const StoreTopBar = ({ slug, isDocked }: StoreTopBarProps) => {
                   className={`${styles.account} ${styles.accountEntry}`}
                   aria-label={`Sua conta — ${named}`}
                 >
-                  <Icon name="user" />
+                  {customer.photoUrl ? (
+                    <img
+                      src={customer.photoUrl}
+                      alt=""
+                      className={styles.accountPhoto}
+                      referrerPolicy="no-referrer"
+                    />
+                  ) : (
+                    <Icon name="user" />
+                  )}
                   <Text as="span" className={styles.accountName}>
                     {named}
                   </Text>
