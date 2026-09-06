@@ -41,7 +41,7 @@ describe('SignInGoogleButton', () => {
 
     // Assert
     expect(
-      screen.getByRole('link', { name: 'Continuar com Google' })
+      screen.getByRole('link', { name: 'Entrar com Google' })
     ).toHaveAttribute(
       'href',
       'https://accounts.google.com/o/oauth2/v2/auth?client_id=1'

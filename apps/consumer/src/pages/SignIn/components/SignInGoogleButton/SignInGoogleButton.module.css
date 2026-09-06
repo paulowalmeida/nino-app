@@ -5,8 +5,12 @@
 }
 
 .button {
-  @apply flex h-11 w-full items-center justify-center rounded-full;
+  @apply flex h-11 w-full items-center justify-center gap-2.5 rounded-full;
   @apply text-sm font-bold;
+}
+
+.logo {
+  @apply h-[18px] w-[18px] shrink-0;
 }
 
 .alert {
