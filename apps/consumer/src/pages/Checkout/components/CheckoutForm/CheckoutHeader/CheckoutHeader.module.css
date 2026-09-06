@@ -17,7 +17,7 @@
 
 .storeMark {
   @apply flex h-10 w-10 shrink-0 items-center justify-center overflow-hidden;
-  @apply rounded-3 bg-brand text-fg-on-brand;
+  @apply rounded-3 bg-brand-soft text-brand-strong;
 }
 
 .logo {
