@@ -40,4 +40,19 @@ describe('buildGoogleAuthUrl', () => {
     expect(params.get('response_type')).toBe('code')
     expect(params.get('state')).toBe(buildGoogleAuthUrlMock.returnUrl)
   })
+
+  it('makes the callback absolute when the api base is the dev proxy', () => {
+    // Arrange
+    vi.stubEnv('VITE_GOOGLE_CLIENT_ID', 'client-123')
+    vi.stubEnv('VITE_BASE_URL', '/api')
+
+    // Act
+    const url = buildGoogleAuthUrl(buildGoogleAuthUrlMock.returnUrl)
+    const params = new URL(url as string).searchParams
+
+    // Assert
+    expect(params.get('redirect_uri')).toBe(
+      `${window.location.origin}/api/customer/auth/google/callback`
+    )
+  })
 })

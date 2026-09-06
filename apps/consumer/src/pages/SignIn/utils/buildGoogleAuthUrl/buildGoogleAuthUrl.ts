@@ -16,12 +16,17 @@ export const buildGoogleAuthUrl = (returnUrl: string): string | null => {
 
   if (!clientId) return null
 
+  /* CONSTRAINT: o Google recusa `redirect_uri` relativo, e em
+     desenvolvimento a base da API é o caminho do proxy do Vite (`/api`) —
+     resolver contra a origem atual cobre os dois casos sem env extra. */
+  const callback = new URL(
+    `${apiBaseUrl}/customer/auth/google/callback`,
+    window.location.origin
+  ).toString()
+
   const url = new URL(GOOGLE_AUTH_URL)
   url.searchParams.set('client_id', clientId)
-  url.searchParams.set(
-    'redirect_uri',
-    `${apiBaseUrl}/customer/auth/google/callback`
-  )
+  url.searchParams.set('redirect_uri', callback)
   url.searchParams.set('response_type', 'code')
   url.searchParams.set('scope', 'openid email profile')
   url.searchParams.set('state', returnUrl)
