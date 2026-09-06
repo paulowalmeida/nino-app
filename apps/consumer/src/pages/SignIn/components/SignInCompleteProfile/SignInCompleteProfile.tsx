@@ -9,6 +9,7 @@ import { Text } from '@nino/ds/components/Text'
 import { isCompletePhone } from '@utils/phone'
 import { riseDelay } from '@utils/rise-delay'
 import { useSignInFacade } from '@pages/sign-in/facades/useSignInFacade/useSignInFacade'
+import { resolveProfileName } from '@pages/sign-in/utils/resolveProfileName/resolveProfileName'
 
 import styles from './SignInCompleteProfile.module.css'
 import motion from '@styles/motion.module.css'
@@ -18,6 +19,10 @@ import motion from '@styles/motion.module.css'
  * para quem ainda não tem um telefone confirmado — se quer deixá-lo já
  * registrado. Telefone aqui é sempre pulável: ele vira obrigatório só no
  * checkout, quando existe um pedido para entregar.
+ *
+ * Quem entrou pelo Google chega com nome, e-mail e foto já verificados: aí
+ * a tela deixa de perguntar quem é a pessoa e passa a mostrar o que veio,
+ * para ela conferir — a única lacuna real é o telefone.
  */
 export const SignInCompleteProfile = () => {
   const {
@@ -32,6 +37,8 @@ export const SignInCompleteProfile = () => {
   } = useSignInFacade()
 
   const hasPhone = Boolean(customer?.phone)
+  const knownName = resolveProfileName(customer?.name ?? '')
+  const imported = Boolean(customer?.photoUrl) || Boolean(knownName)
   const trimmedName = name.trim()
   const normalizedPhone = phone.trim()
   const phoneIsValid = !normalizedPhone || isCompletePhone(normalizedPhone)
@@ -52,11 +59,34 @@ export const SignInCompleteProfile = () => {
       onSubmit={handleSubmit}
     >
       <Heading level={1} className={styles.title}>
-        Como podemos te chamar?
+        {imported ? 'Confirme seus dados' : 'Como podemos te chamar?'}
       </Heading>
       <Text size="sm" className={styles.subtitle}>
-        Só isso e você já pode pedir.
+        {imported
+          ? 'Trouxemos o que deu do Google. Ajuste se precisar.'
+          : 'Só isso e você já pode pedir.'}
       </Text>
+
+      {imported && (
+        <Box className={styles.identity}>
+          {customer?.photoUrl && (
+            <img
+              src={customer.photoUrl}
+              alt=""
+              className={styles.identityPhoto}
+              referrerPolicy="no-referrer"
+            />
+          )}
+          <Box>
+            {knownName && (
+              <Text className={styles.identityName}>{knownName}</Text>
+            )}
+            {customer?.email && (
+              <Text className={styles.identityContact}>{customer.email}</Text>
+            )}
+          </Box>
+        </Box>
+      )}
 
       <FormField label="Nome" required className={styles.field}>
         <Input

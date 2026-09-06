@@ -11,6 +11,23 @@
   @apply mt-2.5 text-center leading-relaxed text-fg-default;
 }
 
+.identity {
+  @apply mt-6 flex items-center gap-3 rounded-3 border border-border p-3;
+  @apply bg-surface-1;
+}
+
+.identityPhoto {
+  @apply h-11 w-11 shrink-0 rounded-full object-cover;
+}
+
+.identityName {
+  @apply truncate font-semibold text-fg-strong;
+}
+
+.identityContact {
+  @apply truncate text-sm text-fg-muted;
+}
+
 .field {
   @apply mt-5;
 }

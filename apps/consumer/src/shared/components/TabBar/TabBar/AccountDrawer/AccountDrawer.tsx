@@ -120,7 +120,16 @@ export const AccountDrawer = ({
       >
         <Box as="header" className={styles.head}>
           <Box className={`${motion.land} ${styles.tile}`}>
-            {mark ?? <Icon name="user" className={styles.tileIcon} />}
+            {customer?.photoUrl ? (
+              <img
+                src={customer.photoUrl}
+                alt=""
+                className={styles.tilePhoto}
+                referrerPolicy="no-referrer"
+              />
+            ) : (
+              (mark ?? <Icon name="user" className={styles.tileIcon} />)
+            )}
           </Box>
 
           <Text
