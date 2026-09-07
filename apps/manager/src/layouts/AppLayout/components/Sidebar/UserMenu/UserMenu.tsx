@@ -67,12 +67,6 @@ export const UserMenu = ({
                 },
               ]
             : []),
-          {
-            value: 'stores',
-            label: 'Trocar de loja',
-            icon: <Icon name="store" className={styles.itemIcon} />,
-            onSelect: () => void navigate('/lojas'),
-          },
         ]}
       />
       <Tooltip content="Sair">

@@ -64,23 +64,6 @@ describe('UserMenu', () => {
     ).not.toBeInTheDocument()
   })
 
-  it('offers the way back to the store list, for any role', async () => {
-    vi.mocked(useTenantRole).mockReturnValue(managerRoleMock)
-    const user = userEvent.setup()
-
-    render(
-      <MemoryRouter>
-        <UserMenu {...userMenuMock} />
-      </MemoryRouter>
-    )
-
-    await user.click(screen.getByRole('button', { name: /Marina/ }))
-
-    expect(
-      await screen.findByRole('menuitem', { name: /Trocar de loja/ })
-    ).toBeInTheDocument()
-  })
-
   it('names the sign-out button on hover', async () => {
     vi.mocked(useTenantRole).mockReturnValue(managerRoleMock)
     const user = userEvent.setup()
