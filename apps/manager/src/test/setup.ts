@@ -5,6 +5,7 @@ window.HTMLElement.prototype.hasPointerCapture = () => false
 window.HTMLElement.prototype.setPointerCapture = () => {}
 window.HTMLElement.prototype.releasePointerCapture = () => {}
 window.HTMLElement.prototype.scrollIntoView = () => {}
+window.Element.prototype.scrollTo = () => {}
 
 // jsdom has no media query engine; `useIsDesktop` reads it on mount, and
 // reporting no match renders the mobile branch of whatever is under test

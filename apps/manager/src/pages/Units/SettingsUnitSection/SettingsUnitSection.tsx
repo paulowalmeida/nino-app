@@ -30,7 +30,7 @@ export const SettingsUnitSection = () => {
   const { limit, planName, isFull, isPending } = unitsDomain.limit
 
   const unitDetailTo = (unitTenantId: string) =>
-    unitTenantId === tenantId ? 'detalhe' : `/${unitTenantId}/unidades/detalhe`
+    unitTenantId === tenantId ? 'detalhe' : `/${unitTenantId}/unidade/detalhe`
 
   if (isPending) return <SettingsUnitSkeleton />
 
@@ -59,7 +59,7 @@ export const SettingsUnitSection = () => {
 
         {!isFull && (
           <Button asChild className={mergeClasses(motion.press, local.add)}>
-            <Link to={`/${tenantId}/unidades/nova`}>Abrir unidade</Link>
+            <Link to={`/${tenantId}/unidade/nova`}>Abrir unidade</Link>
           </Button>
         )}
       </Box>

@@ -24,4 +24,16 @@ describe(BrandPalette.name, () => {
 
     expect(onChange).toHaveBeenCalledWith({ primaryColor: '#FF6B00' })
   })
+
+  it('reports a surface color under its own draft key too', async () => {
+    const onChange = vi.fn()
+    render(<BrandPalette colors={brandPaletteColorsMock} onChange={onChange} />)
+
+    fireEvent.click(screen.getByRole('button', { name: /Fundo/ }))
+    fireEvent.click(await screen.findByRole('button', { name: 'Aplicar' }))
+
+    expect(onChange).toHaveBeenCalledWith({
+      backgroundColor: brandPaletteColorsMock.backgroundColor,
+    })
+  })
 })
