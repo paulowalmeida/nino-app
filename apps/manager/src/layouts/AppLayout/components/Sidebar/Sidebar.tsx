@@ -80,7 +80,15 @@ export const Sidebar = ({
       </Box>
 
       <Box className={styles.switcherWrap}>
-        <StoreSwitcher currentTenantId={tenantId} collapsed={isCollapsed} />
+        {/* WHY: the aside never unmounts on mobile — it just slides off
+            via CSS. StoreSwitcher's own dropdown keeps its open state
+            regardless, so a fresh key on the drawer's own open/close edge
+            forces it (and any open popover inside) to reset alongside. */}
+        <StoreSwitcher
+          key={isOpen ? 'open' : 'closed'}
+          currentTenantId={tenantId}
+          collapsed={isCollapsed}
+        />
       </Box>
 
       <SidebarNavigation
@@ -93,6 +101,7 @@ export const Sidebar = ({
 
       <Box className={styles.footer}>
         <UserMenu
+          key={isOpen ? 'open' : 'closed'}
           name={user?.name ?? ''}
           tenantId={tenantId}
           onNavigate={onClose}
