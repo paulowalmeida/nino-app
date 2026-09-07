@@ -160,7 +160,7 @@ export const router = createBrowserRouter([
           })),
       },
       {
-        path: 'catalogo',
+        path: 'produtos',
         loader: roleGuard(MANAGERS),
         lazy: () =>
           import('@pages/Catalog/Catalog').then(({ Catalog }) => ({
@@ -168,7 +168,7 @@ export const router = createBrowserRouter([
           })),
       },
       {
-        path: 'catalogo/novo',
+        path: 'produtos/novo',
         loader: roleGuard(MANAGERS),
         lazy: () =>
           import('@pages/NewProduct/NewProduct').then(({ NewProduct }) => ({
@@ -176,7 +176,7 @@ export const router = createBrowserRouter([
           })),
       },
       {
-        path: 'catalogo/categorias',
+        path: 'categorias-produtos',
         loader: roleGuard(MANAGERS),
         lazy: () =>
           import('@pages/CatalogCategories/CatalogCategories').then(
@@ -186,13 +186,53 @@ export const router = createBrowserRouter([
           ),
       },
       {
-        path: 'catalogo/:productId',
+        path: 'produtos/:productId',
         loader: roleGuard(MANAGERS),
         lazy: () =>
           import('@pages/ProductDetail/ProductDetail').then(
             ({ ProductDetail }) => ({
               Component: ProductDetail,
             })
+          ),
+      },
+      {
+        path: 'relatorios',
+        loader: roleGuard(MANAGERS),
+        lazy: () =>
+          import('@pages/Reports/Reports').then(({ Reports }) => ({
+            Component: Reports,
+          })),
+      },
+      {
+        path: 'clientes',
+        loader: roleGuard(MANAGERS),
+        lazy: () =>
+          import('@pages/Customers/Customers').then(({ Customers }) => ({
+            Component: Customers,
+          })),
+      },
+      {
+        path: 'clientes/:customerId',
+        loader: roleGuard(MANAGERS),
+        lazy: () =>
+          import('@pages/CustomerDetail/CustomerDetail').then(
+            ({ CustomerDetail }) => ({ Component: CustomerDetail })
+          ),
+      },
+      {
+        path: 'colaboradores',
+        loader: roleGuard(MANAGERS),
+        lazy: () =>
+          import('@pages/Employees/Employees').then(({ Employees }) => ({
+            Component: Employees,
+          })),
+      },
+      {
+        path: 'colaboradores/:userId',
+        loader: roleGuard(MANAGERS),
+        lazy: () =>
+          import('@pages/CollaboratorDetail/CollaboratorDetail').then(
+            ({ CollaboratorDetail }) => ({ Component: CollaboratorDetail })
           ),
       },
       {
@@ -203,38 +243,33 @@ export const router = createBrowserRouter([
             Component: Settings,
           })),
         children: [
-          { index: true, element: <Navigate to="detalhe" replace /> },
+          { index: true, element: <Navigate to="informacoes" replace /> },
           {
             path: 'detalhe',
+            element: <Navigate to="../informacoes" replace />,
+          },
+          {
+            path: 'informacoes',
             lazy: () =>
               import('@pages/Units/SettingsUnitDetailSection/SettingsUnitDetailSection').then(
                 ({ SettingsUnitDetailSection }) => ({
                   Component: SettingsUnitDetailSection,
                 })
               ),
-            children: [
-              {
-                index: true,
-                lazy: () =>
-                  import('@pages/Units/UnitInfo/UnitInfo').then(
-                    ({ UnitInfo }) => ({ Component: UnitInfo })
-                  ),
-              },
-              {
-                path: 'horarios',
-                lazy: () =>
-                  import('@pages/Units/UnitHours/UnitHours').then(
-                    ({ UnitHours }) => ({ Component: UnitHours })
-                  ),
-              },
-              {
-                path: 'cashback',
-                lazy: () =>
-                  import('@pages/Units/UnitCashback/UnitCashback').then(
-                    ({ UnitCashback }) => ({ Component: UnitCashback })
-                  ),
-              },
-            ],
+          },
+          {
+            path: 'horarios',
+            lazy: () =>
+              import('@pages/Units/UnitHours/UnitHours').then(
+                ({ UnitHours }) => ({ Component: UnitHours })
+              ),
+          },
+          {
+            path: 'cashback',
+            lazy: () =>
+              import('@pages/Units/UnitCashback/UnitCashback').then(
+                ({ UnitCashback }) => ({ Component: UnitCashback })
+              ),
           },
           {
             path: 'atendimento',
@@ -309,7 +344,7 @@ export const router = createBrowserRouter([
           },
           {
             path: 'unidade/detalhe',
-            element: <Navigate to="../../unidade/detalhe" replace />,
+            element: <Navigate to="../../unidade/informacoes" replace />,
           },
           {
             path: 'atendimento',
@@ -321,7 +356,7 @@ export const router = createBrowserRouter([
           },
           {
             path: 'horarios',
-            element: <Navigate to="../../unidade/detalhe/horarios" replace />,
+            element: <Navigate to="../../unidade/horarios" replace />,
           },
           {
             path: 'entrega',
@@ -339,7 +374,7 @@ export const router = createBrowserRouter([
       },
       {
         path: 'unidades/detalhe',
-        element: <Navigate to="../unidade/detalhe" replace />,
+        element: <Navigate to="../unidade/informacoes" replace />,
       },
       {
         path: 'unidades/nova',

@@ -114,12 +114,6 @@ export const EMPTY_CASHBACK_DRAFT: CashbackDraft = {
   cashbackMinRedeem: '0,00',
 }
 
-export const UNIT_DETAIL_TABS = [
-  { value: 'info', label: 'Informações', segment: '' },
-  { value: 'hours', label: 'Horários', segment: 'horarios' },
-  { value: 'cashback', label: 'Cashback', segment: 'cashback' },
-] as const
-
 export const WEEK_SCHEDULE_DAYS = [
   'Domingo',
   'Segunda',

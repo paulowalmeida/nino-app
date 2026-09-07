@@ -96,7 +96,8 @@ Mapa central via `createBrowserRouter`; guards são loaders, não middleware:
 /lojas                      ← seletor de tenants (N memberships)
 /primeira-loja              ← onboarding (0 memberships)
 /:tenantId/visao-geral, /:tenantId/pedidos, /:tenantId/pedidos/:id
-/:tenantId/catalogo         (produtos e categorias — CRUD)
+/:tenantId/produtos         (produtos — CRUD)
+/:tenantId/categorias-produtos (categorias — CRUD)
 /:tenantId/colaboradores, /:tenantId/configuracoes
 ```
 

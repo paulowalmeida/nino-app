@@ -26,13 +26,13 @@ export const SIDEMENU_GROUPS: SidemenuItem[] = [
     title: 'Cardápio',
     items: [
       {
-        section: 'catalogo',
+        section: 'produtos',
         label: 'Produtos',
         icon: 'book',
         roles: MANAGERS,
       },
       {
-        section: 'catalogo/categorias',
+        section: 'categorias-produtos',
         label: 'Categorias',
         icon: 'tag',
         roles: MANAGERS,
@@ -66,9 +66,21 @@ export const SIDEMENU_GROUPS: SidemenuItem[] = [
     title: 'Unidade',
     items: [
       {
-        section: 'unidade/detalhe',
-        label: 'Esta unidade',
+        section: 'unidade/informacoes',
+        label: 'Informações',
         icon: 'store',
+        roles: MANAGERS,
+      },
+      {
+        section: 'unidade/horarios',
+        label: 'Horários',
+        icon: 'clock',
+        roles: MANAGERS,
+      },
+      {
+        section: 'unidade/cashback',
+        label: 'Cashback',
+        icon: 'dollar-sign',
         roles: MANAGERS,
       },
       {
@@ -95,17 +107,28 @@ export const SIDEMENU_GROUPS: SidemenuItem[] = [
         icon: 'phone',
         roles: MANAGERS,
       },
+    ],
+  },
+  {
+    title: 'Empresa',
+    items: [
       {
-        section: 'unidade/personalizar',
-        label: 'Personalizar',
-        icon: 'sliders',
-        roles: MANAGERS,
+        section: 'empresa',
+        label: 'Informações',
+        icon: 'building',
+        roles: ['TENANT_OWNER'],
       },
       {
         section: 'unidade/unidades',
         label: 'Unidades',
-        icon: 'building',
+        icon: 'store',
         roles: MANAGERS,
+      },
+      {
+        section: 'unidade/personalizar',
+        label: 'Personalizar',
+        icon: 'sliders',
+        roles: ['TENANT_OWNER'],
       },
     ],
   },

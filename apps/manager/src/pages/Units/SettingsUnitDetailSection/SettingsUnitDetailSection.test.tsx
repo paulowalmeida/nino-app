@@ -15,16 +15,16 @@ vi.mock(
 vi.mock('@shared/components/Breadcrumb/Breadcrumb', () => ({
   Breadcrumb: () => <div>breadcrumb</div>,
 }))
-vi.mock('./UnitDetailTabs/UnitDetailTabs', () => ({
-  UnitDetailTabs: () => <div>unit tabs</div>,
+vi.mock('@pages/Units/UnitInfo/UnitInfo', () => ({
+  UnitInfo: () => <div>unit information</div>,
 }))
 
 describe(SettingsUnitDetailSection.name, () => {
-  it('frames the unit with its trail and tabs', () => {
+  it('frames the unit with its trail and information', () => {
     render(<SettingsUnitDetailSection />)
 
     expect(screen.getByText('breadcrumb')).toBeInTheDocument()
-    expect(screen.getByText('unit tabs')).toBeInTheDocument()
+    expect(screen.getByText('unit information')).toBeInTheDocument()
   })
 
   it('still frames the screen before the unit is known', () => {
@@ -32,7 +32,7 @@ describe(SettingsUnitDetailSection.name, () => {
 
     render(<SettingsUnitDetailSection />)
 
-    expect(screen.getByText('unit tabs')).toBeInTheDocument()
+    expect(screen.getByText('unit information')).toBeInTheDocument()
 
     tenant = settingsUnitDetailSectionMock.tenant
   })

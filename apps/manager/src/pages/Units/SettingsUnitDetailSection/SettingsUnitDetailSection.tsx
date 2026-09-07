@@ -1,8 +1,7 @@
 import { Box } from '@nino/ds/components/Box'
 import { useUnitDetailShellFacade } from '@pages/Units/facades/useUnitDetailShellFacade/useUnitDetailShellFacade'
+import { UnitInfo } from '@pages/Units/UnitInfo/UnitInfo'
 import { Breadcrumb } from '@shared/components/Breadcrumb/Breadcrumb'
-
-import { UnitDetailTabs } from './UnitDetailTabs/UnitDetailTabs'
 
 import local from './SettingsUnitDetailSection.module.css'
 
@@ -18,7 +17,7 @@ export const SettingsUnitDetailSection = () => {
         ]}
       />
 
-      <UnitDetailTabs />
+      <UnitInfo />
     </Box>
   )
 }

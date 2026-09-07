@@ -48,4 +48,39 @@ describe('SidebarNavLink', () => {
 
     expect(await screen.findByRole('tooltip')).toHaveTextContent('Pedidos')
   })
+
+  it('keeps Products inactive when Categories is the current route', () => {
+    render(
+      <MemoryRouter initialEntries={['/tenant-1/categorias-produtos']}>
+        <SidebarNavLink
+          tenantId="tenant-1"
+          section="produtos"
+          label="Produtos"
+          icon="book"
+          isCollapsed={false}
+          waiting={0}
+          delay={{}}
+          onNavigate={() => undefined}
+        />
+        <SidebarNavLink
+          tenantId="tenant-1"
+          section="categorias-produtos"
+          label="Categorias"
+          icon="tag"
+          isCollapsed={false}
+          waiting={0}
+          delay={{}}
+          onNavigate={() => undefined}
+        />
+      </MemoryRouter>
+    )
+
+    expect(screen.getByRole('link', { name: 'Produtos' })).not.toHaveAttribute(
+      'aria-current'
+    )
+    expect(screen.getByRole('link', { name: 'Categorias' })).toHaveAttribute(
+      'aria-current',
+      'page'
+    )
+  })
 })

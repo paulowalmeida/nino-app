@@ -30,7 +30,7 @@ describe('UserMenu', () => {
     ).toBeInTheDocument()
   })
 
-  it('offers the company to the owner of the tenant', async () => {
+  it('offers the plan to the owner of the tenant', async () => {
     vi.mocked(useTenantRole).mockReturnValue(ownerRoleMock)
     const user = userEvent.setup()
 
@@ -43,28 +43,8 @@ describe('UserMenu', () => {
     await user.click(screen.getByRole('button', { name: /Marina/ }))
 
     expect(
-      await screen.findByRole('menuitem', { name: /Empresa/ })
+      await screen.findByRole('menuitem', { name: /Assinatura/ })
     ).toBeInTheDocument()
-  })
-
-  it('hides the company from everyone else', async () => {
-    vi.mocked(useTenantRole).mockReturnValue(managerRoleMock)
-    const user = userEvent.setup()
-
-    render(
-      <MemoryRouter>
-        <UserMenu {...userMenuMock} />
-      </MemoryRouter>
-    )
-
-    await user.click(screen.getByRole('button', { name: /Marina/ }))
-
-    expect(
-      await screen.findByRole('menuitem', { name: /Meus dados/ })
-    ).toBeInTheDocument()
-    expect(
-      screen.queryByRole('menuitem', { name: /Empresa/ })
-    ).not.toBeInTheDocument()
   })
 
   it('keeps the plan with whoever pays for it', async () => {
@@ -84,7 +64,7 @@ describe('UserMenu', () => {
     ).not.toBeInTheDocument()
   })
 
-  it('offers the way back to the store list', async () => {
+  it('offers the way back to the store list, for any role', async () => {
     vi.mocked(useTenantRole).mockReturnValue(managerRoleMock)
     const user = userEvent.setup()
 

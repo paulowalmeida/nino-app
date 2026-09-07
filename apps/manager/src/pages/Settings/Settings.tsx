@@ -9,7 +9,7 @@ const FLOW_SCROLL_ROUTES = [
   '/atendimento',
   '/salao-comandas',
   '/entrega',
-  '/detalhe',
+  '/informacoes',
   '/horarios',
   '/cashback',
   '/personalizar',

@@ -60,12 +60,6 @@ export const UserMenu = ({
           ...(isOwner
             ? [
                 {
-                  value: 'company',
-                  label: 'Empresa',
-                  icon: <Icon name="building" className={styles.itemIcon} />,
-                  onSelect: () => go('empresa'),
-                },
-                {
                   value: 'subscription',
                   label: 'Assinatura e plano',
                   icon: <Icon name="receipt" className={styles.itemIcon} />,

@@ -33,6 +33,7 @@ export const SidebarNavLink = ({
   const link = (
     <NavLink
       to={`/${tenantId}/${section}`}
+      end={section === 'produtos'}
       onClick={onNavigate}
       className={({ isActive }) =>
         isActive ? `${styles.navItem} ${styles.navItemActive}` : styles.navItem

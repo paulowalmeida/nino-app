@@ -30,7 +30,9 @@ export const SettingsUnitSection = () => {
   const { limit, planName, isFull, isPending } = unitsDomain.limit
 
   const unitDetailTo = (unitTenantId: string) =>
-    unitTenantId === tenantId ? 'detalhe' : `/${unitTenantId}/unidade/detalhe`
+    unitTenantId === tenantId
+      ? 'informacoes'
+      : `/${unitTenantId}/unidade/informacoes`
 
   if (isPending) return <SettingsUnitSkeleton />
 
