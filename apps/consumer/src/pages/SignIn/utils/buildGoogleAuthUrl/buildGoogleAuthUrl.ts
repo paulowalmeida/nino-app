@@ -18,10 +18,16 @@ export const buildGoogleAuthUrl = (returnUrl: string): string | null => {
 
   /* CONSTRAINT: o Google recusa `redirect_uri` relativo, e em
      desenvolvimento a base da API é o caminho do proxy do Vite (`/api`) —
-     resolver contra a origem atual cobre os dois casos sem env extra. */
+     resolver contra a origem atual cobre os dois casos sem env extra.
+     WORKAROUND: cada loja local é um subdomínio (`loja.localhost:3002`), mas
+     o proxy do Vite escuta a mesma porta em qualquer host — por isso a base
+     usada aqui descarta o subdomínio da página, senão o `redirect_uri`
+     mudaria a cada loja e exigiria cadastro individual no Console. */
+  const { protocol, port } = window.location
+  const proxyOrigin = `${protocol}//localhost:${port}`
   const callback = new URL(
     `${apiBaseUrl}/customer/auth/google/callback`,
-    window.location.origin
+    proxyOrigin
   ).toString()
 
   const url = new URL(GOOGLE_AUTH_URL)

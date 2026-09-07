@@ -52,6 +52,9 @@
       "@shared/*": ["src/shared/*"],
       "@utils/category-icon": ["src/pages/Storefront/utils/category-icon"],
       "@utils/last-order": ["src/shared/lib/last-order"],
+      "@utils/local-store-redirect": [
+        "src/shared/lib/local-store-redirect/local-store-redirect"
+      ],
       "@utils/menu-image": ["src/pages/Storefront/utils/menu-image"],
       "@utils/resolve-slug": ["src/shared/lib/resolve-slug"],
       "@utils/session-hint": ["src/shared/lib/session-hint"],

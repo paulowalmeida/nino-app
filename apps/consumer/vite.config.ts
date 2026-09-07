@@ -81,6 +81,10 @@ export default defineConfig({
       '@shared': resolve(__dirname, 'src/shared'),
       '@utils/category-icon': resolve(__dirname, 'src/pages/Storefront/utils/category-icon'),
       '@utils/last-order': resolve(__dirname, 'src/shared/lib/last-order'),
+      '@utils/local-store-redirect': resolve(
+        __dirname,
+        'src/shared/lib/local-store-redirect/local-store-redirect'
+      ),
       '@utils/menu-image': resolve(__dirname, 'src/pages/Storefront/utils/menu-image'),
       '@utils/resolve-slug': resolve(__dirname, 'src/shared/lib/resolve-slug'),
       '@utils/session-hint': resolve(__dirname, 'src/shared/lib/session-hint'),

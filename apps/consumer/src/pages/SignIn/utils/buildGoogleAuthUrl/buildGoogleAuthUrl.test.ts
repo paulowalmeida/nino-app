@@ -51,8 +51,30 @@ describe('buildGoogleAuthUrl', () => {
     const params = new URL(url as string).searchParams
 
     // Assert
+    const { protocol, port } = window.location
     expect(params.get('redirect_uri')).toBe(
-      `${window.location.origin}/api/customer/auth/google/callback`
+      `${protocol}//localhost:${port}/api/customer/auth/google/callback`
+    )
+  })
+
+  it('drops the store subdomain so every store shares one callback', () => {
+    // Arrange
+    vi.stubEnv('VITE_GOOGLE_CLIENT_ID', 'client-123')
+    vi.stubEnv('VITE_BASE_URL', '/api')
+    vi.stubGlobal('location', {
+      ...window.location,
+      origin: 'http://burgao-centro.localhost:3002',
+      protocol: 'http:',
+      port: '3002',
+    })
+
+    // Act
+    const url = buildGoogleAuthUrl(buildGoogleAuthUrlMock.returnUrl)
+    const params = new URL(url as string).searchParams
+
+    // Assert
+    expect(params.get('redirect_uri')).toBe(
+      'http://localhost:3002/api/customer/auth/google/callback'
     )
   })
 })
