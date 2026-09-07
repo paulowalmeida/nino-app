@@ -10,6 +10,3 @@ export type SessionState = {
   clear: () => void
   load: () => Promise<AuthUser | null>
 }
-
-export type SetSession = (partial: Partial<SessionState>) => void
-export type GetSession = () => SessionState

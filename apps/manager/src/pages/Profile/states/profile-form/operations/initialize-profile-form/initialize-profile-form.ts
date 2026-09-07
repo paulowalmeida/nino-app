@@ -1,7 +1,8 @@
+import type { GetForm } from '@pages/Profile/types/GetForm.type'
+import type { ProfileFormState } from '@pages/Profile/types/ProfileFormState.type'
+import type { SetForm } from '@pages/Profile/types/SetForm.type'
 import type { Profile } from '@shared/types/profile/profile'
 import { formatPhone } from '@shared/utils/phone/phone'
-
-import type { GetForm, ProfileFormState, SetForm } from '../../profile-form.state'
 
 const draftFromProfile = (profile: Profile) => ({
   name: profile.name,

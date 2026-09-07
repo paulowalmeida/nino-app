@@ -1,8 +1,7 @@
 import { toast } from '@nino/ds/components/Toast'
 import { ProfileService } from '@pages/Profile/services/profile/profile.service'
+import type { SetProfile } from '@pages/Profile/types/SetProfile.type'
 import type { UpdateProfileRequest } from '@shared/types/profile/update-profile-request'
-
-import type { SetProfile } from '../../profile.state'
 
 export const saveProfile = async (set: SetProfile, data: UpdateProfileRequest) => {
   set({ isSaving: true, error: null })

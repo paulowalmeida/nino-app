@@ -1,6 +1,6 @@
 import { ProfileService } from '@pages/Profile/services/profile/profile.service'
-
-import type { GetProfile, SetProfile } from '../../profile.state'
+import type { GetProfile } from '@pages/Profile/types/GetProfile.type'
+import type { SetProfile } from '@pages/Profile/types/SetProfile.type'
 
 export const loadProfile = async (set: SetProfile, get: GetProfile) => {
   const current = get()

@@ -1,8 +1,9 @@
+import type { GetForm } from '@pages/Profile/types/GetForm.type'
+import type { SetForm } from '@pages/Profile/types/SetForm.type'
 import { EMAIL_PATTERN } from '@shared/constants/auth.constants'
 import { toE164 } from '@shared/utils/phone/phone'
 
 import { useProfileStore } from '../../../profile/profile.state'
-import type { GetForm, SetForm } from '../../profile-form.state'
 import { draftFromProfile } from '../initialize-profile-form/initialize-profile-form'
 
 export const saveProfileForm = async (set: SetForm, get: GetForm) => {

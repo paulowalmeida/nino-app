@@ -21,7 +21,7 @@ vi.mock(
     OrderDetailSkeleton: () => <div>loading order</div>,
   })
 )
-vi.mock('@pages/OrderDetail/hooks/useBackTarget/useBackTarget', () => ({
+vi.mock('@shared/hooks/ui/useBackTarget/useBackTarget', () => ({
   useBackTarget: () => ({ to: '..', label: orderDetailPageMock.backLabel }),
 }))
 

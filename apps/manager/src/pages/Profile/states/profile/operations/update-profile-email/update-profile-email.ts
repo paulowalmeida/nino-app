@@ -1,7 +1,7 @@
 import { toast } from '@nino/ds/components/Toast'
 import { ProfileService } from '@pages/Profile/services/profile/profile.service'
-
-import type { GetProfile, SetProfile } from '../../profile.state'
+import type { GetProfile } from '@pages/Profile/types/GetProfile.type'
+import type { SetProfile } from '@pages/Profile/types/SetProfile.type'
 
 export const updateProfileEmail = async (
   set: SetProfile,
