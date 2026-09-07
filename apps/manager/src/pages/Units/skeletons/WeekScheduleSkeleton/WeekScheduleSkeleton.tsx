@@ -2,10 +2,10 @@ import { Box } from '@nino/ds/components/Box'
 import { Skeleton } from '@nino/ds/components/Skeleton'
 import { Text } from '@nino/ds/components/Text'
 import { mergeClasses } from '@nino/ds/mergeClasses'
-import { WEEK_SCHEDULE_DAYS } from '@pages/Settings/constants/settings.constants'
+import { WEEK_SCHEDULE_DAYS } from '@pages/Units/constants/unit.constants'
 
 import ghost from './WeekScheduleSkeleton.module.css'
-import schedule from '@pages/Settings/components/SettingsHoursSection/WeekSchedule/WeekSchedule.module.css'
+import schedule from '@pages/Units/components/WeekSchedule/WeekSchedule.module.css'
 
 /* WHY: o nome do dia e o "às" saem de constante, não do servidor — ficam
  * legíveis enquanto os horários carregam, em vez de virar barra cinza. */

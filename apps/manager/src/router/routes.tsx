@@ -196,129 +196,45 @@ export const router = createBrowserRouter([
           ),
       },
       {
-        path: 'unidades/nova',
-        loader: roleGuard(MANAGERS),
-        lazy: () =>
-          import('@pages/NewUnit/NewUnit').then(({ NewUnit }) => ({
-            Component: NewUnit,
-          })),
-      },
-      {
-        path: 'relatorios',
-        loader: roleGuard(MANAGERS),
-        lazy: () =>
-          import('@pages/Reports/Reports').then(({ Reports }) => ({
-            Component: Reports,
-          })),
-      },
-      {
-        path: 'clientes',
-        loader: roleGuard(MANAGERS),
-        lazy: () =>
-          import('@pages/Customers/Customers').then(({ Customers }) => ({
-            Component: Customers,
-          })),
-      },
-      {
-        path: 'clientes/:customerId',
-        loader: roleGuard(MANAGERS),
-        lazy: () =>
-          import('@pages/CustomerDetail/CustomerDetail').then(
-            ({ CustomerDetail }) => ({ Component: CustomerDetail })
-          ),
-      },
-      {
-        path: 'colaboradores',
-        loader: roleGuard(MANAGERS),
-        lazy: () =>
-          import('@pages/Employees/Employees').then(({ Employees }) => ({
-            Component: Employees,
-          })),
-      },
-      {
-        path: 'colaboradores/:userId',
-        loader: roleGuard(MANAGERS),
-        lazy: () =>
-          import('@pages/CollaboratorDetail/CollaboratorDetail').then(
-            ({ CollaboratorDetail }) => ({ Component: CollaboratorDetail })
-          ),
-      },
-      {
-        path: 'perfil',
-        lazy: () =>
-          import('@pages/Profile/Profile').then(({ Profile }) => ({
-            Component: Profile,
-          })),
-      },
-      {
-        path: 'assinatura',
-        lazy: () =>
-          import('@pages/Subscription/Subscription').then(
-            ({ Subscription: AccountSubscription }) => ({
-              Component: AccountSubscription,
-            })
-          ),
-      },
-      {
-        path: 'empresa',
-        loader: roleGuard(['TENANT_OWNER']),
-        lazy: () =>
-          import('@pages/Company/Company').then(({ Company }) => ({
-            Component: Company,
-          })),
-      },
-      {
-        path: 'unidades',
-        loader: roleGuard(['TENANT_OWNER']),
-        lazy: () =>
-          import('@pages/Units/SettingsUnitSection/SettingsUnitSection').then(
-            ({ SettingsUnitSection }) => ({ Component: SettingsUnitSection })
-          ),
-      },
-      {
-        path: 'unidades/detalhe',
-        loader: roleGuard(['TENANT_OWNER']),
-        lazy: () =>
-          import('@pages/Units/SettingsUnitDetailSection/SettingsUnitDetailSection').then(
-            ({ SettingsUnitDetailSection }) => ({
-              Component: SettingsUnitDetailSection,
-            })
-          ),
-      },
-      {
-        path: 'personalizar',
-        loader: roleGuard(['TENANT_OWNER']),
-        lazy: () =>
-          import('@pages/Units/Personalize/Personalize').then(
-            ({ Personalize }) => ({ Component: Personalize })
-          ),
-      },
-      {
-        path: 'unidades/nova',
-        loader: roleGuard(['TENANT_OWNER']),
-        lazy: () =>
-          import('@pages/NewUnit/NewUnit').then(({ NewUnit }) => ({
-            Component: NewUnit,
-          })),
-      },
-      {
-        path: 'configuracoes',
+        path: 'unidade',
         loader: roleGuard(MANAGERS),
         lazy: () =>
           import('@pages/Settings/Settings').then(({ Settings }) => ({
             Component: Settings,
           })),
         children: [
-          { index: true, element: <Navigate to="unidade" replace /> },
+          { index: true, element: <Navigate to="detalhe" replace /> },
           {
-            path: 'unidade',
-            loader: roleGuard(['TENANT_OWNER']),
-            element: <Navigate to="../../unidades" replace />,
-          },
-          {
-            path: 'unidade/detalhe',
-            loader: roleGuard(['TENANT_OWNER']),
-            element: <Navigate to="../../unidades/detalhe" replace />,
+            path: 'detalhe',
+            lazy: () =>
+              import('@pages/Units/SettingsUnitDetailSection/SettingsUnitDetailSection').then(
+                ({ SettingsUnitDetailSection }) => ({
+                  Component: SettingsUnitDetailSection,
+                })
+              ),
+            children: [
+              {
+                index: true,
+                lazy: () =>
+                  import('@pages/Units/UnitInfo/UnitInfo').then(
+                    ({ UnitInfo }) => ({ Component: UnitInfo })
+                  ),
+              },
+              {
+                path: 'horarios',
+                lazy: () =>
+                  import('@pages/Units/UnitHours/UnitHours').then(
+                    ({ UnitHours }) => ({ Component: UnitHours })
+                  ),
+              },
+              {
+                path: 'cashback',
+                lazy: () =>
+                  import('@pages/Units/UnitCashback/UnitCashback').then(
+                    ({ UnitCashback }) => ({ Component: UnitCashback })
+                  ),
+              },
+            ],
           },
           {
             path: 'atendimento',
@@ -326,24 +242,6 @@ export const router = createBrowserRouter([
               import('@pages/Settings/components/SettingsServiceSection/SettingsServiceSection').then(
                 ({ SettingsServiceSection }) => ({
                   Component: SettingsServiceSection,
-                })
-              ),
-          },
-          {
-            path: 'salao-comandas',
-            lazy: () =>
-              import('@pages/Settings/components/SettingsTableSection/SettingsTableSection').then(
-                ({ SettingsTableSection }) => ({
-                  Component: SettingsTableSection,
-                })
-              ),
-          },
-          {
-            path: 'horarios',
-            lazy: () =>
-              import('@pages/Settings/components/SettingsHoursSection/SettingsHoursSection').then(
-                ({ SettingsHoursSection }) => ({
-                  Component: SettingsHoursSection,
                 })
               ),
           },
@@ -357,6 +255,15 @@ export const router = createBrowserRouter([
               ),
           },
           {
+            path: 'salao-comandas',
+            lazy: () =>
+              import('@pages/Settings/components/SettingsTableSection/SettingsTableSection').then(
+                ({ SettingsTableSection }) => ({
+                  Component: SettingsTableSection,
+                })
+              ),
+          },
+          {
             path: 'contato',
             lazy: () =>
               import('@pages/Settings/components/SettingsContactSection/SettingsContactSection').then(
@@ -365,7 +272,82 @@ export const router = createBrowserRouter([
                 })
               ),
           },
+          {
+            path: 'personalizar',
+            loader: roleGuard(['TENANT_OWNER']),
+            lazy: () =>
+              import('@pages/Units/Personalize/Personalize').then(
+                ({ Personalize }) => ({ Component: Personalize })
+              ),
+          },
+          {
+            path: 'unidades',
+            lazy: () =>
+              import('@pages/Units/SettingsUnitSection/SettingsUnitSection').then(
+                ({ SettingsUnitSection }) => ({
+                  Component: SettingsUnitSection,
+                })
+              ),
+          },
+          {
+            path: 'nova',
+            loader: roleGuard(['TENANT_OWNER']),
+            lazy: () =>
+              import('@pages/NewUnit/NewUnit').then(({ NewUnit }) => ({
+                Component: NewUnit,
+              })),
+          },
         ],
+      },
+      {
+        path: 'configuracoes',
+        children: [
+          { index: true, element: <Navigate to="../unidade" replace /> },
+          {
+            path: 'unidade',
+            element: <Navigate to="../../unidade/unidades" replace />,
+          },
+          {
+            path: 'unidade/detalhe',
+            element: <Navigate to="../../unidade/detalhe" replace />,
+          },
+          {
+            path: 'atendimento',
+            element: <Navigate to="../../unidade/atendimento" replace />,
+          },
+          {
+            path: 'salao-comandas',
+            element: <Navigate to="../../unidade/salao-comandas" replace />,
+          },
+          {
+            path: 'horarios',
+            element: <Navigate to="../../unidade/detalhe/horarios" replace />,
+          },
+          {
+            path: 'entrega',
+            element: <Navigate to="../../unidade/entrega" replace />,
+          },
+          {
+            path: 'contato',
+            element: <Navigate to="../../unidade/contato" replace />,
+          },
+        ],
+      },
+      {
+        path: 'unidades',
+        element: <Navigate to="../unidade/unidades" replace />,
+      },
+      {
+        path: 'unidades/detalhe',
+        element: <Navigate to="../unidade/detalhe" replace />,
+      },
+      {
+        path: 'unidades/nova',
+        element: <Navigate to="../unidade/nova" replace />,
+      },
+      {
+        path: 'personalizar',
+        element: <Navigate to="../unidade/personalizar" replace />,
       },
     ],
   },

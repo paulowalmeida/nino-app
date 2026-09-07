@@ -3,11 +3,12 @@ import { useState } from 'react'
 import { Box } from '@nino/ds/components/Box'
 import { Button } from '@nino/ds/components/Button'
 import { Heading } from '@nino/ds/components/Heading'
+import { ListRow } from '@nino/ds/components/ListRow'
 import { Switch } from '@nino/ds/components/Switch'
 import { Text } from '@nino/ds/components/Text'
 import { TimePicker } from '@nino/ds/components/TimePicker'
-import { WEEK_SCHEDULE_DAYS } from '@pages/Settings/constants/settings.constants'
-import { WeekScheduleSkeleton } from '@pages/Settings/skeletons/WeekScheduleSkeleton/WeekScheduleSkeleton'
+import { WEEK_SCHEDULE_DAYS } from '@pages/Units/constants/unit.constants'
+import { WeekScheduleSkeleton } from '@pages/Units/skeletons/WeekScheduleSkeleton/WeekScheduleSkeleton'
 import type { HoursDraft } from '@shared/types/settings/hours-draft'
 import type { OpeningHours } from '@shared/types/settings/opening-hours'
 import { riseDelay } from '@shared/utils/rise-delay/rise-delay'
@@ -99,10 +100,14 @@ export const WeekSchedule = ({
       </Box>
 
       <Box className={local.body}>
-        <ul className={local.week}>
+        <Box as="ul" className={local.week}>
           {week.map((entry, index) => (
-            <li
+            <ListRow
               key={entry.dayOfWeek}
+              divider="none"
+              gap={3}
+              padding={2}
+              wrap
               className={`${motion.deal} ${local.day} ${
                 entry.isOpen ? '' : local.closed
               }`}
@@ -141,9 +146,9 @@ export const WeekSchedule = ({
                   }
                 />
               </Box>
-            </li>
+            </ListRow>
           ))}
-        </ul>
+        </Box>
 
         <Button
           loading={isSaving}

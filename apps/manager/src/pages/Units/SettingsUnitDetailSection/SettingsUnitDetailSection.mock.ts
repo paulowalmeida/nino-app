@@ -1,1 +1,3 @@
-export const settingsUnitDetailSectionMock = { tenantName: 'Loja principal' }
+export const settingsUnitDetailSectionMock = {
+  tenant: { tenantName: 'Loja principal' },
+}

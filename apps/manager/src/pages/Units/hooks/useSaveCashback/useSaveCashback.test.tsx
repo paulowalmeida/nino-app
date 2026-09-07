@@ -1,0 +1,60 @@
+import type { ReactNode } from 'react'
+
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import { renderHook, waitFor } from '@testing-library/react'
+import { beforeEach, describe, expect, it, vi } from 'vitest'
+
+import { queryKeys } from '@shared/lib/query-keys'
+import { SettingsService } from '@shared/services/settings/settings.service'
+
+import { useSaveCashback } from './useSaveCashback'
+import { savedSettingsMock, tenantIdMock } from './useSaveCashback.mock'
+
+vi.mock('@shared/services/settings/settings.service')
+
+let client: QueryClient
+
+const wrapper = ({ children }: { children: ReactNode }) => (
+  <QueryClientProvider client={client}>{children}</QueryClientProvider>
+)
+
+describe(useSaveCashback.name, () => {
+  beforeEach(() => {
+    vi.clearAllMocks()
+    client = new QueryClient({
+      defaultOptions: { queries: { retry: false }, mutations: { retry: false } },
+    })
+  })
+
+  it('writes the saved settings straight into the cache of that unit', async () => {
+    // Arrange
+    vi.mocked(SettingsService.saveSettings).mockResolvedValue(savedSettingsMock)
+    const { result } = renderHook(() => useSaveCashback(tenantIdMock), {
+      wrapper,
+    })
+
+    // Act
+    result.current.mutate(savedSettingsMock)
+
+    // Assert
+    await waitFor(() => expect(result.current.isSuccess).toBe(true))
+    expect(client.getQueryData(queryKeys.tenant.settings(tenantIdMock))).toEqual(
+      savedSettingsMock
+    )
+  })
+
+  it('caches under the empty key when no unit is open', async () => {
+    // Arrange
+    vi.mocked(SettingsService.saveSettings).mockResolvedValue(savedSettingsMock)
+    const { result } = renderHook(() => useSaveCashback(null), { wrapper })
+
+    // Act
+    result.current.mutate(savedSettingsMock)
+
+    // Assert
+    await waitFor(() => expect(result.current.isSuccess).toBe(true))
+    expect(client.getQueryData(queryKeys.tenant.settings(''))).toEqual(
+      savedSettingsMock
+    )
+  })
+})

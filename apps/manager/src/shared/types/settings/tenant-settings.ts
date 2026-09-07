@@ -11,4 +11,8 @@ export type TenantSettings = {
   preparationMinutes: number
   deliveryMinutes: number
   acceptedPaymentMethods: PaymentMethod[]
+  cashbackEnabled: boolean
+  cashbackPercent: number
+  cashbackMinRedeem: number
+  cashbackExpiresInDays: number | null
 }

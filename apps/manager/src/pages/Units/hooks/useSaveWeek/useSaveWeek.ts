@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 
-import { OpeningHoursService } from '@pages/Settings/services/opening-hours/opening-hours.service'
 import { hoursKey } from '@shared/hooks/settings/useOpeningHours/useOpeningHours'
+import { OpeningHoursService } from '@shared/services/opening-hours/opening-hours.service'
 import type { HoursDraft } from '@shared/types/settings/hours-draft'
 
 /**

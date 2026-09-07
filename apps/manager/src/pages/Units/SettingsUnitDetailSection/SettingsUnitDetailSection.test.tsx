@@ -2,29 +2,38 @@ import { render, screen } from '@testing-library/react'
 import { describe, expect, it, vi } from 'vitest'
 
 import { SettingsUnitDetailSection } from './SettingsUnitDetailSection'
+import { settingsUnitDetailSectionMock } from './SettingsUnitDetailSection.mock'
+
+let tenant: { tenantName: string } | null = settingsUnitDetailSectionMock.tenant
+
 vi.mock(
-  '../facades/useSettingsUnitDetailFacade/useSettingsUnitDetailFacade',
+  '@pages/Units/facades/useUnitDetailShellFacade/useUnitDetailShellFacade',
   () => ({
-    useSettingsUnitDetailFacade: () => ({
-      tenant: { tenantName: 'Loja principal' },
-      location: { states: {}, municipalities: {} },
-      units: {
-        detail: { data: undefined, isPending: false },
-        save: { mutate: vi.fn(), isPending: false },
-        setMain: { mutate: vi.fn(), isPending: false },
-      },
-    }),
+    useUnitDetailShellFacade: () => ({ tenant }),
   })
 )
 vi.mock('@shared/components/Breadcrumb/Breadcrumb', () => ({
   Breadcrumb: () => <div>breadcrumb</div>,
 }))
-vi.mock('./UnitCard/UnitCard', () => ({
-  UnitCard: () => <div>unit detail</div>,
+vi.mock('./UnitDetailTabs/UnitDetailTabs', () => ({
+  UnitDetailTabs: () => <div>unit tabs</div>,
 }))
+
 describe(SettingsUnitDetailSection.name, () => {
-  it('renders unit detail settings', () => {
+  it('frames the unit with its trail and tabs', () => {
     render(<SettingsUnitDetailSection />)
-    expect(screen.getByText('unit detail')).toBeInTheDocument()
+
+    expect(screen.getByText('breadcrumb')).toBeInTheDocument()
+    expect(screen.getByText('unit tabs')).toBeInTheDocument()
+  })
+
+  it('still frames the screen before the unit is known', () => {
+    tenant = null
+
+    render(<SettingsUnitDetailSection />)
+
+    expect(screen.getByText('unit tabs')).toBeInTheDocument()
+
+    tenant = settingsUnitDetailSectionMock.tenant
   })
 })

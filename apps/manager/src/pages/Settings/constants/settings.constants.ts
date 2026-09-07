@@ -1,16 +1,6 @@
 import type { PaymentMethod } from '@shared/types/order/payment-method'
 import type { ServiceRulesDraft } from '@shared/types/settings/service-rules-draft'
 
-export const WEEK_SCHEDULE_DAYS = [
-  'Domingo',
-  'Segunda',
-  'Terça',
-  'Quarta',
-  'Quinta',
-  'Sexta',
-  'Sábado',
-]
-
 export const SERVICE_RULES_CHANNELS: {
   key: 'isDeliveryEnabled' | 'isPickupEnabled' | 'isCounterEnabled'
   label: string

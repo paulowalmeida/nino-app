@@ -1,4 +1,5 @@
 import type { BrandTheme } from '@pages/Units/types/BrandTheme.type'
+import type { CashbackDraft } from '@shared/types/settings/cashback-draft'
 import type { UnitDraft } from '@shared/types/store/unit-draft'
 
 export const UNIT_TIMEZONES = [
@@ -105,4 +106,26 @@ export const BRAND_THEMES: BrandTheme[] = [
       mutedTextColor: '#8A6C78',
     },
   },
+]
+
+export const EMPTY_CASHBACK_DRAFT: CashbackDraft = {
+  cashbackEnabled: false,
+  cashbackPercent: '0',
+  cashbackMinRedeem: '0,00',
+}
+
+export const UNIT_DETAIL_TABS = [
+  { value: 'info', label: 'Informações', segment: '' },
+  { value: 'hours', label: 'Horários', segment: 'horarios' },
+  { value: 'cashback', label: 'Cashback', segment: 'cashback' },
+] as const
+
+export const WEEK_SCHEDULE_DAYS = [
+  'Domingo',
+  'Segunda',
+  'Terça',
+  'Quarta',
+  'Quinta',
+  'Sexta',
+  'Sábado',
 ]

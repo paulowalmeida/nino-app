@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react'
 import { describe, expect, it } from 'vitest'
 
-import { WEEK_SCHEDULE_DAYS } from '@pages/Settings/constants/settings.constants'
+import { WEEK_SCHEDULE_DAYS } from '@pages/Units/constants/unit.constants'
 
 import { WeekScheduleSkeleton } from './WeekScheduleSkeleton'
 import { weekScheduleSkeletonMock } from './WeekScheduleSkeleton.mock'

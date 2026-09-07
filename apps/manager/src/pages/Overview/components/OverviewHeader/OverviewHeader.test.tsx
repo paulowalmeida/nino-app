@@ -24,7 +24,7 @@ describe('OverviewHeader', () => {
     expect(screen.getByText('store sign')).toBeInTheDocument()
     expect(screen.getByRole('link', { name: /Ver a loja/ })).toHaveAttribute(
       'href',
-      'https://minha-loja.dev.nino.delivery'
+      'http://localhost:3002/minha-loja'
     )
   })
 

@@ -9,9 +9,10 @@ const FLOW_SCROLL_ROUTES = [
   '/atendimento',
   '/salao-comandas',
   '/entrega',
-  '/unidade/detalhe',
-  '/unidades/detalhe',
+  '/detalhe',
   '/horarios',
+  '/cashback',
+  '/personalizar',
 ]
 
 export const Settings = () => {

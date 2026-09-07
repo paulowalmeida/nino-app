@@ -4,6 +4,7 @@ import { Icon } from '@nino/ds/components/Icon'
 import { Text } from '@nino/ds/components/Text'
 import { useOverviewFacade } from '@pages/Overview/facades/useOverviewFacade/useOverviewFacade'
 import { dateFor, greetingFor } from '@pages/Overview/utils/greeting'
+import { storeUrlFor } from '@shared/utils/store-url/store-url'
 
 import { StoreSign } from './StoreSign/StoreSign'
 
@@ -41,7 +42,7 @@ export const OverviewHeader = () => {
 
         {tenant && (
           <a
-            href={`https://${tenant.tenantSlug}.dev.nino.delivery`}
+            href={storeUrlFor(tenant.tenantSlug, window.location.hostname)}
             target="_blank"
             rel="noopener noreferrer"
             className={styles.visit}

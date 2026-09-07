@@ -29,8 +29,8 @@ export const SidebarNavigation = ({
     <ScrollArea fadeEdges className={styles.navigation}>
       <Box as="nav" direction="column" className={styles.list}>
         {groups.map(({ title, items }) => (
-          <Box key={title} gap={0.5} className={styles.section}>
-            {!isCollapsed && (
+          <Box key={title ?? 'home'} gap={0.5} className={styles.section}>
+            {!isCollapsed && title && (
               <Text as="p" className={styles.sectionTitle}>
                 {title}
               </Text>

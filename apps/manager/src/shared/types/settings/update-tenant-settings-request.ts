@@ -11,4 +11,7 @@ export type UpdateTenantSettingsRequest = {
   preparationMinutes: number
   deliveryMinutes: number
   acceptedPaymentMethods: PaymentMethod[]
+  cashbackEnabled?: boolean
+  cashbackPercent?: number
+  cashbackMinRedeem?: number
 }

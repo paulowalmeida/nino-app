@@ -39,10 +39,7 @@ vi.mock('@pages/Settings/hooks/usePhones/usePhones', () => ({
 vi.mock('@pages/Settings/hooks/useSaveSettings/useSaveSettings', () => ({
   useSaveSettings: hook,
 }))
-vi.mock('@pages/Settings/hooks/useSaveWeek/useSaveWeek', () => ({
-  useSaveWeek: hook,
-}))
-vi.mock('@pages/Settings/hooks/useSettings/useSettings', () => ({
+vi.mock('@shared/hooks/settings/useSettings/useSettings', () => ({
   useSettings: hook,
 }))
 vi.mock('@pages/Settings/hooks/useZoneMutations/useZoneMutations', () => ({

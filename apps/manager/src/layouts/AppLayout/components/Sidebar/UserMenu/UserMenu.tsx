@@ -66,24 +66,18 @@ export const UserMenu = ({
                   onSelect: () => go('empresa'),
                 },
                 {
-                  value: 'units',
-                  label: 'Unidades',
-                  icon: <Icon name="store" className={styles.itemIcon} />,
-                  onSelect: () => go('unidades'),
-                },
-                {
-                  value: 'personalize',
-                  label: 'Personalizar loja',
-                  icon: <Icon name="sliders" className={styles.itemIcon} />,
-                  onSelect: () => go('personalizar'),
+                  value: 'subscription',
+                  label: 'Assinatura e plano',
+                  icon: <Icon name="receipt" className={styles.itemIcon} />,
+                  onSelect: () => go('assinatura'),
                 },
               ]
             : []),
           {
-            value: 'subscription',
-            label: 'Assinatura e plano',
-            icon: <Icon name="receipt" className={styles.itemIcon} />,
-            onSelect: () => go('assinatura'),
+            value: 'stores',
+            label: 'Trocar de loja',
+            icon: <Icon name="store" className={styles.itemIcon} />,
+            onSelect: () => void navigate('/lojas'),
           },
         ]}
       />
