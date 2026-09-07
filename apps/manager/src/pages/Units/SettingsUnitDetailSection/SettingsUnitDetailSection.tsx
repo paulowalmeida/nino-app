@@ -12,7 +12,7 @@ export const SettingsUnitDetailSection = () => {
     <Box className={local.panel}>
       <Breadcrumb
         trail={[
-          { label: 'Unidades', to: '..' },
+          { label: 'Unidades', to: '../unidades' },
           { label: tenant?.tenantName ?? 'Unidade' },
         ]}
       />

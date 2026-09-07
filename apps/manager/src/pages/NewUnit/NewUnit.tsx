@@ -15,7 +15,7 @@ export const NewUnit = () => {
       <Breadcrumb
         trail={[
           { label: 'Empresa', to: '../../empresa' },
-          { label: 'Unidades', to: '../../unidades' },
+          { label: 'Unidades', to: '../../unidade/unidades' },
           { label: 'Nova unidade' },
         ]}
       />
