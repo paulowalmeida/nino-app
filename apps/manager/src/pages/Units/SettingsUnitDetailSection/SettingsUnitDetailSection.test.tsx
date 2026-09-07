@@ -39,7 +39,7 @@ describe(SettingsUnitDetailSection.name, () => {
 
     expect(screen.getByText('Unidades')).toHaveAttribute(
       'data-to',
-      '../unidades'
+      '../../empresa/unidades'
     )
   })
 

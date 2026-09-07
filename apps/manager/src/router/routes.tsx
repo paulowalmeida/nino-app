@@ -236,6 +236,57 @@ export const router = createBrowserRouter([
           ),
       },
       {
+        path: 'perfil',
+        lazy: () =>
+          import('@pages/Profile/Profile').then(({ Profile }) => ({
+            Component: Profile,
+          })),
+      },
+      {
+        path: 'assinatura',
+        loader: roleGuard(['TENANT_OWNER']),
+        lazy: () =>
+          import('@pages/Subscription/Subscription').then(
+            ({ Subscription }) => ({ Component: Subscription })
+          ),
+      },
+      {
+        path: 'empresa',
+        element: <Navigate to="informacoes" replace />,
+      },
+      {
+        path: 'empresa/informacoes',
+        loader: roleGuard(['TENANT_OWNER']),
+        lazy: () =>
+          import('@pages/Company/Company').then(({ Company }) => ({
+            Component: Company,
+          })),
+      },
+      {
+        path: 'empresa/unidades',
+        loader: roleGuard(MANAGERS),
+        lazy: () =>
+          import('@pages/Units/SettingsUnitSection/SettingsUnitSection').then(
+            ({ SettingsUnitSection }) => ({ Component: SettingsUnitSection })
+          ),
+      },
+      {
+        path: 'empresa/unidades/nova',
+        loader: roleGuard(['TENANT_OWNER']),
+        lazy: () =>
+          import('@pages/NewUnit/NewUnit').then(({ NewUnit }) => ({
+            Component: NewUnit,
+          })),
+      },
+      {
+        path: 'empresa/personalizar',
+        loader: roleGuard(['TENANT_OWNER']),
+        lazy: () =>
+          import('@pages/Units/Personalize/Personalize').then(
+            ({ Personalize }) => ({ Component: Personalize })
+          ),
+      },
+      {
         path: 'unidade',
         loader: roleGuard(MANAGERS),
         lazy: () =>
@@ -308,29 +359,12 @@ export const router = createBrowserRouter([
               ),
           },
           {
-            path: 'personalizar',
-            loader: roleGuard(['TENANT_OWNER']),
-            lazy: () =>
-              import('@pages/Units/Personalize/Personalize').then(
-                ({ Personalize }) => ({ Component: Personalize })
-              ),
-          },
-          {
             path: 'unidades',
-            lazy: () =>
-              import('@pages/Units/SettingsUnitSection/SettingsUnitSection').then(
-                ({ SettingsUnitSection }) => ({
-                  Component: SettingsUnitSection,
-                })
-              ),
+            element: <Navigate to="../empresa/unidades" replace />,
           },
           {
             path: 'nova',
-            loader: roleGuard(['TENANT_OWNER']),
-            lazy: () =>
-              import('@pages/NewUnit/NewUnit').then(({ NewUnit }) => ({
-                Component: NewUnit,
-              })),
+            element: <Navigate to="../../empresa/unidades/nova" replace />,
           },
         ],
       },
@@ -340,7 +374,7 @@ export const router = createBrowserRouter([
           { index: true, element: <Navigate to="../unidade" replace /> },
           {
             path: 'unidade',
-            element: <Navigate to="../../unidade/unidades" replace />,
+            element: <Navigate to="../../empresa/unidades" replace />,
           },
           {
             path: 'unidade/detalhe',
@@ -370,7 +404,7 @@ export const router = createBrowserRouter([
       },
       {
         path: 'unidades',
-        element: <Navigate to="../unidade/unidades" replace />,
+        element: <Navigate to="../empresa/unidades" replace />,
       },
       {
         path: 'unidades/detalhe',
@@ -378,11 +412,11 @@ export const router = createBrowserRouter([
       },
       {
         path: 'unidades/nova',
-        element: <Navigate to="../unidade/nova" replace />,
+        element: <Navigate to="../empresa/unidades/nova" replace />,
       },
       {
         path: 'personalizar',
-        element: <Navigate to="../unidade/personalizar" replace />,
+        element: <Navigate to="../empresa/personalizar" replace />,
       },
     ],
   },

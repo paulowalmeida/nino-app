@@ -113,19 +113,19 @@ export const SIDEMENU_GROUPS: SidemenuItem[] = [
     title: 'Empresa',
     items: [
       {
-        section: 'empresa',
+        section: 'empresa/informacoes',
         label: 'Informações',
         icon: 'building',
         roles: ['TENANT_OWNER'],
       },
       {
-        section: 'unidade/unidades',
+        section: 'empresa/unidades',
         label: 'Unidades',
         icon: 'store',
         roles: MANAGERS,
       },
       {
-        section: 'unidade/personalizar',
+        section: 'empresa/personalizar',
         label: 'Personalizar',
         icon: 'sliders',
         roles: ['TENANT_OWNER'],

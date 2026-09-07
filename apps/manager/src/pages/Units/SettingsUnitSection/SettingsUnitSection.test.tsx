@@ -124,7 +124,7 @@ describe(SettingsUnitSection.name, () => {
 
     expect(screen.getByRole('link', { name: 'Loja principal' })).toHaveAttribute(
       'href',
-      'informacoes'
+      '/tenant-1/unidade/informacoes'
     )
     expect(screen.getByRole('link', { name: 'Loja Centro' })).toHaveAttribute(
       'href',

@@ -19,6 +19,6 @@ export const tenantStepMock = {
   nameLabel: 'Nome da unidade',
   slugLabel: 'Endereço público',
   backLabel: 'Voltar',
-  submitLabel: 'Criar conta e unidade',
+  submitLabel: 'Concluir',
   failureMessage: 'Não foi possível concluir. Tente de novo.',
 }

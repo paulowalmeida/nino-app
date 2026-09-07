@@ -109,7 +109,7 @@ export const TenantStep = () => {
               loading={isSubmitting}
               loadingIndicator="dots"
             >
-              Criar conta e unidade
+              Concluir
             </Button>
           </Box>
         </RiseIn>
