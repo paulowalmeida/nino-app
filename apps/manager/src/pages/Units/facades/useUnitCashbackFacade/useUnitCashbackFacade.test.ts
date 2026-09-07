@@ -6,17 +6,23 @@ import { unitCashbackFacadeMock } from './useUnitCashbackFacade.mock'
 
 let tenant: { tenantId: string } | null = { tenantId: unitCashbackFacadeMock.tenantId }
 
+const settingsSpy = vi.fn()
+const saveCashbackSpy = vi.fn()
+
 vi.mock('@shared/hooks/session/useCurrentTenant/useCurrentTenant', () => ({
   useCurrentTenant: () => tenant,
 }))
 vi.mock('@shared/hooks/settings/useSettings/useSettings', () => ({
-  useSettings: (tenantId: string | null) => ({
-    tenantId,
-    data: unitCashbackFacadeMock.settings,
-  }),
+  useSettings: (tenantId: string | null) => {
+    settingsSpy(tenantId)
+    return { data: unitCashbackFacadeMock.settings }
+  },
 }))
 vi.mock('@pages/Units/hooks/useSaveCashback/useSaveCashback', () => ({
-  useSaveCashback: (tenantId: string | null) => ({ tenantId }),
+  useSaveCashback: (tenantId: string | null) => {
+    saveCashbackSpy(tenantId)
+    return { mutate: vi.fn(), isPending: false }
+  },
 }))
 
 describe(useUnitCashbackFacade.name, () => {
@@ -24,15 +30,16 @@ describe(useUnitCashbackFacade.name, () => {
     const { result } = renderHook(() => useUnitCashbackFacade())
 
     expect(result.current.query.data).toEqual(unitCashbackFacadeMock.settings)
-    expect(result.current.save.tenantId).toBe(unitCashbackFacadeMock.tenantId)
+    expect(saveCashbackSpy).toHaveBeenCalledWith(unitCashbackFacadeMock.tenantId)
   })
 
   it('asks for nothing while no unit is open', () => {
     tenant = null
 
-    const { result } = renderHook(() => useUnitCashbackFacade())
+    renderHook(() => useUnitCashbackFacade())
 
-    expect(result.current.save.tenantId).toBeNull()
+    expect(settingsSpy).toHaveBeenCalledWith(null)
+    expect(saveCashbackSpy).toHaveBeenCalledWith(null)
 
     tenant = { tenantId: unitCashbackFacadeMock.tenantId }
   })

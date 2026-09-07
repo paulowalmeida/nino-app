@@ -83,7 +83,9 @@ describe(useUnitsDomain.name, () => {
   })
 
   it('drops the session and leaves once the store is closed', async () => {
-    vi.mocked(TenantService.removeTenant).mockResolvedValue(undefined)
+    vi.mocked(TenantService.removeTenant).mockResolvedValue({
+      message: 'Loja fechada',
+    })
     const clear = vi.fn()
     vi.spyOn(useSessionStore, 'getState').mockReturnValue({
       clear,

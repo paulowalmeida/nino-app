@@ -2,6 +2,8 @@ import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 
+import type { TenantSettings } from '@shared/types/settings/tenant-settings'
+
 import { CashbackRules } from './CashbackRules'
 import {
   cashbackRulesOffMock,
@@ -10,7 +12,10 @@ import {
 
 const onSave = vi.fn()
 
-const renderRules = (settings = cashbackRulesSettingsMock, isPending = false) =>
+const renderRules = (
+  settings: TenantSettings = cashbackRulesSettingsMock,
+  isPending = false
+) =>
   render(
     <CashbackRules
       settings={settings}
