@@ -1,6 +1,13 @@
 import { describe, expect, it } from 'vitest'
 
-import { maskCnpj, maskCpf, maskPhone, maskZipCode, onlyDigits } from './masks'
+import {
+  maskCnpj,
+  maskCpf,
+  maskPhone,
+  maskTime,
+  maskZipCode,
+  onlyDigits,
+} from './masks'
 
 describe('masks', () => {
   it('onlyDigits strips every symbol a mask may have added', () => {
@@ -94,11 +101,31 @@ describe('masks', () => {
     expect(maskCnpj('123456780001999999')).toBe('12.345.678/0001-99')
   })
 
+  it('maskTime inserts the colon once the third digit arrives', () => {
+    // Arrange / Act / Assert
+    expect(maskTime('1')).toBe('1')
+    expect(maskTime('14')).toBe('14')
+    expect(maskTime('143')).toBe('14:3')
+    expect(maskTime('1430')).toBe('14:30')
+  })
+
+  it('maskTime caps at 4 digits', () => {
+    // Arrange / Act / Assert
+    expect(maskTime('14309999')).toBe('14:30')
+  })
+
+  it('maskTime ignores what the person typed that is not a digit', () => {
+    // Arrange / Act / Assert
+    expect(maskTime('14:30')).toBe('14:30')
+    expect(maskTime('abc')).toBe('')
+  })
+
   it('every mask returns an empty string for an empty value', () => {
     // Arrange / Act / Assert
     expect(maskPhone('')).toBe('')
     expect(maskCpf('')).toBe('')
     expect(maskZipCode('')).toBe('')
     expect(maskCnpj('')).toBe('')
+    expect(maskTime('')).toBe('')
   })
 })

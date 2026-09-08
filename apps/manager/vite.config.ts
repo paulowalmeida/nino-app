@@ -7,6 +7,11 @@ const API = 'https://api-dev.nino.delivery'
 
 export default defineConfig({
   plugins: [react(), tailwindcss()],
+  /* O design system aponta diretamente para TypeScript do workspace. Se ele
+   * for pré-otimizado, o dev server mantém uma cópia em cache e ignora HMR. */
+  optimizeDeps: {
+    exclude: ['@nino/ds'],
+  },
   /**
    * O nome gerado carrega o arquivo de origem (`Alert-module__title___a1b2c`)
    * em vez de só a classe: no DevTools o hash sozinho não diz de qual

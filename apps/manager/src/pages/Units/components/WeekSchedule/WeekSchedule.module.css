@@ -28,7 +28,7 @@
 }
 
 .closed {
-  @apply opacity-dim;
+  @apply select-none opacity-dim;
 }
 
 .dayName {

@@ -2,7 +2,7 @@
 
 .searchField {
   @apply w-full rounded-2 border bg-surface-raised text-fg-strong;
-  @apply disabled:pointer-events-none state-disabled;
+  @apply disabled:pointer-events-none disabled:select-none state-disabled;
   @apply placeholder:text-fg-faint;
   @apply transition-field outline-none;
   @apply border-input-border;
@@ -12,6 +12,12 @@
 
 .control {
   @apply relative;
+  @apply data-[disabled]:select-none;
+}
+
+.control[data-disabled]::after {
+  content: '';
+  @apply absolute inset-0 z-10 cursor-default select-none;
 }
 
 .loadingInput {

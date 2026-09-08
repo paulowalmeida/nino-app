@@ -130,6 +130,7 @@ export const WeekSchedule = ({
                   size="sm"
                   className={local.timeInput}
                   ariaLabel={`Abre ${WEEK_SCHEDULE_DAYS[entry.dayOfWeek]}`}
+                  disabled={!entry.isOpen}
                   value={entry.openTime}
                   onValueChange={(openTime) =>
                     change(entry.dayOfWeek, { openTime })
@@ -140,6 +141,7 @@ export const WeekSchedule = ({
                   size="sm"
                   className={local.timeInput}
                   ariaLabel={`Fecha ${WEEK_SCHEDULE_DAYS[entry.dayOfWeek]}`}
+                  disabled={!entry.isOpen}
                   value={entry.closeTime}
                   onValueChange={(closeTime) =>
                     change(entry.dayOfWeek, { closeTime })

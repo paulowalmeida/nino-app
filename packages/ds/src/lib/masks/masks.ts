@@ -38,6 +38,12 @@ export const maskZipCode = (value: string): string =>
     .slice(0, 8)
     .replace(/(\d{5})(\d)/, '$1-$2')
 
+/** 00:00 — hours then minutes, colon inserted once the third digit arrives. */
+export const maskTime = (value: string): string =>
+  onlyDigits(value)
+    .slice(0, 4)
+    .replace(/(\d{2})(\d{1,2})$/, '$1:$2')
+
 /** 00.000.000/0000-00 */
 export const maskCnpj = (value: string): string =>
   onlyDigits(value)

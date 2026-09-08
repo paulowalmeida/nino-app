@@ -58,14 +58,21 @@ describe(TimePicker.name, () => {
     const user = userEvent.setup({ delay: 5 })
     render(<TimePicker />)
     await user.type(screen.getByRole('combobox'), 'a1b:c2!!!zz')
-    expect(screen.getByRole('combobox')).toHaveValue('1:2')
+    expect(screen.getByRole('combobox')).toHaveValue('12')
+  })
+
+  it('masks the typed digits as HH:mm automatically', async () => {
+    const user = userEvent.setup({ delay: 5 })
+    render(<TimePicker />)
+    await user.type(screen.getByRole('combobox'), '1430')
+    expect(screen.getByRole('combobox')).toHaveValue('14:30')
   })
 
   it('caps the typed search at 4 digits, not a 5th raw digit', async () => {
     const user = userEvent.setup({ delay: 5 })
     render(<TimePicker />)
     await user.type(screen.getByRole('combobox'), '0123456789')
-    expect(screen.getByRole('combobox')).toHaveValue('0123')
+    expect(screen.getByRole('combobox')).toHaveValue('01:23')
   })
 
   it('accepts a single colon among the 4 digits', async () => {
@@ -80,5 +87,47 @@ describe(TimePicker.name, () => {
     render(<TimePicker />)
     await user.type(screen.getByRole('combobox'), '01::23')
     expect(screen.getByRole('combobox')).toHaveValue('01:23')
+  })
+
+  it('replaces a pre-filled value when typing starts over it', async () => {
+    const user = userEvent.setup({ delay: 5 })
+    render(<TimePicker value="00:00" />)
+    const input = screen.getByRole('combobox')
+    await user.click(input)
+    await user.keyboard('1430')
+    expect(input).toHaveValue('14:30')
+  })
+
+  it('commits a full typed time on blur, no option click', async () => {
+    // Arrange
+    const user = userEvent.setup({ delay: 5 })
+    const onValueChange = vi.fn()
+    render(<TimePicker value="07:00" onValueChange={onValueChange} />)
+    const input = screen.getByRole('combobox')
+
+    // Act
+    await user.click(input)
+    await user.keyboard('0000')
+    await user.tab()
+
+    // Assert
+    expect(onValueChange).toHaveBeenCalledWith('00:00')
+  })
+
+  it('reverts an incomplete typed time on blur', async () => {
+    // Arrange
+    const user = userEvent.setup({ delay: 5 })
+    const onValueChange = vi.fn()
+    render(<TimePicker value="07:00" onValueChange={onValueChange} />)
+    const input = screen.getByRole('combobox')
+
+    // Act
+    await user.click(input)
+    await user.keyboard('08')
+    await user.tab()
+
+    // Assert
+    expect(onValueChange).not.toHaveBeenCalled()
+    expect(input).toHaveValue('07:00')
   })
 })

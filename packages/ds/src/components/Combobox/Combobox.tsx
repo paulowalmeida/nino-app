@@ -6,8 +6,8 @@ import {
 } from '@ark-ui/react/combobox'
 import { Portal } from '@ark-ui/react/portal'
 import { mergeClasses } from '@ds/lib/mergeClasses/mergeClasses'
-import { Spinner } from '../Spinner/Spinner'
 
+import { Spinner } from '../Spinner/Spinner'
 import styles from './Combobox.module.css'
 import { ComboboxSize } from './Combobox.types'
 
@@ -100,7 +100,7 @@ export function Combobox({
   const [query, setQuery] = useState('')
 
   const handleKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
-    if (!isValidQuery || event.key.length !== 1) return
+    if (event.key.length !== 1) return
 
     const input = event.currentTarget
     const nextValue =
@@ -108,7 +108,7 @@ export function Combobox({
       event.key +
       input.value.slice(input.selectionEnd ?? input.value.length)
 
-    if (!isValidQuery(nextValue)) event.preventDefault()
+    if (isValidQuery && !isValidQuery(nextValue)) event.preventDefault()
   }
 
   const filtered = useMemo(
@@ -126,20 +126,38 @@ export function Combobox({
     [filtered]
   )
 
+  /* Ark rastreia `value` por identidade: um array recriado a cada render
+   * parece "mudar" mesmo com o mesmo conteúdo, e isso faz o Ark reverter o
+   * texto digitado de volta para o item selecionado. */
+  const selectedValue = useMemo(
+    () => (value !== undefined ? [value] : undefined),
+    [value]
+  )
+  const initialValue = useMemo(
+    () => (defaultValue !== undefined ? [defaultValue] : undefined),
+    [defaultValue]
+  )
+
   return (
     <ArkCombobox.Root
       collection={collection}
       disabled={disabled}
-      value={value !== undefined ? [value] : undefined}
+      value={selectedValue}
       inputValue={inputValue}
-      defaultValue={defaultValue !== undefined ? [defaultValue] : undefined}
+      defaultValue={initialValue}
       onValueChange={({ value: values }) => onValueChange?.(values[0])}
       onInputValueChange={({ inputValue }) => {
         setQuery(inputValue)
         onInputValueChange?.(inputValue)
       }}
     >
-      <ArkCombobox.Control className={styles.control}>
+      <ArkCombobox.Control
+        className={styles.control}
+        data-disabled={disabled || undefined}
+        onMouseDownCapture={
+          disabled ? (event) => event.preventDefault() : undefined
+        }
+      >
         <ArkCombobox.Input
           ref={ref}
           placeholder={placeholder}
