@@ -38,6 +38,7 @@ export const useMenu = (tenantId: string | null) => {
     queryKey: menuQueryKey(tenantId),
     queryFn: () => ProductService.listMenu(tenantId as string),
     enabled: !!tenantId,
+    refetchOnMount: false,
   })
 
   const sections = useMemo(() => toSections(query.data), [query.data])
