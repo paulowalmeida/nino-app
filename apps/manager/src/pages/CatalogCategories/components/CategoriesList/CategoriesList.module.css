@@ -3,3 +3,27 @@
 .body {
   @apply [&_tr:last-child]:border-0;
 }
+
+.list {
+  @apply min-h-0 flex-1;
+}
+
+.list > div {
+  @apply h-full min-h-0;
+  overflow-y: auto;
+}
+
+.headRow > th {
+  @apply border-b border-border bg-surface-raised;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+.dragHead {
+  @apply w-10 pl-4 pr-1 lg:pl-10;
+}
+
+.actionsHead {
+  @apply w-12 pl-3 pr-4 lg:pr-10;
+}

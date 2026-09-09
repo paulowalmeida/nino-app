@@ -17,21 +17,31 @@ export const CatalogCategories = () => {
 
   return (
     <Box className={styles.page}>
-      <CategoriesHeader />
+      <Box className={styles.headerRegion}>
+        <CategoriesHeader />
+      </Box>
 
-      {isPending && <CategoryRowsSkeleton />}
+      {isPending && (
+        <Box className={styles.feedback}>
+          <CategoryRowsSkeleton />
+        </Box>
+      )}
 
       {isError && (
-        <Alert variant="error">
-          Não foi possível carregar as categorias. Recarregue a página.
-        </Alert>
+        <Box className={styles.feedback}>
+          <Alert variant="error">
+            Não foi possível carregar as categorias. Recarregue a página.
+          </Alert>
+        </Box>
       )}
 
       {isEmpty && (
-        <EmptyState className={motion.unroll}>
-          Nenhuma categoria ainda. Crie a primeira acima — depois cadastre itens
-          dentro dela.
-        </EmptyState>
+        <Box className={styles.feedback}>
+          <EmptyState className={motion.unroll}>
+            Nenhuma categoria ainda. Crie a primeira acima — depois cadastre
+            itens dentro dela.
+          </EmptyState>
+        </Box>
       )}
 
       {!isPending && !isError && !isEmpty && <CategoriesList />}

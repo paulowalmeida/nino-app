@@ -2,6 +2,7 @@ import { useRef } from 'react'
 
 import { Reorder } from 'framer-motion'
 
+import { Box } from '@nino/ds/components/Box'
 import {
   Table,
   TableHead,
@@ -25,41 +26,43 @@ export const CategoriesList = () => {
   const latestOrder = useRef(order)
 
   return (
-    <Table>
-      <TableHeader>
-        <TableRow>
-          <TableHead>
-            <span className="sr-only">Reordenar</span>
-          </TableHead>
-          <TableHead>Categoria</TableHead>
-          <TableHead>
-            <span className="sr-only">Ações</span>
-          </TableHead>
-        </TableRow>
-      </TableHeader>
+    <Box className={styles.list}>
+      <Table>
+        <TableHeader>
+          <TableRow className={styles.headRow}>
+            <TableHead className={styles.dragHead}>
+              <span className="sr-only">Reordenar</span>
+            </TableHead>
+            <TableHead>Categoria</TableHead>
+            <TableHead className={styles.actionsHead}>
+              <span className="sr-only">Ações</span>
+            </TableHead>
+          </TableRow>
+        </TableHeader>
 
-      <Reorder.Group
-        as="tbody"
-        axis="y"
-        values={order}
-        onReorder={(nextOrder) => {
-          latestOrder.current = nextOrder
-          setOrder(nextOrder)
-        }}
-        onDragEnd={() => persistOrder(latestOrder.current)}
-        className={styles.body}
-      >
-        {order.map((category, index) => (
-          <CategoryRow
-            key={category.id}
-            category={category}
-            index={index}
-            disabled={isDeleting}
-            onEdit={() => requestEdit(category)}
-            onDelete={() => requestDelete(category)}
-          />
-        ))}
-      </Reorder.Group>
-    </Table>
+        <Reorder.Group
+          as="tbody"
+          axis="y"
+          values={order}
+          onReorder={(nextOrder) => {
+            latestOrder.current = nextOrder
+            setOrder(nextOrder)
+          }}
+          onDragEnd={() => persistOrder(latestOrder.current)}
+          className={styles.body}
+        >
+          {order.map((category, index) => (
+            <CategoryRow
+              key={category.id}
+              category={category}
+              index={index}
+              disabled={isDeleting}
+              onEdit={() => requestEdit(category)}
+              onDelete={() => requestDelete(category)}
+            />
+          ))}
+        </Reorder.Group>
+      </Table>
+    </Box>
   )
 }

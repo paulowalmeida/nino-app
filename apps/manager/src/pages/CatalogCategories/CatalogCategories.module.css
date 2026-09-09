@@ -1,12 +1,16 @@
 @reference "@nino/ds/globals.css";
 
 .page {
-  @apply relative max-w-3xl p-4 lg:p-10;
+  @apply relative flex h-[calc(100dvh-3.5rem)] min-h-0 flex-col overflow-hidden;
+  @apply lg:h-dvh;
 }
 
-/* O conteúdo já é estreito; em 4K só o centraliza no canvas disponível. */
-@media (min-width: 2560px) {
-  .page {
-    @apply mx-auto max-w-[96rem];
-  }
+.headerRegion {
+  @apply shrink-0 px-4 pt-4;
+  @apply lg:px-10 lg:pt-10;
+}
+
+.feedback {
+  @apply min-h-0 flex-1 overflow-y-auto px-4 pb-4;
+  @apply lg:px-10 lg:pb-10;
 }
