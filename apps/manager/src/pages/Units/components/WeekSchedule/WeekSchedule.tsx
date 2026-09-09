@@ -113,40 +113,42 @@ export const WeekSchedule = ({
               }`}
               style={riseDelay(index * 45 + 60)}
             >
-              <Switch
-                checked={entry.isOpen}
-                onCheckedChange={(checked) =>
-                  change(entry.dayOfWeek, { isOpen: checked })
-                }
-                aria-label={WEEK_SCHEDULE_DAYS[entry.dayOfWeek]}
-              />
-
-              <Text className={local.dayName}>
-                {WEEK_SCHEDULE_DAYS[entry.dayOfWeek]}
-              </Text>
-
-              <Box className={local.times}>
-                <TimePicker
-                  size="sm"
-                  className={local.timeInput}
-                  ariaLabel={`Abre ${WEEK_SCHEDULE_DAYS[entry.dayOfWeek]}`}
-                  disabled={!entry.isOpen}
-                  value={entry.openTime}
-                  onValueChange={(openTime) =>
-                    change(entry.dayOfWeek, { openTime })
+              <Box direction='row'>
+                <Switch
+                  checked={entry.isOpen}
+                  onCheckedChange={(checked) =>
+                    change(entry.dayOfWeek, { isOpen: checked })
                   }
+                  aria-label={WEEK_SCHEDULE_DAYS[entry.dayOfWeek]}
                 />
-                <Text className={local.until}>às</Text>
-                <TimePicker
-                  size="sm"
-                  className={local.timeInput}
-                  ariaLabel={`Fecha ${WEEK_SCHEDULE_DAYS[entry.dayOfWeek]}`}
-                  disabled={!entry.isOpen}
-                  value={entry.closeTime}
-                  onValueChange={(closeTime) =>
-                    change(entry.dayOfWeek, { closeTime })
-                  }
-                />
+
+                <Text className={local.dayName}>
+                  {WEEK_SCHEDULE_DAYS[entry.dayOfWeek]}
+                </Text>
+
+                <Box className={local.times}>
+                  <TimePicker
+                    size="sm"
+                    className={local.timeInput}
+                    ariaLabel={`Abre ${WEEK_SCHEDULE_DAYS[entry.dayOfWeek]}`}
+                    disabled={!entry.isOpen}
+                    value={entry.openTime}
+                    onValueChange={(openTime) =>
+                      change(entry.dayOfWeek, { openTime })
+                    }
+                  />
+                  <Text className={local.until}>às</Text>
+                  <TimePicker
+                    size="sm"
+                    className={local.timeInput}
+                    ariaLabel={`Fecha ${WEEK_SCHEDULE_DAYS[entry.dayOfWeek]}`}
+                    disabled={!entry.isOpen}
+                    value={entry.closeTime}
+                    onValueChange={(closeTime) =>
+                      change(entry.dayOfWeek, { closeTime })
+                    }
+                  />
+                </Box>
               </Box>
             </ListRow>
           ))}

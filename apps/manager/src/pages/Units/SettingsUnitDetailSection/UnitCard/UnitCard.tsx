@@ -7,14 +7,10 @@ import { FieldHint } from '@nino/ds/components/FieldHint'
 import { FormField } from '@nino/ds/components/FormField'
 import { Heading } from '@nino/ds/components/Heading'
 import { Input } from '@nino/ds/components/Input'
-import { Select } from '@nino/ds/components/Select'
 import { Tabs } from '@nino/ds/components/Tabs'
 import { Text } from '@nino/ds/components/Text'
 import { toUnitDraft } from '@pages/Units/adapters/toUnitDraft/toUnitDraft'
-import {
-  EMPTY_UNIT_DRAFT,
-  UNIT_TIMEZONES,
-} from '@pages/Units/constants/unit.constants'
+import { EMPTY_UNIT_DRAFT } from '@pages/Units/constants/unit.constants'
 import type { useDeliveryLocation } from '@pages/Units/hooks/useDeliveryLocation/useDeliveryLocation'
 import { UnitCardSkeleton } from '@pages/Units/skeletons/UnitCardSkeleton/UnitCardSkeleton'
 import { AddressFields } from '@shared/components/AddressFields/AddressFields'
@@ -139,25 +135,6 @@ export const UnitCard = ({
                     }
                   >
                     <Input value={unit?.slug ?? ''} disabled readOnly />
-                  </FormField>
-
-                  <FormField
-                    label={
-                      <FieldHint
-                        label="Fuso horário"
-                        hint={
-                          'Define a virada do dia e ' +
-                          'o horário de funcionamento'
-                        }
-                      />
-                    }
-                  >
-                    <Select
-                      options={UNIT_TIMEZONES}
-                      value={draft.timezone}
-                      aria-label="Fuso horário da unidade"
-                      onValueChange={(timezone) => change({ timezone })}
-                    />
                   </FormField>
                 </Box>
 

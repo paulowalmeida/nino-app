@@ -42,4 +42,25 @@ describe(ProductCard.name, () => {
     expect(onPreviewEnd).toHaveBeenCalledOnce()
     vi.useRealTimers()
   })
+
+  it('does not open the preview when the pointer drags to scroll', () => {
+    vi.useFakeTimers()
+    const onPreviewStart = vi.fn()
+    render(
+      <ProductCard
+        item={item}
+        index={0}
+        onPick={vi.fn()}
+        onPreviewStart={onPreviewStart}
+        onPreviewEnd={vi.fn()}
+      />
+    )
+    const card = screen.getByText('Café').closest('div') as Element
+    fireEvent.pointerDown(card, { clientX: 0, clientY: 0 })
+    fireEvent.pointerMove(card, { clientX: 40, clientY: 0 })
+    act(() => vi.advanceTimersByTime(450))
+    fireEvent.pointerUp(card)
+    expect(onPreviewStart).not.toHaveBeenCalled()
+    vi.useRealTimers()
+  })
 })

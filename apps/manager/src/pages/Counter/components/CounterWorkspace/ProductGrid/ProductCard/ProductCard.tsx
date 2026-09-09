@@ -15,6 +15,8 @@ import { riseDelay } from '@shared/utils/rise-delay/rise-delay'
 import motion from '@styles/motion.module.css'
 import styles from './ProductCard.module.css'
 
+const LONG_PRESS_MOVE_TOLERANCE_PX = 10
+
 const useProductCardLongPress = ({
   onLongPress,
   onRelease,
@@ -23,6 +25,7 @@ const useProductCardLongPress = ({
   onRelease?: () => void
 }) => {
   const timer = useRef<ReturnType<typeof setTimeout> | null>(null)
+  const origin = useRef<{ x: number; y: number } | null>(null)
   const [isPressing, setPressing] = useState(false)
 
   useEffect(() => {
@@ -31,20 +34,46 @@ const useProductCardLongPress = ({
     }
   }, [])
 
+  const cancelPress = () => {
+    if (timer.current) clearTimeout(timer.current)
+    timer.current = null
+    origin.current = null
+    setPressing(false)
+  }
+
   const onPointerDown = (event: React.PointerEvent) => {
     if (event.button !== 0) return
+    origin.current = { x: event.clientX, y: event.clientY }
     setPressing(true)
     timer.current = setTimeout(() => onLongPress(), 450)
   }
 
+  const onPointerMove = (event: React.PointerEvent) => {
+    if (!origin.current) return
+    const movedX = Math.abs(event.clientX - origin.current.x)
+    const movedY = Math.abs(event.clientY - origin.current.y)
+    if (
+      movedX > LONG_PRESS_MOVE_TOLERANCE_PX ||
+      movedY > LONG_PRESS_MOVE_TOLERANCE_PX
+    ) {
+      cancelPress()
+    }
+  }
+
   const onPointerUp = () => {
-    if (timer.current) clearTimeout(timer.current)
-    timer.current = null
-    setPressing(false)
+    cancelPress()
     onRelease?.()
   }
 
-  return { isPressing, handlers: { onPointerDown, onPointerUp } }
+  return {
+    isPressing,
+    handlers: {
+      onPointerDown,
+      onPointerMove,
+      onPointerUp,
+      onPointerCancel: onPointerUp,
+    },
+  }
 }
 
 export type ProductCardProps = {

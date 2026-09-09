@@ -6,7 +6,6 @@ import { ProfileHeader } from './components/ProfileHeader/ProfileHeader'
 import { useProfileFacade } from './facades/useProfileFacade/useProfileFacade'
 import { ProfileFieldsSkeleton } from './skeletons/ProfileFieldsSkeleton/ProfileFieldsSkeleton'
 
-import motion from '@styles/motion.module.css'
 import styles from './Profile.module.css'
 
 export const Profile = () => {
@@ -14,8 +13,6 @@ export const Profile = () => {
 
   return (
     <Box className={styles.page}>
-      <Eyebrow className={motion.deal}>Meus dados</Eyebrow>
-
       <ProfileHeader />
 
       {status === 'loading' || status === 'idle' ? (

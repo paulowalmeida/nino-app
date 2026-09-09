@@ -26,7 +26,7 @@ type ReportsPeriodControlsProps = {
 export const ReportsPeriodControls = ({ period, onPeriodChange, custom }: ReportsPeriodControlsProps) => (
   <Box direction="column" gap={4}>
     <Tabs
-      className={motion.unroll}
+      className={`${motion.unroll} ${styles.periodTabs}`}
       tabs={REPORTS_PERIODS.map(({ id, label }) => ({ value: id, label, content: null }))}
       value={period}
       onValueChange={(value) => onPeriodChange(value as PeriodChoice)}

@@ -14,7 +14,7 @@
 }
 
 .week {
-  @apply flex flex-col gap-1;
+  @apply flex flex-col gap-1 ;
 }
 
 /*
@@ -32,7 +32,7 @@
 }
 
 .dayName {
-  @apply w-24 shrink-0 text-sm font-semibold text-fg-default;
+  @apply pl-2 w-20 shrink-0 text-sm font-semibold text-fg-default;
 }
 
 .times {
@@ -40,7 +40,7 @@
 }
 
 .timeInput {
-  @apply w-24 shrink-0;
+  @apply w-16 shrink-0;
 }
 
 .until {

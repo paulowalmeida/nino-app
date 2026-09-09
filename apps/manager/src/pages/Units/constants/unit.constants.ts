@@ -2,17 +2,6 @@ import type { BrandTheme } from '@pages/Units/types/BrandTheme.type'
 import type { CashbackDraft } from '@shared/types/settings/cashback-draft'
 import type { UnitDraft } from '@shared/types/store/unit-draft'
 
-export const UNIT_TIMEZONES = [
-  { value: 'America/Sao_Paulo', label: 'Brasília (GMT-3)' },
-  { value: 'America/Belem', label: 'Belém (GMT-3)' },
-  { value: 'America/Fortaleza', label: 'Fortaleza (GMT-3)' },
-  { value: 'America/Manaus', label: 'Manaus (GMT-4)' },
-  { value: 'America/Cuiaba', label: 'Cuiabá (GMT-4)' },
-  { value: 'America/Porto_Velho', label: 'Porto Velho (GMT-4)' },
-  { value: 'America/Rio_Branco', label: 'Rio Branco (GMT-5)' },
-  { value: 'America/Noronha', label: 'Fernando de Noronha (GMT-2)' },
-]
-
 export const EMPTY_UNIT_DRAFT: UnitDraft = {
   customName: '',
   timezone: 'America/Sao_Paulo',
