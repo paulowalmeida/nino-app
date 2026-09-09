@@ -1,7 +1,6 @@
 import { Header } from '@nino/ds/components/Header'
 import { CreateCategoryForm } from '@pages/CatalogCategories/components/CategoriesHeader/CreateCategoryForm/CreateCategoryForm'
 import { CATEGORIES_DESCRIPTION } from '@pages/CatalogCategories/constants/catalog-categories.constants'
-import { BackLink } from '@shared/components/BackLink/BackLink'
 
 import motion from '@styles/motion.module.css'
 
