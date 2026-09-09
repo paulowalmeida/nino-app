@@ -1,5 +1,6 @@
 @reference "@nino/ds/globals.css";
 
 .toolbar {
-  @apply mb-2 px-2;
+  @apply mb-2 px-4;
+  @apply lg:px-10;
 }

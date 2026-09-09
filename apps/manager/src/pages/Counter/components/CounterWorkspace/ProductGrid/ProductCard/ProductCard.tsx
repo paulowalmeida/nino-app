@@ -1,7 +1,10 @@
 import { useEffect, useRef, useState } from 'react'
 
 import { Box } from '@nino/ds/components/Box'
+import { Button } from '@nino/ds/components/Button'
 import { Card } from '@nino/ds/components/Card'
+import { Icon } from '@nino/ds/components/Icon'
+import { Popover } from '@nino/ds/components/Popover'
 import { Text } from '@nino/ds/components/Text'
 import { mergeClasses } from '@nino/ds/mergeClasses'
 import { ItemThumb } from '@shared/components/ItemThumb/ItemThumb'
@@ -48,7 +51,9 @@ export type ProductCardProps = {
   item: MenuItem
   index: number
   isPicked?: boolean
+  quantity?: number
   onPick: (item: MenuItem) => void
+  onStep?: (productId: string, by: number) => void
   onPreviewStart: (item: MenuItem) => void
   onPreviewEnd: () => void
 }
@@ -57,7 +62,9 @@ export const ProductCard = ({
   item,
   index,
   isPicked = false,
+  quantity,
   onPick,
+  onStep,
   onPreviewStart,
   onPreviewEnd,
 }: ProductCardProps) => {
@@ -65,14 +72,45 @@ export const ProductCard = ({
     onLongPress: () => onPreviewStart(item),
     onRelease: onPreviewEnd,
   })
+  const quantityCloseTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
+  const [isQuantityOpen, setQuantityOpen] = useState(false)
   const imageUrl = item.images?.[0]?.url
+
+  useEffect(
+    () => () => {
+      if (quantityCloseTimer.current) clearTimeout(quantityCloseTimer.current)
+    },
+    []
+  )
+
+  const openQuantity = () => {
+    if (quantityCloseTimer.current) clearTimeout(quantityCloseTimer.current)
+    setQuantityOpen(true)
+  }
+
+  const closeQuantity = () => {
+    quantityCloseTimer.current = setTimeout(() => setQuantityOpen(false), 100)
+  }
 
   return (
     <>
       <Card
+        asChild
         variant="flat"
         padding="none"
+        role="button"
+        tabIndex={0}
+        aria-pressed={isPicked}
         onClick={() => onPick(item)}
+        onKeyDown={(event) => {
+          if (
+            event.target === event.currentTarget &&
+            (event.key === 'Enter' || event.key === ' ')
+          ) {
+            event.preventDefault()
+            onPick(item)
+          }
+        }}
         style={riseDelay(index * 25)}
         className={mergeClasses(
           motion.settle,
@@ -83,27 +121,98 @@ export const ProductCard = ({
         )}
         {...handlers}
       >
-        <ItemThumb
-          name={item.name}
-          imageUrl={imageUrl}
-          className={styles.photo}
-          wrapperClassName={styles.photoWrap}
-        />
+        <div>
+          <ItemThumb
+            name={item.name}
+            imageUrl={imageUrl}
+            className={styles.photo}
+            wrapperClassName={styles.photoWrap}
+          />
 
-        <Box className={styles.footer}>
-          <Text as="span" size="xs" weight="semibold" className={styles.name}>
-            {item.name}
-          </Text>
-          <Text
-            as="span"
-            size="sm"
-            weight="extrabold"
-            font="display"
-            className={styles.price}
-          >
-            {brl(item.price)}
-          </Text>
-        </Box>
+          <Box className={styles.footer}>
+            <Text as="span" size="xs" weight="semibold" className={styles.name}>
+              {item.name}
+            </Text>
+            <Text
+              as="span"
+              size="sm"
+              weight="extrabold"
+              font="display"
+              className={styles.price}
+            >
+              {brl(item.price)}
+            </Text>
+          </Box>
+          {isPicked && quantity !== undefined && onStep && (
+            <Box
+              className={styles.quantity}
+              onClick={(event) => event.stopPropagation()}
+              onPointerDown={(event) => event.stopPropagation()}
+              onPointerUp={(event) => event.stopPropagation()}
+              onPointerEnter={openQuantity}
+              onPointerLeave={closeQuantity}
+            >
+              <Popover
+                placement="bottom-end"
+                open={isQuantityOpen}
+                onOpenChange={setQuantityOpen}
+                onContentPointerEnter={openQuantity}
+                onContentPointerLeave={closeQuantity}
+                contentClassName={styles.quantityPanel}
+                trigger={
+                  <Button
+                    type="button"
+                    size="sm"
+                    variant="outline"
+                    className={styles.quantityBadge}
+                    aria-label={`Alterar quantidade de ${item.name}: ${quantity}`}
+                  >
+                    <span className={styles.quantityValue}>{quantity}</span>
+                  </Button>
+                }
+              >
+                <Box
+                  direction="row"
+                  align="center"
+                  className={styles.quantityStepper}
+                >
+                  <Button
+                    type="button"
+                    size="icon"
+                    variant="ghost"
+                    className={styles.removeQuantity}
+                    aria-label={`Remover todos os ${item.name} da comanda`}
+                    onClick={() => onStep(item.id, -quantity)}
+                  >
+                    <Icon name="trash" size="xs" />
+                  </Button>
+                  {quantity > 1 && (
+                    <Button
+                      type="button"
+                      size="icon"
+                      variant="ghost"
+                      className={styles.stepQuantity}
+                      aria-label={`Diminuir quantidade de ${item.name}`}
+                      onClick={() => onStep(item.id, -1)}
+                    >
+                      <Icon name="minus" size="xs" />
+                    </Button>
+                  )}
+                  <Button
+                    type="button"
+                    size="icon"
+                    variant="ghost"
+                    className={styles.stepQuantity}
+                    aria-label={`Mais um ${item.name}`}
+                    onClick={() => onStep(item.id, 1)}
+                  >
+                    <Icon name="plus" size="xs" />
+                  </Button>
+                </Box>
+              </Popover>
+            </Box>
+          )}
+        </div>
       </Card>
     </>
   )

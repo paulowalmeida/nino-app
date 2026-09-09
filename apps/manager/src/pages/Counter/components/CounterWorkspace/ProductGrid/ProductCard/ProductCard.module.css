@@ -6,7 +6,7 @@
  * borda, e a única elevação da tela é o cupom do pedido.
  */
 .card {
-  @apply flex cursor-pointer flex-col overflow-hidden rounded-3;
+  @apply relative flex cursor-pointer flex-col overflow-hidden rounded-3;
   @apply bg-surface-page text-left;
   @apply transition-colors duration-150;
   @apply select-none;
@@ -22,6 +22,10 @@
   box-shadow: 0 0 0 1px var(--color-brand);
 }
 
+.card.picked:hover {
+  box-shadow: 0 0 0 1px var(--color-brand);
+}
+
 .photoWrap {
   @apply w-full;
 }
@@ -32,6 +36,83 @@
 
 .footer {
   @apply flex flex-col gap-0.5 px-2.5 pb-2.5 pt-2;
+}
+
+.quantity {
+  @apply absolute right-2 top-2 z-10;
+}
+
+.quantity .quantityBadge {
+  @apply size-7 min-w-7 rounded-full border-0 bg-brand p-0;
+  @apply text-xs font-bold text-fg-on-brand shadow-warm-sm;
+  @apply hover:bg-brand-hover;
+}
+
+.quantityValue {
+  @apply text-center tabular-nums;
+}
+
+.quantityPanel {
+  width: max-content;
+  padding: 0.25rem;
+  border-radius: 999px;
+}
+
+.quantityPanel.quantityPanel[data-state='open'] {
+  animation: quantity-panel-unroll 180ms var(--ease-out) both;
+}
+
+.quantityPanel.quantityPanel[data-state='closed'] {
+  animation: quantity-panel-rollup 100ms var(--ease-in) both;
+}
+
+.quantityStepper {
+  @apply gap-0.5;
+}
+
+.stepQuantity,
+.removeQuantity {
+  @apply size-7 rounded-full text-fg-muted;
+  @apply transition-colors duration-150;
+}
+
+.stepQuantity {
+  @apply hover:bg-brand-soft hover:text-brand-strong;
+}
+
+.removeQuantity {
+  @apply hover:bg-danger-surface hover:text-danger;
+}
+
+@keyframes quantity-panel-unroll {
+  from {
+    clip-path: inset(0 0 0 100% round 999px);
+    transform: translateX(6px);
+  }
+
+  to {
+    clip-path: inset(0 0 0 0 round 999px);
+    transform: translateX(0);
+  }
+}
+
+@keyframes quantity-panel-rollup {
+  from {
+    clip-path: inset(0 0 0 0 round 999px);
+    transform: translateX(0);
+  }
+
+  to {
+    clip-path: inset(0 0 0 100% round 999px);
+    transform: translateX(4px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .quantityPanel.quantityPanel[data-state='open'],
+  .quantityPanel.quantityPanel[data-state='closed'] {
+    animation: none;
+  }
 }
 
 .name {

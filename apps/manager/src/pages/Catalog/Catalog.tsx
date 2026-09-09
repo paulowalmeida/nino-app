@@ -18,13 +18,23 @@ export const Catalog = () => {
 
   return (
     <Box className={styles.page}>
-      <CatalogHeader />
+      <Box className={styles.headerRegion}>
+        <CatalogHeader />
+      </Box>
 
       {isPending && <CatalogContentSkeleton />}
 
-      {isError && <CatalogLoadError />}
+      {isError && (
+        <Box className={styles.feedback}>
+          <CatalogLoadError />
+        </Box>
+      )}
 
-      {isEmpty && <MenuBoardEmptyState />}
+      {isEmpty && (
+        <Box className={styles.feedback}>
+          <MenuBoardEmptyState />
+        </Box>
+      )}
 
       {!isPending && !isError && !isEmpty && <CatalogContent />}
 

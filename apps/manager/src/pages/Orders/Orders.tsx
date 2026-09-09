@@ -7,9 +7,11 @@ import styles from '@pages/Orders/Orders.module.css'
 
 export const Orders = () => (
   <Box className={styles.page}>
-    <OrdersHeader />
-    <Box shrink={false} mb={3}>
-      <OrdersFilters />
+    <Box className={styles.controls}>
+      <OrdersHeader />
+      <Box shrink={false} mb={3}>
+        <OrdersFilters />
+      </Box>
     </Box>
     <OrdersQueue />
   </Box>

@@ -10,8 +10,13 @@
  * ficaria uma barra mais alta que a tela.
  */
 .page {
-  @apply relative flex h-[calc(100dvh-3.5rem)] flex-col p-4;
-  @apply lg:h-dvh lg:p-10;
+  @apply relative flex h-[calc(100dvh-3.5rem)] min-h-0 flex-col overflow-hidden;
+  @apply lg:h-dvh;
+}
+
+.controls {
+  @apply shrink-0 px-4 pt-4;
+  @apply lg:px-10 lg:pt-10;
 }
 
 /* Em 4K, concentra a fila e seus controles em vez de esticá-los pelo painel. */

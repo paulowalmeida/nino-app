@@ -18,7 +18,13 @@ import { ProductPreviewModal } from './ProductPreviewModal/ProductPreviewModal'
 import styles from './ProductGrid.module.css'
 
 export const ProductGrid = () => {
-  const { sections, isPending, lines, add: onPick } = useCounterFacade()
+  const {
+    sections,
+    isPending,
+    lines,
+    add: onPick,
+    updateQuantity: onStep,
+  } = useCounterFacade()
   const [current, setCurrent] = useState<string | null>(null)
   const [previewedItem, setPreviewedItem] = useState<MenuItem | null>(null)
   const [term, setTerm] = useState('')
@@ -33,6 +39,9 @@ export const ProductGrid = () => {
     .filter(({ isActive }) => isActive)
 
   const pickedIds = new Set(lines.map(({ productId }) => productId))
+  const quantities = new Map(
+    lines.map(({ productId, quantity }) => [productId, quantity])
+  )
 
   const renderGrid = (items: MenuItem[]) => (
     <Box className={`${styles.grid} ${styles.resultsTop}`}>
@@ -42,7 +51,9 @@ export const ProductGrid = () => {
           item={item}
           index={index}
           isPicked={pickedIds.has(item.id)}
+          quantity={quantities.get(item.id)}
           onPick={onPick}
+          onStep={onStep}
           onPreviewStart={setPreviewedItem}
           onPreviewEnd={() => setPreviewedItem(null)}
         />
@@ -53,12 +64,14 @@ export const ProductGrid = () => {
   if (isPending) {
     return (
       <Box className={styles.wrap}>
-        <Skeleton className={styles.skeletonSearch} />
+        <Box className={styles.controls}>
+          <Skeleton className={styles.skeletonSearch} />
 
-        <Box direction="row" className={styles.skeletonTabsRow}>
-          {PRODUCT_GRID_SKELETON_TABS.map((tab) => (
-            <Skeleton key={tab} className={styles.skeletonTab} />
-          ))}
+          <Box direction="row" className={styles.skeletonTabsRow}>
+            {PRODUCT_GRID_SKELETON_TABS.map((tab) => (
+              <Skeleton key={tab} className={styles.skeletonTab} />
+            ))}
+          </Box>
         </Box>
 
         <Box className={styles.grid}>
@@ -78,45 +91,50 @@ export const ProductGrid = () => {
 
   if (sections.length === 0) {
     return (
-      <EmptyState>
-        O cardápio está vazio. Cadastre itens no gestor para vender aqui.
-      </EmptyState>
+      <Box className={styles.feedback}>
+        <EmptyState>
+          O cardápio está vazio. Cadastre itens no gestor para vender aqui.
+        </EmptyState>
+      </Box>
     )
   }
 
   return (
     <Box className={styles.wrap}>
-      <Input
-        value={term}
-        onChange={(event) => setTerm(event.target.value)}
-        placeholder="Buscar no cardápio…"
-        aria-label="Buscar no cardápio"
-        className={styles.search}
-      />
+      <Box className={styles.controls}>
+        <Input
+          value={term}
+          onChange={(event) => setTerm(event.target.value)}
+          placeholder="Buscar no cardápio…"
+          aria-label="Buscar no cardápio"
+          className={styles.search}
+        />
 
-      {searching &&
-        (searchResults.length === 0 ? (
-          <EmptyState>Nenhum item com esse nome no cardápio.</EmptyState>
-        ) : (
-          renderGrid(searchResults)
-        ))}
-
-      {!searching && (
-        <>
+        {!searching && (
           <CategoryChips
             categories={sections}
             value={active}
             onChange={setCurrent}
             allowAll={false}
           />
+        )}
+      </Box>
 
-          {renderGrid(
-            sections
-              .find(({ id }) => id === active)
-              ?.items.filter(({ isActive }) => isActive) ?? []
-          )}
-        </>
-      )}
+      {searching &&
+        (searchResults.length === 0 ? (
+          <Box className={styles.feedback}>
+            <EmptyState>Nenhum item com esse nome no cardápio.</EmptyState>
+          </Box>
+        ) : (
+          renderGrid(searchResults)
+        ))}
+
+      {!searching &&
+        renderGrid(
+          sections
+            .find(({ id }) => id === active)
+            ?.items.filter(({ isActive }) => isActive) ?? []
+        )}
 
       <ProductPreviewModal
         item={previewedItem}

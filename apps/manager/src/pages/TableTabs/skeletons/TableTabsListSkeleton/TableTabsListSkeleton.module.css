@@ -1,7 +1,7 @@
 @reference "@nino/ds/globals.css";
 
 .list {
-  @apply grid gap-4 sm:grid-cols-2 xl:grid-cols-3;
+  @apply grid gap-4 pr-1.5 sm:grid-cols-2 xl:grid-cols-3;
 }
 
 .card {

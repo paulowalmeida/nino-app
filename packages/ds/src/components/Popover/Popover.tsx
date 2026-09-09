@@ -3,6 +3,8 @@ import { ReactNode } from 'react'
 import { Popover as ArkPopover } from '@ark-ui/react/popover'
 import { Portal } from '@ark-ui/react/portal'
 
+import { mergeClasses } from '@ds/lib/mergeClasses/mergeClasses'
+
 import styles from './Popover.module.css'
 
 type PopoverPlacement =
@@ -36,6 +38,10 @@ type PopoverProps = {
   /** Controlled state. Leave it out to let the component keep its own */
   open?: boolean
   onOpenChange?: (open: boolean) => void
+  /** Local visual adjustment for a compact, purpose-built popover. */
+  contentClassName?: string
+  onContentPointerEnter?: () => void
+  onContentPointerLeave?: () => void
 }
 
 /**
@@ -59,6 +65,9 @@ export function Popover({
   placement = 'bottom',
   open,
   onOpenChange,
+  contentClassName,
+  onContentPointerEnter,
+  onContentPointerLeave,
 }: PopoverProps) {
   return (
     <ArkPopover.Root
@@ -71,7 +80,11 @@ export function Popover({
       <ArkPopover.Trigger asChild>{trigger}</ArkPopover.Trigger>
       <Portal>
         <ArkPopover.Positioner>
-          <ArkPopover.Content className={styles.panel}>
+          <ArkPopover.Content
+            className={mergeClasses(styles.panel, contentClassName)}
+            onPointerEnter={onContentPointerEnter}
+            onPointerLeave={onContentPointerLeave}
+          >
             <ArkPopover.Arrow className={styles.arrow}>
               <ArkPopover.ArrowTip />
             </ArkPopover.Arrow>

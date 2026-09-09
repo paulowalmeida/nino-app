@@ -35,22 +35,28 @@ export const OrdersQueue = () => {
 
   if (isPending) {
     return (
-      <ul className={styles.board}>
-        {ORDERS_LOADING_TICKETS.map((ticket) => (
-          <li key={ticket}>
-            <OrderTicketSkeleton />
-          </li>
-        ))}
-      </ul>
+      <Box className={styles.scrollArea}>
+        <Box as="ul" className={styles.board}>
+          {ORDERS_LOADING_TICKETS.map((ticket) => (
+            <li key={ticket}>
+              <OrderTicketSkeleton />
+            </li>
+          ))}
+        </Box>
+      </Box>
     )
   }
 
   if (isError) {
     return (
-      <Alert variant="error">
-        Não foi possível carregar os pedidos. Recarregue a página para tentar de
-        novo.
-      </Alert>
+      <Box className={styles.scrollArea}>
+        <Box className={styles.feedback}>
+          <Alert variant="error">
+            Não foi possível carregar os pedidos. Recarregue a página para
+            tentar de novo.
+          </Alert>
+        </Box>
+      </Box>
     )
   }
 
@@ -59,14 +65,20 @@ export const OrdersQueue = () => {
       ? `Nenhum pedido encontrado para "${search}".`
       : (ORDERS_STAGES.find(({ id }) => id === stage)?.empty ?? '')
 
-    return <EmptyState size="md">{empty}</EmptyState>
+    return (
+      <Box className={styles.scrollArea}>
+        <Box className={styles.feedback}>
+          <EmptyState size="md">{empty}</EmptyState>
+        </Box>
+      </Box>
+    )
   }
 
   const handleAdvance = (orderId: string, target: OrderStatusKey) =>
     advanceOrder({ orderId, status: target })
 
   return (
-    <>
+    <Box className={styles.scrollArea}>
       <Box as="ul" className={styles.board}>
         {orders.map((order, index) => (
           <li
@@ -92,6 +104,6 @@ export const OrdersQueue = () => {
           )}
         </div>
       )}
-    </>
+    </Box>
   )
 }

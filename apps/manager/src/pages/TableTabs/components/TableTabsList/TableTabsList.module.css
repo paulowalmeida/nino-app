@@ -1,7 +1,18 @@
 @reference "@nino/ds/globals.css";
 
 .page {
-  @apply flex min-h-full flex-col gap-5 p-4 lg:gap-7 lg:p-10;
+  @apply flex h-[calc(100dvh-3.5rem)] min-h-0 flex-col overflow-hidden;
+  @apply lg:h-dvh;
+}
+
+.controls {
+  @apply flex shrink-0 flex-col gap-5 px-4 pt-4;
+  @apply lg:gap-7 lg:px-10 lg:pt-10;
+}
+
+.scrollArea {
+  @apply min-h-0 flex-1 overflow-y-auto px-4 pb-4 pt-5;
+  @apply lg:px-10 lg:pb-10 lg:pt-7;
 }
 
 /* Em painéis 4K, evita que a leitura fique espalhada pela área inteira do app. */
@@ -12,7 +23,7 @@
 }
 
 .list {
-  @apply grid gap-4 sm:grid-cols-2 xl:grid-cols-3;
+  @apply grid gap-4 pr-1.5 sm:grid-cols-2 xl:grid-cols-3;
 }
 
 .tabs {
@@ -35,7 +46,8 @@
   .card:hover {
     box-shadow:
       0 0 0 1px color-mix(in srgb, var(--color-brand) 45%, transparent),
-      0 8px 20px -12px color-mix(in srgb, var(--color-warm-950) 20%, transparent);
+      0 8px 20px -12px
+        color-mix(in srgb, var(--color-warm-950) 20%, transparent);
     transform: translateY(-2px);
   }
 }

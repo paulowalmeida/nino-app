@@ -1,6 +1,11 @@
 @reference "@nino/ds/globals.css";
 
 .page {
-  @apply mx-auto min-h-dvh w-full max-w-page p-4;
-  @apply lg:h-dvh lg:p-10;
+  @apply mx-auto flex min-h-dvh w-full max-w-page flex-col overflow-hidden;
+  @apply lg:h-dvh lg:min-h-0;
+}
+
+.headerRegion {
+  @apply shrink-0 px-4 pt-4;
+  @apply lg:px-10 lg:pt-10;
 }

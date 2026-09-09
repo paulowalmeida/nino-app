@@ -13,41 +13,45 @@ import { CashSkeleton } from './skeletons/CashSkeleton/CashSkeleton'
 import styles from './Cash.module.css'
 
 export const Cash = () => {
-  const { session, isLoadingSession, isSessionError, isToday } =
-    useCashFacade()
+  const { session, isLoadingSession, isSessionError, isToday } = useCashFacade()
 
   if (isLoadingSession) return <CashSkeleton />
 
   if (isSessionError) {
     return (
       <Box className={styles.page}>
-        <Alert variant="error">
-          Não deu para carregar o caixa. Tente de novo em instantes.
-        </Alert>
+        <Box className={styles.controls}>
+          <Alert variant="error">
+            Não deu para carregar o caixa. Tente de novo em instantes.
+          </Alert>
+        </Box>
       </Box>
     )
   }
 
   return (
     <Box direction="column" className={styles.page}>
-      <CashDateSelector />
+      <Box className={styles.controls}>
+        <CashDateSelector />
 
-      {!session && isToday && <CashOpen />}
+        {!session && isToday && <CashOpen />}
 
-      {!session && !isToday && (
-        <EmptyState size="md" title="Nenhum caixa nesse dia">
-          Ninguém abriu o caixa nessa data. Escolha outro dia para ver o
-          balanço.
-        </EmptyState>
-      )}
+        {!session && !isToday && (
+          <EmptyState size="md" title="Nenhum caixa nesse dia">
+            Ninguém abriu o caixa nessa data. Escolha outro dia para ver o
+            balanço.
+          </EmptyState>
+        )}
 
-      {session && (
-        <>
-          <CashSummary session={session} />
-          {isToday && <CashActions expectedAmount={session.expectedAmount} />}
-          <CashMovements movements={session.movements} />
-        </>
-      )}
+        {session && (
+          <>
+            <CashSummary session={session} />
+            {isToday && <CashActions expectedAmount={session.expectedAmount} />}
+          </>
+        )}
+      </Box>
+
+      {session && <CashMovements movements={session.movements} />}
     </Box>
   )
 }

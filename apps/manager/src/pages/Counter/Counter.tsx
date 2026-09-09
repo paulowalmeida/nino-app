@@ -7,7 +7,9 @@ import styles from './Counter.module.css'
 export const Counter = () => {
   return (
     <Box className={styles.page}>
-      <CounterHeader />
+      <Box className={styles.headerRegion}>
+        <CounterHeader />
+      </Box>
 
       <CounterWorkspace />
     </Box>

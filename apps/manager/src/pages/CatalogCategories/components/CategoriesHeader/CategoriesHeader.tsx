@@ -8,8 +8,6 @@ import motion from '@styles/motion.module.css'
 export const CategoriesHeader = () => {
   return (
     <>
-      <BackLink>Cardápio</BackLink>
-
       <Header
         mb={{ mobile: 5, desktop: 8 }}
         mt={2}

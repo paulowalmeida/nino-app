@@ -14,17 +14,20 @@ describe(CategoryChips.name, () => {
     expect(onChange).toHaveBeenCalledWith('drinks')
   })
 
-  it('keeps chip presses out of the drag-scroll handler', () => {
+  it('starts drag scrolling when the pointer is over a chip', () => {
     render(
       <CategoryChips {...categoryChipsMock} value={null} onChange={vi.fn()} />
     )
     const track = screen.getByRole('tablist')
-    const onTrackPointerDown = vi.fn()
-    track.addEventListener('pointerdown', onTrackPointerDown)
+    const chip = screen.getByRole('tab', { name: 'Bebidas' })
 
-    fireEvent.pointerDown(screen.getByRole('tab', { name: 'Bebidas' }))
+    fireEvent.pointerDown(chip, { pointerId: 1, clientX: 200 })
+    fireEvent.pointerMove(track, { pointerId: 1, clientX: 150 })
+    fireEvent.pointerUp(track, { pointerId: 1, clientX: 150 })
+    const click = fireEvent.click(chip)
 
-    expect(onTrackPointerDown).not.toHaveBeenCalled()
+    expect(track.scrollLeft).toBe(50)
+    expect(click).toBe(false)
   })
 
   it('renders loading placeholders and all option', () => {

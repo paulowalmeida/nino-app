@@ -1,13 +1,86 @@
 @reference "@nino/ds/globals.css";
 
 .movements {
-  @apply gap-2 rounded-4 border border-border bg-surface-raised p-5;
+  @apply min-h-0 flex-1;
 }
 
-.row {
-  @apply gap-3 border-b border-border/60 py-2 last:border-b-0;
+.head {
+  @apply mx-4 shrink-0 border-b border-border/60 pb-3 pt-5;
+  @apply lg:mx-10 lg:pt-7;
 }
 
-.what {
-  @apply gap-0.5;
+.title {
+  @apply text-xs font-bold uppercase tracking-[0.12em];
+}
+
+.tableShell {
+  @apply mx-4 min-h-0 flex-1;
+  @apply lg:mx-10;
+}
+
+.tableShell > div {
+  @apply h-full min-h-0;
+  overflow-y: auto;
+}
+
+.headRow > th {
+  @apply border-b border-border bg-surface-raised;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+.colTime {
+  width: 6rem;
+}
+
+.colKind {
+  width: 12rem;
+}
+
+.colReason {
+  width: auto;
+}
+
+.colAmount {
+  width: 9rem;
+}
+
+.right,
+.amount {
+  @apply whitespace-nowrap text-right;
+}
+
+.headRow > th.right {
+  @apply text-right;
+}
+
+.time {
+  @apply whitespace-nowrap text-sm font-semibold text-fg-faint;
+  font-variant-numeric: tabular-nums;
+}
+
+.kind {
+  @apply whitespace-nowrap text-sm font-semibold text-fg-strong;
+}
+
+.reason {
+  @apply max-w-0 truncate text-sm text-fg-muted;
+}
+
+.amount {
+  @apply text-sm font-bold;
+  font-variant-numeric: tabular-nums;
+}
+
+.deposit {
+  @apply text-brand-strong;
+}
+
+.withdrawal {
+  @apply text-danger;
+}
+
+.empty {
+  @apply px-4 pt-4 lg:px-10;
 }

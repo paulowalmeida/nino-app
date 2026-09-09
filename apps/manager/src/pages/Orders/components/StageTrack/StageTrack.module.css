@@ -1,8 +1,10 @@
 @reference "@nino/ds/globals.css";
 
 .track {
-  @apply relative flex snap-x gap-2 overflow-x-auto pb-1;
+  @apply relative flex w-full min-w-0 cursor-grab gap-2 overflow-x-auto pb-1;
+  @apply active:cursor-grabbing;
   scrollbar-width: none;
+  touch-action: pan-y;
 }
 
 .track::-webkit-scrollbar {
@@ -10,7 +12,7 @@
 }
 
 .stage {
-  @apply min-h-11 snap-start;
+  @apply min-h-11 shrink-0;
 }
 
 .icon {

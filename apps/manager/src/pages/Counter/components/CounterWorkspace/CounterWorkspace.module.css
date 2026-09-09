@@ -1,7 +1,7 @@
 @reference "@nino/ds/globals.css";
 
 .floor {
-  @apply flex-1 gap-4 pb-24;
+  @apply flex min-h-0 flex-1 flex-col gap-4 overflow-hidden pb-24;
   @apply lg:min-h-0 lg:pb-0;
 }
 
@@ -35,7 +35,7 @@
 }
 
 .menu {
-  @apply min-w-0 lg:min-h-0;
+  @apply flex min-w-0 flex-1 flex-col lg:min-h-0;
   container-type: inline-size;
 }
 

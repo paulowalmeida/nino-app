@@ -15,6 +15,10 @@
   @apply border-brand bg-brand-soft;
 }
 
+.choice.selected:hover {
+  @apply border-brand bg-brand-soft;
+}
+
 .icon {
   @apply text-xl leading-none lg:text-[26px];
 }

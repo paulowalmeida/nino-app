@@ -5,15 +5,17 @@
 }
 
 .tally {
-  @apply mb-2 h-3 w-24 shrink-0 lg:h-3.5 lg:w-32;
+  @apply mb-2 ml-4 h-3 w-24 shrink-0;
+  @apply lg:ml-10 lg:h-3.5 lg:w-32;
 }
 
 .scroll {
-  @apply min-h-0 flex-1;
+  @apply min-h-0 flex-1 overflow-y-auto;
 }
 
 .list {
-  @apply overflow-hidden;
+  @apply overflow-hidden px-4 pb-4;
+  @apply lg:px-10 lg:pb-10;
 }
 
 .thumb {

@@ -27,6 +27,7 @@ export const useHorizontalDragScroll = <T extends HTMLElement>() => {
 
     let isDragging = false
     let dragged = false
+    let pointerCaptured = false
     let startX = 0
     let startScrollLeft = 0
 
@@ -34,9 +35,9 @@ export const useHorizontalDragScroll = <T extends HTMLElement>() => {
       if (event.pointerType === 'touch') return
       isDragging = true
       dragged = false
+      pointerCaptured = false
       startX = event.clientX
       startScrollLeft = track.scrollLeft
-      track.setPointerCapture?.(event.pointerId)
       /* WHY: scroll-snap disputa a posição a cada frame do arrasto e trava
        * o movimento; volta a valer quando o dedo/mouse solta. */
       track.style.scrollSnapType = 'none'
@@ -45,12 +46,21 @@ export const useHorizontalDragScroll = <T extends HTMLElement>() => {
     const handlePointerMove = (event: PointerEvent) => {
       if (!isDragging) return
       const delta = event.clientX - startX
-      if (Math.abs(delta) > DRAG_THRESHOLD_PX) dragged = true
+      if (Math.abs(delta) > DRAG_THRESHOLD_PX && !dragged) {
+        dragged = true
+        track.setPointerCapture?.(event.pointerId)
+        pointerCaptured = true
+      }
+      if (!dragged) return
       track.scrollLeft = startScrollLeft - delta
     }
 
-    const endDrag = () => {
+    const endDrag = (event: PointerEvent) => {
+      if (pointerCaptured && track.hasPointerCapture?.(event.pointerId)) {
+        track.releasePointerCapture?.(event.pointerId)
+      }
       isDragging = false
+      pointerCaptured = false
       track.style.scrollSnapType = ''
     }
 
