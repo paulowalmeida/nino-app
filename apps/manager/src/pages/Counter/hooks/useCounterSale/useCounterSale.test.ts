@@ -11,7 +11,7 @@ vi.mock('@shared/hooks/order/useCreateOrder/useCreateOrder', () => ({
 }))
 
 describe(useCounterSale.name, () => {
-  it('requires a customer name', async () => {
+  it('requires a consumer name', async () => {
     vi.mocked(useCreateOrder).mockReturnValue({
       mutateAsync: vi.fn(),
       isPending: false,
@@ -21,7 +21,7 @@ describe(useCounterSale.name, () => {
       result.current.sell({
         lines: [],
         paymentMethod: 'CASH',
-        customerName: '',
+        consumerName: '',
         tableNumber: '',
       })
     )
@@ -39,7 +39,7 @@ describe(useCounterSale.name, () => {
       result.current.sell({
         lines: [],
         paymentMethod: 'CASH',
-        customerName: 'Ana',
+        consumerName: 'Ana',
         tableNumber: '',
       })
     )
@@ -59,7 +59,7 @@ describe(useCounterSale.name, () => {
         lines: [],
         channel: 'DELIVERY',
         paymentMethod: 'PIX',
-        customerName: '',
+        consumerName: '',
         tableNumber: '',
         recipient: {
           name: 'Ana',
@@ -93,7 +93,7 @@ describe(useCounterSale.name, () => {
       result.current.sell({
         lines: [],
         paymentMethod: 'CASH',
-        customerName: 'Ana',
+        consumerName: 'Ana',
         tableNumber: '',
       })
     )
@@ -115,7 +115,7 @@ describe(useCounterSale.name, () => {
       result.current.sell({
         lines: [],
         paymentMethod: 'CASH',
-        customerName: 'Ana',
+        consumerName: 'Ana',
         tableNumber: '',
       })
     )

@@ -1,7 +1,7 @@
 import { renderHook } from '@testing-library/react'
 import { describe, expect, it, vi } from 'vitest'
 
-import { useCustomerSession } from '@shared/hooks/useCustomerSession/useCustomerSession'
+import { useConsumerSession } from '@shared/hooks/useConsumerSession/useConsumerSession'
 import { useSignInBrand } from '@pages/sign-in/hooks/useSignInBrand/useSignInBrand'
 import { useSignInMutations } from '@pages/sign-in/hooks/useSignInMutations/useSignInMutations'
 import { useSignInStore } from '@pages/sign-in/states/sign-in/sign-in.store'
@@ -12,7 +12,7 @@ import { useSignInFacadeMock } from './useSignInFacade.mock'
 vi.mock('@pages/sign-in/hooks/useSignInBrand/useSignInBrand')
 vi.mock('@pages/sign-in/hooks/useSignInMutations/useSignInMutations')
 vi.mock('@pages/sign-in/states/sign-in/sign-in.store')
-vi.mock('@shared/hooks/useCustomerSession/useCustomerSession')
+vi.mock('@shared/hooks/useConsumerSession/useConsumerSession')
 
 describe('useSignInFacade', () => {
   it('exposes the brand, client-state fields, and mutation commands', () => {
@@ -29,10 +29,10 @@ describe('useSignInFacade', () => {
       store: useSignInFacadeMock.store,
     } as unknown as ReturnType<typeof useSignInBrand>)
 
-    vi.mocked(useCustomerSession).mockReturnValue({
-      customer: useSignInFacadeMock.customer,
+    vi.mocked(useConsumerSession).mockReturnValue({
+      consumer: useSignInFacadeMock.consumer,
       isPending: false,
-    } as unknown as ReturnType<typeof useCustomerSession>)
+    } as unknown as ReturnType<typeof useConsumerSession>)
 
     vi.mocked(useSignInStore).mockReturnValue({
       step: useSignInFacadeMock.step,
@@ -84,11 +84,11 @@ describe('useSignInFacade', () => {
         goToCompleteProfile,
         onPhoneCodeRequested: expect.any(Function),
       },
-      useSignInFacadeMock.customer
+      useSignInFacadeMock.consumer
     )
     expect(result.current.home).toBe(useSignInFacadeMock.home)
     expect(result.current.store).toBe(useSignInFacadeMock.store)
-    expect(result.current.customer).toBe(useSignInFacadeMock.customer)
+    expect(result.current.consumer).toBe(useSignInFacadeMock.consumer)
     expect(result.current.step).toBe(useSignInFacadeMock.step)
     expect(result.current.channel).toBe(useSignInFacadeMock.channel)
     expect(result.current.setChannel).toBe(setChannel)

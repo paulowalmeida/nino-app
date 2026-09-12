@@ -1,10 +1,10 @@
-import type { Customer } from '@custom_types/customer/customer'
+import type { Consumer } from '@custom_types/consumer/consumer'
 import { useProfileFacadeMock } from '@pages/Profile/facades/useProfileFacade/useProfileFacade.mock'
 
 export const accountProfilePhoneFieldMock = {
-  customerWithPhone: useProfileFacadeMock.customer,
-  customerWithoutPhone: {
-    ...useProfileFacadeMock.customer,
+  consumerWithPhone: useProfileFacadeMock.consumer,
+  consumerWithoutPhone: {
+    ...useProfileFacadeMock.consumer,
     phone: null,
-  } satisfies Customer,
+  } satisfies Consumer,
 }

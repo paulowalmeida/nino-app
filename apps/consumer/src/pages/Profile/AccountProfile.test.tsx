@@ -10,7 +10,7 @@ vi.mock('@pages/Profile/facades/useProfileFacade/useProfileFacade')
 
 const facadeWith = (overrides: Record<string, unknown>) =>
   vi.mocked(useProfileFacade).mockReturnValue({
-    customer: accountProfileMock.customer,
+    consumer: accountProfileMock.consumer,
     completeProfile: vi.fn(),
     isCompletingProfile: false,
     ...overrides,
@@ -56,7 +56,7 @@ describe('AccountProfile', () => {
 
     // Assert
     expect(completeProfile).toHaveBeenCalledWith(
-      { name: 'Maria Nova', email: accountProfileMock.customer.email },
+      { name: 'Maria Nova', email: accountProfileMock.consumer.email },
       expect.any(Object)
     )
   })

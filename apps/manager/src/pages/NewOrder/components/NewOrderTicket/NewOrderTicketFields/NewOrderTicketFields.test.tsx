@@ -108,7 +108,7 @@ describe('NewOrderTicketFields', () => {
     expect(setChannel).toHaveBeenCalledWith('DELIVERY')
   })
 
-  it('changes how the customer pays', async () => {
+  it('changes how the consumer pays', async () => {
     facadeWith('COUNTER')
 
     render(<NewOrderTicketFields />)

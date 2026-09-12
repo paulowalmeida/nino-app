@@ -5,7 +5,7 @@ import { BackLink } from '@shared/components/BackLink/BackLink'
 import styles from './OrderDetailSkeleton.module.css'
 
 const GHOST_ITEMS = ['first', 'second', 'third', 'fourth']
-const GHOST_CARDS = ['customer', 'payment', 'timeline']
+const GHOST_CARDS = ['consumer', 'payment', 'timeline']
 
 export const OrderDetailSkeleton = () => (
   <Box className={styles.page}>

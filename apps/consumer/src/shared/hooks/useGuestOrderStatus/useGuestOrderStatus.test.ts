@@ -49,7 +49,7 @@ describe('useGuestOrderStatus', () => {
     )
   })
 
-  it('loads the customer order without a tracking token when a session exists', async () => {
+  it('loads the consumer order without a tracking token when a session exists', async () => {
     vi.mocked(orderService.getMyStatus).mockResolvedValue(
       useGuestOrderStatusMock.activeOrder
     )

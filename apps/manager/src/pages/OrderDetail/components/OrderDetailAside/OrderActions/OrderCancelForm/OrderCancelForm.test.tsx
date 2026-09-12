@@ -39,7 +39,7 @@ describe('OrderCancelForm', () => {
     ).toBeDisabled()
   })
 
-  it('cancels the order with the reason the customer will read', async () => {
+  it('cancels the order with the reason the consumer will read', async () => {
     cancelOrder.mockResolvedValue(true)
 
     renderForm()

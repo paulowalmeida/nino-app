@@ -17,7 +17,7 @@ export const OrderTicketSkeleton = () => (
       </Box>
 
       <Box className={ticketStyles.body}>
-        <Skeleton className={styles.ghostCustomer} />
+        <Skeleton className={styles.ghostConsumer} />
         <Skeleton className={styles.ghostMeta} />
         <Skeleton className={styles.ghostSummary} />
 

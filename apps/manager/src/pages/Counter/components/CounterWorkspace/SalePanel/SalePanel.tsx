@@ -30,7 +30,7 @@ export const SalePanel = ({ bare = false }: { bare?: boolean }) => {
     total,
     methods,
     method,
-    customerName,
+    consumerName,
     changeFor,
     changeAmount,
     hasChange,
@@ -39,7 +39,7 @@ export const SalePanel = ({ bare = false }: { bare?: boolean }) => {
     error,
     isSending,
     handleStep,
-    setCustomerName,
+    setConsumerName,
     setChangeFor,
     setChosen,
     emptyTicket,
@@ -113,7 +113,7 @@ export const SalePanel = ({ bare = false }: { bare?: boolean }) => {
       {step === 'destination' && (
         <DestinationStep
           channel={channel}
-          customerName={customerName}
+          consumerName={consumerName}
           tableNumber={tableNumber}
           recipient={recipient}
           storeAddress={storeAddress}
@@ -121,7 +121,7 @@ export const SalePanel = ({ bare = false }: { bare?: boolean }) => {
           addressSuggestions={addressSuggestions}
           isSearchingAddress={isSearchingAddress}
           onChannel={setChannel}
-          onCustomerName={setCustomerName}
+          onConsumerName={setConsumerName}
           onTableNumber={setTableNumber}
           onRecipient={setRecipient}
         />
@@ -143,10 +143,10 @@ export const SalePanel = ({ bare = false }: { bare?: boolean }) => {
         <ReviewStep
           lines={lines}
           channel={channel}
-          customerName={
+          consumerName={
             channel === 'DELIVERY' || channel === 'PICKUP'
               ? recipient.name
-              : customerName
+              : consumerName
           }
           tableNumber={tableNumber}
           recipient={recipient}

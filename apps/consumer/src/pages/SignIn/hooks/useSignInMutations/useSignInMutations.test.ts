@@ -34,7 +34,7 @@ const renderMutations = (
     goToCompleteProfile?: (name: string) => void
     onPhoneCodeRequested?: () => void
   } = {},
-  customer: Parameters<typeof useSignInMutations>[2] = null
+  consumer: Parameters<typeof useSignInMutations>[2] = null
 ) =>
   renderHook(() =>
     useSignInMutations(
@@ -44,7 +44,7 @@ const renderMutations = (
         goToCompleteProfile: handlers.goToCompleteProfile ?? vi.fn(),
         onPhoneCodeRequested: handlers.onPhoneCodeRequested ?? vi.fn(),
       },
-      customer
+      consumer
     )
   )
 
@@ -108,7 +108,7 @@ describe('useSignInMutations', () => {
       useSignInMutationsMock.code
     )
     const [, options] = verifyMutate.mock.calls[0]
-    options.onSuccess(useSignInMutationsMock.completedCustomer)
+    options.onSuccess(useSignInMutationsMock.completedConsumer)
 
     // Assert
     expect(verifyMutate).toHaveBeenCalledWith(
@@ -134,11 +134,11 @@ describe('useSignInMutations', () => {
       useSignInMutationsMock.code
     )
     const [, options] = verifyMutate.mock.calls[0]
-    options.onSuccess(useSignInMutationsMock.incompleteCustomer)
+    options.onSuccess(useSignInMutationsMock.incompleteConsumer)
 
     // Assert
     expect(goToCompleteProfile).toHaveBeenCalledWith(
-      useSignInMutationsMock.incompleteCustomer.name
+      useSignInMutationsMock.incompleteConsumer.name
     )
     expect(navigate).not.toHaveBeenCalled()
   })
@@ -146,7 +146,7 @@ describe('useSignInMutations', () => {
   it('sends an already-completed session home without any click', () => {
     // Arrange
     // Act
-    renderMutations({}, useSignInMutationsMock.completedCustomer)
+    renderMutations({}, useSignInMutationsMock.completedConsumer)
 
     // Assert
     expect(navigate).toHaveBeenCalledWith(useSignInMutationsMock.home, {
@@ -161,12 +161,12 @@ describe('useSignInMutations', () => {
     // Act
     renderMutations(
       { goToCompleteProfile },
-      useSignInMutationsMock.incompleteCustomer
+      useSignInMutationsMock.incompleteConsumer
     )
 
     // Assert
     expect(goToCompleteProfile).toHaveBeenCalledWith(
-      useSignInMutationsMock.incompleteCustomer.name
+      useSignInMutationsMock.incompleteConsumer.name
     )
   })
 

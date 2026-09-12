@@ -46,7 +46,7 @@ const facadeWith = (overrides: Record<string, unknown>) =>
 describe('OrderActions', () => {
   beforeEach(() => vi.clearAllMocks())
 
-  it('requires the customer code and submits it to confirm pickup', async () => {
+  it('requires the consumer code and submits it to confirm pickup', async () => {
     facadeWith({
       order: { ...pendingOrderMock, channel: 'PICKUP', pickupCode: '012345' },
       nextStep: { label: 'Confirmar retirada', target: 'COMPLETED' },

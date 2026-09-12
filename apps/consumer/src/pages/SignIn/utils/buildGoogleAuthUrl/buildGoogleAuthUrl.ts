@@ -26,7 +26,7 @@ export const buildGoogleAuthUrl = (returnUrl: string): string | null => {
   const { protocol, port } = window.location
   const proxyOrigin = `${protocol}//localhost:${port}`
   const callback = new URL(
-    `${apiBaseUrl}/customer/auth/google/callback`,
+    `${apiBaseUrl}/consumer/auth/google/callback`,
     proxyOrigin
   ).toString()
 

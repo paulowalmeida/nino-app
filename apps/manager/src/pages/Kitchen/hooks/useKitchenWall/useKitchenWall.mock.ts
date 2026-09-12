@@ -6,7 +6,7 @@ const base: Order = {
   id: 'order-a',
   orderNumber: 1,
   tenantId: 'tenant-1',
-  customerId: null,
+  consumerId: null,
   status: 'PREPARING',
   channel: 'PICKUP',
   courierId: null,

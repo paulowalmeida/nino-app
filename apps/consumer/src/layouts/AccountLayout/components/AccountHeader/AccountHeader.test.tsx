@@ -11,7 +11,7 @@ vi.mock('../../facades/useAccountLayoutFacade/useAccountLayoutFacade')
 
 const facadeWith = (overrides: Record<string, unknown>) =>
   vi.mocked(useAccountLayoutFacade).mockReturnValue({
-    customer: accountHeaderMock.customer,
+    consumer: accountHeaderMock.consumer,
     ...overrides,
   } as unknown as ReturnType<typeof useAccountLayoutFacade>)
 
@@ -25,9 +25,9 @@ const renderHeader = (initialEntry = '/loja/conta/dados') =>
   )
 
 describe('AccountHeader', () => {
-  it('renders nothing when there is no customer session', () => {
+  it('renders nothing when there is no consumer session', () => {
     // Arrange
-    facadeWith({ customer: null })
+    facadeWith({ consumer: null })
 
     // Act
     const { container } = renderHeader()
@@ -36,7 +36,7 @@ describe('AccountHeader', () => {
     expect(container).toBeEmptyDOMElement()
   })
 
-  it('greets the customer by first name once the profile is complete', () => {
+  it('greets the consumer by first name once the profile is complete', () => {
     // Arrange
     facadeWith({})
 

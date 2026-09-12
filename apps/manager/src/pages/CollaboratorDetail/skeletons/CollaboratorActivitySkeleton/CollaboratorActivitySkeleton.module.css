@@ -7,7 +7,7 @@
   @apply my-0.5 h-4 w-10 rounded-1;
 }
 
-.customer {
+.consumer {
   @apply my-0.5 h-4 w-32 max-w-full rounded-1;
 }
 

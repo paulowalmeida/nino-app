@@ -12,7 +12,7 @@ import styles from './ReviewStep.module.css'
 type ReviewStepProps = {
   lines: CartLine[]
   channel: OrderChannel | null
-  customerName: string
+  consumerName: string
   tableNumber: string
   recipient: Recipient
   method: PaymentMethod | null
@@ -23,7 +23,7 @@ type ReviewStepProps = {
 export const ReviewStep = ({
   lines,
   channel,
-  customerName,
+  consumerName,
   tableNumber,
   recipient,
   method,
@@ -32,7 +32,7 @@ export const ReviewStep = ({
 }: ReviewStepProps) => {
   const printedRows = counterPrintedRows({
     channel,
-    customerName,
+    consumerName,
     tableNumber,
     recipient,
     method,

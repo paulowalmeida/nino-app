@@ -1,4 +1,4 @@
-const KEY = 'nino.customer.had-session'
+const KEY = 'nino.consumer.had-session'
 
 /**
  * Os cookies de sessão são httpOnly, então o app não distingue "nunca entrou"

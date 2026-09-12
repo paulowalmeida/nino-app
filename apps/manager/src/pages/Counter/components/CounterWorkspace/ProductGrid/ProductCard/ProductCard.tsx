@@ -121,6 +121,14 @@ export const ProductCard = ({
     quantityCloseTimer.current = setTimeout(() => setQuantityOpen(false), 100)
   }
 
+  const openQuantityWithMouse = (event: React.PointerEvent) => {
+    if (event.pointerType === 'mouse') openQuantity()
+  }
+
+  const closeQuantityWithMouse = (event: React.PointerEvent) => {
+    if (event.pointerType === 'mouse') closeQuantity()
+  }
+
   return (
     <>
       <Card
@@ -178,8 +186,8 @@ export const ProductCard = ({
               onClick={(event) => event.stopPropagation()}
               onPointerDown={(event) => event.stopPropagation()}
               onPointerUp={(event) => event.stopPropagation()}
-              onPointerEnter={openQuantity}
-              onPointerLeave={closeQuantity}
+              onPointerEnter={openQuantityWithMouse}
+              onPointerLeave={closeQuantityWithMouse}
             >
               <Popover
                 placement="bottom-end"

@@ -28,7 +28,7 @@ export const useCounterSale = (tenantId: string | null): CounterSale => {
     lines,
     channel = 'COUNTER',
     paymentMethod,
-    customerName,
+    consumerName,
     tableNumber,
     recipient,
     changeFor,
@@ -43,12 +43,12 @@ export const useCounterSale = (tenantId: string | null): CounterSale => {
       return null
     }
 
-    const orderCustomerName =
+    const orderConsumerName =
       channel === 'DELIVERY' || channel === 'PICKUP'
         ? (recipient?.name ?? '')
-        : customerName
+        : consumerName
 
-    if (!orderCustomerName.trim()) {
+    if (!orderConsumerName.trim()) {
       setError(NO_RECIPIENT)
       return null
     }
@@ -59,7 +59,7 @@ export const useCounterSale = (tenantId: string | null): CounterSale => {
           lines,
           channel,
           paymentMethod,
-          customerName,
+          consumerName,
           tableNumber,
           recipient,
           changeFor,

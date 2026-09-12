@@ -1,9 +1,9 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 
 import { queryKeys } from '@constants/query-keys'
-import type { Customer } from '@custom_types/customer/customer'
-import type { OtpCredentials } from '@shared/types/customer/otp-credentials'
-import { customerAuthService } from '@shared/services/customer-auth/customer-auth.service'
+import type { Consumer } from '@custom_types/consumer/consumer'
+import type { OtpCredentials } from '@shared/types/consumer/otp-credentials'
+import { consumerAuthService } from '@shared/services/consumer-auth/consumer-auth.service'
 import { rememberSession } from '@utils/session-hint'
 
 export const useVerifyOtp = () => {
@@ -16,10 +16,10 @@ export const useVerifyOtp = () => {
     }: {
       credentials: OtpCredentials
       code: string
-    }) => customerAuthService.verifyOtp(credentials, code),
-    onSuccess: (customer: Customer) => {
+    }) => consumerAuthService.verifyOtp(credentials, code),
+    onSuccess: (consumer: Consumer) => {
       rememberSession()
-      queryClient.setQueryData(queryKeys.session.all, customer)
+      queryClient.setQueryData(queryKeys.session.all, consumer)
     },
   })
 }

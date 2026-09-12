@@ -84,7 +84,7 @@ const accountChildren: RouteObject[] = [
   { path: 'notas', lazy: invoicesLazy },
 ]
 
-const customerAccountRoute: RouteObject = {
+const consumerAccountRoute: RouteObject = {
   path: 'conta',
   lazy: authenticatedLayoutLazy,
   children: [{ lazy: accountLayoutLazy, children: accountChildren }],
@@ -96,7 +96,7 @@ const storeChildren: RouteObject[] = [
   { path: 'checkout', lazy: checkoutLazy },
   { path: 'pedido/:orderId', lazy: orderTrackingLazy },
   { path: 'entrar', lazy: signInLazy },
-  customerAccountRoute,
+  consumerAccountRoute,
 ]
 
 const storeRoute = (path?: string): RouteObject => ({

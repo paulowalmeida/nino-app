@@ -10,7 +10,7 @@ import { useMenuSections } from '@pages/Storefront/hooks/useMenuSections/useMenu
 import { useMenuItemAction } from '@pages/Storefront/hooks/useMenuItemAction/useMenuItemAction'
 import { useStorefrontCart } from '@pages/Storefront/hooks/useStorefrontCart/useStorefrontCart'
 import { useStorefrontSlug } from '@pages/Storefront/hooks/useStorefrontSlug/useStorefrontSlug'
-import { useCustomerSession } from '@shared/hooks/useCustomerSession/useCustomerSession'
+import { useConsumerSession } from '@shared/hooks/useConsumerSession/useConsumerSession'
 import { useLogout } from '@shared/hooks/useLogout/useLogout'
 
 import { useStorefrontFacade } from './useStorefrontFacade'
@@ -25,7 +25,7 @@ vi.mock('@pages/Storefront/hooks/useMenuSections/useMenuSections')
 vi.mock('@pages/Storefront/hooks/useMenuItemAction/useMenuItemAction')
 vi.mock('@pages/Storefront/hooks/useStorefrontCart/useStorefrontCart')
 vi.mock('@pages/Storefront/hooks/useStorefrontSlug/useStorefrontSlug')
-vi.mock('@shared/hooks/useCustomerSession/useCustomerSession')
+vi.mock('@shared/hooks/useConsumerSession/useConsumerSession')
 vi.mock('@shared/hooks/useLogout/useLogout')
 
 describe('useStorefrontFacade', () => {
@@ -68,8 +68,8 @@ describe('useStorefrontFacade', () => {
       openProduct: vi.fn(),
     })
     vi.mocked(useIsDesktop).mockReturnValue(true)
-    vi.mocked(useCustomerSession).mockReturnValue({
-      customer: null,
+    vi.mocked(useConsumerSession).mockReturnValue({
+      consumer: null,
       isPending: false,
     })
     vi.mocked(useLogout).mockReturnValue({

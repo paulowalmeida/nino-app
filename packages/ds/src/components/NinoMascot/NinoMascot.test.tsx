@@ -24,7 +24,7 @@ describe(NinoMascot.name, () => {
     const image = container.querySelector('img')
 
     // Assert
-    expect(image).toHaveAttribute('src', expect.stringContaining('mascot'))
+    expect(image).toHaveAttribute('src', expect.stringContaining('nino_gestor'))
   })
 
   it('applies the given className to the image', () => {

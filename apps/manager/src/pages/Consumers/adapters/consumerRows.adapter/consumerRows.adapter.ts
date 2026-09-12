@@ -1,0 +1,24 @@
+import type { ConsumerRowModel } from '@pages/Consumers/types/ConsumerRowModel.type'
+import type { TenantConsumer } from '@shared/types/consumer/tenant-consumer'
+import { brl } from '@shared/utils/money/money'
+import { formatPhone } from '@shared/utils/phone/phone'
+
+const day = new Intl.DateTimeFormat('pt-BR', {
+  day: '2-digit',
+  month: 'short',
+  year: '2-digit',
+})
+
+export const toConsumerRows = (
+  consumers: TenantConsumer[]
+): ConsumerRowModel[] =>
+  consumers.map((consumer) => ({
+    id: consumer.id,
+    name: consumer.name,
+    phoneLabel: formatPhone(consumer.phone),
+    spentLabel: brl(consumer.spent),
+    ordersCount: String(consumer.orders),
+    ordersLabel: consumer.orders === 1 ? ' pedido' : ' pedidos',
+    pointsLabel: String(consumer.loyaltyPoints),
+    sinceLabel: day.format(new Date(consumer.since)),
+  }))

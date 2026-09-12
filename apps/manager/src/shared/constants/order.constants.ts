@@ -71,6 +71,6 @@ export const PAYMENT_STATUS_LABEL: Record<PaymentStatus, string> = {
 export const ORDER_TIMELINE_REALM_LABEL: Record<string, string> = {
   OPERATIONAL: 'pela loja',
   BACKOFFICE: 'pelo suporte',
-  CUSTOMER: 'pelo cliente',
+  CONSUMER: 'pelo cliente',
   GUEST: 'pelo cliente',
 }

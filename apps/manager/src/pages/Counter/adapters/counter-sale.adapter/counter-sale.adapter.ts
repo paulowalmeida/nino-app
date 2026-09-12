@@ -6,7 +6,7 @@ export const toCounterSaleRequest = ({
   lines,
   channel = 'COUNTER',
   paymentMethod,
-  customerName,
+  consumerName,
   tableNumber,
   recipient,
   changeFor,
@@ -17,7 +17,7 @@ export const toCounterSaleRequest = ({
   guestName:
     (channel === 'DELIVERY' || channel === 'PICKUP'
       ? recipient?.name
-      : customerName) || undefined,
+      : consumerName) || undefined,
   deliveryZoneId:
     channel === 'DELIVERY' ? recipient?.zoneId || undefined : undefined,
   tableNumber: channel === 'COUNTER' && tableNumber ? tableNumber : undefined,

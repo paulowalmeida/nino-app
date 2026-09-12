@@ -3,8 +3,8 @@ import { ReactNode } from 'react'
 import { Menu as ArkMenu } from '@ark-ui/react/menu'
 import { Portal } from '@ark-ui/react/portal'
 import { mergeClasses } from '@ds/lib/mergeClasses/mergeClasses'
-import { Tooltip } from '../Tooltip/Tooltip'
 
+import { Tooltip } from '../Tooltip/Tooltip'
 import styles from './Menu.module.css'
 import { MenuItem } from './Menu.types'
 

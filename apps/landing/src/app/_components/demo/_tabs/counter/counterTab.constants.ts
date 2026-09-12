@@ -8,7 +8,7 @@ export const queueTiles = [
 export const queueOrders = [
   {
     code: "#1042",
-    customer: "João Silva",
+    consumer: "João Silva",
     items: "1 Combo Família · entrega",
     total: "R$ 69,90",
     status: "Esperando aceite",
@@ -17,7 +17,7 @@ export const queueOrders = [
   },
   {
     code: "#1041",
-    customer: "Maria Costa",
+    consumer: "Maria Costa",
     items: "1 Pizza Margherita · entrega",
     total: "R$ 42,00",
     status: "Na cozinha",
@@ -26,7 +26,7 @@ export const queueOrders = [
   },
   {
     code: "#1039",
-    customer: "Pedro Melo",
+    consumer: "Pedro Melo",
     items: "2 X-Burgão · retirada",
     total: "R$ 57,80",
     status: "Pronto para retirada",
@@ -35,7 +35,7 @@ export const queueOrders = [
   },
   {
     code: "#1038",
-    customer: "Lucia Ramos",
+    consumer: "Lucia Ramos",
     items: "1 Smash Clássico · entrega",
     total: "R$ 24,90",
     status: "Saiu para entrega",

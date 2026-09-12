@@ -36,7 +36,7 @@ const renderLayout = (path = '/conta') =>
 describe('AccountLayout', () => {
   it('renders the account navigation and its route outlet', () => {
     vi.mocked(useAccountLayoutFacade).mockReturnValue({
-      customer: useAccountLayoutFacadeMock.customer,
+      consumer: useAccountLayoutFacadeMock.consumer,
     } as never)
 
     renderLayout()

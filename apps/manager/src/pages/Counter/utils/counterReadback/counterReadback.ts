@@ -5,7 +5,7 @@ import { brl } from '@shared/utils/money/money'
 
 type ReadbackParams = {
   channel: OrderChannel | null
-  customerName: string
+  consumerName: string
   tableNumber: string
   addressLine: string
   method: PaymentMethod | null
@@ -32,13 +32,13 @@ const destinationPhrase = (
  */
 export const counterReadback = ({
   channel,
-  customerName,
+  consumerName,
   tableNumber,
   addressLine,
   method,
   changeAmount,
 }: ReadbackParams): string => {
-  const who = customerName.trim() || 'o cliente'
+  const who = consumerName.trim() || 'o cliente'
   const destination = destinationPhrase(channel, who, tableNumber, addressLine)
 
   const payment = method === 'CARD_ON_DELIVERY'

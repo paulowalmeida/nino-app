@@ -23,7 +23,7 @@ vi.mock('@tanstack/react-query', async (importOriginal) => {
 describe('usePlaceOrder', () => {
   beforeEach(() => vi.clearAllMocks())
 
-  it('creates a customer-owned order when a session exists', () => {
+  it('creates a consumer-owned order when a session exists', () => {
     renderHook(() => usePlaceOrder(true))
 
     mutationFn?.(usePlaceOrderMock.input)

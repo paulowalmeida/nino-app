@@ -7,7 +7,7 @@ export const clearTicket = (set: SetCounterState) =>
     step: 'items',
     channel: null,
     chosenPaymentMethod: null,
-    customerName: '',
+    consumerName: '',
     tableNumber: '',
     recipient: {
       name: '',

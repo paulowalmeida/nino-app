@@ -3,7 +3,7 @@ import type { QueueOrderProps } from "./QueueOrder.types"
 
 export function QueueOrder({
   code,
-  customer,
+  consumer,
   items,
   total,
   status,
@@ -15,7 +15,7 @@ export function QueueOrder({
       <div className={styles.identity}>
         <span className={styles.code}>{code}</span>
 
-        <span className={styles.customer}>{customer}</span>
+        <span className={styles.consumer}>{consumer}</span>
 
         <span className={styles.items}>{items}</span>
       </div>

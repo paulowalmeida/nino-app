@@ -1,7 +1,7 @@
-import type { Customer } from '@custom_types/customer/customer'
+import type { Consumer } from '@custom_types/consumer/consumer'
 
-const base: Customer = {
-  id: 'customer-1',
+const base: Consumer = {
+  id: 'consumer-1',
   name: '11987654321',
   phone: null,
   email: null,
@@ -21,6 +21,6 @@ export const signInCompleteProfileMock = {
     name: 'Ana Souza',
     email: 'ana@gmail.com',
     photoUrl: 'https://lh3.googleusercontent.com/a/ana',
-  } satisfies Customer,
-  withPhone: { ...base, phone: '+5511987654321' } satisfies Customer,
+  } satisfies Consumer,
+  withPhone: { ...base, phone: '+5511987654321' } satisfies Consumer,
 }

@@ -7,7 +7,7 @@ export type CounterSaleInput = {
   lines: CartLine[]
   channel?: OrderChannel
   paymentMethod: PaymentMethod
-  customerName: string
+  consumerName: string
   tableNumber: string
   recipient?: Recipient
   changeFor?: string

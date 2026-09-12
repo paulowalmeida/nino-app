@@ -1,6 +1,6 @@
 export type QueueOrderProps = {
   code: string
-  customer: string
+  consumer: string
   items: string
   total: string
   status: string

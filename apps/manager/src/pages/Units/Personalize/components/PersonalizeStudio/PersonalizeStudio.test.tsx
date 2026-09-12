@@ -27,7 +27,7 @@ describe(PersonalizeStudio.name, () => {
     save.mockClear()
   })
 
-  it('shows every editing section beside the customer preview', () => {
+  it('shows every editing section beside the consumer preview', () => {
     render(<PersonalizeStudio />)
 
     expect(

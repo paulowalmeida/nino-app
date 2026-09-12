@@ -1,4 +1,4 @@
-import type { Customer } from '@custom_types/customer/customer'
+import type { Consumer } from '@custom_types/consumer/consumer'
 
 export const useSignInMutationsMock = {
   home: '/padaria-boa',
@@ -6,14 +6,14 @@ export const useSignInMutationsMock = {
   code: '482913',
   phone: '+5511987654321',
   name: 'Ana Souza',
-  completedCustomer: {
+  completedConsumer: {
     id: 'cust-1',
     name: 'Ana Souza',
     profileCompletedAt: '2026-01-10T12:00:00.000Z',
-  } as Customer,
-  incompleteCustomer: {
+  } as Consumer,
+  incompleteConsumer: {
     id: 'cust-2',
     name: 'Ana Souza',
     profileCompletedAt: null,
-  } as Customer,
+  } as Consumer,
 }

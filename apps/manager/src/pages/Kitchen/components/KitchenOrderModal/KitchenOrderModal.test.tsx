@@ -8,7 +8,7 @@ import {
 } from './KitchenOrderModal.mock'
 
 describe(KitchenOrderModal.name, () => {
-  it('shows the customer, items and notes for the selected order', () => {
+  it('shows the consumer, items and notes for the selected order', () => {
     // Arrange / Act
     render(
       <KitchenOrderModal

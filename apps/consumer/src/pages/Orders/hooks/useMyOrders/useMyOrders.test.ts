@@ -47,7 +47,7 @@ describe('useMyOrders', () => {
     expect(result).toEqual(useMyOrdersMock.orders)
   })
 
-  it('stays disabled while there is no customer session', () => {
+  it('stays disabled while there is no consumer session', () => {
     // Arrange
     // Act
     renderHook(() => useMyOrders(false))

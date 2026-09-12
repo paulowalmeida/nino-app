@@ -32,36 +32,36 @@ try {
     })
   )
   write(
-    'pages/Customers/Customers.tsx',
-    "import { useCustomersFacade } from '@pages/Customers/facades/useCustomersFacade/useCustomersFacade'"
+    'pages/Consumers/Consumers.tsx',
+    "import { useConsumersFacade } from '@pages/Consumers/facades/useConsumersFacade/useConsumersFacade'"
   )
   write(
-    'pages/Customers/facades/useCustomersFacade/useCustomersFacade.ts',
-    'export const useCustomersFacade = () => null'
+    'pages/Consumers/facades/useConsumersFacade/useConsumersFacade.ts',
+    'export const useConsumersFacade = () => null'
   )
-  write('pages/Customers/Customers.module.css', '.page { color: red }')
+  write('pages/Consumers/Consumers.module.css', '.page { color: red }')
   assert.equal(run().status, 0, 'existing page paths resolve')
 
   write(
-    'pages/Customers/Customers.test.tsx',
-    "vi.mock('@pages/customers/facades/useCustomersFacade/useCustomersFacade')"
+    'pages/Consumers/Consumers.test.tsx',
+    "vi.mock('@pages/consumers/facades/useConsumersFacade/useConsumersFacade')"
   )
   const lowercase = run()
   assert.equal(lowercase.status, 1, 'a renamed page folder is caught')
-  assert.match(lowercase.stderr, /unresolved module path: @pages\/customers/)
+  assert.match(lowercase.stderr, /unresolved module path: @pages\/consumers/)
 
   write(
-    'pages/Customers/Customers.test.tsx',
+    'pages/Consumers/Consumers.test.tsx',
     "vi.mock('@organisms/ItemPhoto/ItemPhoto')"
   )
   const staleMock = run()
   assert.equal(staleMock.status, 1, 'a vi.mock string of any local alias is checked')
   assert.match(staleMock.stderr, /unresolved module path: @organisms\/ItemPhoto/)
 
-  fs.rmSync(path.join(root, 'pages', 'Customers', 'Customers.test.tsx'))
+  fs.rmSync(path.join(root, 'pages', 'Consumers', 'Consumers.test.tsx'))
   write(
-    'pages/Customers/Customers.mock.ts',
-    "export const path = '@pages/Customers/Customers.module.css'"
+    'pages/Consumers/Consumers.mock.ts',
+    "export const path = '@pages/Consumers/Consumers.module.css'"
   )
   assert.equal(run().status, 0, 'a css asset under the page resolves')
 } finally {

@@ -35,7 +35,7 @@ describe('buildGoogleAuthUrl', () => {
     )
     expect(params.get('client_id')).toBe('client-123')
     expect(params.get('redirect_uri')).toBe(
-      'https://api-dev.nino.delivery/customer/auth/google/callback'
+      'https://api-dev.nino.delivery/consumer/auth/google/callback'
     )
     expect(params.get('response_type')).toBe('code')
     expect(params.get('state')).toBe(buildGoogleAuthUrlMock.returnUrl)
@@ -53,7 +53,7 @@ describe('buildGoogleAuthUrl', () => {
     // Assert
     const { protocol, port } = window.location
     expect(params.get('redirect_uri')).toBe(
-      `${protocol}//localhost:${port}/api/customer/auth/google/callback`
+      `${protocol}//localhost:${port}/api/consumer/auth/google/callback`
     )
   })
 
@@ -74,7 +74,7 @@ describe('buildGoogleAuthUrl', () => {
 
     // Assert
     expect(params.get('redirect_uri')).toBe(
-      'http://localhost:3002/api/customer/auth/google/callback'
+      'http://localhost:3002/api/consumer/auth/google/callback'
     )
   })
 })

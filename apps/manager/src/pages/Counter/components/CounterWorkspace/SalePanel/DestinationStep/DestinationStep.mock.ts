@@ -1,6 +1,6 @@
 export const destinationStepMock = {
   channel: null,
-  customerName: '',
+  consumerName: '',
   tableNumber: '',
   recipient: {
     name: '',

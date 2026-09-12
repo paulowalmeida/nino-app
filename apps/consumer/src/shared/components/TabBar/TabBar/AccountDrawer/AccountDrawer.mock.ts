@@ -1,8 +1,8 @@
-import type { Customer } from '@custom_types/customer/customer'
+import type { Consumer } from '@custom_types/consumer/consumer'
 
 export const accountDrawerMock = {
-  customer: {
-    id: 'customer-1',
+  consumer: {
+    id: 'consumer-1',
     name: 'Maria Silva',
     email: 'maria@example.com',
     phone: '11987654321',
@@ -13,5 +13,5 @@ export const accountDrawerMock = {
     profileCompletedAt: '2025-01-10T12:00:00.000Z',
     createdAt: '2025-01-10T12:00:00.000Z',
     updatedAt: '2025-01-10T12:00:00.000Z',
-  } satisfies Customer,
+  } satisfies Consumer,
 }

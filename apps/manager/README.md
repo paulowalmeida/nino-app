@@ -8,22 +8,6 @@ A arquitetura atual é organizada por domínio. As regras normativas ficam em
 Page governa a composição da tela, componentes do domínio acessam sua facade e
 não há cascata de props para transportar estado entre arquivos.
 
-## Por que Vite SPA e não Next.js
-
-Decisão de 2026-06-12: **todo app autenticado fica em SPA React puro**; Next.js
-fica só em superfície pública (landing/marketing), onde SEO justifica. O manager
-foi o primeiro a pivotar (de Next → React).
-
-- É um painel atrás de login — SSR/RSC/prerender do Next não agregam (nada é
-  indexado, o fetching é client-side com sessão).
-- O **data router** do React Router modela melhor regras de acesso ricas (guard
-  de assinatura ativa + role), e um route map central é mais legível que a
-  convenção pesada do App Router.
-- O **auth guard** vira um branch no `createBrowserRouter`, não middleware edge.
-
-A regra vale para qualquer app futuro atrás de login (consumer, courier,
-backoffice). O setup de Tailwind foi adaptado de Next para Vite.
-
 ## Arquitetura de estado
 
 Regra central (fechada em 2026-06-15): **separar server state de client state.**

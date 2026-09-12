@@ -1,6 +1,6 @@
 export const authenticatedLayoutMock = {
-  customer: {
-    id: 'customer-1',
+  consumer: {
+    id: 'consumer-1',
     name: 'Maria Silva',
   },
 }

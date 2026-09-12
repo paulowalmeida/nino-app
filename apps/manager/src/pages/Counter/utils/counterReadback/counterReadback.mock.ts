@@ -1,6 +1,6 @@
 export const counterReadbackLocalMock = {
   channel: 'COUNTER' as const,
-  customerName: 'Ana',
+  consumerName: 'Ana',
   tableNumber: '12',
   addressLine: '',
   method: 'PIX' as const,
@@ -9,7 +9,7 @@ export const counterReadbackLocalMock = {
 
 export const counterReadbackCashMock = {
   channel: 'PICKUP' as const,
-  customerName: '',
+  consumerName: '',
   tableNumber: '',
   addressLine: '',
   method: 'CASH' as const,

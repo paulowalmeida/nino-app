@@ -5,7 +5,7 @@ import { clearLastSale } from '@pages/Counter/states/counter/operations/clear-la
 import { clearTicket } from '@pages/Counter/states/counter/operations/clear-ticket/clear-ticket'
 import { setChangeFor } from '@pages/Counter/states/counter/operations/set-change-for/set-change-for'
 import { setChannel } from '@pages/Counter/states/counter/operations/set-channel/set-channel'
-import { setCustomerName } from '@pages/Counter/states/counter/operations/set-customer-name/set-customer-name'
+import { setConsumerName } from '@pages/Counter/states/counter/operations/set-consumer-name/set-consumer-name'
 import { setLastSale } from '@pages/Counter/states/counter/operations/set-last-sale/set-last-sale'
 import { setPaymentMethod } from '@pages/Counter/states/counter/operations/set-payment-method/set-payment-method'
 import { setRecipient } from '@pages/Counter/states/counter/operations/set-recipient/set-recipient'
@@ -21,7 +21,7 @@ export const useCounterStore = create<CounterState>((set) => ({
   step: 'items',
   channel: null,
   chosenPaymentMethod: null,
-  customerName: '',
+  consumerName: '',
   tableNumber: '',
   recipient: {
     name: '',
@@ -47,7 +47,7 @@ export const useCounterStore = create<CounterState>((set) => ({
   setStep: (step) => setStep(set, step),
   setChannel: (channel) => setChannel(set, channel),
   setChosenPaymentMethod: (method) => setPaymentMethod(set, method),
-  setCustomerName: (name) => setCustomerName(set, name),
+  setConsumerName: (name) => setConsumerName(set, name),
   setTableNumber: (table) => setTableNumber(set, table),
   setRecipient: (patch) => setRecipient(set, patch),
   setChangeFor: (value) => setChangeFor(set, value),

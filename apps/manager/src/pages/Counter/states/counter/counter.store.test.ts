@@ -43,13 +43,13 @@ describe(useCounterStore.name, () => {
     const store = useCounterStore.getState()
     store.setSheet(true)
     store.setChosenPaymentMethod('PIX')
-    store.setCustomerName('Ana')
+    store.setConsumerName('Ana')
     store.setTableNumber('4')
 
     expect(useCounterStore.getState()).toMatchObject({
       sheet: true,
       chosenPaymentMethod: 'PIX',
-      customerName: 'Ana',
+      consumerName: 'Ana',
       tableNumber: '4',
     })
 
@@ -58,7 +58,7 @@ describe(useCounterStore.name, () => {
       lines: [],
       sheet: false,
       chosenPaymentMethod: null,
-      customerName: '',
+      consumerName: '',
       tableNumber: '',
     })
   })

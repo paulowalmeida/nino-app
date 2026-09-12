@@ -4,7 +4,7 @@ import { OverviewHeader } from '@pages/Overview/components/OverviewHeader/Overvi
 import { PauseSwitch } from '@pages/Overview/components/PauseSwitch/PauseSwitch'
 import { QueueBoard } from '@pages/Overview/components/QueueBoard/QueueBoard'
 import { SalesTrend } from '@pages/Overview/components/SalesTrend/SalesTrend'
-import { TopCustomers } from '@pages/Overview/components/TopCustomers/TopCustomers'
+import { TopConsumers } from '@pages/Overview/components/TopConsumers/TopConsumers'
 import { TopProducts } from '@pages/Overview/components/TopProducts/TopProducts'
 
 import styles from './Overview.module.css'
@@ -20,8 +20,8 @@ export const Overview = () => (
       <SalesTrend />
       <TopProducts />
     </Box>
-    <Box className={styles.customers}>
-      <TopCustomers />
+    <Box className={styles.consumers}>
+      <TopConsumers />
     </Box>
     <Box className={styles.tally}>
       <DayTally />

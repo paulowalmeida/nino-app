@@ -52,7 +52,7 @@ export const CollaboratorActivitySkeleton = () => (
       <Table>
         <colgroup>
           <col className={activity.colTicket} />
-          <col className={activity.colCustomer} />
+          <col className={activity.colConsumer} />
           <col className={activity.colChannel} />
           <col className={activity.colStatus} />
           <col className={activity.colWhen} />
@@ -78,7 +78,7 @@ export const CollaboratorActivitySkeleton = () => (
                 <Skeleton className={ghost.ticket} />
               </TableCell>
               <TableCell>
-                <Skeleton className={ghost.customer} />
+                <Skeleton className={ghost.consumer} />
               </TableCell>
               <TableCell className={activity.colRight}>
                 <Skeleton className={ghost.channel} />

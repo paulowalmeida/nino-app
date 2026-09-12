@@ -1,13 +1,13 @@
-import type { Customer } from '@custom_types/customer/customer'
-import type { UpdateMyProfileRequest } from '@custom_types/customer/update-my-profile-request'
+import type { Consumer } from '@custom_types/consumer/consumer'
+import type { UpdateMyProfileRequest } from '@custom_types/consumer/update-my-profile-request'
 
 export const useCompleteProfileMock: {
   request: UpdateMyProfileRequest
-  customer: Customer
+  consumer: Consumer
 } = {
   request: { name: 'Maria Silva', email: 'maria@example.com' },
-  customer: {
-    id: 'customer-1',
+  consumer: {
+    id: 'consumer-1',
     name: 'Maria Silva',
     email: 'maria@example.com',
     phone: '11987654321',

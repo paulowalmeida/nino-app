@@ -2,11 +2,11 @@ import { render, screen } from '@testing-library/react'
 import { MemoryRouter, Route, Routes, useLocation } from 'react-router'
 import { describe, expect, it, vi } from 'vitest'
 
-import { useCustomerSession } from '@shared/hooks/useCustomerSession/useCustomerSession'
+import { useConsumerSession } from '@shared/hooks/useConsumerSession/useConsumerSession'
 import { AuthenticatedLayout } from './AuthenticatedLayout'
 import { authenticatedLayoutMock } from './AuthenticatedLayout.mock'
 
-vi.mock('@shared/hooks/useCustomerSession/useCustomerSession')
+vi.mock('@shared/hooks/useConsumerSession/useConsumerSession')
 
 const SignIn = () => {
   const { state } = useLocation()
@@ -28,8 +28,8 @@ const renderBoundary = (path = '/loja/conta/pedidos?status=aberto') =>
 
 describe('AuthenticatedLayout', () => {
   it('preserves the intended route when redirecting a visitor', () => {
-    vi.mocked(useCustomerSession).mockReturnValue({
-      customer: null,
+    vi.mocked(useConsumerSession).mockReturnValue({
+      consumer: null,
       isPending: false,
     } as never)
 
@@ -40,9 +40,9 @@ describe('AuthenticatedLayout', () => {
     ).toBeInTheDocument()
   })
 
-  it('renders the protected outlet for an authenticated customer', () => {
-    vi.mocked(useCustomerSession).mockReturnValue({
-      customer: authenticatedLayoutMock.customer,
+  it('renders the protected outlet for an authenticated consumer', () => {
+    vi.mocked(useConsumerSession).mockReturnValue({
+      consumer: authenticatedLayoutMock.consumer,
       isPending: false,
     } as never)
 
@@ -52,8 +52,8 @@ describe('AuthenticatedLayout', () => {
   })
 
   it('renders a pending state while the session is unresolved', () => {
-    vi.mocked(useCustomerSession).mockReturnValue({
-      customer: null,
+    vi.mocked(useConsumerSession).mockReturnValue({
+      consumer: null,
       isPending: true,
     } as never)
 

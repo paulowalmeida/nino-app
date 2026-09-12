@@ -2,17 +2,17 @@ import { renderHook } from '@testing-library/react'
 import { describe, expect, it, vi } from 'vitest'
 
 import { queryKeys } from '@constants/query-keys'
-import type { Customer } from '@custom_types/customer/customer'
-import { customerAuthService } from '@shared/services/customer-auth/customer-auth.service'
+import type { Consumer } from '@custom_types/consumer/consumer'
+import { consumerAuthService } from '@shared/services/consumer-auth/consumer-auth.service'
 
 import { useVerifyPhoneLink } from './useVerifyPhoneLink'
 import { useVerifyPhoneLinkMock } from './useVerifyPhoneLink.mock'
 
-vi.mock('@shared/services/customer-auth/customer-auth.service')
+vi.mock('@shared/services/consumer-auth/consumer-auth.service')
 
 const setQueryData = vi.fn()
 
-let onSuccess: ((customer: Customer) => void) | undefined
+let onSuccess: ((consumer: Consumer) => void) | undefined
 let mutationFn: ((input: unknown) => unknown) | undefined
 
 vi.mock('@tanstack/react-query', async (importOriginal) => {
@@ -40,22 +40,22 @@ describe('useVerifyPhoneLink', () => {
     mutationFn?.(useVerifyPhoneLinkMock.request)
 
     // Assert
-    expect(customerAuthService.verifyPhoneLink).toHaveBeenCalledWith(
+    expect(consumerAuthService.verifyPhoneLink).toHaveBeenCalledWith(
       useVerifyPhoneLinkMock.request
     )
   })
 
-  it('caches the updated customer as the current session on success', () => {
+  it('caches the updated consumer as the current session on success', () => {
     // Arrange
     renderHook(() => useVerifyPhoneLink())
 
     // Act
-    onSuccess?.(useVerifyPhoneLinkMock.customer)
+    onSuccess?.(useVerifyPhoneLinkMock.consumer)
 
     // Assert
     expect(setQueryData).toHaveBeenCalledWith(
       queryKeys.session.all,
-      useVerifyPhoneLinkMock.customer
+      useVerifyPhoneLinkMock.consumer
     )
   })
 })

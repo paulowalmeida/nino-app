@@ -7,30 +7,36 @@ import { profilePageMock } from './Profile.mock'
 
 vi.mock('./facades/useProfileFacade/useProfileFacade')
 vi.mock('./components/ProfileHeader/ProfileHeader', () => ({
-  ProfileHeader: () => <div>profile header</div>,
+  ProfileHeader: () => <div>{profilePageMock.headerText}</div>,
 }))
 vi.mock('./components/ProfileForm/ProfileForm', () => ({
-  ProfileForm: () => <div>profile form</div>,
+  ProfileForm: () => <div>{profilePageMock.formText}</div>,
 }))
 vi.mock('./skeletons/ProfileFieldsSkeleton/ProfileFieldsSkeleton', () => ({
-  ProfileFieldsSkeleton: () => <div>profile loading</div>,
+  ProfileFieldsSkeleton: () => <div>{profilePageMock.loadingText}</div>,
 }))
 
 describe('Profile', () => {
   it('renders the loading macro state', () => {
+    // Arrange
     vi.mocked(useProfileFacade).mockReturnValue({ status: 'loading' } as never)
 
+    // Act
     render(<Profile />)
 
-    expect(screen.getByText('profile loading')).toBeInTheDocument()
+    // Assert
+    expect(screen.getByText(profilePageMock.loadingText)).toBeInTheDocument()
   })
 
   it('renders the profile form after loading', () => {
+    // Arrange
     vi.mocked(useProfileFacade).mockReturnValue({ status: 'success' } as never)
 
+    // Act
     render(<Profile />)
 
-    expect(screen.getByText(profilePageMock.title)).toBeInTheDocument()
-    expect(screen.getByText('profile form')).toBeInTheDocument()
+    // Assert
+    expect(screen.getByText(profilePageMock.headerText)).toBeInTheDocument()
+    expect(screen.getByText(profilePageMock.formText)).toBeInTheDocument()
   })
 })

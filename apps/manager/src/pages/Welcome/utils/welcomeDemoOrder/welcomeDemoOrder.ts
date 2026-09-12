@@ -25,7 +25,7 @@ export const demoOrder = (
   id: 'demo-1042',
   orderNumber: 1042,
   tenantId: 'demo-tenant',
-  customerId: null,
+  consumerId: null,
   status,
   channel: 'DELIVERY',
   courierId: null,

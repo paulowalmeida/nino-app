@@ -10,15 +10,15 @@ const BASE_URL = import.meta.env.VITE_BASE_URL as string
  * ali esconderia o erro real de quem digitou o código trocado.
  */
 const EXEMPT_PATHS = [
-  'customer/auth/otp/request',
-  'customer/auth/otp/verify',
-  'customer/auth/refresh',
-  'customer/auth/logout',
+  'consumer/auth/otp/request',
+  'consumer/auth/otp/verify',
+  'consumer/auth/refresh',
+  'consumer/auth/logout',
 ]
 
 const client = createHttpClient({
   baseUrl: BASE_URL,
-  refreshPath: 'customer/auth/refresh',
+  refreshPath: 'consumer/auth/refresh',
   exemptPaths: EXEMPT_PATHS,
   hasPriorSession: hadSession,
   httpErrorLabels: HTTP_ERRORS,

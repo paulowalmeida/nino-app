@@ -2,6 +2,13 @@
 
 .navigation {
   @apply relative z-content min-h-0 flex-1;
+  overscroll-behavior: contain;
+}
+
+/* O viewport é o scroller real; sem isso, ao atingir o limite da lista,
+   o wheel continua no documento e move a página aberta ao lado. */
+.navigation :global([data-part='viewport']) {
+  overscroll-behavior: contain;
 }
 
 .list {

@@ -10,7 +10,7 @@ vi.mock('@pages/Profile/facades/useProfileFacade/useProfileFacade')
 
 const facadeWith = (overrides: Record<string, unknown>) =>
   vi.mocked(useProfileFacade).mockReturnValue({
-    customer: accountProfilePhoneFieldMock.customerWithoutPhone,
+    consumer: accountProfilePhoneFieldMock.consumerWithoutPhone,
     requestPhoneLink: vi.fn(),
     isRequestingPhoneLink: false,
     requestPhoneLinkFailed: false,
@@ -23,7 +23,7 @@ const facadeWith = (overrides: Record<string, unknown>) =>
 describe('AccountProfilePhoneField', () => {
   it('shows the phone as read-only once the account already has one', () => {
     // Arrange
-    facadeWith({ customer: accountProfilePhoneFieldMock.customerWithPhone })
+    facadeWith({ consumer: accountProfilePhoneFieldMock.consumerWithPhone })
 
     // Act
     render(<AccountProfilePhoneField />)

@@ -73,7 +73,7 @@
   @apply block border-t border-border/60 px-4 py-3;
 }
 
-.customer {
+.consumer {
   @apply truncate text-sm font-semibold text-fg-default;
 }
 

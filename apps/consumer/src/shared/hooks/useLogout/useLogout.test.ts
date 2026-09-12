@@ -2,13 +2,13 @@ import { renderHook } from '@testing-library/react'
 import { describe, expect, it, vi } from 'vitest'
 
 import { queryKeys } from '@constants/query-keys'
-import { customerAuthService } from '@shared/services/customer-auth/customer-auth.service'
+import { consumerAuthService } from '@shared/services/consumer-auth/consumer-auth.service'
 import { forgetSession } from '@utils/session-hint'
 
 import { useLogout } from './useLogout'
 import { useLogoutMock } from './useLogout.mock'
 
-vi.mock('@shared/services/customer-auth/customer-auth.service')
+vi.mock('@shared/services/consumer-auth/consumer-auth.service')
 vi.mock('@utils/session-hint')
 
 const setQueryData = vi.fn()
@@ -42,7 +42,7 @@ describe('useLogout', () => {
     mutationFn?.()
 
     // Assert
-    expect(customerAuthService.logout).toHaveBeenCalled()
+    expect(consumerAuthService.logout).toHaveBeenCalled()
   })
 
   it('forgets the session hint and clears the session cache on success', () => {

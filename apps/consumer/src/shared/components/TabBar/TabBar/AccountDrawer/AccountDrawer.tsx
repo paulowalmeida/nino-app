@@ -7,13 +7,13 @@ import { Box } from '@nino/ds/components/Box'
 import { ListRow } from '@nino/ds/components/ListRow'
 import { Text } from '@nino/ds/components/Text'
 import { ACCOUNT_SECTIONS } from '@shared/constants/account-sections'
-import { useCustomerSession } from '@shared/hooks/useCustomerSession/useCustomerSession'
+import { useConsumerSession } from '@shared/hooks/useConsumerSession/useConsumerSession'
 import { useLogout } from '@shared/hooks/useLogout/useLogout'
 import { useStoreTint } from '@shared/hooks/useStoreTint/useStoreTint'
 import {
-  customerInitials,
+  consumerInitials,
   firstName,
-} from '@shared/utils/customer-name/customer-name'
+} from '@shared/utils/consumer-name/consumer-name'
 import { greeting } from '@shared/utils/greeting/greeting'
 import { riseDelay } from '@utils/rise-delay'
 
@@ -57,15 +57,15 @@ export const AccountDrawer = ({
 }: AccountDrawerProps) => {
   const navigate = useNavigate()
   const { pathname } = useLocation()
-  const { customer } = useCustomerSession()
+  const { consumer } = useConsumerSession()
   const tint = useStoreTint()
   const logout = useLogout()
 
   /* conta aberta por telefone nasce sem nome de verdade: até a pessoa dizer
      como se chama, a saudação vai sozinha e o azulejo fica sem iniciais */
-  const named = customer?.profileCompletedAt ? customer.name : null
+  const named = consumer?.profileCompletedAt ? consumer.name : null
   const name = firstName(named)
-  const mark = customerInitials(named)
+  const mark = consumerInitials(named)
 
   const ready = ACCOUNT_SECTIONS.filter((section) => !section.soon)
   const soon = ACCOUNT_SECTIONS.filter((section) => section.soon)
@@ -120,9 +120,9 @@ export const AccountDrawer = ({
       >
         <Box as="header" className={styles.head}>
           <Box className={`${motion.land} ${styles.tile}`}>
-            {customer?.photoUrl ? (
+            {consumer?.photoUrl ? (
               <img
-                src={customer.photoUrl}
+                src={consumer.photoUrl}
                 alt=""
                 className={styles.tilePhoto}
                 referrerPolicy="no-referrer"
@@ -149,17 +149,17 @@ export const AccountDrawer = ({
             </Text>
           )}
 
-          {customer && (
+          {consumer && (
             <Text
               className={`${motion.deal} ${styles.since}`}
               style={riseDelay(120)}
             >
-              na casa desde {since.format(new Date(customer.createdAt))}
+              na casa desde {since.format(new Date(consumer.createdAt))}
             </Text>
           )}
         </Box>
 
-        {customer ? (
+        {consumer ? (
           <>
             <nav className={styles.nav} aria-label="Seções da conta">
               <Box as="ul" className={styles.list}>

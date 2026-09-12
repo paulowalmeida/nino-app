@@ -1,7 +1,7 @@
-import { useCustomerSession } from '@shared/hooks/useCustomerSession/useCustomerSession'
+import { useConsumerSession } from '@shared/hooks/useConsumerSession/useConsumerSession'
 
 export const useAccountLayoutFacade = () => {
-  const { customer } = useCustomerSession()
+  const { consumer } = useConsumerSession()
 
-  return { customer }
+  return { consumer }
 }

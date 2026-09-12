@@ -12,7 +12,7 @@ const activity = [
     createdAt: '2024-01-02T10:30:00.000Z',
     channel: 'COUNTER',
     totalAmount: 42,
-    customerName: 'Cliente',
+    consumerName: 'Cliente',
   },
   {
     id: 'activity-2',
@@ -22,7 +22,7 @@ const activity = [
     createdAt: '2024-01-03T10:30:00.000Z',
     channel: 'DELIVERY',
     totalAmount: 15,
-    customerName: null,
+    consumerName: null,
   },
 ]
 

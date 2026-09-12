@@ -2,14 +2,14 @@ import { renderHook } from '@testing-library/react'
 import { describe, expect, it, vi } from 'vitest'
 
 import { useCompleteProfile } from '@shared/hooks/useCompleteProfile/useCompleteProfile'
-import { useCustomerSession } from '@shared/hooks/useCustomerSession/useCustomerSession'
+import { useConsumerSession } from '@shared/hooks/useConsumerSession/useConsumerSession'
 import { useRequestPhoneLink } from '@shared/hooks/useRequestPhoneLink/useRequestPhoneLink'
 import { useVerifyPhoneLink } from '@shared/hooks/useVerifyPhoneLink/useVerifyPhoneLink'
 import { useProfileFacade } from './useProfileFacade'
 import { useProfileFacadeMock } from './useProfileFacade.mock'
 
 vi.mock('@shared/hooks/useCompleteProfile/useCompleteProfile')
-vi.mock('@shared/hooks/useCustomerSession/useCustomerSession')
+vi.mock('@shared/hooks/useConsumerSession/useConsumerSession')
 vi.mock('@shared/hooks/useRequestPhoneLink/useRequestPhoneLink')
 vi.mock('@shared/hooks/useVerifyPhoneLink/useVerifyPhoneLink')
 
@@ -18,9 +18,9 @@ describe('useProfileFacade', () => {
     const completeProfile = vi.fn()
     const requestPhoneLink = vi.fn()
     const verifyPhoneLink = vi.fn()
-    vi.mocked(useCustomerSession).mockReturnValue({
-      customer: useProfileFacadeMock.customer,
-    } as unknown as ReturnType<typeof useCustomerSession>)
+    vi.mocked(useConsumerSession).mockReturnValue({
+      consumer: useProfileFacadeMock.consumer,
+    } as unknown as ReturnType<typeof useConsumerSession>)
     vi.mocked(useCompleteProfile).mockReturnValue({
       mutate: completeProfile,
       isPending: false,
@@ -39,7 +39,7 @@ describe('useProfileFacade', () => {
     const { result } = renderHook(() => useProfileFacade())
 
     expect(result.current).toEqual({
-      customer: useProfileFacadeMock.customer,
+      consumer: useProfileFacadeMock.consumer,
       completeProfile,
       isCompletingProfile: false,
       requestPhoneLink,

@@ -103,7 +103,7 @@ describe('OrderDetail', () => {
     expect(screen.getByText(/não está mais nesta loja/)).toBeInTheDocument()
   })
 
-  it('charges the delivery zone and repeats what the customer asked', () => {
+  it('charges the delivery zone and repeats what the consumer asked', () => {
     vi.mocked(useOrderDetailFacade).mockReturnValue({
       order: deliveredOrder,
       isPending: false,

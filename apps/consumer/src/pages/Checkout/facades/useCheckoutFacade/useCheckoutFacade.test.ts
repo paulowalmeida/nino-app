@@ -8,7 +8,7 @@ import { usePublicSettings } from '@hooks/usePublicSettings/usePublicSettings'
 import { useStore } from '@hooks/useStore/useStore'
 import { useCheckoutWorkflow } from '@pages/checkout/hooks/useCheckoutWorkflow/useCheckoutWorkflow'
 import { useCheckoutStore } from '@pages/checkout/states/checkout/checkout.state'
-import { useCustomerSession } from '@shared/hooks/useCustomerSession/useCustomerSession'
+import { useConsumerSession } from '@shared/hooks/useConsumerSession/useConsumerSession'
 import { useMyAddresses } from '@shared/hooks/useMyAddresses/useMyAddresses'
 import { useCheckoutResume } from '@pages/checkout/hooks/useCheckoutResume/useCheckoutResume'
 
@@ -22,7 +22,7 @@ vi.mock('@hooks/usePublicSettings/usePublicSettings')
 vi.mock('@hooks/useStore/useStore')
 vi.mock('@pages/checkout/hooks/useCheckoutWorkflow/useCheckoutWorkflow')
 vi.mock('@pages/checkout/states/checkout/checkout.state')
-vi.mock('@shared/hooks/useCustomerSession/useCustomerSession')
+vi.mock('@shared/hooks/useConsumerSession/useConsumerSession')
 vi.mock('@shared/hooks/useMyAddresses/useMyAddresses')
 vi.mock('@pages/checkout/hooks/useCheckoutResume/useCheckoutResume')
 vi.mock('@utils/store-info', () => ({ isOpen: vi.fn(() => true) }))
@@ -53,9 +53,9 @@ describe('useCheckoutFacadeValue', () => {
       hours: [],
       isPending: false,
     } as unknown as ReturnType<typeof useOpeningHours>)
-    vi.mocked(useCustomerSession).mockReturnValue({
-      customer: null,
-    } as unknown as ReturnType<typeof useCustomerSession>)
+    vi.mocked(useConsumerSession).mockReturnValue({
+      consumer: null,
+    } as unknown as ReturnType<typeof useConsumerSession>)
     vi.mocked(useMyAddresses).mockReturnValue({
       data: [],
     } as unknown as ReturnType<typeof useMyAddresses>)

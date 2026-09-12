@@ -31,7 +31,7 @@ describe('ProductDetailHeader', () => {
     ).toBeInTheDocument()
   })
 
-  it('flags an item the customer cannot see', () => {
+  it('flags an item the consumer cannot see', () => {
     mockItem({ ...menuItemMock, isActive: false })
 
     render(<ProductDetailHeader />)

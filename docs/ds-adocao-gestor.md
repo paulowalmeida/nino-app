@@ -33,7 +33,7 @@ uma prop `renderLink`), para que cada app injete o `Link` do seu roteador.
 ### `Pagination` — o gestor não tem total de itens
 
 `Pagination.types.ts` exige `count` (total) para calcular as páginas. Orders e
-Customers usam infinite query por cursor: existe `hasNextPage`, nunca o total.
+Consumers usam infinite query por cursor: existe `hasNextPage`, nunca o total.
 
 **Para levar ao DS:** um modo cursor (`hasNext`/`hasPrevious` + callbacks), sem
 numeração de páginas.

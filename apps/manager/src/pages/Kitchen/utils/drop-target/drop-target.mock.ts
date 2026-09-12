@@ -4,7 +4,7 @@ export const dropTargetOrderMock: Order = {
   id: 'order-1',
   orderNumber: 1,
   tenantId: 'tenant-1',
-  customerId: null,
+  consumerId: null,
   status: 'PREPARING',
   channel: 'PICKUP',
   courierId: null,

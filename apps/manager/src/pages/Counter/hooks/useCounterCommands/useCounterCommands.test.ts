@@ -50,7 +50,7 @@ vi.mock('@pages/Counter/states/counter/counter.store', () => ({
       clear: spies.clear,
       setSheet: spies.setSheet,
       setLastSale: spies.setLastSale,
-      customerName: 'Ana',
+      consumerName: 'Ana',
       tableNumber: '',
       changeFor: '50,00',
       channel: spies.channel,

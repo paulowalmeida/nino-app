@@ -12,7 +12,7 @@ describe(clearTicket.name, () => {
       step: 'items',
       channel: null,
       chosenPaymentMethod: null,
-      customerName: '',
+      consumerName: '',
       tableNumber: '',
       recipient: {
         name: '',

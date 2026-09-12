@@ -7,7 +7,7 @@ export const preparingOrderMock: Order = {
   id: 'order-1',
   orderNumber: 77,
   tenantId: 'tenant-1',
-  customerId: null,
+  consumerId: null,
   status: 'PREPARING',
   channel: 'PICKUP',
   courierId: null,

@@ -1,16 +1,16 @@
 import { useCompleteProfile } from '@shared/hooks/useCompleteProfile/useCompleteProfile'
-import { useCustomerSession } from '@shared/hooks/useCustomerSession/useCustomerSession'
+import { useConsumerSession } from '@shared/hooks/useConsumerSession/useConsumerSession'
 import { useRequestPhoneLink } from '@shared/hooks/useRequestPhoneLink/useRequestPhoneLink'
 import { useVerifyPhoneLink } from '@shared/hooks/useVerifyPhoneLink/useVerifyPhoneLink'
 
 export const useProfileFacade = () => {
-  const { customer } = useCustomerSession()
+  const { consumer } = useConsumerSession()
   const completeProfile = useCompleteProfile()
   const requestPhoneLink = useRequestPhoneLink()
   const verifyPhoneLink = useVerifyPhoneLink()
 
   return {
-    customer,
+    consumer,
     completeProfile: completeProfile.mutate,
     isCompletingProfile: completeProfile.isPending,
     requestPhoneLink: requestPhoneLink.mutate,

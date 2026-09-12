@@ -1,7 +1,7 @@
 export const useSignInFacadeMock = {
   home: '/padaria-boa',
   store: { id: 'store-1', name: 'Padaria Boa' },
-  customer: null,
+  consumer: null,
   step: 'identify' as const,
   channel: 'phone' as const,
   phone: '11987654321',

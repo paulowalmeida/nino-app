@@ -1,7 +1,7 @@
 import { ReactNode } from 'react'
 
-import { Tooltip as ArkTooltip } from '@ark-ui/react/tooltip'
 import { Portal } from '@ark-ui/react/portal'
+import { Tooltip as ArkTooltip } from '@ark-ui/react/tooltip'
 
 import styles from './Tooltip.module.css'
 

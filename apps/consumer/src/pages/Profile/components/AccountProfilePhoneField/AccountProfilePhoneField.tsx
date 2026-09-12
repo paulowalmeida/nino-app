@@ -37,7 +37,7 @@ const SavedPhone = ({ phone }: { phone: string }) => (
 
 export const AccountProfilePhoneField = () => {
   const {
-    customer,
+    consumer,
     requestPhoneLink,
     isRequestingPhoneLink,
     requestPhoneLinkFailed,
@@ -50,7 +50,7 @@ export const AccountProfilePhoneField = () => {
   const [code, setCode] = useState('')
   const [codeSent, setCodeSent] = useState(false)
 
-  if (customer?.phone) return <SavedPhone phone={customer.phone} />
+  if (consumer?.phone) return <SavedPhone phone={consumer.phone} />
 
   const phoneReady = isCompletePhone(phone)
   const codeReady = code.length === OTP_CODE_LENGTH

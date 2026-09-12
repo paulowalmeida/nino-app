@@ -3,7 +3,7 @@
 .ghostNumber { @apply h-4 w-14; }
 .ghostWaited { @apply h-3 w-12; }
 .ghostStatus { @apply ml-auto h-[1.125rem] w-24 shrink-0 rounded-1; }
-.ghostCustomer { @apply h-3.5 w-32; }
+.ghostConsumer { @apply h-3.5 w-32; }
 .ghostMeta { @apply mt-1 h-3 w-24; }
 .ghostSummary { @apply mt-1.5 h-3.5 w-full sm:hidden; }
 .ghostQuantity { @apply h-3.5 w-6 shrink-0; }

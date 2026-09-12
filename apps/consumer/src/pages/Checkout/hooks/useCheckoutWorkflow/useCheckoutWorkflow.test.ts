@@ -38,7 +38,7 @@ describe('useCheckoutWorkflow', () => {
         store: { id: 'store-1' } as unknown as Parameters<
           typeof useCheckoutWorkflow
         >[0]['store'],
-        customer: null,
+        consumer: null,
         addresses: [],
         zones: [],
         isLoadingZones: false,

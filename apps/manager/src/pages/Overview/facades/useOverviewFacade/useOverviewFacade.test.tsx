@@ -4,7 +4,7 @@ import { describe, expect, it, vi } from 'vitest'
 import { usePause } from '@pages/Overview/hooks/usePause/usePause'
 import { usePauseActions } from '@pages/Overview/hooks/usePauseActions/usePauseActions'
 import { useStoreOpen } from '@pages/Overview/hooks/useStoreOpen/useStoreOpen'
-import { useTopCustomers } from '@pages/Overview/hooks/useTopCustomers/useTopCustomers'
+import { useTopConsumers } from '@pages/Overview/hooks/useTopConsumers/useTopConsumers'
 import { useOrders } from '@shared/hooks/order/useOrders/useOrders'
 import { useQueueSummary } from '@shared/hooks/order/useQueueSummary/useQueueSummary'
 import { useSalesReport } from '@shared/hooks/order/useSalesReport/useSalesReport'
@@ -15,7 +15,7 @@ import { useSessionStore } from '@shared/states/session/session.state'
 import { useOverviewFacade } from './useOverviewFacade'
 import { useOverviewFacadeMock } from './useOverviewFacade.mock'
 
-vi.mock('@pages/Overview/hooks/useTopCustomers/useTopCustomers')
+vi.mock('@pages/Overview/hooks/useTopConsumers/useTopConsumers')
 vi.mock('@shared/hooks/order/useOrders/useOrders')
 vi.mock('@shared/hooks/order/useQueueSummary/useQueueSummary')
 vi.mock('@shared/hooks/order/useSalesReport/useSalesReport')
@@ -43,7 +43,7 @@ describe('useOverviewFacade', () => {
     vi.mocked(useQueueSummary).mockReturnValue({} as never)
     vi.mocked(useSalesReport).mockReturnValue({} as never)
     vi.mocked(useSalesSeries).mockReturnValue({} as never)
-    vi.mocked(useTopCustomers).mockReturnValue({} as never)
+    vi.mocked(useTopConsumers).mockReturnValue({} as never)
 
     const { result } = renderHook(() => useOverviewFacade())
 
@@ -65,7 +65,7 @@ describe('useOverviewFacade', () => {
     vi.mocked(useQueueSummary).mockReturnValue({} as never)
     vi.mocked(useSalesReport).mockReturnValue({} as never)
     vi.mocked(useSalesSeries).mockReturnValue({} as never)
-    vi.mocked(useTopCustomers).mockReturnValue({} as never)
+    vi.mocked(useTopConsumers).mockReturnValue({} as never)
 
     const { result } = renderHook(() => useOverviewFacade())
 

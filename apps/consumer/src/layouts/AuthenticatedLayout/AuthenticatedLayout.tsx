@@ -1,12 +1,12 @@
 import { Navigate, Outlet, useLocation, useParams } from 'react-router'
 
 import { Box } from '@nino/ds/components/Box'
-import { useCustomerSession } from '@shared/hooks/useCustomerSession/useCustomerSession'
+import { useConsumerSession } from '@shared/hooks/useConsumerSession/useConsumerSession'
 
 export const AuthenticatedLayout = () => {
   const { slug } = useParams()
   const location = useLocation()
-  const { customer, isPending } = useCustomerSession()
+  const { consumer, isPending } = useConsumerSession()
 
   if (isPending) {
     return (
@@ -18,7 +18,7 @@ export const AuthenticatedLayout = () => {
     )
   }
 
-  if (!customer) {
+  if (!consumer) {
     const signIn = slug ? `/${slug}/entrar` : '/entrar'
     const returnTo = `${location.pathname}${location.search}${location.hash}`
 

@@ -118,14 +118,14 @@ export const queryKeys = {
     diningTables: (tenantId: string) =>
       [...queryKeys.tenant.all(tenantId), 'dining-tables'] as const,
   },
-  customers: {
-    all: (tenantId: string) => ['customers', tenantId] as const,
+  consumers: {
+    all: (tenantId: string) => ['consumers', tenantId] as const,
     list: (tenantId: string, search?: string) =>
-      [...queryKeys.customers.all(tenantId), 'list', search ?? null] as const,
-    detail: (tenantId: string, customerId: string) =>
-      [...queryKeys.customers.all(tenantId), 'detail', customerId] as const,
+      [...queryKeys.consumers.all(tenantId), 'list', search ?? null] as const,
+    detail: (tenantId: string, consumerId: string) =>
+      [...queryKeys.consumers.all(tenantId), 'detail', consumerId] as const,
     top: (tenantId: string, metric: string) =>
-      [...queryKeys.customers.all(tenantId), 'top', metric] as const,
+      [...queryKeys.consumers.all(tenantId), 'top', metric] as const,
   },
   team: {
     all: (tenantId: string) => ['team', tenantId] as const,

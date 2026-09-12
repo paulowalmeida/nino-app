@@ -2,7 +2,6 @@ import { ReactNode } from 'react'
 
 import { Popover as ArkPopover } from '@ark-ui/react/popover'
 import { Portal } from '@ark-ui/react/portal'
-
 import { mergeClasses } from '@ds/lib/mergeClasses/mergeClasses'
 
 import styles from './Popover.module.css'

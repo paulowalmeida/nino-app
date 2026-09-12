@@ -1,4 +1,4 @@
-import type { OtpCredentials } from '@shared/types/customer/otp-credentials'
+import type { OtpCredentials } from '@shared/types/consumer/otp-credentials'
 import { toE164 } from '@utils/phone'
 import type { SignInChannel } from '@pages/sign-in/types/SignInChannel.type'
 

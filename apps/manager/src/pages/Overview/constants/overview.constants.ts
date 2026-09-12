@@ -1,4 +1,4 @@
-export const TOP_CUSTOMERS_SKELETON_WIDTHS = ['92%', '74%', '58%', '43%', '31%']
+export const TOP_CONSUMERS_SKELETON_WIDTHS = ['92%', '74%', '58%', '43%', '31%']
 export const TOP_PRODUCTS_SKELETON_WIDTHS = ['92%', '74%', '58%', '43%', '31%']
 export const DAY_TALLY_SKELETON_ROWS = ['first', 'second', 'third', 'fourth']
 export const PAUSE_DURATION_OPTIONS = [

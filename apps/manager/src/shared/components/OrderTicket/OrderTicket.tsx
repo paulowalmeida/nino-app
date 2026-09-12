@@ -16,7 +16,7 @@ import type { Order } from '@shared/types/order/order'
 import type { OrderStatusKey } from '@shared/types/order/order-status-key'
 import { brl } from '@shared/utils/money/money'
 import { nextStep } from '@shared/utils/order-action-policy/order-action-policy'
-import { customerNameOf } from '@shared/utils/order-customer/order-customer'
+import { consumerNameOf } from '@shared/utils/order-consumer/order-consumer'
 import { orderDestination } from '@shared/utils/order-destination/order-destination'
 import { stageOf } from '@shared/utils/order-stage/order-stage'
 import { ticketNumber } from '@shared/utils/order-ticket/order-ticket'
@@ -113,7 +113,7 @@ export const OrderTicket = ({ order, onAdvance, isBusy }: OrderTicketProps) => {
           className={`${motion.lift} ${styles.body}`}
           aria-label={`Abrir pedido ${ticketNumber(order.orderNumber)}`}
         >
-          <p className={styles.customer}>{customerNameOf(order)}</p>
+          <p className={styles.consumer}>{consumerNameOf(order)}</p>
           <p className={styles.meta}>
             {CHANNEL_LABEL[order.channel]}
             {destination?.kind === 'table' && ` · ${destination.label}`}

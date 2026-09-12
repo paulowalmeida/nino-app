@@ -10,7 +10,7 @@ import { Input } from '@nino/ds/components/Input'
 import { Button } from '@nino/ds/components/Button'
 import { useStorefrontFacade } from '@pages/Storefront/facades/useStorefrontFacade/useStorefrontFacade'
 import { displayName, isOpen, storeInitials } from '@utils/store-info'
-import { firstName } from '@shared/utils/customer-name/customer-name'
+import { firstName } from '@shared/utils/consumer-name/consumer-name'
 import { formatPhone } from '@utils/phone'
 
 import styles from './StoreTopBar.module.css'
@@ -28,7 +28,7 @@ export const StoreTopBar = ({ slug, isDocked }: StoreTopBarProps) => {
     setCartOpen,
     search,
     setSearch,
-    customer,
+    consumer,
     logout,
     hours,
     isHoursPending,
@@ -56,9 +56,9 @@ export const StoreTopBar = ({ slug, isDocked }: StoreTopBarProps) => {
 
   /* o primeiro nome basta na barra: nome inteiro estoura a coluna e vira
      reticências, que não identificam ninguém */
-  const named = customer?.profileCompletedAt
-    ? (firstName(customer.name) ?? customer.name)
-    : formatPhone(customer?.phone ?? '')
+  const named = consumer?.profileCompletedAt
+    ? (firstName(consumer.name) ?? consumer.name)
+    : formatPhone(consumer?.phone ?? '')
 
   const isStoreOpen = isHoursPending || isOpen(store, hours)
 
@@ -168,7 +168,7 @@ export const StoreTopBar = ({ slug, isDocked }: StoreTopBarProps) => {
             )}
           </Button>
 
-          {customer ? (
+          {consumer ? (
             <Menu
               contentClassName={styles.menuPanel}
               trigger={
@@ -177,9 +177,9 @@ export const StoreTopBar = ({ slug, isDocked }: StoreTopBarProps) => {
                   className={`${styles.account} ${styles.accountEntry}`}
                   aria-label={`Sua conta — ${named}`}
                 >
-                  {customer.photoUrl ? (
+                  {consumer.photoUrl ? (
                     <img
-                      src={customer.photoUrl}
+                      src={consumer.photoUrl}
                       alt=""
                       className={styles.accountPhoto}
                       referrerPolicy="no-referrer"

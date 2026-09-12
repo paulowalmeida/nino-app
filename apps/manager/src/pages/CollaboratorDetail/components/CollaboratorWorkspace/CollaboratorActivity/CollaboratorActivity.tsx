@@ -31,7 +31,7 @@ const stamp = new Intl.DateTimeFormat('pt-BR', {
 
 const activityEntryAriaLabel = (entry: StaffActivityEntry): string =>
   `Pedido #${ticketNumber(entry.orderNumber)}, ` +
-  `${entry.customerName ?? 'Visitante'}, ` +
+  `${entry.consumerName ?? 'Visitante'}, ` +
   `${CHANNEL_LABEL[entry.channel]}, ${STATUS_LABEL[entry.status]}, ` +
   `${stamp.format(new Date(entry.createdAt))}, ${brl(entry.totalAmount)}`
 
@@ -81,7 +81,7 @@ export const CollaboratorActivity = ({
         <Table>
           <colgroup>
             <col className={styles.colTicket} />
-            <col className={styles.colCustomer} />
+            <col className={styles.colConsumer} />
             <col className={styles.colChannel} />
             <col className={styles.colStatus} />
             <col className={styles.colWhen} />
@@ -112,8 +112,8 @@ export const CollaboratorActivity = ({
                   #{ticketNumber(entry.orderNumber)}
                 </TableCell>
 
-                <TableCell className={styles.entryCustomer}>
-                  {entry.customerName ?? 'Visitante'}
+                <TableCell className={styles.entryConsumer}>
+                  {entry.consumerName ?? 'Visitante'}
                 </TableCell>
 
                 <TableCell className={styles.colRight}>

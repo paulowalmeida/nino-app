@@ -65,7 +65,7 @@ describe(toCounterSaleRequest.name, () => {
     expect(
       toCounterSaleRequest({
         ...counterSaleInputMock,
-        customerName: '',
+        consumerName: '',
         tableNumber: '',
       })
     ).toMatchObject({

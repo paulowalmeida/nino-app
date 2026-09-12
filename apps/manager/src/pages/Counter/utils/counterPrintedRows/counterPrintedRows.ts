@@ -9,7 +9,7 @@ export type PrintedRow = { label: string; value: string }
 
 type PrintedRowsParams = {
   channel: OrderChannel | null
-  customerName: string
+  consumerName: string
   tableNumber: string
   recipient: Recipient
   method: PaymentMethod | null
@@ -48,7 +48,7 @@ const paymentRow = (
 
 export const counterPrintedRows = ({
   channel,
-  customerName,
+  consumerName,
   tableNumber,
   recipient,
   method,
@@ -60,7 +60,7 @@ export const counterPrintedRows = ({
   const rows: PrintedRow[] = [
     { label: 'Como sai', value: COUNTER_CHANNEL_HINT[channel] },
   ]
-  const name = customerName.trim()
+  const name = consumerName.trim()
   const table = tableNumber.trim()
 
   if (channel === 'DELIVERY') {

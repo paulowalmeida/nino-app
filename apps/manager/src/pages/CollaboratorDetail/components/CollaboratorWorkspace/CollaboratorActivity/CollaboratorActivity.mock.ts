@@ -1,5 +1,5 @@
 export const collaboratorActivityMock = {
   orderId: 'order-1',
-  customerName: 'Cliente',
+  consumerName: 'Cliente',
   totalAmount: 42,
 }

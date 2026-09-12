@@ -73,7 +73,12 @@ const ChipPlayground = ({
 }
 
 export const Default: Story = {
-  args: { variant: 'toggle', selected: false, borderless: true, children: 'Pix' },
+  args: {
+    variant: 'toggle',
+    selected: false,
+    borderless: true,
+    children: 'Pix',
+  },
   render: ({ variant, selected, borderless, children }) => (
     <ChipPlayground
       key={`${variant}-${String(selected)}-${String(borderless)}`}

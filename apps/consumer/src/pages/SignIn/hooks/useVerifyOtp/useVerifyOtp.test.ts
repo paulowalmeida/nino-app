@@ -2,19 +2,19 @@ import { renderHook } from '@testing-library/react'
 import { describe, expect, it, vi } from 'vitest'
 
 import { queryKeys } from '@constants/query-keys'
-import type { Customer } from '@custom_types/customer/customer'
-import { customerAuthService } from '@shared/services/customer-auth/customer-auth.service'
+import type { Consumer } from '@custom_types/consumer/consumer'
+import { consumerAuthService } from '@shared/services/consumer-auth/consumer-auth.service'
 import { rememberSession } from '@utils/session-hint'
 
 import { useVerifyOtp } from './useVerifyOtp'
 import { useVerifyOtpMock } from './useVerifyOtp.mock'
 
-vi.mock('@shared/services/customer-auth/customer-auth.service')
+vi.mock('@shared/services/consumer-auth/consumer-auth.service')
 vi.mock('@utils/session-hint')
 
 const setQueryData = vi.fn()
 
-let onSuccess: ((customer: Customer) => void) | undefined
+let onSuccess: ((consumer: Consumer) => void) | undefined
 let mutationFn: ((input: unknown) => unknown) | undefined
 
 vi.mock('@tanstack/react-query', async (importOriginal) => {
@@ -43,20 +43,20 @@ describe('useVerifyOtp', () => {
       code: useVerifyOtpMock.code,
     })
     // Assert
-    expect(customerAuthService.verifyOtp).toHaveBeenCalledWith(
+    expect(consumerAuthService.verifyOtp).toHaveBeenCalledWith(
       useVerifyOtpMock.credentials,
       useVerifyOtpMock.code
     )
   })
 
-  it('remembers the session and caches the customer on success', () => {
+  it('remembers the session and caches the consumer on success', () => {
     // Arrange
     renderHook(() => useVerifyOtp())
-    const customer = useVerifyOtpMock.customer as unknown as Customer
+    const consumer = useVerifyOtpMock.consumer as unknown as Consumer
     // Act
-    onSuccess?.(customer)
+    onSuccess?.(consumer)
     // Assert
     expect(rememberSession).toHaveBeenCalled()
-    expect(setQueryData).toHaveBeenCalledWith(queryKeys.session.all, customer)
+    expect(setQueryData).toHaveBeenCalledWith(queryKeys.session.all, consumer)
   })
 })

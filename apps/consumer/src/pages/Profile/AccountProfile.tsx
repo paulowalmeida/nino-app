@@ -15,17 +15,17 @@ import { hasProfanity } from '@pages/Profile/utils/profanity/profanity'
 import styles from './AccountProfile.module.css'
 
 export const AccountProfile = () => {
-  const { customer, completeProfile, isCompletingProfile } = useProfileFacade()
+  const { consumer, completeProfile, isCompletingProfile } = useProfileFacade()
 
   // CONSTRAINT: conta aberta por telefone guarda o número no campo `name`
   // até a pessoa dizer como se chama — o formulário nasce vazio, não com o
   // telefone.
-  const savedName = customer?.profileCompletedAt
-    ? (customer?.name ?? '').trim()
+  const savedName = consumer?.profileCompletedAt
+    ? (consumer?.name ?? '').trim()
     : ''
 
   const [name, setName] = useState(savedName)
-  const [email, setEmail] = useState(customer?.email ?? '')
+  const [email, setEmail] = useState(consumer?.email ?? '')
 
   const trimmedName = name.trim()
   const trimmedEmail = email.trim()
@@ -35,7 +35,7 @@ export const AccountProfile = () => {
   // recusa o mesmo nome do outro lado.
   const nameClean = !hasProfanity(trimmedName)
   const changed =
-    trimmedName !== savedName || trimmedEmail !== (customer?.email ?? '')
+    trimmedName !== savedName || trimmedEmail !== (consumer?.email ?? '')
   const ready = trimmedName.length >= 2 && nameClean && emailValid && changed
 
   const handleSubmit = (event: React.FormEvent) => {

@@ -19,7 +19,7 @@ describe('DestinationStep', () => {
         {...destinationStepMock}
         channel="PICKUP"
         onChannel={vi.fn()}
-        onCustomerName={vi.fn()}
+        onConsumerName={vi.fn()}
         onTableNumber={vi.fn()}
         onRecipient={onRecipient}
         addressSuggestions={[]}
@@ -37,7 +37,7 @@ describe('DestinationStep', () => {
         {...destinationStepMock}
         channel="PICKUP"
         onChannel={vi.fn()}
-        onCustomerName={vi.fn()}
+        onConsumerName={vi.fn()}
         onTableNumber={vi.fn()}
         onRecipient={vi.fn()}
         addressSuggestions={[]}
@@ -58,7 +58,7 @@ describe('DestinationStep', () => {
       <DestinationStep
         {...destinationStepMock}
         onChannel={vi.fn()}
-        onCustomerName={vi.fn()}
+        onConsumerName={vi.fn()}
         onTableNumber={vi.fn()}
         onRecipient={vi.fn()}
         addressSuggestions={[]}

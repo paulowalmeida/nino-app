@@ -26,7 +26,7 @@ import motion from '@styles/motion.module.css'
  */
 export const SignInCompleteProfile = () => {
   const {
-    customer,
+    consumer,
     name,
     setName,
     phone,
@@ -36,9 +36,9 @@ export const SignInCompleteProfile = () => {
     finishProfileFailed,
   } = useSignInFacade()
 
-  const hasPhone = Boolean(customer?.phone)
-  const knownName = resolveProfileName(customer?.name ?? '')
-  const imported = Boolean(customer?.photoUrl) || Boolean(knownName)
+  const hasPhone = Boolean(consumer?.phone)
+  const knownName = resolveProfileName(consumer?.name ?? '')
+  const imported = Boolean(consumer?.photoUrl) || Boolean(knownName)
   const trimmedName = name.trim()
   const normalizedPhone = phone.trim()
   const phoneIsValid = !normalizedPhone || isCompletePhone(normalizedPhone)
@@ -69,9 +69,9 @@ export const SignInCompleteProfile = () => {
 
       {imported && (
         <Box className={styles.identity}>
-          {customer?.photoUrl && (
+          {consumer?.photoUrl && (
             <img
-              src={customer.photoUrl}
+              src={consumer.photoUrl}
               alt=""
               className={styles.identityPhoto}
               referrerPolicy="no-referrer"
@@ -81,8 +81,8 @@ export const SignInCompleteProfile = () => {
             {knownName && (
               <Text className={styles.identityName}>{knownName}</Text>
             )}
-            {customer?.email && (
-              <Text className={styles.identityContact}>{customer.email}</Text>
+            {consumer?.email && (
+              <Text className={styles.identityContact}>{consumer.email}</Text>
             )}
           </Box>
         </Box>

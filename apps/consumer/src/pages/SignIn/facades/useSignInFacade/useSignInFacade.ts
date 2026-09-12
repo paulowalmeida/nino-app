@@ -1,11 +1,11 @@
-import { useCustomerSession } from '@shared/hooks/useCustomerSession/useCustomerSession'
+import { useConsumerSession } from '@shared/hooks/useConsumerSession/useConsumerSession'
 import { useSignInBrand } from '@pages/sign-in/hooks/useSignInBrand/useSignInBrand'
 import { useSignInMutations } from '@pages/sign-in/hooks/useSignInMutations/useSignInMutations'
 import { useSignInStore } from '@pages/sign-in/states/sign-in/sign-in.store'
 
 export const useSignInFacade = () => {
   const { home, store } = useSignInBrand()
-  const { customer } = useCustomerSession()
+  const { consumer } = useConsumerSession()
   const clientState = useSignInStore()
   const mutations = useSignInMutations(
     home,
@@ -14,13 +14,13 @@ export const useSignInFacade = () => {
       goToCompleteProfile: clientState.goToCompleteProfile,
       onPhoneCodeRequested: clientState.goToCompletePhoneCode,
     },
-    customer
+    consumer
   )
 
   return {
     home,
     store,
-    customer,
+    consumer,
     step: clientState.step,
     channel: clientState.channel,
     setChannel: clientState.setChannel,

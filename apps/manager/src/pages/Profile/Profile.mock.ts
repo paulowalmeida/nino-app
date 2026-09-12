@@ -1,3 +1,5 @@
 export const profilePageMock = {
-  title: 'Meus dados',
+  headerText: 'profile header',
+  formText: 'profile form',
+  loadingText: 'profile loading',
 }

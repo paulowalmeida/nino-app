@@ -4,7 +4,7 @@ import { useForm, useWatch } from 'react-hook-form'
 import type { Address } from '@custom_types/address/address'
 import type { CartLine } from '@custom_types/cart/cart-line'
 import type { CheckoutFormValues } from '@pages/checkout/types/checkout/CheckoutFormValues.type'
-import type { Customer } from '@custom_types/customer/customer'
+import type { Consumer } from '@custom_types/consumer/consumer'
 import type { PublicDeliveryZone } from '@pages/checkout/types/delivery-zone/PublicDeliveryZone.type'
 import type { PaymentMethod } from '@custom_types/order/payment-method'
 import type { Store } from '@custom_types/store/store'
@@ -15,7 +15,7 @@ import { writeLastOrder } from '@utils/last-order'
 
 type UseCheckoutWorkflowParams = {
   store: Store | undefined
-  customer: Customer | null
+  consumer: Consumer | null
   addresses: Address[]
   zones: PublicDeliveryZone[]
   isLoadingZones: boolean
@@ -30,7 +30,7 @@ type UseCheckoutWorkflowParams = {
 /** WHY: concentra o formulário, a cotação e a criação em uma única instância. */
 export const useCheckoutWorkflow = ({
   store,
-  customer,
+  consumer,
   addresses,
   zones,
   isLoadingZones,
@@ -41,7 +41,7 @@ export const useCheckoutWorkflow = ({
   clearCart,
   slug,
 }: UseCheckoutWorkflowParams) => {
-  const isAuthenticated = customer !== null
+  const isAuthenticated = consumer !== null
   const paymentOptions = configuredPaymentOptions ?? ['CASH']
   const form = useForm<CheckoutFormValues>({
     defaultValues: { channel: 'DELIVERY', paymentMethod: 'CASH' },
@@ -133,7 +133,7 @@ export const useCheckoutWorkflow = ({
     onSubmit,
     isDelivery,
     isAuthenticated,
-    customer,
+    consumer,
     addresses,
     paymentMethod,
     paymentOptions,

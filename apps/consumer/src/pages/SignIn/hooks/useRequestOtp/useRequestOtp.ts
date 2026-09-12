@@ -1,10 +1,10 @@
 import { useMutation } from '@tanstack/react-query'
 
-import type { OtpCredentials } from '@shared/types/customer/otp-credentials'
-import { customerAuthService } from '@shared/services/customer-auth/customer-auth.service'
+import type { OtpCredentials } from '@shared/types/consumer/otp-credentials'
+import { consumerAuthService } from '@shared/services/consumer-auth/consumer-auth.service'
 
 export const useRequestOtp = () =>
   useMutation({
     mutationFn: (credentials: OtpCredentials) =>
-      customerAuthService.requestOtp(credentials),
+      consumerAuthService.requestOtp(credentials),
   })

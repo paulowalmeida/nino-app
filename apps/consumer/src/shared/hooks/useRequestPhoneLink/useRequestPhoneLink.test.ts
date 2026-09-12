@@ -1,12 +1,12 @@
 import { renderHook } from '@testing-library/react'
 import { describe, expect, it, vi } from 'vitest'
 
-import { customerAuthService } from '@shared/services/customer-auth/customer-auth.service'
+import { consumerAuthService } from '@shared/services/consumer-auth/consumer-auth.service'
 
 import { useRequestPhoneLink } from './useRequestPhoneLink'
 import { useRequestPhoneLinkMock } from './useRequestPhoneLink.mock'
 
-vi.mock('@shared/services/customer-auth/customer-auth.service')
+vi.mock('@shared/services/consumer-auth/consumer-auth.service')
 
 let mutationFn: ((input: unknown) => unknown) | undefined
 
@@ -30,7 +30,7 @@ describe('useRequestPhoneLink', () => {
     mutationFn?.(useRequestPhoneLinkMock.request)
 
     // Assert
-    expect(customerAuthService.requestPhoneLink).toHaveBeenCalledWith(
+    expect(consumerAuthService.requestPhoneLink).toHaveBeenCalledWith(
       useRequestPhoneLinkMock.request
     )
   })

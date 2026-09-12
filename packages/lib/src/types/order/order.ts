@@ -5,7 +5,7 @@ import { OrderStatusHistoryItem } from './order-status-history-item'
 export type Order = {
   id: string
   tenantId: string
-  customerId: string | null
+  consumerId: string | null
   deliveryAddressId: string | null
   channelId: string
   operatorId: string | null

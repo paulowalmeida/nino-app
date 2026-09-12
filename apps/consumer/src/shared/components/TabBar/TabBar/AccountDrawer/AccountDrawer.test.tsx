@@ -2,13 +2,13 @@ import { render, screen } from '@testing-library/react'
 import { MemoryRouter } from 'react-router'
 import { describe, expect, it, vi } from 'vitest'
 
-import { useCustomerSession } from '@shared/hooks/useCustomerSession/useCustomerSession'
+import { useConsumerSession } from '@shared/hooks/useConsumerSession/useConsumerSession'
 import { useLogout } from '@shared/hooks/useLogout/useLogout'
 import { useStoreTint } from '@shared/hooks/useStoreTint/useStoreTint'
 import { AccountDrawer } from './AccountDrawer'
 import { accountDrawerMock } from './AccountDrawer.mock'
 
-vi.mock('@shared/hooks/useCustomerSession/useCustomerSession')
+vi.mock('@shared/hooks/useConsumerSession/useConsumerSession')
 vi.mock('@shared/hooks/useLogout/useLogout')
 vi.mock('@shared/hooks/useStoreTint/useStoreTint')
 
@@ -21,8 +21,8 @@ const renderDrawer = () =>
 
 describe('AccountDrawer', () => {
   it('shows account destinations without querying domain collections', () => {
-    vi.mocked(useCustomerSession).mockReturnValue({
-      customer: accountDrawerMock.customer,
+    vi.mocked(useConsumerSession).mockReturnValue({
+      consumer: accountDrawerMock.consumer,
     } as never)
     vi.mocked(useLogout).mockReturnValue({ mutate: vi.fn() } as never)
     vi.mocked(useStoreTint).mockReturnValue('#123456')
@@ -35,7 +35,7 @@ describe('AccountDrawer', () => {
   })
 
   it('offers sign-in instead of private destinations to a visitor', () => {
-    vi.mocked(useCustomerSession).mockReturnValue({ customer: null } as never)
+    vi.mocked(useConsumerSession).mockReturnValue({ consumer: null } as never)
     vi.mocked(useLogout).mockReturnValue({ mutate: vi.fn() } as never)
     vi.mocked(useStoreTint).mockReturnValue(undefined)
 

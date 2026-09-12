@@ -10,7 +10,7 @@ vi.mock('@pages/sign-in/facades/useSignInFacade/useSignInFacade')
 
 const facadeWith = (overrides: Record<string, unknown>) =>
   vi.mocked(useSignInFacade).mockReturnValue({
-    customer: signInCompleteProfileMock.fromPhone,
+    consumer: signInCompleteProfileMock.fromPhone,
     name: '',
     setName: vi.fn(),
     phone: '',
@@ -37,7 +37,7 @@ describe('SignInCompleteProfile', () => {
   it('shows what google sent, to confirm instead of ask', () => {
     // Arrange
     facadeWith({
-      customer: signInCompleteProfileMock.fromGoogle,
+      consumer: signInCompleteProfileMock.fromGoogle,
       name: 'Ana Souza',
     })
 
@@ -53,7 +53,7 @@ describe('SignInCompleteProfile', () => {
   it('keeps the name editable even when it came from google', () => {
     // Arrange
     facadeWith({
-      customer: signInCompleteProfileMock.fromGoogle,
+      consumer: signInCompleteProfileMock.fromGoogle,
       name: 'Ana Souza',
     })
 
@@ -66,7 +66,7 @@ describe('SignInCompleteProfile', () => {
 
   it('asks for the phone only when the account has none', () => {
     // Arrange
-    facadeWith({ customer: signInCompleteProfileMock.withPhone })
+    facadeWith({ consumer: signInCompleteProfileMock.withPhone })
 
     // Act
     render(<SignInCompleteProfile />)

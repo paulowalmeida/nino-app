@@ -14,7 +14,7 @@
   @apply [font-family:var(--font-sans)];
 }
 
-.customer {
+.consumer {
   @apply font-bold text-sm text-gray-900 truncate;
 }
 

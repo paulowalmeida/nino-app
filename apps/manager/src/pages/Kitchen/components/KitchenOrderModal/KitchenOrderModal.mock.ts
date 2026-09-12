@@ -5,7 +5,7 @@ export const kitchenOrderModalOrderMock: Order = {
   id: 'order-1234',
   orderNumber: 1234,
   tenantId: 'tenant-1',
-  customerId: null,
+  consumerId: null,
   status: 'PREPARING',
   channel: 'TABLE_TAB',
   courierId: null,

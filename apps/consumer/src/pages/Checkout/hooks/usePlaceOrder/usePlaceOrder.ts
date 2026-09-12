@@ -3,7 +3,7 @@ import { useMutation } from '@tanstack/react-query'
 import type { CartLine } from '@custom_types/cart/cart-line'
 import type { CheckoutFormValues } from '@pages/checkout/types/checkout/CheckoutFormValues.type'
 import type { Store } from '@custom_types/store/store'
-import { customerOrderRequest } from '@pages/checkout/adapters/customerOrderRequest.adapter/customerOrderRequest.adapter'
+import { consumerOrderRequest } from '@pages/checkout/adapters/consumerOrderRequest.adapter/consumerOrderRequest.adapter'
 import { guestOrderRequest } from '@pages/checkout/adapters/guestOrderRequest.adapter/guestOrderRequest.adapter'
 import { orderService } from '@shared/services/order/order.service'
 
@@ -18,7 +18,7 @@ export const usePlaceOrder = (isAuthenticated: boolean) =>
     mutationFn: ({ values, store, cartLines }: PlaceOrderInput) =>
       isAuthenticated
         ? orderService.createMine(
-            customerOrderRequest(values, store, cartLines)
+            consumerOrderRequest(values, store, cartLines)
           )
         : orderService.createGuest(guestOrderRequest(values, store, cartLines)),
   })

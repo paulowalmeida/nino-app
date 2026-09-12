@@ -40,7 +40,7 @@ describe('useMyAddresses', () => {
     expect(queryOptions?.queryFn).toBe(addressService.listMine)
   })
 
-  it('stays disabled while there is no customer session', () => {
+  it('stays disabled while there is no consumer session', () => {
     // Arrange
     // Act
     renderHook(() => useMyAddresses(false))

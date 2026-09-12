@@ -4,7 +4,7 @@ import { filterTableTabs } from './filterTableTabs'
 import { tableTabSearchOrdersMock } from './filterTableTabs.mock'
 
 describe('filterTableTabs', () => {
-  it('filters comandas by customer name without case sensitivity', () => {
+  it('filters comandas by consumer name without case sensitivity', () => {
     expect(filterTableTabs(tableTabSearchOrdersMock, 'ana')).toEqual([
       tableTabSearchOrdersMock[0],
     ])

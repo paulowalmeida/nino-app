@@ -1,7 +1,7 @@
 export const reviewStepMock = {
   lines: [{ productId: 'p1', name: 'Café', quantity: 1, unitPrice: '10' }],
   channel: 'COUNTER' as const,
-  customerName: 'Ana',
+  consumerName: 'Ana',
   tableNumber: '2',
   recipient: {
     name: '',

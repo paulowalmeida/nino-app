@@ -7,7 +7,7 @@
 export type HttpClientConfig = {
   baseUrl: string
 
-  /** Endpoint que renova a sessão — ex.: `auth/refresh`, `customer/auth/refresh`. */
+  /** Endpoint que renova a sessão — ex.: `auth/refresh`, `consumer/auth/refresh`. */
   refreshPath: string
 
   /** Rotas onde 401 é resposta (credencial errada, refresh vencido) — nunca renova. */

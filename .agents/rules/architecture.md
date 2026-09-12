@@ -344,7 +344,7 @@ Names must describe the domain and responsibility:
 - `useCatalogStore` for catalog state;
 - `useCatalogFacade` for the UI-facing catalog boundary;
 - a Hook is named after what it returns, never after the library mechanism
-  behind it: `useCustomerDetail`, `useNewOrderAvailability`. The suffixes
+  behind it: `useConsumerDetail`, `useNewOrderAvailability`. The suffixes
   `Query` and `Mutation` are forbidden in a Hook name and are blocked by
   `enforce-hooks`;
 - one operation per file inside the owning state's

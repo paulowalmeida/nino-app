@@ -1,7 +1,7 @@
 import { usePause } from '@pages/Overview/hooks/usePause/usePause'
 import { usePauseActions } from '@pages/Overview/hooks/usePauseActions/usePauseActions'
 import { useStoreOpen } from '@pages/Overview/hooks/useStoreOpen/useStoreOpen'
-import { useTopCustomers } from '@pages/Overview/hooks/useTopCustomers/useTopCustomers'
+import { useTopConsumers } from '@pages/Overview/hooks/useTopConsumers/useTopConsumers'
 import { useOrders } from '@shared/hooks/order/useOrders/useOrders'
 import { useQueueSummary } from '@shared/hooks/order/useQueueSummary/useQueueSummary'
 import { useSalesReport } from '@shared/hooks/order/useSalesReport/useSalesReport'
@@ -9,7 +9,7 @@ import { useSalesSeries } from '@shared/hooks/order/useSalesSeries/useSalesSerie
 import { useCurrentTenant } from '@shared/hooks/session/useCurrentTenant/useCurrentTenant'
 import { useSessionStore } from '@shared/states/session/session.state'
 
-const TOP_CUSTOMERS_LIMIT = 5
+const TOP_CONSUMERS_LIMIT = 5
 
 export const useOverviewFacade = () => {
   const user = useSessionStore(({ user: currentUser }) => currentUser)
@@ -29,11 +29,11 @@ export const useOverviewFacade = () => {
     queueSummary: useQueueSummary(tenantId),
     salesSeries: useSalesSeries(tenantId, { period: 'week' }),
     salesReport: useSalesReport(tenantId, { period: 'week' }),
-    topCustomersSpent: useTopCustomers(tenantId, 'spent', TOP_CUSTOMERS_LIMIT),
-    topCustomersOrders: useTopCustomers(
+    topConsumersSpent: useTopConsumers(tenantId, 'spent', TOP_CONSUMERS_LIMIT),
+    topConsumersOrders: useTopConsumers(
       tenantId,
       'orders',
-      TOP_CUSTOMERS_LIMIT
+      TOP_CONSUMERS_LIMIT
     ),
   }
 }

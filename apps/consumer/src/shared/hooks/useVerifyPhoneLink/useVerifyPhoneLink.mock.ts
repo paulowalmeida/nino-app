@@ -1,12 +1,12 @@
-import type { Customer } from '@custom_types/customer/customer'
+import type { Consumer } from '@custom_types/consumer/consumer'
 
 export const useVerifyPhoneLinkMock: {
   request: { phone: string; code: string }
-  customer: Customer
+  consumer: Consumer
 } = {
   request: { phone: '+5591988881234', code: '123456' },
-  customer: {
-    id: 'customer-1',
+  consumer: {
+    id: 'consumer-1',
     name: 'Maria Silva',
     email: null,
     phone: '+5591988881234',

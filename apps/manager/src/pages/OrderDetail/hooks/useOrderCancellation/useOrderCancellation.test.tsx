@@ -27,7 +27,7 @@ describe('useOrderCancellation', () => {
     } as unknown as ReturnType<typeof useOrderStatus>)
   })
 
-  it('cancels the order carrying the reason the customer will read', async () => {
+  it('cancels the order carrying the reason the consumer will read', async () => {
     mutateAsync.mockResolvedValue({ id: orderCancellationMock.orderId })
     const { result } = renderCancellation()
 

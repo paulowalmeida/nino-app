@@ -42,7 +42,7 @@
   width: 5.5rem;
 }
 
-.colCustomer {
+.colConsumer {
   width: auto;
 }
 
@@ -71,7 +71,7 @@
   font-variant-numeric: tabular-nums;
 }
 
-.entryCustomer {
+.entryConsumer {
   @apply min-w-0 truncate text-sm font-semibold text-fg-strong;
 }
 

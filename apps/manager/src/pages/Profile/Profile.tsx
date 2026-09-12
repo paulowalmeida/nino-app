@@ -1,5 +1,4 @@
 import { Box } from '@nino/ds/components/Box'
-import { Eyebrow } from '@nino/ds/components/Eyebrow'
 
 import { ProfileForm } from './components/ProfileForm/ProfileForm'
 import { ProfileHeader } from './components/ProfileHeader/ProfileHeader'

@@ -15,7 +15,7 @@ describe(counterReadback.name, () => {
     )
   })
 
-  it('falls back to the customer and announces the change', () => {
+  it('falls back to the consumer and announces the change', () => {
     expect(counterReadback(counterReadbackCashMock)).toBe(
       `Retirada no balcão para o cliente. Paga com dinheiro, troco de ${brl(10)}.`
     )

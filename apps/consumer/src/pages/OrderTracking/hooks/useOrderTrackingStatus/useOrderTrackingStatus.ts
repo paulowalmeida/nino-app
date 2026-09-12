@@ -1,4 +1,4 @@
-import { useCustomerSession } from '@shared/hooks/useCustomerSession/useCustomerSession'
+import { useConsumerSession } from '@shared/hooks/useConsumerSession/useConsumerSession'
 import { useGuestOrderStatus } from '@hooks/useGuestOrderStatus/useGuestOrderStatus'
 import { isTerminal } from '@utils/order-journey'
 
@@ -11,19 +11,19 @@ export const useOrderTrackingStatus = (
   orderId: string | undefined,
   token: string | undefined
 ) => {
-  const { customer, isPending: isSessionPending } = useCustomerSession()
+  const { consumer, isPending: isSessionPending } = useConsumerSession()
   const {
     data: order,
     isPending,
     isError,
-  } = useGuestOrderStatus(orderId, token, !!customer)
+  } = useGuestOrderStatus(orderId, token, !!consumer)
 
   return {
     order,
     isPending,
     isSessionPending,
     isError,
-    canAsk: !!token || !!customer,
+    canAsk: !!token || !!consumer,
     done: order ? isTerminal(order.status) : false,
   }
 }

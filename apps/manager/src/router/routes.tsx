@@ -207,16 +207,16 @@ export const router = createBrowserRouter([
         path: 'clientes',
         loader: roleGuard(MANAGERS),
         lazy: () =>
-          import('@pages/Customers/Customers').then(({ Customers }) => ({
-            Component: Customers,
+          import('@pages/Consumers/Consumers').then(({ Consumers }) => ({
+            Component: Consumers,
           })),
       },
       {
-        path: 'clientes/:customerId',
+        path: 'clientes/:consumerId',
         loader: roleGuard(MANAGERS),
         lazy: () =>
-          import('@pages/CustomerDetail/CustomerDetail').then(
-            ({ CustomerDetail }) => ({ Component: CustomerDetail })
+          import('@pages/ConsumerDetail/ConsumerDetail').then(
+            ({ ConsumerDetail }) => ({ Component: ConsumerDetail })
           ),
       },
       {

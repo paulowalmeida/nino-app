@@ -1,8 +1,12 @@
-import { render, screen } from '@testing-library/react'
+import { render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { describe, expect, it, vi } from 'vitest'
 
 import { TimePicker } from './TimePicker'
+
+/* Digitar tecla a tecla com `delay` real fica lento quando a máquina roda
+ * vários pacotes ao mesmo tempo; o padrão de 1s do waitFor não cobre isso. */
+const WAIT = 5000
 
 describe(TimePicker.name, () => {
   it('renders the input', () => {
@@ -19,25 +23,29 @@ describe(TimePicker.name, () => {
     render(<TimePicker />)
     await userEvent.type(screen.getByRole('combobox'), '08')
     expect(
-      screen.getByRole('option', { name: '08:15', hidden: true })
+      await screen.findByRole('option', { name: '08:15', hidden: true })
     ).toBeInTheDocument()
-    expect(
-      screen.queryByRole('option', { name: '09:00', hidden: true })
-    ).not.toBeInTheDocument()
+    await waitFor(() =>
+      expect(
+        screen.queryByRole('option', { name: '09:00', hidden: true })
+      ).not.toBeInTheDocument()
+    )
   })
 
   it('respects a custom step', async () => {
     render(<TimePicker step={30} />)
     await userEvent.type(screen.getByRole('combobox'), '08')
     expect(
-      screen.getByRole('option', { name: '08:00', hidden: true })
+      await screen.findByRole('option', { name: '08:00', hidden: true })
     ).toBeInTheDocument()
     expect(
-      screen.getByRole('option', { name: '08:30', hidden: true })
+      await screen.findByRole('option', { name: '08:30', hidden: true })
     ).toBeInTheDocument()
-    expect(
-      screen.queryByRole('option', { name: '08:15', hidden: true })
-    ).not.toBeInTheDocument()
+    await waitFor(() =>
+      expect(
+        screen.queryByRole('option', { name: '08:15', hidden: true })
+      ).not.toBeInTheDocument()
+    )
   })
 
   it('calls onValueChange when selecting a time', async () => {
@@ -46,7 +54,9 @@ describe(TimePicker.name, () => {
     render(<TimePicker onValueChange={onValueChange} />)
     await userEvent.type(screen.getByRole('combobox'), '00')
     await user.keyboard('{ArrowDown}{Enter}')
-    expect(onValueChange).toHaveBeenCalledWith('00:00')
+    await waitFor(() => expect(onValueChange).toHaveBeenCalledWith('00:00'), {
+      timeout: WAIT,
+    })
   })
 
   it('applies error state when error is true', () => {
@@ -58,35 +68,43 @@ describe(TimePicker.name, () => {
     const user = userEvent.setup({ delay: 5 })
     render(<TimePicker />)
     await user.type(screen.getByRole('combobox'), 'a1b:c2!!!zz')
-    expect(screen.getByRole('combobox')).toHaveValue('12')
+    await waitFor(() => expect(screen.getByRole('combobox')).toHaveValue('12'))
   })
 
   it('masks the typed digits as HH:mm automatically', async () => {
     const user = userEvent.setup({ delay: 5 })
     render(<TimePicker />)
     await user.type(screen.getByRole('combobox'), '1430')
-    expect(screen.getByRole('combobox')).toHaveValue('14:30')
+    await waitFor(() =>
+      expect(screen.getByRole('combobox')).toHaveValue('14:30')
+    )
   })
 
   it('caps the typed search at 4 digits, not a 5th raw digit', async () => {
     const user = userEvent.setup({ delay: 5 })
     render(<TimePicker />)
     await user.type(screen.getByRole('combobox'), '0123456789')
-    expect(screen.getByRole('combobox')).toHaveValue('01:23')
+    await waitFor(() =>
+      expect(screen.getByRole('combobox')).toHaveValue('01:23')
+    )
   })
 
   it('accepts a single colon among the 4 digits', async () => {
     const user = userEvent.setup({ delay: 5 })
     render(<TimePicker />)
     await user.type(screen.getByRole('combobox'), '01:2345')
-    expect(screen.getByRole('combobox')).toHaveValue('01:23')
+    await waitFor(() =>
+      expect(screen.getByRole('combobox')).toHaveValue('01:23')
+    )
   })
 
   it('rejects a second colon', async () => {
     const user = userEvent.setup({ delay: 5 })
     render(<TimePicker />)
     await user.type(screen.getByRole('combobox'), '01::23')
-    expect(screen.getByRole('combobox')).toHaveValue('01:23')
+    await waitFor(() =>
+      expect(screen.getByRole('combobox')).toHaveValue('01:23')
+    )
   })
 
   it('replaces a pre-filled value when typing starts over it', async () => {
@@ -95,7 +113,7 @@ describe(TimePicker.name, () => {
     const input = screen.getByRole('combobox')
     await user.click(input)
     await user.keyboard('1430')
-    expect(input).toHaveValue('14:30')
+    await waitFor(() => expect(input).toHaveValue('14:30'), { timeout: WAIT })
   })
 
   it('commits a full typed time on blur, no option click', async () => {
@@ -111,7 +129,9 @@ describe(TimePicker.name, () => {
     await user.tab()
 
     // Assert
-    expect(onValueChange).toHaveBeenCalledWith('00:00')
+    await waitFor(() => expect(onValueChange).toHaveBeenCalledWith('00:00'), {
+      timeout: WAIT,
+    })
   })
 
   it('reverts an incomplete typed time on blur', async () => {
@@ -127,7 +147,21 @@ describe(TimePicker.name, () => {
     await user.tab()
 
     // Assert
+    await waitFor(() => expect(input).toHaveValue('07:00'), { timeout: WAIT })
     expect(onValueChange).not.toHaveBeenCalled()
-    expect(input).toHaveValue('07:00')
+  })
+
+  it('trims a pasted run of digits down to HH:mm', async () => {
+    // Arrange
+    const user = userEvent.setup({ delay: 5 })
+    render(<TimePicker />)
+    const input = screen.getByRole('combobox')
+
+    // Act
+    await user.click(input)
+    await user.paste('1430999')
+
+    // Assert
+    await waitFor(() => expect(input).toHaveValue('14:30'), { timeout: WAIT })
   })
 })

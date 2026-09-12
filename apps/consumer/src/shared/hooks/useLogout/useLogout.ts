@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 
 import { queryKeys } from '@constants/query-keys'
-import { customerAuthService } from '@shared/services/customer-auth/customer-auth.service'
+import { consumerAuthService } from '@shared/services/consumer-auth/consumer-auth.service'
 import { forgetSession } from '@utils/session-hint'
 
 /**
@@ -13,7 +13,7 @@ export const useLogout = () => {
   const queryClient = useQueryClient()
 
   return useMutation({
-    mutationFn: customerAuthService.logout,
+    mutationFn: consumerAuthService.logout,
     onSuccess: () => {
       forgetSession()
       queryClient.setQueryData(queryKeys.session.all, null)

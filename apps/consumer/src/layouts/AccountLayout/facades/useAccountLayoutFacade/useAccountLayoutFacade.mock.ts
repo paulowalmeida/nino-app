@@ -1,8 +1,8 @@
-import type { Customer } from '@custom_types/customer/customer'
+import type { Consumer } from '@custom_types/consumer/consumer'
 
 export const useAccountLayoutFacadeMock = {
-  customer: {
-    id: 'customer-1',
+  consumer: {
+    id: 'consumer-1',
     name: 'Maria Silva',
     phone: '11999999999',
     email: 'maria@example.com',
@@ -13,5 +13,5 @@ export const useAccountLayoutFacadeMock = {
     profileCompletedAt: '2024-01-01T00:00:00.000Z',
     createdAt: '2024-01-01T00:00:00.000Z',
     updatedAt: '2024-01-01T00:00:00.000Z',
-  } satisfies Customer,
+  } satisfies Consumer,
 }

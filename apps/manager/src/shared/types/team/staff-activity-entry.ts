@@ -5,7 +5,7 @@ export type StaffActivityEntry = {
   id: string
   orderId: string
   orderNumber: number
-  customerName: string | null
+  consumerName: string | null
   channel: OrderChannel
   status: OrderStatusKey
   createdAt: string

@@ -22,7 +22,7 @@ import {
   nextStep,
   previousStep,
 } from '@shared/utils/order-action-policy/order-action-policy'
-import { customerNameOf } from '@shared/utils/order-customer/order-customer'
+import { consumerNameOf } from '@shared/utils/order-consumer/order-consumer'
 import { ticketNumber } from '@shared/utils/order-ticket/order-ticket'
 
 import motion from '@styles/motion.module.css'
@@ -155,7 +155,7 @@ export const KitchenCard = ({
           </Badge>
         )}
         <Text as="span" className={styles.name}>
-          {customerNameOf(order)}
+          {consumerNameOf(order)}
         </Text>
         {canChangeCook ? (
           <Menu

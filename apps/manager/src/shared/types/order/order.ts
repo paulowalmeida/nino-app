@@ -11,7 +11,7 @@ export type Order = {
   orderNumber: number
   pickupCode?: string | null
   tenantId: string
-  customerId: string | null
+  consumerId: string | null
   status: OrderStatusKey
   channel: OrderChannel
   courierId: string | null
@@ -27,7 +27,7 @@ export type Order = {
   paymentStatus: PaymentStatus
   changeFor: string | null
   cancelReason: string | null
-  cancelledBy: 'CUSTOMER' | 'TENANT' | 'BACKOFFICE' | null
+  cancelledBy: 'CONSUMER' | 'TENANT' | 'BACKOFFICE' | null
   guestName: string | null
   guestPhone: string | null
   guestStreet: string | null

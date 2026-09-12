@@ -5,8 +5,8 @@ import { OrderDetailAside } from './OrderDetailAside'
 import { orderDetailAsideMock } from './OrderDetailAside.mock'
 
 vi.mock(
-  '@pages/OrderDetail/components/OrderDetailAside/OrderCustomerBlock/OrderCustomerBlock',
-  () => ({ OrderCustomerBlock: () => <div>customer</div> })
+  '@pages/OrderDetail/components/OrderDetailAside/OrderConsumerBlock/OrderConsumerBlock',
+  () => ({ OrderConsumerBlock: () => <div>consumer</div> })
 )
 vi.mock(
   '@pages/OrderDetail/components/OrderDetailAside/OrderPaymentBlock/OrderPaymentBlock',
@@ -25,7 +25,7 @@ describe('OrderDetailAside', () => {
   it('stacks the four blocks of the order column in reading order', () => {
     const { container } = render(<OrderDetailAside />)
 
-    expect(screen.getByText('customer')).toBeInTheDocument()
+    expect(screen.getByText('consumer')).toBeInTheDocument()
     expect(screen.getByText('payment')).toBeInTheDocument()
     expect(screen.getByText('progress')).toBeInTheDocument()
     expect(screen.getByText('actions')).toBeInTheDocument()

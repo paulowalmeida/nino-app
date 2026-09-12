@@ -106,7 +106,24 @@ describe('createApi', () => {
     await api.remove('tenants/1/staff/user-1')
 
     // Assert
-    expect(client.delete).toHaveBeenCalledWith('tenants/1/staff/user-1')
+    expect(client.delete).toHaveBeenCalledWith(
+      'tenants/1/staff/user-1',
+      undefined
+    )
+  })
+
+  it('remove: forwards the optional body to client.delete', async () => {
+    // Arrange
+    const client = buildClient()
+    const api = createApi(client)
+
+    // Act
+    await api.remove('tenants/1/staff/user-1', { reason: 'offboarding' })
+
+    // Assert
+    expect(client.delete).toHaveBeenCalledWith('tenants/1/staff/user-1', {
+      reason: 'offboarding',
+    })
   })
 
   it('resolves with whatever the underlying client resolves', async () => {

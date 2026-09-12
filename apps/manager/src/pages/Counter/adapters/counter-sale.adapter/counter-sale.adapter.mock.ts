@@ -4,6 +4,6 @@ export const counterSaleInputMock: CounterSaleInput = {
   lines: [{ productId: 'item-1', name: 'Café', unitPrice: '10', quantity: 2 }],
   channel: 'COUNTER',
   paymentMethod: 'CASH',
-  customerName: 'Ana',
+  consumerName: 'Ana',
   tableNumber: '4',
 }

@@ -12,7 +12,7 @@ export type CounterState = {
   step: CounterStep
   channel: OrderChannel | null
   chosenPaymentMethod: PaymentMethod | null
-  customerName: string
+  consumerName: string
   tableNumber: string
   recipient: Recipient
   changeFor: string
@@ -24,7 +24,7 @@ export type CounterState = {
   setStep: (step: CounterStep) => void
   setChannel: (channel: OrderChannel) => void
   setChosenPaymentMethod: (method: PaymentMethod | null) => void
-  setCustomerName: (name: string) => void
+  setConsumerName: (name: string) => void
   setTableNumber: (table: string) => void
   setRecipient: (patch: Partial<Recipient>) => void
   setChangeFor: (value: string) => void

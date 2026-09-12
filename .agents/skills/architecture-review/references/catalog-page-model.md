@@ -13,7 +13,7 @@ Running `node .agents/enforcement/check-test-structure.mjs
 apps/manager/src/pages/Catalog` prints the current list.
 
 For the **file layout** of a finished domain, read the tree below and look at
-`pages/CustomerDetail`, `pages/NewOrder`, or `pages/NewProduct`, which pass
+`pages/ConsumerDetail`, `pages/NewOrder`, or `pages/NewProduct`, which pass
 `node .agents/enforcement/verify-page-feature.mjs <feature>`.
 
 Never copy page names, accidental markup, or domain rules from any of them.
@@ -88,8 +88,8 @@ src/
 ```
 
 A Hook is named after the data or command it returns, never after the
-TanStack mechanism behind it: `useCustomerDetail`, `useCustomersList`,
-`useNewOrderAvailability` — not `useCustomerDetailQuery` or
+TanStack mechanism behind it: `useConsumerDetail`, `useConsumersList`,
+`useNewOrderAvailability` — not `useConsumerDetailQuery` or
 `useCatalogMutations`. `enforce-hooks` blocks `export const use...Query` and
 `use...Mutation`, and this naming rule is the reason.
 

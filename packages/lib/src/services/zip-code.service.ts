@@ -14,28 +14,6 @@ type ViaCepResponse = {
   erro?: boolean | string
 }
 
-type CepRuaAddress = {
-  cep?: string
-  logradouro?: string
-  nome?: string
-  bairro?: string
-  cidade?: string
-  uf?: string
-}
-
-type CepRuaSearchResponse = {
-  resultados?: CepRuaAddress[]
-}
-
-const comparable = (value: string): string =>
-  value
-    .normalize('NFD')
-    .replace(/\p{Diacritic}/gu, '')
-    .toLocaleLowerCase('pt-BR')
-
-const addressSearchQuery = (street: string): string =>
-  street.trim().replace(/([A-Za-zÀ-ÿ])\s+(\d)/g, '$1-$2')
-
 export const onlyDigits = (value: string): string => value.replace(/\D/g, '')
 
 /**
@@ -43,7 +21,7 @@ export const onlyDigits = (value: string): string => value.replace(/\D/g, '')
  * code, so a missing address is a null result rather than a thrown error.
  *
  * Shared by every app that asks for a Brazilian address: the manager, when a
- * store is created, and the storefront, when a customer saves where to
+ * store is created, and the storefront, when a consumer saves where to
  * deliver. Same source in both, so the two never disagree about what a zip
  * code means.
  */
@@ -67,42 +45,41 @@ export const lookupZipCode = async (
   }
 }
 
+/**
+ * ViaCEP's reverse lookup answers a plain array (empty when nothing matches
+ * or the UF is invalid) at /ws/{uf}/{city}/{street}/json/ and matches street
+ * as a substring, so a partial street name is enough. It rejects a street
+ * shorter than 3 characters with an HTTP 400 HTML page instead of JSON, so
+ * that case is guarded before the request is made.
+ */
 export const searchAddress = async (
   state: string,
   city: string,
   street: string
 ): Promise<AddressSearchResult[]> => {
-  if (!state || !city || street.trim().length < 3) return []
+  const trimmedStreet = street.trim()
+  if (!state || !city || trimmedStreet.length < 3) return []
 
-  const query = addressSearchQuery(street)
+  const path = [state, city, trimmedStreet]
+    .map((segment) => encodeURIComponent(segment))
+    .join('/')
+
   const data = await ky
-    .get('https://ceprua.com.br/api/buscar', { searchParams: { q: query } })
-    .json<CepRuaSearchResponse>()
+    .get(`https://viacep.com.br/ws/${path}/json/`)
+    .json<ViaCepResponse[]>()
     .catch(() => null)
 
-  const seen = new Set<string>()
-  return (data?.resultados ?? []).flatMap((item) => {
+  return (data ?? []).flatMap((item) => {
     const zipCode = item.cep ?? ''
-    const resultCity = item.cidade ?? ''
-    const resultState = item.uf ?? ''
+    if (!zipCode) return []
 
-    if (
-      !zipCode ||
-      seen.has(zipCode) ||
-      comparable(resultCity) !== comparable(city) ||
-      resultState !== state.toUpperCase()
-    ) {
-      return []
-    }
-
-    seen.add(zipCode)
     return [
       {
         zipCode,
-        street: item.logradouro ?? item.nome ?? '',
+        street: item.logradouro ?? '',
         neighborhood: item.bairro ?? '',
-        city: resultCity,
-        state: resultState,
+        city: item.localidade ?? '',
+        state: item.uf ?? '',
       },
     ]
   })

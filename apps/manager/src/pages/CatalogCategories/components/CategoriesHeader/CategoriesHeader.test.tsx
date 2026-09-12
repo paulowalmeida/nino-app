@@ -1,28 +1,29 @@
-import { MemoryRouter } from 'react-router'
-
 import { render, screen } from '@testing-library/react'
 import { describe, expect, it, vi } from 'vitest'
 
 import { CategoriesHeader } from '@pages/CatalogCategories/components/CategoriesHeader/CategoriesHeader'
+import { categoriesHeaderMock } from '@pages/CatalogCategories/components/CategoriesHeader/CategoriesHeader.mock'
 import { CATEGORIES_DESCRIPTION } from '@pages/CatalogCategories/constants/catalog-categories.constants'
 
-vi.mock('@pages/CatalogCategories/components/CategoriesHeader/CreateCategoryForm/CreateCategoryForm', () => ({
-  CreateCategoryForm: () => <div>create-category-form</div>,
-}))
+vi.mock(
+  '@pages/CatalogCategories/components/CategoriesHeader/CreateCategoryForm/CreateCategoryForm',
+  () => ({
+    CreateCategoryForm: () => <div>{categoriesHeaderMock.createFormText}</div>,
+  })
+)
 
 describe(CategoriesHeader.name, () => {
-  it('presents navigation, category guidance, and creation', () => {
-    render(
-      <MemoryRouter>
-        <CategoriesHeader />
-      </MemoryRouter>
-    )
+  it('presents category guidance and creation', () => {
+    // Arrange & Act
+    render(<CategoriesHeader />)
 
-    expect(screen.getByRole('link', { name: 'Cardápio' })).toBeInTheDocument()
+    // Assert
     expect(
-      screen.getByRole('heading', { name: 'Como o cardápio se organiza' })
+      screen.getByRole('heading', { name: categoriesHeaderMock.title })
     ).toBeInTheDocument()
     expect(screen.getByText(CATEGORIES_DESCRIPTION)).toBeInTheDocument()
-    expect(screen.getByText('create-category-form')).toBeInTheDocument()
+    expect(
+      screen.getByText(categoriesHeaderMock.createFormText)
+    ).toBeInTheDocument()
   })
 })

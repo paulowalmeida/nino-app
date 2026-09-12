@@ -5,7 +5,7 @@ import { Modal } from '@nino/ds/components/Modal'
 import { Text } from '@nino/ds/components/Text'
 import type { Order } from '@shared/types/order/order'
 import type { OrderChannel } from '@shared/types/order/order-channel'
-import { customerNameOf } from '@shared/utils/order-customer/order-customer'
+import { consumerNameOf } from '@shared/utils/order-consumer/order-consumer'
 import {
   orderDestination,
 } from '@shared/utils/order-destination/order-destination'
@@ -46,7 +46,7 @@ export const KitchenOrderModal = ({
       body={
         order && (
           <Box direction="column" gap={4}>
-            {order.guestName && <Text>{customerNameOf(order)}</Text>}
+            {order.guestName && <Text>{consumerNameOf(order)}</Text>}
 
             <Box as="ul" direction="column" gap={1.5}>
               {order.items.map((item) => (

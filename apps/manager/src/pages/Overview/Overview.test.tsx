@@ -9,7 +9,7 @@ vi.mock('@pages/Overview/components/OverviewHeader/OverviewHeader', () => ({ Ove
 vi.mock('@pages/Overview/components/PauseSwitch/PauseSwitch', () => ({ PauseSwitch: () => <div>pause</div> }))
 vi.mock('@pages/Overview/components/QueueBoard/QueueBoard', () => ({ QueueBoard: () => <div>queue</div> }))
 vi.mock('@pages/Overview/components/SalesTrend/SalesTrend', () => ({ SalesTrend: () => <div>sales trend</div> }))
-vi.mock('@pages/Overview/components/TopCustomers/TopCustomers', () => ({ TopCustomers: () => <div>customers</div> }))
+vi.mock('@pages/Overview/components/TopConsumers/TopConsumers', () => ({ TopConsumers: () => <div>consumers</div> }))
 vi.mock('@pages/Overview/components/TopProducts/TopProducts', () => ({ TopProducts: () => <div>products</div> }))
 
 describe('Overview', () => {

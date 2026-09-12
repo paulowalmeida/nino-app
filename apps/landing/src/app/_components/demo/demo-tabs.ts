@@ -7,7 +7,7 @@ export const tabs = [
   {
     id: "order",
     label: "🛒 Fazer o pedido",
-    side: "customer",
+    side: "consumer",
     caption:
       "A loja que seu cliente abre pelo link — cardápio com foto, sem app pra baixar.",
     Component: OrderTab,
@@ -15,7 +15,7 @@ export const tabs = [
   {
     id: "tracking",
     label: "🔔 Acompanhar",
-    side: "customer",
+    side: "consumer",
     caption:
       "Cada mudança de status vira aviso no WhatsApp, sem ninguém parar pra digitar.",
     Component: TrackingTab,

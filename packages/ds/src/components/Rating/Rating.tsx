@@ -27,7 +27,7 @@ type RatingProps = {
 }
 
 /**
- * Star rating — given by the customer, shown on the store.
+ * Star rating — given by the consumer, shown on the store.
  *
  * ```tsx
  * <Rating value={store.rating} allowHalf readOnly />

@@ -16,7 +16,7 @@ import styles from './DestinationStep.module.css'
 
 type DestinationStepProps = {
   channel: OrderChannel | null
-  customerName: string
+  consumerName: string
   tableNumber: string
   recipient: Recipient
   storeAddress: { city: string; state: string }
@@ -24,7 +24,7 @@ type DestinationStepProps = {
   addressSuggestions: AddressSearchResult[]
   isSearchingAddress: boolean
   onChannel: (channel: OrderChannel) => void
-  onCustomerName: (name: string) => void
+  onConsumerName: (name: string) => void
   onTableNumber: (table: string) => void
   onRecipient: (patch: Partial<Recipient>) => void
 }
@@ -49,7 +49,7 @@ const destinations = [
 
 export const DestinationStep = ({
   channel,
-  customerName,
+  consumerName,
   tableNumber,
   recipient,
   storeAddress,
@@ -57,7 +57,7 @@ export const DestinationStep = ({
   addressSuggestions,
   isSearchingAddress,
   onChannel,
-  onCustomerName,
+  onConsumerName,
   onTableNumber,
   onRecipient,
 }: DestinationStepProps) => (
@@ -116,8 +116,8 @@ export const DestinationStep = ({
             <Input
               placeholder="Ex.: Ana"
               aria-label="Nome de quem pediu (opcional)"
-              value={customerName}
-              onChange={(event) => onCustomerName(event.target.value)}
+              value={consumerName}
+              onChange={(event) => onConsumerName(event.target.value)}
             />
           </FormField>
           {channel === 'COUNTER' && (

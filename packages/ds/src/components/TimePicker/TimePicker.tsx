@@ -112,21 +112,11 @@ export function TimePicker({
     if (!input) return
 
     const selectAll = () => input.select()
-    const applyMask = () => {
-      const masked = maskTime(input.value)
-      if (masked !== input.value) input.value = masked
-      inputValueRef.current = masked
-      setInputValue(masked)
-    }
     input.addEventListener('focus', selectAll)
     input.addEventListener('click', selectAll)
-    /* O listener nativo roda no próprio input antes do listener delegado do
-     * React/Ark no root. Assim o Ark já recebe `14:30`, nunca o cru `1430`. */
-    input.addEventListener('input', applyMask)
     return () => {
       input.removeEventListener('focus', selectAll)
       input.removeEventListener('click', selectAll)
-      input.removeEventListener('input', applyMask)
     }
   }, [])
 
@@ -170,7 +160,6 @@ export function TimePicker({
       emptyMessage="Nenhum horário encontrado"
       className={className}
       isValidQuery={isValidTimeQuery}
-      maxLength={5}
       ariaLabel={ariaLabel}
     />
   )

@@ -5,7 +5,7 @@ import { useOrderTrackingStatus } from './useOrderTrackingStatus'
 import { useOrderTrackingStatusMock } from './useOrderTrackingStatus.mock'
 
 const sessionState = vi.hoisted(() => ({
-  customer: null as unknown,
+  consumer: null as unknown,
   pending: false,
 }))
 const orderState = vi.hoisted(() => ({
@@ -14,9 +14,9 @@ const orderState = vi.hoisted(() => ({
   error: false,
 }))
 
-vi.mock('@shared/hooks/useCustomerSession/useCustomerSession', () => ({
-  useCustomerSession: () => ({
-    customer: sessionState.customer,
+vi.mock('@shared/hooks/useConsumerSession/useConsumerSession', () => ({
+  useConsumerSession: () => ({
+    consumer: sessionState.consumer,
     isPending: sessionState.pending,
   }),
 }))
@@ -32,7 +32,7 @@ vi.mock('@utils/order-journey', () => ({
 }))
 describe('useOrderTrackingStatus', () => {
   beforeEach(() => {
-    sessionState.customer = null
+    sessionState.consumer = null
     sessionState.pending = false
     orderState.data = undefined
     orderState.pending = false
@@ -50,8 +50,8 @@ describe('useOrderTrackingStatus', () => {
     expect(result.current.done).toBe(false)
   })
 
-  it('allows lookup for an authenticated customer without a token', () => {
-    sessionState.customer = { id: 'customer-1' }
+  it('allows lookup for an authenticated consumer without a token', () => {
+    sessionState.consumer = { id: 'consumer-1' }
 
     const { result } = renderHook(() =>
       useOrderTrackingStatus(useOrderTrackingStatusMock.orderId, undefined)
@@ -70,7 +70,7 @@ describe('useOrderTrackingStatus', () => {
     expect(result.current.done).toBe(true)
   })
 
-  it('keeps lookup disabled without a token or customer', () => {
+  it('keeps lookup disabled without a token or consumer', () => {
     const { result } = renderHook(() =>
       useOrderTrackingStatus(useOrderTrackingStatusMock.orderId, undefined)
     )

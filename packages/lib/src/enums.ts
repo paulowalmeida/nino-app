@@ -2,7 +2,7 @@ export enum GlobalRole {
   ADMIN = 'ADMIN',
   SUPPORT = 'SUPPORT',
   OWNER = 'GLOBAL_OWNER',
-  CUSTOMER = 'CUSTOMER',
+  CONSUMER = 'CONSUMER',
   COURIER = 'COURIER',
   GUEST = 'GUEST',
 }

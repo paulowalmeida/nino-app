@@ -8,7 +8,7 @@ import { useMenuItemAction } from '@pages/Storefront/hooks/useMenuItemAction/use
 import { useStorefrontCart } from '@pages/Storefront/hooks/useStorefrontCart/useStorefrontCart'
 import { useStorefrontSlug } from '@pages/Storefront/hooks/useStorefrontSlug/useStorefrontSlug'
 import { useHomeInteractionStore } from '@pages/Storefront/states/storefront/storefront.state'
-import { useCustomerSession } from '@shared/hooks/useCustomerSession/useCustomerSession'
+import { useConsumerSession } from '@shared/hooks/useConsumerSession/useConsumerSession'
 import { useLogout } from '@shared/hooks/useLogout/useLogout'
 
 export const useStorefrontFacade = (requestedSlug?: string) => {
@@ -33,7 +33,7 @@ export const useStorefrontFacade = (requestedSlug?: string) => {
   )
   const menuSections = useMenuSections(menuQuery.sections, search)
   const isDesktop = useIsDesktop()
-  const { customer } = useCustomerSession()
+  const { consumer } = useConsumerSession()
   const logout = useLogout()
 
   return {
@@ -53,7 +53,7 @@ export const useStorefrontFacade = (requestedSlug?: string) => {
     ...menuItemAction,
     ...menuSections,
     isDesktop,
-    customer,
+    consumer,
     logout: logout.mutate,
     isLoggingOut: logout.isPending,
     search,

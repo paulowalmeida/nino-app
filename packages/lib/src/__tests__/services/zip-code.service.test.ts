@@ -7,36 +7,35 @@ vi.mock('ky', () => ({
   default: { get: vi.fn() },
 }))
 
-const addressResponse = {
-  resultados: [
-    {
-      cep: '67140-650',
-      nome: 'Travessa WE-69',
-      bairro: 'Coqueiro',
-      cidade: 'Ananindeua',
-      uf: 'PA',
-    },
-  ],
-}
+const addressResponse = [
+  {
+    cep: '67140-650',
+    logradouro: 'Travessa WE-69',
+    bairro: 'Coqueiro',
+    localidade: 'Ananindeua',
+    uf: 'PA',
+  },
+]
 
 describe('searchAddress', () => {
   beforeEach(() => {
     vi.mocked(ky.get).mockReset()
     vi.mocked(ky.get).mockReturnValue({
       json: vi.fn().mockResolvedValue(addressResponse),
-    } as never)
+    } as unknown as ReturnType<typeof ky.get>)
   })
 
-  it('normalizes street codes for the textual-search provider', async () => {
+  it('queries the ViaCEP reverse lookup with the encoded path', async () => {
     await searchAddress('PA', 'Ananindeua', 'WE 69')
 
-    expect(ky.get).toHaveBeenCalledWith('https://ceprua.com.br/api/buscar', {
-      searchParams: { q: 'WE-69' },
-    })
+    const expectedUrl = 'https://viacep.com.br/ws/PA/Ananindeua/WE%2069/json/'
+    expect(ky.get).toHaveBeenCalledWith(expectedUrl)
   })
 
-  it('returns only results for the delivery city', async () => {
-    await expect(searchAddress('PA', 'Ananindeua', 'WE 69')).resolves.toEqual([
+  it('returns the matched address results', async () => {
+    const result = searchAddress('PA', 'Ananindeua', 'WE 69')
+
+    await expect(result).resolves.toEqual([
       {
         zipCode: '67140-650',
         street: 'Travessa WE-69',
@@ -45,5 +44,12 @@ describe('searchAddress', () => {
         state: 'PA',
       },
     ])
+  })
+
+  it('returns empty when the street has fewer than 3 characters', async () => {
+    const result = searchAddress('PA', 'Ananindeua', 'we')
+
+    await expect(result).resolves.toEqual([])
+    expect(ky.get).not.toHaveBeenCalled()
   })
 })

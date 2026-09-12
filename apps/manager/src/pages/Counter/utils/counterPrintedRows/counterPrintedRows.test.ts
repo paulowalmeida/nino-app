@@ -13,7 +13,7 @@ describe(counterPrintedRows.name, () => {
     expect(
       counterPrintedRows({
         channel: null,
-        customerName: 'Ana',
+        consumerName: 'Ana',
         tableNumber: '',
         recipient: emptyRecipientMock,
         method: null,
@@ -27,7 +27,7 @@ describe(counterPrintedRows.name, () => {
     // Act
     const rows = counterPrintedRows({
       channel: 'COUNTER',
-      customerName: 'Ana',
+      consumerName: 'Ana',
       tableNumber: '12',
       recipient: emptyRecipientMock,
       method: null,
@@ -46,7 +46,7 @@ describe(counterPrintedRows.name, () => {
     // Act
     const rows = counterPrintedRows({
       channel: 'DELIVERY',
-      customerName: 'Ana',
+      consumerName: 'Ana',
       tableNumber: '',
       recipient: deliveryRecipientMock,
       method: null,
@@ -67,7 +67,7 @@ describe(counterPrintedRows.name, () => {
     // Act
     const rows = counterPrintedRows({
       channel: 'PICKUP',
-      customerName: 'Ana',
+      consumerName: 'Ana',
       tableNumber: '',
       recipient: emptyRecipientMock,
       method: null,
@@ -83,7 +83,7 @@ describe(counterPrintedRows.name, () => {
     // Act
     const rows = counterPrintedRows({
       channel: 'PICKUP',
-      customerName: 'Ana',
+      consumerName: 'Ana',
       tableNumber: '',
       recipient: emptyRecipientMock,
       method: 'CASH',
@@ -102,7 +102,7 @@ describe(counterPrintedRows.name, () => {
     // Act
     const rows = counterPrintedRows({
       channel: 'DELIVERY',
-      customerName: 'Ana',
+      consumerName: 'Ana',
       tableNumber: '',
       recipient: deliveryRecipientMock,
       method: 'CARD_ON_DELIVERY',

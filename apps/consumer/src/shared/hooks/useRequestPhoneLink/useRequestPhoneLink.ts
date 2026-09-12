@@ -1,10 +1,10 @@
 import { useMutation } from '@tanstack/react-query'
 
-import type { LinkPhoneRequest } from '@shared/types/customer/link-phone-request'
-import { customerAuthService } from '@shared/services/customer-auth/customer-auth.service'
+import type { LinkPhoneRequest } from '@shared/types/consumer/link-phone-request'
+import { consumerAuthService } from '@shared/services/consumer-auth/consumer-auth.service'
 
 export const useRequestPhoneLink = () =>
   useMutation({
     mutationFn: (data: LinkPhoneRequest) =>
-      customerAuthService.requestPhoneLink(data),
+      consumerAuthService.requestPhoneLink(data),
   })

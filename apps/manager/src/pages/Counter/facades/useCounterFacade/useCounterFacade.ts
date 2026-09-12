@@ -43,14 +43,14 @@ export const useCounterFacade = () => {
   const responsive = useCounterResponsive()
   const sheet = useCounterStore((state) => state.sheet)
   const step = useCounterStore((state) => state.step)
-  const customerName = useCounterStore((state) => state.customerName)
+  const consumerName = useCounterStore((state) => state.consumerName)
   const tableNumber = useCounterStore((state) => state.tableNumber)
   const changeFor = useCounterStore((state) => state.changeFor)
   const setSheet = useCounterStore((state) => state.setSheet)
   const setStep = useCounterStore((state) => state.setStep)
   const setChannel = useCounterStore((state) => state.setChannel)
   const setChosen = useCounterStore((state) => state.setChosenPaymentMethod)
-  const setCustomerName = useCounterStore((state) => state.setCustomerName)
+  const setConsumerName = useCounterStore((state) => state.setConsumerName)
   const setTableNumber = useCounterStore((state) => state.setTableNumber)
   const setRecipient = useCounterStore((state) => state.setRecipient)
   const setChangeFor = useCounterStore((state) => state.setChangeFor)
@@ -71,7 +71,7 @@ export const useCounterFacade = () => {
           : channel === 'PICKUP'
             ? hasPickupRecipient(recipient)
             : channel === 'COUNTER' &&
-              Boolean(customerName.trim() || tableNumber.trim())
+              Boolean(consumerName.trim() || tableNumber.trim())
         : step === 'payment'
           ? selection.method !== null && selection.isChangeValid
           : true
@@ -107,7 +107,7 @@ export const useCounterFacade = () => {
     canContinue,
     step,
     channel,
-    customerName,
+    consumerName,
     tableNumber,
     recipient,
     zones: availability.zones,
@@ -122,7 +122,7 @@ export const useCounterFacade = () => {
     setStep,
     setChannel,
     setChosen,
-    setCustomerName,
+    setConsumerName,
     setTableNumber,
     setRecipient,
     setChangeFor,

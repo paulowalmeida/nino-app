@@ -4,7 +4,7 @@ export const readyForPickupOrderMock: Order = {
   id: 'order-ready',
   orderNumber: 88,
   tenantId: 'tenant-1',
-  customerId: null,
+  consumerId: null,
   status: 'READY_FOR_PICKUP',
   channel: 'PICKUP',
   courierId: null,

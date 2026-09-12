@@ -1,8 +1,8 @@
-import { useEffect, useRef } from 'react'
+import { useCallback, useEffect, useRef } from 'react'
 import { useNavigate, useSearchParams } from 'react-router'
 
-import type { Customer } from '@custom_types/customer/customer'
-import type { OtpCredentials } from '@shared/types/customer/otp-credentials'
+import type { Consumer } from '@custom_types/consumer/consumer'
+import type { OtpCredentials } from '@shared/types/consumer/otp-credentials'
 import { useCompleteProfile } from '@shared/hooks/useCompleteProfile/useCompleteProfile'
 import { useRequestPhoneLink } from '@shared/hooks/useRequestPhoneLink/useRequestPhoneLink'
 import { useVerifyPhoneLink } from '@shared/hooks/useVerifyPhoneLink/useVerifyPhoneLink'
@@ -25,7 +25,7 @@ type SignInMutationsHandlers = {
  *
  * O Google não passa por aqui como mutação: é redirect (ver
  * `SignInGoogleButton`/`buildGoogleAuthUrl`), então quando ele termina a
- * sessão já chega pronta em `customer`, sem nenhum clique interno.
+ * sessão já chega pronta em `consumer`, sem nenhum clique interno.
  */
 export const useSignInMutations = (
   home: string,
@@ -34,7 +34,7 @@ export const useSignInMutations = (
     goToCompleteProfile,
     onPhoneCodeRequested,
   }: SignInMutationsHandlers,
-  customer: Customer | null
+  consumer: Consumer | null
 ) => {
   const navigate = useNavigate()
   const [searchParams] = useSearchParams()
@@ -44,22 +44,28 @@ export const useSignInMutations = (
   const verifyLink = useVerifyPhoneLink()
   const completeProfile = useCompleteProfile()
 
-  const goHome = () => void navigate(home, { replace: true })
+  const goHome = useCallback(
+    () => void navigate(home, { replace: true }),
+    [navigate, home]
+  )
 
-  const handleLoggedIn = (customer: Customer) => {
-    if (customer.profileCompletedAt) {
-      goHome()
-      return
-    }
-    goToCompleteProfile(resolveProfileName(customer.name))
-  }
+  const handleLoggedIn = useCallback(
+    (consumer: Consumer) => {
+      if (consumer.profileCompletedAt) {
+        goHome()
+        return
+      }
+      goToCompleteProfile(resolveProfileName(consumer.name))
+    },
+    [goHome, goToCompleteProfile]
+  )
 
   const handledInitialSession = useRef(false)
   useEffect(() => {
-    if (handledInitialSession.current || !customer) return
+    if (handledInitialSession.current || !consumer) return
     handledInitialSession.current = true
-    handleLoggedIn(customer)
-  }, [customer, handleLoggedIn])
+    handleLoggedIn(consumer)
+  }, [consumer, handleLoggedIn])
 
   const requestCode = (credentials: OtpCredentials) =>
     request.mutate(credentials, { onSuccess: onCodeRequested })

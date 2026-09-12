@@ -5,7 +5,7 @@ import { Heading } from '@nino/ds/components/Heading'
 import { Icon } from '@nino/ds/components/Icon'
 import { Text } from '@nino/ds/components/Text'
 import { useAccountLayoutFacade } from '../../facades/useAccountLayoutFacade/useAccountLayoutFacade'
-import { firstName } from '@shared/utils/customer-name/customer-name'
+import { firstName } from '@shared/utils/consumer-name/consumer-name'
 import { greeting } from '@shared/utils/greeting/greeting'
 
 import styles from './AccountHeader.module.css'
@@ -20,11 +20,11 @@ export const AccountHeader = () => {
   const { slug } = useParams()
   const home = slug ? `/${slug}` : '/'
 
-  const { customer } = useAccountLayoutFacade()
+  const { consumer } = useAccountLayoutFacade()
 
-  if (!customer) return null
+  if (!consumer) return null
 
-  const name = customer.profileCompletedAt ? firstName(customer.name) : null
+  const name = consumer.profileCompletedAt ? firstName(consumer.name) : null
 
   return (
     <Box as="header" className={`${motion.settle} ${styles.header}`}>
@@ -42,7 +42,7 @@ export const AccountHeader = () => {
           {name ? `, ${name}` : ''}
         </Heading>
         <Text className={styles.since}>
-          na casa desde {since.format(new Date(customer.createdAt))}
+          na casa desde {since.format(new Date(consumer.createdAt))}
         </Text>
       </Box>
     </Box>
