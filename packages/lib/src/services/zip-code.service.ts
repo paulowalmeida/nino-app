@@ -16,6 +16,35 @@ type ViaCepResponse = {
 
 export const onlyDigits = (value: string): string => value.replace(/\D/g, '')
 
+const STREET_TYPE_PATTERN =
+  /^(rua|avenida|av|travessa|tv|alameda|estrada|rodovia|praca|beco|largo|passagem|via)$/
+
+const normalizeStreetSearchText = (value: string): string =>
+  value
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .toLocaleLowerCase('pt-BR')
+    .replace(/[^a-z0-9]+/g, ' ')
+    .trim()
+
+const buildViaCepSearchTerm = (street: string): string => {
+  const streetTokens = street.trim().split(/\s+/)
+  const streetTypeIndex = streetTokens.findIndex((token) =>
+    STREET_TYPE_PATTERN.test(normalizeStreetSearchText(token))
+  )
+  const orderedTokens =
+    streetTypeIndex > 0
+      ? [
+          streetTokens[streetTypeIndex],
+          ...streetTokens.filter((_, index) => index !== streetTypeIndex),
+        ]
+      : streetTokens
+
+  return orderedTokens
+    .map((token) => token.replace(/^(.*?)-\d+$/, '$1-'))
+    .join(' ')
+}
+
 /**
  * ViaCEP answers 200 with `{ erro: true }` for a well-formed but unknown zip
  * code, so a missing address is a null result rather than a thrown error.
@@ -46,11 +75,10 @@ export const lookupZipCode = async (
 }
 
 /**
- * ViaCEP's reverse lookup answers a plain array (empty when nothing matches
- * or the UF is invalid) at /ws/{uf}/{city}/{street}/json/ and matches street
- * as a substring, so a partial street name is enough. It rejects a street
- * shorter than 3 characters with an HTTP 400 HTML page instead of JSON, so
- * that case is guarded before the request is made.
+ * CONSTRAINT: ViaCEP's reverse lookup answers a plain array (empty when
+ * nothing matches or the UF is invalid) at /ws/{uf}/{city}/{street}/json/.
+ * The provider can return an empty result for a more specific numeric suffix,
+ * so the request uses a compatible base term and refines the response locally.
  */
 export const searchAddress = async (
   state: string,
@@ -60,7 +88,8 @@ export const searchAddress = async (
   const trimmedStreet = street.trim()
   if (!state || !city || trimmedStreet.length < 3) return []
 
-  const path = [state, city, trimmedStreet]
+  const viaCepStreet = buildViaCepSearchTerm(trimmedStreet)
+  const path = [state, city, viaCepStreet]
     .map((segment) => encodeURIComponent(segment))
     .join('/')
 
@@ -69,18 +98,27 @@ export const searchAddress = async (
     .json<ViaCepResponse[]>()
     .catch(() => null)
 
-  return (data ?? []).flatMap((item) => {
-    const zipCode = item.cep ?? ''
-    if (!zipCode) return []
+  const searchTokens = normalizeStreetSearchText(trimmedStreet).split(' ')
 
-    return [
-      {
-        zipCode,
-        street: item.logradouro ?? '',
-        neighborhood: item.bairro ?? '',
-        city: item.localidade ?? '',
-        state: item.uf ?? '',
-      },
-    ]
-  })
+  return (data ?? [])
+    .filter((item) => {
+      const normalizedLogradouro = normalizeStreetSearchText(
+        item.logradouro ?? ''
+      )
+      return searchTokens.every((token) => normalizedLogradouro.includes(token))
+    })
+    .flatMap((item) => {
+      const zipCode = item.cep ?? ''
+      if (!zipCode) return []
+
+      return [
+        {
+          zipCode,
+          street: item.logradouro ?? '',
+          neighborhood: item.bairro ?? '',
+          city: item.localidade ?? '',
+          state: item.uf ?? '',
+        },
+      ]
+    })
 }
