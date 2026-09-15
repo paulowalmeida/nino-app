@@ -5,7 +5,7 @@ import { renderHook, waitFor } from '@testing-library/react'
 import { afterEach, describe, expect, it, vi } from 'vitest'
 
 import { menuQueryKey } from '@shared/hooks/product/useMenu/useMenu'
-import { queryKeys } from '@shared/lib/query-keys'
+import { queryKeys } from '@shared/lib/query-keys/query-keys'
 import { ProductService } from '@shared/services/product/product.service'
 
 import { useCreateProduct } from './useCreateProduct'
@@ -35,7 +35,7 @@ describe('useCreateProduct', () => {
       >
     )
     const image = new File([''], 'photo.png')
-    const { result } = renderHook(() => useCreateProduct('tenant-1'), {
+    const { result } = renderHook(() => useCreateProduct('unit-1'), {
       wrapper,
     })
 
@@ -43,7 +43,7 @@ describe('useCreateProduct', () => {
 
     await waitFor(() => expect(result.current.isSuccess).toBe(true))
     expect(ProductService.createItemWithImage).toHaveBeenCalledWith(
-      'tenant-1',
+      'unit-1',
       createProductRequestMock,
       image
     )
@@ -56,7 +56,7 @@ describe('useCreateProduct', () => {
       >
     )
     const invalidate = vi.spyOn(queryClient, 'invalidateQueries')
-    const { result } = renderHook(() => useCreateProduct('tenant-1'), {
+    const { result } = renderHook(() => useCreateProduct('unit-1'), {
       wrapper,
     })
 
@@ -64,17 +64,17 @@ describe('useCreateProduct', () => {
 
     await waitFor(() => expect(result.current.isSuccess).toBe(true))
     expect(invalidate).toHaveBeenCalledWith({
-      queryKey: menuQueryKey('tenant-1'),
+      queryKey: menuQueryKey('unit-1'),
     })
     expect(invalidate).toHaveBeenCalledWith({
-      queryKey: queryKeys.productCategories.all('tenant-1'),
+      queryKey: queryKeys.productCategories.all('unit-1'),
     })
     expect(invalidate).toHaveBeenCalledWith({
-      queryKey: queryKeys.products.all('tenant-1'),
+      queryKey: queryKeys.products.all('unit-1'),
     })
   })
 
-  it('falls back to an empty tenant scope without a tenant', async () => {
+  it('falls back to an empty unit scope without a unit', async () => {
     vi.mocked(ProductService.createItemWithImage).mockResolvedValue(
       createdProductMock as unknown as Awaited<
         ReturnType<typeof ProductService.createItemWithImage>

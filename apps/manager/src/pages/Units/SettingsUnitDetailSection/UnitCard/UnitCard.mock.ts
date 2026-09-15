@@ -1,4 +1,4 @@
-import type { TenantDetail } from '@shared/types/store/tenant-detail'
+import type { UnitDetail } from '@shared/types/store/unit-detail'
 
 export const unitCardMock = {
   unit: undefined,
@@ -11,7 +11,7 @@ export const unitCardMock = {
 }
 
 export const unitCardDetailMock = {
-  id: 'tenant-1',
+  id: 'unit-1',
   slug: 'loja-principal',
   customName: 'Loja principal',
   timezone: 'America/Sao_Paulo',
@@ -22,4 +22,4 @@ export const unitCardDetailMock = {
   neighborhood: 'Nazaré',
   city: 'Belém',
   state: 'PA',
-} as TenantDetail
+} as UnitDetail

@@ -1,4 +1,4 @@
 export const unitCashbackFacadeMock = {
-  tenantId: 'tenant-1',
+  unitId: 'unit-1',
   settings: { cashbackEnabled: true, cashbackPercent: 5 },
 }

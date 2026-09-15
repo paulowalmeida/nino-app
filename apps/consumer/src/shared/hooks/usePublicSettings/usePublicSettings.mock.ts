@@ -1,6 +1,6 @@
-import type { PublicTenantSettings } from '@custom_types/settings/public-tenant-settings'
+import type { PublicUnitSettings } from '@custom_types/settings/public-unit-settings'
 
-export const usePublicSettingsMock: { settings: PublicTenantSettings } = {
+export const usePublicSettingsMock: { settings: PublicUnitSettings } = {
   settings: {
     acceptedPaymentMethods: ['CASH'],
     preparationMinutes: 20,

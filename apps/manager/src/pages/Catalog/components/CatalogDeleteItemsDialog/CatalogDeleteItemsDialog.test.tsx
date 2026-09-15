@@ -17,7 +17,7 @@ describe(CatalogDeleteItemsDialog.name, () => {
   beforeEach(() => {
     vi.clearAllMocks()
     vi.mocked(useCatalogFacade).mockImplementation(() => ({
-      tenantId: 'tenant-1',
+      unitId: 'unit-1',
       idsPendingDelete: itemIds,
       isDeletingItems: false,
       closeDeleteItems: close,

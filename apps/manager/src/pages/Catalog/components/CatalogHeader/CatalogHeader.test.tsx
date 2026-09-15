@@ -25,8 +25,8 @@ describe(CatalogHeader.name, () => {
   beforeEach(() => {
     vi.clearAllMocks()
     vi.mocked(useCatalogFacade).mockReturnValue({
-      tenantId: 'tenant-1',
-      tenantRole: 'TENANT_OWNER',
+      unitId: 'unit-1',
+      unitRole: 'UNIT_OWNER',
       categoryId: null,
       setSearch: vi.fn(),
       setCategoryId: vi.fn(),
@@ -36,7 +36,7 @@ describe(CatalogHeader.name, () => {
     } as unknown as ReturnType<typeof useCatalogFacade>)
   })
 
-  it('connects tenant categories and header controls to its presentation', async () => {
+  it('connects unit categories and header controls to its presentation', async () => {
     const user = userEvent.setup()
 
     renderContainer()
@@ -54,8 +54,8 @@ describe(CatalogHeader.name, () => {
   it('debounces the typed term before triggering a search', async () => {
     const setSearch = vi.fn()
     vi.mocked(useCatalogFacade).mockReturnValue({
-      tenantId: 'tenant-1',
-      tenantRole: 'TENANT_OWNER',
+      unitId: 'unit-1',
+      unitRole: 'UNIT_OWNER',
       categoryId: null,
       setSearch,
       setCategoryId: vi.fn(),

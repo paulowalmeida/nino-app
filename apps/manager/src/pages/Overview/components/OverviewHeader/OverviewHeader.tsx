@@ -12,7 +12,7 @@ import motion from '@styles/motion.module.css'
 import styles from './OverviewHeader.module.css'
 
 export const OverviewHeader = () => {
-  const { firstName, timezone, tenant, storeOpen } = useOverviewFacade()
+  const { firstName, timezone, unit, storeOpen } = useOverviewFacade()
   const { isOpen } = storeOpen
 
   const lightStrip = isOpen
@@ -34,15 +34,15 @@ export const OverviewHeader = () => {
       <Box className={styles.plate}>
         <Box className={styles.identity}>
           <Heading level={1} size="2xl" className={styles.storeName}>
-            {tenant?.tenantName ?? 'Sua loja'}
+            {unit?.unitName ?? 'Sua loja'}
           </Heading>
 
           <StoreSign />
         </Box>
 
-        {tenant && (
+        {unit && (
           <a
-            href={storeUrlFor(tenant.tenantSlug, window.location.hostname)}
+            href={storeUrlFor(unit.unitSlug, window.location.hostname)}
             target="_blank"
             rel="noopener noreferrer"
             className={styles.visit}

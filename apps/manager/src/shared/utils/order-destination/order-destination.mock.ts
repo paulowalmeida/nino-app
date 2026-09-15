@@ -4,7 +4,7 @@ import type { OrderChannel } from '@shared/types/order/order-channel'
 export const counterOrderMock: Order = {
   id: 'order-1',
   orderNumber: 41,
-  tenantId: 'tenant-1',
+  unitId: 'unit-1',
   consumerId: null,
   status: 'PREPARING',
   channel: 'COUNTER',

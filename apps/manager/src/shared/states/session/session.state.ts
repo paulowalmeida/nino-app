@@ -1,19 +1,20 @@
 import { create } from 'zustand'
 
+import { registerSessionClear } from '@shared/services/session/session-bridge'
+import { clearSession } from '@shared/states/session/operations/clear-session/clear-session'
+import { loadSession } from '@shared/states/session/operations/load-session/load-session'
+import { setCurrentUnit } from '@shared/states/session/operations/set-current-unit/set-current-unit'
+import { setSession } from '@shared/states/session/operations/set-session/set-session'
 import type { SessionState } from '@shared/types/session/session-state'
-
-import { clearSession } from './operations/clear-session/clear-session'
-import { loadSession } from './operations/load-session/load-session'
-import { setCurrentTenant } from './operations/set-current-tenant/set-current-tenant'
-import { setSession } from './operations/set-session/set-session'
-
 
 export const useSessionStore = create<SessionState>((set, get) => ({
   user: null,
   memberships: [],
-  currentTenantId: null,
+  currentUnitId: null,
   setSession: (user, memberships) => setSession(set, user, memberships),
-  setCurrentTenant: (tenantId) => setCurrentTenant(set, tenantId),
+  setCurrentUnit: (unitId) => setCurrentUnit(set, unitId),
   clear: () => clearSession(set),
   load: () => loadSession(get),
 }))
+
+registerSessionClear(() => useSessionStore.getState().clear())

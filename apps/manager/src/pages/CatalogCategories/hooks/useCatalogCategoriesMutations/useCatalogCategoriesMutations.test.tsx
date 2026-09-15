@@ -8,7 +8,7 @@ import { ApiError } from '@nino/lib/utils/api-error'
 import { CATEGORIES_HAS_PRODUCTS_HINT } from '@pages/CatalogCategories/constants/catalog-categories.constants'
 import { useCatalogCategoriesMutations } from '@pages/CatalogCategories/hooks/useCatalogCategoriesMutations/useCatalogCategoriesMutations'
 import { useCatalogCategoriesStore } from '@pages/CatalogCategories/states/catalog-categories/catalog-categories.store'
-import { queryKeys } from '@shared/lib/query-keys'
+import { queryKeys } from '@shared/lib/query-keys/query-keys'
 import { CategoryService } from '@shared/services/category/category.service'
 import type { CategoryWithCount } from '@shared/types/product/category-with-count'
 import type { ProductCategory } from '@shared/types/product/product-category'
@@ -53,14 +53,14 @@ describe(useCatalogCategoriesMutations.name, () => {
     useCatalogCategoriesStore.getState().setCreateName('  Bebidas  ')
     const { wrapper } = createHarness()
     const { result } = renderHook(
-      () => useCatalogCategoriesMutations('tenant-1'),
+      () => useCatalogCategoriesMutations('unit-1'),
       { wrapper }
     )
 
     await act(() => result.current.submitCreate())
 
     expect(CategoryService.createCategory).toHaveBeenCalledWith(
-      'tenant-1',
+      'unit-1',
       'Bebidas'
     )
     expect(useCatalogCategoriesStore.getState().createName).toBe('')
@@ -70,7 +70,7 @@ describe(useCatalogCategoriesMutations.name, () => {
     useCatalogCategoriesStore.getState().setCreateName('   ')
     const { wrapper } = createHarness()
     const { result } = renderHook(
-      () => useCatalogCategoriesMutations('tenant-1'),
+      () => useCatalogCategoriesMutations('unit-1'),
       { wrapper }
     )
 
@@ -90,14 +90,14 @@ describe(useCatalogCategoriesMutations.name, () => {
     } as CategoryWithCount)
     const { wrapper } = createHarness()
     const { result } = renderHook(
-      () => useCatalogCategoriesMutations('tenant-1'),
+      () => useCatalogCategoriesMutations('unit-1'),
       { wrapper }
     )
 
     await act(() => result.current.confirmDelete())
 
     expect(CategoryService.removeCategory).toHaveBeenCalledWith(
-      'tenant-1',
+      'unit-1',
       'drinks'
     )
     expect(useCatalogCategoriesStore.getState().deleteTarget).toBeNull()
@@ -106,7 +106,7 @@ describe(useCatalogCategoriesMutations.name, () => {
   it('ignores deletion without a target and translates a constrained failure', async () => {
     const { wrapper } = createHarness()
     const { result } = renderHook(
-      () => useCatalogCategoriesMutations('tenant-1'),
+      () => useCatalogCategoriesMutations('unit-1'),
       { wrapper }
     )
 
@@ -137,21 +137,21 @@ describe(useCatalogCategoriesMutations.name, () => {
     const { queryClient, wrapper } = createHarness()
     const invalidateQueries = vi.spyOn(queryClient, 'invalidateQueries')
     const { result } = renderHook(
-      () => useCatalogCategoriesMutations('tenant-1'),
+      () => useCatalogCategoriesMutations('unit-1'),
       { wrapper }
     )
 
     await act(() => result.current.create.mutateAsync('Bebidas'))
 
     expect(CategoryService.createCategory).toHaveBeenCalledWith(
-      'tenant-1',
+      'unit-1',
       'Bebidas'
     )
     expect(invalidateQueries).toHaveBeenCalledWith({
-      queryKey: queryKeys.productCategories.all('tenant-1'),
+      queryKey: queryKeys.productCategories.all('unit-1'),
     })
     expect(invalidateQueries).toHaveBeenCalledWith({
-      queryKey: ['menu', 'tenant-1'],
+      queryKey: ['menu', 'unit-1'],
     })
   })
 
@@ -164,7 +164,7 @@ describe(useCatalogCategoriesMutations.name, () => {
     })
     const { wrapper } = createHarness()
     const { result } = renderHook(
-      () => useCatalogCategoriesMutations('tenant-1'),
+      () => useCatalogCategoriesMutations('unit-1'),
       { wrapper }
     )
 
@@ -174,12 +174,12 @@ describe(useCatalogCategoriesMutations.name, () => {
     await act(() => result.current.remove.mutateAsync('drinks'))
 
     expect(CategoryService.updateCategory).toHaveBeenCalledWith(
-      'tenant-1',
+      'unit-1',
       'drinks',
       'Geladas'
     )
     expect(CategoryService.removeCategory).toHaveBeenCalledWith(
-      'tenant-1',
+      'unit-1',
       'drinks'
     )
   })
@@ -196,14 +196,14 @@ describe(useCatalogCategoriesMutations.name, () => {
     useCatalogCategoriesStore.getState().setEditName('  Geladas  ')
     const { wrapper } = createHarness()
     const { result } = renderHook(
-      () => useCatalogCategoriesMutations('tenant-1'),
+      () => useCatalogCategoriesMutations('unit-1'),
       { wrapper }
     )
 
     await act(() => result.current.submitEdit())
 
     expect(CategoryService.updateCategory).toHaveBeenCalledWith(
-      'tenant-1',
+      'unit-1',
       'drinks',
       'Geladas',
       null
@@ -214,7 +214,7 @@ describe(useCatalogCategoriesMutations.name, () => {
   it('ignores edit without a target or an empty name', async () => {
     const { wrapper } = createHarness()
     const { result } = renderHook(
-      () => useCatalogCategoriesMutations('tenant-1'),
+      () => useCatalogCategoriesMutations('unit-1'),
       { wrapper }
     )
 
@@ -246,7 +246,7 @@ describe(useCatalogCategoriesMutations.name, () => {
     useCatalogCategoriesStore.getState().setEditName('Geladas')
     const { wrapper } = createHarness()
     const { result } = renderHook(
-      () => useCatalogCategoriesMutations('tenant-1'),
+      () => useCatalogCategoriesMutations('unit-1'),
       { wrapper }
     )
 
@@ -260,10 +260,10 @@ describe(useCatalogCategoriesMutations.name, () => {
       message: 'ok',
     })
     const { queryClient, wrapper } = createHarness()
-    const key = queryKeys.productCategories.list('tenant-1')
+    const key = queryKeys.productCategories.list('unit-1')
     const invalidateQueries = vi.spyOn(queryClient, 'invalidateQueries')
     const { result } = renderHook(
-      () => useCatalogCategoriesMutations('tenant-1'),
+      () => useCatalogCategoriesMutations('unit-1'),
       { wrapper }
     )
 
@@ -271,17 +271,17 @@ describe(useCatalogCategoriesMutations.name, () => {
       result.current.reorder.mutateAsync({ ids: ['desserts', 'drinks'] })
     )
 
-    expect(CategoryService.reorderCategories).toHaveBeenCalledWith('tenant-1', [
+    expect(CategoryService.reorderCategories).toHaveBeenCalledWith('unit-1', [
       'desserts',
       'drinks',
     ])
     expect(invalidateQueries).toHaveBeenCalledWith({ queryKey: key })
     expect(invalidateQueries).toHaveBeenCalledWith({
-      queryKey: queryKeys.products.all('tenant-1'),
+      queryKey: queryKeys.products.all('unit-1'),
     })
   })
 
-  it('falls back to an empty tenant scope without a current tenant', async () => {
+  it('falls back to an empty unit scope without a current unit', async () => {
     vi.mocked(CategoryService.createCategory).mockResolvedValue(
       {} as ProductCategory
     )

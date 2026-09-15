@@ -7,7 +7,7 @@ import { useProductDetailSubmission } from '@pages/ProductDetail/hooks/useProduc
 import { useProductRemoval } from '@pages/ProductDetail/hooks/useProductRemoval/useProductRemoval'
 import { useRemoveProductImage } from '@pages/ProductDetail/hooks/useRemoveProductImage/useRemoveProductImage'
 import { useUploadProductImage } from '@pages/ProductDetail/hooks/useUploadProductImage/useUploadProductImage'
-import { useCurrentTenant } from '@shared/hooks/session/useCurrentTenant/useCurrentTenant'
+import { useCurrentUnit } from '@shared/hooks/session/useCurrentUnit/useCurrentUnit'
 
 import { useProductDetailFacade } from './useProductDetailFacade'
 import { productDetailFacadeMock } from './useProductDetailFacade.mock'
@@ -16,7 +16,7 @@ vi.mock('react-router', async (importOriginal) => ({
   ...(await importOriginal<typeof import('react-router')>()),
   useParams: () => ({ productId: productDetailFacadeMock.productId }),
 }))
-vi.mock('@shared/hooks/session/useCurrentTenant/useCurrentTenant')
+vi.mock('@shared/hooks/session/useCurrentUnit/useCurrentUnit')
 vi.mock('@pages/ProductDetail/hooks/useProductDetail/useProductDetail')
 vi.mock(
   '@pages/ProductDetail/hooks/useProductDetailSubmission/useProductDetailSubmission'
@@ -64,22 +64,22 @@ describe('useProductDetailFacade', () => {
   })
 
   it('joins the item, its commands, and its photo under one boundary', () => {
-    vi.mocked(useCurrentTenant).mockReturnValue({
-      tenantId: productDetailFacadeMock.tenantId,
-    } as unknown as ReturnType<typeof useCurrentTenant>)
+    vi.mocked(useCurrentUnit).mockReturnValue({
+      unitId: productDetailFacadeMock.unitId,
+    } as unknown as ReturnType<typeof useCurrentUnit>)
 
     const { result } = renderHook(() => useProductDetailFacade())
 
     expect(useProductDetail).toHaveBeenCalledWith(
-      productDetailFacadeMock.tenantId,
+      productDetailFacadeMock.unitId,
       productDetailFacadeMock.productId
     )
     expect(useProductDetailSubmission).toHaveBeenCalledWith(
-      productDetailFacadeMock.tenantId,
+      productDetailFacadeMock.unitId,
       productDetailFacadeMock.productId
     )
     expect(useProductRemoval).toHaveBeenCalledWith(
-      productDetailFacadeMock.tenantId,
+      productDetailFacadeMock.unitId,
       productDetailFacadeMock.productId
     )
     expect(result.current.item).toBe(menuItemMock)
@@ -94,8 +94,8 @@ describe('useProductDetailFacade', () => {
     expect(result.current.isRemovingImage).toBe(true)
   })
 
-  it('asks nothing of the API with no tenant in session', () => {
-    vi.mocked(useCurrentTenant).mockReturnValue(null)
+  it('asks nothing of the API with no unit in session', () => {
+    vi.mocked(useCurrentUnit).mockReturnValue(null)
 
     renderHook(() => useProductDetailFacade())
 

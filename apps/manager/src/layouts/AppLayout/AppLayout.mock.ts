@@ -1,4 +1,4 @@
 export const appLayoutMock = {
-  tenantName: 'Loja Centro',
+  unitName: 'Loja Centro',
   collapsed: false,
 }

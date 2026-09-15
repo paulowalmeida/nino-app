@@ -16,7 +16,7 @@ export const EmployeesContent = () => {
     ({ id }: RosterEntry) => id === editingStaffId
   )
   const removing = facade.isRemoving ? facade.removingVariables : undefined
-  const canChangeRole = facade.tenant?.role === 'TENANT_OWNER'
+  const canChangeRole = facade.unit?.role === 'UNIT_OWNER'
 
   return (
     <>

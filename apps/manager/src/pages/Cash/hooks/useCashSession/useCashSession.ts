@@ -1,23 +1,23 @@
 import { useQuery } from '@tanstack/react-query'
 
-import { queryKeys } from '@shared/lib/query-keys'
+import { queryKeys } from '@shared/lib/query-keys/query-keys'
 import { CashService } from '@shared/services/cash/cash.service'
 
 export const useCashSession = (
-  tenantId: string | null,
+  unitId: string | null,
   isToday: boolean,
   dateKey: string
 ) => {
   const current = useQuery({
-    queryKey: queryKeys.cash.current(tenantId ?? ''),
-    queryFn: () => CashService.getCurrentSession(tenantId as string),
-    enabled: !!tenantId,
+    queryKey: queryKeys.cash.current(unitId ?? ''),
+    queryFn: () => CashService.getCurrentSession(unitId as string),
+    enabled: !!unitId,
   })
 
   const byDate = useQuery({
-    queryKey: queryKeys.cash.byDate(tenantId ?? '', dateKey),
-    queryFn: () => CashService.getSessionByDate(tenantId as string, dateKey),
-    enabled: !!tenantId && !isToday,
+    queryKey: queryKeys.cash.byDate(unitId ?? '', dateKey),
+    queryFn: () => CashService.getSessionByDate(unitId as string, dateKey),
+    enabled: !!unitId && !isToday,
   })
 
   const active = isToday ? current : byDate

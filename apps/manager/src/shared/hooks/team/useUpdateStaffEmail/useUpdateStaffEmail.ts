@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 
-import { queryKeys } from '@shared/lib/query-keys'
+import { queryKeys } from '@shared/lib/query-keys/query-keys'
 import { StaffService } from '@shared/services/staff/staff.service'
 
 type UpdateStaffEmailVariables = {
@@ -8,7 +8,7 @@ type UpdateStaffEmailVariables = {
   email: string
 }
 
-export const useUpdateStaffEmail = (tenantId: string | null) => {
+export const useUpdateStaffEmail = (unitId: string | null) => {
   const queryClient = useQueryClient()
 
   return useMutation({
@@ -17,10 +17,10 @@ export const useUpdateStaffEmail = (tenantId: string | null) => {
       errorTitle: 'O e-mail não foi alterado',
     },
     mutationFn: ({ userId, email }: UpdateStaffEmailVariables) =>
-      StaffService.updateStaffEmail(tenantId as string, userId, email),
+      StaffService.updateStaffEmail(unitId as string, userId, email),
     onSuccess: () => {
       void queryClient.invalidateQueries({
-        queryKey: queryKeys.team.all(tenantId ?? ''),
+        queryKey: queryKeys.team.all(unitId ?? ''),
       })
     },
   })

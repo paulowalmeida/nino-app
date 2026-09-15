@@ -6,7 +6,7 @@ import { describe, expect, it, vi } from 'vitest'
 
 import { useCollaboratorDetailAdmin } from '@pages/CollaboratorDetail/hooks/useCollaboratorDetailAdmin/useCollaboratorDetailAdmin'
 import { useCollaboratorDetailQuery } from '@pages/CollaboratorDetail/hooks/useCollaboratorDetailQuery/useCollaboratorDetailQuery'
-import { useCurrentTenant } from '@shared/hooks/session/useCurrentTenant/useCurrentTenant'
+import { useCurrentUnit } from '@shared/hooks/session/useCurrentUnit/useCurrentUnit'
 
 import { useCollaboratorDetailFacade } from './useCollaboratorDetailFacade'
 
@@ -16,7 +16,7 @@ vi.mock(
 vi.mock(
   '@pages/CollaboratorDetail/hooks/useCollaboratorDetailAdmin/useCollaboratorDetailAdmin'
 )
-vi.mock('@shared/hooks/session/useCurrentTenant/useCurrentTenant')
+vi.mock('@shared/hooks/session/useCurrentUnit/useCurrentUnit')
 
 const routeWrapper = ({ children }: { children: ReactNode }) => (
   <MemoryRouter initialEntries={['/colaboradores/user-1']}>
@@ -33,9 +33,9 @@ const emptyRouteWrapper = ({ children }: { children: ReactNode }) => (
 describe(useCollaboratorDetailFacade.name, () => {
   it('maps query and admin contracts without implementing behavior', () => {
     const member = { user: { id: 'user-1' } }
-    vi.mocked(useCurrentTenant).mockReturnValue({
-      tenantId: 'tenant-1',
-      role: 'TENANT_OWNER',
+    vi.mocked(useCurrentUnit).mockReturnValue({
+      unitId: 'unit-1',
+      role: 'UNIT_OWNER',
     } as never)
     vi.mocked(useCollaboratorDetailQuery).mockReturnValue({
       data: member,
@@ -51,19 +51,19 @@ describe(useCollaboratorDetailFacade.name, () => {
     expect(result.current.member).toBe(member)
     expect(result.current.roleLockHint).toBeUndefined()
     expect(useCollaboratorDetailQuery).toHaveBeenCalledWith(
-      'tenant-1',
+      'unit-1',
       'user-1'
     )
     expect(useCollaboratorDetailAdmin).toHaveBeenCalledWith(
-      'tenant-1',
-      'TENANT_OWNER',
+      'unit-1',
+      'UNIT_OWNER',
       member
     )
   })
 
   it('passes a null member to administration while query data is pending', () => {
-    vi.mocked(useCurrentTenant).mockReturnValue({
-      tenantId: 'tenant-1',
+    vi.mocked(useCurrentUnit).mockReturnValue({
+      unitId: 'unit-1',
       role: 'MANAGER',
     } as never)
     vi.mocked(useCollaboratorDetailQuery).mockReturnValue({
@@ -74,14 +74,14 @@ describe(useCollaboratorDetailFacade.name, () => {
     } as never)
     renderHook(() => useCollaboratorDetailFacade(), { wrapper: routeWrapper })
     expect(useCollaboratorDetailAdmin).toHaveBeenCalledWith(
-      'tenant-1',
+      'unit-1',
       'MANAGER',
       null
     )
   })
 
-  it('uses an empty scope when the route and current tenant are unavailable', () => {
-    vi.mocked(useCurrentTenant).mockReturnValue(null)
+  it('uses an empty scope when the route and current unit are unavailable', () => {
+    vi.mocked(useCurrentUnit).mockReturnValue(null)
     vi.mocked(useCollaboratorDetailQuery).mockReturnValue({
       data: undefined,
     } as never)

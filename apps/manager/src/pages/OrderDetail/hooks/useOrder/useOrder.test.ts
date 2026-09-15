@@ -15,18 +15,18 @@ vi.mock('@shared/services/order/order.service', () => ({
 }))
 
 describe('useOrder', () => {
-  it('configures a tenant-scoped detail query', async () => {
+  it('configures a unit-scoped detail query', async () => {
     vi.mocked(useQuery).mockReturnValue({
       data: undefined,
     } as unknown as ReturnType<typeof useQuery>)
 
-    useOrder(useOrderMock.tenantId, useOrderMock.orderId)
+    useOrder(useOrderMock.unitId, useOrderMock.orderId)
 
     expect(useQuery).toHaveBeenCalledWith(
       expect.objectContaining({
         queryKey: [
           'orders',
-          useOrderMock.tenantId,
+          useOrderMock.unitId,
           'detail',
           useOrderMock.orderId,
         ],
@@ -46,7 +46,7 @@ describe('useOrder', () => {
     ).resolves.toEqual({ id: useOrderMock.orderId })
   })
 
-  it('disables the query without a tenant', () => {
+  it('disables the query without a unit', () => {
     vi.mocked(useQuery).mockReturnValue({
       data: undefined,
     } as unknown as ReturnType<typeof useQuery>)

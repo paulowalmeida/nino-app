@@ -1,17 +1,23 @@
-import { describe, expect, it, vi } from 'vitest'
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
+import {
+  configureQueryClientMutationNotifications,
+  queryClient,
+} from './query-client'
 import { queryClientMutationMetaMock } from './query-client.mock'
 
-const { toast } = vi.hoisted(() => ({
-  toast: {
-    error: vi.fn(),
-    success: vi.fn(),
-  },
-}))
+const onError = vi.fn()
+const onSuccess = vi.fn()
 
-vi.mock('@nino/ds/components/Toast', () => ({ toast }))
+beforeEach(() => {
+  vi.clearAllMocks()
+  configureQueryClientMutationNotifications({ onError, onSuccess })
+})
 
-import { queryClient } from './query-client'
+afterEach(() => {
+  configureQueryClientMutationNotifications({})
+  queryClient.clear()
+})
 
 describe(queryClient.constructor.name, () => {
   it('configures the application query defaults', () => {
@@ -30,7 +36,7 @@ describe(queryClient.constructor.name, () => {
 
     await mutation.execute(undefined)
 
-    expect(toast.success).toHaveBeenCalledWith('Pedido salvo')
+    expect(onSuccess).toHaveBeenCalledWith(queryClientMutationMetaMock)
   })
 
   it('shows the configured error message after a mutation fails', async () => {
@@ -42,9 +48,6 @@ describe(queryClient.constructor.name, () => {
     })
 
     await expect(mutation.execute(undefined)).rejects.toThrow('failed')
-    expect(toast.error).toHaveBeenCalledWith(
-      'Falha ao salvar pedido',
-      'Tente de novo em instantes.'
-    )
+    expect(onError).toHaveBeenCalledWith(queryClientMutationMetaMock)
   })
 })

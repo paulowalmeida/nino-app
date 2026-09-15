@@ -21,21 +21,21 @@ import {
 } from '@shared/constants/order.constants'
 import type { PaymentMethod } from '@shared/types/order/payment-method'
 import type { ServiceRulesDraft } from '@shared/types/settings/service-rules-draft'
-import type { TenantSettings } from '@shared/types/settings/tenant-settings'
-import type { UpdateTenantSettingsRequest } from '@shared/types/settings/update-tenant-settings-request'
+import type { UnitSettings } from '@shared/types/settings/unit-settings'
+import type { UpdateUnitSettingsRequest } from '@shared/types/settings/update-unit-settings-request'
 import { riseDelay } from '@shared/utils/rise-delay/rise-delay'
 
 import motion from '@styles/motion.module.css'
 import local from './ServiceRules.module.css'
 
 export type ServiceRulesProps = {
-  settings: TenantSettings | undefined
+  settings: UnitSettings | undefined
   isPending: boolean
   isSaving: boolean
-  onSave: (data: UpdateTenantSettingsRequest) => void
+  onSave: (data: UpdateUnitSettingsRequest) => void
 }
 
-const toDraft = (settings: TenantSettings): ServiceRulesDraft => ({
+const toDraft = (settings: UnitSettings): ServiceRulesDraft => ({
   isDeliveryEnabled: settings.isDeliveryEnabled,
   isPickupEnabled: settings.isPickupEnabled,
   isCounterEnabled: settings.isCounterEnabled,
@@ -58,7 +58,7 @@ export const ServiceRules = ({
     EMPTY_SERVICE_RULES_DRAFT
   )
   const [isDirty, setDirty] = useState(false)
-  const [seed, setSeed] = useState<TenantSettings | undefined>(undefined)
+  const [seed, setSeed] = useState<UnitSettings | undefined>(undefined)
 
   /** Re-seeds the draft when the API sends a different snapshot. */
   if (settings && settings !== seed) {

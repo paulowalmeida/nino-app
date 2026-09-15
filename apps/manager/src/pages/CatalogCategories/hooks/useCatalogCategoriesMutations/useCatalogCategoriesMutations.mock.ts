@@ -1,5 +1,5 @@
 export const catalogCategoriesMutationsMock = {
-  tenantId: 'tenant-1',
+  unitId: 'unit-1',
   categoryName: 'Bebidas',
   categoryId: 'drinks',
 }

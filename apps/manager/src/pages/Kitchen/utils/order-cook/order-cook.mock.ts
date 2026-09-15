@@ -4,7 +4,7 @@ import type { StaffMember } from '@shared/types/team/staff-member'
 export const cookOrderMock: Order = {
   id: 'order-1',
   orderNumber: 1,
-  tenantId: 'tenant-1',
+  unitId: 'unit-1',
   consumerId: null,
   status: 'PREPARING',
   channel: 'COUNTER',
@@ -41,7 +41,6 @@ export const cookOrderMock: Order = {
       id: 'history-1',
       status: 'PREPARING',
       changedByRealm: 'OPERATIONAL',
-      changedById: 'cook-1',
       createdAt: '2026-08-01T12:05:00.000Z',
     },
   ],

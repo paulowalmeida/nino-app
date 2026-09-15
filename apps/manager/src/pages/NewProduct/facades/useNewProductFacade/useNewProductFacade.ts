@@ -1,13 +1,13 @@
 import { useCreateCategory } from '@pages/NewProduct/hooks/useCreateCategory/useCreateCategory'
 import { useNewProductSubmission } from '@pages/NewProduct/hooks/useNewProductSubmission/useNewProductSubmission'
 import { useProductCategoryOptions } from '@shared/hooks/product/useProductCategoryOptions/useProductCategoryOptions'
-import { useCurrentTenant } from '@shared/hooks/session/useCurrentTenant/useCurrentTenant'
+import { useCurrentUnit } from '@shared/hooks/session/useCurrentUnit/useCurrentUnit'
 
 export const useNewProductFacade = () => {
-  const tenantId = useCurrentTenant()?.tenantId ?? null
-  const categories = useProductCategoryOptions(tenantId)
-  const submission = useNewProductSubmission(tenantId)
-  const categoryCreation = useCreateCategory(tenantId)
+  const unitId = useCurrentUnit()?.unitId ?? null
+  const categories = useProductCategoryOptions(unitId)
+  const submission = useNewProductSubmission(unitId)
+  const categoryCreation = useCreateCategory(unitId)
 
   return {
     ...submission,

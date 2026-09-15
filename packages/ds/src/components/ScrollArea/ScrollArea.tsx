@@ -20,7 +20,7 @@ type ScrollAreaProps = {
   style?: CSSProperties
   /**
    * Scrollbar thumb colour. Defaults to the brand orange; takes any CSS
-   * colour, so a tenant with its own palette can pass a hex (`#0f766e`) or a
+   * colour, so a unit with its own palette can pass a hex (`#0f766e`) or a
    * token (`var(--color-fg-strong)`).
    */
   thumbColor?: string

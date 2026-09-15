@@ -1,9 +1,10 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useId, useRef, useState } from 'react'
 
 import { Alert } from '@nino/ds/components/Alert'
 import { Box } from '@nino/ds/components/Box'
 import { Button } from '@nino/ds/components/Button'
 import { Image } from '@nino/ds/components/Image'
+import { Input } from '@nino/ds/components/Input'
 import { Label } from '@nino/ds/components/Label'
 import { Text } from '@nino/ds/components/Text'
 import { ItemThumb } from '@shared/components/ItemThumb/ItemThumb'
@@ -41,6 +42,7 @@ export const ItemPhoto = ({
   onRemove,
 }: ItemPhotoProps) => {
   const inputRef = useRef<HTMLInputElement>(null)
+  const inputId = useId()
   const [isDragging, setIsDragging] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [chosen, setChosen] = useState<File | null>(null)
@@ -150,12 +152,12 @@ export const ItemPhoto = ({
 
       <Box gap={2} align="center" wrap>
         <Label
-          htmlFor="item-photo-input"
+          htmlFor={inputId}
           className={`${motion.press} ${styles.trigger}`}
         >
           {stagedUrl || cover ? 'Trocar foto' : 'Escolher arquivo'}
-          <input
-            id="item-photo-input"
+          <Input
+            id={inputId}
             ref={inputRef}
             type="file"
             accept={ACCEPT}

@@ -157,6 +157,19 @@ Do not equate coverage percentage with quality. Do not add tests for trivial imp
 
 Do not require every test to use a UI query, user event, mock, QueryClient, fake timer, or failure path when that mechanism is not part of its contract.
 
+## Implementation closure
+
+When a test finding is corrected during an authorized implementation, apply
+`.agents/rules/change-protocol.md`. The regression must protect the behavior at
+the narrowest stable boundary and cover the applicable state transitions, not
+only the delegation shape or the happy path. If the same blind spot can recur
+mechanically, update the relevant enforcement rule or test-structure check in
+the same change.
+
+Report test evidence by scope: the exact test files and commands run, coverage
+when required, and unrelated failures separately. Passing tests do not prove
+that an unexecuted workspace, Page, or behavior is covered.
+
 ## Final Review Gate
 
 Before PASS, confirm the contract, boundary, success/failure coverage when applicable, mock boundary, selector/assertion stability, setup/cleanup clarity, regression signal, and objective enforcement results were inspected. A PASS applies only to the reviewed test scope; unresolved required evidence produces **INCOMPLETE**.

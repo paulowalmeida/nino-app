@@ -3,21 +3,21 @@ import { describe, expect, it, vi } from 'vitest'
 
 import { useConsumersList } from '@pages/Consumers/hooks/useConsumersList/useConsumersList'
 import { useConsumersStore } from '@pages/Consumers/states/consumers/consumers.store'
-import { useCurrentTenant } from '@shared/hooks/session/useCurrentTenant/useCurrentTenant'
+import { useCurrentUnit } from '@shared/hooks/session/useCurrentUnit/useCurrentUnit'
 
 import { useConsumersFacade } from './useConsumersFacade'
 import { consumersFacadeMock } from './useConsumersFacade.mock'
 
-vi.mock('@shared/hooks/session/useCurrentTenant/useCurrentTenant')
+vi.mock('@shared/hooks/session/useCurrentUnit/useCurrentUnit')
 vi.mock('@pages/Consumers/hooks/useConsumersList/useConsumersList')
 
 describe('useConsumersFacade', () => {
   it('feeds the committed term to the list and exposes both contracts', () => {
     const loadMoreConsumers = vi.fn()
     useConsumersStore.getState().setSearch(consumersFacadeMock.search)
-    vi.mocked(useCurrentTenant).mockReturnValue({
-      tenantId: consumersFacadeMock.tenantId,
-    } as unknown as ReturnType<typeof useCurrentTenant>)
+    vi.mocked(useCurrentUnit).mockReturnValue({
+      unitId: consumersFacadeMock.unitId,
+    } as unknown as ReturnType<typeof useCurrentUnit>)
     vi.mocked(useConsumersList).mockReturnValue({
       rows: [{ id: 'consumer-1' }],
       total: 1,
@@ -30,7 +30,7 @@ describe('useConsumersFacade', () => {
     const { result } = renderHook(() => useConsumersFacade())
 
     expect(useConsumersList).toHaveBeenCalledWith(
-      consumersFacadeMock.tenantId,
+      consumersFacadeMock.unitId,
       consumersFacadeMock.search
     )
     expect(result.current.search).toBe(consumersFacadeMock.search)
@@ -43,9 +43,9 @@ describe('useConsumersFacade', () => {
     )
   })
 
-  it('asks the whole base without tenant or term', () => {
+  it('asks the whole base without unit or term', () => {
     useConsumersStore.getState().setSearch('')
-    vi.mocked(useCurrentTenant).mockReturnValue(null)
+    vi.mocked(useCurrentUnit).mockReturnValue(null)
     vi.mocked(useConsumersList).mockReturnValue({
       rows: [],
       total: undefined,

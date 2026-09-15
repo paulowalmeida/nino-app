@@ -8,12 +8,12 @@ export const setSessionUserMock: AuthUser = {
 
 export const setSessionMembershipsMock: Membership[] = [
   {
-    tenantId: 'tenant-1',
-    tenantName: 'Loja Centro',
-    tenantSlug: 'loja-centro',
+    unitId: 'unit-1',
+    unitName: 'Loja Centro',
+    unitSlug: 'loja-centro',
     companyId: 'company-1',
     companyName: 'Lanchonete do Zé',
-    role: 'TENANT_OWNER',
+    role: 'UNIT_OWNER',
     isCurrent: true,
   },
 ]

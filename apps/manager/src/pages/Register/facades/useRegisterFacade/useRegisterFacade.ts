@@ -1,6 +1,6 @@
 import { useAccountForm } from '@pages/Register/hooks/useAccountForm/useAccountForm'
 import { useCompanyForm } from '@pages/Register/hooks/useCompanyForm/useCompanyForm'
-import { useTenantForm } from '@pages/Register/hooks/useTenantForm/useTenantForm'
+import { useUnitForm } from '@pages/Register/hooks/useUnitForm/useUnitForm'
 import { useRegisterWizardStore } from '@pages/Register/states/register-wizard/register-wizard.store'
 
 export const useRegisterFacade = () => {
@@ -12,15 +12,15 @@ export const useRegisterFacade = () => {
     (state) => state.goToCompanyStep
   )
   const goToAccount = useRegisterWizardStore((state) => state.goToAccount)
-  const goToTenant = useRegisterWizardStore((state) => state.goToTenant)
+  const goToUnit = useRegisterWizardStore((state) => state.goToUnit)
   const resetWizard = useRegisterWizardStore((state) => state.reset)
 
   const accountForm = useAccountForm({
     defaultValues: account,
     onValid: goToCompany,
   })
-  const companyForm = useCompanyForm({ goToTenant })
-  const tenantForm = useTenantForm({ account, company })
+  const companyForm = useCompanyForm({ goToUnit })
+  const unitForm = useUnitForm({ account, company })
 
   return {
     step,
@@ -31,6 +31,6 @@ export const useRegisterFacade = () => {
     resetWizard,
     accountForm,
     companyForm,
-    tenantForm,
+    unitForm,
   }
 }

@@ -15,6 +15,22 @@ const isStaleChunkError = (error: unknown): boolean =>
   error instanceof Error &&
   /dynamically imported module/i.test(error.message)
 
+const readLastReload = (): number => {
+  try {
+    return Number(sessionStorage.getItem(RELOAD_FLAG) ?? 0)
+  } catch {
+    return 0
+  }
+}
+
+const rememberReload = (): void => {
+  try {
+    sessionStorage.setItem(RELOAD_FLAG, String(Date.now()))
+  } catch {
+    // WORKAROUND: storage can be unavailable while recovering from a chunk error.
+  }
+}
+
 export const RouteErrorBoundary = () => {
   const error = useRouteError()
   const isStaleChunk = isStaleChunkError(error)
@@ -22,10 +38,10 @@ export const RouteErrorBoundary = () => {
   useEffect(() => {
     if (!isStaleChunk) return
 
-    const lastReload = Number(sessionStorage.getItem(RELOAD_FLAG) ?? 0)
+    const lastReload = readLastReload()
     if (Date.now() - lastReload < RELOAD_COOLDOWN_MS) return
 
-    sessionStorage.setItem(RELOAD_FLAG, String(Date.now()))
+    rememberReload()
     window.location.reload()
   }, [isStaleChunk])
 

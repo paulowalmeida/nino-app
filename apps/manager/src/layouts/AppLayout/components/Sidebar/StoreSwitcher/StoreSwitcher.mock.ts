@@ -1,4 +1,4 @@
 export const storeSwitcherMock = {
-  currentTenantId: 'tenant-1',
+  currentUnitId: 'unit-1',
   collapsed: false,
 }

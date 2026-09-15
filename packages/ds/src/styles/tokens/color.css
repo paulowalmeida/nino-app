@@ -3,7 +3,7 @@
  * componente pintam. Trocar um tema significa repontar estes para outros
  * primitivos, sem tocar em nenhum componente.
  *
- * `brand` e os dois de campo são sobrescritos por tenant.
+ * `brand` e os dois de campo são sobrescritos por unit.
  */
 @theme static {
   /* Marca. O laranja mora aqui, e não num primitivo `orange-*`: aquele nome é
@@ -15,7 +15,7 @@
   --color-brand-strong: #e8540c;
   --color-brand-hover: color-mix(in srgb, var(--color-brand) 85%, black);
   --color-brand-active: color-mix(in srgb, var(--color-brand) 70%, black);
-  /* O que assenta em cima da marca — vira escuro num tenant de marca clara.
+  /* O que assenta em cima da marca — vira escuro num unit de marca clara.
      Serve a texto e a ícone. */
   --color-fg-on-brand: var(--color-white);
 

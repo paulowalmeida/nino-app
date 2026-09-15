@@ -4,13 +4,13 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { renderHook, waitFor } from '@testing-library/react'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 
-import { TenantService } from '@shared/services/tenant/tenant.service'
+import { UnitService } from '@shared/services/unit/unit.service'
 
 import { useMapLocation } from './useMapLocation'
-import { mapLocationMock, mapLocationTenantIdMock } from './useMapLocation.mock'
+import { mapLocationMock, mapLocationUnitIdMock } from './useMapLocation.mock'
 
-vi.mock('@shared/services/tenant/tenant.service', () => ({
-  TenantService: { getMapLocation: vi.fn() },
+vi.mock('@shared/services/unit/unit.service', () => ({
+  UnitService: { getMapLocation: vi.fn() },
 }))
 
 const wrapper = ({ children }: { children: ReactNode }) => {
@@ -22,14 +22,14 @@ const wrapper = ({ children }: { children: ReactNode }) => {
 
 describe('useMapLocation', () => {
   beforeEach(() => {
-    vi.mocked(TenantService.getMapLocation).mockReset()
+    vi.mocked(UnitService.getMapLocation).mockReset()
   })
 
   it('resolves the unit coordinates', async () => {
-    vi.mocked(TenantService.getMapLocation).mockResolvedValue(mapLocationMock)
+    vi.mocked(UnitService.getMapLocation).mockResolvedValue(mapLocationMock)
 
     const { result } = renderHook(
-      () => useMapLocation(mapLocationTenantIdMock),
+      () => useMapLocation(mapLocationUnitIdMock),
       { wrapper }
     )
 
@@ -39,10 +39,10 @@ describe('useMapLocation', () => {
   })
 
   it('resolves without coordinates when the unit has no address', async () => {
-    vi.mocked(TenantService.getMapLocation).mockResolvedValue(null)
+    vi.mocked(UnitService.getMapLocation).mockResolvedValue(null)
 
     const { result } = renderHook(
-      () => useMapLocation(mapLocationTenantIdMock),
+      () => useMapLocation(mapLocationUnitIdMock),
       { wrapper }
     )
 
@@ -50,10 +50,10 @@ describe('useMapLocation', () => {
     expect(result.current.hasLocation).toBe(false)
   })
 
-  it('stays unresolved while there is no tenant', () => {
+  it('stays unresolved while there is no unit', () => {
     const { result } = renderHook(() => useMapLocation(null), { wrapper })
 
     expect(result.current.isResolved).toBe(false)
-    expect(TenantService.getMapLocation).not.toHaveBeenCalled()
+    expect(UnitService.getMapLocation).not.toHaveBeenCalled()
   })
 })

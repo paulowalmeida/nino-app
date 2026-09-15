@@ -4,7 +4,7 @@ import type { OrderChannel } from './order-channel'
 import type { PaymentMethod } from './payment-method'
 
 export type CreateGuestOrderRequest = GuestInfo & {
-  tenantId: string
+  unitId: string
   channel: OrderChannel
   deliveryZoneId?: string
   paymentMethod: PaymentMethod

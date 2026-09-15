@@ -16,7 +16,7 @@ vi.mock('@shared/services/order/order.service', () => ({
 }))
 
 describe('useOrderPayment', () => {
-  it('invalidates tenant orders after payment is confirmed', async () => {
+  it('invalidates unit orders after payment is confirmed', async () => {
     const invalidateQueries = vi.fn()
     vi.mocked(useQueryClient).mockReturnValue({
       invalidateQueries,
@@ -25,7 +25,7 @@ describe('useOrderPayment', () => {
       {} as unknown as ReturnType<typeof useMutation>
     )
 
-    useOrderPayment(useOrderPaymentMock.tenantId)
+    useOrderPayment(useOrderPaymentMock.unitId)
 
     const options = vi.mocked(useMutation).mock.calls[0]?.[0] as {
       onSuccess: () => void
@@ -40,11 +40,11 @@ describe('useOrderPayment', () => {
     options.onSuccess()
 
     expect(invalidateQueries).toHaveBeenCalledWith({
-      queryKey: ['orders', useOrderPaymentMock.tenantId],
+      queryKey: ['orders', useOrderPaymentMock.unitId],
     })
   })
 
-  it('invalidates the empty tenant scope when the session has no store', () => {
+  it('invalidates the empty unit scope when the session has no store', () => {
     const invalidateQueries = vi.fn()
     vi.mocked(useQueryClient).mockReturnValue({
       invalidateQueries,

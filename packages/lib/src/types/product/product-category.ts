@@ -6,7 +6,7 @@ export type ProductCategory = {
   description: string | null
   position: number | null
   icon?: ProductCategoryIcon | null
-  tenantId: string
+  unitId: string
   createdAt: string
   updatedAt: string
 }

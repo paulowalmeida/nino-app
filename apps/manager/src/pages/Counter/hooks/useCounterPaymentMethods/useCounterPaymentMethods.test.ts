@@ -14,7 +14,7 @@ describe(useCounterPaymentMethods.name, () => {
     vi.mocked(useAcceptedPayments).mockReturnValue({
       methods: ['CASH', 'CARD_ONLINE', 'PIX', 'CARD_ON_DELIVERY'],
     } as never)
-    const { result } = renderHook(() => useCounterPaymentMethods('tenant-1'))
+    const { result } = renderHook(() => useCounterPaymentMethods('unit-1'))
     expect(result.current.methods).toEqual(['CASH'])
   })
 })

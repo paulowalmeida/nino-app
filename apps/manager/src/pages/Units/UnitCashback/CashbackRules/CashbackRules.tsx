@@ -12,18 +12,18 @@ import { Text } from '@nino/ds/components/Text'
 import { toCashbackDraft } from '@pages/Units/adapters/toCashbackDraft/toCashbackDraft'
 import { EMPTY_CASHBACK_DRAFT } from '@pages/Units/constants/unit.constants'
 import type { CashbackDraft } from '@shared/types/settings/cashback-draft'
-import type { TenantSettings } from '@shared/types/settings/tenant-settings'
-import type { UpdateTenantSettingsRequest } from '@shared/types/settings/update-tenant-settings-request'
+import type { UnitSettings } from '@shared/types/settings/unit-settings'
+import type { UpdateUnitSettingsRequest } from '@shared/types/settings/update-unit-settings-request'
 import { maskMoney, moneyValue } from '@shared/utils/money/money'
 
 import motion from '@styles/motion.module.css'
 import local from './CashbackRules.module.css'
 
 export type CashbackRulesProps = {
-  settings: TenantSettings | undefined
+  settings: UnitSettings | undefined
   isPending: boolean
   isSaving: boolean
-  onSave: (data: UpdateTenantSettingsRequest) => void
+  onSave: (data: UpdateUnitSettingsRequest) => void
 }
 
 export const CashbackRules = ({
@@ -34,7 +34,7 @@ export const CashbackRules = ({
 }: CashbackRulesProps) => {
   const [draft, setDraft] = useState<CashbackDraft>(EMPTY_CASHBACK_DRAFT)
   const [isDirty, setDirty] = useState(false)
-  const [seed, setSeed] = useState<TenantSettings | undefined>(undefined)
+  const [seed, setSeed] = useState<UnitSettings | undefined>(undefined)
 
   // WHY: re-semeia o rascunho quando a API manda outro retrato; sem isso o
   // formulário fica preso no primeiro carregamento.

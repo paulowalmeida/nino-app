@@ -3,7 +3,7 @@ import type { OrderChannel } from './order-channel'
 import type { PaymentMethod } from './payment-method'
 
 export type CreateConsumerOrderRequest = {
-  tenantId: string
+  unitId: string
   deliveryAddressId?: string
   channel: OrderChannel
   deliveryZoneId?: string

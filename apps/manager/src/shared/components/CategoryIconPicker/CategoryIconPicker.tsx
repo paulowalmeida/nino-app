@@ -1,3 +1,5 @@
+import { Box } from '@nino/ds/components/Box'
+import { Button } from '@nino/ds/components/Button'
 import {
   PRODUCT_CATEGORY_ICONS,
   type ProductCategoryIcon,
@@ -21,14 +23,14 @@ export const CategoryIconPicker = ({
 }: CategoryIconPickerProps) => (
   <fieldset className={styles.fieldset} disabled={disabled}>
     <legend className={styles.legend}>Ícone da categoria</legend>
-    <div
+    <Box
       className={
         singleRowAt4k
           ? `${styles.options} ${styles.singleRowAt4k}`
           : styles.options
       }
     >
-      <button
+      <Button
         type="button"
         className={`${styles.option} ${!value ? styles.selected : ''}`}
         aria-label="Escolher ícone automático"
@@ -36,9 +38,9 @@ export const CategoryIconPicker = ({
         onClick={() => onChange(null)}
       >
         <span aria-hidden="true">✨</span>
-      </button>
+      </Button>
       {PRODUCT_CATEGORY_ICONS.map((option) => (
-        <button
+        <Button
           key={option.value}
           type="button"
           className={`${styles.option} ${value === option.value ? styles.selected : ''}`}
@@ -49,8 +51,8 @@ export const CategoryIconPicker = ({
           <span aria-hidden="true">
             {productCategoryIconEmoji(option.value)}
           </span>
-        </button>
+        </Button>
       ))}
-    </div>
+    </Box>
   </fieldset>
 )

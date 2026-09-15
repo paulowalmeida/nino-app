@@ -2,7 +2,7 @@ import type { InfiniteData } from '@tanstack/react-query'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 
 import { toast } from '@nino/ds/components/Toast'
-import { queryKeys } from '@shared/lib/query-keys'
+import { queryKeys } from '@shared/lib/query-keys/query-keys'
 import { OrderService } from '@shared/services/order/order.service'
 import type { Order } from '@shared/types/order/order'
 import type { OrderPage } from '@shared/types/order/order-page'
@@ -31,14 +31,14 @@ const confirmationByStatus: Record<OrderStatusKey, string> = {
   CANCELLED: 'Pedido cancelado',
 }
 
-export const useOrderStatus = (tenantId: string | null) => {
+export const useOrderStatus = (unitId: string | null) => {
   const queryClient = useQueryClient()
-  const listsKey = [...queryKeys.orders.all(tenantId ?? ''), 'list']
+  const listsKey = [...queryKeys.orders.all(unitId ?? ''), 'list']
 
   return useMutation<Order, Error, StatusChange, StatusContext>({
     meta: { errorTitle: 'O pedido continua onde estava' },
     mutationFn: ({ orderId, ...data }) =>
-      OrderService.updateOrderStatus(tenantId as string, orderId, data),
+      OrderService.updateOrderStatus(unitId as string, orderId, data),
 
     /*
      * WHY: a comanda troca de trilho no toque, não na resposta. Cada trilho é
@@ -83,10 +83,10 @@ export const useOrderStatus = (tenantId: string | null) => {
 
     onSettled: () => {
       void queryClient.invalidateQueries({
-        queryKey: queryKeys.orders.all(tenantId ?? ''),
+        queryKey: queryKeys.orders.all(unitId ?? ''),
       })
       void queryClient.invalidateQueries({
-        queryKey: ['order-queue-summary', tenantId],
+        queryKey: ['order-queue-summary', unitId],
       })
     },
   })

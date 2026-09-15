@@ -71,3 +71,31 @@ with:
 ```bash
 for test in enforcement/__tests__/*.test.mjs; do node "$test" || break; done
 ```
+
+## Completion gate
+
+The repository-level implementation gate is:
+
+```bash
+npm run quality:gate
+```
+
+It runs the final diff check, all enforcement regression tests, repository lint,
+repository type-check, and all workspace test suites that declare a `test`
+script. Pass `--workspace <name>` to select only one workspace's test suite and
+`--feature <Page>` to add the composed Page-feature gate:
+
+```bash
+node .agents/enforcement/completion-gate.mjs \
+  --workspace nino-manager \
+  --feature Catalog
+```
+
+The gate reports its scope explicitly. A passing single-workspace suite is not
+a claim that every workspace or every Page has been tested; omit
+`--workspace` when the change crosses package boundaries.
+
+The gate is mechanical evidence. Ownership, cohesion, consumer graphs,
+public-contract compatibility, and the decision to move code to `shared`
+remain semantic responsibilities of the applicable Skills and the
+`change-protocol` rule.

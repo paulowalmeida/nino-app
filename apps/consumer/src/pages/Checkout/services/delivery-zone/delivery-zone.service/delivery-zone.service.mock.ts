@@ -1,4 +1,4 @@
 export const deliveryZoneServiceMock = {
-  tenantId: 'tenant-1',
+  unitId: 'unit-1',
   zipCode: '66000-000',
 }

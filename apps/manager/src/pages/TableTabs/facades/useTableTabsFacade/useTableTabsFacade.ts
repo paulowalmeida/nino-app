@@ -1,17 +1,17 @@
 import { useOrders } from '@shared/hooks/order/useOrders/useOrders'
-import { useCurrentTenant } from '@shared/hooks/session/useCurrentTenant/useCurrentTenant'
+import { useCurrentUnit } from '@shared/hooks/session/useCurrentUnit/useCurrentUnit'
 
 export const useTableTabsFacade = () => {
-  const tenantId = useCurrentTenant()?.tenantId ?? null
+  const unitId = useCurrentUnit()?.unitId ?? null
   const openQuery = useOrders(
-    tenantId,
+    unitId,
     undefined,
     ['PENDING', 'ACCEPTED', 'PREPARING', 'READY_FOR_PICKUP'],
     'TABLE_TAB',
     undefined
   )
   const closedQuery = useOrders(
-    tenantId,
+    unitId,
     undefined,
     ['DELIVERED', 'COMPLETED', 'CANCELLED'],
     'TABLE_TAB',

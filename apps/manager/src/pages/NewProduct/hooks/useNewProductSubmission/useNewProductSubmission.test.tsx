@@ -27,7 +27,7 @@ vi.mock('@pages/NewProduct/hooks/useCreateProduct/useCreateProduct')
 const mutateAsync = vi.fn()
 
 const renderSubmission = () =>
-  renderHook(() => useNewProductSubmission('tenant-1'), {
+  renderHook(() => useNewProductSubmission('unit-1'), {
     wrapper: MemoryRouter,
   })
 

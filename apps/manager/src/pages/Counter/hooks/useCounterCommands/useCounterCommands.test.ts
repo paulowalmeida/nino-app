@@ -70,7 +70,7 @@ describe(useCounterCommands.name, () => {
   it('sends the current quoted zone instead of the previous recipient zone', async () => {
     spies.channel = 'DELIVERY'
     spies.sell.mockResolvedValue(null)
-    const { result } = renderHook(() => useCounterCommands('tenant-1', 'PIX'))
+    const { result } = renderHook(() => useCounterCommands('unit-1', 'PIX'))
 
     await act(() => result.current.finish())
 
@@ -86,7 +86,7 @@ describe(useCounterCommands.name, () => {
 
   it('closes the sheet when the last line is removed', () => {
     const { result } = renderHook(
-      () => useCounterCommands('tenant-1', 'CASH'),
+      () => useCounterCommands('unit-1', 'CASH'),
       { wrapper }
     )
     act(() => result.current.handleStep('item-1', -1))
@@ -97,7 +97,7 @@ describe(useCounterCommands.name, () => {
   it('keeps the sheet open when stepping a non-final line', () => {
     spies.setSheet.mockClear()
     const { result } = renderHook(
-      () => useCounterCommands('tenant-1', 'CASH'),
+      () => useCounterCommands('unit-1', 'CASH'),
       { wrapper }
     )
     act(() => result.current.handleStep('other-item', 1))
@@ -107,7 +107,7 @@ describe(useCounterCommands.name, () => {
   it('clears the ticket after a successful sale', async () => {
     spies.sell.mockResolvedValue({ orderNumber: 7 })
     const { result } = renderHook(
-      () => useCounterCommands('tenant-1', 'CASH'),
+      () => useCounterCommands('unit-1', 'CASH'),
       { wrapper }
     )
     await act(() => result.current.finish())
@@ -119,7 +119,7 @@ describe(useCounterCommands.name, () => {
     // Arrange
     spies.sell.mockResolvedValue({ orderNumber: 128, pickupCode: '123456' })
     const { result } = renderHook(
-      () => useCounterCommands('tenant-1', 'CASH'),
+      () => useCounterCommands('unit-1', 'CASH'),
       { wrapper }
     )
 
@@ -141,7 +141,7 @@ describe(useCounterCommands.name, () => {
 
   it('does not sell without a payment method', async () => {
     spies.sell.mockClear()
-    const { result } = renderHook(() => useCounterCommands('tenant-1', null), {
+    const { result } = renderHook(() => useCounterCommands('unit-1', null), {
       wrapper,
     })
     await act(() => result.current.finish())
@@ -153,7 +153,7 @@ describe(useCounterCommands.name, () => {
     spies.clear.mockClear()
     spies.sell.mockResolvedValue(null)
     const { result } = renderHook(
-      () => useCounterCommands('tenant-1', 'CASH'),
+      () => useCounterCommands('unit-1', 'CASH'),
       { wrapper }
     )
     await act(() => result.current.finish())

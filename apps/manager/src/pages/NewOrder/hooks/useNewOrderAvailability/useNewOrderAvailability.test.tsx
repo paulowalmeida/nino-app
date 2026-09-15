@@ -27,7 +27,7 @@ const wrapper = ({ children }: { children: ReactNode }) => (
 )
 
 const renderAvailability = (draft: NewOrderDraft) =>
-  renderHook(() => useNewOrderAvailability('tenant-1', draft), { wrapper })
+  renderHook(() => useNewOrderAvailability('unit-1', draft), { wrapper })
 
 describe('useNewOrderAvailability', () => {
   afterEach(() => vi.clearAllMocks())

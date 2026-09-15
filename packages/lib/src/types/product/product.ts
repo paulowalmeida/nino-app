@@ -5,7 +5,7 @@ export type Product = {
   price: number
   position: number | null
   isActive: boolean
-  tenantId: string
+  unitId: string
   createdAt: string
   updatedAt: string
   category: { id: string; name: string }

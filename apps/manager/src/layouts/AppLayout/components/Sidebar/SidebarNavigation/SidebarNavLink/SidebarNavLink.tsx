@@ -4,13 +4,14 @@ import { NavLink } from 'react-router'
 import { Box } from '@nino/ds/components/Box'
 import type { IconName } from '@nino/ds/components/Icon'
 import { Tooltip } from '@nino/ds/components/Tooltip'
+import { mergeClasses } from '@nino/ds/mergeClasses'
 import { SidebarNavLabel } from '@shared/components/SidebarNavLabel/SidebarNavLabel'
 
 import motion from '@styles/motion.module.css'
 import styles from './SidebarNavLink.module.css'
 
 type SidebarNavLinkProps = {
-  tenantId: string | null
+  unitId: string | null
   section: string
   label: string
   icon: IconName
@@ -21,7 +22,7 @@ type SidebarNavLinkProps = {
 }
 
 export const SidebarNavLink = ({
-  tenantId,
+  unitId,
   section,
   label,
   icon,
@@ -32,11 +33,11 @@ export const SidebarNavLink = ({
 }: SidebarNavLinkProps) => {
   const link = (
     <NavLink
-      to={`/${tenantId}/${section}`}
+      to={`/${unitId}/${section}`}
       end={section === 'produtos'}
       onClick={onNavigate}
       className={({ isActive }) =>
-        isActive ? `${styles.navItem} ${styles.navItemActive}` : styles.navItem
+        mergeClasses(styles.navItem, isActive && styles.navItemActive)
       }
     >
       {({ isActive }) => (

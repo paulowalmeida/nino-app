@@ -10,11 +10,11 @@ vi.mock('@pages/Overview/facades/useOverviewFacade/useOverviewFacade')
 vi.mock('./StoreSign/StoreSign', () => ({ StoreSign: () => <span>store sign</span> }))
 
 describe('OverviewHeader', () => {
-  it('renders the tenant identity and greeting', () => {
+  it('renders the unit identity and greeting', () => {
     vi.mocked(useOverviewFacade).mockReturnValue({
       firstName: overviewHeaderMock.firstName,
       timezone: overviewHeaderMock.timezone,
-      tenant: { tenantName: 'Minha loja', tenantSlug: 'minha-loja' },
+      unit: { unitName: 'Minha loja', unitSlug: 'minha-loja' },
       storeOpen: { isOpen: true },
     } as never)
 
@@ -28,11 +28,11 @@ describe('OverviewHeader', () => {
     )
   })
 
-  it('renders the fallback identity without a tenant', () => {
+  it('renders the fallback identity without a unit', () => {
     vi.mocked(useOverviewFacade).mockReturnValue({
       firstName: '',
       timezone: null,
-      tenant: null,
+      unit: null,
       storeOpen: { isOpen: false },
     } as never)
 

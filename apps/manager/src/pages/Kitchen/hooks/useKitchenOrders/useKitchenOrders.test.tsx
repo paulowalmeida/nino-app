@@ -29,7 +29,7 @@ describe('useKitchenOrders', () => {
   afterEach(() => vi.useRealTimers())
 
   it('groups active orders and keeps recent finished orders together', () => {
-    const { result } = renderHook(() => useKitchenOrders('tenant-1'))
+    const { result } = renderHook(() => useKitchenOrders('unit-1'))
 
     expect(result.current.ordersByStage.waiting).toEqual([waitingOrderMock])
     expect(result.current.ordersByStage.preparing).toEqual([preparingOrderMock])

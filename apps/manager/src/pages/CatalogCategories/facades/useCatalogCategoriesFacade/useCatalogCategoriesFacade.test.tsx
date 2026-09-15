@@ -7,9 +7,9 @@ import { useCatalogCategoriesMutations } from '@pages/CatalogCategories/hooks/us
 import { useCatalogCategoriesOrder } from '@pages/CatalogCategories/hooks/useCatalogCategoriesOrder/useCatalogCategoriesOrder'
 import { useCatalogCategoriesQuery } from '@pages/CatalogCategories/hooks/useCatalogCategoriesQuery/useCatalogCategoriesQuery'
 import { useCatalogCategoriesStore } from '@pages/CatalogCategories/states/catalog-categories/catalog-categories.store'
-import { useCurrentTenant } from '@shared/hooks/session/useCurrentTenant/useCurrentTenant'
+import { useCurrentUnit } from '@shared/hooks/session/useCurrentUnit/useCurrentUnit'
 
-vi.mock('@shared/hooks/session/useCurrentTenant/useCurrentTenant')
+vi.mock('@shared/hooks/session/useCurrentUnit/useCurrentUnit')
 vi.mock(
   '@pages/CatalogCategories/hooks/useCatalogCategoriesMutations/useCatalogCategoriesMutations'
 )
@@ -58,9 +58,9 @@ const clientState = {
 describe(useCatalogCategoriesFacade.name, () => {
   beforeEach(() => {
     vi.clearAllMocks()
-    vi.mocked(useCurrentTenant).mockReturnValue({
-      tenantId: catalogCategoriesFacadeMock.tenantId,
-    } as ReturnType<typeof useCurrentTenant>)
+    vi.mocked(useCurrentUnit).mockReturnValue({
+      unitId: catalogCategoriesFacadeMock.unitId,
+    } as ReturnType<typeof useCurrentUnit>)
     vi.mocked(useCatalogCategoriesStore).mockReturnValue(
       clientState as unknown as ReturnType<typeof useCatalogCategoriesStore>
     )
@@ -90,7 +90,7 @@ describe(useCatalogCategoriesFacade.name, () => {
     const { result } = renderHook(() => useCatalogCategoriesFacade())
 
     expect(useCatalogCategoriesQuery).toHaveBeenCalledWith(
-      catalogCategoriesFacadeMock.tenantId
+      catalogCategoriesFacadeMock.unitId
     )
     expect(useCatalogCategoriesOrder).toHaveBeenCalledWith(
       expect.any(Array),
@@ -109,8 +109,8 @@ describe(useCatalogCategoriesFacade.name, () => {
     })
   })
 
-  it('uses a null tenant without adding fallback behavior to the facade', () => {
-    vi.mocked(useCurrentTenant).mockReturnValue(null)
+  it('uses a null unit without adding fallback behavior to the facade', () => {
+    vi.mocked(useCurrentUnit).mockReturnValue(null)
     renderHook(() => useCatalogCategoriesFacade())
 
     expect(useCatalogCategoriesQuery).toHaveBeenCalledWith(null)

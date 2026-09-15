@@ -7,6 +7,7 @@ import { Button } from '@nino/ds/components/Button'
 import { FormField } from '@nino/ds/components/FormField'
 import { Input } from '@nino/ds/components/Input'
 import { Modal } from '@nino/ds/components/Modal'
+import { Text } from '@nino/ds/components/Text'
 
 import styles from './EditEmailModal.module.css'
 
@@ -68,7 +69,7 @@ export const EditEmailModal = ({
           onSubmit={handleSubmit(onSubmit)}
           className={styles.form}
         >
-          <p className={styles.hint}>{hint}</p>
+          <Text as="p" className={styles.hint}>{hint}</Text>
 
           <FormField label="E-mail" error={errors.email?.message}>
             <Input

@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 
 import { toast } from '@nino/ds/components/Toast'
-import { queryKeys } from '@shared/lib/query-keys'
+import { queryKeys } from '@shared/lib/query-keys/query-keys'
 import { OrderService } from '@shared/services/order/order.service'
 import type { Order } from '@shared/types/order/order'
 
@@ -11,12 +11,12 @@ type ItemCancellation = {
   cancelReason: string
 }
 
-export const useTableTabItemCancellation = (tenantId: string | null) => {
+export const useTableTabItemCancellation = (unitId: string | null) => {
   const queryClient = useQueryClient()
   const mutation = useMutation<Order, Error, ItemCancellation>({
     mutationFn: ({ orderId, itemId, cancelReason }) =>
       OrderService.cancelOrderItem(
-        tenantId as string,
+        unitId as string,
         orderId,
         itemId,
         cancelReason
@@ -24,10 +24,10 @@ export const useTableTabItemCancellation = (tenantId: string | null) => {
     onSuccess: (order) => {
       toast.success('Item cancelado da comanda')
       void queryClient.invalidateQueries({
-        queryKey: queryKeys.orders.all(tenantId ?? ''),
+        queryKey: queryKeys.orders.all(unitId ?? ''),
       })
       void queryClient.setQueryData(
-        queryKeys.orders.detail(tenantId ?? '', order.id),
+        queryKeys.orders.detail(unitId ?? '', order.id),
         order
       )
     },

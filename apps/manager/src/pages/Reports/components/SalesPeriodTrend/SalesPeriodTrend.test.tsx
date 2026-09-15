@@ -7,7 +7,7 @@ vi.mock('@shared/hooks/order/useSalesSeries/useSalesSeries', () => ({ useSalesSe
 
 describe('SalesPeriodTrend', () => {
   it('shows the empty period state', () => {
-    render(<SalesPeriodTrend tenantId={null} range={{ period: 'today' }} />)
+    render(<SalesPeriodTrend unitId={null} range={{ period: 'today' }} />)
     expect(screen.getByText('Nenhuma venda concluída no período.')).toBeInTheDocument()
   })
 })

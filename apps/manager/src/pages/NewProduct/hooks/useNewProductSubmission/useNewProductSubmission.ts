@@ -5,9 +5,9 @@ import { toCreateMenuItemRequest } from '@pages/NewProduct/adapters/product-form
 import { useCreateProduct } from '@pages/NewProduct/hooks/useCreateProduct/useCreateProduct'
 import type { NewProductFormValues } from '@pages/NewProduct/types/NewProductFormValues.type'
 
-export const useNewProductSubmission = (tenantId: string | null) => {
+export const useNewProductSubmission = (unitId: string | null) => {
   const navigate = useNavigate()
-  const { mutateAsync: createProduct } = useCreateProduct(tenantId)
+  const { mutateAsync: createProduct } = useCreateProduct(unitId)
 
   const submitProduct = async (
     values: NewProductFormValues,

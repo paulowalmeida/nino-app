@@ -2,7 +2,7 @@ import { render, screen, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { describe, expect, it, vi } from 'vitest'
 
-import { tenantPhoneMock } from './PhoneList/PhoneList.mock'
+import { unitPhoneMock } from './PhoneList/PhoneList.mock'
 import { SettingsContactSection } from './SettingsContactSection'
 
 const contact = vi.hoisted(() => ({
@@ -14,7 +14,7 @@ const contact = vi.hoisted(() => ({
 vi.mock('@pages/Settings/facades/useSettingsFacade/useSettingsFacade', () => ({
   useSettingsFacade: () => ({
     contact: {
-      query: { phones: [tenantPhoneMock], isPending: false },
+      query: { phones: [unitPhoneMock], isPending: false },
       mutations: contact,
     },
   }),
@@ -41,6 +41,6 @@ describe('SettingsContactSection', () => {
       within(dialog).getByRole('button', { name: 'Remover telefone' })
     )
 
-    expect(contact.drop.mutate).toHaveBeenCalledWith(tenantPhoneMock.id)
+    expect(contact.drop.mutate).toHaveBeenCalledWith(unitPhoneMock.id)
   })
 })

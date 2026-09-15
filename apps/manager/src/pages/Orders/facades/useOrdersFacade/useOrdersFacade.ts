@@ -2,10 +2,10 @@ import { useOrdersFilters } from '@pages/Orders/hooks/useOrdersFilters/useOrders
 import { useOrders } from '@shared/hooks/order/useOrders/useOrders'
 import { useOrderStatus } from '@shared/hooks/order/useOrderStatus/useOrderStatus'
 import { useQueueSummary } from '@shared/hooks/order/useQueueSummary/useQueueSummary'
-import { useCurrentTenant } from '@shared/hooks/session/useCurrentTenant/useCurrentTenant'
+import { useCurrentUnit } from '@shared/hooks/session/useCurrentUnit/useCurrentUnit'
 
 export const useOrdersFacade = () => {
-  const tenantId = useCurrentTenant()?.tenantId ?? null
+  const unitId = useCurrentUnit()?.unitId ?? null
   const {
     isSearching,
     search,
@@ -16,9 +16,9 @@ export const useOrdersFacade = () => {
     setStage,
     setTerm,
   } = useOrdersFilters()
-  const ordersQuery = useOrders(tenantId, search, statuses, channel)
-  const statusMutation = useOrderStatus(tenantId)
-  const queueSummary = useQueueSummary(tenantId)
+  const ordersQuery = useOrders(unitId, search, statuses, channel)
+  const statusMutation = useOrderStatus(unitId)
+  const queueSummary = useQueueSummary(unitId)
 
   return {
     orders: ordersQuery.orders,

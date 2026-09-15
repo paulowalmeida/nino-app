@@ -1,5 +1,5 @@
-import { useCurrentTenant } from '@shared/hooks/session/useCurrentTenant/useCurrentTenant'
+import { useCurrentUnit } from '@shared/hooks/session/useCurrentUnit/useCurrentUnit'
 
 export const useUnitDetailShellFacade = () => ({
-  tenant: useCurrentTenant(),
+  unit: useCurrentUnit(),
 })

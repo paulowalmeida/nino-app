@@ -1,12 +1,12 @@
 import { useSaveCashback } from '@pages/Units/hooks/useSaveCashback/useSaveCashback'
-import { useCurrentTenant } from '@shared/hooks/session/useCurrentTenant/useCurrentTenant'
+import { useCurrentUnit } from '@shared/hooks/session/useCurrentUnit/useCurrentUnit'
 import { useSettings } from '@shared/hooks/settings/useSettings/useSettings'
 
 export const useUnitCashbackFacade = () => {
-  const tenantId = useCurrentTenant()?.tenantId ?? null
+  const unitId = useCurrentUnit()?.unitId ?? null
 
   return {
-    query: useSettings(tenantId),
-    save: useSaveCashback(tenantId),
+    query: useSettings(unitId),
+    save: useSaveCashback(unitId),
   }
 }

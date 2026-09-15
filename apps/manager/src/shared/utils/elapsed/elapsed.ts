@@ -34,9 +34,21 @@ export const elapsedSince = (
   iso: string,
   dueMinutes = DEFAULT_DUE_MINUTES
 ): Elapsed => {
+  const timestamp = new Date(iso).getTime()
+  if (Number.isNaN(timestamp)) {
+    return {
+      label: '—',
+      remaining: '—',
+      isLate: false,
+      pace: 'fresh',
+      ratio: 0,
+      overdueRatio: 0,
+    }
+  }
+
   const minutes = Math.max(
     0,
-    Math.floor((Date.now() - new Date(iso).getTime()) / 60_000)
+    Math.floor((Date.now() - timestamp) / 60_000)
   )
 
   const isLate = minutes >= dueMinutes

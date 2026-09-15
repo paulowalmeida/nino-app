@@ -5,16 +5,16 @@ import { useProductDetailSubmission } from '@pages/ProductDetail/hooks/useProduc
 import { useProductRemoval } from '@pages/ProductDetail/hooks/useProductRemoval/useProductRemoval'
 import { useRemoveProductImage } from '@pages/ProductDetail/hooks/useRemoveProductImage/useRemoveProductImage'
 import { useUploadProductImage } from '@pages/ProductDetail/hooks/useUploadProductImage/useUploadProductImage'
-import { useCurrentTenant } from '@shared/hooks/session/useCurrentTenant/useCurrentTenant'
+import { useCurrentUnit } from '@shared/hooks/session/useCurrentUnit/useCurrentUnit'
 
 export const useProductDetailFacade = () => {
   const { productId } = useParams()
-  const tenantId = useCurrentTenant()?.tenantId ?? null
-  const detail = useProductDetail(tenantId, productId)
-  const submission = useProductDetailSubmission(tenantId, productId)
-  const removal = useProductRemoval(tenantId, productId)
-  const imageUpload = useUploadProductImage(tenantId, productId)
-  const imageRemoval = useRemoveProductImage(tenantId, productId)
+  const unitId = useCurrentUnit()?.unitId ?? null
+  const detail = useProductDetail(unitId, productId)
+  const submission = useProductDetailSubmission(unitId, productId)
+  const removal = useProductRemoval(unitId, productId)
+  const imageUpload = useUploadProductImage(unitId, productId)
+  const imageRemoval = useRemoveProductImage(unitId, productId)
 
   return {
     ...detail,

@@ -1,3 +1,3 @@
 export const unitDetailShellFacadeMock = {
-  tenant: { tenantId: 'tenant-1', tenantName: 'Loja principal' },
+  unit: { unitId: 'unit-1', unitName: 'Loja principal' },
 }

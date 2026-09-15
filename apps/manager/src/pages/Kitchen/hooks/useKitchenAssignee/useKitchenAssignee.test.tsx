@@ -29,14 +29,14 @@ describe(useKitchenAssignee.name, () => {
       {} as unknown as Order
     )
     const { result } = renderHook(
-      () => useKitchenAssignee(kitchenAssigneeMock.tenantId),
+      () => useKitchenAssignee(kitchenAssigneeMock.unitId),
       { wrapper }
     )
 
     await act(() => result.current.mutateAsync(kitchenAssigneeMock))
 
     expect(OrderService.assignKitchenAssignee).toHaveBeenCalledWith(
-      kitchenAssigneeMock.tenantId,
+      kitchenAssigneeMock.unitId,
       kitchenAssigneeMock.orderId,
       { kitchenAssigneeId: kitchenAssigneeMock.kitchenAssigneeId }
     )
@@ -47,7 +47,7 @@ describe(useKitchenAssignee.name, () => {
       {} as unknown as Order
     )
     const { result } = renderHook(
-      () => useKitchenAssignee(kitchenAssigneeMock.tenantId),
+      () => useKitchenAssignee(kitchenAssigneeMock.unitId),
       { wrapper }
     )
 
@@ -60,7 +60,7 @@ describe(useKitchenAssignee.name, () => {
 
     await waitFor(() => {
       expect(OrderService.clearKitchenAssignee).toHaveBeenCalledWith(
-        kitchenAssigneeMock.tenantId,
+        kitchenAssigneeMock.unitId,
         kitchenAssigneeMock.orderId
       )
     })

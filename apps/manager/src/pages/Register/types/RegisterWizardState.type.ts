@@ -9,7 +9,7 @@ export type RegisterWizardState = {
   company: SignupCompany | null
   goToCompany: (account: SignupAccount) => void
   goToCompanyStep: () => void
-  goToTenant: (company: SignupCompany) => void
+  goToUnit: (company: SignupCompany) => void
   goToAccount: () => void
   reset: () => void
 }

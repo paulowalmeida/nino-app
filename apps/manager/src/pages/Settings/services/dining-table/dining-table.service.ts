@@ -3,34 +3,34 @@ import type { Page } from '@shared/types/http/page'
 import type { DiningTable } from '@shared/types/settings/dining-table'
 
 export const DiningTableService = {
-  list: (tenantId: string): Promise<Page<DiningTable>> =>
-    api.get<Page<DiningTable>>(`tenants/${tenantId}/dining-tables`),
+  list: (unitId: string): Promise<Page<DiningTable>> =>
+    api.get<Page<DiningTable>>(`units/${unitId}/dining-tables`),
 
-  create: (tenantId: string, data: { name: string }): Promise<DiningTable> =>
+  create: (unitId: string, data: { name: string }): Promise<DiningTable> =>
     api.create<typeof data, DiningTable>(
-      `tenants/${tenantId}/dining-tables`,
+      `units/${unitId}/dining-tables`,
       data
     ),
 
   createBatch: (
-    tenantId: string,
+    unitId: string,
     data: { quantity: number; prefix?: string }
   ): Promise<DiningTable[]> =>
     api.create<typeof data, DiningTable[]>(
-      `tenants/${tenantId}/dining-tables/batch`,
+      `units/${unitId}/dining-tables/batch`,
       data
     ),
 
   update: (
-    tenantId: string,
+    unitId: string,
     id: string,
     data: { name?: string; isActive?: boolean }
   ): Promise<DiningTable> =>
     api.patch<typeof data, DiningTable>(
-      `tenants/${tenantId}/dining-tables/${id}`,
+      `units/${unitId}/dining-tables/${id}`,
       data
     ),
 
-  remove: (tenantId: string, id: string): Promise<{ message: string }> =>
-    api.remove<{ message: string }>(`tenants/${tenantId}/dining-tables/${id}`),
+  remove: (unitId: string, id: string): Promise<{ message: string }> =>
+    api.remove<{ message: string }>(`units/${unitId}/dining-tables/${id}`),
 }

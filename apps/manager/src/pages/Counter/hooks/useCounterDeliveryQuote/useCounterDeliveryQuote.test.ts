@@ -22,12 +22,12 @@ describe(useCounterDeliveryQuote.name, () => {
       deliveryQuoteMock
     )
     const { result } = renderHook(
-      () => useCounterDeliveryQuote('tenant-1', '66000-000'),
+      () => useCounterDeliveryQuote('unit-1', '66000-000'),
       { wrapper }
     )
     await waitFor(() => expect(result.current.quote).toEqual(deliveryQuoteMock))
     expect(OrderService.getDeliveryQuote).toHaveBeenCalledWith(
-      'tenant-1',
+      'unit-1',
       '66000000'
     )
   })

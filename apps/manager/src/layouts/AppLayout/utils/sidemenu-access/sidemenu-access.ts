@@ -1,9 +1,9 @@
-import type { TenantRole } from '@shared/types/auth/tenant-role'
+import type { UnitRole } from '@shared/types/auth/unit-role'
 import type { SidemenuItem } from '@shared/types/ui/sidemenu-item.type'
 
 export const groupsForRole = (
   groups: SidemenuItem[],
-  role: TenantRole | null
+  role: UnitRole | null
 ): SidemenuItem[] =>
   groups
     .map(({ title, items }) => ({

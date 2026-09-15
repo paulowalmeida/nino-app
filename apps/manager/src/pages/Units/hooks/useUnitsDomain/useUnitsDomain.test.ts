@@ -4,8 +4,8 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { renderHook, waitFor } from '@testing-library/react'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 
-import { queryKeys } from '@shared/lib/query-keys'
-import { TenantService } from '@shared/services/tenant/tenant.service'
+import { queryKeys } from '@shared/lib/query-keys/query-keys'
+import { UnitService } from '@shared/services/unit/unit.service'
 import { useSessionStore } from '@shared/states/session/session.state'
 
 import { useUnitsDomain } from './useUnitsDomain'
@@ -14,17 +14,17 @@ import { savedUnitMock, unitDraftMock } from './useUnitsDomain.mock'
 const navigate = vi.fn()
 
 vi.mock('react-router', () => ({ useNavigate: () => navigate }))
-vi.mock('@shared/services/tenant/tenant.service')
+vi.mock('@shared/services/unit/unit.service')
 
-vi.mock('@shared/hooks/session/useCurrentTenant/useCurrentTenant', () => ({
-  useCurrentTenant: () => ({ tenantId: 'tenant-1' }),
+vi.mock('@shared/hooks/session/useCurrentUnit/useCurrentUnit', () => ({
+  useCurrentUnit: () => ({ unitId: 'unit-1' }),
 }))
 vi.mock('@shared/hooks/session/useCompanyGroups/useCompanyGroups', () => ({
   useCompanyGroups: () => [],
 }))
 vi.mock('@shared/hooks/account/useSubscription/useSubscription', () => ({
   useSubscription: () => ({
-    data: { plan: { name: 'Pro', maxTenants: 3 } },
+    data: { plan: { name: 'Pro', maxUnits: 3 } },
     isPending: false,
   }),
 }))
@@ -49,28 +49,28 @@ describe(useUnitsDomain.name, () => {
   })
 
   it('reads the unit of the session', async () => {
-    vi.mocked(TenantService.getById).mockResolvedValue(savedUnitMock)
+    vi.mocked(UnitService.getById).mockResolvedValue(savedUnitMock)
 
     const { result } = renderHook(() => useUnitsDomain(), { wrapper })
 
     await waitFor(() => expect(result.current.detail.isSuccess).toBe(true))
-    expect(TenantService.getById).toHaveBeenCalledWith('tenant-1')
+    expect(UnitService.getById).toHaveBeenCalledWith('unit-1')
   })
 
   it('writes what was saved straight into the detail cache', async () => {
-    vi.mocked(TenantService.saveTenant).mockResolvedValue(savedUnitMock)
+    vi.mocked(UnitService.saveUnit).mockResolvedValue(savedUnitMock)
 
     const { result } = renderHook(() => useUnitsDomain(), { wrapper })
     result.current.save.mutate(unitDraftMock)
 
     await waitFor(() => expect(result.current.save.isSuccess).toBe(true))
     expect(
-      client.getQueryData([...queryKeys.tenant.all('tenant-1'), 'detail'])
+      client.getQueryData([...queryKeys.unit.all('unit-1'), 'detail'])
     ).toEqual(savedUnitMock)
   })
 
   it('refreshes the units once another one becomes the head office', async () => {
-    vi.mocked(TenantService.setMainTenant).mockResolvedValue(savedUnitMock)
+    vi.mocked(UnitService.setMainUnit).mockResolvedValue(savedUnitMock)
     const invalidate = vi.spyOn(client, 'invalidateQueries')
 
     const { result } = renderHook(() => useUnitsDomain(), { wrapper })
@@ -78,12 +78,12 @@ describe(useUnitsDomain.name, () => {
 
     await waitFor(() => expect(result.current.setMain.isSuccess).toBe(true))
     expect(invalidate).toHaveBeenCalledWith({
-      queryKey: queryKeys.tenant.all('tenant-1'),
+      queryKey: queryKeys.unit.all('unit-1'),
     })
   })
 
   it('drops the session and leaves once the store is closed', async () => {
-    vi.mocked(TenantService.removeTenant).mockResolvedValue({
+    vi.mocked(UnitService.removeUnit).mockResolvedValue({
       message: 'Loja fechada',
     })
     const clear = vi.fn()

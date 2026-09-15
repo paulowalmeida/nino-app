@@ -5,16 +5,16 @@ import { useOrderActionPolicy } from '@pages/OrderDetail/hooks/useOrderActionPol
 import { useOrderCancellation } from '@pages/OrderDetail/hooks/useOrderCancellation/useOrderCancellation'
 import { useOrderPayment } from '@pages/OrderDetail/hooks/useOrderPayment/useOrderPayment'
 import { useOrderStatus } from '@shared/hooks/order/useOrderStatus/useOrderStatus'
-import { useCurrentTenant } from '@shared/hooks/session/useCurrentTenant/useCurrentTenant'
+import { useCurrentUnit } from '@shared/hooks/session/useCurrentUnit/useCurrentUnit'
 
 export const useOrderDetailFacade = () => {
   const { orderId } = useParams()
-  const tenantId = useCurrentTenant()?.tenantId ?? null
-  const orderQuery = useOrder(tenantId, orderId ?? '')
-  const statusMutation = useOrderStatus(tenantId)
-  const paymentMutation = useOrderPayment(tenantId)
+  const unitId = useCurrentUnit()?.unitId ?? null
+  const orderQuery = useOrder(unitId, orderId ?? '')
+  const statusMutation = useOrderStatus(unitId)
+  const paymentMutation = useOrderPayment(unitId)
   const policy = useOrderActionPolicy(orderQuery.data)
-  const cancellation = useOrderCancellation(tenantId, orderId ?? '')
+  const cancellation = useOrderCancellation(unitId, orderId ?? '')
 
   return {
     order: orderQuery.data,

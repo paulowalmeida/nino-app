@@ -5,7 +5,7 @@ export type PlanRecord = {
   name: string
   slug: string
   price: number
-  maxTenants: number
+  maxUnits: number
   maxProducts: number
   maxOrders: number
   hasPrioritySupport: boolean

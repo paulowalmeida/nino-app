@@ -1,9 +1,9 @@
 import { useQuery } from '@tanstack/react-query'
 
-import { queryKeys } from '@shared/lib/query-keys'
+import { queryKeys } from '@shared/lib/query-keys/query-keys'
 import { SettingsService } from '@shared/services/settings/settings.service'
 import type { OrderChannel } from '@shared/types/order/order-channel'
-import type { PublicTenantSettings } from '@shared/types/settings/public-tenant-settings'
+import type { PublicUnitSettings } from '@shared/types/settings/public-unit-settings'
 
 /**
  * WHY: a loja que ainda não configurou nada continua vendendo por delivery —
@@ -12,7 +12,7 @@ import type { PublicTenantSettings } from '@shared/types/settings/public-tenant-
  */
 const FALLBACK: OrderChannel[] = ['DELIVERY']
 
-const enabledFormats = (settings: PublicTenantSettings): OrderChannel[] => {
+const enabledFormats = (settings: PublicUnitSettings): OrderChannel[] => {
   const formats: OrderChannel[] = []
 
   if (settings.isDeliveryEnabled) formats.push('DELIVERY')
@@ -22,11 +22,11 @@ const enabledFormats = (settings: PublicTenantSettings): OrderChannel[] => {
   return formats.length ? formats : FALLBACK
 }
 
-export const useSalesFormats = (tenantId: string | null) => {
+export const useSalesFormats = (unitId: string | null) => {
   const query = useQuery({
-    queryKey: queryKeys.tenant.publicSettings(tenantId ?? ''),
-    queryFn: () => SettingsService.getPublicSettings(tenantId as string),
-    enabled: !!tenantId,
+    queryKey: queryKeys.unit.publicSettings(unitId ?? ''),
+    queryFn: () => SettingsService.getPublicSettings(unitId as string),
+    enabled: !!unitId,
   })
 
   const formats = query.data ? enabledFormats(query.data) : FALLBACK

@@ -6,7 +6,7 @@ import { settingsTablesTabMock } from './SettingsTablesTab.mock'
 
 vi.mock('@pages/Settings/facades/useSettingsFacade/useSettingsFacade', () => ({
   useSettingsFacade: () => ({
-    tenant: { tenantSlug: settingsTablesTabMock.tenantSlug },
+    unit: { unitSlug: settingsTablesTabMock.unitSlug },
     diningTables: {
       query: {
         tables: settingsTablesTabMock.tables,

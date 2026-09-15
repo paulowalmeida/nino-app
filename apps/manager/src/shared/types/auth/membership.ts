@@ -1,11 +1,11 @@
-import type { TenantRole } from './tenant-role'
+import type { UnitRole } from './unit-role'
 
 export type Membership = {
-  tenantId: string
-  tenantName: string
-  tenantSlug: string
+  unitId: string
+  unitName: string
+  unitSlug: string
   companyId: string
   companyName: string
-  role: TenantRole
+  role: UnitRole
   isCurrent: boolean
 }

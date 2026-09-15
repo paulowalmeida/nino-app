@@ -4,7 +4,7 @@ import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { describe, expect, it, vi } from 'vitest'
 
-import { useTenantRole } from '@layouts/AppLayout/hooks/useTenantRole/useTenantRole'
+import { useUnitRole } from '@layouts/AppLayout/hooks/useUnitRole/useUnitRole'
 
 import { UserMenu } from './UserMenu'
 import { managerRoleMock, ownerRoleMock, userMenuMock } from './UserMenu.mock'
@@ -12,11 +12,11 @@ import { managerRoleMock, ownerRoleMock, userMenuMock } from './UserMenu.mock'
 vi.mock('@shared/hooks/session/useLogout/useLogout', () => ({
   useLogout: () => ({ logout: vi.fn() }),
 }))
-vi.mock('@layouts/AppLayout/hooks/useTenantRole/useTenantRole')
+vi.mock('@layouts/AppLayout/hooks/useUnitRole/useUnitRole')
 
 describe('UserMenu', () => {
   it('shows the signed-in user name', () => {
-    vi.mocked(useTenantRole).mockReturnValue(managerRoleMock)
+    vi.mocked(useUnitRole).mockReturnValue(managerRoleMock)
 
     render(
       <MemoryRouter>
@@ -30,8 +30,8 @@ describe('UserMenu', () => {
     ).toBeInTheDocument()
   })
 
-  it('offers the plan to the owner of the tenant', async () => {
-    vi.mocked(useTenantRole).mockReturnValue(ownerRoleMock)
+  it('offers the plan to the owner of the unit', async () => {
+    vi.mocked(useUnitRole).mockReturnValue(ownerRoleMock)
     const user = userEvent.setup()
 
     render(
@@ -48,7 +48,7 @@ describe('UserMenu', () => {
   })
 
   it('keeps the plan with whoever pays for it', async () => {
-    vi.mocked(useTenantRole).mockReturnValue(managerRoleMock)
+    vi.mocked(useUnitRole).mockReturnValue(managerRoleMock)
     const user = userEvent.setup()
 
     render(
@@ -65,7 +65,7 @@ describe('UserMenu', () => {
   })
 
   it('names the sign-out button on hover', async () => {
-    vi.mocked(useTenantRole).mockReturnValue(managerRoleMock)
+    vi.mocked(useUnitRole).mockReturnValue(managerRoleMock)
     const user = userEvent.setup()
 
     render(

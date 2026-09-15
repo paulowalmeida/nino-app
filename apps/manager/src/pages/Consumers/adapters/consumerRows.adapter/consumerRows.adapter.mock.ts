@@ -1,6 +1,6 @@
-import type { TenantConsumer } from '@shared/types/consumer/tenant-consumer'
+import type { UnitConsumer } from '@shared/types/consumer/unit-consumer'
 
-export const tenantConsumersMock: TenantConsumer[] = [
+export const unitConsumersMock: UnitConsumer[] = [
   {
     id: 'consumer-1',
     name: 'Maria Clara Souza',

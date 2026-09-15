@@ -2,7 +2,7 @@
 
 Design system compartilhado entre os 4 apps do Nino (consumer, manager,
 courier, backoffice). Consumer, manager e courier são white-label — a marca
-do tenant entra via tokens CSS. O backoffice usa o tema default da Nino.
+do unit entra via tokens CSS. O backoffice usa o tema default da Nino.
 
 ## Base
 
@@ -94,7 +94,7 @@ Notas por componente:
 - **Combobox** — Ark UI, busca/filtro client-side (`filterOptions` por label),
   base `ArkCombobox.Input`, erro via `[aria-invalid]`/`[data-invalid]`,
   `emptyMessage`.
-- **ColorPicker** — essencial para o branding do tenant (gestor escolhe a cor
+- **ColorPicker** — essencial para o branding do unit (gestor escolhe a cor
   da loja). Ark color-picker completo (Area/AreaBackground/AreaThumb,
   ChannelSlider hue, ChannelInput hex, SwatchGroup com presets incl. `#FF6B00`).
   Emite hex via `e.value.toString('hex')`; `parseColor` para value/defaultValue.

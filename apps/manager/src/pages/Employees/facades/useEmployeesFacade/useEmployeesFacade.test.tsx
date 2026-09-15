@@ -14,8 +14,8 @@ vi.mock('@shared/hooks/team/useUpdateStaffRole/useUpdateStaffRole', () => ({ use
 describe(useEmployeesFacade.name, () => {
   it('exposes page data and existing team commands', () => {
     vi.mocked(useEmployeesData).mockReturnValue({
-      tenant: { role: 'TENANT_OWNER' },
-      tenantId: 'tenant-1',
+      unit: { role: 'UNIT_OWNER' },
+      unitId: 'unit-1',
       staffEntries: [],
       courierEntries: [],
       isStaffPending: false,
@@ -25,7 +25,7 @@ describe(useEmployeesFacade.name, () => {
 
     const { result } = renderHook(() => useEmployeesFacade())
 
-    expect(result.current.tenantId).toBe('tenant-1')
+    expect(result.current.unitId).toBe('unit-1')
     expect(result.current.invite).toBeTypeOf('function')
     expect(result.current.removeMember).toBeTypeOf('function')
   })

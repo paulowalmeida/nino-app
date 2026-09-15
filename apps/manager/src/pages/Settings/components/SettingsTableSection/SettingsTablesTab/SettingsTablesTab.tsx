@@ -11,7 +11,7 @@ import { DiningTables, DiningTablesList } from '../DiningTables/DiningTables'
 import local from './SettingsTablesTab.module.css'
 
 export const SettingsTablesTab = () => {
-  const { tenant, diningTables } = useSettingsFacade()
+  const { unit, diningTables } = useSettingsFacade()
   const { tables, isPending } = diningTables.query
   const { add, toggle, drop } = diningTables.mutations
 
@@ -45,7 +45,7 @@ export const SettingsTablesTab = () => {
 
       <DiningTables
         tables={tables}
-        tenantSlug={tenant?.tenantSlug ?? ''}
+        unitSlug={unit?.unitSlug ?? ''}
         isPending={isPending}
         isAdding={add.isPending}
         togglingId={toggle.isPending ? toggle.variables?.id : undefined}
@@ -58,7 +58,7 @@ export const SettingsTablesTab = () => {
 
       <DiningTablesList
         tables={tables}
-        tenantSlug={tenant?.tenantSlug ?? ''}
+        unitSlug={unit?.unitSlug ?? ''}
         isPending={isPending}
         togglingId={toggle.isPending ? toggle.variables?.id : undefined}
         onToggle={toggle.mutate}

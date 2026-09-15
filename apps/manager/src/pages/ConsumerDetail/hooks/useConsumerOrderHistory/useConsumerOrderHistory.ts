@@ -3,7 +3,7 @@ import { useCallback } from 'react'
 import { useInfiniteQuery } from '@tanstack/react-query'
 
 import { toConsumerOrderRows } from '@pages/ConsumerDetail/adapters/consumerOrderRows.adapter/consumerOrderRows.adapter'
-import { queryKeys } from '@shared/lib/query-keys'
+import { queryKeys } from '@shared/lib/query-keys/query-keys'
 import { ConsumerService, HISTORY_PAGE_SIZE } from '@shared/services/consumer/consumer.service'
 import { nextPageParam } from '@shared/utils/next-page-param/next-page-param'
 
@@ -11,24 +11,24 @@ import { nextPageParam } from '@shared/utils/next-page-param/next-page-param'
  * atende chega ao fim da lista, como o cardápio faz com os itens.
  */
 export const useConsumerOrderHistory = (
-  tenantId: string | null,
+  unitId: string | null,
   consumerId: string
 ) => {
   const query = useInfiniteQuery({
     queryKey: [
-      ...queryKeys.consumers.detail(tenantId ?? '', consumerId),
+      ...queryKeys.consumers.detail(unitId ?? '', consumerId),
       'orders',
     ],
     queryFn: ({ pageParam }) =>
       ConsumerService.listConsumerOrders(
-        tenantId as string,
+        unitId as string,
         consumerId,
         pageParam as number
       ),
     initialPageParam: 1,
     getNextPageParam: ({ pagination }) =>
       nextPageParam(pagination, HISTORY_PAGE_SIZE),
-    enabled: !!tenantId && !!consumerId,
+    enabled: !!unitId && !!consumerId,
   })
 
   const { fetchNextPage } = query

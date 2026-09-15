@@ -1,4 +1,4 @@
 export const collaboratorDetailFacadeMock = {
-  tenantId: 'tenant-1',
+  unitId: 'unit-1',
   userId: 'user-1',
 }

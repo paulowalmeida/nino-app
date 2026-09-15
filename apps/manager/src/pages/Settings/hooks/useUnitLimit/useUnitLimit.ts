@@ -9,7 +9,7 @@ type UnitLimit = {
 
 export const useUnitLimit = (unitCount: number): UnitLimit => {
   const { data: subscription, isPending } = useSubscription()
-  const limit = subscription?.plan.maxTenants ?? null
+  const limit = subscription?.plan.maxUnits ?? null
 
   return {
     limit,

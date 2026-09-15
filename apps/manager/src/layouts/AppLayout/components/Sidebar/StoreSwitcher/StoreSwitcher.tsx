@@ -1,10 +1,11 @@
 import { useLocation, useNavigate } from 'react-router'
 
-import { Button } from '@ds/components/Button/Button'
 import { Box } from '@nino/ds/components/Box'
+import { Button } from '@nino/ds/components/Button'
 import { Icon } from '@nino/ds/components/Icon'
 import { Menu, type MenuItem } from '@nino/ds/components/Menu'
 import { Text } from '@nino/ds/components/Text'
+import { mergeClasses } from '@nino/ds/mergeClasses'
 import { useCompanyGroups } from '@shared/hooks/session/useCompanyGroups/useCompanyGroups'
 
 import motion from '@styles/motion.module.css'
@@ -14,12 +15,12 @@ const sectionOf = (pathname: string): string =>
   pathname.split('/').slice(2).join('/') || 'visao-geral'
 
 type StoreSwitcherProps = {
-  currentTenantId: string | null
+  currentUnitId: string | null
   collapsed?: boolean
 }
 
 export const StoreSwitcher = ({
-  currentTenantId,
+  currentUnitId,
   collapsed = false,
 }: StoreSwitcherProps) => {
   const groups = useCompanyGroups()
@@ -27,46 +28,44 @@ export const StoreSwitcher = ({
   const { pathname } = useLocation()
 
   const company = groups.find(({ units }) =>
-    units.some(({ tenantId }) => tenantId === currentTenantId)
+    units.some(({ unitId }) => unitId === currentUnitId)
   )
   const units = company?.units ?? []
-  const current = units.find(({ tenantId }) => tenantId === currentTenantId)
+  const current = units.find(({ unitId }) => unitId === currentUnitId)
   const hasOtherCompanies = groups.length > 1
 
   if (units.length <= 1 && !hasOtherCompanies) {
     return collapsed ? (
       <Box
         className={styles.singleCollapsed}
-        aria-label={`Unidade: ${current?.tenantName ?? 'Sua loja'}`}
+        aria-label={`Unidade: ${current?.unitName ?? 'Sua loja'}`}
       >
         <Icon name="store" className={styles.storeIcon} />
       </Box>
     ) : (
       <Text as="p" className={styles.single}>
-        {current?.tenantName ?? 'Sua loja'}
+        {current?.unitName ?? 'Sua loja'}
       </Text>
     )
   }
 
-  const goTo = (tenantId: string) =>
-    navigate(`/${tenantId}/${sectionOf(pathname)}`)
+  const goTo = (unitId: string) =>
+    navigate(`/${unitId}/${sectionOf(pathname)}`)
 
   const check = (active: boolean) => (
     <Icon
       name="check"
-      className={
-        active ? styles.checkIcon : `${styles.checkIcon} ${styles.checkOff}`
-      }
+      className={mergeClasses(styles.checkIcon, !active && styles.checkOff)}
     />
   )
 
   const items: MenuItem[] = [
     ...(units.length > 1
-      ? units.map(({ tenantId, tenantName }) => ({
-          value: tenantId,
-          label: tenantName,
-          icon: check(tenantId === currentTenantId),
-          onSelect: () => goTo(tenantId),
+      ? units.map(({ unitId, unitName }) => ({
+          value: unitId,
+          label: unitName,
+          icon: check(unitId === currentUnitId),
+          onSelect: () => goTo(unitId),
         }))
       : []),
     ...(units.length > 1 && hasOtherCompanies
@@ -90,14 +89,14 @@ export const StoreSwitcher = ({
         trigger={
           <Button
             variant="ghost"
-            className={`${motion.press} ${styles.trigger}`}
+            className={mergeClasses(motion.press, styles.trigger)}
           >
             <Icon name="store" className={styles.storeIcon} />
             {!collapsed && (
               <>
                 <Text as="span" className={styles.triggerText}>
                   <Text as="span" className={styles.name}>
-                    {current?.tenantName}
+                    {current?.unitName}
                   </Text>
                   {hasOtherCompanies && (
                     <Text as="span" className={styles.company}>

@@ -5,7 +5,7 @@ import { Icon } from '@nino/ds/components/Icon'
 import { mergeClasses } from '@nino/ds/mergeClasses'
 import { NinoLogo } from '@shared/components/NinoLogo/NinoLogo'
 import { useQueueSummary } from '@shared/hooks/order/useQueueSummary/useQueueSummary'
-import { useCurrentTenant } from '@shared/hooks/session/useCurrentTenant/useCurrentTenant'
+import { useCurrentUnit } from '@shared/hooks/session/useCurrentUnit/useCurrentUnit'
 import { useSessionStore } from '@shared/states/session/session.state'
 
 import { SidebarNavigation } from './SidebarNavigation/SidebarNavigation'
@@ -28,8 +28,8 @@ export const Sidebar = ({
   onToggleCollapse,
 }: SidebarProps) => {
   const user = useSessionStore(({ user }) => user)
-  const tenantId = useCurrentTenant()?.tenantId ?? null
-  const { data: summary } = useQueueSummary(tenantId)
+  const unitId = useCurrentUnit()?.unitId ?? null
+  const { data: summary } = useQueueSummary(unitId)
   const { groups } = useSidemenu()
 
   const waiting = summary?.PENDING ?? 0
@@ -61,7 +61,7 @@ export const Sidebar = ({
           </Button>
         ) : (
           <>
-            <NinoLogo size="sm" tone="light" to={`/${tenantId}/visao-geral`} />
+            <NinoLogo size="sm" tone="light" to={`/${unitId}/visao-geral`} />
             <Button
               variant="ghost"
               size="icon"
@@ -86,14 +86,14 @@ export const Sidebar = ({
             forces it (and any open popover inside) to reset alongside. */}
         <StoreSwitcher
           key={isOpen ? 'open' : 'closed'}
-          currentTenantId={tenantId}
+          currentUnitId={unitId}
           collapsed={isCollapsed}
         />
       </Box>
 
       <SidebarNavigation
         groups={groups}
-        tenantId={tenantId}
+        unitId={unitId}
         isCollapsed={isCollapsed}
         waiting={waiting}
         onNavigate={onClose}
@@ -103,7 +103,7 @@ export const Sidebar = ({
         <UserMenu
           key={isOpen ? 'open' : 'closed'}
           name={user?.name ?? ''}
-          tenantId={tenantId}
+          unitId={unitId}
           onNavigate={onClose}
           collapsed={isCollapsed}
         />

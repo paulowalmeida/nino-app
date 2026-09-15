@@ -1,5 +1,5 @@
 export const settingsTablesTabMock = {
-  tenantSlug: 'burgão-centro',
+  unitSlug: 'burgão-centro',
   tables: [],
   isPending: false,
   isAdding: false,

@@ -32,13 +32,13 @@ describe(useCatalogQuery.name, () => {
     } as unknown as MenuPage)
 
     const { result } = renderHook(
-      () => useCatalogQuery('tenant-1', 'cat-1', 'burger'),
+      () => useCatalogQuery('unit-1', 'cat-1', 'burger'),
       { wrapper: createWrapper() }
     )
 
     await waitFor(() => expect(result.current.status).toBe('success'))
 
-    expect(ProductService.listProducts).toHaveBeenCalledWith('tenant-1', {
+    expect(ProductService.listProducts).toHaveBeenCalledWith('unit-1', {
       page: 1,
       size: 20,
       categoryId: 'cat-1',
@@ -61,7 +61,7 @@ describe(useCatalogQuery.name, () => {
       } as unknown as MenuPage)
 
     const { result } = renderHook(
-      () => useCatalogQuery('tenant-1', null, ''),
+      () => useCatalogQuery('unit-1', null, ''),
       { wrapper: createWrapper() }
     )
 
@@ -72,7 +72,7 @@ describe(useCatalogQuery.name, () => {
 
     expect(ProductService.listProducts).toHaveBeenNthCalledWith(
       2,
-      'tenant-1',
+      'unit-1',
       { page: 2, size: 20 }
     )
     await waitFor(() => {
@@ -84,7 +84,7 @@ describe(useCatalogQuery.name, () => {
     })
   })
 
-  it('does not request products before a tenant is available', () => {
+  it('does not request products before a unit is available', () => {
     const { result } = renderHook(
       () => useCatalogQuery(null, null, ''),
       { wrapper: createWrapper() }

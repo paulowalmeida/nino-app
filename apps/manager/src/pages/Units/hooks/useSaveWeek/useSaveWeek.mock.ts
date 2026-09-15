@@ -1,6 +1,6 @@
 import type { HoursDraft } from '@shared/types/settings/hours-draft'
 
-export const tenantIdMock = 'tenant-1'
+export const unitIdMock = 'unit-1'
 
 export const newDayMock = {
   dayOfWeek: 1,

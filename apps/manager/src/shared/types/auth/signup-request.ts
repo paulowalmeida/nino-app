@@ -11,7 +11,7 @@ export type SignupRequest = {
     cnpj: string
     legalName?: string
   }
-  tenant: {
+  unit: {
     customName?: string
     slug: string
     zipCode: string

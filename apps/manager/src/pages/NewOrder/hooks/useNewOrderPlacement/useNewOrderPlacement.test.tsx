@@ -34,7 +34,7 @@ describe('useNewOrderPlacement', () => {
   it('sends the ticket with the payment the availability settled', async () => {
     submit.mockResolvedValue(placedOrderIdMock)
     const { result } = renderHook(
-      () => useNewOrderPlacement('tenant-1', placementDraftMock, 'PIX'),
+      () => useNewOrderPlacement('unit-1', placementDraftMock, 'PIX'),
       { wrapper: MemoryRouter }
     )
 
@@ -52,7 +52,7 @@ describe('useNewOrderPlacement', () => {
   it('opens the order it just created', async () => {
     submit.mockResolvedValue(placedOrderIdMock)
     const { result } = renderHook(
-      () => useNewOrderPlacement('tenant-1', placementDraftMock, 'CASH'),
+      () => useNewOrderPlacement('unit-1', placementDraftMock, 'CASH'),
       { wrapper: MemoryRouter }
     )
 
@@ -66,7 +66,7 @@ describe('useNewOrderPlacement', () => {
   it('keeps the attendant on the ticket when the order fails', async () => {
     submit.mockResolvedValue(null)
     const { result } = renderHook(
-      () => useNewOrderPlacement('tenant-1', placementDraftMock, 'CASH'),
+      () => useNewOrderPlacement('unit-1', placementDraftMock, 'CASH'),
       { wrapper: MemoryRouter }
     )
 

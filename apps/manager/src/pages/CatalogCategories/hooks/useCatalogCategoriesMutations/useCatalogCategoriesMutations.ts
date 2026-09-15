@@ -3,7 +3,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query'
 import type { ProductCategoryIcon } from '@nino/lib/types/product/product-category-icon'
 import { toCategoryDeleteError } from '@pages/CatalogCategories/adapters/catalog-categories.adapter/catalog-categories.adapter'
 import { useCatalogCategoriesStore } from '@pages/CatalogCategories/states/catalog-categories/catalog-categories.store'
-import { queryKeys } from '@shared/lib/query-keys'
+import { queryKeys } from '@shared/lib/query-keys/query-keys'
 import { CategoryService } from '@shared/services/category/category.service'
 
 type ReorderVariables = {
@@ -12,15 +12,15 @@ type ReorderVariables = {
 
 const invalidateCategories = (
   queryClient: ReturnType<typeof useQueryClient>,
-  tenantId: string | null
+  unitId: string | null
 ) => {
   void queryClient.invalidateQueries({
-    queryKey: queryKeys.productCategories.all(tenantId ?? ''),
+    queryKey: queryKeys.productCategories.all(unitId ?? ''),
   })
-  void queryClient.invalidateQueries({ queryKey: ['menu', tenantId] })
+  void queryClient.invalidateQueries({ queryKey: ['menu', unitId] })
 }
 
-const useCreateCategoryMutation = (tenantId: string | null) => {
+const useCreateCategoryMutation = (unitId: string | null) => {
   const queryClient = useQueryClient()
 
   return useMutation({
@@ -32,41 +32,41 @@ const useCreateCategoryMutation = (tenantId: string | null) => {
           ? { name: variables, icon: undefined }
           : variables
       return icon == null
-        ? CategoryService.createCategory(tenantId as string, name)
-        : CategoryService.createCategory(tenantId as string, name, icon)
+        ? CategoryService.createCategory(unitId as string, name)
+        : CategoryService.createCategory(unitId as string, name, icon)
     },
-    onSuccess: () => invalidateCategories(queryClient, tenantId),
+    onSuccess: () => invalidateCategories(queryClient, unitId),
   })
 }
 
-const useDeleteCategoryMutation = (tenantId: string | null) => {
+const useDeleteCategoryMutation = (unitId: string | null) => {
   const queryClient = useQueryClient()
 
   return useMutation({
     mutationFn: (id: string) =>
-      CategoryService.removeCategory(tenantId as string, id),
-    onSuccess: () => invalidateCategories(queryClient, tenantId),
+      CategoryService.removeCategory(unitId as string, id),
+    onSuccess: () => invalidateCategories(queryClient, unitId),
   })
 }
 
-const useReorderCategoriesMutation = (tenantId: string | null) => {
+const useReorderCategoriesMutation = (unitId: string | null) => {
   const queryClient = useQueryClient()
   return useMutation({
     mutationFn: ({ ids }: ReorderVariables) =>
-      CategoryService.reorderCategories(tenantId as string, ids),
+      CategoryService.reorderCategories(unitId as string, ids),
     onSettled: () => {
       void queryClient.invalidateQueries({
-        queryKey: queryKeys.productCategories.list(tenantId ?? ''),
+        queryKey: queryKeys.productCategories.list(unitId ?? ''),
       })
-      void queryClient.invalidateQueries({ queryKey: ['menu', tenantId] })
+      void queryClient.invalidateQueries({ queryKey: ['menu', unitId] })
       void queryClient.invalidateQueries({
-        queryKey: queryKeys.products.all(tenantId ?? ''),
+        queryKey: queryKeys.products.all(unitId ?? ''),
       })
     },
   })
 }
 
-const useUpdateCategoryMutation = (tenantId: string | null) => {
+const useUpdateCategoryMutation = (unitId: string | null) => {
   const queryClient = useQueryClient()
 
   return useMutation({
@@ -80,18 +80,18 @@ const useUpdateCategoryMutation = (tenantId: string | null) => {
       icon?: ProductCategoryIcon | null
     }) =>
       icon === undefined
-        ? CategoryService.updateCategory(tenantId as string, id, name)
-        : CategoryService.updateCategory(tenantId as string, id, name, icon),
-    onSuccess: () => invalidateCategories(queryClient, tenantId),
+        ? CategoryService.updateCategory(unitId as string, id, name)
+        : CategoryService.updateCategory(unitId as string, id, name, icon),
+    onSuccess: () => invalidateCategories(queryClient, unitId),
   })
 }
 
-export const useCatalogCategoriesMutations = (tenantId: string | null) => {
+export const useCatalogCategoriesMutations = (unitId: string | null) => {
   const clientState = useCatalogCategoriesStore()
-  const create = useCreateCategoryMutation(tenantId)
-  const remove = useDeleteCategoryMutation(tenantId)
-  const reorder = useReorderCategoriesMutation(tenantId)
-  const update = useUpdateCategoryMutation(tenantId)
+  const create = useCreateCategoryMutation(unitId)
+  const remove = useDeleteCategoryMutation(unitId)
+  const reorder = useReorderCategoriesMutation(unitId)
+  const update = useUpdateCategoryMutation(unitId)
 
   const submitCreate = async () => {
     const name = clientState.createName.trim()

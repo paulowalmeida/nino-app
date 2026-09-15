@@ -29,9 +29,9 @@ export const SubscriptionFacts = ({ subscription }: SubscriptionFactsProps) => {
     ['Renova em', dateOf(subscription.expiresAt)],
     [
       'Unidades inclusas',
-      subscription.plan.maxTenants === null
+      subscription.plan.maxUnits === null
         ? 'ilimitadas'
-        : String(subscription.plan.maxTenants),
+        : String(subscription.plan.maxUnits),
     ],
   ] as const
 

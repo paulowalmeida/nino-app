@@ -1,4 +1,4 @@
 export const useDeliveryQuoteMock = {
-  tenantId: 'tenant-1',
+  unitId: 'unit-1',
   zipCode: '01001-000',
 }

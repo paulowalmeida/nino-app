@@ -1,7 +1,7 @@
 import type { AuthUser } from '@shared/types/auth/auth-user'
-import type { TenantRole } from '@shared/types/auth/tenant-role'
+import type { UnitRole } from '@shared/types/auth/unit-role'
 
 export type StaffMember = {
-  role: TenantRole
+  role: UnitRole
   user: AuthUser
 }

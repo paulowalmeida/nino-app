@@ -1,4 +1,4 @@
-import { ReactNode, useRef, useState } from 'react'
+import { ReactNode, useEffect, useRef, useState } from 'react'
 
 import { Box } from '@nino/ds/components/Box'
 import { FormField } from '@nino/ds/components/FormField'
@@ -42,20 +42,28 @@ export const AddressFields = ({
 }: AddressFieldsProps) => {
   const [lookup, setLookup] = useState<Lookup>('idle')
   const numberRef = useRef<HTMLInputElement>(null)
+  const lookupRequest = useRef(0)
+  const isMounted = useRef(true)
+
+  useEffect(() => () => {
+    isMounted.current = false
+  }, [])
 
   const handleZipChange = async (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
+    const requestId = ++lookupRequest.current
     const zipCode = event.target.value
     onChange({ zipCode })
 
     if (onlyDigits(zipCode).length !== 8) {
-      setLookup('idle')
+      if (isMounted.current) setLookup('idle')
       return
     }
 
-    setLookup('loading')
+    if (isMounted.current) setLookup('loading')
     const found = await lookupZipCode(zipCode).catch(() => null)
+    if (!isMounted.current || requestId !== lookupRequest.current) return
 
     if (!found) {
       setLookup('notFound')

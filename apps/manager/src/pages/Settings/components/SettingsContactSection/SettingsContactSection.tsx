@@ -4,7 +4,7 @@ import { Box } from '@nino/ds/components/Box'
 import { Heading } from '@nino/ds/components/Heading'
 import { Text } from '@nino/ds/components/Text'
 import { useSettingsFacade } from '@pages/Settings/facades/useSettingsFacade/useSettingsFacade'
-import type { TenantPhone } from '@shared/types/settings/tenant-phone'
+import type { UnitPhone } from '@shared/types/settings/unit-phone'
 import { formatPhone } from '@shared/utils/phone/phone'
 
 import { PhoneForm } from './PhoneForm/PhoneForm'
@@ -18,7 +18,7 @@ export const SettingsContactSection = () => {
   const { contact } = useSettingsFacade()
   const { phones, isPending } = contact.query
   const { add, edit, drop } = contact.mutations
-  const [removingPhone, setRemovingPhone] = useState<TenantPhone | null>(null)
+  const [removingPhone, setRemovingPhone] = useState<UnitPhone | null>(null)
 
   const confirmRemoval = () => {
     if (!removingPhone) return

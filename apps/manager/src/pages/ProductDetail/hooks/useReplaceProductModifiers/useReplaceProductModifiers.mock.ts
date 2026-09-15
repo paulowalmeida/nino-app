@@ -1,7 +1,7 @@
 import type { ReplaceProductModifierRequest } from '@shared/types/product/replace-product-modifier-request'
 
 export const replaceProductModifiersContextMock = {
-  tenantId: 'tenant-1',
+  unitId: 'unit-1',
   productId: 'product-1',
 }
 

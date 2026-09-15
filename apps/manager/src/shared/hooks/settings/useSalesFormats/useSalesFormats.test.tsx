@@ -11,7 +11,7 @@ import {
   counterOnlyStoreMock,
   everyFormatEnabledMock,
   noFormatEnabledMock,
-  tenantIdMock,
+  unitIdMock,
 } from './useSalesFormats.mock'
 
 vi.mock('@shared/services/settings/settings.service', () => ({
@@ -36,7 +36,7 @@ describe('useSalesFormats', () => {
     )
 
     // Act
-    const { result } = renderHook(() => useSalesFormats(tenantIdMock), {
+    const { result } = renderHook(() => useSalesFormats(unitIdMock), {
       wrapper,
     })
 
@@ -53,7 +53,7 @@ describe('useSalesFormats', () => {
     )
 
     // Act
-    const { result } = renderHook(() => useSalesFormats(tenantIdMock), {
+    const { result } = renderHook(() => useSalesFormats(unitIdMock), {
       wrapper,
     })
 
@@ -68,7 +68,7 @@ describe('useSalesFormats', () => {
     )
 
     // Act
-    const { result } = renderHook(() => useSalesFormats(tenantIdMock), {
+    const { result } = renderHook(() => useSalesFormats(unitIdMock), {
       wrapper,
     })
 

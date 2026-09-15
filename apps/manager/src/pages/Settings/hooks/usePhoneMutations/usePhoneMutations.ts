@@ -4,11 +4,11 @@ import { PhoneService } from '@pages/Settings/services/phone/phone.service'
 
 import { phonesKey } from '../usePhones/usePhones'
 
-export const usePhoneMutations = (tenantId: string | null) => {
+export const usePhoneMutations = (unitId: string | null) => {
   const queryClient = useQueryClient()
 
   const invalidate = () => {
-    void queryClient.invalidateQueries({ queryKey: phonesKey(tenantId ?? '') })
+    void queryClient.invalidateQueries({ queryKey: phonesKey(unitId ?? '') })
   }
 
   const add = useMutation({
@@ -17,7 +17,7 @@ export const usePhoneMutations = (tenantId: string | null) => {
       errorTitle: 'O telefone não foi adicionado',
     },
     mutationFn: (phone: string) =>
-      PhoneService.createPhone(tenantId as string, phone),
+      PhoneService.createPhone(unitId as string, phone),
     onSuccess: invalidate,
   })
 
@@ -27,7 +27,7 @@ export const usePhoneMutations = (tenantId: string | null) => {
       errorTitle: 'O telefone não foi salvo',
     },
     mutationFn: ({ id, phone }: { id: string; phone: string }) =>
-      PhoneService.updatePhone(tenantId as string, id, phone),
+      PhoneService.updatePhone(unitId as string, id, phone),
     onSuccess: invalidate,
   })
 
@@ -37,7 +37,7 @@ export const usePhoneMutations = (tenantId: string | null) => {
       errorTitle: 'O telefone não foi removido',
     },
     mutationFn: (id: string) =>
-      PhoneService.removePhone(tenantId as string, id),
+      PhoneService.removePhone(unitId as string, id),
     onSuccess: invalidate,
   })
 

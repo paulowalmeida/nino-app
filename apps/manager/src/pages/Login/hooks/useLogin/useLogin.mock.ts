@@ -1,1 +1,1 @@
-export const loginHookMock = { tenantPath: '/' }
+export const loginHookMock = { unitPath: '/' }

@@ -4,9 +4,9 @@ import type { Membership } from '@shared/types/auth/membership'
 export type SessionState = {
   user: AuthUser | null
   memberships: Membership[]
-  currentTenantId: string | null
+  currentUnitId: string | null
   setSession: (user: AuthUser, memberships: Membership[]) => void
-  setCurrentTenant: (tenantId: string | null) => void
+  setCurrentUnit: (unitId: string | null) => void
   clear: () => void
   load: () => Promise<AuthUser | null>
 }

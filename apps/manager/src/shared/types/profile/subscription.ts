@@ -10,7 +10,7 @@ export type Subscription = {
     name: string
     slug: string
     price: string
-    maxTenants: number | null
+    maxUnits: number | null
   }
   subscriptionStatus: {
     id: string
@@ -20,5 +20,5 @@ export type Subscription = {
 
 export type SubscriptionPlan = Pick<
   Subscription['plan'],
-  'id' | 'name' | 'slug' | 'price' | 'maxTenants'
+  'id' | 'name' | 'slug' | 'price' | 'maxUnits'
 >

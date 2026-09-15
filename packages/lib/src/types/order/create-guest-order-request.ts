@@ -1,7 +1,7 @@
 import { CreateOrderItemRequest } from './create-order-item-request'
 
 export type CreateGuestOrderRequest = {
-  tenantId: string
+  unitId: string
   channelId: string
   deliveryFee?: number
   guestName: string

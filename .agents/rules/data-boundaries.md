@@ -79,32 +79,32 @@ The application `services/http.service.ts` is the sole composition point for sha
 
 `nino-api` is the Backend-for-Frontend for the application. This applies to
 every endpoint, not only catalog endpoints. The browser/client is an
-untrusted caller and MUST NOT be treated as the authority for tenant scope,
+untrusted caller and MUST NOT be treated as the authority for unit scope,
 resource ownership, prices, roles, permissions, or workflow decisions.
 
 For every authenticated endpoint, the API MUST resolve the effective user and
-tenant from trusted server-side context, validate the user's membership and
-role for that tenant, and enforce ownership/scoping in the Service/Repository
-path. A `tenantId`, resource ID, role, permission, price, or derived value
+unit from trusted server-side context, validate the user's membership and
+role for that unit, and enforce ownership/scoping in the Service/Repository
+path. A `unitId`, resource ID, role, permission, price, or derived value
 received from the client is only an input candidate; it MUST be validated or
-derived server-side before use. Repositories MUST apply tenant scoping to
-every multi-tenant read, update, delete, and relation lookup so an ID cannot
-cross the tenant boundary (including IDOR and nested-resource access).
+derived server-side before use. Repositories MUST apply unit scoping to
+every multi-unit read, update, delete, and relation lookup so an ID cannot
+cross the unit boundary (including IDOR and nested-resource access).
 
 Roles and Helms are authorization inputs and coarse access gates, not a
 substitute for ownership checks. They MUST be evaluated together with the
-resource's tenant and lifecycle state. Public endpoints MUST be explicit and
+resource's unit and lifecycle state. Public endpoints MUST be explicit and
 limited to intentionally public representations; making an endpoint public
 MUST NOT expose private fields or bypass server-side resource constraints.
 
 The API MUST whitelist mutable fields, reject unauthorized relation changes,
 resolve sensitive derived values such as catalog prices from authoritative
 server data, and return only the BFF response contract needed by the caller.
-Controller input validation, authentication guards, tenant/ownership checks,
+Controller input validation, authentication guards, unit/ownership checks,
 and security regression tests are mandatory parts of the endpoint contract.
 When auditing or implementing an endpoint, trace the complete path
 `controller → guard/context → service → repository → response` and explicitly
-check authentication, tenant isolation, ownership, field assignment, public
+check authentication, unit isolation, ownership, field assignment, public
 exposure, and error leakage. A frontend filter, hidden field, role selector,
 Helm, or UI restriction is never a security boundary.
 

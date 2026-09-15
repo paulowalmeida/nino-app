@@ -1,4 +1,4 @@
 export const newOrderFacadeMock = {
-  tenantId: 'tenant-1',
+  unitId: 'unit-1',
   paymentMethod: 'PIX',
 }

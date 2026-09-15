@@ -3,27 +3,27 @@ import { describe, expect, it, vi } from 'vitest'
 
 import { useTableTabItemCancellation } from '@pages/TableTabDetail/hooks/useTableTabItemCancellation/useTableTabItemCancellation'
 import { useOrders } from '@shared/hooks/order/useOrders/useOrders'
-import { useCurrentTenant } from '@shared/hooks/session/useCurrentTenant/useCurrentTenant'
+import { useCurrentUnit } from '@shared/hooks/session/useCurrentUnit/useCurrentUnit'
 
 import { useTableTabDetailFacade } from './useTableTabDetailFacade'
 import { tableTabDetailFacadeMock } from './useTableTabDetailFacade.mock'
 
 vi.mock('react-router', () => ({ useParams: () => ({ tabId: 'tab-1' }) }))
 vi.mock('@shared/hooks/order/useOrders/useOrders')
-vi.mock('@shared/hooks/session/useCurrentTenant/useCurrentTenant')
+vi.mock('@shared/hooks/session/useCurrentUnit/useCurrentUnit')
 vi.mock(
   '@pages/TableTabDetail/hooks/useTableTabItemCancellation/useTableTabItemCancellation'
 )
 
 describe(useTableTabDetailFacade.name, () => {
   it('composes the detail query and item cancellation command', () => {
-    vi.mocked(useCurrentTenant).mockReturnValue({
-      tenantId: 'tenant-1',
-      tenantName: 'Padoca do Bairro',
-      tenantSlug: 'padoca-do-bairro',
+    vi.mocked(useCurrentUnit).mockReturnValue({
+      unitId: 'unit-1',
+      unitName: 'Padoca do Bairro',
+      unitSlug: 'padoca-do-bairro',
       companyId: 'company-1',
       companyName: 'Padoca do Bairro',
-      role: 'TENANT_OWNER',
+      role: 'UNIT_OWNER',
       isCurrent: true,
     })
     vi.mocked(useOrders).mockReturnValue({
@@ -41,7 +41,7 @@ describe(useTableTabDetailFacade.name, () => {
     expect(result.current.isPending).toBe(tableTabDetailFacadeMock.isPending)
     expect(result.current.isError).toBe(tableTabDetailFacadeMock.isError)
     expect(useOrders).toHaveBeenCalledWith(
-      'tenant-1',
+      'unit-1',
       'tab-1',
       [
         'PENDING',

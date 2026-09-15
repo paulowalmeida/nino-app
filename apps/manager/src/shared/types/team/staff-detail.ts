@@ -1,4 +1,4 @@
-import type { TenantRole } from '@shared/types/auth/tenant-role'
+import type { UnitRole } from '@shared/types/auth/unit-role'
 import type {
   StaffActivityEntry,
 } from '@shared/types/team/staff-activity-entry'
@@ -13,7 +13,7 @@ export type StaffDetail = {
     profileCompletedAt: string | null
     credentials: { provider: string; email: string | null }[]
   }
-  role: TenantRole
+  role: UnitRole
   createdAt: string
   firstActivityAt: string | null
   ordersHandled: number

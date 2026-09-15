@@ -19,17 +19,17 @@ vi.mock('@tanstack/react-query', () => ({
 }))
 
 describe('useOpeningHours', () => {
-  it('uses the tenant cache key and does not request without a tenant', () => {
+  it('uses the unit cache key and does not request without a unit', () => {
     renderHook(() => useOpeningHours(undefined))
 
-    expect(queryOptions?.queryKey).toEqual(queryKeys.openingHours.byTenant(''))
+    expect(queryOptions?.queryKey).toEqual(queryKeys.openingHours.byUnit(''))
     expect(queryOptions?.enabled).toBe(false)
   })
 
   it('exposes an empty hours list while the request has no data', () => {
     queryData = undefined
 
-    const { result } = renderHook(() => useOpeningHours('tenant-1'))
+    const { result } = renderHook(() => useOpeningHours('unit-1'))
 
     expect(result.current.hours).toEqual([])
   })
@@ -37,7 +37,7 @@ describe('useOpeningHours', () => {
   it('exposes the public opening hours returned by the query', () => {
     queryData = useOpeningHoursMock.hours
 
-    const { result } = renderHook(() => useOpeningHours('tenant-1'))
+    const { result } = renderHook(() => useOpeningHours('unit-1'))
 
     expect(result.current.hours).toEqual(useOpeningHoursMock.hours)
   })

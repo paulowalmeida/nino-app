@@ -29,7 +29,7 @@ const renderHistory = () =>
   renderHook(
     () =>
       useConsumerOrderHistory(
-        consumerOrderHistoryScopeMock.tenantId,
+        consumerOrderHistoryScopeMock.unitId,
         consumerOrderHistoryScopeMock.consumerId
       ),
     { wrapper }
@@ -47,7 +47,7 @@ describe('useConsumerOrderHistory', () => {
 
     await waitFor(() => expect(result.current.orderRows).toHaveLength(1))
     expect(ConsumerService.listConsumerOrders).toHaveBeenCalledWith(
-      consumerOrderHistoryScopeMock.tenantId,
+      consumerOrderHistoryScopeMock.unitId,
       consumerOrderHistoryScopeMock.consumerId,
       1
     )
@@ -67,14 +67,14 @@ describe('useConsumerOrderHistory', () => {
     result.current.loadMoreOrders()
     await waitFor(() =>
       expect(ConsumerService.listConsumerOrders).toHaveBeenLastCalledWith(
-        consumerOrderHistoryScopeMock.tenantId,
+        consumerOrderHistoryScopeMock.unitId,
         consumerOrderHistoryScopeMock.consumerId,
         2
       )
     )
   })
 
-  it('does not request without tenant or consumer scope', () => {
+  it('does not request without unit or consumer scope', () => {
     const { result } = renderHook(() => useConsumerOrderHistory(null, ''), {
       wrapper,
     })

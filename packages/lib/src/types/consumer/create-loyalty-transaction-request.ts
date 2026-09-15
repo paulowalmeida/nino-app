@@ -1,7 +1,7 @@
 import { LoyaltyTransactionType } from '../../enums'
 
 export type CreateLoyaltyTransactionRequest = {
-  tenantId: string
+  unitId: string
   orderId?: string
   type: LoyaltyTransactionType
   points: number

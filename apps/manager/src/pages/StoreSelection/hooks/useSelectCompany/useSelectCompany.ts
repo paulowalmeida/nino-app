@@ -7,5 +7,5 @@ export const useSelectCompany = () => {
   const navigate = useNavigate()
 
   return (units: Membership[]) =>
-    void navigate(`/${currentOrFirstUnit(units).tenantId}/visao-geral`)
+    void navigate(`/${currentOrFirstUnit(units).unitId}/visao-geral`)
 }

@@ -6,7 +6,7 @@ import type { OrderPage } from '@shared/types/order/order-page'
 export const preparingOrderMock: Order = {
   id: 'order-1',
   orderNumber: 77,
-  tenantId: 'tenant-1',
+  unitId: 'unit-1',
   consumerId: null,
   status: 'PREPARING',
   channel: 'PICKUP',

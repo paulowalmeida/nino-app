@@ -1,5 +1,3 @@
-const GOOGLE_AUTH_URL = 'https://accounts.google.com/o/oauth2/v2/auth'
-
 /**
  * Cada loja é um subdomínio, e o widget do Google (o que autentica dentro do
  * próprio navegador) só aceita origens cadastradas uma a uma — inviável para
@@ -11,10 +9,9 @@ const GOOGLE_AUTH_URL = 'https://accounts.google.com/o/oauth2/v2/auth'
  * oferece o caminho do Google — o mesmo contrato de antes.
  */
 export const buildGoogleAuthUrl = (returnUrl: string): string | null => {
-  const clientId = import.meta.env.VITE_GOOGLE_CLIENT_ID as string | undefined
   const apiBaseUrl = import.meta.env.VITE_BASE_URL as string
 
-  if (!clientId) return null
+  if (!apiBaseUrl) return null
 
   /* CONSTRAINT: o Google recusa `redirect_uri` relativo, e em
      desenvolvimento a base da API é o caminho do proxy do Vite (`/api`) —
@@ -25,17 +22,11 @@ export const buildGoogleAuthUrl = (returnUrl: string): string | null => {
      mudaria a cada loja e exigiria cadastro individual no Console. */
   const { protocol, port } = window.location
   const proxyOrigin = `${protocol}//localhost:${port}`
-  const callback = new URL(
-    `${apiBaseUrl}/consumer/auth/google/callback`,
+  const startUrl = new URL(
+    `${apiBaseUrl}/consumer/auth/google/start`,
     proxyOrigin
-  ).toString()
+  )
+  startUrl.searchParams.set('returnUrl', returnUrl)
 
-  const url = new URL(GOOGLE_AUTH_URL)
-  url.searchParams.set('client_id', clientId)
-  url.searchParams.set('redirect_uri', callback)
-  url.searchParams.set('response_type', 'code')
-  url.searchParams.set('scope', 'openid email profile')
-  url.searchParams.set('state', returnUrl)
-
-  return url.toString()
+  return startUrl.toString()
 }

@@ -1,7 +1,7 @@
 import type { UpdateMenuItemRequest } from '@shared/types/product/update-menu-item-request'
 
 export const updateProductMock = {
-  tenantId: 'tenant-1',
+  unitId: 'unit-1',
   productId: 'product-1',
 }
 

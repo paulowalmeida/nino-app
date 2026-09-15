@@ -270,7 +270,7 @@
   <rect x="340" y="1040" width="468" height="76" rx="6" fill="#85BBF0" stroke="#5A9BD5"/>
   <text x="352" y="1060" class="cName">Query keys</text>
   <text x="352" y="1074" class="cType">[Componente: TypeScript]  ·  shared/lib/query-keys.ts</text>
-  <text x="352" y="1090" class="cDesc">Fábrica central de chaves por tenant e filtro. A mutação</text>
+  <text x="352" y="1090" class="cDesc">Fábrica central de chaves por unit e filtro. A mutação</text>
   <text x="352" y="1104" class="cDesc">invalida a raiz do domínio depois de gravar.</text>
 
   <rect x="820" y="954" width="468" height="76" rx="6" fill="#85BBF0" stroke="#5A9BD5"/>
@@ -375,8 +375,8 @@
   <rect x="326" y="1490" width="1326" height="104" rx="8" fill="#8A8A8A"/>
   <text x="344" y="1516" class="wName">nino-api</text>
   <text x="344" y="1532" class="wType">[Sistema externo: NestJS + PostgreSQL]</text>
-  <text x="344" y="1552" class="wDesc">Backend-for-frontend do painel. Resolve tenant, papel, preço e escopo no servidor — o browser é caller não confiável.</text>
-  <text x="344" y="1568" class="wDesc">Sessão em cookie httpOnly (access 15min, refresh 7 dias) · RBAC combinando papel global e papel de tenant · multi-tenant Company → N Tenants.</text>
+  <text x="344" y="1552" class="wDesc">Backend-for-frontend do painel. Resolve unit, papel, preço e escopo no servidor — o browser é caller não confiável.</text>
+  <text x="344" y="1568" class="wDesc">Sessão em cookie httpOnly (access 15min, refresh 7 dias) · RBAC combinando papel global e papel de unit · multi-unit Company → N Units.</text>
   <text x="1634" y="1516" text-anchor="end" class="wType">github.com/paulowalmeida/nino-api</text>
 
   <path d="M1501 1430 L1501 1462 L989 1462 L989 1486" fill="none" stroke="#5B6B7C" stroke-width="1.8" marker-end="url(#ar)"/>

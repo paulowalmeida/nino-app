@@ -8,7 +8,7 @@ import {
   phoneMock,
   phonePageMock,
   removePhoneMessageMock,
-  tenantIdMock,
+  unitIdMock,
 } from './phone.service.mock'
 
 vi.mock('@shared/services/http/http.service', () => ({
@@ -23,15 +23,15 @@ vi.mock('@shared/services/http/http.service', () => ({
 describe('PhoneService', () => {
   afterEach(() => vi.clearAllMocks())
 
-  it('listPhones: reads the tenant phones', async () => {
+  it('listPhones: reads the unit phones', async () => {
     // Arrange
     vi.mocked(api.get).mockResolvedValue(phonePageMock)
 
     // Act
-    const result = await PhoneService.listPhones(tenantIdMock)
+    const result = await PhoneService.listPhones(unitIdMock)
 
     // Assert
-    expect(api.get).toHaveBeenCalledWith(`tenants/${tenantIdMock}/phones`)
+    expect(api.get).toHaveBeenCalledWith(`units/${unitIdMock}/phones`)
     expect(result).toBe(phonePageMock)
   })
 
@@ -40,10 +40,10 @@ describe('PhoneService', () => {
     vi.mocked(api.create).mockResolvedValue(phoneMock)
 
     // Act
-    const result = await PhoneService.createPhone(tenantIdMock, '11999990000')
+    const result = await PhoneService.createPhone(unitIdMock, '11999990000')
 
     // Assert
-    expect(api.create).toHaveBeenCalledWith(`tenants/${tenantIdMock}/phones`, {
+    expect(api.create).toHaveBeenCalledWith(`units/${unitIdMock}/phones`, {
       phone: '11999990000',
     })
     expect(result).toBe(phoneMock)
@@ -55,14 +55,14 @@ describe('PhoneService', () => {
 
     // Act
     const result = await PhoneService.updatePhone(
-      tenantIdMock,
+      unitIdMock,
       phoneIdMock,
       '11988880000'
     )
 
     // Assert
     expect(api.patch).toHaveBeenCalledWith(
-      `tenants/${tenantIdMock}/phones/${phoneIdMock}`,
+      `units/${unitIdMock}/phones/${phoneIdMock}`,
       { phone: '11988880000' }
     )
     expect(result).toBe(phoneMock)
@@ -73,11 +73,11 @@ describe('PhoneService', () => {
     vi.mocked(api.remove).mockResolvedValue(removePhoneMessageMock)
 
     // Act
-    const result = await PhoneService.removePhone(tenantIdMock, phoneIdMock)
+    const result = await PhoneService.removePhone(unitIdMock, phoneIdMock)
 
     // Assert
     expect(api.remove).toHaveBeenCalledWith(
-      `tenants/${tenantIdMock}/phones/${phoneIdMock}`
+      `units/${unitIdMock}/phones/${phoneIdMock}`
     )
     expect(result).toBe(removePhoneMessageMock)
   })

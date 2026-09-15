@@ -20,7 +20,7 @@ describe('CompanyPickCard', () => {
       screen.getByText(companyPickCardMock.companyName)
     ).toBeInTheDocument()
     expect(
-      screen.getByText(companyPickCardMock.singleUnit[0].tenantName)
+      screen.getByText(companyPickCardMock.singleUnit[0].unitName)
     ).toBeInTheDocument()
   })
 

@@ -32,7 +32,7 @@ describe('useProductCategoryOptions', () => {
     )
 
     const { result } = renderHook(
-      () => useProductCategoryOptions('tenant-1'),
+      () => useProductCategoryOptions('unit-1'),
       { wrapper }
     )
 
@@ -43,7 +43,7 @@ describe('useProductCategoryOptions', () => {
     ])
   })
 
-  it('does not ask the API without a tenant', () => {
+  it('does not ask the API without a unit', () => {
     const { result } = renderHook(() => useProductCategoryOptions(null), {
       wrapper,
     })

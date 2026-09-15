@@ -4,7 +4,7 @@ import { useRemoveMember } from '@shared/hooks/team/useRemoveMember/useRemoveMem
 import { useUpdateStaffEmail } from '@shared/hooks/team/useUpdateStaffEmail/useUpdateStaffEmail'
 import { useUpdateStaffRole } from '@shared/hooks/team/useUpdateStaffRole/useUpdateStaffRole'
 import { useSessionStore } from '@shared/states/session/session.state'
-import type { TenantRole } from '@shared/types/auth/tenant-role'
+import type { UnitRole } from '@shared/types/auth/unit-role'
 import type { StaffDetail } from '@shared/types/team/staff-detail'
 
 const OWNER_ONLY_HINT = 'Só o dono da loja muda o cargo de alguém.'
@@ -12,23 +12,23 @@ const SELF_HINT = 'Você não pode mudar o próprio cargo.'
 const OWNER_TARGET_HINT = 'Rebaixe o dono antes de removê-lo da loja.'
 
 export const useCollaboratorDetailAdmin = (
-  tenantId: string | null,
-  tenantRole: TenantRole | null,
+  unitId: string | null,
+  unitRole: UnitRole | null,
   member: StaffDetail | null
 ) => {
   const navigate = useNavigate()
   const signedInUserId = useSessionStore((state) => state.user?.id)
 
   const { mutate: changeRole, isPending: isChangingRole } =
-    useUpdateStaffRole(tenantId)
-  const { mutateAsync: updateEmail } = useUpdateStaffEmail(tenantId)
+    useUpdateStaffRole(unitId)
+  const { mutateAsync: updateEmail } = useUpdateStaffEmail(unitId)
   const { mutateAsync: removeMember, isPending: isRemoving } =
-    useRemoveMember(tenantId)
+    useRemoveMember(unitId)
 
   const memberUserId = member?.user.id ?? ''
   const isSelf = memberUserId === signedInUserId
-  const isOwnerSignedIn = tenantRole === 'TENANT_OWNER'
-  const isTargetOwner = member?.role === 'TENANT_OWNER'
+  const isOwnerSignedIn = unitRole === 'UNIT_OWNER'
+  const isTargetOwner = member?.role === 'UNIT_OWNER'
   const roleLockHint = !isOwnerSignedIn
     ? OWNER_ONLY_HINT
     : isSelf
@@ -52,7 +52,7 @@ export const useCollaboratorDetailAdmin = (
           : undefined,
 
     roleLockHint,
-    changeRole: (role: TenantRole) =>
+    changeRole: (role: UnitRole) =>
       changeRole({ userId: memberUserId, role }),
     isChangingRole,
 

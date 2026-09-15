@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query'
 
-import { queryKeys } from '@shared/lib/query-keys'
+import { queryKeys } from '@shared/lib/query-keys/query-keys'
 import { OrderService } from '@shared/services/order/order.service'
 import type { ReportRangeParams } from '@shared/types/order/report-range-params'
 import type {
@@ -13,23 +13,23 @@ import type { SeriesGranularity } from '@shared/types/order/series-granularity'
  * granularity-in-key reasoning as `useSalesSeries` — it changes the shape.
  */
 export const useSalesSeriesByChannel = (
-  tenantId: string | null,
+  unitId: string | null,
   params: ReportRangeParams,
   granularity?: SeriesGranularity
 ) => {
   const query = useQuery<SalesSeriesBreakdown>({
     queryKey: queryKeys.orders.seriesByChannel(
-      tenantId ?? '',
+      unitId ?? '',
       params,
       granularity
     ),
     queryFn: () =>
       OrderService.getSalesSeriesByChannel(
-        tenantId as string,
+        unitId as string,
         params,
         granularity
       ),
-    enabled: !!tenantId,
+    enabled: !!unitId,
   })
 
   return { ...query, breakdown: query.data }

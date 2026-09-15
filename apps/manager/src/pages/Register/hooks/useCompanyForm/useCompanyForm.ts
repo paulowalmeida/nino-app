@@ -5,10 +5,10 @@ import type { CompanyFormValues } from '@pages/Register/types/CompanyFormValues.
 import type { SignupCompany } from '@shared/types/auth/signup-company'
 
 type UseCompanyFormParams = {
-  goToTenant: (company: SignupCompany) => void
+  goToUnit: (company: SignupCompany) => void
 }
 
-export const useCompanyForm = ({ goToTenant }: UseCompanyFormParams) => {
+export const useCompanyForm = ({ goToUnit }: UseCompanyFormParams) => {
   const { mutateAsync: checkAvailability } = useCheckAvailability()
 
   const form = useForm<CompanyFormValues>()
@@ -23,7 +23,7 @@ export const useCompanyForm = ({ goToTenant }: UseCompanyFormParams) => {
         return
       }
 
-      goToTenant(data.company)
+      goToUnit(data.company)
     } catch {
       setError('root', {
         message: 'Não foi possível validar o CNPJ. Tente de novo.',

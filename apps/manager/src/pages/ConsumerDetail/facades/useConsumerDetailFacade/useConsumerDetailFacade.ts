@@ -2,13 +2,13 @@ import { useParams } from 'react-router'
 
 import { useConsumerDetail } from '@pages/ConsumerDetail/hooks/useConsumerDetail/useConsumerDetail'
 import { useConsumerOrderHistory } from '@pages/ConsumerDetail/hooks/useConsumerOrderHistory/useConsumerOrderHistory'
-import { useCurrentTenant } from '@shared/hooks/session/useCurrentTenant/useCurrentTenant'
+import { useCurrentUnit } from '@shared/hooks/session/useCurrentUnit/useCurrentUnit'
 
 export const useConsumerDetailFacade = () => {
   const { consumerId } = useParams()
-  const tenantId = useCurrentTenant()?.tenantId ?? null
-  const detail = useConsumerDetail(tenantId, consumerId ?? '')
-  const history = useConsumerOrderHistory(tenantId, consumerId ?? '')
+  const unitId = useCurrentUnit()?.unitId ?? null
+  const detail = useConsumerDetail(unitId, consumerId ?? '')
+  const history = useConsumerOrderHistory(unitId, consumerId ?? '')
 
   return {
     consumer: detail.consumer,

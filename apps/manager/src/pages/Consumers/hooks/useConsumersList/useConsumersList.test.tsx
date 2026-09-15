@@ -34,7 +34,7 @@ describe('useConsumersList', () => {
     )
 
     const { result } = renderHook(
-      () => useConsumersList(consumersListScopeMock.tenantId, ''),
+      () => useConsumersList(consumersListScopeMock.unitId, ''),
       { wrapper }
     )
 
@@ -43,7 +43,7 @@ describe('useConsumersList', () => {
     expect(result.current.total).toBe(1)
     expect(result.current.hasNextPage).toBe(false)
     expect(ConsumerService.listConsumers).toHaveBeenCalledWith(
-      consumersListScopeMock.tenantId,
+      consumersListScopeMock.unitId,
       1,
       undefined
     )
@@ -57,7 +57,7 @@ describe('useConsumersList', () => {
     renderHook(
       () =>
         useConsumersList(
-          consumersListScopeMock.tenantId,
+          consumersListScopeMock.unitId,
           consumersListScopeMock.search
         ),
       { wrapper }
@@ -65,7 +65,7 @@ describe('useConsumersList', () => {
 
     await waitFor(() =>
       expect(ConsumerService.listConsumers).toHaveBeenCalledWith(
-        consumersListScopeMock.tenantId,
+        consumersListScopeMock.unitId,
         1,
         consumersListScopeMock.trimmedSearch
       )
@@ -79,7 +79,7 @@ describe('useConsumersList', () => {
     })
 
     const { result } = renderHook(
-      () => useConsumersList(consumersListScopeMock.tenantId, ''),
+      () => useConsumersList(consumersListScopeMock.unitId, ''),
       { wrapper }
     )
 
@@ -87,7 +87,7 @@ describe('useConsumersList', () => {
     result.current.loadMoreConsumers()
     await waitFor(() =>
       expect(ConsumerService.listConsumers).toHaveBeenLastCalledWith(
-        consumersListScopeMock.tenantId,
+        consumersListScopeMock.unitId,
         2,
         undefined
       )
@@ -99,7 +99,7 @@ describe('useConsumersList', () => {
       new Error('offline')
     )
 
-    const { result } = renderHook(() => useConsumersList('tenant-1', ''), {
+    const { result } = renderHook(() => useConsumersList('unit-1', ''), {
       wrapper,
     })
 
@@ -108,7 +108,7 @@ describe('useConsumersList', () => {
     expect(result.current.total).toBeUndefined()
   })
 
-  it('does not request without a tenant', () => {
+  it('does not request without a unit', () => {
     const { result } = renderHook(() => useConsumersList(null, ''), {
       wrapper,
     })

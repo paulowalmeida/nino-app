@@ -14,7 +14,7 @@ import { EMPTY_UNIT_DRAFT } from '@pages/Units/constants/unit.constants'
 import type { useDeliveryLocation } from '@pages/Units/hooks/useDeliveryLocation/useDeliveryLocation'
 import { UnitCardSkeleton } from '@pages/Units/skeletons/UnitCardSkeleton/UnitCardSkeleton'
 import { AddressFields } from '@shared/components/AddressFields/AddressFields'
-import type { TenantDetail } from '@shared/types/store/tenant-detail'
+import type { UnitDetail } from '@shared/types/store/unit-detail'
 import type { UnitDraft } from '@shared/types/store/unit-draft'
 
 import { DeliveryCities } from '../DeliveryCities/DeliveryCities'
@@ -23,7 +23,7 @@ import motion from '@styles/motion.module.css'
 import local from './UnitCard.module.css'
 
 export type UnitCardProps = {
-  unit: TenantDetail | undefined
+  unit: UnitDetail | undefined
   isPending: boolean
   isSaving: boolean
   /** Company's headquarters — the rank shows in the profile's header. */
@@ -48,7 +48,7 @@ export const UnitCard = ({
 }: UnitCardProps) => {
   const [draft, setDraft] = useState<UnitDraft>(EMPTY_UNIT_DRAFT)
   const [isDirty, setDirty] = useState(false)
-  const [seed, setSeed] = useState<TenantDetail | undefined>(undefined)
+  const [seed, setSeed] = useState<UnitDetail | undefined>(undefined)
 
   if (unit && unit !== seed) {
     setSeed(unit)

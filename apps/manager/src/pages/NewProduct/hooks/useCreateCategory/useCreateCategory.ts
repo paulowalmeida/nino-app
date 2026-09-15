@@ -1,9 +1,9 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 
-import { queryKeys } from '@shared/lib/query-keys'
+import { queryKeys } from '@shared/lib/query-keys/query-keys'
 import { CategoryService } from '@shared/services/category/category.service'
 
-export const useCreateCategory = (tenantId: string | null) => {
+export const useCreateCategory = (unitId: string | null) => {
   const queryClient = useQueryClient()
 
   return useMutation({
@@ -12,10 +12,10 @@ export const useCreateCategory = (tenantId: string | null) => {
       errorTitle: 'A categoria não foi criada',
     },
     mutationFn: (name: string) =>
-      CategoryService.createCategory(tenantId as string, name),
+      CategoryService.createCategory(unitId as string, name),
     onSuccess: () => {
       void queryClient.invalidateQueries({
-        queryKey: queryKeys.productCategories.all(tenantId ?? ''),
+        queryKey: queryKeys.productCategories.all(unitId ?? ''),
       })
     },
   })

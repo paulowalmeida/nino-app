@@ -24,7 +24,7 @@ export const demoOrder = (
 ): Order => ({
   id: 'demo-1042',
   orderNumber: 1042,
-  tenantId: 'demo-tenant',
+  unitId: 'demo-unit',
   consumerId: null,
   status,
   channel: 'DELIVERY',
@@ -68,7 +68,6 @@ export const demoTimeline = (): OrderStatusEntry[] =>
       id: `demo-entry-${index}`,
       status,
       changedByRealm: index === 0 ? 'GUEST' : 'OPERATIONAL',
-      changedById: null,
       createdAt: new Date(Date.parse(AT) + index * 6 * 60_000).toISOString(),
     })
   )

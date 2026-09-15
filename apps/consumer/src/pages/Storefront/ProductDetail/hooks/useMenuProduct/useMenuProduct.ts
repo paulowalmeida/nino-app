@@ -2,10 +2,10 @@ import type { MenuItem } from '@custom_types/menu/menu-item'
 import { useMenu } from '@pages/Storefront/hooks/useMenu/useMenu'
 
 export const useMenuProduct = (
-  tenantId: string | undefined,
+  unitId: string | undefined,
   productId: string | undefined
 ) => {
-  const menu = useMenu(tenantId)
+  const menu = useMenu(unitId)
   const product: MenuItem | null =
     menu.sections
       .flatMap((section) => section.items)

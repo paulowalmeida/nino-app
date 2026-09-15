@@ -12,7 +12,7 @@ describe('useCartSummary', () => {
   it('derives cart lines, item count, and monetary total from the cart store', () => {
     useCartStore
       .getState()
-      .add(useCartSummaryMock.tenantId, useCartSummaryMock.cartItem, 2)
+      .add(useCartSummaryMock.unitId, useCartSummaryMock.cartItem, 2)
 
     const { result } = renderHook(() => useCartSummary())
 

@@ -4,12 +4,12 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { renderHook, waitFor } from '@testing-library/react'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 
-import { queryKeys } from '@shared/lib/query-keys'
+import { queryKeys } from '@shared/lib/query-keys/query-keys'
 import { OrderService } from '@shared/services/order/order.service'
 import type { Order } from '@shared/types/order/order'
 
 import { useCreateOrder } from './useCreateOrder'
-import { createOrderRequestMock, orderMock, tenantIdMock } from './useCreateOrder.mock'
+import { createOrderRequestMock, orderMock, unitIdMock } from './useCreateOrder.mock'
 
 vi.mock('@shared/services/order/order.service')
 
@@ -33,7 +33,7 @@ describe(useCreateOrder.name, () => {
       orderMock as unknown as Order
     )
     const invalidate = vi.spyOn(client, 'invalidateQueries')
-    const { result } = renderHook(() => useCreateOrder(tenantIdMock), {
+    const { result } = renderHook(() => useCreateOrder(unitIdMock), {
       wrapper,
     })
 
@@ -43,13 +43,13 @@ describe(useCreateOrder.name, () => {
     // Assert
     await waitFor(() => expect(result.current.isSuccess).toBe(true))
     expect(invalidate).toHaveBeenCalledWith({
-      queryKey: queryKeys.orders.all(tenantIdMock),
+      queryKey: queryKeys.orders.all(unitIdMock),
     })
     expect(invalidate).toHaveBeenCalledWith({
-      queryKey: ['order-queue-summary', tenantIdMock],
+      queryKey: ['order-queue-summary', unitIdMock],
     })
     expect(invalidate).toHaveBeenCalledWith({
-      queryKey: queryKeys.cash.all(tenantIdMock),
+      queryKey: queryKeys.cash.all(unitIdMock),
     })
   })
 })

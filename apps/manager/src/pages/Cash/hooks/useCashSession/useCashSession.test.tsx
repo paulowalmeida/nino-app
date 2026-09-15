@@ -33,7 +33,7 @@ describe(useCashSession.name, () => {
 
     // Act
     const { result } = renderHook(
-      () => useCashSession('tenant-1', true, '2026-08-30'),
+      () => useCashSession('unit-1', true, '2026-08-30'),
       { wrapper }
     )
 
@@ -41,7 +41,7 @@ describe(useCashSession.name, () => {
     await waitFor(() => expect(result.current.session).toEqual(
       openSessionMock
     ))
-    expect(CashService.getCurrentSession).toHaveBeenCalledWith('tenant-1')
+    expect(CashService.getCurrentSession).toHaveBeenCalledWith('unit-1')
     expect(CashService.getSessionByDate).not.toHaveBeenCalled()
   })
 
@@ -51,7 +51,7 @@ describe(useCashSession.name, () => {
 
     // Act
     const { result } = renderHook(
-      () => useCashSession('tenant-1', true, '2026-08-30'),
+      () => useCashSession('unit-1', true, '2026-08-30'),
       { wrapper }
     )
 
@@ -69,7 +69,7 @@ describe(useCashSession.name, () => {
 
     // Act
     const { result } = renderHook(
-      () => useCashSession('tenant-1', false, closedSessionDateKeyMock),
+      () => useCashSession('unit-1', false, closedSessionDateKeyMock),
       { wrapper }
     )
 
@@ -78,7 +78,7 @@ describe(useCashSession.name, () => {
       closedSessionMock
     ))
     expect(CashService.getSessionByDate).toHaveBeenCalledWith(
-      'tenant-1',
+      'unit-1',
       closedSessionDateKeyMock
     )
   })
@@ -94,7 +94,7 @@ describe(useCashSession.name, () => {
 
     // Act
     const { result } = renderHook(
-      () => useCashSession('tenant-1', false, closedSessionDateKeyMock),
+      () => useCashSession('unit-1', false, closedSessionDateKeyMock),
       { wrapper }
     )
 
@@ -124,7 +124,7 @@ describe(useCashSession.name, () => {
 
     // Act
     const { result } = renderHook(
-      () => useCashSession('tenant-1', true, '2026-08-30'),
+      () => useCashSession('unit-1', true, '2026-08-30'),
       { wrapper }
     )
 

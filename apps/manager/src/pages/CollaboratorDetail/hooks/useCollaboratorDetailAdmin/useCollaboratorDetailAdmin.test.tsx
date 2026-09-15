@@ -48,7 +48,7 @@ describe(useCollaboratorDetailAdmin.name, () => {
     } as never)
     const { result } = renderHook(
       () =>
-        useCollaboratorDetailAdmin('tenant-1', 'TENANT_OWNER', member as never),
+        useCollaboratorDetailAdmin('unit-1', 'UNIT_OWNER', member as never),
       { wrapper }
     )
     expect(result.current.roleLockHint).toBeUndefined()
@@ -79,8 +79,8 @@ describe(useCollaboratorDetailAdmin.name, () => {
     } as never)
     const { result } = renderHook(
       () =>
-        useCollaboratorDetailAdmin('tenant-1', 'STAFF', {
-          role: 'TENANT_OWNER',
+        useCollaboratorDetailAdmin('unit-1', 'STAFF', {
+          role: 'UNIT_OWNER',
           user: { id: 'user-1' },
         } as never),
       { wrapper }
@@ -107,7 +107,7 @@ describe(useCollaboratorDetailAdmin.name, () => {
     } as never)
     const { result } = renderHook(
       () =>
-        useCollaboratorDetailAdmin('tenant-1', 'TENANT_OWNER', member as never),
+        useCollaboratorDetailAdmin('unit-1', 'UNIT_OWNER', member as never),
       { wrapper }
     )
     expect(result.current.roleLockHint).toContain('Você não pode')
@@ -133,8 +133,8 @@ describe(useCollaboratorDetailAdmin.name, () => {
 
     const { result } = renderHook(
       () =>
-        useCollaboratorDetailAdmin('tenant-1', 'TENANT_OWNER', {
-          role: 'TENANT_OWNER',
+        useCollaboratorDetailAdmin('unit-1', 'UNIT_OWNER', {
+          role: 'UNIT_OWNER',
           user: { id: 'owner-2' },
         } as never),
       { wrapper }

@@ -23,7 +23,7 @@ describe('useSelectCompany', () => {
 
     result.current(selectCompanyUnitsMock)
 
-    expect(navigate).toHaveBeenCalledWith('/tenant-2/visao-geral')
+    expect(navigate).toHaveBeenCalledWith('/unit-2/visao-geral')
   })
 
   it('falls back to the first unit when none is current', () => {
@@ -37,6 +37,6 @@ describe('useSelectCompany', () => {
 
     result.current(noCurrent)
 
-    expect(navigate).toHaveBeenCalledWith('/tenant-1/visao-geral')
+    expect(navigate).toHaveBeenCalledWith('/unit-1/visao-geral')
   })
 })

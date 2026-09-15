@@ -1,7 +1,7 @@
 import type { AuthUser } from '@shared/types/auth/auth-user'
 
 export type CourierMember = {
-  tenantId: string
+  unitId: string
   isActive: boolean
   createdAt: string
   courier: AuthUser

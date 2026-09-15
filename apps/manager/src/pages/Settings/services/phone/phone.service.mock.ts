@@ -1,4 +1,4 @@
-export const tenantIdMock = 'tenant-1'
+export const unitIdMock = 'unit-1'
 export const phoneIdMock = 'phone-1'
 
 export const phonePageMock = {

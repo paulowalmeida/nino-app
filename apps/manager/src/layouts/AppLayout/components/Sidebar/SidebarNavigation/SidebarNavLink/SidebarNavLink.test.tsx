@@ -11,7 +11,7 @@ describe('SidebarNavLink', () => {
     render(
       <MemoryRouter>
         <SidebarNavLink
-          tenantId="tenant-1"
+          unitId="unit-1"
           section="pedidos"
           label="Pedidos"
           icon="receipt"
@@ -32,7 +32,7 @@ describe('SidebarNavLink', () => {
     render(
       <MemoryRouter>
         <SidebarNavLink
-          tenantId="tenant-1"
+          unitId="unit-1"
           section="pedidos"
           label="Pedidos"
           icon="receipt"
@@ -51,9 +51,9 @@ describe('SidebarNavLink', () => {
 
   it('keeps Products inactive when Categories is the current route', () => {
     render(
-      <MemoryRouter initialEntries={['/tenant-1/categorias-produtos']}>
+      <MemoryRouter initialEntries={['/unit-1/categorias-produtos']}>
         <SidebarNavLink
-          tenantId="tenant-1"
+          unitId="unit-1"
           section="produtos"
           label="Produtos"
           icon="book"
@@ -63,7 +63,7 @@ describe('SidebarNavLink', () => {
           onNavigate={() => undefined}
         />
         <SidebarNavLink
-          tenantId="tenant-1"
+          unitId="unit-1"
           section="categorias-produtos"
           label="Categorias"
           icon="tag"

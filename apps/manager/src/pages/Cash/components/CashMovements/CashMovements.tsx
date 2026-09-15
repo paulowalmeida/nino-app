@@ -9,7 +9,7 @@ import {
   TableRow,
 } from '@nino/ds/components/Table'
 import { Text } from '@nino/ds/components/Text'
-import { CASH_MOVEMENT_LABEL } from '@shared/constants/cash.constants'
+import { CASH_MOVEMENT_LABEL } from '@pages/Cash/constants/cash.constants'
 import type { CashMovement } from '@shared/types/cash/cash-movement'
 import { brl } from '@shared/utils/money/money'
 

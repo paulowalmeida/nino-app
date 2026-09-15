@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 import type {
   FieldErrors,
@@ -11,6 +11,7 @@ import { Box } from '@nino/ds/components/Box'
 import { FormField } from '@nino/ds/components/FormField'
 import { Input } from '@nino/ds/components/Input'
 import { MaskedInput } from '@nino/ds/components/MaskedInput'
+import { Text } from '@nino/ds/components/Text'
 import { maskZipCode } from '@nino/ds/masks'
 import { lookupZipCode, onlyDigits } from '@nino/lib/services/zip-code.service'
 import type { FirstStoreFormValues } from '@shared/types/store/first-store-form-values'
@@ -33,17 +34,28 @@ export const StoreFormAddressFields = ({
   setError,
 }: StoreFormAddressFieldsProps) => {
   const [isLookingUp, setIsLookingUp] = useState(false)
+  const lookupRequest = useRef(0)
+  const isMounted = useRef(true)
+
+  useEffect(() => () => {
+    isMounted.current = false
+  }, [])
 
   const handleZipCodeBlur = async (
     event: React.FocusEvent<HTMLInputElement>
   ) => {
+    const requestId = ++lookupRequest.current
     const zipCode = event.target.value
     if (onlyDigits(zipCode).length !== 8) return
 
     setIsLookingUp(true)
-    const address = await lookupZipCode(zipCode).finally(() =>
-      setIsLookingUp(false)
-    )
+    const address = await lookupZipCode(zipCode).finally(() => {
+      if (isMounted.current && requestId === lookupRequest.current) {
+        setIsLookingUp(false)
+      }
+    })
+
+    if (!isMounted.current || requestId !== lookupRequest.current) return
 
     if (!address) {
       setError('zipCode', { message: 'CEP não encontrado' })
@@ -58,9 +70,9 @@ export const StoreFormAddressFields = ({
 
   return (
     <Box as="section" direction="column" gap={4} className={styles.fields}>
-      <p className={`${motion.rise} ${styles.groupTitle}`}>Onde fica</p>
+      <Text as="p" className={`${motion.rise} ${styles.groupTitle}`}>Onde fica</Text>
 
-      <div
+      <Box
         className={`${motion.rise} ${styles.rowLocator}`}
         style={riseDelay(300)}
       >
@@ -74,6 +86,7 @@ export const StoreFormAddressFields = ({
             placeholder="00000-000"
             autoComplete="postal-code"
             error={!!errors.zipCode}
+            // eslint-disable-next-line react-hooks/refs -- react-hook-form requires register during render.
             {...register('zipCode', {
               required: 'Informe o CEP',
               onBlur: handleZipCodeBlur,
@@ -104,9 +117,9 @@ export const StoreFormAddressFields = ({
             {...register('street', { required: 'Informe o logradouro' })}
           />
         </FormField>
-      </div>
+      </Box>
 
-      <div
+      <Box
         className={`${motion.rise} ${styles.rowPlace}`}
         style={riseDelay(380)}
       >
@@ -125,9 +138,9 @@ export const StoreFormAddressFields = ({
             {...register('neighborhood', { required: 'Informe o bairro' })}
           />
         </FormField>
-      </div>
+      </Box>
 
-      <div
+      <Box
         className={`${motion.rise} ${styles.rowCity}`}
         style={riseDelay(420)}
       >
@@ -147,7 +160,7 @@ export const StoreFormAddressFields = ({
             {...register('state', { required: 'Informe o estado' })}
           />
         </FormField>
-      </div>
+      </Box>
     </Box>
   )
 }

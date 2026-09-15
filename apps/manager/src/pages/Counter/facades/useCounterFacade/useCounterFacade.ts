@@ -11,22 +11,22 @@ import { useCounterShortcuts } from '@pages/Counter/hooks/useCounterShortcuts/us
 import { useCounterStore } from '@pages/Counter/states/counter/counter.store'
 import { hasPickupRecipient } from '@pages/Counter/utils/hasPickupRecipient/hasPickupRecipient'
 import { useMenu } from '@shared/hooks/product/useMenu/useMenu'
-import { useCurrentTenant } from '@shared/hooks/session/useCurrentTenant/useCurrentTenant'
+import { useCurrentUnit } from '@shared/hooks/session/useCurrentUnit/useCurrentUnit'
 
 export const useCounterFacade = () => {
-  const tenantId = useCurrentTenant()?.tenantId ?? null
+  const unitId = useCurrentUnit()?.unitId ?? null
   const recipient = useCounterStore((state) => state.recipient)
   const channel = useCounterStore((state) => state.channel)
-  const menu = useMenu(tenantId)
-  const payments = useCounterPaymentMethods(tenantId)
-  const availability = useCounterAvailability(tenantId, recipient.zoneId)
+  const menu = useMenu(unitId)
+  const payments = useCounterPaymentMethods(unitId)
+  const availability = useCounterAvailability(unitId, recipient.zoneId)
   const addressSearch = useCounterAddressSearch(
     recipient.city || availability.storeAddress.city,
     recipient.state || availability.storeAddress.state,
     recipient.street
   )
   const deliveryQuote = useCounterDeliveryQuote(
-    tenantId,
+    unitId,
     channel === 'DELIVERY' ? (recipient.zipCode ?? '') : ''
   )
   const cart = useCounterCart()
@@ -38,7 +38,7 @@ export const useCounterFacade = () => {
     payments.methods,
     cart.total + deliveryFee
   )
-  const commands = useCounterCommands(tenantId, selection.method)
+  const commands = useCounterCommands(unitId, selection.method)
   const receipt = useCounterReceipt()
   const responsive = useCounterResponsive()
   const sheet = useCounterStore((state) => state.sheet)

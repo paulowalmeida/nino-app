@@ -9,7 +9,7 @@ vi.mock('@tanstack/react-query', () => ({
 
 describe('useMenu', () => {
   it('returns no sections before the menu response exists', () => {
-    const { result } = renderHook(() => useMenu(useMenuMock.tenantId))
+    const { result } = renderHook(() => useMenu(useMenuMock.unitId))
     expect(result.current.sections).toEqual([])
     expect(result.current.isPending).toBe(false)
   })

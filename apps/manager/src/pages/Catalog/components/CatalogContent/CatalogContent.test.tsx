@@ -13,7 +13,7 @@ vi.mock('@pages/Catalog/facades/useCatalogFacade')
 
 type BoardHarnessProps = {
   items?: MenuItem[]
-  tenantRole?: string
+  unitRole?: string
   isFetchingNextPage?: boolean
   isSelecting?: boolean
   selectedIds?: Set<string>
@@ -25,7 +25,7 @@ type BoardHarnessProps = {
 
 const BoardHarness = ({
   items = [item],
-  tenantRole = 'MANAGER',
+  unitRole = 'MANAGER',
   isFetchingNextPage = false,
   isSelecting = false,
   selectedIds = new Set(),
@@ -35,8 +35,8 @@ const BoardHarness = ({
   cancelSelection = vi.fn(),
 }: BoardHarnessProps) => {
   const catalogState = {
-    tenantId: 'tenant-1',
-    tenantRole,
+    unitId: 'unit-1',
+    unitRole,
     categoryId: 'cat-1',
     search: '',
     items,

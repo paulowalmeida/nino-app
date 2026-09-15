@@ -3,7 +3,11 @@
  * shows them the way someone reads a number out loud before dialling.
  */
 export const formatPhone = (phone: string): string => {
-  const digits = phone.replace(/\D/g, '').replace(/^55/, '')
+  const rawDigits = phone.replace(/\D/g, '')
+  const digits =
+    rawDigits.startsWith('55') && rawDigits.length >= 12
+      ? rawDigits.slice(2)
+      : rawDigits
   if (digits.length < 10) return phone
 
   const area = digits.slice(0, 2)
@@ -18,6 +22,10 @@ export const formatPhone = (phone: string): string => {
  * digitar — com máscara, com 55 na frente ou só os dígitos.
  */
 export const toE164 = (phone: string): string => {
-  const digits = phone.replace(/\D/g, '').replace(/^55/, '')
+  const rawDigits = phone.replace(/\D/g, '')
+  const digits =
+    rawDigits.startsWith('55') && rawDigits.length >= 12
+      ? rawDigits.slice(2)
+      : rawDigits
   return digits ? `+55${digits}` : ''
 }

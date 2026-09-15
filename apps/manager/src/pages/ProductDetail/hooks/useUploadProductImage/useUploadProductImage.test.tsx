@@ -35,7 +35,7 @@ describe('useUploadProductImage', () => {
     const { result } = renderHook(
       () =>
         useUploadProductImage(
-          uploadProductImageMock.tenantId,
+          uploadProductImageMock.unitId,
           uploadProductImageMock.productId
         ),
       { wrapper }
@@ -45,12 +45,12 @@ describe('useUploadProductImage', () => {
 
     await waitFor(() => expect(result.current.isSuccess).toBe(true))
     expect(ProductService.uploadItemImage).toHaveBeenCalledWith(
-      uploadProductImageMock.tenantId,
+      uploadProductImageMock.unitId,
       uploadProductImageMock.productId,
       photo
     )
     expect(invalidate).toHaveBeenCalledWith({
-      queryKey: menuQueryKey(uploadProductImageMock.tenantId),
+      queryKey: menuQueryKey(uploadProductImageMock.unitId),
     })
   })
 })

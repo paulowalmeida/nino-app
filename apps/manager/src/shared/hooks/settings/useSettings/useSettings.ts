@@ -1,12 +1,12 @@
 import { useQuery } from '@tanstack/react-query'
 
-import { queryKeys } from '@shared/lib/query-keys'
+import { queryKeys } from '@shared/lib/query-keys/query-keys'
 import { SettingsService } from '@shared/services/settings/settings.service'
-import type { TenantSettings } from '@shared/types/settings/tenant-settings'
+import type { UnitSettings } from '@shared/types/settings/unit-settings'
 
-export const useSettings = (tenantId: string | null) =>
-  useQuery<TenantSettings>({
-    queryKey: queryKeys.tenant.settings(tenantId ?? ''),
-    queryFn: () => SettingsService.getSettings(tenantId as string),
-    enabled: !!tenantId,
+export const useSettings = (unitId: string | null) =>
+  useQuery<UnitSettings>({
+    queryKey: queryKeys.unit.settings(unitId ?? ''),
+    queryFn: () => SettingsService.getSettings(unitId as string),
+    enabled: !!unitId,
   })

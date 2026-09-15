@@ -3,7 +3,7 @@ export type UpdatePlanRequest = {
   slug?: string
   typeId?: string
   price?: number
-  maxTenants?: number
+  maxUnits?: number
   maxProducts?: number
   maxOrders?: number
   isActive?: boolean

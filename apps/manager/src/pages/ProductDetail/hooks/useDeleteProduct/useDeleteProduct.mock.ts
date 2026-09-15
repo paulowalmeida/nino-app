@@ -1,4 +1,4 @@
 export const deleteProductMock = {
-  tenantId: 'tenant-1',
+  unitId: 'unit-1',
   productId: 'product-1',
 }

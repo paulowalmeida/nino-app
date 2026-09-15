@@ -10,10 +10,10 @@ export const useProductDetailFacade = () => {
   const { productId } = useParams()
   const slug = useStorefrontSlug()
   const storeQuery = useStore(slug)
-  const tenantId = storeQuery.store?.id
-  const menuProduct = useMenuProduct(tenantId, productId)
+  const unitId = storeQuery.store?.id
+  const menuProduct = useMenuProduct(unitId, productId)
   const choices = useProductChoices(menuProduct.product)
-  const command = useAddChosenProduct(menuProduct.product, tenantId, slug)
+  const command = useAddChosenProduct(menuProduct.product, unitId, slug)
 
   return {
     ...menuProduct,

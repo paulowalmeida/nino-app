@@ -10,17 +10,17 @@ type StoreOpenState = {
 }
 
 /**
- * Whether the storefront is taking orders right now, in the tenant's own
+ * Whether the storefront is taking orders right now, in the unit's own
  * timezone. Two screens read this at once — the masthead lights its rule by
  * it and the sign spells it out — so the derivation lives here instead of
  * being recomputed side by side.
  */
 export const useStoreOpen = (
-  tenantId: string | null,
+  unitId: string | null,
   timezone: string | null
 ): StoreOpenState => {
-  const { hours, isError, isPending } = useOpeningHours(tenantId)
-  const { data: pause } = usePause(tenantId)
+  const { hours, isError, isPending } = useOpeningHours(unitId)
+  const { data: pause } = usePause(unitId)
 
   const zone = timezone ?? Intl.DateTimeFormat().resolvedOptions().timeZone
   const hasSchedule = !isError && hours.length > 0

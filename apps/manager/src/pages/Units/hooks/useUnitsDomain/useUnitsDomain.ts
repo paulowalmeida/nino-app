@@ -4,31 +4,31 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 
 import { useSubscription } from '@shared/hooks/account/useSubscription/useSubscription'
 import { useCompanyGroups } from '@shared/hooks/session/useCompanyGroups/useCompanyGroups'
-import { useCurrentTenant } from '@shared/hooks/session/useCurrentTenant/useCurrentTenant'
-import { queryKeys } from '@shared/lib/query-keys'
-import { TenantService } from '@shared/services/tenant/tenant.service'
+import { useCurrentUnit } from '@shared/hooks/session/useCurrentUnit/useCurrentUnit'
+import { queryKeys } from '@shared/lib/query-keys/query-keys'
+import { UnitService } from '@shared/services/unit/unit.service'
 import { useSessionStore } from '@shared/states/session/session.state'
-import type { TenantDetail } from '@shared/types/store/tenant-detail'
+import type { UnitDetail } from '@shared/types/store/unit-detail'
 import type { UnitDraft } from '@shared/types/store/unit-draft'
 
-const detailKey = (tenantId: string) => [
-  ...queryKeys.tenant.all(tenantId),
+const detailKey = (unitId: string) => [
+  ...queryKeys.unit.all(unitId),
   'detail',
 ]
 
 export const useUnitsDomain = () => {
-  const tenant = useCurrentTenant()
-  const tenantId = tenant?.tenantId ?? null
+  const unit = useCurrentUnit()
+  const unitId = unit?.unitId ?? null
   const groups = useCompanyGroups()
   const units = groups.flatMap(({ units: list }) => list)
   const queryClient = useQueryClient()
   const navigate = useNavigate()
   const { data: subscription, isPending: isLimitPending } = useSubscription()
 
-  const detail = useQuery<TenantDetail>({
-    queryKey: detailKey(tenantId ?? ''),
-    queryFn: () => TenantService.getById(tenantId as string),
-    enabled: !!tenantId,
+  const detail = useQuery<UnitDetail>({
+    queryKey: detailKey(unitId ?? ''),
+    queryFn: () => UnitService.getById(unitId as string),
+    enabled: !!unitId,
   })
   const save = useMutation({
     meta: {
@@ -36,31 +36,31 @@ export const useUnitsDomain = () => {
       errorTitle: 'Os dados da unidade não foram salvos',
     },
     mutationFn: (data: UnitDraft) =>
-      TenantService.saveTenant(tenantId as string, data),
+      UnitService.saveUnit(unitId as string, data),
     onSuccess: (saved) =>
-      queryClient.setQueryData(detailKey(tenantId ?? ''), saved),
+      queryClient.setQueryData(detailKey(unitId ?? ''), saved),
   })
   const setMain = useMutation({
     meta: {
       success: 'Unidade definida como matriz',
       errorTitle: 'Não deu pra definir a matriz',
     },
-    mutationFn: (id: string) => TenantService.setMainTenant(id),
+    mutationFn: (id: string) => UnitService.setMainUnit(id),
     onSuccess: () => {
       void queryClient.invalidateQueries({
-        queryKey: queryKeys.tenant.all(tenantId ?? ''),
+        queryKey: queryKeys.unit.all(unitId ?? ''),
       })
     },
   })
   const remove = useMutation({
     meta: { success: 'Loja fechada', errorTitle: 'Não deu pra fechar a loja' },
-    mutationFn: (id: string) => TenantService.removeTenant(id),
+    mutationFn: (id: string) => UnitService.removeUnit(id),
     onSuccess: () => {
       useSessionStore.getState().clear()
       void navigate('/')
     },
   })
-  const limit = subscription?.plan.maxTenants ?? null
+  const limit = subscription?.plan.maxUnits ?? null
 
   return {
     groups,

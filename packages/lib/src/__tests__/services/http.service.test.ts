@@ -18,10 +18,10 @@ describe('createApi', () => {
     const api = createApi(client)
 
     // Act
-    await api.get('tenants/1')
+    await api.get('units/1')
 
     // Assert
-    expect(client.get).toHaveBeenCalledWith('tenants/1')
+    expect(client.get).toHaveBeenCalledWith('units/1')
   })
 
   it('getAll: forwards params as searchParams', async () => {
@@ -30,10 +30,10 @@ describe('createApi', () => {
     const api = createApi(client)
 
     // Act
-    await api.getAll('tenants/1/orders', { page: 1 })
+    await api.getAll('units/1/orders', { page: 1 })
 
     // Assert
-    expect(client.get).toHaveBeenCalledWith('tenants/1/orders', {
+    expect(client.get).toHaveBeenCalledWith('units/1/orders', {
       searchParams: { page: 1 },
     })
   })
@@ -44,10 +44,10 @@ describe('createApi', () => {
     const api = createApi(client)
 
     // Act
-    await api.create('tenants/1/orders', { total: 10 })
+    await api.create('units/1/orders', { total: 10 })
 
     // Assert
-    expect(client.post).toHaveBeenCalledWith('tenants/1/orders', {
+    expect(client.post).toHaveBeenCalledWith('units/1/orders', {
       total: 10,
     })
   })
@@ -60,11 +60,11 @@ describe('createApi', () => {
     body.append('file', new Blob(['image']), 'image.png')
 
     // Act
-    await api.createFormData('tenants/1/products/1/images', body)
+    await api.createFormData('units/1/products/1/images', body)
 
     // Assert
     expect(client.postFormData).toHaveBeenCalledWith(
-      'tenants/1/products/1/images',
+      'units/1/products/1/images',
       body
     )
   })
@@ -75,10 +75,10 @@ describe('createApi', () => {
     const api = createApi(client)
 
     // Act
-    await api.update('tenants/1', { name: 'Novo nome' })
+    await api.update('units/1', { name: 'Novo nome' })
 
     // Assert
-    expect(client.put).toHaveBeenCalledWith('tenants/1', {
+    expect(client.put).toHaveBeenCalledWith('units/1', {
       name: 'Novo nome',
     })
   })
@@ -89,10 +89,10 @@ describe('createApi', () => {
     const api = createApi(client)
 
     // Act
-    await api.patch('tenants/1/staff/user-1', { role: 'STAFF' })
+    await api.patch('units/1/staff/user-1', { role: 'STAFF' })
 
     // Assert
-    expect(client.patch).toHaveBeenCalledWith('tenants/1/staff/user-1', {
+    expect(client.patch).toHaveBeenCalledWith('units/1/staff/user-1', {
       role: 'STAFF',
     })
   })
@@ -103,11 +103,11 @@ describe('createApi', () => {
     const api = createApi(client)
 
     // Act
-    await api.remove('tenants/1/staff/user-1')
+    await api.remove('units/1/staff/user-1')
 
     // Assert
     expect(client.delete).toHaveBeenCalledWith(
-      'tenants/1/staff/user-1',
+      'units/1/staff/user-1',
       undefined
     )
   })
@@ -118,10 +118,10 @@ describe('createApi', () => {
     const api = createApi(client)
 
     // Act
-    await api.remove('tenants/1/staff/user-1', { reason: 'offboarding' })
+    await api.remove('units/1/staff/user-1', { reason: 'offboarding' })
 
     // Assert
-    expect(client.delete).toHaveBeenCalledWith('tenants/1/staff/user-1', {
+    expect(client.delete).toHaveBeenCalledWith('units/1/staff/user-1', {
       reason: 'offboarding',
     })
   })
@@ -133,7 +133,7 @@ describe('createApi', () => {
     const api = createApi(client)
 
     // Act
-    const result = await api.get('tenants/1/orders/order-1')
+    const result = await api.get('units/1/orders/order-1')
 
     // Assert
     expect(result).toEqual({ id: 'order-1' })
@@ -146,6 +146,6 @@ describe('createApi', () => {
     const api = createApi(client)
 
     // Act / Assert
-    await expect(api.get('tenants/1')).rejects.toThrow('network error')
+    await expect(api.get('units/1')).rejects.toThrow('network error')
   })
 })

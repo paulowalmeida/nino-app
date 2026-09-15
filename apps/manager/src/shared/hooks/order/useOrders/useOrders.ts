@@ -1,6 +1,6 @@
 import { useInfiniteQuery } from '@tanstack/react-query'
 
-import { queryKeys } from '@shared/lib/query-keys'
+import { queryKeys } from '@shared/lib/query-keys/query-keys'
 import { ORDER_PAGE_SIZE, OrderService } from '@shared/services/order/order.service'
 import type { Order } from '@shared/types/order/order'
 import type { OrderChannel } from '@shared/types/order/order-channel'
@@ -10,7 +10,7 @@ import type { PaymentStatus } from '@shared/types/order/payment-status'
 import { nextPageParam } from '@shared/utils/next-page-param/next-page-param'
 
 export const useOrders = (
-  tenantId: string | null,
+  unitId: string | null,
   search?: string,
   statuses?: OrderStatusKey[],
   channel?: OrderChannel | OrderChannel[],
@@ -27,7 +27,7 @@ export const useOrders = (
 
   const query = useInfiniteQuery<OrderPage>({
     queryKey: queryKeys.orders.list(
-      tenantId ?? '',
+      unitId ?? '',
       statusKey,
       term,
       channelKey,
@@ -36,7 +36,7 @@ export const useOrders = (
     ),
     queryFn: ({ pageParam }) =>
       OrderService.listOrders(
-        tenantId as string,
+        unitId as string,
         pageParam as number,
         term,
         statuses,
@@ -47,7 +47,7 @@ export const useOrders = (
     initialPageParam: 1,
     getNextPageParam: ({ pagination }) =>
       nextPageParam(pagination, ORDER_PAGE_SIZE),
-    enabled: !!tenantId,
+    enabled: !!unitId,
     refetchInterval: 25_000,
     refetchOnWindowFocus: true,
   })

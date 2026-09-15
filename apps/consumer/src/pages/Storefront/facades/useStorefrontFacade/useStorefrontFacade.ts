@@ -15,12 +15,12 @@ export const useStorefrontFacade = (requestedSlug?: string) => {
   const routeSlug = useStorefrontSlug()
   const slug = requestedSlug ?? routeSlug
   const storeQuery = useStore(slug)
-  const tenantId = storeQuery.store?.id
-  const menuQuery = useMenu(tenantId)
-  const hoursQuery = useOpeningHours(tenantId)
-  const settingsQuery = usePublicSettings(tenantId)
-  const cart = useStorefrontCart(tenantId)
-  const menuItemAction = useMenuItemAction(tenantId)
+  const unitId = storeQuery.store?.id
+  const menuQuery = useMenu(unitId)
+  const hoursQuery = useOpeningHours(unitId)
+  const settingsQuery = usePublicSettings(unitId)
+  const cart = useStorefrontCart(unitId)
+  const menuItemAction = useMenuItemAction(unitId)
   const search = useHomeInteractionStore((state) => state.search)
   const setSearch = useHomeInteractionStore((state) => state.setSearch)
   const isCartOpen = useHomeInteractionStore((state) => state.isCartOpen)

@@ -23,19 +23,19 @@ const wrapper = ({ children }: { children: ReactNode }) => (
 describe(useCollaboratorDetailQuery.name, () => {
   afterEach(() => vi.clearAllMocks())
 
-  it('loads the collaborator detail for an enabled tenant and user', async () => {
+  it('loads the collaborator detail for an enabled unit and user', async () => {
     vi.mocked(StaffService.getById).mockResolvedValue({
       user: { id: 'user-1' },
     } as never)
     const { result } = renderHook(
-      () => useCollaboratorDetailQuery('tenant-1', 'user-1'),
+      () => useCollaboratorDetailQuery('unit-1', 'user-1'),
       { wrapper }
     )
     await waitFor(() => expect(result.current.isSuccess).toBe(true))
-    expect(StaffService.getById).toHaveBeenCalledWith('tenant-1', 'user-1')
+    expect(StaffService.getById).toHaveBeenCalledWith('unit-1', 'user-1')
   })
 
-  it('does not request without tenant or user scope', () => {
+  it('does not request without unit or user scope', () => {
     const { result } = renderHook(() => useCollaboratorDetailQuery(null, ''), {
       wrapper,
     })

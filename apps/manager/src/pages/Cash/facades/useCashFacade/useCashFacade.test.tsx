@@ -1,7 +1,7 @@
 import { renderHook } from '@testing-library/react'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 
-import { useCurrentTenant } from '@shared/hooks/session/useCurrentTenant/useCurrentTenant'
+import { useCurrentUnit } from '@shared/hooks/session/useCurrentUnit/useCurrentUnit'
 
 import { useCashDate } from '../../hooks/useCashDate/useCashDate'
 import { useCashSession } from '../../hooks/useCashSession/useCashSession'
@@ -21,7 +21,7 @@ const commands = {
 const today = new Date('2026-08-30T00:00:00')
 const setDate = vi.fn()
 
-vi.mock('@shared/hooks/session/useCurrentTenant/useCurrentTenant')
+vi.mock('@shared/hooks/session/useCurrentUnit/useCurrentUnit')
 
 vi.mock('../../hooks/useCashDate/useCashDate')
 
@@ -33,9 +33,9 @@ vi.mock('../../hooks/useCashCommands/useCashCommands', () => ({
 
 describe(useCashFacade.name, () => {
   beforeEach(() => {
-    vi.mocked(useCurrentTenant).mockReturnValue({
-      tenantId: 'tenant-1',
-    } as unknown as ReturnType<typeof useCurrentTenant>)
+    vi.mocked(useCurrentUnit).mockReturnValue({
+      unitId: 'unit-1',
+    } as unknown as ReturnType<typeof useCurrentUnit>)
     vi.mocked(useCashDate).mockReturnValue({
       date: today,
       dateKey: '2026-08-30',
@@ -81,13 +81,13 @@ describe(useCashFacade.name, () => {
 
     renderHook(() => useCashFacade())
 
-    expect(useCashSession).toHaveBeenCalledWith('tenant-1', false, '2026-08-29')
+    expect(useCashSession).toHaveBeenCalledWith('unit-1', false, '2026-08-29')
   })
 
   it('works without a store and without an open session', () => {
     // Arrange
-    vi.mocked(useCurrentTenant).mockReturnValue(
-      undefined as unknown as ReturnType<typeof useCurrentTenant>
+    vi.mocked(useCurrentUnit).mockReturnValue(
+      undefined as unknown as ReturnType<typeof useCurrentUnit>
     )
     vi.mocked(useCashSession).mockReturnValue({
       session: null,

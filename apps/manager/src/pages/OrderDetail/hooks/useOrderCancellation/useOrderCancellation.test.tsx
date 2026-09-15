@@ -13,7 +13,7 @@ const mutateAsync = vi.fn()
 const renderCancellation = () =>
   renderHook(() =>
     useOrderCancellation(
-      orderCancellationMock.tenantId,
+      orderCancellationMock.unitId,
       orderCancellationMock.orderId
     )
   )

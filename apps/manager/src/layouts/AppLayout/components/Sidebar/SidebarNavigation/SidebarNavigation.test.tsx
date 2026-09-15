@@ -27,7 +27,7 @@ describe('SidebarNavigation', () => {
         <SidebarNavigation
           {...sidebarNavigationMock}
           groups={settingsGroupMock}
-          tenantId="tenant-1"
+          unitId="unit-1"
           onNavigate={() => undefined}
         />
       </MemoryRouter>
@@ -35,11 +35,11 @@ describe('SidebarNavigation', () => {
 
     expect(screen.getByRole('link', { name: /Empresa/ })).toHaveAttribute(
       'href',
-      '/tenant-1/configuracoes/empresa'
+      '/unit-1/configuracoes/empresa'
     )
     expect(screen.getByRole('link', { name: /Entrega/ })).toHaveAttribute(
       'href',
-      '/tenant-1/configuracoes/entrega'
+      '/unit-1/configuracoes/entrega'
     )
     expect(screen.getByText('Configurações')).toBeInTheDocument()
   })

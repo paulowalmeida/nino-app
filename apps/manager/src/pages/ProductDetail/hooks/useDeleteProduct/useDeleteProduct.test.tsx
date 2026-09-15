@@ -5,7 +5,7 @@ import { renderHook, waitFor } from '@testing-library/react'
 import { afterEach, describe, expect, it, vi } from 'vitest'
 
 import { menuQueryKey } from '@shared/hooks/product/useMenu/useMenu'
-import { queryKeys } from '@shared/lib/query-keys'
+import { queryKeys } from '@shared/lib/query-keys/query-keys'
 import { ProductService } from '@shared/services/product/product.service'
 
 import { useDeleteProduct } from './useDeleteProduct'
@@ -25,14 +25,14 @@ const wrapper = ({ children }: { children: ReactNode }) =>
 const renderDelete = () =>
   renderHook(
     () =>
-      useDeleteProduct(deleteProductMock.tenantId, deleteProductMock.productId),
+      useDeleteProduct(deleteProductMock.unitId, deleteProductMock.productId),
     { wrapper }
   )
 
 describe('useDeleteProduct', () => {
   afterEach(() => vi.clearAllMocks())
 
-  it('removes the item from its own tenant and refreshes the menu', async () => {
+  it('removes the item from its own unit and refreshes the menu', async () => {
     vi.mocked(ProductService.removeItem).mockResolvedValue(
       undefined as unknown as Awaited<
         ReturnType<typeof ProductService.removeItem>
@@ -45,21 +45,21 @@ describe('useDeleteProduct', () => {
 
     await waitFor(() => expect(result.current.isSuccess).toBe(true))
     expect(ProductService.removeItem).toHaveBeenCalledWith(
-      deleteProductMock.tenantId,
+      deleteProductMock.unitId,
       deleteProductMock.productId
     )
     expect(invalidate).toHaveBeenCalledWith({
-      queryKey: menuQueryKey(deleteProductMock.tenantId),
+      queryKey: menuQueryKey(deleteProductMock.unitId),
     })
     expect(invalidate).toHaveBeenCalledWith({
-      queryKey: queryKeys.productCategories.all(deleteProductMock.tenantId),
+      queryKey: queryKeys.productCategories.all(deleteProductMock.unitId),
     })
     expect(invalidate).toHaveBeenCalledWith({
-      queryKey: queryKeys.products.all(deleteProductMock.tenantId),
+      queryKey: queryKeys.products.all(deleteProductMock.unitId),
     })
   })
 
-  it('falls back to an empty tenant scope without a tenant', async () => {
+  it('falls back to an empty unit scope without a unit', async () => {
     vi.mocked(ProductService.removeItem).mockResolvedValue(
       undefined as unknown as Awaited<
         ReturnType<typeof ProductService.removeItem>

@@ -9,10 +9,10 @@ import { decrementCartItem } from './operations/decrement-cart-item/decrement-ca
 import { incrementCartItem } from './operations/increment-cart-item/increment-cart-item'
 
 type CartState = {
-  tenantId: string | null
+  unitId: string | null
   lines: Record<string, CartLine>
-  add: (tenantId: string, item: CartItem, quantity?: number) => boolean
-  replace: (tenantId: string, item: CartItem, quantity?: number) => void
+  add: (unitId: string, item: CartItem, quantity?: number) => boolean
+  replace: (unitId: string, item: CartItem, quantity?: number) => void
   increment: (lineId: string) => void
   decrement: (lineId: string) => void
   clear: () => void
@@ -21,29 +21,29 @@ type CartState = {
 /**
  * Sacola do cliente: precisa sobreviver à navegação até o checkout e a um
  * F5 no meio do caminho — por isso fica em localStorage, não só em memória.
- * O tenant impede que escolhas de lojas diferentes se misturem. A linha
+ * O unit impede que escolhas de lojas diferentes se misturem. A linha
  * persiste só o snapshot necessário para a sacola; preço e disponibilidade
  * continuam sendo revalidados pela API ao criar o pedido.
  */
 export const useCartStore = create<CartState>()(
   persist(
     (set, get) => ({
-      tenantId: null,
+      unitId: null,
       lines: {},
 
-      add: (tenantId, item, quantity = 1) => {
+      add: (unitId, item, quantity = 1) => {
         const current = get()
-        if (current.tenantId && current.tenantId !== tenantId) return false
+        if (current.unitId && current.unitId !== unitId) return false
 
         set((state) => ({
-          tenantId,
+          unitId,
           lines: addCartItem(state.lines, item, quantity),
         }))
         return true
       },
 
-      replace: (tenantId, item, quantity = 1) =>
-        set({ tenantId, lines: addCartItem({}, item, quantity) }),
+      replace: (unitId, item, quantity = 1) =>
+        set({ unitId, lines: addCartItem({}, item, quantity) }),
 
       increment: (lineId) =>
         set((state) => ({ lines: incrementCartItem(state.lines, lineId) })),
@@ -53,19 +53,19 @@ export const useCartStore = create<CartState>()(
           const lines = decrementCartItem(state.lines, lineId)
           return {
             lines,
-            tenantId: Object.keys(lines).length === 0 ? null : state.tenantId,
+            unitId: Object.keys(lines).length === 0 ? null : state.unitId,
           }
         }),
 
-      clear: () => set({ tenantId: null, lines: clearCart() }),
+      clear: () => set({ unitId: null, lines: clearCart() }),
     }),
     {
       name: 'nino.cart',
       version: 3,
       migrate: (persisted, version) =>
-        version < 3 ? { tenantId: null, lines: {} } : (persisted as CartState),
+        version < 3 ? { unitId: null, lines: {} } : (persisted as CartState),
       partialize: (state) => ({
-        tenantId: state.tenantId,
+        unitId: state.unitId,
         lines: state.lines,
       }),
     }

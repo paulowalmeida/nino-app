@@ -1,15 +1,14 @@
 import type { useQueryClient } from '@tanstack/react-query'
 
-import { queryKeys } from '@shared/lib/query-keys'
-
-import { menuQueryKey } from '../useMenu/useMenu'
+import { menuQueryKey } from '@shared/hooks/product/useMenu/useMenu'
+import { queryKeys } from '@shared/lib/query-keys/query-keys'
 
 export const invalidateCategoryQueries = (
   queryClient: ReturnType<typeof useQueryClient>,
-  tenantId: string | null
+  unitId: string | null
 ) => {
   void queryClient.invalidateQueries({
-    queryKey: queryKeys.productCategories.all(tenantId ?? ''),
+    queryKey: queryKeys.productCategories.all(unitId ?? ''),
   })
-  void queryClient.invalidateQueries({ queryKey: menuQueryKey(tenantId) })
+  void queryClient.invalidateQueries({ queryKey: menuQueryKey(unitId) })
 }

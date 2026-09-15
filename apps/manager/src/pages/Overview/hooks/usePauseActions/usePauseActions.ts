@@ -1,16 +1,16 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 
-import { TenantService } from '@shared/services/tenant/tenant.service'
+import { UnitService } from '@shared/services/unit/unit.service'
 import type { PauseRequest } from '@shared/types/store/pause-request'
-import type { TenantPause } from '@shared/types/store/tenant-pause'
+import type { UnitPause } from '@shared/types/store/unit-pause'
 
 import { pauseKey } from '../usePause/usePause'
 
-export const usePauseActions = (tenantId: string | null) => {
+export const usePauseActions = (unitId: string | null) => {
   const queryClient = useQueryClient()
 
-  const write = (pause: TenantPause) =>
-    queryClient.setQueryData(pauseKey(tenantId ?? ''), pause)
+  const write = (pause: UnitPause) =>
+    queryClient.setQueryData(pauseKey(unitId ?? ''), pause)
 
   const pause = useMutation({
     meta: {
@@ -18,7 +18,7 @@ export const usePauseActions = (tenantId: string | null) => {
       errorTitle: 'A loja continua aberta',
     },
     mutationFn: (data: PauseRequest) =>
-      TenantService.pauseStore(tenantId as string, data),
+      UnitService.pauseStore(unitId as string, data),
     onSuccess: write,
   })
 
@@ -27,7 +27,7 @@ export const usePauseActions = (tenantId: string | null) => {
       success: 'Loja reaberta',
       errorTitle: 'A loja continua fechada',
     },
-    mutationFn: () => TenantService.resumeStore(tenantId as string),
+    mutationFn: () => UnitService.resumeStore(unitId as string),
     onSuccess: write,
   })
 

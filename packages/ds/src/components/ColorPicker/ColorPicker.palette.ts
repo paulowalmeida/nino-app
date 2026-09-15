@@ -2,7 +2,7 @@
  * Catálogo de cores oferecido ao lojista para pintar a própria loja.
  *
  * São as tintas do Tailwind, mas guardadas como HEX e não como classe: a cor
- * do tenant é dado, escolhido em runtime e injetado em `--store-tint`, e
+ * do unit é dado, escolhido em runtime e injetado em `--store-tint`, e
  * classe é decidida em build. Por isso o `restrict.css` pode continuar
  * apagando essas mesmas famílias do tema sem tirar nenhuma opção daqui.
  *

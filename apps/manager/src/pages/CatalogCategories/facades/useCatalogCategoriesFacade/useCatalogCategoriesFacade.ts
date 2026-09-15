@@ -2,13 +2,13 @@ import { useCatalogCategoriesMutations } from '@pages/CatalogCategories/hooks/us
 import { useCatalogCategoriesOrder } from '@pages/CatalogCategories/hooks/useCatalogCategoriesOrder/useCatalogCategoriesOrder'
 import { useCatalogCategoriesQuery } from '@pages/CatalogCategories/hooks/useCatalogCategoriesQuery/useCatalogCategoriesQuery'
 import { useCatalogCategoriesStore } from '@pages/CatalogCategories/states/catalog-categories/catalog-categories.store'
-import { useCurrentTenant } from '@shared/hooks/session/useCurrentTenant/useCurrentTenant'
+import { useCurrentUnit } from '@shared/hooks/session/useCurrentUnit/useCurrentUnit'
 
 export const useCatalogCategoriesFacade = () => {
-  const tenantId = useCurrentTenant()?.tenantId ?? null
+  const unitId = useCurrentUnit()?.unitId ?? null
   const clientState = useCatalogCategoriesStore()
-  const categoriesQuery = useCatalogCategoriesQuery(tenantId)
-  const mutations = useCatalogCategoriesMutations(tenantId)
+  const categoriesQuery = useCatalogCategoriesQuery(unitId)
+  const mutations = useCatalogCategoriesMutations(unitId)
   const categoryOrder = useCatalogCategoriesOrder(
     categoriesQuery.rows,
     clientState.order,

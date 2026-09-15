@@ -5,7 +5,7 @@ import { Reports } from './Reports'
 
 vi.mock('./facades/useReportsFacade/useReportsFacade', () => ({
   useReportsFacade: () => ({
-    period: 'today', setPeriod: vi.fn(), custom: { awaitingDates: false }, tenantId: null,
+    period: 'today', setPeriod: vi.fn(), custom: { awaitingDates: false }, unitId: null,
     report: { report: undefined, isPending: false, isError: false, range: { period: 'today' } },
     timing: { report: undefined, isPending: false },
     series: { channel: { breakdown: [], isPending: false }, payment: { breakdown: [], isPending: false } },

@@ -1,1 +1,1 @@
-export const openingHoursServiceMock = { tenantId: 'tenant-1' }
+export const openingHoursServiceMock = { unitId: 'unit-1' }

@@ -5,12 +5,12 @@ import { useNewOrderAvailability } from '@pages/NewOrder/hooks/useNewOrderAvaila
 import { useNewOrderDraft } from '@pages/NewOrder/hooks/useNewOrderDraft/useNewOrderDraft'
 import { useNewOrderPlacement } from '@pages/NewOrder/hooks/useNewOrderPlacement/useNewOrderPlacement'
 import { useMenu } from '@shared/hooks/product/useMenu/useMenu'
-import { useCurrentTenant } from '@shared/hooks/session/useCurrentTenant/useCurrentTenant'
+import { useCurrentUnit } from '@shared/hooks/session/useCurrentUnit/useCurrentUnit'
 
 import { useNewOrderFacade } from './useNewOrderFacade'
 import { newOrderFacadeMock } from './useNewOrderFacade.mock'
 
-vi.mock('@shared/hooks/session/useCurrentTenant/useCurrentTenant')
+vi.mock('@shared/hooks/session/useCurrentUnit/useCurrentUnit')
 vi.mock('@shared/hooks/product/useMenu/useMenu')
 vi.mock('@pages/NewOrder/hooks/useNewOrderDraft/useNewOrderDraft')
 vi.mock('@pages/NewOrder/hooks/useNewOrderAvailability/useNewOrderAvailability')
@@ -23,9 +23,9 @@ const availability = { method: newOrderFacadeMock.paymentMethod }
 
 describe('useNewOrderFacade', () => {
   it('wires menu, draft, availability, and placement under one boundary', () => {
-    vi.mocked(useCurrentTenant).mockReturnValue({
-      tenantId: newOrderFacadeMock.tenantId,
-    } as unknown as ReturnType<typeof useCurrentTenant>)
+    vi.mocked(useCurrentUnit).mockReturnValue({
+      unitId: newOrderFacadeMock.unitId,
+    } as unknown as ReturnType<typeof useCurrentUnit>)
     vi.mocked(useMenu).mockReturnValue({
       sections: [{ id: 'section-1' }],
       isPending: false,
@@ -44,13 +44,13 @@ describe('useNewOrderFacade', () => {
 
     const { result } = renderHook(() => useNewOrderFacade())
 
-    expect(useMenu).toHaveBeenCalledWith(newOrderFacadeMock.tenantId)
+    expect(useMenu).toHaveBeenCalledWith(newOrderFacadeMock.unitId)
     expect(useNewOrderAvailability).toHaveBeenCalledWith(
-      newOrderFacadeMock.tenantId,
+      newOrderFacadeMock.unitId,
       draft
     )
     expect(useNewOrderPlacement).toHaveBeenCalledWith(
-      newOrderFacadeMock.tenantId,
+      newOrderFacadeMock.unitId,
       draft,
       newOrderFacadeMock.paymentMethod
     )
@@ -62,8 +62,8 @@ describe('useNewOrderFacade', () => {
     expect(result.current.resetDraft).toBe(reset)
   })
 
-  it('works with no tenant until the session is known', () => {
-    vi.mocked(useCurrentTenant).mockReturnValue(null)
+  it('works with no unit until the session is known', () => {
+    vi.mocked(useCurrentUnit).mockReturnValue(null)
     vi.mocked(useMenu).mockReturnValue({
       sections: [],
       isPending: true,

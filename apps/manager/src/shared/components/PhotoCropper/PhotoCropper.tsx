@@ -1,5 +1,6 @@
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
+import { Alert } from '@nino/ds/components/Alert'
 import { Box } from '@nino/ds/components/Box'
 import { Button } from '@nino/ds/components/Button'
 import { Text } from '@nino/ds/components/Text'
@@ -67,6 +68,17 @@ export const PhotoCropper = ({
   const [source] = useState(() => URL.createObjectURL(file))
   const [imageRatio, setImageRatio] = useState(1)
   const [area, setArea] = useState<CropArea | null>(null)
+  const [error, setError] = useState<string | null>(null)
+  const sourceReleased = useRef(false)
+
+  useEffect(
+    () => () => {
+      if (sourceReleased.current) return
+      sourceReleased.current = true
+      URL.revokeObjectURL(source)
+    },
+    [source]
+  )
 
   const startCrop = () => {
     const image = imageRef.current
@@ -147,14 +159,22 @@ export const PhotoCropper = ({
     })
   }
 
-  const release = () => URL.revokeObjectURL(source)
+  const release = () => {
+    if (sourceReleased.current) return
+    sourceReleased.current = true
+    URL.revokeObjectURL(source)
+  }
 
   const handleConfirm = async () => {
     const image = imageRef.current
     if (!image || !area) return
-    const edited = await cropToArea(image, area, file.name)
-    release()
-    onConfirm(edited)
+    try {
+      const edited = await cropToArea(image, area, file.name)
+      release()
+      onConfirm(edited)
+    } catch {
+      setError('Não foi possível recortar a imagem. Tente novamente.')
+    }
   }
 
   const handleCancel = () => {
@@ -176,6 +196,7 @@ export const PhotoCropper = ({
       }
     >
       <Box className={styles.stage}>
+        {error && <Alert variant="error">{error}</Alert>}
         <img
           ref={imageRef}
           src={source}

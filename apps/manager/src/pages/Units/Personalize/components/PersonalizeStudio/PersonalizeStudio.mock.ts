@@ -1,7 +1,7 @@
-import type { TenantDetail } from '@shared/types/store/tenant-detail'
+import type { UnitDetail } from '@shared/types/store/unit-detail'
 
-export const personalizeStudioUnitMock: TenantDetail = {
-  id: 'tenant-1',
+export const personalizeStudioUnitMock: UnitDetail = {
+  id: 'unit-1',
   slug: 'unidade-centro',
   customName: 'Unidade Centro',
   timezone: 'America/Sao_Paulo',

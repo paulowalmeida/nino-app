@@ -1,6 +1,6 @@
 export type DiningTable = {
   id: string
-  tenantId: string
+  unitId: string
   name: string
   publicKey: string
   isActive: boolean

@@ -2,13 +2,13 @@ import { useParams } from 'react-router'
 
 import { useTableTabItemCancellation } from '@pages/TableTabDetail/hooks/useTableTabItemCancellation/useTableTabItemCancellation'
 import { useOrders } from '@shared/hooks/order/useOrders/useOrders'
-import { useCurrentTenant } from '@shared/hooks/session/useCurrentTenant/useCurrentTenant'
+import { useCurrentUnit } from '@shared/hooks/session/useCurrentUnit/useCurrentUnit'
 
 export const useTableTabDetailFacade = () => {
   const { tabId } = useParams()
-  const tenantId = useCurrentTenant()?.tenantId ?? null
+  const unitId = useCurrentUnit()?.unitId ?? null
   const detailQuery = useOrders(
-    tenantId,
+    unitId,
     tabId,
     [
       'PENDING',
@@ -22,7 +22,7 @@ export const useTableTabDetailFacade = () => {
     'TABLE_TAB',
     undefined
   )
-  const itemCancellation = useTableTabItemCancellation(tenantId)
+  const itemCancellation = useTableTabItemCancellation(unitId)
 
   return {
     order: detailQuery.orders[0],

@@ -9,7 +9,7 @@ export const consumerOrderRequest = (
   store: Store,
   cartLines: CartLine[]
 ): CreateConsumerOrderRequest => ({
-  tenantId: store.id,
+  unitId: store.id,
   channel: values.channel,
   deliveryAddressId:
     values.channel === 'DELIVERY' ? values.deliveryAddressId : undefined,

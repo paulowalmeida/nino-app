@@ -1,8 +1,8 @@
-import type { PublicTenantSettings } from '@shared/types/settings/public-tenant-settings'
+import type { PublicUnitSettings } from '@shared/types/settings/public-unit-settings'
 
-export const tenantIdMock = 'tenant-1'
+export const unitIdMock = 'unit-1'
 
-export const everyFormatEnabledMock: PublicTenantSettings = {
+export const everyFormatEnabledMock: PublicUnitSettings = {
   acceptedPaymentMethods: ['CASH'],
   preparationMinutes: 30,
   deliveryMinutes: 10,
@@ -11,13 +11,13 @@ export const everyFormatEnabledMock: PublicTenantSettings = {
   isCounterEnabled: true,
 }
 
-export const counterOnlyStoreMock: PublicTenantSettings = {
+export const counterOnlyStoreMock: PublicUnitSettings = {
   ...everyFormatEnabledMock,
   isDeliveryEnabled: false,
   isPickupEnabled: false,
 }
 
-export const noFormatEnabledMock: PublicTenantSettings = {
+export const noFormatEnabledMock: PublicUnitSettings = {
   ...everyFormatEnabledMock,
   isDeliveryEnabled: false,
   isPickupEnabled: false,

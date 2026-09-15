@@ -1,11 +1,11 @@
-import type { TenantRole } from '@shared/types/auth/tenant-role'
+import type { UnitRole } from '@shared/types/auth/unit-role'
 
 export type RosterEntry = {
   id: string
   name: string
   email: string | null
   role: string
-  roleKey?: TenantRole
+  roleKey?: UnitRole
   roleLocked?: string
   href?: string
   lastLoginAt: string | null

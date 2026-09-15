@@ -1,6 +1,7 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 
 import { AuthService } from '@shared/services/auth/auth.service'
+import { clearRegisteredSession } from '@shared/services/session/session-bridge'
 
 import { useSessionStore } from './session.state'
 import { sessionStateMembershipsMock, sessionStateUserMock } from './session.state.mock'
@@ -18,17 +19,17 @@ describe(useSessionStore.name, () => {
 
     expect(session.user).toBeNull()
     expect(session.memberships).toEqual([])
-    expect(session.currentTenantId).toBeNull()
+    expect(session.currentUnitId).toBeNull()
   })
 
-  it('stores the session and remembers the active tenant', () => {
+  it('stores the session and remembers the active unit', () => {
     useSessionStore
       .getState()
       .setSession(sessionStateUserMock, sessionStateMembershipsMock)
-    useSessionStore.getState().setCurrentTenant('tenant-1')
+    useSessionStore.getState().setCurrentUnit('unit-1')
 
     expect(useSessionStore.getState().user).toBe(sessionStateUserMock)
-    expect(useSessionStore.getState().currentTenantId).toBe('tenant-1')
+    expect(useSessionStore.getState().currentUnitId).toBe('unit-1')
   })
 
   it('loads the session from the API when none is stored yet', async () => {
@@ -54,6 +55,17 @@ describe(useSessionStore.name, () => {
 
     expect(useSessionStore.getState().user).toBeNull()
     expect(useSessionStore.getState().memberships).toEqual([])
-    expect(useSessionStore.getState().currentTenantId).toBeNull()
+    expect(useSessionStore.getState().currentUnitId).toBeNull()
+  })
+
+  it('registers its clear operation for infrastructure session expiry', () => {
+    useSessionStore
+      .getState()
+      .setSession(sessionStateUserMock, sessionStateMembershipsMock)
+
+    clearRegisteredSession()
+
+    expect(useSessionStore.getState().user).toBeNull()
+    expect(useSessionStore.getState().memberships).toEqual([])
   })
 })

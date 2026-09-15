@@ -5,12 +5,12 @@ import { describe, expect, it, vi } from 'vitest'
 
 import { useConsumerDetail } from '@pages/ConsumerDetail/hooks/useConsumerDetail/useConsumerDetail'
 import { useConsumerOrderHistory } from '@pages/ConsumerDetail/hooks/useConsumerOrderHistory/useConsumerOrderHistory'
-import { useCurrentTenant } from '@shared/hooks/session/useCurrentTenant/useCurrentTenant'
+import { useCurrentUnit } from '@shared/hooks/session/useCurrentUnit/useCurrentUnit'
 
 import { useConsumerDetailFacade } from './useConsumerDetailFacade'
 import { consumerDetailFacadeMock } from './useConsumerDetailFacade.mock'
 
-vi.mock('@shared/hooks/session/useCurrentTenant/useCurrentTenant')
+vi.mock('@shared/hooks/session/useCurrentUnit/useCurrentUnit')
 vi.mock('@pages/ConsumerDetail/hooks/useConsumerDetail/useConsumerDetail')
 vi.mock(
   '@pages/ConsumerDetail/hooks/useConsumerOrderHistory/useConsumerOrderHistory'
@@ -19,9 +19,9 @@ vi.mock(
 describe('useConsumerDetailFacade', () => {
   it('exposes detail and history values under the route scope', () => {
     const loadMoreOrders = vi.fn()
-    vi.mocked(useCurrentTenant).mockReturnValue({
-      tenantId: consumerDetailFacadeMock.tenantId,
-    } as unknown as ReturnType<typeof useCurrentTenant>)
+    vi.mocked(useCurrentUnit).mockReturnValue({
+      unitId: consumerDetailFacadeMock.unitId,
+    } as unknown as ReturnType<typeof useCurrentUnit>)
     vi.mocked(useConsumerDetail).mockReturnValue({
       consumer: { name: 'Maria' },
       addressRows: [],
@@ -48,11 +48,11 @@ describe('useConsumerDetailFacade', () => {
     })
 
     expect(useConsumerDetail).toHaveBeenCalledWith(
-      consumerDetailFacadeMock.tenantId,
+      consumerDetailFacadeMock.unitId,
       consumerDetailFacadeMock.consumerId
     )
     expect(useConsumerOrderHistory).toHaveBeenCalledWith(
-      consumerDetailFacadeMock.tenantId,
+      consumerDetailFacadeMock.unitId,
       consumerDetailFacadeMock.consumerId
     )
     expect(result.current.consumer).toEqual({ name: 'Maria' })
@@ -61,8 +61,8 @@ describe('useConsumerDetailFacade', () => {
     expect(result.current.loadMoreOrders).toBe(loadMoreOrders)
   })
 
-  it('falls back to an empty scope without tenant or route param', () => {
-    vi.mocked(useCurrentTenant).mockReturnValue(null)
+  it('falls back to an empty scope without unit or route param', () => {
+    vi.mocked(useCurrentUnit).mockReturnValue(null)
     vi.mocked(useConsumerDetail).mockReturnValue({
       consumer: undefined,
       addressRows: [],

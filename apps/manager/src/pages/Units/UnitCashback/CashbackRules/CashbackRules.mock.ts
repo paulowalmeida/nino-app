@@ -1,4 +1,4 @@
-import type { TenantSettings } from '@shared/types/settings/tenant-settings'
+import type { UnitSettings } from '@shared/types/settings/unit-settings'
 
 export const cashbackRulesSettingsMock = {
   isDeliveryEnabled: true,
@@ -15,9 +15,9 @@ export const cashbackRulesSettingsMock = {
   cashbackPercent: 5,
   cashbackMinRedeem: 10,
   cashbackExpiresInDays: null,
-} satisfies TenantSettings
+} satisfies UnitSettings
 
 export const cashbackRulesOffMock = {
   ...cashbackRulesSettingsMock,
   cashbackEnabled: false,
-} satisfies TenantSettings
+} satisfies UnitSettings

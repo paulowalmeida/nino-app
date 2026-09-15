@@ -1,10 +1,9 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 
+import { invalidateCategoryQueries } from '@shared/hooks/product/invalidate-category-queries/invalidate-category-queries'
 import { CategoryService } from '@shared/services/category/category.service'
 
-import { invalidateCategoryQueries } from '../invalidate-category-queries/invalidate-category-queries'
-
-export const useUpdateCategory = (tenantId: string | null) => {
+export const useUpdateCategory = (unitId: string | null) => {
   const queryClient = useQueryClient()
 
   return useMutation({
@@ -13,7 +12,7 @@ export const useUpdateCategory = (tenantId: string | null) => {
       errorTitle: 'A categoria continua com o nome antigo',
     },
     mutationFn: ({ id, name }: { id: string; name: string }) =>
-      CategoryService.updateCategory(tenantId as string, id, name),
-    onSuccess: () => invalidateCategoryQueries(queryClient, tenantId),
+      CategoryService.updateCategory(unitId as string, id, name),
+    onSuccess: () => invalidateCategoryQueries(queryClient, unitId),
   })
 }

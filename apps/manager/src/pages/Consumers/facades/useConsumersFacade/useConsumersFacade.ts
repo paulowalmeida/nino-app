@@ -1,12 +1,12 @@
 import { useConsumersList } from '@pages/Consumers/hooks/useConsumersList/useConsumersList'
 import { useConsumersStore } from '@pages/Consumers/states/consumers/consumers.store'
-import { useCurrentTenant } from '@shared/hooks/session/useCurrentTenant/useCurrentTenant'
+import { useCurrentUnit } from '@shared/hooks/session/useCurrentUnit/useCurrentUnit'
 
 export const useConsumersFacade = () => {
-  const tenantId = useCurrentTenant()?.tenantId ?? null
+  const unitId = useCurrentUnit()?.unitId ?? null
   const search = useConsumersStore((state) => state.search)
   const setSearch = useConsumersStore((state) => state.setSearch)
-  const list = useConsumersList(tenantId, search)
+  const list = useConsumersList(unitId, search)
 
   return {
     search,

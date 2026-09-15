@@ -2,15 +2,15 @@ import type { PublicDeliveryZone } from '@pages/checkout/types/delivery-zone/Pub
 import { api } from '@shared/services/http/http.service'
 
 export const deliveryZoneService = {
-  listPublic: (tenantId: string): Promise<PublicDeliveryZone[]> =>
-    api.get<PublicDeliveryZone[]>(`tenants/${tenantId}/delivery-zones/public`),
+  listPublic: (unitId: string): Promise<PublicDeliveryZone[]> =>
+    api.get<PublicDeliveryZone[]>(`units/${unitId}/delivery-zones/public`),
   getQuote: (
-    tenantId: string,
+    unitId: string,
     zipCode: string
   ): Promise<PublicDeliveryZone | null> =>
     api.get<PublicDeliveryZone | null>(
       'orders/guest/quote?' +
-        `tenantId=${encodeURIComponent(tenantId)}&` +
+        `unitId=${encodeURIComponent(unitId)}&` +
         `zipCode=${encodeURIComponent(zipCode)}`
     ),
 }

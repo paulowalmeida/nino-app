@@ -2,7 +2,7 @@ import type { SidemenuItem } from '@shared/types/ui/sidemenu-item.type'
 
 export const sidebarNavigationMock = {
   groups: [] as SidemenuItem[],
-  tenantId: null,
+  unitId: null,
   isCollapsed: false,
   waiting: 0,
 }

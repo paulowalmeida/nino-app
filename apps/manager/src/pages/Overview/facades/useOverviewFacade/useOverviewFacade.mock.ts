@@ -1,4 +1,4 @@
 export const useOverviewFacadeMock = {
-  tenantId: 'tenant-1',
+  unitId: 'unit-1',
   timezone: 'America/Belem',
 }

@@ -15,6 +15,12 @@ Audit the Nino App in controlled phases. Apply `CLAUDE.md`, `AGENTS.md`, all app
 - For every `VIOLATION`, `LEGACY`, proposed exception, or materially different compliant direction, stop and present exact evidence, impact, options, and one recommended option. Wait for the user's explicit choice.
 - Never report the whole repository as clean or 9/10 from a partial phase.
 
+When an audit becomes an explicitly authorized implementation, apply
+`.agents/rules/change-protocol.md`. A correction is not complete because the
+source changed: inspect the final diff, add the smallest meaningful regression
+coverage, update mechanical enforcement when the defect can recur, and report
+scoped versus repository-wide evidence separately.
+
 ## Select the Phase
 
 Interpret an explicit phase in the user's request. If none is supplied, begin with **Baseline** only. After a phase completes, report its result and offer the next recommended phase; do not silently continue into a new phase.
@@ -55,6 +61,11 @@ node tools/__tests__/complexity-baseline.test.mjs
 ```
 
 5. Report each result narrowly: new failure, known warning, legacy inventory, or verification limitation. Do not run the global architecture checker as a cleanliness claim. When a Page or component imports a pre-standardization `src/UI` resource, that resource is in scope for ownership analysis; inspect its consumers and report a shared-ownership violation when it serves more than one Page domain.
+
+For an authorized implementation following Baseline, run
+`npm run quality:gate` before reporting completion. Add `--workspace` and
+`--feature` when the change is narrower or Page-specific. The command is a
+mechanical gate, not a substitute for semantic ownership review.
 
 ## Specialized Phases
 

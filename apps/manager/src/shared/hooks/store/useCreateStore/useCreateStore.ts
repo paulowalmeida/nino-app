@@ -2,7 +2,7 @@ import { useNavigate } from 'react-router'
 
 import { useMutation } from '@tanstack/react-query'
 
-import { TenantService } from '@shared/services/tenant/tenant.service'
+import { UnitService } from '@shared/services/unit/unit.service'
 import { useSessionStore } from '@shared/states/session/session.state'
 import type { CreateStoreRequest } from '@shared/types/store/create-store-request'
 import type { CreatedStore } from '@shared/types/store/created-store'
@@ -20,7 +20,7 @@ export const useCreateStore = (onCreated?: (store: CreatedStore) => string) => {
   return useMutation<CreatedStore, Error, CreateStoreRequest>({
     /* The form handles 409, offline and generic error inline. */
     meta: { silentError: true },
-    mutationFn: TenantService.createStore,
+    mutationFn: UnitService.createStore,
     onSuccess: (store) => {
       useSessionStore.getState().clear()
       void navigate(onCreated?.(store) ?? '/')

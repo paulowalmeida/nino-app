@@ -12,7 +12,7 @@ export const trialSubscriptionMock: Subscription = {
     name: 'Pro',
     slug: 'pro',
     price: '99.00',
-    maxTenants: 5,
+    maxUnits: 5,
   },
   subscriptionStatus: { id: 'status-1', name: 'Ativa' },
 }

@@ -12,7 +12,7 @@ export const signupRequestMock: SignupRequest = {
     name: 'Padoca do Bairro',
     cnpj: '12345678000199',
   },
-  tenant: {
+  unit: {
     slug: 'padoca-do-bairro',
     zipCode: '66000000',
     street: 'Rua das Flores',

@@ -307,6 +307,66 @@ The agent **MUST** prefer explicit names over abbreviations, name functions by t
 The `Page` suffix is optional. A UI unit's layer is defined by its
 responsibility and directory, not by a naming suffix.
 
+A name **MUST** survive being read without the implementation next to it:
+
+- abbreviations **MUST NOT** replace the domain word. `cred`, `req`, `cfg`,
+  `usr`, `msg`, and `btn` are rejected in favor of the full word. Only an idiom
+  already established repository-wide is exempt;
+- a variable **MUST** be named for what it holds, not for its position in the
+  flow. `current`, `updated`, `final`, `temp`, `next`, and `previous` require
+  the domain noun they carry;
+- a variable holding an entity **MUST NOT** be named like a boolean. `linked`
+  reads as a flag; `linkedOrder` states the entity;
+- a boolean **MUST** state what is true, not that something is merely
+  acceptable. `isValid` requires its subject and criterion;
+- generic names such as `data`, `result`, `item`, `value`, `info`, `payload`,
+  and `handler` require a domain qualifier unless the local contract makes the
+  meaning unambiguous;
+- a function **MUST** name its operation and subject. `listUnitMembers` and
+  `cancelPendingOrder` are preferred over `list` and `cancel`.
+
+## Readability over brevity
+
+Conciseness is a formatting preference, never a reason to make the reader
+reconstruct intent. When the shorter form costs comprehension, the longer form
+wins. A line removed at the cost of a second reading is a bad trade.
+
+The agent **MUST NOT**:
+
+- chain more than two resolution strategies in one expression. Sequential
+  fallbacks such as `(a && f(a)) || g() || h()` **MUST** become named steps,
+  each stating the strategy it represents;
+- hide a branch inside an object or props literal through conditional spread.
+  Extract the conditional fragment into a named constant before spreading it;
+- use a truthiness-equality trick such as `!!a === !!b` in place of the
+  explicit conditions it stands for, especially when each condition means a
+  different outcome for the caller;
+- write a ternary whose implicit branch encodes a domain rule, such as
+  `expiresAt ? expiresAt < now : true`. Name the rule the branch represents;
+- compare two values whose equality carries non-obvious meaning without naming
+  the predicate;
+- use a fallback operand to satisfy the type-checker when an earlier guard
+  already established the invariant. Narrow the guard's return type instead,
+  so the fallback becomes unnecessary;
+- nest ternaries in JSX to choose between rendered regions. Use an early
+  return, a named branch variable, or a domain component.
+
+A predicate named `is*`, `has*`, `can*`, or `should*` **MUST** be free of
+observable side effects. Move logging, persistence, navigation, and state
+writes to the caller that owns the decision.
+
+A getter or derived value **MUST NOT** throw. A dependency that may be absent
+is expressed as an explicit `require<Thing>()` call, not as a property access
+that fails.
+
+Parameter order **MUST** stay consistent across the functions of one flow. Two
+adjacent `string` parameters swapped between caller and callee is a defect the
+compiler cannot catch, and the reader is the only remaining check.
+
+Comments **MUST NOT** be used to rescue any of the above. When a reader needs
+prose to follow an expression, the expression is what must change. This is the
+same boundary the `## Comments` rule draws from the other side.
+
 ## Abstractions
 
 An abstraction **MUST have a current, concrete reason to exist**.

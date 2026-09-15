@@ -27,7 +27,7 @@ import local from './DiningTables.module.css'
 
 type DiningTablesProps = {
   tables: DiningTable[]
-  tenantSlug: string
+  unitSlug: string
   isPending: boolean
   isAdding: boolean
   togglingId?: string
@@ -40,7 +40,7 @@ type DiningTablesProps = {
 
 export const DiningTables = ({
   tables,
-  tenantSlug,
+  unitSlug,
   isPending,
   isAdding,
   togglingId,
@@ -84,7 +84,7 @@ export const DiningTables = ({
       {showList && (
         <DiningTablesList
           tables={tables}
-          tenantSlug={tenantSlug}
+          unitSlug={unitSlug}
           isPending={isPending}
           togglingId={togglingId}
           onToggle={onToggle}
@@ -99,7 +99,7 @@ export const DiningTables = ({
 type DiningTablesListProps = Pick<
   DiningTablesProps,
   | 'tables'
-  | 'tenantSlug'
+  | 'unitSlug'
   | 'isPending'
   | 'togglingId'
   | 'onToggle'
@@ -109,7 +109,7 @@ type DiningTablesListProps = Pick<
 
 export const DiningTablesList = ({
   tables,
-  tenantSlug,
+  unitSlug,
   isPending,
   togglingId,
   onToggle,
@@ -120,7 +120,7 @@ export const DiningTablesList = ({
   const [tableToPreview, setTableToPreview] = useState<DiningTable | null>(null)
 
   const qrUrl = (table: DiningTable) =>
-    `https://${tenantSlug}.dev.nino.delivery/?mesa=${encodeURIComponent(table.publicKey)}`
+    `https://${unitSlug}.dev.nino.delivery/?mesa=${encodeURIComponent(table.publicKey)}`
 
   return (
     <>

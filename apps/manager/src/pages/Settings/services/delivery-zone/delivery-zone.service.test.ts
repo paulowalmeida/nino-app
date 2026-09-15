@@ -8,7 +8,7 @@ import {
   deliveryZoneMock,
   deliveryZonePageMock,
   removeDeliveryZoneMessageMock,
-  tenantIdMock,
+  unitIdMock,
   updateDeliveryZoneRequestMock,
   zoneIdMock,
 } from './delivery-zone.service.mock'
@@ -25,16 +25,16 @@ vi.mock('@shared/services/http/http.service', () => ({
 describe('DeliveryZoneService', () => {
   afterEach(() => vi.clearAllMocks())
 
-  it('listDeliveryZones: reads the tenant delivery zones', async () => {
+  it('listDeliveryZones: reads the unit delivery zones', async () => {
     // Arrange
     vi.mocked(api.get).mockResolvedValue(deliveryZonePageMock)
 
     // Act
-    const result = await DeliveryZoneService.listDeliveryZones(tenantIdMock)
+    const result = await DeliveryZoneService.listDeliveryZones(unitIdMock)
 
     // Assert
     expect(api.get).toHaveBeenCalledWith(
-      `tenants/${tenantIdMock}/delivery-zones`
+      `units/${unitIdMock}/delivery-zones`
     )
     expect(result).toBe(deliveryZonePageMock)
   })
@@ -45,13 +45,13 @@ describe('DeliveryZoneService', () => {
 
     // Act
     const result = await DeliveryZoneService.createDeliveryZone(
-      tenantIdMock,
+      unitIdMock,
       createDeliveryZoneRequestMock
     )
 
     // Assert
     expect(api.create).toHaveBeenCalledWith(
-      `tenants/${tenantIdMock}/delivery-zones`,
+      `units/${unitIdMock}/delivery-zones`,
       createDeliveryZoneRequestMock
     )
     expect(result).toBe(deliveryZoneMock)
@@ -63,14 +63,14 @@ describe('DeliveryZoneService', () => {
 
     // Act
     const result = await DeliveryZoneService.updateDeliveryZone(
-      tenantIdMock,
+      unitIdMock,
       zoneIdMock,
       updateDeliveryZoneRequestMock
     )
 
     // Assert
     expect(api.patch).toHaveBeenCalledWith(
-      `tenants/${tenantIdMock}/delivery-zones/${zoneIdMock}`,
+      `units/${unitIdMock}/delivery-zones/${zoneIdMock}`,
       updateDeliveryZoneRequestMock
     )
     expect(result).toBe(deliveryZoneMock)
@@ -82,13 +82,13 @@ describe('DeliveryZoneService', () => {
 
     // Act
     const result = await DeliveryZoneService.removeDeliveryZone(
-      tenantIdMock,
+      unitIdMock,
       zoneIdMock
     )
 
     // Assert
     expect(api.remove).toHaveBeenCalledWith(
-      `tenants/${tenantIdMock}/delivery-zones/${zoneIdMock}`
+      `units/${unitIdMock}/delivery-zones/${zoneIdMock}`
     )
     expect(result).toBe(removeDeliveryZoneMessageMock)
   })

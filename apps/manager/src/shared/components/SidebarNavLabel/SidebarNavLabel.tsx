@@ -41,7 +41,7 @@ export const SidebarNavLabel = ({
         {label}
       </Text>
       {!!tally && (
-        <span className={`${motion.pop} ${styles.tally}`}>{tally}</span>
+        <Text as="span" className={`${motion.pop} ${styles.tally}`}>{tally}</Text>
       )}
     </>
   )

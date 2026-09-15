@@ -16,7 +16,7 @@ type NinoLogoProps = {
   tone?: NinoLogoTone
   /** `sm`, `md` or `lg` (default) */
   size?: NinoLogoSize
-  /** Replaces the round `n` — the mascot, a tenant's own mark */
+  /** Replaces the round `n` — the mascot, a unit's own mark */
   mark?: ReactNode
   /** Small-caps line under the wordmark, naming the app */
   label?: ReactNode

@@ -6,7 +6,14 @@ import type { FirstStoreFormValues } from '@shared/types/store/first-store-form-
 export const toCreateStoreRequest = (
   data: FirstStoreFormValues
 ): CreateStoreRequest => ({
-  ...data,
-    slug: toStoreSlug(data.slug),
+  customName: data.customName,
+  slug: toStoreSlug(data.slug),
+  typeId: data.typeId,
   zipCode: onlyDigits(data.zipCode),
+  street: data.street,
+  number: data.number,
+  complement: data.complement,
+  neighborhood: data.neighborhood,
+  city: data.city,
+  state: data.state,
 })

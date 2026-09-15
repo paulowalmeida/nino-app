@@ -1,5 +1,5 @@
 import type { ConsumerRowModel } from '@pages/Consumers/types/ConsumerRowModel.type'
-import type { TenantConsumer } from '@shared/types/consumer/tenant-consumer'
+import type { UnitConsumer } from '@shared/types/consumer/unit-consumer'
 import { brl } from '@shared/utils/money/money'
 import { formatPhone } from '@shared/utils/phone/phone'
 
@@ -10,7 +10,7 @@ const day = new Intl.DateTimeFormat('pt-BR', {
 })
 
 export const toConsumerRows = (
-  consumers: TenantConsumer[]
+  consumers: UnitConsumer[]
 ): ConsumerRowModel[] =>
   consumers.map((consumer) => ({
     id: consumer.id,

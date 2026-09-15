@@ -1,7 +1,7 @@
-import type { PublicTenantSettings } from '@custom_types/settings/public-tenant-settings'
+import type { PublicUnitSettings } from '@custom_types/settings/public-unit-settings'
 import { api } from '@shared/services/http/http.service'
 
 export const settingsService = {
-  getPublic: (tenantId: string): Promise<PublicTenantSettings> =>
-    api.get<PublicTenantSettings>(`tenants/${tenantId}/settings/public`),
+  getPublic: (unitId: string): Promise<PublicUnitSettings> =>
+    api.get<PublicUnitSettings>(`units/${unitId}/settings/public`),
 }

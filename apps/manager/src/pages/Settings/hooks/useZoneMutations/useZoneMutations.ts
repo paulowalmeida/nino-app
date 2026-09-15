@@ -5,11 +5,11 @@ import { DeliveryZoneService } from '@pages/Settings/services/delivery-zone/deli
 
 import { zonesKey } from '../useDeliveryZones/useDeliveryZones'
 
-export const useZoneMutations = (tenantId: string | null) => {
+export const useZoneMutations = (unitId: string | null) => {
   const queryClient = useQueryClient()
 
   const invalidate = () => {
-    void queryClient.invalidateQueries({ queryKey: zonesKey(tenantId ?? '') })
+    void queryClient.invalidateQueries({ queryKey: zonesKey(unitId ?? '') })
   }
 
   const add = useMutation({
@@ -18,7 +18,7 @@ export const useZoneMutations = (tenantId: string | null) => {
       errorTitle: 'A faixa não foi adicionada',
     },
     mutationFn: (data: { maxRadiusKm: number; fee: number }) =>
-      DeliveryZoneService.createDeliveryZone(tenantId as string, data),
+      DeliveryZoneService.createDeliveryZone(unitId as string, data),
     onSuccess: invalidate,
   })
 
@@ -31,14 +31,14 @@ export const useZoneMutations = (tenantId: string | null) => {
       id: string
       maxRadiusKm: number
       fee: number
-    }) => DeliveryZoneService.updateDeliveryZone(tenantId as string, id, data),
+    }) => DeliveryZoneService.updateDeliveryZone(unitId as string, id, data),
     onSuccess: invalidate,
   })
 
   const toggle = useMutation({
     meta: { errorTitle: 'A entrega nessa faixa não mudou' },
     mutationFn: ({ id, isActive }: { id: string; isActive: boolean }) =>
-      DeliveryZoneService.updateDeliveryZone(tenantId as string, id, {
+      DeliveryZoneService.updateDeliveryZone(unitId as string, id, {
         isActive,
       }),
     onSuccess: (_zone, { isActive }) => {
@@ -55,7 +55,7 @@ export const useZoneMutations = (tenantId: string | null) => {
       errorTitle: 'A faixa não foi removida',
     },
     mutationFn: (id: string) =>
-      DeliveryZoneService.removeDeliveryZone(tenantId as string, id),
+      DeliveryZoneService.removeDeliveryZone(unitId as string, id),
     onSuccess: invalidate,
   })
 

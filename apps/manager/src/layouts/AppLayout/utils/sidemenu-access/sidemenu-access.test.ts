@@ -5,7 +5,7 @@ import { sidemenuAccessGroupsMock } from './sidemenu-access.mock'
 
 describe('groupsForRole', () => {
   it('keeps every item for the role that owns them', () => {
-    const groups = groupsForRole(sidemenuAccessGroupsMock, 'TENANT_OWNER')
+    const groups = groupsForRole(sidemenuAccessGroupsMock, 'UNIT_OWNER')
 
     expect(groups).toHaveLength(2)
     expect(groups[0].items).toHaveLength(2)

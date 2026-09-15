@@ -7,20 +7,20 @@ export enum GlobalRole {
   GUEST = 'GUEST',
 }
 
-export enum TenantRole {
-  OWNER = 'TENANT_OWNER',
+export enum UnitRole {
+  OWNER = 'UNIT_OWNER',
   MANAGER = 'MANAGER',
   STAFF = 'STAFF',
 }
 
-export enum TenantStatus {
+export enum UnitStatus {
   ACTIVE = 'ACTIVE',
   INACTIVE = 'INACTIVE',
   SUSPENDED = 'SUSPENDED',
   PENDING = 'PENDING',
 }
 
-export enum TenantType {
+export enum UnitType {
   RESTAURANT = 'RESTAURANT',
   FOOD_TRUCK = 'FOOD_TRUCK',
   DARK_KITCHEN = 'DARK_KITCHEN',

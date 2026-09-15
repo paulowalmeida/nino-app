@@ -19,7 +19,7 @@ export const categoryOptionsMock: ProductCategoryOption[] = [
 ]
 
 export const productDetailMock = {
-  tenantId: 'tenant-1',
+  unitId: 'unit-1',
   productId: 'product-1',
   unknownProductId: 'product-404',
 }

@@ -36,13 +36,13 @@ reimplementar tudo isso à mão.
 
 ### Client/application state → Zustand
 
-Sidebar colapsada, tema, tenant selecionado. **Não** Redux (RTK é cerimônia
+Sidebar colapsada, tema, unidade selecionada. **Não** Redux (RTK é cerimônia
 demais para o tamanho do app). Instalado na fundação (M0), quando surgiram os
 dois primeiros client states reais — stores em `src/states` (`@states`):
 
-- `useSessionStore` — `user`, `memberships`, `currentTenantId`. `tenantRole` e
-  o tenant atual **não** são estado: derivam por selector (`useTenantRole`,
-  `useCurrentTenant`), para não duplicar verdade.
+- `useSessionStore` — `user`, `memberships`, `currentUnitId`. `unitRole` e
+  a unidade atual **não** são estado: derivam por selector (`useUnitRole`,
+  `useCurrentUnit`), para não duplicar verdade.
 - `useUiStore` — `sidebarOpen`.
 
 Regra: estado de servidor fica no react-query. Um domínio pode usar Zustand
@@ -52,9 +52,9 @@ preferências locais. Dados do backend não devem ser copiados para o Zustand.
 ## Contexto e autenticação
 
 Backend: `nino-api` (NestJS + JWT + RBAC). Auth combina **role global**
-(MERCHANT) com **role de tenant** (`TENANT_OWNER`/`MANAGER`/`STAFF`).
-Multi-tenant: **Company é a marca (o restaurante) e Tenant é a unidade** — uma
-company tem N tenants. O tenant ativo escopa todas as rotas.
+(MERCHANT) com **role de unidade** (`UNIT_OWNER`/`MANAGER`/`STAFF`).
+Multi-unidade: **Company é a marca (o restaurante) e Unit é a unidade** — uma
+company tem N unidades. A unidade ativa escopa todas as rotas.
 
 Sessão é **cookie httpOnly** (`accessToken` 15min, `refreshToken` 7 dias), setado
 pela API; o front nunca lê nem escreve token — só manda `credentials: 'include'`.
@@ -77,12 +77,12 @@ Mapa central via `createBrowserRouter`; guards são loaders, não middleware:
 ```
 /                           ← RootLoader decide (ver abaixo)
 /entrar, /cadastrar
-/lojas                      ← seletor de tenants (N memberships)
+/lojas                      ← seletor de unidades (N memberships)
 /primeira-loja              ← onboarding (0 memberships)
-/:tenantId/visao-geral, /:tenantId/pedidos, /:tenantId/pedidos/:id
-/:tenantId/produtos         (produtos — CRUD)
-/:tenantId/categorias-produtos (categorias — CRUD)
-/:tenantId/colaboradores, /:tenantId/configuracoes
+/:unitId/visao-geral, /:unitId/pedidos, /:unitId/pedidos/:id
+/:unitId/produtos         (produtos — CRUD)
+/:unitId/categorias-produtos (categorias — CRUD)
+/:unitId/colaboradores, /:unitId/configuracoes
 ```
 
 Regra da rota raiz (`RootLoader`), agrupando as memberships por **company**:
@@ -91,15 +91,15 @@ Regra da rota raiz (`RootLoader`), agrupando as memberships por **company**:
 |---|---|
 | Sem sessão | `/entrar` |
 | 0 memberships | `/primeira-loja` (onboarding) |
-| Lojas de **uma** company | `/:tenantId/visao-geral` da `isCurrent` |
+| Lojas de **uma** company | `/:unitId/visao-geral` da `isCurrent` |
 | Lojas em **2+** companies | `/lojas` (escolha de restaurante) |
 
-A distinção existe porque **Company é a marca e Tenant é a unidade**: duas lojas
+A distinção existe porque **Company é a marca e Unit é a unidade**: duas lojas
 da mesma company são unidades do mesmo negócio, e perguntar qual abrir é
 fricção — entra na última usada e a troca de unidade fica no shell (switcher,
 M2). Companies diferentes são restaurantes diferentes: aí a escolha vale tela.
 
-`AuthGuard` (grupo `/:tenantId`) exige sessão viva **e** tenant da URL entre as
+`AuthGuard` (grupo `/:unitId`) exige sessão viva **e** unidade da URL entre as
 memberships.
 
 Login e signup **não** semeiam a sessão: `POST /auth/login` não devolve
@@ -122,7 +122,7 @@ caminho único de bootstrap.
 - **Fluxo client-side**: UI → facade → action/operation → Zustand → facade →
   UI. Quando uma intenção envolve os dois, a mutation cuida do backend e o
   Zustand cuida somente dos efeitos visuais/client-side.
-- **API client**: módulos por domínio (`auth`, `tenant`, `catalog`, `orders`);
+- **API client**: módulos por domínio (`auth`, `unit`, `catalog`, `orders`);
   busca por id é sempre `getById`, nunca `show`.
 - **Formulários**: `@nino/forms` (FormBuilder) para produto, categoria e dados
   da loja
@@ -159,7 +159,7 @@ CORS por padrão.
 1. ✅ **M0 — Fundação**: estrutura atomic + aliases, refresh transparente,
    TanStack Query + query-keys, zustand, bootstrap de sessão e guards
 2. ✅ **M1 — Auth** (`/entrar`, `/cadastrar`) portado do `manager-legacy`
-3. ✅ **M0.6 — Memberships**: guard de tenant efetivo e regra de entrada por
+3. ✅ **M0.6 — Memberships**: guard de unidade efetivo e regra de entrada por
    company (depende da nino-api `feat/NAPI-10`)
 4. M2 — Shell do painel (Sidebar responsiva, StatCard, switcher de unidade)
 5. Pedidos (lista + detalhe + status)

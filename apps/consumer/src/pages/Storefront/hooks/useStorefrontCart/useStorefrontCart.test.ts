@@ -13,7 +13,7 @@ describe('useStorefrontCart', () => {
   it('adapts and adds an item to the current storefront cart', () => {
     const add = vi.fn(() => true)
     vi.mocked(useCartSummary).mockReturnValue({
-      tenantId: useStorefrontCartMock.tenantId,
+      unitId: useStorefrontCartMock.unitId,
       lines: {},
       cartLines: [],
       count: 0,
@@ -26,12 +26,12 @@ describe('useStorefrontCart', () => {
     })
 
     const { result } = renderHook(() =>
-      useStorefrontCart(useStorefrontCartMock.tenantId)
+      useStorefrontCart(useStorefrontCartMock.unitId)
     )
 
     expect(result.current.addToCart(cartItemAdapterMock.item, 2)).toBe(true)
     expect(add).toHaveBeenCalledWith(
-      useStorefrontCartMock.tenantId,
+      useStorefrontCartMock.unitId,
       {
         id: cartItemAdapterMock.item.id,
         name: cartItemAdapterMock.item.name,
@@ -44,7 +44,7 @@ describe('useStorefrontCart', () => {
 
   it('hides lines that belong to another storefront', () => {
     vi.mocked(useCartSummary).mockReturnValue({
-      tenantId: 'other-store',
+      unitId: 'other-store',
       lines: { item: { id: 'item', item: {} as never, quantity: 1 } },
       cartLines: [{ id: 'item', item: {} as never, quantity: 1 }],
       count: 1,
@@ -57,7 +57,7 @@ describe('useStorefrontCart', () => {
     })
 
     const { result } = renderHook(() =>
-      useStorefrontCart(useStorefrontCartMock.tenantId)
+      useStorefrontCart(useStorefrontCartMock.unitId)
     )
 
     expect(result.current.cart).toEqual({})

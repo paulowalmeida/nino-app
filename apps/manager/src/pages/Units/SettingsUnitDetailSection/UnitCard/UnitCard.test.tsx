@@ -5,7 +5,7 @@ import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 
-import type { TenantDetail } from '@shared/types/store/tenant-detail'
+import type { UnitDetail } from '@shared/types/store/unit-detail'
 
 import { UnitCard } from './UnitCard'
 import { unitCardDetailMock } from './UnitCard.mock'
@@ -24,7 +24,7 @@ describe('UnitCard', () => {
 
   beforeEach(() => vi.clearAllMocks())
 
-  const renderCard = (unit: TenantDetail | undefined, isMain = false) =>
+  const renderCard = (unit: UnitDetail | undefined, isMain = false) =>
     render(
       <UnitCard
         unit={unit}

@@ -22,7 +22,7 @@ describe(useCounterAvailability.name, () => {
       availabilityMock as never
     )
     const { result } = renderHook(
-      () => useCounterAvailability('tenant-1', 'zone-1'),
+      () => useCounterAvailability('unit-1', 'zone-1'),
       { wrapper }
     )
     await waitFor(() => expect(result.current.zones).toHaveLength(1))

@@ -6,6 +6,6 @@ export const useReportsFacadeMock = {
   timing: { report: undefined, isPending: false },
   series: { channel: { breakdown: [], isPending: false }, payment: { breakdown: [], isPending: false } },
   breakdown: { channel: [], payment: [] },
-  tenantId: null,
+  unitId: null,
   labels: { channel: {}, payment: {} },
 }

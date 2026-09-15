@@ -9,19 +9,19 @@ import {
 } from '@pages/Catalog/adapters/catalog.adapter'
 import { CATALOG_PAGE_SIZE } from '@pages/Catalog/constants/catalog.constants'
 import { toCatalogViewStatus } from '@pages/Catalog/utils/catalog-view-status/catalog-view-status'
-import { queryKeys } from '@shared/lib/query-keys'
+import { queryKeys } from '@shared/lib/query-keys/query-keys'
 import { ProductService } from '@shared/services/product/product.service'
 
 export const useCatalogQuery = (
-  tenantId: string | null,
+  unitId: string | null,
   categoryId: string | null,
   search: string
 ) => {
   const query = useInfiniteQuery({
-    queryKey: queryKeys.products.catalog(tenantId ?? '', categoryId, search),
+    queryKey: queryKeys.products.catalog(unitId ?? '', categoryId, search),
     queryFn: ({ pageParam }) =>
       ProductService.listProducts(
-        tenantId as string,
+        unitId as string,
         toCatalogListParams(
           pageParam,
           CATALOG_PAGE_SIZE,
@@ -39,7 +39,7 @@ export const useCatalogQuery = (
         ? pages.length + 1
         : undefined
     },
-    enabled: !!tenantId,
+    enabled: !!unitId,
   })
 
   const items = useMemo(() => toCatalogItems(query.data), [query.data])
@@ -48,7 +48,7 @@ export const useCatalogQuery = (
   return {
     items,
     total,
-    status: toCatalogViewStatus(tenantId !== null, query.status),
+    status: toCatalogViewStatus(unitId !== null, query.status),
     queryStatus: query.status,
     fetchStatus: query.fetchStatus,
     fetchNextPage: query.fetchNextPage,

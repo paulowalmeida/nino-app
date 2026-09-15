@@ -7,7 +7,7 @@ import { toUnitDraft } from '@pages/Units/adapters/toUnitDraft/toUnitDraft'
 import { EMPTY_UNIT_DRAFT } from '@pages/Units/constants/unit.constants'
 import { useUnitsFacade } from '@pages/Units/facades/useUnitsFacade/useUnitsFacade'
 import type { PreviewDevice } from '@pages/Units/types/PreviewDevice.type'
-import type { TenantDetail } from '@shared/types/store/tenant-detail'
+import type { UnitDetail } from '@shared/types/store/unit-detail'
 import type { UnitDraft } from '@shared/types/store/unit-draft'
 
 import { BrandAssets } from './BrandAssets/BrandAssets'
@@ -26,7 +26,7 @@ export const PersonalizeStudio = () => {
 
   const [device, setDevice] = useState<PreviewDevice>('mobile')
   const [draft, setDraft] = useState<UnitDraft>(EMPTY_UNIT_DRAFT)
-  const [seed, setSeed] = useState<TenantDetail | undefined>(undefined)
+  const [seed, setSeed] = useState<UnitDetail | undefined>(undefined)
   const [isDirty, setDirty] = useState(false)
 
   if (unit && unit !== seed) {

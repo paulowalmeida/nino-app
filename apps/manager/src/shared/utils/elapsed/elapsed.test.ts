@@ -66,4 +66,15 @@ describe('elapsedSince', () => {
       overdueRatio: 0,
     })
   })
+
+  it('returns a safe neutral value for an invalid timestamp', () => {
+    expect(elapsedSince('not-a-date')).toEqual({
+      label: '—',
+      remaining: '—',
+      isLate: false,
+      pace: 'fresh',
+      ratio: 0,
+      overdueRatio: 0,
+    })
+  })
 })

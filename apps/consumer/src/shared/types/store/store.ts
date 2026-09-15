@@ -1,4 +1,4 @@
-/** A loja como a vitrine a recebe de `GET /tenants/slug/:slug`. */
+/** A loja como a vitrine a recebe de `GET /units/slug/:slug`. */
 export type Store = {
   id: string
   slug: string

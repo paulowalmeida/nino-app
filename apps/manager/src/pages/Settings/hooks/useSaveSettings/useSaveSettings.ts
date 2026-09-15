@@ -1,10 +1,10 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 
-import { queryKeys } from '@shared/lib/query-keys'
+import { queryKeys } from '@shared/lib/query-keys/query-keys'
 import { SettingsService } from '@shared/services/settings/settings.service'
-import type { UpdateTenantSettingsRequest } from '@shared/types/settings/update-tenant-settings-request'
+import type { UpdateUnitSettingsRequest } from '@shared/types/settings/update-unit-settings-request'
 
-export const useSaveSettings = (tenantId: string | null) => {
+export const useSaveSettings = (unitId: string | null) => {
   const queryClient = useQueryClient()
 
   return useMutation({
@@ -12,13 +12,16 @@ export const useSaveSettings = (tenantId: string | null) => {
       success: 'Atendimento salvo',
       errorTitle: 'O atendimento não foi salvo',
     },
-    mutationFn: (data: UpdateTenantSettingsRequest) =>
-      SettingsService.saveSettings(tenantId as string, data),
+    mutationFn: (data: UpdateUnitSettingsRequest) =>
+      SettingsService.saveSettings(unitId as string, data),
     onSuccess: (settings) => {
       queryClient.setQueryData(
-        queryKeys.tenant.settings(tenantId ?? ''),
+        queryKeys.unit.settings(unitId ?? ''),
         settings
       )
+      void queryClient.invalidateQueries({
+        queryKey: queryKeys.unit.publicSettings(unitId ?? ''),
+      })
     },
   })
 }

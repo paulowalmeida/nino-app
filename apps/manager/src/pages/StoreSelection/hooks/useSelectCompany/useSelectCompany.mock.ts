@@ -2,21 +2,21 @@ import type { Membership } from '@shared/types/auth/membership'
 
 export const selectCompanyUnitsMock: Membership[] = [
   {
-    tenantId: 'tenant-1',
-    tenantName: 'Loja Centro',
-    tenantSlug: 'loja-centro',
+    unitId: 'unit-1',
+    unitName: 'Loja Centro',
+    unitSlug: 'loja-centro',
     companyId: 'company-1',
     companyName: 'Lanchonete do Zé',
-    role: 'TENANT_OWNER',
+    role: 'UNIT_OWNER',
     isCurrent: false,
   },
   {
-    tenantId: 'tenant-2',
-    tenantName: 'Loja Zona Sul',
-    tenantSlug: 'loja-zona-sul',
+    unitId: 'unit-2',
+    unitName: 'Loja Zona Sul',
+    unitSlug: 'loja-zona-sul',
     companyId: 'company-1',
     companyName: 'Lanchonete do Zé',
-    role: 'TENANT_OWNER',
+    role: 'UNIT_OWNER',
     isCurrent: true,
   },
 ]

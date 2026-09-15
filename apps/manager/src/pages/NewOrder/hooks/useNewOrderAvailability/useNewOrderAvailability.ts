@@ -6,13 +6,13 @@ import { OrderService } from '@shared/services/order/order.service'
 import { brl } from '@shared/utils/money/money'
 
 export const useNewOrderAvailability = (
-  tenantId: string | null,
+  unitId: string | null,
   { channel, chosenMethod, recipient }: NewOrderDraft
 ): NewOrderAvailability => {
   const query = useQuery({
-    queryKey: ['order-availability', tenantId],
-    queryFn: () => OrderService.getAvailability(tenantId as string),
-    enabled: !!tenantId,
+    queryKey: ['order-availability', unitId],
+    queryFn: () => OrderService.getAvailability(unitId as string),
+    enabled: !!unitId,
   })
   const availability = query.data
   const methods = (availability?.acceptedPaymentMethods ?? ['CASH']).filter(

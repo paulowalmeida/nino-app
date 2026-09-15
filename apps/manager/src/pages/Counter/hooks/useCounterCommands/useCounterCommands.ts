@@ -8,11 +8,11 @@ import type { PaymentMethod } from '@shared/types/order/payment-method'
 import { ticketNumber } from '@shared/utils/order-ticket/order-ticket'
 
 export const useCounterCommands = (
-  tenantId: string | null,
+  unitId: string | null,
   method: PaymentMethod | null
 ) => {
   const { lines, total, updateQuantity } = useCounterCart()
-  const { error, isSending, sell, reset } = useCounterSale(tenantId)
+  const { error, isSending, sell, reset } = useCounterSale(unitId)
   const clear = useCounterStore((state) => state.clear)
   const setSheet = useCounterStore((state) => state.setSheet)
   const setLastSale = useCounterStore((state) => state.setLastSale)
@@ -22,7 +22,7 @@ export const useCounterCommands = (
   const channel = useCounterStore((state) => state.channel)
   const recipient = useCounterStore((state) => state.recipient)
   const deliveryQuote = useCounterDeliveryQuote(
-    tenantId,
+    unitId,
     channel === 'DELIVERY' ? (recipient?.zipCode ?? '') : ''
   )
   const saleTotal =

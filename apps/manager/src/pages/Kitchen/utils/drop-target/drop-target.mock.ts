@@ -3,7 +3,7 @@ import type { Order } from '@shared/types/order/order'
 export const dropTargetOrderMock: Order = {
   id: 'order-1',
   orderNumber: 1,
-  tenantId: 'tenant-1',
+  unitId: 'unit-1',
   consumerId: null,
   status: 'PREPARING',
   channel: 'PICKUP',

@@ -1,1 +1,1 @@
-export const settingsServiceMock = { tenantId: 'tenant-1' }
+export const settingsServiceMock = { unitId: 'unit-1' }

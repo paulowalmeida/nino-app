@@ -1,4 +1,4 @@
 export const createCategoryMock = {
-  tenantId: 'tenant-1',
+  unitId: 'unit-1',
   categoryName: 'Bebidas',
 }

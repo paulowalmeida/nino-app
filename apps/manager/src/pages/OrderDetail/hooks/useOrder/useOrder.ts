@@ -1,13 +1,13 @@
 import { useQuery } from '@tanstack/react-query'
 
-import { queryKeys } from '@shared/lib/query-keys'
+import { queryKeys } from '@shared/lib/query-keys/query-keys'
 import { OrderService } from '@shared/services/order/order.service'
 import type { Order } from '@shared/types/order/order'
 
-export const useOrder = (tenantId: string | null, orderId: string) =>
+export const useOrder = (unitId: string | null, orderId: string) =>
   useQuery<Order>({
-    queryKey: queryKeys.orders.detail(tenantId ?? '', orderId),
-    queryFn: () => OrderService.getById(tenantId as string, orderId),
-    enabled: !!tenantId && !!orderId,
+    queryKey: queryKeys.orders.detail(unitId ?? '', orderId),
+    queryFn: () => OrderService.getById(unitId as string, orderId),
+    enabled: !!unitId && !!orderId,
     refetchInterval: 25_000,
   })

@@ -9,7 +9,7 @@ import { OpeningHoursService } from '@shared/services/opening-hours/opening-hour
 import type { OpeningHours } from '@shared/types/settings/opening-hours'
 
 import { useSaveWeek } from './useSaveWeek'
-import { newDayMock, savedDayMock, tenantIdMock } from './useSaveWeek.mock'
+import { newDayMock, savedDayMock, unitIdMock } from './useSaveWeek.mock'
 
 vi.mock('@shared/services/opening-hours/opening-hours.service')
 
@@ -35,7 +35,7 @@ describe(useSaveWeek.name, () => {
 
   it('creates the day that has no record yet and updates the one that has', async () => {
     // Arrange
-    const { result } = renderHook(() => useSaveWeek(tenantIdMock), { wrapper })
+    const { result } = renderHook(() => useSaveWeek(unitIdMock), { wrapper })
 
     // Act
     result.current.mutate([newDayMock, savedDayMock])
@@ -43,7 +43,7 @@ describe(useSaveWeek.name, () => {
     // Assert
     await waitFor(() => expect(result.current.isSuccess).toBe(true))
     expect(OpeningHoursService.createOpeningHours).toHaveBeenCalledWith(
-      tenantIdMock,
+      unitIdMock,
       {
         dayOfWeek: newDayMock.dayOfWeek,
         openTime: newDayMock.openTime,
@@ -52,7 +52,7 @@ describe(useSaveWeek.name, () => {
       }
     )
     expect(OpeningHoursService.updateOpeningHours).toHaveBeenCalledWith(
-      tenantIdMock,
+      unitIdMock,
       savedDayMock.id,
       {
         openTime: savedDayMock.openTime,
@@ -65,7 +65,7 @@ describe(useSaveWeek.name, () => {
   it('refreshes the week of that unit once every day is written', async () => {
     // Arrange
     const invalidate = vi.spyOn(client, 'invalidateQueries')
-    const { result } = renderHook(() => useSaveWeek(tenantIdMock), { wrapper })
+    const { result } = renderHook(() => useSaveWeek(unitIdMock), { wrapper })
 
     // Act
     result.current.mutate([savedDayMock])
@@ -73,7 +73,7 @@ describe(useSaveWeek.name, () => {
     // Assert
     await waitFor(() => expect(result.current.isSuccess).toBe(true))
     expect(invalidate).toHaveBeenCalledWith({
-      queryKey: hoursKey(tenantIdMock),
+      queryKey: hoursKey(unitIdMock),
     })
   })
 

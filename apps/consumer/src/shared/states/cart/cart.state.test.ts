@@ -10,7 +10,7 @@ afterEach(() => {
 
 describe('useCartStore', () => {
   it('persists cart actions through the shared store', () => {
-    useCartStore.getState().add(cartStateMock.tenantId, cartStateMock.item, 2)
+    useCartStore.getState().add(cartStateMock.unitId, cartStateMock.item, 2)
     useCartStore.getState().decrement(cartStateMock.item.id)
 
     expect(useCartStore.getState().lines[cartStateMock.item.id].quantity).toBe(
@@ -19,42 +19,42 @@ describe('useCartStore', () => {
   })
 
   it('refuses to mix items from different stores', () => {
-    useCartStore.getState().add(cartStateMock.tenantId, cartStateMock.item)
+    useCartStore.getState().add(cartStateMock.unitId, cartStateMock.item)
 
     const added = useCartStore
       .getState()
-      .add(cartStateMock.otherTenantId, cartStateMock.item)
+      .add(cartStateMock.otherUnitId, cartStateMock.item)
 
     expect(added).toBe(false)
-    expect(useCartStore.getState().tenantId).toBe(cartStateMock.tenantId)
+    expect(useCartStore.getState().unitId).toBe(cartStateMock.unitId)
     expect(useCartStore.getState().lines[cartStateMock.item.id].quantity).toBe(
       1
     )
   })
 
   it('replaces the previous store cart only after an explicit command', () => {
-    useCartStore.getState().add(cartStateMock.tenantId, cartStateMock.item, 2)
+    useCartStore.getState().add(cartStateMock.unitId, cartStateMock.item, 2)
 
     useCartStore
       .getState()
-      .replace(cartStateMock.otherTenantId, cartStateMock.item)
+      .replace(cartStateMock.otherUnitId, cartStateMock.item)
 
-    expect(useCartStore.getState().tenantId).toBe(cartStateMock.otherTenantId)
+    expect(useCartStore.getState().unitId).toBe(cartStateMock.otherUnitId)
     expect(useCartStore.getState().lines[cartStateMock.item.id].quantity).toBe(
       1
     )
   })
 
-  it('removes the tenant ownership when the last line leaves the cart', () => {
-    useCartStore.getState().add(cartStateMock.tenantId, cartStateMock.item)
+  it('removes the unit ownership when the last line leaves the cart', () => {
+    useCartStore.getState().add(cartStateMock.unitId, cartStateMock.item)
 
     useCartStore.getState().decrement(cartStateMock.item.id)
 
-    expect(useCartStore.getState().tenantId).toBeNull()
+    expect(useCartStore.getState().unitId).toBeNull()
     expect(useCartStore.getState().lines).toEqual({})
   })
 
-  it('discards persisted carts created before tenant ownership existed', async () => {
+  it('discards persisted carts created before unit ownership existed', async () => {
     window.localStorage.setItem(
       'nino.cart',
       JSON.stringify({
@@ -65,7 +65,7 @@ describe('useCartStore', () => {
 
     await useCartStore.persist.rehydrate()
 
-    expect(useCartStore.getState().tenantId).toBeNull()
+    expect(useCartStore.getState().unitId).toBeNull()
     expect(useCartStore.getState().lines).toEqual({})
   })
 })

@@ -11,15 +11,15 @@ import motion from '@styles/motion.module.css'
 import styles from './SalesPeriodTrend.module.css'
 
 export type SalesPeriodTrendProps = {
-  tenantId: string | null
+  unitId: string | null
   range: ReportRangeParams
 }
 
 export const SalesPeriodTrend = ({
-  tenantId,
+  unitId,
   range,
 }: SalesPeriodTrendProps) => {
-  const { series, isPending } = useSalesSeries(tenantId, range)
+  const { series, isPending } = useSalesSeries(unitId, range)
 
   const points = series?.points ?? []
   const hasNoSales = !isPending && points.every(({ revenue }) => !revenue)

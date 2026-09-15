@@ -1,4 +1,4 @@
 export const collaboratorRoleAccessMock = {
-  role: 'TENANT_MANAGER',
+  role: 'UNIT_MANAGER',
   roleLockHint: 'Só o dono da loja muda o cargo de alguém.',
 }

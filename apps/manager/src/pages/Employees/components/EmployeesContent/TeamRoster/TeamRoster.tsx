@@ -22,7 +22,7 @@ import { PersonMark } from '@shared/components/PersonMark/PersonMark'
 import {
   TEAM_ROLE_OPTIONS,
 } from '@shared/constants/team.constants'
-import type { TenantRole } from '@shared/types/auth/tenant-role'
+import type { UnitRole } from '@shared/types/auth/unit-role'
 import type { RosterEntry } from '@shared/types/team/roster-entry'
 import { lastSeenLabel } from '@shared/utils/last-seen/last-seen'
 import { riseDelay } from '@shared/utils/rise-delay/rise-delay'
@@ -32,7 +32,7 @@ import styles from './TeamRoster.module.css'
 
 export type TeamRosterProps = {
   /** Enables switching roles. Only the store owner gets this. */
-  onChangeRole?: (id: string, role: TenantRole) => void
+  onChangeRole?: (id: string, role: UnitRole) => void
   /** Row with a role change in progress. */
   changingRoleId?: string
   title: string

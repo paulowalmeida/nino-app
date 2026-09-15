@@ -16,7 +16,7 @@ describe(useCounterSale.name, () => {
       mutateAsync: vi.fn(),
       isPending: false,
     } as never)
-    const { result } = renderHook(() => useCounterSale('tenant-1'))
+    const { result } = renderHook(() => useCounterSale('unit-1'))
     await act(() =>
       result.current.sell({
         lines: [],
@@ -34,7 +34,7 @@ describe(useCounterSale.name, () => {
       mutateAsync,
       isPending: false,
     } as never)
-    const { result } = renderHook(() => useCounterSale('tenant-1'))
+    const { result } = renderHook(() => useCounterSale('unit-1'))
     const orderNumber = await act(() =>
       result.current.sell({
         lines: [],
@@ -52,7 +52,7 @@ describe(useCounterSale.name, () => {
       mutateAsync,
       isPending: false,
     } as never)
-    const { result } = renderHook(() => useCounterSale('tenant-1'))
+    const { result } = renderHook(() => useCounterSale('unit-1'))
 
     await act(() =>
       result.current.sell({
@@ -88,7 +88,7 @@ describe(useCounterSale.name, () => {
       mutateAsync,
       isPending: false,
     } as never)
-    const { result } = renderHook(() => useCounterSale('tenant-1'))
+    const { result } = renderHook(() => useCounterSale('unit-1'))
     await act(() =>
       result.current.sell({
         lines: [],
@@ -110,7 +110,7 @@ describe(useCounterSale.name, () => {
       mutateAsync,
       isPending: false,
     } as never)
-    const { result } = renderHook(() => useCounterSale('tenant-1'))
+    const { result } = renderHook(() => useCounterSale('unit-1'))
     await act(() =>
       result.current.sell({
         lines: [],

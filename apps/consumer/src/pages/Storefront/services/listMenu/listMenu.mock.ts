@@ -1,1 +1,1 @@
-export const listMenuMock = { tenantId: 'store-1' }
+export const listMenuMock = { unitId: 'store-1' }

@@ -3,7 +3,7 @@ import { cartItemPrice } from '@utils/cart-item-price/cart-item-price'
 
 /** A sacola pronta pro consumo da tela — já com contagem e total somados. */
 export const useCartSummary = () => {
-  const tenantId = useCartStore((state) => state.tenantId)
+  const unitId = useCartStore((state) => state.unitId)
   const lines = useCartStore((state) => state.lines)
   const add = useCartStore((state) => state.add)
   const replace = useCartStore((state) => state.replace)
@@ -19,7 +19,7 @@ export const useCartSummary = () => {
   )
 
   return {
-    tenantId,
+    unitId,
     lines,
     cartLines,
     count,

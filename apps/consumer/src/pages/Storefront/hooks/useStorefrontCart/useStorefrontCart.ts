@@ -4,15 +4,15 @@ import { cartItem } from '@pages/Storefront/adapters/cartItem.adapter/cartItem.a
 import { useCartSummary } from '@shared/hooks/useCartSummary/useCartSummary'
 import { quantityByProduct } from '@utils/quantity-by-product/quantity-by-product'
 
-export const useStorefrontCart = (tenantId: string | undefined) => {
+export const useStorefrontCart = (unitId: string | undefined) => {
   const cart = useCartSummary()
-  const ownsCart = !cart.tenantId || cart.tenantId === tenantId
+  const ownsCart = !cart.unitId || cart.unitId === unitId
 
   const addToCart = (item: MenuItem, quantity = 1, choices?: ProductChoices) =>
-    tenantId ? cart.add(tenantId, cartItem(item, choices), quantity) : false
+    unitId ? cart.add(unitId, cartItem(item, choices), quantity) : false
 
   const replaceCart = (item: MenuItem, quantity = 1, choices?: ProductChoices) => {
-    if (tenantId) cart.replace(tenantId, cartItem(item, choices), quantity)
+    if (unitId) cart.replace(unitId, cartItem(item, choices), quantity)
   }
 
   return {

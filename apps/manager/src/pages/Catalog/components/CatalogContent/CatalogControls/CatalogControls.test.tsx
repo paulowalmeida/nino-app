@@ -16,7 +16,7 @@ describe(CatalogControls.name, () => {
   beforeEach(() => {
     vi.mocked(useCatalogFacade).mockReturnValue({
       total: 2,
-      tenantRole: 'MANAGER',
+      unitRole: 'MANAGER',
       categoryId: 'cat-1',
       search: '',
       items: [{ id: 'item-1' }, { id: 'item-2' }],
@@ -49,7 +49,7 @@ describe(CatalogControls.name, () => {
       toggleAllItemsSelection: vi.fn(),
       requestDeleteItems,
       total: 2,
-      tenantRole: 'MANAGER',
+      unitRole: 'MANAGER',
       categoryId: 'cat-1',
       search: '',
       items: [{ id: 'item-1' }, { id: 'item-2' }],
@@ -74,7 +74,7 @@ describe(CatalogControls.name, () => {
       toggleAllItemsSelection,
       requestDeleteItems,
       total: 2,
-      tenantRole: 'MANAGER',
+      unitRole: 'MANAGER',
       categoryId: 'cat-1',
       search: '',
       items: [{ id: 'item-1' }, { id: 'item-2' }],
@@ -94,7 +94,7 @@ describe(CatalogControls.name, () => {
     // Arrange
     vi.mocked(useCatalogFacade).mockReturnValue({
       total: 2,
-      tenantRole: 'STAFF',
+      unitRole: 'STAFF',
       categoryId: 'cat-1',
       search: '',
       items: [{ id: 'item-1' }, { id: 'item-2' }],

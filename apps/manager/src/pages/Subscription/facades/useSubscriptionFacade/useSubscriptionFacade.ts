@@ -3,7 +3,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { toast } from '@nino/ds/components/Toast'
 import { useSubscription } from '@shared/hooks/account/useSubscription/useSubscription'
 import { useSubscriptionPlans } from '@shared/hooks/account/useSubscriptionPlans/useSubscriptionPlans'
-import { queryKeys } from '@shared/lib/query-keys'
+import { queryKeys } from '@shared/lib/query-keys/query-keys'
 import { AccountService } from '@shared/services/account/account.service'
 import type { Subscription } from '@shared/types/profile/subscription'
 

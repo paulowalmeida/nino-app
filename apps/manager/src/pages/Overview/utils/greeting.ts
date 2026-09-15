@@ -1,7 +1,7 @@
 const resolveZone = (timezone: string | null): string =>
   timezone ?? Intl.DateTimeFormat().resolvedOptions().timeZone
 
-/** Time-of-day greeting in the tenant's own timezone, not the browser's. */
+/** Time-of-day greeting in the unit's own timezone, not the browser's. */
 export const greetingFor = (timezone: string | null): string => {
   const hour = Number(
     new Date().toLocaleTimeString('en-US', {

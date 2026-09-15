@@ -4,7 +4,7 @@ export const closedSessionDateKeyMock = '2026-08-29'
 
 export const openSessionMock: CashSession = {
   id: 'session-1',
-  tenantId: 'tenant-1',
+  unitId: 'unit-1',
   openedById: 'staff-1',
   openedByName: 'Ana',
   closedById: null,

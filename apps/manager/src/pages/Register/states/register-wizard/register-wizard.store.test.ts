@@ -33,14 +33,14 @@ describe('useRegisterWizardStore', () => {
   })
 
   it('returns to the company step', () => {
-    act(() => useRegisterWizardStore.getState().goToTenant(storeCompanyMock))
+    act(() => useRegisterWizardStore.getState().goToUnit(storeCompanyMock))
     act(() => useRegisterWizardStore.getState().goToCompanyStep())
 
     expect(useRegisterWizardStore.getState().step).toBe(2)
   })
 
-  it('carries the company into the tenant step', () => {
-    act(() => useRegisterWizardStore.getState().goToTenant(storeCompanyMock))
+  it('carries the company into the unit step', () => {
+    act(() => useRegisterWizardStore.getState().goToUnit(storeCompanyMock))
 
     expect(useRegisterWizardStore.getState().step).toBe(3)
     expect(useRegisterWizardStore.getState().company).toBe(storeCompanyMock)

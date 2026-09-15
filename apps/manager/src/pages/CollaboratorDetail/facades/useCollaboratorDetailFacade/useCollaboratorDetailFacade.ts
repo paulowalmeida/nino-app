@@ -2,16 +2,16 @@ import { useParams } from 'react-router'
 
 import { useCollaboratorDetailAdmin } from '@pages/CollaboratorDetail/hooks/useCollaboratorDetailAdmin/useCollaboratorDetailAdmin'
 import { useCollaboratorDetailQuery } from '@pages/CollaboratorDetail/hooks/useCollaboratorDetailQuery/useCollaboratorDetailQuery'
-import { useCurrentTenant } from '@shared/hooks/session/useCurrentTenant/useCurrentTenant'
+import { useCurrentUnit } from '@shared/hooks/session/useCurrentUnit/useCurrentUnit'
 
 export const useCollaboratorDetailFacade = () => {
   const { userId = '' } = useParams()
-  const tenant = useCurrentTenant()
-  const tenantId = tenant?.tenantId ?? null
-  const detailQuery = useCollaboratorDetailQuery(tenantId, userId)
+  const unit = useCurrentUnit()
+  const unitId = unit?.unitId ?? null
+  const detailQuery = useCollaboratorDetailQuery(unitId, userId)
   const admin = useCollaboratorDetailAdmin(
-    tenantId,
-    tenant?.role ?? null,
+    unitId,
+    unit?.role ?? null,
     detailQuery.data ?? null
   )
 

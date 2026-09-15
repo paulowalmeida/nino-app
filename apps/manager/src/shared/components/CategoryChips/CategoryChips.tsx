@@ -1,3 +1,4 @@
+import { Box } from '@nino/ds/components/Box'
 import { Chip } from '@nino/ds/components/Chip'
 import { Icon } from '@nino/ds/components/Icon'
 import { Skeleton } from '@nino/ds/components/Skeleton'
@@ -31,16 +32,16 @@ export const CategoryChips = ({
 
   if (isPending) {
     return (
-      <div className={styles.track} role="tablist" aria-label="Categorias">
+      <Box className={styles.track} role="tablist" aria-label="Categorias">
         {CATEGORY_CHIPS_GHOST_ITEMS.map((chip) => (
           <Skeleton key={chip} className={styles.ghostChip} />
         ))}
-      </div>
+      </Box>
     )
   }
 
   return (
-    <div
+    <Box
       ref={trackRef}
       className={styles.track}
       role="tablist"
@@ -72,6 +73,6 @@ export const CategoryChips = ({
           {name}
         </Chip>
       ))}
-    </div>
+    </Box>
   )
 }

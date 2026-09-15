@@ -3,8 +3,8 @@ import { beforeEach, describe, expect, it, vi } from 'vitest'
 
 import { useKitchenFacade } from './useKitchenFacade'
 
-vi.mock('@shared/hooks/session/useCurrentTenant/useCurrentTenant', () => ({
-  useCurrentTenant: () => ({ tenantId: 'tenant-1' }),
+vi.mock('@shared/hooks/session/useCurrentUnit/useCurrentUnit', () => ({
+  useCurrentUnit: () => ({ unitId: 'unit-1' }),
 }))
 vi.mock('@pages/Kitchen/hooks/useKitchenOrders/useKitchenOrders', () => ({
   useKitchenOrders: vi.fn(() => ({
@@ -48,6 +48,6 @@ describe(useKitchenFacade.name, () => {
 
     renderHook(() => useKitchenFacade())
 
-    expect(useKitchenOrders).toHaveBeenCalledWith('tenant-1')
+    expect(useKitchenOrders).toHaveBeenCalledWith('unit-1')
   })
 })

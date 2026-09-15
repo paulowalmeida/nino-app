@@ -1,6 +1,6 @@
 /**
  * Chaves de cache do consumidor. Tudo é escopado pela loja: `store` pelo
- * slug (é o que a URL carrega), `menu` pelo tenantId resolvido.
+ * slug (é o que a URL carrega), `menu` pelo unitId resolvido.
  */
 export const queryKeys = {
   store: {
@@ -9,27 +9,27 @@ export const queryKeys = {
   },
   menu: {
     all: ['menu'] as const,
-    byTenant: (tenantId: string) => [...queryKeys.menu.all, tenantId] as const,
+    byUnit: (unitId: string) => [...queryKeys.menu.all, unitId] as const,
   },
   settings: {
     all: ['settings'] as const,
-    byTenant: (tenantId: string) =>
-      [...queryKeys.settings.all, tenantId] as const,
+    byUnit: (unitId: string) =>
+      [...queryKeys.settings.all, unitId] as const,
   },
   deliveryZones: {
     all: ['delivery-zones'] as const,
-    byTenant: (tenantId: string) =>
-      [...queryKeys.deliveryZones.all, tenantId] as const,
+    byUnit: (unitId: string) =>
+      [...queryKeys.deliveryZones.all, unitId] as const,
   },
   deliveryQuote: {
     all: ['delivery-quote'] as const,
-    byTenantAndZip: (tenantId: string, zipCode: string) =>
-      [...queryKeys.deliveryQuote.all, tenantId, zipCode] as const,
+    byUnitAndZip: (unitId: string, zipCode: string) =>
+      [...queryKeys.deliveryQuote.all, unitId, zipCode] as const,
   },
   openingHours: {
     all: ['opening-hours'] as const,
-    byTenant: (tenantId: string) =>
-      [...queryKeys.openingHours.all, tenantId] as const,
+    byUnit: (unitId: string) =>
+      [...queryKeys.openingHours.all, unitId] as const,
   },
   guestOrder: {
     all: ['guest-order'] as const,

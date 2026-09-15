@@ -14,12 +14,12 @@ describe(NinoLogo.name, () => {
 
   it('renders as a link to `href` when it is provided', () => {
     // Arrange / Act
-    render(<NinoLogo href="/tenant-1/visao-geral" ariaLabel="Overview" />)
+    render(<NinoLogo href="/unit-1/visao-geral" ariaLabel="Overview" />)
 
     // Assert
     expect(screen.getByRole('link')).toHaveAttribute(
       'href',
-      '/tenant-1/visao-geral'
+      '/unit-1/visao-geral'
     )
   })
 

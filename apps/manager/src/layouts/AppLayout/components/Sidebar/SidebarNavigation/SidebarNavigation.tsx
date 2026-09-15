@@ -10,7 +10,7 @@ import styles from './SidebarNavigation.module.css'
 
 type SidebarNavigationProps = {
   groups: SidemenuItem[]
-  tenantId: string | null
+  unitId: string | null
   isCollapsed: boolean
   waiting: number
   onNavigate: () => void
@@ -18,7 +18,7 @@ type SidebarNavigationProps = {
 
 export const SidebarNavigation = ({
   groups,
-  tenantId,
+  unitId,
   isCollapsed,
   waiting,
   onNavigate,
@@ -39,7 +39,7 @@ export const SidebarNavigation = ({
             {items.map((item) => (
               <SidebarNavLink
                 key={item.section}
-                tenantId={tenantId}
+                unitId={unitId}
                 section={item.section}
                 label={item.label}
                 icon={item.icon}

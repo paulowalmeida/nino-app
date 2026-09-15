@@ -9,11 +9,11 @@ import { resolveBackHref } from '@utils/resolve-back-href'
 
 export const useAddChosenProduct = (
   product: MenuItem | null,
-  tenantId: string | undefined,
+  unitId: string | undefined,
   slug: string | undefined
 ) => {
   const navigate = useNavigate()
-  const cart = useStorefrontCart(tenantId)
+  const cart = useStorefrontCart(unitId)
   const selections = useProductChoicesStore((state) => state.selections)
   const quantity = useProductChoicesStore((state) => state.quantity)
   const notes = useProductChoicesStore((state) => state.notes)

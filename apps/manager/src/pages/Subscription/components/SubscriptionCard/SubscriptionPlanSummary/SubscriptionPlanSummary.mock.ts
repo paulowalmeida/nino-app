@@ -5,5 +5,5 @@ export const proPlanMock: Subscription['plan'] = {
   name: 'Pro',
   slug: 'pro',
   price: '99.00',
-  maxTenants: 5,
+  maxUnits: 5,
 }

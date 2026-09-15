@@ -26,8 +26,8 @@ Faz pedido via `POST /orders/guest` informando nome, telefone, endereço e itens
 
 ## Fluxo de pedido guest
 
-1. `GET /tenants/slug/:slug` — encontra o tenant pelo slug (público)
-2. `GET /tenants/:tenantId/products` — navega o cardápio (público)
+1. `GET /units/slug/:slug` — encontra o unit pelo slug (público)
+2. `GET /units/:unitId/products` — navega o cardápio (público)
 3. `POST /orders/guest` — cria o pedido com nome + telefone + endereço + itens
 
 ### Endereço no pedido guest
@@ -42,7 +42,7 @@ O endereço pode ser informado de duas formas:
 
 ## Programa de fidelidade
 
-Scoped por tenant via `ConsumerTenant.loyaltyPoints`. Cada loja tem seu saldo independente.
+Scoped por unit via `ConsumerUnit.loyaltyPoints`. Cada loja tem seu saldo independente.
 
 | Evento | Tipo | Quem cria |
 |---|---|---|
@@ -51,7 +51,7 @@ Scoped por tenant via `ConsumerTenant.loyaltyPoints`. Cada loja tem seu saldo in
 | Expiração | `EXPIRE` | ADMIN ou SUPPORT |
 | Ajuste manual | `ADJUST` | ADMIN ou SUPPORT |
 
-Configuração por tenant em `TenantSettings`: `loyaltyEnabled`, `loyaltyPointsPerOrder`, `loyaltyPointValue`.
+Configuração por unit em `UnitSettings`: `loyaltyEnabled`, `loyaltyPointsPerOrder`, `loyaltyPointValue`.
 
 ---
 

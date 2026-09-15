@@ -14,13 +14,13 @@ import { useTimingReport } from '@pages/Reports/hooks/useTimingReport/useTimingR
 import { dateToInput, parseInputDate, todayInput } from '@pages/Reports/utils/date-input'
 import { CHANNEL_LABEL, PAYMENT_METHOD_LABEL } from '@shared/constants/order.constants'
 import { useSalesReport } from '@shared/hooks/order/useSalesReport/useSalesReport'
-import { useCurrentTenant } from '@shared/hooks/session/useCurrentTenant/useCurrentTenant'
+import { useCurrentUnit } from '@shared/hooks/session/useCurrentUnit/useCurrentUnit'
 import type { ReportRangeParams } from '@shared/types/order/report-range-params'
 import type { PeriodChoice } from '@shared/types/ui/period-choice'
 
 export const useReportsFacade = () => {
-  const tenant = useCurrentTenant()
-  const tenantId = tenant?.tenantId ?? null
+  const unit = useCurrentUnit()
+  const unitId = unit?.unitId ?? null
   const [searchParams, setSearchParams] = useSearchParams()
   const requested = searchParams.get('periodo')
   const period: PeriodChoice = REPORTS_PERIODS.some(({ id }) => id === requested)
@@ -35,11 +35,11 @@ export const useReportsFacade = () => {
     return { from: customFrom, to: customTo }
   }, [customFrom, customTo, period])
   const requestRange = range ?? { period: 'today' as const }
-  const requestTenant = range ? tenantId : null
-  const reportQuery = useSalesReport(requestTenant, requestRange)
-  const timingQuery = useTimingReport(requestTenant, requestRange)
-  const channelQuery = useSalesSeriesByChannel(requestTenant, requestRange)
-  const paymentQuery = useSalesSeriesByPaymentMethod(requestTenant, requestRange)
+  const requestUnit = range ? unitId : null
+  const reportQuery = useSalesReport(requestUnit, requestRange)
+  const timingQuery = useTimingReport(requestUnit, requestRange)
+  const channelQuery = useSalesSeriesByChannel(requestUnit, requestRange)
+  const paymentQuery = useSalesSeriesByPaymentMethod(requestUnit, requestRange)
 
   const setPeriod = (next: PeriodChoice) =>
     setSearchParams((current) => {
@@ -74,7 +74,7 @@ export const useReportsFacade = () => {
       channel: toChannelBreakdownItems(reportQuery.report?.byChannel ?? [], (channel) => CHANNEL_LABEL[channel]),
       payment: toPaymentMethodBreakdownItems(reportQuery.report?.byPaymentMethod ?? [], (method) => PAYMENT_METHOD_LABEL[method]),
     },
-    tenantId,
+    unitId,
     labels: { channel: CHANNEL_LABEL, payment: PAYMENT_METHOD_LABEL },
   }
 }

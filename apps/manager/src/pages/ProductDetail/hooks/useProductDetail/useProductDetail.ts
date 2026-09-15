@@ -16,11 +16,11 @@ type ProductDetail = {
  * As categorias, porém, vêm direto da API: uma categoria recém-criada ainda
  * não tem produto, então não apareceria se derivada do cardápio. */
 export const useProductDetail = (
-  tenantId: string | null,
+  unitId: string | null,
   productId: string | undefined
 ): ProductDetail => {
-  const { data, isPending } = useMenu(tenantId)
-  const { categoryOptions } = useProductCategoryOptions(tenantId)
+  const { data, isPending } = useMenu(unitId)
+  const { categoryOptions } = useProductCategoryOptions(unitId)
   const item = data?.data.find(({ id }) => id === productId) ?? null
 
   return {

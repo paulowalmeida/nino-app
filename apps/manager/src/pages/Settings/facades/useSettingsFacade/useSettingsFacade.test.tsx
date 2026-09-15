@@ -12,8 +12,8 @@ const hook = vi.hoisted(() => () => ({
 vi.mock('@shared/hooks/session/useCompanyGroups/useCompanyGroups', () => ({
   useCompanyGroups: () => [],
 }))
-vi.mock('@shared/hooks/session/useCurrentTenant/useCurrentTenant', () => ({
-  useCurrentTenant: () => ({ tenantId: 'tenant-1' }),
+vi.mock('@shared/hooks/session/useCurrentUnit/useCurrentUnit', () => ({
+  useCurrentUnit: () => ({ unitId: 'unit-1' }),
 }))
 vi.mock('@pages/Settings/hooks/useDeliveryZones/useDeliveryZones', () => ({
   useDeliveryZones: hook,
@@ -45,17 +45,17 @@ vi.mock('@shared/hooks/settings/useSettings/useSettings', () => ({
 vi.mock('@pages/Settings/hooks/useZoneMutations/useZoneMutations', () => ({
   useZoneMutations: hook,
 }))
-vi.mock('@pages/Settings/hooks/useRemoveTenant/useRemoveTenant', () => ({
-  useRemoveTenant: hook,
+vi.mock('@pages/Settings/hooks/useRemoveUnit/useRemoveUnit', () => ({
+  useRemoveUnit: hook,
 }))
-vi.mock('@pages/Settings/hooks/useSaveTenant/useSaveTenant', () => ({
-  useSaveTenant: hook,
+vi.mock('@pages/Settings/hooks/useSaveUnit/useSaveUnit', () => ({
+  useSaveUnit: hook,
 }))
-vi.mock('@pages/Settings/hooks/useSetMainTenant/useSetMainTenant', () => ({
-  useSetMainTenant: hook,
+vi.mock('@pages/Settings/hooks/useSetMainUnit/useSetMainUnit', () => ({
+  useSetMainUnit: hook,
 }))
-vi.mock('@pages/Settings/hooks/useTenantDetail/useTenantDetail', () => ({
-  useTenantDetail: hook,
+vi.mock('@pages/Settings/hooks/useUnitDetail/useUnitDetail', () => ({
+  useUnitDetail: hook,
 }))
 vi.mock('@pages/Settings/hooks/useUnitLimit/useUnitLimit', () => ({
   useUnitLimit: hook,
@@ -64,7 +64,7 @@ vi.mock('@pages/Settings/hooks/useUnitLimit/useUnitLimit', () => ({
 describe(useSettingsFacade.name, () => {
   it('composes all settings domains behind one contract', () => {
     const { result } = renderHook(() => useSettingsFacade())
-    expect(result.current.tenant?.tenantId).toBe('tenant-1')
+    expect(result.current.unit?.unitId).toBe('unit-1')
     expect(result.current.units.limit).toBeDefined()
   })
 })

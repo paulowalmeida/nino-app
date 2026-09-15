@@ -6,10 +6,10 @@ import { useUpdateStaffRole } from '@shared/hooks/team/useUpdateStaffRole/useUpd
 
 export const useEmployeesFacade = () => {
   const data = useEmployeesData()
-  const invite = useInvite(data.tenantId)
-  const removeMember = useRemoveMember(data.tenantId)
-  const updateEmail = useUpdateStaffEmail(data.tenantId)
-  const updateRole = useUpdateStaffRole(data.tenantId)
+  const invite = useInvite(data.unitId)
+  const removeMember = useRemoveMember(data.unitId)
+  const updateEmail = useUpdateStaffEmail(data.unitId)
+  const updateRole = useUpdateStaffRole(data.unitId)
 
   return {
     ...data,

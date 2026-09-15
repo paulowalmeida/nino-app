@@ -32,7 +32,7 @@ type DialogProps = {
 /**
  * Confirmation dialog built on top of Modal.
  * Renders a title, description, and two action buttons (cancel + confirm).
- * The confirm button uses the tenant's primary brand color.
+ * The confirm button uses the unit's primary brand color.
  *
  * ```tsx
  * <Dialog

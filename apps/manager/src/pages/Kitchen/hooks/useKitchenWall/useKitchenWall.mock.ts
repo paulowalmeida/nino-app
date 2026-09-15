@@ -5,7 +5,7 @@ export const cardHeightMock = 160
 const base: Order = {
   id: 'order-a',
   orderNumber: 1,
-  tenantId: 'tenant-1',
+  unitId: 'unit-1',
   consumerId: null,
   status: 'PREPARING',
   channel: 'PICKUP',

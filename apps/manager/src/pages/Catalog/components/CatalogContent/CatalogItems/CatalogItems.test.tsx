@@ -34,7 +34,7 @@ const renderList = (
 
   vi.mocked(useCatalogFacade).mockReturnValue({
     categoryId: 'cat-1',
-    tenantRole: 'MANAGER',
+    unitRole: 'MANAGER',
     search: '',
     items: props.items,
     isFetchingNextPage: props.isFetchingNextPage,

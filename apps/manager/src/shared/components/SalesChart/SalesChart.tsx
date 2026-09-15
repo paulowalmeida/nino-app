@@ -6,6 +6,7 @@ import { scaleLinear, scaleTime } from '@visx/scale'
 import { AreaClosed, Bar, LinePath } from '@visx/shape'
 import { useTooltip, useTooltipInPortal } from '@visx/tooltip'
 
+import { Box } from '@nino/ds/components/Box'
 import { toPointerTime } from '@shared/adapters/chart-pointer.adapter/chart-pointer.adapter'
 import { ChartAxes } from '@shared/components/ChartAxes/ChartAxes'
 import { useChartGeometry } from '@shared/hooks/ui/useChartGeometry/useChartGeometry'
@@ -106,6 +107,7 @@ export const SalesChart = ({
       if (time === null) return
 
       const nearestIndex = nearestIndexByTime(data, time)
+      if (nearestIndex === null) return
       const nearest = data[nearestIndex]
 
       showTooltip({
@@ -121,7 +123,7 @@ export const SalesChart = ({
 
   return (
     <figure className={styles.figure} ref={holder}>
-      <div ref={containerRef} className={styles.canvas}>
+      <Box ref={containerRef} className={styles.canvas}>
         <svg width={width} height={drawHeight} role="img" aria-label={label}>
           <defs>
             <linearGradient id="salesArea" x1="0" y1="0" x2="0" y2="1">
@@ -213,7 +215,7 @@ export const SalesChart = ({
             />
           </TooltipInPortal>
         )}
-      </div>
+      </Box>
     </figure>
   )
 }

@@ -5,10 +5,10 @@ import { useOrderStatus } from '@shared/hooks/order/useOrderStatus/useOrderStatu
  * a escrever tudo de novo quando a chamada falha.
  */
 export const useOrderCancellation = (
-  tenantId: string | null,
+  unitId: string | null,
   orderId: string
 ) => {
-  const { mutateAsync: changeStatus, isPending } = useOrderStatus(tenantId)
+  const { mutateAsync: changeStatus, isPending } = useOrderStatus(unitId)
 
   const cancelOrder = async (cancelReason: string) => {
     try {

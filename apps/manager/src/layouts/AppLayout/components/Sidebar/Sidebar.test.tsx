@@ -5,8 +5,8 @@ import { describe, expect, it, vi } from 'vitest'
 
 import { Sidebar } from './Sidebar'
 
-vi.mock('@shared/hooks/session/useCurrentTenant/useCurrentTenant', () => ({
-  useCurrentTenant: () => ({ tenantId: 'tenant-1' }),
+vi.mock('@shared/hooks/session/useCurrentUnit/useCurrentUnit', () => ({
+  useCurrentUnit: () => ({ unitId: 'unit-1' }),
 }))
 vi.mock('@shared/hooks/order/useQueueSummary/useQueueSummary', () => ({
   useQueueSummary: () => ({ data: { PENDING: 2 } }),

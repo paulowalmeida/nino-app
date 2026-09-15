@@ -30,7 +30,7 @@ const renderSubmission = () =>
   renderHook(
     () =>
       useProductDetailSubmission(
-        productSubmissionMock.tenantId,
+        productSubmissionMock.unitId,
         productSubmissionMock.productId
       ),
     { wrapper: MemoryRouter }

@@ -1,5 +1,5 @@
 import { EMPTY_UNIT_DRAFT } from '@pages/Units/constants/unit.constants'
-import type { TenantDetail } from '@shared/types/store/tenant-detail'
+import type { UnitDetail } from '@shared/types/store/unit-detail'
 import type { UnitDraft } from '@shared/types/store/unit-draft'
 
 export const unitsDomainMock = {
@@ -14,7 +14,7 @@ export const unitsDomainMock = {
 export const unitDraftMock: UnitDraft = EMPTY_UNIT_DRAFT
 
 export const savedUnitMock = {
-  id: 'tenant-1',
+  id: 'unit-1',
   slug: 'loja-principal',
   customName: 'Loja principal',
   timezone: 'America/Sao_Paulo',
@@ -25,4 +25,4 @@ export const savedUnitMock = {
   neighborhood: 'Nazaré',
   city: 'Belém',
   state: 'PA',
-} as TenantDetail
+} as UnitDetail

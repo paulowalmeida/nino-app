@@ -21,7 +21,7 @@ describe(useAcceptedPayments.name, () => {
     vi.mocked(SettingsService.getPublicSettings).mockResolvedValue({
       acceptedPaymentMethods: [...acceptedPaymentsMock],
     } as never)
-    const { result } = renderHook(() => useAcceptedPayments('tenant-1'), {
+    const { result } = renderHook(() => useAcceptedPayments('unit-1'), {
       wrapper,
     })
     await waitFor(() =>

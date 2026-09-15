@@ -11,8 +11,8 @@ import { Box } from '@nino/ds/components/Box'
 import { FormField } from '@nino/ds/components/FormField'
 import { Input } from '@nino/ds/components/Input'
 import { Select } from '@nino/ds/components/Select'
+import { Text } from '@nino/ds/components/Text'
 import { toStoreSlug } from '@shared/adapters/store-slug.adapter/store-slug.adapter'
-import { useCheckSlugAvailable } from '@shared/hooks/store/useCheckSlugAvailable/useCheckSlugAvailable'
 import type { FirstStoreFormValues } from '@shared/types/store/first-store-form-values'
 import { riseDelay } from '@shared/utils/rise-delay/rise-delay'
 
@@ -36,8 +36,6 @@ export const StoreFormDetailsFields = ({
   setValue,
   typeOptions,
 }: StoreDetailsFieldsProps) => {
-  const checkSlugTaken = useCheckSlugAvailable()
-
   const handleNameBlur = () => {
     const { customName, slug } = getValues()
     if (!slug && customName) setValue('slug', toStoreSlug(customName))
@@ -45,9 +43,9 @@ export const StoreFormDetailsFields = ({
 
   return (
     <Box as="section" direction="column" gap={4}>
-      <p className={`${motion.rise} ${styles.groupTitle}`}>A loja</p>
+      <Text as="p" className={`${motion.rise} ${styles.groupTitle}`}>A loja</Text>
 
-      <div className={motion.rise} style={riseDelay(180)}>
+      <Box className={motion.rise} style={riseDelay(180)}>
         <FormField label="Nome da loja" error={errors.customName?.message}>
           <Input
             placeholder="Lanchonete do Zé"
@@ -57,9 +55,9 @@ export const StoreFormDetailsFields = ({
             })}
           />
         </FormField>
-      </div>
+      </Box>
 
-      <div className={motion.rise} style={riseDelay(220)}>
+      <Box className={motion.rise} style={riseDelay(220)}>
         <FormField
           label="Endereço da loja"
           helperText="É o link que seus clientes vão acessar"
@@ -71,19 +69,14 @@ export const StoreFormDetailsFields = ({
               {...register('slug', {
                 required: 'Informe o endereço',
                 setValueAs: toStoreSlug,
-                validate: async (value) => {
-                  const slug = toStoreSlug(value)
-                  if (!slug) return 'Informe o endereço'
-                  return checkSlugTaken(slug)
-                },
               })}
             />
-            <span className={styles.slugPrefix}>.dev.nino.delivery</span>
+            <Text as="span" className={styles.slugPrefix}>.dev.nino.delivery</Text>
           </Box>
         </FormField>
-      </div>
+      </Box>
 
-      <div className={motion.rise} style={riseDelay(260)}>
+      <Box className={motion.rise} style={riseDelay(260)}>
         <FormField label="Tipo" error={errors.typeId?.message}>
           <Controller
             name="typeId"
@@ -100,7 +93,7 @@ export const StoreFormDetailsFields = ({
             )}
           />
         </FormField>
-      </div>
+      </Box>
     </Box>
   )
 }

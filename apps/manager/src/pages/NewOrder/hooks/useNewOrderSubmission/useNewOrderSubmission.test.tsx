@@ -24,7 +24,7 @@ describe('useNewOrderSubmission', () => {
 
   it('returns the id of the order it opened', async () => {
     mutateAsync.mockResolvedValue(createdOrderMock)
-    const { result } = renderHook(() => useNewOrderSubmission('tenant-1'))
+    const { result } = renderHook(() => useNewOrderSubmission('unit-1'))
 
     let orderId: string | null = null
     await act(async () => {
@@ -40,7 +40,7 @@ describe('useNewOrderSubmission', () => {
 
   it('reports the failure instead of throwing at the caller', async () => {
     mutateAsync.mockRejectedValue(new Error('offline'))
-    const { result } = renderHook(() => useNewOrderSubmission('tenant-1'))
+    const { result } = renderHook(() => useNewOrderSubmission('unit-1'))
 
     let orderId: string | null = 'not-null'
     await act(async () => {
@@ -53,7 +53,7 @@ describe('useNewOrderSubmission', () => {
 
   it('clears the previous failure when the attendant tries again', async () => {
     mutateAsync.mockRejectedValueOnce(new Error('offline'))
-    const { result } = renderHook(() => useNewOrderSubmission('tenant-1'))
+    const { result } = renderHook(() => useNewOrderSubmission('unit-1'))
 
     await act(async () => {
       await result.current.submit(submissionInputMock)

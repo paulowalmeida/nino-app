@@ -6,8 +6,8 @@ import { describe, expect, it, vi } from 'vitest'
 
 import { Sidebar } from './Sidebar'
 
-vi.mock('@shared/hooks/session/useCurrentTenant/useCurrentTenant', () => ({
-  useCurrentTenant: () => ({ tenantId: 'tenant-1' }),
+vi.mock('@shared/hooks/session/useCurrentUnit/useCurrentUnit', () => ({
+  useCurrentUnit: () => ({ unitId: 'unit-1' }),
 }))
 vi.mock('@shared/hooks/order/useQueueSummary/useQueueSummary', () => ({
   useQueueSummary: () => ({ data: { PENDING: 2 } }),
@@ -24,8 +24,8 @@ vi.mock('@shared/hooks/session/useCompanyGroups/useCompanyGroups', () => ({
       companyId: 'company-1',
       companyName: 'Burgão do Nino',
       units: [
-        { tenantId: 'tenant-1', tenantName: 'Centro' },
-        { tenantId: 'tenant-2', tenantName: 'Pinheiros' },
+        { unitId: 'unit-1', unitName: 'Centro' },
+        { unitId: 'unit-2', unitName: 'Pinheiros' },
       ],
     },
   ],
@@ -39,7 +39,7 @@ describe('Sidebar closing the drawer', () => {
   it('takes the store switcher dropdown down with it', async () => {
     const user = userEvent.setup()
     const { rerender } = render(
-      <MemoryRouter initialEntries={['/tenant-1/pedidos']}>
+      <MemoryRouter initialEntries={['/unit-1/pedidos']}>
         <Sidebar
           isOpen
           onClose={() => undefined}
@@ -53,7 +53,7 @@ describe('Sidebar closing the drawer', () => {
     expect(await screen.findByText('Pinheiros')).toBeInTheDocument()
 
     rerender(
-      <MemoryRouter initialEntries={['/tenant-1/pedidos']}>
+      <MemoryRouter initialEntries={['/unit-1/pedidos']}>
         <Sidebar
           isOpen={false}
           onClose={() => undefined}

@@ -61,7 +61,7 @@ describe('useCheckoutFacadeValue', () => {
     } as unknown as ReturnType<typeof useMyAddresses>)
     vi.mocked(useCheckoutResume).mockReturnValue(null)
     vi.mocked(useCheckoutCart).mockReturnValue({
-      tenantId: 'store-1',
+      unitId: 'store-1',
       lines: {},
       cartLines: [],
       count: useCheckoutFacadeMock.cartCount,

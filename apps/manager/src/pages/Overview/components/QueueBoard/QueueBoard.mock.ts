@@ -1,1 +1,1 @@
-export const queueBoardMock = { tenantId: 'tenant-1' }
+export const queueBoardMock = { unitId: 'unit-1' }

@@ -1,12 +1,12 @@
 import { useSaveWeek } from '@pages/Units/hooks/useSaveWeek/useSaveWeek'
-import { useCurrentTenant } from '@shared/hooks/session/useCurrentTenant/useCurrentTenant'
+import { useCurrentUnit } from '@shared/hooks/session/useCurrentUnit/useCurrentUnit'
 import { useOpeningHours } from '@shared/hooks/settings/useOpeningHours/useOpeningHours'
 
 export const useUnitHoursFacade = () => {
-  const tenantId = useCurrentTenant()?.tenantId ?? null
+  const unitId = useCurrentUnit()?.unitId ?? null
 
   return {
-    query: useOpeningHours(tenantId),
-    save: useSaveWeek(tenantId),
+    query: useOpeningHours(unitId),
+    save: useSaveWeek(unitId),
   }
 }

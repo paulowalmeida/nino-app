@@ -4,7 +4,7 @@ import { menuQueryKey } from '@shared/hooks/product/useMenu/useMenu'
 import { ProductService } from '@shared/services/product/product.service'
 
 export const useRemoveProductImage = (
-  tenantId: string | null,
+  unitId: string | null,
   productId: string | undefined
 ) => {
   const queryClient = useQueryClient()
@@ -13,12 +13,12 @@ export const useRemoveProductImage = (
     meta: { success: 'Foto removida', errorTitle: 'A foto continua no item' },
     mutationFn: (imageId: string) =>
       ProductService.removeItemImage(
-        tenantId as string,
+        unitId as string,
         productId as string,
         imageId
       ),
     onSuccess: () => {
-      void queryClient.invalidateQueries({ queryKey: menuQueryKey(tenantId) })
+      void queryClient.invalidateQueries({ queryKey: menuQueryKey(unitId) })
     },
   })
 }

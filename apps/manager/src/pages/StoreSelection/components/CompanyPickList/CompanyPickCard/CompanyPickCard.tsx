@@ -30,7 +30,7 @@ export const CompanyPickCard = ({
       {companyName}
     </Text>
     <Text as="span" size="sm" color="muted" className={styles.unit}>
-      {units.length > 1 ? unitLabel(units.length) : units[0].tenantName}
+      {units.length > 1 ? unitLabel(units.length) : units[0].unitName}
     </Text>
   </Card>
 )

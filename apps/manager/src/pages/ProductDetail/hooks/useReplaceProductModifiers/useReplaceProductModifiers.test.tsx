@@ -4,7 +4,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { renderHook, waitFor } from '@testing-library/react'
 import { afterEach, describe, expect, it, vi } from 'vitest'
 
-import { queryKeys } from '@shared/lib/query-keys'
+import { queryKeys } from '@shared/lib/query-keys/query-keys'
 import { ProductService } from '@shared/services/product/product.service'
 
 import { useReplaceProductModifiers } from './useReplaceProductModifiers'
@@ -26,7 +26,7 @@ const wrapper = ({ children }: { children: ReactNode }) =>
 describe('useReplaceProductModifiers', () => {
   afterEach(() => vi.clearAllMocks())
 
-  it('replaces the product choices in its tenant', async () => {
+  it('replaces the product choices in its unit', async () => {
     vi.mocked(ProductService.replaceItemModifiers).mockResolvedValue(
       undefined as unknown as Awaited<
         ReturnType<typeof ProductService.replaceItemModifiers>
@@ -35,7 +35,7 @@ describe('useReplaceProductModifiers', () => {
     const { result } = renderHook(
       () =>
         useReplaceProductModifiers(
-          replaceProductModifiersContextMock.tenantId,
+          replaceProductModifiersContextMock.unitId,
           replaceProductModifiersContextMock.productId
         ),
       { wrapper }
@@ -45,13 +45,13 @@ describe('useReplaceProductModifiers', () => {
 
     await waitFor(() => expect(result.current.isSuccess).toBe(true))
     expect(ProductService.replaceItemModifiers).toHaveBeenCalledWith(
-      replaceProductModifiersContextMock.tenantId,
+      replaceProductModifiersContextMock.unitId,
       replaceProductModifiersContextMock.productId,
       replaceProductModifiersRequestMock
     )
   })
 
-  it('uses the empty cache scope when the tenant is unavailable', async () => {
+  it('uses the empty cache scope when the unit is unavailable', async () => {
     vi.mocked(ProductService.replaceItemModifiers).mockResolvedValue(
       undefined as unknown as Awaited<
         ReturnType<typeof ProductService.replaceItemModifiers>

@@ -17,17 +17,17 @@ vi.mock('@tanstack/react-query', () => ({
 }))
 
 describe('usePublicSettings', () => {
-  it('uses the tenant cache key and stays disabled without a tenant', () => {
+  it('uses the unit cache key and stays disabled without a unit', () => {
     renderHook(() => usePublicSettings(undefined))
 
-    expect(queryOptions?.queryKey).toEqual(queryKeys.settings.byTenant(''))
+    expect(queryOptions?.queryKey).toEqual(queryKeys.settings.byUnit(''))
     expect(queryOptions?.enabled).toBe(false)
   })
 
   it('does not estimate time before settings are available', () => {
     queryData = undefined
 
-    const { result } = renderHook(() => usePublicSettings('tenant-1'))
+    const { result } = renderHook(() => usePublicSettings('unit-1'))
 
     expect(result.current.settings).toBeUndefined()
     expect(result.current.estimatedMinutes).toBeUndefined()
@@ -36,7 +36,7 @@ describe('usePublicSettings', () => {
   it('sums preparation and delivery time from public settings', () => {
     queryData = usePublicSettingsMock.settings
 
-    const { result } = renderHook(() => usePublicSettings('tenant-1'))
+    const { result } = renderHook(() => usePublicSettings('unit-1'))
 
     expect(result.current.estimatedMinutes).toBe(55)
   })

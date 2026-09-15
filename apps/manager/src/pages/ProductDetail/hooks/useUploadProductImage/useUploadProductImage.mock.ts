@@ -1,5 +1,5 @@
 export const uploadProductImageMock = {
-  tenantId: 'tenant-1',
+  unitId: 'unit-1',
   productId: 'product-1',
   fileName: 'foto.png',
 }

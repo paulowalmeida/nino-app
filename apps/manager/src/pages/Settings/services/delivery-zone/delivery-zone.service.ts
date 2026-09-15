@@ -3,20 +3,20 @@ import type { Page } from '@shared/types/http/page'
 import type { DeliveryZone } from '@shared/types/settings/delivery-zone'
 
 export const DeliveryZoneService = {
-  listDeliveryZones: (tenantId: string): Promise<Page<DeliveryZone>> =>
-    api.get<Page<DeliveryZone>>(`tenants/${tenantId}/delivery-zones`),
+  listDeliveryZones: (unitId: string): Promise<Page<DeliveryZone>> =>
+    api.get<Page<DeliveryZone>>(`units/${unitId}/delivery-zones`),
 
   createDeliveryZone: (
-    tenantId: string,
+    unitId: string,
     data: { maxRadiusKm: number; fee: number }
   ): Promise<DeliveryZone> =>
     api.create<typeof data, DeliveryZone>(
-      `tenants/${tenantId}/delivery-zones`,
+      `units/${unitId}/delivery-zones`,
       data
     ),
 
   updateDeliveryZone: (
-    tenantId: string,
+    unitId: string,
     id: string,
     data: {
       maxRadiusKm?: number
@@ -25,13 +25,13 @@ export const DeliveryZoneService = {
     }
   ): Promise<DeliveryZone> =>
     api.patch<typeof data, DeliveryZone>(
-      `tenants/${tenantId}/delivery-zones/${id}`,
+      `units/${unitId}/delivery-zones/${id}`,
       data
     ),
 
   removeDeliveryZone: (
-    tenantId: string,
+    unitId: string,
     id: string
   ): Promise<{ message: string }> =>
-    api.remove<{ message: string }>(`tenants/${tenantId}/delivery-zones/${id}`),
+    api.remove<{ message: string }>(`units/${unitId}/delivery-zones/${id}`),
 }

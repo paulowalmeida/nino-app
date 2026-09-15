@@ -20,7 +20,7 @@ export const CatalogHeader = () => {
     setCategoryId,
     categories,
     categoriesStatus,
-    tenantRole,
+    unitRole,
   } = useCatalogFacade()
   const debouncedTerm = useDebouncedValue(term)
   useEffect(() => {
@@ -40,7 +40,7 @@ export const CatalogHeader = () => {
         term={term}
         onTermChange={setTerm}
         canManageCategories={
-          tenantRole === 'TENANT_OWNER' || tenantRole === 'MANAGER'
+          unitRole === 'UNIT_OWNER' || unitRole === 'MANAGER'
         }
       />
 

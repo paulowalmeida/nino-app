@@ -26,7 +26,7 @@ describe('useCheckoutCart', () => {
   it('hides cart lines belonging to another store', () => {
     vi.mocked(useCartSummary).mockReturnValue({
       ...useCheckoutCartMock.cart,
-      tenantId: 'other-tenant',
+      unitId: 'other-unit',
     } as never)
 
     const { result } = renderHook(() =>

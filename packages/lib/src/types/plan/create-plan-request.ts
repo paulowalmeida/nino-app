@@ -3,7 +3,7 @@ export type CreatePlanRequest = {
   slug: string
   typeId: string
   price: number
-  maxTenants: number
+  maxUnits: number
   maxProducts: number
   maxOrders: number
   hasPrioritySupport?: boolean

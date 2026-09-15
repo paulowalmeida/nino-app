@@ -7,7 +7,7 @@ describe('team roster adapter', () => {
     const entries = staffRosterEntries([
       {
         user: { id: 'user-1', name: 'Ana Souza', credentials: [], lastLoginAt: null },
-        role: 'TENANT_OWNER',
+        role: 'UNIT_OWNER',
       },
     ] as never, 'user-1')
     expect(entries[0]).toMatchObject({ name: 'Ana Souza', roleLocked: 'Você não pode mudar o próprio cargo' })

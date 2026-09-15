@@ -1,4 +1,6 @@
 import { Box } from '@nino/ds/components/Box'
+import { ListRow } from '@nino/ds/components/ListRow'
+import { Text } from '@nino/ds/components/Text'
 import {
   ORDER_TIMELINE_REALM_LABEL,
   STATUS_LABEL,
@@ -27,25 +29,28 @@ export const OrderTimeline = ({ entries }: OrderTimelineProps) => {
   return (
     <Box as="ol" direction="column">
       {sorted.map((entry, index) => (
-        <li
+        <ListRow
           key={entry.id}
+          divider="none"
+          padding={0}
+          gap={3}
           className={`${motion.deal} ${styles.entry} ${
             index === sorted.length - 1 ? styles.last : ''
           }`}
           style={riseDelay(index * 60 + 120)}
         >
-          <span className={styles.mark} />
-          <span className={styles.label}>
+          <span aria-hidden="true" className={styles.mark} />
+          <Text as="span" className={styles.label}>
             {STATUS_LABEL[entry.status]}
-            <span className={styles.author}>
+            <Text as="span" className={styles.author}>
               {' '}
               {ORDER_TIMELINE_REALM_LABEL[entry.changedByRealm] ?? ''}
-            </span>
-          </span>
+            </Text>
+          </Text>
           <time className={styles.at} dateTime={entry.createdAt}>
             {clock.format(new Date(entry.createdAt))}
           </time>
-        </li>
+        </ListRow>
       ))}
     </Box>
   )

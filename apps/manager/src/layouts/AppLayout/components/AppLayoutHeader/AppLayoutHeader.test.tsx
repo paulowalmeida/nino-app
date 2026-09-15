@@ -6,7 +6,7 @@ import { AppLayoutHeader } from './AppLayoutHeader'
 describe('AppLayoutHeader', () => {
   it('shows the current store and exposes the menu action', () => {
     const onOpenMenu = vi.fn()
-    render(<AppLayoutHeader tenantName="Loja Centro" onOpenMenu={onOpenMenu} />)
+    render(<AppLayoutHeader unitName="Loja Centro" onOpenMenu={onOpenMenu} />)
 
     expect(screen.getByText('Loja Centro')).toBeInTheDocument()
     screen.getByRole('button', { name: 'Abrir menu' }).click()

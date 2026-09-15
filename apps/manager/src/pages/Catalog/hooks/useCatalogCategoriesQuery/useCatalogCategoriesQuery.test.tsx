@@ -34,20 +34,20 @@ describe(useCatalogCategoriesQuery.name, () => {
     } as unknown as { data: CategoryWithProductCount[] })
 
     const { result } = renderHook(
-      () => useCatalogCategoriesQuery('tenant-1'),
+      () => useCatalogCategoriesQuery('unit-1'),
       { wrapper: createWrapper() }
     )
 
     await waitFor(() => expect(result.current.status).toBe('success'))
 
-    expect(CategoryService.listCategories).toHaveBeenCalledWith('tenant-1')
+    expect(CategoryService.listCategories).toHaveBeenCalledWith('unit-1')
     expect(result.current.categories.map(({ id }) => id)).toEqual([
       'cat-1',
       'cat-2',
     ])
   })
 
-  it('does not request categories before a tenant is available', () => {
+  it('does not request categories before a unit is available', () => {
     const { result } = renderHook(
       () => useCatalogCategoriesQuery(null),
       { wrapper: createWrapper() }

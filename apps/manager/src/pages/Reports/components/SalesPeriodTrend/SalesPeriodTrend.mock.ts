@@ -1,1 +1,1 @@
-export const salesPeriodTrendMock = { tenantId: null, range: { period: 'today' as const } }
+export const salesPeriodTrendMock = { unitId: null, range: { period: 'today' as const } }

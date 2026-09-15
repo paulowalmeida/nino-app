@@ -6,12 +6,12 @@ import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { useOrder } from '@pages/OrderDetail/hooks/useOrder/useOrder'
 import { useOrderPayment } from '@pages/OrderDetail/hooks/useOrderPayment/useOrderPayment'
 import { useOrderStatus } from '@shared/hooks/order/useOrderStatus/useOrderStatus'
-import { useCurrentTenant } from '@shared/hooks/session/useCurrentTenant/useCurrentTenant'
+import { useCurrentUnit } from '@shared/hooks/session/useCurrentUnit/useCurrentUnit'
 
 import { useOrderDetailFacade } from './useOrderDetailFacade'
 import { orderDetailFacadeMock } from './useOrderDetailFacade.mock'
 
-vi.mock('@shared/hooks/session/useCurrentTenant/useCurrentTenant')
+vi.mock('@shared/hooks/session/useCurrentUnit/useCurrentUnit')
 vi.mock('@pages/OrderDetail/hooks/useOrder/useOrder')
 vi.mock('@pages/OrderDetail/hooks/useOrderPayment/useOrderPayment')
 vi.mock('@shared/hooks/order/useOrderStatus/useOrderStatus')
@@ -39,9 +39,9 @@ const mockIntegration = (order: unknown) => {
 describe('useOrderDetailFacade', () => {
   beforeEach(() => {
     vi.clearAllMocks()
-    vi.mocked(useCurrentTenant).mockReturnValue({
-      tenantId: orderDetailFacadeMock.tenantId,
-    } as unknown as ReturnType<typeof useCurrentTenant>)
+    vi.mocked(useCurrentUnit).mockReturnValue({
+      unitId: orderDetailFacadeMock.unitId,
+    } as unknown as ReturnType<typeof useCurrentUnit>)
   })
 
   it('composes detail data, policy, and existing commands for the UI', () => {
@@ -56,7 +56,7 @@ describe('useOrderDetailFacade', () => {
       wrapper: MemoryRouter,
     })
 
-    expect(useOrder).toHaveBeenCalledWith(orderDetailFacadeMock.tenantId, '')
+    expect(useOrder).toHaveBeenCalledWith(orderDetailFacadeMock.unitId, '')
     expect(result.current.order?.id).toBe(orderDetailFacadeMock.orderId)
     expect(result.current.advanceOrder).toBe(advanceOrder)
     expect(result.current.markOrderPaid).toBe(markOrderPaid)
@@ -81,8 +81,8 @@ describe('useOrderDetailFacade', () => {
     expect(result.current.canCancelOrder).toBe(false)
   })
 
-  it('passes a missing tenant through to integration hooks', () => {
-    vi.mocked(useCurrentTenant).mockReturnValue(null)
+  it('passes a missing unit through to integration hooks', () => {
+    vi.mocked(useCurrentUnit).mockReturnValue(null)
     mockIntegration(undefined)
 
     renderHook(() => useOrderDetailFacade(), { wrapper: MemoryRouter })

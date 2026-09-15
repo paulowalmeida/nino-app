@@ -1,26 +1,26 @@
 import { api } from '@shared/services/http/http.service'
 import type { Page } from '@shared/types/http/page'
-import type { TenantPhone } from '@shared/types/settings/tenant-phone'
+import type { UnitPhone } from '@shared/types/settings/unit-phone'
 
 export const PhoneService = {
-  listPhones: (tenantId: string): Promise<Page<TenantPhone>> =>
-    api.get<Page<TenantPhone>>(`tenants/${tenantId}/phones`),
+  listPhones: (unitId: string): Promise<Page<UnitPhone>> =>
+    api.get<Page<UnitPhone>>(`units/${unitId}/phones`),
 
-  createPhone: (tenantId: string, phone: string): Promise<TenantPhone> =>
-    api.create<{ phone: string }, TenantPhone>(`tenants/${tenantId}/phones`, {
+  createPhone: (unitId: string, phone: string): Promise<UnitPhone> =>
+    api.create<{ phone: string }, UnitPhone>(`units/${unitId}/phones`, {
       phone,
     }),
 
   updatePhone: (
-    tenantId: string,
+    unitId: string,
     id: string,
     phone: string
-  ): Promise<TenantPhone> =>
-    api.patch<{ phone: string }, TenantPhone>(
-      `tenants/${tenantId}/phones/${id}`,
+  ): Promise<UnitPhone> =>
+    api.patch<{ phone: string }, UnitPhone>(
+      `units/${unitId}/phones/${id}`,
       { phone }
     ),
 
-  removePhone: (tenantId: string, id: string): Promise<{ message: string }> =>
-    api.remove<{ message: string }>(`tenants/${tenantId}/phones/${id}`),
+  removePhone: (unitId: string, id: string): Promise<{ message: string }> =>
+    api.remove<{ message: string }>(`units/${unitId}/phones/${id}`),
 }

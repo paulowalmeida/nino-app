@@ -4,6 +4,8 @@ import { Badge } from '@nino/ds/components/Badge'
 import { Box } from '@nino/ds/components/Box'
 import { Button } from '@nino/ds/components/Button'
 import { Card } from '@nino/ds/components/Card'
+import { ListRow } from '@nino/ds/components/ListRow'
+import { Text } from '@nino/ds/components/Text'
 import { toOrderBadgeVariant } from '@shared/adapters/order-badge.adapter/order-badge.adapter'
 import {
   CHANNEL_LABEL,
@@ -82,10 +84,10 @@ export const OrderTicket = ({ order, onAdvance, isBusy }: OrderTicketProps) => {
   return (
     <Card asChild className={classes.filter(Boolean).join(' ')}>
       <article>
-        <header className={styles.head}>
-          <span className={styles.number}>
+        <Box as="header" direction="row" className={styles.head}>
+          <Text as="span" className={styles.number}>
             #{ticketNumber(order.orderNumber)}
-          </span>
+          </Text>
           {isDone ? (
             <time className={styles.time} dateTime={order.createdAt}>
               {clockLabel}
@@ -106,60 +108,60 @@ export const OrderTicket = ({ order, onAdvance, isBusy }: OrderTicketProps) => {
           >
             {STATUS_LABEL[order.status]}
           </Badge>
-        </header>
+        </Box>
 
         <Link
           to={order.id}
           className={`${motion.lift} ${styles.body}`}
           aria-label={`Abrir pedido ${ticketNumber(order.orderNumber)}`}
         >
-          <p className={styles.consumer}>{consumerNameOf(order)}</p>
-          <p className={styles.meta}>
+          <Text as="p" className={styles.consumer}>{consumerNameOf(order)}</Text>
+          <Text as="p" className={styles.meta}>
             {CHANNEL_LABEL[order.channel]}
             {destination?.kind === 'table' && ` · ${destination.label}`}
-          </p>
+          </Text>
 
           {/* the whole ticket doesn't fit on mobile: the count matters,
             not the list */}
-          <p className={styles.summary}>
+          <Text as="p" className={styles.summary}>
             {order.items.reduce((total, { quantity }) => total + quantity, 0)}{' '}
             {order.items.length === 1 ? 'item' : 'itens'} ·{' '}
             {order.items.map(({ product }) => product.name).join(', ')}
-          </p>
+          </Text>
 
           {order.notes && (
-            <p className={styles.notes}>
-              <span className={styles.notesLabel}>Observação</span>
+            <Text as="p" className={styles.notes}>
+              <Text as="span" className={styles.notesLabel}>Observação</Text>
               {order.notes}
-            </p>
+            </Text>
           )}
 
-          <ul className={styles.items}>
+          <Box as="ul" className={styles.items}>
             {order.items.slice(0, VISIBLE_ITEMS).map((item) => (
-              <li key={item.id} className={styles.item}>
-                <span className={styles.quantity}>{item.quantity}×</span>
-                <span className={styles.itemName}>{item.product.name}</span>
-              </li>
+              <ListRow key={item.id} divider="none" padding={0} className={styles.item}>
+                <Text as="span" className={styles.quantity}>{item.quantity}×</Text>
+                <Text as="span" className={styles.itemName}>{item.product.name}</Text>
+              </ListRow>
             ))}
             {hidden > 0 && (
-              <li className={styles.more}>
+              <ListRow divider="none" padding={0} className={styles.more}>
                 e mais {hidden} {hidden === 1 ? 'item' : 'itens'}
-              </li>
+              </ListRow>
             )}
-          </ul>
+          </Box>
         </Link>
 
         <footer className={styles.foot}>
           <Box direction="column">
-            <span className={styles.total}>{brl(order.totalAmount)}</span>
-            <span className={styles.payment}>
+            <Text as="span" className={styles.total}>{brl(order.totalAmount)}</Text>
+            <Text as="span" className={styles.payment}>
               {
                 PAYMENT_METHOD_LABEL_BY_CHANNEL[order.channel][
                   order.paymentMethod
                 ]
               }{' '}
               · {PAYMENT_STATUS_LABEL[order.paymentStatus]}
-            </span>
+            </Text>
           </Box>
 
           {step &&

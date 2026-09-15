@@ -6,7 +6,7 @@ import { ProductService } from '@shared/services/product/product.service'
 import type { MenuPage } from '@shared/types/product/menu-page'
 import type { MenuSection } from '@shared/types/product/menu-section'
 
-export const menuQueryKey = (tenantId: string | null) => ['menu', tenantId]
+export const menuQueryKey = (unitId: string | null) => ['menu', unitId]
 
 /**
  * Groups by category and sorts by the category's own `position` — not by
@@ -33,12 +33,11 @@ const toSections = (page: MenuPage | undefined): MenuSection[] => {
   return sections.sort((a, b) => a.position - b.position)
 }
 
-export const useMenu = (tenantId: string | null) => {
+export const useMenu = (unitId: string | null) => {
   const query = useQuery<MenuPage>({
-    queryKey: menuQueryKey(tenantId),
-    queryFn: () => ProductService.listMenu(tenantId as string),
-    enabled: !!tenantId,
-    refetchOnMount: false,
+    queryKey: menuQueryKey(unitId),
+    queryFn: () => ProductService.listMenu(unitId as string),
+    enabled: !!unitId,
   })
 
   const sections = useMemo(() => toSections(query.data), [query.data])

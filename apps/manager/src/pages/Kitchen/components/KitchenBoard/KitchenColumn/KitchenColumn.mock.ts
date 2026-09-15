@@ -3,7 +3,7 @@ import type { Order } from '@shared/types/order/order'
 export const readyForPickupOrderMock: Order = {
   id: 'order-ready',
   orderNumber: 88,
-  tenantId: 'tenant-1',
+  unitId: 'unit-1',
   consumerId: null,
   status: 'READY_FOR_PICKUP',
   channel: 'PICKUP',

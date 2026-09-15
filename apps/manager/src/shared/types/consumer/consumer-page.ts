@@ -1,7 +1,7 @@
-import type { TenantConsumer } from './tenant-consumer'
+import type { UnitConsumer } from './unit-consumer'
 
 export type ConsumerPage = {
-  data: TenantConsumer[]
+  data: UnitConsumer[]
   pagination: {
     total: number
     page: number

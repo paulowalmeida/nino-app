@@ -71,7 +71,7 @@ O consumer conduz o cliente por decisões claras, sem aparência administrativa.
 
 A paleta padrão é quente e neutra. Cada loja pode substituir marca, superfícies, texto e bordas pelos tokens semânticos, sem alterar componentes.
 
-**The Tenant Palette Rule.** Nunca codifique a cor da unidade dentro de uma tela; use os papéis semânticos do tema.
+**The Unit Palette Rule.** Nunca codifique a cor da unidade dentro de uma tela; use os papéis semânticos do tema.
 
 **The Focused Brand Rule.** A marca indica escolha, foco, progresso e ação — não colore áreas grandes sem função.
 

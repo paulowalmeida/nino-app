@@ -5,7 +5,7 @@ import { renderHook, waitFor } from '@testing-library/react'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 
 import { toast } from '@nino/ds/components/Toast'
-import { queryKeys } from '@shared/lib/query-keys'
+import { queryKeys } from '@shared/lib/query-keys/query-keys'
 import { CashService } from '@shared/services/cash/cash.service'
 
 import { openSessionMock } from '../useCashSession/useCashSession.mock'
@@ -29,7 +29,7 @@ const wrapper = ({ children }: { children: ReactNode }) => (
 )
 
 const renderCommands = () =>
-  renderHook(() => useCashCommands('tenant-1', 'session-1'), { wrapper })
+  renderHook(() => useCashCommands('unit-1', 'session-1'), { wrapper })
 
 describe(useCashCommands.name, () => {
   beforeEach(() => {
@@ -52,7 +52,7 @@ describe(useCashCommands.name, () => {
 
     // Assert
     await waitFor(() =>
-      expect(CashService.openSession).toHaveBeenCalledWith('tenant-1', {
+      expect(CashService.openSession).toHaveBeenCalledWith('unit-1', {
         openingFloat: cashOpeningFloatMock,
       })
     )
@@ -69,7 +69,7 @@ describe(useCashCommands.name, () => {
 
     // Assert
     await waitFor(() =>
-      expect(client.getQueryData(queryKeys.cash.current('tenant-1'))).toEqual(
+      expect(client.getQueryData(queryKeys.cash.current('unit-1'))).toEqual(
         openSessionMock
       )
     )
@@ -88,7 +88,7 @@ describe(useCashCommands.name, () => {
       expect(toast.success).toHaveBeenCalledWith('Sangria registrada')
     )
     expect(CashService.addMovement).toHaveBeenCalledWith(
-      'tenant-1',
+      'unit-1',
       'session-1',
       cashWithdrawalMock
     )
@@ -122,7 +122,7 @@ describe(useCashCommands.name, () => {
       expect(toast.success).toHaveBeenCalledWith('Caixa fechado')
     )
     expect(invalidate).toHaveBeenCalledWith({
-      queryKey: queryKeys.cash.all('tenant-1'),
+      queryKey: queryKeys.cash.all('unit-1'),
     })
   })
 

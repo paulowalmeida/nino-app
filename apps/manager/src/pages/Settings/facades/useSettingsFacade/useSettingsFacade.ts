@@ -4,46 +4,46 @@ import { useDiningTables } from '@pages/Settings/hooks/useDiningTables/useDining
 import { useMapLocation } from '@pages/Settings/hooks/useMapLocation/useMapLocation'
 import { usePhoneMutations } from '@pages/Settings/hooks/usePhoneMutations/usePhoneMutations'
 import { usePhones } from '@pages/Settings/hooks/usePhones/usePhones'
-import { useRemoveTenant } from '@pages/Settings/hooks/useRemoveTenant/useRemoveTenant'
+import { useRemoveUnit } from '@pages/Settings/hooks/useRemoveUnit/useRemoveUnit'
 import { useSaveSettings } from '@pages/Settings/hooks/useSaveSettings/useSaveSettings'
-import { useSaveTenant } from '@pages/Settings/hooks/useSaveTenant/useSaveTenant'
-import { useSetMainTenant } from '@pages/Settings/hooks/useSetMainTenant/useSetMainTenant'
-import { useTenantDetail } from '@pages/Settings/hooks/useTenantDetail/useTenantDetail'
+import { useSaveUnit } from '@pages/Settings/hooks/useSaveUnit/useSaveUnit'
+import { useSetMainUnit } from '@pages/Settings/hooks/useSetMainUnit/useSetMainUnit'
+import { useUnitDetail } from '@pages/Settings/hooks/useUnitDetail/useUnitDetail'
 import { useUnitLimit } from '@pages/Settings/hooks/useUnitLimit/useUnitLimit'
 import { useZoneMutations } from '@pages/Settings/hooks/useZoneMutations/useZoneMutations'
 import { useCompanyGroups } from '@shared/hooks/session/useCompanyGroups/useCompanyGroups'
-import { useCurrentTenant } from '@shared/hooks/session/useCurrentTenant/useCurrentTenant'
+import { useCurrentUnit } from '@shared/hooks/session/useCurrentUnit/useCurrentUnit'
 import { useSettings } from '@shared/hooks/settings/useSettings/useSettings'
 
 export const useSettingsFacade = () => {
-  const tenant = useCurrentTenant()
-  const tenantId = tenant?.tenantId ?? null
+  const unit = useCurrentUnit()
+  const unitId = unit?.unitId ?? null
   const groups = useCompanyGroups()
   const units = groups.flatMap(({ units: list }) => list)
 
   return {
-    tenant,
+    unit,
     contact: {
-      query: usePhones(tenantId),
-      mutations: usePhoneMutations(tenantId),
+      query: usePhones(unitId),
+      mutations: usePhoneMutations(unitId),
     },
     delivery: {
-      query: useDeliveryZones(tenantId),
-      location: useMapLocation(tenantId),
-      mutations: useZoneMutations(tenantId),
+      query: useDeliveryZones(unitId),
+      location: useMapLocation(unitId),
+      mutations: useZoneMutations(unitId),
     },
-    service: { query: useSettings(tenantId), save: useSaveSettings(tenantId) },
+    service: { query: useSettings(unitId), save: useSaveSettings(unitId) },
     diningTables: {
-      query: useDiningTables(tenantId),
-      mutations: useDiningTableMutations(tenantId),
+      query: useDiningTables(unitId),
+      mutations: useDiningTableMutations(unitId),
     },
     units: {
       groups,
-      detail: useTenantDetail(tenantId),
+      detail: useUnitDetail(unitId),
       limit: useUnitLimit(units.length),
-      remove: useRemoveTenant(),
-      save: useSaveTenant(tenantId),
-      setMain: useSetMainTenant(tenantId),
+      remove: useRemoveUnit(),
+      save: useSaveUnit(unitId),
+      setMain: useSetMainUnit(unitId),
     },
   }
 }

@@ -1,18 +1,18 @@
 import { useQuery } from '@tanstack/react-query'
 
-import { queryKeys } from '@shared/lib/query-keys'
-import { TenantService } from '@shared/services/tenant/tenant.service'
-import type { TenantPause } from '@shared/types/store/tenant-pause'
+import { queryKeys } from '@shared/lib/query-keys/query-keys'
+import { UnitService } from '@shared/services/unit/unit.service'
+import type { UnitPause } from '@shared/types/store/unit-pause'
 
-export const pauseKey = (tenantId: string) => [
-  ...queryKeys.tenant.all(tenantId),
+export const pauseKey = (unitId: string) => [
+  ...queryKeys.unit.all(unitId),
   'pause',
 ]
 
-export const usePause = (tenantId: string | null) =>
-  useQuery<TenantPause>({
-    queryKey: pauseKey(tenantId ?? ''),
-    queryFn: () => TenantService.getPause(tenantId as string),
-    enabled: !!tenantId,
+export const usePause = (unitId: string | null) =>
+  useQuery<UnitPause>({
+    queryKey: pauseKey(unitId ?? ''),
+    queryFn: () => UnitService.getPause(unitId as string),
+    enabled: !!unitId,
     refetchInterval: 60_000,
   })

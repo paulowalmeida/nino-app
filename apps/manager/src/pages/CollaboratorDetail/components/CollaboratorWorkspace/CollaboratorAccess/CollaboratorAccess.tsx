@@ -1,6 +1,6 @@
 import { Alert } from '@nino/ds/components/Alert'
 import { Box } from '@nino/ds/components/Box'
-import type { TenantRole } from '@shared/types/auth/tenant-role'
+import type { UnitRole } from '@shared/types/auth/unit-role'
 import type { StaffDetail } from '@shared/types/team/staff-detail'
 import { loginEmailOf } from '@shared/utils/login-email/login-email'
 
@@ -14,7 +14,7 @@ type CollaboratorAccessProps = {
   member: StaffDetail
   roleLockHint?: string
   isChangingRole: boolean
-  onChangeRole: (role: TenantRole) => void
+  onChangeRole: (role: UnitRole) => void
   removalLockHint?: string
   emailLockHint?: string
   onOpenEmailModal: () => void

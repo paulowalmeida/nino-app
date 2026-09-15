@@ -14,14 +14,14 @@ import {
 vi.mock('@pages/Register/hooks/useCheckAvailability/useCheckAvailability')
 
 const checkAvailability = vi.fn()
-const goToTenant = vi.fn()
+const goToUnit = vi.fn()
 
 /* O formState do react-hook-form so avisa sobre o que foi lido no render:
    ler os erros aqui e' o que faz o teste enxergar a mudanca. */
 const renderCompanyForm = () =>
   renderHook(
     () => {
-      const form = useCompanyForm({ goToTenant })
+      const form = useCompanyForm({ goToUnit })
       return { ...form, errors: form.formState.errors }
     }
   )
@@ -49,7 +49,7 @@ describe('useCompanyForm', () => {
     expect(checkAvailability).toHaveBeenCalledWith({
       cnpj: companyValuesMock.cnpj,
     })
-    expect(goToTenant).toHaveBeenCalledWith(companyValuesMock)
+    expect(goToUnit).toHaveBeenCalledWith(companyValuesMock)
   })
 
   it('points at the CNPJ that already belongs to someone', async () => {
@@ -66,7 +66,7 @@ describe('useCompanyForm', () => {
         companyFormMock.takenCnpjMessage
       )
     )
-    expect(goToTenant).not.toHaveBeenCalled()
+    expect(goToUnit).not.toHaveBeenCalled()
   })
 
   it('explains the failure without leaving the step', async () => {
@@ -83,7 +83,7 @@ describe('useCompanyForm', () => {
         'Não foi possível validar o CNPJ. Tente de novo.'
       )
     )
-    expect(goToTenant).not.toHaveBeenCalled()
+    expect(goToUnit).not.toHaveBeenCalled()
   })
 
   it('does not advance when the company is unavailable', async () => {
@@ -94,6 +94,6 @@ describe('useCompanyForm', () => {
       await result.current.submit()
     })
 
-    expect(goToTenant).not.toHaveBeenCalled()
+    expect(goToUnit).not.toHaveBeenCalled()
   })
 })

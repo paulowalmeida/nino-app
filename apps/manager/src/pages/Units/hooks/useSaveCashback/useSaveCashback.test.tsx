@@ -4,11 +4,11 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { renderHook, waitFor } from '@testing-library/react'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 
-import { queryKeys } from '@shared/lib/query-keys'
+import { queryKeys } from '@shared/lib/query-keys/query-keys'
 import { SettingsService } from '@shared/services/settings/settings.service'
 
 import { useSaveCashback } from './useSaveCashback'
-import { savedSettingsMock, tenantIdMock } from './useSaveCashback.mock'
+import { savedSettingsMock, unitIdMock } from './useSaveCashback.mock'
 
 vi.mock('@shared/services/settings/settings.service')
 
@@ -29,7 +29,7 @@ describe(useSaveCashback.name, () => {
   it('writes the saved settings straight into the cache of that unit', async () => {
     // Arrange
     vi.mocked(SettingsService.saveSettings).mockResolvedValue(savedSettingsMock)
-    const { result } = renderHook(() => useSaveCashback(tenantIdMock), {
+    const { result } = renderHook(() => useSaveCashback(unitIdMock), {
       wrapper,
     })
 
@@ -38,7 +38,7 @@ describe(useSaveCashback.name, () => {
 
     // Assert
     await waitFor(() => expect(result.current.isSuccess).toBe(true))
-    expect(client.getQueryData(queryKeys.tenant.settings(tenantIdMock))).toEqual(
+    expect(client.getQueryData(queryKeys.unit.settings(unitIdMock))).toEqual(
       savedSettingsMock
     )
   })
@@ -53,7 +53,7 @@ describe(useSaveCashback.name, () => {
 
     // Assert
     await waitFor(() => expect(result.current.isSuccess).toBe(true))
-    expect(client.getQueryData(queryKeys.tenant.settings(''))).toEqual(
+    expect(client.getQueryData(queryKeys.unit.settings(''))).toEqual(
       savedSettingsMock
     )
   })

@@ -15,7 +15,7 @@ export const guestOrderRequest = (
   const isDelivery = values.channel === 'DELIVERY'
 
   return {
-    tenantId: store.id,
+    unitId: store.id,
     channel: values.channel,
     deliveryZoneId: isDelivery ? values.deliveryZoneId : undefined,
     paymentMethod: values.paymentMethod,

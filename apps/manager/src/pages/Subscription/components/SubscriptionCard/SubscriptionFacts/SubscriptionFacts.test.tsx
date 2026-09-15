@@ -21,7 +21,7 @@ describe(SubscriptionFacts.name, () => {
         subscription={{
           ...activeSubscription,
           isActive: false,
-          plan: { ...activeSubscription.plan, maxTenants: null },
+          plan: { ...activeSubscription.plan, maxUnits: null },
           subscriptionStatus: { id: 'status-2', name: 'Suspensa' },
           trialEndsAt: null,
           expiresAt: null,

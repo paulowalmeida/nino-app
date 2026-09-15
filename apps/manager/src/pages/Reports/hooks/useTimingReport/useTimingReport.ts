@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query'
 
-import { queryKeys } from '@shared/lib/query-keys'
+import { queryKeys } from '@shared/lib/query-keys/query-keys'
 import { OrderService } from '@shared/services/order/order.service'
 import type { ReportRangeParams } from '@shared/types/order/report-range-params'
 import type { TimingReport } from '@shared/types/order/timing-report'
@@ -10,13 +10,13 @@ import type { TimingReport } from '@shared/types/order/timing-report'
  * to the period.
  */
 export const useTimingReport = (
-  tenantId: string | null,
+  unitId: string | null,
   params: ReportRangeParams
 ) => {
   const query = useQuery<TimingReport>({
-    queryKey: queryKeys.orders.timingReport(tenantId ?? '', params),
-    queryFn: () => OrderService.getTimingReport(tenantId as string, params),
-    enabled: !!tenantId,
+    queryKey: queryKeys.orders.timingReport(unitId ?? '', params),
+    queryFn: () => OrderService.getTimingReport(unitId as string, params),
+    enabled: !!unitId,
   })
 
   return { ...query, report: query.data }

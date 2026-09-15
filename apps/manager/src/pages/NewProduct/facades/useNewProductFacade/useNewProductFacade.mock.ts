@@ -1,3 +1,3 @@
 export const newProductFacadeMock = {
-  tenantId: 'tenant-1',
+  unitId: 'unit-1',
 }

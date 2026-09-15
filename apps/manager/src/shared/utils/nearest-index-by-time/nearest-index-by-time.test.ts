@@ -23,4 +23,8 @@ describe('nearestIndexByTime', () => {
     const items = [{ at: new Date('2026-01-01T10:00:00') }]
     expect(nearestIndexByTime(items, Date.now())).toBe(0)
   })
+
+  it('returns null for an empty list', () => {
+    expect(nearestIndexByTime([], Date.now())).toBeNull()
+  })
 })

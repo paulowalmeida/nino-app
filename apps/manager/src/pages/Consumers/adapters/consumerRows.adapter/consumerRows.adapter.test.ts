@@ -1,11 +1,11 @@
 import { describe, expect, it } from 'vitest'
 
 import { toConsumerRows } from './consumerRows.adapter'
-import { tenantConsumersMock } from './consumerRows.adapter.mock'
+import { unitConsumersMock } from './consumerRows.adapter.mock'
 
 describe('toConsumerRows', () => {
   it('converts consumers into presentation rows', () => {
-    const [maria] = toConsumerRows(tenantConsumersMock)
+    const [maria] = toConsumerRows(unitConsumersMock)
 
     expect(maria.id).toBe('consumer-1')
     expect(maria.name).toBe('Maria Clara Souza')
@@ -17,7 +17,7 @@ describe('toConsumerRows', () => {
   })
 
   it('keeps the singular for a consumer with one order', () => {
-    const [maria, joao] = toConsumerRows(tenantConsumersMock)
+    const [maria, joao] = toConsumerRows(unitConsumersMock)
 
     expect(maria.ordersLabel).toBe(' pedidos')
     expect(joao.ordersLabel).toBe(' pedido')

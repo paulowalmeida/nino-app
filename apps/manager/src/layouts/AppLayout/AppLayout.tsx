@@ -3,10 +3,10 @@ import { useEffect, useState } from 'react'
 import {
   readSidebarCollapsed,
   writeSidebarCollapsed,
-} from '@layouts/AppLayout/utils/sidebar-collapse'
+} from '@layouts/AppLayout/utils/sidebar-collapse/sidebar-collapse'
 import { Box } from '@nino/ds/components/Box'
 import { Button } from '@nino/ds/components/Button'
-import { useCurrentTenant } from '@shared/hooks/session/useCurrentTenant/useCurrentTenant'
+import { useCurrentUnit } from '@shared/hooks/session/useCurrentUnit/useCurrentUnit'
 
 import { AppLayoutContent } from './components/AppLayoutContent/AppLayoutContent'
 import { AppLayoutHeader } from './components/AppLayoutHeader/AppLayoutHeader'
@@ -15,7 +15,7 @@ import { Sidebar } from './components/Sidebar/Sidebar'
 import styles from './AppLayout.module.css'
 
 export const AppLayout = () => {
-  const tenant = useCurrentTenant()
+  const unit = useCurrentUnit()
   const [menuOpen, setMenuOpen] = useState(false)
   const [collapsed, setCollapsed] = useState(readSidebarCollapsed)
 
@@ -55,7 +55,7 @@ export const AppLayout = () => {
   return (
     <Box direction="row" className={styles.shell}>
       <AppLayoutHeader
-        tenantName={tenant?.tenantName}
+        unitName={unit?.unitName}
         onOpenMenu={() => setMenuOpen(true)}
       />
 

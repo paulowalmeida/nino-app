@@ -8,5 +8,5 @@ export type LoyaltyTransaction = {
   description: string | null
   createdAt: string
   updatedAt: string
-  tenant: { id: string; slug: string; customName: string | null }
+  unit: { id: string; slug: string; customName: string | null }
 }

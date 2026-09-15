@@ -28,7 +28,7 @@ Diagrama de componentes (C4 nível 3) do `nino-manager`, com os componentes agru
 
 ### `nino-courier` — entregador
 
-**Falta:** tudo. Só existe o scaffold default do Next.js (`page.tsx`/`layout.tsx`), sem lógica. As regras de negócio já estão escritas em [`docs/courier.md`](apps/courier/docs/courier.md): vínculo N:N com tenants via `CourierTenant`, atribuição de pedido feita pela loja, status de entrega, pagamento negociado fora da plataforma.
+**Falta:** tudo. Só existe o scaffold default do Next.js (`page.tsx`/`layout.tsx`), sem lógica. As regras de negócio já estão escritas em [`docs/courier.md`](apps/courier/docs/courier.md): vínculo N:N com units via `CourierUnit`, atribuição de pedido feita pela loja, status de entrega, pagamento negociado fora da plataforma.
 
 ### `nino-backoffice` — administração da plataforma Nino
 

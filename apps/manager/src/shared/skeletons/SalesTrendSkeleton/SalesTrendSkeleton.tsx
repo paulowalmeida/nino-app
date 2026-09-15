@@ -1,5 +1,5 @@
-import { Box } from "@ds/components/Box/Box"
-import { Skeleton } from "@ds/components/Skeleton/Skeleton"
+import { Box } from '@nino/ds/components/Box'
+import { Skeleton } from '@nino/ds/components/Skeleton'
 import { SALES_TREND_SKELETON_DAYS } from '@shared/constants/chart.constants'
 
 import styles from './SalesTrendSkeleton.module.css'

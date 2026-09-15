@@ -5,12 +5,12 @@ import { useOrdersFilters } from '@pages/Orders/hooks/useOrdersFilters/useOrders
 import { useOrders } from '@shared/hooks/order/useOrders/useOrders'
 import { useOrderStatus } from '@shared/hooks/order/useOrderStatus/useOrderStatus'
 import { useQueueSummary } from '@shared/hooks/order/useQueueSummary/useQueueSummary'
-import { useCurrentTenant } from '@shared/hooks/session/useCurrentTenant/useCurrentTenant'
+import { useCurrentUnit } from '@shared/hooks/session/useCurrentUnit/useCurrentUnit'
 
 import { useOrdersFacade } from './useOrdersFacade'
 import { useOrdersFacadeMock } from './useOrdersFacade.mock'
 
-vi.mock('@shared/hooks/session/useCurrentTenant/useCurrentTenant')
+vi.mock('@shared/hooks/session/useCurrentUnit/useCurrentUnit')
 vi.mock('@shared/hooks/order/useOrderStatus/useOrderStatus')
 vi.mock('@shared/hooks/order/useOrders/useOrders')
 vi.mock('@shared/hooks/order/useQueueSummary/useQueueSummary')
@@ -21,8 +21,8 @@ describe('useOrdersFacade', () => {
     const setStage = vi.fn()
     const setTerm = vi.fn()
     const advanceOrder = vi.fn()
-    vi.mocked(useCurrentTenant).mockReturnValue({
-      tenantId: useOrdersFacadeMock.tenantId,
+    vi.mocked(useCurrentUnit).mockReturnValue({
+      unitId: useOrdersFacadeMock.unitId,
     } as never)
     vi.mocked(useOrdersFilters).mockReturnValue({
       isSearching: true,
@@ -52,7 +52,7 @@ describe('useOrdersFacade', () => {
     const { result } = renderHook(() => useOrdersFacade())
 
     expect(useOrders).toHaveBeenCalledWith(
-      useOrdersFacadeMock.tenantId,
+      useOrdersFacadeMock.unitId,
       useOrdersFacadeMock.search,
       undefined,
       undefined
@@ -62,8 +62,8 @@ describe('useOrdersFacade', () => {
     expect(result.current.advanceOrder).toBe(advanceOrder)
   })
 
-  it('uses a null tenant when no tenant is selected', () => {
-    vi.mocked(useCurrentTenant).mockReturnValue(null)
+  it('uses a null unit when no unit is selected', () => {
+    vi.mocked(useCurrentUnit).mockReturnValue(null)
     vi.mocked(useOrdersFilters).mockReturnValue({
       isSearching: false,
       search: '',

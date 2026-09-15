@@ -1,5 +1,5 @@
 export const sidebarNavLinkMock = {
-  tenantId: 'tenant-1',
+  unitId: 'unit-1',
   section: 'pedidos',
   label: 'Pedidos',
   icon: 'receipt',

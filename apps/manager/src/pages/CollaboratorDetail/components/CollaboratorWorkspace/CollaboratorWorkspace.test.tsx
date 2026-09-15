@@ -129,7 +129,7 @@ describe(CollaboratorWorkspace.name, () => {
     expect(container).toBeEmptyDOMElement()
   })
 
-  it('uses empty route scope when tenant and route params are unavailable', () => {
+  it('uses empty route scope when unit and route params are unavailable', () => {
     vi.mocked(useCollaboratorDetailFacade).mockReturnValue({
       member: undefined,
     } as never)

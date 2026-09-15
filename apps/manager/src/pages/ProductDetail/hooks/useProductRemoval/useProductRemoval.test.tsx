@@ -28,7 +28,7 @@ const renderRemoval = () =>
   renderHook(
     () =>
       useProductRemoval(
-        productRemovalMock.tenantId,
+        productRemovalMock.unitId,
         productRemovalMock.productId
       ),
     { wrapper: MemoryRouter }

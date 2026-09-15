@@ -1,18 +1,18 @@
 import { useQuery } from '@tanstack/react-query'
 
-import { queryKeys } from '@shared/lib/query-keys'
-import { TenantService } from '@shared/services/tenant/tenant.service'
+import { queryKeys } from '@shared/lib/query-keys/query-keys'
+import { UnitService } from '@shared/services/unit/unit.service'
 
-export const mapLocationKey = (tenantId: string) => [
-  ...queryKeys.tenant.all(tenantId),
+export const mapLocationKey = (unitId: string) => [
+  ...queryKeys.unit.all(unitId),
   'map-location',
 ]
 
-export const useMapLocation = (tenantId: string | null) => {
+export const useMapLocation = (unitId: string | null) => {
   const query = useQuery({
-    queryKey: mapLocationKey(tenantId ?? ''),
-    queryFn: () => TenantService.getMapLocation(tenantId as string),
-    enabled: !!tenantId,
+    queryKey: mapLocationKey(unitId ?? ''),
+    queryFn: () => UnitService.getMapLocation(unitId as string),
+    enabled: !!unitId,
   })
 
   const coordinates = query.data ?? null
@@ -20,7 +20,7 @@ export const useMapLocation = (tenantId: string | null) => {
   return {
     ...query,
     coordinates,
-    isResolved: !!tenantId && !query.isPending,
+    isResolved: !!unitId && !query.isPending,
     hasLocation: !!coordinates,
   }
 }

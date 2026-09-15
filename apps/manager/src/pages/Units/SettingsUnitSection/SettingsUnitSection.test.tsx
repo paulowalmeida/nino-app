@@ -26,7 +26,7 @@ vi.mock('react-router', () => ({
 }))
 vi.mock('@pages/Units/facades/useUnitsFacade/useUnitsFacade', () => ({
   useUnitsFacade: () => ({
-    tenant: { tenantId: 'tenant-1' },
+    unit: { unitId: 'unit-1' },
     units: {
       groups: domain.groups,
       detail: { data: { isMain: true } },
@@ -124,11 +124,11 @@ describe(SettingsUnitSection.name, () => {
 
     expect(screen.getByRole('link', { name: 'Loja principal' })).toHaveAttribute(
       'href',
-      '/tenant-1/unidade/informacoes'
+      '/unit-1/unidade/informacoes'
     )
     expect(screen.getByRole('link', { name: 'Loja Centro' })).toHaveAttribute(
       'href',
-      '/tenant-2/unidade/informacoes'
+      '/unit-2/unidade/informacoes'
     )
   })
 
@@ -155,7 +155,7 @@ describe(SettingsUnitSection.name, () => {
     await userEvent.click(screen.getByRole('button', { name: 'confirmar' }))
 
     expect(removeUnit).toHaveBeenCalledWith(
-      'tenant-2',
+      'unit-2',
       expect.objectContaining({ onSuccess: expect.any(Function) })
     )
   })

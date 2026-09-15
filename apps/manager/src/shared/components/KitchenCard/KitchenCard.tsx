@@ -107,13 +107,26 @@ export const KitchenCard = ({
 
   const handleDetailsKeyDown = (event: KeyboardEvent) => {
     if (event.key !== 'Enter' && event.key !== ' ') return
+    if (
+      event.target instanceof Element &&
+      event.target.closest(
+        'button, a, input, select, textarea, [role="menu"], [role="menuitem"]'
+      )
+    ) {
+      return
+    }
     event.preventDefault()
     onOpenDetails?.()
   }
 
   const handleCardClick = (event: MouseEvent<HTMLElement>) => {
     const target = event.target
-    if (target instanceof Element && target.closest('[role="menuitem"]')) {
+    if (
+      target instanceof Element &&
+      target.closest(
+        'button, a, input, select, textarea, [role="menu"], [role="menuitem"]'
+      )
+    ) {
       return
     }
     onOpenDetails?.()
@@ -195,13 +208,14 @@ export const KitchenCard = ({
           />
         ) : (
           cookName && (
-            <span
+            <Text
+              as="span"
               className={styles.cook}
               title={`Em preparo com ${cookName}`}
               aria-label={`Em preparo com ${cookName}`}
             >
               {cookAvatar}
-            </span>
+            </Text>
           )
         )}
       </Box>

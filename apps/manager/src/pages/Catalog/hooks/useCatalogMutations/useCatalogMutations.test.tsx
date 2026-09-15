@@ -31,11 +31,11 @@ const createHarness = () => {
 describe(useCatalogMutations.name, () => {
   afterEach(() => vi.clearAllMocks())
 
-  it('updates availability and invalidates the tenant product cache', async () => {
+  it('updates availability and invalidates the unit product cache', async () => {
     vi.mocked(ProductService.setItemAvailability).mockResolvedValue({} as MenuItem)
     const { queryClient, wrapper } = createHarness()
     const invalidateQueries = vi.spyOn(queryClient, 'invalidateQueries')
-    const { result } = renderHook(() => useCatalogMutations('tenant-1'), {
+    const { result } = renderHook(() => useCatalogMutations('unit-1'), {
       wrapper,
     })
 
@@ -47,12 +47,12 @@ describe(useCatalogMutations.name, () => {
     )
 
     expect(ProductService.setItemAvailability).toHaveBeenCalledWith(
-      'tenant-1',
+      'unit-1',
       'item-1',
       false
     )
     expect(invalidateQueries).toHaveBeenCalledWith({
-      queryKey: ['products', 'tenant-1'],
+      queryKey: ['products', 'unit-1'],
     })
   })
 
@@ -60,13 +60,13 @@ describe(useCatalogMutations.name, () => {
     vi.mocked(ProductService.reorderItems).mockResolvedValue({ message: 'ok' })
     const { wrapper } = createHarness()
     const items = [{ id: 'item-2' }, { id: 'item-1' }] as MenuItem[]
-    const { result } = renderHook(() => useCatalogMutations('tenant-1'), {
+    const { result } = renderHook(() => useCatalogMutations('unit-1'), {
       wrapper,
     })
 
     await act(() => result.current.reorderItems.mutateAsync(items))
 
-    expect(ProductService.reorderItems).toHaveBeenCalledWith('tenant-1', [
+    expect(ProductService.reorderItems).toHaveBeenCalledWith('unit-1', [
       'item-2',
       'item-1',
     ])
@@ -79,21 +79,21 @@ describe(useCatalogMutations.name, () => {
       count: 2,
     })
     const { wrapper } = createHarness()
-    const { result } = renderHook(() => useCatalogMutations('tenant-1'), {
+    const { result } = renderHook(() => useCatalogMutations('unit-1'), {
       wrapper,
     })
 
     await act(() => result.current.deleteItem.mutateAsync('item-1'))
     await act(() => result.current.deleteItems.mutateAsync(['item-1', 'item-2']))
 
-    expect(ProductService.removeItem).toHaveBeenCalledWith('tenant-1', 'item-1')
-    expect(ProductService.removeItems).toHaveBeenCalledWith('tenant-1', [
+    expect(ProductService.removeItem).toHaveBeenCalledWith('unit-1', 'item-1')
+    expect(ProductService.removeItems).toHaveBeenCalledWith('unit-1', [
       'item-1',
       'item-2',
     ])
   })
 
-  it('keeps the empty tenant scope when invalidating after a mutation', async () => {
+  it('keeps the empty unit scope when invalidating after a mutation', async () => {
     vi.mocked(ProductService.setItemAvailability).mockResolvedValue(
       {} as unknown as MenuItem
     )

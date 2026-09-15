@@ -1,27 +1,27 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 
-import { queryKeys } from '@shared/lib/query-keys'
+import { queryKeys } from '@shared/lib/query-keys/query-keys'
 import { ProductService } from '@shared/services/product/product.service'
 import type { MenuItem } from '@shared/types/product/menu-item'
 
-export const useCatalogMutations = (tenantId: string | null) => {
+export const useCatalogMutations = (unitId: string | null) => {
   const queryClient = useQueryClient()
   
   const invalidateCatalog = () =>
     queryClient.invalidateQueries({
-      queryKey: queryKeys.products.all(tenantId ?? ''),
+      queryKey: queryKeys.products.all(unitId ?? ''),
     })
 
   const setAvailability = useMutation({
     mutationFn: (data: { id: string; isActive: boolean }) =>
-      ProductService.setItemAvailability(tenantId as string, data.id, data.isActive),
+      ProductService.setItemAvailability(unitId as string, data.id, data.isActive),
     onSuccess: invalidateCatalog,
   })
 
   const reorderItems = useMutation({
     mutationFn: (items: MenuItem[]) =>
       ProductService.reorderItems(
-        tenantId as string,
+        unitId as string,
         items.map((item) => item.id)
       ),
     onSuccess: invalidateCatalog,
@@ -29,13 +29,13 @@ export const useCatalogMutations = (tenantId: string | null) => {
 
   const deleteItem = useMutation({
     mutationFn: (id: string) =>
-      ProductService.removeItem(tenantId as string, id),
+      ProductService.removeItem(unitId as string, id),
     onSuccess: invalidateCatalog,
   })
 
   const deleteItems = useMutation({
     mutationFn: (ids: string[]) =>
-      ProductService.removeItems(tenantId as string, ids),
+      ProductService.removeItems(unitId as string, ids),
     onSuccess: invalidateCatalog,
   })
 

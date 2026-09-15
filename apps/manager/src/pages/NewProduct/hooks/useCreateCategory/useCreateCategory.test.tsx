@@ -4,7 +4,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { renderHook, waitFor } from '@testing-library/react'
 import { afterEach, describe, expect, it, vi } from 'vitest'
 
-import { queryKeys } from '@shared/lib/query-keys'
+import { queryKeys } from '@shared/lib/query-keys/query-keys'
 import { CategoryService } from '@shared/services/category/category.service'
 import type { ProductCategory } from '@shared/types/product/product-category'
 
@@ -32,7 +32,7 @@ describe('useCreateCategory', () => {
     )
     const invalidate = vi.spyOn(queryClient, 'invalidateQueries')
     const { result } = renderHook(
-      () => useCreateCategory(createCategoryMock.tenantId),
+      () => useCreateCategory(createCategoryMock.unitId),
       { wrapper }
     )
 
@@ -40,15 +40,15 @@ describe('useCreateCategory', () => {
 
     await waitFor(() => expect(result.current.isSuccess).toBe(true))
     expect(CategoryService.createCategory).toHaveBeenCalledWith(
-      createCategoryMock.tenantId,
+      createCategoryMock.unitId,
       createCategoryMock.categoryName
     )
     expect(invalidate).toHaveBeenCalledWith({
-      queryKey: queryKeys.productCategories.all(createCategoryMock.tenantId),
+      queryKey: queryKeys.productCategories.all(createCategoryMock.unitId),
     })
   })
 
-  it('falls back to an empty tenant scope without a tenant', async () => {
+  it('falls back to an empty unit scope without a unit', async () => {
     vi.mocked(CategoryService.createCategory).mockResolvedValue(
       {} as ProductCategory
     )

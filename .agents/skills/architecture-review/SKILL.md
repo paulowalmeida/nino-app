@@ -279,6 +279,20 @@ fixtures, and tests must communicate domain and responsibility without opening
 unrelated files. Do not use comments to compensate for unclear names or
 structure; follow the comment policy in `.agents/rules/coding.md`.
 
+## Implementation closure
+
+When this Skill is used during an authorized change, apply
+`.agents/rules/change-protocol.md`. If the finding is mechanically detectable
+and can recur, update the relevant `enforce-*` hook, policy, or regression test
+in the same change as the source correction. Do not close a boundary defect as
+fixed when only the current file changed.
+
+Before reporting completion, inspect the final diff for unrelated changes and
+separate evidence into: scoped architecture checks, scoped tests/coverage,
+repository lint/type-check, and semantic decisions that automation cannot
+prove. A passing checker never proves ownership, cohesion, or public-contract
+compatibility by itself.
+
 ## Final Review Gate
 
 Before PASS/complete, confirm scope was fully inspected, applicable enforcement was considered, every finding has a disposition, Page/component/facade/Hook/store ownership was checked where integration exists, facade purity was checked, no mechanical failure was reclassified as subjective, all `NEEDS-EVIDENCE` items are resolved or explicitly reported as INCOMPLETE, and proposed corrections restore responsibility instead of relocating it.

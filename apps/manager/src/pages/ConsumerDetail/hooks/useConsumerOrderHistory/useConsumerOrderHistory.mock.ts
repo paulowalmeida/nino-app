@@ -1,7 +1,7 @@
 import type { ConsumerHistoryPage } from '@shared/types/consumer/consumer-history-page'
 
 export const consumerOrderHistoryScopeMock = {
-  tenantId: 'tenant-1',
+  unitId: 'unit-1',
   consumerId: 'consumer-1',
 }
 

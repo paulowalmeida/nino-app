@@ -7,7 +7,7 @@ import { Heading } from '@nino/ds/components/Heading'
 import { PhoneInput } from '@nino/ds/components/PhoneInput'
 import { Skeleton } from '@nino/ds/components/Skeleton'
 import { Text } from '@nino/ds/components/Text'
-import type { TenantPhone } from '@shared/types/settings/tenant-phone'
+import type { UnitPhone } from '@shared/types/settings/unit-phone'
 import { formatPhone, toE164 } from '@shared/utils/phone/phone'
 import { riseDelay } from '@shared/utils/rise-delay/rise-delay'
 
@@ -15,10 +15,10 @@ import motion from '@styles/motion.module.css'
 import local from './PhoneList.module.css'
 
 export type PhoneListProps = {
-  phones: TenantPhone[]
+  phones: UnitPhone[]
   isPending: boolean
   onEdit: (data: { id: string; phone: string }) => void
-  onRemove: (phone: TenantPhone) => void
+  onRemove: (phone: UnitPhone) => void
 }
 
 export const PhoneList = ({

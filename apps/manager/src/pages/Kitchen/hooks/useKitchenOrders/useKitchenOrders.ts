@@ -6,9 +6,9 @@ import {
 import { recentlyFinished } from '@pages/Kitchen/utils/recently-finished/recently-finished'
 import { useOrders } from '@shared/hooks/order/useOrders/useOrders'
 
-export const useKitchenOrders = (tenantId: string | null) => {
+export const useKitchenOrders = (unitId: string | null) => {
   const ordersQuery = useOrders(
-    tenantId,
+    unitId,
     undefined,
     KITCHEN_STATUSES,
     undefined,
@@ -16,7 +16,7 @@ export const useKitchenOrders = (tenantId: string | null) => {
     true
   )
   const finishedQuery = useOrders(
-    tenantId,
+    unitId,
     undefined,
     KITCHEN_FINISHED_STATUSES,
     undefined,

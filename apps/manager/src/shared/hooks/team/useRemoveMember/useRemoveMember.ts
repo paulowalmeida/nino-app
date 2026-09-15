@@ -1,6 +1,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 
-import { queryKeys } from '@shared/lib/query-keys'
+import { queryKeys } from '@shared/lib/query-keys/query-keys'
+import { CourierService } from '@shared/services/courier/courier.service'
 import { StaffService } from '@shared/services/staff/staff.service'
 
 type RemoveMemberVariables = {
@@ -8,7 +9,7 @@ type RemoveMemberVariables = {
   kind: 'STAFF' | 'COURIER'
 }
 
-export const useRemoveMember = (tenantId: string | null) => {
+export const useRemoveMember = (unitId: string | null) => {
   const queryClient = useQueryClient()
 
   return useMutation({
@@ -16,11 +17,17 @@ export const useRemoveMember = (tenantId: string | null) => {
       success: 'Pessoa removida da loja',
       errorTitle: 'Não foi possível remover',
     },
-    mutationFn: ({ id }: RemoveMemberVariables) =>
-      StaffService.removeStaff(tenantId as string, id),
+    mutationFn: async ({ id, kind }: RemoveMemberVariables) => {
+      if (kind === 'COURIER') {
+        await CourierService.removeCourier(unitId as string, id)
+        return
+      }
+
+      await StaffService.removeStaff(unitId as string, id)
+    },
     onSuccess: () => {
       void queryClient.invalidateQueries({
-        queryKey: queryKeys.team.all(tenantId ?? ''),
+        queryKey: queryKeys.team.all(unitId ?? ''),
       })
     },
   })

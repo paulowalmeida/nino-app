@@ -3,7 +3,7 @@ import userEvent from '@testing-library/user-event'
 import { describe, expect, it, vi } from 'vitest'
 
 import { PhoneList } from './PhoneList'
-import { tenantPhoneMock } from './PhoneList.mock'
+import { unitPhoneMock } from './PhoneList.mock'
 
 describe('PhoneList', () => {
   it('shows the empty state', () => {
@@ -23,7 +23,7 @@ describe('PhoneList', () => {
   it('shows the configured phone with its actions', () => {
     render(
       <PhoneList
-        phones={[tenantPhoneMock]}
+        phones={[unitPhoneMock]}
         isPending={false}
         onEdit={() => undefined}
         onRemove={() => undefined}
@@ -45,7 +45,7 @@ describe('PhoneList', () => {
 
     render(
       <PhoneList
-        phones={[tenantPhoneMock]}
+        phones={[unitPhoneMock]}
         isPending={false}
         onEdit={() => undefined}
         onRemove={onRemove}
@@ -54,6 +54,6 @@ describe('PhoneList', () => {
 
     await user.click(screen.getByRole('button', { name: 'Remover' }))
 
-    expect(onRemove).toHaveBeenCalledWith(tenantPhoneMock)
+    expect(onRemove).toHaveBeenCalledWith(unitPhoneMock)
   })
 })

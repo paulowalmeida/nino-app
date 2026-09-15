@@ -1,3 +1,3 @@
 export const appLayoutHeaderMock = {
-  tenantName: 'Loja Centro',
+  unitName: 'Loja Centro',
 }

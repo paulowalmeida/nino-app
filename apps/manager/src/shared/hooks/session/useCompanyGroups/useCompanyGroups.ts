@@ -3,7 +3,7 @@ import type { Membership } from '@shared/types/auth/membership'
 import type { CompanyGroup } from '@shared/types/session/company-group'
 
 /**
- * Company is the brand (one CNPJ), Tenant is the unit. Switching unit is a
+ * Company is the brand (one CNPJ), Unit is the unit. Switching unit is a
  * shell gesture; switching company means changing restaurant, so the two
  * levels never share a flat list.
  */

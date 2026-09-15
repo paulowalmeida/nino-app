@@ -1,22 +1,22 @@
 import { useQuery } from '@tanstack/react-query'
 
 import { PhoneService } from '@pages/Settings/services/phone/phone.service'
-import { queryKeys } from '@shared/lib/query-keys'
-import type { TenantPhone } from '@shared/types/settings/tenant-phone'
+import { queryKeys } from '@shared/lib/query-keys/query-keys'
+import type { UnitPhone } from '@shared/types/settings/unit-phone'
 
-export const phonesKey = (tenantId: string) => [
-  ...queryKeys.tenant.all(tenantId),
+export const phonesKey = (unitId: string) => [
+  ...queryKeys.unit.all(unitId),
   'phones',
 ]
 
-export const usePhones = (tenantId: string | null) => {
+export const usePhones = (unitId: string | null) => {
   const query = useQuery({
-    queryKey: phonesKey(tenantId ?? ''),
-    queryFn: () => PhoneService.listPhones(tenantId as string),
-    enabled: !!tenantId,
+    queryKey: phonesKey(unitId ?? ''),
+    queryFn: () => PhoneService.listPhones(unitId as string),
+    enabled: !!unitId,
   })
 
-  const phones: TenantPhone[] = query.data?.data ?? []
+  const phones: UnitPhone[] = query.data?.data ?? []
 
   return { ...query, phones }
 }

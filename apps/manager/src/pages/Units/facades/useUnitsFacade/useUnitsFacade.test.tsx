@@ -10,8 +10,8 @@ vi.mock('@shared/states/session/session.state', () => ({
   useSessionStore: (selector: (state: { user: { name: string } }) => unknown) =>
     selector({ user: { name: 'Marina Silva' } }),
 }))
-vi.mock('@shared/hooks/session/useCurrentTenant/useCurrentTenant', () => ({
-  useCurrentTenant: () => ({ tenantId: 'tenant-1' }),
+vi.mock('@shared/hooks/session/useCurrentUnit/useCurrentUnit', () => ({
+  useCurrentUnit: () => ({ unitId: 'unit-1' }),
 }))
 vi.mock('@pages/Units/hooks/useUnitsDomain/useUnitsDomain', () => ({
   useUnitsDomain: () => ({ groups: [], limit: {} }),

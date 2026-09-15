@@ -32,13 +32,13 @@ describe(useCatalogCategoriesQuery.name, () => {
       ],
     } as unknown as { data: CategoryWithProductCount[] })
 
-    const { result } = renderHook(() => useCatalogCategoriesQuery('tenant-1'), {
+    const { result } = renderHook(() => useCatalogCategoriesQuery('unit-1'), {
       wrapper: createWrapper(),
     })
 
     await waitFor(() => expect(result.current.isPending).toBe(false))
 
-    expect(CategoryService.listCategories).toHaveBeenCalledWith('tenant-1')
+    expect(CategoryService.listCategories).toHaveBeenCalledWith('unit-1')
     expect(result.current.rows.map(({ id, count }) => [id, count])).toEqual([
       ['drinks', 1],
       ['desserts', 0],
@@ -46,7 +46,7 @@ describe(useCatalogCategoriesQuery.name, () => {
     expect(result.current.isError).toBe(false)
   })
 
-  it('does not request categories before a tenant is available', () => {
+  it('does not request categories before a unit is available', () => {
     const { result } = renderHook(() => useCatalogCategoriesQuery(null), {
       wrapper: createWrapper(),
     })
@@ -60,7 +60,7 @@ describe(useCatalogCategoriesQuery.name, () => {
       new Error('offline')
     )
 
-    const { result } = renderHook(() => useCatalogCategoriesQuery('tenant-1'), {
+    const { result } = renderHook(() => useCatalogCategoriesQuery('unit-1'), {
       wrapper: createWrapper(),
     })
 

@@ -1,10 +1,9 @@
-import type { TenantRole } from 'src/shared/types/auth/tenant-role'
-/** Quem administra a loja: vê faturamento, equipe e configurações. */
-export const MANAGERS: TenantRole[] = ['TENANT_OWNER', 'MANAGER']
+import type { UnitRole } from '@shared/types/auth/unit-role'
 
-/** Onde cada papel começa ao entrar — e para onde volta se tentar demais. */
-export const HOME_OF: Record<TenantRole, string> = {
-  TENANT_OWNER: 'visao-geral',
+export const UNIT_MANAGER_ROLES = ['UNIT_OWNER', 'MANAGER'] as const
+
+export const HOME_SECTION_BY_UNIT_ROLE = {
+  UNIT_OWNER: 'visao-geral',
   MANAGER: 'visao-geral',
   STAFF: 'balcao',
-}
+} as const satisfies Readonly<Record<UnitRole, string>>

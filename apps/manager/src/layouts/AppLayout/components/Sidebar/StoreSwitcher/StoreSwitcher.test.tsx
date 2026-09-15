@@ -10,7 +10,7 @@ vi.mock('@shared/hooks/session/useCompanyGroups/useCompanyGroups', () => ({
     {
       companyId: 'company-1',
       companyName: 'Nino',
-      units: [{ tenantId: 'tenant-1', tenantName: 'Loja Centro' }],
+      units: [{ unitId: 'unit-1', unitName: 'Loja Centro' }],
     },
   ],
 }))
@@ -18,8 +18,8 @@ vi.mock('@shared/hooks/session/useCompanyGroups/useCompanyGroups', () => ({
 describe('StoreSwitcher', () => {
   it('shows the current store when no switch is needed', () => {
     render(
-      <MemoryRouter initialEntries={['/tenant-1/pedidos']}>
-        <StoreSwitcher currentTenantId="tenant-1" />
+      <MemoryRouter initialEntries={['/unit-1/pedidos']}>
+        <StoreSwitcher currentUnitId="unit-1" />
       </MemoryRouter>
     )
 
@@ -28,8 +28,8 @@ describe('StoreSwitcher', () => {
 
   it('keeps the current store represented when collapsed', () => {
     render(
-      <MemoryRouter initialEntries={['/tenant-1/pedidos']}>
-        <StoreSwitcher currentTenantId="tenant-1" collapsed />
+      <MemoryRouter initialEntries={['/unit-1/pedidos']}>
+        <StoreSwitcher currentUnitId="unit-1" collapsed />
       </MemoryRouter>
     )
 

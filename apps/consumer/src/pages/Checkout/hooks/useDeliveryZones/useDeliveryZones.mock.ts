@@ -1,1 +1,1 @@
-export const useDeliveryZonesMock = { tenantId: 'tenant-1' }
+export const useDeliveryZonesMock = { unitId: 'unit-1' }

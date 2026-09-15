@@ -118,6 +118,7 @@ export const SalesMultiChart = ({
       if (time === null) return
 
       const nearestIndex = nearestIndexByTime(timeline, time)
+      if (nearestIndex === null) return
       const nearest = timeline[nearestIndex]
 
       showTooltip({

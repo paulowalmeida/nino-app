@@ -18,9 +18,9 @@ import motion from '@styles/motion.module.css'
 import local from './SettingsUnitSection.module.css'
 
 export const SettingsUnitSection = () => {
-  const { tenant, units: unitsDomain } = useUnitsFacade()
-  const tenantId = tenant?.tenantId ?? null
-  const { data: unit } = unitsDomain.detail
+  const { unit: currentUnit, units: unitsDomain } = useUnitsFacade()
+  const unitId = currentUnit?.unitId ?? null
+  const { data: unitDetail } = unitsDomain.detail
   const { mutate: removeUnit, isPending: isRemoving } = unitsDomain.remove
   const [confirming, setConfirming] = useState<{
     id: string
@@ -29,8 +29,8 @@ export const SettingsUnitSection = () => {
   const units = unitsDomain.groups.flatMap(({ units: list }) => list)
   const { limit, planName, isFull, isPending } = unitsDomain.limit
 
-  const unitDetailTo = (unitTenantId: string) =>
-    `/${unitTenantId}/unidade/informacoes`
+  const unitDetailTo = (targetUnitId: string) =>
+    `/${targetUnitId}/unidade/informacoes`
 
   if (isPending) return <SettingsUnitSkeleton />
 
@@ -59,7 +59,7 @@ export const SettingsUnitSection = () => {
 
         {!isFull && (
           <Button asChild className={mergeClasses(motion.press, local.add)}>
-          <Link to={`/${tenantId}/empresa/unidades/nova`}>Abrir unidade</Link>
+          <Link to={`/${unitId}/empresa/unidades/nova`}>Abrir unidade</Link>
           </Button>
         )}
       </Box>
@@ -67,16 +67,16 @@ export const SettingsUnitSection = () => {
       {units.length === 0 && <EmptyState>Nenhuma loja cadastrada.</EmptyState>}
 
       <Box as="ul" direction="column">
-        {units.map(({ tenantId: id, tenantName, companyName }, index) => (
+        {units.map(({ unitId: id, unitName, companyName }, index) => (
           <UnitRow
             key={id}
-            name={tenantName}
+            name={unitName}
             companyName={companyName}
             to={unitDetailTo(id)}
-            isCurrent={id === tenantId}
-            isMain={id === tenantId && (unit?.isMain ?? false)}
+            isCurrent={id === unitId}
+            isMain={id === unitId && (unitDetail?.isMain ?? false)}
             delay={riseDelay(index * 40 + 60)}
-            onRemove={() => setConfirming({ id, name: tenantName })}
+            onRemove={() => setConfirming({ id, name: unitName })}
           />
         ))}
       </Box>

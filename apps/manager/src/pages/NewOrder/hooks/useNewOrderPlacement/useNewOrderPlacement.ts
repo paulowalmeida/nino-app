@@ -5,12 +5,12 @@ import type { NewOrderDraft } from '@pages/NewOrder/types/NewOrderDraft.type'
 import type { PaymentMethod } from '@shared/types/order/payment-method'
 
 export const useNewOrderPlacement = (
-  tenantId: string | null,
+  unitId: string | null,
   draft: NewOrderDraft,
   paymentMethod: PaymentMethod
 ) => {
   const navigate = useNavigate()
-  const { failed, isSubmitting, submit } = useNewOrderSubmission(tenantId)
+  const { failed, isSubmitting, submit } = useNewOrderSubmission(unitId)
 
   const placeOrder = async () => {
     const orderId = await submit({

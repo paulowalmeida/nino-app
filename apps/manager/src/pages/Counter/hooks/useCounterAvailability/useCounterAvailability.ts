@@ -1,17 +1,17 @@
 import { useQuery } from '@tanstack/react-query'
 
-import { queryKeys } from '@shared/lib/query-keys'
+import { queryKeys } from '@shared/lib/query-keys/query-keys'
 import { OrderService } from '@shared/services/order/order.service'
 import { brl } from '@shared/utils/money/money'
 
 export const useCounterAvailability = (
-  tenantId: string | null,
+  unitId: string | null,
   zoneId: string
 ) => {
   const query = useQuery({
-    queryKey: [...queryKeys.orders.all(tenantId ?? ''), 'availability'],
-    queryFn: () => OrderService.getAvailability(tenantId as string),
-    enabled: !!tenantId,
+    queryKey: [...queryKeys.orders.all(unitId ?? ''), 'availability'],
+    queryFn: () => OrderService.getAvailability(unitId as string),
+    enabled: !!unitId,
   })
 
   return {

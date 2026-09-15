@@ -14,7 +14,7 @@ describe(DiningTables.name, () => {
     render(
       <DiningTables
         tables={[]}
-        tenantSlug="burgão-do-nino"
+        unitSlug="burgão-do-nino"
         isPending={false}
         isAdding={false}
         togglingId={undefined}
@@ -35,7 +35,7 @@ describe(DiningTables.name, () => {
     const user = userEvent.setup()
     const table: DiningTable = {
       id: 'table-1',
-      tenantId: 'tenant-1',
+      unitId: 'unit-1',
       name: 'Mesa 1',
       publicKey: 'public-key-1',
       isActive: true,
@@ -46,7 +46,7 @@ describe(DiningTables.name, () => {
     render(
       <DiningTables
         tables={[table]}
-        tenantSlug="burgão-do-nino"
+        unitSlug="burgão-do-nino"
         isPending={false}
         isAdding={false}
         onAdd={() => undefined}
@@ -68,7 +68,7 @@ describe(DiningTables.name, () => {
     const user = userEvent.setup()
     const table: DiningTable = {
       id: 'table-1',
-      tenantId: 'tenant-1',
+      unitId: 'unit-1',
       name: 'Mesa 1',
       publicKey: 'public-key-1',
       isActive: true,
@@ -79,7 +79,7 @@ describe(DiningTables.name, () => {
     render(
       <DiningTables
         tables={[table]}
-        tenantSlug="burgão-do-nino"
+        unitSlug="burgão-do-nino"
         isPending={false}
         isAdding={false}
         onAdd={() => undefined}

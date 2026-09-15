@@ -8,7 +8,6 @@ import { Button } from '@nino/ds/components/Button'
 import { Icon } from '@nino/ds/components/Icon'
 import { Text } from '@nino/ds/components/Text'
 import { mergeClasses } from '@nino/ds/mergeClasses'
-import { SLUG_TAKEN_MESSAGE } from '@shared/constants/store.constants'
 import { STORE_DRAFT_KEY } from '@shared/constants/store-draft.constants'
 import type { FirstStoreFormValues } from '@shared/types/store/first-store-form-values'
 import type { StoreSubmitResult } from '@shared/types/store/store-submit-result'
@@ -20,6 +19,8 @@ import { StoreFormDetailsFields } from './StoreFormDetailsFields/StoreFormDetail
 
 import motion from '@styles/rise.module.css'
 import styles from './StoreForm.module.css'
+
+const SLUG_TAKEN_MESSAGE = 'Este endereço já está em uso'
 
 type FirstStoreFormProps = {
   typeOptions: { value: string; label: string }[]

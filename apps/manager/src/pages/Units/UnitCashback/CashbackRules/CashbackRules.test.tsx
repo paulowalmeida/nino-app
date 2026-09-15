@@ -2,7 +2,7 @@ import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 
-import type { TenantSettings } from '@shared/types/settings/tenant-settings'
+import type { UnitSettings } from '@shared/types/settings/unit-settings'
 
 import { CashbackRules } from './CashbackRules'
 import {
@@ -13,7 +13,7 @@ import {
 const onSave = vi.fn()
 
 const renderRules = (
-  settings: TenantSettings = cashbackRulesSettingsMock,
+  settings: UnitSettings = cashbackRulesSettingsMock,
   isPending = false
 ) =>
   render(

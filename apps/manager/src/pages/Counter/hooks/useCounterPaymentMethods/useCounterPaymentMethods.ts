@@ -4,8 +4,8 @@ import type { PaymentMethod } from '@shared/types/order/payment-method'
 const isAvailableAtCounter = (method: PaymentMethod): boolean =>
   method === 'CASH'
 
-export const useCounterPaymentMethods = (tenantId: string | null) => {
-  const payments = useAcceptedPayments(tenantId)
+export const useCounterPaymentMethods = (unitId: string | null) => {
+  const payments = useAcceptedPayments(unitId)
 
   return {
     ...payments,

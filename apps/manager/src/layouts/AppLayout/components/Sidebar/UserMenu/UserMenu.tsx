@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router'
 
-import { useTenantRole } from '@layouts/AppLayout/hooks/useTenantRole/useTenantRole'
+import { useUnitRole } from '@layouts/AppLayout/hooks/useUnitRole/useUnitRole'
 import { Box } from '@nino/ds/components/Box'
 import { Button } from '@nino/ds/components/Button'
 import { Icon } from '@nino/ds/components/Icon'
@@ -14,24 +14,24 @@ import styles from './UserMenu.module.css'
 
 type UserMenuProps = {
   name: string
-  tenantId: string | null
+  unitId: string | null
   onNavigate?: () => void
   collapsed?: boolean
 }
 
 export const UserMenu = ({
   name,
-  tenantId,
+  unitId,
   onNavigate,
   collapsed = false,
 }: UserMenuProps) => {
   const navigate = useNavigate()
   const { logout } = useLogout()
-  const isOwner = useTenantRole() === 'TENANT_OWNER'
+  const isOwner = useUnitRole() === 'UNIT_OWNER'
 
   const go = (path: string) => {
     onNavigate?.()
-    void navigate(`/${tenantId}/${path}`)
+    void navigate(`/${unitId}/${path}`)
   }
 
   return (

@@ -33,7 +33,7 @@ describe('useConsumerDetail', () => {
     const { result } = renderHook(
       () =>
         useConsumerDetail(
-          consumerDetailScopeMock.tenantId,
+          consumerDetailScopeMock.unitId,
           consumerDetailScopeMock.consumerId
         ),
       { wrapper }
@@ -41,14 +41,14 @@ describe('useConsumerDetail', () => {
 
     await waitFor(() => expect(result.current.consumer).toBeDefined())
     expect(ConsumerService.getById).toHaveBeenCalledWith(
-      consumerDetailScopeMock.tenantId,
+      consumerDetailScopeMock.unitId,
       consumerDetailScopeMock.consumerId
     )
     expect(result.current.addressRows).toHaveLength(1)
     expect(result.current.addressRows[0].streetLine).toBe('Rua Olimpíadas, 55')
   })
 
-  it('does not request without tenant or consumer scope', () => {
+  it('does not request without unit or consumer scope', () => {
     const { result } = renderHook(() => useConsumerDetail(null, ''), {
       wrapper,
     })

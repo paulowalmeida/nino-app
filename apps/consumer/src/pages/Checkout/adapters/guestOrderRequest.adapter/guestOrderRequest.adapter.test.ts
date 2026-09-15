@@ -12,7 +12,7 @@ describe('guestOrderRequest', () => {
     )
 
     expect(request).toMatchObject({
-      tenantId: 'tenant-1',
+      unitId: 'unit-1',
       channel: 'PICKUP',
       guestPhone: '+5511987654321',
     })

@@ -5,14 +5,14 @@ import L from 'leaflet'
 import { Box } from '@nino/ds/components/Box'
 import { Text } from '@nino/ds/components/Text'
 import type { DeliveryZone } from '@shared/types/settings/delivery-zone'
-import type { TenantMapLocation } from '@shared/types/store/tenant-map-location'
+import type { UnitMapLocation } from '@shared/types/store/unit-map-location'
 
 import local from './DeliveryMap.module.css'
 import 'leaflet/dist/leaflet.css'
 
 type DeliveryMapProps = {
   zones: DeliveryZone[]
-  coordinates: TenantMapLocation | null
+  coordinates: UnitMapLocation | null
   previewKm?: number | null
   focusedZoneId?: string | null
 }

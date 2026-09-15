@@ -3,7 +3,7 @@ import { beforeEach, describe, expect, it, vi } from 'vitest'
 
 import { useAccountForm } from '@pages/Register/hooks/useAccountForm/useAccountForm'
 import { useCompanyForm } from '@pages/Register/hooks/useCompanyForm/useCompanyForm'
-import { useTenantForm } from '@pages/Register/hooks/useTenantForm/useTenantForm'
+import { useUnitForm } from '@pages/Register/hooks/useUnitForm/useUnitForm'
 import { useRegisterWizardStore } from '@pages/Register/states/register-wizard/register-wizard.store'
 
 import { useRegisterFacade } from './useRegisterFacade'
@@ -11,11 +11,11 @@ import { facadeAccountMock } from './useRegisterFacade.mock'
 
 vi.mock('@pages/Register/hooks/useAccountForm/useAccountForm')
 vi.mock('@pages/Register/hooks/useCompanyForm/useCompanyForm')
-vi.mock('@pages/Register/hooks/useTenantForm/useTenantForm')
+vi.mock('@pages/Register/hooks/useUnitForm/useUnitForm')
 
 const accountForm = { submit: vi.fn() }
 const companyForm = { submit: vi.fn() }
-const tenantForm = { submit: vi.fn() }
+const unitForm = { submit: vi.fn() }
 
 describe('useRegisterFacade', () => {
   beforeEach(() => {
@@ -27,8 +27,8 @@ describe('useRegisterFacade', () => {
     vi.mocked(useCompanyForm).mockReturnValue(
       companyForm as unknown as ReturnType<typeof useCompanyForm>
     )
-    vi.mocked(useTenantForm).mockReturnValue(
-      tenantForm as unknown as ReturnType<typeof useTenantForm>
+    vi.mocked(useUnitForm).mockReturnValue(
+      unitForm as unknown as ReturnType<typeof useUnitForm>
     )
   })
 
@@ -39,15 +39,15 @@ describe('useRegisterFacade', () => {
     expect(result.current.account).toBeNull()
     expect(result.current.accountForm).toBe(accountForm)
     expect(result.current.companyForm).toBe(companyForm)
-    expect(result.current.tenantForm).toBe(tenantForm)
+    expect(result.current.unitForm).toBe(unitForm)
     expect(useAccountForm).toHaveBeenCalledWith({
       defaultValues: null,
       onValid: useRegisterWizardStore.getState().goToCompany,
     })
     expect(useCompanyForm).toHaveBeenCalledWith({
-      goToTenant: useRegisterWizardStore.getState().goToTenant,
+      goToUnit: useRegisterWizardStore.getState().goToUnit,
     })
-    expect(useTenantForm).toHaveBeenCalledWith({
+    expect(useUnitForm).toHaveBeenCalledWith({
       account: null,
       company: null,
     })
@@ -61,9 +61,9 @@ describe('useRegisterFacade', () => {
     expect(result.current.step).toBe(2)
     expect(result.current.account).toBe(facadeAccountMock)
     expect(useCompanyForm).toHaveBeenLastCalledWith({
-      goToTenant: useRegisterWizardStore.getState().goToTenant,
+      goToUnit: useRegisterWizardStore.getState().goToUnit,
     })
-    expect(useTenantForm).toHaveBeenLastCalledWith({
+    expect(useUnitForm).toHaveBeenLastCalledWith({
       account: facadeAccountMock,
       company: null,
     })

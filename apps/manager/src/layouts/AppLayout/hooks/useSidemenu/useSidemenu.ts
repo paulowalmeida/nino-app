@@ -4,14 +4,14 @@ import { groupsForRole } from '@layouts/AppLayout/utils/sidemenu-access/sidemenu
 import { SIDEMENU_GROUPS } from '@shared/constants/sidemenu.constants'
 import type { SidemenuItem } from '@shared/types/ui/sidemenu-item.type'
 
-import { useTenantRole } from '../useTenantRole/useTenantRole'
+import { useUnitRole } from '../useUnitRole/useUnitRole'
 
 type Sidemenu = {
   groups: SidemenuItem[]
 }
 
 export const useSidemenu = (): Sidemenu => {
-  const role = useTenantRole()
+  const role = useUnitRole()
 
   const groups = useMemo(() => groupsForRole(SIDEMENU_GROUPS, role), [role])
 

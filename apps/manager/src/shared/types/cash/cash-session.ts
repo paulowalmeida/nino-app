@@ -2,7 +2,7 @@ import type { CashMovement } from '@shared/types/cash/cash-movement'
 
 export type CashSession = {
   id: string
-  tenantId: string
+  unitId: string
   openedById: string
   openedByName: string
   closedById: string | null

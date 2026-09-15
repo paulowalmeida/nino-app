@@ -6,12 +6,12 @@ import { Text } from '@nino/ds/components/Text'
 import styles from './AppLayoutHeader.module.css'
 
 type AppLayoutHeaderProps = {
-  tenantName?: string
+  unitName?: string
   onOpenMenu: () => void
 }
 
 export const AppLayoutHeader = ({
-  tenantName,
+  unitName,
   onOpenMenu,
 }: AppLayoutHeaderProps) => (
   <Box as="header" direction="row" className={styles.topbar}>
@@ -25,7 +25,7 @@ export const AppLayoutHeader = ({
       <Icon name="menu" size="md" />
     </Button>
     <Text as="span" className={styles.storeName}>
-      {tenantName}
+      {unitName}
     </Text>
   </Box>
 )

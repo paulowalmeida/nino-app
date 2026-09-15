@@ -4,7 +4,7 @@ import type { OrderChannel } from '@shared/types/order/order-channel'
 export const kitchenOrderModalOrderMock: Order = {
   id: 'order-1234',
   orderNumber: 1234,
-  tenantId: 'tenant-1',
+  unitId: 'unit-1',
   consumerId: null,
   status: 'PREPARING',
   channel: 'TABLE_TAB',

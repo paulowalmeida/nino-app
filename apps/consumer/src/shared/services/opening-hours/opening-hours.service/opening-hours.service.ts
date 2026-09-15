@@ -2,6 +2,6 @@ import type { PublicOpeningHours } from '@custom_types/opening-hours/public-open
 import { api } from '@shared/services/http/http.service'
 
 export const openingHoursService = {
-  getPublic: (tenantId: string): Promise<PublicOpeningHours[]> =>
-    api.get<PublicOpeningHours[]>(`tenants/${tenantId}/opening-hours/public`),
+  getPublic: (unitId: string): Promise<PublicOpeningHours[]> =>
+    api.get<PublicOpeningHours[]>(`units/${unitId}/opening-hours/public`),
 }

@@ -15,9 +15,9 @@ describe('listMenu', () => {
       data: [],
       pagination: { total: 0 },
     } as never)
-    await listMenu(listMenuMock.tenantId)
+    await listMenu(listMenuMock.unitId)
     expect(api.getAll).toHaveBeenCalledWith(
-      `tenants/${listMenuMock.tenantId}/products`,
+      `units/${listMenuMock.unitId}/products`,
       { size: 100, page: 1 }
     )
   })
@@ -33,12 +33,12 @@ describe('listMenu', () => {
         pagination: { total: 101 },
       } as never)
 
-    const result = await listMenu(listMenuMock.tenantId)
+    const result = await listMenu(listMenuMock.unitId)
 
     expect(result.data).toHaveLength(101)
     expect(api.getAll).toHaveBeenNthCalledWith(
       2,
-      `tenants/${listMenuMock.tenantId}/products`,
+      `units/${listMenuMock.unitId}/products`,
       { size: 100, page: 2 }
     )
   })

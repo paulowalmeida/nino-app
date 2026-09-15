@@ -4,7 +4,7 @@ import { Icon } from '@nino/ds/components/Icon'
 import { RadioGroup } from '@nino/ds/components/RadioGroup'
 import { Text } from '@nino/ds/components/Text'
 import { TEAM_ROLE_OPTIONS } from '@shared/constants/team.constants'
-import type { TenantRole } from '@shared/types/auth/tenant-role'
+import type { UnitRole } from '@shared/types/auth/unit-role'
 
 import styles from './CollaboratorRoleAccess.module.css'
 
@@ -16,14 +16,14 @@ const ROLE_REACH = TEAM_ROLE_OPTIONS.map(({ value, label, hint }) => ({
 
 const ROLE_LABEL_ID = 'collaborator-role-choice'
 
-const isTenantRole = (value: string): value is TenantRole =>
+const isUnitRole = (value: string): value is UnitRole =>
   TEAM_ROLE_OPTIONS.some((option) => option.value === value)
 
 type CollaboratorRoleAccessProps = {
-  role: TenantRole
+  role: UnitRole
   roleLockHint?: string
   isChangingRole: boolean
-  onChangeRole: (role: TenantRole) => void
+  onChangeRole: (role: UnitRole) => void
 }
 
 export const CollaboratorRoleAccess = ({
@@ -48,7 +48,7 @@ export const CollaboratorRoleAccess = ({
       options={ROLE_REACH}
       value={role}
       disabled={!!roleLockHint || isChangingRole}
-      onValueChange={(value) => isTenantRole(value) && onChangeRole(value)}
+      onValueChange={(value) => isUnitRole(value) && onChangeRole(value)}
       aria-labelledby={ROLE_LABEL_ID}
       className={styles.choice}
     />

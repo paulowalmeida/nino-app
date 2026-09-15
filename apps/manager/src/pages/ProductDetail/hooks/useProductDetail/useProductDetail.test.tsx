@@ -27,7 +27,7 @@ const mockCategoryOptions = (
   )
 
 const renderDetail = (productId: string | undefined) =>
-  renderHook(() => useProductDetail(productDetailMock.tenantId, productId))
+  renderHook(() => useProductDetail(productDetailMock.unitId, productId))
 
 describe('useProductDetail', () => {
   beforeEach(() => vi.clearAllMocks())
@@ -41,9 +41,9 @@ describe('useProductDetail', () => {
 
     const { result } = renderDetail(productDetailMock.productId)
 
-    expect(useMenu).toHaveBeenCalledWith(productDetailMock.tenantId)
+    expect(useMenu).toHaveBeenCalledWith(productDetailMock.unitId)
     expect(useProductCategoryOptions).toHaveBeenCalledWith(
-      productDetailMock.tenantId
+      productDetailMock.unitId
     )
     expect(result.current.item).toBe(menuItemMock)
     expect(result.current.categoryOptions).toBe(categoryOptionsMock)

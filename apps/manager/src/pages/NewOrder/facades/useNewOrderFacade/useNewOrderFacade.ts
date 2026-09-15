@@ -2,14 +2,14 @@ import { useNewOrderAvailability } from '@pages/NewOrder/hooks/useNewOrderAvaila
 import { useNewOrderDraft } from '@pages/NewOrder/hooks/useNewOrderDraft/useNewOrderDraft'
 import { useNewOrderPlacement } from '@pages/NewOrder/hooks/useNewOrderPlacement/useNewOrderPlacement'
 import { useMenu } from '@shared/hooks/product/useMenu/useMenu'
-import { useCurrentTenant } from '@shared/hooks/session/useCurrentTenant/useCurrentTenant'
+import { useCurrentUnit } from '@shared/hooks/session/useCurrentUnit/useCurrentUnit'
 
 export const useNewOrderFacade = () => {
-  const tenantId = useCurrentTenant()?.tenantId ?? null
-  const menu = useMenu(tenantId)
+  const unitId = useCurrentUnit()?.unitId ?? null
+  const menu = useMenu(unitId)
   const draft = useNewOrderDraft()
-  const availability = useNewOrderAvailability(tenantId, draft)
-  const placement = useNewOrderPlacement(tenantId, draft, availability.method)
+  const availability = useNewOrderAvailability(unitId, draft)
+  const placement = useNewOrderPlacement(unitId, draft, availability.method)
 
   return {
     sections: menu.sections,

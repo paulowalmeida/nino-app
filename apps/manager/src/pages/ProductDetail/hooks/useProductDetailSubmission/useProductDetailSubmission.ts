@@ -9,13 +9,13 @@ import { useUpdateProduct } from '@pages/ProductDetail/hooks/useUpdateProduct/us
 import type { ProductDetailFormValues } from '@pages/ProductDetail/types/ProductDetailFormValues.type'
 
 export const useProductDetailSubmission = (
-  tenantId: string | null,
+  unitId: string | null,
   productId: string | undefined
 ) => {
   const navigate = useNavigate()
-  const { mutateAsync: updateProduct } = useUpdateProduct(tenantId, productId)
+  const { mutateAsync: updateProduct } = useUpdateProduct(unitId, productId)
   const { mutateAsync: replaceModifiers } = useReplaceProductModifiers(
-    tenantId,
+    unitId,
     productId
   )
 

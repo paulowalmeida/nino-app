@@ -34,7 +34,7 @@ describe('useRemoveProductImage', () => {
     const { result } = renderHook(
       () =>
         useRemoveProductImage(
-          removeProductImageMock.tenantId,
+          removeProductImageMock.unitId,
           removeProductImageMock.productId
         ),
       { wrapper }
@@ -44,12 +44,12 @@ describe('useRemoveProductImage', () => {
 
     await waitFor(() => expect(result.current.isSuccess).toBe(true))
     expect(ProductService.removeItemImage).toHaveBeenCalledWith(
-      removeProductImageMock.tenantId,
+      removeProductImageMock.unitId,
       removeProductImageMock.productId,
       removeProductImageMock.imageId
     )
     expect(invalidate).toHaveBeenCalledWith({
-      queryKey: menuQueryKey(removeProductImageMock.tenantId),
+      queryKey: menuQueryKey(removeProductImageMock.unitId),
     })
   })
 })

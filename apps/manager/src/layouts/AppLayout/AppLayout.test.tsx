@@ -5,8 +5,8 @@ import { describe, expect, it, vi } from 'vitest'
 
 import { AppLayout } from './AppLayout'
 
-vi.mock('@shared/hooks/session/useCurrentTenant/useCurrentTenant', () => ({
-  useCurrentTenant: () => ({ tenantName: 'Loja Centro', tenantId: 'tenant-1' }),
+vi.mock('@shared/hooks/session/useCurrentUnit/useCurrentUnit', () => ({
+  useCurrentUnit: () => ({ unitName: 'Loja Centro', unitId: 'unit-1' }),
 }))
 vi.mock('./components/Sidebar/Sidebar', () => ({ Sidebar: () => <aside /> }))
 

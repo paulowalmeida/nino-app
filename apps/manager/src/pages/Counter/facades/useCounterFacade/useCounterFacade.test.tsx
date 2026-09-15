@@ -7,12 +7,12 @@ const stateOverride = vi.hoisted(() => ({
   value: {} as Record<string, unknown>,
 }))
 
-const tenant = vi.hoisted(() => ({
-  value: { tenantId: 'tenant-1' } as { tenantId: string } | null,
+const unit = vi.hoisted(() => ({
+  value: { unitId: 'unit-1' } as { unitId: string } | null,
 }))
 
-vi.mock('@shared/hooks/session/useCurrentTenant/useCurrentTenant', () => ({
-  useCurrentTenant: () => tenant.value,
+vi.mock('@shared/hooks/session/useCurrentUnit/useCurrentUnit', () => ({
+  useCurrentUnit: () => unit.value,
 }))
 vi.mock('@shared/hooks/product/useMenu/useMenu', () => ({
   useMenu: () => ({ sections: [], isPending: false }),
@@ -131,8 +131,8 @@ describe(useCounterFacade.name, () => {
     })
   })
 
-  it('composes the feature without an active tenant', () => {
-    tenant.value = null
+  it('composes the feature without an active unit', () => {
+    unit.value = null
     const { result } = renderHook(() => useCounterFacade())
     expect(result.current.sections).toEqual([])
   })

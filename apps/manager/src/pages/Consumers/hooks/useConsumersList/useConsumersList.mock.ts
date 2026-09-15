@@ -1,7 +1,7 @@
 import type { ConsumerPage } from '@shared/types/consumer/consumer-page'
 
 export const consumersListScopeMock = {
-  tenantId: 'tenant-1',
+  unitId: 'unit-1',
   search: '  maria  ',
   trimmedSearch: 'maria',
 }

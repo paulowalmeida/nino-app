@@ -7,10 +7,10 @@ import { useCatalogCommands } from '@pages/Catalog/hooks/useCatalogCommands/useC
 import { useCatalogMutations } from '@pages/Catalog/hooks/useCatalogMutations/useCatalogMutations'
 import { useCatalogQuery } from '@pages/Catalog/hooks/useCatalogQuery/useCatalogQuery'
 import { useCatalogStore } from '@pages/Catalog/states/catalog/catalog.store'
-import { useCurrentTenant } from '@shared/hooks/session/useCurrentTenant/useCurrentTenant'
+import { useCurrentUnit } from '@shared/hooks/session/useCurrentUnit/useCurrentUnit'
 import type { MenuItem } from '@shared/types/product/menu-item'
 
-vi.mock('@shared/hooks/session/useCurrentTenant/useCurrentTenant')
+vi.mock('@shared/hooks/session/useCurrentUnit/useCurrentUnit')
 vi.mock('@pages/Catalog/hooks/useCatalogCategoriesQuery/useCatalogCategoriesQuery')
 vi.mock('@pages/Catalog/hooks/useCatalogCommands/useCatalogCommands')
 vi.mock('@pages/Catalog/hooks/useCatalogMutations/useCatalogMutations')
@@ -36,10 +36,10 @@ describe(useCatalogFacade.name, () => {
 
   beforeEach(() => {
     vi.clearAllMocks()
-    vi.mocked(useCurrentTenant).mockReturnValue({
-      tenantId: 'tenant-1',
-      role: 'TENANT_OWNER',
-    } as ReturnType<typeof useCurrentTenant>)
+    vi.mocked(useCurrentUnit).mockReturnValue({
+      unitId: 'unit-1',
+      role: 'UNIT_OWNER',
+    } as ReturnType<typeof useCurrentUnit>)
     vi.mocked(useCatalogStore).mockReturnValue({
       categoryId: 'cat-1',
       search: 'burger',
@@ -70,7 +70,7 @@ describe(useCatalogFacade.name, () => {
   it('exposes view data and delegates catalog commands through the facade', async () => {
     const { result } = renderHook(() => useCatalogFacade())
 
-    expect(result.current.tenantId).toBe('tenant-1')
+    expect(result.current.unitId).toBe('unit-1')
     expect(result.current.status).toBe('success')
     expect(result.current.items).toEqual([{ id: 'item-1' }])
     expect(result.current.total).toBe(1)
@@ -93,8 +93,8 @@ describe(useCatalogFacade.name, () => {
     expect(deleteItems).toHaveBeenCalledWith(['item-1'])
   })
 
-  it('reports idle while no tenant is available', () => {
-    vi.mocked(useCurrentTenant).mockReturnValue(null)
+  it('reports idle while no unit is available', () => {
+    vi.mocked(useCurrentUnit).mockReturnValue(null)
     vi.mocked(useCatalogQuery).mockReturnValue({
       status: 'idle',
     } as unknown as ReturnType<typeof useCatalogQuery>)

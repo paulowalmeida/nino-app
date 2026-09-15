@@ -1,7 +1,7 @@
-import type { TenantDetail } from '@shared/types/store/tenant-detail'
+import type { UnitDetail } from '@shared/types/store/unit-detail'
 import type { UnitDraft } from '@shared/types/store/unit-draft'
 
-export const toUnitDraft = (unit: TenantDetail): UnitDraft => ({
+export const toUnitDraft = (unit: UnitDetail): UnitDraft => ({
   customName: unit.customName ?? '',
   timezone: unit.timezone,
   primaryColor: unit.primaryColor ?? '#FF6B00',

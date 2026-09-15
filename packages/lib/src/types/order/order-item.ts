@@ -14,7 +14,7 @@ export type OrderItem = {
     position: number | null
     isActive: boolean
     categoryId: string
-    tenantId: string
+    unitId: string
     createdAt: string
     updatedAt: string
   }

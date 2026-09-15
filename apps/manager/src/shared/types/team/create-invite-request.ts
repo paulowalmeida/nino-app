@@ -1,7 +1,7 @@
-import type { TenantRole } from '@shared/types/auth/tenant-role'
+import type { UnitRole } from '@shared/types/auth/unit-role'
 
 export type CreateInviteRequest = {
   email: string
   kind: 'STAFF' | 'COURIER'
-  role?: Extract<TenantRole, 'MANAGER' | 'STAFF'>
+  role?: Extract<UnitRole, 'MANAGER' | 'STAFF'>
 }

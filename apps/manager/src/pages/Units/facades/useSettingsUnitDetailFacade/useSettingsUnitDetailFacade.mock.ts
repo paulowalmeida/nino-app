@@ -1,5 +1,5 @@
 export const settingsUnitDetailFacadeMock = {
-  tenant: { tenantName: 'Loja principal' },
+  unit: { unitName: 'Loja principal' },
   location: {
     states: {
       data: [{ id: 15, sigla: 'PA', nome: 'Pará' }],

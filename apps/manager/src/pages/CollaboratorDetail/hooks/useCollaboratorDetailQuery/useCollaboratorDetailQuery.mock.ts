@@ -1,4 +1,4 @@
 export const collaboratorDetailQueryMock = {
-  tenantId: 'tenant-1',
+  unitId: 'unit-1',
   userId: 'user-1',
 }

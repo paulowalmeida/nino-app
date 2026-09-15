@@ -19,7 +19,7 @@ describe('QueueBoard', () => {
     render(<QueueBoard />, { wrapper: MemoryRouter })
 
     expect(screen.getByLabelText('Fila de pedidos')).toBeInTheDocument()
-    expect(queueBoardMock.tenantId).toBeTruthy()
+    expect(queueBoardMock.unitId).toBeTruthy()
   })
 
   it('renders idle and active queue tiles', () => {

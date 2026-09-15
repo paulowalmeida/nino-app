@@ -13,7 +13,7 @@ vi.mock('@shared/components/EditEmailModal/EditEmailModal', () => ({ EditEmailMo
 describe(EmployeesContent.name, () => {
   it('composes the invitation and both team rosters', () => {
     vi.mocked(useEmployeesFacade).mockReturnValue({
-      tenant: { role: 'TENANT_OWNER' },
+      unit: { role: 'UNIT_OWNER' },
       staffEntries: [],
       courierEntries: [],
       isStaffPending: false,
