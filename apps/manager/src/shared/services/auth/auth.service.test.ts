@@ -78,12 +78,12 @@ describe('AuthService', () => {
     expect(result).toBe(meResponseMock)
   })
 
-  it('logout: posts to auth/logout with no body', async () => {
+  it('logout: posts to session-manager/logout with no body', async () => {
     // Act
     await AuthService.logout()
 
     // Assert
-    expect(api.create).toHaveBeenCalledWith('auth/logout')
+    expect(api.create).toHaveBeenCalledWith('session-manager/logout')
   })
 
   it('forgotPassword: posts the email to auth/forgot-password', async () => {

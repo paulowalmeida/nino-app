@@ -30,7 +30,7 @@ export const AuthService = {
 
   me: (): Promise<MeResponse> => api.get<MeResponse>('auth/me'),
 
-  logout: (): Promise<void> => api.create<void, void>('auth/logout'),
+  logout: (): Promise<void> => api.create<void, void>('session-manager/logout'),
 
   forgotPassword: (data: ForgotPasswordRequest): Promise<MessageResponse> =>
     api.create<ForgotPasswordRequest, MessageResponse>(

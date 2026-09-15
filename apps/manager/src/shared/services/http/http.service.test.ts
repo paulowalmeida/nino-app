@@ -27,11 +27,11 @@ describe('http.service', () => {
     // Assert
     expect(createHttpClientMock).toHaveBeenCalledWith(
       expect.objectContaining({
-        refreshPath: 'auth/refresh',
+        refreshPath: 'session-manager/refresh',
         exemptPaths: [
           'auth/login',
           'auth/signup',
-          'auth/refresh',
+          'session-manager/refresh',
           'auth/check-availability',
           'auth/forgot-password',
           'auth/reset-password',

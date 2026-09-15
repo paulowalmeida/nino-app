@@ -14,7 +14,7 @@ const BASE_URL = import.meta.env.VITE_BASE_URL
 const EXEMPT_PATHS = [
   'auth/login',
   'auth/signup',
-  'auth/refresh',
+  'session-manager/refresh',
   'auth/check-availability',
   'auth/forgot-password',
   'auth/reset-password',
@@ -30,7 +30,7 @@ const SESSION_PROBE_PATH = 'auth/me'
 
 const client = createHttpClient({
   baseUrl: BASE_URL,
-  refreshPath: 'auth/refresh',
+  refreshPath: 'session-manager/refresh',
   exemptPaths: EXEMPT_PATHS,
   sessionProbePath: SESSION_PROBE_PATH,
   hasPriorSession: hadSession,
