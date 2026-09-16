@@ -113,6 +113,7 @@ export const searchAddress = async (
 
       return [
         {
+          id: `${zipCode}:${item.logradouro ?? ''}`,
           zipCode,
           street: item.logradouro ?? '',
           neighborhood: item.bairro ?? '',

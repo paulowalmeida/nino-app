@@ -54,6 +54,7 @@ describe('searchAddress', () => {
 
     await expect(result).resolves.toEqual([
       {
+        id: '67140-650:Travessa WE-69',
         zipCode: '67140-650',
         street: 'Travessa WE-69',
         neighborhood: 'Coqueiro',
@@ -75,6 +76,7 @@ describe('searchAddress', () => {
     )
     expect(result).toEqual([
       {
+        id: '67033-736:Rua WE-6',
         zipCode: '67033-736',
         street: 'Rua WE-6',
         neighborhood: 'Aurá',
