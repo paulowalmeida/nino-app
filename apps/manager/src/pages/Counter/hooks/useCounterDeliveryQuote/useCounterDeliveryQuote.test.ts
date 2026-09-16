@@ -22,13 +22,14 @@ describe(useCounterDeliveryQuote.name, () => {
       deliveryQuoteMock
     )
     const { result } = renderHook(
-      () => useCounterDeliveryQuote('unit-1', '66000-000'),
+      () => useCounterDeliveryQuote('unit-1', { zipCode: '66000-000' }),
       { wrapper }
     )
     await waitFor(() => expect(result.current.quote).toEqual(deliveryQuoteMock))
     expect(OrderService.getDeliveryQuote).toHaveBeenCalledWith(
       'unit-1',
-      '66000000'
+      '66000000',
+      { latitude: undefined, longitude: undefined }
     )
   })
 })

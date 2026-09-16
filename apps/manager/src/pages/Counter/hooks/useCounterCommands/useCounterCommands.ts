@@ -23,7 +23,7 @@ export const useCounterCommands = (
   const recipient = useCounterStore((state) => state.recipient)
   const deliveryQuote = useCounterDeliveryQuote(
     unitId,
-    channel === 'DELIVERY' ? (recipient?.zipCode ?? '') : ''
+    channel === 'DELIVERY' ? recipient : {}
   )
   const saleTotal =
     channel === 'DELIVERY' ? total + (deliveryQuote.quote?.fee ?? 0) : total
@@ -33,10 +33,12 @@ export const useCounterCommands = (
     reset()
   }
 
-  const handleStep = (productId: string, by: number) => {
-    const line = lines.find((current) => current.productId === productId)
+  const handleStep = (lineId: string, by: number) => {
+    const line = lines.find(
+      (current) => (current.lineId ?? current.productId) === lineId
+    )
     if (lines.length === 1 && line && line.quantity + by <= 0) setSheet(false)
-    updateQuantity(productId, by)
+    updateQuantity(lineId, by)
   }
 
   const finish = async () => {

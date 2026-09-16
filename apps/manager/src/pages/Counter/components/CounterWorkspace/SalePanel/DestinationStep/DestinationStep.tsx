@@ -7,7 +7,6 @@ import type { AddressSearchResult } from '@nino/lib/types/address/address-lookup
 import { COUNTER_CHANNEL_HINT } from '@pages/Counter/constants/counter.constants'
 import type { OrderChannel } from '@shared/types/order/order-channel'
 import type { Recipient } from '@shared/types/order/recipient'
-import type { DeliveryCity } from '@shared/types/store/delivery-city'
 
 import { ChoiceCard } from '../ChoiceCard/ChoiceCard'
 import { DeliveryRecipientFields } from '../DeliveryRecipientFields/DeliveryRecipientFields'
@@ -19,8 +18,6 @@ type DestinationStepProps = {
   consumerName: string
   tableNumber: string
   recipient: Recipient
-  storeAddress: { city: string; state: string }
-  deliveryCities: DeliveryCity[]
   addressSuggestions: AddressSearchResult[]
   isSearchingAddress: boolean
   onChannel: (channel: OrderChannel) => void
@@ -52,8 +49,6 @@ export const DestinationStep = ({
   consumerName,
   tableNumber,
   recipient,
-  storeAddress,
-  deliveryCities,
   addressSuggestions,
   isSearchingAddress,
   onChannel,
@@ -101,10 +96,7 @@ export const DestinationStep = ({
       </Box>
     ) : channel === 'DELIVERY' ? (
       <DeliveryRecipientFields
-        isDelivery={channel === 'DELIVERY'}
         value={recipient}
-        storeAddress={storeAddress}
-        deliveryCities={deliveryCities}
         addressSuggestions={addressSuggestions}
         isSearchingAddress={isSearchingAddress}
         onChange={onRecipient}

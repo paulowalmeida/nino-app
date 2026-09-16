@@ -22,6 +22,10 @@ type DeliveryQuote = { id: string; name: string; fee: number }
 type DeliveryQuoteResponse = Omit<DeliveryQuote, 'fee'> & {
   fee: number | string
 }
+type DeliveryCoordinates = {
+  latitude?: number
+  longitude?: number
+}
 
 const isCustomRange = (
   params: ReportRangeParams
@@ -44,11 +48,23 @@ export const OrderService = {
 
   getDeliveryQuote: (
     unitId: string,
-    zipCode: string
+    zipCode: string,
+    coordinates: DeliveryCoordinates = {}
   ): Promise<DeliveryQuote | null> =>
     api
       .get<DeliveryQuoteResponse | null>(
-        `orders/guest/quote?unitId=${encodeURIComponent(unitId)}&zipCode=${encodeURIComponent(zipCode)}`
+        (() => {
+          const params = new URLSearchParams({ unitId })
+          if (zipCode) params.set('zipCode', zipCode)
+          if (
+            coordinates.latitude !== undefined &&
+            coordinates.longitude !== undefined
+          ) {
+            params.set('latitude', String(coordinates.latitude))
+            params.set('longitude', String(coordinates.longitude))
+          }
+          return `orders/guest/quote?${params.toString()}`
+        })()
       )
       .then((quote) =>
         quote
@@ -131,7 +147,9 @@ export const OrderService = {
     }),
 
   createOrder: (unitId: string, data: CreateOrderRequest): Promise<Order> =>
-    api.create<CreateOrderRequest, Order>(`units/${unitId}/orders`, data),
+    api.create<CreateOrderRequest, Order>(`units/${unitId}/orders`, data, {
+      headers: { 'Idempotency-Key': crypto.randomUUID() },
+    }),
 
   getById: (unitId: string, orderId: string): Promise<Order> =>
     api.get<Order>(`units/${unitId}/orders/${orderId}`),

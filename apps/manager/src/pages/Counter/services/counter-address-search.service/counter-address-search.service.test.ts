@@ -19,15 +19,9 @@ describe(CounterAddressSearchService.search.name, () => {
     vi.mocked(api.getAll).mockResolvedValue(counterAddressSearchResultsMock)
 
     await expect(
-      CounterAddressSearchService.search(
-        counterAddressSearchParamsMock.state,
-        counterAddressSearchParamsMock.city,
-        counterAddressSearchParamsMock.street
-      )
+      CounterAddressSearchService.search(counterAddressSearchParamsMock.street)
     ).resolves.toEqual(counterAddressSearchResultsMock)
     expect(api.getAll).toHaveBeenCalledWith('addresses/search', {
-      state: 'PA',
-      city: 'Ananindeua',
       street: 'WE-69-A',
     })
   })

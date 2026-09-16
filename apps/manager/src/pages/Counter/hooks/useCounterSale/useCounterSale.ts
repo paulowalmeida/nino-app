@@ -16,7 +16,7 @@ type CounterSale = {
   reset: () => void
 }
 
-const NO_RECIPIENT = 'Informe o nome de quem pediu.'
+const NO_COUNTER_IDENTITY = 'Informe o nome de quem pediu ou a mesa.'
 const UNEXPECTED = 'Não foi possível fechar a venda. Tente de novo.'
 
 export const useCounterSale = (unitId: string | null): CounterSale => {
@@ -48,8 +48,11 @@ export const useCounterSale = (unitId: string | null): CounterSale => {
         ? (recipient?.name ?? '')
         : consumerName
 
-    if (!orderConsumerName.trim()) {
-      setError(NO_RECIPIENT)
+    const hasCounterIdentity =
+      channel === 'COUNTER' && (consumerName.trim() || tableNumber.trim())
+
+    if (!orderConsumerName.trim() && !hasCounterIdentity) {
+      setError(NO_COUNTER_IDENTITY)
       return null
     }
 

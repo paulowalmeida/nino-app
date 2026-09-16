@@ -3,7 +3,7 @@ import { describe, expect, it, vi } from 'vitest'
 
 import { DeliveryRecipientFields } from './DeliveryRecipientFields'
 import {
-  deliveryCitiesMock,
+  addressSuggestionMock,
   deliveryRecipientMock,
 } from './DeliveryRecipientFields.mock'
 
@@ -16,8 +16,6 @@ describe('DeliveryRecipientFields', () => {
     render(
       <DeliveryRecipientFields
         value={deliveryRecipientMock}
-        storeAddress={{ city: 'Belém', state: 'PA' }}
-        deliveryCities={deliveryCitiesMock}
         addressSuggestions={[]}
         isSearchingAddress={false}
         onChange={onChange}
@@ -32,8 +30,6 @@ describe('DeliveryRecipientFields', () => {
     render(
       <DeliveryRecipientFields
         value={deliveryRecipientMock}
-        storeAddress={{ city: 'Belém', state: 'PA' }}
-        deliveryCities={deliveryCitiesMock}
         addressSuggestions={[]}
         isSearchingAddress={false}
         onChange={vi.fn()}
@@ -45,6 +41,28 @@ describe('DeliveryRecipientFields', () => {
     ).toBeInTheDocument()
     expect(
       screen.getByRole('combobox', { name: 'Logradouro' })
+    ).toBeInTheDocument()
+  })
+
+  it('keeps neighborhood and zip code only in the address option', () => {
+    render(
+      <DeliveryRecipientFields
+        value={{ ...deliveryRecipientMock, ...addressSuggestionMock }}
+        addressSuggestions={[addressSuggestionMock]}
+        isSearchingAddress={false}
+        onChange={vi.fn()}
+      />
+    )
+
+    const streetInput = screen.getByRole('combobox', { name: 'Logradouro' })
+    fireEvent.click(streetInput)
+
+    expect(streetInput).toHaveValue(addressSuggestionMock.street)
+    expect(
+      screen.getByRole('option', {
+        name: `${addressSuggestionMock.street} · ${addressSuggestionMock.neighborhood} · ${addressSuggestionMock.zipCode}`,
+        hidden: true,
+      })
     ).toBeInTheDocument()
   })
 })

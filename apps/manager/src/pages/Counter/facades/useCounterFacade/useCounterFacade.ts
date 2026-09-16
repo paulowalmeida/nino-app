@@ -10,6 +10,7 @@ import { useCounterResponsive } from '@pages/Counter/hooks/useCounterResponsive/
 import { useCounterShortcuts } from '@pages/Counter/hooks/useCounterShortcuts/useCounterShortcuts'
 import { useCounterStore } from '@pages/Counter/states/counter/counter.store'
 import { hasPickupRecipient } from '@pages/Counter/utils/hasPickupRecipient/hasPickupRecipient'
+import { hasValidRecipientIdentity } from '@pages/Counter/utils/hasValidRecipientIdentity/hasValidRecipientIdentity'
 import { useMenu } from '@shared/hooks/product/useMenu/useMenu'
 import { useCurrentUnit } from '@shared/hooks/session/useCurrentUnit/useCurrentUnit'
 
@@ -20,14 +21,10 @@ export const useCounterFacade = () => {
   const menu = useMenu(unitId)
   const payments = useCounterPaymentMethods(unitId)
   const availability = useCounterAvailability(unitId, recipient.zoneId)
-  const addressSearch = useCounterAddressSearch(
-    recipient.city || availability.storeAddress.city,
-    recipient.state || availability.storeAddress.state,
-    recipient.street
-  )
+  const addressSearch = useCounterAddressSearch(recipient.street)
   const deliveryQuote = useCounterDeliveryQuote(
     unitId,
-    channel === 'DELIVERY' ? (recipient.zipCode ?? '') : ''
+    channel === 'DELIVERY' ? recipient : {}
   )
   const cart = useCounterCart()
   const deliveryFee =
@@ -61,9 +58,10 @@ export const useCounterFacade = () => {
       : step === 'destination'
         ? channel === 'DELIVERY'
           ? Boolean(
-              recipient.name.trim() &&
-              recipient.phone.trim() &&
-              recipient.zipCode?.replace(/\D/g, '').length === 8 &&
+              hasValidRecipientIdentity(recipient) &&
+              (recipient.zipCode?.replace(/\D/g, '').length === 8 ||
+                (recipient.latitude !== undefined &&
+                  recipient.longitude !== undefined)) &&
               recipient.street.trim() &&
               recipient.number.trim() &&
               deliveryQuote.quote
@@ -77,7 +75,8 @@ export const useCounterFacade = () => {
           : true
 
   useCounterShortcuts({
-    isOpen: cart.count > 0 && (step !== 'review' || selection.method !== 'CASH'),
+    isOpen:
+      cart.count > 0 && (step !== 'review' || selection.method !== 'CASH'),
     canAdvance: canContinue && !commands.isSending,
     onAdvance: () => {
       if (!sheet) {
@@ -111,8 +110,6 @@ export const useCounterFacade = () => {
     tableNumber,
     recipient,
     zones: availability.zones,
-    storeAddress: availability.storeAddress,
-    deliveryCities: availability.deliveryCities,
     deliveryQuote: deliveryQuote.quote,
     addressSuggestions: addressSearch.suggestions,
     isSearchingAddress: addressSearch.isSearching,

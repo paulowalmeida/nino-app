@@ -1,6 +1,7 @@
 export type Recipient = {
   name: string
   phone: string
+  addressId?: string
   zipCode?: string
   street: string
   number: string
@@ -8,5 +9,7 @@ export type Recipient = {
   neighborhood: string
   city?: string
   state?: string
+  latitude?: number
+  longitude?: number
   zoneId: string
 }

@@ -12,7 +12,37 @@ describe(toCounterSaleRequest.name, () => {
       guestName: 'Ana',
       tableNumber: '4',
       changeFor: undefined,
-      items: [{ productId: 'item-1', quantity: 2, unitPrice: 10 }],
+      items: [
+        {
+          productId: 'item-1',
+          quantity: 2,
+          unitPrice: 10,
+          modifiers: undefined,
+        },
+      ],
+    })
+  })
+
+  it('sends the product modifier selections', () => {
+    expect(
+      toCounterSaleRequest({
+        ...counterSaleInputMock,
+        lines: [
+          {
+            ...counterSaleInputMock.lines[0],
+            modifiers: [
+              {
+                optionId: 'option-1',
+                name: 'Ao ponto',
+                unitPrice: '0',
+                quantity: 1,
+              },
+            ],
+          },
+        ],
+      }).items[0]
+    ).toMatchObject({
+      modifiers: [{ optionId: 'option-1', quantity: 1 }],
     })
   })
 

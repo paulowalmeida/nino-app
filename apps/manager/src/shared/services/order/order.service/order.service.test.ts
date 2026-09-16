@@ -71,9 +71,7 @@ describe('OrderService', () => {
     const result = await OrderService.getQueueSummary(unitIdMock)
 
     // Assert
-    expect(api.get).toHaveBeenCalledWith(
-      `units/${unitIdMock}/orders/summary`
-    )
+    expect(api.get).toHaveBeenCalledWith(`units/${unitIdMock}/orders/summary`)
     expect(result).toBe(orderQueueSummaryMock)
   })
 
@@ -248,7 +246,8 @@ describe('OrderService', () => {
     // Assert
     expect(api.create).toHaveBeenCalledWith(
       `units/${unitIdMock}/orders`,
-      createOrderRequestMock
+      createOrderRequestMock,
+      { headers: { 'Idempotency-Key': expect.any(String) } }
     )
     expect(result).toBe(orderMock)
   })

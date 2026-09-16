@@ -11,6 +11,10 @@ const unit = vi.hoisted(() => ({
   value: { unitId: 'unit-1' } as { unitId: string } | null,
 }))
 
+const deliveryQuoteState = vi.hoisted(() => ({
+  value: undefined as { fee: number } | undefined,
+}))
+
 vi.mock('@shared/hooks/session/useCurrentUnit/useCurrentUnit', () => ({
   useCurrentUnit: () => unit.value,
 }))
@@ -43,7 +47,10 @@ vi.mock(
 vi.mock(
   '@pages/Counter/hooks/useCounterDeliveryQuote/useCounterDeliveryQuote',
   () => ({
-    useCounterDeliveryQuote: () => ({ quote: undefined, isQuoting: false }),
+    useCounterDeliveryQuote: () => ({
+      quote: deliveryQuoteState.value,
+      isQuoting: false,
+    }),
   })
 )
 vi.mock('@pages/Counter/hooks/useCounterCart/useCounterCart', () => ({
@@ -91,6 +98,44 @@ vi.mock('@pages/Counter/states/counter/counter.store', () => ({
 }))
 
 describe(useCounterFacade.name, () => {
+  it('keeps delivery blocked until name and phone have valid lengths', () => {
+    deliveryQuoteState.value = { fee: 300 }
+    stateOverride.value = {
+      step: 'destination',
+      channel: 'DELIVERY',
+      recipient: {
+        name: 'E',
+        phone: '9',
+        zipCode: '67143450',
+        street: 'Travessa WE-69-A',
+        number: '471',
+        neighborhood: 'Coqueiro',
+        city: 'Ananindeua',
+        state: 'PA',
+        complement: '',
+        zoneId: '',
+      },
+    }
+
+    const { result, rerender } = renderHook(() => useCounterFacade())
+
+    expect(result.current.canContinue).toBe(false)
+
+    stateOverride.value = {
+      ...stateOverride.value,
+      recipient: {
+        ...(stateOverride.value.recipient as object),
+        name: 'Edu',
+        phone: '(91) 98888-0000',
+      },
+    }
+    rerender()
+
+    expect(result.current.canContinue).toBe(true)
+    deliveryQuoteState.value = undefined
+    stateOverride.value = {}
+  })
+
   it('enables pickup with a complete recipient even without a delivery quote', () => {
     stateOverride.value = {
       step: 'destination',

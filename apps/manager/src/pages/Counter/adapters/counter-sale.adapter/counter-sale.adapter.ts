@@ -53,13 +53,25 @@ export const toCounterSaleRequest = ({
     channel === 'DELIVERY' || channel === 'PICKUP'
       ? recipient?.state || undefined
       : undefined,
+  guestLatitude:
+    channel === 'DELIVERY' || channel === 'PICKUP'
+      ? recipient?.latitude
+      : undefined,
+  guestLongitude:
+    channel === 'DELIVERY' || channel === 'PICKUP'
+      ? recipient?.longitude
+      : undefined,
   changeFor:
     paymentMethod === 'CASH' && changeFor?.trim()
       ? moneyValue(changeFor)
       : undefined,
-  items: lines.map(({ productId, quantity, unitPrice }) => ({
+  items: lines.map(({ productId, quantity, unitPrice, modifiers }) => ({
     productId,
     quantity,
     unitPrice: Number(unitPrice),
+    modifiers: modifiers?.map(({ optionId, quantity: modifierQuantity }) => ({
+      optionId,
+      quantity: modifierQuantity,
+    })),
   })),
 })

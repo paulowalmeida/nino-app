@@ -20,4 +20,6 @@ export type CreateOrderRequest = {
   guestNeighborhood?: string
   guestCity?: string
   guestState?: string
+  guestLatitude?: number
+  guestLongitude?: number
 }

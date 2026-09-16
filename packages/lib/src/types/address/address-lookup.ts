@@ -7,5 +7,8 @@ export type AddressLookup = {
 }
 
 export type AddressSearchResult = AddressLookup & {
+  id: string
   zipCode: string
+  latitude: number
+  longitude: number
 }

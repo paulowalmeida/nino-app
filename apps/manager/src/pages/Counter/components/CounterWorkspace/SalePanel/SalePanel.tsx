@@ -55,8 +55,6 @@ export const SalePanel = ({ bare = false }: { bare?: boolean }) => {
     setTableNumber,
     recipient,
     setRecipient,
-    storeAddress,
-    deliveryCities,
     canContinue,
     addressSuggestions,
     isSearchingAddress,
@@ -116,8 +114,6 @@ export const SalePanel = ({ bare = false }: { bare?: boolean }) => {
           consumerName={consumerName}
           tableNumber={tableNumber}
           recipient={recipient}
-          storeAddress={storeAddress}
-          deliveryCities={deliveryCities}
           addressSuggestions={addressSuggestions}
           isSearchingAddress={isSearchingAddress}
           onChannel={setChannel}

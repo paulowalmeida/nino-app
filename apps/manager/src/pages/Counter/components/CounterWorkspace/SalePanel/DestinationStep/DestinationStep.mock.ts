@@ -14,6 +14,4 @@ export const destinationStepMock = {
     zipCode: '',
     zoneId: '',
   },
-  storeAddress: { city: 'Belém', state: 'PA' },
-  deliveryCities: [{ city: 'Belém', state: 'PA' }],
 }

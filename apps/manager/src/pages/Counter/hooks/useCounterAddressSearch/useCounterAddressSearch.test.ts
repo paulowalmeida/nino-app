@@ -26,7 +26,7 @@ describe(useCounterAddressSearch.name, () => {
       addressSuggestionsMock
     )
     const { result } = renderHook(
-      ({ street }) => useCounterAddressSearch('Belém', 'PA', street),
+      ({ street }) => useCounterAddressSearch(street),
       { initialProps: { street: 'Rua das' }, wrapper }
     )
     expect(CounterAddressSearchService.search).not.toHaveBeenCalled()
@@ -37,11 +37,7 @@ describe(useCounterAddressSearch.name, () => {
     })
     vi.useRealTimers()
     await waitFor(() =>
-      expect(CounterAddressSearchService.search).toHaveBeenCalledWith(
-        'PA',
-        'Belém',
-        'Rua das'
-      )
+      expect(CounterAddressSearchService.search).toHaveBeenCalledWith('Rua das')
     )
   })
 })

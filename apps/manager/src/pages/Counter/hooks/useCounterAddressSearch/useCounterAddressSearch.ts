@@ -4,11 +4,7 @@ import { useQuery } from '@tanstack/react-query'
 
 import { CounterAddressSearchService } from '@pages/Counter/services/counter-address-search.service/counter-address-search.service'
 
-export const useCounterAddressSearch = (
-  city: string,
-  state: string,
-  street: string
-) => {
+export const useCounterAddressSearch = (street: string) => {
   const normalizedStreet = street.trim()
   const [debouncedStreet, setDebouncedStreet] = useState('')
 
@@ -21,11 +17,9 @@ export const useCounterAddressSearch = (
   }, [street])
 
   const query = useQuery({
-    queryKey: ['counter', 'address-search', state, city, debouncedStreet],
-    queryFn: () =>
-      CounterAddressSearchService.search(state, city, debouncedStreet),
-    enabled:
-      state.length === 2 && city.length > 0 && debouncedStreet.length >= 3,
+    queryKey: ['counter', 'address-search', debouncedStreet],
+    queryFn: () => CounterAddressSearchService.search(debouncedStreet),
+    enabled: debouncedStreet.length >= 3,
     staleTime: 60_000,
   })
 
