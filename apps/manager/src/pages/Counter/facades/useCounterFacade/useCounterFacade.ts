@@ -21,7 +21,10 @@ export const useCounterFacade = () => {
   const menu = useMenu(unitId)
   const payments = useCounterPaymentMethods(unitId)
   const availability = useCounterAvailability(unitId, recipient.zoneId)
-  const addressSearch = useCounterAddressSearch(recipient.street)
+  const addressSearch = useCounterAddressSearch(
+    recipient.street,
+    availability.storeAddress.state
+  )
   const deliveryQuote = useCounterDeliveryQuote(
     unitId,
     channel === 'DELIVERY' ? recipient : {}

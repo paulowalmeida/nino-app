@@ -19,10 +19,25 @@ describe(CounterAddressSearchService.search.name, () => {
     vi.mocked(api.getAll).mockResolvedValue(counterAddressSearchResultsMock)
 
     await expect(
-      CounterAddressSearchService.search(counterAddressSearchParamsMock.street)
+      CounterAddressSearchService.search(
+        counterAddressSearchParamsMock.street,
+        counterAddressSearchParamsMock.state
+      )
     ).resolves.toEqual(counterAddressSearchResultsMock)
     expect(api.getAll).toHaveBeenCalledWith('addresses/search', {
       street: 'WE-69-A',
+      state: 'PA',
+    })
+  })
+
+  it('passes the unit state as geocoding context', async () => {
+    vi.mocked(api.getAll).mockResolvedValue(counterAddressSearchResultsMock)
+
+    await CounterAddressSearchService.search('Avenida Nazaré', 'PA')
+
+    expect(api.getAll).toHaveBeenCalledWith('addresses/search', {
+      street: 'Avenida Nazaré',
+      state: 'PA',
     })
   })
 })

@@ -1,3 +1,5 @@
+import { useState } from 'react'
+
 import { fireEvent, render, screen } from '@testing-library/react'
 import { describe, expect, it, vi } from 'vitest'
 
@@ -53,6 +55,36 @@ describe('DestinationStep', () => {
     expect(screen.getAllByRole('textbox')).toHaveLength(2)
     expect(screen.queryByText('delivery fields')).not.toBeInTheDocument()
   })
+
+  it('keeps the pickup phone visible after the controlled state changes', () => {
+    const TestHarness = () => {
+      const [recipient, setRecipient] = useState(destinationStepMock.recipient)
+
+      return (
+        <DestinationStep
+          {...destinationStepMock}
+          channel="PICKUP"
+          recipient={recipient}
+          onChannel={vi.fn()}
+          onConsumerName={vi.fn()}
+          onTableNumber={vi.fn()}
+          onRecipient={(patch) =>
+            setRecipient((current) => ({ ...current, ...patch }))
+          }
+          addressSuggestions={[]}
+          isSearchingAddress={false}
+        />
+      )
+    }
+
+    render(<TestHarness />)
+    const phone = screen.getByRole('textbox', { name: 'Telefone' })
+
+    fireEvent.change(phone, { target: { value: '91982071243' } })
+
+    expect(phone).toHaveValue('(91) 98207-1243')
+  })
+
   it('presents the available order destinations', () => {
     render(
       <DestinationStep

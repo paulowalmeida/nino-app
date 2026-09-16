@@ -26,7 +26,14 @@ describe(useCounterStore.name, () => {
     useCounterStore.getState().add(item)
 
     expect(useCounterStore.getState().lines).toEqual([
-      { productId: 'item-1', name: 'Café', unitPrice: '10', quantity: 2 },
+      {
+        lineId: 'item-1',
+        productId: 'item-1',
+        name: 'Café',
+        unitPrice: '10',
+        quantity: 2,
+        modifiers: [],
+      },
     ])
   })
 

@@ -79,6 +79,23 @@ describe(counterPrintedRows.name, () => {
     expect(rows.at(-1)).toEqual({ label: 'Chamar por', value: 'Ana' })
   })
 
+  it('prints the pickup phone alongside the name', () => {
+    const rows = counterPrintedRows({
+      channel: 'PICKUP',
+      consumerName: 'Ana',
+      tableNumber: '',
+      recipient: { ...emptyRecipientMock, phone: '(91) 98888-0000' },
+      method: null,
+      changeFor: '',
+      changeAmount: 0,
+    })
+
+    expect(rows.at(-1)).toEqual({
+      label: 'Chamar por',
+      value: 'Ana · (91) 98888-0000',
+    })
+  })
+
   it('prints the change alongside a cash payment', () => {
     // Act
     const rows = counterPrintedRows({

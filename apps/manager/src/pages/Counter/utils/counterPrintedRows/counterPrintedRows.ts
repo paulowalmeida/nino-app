@@ -81,8 +81,9 @@ export const counterPrintedRows = ({
         value: table ? `Mesa ${table}${name ? ` · ${name}` : ''}` : name,
       })
     }
-  } else if (name) {
-    rows.push({ label: 'Chamar por', value: name })
+  } else {
+    const who = [name, recipient.phone.trim()].filter(Boolean).join(' · ')
+    if (who) rows.push({ label: 'Chamar por', value: who })
   }
 
   if (method) {

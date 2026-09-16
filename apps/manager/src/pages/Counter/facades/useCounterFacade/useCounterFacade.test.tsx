@@ -15,6 +15,12 @@ const deliveryQuoteState = vi.hoisted(() => ({
   value: undefined as { fee: number } | undefined,
 }))
 
+const availabilityState = vi.hoisted(() => ({
+  value: { city: '', state: '' },
+}))
+
+const addressSearchSpy = vi.hoisted(() => vi.fn())
+
 vi.mock('@shared/hooks/session/useCurrentUnit/useCurrentUnit', () => ({
   useCurrentUnit: () => unit.value,
 }))
@@ -33,7 +39,7 @@ vi.mock(
     useCounterAvailability: () => ({
       zones: [],
       fee: 0,
-      storeAddress: { city: '', state: '' },
+      storeAddress: availabilityState.value,
       deliveryCities: [],
     }),
   })
@@ -41,7 +47,10 @@ vi.mock(
 vi.mock(
   '@pages/Counter/hooks/useCounterAddressSearch/useCounterAddressSearch',
   () => ({
-    useCounterAddressSearch: () => ({ suggestions: [], isSearching: false }),
+    useCounterAddressSearch: (...args: unknown[]) => {
+      addressSearchSpy(...args)
+      return { suggestions: [], isSearching: false }
+    },
   })
 )
 vi.mock(
@@ -164,6 +173,28 @@ describe(useCounterFacade.name, () => {
     rerender()
     expect(result.current.canContinue).toBe(false)
     stateOverride.value = {}
+  })
+
+  it('passes the unit state to address search without forcing a city', () => {
+    availabilityState.value = { city: 'Belém', state: 'PA' }
+    stateOverride.value = {
+      recipient: {
+        name: '',
+        phone: '',
+        street: 'Avenida Nazaré',
+        number: '',
+        complement: '',
+        neighborhood: '',
+        zoneId: '',
+      },
+    }
+
+    renderHook(() => useCounterFacade())
+
+    expect(addressSearchSpy).toHaveBeenCalledWith('Avenida Nazaré', 'PA')
+    availabilityState.value = { city: '', state: '' }
+    stateOverride.value = {}
+    addressSearchSpy.mockClear()
   })
 
   it('composes the counter feature contract', () => {
