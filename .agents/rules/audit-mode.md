@@ -14,7 +14,11 @@ When the user asks for an audit, review, inspection, assessment, retrospective a
 
 ## Allowed Output
 
-Proposed corrections belong in the audit report only. The report MUST distinguish confirmed violations from recommendations.
+Proposed corrections belong in the audit output or handoff only. In a
+harness-orchestrated QA run, this output is transient and goes to
+`tech-lead`; it MUST distinguish confirmed violations from
+recommendations. Do not create a saved report unless the user explicitly asks
+for one.
 
 If the user explicitly authorizes one proposed change during the audit, only that specific change becomes implementation scope. Re-run the normal implementation preflight for that change.
 
@@ -40,7 +44,9 @@ An unresolved `NEEDS-EVIDENCE` item MUST result in **INCOMPLETE**, never a clean
 
 Every confirmed finding MUST identify the file and line when applicable, observed behavior, applicable rule, classification, concrete impact, and smallest in-scope disposition or correction. Distinguish a search result, file inspection, check result, and conclusion; do not claim a broader result than the evidence proves.
 
-The report MUST separately list unresolved evidence, legacy items, and checks run with their exact scope. A passing automated check is evidence only for the invariant it actually verifies.
+The audit output MUST separately list unresolved evidence, legacy items, and
+checks run with their exact scope. A passing automated check is evidence only
+for the invariant it actually verifies.
 
 ## User Decision Gate
 

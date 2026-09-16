@@ -1,5 +1,20 @@
 # Nino — Agent Rules
 
+## Harness language rule
+
+Harness instructions and handoffs must be written in English. Do not add
+Brazilian Portuguese to harness-owned artifacts.
+
+## Harness-delegated QA
+
+When `tech-lead` delegates QA in this repository, the agent must
+inspect and return a transient `qa-handoff` to the orchestrator. It must not
+create an execution report, change code, or choose the correcting agent.
+Findings involving UI, client-side state, interaction, or presentation are
+inputs for the orchestrator to decide whether to call `frontend-dev`,
+`backend-dev`, or both. After correction, the orchestrator must request a new
+QA validation.
+
 This file is the agent's **mandatory operational contract**. Its purpose is to prevent improvisation, architectural drift, incomplete inspection, unsupported claims, and rule circumvention.
 
 ## Fundamental Rule
