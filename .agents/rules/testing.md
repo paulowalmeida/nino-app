@@ -146,6 +146,10 @@ The agent MUST:
 9. verify async assertions are awaited;
 10. inspect the final diff.
 
+When a shared package or exported type changes, the relevant workspace builds
+are mandatory evidence in addition to package tests. A passing manager test
+does not establish that the consumer or another workspace still compiles.
+
 For a refactored page domain, the agent MUST additionally inventory every
 folder and executable source file, pair it with a colocated test, and run
 coverage scoped to `src/pages/<feature>/**/*`. Completion requires 100%

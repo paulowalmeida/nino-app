@@ -33,6 +33,11 @@ moving code to `shared`, creating a facade, or extracting a component.
 - When a defect can recur mechanically, update the corresponding rule, hook,
   checker, or regression test in the same change. A source-only correction is
   incomplete when the repository can generate the same defect again.
+- When changing a shared package or exported type, inventory every workspace
+  consumer and run the affected production builds. New required fields MUST be
+  supplied by every adapter/provider in the graph; when a legacy provider cannot
+  supply them, use a compatible provider-specific type or adapter instead of
+  weakening the runtime contract by assumption.
 
 ## Regression evidence
 

@@ -81,9 +81,9 @@ npm run quality:gate
 ```
 
 It runs the final diff check, all enforcement regression tests, repository lint,
-repository type-check, and all workspace test suites that declare a `test`
-script. Pass `--workspace <name>` to select only one workspace's test suite and
-`--feature <Page>` to add the composed Page-feature gate:
+repository type-check, all workspace builds, and all workspace test suites that
+declare a `test` script. Pass `--workspace <name>` to scope the build and test
+to one workspace, and `--feature <Page>` to add the composed Page-feature gate:
 
 ```bash
 node .agents/enforcement/completion-gate.mjs \

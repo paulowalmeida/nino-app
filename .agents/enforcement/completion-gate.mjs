@@ -20,11 +20,6 @@ if (process.argv.includes('--help')) {
   process.exit(0)
 }
 
-if (!workspace || workspace.startsWith('--')) {
-  console.error('--workspace requires a workspace name')
-  process.exit(2)
-}
-
 if (featureIndex >= 0 && (!feature || feature.startsWith('--'))) {
   console.error('--feature requires a Page name')
   process.exit(2)
@@ -58,6 +53,16 @@ for (const test of enforcementTests) {
 
 run('repository lint', 'npm', ['run', 'lint'])
 run('repository type-check', 'npm', ['run', 'type-check'])
+if (workspace) {
+  run(`${workspace} build`, 'npm', ['run', 'build', '--workspace', workspace])
+} else {
+  run('all workspace builds', 'npm', [
+    'run',
+    'build',
+    '--workspaces',
+    '--if-present',
+  ])
+}
 if (workspace) {
   run(`${workspace} tests`, 'npm', ['run', 'test', '--workspace', workspace])
 } else {
