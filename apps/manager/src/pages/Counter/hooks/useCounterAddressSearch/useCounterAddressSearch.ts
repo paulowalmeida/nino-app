@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 
 import { useQuery } from '@tanstack/react-query'
 
-import { searchAddress } from '@nino/lib/services/zip-code.service'
+import { CounterAddressSearchService } from '@pages/Counter/services/counter-address-search.service/counter-address-search.service'
 
 export const useCounterAddressSearch = (
   city: string,
@@ -22,7 +22,8 @@ export const useCounterAddressSearch = (
 
   const query = useQuery({
     queryKey: ['counter', 'address-search', state, city, debouncedStreet],
-    queryFn: () => searchAddress(state, city, debouncedStreet),
+    queryFn: () =>
+      CounterAddressSearchService.search(state, city, debouncedStreet),
     enabled:
       state.length === 2 && city.length > 0 && debouncedStreet.length >= 3,
     staleTime: 60_000,

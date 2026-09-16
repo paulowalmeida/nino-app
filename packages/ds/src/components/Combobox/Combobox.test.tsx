@@ -34,6 +34,19 @@ describe(Combobox.name, () => {
     ).not.toBeInTheDocument()
   })
 
+  it('keeps server-filtered options when local filtering is disabled', async () => {
+    render(<Combobox options={options} shouldFilterOptions={false} />)
+
+    await userEvent.type(screen.getByRole('combobox'), 'zzz')
+
+    expect(
+      screen.getByRole('option', { name: 'Option A', hidden: true })
+    ).toBeInTheDocument()
+    expect(
+      screen.getByRole('option', { name: 'Option B', hidden: true })
+    ).toBeInTheDocument()
+  })
+
   it('displays empty message when no options match', async () => {
     render(<Combobox options={options} emptyMessage="Nada encontrado" />)
     await userEvent.type(screen.getByRole('combobox'), 'zzz')

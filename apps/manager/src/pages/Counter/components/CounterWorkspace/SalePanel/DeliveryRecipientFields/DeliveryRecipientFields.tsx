@@ -63,6 +63,7 @@ export const DeliveryRecipientFields = ({
           : 'Nenhum endereço encontrado'
       }
       loading={isSearchingAddress}
+      shouldFilterOptions={false}
       onInputValueChange={(query) => {
         onChange({ street: query })
       }}

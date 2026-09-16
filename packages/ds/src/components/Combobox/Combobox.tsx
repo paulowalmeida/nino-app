@@ -42,6 +42,8 @@ type ComboboxProps = {
   emptyMessage?: string
   /** Shows an inline loading indicator while options are being fetched. */
   loading?: boolean
+  /** Keeps server-filtered options intact instead of filtering them again. */
+  shouldFilterOptions?: boolean
   /** Additional CSS classes merged into the input */
   className?: string
   /**
@@ -91,6 +93,7 @@ export function Combobox({
   onInputValueChange,
   emptyMessage = 'Nenhum resultado',
   loading = false,
+  shouldFilterOptions = true,
   className,
   isValidQuery,
   maxLength,
@@ -112,8 +115,8 @@ export function Combobox({
   }
 
   const filtered = useMemo(
-    () => filterOptions(options, query),
-    [options, query]
+    () => (shouldFilterOptions ? filterOptions(options, query) : options),
+    [options, query, shouldFilterOptions]
   )
 
   const collection = useMemo(
