@@ -92,6 +92,22 @@ describe('createHttpClient', () => {
     expect(JSON.parse(sentBody)).toEqual({ total: 42 })
   })
 
+  it('post: sends custom headers with the request', async () => {
+    // Arrange
+    const fetchMock = stubFetch(jsonResponse(201, { id: 'order-3' }))
+    const client = createHttpClient(baseConfig())
+
+    // Act
+    await client.post(
+      'orders',
+      { total: 42 },
+      { headers: { 'Idempotency-Key': 'order-3' } }
+    )
+
+    // Assert
+    expect(requestOf(fetchMock).headers.get('Idempotency-Key')).toBe('order-3')
+  })
+
   it('postFormData: sends a multipart body and returns the response', async () => {
     // Arrange
     const fetchMock = vi

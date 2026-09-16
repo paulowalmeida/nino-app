@@ -7,6 +7,7 @@ import styles from './Settings.module.css'
 
 const FLOW_SCROLL_ROUTES = [
   '/atendimento',
+  '/pagamento',
   '/salao-comandas',
   '/entrega',
   '/informacoes',

@@ -12,10 +12,6 @@
   @apply flex flex-col gap-3 border-t border-border py-4;
 }
 
-.groupTitle {
-  @apply text-xs font-bold uppercase tracking-[0.12em] text-fg-faint;
-}
-
 .row {
   @apply flex items-start gap-3;
 }
@@ -64,24 +60,6 @@
 
 .skeleton {
   @apply h-64 w-full rounded-6;
-}
-
-/* payment methods: a badge the store lights up */
-.chips {
-  @apply gap-2;
-}
-
-.chip {
-  @apply gap-1.5 rounded-3 px-3 py-2 text-sm text-fg-subtle;
-  @apply hover:text-fg-default;
-}
-
-.chip svg {
-  @apply h-4 w-4 shrink-0;
-}
-
-.chipOn {
-  @apply bg-brand-soft font-semibold text-brand-strong;
 }
 
 .minimum {

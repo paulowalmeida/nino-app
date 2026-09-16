@@ -14,6 +14,7 @@ import { ComboboxSize } from './Combobox.types'
 type ComboboxOption = {
   value: string
   label: string
+  inputLabel?: string
   disabled?: boolean
 }
 
@@ -124,7 +125,7 @@ export function Combobox({
       createListCollection({
         items: filtered,
         itemToValue: (item) => item.value,
-        itemToString: (item) => item.label,
+        itemToString: (item) => item.inputLabel ?? item.label,
       }),
     [filtered]
   )

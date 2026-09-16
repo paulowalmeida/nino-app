@@ -58,6 +58,9 @@
   @apply mt-0.5 truncate whitespace-nowrap;
   font-variant-numeric: tabular-nums;
 }
+.modifiers {
+  @apply mt-0.5 border-l-2 border-brand-soft pl-2;
+}
 .lineTotal {
   font-variant-numeric: tabular-nums;
 }

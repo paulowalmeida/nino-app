@@ -37,11 +37,11 @@ export const useCounterStore = create<CounterState>((set) => ({
   },
   changeFor: '',
   lastSale: null,
-  add: (item) => {
-    addItem(set, item)
+  add: (item, modifiers) => {
+    addItem(set, item, modifiers)
     clearLastSale(set)
   },
-  updateQuantity: (productId, by) => stepLine(set, productId, by),
+  updateQuantity: (lineId, by) => stepLine(set, lineId, by),
   clear: () => clearTicket(set),
   setSheet: (sheet) => setSheet(set, sheet),
   setStep: (step) => setStep(set, step),

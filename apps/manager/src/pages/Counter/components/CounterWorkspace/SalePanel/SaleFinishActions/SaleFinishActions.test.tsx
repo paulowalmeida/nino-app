@@ -142,4 +142,22 @@ describe(SaleFinishActions.name, () => {
     )
     expect(screen.getByText('R$ 25,00')).toBeInTheDocument()
   })
+
+  it('places the clear action before the finish action', () => {
+    render(
+      <SaleFinishActions
+        {...saleFinishActionsMock}
+        error={null}
+        isSending={false}
+        onFinish={vi.fn()}
+        onClear={vi.fn()}
+      />
+    )
+    const buttons = screen.getAllByRole('button')
+    expect(
+      buttons.indexOf(screen.getByRole('button', { name: 'Limpar Pedido' }))
+    ).toBeLessThan(
+      buttons.indexOf(screen.getByRole('button', { name: 'Concluir pedido' }))
+    )
+  })
 })

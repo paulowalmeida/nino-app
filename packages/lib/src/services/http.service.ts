@@ -1,4 +1,8 @@
-import type { HttpClient, HttpSearchParams } from '../types/http/http-client'
+import type {
+  HttpClient,
+  HttpRequestOptions,
+  HttpSearchParams,
+} from '../types/http/http-client'
 
 export const createApi = (client: HttpClient) => ({
   get: <ReturnType>(url: string): Promise<ReturnType> => client.get(url),
@@ -10,8 +14,10 @@ export const createApi = (client: HttpClient) => ({
 
   create: <BodyType, ReturnType>(
     url: string,
-    body?: BodyType
-  ): Promise<ReturnType> => client.post(url, body),
+    body?: BodyType,
+    options?: HttpRequestOptions
+  ): Promise<ReturnType> =>
+    options ? client.post(url, body, options) : client.post(url, body),
 
   createFormData: <ReturnType>(
     url: string,

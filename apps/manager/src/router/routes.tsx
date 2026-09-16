@@ -332,6 +332,15 @@ export const router = createBrowserRouter([
               ),
           },
           {
+            path: 'pagamento',
+            lazy: () =>
+              import('@pages/Settings/components/SettingsPaymentSection/SettingsPaymentSection').then(
+                ({ SettingsPaymentSection }) => ({
+                  Component: SettingsPaymentSection,
+                })
+              ),
+          },
+          {
             path: 'entrega',
             lazy: () =>
               import('@pages/Settings/components/SettingsDeliverySection/SettingsDeliverySection').then(
@@ -383,6 +392,10 @@ export const router = createBrowserRouter([
           {
             path: 'atendimento',
             element: <Navigate to="../../unidade/atendimento" replace />,
+          },
+          {
+            path: 'pagamento',
+            element: <Navigate to="../../unidade/pagamento" replace />,
           },
           {
             path: 'salao-comandas',

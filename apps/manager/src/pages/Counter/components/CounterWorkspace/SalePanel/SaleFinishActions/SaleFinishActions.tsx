@@ -71,25 +71,33 @@ export const SaleFinishActions = ({
           </Alert>
         )}
         {error && <Alert variant="error">{error}</Alert>}
-        <Button
-          loading={isSending}
-          disabled={!hasLines || !isPaymentAvailable}
-          className={mergeClasses(motion.press, styles.finish)}
-          onClick={() => (isCash ? setConfirmingCash(true) : onFinish())}
+        <Box
+          direction={bare ? 'row' : 'column'}
+          align={bare ? 'center' : undefined}
+          justify={bare ? 'end' : undefined}
+          gap={2}
+          className={styles.actions}
         >
-          Concluir pedido
-        </Button>
-        {hasLines && (
+          {hasLines && (
+            <Button
+              type="button"
+              variant="ghost"
+              disabled={isSending}
+              className={styles.clear}
+              onClick={() => setConfirmingClear(true)}
+            >
+              Limpar Pedido
+            </Button>
+          )}
           <Button
-            type="button"
-            variant="ghost"
-            disabled={isSending}
-            className={styles.clear}
-            onClick={() => setConfirmingClear(true)}
+            loading={isSending}
+            disabled={!hasLines || !isPaymentAvailable}
+            className={mergeClasses(motion.press, styles.finish)}
+            onClick={() => (isCash ? setConfirmingCash(true) : onFinish())}
           >
-            Limpar Pedido
+            Concluir pedido
           </Button>
-        )}
+        </Box>
       </Box>
       <Dialog
         open={confirmingCash && isCash}

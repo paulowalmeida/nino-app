@@ -4,7 +4,10 @@ import { describe, expect, it, vi } from 'vitest'
 import { useSettingsUnitDetailFacade } from './useSettingsUnitDetailFacade'
 
 vi.mock('@pages/Units/facades/useUnitsFacade/useUnitsFacade', () => ({
-  useUnitsFacade: () => ({ unit: null }),
+  useUnitsFacade: () => ({
+    unit: null,
+    units: { detail: { data: undefined } },
+  }),
 }))
 vi.mock('../../hooks/useDeliveryLocation/useDeliveryLocation', () => ({
   useDeliveryLocation: (state: string) => ({ state }),

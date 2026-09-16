@@ -11,8 +11,16 @@ import { UnitCard } from './UnitCard'
 import { unitCardDetailMock } from './UnitCard.mock'
 
 const location = {
-  states: { data: [], isLoading: false, isError: false },
-  municipalities: { data: [], isLoading: false, isError: false },
+  states: {
+    data: [{ id: 15, sigla: 'PA', nome: 'Pará' }],
+    isLoading: false,
+    isError: false,
+  },
+  municipalities: {
+    data: [{ id: 1500800, nome: 'Ananindeua' }],
+    isLoading: false,
+    isError: false,
+  },
 } as never
 
 const onSave = vi.fn()
@@ -109,6 +117,21 @@ describe('UnitCard', () => {
     renderCard(unitCardDetailMock)
 
     expect(screen.getByRole('button', { name: 'Salvar' })).toBeDisabled()
+  })
+
+  it('opens the visible save action after choosing a delivery city', async () => {
+    const user = userEvent.setup({ pointerEventsCheck: 0 })
+    renderCard(unitCardDetailMock)
+
+    await user.click(screen.getByRole('tab', { name: 'Atendimento' }))
+    const cityInput = screen.getByRole('combobox', { name: 'Cidade atendida' })
+    await user.click(cityInput)
+    await user.type(cityInput, 'Ana')
+    await user.keyboard('{ArrowDown}{Enter}')
+
+    expect(screen.getByRole('button', { name: 'Salvar' })).toBeEnabled()
+    expect(screen.getByText('Belém · PA')).toBeInTheDocument()
+    expect(screen.queryByText('Ananindeua · PA')).not.toBeInTheDocument()
   })
 
   it('offers the promotion to a unit that is not the head office', async () => {

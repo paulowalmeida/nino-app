@@ -34,4 +34,35 @@ describe(SaleCart.name, () => {
       screen.getByRole('button', { name: 'Tirar um Café' })
     ).toBeInTheDocument()
   })
+
+  it('shows each selected modifier under its group', () => {
+    render(
+      <SaleCart
+        lines={[
+          {
+            ...line,
+            modifiers: [
+              {
+                optionId: 'option-1',
+                name: 'Ao ponto',
+                unitPrice: '0',
+                quantity: 1,
+                groupName: 'Ponto da carne',
+              },
+              {
+                optionId: 'option-2',
+                name: 'Ovo',
+                unitPrice: '2.5',
+                quantity: 1,
+                groupName: 'Adicionais',
+              },
+            ],
+          },
+        ]}
+        onStep={vi.fn()}
+      />
+    )
+    expect(screen.getByText('Ponto da carne: Ao ponto')).toBeInTheDocument()
+    expect(screen.getByText('Adicionais: Ovo')).toBeInTheDocument()
+  })
 })

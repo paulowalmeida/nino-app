@@ -45,13 +45,32 @@ export const ReviewStep = ({
       <Box direction="column" className={styles.ticket}>
         <Box direction="column" as="ul" className={styles.ticketItems}>
           {lines.map((line) => (
-            <Box as="li" key={line.productId} className={styles.ticketItem}>
-              <Text as="span" size="sm" className={styles.ticketName}>
-                <Text as="span" size="sm" className={styles.ticketQuantity}>
-                  {line.quantity}×
-                </Text>{' '}
-                {line.name}
-              </Text>
+            <Box
+              as="li"
+              key={line.lineId ?? line.productId}
+              className={styles.ticketItem}
+            >
+              <Box gap={0.5}>
+                <Text as="span" size="sm" className={styles.ticketName}>
+                  <Text as="span" size="sm" className={styles.ticketQuantity}>
+                    {line.quantity}×
+                  </Text>{' '}
+                  {line.name}
+                </Text>
+                {!!line.modifiers?.length && (
+                  <Box
+                    direction="column"
+                    gap={0.5}
+                    className={styles.modifiers}
+                  >
+                    {line.modifiers.map(({ optionId, name, groupName }) => (
+                      <Text as="span" size="xs" color="muted" key={optionId}>
+                        {groupName ? `${groupName}: ${name}` : name}
+                      </Text>
+                    ))}
+                  </Box>
+                )}
+              </Box>
               <Text as="span" size="sm">
                 {brl(Number(line.unitPrice) * line.quantity)}
               </Text>

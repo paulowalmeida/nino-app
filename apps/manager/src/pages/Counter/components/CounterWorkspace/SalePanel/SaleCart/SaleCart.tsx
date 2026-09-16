@@ -15,7 +15,7 @@ import styles from './SaleCart.module.css'
 
 export type SaleCartProps = {
   lines: CartLine[]
-  onStep: (productId: string, by: number) => void
+  onStep: (lineId: string, by: number) => void
   bare?: boolean
   onAddMore?: () => void
 }
@@ -47,7 +47,7 @@ export const SaleCart = ({
 
           return (
             <ListRow
-              key={line.productId}
+              key={line.lineId ?? line.productId}
               divider="top"
               gap={2.5}
               padding={3}
@@ -71,6 +71,19 @@ export const SaleCart = ({
                 >
                   {line.quantity} × {brl(line.unitPrice)}
                 </Text>
+                {!!line.modifiers?.length && (
+                  <Box
+                    direction="column"
+                    gap={0.5}
+                    className={styles.modifiers}
+                  >
+                    {line.modifiers.map(({ optionId, name, groupName }) => (
+                      <Text as="span" size="xs" color="muted" key={optionId}>
+                        {groupName ? `${groupName}: ${name}` : name}
+                      </Text>
+                    ))}
+                  </Box>
+                )}
               </Box>
               <Box direction="column" gap={1.5} align="end" shrink={false}>
                 <Text
@@ -92,8 +105,8 @@ export const SaleCart = ({
                       : `Tirar um ${line.name}`
                   }
                   incrementLabel={`Mais um ${line.name}`}
-                  onDecrement={() => onStep(line.productId, -1)}
-                  onIncrement={() => onStep(line.productId, 1)}
+                  onDecrement={() => onStep(line.lineId ?? line.productId, -1)}
+                  onIncrement={() => onStep(line.lineId ?? line.productId, 1)}
                   size="sm"
                   className={styles.stepper}
                 />

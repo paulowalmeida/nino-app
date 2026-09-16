@@ -1,13 +1,14 @@
 import { useCounterStore } from '@pages/Counter/states/counter/counter.store'
 import type { CartLine } from '@shared/types/counter/cart-line'
+import type { CartLineModifier } from '@shared/types/counter/cart-line-modifier'
 import type { MenuItem } from '@shared/types/product/menu-item'
 
 type CounterCart = {
   lines: CartLine[]
   count: number
   total: number
-  add: (item: MenuItem) => void
-  updateQuantity: (productId: string, by: number) => void
+  add: (item: MenuItem, modifiers?: CartLineModifier[]) => void
+  updateQuantity: (lineId: string, by: number) => void
   clear: () => void
 }
 

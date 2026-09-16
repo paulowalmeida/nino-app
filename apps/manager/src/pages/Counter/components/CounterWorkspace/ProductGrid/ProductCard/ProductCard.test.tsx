@@ -63,4 +63,86 @@ describe(ProductCard.name, () => {
     expect(onPreviewStart).not.toHaveBeenCalled()
     vi.useRealTimers()
   })
+
+  it('opens quantity controls when hovering the picked card', async () => {
+    render(
+      <ProductCard
+        item={item}
+        index={0}
+        isPicked
+        quantity={1}
+        onPick={vi.fn()}
+        onStep={vi.fn()}
+        onPreviewStart={vi.fn()}
+        onPreviewEnd={vi.fn()}
+      />
+    )
+
+    const card = screen.getByText('Café').closest('[role="button"]')
+    if (!card) throw new Error('Card do produto não encontrado')
+    fireEvent.pointerEnter(card, { pointerType: 'mouse' })
+
+    expect(
+      await screen.findByRole('button', { name: 'Mais um Café' })
+    ).toBeInTheDocument()
+  })
+
+  it('keeps opening quantity controls by clicking the badge', async () => {
+    render(
+      <ProductCard
+        item={item}
+        index={0}
+        isPicked
+        quantity={1}
+        onPick={vi.fn()}
+        onStep={vi.fn()}
+        onPreviewStart={vi.fn()}
+        onPreviewEnd={vi.fn()}
+      />
+    )
+
+    fireEvent.click(
+      screen.getByRole('button', {
+        name: 'Alterar quantidade de Café: 1',
+      })
+    )
+
+    expect(
+      await screen.findByRole('button', { name: 'Mais um Café' })
+    ).toBeInTheDocument()
+  })
+
+  it('keeps quantity controls open when returning from the popover to the card', async () => {
+    vi.useFakeTimers()
+    render(
+      <ProductCard
+        item={item}
+        index={0}
+        isPicked
+        quantity={1}
+        onPick={vi.fn()}
+        onStep={vi.fn()}
+        onPreviewStart={vi.fn()}
+        onPreviewEnd={vi.fn()}
+      />
+    )
+
+    const card = screen.getByText('Café').closest('[role="button"]')
+    if (!card) throw new Error('Card do produto não encontrado')
+    fireEvent.pointerEnter(card, { pointerType: 'mouse' })
+    await act(async () => {
+      await vi.runAllTimersAsync()
+    })
+    const panelButton = screen.getByRole('button', {
+      name: 'Mais um Café',
+    })
+    fireEvent.pointerLeave(panelButton, { pointerType: 'mouse' })
+    fireEvent.pointerMove(card, { pointerType: 'mouse' })
+    act(() => vi.advanceTimersByTime(100))
+
+    expect(
+      screen.getByRole('button', { name: 'Mais um Café' })
+    ).toBeInTheDocument()
+    vi.useRealTimers()
+  })
 })

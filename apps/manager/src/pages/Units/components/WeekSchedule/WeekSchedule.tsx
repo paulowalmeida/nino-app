@@ -92,7 +92,7 @@ export const WeekSchedule = ({
     <Box as="section" className={local.panel}>
       <Box as="header" className={`${motion.unroll} ${local.head}`}>
         <Heading level={2} size="xl">
-          Quando a loja abre
+          Quando a unidade abre
         </Heading>
         <Text size="sm" color="subtle" mt={1}>
           Fora do horário, o cliente vê a loja fechada e não consegue pedir.

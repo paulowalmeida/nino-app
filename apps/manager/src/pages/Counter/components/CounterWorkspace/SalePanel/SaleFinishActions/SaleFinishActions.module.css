@@ -36,6 +36,18 @@
   padding-bottom: max(1rem, env(safe-area-inset-bottom));
 }
 
+.actions {
+  @apply w-full;
+}
+
+.footerBare .actions {
+  @apply justify-end;
+}
+
+.footerBare .finish {
+  @apply w-fit;
+}
+
 .totalLabel {
   @apply leading-normal;
 }
@@ -45,25 +57,15 @@
 }
 
 .finish {
-  @apply h-12 w-full text-base;
+  @apply w-full;
 }
 
 .clear {
-  @apply h-11 w-full text-sm text-fg-muted hover:text-danger;
+  @apply w-fit self-end px-4 text-fg-muted hover:text-danger;
 }
 
 @media (min-width: 640px) {
-  .footerBare {
-    @apply grid items-center gap-x-4;
-    grid-template-columns: minmax(0, 1fr) auto auto;
-  }
-
-  .footerBare > [role='alert'] {
-    grid-column: 1 / -1;
-  }
-
-  .footerBare .finish,
   .footerBare .clear {
-    @apply w-auto px-4;
+    @apply w-fit px-4;
   }
 }

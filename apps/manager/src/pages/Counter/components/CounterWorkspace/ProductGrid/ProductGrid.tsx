@@ -13,6 +13,7 @@ import { CategoryChips } from '@shared/components/CategoryChips/CategoryChips'
 import type { MenuItem } from '@shared/types/product/menu-item'
 
 import { ProductCard } from './ProductCard/ProductCard'
+import { ProductConfigurationModal } from './ProductConfigurationModal/ProductConfigurationModal'
 import { ProductPreviewModal } from './ProductPreviewModal/ProductPreviewModal'
 
 import styles from './ProductGrid.module.css'
@@ -26,6 +27,7 @@ export const ProductGrid = () => {
     updateQuantity: onStep,
   } = useCounterFacade()
   const [current, setCurrent] = useState<string | null>(null)
+  const [configuredItem, setConfiguredItem] = useState<MenuItem | null>(null)
   const [previewedItem, setPreviewedItem] = useState<MenuItem | null>(null)
   const [term, setTerm] = useState('')
 
@@ -40,8 +42,21 @@ export const ProductGrid = () => {
 
   const pickedIds = new Set(lines.map(({ productId }) => productId))
   const quantities = new Map(
-    lines.map(({ productId, quantity }) => [productId, quantity])
+    lines.map(({ productId }) => [
+      productId,
+      lines
+        .filter((line) => line.productId === productId)
+        .reduce((sum, line) => sum + line.quantity, 0),
+    ])
   )
+
+  const pickItem = (item: MenuItem) => {
+    if (item.modifiers?.length) {
+      setConfiguredItem(item)
+      return
+    }
+    onPick(item)
+  }
 
   const renderGrid = (items: MenuItem[]) => (
     <Box className={`${styles.grid} ${styles.resultsTop}`}>
@@ -52,8 +67,8 @@ export const ProductGrid = () => {
           index={index}
           isPicked={pickedIds.has(item.id)}
           quantity={quantities.get(item.id)}
-          onPick={onPick}
-          onStep={onStep}
+          onPick={pickItem}
+          onStep={item.modifiers?.length ? undefined : onStep}
           onPreviewStart={setPreviewedItem}
           onPreviewEnd={() => setPreviewedItem(null)}
         />
@@ -139,6 +154,11 @@ export const ProductGrid = () => {
       <ProductPreviewModal
         item={previewedItem}
         onOpenChange={(open) => !open && setPreviewedItem(null)}
+      />
+      <ProductConfigurationModal
+        item={configuredItem}
+        onAdd={onPick}
+        onOpenChange={(open) => !open && setConfiguredItem(null)}
       />
     </Box>
   )

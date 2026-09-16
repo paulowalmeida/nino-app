@@ -1,7 +1,6 @@
 import { useState } from 'react'
 
 import { Box } from '@nino/ds/components/Box'
-import { Button } from '@nino/ds/components/Button'
 import { Chip } from '@nino/ds/components/Chip'
 import { Combobox } from '@nino/ds/components/Combobox'
 import { FormField } from '@nino/ds/components/FormField'
@@ -14,6 +13,7 @@ import styles from './DeliveryCities.module.css'
 
 type DeliveryCitiesProps = {
   cities: DeliveryCity[]
+  savedCities: DeliveryCity[]
   primaryCity: DeliveryCity
   location: ReturnType<typeof useDeliveryLocation>
   onStateChange: (state: string) => void
@@ -22,16 +22,17 @@ type DeliveryCitiesProps = {
 
 export const DeliveryCities = ({
   cities,
+  savedCities,
   primaryCity,
   location,
   onStateChange,
   onChange,
 }: DeliveryCitiesProps) => {
-  const [state, setState] = useState('')
+  const [state, setState] = useState(primaryCity.state)
   const [city, setCity] = useState('')
   const { states, municipalities } = location
 
-  const addCity = (selectedCity = city) => {
+  const selectCity = (selectedCity: string) => {
     const municipality = municipalities.data?.find(
       (item) => item.nome.toLowerCase() === selectedCity.trim().toLowerCase()
     )
@@ -48,6 +49,15 @@ export const DeliveryCities = ({
     onChange([...cities, deliveryCity])
     setCity('')
   }
+
+  const visibleCities = cities.filter(
+    (item) =>
+      savedCities.some(
+        (saved) =>
+          saved.city.toLowerCase() === item.city.toLowerCase() &&
+          saved.state === item.state
+      )
+  )
 
   return (
     <Box direction="column" gap={4}>
@@ -87,25 +97,13 @@ export const DeliveryCities = ({
               ariaLabel="Cidade atendida"
               inputValue={city}
               onInputValueChange={setCity}
-              onValueChange={addCity}
+              onValueChange={selectCity}
               disabled={
                 !state || municipalities.isLoading || municipalities.isError
               }
             />
           </FormField>
         </Box>
-
-        <Button
-          variant="outline"
-          onClick={() => addCity()}
-          disabled={
-            !municipalities.data?.some(
-              (item) => item.nome.toLowerCase() === city.trim().toLowerCase()
-            )
-          }
-        >
-          Adicionar
-        </Button>
       </Box>
 
       <Box
@@ -115,7 +113,7 @@ export const DeliveryCities = ({
         wrap
         aria-label="Cidades configuradas"
       >
-        {cities.map((item) => {
+        {visibleCities.map((item) => {
           const isPrimary =
             item.city === primaryCity.city && item.state === primaryCity.state
           return (

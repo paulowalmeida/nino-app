@@ -63,6 +63,27 @@ describe(Combobox.name, () => {
     expect(onValueChange).toHaveBeenCalledWith('a')
   })
 
+  it('uses the input label after selecting a detailed option', async () => {
+    const user = userEvent.setup({ pointerEventsCheck: 0 })
+    render(
+      <Combobox
+        options={[
+          {
+            value: '67143450',
+            label: 'Travessa WE-69-A · Coqueiro · 67143-450',
+            inputLabel: 'Travessa WE-69-A',
+          },
+        ]}
+      />
+    )
+
+    const input = screen.getByRole('combobox')
+    await user.click(input)
+    await user.keyboard('{ArrowDown}{Enter}')
+
+    expect(input).toHaveValue('Travessa WE-69-A')
+  })
+
   it('applies error state when error is true', () => {
     render(<Combobox options={options} error />)
     expect(screen.getByRole('combobox')).toHaveAttribute('data-invalid')

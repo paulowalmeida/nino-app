@@ -28,6 +28,10 @@
   @apply flex-1;
 }
 
+.modifiers {
+  @apply mt-0.5 border-l-2 border-brand-soft pl-2;
+}
+
 .dashed {
   @apply h-px;
   background: repeating-linear-gradient(

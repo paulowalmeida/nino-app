@@ -5,16 +5,18 @@ import { LocationService } from '@pages/Units/services/LocationService/LocationS
 export type DeliveryLocationState = { id: number; sigla: string; nome: string }
 export type DeliveryMunicipality = { id: number; nome: string }
 
-export const useDeliveryLocation = (state: string) => {
+export const useDeliveryLocation = (state: string, defaultState = '') => {
+  const selectedState = state || defaultState
+
   const states = useQuery({
     queryKey: ['locations', 'states'],
     queryFn: LocationService.listStates,
     staleTime: Infinity,
   })
   const municipalities = useQuery({
-    queryKey: ['locations', 'municipalities', state],
-    queryFn: () => LocationService.listMunicipalities(state),
-    enabled: !!state,
+    queryKey: ['locations', 'municipalities', selectedState],
+    queryFn: () => LocationService.listMunicipalities(selectedState),
+    enabled: !!selectedState,
     staleTime: Infinity,
   })
 

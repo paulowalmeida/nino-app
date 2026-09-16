@@ -113,7 +113,13 @@ export const createHttpClient = (config: HttpClientConfig): HttpClient => {
   return {
     get: (url, options) =>
       run(transport.get(url, { searchParams: options?.searchParams })),
-    post: (url, body) => run(transport.post(url, { json: body })),
+    post: (url, body, options) =>
+      run(
+        transport.post(url, {
+          json: body,
+          headers: options?.headers,
+        })
+      ),
     postFormData: (url, body) => run(transport.post(url, { body })),
     put: (url, body) => run(transport.put(url, { json: body })),
     patch: (url, body) => run(transport.patch(url, { json: body })),

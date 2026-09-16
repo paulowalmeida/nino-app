@@ -156,7 +156,13 @@ export const ProductCard = ({
           isPicked && styles.picked,
           isPressing && styles.pressing
         )}
+        onPointerEnter={openQuantityWithMouse}
+        onPointerLeave={closeQuantityWithMouse}
         {...handlers}
+        onPointerMove={(event) => {
+          handlers.onPointerMove(event)
+          openQuantityWithMouse(event)
+        }}
       >
         <div>
           <ItemThumb
@@ -186,8 +192,6 @@ export const ProductCard = ({
               onClick={(event) => event.stopPropagation()}
               onPointerDown={(event) => event.stopPropagation()}
               onPointerUp={(event) => event.stopPropagation()}
-              onPointerEnter={openQuantityWithMouse}
-              onPointerLeave={closeQuantityWithMouse}
             >
               <Popover
                 placement="bottom-end"

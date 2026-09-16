@@ -2,7 +2,14 @@ import { useUnitsFacade } from '@pages/Units/facades/useUnitsFacade/useUnitsFaca
 
 import { useDeliveryLocation } from '../../hooks/useDeliveryLocation/useDeliveryLocation'
 
-export const useSettingsUnitDetailFacade = (state: string) => ({
-  ...useUnitsFacade(),
-  location: useDeliveryLocation(state),
-})
+export const useSettingsUnitDetailFacade = (state: string) => {
+  const units = useUnitsFacade()
+
+  return {
+    ...units,
+    location: useDeliveryLocation(
+      state,
+      units.units.detail.data?.state ?? ''
+    ),
+  }
+}

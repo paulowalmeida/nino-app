@@ -1,0 +1,26 @@
+@reference "@nino/ds/globals.css";
+
+.modal {
+  @apply max-h-[calc(100dvh-2rem)];
+}
+
+.groups {
+  @apply max-h-[60dvh] overflow-y-auto pr-1;
+}
+
+.group {
+  @apply border-b border-border pb-4 last:border-b-0 last:pb-0;
+}
+
+.option {
+  @apply min-h-11 cursor-pointer rounded-2 px-2;
+  @apply hover:bg-surface-2;
+}
+
+.optionName {
+  @apply min-w-0 flex-1;
+}
+
+.noShrink {
+  @apply shrink-0;
+}

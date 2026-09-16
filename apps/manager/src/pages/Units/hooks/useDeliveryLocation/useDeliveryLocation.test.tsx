@@ -42,4 +42,19 @@ describe('useDeliveryLocation', () => {
     expect(result.current.states.data).toEqual(deliveryStatesMock)
     expect(LocationService.listMunicipalities).toHaveBeenCalledWith('PA')
   })
+
+  it('falls back to the unit UF before a different UF is selected', async () => {
+    const queryClient = new QueryClient({
+      defaultOptions: { queries: { retry: false } },
+    })
+    const wrapper = ({ children }: { children: ReactNode }) => (
+      <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
+    )
+
+    renderHook(() => useDeliveryLocation('', 'PA'), { wrapper })
+
+    await waitFor(() =>
+      expect(LocationService.listMunicipalities).toHaveBeenCalledWith('PA')
+    )
+  })
 })

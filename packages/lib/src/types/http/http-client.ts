@@ -1,5 +1,9 @@
 export type HttpSearchParams = Record<string, string | number | boolean>
 
+export type HttpRequestOptions = {
+  headers?: Record<string, string>
+}
+
 export type HttpClient = {
   get: <ReturnType>(
     url: string,
@@ -7,7 +11,8 @@ export type HttpClient = {
   ) => Promise<ReturnType>
   post: <ReturnType, BodyType = unknown>(
     url: string,
-    body?: BodyType
+    body?: BodyType,
+    options?: HttpRequestOptions
   ) => Promise<ReturnType>
   postFormData: <ReturnType>(url: string, body: FormData) => Promise<ReturnType>
   put: <ReturnType, BodyType = unknown>(

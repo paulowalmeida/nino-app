@@ -1,6 +1,7 @@
 import type { CounterStep } from '@pages/Counter/types/CounterStep.type'
 import type { SaleReceipt } from '@pages/Counter/types/SaleReceipt.type'
 import type { CartLine } from '@shared/types/counter/cart-line'
+import type { CartLineModifier } from '@shared/types/counter/cart-line-modifier'
 import type { OrderChannel } from '@shared/types/order/order-channel'
 import type { PaymentMethod } from '@shared/types/order/payment-method'
 import type { Recipient } from '@shared/types/order/recipient'
@@ -17,8 +18,8 @@ export type CounterState = {
   recipient: Recipient
   changeFor: string
   lastSale: SaleReceipt | null
-  add: (item: MenuItem) => void
-  updateQuantity: (productId: string, by: number) => void
+  add: (item: MenuItem, modifiers?: CartLineModifier[]) => void
+  updateQuantity: (lineId: string, by: number) => void
   clear: () => void
   setSheet: (sheet: boolean) => void
   setStep: (step: CounterStep) => void

@@ -52,6 +52,26 @@ describe('createApi', () => {
     })
   })
 
+  it('create: forwards request headers to client.post', async () => {
+    // Arrange
+    const client = buildClient()
+    const api = createApi(client)
+
+    // Act
+    await api.create(
+      'units/1/orders',
+      { total: 10 },
+      { headers: { 'Idempotency-Key': 'order-1' } }
+    )
+
+    // Assert
+    expect(client.post).toHaveBeenCalledWith(
+      'units/1/orders',
+      { total: 10 },
+      { headers: { 'Idempotency-Key': 'order-1' } }
+    )
+  })
+
   it('createFormData: forwards the form body to client.postFormData', async () => {
     // Arrange
     const client = buildClient()

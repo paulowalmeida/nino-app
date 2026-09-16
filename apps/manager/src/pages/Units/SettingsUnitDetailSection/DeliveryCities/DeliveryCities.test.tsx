@@ -21,20 +21,24 @@ const location = {
   },
   municipalities: {
     data: [
+      { id: 1505536, nome: 'Marituba' },
       { id: 1501402, nome: 'Belém' },
       { id: 1500800, nome: 'Ananindeua' },
-      { id: 1505536, nome: 'Marituba' },
     ],
     isLoading: false,
     isError: false,
   },
 } as never
 
-const renderCities = (cities: DeliveryCity[] = deliveryCitiesMock) =>
+const renderCities = (
+  cities: DeliveryCity[] = deliveryCitiesMock,
+  primaryCity: DeliveryCity = primaryDeliveryCityMock
+) =>
   render(
     <DeliveryCities
       cities={cities}
-      primaryCity={primaryDeliveryCityMock}
+      savedCities={deliveryCitiesMock}
+      primaryCity={primaryCity}
       location={location}
       onStateChange={onStateChange}
       onChange={onChange}
@@ -67,7 +71,7 @@ describe('DeliveryCities', () => {
   })
 
   it('reports the state so the cities can be fetched', async () => {
-    renderCities()
+    renderCities(deliveryCitiesMock, { city: '', state: '' })
 
     await userEvent.click(screen.getByRole('combobox', { name: 'UF' }))
     await userEvent.click(screen.getByRole('option', { name: 'PA' }))
@@ -78,7 +82,42 @@ describe('DeliveryCities', () => {
   it('keeps the add button closed while no city is picked', () => {
     renderCities()
 
-    expect(screen.getByRole('button', { name: 'Adicionar' })).toBeDisabled()
+    expect(
+      screen.queryByRole('button', { name: 'Adicionar' })
+    ).not.toBeInTheDocument()
+  })
+
+  it('keeps a selected city out of the chips until the saved data returns it', async () => {
+    const pendingCity = { city: 'Marituba', state: 'PA' }
+    const { rerender } = renderCities([...deliveryCitiesMock, pendingCity])
+
+    rerender(
+      <DeliveryCities
+        cities={[...deliveryCitiesMock, pendingCity]}
+        savedCities={deliveryCitiesMock}
+        primaryCity={primaryDeliveryCityMock}
+        location={location}
+        onStateChange={onStateChange}
+        onChange={onChange}
+      />
+    )
+    expect(
+      screen.queryByRole('button', { name: /Remover Marituba, PA/i })
+    ).not.toBeInTheDocument()
+
+    rerender(
+      <DeliveryCities
+        cities={[...deliveryCitiesMock, pendingCity]}
+        savedCities={[...deliveryCitiesMock, pendingCity]}
+        primaryCity={primaryDeliveryCityMock}
+        location={location}
+        onStateChange={onStateChange}
+        onChange={onChange}
+      />
+    )
+    expect(
+      screen.getByRole('button', { name: /Remover Marituba, PA/i })
+    ).toBeInTheDocument()
   })
 
 })

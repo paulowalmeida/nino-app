@@ -1,4 +1,5 @@
 import { fireEvent, render, screen } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
 import { describe, expect, it, vi } from 'vitest'
 
 import type { CartLine } from '@shared/types/counter/cart-line'
@@ -115,5 +116,37 @@ describe(ProductGrid.name, () => {
       'aria-pressed',
       'true'
     )
+  })
+
+  it('asks for configuration before adding a product with modifiers', async () => {
+    facadeState.sections = [
+      {
+        ...sections[0],
+        items: [
+          {
+            ...sections[0].items[0],
+            modifiers: [
+              {
+                id: 'modifier-1',
+                name: 'Ponto da carne',
+                description: null,
+                role: 'ADDITION',
+                minSelections: 1,
+                maxSelections: 1,
+                options: [{ id: 'option-1', name: 'Ao ponto', price: '0' }],
+              },
+            ],
+          },
+        ],
+      },
+    ]
+    facadeState.lines = []
+
+    render(<ProductGrid />)
+    await userEvent.click(screen.getByRole('button', { name: 'Café' }))
+
+    expect(await screen.findByRole('dialog')).toBeInTheDocument()
+    expect(screen.getByText('Ponto da carne')).toBeInTheDocument()
+    expect(facadeState.add).not.toHaveBeenCalled()
   })
 })

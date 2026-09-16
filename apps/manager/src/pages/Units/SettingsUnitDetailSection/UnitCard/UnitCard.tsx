@@ -143,14 +143,6 @@ export const UnitCard = ({
                   <AddressFields value={draft} onChange={change} />
                 </Box>
 
-                <Button
-                  loading={isSaving}
-                  disabled={!isDirty}
-                  className={`${motion.press} ${local.save}`}
-                  onClick={() => onSave(draft)}
-                >
-                  Salvar
-                </Button>
               </Box>
             ),
           },
@@ -159,7 +151,9 @@ export const UnitCard = ({
             label: 'Atendimento',
             content: (
               <DeliveryCities
+                key={unit?.id ?? 'empty-unit'}
                 cities={draft.deliveryCities}
+                savedCities={unit ? toUnitDraft(unit).deliveryCities : []}
                 primaryCity={{ city: draft.city, state: draft.state }}
                 location={location}
                 onStateChange={onDeliveryStateChange}
@@ -169,6 +163,15 @@ export const UnitCard = ({
           },
         ]}
       />
+
+      <Button
+        loading={isSaving}
+        disabled={!isDirty}
+        className={`${motion.press} ${local.save}`}
+        onClick={() => onSave(draft)}
+      >
+        Salvar
+      </Button>
     </Box>
   )
 }
