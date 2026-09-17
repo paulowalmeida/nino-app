@@ -9,6 +9,7 @@ import { useCounterFacade } from '@pages/Counter/facades/useCounterFacade/useCou
 import { OpenOrderBar } from './OpenOrderBar/OpenOrderBar'
 import { ProductGrid } from './ProductGrid/ProductGrid'
 import { SalePanel } from './SalePanel/SalePanel'
+import { SaleReceiptButton } from './SalePanel/SaleReceiptButton/SaleReceiptButton'
 
 import styles from './CounterWorkspace.module.css'
 
@@ -35,6 +36,11 @@ export const CounterWorkspace = () => {
       </Box>
 
       {counter.count > 0 && <OpenOrderBar />}
+
+      <SaleReceiptButton
+        saleReceipt={counter.lastSale}
+        onDismiss={counter.dismissReceipt}
+      />
 
       <Modal
         open={counter.sheet && counter.count > 0}

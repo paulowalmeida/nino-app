@@ -77,22 +77,28 @@ export const DestinationStep = ({
     )}
 
     {channel === 'PICKUP' ? (
-      <Box className={styles.identity}>
-        <FormField label="Nome de quem pediu">
-          <Input
-            aria-label="Nome de quem pediu"
-            value={recipient.name}
-            onChange={(event) => onRecipient({ name: event.target.value })}
-          />
-        </FormField>
-        <FormField label="Telefone">
-          <PhoneInput
-            aria-label="Telefone"
-            type="tel"
-            value={recipient.phone}
-            onChange={(event) => onRecipient({ phone: event.target.value })}
-          />
-        </FormField>
+      <Box direction="column" className={styles.fields}>
+        <Box className={styles.identity}>
+          <FormField label="Nome de quem pediu">
+            <Input
+              aria-label="Nome de quem pediu"
+              value={recipient.name}
+              onChange={(event) => onRecipient({ name: event.target.value })}
+            />
+          </FormField>
+          <FormField label="Telefone">
+            <PhoneInput
+              aria-label="Telefone"
+              type="tel"
+              value={recipient.phone}
+              onChange={(event) => onRecipient({ phone: event.target.value })}
+            />
+          </FormField>
+        </Box>
+        <Text size="xs" color="muted" className={styles.note}>
+          Nome e telefone válidos são obrigatórios para identificar quem vai
+          retirar o pedido.
+        </Text>
       </Box>
     ) : channel === 'DELIVERY' ? (
       <DeliveryRecipientFields
@@ -104,20 +110,20 @@ export const DestinationStep = ({
     ) : channel ? (
       <Box direction="column" className={styles.fields}>
         <Box className={styles.identity}>
-          <FormField label="Nome de quem pediu (opcional)">
+          <FormField label="Nome de quem pediu">
             <Input
               placeholder="Ex.: Ana"
-              aria-label="Nome de quem pediu (opcional)"
+              aria-label="Nome de quem pediu"
               value={consumerName}
               onChange={(event) => onConsumerName(event.target.value)}
             />
           </FormField>
           {channel === 'COUNTER' && (
-            <FormField label="Mesa (opcional)">
+            <FormField label="Mesa">
               <Input
                 placeholder="Ex.: 12"
                 inputMode="numeric"
-                aria-label="Mesa (opcional)"
+                aria-label="Mesa"
                 value={tableNumber}
                 onChange={(event) => onTableNumber(event.target.value)}
               />

@@ -10,9 +10,6 @@ vi.mock('./SalePaymentDetails/SalePaymentDetails', () => ({
 vi.mock('./SaleFinishActions/SaleFinishActions', () => ({
   SaleFinishActions: () => <div>finish</div>,
 }))
-vi.mock('./SaleReceiptButton/SaleReceiptButton', () => ({
-  SaleReceiptButton: () => <div>receipt</div>,
-}))
 const facadeState = vi.hoisted(() => ({
   lines: [],
   count: 1,
@@ -45,7 +42,6 @@ describe(SalePanel.name, () => {
     render(<SalePanel />)
     expect(screen.getByText('Venda')).toBeInTheDocument()
     expect(screen.getByText('payment')).toBeInTheDocument()
-    expect(screen.getByText('receipt')).toBeInTheDocument()
   })
 
   it('composes the bare sale panel without header or payment', () => {

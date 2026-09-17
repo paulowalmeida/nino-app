@@ -26,6 +26,8 @@ const counter = vi.hoisted(() => ({
   handleStep: vi.fn(),
   emptyTicket: vi.fn(),
   finish: vi.fn(),
+  lastSale: null,
+  dismissReceipt: vi.fn(),
 }))
 
 vi.mock('@pages/Counter/facades/useCounterFacade/useCounterFacade', () => ({
@@ -41,6 +43,18 @@ vi.mock('./OpenOrderBar/OpenOrderBar', () => ({
 }))
 vi.mock('./SalePanel/SalePanel', () => ({
   SalePanel: () => <button onClick={counter.handleStep}>sale</button>,
+}))
+vi.mock('./SalePanel/SaleReceiptButton/SaleReceiptButton', () => ({
+  SaleReceiptButton: ({
+    saleReceipt,
+    onDismiss,
+  }: {
+    saleReceipt: { orderNumber: number } | null
+    onDismiss: () => void
+  }) =>
+    saleReceipt ? (
+      <button onClick={onDismiss}>receipt #{saleReceipt.orderNumber}</button>
+    ) : null,
 }))
 vi.mock('@nino/ds/components/Modal', () => ({
   Modal: ({
@@ -141,5 +155,23 @@ describe(CounterWorkspace.name, () => {
     expect(
       screen.queryByRole('button', { name: 'coupon' })
     ).not.toBeInTheDocument()
+  })
+
+  it('keeps the closed-sale receipt visible after the sheet closes', () => {
+    // Arrange: finishing a sale clears the ticket (count 0) and closes the
+    // sheet in the same update, which used to unmount the receipt with it.
+    mockFacade({
+      count: 0,
+      sheet: false,
+      lastSale: { orderNumber: 128 },
+    })
+
+    // Act
+    render(<CounterWorkspace />)
+
+    // Assert
+    expect(
+      screen.getByRole('button', { name: 'receipt #128' })
+    ).toBeInTheDocument()
   })
 })

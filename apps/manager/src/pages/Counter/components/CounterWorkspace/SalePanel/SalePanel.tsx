@@ -9,7 +9,6 @@ import { ReviewStep } from './ReviewStep/ReviewStep'
 import { SaleCart } from './SaleCart/SaleCart'
 import { SaleFinishActions } from './SaleFinishActions/SaleFinishActions'
 import { SalePaymentDetails } from './SalePaymentDetails/SalePaymentDetails'
-import { SaleReceiptButton } from './SaleReceiptButton/SaleReceiptButton'
 import { StepActions } from './StepActions/StepActions'
 
 import styles from './SalePanel.module.css'
@@ -44,8 +43,6 @@ export const SalePanel = ({ bare = false }: { bare?: boolean }) => {
     setChosen,
     emptyTicket,
     finish,
-    lastSale,
-    dismissReceipt,
     step,
     channel,
     setStep,
@@ -174,7 +171,6 @@ export const SalePanel = ({ bare = false }: { bare?: boolean }) => {
           onFinish={finish}
         />
       )}
-      <SaleReceiptButton saleReceipt={lastSale} onDismiss={dismissReceipt} />
     </Box>
   )
 }
