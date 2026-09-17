@@ -52,14 +52,16 @@ describe(useCounterSale.name, () => {
     )
   })
 
-  it('returns the created order number', async () => {
-    const mutateAsync = vi.fn().mockResolvedValue({ orderNumber: 7 })
+  it('returns the created order id, number, and pickup code', async () => {
+    const mutateAsync = vi
+      .fn()
+      .mockResolvedValue({ id: 'order-7', orderNumber: 7 })
     vi.mocked(useCreateOrder).mockReturnValue({
       mutateAsync,
       isPending: false,
-    } as never)
+    } as unknown as ReturnType<typeof useCreateOrder>)
     const { result } = renderHook(() => useCounterSale('unit-1'))
-    const orderNumber = await act(() =>
+    const sale = await act(() =>
       result.current.sell({
         lines: [],
         paymentMethod: 'CASH',
@@ -67,7 +69,7 @@ describe(useCounterSale.name, () => {
         tableNumber: '',
       })
     )
-    expect(orderNumber).toEqual({ orderNumber: 7 })
+    expect(sale).toEqual({ id: 'order-7', orderNumber: 7 })
   })
 
   it('accepts delivery sales identified by the recipient name', async () => {

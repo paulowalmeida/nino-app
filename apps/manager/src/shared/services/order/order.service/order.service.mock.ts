@@ -5,6 +5,10 @@ export const orderAvailabilityMock = { isOpen: true }
 
 export const orderQueueSummaryMock = { pending: 2, preparing: 1 }
 
+export const receiptBlobMock = new Blob(['%PDF-1.4'], {
+  type: 'application/pdf',
+})
+
 export const deliveryQuoteResponseMock = {
   id: 'zone-1',
   name: 'Centro',

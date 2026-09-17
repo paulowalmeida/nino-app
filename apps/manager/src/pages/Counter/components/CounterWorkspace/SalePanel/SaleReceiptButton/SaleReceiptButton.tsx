@@ -3,18 +3,21 @@ import { Button } from '@nino/ds/components/Button'
 import { Icon } from '@nino/ds/components/Icon'
 import { Text } from '@nino/ds/components/Text'
 import type { SaleReceipt } from '@pages/Counter/types/SaleReceipt.type'
-import { downloadSaleReceipt } from '@pages/Counter/utils/downloadSaleReceipt/downloadSaleReceipt'
 import { ticketNumber } from '@shared/utils/order-ticket/order-ticket'
 
 import styles from './SaleReceiptButton.module.css'
 
 export type SaleReceiptButtonProps = {
   saleReceipt: SaleReceipt | null
+  isDownloading: boolean
+  onDownload: (receipt: SaleReceipt) => void
   onDismiss: () => void
 }
 
 export const SaleReceiptButton = ({
   saleReceipt,
+  isDownloading,
+  onDownload,
   onDismiss,
 }: SaleReceiptButtonProps) => {
   if (!saleReceipt) return null
@@ -29,7 +32,8 @@ export const SaleReceiptButton = ({
       <Button
         variant="outline"
         size="sm"
-        onClick={() => downloadSaleReceipt(saleReceipt)}
+        loading={isDownloading}
+        onClick={() => onDownload(saleReceipt)}
       >
         <Icon name="receipt" size="sm" />
         Gerar recibo

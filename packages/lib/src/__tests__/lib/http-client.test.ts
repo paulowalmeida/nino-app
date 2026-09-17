@@ -74,6 +74,37 @@ describe('createHttpClient', () => {
     expect(result).toBeNull()
   })
 
+  it('getBlob: resolves the raw response body as a Blob', async () => {
+    // Arrange
+    const pdf = new Response('%PDF-1.4', {
+      status: 200,
+      headers: { 'content-type': 'application/pdf' },
+    })
+    stubFetch(pdf)
+    const client = createHttpClient(baseConfig())
+
+    // Act
+    const result = await client.getBlob('units/1/orders/order-1/receipt')
+
+    // Assert
+    expect(result).toBeInstanceOf(Blob)
+    expect(await result.text()).toBe('%PDF-1.4')
+  })
+
+  it('getBlob: throws an ApiError when the order has no receipt', async () => {
+    // Arrange
+    stubFetch(jsonResponse(404, { message: 'Order not found' }))
+    const client = createHttpClient(baseConfig())
+
+    // Act
+    const error = await client
+      .getBlob('units/1/orders/missing/receipt')
+      .catch((err) => err)
+
+    // Assert
+    expectApiError(error, 404, 'Order not found')
+  })
+
   it('post: sends the body as json and returns the response', async () => {
     // Arrange
     let sentBody = ''

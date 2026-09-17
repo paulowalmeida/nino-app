@@ -40,7 +40,7 @@ export const useCounterFacade = () => {
     cart.total + deliveryFee
   )
   const commands = useCounterCommands(unitId, selection.method)
-  const receipt = useCounterReceipt()
+  const receipt = useCounterReceipt(unitId)
   const responsive = useCounterResponsive()
   const sheet = useCounterStore((state) => state.sheet)
   const step = useCounterStore((state) => state.step)

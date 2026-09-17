@@ -2,8 +2,11 @@ import { describe, expect, it, vi } from 'vitest'
 
 import { createApi } from '../../services/http.service'
 
+const pdfBlobMock = new Blob(['pdf'])
+
 const buildClient = () => ({
   get: vi.fn().mockResolvedValue({ ok: true }),
+  getBlob: vi.fn().mockResolvedValue(pdfBlobMock),
   post: vi.fn().mockResolvedValue({ ok: true }),
   postFormData: vi.fn().mockResolvedValue({ ok: true }),
   put: vi.fn().mockResolvedValue({ ok: true }),
@@ -22,6 +25,21 @@ describe('createApi', () => {
 
     // Assert
     expect(client.get).toHaveBeenCalledWith('units/1')
+  })
+
+  it('getBlob: forwards the url to client.getBlob', async () => {
+    // Arrange
+    const client = buildClient()
+    const api = createApi(client)
+
+    // Act
+    const result = await api.getBlob('units/1/orders/order-1/receipt')
+
+    // Assert
+    expect(client.getBlob).toHaveBeenCalledWith(
+      'units/1/orders/order-1/receipt'
+    )
+    expect(result).toBe(pdfBlobMock)
   })
 
   it('getAll: forwards params as searchParams', async () => {

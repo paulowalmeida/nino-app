@@ -154,6 +154,9 @@ export const OrderService = {
   getById: (unitId: string, orderId: string): Promise<Order> =>
     api.get<Order>(`units/${unitId}/orders/${orderId}`),
 
+  downloadReceipt: (unitId: string, orderId: string): Promise<Blob> =>
+    api.getBlob(`units/${unitId}/orders/${orderId}/receipt`),
+
   updateOrderStatus: (
     unitId: string,
     orderId: string,

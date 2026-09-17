@@ -3,6 +3,7 @@ import { beforeEach, describe, expect, it } from 'vitest'
 import type { MenuItem } from '@shared/types/product/menu-item'
 
 import { useCounterStore } from './counter.store'
+import { closedSaleMock } from './counter.store.mock'
 
 const item: MenuItem = {
   id: 'item-1',
@@ -73,15 +74,7 @@ describe(useCounterStore.name, () => {
   it('remembers the receipt of the last closed sale until dismissed', () => {
     const store = useCounterStore.getState()
 
-    store.setLastSale({
-      orderNumber: 128,
-      closedAt: '2026-08-30T12:00:00.000Z',
-      lines: [],
-      total: 20,
-      paymentMethod: 'CASH',
-      receivedAmount: 50,
-      changeAmount: 30,
-    })
+    store.setLastSale(closedSaleMock)
     expect(useCounterStore.getState().lastSale?.orderNumber).toBe(128)
 
     store.clearLastSale()
@@ -90,15 +83,7 @@ describe(useCounterStore.name, () => {
 
   it('dismisses the previous receipt once a new sale starts', () => {
     const store = useCounterStore.getState()
-    store.setLastSale({
-      orderNumber: 128,
-      closedAt: '2026-08-30T12:00:00.000Z',
-      lines: [],
-      total: 20,
-      paymentMethod: 'CASH',
-      receivedAmount: 50,
-      changeAmount: 30,
-    })
+    store.setLastSale(closedSaleMock)
 
     store.add(item)
 
@@ -107,15 +92,7 @@ describe(useCounterStore.name, () => {
 
   it('keeps the receipt available after clearing the ticket', () => {
     const store = useCounterStore.getState()
-    store.setLastSale({
-      orderNumber: 128,
-      closedAt: '2026-08-30T12:00:00.000Z',
-      lines: [],
-      total: 20,
-      paymentMethod: 'CASH',
-      receivedAmount: 50,
-      changeAmount: 30,
-    })
+    store.setLastSale(closedSaleMock)
 
     store.clear()
 

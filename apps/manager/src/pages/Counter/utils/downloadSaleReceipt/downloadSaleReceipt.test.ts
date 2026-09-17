@@ -1,58 +1,65 @@
-import { beforeEach, describe, expect, it, vi } from 'vitest'
-
-import { brl } from '@shared/utils/money/money'
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
 import { downloadSaleReceipt } from './downloadSaleReceipt'
-import { cashReceiptMock, pixReceiptMock } from './downloadSaleReceipt.mock'
-
-const setFont = vi.fn()
-const text = vi.fn()
-const save = vi.fn()
-
-vi.mock('jspdf', () => ({
-  jsPDF: class {
-    setFont = setFont
-    text = text
-    save = save
-  },
-}))
-
-const writtenLines = () => text.mock.calls.map(([line]) => line as string)
+import {
+  receiptBlobMock,
+  receiptFilenameMock,
+} from './downloadSaleReceipt.mock'
 
 describe(downloadSaleReceipt.name, () => {
-  beforeEach(() => vi.clearAllMocks())
+  const createObjectURL = vi.fn(() => 'blob:receipt-url')
+  const revokeObjectURL = vi.fn()
 
-  it('writes every item with its quantity and line total', () => {
-    downloadSaleReceipt(cashReceiptMock)
-
-    expect(writtenLines()).toContain('2x Café')
-    expect(writtenLines()).toContain(`  ${brl(10)} = ${brl(20)}`)
+  beforeEach(() => {
+    vi.stubGlobal('URL', { createObjectURL, revokeObjectURL })
   })
 
-  it('writes the order number and the total', () => {
-    downloadSaleReceipt(cashReceiptMock)
-
-    expect(writtenLines()).toContain('#128')
-    expect(writtenLines()).toContain(`Total: ${brl(20)}`)
+  afterEach(() => {
+    vi.unstubAllGlobals()
+    vi.restoreAllMocks()
+    vi.clearAllMocks()
   })
 
-  it('writes the amount received and the change for a cash sale', () => {
-    downloadSaleReceipt(cashReceiptMock)
+  it('triggers a browser download named after the receipt file', () => {
+    // Arrange
+    const anchorClick = vi.fn()
+    const anchor = { click: anchorClick, href: '', download: '' }
+    const createElementSpy = vi
+      .spyOn(document, 'createElement')
+      .mockReturnValue(anchor as unknown as HTMLAnchorElement)
+    const appendSpy = vi
+      .spyOn(document.body, 'appendChild')
+      .mockImplementation((node) => node)
+    const removeSpy = vi
+      .spyOn(document.body, 'removeChild')
+      .mockImplementation((node) => node)
 
-    expect(writtenLines()).toContain(`Valor recebido: ${brl(50)}`)
-    expect(writtenLines()).toContain(`Troco: ${brl(30)}`)
+    // Act
+    downloadSaleReceipt(receiptBlobMock, receiptFilenameMock)
+
+    // Assert
+    expect(createObjectURL).toHaveBeenCalledWith(receiptBlobMock)
+    expect(createElementSpy).toHaveBeenCalledWith('a')
+    expect(anchor.href).toBe('blob:receipt-url')
+    expect(anchor.download).toBe(receiptFilenameMock)
+    expect(anchorClick).toHaveBeenCalledTimes(1)
+    expect(appendSpy).toHaveBeenCalledWith(anchor)
+    expect(removeSpy).toHaveBeenCalledWith(anchor)
   })
 
-  it('omits received amount and change for a non-cash sale', () => {
-    downloadSaleReceipt(pixReceiptMock)
+  it('releases the object URL after triggering the download', () => {
+    // Arrange
+    const anchor = { click: vi.fn(), href: '', download: '' }
+    vi.spyOn(document, 'createElement').mockReturnValue(
+      anchor as unknown as HTMLAnchorElement
+    )
+    vi.spyOn(document.body, 'appendChild').mockImplementation((node) => node)
+    vi.spyOn(document.body, 'removeChild').mockImplementation((node) => node)
 
-    expect(writtenLines()).not.toContain(`Valor recebido: ${brl(50)}`)
-    expect(writtenLines()).not.toContain(`Troco: ${brl(30)}`)
-  })
+    // Act
+    downloadSaleReceipt(receiptBlobMock, receiptFilenameMock)
 
-  it('saves the file named after the order number', () => {
-    downloadSaleReceipt(cashReceiptMock)
-
-    expect(save).toHaveBeenCalledWith('recibo-128.pdf')
+    // Assert
+    expect(revokeObjectURL).toHaveBeenCalledWith('blob:receipt-url')
   })
 })

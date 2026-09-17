@@ -27,6 +27,8 @@ const counter = vi.hoisted(() => ({
   emptyTicket: vi.fn(),
   finish: vi.fn(),
   lastSale: null,
+  isDownloadingReceipt: false,
+  downloadReceipt: vi.fn(),
   dismissReceipt: vi.fn(),
 }))
 

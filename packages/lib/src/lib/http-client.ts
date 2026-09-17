@@ -99,7 +99,9 @@ export const createHttpClient = (config: HttpClientConfig): HttpClient => {
     throw error
   }
 
-  // WHY: corpo vazio (Nest manda `response.send()` sem corpo pra `null`/`undefined`) faz `response.json()` lançar; ler como texto primeiro deixa isso virar `null` de verdade.
+  // WHY: corpo vazio (Nest manda `response.send()` sem corpo pra
+  // `null`/`undefined`) faz `response.json()` lançar; ler como texto
+  // primeiro deixa isso virar `null` de verdade.
   const run = async <T>(request: ResponsePromise): Promise<T> => {
     try {
       const response = await request
@@ -110,9 +112,19 @@ export const createHttpClient = (config: HttpClientConfig): HttpClient => {
     }
   }
 
+  const runBlob = async (request: ResponsePromise): Promise<Blob> => {
+    try {
+      const response = await request
+      return await response.blob()
+    } catch (error) {
+      return handleError(error)
+    }
+  }
+
   return {
     get: (url, options) =>
       run(transport.get(url, { searchParams: options?.searchParams })),
+    getBlob: (url) => runBlob(transport.get(url)),
     post: (url, body, options) =>
       run(
         transport.post(url, {

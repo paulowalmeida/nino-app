@@ -7,6 +7,8 @@ import type {
 export const createApi = (client: HttpClient) => ({
   get: <ReturnType>(url: string): Promise<ReturnType> => client.get(url),
 
+  getBlob: (url: string): Promise<Blob> => client.getBlob(url),
+
   getAll: <ReturnType>(
     url: string,
     searchParams: HttpSearchParams

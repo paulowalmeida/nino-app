@@ -14,6 +14,7 @@ import {
   orderPageMock,
   orderQueueSummaryMock,
   periodRangeParamsMock,
+  receiptBlobMock,
   salesReportMock,
   salesSeriesBreakdownMock,
   salesSeriesMock,
@@ -25,6 +26,7 @@ import {
 vi.mock('@shared/services/http/http.service', () => ({
   api: {
     get: vi.fn(),
+    getBlob: vi.fn(),
     getAll: vi.fn(),
     create: vi.fn(),
     remove: vi.fn(),
@@ -264,6 +266,20 @@ describe('OrderService', () => {
       `units/${unitIdMock}/orders/${orderIdMock}`
     )
     expect(result).toBe(orderMock)
+  })
+
+  it('downloadReceipt: reads the receipt PDF as a blob', async () => {
+    // Arrange
+    vi.mocked(api.getBlob).mockResolvedValue(receiptBlobMock)
+
+    // Act
+    const result = await OrderService.downloadReceipt(unitIdMock, orderIdMock)
+
+    // Assert
+    expect(api.getBlob).toHaveBeenCalledWith(
+      `units/${unitIdMock}/orders/${orderIdMock}/receipt`
+    )
+    expect(result).toBe(receiptBlobMock)
   })
 
   it('updateOrderStatus: patches the order status', async () => {

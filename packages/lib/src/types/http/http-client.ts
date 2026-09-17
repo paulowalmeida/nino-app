@@ -9,6 +9,7 @@ export type HttpClient = {
     url: string,
     options?: { searchParams?: HttpSearchParams }
   ) => Promise<ReturnType>
+  getBlob: (url: string) => Promise<Blob>
   post: <ReturnType, BodyType = unknown>(
     url: string,
     body?: BodyType,

@@ -1,5 +1,4 @@
 import { toast } from '@nino/ds/components/Toast'
-import { toSaleReceipt } from '@pages/Counter/adapters/sale-receipt.adapter/sale-receipt.adapter'
 import { useCounterCart } from '@pages/Counter/hooks/useCounterCart/useCounterCart'
 import { useCounterDeliveryQuote } from '@pages/Counter/hooks/useCounterDeliveryQuote/useCounterDeliveryQuote'
 import { useCounterSale } from '@pages/Counter/hooks/useCounterSale/useCounterSale'
@@ -11,7 +10,7 @@ export const useCounterCommands = (
   unitId: string | null,
   method: PaymentMethod | null
 ) => {
-  const { lines, total, updateQuantity } = useCounterCart()
+  const { lines, updateQuantity } = useCounterCart()
   const { error, isSending, sell, reset } = useCounterSale(unitId)
   const clear = useCounterStore((state) => state.clear)
   const setSheet = useCounterStore((state) => state.setSheet)
@@ -25,9 +24,6 @@ export const useCounterCommands = (
     unitId,
     channel === 'DELIVERY' ? recipient : {}
   )
-  const saleTotal =
-    channel === 'DELIVERY' ? total + (deliveryQuote.quote?.fee ?? 0) : total
-
   const emptyTicket = () => {
     clear()
     reset()
@@ -56,18 +52,8 @@ export const useCounterCommands = (
           : recipient,
     })
     if (!sale) return
-    const { orderNumber, pickupCode } = sale
-    setLastSale(
-      toSaleReceipt({
-        orderNumber,
-        pickupCode,
-        lines,
-        total: saleTotal,
-        paymentMethod: method,
-        changeFor,
-        closedAt: new Date(),
-      })
-    )
+    const { id, orderNumber, pickupCode } = sale
+    setLastSale({ orderId: id, orderNumber, pickupCode })
     emptyTicket()
     toast.success(`Venda #${ticketNumber(orderNumber)} fechada`)
   }

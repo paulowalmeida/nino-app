@@ -39,6 +39,8 @@ export const CounterWorkspace = () => {
 
       <SaleReceiptButton
         saleReceipt={counter.lastSale}
+        isDownloading={counter.isDownloadingReceipt}
+        onDownload={counter.downloadReceipt}
         onDismiss={counter.dismissReceipt}
       />
 

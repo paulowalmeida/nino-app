@@ -12,7 +12,7 @@ type CounterSale = {
   isSending: boolean
   sell: (
     input: CounterSaleInput
-  ) => Promise<Pick<Order, 'orderNumber' | 'pickupCode'> | null>
+  ) => Promise<Pick<Order, 'id' | 'orderNumber' | 'pickupCode'> | null>
   reset: () => void
 }
 
@@ -69,7 +69,11 @@ export const useCounterSale = (unitId: string | null): CounterSale => {
         })
       )
 
-      return { orderNumber: order.orderNumber, pickupCode: order.pickupCode }
+      return {
+        id: order.id,
+        orderNumber: order.orderNumber,
+        pickupCode: order.pickupCode,
+      }
     } catch (caught) {
       setError(
         caught instanceof ApiError && caught.status < 500
