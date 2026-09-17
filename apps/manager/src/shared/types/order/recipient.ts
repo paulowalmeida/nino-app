@@ -1,7 +1,7 @@
 export type Recipient = {
   name: string
   phone: string
-  addressId?: string
+  providerId?: string
   zipCode?: string
   street: string
   number: string

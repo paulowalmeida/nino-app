@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 
 import { useQuery } from '@tanstack/react-query'
 
-import { searchAddress } from '@nino/lib/services/zip-code.service'
+import { checkoutAddressSearchService } from '@pages/Checkout/services/address-search/address-search.service/index'
 
 export const useGuestAddressSearch = (
   city: string | undefined,
@@ -22,9 +22,9 @@ export const useGuestAddressSearch = (
 
   const query = useQuery({
     queryKey: ['checkout', 'address-search', state, city, debouncedStreet],
-    queryFn: () => searchAddress(state ?? '', city ?? '', debouncedStreet),
-    enabled:
-      state?.length === 2 && !!city && debouncedStreet.length >= 3,
+    queryFn: () =>
+      checkoutAddressSearchService.search(debouncedStreet, state ?? '', city),
+    enabled: state?.length === 2 && !!city && debouncedStreet.length >= 3,
     staleTime: 60_000,
   })
 

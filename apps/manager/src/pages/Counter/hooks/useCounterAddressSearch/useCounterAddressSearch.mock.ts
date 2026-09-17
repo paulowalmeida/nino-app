@@ -1,6 +1,10 @@
+import type { AddressSearchResult } from '@nino/lib/types/address/address-lookup'
+
 export const addressSuggestionsMock = [
   {
     id: 'address-1',
+    providerId: 'address-1',
+    precision: 'street',
     zipCode: '66000-000',
     street: 'Rua das Flores',
     neighborhood: 'Centro',
@@ -9,4 +13,4 @@ export const addressSuggestionsMock = [
     latitude: -1.45,
     longitude: -48.5,
   },
-]
+] satisfies AddressSearchResult[]

@@ -29,6 +29,8 @@ export const guestOrderRequest = (
     guestNeighborhood: isDelivery ? values.guestNeighborhood : undefined,
     guestCity: values.guestCity,
     guestState: values.guestState,
+    guestLatitude: isDelivery ? values.guestLatitude : undefined,
+    guestLongitude: isDelivery ? values.guestLongitude : undefined,
     notes: values.notes,
     items: orderItemsRequest(cartLines),
   }

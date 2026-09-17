@@ -66,7 +66,8 @@ describe(useCounterAddressSearch.name, () => {
     await waitFor(() =>
       expect(CounterAddressSearchService.search).toHaveBeenCalledWith(
         'Rua das',
-        'PA'
+        'PA',
+        undefined
       )
     )
     expect(CounterAddressSearchService.search).toHaveBeenCalledTimes(1)
@@ -89,7 +90,8 @@ describe(useCounterAddressSearch.name, () => {
     await waitFor(() =>
       expect(CounterAddressSearchService.search).toHaveBeenCalledWith(
         'Rua das',
-        'PA'
+        'PA',
+        undefined
       )
     )
     await waitFor(() =>

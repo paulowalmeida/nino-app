@@ -6,11 +6,21 @@ export const deliveryZoneService = {
     api.get<PublicDeliveryZone[]>(`units/${unitId}/delivery-zones/public`),
   getQuote: (
     unitId: string,
-    zipCode: string
+    zipCode: string,
+    coordinates: { latitude?: number; longitude?: number } = {}
   ): Promise<PublicDeliveryZone | null> =>
     api.get<PublicDeliveryZone | null>(
-      'orders/guest/quote?' +
-        `unitId=${encodeURIComponent(unitId)}&` +
-        `zipCode=${encodeURIComponent(zipCode)}`
+      (() => {
+        const params = new URLSearchParams({ unitId })
+        if (zipCode) params.set('zipCode', zipCode)
+        if (
+          coordinates.latitude !== undefined &&
+          coordinates.longitude !== undefined
+        ) {
+          params.set('latitude', String(coordinates.latitude))
+          params.set('longitude', String(coordinates.longitude))
+        }
+        return `orders/guest/quote?${params.toString()}`
+      })()
     ),
 }

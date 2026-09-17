@@ -48,7 +48,18 @@ export const DeliveryAddressFields = ({
   const zipCodeField = register('guestZipCode', {
     required: 'Informe o CEP',
   })
-  const guestZipCode = useWatch({ control, name: 'guestZipCode' })
+  const guestNumberField = register('guestNumber', {
+    required: 'Informe o nº',
+  })
+  const guestNeighborhoodField = register('guestNeighborhood', {
+    required: 'Informe o bairro',
+  })
+  const guestCityField = register('guestCity', { required: 'Informe a cidade' })
+  const guestStateField = register('guestState', {
+    required: 'Informe o estado',
+  })
+  const guestComplementField = register('guestComplement')
+  const guestProviderId = useWatch({ control, name: 'guestProviderId' })
   const guestStreet = useWatch({ control, name: 'guestStreet' })
   const guestCity = useWatch({ control, name: 'guestCity' })
   const guestState = useWatch({ control, name: 'guestState' })
@@ -57,25 +68,53 @@ export const DeliveryAddressFields = ({
     guestState || store?.state,
     guestStreet
   )
-  const hasDeliveryQuote =
-    !!quote && !isLookingUpAddress && !isQuoting
+  const hasDeliveryQuote = !!quote && !isLookingUpAddress && !isQuoting
 
-  const applySuggestion = (zipCode: string) => {
-    const suggestion = suggestions.find((item) => item.zipCode === zipCode)
+  const clearGuestAddressSelection = (clearZipCode = false) => {
+    const options = { shouldDirty: true, shouldValidate: true }
+    form.setValue('guestProviderId', undefined, options)
+    form.setValue('guestLatitude', undefined, options)
+    form.setValue('guestLongitude', undefined, options)
+    if (clearZipCode) form.setValue('guestZipCode', '', options)
+  }
+
+  const handleStreetInputChange = (street: string) => {
+    form.setValue('guestStreet', street, {
+      shouldDirty: true,
+      shouldValidate: true,
+    })
+    clearGuestAddressSelection(true)
+  }
+
+  const handleManualAddressChange = (
+    onChange: (event: ChangeEvent<HTMLInputElement>) => void,
+    event: ChangeEvent<HTMLInputElement>
+  ) => {
+    void onChange(event)
+    clearGuestAddressSelection()
+  }
+
+  const applySuggestion = (providerId: string) => {
+    const suggestion = suggestions.find((item) => item.id === providerId)
     if (!suggestion) return
 
     const options = { shouldDirty: true, shouldValidate: true }
+    setLookupStatus('done')
+    form.setValue('guestProviderId', suggestion.providerId, options)
     form.setValue('guestZipCode', suggestion.zipCode, options)
     form.setValue('guestStreet', suggestion.street, options)
     form.setValue('guestNeighborhood', suggestion.neighborhood, options)
     form.setValue('guestCity', suggestion.city, options)
     form.setValue('guestState', suggestion.state, options)
+    form.setValue('guestLatitude', suggestion.latitude, options)
+    form.setValue('guestLongitude', suggestion.longitude, options)
     form.setFocus('guestNumber')
   }
 
   const handleZipCodeChange = (event: ChangeEvent<HTMLInputElement>) => {
     void zipCodeField.onChange(event)
     const zipCode = event.target.value
+    clearGuestAddressSelection()
 
     if (onlyDigits(zipCode).length !== 8) {
       setLookupStatus('idle')
@@ -92,7 +131,11 @@ export const DeliveryAddressFields = ({
         const current = form.getValues()
         const options = { shouldDirty: true, shouldValidate: true }
         setLookupStatus('done')
-        form.setValue('guestStreet', found.street || current.guestStreet, options)
+        form.setValue(
+          'guestStreet',
+          found.street || current.guestStreet,
+          options
+        )
         form.setValue(
           'guestNeighborhood',
           found.neighborhood || current.guestNeighborhood,
@@ -200,7 +243,10 @@ export const DeliveryAddressFields = ({
                 aria-label="Número"
                 inputMode="numeric"
                 error={!!errors.guestNumber}
-                {...register('guestNumber', { required: 'Informe o nº' })}
+                {...guestNumberField}
+                onChange={(event) =>
+                  handleManualAddressChange(guestNumberField.onChange, event)
+                }
               />
             </FormField>
           </Box>
@@ -208,10 +254,11 @@ export const DeliveryAddressFields = ({
           <FormField error={errors.guestStreet?.message}>
             <Combobox
               options={suggestions.map((suggestion) => ({
-                value: suggestion.zipCode,
+                value: suggestion.id,
                 label: `${suggestion.street} · ${suggestion.neighborhood}`,
+                inputLabel: suggestion.street,
               }))}
-              value={guestZipCode}
+              value={guestProviderId}
               inputValue={guestStreet}
               placeholder="Logradouro"
               ariaLabel="Endereço"
@@ -222,9 +269,7 @@ export const DeliveryAddressFields = ({
                   ? 'Não encontrado. Continue preenchendo manualmente.'
                   : 'Digite pelo menos 3 caracteres para buscar'
               }
-              onInputValueChange={(street) =>
-                form.setValue('guestStreet', street, { shouldDirty: true })
-              }
+              onInputValueChange={handleStreetInputChange}
               onValueChange={applySuggestion}
             />
           </FormField>
@@ -236,9 +281,13 @@ export const DeliveryAddressFields = ({
               autoComplete="address-level3"
               disabled={isLookingUpAddress}
               error={!!errors.guestNeighborhood}
-              {...register('guestNeighborhood', {
-                required: 'Informe o bairro',
-              })}
+              {...guestNeighborhoodField}
+              onChange={(event) =>
+                handleManualAddressChange(
+                  guestNeighborhoodField.onChange,
+                  event
+                )
+              }
             />
           </FormField>
 
@@ -249,7 +298,10 @@ export const DeliveryAddressFields = ({
               autoComplete="address-level2"
               disabled={isLookingUpAddress}
               error={!!errors.guestCity}
-              {...register('guestCity', { required: 'Informe a cidade' })}
+              {...guestCityField}
+              onChange={(event) =>
+                handleManualAddressChange(guestCityField.onChange, event)
+              }
             />
             <Input
               placeholder="UF"
@@ -258,7 +310,10 @@ export const DeliveryAddressFields = ({
               maxLength={2}
               disabled={isLookingUpAddress}
               error={!!errors.guestState}
-              {...register('guestState', { required: 'Informe o estado' })}
+              {...guestStateField}
+              onChange={(event) =>
+                handleManualAddressChange(guestStateField.onChange, event)
+              }
             />
           </Box>
 
@@ -273,7 +328,13 @@ export const DeliveryAddressFields = ({
                 placeholder="Apto, bloco ou ponto de referência"
                 aria-label="Complemento ou ponto de referência"
                 autoComplete="address-line2"
-                {...register('guestComplement')}
+                {...guestComplementField}
+                onChange={(event) =>
+                  handleManualAddressChange(
+                    guestComplementField.onChange,
+                    event
+                  )
+                }
               />
             </Box>
           </Collapsible>

@@ -8,12 +8,15 @@ export type CheckoutFormValues = {
   guestName: string
   guestPhone: string
   guestZipCode?: string
+  guestProviderId?: string
   guestStreet?: string
   guestNumber?: string
   guestComplement?: string
   guestNeighborhood?: string
   guestCity?: string
   guestState?: string
+  guestLatitude?: number
+  guestLongitude?: number
   paymentMethod: PaymentMethod
   changeFor?: number
   notes?: string

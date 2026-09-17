@@ -8,4 +8,6 @@ export type GuestInfo = {
   guestNeighborhood?: string
   guestCity?: string
   guestState?: string
+  guestLatitude?: number
+  guestLongitude?: number
 }

@@ -21,12 +21,14 @@ describe(CounterAddressSearchService.search.name, () => {
     await expect(
       CounterAddressSearchService.search(
         counterAddressSearchParamsMock.street,
-        counterAddressSearchParamsMock.state
+        counterAddressSearchParamsMock.state,
+        counterAddressSearchParamsMock.city
       )
     ).resolves.toEqual(counterAddressSearchResultsMock)
     expect(api.getAll).toHaveBeenCalledWith('addresses/search', {
       street: 'WE-69-A',
       state: 'PA',
+      city: 'Ananindeua',
     })
   })
 

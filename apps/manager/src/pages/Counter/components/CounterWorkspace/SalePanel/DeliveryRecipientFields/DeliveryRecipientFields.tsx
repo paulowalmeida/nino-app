@@ -23,6 +23,14 @@ export const DeliveryRecipientFields = ({
   isSearchingAddress,
   onChange,
 }: DeliveryRecipientFieldsProps) => {
+  const clearAddressSelection = (patch: Partial<Recipient>) =>
+    onChange({
+      ...patch,
+      providerId: undefined,
+      latitude: undefined,
+      longitude: undefined,
+    })
+
   const streetQuery = value.street
   const suggestions = addressSuggestions
 
@@ -34,10 +42,10 @@ export const DeliveryRecipientFields = ({
 
   if (
     value.street &&
-    !addressOptions.some((option) => option.value === value.addressId)
+    !addressOptions.some((option) => option.value === value.providerId)
   ) {
     addressOptions.unshift({
-      value: value.addressId || 'current-address',
+      value: value.providerId || 'current-address',
       label: value.street,
       inputLabel: value.street,
     })
@@ -46,7 +54,7 @@ export const DeliveryRecipientFields = ({
   const streetField = (
     <Combobox
       options={addressOptions}
-      value={value.addressId ?? ''}
+      value={value.providerId ?? ''}
       inputValue={streetQuery}
       placeholder="Digite o logradouro"
       ariaLabel="Logradouro"
@@ -58,24 +66,21 @@ export const DeliveryRecipientFields = ({
       loading={isSearchingAddress}
       shouldFilterOptions={false}
       onInputValueChange={(query) => {
-        onChange({
+        clearAddressSelection({
           street: query,
-          addressId: undefined,
-          latitude: undefined,
-          longitude: undefined,
           zipCode: undefined,
           neighborhood: '',
           city: undefined,
           state: undefined,
         })
       }}
-      onValueChange={(addressId) => {
-        const suggestion = suggestions.find((item) => item.id === addressId)
+      onValueChange={(providerId) => {
+        const suggestion = suggestions.find((item) => item.id === providerId)
 
         if (!suggestion) return
 
         onChange({
-          addressId: suggestion.id,
+          providerId: suggestion.providerId,
           zipCode: suggestion.zipCode,
           street: suggestion.street,
           neighborhood: suggestion.neighborhood,
@@ -134,7 +139,7 @@ export const DeliveryRecipientFields = ({
             hint="Ou digite o logradouro para buscar o endereço."
           />
         }
-        onChange={onChange}
+        onChange={clearAddressSelection}
       />
     </Box>
   )

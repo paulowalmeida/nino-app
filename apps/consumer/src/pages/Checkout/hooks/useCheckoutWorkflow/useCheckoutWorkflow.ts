@@ -65,10 +65,32 @@ export const useCheckoutWorkflow = ({
   const deliveryZoneId = useWatch({ control, name: 'deliveryZoneId' })
   const deliveryAddressId = useWatch({ control, name: 'deliveryAddressId' })
   const guestZipCode = useWatch({ control, name: 'guestZipCode' })
+  const guestProviderId = useWatch({ control, name: 'guestProviderId' })
+  const guestStreet = useWatch({ control, name: 'guestStreet' })
+  const guestNumber = useWatch({ control, name: 'guestNumber' })
+  const guestComplement = useWatch({ control, name: 'guestComplement' })
+  const guestNeighborhood = useWatch({ control, name: 'guestNeighborhood' })
+  const guestCity = useWatch({ control, name: 'guestCity' })
+  const guestState = useWatch({ control, name: 'guestState' })
+  const guestLatitude = useWatch({ control, name: 'guestLatitude' })
+  const guestLongitude = useWatch({ control, name: 'guestLongitude' })
   const selectedAddress = addresses.find(({ id }) => id === deliveryAddressId)
   const { quote, isFetching: isQuoting } = useDeliveryQuote(
     store?.id,
-    isAuthenticated ? selectedAddress?.zipCode : guestZipCode
+    isAuthenticated
+      ? (selectedAddress ?? {})
+      : {
+          providerId: guestProviderId,
+          zipCode: guestZipCode,
+          street: guestStreet,
+          number: guestNumber,
+          complement: guestComplement,
+          neighborhood: guestNeighborhood,
+          city: guestCity,
+          state: guestState,
+          latitude: guestLatitude,
+          longitude: guestLongitude,
+        }
   )
 
   useEffect(() => {

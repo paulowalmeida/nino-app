@@ -20,14 +20,17 @@ const isAllowedDeliveryCity = (
   deliveryCities.length === 0 ||
   deliveryCities.some(
     (deliveryCity) =>
-      normalizeLocation(deliveryCity.city) === normalizeLocation(suggestion.city) &&
-      normalizeLocation(deliveryCity.state) === normalizeLocation(suggestion.state)
+      normalizeLocation(deliveryCity.city) ===
+        normalizeLocation(suggestion.city) &&
+      normalizeLocation(deliveryCity.state) ===
+        normalizeLocation(suggestion.state)
   )
 
 export const useCounterAddressSearch = (
   street: string,
   state: string,
-  deliveryCities: DeliveryCity[] = []
+  deliveryCities: DeliveryCity[] = [],
+  city?: string
 ) => {
   const normalizedStreet = street.trim()
   const normalizedState = state.trim().toUpperCase()
@@ -47,10 +50,15 @@ export const useCounterAddressSearch = (
       'address-search',
       debouncedStreet,
       normalizedState,
+      city,
       deliveryCities,
     ],
     queryFn: () =>
-      CounterAddressSearchService.search(debouncedStreet, normalizedState),
+      CounterAddressSearchService.search(
+        debouncedStreet,
+        normalizedState,
+        city
+      ),
     enabled: debouncedStreet.length >= 3 && normalizedState.length === 2,
     staleTime: 60_000,
     retry: false,

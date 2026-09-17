@@ -5,7 +5,21 @@ import type { Recipient } from '@shared/types/order/recipient'
 
 export const useCounterDeliveryQuote = (
   unitId: string | null,
-  address: Pick<Recipient, 'zipCode' | 'latitude' | 'longitude'>
+  address: Partial<
+    Pick<
+      Recipient,
+      | 'providerId'
+      | 'zipCode'
+      | 'street'
+      | 'number'
+      | 'complement'
+      | 'neighborhood'
+      | 'city'
+      | 'state'
+      | 'latitude'
+      | 'longitude'
+    >
+  >
 ) => {
   const normalizedZipCode = address.zipCode?.replace(/\D/g, '') ?? ''
   const hasCoordinates =
@@ -16,6 +30,13 @@ export const useCounterDeliveryQuote = (
       'delivery-quote',
       unitId,
       normalizedZipCode,
+      address.providerId,
+      address.street,
+      address.number,
+      address.complement,
+      address.neighborhood,
+      address.city,
+      address.state,
       address.latitude,
       address.longitude,
     ],
