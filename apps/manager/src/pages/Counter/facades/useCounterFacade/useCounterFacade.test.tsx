@@ -19,6 +19,10 @@ const availabilityState = vi.hoisted(() => ({
   value: { city: '', state: '' },
 }))
 
+const deliveryCitiesState = vi.hoisted(() => ({
+  value: [] as { city: string; state: string }[],
+}))
+
 const addressSearchSpy = vi.hoisted(() => vi.fn())
 
 vi.mock('@shared/hooks/session/useCurrentUnit/useCurrentUnit', () => ({
@@ -40,7 +44,7 @@ vi.mock(
       zones: [],
       fee: 0,
       storeAddress: availabilityState.value,
-      deliveryCities: [],
+      deliveryCities: deliveryCitiesState.value,
     }),
   })
 )
@@ -175,8 +179,9 @@ describe(useCounterFacade.name, () => {
     stateOverride.value = {}
   })
 
-  it('passes the unit state to address search without forcing a city', () => {
+  it('passes the configured delivery cities to address search', () => {
     availabilityState.value = { city: 'Belém', state: 'PA' }
+    deliveryCitiesState.value = [{ city: 'Belém', state: 'PA' }]
     stateOverride.value = {
       recipient: {
         name: '',
@@ -191,8 +196,11 @@ describe(useCounterFacade.name, () => {
 
     renderHook(() => useCounterFacade())
 
-    expect(addressSearchSpy).toHaveBeenCalledWith('Avenida Nazaré', 'PA')
+    expect(addressSearchSpy).toHaveBeenCalledWith('Avenida Nazaré', 'PA', [
+      { city: 'Belém', state: 'PA' },
+    ])
     availabilityState.value = { city: '', state: '' }
+    deliveryCitiesState.value = []
     stateOverride.value = {}
     addressSearchSpy.mockClear()
   })

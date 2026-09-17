@@ -2,9 +2,33 @@ import { useEffect, useState } from 'react'
 
 import { useQuery } from '@tanstack/react-query'
 
+import type { AddressSearchResult } from '@nino/lib/types/address/address-lookup'
 import { CounterAddressSearchService } from '@pages/Counter/services/counter-address-search.service/counter-address-search.service'
+import type { DeliveryCity } from '@shared/types/store/delivery-city'
 
-export const useCounterAddressSearch = (street: string, state: string) => {
+const normalizeLocation = (value: string): string =>
+  value
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .trim()
+    .toLocaleUpperCase('pt-BR')
+
+const isAllowedDeliveryCity = (
+  suggestion: AddressSearchResult,
+  deliveryCities: DeliveryCity[]
+): boolean =>
+  deliveryCities.length === 0 ||
+  deliveryCities.some(
+    (deliveryCity) =>
+      normalizeLocation(deliveryCity.city) === normalizeLocation(suggestion.city) &&
+      normalizeLocation(deliveryCity.state) === normalizeLocation(suggestion.state)
+  )
+
+export const useCounterAddressSearch = (
+  street: string,
+  state: string,
+  deliveryCities: DeliveryCity[] = []
+) => {
   const normalizedStreet = street.trim()
   const normalizedState = state.trim().toUpperCase()
   const [debouncedStreet, setDebouncedStreet] = useState('')
@@ -23,6 +47,7 @@ export const useCounterAddressSearch = (street: string, state: string) => {
       'address-search',
       debouncedStreet,
       normalizedState,
+      deliveryCities,
     ],
     queryFn: () =>
       CounterAddressSearchService.search(debouncedStreet, normalizedState),
@@ -37,7 +62,9 @@ export const useCounterAddressSearch = (street: string, state: string) => {
     normalizedStreet !== debouncedStreet
 
   return {
-    suggestions: query.data ?? [],
+    suggestions: (query.data ?? []).filter((suggestion) =>
+      isAllowedDeliveryCity(suggestion, deliveryCities)
+    ),
     isSearching: isWaitingForDebounce || query.isFetching,
   }
 }

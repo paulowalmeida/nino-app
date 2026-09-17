@@ -19,6 +19,8 @@ export function MaskedInput({
   mask,
   onChange,
   inputMode = 'numeric',
+  value,
+  defaultValue,
   ...props
 }: MaskedInputProps) {
   /* Reescreve o valor no próprio evento antes de repassá-lo: é o que faz o
@@ -29,5 +31,17 @@ export function MaskedInput({
     onChange?.(event)
   }
 
-  return <Input inputMode={inputMode} onChange={handleChange} {...props} />
+  const maskedValue = typeof value === 'string' ? mask(value) : value
+  const maskedDefaultValue =
+    typeof defaultValue === 'string' ? mask(defaultValue) : defaultValue
+
+  return (
+    <Input
+      inputMode={inputMode}
+      value={maskedValue}
+      defaultValue={maskedDefaultValue}
+      onChange={handleChange}
+      {...props}
+    />
+  )
 }

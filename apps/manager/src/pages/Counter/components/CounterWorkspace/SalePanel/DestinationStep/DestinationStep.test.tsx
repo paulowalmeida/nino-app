@@ -1,6 +1,7 @@
 import { useState } from 'react'
 
 import { fireEvent, render, screen } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
 import { describe, expect, it, vi } from 'vitest'
 
 import { DestinationStep } from './DestinationStep'
@@ -56,7 +57,7 @@ describe('DestinationStep', () => {
     expect(screen.queryByText('delivery fields')).not.toBeInTheDocument()
   })
 
-  it('keeps the pickup phone visible after the controlled state changes', () => {
+  it('keeps the pickup phone visible after real controlled typing', async () => {
     const TestHarness = () => {
       const [recipient, setRecipient] = useState(destinationStepMock.recipient)
 
@@ -80,7 +81,7 @@ describe('DestinationStep', () => {
     render(<TestHarness />)
     const phone = screen.getByRole('textbox', { name: 'Telefone' })
 
-    fireEvent.change(phone, { target: { value: '91982071243' } })
+    await userEvent.type(phone, '91982071243')
 
     expect(phone).toHaveValue('(91) 98207-1243')
   })

@@ -23,7 +23,8 @@ export const useCounterFacade = () => {
   const availability = useCounterAvailability(unitId, recipient.zoneId)
   const addressSearch = useCounterAddressSearch(
     recipient.street,
-    availability.storeAddress.state
+    availability.storeAddress.state,
+    availability.deliveryCities
   )
   const deliveryQuote = useCounterDeliveryQuote(
     unitId,

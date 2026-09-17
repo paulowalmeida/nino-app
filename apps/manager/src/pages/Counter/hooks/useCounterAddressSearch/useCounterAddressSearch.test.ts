@@ -31,14 +31,26 @@ describe(useCounterAddressSearch.name, () => {
       addressSuggestionsMock
     )
     const { result, rerender } = renderHook(
-      ({ street, state }) => useCounterAddressSearch(street, state),
-      { initialProps: { street: 'Rua d', state: 'pa' }, wrapper }
+      ({ street, state, deliveryCities }) =>
+        useCounterAddressSearch(street, state, deliveryCities),
+      {
+        initialProps: {
+          street: 'Rua d',
+          state: 'pa',
+          deliveryCities: [{ city: 'Belém', state: 'PA' }],
+        },
+        wrapper,
+      }
     )
     expect(CounterAddressSearchService.search).not.toHaveBeenCalled()
     expect(result.current.isSearching).toBe(true)
 
     act(() => vi.advanceTimersByTime(300))
-    rerender({ street: 'Rua das', state: 'pa' })
+    rerender({
+      street: 'Rua das',
+      state: 'pa',
+      deliveryCities: [{ city: 'Belém', state: 'PA' }],
+    })
 
     await act(async () => {
       vi.advanceTimersByTime(599)
@@ -58,5 +70,30 @@ describe(useCounterAddressSearch.name, () => {
       )
     )
     expect(CounterAddressSearchService.search).toHaveBeenCalledTimes(1)
+  })
+
+  it('keeps only suggestions in the configured delivery cities', async () => {
+    vi.mocked(CounterAddressSearchService.search).mockResolvedValue([
+      addressSuggestionsMock[0],
+      { ...addressSuggestionsMock[0], id: 'address-2', city: 'Ananindeua' },
+    ])
+
+    const { result } = renderHook(
+      () =>
+        useCounterAddressSearch('Rua das', 'PA', [
+          { city: 'Belém', state: 'PA' },
+        ]),
+      { wrapper }
+    )
+
+    await waitFor(() =>
+      expect(CounterAddressSearchService.search).toHaveBeenCalledWith(
+        'Rua das',
+        'PA'
+      )
+    )
+    await waitFor(() =>
+      expect(result.current.suggestions).toEqual([addressSuggestionsMock[0]])
+    )
   })
 })
