@@ -26,12 +26,12 @@ describe(useGuestAddressSearch.name, () => {
     vi.clearAllMocks()
   })
 
-  it('debounces the street and searches the BFF with city and state context', async () => {
+  it('debounces the street and searches the BFF with the store coverage', async () => {
     vi.useFakeTimers()
     vi.mocked(checkoutAddressSearchService.search).mockResolvedValue(
       guestAddressSearchResultsMock
     )
-    renderHook(() => useGuestAddressSearch('Belém', 'pa', 'Rua das'), {
+    renderHook(() => useGuestAddressSearch('unit-1', 'pa', 'Rua das'), {
       wrapper: createWrapper(),
     })
 
@@ -44,16 +44,16 @@ describe(useGuestAddressSearch.name, () => {
 
     await waitFor(() =>
       expect(checkoutAddressSearchService.search).toHaveBeenCalledWith(
+        'unit-1',
         'Rua das',
-        'pa',
-        'Belém'
+        'pa'
       )
     )
   })
 
   it('does not search until the street has three characters and a state', async () => {
     const { result } = renderHook(
-      () => useGuestAddressSearch('Belém', 'PA', 'Ru'),
+      () => useGuestAddressSearch('unit-1', 'PA', 'Ru'),
       { wrapper: createWrapper() }
     )
 

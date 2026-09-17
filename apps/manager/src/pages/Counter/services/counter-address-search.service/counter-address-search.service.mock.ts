@@ -1,8 +1,8 @@
 import type { AddressSearchResult } from '@nino/lib/types/address/address-lookup'
 
 export const counterAddressSearchParamsMock = {
+  unitId: 'f3c99db0-8c56-4e84-a843-a8092c77038b',
   state: 'PA',
-  city: 'Ananindeua',
   street: 'WE-69-A',
 }
 

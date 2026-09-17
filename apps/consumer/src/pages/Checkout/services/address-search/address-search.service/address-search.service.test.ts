@@ -12,16 +12,16 @@ vi.mock('@shared/services/http/http.service', () => ({
 describe(checkoutAddressSearchService.search.name, () => {
   afterEach(() => vi.clearAllMocks())
 
-  it('uses the shared address search endpoint with the consumer location', async () => {
+  it('uses the shared address search endpoint with the store coverage', async () => {
     vi.mocked(api.getAll).mockResolvedValue(checkoutAddressSearchResultsMock)
 
     await expect(
-      checkoutAddressSearchService.search('Rua das', 'PA', 'Belém')
+      checkoutAddressSearchService.search('unit-1', 'Rua das', 'PA')
     ).resolves.toEqual(checkoutAddressSearchResultsMock)
     expect(api.getAll).toHaveBeenCalledWith('addresses/search', {
+      unitId: 'unit-1',
       street: 'Rua das',
       state: 'PA',
-      city: 'Belém',
     })
   })
 })

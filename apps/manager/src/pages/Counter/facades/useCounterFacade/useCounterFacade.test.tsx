@@ -179,7 +179,7 @@ describe(useCounterFacade.name, () => {
     stateOverride.value = {}
   })
 
-  it('passes the configured delivery cities to address search', () => {
+  it('passes the active unit and state to address search', () => {
     availabilityState.value = { city: 'Belém', state: 'PA' }
     deliveryCitiesState.value = [{ city: 'Belém', state: 'PA' }]
     stateOverride.value = {
@@ -196,9 +196,11 @@ describe(useCounterFacade.name, () => {
 
     renderHook(() => useCounterFacade())
 
-    expect(addressSearchSpy).toHaveBeenCalledWith('Avenida Nazaré', 'PA', [
-      { city: 'Belém', state: 'PA' },
-    ])
+    expect(addressSearchSpy).toHaveBeenCalledWith(
+      'unit-1',
+      'Avenida Nazaré',
+      'PA'
+    )
     availabilityState.value = { city: '', state: '' }
     deliveryCitiesState.value = []
     stateOverride.value = {}

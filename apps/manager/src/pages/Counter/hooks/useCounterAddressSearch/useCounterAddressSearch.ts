@@ -2,35 +2,12 @@ import { useEffect, useState } from 'react'
 
 import { useQuery } from '@tanstack/react-query'
 
-import type { AddressSearchResult } from '@nino/lib/types/address/address-lookup'
 import { CounterAddressSearchService } from '@pages/Counter/services/counter-address-search.service/counter-address-search.service'
-import type { DeliveryCity } from '@shared/types/store/delivery-city'
-
-const normalizeLocation = (value: string): string =>
-  value
-    .normalize('NFD')
-    .replace(/[\u0300-\u036f]/g, '')
-    .trim()
-    .toLocaleUpperCase('pt-BR')
-
-const isAllowedDeliveryCity = (
-  suggestion: AddressSearchResult,
-  deliveryCities: DeliveryCity[]
-): boolean =>
-  deliveryCities.length === 0 ||
-  deliveryCities.some(
-    (deliveryCity) =>
-      normalizeLocation(deliveryCity.city) ===
-        normalizeLocation(suggestion.city) &&
-      normalizeLocation(deliveryCity.state) ===
-        normalizeLocation(suggestion.state)
-  )
 
 export const useCounterAddressSearch = (
+  unitId: string | null,
   street: string,
-  state: string,
-  deliveryCities: DeliveryCity[] = [],
-  city?: string
+  state: string
 ) => {
   const normalizedStreet = street.trim()
   const normalizedState = state.trim().toUpperCase()
@@ -48,18 +25,18 @@ export const useCounterAddressSearch = (
     queryKey: [
       'counter',
       'address-search',
+      unitId,
       debouncedStreet,
       normalizedState,
-      city,
-      deliveryCities,
     ],
     queryFn: () =>
       CounterAddressSearchService.search(
+        unitId as string,
         debouncedStreet,
-        normalizedState,
-        city
+        normalizedState
       ),
-    enabled: debouncedStreet.length >= 3 && normalizedState.length === 2,
+    enabled:
+      !!unitId && debouncedStreet.length >= 3 && normalizedState.length === 2,
     staleTime: 60_000,
     retry: false,
   })
@@ -70,9 +47,7 @@ export const useCounterAddressSearch = (
     normalizedStreet !== debouncedStreet
 
   return {
-    suggestions: (query.data ?? []).filter((suggestion) =>
-      isAllowedDeliveryCity(suggestion, deliveryCities)
-    ),
+    suggestions: query.data ?? [],
     isSearching: isWaitingForDebounce || query.isFetching,
   }
 }

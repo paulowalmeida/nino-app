@@ -5,7 +5,7 @@ import { useQuery } from '@tanstack/react-query'
 import { checkoutAddressSearchService } from '@pages/Checkout/services/address-search/address-search.service/index'
 
 export const useGuestAddressSearch = (
-  city: string | undefined,
+  unitId: string | undefined,
   state: string | undefined,
   street: string | undefined
 ) => {
@@ -21,10 +21,15 @@ export const useGuestAddressSearch = (
   }, [normalizedStreet])
 
   const query = useQuery({
-    queryKey: ['checkout', 'address-search', state, city, debouncedStreet],
+    queryKey: ['checkout', 'address-search', unitId, state, debouncedStreet],
     queryFn: () =>
-      checkoutAddressSearchService.search(debouncedStreet, state ?? '', city),
-    enabled: state?.length === 2 && !!city && debouncedStreet.length >= 3,
+      checkoutAddressSearchService.search(
+        unitId as string,
+        debouncedStreet,
+        state ?? ''
+      ),
+    enabled:
+      !!unitId && state?.length === 2 && debouncedStreet.length >= 3,
     staleTime: 60_000,
   })
 

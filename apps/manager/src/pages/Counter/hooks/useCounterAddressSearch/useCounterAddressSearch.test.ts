@@ -31,13 +31,13 @@ describe(useCounterAddressSearch.name, () => {
       addressSuggestionsMock
     )
     const { result, rerender } = renderHook(
-      ({ street, state, deliveryCities }) =>
-        useCounterAddressSearch(street, state, deliveryCities),
+      ({ unitId, street, state }) =>
+        useCounterAddressSearch(unitId, street, state),
       {
         initialProps: {
+          unitId: 'unit-1',
           street: 'Rua d',
           state: 'pa',
-          deliveryCities: [{ city: 'Belém', state: 'PA' }],
         },
         wrapper,
       }
@@ -47,9 +47,9 @@ describe(useCounterAddressSearch.name, () => {
 
     act(() => vi.advanceTimersByTime(300))
     rerender({
+      unitId: 'unit-1',
       street: 'Rua das',
       state: 'pa',
-      deliveryCities: [{ city: 'Belém', state: 'PA' }],
     })
 
     await act(async () => {
@@ -65,15 +65,15 @@ describe(useCounterAddressSearch.name, () => {
     vi.useRealTimers()
     await waitFor(() =>
       expect(CounterAddressSearchService.search).toHaveBeenCalledWith(
+        'unit-1',
         'Rua das',
-        'PA',
-        undefined
+        'PA'
       )
     )
     expect(CounterAddressSearchService.search).toHaveBeenCalledTimes(1)
   })
 
-  it('keeps only suggestions in the configured delivery cities', async () => {
+  it('returns the BFF suggestions already scoped to unit delivery coverage', async () => {
     vi.mocked(CounterAddressSearchService.search).mockResolvedValue([
       addressSuggestionsMock[0],
       { ...addressSuggestionsMock[0], id: 'address-2', city: 'Ananindeua' },
@@ -81,21 +81,22 @@ describe(useCounterAddressSearch.name, () => {
 
     const { result } = renderHook(
       () =>
-        useCounterAddressSearch('Rua das', 'PA', [
-          { city: 'Belém', state: 'PA' },
-        ]),
+        useCounterAddressSearch('unit-1', 'Rua das', 'PA'),
       { wrapper }
     )
 
     await waitFor(() =>
       expect(CounterAddressSearchService.search).toHaveBeenCalledWith(
+        'unit-1',
         'Rua das',
-        'PA',
-        undefined
+        'PA'
       )
     )
     await waitFor(() =>
-      expect(result.current.suggestions).toEqual([addressSuggestionsMock[0]])
+      expect(result.current.suggestions).toEqual([
+        addressSuggestionsMock[0],
+        { ...addressSuggestionsMock[0], id: 'address-2', city: 'Ananindeua' },
+      ])
     )
   })
 })

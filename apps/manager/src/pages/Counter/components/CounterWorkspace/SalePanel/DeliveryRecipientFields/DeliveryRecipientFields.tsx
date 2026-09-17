@@ -40,17 +40,6 @@ export const DeliveryRecipientFields = ({
     inputLabel: suggestion.street,
   }))
 
-  if (
-    value.street &&
-    !addressOptions.some((option) => option.value === value.providerId)
-  ) {
-    addressOptions.unshift({
-      value: value.providerId || 'current-address',
-      label: value.street,
-      inputLabel: value.street,
-    })
-  }
-
   const streetField = (
     <Combobox
       options={addressOptions}

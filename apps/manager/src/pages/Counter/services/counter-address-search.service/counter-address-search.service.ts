@@ -3,13 +3,13 @@ import { api } from '@shared/services/http/http.service'
 
 export const CounterAddressSearchService = {
   search: (
+    unitId: string,
     street: string,
-    state: string,
-    city?: string
+    state: string
   ): Promise<AddressSearchResult[]> =>
     api.getAll<AddressSearchResult[]>('addresses/search', {
+      unitId,
       street,
       state,
-      ...(city ? { city } : {}),
     }),
 }

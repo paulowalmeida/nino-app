@@ -61,10 +61,9 @@ export const DeliveryAddressFields = ({
   const guestComplementField = register('guestComplement')
   const guestProviderId = useWatch({ control, name: 'guestProviderId' })
   const guestStreet = useWatch({ control, name: 'guestStreet' })
-  const guestCity = useWatch({ control, name: 'guestCity' })
   const guestState = useWatch({ control, name: 'guestState' })
   const { suggestions, isSearching: isSearchingStreet } = useGuestAddressSearch(
-    guestCity || store?.city,
+    store?.id,
     guestState || store?.state,
     guestStreet
   )
