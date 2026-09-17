@@ -150,9 +150,12 @@ export function Combobox({
       inputValue={inputValue}
       defaultValue={initialValue}
       onValueChange={({ value: values }) => onValueChange?.(values[0])}
-      onInputValueChange={({ inputValue }) => {
+      onInputValueChange={({ inputValue, reason }) => {
         setQuery(inputValue)
-        onInputValueChange?.(inputValue)
+        // WORKAROUND: selecting an item also fires this event (Ark syncs the
+        // input text to the chosen item), so a consumer that clears stale
+        // selection fields on every text change would erase what it just set.
+        if (reason === 'input-change') onInputValueChange?.(inputValue)
       }}
     >
       <ArkCombobox.Control

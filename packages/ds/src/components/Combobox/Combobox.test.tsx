@@ -84,6 +84,32 @@ describe(Combobox.name, () => {
     expect(input).toHaveValue('Travessa WE-69-A')
   })
 
+  it('does not call onInputValueChange when selection sets the input text', async () => {
+    const onInputValueChange = vi.fn()
+    const user = userEvent.setup({ pointerEventsCheck: 0 })
+    render(
+      <Combobox
+        options={[
+          {
+            value: '67143450',
+            label: 'Travessa WE-69-A · Coqueiro · 67143-450',
+            inputLabel: 'Travessa WE-69-A',
+          },
+        ]}
+        onInputValueChange={onInputValueChange}
+      />
+    )
+
+    const input = screen.getByRole('combobox')
+    await user.click(input)
+    await user.keyboard('we')
+    onInputValueChange.mockClear()
+
+    await user.keyboard('{ArrowDown}{Enter}')
+
+    expect(onInputValueChange).not.toHaveBeenCalled()
+  })
+
   it('applies error state when error is true', () => {
     render(<Combobox options={options} error />)
     expect(screen.getByRole('combobox')).toHaveAttribute('data-invalid')
