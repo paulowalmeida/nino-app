@@ -27,6 +27,8 @@ describe('DestinationStep', () => {
         onRecipient={onRecipient}
         addressSuggestions={[]}
         isSearchingAddress={false}
+        resolveSelectedAddress={vi.fn()}
+        isResolvingSelectedAddress={false}
       />
     )
     fireEvent.change(screen.getByRole('textbox', { name: 'Telefone' }), {
@@ -45,6 +47,8 @@ describe('DestinationStep', () => {
         onRecipient={vi.fn()}
         addressSuggestions={[]}
         isSearchingAddress={false}
+        resolveSelectedAddress={vi.fn()}
+        isResolvingSelectedAddress={false}
       />
     )
     expect(
@@ -74,6 +78,8 @@ describe('DestinationStep', () => {
           }
           addressSuggestions={[]}
           isSearchingAddress={false}
+          resolveSelectedAddress={vi.fn()}
+          isResolvingSelectedAddress={false}
         />
       )
     }
@@ -96,6 +102,8 @@ describe('DestinationStep', () => {
         onRecipient={vi.fn()}
         addressSuggestions={[]}
         isSearchingAddress={false}
+        resolveSelectedAddress={vi.fn()}
+        isResolvingSelectedAddress={false}
       />
     )
 
