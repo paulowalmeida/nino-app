@@ -21,6 +21,7 @@ export type AddressSearchResult = AddressLookup & {
   providerId: string
   precision: AddressSearchPrecision
   zipCode: string
+  number: string
   latitude: number
   longitude: number
 }

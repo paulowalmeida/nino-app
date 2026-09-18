@@ -18,4 +18,7 @@ export const reviewStepMock = {
   method: 'CASH' as const,
   changeFor: '',
   changeAmount: 0,
+  subtotal: 10,
+  deliveryFee: 0,
+  total: 10,
 }

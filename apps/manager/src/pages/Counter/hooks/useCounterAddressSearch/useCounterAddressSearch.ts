@@ -7,39 +7,49 @@ import { CounterAddressSearchService } from '@pages/Counter/services/counter-add
 export const useCounterAddressSearch = (
   unitId: string | null,
   street: string,
-  state: string
+  number: string,
+  state: string,
+  searchRequested = true
 ) => {
   const normalizedStreet = street.trim()
+  const normalizedNumber = number.trim()
   const normalizedState = state.trim().toUpperCase()
-  const [debouncedStreet, setDebouncedStreet] = useState('')
+  const normalizedSearch =
+    normalizedStreet && normalizedNumber
+      ? `${normalizedStreet}, ${normalizedNumber}`
+      : ''
+  const [debouncedSearch, setDebouncedSearch] = useState('')
   const [sessionToken, setSessionToken] = useState(() => crypto.randomUUID())
 
   useEffect(() => {
     const timer = window.setTimeout(
-      () => setDebouncedStreet(street.trim()),
+      () => setDebouncedSearch(searchRequested ? normalizedSearch : ''),
       600
     )
     return () => window.clearTimeout(timer)
-  }, [street])
+  }, [normalizedSearch, searchRequested])
 
   const query = useQuery({
     queryKey: [
       'counter',
       'address-search',
       unitId,
-      debouncedStreet,
+      debouncedSearch,
       normalizedState,
       sessionToken,
     ],
     queryFn: () =>
       CounterAddressSearchService.search(
         unitId as string,
-        debouncedStreet,
+        debouncedSearch,
         normalizedState,
         sessionToken
       ),
     enabled:
-      !!unitId && debouncedStreet.length >= 3 && normalizedState.length === 2,
+      !!unitId &&
+      searchRequested &&
+      debouncedSearch.length >= 3 &&
+      normalizedState.length === 2,
     staleTime: 60_000,
     retry: false,
   })
@@ -60,8 +70,10 @@ export const useCounterAddressSearch = (
 
   const isWaitingForDebounce =
     normalizedStreet.length >= 3 &&
+    normalizedNumber.length > 0 &&
+    searchRequested &&
     normalizedState.length === 2 &&
-    normalizedStreet !== debouncedStreet
+    normalizedSearch !== debouncedSearch
 
   return {
     suggestions: query.data ?? [],

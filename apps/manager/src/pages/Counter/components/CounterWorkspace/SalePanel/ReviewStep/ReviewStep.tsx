@@ -18,6 +18,9 @@ type ReviewStepProps = {
   method: PaymentMethod | null
   changeFor: string
   changeAmount: number
+  subtotal: number
+  deliveryFee: number
+  total: number
 }
 
 export const ReviewStep = ({
@@ -29,6 +32,9 @@ export const ReviewStep = ({
   method,
   changeFor,
   changeAmount,
+  subtotal,
+  deliveryFee,
+  total,
 }: ReviewStepProps) => {
   const printedRows = counterPrintedRows({
     channel,
@@ -76,6 +82,54 @@ export const ReviewStep = ({
               </Text>
             </Box>
           ))}
+        </Box>
+
+        <span className={styles.dashed} aria-hidden="true" />
+        <Box direction="column" className={styles.totals}>
+          {deliveryFee > 0 && (
+            <>
+              <Box direction="row" justify="between" align="baseline">
+                <Text as="span" size="sm" color="muted">
+                  Itens
+                </Text>
+                <Text
+                  as="span"
+                  size="sm"
+                  color="muted"
+                  className={styles.money}
+                >
+                  {brl(subtotal)}
+                </Text>
+              </Box>
+              <Box direction="row" justify="between" align="baseline">
+                <Text as="span" size="sm" color="muted">
+                  Entrega
+                </Text>
+                <Text
+                  as="span"
+                  size="sm"
+                  color="muted"
+                  className={styles.money}
+                >
+                  {brl(deliveryFee)}
+                </Text>
+              </Box>
+            </>
+          )}
+          <Box direction="row" justify="between" align="baseline">
+            <Text as="span" size="sm" weight="semibold" color="muted">
+              Total
+            </Text>
+            <Text
+              as="span"
+              size="2xl"
+              weight="extrabold"
+              font="display"
+              className={styles.money}
+            >
+              {brl(total)}
+            </Text>
+          </Box>
         </Box>
 
         {printedRows.length > 0 && (

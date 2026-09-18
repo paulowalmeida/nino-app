@@ -187,7 +187,7 @@ describe(useCounterFacade.name, () => {
         name: '',
         phone: '',
         street: 'Avenida Nazaré',
-        number: '',
+        number: '123',
         complement: '',
         neighborhood: '',
         zoneId: '',
@@ -196,10 +196,12 @@ describe(useCounterFacade.name, () => {
 
     renderHook(() => useCounterFacade())
 
-    expect(addressSearchSpy).toHaveBeenCalledWith(
+    expect(addressSearchSpy).toHaveBeenLastCalledWith(
       'unit-1',
       'Avenida Nazaré',
-      'PA'
+      '123',
+      'PA',
+      undefined
     )
     availabilityState.value = { city: '', state: '' }
     deliveryCitiesState.value = []

@@ -1,3 +1,4 @@
+import type { CounterStep } from '@pages/Counter/types/CounterStep.type'
 import type { OrderChannel } from '@shared/types/order/order-channel'
 import type { PaymentMethod } from '@shared/types/order/payment-method'
 
@@ -34,4 +35,31 @@ export const COUNTER_PAYMENT_SPOKEN: Record<PaymentMethod, string> = {
   PIX: 'Pix',
   CARD_ON_DELIVERY: 'cartão',
   CARD_ONLINE: 'cartão',
+}
+
+/** A ordem em que o checkout do balcão pergunta as coisas. */
+export const COUNTER_STEP_ORDER: CounterStep[] = [
+  'items',
+  'destination',
+  'location',
+  'payment',
+  'review',
+]
+
+/**
+ * O nome e a linha de apoio de cada etapa. Vive aqui porque o cabeçalho da
+ * página e a trilha de progresso contam a mesma etapa de lugares diferentes.
+ */
+export const COUNTER_STEP_COPY: Record<
+  CounterStep,
+  { title: string; hint: string }
+> = {
+  items: { title: 'Itens', hint: 'Confira o que o cliente pediu' },
+  destination: { title: 'Destino', hint: 'Como esse pedido sai da loja' },
+  location: {
+    title: 'Localização',
+    hint: 'Confirme o ponto que calcula a entrega',
+  },
+  payment: { title: 'Pagamento', hint: 'Como o cliente vai pagar' },
+  review: { title: 'Revisão', hint: 'Confira e feche a venda' },
 }

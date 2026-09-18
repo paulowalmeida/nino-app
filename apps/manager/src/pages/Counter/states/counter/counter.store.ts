@@ -3,6 +3,7 @@ import { create } from 'zustand'
 import { addItem } from '@pages/Counter/states/counter/operations/add-item/add-item'
 import { clearLastSale } from '@pages/Counter/states/counter/operations/clear-last-sale/clear-last-sale'
 import { clearTicket } from '@pages/Counter/states/counter/operations/clear-ticket/clear-ticket'
+import { setAddressLookupRequested } from '@pages/Counter/states/counter/operations/set-address-lookup-requested/set-address-lookup-requested'
 import { setChangeFor } from '@pages/Counter/states/counter/operations/set-change-for/set-change-for'
 import { setChannel } from '@pages/Counter/states/counter/operations/set-channel/set-channel'
 import { setConsumerName } from '@pages/Counter/states/counter/operations/set-consumer-name/set-consumer-name'
@@ -35,6 +36,7 @@ export const useCounterStore = create<CounterState>((set) => ({
     city: '',
     state: '',
   },
+  addressLookupRequested: false,
   changeFor: '',
   lastSale: null,
   add: (item, modifiers) => {
@@ -49,7 +51,14 @@ export const useCounterStore = create<CounterState>((set) => ({
   setChosenPaymentMethod: (method) => setPaymentMethod(set, method),
   setConsumerName: (name) => setConsumerName(set, name),
   setTableNumber: (table) => setTableNumber(set, table),
-  setRecipient: (patch) => setRecipient(set, patch),
+  setRecipient: (patch) => {
+    setRecipient(set, patch)
+    if ('street' in patch || 'number' in patch) {
+      setAddressLookupRequested(set, false)
+    }
+  },
+  setAddressLookupRequested: (requested) =>
+    setAddressLookupRequested(set, requested),
   setChangeFor: (value) => setChangeFor(set, value),
   setLastSale: (receipt) => setLastSale(set, receipt),
   clearLastSale: () => clearLastSale(set),

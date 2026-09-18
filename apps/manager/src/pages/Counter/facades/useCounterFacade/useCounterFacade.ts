@@ -17,6 +17,9 @@ import { useCurrentUnit } from '@shared/hooks/session/useCurrentUnit/useCurrentU
 export const useCounterFacade = () => {
   const unitId = useCurrentUnit()?.unitId ?? null
   const recipient = useCounterStore((state) => state.recipient)
+  const addressLookupRequested = useCounterStore(
+    (state) => state.addressLookupRequested
+  )
   const channel = useCounterStore((state) => state.channel)
   const menu = useMenu(unitId)
   const payments = useCounterPaymentMethods(unitId)
@@ -24,7 +27,9 @@ export const useCounterFacade = () => {
   const addressSearch = useCounterAddressSearch(
     unitId,
     recipient.street,
+    recipient.number,
     availability.storeAddress.state,
+    addressLookupRequested,
   )
   const deliveryQuote = useCounterDeliveryQuote(
     unitId,
@@ -54,6 +59,9 @@ export const useCounterFacade = () => {
   const setConsumerName = useCounterStore((state) => state.setConsumerName)
   const setTableNumber = useCounterStore((state) => state.setTableNumber)
   const setRecipient = useCounterStore((state) => state.setRecipient)
+  const setAddressLookupRequested = useCounterStore(
+    (state) => state.setAddressLookupRequested
+  )
   const setChangeFor = useCounterStore((state) => state.setChangeFor)
 
   const canContinue =
@@ -67,7 +75,7 @@ export const useCounterFacade = () => {
                 (recipient.latitude !== undefined &&
                   recipient.longitude !== undefined)) &&
               recipient.street.trim() &&
-              recipient.number.trim() &&
+              recipient.number?.trim() &&
               deliveryQuote.quote
             )
           : channel === 'PICKUP'
@@ -88,7 +96,9 @@ export const useCounterFacade = () => {
         return
       }
       if (step === 'items') setStep('destination')
-      else if (step === 'destination') setStep('payment')
+      else if (step === 'destination')
+        setStep(channel === 'DELIVERY' ? 'location' : 'payment')
+      else if (step === 'location') setStep('payment')
       else if (step === 'payment') setStep('review')
       else commands.finish()
     },
@@ -113,6 +123,7 @@ export const useCounterFacade = () => {
     consumerName,
     tableNumber,
     recipient,
+    addressLookupRequested,
     zones: availability.zones,
     deliveryQuote: deliveryQuote.quote,
     addressSuggestions: addressSearch.suggestions,
@@ -128,6 +139,7 @@ export const useCounterFacade = () => {
     setConsumerName,
     setTableNumber,
     setRecipient,
+    setAddressLookupRequested,
     setChangeFor,
   }
 }

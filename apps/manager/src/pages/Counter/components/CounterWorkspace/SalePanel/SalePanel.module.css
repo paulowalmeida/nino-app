@@ -15,8 +15,3 @@
 .title {
   @apply tracking-[-0.01em];
 }
-
-.stepName {
-  @apply shrink-0 px-6 pb-4 pt-1;
-  padding-inline: var(--checkout-gutter, 1.5rem);
-}

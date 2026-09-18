@@ -1,5 +1,6 @@
 import { Box } from '@nino/ds/components/Box'
 import { FormField } from '@nino/ds/components/FormField'
+import { Icon } from '@nino/ds/components/Icon'
 import { Input } from '@nino/ds/components/Input'
 import { PhoneInput } from '@nino/ds/components/PhoneInput'
 import { Text } from '@nino/ds/components/Text'
@@ -29,22 +30,24 @@ type DestinationStepProps = {
   onRecipient: (patch: Partial<Recipient>) => void
   resolveSelectedAddress: (placeId: string) => Promise<AddressSearchResult>
   isResolvingSelectedAddress: boolean
+  addressLookupRequested?: boolean
+  onAddressLookupRequested?: (requested: boolean) => void
 }
 
 const destinations = [
   {
     value: 'PICKUP' as const,
-    icon: '🛍️',
+    icon: 'shopping-bag' as const,
     label: 'Retirada',
   },
   {
     value: 'COUNTER' as const,
-    icon: '🍽️',
+    icon: 'store' as const,
     label: 'No local',
   },
   {
     value: 'DELIVERY' as const,
-    icon: '🛵',
+    icon: 'truck' as const,
     label: 'Entrega',
   },
 ]
@@ -62,13 +65,15 @@ export const DestinationStep = ({
   onRecipient,
   resolveSelectedAddress,
   isResolvingSelectedAddress,
+  addressLookupRequested,
+  onAddressLookupRequested,
 }: DestinationStepProps) => (
   <Box direction="column" gap={3} className={styles.step}>
     <Box className={styles.choices}>
       {destinations.map((destination) => (
         <ChoiceCard
           key={destination.value}
-          icon={destination.icon}
+          icon={<Icon name={destination.icon} />}
           label={destination.label}
           hint={COUNTER_CHANNEL_HINT[destination.value]}
           isSelected={channel === destination.value}
@@ -115,6 +120,8 @@ export const DestinationStep = ({
         onChange={onRecipient}
         resolveSelectedAddress={resolveSelectedAddress}
         isResolvingSelectedAddress={isResolvingSelectedAddress}
+        addressLookupRequested={addressLookupRequested}
+        onAddressLookupRequested={onAddressLookupRequested}
       />
     ) : channel ? (
       <Box direction="column" className={styles.fields}>

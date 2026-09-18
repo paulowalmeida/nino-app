@@ -4,6 +4,7 @@ import { Text } from '@nino/ds/components/Text'
 import { useCounterFacade } from '@pages/Counter/facades/useCounterFacade/useCounterFacade'
 
 import { CheckoutRail } from './CheckoutRail/CheckoutRail'
+import { DeliveryLocationStep } from './DeliveryLocationStep/DeliveryLocationStep'
 import { DestinationStep } from './DestinationStep/DestinationStep'
 import { ReviewStep } from './ReviewStep/ReviewStep'
 import { SaleCart } from './SaleCart/SaleCart'
@@ -12,13 +13,6 @@ import { SalePaymentDetails } from './SalePaymentDetails/SalePaymentDetails'
 import { StepActions } from './StepActions/StepActions'
 
 import styles from './SalePanel.module.css'
-
-const stepCopy = {
-  items: { title: 'Itens', hint: 'Confira o que o cliente pediu' },
-  destination: { title: 'Destino', hint: 'Como esse pedido sai da loja' },
-  payment: { title: 'Pagamento', hint: 'Como o cliente vai pagar' },
-  review: { title: 'Fechar', hint: 'Confira e feche a venda' },
-} as const
 
 export const SalePanel = ({ bare = false }: { bare?: boolean }) => {
   const {
@@ -52,6 +46,8 @@ export const SalePanel = ({ bare = false }: { bare?: boolean }) => {
     setTableNumber,
     recipient,
     setRecipient,
+    addressLookupRequested,
+    setAddressLookupRequested,
     canContinue,
     addressSuggestions,
     isSearchingAddress,
@@ -61,14 +57,18 @@ export const SalePanel = ({ bare = false }: { bare?: boolean }) => {
 
   const goNext = () => {
     if (step === 'items') setStep('destination')
-    else if (step === 'destination') setStep('payment')
+    else if (step === 'destination')
+      setStep(channel === 'DELIVERY' ? 'location' : 'payment')
+    else if (step === 'location') setStep('payment')
     else if (step === 'payment') setStep('review')
     else finish()
   }
 
   const goBack = () => {
     if (step === 'destination') setStep('items')
-    if (step === 'payment') setStep('destination')
+    if (step === 'location') setStep('destination')
+    if (step === 'payment')
+      setStep(channel === 'DELIVERY' ? 'location' : 'destination')
     if (step === 'review') setStep('payment')
   }
 
@@ -83,21 +83,12 @@ export const SalePanel = ({ bare = false }: { bare?: boolean }) => {
           </Heading>
         </Box>
       )}
-      {bare && <CheckoutRail current={step} onStep={setStep} />}
       {bare && (
-        <Box
-          direction="row"
-          align="baseline"
-          gap={1.5}
-          className={styles.stepName}
-        >
-          <Heading level={3} size="md">
-            {stepCopy[step].title}
-          </Heading>
-          <Text size="xs" color="muted">
-            {stepCopy[step].hint}
-          </Text>
-        </Box>
+        <CheckoutRail
+          current={step}
+          includeLocation={channel === 'DELIVERY'}
+          onStep={setStep}
+        />
       )}
       {step === 'items' && (
         <SaleCart
@@ -119,10 +110,13 @@ export const SalePanel = ({ bare = false }: { bare?: boolean }) => {
           onConsumerName={setConsumerName}
           onTableNumber={setTableNumber}
           onRecipient={setRecipient}
+          addressLookupRequested={addressLookupRequested}
+          onAddressLookupRequested={setAddressLookupRequested}
           resolveSelectedAddress={resolveSelectedAddress}
           isResolvingSelectedAddress={isResolvingSelectedAddress}
         />
       )}
+      {step === 'location' && <DeliveryLocationStep recipient={recipient} />}
       {step === 'payment' && count > 0 && (
         <SalePaymentDetails
           changeFor={changeFor}
@@ -150,6 +144,9 @@ export const SalePanel = ({ bare = false }: { bare?: boolean }) => {
           method={method}
           changeFor={changeFor}
           changeAmount={changeAmount}
+          subtotal={subtotal}
+          deliveryFee={deliveryFee}
+          total={total}
         />
       )}
       {step === 'payment' && error && <Text color="danger">{error}</Text>}

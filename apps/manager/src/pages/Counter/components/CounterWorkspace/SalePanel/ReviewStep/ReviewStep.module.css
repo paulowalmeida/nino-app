@@ -53,3 +53,12 @@
   @apply font-semibold text-fg-default;
   font-size: 13.5px;
 }
+
+/* O total é o número do cupom: o resto da tela fica quieto ao redor dele. */
+.totals {
+  @apply gap-1;
+}
+
+.money {
+  font-variant-numeric: tabular-nums;
+}

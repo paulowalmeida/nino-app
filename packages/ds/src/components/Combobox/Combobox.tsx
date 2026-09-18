@@ -61,6 +61,7 @@ type ComboboxProps = {
    * outside `FormField`)
    */
   ariaLabel?: string
+  onBlur?: React.FocusEventHandler<HTMLInputElement>
   ref?: Ref<HTMLInputElement>
 }
 
@@ -99,6 +100,7 @@ export function Combobox({
   isValidQuery,
   maxLength,
   ariaLabel,
+  onBlur,
   ref,
 }: ComboboxProps) {
   const [query, setQuery] = useState('')
@@ -171,6 +173,7 @@ export function Combobox({
           maxLength={maxLength}
           onKeyDown={handleKeyDown}
           aria-label={ariaLabel}
+          onBlur={onBlur}
           data-invalid={error || undefined}
           aria-invalid={error || undefined}
           className={mergeClasses(

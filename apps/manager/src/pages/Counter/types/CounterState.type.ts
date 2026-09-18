@@ -16,6 +16,7 @@ export type CounterState = {
   consumerName: string
   tableNumber: string
   recipient: Recipient
+  addressLookupRequested: boolean
   changeFor: string
   lastSale: SaleReceipt | null
   add: (item: MenuItem, modifiers?: CartLineModifier[]) => void
@@ -28,6 +29,7 @@ export type CounterState = {
   setConsumerName: (name: string) => void
   setTableNumber: (table: string) => void
   setRecipient: (patch: Partial<Recipient>) => void
+  setAddressLookupRequested: (requested: boolean) => void
   setChangeFor: (value: string) => void
   setLastSale: (receipt: SaleReceipt) => void
   clearLastSale: () => void

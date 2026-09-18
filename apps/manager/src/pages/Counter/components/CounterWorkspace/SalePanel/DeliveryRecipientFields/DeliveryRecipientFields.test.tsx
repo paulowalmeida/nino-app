@@ -113,6 +113,7 @@ describe('DeliveryRecipientFields', () => {
         providerId: addressSearchResultMock.providerId,
         zipCode: addressSearchResultMock.zipCode,
         street: addressSearchResultMock.street,
+        number: addressSearchResultMock.number,
         neighborhood: addressSearchResultMock.neighborhood,
         city: addressSearchResultMock.city,
         state: addressSearchResultMock.state,

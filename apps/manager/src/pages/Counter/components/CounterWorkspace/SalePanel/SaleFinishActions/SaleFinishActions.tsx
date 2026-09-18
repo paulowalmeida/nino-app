@@ -57,7 +57,7 @@ export const SaleFinishActions = ({
           </Text>
           <Text
             as="span"
-            size="2xl"
+            size="lg"
             weight="extrabold"
             font="display"
             className={styles.total}

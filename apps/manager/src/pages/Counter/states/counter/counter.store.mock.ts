@@ -1,6 +1,7 @@
 export const counterStoreMock = {
   lines: [],
   sheet: false,
+  addressLookupRequested: false,
   chosenPaymentMethod: null,
   consumerName: '',
   tableNumber: '',

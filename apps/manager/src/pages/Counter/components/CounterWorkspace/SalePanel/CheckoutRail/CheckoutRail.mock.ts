@@ -1,1 +1,4 @@
-export const checkoutRailMock = { current: 'payment' as const }
+export const checkoutRailMock = {
+  current: 'payment' as const,
+  includeLocation: false,
+}

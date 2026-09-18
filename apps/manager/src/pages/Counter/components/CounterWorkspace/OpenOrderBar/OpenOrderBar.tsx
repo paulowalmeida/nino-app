@@ -1,3 +1,5 @@
+import { useNavigate } from 'react-router'
+
 import { Box } from '@nino/ds/components/Box'
 import { Button } from '@nino/ds/components/Button'
 import { Icon } from '@nino/ds/components/Icon'
@@ -9,12 +11,16 @@ import styles from './OpenOrderBar.module.css'
 
 export const OpenOrderBar = () => {
   const { count, total, setSheet } = useCounterFacade()
+  const navigate = useNavigate()
 
   return (
     <Button
       variant="ghost"
       className={styles.tab}
-      onClick={() => setSheet(true)}
+      onClick={() => {
+        setSheet(true)
+        navigate('fechar')
+      }}
     >
       <span className={styles.perforation} aria-hidden="true" />
 

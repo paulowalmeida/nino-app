@@ -29,6 +29,7 @@ export const addressSearchResultMock = {
   precision: 'point',
   zipCode: '67143-450',
   street: 'Travessa WE-69-A',
+  number: '26',
   neighborhood: 'Coqueiro',
   city: 'Ananindeua',
   state: 'PA',

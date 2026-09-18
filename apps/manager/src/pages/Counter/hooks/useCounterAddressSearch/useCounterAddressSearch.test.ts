@@ -42,12 +42,13 @@ describe(useCounterAddressSearch.name, () => {
       addressPredictionsMock
     )
     const { result, rerender } = renderHook(
-      ({ unitId, street, state }) =>
-        useCounterAddressSearch(unitId, street, state),
+      ({ unitId, street, number, state }) =>
+        useCounterAddressSearch(unitId, street, number, state),
       {
         initialProps: {
           unitId: 'unit-1',
           street: 'Rua d',
+          number: '123',
           state: 'pa',
         },
         wrapper,
@@ -60,6 +61,7 @@ describe(useCounterAddressSearch.name, () => {
     rerender({
       unitId: 'unit-1',
       street: 'Rua das',
+      number: '123',
       state: 'pa',
     })
 
@@ -77,7 +79,7 @@ describe(useCounterAddressSearch.name, () => {
     await waitFor(() =>
       expect(CounterAddressSearchService.search).toHaveBeenCalledWith(
         'unit-1',
-        'Rua das',
+        'Rua das, 123',
         'PA',
         'session-1'
       )
@@ -92,14 +94,14 @@ describe(useCounterAddressSearch.name, () => {
     ])
 
     const { result } = renderHook(
-      () => useCounterAddressSearch('unit-1', 'Rua das', 'PA'),
+      () => useCounterAddressSearch('unit-1', 'Rua das', '123', 'PA'),
       { wrapper }
     )
 
     await waitFor(() =>
       expect(CounterAddressSearchService.search).toHaveBeenCalledWith(
         'unit-1',
-        'Rua das',
+        'Rua das, 123',
         'PA',
         'session-1'
       )
@@ -121,7 +123,7 @@ describe(useCounterAddressSearch.name, () => {
     )
 
     const { result } = renderHook(
-      () => useCounterAddressSearch('unit-1', 'Rua das', 'PA'),
+      () => useCounterAddressSearch('unit-1', 'Rua das', '123', 'PA'),
       { wrapper }
     )
     await waitFor(() =>
@@ -144,10 +146,26 @@ describe(useCounterAddressSearch.name, () => {
     await waitFor(() =>
       expect(CounterAddressSearchService.search).toHaveBeenLastCalledWith(
         'unit-1',
-        'Rua das',
+        'Rua das, 123',
         'PA',
         'session-2'
       )
     )
+  })
+
+  it('does not search until the house number is informed', async () => {
+    vi.useFakeTimers()
+
+    renderHook(
+      () => useCounterAddressSearch('unit-1', 'WE 26', '', 'PA'),
+      { wrapper }
+    )
+
+    await act(async () => {
+      vi.advanceTimersByTime(600)
+      await Promise.resolve()
+    })
+
+    expect(CounterAddressSearchService.search).not.toHaveBeenCalled()
   })
 })

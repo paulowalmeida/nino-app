@@ -1,1 +1,6 @@
-export type CounterStep = 'items' | 'destination' | 'payment' | 'review'
+export type CounterStep =
+  | 'items'
+  | 'destination'
+  | 'location'
+  | 'payment'
+  | 'review'

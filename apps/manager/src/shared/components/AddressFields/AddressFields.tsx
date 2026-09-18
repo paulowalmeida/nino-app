@@ -30,6 +30,7 @@ type AddressFieldsProps = {
   zipCodeLabel?: ReactNode
   streetLabel?: ReactNode
   showCityAndState?: boolean
+  onNumberBlur?: () => void
 }
 
 export const AddressFields = ({
@@ -39,6 +40,7 @@ export const AddressFields = ({
   zipCodeLabel = 'CEP',
   streetLabel = 'Logradouro',
   showCityAndState = true,
+  onNumberBlur,
 }: AddressFieldsProps) => {
   const [lookup, setLookup] = useState<Lookup>('idle')
   const numberRef = useRef<HTMLInputElement>(null)
@@ -109,6 +111,7 @@ export const AddressFields = ({
           inputMode="numeric"
           value={value.number}
           onChange={(event) => onChange({ number: event.target.value })}
+          onBlur={onNumberBlur}
         />
       </FormField>
 

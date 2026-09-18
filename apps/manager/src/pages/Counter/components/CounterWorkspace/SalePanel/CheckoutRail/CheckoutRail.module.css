@@ -1,40 +1,16 @@
 @reference "@nino/ds/globals.css";
 
-.rail {
-  @apply shrink-0 items-center px-6 pb-2 pt-1;
+/*
+ * A trilha muda de forma com a largura porque muda o que ela consegue dizer.
+ * No celular sobra espaço para um fio: quanto falta, e nada mais — o nome da
+ * etapa já está no cabeçalho. Na largura de mesa cabe o caminho inteiro, com
+ * os nomes, e aí o passo concluído volta a ser clicável.
+ */
+.progress {
+  @apply shrink-0 lg:hidden;
+}
+
+.steps {
+  @apply hidden shrink-0 pb-4 pt-3 lg:flex;
   padding-inline: var(--checkout-gutter, 1.5rem);
-}
-
-.item {
-  @apply min-w-0 flex-1;
-}
-
-.item:last-child {
-  @apply flex-none;
-}
-
-.item button {
-  @apply size-11 shrink-0 rounded-2 p-0 text-xs font-bold;
-}
-
-.active {
-  @apply bg-brand text-fg-on-brand;
-}
-
-.done {
-  @apply bg-fg-strong text-fg-inverse;
-}
-
-.todo {
-  @apply bg-surface-mute text-fg-faint;
-}
-
-.bar,
-.barDone {
-  @apply mx-1.5 h-[3px] min-w-2 flex-1 rounded-full;
-  @apply bg-surface-mute;
-}
-
-.barDone {
-  @apply bg-fg-strong;
 }

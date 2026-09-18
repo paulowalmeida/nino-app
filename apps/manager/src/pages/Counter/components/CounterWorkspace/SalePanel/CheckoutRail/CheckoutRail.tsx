@@ -1,64 +1,50 @@
-import { Box } from '@nino/ds/components/Box'
-import { Button } from '@nino/ds/components/Button'
+import { ProgressLine } from '@nino/ds/components/ProgressLine'
+import { Stepper } from '@nino/ds/components/Stepper'
+import {
+  COUNTER_STEP_COPY,
+  COUNTER_STEP_ORDER,
+} from '@pages/Counter/constants/counter.constants'
 import type { CounterStep } from '@pages/Counter/types/CounterStep.type'
 
 import styles from './CheckoutRail.module.css'
 
-const steps: { key: CounterStep; label: string }[] = [
-  { key: 'items', label: 'Itens' },
-  { key: 'destination', label: 'Destino' },
-  { key: 'payment', label: 'Pagamento' },
-  { key: 'review', label: 'Revisão' },
-]
-
 type CheckoutRailProps = {
   current: CounterStep
+  includeLocation: boolean
   onStep: (step: CounterStep) => void
 }
 
-export const CheckoutRail = ({ current, onStep }: CheckoutRailProps) => {
-  const currentIndex = steps.findIndex(({ key }) => key === current)
+export const CheckoutRail = ({
+  current,
+  includeLocation,
+  onStep,
+}: CheckoutRailProps) => {
+  const visibleSteps = includeLocation
+    ? COUNTER_STEP_ORDER
+    : COUNTER_STEP_ORDER.filter((step) => step !== 'location')
+  const currentIndex = visibleSteps.indexOf(current)
+  const progress = ((currentIndex + 1) / visibleSteps.length) * 100
+
+  const goToCompletedStep = (index: number) => {
+    if (index < currentIndex) onStep(visibleSteps[index])
+  }
 
   return (
-    <Box
-      as="nav"
-      direction="row"
-      aria-label="Etapas do pedido"
-      className={styles.rail}
-    >
-      {steps.map((step, index) => {
-        const done = index < currentIndex
-        const active = index === currentIndex
-
-        return (
-          <Box
-            key={step.key}
-            direction="row"
-            align="center"
-            className={styles.item}
-          >
-            <Button
-              type="button"
-              variant="ghost"
-              disabled={!done}
-              aria-current={active ? 'step' : undefined}
-              aria-label={done ? `Voltar para ${step.label}` : step.label}
-              onClick={() => done && onStep(step.key)}
-              className={
-                active ? styles.active : done ? styles.done : styles.todo
-              }
-            >
-              {done ? '✓' : index + 1}
-            </Button>
-            {index < steps.length - 1 && (
-              <span
-                className={done ? styles.barDone : styles.bar}
-                aria-hidden="true"
-              />
-            )}
-          </Box>
-        )
-      })}
-    </Box>
+    <>
+      <ProgressLine
+        value={progress}
+        size="sm"
+        label={`Etapa ${currentIndex + 1} de ${visibleSteps.length}`}
+        className={styles.progress}
+      />
+      <Stepper
+        steps={visibleSteps.map((step) => ({
+          title: COUNTER_STEP_COPY[step].title,
+        }))}
+        step={currentIndex}
+        onStepChange={goToCompletedStep}
+        className={styles.steps}
+      />
+    </>
   )
 }

@@ -18,6 +18,7 @@ export const addressSearchResultMock = {
   precision: 'point',
   zipCode: '66000-000',
   street: 'Rua das Flores',
+  number: '26',
   neighborhood: 'Centro',
   city: 'Belém',
   state: 'PA',
