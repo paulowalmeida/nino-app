@@ -7,8 +7,8 @@ import { Icon } from '@nino/ds/components/Icon'
 import { Text } from '@nino/ds/components/Text'
 import { COUNTER_STEP_COPY } from '@pages/Counter/constants/counter.constants'
 
-import { SalePanel } from './components/CounterWorkspace/SalePanel/SalePanel'
-import { useCounterFacade } from './facades/useCounterFacade/useCounterFacade'
+import { SalePanel } from '../components/CounterWorkspace/SalePanel/SalePanel'
+import { useCounterFacade } from '../facades/useCounterFacade/useCounterFacade'
 
 import styles from './CounterCheckout.module.css'
 

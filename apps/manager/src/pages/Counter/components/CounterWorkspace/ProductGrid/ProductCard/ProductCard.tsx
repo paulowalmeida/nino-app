@@ -164,7 +164,7 @@ export const ProductCard = ({
           openQuantityWithMouse(event)
         }}
       >
-        <div>
+        <Box>
           <ItemThumb
             name={item.name}
             imageUrl={imageUrl}
@@ -208,7 +208,7 @@ export const ProductCard = ({
                     className={styles.quantityBadge}
                     aria-label={`Alterar quantidade de ${item.name}: ${quantity}`}
                   >
-                    <span className={styles.quantityValue}>{quantity}</span>
+                    {quantity}
                   </Button>
                 }
               >
@@ -253,7 +253,7 @@ export const ProductCard = ({
               </Popover>
             </Box>
           )}
-        </div>
+        </Box>
       </Card>
     </>
   )

@@ -113,7 +113,7 @@ export const router = createBrowserRouter([
       {
         path: 'balcao/fechar',
         lazy: () =>
-          import('@pages/Counter/CounterCheckout').then(
+          import('@pages/Counter/CounterCheckout/CounterCheckout').then(
             ({ CounterCheckout }) => ({ Component: CounterCheckout })
           ),
       },

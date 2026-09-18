@@ -44,12 +44,8 @@
 
 .quantity .quantityBadge {
   @apply size-7 min-w-7 rounded-full border-0 bg-brand p-0;
-  @apply text-xs font-bold text-fg-on-brand shadow-warm-sm;
+  @apply text-xs font-bold tabular-nums text-fg-on-brand shadow-warm-sm;
   @apply hover:bg-brand-hover;
-}
-
-.quantityValue {
-  @apply text-center tabular-nums;
 }
 
 .quantityPanel {

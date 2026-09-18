@@ -6,7 +6,7 @@ import os from 'node:os'
 import path from 'node:path'
 import { spawnSync } from 'node:child_process'
 
-const checker = path.resolve('.agents/enforcement/check-page-governance.mjs')
+const checker = path.resolve('enforcement/check-page-governance.mjs')
 const root = fs.mkdtempSync(path.join(os.tmpdir(), 'nino-page-governance-'))
 const pageRoot = path.join(root, 'Orders')
 fs.mkdirSync(pageRoot, { recursive: true })

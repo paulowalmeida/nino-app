@@ -47,7 +47,7 @@ const destinations = [
   },
   {
     value: 'DELIVERY' as const,
-    icon: 'truck' as const,
+    icon: 'map-pin' as const,
     label: 'Entrega',
   },
 ]
