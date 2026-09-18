@@ -10,23 +10,15 @@ import styles from './CheckoutRail.module.css'
 
 type CheckoutRailProps = {
   current: CounterStep
-  includeLocation: boolean
   onStep: (step: CounterStep) => void
 }
 
-export const CheckoutRail = ({
-  current,
-  includeLocation,
-  onStep,
-}: CheckoutRailProps) => {
-  const visibleSteps = includeLocation
-    ? COUNTER_STEP_ORDER
-    : COUNTER_STEP_ORDER.filter((step) => step !== 'location')
-  const currentIndex = visibleSteps.indexOf(current)
-  const progress = ((currentIndex + 1) / visibleSteps.length) * 100
+export const CheckoutRail = ({ current, onStep }: CheckoutRailProps) => {
+  const currentIndex = COUNTER_STEP_ORDER.indexOf(current)
+  const progress = ((currentIndex + 1) / COUNTER_STEP_ORDER.length) * 100
 
   const goToCompletedStep = (index: number) => {
-    if (index < currentIndex) onStep(visibleSteps[index])
+    if (index < currentIndex) onStep(COUNTER_STEP_ORDER[index])
   }
 
   return (
@@ -34,11 +26,11 @@ export const CheckoutRail = ({
       <ProgressLine
         value={progress}
         size="sm"
-        label={`Etapa ${currentIndex + 1} de ${visibleSteps.length}`}
+        label={`Etapa ${currentIndex + 1} de ${COUNTER_STEP_ORDER.length}`}
         className={styles.progress}
       />
       <Stepper
-        steps={visibleSteps.map((step) => ({
+        steps={COUNTER_STEP_ORDER.map((step) => ({
           title: COUNTER_STEP_COPY[step].title,
         }))}
         step={currentIndex}

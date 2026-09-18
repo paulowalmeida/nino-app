@@ -11,6 +11,6 @@
 }
 
 .steps {
-  @apply hidden shrink-0 pb-4 pt-3 lg:flex;
+  @apply hidden shrink-0 pb-2 pt-1 lg:flex;
   padding-inline: var(--checkout-gutter, 1.5rem);
 }

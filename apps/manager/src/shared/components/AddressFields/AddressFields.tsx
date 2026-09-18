@@ -6,6 +6,7 @@ import { Input } from '@nino/ds/components/Input'
 import { MaskedInput } from '@nino/ds/components/MaskedInput'
 import { Select } from '@nino/ds/components/Select'
 import { maskZipCode } from '@nino/ds/masks'
+import { mergeClasses } from '@nino/ds/mergeClasses'
 import { lookupZipCode, onlyDigits } from '@nino/lib/services/zip-code.service'
 import { BRAZIL_STATES } from '@shared/constants/address.constants'
 
@@ -31,6 +32,13 @@ type AddressFieldsProps = {
   streetLabel?: ReactNode
   showCityAndState?: boolean
   onNumberBlur?: () => void
+  /**
+   * Which question opens the form. `zipCode` fills the address from the CEP
+   * and is what a registration asks first; `street` puts the address and the
+   * number up front and drops the CEP next to the complement, which is the
+   * order a delivery is dictated over the counter.
+   */
+  leadWith?: 'zipCode' | 'street'
 }
 
 export const AddressFields = ({
@@ -41,15 +49,19 @@ export const AddressFields = ({
   streetLabel = 'Logradouro',
   showCityAndState = true,
   onNumberBlur,
+  leadWith = 'zipCode',
 }: AddressFieldsProps) => {
   const [lookup, setLookup] = useState<Lookup>('idle')
   const numberRef = useRef<HTMLInputElement>(null)
   const lookupRequest = useRef(0)
   const isMounted = useRef(true)
 
-  useEffect(() => () => {
-    isMounted.current = false
-  }, [])
+  useEffect(
+    () => () => {
+      isMounted.current = false
+    },
+    []
+  )
 
   const handleZipChange = async (
     event: React.ChangeEvent<HTMLInputElement>
@@ -82,17 +94,25 @@ export const AddressFields = ({
     numberRef.current?.focus()
   }
 
+  const leadsWithStreet = leadWith === 'street'
+
+  const zipCodeField = (
+    <FormField label={zipCodeLabel} className={styles.zip}>
+      <MaskedInput
+        mask={maskZipCode}
+        inputMode="numeric"
+        autoComplete="postal-code"
+        value={value.zipCode}
+        onChange={handleZipChange}
+      />
+    </FormField>
+  )
+
   return (
-    <Box className={styles.grid}>
-      <FormField label={zipCodeLabel} className={styles.zip}>
-        <MaskedInput
-          mask={maskZipCode}
-          inputMode="numeric"
-          autoComplete="postal-code"
-          value={value.zipCode}
-          onChange={handleZipChange}
-        />
-      </FormField>
+    <Box
+      className={mergeClasses(styles.grid, leadsWithStreet && styles.streetLed)}
+    >
+      {!leadsWithStreet && zipCodeField}
 
       <FormField label={streetLabel} className={styles.street}>
         {streetField ?? (
@@ -129,6 +149,8 @@ export const AddressFields = ({
           onChange={(event) => onChange({ neighborhood: event.target.value })}
         />
       </FormField>
+
+      {leadsWithStreet && zipCodeField}
 
       {showCityAndState && (
         <>

@@ -60,3 +60,23 @@
 .state {
   grid-area: sa;
 }
+
+/* A entrega é ditada na ordem em que o cliente fala: rua, número, o resto.
+   O CEP desce para o lado do bairro, onde é o que é — opcional. */
+.streetLed {
+  grid-template-areas:
+    'st st st st st st st st n n n n'
+    'co co co co co co co co co co co co'
+    'h h h h h h h z z z z z'
+    'ci ci ci ci ci ci ci ci ci sa sa sa';
+}
+
+@media (min-width: 640px) {
+  .streetLed {
+    grid-template-areas:
+      'st st st st st st st st st st n n'
+      'co co co co co co co co co co co co'
+      'h h h h h h h h z z z z'
+      'ci ci ci ci ci ci ci ci sa sa sa sa';
+  }
+}

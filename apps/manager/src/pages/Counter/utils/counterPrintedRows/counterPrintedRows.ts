@@ -40,9 +40,11 @@ const paymentRow = (
   }
 
   const label = PAYMENT_METHOD_LABEL[method]
-  if (method !== 'CASH' || !changeFor) return { label: 'Pagamento', value: label }
+  if (method !== 'CASH' || !changeFor)
+    return { label: 'Pagamento', value: label }
 
-  const change = changeAmount > 0 ? `troco de ${brl(changeAmount)}` : 'sem troco'
+  const change =
+    changeAmount > 0 ? `troco de ${brl(changeAmount)}` : 'sem troco'
   return { label: 'Pagamento', value: `${label} · ${change}` }
 }
 

@@ -156,10 +156,9 @@ describe(useCounterAddressSearch.name, () => {
   it('does not search until the house number is informed', async () => {
     vi.useFakeTimers()
 
-    renderHook(
-      () => useCounterAddressSearch('unit-1', 'WE 26', '', 'PA'),
-      { wrapper }
-    )
+    renderHook(() => useCounterAddressSearch('unit-1', 'WE 26', '', 'PA'), {
+      wrapper,
+    })
 
     await act(async () => {
       vi.advanceTimersByTime(600)

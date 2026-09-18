@@ -8,7 +8,7 @@
 .choice {
   @apply h-auto flex-col items-center gap-1.5 rounded-3 border-border;
   @apply bg-surface-page px-2 py-3 text-center;
-  @apply hover:border-brand-bold lg:gap-2 lg:px-2.5 lg:py-4;
+  @apply hover:border-brand-bold lg:gap-1 lg:px-2.5 lg:py-2.5;
 }
 
 .selected {
@@ -20,11 +20,13 @@
 }
 
 .icon {
-  @apply text-xl leading-none lg:text-[26px];
+  @apply text-xl leading-none lg:text-lg;
 }
 
+/* O dedo precisa do alvo grande; o mouse não. O cartão para de crescer na
+   largura de mesa em vez de inchar junto com a tela. */
 .icon svg {
-  @apply size-5 lg:size-[26px];
+  @apply size-5 lg:size-[18px];
 }
 
 .label {

@@ -1,5 +1,4 @@
 import { fireEvent, render, screen, waitFor } from '@testing-library/react'
-import userEvent from '@testing-library/user-event'
 import { describe, expect, it, vi } from 'vitest'
 
 import { DeliveryRecipientFields } from './DeliveryRecipientFields'
@@ -8,6 +7,12 @@ import {
   addressSearchResultMock,
   deliveryRecipientMock,
 } from './DeliveryRecipientFields.mock'
+
+const typedAddress = {
+  ...deliveryRecipientMock,
+  street: addressPredictionMock.mainText,
+  number: addressSearchResultMock.number,
+}
 
 describe('DeliveryRecipientFields', () => {
   it.each([
@@ -30,11 +35,12 @@ describe('DeliveryRecipientFields', () => {
     })
     expect(onChange).toHaveBeenCalledWith({ phone: maskedPhone })
   })
-  it('renders recipient and configured delivery city fields', () => {
+
+  it('asks for the address as plain fields, with no suggestion preview', () => {
     render(
       <DeliveryRecipientFields
-        value={deliveryRecipientMock}
-        addressSuggestions={[]}
+        value={typedAddress}
+        addressSuggestions={[addressPredictionMock]}
         isSearchingAddress={false}
         onChange={vi.fn()}
         resolveSelectedAddress={vi.fn()}
@@ -46,63 +52,154 @@ describe('DeliveryRecipientFields', () => {
       screen.getByRole('textbox', { name: 'Nome de quem pediu' })
     ).toBeInTheDocument()
     expect(
-      screen.getByRole('combobox', { name: 'Logradouro' })
+      screen.getByRole('textbox', { name: 'Endereço' })
     ).toBeInTheDocument()
+    expect(
+      screen.queryByText(addressPredictionMock.secondaryText)
+    ).not.toBeInTheDocument()
   })
 
-  it('lists the prediction description without exposing zip/neighborhood yet', () => {
+  it('requests the lookup once street and number are filled', () => {
+    const onAddressLookupRequested = vi.fn()
     render(
       <DeliveryRecipientFields
-        value={{
-          ...deliveryRecipientMock,
-          street: addressPredictionMock.mainText,
-        }}
+        value={typedAddress}
+        addressSuggestions={[]}
+        isSearchingAddress={false}
+        onChange={vi.fn()}
+        resolveSelectedAddress={vi.fn()}
+        isResolvingSelectedAddress={false}
+        onAddressLookupRequested={onAddressLookupRequested}
+      />
+    )
+
+    fireEvent.blur(screen.getByRole('textbox', { name: 'Endereço' }))
+
+    expect(onAddressLookupRequested).toHaveBeenCalledWith(true)
+  })
+
+  it('does not search again when nothing was edited', () => {
+    const onAddressLookupRequested = vi.fn()
+    render(
+      <DeliveryRecipientFields
+        value={typedAddress}
+        addressSuggestions={[]}
+        isSearchingAddress={false}
+        onChange={vi.fn()}
+        resolveSelectedAddress={vi.fn()}
+        isResolvingSelectedAddress={false}
+        onAddressLookupRequested={onAddressLookupRequested}
+      />
+    )
+    const street = screen.getByRole('textbox', { name: 'Endereço' })
+
+    fireEvent.blur(street)
+    fireEvent.blur(street)
+
+    expect(onAddressLookupRequested).toHaveBeenCalledTimes(1)
+  })
+
+  it('fills the fields behind a skeleton while the choice resolves', () => {
+    render(
+      <DeliveryRecipientFields
+        value={typedAddress}
+        addressSuggestions={[]}
+        isSearchingAddress={false}
+        onChange={vi.fn()}
+        resolveSelectedAddress={vi.fn()}
+        isResolvingSelectedAddress
+      />
+    )
+
+    expect(
+      screen.getByText('Preenchendo o endereço escolhido…')
+    ).toBeInTheDocument()
+    expect(
+      screen.queryByRole('textbox', { name: 'Endereço' })
+    ).not.toBeInTheDocument()
+  })
+
+  it('waits for the search inside the confirmation dialog', () => {
+    render(
+      <DeliveryRecipientFields
+        value={typedAddress}
+        addressSuggestions={[]}
+        isSearchingAddress
+        onChange={vi.fn()}
+        resolveSelectedAddress={vi.fn()}
+        isResolvingSelectedAddress={false}
+        addressLookupRequested
+      />
+    )
+
+    expect(
+      screen.getByText(
+        `Procurando ${typedAddress.street}, ${typedAddress.number}…`
+      )
+    ).toBeInTheDocument()
+    expect(
+      screen.queryByText(/Nenhum endereço encontrado/)
+    ).not.toBeInTheDocument()
+  })
+
+  it('lists what the provider found once the search settles', () => {
+    render(
+      <DeliveryRecipientFields
+        value={typedAddress}
         addressSuggestions={[addressPredictionMock]}
         isSearchingAddress={false}
         onChange={vi.fn()}
         resolveSelectedAddress={vi.fn()}
         isResolvingSelectedAddress={false}
+        addressLookupRequested
       />
     )
 
-    const streetInput = screen.getByRole('combobox', { name: 'Logradouro' })
-    fireEvent.click(streetInput)
-
-    expect(streetInput).toHaveValue(addressPredictionMock.mainText)
     expect(
-      screen.getByRole('option', {
-        name: addressPredictionMock.description,
-        hidden: true,
-      })
+      screen.getByText(addressPredictionMock.secondaryText)
     ).toBeInTheDocument()
   })
 
+  it('tells the attendant when the search came back empty', () => {
+    render(
+      <DeliveryRecipientFields
+        value={typedAddress}
+        addressSuggestions={[]}
+        isSearchingAddress={false}
+        onChange={vi.fn()}
+        resolveSelectedAddress={vi.fn()}
+        isResolvingSelectedAddress={false}
+        addressLookupRequested
+      />
+    )
+
+    expect(screen.getByText(/Nenhum endereço encontrado/)).toBeInTheDocument()
+  })
+
   it('resolves the full address once a prediction is selected', async () => {
-    // Arrange: the guest has typed enough for one prediction to show.
+    // Arrange: the search came back with one candidate.
     const onChange = vi.fn()
+    const onAddressLookupRequested = vi.fn()
     const resolveSelectedAddress = vi
       .fn()
       .mockResolvedValue(addressSearchResultMock)
     render(
       <DeliveryRecipientFields
-        value={{
-          ...deliveryRecipientMock,
-          street: addressPredictionMock.mainText,
-        }}
+        value={typedAddress}
         addressSuggestions={[addressPredictionMock]}
         isSearchingAddress={false}
         onChange={onChange}
         resolveSelectedAddress={resolveSelectedAddress}
         isResolvingSelectedAddress={false}
+        addressLookupRequested
+        onAddressLookupRequested={onAddressLookupRequested}
       />
     )
 
-    // Act: select the only prediction in the list.
-    const user = userEvent.setup({ pointerEventsCheck: 0 })
-    await user.click(screen.getByRole('combobox', { name: 'Logradouro' }))
-    await user.keyboard('{ArrowDown}{ArrowDown}{Enter}')
+    // Act: pick the candidate.
+    fireEvent.click(screen.getByText(addressPredictionMock.mainText))
 
-    // Assert: the details call resolved and populated the full address.
+    // Assert: the details call populated the address and closed the dialog.
     await waitFor(() =>
       expect(resolveSelectedAddress).toHaveBeenCalledWith(
         addressPredictionMock.placeId
@@ -121,31 +218,30 @@ describe('DeliveryRecipientFields', () => {
         longitude: addressSearchResultMock.longitude,
       })
     )
+    await waitFor(() =>
+      expect(onAddressLookupRequested).toHaveBeenCalledWith(false)
+    )
   })
 
-  it('shows a non-deliverable message when resolving the selection fails', async () => {
+  it('warns when the store cannot deliver to the picked address', async () => {
     // Arrange: the backend rejects this specific address as out of range.
     const resolveSelectedAddress = vi.fn().mockRejectedValue(new Error('422'))
     render(
       <DeliveryRecipientFields
-        value={{
-          ...deliveryRecipientMock,
-          street: addressPredictionMock.mainText,
-        }}
+        value={typedAddress}
         addressSuggestions={[addressPredictionMock]}
         isSearchingAddress={false}
         onChange={vi.fn()}
         resolveSelectedAddress={resolveSelectedAddress}
         isResolvingSelectedAddress={false}
+        addressLookupRequested
       />
     )
 
-    // Act: select the only prediction in the list.
-    const user = userEvent.setup({ pointerEventsCheck: 0 })
-    await user.click(screen.getByRole('combobox', { name: 'Logradouro' }))
-    await user.keyboard('{ArrowDown}{ArrowDown}{Enter}')
+    // Act: pick the candidate the store cannot deliver to.
+    fireEvent.click(screen.getByText(addressPredictionMock.mainText))
 
-    // Assert: the guest sees why the address wasn't accepted.
+    // Assert: the attendant sees why the address wasn't accepted.
     await waitFor(() =>
       expect(
         screen.getByText('A loja não entrega nesse endereço.')

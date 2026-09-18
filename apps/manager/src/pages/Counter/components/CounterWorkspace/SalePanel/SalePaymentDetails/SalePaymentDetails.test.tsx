@@ -82,7 +82,9 @@ describe(SalePaymentDetails.name, () => {
     // Assert
     expect(screen.queryByText('Troco')).not.toBeInTheDocument()
     expect(
-      screen.getByText('Escolha quanto o cliente entregou e o troco aparece aqui.')
+      screen.getByText(
+        'Escolha quanto o cliente entregou e o troco aparece aqui.'
+      )
     ).toBeInTheDocument()
   })
 

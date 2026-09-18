@@ -1,19 +1,18 @@
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 
 import { Box } from '@nino/ds/components/Box'
 import { Button } from '@nino/ds/components/Button'
-import { Combobox } from '@nino/ds/components/Combobox'
-import { FieldHint } from '@nino/ds/components/FieldHint'
 import { FormField } from '@nino/ds/components/FormField'
-import { Heading } from '@nino/ds/components/Heading'
+import { Icon } from '@nino/ds/components/Icon'
 import { Input } from '@nino/ds/components/Input'
-import { Modal } from '@nino/ds/components/Modal'
 import { PhoneInput } from '@nino/ds/components/PhoneInput'
+import { Skeleton } from '@nino/ds/components/Skeleton'
 import { Text } from '@nino/ds/components/Text'
 import type {
   AddressPrediction,
   AddressSearchResult,
 } from '@nino/lib/types/address/address-lookup'
+import { ADDRESS_LOOKUP_SKELETON_ROWS } from '@pages/Counter/constants/counter.constants'
 import { AddressFields } from '@shared/components/AddressFields/AddressFields'
 import type { Recipient } from '@shared/types/order/recipient'
 
@@ -41,9 +40,9 @@ export const DeliveryRecipientFields = ({
   onAddressLookupRequested,
 }: DeliveryRecipientFieldsProps) => {
   const [selectionError, setSelectionError] = useState<string | null>(null)
-  const isAddressModalOpen = Boolean(
-    addressLookupRequested && !isSearchingAddress
-  )
+  const searchedAddress = useRef('')
+  const isConfirmingAddress = Boolean(addressLookupRequested)
+  const isLoadingAddresses = isSearchingAddress || isResolvingSelectedAddress
 
   const clearAddressSelection = (patch: Partial<Recipient>) => {
     if ('complement' in patch) {
@@ -59,17 +58,21 @@ export const DeliveryRecipientFields = ({
     })
   }
 
-  const streetQuery = value.street
-  const suggestions = addressSuggestions
+  const startAddressLookup = () => {
+    const street = value.street.trim()
+    const number = value.number.trim()
+    if (!street || !number) return
 
-  const addressOptions = suggestions.map((suggestion) => ({
-    value: suggestion.placeId,
-    label: suggestion.description,
-    inputLabel: suggestion.mainText,
-  }))
+    const typedAddress = `${street}, ${number}`
+    if (typedAddress === searchedAddress.current) return
+
+    searchedAddress.current = typedAddress
+    onAddressLookupRequested?.(true)
+  }
 
   const selectPrediction = async (placeId: string) => {
     setSelectionError(null)
+    onAddressLookupRequested?.(false)
     try {
       const address = await resolveSelectedAddress(placeId)
       onChange({
@@ -83,60 +86,97 @@ export const DeliveryRecipientFields = ({
         latitude: address.latitude,
         longitude: address.longitude,
       })
-      onAddressLookupRequested?.(false)
+      searchedAddress.current = `${address.street}, ${address.number || value.number}`
     } catch {
       setSelectionError('A loja não entrega nesse endereço.')
     }
   }
 
   const streetField = (
-    <Box direction="column" gap={1}>
-      <Combobox
-        options={addressLookupRequested === undefined ? addressOptions : []}
-        value={value.providerId ?? ''}
-        inputValue={streetQuery}
-        placeholder="Digite o logradouro"
-        ariaLabel="Logradouro"
-        emptyMessage={
-          !value.number.trim()
-            ? 'Informe o número para buscar'
-            : streetQuery.trim().length < 3
-            ? 'Digite pelo menos 3 caracteres'
-            : 'Nenhum endereço encontrado'
-        }
-        loading={isSearchingAddress || isResolvingSelectedAddress}
-        shouldFilterOptions={false}
-        onInputValueChange={(query) => {
-          setSelectionError(null)
-          clearAddressSelection({
-            street: query,
-            zipCode: undefined,
-            neighborhood: '',
-            city: undefined,
-            state: undefined,
-          })
-        }}
-        onValueChange={(placeId) => {
-          void selectPrediction(placeId)
-        }}
-        onBlur={() => {
-          if (value.street.trim() && value.number.trim()) {
-            onAddressLookupRequested?.(true)
-          }
-        }}
-      />
-      {selectionError && (
-        <Text size="xs" color="danger">
-          {selectionError}
-        </Text>
-      )}
-    </Box>
+    <Input
+      placeholder="Rua, avenida, travessa…"
+      aria-label="Endereço"
+      value={value.street}
+      onChange={(event) => {
+        setSelectionError(null)
+        clearAddressSelection({
+          street: event.target.value,
+          zipCode: undefined,
+          neighborhood: '',
+          city: undefined,
+          state: undefined,
+        })
+      }}
+      onBlur={startAddressLookup}
+    />
   )
+
+  const addressResults = isLoadingAddresses ? (
+    <Box direction="column" gap={1.5} aria-live="polite">
+      <Text size="sm" color="muted">
+        Procurando {value.street}, {value.number}…
+      </Text>
+      {ADDRESS_LOOKUP_SKELETON_ROWS.map((row) => (
+        <Skeleton key={row} className={styles.addressOptionPlaceholder} />
+      ))}
+    </Box>
+  ) : addressSuggestions.length > 0 ? (
+    <Box direction="column" gap={1.5}>
+      {addressSuggestions.map((suggestion) => (
+        <Button
+          key={suggestion.placeId}
+          type="button"
+          variant="ghost"
+          onClick={() => void selectPrediction(suggestion.placeId)}
+          className={styles.addressOption}
+        >
+          <Icon name="map-pin" size="sm" className={styles.addressPin} />
+          <Box direction="column" gap={0.5} className={styles.addressText}>
+            <Text as="span" size="sm" weight="semibold">
+              {suggestion.mainText}
+            </Text>
+            <Text as="span" size="xs" color="muted">
+              {suggestion.secondaryText}
+            </Text>
+          </Box>
+        </Button>
+      ))}
+    </Box>
+  ) : (
+    <Text color="muted">
+      Nenhum endereço encontrado. Confira o logradouro e o número.
+    </Text>
+  )
+
+  if (isConfirmingAddress) {
+    return (
+      <Box direction="column" gap={2} className={styles.confirm}>
+        <Button
+          type="button"
+          variant="ghost"
+          className={styles.confirmBack}
+          onClick={() => onAddressLookupRequested?.(false)}
+        >
+          <Icon name="arrow-left" size="sm" />
+          Confirme o endereço
+        </Button>
+        <Text size="sm" color="muted">
+          A taxa sai do ponto escolhido aqui, não do CEP.
+        </Text>
+        {selectionError && (
+          <Text size="sm" color="danger">
+            {selectionError}
+          </Text>
+        )}
+        {addressResults}
+      </Box>
+    )
+  }
 
   return (
     <Box direction="column" gap={3}>
       <Box className={styles.identity}>
-        <FormField label="Nome de quem pediu">
+        <FormField label="Nome de quem pediu" className={styles.identityName}>
           <Input
             placeholder="Ex.: Ana"
             aria-label="Nome de quem pediu"
@@ -155,77 +195,40 @@ export const DeliveryRecipientFields = ({
         </FormField>
       </Box>
 
-      <AddressFields
-        value={{
-          zipCode: value.zipCode ?? '',
-          street: value.street,
-          number: value.number,
-          complement: value.complement,
-          neighborhood: value.neighborhood,
-          city: value.city ?? '',
-          state: value.state ?? '',
-        }}
-        streetField={streetField}
-        showCityAndState={false}
-        zipCodeLabel={
-          <FieldHint
-            label="CEP"
-            hint="Digite o CEP para preencher o endereço."
-          />
-        }
-        streetLabel={
-          <FieldHint
-            label="Logradouro"
-            hint="Ou digite o logradouro para buscar o endereço."
-          />
-        }
-        onChange={clearAddressSelection}
-        onNumberBlur={() => {
-          if (value.street.trim() && value.number.trim()) {
-            onAddressLookupRequested?.(true)
-          }
-        }}
-      />
-      <Modal
-        open={isAddressModalOpen}
-        onOpenChange={(open) => {
-          if (!open) onAddressLookupRequested?.(false)
-        }}
-        ariaLabel="Confirme o endereço"
-        size="lg"
-        contentClassName={styles.addressModal}
-        header={
-          <Box direction="column" gap={1}>
-            <Heading level={2} size="md">
-              Confirme o endereço
-            </Heading>
-            <Text size="sm" color="muted">
-              Escolha o resultado que corresponde ao endereço informado.
-            </Text>
-          </Box>
-        }
-        body={
-          <Box direction="column" gap={1.5}>
-            {addressOptions.length > 0 ? (
-              addressOptions.map((option) => (
-                <Button
-                  key={option.value}
-                  type="button"
-                  variant="ghost"
-                  onClick={() => void selectPrediction(option.value)}
-                  className={styles.addressOption}
-                >
-                  {option.label}
-                </Button>
-              ))
-            ) : (
-              <Text color="muted">
-                Nenhum endereço encontrado. Confira o logradouro e o número.
-              </Text>
-            )}
-          </Box>
-        }
-      />
+      {selectionError && (
+        <Text size="sm" color="danger">
+          {selectionError}
+        </Text>
+      )}
+
+      {isResolvingSelectedAddress ? (
+        <Box direction="column" gap={2.5} aria-live="polite">
+          <Text size="sm" color="muted">
+            Preenchendo o endereço escolhido…
+          </Text>
+          {ADDRESS_LOOKUP_SKELETON_ROWS.map((row) => (
+            <Skeleton key={row} className={styles.fieldPlaceholder} />
+          ))}
+        </Box>
+      ) : (
+        <AddressFields
+          value={{
+            zipCode: value.zipCode ?? '',
+            street: value.street,
+            number: value.number,
+            complement: value.complement,
+            neighborhood: value.neighborhood,
+            city: value.city ?? '',
+            state: value.state ?? '',
+          }}
+          streetField={streetField}
+          showCityAndState={false}
+          leadWith="street"
+          streetLabel="Endereço"
+          onChange={clearAddressSelection}
+          onNumberBlur={startAddressLookup}
+        />
+      )}
     </Box>
   )
 }

@@ -129,7 +129,7 @@ describe(SaleFinishActions.name, () => {
     fireEvent.click(screen.getByRole('button', { name: 'cancel-clear' }))
   })
 
-  it('uses the bare footer layout', () => {
+  it('leaves the total to the receipt and keeps only the action', () => {
     render(
       <SaleFinishActions
         {...saleFinishActionsMock}
@@ -140,7 +140,10 @@ describe(SaleFinishActions.name, () => {
         onClear={vi.fn()}
       />
     )
-    expect(screen.getByText('R$ 25,00')).toBeInTheDocument()
+    expect(screen.queryByText('R$ 25,00')).not.toBeInTheDocument()
+    expect(
+      screen.getByRole('button', { name: 'Concluir pedido' })
+    ).toBeInTheDocument()
   })
 
   it('places the clear action before the finish action', () => {

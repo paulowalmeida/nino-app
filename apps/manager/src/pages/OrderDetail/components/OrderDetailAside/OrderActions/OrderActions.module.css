@@ -9,3 +9,7 @@
 .advance {
   @apply w-full;
 }
+
+.receipt {
+  @apply w-full;
+}

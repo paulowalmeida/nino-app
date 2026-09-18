@@ -29,7 +29,7 @@ export const useCounterFacade = () => {
     recipient.street,
     recipient.number,
     availability.storeAddress.state,
-    addressLookupRequested,
+    addressLookupRequested
   )
   const deliveryQuote = useCounterDeliveryQuote(
     unitId,
@@ -96,9 +96,7 @@ export const useCounterFacade = () => {
         return
       }
       if (step === 'items') setStep('destination')
-      else if (step === 'destination')
-        setStep(channel === 'DELIVERY' ? 'location' : 'payment')
-      else if (step === 'location') setStep('payment')
+      else if (step === 'destination') setStep('payment')
       else if (step === 'payment') setStep('review')
       else commands.finish()
     },

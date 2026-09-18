@@ -5,6 +5,7 @@ import { beforeEach, describe, expect, it, vi } from 'vitest'
 
 import { useOrder } from '@pages/OrderDetail/hooks/useOrder/useOrder'
 import { useOrderPayment } from '@pages/OrderDetail/hooks/useOrderPayment/useOrderPayment'
+import { useOrderReceipt } from '@pages/OrderDetail/hooks/useOrderReceipt/useOrderReceipt'
 import { useOrderStatus } from '@shared/hooks/order/useOrderStatus/useOrderStatus'
 import { useCurrentUnit } from '@shared/hooks/session/useCurrentUnit/useCurrentUnit'
 
@@ -14,10 +15,12 @@ import { orderDetailFacadeMock } from './useOrderDetailFacade.mock'
 vi.mock('@shared/hooks/session/useCurrentUnit/useCurrentUnit')
 vi.mock('@pages/OrderDetail/hooks/useOrder/useOrder')
 vi.mock('@pages/OrderDetail/hooks/useOrderPayment/useOrderPayment')
+vi.mock('@pages/OrderDetail/hooks/useOrderReceipt/useOrderReceipt')
 vi.mock('@shared/hooks/order/useOrderStatus/useOrderStatus')
 
 const advanceOrder = vi.fn()
 const markOrderPaid = vi.fn()
+const downloadReceipt = vi.fn()
 
 const mockIntegration = (order: unknown) => {
   vi.mocked(useOrder).mockReturnValue({
@@ -34,6 +37,10 @@ const mockIntegration = (order: unknown) => {
     mutate: markOrderPaid,
     isPending: false,
   } as unknown as ReturnType<typeof useOrderPayment>)
+  vi.mocked(useOrderReceipt).mockReturnValue({
+    downloadReceipt,
+    isDownloadingReceipt: false,
+  } as unknown as ReturnType<typeof useOrderReceipt>)
 }
 
 describe('useOrderDetailFacade', () => {
@@ -67,6 +74,8 @@ describe('useOrderDetailFacade', () => {
     expect(result.current.canCancelOrder).toBe(true)
     expect(result.current.cancelOrder).toBeTypeOf('function')
     expect(result.current.isCancelling).toBe(true)
+    expect(result.current.downloadReceipt).toBe(downloadReceipt)
+    expect(result.current.isDownloadingReceipt).toBe(false)
   })
 
   it('closes every action while the order has not arrived', () => {

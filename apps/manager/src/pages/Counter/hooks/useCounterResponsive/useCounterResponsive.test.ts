@@ -13,8 +13,9 @@ vi.mock('@pages/Counter/hooks/useIsDesktop/useIsDesktop', () => ({
   }),
 }))
 vi.mock('@pages/Counter/states/counter/counter.store', () => ({
-  useCounterStore: (selector: (value: { setSheet: typeof setSheet }) => unknown) =>
-    selector({ setSheet }),
+  useCounterStore: (
+    selector: (value: { setSheet: typeof setSheet }) => unknown
+  ) => selector({ setSheet }),
 }))
 
 describe(useCounterResponsive.name, () => {

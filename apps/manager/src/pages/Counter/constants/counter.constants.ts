@@ -18,6 +18,8 @@ export const PRODUCT_GRID_SKELETON_CARDS = [
   'eight',
 ]
 
+export const ADDRESS_LOOKUP_SKELETON_ROWS = ['first', 'second', 'third']
+
 /** A linha de apoio de cada destino, igual no cartão de escolha e no papel. */
 export const COUNTER_CHANNEL_HINT: Record<OrderChannel, string> = {
   PICKUP: 'Cliente retira no balcão',
@@ -41,7 +43,6 @@ export const COUNTER_PAYMENT_SPOKEN: Record<PaymentMethod, string> = {
 export const COUNTER_STEP_ORDER: CounterStep[] = [
   'items',
   'destination',
-  'location',
   'payment',
   'review',
 ]
@@ -56,10 +57,6 @@ export const COUNTER_STEP_COPY: Record<
 > = {
   items: { title: 'Itens', hint: 'Confira o que o cliente pediu' },
   destination: { title: 'Destino', hint: 'Como esse pedido sai da loja' },
-  location: {
-    title: 'Localização',
-    hint: 'Confirme o ponto que calcula a entrega',
-  },
   payment: { title: 'Pagamento', hint: 'Como o cliente vai pagar' },
   review: { title: 'Revisão', hint: 'Confira e feche a venda' },
 }

@@ -31,6 +31,7 @@ vi.mock(
 )
 
 const advanceOrder = vi.fn()
+const downloadReceipt = vi.fn()
 
 const facadeWith = (overrides: Record<string, unknown>) =>
   vi.mocked(useOrderDetailFacade).mockReturnValue({
@@ -40,6 +41,8 @@ const facadeWith = (overrides: Record<string, unknown>) =>
     canCancelOrder: true,
     advanceOrder,
     isAdvancing: false,
+    downloadReceipt,
+    isDownloadingReceipt: false,
     ...overrides,
   } as unknown as ReturnType<typeof useOrderDetailFacade>)
 
@@ -136,12 +139,23 @@ describe('OrderActions', () => {
     ).toBeInTheDocument()
   })
 
-  it('disappears when the order accepts no action at all', () => {
+  it('offers the receipt as the only action once nothing else is left', () => {
     facadeWith({ canAdvance: false, nextStep: null, canCancelOrder: false })
 
-    const { container } = render(<OrderActions />)
+    render(<OrderActions />)
 
-    expect(container).toBeEmptyDOMElement()
+    expect(
+      screen.getByRole('button', { name: /Gerar recibo/ })
+    ).toBeInTheDocument()
+  })
+
+  it('downloads the receipt for the order being viewed', async () => {
+    facadeWith({})
+
+    render(<OrderActions />)
+    await userEvent.click(screen.getByRole('button', { name: /Gerar recibo/ }))
+
+    expect(downloadReceipt).toHaveBeenCalledWith(pendingOrderMock)
   })
 
   it('renders nothing while the order is unknown', () => {

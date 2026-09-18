@@ -4,8 +4,8 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { act, renderHook, waitFor } from '@testing-library/react'
 import { describe, expect, it, vi } from 'vitest'
 
-import { downloadSaleReceipt } from '@pages/Counter/utils/downloadSaleReceipt/downloadSaleReceipt'
 import { OrderService } from '@shared/services/order/order.service'
+import { downloadSaleReceipt } from '@shared/utils/downloadSaleReceipt/downloadSaleReceipt'
 
 import { useCounterReceipt } from './useCounterReceipt'
 import { counterReceiptMock } from './useCounterReceipt.mock'
@@ -18,7 +18,7 @@ vi.mock('@pages/Counter/states/counter/counter.store', () => ({
     selector(state),
 }))
 vi.mock('@shared/services/order/order.service')
-vi.mock('@pages/Counter/utils/downloadSaleReceipt/downloadSaleReceipt')
+vi.mock('@shared/utils/downloadSaleReceipt/downloadSaleReceipt')
 
 const wrapper = ({ children }: { children: ReactNode }) =>
   createElement(

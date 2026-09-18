@@ -4,7 +4,6 @@ import { Alert } from '@nino/ds/components/Alert'
 import { Box } from '@nino/ds/components/Box'
 import { Button } from '@nino/ds/components/Button'
 import { Dialog } from '@nino/ds/components/Dialog'
-import { Text } from '@nino/ds/components/Text'
 import { mergeClasses } from '@nino/ds/mergeClasses'
 import { brl } from '@shared/utils/money/money'
 
@@ -45,26 +44,6 @@ export const SaleFinishActions = ({
   return (
     <>
       <Box className={bare ? styles.footerBare : styles.footer}>
-        <Box align="baseline" justify="between">
-          <Text
-            as="span"
-            size="sm"
-            weight="semibold"
-            color="muted"
-            className={styles.totalLabel}
-          >
-            Total
-          </Text>
-          <Text
-            as="span"
-            size="lg"
-            weight="extrabold"
-            font="display"
-            className={styles.total}
-          >
-            {brl(total)}
-          </Text>
-        </Box>
         {hasLines && !isPaymentAvailable && (
           <Alert variant="error">
             Nenhum método de pagamento está disponível no balcão.

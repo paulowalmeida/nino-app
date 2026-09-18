@@ -41,9 +41,10 @@ export const counterReadback = ({
   const who = consumerName.trim() || 'o cliente'
   const destination = destinationPhrase(channel, who, tableNumber, addressLine)
 
-  const payment = method === 'CARD_ON_DELIVERY'
-    ? 'Paga com cartão na entrega'
-    : `Paga com ${method ? COUNTER_PAYMENT_SPOKEN[method] : '—'}`
+  const payment =
+    method === 'CARD_ON_DELIVERY'
+      ? 'Paga com cartão na entrega'
+      : `Paga com ${method ? COUNTER_PAYMENT_SPOKEN[method] : '—'}`
   const change = changeAmount > 0 ? `, troco de ${brl(changeAmount)}` : ''
 
   return `${destination} ${payment}${change}.`

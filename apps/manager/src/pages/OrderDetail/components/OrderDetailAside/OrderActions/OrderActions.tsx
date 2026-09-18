@@ -2,6 +2,7 @@ import { useState } from 'react'
 
 import { Button } from '@nino/ds/components/Button'
 import { FormField } from '@nino/ds/components/FormField'
+import { Icon } from '@nino/ds/components/Icon'
 import { Input } from '@nino/ds/components/Input'
 import { OrderCancelForm } from '@pages/OrderDetail/components/OrderDetailAside/OrderActions/OrderCancelForm/OrderCancelForm'
 import { useOrderDetailFacade } from '@pages/OrderDetail/facades/useOrderDetailFacade/useOrderDetailFacade'
@@ -18,11 +19,13 @@ export const OrderActions = () => {
     canCancelOrder,
     advanceOrder,
     isAdvancing,
+    downloadReceipt,
+    isDownloadingReceipt,
   } = useOrderDetailFacade()
   const [isNamingReason, setNamingReason] = useState(false)
   const [pickupCode, setPickupCode] = useState('')
 
-  if (!order || (!canAdvance && !canCancelOrder)) return null
+  if (!order) return null
   const requiresPickupCode =
     order.channel === 'PICKUP' &&
     !!order.pickupCode &&
@@ -76,6 +79,17 @@ export const OrderActions = () => {
           onDismiss={() => setNamingReason(false)}
         />
       )}
+
+      <Button
+        type="button"
+        variant="outline"
+        loading={isDownloadingReceipt}
+        onClick={() => downloadReceipt(order)}
+        className={styles.receipt}
+      >
+        <Icon name="receipt" size="sm" />
+        Gerar recibo
+      </Button>
     </section>
   )
 }

@@ -1,29 +1,7 @@
 @reference "@nino/ds/globals.css";
 
-/* Mesmo corte da gaveta de pedido: marca onde o pedido termina e a
-   transação começa — igual ao StepActions das demais etapas. */
-.footer,
-.footerBare {
-  @apply relative;
-}
-
-.footer::before,
-.footerBare::before {
-  content: '';
-  position: absolute;
-  inset-inline: 0;
-  bottom: 100%;
-  height: 8px;
-  background: var(--color-surface-page);
-  mask: conic-gradient(
-      from 0deg at 50% 0,
-      #0000 0 135deg,
-      #000 135deg 225deg,
-      #0000 225deg
-    )
-    50% 0 / 16px 8px repeat-x;
-}
-
+/* Na revisão o cupom já é o papel e já fecha a conta: o pé não repete o
+   total nem o picote — só a ação. */
 .footer {
   @apply -mx-4 gap-3 bg-surface-page px-4 pb-4 pt-3;
   filter: drop-shadow(0 -1px 0 var(--color-border));
@@ -46,14 +24,6 @@
 
 .footerBare .finish {
   @apply w-fit;
-}
-
-.totalLabel {
-  @apply leading-normal;
-}
-
-.total {
-  font-variant-numeric: tabular-nums;
 }
 
 .finish {

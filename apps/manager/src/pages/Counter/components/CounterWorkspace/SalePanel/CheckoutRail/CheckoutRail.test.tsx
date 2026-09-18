@@ -31,15 +31,4 @@ describe('CheckoutRail', () => {
       '75'
     )
   })
-
-  it('counts the delivery location as its own step', () => {
-    render(
-      <CheckoutRail {...checkoutRailMock} includeLocation onStep={vi.fn()} />
-    )
-
-    expect(screen.getByRole('progressbar')).toHaveAttribute(
-      'aria-valuenow',
-      '80'
-    )
-  })
 })

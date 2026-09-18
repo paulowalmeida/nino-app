@@ -111,13 +111,6 @@ export const router = createBrowserRouter([
           })),
       },
       {
-        path: 'balcao/fechar',
-        lazy: () =>
-          import('@pages/Counter/CounterCheckout/CounterCheckout').then(
-            ({ CounterCheckout }) => ({ Component: CounterCheckout })
-          ),
-      },
-      {
         path: 'caixa',
         lazy: () =>
           import('@pages/Cash/Cash').then(({ Cash }) => ({

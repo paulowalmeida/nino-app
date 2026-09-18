@@ -4,7 +4,6 @@ import { Text } from '@nino/ds/components/Text'
 import { useCounterFacade } from '@pages/Counter/facades/useCounterFacade/useCounterFacade'
 
 import { CheckoutRail } from './CheckoutRail/CheckoutRail'
-import { DeliveryLocationStep } from './DeliveryLocationStep/DeliveryLocationStep'
 import { DestinationStep } from './DestinationStep/DestinationStep'
 import { ReviewStep } from './ReviewStep/ReviewStep'
 import { SaleCart } from './SaleCart/SaleCart'
@@ -57,22 +56,41 @@ export const SalePanel = ({ bare = false }: { bare?: boolean }) => {
 
   const goNext = () => {
     if (step === 'items') setStep('destination')
-    else if (step === 'destination')
-      setStep(channel === 'DELIVERY' ? 'location' : 'payment')
-    else if (step === 'location') setStep('payment')
+    else if (step === 'destination') setStep('payment')
     else if (step === 'payment') setStep('review')
     else finish()
   }
 
   const goBack = () => {
     if (step === 'destination') setStep('items')
-    if (step === 'location') setStep('destination')
-    if (step === 'payment')
-      setStep(channel === 'DELIVERY' ? 'location' : 'destination')
+    if (step === 'payment') setStep('destination')
     if (step === 'review') setStep('payment')
   }
 
   const isReview = step === 'review'
+
+  const actions = !isReview ? (
+    <StepActions
+      subtotal={subtotal}
+      deliveryFee={deliveryFee}
+      total={total}
+      canContinue={canContinue}
+      onBack={step !== 'items' ? goBack : undefined}
+      onContinue={goNext}
+    />
+  ) : (
+    <SaleFinishActions
+      bare={bare}
+      hasLines={count > 0}
+      isPaymentAvailable={method !== null && isChangeValid}
+      isCash={method === 'CASH'}
+      total={total}
+      isSending={isSending}
+      error={error}
+      onClear={emptyTicket}
+      onFinish={finish}
+    />
+  )
 
   return (
     <Box className={bare ? styles.bare : styles.panel}>
@@ -83,13 +101,7 @@ export const SalePanel = ({ bare = false }: { bare?: boolean }) => {
           </Heading>
         </Box>
       )}
-      {bare && (
-        <CheckoutRail
-          current={step}
-          includeLocation={channel === 'DELIVERY'}
-          onStep={setStep}
-        />
-      )}
+      {bare && <CheckoutRail current={step} onStep={setStep} />}
       {step === 'items' && (
         <SaleCart
           lines={lines}
@@ -116,7 +128,6 @@ export const SalePanel = ({ bare = false }: { bare?: boolean }) => {
           isResolvingSelectedAddress={isResolvingSelectedAddress}
         />
       )}
-      {step === 'location' && <DeliveryLocationStep recipient={recipient} />}
       {step === 'payment' && count > 0 && (
         <SalePaymentDetails
           changeFor={changeFor}
@@ -150,28 +161,7 @@ export const SalePanel = ({ bare = false }: { bare?: boolean }) => {
         />
       )}
       {step === 'payment' && error && <Text color="danger">{error}</Text>}
-      {!isReview ? (
-        <StepActions
-          subtotal={subtotal}
-          deliveryFee={deliveryFee}
-          total={total}
-          canContinue={canContinue}
-          onBack={step !== 'items' ? goBack : undefined}
-          onContinue={goNext}
-        />
-      ) : (
-        <SaleFinishActions
-          bare={bare}
-          hasLines={count > 0}
-          isPaymentAvailable={method !== null && isChangeValid}
-          isCash={method === 'CASH'}
-          total={total}
-          isSending={isSending}
-          error={error}
-          onClear={emptyTicket}
-          onFinish={finish}
-        />
-      )}
+      {actions}
     </Box>
   )
 }
