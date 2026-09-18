@@ -1,4 +1,5 @@
-import { fireEvent, render, screen } from '@testing-library/react'
+import { fireEvent, render, screen, waitFor } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
 import { describe, expect, it, vi } from 'vitest'
 
 import { useCheckoutFacade } from '@pages/checkout/facades/useCheckoutFacade/useCheckoutFacade'
@@ -28,6 +29,8 @@ describe('DeliveryAddressFields', () => {
     vi.mocked(useGuestAddressSearch).mockReturnValue({
       suggestions: [],
       isSearching: false,
+      resolveSelectedAddress: vi.fn(),
+      isResolvingSelectedAddress: false,
     })
     vi.mocked(useCheckoutFacade).mockReturnValue({
       control: {},
@@ -97,6 +100,53 @@ describe('DeliveryAddressFields', () => {
       'guestStreet',
       'Rua das Flores',
       expect.any(Object)
+    )
+    expect(setFocus).toHaveBeenCalledWith('guestNumber')
+  })
+
+  it('resolves the full address once a prediction is selected', async () => {
+    // Arrange: one prediction is available and resolves successfully.
+    const resolveSelectedAddress = vi.fn().mockResolvedValue({
+      providerId: 'place-1',
+      zipCode: '66000-000',
+      street: 'Rua das Flores',
+      neighborhood: 'Centro',
+      city: 'Belém',
+      state: 'PA',
+      latitude: -1.45,
+      longitude: -48.5,
+    })
+    const { setValue, setFocus } = setup()
+    vi.mocked(useGuestAddressSearch).mockReturnValue({
+      suggestions: [
+        {
+          placeId: 'place-1',
+          description: 'Rua das Flores - Centro, Belém - PA',
+          mainText: 'Rua das Flores',
+          secondaryText: 'Centro, Belém - PA',
+        },
+      ],
+      isSearching: false,
+      resolveSelectedAddress,
+      isResolvingSelectedAddress: false,
+    })
+    render(<DeliveryAddressFields />)
+
+    // Act: select the only prediction in the list.
+    const user = userEvent.setup({ pointerEventsCheck: 0 })
+    await user.click(screen.getByLabelText('Endereço'))
+    await user.keyboard('{ArrowDown}{ArrowDown}{Enter}')
+
+    // Assert: the details call resolved and populated the full address.
+    await waitFor(() =>
+      expect(resolveSelectedAddress).toHaveBeenCalledWith('place-1')
+    )
+    await waitFor(() =>
+      expect(setValue).toHaveBeenCalledWith(
+        'guestZipCode',
+        '66000-000',
+        expect.any(Object)
+      )
     )
     expect(setFocus).toHaveBeenCalledWith('guestNumber')
   })

@@ -62,11 +62,13 @@ export const DeliveryAddressFields = ({
   const guestProviderId = useWatch({ control, name: 'guestProviderId' })
   const guestStreet = useWatch({ control, name: 'guestStreet' })
   const guestState = useWatch({ control, name: 'guestState' })
-  const { suggestions, isSearching: isSearchingStreet } = useGuestAddressSearch(
-    store?.id,
-    guestState || store?.state,
-    guestStreet
-  )
+  const {
+    suggestions,
+    isSearching: isSearchingStreet,
+    resolveSelectedAddress,
+    isResolvingSelectedAddress,
+  } = useGuestAddressSearch(store?.id, guestState || store?.state, guestStreet)
+  const [selectionError, setSelectionError] = useState<string | null>(null)
   const hasDeliveryQuote = !!quote && !isLookingUpAddress && !isQuoting
 
   const clearGuestAddressSelection = (clearZipCode = false) => {
@@ -78,6 +80,7 @@ export const DeliveryAddressFields = ({
   }
 
   const handleStreetInputChange = (street: string) => {
+    setSelectionError(null)
     form.setValue('guestStreet', street, {
       shouldDirty: true,
       shouldValidate: true,
@@ -93,21 +96,24 @@ export const DeliveryAddressFields = ({
     clearGuestAddressSelection()
   }
 
-  const applySuggestion = (providerId: string) => {
-    const suggestion = suggestions.find((item) => item.id === providerId)
-    if (!suggestion) return
-
-    const options = { shouldDirty: true, shouldValidate: true }
-    setLookupStatus('done')
-    form.setValue('guestProviderId', suggestion.providerId, options)
-    form.setValue('guestZipCode', suggestion.zipCode, options)
-    form.setValue('guestStreet', suggestion.street, options)
-    form.setValue('guestNeighborhood', suggestion.neighborhood, options)
-    form.setValue('guestCity', suggestion.city, options)
-    form.setValue('guestState', suggestion.state, options)
-    form.setValue('guestLatitude', suggestion.latitude, options)
-    form.setValue('guestLongitude', suggestion.longitude, options)
-    form.setFocus('guestNumber')
+  const selectPrediction = async (placeId: string) => {
+    setSelectionError(null)
+    try {
+      const address = await resolveSelectedAddress(placeId)
+      const options = { shouldDirty: true, shouldValidate: true }
+      setLookupStatus('done')
+      form.setValue('guestProviderId', address.providerId, options)
+      form.setValue('guestZipCode', address.zipCode, options)
+      form.setValue('guestStreet', address.street, options)
+      form.setValue('guestNeighborhood', address.neighborhood, options)
+      form.setValue('guestCity', address.city, options)
+      form.setValue('guestState', address.state, options)
+      form.setValue('guestLatitude', address.latitude, options)
+      form.setValue('guestLongitude', address.longitude, options)
+      form.setFocus('guestNumber')
+    } catch {
+      setSelectionError('A loja não entrega nesse endereço.')
+    }
   }
 
   const handleZipCodeChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -250,26 +256,28 @@ export const DeliveryAddressFields = ({
             </FormField>
           </Box>
 
-          <FormField error={errors.guestStreet?.message}>
+          <FormField error={selectionError ?? errors.guestStreet?.message}>
             <Combobox
               options={suggestions.map((suggestion) => ({
-                value: suggestion.id,
-                label: `${suggestion.street} · ${suggestion.neighborhood}`,
-                inputLabel: suggestion.street,
+                value: suggestion.placeId,
+                label: suggestion.description,
+                inputLabel: suggestion.mainText,
               }))}
               value={guestProviderId}
               inputValue={guestStreet}
               placeholder="Logradouro"
               ariaLabel="Endereço"
               disabled={isLookingUpAddress}
-              loading={isSearchingStreet}
+              loading={isSearchingStreet || isResolvingSelectedAddress}
               emptyMessage={
                 (guestStreet?.trim().length ?? 0) >= 3
                   ? 'Não encontrado. Continue preenchendo manualmente.'
                   : 'Digite pelo menos 3 caracteres para buscar'
               }
               onInputValueChange={handleStreetInputChange}
-              onValueChange={applySuggestion}
+              onValueChange={(placeId) => {
+                void selectPrediction(placeId)
+              }}
             />
           </FormField>
 

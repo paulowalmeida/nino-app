@@ -1,10 +1,16 @@
+import { useState } from 'react'
+
 import { Box } from '@nino/ds/components/Box'
 import { Combobox } from '@nino/ds/components/Combobox'
 import { FieldHint } from '@nino/ds/components/FieldHint'
 import { FormField } from '@nino/ds/components/FormField'
 import { Input } from '@nino/ds/components/Input'
 import { PhoneInput } from '@nino/ds/components/PhoneInput'
-import type { AddressSearchResult } from '@nino/lib/types/address/address-lookup'
+import { Text } from '@nino/ds/components/Text'
+import type {
+  AddressPrediction,
+  AddressSearchResult,
+} from '@nino/lib/types/address/address-lookup'
 import { AddressFields } from '@shared/components/AddressFields/AddressFields'
 import type { Recipient } from '@shared/types/order/recipient'
 
@@ -12,9 +18,11 @@ import styles from './DeliveryRecipientFields.module.css'
 
 type DeliveryRecipientFieldsProps = {
   value: Recipient
-  addressSuggestions: AddressSearchResult[]
+  addressSuggestions: AddressPrediction[]
   isSearchingAddress: boolean
   onChange: (patch: Partial<Recipient>) => void
+  resolveSelectedAddress: (placeId: string) => Promise<AddressSearchResult>
+  isResolvingSelectedAddress: boolean
 }
 
 export const DeliveryRecipientFields = ({
@@ -22,7 +30,11 @@ export const DeliveryRecipientFields = ({
   addressSuggestions,
   isSearchingAddress,
   onChange,
+  resolveSelectedAddress,
+  isResolvingSelectedAddress,
 }: DeliveryRecipientFieldsProps) => {
+  const [selectionError, setSelectionError] = useState<string | null>(null)
+
   const clearAddressSelection = (patch: Partial<Recipient>) =>
     onChange({
       ...patch,
@@ -35,51 +47,65 @@ export const DeliveryRecipientFields = ({
   const suggestions = addressSuggestions
 
   const addressOptions = suggestions.map((suggestion) => ({
-    value: suggestion.id,
-    label: `${suggestion.street} · ${suggestion.neighborhood || suggestion.city} · ${suggestion.zipCode || suggestion.state}`,
-    inputLabel: suggestion.street,
+    value: suggestion.placeId,
+    label: suggestion.description,
+    inputLabel: suggestion.mainText,
   }))
 
+  const selectPrediction = async (placeId: string) => {
+    setSelectionError(null)
+    try {
+      const address = await resolveSelectedAddress(placeId)
+      onChange({
+        providerId: address.providerId,
+        zipCode: address.zipCode,
+        street: address.street,
+        neighborhood: address.neighborhood,
+        city: address.city,
+        state: address.state,
+        latitude: address.latitude,
+        longitude: address.longitude,
+      })
+    } catch {
+      setSelectionError('A loja não entrega nesse endereço.')
+    }
+  }
+
   const streetField = (
-    <Combobox
-      options={addressOptions}
-      value={value.providerId ?? ''}
-      inputValue={streetQuery}
-      placeholder="Digite o logradouro"
-      ariaLabel="Logradouro"
-      emptyMessage={
-        streetQuery.trim().length < 3
-          ? 'Digite pelo menos 3 caracteres'
-          : 'Nenhum endereço encontrado'
-      }
-      loading={isSearchingAddress}
-      shouldFilterOptions={false}
-      onInputValueChange={(query) => {
-        clearAddressSelection({
-          street: query,
-          zipCode: undefined,
-          neighborhood: '',
-          city: undefined,
-          state: undefined,
-        })
-      }}
-      onValueChange={(providerId) => {
-        const suggestion = suggestions.find((item) => item.id === providerId)
-
-        if (!suggestion) return
-
-        onChange({
-          providerId: suggestion.providerId,
-          zipCode: suggestion.zipCode,
-          street: suggestion.street,
-          neighborhood: suggestion.neighborhood,
-          city: suggestion.city,
-          state: suggestion.state,
-          latitude: suggestion.latitude,
-          longitude: suggestion.longitude,
-        })
-      }}
-    />
+    <Box direction="column" gap={1}>
+      <Combobox
+        options={addressOptions}
+        value={value.providerId ?? ''}
+        inputValue={streetQuery}
+        placeholder="Digite o logradouro"
+        ariaLabel="Logradouro"
+        emptyMessage={
+          streetQuery.trim().length < 3
+            ? 'Digite pelo menos 3 caracteres'
+            : 'Nenhum endereço encontrado'
+        }
+        loading={isSearchingAddress || isResolvingSelectedAddress}
+        shouldFilterOptions={false}
+        onInputValueChange={(query) => {
+          setSelectionError(null)
+          clearAddressSelection({
+            street: query,
+            zipCode: undefined,
+            neighborhood: '',
+            city: undefined,
+            state: undefined,
+          })
+        }}
+        onValueChange={(placeId) => {
+          void selectPrediction(placeId)
+        }}
+      />
+      {selectionError && (
+        <Text size="xs" color="danger">
+          {selectionError}
+        </Text>
+      )}
+    </Box>
   )
 
   return (

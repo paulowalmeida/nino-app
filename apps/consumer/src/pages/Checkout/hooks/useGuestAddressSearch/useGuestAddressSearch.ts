@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react'
 
-import { useQuery } from '@tanstack/react-query'
+import { useMutation, useQuery } from '@tanstack/react-query'
 
-import { checkoutAddressSearchService } from '@pages/Checkout/services/address-search/address-search.service/index'
+import { checkoutAddressSearchService } from '@pages/Checkout/services/address-search/address-search.service/address-search.service'
 
 export const useGuestAddressSearch = (
   unitId: string | undefined,
@@ -11,6 +11,7 @@ export const useGuestAddressSearch = (
 ) => {
   const normalizedStreet = street?.trim() ?? ''
   const [debouncedStreet, setDebouncedStreet] = useState('')
+  const [sessionToken, setSessionToken] = useState(() => crypto.randomUUID())
 
   useEffect(() => {
     const timer = window.setTimeout(
@@ -21,16 +22,37 @@ export const useGuestAddressSearch = (
   }, [normalizedStreet])
 
   const query = useQuery({
-    queryKey: ['checkout', 'address-search', unitId, state, debouncedStreet],
+    queryKey: [
+      'checkout',
+      'address-search',
+      unitId,
+      state,
+      debouncedStreet,
+      sessionToken,
+    ],
     queryFn: () =>
       checkoutAddressSearchService.search(
         unitId as string,
         debouncedStreet,
-        state ?? ''
+        state ?? '',
+        sessionToken
       ),
-    enabled:
-      !!unitId && state?.length === 2 && debouncedStreet.length >= 3,
+    enabled: !!unitId && state?.length === 2 && debouncedStreet.length >= 3,
     staleTime: 60_000,
+  })
+
+  // WORKAROUND: the provider only prices autocomplete for free when a
+  // session ends in exactly one details call, so the token must be replaced
+  // once the guest confirms a selection — reusing it past that point would
+  // mis-attribute the next search to an already-closed session.
+  const detailsMutation = useMutation({
+    mutationFn: (placeId: string) =>
+      checkoutAddressSearchService.details(
+        unitId as string,
+        placeId,
+        sessionToken
+      ),
+    onSettled: () => setSessionToken(crypto.randomUUID()),
   })
 
   return {
@@ -38,5 +60,7 @@ export const useGuestAddressSearch = (
     isSearching:
       (normalizedStreet.length >= 3 && normalizedStreet !== debouncedStreet) ||
       query.isFetching,
+    resolveSelectedAddress: detailsMutation.mutateAsync,
+    isResolvingSelectedAddress: detailsMutation.isPending,
   }
 }

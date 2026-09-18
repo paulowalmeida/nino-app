@@ -24,3 +24,13 @@ export type AddressSearchResult = AddressLookup & {
   latitude: number
   longitude: number
 }
+
+/** WHY: the provider's session-priced autocomplete step only returns text
+ * and a place id, never zip/neighborhood/coordinates — those are resolved
+ * separately, once, when the guest selects a prediction. */
+export type AddressPrediction = {
+  placeId: string
+  description: string
+  mainText: string
+  secondaryText: string
+}

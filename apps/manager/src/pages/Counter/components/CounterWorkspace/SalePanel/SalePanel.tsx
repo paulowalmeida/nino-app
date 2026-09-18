@@ -55,6 +55,8 @@ export const SalePanel = ({ bare = false }: { bare?: boolean }) => {
     canContinue,
     addressSuggestions,
     isSearchingAddress,
+    resolveSelectedAddress,
+    isResolvingSelectedAddress,
   } = useCounterFacade()
 
   const goNext = () => {
@@ -117,6 +119,8 @@ export const SalePanel = ({ bare = false }: { bare?: boolean }) => {
           onConsumerName={setConsumerName}
           onTableNumber={setTableNumber}
           onRecipient={setRecipient}
+          resolveSelectedAddress={resolveSelectedAddress}
+          isResolvingSelectedAddress={isResolvingSelectedAddress}
         />
       )}
       {step === 'payment' && count > 0 && (

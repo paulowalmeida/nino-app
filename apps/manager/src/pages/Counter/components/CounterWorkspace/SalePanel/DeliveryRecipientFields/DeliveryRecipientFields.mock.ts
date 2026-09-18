@@ -1,4 +1,7 @@
-import type { AddressSearchResult } from '@nino/lib/types/address/address-lookup'
+import type {
+  AddressPrediction,
+  AddressSearchResult,
+} from '@nino/lib/types/address/address-lookup'
 
 export const deliveryRecipientMock = {
   name: 'Ana',
@@ -13,10 +16,17 @@ export const deliveryRecipientMock = {
   zoneId: '',
 }
 
-export const addressSuggestionMock = {
-  id: 'address-1',
-  providerId: 'address-1',
-  precision: 'street',
+export const addressPredictionMock = {
+  placeId: 'place-1',
+  description: 'Travessa WE-69-A - Coqueiro, Ananindeua - PA',
+  mainText: 'Travessa WE-69-A',
+  secondaryText: 'Coqueiro, Ananindeua - PA',
+} satisfies AddressPrediction
+
+export const addressSearchResultMock = {
+  id: 'place-1',
+  providerId: 'place-1',
+  precision: 'point',
   zipCode: '67143-450',
   street: 'Travessa WE-69-A',
   neighborhood: 'Coqueiro',

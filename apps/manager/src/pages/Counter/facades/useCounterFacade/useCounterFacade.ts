@@ -117,6 +117,8 @@ export const useCounterFacade = () => {
     deliveryQuote: deliveryQuote.quote,
     addressSuggestions: addressSearch.suggestions,
     isSearchingAddress: addressSearch.isSearching,
+    resolveSelectedAddress: addressSearch.resolveSelectedAddress,
+    isResolvingSelectedAddress: addressSearch.isResolvingSelectedAddress,
     isQuotingDelivery: deliveryQuote.isQuoting,
     changeFor,
     setSheet,
