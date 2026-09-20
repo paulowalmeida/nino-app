@@ -9,7 +9,7 @@
 }
 
 .save {
-  @apply mt-4 w-full sm:w-auto sm:self-end;
+  @apply w-full sm:w-auto;
 }
 
 .fields {

@@ -1,29 +1,14 @@
-import { useMutation, useQueryClient } from '@tanstack/react-query'
-
-import { toast } from '@nino/ds/components/Toast'
 import { useSubscription } from '@shared/hooks/account/useSubscription/useSubscription'
 import { useSubscriptionPlans } from '@shared/hooks/account/useSubscriptionPlans/useSubscriptionPlans'
-import { queryKeys } from '@shared/lib/query-keys/query-keys'
-import { AccountService } from '@shared/services/account/account.service'
-import type { Subscription } from '@shared/types/profile/subscription'
+
+import { useSubscriptionActions } from '../../hooks/useSubscriptionActions/useSubscriptionActions'
+import { useSubscriptionInterest } from '../../hooks/useSubscriptionInterest/useSubscriptionInterest'
 
 export const useSubscriptionFacade = () => {
   const { data, isPending, isError } = useSubscription()
   const plans = useSubscriptionPlans()
-  const queryClient = useQueryClient()
-  const updateSubscription = useMutation({
-    mutationFn: ({ planId }: { planId?: string }) =>
-      planId
-        ? AccountService.changePlan(planId)
-        : AccountService.cancelSubscription(),
-    onSuccess: (next) => {
-      queryClient.setQueryData<Subscription>(
-        queryKeys.account.subscription(),
-        next
-      )
-      toast.success('Assinatura atualizada')
-    },
-  })
+  const actions = useSubscriptionActions()
+  const interest = useSubscriptionInterest()
 
   return {
     subscription: data,
@@ -32,8 +17,12 @@ export const useSubscriptionFacade = () => {
     plans: plans.data ?? [],
     isPlansPending: plans.isPending,
     isPlansError: plans.isError,
-    changePlan: (planId: string) => updateSubscription.mutateAsync({ planId }),
-    cancelPlan: () => updateSubscription.mutateAsync({}),
-    isUpdating: updateSubscription.isPending,
+    changePlan: actions.changePlan,
+    cancelPlan: actions.cancelPlan,
+    isUpdating: actions.isUpdating,
+    isUpdateError: actions.isError,
+    requestInterest: interest.mutateAsync,
+    isRequestingInterest: interest.isPending,
+    isRequestInterestError: interest.isError,
   }
 }

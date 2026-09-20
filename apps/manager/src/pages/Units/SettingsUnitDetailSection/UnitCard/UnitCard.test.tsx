@@ -130,8 +130,8 @@ describe('UnitCard', () => {
     await user.keyboard('{ArrowDown}{Enter}')
 
     expect(screen.getByRole('button', { name: 'Salvar' })).toBeEnabled()
-    expect(screen.getByText('Belém · PA')).toBeInTheDocument()
-    expect(screen.queryByText('Ananindeua · PA')).not.toBeInTheDocument()
+    expect(screen.getByText('Belém · Pará')).toBeInTheDocument()
+    expect(screen.queryByText('Ananindeua · Pará')).not.toBeInTheDocument()
   })
 
   it('offers the promotion to a unit that is not the head office', async () => {

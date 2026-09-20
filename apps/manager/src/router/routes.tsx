@@ -243,6 +243,14 @@ export const router = createBrowserRouter([
           })),
       },
       {
+        path: 'assinatura/rede',
+        loader: roleGuard(['UNIT_OWNER']),
+        lazy: () =>
+          import('@pages/SubscriptionInterest/SubscriptionInterest').then(
+            ({ SubscriptionInterest }) => ({ Component: SubscriptionInterest })
+          ),
+      },
+      {
         path: 'assinatura',
         loader: roleGuard(['UNIT_OWNER']),
         lazy: () =>

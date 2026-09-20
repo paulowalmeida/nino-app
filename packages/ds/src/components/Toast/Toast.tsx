@@ -1,6 +1,16 @@
-import { useState, useSyncExternalStore } from 'react'
+import {
+  type PointerEvent,
+  useRef,
+  useState,
+  useSyncExternalStore,
+} from 'react'
 
-import { Toast as ArkToast, Toaster as ArkToaster } from '@ark-ui/react/toast'
+import {
+  Toast as ArkToast,
+  Toaster as ArkToaster,
+  type ToastOptions as ArkToastOptions,
+  useToastContext,
+} from '@ark-ui/react/toast'
 import { Icon } from '@ds/components/Icon/Icon'
 import { IconName } from '@ds/components/Icon/Icon.types'
 import { mergeClasses } from '@ds/lib/mergeClasses/mergeClasses'
@@ -59,6 +69,121 @@ const ToastIcon = ({ variant }: { variant: ToastVariant }) =>
     <Icon name={statusIcon[variant]} className={styles.statusIcon} />
   )
 
+const SWIPE_DISMISS_THRESHOLD = 72
+
+const ToastCard = ({ toast }: { toast: ArkToastOptions }) => {
+  const toastApi = useToastContext()
+  const meta = toast.meta as ToastMeta | undefined
+  const variant = meta?.variant ?? 'default'
+  const [swipeOffset, setSwipeOffset] = useState(0)
+  const [isDragging, setIsDragging] = useState(false)
+  const pointerRef = useRef<{
+    id: number
+    startX: number
+    startY: number
+    offset: number
+  } | null>(null)
+
+  const resetSwipe = () => {
+    pointerRef.current = null
+    setIsDragging(false)
+    setSwipeOffset(0)
+  }
+
+  const handlePointerDown = (event: PointerEvent<HTMLDivElement>) => {
+    if (event.pointerType === 'mouse' && event.button !== 0) return
+    if ((event.target as HTMLElement).closest('button')) return
+
+    pointerRef.current = {
+      id: event.pointerId,
+      startX: event.clientX,
+      startY: event.clientY,
+      offset: 0,
+    }
+    event.currentTarget.setPointerCapture?.(event.pointerId)
+  }
+
+  const handlePointerMove = (event: PointerEvent<HTMLDivElement>) => {
+    const pointer = pointerRef.current
+    if (!pointer || pointer.id !== event.pointerId) return
+
+    const offsetX = event.clientX - pointer.startX
+    const offsetY = event.clientY - pointer.startY
+    if (Math.abs(offsetY) > Math.abs(offsetX)) {
+      resetSwipe()
+      return
+    }
+
+    if (Math.abs(offsetX) < 8) return
+
+    event.preventDefault()
+    pointer.offset = offsetX
+    setIsDragging(true)
+    setSwipeOffset(offsetX)
+  }
+
+  const handlePointerUp = (event: PointerEvent<HTMLDivElement>) => {
+    const pointer = pointerRef.current
+    if (!pointer || pointer.id !== event.pointerId) return
+
+    const width = event.currentTarget.getBoundingClientRect().width
+    const threshold = Math.max(SWIPE_DISMISS_THRESHOLD, width * 0.3)
+    pointerRef.current = null
+    setIsDragging(false)
+
+    if (Math.abs(pointer.offset) >= threshold) {
+      setSwipeOffset(Math.sign(pointer.offset) * Math.max(width, threshold))
+      toastApi.dismiss()
+      return
+    }
+
+    setSwipeOffset(0)
+  }
+
+  return (
+    <div
+      className={mergeClasses(
+        styles.card,
+        surfaceClass[variant],
+        isDragging && styles.dragging
+      )}
+      style={{ transform: `translateX(${swipeOffset}px)` }}
+      onPointerDown={handlePointerDown}
+      onPointerMove={handlePointerMove}
+      onPointerUp={handlePointerUp}
+      onPointerCancel={resetSwipe}
+    >
+      <ToastIcon variant={variant} />
+      <div className={styles.textStack}>
+        <ArkToast.Title className={styles.title}>{toast.title}</ArkToast.Title>
+        {toast.description && (
+          <ArkToast.Description className={styles.description}>
+            {toast.description}
+          </ArkToast.Description>
+        )}
+        {toast.action && (
+          <ArkToast.ActionTrigger className={styles.actionButton}>
+            {toast.action.label}
+          </ArkToast.ActionTrigger>
+        )}
+      </div>
+      {toast.closable !== false && (
+        <ArkToast.CloseTrigger
+          className={styles.closeButton}
+          aria-label="Fechar"
+        >
+          <Icon name="x" size="sm" />
+        </ArkToast.CloseTrigger>
+      )}
+      {meta?.timed && (
+        <span className={styles.timerTrack} aria-hidden="true">
+          <span className={mergeClasses('toast-timer', styles.timerBar)} />
+        </span>
+      )}
+    </div>
+  )
+}
+
 /* A pilha de cartões de uma quina da tela. Existe uma por quina em uso — o
  * container monta cada uma. */
 const ToastStack = ({
@@ -74,44 +199,9 @@ const ToastStack = ({
 }) => (
   <ArkToaster toaster={getToaster(placement)} className={className}>
     {(t) => {
-      const meta = t.meta as ToastMeta | undefined
-      const variant = meta?.variant ?? 'default'
-
       return (
         <ArkToast.Root key={t.id} className={styles.toast}>
-          <div className={mergeClasses(styles.card, surfaceClass[variant])}>
-            <ToastIcon variant={variant} />
-            <div className={styles.textStack}>
-              <ArkToast.Title className={styles.title}>
-                {t.title}
-              </ArkToast.Title>
-              {t.description && (
-                <ArkToast.Description className={styles.description}>
-                  {t.description}
-                </ArkToast.Description>
-              )}
-              {t.action && (
-                <ArkToast.ActionTrigger className={styles.actionButton}>
-                  {t.action.label}
-                </ArkToast.ActionTrigger>
-              )}
-            </div>
-            {t.closable !== false && (
-              <ArkToast.CloseTrigger
-                className={styles.closeButton}
-                aria-label="Fechar"
-              >
-                <Icon name="x" size="sm" />
-              </ArkToast.CloseTrigger>
-            )}
-            {meta?.timed && (
-              <span className={styles.timerTrack} aria-hidden="true">
-                <span
-                  className={mergeClasses('toast-timer', styles.timerBar)}
-                />
-              </span>
-            )}
-          </div>
+          <ToastCard toast={t} />
         </ArkToast.Root>
       )
     }}

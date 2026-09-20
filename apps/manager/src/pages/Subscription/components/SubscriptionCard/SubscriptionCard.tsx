@@ -16,6 +16,7 @@ type SubscriptionCardProps = {
   isUpdating?: boolean
   onChangePlan?: (planId: string) => Promise<unknown>
   onCancel?: () => Promise<unknown>
+  onRequestInterest?: () => void
 }
 
 export const SubscriptionCard = ({
@@ -24,6 +25,7 @@ export const SubscriptionCard = ({
   isUpdating,
   onChangePlan,
   onCancel,
+  onRequestInterest,
 }: SubscriptionCardProps) => (
   <Box as="section" className={`${motion.settle} ${styles.subscription}`}>
     <SubscriptionPlanSummary plan={subscription.plan} />
@@ -35,6 +37,7 @@ export const SubscriptionCard = ({
         isUpdating={isUpdating ?? false}
         onChangePlan={onChangePlan}
         onCancel={onCancel}
+        onRequestInterest={onRequestInterest}
       />
     ) : null}
     <SubscriptionSupportHint />

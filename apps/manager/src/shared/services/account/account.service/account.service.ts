@@ -3,6 +3,10 @@ import type {
   Subscription,
   SubscriptionPlan,
 } from '@shared/types/profile/subscription'
+import type {
+  CreateSubscriptionInterestInput,
+  SubscriptionInterestResponse,
+} from '@shared/types/profile/subscription-interest'
 
 export const AccountService = {
   getSubscription: (): Promise<Subscription> =>
@@ -17,5 +21,12 @@ export const AccountService = {
     api.patch<Record<string, never>, Subscription>(
       'my/subscription/cancel',
       {}
+    ),
+  requestSubscriptionInterest: (
+    input: CreateSubscriptionInterestInput
+  ): Promise<SubscriptionInterestResponse> =>
+    api.create<CreateSubscriptionInterestInput, SubscriptionInterestResponse>(
+      'my/subscription/interest',
+      input
     ),
 }

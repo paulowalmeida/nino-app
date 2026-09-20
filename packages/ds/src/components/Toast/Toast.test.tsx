@@ -1,4 +1,4 @@
-import { act, render, screen, waitFor } from '@testing-library/react'
+import { act, fireEvent, render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { afterEach, describe, expect, it, vi } from 'vitest'
 
@@ -41,6 +41,44 @@ describe(ToastContainer.name, () => {
     await userEvent.click(screen.getByRole('button', { name: 'Fechar' }))
     await waitFor(
       () => expect(screen.queryByText('Mensagem')).not.toBeInTheDocument(),
+      { timeout: 3000 }
+    )
+  })
+
+  it('dismisses when swiped horizontally', async () => {
+    renderContainer()
+    act(() => toast.default('Mensagem arrastável'))
+
+    const title = await screen.findByText('Mensagem arrastável')
+    const toastCard = title.parentElement?.parentElement
+    expect(toastCard).not.toBeNull()
+
+    act(() => {
+      fireEvent.pointerDown(toastCard!, {
+        pointerId: 1,
+        pointerType: 'touch',
+        clientX: 300,
+        clientY: 100,
+      })
+      fireEvent.pointerMove(toastCard!, {
+        pointerId: 1,
+        pointerType: 'touch',
+        clientX: 200,
+        clientY: 100,
+      })
+      fireEvent.pointerUp(toastCard!, {
+        pointerId: 1,
+        pointerType: 'touch',
+        clientX: 200,
+        clientY: 100,
+      })
+    })
+
+    await waitFor(
+      () =>
+        expect(
+          screen.queryByText('Mensagem arrastável')
+        ).not.toBeInTheDocument(),
       { timeout: 3000 }
     )
   })

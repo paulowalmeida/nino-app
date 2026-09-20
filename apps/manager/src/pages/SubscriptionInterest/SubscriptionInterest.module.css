@@ -1,0 +1,9 @@
+@reference "@nino/ds/globals.css";
+
+.page {
+  @apply relative w-full max-w-3xl p-4 lg:p-10;
+}
+
+.success {
+  @apply max-w-2xl;
+}

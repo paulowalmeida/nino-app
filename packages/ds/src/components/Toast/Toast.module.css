@@ -8,6 +8,18 @@
   @apply relative flex h-full w-full gap-3 overflow-hidden rounded-2;
   @apply shadow-warm-lg;
   @apply pb-3 pl-4 pr-11 pt-2.5;
+  touch-action: pan-y;
+  transition: transform 180ms ease-out;
+}
+
+.dragging {
+  transition: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card {
+    transition: none;
+  }
 }
 
 .surfaceDefault,

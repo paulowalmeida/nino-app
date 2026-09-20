@@ -3,3 +3,28 @@
 .actions {
   @apply border-t border-border pt-5;
 }
+
+.planList {
+  @apply m-0 list-none;
+}
+
+.planRow {
+  @apply items-start gap-4;
+}
+
+.planDetails {
+  @apply min-w-0 flex-1;
+}
+
+.planDecision {
+  @apply w-full shrink-0;
+  @apply sm:w-auto;
+}
+
+.consultativePlan {
+  @apply rounded-2 bg-surface-2 px-3 py-3;
+}
+
+.consultativeAction {
+  @apply self-start;
+}

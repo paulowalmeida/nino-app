@@ -1,7 +1,7 @@
 @reference "@nino/ds/globals.css";
 
 .panel {
-  @apply flex min-w-0 flex-col;
+  @apply flex min-w-0 max-w-page-narrow flex-col;
 }
 
 .head {

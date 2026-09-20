@@ -2,16 +2,15 @@ import { useState } from 'react'
 
 import { Box } from '@nino/ds/components/Box'
 import { Button } from '@nino/ds/components/Button'
-import { Checkbox } from '@nino/ds/components/Checkbox'
 import { Heading } from '@nino/ds/components/Heading'
 import { Modal } from '@nino/ds/components/Modal'
-import { RadioGroup } from '@nino/ds/components/RadioGroup'
 import { Text } from '@nino/ds/components/Text'
 import type { CartLineModifier } from '@shared/types/counter/cart-line-modifier'
 import type { MenuItem } from '@shared/types/product/menu-item'
 import type { MenuItemModifier } from '@shared/types/product/menu-item-modifier'
 import { brl } from '@shared/utils/money/money'
 
+import { ProductChoiceGroup } from './ProductChoiceGroup/ProductChoiceGroup'
 import styles from './ProductConfigurationModal.module.css'
 
 type ProductConfigurationModalProps = {
@@ -19,19 +18,6 @@ type ProductConfigurationModalProps = {
   onAdd: (item: MenuItem, modifiers: CartLineModifier[]) => void
   onOpenChange: (open: boolean) => void
 }
-
-const selectionHint = ({ minSelections, maxSelections }: MenuItemModifier) => {
-  if (minSelections === maxSelections) {
-    return `Escolha ${minSelections}`
-  }
-  if (minSelections > 0) {
-    return `Escolha de ${minSelections} a ${maxSelections}`
-  }
-  return `Escolha até ${maxSelections}`
-}
-
-const optionPrice = (price: string): string =>
-  Number(price) > 0 ? `+ ${brl(price)}` : 'Incluído'
 
 export const ProductConfigurationModal = ({
   item,
@@ -121,90 +107,22 @@ export const ProductConfigurationModal = ({
       body={
         item && (
           <Box gap={4} className={styles.groups}>
-            {modifiers.map((modifier) => {
-              const count = selectedCount(modifier)
-              const isAtLimit = count >= modifier.maxSelections
-
-              return (
-                <Box
-                  key={modifier.id}
-                  role="group"
-                  aria-label={modifier.name}
-                  gap={2}
-                  className={styles.group}
-                >
-                  <Box gap={0.5}>
-                    <Box direction="row" justify="between" gap={2}>
-                      <Heading level={3} size="sm">
-                        {modifier.name}
-                      </Heading>
-                      <Text size="xs" color="muted" className={styles.noShrink}>
-                        {selectionHint(modifier)}
-                      </Text>
-                    </Box>
-                    {modifier.description && (
-                      <Text size="xs" color="muted">
-                        {modifier.description}
-                      </Text>
-                    )}
-                  </Box>
-
-                  {modifier.maxSelections === 1 &&
-                  modifier.minSelections === 1 ? (
-                    <RadioGroup
-                      aria-label={modifier.name}
-                      value={
-                        modifier.options.find(({ id }) =>
-                          selectedOptionIds.includes(id)
-                        )?.id
-                      }
-                      onValueChange={(optionId) =>
-                        selectSingleOption(modifier, optionId)
-                      }
-                      options={modifier.options.map((option) => ({
-                        value: option.id,
-                        label: option.name,
-                        trailing: optionPrice(option.price),
-                      }))}
-                    />
-                  ) : (
-                    <Box gap={1}>
-                      {modifier.options.map((option) => {
-                        const isChecked = selectedOptionIds.includes(option.id)
-                        return (
-                          <Box
-                            as="label"
-                            key={option.id}
-                            direction="row"
-                            align="center"
-                            gap={2.5}
-                            className={styles.option}
-                          >
-                            <Checkbox
-                              checked={isChecked}
-                              disabled={!isChecked && isAtLimit}
-                              onCheckedChange={(checked) =>
-                                toggleOption(modifier, option.id, checked)
-                              }
-                            />
-                            <Text size="sm" className={styles.optionName}>
-                              {option.name}
-                            </Text>
-                            <Text
-                              size="sm"
-                              color="muted"
-                              className={styles.noShrink}
-                            >
-                              {optionPrice(option.price)}
-                            </Text>
-                          </Box>
-                        )
-                      })}
-                    </Box>
-                  )}
-                </Box>
-              )
-            })}
+            {modifiers.map((modifier) => (
+              <ProductChoiceGroup
+                key={modifier.id}
+                group={modifier}
+                selectedOptionIds={modifier.options
+                  .map(({ id }) => id)
+                  .filter((id) => selectedOptionIds.includes(id))}
+                isAtLimit={selectedCount(modifier) >= modifier.maxSelections}
+                onSelectSingle={(optionId) =>
+                  selectSingleOption(modifier, optionId)
+                }
+                onToggleOption={(optionId, checked) =>
+                  toggleOption(modifier, optionId, checked)
+                }
+              />
+            ))}
           </Box>
         )
       }

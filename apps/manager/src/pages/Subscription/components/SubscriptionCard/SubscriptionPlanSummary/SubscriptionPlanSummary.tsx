@@ -3,48 +3,56 @@ import { Text } from '@nino/ds/components/Text'
 import type { Subscription } from '@shared/types/profile/subscription'
 import { brl } from '@shared/utils/money/money'
 
+import { isConsultativePlan } from '../../../utils/isConsultativePlan/isConsultativePlan'
+
 import styles from './SubscriptionPlanSummary.module.css'
 
 type SubscriptionPlanSummaryProps = { plan: Subscription['plan'] }
 
 export const SubscriptionPlanSummary = ({
   plan,
-}: SubscriptionPlanSummaryProps) => (
-  <Box
-    direction="row"
-    wrap
-    align="end"
-    justify="between"
-    gap={3}
-    className={styles.plan}
-  >
-    <Box>
-      <Text as="p" size="xs" weight="bold" case="uppercase" color="faint">
-        Plano atual
-      </Text>
+}: SubscriptionPlanSummaryProps) => {
+  const consultative = isConsultativePlan(plan)
+
+  return (
+    <Box
+      direction="row"
+      wrap
+      align="end"
+      justify="between"
+      gap={3}
+      className={styles.plan}
+    >
+      <Box>
+        <Text as="p" size="xs" weight="bold" case="uppercase" color="faint">
+          Plano atual
+        </Text>
+        <Text
+          as="p"
+          size="2xl"
+          weight="extrabold"
+          font="display"
+          color="strong"
+          className={styles.planName}
+        >
+          {plan.name}
+        </Text>
+      </Box>
       <Text
         as="p"
-        size="2xl"
+        size="xl"
         weight="extrabold"
         font="display"
-        color="strong"
-        className={styles.planName}
+        color="brand-strong"
+        className={styles.price}
       >
-        {plan.name}
+        {consultative ? 'Sob consulta' : brl(plan.price)}
+        {!consultative && (
+          <Text as="span" size="sm" weight="semibold" color="faint">
+            /mês
+          </Text>
+        )}
       </Text>
     </Box>
-    <Text
-      as="p"
-      size="xl"
-      weight="extrabold"
-      font="display"
-      color="brand-strong"
-      className={styles.price}
-    >
-      {brl(plan.price)}
-      <Text as="span" size="sm" weight="semibold" color="faint">
-        /mês
-      </Text>
-    </Text>
-  </Box>
-)
+  )
+}

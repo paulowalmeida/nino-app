@@ -1,3 +1,5 @@
+import { useNavigate } from 'react-router'
+
 import { Alert } from '@nino/ds/components/Alert'
 import { Box } from '@nino/ds/components/Box'
 import { Header } from '@nino/ds/components/Header'
@@ -9,6 +11,7 @@ import { SubscriptionSkeleton } from './skeletons/SubscriptionSkeleton/Subscript
 import styles from './Subscription.module.css'
 
 export const Subscription = () => {
+  const navigate = useNavigate()
   const {
     subscription,
     isPending,
@@ -17,6 +20,7 @@ export const Subscription = () => {
     isPlansPending,
     isPlansError,
     isUpdating,
+    isUpdateError,
     changePlan,
     cancelPlan,
   } = useSubscriptionFacade()
@@ -38,6 +42,12 @@ export const Subscription = () => {
         </Alert>
       )}
 
+      {isUpdateError && (
+        <Alert variant="error">
+          Não foi possível atualizar a assinatura agora.
+        </Alert>
+      )}
+
       {subscription && (
         <SubscriptionCard
           subscription={subscription}
@@ -45,6 +55,7 @@ export const Subscription = () => {
           isUpdating={isUpdating}
           onChangePlan={changePlan}
           onCancel={cancelPlan}
+          onRequestInterest={() => navigate('rede')}
         />
       )}
       {isPlansError && (

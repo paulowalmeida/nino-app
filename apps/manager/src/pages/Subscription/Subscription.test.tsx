@@ -5,6 +5,10 @@ import { useSubscriptionFacade } from './facades/useSubscriptionFacade/useSubscr
 import { Subscription } from './Subscription'
 import { subscriptionPageMock } from './Subscription.mock'
 
+vi.mock('react-router', () => ({
+  useNavigate: () => vi.fn(),
+}))
+
 vi.mock(
   '@pages/Subscription/facades/useSubscriptionFacade/useSubscriptionFacade'
 )
@@ -22,6 +26,7 @@ const facadeWith = (overrides: Record<string, unknown>) =>
     subscription: undefined,
     isPending: false,
     isError: false,
+    isUpdateError: false,
     ...overrides,
   } as unknown as ReturnType<typeof useSubscriptionFacade>)
 
@@ -58,6 +63,36 @@ describe('Subscription', () => {
 
     expect(screen.getByRole('alert')).toHaveTextContent(
       subscriptionPageMock.errorMessage
+    )
+  })
+
+  it('reports when a subscription action fails', () => {
+    facadeWith({ isUpdateError: true })
+
+    render(<Subscription />)
+
+    expect(screen.getByRole('alert')).toHaveTextContent(
+      'Não foi possível atualizar a assinatura agora.'
+    )
+  })
+
+  it('reports when the available plans could not be read', () => {
+    facadeWith({ isPlansError: true })
+
+    render(<Subscription />)
+
+    expect(screen.getByRole('alert')).toHaveTextContent(
+      'Não foi possível carregar os planos disponíveis.'
+    )
+  })
+
+  it('shows feedback while the available plans are loading', () => {
+    facadeWith({ isPlansPending: true })
+
+    render(<Subscription />)
+
+    expect(screen.getByRole('alert')).toHaveTextContent(
+      'Carregando planos disponíveis...'
     )
   })
 })

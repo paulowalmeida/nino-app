@@ -1,5 +1,6 @@
-import { useState } from 'react'
+import { type ReactNode, useState } from 'react'
 
+import { Badge } from '@nino/ds/components/Badge'
 import { Box } from '@nino/ds/components/Box'
 import { Chip } from '@nino/ds/components/Chip'
 import { Combobox } from '@nino/ds/components/Combobox'
@@ -18,6 +19,7 @@ type DeliveryCitiesProps = {
   location: ReturnType<typeof useDeliveryLocation>
   onStateChange: (state: string) => void
   onChange: (cities: DeliveryCity[]) => void
+  saveAction?: ReactNode
 }
 
 export const DeliveryCities = ({
@@ -27,6 +29,7 @@ export const DeliveryCities = ({
   location,
   onStateChange,
   onChange,
+  saveAction,
 }: DeliveryCitiesProps) => {
   const [state, setState] = useState(primaryCity.state)
   const [city, setCity] = useState('')
@@ -58,6 +61,9 @@ export const DeliveryCities = ({
           saved.state === item.state
       )
   )
+  const stateNames = new Map(
+    (states.data ?? []).map(({ sigla, nome }) => [sigla, nome])
+  )
 
   return (
     <Box direction="column" gap={4}>
@@ -70,13 +76,14 @@ export const DeliveryCities = ({
       </Box>
 
       <Box direction="row" gap={2} align="end" wrap>
-        <FormField label="UF" className={styles.stateField}>
+        <FormField label="Estado" className={styles.stateField}>
           <Select
-            options={(states.data ?? []).map(({ sigla }) => ({
+            options={(states.data ?? []).map(({ sigla, nome }) => ({
               value: sigla,
-              label: sigla,
+              label: nome,
             }))}
             value={state}
+            className={styles.stateSelect}
             onValueChange={(value) => {
               setState(value)
               onStateChange(value)
@@ -86,7 +93,7 @@ export const DeliveryCities = ({
           />
         </FormField>
 
-        <Box grow>
+        <Box className={styles.cityField}>
           <FormField label="Cidade">
             <Combobox
               options={(municipalities.data ?? []).map(({ nome }) => ({
@@ -104,6 +111,7 @@ export const DeliveryCities = ({
             />
           </FormField>
         </Box>
+        {saveAction}
       </Box>
 
       <Box
@@ -116,25 +124,42 @@ export const DeliveryCities = ({
         {visibleCities.map((item) => {
           const isPrimary =
             item.city === primaryCity.city && item.state === primaryCity.state
+          const stateName = stateNames.get(item.state) ?? item.state
           return (
-            <Box as="li" key={`${item.state}-${item.city}`}>
+            <Box
+              as="li"
+              key={`${item.state}-${item.city}`}
+              className={styles.chipItem}
+            >
               <Chip
                 variant="toggle"
                 selected={false}
-                trailingIcon={isPrimary ? undefined : '×'}
+                borderless={false}
+                className={
+                  isPrimary ? styles.primaryChip : styles.removableChip
+                }
                 disabled={isPrimary}
                 aria-label={
                   isPrimary
-                    ? `${item.city}, ${item.state}, cidade da unidade`
-                    : `Remover ${item.city}, ${item.state}`
+                    ? `${item.city}, ${stateName}, cidade da unidade`
+                    : `Remover ${item.city}, ${stateName}`
                 }
                 onClick={() => {
                   if (!isPrimary)
                     onChange(cities.filter((cityName) => cityName !== item))
                 }}
               >
-                {item.city} · {item.state}
+                {item.city} · {stateName}
               </Chip>
+              {!isPrimary && (
+                <Badge
+                  size="sm"
+                  className={styles.removeBadge}
+                  aria-hidden="true"
+                >
+                  ×
+                </Badge>
+              )}
             </Box>
           )
         })}

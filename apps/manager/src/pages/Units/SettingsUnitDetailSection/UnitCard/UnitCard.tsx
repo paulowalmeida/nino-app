@@ -63,6 +63,17 @@ export const UnitCard = ({
 
   if (isPending) return <UnitCardSkeleton />
 
+  const renderSaveButton = () => (
+    <Button
+      loading={isSaving}
+      disabled={!isDirty}
+      className={`${motion.press} ${local.save}`}
+      onClick={() => onSave(draft)}
+    >
+      Salvar
+    </Button>
+  )
+
   return (
     <Box as="section" className={local.panel}>
       <Box
@@ -142,7 +153,7 @@ export const UnitCard = ({
                   <Text className={local.groupTitle}>Endereço da unidade</Text>
                   <AddressFields value={draft} onChange={change} />
                 </Box>
-
+                <Box mt={4}>{renderSaveButton()}</Box>
               </Box>
             ),
           },
@@ -158,20 +169,12 @@ export const UnitCard = ({
                 location={location}
                 onStateChange={onDeliveryStateChange}
                 onChange={(deliveryCities) => change({ deliveryCities })}
+                saveAction={renderSaveButton()}
               />
             ),
           },
         ]}
       />
-
-      <Button
-        loading={isSaving}
-        disabled={!isDirty}
-        className={`${motion.press} ${local.save}`}
-        onClick={() => onSave(draft)}
-      >
-        Salvar
-      </Button>
     </Box>
   )
 }

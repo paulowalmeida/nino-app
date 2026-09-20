@@ -1,0 +1,5 @@
+@reference "@nino/ds/globals.css";
+
+.group {
+  @apply flex flex-col border-t border-border;
+}

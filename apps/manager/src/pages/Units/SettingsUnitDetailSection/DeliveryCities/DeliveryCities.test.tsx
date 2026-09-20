@@ -51,10 +51,11 @@ describe('DeliveryCities', () => {
   it('keeps the unit city and renders configured coverage chips', () => {
     renderCities()
 
-    expect(screen.getByText('Belém · PA')).toBeTruthy()
+    expect(screen.getByText('Belém · Pará')).toBeTruthy()
     expect(
-      screen.getByRole('button', { name: /Remover Ananindeua, PA/i })
+      screen.getByRole('button', { name: /Remover Ananindeua, Pará/i })
     ).toBeTruthy()
+    expect(screen.getByText('×')).toHaveAttribute('aria-hidden', 'true')
     expect(
       screen.getByRole('button', { name: /cidade da unidade/i })
     ).toBeDisabled()
@@ -64,7 +65,7 @@ describe('DeliveryCities', () => {
     renderCities()
 
     await userEvent.click(
-      screen.getByRole('button', { name: /Remover Ananindeua, PA/i })
+      screen.getByRole('button', { name: /Remover Ananindeua, Pará/i })
     )
 
     expect(onChange).toHaveBeenCalledWith([{ city: 'Belém', state: 'PA' }])
@@ -73,10 +74,24 @@ describe('DeliveryCities', () => {
   it('reports the state so the cities can be fetched', async () => {
     renderCities(deliveryCitiesMock, { city: '', state: '' })
 
-    await userEvent.click(screen.getByRole('combobox', { name: 'UF' }))
-    await userEvent.click(screen.getByRole('option', { name: 'PA' }))
+    await userEvent.click(screen.getByRole('combobox', { name: 'Estado' }))
+    await userEvent.click(screen.getByRole('option', { name: 'Pará' }))
 
     expect(onStateChange).toHaveBeenCalledWith('PA')
+  })
+
+  it('clears the combobox after adding the selected city', async () => {
+    const user = userEvent.setup({ pointerEventsCheck: 0 })
+    renderCities()
+
+    const cityInput = screen.getByRole('combobox', {
+      name: 'Cidade atendida',
+    })
+    await user.click(cityInput)
+    await user.keyboard('Mar')
+    await user.keyboard('{ArrowDown}{Enter}')
+
+    expect(cityInput).toHaveValue('')
   })
 
   it('keeps the add button closed while no city is picked', () => {
@@ -102,7 +117,7 @@ describe('DeliveryCities', () => {
       />
     )
     expect(
-      screen.queryByRole('button', { name: /Remover Marituba, PA/i })
+      screen.queryByRole('button', { name: /Remover Marituba, Pará/i })
     ).not.toBeInTheDocument()
 
     rerender(
@@ -116,7 +131,7 @@ describe('DeliveryCities', () => {
       />
     )
     expect(
-      screen.getByRole('button', { name: /Remover Marituba, PA/i })
+      screen.getByRole('button', { name: /Remover Marituba, Pará/i })
     ).toBeInTheDocument()
   })
 

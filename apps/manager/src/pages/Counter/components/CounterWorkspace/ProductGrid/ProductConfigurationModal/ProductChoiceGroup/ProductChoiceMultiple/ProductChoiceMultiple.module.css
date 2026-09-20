@@ -1,0 +1,23 @@
+@reference "@nino/ds/globals.css";
+
+.options {
+  @apply flex flex-col px-4 pb-2 sm:px-6;
+}
+
+.option {
+  @apply flex min-h-12 cursor-pointer items-center justify-between gap-4;
+  @apply border-b border-border py-3 last:border-b-0;
+}
+
+.identity {
+  @apply min-w-0 flex-1;
+}
+
+.name {
+  @apply text-[0.9375rem] font-medium leading-snug text-fg-strong;
+}
+
+.price {
+  @apply shrink-0 text-sm text-fg-subtle;
+  font-variant-numeric: tabular-nums;
+}
