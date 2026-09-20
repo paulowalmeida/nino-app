@@ -1,3 +1,5 @@
+import type { StoreTheme } from '@shared/types/store/store-theme'
+
 /** A loja como a vitrine a recebe de `GET /units/slug/:slug`. */
 export type Store = {
   id: string
@@ -12,6 +14,7 @@ export type Store = {
   cardColor?: string | null
   borderColor?: string | null
   mutedTextColor?: string | null
+  theme?: StoreTheme | null
   isPaused: boolean
   timezone: string
   street: string

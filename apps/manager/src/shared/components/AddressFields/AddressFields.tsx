@@ -28,10 +28,16 @@ type AddressFieldsProps = {
   value: AddressValue
   onChange: (patch: Partial<AddressValue>) => void
   streetField?: ReactNode
+  cityField?: ReactNode
+  stateField?: ReactNode
   zipCodeLabel?: ReactNode
   streetLabel?: ReactNode
   showCityAndState?: boolean
   onNumberBlur?: () => void
+  /** Places city and state first so address search can use that context. */
+  locationFirst?: boolean
+  /** Keeps address fields unavailable until a state has been selected. */
+  requiresState?: boolean
   /**
    * Which question opens the form. `zipCode` fills the address from the CEP
    * and is what a registration asks first; `street` puts the address and the
@@ -45,11 +51,15 @@ export const AddressFields = ({
   value,
   onChange,
   streetField,
+  cityField,
+  stateField,
   zipCodeLabel = 'CEP',
-  streetLabel = 'Logradouro',
+  streetLabel = 'Endereço',
   showCityAndState = true,
   onNumberBlur,
   leadWith = 'zipCode',
+  locationFirst = false,
+  requiresState = false,
 }: AddressFieldsProps) => {
   const [lookup, setLookup] = useState<Lookup>('idle')
   const numberRef = useRef<HTMLInputElement>(null)
@@ -95,6 +105,33 @@ export const AddressFields = ({
   }
 
   const leadsWithStreet = leadWith === 'street'
+  const addressDisabled = requiresState && !value.state
+
+  const cityAndStateFields = showCityAndState ? (
+    <>
+      <FormField label="Estado" className={styles.state}>
+        {stateField ?? (
+          <Select
+            disabled={lookup === 'loading'}
+            options={BRAZIL_STATES}
+            value={value.state}
+            aria-label="Estado do endereço"
+            onValueChange={(state) => onChange({ state })}
+          />
+        )}
+      </FormField>
+
+      <FormField label="Cidade" className={styles.city}>
+        {cityField ?? (
+          <Input
+            disabled={addressDisabled || lookup === 'loading'}
+            value={value.city}
+            onChange={(event) => onChange({ city: event.target.value })}
+          />
+        )}
+      </FormField>
+    </>
+  ) : null
 
   const zipCodeField = (
     <FormField label={zipCodeLabel} className={styles.zip}>
@@ -102,6 +139,7 @@ export const AddressFields = ({
         mask={maskZipCode}
         inputMode="numeric"
         autoComplete="postal-code"
+        disabled={addressDisabled}
         value={value.zipCode}
         onChange={handleZipChange}
       />
@@ -110,15 +148,21 @@ export const AddressFields = ({
 
   return (
     <Box
-      className={mergeClasses(styles.grid, leadsWithStreet && styles.streetLed)}
+      className={mergeClasses(
+        styles.grid,
+        leadsWithStreet && styles.streetLed,
+        locationFirst && styles.locationFirst
+      )}
     >
+      {locationFirst && cityAndStateFields}
+
       {!leadsWithStreet && zipCodeField}
 
       <FormField label={streetLabel} className={styles.street}>
         {streetField ?? (
           <Input
             autoComplete="address-line1"
-            disabled={lookup === 'loading'}
+            disabled={addressDisabled || lookup === 'loading'}
             value={value.street}
             onChange={(event) => onChange({ street: event.target.value })}
           />
@@ -129,6 +173,7 @@ export const AddressFields = ({
         <Input
           ref={numberRef}
           inputMode="numeric"
+          disabled={addressDisabled}
           value={value.number}
           onChange={(event) => onChange({ number: event.target.value })}
           onBlur={onNumberBlur}
@@ -137,6 +182,7 @@ export const AddressFields = ({
 
       <FormField label="Complemento" className={styles.complement}>
         <Input
+          disabled={addressDisabled}
           value={value.complement}
           onChange={(event) => onChange({ complement: event.target.value })}
         />
@@ -144,7 +190,7 @@ export const AddressFields = ({
 
       <FormField label="Bairro" className={styles.neighborhood}>
         <Input
-          disabled={lookup === 'loading'}
+          disabled={addressDisabled || lookup === 'loading'}
           value={value.neighborhood}
           onChange={(event) => onChange({ neighborhood: event.target.value })}
         />
@@ -152,27 +198,7 @@ export const AddressFields = ({
 
       {leadsWithStreet && zipCodeField}
 
-      {showCityAndState && (
-        <>
-          <FormField label="Cidade" className={styles.city}>
-            <Input
-              disabled={lookup === 'loading'}
-              value={value.city}
-              onChange={(event) => onChange({ city: event.target.value })}
-            />
-          </FormField>
-
-          <FormField label="UF" className={styles.state}>
-            <Select
-              disabled={lookup === 'loading'}
-              options={BRAZIL_STATES}
-              value={value.state}
-              aria-label="Estado do endereço"
-              onValueChange={(state) => onChange({ state })}
-            />
-          </FormField>
-        </>
-      )}
+      {!locationFirst && cityAndStateFields}
     </Box>
   )
 }

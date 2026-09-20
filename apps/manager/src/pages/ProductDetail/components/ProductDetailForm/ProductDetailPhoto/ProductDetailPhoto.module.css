@@ -3,3 +3,42 @@
 .photoCol {
   @apply min-w-0;
 }
+
+.photoStage {
+  @apply relative;
+}
+
+.photoWithCover :global(span) {
+  @apply h-full w-full;
+}
+
+.photoWithCover :global(img) {
+  @apply !h-full !max-h-none !w-full !object-cover;
+}
+
+.photoWithFallback :global(img) {
+  @apply !h-32 !w-32 !max-h-none !rounded-3 !object-cover;
+}
+
+.previewTrigger {
+  @apply !absolute !inset-x-0 !top-0 !h-auto !w-full;
+  @apply aspect-[4/3] cursor-zoom-in rounded-5 bg-transparent p-0;
+  @apply hover:bg-transparent active:bg-transparent;
+}
+
+.previewModal {
+  @apply max-w-3xl;
+}
+
+.previewBody {
+  @apply -mx-6 -my-5 flex max-h-[80vh] items-center justify-center;
+  @apply overflow-hidden bg-surface-page p-2 sm:p-4;
+}
+
+.previewImageWrapper {
+  @apply max-h-[72vh] max-w-full;
+}
+
+.previewImage {
+  @apply max-h-[72vh] max-w-full rounded-2 object-contain;
+}

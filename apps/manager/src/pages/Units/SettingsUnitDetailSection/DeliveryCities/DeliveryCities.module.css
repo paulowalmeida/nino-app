@@ -12,6 +12,10 @@
   @apply w-full sm:w-96;
 }
 
+.save {
+  @apply min-w-32 shrink-0;
+}
+
 .chipItem {
   @apply relative;
 }

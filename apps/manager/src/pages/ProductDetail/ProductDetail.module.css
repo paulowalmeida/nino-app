@@ -5,3 +5,7 @@
 .page {
   @apply max-w-5xl p-4 lg:p-10;
 }
+
+.headerRow {
+  @apply border-b border-border/60 pb-5;
+}

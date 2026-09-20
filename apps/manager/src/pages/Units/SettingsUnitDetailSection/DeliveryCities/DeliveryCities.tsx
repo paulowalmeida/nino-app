@@ -1,7 +1,8 @@
-import { type ReactNode, useState } from 'react'
+import { useState } from 'react'
 
 import { Badge } from '@nino/ds/components/Badge'
 import { Box } from '@nino/ds/components/Box'
+import { Button } from '@nino/ds/components/Button'
 import { Chip } from '@nino/ds/components/Chip'
 import { Combobox } from '@nino/ds/components/Combobox'
 import { FormField } from '@nino/ds/components/FormField'
@@ -9,6 +10,8 @@ import { Select } from '@nino/ds/components/Select'
 import { Text } from '@nino/ds/components/Text'
 import type { useDeliveryLocation } from '@pages/Units/hooks/useDeliveryLocation/useDeliveryLocation'
 import type { DeliveryCity } from '@shared/types/store/delivery-city'
+
+import motion from '@styles/motion.module.css'
 
 import styles from './DeliveryCities.module.css'
 
@@ -19,7 +22,8 @@ type DeliveryCitiesProps = {
   location: ReturnType<typeof useDeliveryLocation>
   onStateChange: (state: string) => void
   onChange: (cities: DeliveryCity[]) => void
-  saveAction?: ReactNode
+  isSaving?: boolean
+  onSave?: () => void
 }
 
 export const DeliveryCities = ({
@@ -29,11 +33,22 @@ export const DeliveryCities = ({
   location,
   onStateChange,
   onChange,
-  saveAction,
+  isSaving = false,
+  onSave,
 }: DeliveryCitiesProps) => {
   const [state, setState] = useState(primaryCity.state)
   const [city, setCity] = useState('')
   const { states, municipalities } = location
+  const hasUnsavedChanges =
+    cities.length !== savedCities.length ||
+    cities.some(
+      (item) =>
+        !savedCities.some(
+          (saved) =>
+            saved.city.toLowerCase() === item.city.toLowerCase() &&
+            saved.state === item.state
+        )
+    )
 
   const selectCity = (selectedCity: string) => {
     const municipality = municipalities.data?.find(
@@ -111,7 +126,17 @@ export const DeliveryCities = ({
             />
           </FormField>
         </Box>
-        {saveAction}
+        {onSave && (
+          <Button
+            size="md"
+            loading={isSaving}
+            disabled={!hasUnsavedChanges}
+            className={`${motion.press} ${styles.save}`}
+            onClick={onSave}
+          >
+            Salvar
+          </Button>
+        )}
       </Box>
 
       <Box
@@ -164,6 +189,7 @@ export const DeliveryCities = ({
           )
         })}
       </Box>
+
     </Box>
   )
 }

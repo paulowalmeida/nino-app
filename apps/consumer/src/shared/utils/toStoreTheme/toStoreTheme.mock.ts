@@ -23,3 +23,29 @@ export const storeThemeMock: Store = {
   status: { name: 'OPEN' },
   company: { name: 'Nino' },
 }
+
+export const storeWithPublishedThemeMock: Store = {
+  ...storeThemeMock,
+  theme: {
+    version: 3,
+    configVersion: 1,
+    templateId: 'classic',
+    templateVersion: 1,
+    config: {
+      brand: { logoUrl: null, faviconUrl: null, bannerUrl: null },
+      colors: {
+        primary: '#A8342A',
+        secondary: '#2B2B2B',
+        tertiary: '#FFF7F5',
+        background: '#FFFDFC',
+        surface: '#FFFFFF',
+        text: '#1B1D1A',
+        mutedText: '#767B74',
+        border: '#E2DFD6',
+      },
+      typography: { headingFont: 'default', bodyFont: 'default' },
+      shape: { radius: 'round', border: 'line' },
+      loading: { type: 'MASCOT' },
+    },
+  },
+}

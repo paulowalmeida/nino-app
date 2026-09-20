@@ -1,7 +1,6 @@
 import { type CSSProperties, useEffect, useMemo } from 'react'
 
 import { Box } from '@nino/ds/components/Box'
-import { Chip } from '@nino/ds/components/Chip'
 import { Icon } from '@nino/ds/components/Icon'
 import { Text } from '@nino/ds/components/Text'
 import type { BrandColors } from '@pages/Units/types/BrandColors.type'
@@ -14,17 +13,11 @@ export type StorefrontPreviewProps = {
   storeName: string
   colors: BrandColors
   device: PreviewDevice
-  onDeviceChange: (device: PreviewDevice) => void
   logoUrl?: string | null
   bannerUrl?: string | null
   logoFile?: File
   bannerFile?: File
 }
-
-const DEVICE_TABS = [
-  { value: 'mobile', label: 'Celular', icon: 'smartphone' },
-  { value: 'desktop', label: 'Computador', icon: 'monitor' },
-] as const
 
 const useFilePreview = (file?: File) => {
   const url = useMemo(
@@ -46,7 +39,6 @@ export const StorefrontPreview = ({
   storeName,
   colors,
   device,
-  onDeviceChange,
   logoUrl,
   bannerUrl,
   logoFile,
@@ -70,26 +62,6 @@ export const StorefrontPreview = ({
         <Text size="xs" weight="bold" className={local.dockTitle}>
           O que o cliente vê
         </Text>
-        <Box
-          direction="row"
-          gap={1}
-          role="tablist"
-          aria-label="Formato da prévia"
-          className={local.devices}
-        >
-          {DEVICE_TABS.map(({ value, label, icon }) => (
-            <Chip
-              key={value}
-              variant="tab"
-              selected={device === value}
-              className={local.device}
-              leadingIcon={<Icon name={icon} size="sm" />}
-              onClick={() => onDeviceChange(value)}
-            >
-              {label}
-            </Chip>
-          ))}
-        </Box>
       </Box>
 
       <Box

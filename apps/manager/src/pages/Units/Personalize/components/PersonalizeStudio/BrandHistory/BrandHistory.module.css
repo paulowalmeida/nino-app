@@ -1,0 +1,9 @@
+@reference "@nino/ds/globals.css";
+
+.versions {
+  @apply flex flex-col list-none p-0 m-0;
+}
+
+.row {
+  @apply w-full;
+}

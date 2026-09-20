@@ -1,47 +1,32 @@
 @reference "@nino/ds/globals.css";
 
 .studio {
-  @apply grid min-w-0 grid-cols-1 items-start gap-x-8 gap-y-6;
-  transition: grid-template-columns var(--duration-slow) var(--ease-out-soft);
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .studio {
-    transition: none;
-  }
+  @apply grid min-w-0 grid-cols-1 items-start gap-x-6 gap-y-4;
 }
 
 .mobile {
-  @apply lg:grid-cols-[minmax(0,1fr)_minmax(0,21rem)];
-  @apply xl:grid-cols-[minmax(0,1fr)_minmax(0,25rem)];
+  @apply lg:grid-cols-[13rem_minmax(0,1fr)_minmax(0,22rem)];
 }
 
 .desktop {
-  @apply lg:grid-cols-[minmax(0,1fr)_minmax(0,30rem)];
-  @apply xl:grid-cols-[minmax(0,24rem)_minmax(0,1fr)];
+  @apply lg:grid-cols-[13rem_minmax(0,1fr)_minmax(0,22rem)];
+  @apply xl:grid-cols-[13rem_minmax(0,1.4fr)_minmax(0,22rem)];
+}
+
+.nav {
+  @apply row-start-2 min-w-0;
+  @apply lg:col-start-1 lg:row-start-2 lg:sticky lg:top-24;
 }
 
 .dock {
-  @apply sticky top-14 z-sticky row-start-1 min-w-0;
-  @apply -mx-4 border-b border-border bg-surface-raised px-4 pb-4 pt-1;
-  @apply lg:top-6 lg:col-start-2 lg:mx-0 lg:border-b-0 lg:px-0 lg:pb-0;
+  @apply row-start-3 min-w-0;
+  @apply lg:col-start-2 lg:row-start-2 lg:sticky lg:top-24;
 }
 
-/* WHY: as seções medem esta coluna, não a viewport — a largura dela muda
-   com o formato escolhido na prévia. */
-.controls {
-  @apply row-start-2 flex min-w-0 flex-col gap-6;
-  @apply lg:col-start-1 lg:row-start-1;
+/* WHY: o painel mede esta coluna, não a viewport — as seções internas
+   reagem à largura dela. */
+.panel {
+  @apply row-start-4 flex min-w-0 flex-col gap-6;
+  @apply lg:col-start-3 lg:row-start-2;
   container: studioControls / inline-size;
-}
-
-.actions {
-  @apply sticky bottom-0 z-sticky row-start-3 min-w-0;
-  @apply -mx-4 border-t border-border px-4 py-3 shadow-up;
-  @apply bg-surface-raised/92 backdrop-blur-sm;
-  @apply lg:col-span-2 lg:col-start-1 lg:row-start-2 lg:-mx-10 lg:px-10;
-}
-
-.buttons {
-  @apply ml-auto shrink-0;
 }

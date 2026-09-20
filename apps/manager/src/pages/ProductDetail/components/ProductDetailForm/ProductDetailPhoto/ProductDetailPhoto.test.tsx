@@ -75,6 +75,18 @@ describe('ProductDetailPhoto', () => {
     expect(removeImage).toHaveBeenCalledWith(productDetailPhotoMock.imageId)
   })
 
+  it('opens the known fallback photo in the product detail modal', async () => {
+    render(<ProductDetailPhoto />)
+
+    await userEvent.click(
+      screen.getByRole('button', { name: 'Ampliar foto de X-Tudo' })
+    )
+
+    expect(
+      screen.getByRole('dialog', { name: 'Prévia da foto de X-Tudo' })
+    ).toBeInTheDocument()
+  })
+
   it('renders nothing while there is no item to illustrate', () => {
     mockPhoto(null)
 

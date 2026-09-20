@@ -1,9 +1,29 @@
 @reference "@nino/ds/globals.css";
 
 .modal {
-  @apply max-w-2xl max-h-[calc(100dvh-2rem)];
+  @apply max-h-[calc(100dvh-2rem)];
+  width: min(76rem, calc(100vw - 2rem));
+  max-width: 76rem !important;
+}
+
+.modal :global(button[aria-label='Fechar']) {
+  @apply z-10 bg-surface-raised;
+}
+
+.layout {
+  @apply min-h-0 pt-5 lg:items-center lg:justify-center;
+}
+
+.product {
+  @apply min-w-0 shrink-0 items-center justify-center text-center lg:w-[22rem];
+}
+
+.productImage {
+  @apply h-80 w-full max-w-[20rem] rounded-3 object-cover text-7xl;
 }
 
 .groups {
-  @apply max-h-[70dvh] overflow-y-auto pr-1;
+  @apply min-w-0 overflow-y-auto pr-1;
+  @apply max-h-[52dvh] lg:max-h-[70dvh];
+  @apply lg:w-full lg:max-w-[42rem];
 }

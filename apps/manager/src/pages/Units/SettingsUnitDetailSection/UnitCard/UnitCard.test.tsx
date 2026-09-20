@@ -1,14 +1,26 @@
 import { createElement, type ReactNode } from 'react'
 
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-import { render, screen } from '@testing-library/react'
+import { render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 
+import { useDeliveryLocation } from '@pages/Units/hooks/useDeliveryLocation/useDeliveryLocation'
+import { useUnitAddressSearch } from '@pages/Units/hooks/useUnitAddressSearch/useUnitAddressSearch'
 import type { UnitDetail } from '@shared/types/store/unit-detail'
 
 import { UnitCard } from './UnitCard'
 import { unitCardDetailMock } from './UnitCard.mock'
+
+vi.mock('@pages/Units/hooks/useUnitAddressSearch/useUnitAddressSearch', () => ({
+  useUnitAddressSearch: vi.fn(),
+}))
+
+vi.mock('@pages/Units/hooks/useDeliveryLocation/useDeliveryLocation', () => ({
+  useDeliveryLocation: vi.fn(),
+}))
+
+const resolveSelectedAddress = vi.fn()
 
 const location = {
   states: {
@@ -30,7 +42,23 @@ describe('UnitCard', () => {
   const wrapper = ({ children }: { children: ReactNode }) =>
     createElement(QueryClientProvider, { client: new QueryClient() }, children)
 
-  beforeEach(() => vi.clearAllMocks())
+  beforeEach(() => {
+    vi.clearAllMocks()
+    vi.mocked(useDeliveryLocation).mockReturnValue(location)
+    vi.mocked(useUnitAddressSearch).mockReturnValue({
+      suggestions: [
+        {
+          placeId: 'place-1',
+          description: 'Rua das Flores - Centro, Belém - PA',
+          mainText: 'Rua das Flores',
+          secondaryText: 'Centro, Belém - PA',
+        },
+      ],
+      isSearching: false,
+      resolveSelectedAddress,
+      isResolvingSelectedAddress: false,
+    })
+  })
 
   const renderCard = (unit: UnitDetail | undefined, isMain = false) =>
     render(
@@ -119,6 +147,15 @@ describe('UnitCard', () => {
     expect(screen.getByRole('button', { name: 'Salvar' })).toBeDisabled()
   })
 
+  it('requires a state before enabling city and address fields', () => {
+    renderCard(undefined)
+
+    expect(screen.getByRole('combobox', { name: 'Estado' })).toBeEnabled()
+    expect(screen.getByRole('combobox', { name: 'Cidade' })).toBeDisabled()
+    expect(screen.getByLabelText('CEP')).toBeDisabled()
+    expect(screen.getByLabelText('Endereço')).toBeDisabled()
+  })
+
   it('opens the visible save action after choosing a delivery city', async () => {
     const user = userEvent.setup({ pointerEventsCheck: 0 })
     renderCard(unitCardDetailMock)
@@ -132,6 +169,64 @@ describe('UnitCard', () => {
     expect(screen.getByRole('button', { name: 'Salvar' })).toBeEnabled()
     expect(screen.getByText('Belém · Pará')).toBeInTheDocument()
     expect(screen.queryByText('Ananindeua · Pará')).not.toBeInTheDocument()
+  })
+
+  it('fills the unit address from a selected autocomplete suggestion', async () => {
+    resolveSelectedAddress.mockResolvedValue({
+      zipCode: '66000-000',
+      street: 'Rua das Flores',
+      number: '26',
+      neighborhood: 'Centro',
+      city: 'Belém',
+      state: 'PA',
+    })
+    const user = userEvent.setup({ pointerEventsCheck: 0 })
+    renderCard({ ...unitCardDetailMock, street: '', number: '' })
+
+    const street = screen.getByLabelText('Endereço')
+    await user.type(street, 'Rua')
+    const number = screen.getByLabelText('Número')
+    await user.type(number, '26')
+    await user.click(screen.getByText('Endereço da unidade'))
+    await user.click(
+      screen.getByRole('button', { name: 'Rua das FloresCentro, Belém - PA' })
+    )
+
+    await waitFor(() => {
+      expect(screen.getByDisplayValue('Rua das Flores')).toBeInTheDocument()
+      expect(screen.getByDisplayValue('26')).toBeInTheDocument()
+      expect(screen.getByDisplayValue('66000-000')).toBeInTheDocument()
+    })
+    expect(resolveSelectedAddress).toHaveBeenCalledWith('place-1')
+  })
+
+  it('shows address suggestions after street and number are completed', async () => {
+    const user = userEvent.setup({ pointerEventsCheck: 0 })
+    renderCard({ ...unitCardDetailMock, street: '', number: '' })
+
+    const street = screen.getByLabelText('Endereço')
+    await user.type(street, 'Rua')
+    const number = screen.getByLabelText('Número')
+    await user.type(number, '26')
+    await user.click(screen.getByText('Endereço da unidade'))
+
+    expect(await screen.findByText('Confirme o endereço')).toBeInTheDocument()
+    expect(screen.getByText('Rua das Flores')).toBeInTheDocument()
+    expect(screen.getByText('Centro, Belém - PA')).toBeInTheDocument()
+  })
+
+  it('also starts the lookup when number is entered before the street', async () => {
+    const user = userEvent.setup({ pointerEventsCheck: 0 })
+    renderCard({ ...unitCardDetailMock, street: '', number: '' })
+
+    const number = screen.getByLabelText('Número')
+    await user.type(number, '26')
+    const street = screen.getByLabelText('Endereço')
+    await user.type(street, 'Rua')
+    await user.click(screen.getByText('Endereço da unidade'))
+
+    expect(await screen.findByText('Confirme o endereço')).toBeInTheDocument()
+    expect(screen.getByText('Rua das Flores')).toBeInTheDocument()
   })
 
   it('offers the promotion to a unit that is not the head office', async () => {

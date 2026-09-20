@@ -1,46 +1,32 @@
-import { FlatCompat } from '@eslint/eslintrc'
+import js from '@eslint/js'
+import globals from 'globals'
+import reactHooks from 'eslint-plugin-react-hooks'
+import reactRefresh from 'eslint-plugin-react-refresh'
 import simpleImportSort from 'eslint-plugin-simple-import-sort'
-import { dirname } from 'path'
-import { fileURLToPath } from 'url'
+import tseslint from 'typescript-eslint'
+import { defineConfig, globalIgnores } from 'eslint/config'
 
-const __filename = fileURLToPath(import.meta.url)
-const __dirname = dirname(__filename)
-
-const compat = new FlatCompat({ baseDirectory: __dirname })
-
-const eslintConfig = [
-  { ignores: ['next-env.d.ts', '.next/**', 'node_modules/**'] },
-  ...compat.extends('next/core-web-vitals', 'next/typescript'),
-  {
-    plugins: { 'simple-import-sort': simpleImportSort },
-    rules: {
-      'simple-import-sort/imports': [
-        'error',
-        {
-          groups: [
-            ['^react', '^next'],
-            ['^@?\\w'],
-            ['^@nino/'],
-            ['^\\.\\./|^\\./'],
-          ],
-        },
-      ],
-      'simple-import-sort/exports': 'error',
-      '@typescript-eslint/no-explicit-any': 'error',
-      '@typescript-eslint/no-unused-vars': [
-        'error',
-        { varsIgnorePattern: '^_', argsIgnorePattern: '^_' },
-      ],
-    },
-  },
+export default defineConfig([
+  globalIgnores(['dist', 'coverage', '.next', 'node_modules']),
   {
     files: ['**/*.{ts,tsx}'],
+    extends: [
+      js.configs.recommended,
+      tseslint.configs.recommended,
+      reactHooks.configs['recommended-latest'],
+      reactRefresh.configs.vite,
+    ],
+    languageOptions: {
+      globals: globals.browser,
+    },
+    plugins: {
+      'simple-import-sort': simpleImportSort,
+    },
     rules: {
-      /*
-       * Barrel de pacote do workspace é proibido: um único import dele amarra
-       * o pacote inteiro num chunk só — no manager isso dobrava o JS da tela
-       * de login (1166 KB → 702 KB depois da migração). Importe o subcaminho.
-       */
+      'simple-import-sort/imports': 'error',
+      'simple-import-sort/exports': 'error',
+      'no-console': 'error',
+      'no-debugger': 'error',
       'no-restricted-imports': [
         'error',
         {
@@ -55,15 +41,9 @@ const eslintConfig = [
               message:
                 "Importe o subcaminho: '@nino/lib/types/<dominio>' ou '@nino/lib/services/<arquivo>'.",
             },
-            {
-              name: '@nino/forms',
-              message: 'Importe o arquivo direto em vez do barrel do pacote.',
-            },
           ],
         },
       ],
     },
   },
-]
-
-export default eslintConfig
+])

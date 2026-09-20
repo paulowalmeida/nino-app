@@ -19,11 +19,15 @@ vi.mock('@pages/Units/hooks/useUnitsDomain/useUnitsDomain', () => ({
 vi.mock('@pages/Units/hooks/useUnitsStoreForm/useUnitsStoreForm', () => ({
   useUnitsStoreForm: () => ({ typeOptions: [], submitStore: vi.fn() }),
 }))
+vi.mock('@pages/Units/hooks/useUnitTheme/useUnitTheme', () => ({
+  useUnitTheme: () => ({ editor: { data: null } }),
+}))
 
 describe(useUnitsFacade.name, () => {
   it('exposes the onboarding UI contract', () => {
     const { result } = renderHook(() => useUnitsFacade())
     expect(result.current.user).toEqual({ name: 'Marina Silva' })
     expect(result.current.typeOptions).toEqual([])
+    expect(result.current.theme.editor.data).toBeNull()
   })
 })

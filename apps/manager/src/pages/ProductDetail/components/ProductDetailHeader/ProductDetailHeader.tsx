@@ -12,7 +12,13 @@ export const ProductDetailHeader = () => {
   if (!item) return null
 
   return (
-    <Box as="header" className={`${motion.settle} ${styles.head}`}>
+    <Box
+      as="header"
+      direction="row"
+      align="center"
+      gap={4}
+      className={`${motion.settle} ${styles.head}`}
+    >
       <Box className={styles.headText}>
         <Heading level={1} size="2xl" className={styles.name}>
           {item.name}

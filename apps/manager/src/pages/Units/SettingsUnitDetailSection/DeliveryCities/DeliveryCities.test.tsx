@@ -12,6 +12,7 @@ import {
 
 const onChange = vi.fn()
 const onStateChange = vi.fn()
+const onSave = vi.fn()
 
 const location = {
   states: {
@@ -32,7 +33,8 @@ const location = {
 
 const renderCities = (
   cities: DeliveryCity[] = deliveryCitiesMock,
-  primaryCity: DeliveryCity = primaryDeliveryCityMock
+  primaryCity: DeliveryCity = primaryDeliveryCityMock,
+  onSave?: () => void
 ) =>
   render(
     <DeliveryCities
@@ -42,6 +44,7 @@ const renderCities = (
       location={location}
       onStateChange={onStateChange}
       onChange={onChange}
+      onSave={onSave}
     />
   )
 
@@ -100,6 +103,30 @@ describe('DeliveryCities', () => {
     expect(
       screen.queryByRole('button', { name: 'Adicionar' })
     ).not.toBeInTheDocument()
+  })
+
+  it('enables saving only when coverage cities differ from saved data', () => {
+    const { rerender } = renderCities(
+      deliveryCitiesMock,
+      primaryDeliveryCityMock,
+      onSave
+    )
+
+    expect(screen.getByRole('button', { name: 'Salvar' })).toBeDisabled()
+
+    rerender(
+      <DeliveryCities
+        cities={[...deliveryCitiesMock, { city: 'Marituba', state: 'PA' }]}
+        savedCities={deliveryCitiesMock}
+        primaryCity={primaryDeliveryCityMock}
+        location={location}
+        onStateChange={onStateChange}
+        onChange={onChange}
+        onSave={onSave}
+      />
+    )
+
+    expect(screen.getByRole('button', { name: 'Salvar' })).toBeEnabled()
   })
 
   it('keeps a selected city out of the chips until the saved data returns it', async () => {

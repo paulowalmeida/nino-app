@@ -1,7 +1,7 @@
 @reference "@nino/ds/globals.css";
 
 .panel {
-  @apply flex min-w-0 flex-col;
+  @apply flex w-full min-w-0 max-w-6xl flex-col;
 }
 
 .groupTitle {
@@ -9,7 +9,7 @@
 }
 
 .save {
-  @apply w-full sm:w-auto;
+  @apply min-w-32 w-fit self-start;
 }
 
 .fields {
@@ -26,6 +26,34 @@
 
 .address {
   @apply mt-4 flex flex-col gap-2 border-t border-border pt-4;
+}
+
+.confirm {
+  @apply min-h-0 flex-1;
+}
+
+.confirmBack {
+  @apply h-auto w-fit gap-2 px-0 text-base font-bold text-fg-strong;
+  @apply hover:text-brand-strong;
+}
+
+.addressOption {
+  @apply h-auto min-h-14 w-full justify-start gap-3 rounded-3 px-4 py-3;
+  @apply border border-border bg-surface-1 text-left transition-colors;
+  @apply hover:border-brand-bold hover:bg-surface-page;
+  @apply focus-visible:border-brand-bold focus-visible:bg-surface-page;
+}
+
+.addressPin {
+  @apply shrink-0 text-brand;
+}
+
+.addressText {
+  @apply min-w-0 flex-1;
+}
+
+.addressOptionPlaceholder {
+  @apply h-14 w-full rounded-3;
 }
 
 /* the rank sits next to the name, where the question shows up */

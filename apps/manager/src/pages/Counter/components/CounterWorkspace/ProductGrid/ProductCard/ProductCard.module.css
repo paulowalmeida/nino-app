@@ -31,7 +31,7 @@
 }
 
 .photo {
-  @apply h-[84px] w-full rounded-none text-3xl lg:h-[104px] lg:text-4xl;
+  @apply h-[120px] w-full rounded-none text-3xl lg:h-[144px] lg:text-4xl;
 }
 
 .footer {

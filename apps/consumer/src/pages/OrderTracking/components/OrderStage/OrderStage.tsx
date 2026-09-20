@@ -8,7 +8,7 @@ import { OrderRail } from '@shared/components/OrderRail/OrderRail'
 import { useMinutesUntil } from '@hooks/useMinutesUntil/useMinutesUntil'
 import { clockLabel } from '@utils/clock'
 import { EXPO_OUT_EASE } from '@constants/motion.constants'
-import { STATUS_LABEL } from '@constants/order.constants'
+import { useStoreTracking } from '@hooks/useStoreTracking/useStoreTracking'
 import { etaLead, isTerminal, stageNote } from '@utils/order-journey'
 import type { GuestOrderStatus } from '@custom_types/order/guest-order-status'
 import { riseDelay } from '@utils/rise-delay'
@@ -24,6 +24,7 @@ type OrderStageProps = {
 const COUNTDOWN_CEILING = 90
 
 export const OrderStage = ({ order }: OrderStageProps) => {
+  const { stageLabel } = useStoreTracking()
   const reduceMotion = useReducedMotion()
   const minutes = useMinutesUntil(order.estimatedDeliveryAt)
   const isDone = isTerminal(order.status)
@@ -66,7 +67,7 @@ export const OrderStage = ({ order }: OrderStageProps) => {
           }}
         >
           <Heading level={2} className={styles.headline}>
-            {STATUS_LABEL[order.status]}
+            {stageLabel(order.status)}
           </Heading>
           <Text as="p" className={styles.note}>
             {stageNote(order, order.status)}

@@ -1,5 +1,6 @@
 import { Image } from '@nino/ds/components/Image'
 import { mergeClasses } from '@nino/ds/mergeClasses'
+import { defaultProductImage } from '@nino/lib/utils/default-product-image'
 import { toCategoryIcon } from '@shared/adapters/category-icon.adapter/category-icon.adapter'
 
 import styles from './ItemThumb.module.css'
@@ -36,7 +37,7 @@ export const ItemThumb = ({
 
   return (
     <Image
-      src={imageUrl}
+      src={imageUrl ?? defaultProductImage(name)}
       alt=""
       aria-hidden="true"
       className={thumbClasses}

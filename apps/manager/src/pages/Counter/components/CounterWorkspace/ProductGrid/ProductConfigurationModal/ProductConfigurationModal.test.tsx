@@ -16,6 +16,11 @@ describe(ProductConfigurationModal.name, () => {
       />
     )
 
+    expect(
+      screen.getByRole('dialog', { name: 'Configurar X-Salada' })
+    ).toBeInTheDocument()
+    expect(screen.getByRole('heading', { name: 'X-Salada' })).toBeInTheDocument()
+
     const addButton = screen.getByRole('button', { name: /Adicionar/ })
     expect(addButton).toBeDisabled()
 

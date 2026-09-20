@@ -104,6 +104,8 @@ export const queryKeys = {
       [...queryKeys.unit.all(unitId), 'settings', 'public'] as const,
     diningTables: (unitId: string) =>
       [...queryKeys.unit.all(unitId), 'dining-tables'] as const,
+    theme: (unitId: string) =>
+      [...queryKeys.unit.all(unitId), 'theme'] as const,
   },
   consumers: {
     all: (unitId: string) => ['consumers', unitId] as const,

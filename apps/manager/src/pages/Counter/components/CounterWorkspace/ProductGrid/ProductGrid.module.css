@@ -92,7 +92,7 @@
 }
 
 .skeletonPhoto {
-  @apply h-[84px] w-full rounded-none lg:h-[104px];
+  @apply h-[120px] w-full rounded-none lg:h-[144px];
 }
 
 .skeletonFooter {

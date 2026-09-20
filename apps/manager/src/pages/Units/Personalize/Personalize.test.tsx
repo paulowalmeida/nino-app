@@ -14,6 +14,12 @@ vi.mock('@pages/Units/facades/useUnitsFacade/useUnitsFacade', () => ({
 const facadeWith = (detail: Record<string, unknown>) =>
   ({
     units: { detail, save: { mutate: vi.fn(), isPending: false } },
+    theme: {
+      editor: { data: null },
+      saveDraft: { mutate: vi.fn(), isPending: false },
+      publish: { mutate: vi.fn(), isPending: false },
+      restore: { mutate: vi.fn(), isPending: false },
+    },
   }) as unknown as ReturnType<typeof useUnitsFacade>
 
 const renderPage = () => render(<Personalize />)

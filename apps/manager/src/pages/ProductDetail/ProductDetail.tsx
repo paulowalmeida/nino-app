@@ -13,13 +13,15 @@ export const ProductDetail = () => {
 
   return (
     <Box className={styles.page}>
-      <BackLink>Cardápio</BackLink>
+      <Box direction="row" align="center" gap={4} className={styles.headerRow}>
+        <BackLink>Cardápio</BackLink>
+        {isReady && <ProductDetailHeader />}
+      </Box>
 
       {isPending && <ProductDetailSkeleton />}
       {isMissing && <ProductMissingNotice />}
       {isReady && (
         <>
-          <ProductDetailHeader />
           <ProductDetailForm />
         </>
       )}

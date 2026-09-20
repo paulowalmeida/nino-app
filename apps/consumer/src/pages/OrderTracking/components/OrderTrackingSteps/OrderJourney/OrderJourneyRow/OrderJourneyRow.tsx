@@ -1,8 +1,8 @@
 import type { OrderJourneyRow as OrderJourneyRowData } from '@custom_types/order/order-journey-row'
 import { ListRow } from '@nino/ds/components/ListRow'
 import { Text } from '@nino/ds/components/Text'
-import { STATUS_LABEL } from '@constants/order.constants'
 import { clockLabel } from '@utils/clock'
+import { useStoreTracking } from '@hooks/useStoreTracking/useStoreTracking'
 import { stageIcon } from '@utils/order-journey'
 import { riseDelay } from '@utils/rise-delay'
 
@@ -29,8 +29,11 @@ export const OrderJourneyRow = ({
   row,
   index,
   estimatedAt,
-}: OrderJourneyRowProps) => (
-  <ListRow
+}: OrderJourneyRowProps) => {
+  const { stageLabel } = useStoreTracking()
+
+  return (
+    <ListRow
     divider="none"
     padding={0}
     className={[
@@ -52,7 +55,7 @@ export const OrderJourneyRow = ({
     </Text>
 
     <Text as="p" className={styles.label}>
-      {STATUS_LABEL[row.status]}
+      {stageLabel(row.status)}
     </Text>
 
     {row.at && (
@@ -66,5 +69,6 @@ export const OrderJourneyRow = ({
         ~ {clockLabel(estimatedAt)}
       </Text>
     )}
-  </ListRow>
-)
+    </ListRow>
+  )
+}

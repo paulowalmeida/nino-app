@@ -1,8 +1,7 @@
 @reference "@nino/ds/globals.css";
 
-/* col-span sozinho não dá pra reagrupar os campos por breakpoint (CEP+Número
-   juntos no mobile, Número+Complemento juntos no desktop) — só com áreas
-   nomeadas. Nomes curtos porque a linha da área não pode quebrar. */
+/* As áreas nomeadas mantêm a ordem de leitura e reagrupam os campos por
+   breakpoint: no desktop, endereço+número, bairro+complemento e cidade+estado. */
 .grid {
   @apply grid gap-3;
   grid-template-columns: repeat(12, minmax(0, 1fr));
@@ -27,9 +26,9 @@
 @media (min-width: 768px) {
   .grid {
     grid-template-areas:
-      'z z st st st st st st st st st st'
-      'n n co co co co co co co co co co'
-      'h h h h h ci ci ci ci ci sa sa';
+      'z z st st st st st st st st n n'
+      'h h h h h h co co co co co co'
+      'ci ci ci ci ci ci ci ci ci sa sa sa';
   }
 }
 
@@ -59,6 +58,35 @@
 
 .state {
   grid-area: sa;
+}
+
+.locationFirst {
+  grid-template-areas:
+    'sa sa sa sa sa sa sa sa sa sa sa sa'
+    'ci ci ci ci ci ci ci ci ci ci ci ci'
+    'z z z z z z z z z z z z'
+    'st st st st st st st st st st st st'
+    'n n n n n n n n n n n n'
+    'co co co co co co co co co co co co'
+    'h h h h h h h h h h h h';
+}
+
+@media (min-width: 640px) {
+  .locationFirst {
+    grid-template-areas:
+      'sa sa sa sa ci ci ci ci ci ci ci ci'
+      'z z z st st st st st st st n n'
+      'h h h h h h co co co co co co';
+  }
+}
+
+@media (min-width: 768px) {
+  .locationFirst {
+    grid-template-areas:
+      'sa sa sa sa ci ci ci ci ci ci ci ci'
+      'z z st st st st st st st st n n'
+      'h h h h h h co co co co co co';
+  }
 }
 
 /* A entrega é ditada na ordem em que o cliente fala: rua, número, o resto.

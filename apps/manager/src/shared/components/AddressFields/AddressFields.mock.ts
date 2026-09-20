@@ -1,12 +1,9 @@
-export const addressFieldsMock = {
-  value: {
-    zipCode: '',
-    street: '',
-    number: '',
-    complement: '',
-    neighborhood: '',
-    city: '',
-    state: '',
-  },
-  onChange: () => undefined,
+export const addressFieldsValueMock = {
+  zipCode: '',
+  street: '',
+  number: '',
+  complement: '',
+  neighborhood: '',
+  city: '',
+  state: '',
 }

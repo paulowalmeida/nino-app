@@ -3,7 +3,7 @@
 /* A tela toda é uma ficha só: o cabeçalho do item mora no topo, separado do
    formulário por um fio — não é outra superfície. */
 .head {
-  @apply mt-2 flex items-center gap-4 border-b border-border/60 pb-5;
+  @apply min-w-0 flex-1;
 }
 
 .headText {
