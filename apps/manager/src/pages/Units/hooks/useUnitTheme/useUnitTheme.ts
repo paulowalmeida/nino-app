@@ -2,6 +2,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 
 import { toThemeConfig } from '@pages/Units/adapters/toThemeConfig/toThemeConfig'
 import { UnitThemeService } from '@pages/Units/services/unit-theme.service/unit-theme.service'
+import type { CatalogDraft } from '@pages/Units/types/CatalogDraft.type'
 import type { ThemeEditorState } from '@pages/Units/types/ThemeEditorState.type'
 import type { TrackingDraft } from '@pages/Units/types/TrackingDraft.type'
 import { useCurrentUnit } from '@shared/hooks/session/useCurrentUnit/useCurrentUnit'
@@ -14,6 +15,7 @@ type ThemeDraftInput = {
   draft: UnitDraft
   unit?: UnitDetail | null
   tracking?: TrackingDraft
+  catalog?: CatalogDraft
 }
 
 export const useUnitTheme = () => {
@@ -41,6 +43,7 @@ export const useUnitTheme = () => {
     draft,
     unit: detail,
     tracking,
+    catalog,
   }: ThemeDraftInput) => {
     const hasNewAsset = !!(draft.logoFile || draft.bannerFile)
     const saved = hasNewAsset
@@ -49,7 +52,7 @@ export const useUnitTheme = () => {
 
     return UnitThemeService.saveDraft(
       unitId as string,
-      toThemeConfig(draft, saved, undefined, tracking)
+      toThemeConfig(draft, saved, undefined, tracking, catalog)
     )
   }
 

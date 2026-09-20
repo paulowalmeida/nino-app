@@ -9,7 +9,7 @@
 }
 
 .save {
-  @apply min-w-32 w-fit self-start;
+  @apply min-w-32 w-full self-start min-[426px]:w-fit sm:self-end;
 }
 
 .fields {

@@ -5,13 +5,13 @@ import { buildGoogleAuthUrlMock } from './buildGoogleAuthUrl.mock'
 
 afterEach(() => {
   vi.unstubAllEnvs()
+  vi.unstubAllGlobals()
 })
 
 describe('buildGoogleAuthUrl', () => {
-  it('returns null when the client id is not configured', () => {
+  it('returns null when the api base is not configured', () => {
     // Arrange
-    vi.stubEnv('VITE_GOOGLE_CLIENT_ID', '')
-    vi.stubEnv('VITE_BASE_URL', 'https://api-dev.nino.delivery')
+    vi.stubEnv('VITE_BASE_URL', '')
 
     // Act
     const url = buildGoogleAuthUrl(buildGoogleAuthUrlMock.returnUrl)
@@ -20,9 +20,22 @@ describe('buildGoogleAuthUrl', () => {
     expect(url).toBeNull()
   })
 
-  it('builds the authorization url with the fixed api callback and state', () => {
+  it('sends the browser to the api start route, not to Google', () => {
     // Arrange
-    vi.stubEnv('VITE_GOOGLE_CLIENT_ID', 'client-123')
+    vi.stubEnv('VITE_BASE_URL', 'https://api-dev.nino.delivery')
+
+    // Act
+    const url = buildGoogleAuthUrl(buildGoogleAuthUrlMock.returnUrl)
+
+    // Assert
+    expect(url).toBe(
+      'https://api-dev.nino.delivery/consumer/auth/google/start?returnUrl=' +
+        encodeURIComponent(buildGoogleAuthUrlMock.returnUrl)
+    )
+  })
+
+  it('carries the return url so the store gets the guest back', () => {
+    // Arrange
     vi.stubEnv('VITE_BASE_URL', 'https://api-dev.nino.delivery')
 
     // Act
@@ -30,36 +43,25 @@ describe('buildGoogleAuthUrl', () => {
     const params = new URL(url as string).searchParams
 
     // Assert
-    expect(url).toMatch(
-      /^https:\/\/accounts\.google\.com\/o\/oauth2\/v2\/auth\?/
-    )
-    expect(params.get('client_id')).toBe('client-123')
-    expect(params.get('redirect_uri')).toBe(
-      'https://api-dev.nino.delivery/consumer/auth/google/callback'
-    )
-    expect(params.get('response_type')).toBe('code')
-    expect(params.get('state')).toBe(buildGoogleAuthUrlMock.returnUrl)
+    expect(params.get('returnUrl')).toBe(buildGoogleAuthUrlMock.returnUrl)
   })
 
-  it('makes the callback absolute when the api base is the dev proxy', () => {
+  it('resolves the dev proxy base against the current origin', () => {
     // Arrange
-    vi.stubEnv('VITE_GOOGLE_CLIENT_ID', 'client-123')
     vi.stubEnv('VITE_BASE_URL', '/api')
 
     // Act
     const url = buildGoogleAuthUrl(buildGoogleAuthUrlMock.returnUrl)
-    const params = new URL(url as string).searchParams
 
     // Assert
     const { protocol, port } = window.location
-    expect(params.get('redirect_uri')).toBe(
-      `${protocol}//localhost:${port}/api/consumer/auth/google/callback`
+    expect(url).toContain(
+      `${protocol}//localhost:${port}/api/consumer/auth/google/start`
     )
   })
 
-  it('drops the store subdomain so every store shares one callback', () => {
+  it('drops the store subdomain so every store shares one start url', () => {
     // Arrange
-    vi.stubEnv('VITE_GOOGLE_CLIENT_ID', 'client-123')
     vi.stubEnv('VITE_BASE_URL', '/api')
     vi.stubGlobal('location', {
       ...window.location,
@@ -70,11 +72,11 @@ describe('buildGoogleAuthUrl', () => {
 
     // Act
     const url = buildGoogleAuthUrl(buildGoogleAuthUrlMock.returnUrl)
-    const params = new URL(url as string).searchParams
 
     // Assert
-    expect(params.get('redirect_uri')).toBe(
-      'http://localhost:3002/api/consumer/auth/google/callback'
+    expect(url).toContain(
+      'http://localhost:3002/api/consumer/auth/google/start'
     )
+    expect(url).not.toContain('burgao-centro.localhost')
   })
 })

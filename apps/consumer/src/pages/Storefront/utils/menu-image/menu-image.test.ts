@@ -28,6 +28,16 @@ it.each([
   ['Pizza Quatro Queijos', '/product-presets/pizza-quatro-queijos.png'],
   ['Pizza Frango com Catupiry', '/product-presets/pizza-frango-catupiry.png'],
   ['Pizza Pepperoni', '/product-presets/pizza-pepperoni.png'],
+  ['Pizza Vegetariana', '/product-presets/pizza-vegetariana.png'],
+  ['Pizza Chocolate', '/product-presets/pizza-chocolate.png'],
+  ['Coca-Cola Lata', '/product-presets/coca-cola-lata.png'],
+  ['Coca-Cola 600ml', '/product-presets/coca-cola-600ml.png'],
+  ['Guaraná Lata', '/product-presets/guarana-lata.png'],
+  ['Guaraná 2L', '/product-presets/guarana-2l.png'],
+  ['Água Mineral', '/product-presets/agua-mineral.png'],
+  ['Água com Gás', '/product-presets/agua-com-gas.png'],
+  ['Suco de Laranja', '/product-presets/suco-laranja.png'],
+  ['Suco de Maracujá', '/product-presets/suco-maracuja.png'],
 ])('uses the preset for %s without images', (name, image) =>
   expect(primaryImage({ name, images: [] } as never)).toBe(image)
 )

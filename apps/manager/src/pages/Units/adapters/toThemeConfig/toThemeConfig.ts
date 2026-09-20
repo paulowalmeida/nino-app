@@ -1,3 +1,4 @@
+import type { CatalogDraft } from '@pages/Units/types/CatalogDraft.type'
 import type { ThemeConfig } from '@pages/Units/types/ThemeConfig.type'
 import type { TrackingDraft } from '@pages/Units/types/TrackingDraft.type'
 import type { UnitDetail } from '@shared/types/store/unit-detail'
@@ -10,7 +11,8 @@ export const toThemeConfig = (
   draft: UnitDraft,
   unit?: UnitDetail | null,
   shape?: ThemeConfig['shape'],
-  tracking?: TrackingDraft
+  tracking?: TrackingDraft,
+  catalog?: CatalogDraft
 ): ThemeConfig => ({
   brand: {
     logoUrl: unit?.logoUrl ?? null,
@@ -45,4 +47,5 @@ export const toThemeConfig = (
     },
     waitingMessage: toLabel(tracking?.waitingMessage ?? ''),
   },
+  ...(catalog ? { catalog } : {}),
 })

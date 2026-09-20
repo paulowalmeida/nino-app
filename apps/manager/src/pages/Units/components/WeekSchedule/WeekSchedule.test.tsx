@@ -23,7 +23,7 @@ describe('WeekSchedule', () => {
   it('renders the weekly schedule', () => {
     renderWeek([])
 
-    expect(screen.getByText('Quando a loja abre')).toBeInTheDocument()
+    expect(screen.getByText('Quando a unidade abre')).toBeInTheDocument()
   })
 
   it('lists every day of the week', () => {

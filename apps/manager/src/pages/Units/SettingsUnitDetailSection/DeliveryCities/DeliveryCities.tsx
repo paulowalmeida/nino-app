@@ -12,7 +12,6 @@ import type { useDeliveryLocation } from '@pages/Units/hooks/useDeliveryLocation
 import type { DeliveryCity } from '@shared/types/store/delivery-city'
 
 import motion from '@styles/motion.module.css'
-
 import styles from './DeliveryCities.module.css'
 
 type DeliveryCitiesProps = {

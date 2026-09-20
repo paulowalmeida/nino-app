@@ -173,7 +173,9 @@ export const UnitCard = ({
     />
   )
 
-  const isConfirmingAddress = Boolean(addressLookupRequested)
+  const isConfirmingAddress = Boolean(
+    addressLookupRequested || addressSearch.isResolvingSelectedAddress
+  )
   const isLoadingAddresses =
     addressSearch.isSearching || addressSearch.isResolvingSelectedAddress
   const addressResults = isLoadingAddresses ? (
@@ -310,6 +312,7 @@ export const UnitCard = ({
                         type="button"
                         variant="ghost"
                         className={local.confirmBack}
+                        disabled={addressSearch.isResolvingSelectedAddress}
                         onClick={() => setAddressLookupRequested(false)}
                       >
                         <Icon name="arrow-left" size="sm" />
@@ -326,16 +329,23 @@ export const UnitCard = ({
                       {addressResults}
                     </Box>
                   ) : (
-                    <AddressFields
-                      value={draft}
-                      streetField={streetField}
-                      cityField={cityField}
-                      stateField={stateField}
-                      locationFirst
-                      requiresState
-                      onChange={clearAddressSelection}
-                      onNumberBlur={startAddressLookup}
-                    />
+                    <>
+                      {selectionError && (
+                        <Text size="sm" color="danger" className="mb-3">
+                          {selectionError}
+                        </Text>
+                      )}
+                      <AddressFields
+                        value={draft}
+                        streetField={streetField}
+                        cityField={cityField}
+                        stateField={stateField}
+                        locationFirst
+                        requiresState
+                        onChange={clearAddressSelection}
+                        onNumberBlur={startAddressLookup}
+                      />
+                    </>
                   )}
                 </Box>
                 <Box mt={4}>{renderSaveButton()}</Box>

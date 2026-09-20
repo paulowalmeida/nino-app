@@ -32,6 +32,16 @@ const PRESETS: readonly [RegExp, string][] = [
     '/product-presets/pizza-frango-catupiry.png',
   ],
   [/\bpizza\s+pepperoni\b/i, '/product-presets/pizza-pepperoni.png'],
+  [/\bpizza\s+vegetariana\b/i, '/product-presets/pizza-vegetariana.png'],
+  [/\bpizza\s+chocolate\b/i, '/product-presets/pizza-chocolate.png'],
+  [/\bcoca[-\s]?cola\s+lata\b/i, '/product-presets/coca-cola-lata.png'],
+  [/\bcoca[-\s]?cola\s+600\s?ml\b/i, '/product-presets/coca-cola-600ml.png'],
+  [/\bguaran[aá]\s+lata\b/i, '/product-presets/guarana-lata.png'],
+  [/\bguaran[aá]\s+2\s?l\b/i, '/product-presets/guarana-2l.png'],
+  [/(?:^|\s)[aá]gua\s+mineral\b/i, '/product-presets/agua-mineral.png'],
+  [/(?:^|\s)[aá]gua\s+com\s+g[aá]s\b/i, '/product-presets/agua-com-gas.png'],
+  [/\bsuco\s+de\s+laranja\b/i, '/product-presets/suco-laranja.png'],
+  [/\bsuco\s+de\s+maracuj[aá]\b/i, '/product-presets/suco-maracuja.png'],
   [/\bbatata\s+frita\b/i, '/product-presets/batata-frita.png'],
 ]
 

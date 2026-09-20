@@ -2,13 +2,16 @@ import type { JSX } from 'react'
 import { useState } from 'react'
 
 import { Box } from '@nino/ds/components/Box'
+import { toCatalogDraft } from '@pages/Units/adapters/toCatalogDraft/toCatalogDraft'
 import { toThemeColors } from '@pages/Units/adapters/toThemeColors/toThemeColors'
 import { toTrackingDraft } from '@pages/Units/adapters/toTrackingDraft/toTrackingDraft'
 import { toUnitDraft } from '@pages/Units/adapters/toUnitDraft/toUnitDraft'
+import { DEFAULT_CATALOG_DRAFT } from '@pages/Units/constants/catalog.constants'
 import { STUDIO_GROUPS } from '@pages/Units/constants/studio.constants'
 import { EMPTY_TRACKING_DRAFT } from '@pages/Units/constants/tracking.constants'
 import { EMPTY_UNIT_DRAFT } from '@pages/Units/constants/unit.constants'
 import { useUnitsFacade } from '@pages/Units/facades/useUnitsFacade/useUnitsFacade'
+import type { CatalogDraft } from '@pages/Units/types/CatalogDraft.type'
 import type { PreviewDevice } from '@pages/Units/types/PreviewDevice.type'
 import type { StudioGroup } from '@pages/Units/types/StudioGroup.type'
 import type { TrackingDraft } from '@pages/Units/types/TrackingDraft.type'
@@ -16,6 +19,7 @@ import type { UnitDetail } from '@shared/types/store/unit-detail'
 import type { UnitDraft } from '@shared/types/store/unit-draft'
 
 import { BrandAssets } from './BrandAssets/BrandAssets'
+import { BrandCatalog } from './BrandCatalog/BrandCatalog'
 import { BrandHistory } from './BrandHistory/BrandHistory'
 import { BrandLoading } from './BrandLoading/BrandLoading'
 import { BrandPalette } from './BrandPalette/BrandPalette'
@@ -38,6 +42,7 @@ export const PersonalizeStudio = () => {
   const [group, setGroup] = useState<StudioGroup['id']>('themes')
   const [draft, setDraft] = useState<UnitDraft>(EMPTY_UNIT_DRAFT)
   const [tracking, setTracking] = useState<TrackingDraft>(EMPTY_TRACKING_DRAFT)
+  const [catalog, setCatalog] = useState<CatalogDraft>(DEFAULT_CATALOG_DRAFT)
   const [seed, setSeed] = useState<UnitDetail | undefined>(undefined)
   const [isDirty, setDirty] = useState(false)
 
@@ -51,10 +56,14 @@ export const PersonalizeStudio = () => {
   const seedTracking = () =>
     storedConfig ? toTrackingDraft(storedConfig) : EMPTY_TRACKING_DRAFT
 
+  const seedCatalog = () =>
+    storedConfig ? toCatalogDraft(storedConfig) : DEFAULT_CATALOG_DRAFT
+
   if (unit && unit !== seed) {
     setSeed(unit)
     setDraft(seedDraft(unit))
     setTracking(seedTracking())
+    setCatalog(seedCatalog())
     setDirty(false)
   }
 
@@ -68,9 +77,15 @@ export const PersonalizeStudio = () => {
     setDirty(true)
   }
 
+  const changeCatalog = (patch: Partial<CatalogDraft>) => {
+    setCatalog((current) => ({ ...current, ...patch }))
+    setDirty(true)
+  }
+
   const discard = () => {
     setDraft(seed ? seedDraft(seed) : EMPTY_UNIT_DRAFT)
     setTracking(seedTracking())
+    setCatalog(seedCatalog())
     setDirty(false)
   }
 
@@ -84,6 +99,7 @@ export const PersonalizeStudio = () => {
         onChange={change}
       />
     ),
+    catalog: <BrandCatalog catalog={catalog} onChange={changeCatalog} />,
     loading: (
       <BrandLoading
         value={draft.loadingType}
@@ -105,8 +121,8 @@ export const PersonalizeStudio = () => {
         hasUnpublishedDraft={!!editor?.draft}
         isSaving={isSaving}
         isPublishing={isPublishing}
-        onSave={() => saveDraft({ draft, unit, tracking })}
-        onPublish={() => publish({ draft, unit, tracking })}
+        onSave={() => saveDraft({ draft, unit, tracking, catalog })}
+        onPublish={() => publish({ draft, unit, tracking, catalog })}
         onDiscard={discard}
       />
 

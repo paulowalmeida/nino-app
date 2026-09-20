@@ -11,6 +11,7 @@ import { categoryIcon } from '@utils/category-icon'
 import { brl } from '@utils/money'
 import { minimumProductPrice } from '@pages/Storefront/utils/minimum-product-price/minimum-product-price'
 import { primaryImage } from '@utils/menu-image'
+import { useStoreCatalog } from '@hooks/useStoreCatalog/useStoreCatalog'
 import type { MenuItem } from '@custom_types/menu/menu-item'
 
 import styles from './MenuItemCard.module.css'
@@ -40,6 +41,7 @@ export const MenuItemCard = ({
   fallbackIcon,
   quantity = 0,
 }: MenuItemCardProps) => {
+  const { itemStyle, imageRatio, density, showDescription } = useStoreCatalog()
   const image = primaryImage(item)
   const glyph = categoryIcon(item.name) ?? fallbackIcon ?? '🍽️'
 
@@ -55,6 +57,9 @@ export const MenuItemCard = ({
       className={disabled ? `${styles.card} ${styles.disabled}` : styles.card}
       role="group"
       aria-disabled={disabled}
+      data-item-style={itemStyle}
+      data-density={density}
+      data-image-ratio={imageRatio}
     >
       <Button
         variant="ghost"
@@ -90,7 +95,7 @@ export const MenuItemCard = ({
           <Heading level={3} className={styles.name}>
             {item.name}
           </Heading>
-          {item.description && (
+          {showDescription && item.description && (
             <Text as="p" className={styles.description}>
               {item.description}
             </Text>

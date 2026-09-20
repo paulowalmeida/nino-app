@@ -98,8 +98,8 @@ export const ProductConfigurationModal = ({
       body={
         item && (
           <Box
-            direction={{ mobile: 'column', desktop: 'row' }}
-            gap={{ mobile: 5, desktop: 6 }}
+            direction={{ mobile: 'column', tablet: 'row', desktop: 'row' }}
+            gap={{ mobile: 3, tablet: 4, desktop: 6 }}
             className={styles.layout}
           >
             <Box gap={2} className={styles.product}>

@@ -153,3 +153,39 @@
     transform: none;
   }
 }
+
+/*
+ * A loja escolhe a apresentação no tema; o card responde aos atributos que o
+ * item carrega. Sem escolha publicada, nada disto aplica e vale o padrão.
+ */
+.card[data-image-ratio='1:1'] .media {
+  aspect-ratio: 1 / 1;
+}
+
+.card[data-image-ratio='16:9'] .media {
+  aspect-ratio: 16 / 9;
+}
+
+.card[data-density='compact'] .body {
+  @apply gap-0.5;
+}
+
+.card[data-density='compact'] .description {
+  @apply line-clamp-1;
+}
+
+.card[data-item-style='big-image'] .open {
+  @apply flex-col items-stretch;
+}
+
+.card[data-item-style='big-image'] .media {
+  @apply w-full;
+}
+
+.card[data-item-style='condensed'] .media {
+  @apply size-12;
+}
+
+.card[data-item-style='text-only'] .media {
+  @apply hidden;
+}

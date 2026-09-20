@@ -2,6 +2,16 @@ import { fireEvent, render, screen } from '@testing-library/react'
 import { describe, expect, it, vi } from 'vitest'
 import { MenuItemCard } from './MenuItemCard'
 import { menuItemCardMock } from './MenuItemCard.mock'
+
+vi.mock('@hooks/useStoreCatalog/useStoreCatalog', () => ({
+  useStoreCatalog: () => ({
+    itemStyle: 'side-image',
+    imageRatio: '4:3',
+    density: 'comfortable',
+    showDescription: true,
+  }),
+}))
+
 describe('MenuItemCard', () => {
   it('renders the item and add action', () => {
     render(
