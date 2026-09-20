@@ -1,4 +1,5 @@
 import type { CatalogDraft } from '@pages/Units/types/CatalogDraft.type'
+import type { HomeDraft } from '@pages/Units/types/HomeDraft.type'
 import type { ThemeConfig } from '@pages/Units/types/ThemeConfig.type'
 import type { TrackingDraft } from '@pages/Units/types/TrackingDraft.type'
 import type { UnitDetail } from '@shared/types/store/unit-detail'
@@ -12,7 +13,8 @@ export const toThemeConfig = (
   unit?: UnitDetail | null,
   shape?: ThemeConfig['shape'],
   tracking?: TrackingDraft,
-  catalog?: CatalogDraft
+  catalog?: CatalogDraft,
+  home?: HomeDraft
 ): ThemeConfig => ({
   brand: {
     logoUrl: unit?.logoUrl ?? null,
@@ -48,4 +50,5 @@ export const toThemeConfig = (
     waitingMessage: toLabel(tracking?.waitingMessage ?? ''),
   },
   ...(catalog ? { catalog } : {}),
+  ...(home ? { home } : {}),
 })

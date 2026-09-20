@@ -8,7 +8,18 @@ import { StorefrontContent } from './StorefrontContent'
 import { homeContentMock } from './StorefrontContent.mock'
 import { storefrontStoreMock as homeStoreMock } from '../../Storefront.mock'
 
-vi.mock('react-router', () => ({ useNavigate: () => vi.fn() }))
+vi.mock('react-router', () => ({
+  useNavigate: () => vi.fn(),
+  useParams: () => ({ slug: 'pizzaria' }),
+}))
+vi.mock('@hooks/useStoreHome/useStoreHome', () => ({
+  useStoreHome: () => ({
+    showBanner: true,
+    showSearch: true,
+    showCategoryBar: true,
+    showStoreInfo: true,
+  }),
+}))
 vi.mock(
   '@pages/Storefront/facades/useStorefrontFacade/useStorefrontFacade',
   () => ({

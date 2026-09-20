@@ -1,0 +1,5 @@
+@reference "@nino/ds/globals.css";
+
+.blocks {
+  @apply flex flex-col gap-3;
+}

@@ -41,7 +41,9 @@ const PRESETS: readonly [RegExp, string][] = [
   [/(?:^|\s)[aá]gua\s+mineral\b/i, '/product-presets/agua-mineral.png'],
   [/(?:^|\s)[aá]gua\s+com\s+g[aá]s\b/i, '/product-presets/agua-com-gas.png'],
   [/\bsuco\s+de\s+laranja\b/i, '/product-presets/suco-laranja.png'],
-  [/\bsuco\s+de\s+maracuj[aá]\b/i, '/product-presets/suco-maracuja.png'],
+  [/\bsuco\s+de\s+maracuj[aá](?:\s|$)/i, '/product-presets/suco-maracuja.png'],
+  [/\blimonada\s+su[ií]ça\b/i, '/product-presets/limonada-suica.png'],
+  [/\bcerveja\s+long\s+neck\b/i, '/product-presets/cerveja-long-neck.png'],
   [/\bbatata\s+frita\b/i, '/product-presets/batata-frita.png'],
 ]
 

@@ -20,6 +20,7 @@ import { PoweredBy } from '@shared/components/PoweredBy/PoweredBy'
 import { StoreBanner } from '@pages/Storefront/components/StoreHeader/StoreBanner/StoreBanner'
 import { useDockedHeader } from '@pages/Storefront/hooks/useDockedHeader/useDockedHeader'
 import { useStorefrontFacade } from '@pages/Storefront/facades/useStorefrontFacade/useStorefrontFacade'
+import { useStoreHome } from '@hooks/useStoreHome/useStoreHome'
 import { resolveSlug } from '@utils/resolve-slug'
 import { riseDelay } from '@utils/rise-delay'
 
@@ -39,6 +40,7 @@ export const StorefrontContent = ({ pathSlug }: StorefrontContentProps) => {
   const [searchField, setSearchField] = useState<HTMLInputElement | null>(null)
   const isHeaderDocked = useDockedHeader(searchField, DOCKED_HEADER_OFFSET_PX)
   const { search, visibleSections, isSearching } = home
+  const blocks = useStoreHome()
 
   useLayoutEffect(() => {
     reset()
@@ -57,7 +59,7 @@ export const StorefrontContent = ({ pathSlug }: StorefrontContentProps) => {
     >
       <StoreTopBar slug={pathSlug ?? ''} isDocked={isHeaderDocked} />
 
-      <StoreBanner />
+      {blocks.showBanner && <StoreBanner />}
 
       <Box className={styles.shell}>
         <StoreIdentity />
@@ -66,10 +68,12 @@ export const StorefrontContent = ({ pathSlug }: StorefrontContentProps) => {
 
         <ActiveOrderBanner slug={slug ?? ''} />
 
-        {home.sections.length > 0 && <MenuSearchField ref={setSearchField} />}
+        {blocks.showSearch && home.sections.length > 0 && (
+          <MenuSearchField ref={setSearchField} />
+        )}
       </Box>
 
-      {home.sections.length > 0 && !isSearching && (
+      {blocks.showCategoryBar && home.sections.length > 0 && !isSearching && (
         <CategoryBar className={motion.settle} style={riseDelay(140)}>
           <CategoryNav />
         </CategoryBar>
@@ -128,7 +132,7 @@ export const StorefrontContent = ({ pathSlug }: StorefrontContentProps) => {
         onOpenCart={() => home.setCartOpen(true)}
       />
 
-      <StoreInfo />
+      {blocks.showStoreInfo && <StoreInfo />}
 
     </Box>
   )

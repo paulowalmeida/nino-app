@@ -4,6 +4,7 @@ export type StudioGroup = {
     | 'themes'
     | 'colors'
     | 'assets'
+    | 'home'
     | 'catalog'
     | 'loading'
     | 'tracking'

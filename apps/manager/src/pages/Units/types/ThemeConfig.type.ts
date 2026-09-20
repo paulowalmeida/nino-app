@@ -26,6 +26,12 @@ export type ThemeConfig = {
   loading: {
     type: 'MASCOT' | 'SPINNER' | 'DOTS'
   }
+  home?: {
+    showBanner: boolean
+    showSearch: boolean
+    showCategoryBar: boolean
+    showStoreInfo: boolean
+  }
   catalog?: {
     itemStyle: 'side-image' | 'big-image' | 'condensed' | 'text-only'
     imageRatio: '1:1' | '4:3' | '16:9'

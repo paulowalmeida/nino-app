@@ -38,6 +38,8 @@ it.each([
   ['Água com Gás', '/product-presets/agua-com-gas.png'],
   ['Suco de Laranja', '/product-presets/suco-laranja.png'],
   ['Suco de Maracujá', '/product-presets/suco-maracuja.png'],
+  ['Limonada Suíça', '/product-presets/limonada-suica.png'],
+  ['Cerveja Long Neck', '/product-presets/cerveja-long-neck.png'],
 ])('uses the preset for %s without images', (name, image) =>
   expect(primaryImage({ name, images: [] } as never)).toBe(image)
 )
