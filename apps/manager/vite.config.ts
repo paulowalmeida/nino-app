@@ -11,6 +11,9 @@ export default defineConfig({
    * for pré-otimizado, o dev server mantém uma cópia em cache e ignora HMR. */
   optimizeDeps: {
     exclude: ['@nino/ds'],
+    // Leaflet is imported by a lazy route; pre-bundle it before the first
+    // sidebar navigation so Vite does not discover it during route loading.
+    include: ['leaflet'],
   },
   /**
    * O nome gerado carrega o arquivo de origem (`Alert-module__title___a1b2c`)
