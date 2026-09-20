@@ -13,14 +13,21 @@
   @apply xl:grid-cols-[13rem_minmax(0,1.4fr)_minmax(0,22rem)];
 }
 
+/* WHY: no celular a árvore vira trilho horizontal — coluna de 13rem não cabe
+   ao lado da prévia em 375px. */
 .nav {
-  @apply row-start-2 min-w-0;
-  @apply lg:col-start-1 lg:row-start-2 lg:sticky lg:top-24;
+  @apply row-start-2 -mx-4 min-w-0 overflow-x-auto px-4;
+  @apply lg:sticky lg:top-24 lg:col-start-1 lg:row-start-2 lg:mx-0 lg:px-0;
+  @apply lg:overflow-visible;
 }
 
+/* WHY: a prévia é o que está sendo decidido; ela gruda abaixo da barra para
+   que nenhum ajuste aconteça às cegas. */
 .dock {
-  @apply row-start-3 min-w-0;
-  @apply lg:col-start-2 lg:row-start-2 lg:sticky lg:top-24;
+  @apply sticky top-28 z-sticky row-start-3 min-w-0;
+  @apply -mx-4 border-b border-border bg-surface-raised px-4 pb-3;
+  @apply lg:top-24 lg:col-start-2 lg:row-start-2 lg:mx-0 lg:border-b-0;
+  @apply lg:px-0 lg:pb-0;
 }
 
 /* WHY: o painel mede esta coluna, não a viewport — as seções internas
