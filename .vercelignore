@@ -6,6 +6,5 @@
 **/dist
 **/coverage
 **/.turbo
-apps/backoffice
 apps/courier
 apps/nino-api
