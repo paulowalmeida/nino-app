@@ -3,12 +3,12 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { toThemeConfig } from '@pages/Units/adapters/toThemeConfig/toThemeConfig'
 import { UnitThemeService } from '@pages/Units/services/unit-theme.service/unit-theme.service'
 import type { ThemeEditorState } from '@pages/Units/types/ThemeEditorState.type'
+import type { TrackingDraft } from '@pages/Units/types/TrackingDraft.type'
 import { useCurrentUnit } from '@shared/hooks/session/useCurrentUnit/useCurrentUnit'
 import { queryKeys } from '@shared/lib/query-keys/query-keys'
 import { UnitService } from '@shared/services/unit/unit.service'
 import type { UnitDetail } from '@shared/types/store/unit-detail'
 import type { UnitDraft } from '@shared/types/store/unit-draft'
-import type { TrackingDraft } from '@pages/Units/types/TrackingDraft.type'
 
 type ThemeDraftInput = {
   draft: UnitDraft
