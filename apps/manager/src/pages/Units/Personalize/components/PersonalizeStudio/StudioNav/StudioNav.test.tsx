@@ -10,7 +10,7 @@ const onSelect = vi.fn()
 describe(StudioNav.name, () => {
   beforeEach(() => onSelect.mockClear())
 
-  it('lists the parts of the store in order', () => {
+  it('lists the parts of the store in order', async () => {
     render(
       <StudioNav
         groups={studioNavGroupsMock}

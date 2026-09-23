@@ -201,9 +201,7 @@ export const StorefrontPreview = ({
         }
       >
         <Box as="header" direction="row" className={local.storeHeader}>
-          <Box
-            as="a"
-            direction="row"
+          <a
             className={local.storeBrand}
             href="#"
             onClick={(event) => event.preventDefault()}
@@ -224,7 +222,7 @@ export const StorefrontPreview = ({
             <Text as="span" className={local.headerStoreName}>
               {shownName}
             </Text>
-          </Box>
+          </a>
 
           <Box direction="row" className={local.headerSearch}>
             <Icon name="search" className={local.headerSearchIcon} />

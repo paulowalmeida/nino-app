@@ -1,6 +1,5 @@
 import { Box } from '@nino/ds/components/Box'
 import { Collapsible } from '@nino/ds/components/Collapsible'
-import { Text } from '@nino/ds/components/Text'
 import type { BrandColors } from '@pages/Units/types/BrandColors.type'
 
 import { StudioSection } from '../StudioSection/StudioSection'
