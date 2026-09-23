@@ -27,7 +27,12 @@ export const TopProducts = () => {
   }))
 
   return (
-    <Box as="section" aria-label="O que mais sai" className={styles.section}>
+    <Box
+      as="section"
+      id="ultimos-vendidos"
+      aria-label="O que mais sai"
+      className={styles.section}
+    >
       <Box className={motion.unroll}>
         <Eyebrow className={styles.heading}>O que mais sai</Eyebrow>
       </Box>

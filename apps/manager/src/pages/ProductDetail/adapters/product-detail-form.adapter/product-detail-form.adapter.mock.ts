@@ -41,4 +41,5 @@ export const menuItemMock = {
   ],
   category: { id: 'burgers', name: 'Hambúrgueres', position: 1 },
   images: [],
+  fallbackUrl: '/product-presets/x-tudo.png',
 }

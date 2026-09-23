@@ -1,8 +1,11 @@
 @reference "@nino/ds/globals.css";
 
 .toolbar {
-  @apply sticky top-14 z-sticky -mx-4 px-4 py-2 lg:top-6 lg:mx-0 lg:px-0;
-  @apply border-b border-border bg-surface-raised/92 backdrop-blur-sm;
+  @apply min-w-0 flex-wrap;
+}
+
+.controls {
+  @apply min-w-0 flex-wrap;
 }
 
 .devices {
@@ -10,5 +13,5 @@
 }
 
 .right {
-  @apply ml-auto;
+  @apply min-w-0;
 }

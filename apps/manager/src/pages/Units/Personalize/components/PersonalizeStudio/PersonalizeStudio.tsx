@@ -29,6 +29,7 @@ import { BrandLoading } from './BrandLoading/BrandLoading'
 import { BrandPalette } from './BrandPalette/BrandPalette'
 import { BrandThemes } from './BrandThemes/BrandThemes'
 import { BrandTracking } from './BrandTracking/BrandTracking'
+import { PersonalizeHeader } from '../PersonalizeHeader/PersonalizeHeader'
 import { StorefrontPreview } from './StorefrontPreview/StorefrontPreview'
 import { StudioNav } from './StudioNav/StudioNav'
 import { StudioToolbar } from './StudioToolbar/StudioToolbar'
@@ -42,12 +43,12 @@ export const PersonalizeStudio = () => {
   const { mutate: saveDraft, isPending: isSaving } = theme.saveDraft
   const { mutate: publish, isPending: isPublishing } = theme.publish
 
-  const [device, setDevice] = useState<PreviewDevice>('mobile')
   const [group, setGroup] = useState<StudioGroup['id']>('themes')
   const [draft, setDraft] = useState<UnitDraft>(EMPTY_UNIT_DRAFT)
   const [tracking, setTracking] = useState<TrackingDraft>(EMPTY_TRACKING_DRAFT)
   const [catalog, setCatalog] = useState<CatalogDraft>(DEFAULT_CATALOG_DRAFT)
   const [home, setHome] = useState<HomeDraft>(DEFAULT_HOME_DRAFT)
+  const [device, setDevice] = useState<PreviewDevice>('mobile')
   const [seed, setSeed] = useState<UnitDetail | undefined>(undefined)
   const [isDirty, setDirty] = useState(false)
 
@@ -128,44 +129,48 @@ export const PersonalizeStudio = () => {
   }
 
   return (
-    <Box className={`${styles.studio} ${styles[device]}`}>
-      <StudioToolbar
-        device={device}
-        onDeviceChange={setDevice}
-        publishedVersion={editor?.published?.version ?? null}
-        isDirty={isDirty}
-        hasUnpublishedDraft={!!editor?.draft}
-        isSaving={isSaving}
-        isPublishing={isPublishing}
-        onSave={() => saveDraft({ draft, unit, tracking, catalog, home })}
-        onPublish={() => publish({ draft, unit, tracking, catalog, home })}
-        onDiscard={discard}
+    <>
+      <PersonalizeHeader
+        actions={
+          <StudioToolbar
+            device={device}
+            onDeviceChange={setDevice}
+            publishedVersion={editor?.published?.version ?? null}
+            isDirty={isDirty}
+            hasUnpublishedDraft={!!editor?.draft}
+            isSaving={isSaving}
+            isPublishing={isPublishing}
+            onSave={() => saveDraft({ draft, unit, tracking, catalog, home })}
+            onPublish={() => publish({ draft, unit, tracking, catalog, home })}
+            onDiscard={discard}
+          />
+        }
       />
 
-      <Box className={styles.nav}>
-        <StudioNav groups={STUDIO_GROUPS} selected={group} onSelect={setGroup} />
-      </Box>
+      <Box className={`${styles.studio} ${styles[device]}`}>
+        <Box className={styles.dock}>
+          <StorefrontPreview
+            storeName={draft.customName || unit?.customName || ''}
+            colors={draft}
+            device={device}
+            logoUrl={unit?.logoUrl}
+            bannerUrl={unit?.bannerUrl}
+            logoFile={draft.logoFile}
+            bannerFile={draft.bannerFile}
+            catalog={catalog}
+            home={home}
+          />
+        </Box>
 
-      <Box className={styles.dock}>
-        <StorefrontPreview
-          storeName={draft.customName || unit?.customName || ''}
-          colors={draft}
-          device={device}
-          logoUrl={unit?.logoUrl}
-          bannerUrl={unit?.bannerUrl}
-          logoFile={draft.logoFile}
-          bannerFile={draft.bannerFile}
-        />
+        <Box className={styles.panel}>
+          <StudioNav
+            groups={STUDIO_GROUPS}
+            selected={group}
+            onSelect={setGroup}
+          />
+          {panels[group]}
+        </Box>
       </Box>
-
-      <Box
-        role="tabpanel"
-        id={`studio-panel-${group}`}
-        aria-labelledby={`studio-tab-${group}`}
-        className={styles.panel}
-      >
-        {panels[group]}
-      </Box>
-    </Box>
+    </>
   )
 }

@@ -1,5 +1,7 @@
 import { useState } from 'react'
 
+import { useSearchParams } from 'react-router'
+
 import { Box } from '@nino/ds/components/Box'
 import { Tabs } from '@nino/ds/components/Tabs'
 import { useEmployeesFacade } from '@pages/Employees/facades/useEmployeesFacade/useEmployeesFacade'
@@ -11,12 +13,21 @@ import { TeamRoster } from './TeamRoster/TeamRoster'
 
 export const EmployeesContent = () => {
   const facade = useEmployeesFacade()
+  const [searchParams, setSearchParams] = useSearchParams()
   const [editingStaffId, setEditingStaffId] = useState<string | null>(null)
   const editingStaff = facade.staffEntries.find(
     ({ id }: RosterEntry) => id === editingStaffId
   )
   const removing = facade.isRemoving ? facade.removingVariables : undefined
   const canChangeRole = facade.unit?.role === 'UNIT_OWNER'
+  const activeTab = searchParams.get('tab') === 'couriers' ? 'couriers' : 'staff'
+
+  const changeTab = (value: string) => {
+    const nextParams = new URLSearchParams(searchParams)
+    if (value === 'staff') nextParams.delete('tab')
+    else nextParams.set('tab', value)
+    setSearchParams(nextParams, { replace: true })
+  }
 
   return (
     <>
@@ -24,6 +35,8 @@ export const EmployeesContent = () => {
         <InviteForm onInvite={facade.invite} />
 
         <Tabs
+          value={activeTab}
+          onValueChange={changeTab}
           tabs={[
             {
               value: 'staff',

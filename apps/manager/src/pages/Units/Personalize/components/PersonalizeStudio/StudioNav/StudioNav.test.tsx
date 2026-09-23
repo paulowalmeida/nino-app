@@ -19,8 +19,12 @@ describe(StudioNav.name, () => {
       />
     )
 
+    expect(screen.getByRole('combobox')).toHaveTextContent('Cores')
+
+    await userEvent.click(screen.getByRole('combobox'))
+
     expect(
-      screen.getAllByRole('tab').map((tab) => tab.textContent)
+      screen.getAllByRole('option').map((option) => option.textContent)
     ).toEqual(['Cores', 'Acompanhamento'])
   })
 
@@ -33,10 +37,7 @@ describe(StudioNav.name, () => {
       />
     )
 
-    expect(screen.getByRole('tab', { name: 'Acompanhamento' })).toHaveAttribute(
-      'aria-selected',
-      'true'
-    )
+    expect(screen.getByRole('combobox')).toHaveTextContent('Acompanhamento')
   })
 
   it('asks for another part when one is chosen', async () => {
@@ -48,7 +49,10 @@ describe(StudioNav.name, () => {
       />
     )
 
-    await userEvent.click(screen.getByRole('tab', { name: 'Acompanhamento' }))
+    await userEvent.click(screen.getByRole('combobox'))
+    await userEvent.click(
+      screen.getByRole('option', { name: 'Acompanhamento' })
+    )
 
     expect(onSelect).toHaveBeenCalledWith('tracking')
   })

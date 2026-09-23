@@ -124,8 +124,11 @@ export const TeamRoster = ({
     return items
   }
 
+  const sectionId =
+    title === 'Na rua' ? 'entregadores-na-rua' : 'equipe-do-painel'
+
   return (
-    <section className={styles.roster}>
+    <section id={sectionId} className={styles.roster}>
       <header className={`${motion.unroll} ${styles.head}`}>
         <div className={styles.headings}>
           <h2 className="sr-only">{title}</h2>

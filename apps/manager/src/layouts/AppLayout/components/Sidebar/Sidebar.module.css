@@ -46,6 +46,23 @@
   @apply py-2;
 }
 
+.searchWrap {
+  @apply relative z-content shrink-0 px-2 py-2;
+}
+
+.searchButton {
+  @apply w-full justify-start gap-3 rounded-2 text-fg-on-brand/75;
+  @apply hover:bg-surface-raised/10 hover:text-fg-on-brand;
+}
+
+.sidebar.collapsed .searchButton {
+  @apply lg:justify-center;
+}
+
+.searchLabel {
+  @apply truncate text-sm font-semibold;
+}
+
 .footer {
   @apply relative z-content shrink-0 border-t border-fg-on-brand/8 p-2;
 }

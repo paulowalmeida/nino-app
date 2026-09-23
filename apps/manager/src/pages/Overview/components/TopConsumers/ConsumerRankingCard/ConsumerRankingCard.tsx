@@ -20,7 +20,12 @@ export const ConsumerRankingCard = ({
   isPending,
   items,
 }: ConsumerRankingCardProps) => (
-  <Box as="section" aria-label={label} className={styles.section}>
+  <Box
+    as="section"
+    id={label === 'Quem mais gasta' ? 'quem-mais-gasta' : 'quem-mais-pede'}
+    aria-label={label}
+    className={styles.section}
+  >
     <Box className={motion.unroll}>
       <Eyebrow className={styles.heading}>{label}</Eyebrow>
     </Box>

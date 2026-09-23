@@ -18,5 +18,7 @@ export type MenuItem = {
     icon?: ProductCategoryIcon | null
   }
   images: MenuItemImage[]
+  /** Preset returned by the API when the product has no uploaded image. */
+  fallbackUrl?: string | null
   modifiers: MenuItemModifier[]
 }

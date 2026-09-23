@@ -10,6 +10,7 @@ import { useCurrentUnit } from '@shared/hooks/session/useCurrentUnit/useCurrentU
 
 import { AppLayoutContent } from './components/AppLayoutContent/AppLayoutContent'
 import { AppLayoutHeader } from './components/AppLayoutHeader/AppLayoutHeader'
+import { CommandPalette } from './components/CommandPalette/CommandPalette'
 import { Sidebar } from './components/Sidebar/Sidebar'
 
 import styles from './AppLayout.module.css'
@@ -18,6 +19,7 @@ export const AppLayout = () => {
   const unit = useCurrentUnit()
   const [menuOpen, setMenuOpen] = useState(false)
   const [collapsed, setCollapsed] = useState(readSidebarCollapsed)
+  const [commandPaletteOpen, setCommandPaletteOpen] = useState(false)
 
   const closeMenu = () => setMenuOpen(false)
 
@@ -59,11 +61,17 @@ export const AppLayout = () => {
         onOpenMenu={() => setMenuOpen(true)}
       />
 
+      <CommandPalette
+        open={commandPaletteOpen}
+        onOpenChange={setCommandPaletteOpen}
+      />
+
       <Sidebar
         isOpen={menuOpen}
         onClose={closeMenu}
         collapsed={collapsed}
         onToggleCollapse={toggleCollapsed}
+        onOpenCommandPalette={() => setCommandPaletteOpen(true)}
       />
 
       {menuOpen && (

@@ -52,7 +52,12 @@ export const TopSalesTable = ({
   noSales,
   products,
 }: TopSalesTableProps) => (
-  <Box as="section" className={styles.top} aria-label="Produtos mais vendidos">
+  <Box
+    as="section"
+    id="mais-vendidos"
+    className={styles.top}
+    aria-label="Produtos mais vendidos"
+  >
     <h2 className={styles.topTitle}>Mais vendidos</h2>
 
     {awaitingDates && (

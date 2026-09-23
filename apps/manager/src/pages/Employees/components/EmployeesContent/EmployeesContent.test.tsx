@@ -1,5 +1,6 @@
 import { render, screen } from '@testing-library/react'
 import { describe, expect, it, vi } from 'vitest'
+import { MemoryRouter } from 'react-router'
 
 import { useEmployeesFacade } from '@pages/Employees/facades/useEmployeesFacade/useEmployeesFacade'
 
@@ -21,9 +22,36 @@ describe(EmployeesContent.name, () => {
       isRemoving: false,
       isChangingRole: false,
     } as never)
-    render(<EmployeesContent />)
+    render(
+      <MemoryRouter>
+        <EmployeesContent />
+      </MemoryRouter>
+    )
     expect(screen.getByText('invite')).toBeInTheDocument()
     expect(screen.getByText('No painel')).toBeInTheDocument()
     expect(screen.getByText('Na rua')).toBeInTheDocument()
+  })
+
+  it('opens the requested team tab from the URL', () => {
+    vi.mocked(useEmployeesFacade).mockReturnValue({
+      unit: { role: 'UNIT_OWNER' },
+      staffEntries: [],
+      courierEntries: [],
+      isStaffPending: false,
+      isCourierPending: false,
+      isRemoving: false,
+      isChangingRole: false,
+    } as never)
+
+    render(
+      <MemoryRouter initialEntries={['/colaboradores?tab=couriers']}>
+        <EmployeesContent />
+      </MemoryRouter>
+    )
+
+    expect(screen.getByRole('tab', { name: 'Na rua · 0' })).toHaveAttribute(
+      'aria-selected',
+      'true'
+    )
   })
 })

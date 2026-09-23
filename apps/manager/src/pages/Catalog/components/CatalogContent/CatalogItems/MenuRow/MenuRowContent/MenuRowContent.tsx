@@ -16,7 +16,11 @@ type MenuRowContentProps = {
 
 export const MenuRowContent = ({ item }: MenuRowContentProps) => (
   <Link to={item.id} className={styles.itemLink}>
-    <ItemThumb name={item.name} imageUrl={item.images?.[0]?.url} />
+    <ItemThumb
+      name={item.name}
+      imageUrl={item.images?.[0]?.url}
+      fallbackUrl={item.fallbackUrl}
+    />
     <span className={styles.itemText}>
       <span
         className={`${styles.itemName} ${

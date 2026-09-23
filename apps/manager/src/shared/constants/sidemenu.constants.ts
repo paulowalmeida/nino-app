@@ -78,9 +78,9 @@ export const SIDEMENU_GROUPS: SidemenuItem[] = [
         roles: UNIT_MANAGER_ROLES,
       },
       {
-        section: 'unidade/cashback',
-        label: 'Cashback',
-        icon: 'dollar-sign',
+        section: 'marketing',
+        label: 'Marketing',
+        icon: 'tag',
         roles: UNIT_MANAGER_ROLES,
       },
       {

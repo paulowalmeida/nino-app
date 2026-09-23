@@ -4,7 +4,6 @@ import { Box } from '@nino/ds/components/Box'
 import { Button } from '@nino/ds/components/Button'
 import { Image } from '@nino/ds/components/Image'
 import { Modal } from '@nino/ds/components/Modal'
-import { defaultProductImage } from '@nino/lib/utils/default-product-image'
 import { useProductDetailFacade } from '@pages/ProductDetail/facades/useProductDetailFacade/useProductDetailFacade'
 import { ItemPhoto } from '@shared/components/ItemPhoto/ItemPhoto'
 import { riseDelay } from '@shared/utils/rise-delay/rise-delay'
@@ -25,7 +24,7 @@ export const ProductDetailPhoto = () => {
   if (!item) return null
 
   const cover = item.images.find(({ isPrimary }) => isPrimary) ?? item.images[0]
-  const previewUrl = cover?.url ?? defaultProductImage(item.name)
+  const previewUrl = cover?.url ?? item.fallbackUrl
   const imageStageClassName = cover
     ? styles.photoWithCover
     : styles.photoWithFallback
@@ -37,6 +36,7 @@ export const ProductDetailPhoto = () => {
           productId={item.id}
           name={item.name}
           images={item.images}
+          fallbackUrl={item.fallbackUrl}
           isUploading={isUploadingImage}
           isRemoving={isRemovingImage}
           onUpload={(file, callbacks) => uploadImage(file, callbacks)}

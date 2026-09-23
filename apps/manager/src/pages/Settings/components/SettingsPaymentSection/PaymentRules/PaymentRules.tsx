@@ -89,7 +89,7 @@ export const PaymentRules = ({
         </Text>
       </Box>
 
-      <Box className={local.group}>
+      <Box id="formas-de-pagamento" className={local.group}>
         <Text className={local.groupTitle}>Formas de pagamento aceitas</Text>
         <Box direction="row" wrap className={local.chips}>
           {SERVICE_RULES_METHODS.map((method) => (
@@ -112,7 +112,7 @@ export const PaymentRules = ({
         </Box>
       </Box>
 
-      <Box className={local.group}>
+      <Box id="pedir-cpf-na-nota" className={local.group}>
         <Box className={local.channelRow}>
           <Switch
             checked={draft.requireCpf}
@@ -128,7 +128,7 @@ export const PaymentRules = ({
         </Box>
       </Box>
 
-      <Box className={local.field}>
+      <Box id="pedido-minimo" className={local.field}>
         <Label htmlFor="min-order">
           <FieldHint
             label="Pedido mínimo"

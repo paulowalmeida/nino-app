@@ -11,6 +11,7 @@ export const menuItemMock: MenuItem = {
   requiresPreparation: true,
   category: { id: 'category-1', name: 'Lanches', position: 1 },
   images: [],
+  fallbackUrl: '/product-presets/x-tudo.png',
 }
 
 export const categoryOptionsMock: ProductCategoryOption[] = [

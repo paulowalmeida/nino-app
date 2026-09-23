@@ -63,7 +63,12 @@ export const QueueBoard = () => {
   const isIdle = !isPending && tiles.every(({ value }) => value === 0)
 
   return (
-    <Box as="section" aria-label="Fila de pedidos" className="mb-8">
+    <Box
+      as="section"
+      id="fila-de-pedidos"
+      aria-label="Fila de pedidos"
+      className="mb-8"
+    >
       <Eyebrow className={`${motion.unroll} mb-3`}>Agora na loja</Eyebrow>
 
       <Box className={styles.board}>

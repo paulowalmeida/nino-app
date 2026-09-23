@@ -30,6 +30,7 @@ export const ProductPreviewModal = ({
           <ItemThumb
             name={item.name}
             imageUrl={item.images[0]?.url}
+            fallbackUrl={item.fallbackUrl}
             className={styles.photo}
           />
           <Heading level={2} size="lg" className={styles.name}>

@@ -2,9 +2,10 @@ import type { StudioToolbarProps } from './StudioToolbar'
 
 export const studioToolbarPropsMock: Omit<
   StudioToolbarProps,
-  'onDeviceChange' | 'onSave' | 'onPublish' | 'onDiscard'
+  'onSave' | 'onPublish' | 'onDiscard'
 > = {
   device: 'mobile',
+  onDeviceChange: () => {},
   publishedVersion: 4,
   isDirty: false,
   hasUnpublishedDraft: false,

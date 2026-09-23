@@ -1,6 +1,5 @@
 import { Image } from '@nino/ds/components/Image'
 import { mergeClasses } from '@nino/ds/mergeClasses'
-import { defaultProductImage } from '@nino/lib/utils/default-product-image'
 import { toCategoryIcon } from '@shared/adapters/category-icon.adapter/category-icon.adapter'
 
 import styles from './ItemThumb.module.css'
@@ -8,6 +7,7 @@ import styles from './ItemThumb.module.css'
 type ItemThumbProps = {
   name: string
   imageUrl?: string | null
+  fallbackUrl?: string | null
   className?: string
   wrapperClassName?: string
 }
@@ -25,6 +25,7 @@ const toneOf = (name: string): number => {
 export const ItemThumb = ({
   name,
   imageUrl,
+  fallbackUrl,
   className,
   wrapperClassName,
 }: ItemThumbProps) => {
@@ -37,7 +38,7 @@ export const ItemThumb = ({
 
   return (
     <Image
-      src={imageUrl ?? defaultProductImage(name)}
+      src={imageUrl ?? fallbackUrl}
       alt=""
       aria-hidden="true"
       className={thumbClasses}

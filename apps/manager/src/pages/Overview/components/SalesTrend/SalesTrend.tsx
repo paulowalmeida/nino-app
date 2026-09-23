@@ -41,7 +41,12 @@ export const SalesTrend = () => {
   const hasNoSales = !isPending && total === 0
 
   return (
-    <Box as="section" aria-label="Os últimos 7 dias" className={styles.section}>
+    <Box
+      as="section"
+      id="faturamento-ultimos-7-dias"
+      aria-label="Os últimos 7 dias"
+      className={styles.section}
+    >
       <Eyebrow className={styles.heading}>Os últimos 7 dias</Eyebrow>
 
       <Card variant="flat" padding="lg" className={`${motion.settle} ${styles.card}`}>

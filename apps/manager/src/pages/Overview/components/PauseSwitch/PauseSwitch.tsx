@@ -41,6 +41,7 @@ export const PauseSwitch = () => {
     return (
       <Box
         as="section"
+        id="controle-da-loja"
         wrap
         align="center"
         justify="between"
@@ -79,7 +80,7 @@ export const PauseSwitch = () => {
   }
 
   return (
-    <Box as="section">
+    <Box as="section" id="controle-da-loja">
       <Button
         variant="warning"
         className={`${motion.press} ${styles.trigger} w-3xs`}

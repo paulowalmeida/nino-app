@@ -5,5 +5,5 @@
 }
 
 .options {
-  @apply flex-nowrap;
+  @apply flex-wrap gap-y-2;
 }

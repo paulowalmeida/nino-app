@@ -2,6 +2,7 @@ import { useSidemenu } from '@layouts/AppLayout/hooks/useSidemenu/useSidemenu'
 import { Box } from '@nino/ds/components/Box'
 import { Button } from '@nino/ds/components/Button'
 import { Icon } from '@nino/ds/components/Icon'
+import { Text } from '@nino/ds/components/Text'
 import { mergeClasses } from '@nino/ds/mergeClasses'
 import { NinoLogo } from '@shared/components/NinoLogo/NinoLogo'
 import { useQueueSummary } from '@shared/hooks/order/useQueueSummary/useQueueSummary'
@@ -19,6 +20,7 @@ type SidebarProps = {
   onClose: () => void
   collapsed: boolean
   onToggleCollapse: () => void
+  onOpenCommandPalette: () => void
 }
 
 export const Sidebar = ({
@@ -26,6 +28,7 @@ export const Sidebar = ({
   onClose,
   collapsed,
   onToggleCollapse,
+  onOpenCommandPalette,
 }: SidebarProps) => {
   const user = useSessionStore(({ user }) => user)
   const unitId = useCurrentUnit()?.unitId ?? null
@@ -77,6 +80,23 @@ export const Sidebar = ({
             </Button>
           </>
         )}
+      </Box>
+
+      <Box className={styles.searchWrap}>
+        <Button
+          variant="ghost"
+          size={isCollapsed ? 'icon' : 'md'}
+          className={styles.searchButton}
+          onClick={onOpenCommandPalette}
+          aria-label="Buscar funcionalidade"
+        >
+          <Icon name="search" size="sm" />
+          {!isCollapsed && (
+            <Text as="span" className={styles.searchLabel}>
+              Buscar funcionalidade
+            </Text>
+          )}
+        </Button>
       </Box>
 
       <Box className={styles.switcherWrap}>

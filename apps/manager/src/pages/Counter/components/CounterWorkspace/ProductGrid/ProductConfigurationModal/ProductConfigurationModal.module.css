@@ -1,41 +1,93 @@
 @reference "@nino/ds/globals.css";
 
 .modal {
-  @apply max-h-[calc(100dvh-2rem)];
-  width: min(76rem, calc(100vw - 2rem));
-  max-width: 76rem !important;
+  @apply flex max-h-[calc(100dvh-2rem)] flex-col;
+  width: min(34rem, calc(100vw - 2rem));
+  max-width: 34rem !important;
 }
 
-.modal :global(button[aria-label='Fechar']) {
-  @apply z-10 bg-surface-raised;
+.modal > div:first-of-type {
+  @apply flex min-h-0 flex-1 flex-col overflow-hidden;
 }
 
-.layout {
-  @apply min-h-0 pt-3 sm:pt-5 sm:items-center sm:justify-center;
+.modal > div:first-of-type > div {
+  @apply min-h-0 flex-1;
+  max-height: none;
 }
 
-.product {
-  @apply min-w-0 shrink-0 items-center justify-center text-center;
-  @apply sm:w-52 lg:w-[22rem];
-  display: none;
+.modal > div:last-of-type {
+  @apply shrink-0;
 }
 
-@media (min-width: 640px) {
-  .product {
-    display: flex;
+.footer {
+  @apply w-full items-center justify-end gap-3;
+}
+
+.cancel {
+  @apply shrink-0;
+}
+
+@media (max-width: 425px) {
+  .footer {
+    @apply fixed inset-x-0 z-overlay justify-stretch border-t border-border;
+    @apply bg-surface-page px-4 pb-3 pt-3;
+    margin-bottom: 0;
+    bottom: 1rem;
+    padding-bottom: calc(1rem + env(safe-area-inset-bottom));
+  }
+
+  .cancel {
+    display: none;
+  }
+
+  .footer > button:last-child {
+    @apply w-full;
   }
 }
 
-.productImage {
-  @apply h-40 w-full max-w-[15rem] rounded-3 object-cover text-3xl;
-  @apply sm:h-52 sm:max-w-[13rem] sm:text-4xl;
-  @apply lg:h-80 lg:max-w-[20rem];
-}
+@media (max-width: 425px) {
+  .layout {
+    @apply flex h-full min-h-0 gap-0 overflow-hidden p-0;
+  }
 
-.groups {
-  @apply min-w-0 overflow-y-auto pr-1;
-  max-height: calc(100dvh - 10rem);
-  @apply w-full max-w-none;
-  @apply sm:max-h-[calc(100dvh-12rem)] sm:flex-1;
-  @apply lg:max-h-[70dvh] lg:flex-none lg:w-full lg:max-w-[42rem];
+  .mobileBack {
+    display: inline-flex;
+  }
+
+  .modal :global(button[aria-label='Fechar']) {
+    display: none;
+  }
+
+  .product {
+    @apply flex w-full flex-col items-stretch justify-start gap-0 text-left;
+  }
+
+  .productImage {
+    @apply h-72 w-full max-w-none rounded-none;
+  }
+
+  .productImageWrapper {
+    @apply h-72 w-full;
+  }
+
+  .product > div:last-child {
+    @apply gap-2 px-4 pb-5 pt-5;
+  }
+
+  .groups {
+    @apply min-h-0 flex-1 overflow-y-auto;
+    max-height: none;
+  }
+
+  .footer {
+    @apply justify-stretch;
+  }
+
+  .cancel {
+    display: none;
+  }
+
+  .footer > button:last-child {
+    @apply w-full;
+  }
 }

@@ -21,6 +21,7 @@ export type ItemPhotoProps = {
   productId: string | null
   name: string
   images: MenuItemImage[]
+  fallbackUrl?: string | null
   onStagedFile?: (file: File | null) => void
   isUploading?: boolean
   isRemoving?: boolean
@@ -35,6 +36,7 @@ export const ItemPhoto = ({
   productId,
   name,
   images,
+  fallbackUrl,
   onStagedFile,
   isUploading = false,
   isRemoving = false,
@@ -138,7 +140,7 @@ export const ItemPhoto = ({
           />
         ) : (
           <Box className={styles.empty}>
-            <ItemThumb name={name} />
+            <ItemThumb name={name} fallbackUrl={fallbackUrl} />
             <Text as="p" className={styles.emptyTitle}>
               Arraste uma foto aqui
             </Text>

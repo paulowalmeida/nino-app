@@ -1,0 +1,9 @@
+@reference "@nino/ds/globals.css";
+
+.page {
+  @apply mx-auto flex min-h-full w-full max-w-page flex-col gap-6 p-4 lg:p-10;
+}
+
+.header {
+  @apply flex flex-col gap-1;
+}

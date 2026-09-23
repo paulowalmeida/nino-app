@@ -1,9 +1,18 @@
 @reference "@nino/ds/globals.css";
 
 .header {
-  @apply flex min-w-0 flex-col;
+  @apply grid w-full min-w-0 grid-cols-1 items-start gap-4;
+  @apply lg:grid-cols-[minmax(0,1fr)_auto];
+}
+
+.copy {
+  @apply min-w-0;
 }
 
 .subtitle {
   @apply mt-1 max-w-prose text-pretty;
+}
+
+.actions {
+  @apply min-w-0 lg:justify-self-end;
 }

@@ -1,0 +1,39 @@
+@reference "@nino/ds/globals.css";
+
+.modal {
+  @apply max-w-xl;
+}
+
+.body {
+  @apply gap-3;
+}
+
+.searchField {
+  @apply relative;
+}
+
+.searchIcon {
+  @apply pointer-events-none absolute left-3 top-1/2 z-10 -translate-y-1/2 text-fg-faint;
+}
+
+.input {
+  @apply pl-10;
+}
+
+.optionPanel {
+  @apply max-h-[min(18rem,60vh)] overflow-y-auto overscroll-contain rounded-2;
+  @apply bg-surface-raised p-1 shadow-warm-lg;
+}
+
+.option {
+  @apply w-full justify-start rounded-1 px-3 py-2 text-left text-sm;
+  @apply text-fg-strong;
+}
+
+.optionActive {
+  @apply bg-brand-soft text-brand;
+}
+
+.emptyMessage {
+  @apply px-3 py-2;
+}

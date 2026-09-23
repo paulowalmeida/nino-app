@@ -8,4 +8,9 @@ describe('TopSalesTable', () => {
     render(<TopSalesTable awaitingDates isError={false} isPending={false} noSales={false} products={[]} />)
     expect(screen.getByText(/Escolha as datas/)).toBeInTheDocument()
   })
+
+  it('exposes the ranking as a deep-link target', () => {
+    render(<TopSalesTable awaitingDates isError={false} isPending={false} noSales={false} products={[]} />)
+    expect(screen.getByRole('region', { name: 'Produtos mais vendidos' })).toHaveAttribute('id', 'mais-vendidos')
+  })
 })

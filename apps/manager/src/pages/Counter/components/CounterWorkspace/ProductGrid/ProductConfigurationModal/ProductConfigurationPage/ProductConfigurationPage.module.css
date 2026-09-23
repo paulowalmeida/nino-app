@@ -1,0 +1,97 @@
+@reference "@nino/ds/globals.css";
+
+.page {
+  @apply flex min-h-0 flex-col overflow-hidden bg-surface-page;
+}
+
+.scroll {
+  @apply min-h-0 flex-1 overflow-y-auto;
+}
+
+.hero {
+  @apply relative flex aspect-[4/3] shrink-0 justify-center overflow-hidden bg-surface-cool;
+}
+
+.heroImageWrapper,
+.heroImage {
+  @apply h-full w-full max-w-none rounded-none object-cover text-5xl;
+}
+
+.back {
+  @apply absolute left-4 top-4 z-10 rounded-full bg-surface-raised text-fg-strong shadow-warm-md;
+}
+
+.summary {
+  @apply flex shrink-0 flex-col px-4 pb-5 pt-5 sm:px-6;
+}
+
+.name {
+  @apply font-display text-2xl font-extrabold leading-tight tracking-tight;
+  @apply text-fg-strong;
+}
+
+.description {
+  @apply mt-2 text-[0.9375rem] leading-relaxed text-fg-subtle;
+}
+
+.price {
+  @apply mt-4 font-display text-xl font-medium;
+  color: var(--color-success);
+  font-variant-numeric: tabular-nums;
+}
+
+.groups {
+  @apply flex-none;
+}
+
+@media (min-width: 426px) {
+  .back {
+    display: none;
+  }
+
+  .page {
+    max-height: calc(100dvh - 8rem);
+  }
+}
+
+@media (max-width: 425px) {
+  @keyframes productConfigurationEnter {
+    from {
+      opacity: 0;
+      transform: translateY(4px);
+    }
+
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes productConfigurationExit {
+    from {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    to {
+      opacity: 0;
+      transform: translateY(4px);
+    }
+  }
+
+  .page {
+    @apply fixed inset-0 z-modal h-[100dvh] w-full;
+    min-height: 100dvh;
+    animation: productConfigurationEnter 140ms ease-out both;
+    will-change: transform;
+  }
+
+  .closing {
+    animation: productConfigurationExit 140ms ease-in both;
+    pointer-events: none;
+  }
+
+  .scroll {
+    padding-bottom: calc(5.5rem + env(safe-area-inset-bottom));
+  }
+}

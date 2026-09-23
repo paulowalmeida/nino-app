@@ -51,6 +51,7 @@ export const NewOrderMenu = () => {
                   <ItemThumb
                     name={item.name}
                     imageUrl={item.images?.[0]?.url}
+                    fallbackUrl={item.fallbackUrl}
                   />
                   <Text as="span" className={styles.itemName}>
                     {item.name}

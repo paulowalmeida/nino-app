@@ -325,10 +325,7 @@ export const router = createBrowserRouter([
           },
           {
             path: 'cashback',
-            lazy: () =>
-              import('@pages/Units/UnitCashback/UnitCashback').then(
-                ({ UnitCashback }) => ({ Component: UnitCashback })
-              ),
+            element: <Navigate to="../../marketing/cashback" replace />,
           },
           {
             path: 'atendimento',
@@ -382,6 +379,31 @@ export const router = createBrowserRouter([
           {
             path: 'nova',
             element: <Navigate to="../../empresa/unidades/nova" replace />,
+          },
+        ],
+      },
+      {
+        path: 'marketing',
+        loader: roleGuard(UNIT_MANAGER_ROLES),
+        lazy: () =>
+          import('@pages/Marketing/Marketing').then(({ Marketing }) => ({
+            Component: Marketing,
+          })),
+        children: [
+          { index: true, element: <Navigate to="cashback" replace /> },
+          {
+            path: 'cashback',
+            lazy: () =>
+              import('@pages/Units/UnitCashback/UnitCashback').then(
+                ({ UnitCashback }) => ({ Component: UnitCashback })
+              ),
+          },
+          {
+            path: 'promocoes',
+            lazy: () =>
+              import('@pages/Marketing/Promotions/Promotions').then(
+                ({ Promotions }) => ({ Component: Promotions })
+              ),
           },
         ],
       },

@@ -15,6 +15,20 @@ describe(ItemThumb.name, () => {
     expect(container.querySelector('img')).toHaveAttribute('src', '/coffee.png')
   })
 
+  it('renders the fallback image source returned by the API', () => {
+    const { container } = render(
+      <ItemThumb
+        {...itemThumbMock}
+        fallbackUrl="/product-presets/x-bacon.png"
+      />
+    )
+
+    expect(container.querySelector('img')).toHaveAttribute(
+      'src',
+      '/product-presets/x-bacon.png'
+    )
+  })
+
   it('uses the default glyph for an unmatched name', () => {
     const { container } = render(<ItemThumb name="Produto desconhecido" />)
     expect(container).toHaveTextContent('🍽️')

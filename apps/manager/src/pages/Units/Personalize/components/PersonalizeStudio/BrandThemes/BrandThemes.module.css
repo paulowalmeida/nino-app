@@ -1,9 +1,7 @@
 @reference "@nino/ds/globals.css";
 
 .row {
-  @apply -mx-1 min-w-0 flex-nowrap overflow-x-auto px-1 pb-1;
-  scrollbar-width: thin;
-  scrollbar-color: var(--color-border) transparent;
+  @apply -mx-1 max-h-[calc(100dvh-23rem)] min-w-0 flex-wrap gap-y-2 overflow-y-auto px-1 pb-1 pr-2;
 }
 
 .theme {

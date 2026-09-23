@@ -32,6 +32,7 @@ describe('Sidebar', () => {
           onClose={() => undefined}
           collapsed={false}
           onToggleCollapse={() => undefined}
+          onOpenCommandPalette={() => undefined}
         />
       </MemoryRouter>
     )
@@ -46,6 +47,7 @@ describe('Sidebar', () => {
           onClose={() => undefined}
           collapsed
           onToggleCollapse={() => undefined}
+          onOpenCommandPalette={() => undefined}
         />
       </MemoryRouter>
     )
@@ -56,5 +58,8 @@ describe('Sidebar', () => {
     expect(
       screen.queryByRole('link', { name: 'Ir para a visão geral' })
     ).not.toBeInTheDocument()
+    expect(
+      screen.getByRole('button', { name: 'Buscar funcionalidade' })
+    ).toBeInTheDocument()
   })
 })

@@ -1,4 +1,5 @@
 import { Box } from '@nino/ds/components/Box'
+import { Collapsible } from '@nino/ds/components/Collapsible'
 import { Text } from '@nino/ds/components/Text'
 import type { BrandColors } from '@pages/Units/types/BrandColors.type'
 
@@ -59,10 +60,12 @@ export const BrandPalette = ({ colors, onChange }: BrandPaletteProps) => (
     description="Duas escolhas resolvem a marca. O resto ajusta a leitura."
   >
     <Box className={styles.groups}>
-      <Box className={styles.group}>
-        <Text size="xs" weight="bold" className={styles.groupTitle}>
-          Marca
-        </Text>
+      <Collapsible
+        trigger="Marca"
+        indicator
+        defaultOpen
+        className={styles.group}
+      >
         <Box className={styles.grid}>
           {IDENTITY_COLORS.map(({ key, label, hint }) => (
             <ColorField
@@ -74,12 +77,14 @@ export const BrandPalette = ({ colors, onChange }: BrandPaletteProps) => (
             />
           ))}
         </Box>
-      </Box>
+      </Collapsible>
 
-      <Box className={styles.group}>
-        <Text size="xs" weight="bold" className={styles.groupTitle}>
-          Superfícies e texto
-        </Text>
+      <Collapsible
+        trigger="Superfícies e texto"
+        indicator
+        defaultOpen
+        className={styles.group}
+      >
         <Box className={styles.grid}>
           {SURFACE_COLORS.map(({ key, label, hint }) => (
             <ColorField
@@ -91,7 +96,7 @@ export const BrandPalette = ({ colors, onChange }: BrandPaletteProps) => (
             />
           ))}
         </Box>
-      </Box>
+      </Collapsible>
     </Box>
 
     <ContrastNotice colors={colors} />

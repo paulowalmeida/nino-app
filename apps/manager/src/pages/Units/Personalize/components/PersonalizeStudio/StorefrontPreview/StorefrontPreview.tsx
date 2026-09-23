@@ -1,8 +1,17 @@
 import { type CSSProperties, useEffect, useMemo } from 'react'
 
 import { Box } from '@nino/ds/components/Box'
+import { Button } from '@nino/ds/components/Button'
+import { Card } from '@nino/ds/components/Card'
+import { Chip } from '@nino/ds/components/Chip'
+import { Heading } from '@nino/ds/components/Heading'
 import { Icon } from '@nino/ds/components/Icon'
+import { Image } from '@nino/ds/components/Image'
 import { Text } from '@nino/ds/components/Text'
+import { DEFAULT_CATALOG_DRAFT } from '@pages/Units/constants/catalog.constants'
+import { DEFAULT_HOME_DRAFT } from '@pages/Units/constants/home.constants'
+import type { CatalogDraft } from '@pages/Units/types/CatalogDraft.type'
+import type { HomeDraft } from '@pages/Units/types/HomeDraft.type'
 import type { BrandColors } from '@pages/Units/types/BrandColors.type'
 import type { PreviewDevice } from '@pages/Units/types/PreviewDevice.type'
 
@@ -17,7 +26,112 @@ export type StorefrontPreviewProps = {
   bannerUrl?: string | null
   logoFile?: File
   bannerFile?: File
+  catalog?: CatalogDraft
+  home?: HomeDraft
 }
+
+type PreviewProduct = {
+  id: string
+  name: string
+  description: string
+  price: string
+  icon: string
+  image: string
+}
+
+const PREVIEW_PRODUCTS: PreviewProduct[] = [
+  {
+    id: 'special',
+    name: 'Especial da casa',
+    description: 'O favorito dos clientes, preparado na hora.',
+    price: 'R$ 29,90',
+    icon: '🍔',
+    image: '/product-presets/x-salada.png',
+  },
+  {
+    id: 'combo',
+    name: 'Combo do dia',
+    description: 'Prato, acompanhamento e bebida.',
+    price: 'R$ 42,00',
+    icon: '🍟',
+    image: '/product-presets/duplo-cheddar.png',
+  },
+  {
+    id: 'bacon',
+    name: 'X-Bacon',
+    description: 'Hambúrguer, bacon crocante, queijo e molho da casa.',
+    price: 'R$ 28,90',
+    icon: '🥓',
+    image: '/product-presets/x-bacon.png',
+  },
+  {
+    id: 'egg',
+    name: 'X-Egg',
+    description: 'Hambúrguer, ovo, queijo, alface e tomate.',
+    price: 'R$ 26,50',
+    icon: '🍳',
+    image: '/product-presets/x-egg.png',
+  },
+]
+
+const PREVIEW_CATEGORIES = [
+  { name: 'Destaques', icon: '⭐' },
+  { name: 'Combos', icon: '🍟' },
+  { name: 'Bebidas', icon: '🥤' },
+]
+
+type PreviewProductCardProps = {
+  product: PreviewProduct
+  catalog: CatalogDraft
+}
+
+const PreviewProductCard = ({ product, catalog }: PreviewProductCardProps) => (
+  <Card
+    padding="sm"
+    className={local.productCard}
+    data-item-style={catalog.itemStyle}
+    data-density={catalog.density}
+    data-image-ratio={catalog.imageRatio}
+    role="group"
+  >
+    <Button variant="ghost" className={local.productOpen}>
+      <Box className={local.productMedia}>
+        <Image
+          src={product.image}
+          alt=""
+          className={local.productPhoto}
+          wrapperClassName={local.productPhoto}
+          placeholder={
+            <Box className={local.noPhoto} aria-hidden="true">
+              {product.icon}
+            </Box>
+          }
+        />
+      </Box>
+      <Box className={local.productBody}>
+        <Heading level={3} className={local.productName}>
+          {product.name}
+        </Heading>
+        {catalog.showDescription && (
+          <Text as="p" className={local.productDescription}>
+            {product.description}
+          </Text>
+        )}
+        <Text as="span" className={local.productPrice}>
+          {product.price}
+        </Text>
+      </Box>
+    </Button>
+    <Button
+      variant="primary"
+      size="icon"
+      className={local.productAdd}
+      aria-label={`Adicionar ${product.name}`}
+    >
+      <Icon name="plus" />
+    </Button>
+  </Card>
+)
 
 const useFilePreview = (file?: File) => {
   const url = useMemo(
@@ -43,12 +157,16 @@ export const StorefrontPreview = ({
   bannerUrl,
   logoFile,
   bannerFile,
+  catalog = DEFAULT_CATALOG_DRAFT,
+  home = DEFAULT_HOME_DRAFT,
 }: StorefrontPreviewProps) => {
   const localLogoUrl = useFilePreview(logoFile)
   const localBannerUrl = useFilePreview(bannerFile)
   const shownLogoUrl = localLogoUrl ?? logoUrl
   const shownBannerUrl = localBannerUrl ?? bannerUrl
   const shownName = storeName.trim() || 'Nome da unidade'
+  const visibleProducts =
+    device === 'desktop' ? PREVIEW_PRODUCTS : PREVIEW_PRODUCTS.slice(0, 2)
 
   return (
     <Box className={local.dock}>
@@ -82,16 +200,77 @@ export const StorefrontPreview = ({
           } as CSSProperties
         }
       >
-        <Box className={local.chrome} aria-hidden="true">
-          <Box className={local.chromeDots}>
-            <Box className={local.chromeDot} />
-            <Box className={local.chromeDot} />
-            <Box className={local.chromeDot} />
+        <Box as="header" direction="row" className={local.storeHeader}>
+          <Box
+            as="a"
+            direction="row"
+            className={local.storeBrand}
+            href="#"
+            onClick={(event) => event.preventDefault()}
+          >
+            <Box className={local.headerLogo} aria-hidden="true">
+              {shownLogoUrl ? (
+                <img
+                  src={shownLogoUrl}
+                  alt=""
+                  className={local.headerLogoImage}
+                />
+              ) : (
+                <Text as="span" className={local.headerLogoFallback}>
+                  {shownName.slice(0, 2).toUpperCase()}
+                </Text>
+              )}
+            </Box>
+            <Text as="span" className={local.headerStoreName}>
+              {shownName}
+            </Text>
           </Box>
-          <Text as="span" className={local.chromeAddress}>
-            sualoja.nino.delivery
-          </Text>
-          <Box className={local.chromeNotch} />
+
+          <Box direction="row" className={local.headerSearch}>
+            <Icon name="search" className={local.headerSearchIcon} />
+            <Text as="span" className={local.headerSearchText}>
+              Buscar no cardápio
+            </Text>
+          </Box>
+
+          <Box direction="row" className={local.headerTools}>
+            <Text as="span" className={local.headerStatus}>
+              <span className={local.headerStatusDot} aria-hidden="true" />
+              Aberto agora
+            </Text>
+            <Button
+              variant="ghost"
+              size="icon"
+              className={local.headerIcon}
+              aria-label="Informações da loja"
+            >
+              <Icon name="info" />
+            </Button>
+            <Button
+              variant="ghost"
+              size="icon"
+              className={local.headerIcon}
+              aria-label="Notificações"
+            >
+              <Icon name="bell" />
+            </Button>
+            <Button
+              variant="ghost"
+              size="icon"
+              className={local.headerIcon}
+              aria-label="Sacola"
+            >
+              <Icon name="shopping-cart" />
+            </Button>
+            <Button
+              variant="primary"
+              size="icon"
+              className={local.headerAccount}
+              aria-label="Sua conta"
+            >
+              <Icon name="user" />
+            </Button>
+          </Box>
         </Box>
 
         <Box
@@ -100,83 +279,123 @@ export const StorefrontPreview = ({
           aria-label="Prévia da loja para o cliente"
           className={`${local.storefront} ${motion.settle}`}
         >
-          <Box className={local.banner} />
-
-          <Box className={local.identity}>
-            <Box className={local.logoTile}>
+          {home.showBanner && (
+            <Box className={local.banner}>
               {shownLogoUrl ? (
-                <img src={shownLogoUrl} alt="" className={local.logo} />
+                <img src={shownLogoUrl} alt="" className={local.bannerMark} />
               ) : (
-                <Text as="span" className={local.logoFallback}>
+                <Text as="span" className={local.bannerMonogram} aria-hidden="true">
                   {shownName.slice(0, 2).toUpperCase()}
                 </Text>
               )}
             </Box>
-            <Box className={local.identityText}>
-              <Text className={local.storeName}>{shownName}</Text>
-              <Text className={local.status}>
-                <Text as="span" className={local.statusDot} />
-                Aberta agora · 30–45 min
+          )}
+
+          <Box className={local.promoBanner} aria-label="Promoção da loja">
+            <Box className={local.promoCopy}>
+              <Text as="span" className={local.promoEyebrow}>
+                Oferta da casa
+              </Text>
+              <Heading level={3} className={local.promoTitle}>
+                Combo do dia
+              </Heading>
+              <Text as="span" className={local.promoDescription}>
+                Prato, acompanhamento e bebida.
               </Text>
             </Box>
-          </Box>
-
-          <Text className={local.search}>Buscar no cardápio</Text>
-
-          <Box className={local.categories} aria-hidden="true">
-            <Text as="span" className={`${local.category} ${local.current}`}>
-              Destaques
-            </Text>
-            <Text as="span" className={local.category}>
-              Combos
-            </Text>
-            <Text as="span" className={local.category}>
-              Bebidas
+            <Text as="span" className={local.promoPrice}>
+              R$ 42,00
             </Text>
           </Box>
+
+          {home.showCategoryBar && (
+            <Box
+              as="nav"
+              className={local.categories}
+              aria-label="Categorias do cardápio"
+            >
+              <Text className={local.categoryRailLabel}>Cardápio</Text>
+              <Box direction="row" className={local.categoryTrack}>
+                {PREVIEW_CATEGORIES.map(({ name, icon }, index) => (
+                  <Chip
+                    key={name}
+                    variant="toggle"
+                    selected={index === 0}
+                    borderless
+                    className={local.category}
+                    leadingIcon={<span aria-hidden="true">{icon}</span>}
+                    onClick={() => undefined}
+                  >
+                    {name}
+                  </Chip>
+                ))}
+              </Box>
+            </Box>
+          )}
 
           <Box className={local.menu}>
-            <Text className={local.menuTitle}>Destaques</Text>
+            <Box direction="row" className={local.sectionHead}>
+              <Heading level={2} className={local.menuTitle}>
+                Destaques
+              </Heading>
+              <Text as="span" className={local.sectionCount}>
+                {visibleProducts.length} opções
+              </Text>
+            </Box>
             <Box className={local.products}>
-              <Box className={local.product}>
-                <Box className={local.productCopy}>
-                  <Text className={local.productName}>Especial da casa</Text>
-                  <Text className={local.productNote}>
-                    O favorito dos clientes, preparado na hora.
-                  </Text>
-                  <Text className={local.price}>R$ 29,90</Text>
-                </Box>
-                <Box className={local.productImage} aria-hidden="true">
-                  <Icon name="chef-hat" size="lg" />
-                  <Text as="span" className={local.add}>
-                    <Icon name="plus" size="sm" />
-                  </Text>
-                </Box>
-              </Box>
-              <Box className={local.product}>
-                <Box className={local.productCopy}>
-                  <Text className={local.productName}>Combo do dia</Text>
-                  <Text className={local.productNote}>
-                    Prato, acompanhamento e bebida.
-                  </Text>
-                  <Text className={local.price}>R$ 42,00</Text>
-                </Box>
-                <Box className={local.productImage} aria-hidden="true">
-                  <Icon name="shopping-bag" size="lg" />
-                  <Text as="span" className={local.add}>
-                    <Icon name="plus" size="sm" />
-                  </Text>
-                </Box>
-              </Box>
+              {visibleProducts.map((product) => (
+                <PreviewProductCard
+                  key={product.id}
+                  product={product}
+                  catalog={catalog}
+                />
+              ))}
             </Box>
           </Box>
 
-          <Box className={local.cartBar} aria-hidden="true">
-            <Text as="span">Ver sacola · 2 itens</Text>
-            <Text as="span" className={local.cartTotal}>
-              R$ 71,90
-            </Text>
-          </Box>
+          {device === 'mobile' && (
+            <Box
+              as="nav"
+              direction="row"
+              className={local.tabBar}
+              aria-label="Atalhos"
+            >
+              <Button variant="ghost" className={local.tab}>
+                <Text as="span" className={local.tabIcon}>
+                  <Icon name="bag" />
+                  <Text as="span" className={local.tabBadge}>
+                    2
+                  </Text>
+                </Text>
+                <Text as="span" className={local.tabLabel}>
+                  Sacola
+                </Text>
+              </Button>
+              <Button
+                variant="ghost"
+                className={`${local.tab} ${local.homeTab}`}
+              >
+                <Text as="span" className={local.homeRing}>
+                  <Icon name="home" />
+                </Text>
+                <Text as="span" className={local.tabLabel}>
+                  Início
+                </Text>
+              </Button>
+              <Button variant="ghost" className={local.tab}>
+                <Icon name="bell" />
+                <Text as="span" className={local.tabLabel}>
+                  Notificações
+                </Text>
+              </Button>
+              <Button variant="ghost" className={local.tab}>
+                <Icon name="user" />
+                <Text as="span" className={local.tabLabel}>
+                  Perfil
+                </Text>
+              </Button>
+            </Box>
+          )}
         </Box>
       </Box>
     </Box>

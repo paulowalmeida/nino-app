@@ -168,6 +168,7 @@ export const ProductCard = ({
           <ItemThumb
             name={item.name}
             imageUrl={imageUrl}
+            fallbackUrl={item.fallbackUrl}
             className={styles.photo}
             wrapperClassName={styles.photoWrap}
           />

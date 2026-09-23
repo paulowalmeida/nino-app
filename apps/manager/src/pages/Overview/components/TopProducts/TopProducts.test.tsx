@@ -16,7 +16,7 @@ describe('TopProducts', () => {
 
     render(<TopProducts />)
 
-    expect(screen.getByLabelText(topProductsMock.label)).toBeInTheDocument()
+    expect(screen.getByLabelText(topProductsMock.label)).toHaveAttribute('id', 'ultimos-vendidos')
   })
 
   it('renders the empty product ranking', () => {

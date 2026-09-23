@@ -45,6 +45,7 @@ describe('Sidebar closing the drawer', () => {
           onClose={() => undefined}
           collapsed={false}
           onToggleCollapse={() => undefined}
+          onOpenCommandPalette={() => undefined}
         />
       </MemoryRouter>
     )
@@ -59,6 +60,7 @@ describe('Sidebar closing the drawer', () => {
           onClose={() => undefined}
           collapsed={false}
           onToggleCollapse={() => undefined}
+          onOpenCommandPalette={() => undefined}
         />
       </MemoryRouter>
     )

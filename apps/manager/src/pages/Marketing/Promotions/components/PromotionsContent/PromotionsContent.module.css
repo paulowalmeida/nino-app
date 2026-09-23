@@ -1,0 +1,55 @@
+@reference "@nino/ds/globals.css";
+
+.layout {
+  @apply grid gap-6 xl:grid-cols-[minmax(0,1.4fr)_minmax(20rem,0.8fr)];
+}
+
+.editor,
+.list {
+  @apply flex flex-col gap-5;
+}
+
+.sectionHeader {
+  @apply flex flex-col gap-1;
+}
+
+.formGrid {
+  @apply grid gap-4 md:grid-cols-2;
+}
+
+.field,
+.fieldWide {
+  @apply flex flex-col gap-1.5;
+}
+
+.fieldWide {
+  @apply md:col-span-2;
+}
+
+.group {
+  @apply flex flex-col gap-2;
+}
+
+.checkGrid {
+  @apply grid gap-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4;
+}
+
+.checkItem {
+  @apply flex items-center gap-2 border-b border-border px-1 py-2 text-sm text-fg-strong;
+}
+
+.switchRow {
+  @apply flex items-center gap-2;
+}
+
+.summary {
+  @apply flex flex-col gap-1 border-l-2 border-brand bg-brand-soft/20 px-4 py-3;
+}
+
+.promotionRow {
+  @apply flex items-center justify-between gap-3 border-b border-border pb-4 last:border-b-0 last:pb-0;
+}
+
+.skeleton {
+  @apply min-h-96 w-full;
+}

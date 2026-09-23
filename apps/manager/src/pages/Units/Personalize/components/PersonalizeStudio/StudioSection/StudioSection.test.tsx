@@ -1,5 +1,4 @@
-import { render, screen, waitFor } from '@testing-library/react'
-import userEvent from '@testing-library/user-event'
+import { render, screen } from '@testing-library/react'
 import { describe, expect, it } from 'vitest'
 
 import { StudioSection } from './StudioSection'
@@ -18,20 +17,14 @@ describe(StudioSection.name, () => {
     expect(screen.getByText('Conteúdo da seção')).toBeVisible()
   })
 
-  it('folds the content away when the title is clicked', async () => {
+  it('keeps the single configuration visible without a collapsible wrapper', () => {
     render(
       <StudioSection {...studioSectionMock}>
         <p>Conteúdo da seção</p>
       </StudioSection>
     )
 
-    const toggle = screen.getByRole('button', { name: /Cores/ })
-    expect(toggle).toHaveAttribute('aria-expanded', 'true')
-
-    await userEvent.click(toggle)
-
-    await waitFor(() =>
-      expect(toggle).toHaveAttribute('aria-expanded', 'false')
-    )
+    expect(screen.queryByRole('button', { name: /Cores/ })).toBeNull()
+    expect(screen.getByText('Conteúdo da seção')).toBeVisible()
   })
 })

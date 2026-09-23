@@ -9,7 +9,10 @@ describe(PersonalizeHeader.name, () => {
     render(<PersonalizeHeader />)
 
     expect(
-      screen.getByRole('heading', { level: 1, name: personalizeHeaderMock.title })
+      screen.getByRole('heading', {
+        level: 1,
+        name: personalizeHeaderMock.title,
+      })
     ).toBeInTheDocument()
     expect(
       screen.getByText(/nada vai pro ar antes de você publicar/)

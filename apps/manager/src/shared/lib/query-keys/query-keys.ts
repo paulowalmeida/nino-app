@@ -107,6 +107,10 @@ export const queryKeys = {
     theme: (unitId: string) =>
       [...queryKeys.unit.all(unitId), 'theme'] as const,
   },
+  promotions: {
+    all: (unitId: string) => ['promotions', unitId] as const,
+    list: (unitId: string) => [...queryKeys.promotions.all(unitId), 'list'] as const,
+  },
   consumers: {
     all: (unitId: string) => ['consumers', unitId] as const,
     list: (unitId: string, search?: string) =>

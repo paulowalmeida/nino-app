@@ -55,7 +55,10 @@ describe(PersonalizeStudio.name, () => {
   it('swaps the panel for the part chosen in the tree', async () => {
     render(<PersonalizeStudio />)
 
-    await userEvent.click(screen.getByRole('tab', { name: 'Acompanhamento' }))
+    await userEvent.click(screen.getByRole('combobox'))
+    await userEvent.click(
+      screen.getByRole('option', { name: 'Acompanhamento' })
+    )
 
     expect(
       screen.getByRole('region', { name: 'Acompanhamento' })
@@ -74,7 +77,8 @@ describe(PersonalizeStudio.name, () => {
   it('saves the edited draft without putting it on the storefront', async () => {
     render(<PersonalizeStudio />)
 
-    await userEvent.click(screen.getByRole('tab', { name: 'Carregamento' }))
+    await userEvent.click(screen.getByRole('combobox'))
+    await userEvent.click(screen.getByRole('option', { name: 'Carregamento' }))
     await userEvent.click(screen.getByLabelText('Pontos'))
     fireEvent.click(screen.getByRole('button', { name: 'Salvar rascunho' }))
 
@@ -89,7 +93,8 @@ describe(PersonalizeStudio.name, () => {
   it('publishes the edited draft with the change applied', async () => {
     render(<PersonalizeStudio />)
 
-    await userEvent.click(screen.getByRole('tab', { name: 'Carregamento' }))
+    await userEvent.click(screen.getByRole('combobox'))
+    await userEvent.click(screen.getByRole('option', { name: 'Carregamento' }))
     await userEvent.click(screen.getByLabelText('Pontos'))
     fireEvent.click(screen.getByRole('button', { name: 'Publicar na loja' }))
 

@@ -25,6 +25,7 @@ export const ProductHero = () => {
   )
 
   const images = product?.images ?? []
+  const fallbackUrl = product?.fallbackUrl
 
   return (
     <Box className={styles.hero}>
@@ -40,6 +41,14 @@ export const ProductHero = () => {
               placeholder={fallback}
             />
           ))}
+        />
+      ) : fallbackUrl ? (
+        <Image
+          src={fallbackUrl}
+          alt=""
+          className={styles.photo}
+          wrapperClassName={styles.photoWrap}
+          placeholder={fallback}
         />
       ) : (
         fallback

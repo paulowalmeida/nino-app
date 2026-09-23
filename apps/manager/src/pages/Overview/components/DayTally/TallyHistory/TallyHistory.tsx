@@ -24,7 +24,12 @@ const clock = new Intl.DateTimeFormat('pt-BR', {
 
 export const TallyHistory = ({ recent }: TallyHistoy) => {
   return (
-    <Box as="section" aria-label="Últimos pedidos" className={styles.section}>
+    <Box
+      as="section"
+      id="ultimos-pedidos"
+      aria-label="Últimos pedidos"
+      className={styles.section}
+    >
       <Eyebrow className="mb-3">Últimos pedidos</Eyebrow>
 
       <Box as="ul" direction="column">

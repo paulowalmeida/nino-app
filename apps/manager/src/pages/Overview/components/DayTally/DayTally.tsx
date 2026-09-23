@@ -36,7 +36,12 @@ export const DayTally = () => {
   }))
 
   return (
-    <Box as="section" aria-label="O dia até agora" className="mb-8">
+    <Box
+      as="section"
+      id="resumo-do-dia"
+      aria-label="O dia até agora"
+      className="mb-8"
+    >
       <Eyebrow className="mb-3">O dia até agora</Eyebrow>
 
       <Box className={styles.tally}>
@@ -73,7 +78,7 @@ export const DayTally = () => {
       {isPending && <DayTallySkeleton />}
 
       {!isPending && paymentBars.length > 0 && (
-        <Box className={styles.payments}>
+        <Box id="pagamentos-hoje" className={styles.payments}>
           <Eyebrow className="mb-3">Por forma de pagamento</Eyebrow>
           <BarList items={paymentBars} className="text-brand" />
         </Box>
