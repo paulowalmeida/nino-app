@@ -23,9 +23,7 @@ vi.mock('@tanstack/react-query', async (importOriginal) => {
 describe('usePlaceOrder', () => {
   beforeEach(() => {
     vi.clearAllMocks()
-    vi.spyOn(crypto, 'randomUUID').mockReturnValue(
-      '11111111-1111-4111-8111-111111111111'
-    )
+    vi.stubGlobal('crypto', { randomUUID: vi.fn(() => 'checkout-key-1') })
   })
 
   it('creates a consumer-owned order with an idempotency key', () => {
@@ -34,8 +32,8 @@ describe('usePlaceOrder', () => {
     mutationFn?.(usePlaceOrderMock.input)
 
     expect(orderService.createMine).toHaveBeenCalledWith(
-      expect.anything(),
-      '11111111-1111-4111-8111-111111111111'
+      expect.any(Object),
+      'checkout-key-1'
     )
     expect(orderService.createGuest).not.toHaveBeenCalled()
   })
@@ -46,9 +44,28 @@ describe('usePlaceOrder', () => {
     mutationFn?.(usePlaceOrderMock.input)
 
     expect(orderService.createGuest).toHaveBeenCalledWith(
-      expect.anything(),
-      '11111111-1111-4111-8111-111111111111'
+      expect.any(Object),
+      'checkout-key-1'
     )
     expect(orderService.createMine).not.toHaveBeenCalled()
+  })
+
+  it('reuses the same key when the customer retries the same checkout', () => {
+    renderHook(() => usePlaceOrder(false))
+
+    mutationFn?.(usePlaceOrderMock.input)
+    mutationFn?.(usePlaceOrderMock.input)
+
+    expect(orderService.createGuest).toHaveBeenNthCalledWith(
+      1,
+      expect.any(Object),
+      'checkout-key-1'
+    )
+    expect(orderService.createGuest).toHaveBeenNthCalledWith(
+      2,
+      expect.any(Object),
+      'checkout-key-1'
+    )
+    expect(globalThis.crypto.randomUUID).toHaveBeenCalledOnce()
   })
 })

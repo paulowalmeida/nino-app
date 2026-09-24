@@ -50,6 +50,7 @@ export const useCheckoutWorkflow = ({
     mutate: createOrder,
     isPending: isSubmitting,
     isError: submitFailed,
+    error: submitError,
     data: created,
     error: submitError,
   } = usePlaceOrder(isAuthenticated)

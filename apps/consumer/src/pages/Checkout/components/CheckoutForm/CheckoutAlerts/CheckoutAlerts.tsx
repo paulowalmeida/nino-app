@@ -19,8 +19,8 @@ export const CheckoutAlerts = ({
   <>
     {isSubmitFailed && (
       <Alert variant="error" title="O pedido não foi enviado">
-        {submitErrorMessage ??
-          'Não foi possível enviar o pedido. Tente confirmar novamente.'}
+        {submitErrorMessage ||
+          'Não foi possível enviar o pedido. Confira os dados e tente novamente.'}
       </Alert>
     )}
 

@@ -1,3 +1,4 @@
+import { useRef } from 'react'
 import { useMutation } from '@tanstack/react-query'
 
 import type { CartLine } from '@custom_types/cart/cart-line'
@@ -13,21 +14,27 @@ type PlaceOrderInput = {
   cartLines: CartLine[]
 }
 
-const createIdempotencyKey = (): string => crypto.randomUUID()
+/**
+ * A chave vive durante toda a tentativa de checkout. Repetir o submit após
+ * timeout/rede ruim reaproveita a mesma chave e deixa a API devolver o mesmo
+ * pedido em vez de criar outro.
+ */
+export const usePlaceOrder = (isAuthenticated: boolean) => {
+  const idempotencyKey = useRef<string | null>(null)
+  if (!idempotencyKey.current) {
+    idempotencyKey.current = globalThis.crypto.randomUUID()
+  }
 
-export const usePlaceOrder = (isAuthenticated: boolean) =>
-  useMutation({
-    mutationFn: ({ values, store, cartLines }: PlaceOrderInput) => {
-      const idempotencyKey = createIdempotencyKey()
-
-      return isAuthenticated
+  return useMutation({
+    mutationFn: ({ values, store, cartLines }: PlaceOrderInput) =>
+      isAuthenticated
         ? orderService.createMine(
             consumerOrderRequest(values, store, cartLines),
-            idempotencyKey
+            idempotencyKey.current as string
           )
         : orderService.createGuest(
             guestOrderRequest(values, store, cartLines),
-            idempotencyKey
-          )
-    },
+            idempotencyKey.current as string
+          ),
   })
+}
