@@ -12,6 +12,7 @@ import { useStorefrontFacade } from '@pages/Storefront/facades/useStorefrontFaca
 import { displayName, isOpen, storeInitials } from '@utils/store-info'
 import { firstName } from '@shared/utils/consumer-name/consumer-name'
 import { formatPhone } from '@utils/phone'
+import { storeThemeLogoUrl } from '@utils/store-theme/store-theme'
 
 import styles from './StoreTopBar.module.css'
 
@@ -61,6 +62,7 @@ export const StoreTopBar = ({ slug, isDocked }: StoreTopBarProps) => {
     : formatPhone(consumer?.phone ?? '')
 
   const isStoreOpen = isHoursPending || isOpen(store, hours)
+  const logoUrl = storeThemeLogoUrl(store)
 
   return (
     <Box
@@ -71,7 +73,7 @@ export const StoreTopBar = ({ slug, isDocked }: StoreTopBarProps) => {
         <a href={base || '/'} className={styles.brand}>
           <Box className={styles.logo} aria-hidden="true">
             <Image
-              src={store.logoUrl}
+              src={logoUrl}
               alt=""
               className={styles.logoImg}
               placeholder={storeInitials(store)}
