@@ -23,6 +23,7 @@ import { useStorefrontFacade } from '@pages/Storefront/facades/useStorefrontFaca
 import { useStoreHome } from '@hooks/useStoreHome/useStoreHome'
 import { resolveSlug } from '@utils/resolve-slug'
 import { riseDelay } from '@utils/rise-delay'
+import { storeThemePrimaryColor } from '@utils/store-theme/store-theme'
 
 import styles from './StorefrontContent.module.css'
 import motion from '@styles/motion.module.css'
@@ -41,6 +42,7 @@ export const StorefrontContent = ({ pathSlug }: StorefrontContentProps) => {
   const isHeaderDocked = useDockedHeader(searchField, DOCKED_HEADER_OFFSET_PX)
   const { search, visibleSections, isSearching } = home
   const blocks = useStoreHome()
+  const tint = storeThemePrimaryColor(home.store)
 
   useLayoutEffect(() => {
     reset()
@@ -52,9 +54,7 @@ export const StorefrontContent = ({ pathSlug }: StorefrontContentProps) => {
     <Box
       className={styles.page}
       style={
-        home.store?.primaryColor
-          ? ({ '--store-tint': home.store.primaryColor } as React.CSSProperties)
-          : undefined
+        tint ? ({ '--store-tint': tint } as React.CSSProperties) : undefined
       }
     >
       <StoreTopBar slug={pathSlug ?? ''} isDocked={isHeaderDocked} />
