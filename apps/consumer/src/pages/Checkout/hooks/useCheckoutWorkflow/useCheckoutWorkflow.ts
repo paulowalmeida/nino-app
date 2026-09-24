@@ -52,7 +52,6 @@ export const useCheckoutWorkflow = ({
     isError: submitFailed,
     error: submitError,
     data: created,
-    error: submitError,
   } = usePlaceOrder(isAuthenticated)
 
   const {
