@@ -6,6 +6,7 @@ export type Store = {
   slug: string
   customName: string | null
   logoUrl: string | null
+  bannerUrl?: string | null
   primaryColor: string | null
   secondaryColor?: string | null
   tertiaryColor?: string | null

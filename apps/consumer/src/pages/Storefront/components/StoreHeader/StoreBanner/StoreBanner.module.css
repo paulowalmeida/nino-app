@@ -7,21 +7,12 @@
  * ela vira uma tarja, não uma capa de loja.
  */
 .banner {
-  @apply relative w-full overflow-hidden;
+  @apply relative w-full overflow-hidden bg-cover bg-center;
   @apply h-36;
   @apply sm:mx-auto sm:mt-4 sm:h-auto sm:w-[calc(100%-3rem)];
   @apply sm:aspect-[1300/250] sm:max-h-60 sm:rounded-4;
   max-width: var(--storefront-column);
-  background: linear-gradient(
-    180deg,
-    var(--store-tint, var(--color-brand)) 0%,
-    color-mix(
-        in srgb,
-        var(--store-tint, var(--color-brand)) 82%,
-        var(--color-warm-950)
-      )
-      100%
-  );
+  background-color: var(--store-tint, var(--color-brand));
 }
 
 .banner::before {

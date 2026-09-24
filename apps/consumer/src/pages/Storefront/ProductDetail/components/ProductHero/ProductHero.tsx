@@ -7,6 +7,7 @@ import { Icon } from '@nino/ds/components/Icon'
 import { Image } from '@nino/ds/components/Image'
 import { Text } from '@nino/ds/components/Text'
 import { useProductDetailFacade } from '@pages/Storefront/ProductDetail/facades/useProductDetailFacade/useProductDetailFacade'
+import { resolveApiAssetUrl } from '@utils/api-asset-url/api-asset-url'
 import { categoryIcon } from '@utils/category-icon'
 import { resolveBackHref } from '@utils/resolve-back-href'
 
@@ -25,7 +26,7 @@ export const ProductHero = () => {
   )
 
   const images = product?.images ?? []
-  const fallbackUrl = product?.fallbackUrl
+  const fallbackUrl = resolveApiAssetUrl(product?.fallbackUrl)
 
   return (
     <Box className={styles.hero}>

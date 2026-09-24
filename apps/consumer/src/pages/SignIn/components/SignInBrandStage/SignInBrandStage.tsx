@@ -4,17 +4,14 @@ import { Box } from '@nino/ds/components/Box'
 import { Icon } from '@nino/ds/components/Icon'
 import { Text } from '@nino/ds/components/Text'
 import { displayName, storeInitials } from '@utils/store-info'
+import { storeThemeLogoUrl } from '@utils/store-theme/store-theme'
 import { useSignInFacade } from '@pages/sign-in/facades/useSignInFacade/useSignInFacade'
 
 import styles from './SignInBrandStage.module.css'
 
-/**
- * A fachada da loja. É o único lugar da tela onde a cor da loja toma conta,
- * e a curva na base existe para essa mancha terminar como um toldo em vez de
- * uma faixa de sistema.
- */
 export const SignInBrandStage = () => {
   const { home, store } = useSignInFacade()
+  const logoUrl = storeThemeLogoUrl(store)
 
   return (
     <Box className={styles.stage}>
@@ -29,9 +26,9 @@ export const SignInBrandStage = () => {
       {store && (
         <Box className={styles.identity}>
           <Box className={styles.mark}>
-            {store.logoUrl ? (
+            {logoUrl ? (
               <img
-                src={store.logoUrl}
+                src={logoUrl}
                 alt={displayName(store)}
                 className={styles.logo}
               />

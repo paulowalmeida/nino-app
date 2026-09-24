@@ -1,12 +1,12 @@
 import { Outlet } from 'react-router'
 
 import { Box } from '@nino/ds/components/Box'
-import { useStoreTint } from '@shared/hooks/useStoreTint/useStoreTint'
+import { useStoreTheme } from '@shared/hooks/useStoreTheme/useStoreTheme'
 
 import styles from './StoreLayout.module.css'
 
 export const StoreLayout = () => {
-  const tint = useStoreTint()
+  const tint = useStoreTheme()
 
   return (
     <Box
