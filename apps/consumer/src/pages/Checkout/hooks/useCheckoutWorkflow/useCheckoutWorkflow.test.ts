@@ -4,6 +4,7 @@ import { describe, expect, it, vi } from 'vitest'
 import { checkoutTotals } from '@pages/checkout/utils/checkout-totals/checkout-totals'
 import { useDeliveryQuote } from '@pages/checkout/hooks/useDeliveryQuote/useDeliveryQuote'
 import { usePlaceOrder } from '@pages/checkout/hooks/usePlaceOrder/usePlaceOrder'
+import { ApiError } from '@nino/lib/utils/api-error'
 
 import { useCheckoutWorkflow } from './useCheckoutWorkflow'
 import { useCheckoutWorkflowMock } from './useCheckoutWorkflow.mock'
@@ -67,4 +68,47 @@ describe('useCheckoutWorkflow', () => {
     expect(result.current.deliveryNote).toBe('Chega em cerca de 40 min')
     expect(clearCart).not.toHaveBeenCalled()
   })
+})
+
+
+it('shows a friendly message when guest checkout is throttled', () => {
+  const clearCart = vi.fn()
+  vi.mocked(usePlaceOrder).mockReturnValue({
+    mutate: vi.fn(),
+    isPending: false,
+    isError: true,
+    error: new ApiError(429, 'ThrottlerException: Too Many Requests'),
+    data: undefined,
+  } as unknown as ReturnType<typeof usePlaceOrder>)
+  vi.mocked(useDeliveryQuote).mockReturnValue({
+    quote: undefined,
+    isFetching: false,
+  } as unknown as ReturnType<typeof useDeliveryQuote>)
+  vi.mocked(checkoutTotals).mockReturnValue({
+    subtotal: 36,
+    deliveryFee: 0,
+    total: 36,
+    deliveryNote: '',
+  })
+
+  const { result } = renderHook(() =>
+    useCheckoutWorkflow({
+      store: { id: 'store-1' } as unknown as Parameters<
+        typeof useCheckoutWorkflow
+      >[0]['store'],
+      consumer: null,
+      addresses: [],
+      zones: [],
+      isLoadingZones: false,
+      cartLines: [],
+      estimatedMinutes: undefined,
+      paymentOptions: ['CASH'],
+      clearCart,
+      slug: useCheckoutWorkflowMock.slug,
+    })
+  )
+
+  expect(result.current.submitErrorMessage).toBe(
+    'Muitas tentativas em pouco tempo. Aguarde alguns segundos e tente novamente.'
+  )
 })

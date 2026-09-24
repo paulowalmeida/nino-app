@@ -12,6 +12,7 @@ import { checkoutTotals } from '@pages/checkout/utils/checkout-totals/checkout-t
 import { useDeliveryQuote } from '@pages/checkout/hooks/useDeliveryQuote/useDeliveryQuote'
 import { usePlaceOrder } from '@pages/checkout/hooks/usePlaceOrder/usePlaceOrder'
 import { writeLastOrder } from '@utils/last-order'
+import { ApiError } from '@nino/lib/utils/api-error'
 
 type UseCheckoutWorkflowParams = {
   store: Store | undefined
@@ -169,7 +170,11 @@ export const useCheckoutWorkflow = ({
     isSubmitting,
     submitFailed,
     submitErrorMessage:
-      submitError instanceof Error ? submitError.message : undefined,
+      submitError instanceof ApiError && submitError.status === 429
+        ? 'Muitas tentativas em pouco tempo. Aguarde alguns segundos e tente novamente.'
+        : submitError instanceof Error
+          ? submitError.message
+          : undefined,
     isQuoting,
     minimumOrderAmount: minimum,
     isBelowMinimum,
