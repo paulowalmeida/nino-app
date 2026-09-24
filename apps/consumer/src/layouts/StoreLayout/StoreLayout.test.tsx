@@ -2,15 +2,15 @@ import { render, screen } from '@testing-library/react'
 import { MemoryRouter, Route, Routes } from 'react-router'
 import { describe, expect, it, vi } from 'vitest'
 
-import { useStoreTint } from '@shared/hooks/useStoreTint/useStoreTint'
+import { useStoreTheme } from '@shared/hooks/useStoreTheme/useStoreTheme'
 import { StoreLayout } from './StoreLayout'
 import { storeLayoutMock } from './StoreLayout.mock'
 
-vi.mock('@shared/hooks/useStoreTint/useStoreTint')
+vi.mock('@shared/hooks/useStoreTheme/useStoreTheme')
 
 describe('StoreLayout', () => {
   it('provides the store tint and renders its route outlet', () => {
-    vi.mocked(useStoreTint).mockReturnValue(storeLayoutMock.tint)
+    vi.mocked(useStoreTheme).mockReturnValue(storeLayoutMock.tint)
 
     render(
       <MemoryRouter>
