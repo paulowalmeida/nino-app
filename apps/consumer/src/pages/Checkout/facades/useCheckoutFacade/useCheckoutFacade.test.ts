@@ -77,9 +77,18 @@ describe('useCheckoutFacadeValue', () => {
       checkout as unknown as ReturnType<typeof useCheckoutWorkflow>
     )
 
-    const { result } = renderHook(() => useCheckoutFacadeValue())
+    const { result } = renderHook(() =>
+      useCheckoutFacadeValue(useCheckoutFacadeMock.slug)
+    )
 
     expect(useStore).toHaveBeenCalledWith(useCheckoutFacadeMock.slug)
+    expect(useCheckoutResume).toHaveBeenCalledWith(
+      expect.objectContaining({
+        storeSlug: useCheckoutFacadeMock.slug,
+        isStoreReady: true,
+        cartItemCount: 0,
+      })
+    )
     expect(result.current.store?.id).toBe(useCheckoutFacadeMock.storeId)
     expect(result.current.setSlug).toBe(setSlug)
     expect(result.current.onSubmit).toBe(checkout.onSubmit)

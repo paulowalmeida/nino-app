@@ -9,10 +9,15 @@ import { useCheckoutStore } from '@pages/checkout/states/checkout/checkout.state
 import { useConsumerSession } from '@shared/hooks/useConsumerSession/useConsumerSession'
 import { useMyAddresses } from '@shared/hooks/useMyAddresses/useMyAddresses'
 import { isOpen } from '@utils/store-info'
+import { resolveSlug } from '@utils/resolve-slug'
 
 export const useCheckoutFacadeValue = (pathSlug?: string | null) => {
-  const slug = useCheckoutStore((state) => state.slug)
+  const storedSlug = useCheckoutStore((state) => state.slug)
   const setSlug = useCheckoutStore((state) => state.setSlug)
+  // WHY: a rota/host é a fonte síncrona da loja. Esperar o effect de Checkout
+  // popular o Zustand cria um frame em que a sacola parece vazia e pode
+  // reabrir um pedido antigo antes de a loja atual terminar de carregar.
+  const slug = resolveSlug(pathSlug ?? undefined) ?? storedSlug
   const storeQuery = useStore(slug)
   const { consumer } = useConsumerSession()
   const addressesQuery = useMyAddresses(consumer !== null)
@@ -35,11 +40,13 @@ export const useCheckoutFacadeValue = (pathSlug?: string | null) => {
     clearCart: cart.clear,
     slug,
   })
-  const lastOrder = useCheckoutResume(
-    pathSlug ?? null,
-    checkout.created,
-    cartLines.length
-  )
+  const lastOrder = useCheckoutResume({
+    pathSlug: pathSlug ?? null,
+    storeSlug: slug,
+    isStoreReady: !storeQuery.isPending && !!storeQuery.store,
+    created: checkout.created,
+    cartItemCount: cartLines.length,
+  })
 
   return {
     store: storeQuery.store,

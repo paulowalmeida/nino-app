@@ -12,7 +12,7 @@ vi.mock('react-router', () => ({ useNavigate: () => navigate }))
 vi.mock('@utils/last-order')
 
 describe('useCheckoutResume', () => {
-  it('redirects an empty checkout to the stored order', () => {
+  it('redirects an empty resolved checkout to the stored order from the same store', () => {
     vi.mocked(readLastOrder).mockReturnValue({
       orderId: useCheckoutResumeMock.orderId,
       token: useCheckoutResumeMock.token,
@@ -20,7 +20,13 @@ describe('useCheckoutResume', () => {
     })
 
     const { result } = renderHook(() =>
-      useCheckoutResume(useCheckoutResumeMock.pathSlug, undefined, 0)
+      useCheckoutResume({
+        pathSlug: useCheckoutResumeMock.pathSlug,
+        storeSlug: useCheckoutResumeMock.pathSlug,
+        isStoreReady: true,
+        created: undefined,
+        cartItemCount: 0,
+      })
     )
 
     expect(result.current?.orderId).toBe(useCheckoutResumeMock.orderId)
@@ -28,5 +34,66 @@ describe('useCheckoutResume', () => {
       '/loja-do-ze/pedido/order-1?token=token-1',
       { replace: true }
     )
+  })
+
+  it('does not treat the cart as empty before the current store resolves', () => {
+    vi.mocked(readLastOrder).mockReturnValue({
+      orderId: useCheckoutResumeMock.orderId,
+      token: useCheckoutResumeMock.token,
+      slug: useCheckoutResumeMock.pathSlug,
+    })
+
+    renderHook(() =>
+      useCheckoutResume({
+        pathSlug: useCheckoutResumeMock.pathSlug,
+        storeSlug: useCheckoutResumeMock.pathSlug,
+        isStoreReady: false,
+        created: undefined,
+        cartItemCount: 0,
+      })
+    )
+
+    expect(navigate).not.toHaveBeenCalled()
+  })
+
+  it('ignores a stored order that belongs to another store', () => {
+    vi.mocked(readLastOrder).mockReturnValue({
+      orderId: useCheckoutResumeMock.orderId,
+      token: useCheckoutResumeMock.token,
+      slug: 'outra-loja',
+    })
+
+    const { result } = renderHook(() =>
+      useCheckoutResume({
+        pathSlug: useCheckoutResumeMock.pathSlug,
+        storeSlug: useCheckoutResumeMock.pathSlug,
+        isStoreReady: true,
+        created: undefined,
+        cartItemCount: 0,
+      })
+    )
+
+    expect(result.current).toBeNull()
+    expect(navigate).not.toHaveBeenCalled()
+  })
+
+  it('keeps the current checkout when the cart has items', () => {
+    vi.mocked(readLastOrder).mockReturnValue({
+      orderId: useCheckoutResumeMock.orderId,
+      token: useCheckoutResumeMock.token,
+      slug: useCheckoutResumeMock.pathSlug,
+    })
+
+    renderHook(() =>
+      useCheckoutResume({
+        pathSlug: useCheckoutResumeMock.pathSlug,
+        storeSlug: useCheckoutResumeMock.pathSlug,
+        isStoreReady: true,
+        created: undefined,
+        cartItemCount: 1,
+      })
+    )
+
+    expect(navigate).not.toHaveBeenCalled()
   })
 })
