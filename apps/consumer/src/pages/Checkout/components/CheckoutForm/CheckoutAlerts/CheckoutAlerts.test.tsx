@@ -11,4 +11,18 @@ describe('CheckoutAlerts', () => {
     expect(screen.getByText(checkoutAlertsMock.failedTitle)).toBeInTheDocument()
     expect(screen.getByText(checkoutAlertsMock.closedTitle)).toBeInTheDocument()
   })
+
+  it('shows the API reason when order creation fails', () => {
+    render(
+      <CheckoutAlerts
+        isSubmitFailed
+        isStoreClosed={false}
+        submitErrorMessage="Forma de pagamento não aceita pela loja"
+      />
+    )
+
+    expect(
+      screen.getByText('Forma de pagamento não aceita pela loja')
+    ).toBeInTheDocument()
+  })
 })

@@ -21,23 +21,34 @@ vi.mock('@tanstack/react-query', async (importOriginal) => {
 })
 
 describe('usePlaceOrder', () => {
-  beforeEach(() => vi.clearAllMocks())
+  beforeEach(() => {
+    vi.clearAllMocks()
+    vi.spyOn(crypto, 'randomUUID').mockReturnValue(
+      '11111111-1111-4111-8111-111111111111'
+    )
+  })
 
-  it('creates a consumer-owned order when a session exists', () => {
+  it('creates a consumer-owned order with an idempotency key', () => {
     renderHook(() => usePlaceOrder(true))
 
     mutationFn?.(usePlaceOrderMock.input)
 
-    expect(orderService.createMine).toHaveBeenCalledOnce()
+    expect(orderService.createMine).toHaveBeenCalledWith(
+      expect.anything(),
+      '11111111-1111-4111-8111-111111111111'
+    )
     expect(orderService.createGuest).not.toHaveBeenCalled()
   })
 
-  it('creates a guest order when there is no session', () => {
+  it('creates a guest order with an idempotency key', () => {
     renderHook(() => usePlaceOrder(false))
 
     mutationFn?.(usePlaceOrderMock.input)
 
-    expect(orderService.createGuest).toHaveBeenCalledOnce()
+    expect(orderService.createGuest).toHaveBeenCalledWith(
+      expect.anything(),
+      '11111111-1111-4111-8111-111111111111'
+    )
     expect(orderService.createMine).not.toHaveBeenCalled()
   })
 })

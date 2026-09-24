@@ -10,18 +10,22 @@ import { api } from '@shared/services/http/http.service'
 /** Pedido sem conta — o único jeito de comprar até o login do cliente existir. */
 export const orderService = {
   createMine: (
-    data: CreateConsumerOrderRequest
+    data: CreateConsumerOrderRequest,
+    idempotencyKey: string
   ): Promise<OrderCreatedResponse> =>
     api.create<CreateConsumerOrderRequest, OrderCreatedResponse>(
       'my/orders',
-      data
+      data,
+      { headers: { 'Idempotency-Key': idempotencyKey } }
     ),
   createGuest: (
-    data: CreateGuestOrderRequest
+    data: CreateGuestOrderRequest,
+    idempotencyKey: string
   ): Promise<GuestOrderCreatedResponse> =>
     api.create<CreateGuestOrderRequest, GuestOrderCreatedResponse>(
       'orders/guest',
-      data
+      data,
+      { headers: { 'Idempotency-Key': idempotencyKey } }
     ),
   getGuestStatus: (orderId: string, token: string): Promise<GuestOrderStatus> =>
     api.getAll<GuestOrderStatus>(`orders/guest/${orderId}/status`, { token }),

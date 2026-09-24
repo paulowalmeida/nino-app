@@ -51,6 +51,7 @@ export const CheckoutForm = ({
     onSubmit,
     isDelivery,
     submitFailed,
+    submitErrorMessage,
     isBelowMinimum,
     minimumOrderAmount,
   } = facade
@@ -126,6 +127,7 @@ export const CheckoutForm = ({
               <Box className={styles.alertsArea}>
                 <CheckoutAlerts
                   isSubmitFailed={submitFailed}
+                  submitErrorMessage={submitErrorMessage}
                   isStoreClosed={!isStoreOpen}
                   isBelowMinimum={isBelowMinimum}
                   minimumOrderAmount={minimumOrderAmount}

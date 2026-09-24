@@ -3,6 +3,7 @@ import { brl } from '@utils/money'
 
 type CheckoutAlertsProps = {
   isSubmitFailed: boolean
+  submitErrorMessage?: string
   isStoreClosed: boolean
   isBelowMinimum?: boolean
   minimumOrderAmount?: number
@@ -10,6 +11,7 @@ type CheckoutAlertsProps = {
 
 export const CheckoutAlerts = ({
   isSubmitFailed,
+  submitErrorMessage,
   isStoreClosed,
   isBelowMinimum,
   minimumOrderAmount = 0,
@@ -17,7 +19,8 @@ export const CheckoutAlerts = ({
   <>
     {isSubmitFailed && (
       <Alert variant="error" title="O pedido não foi enviado">
-        Confira os campos marcados e toque em confirmar de novo.
+        {submitErrorMessage ??
+          'Não foi possível enviar o pedido. Tente confirmar novamente.'}
       </Alert>
     )}
 

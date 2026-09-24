@@ -13,12 +13,21 @@ type PlaceOrderInput = {
   cartLines: CartLine[]
 }
 
+const createIdempotencyKey = (): string => crypto.randomUUID()
+
 export const usePlaceOrder = (isAuthenticated: boolean) =>
   useMutation({
-    mutationFn: ({ values, store, cartLines }: PlaceOrderInput) =>
-      isAuthenticated
+    mutationFn: ({ values, store, cartLines }: PlaceOrderInput) => {
+      const idempotencyKey = createIdempotencyKey()
+
+      return isAuthenticated
         ? orderService.createMine(
-            consumerOrderRequest(values, store, cartLines)
+            consumerOrderRequest(values, store, cartLines),
+            idempotencyKey
           )
-        : orderService.createGuest(guestOrderRequest(values, store, cartLines)),
+        : orderService.createGuest(
+            guestOrderRequest(values, store, cartLines),
+            idempotencyKey
+          )
+    },
   })

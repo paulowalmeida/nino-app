@@ -51,6 +51,7 @@ export const useCheckoutWorkflow = ({
     isPending: isSubmitting,
     isError: submitFailed,
     data: created,
+    error: submitError,
   } = usePlaceOrder(isAuthenticated)
 
   const {
@@ -167,6 +168,8 @@ export const useCheckoutWorkflow = ({
     created,
     isSubmitting,
     submitFailed,
+    submitErrorMessage:
+      submitError instanceof Error ? submitError.message : undefined,
     isQuoting,
     minimumOrderAmount: minimum,
     isBelowMinimum,
