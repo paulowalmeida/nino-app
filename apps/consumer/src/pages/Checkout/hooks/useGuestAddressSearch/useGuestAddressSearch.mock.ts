@@ -17,6 +17,7 @@ export const guestAddressSearchResultMock = {
   providerId: 'place-1',
   precision: 'point',
   zipCode: '66000-000',
+  number: '123',
   street: 'Rua das Flores',
   neighborhood: 'Centro',
   city: 'Belém',
