@@ -32,6 +32,32 @@
   will-change: transform;
 }
 
+/* A arte determina a largura, limitada a 900 px. Não há uma faixa fixa que
+ * corte a imagem nem espaço lateral artificial. */
+.customBanner {
+  width: fit-content;
+  height: auto;
+  aspect-ratio: auto;
+  max-width: min(100%, 900px);
+  max-height: none;
+  margin-inline: auto;
+  background-color: transparent;
+}
+
+.customBanner::before {
+  display: none;
+}
+
+.customImage {
+  display: block;
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  max-height: 250px;
+  margin: auto;
+  border-radius: inherit;
+}
+
 .mark {
   @apply pointer-events-none absolute -bottom-4 right-2 h-[135%] w-auto;
   @apply select-none;

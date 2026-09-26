@@ -1,4 +1,4 @@
-import { type CSSProperties, useEffect, useRef } from 'react'
+import { useEffect, useRef } from 'react'
 
 import { Box } from '@nino/ds/components/Box'
 import { Text } from '@nino/ds/components/Text'
@@ -16,10 +16,15 @@ export const StoreBanner = () => {
   const bannerRef = useRef<HTMLDivElement>(null)
   const logoUrl = storeThemeLogoUrl(store)
   const bannerUrl = storeThemeBannerUrl(store)
+  const hasCustomBanner = Boolean(bannerUrl)
 
   useEffect(() => {
     const banner = bannerRef.current
-    if (!banner || window.matchMedia('(prefers-reduced-motion: reduce)').matches)
+    if (
+      hasCustomBanner ||
+      !banner ||
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    )
       return
 
     let frame: number | null = null
@@ -41,20 +46,22 @@ export const StoreBanner = () => {
       window.removeEventListener('scroll', onScroll)
       if (frame !== null) window.cancelAnimationFrame(frame)
     }
-  }, [])
+  }, [hasCustomBanner])
 
   return (
     <Box
       ref={bannerRef}
-      className={styles.banner}
-      style={
-        bannerUrl
-          ? ({ backgroundImage: `url("${bannerUrl}")` } as CSSProperties)
-          : undefined
-      }
+      className={`${styles.banner} ${
+        hasCustomBanner ? styles.customBanner : ''
+      }`}
     >
-      {logoUrl && <img src={logoUrl} alt="" className={styles.mark} />}
-      {!logoUrl && store && (
+      {bannerUrl && (
+        <img src={bannerUrl} alt="" className={styles.customImage} />
+      )}
+      {!hasCustomBanner && logoUrl && (
+        <img src={logoUrl} alt="" className={styles.mark} />
+      )}
+      {!hasCustomBanner && !logoUrl && store && (
         <Text as="span" className={styles.monogram} aria-hidden="true">
           {storeInitials(store)}
         </Text>

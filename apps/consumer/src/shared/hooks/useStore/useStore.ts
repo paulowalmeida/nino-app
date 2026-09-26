@@ -9,6 +9,8 @@ export const useStore = (slug: string | undefined) => {
     queryKey: queryKeys.store.bySlug(slug ?? ''),
     queryFn: () => storeService.getBySlug(slug as string),
     enabled: !!slug,
+    staleTime: 0,
+    refetchOnWindowFocus: true,
   })
 
   return { ...query, store: query.data }

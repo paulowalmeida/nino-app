@@ -6,7 +6,14 @@ import { queryKeys } from '@constants/query-keys'
 import { useStore } from './useStore'
 import { useStoreMock } from './useStore.mock'
 
-let queryOptions: { queryKey: unknown; enabled: boolean } | undefined
+let queryOptions:
+  | {
+      queryKey: unknown
+      enabled: boolean
+      staleTime: number
+      refetchOnWindowFocus: boolean
+    }
+  | undefined
 let queryData: unknown
 
 vi.mock('@tanstack/react-query', () => ({
@@ -22,6 +29,8 @@ describe('useStore', () => {
 
     expect(queryOptions?.queryKey).toEqual(queryKeys.store.bySlug(''))
     expect(queryOptions?.enabled).toBe(false)
+    expect(queryOptions?.staleTime).toBe(0)
+    expect(queryOptions?.refetchOnWindowFocus).toBe(true)
   })
 
   it('exposes the loaded store', () => {

@@ -6,6 +6,8 @@ import { BrandAssetSlot } from './BrandAssetSlot/BrandAssetSlot'
 
 import styles from './BrandAssets.module.css'
 
+const STORE_BANNER_ASPECT_RATIO = 900 / 250
+
 export type BrandAssetsProps = {
   hasLogo: boolean
   hasBanner: boolean
@@ -40,7 +42,7 @@ export const BrandAssets = ({
         framingTitle="Enquadrar o banner"
         framingHint="Arraste para escolher a faixa que aparece no topo da loja."
         confirmLabel="Usar este banner"
-        aspectRatio={3}
+        aspectRatio={STORE_BANNER_ASPECT_RATIO}
         onCropped={(bannerFile) => onChange({ bannerFile })}
       />
     </Box>

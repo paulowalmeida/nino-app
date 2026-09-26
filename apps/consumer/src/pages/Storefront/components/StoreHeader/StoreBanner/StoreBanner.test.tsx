@@ -22,4 +22,20 @@ describe('StoreBanner', () => {
     expect(container.querySelector('img')).not.toBeInTheDocument()
     expect(container).toHaveTextContent(storeBannerMock.initials)
   })
+
+  it('does not overlay branding on a custom banner', () => {
+    vi.mocked(useStorefrontFacade).mockReturnValue({
+      store: {
+        logoUrl: 'https://cdn.example/logo.png',
+        bannerUrl: 'https://cdn.example/banner.png',
+      },
+    } as never)
+    const { container } = render(<StoreBanner />)
+
+    expect(container.querySelector('img')).toHaveAttribute(
+      'src',
+      'https://cdn.example/banner.png'
+    )
+    expect(container).not.toHaveTextContent(storeBannerMock.initials)
+  })
 })
