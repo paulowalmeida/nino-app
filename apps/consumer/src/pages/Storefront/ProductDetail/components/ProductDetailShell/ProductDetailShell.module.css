@@ -1,0 +1,30 @@
+@reference "@nino/ds/globals.css";
+
+.sheetBody {
+  @apply p-0;
+}
+
+.backdrop {
+  @apply backdrop-blur-sm;
+}
+
+.panel {
+  @apply max-w-5xl;
+}
+
+.grid {
+  @apply grid h-[75vh] grid-cols-2 gap-x-8;
+  @apply grid-rows-[minmax(0,1fr)_auto];
+}
+
+.media {
+  @apply flex min-h-0 items-center justify-center;
+}
+
+.details {
+  @apply min-h-0 overflow-y-auto;
+}
+
+.footer {
+  @apply col-span-2;
+}

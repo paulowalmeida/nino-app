@@ -17,6 +17,18 @@
   @apply h-full w-full object-cover;
 }
 
+/* WHY: na modal do desktop a foto aparece inteira, centrada na coluna. */
+@media (min-width: 1024px) {
+  .hero {
+    @apply aspect-auto h-full rounded-2 bg-transparent;
+  }
+
+  .photoWrap,
+  .photo {
+    @apply object-contain;
+  }
+}
+
 .fallback {
   @apply flex h-full w-full items-center justify-center bg-surface-cool;
 }

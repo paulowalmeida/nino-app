@@ -1,4 +1,4 @@
-import { useParams } from 'react-router'
+import { Outlet, useParams } from 'react-router'
 
 import { Box } from '@nino/ds/components/Box'
 import { StoreLookupEmptyState } from '@pages/Storefront/components/StoreLookupEmptyState/StoreLookupEmptyState'
@@ -39,6 +39,7 @@ export const Storefront = () => {
   return (
     <Box>
       <StorefrontContent pathSlug={pathSlug ?? undefined} />
+      <Outlet />
     </Box>
   )
 }

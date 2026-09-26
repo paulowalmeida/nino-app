@@ -91,8 +91,13 @@ const consumerAccountRoute: RouteObject = {
 }
 
 const storeChildren: RouteObject[] = [
-  { index: true, lazy: storefrontLazy },
-  { path: 'produto/:productId', lazy: productDetailLazy },
+  {
+    lazy: storefrontLazy,
+    children: [
+      { index: true },
+      { path: 'produto/:productId', lazy: productDetailLazy },
+    ],
+  },
   { path: 'checkout', lazy: checkoutLazy },
   { path: 'pedido/:orderId', lazy: orderTrackingLazy },
   { path: 'entrar', lazy: signInLazy },
