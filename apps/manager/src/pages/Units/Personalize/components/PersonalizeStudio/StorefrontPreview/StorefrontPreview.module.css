@@ -383,13 +383,14 @@
 }
 
 .productMedia {
-  @apply relative shrink-0 overflow-hidden rounded-3;
-  @apply h-16 w-16;
+  @apply relative shrink-0 self-start overflow-hidden rounded-3;
+  @apply w-16;
+  aspect-ratio: 4 / 3;
   background: color-mix(in srgb, var(--preview-tertiary) 70%, white);
 }
 
 .productPhoto {
-  @apply h-full w-full object-cover;
+  @apply block h-full min-h-0 min-w-0 w-full object-cover;
 }
 
 .noPhoto {
@@ -427,6 +428,10 @@
 
 .productCard[data-image-ratio='1:1'] .productMedia {
   aspect-ratio: 1 / 1;
+}
+
+.productCard[data-image-ratio='4:3'] .productMedia {
+  aspect-ratio: 4 / 3;
 }
 
 .productCard[data-image-ratio='16:9'] .productMedia {
