@@ -5,7 +5,6 @@ import { Text } from '@nino/ds/components/Text'
 import { useStorefrontFacade } from '@pages/Storefront/facades/useStorefrontFacade/useStorefrontFacade'
 import { isOpen } from '@utils/store-info'
 import type { MenuSection as MenuSectionType } from '@custom_types/menu/menu-section'
-import { categoryIcon } from '@utils/category-icon'
 
 import styles from './MenuSection.module.css'
 
@@ -26,8 +25,6 @@ export const MenuSection = ({ section }: MenuSectionProps) => {
   if (!store) return null
   const storeOpen = isHoursPending || isOpen(store, hours)
   const domId = `section-${section.id}`
-  const icon = categoryIcon(section.name, section.icon)
-
   return (
     <Box
       as="section"
@@ -52,7 +49,6 @@ export const MenuSection = ({ section }: MenuSectionProps) => {
             onAdd={addFromMenu}
             onSelect={openProduct}
             disabled={!storeOpen}
-            fallbackIcon={icon}
             quantity={quantityByProduct[item.id] ?? 0}
           />
         ))}

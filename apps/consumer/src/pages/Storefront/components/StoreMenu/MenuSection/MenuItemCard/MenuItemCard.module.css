@@ -78,15 +78,12 @@
   aspect-ratio: 4 / 3;
 }
 
-.photo {
-  @apply block h-full min-h-0 min-w-0 w-full object-cover;
+.photoWrap {
+  @apply h-full min-h-0 min-w-0 w-full;
 }
 
-/* sem foto o item não finge uma: campo calmo com o glifo da categoria */
-.noPhoto {
-  @apply flex h-full w-full items-center justify-center bg-surface-cool;
-  @apply text-3xl sm:text-5xl;
-  opacity: 0.45;
+.photo {
+  @apply block h-full min-h-0 min-w-0 w-full object-cover;
 }
 
 .body {

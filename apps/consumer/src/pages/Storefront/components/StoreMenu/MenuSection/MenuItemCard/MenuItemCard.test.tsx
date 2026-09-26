@@ -19,12 +19,23 @@ describe('MenuItemCard', () => {
         item={menuItemCardMock.item as never}
         onAdd={vi.fn()}
         onSelect={vi.fn()}
-        fallbackIcon={menuItemCardMock.fallbackIcon}
       />
     )
     expect(
       screen.getByRole('button', { name: 'Adicionar Hambúrguer' })
     ).toBeInTheDocument()
+  })
+
+  it('does not render an image placeholder when the item has no photo', () => {
+    render(
+      <MenuItemCard
+        item={menuItemCardMock.item as never}
+        onAdd={vi.fn()}
+        onSelect={vi.fn()}
+      />
+    )
+
+    expect(screen.queryByText('🍽️')).not.toBeInTheDocument()
   })
 
   it('keeps the add action separate from opening item details', () => {
@@ -36,7 +47,6 @@ describe('MenuItemCard', () => {
         item={menuItemCardMock.item as never}
         onAdd={onAdd}
         onSelect={onSelect}
-        fallbackIcon={menuItemCardMock.fallbackIcon}
       />
     )
 
