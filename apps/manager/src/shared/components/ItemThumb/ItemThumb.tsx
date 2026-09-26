@@ -1,6 +1,7 @@
 import { Image } from '@nino/ds/components/Image'
 import { mergeClasses } from '@nino/ds/mergeClasses'
 import { toCategoryIcon } from '@shared/adapters/category-icon.adapter/category-icon.adapter'
+import { resolveApiAssetUrl } from '@shared/utils/api-asset-url/api-asset-url'
 
 import styles from './ItemThumb.module.css'
 
@@ -38,7 +39,7 @@ export const ItemThumb = ({
 
   return (
     <Image
-      src={imageUrl ?? fallbackUrl}
+      src={imageUrl ?? resolveApiAssetUrl(fallbackUrl)}
       alt=""
       aria-hidden="true"
       className={thumbClasses}

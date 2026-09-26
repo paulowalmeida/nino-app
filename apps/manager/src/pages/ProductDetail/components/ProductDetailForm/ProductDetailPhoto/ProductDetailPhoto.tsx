@@ -6,6 +6,7 @@ import { Image } from '@nino/ds/components/Image'
 import { Modal } from '@nino/ds/components/Modal'
 import { useProductDetailFacade } from '@pages/ProductDetail/facades/useProductDetailFacade/useProductDetailFacade'
 import { ItemPhoto } from '@shared/components/ItemPhoto/ItemPhoto'
+import { resolveApiAssetUrl } from '@shared/utils/api-asset-url/api-asset-url'
 import { riseDelay } from '@shared/utils/rise-delay/rise-delay'
 
 import motion from '@styles/motion.module.css'
@@ -24,7 +25,7 @@ export const ProductDetailPhoto = () => {
   if (!item) return null
 
   const cover = item.images.find(({ isPrimary }) => isPrimary) ?? item.images[0]
-  const previewUrl = cover?.url ?? item.fallbackUrl
+  const previewUrl = cover?.url ?? resolveApiAssetUrl(item.fallbackUrl)
   const imageStageClassName = cover
     ? styles.photoWithCover
     : styles.photoWithFallback

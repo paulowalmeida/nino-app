@@ -1,5 +1,5 @@
 import { render } from '@testing-library/react'
-import { describe, expect, it } from 'vitest'
+import { describe, expect, it, vi } from 'vitest'
 
 import { ItemThumb } from './ItemThumb'
 import { itemThumbMock } from './ItemThumb.mock'
@@ -15,7 +15,11 @@ describe(ItemThumb.name, () => {
     expect(container.querySelector('img')).toHaveAttribute('src', '/coffee.png')
   })
 
-  it('renders the fallback image source returned by the API', () => {
+  it('anchors the API fallback path to the API base url', () => {
+    // Arrange
+    vi.stubEnv('VITE_BASE_URL', 'https://api-dev.nino.delivery')
+
+    // Act
     const { container } = render(
       <ItemThumb
         {...itemThumbMock}
@@ -23,10 +27,12 @@ describe(ItemThumb.name, () => {
       />
     )
 
+    // Assert
     expect(container.querySelector('img')).toHaveAttribute(
       'src',
-      '/product-presets/x-bacon.png'
+      'https://api-dev.nino.delivery/product-presets/x-bacon.png'
     )
+    vi.unstubAllEnvs()
   })
 
   it('uses the default glyph for an unmatched name', () => {
