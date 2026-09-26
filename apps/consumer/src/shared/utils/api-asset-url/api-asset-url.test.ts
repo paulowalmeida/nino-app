@@ -20,4 +20,16 @@ describe('resolveApiAssetUrl', () => {
       'https://cdn.example/x-bacon.png'
     )
   })
+
+  it('anchors to the dev proxy path when the base is relative', () => {
+    // Arrange: `.env.local` do consumer usa `/api`, o proxy do Vite que
+    // esconde os cookies sameSite:'strict' da API atrás da mesma origem.
+    vi.stubEnv('VITE_BASE_URL', '/api')
+
+    // Act
+    const url = resolveApiAssetUrl('/product-presets/x-bacon.png')
+
+    // Assert
+    expect(url).toBe('/api/product-presets/x-bacon.png')
+  })
 })
