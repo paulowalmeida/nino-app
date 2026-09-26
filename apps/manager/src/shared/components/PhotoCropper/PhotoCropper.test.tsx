@@ -1,4 +1,5 @@
 import { fireEvent, render, screen } from '@testing-library/react'
+import { StrictMode } from 'react'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 
 import { PhotoCropper } from './PhotoCropper'
@@ -112,5 +113,34 @@ describe(PhotoCropper.name, () => {
     )
 
     expect(screen.queryByRole('button', { name: 'Remover foto' })).toBeNull()
+  })
+
+  it('keeps the active object URL alive in StrictMode', () => {
+    let sequence = 0
+    const createObjectURL = vi.fn(() => `blob:dish-${++sequence}`)
+    const revokeObjectURL = vi.fn()
+
+    vi.stubGlobal('URL', {
+      ...URL,
+      createObjectURL,
+      revokeObjectURL,
+    })
+
+    render(
+      <StrictMode>
+        <PhotoCropper
+          {...photoCropperMock}
+          onConfirm={vi.fn()}
+          onCancel={vi.fn()}
+        />
+      </StrictMode>
+    )
+
+    const image = screen.getByAltText('Imagem a recortar')
+    const activeSource = image.getAttribute('src')
+
+    expect(activeSource).toBe('blob:dish-2')
+    expect(revokeObjectURL).toHaveBeenCalledWith('blob:dish-1')
+    expect(revokeObjectURL).not.toHaveBeenCalledWith(activeSource)
   })
 })

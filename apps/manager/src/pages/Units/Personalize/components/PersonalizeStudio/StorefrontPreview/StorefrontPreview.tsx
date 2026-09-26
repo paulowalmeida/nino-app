@@ -1,4 +1,4 @@
-import { type CSSProperties, useEffect, useMemo } from 'react'
+import { type CSSProperties, useEffect, useState } from 'react'
 
 import { Box } from '@nino/ds/components/Box'
 import { Button } from '@nino/ds/components/Button'
@@ -134,17 +134,21 @@ const PreviewProductCard = ({ product, catalog }: PreviewProductCardProps) => (
 )
 
 const useFilePreview = (file?: File) => {
-  const url = useMemo(
-    () => (file ? URL.createObjectURL(file) : undefined),
-    [file]
-  )
+  const [url, setUrl] = useState<string>()
 
-  useEffect(
-    () => () => {
-      if (url) URL.revokeObjectURL(url)
-    },
-    [url]
-  )
+  useEffect(() => {
+    if (!file) {
+      setUrl(undefined)
+      return
+    }
+
+    const nextUrl = URL.createObjectURL(file)
+    setUrl(nextUrl)
+
+    return () => {
+      URL.revokeObjectURL(nextUrl)
+    }
+  }, [file])
 
   return url
 }
@@ -282,7 +286,11 @@ export const StorefrontPreview = ({
               {shownLogoUrl ? (
                 <img src={shownLogoUrl} alt="" className={local.bannerMark} />
               ) : (
-                <Text as="span" className={local.bannerMonogram} aria-hidden="true">
+                <Text
+                  as="span"
+                  className={local.bannerMonogram}
+                  aria-hidden="true"
+                >
                   {shownName.slice(0, 2).toUpperCase()}
                 </Text>
               )}

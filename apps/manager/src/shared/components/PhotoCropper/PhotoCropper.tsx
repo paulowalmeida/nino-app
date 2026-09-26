@@ -65,20 +65,19 @@ export const PhotoCropper = ({
 }: PhotoCropperProps) => {
   const imageRef = useRef<HTMLImageElement>(null)
   const dragRef = useRef<Drag | null>(null)
-  const [source] = useState(() => URL.createObjectURL(file))
+  const [source, setSource] = useState<string>()
   const [imageRatio, setImageRatio] = useState(1)
   const [area, setArea] = useState<CropArea | null>(null)
   const [error, setError] = useState<string | null>(null)
-  const sourceReleased = useRef(false)
 
-  useEffect(
-    () => () => {
-      if (sourceReleased.current) return
-      sourceReleased.current = true
-      URL.revokeObjectURL(source)
-    },
-    [source]
-  )
+  useEffect(() => {
+    const nextSource = URL.createObjectURL(file)
+    setSource(nextSource)
+
+    return () => {
+      URL.revokeObjectURL(nextSource)
+    }
+  }, [file])
 
   const startCrop = () => {
     const image = imageRef.current
@@ -159,18 +158,11 @@ export const PhotoCropper = ({
     })
   }
 
-  const release = () => {
-    if (sourceReleased.current) return
-    sourceReleased.current = true
-    URL.revokeObjectURL(source)
-  }
-
   const handleConfirm = async () => {
     const image = imageRef.current
     if (!image || !area) return
     try {
       const edited = await cropToArea(image, area, file.name)
-      release()
       onConfirm(edited)
     } catch {
       setError('Não foi possível recortar a imagem. Tente novamente.')
@@ -178,12 +170,10 @@ export const PhotoCropper = ({
   }
 
   const handleCancel = () => {
-    release()
     onCancel()
   }
 
   const handleRemove = () => {
-    release()
     onRemove?.()
   }
 
