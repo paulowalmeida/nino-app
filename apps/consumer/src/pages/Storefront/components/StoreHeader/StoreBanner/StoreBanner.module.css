@@ -23,11 +23,7 @@
     color-mix(in srgb, var(--color-fg-on-brand) 38%, transparent) 0%,
     transparent 64%
   );
-  transform: translate3d(
-    0,
-    calc(var(--banner-parallax, 0px) * -0.32),
-    0
-  );
+  transform: translate3d(0, calc(var(--banner-parallax, 0px) * -0.32), 0);
   transition: transform 70ms linear;
   will-change: transform;
 }
@@ -35,13 +31,15 @@
 /* A arte determina a largura, limitada a 900 px. Não há uma faixa fixa que
  * corte a imagem nem espaço lateral artificial. */
 .customBanner {
-  width: fit-content;
-  height: auto;
+  width: min(100%, 900px);
+  height: fit-content;
+  min-height: 0;
   aspect-ratio: auto;
   max-width: min(100%, 900px);
   max-height: none;
   margin-inline: auto;
   background-color: transparent;
+  overflow: visible;
 }
 
 .customBanner::before {
@@ -50,12 +48,13 @@
 
 .customImage {
   display: block;
-  width: auto;
+  width: 100%;
   height: auto;
-  max-width: 100%;
-  max-height: 250px;
+  max-width: none;
+  max-height: none;
   margin: auto;
   border-radius: inherit;
+  object-fit: contain;
 }
 
 .customImageWrap {

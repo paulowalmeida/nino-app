@@ -1,16 +1,19 @@
 import type { ReactNode } from 'react'
 
 import { Box } from '@nino/ds/components/Box'
+import { Button } from '@nino/ds/components/Button'
 import { Heading } from '@nino/ds/components/Heading'
+import { Icon } from '@nino/ds/components/Icon'
 import { Text } from '@nino/ds/components/Text'
 
 import styles from './PersonalizeHeader.module.css'
 
 export type PersonalizeHeaderProps = {
+  storeUrl?: string
   actions?: ReactNode
 }
 
-export const PersonalizeHeader = ({ actions }: PersonalizeHeaderProps) => (
+export const PersonalizeHeader = ({ storeUrl, actions }: PersonalizeHeaderProps) => (
   <Box as="header" className={styles.header}>
     <Box className={styles.copy}>
       <Heading level={1} size="2xl">
@@ -21,6 +24,25 @@ export const PersonalizeHeader = ({ actions }: PersonalizeHeaderProps) => (
         cada alteração — nada vai pro ar antes de você publicar.
       </Text>
     </Box>
-    {actions && <Box className={styles.actions}>{actions}</Box>}
+    {(storeUrl || actions) && (
+      <Box
+        direction="row"
+        align="center"
+        justify="end"
+        gap={2}
+        wrap
+        className={styles.actions}
+      >
+        {storeUrl && (
+          <Button asChild variant="outline" size="sm">
+            <a href={storeUrl} target="_blank" rel="noopener noreferrer">
+              Ver na loja
+              <Icon name="arrow-up-right" size="xs" />
+            </a>
+          </Button>
+        )}
+        {actions}
+      </Box>
+    )}
   </Box>
 )

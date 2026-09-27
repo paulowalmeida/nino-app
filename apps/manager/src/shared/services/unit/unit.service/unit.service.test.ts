@@ -1,6 +1,7 @@
 import { afterEach, describe, expect, it, vi } from 'vitest'
 
 import { api } from '@shared/services/http/http.service'
+import type { UnitDraft } from '@shared/types/store/unit-draft'
 
 import { UnitService } from './unit.service'
 import {
@@ -84,6 +85,21 @@ describe('UnitService', () => {
     expect(result).toBe(unitDetailMock)
   })
 
+  it('saveUnit: sends null asset URLs when branding is removed', async () => {
+    vi.mocked(api.patch).mockResolvedValue(unitDetailMock)
+
+    await UnitService.saveUnit(unitIdMock, {
+      ...updateUnitRequestMock,
+      logoUrl: null,
+      bannerUrl: null,
+    } as unknown as UnitDraft)
+
+    expect(api.patch).toHaveBeenCalledWith(
+      `units/${unitIdMock}`,
+      expect.objectContaining({ logoUrl: null, bannerUrl: null })
+    )
+  })
+
   it('getPause: reads the unit pause status', async () => {
     // Arrange
     vi.mocked(api.get).mockResolvedValue(unitPauseMock)
@@ -101,10 +117,7 @@ describe('UnitService', () => {
     vi.mocked(api.patch).mockResolvedValue(unitPauseMock)
 
     // Act
-    const result = await UnitService.pauseStore(
-      unitIdMock,
-      pauseRequestMock
-    )
+    const result = await UnitService.pauseStore(unitIdMock, pauseRequestMock)
 
     // Assert
     expect(api.patch).toHaveBeenCalledWith(
@@ -122,10 +135,7 @@ describe('UnitService', () => {
     const result = await UnitService.resumeStore(unitIdMock)
 
     // Assert
-    expect(api.patch).toHaveBeenCalledWith(
-      `units/${unitIdMock}/resume`,
-      {}
-    )
+    expect(api.patch).toHaveBeenCalledWith(`units/${unitIdMock}/resume`, {})
     expect(result).toBe(unitPauseMock)
   })
 
@@ -149,10 +159,7 @@ describe('UnitService', () => {
     const result = await UnitService.setMainUnit(unitIdMock)
 
     // Assert
-    expect(api.patch).toHaveBeenCalledWith(
-      `units/${unitIdMock}/main`,
-      {}
-    )
+    expect(api.patch).toHaveBeenCalledWith(`units/${unitIdMock}/main`, {})
     expect(result).toBe(unitDetailMock)
   })
 })

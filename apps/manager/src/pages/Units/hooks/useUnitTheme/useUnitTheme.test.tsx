@@ -81,9 +81,7 @@ describe(useUnitTheme.name, () => {
       unit: unitDetailMock,
     })
 
-    await waitFor(() =>
-      expect(result.current.saveDraft.isSuccess).toBe(true)
-    )
+    await waitFor(() => expect(result.current.saveDraft.isSuccess).toBe(true))
     expect(UnitService.saveUnit).not.toHaveBeenCalled()
     expect(UnitThemeService.saveDraft).toHaveBeenCalledWith(
       themeUnitIdMock,
@@ -105,9 +103,7 @@ describe(useUnitTheme.name, () => {
       unit: unitDetailMock,
     })
 
-    await waitFor(() =>
-      expect(result.current.saveDraft.isSuccess).toBe(true)
-    )
+    await waitFor(() => expect(result.current.saveDraft.isSuccess).toBe(true))
     expect(UnitService.saveUnit).toHaveBeenCalled()
     expect(UnitThemeService.saveDraft).toHaveBeenCalledWith(
       themeUnitIdMock,
@@ -115,6 +111,25 @@ describe(useUnitTheme.name, () => {
         brand: expect.objectContaining({
           logoUrl: uploadedUnitDetailMock.logoUrl,
         }),
+      })
+    )
+  })
+
+  it('persists removing the saved assets before storing the document', async () => {
+    const { wrapper } = createHarness()
+    const { result } = renderHook(() => useUnitTheme(), { wrapper })
+
+    result.current.saveDraft.mutate({
+      draft: { ...unitDraftMock, logoUrl: null, bannerUrl: null },
+      unit: unitDetailMock,
+    })
+
+    await waitFor(() => expect(result.current.saveDraft.isSuccess).toBe(true))
+    expect(UnitService.saveUnit).toHaveBeenCalled()
+    expect(UnitThemeService.saveDraft).toHaveBeenCalledWith(
+      themeUnitIdMock,
+      expect.objectContaining({
+        brand: { logoUrl: null, faviconUrl: null, bannerUrl: null },
       })
     )
   })

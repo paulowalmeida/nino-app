@@ -4,10 +4,14 @@ import { useStorefrontFacade } from '@pages/Storefront/facades/useStorefrontFaca
 
 import { StoreBanner } from './StoreBanner'
 import { storeBannerMock } from './StoreBanner.mock'
+import styles from './StoreBanner.module.css'
 
-vi.mock('@pages/Storefront/facades/useStorefrontFacade/useStorefrontFacade', () => ({
-  useStorefrontFacade: vi.fn(),
-}))
+vi.mock(
+  '@pages/Storefront/facades/useStorefrontFacade/useStorefrontFacade',
+  () => ({
+    useStorefrontFacade: vi.fn(),
+  })
+)
 
 describe('StoreBanner', () => {
   it('uses the store initials when the store has no logo', () => {
@@ -23,7 +27,7 @@ describe('StoreBanner', () => {
     expect(container).toHaveTextContent(storeBannerMock.initials)
   })
 
-  it('does not overlay branding on a custom banner', () => {
+  it('removes the store watermark from a custom banner', () => {
     vi.mocked(useStorefrontFacade).mockReturnValue({
       store: {
         logoUrl: 'https://cdn.example/logo.png',
@@ -36,6 +40,7 @@ describe('StoreBanner', () => {
       'src',
       'https://cdn.example/banner.png'
     )
-    expect(container).not.toHaveTextContent(storeBannerMock.initials)
+    expect(container.querySelectorAll('img')).toHaveLength(1)
+    expect(container.querySelector(`.${styles.mark}`)).not.toBeInTheDocument()
   })
 })

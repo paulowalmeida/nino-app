@@ -1,4 +1,5 @@
 import { Box } from '@nino/ds/components/Box'
+import { Button } from '@nino/ds/components/Button'
 import { FormField } from '@nino/ds/components/FormField'
 import { Switch } from '@nino/ds/components/Switch'
 import { HOME_BLOCK_FIELDS } from '@pages/Units/constants/home.constants'
@@ -14,9 +15,14 @@ const SECTION_DESCRIPTION =
 export type BrandHomeProps = {
   home: HomeDraft
   onChange: (patch: Partial<HomeDraft>) => void
+  onResetLayout?: () => void
 }
 
-export const BrandHome = ({ home, onChange }: BrandHomeProps) => (
+export const BrandHome = ({
+  home,
+  onChange,
+  onResetLayout,
+}: BrandHomeProps) => (
   <StudioSection title="Blocos da home" description={SECTION_DESCRIPTION}>
     <Box className={styles.blocks}>
       {HOME_BLOCK_FIELDS.map(({ field, label, helperText }) => (
@@ -32,6 +38,11 @@ export const BrandHome = ({ home, onChange }: BrandHomeProps) => (
           />
         </FormField>
       ))}
+      {onResetLayout && (
+        <Button variant="outline" size="sm" onClick={onResetLayout}>
+          Restaurar layout padrão do Nino
+        </Button>
+      )}
     </Box>
   </StudioSection>
 )

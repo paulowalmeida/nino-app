@@ -17,9 +17,13 @@ export const toThemeConfig = (
   home?: HomeDraft
 ): ThemeConfig => ({
   brand: {
-    logoUrl: unit?.logoUrl ?? null,
+    logoUrl:
+      draft.logoUrl !== undefined ? draft.logoUrl : (unit?.logoUrl ?? null),
     faviconUrl: null,
-    bannerUrl: unit?.bannerUrl ?? null,
+    bannerUrl:
+      draft.bannerUrl !== undefined
+        ? draft.bannerUrl
+        : (unit?.bannerUrl ?? null),
   },
   colors: {
     primary: draft.primaryColor || null,

@@ -34,6 +34,9 @@ export const useUnitTheme = () => {
 
   const refreshEditor = () => {
     void queryClient.invalidateQueries({ queryKey: themeKey })
+    void queryClient.invalidateQueries({
+      queryKey: queryKeys.unit.all(unitId ?? ''),
+    })
   }
 
   /**
@@ -48,8 +51,13 @@ export const useUnitTheme = () => {
     catalog,
     home,
   }: ThemeDraftInput) => {
-    const hasNewAsset = !!(draft.logoFile || draft.bannerFile)
-    const saved = hasNewAsset
+    const hasAssetChange =
+      !!(draft.logoFile || draft.bannerFile) ||
+      (draft.logoUrl !== undefined &&
+        (draft.logoUrl ?? null) !== (detail?.logoUrl ?? null)) ||
+      (draft.bannerUrl !== undefined &&
+        (draft.bannerUrl ?? null) !== (detail?.bannerUrl ?? null))
+    const saved = hasAssetChange
       ? await UnitService.saveUnit(unitId as string, draft)
       : detail
 

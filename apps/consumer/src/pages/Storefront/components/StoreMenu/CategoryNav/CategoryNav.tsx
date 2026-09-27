@@ -9,7 +9,7 @@ import { categoryIcon } from '@utils/category-icon'
 import styles from './CategoryNav.module.css'
 
 export const CategoryNav = () => {
-  const { sections, activeId, goToSection } = useStorefrontFacade()
+  const { visibleSections, activeId, goToSection } = useStorefrontFacade()
   const activeRef = useRef<HTMLButtonElement>(null)
 
   /* WHY: scrollIntoView centraliza o chip, mas também rola a página na
@@ -29,27 +29,29 @@ export const CategoryNav = () => {
     <nav className={styles.nav} aria-label="Categorias do cardápio">
       <Text className={styles.railLabel}>Cardápio</Text>
       <Box direction="row" className={styles.track}>
-        {sections.map((section) => {
-          const isActive = section.id === activeId
-          return (
-            <Chip
-              key={section.id}
-              ref={isActive ? activeRef : undefined}
-              variant="toggle"
-              selected={isActive}
-              borderless
-              onClick={() => goToSection(section.id)}
-              className={`${styles.chip} ${isActive ? styles.chipOn : ''}`}
-              leadingIcon={
-                <span aria-hidden="true">
-                  {categoryIcon(section.name, section.icon) ?? '🍽️'}
-                </span>
-              }
-            >
-              {section.name}
-            </Chip>
-          )
-        })}
+        <Box direction="row" className={styles.chips}>
+          {visibleSections.map((section) => {
+            const isActive = section.id === activeId
+            return (
+              <Chip
+                key={section.id}
+                ref={isActive ? activeRef : undefined}
+                variant="toggle"
+                selected={isActive}
+                borderless
+                onClick={() => goToSection(section.id)}
+                className={`${styles.chip} ${isActive ? styles.chipOn : ''}`}
+                leadingIcon={
+                  <span aria-hidden="true">
+                    {categoryIcon(section.name, section.icon) ?? '🍽️'}
+                  </span>
+                }
+              >
+                {section.name}
+              </Chip>
+            )
+          })}
+        </Box>
       </Box>
     </nav>
   )

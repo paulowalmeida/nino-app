@@ -46,4 +46,14 @@ describe('toThemeConfig', () => {
       bannerUrl: null,
     })
   })
+
+  it('keeps an explicit asset removal in the theme document', () => {
+    const config = toThemeConfig(
+      { ...themeDraftMock, logoUrl: null, bannerUrl: null },
+      themeUnitMock
+    )
+
+    expect(config.brand.logoUrl).toBeNull()
+    expect(config.brand.bannerUrl).toBeNull()
+  })
 })

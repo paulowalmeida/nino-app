@@ -32,4 +32,21 @@ describe(BrandHome.name, () => {
 
     expect(onChange).toHaveBeenCalledWith({ showCategoryBar: true })
   })
+
+  it('offers restoring the default Nino layout', async () => {
+    const onResetLayout = vi.fn()
+    render(
+      <BrandHome
+        home={homeDraftMock}
+        onChange={onChange}
+        onResetLayout={onResetLayout}
+      />
+    )
+
+    await userEvent.click(
+      screen.getByRole('button', { name: 'Restaurar layout padrão do Nino' })
+    )
+
+    expect(onResetLayout).toHaveBeenCalledTimes(1)
+  })
 })

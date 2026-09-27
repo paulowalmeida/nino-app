@@ -6,9 +6,9 @@ const sectionDomId = (id: string): string => `section-${id}`
 
 /**
  * O cardápio como a tela precisa dele: as seções que sobrevivem à busca, qual
- * delas está sob os olhos agora, e como pular até uma. O rastreio de scroll
- * usa as seções inteiras, não as filtradas — a régua de categorias some
- * durante a busca, então "ativa" só importa fora dela.
+ * delas está sob os olhos agora, e como pular até uma. Durante a busca, a
+ * mesma lista filtrada alimenta os chips e o rastreio para não apontar para
+ * uma categoria que não aparece nos resultados.
  */
 export const useMenuSections = (sections: MenuSection[], search: string) => {
   const query = search.trim().toLowerCase()
@@ -25,7 +25,7 @@ export const useMenuSections = (sections: MenuSection[], search: string) => {
     : sections
 
   const activeDomId = useActiveSection(
-    sections.map((section) => sectionDomId(section.id))
+    visibleSections.map((section) => sectionDomId(section.id))
   )
   const activeId = activeDomId?.replace(/^section-/, '') ?? null
 

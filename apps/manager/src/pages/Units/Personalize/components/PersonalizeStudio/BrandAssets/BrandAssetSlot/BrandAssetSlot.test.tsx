@@ -1,4 +1,4 @@
-import { render, screen, waitFor } from '@testing-library/react'
+import { render, screen, waitFor, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 
@@ -97,5 +97,30 @@ describe(BrandAssetSlot.name, () => {
         screen.queryByText(brandAssetSlotMock.framingTitle)
       ).not.toBeInTheDocument()
     )
+  })
+
+  it('confirms before removing an existing asset', async () => {
+    const onRemove = vi.fn()
+    render(
+      <BrandAssetSlot
+        {...brandAssetSlotMock}
+        hasAsset
+        onRemove={onRemove}
+        onCropped={vi.fn()}
+      />
+    )
+
+    await userEvent.click(
+      screen.getByRole('button', { name: 'Remover banner' })
+    )
+
+    expect(onRemove).not.toHaveBeenCalled()
+    await userEvent.click(
+      within(screen.getByRole('dialog')).getByRole('button', {
+        name: /^Remover banner$/,
+      })
+    )
+
+    expect(onRemove).toHaveBeenCalledTimes(1)
   })
 })

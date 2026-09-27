@@ -1,5 +1,6 @@
 import { useState } from 'react'
 
+import { Alert } from '@nino/ds/components/Alert'
 import { Box } from '@nino/ds/components/Box'
 import { EmptyState } from '@nino/ds/components/EmptyState'
 import { Input } from '@nino/ds/components/Input'
@@ -22,6 +23,7 @@ export const ProductGrid = () => {
   const {
     sections,
     isPending,
+    isError,
     lines,
     add: onPick,
     updateQuantity: onStep,
@@ -76,6 +78,17 @@ export const ProductGrid = () => {
     </Box>
   )
 
+  if (isError) {
+    return (
+      <Box className={styles.feedback}>
+        <Alert variant="error" title="Não foi possível carregar o cardápio">
+          A consulta dos itens falhou ou excedeu o tempo limite. Tente
+          novamente.
+        </Alert>
+      </Box>
+    )
+  }
+
   if (isPending) {
     return (
       <Box className={styles.wrap}>
@@ -100,16 +113,6 @@ export const ProductGrid = () => {
             </Box>
           ))}
         </Box>
-      </Box>
-    )
-  }
-
-  if (sections.length === 0) {
-    return (
-      <Box className={styles.feedback}>
-        <EmptyState>
-          O cardápio está vazio. Cadastre itens no gestor para vender aqui.
-        </EmptyState>
       </Box>
     )
   }

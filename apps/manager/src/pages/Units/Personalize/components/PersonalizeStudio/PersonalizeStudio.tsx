@@ -20,7 +20,9 @@ import type { StudioGroup } from '@pages/Units/types/StudioGroup.type'
 import type { TrackingDraft } from '@pages/Units/types/TrackingDraft.type'
 import type { UnitDetail } from '@shared/types/store/unit-detail'
 import type { UnitDraft } from '@shared/types/store/unit-draft'
+import { storeUrlFor } from '@shared/utils/store-url/store-url'
 
+import { PersonalizeHeader } from '../PersonalizeHeader/PersonalizeHeader'
 import { BrandAssets } from './BrandAssets/BrandAssets'
 import { BrandCatalog } from './BrandCatalog/BrandCatalog'
 import { BrandHistory } from './BrandHistory/BrandHistory'
@@ -29,7 +31,6 @@ import { BrandLoading } from './BrandLoading/BrandLoading'
 import { BrandPalette } from './BrandPalette/BrandPalette'
 import { BrandThemes } from './BrandThemes/BrandThemes'
 import { BrandTracking } from './BrandTracking/BrandTracking'
-import { PersonalizeHeader } from '../PersonalizeHeader/PersonalizeHeader'
 import { StorefrontPreview } from './StorefrontPreview/StorefrontPreview'
 import { StudioNav } from './StudioNav/StudioNav'
 import { StudioToolbar } from './StudioToolbar/StudioToolbar'
@@ -53,6 +54,9 @@ export const PersonalizeStudio = () => {
   const [isDirty, setDirty] = useState(false)
 
   const storedConfig = editor?.draft?.config ?? editor?.published?.config
+  const storeUrl = unit?.slug
+    ? storeUrlFor(unit.slug, window.location.hostname)
+    : undefined
 
   const seedDraft = (detail: UnitDetail) =>
     storedConfig
@@ -97,6 +101,12 @@ export const PersonalizeStudio = () => {
     setDirty(true)
   }
 
+  const resetLayout = () => {
+    setHome(DEFAULT_HOME_DRAFT)
+    setCatalog(DEFAULT_CATALOG_DRAFT)
+    setDirty(true)
+  }
+
   const discard = () => {
     setDraft(seed ? seedDraft(seed) : EMPTY_UNIT_DRAFT)
     setTracking(seedTracking())
@@ -110,12 +120,18 @@ export const PersonalizeStudio = () => {
     colors: <BrandPalette colors={draft} onChange={change} />,
     assets: (
       <BrandAssets
-        hasLogo={!!(unit?.logoUrl || draft.logoFile)}
-        hasBanner={!!(unit?.bannerUrl || draft.bannerFile)}
+        hasLogo={!!(draft.logoUrl || draft.logoFile)}
+        hasBanner={!!(draft.bannerUrl || draft.bannerFile)}
         onChange={change}
       />
     ),
-    home: <BrandHome home={home} onChange={changeHome} />,
+    home: (
+      <BrandHome
+        home={home}
+        onChange={changeHome}
+        onResetLayout={resetLayout}
+      />
+    ),
     catalog: <BrandCatalog catalog={catalog} onChange={changeCatalog} />,
     loading: (
       <BrandLoading
@@ -131,6 +147,7 @@ export const PersonalizeStudio = () => {
   return (
     <>
       <PersonalizeHeader
+        storeUrl={storeUrl}
         actions={
           <StudioToolbar
             device={device}
@@ -153,8 +170,8 @@ export const PersonalizeStudio = () => {
             storeName={draft.customName || unit?.customName || ''}
             colors={draft}
             device={device}
-            logoUrl={unit?.logoUrl}
-            bannerUrl={unit?.bannerUrl}
+            logoUrl={draft.logoUrl}
+            bannerUrl={draft.bannerUrl}
             logoFile={draft.logoFile}
             bannerFile={draft.bannerFile}
             catalog={catalog}

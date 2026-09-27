@@ -23,24 +23,25 @@ export const UnitService = {
     )
   },
 
-  saveUnit: async (
-    unitId: string,
-    draft: UnitDraft
-  ): Promise<UnitDetail> => {
-    const { logoFile, bannerFile, ...data } = draft
-    let logoUrl: string | undefined
-    let bannerUrl: string | undefined
+  saveUnit: async (unitId: string, draft: UnitDraft): Promise<UnitDetail> => {
+    const { logoFile, bannerFile, logoUrl, bannerUrl, ...data } = draft
+    let nextLogoUrl = logoUrl
+    let nextBannerUrl = bannerUrl
 
     if (logoFile)
-      logoUrl = (
+      nextLogoUrl = (
         await UnitService.uploadBrandAsset(unitId, 'logo', logoFile)
       ).logoUrl
     if (bannerFile)
-      bannerUrl = (
+      nextBannerUrl = (
         await UnitService.uploadBrandAsset(unitId, 'banner', bannerFile)
       ).bannerUrl
 
-    return UnitService.updateUnit(unitId, { ...data, logoUrl, bannerUrl })
+    return UnitService.updateUnit(unitId, {
+      ...data,
+      ...(nextLogoUrl !== undefined ? { logoUrl: nextLogoUrl } : {}),
+      ...(nextBannerUrl !== undefined ? { bannerUrl: nextBannerUrl } : {}),
+    })
   },
 
   createStore: (data: CreateStoreRequest): Promise<CreatedStore> =>
@@ -55,33 +56,21 @@ export const UnitService = {
   getMapLocation: (unitId: string): Promise<UnitMapLocation | null> =>
     api.get<UnitMapLocation | null>(`units/${unitId}/map-location`),
 
-  updateUnit: (
-    unitId: string,
-    data: UpdateUnitRequest
-  ): Promise<UnitDetail> =>
+  updateUnit: (unitId: string, data: UpdateUnitRequest): Promise<UnitDetail> =>
     api.patch<UpdateUnitRequest, UnitDetail>(`units/${unitId}`, data),
 
   getPause: (unitId: string): Promise<UnitPause> =>
     api.get<UnitPause>(`units/${unitId}/pause`),
 
   pauseStore: (unitId: string, data: PauseRequest): Promise<UnitPause> =>
-    api.patch<PauseRequest, UnitPause>(
-      `units/${unitId}/pause`,
-      data
-    ),
+    api.patch<PauseRequest, UnitPause>(`units/${unitId}/pause`, data),
 
   resumeStore: (unitId: string): Promise<UnitPause> =>
-    api.patch<Record<string, never>, UnitPause>(
-      `units/${unitId}/resume`,
-      {}
-    ),
+    api.patch<Record<string, never>, UnitPause>(`units/${unitId}/resume`, {}),
 
   removeUnit: (unitId: string): Promise<{ message: string }> =>
     api.remove<{ message: string }>(`units/${unitId}`),
 
   setMainUnit: (unitId: string): Promise<UnitDetail> =>
-    api.patch<Record<string, never>, UnitDetail>(
-      `units/${unitId}/main`,
-      {}
-    ),
+    api.patch<Record<string, never>, UnitDetail>(`units/${unitId}/main`, {}),
 }

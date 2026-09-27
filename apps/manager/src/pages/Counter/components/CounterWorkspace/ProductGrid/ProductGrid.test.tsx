@@ -1,6 +1,6 @@
 import { fireEvent, render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import { describe, expect, it, vi } from 'vitest'
+import { beforeEach, describe, expect, it, vi } from 'vitest'
 
 import type { CartLine } from '@shared/types/counter/cart-line'
 import type { MenuSection } from '@shared/types/product/menu-section'
@@ -47,6 +47,8 @@ vi.mock('./ProductPreviewModal/ProductPreviewModal', () => ({
 const facadeState = vi.hoisted(() => ({
   sections: [] as MenuSection[],
   isPending: false,
+  isError: false,
+  error: null as Error | null,
   lines: [] as CartLine[],
   add: vi.fn(),
 }))
@@ -75,7 +77,16 @@ const sections = [
 ]
 
 describe(ProductGrid.name, () => {
-  it('renders loading and empty states', () => {
+  beforeEach(() => {
+    facadeState.sections = []
+    facadeState.isPending = false
+    facadeState.isError = false
+    facadeState.error = null
+    facadeState.lines = []
+    facadeState.add.mockClear()
+  })
+
+  it('keeps the layout without claiming the catalog is empty', () => {
     facadeState.isPending = true
     const { container, rerender } = render(<ProductGrid />)
     expect(
@@ -83,7 +94,19 @@ describe(ProductGrid.name, () => {
     ).toBeGreaterThan(0)
     facadeState.isPending = false
     rerender(<ProductGrid />)
-    expect(screen.getByText(/cardápio está vazio/)).toBeInTheDocument()
+    expect(screen.queryByText(/cardápio está vazio/)).not.toBeInTheDocument()
+  })
+
+  it('shows an error instead of an empty-state message after a failed request', () => {
+    facadeState.isError = true
+    facadeState.error = new Error('Request timed out')
+
+    render(<ProductGrid />)
+
+    expect(screen.getByRole('alert')).toHaveTextContent(
+      /Não foi possível carregar o cardápio.*excedeu o tempo limite/
+    )
+    expect(screen.queryByText(/cardápio está vazio/)).not.toBeInTheDocument()
   })
 
   it('searches products and changes category', () => {

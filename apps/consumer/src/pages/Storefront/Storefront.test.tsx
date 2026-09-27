@@ -7,13 +7,25 @@ import { useStorefrontFacade } from '@pages/Storefront/facades/useStorefrontFaca
 import { Storefront } from './Storefront'
 import { storefrontPathMock, storefrontStoreMock } from './Storefront.mock'
 
+const { useOutletMock } = vi.hoisted(() => ({
+  useOutletMock: vi.fn<() => ReactNode>(() => null),
+}))
+const useParamsMock = vi.hoisted(() =>
+  vi.fn<() => { slug: string; productId?: string }>(() => ({
+    slug: 'loja-do-ze',
+  }))
+)
+
 vi.mock('react-router', () => ({
-  useParams: () => ({ slug: storefrontPathMock.slug }),
-  useOutlet: () => null,
+  useParams: useParamsMock,
+  useOutlet: useOutletMock,
 }))
-vi.mock('@pages/Storefront/facades/useStorefrontFacade/useStorefrontFacade', () => ({
-  useStorefrontFacade: vi.fn(),
-}))
+vi.mock(
+  '@pages/Storefront/facades/useStorefrontFacade/useStorefrontFacade',
+  () => ({
+    useStorefrontFacade: vi.fn(),
+  })
+)
 vi.mock('@nino/ds/components/Box', () => ({
   Box: ({ children }: { children: ReactNode }) => <div>{children}</div>,
 }))
@@ -23,17 +35,28 @@ vi.mock(
     StoreLookupEmptyState: ({ title }: { title: string }) => <div>{title}</div>,
   })
 )
-vi.mock('@pages/Storefront/skeletons/StorefrontSkeleton/StorefrontSkeleton', () => ({
-  StorefrontSkeleton: () => <div>carregando loja</div>,
-}))
-vi.mock('@pages/Storefront/components/StorefrontContent/StorefrontContent', () => ({
-  StorefrontContent: ({ pathSlug }: { pathSlug?: string }) => (
-    <div>conteúdo {pathSlug}</div>
-  ),
-}))
+vi.mock(
+  '@pages/Storefront/skeletons/StorefrontSkeleton/StorefrontSkeleton',
+  () => ({
+    StorefrontSkeleton: () => <div>carregando loja</div>,
+  })
+)
+vi.mock(
+  '@pages/Storefront/components/StorefrontContent/StorefrontContent',
+  () => ({
+    StorefrontContent: ({ pathSlug }: { pathSlug?: string }) => (
+      <div>conteúdo {pathSlug}</div>
+    ),
+  })
+)
 
 describe('Storefront', () => {
   it('renders the store content after the store is available', () => {
+    useParamsMock.mockReturnValue({
+      slug: storefrontPathMock.slug,
+      productId: undefined,
+    })
+    useOutletMock.mockReturnValue(<></>)
     vi.mocked(useStorefrontFacade).mockReturnValue({
       store: storefrontStoreMock,
       isStorePending: false,
@@ -45,7 +68,30 @@ describe('Storefront', () => {
     expect(screen.getByText('conteúdo loja-do-ze')).toBeInTheDocument()
   })
 
+  it('renders the child route instead of the store content when it is active', () => {
+    useParamsMock.mockReturnValue({
+      slug: storefrontPathMock.slug,
+      productId: 'product-1',
+    })
+    useOutletMock.mockReturnValue(<p>detalhe do produto</p>)
+    vi.mocked(useStorefrontFacade).mockReturnValue({
+      store: storefrontStoreMock,
+      isStorePending: false,
+      isStoreError: false,
+    } as never)
+
+    render(<Storefront />)
+
+    expect(screen.getByText('detalhe do produto')).toBeInTheDocument()
+    expect(screen.queryByText('conteúdo loja-do-ze')).not.toBeInTheDocument()
+  })
+
   it('renders the loading state while the store is pending', () => {
+    useParamsMock.mockReturnValue({
+      slug: storefrontPathMock.slug,
+      productId: undefined,
+    })
+    useOutletMock.mockReturnValue(null)
     vi.mocked(useStorefrontFacade).mockReturnValue({
       store: undefined,
       isStorePending: true,

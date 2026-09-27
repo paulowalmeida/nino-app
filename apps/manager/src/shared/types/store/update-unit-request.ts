@@ -4,8 +4,8 @@ export type UpdateUnitRequest = {
   primaryColor?: string
   secondaryColor?: string
   tertiaryColor?: string
-  logoUrl?: string
-  bannerUrl?: string
+  logoUrl?: string | null
+  bannerUrl?: string | null
   loadingType?: 'MASCOT' | 'SPINNER' | 'DOTS'
   zipCode: string
   street: string

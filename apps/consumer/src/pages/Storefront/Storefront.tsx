@@ -8,7 +8,7 @@ import { resolveSlug } from '@utils/resolve-slug'
 import { useStorefrontFacade } from './facades/useStorefrontFacade/useStorefrontFacade'
 
 export const Storefront = () => {
-  const { slug: pathSlug } = useParams()
+  const { slug: pathSlug, productId } = useParams()
   const slug = resolveSlug(pathSlug)
   const outlet = useOutlet()
   const home = useStorefrontFacade(slug ?? undefined)
@@ -38,6 +38,12 @@ export const Storefront = () => {
   }
 
   return (
-    <Box>{outlet ?? <StorefrontContent pathSlug={pathSlug ?? undefined} />}</Box>
+    <Box>
+      {productId && outlet ? (
+        outlet
+      ) : (
+        <StorefrontContent pathSlug={pathSlug ?? undefined} />
+      )}
+    </Box>
   )
 }

@@ -35,13 +35,13 @@
 }
 
 .storeHeader {
-  @apply h-14 shrink-0 items-center gap-3 border-b px-4;
+  @apply hidden shrink-0 items-center gap-3 border-b px-4;
   background-color: var(--preview-background);
   border-color: var(--preview-border);
 }
 
 .desktop .storeHeader {
-  @apply h-20 gap-5 px-6;
+  @apply flex h-20 gap-5 px-6;
 }
 
 .storeBrand {
@@ -155,11 +155,14 @@
   @apply h-28 sm:h-36;
 }
 
-.desktop .identity,
 .desktop .search,
 .desktop .categories,
 .desktop .menu {
   @apply px-6;
+}
+
+.desktop .identityRow {
+  @apply hidden;
 }
 
 .desktop .products {
@@ -171,13 +174,37 @@
   @apply sm:aspect-[1300/250] sm:h-auto sm:max-h-60;
   max-width: var(--storefront-column);
   background-color: var(--preview-primary);
-  background-image:
-    linear-gradient(
-      118deg,
-      color-mix(in srgb, var(--preview-primary) 22%, transparent),
-      color-mix(in srgb, var(--preview-secondary) 34%, transparent)
-    ),
-    var(--preview-banner);
+  background-image: linear-gradient(
+    118deg,
+    color-mix(in srgb, var(--preview-primary) 22%, transparent),
+    color-mix(in srgb, var(--preview-secondary) 34%, transparent)
+  );
+}
+
+.customBanner {
+  width: 100%;
+  height: fit-content;
+  min-height: 0;
+  aspect-ratio: auto;
+  max-width: var(--storefront-column);
+  max-height: none;
+  margin-inline: auto;
+  background-color: transparent;
+  overflow: visible;
+}
+
+.customBanner::before {
+  display: none;
+}
+
+.customImage {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-width: none;
+  max-height: none;
+  margin: auto;
+  object-fit: contain;
 }
 
 .banner::before {
@@ -208,45 +235,11 @@
   @apply text-[10rem];
 }
 
-.promoBanner {
-  @apply mx-4 my-3 flex shrink-0 items-center justify-between gap-3 overflow-hidden rounded-3 px-4 py-3;
-  background: linear-gradient(
-    118deg,
-    color-mix(in srgb, var(--preview-primary) 88%, var(--preview-secondary)),
-    var(--preview-secondary)
-  );
-  color: var(--preview-text);
-}
-
-.desktop .promoBanner {
-  @apply mx-6 my-4 px-5 py-4;
-}
-
-.promoCopy {
-  @apply min-w-0;
-}
-
-.promoEyebrow {
-  @apply text-[10px] font-bold uppercase tracking-[0.12em];
-  color: color-mix(in srgb, var(--preview-text) 70%, transparent);
-}
-
-.promoTitle {
-  @apply truncate text-base font-extrabold;
-}
-
-.promoDescription {
-  @apply block truncate text-xs;
-  color: color-mix(in srgb, var(--preview-text) 78%, transparent);
-}
-
-.promoPrice {
-  @apply shrink-0 text-sm font-extrabold;
-}
-
-.identity {
-  @apply flex shrink-0 items-start gap-3 px-4 pb-3;
-  background: var(--preview-tertiary);
+.identityRow {
+  @apply relative z-content -mt-7 flex shrink-0 items-center gap-3.5;
+  @apply border-y px-4 py-4;
+  background: var(--preview-background);
+  border-color: var(--preview-border);
 }
 
 .logoTile {
@@ -295,12 +288,32 @@
   background: var(--preview-primary);
 }
 
+.more {
+  @apply inline-flex w-auto shrink-0 justify-start px-0 text-[11px];
+  @apply font-semibold text-fg-faint underline underline-offset-4;
+  @apply hover:text-fg-default;
+  height: auto;
+  flex: 0 0 auto;
+}
+
 .search {
-  @apply mx-4 my-3 shrink-0 truncate rounded-full border px-3 py-1.5;
+  @apply mx-4 my-1.5 flex h-8 shrink-0 items-center gap-1.5 rounded-2 border px-2.5;
   @apply text-[11px];
   border-color: var(--preview-border);
-  background: var(--preview-card);
+  background: color-mix(
+    in srgb,
+    var(--preview-card) 78%,
+    var(--preview-background)
+  );
   color: var(--preview-muted);
+}
+
+.searchIcon {
+  @apply h-3.5 w-3.5 shrink-0;
+}
+
+.searchText {
+  @apply truncate;
 }
 
 @media (prefers-reduced-motion: reduce) {

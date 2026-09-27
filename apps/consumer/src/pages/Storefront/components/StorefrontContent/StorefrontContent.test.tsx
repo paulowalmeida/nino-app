@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react'
+import { fireEvent, render, screen } from '@testing-library/react'
 import type { ReactNode } from 'react'
 import { describe, expect, it, vi } from 'vitest'
 
@@ -48,7 +48,7 @@ vi.mock('@pages/Storefront/components/StoreCart/StoreCart', () => ({
 vi.mock(
   '@pages/Storefront/components/StoreMenu/CategoryNav/CategoryNav',
   () => ({
-    CategoryNav: emptyComponent,
+    CategoryNav: () => <div>categorias filtradas</div>,
   })
 )
 vi.mock(
@@ -108,13 +108,28 @@ vi.mock(
 )
 
 vi.mock('@nino/ds/components/EmptyState', () => ({
-  EmptyState: emptyComponent,
+  EmptyState: ({
+    title,
+    action,
+    children,
+  }: {
+    title?: string
+    action?: ReactNode
+    children?: ReactNode
+  }) => (
+    <div>
+      {title && <h2>{title}</h2>}
+      {children}
+      {action}
+    </div>
+  ),
 }))
 
 describe('StorefrontContent', () => {
   it('renders the menu shell using the feature facade without integration props', () => {
     vi.mocked(useStorefrontFacade).mockReturnValue({
       store: homeStoreMock,
+      search: '',
       sections: homeContentMock.sections,
       isMenuPending: false,
       isHoursPending: false,
@@ -134,5 +149,71 @@ describe('StorefrontContent', () => {
     render(<StorefrontContent pathSlug={homeContentMock.pathSlug} />)
 
     expect(screen.getByText('identidade da loja')).toBeInTheDocument()
+  })
+
+  it('scrolls to the top when searching for a product', () => {
+    const scrollTo = vi
+      .spyOn(window, 'scrollTo')
+      .mockImplementation(() => undefined)
+    vi.mocked(useStorefrontFacade).mockReturnValue({
+      store: homeStoreMock,
+      search: 'burger',
+      sections: homeContentMock.sections,
+      isMenuPending: false,
+      isHoursPending: false,
+      hours: [],
+      estimatedMinutes: homeContentMock.pathSlug.length,
+      cart: {},
+      cartLines: [],
+      cartCount: 0,
+      cartTotal: 0,
+      visibleSections: homeContentMock.sections,
+      isSearching: true,
+      isMenuError: false,
+      retryMenu: vi.fn(),
+      reset: vi.fn(),
+    } as never)
+
+    render(<StorefrontContent pathSlug={homeContentMock.pathSlug} />)
+
+    expect(scrollTo).toHaveBeenCalledWith({ top: 0, behavior: 'smooth' })
+    expect(screen.getByText('categorias filtradas')).toBeInTheDocument()
+    scrollTo.mockRestore()
+  })
+
+  it('offers a way to recover when the search has no results', () => {
+    const setSearch = vi.fn()
+    vi.mocked(useStorefrontFacade).mockReturnValue({
+      store: homeStoreMock,
+      search: 'pizza',
+      setSearch,
+      sections: homeContentMock.sections,
+      isMenuPending: false,
+      isHoursPending: false,
+      hours: [],
+      estimatedMinutes: homeContentMock.pathSlug.length,
+      cart: {},
+      cartLines: [],
+      cartCount: 0,
+      cartTotal: 0,
+      visibleSections: [],
+      isSearching: true,
+      isMenuError: false,
+      retryMenu: vi.fn(),
+      reset: vi.fn(),
+    } as never)
+
+    render(<StorefrontContent pathSlug={homeContentMock.pathSlug} />)
+
+    expect(screen.getByText('Nenhum item encontrado')).toBeInTheDocument()
+    expect(
+      screen.getByText(
+        'Não encontramos resultados para “pizza”. Tente outro termo.'
+      )
+    ).toBeInTheDocument()
+
+    fireEvent.click(screen.getByRole('button', { name: 'Limpar busca' }))
+
+    expect(setSearch).toHaveBeenCalledWith('')
   })
 })

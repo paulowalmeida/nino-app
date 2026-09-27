@@ -12,6 +12,8 @@ export const toUnitDraft = (unit: UnitDetail): UnitDraft => ({
   cardColor: unit.cardColor ?? '#FAFAFA',
   borderColor: unit.borderColor ?? '#E5E5E5',
   mutedTextColor: unit.mutedTextColor ?? '#666666',
+  logoUrl: unit.logoUrl ?? null,
+  bannerUrl: unit.bannerUrl ?? null,
   loadingType: unit.loadingType,
   zipCode: unit.zipCode,
   street: unit.street,

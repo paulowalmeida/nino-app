@@ -49,6 +49,10 @@ describe(PersonalizeStudio.name, () => {
     expect(
       screen.getByRole('region', { name: 'Prévia da loja para o cliente' })
     ).toBeInTheDocument()
+    expect(screen.getByRole('link', { name: /Ver na loja/ })).toHaveAttribute(
+      'href',
+      'http://localhost:3002/unidade-centro'
+    )
     expect(screen.queryByRole('region', { name: 'Cores' })).toBeNull()
   })
 

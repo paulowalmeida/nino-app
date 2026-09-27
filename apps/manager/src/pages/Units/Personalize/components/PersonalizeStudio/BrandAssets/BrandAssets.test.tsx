@@ -11,15 +11,24 @@ vi.mock('./BrandAssetSlot/BrandAssetSlot', () => ({
   BrandAssetSlot: ({
     label,
     triggerLabel,
+    hasAsset,
+    onRemove,
     onCropped,
   }: {
     label: string
     triggerLabel: string
+    hasAsset?: boolean
+    onRemove?: () => void
     onCropped: (file: File) => void
   }) => (
-    <button onClick={() => onCropped(croppedFile)}>
-      {label}: {triggerLabel}
-    </button>
+    <>
+      <button onClick={() => onCropped(croppedFile)}>
+        {label}: {triggerLabel}
+      </button>
+      {hasAsset && onRemove && (
+        <button onClick={onRemove}>Remover {label.toLowerCase()}</button>
+      )}
+    </>
   ),
 }))
 
@@ -68,5 +77,17 @@ describe(BrandAssets.name, () => {
     )
 
     expect(onChange).toHaveBeenCalledWith({ bannerFile: croppedFile })
+  })
+
+  it('removes an existing logo from the draft', async () => {
+    const onChange = vi.fn()
+    render(<BrandAssets {...brandAssetsMock} onChange={onChange} />)
+
+    await userEvent.click(screen.getByRole('button', { name: 'Remover logo' }))
+
+    expect(onChange).toHaveBeenCalledWith({
+      logoFile: undefined,
+      logoUrl: null,
+    })
   })
 })

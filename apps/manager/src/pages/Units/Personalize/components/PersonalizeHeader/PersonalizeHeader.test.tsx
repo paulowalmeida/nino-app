@@ -18,4 +18,17 @@ describe(PersonalizeHeader.name, () => {
       screen.getByText(/nada vai pro ar antes de você publicar/)
     ).toBeInTheDocument()
   })
+
+  it('offers the real storefront without leaving the studio', () => {
+    render(<PersonalizeHeader storeUrl={personalizeHeaderMock.storeUrl} />)
+
+    expect(screen.getByRole('link', { name: /Ver na loja/ })).toHaveAttribute(
+      'href',
+      personalizeHeaderMock.storeUrl
+    )
+    expect(screen.getByRole('link', { name: /Ver na loja/ })).toHaveAttribute(
+      'target',
+      '_blank'
+    )
+  })
 })

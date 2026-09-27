@@ -9,6 +9,8 @@ export type UnitDraft = {
   cardColor: string
   borderColor: string
   mutedTextColor: string
+  logoUrl?: string | null
+  bannerUrl?: string | null
   logoFile?: File
   bannerFile?: File
   loadingType: 'MASCOT' | 'SPINNER' | 'DOTS'

@@ -27,4 +27,15 @@ describe('toUnitDraft', () => {
     expect(draft.customName).toBe('')
     expect(draft.complement).toBe('')
   })
+
+  it('keeps the saved asset URLs in the editable draft', () => {
+    const draft = toUnitDraft({
+      ...unitDetailMock,
+      logoUrl: 'https://cdn.example/logo.png',
+      bannerUrl: 'https://cdn.example/banner.png',
+    })
+
+    expect(draft.logoUrl).toBe('https://cdn.example/logo.png')
+    expect(draft.bannerUrl).toBe('https://cdn.example/banner.png')
+  })
 })

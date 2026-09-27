@@ -7,17 +7,37 @@ import { PersonalizeStudio } from './components/PersonalizeStudio/PersonalizeStu
 
 import styles from './Personalize.module.css'
 
-export const Personalize = () => {
-  const { units } = useUnitsFacade()
-  const { isPending, isError } = units.detail
+const loadErrorMessage = (errors: unknown[]) => {
+  const error = errors.find((candidate): candidate is Error =>
+    candidate instanceof Error
+  )
 
-  if (isPending) return <PersonalizeSkeleton />
+  if (!error) {
+    return 'A API não retornou todos os dados necessários. Recarregue a página para tentar de novo.'
+  }
+
+  if (error.message === 'Request timed out') {
+    return 'A requisição excedeu o tempo limite. Recarregue a página para tentar de novo.'
+  }
+
+  return `A API retornou um erro: ${error.message}. Recarregue a página para tentar de novo.`
+}
+
+export const Personalize = () => {
+  const { units, theme } = useUnitsFacade()
+  const detail = units.detail
+  const editor = theme.editor
+  const isError = detail.isError || editor.isError
+  const isIncomplete =
+    detail.isPending || editor.isPending || !detail.data || !editor.data
+
+  if (isIncomplete && !isError) return <PersonalizeSkeleton />
 
   return (
     <Box className={styles.page}>
-      {isError ? (
+      {isError || !detail.data || !editor.data ? (
         <Alert variant="error" title="A personalização não carregou">
-          Recarregue a página para tentar de novo.
+          {loadErrorMessage([detail.error, editor.error])}
         </Alert>
       ) : (
         <PersonalizeStudio />

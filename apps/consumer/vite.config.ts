@@ -45,6 +45,9 @@ export default defineConfig({
         headers: { origin: API },
         rewrite: (path) => path.replace(/^\/api/, ''),
         cookieDomainRewrite: 'localhost',
+        cookiePathRewrite: {
+          '/consumer/auth/google': '/api/consumer/auth/google',
+        },
       },
     },
   },

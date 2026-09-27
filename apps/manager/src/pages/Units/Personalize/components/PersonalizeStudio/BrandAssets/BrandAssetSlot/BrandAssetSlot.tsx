@@ -1,5 +1,8 @@
 import { useState } from 'react'
 
+import { Box } from '@nino/ds/components/Box'
+import { Button } from '@nino/ds/components/Button'
+import { Dialog } from '@nino/ds/components/Dialog'
 import { FileUpload } from '@nino/ds/components/FileUpload'
 import { FormField } from '@nino/ds/components/FormField'
 import { Heading } from '@nino/ds/components/Heading'
@@ -16,6 +19,8 @@ export type BrandAssetSlotProps = {
   /** Proporção do recorte, largura ÷ altura. */
   aspectRatio: number
   onCropped: (file: File) => void
+  hasAsset?: boolean
+  onRemove?: () => void
 }
 
 const IMAGE_TYPES = {
@@ -34,9 +39,12 @@ export const BrandAssetSlot = ({
   confirmLabel,
   aspectRatio,
   onCropped,
+  hasAsset = false,
+  onRemove,
 }: BrandAssetSlotProps) => {
   const [chosenFile, setChosenFile] = useState<File | null>(null)
   const [dropzoneKey, setDropzoneKey] = useState(0)
+  const [isRemoveOpen, setRemoveOpen] = useState(false)
 
   const close = () => {
     setChosenFile(null)
@@ -46,14 +54,39 @@ export const BrandAssetSlot = ({
   return (
     <>
       <FormField label={label} helperText={helperText}>
-        <FileUpload
-          key={dropzoneKey}
-          accept={IMAGE_TYPES}
-          maxFileSize={MAX_FILE_SIZE}
-          triggerLabel={triggerLabel}
-          onFileChange={(files) => setChosenFile(files[0] ?? null)}
-        />
+        <Box>
+          <FileUpload
+            key={dropzoneKey}
+            accept={IMAGE_TYPES}
+            maxFileSize={MAX_FILE_SIZE}
+            triggerLabel={triggerLabel}
+            onFileChange={(files) => setChosenFile(files[0] ?? null)}
+          />
+          {hasAsset && onRemove && (
+            <Button
+              variant="ghost"
+              size="sm"
+              className="mt-2"
+              onClick={() => setRemoveOpen(true)}
+            >
+              Remover {label.toLowerCase()}
+            </Button>
+          )}
+        </Box>
       </FormField>
+
+      <Dialog
+        open={isRemoveOpen}
+        title={`Remover ${label.toLowerCase()}?`}
+        description={`A ${label.toLowerCase()} atual deixará de aparecer na loja depois que você salvar as alterações.`}
+        confirmLabel={`Remover ${label.toLowerCase()}`}
+        onConfirm={() => {
+          onRemove?.()
+          setRemoveOpen(false)
+        }}
+        onCancel={() => setRemoveOpen(false)}
+        onOpenChange={setRemoveOpen}
+      />
 
       <Modal
         open={!!chosenFile}

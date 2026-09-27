@@ -11,12 +11,16 @@
 }
 
 .track {
-  @apply flex min-w-0 flex-1 gap-2 overflow-x-auto py-3;
+  @apply flex min-w-0 flex-1 overflow-x-auto py-3;
   scrollbar-width: none;
 }
 
 .track::-webkit-scrollbar {
   display: none;
+}
+
+.chips {
+  @apply flex w-max min-w-full justify-center gap-2;
 }
 
 /*

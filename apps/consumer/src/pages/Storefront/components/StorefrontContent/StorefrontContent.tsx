@@ -1,7 +1,8 @@
-import { useLayoutEffect, useState } from 'react'
+import { useEffect, useLayoutEffect, useState } from 'react'
 
 import { Alert } from '@nino/ds/components/Alert'
 import { EmptyState } from '@nino/ds/components/EmptyState'
+import { Icon } from '@nino/ds/components/Icon'
 import { Box } from '@nino/ds/components/Box'
 import { Button } from '@nino/ds/components/Button'
 import { ActiveOrderBanner } from '@pages/Storefront/components/ActiveOrderBanner/ActiveOrderBanner'
@@ -40,9 +41,16 @@ export const StorefrontContent = ({ pathSlug }: StorefrontContentProps) => {
   const { reset } = home
   const [searchField, setSearchField] = useState<HTMLInputElement | null>(null)
   const isHeaderDocked = useDockedHeader(searchField, DOCKED_HEADER_OFFSET_PX)
-  const { search, visibleSections, isSearching } = home
+  const { search, setSearch, visibleSections, isSearching } = home
   const blocks = useStoreHome()
   const tint = storeThemePrimaryColor(home.store)
+
+  useEffect(() => {
+    if (!isSearching) return
+
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)')
+    window.scrollTo({ top: 0, behavior: reduced.matches ? 'auto' : 'smooth' })
+  }, [isSearching, search])
 
   useLayoutEffect(() => {
     reset()
@@ -73,7 +81,7 @@ export const StorefrontContent = ({ pathSlug }: StorefrontContentProps) => {
         )}
       </Box>
 
-      {blocks.showCategoryBar && home.sections.length > 0 && !isSearching && (
+      {blocks.showCategoryBar && home.visibleSections.length > 0 && (
         <CategoryBar className={motion.settle} style={riseDelay(140)}>
           <CategoryNav />
         </CategoryBar>
@@ -112,8 +120,18 @@ export const StorefrontContent = ({ pathSlug }: StorefrontContentProps) => {
             !home.isMenuError &&
             isSearching &&
             visibleSections.length === 0 && (
-              <EmptyState className={styles.empty}>
-                Nada encontrado para “{search}”.
+              <EmptyState
+                size="md"
+                className={styles.empty}
+                illustration={<Icon name="search" size="xl" />}
+                title="Nenhum item encontrado"
+                action={
+                  <Button variant="outline" onClick={() => setSearch('')}>
+                    Limpar busca
+                  </Button>
+                }
+              >
+                Não encontramos resultados para “{search}”. Tente outro termo.
               </EmptyState>
             )}
 
@@ -133,7 +151,6 @@ export const StorefrontContent = ({ pathSlug }: StorefrontContentProps) => {
       />
 
       {blocks.showStoreInfo && <StoreInfo />}
-
     </Box>
   )
 }

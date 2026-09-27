@@ -14,7 +14,13 @@ vi.mock('@nino/ds/components/Box', () => ({
 }))
 
 vi.mock('@nino/ds/components/Button', () => ({
-  Button: ({ children }: { children?: ReactNode }) => <button>{children}</button>,
+  Button: ({
+    children,
+    onClick,
+  }: {
+    children?: ReactNode
+    onClick?: () => void
+  }) => <button onClick={onClick}>{children}</button>,
 }))
 
 vi.mock('@nino/ds/components/Icon', () => ({

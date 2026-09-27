@@ -11,7 +11,9 @@ const STORE_BANNER_ASPECT_RATIO = 900 / 250
 export type BrandAssetsProps = {
   hasLogo: boolean
   hasBanner: boolean
-  onChange: (files: Pick<UnitDraft, 'logoFile' | 'bannerFile'>) => void
+  onChange: (
+    files: Pick<UnitDraft, 'logoFile' | 'bannerFile' | 'logoUrl' | 'bannerUrl'>
+  ) => void
 }
 
 export const BrandAssets = ({
@@ -33,6 +35,8 @@ export const BrandAssets = ({
         confirmLabel="Usar esta logo"
         aspectRatio={1}
         onCropped={(logoFile) => onChange({ logoFile })}
+        hasAsset={hasLogo}
+        onRemove={() => onChange({ logoFile: undefined, logoUrl: null })}
       />
 
       <BrandAssetSlot
@@ -44,6 +48,8 @@ export const BrandAssets = ({
         confirmLabel="Usar este banner"
         aspectRatio={STORE_BANNER_ASPECT_RATIO}
         onCropped={(bannerFile) => onChange({ bannerFile })}
+        hasAsset={hasBanner}
+        onRemove={() => onChange({ bannerFile: undefined, bannerUrl: null })}
       />
     </Box>
   </StudioSection>
