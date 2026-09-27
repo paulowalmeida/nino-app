@@ -5,8 +5,13 @@
 }
 
 .panel {
-  @apply h-dvh w-screen max-w-none rounded-none;
+  @apply flex h-dvh w-screen max-w-none flex-col rounded-none;
   @apply lg:h-auto lg:w-auto lg:max-w-5xl lg:rounded-2;
+}
+
+.body {
+  @apply min-h-0 flex-1;
+  @apply lg:flex-none;
 }
 
 .mobileBack {
