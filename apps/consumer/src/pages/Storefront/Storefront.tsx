@@ -1,4 +1,4 @@
-import { Outlet, useParams } from 'react-router'
+import { useOutlet, useParams } from 'react-router'
 
 import { Box } from '@nino/ds/components/Box'
 import { StoreLookupEmptyState } from '@pages/Storefront/components/StoreLookupEmptyState/StoreLookupEmptyState'
@@ -10,6 +10,7 @@ import { useStorefrontFacade } from './facades/useStorefrontFacade/useStorefront
 export const Storefront = () => {
   const { slug: pathSlug } = useParams()
   const slug = resolveSlug(pathSlug)
+  const outlet = useOutlet()
   const home = useStorefrontFacade(slug ?? undefined)
 
   if (!slug) {
@@ -37,9 +38,6 @@ export const Storefront = () => {
   }
 
   return (
-    <Box>
-      <StorefrontContent pathSlug={pathSlug ?? undefined} />
-      <Outlet />
-    </Box>
+    <Box>{outlet ?? <StorefrontContent pathSlug={pathSlug ?? undefined} />}</Box>
   )
 }

@@ -9,7 +9,7 @@ import { storefrontPathMock, storefrontStoreMock } from './Storefront.mock'
 
 vi.mock('react-router', () => ({
   useParams: () => ({ slug: storefrontPathMock.slug }),
-  Outlet: () => null,
+  useOutlet: () => null,
 }))
 vi.mock('@pages/Storefront/facades/useStorefrontFacade/useStorefrontFacade', () => ({
   useStorefrontFacade: vi.fn(),

@@ -64,6 +64,15 @@
   @apply h-full w-full object-cover;
 }
 
+.logoStack {
+  @apply h-full w-full;
+}
+
+.logoPlaceholder {
+  composes: nino-skeleton from global;
+  @apply h-full w-full bg-black/[0.06];
+}
+
 .storeName {
   @apply block min-w-0 truncate font-display text-sm font-extrabold;
   @apply text-fg-strong lg:text-2xl lg:tracking-tight;
@@ -253,6 +262,15 @@
 
 .accountPhoto {
   @apply h-6 w-6 shrink-0 rounded-full object-cover;
+}
+
+.accountPhotoWrap {
+  @apply h-6 w-6 shrink-0 overflow-hidden rounded-full;
+}
+
+.accountPhotoPlaceholder {
+  composes: nino-skeleton from global;
+  @apply h-full w-full bg-black/[0.06];
 }
 
 .accountName {

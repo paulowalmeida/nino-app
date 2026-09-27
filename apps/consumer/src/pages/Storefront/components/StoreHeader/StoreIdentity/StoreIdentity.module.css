@@ -40,6 +40,11 @@
   @apply h-full w-full;
 }
 
+.logoPlaceholder {
+  composes: nino-skeleton from global;
+  @apply h-full w-full bg-black/[0.06];
+}
+
 .logoFallback {
   @apply flex h-full w-full items-center justify-center;
   @apply font-display text-xl font-extrabold text-fg-on-brand;

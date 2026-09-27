@@ -82,6 +82,11 @@
   @apply h-full min-h-0 min-w-0 w-full;
 }
 
+.photoPlaceholder {
+  composes: nino-skeleton from global;
+  @apply h-full min-h-0 min-w-0 w-full bg-black/[0.06];
+}
+
 .photo {
   @apply block h-full min-h-0 min-w-0 w-full object-cover;
 }

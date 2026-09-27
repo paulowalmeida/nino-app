@@ -28,9 +28,13 @@ export const StoreIdentity = () => {
           className={styles.logoImg}
           wrapperClassName={styles.logoStack}
           placeholder={
-            <Text as="span" className={styles.logoFallback}>
-              {storeInitials(store)}
-            </Text>
+            logoUrl ? (
+              <Box className={styles.logoPlaceholder} aria-hidden="true" />
+            ) : (
+              <Text as="span" className={styles.logoFallback}>
+                {storeInitials(store)}
+              </Text>
+            )
           }
         />
       </Box>

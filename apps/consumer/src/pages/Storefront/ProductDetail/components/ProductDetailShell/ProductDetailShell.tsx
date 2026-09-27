@@ -1,7 +1,8 @@
 import type { ReactNode } from 'react'
 
 import { Box } from '@nino/ds/components/Box'
-import { Drawer } from '@nino/ds/components/Drawer'
+import { Button } from '@nino/ds/components/Button'
+import { Icon } from '@nino/ds/components/Icon'
 import { Modal } from '@nino/ds/components/Modal'
 
 import styles from './ProductDetailShell.module.css'
@@ -16,7 +17,7 @@ type ProductDetailShellProps = {
 }
 
 /**
- * Mobile: tela cheia, tudo empilhado. Desktop: modal larga com a foto à
+ * Mobile: página dedicada, tudo empilhado. Desktop: modal larga com a foto à
  * esquerda, só a coluna de escolhas rola, e o rodapé fica fora da rolagem.
  */
 export const ProductDetailShell = ({
@@ -33,17 +34,22 @@ export const ProductDetailShell = ({
 
   if (!isDesktop) {
     return (
-      <Drawer
-        open
-        onOpenChange={handleOpenChange}
-        placement="bottom"
-        size="100dvh"
-        bodyClassName={styles.sheetBody}
-      >
+      <Box as="main" className={styles.mobilePage}>
+        {!media && (
+          <Button
+            variant="ghost"
+            size="icon"
+            className={styles.mobileBack}
+            aria-label="Voltar ao cardápio"
+            onClick={onClose}
+          >
+            <Icon name="arrow-left" />
+          </Button>
+        )}
         {media}
         {details}
         {footer}
-      </Drawer>
+      </Box>
     )
   }
 

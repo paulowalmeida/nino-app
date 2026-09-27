@@ -76,7 +76,14 @@ export const StoreTopBar = ({ slug, isDocked }: StoreTopBarProps) => {
               src={logoUrl}
               alt=""
               className={styles.logoImg}
-              placeholder={storeInitials(store)}
+              wrapperClassName={styles.logoStack}
+              placeholder={
+                logoUrl ? (
+                  <Box className={styles.logoPlaceholder} aria-hidden="true" />
+                ) : (
+                  storeInitials(store)
+                )
+              }
             />
           </Box>
           <Text as="span" className={styles.storeName}>
@@ -180,10 +187,17 @@ export const StoreTopBar = ({ slug, isDocked }: StoreTopBarProps) => {
                   aria-label={`Sua conta — ${named}`}
                 >
                   {consumer.photoUrl ? (
-                    <img
+                    <Image
                       src={consumer.photoUrl}
                       alt=""
                       className={styles.accountPhoto}
+                      wrapperClassName={styles.accountPhotoWrap}
+                      placeholder={
+                        <Box
+                          className={styles.accountPhotoPlaceholder}
+                          aria-hidden="true"
+                        />
+                      }
                       referrerPolicy="no-referrer"
                     />
                   ) : (

@@ -69,6 +69,11 @@ export const MenuItemCard = ({
             alt=""
             className={styles.photo}
             wrapperClassName={styles.photoWrap}
+            placeholder={
+              image ? (
+                <Box className={styles.photoPlaceholder} aria-hidden="true" />
+              ) : undefined
+            }
           />
           {quantity > 0 && (
             <Text

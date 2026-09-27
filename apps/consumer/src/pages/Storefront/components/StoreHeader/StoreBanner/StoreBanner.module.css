@@ -8,7 +8,7 @@
  */
 .banner {
   @apply relative w-full overflow-hidden bg-cover bg-center;
-  @apply h-36;
+  @apply h-64;
   @apply sm:mx-auto sm:mt-4 sm:h-auto sm:w-[calc(100%-3rem)];
   @apply sm:aspect-[1300/250] sm:max-h-60 sm:rounded-4;
   max-width: var(--storefront-column);
@@ -56,6 +56,15 @@
   max-height: 250px;
   margin: auto;
   border-radius: inherit;
+}
+
+.customImageWrap {
+  display: block;
+}
+
+.imagePlaceholder {
+  composes: nino-skeleton from global;
+  @apply h-full w-full bg-black/[0.06];
 }
 
 .mark {

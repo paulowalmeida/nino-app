@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react'
 
 import { Box } from '@nino/ds/components/Box'
+import { Image } from '@nino/ds/components/Image'
 import { Text } from '@nino/ds/components/Text'
 import { useStorefrontFacade } from '@pages/Storefront/facades/useStorefrontFacade/useStorefrontFacade'
 import { storeInitials } from '@utils/store-info'
@@ -56,7 +57,15 @@ export const StoreBanner = () => {
       }`}
     >
       {bannerUrl && (
-        <img src={bannerUrl} alt="" className={styles.customImage} />
+        <Image
+          src={bannerUrl}
+          alt=""
+          className={styles.customImage}
+          wrapperClassName={styles.customImageWrap}
+          placeholder={
+            <Box className={styles.imagePlaceholder} aria-hidden="true" />
+          }
+        />
       )}
       {!hasCustomBanner && logoUrl && (
         <img src={logoUrl} alt="" className={styles.mark} />
