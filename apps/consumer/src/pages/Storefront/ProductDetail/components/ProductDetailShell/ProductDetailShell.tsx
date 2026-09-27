@@ -45,6 +45,7 @@ export const ProductDetailShell = ({
       dismissible={isDesktop}
       positionerClassName={styles.positioner}
       contentClassName={styles.panel}
+      bodyClassName={styles.body}
       body={
         <Box className={styles.grid}>
           <Box className={styles.media}>
