@@ -5,11 +5,10 @@ import { Button } from '@nino/ds/components/Button'
 import { Carousel } from '@nino/ds/components/Carousel'
 import { Icon } from '@nino/ds/components/Icon'
 import { Image } from '@nino/ds/components/Image'
-import { Text } from '@nino/ds/components/Text'
+import { Skeleton } from '@nino/ds/components/Skeleton'
 import { useProductDetailFacade } from '@pages/Storefront/ProductDetail/facades/useProductDetailFacade/useProductDetailFacade'
 import { useIsDesktop } from '@pages/Storefront/hooks/useIsDesktop/useIsDesktop'
 import { resolveApiAssetUrl } from '@utils/api-asset-url/api-asset-url'
-import { categoryIcon } from '@utils/category-icon'
 import { resolveBackHref } from '@utils/resolve-back-href'
 
 import styles from './ProductHero.module.css'
@@ -19,13 +18,7 @@ export const ProductHero = () => {
   const navigate = useNavigate()
   const isDesktop = useIsDesktop()
 
-  const fallback = (
-    <Box className={styles.fallback} aria-hidden="true">
-      <Text as="span" className={styles.glyph}>
-        {(product ? categoryIcon(product.name) : null) ?? '🍽️'}
-      </Text>
-    </Box>
-  )
+  const fallback = <Skeleton className={styles.fallback} />
 
   const images = product?.images ?? []
   const fallbackUrl = resolveApiAssetUrl(product?.fallbackUrl)
