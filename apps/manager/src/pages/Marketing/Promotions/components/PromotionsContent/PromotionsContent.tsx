@@ -4,6 +4,7 @@ import { Box } from '@nino/ds/components/Box'
 import { Button } from '@nino/ds/components/Button'
 import { Card } from '@nino/ds/components/Card'
 import { Checkbox } from '@nino/ds/components/Checkbox'
+import { EmptyState } from '@nino/ds/components/EmptyState'
 import { FieldHint } from '@nino/ds/components/FieldHint'
 import { Heading } from '@nino/ds/components/Heading'
 import { Input } from '@nino/ds/components/Input'
@@ -434,7 +435,7 @@ export const PromotionsContent = ({
           </Text>
         </Box>
         {promotions.length === 0 ? (
-          <Text color="subtle">Ainda não há promoções nesta unidade.</Text>
+          <EmptyState>Ainda não há promoções nesta unidade.</EmptyState>
         ) : (
           promotions.map((promotion) => (
             <Box key={promotion.id} className={styles.promotionRow}>

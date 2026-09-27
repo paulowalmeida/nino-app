@@ -6,16 +6,16 @@ import { deliveryZoneService } from '@pages/Checkout/services/delivery-zone/deli
 type DeliveryQuoteAddress = {
   providerId?: string
   zipCode?: string
-  street?: string
-  number?: string
-  complement?: string | null
-  neighborhood?: string
-  city?: string
-  state?: string
   latitude?: number
   longitude?: number
 }
 
+/**
+ * WHY: a cotação só depende do CEP e das coordenadas — é só isso que
+ * `getQuote` manda pro backend. Incluir rua/número/complemento/bairro na
+ * chave da query fazia qualquer tecla nesses campos (mesmo sem mudar CEP ou
+ * coordenada) disparar uma nova cotação, piscando o spinner e a taxa.
+ */
 export const useDeliveryQuote = (
   unitId: string | undefined,
   address: DeliveryQuoteAddress
@@ -27,12 +27,6 @@ export const useDeliveryQuote = (
     queryKey: [
       ...queryKeys.deliveryQuote.byUnitAndZip(unitId ?? '', normalizedZipCode),
       address.providerId,
-      address.street,
-      address.number,
-      address.complement,
-      address.neighborhood,
-      address.city,
-      address.state,
       address.latitude,
       address.longitude,
     ],

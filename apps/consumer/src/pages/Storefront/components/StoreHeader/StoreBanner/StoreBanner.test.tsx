@@ -27,7 +27,7 @@ describe('StoreBanner', () => {
     expect(container).toHaveTextContent(storeBannerMock.initials)
   })
 
-  it('removes the store watermark from a custom banner', () => {
+  it('renders a custom banner without the store watermark', () => {
     vi.mocked(useStorefrontFacade).mockReturnValue({
       store: {
         logoUrl: 'https://cdn.example/logo.png',

@@ -7,6 +7,7 @@ import { toHomeDraft } from '@pages/Units/adapters/toHomeDraft/toHomeDraft'
 import { toThemeColors } from '@pages/Units/adapters/toThemeColors/toThemeColors'
 import { toTrackingDraft } from '@pages/Units/adapters/toTrackingDraft/toTrackingDraft'
 import { toUnitDraft } from '@pages/Units/adapters/toUnitDraft/toUnitDraft'
+import { toUnitThemeDraft } from '@pages/Units/adapters/toUnitThemeDraft/toUnitThemeDraft'
 import { DEFAULT_CATALOG_DRAFT } from '@pages/Units/constants/catalog.constants'
 import { DEFAULT_HOME_DRAFT } from '@pages/Units/constants/home.constants'
 import { STUDIO_GROUPS } from '@pages/Units/constants/studio.constants'
@@ -18,6 +19,7 @@ import type { HomeDraft } from '@pages/Units/types/HomeDraft.type'
 import type { PreviewDevice } from '@pages/Units/types/PreviewDevice.type'
 import type { StudioGroup } from '@pages/Units/types/StudioGroup.type'
 import type { TrackingDraft } from '@pages/Units/types/TrackingDraft.type'
+import type { UnitTheme } from '@pages/Units/types/UnitTheme.type'
 import type { UnitDetail } from '@shared/types/store/unit-detail'
 import type { UnitDraft } from '@shared/types/store/unit-draft'
 import { storeUrlFor } from '@shared/utils/store-url/store-url'
@@ -107,6 +109,16 @@ export const PersonalizeStudio = () => {
     setDirty(true)
   }
 
+  const loadVersion = (version: UnitTheme) => {
+    if (!unit) return
+
+    setDraft(toUnitThemeDraft(unit, version))
+    setTracking(toTrackingDraft(version.config))
+    setCatalog(toCatalogDraft(version.config))
+    setHome(toHomeDraft(version.config))
+    setDirty(true)
+  }
+
   const discard = () => {
     setDraft(seed ? seedDraft(seed) : EMPTY_UNIT_DRAFT)
     setTracking(seedTracking())
@@ -141,7 +153,7 @@ export const PersonalizeStudio = () => {
       />
     ),
     tracking: <BrandTracking tracking={tracking} onChange={changeTracking} />,
-    versions: <BrandHistory />,
+    versions: <BrandHistory onLoadVersion={loadVersion} />,
   }
 
   return (

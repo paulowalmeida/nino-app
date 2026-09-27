@@ -1,21 +1,23 @@
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import type { ChangeEvent } from 'react'
 import { Controller, useWatch } from 'react-hook-form'
 
 import { Collapsible } from '@nino/ds/components/Collapsible'
 import { Box } from '@nino/ds/components/Box'
-import { Combobox } from '@nino/ds/components/Combobox'
+import { Button } from '@nino/ds/components/Button'
 import { FormField } from '@nino/ds/components/FormField'
+import { Icon } from '@nino/ds/components/Icon'
 import { Input } from '@nino/ds/components/Input'
 import { MaskedInput } from '@nino/ds/components/MaskedInput'
+import { Skeleton } from '@nino/ds/components/Skeleton'
 import { Text } from '@nino/ds/components/Text'
 import { Heading } from '@nino/ds/components/Heading'
 import { RadioGroup } from '@nino/ds/components/RadioGroup'
 import { Spinner } from '@nino/ds/components/Spinner'
-import { maskZipCode, onlyDigits } from '@nino/ds/masks'
+import { maskZipCode } from '@nino/ds/masks'
+import { ADDRESS_LOOKUP_SKELETON_ROWS } from '@pages/checkout/constants/addressLookupSkeletonRows.constants'
 import { useCheckoutFacade } from '@pages/checkout/facades/useCheckoutFacade/useCheckoutFacade'
 import type { CheckoutFacade } from '@pages/checkout/facades/useCheckoutFacade/useCheckoutFacade'
-import { useGuestAddressLookup } from '@pages/checkout/hooks/useGuestAddressLookup/useGuestAddressLookup'
 import { useGuestAddressSearch } from '@pages/checkout/hooks/useGuestAddressSearch/useGuestAddressSearch'
 import { brl } from '@utils/money'
 
@@ -23,7 +25,13 @@ import { DisclosureTrigger } from '../DisclosureTrigger/DisclosureTrigger'
 
 import styles from './DeliveryAddressFields.module.css'
 
-/** WHY: apresenta a zona e o endereço adequado ao tipo de cliente. */
+/**
+ * WHY: espelha a mesma busca de endereço do balcão do manager
+ * (DeliveryRecipientFields) — rua+número disparam a busca no Google ao
+ * perder o foco, e a tela troca para a lista de sugestões até o cliente
+ * confirmar um ponto. Não existe mais busca por CEP; o campo de CEP é só
+ * exibição/edição do valor resolvido.
+ */
 export const DeliveryAddressFields = ({
   checkout,
 }: {
@@ -40,119 +48,149 @@ export const DeliveryAddressFields = ({
     addresses,
     store,
   } = useCheckoutFacade(checkout)
-  const { mutate: lookupAddress, isPending: isLookingUpAddress } =
-    useGuestAddressLookup()
-  const [lookupStatus, setLookupStatus] = useState<
-    'idle' | 'done' | 'notFound'
-  >('idle')
-  const zipCodeField = register('guestZipCode', {
-    required: 'Informe o CEP',
-  })
-  const guestNumberField = register('guestNumber', {
-    required: 'Informe o nº',
-  })
+  const [isConfirmingAddress, setIsConfirmingAddress] = useState(false)
+  const [selectionError, setSelectionError] = useState<string | null>(null)
+  const searchedAddress = useRef('')
+  const zipCodeField = register('guestZipCode')
   const guestNeighborhoodField = register('guestNeighborhood', {
     required: 'Informe o bairro',
   })
-  const guestCityField = register('guestCity', { required: 'Informe a cidade' })
-  const guestStateField = register('guestState', {
-    required: 'Informe o estado',
-  })
   const guestComplementField = register('guestComplement')
-  const guestProviderId = useWatch({ control, name: 'guestProviderId' })
-  const guestStreet = useWatch({ control, name: 'guestStreet' })
+  const guestStreet = useWatch({ control, name: 'guestStreet' }) ?? ''
+  const guestNumber = useWatch({ control, name: 'guestNumber' }) ?? ''
   const guestState = useWatch({ control, name: 'guestState' })
   const {
     suggestions,
-    isSearching: isSearchingStreet,
+    isSearching: isSearchingAddress,
     resolveSelectedAddress,
     isResolvingSelectedAddress,
-  } = useGuestAddressSearch(store?.id, guestState || store?.state, guestStreet)
-  const [selectionError, setSelectionError] = useState<string | null>(null)
-  const hasDeliveryQuote = !!quote && !isLookingUpAddress && !isQuoting
+  } = useGuestAddressSearch(
+    store?.id,
+    guestState || store?.state,
+    guestStreet,
+    guestNumber,
+    isConfirmingAddress
+  )
+  const isLoadingAddresses = isSearchingAddress || isResolvingSelectedAddress
+  const hasDeliveryQuote = !!quote && !isQuoting
 
-  const clearGuestAddressSelection = (clearZipCode = false) => {
+  /** WHY: editar rua/número/bairro invalida o ponto já resolvido pelo Google.
+   * O CEP some junto — ele veio daquele ponto, e mantê-lo faz a cotação de
+   * entrega continuar rodando (e tremendo) atrás de um endereço que o
+   * cliente já está reescrevendo. Editar o próprio CEP não deve apagar o
+   * que acabou de ser digitado nele, só o ponto resolvido. */
+  const clearProviderSelection = () => {
     const options = { shouldDirty: true, shouldValidate: true }
     form.setValue('guestProviderId', undefined, options)
     form.setValue('guestLatitude', undefined, options)
     form.setValue('guestLongitude', undefined, options)
-    if (clearZipCode) form.setValue('guestZipCode', '', options)
   }
 
-  const handleStreetInputChange = (street: string) => {
-    setSelectionError(null)
-    form.setValue('guestStreet', street, {
+  const clearResolvedAddress = () => {
+    clearProviderSelection()
+    form.setValue('guestZipCode', '', {
       shouldDirty: true,
       shouldValidate: true,
     })
-    clearGuestAddressSelection(true)
   }
 
   const handleManualAddressChange = (
     onChange: (event: ChangeEvent<HTMLInputElement>) => void,
-    event: ChangeEvent<HTMLInputElement>
+    event: ChangeEvent<HTMLInputElement>,
+    clearZipCode = false
   ) => {
     void onChange(event)
-    clearGuestAddressSelection()
+    if (clearZipCode) clearResolvedAddress()
+    else clearProviderSelection()
+  }
+
+  const handleStreetChange = (event: ChangeEvent<HTMLInputElement>) => {
+    setSelectionError(null)
+    form.setValue('guestStreet', event.target.value, {
+      shouldDirty: true,
+      shouldValidate: true,
+    })
+    clearResolvedAddress()
+  }
+
+  const handleNumberChange = (event: ChangeEvent<HTMLInputElement>) => {
+    form.setValue('guestNumber', event.target.value, {
+      shouldDirty: true,
+      shouldValidate: true,
+    })
+    clearResolvedAddress()
+  }
+
+  const startAddressLookup = () => {
+    const street = guestStreet.trim()
+    const number = guestNumber.trim()
+    if (!street || !number) return
+
+    const typedAddress = `${street}, ${number}`
+    if (typedAddress === searchedAddress.current) return
+
+    searchedAddress.current = typedAddress
+    setIsConfirmingAddress(true)
   }
 
   const selectPrediction = async (placeId: string) => {
     setSelectionError(null)
+    setIsConfirmingAddress(false)
     try {
       const address = await resolveSelectedAddress(placeId)
       const options = { shouldDirty: true, shouldValidate: true }
-      setLookupStatus('done')
       form.setValue('guestProviderId', address.providerId, options)
       form.setValue('guestZipCode', address.zipCode, options)
       form.setValue('guestStreet', address.street, options)
+      form.setValue('guestNumber', address.number || guestNumber, options)
       form.setValue('guestNeighborhood', address.neighborhood, options)
       form.setValue('guestCity', address.city, options)
       form.setValue('guestState', address.state, options)
       form.setValue('guestLatitude', address.latitude, options)
       form.setValue('guestLongitude', address.longitude, options)
-      form.setFocus('guestNumber')
+      const resolvedNumber = address.number || guestNumber
+      searchedAddress.current = `${address.street}, ${resolvedNumber}`
     } catch {
       setSelectionError('A loja não entrega nesse endereço.')
     }
   }
 
-  const handleZipCodeChange = (event: ChangeEvent<HTMLInputElement>) => {
-    void zipCodeField.onChange(event)
-    const zipCode = event.target.value
-    clearGuestAddressSelection()
-
-    if (onlyDigits(zipCode).length !== 8) {
-      setLookupStatus('idle')
-      return
-    }
-
-    lookupAddress(zipCode, {
-      onSuccess: (found) => {
-        if (!found) {
-          setLookupStatus('notFound')
-          return
-        }
-
-        const current = form.getValues()
-        const options = { shouldDirty: true, shouldValidate: true }
-        setLookupStatus('done')
-        form.setValue(
-          'guestStreet',
-          found.street || current.guestStreet,
-          options
-        )
-        form.setValue(
-          'guestNeighborhood',
-          found.neighborhood || current.guestNeighborhood,
-          options
-        )
-        form.setValue('guestCity', found.city || current.guestCity, options)
-        form.setValue('guestState', found.state || current.guestState, options)
-        form.setFocus('guestNumber')
-      },
-      onError: () => setLookupStatus('notFound'),
-    })
-  }
+  const addressResults = isLoadingAddresses ? (
+    <Box direction="column" gap={1.5} aria-live="polite">
+      <Text size="sm" color="muted">
+        Procurando {guestStreet}, {guestNumber}…
+      </Text>
+      {ADDRESS_LOOKUP_SKELETON_ROWS.map((row) => (
+        <Skeleton key={row} className={styles.addressOptionPlaceholder} />
+      ))}
+    </Box>
+  ) : suggestions.length > 0 ? (
+    <Box direction="column" gap={1.5}>
+      {suggestions.map((suggestion) => (
+        <Button
+          key={suggestion.placeId}
+          type="button"
+          variant="ghost"
+          onClick={() => void selectPrediction(suggestion.placeId)}
+          className={styles.addressOption}
+        >
+          <Icon name="map-pin" size="sm" className={styles.addressPin} />
+          <Box direction="column" gap={0.5} className={styles.addressText}>
+            <Text as="span" size="sm" weight="semibold">
+              {suggestion.mainText}
+            </Text>
+            <Text as="span" size="xs" color="muted">
+              {suggestion.secondaryText}
+            </Text>
+          </Box>
+        </Button>
+      ))}
+    </Box>
+  ) : (
+    <Text color="muted">
+      Nenhum endereço encontrado. Confira o logradouro e o número.
+    </Text>
+  )
 
   return (
     <Box className={styles.block}>
@@ -164,7 +202,7 @@ export const DeliveryAddressFields = ({
         <Controller
           name="deliveryZoneId"
           control={control}
-          rules={{ required: 'Informe um CEP atendido pela loja' }}
+          rules={{ required: 'Confirme um endereço atendido pela loja' }}
           render={() => (
             <Box
               direction="row"
@@ -176,8 +214,8 @@ export const DeliveryAddressFields = ({
               aria-live="polite"
             >
               <Spinner
-                visible={isLookingUpAddress || isQuoting}
-                label="Buscando endereço e entrega"
+                visible={isQuoting}
+                label="Calculando a taxa de entrega"
               />
               {hasDeliveryQuote ? (
                 <Text as="span" className={styles.deliveryFee}>
@@ -185,13 +223,9 @@ export const DeliveryAddressFields = ({
                 </Text>
               ) : (
                 <Text color="subtle">
-                  {isLookingUpAddress
-                    ? 'Buscando endereço pelo CEP…'
-                    : isQuoting
-                      ? 'Calculando a taxa de entrega…'
-                      : lookupStatus === 'done'
-                        ? 'Endereço preenchido. Verificando a entrega…'
-                        : 'Informe o CEP para buscar o endereço e a entrega.'}
+                  {isQuoting
+                    ? 'Calculando a taxa de entrega…'
+                    : 'Informe o endereço para calcular a entrega.'}
                 </Text>
               )}
             </Box>
@@ -222,106 +256,55 @@ export const DeliveryAddressFields = ({
             )}
           />
         </FormField>
+      ) : isConfirmingAddress ? (
+        <Box direction="column" gap={2} className={styles.confirm}>
+          <Button
+            type="button"
+            variant="ghost"
+            className={styles.confirmBack}
+            onClick={() => setIsConfirmingAddress(false)}
+          >
+            <Icon name="arrow-left" size="sm" />
+            Confirme o endereço
+          </Button>
+          <Text size="sm" color="muted">
+            A taxa sai do ponto escolhido aqui, não do CEP digitado.
+          </Text>
+          {selectionError && (
+            <Text size="sm" color="danger">
+              {selectionError}
+            </Text>
+          )}
+          {addressResults}
+        </Box>
       ) : (
         <>
-          <Box className={styles.zipRow}>
-            <FormField
-              error={
-                lookupStatus === 'notFound'
-                  ? 'CEP não encontrado. Preencha o endereço.'
-                  : errors.guestZipCode?.message
-              }
-            >
-              <MaskedInput
-                {...zipCodeField}
-                mask={maskZipCode}
-                placeholder="CEP"
-                aria-label="CEP"
-                autoComplete="postal-code"
-                inputMode="numeric"
-                onChange={handleZipCodeChange}
+          {selectionError && (
+            <Text size="sm" color="danger">
+              {selectionError}
+            </Text>
+          )}
+
+          <Box className={styles.row}>
+            <FormField>
+              <Input
+                placeholder="Rua, avenida, travessa…"
+                aria-label="Endereço"
+                value={guestStreet}
+                onChange={handleStreetChange}
+                onBlur={startAddressLookup}
               />
             </FormField>
-            <FormField error={errors.guestNumber?.message}>
+            <FormField>
               <Input
                 placeholder="Nº"
                 aria-label="Número"
                 inputMode="numeric"
-                error={!!errors.guestNumber}
-                {...guestNumberField}
-                onChange={(event) =>
-                  handleManualAddressChange(guestNumberField.onChange, event)
-                }
+                value={guestNumber}
+                onChange={handleNumberChange}
+                onBlur={startAddressLookup}
               />
             </FormField>
-          </Box>
-
-          <FormField error={selectionError ?? errors.guestStreet?.message}>
-            <Combobox
-              options={suggestions.map((suggestion) => ({
-                value: suggestion.placeId,
-                label: suggestion.description,
-                inputLabel: suggestion.mainText,
-              }))}
-              value={guestProviderId}
-              inputValue={guestStreet}
-              placeholder="Logradouro"
-              ariaLabel="Endereço"
-              disabled={isLookingUpAddress}
-              loading={isSearchingStreet || isResolvingSelectedAddress}
-              emptyMessage={
-                (guestStreet?.trim().length ?? 0) >= 3
-                  ? 'Não encontrado. Continue preenchendo manualmente.'
-                  : 'Digite pelo menos 3 caracteres para buscar'
-              }
-              onInputValueChange={handleStreetInputChange}
-              onValueChange={(placeId) => {
-                void selectPrediction(placeId)
-              }}
-            />
-          </FormField>
-
-          <FormField error={errors.guestNeighborhood?.message}>
-            <Input
-              placeholder="Bairro"
-              aria-label="Bairro"
-              autoComplete="address-level3"
-              disabled={isLookingUpAddress}
-              error={!!errors.guestNeighborhood}
-              {...guestNeighborhoodField}
-              onChange={(event) =>
-                handleManualAddressChange(
-                  guestNeighborhoodField.onChange,
-                  event
-                )
-              }
-            />
-          </FormField>
-
-          <Box className={styles.row}>
-            <Input
-              placeholder="Cidade"
-              aria-label="Cidade"
-              autoComplete="address-level2"
-              disabled={isLookingUpAddress}
-              error={!!errors.guestCity}
-              {...guestCityField}
-              onChange={(event) =>
-                handleManualAddressChange(guestCityField.onChange, event)
-              }
-            />
-            <Input
-              placeholder="UF"
-              aria-label="Estado"
-              autoComplete="address-level1"
-              maxLength={2}
-              disabled={isLookingUpAddress}
-              error={!!errors.guestState}
-              {...guestStateField}
-              onChange={(event) =>
-                handleManualAddressChange(guestStateField.onChange, event)
-              }
-            />
           </Box>
 
           <Collapsible
@@ -336,15 +319,41 @@ export const DeliveryAddressFields = ({
                 aria-label="Complemento ou ponto de referência"
                 autoComplete="address-line2"
                 {...guestComplementField}
-                onChange={(event) =>
-                  handleManualAddressChange(
-                    guestComplementField.onChange,
-                    event
-                  )
-                }
               />
             </Box>
           </Collapsible>
+
+          <Box className={styles.row}>
+            <FormField error={errors.guestNeighborhood?.message}>
+              <Input
+                placeholder="Bairro"
+                aria-label="Bairro"
+                autoComplete="address-level3"
+                error={!!errors.guestNeighborhood}
+                {...guestNeighborhoodField}
+                onChange={(event) =>
+                  handleManualAddressChange(
+                    guestNeighborhoodField.onChange,
+                    event,
+                    true
+                  )
+                }
+              />
+            </FormField>
+            <FormField error={errors.guestZipCode?.message}>
+              <MaskedInput
+                {...zipCodeField}
+                mask={maskZipCode}
+                placeholder="CEP"
+                aria-label="CEP"
+                autoComplete="postal-code"
+                inputMode="numeric"
+                onChange={(event) =>
+                  handleManualAddressChange(zipCodeField.onChange, event)
+                }
+              />
+            </FormField>
+          </Box>
         </>
       )}
     </Box>

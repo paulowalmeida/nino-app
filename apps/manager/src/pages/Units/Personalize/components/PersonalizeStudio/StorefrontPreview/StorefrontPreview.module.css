@@ -152,7 +152,7 @@
 }
 
 .desktop .banner {
-  @apply h-28 sm:h-36;
+  @apply h-28;
 }
 
 .desktop .search,
@@ -170,8 +170,7 @@
 }
 
 .banner {
-  @apply relative h-20 shrink-0 overflow-hidden bg-cover bg-center sm:h-24;
-  @apply sm:aspect-[1300/250] sm:h-auto sm:max-h-60;
+  @apply relative h-64 w-full shrink-0 overflow-hidden bg-cover bg-center;
   max-width: var(--storefront-column);
   background-color: var(--preview-primary);
   background-image: linear-gradient(
@@ -182,11 +181,11 @@
 }
 
 .customBanner {
-  width: 100%;
+  width: min(100%, 900px);
   height: fit-content;
   min-height: 0;
   aspect-ratio: auto;
-  max-width: var(--storefront-column);
+  max-width: min(100%, 900px);
   max-height: none;
   margin-inline: auto;
   background-color: transparent;
@@ -236,17 +235,24 @@
 }
 
 .identityRow {
-  @apply relative z-content -mt-7 flex shrink-0 items-center gap-3.5;
+  @apply relative z-content -mt-9 flex w-full shrink-0 items-center gap-3.5;
   @apply border-y px-4 py-4;
   background: var(--preview-background);
   border-color: var(--preview-border);
+  box-shadow: 0 12px 32px -18px
+    color-mix(in srgb, var(--preview-text) 40%, transparent);
+}
+
+.afterCustomBanner {
+  margin-top: 0;
+  box-shadow: none;
 }
 
 .logoTile {
-  @apply -mt-7 flex h-14 w-14 shrink-0 items-center justify-center;
-  @apply overflow-hidden rounded-4 border-4 shadow-md;
+  @apply flex h-16 w-16 shrink-0 items-center justify-center;
+  @apply overflow-hidden rounded-3 border;
   border-color: var(--preview-background);
-  background: var(--preview-background);
+  background: var(--preview-card);
 }
 
 .logo {
@@ -261,26 +267,26 @@
 }
 
 .identityText {
-  @apply min-w-0 pt-1.5;
+  @apply min-w-0 flex-1;
 }
 
 .statusLine {
   @apply mt-1.5 flex flex-wrap items-center gap-x-1.5 gap-y-1;
+  @apply text-[0.8125rem];
 }
 
 .estimatedTime {
-  @apply text-[11px];
   color: var(--preview-muted);
 }
 
 .storeName {
-  @apply truncate text-base font-extrabold;
+  @apply line-clamp-2 text-xl font-extrabold leading-tight tracking-tight;
   color: var(--preview-secondary);
 }
 
 .status {
-  @apply mt-0.5 flex items-center gap-1.5 text-[11px] font-semibold;
-  color: var(--preview-muted);
+  @apply inline-flex items-center gap-1.5 font-semibold;
+  color: var(--preview-text);
 }
 
 .statusDot {
@@ -289,7 +295,7 @@
 }
 
 .more {
-  @apply inline-flex w-auto shrink-0 justify-start px-0 text-[11px];
+  @apply inline-flex w-auto shrink-0 justify-start px-0 text-[0.8125rem];
   @apply font-semibold text-fg-faint underline underline-offset-4;
   @apply hover:text-fg-default;
   height: auto;
@@ -297,23 +303,19 @@
 }
 
 .search {
-  @apply mx-4 my-1.5 flex h-8 shrink-0 items-center gap-1.5 rounded-2 border px-2.5;
-  @apply text-[11px];
+  @apply relative mx-4 mt-4 flex h-12 shrink-0 items-center rounded-3 border;
+  @apply text-base;
   border-color: var(--preview-border);
-  background: color-mix(
-    in srgb,
-    var(--preview-card) 78%,
-    var(--preview-background)
-  );
+  background: var(--preview-card);
   color: var(--preview-muted);
 }
 
 .searchIcon {
-  @apply h-3.5 w-3.5 shrink-0;
+  @apply pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2;
 }
 
 .searchText {
-  @apply truncate;
+  @apply w-full truncate py-3 pl-11 pr-4 leading-tight;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -326,11 +328,6 @@
 .categories {
   @apply flex shrink-0 items-center gap-2 overflow-hidden border-y px-4 py-2;
   border-color: var(--preview-border);
-}
-
-.categoryRailLabel {
-  @apply shrink-0 text-[10px] font-bold uppercase tracking-[0.08em];
-  color: var(--preview-muted);
 }
 
 .categoryTrack {
@@ -464,7 +461,7 @@
 }
 
 .productCard[data-item-style='big-image'] .productMedia {
-  @apply w-full;
+  @apply w-full max-h-60 sm:max-h-72;
 }
 
 .productCard[data-item-style='condensed'] .productMedia {

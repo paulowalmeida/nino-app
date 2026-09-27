@@ -10,6 +10,7 @@ import { EmptyState } from '@nino/ds/components/EmptyState'
 import { Header } from '@nino/ds/components/Header'
 import { Input } from '@nino/ds/components/Input'
 import { ListRow } from '@nino/ds/components/ListRow'
+import { NinoMascot } from '@nino/ds/components/NinoMascot'
 import { Text } from '@nino/ds/components/Text'
 import { TableTabsListSkeleton } from '@pages/TableTabs/skeletons/TableTabsListSkeleton/TableTabsListSkeleton'
 import { filterTableTabs } from '@pages/TableTabs/utils/filterTableTabs/filterTableTabs'
@@ -89,7 +90,11 @@ export const TableTabsList = ({
           </Alert>
         )}
         {!isPending && !isError && orders.length === 0 && (
-          <EmptyState size="md" className={motion.settle}>
+          <EmptyState
+            size="md"
+            illustration={search.trim() ? undefined : <NinoMascot />}
+            className={motion.settle}
+          >
             {search.trim()
               ? 'Nenhuma comanda encontrada para esta busca.'
               : selectedTab === 'open'

@@ -1,7 +1,7 @@
 import { MemoryRouter } from 'react-router'
 
 import { render, screen } from '@testing-library/react'
-import { beforeEach, describe, expect, it, vi } from 'vitest'
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
 import { useProductDetailFacade } from '@pages/ProductDetail/facades/useProductDetailFacade/useProductDetailFacade'
 
@@ -47,7 +47,11 @@ const renderPage = () =>
   )
 
 describe('ProductDetail', () => {
-  beforeEach(() => vi.clearAllMocks())
+  beforeEach(() => {
+    vi.clearAllMocks()
+    vi.spyOn(window, 'scrollTo').mockImplementation(() => {})
+  })
+  afterEach(() => vi.restoreAllMocks())
 
   it('opens the item card with its header and form', () => {
     mockScreenState({ isPending: false, isMissing: false, isReady: true })
@@ -63,6 +67,14 @@ describe('ProductDetail', () => {
     expect(
       screen.getByText(productDetailPageMock.formLabel)
     ).toBeInTheDocument()
+  })
+
+  it('scrolls to the top when the detail page mounts', () => {
+    mockScreenState({ isPending: true, isMissing: false, isReady: false })
+
+    renderPage()
+
+    expect(vi.mocked(window.scrollTo)).toHaveBeenCalledWith(0, 0)
   })
 
   it('holds the card until the menu arrives', () => {

@@ -7,6 +7,7 @@ import { Icon } from '@nino/ds/components/Icon'
 import { Image } from '@nino/ds/components/Image'
 import { Text } from '@nino/ds/components/Text'
 import { useProductDetailFacade } from '@pages/Storefront/ProductDetail/facades/useProductDetailFacade/useProductDetailFacade'
+import { useIsDesktop } from '@pages/Storefront/hooks/useIsDesktop/useIsDesktop'
 import { resolveApiAssetUrl } from '@utils/api-asset-url/api-asset-url'
 import { categoryIcon } from '@utils/category-icon'
 import { resolveBackHref } from '@utils/resolve-back-href'
@@ -16,6 +17,7 @@ import styles from './ProductHero.module.css'
 export const ProductHero = () => {
   const { product, slug } = useProductDetailFacade()
   const navigate = useNavigate()
+  const isDesktop = useIsDesktop()
 
   const fallback = (
     <Box className={styles.fallback} aria-hidden="true">
@@ -55,15 +57,17 @@ export const ProductHero = () => {
         fallback
       )}
 
-      <Button
-        variant="ghost"
-        size="icon"
-        className={styles.back}
-        aria-label="Voltar ao cardápio"
-        onClick={() => navigate(resolveBackHref(slug))}
-      >
-        <Icon name="arrow-left" />
-      </Button>
+      {!isDesktop && (
+        <Button
+          variant="ghost"
+          size="icon"
+          className={styles.back}
+          aria-label="Voltar ao cardápio"
+          onClick={() => navigate(resolveBackHref(slug))}
+        >
+          <Icon name="arrow-left" />
+        </Button>
+      )}
     </Box>
   )
 }

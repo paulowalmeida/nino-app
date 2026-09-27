@@ -105,9 +105,10 @@ Contrato completo em `AGENTS.md` e `.agents/rules/*.md`, auditado por 8 skills e
 # apps/manager — .env.local (sem .env.example versionado)
 VITE_BASE_URL=http://localhost:3000
 
-# apps/consumer — .env.example
-VITE_BASE_URL=http://localhost:3000
+# apps/consumer — .env.example (local)
+VITE_BASE_URL=/api
 VITE_GOOGLE_CLIENT_ID=""   # sem ele, botão "Continuar com Google" some
+# O deploy usa https://api-dev.nino.delivery via apps/consumer/vercel.json.
 
 # apps/landing — .env.example
 NEXT_PUBLIC_MANAGER_URL=http://localhost:3002

@@ -14,6 +14,7 @@ import type { CatalogDraft } from '@pages/Units/types/CatalogDraft.type'
 import type { HomeDraft } from '@pages/Units/types/HomeDraft.type'
 import type { BrandColors } from '@pages/Units/types/BrandColors.type'
 import type { PreviewDevice } from '@pages/Units/types/PreviewDevice.type'
+import { resolveApiAssetUrl } from '@shared/utils/api-asset-url/api-asset-url'
 
 import motion from '@styles/motion.module.css'
 import local from './StorefrontPreview.module.css'
@@ -35,7 +36,6 @@ type PreviewProduct = {
   name: string
   description: string
   price: string
-  icon: string
   image: string
 }
 
@@ -45,7 +45,6 @@ const PREVIEW_PRODUCTS: PreviewProduct[] = [
     name: 'Especial da casa',
     description: 'O favorito dos clientes, preparado na hora.',
     price: 'R$ 29,90',
-    icon: '🍔',
     image: '/product-presets/x-salada.png',
   },
   {
@@ -53,15 +52,13 @@ const PREVIEW_PRODUCTS: PreviewProduct[] = [
     name: 'Combo do dia',
     description: 'Prato, acompanhamento e bebida.',
     price: 'R$ 42,00',
-    icon: '🍟',
-    image: '/product-presets/duplo-cheddar.png',
+    image: '/product-presets/combo-x-salada-batata-refri.png',
   },
   {
     id: 'bacon',
     name: 'X-Bacon',
     description: 'Hambúrguer, bacon crocante, queijo e molho da casa.',
     price: 'R$ 28,90',
-    icon: '🥓',
     image: '/product-presets/x-bacon.png',
   },
   {
@@ -69,7 +66,6 @@ const PREVIEW_PRODUCTS: PreviewProduct[] = [
     name: 'X-Egg',
     description: 'Hambúrguer, ovo, queijo, alface e tomate.',
     price: 'R$ 26,50',
-    icon: '🍳',
     image: '/product-presets/x-egg.png',
   },
 ]
@@ -97,15 +93,11 @@ const PreviewProductCard = ({ product, catalog }: PreviewProductCardProps) => (
     <Button variant="ghost" className={local.productOpen}>
       <Box className={local.productMedia}>
         <Image
-          src={product.image}
+          src={resolveApiAssetUrl(product.image)}
           alt=""
           className={local.productPhoto}
           wrapperClassName={local.productPhoto}
-          placeholder={
-            <Box className={local.noPhoto} aria-hidden="true">
-              {product.icon}
-            </Box>
-          }
+          placeholder={<Box className={local.noPhoto} aria-hidden="true" />}
         />
       </Box>
       <Box className={local.productBody}>
@@ -291,21 +283,27 @@ export const StorefrontPreview = ({
                   className={local.customImage}
                 />
               )}
-              {shownLogoUrl ? (
-                <img src={shownLogoUrl} alt="" className={local.bannerMark} />
-              ) : (
-                <Text
-                  as="span"
-                  className={local.bannerMonogram}
-                  aria-hidden="true"
-                >
-                  {shownName.slice(0, 2).toUpperCase()}
-                </Text>
-              )}
+              {!shownBannerUrl &&
+                (shownLogoUrl ? (
+                  <img src={shownLogoUrl} alt="" className={local.bannerMark} />
+                ) : (
+                  <Text
+                    as="span"
+                    className={local.bannerMonogram}
+                    aria-hidden="true"
+                  >
+                    {shownName.slice(0, 2).toUpperCase()}
+                  </Text>
+                ))}
             </Box>
           )}
 
-          <Box direction="row" className={local.identityRow}>
+          <Box
+            direction="row"
+            className={`${local.identityRow} ${
+              shownBannerUrl ? local.afterCustomBanner : ''
+            }`}
+          >
             <Box className={local.logoTile} aria-hidden="true">
               {shownLogoUrl ? (
                 <img src={shownLogoUrl} alt="" className={local.logo} />
@@ -349,7 +347,6 @@ export const StorefrontPreview = ({
               className={local.categories}
               aria-label="Categorias do cardápio"
             >
-              <Text className={local.categoryRailLabel}>Cardápio</Text>
               <Box direction="row" className={local.categoryTrack}>
                 {PREVIEW_CATEGORIES.map(({ name, icon }, index) => (
                   <Chip

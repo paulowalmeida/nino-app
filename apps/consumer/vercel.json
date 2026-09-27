@@ -1,6 +1,9 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "framework": "vite",
+  "env": {
+    "VITE_BASE_URL": "https://api-dev.nino.delivery"
+  },
   "ignoreCommand": "cd ../.. && sh scripts/skip-unaffected-build.sh nino-consumer",
   "installCommand": "cd ../.. && npm install",
   "buildCommand": "cd ../.. && npx turbo run build --filter=nino-consumer",

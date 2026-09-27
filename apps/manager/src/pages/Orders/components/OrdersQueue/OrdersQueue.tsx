@@ -1,7 +1,11 @@
 import { Alert } from '@nino/ds/components/Alert'
 import { Box } from '@nino/ds/components/Box'
 import { EmptyState } from '@nino/ds/components/EmptyState'
-import { ORDERS_LOADING_TICKETS, ORDERS_STAGES } from '@pages/Orders/constants/orders.constants'
+import { NinoMascot } from '@nino/ds/components/NinoMascot'
+import {
+  ORDERS_LOADING_TICKETS,
+  ORDERS_STAGES,
+} from '@pages/Orders/constants/orders.constants'
 import { useOrdersFacade } from '@pages/Orders/facades/useOrdersFacade/useOrdersFacade'
 import { OrderTicketSkeleton } from '@pages/Orders/skeletons/OrderTicketSkeleton/OrderTicketSkeleton'
 import { OrderTicket } from '@shared/components/OrderTicket/OrderTicket'
@@ -68,7 +72,12 @@ export const OrdersQueue = () => {
     return (
       <Box className={styles.scrollArea}>
         <Box className={styles.feedback}>
-          <EmptyState size="md">{empty}</EmptyState>
+          <EmptyState
+            size="md"
+            illustration={isSearching ? undefined : <NinoMascot />}
+          >
+            {empty}
+          </EmptyState>
         </Box>
       </Box>
     )
@@ -84,9 +93,7 @@ export const OrdersQueue = () => {
           <li
             key={order.id}
             className={motion.settle}
-            style={riseDelay(
-              Math.min(index, 11) * 55 + 80
-            )}
+            style={riseDelay(Math.min(index, 11) * 55 + 80)}
           >
             <OrderTicket
               order={order}

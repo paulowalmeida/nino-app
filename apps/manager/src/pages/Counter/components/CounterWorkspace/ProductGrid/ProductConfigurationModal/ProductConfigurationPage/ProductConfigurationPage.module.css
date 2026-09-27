@@ -1,24 +1,30 @@
 @reference "@nino/ds/globals.css";
 
 .page {
-  @apply flex min-h-0 flex-col overflow-hidden bg-surface-page;
+  @apply flex min-h-0 flex-1 flex-col overflow-hidden bg-surface-page;
 }
 
-.scroll {
-  @apply min-h-0 flex-1 overflow-y-auto;
+.grid {
+  @apply flex min-h-0 w-full flex-1 flex-col overflow-y-auto;
 }
 
-.hero {
-  @apply relative flex aspect-[4/3] shrink-0 justify-center overflow-hidden bg-surface-cool;
+.media {
+  @apply relative flex aspect-[4/3] shrink-0 justify-center;
+  @apply overflow-hidden bg-surface-cool;
 }
 
 .heroImageWrapper,
 .heroImage {
-  @apply h-full w-full max-w-none rounded-none object-cover text-5xl;
+  @apply h-full w-full max-w-none rounded-none;
+  @apply object-cover text-5xl;
 }
 
 .back {
   @apply absolute left-4 top-4 z-10 rounded-full bg-surface-raised text-fg-strong shadow-warm-md;
+}
+
+.details {
+  @apply flex flex-col;
 }
 
 .summary {
@@ -49,49 +55,15 @@
     display: none;
   }
 
-  .page {
-    max-height: calc(100dvh - 8rem);
-  }
-}
-
-@media (max-width: 425px) {
-  @keyframes productConfigurationEnter {
-    from {
-      opacity: 0;
-      transform: translateY(4px);
-    }
-
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
+  .grid {
+    @apply grid h-[26rem] grid-cols-[11rem_1fr] gap-x-6 overflow-visible;
   }
 
-  @keyframes productConfigurationExit {
-    from {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    to {
-      opacity: 0;
-      transform: translateY(4px);
-    }
+  .media {
+    @apply aspect-auto min-h-0;
   }
 
-  .page {
-    @apply fixed inset-0 z-modal h-[100dvh] w-full;
-    min-height: 100dvh;
-    animation: productConfigurationEnter 140ms ease-out both;
-    will-change: transform;
-  }
-
-  .closing {
-    animation: productConfigurationExit 140ms ease-in both;
-    pointer-events: none;
-  }
-
-  .scroll {
-    padding-bottom: calc(5.5rem + env(safe-area-inset-bottom));
+  .details {
+    @apply mr-8 min-h-0 overflow-y-auto;
   }
 }

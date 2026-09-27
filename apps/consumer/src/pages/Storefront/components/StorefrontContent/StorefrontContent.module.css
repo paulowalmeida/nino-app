@@ -9,7 +9,9 @@
 .page {
   --storefront-column: 80rem;
   @apply relative flex min-h-dvh w-full flex-col bg-surface-page pb-24;
-  @apply lg:pb-12 lg:pt-20;
+  /* WHY: no desktop a StoreTopBar é fixa e permanente; sem reservar a altura
+     dela, o banner nasce 80px por baixo da barra. */
+  @apply lg:pt-20;
   padding-bottom: calc(6rem + env(safe-area-inset-bottom));
 }
 

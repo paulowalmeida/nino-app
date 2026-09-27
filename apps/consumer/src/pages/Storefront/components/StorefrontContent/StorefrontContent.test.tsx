@@ -106,6 +106,12 @@ vi.mock(
     MenuRowsSkeleton: emptyComponent,
   })
 )
+vi.mock(
+  '@pages/Storefront/skeletons/StoreHeaderSkeleton/StoreHeaderSkeleton',
+  () => ({
+    StoreHeaderSkeleton: () => <div>carregando cabeçalho</div>,
+  })
+)
 
 vi.mock('@nino/ds/components/EmptyState', () => ({
   EmptyState: ({
@@ -149,6 +155,32 @@ describe('StorefrontContent', () => {
     render(<StorefrontContent pathSlug={homeContentMock.pathSlug} />)
 
     expect(screen.getByText('identidade da loja')).toBeInTheDocument()
+  })
+
+  it('keeps the real header hidden while its data is pending', () => {
+    vi.mocked(useStorefrontFacade).mockReturnValue({
+      store: homeStoreMock,
+      isHeaderPending: true,
+      search: '',
+      sections: [],
+      isMenuPending: true,
+      isHoursPending: true,
+      hours: [],
+      cart: {},
+      cartLines: [],
+      cartCount: 0,
+      cartTotal: 0,
+      visibleSections: [],
+      isSearching: false,
+      isMenuError: false,
+      retryMenu: vi.fn(),
+      reset: vi.fn(),
+    } as never)
+
+    render(<StorefrontContent pathSlug={homeContentMock.pathSlug} />)
+
+    expect(screen.getByText('carregando cabeçalho')).toBeInTheDocument()
+    expect(screen.queryByText('identidade da loja')).not.toBeInTheDocument()
   })
 
   it('scrolls to the top when searching for a product', () => {

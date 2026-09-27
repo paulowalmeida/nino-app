@@ -1,4 +1,4 @@
-import type { ReactNode } from 'react'
+import { useLayoutEffect, type ReactNode } from 'react'
 
 import { Box } from '@nino/ds/components/Box'
 import { Button } from '@nino/ds/components/Button'
@@ -17,8 +17,9 @@ type ProductDetailShellProps = {
 }
 
 /**
- * Mobile: página dedicada, tudo empilhado. Desktop: modal larga com a foto à
- * esquerda, só a coluna de escolhas rola, e o rodapé fica fora da rolagem.
+ * Sempre uma Modal do DS. Mobile/tablet: ocupa a tela toda, sem X, só o
+ * botão de voltar. Desktop: painel largo com a foto à esquerda, comportamento
+ * default de abertura da Modal e sem botão de voltar — o X já fecha.
  */
 export const ProductDetailShell = ({
   isDesktop,
@@ -28,29 +29,12 @@ export const ProductDetailShell = ({
   details,
   footer,
 }: ProductDetailShellProps) => {
+  useLayoutEffect(() => {
+    if (!isDesktop) window.scrollTo(0, 0)
+  }, [isDesktop])
+
   const handleOpenChange = (open: boolean) => {
     if (!open) onClose()
-  }
-
-  if (!isDesktop) {
-    return (
-      <Box as="main" className={styles.mobilePage}>
-        {!media && (
-          <Button
-            variant="ghost"
-            size="icon"
-            className={styles.mobileBack}
-            aria-label="Voltar ao cardápio"
-            onClick={onClose}
-          >
-            <Icon name="arrow-left" />
-          </Button>
-        )}
-        {media}
-        {details}
-        {footer}
-      </Box>
-    )
   }
 
   return (
@@ -58,11 +42,25 @@ export const ProductDetailShell = ({
       open
       onOpenChange={handleOpenChange}
       ariaLabel={ariaLabel}
-      backdropClassName={styles.backdrop}
+      dismissible={isDesktop}
+      positionerClassName={styles.positioner}
       contentClassName={styles.panel}
       body={
         <Box className={styles.grid}>
-          <Box className={styles.media}>{media}</Box>
+          <Box className={styles.media}>
+            {!media && !isDesktop && (
+              <Button
+                variant="ghost"
+                size="icon"
+                className={styles.mobileBack}
+                aria-label="Voltar ao cardápio"
+                onClick={onClose}
+              >
+                <Icon name="arrow-left" />
+              </Button>
+            )}
+            {media}
+          </Box>
           <Box className={styles.details}>{details}</Box>
           {footer && <Box className={styles.footer}>{footer}</Box>}
         </Box>

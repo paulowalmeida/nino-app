@@ -39,11 +39,8 @@ export const Storefront = () => {
 
   return (
     <Box>
-      {productId && outlet ? (
-        outlet
-      ) : (
-        <StorefrontContent pathSlug={pathSlug ?? undefined} />
-      )}
+      <StorefrontContent pathSlug={pathSlug ?? undefined} />
+      {productId && outlet}
     </Box>
   )
 }

@@ -33,13 +33,19 @@ export const useStorefrontFacade = (requestedSlug?: string) => {
   )
   const menuSections = useMenuSections(menuQuery.sections, search)
   const isDesktop = useIsDesktop()
-  const { consumer } = useConsumerSession()
+  const { consumer, isPending: isConsumerPending } = useConsumerSession()
   const logout = useLogout()
 
   return {
     store: storeQuery.store,
     isStorePending: storeQuery.isPending,
     isStoreError: storeQuery.isError,
+    isHeaderPending:
+      storeQuery.isPending ||
+      menuQuery.isPending ||
+      hoursQuery.isPending ||
+      settingsQuery.isPending ||
+      isConsumerPending,
     sections: menuQuery.sections,
     isMenuPending: menuQuery.isPending,
     isMenuError: menuQuery.isError,

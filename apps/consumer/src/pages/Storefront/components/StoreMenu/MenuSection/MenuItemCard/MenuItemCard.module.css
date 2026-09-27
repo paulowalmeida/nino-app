@@ -185,7 +185,7 @@
 }
 
 .card[data-item-style='big-image'] .media {
-  @apply w-full;
+  @apply w-full max-h-60 sm:max-h-72;
 }
 
 .card[data-item-style='condensed'] .media {

@@ -68,7 +68,7 @@ describe('Storefront', () => {
     expect(screen.getByText('conteúdo loja-do-ze')).toBeInTheDocument()
   })
 
-  it('renders the child route instead of the store content when it is active', () => {
+  it('keeps the store content mounted behind the product route', () => {
     useParamsMock.mockReturnValue({
       slug: storefrontPathMock.slug,
       productId: 'product-1',
@@ -78,12 +78,12 @@ describe('Storefront', () => {
       store: storefrontStoreMock,
       isStorePending: false,
       isStoreError: false,
-    } as never)
+    } as unknown as ReturnType<typeof useStorefrontFacade>)
 
     render(<Storefront />)
 
     expect(screen.getByText('detalhe do produto')).toBeInTheDocument()
-    expect(screen.queryByText('conteúdo loja-do-ze')).not.toBeInTheDocument()
+    expect(screen.getByText('conteúdo loja-do-ze')).toBeInTheDocument()
   })
 
   it('renders the loading state while the store is pending', () => {

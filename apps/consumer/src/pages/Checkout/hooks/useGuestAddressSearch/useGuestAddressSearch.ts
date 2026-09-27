@@ -7,19 +7,26 @@ import { checkoutAddressSearchService } from '@pages/Checkout/services/address-s
 export const useGuestAddressSearch = (
   unitId: string | undefined,
   state: string | undefined,
-  street: string | undefined
+  street: string,
+  number: string,
+  searchRequested: boolean
 ) => {
-  const normalizedStreet = street?.trim() ?? ''
-  const [debouncedStreet, setDebouncedStreet] = useState('')
+  const normalizedStreet = street.trim()
+  const normalizedNumber = number.trim()
+  const normalizedSearch =
+    normalizedStreet && normalizedNumber
+      ? `${normalizedStreet}, ${normalizedNumber}`
+      : ''
+  const [debouncedSearch, setDebouncedSearch] = useState('')
   const [sessionToken, setSessionToken] = useState(() => crypto.randomUUID())
 
   useEffect(() => {
     const timer = window.setTimeout(
-      () => setDebouncedStreet(normalizedStreet),
-      350
+      () => setDebouncedSearch(searchRequested ? normalizedSearch : ''),
+      600
     )
     return () => window.clearTimeout(timer)
-  }, [normalizedStreet])
+  }, [normalizedSearch, searchRequested])
 
   const query = useQuery({
     queryKey: [
@@ -27,17 +34,21 @@ export const useGuestAddressSearch = (
       'address-search',
       unitId,
       state,
-      debouncedStreet,
+      debouncedSearch,
       sessionToken,
     ],
     queryFn: () =>
       checkoutAddressSearchService.search(
         unitId as string,
-        debouncedStreet,
+        debouncedSearch,
         state ?? '',
         sessionToken
       ),
-    enabled: !!unitId && state?.length === 2 && debouncedStreet.length >= 3,
+    enabled:
+      !!unitId &&
+      searchRequested &&
+      state?.length === 2 &&
+      debouncedSearch.length >= 3,
     staleTime: 60_000,
   })
 
@@ -55,11 +66,14 @@ export const useGuestAddressSearch = (
     onSettled: () => setSessionToken(crypto.randomUUID()),
   })
 
+  const isWaitingForDebounce =
+    searchRequested &&
+    normalizedSearch.length > 0 &&
+    normalizedSearch !== debouncedSearch
+
   return {
     suggestions: query.data ?? [],
-    isSearching:
-      (normalizedStreet.length >= 3 && normalizedStreet !== debouncedStreet) ||
-      query.isFetching,
+    isSearching: isWaitingForDebounce || query.isFetching,
     resolveSelectedAddress: detailsMutation.mutateAsync,
     isResolvingSelectedAddress: detailsMutation.isPending,
   }

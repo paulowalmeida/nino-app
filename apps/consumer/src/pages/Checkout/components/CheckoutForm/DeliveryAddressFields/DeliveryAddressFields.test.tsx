@@ -1,153 +1,218 @@
 import { fireEvent, render, screen, waitFor } from '@testing-library/react'
-import userEvent from '@testing-library/user-event'
+import { useForm } from 'react-hook-form'
 import { describe, expect, it, vi } from 'vitest'
 
+import type { CheckoutFormValues } from '@pages/checkout/types/checkout/CheckoutFormValues.type'
 import { useCheckoutFacade } from '@pages/checkout/facades/useCheckoutFacade/useCheckoutFacade'
-import { useGuestAddressLookup } from '@pages/checkout/hooks/useGuestAddressLookup/useGuestAddressLookup'
+import type { CheckoutFacade } from '@pages/checkout/facades/useCheckoutFacade/useCheckoutFacade'
 import { useGuestAddressSearch } from '@pages/checkout/hooks/useGuestAddressSearch/useGuestAddressSearch'
 
 import { DeliveryAddressFields } from './DeliveryAddressFields'
-import { deliveryAddressFieldsMock } from './DeliveryAddressFields.mock'
+import {
+  addressPredictionMock,
+  addressSearchResultMock,
+  deliveryAddressFieldsMock,
+} from './DeliveryAddressFields.mock'
 
 vi.mock('@pages/checkout/facades/useCheckoutFacade/useCheckoutFacade')
-vi.mock('@pages/checkout/hooks/useGuestAddressLookup/useGuestAddressLookup')
 vi.mock('@pages/checkout/hooks/useGuestAddressSearch/useGuestAddressSearch')
-vi.mock('react-hook-form', () => ({
-  Controller: ({ render }: { render: (args: unknown) => unknown }) =>
-    render({ field: { value: '', onChange: vi.fn() } }),
-  useWatch: () => '',
-}))
+
+/** WHY: o formulário real vem de `react-hook-form`, e o fluxo de endereço
+ * depende de `useWatch`/`form.setValue` refletindo o valor digitado — um
+ * `control`/`form` de mentira não reproduziria essa amarração. */
+const Harness = ({
+  zone,
+}: {
+  zone?: { name: string; fee: number }
+} = {}) => {
+  const form = useForm<CheckoutFormValues>({
+    defaultValues: { guestStreet: '', guestNumber: '' },
+  })
+  vi.mocked(useCheckoutFacade).mockReturnValue({
+    form,
+    control: form.control,
+    register: form.register,
+    errors: form.formState.errors,
+    zone,
+    isQuoting: false,
+    isAuthenticated: false,
+    addresses: [],
+    store: { id: 'store-1', state: 'PA' },
+  } as unknown as CheckoutFacade)
+
+  return <DeliveryAddressFields />
+}
 
 describe('DeliveryAddressFields', () => {
-  const setup = ({ isPending = false, mutate = vi.fn() } = {}) => {
-    const setValue = vi.fn()
-    const setFocus = vi.fn()
-    vi.mocked(useGuestAddressLookup).mockReturnValue({
-      mutate,
-      isPending,
-    } as never)
+  const setup = (
+    searchOverrides: Partial<ReturnType<typeof useGuestAddressSearch>> = {}
+  ) => {
     vi.mocked(useGuestAddressSearch).mockReturnValue({
       suggestions: [],
       isSearching: false,
       resolveSelectedAddress: vi.fn(),
       isResolvingSelectedAddress: false,
+      ...searchOverrides,
     })
-    vi.mocked(useCheckoutFacade).mockReturnValue({
-      control: {},
-      form: {
-        getValues: () => ({}),
-        setValue,
-        setFocus,
-      },
-      register: (name: string) => ({ name, onChange: vi.fn() }),
-      errors: {},
-      zone: {
-        name: deliveryAddressFieldsMock.zoneName,
-        fee: deliveryAddressFieldsMock.zoneFee,
-      },
-      isQuoting: false,
-      isAuthenticated: false,
-      addresses: [],
-    } as never)
-
-    return { setValue, setFocus }
   }
 
-  it('shows the quoted delivery fee', () => {
+  it('asks for street and number, with no CEP-driven lookup', () => {
     setup()
 
-    render(<DeliveryAddressFields />)
+    render(<Harness />)
+
+    expect(screen.getByLabelText('Endereço')).toBeInTheDocument()
+    expect(screen.getByLabelText('Número')).toBeInTheDocument()
+    expect(screen.queryByText(/Buscando endereço pelo CEP/)).toBeNull()
+  })
+
+  it('shows the quoted delivery fee once the zone resolves', () => {
+    setup()
+
+    render(
+      <Harness
+        zone={{
+          name: deliveryAddressFieldsMock.zoneName,
+          fee: deliveryAddressFieldsMock.zoneFee,
+        }}
+      />
+    )
 
     expect(screen.getByText(/Taxa de entrega/)).toBeInTheDocument()
-    expect(screen.getByLabelText('Endereço')).toBeInTheDocument()
   })
 
-  it('blocks auto-filled fields and shows feedback during lookup', () => {
-    setup({ isPending: true })
+  it('opens the confirmation screen once street and number are filled', async () => {
+    // Arrange: no suggestions yet, waiting for the guest to fill both fields.
+    setup()
+    render(<Harness />)
 
-    render(<DeliveryAddressFields />)
-
-    expect(
-      screen.getByRole('status', { name: /Buscando endereço/ })
-    ).toBeInTheDocument()
-    expect(screen.getByText('Buscando endereço pelo CEP…')).toBeInTheDocument()
-    expect(screen.getByLabelText('Endereço')).toBeDisabled()
-    expect(screen.getByLabelText('Bairro')).toBeDisabled()
-    expect(screen.getByLabelText('Cidade')).toBeDisabled()
-    expect(screen.getByLabelText('Estado')).toBeDisabled()
-    expect(screen.getByLabelText('Número')).toBeEnabled()
-  })
-
-  it('fills the address returned by the zip code service', () => {
-    const mutate = vi.fn(
-      (_zipCode: string, options: { onSuccess: (found: object) => void }) =>
-        options.onSuccess({
-          street: 'Rua das Flores',
-          neighborhood: 'Centro',
-          city: 'Belém',
-          state: 'PA',
-        })
-    )
-    const { setValue, setFocus } = setup({ mutate })
-
-    render(<DeliveryAddressFields />)
-    fireEvent.change(screen.getByLabelText('CEP'), {
-      target: { value: '66000-000' },
+    // Act: type the street and number, then blur to trigger the lookup —
+    // the exact behavior of the counter's DeliveryRecipientFields.
+    fireEvent.change(screen.getByLabelText('Endereço'), {
+      target: { value: 'Rua das Flores' },
     })
+    fireEvent.blur(screen.getByLabelText('Endereço'))
+    fireEvent.change(screen.getByLabelText('Número'), {
+      target: { value: '123' },
+    })
+    fireEvent.blur(screen.getByLabelText('Número'))
 
-    expect(mutate).toHaveBeenCalled()
-    expect(setValue).toHaveBeenCalledWith(
-      'guestStreet',
-      'Rua das Flores',
-      expect.any(Object)
+    // Assert: the field view is replaced by the confirmation screen.
+    await waitFor(() =>
+      expect(screen.getByText('Confirme o endereço')).toBeInTheDocument()
     )
-    expect(setFocus).toHaveBeenCalledWith('guestNumber')
+    expect(screen.queryByLabelText('Bairro')).toBeNull()
+  })
+
+  it('shows a skeleton while searching and the predictions once they arrive', async () => {
+    setup({ isSearching: true })
+    const { rerender } = render(<Harness />)
+
+    fireEvent.change(screen.getByLabelText('Endereço'), {
+      target: { value: 'Rua das Flores' },
+    })
+    fireEvent.change(screen.getByLabelText('Número'), {
+      target: { value: '123' },
+    })
+    fireEvent.blur(screen.getByLabelText('Número'))
+
+    await waitFor(() =>
+      expect(screen.getByText('Confirme o endereço')).toBeInTheDocument()
+    )
+    expect(screen.getByText(/Procurando/)).toBeInTheDocument()
+
+    // Act: the search resolves with one prediction.
+    setup({ suggestions: [addressPredictionMock], isSearching: false })
+    rerender(<Harness />)
+
+    // Assert: the prediction now shows in place of the skeleton.
+    expect(screen.getByText(addressPredictionMock.mainText)).toBeInTheDocument()
   })
 
   it('resolves the full address once a prediction is selected', async () => {
-    // Arrange: one prediction is available and resolves successfully.
-    const resolveSelectedAddress = vi.fn().mockResolvedValue({
-      providerId: 'place-1',
-      zipCode: '66000-000',
-      street: 'Rua das Flores',
-      neighborhood: 'Centro',
-      city: 'Belém',
-      state: 'PA',
-      latitude: -1.45,
-      longitude: -48.5,
-    })
-    const { setValue, setFocus } = setup()
-    vi.mocked(useGuestAddressSearch).mockReturnValue({
-      suggestions: [
-        {
-          placeId: 'place-1',
-          description: 'Rua das Flores - Centro, Belém - PA',
-          mainText: 'Rua das Flores',
-          secondaryText: 'Centro, Belém - PA',
-        },
-      ],
-      isSearching: false,
+    const resolveSelectedAddress = vi
+      .fn()
+      .mockResolvedValue(addressSearchResultMock)
+    setup({
+      suggestions: [addressPredictionMock],
       resolveSelectedAddress,
-      isResolvingSelectedAddress: false,
     })
-    render(<DeliveryAddressFields />)
+    render(<Harness />)
 
-    // Act: select the only prediction in the list.
-    const user = userEvent.setup({ pointerEventsCheck: 0 })
-    await user.click(screen.getByLabelText('Endereço'))
-    await user.keyboard('{ArrowDown}{ArrowDown}{Enter}')
+    fireEvent.change(screen.getByLabelText('Endereço'), {
+      target: { value: 'Rua das Flores' },
+    })
+    fireEvent.change(screen.getByLabelText('Número'), {
+      target: { value: '123' },
+    })
+    fireEvent.blur(screen.getByLabelText('Número'))
+    await waitFor(() =>
+      expect(
+        screen.getByText(addressPredictionMock.mainText)
+      ).toBeInTheDocument()
+    )
 
-    // Assert: the details call resolved and populated the full address.
+    fireEvent.click(screen.getByText(addressPredictionMock.mainText))
+
+    // Assert: the details call resolved and the fields view returns, filled.
     await waitFor(() =>
       expect(resolveSelectedAddress).toHaveBeenCalledWith('place-1')
     )
     await waitFor(() =>
-      expect(setValue).toHaveBeenCalledWith(
-        'guestZipCode',
-        '66000-000',
-        expect.any(Object)
+      expect(screen.getByLabelText('CEP')).toHaveValue(
+        addressSearchResultMock.zipCode
       )
     )
-    expect(setFocus).toHaveBeenCalledWith('guestNumber')
+  })
+
+  it('shows an error and returns to the fields when the store does not deliver there', async () => {
+    const resolveSelectedAddress = vi.fn().mockRejectedValue(new Error('nope'))
+    setup({
+      suggestions: [addressPredictionMock],
+      resolveSelectedAddress,
+    })
+    render(<Harness />)
+
+    fireEvent.change(screen.getByLabelText('Endereço'), {
+      target: { value: 'Rua das Flores' },
+    })
+    fireEvent.change(screen.getByLabelText('Número'), {
+      target: { value: '123' },
+    })
+    fireEvent.blur(screen.getByLabelText('Número'))
+    await waitFor(() =>
+      expect(
+        screen.getByText(addressPredictionMock.mainText)
+      ).toBeInTheDocument()
+    )
+
+    fireEvent.click(screen.getByText(addressPredictionMock.mainText))
+
+    await waitFor(() =>
+      expect(
+        screen.getByText('A loja não entrega nesse endereço.')
+      ).toBeInTheDocument()
+    )
+  })
+
+  it('lets the guest go back to editing without picking a prediction', async () => {
+    setup({ suggestions: [addressPredictionMock] })
+    render(<Harness />)
+
+    fireEvent.change(screen.getByLabelText('Endereço'), {
+      target: { value: 'Rua das Flores' },
+    })
+    fireEvent.change(screen.getByLabelText('Número'), {
+      target: { value: '123' },
+    })
+    fireEvent.blur(screen.getByLabelText('Número'))
+    await waitFor(() =>
+      expect(screen.getByText('Confirme o endereço')).toBeInTheDocument()
+    )
+
+    fireEvent.click(screen.getByText('Confirme o endereço'))
+
+    expect(screen.getByLabelText('Endereço')).toBeInTheDocument()
+    expect(screen.queryByText('Confirme o endereço')).toBeNull()
   })
 })

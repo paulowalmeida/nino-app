@@ -20,6 +20,13 @@
     color-mix(in srgb, var(--color-warm-950) 40%, transparent);
 }
 
+/* A arte enviada pelo restaurante já tem uma altura própria; sobrepor a
+ * identidade esconderia parte da imagem em vez de apresentá-la inteira. */
+.afterCustomBanner {
+  margin-top: 0;
+  box-shadow: none;
+}
+
 @media (min-width: 640px) {
   .identityRow {
     box-shadow: none;

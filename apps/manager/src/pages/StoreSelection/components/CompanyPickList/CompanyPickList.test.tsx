@@ -40,4 +40,18 @@ describe('CompanyPickList', () => {
 
     expect(selectCompany).toHaveBeenCalledWith(companyPickListMock[1].units)
   })
+
+  it('shows an empty state for an account with no linked company', () => {
+    vi.mocked(useStoreSelectionFacade).mockReturnValue({
+      companies: [],
+      selectCompany,
+    })
+
+    render(<CompanyPickList />)
+
+    expect(screen.getByText('Nada por aqui')).toBeInTheDocument()
+    expect(
+      screen.queryByText(companyPickListMock[0].companyName)
+    ).not.toBeInTheDocument()
+  })
 })

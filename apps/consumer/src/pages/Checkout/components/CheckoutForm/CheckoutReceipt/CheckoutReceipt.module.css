@@ -25,6 +25,25 @@
   @apply flex flex-col gap-3 pt-2;
 }
 
+.itemsList {
+  @apply flex flex-col gap-3;
+}
+
+/*
+ * WHY: no desktop o resumo é `sticky`, e um pedido com muitos itens estourava
+ * a altura da viewport — a página inteira precisava rolar para revelar o
+ * total e o botão "Continuar". Só a lista de itens rola; subtotal, entrega e
+ * o rodapé (fora deste componente) ficam sempre visíveis. A subtração fixa
+ * aproxima o espaço ocupado pelo cabeçalho do resumo, subtotal/entrega e o
+ * rodapé de total — não precisa ser exata, sobra de respiro é inofensiva.
+ */
+@media (min-width: 1024px) {
+  .itemsList {
+    @apply overflow-y-auto;
+    max-height: calc(100dvh - 531px);
+  }
+}
+
 .item {
   @apply flex items-baseline justify-between gap-3 text-sm text-fg-default;
   font-variant-numeric: tabular-nums;

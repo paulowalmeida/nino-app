@@ -8,8 +8,9 @@ import type { MenuItem } from '@shared/types/product/menu-item'
 import type { MenuItemModifier } from '@shared/types/product/menu-item-modifier'
 import { brl } from '@shared/utils/money/money'
 
-import { ProductConfigurationPage } from './ProductConfigurationPage/ProductConfigurationPage'
 import { useProductConfigurationMobile } from './hooks/useProductConfigurationMobile/useProductConfigurationMobile'
+import { ProductConfigurationPage } from './ProductConfigurationPage/ProductConfigurationPage'
+
 import styles from './ProductConfigurationModal.module.css'
 
 type ProductConfigurationModalProps = {
@@ -25,6 +26,7 @@ export const ProductConfigurationModal = ({
 }: ProductConfigurationModalProps) => {
   const [selectedOptionIds, setSelectedOptionIds] = useState<string[]>([])
   const isMobile = useProductConfigurationMobile()
+  const isDesktop = !isMobile
   const modifiers = item?.modifiers ?? []
 
   const selectedCount = (modifier: MenuItemModifier) =>
@@ -105,11 +107,9 @@ export const ProductConfigurationModal = ({
       selectedCount={selectedCount}
       onSelectSingle={selectSingleOption}
       onToggleOption={toggleOption}
-      actions={isMobile ? actions : undefined}
+      actions={actions}
     />
   ) : null
-
-  if (isMobile) return page
 
   return (
     <Modal
@@ -117,9 +117,11 @@ export const ProductConfigurationModal = ({
       onOpenChange={(open) => !open && close()}
       ariaLabel={item ? `Configurar ${item.name}` : 'Configurar produto'}
       size="lg"
+      dismissible={isDesktop}
+      positionerClassName={styles.positioner}
       contentClassName={styles.modal}
+      bodyClassName={styles.body}
       body={page}
-      footer={actions}
     />
   )
 }

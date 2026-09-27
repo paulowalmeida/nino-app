@@ -1,88 +1,45 @@
 @reference "@nino/ds/globals.css";
 
+.positioner {
+  @apply p-0;
+}
+
 .modal {
-  @apply flex max-h-[calc(100dvh-2rem)] flex-col;
-  width: min(34rem, calc(100vw - 2rem));
-  max-width: 34rem !important;
+  @apply flex h-full max-h-none w-screen max-w-none flex-col rounded-none;
 }
 
-.modal > div:first-of-type {
-  @apply flex min-h-0 flex-1 flex-col overflow-hidden;
-}
-
-.modal > div:first-of-type > div {
-  @apply min-h-0 flex-1;
-  max-height: none;
-}
-
-.modal > div:last-of-type {
-  @apply shrink-0;
+.body {
+  @apply flex min-h-0 flex-1 flex-col p-0;
 }
 
 .footer {
-  @apply w-full items-center justify-end gap-3;
+  @apply w-full shrink-0 items-center justify-end gap-3;
+  @apply border-t border-border bg-surface-page px-4 pt-3;
+  padding-bottom: calc(0.75rem + env(safe-area-inset-bottom));
 }
 
 .cancel {
   @apply shrink-0;
 }
 
-@media (max-width: 425px) {
+@media (min-width: 426px) {
+  .positioner {
+    @apply p-4;
+  }
+
+  .modal {
+    @apply h-auto rounded-2;
+    max-height: calc(100dvh - 2rem);
+    width: min(42rem, calc(100vw - 2rem));
+  }
+
   .footer {
-    @apply fixed inset-x-0 z-overlay justify-stretch border-t border-border;
-    @apply bg-surface-page px-4 pb-3 pt-3;
-    margin-bottom: 0;
-    bottom: 1rem;
-    padding-bottom: calc(1rem + env(safe-area-inset-bottom));
-  }
-
-  .cancel {
-    display: none;
-  }
-
-  .footer > button:last-child {
-    @apply w-full;
+    @apply border-0 bg-transparent px-6 pb-6 pt-4;
+    padding-bottom: 1.5rem;
   }
 }
 
 @media (max-width: 425px) {
-  .layout {
-    @apply flex h-full min-h-0 gap-0 overflow-hidden p-0;
-  }
-
-  .mobileBack {
-    display: inline-flex;
-  }
-
-  .modal :global(button[aria-label='Fechar']) {
-    display: none;
-  }
-
-  .product {
-    @apply flex w-full flex-col items-stretch justify-start gap-0 text-left;
-  }
-
-  .productImage {
-    @apply h-72 w-full max-w-none rounded-none;
-  }
-
-  .productImageWrapper {
-    @apply h-72 w-full;
-  }
-
-  .product > div:last-child {
-    @apply gap-2 px-4 pb-5 pt-5;
-  }
-
-  .groups {
-    @apply min-h-0 flex-1 overflow-y-auto;
-    max-height: none;
-  }
-
-  .footer {
-    @apply justify-stretch;
-  }
-
   .cancel {
     display: none;
   }

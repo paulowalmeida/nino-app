@@ -45,22 +45,24 @@ export const CheckoutReceipt = ({
       }
     >
       <Box className={styles.items}>
-        {cartLines.map(({ id, item, quantity }) => (
-          <Text as="p" key={id ?? item.id} className={styles.item}>
-            <Text as="span" className={styles.name}>
-              <Text as="span" className={styles.qty}>
-                {quantity}×
-              </Text>
-              {item.name}
-              {item.modifiers && item.modifiers.length > 0 && (
-                <Text as="span" className={styles.choices}>
-                  {item.modifiers.map((modifier) => modifier.name).join(', ')}
+        <Box className={styles.itemsList}>
+          {cartLines.map(({ id, item, quantity }) => (
+            <Text as="p" key={id ?? item.id} className={styles.item}>
+              <Text as="span" className={styles.name}>
+                <Text as="span" className={styles.qty}>
+                  {quantity}×
                 </Text>
-              )}
+                {item.name}
+                {item.modifiers && item.modifiers.length > 0 && (
+                  <Text as="span" className={styles.choices}>
+                    {item.modifiers.map((modifier) => modifier.name).join(', ')}
+                  </Text>
+                )}
+              </Text>
+              <Text as="span">{brl(cartItemPrice(item) * quantity)}</Text>
             </Text>
-            <Text as="span">{brl(cartItemPrice(item) * quantity)}</Text>
-          </Text>
-        ))}
+          ))}
+        </Box>
 
         <Box className={styles.rule} />
 

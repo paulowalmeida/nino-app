@@ -1,6 +1,7 @@
 import { Alert } from '@nino/ds/components/Alert'
 import { Box } from '@nino/ds/components/Box'
 import { EmptyState } from '@nino/ds/components/EmptyState'
+import { NinoMascot } from '@nino/ds/components/NinoMascot'
 
 import { CashActions } from './components/CashActions/CashActions'
 import { CashDateSelector } from './components/CashDateSelector/CashDateSelector'
@@ -37,7 +38,11 @@ export const Cash = () => {
         {!session && isToday && <CashOpen />}
 
         {!session && !isToday && (
-          <EmptyState size="md" title="Nenhum caixa nesse dia">
+          <EmptyState
+            size="md"
+            illustration={<NinoMascot />}
+            title="Nenhum caixa nesse dia"
+          >
             Ninguém abriu o caixa nessa data. Escolha outro dia para ver o
             balanço.
           </EmptyState>

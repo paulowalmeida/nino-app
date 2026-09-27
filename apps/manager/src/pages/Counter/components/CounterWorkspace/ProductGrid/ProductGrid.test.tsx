@@ -48,6 +48,7 @@ const facadeState = vi.hoisted(() => ({
   sections: [] as MenuSection[],
   isPending: false,
   isError: false,
+  isSuccess: false,
   error: null as Error | null,
   lines: [] as CartLine[],
   add: vi.fn(),
@@ -81,6 +82,7 @@ describe(ProductGrid.name, () => {
     facadeState.sections = []
     facadeState.isPending = false
     facadeState.isError = false
+    facadeState.isSuccess = true
     facadeState.error = null
     facadeState.lines = []
     facadeState.add.mockClear()
@@ -93,12 +95,23 @@ describe(ProductGrid.name, () => {
       container.querySelectorAll('[aria-hidden="true"]').length
     ).toBeGreaterThan(0)
     facadeState.isPending = false
+    facadeState.isSuccess = true
     rerender(<ProductGrid />)
     expect(screen.queryByText(/cardápio está vazio/)).not.toBeInTheDocument()
   })
 
+  it('keeps the skeleton until the menu query is complete', () => {
+    facadeState.isSuccess = false
+    const { container } = render(<ProductGrid />)
+
+    expect(
+      container.querySelectorAll('[aria-hidden="true"]').length
+    ).toBeGreaterThan(0)
+  })
+
   it('shows an error instead of an empty-state message after a failed request', () => {
     facadeState.isError = true
+    facadeState.isSuccess = false
     facadeState.error = new Error('Request timed out')
 
     render(<ProductGrid />)

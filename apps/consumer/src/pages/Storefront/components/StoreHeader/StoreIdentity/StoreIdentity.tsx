@@ -7,7 +7,10 @@ import { useStorefrontFacade } from '@pages/Storefront/facades/useStorefrontFaca
 import { isOpen } from '@utils/store-info'
 import { displayName, storeInitials } from '@utils/store-info'
 import { riseDelay } from '@utils/rise-delay'
-import { storeThemeLogoUrl } from '@utils/store-theme/store-theme'
+import {
+  storeThemeBannerUrl,
+  storeThemeLogoUrl,
+} from '@utils/store-theme/store-theme'
 
 import styles from './StoreIdentity.module.css'
 import motion from '@styles/motion.module.css'
@@ -18,9 +21,15 @@ export const StoreIdentity = () => {
   if (!store) return null
   const isStoreOpen = isHoursPending || isOpen(store, hours)
   const logoUrl = storeThemeLogoUrl(store)
+  const hasCustomBanner = Boolean(storeThemeBannerUrl(store))
 
   return (
-    <Box direction="row" className={styles.identityRow}>
+    <Box
+      direction="row"
+      className={`${styles.identityRow} ${
+        hasCustomBanner ? styles.afterCustomBanner : ''
+      }`}
+    >
       <Box className={styles.logoTile}>
         <Image
           src={logoUrl}

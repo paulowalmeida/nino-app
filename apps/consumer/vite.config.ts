@@ -1,10 +1,11 @@
 import { resolve } from 'node:path'
 
-import { defineConfig } from 'vite'
+import { defineConfig, loadEnv } from 'vite'
 import react from '@vitejs/plugin-react'
 import tailwindcss from '@tailwindcss/vite'
 
-const API = 'https://api-dev.nino.delivery'
+const env = loadEnv('development', process.cwd(), '')
+const apiTarget = env.VITE_API_PROXY_TARGET || 'https://api-dev.nino.delivery'
 
 export default defineConfig({
   plugins: [react(), tailwindcss()],
@@ -39,14 +40,24 @@ export default defineConfig({
     strictPort: true,
     proxy: {
       '/api': {
-        target: API,
+        target: apiTarget,
         changeOrigin: true,
-        secure: true,
-        headers: { origin: API },
+        secure: apiTarget.startsWith('https://'),
+        headers: { origin: apiTarget },
         rewrite: (path) => path.replace(/^\/api/, ''),
         cookieDomainRewrite: 'localhost',
         cookiePathRewrite: {
           '/consumer/auth/google': '/api/consumer/auth/google',
+        },
+        configure: (proxy) => {
+          proxy.on('proxyRes', (proxyResponse) => {
+            const setCookie = proxyResponse.headers['set-cookie']
+            if (!setCookie) return
+
+            proxyResponse.headers['set-cookie'] = setCookie.map((cookie) =>
+              cookie.replace(/;\s*Secure(?=;|$)/gi, '')
+            )
+          })
         },
       },
     },
@@ -62,7 +73,7 @@ export default defineConfig({
       '@components': resolve(__dirname, 'src/components'),
       '@compositions': resolve(__dirname, 'src/compositions'),
       '@constants': resolve(__dirname, 'src/shared/constants'),
-  '@custom_types/account': resolve(__dirname, 'src/shared/types/account'),
+      '@custom_types/account': resolve(__dirname, 'src/shared/types/account'),
       '@custom_types/checkout': resolve(
         __dirname,
         'src/pages/Checkout/types/checkout'
@@ -71,7 +82,10 @@ export default defineConfig({
         __dirname,
         'src/pages/Checkout/types/delivery-zone'
       ),
-      '@custom_types/menu': resolve(__dirname, 'src/pages/Storefront/types/menu'),
+      '@custom_types/menu': resolve(
+        __dirname,
+        'src/pages/Storefront/types/menu'
+      ),
       '@custom_types': resolve(__dirname, 'src/shared/types'),
       '@styles': resolve(__dirname, 'src/styles'),
       '@elements': resolve(__dirname, 'src/elements'),
@@ -82,13 +96,19 @@ export default defineConfig({
       '@providers': resolve(__dirname, 'src/providers'),
       '@router': resolve(__dirname, 'src/router'),
       '@shared': resolve(__dirname, 'src/shared'),
-      '@utils/category-icon': resolve(__dirname, 'src/pages/Storefront/utils/category-icon'),
+      '@utils/category-icon': resolve(
+        __dirname,
+        'src/pages/Storefront/utils/category-icon'
+      ),
       '@utils/last-order': resolve(__dirname, 'src/shared/lib/last-order'),
       '@utils/local-store-redirect': resolve(
         __dirname,
         'src/shared/lib/local-store-redirect/local-store-redirect'
       ),
-      '@utils/menu-image': resolve(__dirname, 'src/pages/Storefront/utils/menu-image'),
+      '@utils/menu-image': resolve(
+        __dirname,
+        'src/pages/Storefront/utils/menu-image'
+      ),
       '@utils/resolve-slug': resolve(__dirname, 'src/shared/lib/resolve-slug'),
       '@utils/session-hint': resolve(__dirname, 'src/shared/lib/session-hint'),
       '@utils': resolve(__dirname, 'src/shared/utils'),

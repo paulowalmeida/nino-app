@@ -53,11 +53,17 @@
   @apply lg:max-w-[26rem] lg:shrink-0;
 }
 
+/*
+ * WHY: sem cor de fundo própria — a tinta da loja é o sinal de "sem logo",
+ * não o repouso do slot. Com fundo fixo aqui, o instante entre o placeholder
+ * do `Image` e o arquivo decodificar mostrava a tinta por baixo como se fosse
+ * um fallback, mesmo em loja com logo configurado.
+ */
 .logo {
   @apply flex h-8 w-8 shrink-0 items-center justify-center overflow-hidden;
   @apply lg:h-14 lg:w-14 lg:rounded-3 lg:text-sm;
-  @apply origin-left rounded-2 text-xs font-extrabold text-fg-on-brand;
-  background-color: var(--store-tint, var(--color-brand));
+  @apply origin-left rounded-2 border border-border bg-surface-raised;
+  @apply text-xs font-extrabold;
 }
 
 .logoImg {
@@ -66,6 +72,11 @@
 
 .logoStack {
   @apply h-full w-full;
+}
+
+.logoFallback {
+  @apply flex h-full w-full items-center justify-center text-fg-on-brand;
+  background-color: var(--store-tint, var(--color-brand));
 }
 
 .logoPlaceholder {
@@ -139,7 +150,6 @@
     animation: none;
   }
 }
-
 
 /*
  * A busca permanente do desktop. WHY: encostada à direita, junto das ações, em

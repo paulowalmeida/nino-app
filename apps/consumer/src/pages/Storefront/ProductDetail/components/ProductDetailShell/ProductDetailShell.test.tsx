@@ -1,12 +1,22 @@
 import { render, screen } from '@testing-library/react'
 import type { ReactNode } from 'react'
-import { describe, expect, it, vi } from 'vitest'
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
 import { ProductDetailShell } from './ProductDetailShell'
 import { productDetailShellMock } from './ProductDetailShell.mock'
 
 vi.mock('@nino/ds/components/Modal', () => ({
-  Modal: () => <div data-testid="modal" />,
+  Modal: ({
+    body,
+    dismissible,
+  }: {
+    body?: ReactNode
+    dismissible?: boolean
+  }) => (
+    <div data-testid="modal" data-dismissible={dismissible}>
+      {body}
+    </div>
+  ),
 }))
 
 vi.mock('@nino/ds/components/Box', () => ({
@@ -28,7 +38,10 @@ vi.mock('@nino/ds/components/Icon', () => ({
 }))
 
 describe('ProductDetailShell', () => {
-  it('renders mobile product details as a page instead of a drawer', () => {
+  beforeEach(() => vi.spyOn(window, 'scrollTo').mockImplementation(() => {}))
+  afterEach(() => vi.restoreAllMocks())
+
+  it('always renders the product details through the Modal', () => {
     render(
       <ProductDetailShell
         isDesktop={false}
@@ -39,12 +52,12 @@ describe('ProductDetailShell', () => {
       />
     )
 
+    expect(screen.getByTestId('modal')).toBeInTheDocument()
     expect(screen.getByText('Imagem do produto')).toBeInTheDocument()
     expect(screen.getByText('Escolhas do produto')).toBeInTheDocument()
-    expect(screen.queryByTestId('modal')).not.toBeInTheDocument()
   })
 
-  it('keeps a back action available when the page has no media', () => {
+  it('keeps only the back button on mobile/tablet, without a close X', () => {
     const onClose = vi.fn()
 
     render(
@@ -57,8 +70,45 @@ describe('ProductDetailShell', () => {
       />
     )
 
+    expect(screen.getByTestId('modal')).toHaveAttribute(
+      'data-dismissible',
+      'false'
+    )
+
     screen.getByRole('button').click()
 
     expect(onClose).toHaveBeenCalledOnce()
+  })
+
+  it('hides the back button and enables the close X on desktop', () => {
+    render(
+      <ProductDetailShell
+        isDesktop
+        ariaLabel={productDetailShellMock.ariaLabel}
+        onClose={vi.fn()}
+        media={null}
+        details={<p>{productDetailShellMock.details}</p>}
+      />
+    )
+
+    expect(screen.queryByRole('button')).not.toBeInTheDocument()
+    expect(screen.getByTestId('modal')).toHaveAttribute(
+      'data-dismissible',
+      'true'
+    )
+  })
+
+  it('scrolls to the top when the mobile/tablet detail opens', () => {
+    render(
+      <ProductDetailShell
+        isDesktop={false}
+        ariaLabel={productDetailShellMock.ariaLabel}
+        onClose={vi.fn()}
+        media={null}
+        details={<p>{productDetailShellMock.details}</p>}
+      />
+    )
+
+    expect(vi.mocked(window.scrollTo)).toHaveBeenCalledWith(0, 0)
   })
 })

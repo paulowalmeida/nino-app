@@ -81,7 +81,9 @@ export const StoreTopBar = ({ slug, isDocked }: StoreTopBarProps) => {
                 logoUrl ? (
                   <Box className={styles.logoPlaceholder} aria-hidden="true" />
                 ) : (
-                  storeInitials(store)
+                  <Box className={styles.logoFallback} aria-hidden="true">
+                    {storeInitials(store)}
+                  </Box>
                 )
               }
             />

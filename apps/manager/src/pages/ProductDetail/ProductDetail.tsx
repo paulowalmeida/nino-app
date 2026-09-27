@@ -1,3 +1,5 @@
+import { useLayoutEffect } from 'react'
+
 import { Box } from '@nino/ds/components/Box'
 import { ProductDetailForm } from '@pages/ProductDetail/components/ProductDetailForm/ProductDetailForm'
 import { ProductDetailHeader } from '@pages/ProductDetail/components/ProductDetailHeader/ProductDetailHeader'
@@ -10,6 +12,10 @@ import styles from './ProductDetail.module.css'
 
 export const ProductDetail = () => {
   const { isPending, isMissing, isReady } = useProductDetailFacade()
+
+  useLayoutEffect(() => {
+    window.scrollTo(0, 0)
+  }, [])
 
   return (
     <Box className={styles.page}>

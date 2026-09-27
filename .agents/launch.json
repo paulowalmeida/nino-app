@@ -6,6 +6,12 @@
       "runtimeExecutable": "npm",
       "runtimeArgs": ["run", "dev", "--workspace=apps/manager"],
       "port": 3001
+    },
+    {
+      "name": "nino-consumer",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run", "dev", "--workspace=apps/consumer"],
+      "port": 3002
     }
   ]
 }

@@ -24,6 +24,7 @@ export const ProductGrid = () => {
     sections,
     isPending,
     isError,
+    isSuccess,
     lines,
     add: onPick,
     updateQuantity: onStep,
@@ -89,7 +90,7 @@ export const ProductGrid = () => {
     )
   }
 
-  if (isPending) {
+  if (isPending || (!isError && !isSuccess)) {
     return (
       <Box className={styles.wrap}>
         <Box className={styles.controls}>

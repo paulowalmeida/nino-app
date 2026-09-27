@@ -28,18 +28,22 @@
   will-change: transform;
 }
 
-/* A arte determina a largura, limitada a 900 px. Não há uma faixa fixa que
- * corte a imagem nem espaço lateral artificial. */
+/* A arte determina a largura até o limite normal da coluna. Imagens menores
+ * permanecem no tamanho natural, sem serem esticadas para preencher uma faixa. */
 .customBanner {
-  width: min(100%, 900px);
+  display: block;
+  width: fit-content;
   height: fit-content;
+  max-width: 100%;
   min-height: 0;
   aspect-ratio: auto;
-  max-width: min(100%, 900px);
   max-height: none;
   margin-inline: auto;
+  border: 0;
+  border-radius: 0;
   background-color: transparent;
-  overflow: visible;
+  overflow: hidden;
+  @apply sm:rounded-4;
 }
 
 .customBanner::before {
@@ -48,17 +52,26 @@
 
 .customImage {
   display: block;
-  width: 100%;
+  width: auto;
   height: auto;
-  max-width: none;
+  max-width: 100%;
   max-height: none;
   margin: auto;
-  border-radius: inherit;
+  border: 0;
+  border-radius: 0;
   object-fit: contain;
+}
+
+@media (min-width: 640px) {
+  .customImage {
+    border-radius: inherit;
+  }
 }
 
 .customImageWrap {
   display: block;
+  width: fit-content;
+  max-width: 100%;
 }
 
 .imagePlaceholder {

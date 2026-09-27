@@ -8,19 +8,13 @@ const value = (input?: string | null): string | undefined => {
 }
 
 export const storeThemePrimaryColor = (store?: Store): string | undefined =>
-  store?.theme
-    ? value(store.theme.config.colors.primary)
-    : value(store?.primaryColor)
+  value(store?.theme?.config.colors.primary) ?? value(store?.primaryColor)
 
 export const storeThemeLogoUrl = (store?: Store): string | null =>
-  store?.theme
-    ? value(store.theme.config.brand.logoUrl) ?? null
-    : value(store?.logoUrl) ?? null
+  value(store?.theme?.config.brand.logoUrl) ?? value(store?.logoUrl) ?? null
 
 export const storeThemeBannerUrl = (store?: Store): string | null =>
-  store?.theme
-    ? value(store.theme.config.brand.bannerUrl) ?? null
-    : value(store?.bannerUrl) ?? null
+  value(store?.theme?.config.brand.bannerUrl) ?? value(store?.bannerUrl) ?? null
 
 const radiusVars = (radius: 'square' | 'soft' | 'round'): ThemeVars => {
   if (radius === 'square') {
@@ -55,23 +49,13 @@ export const storeThemeVariables = (store?: Store): ThemeVars => {
   const config = store.theme?.config
   const colors = config?.colors
   const primary = storeThemePrimaryColor(store)
-  const secondary = store.theme
-    ? value(colors?.secondary)
-    : value(store.secondaryColor)
-  const tertiary = store.theme
-    ? value(colors?.tertiary)
-    : value(store.tertiaryColor)
-  const background = store.theme
-    ? value(colors?.background)
-    : value(store.backgroundColor)
-  const surface = store.theme ? value(colors?.surface) : value(store.cardColor)
-  const foreground = store.theme ? value(colors?.text) : value(store.textColor)
-  const muted = store.theme
-    ? value(colors?.mutedText)
-    : value(store.mutedTextColor)
-  const border = store.theme
-    ? value(colors?.border)
-    : value(store.borderColor)
+  const secondary = value(colors?.secondary) ?? value(store.secondaryColor)
+  const tertiary = value(colors?.tertiary) ?? value(store.tertiaryColor)
+  const background = value(colors?.background) ?? value(store.backgroundColor)
+  const surface = value(colors?.surface) ?? value(store.cardColor)
+  const foreground = value(colors?.text) ?? value(store.textColor)
+  const muted = value(colors?.mutedText) ?? value(store.mutedTextColor)
+  const border = value(colors?.border) ?? value(store.borderColor)
 
   const vars: ThemeVars = {}
 

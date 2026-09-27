@@ -16,11 +16,9 @@ vi.mock('@pages/Units/facades/useUnitsFacade/useUnitsFacade', () => ({
 }))
 
 const restore = vi.fn()
+const loadVersion = vi.fn()
 
-const facadeFor = (
-  editorState: ThemeEditorState,
-  isRestoring = false
-) =>
+const facadeFor = (editorState: ThemeEditorState, isRestoring = false) =>
   ({
     theme: {
       editor: { data: editorState },
@@ -31,14 +29,30 @@ const facadeFor = (
 describe(BrandHistory.name, () => {
   beforeEach(() => {
     restore.mockClear()
+    loadVersion.mockClear()
     vi.mocked(useUnitsFacade).mockReturnValue(facadeFor(historyEditorStateMock))
   })
 
-  it('marks which version is on the storefront right now', () => {
-    render(<BrandHistory />)
+  it('shows the published version selected by default, with no restore', () => {
+    render(<BrandHistory onLoadVersion={loadVersion} />)
 
-    expect(screen.getByText('Versão 3 · no ar')).toBeVisible()
-    expect(screen.getByText('Versão 2')).toBeVisible()
+    expect(
+      screen.getByRole('combobox', { name: 'Configuração para editar' })
+    ).toHaveTextContent('Versão 3 · no ar')
+    expect(screen.queryByRole('button', { name: 'Restaurar' })).toBeNull()
+  })
+
+  it('offers restore only for a selected past version', async () => {
+    render(<BrandHistory onLoadVersion={loadVersion} />)
+
+    await userEvent.click(
+      screen.getByRole('combobox', { name: 'Configuração para editar' })
+    )
+    await userEvent.click(screen.getByRole('option', { name: 'Versão 2' }))
+
+    expect(
+      screen.getByRole('button', { name: 'Restaurar' })
+    ).toBeInTheDocument()
   })
 
   it('invites the first publication when no version exists yet', () => {
@@ -55,22 +69,28 @@ describe(BrandHistory.name, () => {
   })
 
   it('confirms before putting an old version back on the air', async () => {
-    render(<BrandHistory />)
+    render(<BrandHistory onLoadVersion={loadVersion} />)
 
+    // Act: select the past version, then trigger restore
     await userEvent.click(
-      screen.getAllByRole('button', { name: 'Restaurar' })[0]
+      screen.getByRole('combobox', { name: 'Configuração para editar' })
     )
+    await userEvent.click(screen.getByRole('option', { name: 'Versão 2' }))
+    await userEvent.click(screen.getByRole('button', { name: 'Restaurar' }))
 
     expect(screen.getByText('Restaurar a versão 2?')).toBeVisible()
     expect(restore).not.toHaveBeenCalled()
   })
 
   it('restores the confirmed version', async () => {
-    render(<BrandHistory />)
+    render(<BrandHistory onLoadVersion={loadVersion} />)
 
+    // Act: select the past version, confirm the restore dialog
     await userEvent.click(
-      screen.getAllByRole('button', { name: 'Restaurar' })[0]
+      screen.getByRole('combobox', { name: 'Configuração para editar' })
     )
+    await userEvent.click(screen.getByRole('option', { name: 'Versão 2' }))
+    await userEvent.click(screen.getByRole('button', { name: 'Restaurar' }))
     const dialog = screen.getByRole('dialog')
     await userEvent.click(
       within(dialog).getByRole('button', { name: 'Restaurar' })
@@ -79,15 +99,28 @@ describe(BrandHistory.name, () => {
     expect(restore).toHaveBeenCalledWith(2)
   })
 
-  it('blocks a second restore while one is running', () => {
+  it('blocks a second restore while one is running', async () => {
     vi.mocked(useUnitsFacade).mockReturnValue(
       facadeFor(historyEditorStateMock, true)
     )
 
-    render(<BrandHistory />)
+    render(<BrandHistory onLoadVersion={loadVersion} />)
+    await userEvent.click(
+      screen.getByRole('combobox', { name: 'Configuração para editar' })
+    )
+    await userEvent.click(screen.getByRole('option', { name: 'Versão 2' }))
 
-    expect(
-      screen.getAllByRole('button', { name: 'Restaurar' })[0]
-    ).toBeDisabled()
+    expect(screen.getByRole('button', { name: 'Restaurar' })).toBeDisabled()
+  })
+
+  it('loads a saved configuration from the selector', async () => {
+    render(<BrandHistory onLoadVersion={loadVersion} />)
+
+    await userEvent.click(
+      screen.getByRole('combobox', { name: 'Configuração para editar' })
+    )
+    await userEvent.click(screen.getByRole('option', { name: 'Versão 2' }))
+
+    expect(loadVersion).toHaveBeenCalledWith(historyEditorStateMock.history[0])
   })
 })

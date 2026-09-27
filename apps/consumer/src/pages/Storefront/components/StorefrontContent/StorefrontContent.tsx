@@ -17,14 +17,20 @@ import { TabBar } from '@shared/components/TabBar/TabBar/TabBar'
 import { CategoryBar } from '@pages/Storefront/components/StoreMenu/CategoryBar/CategoryBar'
 import { MenuSearchField } from '@pages/Storefront/components/StoreMenu/MenuSearchField/MenuSearchField'
 import { MenuRowsSkeleton } from '@pages/Storefront/skeletons/MenuRowsSkeleton/MenuRowsSkeleton'
+import { StoreHeaderSkeleton } from '@pages/Storefront/skeletons/StoreHeaderSkeleton/StoreHeaderSkeleton'
 import { PoweredBy } from '@shared/components/PoweredBy/PoweredBy'
 import { StoreBanner } from '@pages/Storefront/components/StoreHeader/StoreBanner/StoreBanner'
 import { useDockedHeader } from '@pages/Storefront/hooks/useDockedHeader/useDockedHeader'
+import { useImagePreload } from '@pages/Storefront/hooks/useImagePreload/useImagePreload'
 import { useStorefrontFacade } from '@pages/Storefront/facades/useStorefrontFacade/useStorefrontFacade'
 import { useStoreHome } from '@hooks/useStoreHome/useStoreHome'
 import { resolveSlug } from '@utils/resolve-slug'
 import { riseDelay } from '@utils/rise-delay'
-import { storeThemePrimaryColor } from '@utils/store-theme/store-theme'
+import {
+  storeThemeBannerUrl,
+  storeThemeLogoUrl,
+  storeThemePrimaryColor,
+} from '@utils/store-theme/store-theme'
 
 import styles from './StorefrontContent.module.css'
 import motion from '@styles/motion.module.css'
@@ -44,6 +50,12 @@ export const StorefrontContent = ({ pathSlug }: StorefrontContentProps) => {
   const { search, setSearch, visibleSections, isSearching } = home
   const blocks = useStoreHome()
   const tint = storeThemePrimaryColor(home.store)
+  const bannerUrl = blocks.showBanner ? storeThemeBannerUrl(home.store) : null
+  const logoUrl = storeThemeLogoUrl(home.store)
+  const isBannerPending = useImagePreload(bannerUrl)
+  const isLogoPending = useImagePreload(logoUrl)
+  const isHeaderReady =
+    !home.isHeaderPending && !isBannerPending && !isLogoPending
 
   useEffect(() => {
     if (!isSearching) return
@@ -57,14 +69,13 @@ export const StorefrontContent = ({ pathSlug }: StorefrontContentProps) => {
   }, [reset, slug])
 
   const base = pathSlug ? `/${pathSlug}` : ''
-
-  return (
-    <Box
-      className={styles.page}
-      style={
-        tint ? ({ '--store-tint': tint } as React.CSSProperties) : undefined
-      }
-    >
+  const header = !isHeaderReady ? (
+    <StoreHeaderSkeleton
+      showBanner={blocks.showBanner}
+      showSearch={blocks.showSearch}
+    />
+  ) : (
+    <>
       <StoreTopBar slug={pathSlug ?? ''} isDocked={isHeaderDocked} />
 
       {blocks.showBanner && <StoreBanner />}
@@ -80,6 +91,17 @@ export const StorefrontContent = ({ pathSlug }: StorefrontContentProps) => {
           <MenuSearchField ref={setSearchField} />
         )}
       </Box>
+    </>
+  )
+
+  return (
+    <Box
+      className={styles.page}
+      style={
+        tint ? ({ '--store-tint': tint } as React.CSSProperties) : undefined
+      }
+    >
+      {header}
 
       {blocks.showCategoryBar && home.visibleSections.length > 0 && (
         <CategoryBar className={motion.settle} style={riseDelay(140)}>

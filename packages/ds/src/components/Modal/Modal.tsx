@@ -30,7 +30,17 @@ type ModalProps = {
    */
   dismissible?: boolean
   backdropClassName?: string
+  /**
+   * Overrides the fixed centering wrapper — e.g. dropping its padding for an
+   * edge-to-edge panel
+   */
+  positionerClassName?: string
   contentClassName?: string
+  /**
+   * Overrides the body wrapper — e.g. dropping its padding, or making it a
+   * flex parent so a tall `body` can scroll internally with a pinned footer
+   */
+  bodyClassName?: string
 }
 
 const sizeClasses: Record<ModalSize, string> = {
@@ -71,7 +81,9 @@ export function Modal({
   onOpenChange,
   dismissible = true,
   backdropClassName,
+  positionerClassName,
   contentClassName,
+  bodyClassName,
 }: ModalProps) {
   const headerId = useId()
   const isNamedByHeader = !ariaLabel && !!header
@@ -93,7 +105,9 @@ export function Modal({
             backdropClassName
           )}
         />
-        <ArkDialog.Positioner className={styles.positioner}>
+        <ArkDialog.Positioner
+          className={mergeClasses(styles.positioner, positionerClassName)}
+        >
           <ArkDialog.Content
             aria-label={ariaLabel}
             aria-labelledby={isNamedByHeader ? headerId : undefined}
@@ -121,7 +135,11 @@ export function Modal({
                 {header}
               </div>
             )}
-            {body && <div className={styles.body}>{body}</div>}
+            {body && (
+              <div className={mergeClasses(styles.body, bodyClassName)}>
+                {body}
+              </div>
+            )}
             {footer && <div className={styles.footer}>{footer}</div>}
           </ArkDialog.Content>
         </ArkDialog.Positioner>

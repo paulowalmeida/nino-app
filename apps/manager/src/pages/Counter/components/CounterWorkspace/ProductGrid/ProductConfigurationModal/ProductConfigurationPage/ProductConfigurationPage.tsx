@@ -1,5 +1,4 @@
 import type { ReactNode } from 'react'
-import { useEffect, useRef, useState } from 'react'
 
 import { Box } from '@nino/ds/components/Box'
 import { Button } from '@nino/ds/components/Button'
@@ -14,8 +13,6 @@ import { brl } from '@shared/utils/money/money'
 import { ProductChoiceGroup } from '../ProductChoiceGroup/ProductChoiceGroup'
 
 import styles from './ProductConfigurationPage.module.css'
-
-const mobileTransitionDuration = 140
 
 type ProductConfigurationPageProps = {
   item: MenuItem
@@ -39,46 +36,30 @@ export const ProductConfigurationPage = ({
   onSelectSingle,
   onToggleOption,
   actions,
-}: ProductConfigurationPageProps) => {
-  const [isClosing, setIsClosing] = useState(false)
-  const closeTimeout = useRef<ReturnType<typeof setTimeout> | null>(null)
+}: ProductConfigurationPageProps) => (
+  <Box className={styles.page}>
+    <Box className={styles.grid}>
+      <Box className={styles.media}>
+        <ItemThumb
+          name={item.name}
+          imageUrl={item.images[0]?.url}
+          fallbackUrl={item.fallbackUrl}
+          className={styles.heroImage}
+          wrapperClassName={styles.heroImageWrapper}
+        />
+        <Button
+          type="button"
+          variant="ghost"
+          size="icon"
+          className={styles.back}
+          aria-label="Voltar ao balcão"
+          onClick={onBack}
+        >
+          <Icon name="arrow-left" />
+        </Button>
+      </Box>
 
-  useEffect(
-    () => () => {
-      if (closeTimeout.current) clearTimeout(closeTimeout.current)
-    },
-    []
-  )
-
-  const handleBack = () => {
-    if (isClosing) return
-    setIsClosing(true)
-    closeTimeout.current = setTimeout(onBack, mobileTransitionDuration)
-  }
-
-  return (
-    <Box className={`${styles.page} ${isClosing ? styles.closing : ''}`}>
-      <Box className={styles.scroll}>
-        <Box className={styles.hero}>
-          <ItemThumb
-            name={item.name}
-            imageUrl={item.images[0]?.url}
-            fallbackUrl={item.fallbackUrl}
-            className={styles.heroImage}
-            wrapperClassName={styles.heroImageWrapper}
-          />
-          <Button
-            type="button"
-            variant="ghost"
-            size="icon"
-            className={styles.back}
-            aria-label="Voltar ao balcão"
-            onClick={handleBack}
-          >
-            <Icon name="arrow-left" />
-          </Button>
-        </Box>
-
+      <Box className={styles.details}>
         <Box className={styles.summary}>
           <Heading level={1} className={styles.name}>
             {item.name}
@@ -111,10 +92,10 @@ export const ProductConfigurationPage = ({
           ))}
         </Box>
       </Box>
-
-      {actions}
     </Box>
-  )
-}
+
+    {actions}
+  </Box>
+)
 
 export type { ProductConfigurationPageProps }

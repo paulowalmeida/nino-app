@@ -1,9 +1,9 @@
-import identityStyles from '@pages/Storefront/components/StoreHeader/StoreIdentity/StoreIdentity.module.css'
 import { Box } from '@nino/ds/components/Box'
 import { Text } from '@nino/ds/components/Text'
 import styles from './StorefrontSkeleton.module.css'
 
 import { MenuRowsSkeleton } from '@pages/Storefront/skeletons/MenuRowsSkeleton/MenuRowsSkeleton'
+import { StoreHeaderSkeleton } from '@pages/Storefront/skeletons/StoreHeaderSkeleton/StoreHeaderSkeleton'
 
 /** Larguras variadas pros chips, imitando nomes de categoria de tamanhos
  * diferentes. */
@@ -21,19 +21,9 @@ const chipWidths = [
  */
 export const StorefrontSkeleton = () => (
   <Box className={styles.page} aria-busy="true" aria-label="Carregando a loja">
-    <Box className={styles.skBanner} />
+    <StoreHeaderSkeleton showBanner showSearch />
 
     <Box className={styles.shell}>
-      <Box className={identityStyles.identityRow}>
-        <Box className={styles.skLogo} />
-        <Box className={styles.skLines}>
-          <Box className={styles.skName} />
-          <Box className={styles.skMeta} />
-        </Box>
-      </Box>
-
-      <Box className={styles.skSearch} />
-
       <Box className={styles.skTrack}>
         {chipWidths.map((width, index) => (
           <Text
