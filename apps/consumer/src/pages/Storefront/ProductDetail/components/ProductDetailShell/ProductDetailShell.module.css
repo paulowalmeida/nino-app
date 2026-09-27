@@ -10,8 +10,8 @@
 }
 
 .body {
-  @apply min-h-0 flex-1;
-  @apply lg:flex-none;
+  @apply min-h-0 flex-1 overflow-y-auto overscroll-contain;
+  @apply lg:flex-none lg:overflow-visible;
 }
 
 .mobileBack {
@@ -28,7 +28,7 @@
 }
 
 .grid {
-  @apply flex h-full min-h-0 w-full flex-col overflow-y-auto bg-surface-page;
+  @apply flex min-h-0 w-full flex-col bg-surface-page;
   @apply lg:grid lg:h-[75vh] lg:grid-cols-2 lg:grid-rows-[minmax(0,1fr)_auto];
   @apply lg:gap-x-8 lg:overflow-visible lg:bg-transparent;
 }
