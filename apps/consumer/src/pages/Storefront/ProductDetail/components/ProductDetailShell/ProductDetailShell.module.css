@@ -10,8 +10,8 @@
 }
 
 .body {
-  @apply min-h-0 flex-1 overflow-y-auto overscroll-contain;
-  @apply lg:flex-none lg:overflow-visible;
+  @apply min-h-0 flex-1 overflow-y-auto overscroll-contain p-0;
+  @apply lg:flex-none lg:overflow-visible lg:px-6 lg:py-5;
 }
 
 .mobileBack {
