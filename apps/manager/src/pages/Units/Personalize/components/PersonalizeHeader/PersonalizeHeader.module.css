@@ -1,8 +1,24 @@
 @reference "@nino/ds/globals.css";
 
+/*
+ * WHY: lg: é o viewport inteiro, mas esse header vive ao lado da sidebar —
+ * em 1024px de viewport sobra menos de 700px de coluna, apertando a
+ * toolbar (~664px) contra o texto até ele quebrar palavra por palavra.
+ * @container mede o espaço real que o header tem, não a tela toda — mas um
+ * elemento não pode ser container e alvo da própria query, daí o wrapper.
+ */
+.headerContainer {
+  container-type: inline-size;
+}
+
 .header {
   @apply grid w-full min-w-0 grid-cols-1 items-start gap-4;
-  @apply lg:grid-cols-[minmax(0,1fr)_auto];
+}
+
+@container (min-width: 75rem) {
+  .header {
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
 }
 
 .copy {
@@ -14,5 +30,11 @@
 }
 
 .actions {
-  @apply min-w-0 lg:justify-self-end;
+  @apply min-w-0;
+}
+
+@container (min-width: 75rem) {
+  .actions {
+    justify-self: end;
+  }
 }

@@ -14,35 +14,37 @@ export type PersonalizeHeaderProps = {
 }
 
 export const PersonalizeHeader = ({ storeUrl, actions }: PersonalizeHeaderProps) => (
-  <Box as="header" className={styles.header}>
-    <Box className={styles.copy}>
-      <Heading level={1} size="2xl">
-        Personalizar loja
-      </Heading>
-      <Text as="p" size="sm" color="subtle" className={styles.subtitle}>
-        Cor, logo e banner do cardápio que o cliente abre. A prévia acompanha
-        cada alteração — nada vai pro ar antes de você publicar.
-      </Text>
-    </Box>
-    {(storeUrl || actions) && (
-      <Box
-        direction="row"
-        align="center"
-        justify="end"
-        gap={2}
-        wrap
-        className={styles.actions}
-      >
-        {storeUrl && (
-          <Button asChild variant="outline" size="sm">
-            <a href={storeUrl} target="_blank" rel="noopener noreferrer">
-              Ver na loja
-              <Icon name="arrow-up-right" size="xs" />
-            </a>
-          </Button>
-        )}
-        {actions}
+  <Box as="header" className={styles.headerContainer}>
+    <Box className={styles.header}>
+      <Box className={styles.copy}>
+        <Heading level={1} size="2xl">
+          Personalizar loja
+        </Heading>
+        <Text as="p" size="sm" color="subtle" className={styles.subtitle}>
+          Cor, logo e banner do cardápio que o cliente abre. A prévia acompanha
+          cada alteração — nada vai pro ar antes de você publicar.
+        </Text>
       </Box>
-    )}
+      {(storeUrl || actions) && (
+        <Box
+          direction="row"
+          align="center"
+          justify="end"
+          gap={2}
+          wrap
+          className={styles.actions}
+        >
+          {storeUrl && (
+            <Button asChild variant="outline" size="sm">
+              <a href={storeUrl} target="_blank" rel="noopener noreferrer">
+                Ver na loja
+                <Icon name="arrow-up-right" size="xs" />
+              </a>
+            </Button>
+          )}
+          {actions}
+        </Box>
+      )}
+    </Box>
   </Box>
 )
