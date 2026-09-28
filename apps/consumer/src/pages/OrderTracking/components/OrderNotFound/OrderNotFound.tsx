@@ -38,7 +38,7 @@ export const OrderNotFound = ({ backHref, reason }: OrderNotFoundProps) => {
       </Box>
 
       <Box className={styles.footer}>
-        <PoweredBy />
+        <PoweredBy compact />
       </Box>
     </Box>
   )

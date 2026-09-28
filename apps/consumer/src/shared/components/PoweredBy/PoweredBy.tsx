@@ -4,8 +4,12 @@ import styles from './PoweredBy.module.css'
 
 const LANDING_URL = 'https://dev.nino.delivery'
 
-export const PoweredBy = () => (
-  <footer className={styles.footer}>
+type PoweredByProps = {
+  compact?: boolean
+}
+
+export const PoweredBy = ({ compact = false }: PoweredByProps) => (
+  <footer className={`${styles.footer} ${compact ? styles.compact : ''}`}>
     <a
       href={LANDING_URL}
       target="_blank"

@@ -28,7 +28,7 @@ export const OrderTrackingSkeleton = () => (
       </Box>
     </Box>
     <Box className={styles.footer}>
-      <PoweredBy />
+      <PoweredBy compact />
     </Box>
   </Box>
 )

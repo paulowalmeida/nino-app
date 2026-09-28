@@ -7,6 +7,6 @@ import { router } from '@router/routes'
 export const App = () => (
   <QueryProvider>
     <RouterProvider router={router} />
-    <ToastContainer />
+    <ToastContainer placement="top-end" />
   </QueryProvider>
 )

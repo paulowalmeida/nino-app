@@ -4,6 +4,10 @@
   @apply mt-14 border-t border-border py-8 text-center;
 }
 
+.compact {
+  @apply mt-0 py-4;
+}
+
 .link {
   @apply inline-flex items-baseline gap-1.5 text-xs text-fg-faint;
   @apply transition-colors hover:text-brand-strong;
