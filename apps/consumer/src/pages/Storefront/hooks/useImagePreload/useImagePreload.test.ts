@@ -73,6 +73,20 @@ describe('useImagePreload', () => {
     expect(result.current).toBe(false)
   })
 
+  it('stays pending until every image file loads', () => {
+    const { result } = renderHook(() =>
+      useImagePreload([useImagePreloadMock.url, useImagePreloadMock.nextUrl])
+    )
+
+    expect(result.current).toBe(true)
+
+    act(() => instances[0].fire('load'))
+    expect(result.current).toBe(true)
+
+    act(() => instances[1].fire('load'))
+    expect(result.current).toBe(false)
+  })
+
   it('stops waiting when the image file fails', () => {
     // Arrange
     const { result } = renderHook(() =>

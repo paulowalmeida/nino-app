@@ -26,6 +26,7 @@ import { useStorefrontFacade } from '@pages/Storefront/facades/useStorefrontFaca
 import { useStoreHome } from '@hooks/useStoreHome/useStoreHome'
 import { resolveSlug } from '@utils/resolve-slug'
 import { riseDelay } from '@utils/rise-delay'
+import { primaryImage } from '@utils/menu-image'
 import {
   storeThemeBannerUrl,
   storeThemeLogoUrl,
@@ -54,6 +55,13 @@ export const StorefrontContent = ({ pathSlug }: StorefrontContentProps) => {
   const logoUrl = storeThemeLogoUrl(home.store)
   const isBannerPending = useImagePreload(bannerUrl)
   const isLogoPending = useImagePreload(logoUrl)
+  const menuImageUrls = home.sections.flatMap((section) =>
+    section.items.map(primaryImage)
+  )
+  const isMenuImagePending = useImagePreload(
+    home.isMenuError ? [] : menuImageUrls
+  )
+  const isMenuContentPending = home.isMenuPending || isMenuImagePending
   const isHeaderReady =
     !home.isHeaderPending && !isBannerPending && !isLogoPending
 
@@ -103,20 +111,22 @@ export const StorefrontContent = ({ pathSlug }: StorefrontContentProps) => {
     >
       {header}
 
-      {blocks.showCategoryBar && home.visibleSections.length > 0 && (
-        <CategoryBar className={motion.settle} style={riseDelay(140)}>
-          <CategoryNav />
-        </CategoryBar>
-      )}
+      {!isMenuContentPending &&
+        blocks.showCategoryBar &&
+        home.visibleSections.length > 0 && (
+          <CategoryBar className={motion.settle} style={riseDelay(140)}>
+            <CategoryNav />
+          </CategoryBar>
+        )}
 
       <Box as="main" className={`${styles.shell} ${styles.main}`}>
         <Box
           className={`${motion.settle} ${styles.menu}`}
           style={riseDelay(200)}
         >
-          {home.isMenuPending && <MenuRowsSkeleton />}
+          {isMenuContentPending && <MenuRowsSkeleton />}
 
-          {!home.isMenuPending && home.isMenuError && (
+          {!isMenuContentPending && home.isMenuError && (
             <>
               <Alert
                 variant="error"
@@ -130,7 +140,7 @@ export const StorefrontContent = ({ pathSlug }: StorefrontContentProps) => {
             </>
           )}
 
-          {!home.isMenuPending &&
+          {!isMenuContentPending &&
             !home.isMenuError &&
             home.sections.length === 0 && (
               <EmptyState className={styles.empty}>
@@ -138,7 +148,7 @@ export const StorefrontContent = ({ pathSlug }: StorefrontContentProps) => {
               </EmptyState>
             )}
 
-          {!home.isMenuPending &&
+          {!isMenuContentPending &&
             !home.isMenuError &&
             isSearching &&
             visibleSections.length === 0 && (
@@ -157,9 +167,10 @@ export const StorefrontContent = ({ pathSlug }: StorefrontContentProps) => {
               </EmptyState>
             )}
 
-          {visibleSections.map((section) => (
-            <MenuSection key={section.id} section={section} />
-          ))}
+          {!isMenuContentPending &&
+            visibleSections.map((section) => (
+              <MenuSection key={section.id} section={section} />
+            ))}
         </Box>
       </Box>
 

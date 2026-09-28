@@ -1,11 +1,14 @@
 import { fireEvent, render, screen } from '@testing-library/react'
 import type { ReactNode } from 'react'
-import { describe, expect, it, vi } from 'vitest'
+import { beforeEach, describe, expect, it, vi } from 'vitest'
 
 import { useStorefrontFacade } from '@pages/Storefront/facades/useStorefrontFacade/useStorefrontFacade'
 
 import { StorefrontContent } from './StorefrontContent'
-import { homeContentMock } from './StorefrontContent.mock'
+import {
+  homeContentMock,
+  menuSectionWithImageMock,
+} from './StorefrontContent.mock'
 import { storefrontStoreMock as homeStoreMock } from '../../Storefront.mock'
 
 vi.mock('react-router', () => ({
@@ -28,6 +31,9 @@ vi.mock(
 )
 vi.mock('@hooks/useScrollProgress/useScrollProgress', () => ({
   useScrollProgress: () => 0,
+}))
+vi.mock('@pages/Storefront/hooks/useImagePreload/useImagePreload', () => ({
+  useImagePreload: vi.fn(() => false),
 }))
 vi.mock('@nino/ds/components/Box', () => ({
   Box: ({ children }: { children: ReactNode }) => <div>{children}</div>,
@@ -54,7 +60,9 @@ vi.mock(
 vi.mock(
   '@pages/Storefront/components/StoreMenu/MenuSection/MenuSection',
   () => ({
-    MenuSection: emptyComponent,
+    MenuSection: ({ section }: { section: { name: string } }) => (
+      <div>seção {section.name}</div>
+    ),
   })
 )
 vi.mock(
@@ -103,7 +111,7 @@ vi.mock(
 vi.mock(
   '@pages/Storefront/skeletons/MenuRowsSkeleton/MenuRowsSkeleton',
   () => ({
-    MenuRowsSkeleton: emptyComponent,
+    MenuRowsSkeleton: () => <div>carregando cardápio</div>,
   })
 )
 vi.mock(
@@ -132,6 +140,13 @@ vi.mock('@nino/ds/components/EmptyState', () => ({
 }))
 
 describe('StorefrontContent', () => {
+  beforeEach(async () => {
+    const { useImagePreload } =
+      await import('@pages/Storefront/hooks/useImagePreload/useImagePreload')
+    vi.mocked(useImagePreload).mockReset()
+    vi.mocked(useImagePreload).mockReturnValue(false)
+  })
+
   it('renders the menu shell using the feature facade without integration props', () => {
     vi.mocked(useStorefrontFacade).mockReturnValue({
       store: homeStoreMock,
@@ -181,6 +196,37 @@ describe('StorefrontContent', () => {
 
     expect(screen.getByText('carregando cabeçalho')).toBeInTheDocument()
     expect(screen.queryByText('identidade da loja')).not.toBeInTheDocument()
+  })
+
+  it('keeps menu cards behind the skeleton until every menu image is ready', async () => {
+    const { useImagePreload } =
+      await import('@pages/Storefront/hooks/useImagePreload/useImagePreload')
+    vi.mocked(useImagePreload).mockImplementation((target) =>
+      Array.isArray(target)
+    )
+    vi.mocked(useStorefrontFacade).mockReturnValue({
+      store: homeStoreMock,
+      search: '',
+      sections: [menuSectionWithImageMock],
+      isMenuPending: false,
+      isHoursPending: false,
+      hours: [],
+      estimatedMinutes: 15,
+      cart: {},
+      cartLines: [],
+      cartCount: 0,
+      cartTotal: 0,
+      visibleSections: [menuSectionWithImageMock],
+      isSearching: false,
+      isMenuError: false,
+      retryMenu: vi.fn(),
+      reset: vi.fn(),
+    } as never)
+
+    render(<StorefrontContent pathSlug={homeContentMock.pathSlug} />)
+
+    expect(screen.getByText('carregando cardápio')).toBeInTheDocument()
+    expect(screen.queryByText('seção Hambúrgueres')).not.toBeInTheDocument()
   })
 
   it('scrolls to the top when searching for a product', () => {
