@@ -43,7 +43,7 @@ describe('AccountChats', () => {
     )
 
     // Assert
-    expect(screen.getByText('Nenhuma notificação ainda')).toBeInTheDocument()
+    expect(screen.getByText('Você está em dia')).toBeInTheDocument()
   })
 
   it('shows order events as notifications', () => {
@@ -58,6 +58,7 @@ describe('AccountChats', () => {
       channel: 'DELIVERY',
       estimatedDeliveryAt: null,
       createdAt: '2026-09-28T12:00:00.000Z',
+      storeMessage: 'Seu pedido já entrou na fila da cozinha.',
       timeline: [
         { status: 'PENDING', at: '2026-09-28T12:01:00.000Z' },
         { status: 'PREPARING', at: '2026-09-28T12:05:00.000Z' },
@@ -74,8 +75,14 @@ describe('AccountChats', () => {
       screen.getByRole('heading', { name: 'Notificações' })
     ).toBeInTheDocument()
     expect(
-      screen.getByText('Sua comida está sendo preparada')
+      screen.getByRole('heading', {
+        name: 'Sua comida está sendo preparada',
+      })
     ).toBeInTheDocument()
     expect(screen.getByText('Recebemos seu pedido')).toBeInTheDocument()
+    expect(screen.getByText('Mensagem da loja')).toBeInTheDocument()
+    expect(
+      screen.getByRole('link', { name: 'Acompanhar pedido' })
+    ).toHaveAttribute('href', '/pedido/order-1?token=token-1')
   })
 })
