@@ -10,7 +10,7 @@ export const OrderTrackingSkeleton = () => (
     aria-busy="true"
     aria-label="Carregando o pedido"
   >
-    <Box as="header" className={headerStyles.header}>
+    <Box as="header" direction="row" className={headerStyles.header}>
       <Box className={headerStyles.skBack} />
       <Box className={headerStyles.skTitle} />
     </Box>

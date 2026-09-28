@@ -30,7 +30,11 @@ export const OrderRail = ({ order, className }: OrderRailProps) => {
     : journey.indexOf(order.status)
 
   return (
-    <Box className={`${styles.rail} ${className ?? ''}`} aria-hidden="true">
+    <Box
+      direction="row"
+      className={`${styles.rail} ${className ?? ''}`}
+      aria-hidden="true"
+    >
       {journey.map((step, i) => (
         <Text
           as="span"
