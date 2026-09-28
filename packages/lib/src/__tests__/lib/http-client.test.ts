@@ -74,6 +74,22 @@ describe('createHttpClient', () => {
     expect(result).toBeNull()
   })
 
+  it('get: sends custom headers with the request', async () => {
+    // Arrange
+    const fetchMock = stubFetch(jsonResponse(200, { ok: true }))
+    const client = createHttpClient(baseConfig())
+
+    // Act
+    await client.get('orders/order-1/status', {
+      headers: { 'x-guest-order-token': 'token-1' },
+    })
+
+    // Assert
+    expect(requestOf(fetchMock).headers.get('x-guest-order-token')).toBe(
+      'token-1'
+    )
+  })
+
   it('getBlob: resolves the raw response body as a Blob', async () => {
     // Arrange
     const pdf = new Response('%PDF-1.4', {

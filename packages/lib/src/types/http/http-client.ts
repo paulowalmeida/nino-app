@@ -2,12 +2,13 @@ export type HttpSearchParams = Record<string, string | number | boolean>
 
 export type HttpRequestOptions = {
   headers?: Record<string, string>
+  searchParams?: HttpSearchParams
 }
 
 export type HttpClient = {
   get: <ReturnType>(
     url: string,
-    options?: { searchParams?: HttpSearchParams }
+    options?: HttpRequestOptions
   ) => Promise<ReturnType>
   getBlob: (url: string) => Promise<Blob>
   post: <ReturnType, BodyType = unknown>(

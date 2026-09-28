@@ -28,7 +28,9 @@ export const orderService = {
       { headers: { 'Idempotency-Key': idempotencyKey } }
     ),
   getGuestStatus: (orderId: string, token: string): Promise<GuestOrderStatus> =>
-    api.getAll<GuestOrderStatus>(`orders/guest/${orderId}/status`, { token }),
+    api.get<GuestOrderStatus>(`orders/guest/${orderId}/status`, {
+      headers: { 'x-guest-order-token': token },
+    }),
   listMine: async (): Promise<MyOrder[]> => {
     const page = await api.get<{ data: MyOrder[] }>('my/orders')
     return page.data

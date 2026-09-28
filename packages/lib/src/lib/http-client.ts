@@ -123,7 +123,12 @@ export const createHttpClient = (config: HttpClientConfig): HttpClient => {
 
   return {
     get: (url, options) =>
-      run(transport.get(url, { searchParams: options?.searchParams })),
+      run(
+        transport.get(url, {
+          searchParams: options?.searchParams,
+          headers: options?.headers,
+        })
+      ),
     getBlob: (url) => runBlob(transport.get(url)),
     post: (url, body, options) =>
       run(

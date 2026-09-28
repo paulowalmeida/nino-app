@@ -27,6 +27,22 @@ describe('createApi', () => {
     expect(client.get).toHaveBeenCalledWith('units/1')
   })
 
+  it('get: forwards request headers to client.get', async () => {
+    // Arrange
+    const client = buildClient()
+    const api = createApi(client)
+
+    // Act
+    await api.get('orders/order-1/status', {
+      headers: { 'x-guest-order-token': 'token-1' },
+    })
+
+    // Assert
+    expect(client.get).toHaveBeenCalledWith('orders/order-1/status', {
+      headers: { 'x-guest-order-token': 'token-1' },
+    })
+  })
+
   it('getBlob: forwards the url to client.getBlob', async () => {
     // Arrange
     const client = buildClient()

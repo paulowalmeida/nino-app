@@ -5,7 +5,11 @@ import type {
 } from '../types/http/http-client'
 
 export const createApi = (client: HttpClient) => ({
-  get: <ReturnType>(url: string): Promise<ReturnType> => client.get(url),
+  get: <ReturnType>(
+    url: string,
+    options?: HttpRequestOptions
+  ): Promise<ReturnType> =>
+    options ? client.get(url, options) : client.get(url),
 
   getBlob: (url: string): Promise<Blob> => client.getBlob(url),
 
