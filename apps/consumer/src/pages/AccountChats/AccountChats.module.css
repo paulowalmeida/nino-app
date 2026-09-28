@@ -1,0 +1,121 @@
+@reference "@nino/ds/globals.css";
+
+.page {
+  @apply flex min-h-dvh w-full flex-col bg-surface-1 pb-16;
+}
+
+.shell {
+  @apply mx-auto w-full max-w-2xl flex-1 px-5 sm:px-6;
+}
+
+.header {
+  @apply sticky top-0 z-dock -mx-5 flex items-center gap-3;
+  @apply bg-surface-raised/95 px-5 py-4 backdrop-blur;
+  border-bottom: 1px solid
+    color-mix(in srgb, black calc(var(--p, 0) * 8%), transparent);
+}
+
+.back {
+  @apply flex h-11 w-11 shrink-0 items-center justify-center rounded-full;
+  @apply border border-black/[0.08] bg-surface-page text-lg text-fg-muted;
+  @apply transition-colors hover:border-accent-peach hover:text-brand-strong;
+}
+
+.title {
+  @apply font-display text-xl font-extrabold leading-tight text-fg-muted;
+}
+
+.code {
+  @apply text-xs uppercase tracking-wide text-fg-faint;
+  font-variant-numeric: tabular-nums;
+}
+
+.eyebrow {
+  @apply mt-8 text-xs font-bold uppercase tracking-[0.16em] text-fg-faint;
+}
+
+.heading {
+  @apply mt-2 font-display text-2xl font-extrabold text-fg-muted;
+}
+
+.list {
+  @apply mt-5 flex flex-col gap-3;
+}
+
+.item {
+  @apply flex gap-3 rounded-4 border border-border bg-surface-raised p-4;
+  @apply shadow-warm-sm;
+}
+
+.itemCurrent {
+  @apply border-accent-peach;
+}
+
+.icon {
+  @apply flex h-10 w-10 shrink-0 items-center justify-center rounded-full;
+  @apply bg-surface-3 text-lg;
+}
+
+.itemCurrent .icon {
+  @apply bg-brand-soft;
+}
+
+.copy {
+  @apply min-w-0 flex-1;
+}
+
+.itemTitle {
+  @apply font-display text-base font-extrabold leading-tight text-fg-muted;
+}
+
+.itemBody {
+  @apply mt-1 text-sm leading-snug text-fg-subtle;
+}
+
+.time {
+  @apply mt-3 block text-xs font-semibold text-fg-faint;
+  font-variant-numeric: tabular-nums;
+}
+
+.storeMessage {
+  @apply mt-5 rounded-4 border border-accent-peach bg-brand-soft p-4;
+}
+
+.storeMessageLabel {
+  @apply text-xs font-bold uppercase tracking-[0.14em] text-brand-strong;
+}
+
+.storeMessageBody {
+  @apply mt-2 text-sm leading-relaxed text-fg-muted;
+}
+
+.emptyShell {
+  @apply flex flex-1 items-center justify-center px-5;
+}
+
+.footer {
+  @apply mt-auto w-full;
+}
+
+.skeletonBack,
+.skeletonTitle,
+.skeletonCard {
+  composes: nino-skeleton from global;
+  @apply bg-black/[0.06];
+}
+
+.skeletonBack {
+  @apply h-11 w-11 shrink-0 rounded-full;
+}
+
+.skeletonTitle {
+  @apply h-6 w-36 rounded-2;
+}
+
+.skeletonList {
+  @apply mt-8 flex flex-col gap-3;
+}
+
+.skeletonCard {
+  @apply h-28 rounded-4;
+}

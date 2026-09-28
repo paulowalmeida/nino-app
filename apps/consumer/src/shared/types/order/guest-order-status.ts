@@ -11,4 +11,6 @@ export type GuestOrderStatus = {
   estimatedDeliveryAt: string | null
   createdAt: string
   timeline: OrderTimelineEntry[]
+  /** Mensagem opcional publicada pela loja para este pedido. */
+  storeMessage?: string | null
 }

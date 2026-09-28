@@ -41,6 +41,14 @@ describe(CountUp.name, () => {
     expect(screen.getByText('-5')).toBeInTheDocument()
   })
 
+  it('falls back to zero for a non-finite value', () => {
+    // Arrange / Act
+    render(<CountUp value={Number.NaN} />)
+
+    // Assert
+    expect(screen.getByText('0')).toBeInTheDocument()
+  })
+
   /* Com a animação ligada o número corre quadro a quadro, então o teste
    * precisa segurar o relógio e o agendador para ver cada passo. */
   const withMotion = () => {
@@ -70,6 +78,24 @@ describe(CountUp.name, () => {
   it('runs the number up to the new value', () => {
     // Arrange
     const clock = withMotion()
+    const { rerender } = render(<CountUp value={0} />)
+
+    // Act
+    act(() => {
+      rerender(<CountUp value={100} />)
+    })
+    clock.advance(460)
+
+    // Assert
+    expect(screen.getByText('100')).toBeInTheDocument()
+  })
+
+  it('uses the default duration when the CSS token is invalid', () => {
+    // Arrange
+    const clock = withMotion()
+    vi.stubGlobal('getComputedStyle', () => ({
+      getPropertyValue: () => 'invalid',
+    }))
     const { rerender } = render(<CountUp value={0} />)
 
     // Act

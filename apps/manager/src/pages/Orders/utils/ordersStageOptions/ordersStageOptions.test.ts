@@ -10,4 +10,16 @@ describe('ordersStageOptions', () => {
     expect(options.find(({ id }) => id === 'incoming')?.count).toBe(2)
     expect(options.find(({ id }) => id === 'closed')?.count).toBe(21)
   })
+
+  it('replaces invalid status counts with zero', () => {
+    const options = ordersStageOptions({
+      PENDING: Number.NaN,
+      TABLE_TAB: Number.NaN,
+      TABLE_TAB_CLOSED: Number.NaN,
+    })
+
+    expect(options.find(({ id }) => id === 'incoming')?.count).toBe(0)
+    expect(options.find(({ id }) => id === 'table')?.count).toBe(0)
+    expect(options.find(({ id }) => id === 'closed')?.count).toBe(0)
+  })
 })

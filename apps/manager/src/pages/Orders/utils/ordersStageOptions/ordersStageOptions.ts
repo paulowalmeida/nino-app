@@ -3,6 +3,9 @@ import type { StageOption } from '@pages/Orders/types/stage-option'
 import type { OrderQueueSummary } from '@shared/types/order/order-queue-summary'
 import { statusesForStage } from '@shared/utils/order-stage/order-stage'
 
+const countOf = (value: number | undefined): number =>
+  value !== undefined && Number.isFinite(value) && value >= 0 ? value : 0
+
 export const ordersStageOptions = (
   summary: OrderQueueSummary | undefined
 ): StageOption[] =>
@@ -12,9 +15,9 @@ export const ordersStageOptions = (
     icon,
     count:
       id === 'table'
-        ? (summary?.TABLE_TAB ?? 0)
+        ? countOf(summary?.TABLE_TAB)
         : statusesForStage(id).reduce(
-            (total, status) => total + (summary?.[status] ?? 0),
+            (total, status) => total + countOf(summary?.[status]),
             0
-          ) + (id === 'closed' ? (summary?.TABLE_TAB_CLOSED ?? 0) : 0),
+          ) + (id === 'closed' ? countOf(summary?.TABLE_TAB_CLOSED) : 0),
   }))
