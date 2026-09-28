@@ -15,7 +15,9 @@ describe('OrderNotFound', () => {
     expect(
       screen.getByText(/Abra pelo link que apareceu na hora do pedido/)
     ).toBeInTheDocument()
-    expect(screen.getByRole('link')).toHaveAttribute(
+    expect(
+      screen.getByRole('link', { name: 'Voltar para a loja' })
+    ).toHaveAttribute(
       'href',
       orderNotFoundMock.backHref
     )

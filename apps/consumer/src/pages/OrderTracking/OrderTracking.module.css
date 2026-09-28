@@ -7,3 +7,7 @@
 .shell {
   @apply mx-auto w-full max-w-2xl flex-1 px-5 sm:px-6;
 }
+
+.footer {
+  @apply mt-auto w-full;
+}

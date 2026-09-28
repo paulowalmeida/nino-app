@@ -54,7 +54,9 @@ export const OrderTracking = () => {
         )}
       </Box>
 
-      <PoweredBy />
+      <Box className={styles.footer}>
+        <PoweredBy />
+      </Box>
     </Box>
   )
 }
