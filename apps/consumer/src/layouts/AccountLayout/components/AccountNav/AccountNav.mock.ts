@@ -1,3 +1,3 @@
 export const accountNavMock = {
-  soonSections: 3,
+  soonSections: 2,
 }

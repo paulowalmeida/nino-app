@@ -64,7 +64,7 @@ const paymentLazy = () =>
     })
   )
 
-const conversationsLazy = () =>
+const notificationsLazy = () =>
   import('@pages/AccountChats/AccountChats').then(({ AccountChats }) => ({
     Component: AccountChats,
   }))
@@ -80,7 +80,6 @@ const accountChildren: RouteObject[] = [
   { path: 'enderecos', lazy: addressesLazy },
   { path: 'pedidos', lazy: ordersLazy },
   { path: 'pagamento', lazy: paymentLazy },
-  { path: 'conversas', lazy: conversationsLazy },
   { path: 'notas', lazy: invoicesLazy },
 ]
 
@@ -101,6 +100,7 @@ const storeChildren: RouteObject[] = [
   { path: 'checkout', lazy: checkoutLazy },
   { path: 'pedido/:orderId', lazy: orderTrackingLazy },
   { path: 'entrar', lazy: signInLazy },
+  { path: 'conta/conversas', lazy: notificationsLazy },
   consumerAccountRoute,
 ]
 

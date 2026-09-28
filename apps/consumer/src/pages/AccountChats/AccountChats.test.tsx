@@ -1,15 +1,30 @@
 import { render, screen } from '@testing-library/react'
-import { describe, expect, it } from 'vitest'
+import { MemoryRouter } from 'react-router'
+import { describe, expect, it, vi } from 'vitest'
 
 import { AccountChats } from './AccountChats'
 
+vi.mock('@hooks/useGuestOrderStatus/useGuestOrderStatus', () => ({
+  useGuestOrderStatus: () => ({
+    data: undefined,
+    isPending: false,
+    isError: false,
+  }),
+}))
+
 describe('AccountChats', () => {
-  it('renders the chat section headline', () => {
+  it('opens the public notifications screen without a previous order', () => {
     // Arrange
     // Act
-    render(<AccountChats />)
+    render(
+      <MemoryRouter>
+        <AccountChats />
+      </MemoryRouter>
+    )
 
     // Assert
-    expect(screen.getByText('Falar com a loja')).toBeInTheDocument()
+    expect(
+      screen.getByText('Nenhum pedido em acompanhamento')
+    ).toBeInTheDocument()
   })
 })

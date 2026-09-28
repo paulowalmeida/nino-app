@@ -155,7 +155,7 @@ export const StoreTopBar = ({ slug, isDocked }: StoreTopBarProps) => {
             size="icon"
             className={`${styles.iconBtn} ${styles.notificationsEntry}`}
             onClick={go('/conta/conversas')}
-            aria-label="Conversas com a loja"
+            aria-label="Notificações do pedido"
           >
             <Icon name="bell" />
           </Button>
