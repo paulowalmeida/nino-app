@@ -7,12 +7,13 @@ import { Chip } from '@nino/ds/components/Chip'
 import { Heading } from '@nino/ds/components/Heading'
 import { Icon } from '@nino/ds/components/Icon'
 import { Image } from '@nino/ds/components/Image'
+import { Input } from '@nino/ds/components/Input'
 import { Text } from '@nino/ds/components/Text'
 import { DEFAULT_CATALOG_DRAFT } from '@pages/Units/constants/catalog.constants'
 import { DEFAULT_HOME_DRAFT } from '@pages/Units/constants/home.constants'
+import type { BrandColors } from '@pages/Units/types/BrandColors.type'
 import type { CatalogDraft } from '@pages/Units/types/CatalogDraft.type'
 import type { HomeDraft } from '@pages/Units/types/HomeDraft.type'
-import type { BrandColors } from '@pages/Units/types/BrandColors.type'
 import type { PreviewDevice } from '@pages/Units/types/PreviewDevice.type'
 import { resolveApiAssetUrl } from '@shared/utils/api-asset-url/api-asset-url'
 
@@ -333,11 +334,16 @@ export const StorefrontPreview = ({
           </Box>
 
           {home.showSearch && (
-            <Box className={local.search} aria-label="Buscar no cardápio">
+            <Box className={local.search}>
               <Icon name="search" className={local.searchIcon} />
-              <Text as="span" className={local.searchText}>
-                Buscar no cardápio
-              </Text>
+              <Input
+                type="search"
+                aria-label="Buscar no cardápio"
+                placeholder="Buscar no cardápio"
+                className={local.searchInput}
+                readOnly
+                tabIndex={-1}
+              />
             </Box>
           )}
 

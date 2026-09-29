@@ -3,6 +3,7 @@ import { describe, expect, it } from 'vitest'
 
 import { StorefrontPreview } from './StorefrontPreview'
 import { storefrontPreviewMock } from './StorefrontPreview.mock'
+
 import styles from './StorefrontPreview.module.css'
 
 describe(StorefrontPreview.name, () => {
@@ -21,6 +22,14 @@ describe(StorefrontPreview.name, () => {
     render(<StorefrontPreview {...storefrontPreviewMock} storeName="  " />)
 
     expect(screen.getByText('Nome da unidade')).toBeInTheDocument()
+  })
+
+  it('mirrors the consumer mobile search field as a read-only preview', () => {
+    render(<StorefrontPreview {...storefrontPreviewMock} />)
+
+    expect(
+      screen.getByRole('searchbox', { name: 'Buscar no cardápio' })
+    ).toHaveAttribute('readonly')
   })
 
   it('uses the API fallback photos instead of emoji placeholders', () => {

@@ -123,16 +123,43 @@
 }
 
 .storefront {
-  --color-fg-default: var(--preview-text);
+  --color-brand: var(--preview-primary);
+  --color-brand-strong: var(--preview-primary);
+  --color-brand-soft: color-mix(
+    in srgb,
+    var(--preview-primary) 16%,
+    transparent
+  );
+  --color-surface-page: var(--preview-background);
+  --color-surface-raised: var(--preview-card);
+  --color-surface-cool: color-mix(
+    in srgb,
+    var(--preview-text) 5%,
+    var(--preview-background)
+  );
   --color-fg-strong: var(--preview-text);
+  --color-fg-default: var(--preview-text);
+  --color-fg-muted: var(--preview-muted);
   --color-fg-subtle: var(--preview-muted);
+  --color-fg-faint: var(--preview-muted);
   --color-border: var(--preview-border);
+  --color-input-border: var(--preview-border);
   @apply flex min-h-0 w-full flex-1 flex-col overflow-y-auto;
   background-color: var(--preview-background);
   color: var(--preview-text);
   scrollbar-width: thin;
-  scrollbar-color: var(--preview-border) transparent;
+  scrollbar-color: var(--preview-primary) transparent;
   max-height: 48vh;
+}
+
+.storefront::-webkit-scrollbar {
+  width: 0.5rem;
+}
+
+.storefront::-webkit-scrollbar-thumb {
+  background-color: var(--preview-primary);
+  border: 2px solid var(--preview-background);
+  border-radius: 999px;
 }
 
 @media (min-width: 1024px) {
@@ -303,19 +330,19 @@
 }
 
 .search {
-  @apply relative mx-4 mt-4 flex h-12 shrink-0 items-center rounded-3 border;
-  @apply text-base;
-  border-color: var(--preview-border);
-  background: var(--preview-card);
-  color: var(--preview-muted);
+  @apply relative mx-4 mt-4 shrink-0;
 }
 
 .searchIcon {
   @apply pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2;
 }
 
-.searchText {
-  @apply w-full truncate py-3 pl-11 pr-4 leading-tight;
+.searchInput {
+  @apply h-12 w-full rounded-3 border border-input-border bg-surface-cool;
+  @apply pl-11 pr-4 text-base text-fg-default;
+  @apply placeholder:text-fg-faint;
+  @apply focus-visible:border-brand focus-visible:bg-surface-page;
+  @apply focus-visible:ring-2 focus-visible:ring-brand-soft;
 }
 
 @media (prefers-reduced-motion: reduce) {
