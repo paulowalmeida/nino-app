@@ -44,4 +44,7 @@ export const queryKeys = {
   myAddresses: {
     all: ['my-addresses'] as const,
   },
+  myNotifications: {
+    all: ['my-notifications'] as const,
+  },
 }

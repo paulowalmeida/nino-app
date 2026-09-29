@@ -17,11 +17,17 @@ import { useStoreTracking } from '@hooks/useStoreTracking/useStoreTracking'
 import { PoweredBy } from '@shared/components/PoweredBy/PoweredBy'
 import { useGuestOrders } from '@shared/hooks/useGuestOrders/useGuestOrders'
 import {
+  useConsumerNotifications,
+} from '@shared/hooks/useConsumerNotifications/useConsumerNotifications'
+import {
   markGuestOrderSeen,
   recordGuestOrderStatus,
 } from '@shared/lib/last-order/last-order'
 import { isTerminal, stageNote } from '@utils/order-journey'
 
+import {
+  StoreNotificationCard,
+} from './components/StoreNotificationCard/StoreNotificationCard'
 import styles from './AccountChats.module.css'
 
 /**
@@ -96,8 +102,8 @@ const OrderEmpty = ({ backHref }: { backHref: string }) => (
           Nenhum pedido para acompanhar
         </Heading>
         <Text as="p" className={styles.emptyCopy}>
-          Esta área aparece quando há um pedido em andamento ou
-          recém-concluído.
+          Esta área aparece quando há um pedido em andamento, recém-concluído
+          ou um aviso da loja.
         </Text>
         <Link to={backHref} className={styles.emptyAction}>
           Ver cardápio
@@ -217,6 +223,10 @@ export const AccountChats = () => {
   const { consumer } = useConsumerSession()
   const guestOrders = useGuestOrders(slug)
   const { data: myOrders } = useMyOrders(!!consumer)
+  const { data: storeNotifications, markRead } = useConsumerNotifications(
+    !!consumer
+  )
+  const notifications = storeNotifications ?? []
 
   /* WHY: quem tem conta já enxerga o histórico completo em /conta/pedidos —
      aqui só o pedido em andamento interessa, sem duplicar a lista inteira. */
@@ -226,23 +236,45 @@ export const AccountChats = () => {
 
   const orders: OrderRow[] = [...guestOrders, ...activeMyOrders]
 
-  if (orders.length === 0) return <OrderEmpty backHref={backHref} />
+  if (orders.length === 0 && notifications.length === 0) {
+    return <OrderEmpty backHref={backHref} />
+  }
 
   return (
     <Box className={styles.page}>
       <Box className={styles.shell}>
         <OrderHeader backHref={backHref} />
         <main className={styles.content}>
-          <Box className={styles.list} aria-label="Pedidos deste dispositivo">
-            {orders.map((reference) => (
-              <OrderCard
-                key={reference.orderId}
-                reference={reference}
-                pathSlug={slug}
-                hasSession={!!consumer}
-              />
-            ))}
-          </Box>
+          {orders.length > 0 && (
+            <Box className={styles.list} aria-label="Pedidos deste dispositivo">
+              {orders.map((reference) => (
+                <OrderCard
+                  key={reference.orderId}
+                  reference={reference}
+                  pathSlug={slug}
+                  hasSession={!!consumer}
+                />
+              ))}
+            </Box>
+          )}
+          {notifications.length > 0 && (
+            <Box
+              className={
+                orders.length > 0
+                  ? `${styles.list} ${styles.listSpaced}`
+                  : styles.list
+              }
+              aria-label="Avisos da loja"
+            >
+              {notifications.map((notification) => (
+                <StoreNotificationCard
+                  key={notification.id}
+                  notification={notification}
+                  onSeen={markRead}
+                />
+              ))}
+            </Box>
+          )}
           {guestOrders.length > 0 && (
             <Text as="p" className={styles.retentionNote}>
               Pedidos concluídos permanecem aqui por 7 dias. Para acessar em

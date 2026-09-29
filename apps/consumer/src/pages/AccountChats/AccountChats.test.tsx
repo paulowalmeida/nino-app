@@ -18,6 +18,11 @@ const myOrdersState = vi.hoisted(() => ({
   data: undefined as unknown,
 }))
 
+const notificationsState = vi.hoisted(() => ({
+  data: undefined as unknown,
+  markRead: () => undefined,
+}))
+
 vi.mock('@hooks/useGuestOrderStatus/useGuestOrderStatus', () => ({
   useGuestOrderStatus: () => statusState,
 }))
@@ -32,6 +37,17 @@ vi.mock('@shared/hooks/useConsumerSession/useConsumerSession', () => ({
 vi.mock('@shared/hooks/useMyOrders/useMyOrders', () => ({
   useMyOrders: () => ({ data: myOrdersState.data, isPending: false }),
 }))
+
+vi.mock(
+  '@shared/hooks/useConsumerNotifications/useConsumerNotifications',
+  () => ({
+    useConsumerNotifications: () => ({
+      data: notificationsState.data,
+      isPending: false,
+      markRead: notificationsState.markRead,
+    }),
+  })
+)
 
 vi.mock('@hooks/useStoreTracking/useStoreTracking', () => ({
   useStoreTracking: () => ({
@@ -52,6 +68,7 @@ describe('AccountChats', () => {
     statusState.isError = false
     sessionState.consumer = null
     myOrdersState.data = undefined
+    notificationsState.data = undefined
   })
 
   it('opens the public order screen without a previous order', () => {
@@ -201,6 +218,38 @@ describe('AccountChats', () => {
     // Assert
     expect(
       screen.getByText('Nenhum pedido para acompanhar')
+    ).toBeInTheDocument()
+  })
+
+  it('shows a store notification even without any tracked order', () => {
+    // Arrange
+    sessionState.consumer = { id: 'consumer-1' }
+    notificationsState.data = [
+      {
+        id: 'notification-1',
+        title: 'Cupom novo na loja',
+        body: '10% off no seu próximo pedido com VOLTA10',
+        data: { promotionId: 'promotion-1' },
+        readAt: null,
+        createdAt: '2026-09-28T12:00:00.000Z',
+        updatedAt: '2026-09-28T12:00:00.000Z',
+        type: { id: 'type-1', name: 'PROMOTION', description: 'Promoção' },
+      },
+    ]
+
+    // Act
+    render(
+      <MemoryRouter initialEntries={['/demo/conta/conversas']}>
+        <AccountChats />
+      </MemoryRouter>
+    )
+
+    // Assert
+    expect(
+      screen.queryByText('Nenhum pedido para acompanhar')
+    ).not.toBeInTheDocument()
+    expect(
+      screen.getByRole('heading', { name: 'Cupom novo na loja' })
     ).toBeInTheDocument()
   })
 })

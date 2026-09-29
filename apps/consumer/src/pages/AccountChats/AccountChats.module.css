@@ -37,6 +37,10 @@
   @apply flex flex-col gap-4;
 }
 
+.listSpaced {
+  @apply mt-6;
+}
+
 .orderCard {
   @apply gap-4 rounded-4 border border-border bg-surface-raised p-4 sm:p-5;
 }
