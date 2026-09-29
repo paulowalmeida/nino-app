@@ -6,11 +6,16 @@ import { Heading } from '@nino/ds/components/Heading'
 import { Icon, type IconName } from '@nino/ds/components/Icon'
 import { Text } from '@nino/ds/components/Text'
 import type { GuestOrderStatus } from '@custom_types/order/guest-order-status'
-import { useGuestOrderStatus } from '@hooks/useGuestOrderStatus/useGuestOrderStatus'
+import {
+  useConsumerSession,
+} from '@shared/hooks/useConsumerSession/useConsumerSession'
+import {
+  useGuestOrderStatus,
+} from '@hooks/useGuestOrderStatus/useGuestOrderStatus'
+import { useMyOrders } from '@shared/hooks/useMyOrders/useMyOrders'
 import { useStoreTracking } from '@hooks/useStoreTracking/useStoreTracking'
 import { PoweredBy } from '@shared/components/PoweredBy/PoweredBy'
 import { useGuestOrders } from '@shared/hooks/useGuestOrders/useGuestOrders'
-import type { GuestOrderReference } from '@shared/lib/last-order/last-order'
 import {
   markGuestOrderSeen,
   recordGuestOrderStatus,
@@ -18,6 +23,19 @@ import {
 import { isTerminal, stageNote } from '@utils/order-journey'
 
 import styles from './AccountChats.module.css'
+
+/**
+ * Um cartão só sabe acompanhar um pedido: com token (convidado, link do
+ * WhatsApp) ou por sessão (cliente logado, sem token nenhum para guardar).
+ * `lastSeenEventAt` ausente marca a segunda origem — o navegador não tem
+ * onde guardar "já vi isto" para um pedido que não é dele, então o cartão
+ * nunca acende "Nova atualização" nesse caso.
+ */
+type OrderRow = {
+  orderId: string
+  token?: string
+  lastSeenEventAt?: string | null
+}
 
 const orderDate = new Intl.DateTimeFormat('pt-BR', {
   day: '2-digit',
@@ -44,9 +62,10 @@ const orderIcon = (status: GuestOrderStatus['status']): IconName => {
 const latestEventAt = (order: GuestOrderStatus) =>
   order.timeline.at(-1)?.at ?? order.createdAt
 
-const trackingHref = (reference: GuestOrderReference, pathSlug?: string) => {
+const trackingHref = (reference: OrderRow, pathSlug?: string) => {
   const base = pathSlug ? `/${pathSlug}` : ''
-  return `${base}/pedido/${reference.orderId}?token=${reference.token}`
+  const query = reference.token ? `?token=${reference.token}` : ''
+  return `${base}/pedido/${reference.orderId}${query}`
 }
 
 const OrderHeader = ({ backHref }: { backHref: string }) => (
@@ -59,7 +78,7 @@ const OrderHeader = ({ backHref }: { backHref: string }) => (
         Atualizações do pedido
       </Heading>
       <Text as="p" className={styles.subtitle}>
-        Pedidos ativos e conclusões recentes neste dispositivo
+        Pedidos em andamento e conclusões recentes
       </Text>
     </Box>
   </Box>
@@ -77,7 +96,7 @@ const OrderEmpty = ({ backHref }: { backHref: string }) => (
           Nenhum pedido para acompanhar
         </Heading>
         <Text as="p" className={styles.emptyCopy}>
-          Esta área aparece quando este dispositivo tem um pedido ativo ou
+          Esta área aparece quando há um pedido em andamento ou
           recém-concluído.
         </Text>
         <Link to={backHref} className={styles.emptyAction}>
@@ -99,16 +118,18 @@ const OrderCardSkeleton = () => (
 const OrderCard = ({
   reference,
   pathSlug,
+  hasSession,
 }: {
-  reference: GuestOrderReference
+  reference: OrderRow
   pathSlug?: string
+  hasSession: boolean
 }) => {
   const { stageLabel } = useStoreTracking()
   const {
     data: order,
     isPending,
     isError,
-  } = useGuestOrderStatus(reference.orderId, reference.token)
+  } = useGuestOrderStatus(reference.orderId, reference.token, hasSession)
   const eventAt = order ? latestEventAt(order) : null
 
   useEffect(() => {
@@ -142,8 +163,9 @@ const OrderCard = ({
   const resolved = isTerminal(order.status)
   const displayEventAt = eventAt ?? order.createdAt
   const unread =
-    !reference.lastSeenEventAt ||
-    Date.parse(reference.lastSeenEventAt) < Date.parse(displayEventAt)
+    reference.lastSeenEventAt !== undefined &&
+    (!reference.lastSeenEventAt ||
+      Date.parse(reference.lastSeenEventAt) < Date.parse(displayEventAt))
 
   return (
     <Box
@@ -192,7 +214,17 @@ const OrderCard = ({
 export const AccountChats = () => {
   const { slug } = useParams()
   const backHref = slug ? `/${slug}` : '/'
-  const orders = useGuestOrders(slug)
+  const { consumer } = useConsumerSession()
+  const guestOrders = useGuestOrders(slug)
+  const { data: myOrders } = useMyOrders(!!consumer)
+
+  /* WHY: quem tem conta já enxerga o histórico completo em /conta/pedidos —
+     aqui só o pedido em andamento interessa, sem duplicar a lista inteira. */
+  const activeMyOrders = (myOrders ?? [])
+    .filter((order) => !isTerminal(order.status))
+    .map((order): OrderRow => ({ orderId: order.id }))
+
+  const orders: OrderRow[] = [...guestOrders, ...activeMyOrders]
 
   if (orders.length === 0) return <OrderEmpty backHref={backHref} />
 
@@ -207,13 +239,16 @@ export const AccountChats = () => {
                 key={reference.orderId}
                 reference={reference}
                 pathSlug={slug}
+                hasSession={!!consumer}
               />
             ))}
           </Box>
-          <Text as="p" className={styles.retentionNote}>
-            Pedidos concluídos permanecem aqui por 7 dias. Para acessar em outro
-            dispositivo, use o link recebido da loja.
-          </Text>
+          {guestOrders.length > 0 && (
+            <Text as="p" className={styles.retentionNote}>
+              Pedidos concluídos permanecem aqui por 7 dias. Para acessar em
+              outro dispositivo, use o link recebido da loja.
+            </Text>
+          )}
         </main>
       </Box>
       <Box className={styles.footer}>

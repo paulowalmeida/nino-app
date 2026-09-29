@@ -4,9 +4,15 @@ import { Box } from '@nino/ds/components/Box'
 import { Text } from '@nino/ds/components/Text'
 
 import { OrderRail } from '@shared/components/OrderRail/OrderRail'
-import { useGuestOrderStatus } from '@hooks/useGuestOrderStatus/useGuestOrderStatus'
+import {
+  useConsumerSession,
+} from '@shared/hooks/useConsumerSession/useConsumerSession'
+import {
+  useGuestOrderStatus,
+} from '@hooks/useGuestOrderStatus/useGuestOrderStatus'
 import { useGuestOrders } from '@shared/hooks/useGuestOrders/useGuestOrders'
 import { useMinutesUntil } from '@hooks/useMinutesUntil/useMinutesUntil'
+import { useMyOrders } from '@shared/hooks/useMyOrders/useMyOrders'
 import { recordGuestOrderStatus } from '@utils/last-order'
 import { STATUS_LABEL } from '@constants/order.constants'
 import { isTerminal, stageIcon } from '@utils/order-journey'
@@ -18,13 +24,18 @@ type ActiveOrderBannerProps = {
 }
 
 export const ActiveOrderBanner = ({ slug }: ActiveOrderBannerProps) => {
+  const { consumer } = useConsumerSession()
   const [lastOrder] = useGuestOrders(slug)
   const isForThisStore = lastOrder?.slug === slug
 
-  const { data: order } = useGuestOrderStatus(
-    isForThisStore ? lastOrder.orderId : undefined,
-    isForThisStore ? lastOrder.token : undefined
+  const { data: myOrders } = useMyOrders(!!consumer)
+  const activeMyOrder = (myOrders ?? []).find(
+    (myOrder) => !isTerminal(myOrder.status)
   )
+
+  const orderId = isForThisStore ? lastOrder.orderId : activeMyOrder?.id
+  const token = isForThisStore ? lastOrder.token : undefined
+  const { data: order } = useGuestOrderStatus(orderId, token, !!consumer)
 
   const minutes = useMinutesUntil(order?.estimatedDeliveryAt ?? null)
 
@@ -34,13 +45,12 @@ export const ActiveOrderBanner = ({ slug }: ActiveOrderBannerProps) => {
     recordGuestOrderStatus(order.id, order.status, eventAt)
   }, [order])
 
-  if (!isForThisStore || !order || isTerminal(order.status)) return null
+  if (!orderId || !order || isTerminal(order.status)) return null
+
+  const query = token ? `?token=${token}` : ''
 
   return (
-    <Link
-      to={`/${slug}/pedido/${lastOrder.orderId}?token=${lastOrder.token}`}
-      className={styles.banner}
-    >
+    <Link to={`/${slug}/pedido/${orderId}${query}`} className={styles.banner}>
       <span className={styles.icon} aria-hidden="true">
         {stageIcon(order.status)}
       </span>

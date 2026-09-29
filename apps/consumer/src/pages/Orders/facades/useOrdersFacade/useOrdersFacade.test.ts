@@ -1,11 +1,11 @@
 import { renderHook } from '@testing-library/react'
 import { describe, expect, it, vi } from 'vitest'
 
-import { useMyOrders } from '@pages/Orders/hooks/useMyOrders/useMyOrders'
+import { useMyOrders } from '@shared/hooks/useMyOrders/useMyOrders'
 import { useOrdersFacade } from './useOrdersFacade'
 import { useOrdersFacadeMock } from './useOrdersFacade.mock'
 
-vi.mock('@pages/Orders/hooks/useMyOrders/useMyOrders')
+vi.mock('@shared/hooks/useMyOrders/useMyOrders')
 
 describe('useOrdersFacade', () => {
   it('exposes the orders query state for the Orders Page', () => {

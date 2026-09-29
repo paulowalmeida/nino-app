@@ -13,12 +13,11 @@ import { StoreIdentity } from '@pages/Storefront/components/StoreHeader/StoreIde
 import { StoreAvailabilityBanner } from '@pages/Storefront/components/StoreHeader/StoreAvailabilityBanner/StoreAvailabilityBanner'
 import { StoreInfo } from '@pages/Storefront/components/StoreHeader/StoreInfo/StoreInfo'
 import { StoreTopBar } from '@pages/Storefront/components/StoreHeader/StoreTopBar/StoreTopBar'
-import { TabBar } from '@shared/components/TabBar/TabBar/TabBar'
 import { CategoryBar } from '@pages/Storefront/components/StoreMenu/CategoryBar/CategoryBar'
 import { MenuSearchField } from '@pages/Storefront/components/StoreMenu/MenuSearchField/MenuSearchField'
 import { MenuRowsSkeleton } from '@pages/Storefront/skeletons/MenuRowsSkeleton/MenuRowsSkeleton'
 import { StoreHeaderSkeleton } from '@pages/Storefront/skeletons/StoreHeaderSkeleton/StoreHeaderSkeleton'
-import { PoweredBy } from '@shared/components/PoweredBy/PoweredBy'
+import { FooterNav } from '@shared/components/FooterNav/FooterNav'
 import { StoreBanner } from '@pages/Storefront/components/StoreHeader/StoreBanner/StoreBanner'
 import { useDockedHeader } from '@pages/Storefront/hooks/useDockedHeader/useDockedHeader'
 import { useImagePreload } from '@pages/Storefront/hooks/useImagePreload/useImagePreload'
@@ -176,8 +175,7 @@ export const StorefrontContent = ({ pathSlug }: StorefrontContentProps) => {
 
       <StoreCart />
 
-      <PoweredBy />
-      <TabBar
+      <FooterNav
         base={base}
         cartCount={home.cartCount}
         onOpenCart={() => home.setCartOpen(true)}

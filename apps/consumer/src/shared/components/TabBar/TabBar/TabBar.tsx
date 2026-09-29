@@ -4,7 +4,12 @@ import { useLocation, useNavigate } from 'react-router'
 import { Icon } from '@nino/ds/components/Icon'
 import { Button } from '@nino/ds/components/Button'
 import { Text } from '@nino/ds/components/Text'
+import {
+  useConsumerSession,
+} from '@shared/hooks/useConsumerSession/useConsumerSession'
 import { useGuestOrders } from '@shared/hooks/useGuestOrders/useGuestOrders'
+import { useMyOrders } from '@shared/hooks/useMyOrders/useMyOrders'
+import { isTerminal } from '@utils/order-journey'
 import { AccountDrawer } from './AccountDrawer/AccountDrawer'
 
 import styles from './TabBar.module.css'
@@ -22,7 +27,12 @@ export const TabBar = ({ base, cartCount = 0, onOpenCart }: TabBarProps) => {
   const { pathname } = useLocation()
   const [isAccountOpen, setIsAccountOpen] = useState(false)
   const slug = base.startsWith('/') ? base.slice(1).split('/')[0] : undefined
+  const { consumer } = useConsumerSession()
   const guestOrders = useGuestOrders(slug)
+  const { data: myOrders } = useMyOrders(!!consumer)
+  const hasActiveOrder =
+    guestOrders.length > 0 ||
+    (myOrders ?? []).some((order) => !isTerminal(order.status))
 
   const home = base || '/'
   const isHome = pathname === home || pathname === `${home}/`
@@ -84,7 +94,7 @@ export const TabBar = ({ base, cartCount = 0, onOpenCart }: TabBarProps) => {
           </Text>
         </Button>
 
-        {guestOrders.length > 0 && (
+        {hasActiveOrder && (
           <Button
             variant="ghost"
             onClick={() => void navigate(notifications)}

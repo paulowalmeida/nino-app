@@ -1,4 +1,4 @@
-import { useMyOrders } from '@pages/Orders/hooks/useMyOrders/useMyOrders'
+import { useMyOrders } from '@shared/hooks/useMyOrders/useMyOrders'
 
 export const useOrdersFacade = () => {
   const orders = useMyOrders(true)

@@ -4,8 +4,7 @@ import { Box } from '@nino/ds/components/Box'
 import { useScrollProgress } from '@hooks/useScrollProgress/useScrollProgress'
 import { AccountHeader } from './components/AccountHeader/AccountHeader'
 import { AccountNav } from './components/AccountNav/AccountNav'
-import { PoweredBy } from '@shared/components/PoweredBy/PoweredBy'
-import { TabBar } from '@shared/components/TabBar/TabBar/TabBar'
+import { FooterNav } from '@shared/components/FooterNav/FooterNav'
 import { riseDelay } from '@utils/rise-delay'
 
 import motion from '@styles/motion.module.css'
@@ -42,8 +41,7 @@ export const AccountLayout = () => {
         </Box>
       </Box>
 
-      <PoweredBy />
-      <TabBar base={slug ? `/${slug}` : ''} />
+      <FooterNav base={slug ? `/${slug}` : ''} />
     </Box>
   )
 }
