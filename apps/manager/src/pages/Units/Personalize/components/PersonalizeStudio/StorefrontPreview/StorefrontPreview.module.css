@@ -334,15 +334,16 @@
 }
 
 .searchIcon {
-  @apply pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2;
+  @apply pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2;
+  color: var(--preview-muted);
 }
 
 .searchInput {
-  @apply h-12 w-full rounded-3 border border-input-border bg-surface-cool;
-  @apply pl-11 pr-4 text-base text-fg-default;
-  @apply placeholder:text-fg-faint;
+  @apply h-12 w-full rounded-3 border border-border bg-surface-cool;
+  @apply pl-11 pr-4 text-base text-fg-default transition-field;
+  @apply placeholder:text-fg-faint hover:border-fg-faintest;
+  @apply outline-none focus-visible:ring-2 focus-visible:ring-brand-soft;
   @apply focus-visible:border-brand focus-visible:bg-surface-page;
-  @apply focus-visible:ring-2 focus-visible:ring-brand-soft;
 }
 
 @media (prefers-reduced-motion: reduce) {
