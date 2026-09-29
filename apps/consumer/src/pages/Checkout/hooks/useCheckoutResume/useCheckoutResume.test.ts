@@ -1,5 +1,5 @@
 import { renderHook } from '@testing-library/react'
-import { describe, expect, it, vi } from 'vitest'
+import { beforeEach, describe, expect, it, vi } from 'vitest'
 
 import { readLastOrder } from '@utils/last-order'
 
@@ -7,17 +7,26 @@ import { useCheckoutResume } from './useCheckoutResume'
 import { useCheckoutResumeMock } from './useCheckoutResume.mock'
 
 const navigate = vi.fn()
+const storedOrder = (slug: string) => ({
+  orderId: useCheckoutResumeMock.orderId,
+  token: useCheckoutResumeMock.token,
+  slug,
+  createdAt: '2026-09-28T12:00:00.000Z',
+  lastSeenEventAt: null,
+  terminalAt: null,
+  expiresAt: '2026-10-28T12:00:00.000Z',
+})
 
 vi.mock('react-router', () => ({ useNavigate: () => navigate }))
 vi.mock('@utils/last-order')
 
 describe('useCheckoutResume', () => {
+  beforeEach(() => vi.clearAllMocks())
+
   it('redirects an empty resolved checkout to the stored order from the same store', () => {
-    vi.mocked(readLastOrder).mockReturnValue({
-      orderId: useCheckoutResumeMock.orderId,
-      token: useCheckoutResumeMock.token,
-      slug: useCheckoutResumeMock.pathSlug,
-    })
+    vi.mocked(readLastOrder).mockReturnValue(
+      storedOrder(useCheckoutResumeMock.pathSlug)
+    )
 
     const { result } = renderHook(() =>
       useCheckoutResume({
@@ -37,11 +46,9 @@ describe('useCheckoutResume', () => {
   })
 
   it('does not treat the cart as empty before the current store resolves', () => {
-    vi.mocked(readLastOrder).mockReturnValue({
-      orderId: useCheckoutResumeMock.orderId,
-      token: useCheckoutResumeMock.token,
-      slug: useCheckoutResumeMock.pathSlug,
-    })
+    vi.mocked(readLastOrder).mockReturnValue(
+      storedOrder(useCheckoutResumeMock.pathSlug)
+    )
 
     renderHook(() =>
       useCheckoutResume({
@@ -57,11 +64,7 @@ describe('useCheckoutResume', () => {
   })
 
   it('ignores a stored order that belongs to another store', () => {
-    vi.mocked(readLastOrder).mockReturnValue({
-      orderId: useCheckoutResumeMock.orderId,
-      token: useCheckoutResumeMock.token,
-      slug: 'outra-loja',
-    })
+    vi.mocked(readLastOrder).mockReturnValue(storedOrder('outra-loja'))
 
     const { result } = renderHook(() =>
       useCheckoutResume({
@@ -78,11 +81,9 @@ describe('useCheckoutResume', () => {
   })
 
   it('keeps the current checkout when the cart has items', () => {
-    vi.mocked(readLastOrder).mockReturnValue({
-      orderId: useCheckoutResumeMock.orderId,
-      token: useCheckoutResumeMock.token,
-      slug: useCheckoutResumeMock.pathSlug,
-    })
+    vi.mocked(readLastOrder).mockReturnValue(
+      storedOrder(useCheckoutResumeMock.pathSlug)
+    )
 
     renderHook(() =>
       useCheckoutResume({

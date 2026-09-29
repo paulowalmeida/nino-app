@@ -7,12 +7,18 @@ import { useOrderTrackingFacadeMock } from './useOrderTrackingFacade.mock'
 const routeState = vi.hoisted(() => ({
   token: 'token-1' as string | undefined,
 }))
+const setSearchParams = vi.fn()
 
 vi.mock('react-router', () => ({
   useParams: () => ({ slug: 'loja', orderId: 'order-1' }),
   useSearchParams: () => [
     new URLSearchParams(routeState.token ? `token=${routeState.token}` : ''),
+    setSearchParams,
   ],
+}))
+vi.mock('@utils/last-order', () => ({
+  readGuestOrder: () => null,
+  writeLastOrder: vi.fn(),
 }))
 vi.mock(
   '@pages/order-tracking/hooks/useOrderTrackingStatus/useOrderTrackingStatus',
@@ -26,6 +32,7 @@ vi.mock('@utils/resolve-back-href', () => ({
 }))
 describe('useOrderTrackingFacade', () => {
   beforeEach(() => {
+    vi.clearAllMocks()
     routeState.token = 'token-1'
   })
 
@@ -33,6 +40,9 @@ describe('useOrderTrackingFacade', () => {
     const { result } = renderHook(() => useOrderTrackingFacade())
     expect(result.current.backHref).toBe(useOrderTrackingFacadeMock.backHref)
     expect(result.current.progress).toBe(useOrderTrackingFacadeMock.progress)
+    expect(setSearchParams).toHaveBeenCalledWith(new URLSearchParams(), {
+      replace: true,
+    })
   })
 
   it('accepts a missing tracking token', () => {

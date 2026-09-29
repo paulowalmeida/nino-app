@@ -1,12 +1,13 @@
-import { useState } from 'react'
+import { useEffect } from 'react'
 import { Link } from 'react-router'
 import { Box } from '@nino/ds/components/Box'
 import { Text } from '@nino/ds/components/Text'
 
 import { OrderRail } from '@shared/components/OrderRail/OrderRail'
 import { useGuestOrderStatus } from '@hooks/useGuestOrderStatus/useGuestOrderStatus'
+import { useGuestOrders } from '@shared/hooks/useGuestOrders/useGuestOrders'
 import { useMinutesUntil } from '@hooks/useMinutesUntil/useMinutesUntil'
-import { readLastOrder } from '@utils/last-order'
+import { recordGuestOrderStatus } from '@utils/last-order'
 import { STATUS_LABEL } from '@constants/order.constants'
 import { isTerminal, stageIcon } from '@utils/order-journey'
 
@@ -17,7 +18,7 @@ type ActiveOrderBannerProps = {
 }
 
 export const ActiveOrderBanner = ({ slug }: ActiveOrderBannerProps) => {
-  const [lastOrder] = useState(readLastOrder)
+  const [lastOrder] = useGuestOrders(slug)
   const isForThisStore = lastOrder?.slug === slug
 
   const { data: order } = useGuestOrderStatus(
@@ -26,6 +27,12 @@ export const ActiveOrderBanner = ({ slug }: ActiveOrderBannerProps) => {
   )
 
   const minutes = useMinutesUntil(order?.estimatedDeliveryAt ?? null)
+
+  useEffect(() => {
+    if (!order) return
+    const eventAt = order.timeline.at(-1)?.at ?? order.createdAt
+    recordGuestOrderStatus(order.id, order.status, eventAt)
+  }, [order])
 
   if (!isForThisStore || !order || isTerminal(order.status)) return null
 

@@ -4,6 +4,7 @@ import { useLocation, useNavigate } from 'react-router'
 import { Icon } from '@nino/ds/components/Icon'
 import { Button } from '@nino/ds/components/Button'
 import { Text } from '@nino/ds/components/Text'
+import { useGuestOrders } from '@shared/hooks/useGuestOrders/useGuestOrders'
 import { AccountDrawer } from './AccountDrawer/AccountDrawer'
 
 import styles from './TabBar.module.css'
@@ -20,6 +21,8 @@ export const TabBar = ({ base, cartCount = 0, onOpenCart }: TabBarProps) => {
   const navigate = useNavigate()
   const { pathname } = useLocation()
   const [isAccountOpen, setIsAccountOpen] = useState(false)
+  const slug = base.startsWith('/') ? base.slice(1).split('/')[0] : undefined
+  const guestOrders = useGuestOrders(slug)
 
   const home = base || '/'
   const isHome = pathname === home || pathname === `${home}/`
@@ -81,19 +84,21 @@ export const TabBar = ({ base, cartCount = 0, onOpenCart }: TabBarProps) => {
           </Text>
         </Button>
 
-        <Button
-          variant="ghost"
-          onClick={() => void navigate(notifications)}
-          aria-current={isNotifications ? 'page' : undefined}
-          className={
-            isNotifications ? `${styles.tab} ${styles.tabOn}` : styles.tab
-          }
-        >
-          <Icon name="receipt" />
-          <Text as="span" className={styles.label}>
-            Pedido
-          </Text>
-        </Button>
+        {guestOrders.length > 0 && (
+          <Button
+            variant="ghost"
+            onClick={() => void navigate(notifications)}
+            aria-current={isNotifications ? 'page' : undefined}
+            className={
+              isNotifications ? `${styles.tab} ${styles.tabOn}` : styles.tab
+            }
+          >
+            <Icon name="receipt" />
+            <Text as="span" className={styles.label}>
+              Pedido
+            </Text>
+          </Button>
+        )}
 
         <Button
           variant="ghost"

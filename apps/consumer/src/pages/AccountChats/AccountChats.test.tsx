@@ -43,7 +43,9 @@ describe('AccountChats', () => {
     )
 
     // Assert
-    expect(screen.getByText('Nenhum pedido recente')).toBeInTheDocument()
+    expect(
+      screen.getByText('Nenhum pedido para acompanhar')
+    ).toBeInTheDocument()
   })
 
   it('shows the active order and its updates', () => {
@@ -72,15 +74,13 @@ describe('AccountChats', () => {
     )
 
     expect(
-      screen.getByRole('heading', { name: 'Seu pedido' })
+      screen.getByRole('heading', { name: 'Atualizações do pedido' })
     ).toBeInTheDocument()
     expect(
       screen.getByRole('heading', {
         name: 'Sua comida está sendo preparada',
       })
     ).toBeInTheDocument()
-    expect(screen.getByText('Recebemos seu pedido')).toBeInTheDocument()
-    expect(screen.getByText('Mensagem da loja')).toBeInTheDocument()
     expect(
       screen.getByRole('link', { name: 'Acompanhar pedido' })
     ).toHaveAttribute('href', '/pedido/order-1?token=token-1')
@@ -111,10 +111,7 @@ describe('AccountChats', () => {
     )
 
     expect(
-      screen.getByRole('heading', { name: 'Histórico do pedido' })
-    ).toBeInTheDocument()
-    expect(
-      screen.getByRole('link', { name: 'Ver detalhes do pedido' })
+      screen.getByRole('link', { name: 'Ver recibo e detalhes' })
     ).toBeInTheDocument()
     expect(
       screen.queryByRole('link', { name: 'Acompanhar pedido' })
