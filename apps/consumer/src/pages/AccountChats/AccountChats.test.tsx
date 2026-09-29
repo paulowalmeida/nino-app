@@ -33,7 +33,7 @@ describe('AccountChats', () => {
     statusState.isError = false
   })
 
-  it('opens the public notifications screen without a previous order', () => {
+  it('opens the public order screen without a previous order', () => {
     // Arrange
     // Act
     render(
@@ -43,10 +43,10 @@ describe('AccountChats', () => {
     )
 
     // Assert
-    expect(screen.getByText('Você está em dia')).toBeInTheDocument()
+    expect(screen.getByText('Nenhum pedido recente')).toBeInTheDocument()
   })
 
-  it('shows order events as notifications', () => {
+  it('shows the active order and its updates', () => {
     window.localStorage.setItem(
       'nino.last-order',
       JSON.stringify({ orderId: 'order-1', token: 'token-1', slug: 'demo' })
@@ -72,7 +72,7 @@ describe('AccountChats', () => {
     )
 
     expect(
-      screen.getByRole('heading', { name: 'Notificações' })
+      screen.getByRole('heading', { name: 'Seu pedido' })
     ).toBeInTheDocument()
     expect(
       screen.getByRole('heading', {
@@ -84,5 +84,40 @@ describe('AccountChats', () => {
     expect(
       screen.getByRole('link', { name: 'Acompanhar pedido' })
     ).toHaveAttribute('href', '/pedido/order-1?token=token-1')
+  })
+
+  it('shows a completed order as history instead of an active notification', () => {
+    window.localStorage.setItem(
+      'nino.last-order',
+      JSON.stringify({ orderId: 'order-1', token: 'token-1', slug: 'demo' })
+    )
+    statusState.data = {
+      id: 'order-1',
+      orderNumber: 136,
+      status: 'COMPLETED',
+      channel: 'PICKUP',
+      estimatedDeliveryAt: null,
+      createdAt: '2026-09-28T12:00:00.000Z',
+      timeline: [
+        { status: 'PENDING', at: '2026-09-28T12:01:00.000Z' },
+        { status: 'COMPLETED', at: '2026-09-28T12:20:00.000Z' },
+      ],
+    }
+
+    render(
+      <MemoryRouter initialEntries={['/demo/conta/conversas']}>
+        <AccountChats />
+      </MemoryRouter>
+    )
+
+    expect(
+      screen.getByRole('heading', { name: 'Histórico do pedido' })
+    ).toBeInTheDocument()
+    expect(
+      screen.getByRole('link', { name: 'Ver detalhes do pedido' })
+    ).toBeInTheDocument()
+    expect(
+      screen.queryByRole('link', { name: 'Acompanhar pedido' })
+    ).not.toBeInTheDocument()
   })
 })

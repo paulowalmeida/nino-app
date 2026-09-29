@@ -26,8 +26,7 @@ export const TabBar = ({ base, cartCount = 0, onOpenCart }: TabBarProps) => {
   const notifications = `${base}/conta/conversas`
   const isNotifications = pathname.startsWith(notifications)
   const isAccount =
-    isAccountOpen ||
-    (pathname.startsWith(`${base}/conta`) && !isNotifications)
+    isAccountOpen || (pathname.startsWith(`${base}/conta`) && !isNotifications)
 
   const handleHome = () => {
     if (!isHome) {
@@ -90,9 +89,9 @@ export const TabBar = ({ base, cartCount = 0, onOpenCart }: TabBarProps) => {
             isNotifications ? `${styles.tab} ${styles.tabOn}` : styles.tab
           }
         >
-          <Icon name="bell" />
+          <Icon name="receipt" />
           <Text as="span" className={styles.label}>
-            Notificações
+            Pedido
           </Text>
         </Button>
 

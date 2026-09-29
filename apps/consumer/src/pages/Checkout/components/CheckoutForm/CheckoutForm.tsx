@@ -5,6 +5,7 @@ import type { CheckoutFacade } from '@pages/checkout/facades/useCheckoutFacade/u
 import { useCheckoutFacade } from '@pages/checkout/facades/useCheckoutFacade/useCheckoutFacade'
 import { Box } from '@nino/ds/components/Box'
 import { Heading } from '@nino/ds/components/Heading'
+import { Icon } from '@nino/ds/components/Icon'
 import { Stepper } from '@nino/ds/components/Stepper'
 import { Text } from '@nino/ds/components/Text'
 import { FormBuilder } from '@nino/forms/FormBuilder'
@@ -24,8 +25,8 @@ import { PaymentMethodFields } from './PaymentMethodFields/PaymentMethodFields'
 import styles from './CheckoutForm.module.css'
 
 const CHECKOUT_STEPS = [
-  { title: 'Recebimento' },
   { title: 'Contato' },
+  { title: 'Recebimento' },
   { title: 'Pagamento' },
   { title: 'Revisão' },
 ]
@@ -60,7 +61,10 @@ export const CheckoutForm = ({
   const isLastStep = step === CHECKOUT_STEPS.length - 1
 
   const fieldsForStep = (): FieldPath<CheckoutFormValues>[] => {
-    if (step === 0 && isDelivery) {
+    if (step === 0) {
+      return facade.isAuthenticated ? [] : ['guestName', 'guestPhone']
+    }
+    if (step === 1 && isDelivery) {
       return facade.isAuthenticated
         ? ['deliveryZoneId', 'deliveryAddressId']
         : [
@@ -73,7 +77,6 @@ export const CheckoutForm = ({
             'guestState',
           ]
     }
-    if (step === 1) return ['guestName', 'guestPhone']
     return []
   }
 
@@ -154,13 +157,31 @@ export const CheckoutForm = ({
               />
 
               <Box as="section" className={styles.stepContent}>
-                {step === 0 && (
+                {step === 0 &&
+                  (facade.isAuthenticated ? (
+                    <Box className={styles.recognizedCustomer}>
+                      <Box className={styles.recognizedIcon} aria-hidden="true">
+                        <Icon name="check-circle" />
+                      </Box>
+                      <Box>
+                        <Heading level={2} size="md">
+                          Olá, {facade.consumer?.name}
+                        </Heading>
+                        <Text color="muted">
+                          Sua conta foi reconhecida e seus dados foram
+                          recuperados.
+                        </Text>
+                      </Box>
+                    </Box>
+                  ) : (
+                    <GuestContactFields checkout={facade} />
+                  ))}
+                {step === 1 && (
                   <Box className={styles.stepFields}>
                     <ChannelFields checkout={facade} />
                     {isDelivery && <DeliveryAddressFields checkout={facade} />}
                   </Box>
                 )}
-                {step === 1 && <GuestContactFields checkout={facade} />}
                 {step === 2 && (
                   <Box className={styles.stepFields}>
                     <PaymentMethodFields checkout={facade} />
@@ -182,7 +203,9 @@ export const CheckoutForm = ({
                     </Box>
                     <dl className={styles.reviewList}>
                       <Box className={styles.reviewRow}>
-                        <dt><Text color="muted">Recebimento</Text></dt>
+                        <dt>
+                          <Text color="muted">Recebimento</Text>
+                        </dt>
                         <dd>
                           <Text weight="semibold">
                             {values.channel === 'DELIVERY'
@@ -192,15 +215,21 @@ export const CheckoutForm = ({
                         </dd>
                       </Box>
                       <Box className={styles.reviewRow}>
-                        <dt><Text color="muted">Contato</Text></dt>
+                        <dt>
+                          <Text color="muted">Contato</Text>
+                        </dt>
                         <dd>
                           <Text weight="semibold">
-                            {values.guestName} · {values.guestPhone}
+                            {facade.consumer?.name ?? values.guestName}
+                            {' · '}
+                            {facade.consumer?.phone ?? values.guestPhone}
                           </Text>
                         </dd>
                       </Box>
                       <Box className={styles.reviewRow}>
-                        <dt><Text color="muted">Pagamento</Text></dt>
+                        <dt>
+                          <Text color="muted">Pagamento</Text>
+                        </dt>
                         <dd>
                           <Text weight="semibold">
                             {PAYMENT_METHOD_LABEL[values.paymentMethod]}

@@ -12,7 +12,7 @@ import { PoweredBy } from '@shared/components/PoweredBy/PoweredBy'
 import type { LastOrder } from '@shared/lib/last-order/last-order'
 import { readLastOrder } from '@shared/lib/last-order/last-order'
 import { clockLabel } from '@utils/clock'
-import { stageNote } from '@utils/order-journey'
+import { isTerminal, stageNote } from '@utils/order-journey'
 import { useStoreTracking } from '@hooks/useStoreTracking/useStoreTracking'
 
 import styles from './AccountChats.module.css'
@@ -32,19 +32,19 @@ const readStoreOrder = (slug: string | undefined): LastOrder | null => {
   return order
 }
 
-const NotificationsEmpty = ({ backHref }: { backHref: string }) => (
+const OrderEmpty = ({ backHref }: { backHref: string }) => (
   <Box className={styles.page}>
     <Box className={styles.shell}>
-      <NotificationsHeader backHref={backHref} />
+      <OrderHeader backHref={backHref} />
       <Box className={styles.emptyShell}>
         <Box className={styles.emptyIcon} aria-hidden="true">
-          <Icon name="bell" size="lg" />
+          <Icon name="receipt" size="lg" />
         </Box>
         <Heading level={2} className={styles.emptyTitle}>
-          Você está em dia
+          Nenhum pedido recente
         </Heading>
         <Text as="p" className={styles.emptyCopy}>
-          Quando você fizer um pedido, as atualizações da loja aparecem aqui.
+          Seu próximo pedido e as atualizações da loja vão aparecer aqui.
         </Text>
         <Link to={backHref} className={styles.emptyAction}>
           Ver cardápio
@@ -59,12 +59,8 @@ const NotificationsEmpty = ({ backHref }: { backHref: string }) => (
   </Box>
 )
 
-const NotificationsSkeleton = () => (
-  <Box
-    className={styles.page}
-    aria-busy="true"
-    aria-label="Carregando notificações"
-  >
+const OrderSkeleton = () => (
+  <Box className={styles.page} aria-busy="true" aria-label="Carregando pedido">
     <Box className={styles.shell}>
       <Box as="header" direction="row" align="center" className={styles.header}>
         <Box className={styles.skeletonBack} />
@@ -86,21 +82,17 @@ const NotificationsSkeleton = () => (
   </Box>
 )
 
-const NotificationsHeader = ({
-  backHref,
-}: {
-  backHref: string
-}) => (
+const OrderHeader = ({ backHref }: { backHref: string }) => (
   <Box as="header" direction="row" align="center" className={styles.header}>
     <Link to={backHref} className={styles.back} aria-label="Voltar para a loja">
       <Icon name="arrow-left" />
     </Link>
     <Box>
       <Heading level={1} className={styles.title}>
-        Notificações
+        Seu pedido
       </Heading>
       <Text as="p" className={styles.subtitle}>
-        Acompanhe tudo que acontece com seu pedido
+        Acompanhe o andamento e consulte o histórico
       </Text>
     </Box>
   </Box>
@@ -140,10 +132,15 @@ const OrderNotifications = ({
   const { stageLabel } = useStoreTracking()
   const events = notificationEvents(order)
   const currentTitle = stageLabel(order.status)
+  const resolved = isTerminal(order.status)
 
   return (
     <main className={styles.content}>
-      <Box as="section" className={styles.activeOrder} aria-labelledby="active-order-heading">
+      <Box
+        as="section"
+        className={`${styles.activeOrder} ${resolved ? styles.resolvedOrder : ''}`}
+        aria-labelledby="order-summary-heading"
+      >
         <Box direction="row" align="start" className={styles.activeOrderMain}>
           <Box className={styles.activeOrderIcon} aria-hidden="true">
             <Icon name={notificationIcon(order.status)} size="md" />
@@ -154,7 +151,7 @@ const OrderNotifications = ({
             </Text>
             <Heading
               level={2}
-              id="active-order-heading"
+              id="order-summary-heading"
               className={styles.activeOrderTitle}
             >
               {currentTitle}
@@ -165,17 +162,23 @@ const OrderNotifications = ({
           </Box>
         </Box>
         <Link to={trackingHref} className={styles.trackLink}>
-          Acompanhar pedido
+          {resolved ? 'Ver detalhes do pedido' : 'Acompanhar pedido'}
           <Icon name="arrow-right" size="sm" />
         </Link>
       </Box>
 
-      <Box as="section" className={styles.feed} aria-labelledby="updates-heading">
+      <Box
+        as="section"
+        className={styles.feed}
+        aria-labelledby="updates-heading"
+      >
         <Heading level={2} id="updates-heading" className={styles.feedTitle}>
-          Atualizações
+          Histórico do pedido
         </Heading>
         <Text as="p" className={styles.feedDescription}>
-          Tudo que mudou no seu pedido, em ordem de chegada.
+          {resolved
+            ? 'O registro completo deste pedido.'
+            : 'As mudanças mais recentes aparecem primeiro.'}
         </Text>
 
         <Box as="ol" className={styles.list}>
@@ -199,35 +202,37 @@ const OrderNotifications = ({
               </Box>
             </Box>
           )}
-        {events.map((event, index) => (
-          <Box
-            as="li"
-            direction="row"
-            align="start"
-            key={`${event.status}-${event.at}`}
-            className={styles.item}
-          >
-            <Box className={styles.icon} aria-hidden="true">
-              <Icon name={notificationIcon(event.status)} size="sm" />
+          {events.map((event, index) => (
+            <Box
+              as="li"
+              direction="row"
+              align="start"
+              key={`${event.status}-${event.at}`}
+              className={styles.item}
+            >
+              <Box className={styles.icon} aria-hidden="true">
+                <Icon name={notificationIcon(event.status)} size="sm" />
+              </Box>
+              <Box className={styles.copy}>
+                <Text as="p" className={styles.itemTitle}>
+                  {stageLabel(event.status)}
+                </Text>
+                <Text as="p" className={styles.itemBody}>
+                  {stageNote(order, event.status)}
+                </Text>
+                <time
+                  className={styles.time}
+                  dateTime={event.at}
+                  title={notificationDate.format(new Date(event.at))}
+                >
+                  {clockLabel(event.at)}
+                </time>
+              </Box>
+              {index === 0 && !resolved && (
+                <Box className={styles.currentDot} aria-hidden="true" />
+              )}
             </Box>
-            <Box className={styles.copy}>
-              <Text as="p" className={styles.itemTitle}>
-                {stageLabel(event.status)}
-              </Text>
-              <Text as="p" className={styles.itemBody}>
-                {stageNote(order, event.status)}
-              </Text>
-              <time
-                className={styles.time}
-                dateTime={event.at}
-                title={notificationDate.format(new Date(event.at))}
-              >
-                {clockLabel(event.at)}
-              </time>
-            </Box>
-            {index === 0 && <Box className={styles.currentDot} aria-hidden="true" />}
-          </Box>
-        ))}
+          ))}
         </Box>
       </Box>
     </main>
@@ -247,9 +252,9 @@ export const AccountChats = () => {
     isError,
   } = useGuestOrderStatus(lastOrder?.orderId, lastOrder?.token)
 
-  if (!lastOrder) return <NotificationsEmpty backHref={backHref} />
+  if (!lastOrder) return <OrderEmpty backHref={backHref} />
 
-  if (isPending) return <NotificationsSkeleton />
+  if (isPending) return <OrderSkeleton />
 
   if (isError || !order) {
     return <OrderNotFound backHref={backHref} reason="invalid-link" />
@@ -258,11 +263,8 @@ export const AccountChats = () => {
   return (
     <Box className={styles.page}>
       <Box className={styles.shell}>
-        <NotificationsHeader backHref={backHref} />
-        <OrderNotifications
-          order={order}
-          trackingHref={trackingHref}
-        />
+        <OrderHeader backHref={backHref} />
+        <OrderNotifications order={order} trackingHref={trackingHref} />
       </Box>
 
       <Box className={styles.footer}>

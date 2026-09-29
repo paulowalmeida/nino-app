@@ -1,4 +1,5 @@
 import { useLayoutEffect } from 'react'
+import { useLocation } from 'react-router'
 
 import { SignInBrandStage } from '@pages/sign-in/components/SignInBrandStage/SignInBrandStage'
 import { SignInCodeForm } from '@pages/sign-in/components/SignInCodeForm/SignInCodeForm'
@@ -12,11 +13,19 @@ import { Box } from '@nino/ds/components/Box'
 import styles from './SignIn.module.css'
 
 export const SignIn = () => {
-  const { store, step, reset } = useSignInFacade()
+  const { state } = useLocation()
+  const { store, step, reset, setChannel, setPhone, goToIdentify } =
+    useSignInFacade()
 
   useLayoutEffect(() => {
     reset()
-  }, [reset])
+    const phone = (state as { phone?: unknown } | null)?.phone
+    if (typeof phone !== 'string' || !phone) return
+
+    setChannel('phone')
+    setPhone(phone)
+    goToIdentify()
+  }, [goToIdentify, reset, setChannel, setPhone, state])
 
   return (
     <Box

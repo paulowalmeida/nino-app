@@ -70,15 +70,17 @@ describe('CheckoutForm', () => {
     return trigger
   }
 
-  it('starts at the receiving step', () => {
+  it('starts with contact so returning customers can recover their data', () => {
     setupFacade()
 
     render(<CheckoutForm {...checkoutFormMock} />)
 
     expect(screen.getByText('header')).toBeInTheDocument()
     expect(screen.getByText('receipt')).toBeInTheDocument()
-    expect(screen.getByText('channel')).toBeInTheDocument()
-    expect(screen.getByRole('button', { name: 'Continuar' })).toBeInTheDocument()
+    expect(screen.getByText('contact')).toBeInTheDocument()
+    expect(
+      screen.getByRole('button', { name: 'Continuar' })
+    ).toBeInTheDocument()
   })
 
   it('validates and advances one step at a time', async () => {
@@ -88,6 +90,6 @@ describe('CheckoutForm', () => {
     fireEvent.click(screen.getByRole('button', { name: 'Continuar' }))
 
     await waitFor(() => expect(trigger).toHaveBeenCalled())
-    expect(screen.getByText('contact')).toBeInTheDocument()
+    expect(screen.getByText('channel')).toBeInTheDocument()
   })
 })

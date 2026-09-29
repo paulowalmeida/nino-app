@@ -43,10 +43,13 @@ export const useSignInMutations = (
   const requestLink = useRequestPhoneLink()
   const verifyLink = useVerifyPhoneLink()
   const completeProfile = useCompleteProfile()
+  const returnTo = searchParams.get('returnTo')
+  const destination =
+    returnTo?.startsWith('/') && !returnTo.startsWith('//') ? returnTo : home
 
   const goHome = useCallback(
-    () => void navigate(home, { replace: true }),
-    [navigate, home]
+    () => void navigate(destination, { replace: true }),
+    [destination, navigate]
   )
 
   const handleLoggedIn = useCallback(

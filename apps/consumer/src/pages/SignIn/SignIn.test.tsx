@@ -51,6 +51,29 @@ describe('SignIn', () => {
     expect(screen.queryByText('Digite o código')).not.toBeInTheDocument()
   })
 
+  it('opens phone identification with the number carried from checkout', () => {
+    const reset = vi.fn()
+    const setChannel = vi.fn()
+    const setPhone = vi.fn()
+    const goToIdentify = vi.fn()
+    facadeWith({ reset, setChannel, setPhone, goToIdentify })
+
+    render(
+      <MemoryRouter
+        initialEntries={[
+          { pathname: '/entrar', state: { phone: '(91) 99999-9999' } },
+        ]}
+      >
+        <SignIn />
+      </MemoryRouter>
+    )
+
+    expect(reset).toHaveBeenCalled()
+    expect(setChannel).toHaveBeenCalledWith('phone')
+    expect(setPhone).toHaveBeenCalledWith('(91) 99999-9999')
+    expect(goToIdentify).toHaveBeenCalled()
+  })
+
   it('renders the code step once it is reached', () => {
     facadeWith({ step: 'code' })
 

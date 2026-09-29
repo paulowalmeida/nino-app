@@ -90,6 +90,12 @@ export const useCheckoutWorkflow = ({
   }, [addresses, deliveryAddressId, isAuthenticated, setValue])
 
   useEffect(() => {
+    if (!consumer) return
+    setValue('guestName', consumer.name)
+    setValue('guestPhone', consumer.phone ?? '')
+  }, [consumer, setValue])
+
+  useEffect(() => {
     setValue('deliveryZoneId', quote?.id)
   }, [quote?.id, setValue])
 

@@ -123,6 +123,38 @@ describe('useSignInMutations', () => {
     })
   })
 
+  it('returns a completed account to checkout when it came from checkout', () => {
+    searchParams = new URLSearchParams('returnTo=%2Fpadaria-boa%2Fcheckout')
+    const { result } = renderMutations()
+
+    result.current.verifyCode(
+      useSignInMutationsMock.credentials,
+      useSignInMutationsMock.code
+    )
+    const [, options] = verifyMutate.mock.calls[0]
+    options.onSuccess(useSignInMutationsMock.completedConsumer)
+
+    expect(navigate).toHaveBeenCalledWith('/padaria-boa/checkout', {
+      replace: true,
+    })
+  })
+
+  it('rejects an external return destination', () => {
+    searchParams = new URLSearchParams('returnTo=https%3A%2F%2Fevil.example')
+    const { result } = renderMutations()
+
+    result.current.verifyCode(
+      useSignInMutationsMock.credentials,
+      useSignInMutationsMock.code
+    )
+    const [, options] = verifyMutate.mock.calls[0]
+    options.onSuccess(useSignInMutationsMock.completedConsumer)
+
+    expect(navigate).toHaveBeenCalledWith(useSignInMutationsMock.home, {
+      replace: true,
+    })
+  })
+
   it('sends an incomplete account to complete the profile instead', () => {
     // Arrange
     const goToCompleteProfile = vi.fn()
