@@ -20,7 +20,7 @@
 }
 
 .chips {
-  @apply flex w-max min-w-full justify-center gap-2;
+  @apply flex w-max min-w-full justify-start gap-2;
 }
 
 /*

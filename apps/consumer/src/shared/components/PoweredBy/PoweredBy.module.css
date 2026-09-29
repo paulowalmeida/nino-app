@@ -5,7 +5,7 @@
 }
 
 .compact {
-  @apply mt-0 py-4;
+  @apply mt-0 border-t-0 py-4;
 }
 
 .link {
