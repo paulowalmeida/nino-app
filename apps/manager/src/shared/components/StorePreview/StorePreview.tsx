@@ -26,11 +26,11 @@ export const StorePreview = ({
         </Text>
       </Box>
 
-      <Box className={styles.text}>
+      <Box className={styles.storePreviewText}>
         <Text as="span" className={styles.name}>
           {typed || placeholder}
         </Text>
-        <Text as="span" className={styles.link}>
+        <Text as="span" className={styles.storePreviewLink}>
           {typed ? toStoreSlug(typed) : placeholderSlug}.dev.nino.delivery
         </Text>
       </Box>

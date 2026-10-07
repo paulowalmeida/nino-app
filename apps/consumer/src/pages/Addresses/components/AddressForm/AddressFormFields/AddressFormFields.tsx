@@ -47,7 +47,7 @@ export const AddressFormFields = ({
         >
           <Input
             autoComplete="address-line1"
-            className={styles.input}
+            className={styles.addressFormFieldsInput}
             {...register('street', { validate: required })}
           />
         </FormField>
@@ -58,7 +58,7 @@ export const AddressFormFields = ({
         >
           <Input
             inputMode="numeric"
-            className={styles.input}
+            className={styles.addressFormFieldsInput}
             {...register('number', { validate: required })}
           />
         </FormField>
@@ -77,7 +77,7 @@ export const AddressFormFields = ({
         <Input
           placeholder="Apto, bloco ou ponto de referência"
           autoComplete="address-line2"
-          className={styles.input}
+          className={styles.addressFormFieldsInput}
           {...register('complement')}
         />
       </FormField>
@@ -88,7 +88,7 @@ export const AddressFormFields = ({
       >
         <Input
           autoComplete="address-level3"
-          className={styles.input}
+          className={styles.addressFormFieldsInput}
           {...register('neighborhood', { validate: required })}
         />
       </FormField>
@@ -100,7 +100,7 @@ export const AddressFormFields = ({
         >
           <Input
             autoComplete="address-level2"
-            className={styles.input}
+            className={styles.addressFormFieldsInput}
             {...register('city', { validate: required })}
           />
         </FormField>
@@ -113,7 +113,7 @@ export const AddressFormFields = ({
             {...stateField}
             maxLength={2}
             autoComplete="address-level1"
-            className={styles.input}
+            className={styles.addressFormFieldsInput}
             onChange={(event) => {
               event.target.value = event.target.value.toUpperCase()
               void stateField.onChange(event)

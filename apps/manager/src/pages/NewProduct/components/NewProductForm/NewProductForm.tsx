@@ -55,7 +55,7 @@ export const NewProductForm = () => {
   })
 
   return (
-    <Box as="form" onSubmit={onSubmit} className={styles.form}>
+    <Box as="form" onSubmit={onSubmit} className={styles.newProductForm}>
       <Box
         className={`${motion.deal} ${styles.photoCol}`}
         style={riseDelay(40)}
@@ -68,8 +68,8 @@ export const NewProductForm = () => {
         />
       </Box>
 
-      <Box className={styles.fields}>
-        <Box className={`${motion.deal} ${styles.field}`} style={riseDelay(80)}>
+      <Box className={styles.newProductFormFields}>
+        <Box className={`${motion.deal} ${styles.newProductFormField}`} style={riseDelay(80)}>
           <FormField label="Nome" error={errors.name?.message}>
             <Input
               autoFocus
@@ -80,7 +80,7 @@ export const NewProductForm = () => {
         </Box>
 
         <Box
-          className={`${motion.deal} ${styles.field}`}
+          className={`${motion.deal} ${styles.newProductFormField}`}
           style={riseDelay(140)}
         >
           <FormField
@@ -101,7 +101,7 @@ export const NewProductForm = () => {
           </FormField>
         </Box>
 
-        <Box className={`${motion.deal} ${styles.row}`} style={riseDelay(200)}>
+        <Box className={`${motion.deal} ${styles.newProductFormRow}`} style={riseDelay(200)}>
           <FormField label="Preço" error={errors.price?.message}>
             <Input
               inputMode="decimal"
@@ -180,7 +180,7 @@ export const NewProductForm = () => {
       </Box>
 
       <Box
-        className={`${motion.deal} ${styles.actions}`}
+        className={`${motion.deal} ${styles.newProductFormActions}`}
         style={riseDelay(360)}
       >
         <Button type="button" variant="ghost" onClick={cancel}>

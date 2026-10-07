@@ -1,10 +1,10 @@
 @reference "@nino/ds/globals.css";
 
-.title {
+.deliveryMapSkeletonTitle {
   @apply h-4 w-36 rounded-2;
 }
 
-.status {
+.deliveryMapSkeletonStatus {
   @apply h-3 w-44 rounded-2;
 }
 

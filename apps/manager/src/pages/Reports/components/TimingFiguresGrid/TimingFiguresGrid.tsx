@@ -30,7 +30,7 @@ export const TimingFiguresGrid = ({
         >
           <Text
             as="span"
-            className={noSample ? styles.valueEmpty : styles.value}
+            className={noSample ? styles.valueEmpty : styles.timingFiguresGridValue}
           >
             {isPending || !timing ? (
               <Skeleton className={styles.ghostCount} />
@@ -42,7 +42,7 @@ export const TimingFiguresGrid = ({
               </>
             )}
           </Text>
-          <Text as="span" className={styles.label}>
+          <Text as="span" className={styles.timingFiguresGridLabel}>
             {label}
           </Text>
         </Box>

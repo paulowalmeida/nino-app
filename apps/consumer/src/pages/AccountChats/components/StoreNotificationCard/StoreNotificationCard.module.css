@@ -1,14 +1,14 @@
 @reference "@nino/ds/globals.css";
 
-.card {
+.storeNotificationCard {
   @apply gap-4 rounded-4 border border-border bg-surface-raised p-4 sm:p-5;
 }
 
-.main {
+.storeNotificationCardMain {
   @apply gap-3;
 }
 
-.icon {
+.storeNotificationCardIcon {
   @apply flex h-11 w-11 shrink-0 items-center justify-center rounded-full;
   @apply bg-brand-soft text-brand-strong;
 }
@@ -17,7 +17,7 @@
   @apply min-w-0 flex-1;
 }
 
-.meta {
+.storeNotificationCardMeta {
   @apply flex-wrap gap-2;
 }
 
@@ -26,11 +26,11 @@
   @apply text-xs font-bold text-brand-strong;
 }
 
-.title {
+.storeNotificationCardTitle {
   @apply mt-1 font-display text-lg font-extrabold leading-tight text-fg-muted;
 }
 
-.body {
+.storeNotificationCardBody {
   @apply mt-1.5 text-sm leading-relaxed text-fg-subtle;
 }
 

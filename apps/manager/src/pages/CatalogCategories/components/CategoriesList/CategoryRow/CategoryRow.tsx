@@ -60,7 +60,7 @@ export const CategoryRow = ({
       dragControls={dragControls}
       onAnimationEnd={handleEntranceEnd}
       transition={REORDER_TRANSITION}
-      className={mergeClasses(styles.row, isEntering && motion.deal)}
+      className={mergeClasses(styles.categoryRow, isEntering && motion.deal)}
       style={isEntering ? riseDelay(index * 35 + 60) : {}}
     >
       <TableCell className={styles.dragCell}>

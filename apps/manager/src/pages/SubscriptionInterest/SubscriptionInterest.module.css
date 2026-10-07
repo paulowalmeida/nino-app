@@ -1,6 +1,6 @@
 @reference "@nino/ds/globals.css";
 
-.page {
+.subscriptionInterestPage {
   @apply relative w-full max-w-3xl p-4 lg:p-10;
 }
 

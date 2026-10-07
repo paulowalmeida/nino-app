@@ -61,7 +61,7 @@ export const CompanyCard = ({
   if (isPending) return <CompanyCardSkeleton />
 
   return (
-    <Box as="section" className={local.panel}>
+    <Box as="section" className={local.companyCardPanel}>
       <Box as="header" className={`${motion.unroll} ${local.head}`}>
         <Heading level={2} size="xl">
           A empresa
@@ -81,7 +81,7 @@ export const CompanyCard = ({
         </Text>
       </Box>
 
-      <Box className={local.fields}>
+      <Box className={local.companyCardFields}>
         <FormField label="Nome" className={local.wide}>
           <Input
             value={draft.name}
@@ -111,9 +111,9 @@ export const CompanyCard = ({
         <AddressFields value={draft} onChange={change} />
       </Box>
 
-      <Box className={local.actions}>
+      <Box className={local.companyCardActions}>
         {!isDirty && (
-          <Text className={local.status}>
+          <Text className={local.companyCardStatus}>
             Nada mudou desde o último salvamento.
           </Text>
         )}

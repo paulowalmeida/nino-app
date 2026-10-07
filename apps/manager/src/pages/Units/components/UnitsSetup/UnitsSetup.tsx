@@ -20,7 +20,7 @@ export const UnitsSetup = () => {
       <Box className={styles.preview}>
         <StorePreview name={storeName} />
       </Box>
-      <Box className={styles.form}>
+      <Box className={styles.unitsSetupForm}>
         <UnitsStoreForm onChange={handleFormChange} />
       </Box>
     </Box>

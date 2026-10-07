@@ -18,7 +18,7 @@ export const NewOrderTicketSummary = () => {
         </Box>
       )}
 
-      <Box direction="row" justify="between" className={styles.total}>
+      <Box direction="row" justify="between" className={styles.newOrderTicketSummaryTotal}>
         <Text as="span">Total</Text>
         <Text as="span">{brl(draft.subtotal + availability.fee)}</Text>
       </Box>

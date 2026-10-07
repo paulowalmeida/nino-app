@@ -21,7 +21,7 @@ export const Reports = () => {
   const showReport = !custom.awaitingDates
 
   return (
-    <Box className={styles.page} direction="column">
+    <Box className={styles.reportsPage} direction="column">
       <Header mb={{ mobile: 4, desktop: 6 }} className={motion.deal} title="Relatório de venda" accent="venda" description="O que a loja vendeu no período — só pedidos concluídos entram na conta." />
       <ReportsPeriodControls period={period} onPeriodChange={reports.setPeriod} custom={custom} />
       <SalesFiguresGrid report={report.report} isPending={report.isPending} />

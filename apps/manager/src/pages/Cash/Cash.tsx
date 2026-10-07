@@ -20,8 +20,8 @@ export const Cash = () => {
 
   if (isSessionError) {
     return (
-      <Box className={styles.page}>
-        <Box className={styles.controls}>
+      <Box className={styles.cashPage}>
+        <Box className={styles.cashControls}>
           <Alert variant="error">
             Não deu para carregar o caixa. Tente de novo em instantes.
           </Alert>
@@ -31,8 +31,8 @@ export const Cash = () => {
   }
 
   return (
-    <Box direction="column" className={styles.page}>
-      <Box className={styles.controls}>
+    <Box direction="column" className={styles.cashPage}>
+      <Box className={styles.cashControls}>
         <CashDateSelector />
 
         {!session && isToday && <CashOpen />}

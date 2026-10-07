@@ -1,13 +1,13 @@
 @reference '../../theme.css';
-.section {
+.howItWorksSection {
   @apply relative overflow-hidden bg-surface-3 py-[6.5rem] px-10;
 }
 
-.inner {
+.howItWorksInner {
   @apply max-w-[1040px] mx-auto;
 }
 
-.header {
+.howItWorksHeader {
   @apply text-center max-w-[540px] mx-auto mb-16;
 }
 
@@ -23,13 +23,13 @@
   @apply inline-box w-[22px] h-0.5 bg-brand rounded-1;
 }
 
-.title {
+.howItWorksTitle {
   @apply [font-family:var(--font-display)] font-extrabold;
   @apply text-[clamp(2rem,3.6vw,2.8rem)] leading-display;
   @apply tracking-[-0.02em] text-fg-strong;
 }
 
-.subtitle {
+.howItWorksSubtitle {
   @apply mt-[0.9rem] text-base text-fg-muted;
 }
 
@@ -48,7 +48,7 @@
 }
 
 @media (max-width: 820px) {
-  .section {
+  .howItWorksSection {
     @apply py-16 px-5;
   }
 

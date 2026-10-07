@@ -14,7 +14,7 @@ export const Consumers = () => {
   const { rows, search, isPending, isError } = useConsumersFacade()
 
   return (
-    <Box className={styles.page}>
+    <Box className={styles.consumersPage}>
       <ConsumersHeader />
 
       {isPending && <ConsumersListSkeleton />}
@@ -26,7 +26,7 @@ export const Consumers = () => {
       )}
 
       {!isPending && !isError && rows.length === 0 && (
-        <EmptyState className={`${motion.unroll} ${styles.empty}`}>
+        <EmptyState className={`${motion.unroll} ${styles.consumersEmpty}`}>
           {consumersEmptyMessage(search)}
         </EmptyState>
       )}

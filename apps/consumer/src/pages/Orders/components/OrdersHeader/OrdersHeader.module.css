@@ -1,5 +1,5 @@
 @reference "@nino/ds/globals.css";
 
-.note {
+.ordersHeaderNote {
   @apply mt-1 text-sm leading-snug text-fg-muted;
 }

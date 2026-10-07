@@ -22,7 +22,7 @@ export const NewOrderTicketFields = () => {
   return (
     <>
       <Box direction="column" gap={1.5}>
-        <Text as="span" className={styles.label} id="channel-label">
+        <Text as="span" className={styles.newOrderTicketFieldsLabel} id="channel-label">
           Como sai
         </Text>
         <Select
@@ -43,8 +43,8 @@ export const NewOrderTicketFields = () => {
         onChange={draft.setRecipient}
       />
 
-      <Box className={styles.field}>
-        <Text as="span" className={styles.label} id="payment-label">
+      <Box className={styles.newOrderTicketFieldsField}>
+        <Text as="span" className={styles.newOrderTicketFieldsLabel} id="payment-label">
           Pagamento
         </Text>
         <Select
@@ -60,8 +60,8 @@ export const NewOrderTicketFields = () => {
         />
       </Box>
 
-      <Box className={styles.field}>
-        <Label className={styles.label} htmlFor="notes">
+      <Box className={styles.newOrderTicketFieldsField}>
+        <Label className={styles.newOrderTicketFieldsLabel} htmlFor="notes">
           Observação
         </Label>
         <Textarea

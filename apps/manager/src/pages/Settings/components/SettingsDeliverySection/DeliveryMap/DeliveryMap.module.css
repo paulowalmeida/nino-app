@@ -1,10 +1,10 @@
 @reference "@nino/ds/globals.css";
 
-.wrapper {
+.deliveryMapWrapper {
   @apply flex min-w-0 flex-col gap-2;
 }
 
-.header {
+.deliveryMapHeader {
   @apply flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1;
 }
 
@@ -17,7 +17,8 @@
 }
 
 /* WHY: Leaflet escreve cor como atributo de apresentação no SVG, e atributo
-   não resolve var(); por isso o desenho das faixas vive no CSS. */
+ * não resolve var(); por isso o desenho das faixas vive no CSS.
+ */
 .unitDot {
   stroke: var(--color-fg-inverse);
   fill: var(--color-brand);

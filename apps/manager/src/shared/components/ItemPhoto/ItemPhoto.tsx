@@ -139,7 +139,7 @@ export const ItemPhoto = ({
             className={styles.photo}
           />
         ) : (
-          <Box className={styles.empty}>
+          <Box className={styles.itemPhotoEmpty}>
             <ItemThumb name={name} fallbackUrl={fallbackUrl} />
             <Text as="p" className={styles.emptyTitle}>
               Arraste uma foto aqui
@@ -155,7 +155,7 @@ export const ItemPhoto = ({
       <Box gap={2} align="center" wrap>
         <Label
           htmlFor={inputId}
-          className={`${motion.press} ${styles.trigger}`}
+          className={`${motion.press} ${styles.itemPhotoTrigger}`}
         >
           {stagedUrl || cover ? 'Trocar foto' : 'Escolher arquivo'}
           <Input

@@ -1,11 +1,11 @@
 @reference "@nino/ds/globals.css";
 
-.title {
+.editEmailModalTitle {
   @apply font-display text-lg font-extrabold tracking-[-0.01em];
   @apply text-fg-strong;
 }
 
-.form {
+.editEmailModalForm {
   @apply flex flex-col gap-3;
 }
 

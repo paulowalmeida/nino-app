@@ -26,7 +26,7 @@ export const StepActions = ({
   onBack,
   onContinue,
 }: StepActionsProps) => (
-  <Box className={styles.footer}>
+  <Box className={styles.stepActionsFooter}>
     <Box direction="column" className={styles.totals}>
       {deliveryFee > 0 && (
         <>
@@ -57,7 +57,7 @@ export const StepActions = ({
         </Text>
       </Box>
     </Box>
-    <Box direction="row" align="center" gap={2} className={styles.actions}>
+    <Box direction="row" align="center" gap={2} className={styles.stepActions}>
       <Text as="span" size="xs" color="faint" className={styles.keys}>
         <Box className={styles.key}>
           <kbd>Enter</kbd> continuar

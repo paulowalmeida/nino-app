@@ -38,7 +38,7 @@ export const CollaboratorRoleAccess = ({
       size="sm"
       color="faintest"
       id={ROLE_LABEL_ID}
-      className={styles.title}
+      className={styles.collaboratorRoleAccessTitle}
     >
       Até onde vai nesta loja
     </Heading>

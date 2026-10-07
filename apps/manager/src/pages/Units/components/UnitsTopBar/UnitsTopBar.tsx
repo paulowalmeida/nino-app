@@ -11,7 +11,7 @@ export const UnitsTopBar = () => {
   return (
     <Box as="header" className={styles.bar}>
       <NinoLogo size="sm" />
-      <Button variant="ghost" className={styles.action} onClick={() => void logout()}>
+      <Button variant="ghost" className={styles.unitsTopBarAction} onClick={() => void logout()}>
         Sair
       </Button>
     </Box>

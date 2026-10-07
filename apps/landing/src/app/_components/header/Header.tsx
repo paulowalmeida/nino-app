@@ -27,9 +27,9 @@ export function Header() {
 
   return (
     <>
-      <header className={`${styles.header} ${scrolled ? styles.scrolled : ""}`}>
-        <div className={styles.inner}>
-          <a href="#" className={styles.brand}>
+      <header className={`${styles.landingHeader} ${scrolled ? styles.scrolled : ""}`}>
+        <div className={styles.headerInner}>
+          <a href="#" className={styles.headerBrand}>
             <Image
               src="/novo-nino.svg"
               alt=""
@@ -43,7 +43,7 @@ export function Header() {
             </span>
           </a>
 
-          <nav className={styles.nav}>
+          <nav className={styles.headerNav}>
             {navLinks.map((link) => (
               <a key={link.href} href={link.href} className={styles.navLink}>
                 {link.label}

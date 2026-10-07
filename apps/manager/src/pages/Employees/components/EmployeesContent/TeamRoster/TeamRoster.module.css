@@ -1,14 +1,11 @@
 @reference "@nino/ds/globals.css";
 
-/* no card: these are two groups of the same team, not two loose objects on
-   the screen — what separates one from the other is the title and the
-   spacing */
+
 .roster {
   @apply min-w-0;
 }
 
-/* the search heads the group it filters: title and hint hold the left, the
-   field takes the right and drops below them when the row runs out of room */
+
 .head {
   @apply mb-3 flex flex-col gap-3;
   @apply sm:flex-row sm:items-end sm:justify-between sm:gap-4;
@@ -18,11 +15,11 @@
   @apply min-w-0;
 }
 
-.search {
+.teamRosterSearch {
   @apply h-11 w-full shrink-0 sm:w-56;
 }
 
-.title {
+.teamRosterTitle {
   @apply font-display text-lg font-extrabold tracking-[-0.01em];
   @apply text-fg-strong;
 }
@@ -31,8 +28,10 @@
   @apply mt-0.5 text-sm text-fg-faint;
 }
 
-/* CONSTRAINT: Table já envolve a <table> no seu próprio scroller, e o cabeçalho
-   sticky só gruda se a rolagem vertical acontecer nesse mesmo elemento. */
+/* CONSTRAINT: Table já envolve a <table> no seu próprio scroller, e o
+ * cabeçalho sticky só gruda se a rolagem vertical acontecer nesse mesmo
+ * elemento.
+ */
 .tableShell > div {
   max-height: 22rem;
   overflow-y: auto;
@@ -65,7 +64,7 @@
   @apply text-right;
 }
 
-/* avatar, nome e e-mail truncam antes de disputar espaço com papel e menu */
+
 .identityCell {
   @apply flex min-w-0 items-center gap-3;
 }
@@ -74,8 +73,7 @@
   @apply min-w-0 flex-1;
 }
 
-/* identity is a link: avatar, name and email truncate before competing for
-   space with the badge and the menu, which never shrink */
+
 .identity {
   @apply flex min-w-0 items-center gap-3 rounded-2;
   @apply transition-colors duration-150 hover:bg-surface-mute;
@@ -100,22 +98,20 @@
   @apply truncate whitespace-nowrap text-xs text-fg-faint;
 }
 
-/* an account that never signed in is what an audit looks for — it doesn't
-   hide */
+
 .neverSeen {
   @apply truncate whitespace-nowrap text-xs font-semibold text-fg-muted;
 }
 
-/* locked or view-only roles: a plain label, nothing to click */
+
 .roleBadge {
   @apply shrink-0;
 }
 
-/*
- * Same pill as `.roleBadge`, rebuilt on a `Button` so it can open the role
- * menu — the chevron is the same "opens a list of values" cue `Select`
- * uses elsewhere in the DS, borrowed here because changing a role is
- * exactly that.
+/* WHY: Same pill as `.roleBadge`, rebuilt on a `Button` so it can open the
+ * role menu — the chevron is the same "opens a list of values" cue `Select`
+ * uses elsewhere in the DS, borrowed here because changing a role is exactly
+ * that.
  */
 .roleTrigger {
   @apply inline-flex min-h-11 shrink-0 items-center gap-1 rounded-1;
@@ -131,12 +127,11 @@
   @apply h-3 w-3 shrink-0 text-fg-faint;
 }
 
-/*
- * One kebab per person for what's left: editing e-mail and removing from
+/* WHY: One kebab per person for what's left: editing e-mail and removing from
  * the store are the same question ("what to do with this person"), and a
- * kebab button fits any screen width without needing a different layout
- * per breakpoint. 40px touch target, circle instead of rectangle — same
- * visual weight as the avatar on the other side of the row.
+ * kebab button fits any screen width without needing a different layout per
+ * breakpoint. 40px touch target, circle instead of rectangle — same visual
+ * weight as the avatar on the other side of the row.
  */
 .kebab {
   @apply flex h-10 w-10 shrink-0 items-center justify-center rounded-full;
@@ -152,9 +147,8 @@
   @apply min-w-56;
 }
 
-/*
- * Skeleton: the measurements match what will occupy each spot. The initials
- * disc is the DS's `md` Avatar (40px), and the role is a Badge — 4px
+/* WHY: Skeleton: the measurements match what will occupy each spot. The
+ * initials disc is the DS's `md` Avatar (40px), and the role is a Badge — 4px
  * radius, not a pill.
  */
 .ghostMark {

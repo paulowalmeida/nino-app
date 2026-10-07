@@ -29,7 +29,7 @@ export const SignIn = () => {
 
   return (
     <Box
-      className={styles.page}
+      className={styles.signInPage}
       style={
         store?.primaryColor
           ? ({ '--store-tint': store.primaryColor } as React.CSSProperties)
@@ -38,8 +38,8 @@ export const SignIn = () => {
     >
       <SignInBrandStage />
 
-      <Box className={styles.content}>
-        <Box className={styles.shell}>
+      <Box className={styles.signInContent}>
+        <Box className={styles.signInShell}>
           {step === 'method' && <SignInMethods />}
           {step === 'identify' && <SignInIdentifyForm />}
           {step === 'code' && <SignInCodeForm />}

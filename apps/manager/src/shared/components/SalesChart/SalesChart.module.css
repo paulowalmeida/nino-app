@@ -1,19 +1,18 @@
 @reference "@nino/ds/globals.css";
 
-/* `figure` zeroes out the margin the user agent adds and lets the chart
-   fill the whole card — the frame belongs to Card, not here. */
+
 .figure {
   @apply m-0 w-full min-w-0;
 }
 
-/* `overflow-hidden` closes the loop: without it an SVG wider than the card
-   would feed back into the measurement and never shrink. */
+/* WHY: `overflow-hidden` closes the loop: without it an SVG wider than the
+ * card would feed back into the measurement and never shrink.
+ */
 .canvas {
   @apply relative w-full min-w-0 overflow-hidden;
 }
 
-/* The gesture over the chart is reading, not scrolling: without this the
-   finger drags the page and the point never gets picked. */
+
 .touchArea {
   @apply touch-none;
 }
@@ -23,10 +22,7 @@
   fill: none;
 }
 
-/*
- * The white ring is what keeps the point legible where it crosses its own
- * line — separating it with a colored border would add ink that isn't data.
- */
+
 .dot {
   @apply fill-brand stroke-white;
 }

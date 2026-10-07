@@ -26,7 +26,7 @@ export const Subscription = () => {
   } = useSubscriptionFacade()
 
   return (
-    <Box className={styles.page}>
+    <Box className={styles.subscriptionPage}>
       <Header
         mb={{ mobile: 5, desktop: 8 }}
         title="Assinatura e plano"

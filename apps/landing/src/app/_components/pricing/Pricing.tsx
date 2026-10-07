@@ -5,19 +5,19 @@ import styles from "./Pricing.module.css"
 
 export function Pricing() {
   return (
-    <section id="precos" className={styles.section}>
-      <div className={styles.inner}>
+    <section id="precos" className={styles.pricingSection}>
+      <div className={styles.pricingInner}>
         <div className={styles.head}>
           <span className={styles.eyebrow}>Planos e preços</span>
 
-          <h2 className={styles.title}>Preço simples, resultado real</h2>
+          <h2 className={styles.pricingTitle}>Preço simples, resultado real</h2>
 
           <p className={styles.lead}>
             Sem taxa por pedido. Sem percentual sobre venda. Sem letras miúdas.
           </p>
         </div>
 
-        <div className={styles.grid}>
+        <div className={styles.pricingGrid}>
           {plans.map((plan) => (
             <PlanCard key={plan.tag} {...plan} />
           ))}

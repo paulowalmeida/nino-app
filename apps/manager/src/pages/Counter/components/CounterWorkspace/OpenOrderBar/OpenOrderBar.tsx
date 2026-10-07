@@ -13,16 +13,16 @@ export const OpenOrderBar = () => {
   return (
     <Button
       variant="ghost"
-      className={styles.tab}
+      className={styles.openOrderBarTab}
       onClick={() => setSheet(true)}
     >
       <span className={styles.perforation} aria-hidden="true" />
 
-      <Box direction="row" className={styles.body}>
-        <Text as="span" className={styles.count}>
+      <Box direction="row" className={styles.openOrderBarBody}>
+        <Text as="span" className={styles.openOrderBarCount}>
           {count} {count === 1 ? 'item' : 'itens'}
         </Text>
-        <Text as="span" className={styles.total}>
+        <Text as="span" className={styles.openOrderBarTotal}>
           {brl(total)}
         </Text>
         <kbd className={styles.shortcut}>Enter</kbd>

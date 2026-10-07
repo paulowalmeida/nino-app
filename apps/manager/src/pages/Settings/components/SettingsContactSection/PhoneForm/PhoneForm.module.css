@@ -1,6 +1,6 @@
 @reference "@nino/ds/globals.css";
 
-.section {
+.phoneFormSection {
   @apply border-y border-border py-5;
 }
 
@@ -8,7 +8,7 @@
   @apply flex flex-col gap-1;
 }
 
-.form {
+.phoneForm {
   @apply mt-4 grid grid-cols-1 gap-3;
 
   @media (min-width: 640px) {
@@ -17,7 +17,7 @@
   }
 }
 
-.field {
+.phoneFormField {
   @apply min-w-0;
 }
 

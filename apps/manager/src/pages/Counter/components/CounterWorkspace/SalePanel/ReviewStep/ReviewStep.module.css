@@ -6,7 +6,7 @@
   overscroll-behavior: contain;
 }
 
-/* O papel do pedido: aqui a borda é o próprio recibo, não decoração. */
+
 .ticket {
   @apply gap-3 rounded-3 border border-border bg-surface-page p-4;
 }
@@ -54,7 +54,7 @@
   font-size: 13.5px;
 }
 
-/* O total é o número do cupom: o resto da tela fica quieto ao redor dele. */
+
 .totals {
   @apply gap-1;
 }

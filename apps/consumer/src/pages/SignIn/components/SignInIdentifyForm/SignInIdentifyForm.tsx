@@ -46,10 +46,10 @@ export const SignInIdentifyForm = () => {
       style={riseDelay(60)}
       onSubmit={handleSubmit}
     >
-      <Heading level={1} className={styles.title}>
+      <Heading level={1} className={styles.signInIdentifyFormTitle}>
         {isEmail ? 'Qual é o seu e-mail?' : 'Qual é o seu celular?'}
       </Heading>
-      <Text size="sm" className={styles.subtitle}>
+      <Text size="sm" className={styles.signInIdentifyFormSubtitle}>
         Mandaremos um código de 6 dígitos para confirmar que é você.
       </Text>
 
@@ -61,7 +61,7 @@ export const SignInIdentifyForm = () => {
           aria-label="E-mail"
           autoComplete="email"
           placeholder="voce@email.com"
-          className={styles.field}
+          className={styles.signInIdentifyFormField}
           value={email}
           onChange={(event) => setEmail(event.target.value)}
         />
@@ -71,7 +71,7 @@ export const SignInIdentifyForm = () => {
           autoFocus
           aria-label="Celular"
           autoComplete="tel"
-          className={styles.field}
+          className={styles.signInIdentifyFormField}
           value={phone}
           onChange={(event) => setPhone(event.target.value)}
         />
@@ -94,7 +94,7 @@ export const SignInIdentifyForm = () => {
       <Button
         type="button"
         variant="ghost"
-        className={`${motion.press} ${styles.secondary}`}
+        className={`${motion.press} ${styles.signInIdentifyFormSecondary}`}
         onClick={goToMethods}
       >
         Entrar de outro jeito

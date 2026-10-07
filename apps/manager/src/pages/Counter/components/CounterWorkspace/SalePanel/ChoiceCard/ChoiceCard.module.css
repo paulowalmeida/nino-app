@@ -1,10 +1,6 @@
 @reference "@nino/ds/globals.css";
 
-/*
- * O cartão de escolha do balcão: destino e forma de pagamento são a mesma
- * decisão de um toque, então são a mesma peça — ícone em cima, nome embaixo,
- * e a linha de apoio só onde há largura para ela.
- */
+
 .choice {
   @apply h-auto flex-col items-center gap-1.5 rounded-3 border-border;
   @apply bg-surface-page px-2 py-3 text-center;
@@ -19,25 +15,24 @@
   @apply border-brand bg-brand-soft;
 }
 
-.icon {
+.choiceCardIcon {
   @apply text-xl leading-none lg:text-lg;
 }
 
-/* O dedo precisa do alvo grande; o mouse não. O cartão para de crescer na
-   largura de mesa em vez de inchar junto com a tela. */
-.icon svg {
+
+.choiceCardIcon svg {
   @apply size-5 lg:size-[18px];
 }
 
-.label {
+.choiceCardLabel {
   @apply text-xs lg:text-sm;
 }
 
-.selected .label {
+.selected .choiceCardLabel {
   @apply text-brand-strong;
 }
 
-/* A linha de apoio só cabe na janela: no celular o cartão é ícone e nome. */
+
 .hint {
   @apply hidden leading-tight lg:block;
 }

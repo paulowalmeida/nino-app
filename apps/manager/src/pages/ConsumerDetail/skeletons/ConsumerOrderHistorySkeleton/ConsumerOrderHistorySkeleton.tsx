@@ -17,7 +17,7 @@ const GHOST_ORDERS = ['first', 'second', 'third', 'fourth', 'fifth']
 /* WHY: a régua de colunas não vira osso — já funciona sem os pedidos e
  * sumiria da tela se virasse barra cinza. */
 export const ConsumerOrderHistorySkeleton = () => (
-  <Box className={orders.shell}>
+  <Box className={orders.consumerOrderHistoryShell}>
     <Table>
       <colgroup>
         <col className={orders.colOrder} />
@@ -41,13 +41,13 @@ export const ConsumerOrderHistorySkeleton = () => (
               <Skeleton className={ghost.number} />
             </TableCell>
             <TableCell>
-              <Skeleton className={ghost.status} />
+              <Skeleton className={ghost.consumerOrderHistorySkeletonStatus} />
             </TableCell>
             <TableCell className={orders.colRight}>
               <Skeleton className={ghost.createdAt} />
             </TableCell>
             <TableCell className={orders.colRight}>
-              <Skeleton className={ghost.total} />
+              <Skeleton className={ghost.consumerOrderHistorySkeletonTotal} />
             </TableCell>
           </TableRow>
         ))}

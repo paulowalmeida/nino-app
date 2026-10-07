@@ -1,5 +1,5 @@
 @reference "@nino/ds/globals.css";
 
-.page {
+.checkoutPage {
   @apply min-h-dvh w-full bg-surface-page text-fg-default;
 }

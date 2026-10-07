@@ -24,8 +24,7 @@
   }
 }
 
-/* espelha o MenuItemCard: foto sempre à esquerda, subindo para o topo do card
-   apenas na faixa de duas colunas estreitas (640 a 1024) */
+
 .skRow {
   @apply flex flex-row items-stretch gap-3 rounded-4 p-3;
   @apply sm:flex-col sm:gap-0;

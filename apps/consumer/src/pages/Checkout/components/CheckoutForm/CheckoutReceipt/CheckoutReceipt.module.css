@@ -8,11 +8,11 @@
   @apply flex min-w-0 flex-col items-start gap-0.5;
 }
 
-.label {
+.checkoutReceiptLabel {
   @apply font-display text-base font-extrabold text-fg-strong;
 }
 
-.count {
+.checkoutReceiptCount {
   @apply text-sm font-semibold text-fg-muted;
   font-variant-numeric: tabular-nums;
 }
@@ -29,8 +29,7 @@
   @apply flex flex-col gap-3;
 }
 
-/*
- * WHY: no desktop o resumo é `sticky`, e um pedido com muitos itens estourava
+/* WHY: no desktop o resumo é `sticky`, e um pedido com muitos itens estourava
  * a altura da viewport — a página inteira precisava rolar para revelar o
  * total e o botão "Continuar". Só a lista de itens rola; subtotal, entrega e
  * o rodapé (fora deste componente) ficam sempre visíveis. A subtração fixa
@@ -44,7 +43,7 @@
   }
 }
 
-.item {
+.checkoutReceiptItem {
   @apply flex items-baseline justify-between gap-3 text-sm text-fg-default;
   font-variant-numeric: tabular-nums;
 }

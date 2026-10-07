@@ -1,19 +1,18 @@
 @reference "@nino/ds/globals.css";
 
-/* Mesmo corte da gaveta de pedido: o pé é a parte que se destaca do
-   pedido, marcando onde o pedido termina e a transação começa. */
-.footer {
+
+.stepActionsFooter {
   @apply relative shrink-0 gap-3 bg-surface-page px-6 pb-4 pt-3;
   filter: drop-shadow(0 -1px 0 var(--color-border));
   padding-inline: var(--checkout-gutter, 1.5rem);
   padding-bottom: max(1rem, env(safe-area-inset-bottom));
 }
 
-.actions {
+.stepActions {
   @apply w-full justify-end;
 }
 
-.footer::before {
+.stepActionsFooter::before {
   content: '';
   position: absolute;
   inset-inline: 0;
@@ -38,22 +37,22 @@
   font-variant-numeric: tabular-nums;
 }
 
-/* O atalho é dica, não comando: só aparece onde há teclado à mão. */
+
 .keys {
   @apply hidden;
 }
 
 @media (min-width: 768px) {
-  .footer {
+  .stepActionsFooter {
     @apply flex-row items-center justify-between gap-5 px-6 pb-3.5 pt-3;
   }
 
-  /* O total ocupa a folga: rótulo na margem, valor encostado na ação. */
+
   .totals {
     @apply flex-1;
   }
 
-  .actions {
+  .stepActions {
     @apply w-auto gap-3.5;
   }
 

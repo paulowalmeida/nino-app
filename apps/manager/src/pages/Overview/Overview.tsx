@@ -10,7 +10,7 @@ import { TopProducts } from '@pages/Overview/components/TopProducts/TopProducts'
 import styles from './Overview.module.css'
 
 export const Overview = () => (
-  <Box className={styles.page}>
+  <Box className={styles.overviewPage}>
     <OverviewHeader />
     <Box className={styles.pause}>
       <PauseSwitch />

@@ -63,9 +63,9 @@ export const BrandPalette = ({ colors, onChange }: BrandPaletteProps) => (
         trigger="Marca"
         indicator
         defaultOpen
-        className={styles.group}
+        className={styles.brandPaletteGroup}
       >
-        <Box className={styles.grid}>
+        <Box className={styles.brandPaletteGrid}>
           {IDENTITY_COLORS.map(({ key, label, hint }) => (
             <ColorField
               key={key}
@@ -82,9 +82,9 @@ export const BrandPalette = ({ colors, onChange }: BrandPaletteProps) => (
         trigger="Superfícies e texto"
         indicator
         defaultOpen
-        className={styles.group}
+        className={styles.brandPaletteGroup}
       >
-        <Box className={styles.grid}>
+        <Box className={styles.brandPaletteGrid}>
           {SURFACE_COLORS.map(({ key, label, hint }) => (
             <ColorField
               key={key}

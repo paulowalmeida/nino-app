@@ -152,7 +152,7 @@ export const ProductCard = ({
         className={mergeClasses(
           motion.settle,
           motion.press,
-          styles.card,
+          styles.productCard,
           isPicked && styles.picked,
           isPressing && styles.pressing
         )}
@@ -173,7 +173,7 @@ export const ProductCard = ({
             wrapperClassName={styles.photoWrap}
           />
 
-          <Box className={styles.footer}>
+          <Box className={styles.productCardFooter}>
             <Text as="span" size="xs" weight="semibold" className={styles.name}>
               {item.name}
             </Text>

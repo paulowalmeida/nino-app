@@ -6,7 +6,7 @@
   padding-bottom: env(safe-area-inset-bottom);
 }
 
-.tab {
+.tabBarTab {
   @apply flex h-full flex-1 flex-col items-center justify-center gap-1;
   @apply min-h-12 text-fg-subtle transition-colors;
 }
@@ -15,12 +15,7 @@
   @apply text-brand-strong;
 }
 
-/*
- * A casa abre a barra e se anuncia por um anel — não por um botão que estoura
- * para cima. O destaque cabe dentro da altura da barra: mesma linha, outro
- * peso. A sacola é um atalho como os outros; ela deixou de flutuar sobre o
- * conteúdo quando virou item daqui.
- */
+
 .home {
   @apply flex h-full flex-1 flex-col items-center justify-center gap-0.5;
   @apply min-h-12 text-fg-subtle transition-colors;
@@ -37,8 +32,7 @@
   color: var(--store-tint, var(--color-brand));
 }
 
-/* na vitrine o anel enche: o alvo aceso é a única superfície da navegação
-   pintada com a cor da loja */
+
 .homeOn .homeRing {
   border-color: var(--store-tint, var(--color-brand));
   background: var(--store-tint, var(--color-brand));
@@ -50,12 +44,13 @@
   color: var(--store-tint, var(--color-brand));
 }
 
-/* três alvos numa tela de 360px: o rótulo aperta antes do ícone */
-.label {
+/* WHY: três alvos numa tela de 360px: o rótulo aperta antes do ícone
+ */
+.tabBarLabel {
   @apply text-xs font-semibold;
 }
 
-/* a contagem da sacola marca o ícone, não a linha inteira */
+
 .cartIcon {
   @apply relative inline-flex items-center justify-center;
 }

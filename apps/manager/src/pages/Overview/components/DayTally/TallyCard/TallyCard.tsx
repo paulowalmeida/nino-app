@@ -41,7 +41,7 @@ export const TallyCard = ({
       style={riseDelay(delay)}
     className={styles.cardOverview}
     >
-      <Text as="span" className={styles.value}>
+      <Text as="span" className={styles.tallyCardValue}>
         {isPending ? <Skeleton className={skeletonClassName} /> : value}
       </Text>
       <Text as="span" className={styles.metricLabel}>

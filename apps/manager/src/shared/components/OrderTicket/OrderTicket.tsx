@@ -104,7 +104,7 @@ export const OrderTicket = ({ order, onAdvance, isBusy }: OrderTicketProps) => {
           <Badge
             size="sm"
             variant={toOrderBadgeVariant(order.status)}
-            className={styles.status}
+            className={styles.orderTicketStatus}
           >
             {STATUS_LABEL[order.status]}
           </Badge>
@@ -112,18 +112,18 @@ export const OrderTicket = ({ order, onAdvance, isBusy }: OrderTicketProps) => {
 
         <Link
           to={order.id}
-          className={`${motion.lift} ${styles.body}`}
+          className={`${motion.lift} ${styles.orderTicketBody}`}
           aria-label={`Abrir pedido ${ticketNumber(order.orderNumber)}`}
         >
           <Text as="p" className={styles.consumer}>{consumerNameOf(order)}</Text>
-          <Text as="p" className={styles.meta}>
+          <Text as="p" className={styles.orderTicketMeta}>
             {CHANNEL_LABEL[order.channel]}
             {destination?.kind === 'table' && ` · ${destination.label}`}
           </Text>
 
           {/* the whole ticket doesn't fit on mobile: the count matters,
             not the list */}
-          <Text as="p" className={styles.summary}>
+          <Text as="p" className={styles.orderTicketSummary}>
             {order.items.reduce((total, { quantity }) => total + quantity, 0)}{' '}
             {order.items.length === 1 ? 'item' : 'itens'} ·{' '}
             {order.items.map(({ product }) => product.name).join(', ')}
@@ -138,7 +138,7 @@ export const OrderTicket = ({ order, onAdvance, isBusy }: OrderTicketProps) => {
 
           <Box as="ul" className={styles.items}>
             {order.items.slice(0, VISIBLE_ITEMS).map((item) => (
-              <ListRow key={item.id} divider="none" padding={0} className={styles.item}>
+              <ListRow key={item.id} divider="none" padding={0} className={styles.orderTicketItem}>
                 <Text as="span" className={styles.quantity}>{item.quantity}×</Text>
                 <Text as="span" className={styles.itemName}>{item.product.name}</Text>
               </ListRow>
@@ -153,7 +153,7 @@ export const OrderTicket = ({ order, onAdvance, isBusy }: OrderTicketProps) => {
 
         <footer className={styles.foot}>
           <Box direction="column">
-            <Text as="span" className={styles.total}>{brl(order.totalAmount)}</Text>
+            <Text as="span" className={styles.orderTicketTotal}>{brl(order.totalAmount)}</Text>
             <Text as="span" className={styles.payment}>
               {
                 PAYMENT_METHOD_LABEL_BY_CHANNEL[order.channel][
@@ -176,7 +176,7 @@ export const OrderTicket = ({ order, onAdvance, isBusy }: OrderTicketProps) => {
               <Button
                 size="sm"
                 loading={isBusy}
-                className={`${motion.press} ${styles.action}`}
+                className={`${motion.press} ${styles.orderTicketAction}`}
                 onClick={() => onAdvance(order.id, step.target)}
               >
                 {step.label}

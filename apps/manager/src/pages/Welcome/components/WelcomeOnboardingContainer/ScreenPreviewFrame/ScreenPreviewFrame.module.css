@@ -18,7 +18,7 @@
   @apply ml-1 text-xs font-semibold text-fg-faint;
 }
 
-.body {
+.screenPreviewFrameBody {
   @apply p-4;
 }
 

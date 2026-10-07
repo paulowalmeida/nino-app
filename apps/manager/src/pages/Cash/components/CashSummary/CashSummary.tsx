@@ -17,7 +17,7 @@ const timeLabel = (isoDate: string): string =>
   })
 
 export const CashSummary = ({ session }: CashSummaryProps) => (
-  <Box as="section" direction="column" className={styles.summary}>
+  <Box as="section" direction="column" className={styles.cashSummary}>
     <Box direction="row" justify="between" align="baseline">
       <Heading level={2} size="lg">
         {session.closedAt ? 'Caixa fechado' : 'Caixa aberto'}

@@ -24,7 +24,7 @@ export const OverviewHeader = () => {
     : greetingFor(timezone)
 
   return (
-    <Box as="header" className={`${motion.settle} ${styles.header}`}>
+    <Box as="header" className={`${motion.settle} ${styles.overviewHeader}`}>
       <Text as="p" size="xs" color="faint" className={styles.eyebrow}>
         <Text as="span">{greeting}</Text>
         <span aria-hidden="true">·</span>

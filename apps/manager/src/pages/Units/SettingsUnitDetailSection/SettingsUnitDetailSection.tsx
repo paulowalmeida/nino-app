@@ -5,7 +5,7 @@ import local from './SettingsUnitDetailSection.module.css'
 
 export const SettingsUnitDetailSection = () => {
   return (
-    <Box className={local.panel}>
+    <Box className={local.settingsUnitDetailSectionPanel}>
       <UnitInfo />
     </Box>
   )

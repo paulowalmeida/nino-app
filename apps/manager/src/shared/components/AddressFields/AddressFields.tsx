@@ -149,7 +149,7 @@ export const AddressFields = ({
   return (
     <Box
       className={mergeClasses(
-        styles.grid,
+        styles.addressFieldsGrid,
         leadsWithStreet && styles.streetLed,
         locationFirst && styles.locationFirst
       )}

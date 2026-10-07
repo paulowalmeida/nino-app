@@ -26,7 +26,7 @@ export const ProductChoiceHeader = ({
   group,
   selectedCount,
 }: ProductChoiceHeaderProps) => (
-  <Box direction="row" className={styles.header}>
+  <Box direction="row" className={styles.productChoiceHeader}>
     <Box className={styles.identity}>
       <Heading level={2} id={group.id} className={styles.name}>
         {group.name}

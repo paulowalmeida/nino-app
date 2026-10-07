@@ -12,7 +12,7 @@ export function FeatureCard({
 }: FeatureCardProps) {
   return (
     <article
-      className={`${styles.card}${featured ? ` ${styles.featured}` : ""}`}
+      className={`${styles.featureCard}${featured ? ` ${styles.featured}` : ""}`}
     >
       <span className={styles.sequenceNumber}>{num}</span>
 

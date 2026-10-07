@@ -93,10 +93,10 @@ export const SalePanel = ({ bare = false }: { bare?: boolean }) => {
   )
 
   return (
-    <Box className={bare ? styles.bare : styles.panel}>
+    <Box className={bare ? styles.bare : styles.salePanel}>
       {!bare && (
-        <Box as="header" direction="row" className={styles.header}>
-          <Heading level={2} size="lg" className={styles.title}>
+        <Box as="header" direction="row" className={styles.salePanelHeader}>
+          <Heading level={2} size="lg" className={styles.salePanelTitle}>
             Venda
           </Heading>
         </Box>

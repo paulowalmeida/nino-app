@@ -1,7 +1,7 @@
 @reference "@nino/ds/globals.css";
 
-/* mesma grade do formulário: o esqueleto ocupa o lugar que os campos terão */
-.form {
+
+.newProductFormSkeletonForm {
   @apply mt-6 flex flex-col gap-5;
   @apply lg:grid lg:grid-cols-[20rem_1fr] lg:items-start lg:gap-x-10;
 }
@@ -10,15 +10,15 @@
   @apply min-w-0;
 }
 
-.fields {
+.newProductFormSkeletonFields {
   @apply flex min-w-0 flex-col gap-5;
 }
 
-.field {
+.newProductFormSkeletonField {
   @apply min-w-0;
 }
 
-.row {
+.newProductFormSkeletonRow {
   @apply grid grid-cols-1 gap-4 sm:grid-cols-[9rem_1fr];
 }
 
@@ -26,7 +26,7 @@
   @apply -mt-2;
 }
 
-.actions {
+.newProductFormSkeletonActions {
   @apply flex flex-col gap-2 border-t border-border/60 pt-5;
   @apply sm:flex-row sm:justify-end lg:col-span-2;
 }
@@ -51,12 +51,13 @@
   @apply h-20 w-full rounded-2;
 }
 
-/* linha de "0/300 · Aparece..." sob a descrição */
+
 .ghostHelper {
   @apply mt-1.5 h-3 w-64 max-w-full rounded-1;
 }
 
-/* o "Criar uma categoria" fantasma, mesmo porte do Button size sm */
+/* WHY: o "Criar uma categoria" fantasma, mesmo porte do Button size sm
+ */
 .ghostCategoryButton {
   @apply h-8 w-40 rounded-full;
 }

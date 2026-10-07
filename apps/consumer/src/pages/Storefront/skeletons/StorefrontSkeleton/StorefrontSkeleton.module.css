@@ -1,11 +1,11 @@
 @reference "@nino/ds/globals.css";
 
-.page {
+.storefrontSkeletonPage {
   @apply relative flex min-h-dvh w-full flex-col bg-surface-raised pb-24;
   @apply lg:pb-12;
 }
 
-.shell {
+.storefrontSkeletonShell {
   @apply mx-auto w-full max-w-[80rem] px-4 sm:px-6;
 }
 

@@ -26,7 +26,7 @@ export const BrandTracking = ({ tracking, onChange }: BrandTrackingProps) => {
 
   return (
     <StudioSection title="Acompanhamento" description={SECTION_DESCRIPTION}>
-      <Box className={styles.fields}>
+      <Box className={styles.brandTrackingFields}>
         {TRACKING_STAGE_FIELDS.map(({ stage, label, placeholder }) => (
           <FormField key={stage} label={label}>
             <Input

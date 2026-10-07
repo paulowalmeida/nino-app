@@ -13,7 +13,7 @@ export const ProductUnavailable = () => {
   const navigate = useNavigate()
 
   return (
-    <Box className={styles.wrapper}>
+    <Box className={styles.productUnavailableWrapper}>
       <EmptyState
         size="md"
         title="Este item saiu do cardápio"

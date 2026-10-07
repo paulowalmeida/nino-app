@@ -26,7 +26,7 @@ export const KitchenHeader = ({
       direction={{ mobile: 'column', tablet: 'row' }}
       align={{ mobile: 'start', tablet: 'end' }}
       justify="between"
-      className={`${motion.deal} ${styles.header}`}
+      className={`${motion.deal} ${styles.kitchenHeader}`}
     >
       <Box className={styles.identity}>
         <Heading level={1} size="xl">

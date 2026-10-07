@@ -49,7 +49,7 @@ export const CatalogControls = () => {
       align="center"
       gap={2}
       shrink={false}
-      className={styles.toolbar}
+      className={styles.catalogControlsToolbar}
     >
       {canManageCatalog && <MenuBoardSelectionActions selection={selection} />}
 

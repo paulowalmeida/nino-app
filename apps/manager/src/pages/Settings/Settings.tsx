@@ -23,10 +23,10 @@ export const Settings = () => {
   )
 
   return (
-    <Box className={`${styles.page} ${isFlowScroll ? styles.pageFlow : ''}`}>
+    <Box className={`${styles.settingsPage} ${isFlowScroll ? styles.pageFlow : ''}`}>
       <Box
         key={pathname}
-        className={`${motion.settle} ${styles.panel} ${
+        className={`${motion.settle} ${styles.settingsPanel} ${
           isFlowScroll ? styles.panelFlow : ''
         }`}
       >

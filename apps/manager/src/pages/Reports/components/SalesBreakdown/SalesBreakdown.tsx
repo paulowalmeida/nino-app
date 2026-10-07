@@ -44,7 +44,7 @@ export const SalesBreakdown = ({
     )}
 
     {!isPending && items.length === 0 && (
-      <Text className={styles.empty}>{emptyMessage}</Text>
+      <Text className={styles.salesBreakdownEmpty}>{emptyMessage}</Text>
     )}
 
     {!isPending && items.length > 0 && (

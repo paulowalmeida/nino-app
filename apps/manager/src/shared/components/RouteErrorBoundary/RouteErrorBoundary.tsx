@@ -52,9 +52,9 @@ export const RouteErrorBoundary = () => {
     : 'Essa tela travou'
 
   return (
-    <Box direction="row" className={styles.shell}>
-      <Box direction="column" className={styles.panel}>
-        <Heading level={1} size="2xl" className={styles.title}>
+    <Box direction="row" className={styles.routeErrorBoundaryShell}>
+      <Box direction="column" className={styles.routeErrorBoundaryPanel}>
+        <Heading level={1} size="2xl" className={styles.routeErrorBoundaryTitle}>
           {title}
         </Heading>
         <Text size="sm" color="muted">

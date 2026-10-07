@@ -5,14 +5,14 @@ import styles from "./HowItWorks.module.css"
 
 export function HowItWorks() {
   return (
-    <section id="como-funciona" className={styles.section}>
-      <div className={styles.inner}>
-        <div className={styles.header}>
+    <section id="como-funciona" className={styles.howItWorksSection}>
+      <div className={styles.howItWorksInner}>
+        <div className={styles.howItWorksHeader}>
           <span className={styles.eyebrow}>Simples assim</span>
 
-          <h2 className={styles.title}>Como o Nino funciona</h2>
+          <h2 className={styles.howItWorksTitle}>Como o Nino funciona</h2>
 
-          <p className={styles.subtitle}>
+          <p className={styles.howItWorksSubtitle}>
             Do cadastro ao primeiro pedido em 3 passos.
           </p>
         </div>

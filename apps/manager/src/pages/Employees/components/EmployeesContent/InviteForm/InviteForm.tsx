@@ -63,13 +63,13 @@ export const InviteForm = ({ onInvite }: InviteFormProps) => {
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className={`${motion.settle} ${styles.form}`}
+      className={`${motion.settle} ${styles.inviteForm}`}
     >
       <div className={styles.copy}>
-        <h2 className={styles.title}>Chamar alguém para a loja</h2>
+        <h2 className={styles.inviteFormTitle}>Chamar alguém para a loja</h2>
       </div>
 
-      <div className={styles.fields}>
+      <div className={styles.inviteFormFields}>
         <FormField
           label={
             <FieldHint

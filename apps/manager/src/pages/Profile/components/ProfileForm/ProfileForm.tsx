@@ -75,10 +75,10 @@ export const ProfileForm = () => {
         align={{ tablet: 'center' }}
         justify={{ tablet: 'end' }}
         gap={{ tablet: 4 }}
-        className={styles.actions}
+        className={styles.profileFormActions}
       >
         {!isDirty && !saveError && (
-          <Text as="p" size="xs" color="faint" className={styles.status}>
+          <Text as="p" size="xs" color="faint" className={styles.profileFormStatus}>
             Nada mudou ainda.
           </Text>
         )}

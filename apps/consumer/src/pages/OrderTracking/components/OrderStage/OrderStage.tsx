@@ -69,7 +69,7 @@ export const OrderStage = ({ order }: OrderStageProps) => {
           <Heading level={2} className={styles.headline}>
             {stageLabel(order.status)}
           </Heading>
-          <Text as="p" className={styles.note}>
+          <Text as="p" className={styles.orderStageNote}>
             {stageNote(order, order.status)}
           </Text>
         </motion.div>

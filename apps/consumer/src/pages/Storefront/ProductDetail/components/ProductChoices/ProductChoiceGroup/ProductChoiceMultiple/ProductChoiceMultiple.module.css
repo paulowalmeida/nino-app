@@ -4,8 +4,7 @@
   @apply flex flex-col px-4 pb-2 sm:px-6;
 }
 
-/*
- * WHY: a linha inteira é o label do checkbox — no toque de um celular, mirar
+/* WHY: a linha inteira é o label do checkbox — no toque de um celular, mirar
  * só a caixinha de 20px erra mais do que acerta.
  */
 .option {

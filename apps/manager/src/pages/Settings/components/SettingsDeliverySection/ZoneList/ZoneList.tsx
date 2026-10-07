@@ -96,7 +96,7 @@ export const ZoneList = ({
   if (isPending) return <Skeleton className={local.skeleton} />
 
   return (
-    <Box as="section" className={local.section}>
+    <Box as="section" className={local.zoneListSection}>
       <Box
         as="header"
         direction="row"
@@ -110,7 +110,7 @@ export const ZoneList = ({
       </Box>
 
       {zones.length === 0 ? (
-        <EmptyState className={local.empty}>
+        <EmptyState className={local.zoneListEmpty}>
           Adicione a primeira faixa para definir onde a loja atende.
         </EmptyState>
       ) : (
@@ -220,7 +220,7 @@ export const ZoneList = ({
                           />
                         </TableCell>
                         <TableCell className={local.actionsCell}>
-                          <Box direction="row" className={local.actions}>
+                          <Box direction="row" className={local.zoneListActions}>
                             <Button
                               variant="ghost"
                               size="sm"

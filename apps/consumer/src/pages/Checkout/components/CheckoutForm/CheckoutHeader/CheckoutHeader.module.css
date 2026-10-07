@@ -1,6 +1,6 @@
 @reference "@nino/ds/globals.css";
 
-.header {
+.checkoutHeader {
   @apply sticky top-0 z-sticky flex items-center gap-3 border-b border-border;
   @apply bg-surface-page px-4 py-3 sm:px-6;
 }
@@ -20,7 +20,7 @@
   @apply rounded-3 bg-brand-soft text-brand-strong;
 }
 
-.logo {
+.checkoutHeaderLogo {
   @apply h-full w-full object-cover;
 }
 
@@ -32,7 +32,7 @@
   @apply flex min-w-0 flex-col;
 }
 
-.title {
+.checkoutHeaderTitle {
   @apply truncate font-display text-xl font-extrabold leading-tight;
   @apply text-fg-strong;
 }
@@ -42,7 +42,7 @@
 }
 
 @media (min-width: 1024px) {
-  .header {
+  .checkoutHeader {
     @apply px-0 py-5;
   }
 

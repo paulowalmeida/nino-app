@@ -10,12 +10,12 @@ export const AddressesList = () => {
   const { addresses } = useAddressesFacade()
 
   return (
-    <Box as="ul" className={styles.list}>
+    <Box as="ul" className={styles.addressesList}>
       {addresses?.map((address, index) => (
         <Box
           as="li"
           key={address.id}
-          className={`${motion.deal} ${styles.item}`}
+          className={`${motion.deal} ${styles.addressesListItem}`}
           style={riseDelay(index * 55)}
         >
           <AddressCard address={address} />

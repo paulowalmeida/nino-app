@@ -16,7 +16,7 @@ export const CatalogCategories = () => {
   const isEmpty = !isPending && !isError && categories.length === 0
 
   return (
-    <Box className={styles.page}>
+    <Box className={styles.catalogCategoriesPage}>
       <Box className={styles.headerRegion}>
         <CategoriesHeader />
       </Box>

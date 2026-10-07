@@ -1,14 +1,14 @@
 @reference "@nino/ds/globals.css";
 
-.page {
+.cashSkeletonPage {
   @apply gap-4 p-4 lg:p-10;
 }
 
-.card {
+.cashSkeletonCard {
   @apply gap-4 rounded-4 border border-border bg-surface-raised p-5;
 }
 
-.title {
+.cashSkeletonTitle {
   @apply h-6 w-40;
 }
 
@@ -24,10 +24,10 @@
   @apply h-14 w-full rounded-3;
 }
 
-.actions {
+.cashSkeletonActions {
   @apply gap-2;
 }
 
-.action {
+.cashSkeletonAction {
   @apply h-11 w-32 rounded-3;
 }

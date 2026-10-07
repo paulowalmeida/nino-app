@@ -10,7 +10,7 @@
   @apply grid grid-cols-3 gap-2;
 }
 
-.fields {
+.destinationStepFields {
   @apply gap-2.5;
 }
 
@@ -18,7 +18,7 @@
   @apply grid gap-2.5 md:grid-cols-2;
 }
 
-/* A nota do demo: faixa quente rasa, não cartão. */
-.note {
+
+.destinationStepNote {
   @apply rounded-3 bg-surface-2 px-3 py-2.5 leading-snug;
 }

@@ -62,12 +62,12 @@ export const EditEmailModal = ({
       open={open}
       onOpenChange={onOpenChange}
       ariaLabel={title}
-      header={<h2 className={styles.title}>{title}</h2>}
+      header={<h2 className={styles.editEmailModalTitle}>{title}</h2>}
       body={
         <form
           id="edit-email-form"
           onSubmit={handleSubmit(onSubmit)}
-          className={styles.form}
+          className={styles.editEmailModalForm}
         >
           <Text as="p" className={styles.hint}>{hint}</Text>
 

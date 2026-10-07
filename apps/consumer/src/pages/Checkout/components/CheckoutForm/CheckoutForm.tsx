@@ -113,7 +113,7 @@ export const CheckoutForm = ({
         }
         onSubmit(submittedValues)
       }}
-      formProps={{ className: styles.form }}
+      formProps={{ className: styles.checkoutForm }}
     >
       {() => (
         <>
@@ -123,7 +123,7 @@ export const CheckoutForm = ({
             storeLogoUrl={storeLogoUrl}
           />
           <Box className={styles.workspace}>
-            <Box as="aside" className={styles.summary} aria-label="Seu pedido">
+            <Box as="aside" className={styles.checkoutFormSummary} aria-label="Seu pedido">
               <Box className={styles.receiptArea}>
                 <CheckoutReceipt checkout={facade} />
               </Box>
@@ -148,7 +148,7 @@ export const CheckoutForm = ({
               </Box>
             </Box>
 
-            <Box className={styles.details}>
+            <Box className={styles.checkoutFormDetails}>
               <Stepper
                 steps={CHECKOUT_STEPS}
                 step={step}

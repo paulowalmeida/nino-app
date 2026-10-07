@@ -9,10 +9,8 @@
   @apply text-fg-strong;
 }
 
-/* Mesmo tratamento do "Sem pedidos no período"/"Sem entregas no período"
-   dos tempos médios do relatório — texto discreto no lugar do gráfico, não
-   o EmptyState ilustrado, que pesa demais entre números densos como esses. */
-.empty {
+
+.salesBreakdownEmpty {
   @apply font-display text-sm font-semibold leading-tight text-fg-faint;
   @apply lg:text-base;
 }

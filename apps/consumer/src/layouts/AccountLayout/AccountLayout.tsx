@@ -18,22 +18,22 @@ export const AccountLayout = () => {
 
   return (
     <Box
-      className={styles.page}
+      className={styles.accountLayoutPage}
       style={
         {
           '--p': progress,
         } as React.CSSProperties
       }
     >
-      <Box className={styles.shell}>
+      <Box className={styles.accountLayoutShell}>
         <AccountHeader />
 
-        <Box className={styles.body}>
+        <Box className={styles.accountLayoutBody}>
           <AccountNav />
 
           <Box
             key={pathname}
-            className={`${motion.settle} ${styles.panel}`}
+            className={`${motion.settle} ${styles.accountLayoutPanel}`}
             style={riseDelay(60)}
           >
             <Outlet />

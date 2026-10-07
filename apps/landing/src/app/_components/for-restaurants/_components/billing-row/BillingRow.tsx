@@ -3,7 +3,7 @@ import type { BillingRowProps } from "./BillingRow.types"
 
 export function BillingRow({ name, model, isNino = false }: BillingRowProps) {
   return (
-    <div className={`${styles.row}${isNino ? ` ${styles.ninoRow}` : ""}`}>
+    <div className={`${styles.billingRow}${isNino ? ` ${styles.ninoRow}` : ""}`}>
       <span className={isNino ? styles.ninoName : styles.platformName}>
         {name}
       </span>

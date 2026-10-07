@@ -79,13 +79,13 @@ export const CartDrawer = () => {
           </Box>
         }
         size={isDesktop ? '25rem' : 'var(--cart-drawer-height)'}
-        contentClassName={isDesktop ? styles.panel : styles.sheet}
+        contentClassName={isDesktop ? styles.cartDrawerPanel : styles.sheet}
       >
-        <Box className={styles.body}>
+        <Box className={styles.cartDrawerBody}>
           {lines.length === 0 ? (
             <EmptyState
               size="md"
-              className={`${motionStyles.riseIn} ${styles.empty}`}
+              className={`${motionStyles.riseIn} ${styles.cartDrawerEmpty}`}
               illustration={<img src="/mascot-consumer.svg" alt="" />}
               title="Sua sacola está vazia"
               action={
@@ -192,7 +192,7 @@ export const CartDrawer = () => {
                 </AnimatePresence>
               </Box>
 
-              <Box className={styles.footer}>
+              <Box className={styles.cartDrawerFooter}>
                 <Box direction="row" className={styles.totalRow}>
                   <Box>
                     <Text className={styles.totalLabel}>Total</Text>
@@ -202,7 +202,7 @@ export const CartDrawer = () => {
                       </Text>
                     ) : null}
                   </Box>
-                  <AnimatedNumber value={brl(total)} className={styles.total} />
+                  <AnimatedNumber value={brl(total)} className={styles.cartDrawerTotal} />
                 </Box>
                 <Button className={styles.checkout} onClick={onCheckout}>
                   Finalizar pedido

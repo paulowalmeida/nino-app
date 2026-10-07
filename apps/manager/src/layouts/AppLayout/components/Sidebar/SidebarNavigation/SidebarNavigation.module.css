@@ -1,24 +1,25 @@
 @reference "@nino/ds/globals.css";
 
-.navigation {
+.sidebarNavigation {
   @apply relative z-content min-h-0 flex-1;
   overscroll-behavior: contain;
 }
 
-/* CONSTRAINT: o viewport é o scroller real para conter o wheel no menu. */
-.navigation :global([data-part='viewport']) {
+/* CONSTRAINT: o viewport é o scroller real para conter o wheel no menu.
+ */
+.sidebarNavigation :global([data-part='viewport']) {
   overscroll-behavior: contain;
 }
 
-.list {
+.sidebarNavigationList {
   @apply flex flex-col gap-0.5 px-3 py-4;
 }
 
-.section + .section {
+.sidebarNavigationSection + .sidebarNavigationSection {
   @apply mt-5;
 }
 
-:global([data-collapsed]) .section + .section {
+:global([data-collapsed]) .sidebarNavigationSection + .sidebarNavigationSection {
   @apply lg:mt-1;
 }
 

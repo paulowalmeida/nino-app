@@ -81,7 +81,7 @@ export const TableTabDetailContent = ({
   }
 
   return (
-    <Box as="main" className={styles.page}>
+    <Box as="main" className={styles.tableTabDetailContentPage}>
       <BackLink>Voltar para comandas</BackLink>
       {isPending && <Text color="muted">Carregando comanda…</Text>}
       {isError && (
@@ -120,7 +120,7 @@ export const TableTabDetailContent = ({
                 </Text>
               </Box>
             </Box>
-            <Box className={styles.total}>
+            <Box className={styles.tableTabDetailContentTotal}>
               <Text size="sm" color="muted">
                 Total da conta
               </Text>
@@ -130,7 +130,7 @@ export const TableTabDetailContent = ({
             </Box>
           </Box>
 
-          <Box className={styles.content}>
+          <Box className={styles.tableTabDetailContent}>
             <Card
               variant="flat"
               padding="lg"

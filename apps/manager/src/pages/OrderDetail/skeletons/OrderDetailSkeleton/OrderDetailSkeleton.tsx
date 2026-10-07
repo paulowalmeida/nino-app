@@ -8,7 +8,7 @@ const GHOST_ITEMS = ['first', 'second', 'third', 'fourth']
 const GHOST_CARDS = ['consumer', 'payment', 'timeline']
 
 export const OrderDetailSkeleton = () => (
-  <Box className={styles.page}>
+  <Box className={styles.orderDetailSkeletonPage}>
     <Box className={styles.backBar}>
       <BackLink>Pedidos</BackLink>
     </Box>
@@ -30,7 +30,7 @@ export const OrderDetailSkeleton = () => (
       <Box className={styles.receipt}>
         <Box as="ul" className={styles.items}>
           {GHOST_ITEMS.map((item) => (
-            <div key={item} className={styles.item}>
+            <div key={item} className={styles.orderDetailSkeletonItem}>
               <Skeleton variant="text" className={styles.ghostQuantity} />
               <Skeleton variant="text" className={styles.ghostItemName} />
               <Skeleton variant="text" className={styles.ghostPrice} />

@@ -5,7 +5,7 @@
   background: var(--color-surface-1);
 }
 
-.rail {
+.appRail {
   display: flex;
   position: sticky;
   top: 0;
@@ -54,7 +54,7 @@
   padding: 48px clamp(24px, 5vw, 88px) 72px;
 }
 
-.page {
+.appPage {
   width: min(1320px, 100%);
   margin: 0 auto;
 }
@@ -475,7 +475,7 @@
     grid-template-columns: 176px minmax(0, 1fr);
   }
 
-  .rail {
+  .appRail {
     padding-inline: 18px;
   }
 }
@@ -485,7 +485,7 @@
     display: block;
   }
 
-  .rail {
+  .appRail {
     position: static;
     display: flex;
     height: auto;

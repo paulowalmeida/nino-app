@@ -17,14 +17,16 @@
   @apply min-h-0 flex-1;
 }
 
-/* CONSTRAINT: Table já envolve a <table> no seu próprio scroller, e o cabeçalho
-   sticky só gruda se a rolagem vertical acontecer nesse mesmo elemento. */
+/* CONSTRAINT: Table já envolve a <table> no seu próprio scroller, e o
+ * cabeçalho sticky só gruda se a rolagem vertical acontecer nesse mesmo
+ * elemento.
+ */
 .listShell > div {
   max-height: 26rem;
   overflow-y: auto;
 }
 
-/* Em 4K, ocupa a altura restante depois de cabeçalho, resumo e abas. */
+
 @media (min-width: 2560px) {
   .listShell > div {
     max-height: calc(100dvh - 26rem);
@@ -81,6 +83,6 @@
   font-variant-numeric: tabular-nums;
 }
 
-.empty {
+.collaboratorActivityEmpty {
   @apply mt-4;
 }

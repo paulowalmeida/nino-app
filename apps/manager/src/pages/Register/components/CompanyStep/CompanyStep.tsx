@@ -43,7 +43,7 @@ export const CompanyStep = () => {
         gap={4}
         mt={12}
         onSubmit={submit}
-        className={styles.form}
+        className={styles.companyStepForm}
       >
         <RiseIn delay={120} className={styles.primaryField}>
           <FormField label="Nome" error={errors.company?.name?.message}>
@@ -84,7 +84,7 @@ export const CompanyStep = () => {
           </Alert>
         )}
 
-        <RiseIn delay={300} className={styles.actions}>
+        <RiseIn delay={300} className={styles.companyStepActions}>
           <Box direction="row" justify="end" gap={2}>
             <Button
               type="button"

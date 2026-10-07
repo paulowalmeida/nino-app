@@ -1,9 +1,9 @@
 @reference "@nino/ds/globals.css";
 
-.actions {
+.addressFormActions {
   @apply mt-6 flex flex-col gap-2.5 sm:flex-row-reverse;
 }
-.primary {
+.addressFormActionsPrimary {
   @apply flex h-12 w-full items-center justify-center rounded-full bg-brand;
   @apply font-bold text-fg-on-brand transition-colors hover:bg-brand-hover;
   @apply sm:w-auto sm:px-7 disabled:cursor-not-allowed disabled:opacity-dim;

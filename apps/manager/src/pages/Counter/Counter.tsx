@@ -6,7 +6,7 @@ import styles from './Counter.module.css'
 
 export const Counter = () => {
   return (
-    <Box className={styles.page}>
+    <Box className={styles.counterPage}>
       <Box className={styles.headerRegion}>
         <CounterHeader />
       </Box>

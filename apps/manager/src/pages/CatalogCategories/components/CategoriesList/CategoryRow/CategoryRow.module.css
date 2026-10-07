@@ -1,9 +1,10 @@
 @reference "@nino/ds/globals.css";
 
 /* WHY: Reorder.Item só aceita `as` como nome de tag HTML (não um componente),
-   então essa linha não pode literalmente ser o TableRow do DS — a listra
-   zebrada e o hover replicam o mesmo visual usado nas outras tabelas. */
-.row {
+ * então essa linha não pode literalmente ser o TableRow do DS — a listra
+ * zebrada e o hover replicam o mesmo visual usado nas outras tabelas.
+ */
+.categoryRow {
   @apply transition-colors duration-fast even:bg-surface-mute;
   @apply hover:bg-brand-soft;
 }
@@ -32,7 +33,7 @@
   font-variant-numeric: tabular-nums;
 }
 
-/* categoria vazia é a única segura de excluir — o texto sinaliza isso */
+
 .hintEmpty {
   @apply block text-xs font-medium text-brand-vivid;
 }

@@ -18,13 +18,13 @@ export const CheckoutHeader = ({
   storeName,
   storeLogoUrl,
 }: CheckoutHeaderProps) => (
-  <Box as="header" direction="row" className={styles.header}>
+  <Box as="header" direction="row" className={styles.checkoutHeader}>
     <Link to={backHref} className={styles.back} aria-label="Voltar">
       <Icon name="arrow-left" />
     </Link>
     <Box className={styles.storeMark} aria-hidden="true">
       {storeLogoUrl ? (
-        <img src={storeLogoUrl} alt="" className={styles.logo} />
+        <img src={storeLogoUrl} alt="" className={styles.checkoutHeaderLogo} />
       ) : (
         <Text as="span" className={styles.logoFallback}>
           {storeName.slice(0, 2).toUpperCase()}
@@ -32,7 +32,7 @@ export const CheckoutHeader = ({
       )}
     </Box>
     <Box className={styles.headText}>
-      <Heading level={1} size="md" className={styles.title}>
+      <Heading level={1} size="md" className={styles.checkoutHeaderTitle}>
         Finalizar pedido
       </Heading>
       <Text className={styles.storeLine}>{storeName}</Text>

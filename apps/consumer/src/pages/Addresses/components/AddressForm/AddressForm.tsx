@@ -65,7 +65,7 @@ export const AddressForm = ({
       defaultValues={defaultValues}
       formOptions={{ mode: 'onChange' }}
       onSubmit={handleSubmit}
-      formProps={{ className: styles.form }}
+      formProps={{ className: styles.addressForm }}
     >
       {(form) => (
         <>

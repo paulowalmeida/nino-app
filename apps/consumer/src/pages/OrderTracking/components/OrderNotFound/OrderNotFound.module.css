@@ -1,14 +1,14 @@
 @reference "@nino/ds/globals.css";
 
-.page {
+.orderNotFoundPage {
   @apply flex min-h-dvh w-full flex-col bg-surface-1 pb-16;
 }
 
-.content {
+.orderNotFoundContent {
   @apply flex-1 items-center justify-center;
 }
 
-/* ----- não encontrado ----- */
+
 .notFound {
   @apply w-full max-w-md gap-3 px-6 text-center;
 }
@@ -17,6 +17,6 @@
   @apply mt-2 font-bold text-brand-strong;
 }
 
-.footer {
+.orderNotFoundFooter {
   @apply mt-auto w-full;
 }

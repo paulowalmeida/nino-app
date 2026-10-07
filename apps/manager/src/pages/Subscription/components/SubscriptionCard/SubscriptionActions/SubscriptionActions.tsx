@@ -59,7 +59,7 @@ export const SubscriptionActions = ({
   }
 
   return (
-    <Box className={styles.actions} gap={5}>
+    <Box className={styles.subscriptionActions} gap={5}>
       <Box gap={2}>
         <Text as="p" size="sm" weight="bold">
           Planos disponíveis

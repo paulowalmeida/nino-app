@@ -46,7 +46,7 @@ export const UnitStep = () => {
         gap={4}
         mt={12}
         onSubmit={submit}
-        className={styles.form}
+        className={styles.unitStepForm}
       >
         <RiseIn delay={120} className={styles.identityField}>
           <FormField label="Nome da unidade" error={errors.customName?.message}>
@@ -94,7 +94,7 @@ export const UnitStep = () => {
           </Alert>
         )}
 
-        <RiseIn delay={300} className={styles.actions}>
+        <RiseIn delay={300} className={styles.unitStepActions}>
           <Box direction="row" justify="end" gap={2}>
             <Button
               type="button"

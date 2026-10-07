@@ -1,9 +1,9 @@
 @reference '../../theme.css';
-.section {
+.forRestaurantsSection {
   @apply relative overflow-hidden bg-surface-1 py-[6.5rem] px-10;
 }
 
-.inner {
+.forRestaurantsInner {
   @apply max-w-[1100px] mx-auto grid items-center;
   @apply grid-cols-[1.05fr_0.95fr] gap-14;
 }
@@ -19,7 +19,7 @@
   @apply inline-box w-[22px] h-0.5 bg-brand rounded-1;
 }
 
-.title {
+.forRestaurantsTitle {
   @apply [font-family:var(--font-display)] font-extrabold;
   @apply text-[clamp(2rem,3.8vw,3rem)] leading-display;
   @apply tracking-[-0.02em] text-fg-strong;
@@ -34,7 +34,7 @@
   @apply text-fg-muted max-w-[480px];
 }
 
-.list {
+.forRestaurantsList {
   @apply mt-8 flex flex-col gap-[0.9rem];
 }
 
@@ -52,11 +52,11 @@
 }
 
 @media (max-width: 860px) {
-  .section {
+  .forRestaurantsSection {
     @apply py-16 px-5;
   }
 
-  .inner {
+  .forRestaurantsInner {
     @apply grid-cols-1 gap-10;
   }
 }

@@ -9,7 +9,7 @@ import styles from './NewProductFormSkeleton.module.css'
  * chegam. O cabeçalho não é osso: o título não depende de nenhum dado.
  */
 export const NewProductFormSkeleton = () => (
-  <Box className={styles.form}>
+  <Box className={styles.newProductFormSkeletonForm}>
     <Text as="p" role="status" className="sr-only">
       Carregando formulário do item
     </Text>
@@ -21,24 +21,24 @@ export const NewProductFormSkeleton = () => (
       </Box>
     </Box>
 
-    <Box className={styles.fields}>
-      <Box className={styles.field}>
+    <Box className={styles.newProductFormSkeletonFields}>
+      <Box className={styles.newProductFormSkeletonField}>
         <Skeleton className={styles.ghostLabel} />
         <Skeleton className={styles.ghostInput} />
       </Box>
 
-      <Box className={styles.field}>
+      <Box className={styles.newProductFormSkeletonField}>
         <Skeleton className={styles.ghostLabel} />
         <Skeleton className={styles.ghostTextarea} />
         <Skeleton className={styles.ghostHelper} />
       </Box>
 
-      <Box className={styles.row}>
-        <Box className={styles.field}>
+      <Box className={styles.newProductFormSkeletonRow}>
+        <Box className={styles.newProductFormSkeletonField}>
           <Skeleton className={styles.ghostLabel} />
           <Skeleton className={styles.ghostInput} />
         </Box>
-        <Box className={styles.field}>
+        <Box className={styles.newProductFormSkeletonField}>
           <Skeleton className={styles.ghostLabel} />
           <Skeleton className={styles.ghostInput} />
         </Box>
@@ -49,7 +49,7 @@ export const NewProductFormSkeleton = () => (
       </Box>
     </Box>
 
-    <Box className={styles.actions}>
+    <Box className={styles.newProductFormSkeletonActions}>
       <Skeleton className={styles.ghostButton} />
       <Skeleton className={styles.ghostButton} />
     </Box>

@@ -15,12 +15,12 @@ export type PersonalizeHeaderProps = {
 
 export const PersonalizeHeader = ({ storeUrl, actions }: PersonalizeHeaderProps) => (
   <Box as="header" className={styles.headerContainer}>
-    <Box className={styles.header}>
+    <Box className={styles.personalizeHeader}>
       <Box className={styles.copy}>
         <Heading level={1} size="2xl">
           Personalizar loja
         </Heading>
-        <Text as="p" size="sm" color="subtle" className={styles.subtitle}>
+        <Text as="p" size="sm" color="subtle" className={styles.personalizeHeaderSubtitle}>
           Cor, logo e banner do cardápio que o cliente abre. A prévia acompanha
           cada alteração — nada vai pro ar antes de você publicar.
         </Text>
@@ -32,7 +32,7 @@ export const PersonalizeHeader = ({ storeUrl, actions }: PersonalizeHeaderProps)
           justify="end"
           gap={2}
           wrap
-          className={styles.actions}
+          className={styles.personalizeHeaderActions}
         >
           {storeUrl && (
             <Button asChild variant="outline" size="sm">

@@ -11,7 +11,7 @@ export const Profile = () => {
   const { status } = useProfileFacade()
 
   return (
-    <Box className={styles.page}>
+    <Box className={styles.profilePage}>
       <ProfileHeader />
 
       {status === 'loading' || status === 'idle' ? (

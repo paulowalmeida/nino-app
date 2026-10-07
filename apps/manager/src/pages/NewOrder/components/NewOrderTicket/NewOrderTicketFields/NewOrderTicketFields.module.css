@@ -1,9 +1,9 @@
 @reference "@nino/ds/globals.css";
 
-.field {
+.newOrderTicketFieldsField {
   @apply flex flex-col gap-3;
 }
 
-.label {
+.newOrderTicketFieldsLabel {
   @apply text-sm font-medium text-fg-default;
 }

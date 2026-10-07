@@ -26,7 +26,7 @@ export const CategoriesList = () => {
   const latestOrder = useRef(order)
 
   return (
-    <Box className={styles.list}>
+    <Box className={styles.categoriesList}>
       <Table>
         <TableHeader>
           <TableRow className={styles.headRow}>
@@ -49,7 +49,7 @@ export const CategoriesList = () => {
             setOrder(nextOrder)
           }}
           onDragEnd={() => persistOrder(latestOrder.current)}
-          className={styles.body}
+          className={styles.categoriesListBody}
         >
           {order.map((category, index) => (
             <CategoryRow

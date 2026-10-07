@@ -1,8 +1,7 @@
 @reference "@nino/ds/globals.css";
 
-/* sem caixa: o botão primário já é o destaque da coluna, e uma moldura em
-   volta dele só repete o que a cor do próprio botão diz */
-.actions {
+
+.orderActions {
   @apply mt-2 flex flex-col gap-2 border-t border-border/60 pt-4;
 }
 

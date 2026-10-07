@@ -21,7 +21,7 @@ export const NewOrder = () => {
   }, [resetDraft])
 
   return (
-    <Box className={styles.page}>
+    <Box className={styles.newOrderPage}>
       <BackLink>Pedidos</BackLink>
 
       <Header

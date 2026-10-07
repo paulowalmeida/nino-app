@@ -4,21 +4,21 @@
   @apply text-xs font-bold uppercase tracking-[0.12em] text-fg-faint;
 }
 
-/* a página é a lista: fio fino separa cabeçalho do conteúdo, sem moldura */
+
 .head {
   @apply mt-1 border-b border-border/60 pb-5;
 }
 
-.title {
+.consumersHeaderTitle {
   @apply font-display text-2xl font-extrabold tracking-[-0.02em];
   @apply text-fg-strong;
   @apply lg:text-3xl;
 }
 
-.subtitle {
+.consumersHeaderSubtitle {
   @apply mt-1.5 text-sm text-fg-subtle;
 }
 
-.search {
+.consumersHeaderSearch {
   @apply mt-4 h-11 w-full lg:max-w-sm;
 }

@@ -12,7 +12,7 @@ export const StoreAvailabilityBanner = () => {
   if (!store || isHoursPending || isOpen(store, hours)) return null
 
   return (
-    <Box className={styles.wrapper}>
+    <Box className={styles.storeAvailabilityBannerWrapper}>
       <Alert variant="warning" title="Pedidos indisponíveis no momento">
         Abra “Detalhes da loja” para consultar os horários.
       </Alert>

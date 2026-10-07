@@ -1,18 +1,18 @@
 @reference "@nino/ds/globals.css";
 
-.title {
+.removeUnitModalTitle {
   @apply font-display text-lg font-extrabold tracking-tight text-fg-strong;
 }
 
-.form {
+.removeUnitModalForm {
   @apply flex flex-col gap-4;
 }
 
-.label {
+.removeUnitModalLabel {
   @apply text-sm leading-relaxed text-fg-default;
 }
 
-/* o nome vem em bloco de código para não se confundir com a instrução */
+
 .code {
   @apply rounded-2 bg-surface-5 px-1.5 py-0.5;
   @apply font-mono text-sm font-semibold text-fg-strong;

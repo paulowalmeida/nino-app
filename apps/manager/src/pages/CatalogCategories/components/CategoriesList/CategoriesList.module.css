@@ -1,14 +1,14 @@
 @reference "@nino/ds/globals.css";
 
-.body {
+.categoriesListBody {
   @apply [&_tr:last-child]:border-0;
 }
 
-.list {
+.categoriesList {
   @apply min-h-0 flex-1;
 }
 
-.list > div {
+.categoriesList > div {
   @apply h-full min-h-0;
   overflow-y: auto;
 }

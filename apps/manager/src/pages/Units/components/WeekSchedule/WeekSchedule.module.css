@@ -1,6 +1,6 @@
 @reference "@nino/ds/globals.css";
 
-.panel {
+.weekSchedulePanel {
   @apply flex min-w-0 flex-col;
 }
 
@@ -17,10 +17,9 @@
   @apply flex flex-col gap-1 ;
 }
 
-/*
- * One row per day — a closed day recedes into the background. No divider:
- * outside the card, the rule used to run the page's full width while the
- * fields stopped halfway, leaving a stroke on the right pointing at
+/* WHY: One row per day — a closed day recedes into the background. No
+ * divider: outside the card, the rule used to run the page's full width while
+ * the fields stopped halfway, leaving a stroke on the right pointing at
  * nothing. What separates the days is the rows' own rhythm.
  */
 .day {
@@ -47,9 +46,9 @@
   @apply text-xs text-fg-faint;
 }
 
-/* Em 4K, mantém a leitura semanal em uma coluna e centraliza o bloco. */
+
 @media (min-width: 2560px) {
-  .panel {
+  .weekSchedulePanel {
     @apply mx-auto w-full max-w-2xl;
   }
 }

@@ -58,7 +58,7 @@ export const TabBar = ({ base, cartCount = 0, onOpenCart }: TabBarProps) => {
           <Button
             variant="ghost"
             onClick={onOpenCart}
-            className={styles.tab}
+            className={styles.tabBarTab}
             aria-label={
               cartCount > 0
                 ? `Sacola com ${cartCount} ${cartCount === 1 ? 'item' : 'itens'}`
@@ -73,7 +73,7 @@ export const TabBar = ({ base, cartCount = 0, onOpenCart }: TabBarProps) => {
                 </Text>
               )}
             </Text>
-            <Text as="span" className={styles.label}>
+            <Text as="span" className={styles.tabBarLabel}>
               Sacola
             </Text>
           </Button>
@@ -89,7 +89,7 @@ export const TabBar = ({ base, cartCount = 0, onOpenCart }: TabBarProps) => {
           <Text as="span" className={styles.homeRing}>
             <Icon name="home" />
           </Text>
-          <Text as="span" className={styles.label}>
+          <Text as="span" className={styles.tabBarLabel}>
             Início
           </Text>
         </Button>
@@ -100,11 +100,11 @@ export const TabBar = ({ base, cartCount = 0, onOpenCart }: TabBarProps) => {
             onClick={() => void navigate(notifications)}
             aria-current={isNotifications ? 'page' : undefined}
             className={
-              isNotifications ? `${styles.tab} ${styles.tabOn}` : styles.tab
+              isNotifications ? `${styles.tabBarTab} ${styles.tabOn}` : styles.tabBarTab
             }
           >
             <Icon name="receipt" />
-            <Text as="span" className={styles.label}>
+            <Text as="span" className={styles.tabBarLabel}>
               Pedido
             </Text>
           </Button>
@@ -115,10 +115,10 @@ export const TabBar = ({ base, cartCount = 0, onOpenCart }: TabBarProps) => {
           onClick={() => setIsAccountOpen(true)}
           aria-haspopup="dialog"
           aria-expanded={isAccountOpen}
-          className={isAccount ? `${styles.tab} ${styles.tabOn}` : styles.tab}
+          className={isAccount ? `${styles.tabBarTab} ${styles.tabOn}` : styles.tabBarTab}
         >
           <Icon name="user" />
-          <Text as="span" className={styles.label}>
+          <Text as="span" className={styles.tabBarLabel}>
             Perfil
           </Text>
         </Button>

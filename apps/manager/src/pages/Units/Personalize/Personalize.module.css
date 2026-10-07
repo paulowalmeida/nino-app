@@ -1,5 +1,5 @@
 @reference "@nino/ds/globals.css";
 
-.page {
+.personalizePage {
   @apply flex min-h-dvh w-full min-w-0 flex-col gap-6 p-4 lg:p-10;
 }

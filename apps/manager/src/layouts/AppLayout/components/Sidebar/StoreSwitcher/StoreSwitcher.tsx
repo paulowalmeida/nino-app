@@ -89,7 +89,7 @@ export const StoreSwitcher = ({
         trigger={
           <Button
             variant="ghost"
-            className={mergeClasses(motion.press, styles.trigger)}
+            className={mergeClasses(motion.press, styles.storeSwitcherTrigger)}
           >
             <Icon name="store" className={styles.storeIcon} />
             {!collapsed && (
@@ -110,7 +110,7 @@ export const StoreSwitcher = ({
           </Button>
         }
         items={items}
-        contentClassName={styles.panel}
+        contentClassName={styles.storeSwitcherPanel}
         itemClassName={styles.option}
       />
     </Box>

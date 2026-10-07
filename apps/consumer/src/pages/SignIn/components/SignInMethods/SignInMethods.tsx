@@ -21,10 +21,10 @@ export const SignInMethods = () => {
 
   return (
     <Box className={motion.riseIn} style={riseDelay(60)}>
-      <Heading level={1} className={styles.title}>
+      <Heading level={1} className={styles.signInMethodsTitle}>
         Bora pedir?
       </Heading>
-      <Text size="sm" className={styles.subtitle}>
+      <Text size="sm" className={styles.signInMethodsSubtitle}>
         {store
           ? `Entre para fazer seu pedido no ${displayName(store)}.`
           : 'Entre para fazer seu pedido.'}
@@ -32,13 +32,13 @@ export const SignInMethods = () => {
 
       <Button
         type="button"
-        className={`${motion.press} ${styles.primary}`}
+        className={`${motion.press} ${styles.signInMethodsPrimary}`}
         onClick={() => setChannel('phone')}
       >
         Entrar com celular
       </Button>
 
-      <Box direction="row" className={styles.divider}>
+      <Box direction="row" className={styles.signInMethodsDivider}>
         <Text size="xs" color="faintest" className={styles.dividerLabel}>
           ou
         </Text>
@@ -49,7 +49,7 @@ export const SignInMethods = () => {
       <Button
         type="button"
         variant="ghost"
-        className={`${motion.press} ${styles.secondary}`}
+        className={`${motion.press} ${styles.signInMethodsSecondary}`}
         onClick={() => setChannel('email')}
       >
         <Icon name="mail" className={styles.secondaryIcon} />

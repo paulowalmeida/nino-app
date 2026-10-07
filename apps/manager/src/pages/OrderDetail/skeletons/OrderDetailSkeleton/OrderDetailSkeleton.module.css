@@ -1,6 +1,6 @@
 @reference "@nino/ds/globals.css";
 
-.page {
+.orderDetailSkeletonPage {
   @apply mx-auto flex max-w-page flex-col p-4 lg:p-10;
 }
 .backBar {
@@ -21,7 +21,7 @@
 .items {
   @apply flex flex-col divide-y divide-border/50;
 }
-.item {
+.orderDetailSkeletonItem {
   @apply flex items-baseline gap-3 py-2.5 first:pt-0;
 }
 .totals {

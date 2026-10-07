@@ -1,14 +1,14 @@
 @reference "@nino/ds/globals.css";
 
-.body {
+.storeInfoBody {
   @apply flex flex-col gap-6 pb-2;
 }
 
-.label {
+.storeInfoLabel {
   @apply mb-1 text-2xs font-bold uppercase tracking-[0.12em] text-fg-faint;
 }
 
-.value {
+.storeInfoValue {
   @apply text-sm font-bold text-fg-muted;
 }
 
@@ -20,7 +20,7 @@
   @apply flex flex-col;
 }
 
-.row {
+.storeInfoRow {
   @apply flex items-center justify-between border-b border-black/[0.06] py-2;
   @apply text-sm text-fg-muted last:border-0;
 }

@@ -8,10 +8,10 @@
   @apply mt-4;
 }
 
-.actions {
+.profileFormActions {
   @apply mt-8 border-t border-border pt-5;
 }
 
-.status {
+.profileFormStatus {
   @apply mb-2 sm:mb-0 sm:mr-auto;
 }

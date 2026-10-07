@@ -1,5 +1,5 @@
 @reference '../../../../theme.css';
-.header {
+.counterTabHeader {
   @apply flex items-start justify-between gap-4;
   @apply px-6 py-4 border-b border-gray-100;
 }
@@ -23,7 +23,7 @@
   @apply text-emerald-700 bg-emerald-500/12;
 }
 
-.body {
+.counterTabBody {
   @apply px-6 py-4 flex flex-col gap-4 bg-gray-50;
 }
 
@@ -51,16 +51,16 @@
   @apply border-brand-bold bg-brand-ghost;
 }
 
-.value {
+.counterTabValue {
   @apply text-[1.6rem] font-extrabold leading-none text-fg-strong;
   @apply [font-family:var(--font-display)];
 }
 
-.urgent .value {
+.urgent .counterTabValue {
   @apply text-brand-strong;
 }
 
-.label {
+.counterTabLabel {
   @apply text-2xs leading-tight text-gray-500;
 }
 

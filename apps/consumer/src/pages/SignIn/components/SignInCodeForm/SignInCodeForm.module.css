@@ -1,17 +1,16 @@
 @reference "@nino/ds/globals.css";
 
-.title {
+.signInCodeFormTitle {
   @apply mt-7 text-center font-display text-[1.6rem] font-extrabold;
   @apply leading-tight text-fg-strong;
   letter-spacing: -0.02em;
 }
 
-.subtitle {
+.signInCodeFormSubtitle {
   @apply mt-2 text-center leading-relaxed text-fg-default;
 }
 
-/* o código é o dado da tela: as casas têm a altura do campo do passo 1, para
-   as duas telas serem a mesma conversa em dois momentos */
+
 .codeField {
   @apply mt-3 justify-between gap-2;
 }
@@ -31,9 +30,8 @@
   @apply mt-4;
 }
 
-/*
- * A cor da loja só na ação viva. Desligado é `sand` com texto apagado — a
- * regra é do próprio Button do DS, e pintar o fundo aqui sem essa ressalva
+/* WHY: A cor da loja só na ação viva. Desligado é `sand` com texto apagado —
+ * a regra é do próprio Button do DS, e pintar o fundo aqui sem essa ressalva
  * devolvia um CTA laranja vivo que não faz nada quando tocado.
  */
 .cta {
@@ -52,8 +50,8 @@
   );
 }
 
-/* sair do passo é caminho de volta, não oferta: texto, sem moldura */
-.secondary {
+
+.signInCodeFormSecondary {
   @apply mt-2 h-12 w-full text-sm font-bold text-fg-muted;
   @apply hover:text-brand-strong;
 }

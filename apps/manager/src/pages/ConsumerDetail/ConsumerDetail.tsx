@@ -17,7 +17,7 @@ export const ConsumerDetail = () => {
 
   if (!consumer) {
     return (
-      <Box className={styles.page}>
+      <Box className={styles.consumerDetailPage}>
         <Breadcrumb trail={[{ label: 'Clientes', to: '..' }, { label: '—' }]} />
         <EmptyState>Esta pessoa não tem pedido nesta loja.</EmptyState>
       </Box>
@@ -25,7 +25,7 @@ export const ConsumerDetail = () => {
   }
 
   return (
-    <Box className={styles.page}>
+    <Box className={styles.consumerDetailPage}>
       <Breadcrumb
         trail={[{ label: 'Clientes', to: '..' }, { label: consumer.name }]}
       />

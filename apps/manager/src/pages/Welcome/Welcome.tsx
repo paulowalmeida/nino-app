@@ -5,10 +5,10 @@ import { WelcomeOnboardingContainer } from '@pages/Welcome/components/WelcomeOnb
 import styles from './Welcome.module.css'
 
 export const Welcome = () => (
-  <Box direction="column" className={styles.shell}>
+  <Box direction="column" className={styles.welcomeShell}>
     <BrandTopBar />
 
-    <Box as="main" direction="column" className={styles.page}>
+    <Box as="main" direction="column" className={styles.welcomePage}>
       <WelcomeOnboardingContainer />
     </Box>
   </Box>

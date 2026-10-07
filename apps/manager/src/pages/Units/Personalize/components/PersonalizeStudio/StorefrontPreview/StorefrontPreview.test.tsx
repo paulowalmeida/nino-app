@@ -4,8 +4,6 @@ import { describe, expect, it } from 'vitest'
 import { StorefrontPreview } from './StorefrontPreview'
 import { storefrontPreviewMock } from './StorefrontPreview.mock'
 
-import styles from './StorefrontPreview.module.css'
-
 describe(StorefrontPreview.name, () => {
   it('shows the store identity and a representative menu', () => {
     render(<StorefrontPreview {...storefrontPreviewMock} />)
@@ -55,10 +53,8 @@ describe(StorefrontPreview.name, () => {
     )
 
     expect(
-      container.querySelector(`.${styles.bannerMark}`)
-    ).not.toBeInTheDocument()
-    expect(
-      container.querySelector(`.${styles.bannerMonogram}`)
-    ).not.toBeInTheDocument()
+      container.querySelector('img[src="https://cdn.example/banner.png"]')
+    ).toBeInTheDocument()
+    expect(screen.queryByText('UN')).not.toBeInTheDocument()
   })
 })

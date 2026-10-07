@@ -1,42 +1,34 @@
 @reference "@nino/ds/globals.css";
 
-/*
- * Vocabulário de movimento da vitrine — o mesmo do painel do gestor, para a
- * marca se mover igual dos dois lados. Expo-out (0.16, 1, 0.3, 1) em tudo,
- * exceto onde o overshoot é intencional.
- *
- * Tempos: 380–620ms. Abaixo disso o movimento não é lido; acima, atrapalha
- * quem já sabe onde clicar.
- *
- * Toda classe aceita --d para escalonar entradas em sequência.
- */
 
-/* páginas e painéis: assentam no lugar. É o gesto de troca de tela. */
+
+
 .settle {
   animation: settle 0.52s var(--ease-out) var(--d, 0ms) both;
 }
 
-/* linhas de lista e texto: entram deslizando da esquerda, curtas */
+
 .deal {
   animation: deal 0.42s var(--ease-out) var(--d, 0ms) both;
 }
 
-/* destaque que chega de cima e quica uma vez */
+
 .land {
   animation: land 0.66s var(--ease-back) var(--d, 0ms) both;
 }
 
-/* revela de cima para baixo por clip-path, sem fade */
+/* WHY: revela de cima para baixo por clip-path, sem fade
+ */
 .unroll {
   animation: unroll 0.46s var(--ease-out) var(--d, 0ms) both;
 }
 
-/* números e selos: crescem com um respiro */
+
 .pop {
   animation: pop 0.42s var(--ease-back) var(--d, 0ms) both;
 }
 
-/* o prato chegando à mesa: sobe de leve, sem cair de cima */
+
 .riseIn {
   animation: rise-in 0.36s var(--ease-out) var(--d, 0ms) both;
 }
@@ -118,7 +110,7 @@
   }
 }
 
-/* alvos de toque: afundam ao pressionar — botões, steppers, CTA */
+
 .press {
   @apply transition-transform duration-150 ease-out;
 }

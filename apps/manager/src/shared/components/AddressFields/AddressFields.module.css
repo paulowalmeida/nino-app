@@ -1,8 +1,10 @@
 @reference "@nino/ds/globals.css";
 
-/* As áreas nomeadas mantêm a ordem de leitura e reagrupam os campos por
-   breakpoint: no desktop, endereço+número, bairro+complemento e cidade+estado. */
-.grid {
+/* WHY: As áreas nomeadas mantêm a ordem de leitura e reagrupam os campos por
+ * breakpoint: no desktop, endereço+número, bairro+complemento e
+ * cidade+estado.
+ */
+.addressFieldsGrid {
   @apply grid gap-3;
   grid-template-columns: repeat(12, minmax(0, 1fr));
   grid-template-areas:
@@ -14,7 +16,7 @@
 }
 
 @media (min-width: 640px) {
-  .grid {
+  .addressFieldsGrid {
     grid-template-columns: repeat(12, minmax(0, 1fr));
     grid-template-areas:
       'z z z z st st st st st st st st'
@@ -24,7 +26,7 @@
 }
 
 @media (min-width: 768px) {
-  .grid {
+  .addressFieldsGrid {
     grid-template-areas:
       'z z st st st st st st st st n n'
       'h h h h h h co co co co co co'
@@ -89,8 +91,7 @@
   }
 }
 
-/* A entrega é ditada na ordem em que o cliente fala: rua, número, o resto.
-   O CEP desce para o lado do bairro, onde é o que é — opcional. */
+
 .streetLed {
   grid-template-areas:
     'st st st st st st st st n n n n'

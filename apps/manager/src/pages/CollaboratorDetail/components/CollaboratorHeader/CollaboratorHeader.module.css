@@ -20,6 +20,6 @@
   @apply mt-1 truncate text-xs text-fg-faint;
 }
 
-.status {
+.collaboratorHeaderStatus {
   @apply shrink-0;
 }

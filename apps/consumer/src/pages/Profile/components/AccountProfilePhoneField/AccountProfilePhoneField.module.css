@@ -1,6 +1,6 @@
 @reference "@nino/ds/globals.css";
 
-.field {
+.accountProfilePhoneField {
   @apply mt-4 first:mt-0;
 }
 
@@ -18,11 +18,11 @@
   @apply mt-1.5 text-xs leading-snug text-fg-faint;
 }
 
-.row {
+.accountProfilePhoneFieldRow {
   @apply mt-2 flex flex-col gap-2 sm:flex-row;
 }
 
-.input {
+.accountProfilePhoneFieldInput {
   @apply sm:flex-1;
 }
 
@@ -40,7 +40,7 @@
   @apply mt-2;
 }
 
-.action {
+.accountProfilePhoneFieldAction {
   @apply h-11 rounded-full px-5 text-sm font-bold;
 }
 

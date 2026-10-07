@@ -1,12 +1,14 @@
 @reference "@nino/ds/globals.css";
 
-.shell {
+.consumerOrderHistoryShell {
   @apply flex min-h-0 flex-1 flex-col;
 }
 
-/* CONSTRAINT: Table já envolve a <table> no seu próprio scroller, e o cabeçalho
-   sticky só gruda se a rolagem vertical acontecer nesse mesmo elemento. */
-.shell > div {
+/* CONSTRAINT: Table já envolve a <table> no seu próprio scroller, e o
+ * cabeçalho sticky só gruda se a rolagem vertical acontecer nesse mesmo
+ * elemento.
+ */
+.consumerOrderHistoryShell > div {
   @apply min-h-0 flex-1;
   overflow-y: auto;
 }

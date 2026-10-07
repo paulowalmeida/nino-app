@@ -27,13 +27,13 @@ const ADDRESS_FIELDS = [
  * se a grade mudar lá, o esqueleto acompanha em vez de mentir sobre a tela
  * que está por vir. */
 export const CompanyCardSkeleton = () => (
-  <Box as="section" className={card.panel}>
+  <Box as="section" className={card.companyCardPanel}>
     <Text as="p" role="status" className="sr-only">
       Carregando a empresa
     </Text>
 
     <Box as="header" className={card.head}>
-      <Skeleton className={ghost.heading} />
+      <Skeleton className={ghost.companyCardSkeletonHeading} />
       <Skeleton className={ghost.lead} />
     </Box>
 
@@ -43,11 +43,11 @@ export const CompanyCardSkeleton = () => (
       <Skeleton className={ghost.identityHint} />
     </Box>
 
-    <Box className={card.fields}>
+    <Box className={card.companyCardFields}>
       {COMPANY_FIELDS.map(({ span, label }) => (
-        <Box key={label} className={mergeClasses(ghost.field, span)}>
-          <Skeleton className={mergeClasses(ghost.label, label)} />
-          <Skeleton className={ghost.input} />
+        <Box key={label} className={mergeClasses(ghost.companyCardSkeletonField, span)}>
+          <Skeleton className={mergeClasses(ghost.companyCardSkeletonLabel, label)} />
+          <Skeleton className={ghost.companyCardSkeletonInput} />
         </Box>
       ))}
     </Box>
@@ -55,18 +55,18 @@ export const CompanyCardSkeleton = () => (
     <Box className={card.address}>
       <Skeleton className={ghost.groupTitle} />
 
-      <Box className={address.grid}>
+      <Box className={address.addressFieldsGrid}>
         {ADDRESS_FIELDS.map(({ span, label }) => (
-          <Box key={label} className={mergeClasses(ghost.field, span)}>
-            <Skeleton className={mergeClasses(ghost.label, label)} />
-            <Skeleton className={ghost.input} />
+          <Box key={label} className={mergeClasses(ghost.companyCardSkeletonField, span)}>
+            <Skeleton className={mergeClasses(ghost.companyCardSkeletonLabel, label)} />
+            <Skeleton className={ghost.companyCardSkeletonInput} />
           </Box>
         ))}
       </Box>
     </Box>
 
-    <Box className={card.actions}>
-      <Skeleton className={ghost.status} />
+    <Box className={card.companyCardActions}>
+      <Skeleton className={ghost.companyCardSkeletonStatus} />
       <Skeleton className={ghost.save} />
     </Box>
   </Box>

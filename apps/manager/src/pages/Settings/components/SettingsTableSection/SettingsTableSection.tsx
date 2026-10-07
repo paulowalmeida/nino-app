@@ -11,7 +11,7 @@ import local from './SettingsTableSection.module.css'
 
 export const SettingsTableSection = () => {
   return (
-    <Box as="section" className={local.panel}>
+    <Box as="section" className={local.settingsTableSectionPanel}>
       <Box as="header" className={`${motion.unroll} ${local.head}`}>
         <Heading level={2} size="xl">
           Salão e comandas
@@ -23,7 +23,7 @@ export const SettingsTableSection = () => {
       </Box>
 
       <Tabs
-        className={local.tabs}
+        className={local.settingsTableSectionTabs}
         tabs={[
           {
             value: 'tables',

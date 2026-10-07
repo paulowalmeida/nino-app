@@ -1,11 +1,12 @@
 @reference "@nino/ds/globals.css";
 
-.nav {
+.categoryNav {
   @apply flex w-full items-center;
 }
 
 /* WHY: num celular estreito o rótulo comia 80px da régua; a nav já se
-   identifica pelo aria-label e pelos nomes das categorias */
+ * identifica pelo aria-label e pelos nomes das categorias
+ */
 .railLabel {
   @apply hidden;
 }
@@ -23,10 +24,7 @@
   @apply flex w-max min-w-full justify-start gap-2;
 }
 
-/*
- * Chip em repouso é campo calmo sem contorno; a categoria ativa recebe a cor
- * da loja cheia. A diferença entre as duas é de peso, não de moldura.
- */
+
 .chip {
   @apply flex shrink-0 cursor-pointer items-center gap-1.5 rounded-full;
   @apply bg-surface-cool px-3.5 py-2 text-sm font-semibold;

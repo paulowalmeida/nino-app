@@ -34,7 +34,7 @@ export const OrderDetail = () => {
 
   if (isError) {
     return (
-      <Box className={styles.page}>
+      <Box className={styles.orderDetailPage}>
         <Box className={styles.backBar}>
           <BackLink to={back.to}>{back.label}</BackLink>
         </Box>
@@ -47,7 +47,7 @@ export const OrderDetail = () => {
 
   if (!order) {
     return (
-      <Box className={styles.page}>
+      <Box className={styles.orderDetailPage}>
         <Box className={styles.backBar}>
           <BackLink to={back.to}>{back.label}</BackLink>
         </Box>
@@ -59,7 +59,7 @@ export const OrderDetail = () => {
   }
 
   return (
-    <Box className={styles.page}>
+    <Box className={styles.orderDetailPage}>
       <Box className={styles.backBar}>
         <BackLink to={back.to}>{back.label}</BackLink>
       </Box>
@@ -78,7 +78,7 @@ export const OrderDetail = () => {
         </div>
         <Badge
           variant={toOrderBadgeVariant(order.status)}
-          className={styles.badge}
+          className={styles.orderDetailBadge}
         >
           {STATUS_LABEL[order.status]}
         </Badge>
@@ -94,7 +94,7 @@ export const OrderDetail = () => {
               {order.items.map((item, index) => (
                 <li
                   key={item.id}
-                  className={`${motion.deal} ${styles.item}`}
+                  className={`${motion.deal} ${styles.orderDetailItem}`}
                   style={riseDelay(index * 45 + 60)}
                 >
                   <span className={styles.quantity}>{item.quantity}×</span>

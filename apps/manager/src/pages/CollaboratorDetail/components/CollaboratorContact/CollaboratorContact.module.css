@@ -4,15 +4,15 @@
   @apply mt-5 gap-x-4 gap-y-2;
 }
 
-.actions {
+.collaboratorContactActions {
   @apply min-w-0 gap-2;
 }
 
-.action {
+.collaboratorContactAction {
   @apply inline-flex min-w-0 items-center gap-2;
 }
 
-/* E-mail longo encolhe em vez de empurrar o botão pra fora da tela. */
+
 .email {
   @apply truncate;
 }

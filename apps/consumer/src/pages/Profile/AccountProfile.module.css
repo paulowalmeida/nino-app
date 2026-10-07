@@ -1,10 +1,10 @@
 @reference "@nino/ds/globals.css";
 
-.note {
+.accountProfileNote {
   @apply mt-1 text-sm leading-snug text-fg-muted;
 }
 
-.card {
+.accountProfileCard {
   @apply mt-6 rounded-4 border border-border bg-surface-1 p-5 sm:p-6;
 }
 
@@ -12,14 +12,15 @@
   @apply mt-1.5 text-xs leading-snug text-fg-faint;
 }
 
-.actions {
+.accountProfileActions {
   @apply mt-6 flex flex-col gap-2.5 sm:flex-row-reverse;
 }
 
 /* WORKAROUND: largura por `w-full`, nunca por `flex-1` — no celular
-   `.actions` é coluna, e em coluna o `flex-1` zera a altura-base do botão e
-   passa por cima do `h-12`, esmagando-o numa faixa de texto. */
-.primary {
+ * `.accountProfileActions` é coluna, e em coluna o `flex-1` zera a altura-base do botão e
+ * passa por cima do `h-12`, esmagando-o numa faixa de texto.
+ */
+.accountProfilePrimary {
   @apply flex h-12 w-full items-center justify-center rounded-full;
   @apply bg-brand;
   @apply font-bold text-fg-on-brand transition-colors;

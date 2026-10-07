@@ -102,8 +102,8 @@ export const DeliveryMap = ({
   }, [center, zones, previewKm, focusedZoneId])
 
   return (
-    <Box className={local.wrapper}>
-      <Box className={local.header}>
+    <Box className={local.deliveryMapWrapper}>
+      <Box className={local.deliveryMapHeader}>
         <Text size="sm" weight="semibold">
           Área de atendimento
         </Text>

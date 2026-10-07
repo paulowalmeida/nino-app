@@ -42,7 +42,7 @@ export const SalesTrendByDimension = ({
       {isPending && <SalesTrendSkeleton />}
 
       {hasNoSales && (
-        <EmptyState className={styles.empty}>{emptyMessage}</EmptyState>
+        <EmptyState className={styles.salesTrendByDimensionEmpty}>{emptyMessage}</EmptyState>
       )}
 
       {!isPending && !hasNoSales && breakdown && (

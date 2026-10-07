@@ -1,6 +1,6 @@
 @reference "@nino/ds/globals.css";
 
-.page {
+.checkoutSkeletonPage {
   @apply mx-auto flex min-h-dvh w-full max-w-2xl flex-col bg-surface-page;
   @apply lg:my-10 lg:min-h-[calc(100dvh-5rem)] lg:rounded-5;
   @apply lg:border lg:border-border lg:shadow-warm-lg;

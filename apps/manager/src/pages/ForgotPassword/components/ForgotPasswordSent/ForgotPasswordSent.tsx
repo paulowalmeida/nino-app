@@ -17,7 +17,7 @@ export const ForgotPasswordSent = ({
   onUseAnotherEmail,
 }: ForgotPasswordSentProps) => (
   <RiseIn>
-    <Box direction="column" role="status" className={styles.panel}>
+    <Box direction="column" role="status" className={styles.forgotPasswordSentPanel}>
       <Box direction="row" align="center" gap={2} className={styles.flag}>
         <Box className={styles.dot} aria-hidden="true" />
         <Text as="span" className={styles.flagLabel}>
@@ -37,7 +37,7 @@ export const ForgotPasswordSent = ({
         </Text>
       </Box>
 
-      <Text size="sm" color="subtle" className={styles.note}>
+      <Text size="sm" color="subtle" className={styles.forgotPasswordSentNote}>
         Não chegou? Procure na caixa de spam antes de pedir outro.
       </Text>
 

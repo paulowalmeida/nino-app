@@ -16,7 +16,7 @@ export const StoreHeaderSkeleton = ({
 }: StoreHeaderSkeletonProps) => {
   return (
     <Box
-      className={styles.header}
+      className={styles.storeHeaderSkeletonHeader}
       aria-busy="true"
       aria-label="Carregando cabeçalho da loja"
     >
@@ -48,12 +48,12 @@ export const StoreHeaderSkeleton = ({
       </Box>
 
       {showBanner && (
-        <Box className={styles.banner}>
+        <Box className={styles.storeHeaderSkeletonBanner}>
           <Skeleton className={styles.bannerFill} />
         </Box>
       )}
 
-      <Box className={styles.shell}>
+      <Box className={styles.storeHeaderSkeletonShell}>
         <Box
           direction="row"
           className={`${styles.identityRow} ${!showBanner ? styles.afterBanner : ''}`}
@@ -68,7 +68,7 @@ export const StoreHeaderSkeleton = ({
           </Box>
         </Box>
 
-        {showSearch && <Skeleton className={styles.search} />}
+        {showSearch && <Skeleton className={styles.storeHeaderSkeletonSearch} />}
       </Box>
     </Box>
   )

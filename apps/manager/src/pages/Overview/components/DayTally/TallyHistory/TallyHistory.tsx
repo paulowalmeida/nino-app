@@ -28,7 +28,7 @@ export const TallyHistory = ({ recent }: TallyHistoy) => {
       as="section"
       id="ultimos-pedidos"
       aria-label="Últimos pedidos"
-      className={styles.section}
+      className={styles.tallyHistorySection}
     >
       <Eyebrow className="mb-3">Últimos pedidos</Eyebrow>
 
@@ -43,7 +43,7 @@ export const TallyHistory = ({ recent }: TallyHistoy) => {
             <Link
               to={`../pedidos/${order.id}`}
               relative="path"
-              className={`${motion.lift} ${styles.link}`}
+              className={`${motion.lift} ${styles.tallyHistoryLink}`}
             >
               <Text className={styles.number}>
                 #{ticketNumber(order.orderNumber)}
@@ -52,7 +52,7 @@ export const TallyHistory = ({ recent }: TallyHistoy) => {
               <time className={styles.at} dateTime={order.createdAt}>
                 {clock.format(new Date(order.createdAt))}
               </time>
-              <Text className={styles.total}>{brl(order.totalAmount)}</Text>
+              <Text className={styles.tallyHistoryTotal}>{brl(order.totalAmount)}</Text>
             </Link>
           </ListRow>
         ))}

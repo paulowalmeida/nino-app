@@ -34,7 +34,7 @@ export const Personalize = () => {
   if (isIncomplete && !isError) return <PersonalizeSkeleton />
 
   return (
-    <Box className={styles.page}>
+    <Box className={styles.personalizePage}>
       {isError || !detail.data || !editor.data ? (
         <Alert variant="error" title="A personalização não carregou">
           {loadErrorMessage([detail.error, editor.error])}

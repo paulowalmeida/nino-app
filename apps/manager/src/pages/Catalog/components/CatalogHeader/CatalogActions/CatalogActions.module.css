@@ -1,6 +1,6 @@
 @reference "@nino/ds/globals.css";
 
-.actions {
+.catalogActions {
   @apply lg:ml-auto;
 }
 

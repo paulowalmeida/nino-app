@@ -83,13 +83,13 @@ export const DestinationStep = ({
     </Box>
 
     {!channel && (
-      <Text size="xs" color="muted" className={styles.note}>
+      <Text size="xs" color="muted" className={styles.destinationStepNote}>
         Escolha como o pedido sai para saber o que precisa perguntar ao cliente.
       </Text>
     )}
 
     {channel === 'PICKUP' ? (
-      <Box direction="column" className={styles.fields}>
+      <Box direction="column" className={styles.destinationStepFields}>
         <Box className={styles.identity}>
           <FormField label="Nome de quem pediu">
             <Input
@@ -107,7 +107,7 @@ export const DestinationStep = ({
             />
           </FormField>
         </Box>
-        <Text size="xs" color="muted" className={styles.note}>
+        <Text size="xs" color="muted" className={styles.destinationStepNote}>
           Nome e telefone válidos são obrigatórios para identificar quem vai
           retirar o pedido.
         </Text>
@@ -124,7 +124,7 @@ export const DestinationStep = ({
         onAddressLookupRequested={onAddressLookupRequested}
       />
     ) : channel ? (
-      <Box direction="column" className={styles.fields}>
+      <Box direction="column" className={styles.destinationStepFields}>
         <Box className={styles.identity}>
           <FormField label="Nome de quem pediu">
             <Input
@@ -146,7 +146,7 @@ export const DestinationStep = ({
             </FormField>
           )}
         </Box>
-        <Text size="xs" color="muted" className={styles.note}>
+        <Text size="xs" color="muted" className={styles.destinationStepNote}>
           Preencha o nome, a mesa ou os dois para identificar o pedido.
         </Text>
       </Box>

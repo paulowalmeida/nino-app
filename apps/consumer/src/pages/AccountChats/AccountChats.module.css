@@ -1,14 +1,14 @@
 @reference "@nino/ds/globals.css";
 
-.page {
+.accountChatsPage {
   @apply flex min-h-dvh w-full flex-col bg-surface-1 pb-16;
 }
 
-.shell {
+.accountChatsShell {
   @apply mx-auto w-full max-w-5xl flex-1 px-5 sm:px-6 lg:px-10;
 }
 
-.header {
+.accountChatsHeader {
   @apply sticky top-0 z-dock -mx-5 gap-3;
   @apply border-b border-border bg-surface-raised/95 px-5 py-4 backdrop-blur;
   @apply sm:-mx-6 sm:px-6 lg:-mx-10 lg:px-10;
@@ -21,19 +21,19 @@
   @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand;
 }
 
-.title {
+.accountChatsTitle {
   @apply font-display text-xl font-extrabold leading-tight text-fg-muted;
 }
 
-.subtitle {
+.accountChatsSubtitle {
   @apply mt-0.5 max-w-[46ch] text-sm leading-snug text-fg-faint;
 }
 
-.content {
+.accountChatsContent {
   @apply mx-auto w-full max-w-2xl py-7 sm:py-9;
 }
 
-.list {
+.accountChatsList {
   @apply flex flex-col gap-4;
 }
 
@@ -124,7 +124,7 @@
   @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand;
 }
 
-.footer {
+.accountChatsFooter {
   @apply mt-auto w-full;
 }
 

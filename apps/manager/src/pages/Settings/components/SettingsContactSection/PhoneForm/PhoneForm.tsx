@@ -27,7 +27,7 @@ export const PhoneForm = ({ isAdding, onAdd }: PhoneFormProps) => {
   }
 
   return (
-    <Box className={local.section}>
+    <Box className={local.phoneFormSection}>
       <Box className={local.intro}>
         <Heading level={3} size="md">
           Adicionar telefone
@@ -37,8 +37,8 @@ export const PhoneForm = ({ isAdding, onAdd }: PhoneFormProps) => {
         </Text>
       </Box>
 
-      <Box className={local.form}>
-        <FormField label="Telefone" className={local.field}>
+      <Box className={local.phoneForm}>
+        <FormField label="Telefone" className={local.phoneFormField}>
           <PhoneInput
             value={phone}
             onChange={(event) => setPhone(event.target.value)}

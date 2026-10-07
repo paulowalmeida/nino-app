@@ -15,23 +15,23 @@
   @apply min-h-11 shrink-0;
 }
 
-.icon {
+.stageTrackIcon {
   @apply h-4 w-4 shrink-0 text-fg-faintest transition-colors duration-200;
 }
 
-.current .icon {
+.current .stageTrackIcon {
   @apply text-brand;
 }
 
-.label {
+.stageTrackLabel {
   @apply whitespace-nowrap;
 }
 
-.count {
+.stageTrackCount {
   @apply text-xs font-bold text-fg-faintest;
   font-variant-numeric: tabular-nums;
 }
 
-.current .count {
+.current .stageTrackCount {
   @apply text-brand-strong;
 }

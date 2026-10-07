@@ -26,9 +26,9 @@ export const AccountSoon = ({
       {headline}
     </Heading>
 
-    <Box className={styles.card}>
-      <Icon name={icon} className={styles.icon} />
-      <Text className={styles.note}>{note}</Text>
+    <Box className={styles.accountSoonCard}>
+      <Icon name={icon} className={styles.accountSoonIcon} />
+      <Text className={styles.accountSoonNote}>{note}</Text>
       <Badge size="sm" className={styles.tag}>
         Em breve
       </Badge>

@@ -7,7 +7,7 @@ import styles from './Employees.module.css'
 
 export const Employees = () => {
   return (
-    <Box className={styles.page}>
+    <Box className={styles.employeesPage}>
       <EmployeesHeader />
       <EmployeesContent />
     </Box>

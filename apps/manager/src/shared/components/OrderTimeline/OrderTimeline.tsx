@@ -40,7 +40,7 @@ export const OrderTimeline = ({ entries }: OrderTimelineProps) => {
           style={riseDelay(index * 60 + 120)}
         >
           <span aria-hidden="true" className={styles.mark} />
-          <Text as="span" className={styles.label}>
+          <Text as="span" className={styles.orderTimelineLabel}>
             {STATUS_LABEL[entry.status]}
             <Text as="span" className={styles.author}>
               {' '}

@@ -119,7 +119,7 @@ export const Sidebar = ({
         onNavigate={onClose}
       />
 
-      <Box className={styles.footer}>
+      <Box className={styles.sidebarFooter}>
         <UserMenu
           key={isOpen ? 'open' : 'closed'}
           name={user?.name ?? ''}

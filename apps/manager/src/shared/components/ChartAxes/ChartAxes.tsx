@@ -38,7 +38,7 @@ export const ChartAxes = ({
         x2={innerWidth}
         y1={yScale(tick)}
         y2={yScale(tick)}
-        className={styles.grid}
+        className={styles.chartAxesGrid}
       />
     ))}
 

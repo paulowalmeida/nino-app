@@ -1,14 +1,14 @@
 @reference "@nino/ds/globals.css";
 
-.page {
+.orderTrackingSkeletonPage {
   @apply flex min-h-dvh w-full flex-col bg-surface-raised pb-16;
 }
 
-.shell {
+.orderTrackingSkeletonShell {
   @apply mx-auto w-full max-w-2xl flex-1 px-5 sm:px-6;
 }
 
-.footer {
+.orderTrackingSkeletonFooter {
   @apply mt-auto w-full;
 }
 

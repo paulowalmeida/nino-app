@@ -1,5 +1,5 @@
 @reference "@nino/ds/globals.css";
 
-.wrapper {
+.storeAvailabilityBannerWrapper {
   @apply mt-4;
 }

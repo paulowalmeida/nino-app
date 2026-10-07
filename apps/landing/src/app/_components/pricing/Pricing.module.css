@@ -1,9 +1,9 @@
 @reference '../../theme.css';
-.section {
+.pricingSection {
   @apply relative overflow-hidden bg-surface-3 py-[6.5rem] px-10;
 }
 
-.inner {
+.pricingInner {
   @apply max-w-[1140px] mx-auto;
 }
 
@@ -23,7 +23,7 @@
   @apply inline-box w-[22px] h-0.5 bg-brand rounded-1;
 }
 
-.title {
+.pricingTitle {
   @apply [font-family:var(--font-display)] font-extrabold;
   @apply text-[clamp(2rem,3.6vw,2.8rem)] leading-display;
   @apply tracking-[-0.02em] text-fg-strong;
@@ -33,7 +33,7 @@
   @apply mt-[0.9rem] text-base text-fg-muted;
 }
 
-.grid {
+.pricingGrid {
   @apply grid grid-cols-4 gap-[1.1rem] items-stretch;
 }
 
@@ -42,7 +42,7 @@
 }
 
 @media (max-width: 980px) {
-  .grid {
+  .pricingGrid {
     @apply grid-cols-2;
   }
 
@@ -56,11 +56,11 @@
 }
 
 @media (max-width: 560px) {
-  .section {
+  .pricingSection {
     @apply py-16 px-5;
   }
 
-  .grid {
+  .pricingGrid {
     @apply grid-cols-1;
   }
 }

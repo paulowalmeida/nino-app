@@ -4,7 +4,7 @@
   @apply border-border bg-surface-raised;
 }
 
-.body {
+.settingsPhysicalTabBody {
   @apply flex h-full flex-col justify-between gap-8;
 }
 
@@ -12,7 +12,7 @@
   @apply flex flex-col gap-2;
 }
 
-.title {
+.settingsPhysicalTabTitle {
   @apply flex items-center justify-between gap-3;
 }
 

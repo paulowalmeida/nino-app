@@ -37,7 +37,7 @@ export const SalePaymentDetails = ({
   method,
   onMethod,
 }: SalePaymentDetailsProps) => (
-  <Box className={styles.details}>
+  <Box className={styles.salePaymentDetails}>
     <Box className={styles.choices}>
       {methods.map((value) => (
         <ChoiceCard
@@ -51,7 +51,7 @@ export const SalePaymentDetails = ({
     </Box>
     {method === 'CASH' && (
       <Box direction="column" className={styles.cashDetails}>
-        <Box direction="column" className={styles.field}>
+        <Box direction="column" className={styles.salePaymentDetailsField}>
           <Text as="span" className={styles.fieldLabel}>
             Valor recebido
           </Text>
@@ -90,7 +90,7 @@ export const SalePaymentDetails = ({
             </Text>
           </Box>
         ) : (
-          <Text as="p" size="xs" color="muted" className={styles.note}>
+          <Text as="p" size="xs" color="muted" className={styles.salePaymentDetailsNote}>
             Escolha quanto o cliente entregou e o troco aparece aqui.
           </Text>
         )}

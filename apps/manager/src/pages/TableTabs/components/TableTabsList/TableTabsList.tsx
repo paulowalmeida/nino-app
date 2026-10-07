@@ -43,8 +43,8 @@ export const TableTabsList = ({
   const orders = filterTableTabs(searchableOrders, search)
 
   return (
-    <Box className={styles.page}>
-      <Box className={styles.controls}>
+    <Box className={styles.tableTabsListPage}>
+      <Box className={styles.tableTabsListControls}>
         <Header
           className={motion.deal}
           title="Comandas"
@@ -56,14 +56,14 @@ export const TableTabsList = ({
           value={search}
           placeholder="Buscar por nome, mesa ou número da comanda"
           aria-label="Buscar comandas por nome, mesa ou número da comanda"
-          className={styles.search}
+          className={styles.tableTabsListSearch}
           onChange={(event) => setSearch(event.target.value)}
         />
         <Box
           direction="row"
           role="tablist"
           aria-label="Estado das comandas"
-          className={`${motion.unroll} ${styles.tabs}`}
+          className={`${motion.unroll} ${styles.tableTabsListTabs}`}
         >
           <Chip
             variant="tab"
@@ -106,7 +106,7 @@ export const TableTabsList = ({
           <Box
             key={selectedTab}
             as="ul"
-            className={`${motion.unroll} ${styles.list}`}
+            className={`${motion.unroll} ${styles.tableTabsList}`}
           >
             {orders.map((order) => (
               <ListRow
@@ -119,7 +119,7 @@ export const TableTabsList = ({
                   variant="flat"
                   padding="none"
                   asChild
-                  className={`${styles.card} w-full`}
+                  className={`${styles.tableTabsListCard} w-full`}
                 >
                   <Link to={`../comandas/${order.id}`}>
                     <Box direction="row" justify="between" align="start">

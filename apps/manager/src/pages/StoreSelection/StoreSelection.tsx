@@ -6,8 +6,8 @@ import motion from '@styles/motion.module.css'
 import styles from './StoreSelection.module.css'
 
 export const StoreSelection = () => (
-  <Box direction="row" className={styles.shell}>
-    <Box direction="column" className={`${motion.settle} ${styles.panel}`}>
+  <Box direction="row" className={styles.storeSelectionShell}>
+    <Box direction="column" className={`${motion.settle} ${styles.storeSelectionPanel}`}>
       <StoreSelectionHeader />
       <CompanyPickList />
     </Box>

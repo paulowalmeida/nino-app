@@ -44,18 +44,18 @@ export const StudioToolbar = ({
   onPublish,
   onDiscard,
 }: StudioToolbarProps) => (
-  <Box className={styles.toolbar}>
+  <Box className={styles.studioToolbar}>
     <Box
       direction="row"
       align="center"
       justify="end"
       gap={3}
       wrap
-      className={styles.controls}
+      className={styles.studioToolbarControls}
     >
       <StudioDeviceTabs device={device} onChange={onDeviceChange} />
 
-      <Box direction="row" align="center" gap={2} wrap className={styles.right}>
+      <Box direction="row" align="center" gap={2} wrap className={styles.studioToolbarRight}>
         <Text size="sm" weight="semibold" aria-live="polite">
           {statusFor(isDirty, hasUnpublishedDraft, publishedVersion)}
         </Text>

@@ -19,23 +19,23 @@ export const AccountNav = () => {
   const { logout, isLoggingOut } = useAccountNavigationFacade()
 
   return (
-    <Box as="nav" className={styles.nav} aria-label="Seções da conta">
-      <Box as="ul" className={styles.list}>
+    <Box as="nav" className={styles.accountNav} aria-label="Seções da conta">
+      <Box as="ul" className={styles.accountNavList}>
         {ACCOUNT_SECTIONS.map(({ to, label, icon, soon }, index) => (
           <Box
             as="li"
             key={to}
-            className={`${motion.deal} ${styles.item}`}
+            className={`${motion.deal} ${styles.accountNavItem}`}
             style={riseDelay(90 + index * 45)}
           >
             <NavLink
               to={`${base}/${to}`}
               className={({ isActive }) =>
-                isActive ? `${styles.link} ${styles.linkOn}` : styles.link
+                isActive ? `${styles.accountNavLink} ${styles.linkOn}` : styles.accountNavLink
               }
             >
-              <Icon name={icon} className={styles.icon} />
-              <Text as="span" className={styles.label}>
+              <Icon name={icon} className={styles.accountNavIcon} />
+              <Text as="span" className={styles.accountNavLabel}>
                 {label}
               </Text>
 
@@ -56,8 +56,8 @@ export const AccountNav = () => {
         onClick={() => logout()}
         disabled={isLoggingOut}
       >
-        <Icon name="logout" className={styles.icon} />
-        <Text as="span" className={styles.label}>
+        <Icon name="logout" className={styles.accountNavIcon} />
+        <Text as="span" className={styles.accountNavLabel}>
           {isLoggingOut ? 'Saindo…' : 'Sair da conta'}
         </Text>
       </Button>

@@ -32,7 +32,7 @@ export function PlanCard({
         {period && <span className={styles.period}>{period}</span>}
       </div>
 
-      <p className={styles.description}>{desc}</p>
+      <p className={styles.planCardDescription}>{desc}</p>
 
       {inherits && (
         <p className={styles.inherits}>

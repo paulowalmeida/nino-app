@@ -1,6 +1,6 @@
 @reference "@nino/ds/globals.css";
 
-.panel {
+.settingsDeliverySectionPanel {
   @apply flex min-w-0 flex-col gap-5 lg:gap-6;
 }
 
@@ -16,7 +16,7 @@
   @apply flex min-w-0 flex-col gap-6;
 }
 
-.rail {
+.settingsDeliverySectionRail {
   @apply flex min-w-0 flex-col;
 }
 
@@ -28,19 +28,18 @@
   .split {
     @apply grid items-start gap-8;
 
-    /* WHY: com a sidebar recolhida sobra largura no painel; quem deve crescer
-       é o card do formulário, não a tabela — que já tem o tamanho ideal com
-       a sidebar aberta. */
+
     grid-template-columns: minmax(21rem, 1fr) minmax(0, 44.5rem);
   }
 
-  .rail {
+  .settingsDeliverySectionRail {
     @apply self-start;
   }
 
   /* WHY: sem isso a tabela estica pra preencher a linha do grid inteira mesmo
-     com poucas faixas (telas grandes sobram muita altura); self-start deixa
-     ela abraçar o conteúdo em vez de esticar pra igualar a coluna do mapa. */
+ * com poucas faixas (telas grandes sobram muita altura); self-start deixa ela
+ * abraçar o conteúdo em vez de esticar pra igualar a coluna do mapa.
+ */
   .zones {
     @apply self-start;
   }

@@ -23,7 +23,7 @@ export const ScreenPreviewFrame = ({
       </Text>
     </Box>
 
-    <Box className={styles.body}>
+    <Box className={styles.screenPreviewFrameBody}>
       <Box className={styles.preview} aria-hidden="true" inert>
         {children}
       </Box>

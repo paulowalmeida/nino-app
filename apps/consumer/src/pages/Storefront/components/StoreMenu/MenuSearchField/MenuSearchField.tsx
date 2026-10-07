@@ -14,15 +14,15 @@ import styles from './MenuSearchField.module.css'
 export const MenuSearchField = forwardRef<HTMLInputElement>((_, ref) => {
   const { search, setSearch } = useStorefrontFacade()
   return (
-    <Box className={styles.toolbar}>
-      <Box className={styles.field}>
-        <Icon name="search" className={styles.icon} />
+    <Box className={styles.menuSearchFieldToolbar}>
+      <Box className={styles.menuSearchField}>
+        <Icon name="search" className={styles.menuSearchFieldIcon} />
         <Input
           ref={ref}
           type="search"
           aria-label="Buscar no cardápio"
           placeholder="Buscar no cardápio"
-          className={styles.input}
+          className={styles.menuSearchFieldInput}
           value={search}
           onChange={(event) => setSearch(event.target.value)}
         />

@@ -21,8 +21,8 @@ export const NewUnitContent = () => {
   )
 
   return (
-    <Box className={styles.body}>
-      <Box className={`${motion.settle} ${styles.form}`}>
+    <Box className={styles.newUnitContentBody}>
+      <Box className={`${motion.settle} ${styles.newUnitContentForm}`}>
         <StoreForm
           typeOptions={typeOptions}
           onSubmitStore={submitStore}

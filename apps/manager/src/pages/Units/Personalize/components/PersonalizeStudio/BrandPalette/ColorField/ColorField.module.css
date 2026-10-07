@@ -5,7 +5,7 @@
   @apply hover:shadow-warm-sm focus-ring;
 }
 
-.row {
+.colorFieldRow {
   @apply min-w-0;
 }
 
@@ -14,11 +14,11 @@
   box-shadow: inset 0 0 0 2px var(--color-surface-raised);
 }
 
-.meta {
+.colorFieldMeta {
   @apply flex min-w-0 flex-col;
 }
 
-.label {
+.colorFieldLabel {
   @apply truncate leading-tight;
 }
 

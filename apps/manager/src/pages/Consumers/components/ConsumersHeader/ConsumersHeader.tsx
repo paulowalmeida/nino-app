@@ -35,10 +35,10 @@ export const ConsumersHeader = () => {
       </Text>
 
       <Box as="header" className={`${motion.deal} ${styles.head}`}>
-        <Heading level={1} className={styles.title}>
+        <Heading level={1} className={styles.consumersHeaderTitle}>
           Quem já comprou e volta
         </Heading>
-        <Text size="sm" color="subtle" className={styles.subtitle}>
+        <Text size="sm" color="subtle" className={styles.consumersHeaderSubtitle}>
           {consumersSubtitle(total)}
         </Text>
 
@@ -47,7 +47,7 @@ export const ConsumersHeader = () => {
           value={term}
           placeholder={SEARCH_LABEL}
           aria-label={SEARCH_LABEL}
-          className={styles.search}
+          className={styles.consumersHeaderSearch}
           onChange={(event) => setTerm(event.target.value)}
         />
       </Box>

@@ -1,6 +1,6 @@
 @reference "@nino/ds/globals.css";
 
-.panel {
+.cashbackRulesPanel {
   @apply flex min-w-0 flex-col;
 }
 
@@ -8,7 +8,7 @@
   @apply mb-4 lg:mb-6;
 }
 
-.group {
+.cashbackRulesGroup {
   @apply flex flex-col gap-3 border-t border-border py-4;
 }
 
@@ -21,9 +21,10 @@
   @apply whitespace-nowrap;
 }
 
-/* O trilho do Switch é mais alto que a linha de texto: sem o empurrão o rótulo
-   assenta abaixo do eixo do controle. Mesmo ajuste do formulário de
-   atendimento. */
+/* WHY: O trilho do Switch é mais alto que a linha de texto: sem o empurrão o
+ * rótulo assenta abaixo do eixo do controle. Mesmo ajuste do formulário de
+ * atendimento.
+ */
 .textCell {
   @apply self-center;
   position: relative;
@@ -49,7 +50,7 @@
   @apply mt-0.5 text-xs leading-relaxed text-fg-faint;
 }
 
-.field {
+.cashbackRulesField {
   @apply mt-4 flex flex-col gap-1.5;
 }
 

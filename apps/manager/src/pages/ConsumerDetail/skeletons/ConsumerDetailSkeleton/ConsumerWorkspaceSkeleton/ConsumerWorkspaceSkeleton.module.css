@@ -1,19 +1,19 @@
 @reference "@nino/ds/globals.css";
 
 /* WHY: o trilho das abas é interno ao DS e não pode ser importado de dentro
-   do pacote. Repetido aqui para o painel não subir 16px quando as abas reais
-   chegam. */
+ * do pacote. Repetido aqui para o painel não subir 16px quando as abas reais
+ * chegam.
+ */
 .tabBar {
   @apply inline-flex items-center gap-0.5 self-start rounded-2;
   @apply bg-surface-mute p-1;
 }
 
-.tab {
+.consumerWorkspaceSkeletonTab {
   @apply h-11 w-28 rounded-2;
 }
 
-/* espelha o .panel do Tabs somado ao esticamento que o ConsumerWorkspace
-   aplica no painel ativo */
-.panel {
+
+.consumerWorkspaceSkeletonPanel {
   @apply mt-4 flex min-h-0 flex-1 flex-col;
 }

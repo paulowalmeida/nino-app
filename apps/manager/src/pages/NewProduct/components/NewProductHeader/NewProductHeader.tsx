@@ -10,7 +10,7 @@ export const NewProductHeader = () => (
     <BackLink>Cardápio</BackLink>
 
     <Header
-      className={styles.header}
+      className={styles.newProductHeader}
       mb={5}
       title="Novo item"
       accent="item"

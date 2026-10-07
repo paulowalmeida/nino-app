@@ -10,7 +10,7 @@ export const NewProduct = () => {
   const { isCategoriesPending } = useNewProductFacade()
 
   return (
-    <Box className={styles.page}>
+    <Box className={styles.newProductPage}>
       <NewProductHeader />
 
       {isCategoriesPending ? <NewProductFormSkeleton /> : <NewProductForm />}

@@ -11,7 +11,7 @@ type ProductChoiceGroupProps = {
 }
 
 export const ProductChoiceGroup = ({ group }: ProductChoiceGroupProps) => (
-  <Box as="section" className={styles.group} aria-labelledby={group.id}>
+  <Box as="section" className={styles.productChoiceGroup} aria-labelledby={group.id}>
     <ProductChoiceHeader group={group} />
     {group.maxSelections === 1 ? (
       <ProductChoiceSingle group={group} />

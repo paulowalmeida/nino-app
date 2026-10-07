@@ -10,7 +10,7 @@ export const CatalogActions = () => (
   <Box
     direction={{ mobile: 'column', tablet: 'row' }}
     gap={{ mobile: 2, tablet: 3 }}
-    className={styles.actions}
+    className={styles.catalogActions}
   >
     <Button
       asChild

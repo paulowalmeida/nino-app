@@ -192,7 +192,7 @@ export const PhotoCropper = ({
           src={source}
           alt="Imagem a recortar"
           draggable={false}
-          className={styles.image}
+          className={styles.photoCropperImage}
           onLoad={startCrop}
         />
 

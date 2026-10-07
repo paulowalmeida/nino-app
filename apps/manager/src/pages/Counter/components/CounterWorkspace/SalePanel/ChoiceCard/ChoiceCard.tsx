@@ -33,10 +33,10 @@ export const ChoiceCard = ({
       isSelected && styles.selected
     )}
   >
-    <Text as="span" aria-hidden="true" className={styles.icon}>
+    <Text as="span" aria-hidden="true" className={styles.choiceCardIcon}>
       {icon}
     </Text>
-    <Text as="span" weight="bold" className={styles.label}>
+    <Text as="span" weight="bold" className={styles.choiceCardLabel}>
       {label}
     </Text>
     {hint && (

@@ -87,7 +87,7 @@ export const StorefrontContent = ({ pathSlug }: StorefrontContentProps) => {
 
       {blocks.showBanner && <StoreBanner />}
 
-      <Box className={styles.shell}>
+      <Box className={styles.storefrontContentShell}>
         <StoreIdentity />
 
         <StoreAvailabilityBanner />
@@ -103,7 +103,7 @@ export const StorefrontContent = ({ pathSlug }: StorefrontContentProps) => {
 
   return (
     <Box
-      className={styles.page}
+      className={styles.storefrontContentPage}
       style={
         tint ? ({ '--store-tint': tint } as React.CSSProperties) : undefined
       }
@@ -118,9 +118,9 @@ export const StorefrontContent = ({ pathSlug }: StorefrontContentProps) => {
           </CategoryBar>
         )}
 
-      <Box as="main" className={`${styles.shell} ${styles.main}`}>
+      <Box as="main" className={`${styles.storefrontContentShell} ${styles.storefrontContentMain}`}>
         <Box
-          className={`${motion.settle} ${styles.menu}`}
+          className={`${motion.settle} ${styles.storefrontContentMenu}`}
           style={riseDelay(200)}
         >
           {isMenuContentPending && <MenuRowsSkeleton />}
@@ -142,7 +142,7 @@ export const StorefrontContent = ({ pathSlug }: StorefrontContentProps) => {
           {!isMenuContentPending &&
             !home.isMenuError &&
             home.sections.length === 0 && (
-              <EmptyState className={styles.empty}>
+              <EmptyState className={styles.storefrontContentEmpty}>
                 Esta loja ainda não publicou itens no cardápio.
               </EmptyState>
             )}
@@ -153,7 +153,7 @@ export const StorefrontContent = ({ pathSlug }: StorefrontContentProps) => {
             visibleSections.length === 0 && (
               <EmptyState
                 size="md"
-                className={styles.empty}
+                className={styles.storefrontContentEmpty}
                 illustration={<Icon name="search" size="xl" />}
                 title="Nenhum item encontrado"
                 action={

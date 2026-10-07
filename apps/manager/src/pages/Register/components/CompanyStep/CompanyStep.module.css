@@ -1,6 +1,6 @@
 @reference "@nino/ds/globals.css";
 
-.form {
+.companyStepForm {
   @apply grid grid-cols-1 gap-x-5 gap-y-4 sm:grid-cols-12;
 }
 
@@ -14,10 +14,10 @@
 }
 
 .formFeedback,
-.actions {
+.companyStepActions {
   @apply sm:col-span-12;
 }
 
-.actions {
+.companyStepActions {
   @apply mt-2;
 }

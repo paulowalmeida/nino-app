@@ -28,7 +28,7 @@ export const OrdersFilters = () => {
         value={term}
         placeholder="Buscar por código, nome ou telefone"
         aria-label="Buscar por código, nome ou telefone"
-        className={styles.search}
+        className={styles.ordersFiltersSearch}
         onChange={(event) => setTerm(event.target.value)}
       />
       {isSearching ? (

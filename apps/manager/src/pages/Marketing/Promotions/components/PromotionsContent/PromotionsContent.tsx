@@ -188,7 +188,7 @@ export const PromotionsContent = ({
   if (isPending) return <Skeleton className={styles.skeleton} />
 
   return (
-    <Box className={styles.layout}>
+    <Box className={styles.promotionsContentLayout}>
       <Card variant="flat" padding="lg" className={styles.editor}>
         <Box className={styles.sectionHeader}>
           <Heading level={2} size="xl">
@@ -226,7 +226,7 @@ export const PromotionsContent = ({
               onChange={(event) => update({ description: event.target.value })}
             />
           </Box>
-          <Box className={styles.field}>
+          <Box className={styles.promotionsContentField}>
             <Label>
               <FieldHint
                 label="Benefício"
@@ -241,7 +241,7 @@ export const PromotionsContent = ({
               }
             />
           </Box>
-          <Box className={styles.field}>
+          <Box className={styles.promotionsContentField}>
             <Label>
               <FieldHint
                 label="Aplicação"
@@ -257,7 +257,7 @@ export const PromotionsContent = ({
             />
           </Box>
           {form.type !== 'FREE_DELIVERY' && (
-            <Box className={styles.field}>
+            <Box className={styles.promotionsContentField}>
               <Label htmlFor="promotion-value">
                 <FieldHint
                   label={
@@ -277,7 +277,7 @@ export const PromotionsContent = ({
             </Box>
           )}
           {form.trigger === 'COUPON' && (
-            <Box className={styles.field}>
+            <Box className={styles.promotionsContentField}>
               <Label htmlFor="promotion-code">
                 <FieldHint
                   label="Código do cupom"
@@ -293,7 +293,7 @@ export const PromotionsContent = ({
               />
             </Box>
           )}
-          <Box className={styles.field}>
+          <Box className={styles.promotionsContentField}>
             <Label htmlFor="promotion-minimum">
               <FieldHint
                 label="Pedido mínimo (R$)"
@@ -309,7 +309,7 @@ export const PromotionsContent = ({
               }
             />
           </Box>
-          <Box className={styles.field}>
+          <Box className={styles.promotionsContentField}>
             <Label htmlFor="promotion-start">
               <FieldHint label="Começa em" hint="Opcional." />
             </Label>
@@ -320,7 +320,7 @@ export const PromotionsContent = ({
               onChange={(event) => update({ startsAt: event.target.value })}
             />
           </Box>
-          <Box className={styles.field}>
+          <Box className={styles.promotionsContentField}>
             <Label htmlFor="promotion-end">
               <FieldHint label="Termina em" hint="Opcional." />
             </Label>
@@ -333,7 +333,7 @@ export const PromotionsContent = ({
           </Box>
         </Box>
 
-        <Box className={styles.group}>
+        <Box className={styles.promotionsContentGroup}>
           <Text weight="semibold">Canais</Text>
           <Box className={styles.checkGrid}>
             {ALL_CHANNELS.map((channel) => (
@@ -356,7 +356,7 @@ export const PromotionsContent = ({
           </Box>
         </Box>
 
-        <Box className={styles.group}>
+        <Box className={styles.promotionsContentGroup}>
           <Text weight="semibold">Aplicar a produtos ou categorias</Text>
           <Text size="xs" color="subtle">
             Sem seleção, a promoção vale para o pedido inteiro.
@@ -396,7 +396,7 @@ export const PromotionsContent = ({
           <Text>Promoção ativa</Text>
         </Box>
 
-        <Box className={styles.summary}>
+        <Box className={styles.promotionsContentSummary}>
           <Text size="xs" color="subtle">
             Resumo da regra
           </Text>
@@ -425,7 +425,7 @@ export const PromotionsContent = ({
         </Box>
       </Card>
 
-      <Card variant="flat" padding="lg" className={styles.list}>
+      <Card variant="flat" padding="lg" className={styles.promotionsContentList}>
         <Box className={styles.sectionHeader}>
           <Heading level={2} size="xl">
             Promoções cadastradas

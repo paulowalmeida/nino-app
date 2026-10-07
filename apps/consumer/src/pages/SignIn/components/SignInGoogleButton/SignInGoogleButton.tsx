@@ -11,7 +11,7 @@ import styles from './SignInGoogleButton.module.css'
  * e proporções fixas, não é um ícone genérico que o DS deveria ter.
  */
 const GoogleLogo = () => (
-  <svg viewBox="0 0 18 18" className={styles.logo} aria-hidden="true">
+  <svg viewBox="0 0 18 18" className={styles.signInGoogleButtonLogo} aria-hidden="true">
     <path
       fill="#4285F4"
       d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844c-.209 1.125-.843 2.078-1.796 2.717v2.258h2.908c1.702-1.567 2.684-3.874 2.684-6.615z"
@@ -48,7 +48,7 @@ export const SignInGoogleButton = () => {
 
   return (
     <Box className={styles.region}>
-      <Button variant="outline" asChild className={styles.button}>
+      <Button variant="outline" asChild className={styles.signInGoogleButton}>
         <a href={authUrl}>
           <GoogleLogo />
           Entrar com Google

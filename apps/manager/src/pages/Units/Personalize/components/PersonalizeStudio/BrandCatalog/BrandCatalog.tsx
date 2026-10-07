@@ -23,7 +23,7 @@ export type BrandCatalogProps = {
 
 export const BrandCatalog = ({ catalog, onChange }: BrandCatalogProps) => (
   <StudioSection title="Cardápio" description={SECTION_DESCRIPTION}>
-    <Box className={styles.fields}>
+    <Box className={styles.brandCatalogFields}>
       <FormField label="Estilo do item">
         <Select
           options={CATALOG_ITEM_STYLE_OPTIONS}

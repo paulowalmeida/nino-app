@@ -35,7 +35,7 @@ export const SettingsUnitSection = () => {
   if (isPending) return <SettingsUnitSkeleton />
 
   return (
-    <Box as="section" className={local.panel}>
+    <Box as="section" className={local.settingsUnitSectionPanel}>
       <Box
         as="header"
         gap={3}

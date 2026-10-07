@@ -1,19 +1,18 @@
 @reference "@nino/ds/globals.css";
 
-/*
- * Duas colunas no desktop: a foto tem largura fixa à esquerda e os campos
- * ocupam o resto. Empilhada, a moldura 4/3 nascia com a largura inteira da
- * página — quase 500px de altura antes do primeiro campo.
+/* WHY: Duas colunas no desktop: a foto tem largura fixa à esquerda e os
+ * campos ocupam o resto. Empilhada, a moldura 4/3 nascia com a largura
+ * inteira da página — quase 500px de altura antes do primeiro campo.
  */
-.form {
+.productDetailForm {
   @apply mt-6 flex flex-col gap-5;
 }
 
-.fields {
+.productDetailFormFields {
   @apply flex min-w-0 flex-col gap-5;
 }
 
-.tabs {
+.productDetailFormTabs {
   @apply min-w-0;
 }
 
@@ -29,13 +28,12 @@
   @apply flex min-w-0 flex-col gap-5;
 }
 
-.field {
+.productDetailFormField {
   @apply min-w-0;
 }
 
-/* preço e posição são campos curtos: a largura acompanha o que se digita
-   ("16,90", "13"), não a coluna inteira do formulário */
-.row {
+
+.productDetailFormRow {
   @apply grid grid-cols-2 gap-4 sm:grid-cols-[9rem_7rem];
 }
 
@@ -59,9 +57,8 @@
   @apply mt-0.5 block text-xs leading-relaxed text-fg-faint;
 }
 
-/* ação fecha o bloco à direita, com a primária na ponta: é onde a mão vai
-   depois de percorrer o formulário inteiro */
-.actions {
+
+.productDetailFormActions {
   @apply flex flex-col gap-2 border-t border-border/60 pt-5;
   @apply sm:flex-row sm:justify-end;
 }

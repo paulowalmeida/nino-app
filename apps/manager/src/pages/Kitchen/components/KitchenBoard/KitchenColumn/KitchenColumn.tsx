@@ -73,7 +73,7 @@ export const KitchenColumn = ({
   const acceptsDrop =
     !!activeOrder && (keepsOrderInStage || !!dropTarget(activeOrder, stage))
   const columnClassName = mergeClasses(
-    styles.column,
+    styles.kitchenColumn,
     !ownsNextStep && styles.finished,
     activeOrder && styles.dropRegion,
     acceptsDrop && styles.validDrop,
@@ -99,7 +99,7 @@ export const KitchenColumn = ({
         <Heading level={2} className={styles.columnTitle}>
           {title}
         </Heading>
-        <Text as="span" className={styles.count}>
+        <Text as="span" className={styles.kitchenColumnCount}>
           {orders.length}
         </Text>
       </Box>
@@ -111,7 +111,7 @@ export const KitchenColumn = ({
           ))}
 
         {!isPending && orders.length === 0 && (
-          <EmptyState className={styles.empty}>{empty}</EmptyState>
+          <EmptyState className={styles.kitchenColumnEmpty}>{empty}</EmptyState>
         )}
 
         <SortableContext

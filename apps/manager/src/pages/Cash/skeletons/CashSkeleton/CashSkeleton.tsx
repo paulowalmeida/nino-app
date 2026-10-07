@@ -7,10 +7,10 @@ export const CashSkeleton = () => (
   <Box
     direction="column"
     aria-label="Carregando o caixa"
-    className={styles.page}
+    className={styles.cashSkeletonPage}
   >
-    <Box direction="column" className={styles.card}>
-      <Skeleton className={styles.title} />
+    <Box direction="column" className={styles.cashSkeletonCard}>
+      <Skeleton className={styles.cashSkeletonTitle} />
       <Box direction="row" wrap className={styles.figures}>
         <Skeleton className={styles.figure} />
         <Skeleton className={styles.figure} />
@@ -19,10 +19,10 @@ export const CashSkeleton = () => (
       </Box>
       <Skeleton className={styles.expected} />
     </Box>
-    <Box direction="row" className={styles.actions}>
-      <Skeleton className={styles.action} />
-      <Skeleton className={styles.action} />
-      <Skeleton className={styles.action} />
+    <Box direction="row" className={styles.cashSkeletonActions}>
+      <Skeleton className={styles.cashSkeletonAction} />
+      <Skeleton className={styles.cashSkeletonAction} />
+      <Skeleton className={styles.cashSkeletonAction} />
     </Box>
   </Box>
 )

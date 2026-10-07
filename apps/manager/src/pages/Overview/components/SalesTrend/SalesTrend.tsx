@@ -45,11 +45,11 @@ export const SalesTrend = () => {
       as="section"
       id="faturamento-ultimos-7-dias"
       aria-label="Os últimos 7 dias"
-      className={styles.section}
+      className={styles.salesTrendSection}
     >
-      <Eyebrow className={styles.heading}>Os últimos 7 dias</Eyebrow>
+      <Eyebrow className={styles.salesTrendHeading}>Os últimos 7 dias</Eyebrow>
 
-      <Card variant="flat" padding="lg" className={`${motion.settle} ${styles.card}`}>
+      <Card variant="flat" padding="lg" className={`${motion.settle} ${styles.salesTrendCard}`}>
         <Box
           as="header"
           direction="row"
@@ -62,9 +62,9 @@ export const SalesTrend = () => {
             {isPending ? (
               <Skeleton className={styles.skeletonTotal} />
             ) : (
-              <Text as="p" className={styles.total}>{brl(total)}</Text>
+              <Text as="p" className={styles.salesTrendTotal}>{brl(total)}</Text>
             )}
-            <Text className={styles.label}>faturamento na semana</Text>
+            <Text className={styles.salesTrendLabel}>faturamento na semana</Text>
           </Box>
 
           {delta !== null && (
@@ -80,7 +80,7 @@ export const SalesTrend = () => {
         {isPending && <SalesTrendSkeleton />}
 
         {hasNoSales && (
-          <EmptyState className={styles.empty}>
+          <EmptyState className={styles.salesTrendEmpty}>
             Nenhuma venda concluída nos últimos sete dias.
           </EmptyState>
         )}

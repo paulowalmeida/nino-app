@@ -1,5 +1,5 @@
 @reference "@nino/ds/globals.css";
 
-.actions {
+.cashActions {
   @apply gap-2;
 }

@@ -1,11 +1,7 @@
 @reference "@nino/ds/globals.css";
 
-/*
- * O mesmo header colapsável da vitrine: gruda no topo e só ganha borda e
- * sombra quando há conteúdo passando por baixo. Parado no alto da página ele
- * não desenha linha nenhuma — a régua só existe quando há o que separar.
- */
-.header {
+
+.orderTrackingHeader {
   @apply sticky top-0 z-dock -mx-5 flex items-center gap-3;
   @apply bg-surface-raised/95 px-5;
   @apply py-4 backdrop-blur;
@@ -27,19 +23,20 @@
   @apply hover:text-brand-strong;
 }
 
-.title {
+.orderTrackingHeaderTitle {
   @apply font-display text-xl font-extrabold leading-tight text-fg-muted;
 }
 
-/* O código vira legenda do título: é a identidade do pedido,
-   não uma nota de fim de página, onde ninguém rolava para ler */
+
 .code {
   @apply text-xs uppercase tracking-wide text-fg-faint;
   font-variant-numeric: tabular-nums;
 }
 
-/* ----- skeleton ----- */
-/* usa o mesmo `.header` do real; back e título viram placeholder */
+/* WHY: ----- skeleton -----
+ */
+/* WHY: usa o mesmo `.orderTrackingHeader` do real; back e título viram placeholder
+ */
 .skBack {
   composes: nino-skeleton from global;
   @apply h-11 w-11 shrink-0 rounded-full bg-black/[0.06];

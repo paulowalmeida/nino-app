@@ -1,29 +1,30 @@
 @reference "@nino/ds/globals.css";
 
 /* CONSTRAINT: só desktop — no celular quem lista as gavetas é a
-   `AccountDrawer` da barra, e duplicar aqui ensinaria dois caminhos para o
-   mesmo menu. Ambas leem de `ACCOUNT_SECTIONS`. */
-.nav {
+ * `AccountDrawer` da barra, e duplicar aqui ensinaria dois caminhos para o
+ * mesmo menu. Ambas leem de `ACCOUNT_SECTIONS`.
+ */
+.accountNav {
   @apply hidden;
   @apply lg:mx-0 lg:mb-0 lg:flex lg:w-56 lg:shrink-0 lg:flex-col lg:px-0;
   @apply lg:sticky lg:top-24;
 }
 
-.list {
+.accountNavList {
   @apply flex gap-2 overflow-x-auto pb-2;
   @apply lg:flex-col lg:gap-1 lg:overflow-visible lg:pb-0;
   scrollbar-width: none;
 }
 
-.list::-webkit-scrollbar {
+.accountNavList::-webkit-scrollbar {
   display: none;
 }
 
-.item {
+.accountNavItem {
   @apply shrink-0 lg:shrink;
 }
 
-.link {
+.accountNavLink {
   @apply flex h-11 items-center gap-2.5 rounded-full border border-black/[0.08];
   @apply bg-surface-page px-4 text-sm font-semibold text-fg-muted;
   @apply whitespace-nowrap transition-colors;
@@ -32,9 +33,7 @@
   @apply lg:bg-transparent lg:px-3.5 lg:py-2.5;
 }
 
-/* WHY: no celular a pílula ativa preenche; no desktop ganha só um filete de
-   marca à esquerda — um preenchimento inteiro em cada linha da coluna
-   brigaria visualmente com o painel ao lado. */
+
 .linkOn {
   @apply border-transparent bg-brand text-fg-on-brand;
   @apply hover:border-transparent hover:text-fg-on-brand;
@@ -48,11 +47,11 @@
   @apply absolute left-0 top-2 bottom-2 w-[3px] rounded-full bg-brand;
 }
 
-.icon {
+.accountNavIcon {
   @apply shrink-0;
 }
 
-.label {
+.accountNavLabel {
   @apply flex-1 text-left;
 }
 

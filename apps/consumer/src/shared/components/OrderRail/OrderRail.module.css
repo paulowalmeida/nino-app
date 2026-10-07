@@ -1,6 +1,6 @@
 @reference "@nino/ds/globals.css";
 
-.rail {
+.orderRail {
   @apply absolute inset-x-0 bottom-0 flex h-1 gap-0.5;
 }
 

@@ -10,13 +10,13 @@ import schedule from '@pages/Units/components/WeekSchedule/WeekSchedule.module.c
 /* WHY: o nome do dia e o "às" saem de constante, não do servidor — ficam
  * legíveis enquanto os horários carregam, em vez de virar barra cinza. */
 export const WeekScheduleSkeleton = () => (
-  <Box as="section" className={schedule.panel}>
+  <Box as="section" className={schedule.weekSchedulePanel}>
     <Text as="p" role="status" className="sr-only">
       Carregando os horários
     </Text>
 
     <Box as="header" className={schedule.head}>
-      <Skeleton className={ghost.heading} />
+      <Skeleton className={ghost.weekScheduleSkeletonHeading} />
       <Skeleton className={ghost.lead} />
     </Box>
 

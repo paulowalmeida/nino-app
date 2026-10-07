@@ -4,7 +4,7 @@
   @apply w-full min-w-0 shrink-0 overflow-hidden pb-2 lg:pb-0;
 }
 
-.search {
+.ordersFiltersSearch {
   @apply w-full lg:max-w-sm;
 }
 

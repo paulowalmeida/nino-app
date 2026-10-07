@@ -13,24 +13,22 @@
     max-height: 100dvh;
   }
 
-  .footer {
+  .cartDrawerFooter {
     padding-bottom: max(1rem, env(safe-area-inset-bottom));
   }
 }
 
-.panel {
+.cartDrawerPanel {
   @apply bg-surface-page;
   box-shadow: -24px 0 60px -30px
     color-mix(in srgb, var(--color-warm-950) 35%, transparent);
 }
 
-.body {
+.cartDrawerBody {
   @apply flex min-h-full flex-col;
 }
 
-/*
- * O cabeçalho é nosso: o do Drawer é miúdo demais para nomear a tela.
- *
+/* WHY: O cabeçalho é nosso: o do Drawer é miúdo demais para nomear a tela.
  * WHY -mt-4: acima do título há a faixa da alça de arraste (44px) somada ao
  * `pt-6` do cabeçalho do Drawer — 68px de vão antes de qualquer conteúdo.
  * Puxar o nó daqui encurta isso sem alcançar a estrutura interna do DS.
@@ -77,11 +75,7 @@
     color-mix(in srgb, var(--color-warm-950) 10%, transparent);
 }
 
-/*
- * WHY: nome, preço unitário e quantidade na mesma coluna. Com a quantidade na
- * direita, cada linha virava duas colunas de dois andares e o controle — que é
- * secundário — ficava do mesmo tamanho do total.
- */
+
 .lineText {
   @apply flex min-w-0 flex-1 flex-col items-start gap-1;
 }
@@ -95,10 +89,7 @@
   font-variant-numeric: tabular-nums;
 }
 
-/*
- * WHY: pílula única em vez de dois círculos contornados. Os contornos eram a
- * tinta mais pesada da linha, competindo com a foto e com o total.
- */
+
 .stepper {
   @apply -ml-0.5 mt-0.5 inline-flex items-center rounded-full bg-surface-1;
 }
@@ -123,7 +114,7 @@
   font-variant-numeric: tabular-nums;
 }
 
-.empty {
+.cartDrawerEmpty {
   @apply flex-1 justify-center py-3;
 }
 
@@ -132,12 +123,8 @@
   background-color: var(--store-tint, var(--color-brand));
 }
 
-/*
- * WHY: o rodapé é um bloco de material próprio, não a continuação da lista.
- * A zona de pagar precisa de um foco — antes eram três faixas de mesma
- * densidade e o olho não sabia onde parar.
- */
-.footer {
+
+.cartDrawerFooter {
   @apply sticky bottom-0 -mx-6 -mb-4 mt-auto flex flex-col gap-2.5;
   @apply border-t border-border bg-surface-1 px-6 pb-4 pt-3.5;
 }
@@ -155,7 +142,7 @@
   font-variant-numeric: tabular-nums;
 }
 
-.total {
+.cartDrawerTotal {
   @apply font-display text-lg font-extrabold leading-none;
   color: var(--color-success);
   font-variant-numeric: tabular-nums;

@@ -1,5 +1,5 @@
 @reference "@nino/ds/globals.css";
 
-.row {
+.brandHistoryRow {
   @apply w-full;
 }

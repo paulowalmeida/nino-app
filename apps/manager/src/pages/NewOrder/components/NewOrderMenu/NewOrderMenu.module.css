@@ -1,6 +1,6 @@
 @reference "@nino/ds/globals.css";
 
-.menu {
+.newOrderMenu {
   @apply flex min-w-0 flex-col gap-6 rounded-6 border border-border;
   @apply bg-surface-page/70;
   @apply p-5 backdrop-blur-sm lg:p-6;
@@ -12,7 +12,7 @@
   @apply text-fg-strong;
 }
 
-.item {
+.newOrderMenuItem {
   @apply flex min-w-0 items-center gap-3 border-b border-border/60 py-2.5;
 }
 

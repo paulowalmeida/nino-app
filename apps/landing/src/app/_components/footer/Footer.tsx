@@ -5,11 +5,11 @@ import styles from "./Footer.module.css"
 
 export function Footer() {
   return (
-    <footer className={styles.footer}>
-      <div className={styles.inner}>
-        <div className={styles.top}>
-          <div className={styles.brand}>
-            <span className={styles.logo}>
+    <footer className={styles.landingFooter}>
+      <div className={styles.footerInner}>
+        <div className={styles.footerTop}>
+          <div className={styles.footerBrand}>
+            <span className={styles.footerLogo}>
               nino<i>.</i>
             </span>
             <p className={styles.tagline}>
@@ -20,7 +20,7 @@ export function Footer() {
             <FooterColumn key={column.title} {...column} />
           ))}
         </div>
-        <div className={styles.bottom}>
+        <div className={styles.footerBottom}>
           <p>© 2026 Nino Delivery</p>
           <p>Privacidade · Termos · Cookies</p>
         </div>

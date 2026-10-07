@@ -50,12 +50,12 @@ export const ActiveOrderBanner = ({ slug }: ActiveOrderBannerProps) => {
   const query = token ? `?token=${token}` : ''
 
   return (
-    <Link to={`/${slug}/pedido/${orderId}${query}`} className={styles.banner}>
-      <span className={styles.icon} aria-hidden="true">
+    <Link to={`/${slug}/pedido/${orderId}${query}`} className={styles.activeOrderBanner}>
+      <span className={styles.activeOrderBannerIcon} aria-hidden="true">
         {stageIcon(order.status)}
       </span>
 
-      <Box className={styles.body}>
+      <Box className={styles.activeOrderBannerBody}>
         <Text className={styles.flag}>
           <span className={styles.flagDot} aria-hidden="true" />
           Acompanhando ao vivo

@@ -1,5 +1,5 @@
 @reference "@nino/ds/globals.css";
 
-.group {
+.productChoiceGroup {
   @apply flex flex-col border-t border-border;
 }

@@ -30,7 +30,7 @@ export const CatalogHeader = () => {
     <>
       <Header
         mb={{ mobile: 3, desktop: 4 }}
-        className={styles.header}
+        className={styles.catalogHeader}
         title="Cardápio"
         accent="Cardápio"
         description={DESCRIPTION}

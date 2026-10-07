@@ -49,7 +49,7 @@ export const PauseSwitch = () => {
         className={`${motion.settle} ${styles.paused}`}
       >
         <Box className={styles.pausedSummary}>
-          <Text as="p" className={styles.title}>
+          <Text as="p" className={styles.pauseSwitchTitle}>
             {until ? `Fechada até ${until}` : 'Fechada até você reabrir'}
           </Text>
           <Text as="p" className={styles.hint}>
@@ -83,7 +83,7 @@ export const PauseSwitch = () => {
     <Box as="section" id="controle-da-loja">
       <Button
         variant="warning"
-        className={`${motion.press} ${styles.trigger} w-3xs`}
+        className={`${motion.press} ${styles.pauseSwitchTrigger} w-3xs`}
         onClick={() => setOpenedAt(Date.now())}
       >
         <Icon name="pause" size="sm" />

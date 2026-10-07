@@ -39,23 +39,23 @@ export const StoreNotificationCard = ({
   }, [id, readAt, onSeen])
 
   return (
-    <Box as="article" className={styles.card} aria-labelledby={`store-${id}`}>
-      <Box direction="row" align="start" className={styles.main}>
-        <Box className={styles.icon} aria-hidden="true">
+    <Box as="article" className={styles.storeNotificationCard} aria-labelledby={`store-${id}`}>
+      <Box direction="row" align="start" className={styles.storeNotificationCardMain}>
+        <Box className={styles.storeNotificationCardIcon} aria-hidden="true">
           <Icon name={iconByType[type.name] ?? 'bell'} size="md" />
         </Box>
         <Box className={styles.copy}>
-          <Box direction="row" align="center" className={styles.meta}>
+          <Box direction="row" align="center" className={styles.storeNotificationCardMeta}>
             {!readAt && (
               <Text as="span" className={styles.unreadLabel}>
                 Nova
               </Text>
             )}
           </Box>
-          <Heading level={2} id={`store-${id}`} className={styles.title}>
+          <Heading level={2} id={`store-${id}`} className={styles.storeNotificationCardTitle}>
             {title}
           </Heading>
-          <Text as="p" className={styles.body}>
+          <Text as="p" className={styles.storeNotificationCardBody}>
             {body}
           </Text>
           <time className={styles.time} dateTime={createdAt}>

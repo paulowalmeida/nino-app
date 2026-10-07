@@ -4,16 +4,12 @@
   @apply flex flex-col gap-4;
 }
 
-/*
- * Microrótulo em caixa alta com tracking largo: é a voz impressa da comanda,
- * não um título de seção. Substitui a barrinha colorida antes
- * do título — aquilo decorava, isto informa.
- */
+
 .blockLabel {
   @apply font-display text-xl font-extrabold tracking-snug text-fg-strong;
 }
 
-.row {
+.deliveryAddressFieldsRow {
   @apply grid gap-3;
   grid-template-columns: 1fr 5.5rem;
 }
@@ -39,12 +35,12 @@
 }
 
 @media (max-width: 420px) {
-  .row {
+  .deliveryAddressFieldsRow {
     grid-template-columns: minmax(0, 1fr) 4.75rem;
   }
 }
 
-/* O painel toma o lugar dos campos: mesma moldura, outro assunto. */
+
 .confirm {
   @apply min-h-0 flex-1;
 }
@@ -69,7 +65,7 @@
   @apply min-w-0 flex-1;
 }
 
-/* A linha vazia tem a medida da linha cheia: mesma altura, mesmo raio. */
+
 .addressOptionPlaceholder {
   @apply h-14 w-full rounded-3;
 }

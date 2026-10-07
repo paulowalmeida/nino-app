@@ -16,14 +16,14 @@ export const OrderTicketSkeleton = () => (
         <Skeleton className={styles.ghostStatus} />
       </Box>
 
-      <Box className={ticketStyles.body}>
+      <Box className={ticketStyles.orderTicketBody}>
         <Skeleton className={styles.ghostConsumer} />
         <Skeleton className={styles.ghostMeta} />
         <Skeleton className={styles.ghostSummary} />
 
         <Box as="ul" className={ticketStyles.items}>
           {GHOST_ITEMS.map((item) => (
-            <Box as="li" key={item} className={ticketStyles.item}>
+            <Box as="li" key={item} className={ticketStyles.orderTicketItem}>
               <Skeleton className={styles.ghostQuantity} />
               <Skeleton className={styles.ghostItemName} />
             </Box>

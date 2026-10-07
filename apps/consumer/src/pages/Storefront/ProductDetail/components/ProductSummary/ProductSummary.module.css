@@ -1,6 +1,6 @@
 @reference "@nino/ds/globals.css";
 
-.summary {
+.productSummary {
   @apply flex flex-col px-4 pb-5 pt-5 sm:px-6;
 }
 
@@ -9,7 +9,7 @@
   @apply text-fg-strong;
 }
 
-.description {
+.productSummaryDescription {
   @apply mt-2 text-[0.9375rem] leading-relaxed text-fg-subtle;
 }
 

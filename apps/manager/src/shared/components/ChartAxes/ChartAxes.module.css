@@ -1,6 +1,6 @@
 @reference "@nino/ds/globals.css";
 
-.grid {
+.chartAxesGrid {
   @apply stroke-surface-5 stroke-1;
 }
 

@@ -17,22 +17,22 @@
   stroke-dasharray: 3 3;
 }
 
-.chart1 {
+.primarySeries {
   @apply stroke-chart-1;
   fill: none;
 }
 
-.chart2 {
+.secondarySeries {
   @apply stroke-chart-2;
   fill: none;
 }
 
-.chart3 {
+.tertiarySeries {
   @apply stroke-chart-3;
   fill: none;
 }
 
-.chart4 {
+.quaternarySeries {
   @apply stroke-chart-4;
   fill: none;
 }
@@ -42,19 +42,19 @@
   fill: currentColor;
 }
 
-.dot.chart1 {
+.dot.primarySeries {
   @apply fill-chart-1;
 }
 
-.dot.chart2 {
+.dot.secondarySeries {
   @apply fill-chart-2;
 }
 
-.dot.chart3 {
+.dot.tertiarySeries {
   @apply fill-chart-3;
 }
 
-.dot.chart4 {
+.dot.quaternarySeries {
   @apply fill-chart-4;
 }
 

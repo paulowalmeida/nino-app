@@ -1,6 +1,6 @@
 @reference "@nino/ds/globals.css";
 
-.row {
+.addressesSkeletonRow {
   composes: nino-skeleton from global;
   @apply mt-3 h-16 w-full rounded-2 bg-black/[0.06];
 }

@@ -24,13 +24,13 @@ export const ConsumerRankingCard = ({
     as="section"
     id={label === 'Quem mais gasta' ? 'quem-mais-gasta' : 'quem-mais-pede'}
     aria-label={label}
-    className={styles.section}
+    className={styles.consumerRankingCardSection}
   >
     <Box className={motion.unroll}>
-      <Eyebrow className={styles.heading}>{label}</Eyebrow>
+      <Eyebrow className={styles.consumerRankingCardHeading}>{label}</Eyebrow>
     </Box>
 
-    <Card variant="flat" padding="lg" className={`${motion.settle} ${styles.card}`}>
+    <Card variant="flat" padding="lg" className={`${motion.settle} ${styles.consumerRankingCard}`}>
       {isPending && (
         <Box className={styles.skeletonBars}>
           {TOP_CONSUMERS_SKELETON_WIDTHS.map((width) => (
@@ -44,7 +44,7 @@ export const ConsumerRankingCard = ({
       )}
 
       {!isPending && items.length === 0 && (
-        <EmptyState className={styles.empty}>
+        <EmptyState className={styles.consumerRankingCardEmpty}>
           Nenhum cliente identificado ainda.
         </EmptyState>
       )}

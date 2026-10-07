@@ -1,11 +1,11 @@
 @reference "@nino/ds/globals.css";
 
-.layout {
+.promotionsContentLayout {
   @apply grid gap-6 xl:grid-cols-[minmax(0,1.4fr)_minmax(20rem,0.8fr)];
 }
 
 .editor,
-.list {
+.promotionsContentList {
   @apply flex flex-col gap-5;
 }
 
@@ -17,7 +17,7 @@
   @apply grid gap-4 md:grid-cols-2;
 }
 
-.field,
+.promotionsContentField,
 .fieldWide {
   @apply flex flex-col gap-1.5;
 }
@@ -26,7 +26,7 @@
   @apply md:col-span-2;
 }
 
-.group {
+.promotionsContentGroup {
   @apply flex flex-col gap-2;
 }
 
@@ -42,7 +42,7 @@
   @apply flex items-center gap-2;
 }
 
-.summary {
+.promotionsContentSummary {
   @apply flex flex-col gap-1 border-l-2 border-brand bg-brand-soft/20 px-4 py-3;
 }
 

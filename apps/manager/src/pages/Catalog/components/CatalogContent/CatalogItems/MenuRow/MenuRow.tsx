@@ -60,7 +60,7 @@ export const MenuRow = ({
       onAnimationEnd={handleEntranceEnd}
       transition={REORDER_TRANSITION}
       className={`${isEntering ? motion.deal : ''} ${
-        item.isActive ? styles.item : styles.itemOff
+        item.isActive ? styles.menuRowItem : styles.itemOff
       }`}
       style={isEntering ? riseDelay(entranceDelay(index)) : {}}
     >

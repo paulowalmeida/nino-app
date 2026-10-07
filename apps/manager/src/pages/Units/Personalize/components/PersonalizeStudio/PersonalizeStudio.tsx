@@ -191,7 +191,7 @@ export const PersonalizeStudio = () => {
           />
         </Box>
 
-        <Box className={styles.panel}>
+        <Box className={styles.personalizeStudioPanel}>
           <StudioNav
             groups={STUDIO_GROUPS}
             selected={group}

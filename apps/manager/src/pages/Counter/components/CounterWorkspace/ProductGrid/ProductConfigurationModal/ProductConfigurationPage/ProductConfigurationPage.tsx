@@ -37,9 +37,9 @@ export const ProductConfigurationPage = ({
   onToggleOption,
   actions,
 }: ProductConfigurationPageProps) => (
-  <Box className={styles.page}>
-    <Box className={styles.grid}>
-      <Box className={styles.media}>
+  <Box className={styles.productConfigurationPage}>
+    <Box className={styles.productConfigurationPageGrid}>
+      <Box className={styles.productConfigurationPageMedia}>
         <ItemThumb
           name={item.name}
           imageUrl={item.images[0]?.url}
@@ -59,13 +59,13 @@ export const ProductConfigurationPage = ({
         </Button>
       </Box>
 
-      <Box className={styles.details}>
-        <Box className={styles.summary}>
+      <Box className={styles.productConfigurationPageDetails}>
+        <Box className={styles.productConfigurationPageSummary}>
           <Heading level={1} className={styles.name}>
             {item.name}
           </Heading>
           {item.description && (
-            <Text as="p" className={styles.description}>
+            <Text as="p" className={styles.productConfigurationPageDescription}>
               {item.description}
             </Text>
           )}

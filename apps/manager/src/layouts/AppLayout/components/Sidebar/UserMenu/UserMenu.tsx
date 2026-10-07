@@ -35,13 +35,13 @@ export const UserMenu = ({
   }
 
   return (
-    <Box direction="row" className={styles.actions}>
+    <Box direction="row" className={styles.userMenuActions}>
       <Menu
         placement="top-start"
-        contentClassName={styles.panel}
+        contentClassName={styles.userMenuPanel}
         triggerTooltip={collapsed ? 'Abrir menu da conta' : undefined}
         trigger={
-          <Button variant="ghost" className={styles.trigger}>
+          <Button variant="ghost" className={styles.userMenuTrigger}>
             <PersonMark name={name} tone="night" size="sm" />
             {!collapsed && (
               <Text as="span" className={styles.name}>

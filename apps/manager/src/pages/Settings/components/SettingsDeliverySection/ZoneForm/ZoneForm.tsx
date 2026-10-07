@@ -65,7 +65,7 @@ export const ZoneForm = ({
   }
 
   return (
-    <Box as="section" className={local.section}>
+    <Box as="section" className={local.zoneFormSection}>
       <Box className={local.intro}>
         <Heading level={3} size="md">
           Nova faixa
@@ -88,8 +88,8 @@ export const ZoneForm = ({
         onValueChange={previewRadius}
       />
 
-      <Box className={local.form}>
-        <FormField className={local.field} label="Até (km)">
+      <Box className={local.zoneForm}>
+        <FormField className={local.zoneFormField} label="Até (km)">
           <NumberInput
             min={MIN_RADIUS_KM}
             max={MAX_RADIUS_KM}
@@ -98,7 +98,7 @@ export const ZoneForm = ({
             onValueChange={previewRadius}
           />
         </FormField>
-        <FormField className={local.field} label="Taxa de entrega (R$)">
+        <FormField className={local.zoneFormField} label="Taxa de entrega (R$)">
           <Input
             inputMode="decimal"
             placeholder="0,00"

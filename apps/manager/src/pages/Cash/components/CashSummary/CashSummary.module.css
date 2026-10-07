@@ -1,6 +1,6 @@
 @reference "@nino/ds/globals.css";
 
-.summary {
+.cashSummary {
   @apply gap-4 rounded-4 border border-border bg-surface-raised p-5;
 }
 

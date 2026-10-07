@@ -87,7 +87,7 @@ export const KitchenCard = ({
 
   const card = mergeClasses(
     motion.settle,
-    styles.card,
+    styles.kitchenCard,
     destination ? paperClasses[destination.kind] : styles.paperPlain,
     paceClasses[pace],
     isCompact && styles.compact
@@ -225,7 +225,7 @@ export const KitchenCard = ({
       </Box>
 
       {isCompact ? (
-        <Text as="p" className={styles.summary}>
+        <Text as="p" className={styles.kitchenCardSummary}>
           {itemCount === 1 ? '1 item' : `${itemCount} itens`}
         </Text>
       ) : (
@@ -236,7 +236,7 @@ export const KitchenCard = ({
               divider="none"
               padding={0}
               gap={0}
-              className={styles.item}
+              className={styles.kitchenCardItem}
             >
               <Stamp size="lg" tone="neutral" className={styles.quantity}>
                 {item.quantity}
@@ -260,7 +260,7 @@ export const KitchenCard = ({
           type="button"
           size="lg"
           loading={isBusy}
-          className={mergeClasses(motion.press, styles.action)}
+          className={mergeClasses(motion.press, styles.kitchenCardAction)}
           onClick={(event) => {
             event.preventDefault()
             event.stopPropagation()

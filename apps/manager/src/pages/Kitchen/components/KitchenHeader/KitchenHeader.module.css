@@ -1,6 +1,6 @@
 @reference "@nino/ds/globals.css";
 
-.header {
+.kitchenHeader {
   @apply mb-4 shrink-0 flex-wrap gap-x-6 gap-y-4;
 }
 
@@ -33,7 +33,7 @@
   @apply text-fg-strong;
 }
 
-/* WHY: atraso se anuncia por peso, não por cor — o mesmo sinal da comanda. */
+
 .alert .metricValue {
   @apply underline decoration-2 underline-offset-4;
 }

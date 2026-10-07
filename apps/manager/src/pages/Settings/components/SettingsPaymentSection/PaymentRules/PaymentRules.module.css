@@ -1,6 +1,6 @@
 @reference "@nino/ds/globals.css";
 
-.panel {
+.paymentRulesPanel {
   @apply flex min-w-0 flex-col;
 }
 
@@ -8,7 +8,7 @@
   @apply mb-4 lg:mb-6;
 }
 
-.group {
+.paymentRulesGroup {
   @apply flex flex-col gap-3 border-t border-border py-4;
 }
 
@@ -67,7 +67,7 @@
   @apply bg-brand-soft font-semibold text-brand-strong;
 }
 
-.field {
+.paymentRulesField {
   @apply mt-4 flex flex-col gap-1.5;
 }
 

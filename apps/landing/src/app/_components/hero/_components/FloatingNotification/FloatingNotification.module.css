@@ -7,15 +7,15 @@
   @apply animate-[float_4s_ease-in-out_infinite];
 }
 
-.top {
+.floatingNotificationTop {
   @apply top-10 right-[2px];
 }
 
-.bottom {
+.floatingNotificationBottom {
   @apply bottom-[46px] right-[-10px] [animation-delay:1.2s];
 }
 
-.icon {
+.floatingNotificationIcon {
   @apply w-[34px] h-[34px] flex items-center justify-center;
   @apply shrink-0 text-base;
 }
@@ -28,11 +28,11 @@
   @apply rounded-2 bg-accent-peach-light text-lg;
 }
 
-.title {
+.floatingNotificationTitle {
   @apply text-xs font-bold block;
 }
 
-.subtitle {
+.floatingNotificationSubtitle {
   @apply text-2xs text-fg-faint;
 }
 

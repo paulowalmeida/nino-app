@@ -1,11 +1,7 @@
 @reference "@nino/ds/globals.css";
 
-/*
- * WHY: o bloco decide as próprias quebras a partir da largura que recebe, e não
- * da janela — ele aparece tanto na coluna estreita do cadastro quanto no
- * formulário largo de unidade.
- */
-.fields {
+
+.storeFormAddressFields {
   container-type: inline-size;
 }
 
@@ -13,11 +9,7 @@
   @apply text-xs font-bold uppercase tracking-[0.12em] text-fg-faint;
 }
 
-/*
- * CEP e número são valores curtos de tamanho conhecido: a caixa acompanha o
- * conteúdo, e a rua toma a sobra da linha. Numa coluna estreita a rua desce
- * sozinha, porque um nome de rua não cabe no que resta.
- */
+
 .rowLocator {
   @apply grid gap-4;
   grid-template-columns: 9rem 7rem;
@@ -43,7 +35,7 @@
   grid-template-columns: 1fr;
 }
 
-/* O estado são duas letras; a cidade é uma frase inteira. */
+
 .rowCity {
   @apply grid gap-4;
   grid-template-columns: 1fr 5.5rem;

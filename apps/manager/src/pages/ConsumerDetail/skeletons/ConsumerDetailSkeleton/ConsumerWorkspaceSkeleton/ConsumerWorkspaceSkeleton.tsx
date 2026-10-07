@@ -13,11 +13,11 @@ export const ConsumerWorkspaceSkeleton = () => (
   <Box className={workspace.panels}>
     <Box direction="row" className={ghost.tabBar}>
       {GHOST_TABS.map((tab) => (
-        <Skeleton key={tab} className={ghost.tab} />
+        <Skeleton key={tab} className={ghost.consumerWorkspaceSkeletonTab} />
       ))}
     </Box>
 
-    <Box className={ghost.panel}>
+    <Box className={ghost.consumerWorkspaceSkeletonPanel}>
       <ConsumerOrderHistorySkeleton />
     </Box>
   </Box>

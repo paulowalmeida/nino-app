@@ -18,7 +18,7 @@ import styles from './AccountProfilePhoneField.module.css'
  */
 const SavedPhone = ({ phone }: { phone: string }) => (
   <Box
-    className={styles.field}
+    className={styles.accountProfilePhoneField}
     role="group"
     aria-labelledby="profile-phone-label"
   >
@@ -74,7 +74,7 @@ export const AccountProfilePhoneField = () => {
 
   if (codeSent) {
     return (
-      <Box as="form" className={styles.field} onSubmit={handleVerify}>
+      <Box as="form" className={styles.accountProfilePhoneField} onSubmit={handleVerify}>
         <Text as="span" className={styles.fieldLabel}>
           Telefone
         </Text>
@@ -106,7 +106,7 @@ export const AccountProfilePhoneField = () => {
 
         <Button
           type="submit"
-          className={styles.action}
+          className={styles.accountProfilePhoneFieldAction}
           disabled={!codeReady || isVerifyingPhoneLink}
         >
           {isVerifyingPhoneLink ? 'Confirmando…' : 'Confirmar'}
@@ -124,7 +124,7 @@ export const AccountProfilePhoneField = () => {
   }
 
   return (
-    <Box as="form" className={styles.field} onSubmit={handleRequest}>
+    <Box as="form" className={styles.accountProfilePhoneField} onSubmit={handleRequest}>
       <Text as="span" className={styles.fieldLabel} id="profile-phone-label">
         Telefone
       </Text>
@@ -132,17 +132,17 @@ export const AccountProfilePhoneField = () => {
         Pedimos só na entrega, se algo mudar no pedido.
       </Text>
 
-      <Box className={styles.row}>
+      <Box className={styles.accountProfilePhoneFieldRow}>
         <PhoneInput
           aria-labelledby="profile-phone-label"
           autoComplete="tel"
-          className={styles.input}
+          className={styles.accountProfilePhoneFieldInput}
           value={phone}
           onChange={(event) => setPhone(event.target.value)}
         />
         <Button
           type="submit"
-          className={styles.action}
+          className={styles.accountProfilePhoneFieldAction}
           disabled={!phoneReady || isRequestingPhoneLink}
         >
           {isRequestingPhoneLink ? 'Enviando…' : 'Adicionar'}

@@ -65,7 +65,7 @@ export const CashMovementModal = ({
         </Heading>
       }
       body={
-        <Box direction="column" className={styles.fields}>
+        <Box direction="column" className={styles.cashMovementModalFields}>
           <Text size="sm" color="muted">
             {copy.description}
           </Text>
@@ -85,7 +85,7 @@ export const CashMovementModal = ({
         </Box>
       }
       footer={
-        <Box direction="row" className={styles.actions}>
+        <Box direction="row" className={styles.cashMovementModalActions}>
           <Button type="button" variant="ghost" onClick={onClose}>
             Cancelar
           </Button>

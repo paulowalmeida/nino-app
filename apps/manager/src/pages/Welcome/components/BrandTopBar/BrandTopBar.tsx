@@ -14,7 +14,7 @@ export const BrandTopBar = () => {
     <Box as="header" className={styles.bar}>
       <NinoLogo size="sm" />
 
-      <Button variant="ghost" className={styles.action} onClick={leave}>
+      <Button variant="ghost" className={styles.brandTopBarAction} onClick={leave}>
         Pular
       </Button>
     </Box>

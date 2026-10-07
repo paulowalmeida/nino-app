@@ -1,6 +1,6 @@
 @reference "@nino/ds/globals.css";
 
-.form {
+.checkoutForm {
   @apply mx-auto flex min-h-dvh w-full max-w-7xl flex-col;
 }
 
@@ -8,7 +8,7 @@
   @apply flex flex-1 flex-col px-4 pb-28 pt-4 sm:px-6;
 }
 
-.summary {
+.checkoutFormSummary {
   display: contents;
 }
 
@@ -16,7 +16,7 @@
   @apply hidden;
 }
 
-.details {
+.checkoutFormDetails {
   @apply order-2 min-w-0;
 }
 
@@ -74,7 +74,7 @@
 }
 
 @media (min-width: 1024px) {
-  .form {
+  .checkoutForm {
     @apply min-h-dvh px-10 pb-14;
   }
 
@@ -83,11 +83,11 @@
     grid-template-columns: minmax(0, 1fr) 23rem;
   }
 
-  .details {
+  .checkoutFormDetails {
     @apply order-1 max-w-3xl;
   }
 
-  .summary {
+  .checkoutFormSummary {
     @apply order-2 flex flex-col gap-4 self-start;
     display: flex;
     position: sticky;

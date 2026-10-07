@@ -25,7 +25,7 @@ export const CollaboratorLoginAccess = ({
       size="sm"
       color="faintest"
       id={LOGIN_LABEL_ID}
-      className={styles.title}
+      className={styles.collaboratorLoginAccessTitle}
       mt={3}
     >
       Como entra no painel

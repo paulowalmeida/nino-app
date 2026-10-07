@@ -50,7 +50,7 @@ export const CashCloseModal = ({
         </Heading>
       }
       body={
-        <Box direction="column" className={styles.fields}>
+        <Box direction="column" className={styles.cashCloseModalFields}>
           <Text size="sm" color="muted">
             Conte o dinheiro da gaveta e informe o total. O sistema espera{' '}
             {brl(expectedAmount)}.
@@ -91,7 +91,7 @@ export const CashCloseModal = ({
         </Box>
       }
       footer={
-        <Box direction="row" className={styles.actions}>
+        <Box direction="row" className={styles.cashCloseModalActions}>
           <Button type="button" variant="ghost" onClick={onClose}>
             Cancelar
           </Button>

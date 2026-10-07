@@ -16,11 +16,11 @@ export const StudioSection = ({
   description,
   children,
 }: StudioSectionProps) => (
-  <Box as="section" aria-label={title} className={styles.section}>
+  <Box as="section" aria-label={title} className={styles.studioSection}>
     <Text size="sm" weight="bold">
       {title}
     </Text>
-    <Box className={styles.body}>
+    <Box className={styles.studioSectionBody}>
       <Text size="sm" color="subtle">
         {description}
       </Text>

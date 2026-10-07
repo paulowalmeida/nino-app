@@ -10,7 +10,7 @@ export const StoreLayout = () => {
 
   return (
     <Box
-      className={styles.page}
+      className={styles.storeLayoutPage}
       style={
         tint ? ({ '--store-tint': tint } as React.CSSProperties) : undefined
       }

@@ -5,7 +5,8 @@
   @apply text-fg-faint;
 }
 
-/* ----- skeleton ----- */
+/* WHY: ----- skeleton -----
+ */
 .skJourney {
   @apply mt-14 flex flex-col;
 }

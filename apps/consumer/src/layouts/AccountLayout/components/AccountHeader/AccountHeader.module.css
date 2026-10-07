@@ -1,6 +1,6 @@
 @reference "@nino/ds/globals.css";
 
-.header {
+.accountHeader {
   @apply sticky top-0 z-dock -mx-4 hidden items-center gap-3;
   @apply bg-surface-1/95 px-4;
   @apply py-4 backdrop-blur sm:-mx-6 sm:px-6 lg:flex;
@@ -27,7 +27,7 @@
   @apply min-w-0;
 }
 
-.title {
+.accountHeaderTitle {
   @apply truncate text-fg-strong;
 }
 

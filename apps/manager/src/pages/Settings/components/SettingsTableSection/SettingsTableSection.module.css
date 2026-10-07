@@ -1,6 +1,6 @@
 @reference "@nino/ds/globals.css";
 
-.panel {
+.settingsTableSectionPanel {
   @apply flex min-w-0 flex-col;
 }
 
@@ -8,20 +8,20 @@
   @apply mb-5 lg:mb-6;
 }
 
-.tabs {
+.settingsTableSectionTabs {
   @apply flex min-w-0 flex-col;
 }
 
-.tabs > [data-part='list'] {
+.settingsTableSectionTabs > [data-part='list'] {
   @apply w-fit;
 }
 
 @media (max-width: 374px) {
-  .tabs > [data-part='list'] {
+  .settingsTableSectionTabs > [data-part='list'] {
     @apply flex w-full;
   }
 
-  .tabs > [data-part='list'] > [role='tab'] {
+  .settingsTableSectionTabs > [data-part='list'] > [role='tab'] {
     @apply min-w-0 flex-1 justify-center px-2 text-xs;
   }
 }

@@ -16,7 +16,7 @@ export const AccountOrders = () => {
   if (isOrdersPending) return <OrdersSkeleton />
 
   return (
-    <Box className={styles.page}>
+    <Box className={styles.accountOrdersPage}>
       <OrdersHeader />
       {!orders?.length ? <OrdersEmptyState /> : null}
       {orders?.length ? <OrdersList orders={orders} slug={slug} /> : null}

@@ -8,15 +8,15 @@ import styles from './SettingsUnitSkeleton.module.css'
 const GHOST_UNITS = ['first', 'second', 'third']
 
 export const SettingsUnitSkeleton = () => (
-  <Box as="section" className={styles.panel}>
+  <Box as="section" className={styles.settingsUnitSkeletonPanel}>
     <Text as="p" role="status" className={styles.loadingLabel}>
       Carregando lojas da empresa
     </Text>
 
     <Box as="header" align="start" justify="between" wrap mb={4}>
       <Box direction="column" gap={2}>
-        <Skeleton className={styles.title} />
-        <Skeleton className={styles.subtitle} />
+        <Skeleton className={styles.settingsUnitSkeletonTitle} />
+        <Skeleton className={styles.settingsUnitSkeletonSubtitle} />
       </Box>
 
       <Skeleton className={styles.add} />

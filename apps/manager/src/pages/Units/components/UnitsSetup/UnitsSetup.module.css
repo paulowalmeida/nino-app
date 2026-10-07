@@ -1,4 +1,4 @@
 @reference "@nino/ds/globals.css";
 
 .preview { @apply mt-6; }
-.form { @apply mt-6; }
+.unitsSetupForm { @apply mt-6; }

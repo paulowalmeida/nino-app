@@ -1,17 +1,16 @@
 @reference "@nino/ds/globals.css";
 
-/* o convite é ação, não conteúdo: mantém superfície para se destacar da
-   lista, mas sem a borda que o transformava em mais um cartão */
-.form {
+
+.inviteForm {
   @apply flex flex-col gap-4 rounded-6 bg-surface-2 p-5 lg:p-6;
 }
 
-.title {
+.inviteFormTitle {
   @apply font-display text-lg font-extrabold tracking-[-0.01em];
   @apply text-fg-strong;
 }
 
-.fields {
+.inviteFormFields {
   @apply grid gap-4 sm:grid-cols-2;
 }
 

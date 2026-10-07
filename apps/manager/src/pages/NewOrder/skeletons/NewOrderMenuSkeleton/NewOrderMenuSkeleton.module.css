@@ -1,13 +1,13 @@
 @reference "@nino/ds/globals.css";
 
-/* mesma moldura do cardápio: o esqueleto ocupa o lugar que os itens vão ter */
-.menu {
+
+.newOrderMenuSkeletonMenu {
   @apply flex min-w-0 flex-col gap-6 rounded-6 border border-border;
   @apply bg-surface-page/70;
   @apply p-5 backdrop-blur-sm lg:p-6;
 }
 
-.item {
+.newOrderMenuSkeletonItem {
   @apply flex min-w-0 items-center gap-3 border-b border-border/60 py-2.5;
 }
 

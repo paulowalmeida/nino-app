@@ -36,10 +36,10 @@ export const SignInCompletePhoneCode = () => {
       style={riseDelay(60)}
       onSubmit={handleSubmit}
     >
-      <Heading level={1} className={styles.title}>
+      <Heading level={1} className={styles.signInCompletePhoneCodeTitle}>
         Confirme seu telefone
       </Heading>
-      <Text size="sm" className={styles.subtitle}>
+      <Text size="sm" className={styles.signInCompletePhoneCodeSubtitle}>
         Enviamos um código para{' '}
         <Text as="span" weight="bold" color="strong">
           {phone}
@@ -80,7 +80,7 @@ export const SignInCompletePhoneCode = () => {
       <Button
         type="button"
         variant="ghost"
-        className={`${motion.press} ${styles.secondary}`}
+        className={`${motion.press} ${styles.signInCompletePhoneCodeSecondary}`}
         onClick={goHomeSkippingPhone}
       >
         Deixar para depois

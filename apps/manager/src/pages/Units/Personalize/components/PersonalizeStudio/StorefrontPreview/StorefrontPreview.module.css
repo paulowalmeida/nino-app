@@ -178,13 +178,13 @@
   }
 }
 
-.desktop .banner {
+.desktop .storefrontPreviewBanner {
   @apply h-28;
 }
 
-.desktop .search,
+.desktop .storefrontPreviewSearch,
 .desktop .categories,
-.desktop .menu {
+.desktop .storefrontPreviewMenu {
   @apply px-6;
 }
 
@@ -196,7 +196,7 @@
   @apply grid grid-cols-2 gap-3;
 }
 
-.banner {
+.storefrontPreviewBanner {
   @apply relative h-64 w-full shrink-0 overflow-hidden bg-cover bg-center;
   max-width: var(--storefront-column);
   background-color: var(--preview-primary);
@@ -233,7 +233,7 @@
   object-fit: contain;
 }
 
-.banner::before {
+.storefrontPreviewBanner::before {
   content: '';
   @apply pointer-events-none absolute -inset-8;
   background: radial-gradient(
@@ -282,7 +282,7 @@
   background: var(--preview-card);
 }
 
-.logo {
+.storefrontPreviewLogo {
   @apply h-full w-full object-cover;
 }
 
@@ -311,7 +311,7 @@
   color: var(--preview-secondary);
 }
 
-.status {
+.storefrontPreviewStatus {
   @apply inline-flex items-center gap-1.5 font-semibold;
   color: var(--preview-text);
 }
@@ -329,7 +329,7 @@
   flex: 0 0 auto;
 }
 
-.search {
+.storefrontPreviewSearch {
   @apply relative mx-4 mt-4 shrink-0;
 }
 
@@ -379,7 +379,7 @@
   color: var(--preview-tertiary);
 }
 
-.menu {
+.storefrontPreviewMenu {
   @apply flex flex-col gap-2 p-4;
 }
 
@@ -544,7 +544,7 @@
   border-color: var(--preview-border);
 }
 
-.tab {
+.storefrontPreviewTab {
   @apply flex h-full min-h-12 flex-1 flex-col items-center justify-center gap-1;
   @apply text-[var(--preview-muted)];
 }

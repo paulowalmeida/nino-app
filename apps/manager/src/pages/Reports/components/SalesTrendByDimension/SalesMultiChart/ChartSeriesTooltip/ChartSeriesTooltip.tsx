@@ -20,11 +20,11 @@ export const ChartSeriesTooltip = ({
   lines,
 }: ChartSeriesTooltipProps) => (
   <>
-    <Text as="p" className={styles.label}>
+    <Text as="p" className={styles.chartSeriesTooltipLabel}>
       {chartFullDateLabel.format(at)}
     </Text>
     {lines.map((line, index) => (
-      <Text as="p" key={line.key} className={styles.row}>
+      <Text as="p" key={line.key} className={styles.chartSeriesTooltipRow}>
         <span
           aria-hidden="true"
           className={`${styles.dot} ${
@@ -34,7 +34,7 @@ export const ChartSeriesTooltip = ({
         <Text as="span" className={styles.name}>
           {line.label}
         </Text>
-        <Text as="span" className={styles.value}>
+        <Text as="span" className={styles.chartSeriesTooltipValue}>
           {line.value}
         </Text>
       </Text>

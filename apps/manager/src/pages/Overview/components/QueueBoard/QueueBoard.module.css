@@ -11,9 +11,7 @@
   @apply md:grid-cols-[repeat(5,minmax(0,10rem))];
 }
 
-/* superfície e sombra vêm do Card do DS; aqui fica o que ele não sabe.
-   O gap não é 1: o número usa leading-none, então não há entrelinha para
-   servir de folga entre ele e o rótulo. */
+
 .tile {
   @apply flex w-full flex-col gap-2 p-5;
   @apply transition-shadow duration-150;
@@ -31,10 +29,7 @@
   }
 }
 
-/*
- * The one tile that asks for action carries the brand color; the others stay
- * quiet. Attention is a budget, and it is spent here.
- */
+
 .urgent {
   @apply border-brand-bold bg-brand-ghost;
 }
@@ -45,8 +40,7 @@
   font-variant-numeric: tabular-nums;
 }
 
-/*
- * A altura acompanha o número que vai ocupar o lugar — `text-3xl` com
+/* WHY: A altura acompanha o número que vai ocupar o lugar — `text-3xl` com
  * `leading-none` mede 1.875rem, `text-4xl` mede 2.25rem. Sem casar os dois, o
  * quadro encolhe quando o dado chega e a página inteira dá um salto.
  */

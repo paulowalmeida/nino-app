@@ -1,6 +1,6 @@
 @reference "@nino/ds/globals.css";
 
-.empty {
+.saleCartEmpty {
   @apply flex-1;
 }
 .linesScroll {
@@ -19,8 +19,7 @@
   font-size: 13px;
 }
 
-/*
- * WHY: o carimbo do QuantityStepper chega em 40px porque o `size="icon"` do
+/* WHY: o carimbo do QuantityStepper chega em 40px porque o `size="icon"` do
  * Button vence o `h-8 w-8` do próprio stepper. A linha do pedido é ritmo de
  * cupom, não de formulário: em 40px ela cresce 6px e desalinha do papel.
  */
@@ -28,17 +27,15 @@
   @apply size-8;
 }
 
-/*
- * WHY: o QuantityStepper pinta a contagem com `text-muted`, que não existe
- * na escala do DS (o token é `fg-muted`) — sem isso o número herda preto e
- * briga com o nome do item.
+/* WHY: o QuantityStepper pinta a contagem com `text-muted`, que não existe na
+ * escala do DS (o token é `fg-muted`) — sem isso o número herda preto e briga
+ * com o nome do item.
  */
 .stepper > :not(button) {
   @apply text-fg-muted;
 }
 
-/* WHY: a folga da direita é a calha da barra de rolagem — sem ela o valor da
-   linha encosta no fio quando a lista passa da altura do papel. */
+
 .lines {
   @apply pb-4 pr-3;
 }

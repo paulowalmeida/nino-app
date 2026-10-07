@@ -1,22 +1,23 @@
 @reference "@nino/ds/globals.css";
 
 /* WHY: a busca da página não some no scroll — sumir deixava um buraco branco
-   do tamanho dela no lugar. Ela rola para baixo da barra fixa, que só fica
-   sólida depois que a busca já saiu de vista. */
-.toolbar {
+ * do tamanho dela no lugar. Ela rola para baixo da barra fixa, que só fica
+ * sólida depois que a busca já saiu de vista.
+ */
+.menuSearchFieldToolbar {
   @apply mt-4 flex flex-col gap-3 sm:flex-row sm:items-stretch lg:hidden;
 }
 
-.field {
+.menuSearchField {
   @apply relative flex-1;
 }
 
-.icon {
+.menuSearchFieldIcon {
   @apply pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2;
   @apply text-fg-faint;
 }
 
-.input {
+.menuSearchFieldInput {
   @apply h-12 w-full rounded-3 border border-border bg-surface-cool;
   @apply pl-11 pr-4;
   @apply text-base text-fg-default outline-none transition-field;

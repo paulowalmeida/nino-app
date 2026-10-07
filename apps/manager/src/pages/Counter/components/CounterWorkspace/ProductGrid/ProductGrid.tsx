@@ -62,7 +62,7 @@ export const ProductGrid = () => {
   }
 
   const renderGrid = (items: MenuItem[]) => (
-    <Box className={`${styles.grid} ${styles.resultsTop}`}>
+    <Box className={`${styles.productGrid} ${styles.resultsTop}`}>
       {items.map((item, index) => (
         <ProductCard
           key={item.id}
@@ -93,7 +93,7 @@ export const ProductGrid = () => {
   if (isPending || (!isError && !isSuccess)) {
     return (
       <Box className={styles.wrap}>
-        <Box className={styles.controls}>
+        <Box className={styles.productGridControls}>
           <Skeleton className={styles.skeletonSearch} />
 
           <Box direction="row" className={styles.skeletonTabsRow}>
@@ -103,7 +103,7 @@ export const ProductGrid = () => {
           </Box>
         </Box>
 
-        <Box className={styles.grid}>
+        <Box className={styles.productGrid}>
           {PRODUCT_GRID_SKELETON_CARDS.map((card) => (
             <Box key={card} className={styles.skeletonCard}>
               <Skeleton className={styles.skeletonPhoto} />
@@ -120,13 +120,13 @@ export const ProductGrid = () => {
 
   return (
     <Box className={styles.wrap}>
-      <Box className={styles.controls}>
+      <Box className={styles.productGridControls}>
         <Input
           value={term}
           onChange={(event) => setTerm(event.target.value)}
           placeholder="Buscar no cardápio…"
           aria-label="Buscar no cardápio"
-          className={styles.search}
+          className={styles.productGridSearch}
         />
 
         {!searching && (

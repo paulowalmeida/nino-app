@@ -1,5 +1,5 @@
 @reference '../../../../theme.css';
-.item {
+.benefitItem {
   @apply flex items-start gap-3 text-base leading-snug;
   @apply text-fg-default;
 }

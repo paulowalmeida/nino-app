@@ -57,12 +57,12 @@ export const AccountProfile = () => {
       <Heading level={2} size="lg" color="muted">
         Como a loja te encontra
       </Heading>
-      <Text className={styles.note}>
+      <Text className={styles.accountProfileNote}>
         O nome vai na comanda, para a cozinha e o entregador saberem de quem é o
         pedido.
       </Text>
 
-      <Box className={styles.card}>
+      <Box className={styles.accountProfileCard}>
         <FormField
           label="Nome"
           labelVariant="compact"
@@ -109,10 +109,10 @@ export const AccountProfile = () => {
         </FormField>
       </Box>
 
-      <Box className={styles.actions}>
+      <Box className={styles.accountProfileActions}>
         <Button
           type="submit"
-          className={styles.primary}
+          className={styles.accountProfilePrimary}
           disabled={!ready || isCompletingProfile}
         >
           {isCompletingProfile ? 'Salvando…' : 'Salvar'}

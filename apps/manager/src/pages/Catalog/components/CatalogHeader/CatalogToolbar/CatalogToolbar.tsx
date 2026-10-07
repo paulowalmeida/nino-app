@@ -27,7 +27,7 @@ export const CatalogToolbar = ({
       value={term}
       placeholder="Buscar item pelo nome"
       aria-label="Buscar item pelo nome"
-      className={styles.search}
+      className={styles.catalogToolbarSearch}
       onChange={(event) => onTermChange(event.target.value)}
     />
 

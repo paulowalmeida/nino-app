@@ -1,4 +1,4 @@
 @reference "@nino/ds/globals.css";
 
-.shell { @apply flex min-h-dvh flex-col bg-surface-raised; }
-.page { @apply mx-auto w-full max-w-3xl p-4 lg:p-10; }
+.unitsShell { @apply flex min-h-dvh flex-col bg-surface-raised; }
+.unitsPage { @apply mx-auto w-full max-w-3xl p-4 lg:p-10; }

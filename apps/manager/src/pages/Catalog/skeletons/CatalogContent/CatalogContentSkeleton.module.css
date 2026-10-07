@@ -13,7 +13,7 @@
   @apply min-h-0 flex-1 overflow-y-auto;
 }
 
-.list {
+.catalogContentSkeletonList {
   @apply overflow-hidden px-4 pb-4;
   @apply lg:px-10 lg:pb-10;
 }
@@ -26,7 +26,7 @@
   @apply h-3.5 w-40 lg:h-4;
 }
 
-.description {
+.catalogContentSkeletonDescription {
   @apply mt-1 hidden h-2.5 w-56 sm:block;
 }
 

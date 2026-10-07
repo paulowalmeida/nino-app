@@ -12,7 +12,7 @@ export type StudioNavProps = {
 }
 
 export const StudioNav = ({ groups, selected, onSelect }: StudioNavProps) => (
-  <Box as="nav" className={styles.nav} aria-label="Estrutura da loja">
+  <Box as="nav" className={styles.studioNav} aria-label="Estrutura da loja">
     <FormField label="Estrutura" labelVariant="compact">
       <Select
         options={groups.map(({ id, label }) => ({ value: id, label }))}

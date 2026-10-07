@@ -58,10 +58,10 @@ export const SignInCompleteProfile = () => {
       style={riseDelay(60)}
       onSubmit={handleSubmit}
     >
-      <Heading level={1} className={styles.title}>
+      <Heading level={1} className={styles.signInCompleteProfileTitle}>
         {imported ? 'Confirme seus dados' : 'Como podemos te chamar?'}
       </Heading>
-      <Text size="sm" className={styles.subtitle}>
+      <Text size="sm" className={styles.signInCompleteProfileSubtitle}>
         {imported
           ? 'Trouxemos o que deu do Google. Ajuste se precisar.'
           : 'Só isso e você já pode pedir.'}
@@ -88,7 +88,7 @@ export const SignInCompleteProfile = () => {
         </Box>
       )}
 
-      <FormField label="Nome" required className={styles.field}>
+      <FormField label="Nome" required className={styles.signInCompleteProfileField}>
         <Input
           size="lg"
           autoFocus
@@ -101,7 +101,7 @@ export const SignInCompleteProfile = () => {
       {!hasPhone && (
         <FormField
           label="Telefone (opcional agora)"
-          className={styles.field}
+          className={styles.signInCompleteProfileField}
           helperText="É por ele que a loja confirma o pedido e o entregador te acha."
         >
           <PhoneInput

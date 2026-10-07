@@ -285,7 +285,7 @@ export const DeliveryAddressFields = ({
             </Text>
           )}
 
-          <Box className={styles.row}>
+          <Box className={styles.deliveryAddressFieldsRow}>
             <FormField>
               <Input
                 placeholder="Rua, avenida, travessa…"
@@ -323,7 +323,7 @@ export const DeliveryAddressFields = ({
             </Box>
           </Collapsible>
 
-          <Box className={styles.row}>
+          <Box className={styles.deliveryAddressFieldsRow}>
             <FormField error={errors.guestNeighborhood?.message}>
               <Input
                 placeholder="Bairro"

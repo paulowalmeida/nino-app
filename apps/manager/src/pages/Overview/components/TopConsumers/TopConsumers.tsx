@@ -25,7 +25,7 @@ export const TopConsumers = () => {
   }))
 
   return (
-    <Box className={styles.grid}>
+    <Box className={styles.topConsumersGrid}>
       <ConsumerRankingCard
         label="Quem mais gasta"
         isPending={bySpent.isPending}

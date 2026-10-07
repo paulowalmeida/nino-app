@@ -230,7 +230,7 @@ export const UnitCard = ({
   )
 
   return (
-    <Box as="section" className={local.panel}>
+    <Box as="section" className={local.unitCardPanel}>
       <Box
         as="header"
         direction="row"
@@ -245,7 +245,7 @@ export const UnitCard = ({
           <Heading level={2} size="xl">
             {unit?.customName || 'Esta unidade'}
             {isMain && (
-              <Badge size="sm" className={local.main}>
+              <Badge size="sm" className={local.unitCardMain}>
                 matriz
               </Badge>
             )}
@@ -271,14 +271,14 @@ export const UnitCard = ({
       </Box>
 
       <Tabs
-        className={local.tabs}
+        className={local.unitCardTabs}
         tabs={[
           {
             value: 'unit',
             label: 'Dados da unidade',
             content: (
               <Box className={local.tabContent}>
-                <Box className={local.fields}>
+                <Box className={local.unitCardFields}>
                   <FormField label="Nome da unidade">
                     <Input
                       placeholder="Matriz, Centro, Unidade 2…"

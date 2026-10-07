@@ -1,18 +1,12 @@
 @reference "@nino/ds/globals.css";
 
-/*
- * O cartão vivo usa a mesma gramática dos avisos do app
- * em todo lugar — superfície chapada, canto de `radius-card`, tudo por cima
- * numa tinta só, e o prazo desenhado como a barra que drena na borda de
- * baixo. Aqui a superfície é laranja bem claro em vez de saturada porque
- * este cartão não pisca e some: fica na tela o tempo inteiro da espera.
- */
+
 .stage {
   @apply relative overflow-hidden rounded-4 border border-brand-muted;
   @apply bg-surface-page px-5 pb-7 pt-5 text-fg-muted shadow-warm-sm;
 }
 
-/* Cancelado sai do laranja: nada está acontecendo para acompanhar. */
+
 .stageCancelled {
   @apply border-black/[0.08] bg-black/[0.08] pb-5;
 }
@@ -53,12 +47,11 @@
   @apply sm:text-2xl;
 }
 
-.note {
+.orderStageNote {
   @apply mt-1.5 text-sm leading-snug text-fg-muted;
 }
 
-/*
- * A previsão é a resposta que a pessoa veio buscar, então ela é o maior
+/* WHY: A previsão é a resposta que a pessoa veio buscar, então ela é o maior
  * número da tela — e conta sozinha, minuto a minuto. Antes era uma linha de
  * 13px abaixo do nome do estado, do mesmo tamanho de todo o resto.
  */

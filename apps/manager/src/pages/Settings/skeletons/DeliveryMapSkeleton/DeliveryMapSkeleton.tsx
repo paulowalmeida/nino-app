@@ -6,14 +6,14 @@ import ghost from './DeliveryMapSkeleton.module.css'
 import map from '@pages/Settings/components/SettingsDeliverySection/DeliveryMap/DeliveryMap.module.css'
 
 export const DeliveryMapSkeleton = () => (
-  <Box className={map.wrapper}>
+  <Box className={map.deliveryMapWrapper}>
     <Text as="p" role="status" className="sr-only">
       Carregando a área de atendimento
     </Text>
 
-    <Box className={map.header}>
-      <Skeleton className={ghost.title} />
-      <Skeleton className={ghost.status} />
+    <Box className={map.deliveryMapHeader}>
+      <Skeleton className={ghost.deliveryMapSkeletonTitle} />
+      <Skeleton className={ghost.deliveryMapSkeletonStatus} />
     </Box>
     <Skeleton className={`${map.map} ${ghost.frame}`} />
   </Box>

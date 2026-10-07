@@ -1,17 +1,16 @@
 @reference "@nino/ds/globals.css";
 
-/*
- * A superfície, o anel e a elevação vêm do `Card` do Design System. Aqui fica
- * só o que é do cardápio: o canto mais largo que o padrão e o realce na cor da
- * loja ao passar o mouse.
+/* WHY: A superfície, o anel e a elevação vêm do `Card` do Design System. Aqui
+ * fica só o que é do cardápio: o canto mais largo que o padrão e o realce na
+ * cor da loja ao passar o mouse.
  */
-.card {
+.menuItemCard {
   @apply relative isolate rounded-4;
   @apply transition-[box-shadow,transform] duration-base;
 }
 
 @media (hover: hover) {
-  .card:hover {
+  .menuItemCard:hover {
     box-shadow:
       0 0 0 1px
         color-mix(in srgb, var(--store-tint, var(--color-brand)) 45%, transparent),
@@ -21,18 +20,18 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .card,
-  .card:hover {
+  .menuItemCard,
+  .menuItemCard:hover {
     transform: none;
   }
 }
 
-.card:has(.open:focus-visible) {
+.menuItemCard:has(.open:focus-visible) {
   outline: 2px solid var(--store-tint, var(--color-brand));
   outline-offset: 2px;
 }
 
-/* loja fechada: o item continua legível, só sai do caminho de quem clica */
+
 .disabled {
   @apply grayscale;
   opacity: 0.55;
@@ -45,10 +44,7 @@
   }
 }
 
-/*
- * O botão que abre o detalhe cobre foto e texto: o alvo é o item inteiro,
- * não um link escondido no nome.
- */
+
 .open {
   @apply flex w-full cursor-pointer appearance-none gap-3 border-0;
   @apply bg-transparent p-0 text-left;
@@ -61,8 +57,7 @@
   @apply cursor-not-allowed;
 }
 
-/* WHY: o ghost do DS pinta o fundo no hover; aqui o alvo cobre o card inteiro,
-   então esse fundo tingiria o card todo. Quem responde ao hover é o card. */
+
 .open:hover,
 .open:active {
   background-color: transparent;
@@ -72,7 +67,7 @@
   outline: none;
 }
 
-.media {
+.menuItemCardMedia {
   @apply relative shrink-0 self-start overflow-hidden rounded-3 bg-surface-cool;
   @apply w-28 lg:w-36;
   aspect-ratio: 4 / 3;
@@ -91,7 +86,7 @@
   @apply block h-full min-h-0 min-w-0 w-full object-cover;
 }
 
-.body {
+.menuItemCardBody {
   @apply flex min-w-0 flex-1 flex-col pr-10;
 }
 
@@ -100,21 +95,19 @@
   @apply sm:text-base;
 }
 
-.description {
+.menuItemCardDescription {
   @apply mt-2 line-clamp-2 text-[0.8125rem] leading-relaxed text-fg-subtle;
   @apply lg:mt-2.5 lg:line-clamp-3 lg:text-sm;
 }
 
-/* WHY: o preço ancora no rodapé do card, não logo abaixo da descrição — com
-   descrições de tamanhos diferentes ele dançava de altura de um card para o
-   outro, e é ele que o olho procura para comparar. */
+
 .price {
   @apply mt-auto pt-2 font-display text-[0.9375rem] font-medium;
   color: var(--color-success);
   font-variant-numeric: tabular-nums;
 }
 
-/* a marca de quantas unidades já estão na sacola */
+
 .tally {
   @apply absolute left-1.5 top-1.5 z-content inline-flex h-6 min-w-6;
   @apply items-center justify-center rounded-full px-1.5;
@@ -123,8 +116,9 @@
   font-variant-numeric: tabular-nums;
 }
 
-/* o somar fica no mesmo canto do card em todo breakpoint; o anel branco
-   separa o controle da foto por baixo dele. */
+/* WHY: o somar fica no mesmo canto do card em todo breakpoint; o anel branco
+ * separa o controle da foto por baixo dele.
+ */
 .add {
   @apply absolute bottom-2 right-2 z-content flex h-9 w-9 items-center;
   @apply justify-center rounded-full border-0 text-fg-on-brand;
@@ -156,42 +150,39 @@
   }
 }
 
-/*
- * A loja escolhe a apresentação no tema; o card responde aos atributos que o
- * item carrega. Sem escolha publicada, nada disto aplica e vale o padrão.
- */
-.card[data-image-ratio='1:1'] .media {
+
+.menuItemCard[data-image-ratio='1:1'] .menuItemCardMedia {
   aspect-ratio: 1 / 1;
 }
 
-.card[data-image-ratio='4:3'] .media {
+.menuItemCard[data-image-ratio='4:3'] .menuItemCardMedia {
   aspect-ratio: 4 / 3;
 }
 
-.card[data-image-ratio='16:9'] .media {
+.menuItemCard[data-image-ratio='16:9'] .menuItemCardMedia {
   aspect-ratio: 16 / 9;
 }
 
-.card[data-density='compact'] .body {
+.menuItemCard[data-density='compact'] .menuItemCardBody {
   @apply gap-0.5;
 }
 
-.card[data-density='compact'] .description {
+.menuItemCard[data-density='compact'] .menuItemCardDescription {
   @apply line-clamp-1;
 }
 
-.card[data-item-style='big-image'] .open {
+.menuItemCard[data-item-style='big-image'] .open {
   @apply flex-col items-stretch;
 }
 
-.card[data-item-style='big-image'] .media {
+.menuItemCard[data-item-style='big-image'] .menuItemCardMedia {
   @apply w-full max-h-60 sm:max-h-72;
 }
 
-.card[data-item-style='condensed'] .media {
+.menuItemCard[data-item-style='condensed'] .menuItemCardMedia {
   @apply size-12;
 }
 
-.card[data-item-style='text-only'] .media {
+.menuItemCard[data-item-style='text-only'] .menuItemCardMedia {
   @apply hidden;
 }

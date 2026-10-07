@@ -57,10 +57,10 @@ export const ProductDetailForm = () => {
 
   return (
     <FormProvider {...form}>
-      <Box as="form" onSubmit={onSubmit} className={styles.form}>
-        <Box className={styles.fields}>
+      <Box as="form" onSubmit={onSubmit} className={styles.productDetailForm}>
+        <Box className={styles.productDetailFormFields}>
           <Tabs
-            className={styles.tabs}
+            className={styles.productDetailFormTabs}
             tabs={[
               {
                 value: 'information',
@@ -73,7 +73,7 @@ export const ProductDetailForm = () => {
 
                     <Box className={styles.informationFields}>
                       <Box
-                        className={`${motion.deal} ${styles.field}`}
+                        className={`${motion.deal} ${styles.productDetailFormField}`}
                         style={riseDelay(120)}
                       >
                         <FormField label="Nome" error={errors.name?.message}>
@@ -86,7 +86,7 @@ export const ProductDetailForm = () => {
                       </Box>
 
                       <Box
-                        className={`${motion.deal} ${styles.field}`}
+                        className={`${motion.deal} ${styles.productDetailFormField}`}
                         style={riseDelay(180)}
                       >
                         <FormField
@@ -108,7 +108,7 @@ export const ProductDetailForm = () => {
                       </Box>
 
                       <Box
-                        className={`${motion.deal} ${styles.field}`}
+                        className={`${motion.deal} ${styles.productDetailFormField}`}
                         style={riseDelay(220)}
                       >
                         <FormField
@@ -210,7 +210,7 @@ export const ProductDetailForm = () => {
                 content: (
                   <Box className={styles.tabContent}>
                     <Box
-                      className={`${motion.deal} ${styles.row}`}
+                      className={`${motion.deal} ${styles.productDetailFormRow}`}
                       style={riseDelay(280)}
                     >
                       <FormField
@@ -288,7 +288,7 @@ export const ProductDetailForm = () => {
         </Box>
 
         <Box
-          className={`${motion.deal} ${styles.actions}`}
+          className={`${motion.deal} ${styles.productDetailFormActions}`}
           style={riseDelay(460)}
         >
           <ProductDeleteAction />

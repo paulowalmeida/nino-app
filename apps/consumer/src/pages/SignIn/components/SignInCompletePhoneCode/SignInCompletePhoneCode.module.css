@@ -1,13 +1,13 @@
 @reference "@nino/ds/globals.css";
 
-.title {
+.signInCompletePhoneCodeTitle {
   @apply mt-8 text-center font-display text-[1.65rem] font-extrabold;
   @apply leading-[1.15] text-fg-strong sm:text-[1.85rem];
   letter-spacing: -0.025em;
   text-wrap: balance;
 }
 
-.subtitle {
+.signInCompletePhoneCodeSubtitle {
   @apply mt-2.5 text-center leading-relaxed text-fg-default;
 }
 
@@ -46,6 +46,6 @@
   );
 }
 
-.secondary {
+.signInCompletePhoneCodeSecondary {
   @apply mt-2 h-12 w-full rounded-full text-sm font-bold text-fg-faint;
 }

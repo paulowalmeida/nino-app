@@ -1,6 +1,6 @@
 @reference "@nino/ds/globals.css";
 
-.actions {
+.subscriptionActions {
   @apply border-t border-border pt-5;
 }
 

@@ -1,7 +1,6 @@
 @reference "@nino/ds/globals.css";
 
-/* mesma largura da ficha de editar item: a foto ganha coluna fixa no
-   desktop, e em 3xl uma coluna só deixaria a moldura 4/3 esticada demais */
-.page {
+
+.newProductPage {
   @apply max-w-5xl p-4 lg:p-10;
 }

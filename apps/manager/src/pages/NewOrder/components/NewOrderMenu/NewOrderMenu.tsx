@@ -19,7 +19,7 @@ export const NewOrderMenu = () => {
   if (isMenuPending) return <NewOrderMenuSkeleton />
 
   return (
-    <Box as="section" className={styles.menu} aria-label="Cardápio">
+    <Box as="section" className={styles.newOrderMenu} aria-label="Cardápio">
       {sections.length === 0 && (
         <EmptyState>
           O cardápio está vazio. Cadastre um item antes de abrir pedido.
@@ -42,7 +42,7 @@ export const NewOrderMenu = () => {
               .map((item, index) => (
                 <ListRow
                   key={item.id}
-                  className={`${motion.deal} ${styles.item}`}
+                  className={`${motion.deal} ${styles.newOrderMenuItem}`}
                   divider="bottom"
                   gap={3}
                   padding={2.5}

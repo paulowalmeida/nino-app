@@ -18,7 +18,7 @@ export const ProductDetail = () => {
   }, [])
 
   return (
-    <Box className={styles.page}>
+    <Box className={styles.productDetailPage}>
       <Box direction="row" align="center" gap={4} className={styles.headerRow}>
         <BackLink>Cardápio</BackLink>
         {isReady && <ProductDetailHeader />}

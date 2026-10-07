@@ -15,19 +15,19 @@ export function Demo() {
   const isOwner = current.side === "owner"
 
   const tabStyle = (tab: DemoTab) =>
-    `${styles.tab}${active === tab.id ? ` ${styles.tabActive}` : ""}`
+    `${styles.demoTab}${active === tab.id ? ` ${styles.tabActive}` : ""}`
 
   const mockupStyle = `${styles.mockup}${
     isOwner ? ` ${styles.mockupOwner}` : ""
   }`
 
   return (
-    <section id="demo" className={styles.section}>
-      <div className={styles.inner}>
-        <div className={styles.header}>
+    <section id="demo" className={styles.demoSection}>
+      <div className={styles.demoInner}>
+        <div className={styles.demoHeader}>
           <span className={styles.eyebrow}>Os dois lados do balcão</span>
 
-          <h2 className={styles.title}>
+          <h2 className={styles.demoTitle}>
             O que seu cliente vê,{" "}
             <span className={styles.titleAccent}>e o que você vê</span>
           </h2>
@@ -51,7 +51,7 @@ export function Demo() {
           ))}
         </div>
 
-        <p className={styles.caption}>{current.caption}</p>
+        <p className={styles.demoCaption}>{current.caption}</p>
 
         <div className={mockupStyle}>
           <div className={styles.chrome}>

@@ -44,11 +44,11 @@ export const ProductDetailShell = ({
       ariaLabel={ariaLabel}
       dismissible={isDesktop}
       positionerClassName={styles.positioner}
-      contentClassName={styles.panel}
-      bodyClassName={styles.body}
+      contentClassName={styles.productDetailShellPanel}
+      bodyClassName={styles.productDetailShellBody}
       body={
-        <Box className={styles.grid}>
-          <Box className={styles.media}>
+        <Box className={styles.productDetailShellGrid}>
+          <Box className={styles.productDetailShellMedia}>
             {!media && !isDesktop && (
               <Button
                 variant="ghost"
@@ -62,8 +62,8 @@ export const ProductDetailShell = ({
             )}
             {media}
           </Box>
-          <Box className={styles.details}>{details}</Box>
-          {footer && <Box className={styles.footer}>{footer}</Box>}
+          <Box className={styles.productDetailShellDetails}>{details}</Box>
+          {footer && <Box className={styles.productDetailShellFooter}>{footer}</Box>}
         </Box>
       }
     />

@@ -1,5 +1,5 @@
 @reference "@nino/ds/globals.css";
 
-.page {
+.storeLayoutPage {
   @apply min-h-dvh bg-surface-1 text-fg-default;
 }

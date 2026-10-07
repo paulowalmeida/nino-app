@@ -44,7 +44,7 @@ export const PhoneList = ({
   if (isPending) return <Skeleton className={local.skeleton} />
 
   return (
-    <Box as="section" className={local.section}>
+    <Box as="section" className={local.phoneListSection}>
       <Box
         as="header"
         direction="row"
@@ -61,7 +61,7 @@ export const PhoneList = ({
       </Box>
 
       {phones.length === 0 && (
-        <EmptyState className={local.empty}>
+        <EmptyState className={local.phoneListEmpty}>
           Adicione um número para que os clientes saibam como falar com a loja.
         </EmptyState>
       )}
@@ -78,7 +78,7 @@ export const PhoneList = ({
                 <Box direction="row" wrap className={local.editRow}>
                   <PhoneInput
                     aria-label="Telefone da loja"
-                    className={local.input}
+                    className={local.phoneListInput}
                     value={draft}
                     onChange={(event) => setDraft(event.target.value)}
                   />
@@ -106,7 +106,7 @@ export const PhoneList = ({
                   >
                     {formatPhone(entry.phone)}
                   </Button>
-                  <Box direction="row" className={local.actions}>
+                  <Box direction="row" className={local.phoneListActions}>
                     <Button
                       variant="ghost"
                       size="sm"

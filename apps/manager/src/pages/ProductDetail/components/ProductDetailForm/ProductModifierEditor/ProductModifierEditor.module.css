@@ -4,11 +4,11 @@
   @apply flex flex-col gap-4 border-t border-border/60 pt-6;
 }
 
-.header {
+.productModifierEditorHeader {
   @apply flex-wrap items-start justify-between gap-3;
 }
 
-.title {
+.productModifierEditorTitle {
   @apply text-lg text-fg-strong;
 }
 
@@ -16,7 +16,7 @@
   @apply mt-1 text-sm leading-relaxed text-fg-muted;
 }
 
-.empty {
+.productModifierEditorEmpty {
   @apply rounded-2xl bg-surface-2 px-4 py-5 text-sm text-fg-muted;
 }
 

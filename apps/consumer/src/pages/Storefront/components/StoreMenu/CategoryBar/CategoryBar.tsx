@@ -19,6 +19,6 @@ export const CategoryBar = ({
   style,
 }: CategoryBarProps) => (
   <Box className={`${styles.bar} ${className ?? ''}`} style={style}>
-    <Box className={styles.inner}>{children}</Box>
+    <Box className={styles.categoryBarInner}>{children}</Box>
   </Box>
 )

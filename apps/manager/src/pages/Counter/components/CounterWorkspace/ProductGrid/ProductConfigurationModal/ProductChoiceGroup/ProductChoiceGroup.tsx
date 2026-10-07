@@ -21,7 +21,7 @@ export const ProductChoiceGroup = ({
   onSelectSingle,
   onToggleOption,
 }: ProductChoiceGroupProps) => (
-  <Box role="group" aria-labelledby={group.id} className={styles.group}>
+  <Box role="group" aria-labelledby={group.id} className={styles.productChoiceGroup}>
     <ProductChoiceHeader
       group={group}
       selectedCount={selectedOptionIds.length}

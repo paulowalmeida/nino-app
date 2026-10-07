@@ -4,11 +4,11 @@
   @apply mt-5;
 }
 
-.actions {
+.consumerContactActions {
   @apply min-w-0;
 }
 
-.action {
+.consumerContactAction {
   @apply min-w-0;
 }
 

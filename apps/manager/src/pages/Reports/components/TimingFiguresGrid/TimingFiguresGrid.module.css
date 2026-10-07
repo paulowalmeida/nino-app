@@ -9,13 +9,13 @@
   @apply bg-surface-page p-3 lg:p-5;
 }
 
-.value {
+.timingFiguresGridValue {
   @apply font-display text-xl font-extrabold leading-none tracking-tight;
   @apply text-fg-strong lg:text-2xl;
   font-variant-numeric: tabular-nums;
 }
 
-.label {
+.timingFiguresGridLabel {
   @apply text-xs leading-snug text-fg-faint lg:text-sm;
 }
 

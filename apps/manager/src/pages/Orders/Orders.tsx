@@ -6,8 +6,8 @@ import { OrdersQueue } from '@pages/Orders/components/OrdersQueue/OrdersQueue'
 import styles from '@pages/Orders/Orders.module.css'
 
 export const Orders = () => (
-  <Box className={styles.page}>
-    <Box className={styles.controls}>
+  <Box className={styles.ordersPage}>
+    <Box className={styles.ordersControls}>
       <OrdersHeader />
       <Box shrink={false} mb={3}>
         <OrdersFilters />

@@ -21,7 +21,7 @@ export const RecipientFields = ({
   onChange,
 }: RecipientFieldsProps) => (
   <Box className={`${motion.unroll} ${styles.block}`}>
-    <Text as="p" className={styles.title}>
+    <Text as="p" className={styles.recipientFieldsTitle}>
       {hasAddress ? 'Quem recebe' : 'Quem pediu'}
     </Text>
 

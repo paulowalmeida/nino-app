@@ -13,9 +13,9 @@ export const CollaboratorContactSkeleton = () => (
     wrap
     className={contact.contact}
   >
-    <Box direction="row" wrap className={contact.actions}>
-      <Skeleton className={ghost.action} />
-      <Skeleton className={ghost.action} />
+    <Box direction="row" wrap className={contact.collaboratorContactActions}>
+      <Skeleton className={ghost.collaboratorContactSkeletonAction} />
+      <Skeleton className={ghost.collaboratorContactSkeletonAction} />
     </Box>
 
     <Skeleton className={ghost.provider} />

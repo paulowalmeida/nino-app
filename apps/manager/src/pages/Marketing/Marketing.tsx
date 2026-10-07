@@ -14,8 +14,8 @@ export const Marketing = () => {
   const activeTab = pathname.endsWith('/promocoes') ? 'promocoes' : 'cashback'
 
   return (
-    <Box as="main" className={styles.page}>
-      <Box as="header" className={styles.header}>
+    <Box as="main" className={styles.marketingPage}>
+      <Box as="header" className={styles.marketingHeader}>
         <Heading level={1} size="2xl">
           Marketing
         </Heading>

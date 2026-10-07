@@ -1,22 +1,21 @@
 @reference "@nino/ds/globals.css";
 
-/* Column from desktop up: this lets the card fill the height the grid gave
-   the row, so the two blocks end together. */
-.section {
+/* WHY: Column from desktop up: this lets the card fill the height the grid
+ * gave the row, so the two blocks end together.
+ */
+.topProductsSection {
   @apply lg:flex lg:h-full lg:flex-col;
 }
 
-.heading {
+.topProductsHeading {
   @apply mb-3;
 }
 
-/*
- * Next to the chart, the card follows the grid row's height — it's the
+/* WHY: Next to the chart, the card follows the grid row's height — it's the
  * grid's own `stretch` that equalizes the two, no magic number. Stacked on
- * mobile, it closes at the list's size instead of opening an empty gap
- * below.
+ * mobile, it closes at the list's size instead of opening an empty gap below.
  */
-.card {
+.topProductsCard {
   @apply flex min-w-0 flex-col lg:flex-1;
   --card-ring: 0 0 0 1px
     color-mix(in srgb, var(--color-warm-950) 14%, transparent);
@@ -26,16 +25,14 @@
   @apply text-brand lg:flex-1;
 }
 
-/* Mesma régua do cartão ao lado: o vazio ocupa a faixa inteira do corpo em
-   vez de encostar no topo e deixar um vão morto embaixo. */
-.empty {
+
+.topProductsEmpty {
   @apply flex-1;
 }
 
-/*
- * Same metric as the DS's BarList: 2rem rows separated by `gap-2` and a 4px
- * radius. The old block had a flat 208px, which didn't match the height of
- * five rows on either screen size.
+/* WHY: Same metric as the DS's BarList: 2rem rows separated by `gap-2` and a
+ * 4px radius. The old block had a flat 208px, which didn't match the height
+ * of five rows on either screen size.
  */
 .skeletonBars {
   @apply flex flex-1 flex-col gap-2;

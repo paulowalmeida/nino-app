@@ -1,6 +1,6 @@
 @reference "@nino/ds/globals.css";
 
-.brand {
+.personMarkBrand {
   @apply bg-brand-soft text-brand-strong;
 }
 

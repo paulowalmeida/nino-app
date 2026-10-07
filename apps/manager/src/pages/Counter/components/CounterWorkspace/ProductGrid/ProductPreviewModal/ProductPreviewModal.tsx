@@ -37,7 +37,7 @@ export const ProductPreviewModal = ({
             {item.name}
           </Heading>
           {item.description && (
-            <Text size="sm" color="muted" className={styles.description}>
+            <Text size="sm" color="muted" className={styles.productPreviewModalDescription}>
               {item.description}
             </Text>
           )}

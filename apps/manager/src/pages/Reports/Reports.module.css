@@ -1,6 +1,6 @@
 @reference "@nino/ds/globals.css";
 
-.page {
+.reportsPage {
   @apply relative mx-auto max-w-page p-4 lg:p-10;
 }
 

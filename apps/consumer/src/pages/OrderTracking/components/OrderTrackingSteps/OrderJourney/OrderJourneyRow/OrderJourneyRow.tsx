@@ -38,7 +38,7 @@ export const OrderJourneyRow = ({
     padding={0}
     className={[
       motion.riseIn,
-      styles.row,
+      styles.orderJourneyRow,
       rowStyles[row.state],
       row.status === 'CANCELLED' ? styles.cancelled : '',
     ]

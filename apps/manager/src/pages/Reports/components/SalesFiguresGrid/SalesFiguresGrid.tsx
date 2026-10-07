@@ -32,7 +32,7 @@ export const SalesFiguresGrid = ({
         className={`${motion.settle} ${styles.figure}`}
         style={riseDelay(index * 60)}
       >
-        <Text as="span" className={styles.value}>
+        <Text as="span" className={styles.salesFiguresGridValue}>
           {isPending || !report ? (
             <Skeleton
               className={money ? styles.ghostMoney : styles.ghostCount}
@@ -43,7 +43,7 @@ export const SalesFiguresGrid = ({
             <CountUp value={report[key]} />
           )}
         </Text>
-        <Text as="span" className={styles.label}>
+        <Text as="span" className={styles.salesFiguresGridLabel}>
           {label}
         </Text>
       </Box>

@@ -6,12 +6,12 @@ import styles from "./ForRestaurants.module.css"
 
 export function ForRestaurants() {
   return (
-    <section id="para-restaurantes" className={styles.section}>
-      <div className={styles.inner}>
+    <section id="para-restaurantes" className={styles.forRestaurantsSection}>
+      <div className={styles.forRestaurantsInner}>
         <div>
           <span className={styles.eyebrow}>O Nino vs o mercado</span>
 
-          <h2 className={styles.title}>
+          <h2 className={styles.forRestaurantsTitle}>
             Mais completo.{" "}
             <span className={styles.titleAccent}>Mais justo.</span>
           </h2>
@@ -22,7 +22,7 @@ export function ForRestaurants() {
             WhatsApp e os seus entregadores no mesmo pacote.
           </p>
 
-          <div className={styles.list}>
+          <div className={styles.forRestaurantsList}>
             {benefits.map((text) => (
               <BenefitItem key={text} text={text} />
             ))}

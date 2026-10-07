@@ -1,6 +1,6 @@
 @reference "@nino/ds/globals.css";
 
-.content {
+.settingsTablesTabContent {
   @apply flex flex-col gap-6;
 }
 

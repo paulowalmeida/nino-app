@@ -5,8 +5,7 @@
   @apply lg:min-h-0 lg:pb-0;
 }
 
-/*
- * WHY: o positioner do Modal centraliza o painel dentro de um p-4; `fixed
+/* WHY: o positioner do Modal centraliza o painel dentro de um p-4; `fixed
  * inset-0` tira o painel desse fluxo para ele encostar nas quatro bordas da
  * tela, que é o que a venda no celular pede.
  */
@@ -34,7 +33,7 @@
   @apply size-11 shrink-0 rounded-full p-0 text-fg-faint;
 }
 
-.menu {
+.counterWorkspaceMenu {
   @apply flex min-w-0 flex-1 flex-col lg:min-h-0;
   container-type: inline-size;
 }

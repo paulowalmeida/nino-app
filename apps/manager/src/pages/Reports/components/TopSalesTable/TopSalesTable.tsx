@@ -55,7 +55,7 @@ export const TopSalesTable = ({
   <Box
     as="section"
     id="mais-vendidos"
-    className={styles.top}
+    className={styles.topSalesTableTop}
     aria-label="Produtos mais vendidos"
   >
     <h2 className={styles.topTitle}>Mais vendidos</h2>

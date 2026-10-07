@@ -39,14 +39,14 @@ export const ColorField = ({
           setOpen(true)
         }}
       >
-        <Box direction="row" gap={3} align="center" className={styles.row}>
+        <Box direction="row" gap={3} align="center" className={styles.colorFieldRow}>
           <Box
             aria-hidden="true"
             className={styles.swatch}
             style={{ backgroundColor: value }}
           />
-          <Box className={styles.meta}>
-            <Text size="sm" weight="semibold" className={styles.label}>
+          <Box className={styles.colorFieldMeta}>
+            <Text size="sm" weight="semibold" className={styles.colorFieldLabel}>
               {label}
             </Text>
             <Text size="xs" color="faint" className={styles.hint}>

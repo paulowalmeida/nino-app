@@ -1,11 +1,11 @@
 @reference '../../theme.css';
-.header {
+.landingHeader {
   @apply fixed top-0 left-0 right-0 z-nav;
   @apply py-[1.1rem] px-0 bg-transparent;
   @apply transition-[padding] duration-300;
 }
 
-.header::before {
+.landingHeader::before {
   content: "";
   @apply absolute inset-0 z-below opacity-0 transition-opacity duration-300;
   background: linear-gradient(165deg, #ff7e1f 0%, #ec5a0e 100%);
@@ -21,7 +21,7 @@
 }
 
 @supports (animation-timeline: scroll()) {
-  .header::before {
+  .landingHeader::before {
     animation: header-fill linear both;
     animation-timeline: scroll(root);
     animation-range: 16px 72px;
@@ -37,12 +37,12 @@
   }
 }
 
-.inner {
+.headerInner {
   @apply max-w-[1200px] mx-auto px-10;
   @apply flex items-center justify-between;
 }
 
-.brand {
+.headerBrand {
   @apply flex items-center gap-2 no-underline;
 }
 
@@ -67,7 +67,7 @@
   @apply text-fg-inverse not-italic;
 }
 
-.nav {
+.headerNav {
   @apply flex items-center gap-8;
   @apply static inset-auto p-0 bg-transparent bg-none;
   @apply border-0 z-auto;
@@ -146,7 +146,7 @@
 }
 
 @media (max-width: 900px) {
-  .nav {
+  .headerNav {
     @apply hidden;
   }
 

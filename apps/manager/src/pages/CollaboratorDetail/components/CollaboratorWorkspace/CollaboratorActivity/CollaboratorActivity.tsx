@@ -73,7 +73,7 @@ export const CollaboratorActivity = ({
     </Box>
 
     {activity.length === 0 ? (
-      <EmptyState className={styles.empty}>
+      <EmptyState className={styles.collaboratorActivityEmpty}>
         Nenhum pedido passou pela mão desta pessoa ainda.
       </EmptyState>
     ) : (

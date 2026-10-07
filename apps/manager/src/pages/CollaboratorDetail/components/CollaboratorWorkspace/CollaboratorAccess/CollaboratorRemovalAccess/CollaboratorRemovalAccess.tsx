@@ -17,7 +17,7 @@ export const CollaboratorRemovalAccess = ({
   onOpenRemovalConfirm,
 }: CollaboratorRemovalAccessProps) => (
   <Box as="footer" align="start" gap={2} className={styles.removal}>
-    <Text as="p" size="xs" color="faint" className={styles.description}>
+    <Text as="p" size="xs" color="faint" className={styles.collaboratorRemovalAccessDescription}>
       {firstName} perde o painel desta loja. A conta continua existindo, e o
       histórico de pedidos fica registrado.
     </Text>
@@ -27,7 +27,7 @@ export const CollaboratorRemovalAccess = ({
       size="sm"
       disabled={!!removalLockHint}
       onClick={onOpenRemovalConfirm}
-      className={styles.button}
+      className={styles.collaboratorRemovalAccessButton}
     >
       Tirar da loja
     </Button>

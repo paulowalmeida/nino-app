@@ -9,13 +9,13 @@ import local from './SettingsPhysicalTab.module.css'
 
 export const SettingsPhysicalTab = () => (
   <Card variant="flat" className={local.option} padding="lg">
-    <Box className={local.body}>
+    <Box className={local.settingsPhysicalTabBody}>
       <Box className={local.copy}>
         <Box
           direction="row"
           align="center"
           justify="between"
-          className={local.title}
+          className={local.settingsPhysicalTabTitle}
         >
           <Icon name="radio" aria-hidden="true" />
           <Badge size="sm">Em breve</Badge>

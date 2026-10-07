@@ -30,7 +30,7 @@ export const CounterWorkspace = () => {
   return (
     <>
       <Box className={styles.floor}>
-        <Box as="section" className={styles.menu} aria-label="Cardápio">
+        <Box as="section" className={styles.counterWorkspaceMenu} aria-label="Cardápio">
           <ProductGrid />
         </Box>
       </Box>

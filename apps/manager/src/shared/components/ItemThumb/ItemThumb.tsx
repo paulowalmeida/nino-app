@@ -15,6 +15,15 @@ type ItemThumbProps = {
 
 const TONES = 6
 
+const TONE_CLASS_BY_INDEX = [
+  styles.brandSoftTone,
+  styles.peachTone,
+  styles.neutralTone,
+  styles.mutedBrandTone,
+  styles.palePeachTone,
+  styles.limeTone,
+] as const
+
 const toneOf = (name: string): number => {
   let hash = 0
   for (let i = 0; i < name.length; i++) {
@@ -34,7 +43,7 @@ export const ItemThumb = ({
   const glyphClasses = mergeClasses(
     thumbClasses,
     styles.glyph,
-    styles[`tone${toneOf(name)}`]
+    TONE_CLASS_BY_INDEX[toneOf(name)]
   )
 
   return (

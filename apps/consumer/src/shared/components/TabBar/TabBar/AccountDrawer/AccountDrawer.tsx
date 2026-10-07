@@ -83,7 +83,7 @@ export const AccountDrawer = ({
   ) => {
     const href = `${base}/conta/${to}`
     const isOn = pathname === href
-    const className = isOn ? `${styles.item} ${styles.itemOn}` : styles.item
+    const className = isOn ? `${styles.accountDrawerItem} ${styles.itemOn}` : styles.accountDrawerItem
 
     return (
       <ListRow key={to} divider="none" padding={0}>
@@ -94,8 +94,8 @@ export const AccountDrawer = ({
           className={`${motion.deal} ${className}`}
           style={riseDelay(120 + index * 45)}
         >
-          <Icon name={icon} className={styles.icon} />
-          <Text as="span" className={styles.label}>
+          <Icon name={icon} className={styles.accountDrawerIcon} />
+          <Text as="span" className={styles.accountDrawerLabel}>
             {label}
           </Text>
         </Button>
@@ -109,8 +109,8 @@ export const AccountDrawer = ({
       onOpenChange={onOpenChange}
       placement="left"
       size="19.5rem"
-      contentClassName={styles.panel}
-      bodyClassName={styles.body}
+      contentClassName={styles.accountDrawerPanel}
+      bodyClassName={styles.accountDrawerBody}
     >
       {/* a gaveta sai por um portal, fora da árvore da página: a cor da loja
           precisa ser declarada de novo aqui para chegar às peças de dentro */}
@@ -161,8 +161,8 @@ export const AccountDrawer = ({
 
         {consumer ? (
           <>
-            <nav className={styles.nav} aria-label="Seções da conta">
-              <Box as="ul" className={styles.list}>
+            <nav className={styles.accountDrawerNav} aria-label="Seções da conta">
+              <Box as="ul" className={styles.accountDrawerList}>
                 {ready.map(({ to, label, icon }, index) =>
                   sectionRow(to, label, icon, index)
                 )}
@@ -172,7 +172,7 @@ export const AccountDrawer = ({
                   dizia três vezes a mesma coisa e roubava a leitura do nome */}
               <Text className={styles.eyebrow}>em breve</Text>
 
-              <Box as="ul" className={`${styles.list} ${styles.listSoon}`}>
+              <Box as="ul" className={`${styles.accountDrawerList} ${styles.listSoon}`}>
                 {soon.map(({ to, label, icon }, index) =>
                   sectionRow(to, label, icon, ready.length + index)
                 )}
@@ -186,7 +186,7 @@ export const AccountDrawer = ({
                 onClick={() => logout.mutate()}
                 disabled={logout.isPending}
               >
-                <Icon name="logout" className={styles.icon} />
+                <Icon name="logout" className={styles.accountDrawerIcon} />
                 {logout.isPending ? 'Saindo…' : 'Sair da conta'}
               </Button>
             </Box>

@@ -7,9 +7,9 @@ import { UnitsTopBar } from './components/UnitsTopBar/UnitsTopBar'
 import styles from './Units.module.css'
 
 export const Units = () => (
-  <Box className={styles.shell}>
+  <Box className={styles.unitsShell}>
     <UnitsTopBar />
-    <Box as="main" className={styles.page}>
+    <Box as="main" className={styles.unitsPage}>
       <UnitsHeader />
       <UnitsSetup />
     </Box>

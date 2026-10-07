@@ -59,7 +59,7 @@ export const CatalogItems = ({ className }: CatalogItemsProps) => {
 
   return (
     <ScrollArea className={className}>
-      <Box className={styles.list}>
+      <Box className={styles.catalogItemsList}>
         <Reorder.Group
           as="ul"
           axis="y"

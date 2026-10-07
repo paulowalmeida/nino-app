@@ -142,7 +142,7 @@ export const CommandPalette = ({ open, onOpenChange }: CommandPaletteProps) => {
       size="md"
       contentClassName={styles.modal}
       body={
-        <Box className={styles.body}>
+        <Box className={styles.commandPaletteBody}>
           <Box className={styles.searchField}>
             <Icon name="search" size="sm" className={styles.searchIcon} />
             <Input
@@ -161,7 +161,7 @@ export const CommandPalette = ({ open, onOpenChange }: CommandPaletteProps) => {
               value={query}
               onChange={(event) => setQuery(event.target.value)}
               onKeyDown={handleSearchKeyDown}
-              className={styles.input}
+              className={styles.commandPaletteInput}
             />
           </Box>
           <Box

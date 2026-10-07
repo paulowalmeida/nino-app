@@ -10,6 +10,6 @@
   @apply text-fg-strong;
 }
 
-.empty {
+.salesPeriodTrendEmpty {
   @apply py-6;
 }

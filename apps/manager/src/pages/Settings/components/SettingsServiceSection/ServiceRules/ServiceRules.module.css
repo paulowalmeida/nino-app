@@ -1,6 +1,6 @@
 @reference "@nino/ds/globals.css";
 
-.panel {
+.serviceRulesPanel {
   @apply flex min-w-0 flex-col;
 }
 
@@ -8,11 +8,11 @@
   @apply mb-4 lg:mb-6;
 }
 
-.group {
+.serviceRulesGroup {
   @apply flex flex-col gap-3 border-t border-border py-4;
 }
 
-.row {
+.serviceRulesRow {
   @apply flex items-start gap-3;
 }
 

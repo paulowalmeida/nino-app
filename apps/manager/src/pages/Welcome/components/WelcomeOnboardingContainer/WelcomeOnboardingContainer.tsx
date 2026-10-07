@@ -23,7 +23,7 @@ export const WelcomeOnboardingContainer = () => {
 
   return (
     <>
-      <Box className={styles.body}>
+      <Box className={styles.welcomeOnboardingContainerBody}>
         <Box className={styles.copy}>
           <Box key={index} className={styles.reveal}>
             <Text className={styles.stage}>
@@ -31,10 +31,10 @@ export const WelcomeOnboardingContainer = () => {
                 ? `Bem-vindo, ${firstName}`
                 : panel.stage}
             </Text>
-            <Heading level={1} className={styles.title}>
+            <Heading level={1} className={styles.welcomeOnboardingContainerTitle}>
               {panel.title}
             </Heading>
-            <Text className={styles.text}>{panel.text}</Text>
+            <Text className={styles.welcomeOnboardingContainerText}>{panel.text}</Text>
           </Box>
 
           <WelcomeStepTrack panels={WELCOME_PANELS} index={index} />

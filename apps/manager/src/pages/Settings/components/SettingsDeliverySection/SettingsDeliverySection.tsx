@@ -32,7 +32,7 @@ export const SettingsDeliverySection = () => {
   }
 
   return (
-    <Box as="section" className={local.panel}>
+    <Box as="section" className={local.settingsDeliverySectionPanel}>
       <Box as="header" className={`${motion.unroll} ${local.head}`}>
         <Heading level={2} size="xl">
           Entrega
@@ -57,7 +57,7 @@ export const SettingsDeliverySection = () => {
       </Box>
 
       <Box className={local.split}>
-        <Box className={local.rail}>
+        <Box className={local.settingsDeliverySectionRail}>
           {isResolved ? (
             <ZoneForm
               isAdding={add.isPending}

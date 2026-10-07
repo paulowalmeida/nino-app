@@ -88,7 +88,7 @@ export const AddressZipCodeField = ({
           placeholder="00000-000"
           autoComplete="postal-code"
           inputMode="numeric"
-          className={styles.input}
+          className={styles.addressZipCodeFieldInput}
           onChange={handleChange}
         />
       </Box>

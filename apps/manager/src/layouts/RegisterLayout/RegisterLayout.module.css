@@ -1,10 +1,10 @@
 @reference "@nino/ds/globals.css";
 
-.shell {
+.registerLayoutShell {
   @apply min-h-screen bg-surface-page;
 }
 
-.header {
+.registerLayoutHeader {
   @apply border-b border-border/60 px-5 py-4 sm:px-10;
 }
 
@@ -14,10 +14,10 @@
   @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand;
 }
 
-.main {
+.registerLayoutMain {
   @apply min-h-[calc(100vh-73px)] px-5 pt-8 pb-10 sm:px-8 sm:pt-10 sm:pb-12;
 }
 
-.content {
+.registerLayoutContent {
   @apply w-full max-w-4xl;
 }

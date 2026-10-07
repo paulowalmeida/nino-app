@@ -45,7 +45,7 @@ export const AccountStep = () => {
         gap={4}
         mt={12}
         onSubmit={submit}
-        className={styles.form}
+        className={styles.accountStepForm}
       >
         <RiseIn delay={120} className={styles.primaryField}>
           <FormField label="Nome" error={errors.name?.message}>
@@ -129,7 +129,7 @@ export const AccountStep = () => {
           </Alert>
         )}
 
-        <RiseIn delay={480} className={styles.actions}>
+        <RiseIn delay={480} className={styles.accountStepActions}>
           <Button
             type="submit"
             loading={isSubmitting}

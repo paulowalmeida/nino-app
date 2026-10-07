@@ -12,11 +12,11 @@ import styles from './AddressSummary.module.css'
 type AddressSummaryProps = { address: Address }
 
 export const AddressSummary = ({ address }: AddressSummaryProps) => (
-  <Box className={styles.body}>
+  <Box className={styles.addressSummaryBody}>
     <Text className={styles.line}>{addressStreetLine(address)}</Text>
     <Text className={styles.city}>{addressCityLine(address)}</Text>
     {address.isPrimary && (
-      <Badge size="sm" className={styles.badge}>
+      <Badge size="sm" className={styles.addressSummaryBadge}>
         Principal
       </Badge>
     )}

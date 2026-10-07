@@ -16,7 +16,7 @@ export const SettingsTablesTab = () => {
   const { add, toggle, drop } = diningTables.mutations
 
   return (
-    <Box className={local.content}>
+    <Box className={local.settingsTablesTabContent}>
       <Box className={local.intro}>
         <Box direction="row" align="center" gap={1}>
           <Heading level={2} size="lg">

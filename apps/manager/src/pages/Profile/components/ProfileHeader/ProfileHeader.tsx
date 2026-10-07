@@ -44,7 +44,7 @@ export const ProfileHeader = () => {
       direction="row"
       align="center"
       gap={{ mobile: 4, tablet: 5 }}
-      className={`${motion.deal} ${styles.header}`}
+      className={`${motion.deal} ${styles.profileHeader}`}
     >
       <Avatar
         size="xl"

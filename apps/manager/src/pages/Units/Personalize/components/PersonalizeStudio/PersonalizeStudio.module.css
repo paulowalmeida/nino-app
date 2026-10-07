@@ -13,8 +13,7 @@
   @apply xl:grid-cols-[minmax(0,1.4fr)_minmax(0,22rem)];
 }
 
-/* WHY: a prévia é o que está sendo decidido; ela gruda abaixo da barra para
-   que nenhum ajuste aconteça às cegas. */
+
 .dock {
   @apply sticky top-28 z-sticky row-start-1 min-w-0;
   @apply -mx-4 border-b border-border bg-surface-raised px-4 pb-3;
@@ -23,9 +22,10 @@
   @apply xl:max-w-none;
 }
 
-/* WHY: o painel mede esta coluna, não a viewport — as seções internas
-   reagem à largura dela. */
-.panel {
+/* WHY: o painel mede esta coluna, não a viewport — as seções internas reagem
+ * à largura dela.
+ */
+.personalizeStudioPanel {
   @apply row-start-1 flex min-w-0 flex-col gap-6;
   @apply lg:col-start-2 lg:row-start-1;
   container: studioControls / inline-size;

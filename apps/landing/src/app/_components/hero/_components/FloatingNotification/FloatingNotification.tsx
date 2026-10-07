@@ -10,12 +10,12 @@ export function FloatingNotification({
 }: FloatingNotificationProps) {
   return (
     <div className={`${styles.notification} ${styles[placement]}`}>
-      <div className={`${styles.icon} ${styles[iconVariant]}`}>{icon}</div>
+      <div className={`${styles.floatingNotificationIcon} ${styles[iconVariant]}`}>{icon}</div>
 
       <div>
-        <span className={styles.title}>{title}</span>
+        <span className={styles.floatingNotificationTitle}>{title}</span>
 
-        <span className={styles.subtitle}>{subtitle}</span>
+        <span className={styles.floatingNotificationSubtitle}>{subtitle}</span>
       </div>
     </div>
   )

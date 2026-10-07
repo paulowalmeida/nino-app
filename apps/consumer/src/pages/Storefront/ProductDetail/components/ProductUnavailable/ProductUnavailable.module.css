@@ -1,5 +1,5 @@
 @reference "@nino/ds/globals.css";
 
-.wrapper {
+.productUnavailableWrapper {
   @apply flex min-h-[60vh] items-center justify-center px-4 sm:px-6;
 }

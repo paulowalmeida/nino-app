@@ -4,7 +4,7 @@
   @apply max-w-xl;
 }
 
-.body {
+.commandPaletteBody {
   @apply gap-3;
 }
 
@@ -16,7 +16,7 @@
   @apply pointer-events-none absolute left-3 top-1/2 z-10 -translate-y-1/2 text-fg-faint;
 }
 
-.input {
+.commandPaletteInput {
   @apply pl-10;
 }
 

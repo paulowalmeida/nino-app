@@ -11,7 +11,7 @@ export const OrdersHeader = () => (
     <Heading level={2} size="lg" color="muted">
       Tudo que você já pediu aqui
     </Heading>
-    <Text className={styles.note}>
+    <Text className={styles.ordersHeaderNote}>
       Toque em um pedido para ver a comanda, os valores e como foi o
       pagamento.
     </Text>

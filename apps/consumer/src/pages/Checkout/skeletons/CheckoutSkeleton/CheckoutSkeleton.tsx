@@ -13,7 +13,7 @@ import styles from './CheckoutSkeleton.module.css'
  */
 export const CheckoutSkeleton = () => (
   <Box
-    className={styles.page}
+    className={styles.checkoutSkeletonPage}
     aria-busy="true"
     aria-label="Carregando o checkout"
   >

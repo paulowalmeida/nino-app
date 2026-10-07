@@ -13,7 +13,7 @@ export const ProductNotes = () => {
   return (
     <Box className={styles.notes}>
       <Box direction="row" className={styles.head}>
-        <Label htmlFor="product-notes" className={styles.label}>
+        <Label htmlFor="product-notes" className={styles.productNotesLabel}>
           Algum comentário?
         </Label>
         <Text as="span" className={styles.counter}>

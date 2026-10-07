@@ -10,10 +10,10 @@ export type ChartTooltipProps = {
 
 export const ChartTooltip = ({ at, value }: ChartTooltipProps) => (
   <>
-    <Text as="p" className={styles.label}>
+    <Text as="p" className={styles.chartTooltipLabel}>
       {chartFullDateLabel.format(at)}
     </Text>
-    <Text as="p" className={styles.value}>
+    <Text as="p" className={styles.chartTooltipValue}>
       {value}
     </Text>
   </>

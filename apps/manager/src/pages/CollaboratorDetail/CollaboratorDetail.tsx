@@ -18,7 +18,7 @@ export const CollaboratorDetail = () => {
 
   if (isError) {
     return (
-      <Box className={styles.page}>
+      <Box className={styles.collaboratorDetailPage}>
         <Breadcrumb trail={[{ label: 'Equipe', to: '..' }, { label: '—' }]} />
         <Alert variant="error" title="Não foi possível carregar a pessoa">
           Tente novamente em alguns instantes.
@@ -29,7 +29,7 @@ export const CollaboratorDetail = () => {
 
   if (!member) {
     return (
-      <Box className={styles.page}>
+      <Box className={styles.collaboratorDetailPage}>
         <Breadcrumb trail={[{ label: 'Equipe', to: '..' }, { label: '—' }]} />
         <EmptyState>Esta pessoa não está mais nesta loja.</EmptyState>
       </Box>
@@ -37,7 +37,7 @@ export const CollaboratorDetail = () => {
   }
 
   return (
-    <Box className={styles.page}>
+    <Box className={styles.collaboratorDetailPage}>
       <Breadcrumb
         trail={[{ label: 'Equipe', to: '..' }, { label: member.user.name }]}
       />

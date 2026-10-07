@@ -32,7 +32,7 @@ export const OrderRail = ({ order, className }: OrderRailProps) => {
   return (
     <Box
       direction="row"
-      className={`${styles.rail} ${className ?? ''}`}
+      className={`${styles.orderRail} ${className ?? ''}`}
       aria-hidden="true"
     >
       {journey.map((step, i) => (

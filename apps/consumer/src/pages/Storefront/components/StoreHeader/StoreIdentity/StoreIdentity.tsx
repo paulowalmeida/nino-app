@@ -60,7 +60,7 @@ export const StoreIdentity = () => {
           <Text
             as="span"
             className={
-              isStoreOpen ? `${styles.status} ${styles.statusOn}` : styles.status
+              isStoreOpen ? `${styles.storeIdentityStatus} ${styles.statusOn}` : styles.storeIdentityStatus
             }
           >
             <span

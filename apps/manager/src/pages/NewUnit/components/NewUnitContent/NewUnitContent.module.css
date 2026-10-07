@@ -1,7 +1,7 @@
 @reference "@nino/ds/globals.css";
 
-.body { @apply mt-6 flex flex-col-reverse gap-6 lg:grid lg:grid-cols-[minmax(0,1fr)_18rem] lg:items-start lg:gap-x-10; }
-.form { @apply min-w-0; }
+.newUnitContentBody { @apply mt-6 flex flex-col-reverse gap-6 lg:grid lg:grid-cols-[minmax(0,1fr)_18rem] lg:items-start lg:gap-x-10; }
+.newUnitContentForm { @apply min-w-0; }
 .aside { @apply flex min-w-0 flex-col gap-4 lg:sticky lg:top-10; }
 .asideLabel { @apply uppercase tracking-[0.12em]; }
 .facts { @apply flex flex-col rounded-2xl bg-surface-2 px-4 py-1; }

@@ -63,7 +63,7 @@ export const CashbackRules = ({
   if (isPending) return <Skeleton className={local.skeleton} />
 
   return (
-    <Box as="section" className={local.panel}>
+    <Box as="section" className={local.cashbackRulesPanel}>
       <Box as="header" className={`${motion.unroll} ${local.head}`}>
         <Heading level={2} size="xl">
           Cashback desta unidade
@@ -74,7 +74,7 @@ export const CashbackRules = ({
         </Text>
       </Box>
 
-      <Box className={local.group}>
+      <Box className={local.cashbackRulesGroup}>
         <Box className={local.switchRow}>
           <Switch
             checked={draft.cashbackEnabled}
@@ -90,7 +90,7 @@ export const CashbackRules = ({
         </Box>
       </Box>
 
-      <Box className={local.field}>
+      <Box className={local.cashbackRulesField}>
         <Label htmlFor="cashback-percent">
           <FieldHint
             label="Quanto volta (%)"
@@ -107,7 +107,7 @@ export const CashbackRules = ({
         />
       </Box>
 
-      <Box className={local.field}>
+      <Box className={local.cashbackRulesField}>
         <Label htmlFor="cashback-min-redeem">
           <FieldHint
             label="Saldo mínimo para usar (R$)"

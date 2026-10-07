@@ -124,7 +124,7 @@ export const SubscriptionInterestForm = ({
 
   return (
     <form
-      className={styles.form}
+      className={styles.subscriptionInterestForm}
       onSubmit={(event) => void submit(event)}
       noValidate
     >

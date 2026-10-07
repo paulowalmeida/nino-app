@@ -20,9 +20,9 @@ export const ProductModifierEditor = () => {
 
   return (
     <Box className={styles.editor}>
-      <Box direction="row" className={styles.header}>
+      <Box direction="row" className={styles.productModifierEditorHeader}>
         <Box>
-          <Heading level={2} className={styles.title}>
+          <Heading level={2} className={styles.productModifierEditorTitle}>
             Escolhas do cliente
           </Heading>
           <Text as="p" className={styles.hint}>
@@ -49,7 +49,7 @@ export const ProductModifierEditor = () => {
       </Box>
 
       {fields.length === 0 ? (
-        <Text as="p" className={styles.empty}>
+        <Text as="p" className={styles.productModifierEditorEmpty}>
           Este produto ainda não possui escolhas configuradas.
         </Text>
       ) : (

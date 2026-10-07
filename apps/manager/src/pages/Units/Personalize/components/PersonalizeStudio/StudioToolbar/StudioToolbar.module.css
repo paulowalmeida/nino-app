@@ -1,10 +1,10 @@
 @reference "@nino/ds/globals.css";
 
-.toolbar {
+.studioToolbar {
   @apply min-w-0 flex-wrap;
 }
 
-.controls {
+.studioToolbarControls {
   @apply min-w-0 flex-wrap;
 }
 
@@ -12,6 +12,6 @@
   @apply shrink-0;
 }
 
-.right {
+.studioToolbarRight {
   @apply min-w-0;
 }

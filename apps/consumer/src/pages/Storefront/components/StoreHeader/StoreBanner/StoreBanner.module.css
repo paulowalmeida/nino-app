@@ -1,12 +1,7 @@
 @reference "@nino/ds/globals.css";
 
-/*
- * WHY: no celular a faixa vai de borda a borda, que é o certo numa tela
- * estreita. A partir de sm ela entra na coluna de conteúdo e vira um cartão
- * de imagem com canto arredondado — esticada na largura inteira de um monitor
- * ela vira uma tarja, não uma capa de loja.
- */
-.banner {
+
+.storeBanner {
   @apply relative w-full overflow-hidden bg-cover bg-center;
   @apply h-48;
   @apply sm:mx-auto sm:mt-4 sm:h-auto sm:w-[calc(100%-3rem)];
@@ -15,7 +10,7 @@
   background-color: var(--store-tint, var(--color-brand));
 }
 
-.banner::before {
+.storeBanner::before {
   content: '';
   @apply pointer-events-none absolute -inset-y-12 -inset-x-8;
   background: radial-gradient(
@@ -28,8 +23,7 @@
   will-change: transform;
 }
 
-/* A arte determina a largura até o limite normal da coluna. Imagens menores
- * permanecem no tamanho natural, sem serem esticadas para preencher uma faixa. */
+
 .customBanner {
   display: block;
   width: fit-content;
@@ -105,7 +99,7 @@
 @media (prefers-reduced-motion: reduce) {
   .mark,
   .monogram,
-  .banner::before {
+  .storeBanner::before {
     transform: none;
   }
 }

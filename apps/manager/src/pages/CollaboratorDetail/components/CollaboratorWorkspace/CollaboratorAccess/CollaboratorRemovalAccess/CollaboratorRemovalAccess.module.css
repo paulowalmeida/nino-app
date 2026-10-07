@@ -4,10 +4,10 @@
   @apply mt-auto border-t border-border/60 pt-4;
 }
 
-.description {
+.collaboratorRemovalAccessDescription {
   @apply max-w-prose;
 }
 
-.button {
+.collaboratorRemovalAccessButton {
   @apply text-danger hover:bg-danger-surface hover:text-danger-hover;
 }

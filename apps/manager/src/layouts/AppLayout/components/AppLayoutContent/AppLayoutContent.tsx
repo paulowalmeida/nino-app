@@ -18,7 +18,7 @@ export const AppLayoutContent = () => {
   }, [hash, pathname, search])
 
   return (
-    <main className={styles.main}>
+    <main className={styles.appLayoutContentMain}>
       <Outlet />
     </main>
   )

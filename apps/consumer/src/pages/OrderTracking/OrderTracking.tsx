@@ -36,8 +36,8 @@ export const OrderTracking = () => {
   }
 
   return (
-    <Box className={styles.page} style={{ '--p': progress } as CSSProperties}>
-      <Box className={styles.shell}>
+    <Box className={styles.orderTrackingPage} style={{ '--p': progress } as CSSProperties}>
+      <Box className={styles.orderTrackingShell}>
         <OrderTrackingHeader
           backHref={backHref}
           orderNumber={order.orderNumber}
@@ -54,7 +54,7 @@ export const OrderTracking = () => {
         )}
       </Box>
 
-      <Box className={styles.footer}>
+      <Box className={styles.orderTrackingFooter}>
         <PoweredBy compact />
       </Box>
     </Box>

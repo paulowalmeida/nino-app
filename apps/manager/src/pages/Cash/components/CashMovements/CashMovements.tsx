@@ -33,7 +33,7 @@ export const CashMovements = ({ movements }: CashMovementsProps) => (
       align="baseline"
       className={styles.head}
     >
-      <Heading level={2} size="sm" color="faint" className={styles.title}>
+      <Heading level={2} size="sm" color="faint" className={styles.cashMovementsTitle}>
         Movimentações
       </Heading>
       <Text size="xs" color="faint">
@@ -42,7 +42,7 @@ export const CashMovements = ({ movements }: CashMovementsProps) => (
     </Box>
 
     {!movements.length ? (
-      <Text size="sm" color="muted" className={styles.empty}>
+      <Text size="sm" color="muted" className={styles.cashMovementsEmpty}>
         Nada entrou nem saiu da gaveta desde a abertura.
       </Text>
     ) : (
@@ -59,7 +59,7 @@ export const CashMovements = ({ movements }: CashMovementsProps) => (
               <TableHead>Hora</TableHead>
               <TableHead>Movimentação</TableHead>
               <TableHead>Detalhe</TableHead>
-              <TableHead className={styles.right}>Valor</TableHead>
+              <TableHead className={styles.cashMovementsRight}>Valor</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>

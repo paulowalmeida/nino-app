@@ -7,11 +7,11 @@ import styles from './OrderTrackingSkeleton.module.css'
 
 export const OrderTrackingSkeleton = () => (
   <Box
-    className={styles.page}
+    className={styles.orderTrackingSkeletonPage}
     aria-busy="true"
     aria-label="Carregando o pedido"
   >
-    <Box className={styles.shell}>
+    <Box className={styles.orderTrackingSkeletonShell}>
       <Box as="header" direction="row" className={headerStyles.header}>
         <Box className={headerStyles.skBack} />
         <Box className={headerStyles.skTitle} />
@@ -27,7 +27,7 @@ export const OrderTrackingSkeleton = () => (
         ))}
       </Box>
     </Box>
-    <Box className={styles.footer}>
+    <Box className={styles.orderTrackingSkeletonFooter}>
       <PoweredBy compact />
     </Box>
   </Box>

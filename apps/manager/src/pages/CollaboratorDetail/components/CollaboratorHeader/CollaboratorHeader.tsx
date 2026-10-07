@@ -45,7 +45,7 @@ export const CollaboratorHeader = ({ member }: CollaboratorHeaderProps) => (
     </Box>
 
     {!member.user.isActive && (
-      <Badge variant="error" className={styles.status}>
+      <Badge variant="error" className={styles.collaboratorHeaderStatus}>
         Acesso desativado
       </Badge>
     )}

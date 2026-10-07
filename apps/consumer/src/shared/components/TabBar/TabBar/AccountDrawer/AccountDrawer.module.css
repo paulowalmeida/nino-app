@@ -1,12 +1,12 @@
 @reference "@nino/ds/globals.css";
 
-.panel {
+.accountDrawerPanel {
   @apply bg-surface-raised;
   box-shadow: 24px 0 60px -30px
     color-mix(in srgb, var(--color-warm-950) 45%, transparent);
 }
 
-.body {
+.accountDrawerBody {
   @apply flex flex-col overflow-y-auto p-0;
 }
 
@@ -55,15 +55,15 @@
   @apply mt-2 text-xs text-fg-faintest;
 }
 
-.nav {
+.accountDrawerNav {
   @apply flex-1 px-3 pt-2;
 }
 
-.list {
+.accountDrawerList {
   @apply flex flex-col;
 }
 
-.item {
+.accountDrawerItem {
   @apply relative flex h-12 w-full items-center gap-3 rounded-3 px-3;
   @apply text-base font-semibold text-fg-muted transition-colors;
   @apply hover:bg-black/[0.04];
@@ -83,15 +83,15 @@
   background: var(--store-tint, var(--color-brand));
 }
 
-.icon {
+.accountDrawerIcon {
   @apply shrink-0 text-fg-muted;
 }
 
-.itemOn .icon {
+.itemOn .accountDrawerIcon {
   color: var(--store-tint, var(--color-brand));
 }
 
-.label {
+.accountDrawerLabel {
   @apply flex-1 truncate text-left;
 }
 

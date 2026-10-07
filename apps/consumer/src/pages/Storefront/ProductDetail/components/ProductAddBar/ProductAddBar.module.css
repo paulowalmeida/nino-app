@@ -1,7 +1,6 @@
 @reference "@nino/ds/globals.css";
 
-/*
- * WHY: a barra fica presa ao rodapé da viewport porque a lista de escolhas é
+/* WHY: a barra fica presa ao rodapé da viewport porque a lista de escolhas é
  * mais alta que a tela — rolar até o fim para confirmar quebraria o fluxo.
  */
 .bar {

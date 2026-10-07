@@ -57,7 +57,7 @@ export const Checkout = () => {
   }
 
   return (
-    <Box className={styles.page} style={toStoreTheme(store)}>
+    <Box className={styles.checkoutPage} style={toStoreTheme(store)}>
       <CheckoutForm
         backHref={backHref}
         storeName={store.customName ?? store.company.name}

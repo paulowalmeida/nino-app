@@ -1,16 +1,15 @@
 @reference "@nino/ds/globals.css";
 
-/*
- * A tela ocupa a altura da janela e a lista rola por dentro: cabeçalho, régua
- * de colunas e o botão de carregar mais ficam parados, e o que corre é só a
- * lista. Sem isto, uma base grande empurra a paginação para fora da tela.
- * `3.5rem` é a barra superior do celular, que o `.main` já reserva.
+/* WHY: A tela ocupa a altura da janela e a lista rola por dentro: cabeçalho,
+ * régua de colunas e o botão de carregar mais ficam parados, e o que corre é
+ * só a lista. Sem isto, uma base grande empurra a paginação para fora da
+ * tela. `3.5rem` é a barra superior do celular, que o `.main` já reserva.
  */
-.page {
+.consumersPage {
   @apply relative mx-auto flex h-[calc(100dvh-3.5rem)] max-w-page flex-col p-4;
   @apply lg:h-dvh lg:p-10;
 }
 
-.empty {
+.consumersEmpty {
   @apply mt-6;
 }

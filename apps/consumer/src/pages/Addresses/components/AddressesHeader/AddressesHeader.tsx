@@ -11,7 +11,7 @@ export const AddressesHeader = () => (
     <Heading level={2} size="lg" color="muted">
       Para onde a loja entrega
     </Heading>
-    <Text className={styles.note}>
+    <Text className={styles.addressesHeaderNote}>
       O principal já vem preenchido no checkout. Os outros ficam a um toque na
       hora de pedir.
     </Text>

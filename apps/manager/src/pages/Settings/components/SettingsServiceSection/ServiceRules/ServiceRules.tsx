@@ -72,7 +72,7 @@ export const ServiceRules = ({
   if (isPending) return <Skeleton className={local.skeleton} />
 
   return (
-    <Box as="section" className={local.panel}>
+    <Box as="section" className={local.serviceRulesPanel}>
       <Box as="header" className={`${motion.unroll} ${local.head}`}>
         <Heading level={2} size="xl">
           Como a loja atende
@@ -82,7 +82,7 @@ export const ServiceRules = ({
         </Text>
       </Box>
 
-      <Box className={local.group}>
+      <Box className={local.serviceRulesGroup}>
         {SERVICE_RULES_CHANNELS.map(({ key, label, hint }, index) => (
           <Box
             key={key}
@@ -104,7 +104,7 @@ export const ServiceRules = ({
         ))}
       </Box>
 
-      <Box className={local.group}>
+      <Box className={local.serviceRulesGroup}>
         <Box className={local.channelRow}>
           <Switch
             checked={draft.showAddressOnStoreInfo}
@@ -122,7 +122,7 @@ export const ServiceRules = ({
         </Box>
       </Box>
 
-      <Box className={local.group}>
+      <Box className={local.serviceRulesGroup}>
         <Box className={local.channelRow}>
           <Switch
             checked={draft.allowGuestOrder}

@@ -1,7 +1,8 @@
 @reference "@nino/ds/globals.css";
 
 /* WHY: h-4 + my-0.5 = os 20px de um text-sm, a altura de linha das células
-   reais — a tabela não muda de altura quando a atividade chega. */
+ * reais — a tabela não muda de altura quando a atividade chega.
+ */
 
 .ticket {
   @apply my-0.5 h-4 w-10 rounded-1;
@@ -15,7 +16,7 @@
   @apply my-0.5 ml-auto h-4 w-16 rounded-1;
 }
 
-.status {
+.collaboratorActivitySkeletonStatus {
   @apply my-0.5 ml-auto h-4 w-16 rounded-1;
 }
 
@@ -23,6 +24,6 @@
   @apply my-0.5 ml-auto h-4 w-20 rounded-1;
 }
 
-.total {
+.collaboratorActivitySkeletonTotal {
   @apply my-0.5 ml-auto h-4 w-14 rounded-1;
 }

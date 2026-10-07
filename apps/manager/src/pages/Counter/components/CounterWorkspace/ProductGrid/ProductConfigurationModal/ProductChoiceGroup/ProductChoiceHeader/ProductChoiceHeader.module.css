@@ -1,6 +1,6 @@
 @reference "@nino/ds/globals.css";
 
-.header {
+.productChoiceHeader {
   @apply sticky top-0 z-content flex items-center justify-between gap-3;
   @apply bg-surface-2 px-4 py-3 sm:px-6;
 }

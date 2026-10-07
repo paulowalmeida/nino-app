@@ -1,6 +1,6 @@
 @reference "@nino/ds/globals.css";
 
-.label {
+.disclosureTriggerLabel {
   @apply flex items-center gap-2 text-sm font-semibold text-fg-default;
 }
 

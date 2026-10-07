@@ -5,7 +5,7 @@ import styles from '@pages/Orders/components/OrdersHeader/OrdersHeader.module.cs
 export const OrdersHeader = () => (
   <Header
     mb={{ mobile: 3, desktop: 6 }}
-    className={styles.header}
+    className={styles.ordersHeader}
     title="Pedidos"
     accent="Pedidos"
     description="Cada comanda mostra o próximo passo. Um toque move o pedido adiante."

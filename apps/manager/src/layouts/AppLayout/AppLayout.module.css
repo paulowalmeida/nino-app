@@ -1,13 +1,13 @@
 @reference "@nino/ds/globals.css";
 
-.shell {
+.appLayoutShell {
   @apply flex min-h-dvh bg-surface-raised;
 }
 
-.overlay {
+.appLayoutOverlay {
   @apply fixed inset-0 z-overlay bg-fg-cool/60 backdrop-blur-sm lg:hidden;
 }
 
-.overlay.overlay {
+.appLayoutOverlay.appLayoutOverlay {
   @apply h-dvh rounded-none;
 }

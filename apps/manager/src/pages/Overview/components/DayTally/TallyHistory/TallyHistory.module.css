@@ -1,10 +1,10 @@
 @reference "@nino/ds/globals.css";
 
-.section {
+.tallyHistorySection {
   @apply mt-6;
 }
 
-.link {
+.tallyHistoryLink {
   @apply flex items-baseline gap-3 rounded-3 px-2 py-2.5;
   @apply transition-colors duration-150 hover:bg-surface-mute;
   @apply focus-visible:outline-hidden focus-visible:ring-2;
@@ -25,7 +25,7 @@
   font-variant-numeric: tabular-nums;
 }
 
-.total {
+.tallyHistoryTotal {
   @apply text-sm font-semibold text-fg-default;
   font-variant-numeric: tabular-nums;
 }

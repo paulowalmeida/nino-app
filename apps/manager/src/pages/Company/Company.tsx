@@ -11,7 +11,7 @@ export const Company = () => {
   const { query, save } = useCompanyFacade()
 
   return (
-    <Box className={styles.page}>
+    <Box className={styles.companyPage}>
       <Box
         as="header"
         direction="column"

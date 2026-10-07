@@ -13,26 +13,26 @@
   @apply text-lg leading-none;
 }
 
-.tone0 {
+.brandSoftTone {
   @apply bg-brand-soft text-brand-strong;
 }
 
-.tone1 {
+.peachTone {
   @apply bg-accent-peach text-accent-clay;
 }
 
-.tone2 {
+.neutralTone {
   @apply bg-surface-6 text-fg-strong/70;
 }
 
-.tone3 {
+.mutedBrandTone {
   @apply bg-surface-4 text-brand-strong;
 }
 
-.tone4 {
+.palePeachTone {
   @apply bg-accent-peach-light text-accent-clay;
 }
 
-.tone5 {
+.limeTone {
   @apply bg-accent-lime/20 text-fg-strong/70;
 }

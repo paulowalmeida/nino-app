@@ -1,6 +1,6 @@
 @reference "@nino/ds/globals.css";
 
-.page {
+.tableTabDetailContentPage {
   @apply flex min-h-full flex-col gap-5 p-4 lg:gap-7 lg:p-10;
   @apply w-full;
 }
@@ -18,11 +18,11 @@
   @apply font-semibold uppercase tracking-wide;
 }
 
-.total {
+.tableTabDetailContentTotal {
   @apply flex flex-col gap-1 lg:items-end;
 }
 
-.content {
+.tableTabDetailContent {
   @apply grid items-start gap-5 lg:grid-cols-[minmax(0,1.35fr)_minmax(18rem,0.65fr)];
 }
 

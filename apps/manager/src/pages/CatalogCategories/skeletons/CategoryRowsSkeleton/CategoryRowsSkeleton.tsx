@@ -7,7 +7,7 @@ import styles from './CategoryRowsSkeleton.module.css'
 export const CategoryRowsSkeleton = () => (
   <Box gap={2}>
     {CATEGORIES_GHOST_ROWS.map((row) => (
-      <Box key={row} direction="row" className={styles.row}>
+      <Box key={row} direction="row" className={styles.categoryRowsSkeletonRow}>
         <Skeleton className={styles.ghostHandle} />
         <Box className={styles.who}>
           <Skeleton className={styles.ghostName} />

@@ -11,7 +11,7 @@ import styles from './NewUnit.module.css'
  */
 export const NewUnit = () => {
   return (
-    <Box className={styles.page}>
+    <Box className={styles.newUnitPage}>
       <Breadcrumb
         trail={[
           { label: 'Empresa', to: '../../empresa/informacoes' },
@@ -31,10 +31,10 @@ export const NewUnit = () => {
       </Text>
 
       <Box as="header" className={`${motion.deal} ${styles.head}`}>
-        <Heading level={1} size="2xl" className={styles.title}>
+        <Heading level={1} size="2xl" className={styles.newUnitTitle}>
           Abrir nova unidade
         </Heading>
-        <Text size="sm" color="muted" className={styles.subtitle}>
+        <Text size="sm" color="muted" className={styles.newUnitSubtitle}>
           Uma unidade é uma loja com endereço próprio. Preencha o que os
           clientes vão ver e onde ela fica — o resto se ajusta depois, no painel
           da unidade.

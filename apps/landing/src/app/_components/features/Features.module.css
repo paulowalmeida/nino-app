@@ -1,5 +1,5 @@
 @reference '../../theme.css';
-.section {
+.featuresSection {
   @apply relative overflow-hidden pt-28 pb-24 px-10;
   background: #fffbf5;
   background: radial-gradient(
@@ -9,18 +9,18 @@
   );
 }
 
-.section::after {
+.featuresSection::after {
   content: "";
   @apply absolute inset-0 pointer-events-none opacity-disabled;
   @apply mix-blend-multiply;
   background-image: url("/noise.svg");
 }
 
-.inner {
+.featuresInner {
   @apply relative z-raised max-w-[1120px] mx-auto;
 }
 
-.header {
+.featuresHeader {
   @apply max-w-[620px] mb-14;
 }
 
@@ -35,7 +35,7 @@
   @apply inline-box w-[22px] h-0.5 bg-brand rounded-1;
 }
 
-.title {
+.featuresTitle {
   @apply [font-family:var(--font-display)] font-extrabold;
   @apply text-[clamp(2.1rem,4vw,3.1rem)] leading-display;
   @apply tracking-[-0.02em] text-fg-strong;
@@ -45,20 +45,20 @@
   @apply text-brand;
 }
 
-.subtitle {
+.featuresSubtitle {
   @apply mt-4 text-lg leading-relaxed text-fg-muted;
 }
 
-.grid {
+.featuresGrid {
   @apply grid grid-cols-3 gap-5;
 }
 
 @media (max-width: 900px) {
-  .section {
+  .featuresSection {
     @apply py-16 px-5;
   }
 
-  .grid {
+  .featuresGrid {
     @apply grid-cols-1;
   }
 }

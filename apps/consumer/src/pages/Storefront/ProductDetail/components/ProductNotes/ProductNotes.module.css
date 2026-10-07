@@ -8,7 +8,7 @@
   @apply flex items-baseline justify-between gap-3;
 }
 
-.label {
+.productNotesLabel {
   @apply font-display text-base font-bold text-fg-strong;
 }
 

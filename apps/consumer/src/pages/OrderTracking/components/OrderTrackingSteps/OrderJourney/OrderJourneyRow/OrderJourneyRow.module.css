@@ -1,15 +1,13 @@
 @reference "@nino/ds/globals.css";
 
-/* Três colunas fixas: marcador, passo e hora; a hora alinha à direita,
-   então dá para ler a coluna inteira sem varrer o texto */
-.row {
+
+.orderJourneyRow {
   @apply relative grid items-center gap-x-3.5 py-2;
   grid-template-columns: 2rem minmax(0, 1fr) auto;
 }
 
-/* o fio liga marcador a marcador: sai da borda de baixo de um ícone e para na
-   borda de cima do próximo, sem passar por dentro de nenhum dos dois */
-.row:not(:last-child)::before {
+
+.orderJourneyRow:not(:last-child)::before {
   content: '';
   @apply absolute w-0.5 rounded-full;
   left: 15px;
@@ -23,9 +21,8 @@
   background: color-mix(in srgb, var(--color-brand) 35%, transparent);
 }
 
-/*
- * O marcador é o mesmo da demo da landing: um disco de 2rem com a cara do
- * passo dentro. É o que dá ritmo à coluna — cinco discos em vez de cinco
+/* WHY: O marcador é o mesmo da demo da landing: um disco de 2rem com a cara
+ * do passo dentro. É o que dá ritmo à coluna — cinco discos em vez de cinco
  * pontinhos —, e é o que se lê antes do texto quando a tela é conferida de
  * relance.
  */
@@ -35,11 +32,7 @@
   @apply text-base leading-none;
 }
 
-/*
- * Três pesos, e só um deles em tinta cheia. O passo de agora é o único em
- * fonte de display: quem abre a tela encontra onde o pedido está sem ler a
- * lista inteira, que era o custo de cinco linhas com o mesmo peso.
- */
+
 .done .node,
 .final .node {
   @apply bg-brand text-xs font-bold text-fg-on-brand;
@@ -84,7 +77,7 @@
   @apply text-xs text-fg-faintest;
 }
 
-/* cancelado fecha a lista em tom de aviso, não de marca */
+
 .cancelled .node {
   @apply bg-danger-surface text-sm font-bold text-danger;
   box-shadow: none;

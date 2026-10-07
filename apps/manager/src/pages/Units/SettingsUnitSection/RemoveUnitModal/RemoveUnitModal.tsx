@@ -57,12 +57,12 @@ export const RemoveUnitModal = ({
       open={open}
       onOpenChange={onOpenChange}
       ariaLabel={`Fechar a loja ${unitName}`}
-      header={<h2 className={styles.title}>Excluir esta loja?</h2>}
+      header={<h2 className={styles.removeUnitModalTitle}>Excluir esta loja?</h2>}
       body={
         <form
           id="remove-unit-form"
           onSubmit={handleSubmit}
-          className={styles.form}
+          className={styles.removeUnitModalForm}
         >
           <Alert variant="error">
             A loja sai da empresa e o histórico dela vai junto. Não dá para
@@ -73,7 +73,7 @@ export const RemoveUnitModal = ({
               needs to stay visible while typing, not below what was
               already typed. */}
           <Box direction="column" gap={1.5}>
-            <Label className={styles.label} htmlFor="remove-unit-name">
+            <Label className={styles.removeUnitModalLabel} htmlFor="remove-unit-name">
               Para confirmar, digite{' '}
               <code className={styles.code}>{unitName}</code> abaixo:
             </Label>

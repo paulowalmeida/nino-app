@@ -1,5 +1,5 @@
 @reference "@nino/ds/globals.css";
 
-.list {
+.orderJourneyList {
   @apply flex flex-col;
 }

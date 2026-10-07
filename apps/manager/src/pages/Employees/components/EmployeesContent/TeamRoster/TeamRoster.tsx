@@ -141,7 +141,7 @@ export const TeamRoster = ({
             value={term}
             placeholder="Nome ou e-mail"
             aria-label={searchLabel}
-            className={styles.search}
+            className={styles.teamRosterSearch}
             onChange={(event) => setTerm(event.target.value)}
           />
         )}

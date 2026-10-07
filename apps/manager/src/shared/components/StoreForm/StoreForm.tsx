@@ -97,7 +97,7 @@ export const StoreForm = ({
   }
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
+    <form onSubmit={handleSubmit(onSubmit)} className={styles.storeForm}>
       {draft && (
         <Text
           as="p"
@@ -138,7 +138,7 @@ export const StoreForm = ({
       <Box
         direction={{ mobile: 'column', tablet: 'row' }}
         justify={{ tablet: 'end' }}
-        className={mergeClasses(motion.rise, styles.actions)}
+        className={mergeClasses(motion.rise, styles.storeFormActions)}
         style={riseDelay(500)}
       >
         <Button

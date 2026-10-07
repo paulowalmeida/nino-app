@@ -14,16 +14,16 @@
   background-image: url("/noise.svg");
 }
 
-.container {
+.heroContainer {
   @apply max-w-[1200px] mx-auto px-10 relative z-raised;
 }
 
-.grid {
+.heroGrid {
   @apply grid grid-cols-[1.02fr_0.98fr] gap-8 items-center;
   @apply pt-[6.5rem] pb-[4.5rem] px-0;
 }
 
-.badge {
+.heroBadge {
   @apply inline-flex items-center gap-2;
   @apply bg-surface-raised/[0.14] border border-fg-on-brand/[0.28];
   @apply py-[0.4rem] px-[0.95rem] rounded-full;
@@ -54,13 +54,13 @@
   @apply bottom-[0.08em] h-[0.16em] bg-accent-peach-deep;
 }
 
-.subtitle {
+.heroSubtitle {
   @apply mt-14 max-w-[480px];
   @apply text-lg leading-relaxed text-fg-on-brand/[0.92];
   @apply animate-[fadeUp_0.6s_0.1s_ease_both];
 }
 
-.actions {
+.heroActions {
   @apply mt-8 flex gap-[0.9rem] items-center flex-wrap;
   @apply animate-[fadeUp_0.6s_0.15s_ease_both];
 }
@@ -129,11 +129,11 @@
 }
 
 @media (max-width: 900px) {
-  .container {
+  .heroContainer {
     @apply px-5;
   }
 
-  .grid {
+  .heroGrid {
     @apply grid-cols-1 pt-20 pb-14 text-center;
   }
 
@@ -141,11 +141,11 @@
     @apply mx-auto;
   }
 
-  .subtitle {
+  .heroSubtitle {
     @apply mx-auto;
   }
 
-  .actions {
+  .heroActions {
     @apply justify-center;
   }
 

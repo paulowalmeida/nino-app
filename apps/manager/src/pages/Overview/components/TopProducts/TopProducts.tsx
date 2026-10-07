@@ -31,13 +31,13 @@ export const TopProducts = () => {
       as="section"
       id="ultimos-vendidos"
       aria-label="O que mais sai"
-      className={styles.section}
+      className={styles.topProductsSection}
     >
       <Box className={motion.unroll}>
-        <Eyebrow className={styles.heading}>O que mais sai</Eyebrow>
+        <Eyebrow className={styles.topProductsHeading}>O que mais sai</Eyebrow>
       </Box>
 
-      <Card variant="flat" padding="lg" className={`${motion.settle} ${styles.card}`}>
+      <Card variant="flat" padding="lg" className={`${motion.settle} ${styles.topProductsCard}`}>
         {isPending && (
           <Box className={styles.skeletonBars}>
             {TOP_PRODUCTS_SKELETON_WIDTHS.map((width) => (
@@ -51,7 +51,7 @@ export const TopProducts = () => {
         )}
 
         {!isPending && items.length === 0 && (
-          <EmptyState className={styles.empty}>
+          <EmptyState className={styles.topProductsEmpty}>
             Nenhuma venda concluída na semana.
           </EmptyState>
         )}

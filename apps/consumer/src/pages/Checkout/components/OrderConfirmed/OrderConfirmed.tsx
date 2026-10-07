@@ -32,10 +32,10 @@ export const OrderConfirmed = ({
         alt=""
         className={styles.mascot}
       />
-      <Heading level={1} size="2xl" className={styles.title}>
+      <Heading level={1} size="2xl" className={styles.orderConfirmedTitle}>
         Pedido enviado!
       </Heading>
-      <Text className={styles.text}>
+      <Text className={styles.orderConfirmedText}>
         {isPickup
           ? 'A loja já recebeu e vai preparar. Guarde o código para '
             + 'retirar no balcão.'

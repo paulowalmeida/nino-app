@@ -1,6 +1,6 @@
 @reference "@nino/ds/globals.css";
 
-.panel {
+.unitCardPanel {
   @apply flex w-full min-w-0 max-w-6xl flex-col;
 }
 
@@ -12,11 +12,11 @@
   @apply min-w-32 w-full self-start min-[426px]:w-fit sm:self-end;
 }
 
-.fields {
+.unitCardFields {
   @apply grid grid-cols-1 gap-3 sm:grid-cols-2;
 }
 
-.tabs {
+.unitCardTabs {
   @apply min-w-0;
 }
 
@@ -56,8 +56,8 @@
   @apply h-14 w-full rounded-3;
 }
 
-/* the rank sits next to the name, where the question shows up */
-.main {
+
+.unitCardMain {
   @apply ml-2 align-middle;
 }
 

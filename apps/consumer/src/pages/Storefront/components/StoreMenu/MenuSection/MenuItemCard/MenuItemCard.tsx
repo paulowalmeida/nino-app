@@ -49,7 +49,7 @@ export const MenuItemCard = ({
   return (
     <Card
       padding="sm"
-      className={disabled ? `${styles.card} ${styles.disabled}` : styles.card}
+      className={disabled ? `${styles.menuItemCard} ${styles.disabled}` : styles.menuItemCard}
       role="group"
       aria-disabled={disabled}
       data-item-style={itemStyle}
@@ -63,7 +63,7 @@ export const MenuItemCard = ({
         aria-label={`Ver detalhes de ${item.name}`}
         onClick={() => onSelect(item)}
       >
-        <Box className={styles.media}>
+        <Box className={styles.menuItemCardMedia}>
           <Image
             src={image}
             alt=""
@@ -86,12 +86,12 @@ export const MenuItemCard = ({
           )}
         </Box>
 
-        <Box className={styles.body}>
+        <Box className={styles.menuItemCardBody}>
           <Heading level={3} className={styles.name}>
             {item.name}
           </Heading>
           {showDescription && item.description && (
-            <Text as="p" className={styles.description}>
+            <Text as="p" className={styles.menuItemCardDescription}>
               {item.description}
             </Text>
           )}

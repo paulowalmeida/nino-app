@@ -31,7 +31,7 @@ export const SalesPeriodTrend = ({
       {isPending && <SalesTrendSkeleton />}
 
       {hasNoSales && (
-        <EmptyState className={styles.empty}>
+        <EmptyState className={styles.salesPeriodTrendEmpty}>
           Nenhuma venda concluída no período.
         </EmptyState>
       )}

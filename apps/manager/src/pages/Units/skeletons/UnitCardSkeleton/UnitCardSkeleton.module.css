@@ -1,14 +1,14 @@
 @reference "@nino/ds/globals.css";
 
-.title {
+.unitCardSkeletonTitle {
   @apply h-7 w-48;
 }
 
-.panel {
+.unitCardSkeletonPanel {
   @apply flex min-w-0 flex-col;
 }
 
-.fields {
+.unitCardSkeletonFields {
   @apply grid grid-cols-1 gap-3 sm:grid-cols-2;
 }
 
@@ -75,19 +75,19 @@
   @apply h-9 w-36 shrink-0 rounded-full;
 }
 
-.tabs {
+.unitCardSkeletonTabs {
   @apply mb-4;
 }
 
-.tab {
+.unitCardSkeletonTab {
   @apply h-9 w-32 rounded-2;
 }
 
-.label {
+.unitCardSkeletonLabel {
   @apply h-3.5 w-24;
 }
 
-.input {
+.unitCardSkeletonInput {
   @apply h-11 w-full;
 }
 

@@ -4,7 +4,7 @@
   @apply border-t border-border pt-6 sm:col-span-12;
 }
 
-.form {
+.unitStepForm {
   @apply grid grid-cols-1 gap-x-5 gap-y-4 sm:grid-cols-12;
 }
 
@@ -17,10 +17,10 @@
 }
 
 .formFeedback,
-.actions {
+.unitStepActions {
   @apply sm:col-span-12;
 }
 
-.actions {
+.unitStepActions {
   @apply mt-2;
 }

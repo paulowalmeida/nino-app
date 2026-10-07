@@ -20,8 +20,8 @@ export const OrderNotFound = ({ backHref, reason }: OrderNotFoundProps) => {
       : 'Confira o link — ele é o mesmo que apareceu na hora do pedido.'
 
   return (
-    <Box className={styles.page}>
-      <Box className={styles.content}>
+    <Box className={styles.orderNotFoundPage}>
+      <Box className={styles.orderNotFoundContent}>
         <EmptyState
           size="md"
           className={styles.notFound}
@@ -37,7 +37,7 @@ export const OrderNotFound = ({ backHref, reason }: OrderNotFoundProps) => {
         </EmptyState>
       </Box>
 
-      <Box className={styles.footer}>
+      <Box className={styles.orderNotFoundFooter}>
         <PoweredBy compact />
       </Box>
     </Box>

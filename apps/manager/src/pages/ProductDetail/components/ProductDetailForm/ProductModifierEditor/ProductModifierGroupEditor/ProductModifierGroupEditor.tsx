@@ -30,7 +30,7 @@ export const ProductModifierGroupEditor = ({
   const groupErrors = errors.modifiers?.[groupIndex]
 
   return (
-    <Box className={styles.group}>
+    <Box className={styles.productModifierGroupEditorGroup}>
       <Box direction="row" className={styles.groupHeader}>
         <Button type="button" variant="ghost" size="sm" onClick={removeGroup}>
           Remover seção

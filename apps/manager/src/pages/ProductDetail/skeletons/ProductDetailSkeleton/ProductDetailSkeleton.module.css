@@ -28,7 +28,7 @@
   @apply h-20 w-full rounded-2;
 }
 
-/* linha de "42/300 · Aparece..." sob a descrição */
+
 .ghostHelper {
   @apply mt-1.5 h-3 w-64 max-w-full rounded-1;
 }

@@ -1,6 +1,6 @@
 @reference "@nino/ds/globals.css";
 
-.group {
+.productModifierGroupEditorGroup {
   @apply flex flex-col gap-4;
 }
 

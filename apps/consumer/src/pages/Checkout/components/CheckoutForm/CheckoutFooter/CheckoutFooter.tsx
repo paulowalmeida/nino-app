@@ -30,12 +30,12 @@ export const CheckoutFooter = ({
   return (
     <Box className={styles.tearBar}>
       <Box className={styles.totals}>
-        <Text as="span" className={styles.label}>
+        <Text as="span" className={styles.checkoutFooterLabel}>
           Total
         </Text>
-        <AnimatedNumber value={brl(total)} className={styles.total} />
+        <AnimatedNumber value={brl(total)} className={styles.checkoutFooterTotal} />
       </Box>
-      <Box direction="row" gap={2} className={styles.actions}>
+      <Box direction="row" gap={2} className={styles.checkoutFooterActions}>
         {canGoBack && (
           <Button
             type="button"

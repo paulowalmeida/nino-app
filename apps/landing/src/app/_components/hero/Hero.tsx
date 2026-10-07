@@ -15,8 +15,8 @@ function scrollToDemo() {
 export function Hero() {
   return (
     <section className={styles.hero}>
-      <div className={styles.container}>
-        <div className={styles.grid}>
+      <div className={styles.heroContainer}>
+        <div className={styles.heroGrid}>
           <div>
             <h1 className={styles.headline}>
               Seu delivery,
@@ -24,13 +24,13 @@ export function Hero() {
               <span className={styles.underline}>todo seu.</span>
             </h1>
 
-            <p className={styles.subtitle}>
+            <p className={styles.heroSubtitle}>
               Loja de pedidos e WhatsApp com a sua marca — não a de um
               marketplace. Mensalidade fixa, seus entregadores e nenhuma fatia
               das suas vendas.
             </p>
 
-            <div className={styles.actions}>
+            <div className={styles.heroActions}>
               <a className={styles.createButton} href={CADASTRO_URL}>
                 Criar minha loja grátis
               </a>

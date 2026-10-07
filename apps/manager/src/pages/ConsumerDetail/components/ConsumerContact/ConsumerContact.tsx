@@ -26,9 +26,9 @@ export const ConsumerContact = () => {
       wrap
       className={styles.contact}
     >
-      <Box direction="row" gap={2} wrap className={styles.actions}>
+      <Box direction="row" gap={2} wrap className={styles.consumerContactActions}>
         <Button variant="outline" size="sm" asChild>
-          <a href={`tel:${consumer.phone}`} className={styles.action}>
+          <a href={`tel:${consumer.phone}`} className={styles.consumerContactAction}>
             <Icon name="phone" size="sm" aria-hidden />
             {formatPhone(consumer.phone)}
           </a>
@@ -36,7 +36,7 @@ export const ConsumerContact = () => {
 
         {consumer.email && (
           <Button variant="outline" size="sm" asChild>
-            <a href={`mailto:${consumer.email}`} className={styles.action}>
+            <a href={`mailto:${consumer.email}`} className={styles.consumerContactAction}>
               <Icon name="mail" size="sm" aria-hidden />
               <Text as="span" size="sm" color="strong" className={styles.email}>
                 {consumer.email}

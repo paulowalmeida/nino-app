@@ -22,21 +22,21 @@ type OrdersListProps = {
 }
 
 export const OrdersList = ({ orders, slug }: OrdersListProps) => (
-  <Box as="ul" className={styles.list}>
+  <Box as="ul" className={styles.ordersList}>
     {orders.map((order, index) => (
       <Box
         as="li"
         key={order.id}
-        className={`${motion.deal} ${styles.item}`}
+        className={`${motion.deal} ${styles.ordersListItem}`}
         style={riseDelay(index * 55)}
       >
-        <Link to={orderPath(slug, order.id)} className={styles.link}>
+        <Link to={orderPath(slug, order.id)} className={styles.ordersListLink}>
           <Text as="span" className={styles.stage} aria-hidden="true">
             {stageIcon(order.status)}
           </Text>
 
-          <Text as="span" className={styles.body}>
-            <Text as="span" className={styles.status}>
+          <Text as="span" className={styles.ordersListBody}>
+            <Text as="span" className={styles.ordersListStatus}>
               {STATUS_LABEL[order.status]}
               {!isTerminal(order.status) && (
                 <Badge size="sm" className={styles.live}>
@@ -50,7 +50,7 @@ export const OrdersList = ({ orders, slug }: OrdersListProps) => (
             </Text>
           </Text>
 
-          <Text as="span" className={styles.total}>
+          <Text as="span" className={styles.ordersListTotal}>
             {brl(Number(order.totalAmount))}
           </Text>
 

@@ -1,5 +1,5 @@
 @reference "@nino/ds/globals.css";
 
-.panel {
+.settingsUnitDetailSectionPanel {
   @apply flex min-w-0 flex-col gap-2;
 }

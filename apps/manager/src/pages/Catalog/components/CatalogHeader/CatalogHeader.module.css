@@ -1,5 +1,5 @@
 @reference "@nino/ds/globals.css";
 
-.header {
+.catalogHeader {
   @apply shrink-0;
 }

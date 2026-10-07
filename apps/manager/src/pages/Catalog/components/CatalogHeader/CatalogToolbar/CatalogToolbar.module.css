@@ -1,5 +1,5 @@
 @reference "@nino/ds/globals.css";
 
-.search {
+.catalogToolbarSearch {
   @apply h-11 w-full lg:max-w-sm;
 }

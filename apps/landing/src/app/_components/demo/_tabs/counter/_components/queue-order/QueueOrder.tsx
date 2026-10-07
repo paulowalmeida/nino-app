@@ -11,7 +11,7 @@ export function QueueOrder({
   trail,
 }: QueueOrderProps) {
   return (
-    <article className={styles.row}>
+    <article className={styles.queueOrderRow}>
       <div className={styles.identity}>
         <span className={styles.code}>{code}</span>
 
@@ -21,9 +21,9 @@ export function QueueOrder({
       </div>
 
       <div className={styles.state}>
-        <span className={`${styles.status} ${styles[tone]}`}>{status}</span>
+        <span className={`${styles.queueOrderStatus} ${styles[tone]}`}>{status}</span>
 
-        <span className={styles.total}>{total}</span>
+        <span className={styles.queueOrderTotal}>{total}</span>
       </div>
 
       <p className={styles.trail}>{trail}</p>

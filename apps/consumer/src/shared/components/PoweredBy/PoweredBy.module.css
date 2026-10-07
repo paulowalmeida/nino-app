@@ -1,7 +1,7 @@
 @reference "@nino/ds/globals.css";
 
 .footer {
-  @apply mt-14 border-t border-border py-8 text-center;
+  @apply mt-6 border-t border-border py-4 text-center;
 }
 
 .compact {

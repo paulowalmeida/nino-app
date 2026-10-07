@@ -107,7 +107,7 @@ export const BrandHistory = ({ onLoadVersion }: BrandHistoryProps) => {
               justify="between"
               gap={2}
               wrap
-              className={styles.row}
+              className={styles.brandHistoryRow}
             >
               <Text size="sm" color="subtle">
                 {selectedVersion.theme.publishedAt

@@ -1,6 +1,6 @@
 @reference "@nino/ds/globals.css";
 
-.nav {
+.studioNav {
   @apply min-w-0;
 }
 

@@ -8,7 +8,7 @@ type DisclosureTriggerProps = {
 
 /** O gatilho de todo campo opcional dobrado: um "+" quieto e o rótulo. */
 export const DisclosureTrigger = ({ children }: DisclosureTriggerProps) => (
-  <Text as="span" className={styles.label}>
+  <Text as="span" className={styles.disclosureTriggerLabel}>
     <Text as="span" className={styles.plus} aria-hidden="true">
       +
     </Text>

@@ -75,15 +75,15 @@ const trackingHref = (reference: OrderRow, pathSlug?: string) => {
 }
 
 const OrderHeader = ({ backHref }: { backHref: string }) => (
-  <Box as="header" direction="row" align="center" className={styles.header}>
+  <Box as="header" direction="row" align="center" className={styles.accountChatsHeader}>
     <Link to={backHref} className={styles.back} aria-label="Voltar para a loja">
       <Icon name="arrow-left" />
     </Link>
     <Box>
-      <Heading level={1} className={styles.title}>
+      <Heading level={1} className={styles.accountChatsTitle}>
         Atualizações do pedido
       </Heading>
-      <Text as="p" className={styles.subtitle}>
+      <Text as="p" className={styles.accountChatsSubtitle}>
         Pedidos em andamento e conclusões recentes
       </Text>
     </Box>
@@ -91,8 +91,8 @@ const OrderHeader = ({ backHref }: { backHref: string }) => (
 )
 
 const OrderEmpty = ({ backHref }: { backHref: string }) => (
-  <Box className={styles.page}>
-    <Box className={styles.shell}>
+  <Box className={styles.accountChatsPage}>
+    <Box className={styles.accountChatsShell}>
       <OrderHeader backHref={backHref} />
       <Box className={styles.emptyShell}>
         <Box className={styles.emptyIcon} aria-hidden="true">
@@ -111,7 +111,7 @@ const OrderEmpty = ({ backHref }: { backHref: string }) => (
         </Link>
       </Box>
     </Box>
-    <Box className={styles.footer}>
+    <Box className={styles.accountChatsFooter}>
       <PoweredBy compact />
     </Box>
   </Box>
@@ -241,12 +241,12 @@ export const AccountChats = () => {
   }
 
   return (
-    <Box className={styles.page}>
-      <Box className={styles.shell}>
+    <Box className={styles.accountChatsPage}>
+      <Box className={styles.accountChatsShell}>
         <OrderHeader backHref={backHref} />
-        <main className={styles.content}>
+        <main className={styles.accountChatsContent}>
           {orders.length > 0 && (
-            <Box className={styles.list} aria-label="Pedidos deste dispositivo">
+            <Box className={styles.accountChatsList} aria-label="Pedidos deste dispositivo">
               {orders.map((reference) => (
                 <OrderCard
                   key={reference.orderId}
@@ -261,8 +261,8 @@ export const AccountChats = () => {
             <Box
               className={
                 orders.length > 0
-                  ? `${styles.list} ${styles.listSpaced}`
-                  : styles.list
+                  ? `${styles.accountChatsList} ${styles.listSpaced}`
+                  : styles.accountChatsList
               }
               aria-label="Avisos da loja"
             >
@@ -283,7 +283,7 @@ export const AccountChats = () => {
           )}
         </main>
       </Box>
-      <Box className={styles.footer}>
+      <Box className={styles.accountChatsFooter}>
         <PoweredBy compact />
       </Box>
     </Box>

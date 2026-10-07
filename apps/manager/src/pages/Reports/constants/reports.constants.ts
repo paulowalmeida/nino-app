@@ -1,6 +1,11 @@
 import type { PeriodChoice } from '@shared/types/ui/period-choice'
 
-export const CHART_PALETTE = ['chart1', 'chart2', 'chart3', 'chart4'] as const
+export const CHART_PALETTE = [
+  'primarySeries',
+  'secondarySeries',
+  'tertiarySeries',
+  'quaternarySeries',
+] as const
 export const TOP_SALES_TABLE_GHOST_ROWS = ['one', 'two', 'three', 'four', 'five']
 
 export const REPORTS_PERIODS: { id: PeriodChoice; label: string }[] = [

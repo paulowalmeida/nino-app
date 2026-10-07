@@ -20,7 +20,7 @@ export const UnitsHeader = () => {
         <Heading level={1} size="2xl" mt={1}>
           {toUnitsWelcomeTitle(user?.name)}
         </Heading>
-        <Text as="p" size="sm" color="subtle" className={styles.subtitle}>
+        <Text as="p" size="sm" color="subtle" className={styles.unitsHeaderSubtitle}>
           Cada unidade tem cardápio, horário e zonas próprios. A empresa e a assinatura ficam por cima de todas.
         </Text>
       </Box>

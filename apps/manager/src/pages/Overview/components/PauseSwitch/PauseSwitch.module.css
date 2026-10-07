@@ -12,7 +12,7 @@
   @apply min-w-0;
 }
 
-.title {
+.pauseSwitchTitle {
   @apply font-display text-base font-extrabold text-brand-strong;
 }
 
@@ -20,6 +20,6 @@
   @apply mt-0.5 text-sm leading-relaxed text-fg-muted;
 }
 
-.trigger {
+.pauseSwitchTrigger {
   @apply text-white font-extrabold;
 }

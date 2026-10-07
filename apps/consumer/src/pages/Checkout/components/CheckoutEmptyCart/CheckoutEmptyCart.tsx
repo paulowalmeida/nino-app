@@ -9,7 +9,7 @@ type CheckoutEmptyCartProps = { backHref: string }
 export const CheckoutEmptyCart = ({ backHref }: CheckoutEmptyCartProps) => (
   <EmptyState
     size="md"
-    className={styles.empty}
+    className={styles.checkoutEmptyCartEmpty}
     title="Sua sacola está vazia"
     action={
       <Link to={backHref} className={styles.emptyLink}>

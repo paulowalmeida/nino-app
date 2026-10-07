@@ -89,7 +89,7 @@ export const ProductConfigurationModal = ({
     : 0
 
   const actions = item && (
-    <Box direction="row" className={styles.footer}>
+    <Box direction="row" className={styles.productConfigurationModalFooter}>
       <Button variant="ghost" className={styles.cancel} onClick={close}>
         Cancelar
       </Button>
@@ -120,7 +120,7 @@ export const ProductConfigurationModal = ({
       dismissible={isDesktop}
       positionerClassName={styles.positioner}
       contentClassName={styles.modal}
-      bodyClassName={styles.body}
+      bodyClassName={styles.productConfigurationModalBody}
       body={page}
     />
   )

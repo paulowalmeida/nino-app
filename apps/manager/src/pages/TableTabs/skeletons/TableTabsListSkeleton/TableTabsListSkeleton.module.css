@@ -1,10 +1,10 @@
 @reference "@nino/ds/globals.css";
 
-.list {
+.tableTabsListSkeletonList {
   @apply grid gap-4 pr-1.5 sm:grid-cols-2 xl:grid-cols-3;
 }
 
-.card {
+.tableTabsListSkeletonCard {
   @apply mb-1.5 ml-1.5 flex min-h-36 flex-col justify-between gap-6 rounded-4 bg-surface-raised p-5;
   box-shadow: 0 0 0 1px
     color-mix(in srgb, var(--color-warm-950) 14%, transparent);
@@ -18,7 +18,7 @@
   @apply mt-2 h-6 w-32;
 }
 
-.status {
+.tableTabsListSkeletonStatus {
   @apply h-6 w-16 rounded-full;
 }
 
@@ -26,6 +26,6 @@
   @apply h-4 w-14;
 }
 
-.total {
+.tableTabsListSkeletonTotal {
   @apply h-6 w-20;
 }

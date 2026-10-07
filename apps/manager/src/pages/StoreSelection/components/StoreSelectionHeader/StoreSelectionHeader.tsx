@@ -5,7 +5,7 @@ import styles from './StoreSelectionHeader.module.css'
 
 export const StoreSelectionHeader = () => (
   <>
-    <Heading level={1} size="2xl" className={styles.title}>
+    <Heading level={1} size="2xl" className={styles.storeSelectionHeaderTitle}>
       Seus restaurantes
     </Heading>
     <Text size="sm" color="muted" mt={2}>

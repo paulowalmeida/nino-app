@@ -29,7 +29,7 @@ export const MenuSection = ({ section }: MenuSectionProps) => {
     <Box
       as="section"
       id={domId}
-      className={styles.section}
+      className={styles.menuSection}
       aria-label={section.name}
     >
       <Box direction="row" className={styles.sectionHead}>

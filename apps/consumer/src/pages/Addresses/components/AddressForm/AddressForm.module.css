@@ -1,18 +1,18 @@
 @reference "@nino/ds/globals.css";
 
 /* WORKAROUND: grade, não linhas de flex com margem — a versão anterior
-   espaçava os campos pelo `mt` de cada um, e dentro de uma linha o segundo
-   campo herdava essa margem e descia sozinho, tirando "Nº" e "UF" do
-   esquadro com os vizinhos. Aqui o espaço é do container. */
+ * espaçava os campos pelo `mt` de cada um, e dentro de uma linha o segundo
+ * campo herdava essa margem e descia sozinho, tirando "Nº" e "UF" do esquadro
+ * com os vizinhos. Aqui o espaço é do container.
+ */
 /* WHY: teto de largura no desktop — o painel tem 800px, e um campo de rua
-   esticado até lá fica mais difícil de mirar, não mais fácil de ler. */
-.form {
+ * esticado até lá fica mais difícil de mirar, não mais fácil de ler.
+ */
+.addressForm {
   @apply grid w-full gap-4 lg:max-w-block-lg;
 }
 
-/* WHY: largura por proporção, não por número fixo — o número cabe em
-   quatro dígitos e UF em duas letras; a mesma caixa de um nome de rua para
-   os dois é o que fazia o formulário parecer desmontado. */
+
 .pair {
   @apply grid gap-3;
   grid-template-columns: 1fr 5.5rem;
@@ -23,7 +23,7 @@
   grid-template-columns: 1fr 4.5rem;
 }
 
-.label {
+.addressFormLabel {
   @apply text-xs font-bold text-fg-muted;
 }
 
@@ -31,12 +31,12 @@
   @apply font-medium text-fg-faintest;
 }
 
-.input {
+.addressFormInput {
   @apply h-12 w-full rounded-3 border-black/10 bg-surface-raised text-base;
   @apply text-fg-muted;
 }
 
-.input:focus {
+.addressFormInput:focus {
   border-color: var(--store-tint, var(--color-brand));
   box-shadow: inset 0 0 0 1px var(--store-tint, var(--color-brand));
 }
@@ -58,14 +58,15 @@
   @apply mt-4;
 }
 
-.actions {
+.addressFormActions {
   @apply mt-6 flex flex-col gap-2.5 sm:flex-row-reverse;
 }
 
 /* WORKAROUND: largura por `w-full`, nunca por `flex-1` — no celular
-   `.actions` é coluna, e em coluna o `flex-1` zera a altura-base do botão e
-   passa por cima do `h-12`, esmagando-o numa faixa de texto. */
-.primary {
+ * `.addressFormActions` é coluna, e em coluna o `flex-1` zera a altura-base do botão e
+ * passa por cima do `h-12`, esmagando-o numa faixa de texto.
+ */
+.addressFormPrimary {
   @apply flex h-12 w-full items-center justify-center rounded-full;
   @apply bg-brand;
   @apply font-bold text-fg-on-brand transition-colors;

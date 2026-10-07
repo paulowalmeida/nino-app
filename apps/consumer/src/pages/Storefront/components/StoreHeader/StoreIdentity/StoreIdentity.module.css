@@ -1,16 +1,7 @@
 @reference "@nino/ds/globals.css";
 
-/*
- * O cartão de identidade sobe sobre a faixa. Ele é a presença da loja: nome
- * em display, estado e tempo numa linha só de texto — pílula para cada dado
- * quebra em três linhas num celular estreito e some com o nome.
- */
-/*
- * WHY: no celular o cartão sobe sobre a faixa — é o que dá presença à loja numa
- * tela estreita. A partir de sm a faixa já é um cartão de imagem dentro da
- * coluna, então a identidade vira uma linha limpa abaixo dela: sobrepor um
- * cartão branco a outro cartão só empilha molduras.
- */
+
+
 .identityRow {
   @apply relative z-content -mx-4 -mt-9 flex w-[calc(100%+2rem)] items-center;
   @apply gap-3.5 border-y border-border bg-surface-page px-4 py-4;
@@ -20,8 +11,7 @@
     color-mix(in srgb, var(--color-warm-950) 40%, transparent);
 }
 
-/* A arte enviada pelo restaurante já tem uma altura própria; sobrepor a
- * identidade esconderia parte da imagem em vez de apresentá-la inteira. */
+
 .afterCustomBanner {
   margin-top: 0;
   box-shadow: none;
@@ -72,7 +62,7 @@
   @apply text-[0.8125rem] text-fg-subtle;
 }
 
-.status {
+.storeIdentityStatus {
   @apply inline-flex items-center gap-1.5 font-semibold text-fg-default;
 }
 
@@ -88,11 +78,7 @@
   background-color: var(--color-success);
 }
 
-/*
- * WHY: "aberto agora" é um estado ao vivo, e um ponto parado não diz isso. O
- * anel sai do próprio ponto e se dissipa, como sinal de transmissão — o ponto
- * em si não pisca, porque estado que some e volta lê como falha, não como vida.
- */
+
 .dotOn::after {
   content: '';
   @apply absolute inset-0 rounded-full;

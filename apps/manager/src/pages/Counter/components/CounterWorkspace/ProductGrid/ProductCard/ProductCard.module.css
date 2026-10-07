@@ -1,11 +1,7 @@
 @reference "@nino/ds/globals.css";
 
-/*
- * WHY: cartão sem sombra de propósito. A grade é uma folha de cardápio, não
- * uma pilha de cartões flutuando: o que separa um item do outro é o fio da
- * borda, e a única elevação da tela é o cupom do pedido.
- */
-.card {
+
+.productCard {
   @apply relative flex cursor-pointer flex-col overflow-hidden rounded-3;
   @apply bg-surface-page text-left;
   @apply transition-colors duration-150;
@@ -17,12 +13,12 @@
   @apply focus-ring;
 }
 
-/* Já está no pedido: o atendente enxerga o que somou sem abrir o cupom. */
+
 .picked {
   box-shadow: 0 0 0 1px var(--color-brand);
 }
 
-.card.picked:hover {
+.productCard.picked:hover {
   box-shadow: 0 0 0 1px var(--color-brand);
 }
 
@@ -34,7 +30,7 @@
   @apply h-[120px] w-full rounded-none text-3xl lg:h-[144px] lg:text-4xl;
 }
 
-.footer {
+.productCardFooter {
   @apply flex flex-col gap-0.5 px-2.5 pb-2.5 pt-2;
 }
 

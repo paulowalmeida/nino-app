@@ -5,6 +5,6 @@
   @apply lg:mb-8 lg:p-5;
 }
 
-.empty {
+.salesTrendByDimensionEmpty {
   @apply py-6;
 }

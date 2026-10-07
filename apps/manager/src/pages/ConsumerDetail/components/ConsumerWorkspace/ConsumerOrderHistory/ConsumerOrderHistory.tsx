@@ -39,7 +39,7 @@ export const ConsumerOrderHistory = () => {
   }
 
   return (
-    <Box className={styles.shell}>
+    <Box className={styles.consumerOrderHistoryShell}>
       <Table>
         <colgroup>
           <col className={styles.colOrder} />

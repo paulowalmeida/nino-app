@@ -1,6 +1,6 @@
 @reference "@nino/ds/globals.css";
 
-.heading {
+.dayTallyHeading {
   @apply mb-3;
 }
 

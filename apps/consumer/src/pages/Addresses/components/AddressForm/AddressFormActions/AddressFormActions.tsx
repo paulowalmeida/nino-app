@@ -14,10 +14,10 @@ export const AddressFormActions = ({
   onCancel,
   isValid,
 }: AddressFormActionsProps) => (
-  <Box className={styles.actions}>
+  <Box className={styles.addressFormActions}>
     <Button
       type="submit"
-      className={styles.primary}
+      className={styles.addressFormActionsPrimary}
       disabled={!isValid || isSaving}
     >
       {isSaving ? 'Salvando…' : 'Salvar endereço'}

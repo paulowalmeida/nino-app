@@ -6,7 +6,7 @@ import styles from '@shared/components/KitchenCard/KitchenCard.module.css'
 const GHOST_ITEMS = ['first', 'second']
 
 export const KitchenCardSkeleton = () => (
-  <article className={`${styles.card} ${styles.paperPlain}`}>
+  <article className={`${styles.kitchenCard} ${styles.paperPlain}`}>
     <Box as="header" className={styles.head}>
       <Skeleton className={styles.ghostNumber} />
       <Skeleton className={styles.ghostClock} />
@@ -21,7 +21,7 @@ export const KitchenCardSkeleton = () => (
 
     <Box className={styles.items}>
       {GHOST_ITEMS.map((item) => (
-        <Box key={item} className={styles.item}>
+        <Box key={item} className={styles.kitchenCardItem}>
           <Skeleton className={styles.ghostQuantity} />
           <Skeleton className={styles.ghostItemName} />
         </Box>

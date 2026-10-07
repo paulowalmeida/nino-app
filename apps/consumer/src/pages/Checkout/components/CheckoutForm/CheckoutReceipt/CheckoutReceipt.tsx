@@ -31,10 +31,10 @@ export const CheckoutReceipt = ({
       trigger={
         <>
           <Text as="span" className={styles.head}>
-            <Text as="span" className={styles.label}>
+            <Text as="span" className={styles.checkoutReceiptLabel}>
               Resumo do pedido
             </Text>
-            <Text as="span" className={styles.count}>
+            <Text as="span" className={styles.checkoutReceiptCount}>
               {itemCount} {itemCount === 1 ? 'item' : 'itens'} · {brl(subtotal)}
             </Text>
           </Text>
@@ -47,7 +47,7 @@ export const CheckoutReceipt = ({
       <Box className={styles.items}>
         <Box className={styles.itemsList}>
           {cartLines.map(({ id, item, quantity }) => (
-            <Text as="p" key={id ?? item.id} className={styles.item}>
+            <Text as="p" key={id ?? item.id} className={styles.checkoutReceiptItem}>
               <Text as="span" className={styles.name}>
                 <Text as="span" className={styles.qty}>
                   {quantity}×

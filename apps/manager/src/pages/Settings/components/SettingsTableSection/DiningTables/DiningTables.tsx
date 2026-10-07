@@ -60,8 +60,8 @@ export const DiningTables = ({
   }
 
   return (
-    <Box as="section" className={local.section}>
-      <Box className={local.form}>
+    <Box as="section" className={local.diningTablesSection}>
+      <Box className={local.diningTablesForm}>
         <FormField label="Quantidade" className={local.quantity}>
           <NumberInput
             value={quantity}
@@ -124,10 +124,10 @@ export const DiningTablesList = ({
 
   return (
     <>
-      {isPending && <Skeleton className={local.empty} />}
+      {isPending && <Skeleton className={local.diningTablesEmpty} />}
 
       {!isPending && tables.length === 0 && (
-        <EmptyState className={local.empty}>
+        <EmptyState className={local.diningTablesEmpty}>
           Nenhuma mesa cadastrada nesta unidade.
         </EmptyState>
       )}
@@ -168,7 +168,7 @@ export const DiningTablesList = ({
                     </Button>
                   </TableCell>
                   <TableCell className={local.colActions}>
-                    <Box direction="row" className={local.actions}>
+                    <Box direction="row" className={local.diningTablesActions}>
                       <Button
                         size="sm"
                         variant="ghost"

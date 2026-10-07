@@ -30,7 +30,7 @@ export const SignInBrandStage = () => {
               <img
                 src={logoUrl}
                 alt={displayName(store)}
-                className={styles.logo}
+                className={styles.signInBrandStageLogo}
               />
             ) : (
               <Box direction="row" className={styles.initials}>

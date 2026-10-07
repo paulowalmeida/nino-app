@@ -12,12 +12,12 @@ export const ProductSummary = () => {
   if (!product) return null
 
   return (
-    <Box className={styles.summary}>
+    <Box className={styles.productSummary}>
       <Heading level={1} className={styles.name}>
         {product.name}
       </Heading>
       {product.description && (
-        <Text as="p" className={styles.description}>
+        <Text as="p" className={styles.productSummaryDescription}>
           {product.description}
         </Text>
       )}

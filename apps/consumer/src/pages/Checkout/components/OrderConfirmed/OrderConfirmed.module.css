@@ -12,11 +12,11 @@
   );
 }
 
-.title {
+.orderConfirmedTitle {
   @apply font-display text-3xl font-extrabold text-fg-muted;
 }
 
-.text {
+.orderConfirmedText {
   @apply max-w-xs text-sm leading-relaxed text-fg-muted;
 }
 

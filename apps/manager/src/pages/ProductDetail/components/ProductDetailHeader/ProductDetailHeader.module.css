@@ -1,7 +1,6 @@
 @reference "@nino/ds/globals.css";
 
-/* A tela toda é uma ficha só: o cabeçalho do item mora no topo, separado do
-   formulário por um fio — não é outra superfície. */
+
 .head {
   @apply min-w-0 flex-1;
 }

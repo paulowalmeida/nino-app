@@ -1,14 +1,15 @@
 @reference "@nino/ds/globals.css";
 
-/* WHY: a barra tem a altura da tinta, e a margem completa a caixa de linha
-   do texto real (h-4 + my-0.5 = as 20px de um text-sm). Sem isso o
-   formulário inteiro salta quando a empresa chega. */
+/* WHY: a barra tem a altura da tinta, e a margem completa a caixa de linha do
+ * texto real (h-4 + my-0.5 = as 20px de um text-sm). Sem isso o formulário
+ * inteiro salta quando a empresa chega.
+ */
 
-.field {
+.companyCardSkeletonField {
   @apply flex flex-col gap-1.5;
 }
 
-.heading {
+.companyCardSkeletonHeading {
   @apply my-0.5 h-6 w-28 rounded-2 lg:h-7 lg:w-32;
 }
 
@@ -28,11 +29,11 @@
   @apply my-1 h-3 w-96 max-w-full rounded-1;
 }
 
-.label {
+.companyCardSkeletonLabel {
   @apply my-0.5 h-4 rounded-1;
 }
 
-.input {
+.companyCardSkeletonInput {
   @apply h-11 w-full rounded-2;
 }
 
@@ -40,7 +41,7 @@
   @apply my-0.5 h-3 w-40 rounded-1;
 }
 
-.status {
+.companyCardSkeletonStatus {
   @apply my-0.5 h-3 w-56 max-w-full rounded-1 sm:mr-auto;
 }
 
@@ -48,7 +49,7 @@
   @apply h-11 w-36 shrink-0 rounded-3;
 }
 
-/* cada rótulo tem a largura da palavra que substitui */
+
 
 .labelName {
   @apply w-8;

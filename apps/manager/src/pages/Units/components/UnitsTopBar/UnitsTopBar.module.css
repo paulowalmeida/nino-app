@@ -1,4 +1,4 @@
 @reference "@nino/ds/globals.css";
 
 .bar { @apply flex items-center justify-between gap-4 border-b border-border/60 px-4 py-3 lg:px-10; }
-.action { @apply inline-flex min-h-11 items-center rounded-full px-3 text-sm font-semibold text-fg-faint transition-colors duration-150 hover:text-brand-strong focus-visible:outline-2 focus-visible:outline-brand; }
+.unitsTopBarAction { @apply inline-flex min-h-11 items-center rounded-full px-3 text-sm font-semibold text-fg-faint transition-colors duration-150 hover:text-brand-strong focus-visible:outline-2 focus-visible:outline-brand; }

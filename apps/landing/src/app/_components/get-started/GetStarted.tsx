@@ -6,13 +6,13 @@ import { CADASTRO_URL } from "@/config"
 
 export function GetStarted() {
   return (
-    <section id="comecar" className={styles.section}>
+    <section id="comecar" className={styles.getStartedSection}>
       <div className={styles.wrap}>
-        <div className={styles.card}>
-          <div className={styles.inner}>
+        <div className={styles.getStartedCard}>
+          <div className={styles.getStartedInner}>
             <span className={styles.pill}>🎁 30 dias grátis no Pro</span>
 
-            <h2 className={styles.title}>
+            <h2 className={styles.getStartedTitle}>
               Comece hoje,
               <br />
               de graça

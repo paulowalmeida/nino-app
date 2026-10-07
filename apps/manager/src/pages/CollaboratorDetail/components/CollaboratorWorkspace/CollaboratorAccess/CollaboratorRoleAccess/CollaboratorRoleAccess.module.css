@@ -1,6 +1,6 @@
 @reference "@nino/ds/globals.css";
 
-.title {
+.collaboratorRoleAccessTitle {
   @apply mb-2 text-2xs font-bold uppercase tracking-[0.1em];
 }
 

@@ -1,12 +1,12 @@
 @reference "@nino/ds/globals.css";
 
-.header {
+.storeHeaderSkeletonHeader {
   @apply w-full;
 }
 
 .topBar {
   @apply block w-full overflow-hidden bg-surface-page;
-  /* espelha a StoreTopBar: fixa no desktop, sobre o respiro do .page */
+
   @apply lg:fixed lg:top-0 lg:z-nav;
   height: 3.5rem;
   min-height: 3.5rem;
@@ -50,8 +50,9 @@
 }
 
 /* WHY: largura calibrada pelo nome real ("Burgão do Nino — Centro"
-   renderizado mede ~172px no celular e ~277px no desktop) — a largura antiga
-   (112/208px) media visivelmente menor que o título de verdade. */
+ * renderizado mede ~172px no celular e ~277px no desktop) — a largura antiga
+ * (112/208px) media visivelmente menor que o título de verdade.
+ */
 .topBarName {
   @apply h-6 w-44 rounded-1 lg:w-72;
 }
@@ -60,21 +61,19 @@
   @apply ml-auto hidden h-12 min-w-56 max-w-[44rem] flex-1 rounded-3 lg:flex;
 }
 
-/* WHY: `.tools` real nunca aumenta o gap em lg — só o `ml-auto` some. Um
-   `lg:gap-2` aqui deslocava os botões mais à direita do que a posição
-   final. */
+
 .topBarActions {
   @apply ml-auto flex shrink-0 flex-nowrap items-center gap-1 lg:ml-0;
 }
 
 /* WHY: "Aberto agora" mede ~107×24px no header real (xl+); a caixa antiga
-   (96×16px) ficava menor e mais baixa que o texto que ela substitui. */
+ * (96×16px) ficava menor e mais baixa que o texto que ela substitui.
+ */
 .topBarStatus {
   @apply hidden h-6 w-28 rounded-1 xl:block;
 }
 
-/* WHY: `.iconBtn` real é 40×40 (h-10 w-10) em qualquer largura, sem
-   encolher no celular/tablet como o `h-9 w-9` antigo fazia aqui. */
+
 .topBarAction {
   @apply h-10 w-10 rounded-full;
 }
@@ -87,7 +86,7 @@
   @apply hidden min-[769px]:block;
 }
 
-.banner {
+.storeHeaderSkeletonBanner {
   @apply relative h-64 w-full overflow-hidden bg-surface-raised;
   @apply sm:mx-auto sm:mt-4 sm:h-auto sm:w-[calc(100%-3rem)];
   @apply sm:aspect-[1300/250] sm:max-h-60 sm:rounded-4;
@@ -98,7 +97,7 @@
   @apply h-full w-full rounded-none;
 }
 
-.shell {
+.storeHeaderSkeletonShell {
   @apply mx-auto w-full px-4 sm:px-6;
   max-width: 80rem;
 }
@@ -130,7 +129,8 @@
 }
 
 /* WHY: "Aberto agora" mede ~107×24px no cartão real; a caixa antiga
-   (192×16px) ficava mais larga e mais baixa que o indicador de verdade. */
+ * (192×16px) ficava mais larga e mais baixa que o indicador de verdade.
+ */
 .identityMeta {
   @apply h-6 w-40 max-w-full rounded-1;
 }
@@ -143,7 +143,7 @@
   @apply h-8 w-28 shrink-0 rounded-3;
 }
 
-.search {
+.storeHeaderSkeletonSearch {
   @apply mt-5 h-12 w-full rounded-3 lg:hidden;
 }
 

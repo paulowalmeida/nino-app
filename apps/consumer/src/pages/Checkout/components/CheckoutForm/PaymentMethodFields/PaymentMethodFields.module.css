@@ -8,7 +8,8 @@
   @apply font-display text-xl font-extrabold tracking-snug text-fg-strong;
 }
 
-/* As setinhas do input number não têm uso num valor de troco digitado. */
+/* WHY: As setinhas do input number não têm uso num valor de troco digitado.
+ */
 .noSpin {
   -moz-appearance: textfield;
 }

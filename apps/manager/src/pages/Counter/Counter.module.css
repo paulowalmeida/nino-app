@@ -1,6 +1,6 @@
 @reference "@nino/ds/globals.css";
 
-.page {
+.counterPage {
   @apply mx-auto flex min-h-dvh w-full max-w-page flex-col overflow-hidden;
   @apply lg:h-dvh lg:min-h-0;
 }

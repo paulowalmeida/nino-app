@@ -52,7 +52,7 @@ export const StoreBanner = () => {
   return (
     <Box
       ref={bannerRef}
-      className={`${styles.banner} ${
+      className={`${styles.storeBanner} ${
         hasCustomBanner ? styles.customBanner : ''
       }`}
     >

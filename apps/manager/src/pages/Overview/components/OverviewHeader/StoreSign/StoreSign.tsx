@@ -32,7 +32,7 @@ export const StoreSign = () => {
         size="xs"
         weight="bold"
         color={isOpen ? 'success' : 'faint'}
-        className={styles.label}
+        className={styles.storeSignLabel}
       >
         {isOpen ? 'Aberta agora' : 'Fechada agora'}
       </Text>

@@ -20,7 +20,7 @@ export const CashActions = ({ expectedAmount }: CashActionsProps) => {
   const [isClosingOpen, setClosingOpen] = useState(false)
 
   return (
-    <Box as="section" direction="row" wrap className={styles.actions}>
+    <Box as="section" direction="row" wrap className={styles.cashActions}>
       <Button variant="outline" onClick={() => setMovementKind('WITHDRAWAL')}>
         Sangria
       </Button>

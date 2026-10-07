@@ -1,17 +1,11 @@
 @reference "@nino/ds/globals.css";
 
-/*
- * Tela de parede: mesma superfície das outras telas do gestor — papel claro
- * com o glow de marca escorrendo do topo. Nunca rola por inteiro; quem rola
- * é cada trilho. A comanda se destaca pelo próprio contorno picotado, não
- * por contraste de fundo.
+
+
+/* WHY: quantas colunas de trilho cabem lado a lado depende do espaço real da
+ * tela, não do viewport — a sidebar aberta come largura sem mudar o viewport.
+ * container-type habilita a @container do KitchenBoard.
  */
-/* Empilhado no celular não cabe tela de parede: os quatro trilhos dividiriam
-   a mesma altura e cada comanda ficaria cortada. Aí a página rola inteira;
-   a partir de duas colunas volta a ser painel fixo com trilhos rolantes. */
-/* WHY: quantas colunas de trilho cabem lado a lado depende do espaço real
-   da tela, não do viewport — a sidebar aberta come largura sem mudar o
-   viewport. container-type habilita a @container do KitchenBoard. */
 .screen {
   @apply relative flex min-h-[calc(100dvh-3.5rem)] flex-col;
   @apply px-3 pt-3 sm:h-[calc(100dvh-3.5rem)] sm:overflow-hidden;

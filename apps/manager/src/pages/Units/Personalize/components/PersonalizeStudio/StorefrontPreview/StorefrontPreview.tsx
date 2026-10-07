@@ -275,7 +275,7 @@ export const StorefrontPreview = ({
         >
           {home.showBanner && (
             <Box
-              className={`${local.banner} ${shownBannerUrl ? local.customBanner : ''}`}
+              className={`${local.storefrontPreviewBanner} ${shownBannerUrl ? local.customBanner : ''}`}
             >
               {shownBannerUrl && (
                 <img
@@ -307,7 +307,7 @@ export const StorefrontPreview = ({
           >
             <Box className={local.logoTile} aria-hidden="true">
               {shownLogoUrl ? (
-                <img src={shownLogoUrl} alt="" className={local.logo} />
+                <img src={shownLogoUrl} alt="" className={local.storefrontPreviewLogo} />
               ) : (
                 <Text as="span" className={local.logoFallback}>
                   {shownName.slice(0, 2).toUpperCase()}
@@ -319,7 +319,7 @@ export const StorefrontPreview = ({
                 {shownName}
               </Heading>
               <Box direction="row" className={local.statusLine}>
-                <Text as="span" className={local.status}>
+                <Text as="span" className={local.storefrontPreviewStatus}>
                   <span className={local.statusDot} aria-hidden="true" />
                   Aberto agora
                 </Text>
@@ -334,7 +334,7 @@ export const StorefrontPreview = ({
           </Box>
 
           {home.showSearch && (
-            <Box className={local.search}>
+            <Box className={local.storefrontPreviewSearch}>
               <Icon name="search" className={local.searchIcon} />
               <Input
                 type="search"
@@ -371,7 +371,7 @@ export const StorefrontPreview = ({
             </Box>
           )}
 
-          <Box className={local.menu}>
+          <Box className={local.storefrontPreviewMenu}>
             <Box direction="row" className={local.sectionHead}>
               <Heading level={2} className={local.menuTitle}>
                 Destaques
@@ -398,7 +398,7 @@ export const StorefrontPreview = ({
               className={local.tabBar}
               aria-label="Atalhos"
             >
-              <Button variant="ghost" className={local.tab}>
+              <Button variant="ghost" className={local.storefrontPreviewTab}>
                 <Text as="span" className={local.tabIcon}>
                   <Icon name="bag" />
                   <Text as="span" className={local.tabBadge}>
@@ -411,7 +411,7 @@ export const StorefrontPreview = ({
               </Button>
               <Button
                 variant="ghost"
-                className={`${local.tab} ${local.homeTab}`}
+                className={`${local.storefrontPreviewTab} ${local.homeTab}`}
               >
                 <Text as="span" className={local.homeRing}>
                   <Icon name="home" />
@@ -420,13 +420,13 @@ export const StorefrontPreview = ({
                   Início
                 </Text>
               </Button>
-              <Button variant="ghost" className={local.tab}>
+              <Button variant="ghost" className={local.storefrontPreviewTab}>
                 <Icon name="bell" />
                 <Text as="span" className={local.tabLabel}>
                   Notificações
                 </Text>
               </Button>
-              <Button variant="ghost" className={local.tab}>
+              <Button variant="ghost" className={local.storefrontPreviewTab}>
                 <Icon name="user" />
                 <Text as="span" className={local.tabLabel}>
                   Perfil

@@ -1,6 +1,6 @@
 @reference "@nino/ds/globals.css";
 
-.header {
+.profileHeader {
   @apply mt-3;
 }
 

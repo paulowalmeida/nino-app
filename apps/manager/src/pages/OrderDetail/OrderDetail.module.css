@@ -1,20 +1,11 @@
 @reference "@nino/ds/globals.css";
 
-/*
- * A tela rola inteira, como qualquer documento. Ela nasceu com o casco da
- * fila de pedidos — altura travada e miolo rolando por dentro —, mas ali a
- * altura fixa serve às colunas por etapa, que rolam separadas. Aqui só
- * produzia uma barra de rolagem no meio da tela e cortava a coluna da direita.
- */
-.page {
+
+.orderDetailPage {
   @apply mx-auto flex max-w-page flex-col p-4 lg:p-10;
 }
 
-/*
- * As medidas do esqueleto acompanham o texto que vai ocupar o lugar: mesma
- * altura de linha e larguras irregulares, que é o que faz o bloco parecer
- * texto carregando em vez de uma barra cinza.
- */
+
 .ghostEyebrow {
   @apply mb-2 h-2.5 w-24;
 }
@@ -51,19 +42,15 @@
   @apply h-5 w-full;
 }
 
-/*
- * Voltar fica fora da área rolável, então não depende de `sticky`: não há
- * fundo para borrar nem conteúdo passando por baixo, e ele nunca sai do lugar.
+/* WHY: Voltar fica fora da área rolável, então não depende de `sticky`: não
+ * há fundo para borrar nem conteúdo passando por baixo, e ele nunca sai do
+ * lugar.
  */
 .backBar {
   @apply shrink-0 pb-1;
 }
 
-/*
- * Cabeçalho sem moldura: o número do pedido é o título da tela, e um cartão
- * em volta dele só repetia o contorno que a página já dá. A divisória embaixo
- * é o que separa a identificação do conteúdo.
- */
+
 .hero {
   @apply mt-2 flex items-start gap-4 border-b border-border/60 pb-5;
 }
@@ -72,7 +59,7 @@
   @apply min-w-0 flex-1;
 }
 
-/* forma e traço vêm do Eyebrow, o mesmo rótulo da visão geral */
+
 .channel {
   @apply mb-1;
 }
@@ -89,32 +76,24 @@
   font-variant-numeric: tabular-nums;
 }
 
-.badge {
+.orderDetailBadge {
   @apply shrink-0;
 }
 
-/* sem os cartões, o vão é o que separa a via da lateral — apertado, as duas
-   colunas voltavam a parecer uma tabela só */
+
 .columns {
   @apply mt-6 grid items-start gap-5 lg:grid-cols-[1.1fr_1fr] lg:gap-12;
 }
 
-/* a via do pedido: sem cartão, quem separa item de item é a divisória */
+
 .receipt {
   @apply min-w-0;
 }
 
-/*
- * Teto de oito itens no desktop: passando disso, a via empurrava o total para
- * fora da tela e a lateral (quem pediu, pagamento, andamento) ficava sozinha
- * num vão em branco. Rolando por dentro, o total continua à vista, que é o
- * dado que se confere no fim. No celular a página inteira rola — encaixar
- * rolagem dentro de rolagem no polegar é pior que a lista longa.
- */
-/*
- * O teto vai no viewport, não na raiz: o `Viewport` do Ark é `h-full`, e num
- * pai que só tem `max-height` isso resolve para `auto` — a raiz recortava a
- * lista em 22rem e ninguém conseguia rolar até o fim dela.
+
+/* WHY: O teto vai no viewport, não na raiz: o `Viewport` do Ark é `h-full`, e
+ * num pai que só tem `max-height` isso resolve para `auto` — a raiz recortava
+ * a lista em 22rem e ninguém conseguia rolar até o fim dela.
  */
 .itemsScroll {
   @apply lg:pr-2;
@@ -128,7 +107,7 @@
   @apply flex flex-col divide-y divide-border/50;
 }
 
-.item {
+.orderDetailItem {
   @apply flex items-baseline gap-3 py-2.5 text-sm text-fg-default;
   @apply first:pt-0;
 }
@@ -147,10 +126,7 @@
   font-variant-numeric: tabular-nums;
 }
 
-/*
- * O único bloco com superfície na tela. É o número que se lê por último e em
- * voz alta para o cliente — merece o peso que as molduras genéricas gastavam.
- */
+
 .totals {
   @apply mt-4 flex flex-col gap-1.5 rounded-4 bg-surface-2 p-4;
 }
@@ -169,8 +145,7 @@
   @apply font-display text-xl font-extrabold text-fg-strong;
 }
 
-/* mesma marcação da observação na comanda da fila: é o mesmo texto do
-   cliente, e é o que a cozinha erra quando não lê */
+
 .notes {
   @apply mt-4 rounded-2 bg-brand-ghost p-3 text-sm leading-relaxed;
   @apply text-brand-strong;

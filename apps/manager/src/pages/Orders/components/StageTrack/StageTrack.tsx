@@ -118,9 +118,9 @@ export const StageTrack = ({ stages, value, onChange }: StageTrackProps) => {
             id === value ? styles.current : ''
           }`}
         >
-          <Icon name={icon} className={styles.icon} />
-          <span className={styles.label}>{label}</span>
-          <span className={styles.count}>
+          <Icon name={icon} className={styles.stageTrackIcon} />
+          <span className={styles.stageTrackLabel}>{label}</span>
+          <span className={styles.stageTrackCount}>
             <CountUp value={count} />
           </span>
         </Chip>

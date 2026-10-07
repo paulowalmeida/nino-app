@@ -37,6 +37,6 @@
   }
 }
 
-.label {
+.storeSignLabel {
   @apply uppercase tracking-[0.1em];
 }

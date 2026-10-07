@@ -69,7 +69,7 @@ export const StoreFormAddressFields = ({
   }
 
   return (
-    <Box as="section" direction="column" gap={4} className={styles.fields}>
+    <Box as="section" direction="column" gap={4} className={styles.storeFormAddressFields}>
       <Text as="p" className={`${motion.rise} ${styles.groupTitle}`}>Onde fica</Text>
 
       <Box

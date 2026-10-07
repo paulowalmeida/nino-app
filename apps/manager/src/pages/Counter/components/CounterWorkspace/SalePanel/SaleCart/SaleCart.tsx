@@ -28,7 +28,7 @@ export const SaleCart = ({
 }: SaleCartProps) => {
   if (lines.length === 0) {
     return (
-      <EmptyState className={styles.empty}>
+      <EmptyState className={styles.saleCartEmpty}>
         Toque nos itens para montar a venda.
       </EmptyState>
     )

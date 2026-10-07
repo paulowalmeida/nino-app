@@ -1,44 +1,40 @@
 @reference "@nino/ds/globals.css";
 
-/*
- * Vocabulário de movimento do painel. O gesto base é a comanda saindo da
+/* WHY: Vocabulário de movimento do painel. O gesto base é a comanda saindo da
  * impressora: o conteúdo se revela de cima para baixo por clip-path, não por
  * opacidade. Fade fica reservado a sobreposições, onde o que importa é a
- * camada e não o conteúdo.
- *
- * Tempos: 380–620ms. Abaixo disso o movimento não é lido, acima atrapalha
- * quem já sabe onde clicar. Easing expo-out em tudo, exceto onde o overshoot
- * é intencional.
- *
- * Todas as classes aceitam --d para escalonar entradas em sequência.
+ * camada e não o conteúdo. Tempos: 380–620ms. Abaixo disso o movimento não é
+ * lido, acima atrapalha quem já sabe onde clicar. Easing expo-out em tudo,
+ * exceto onde o overshoot é intencional. Todas as classes aceitam --d para
+ * escalonar entradas em sequência.
  */
 
-/* comanda: revela de cima para baixo */
+
 .unroll {
   animation: unroll 0.46s var(--ease-out) var(--d, 0ms) both;
 }
 
-/* painéis e cartões: assentam no lugar */
+
 .settle {
   animation: settle 0.52s var(--ease-out) var(--d, 0ms) both;
 }
 
-/* destaque que chega de cima e quica uma vez */
+
 .land {
   animation: land 0.66s var(--ease-back) var(--d, 0ms) both;
 }
 
-/* gavetas e menus: entram pela lateral */
+
 .slide {
   animation: slide 0.4s var(--ease-out) var(--d, 0ms) both;
 }
 
-/* números e selos: crescem com um respiro */
+
 .pop {
   animation: pop 0.42s var(--ease-back) var(--d, 0ms) both;
 }
 
-/* linhas de lista: entram deslizando da esquerda, curtas */
+
 .deal {
   animation: deal 0.42s var(--ease-out) var(--d, 0ms) both;
 }
@@ -118,12 +114,9 @@
   }
 }
 
-/*
- * Resposta ao toque. Entrada é o que a tela faz sozinha; isto é o que ela
- * devolve a quem age. Sem estas, a animação vira enfeite de carregamento.
- */
 
-/* cartões e linhas clicáveis: sobem de leve sob o cursor */
+
+
 .lift {
   @apply transition-transform duration-200 ease-out;
 }
@@ -136,7 +129,7 @@
   transform: translateY(0) scale(0.995);
 }
 
-/* botões e alvos de toque: afundam ao pressionar */
+
 .press {
   @apply transition-transform duration-150 ease-out;
 }

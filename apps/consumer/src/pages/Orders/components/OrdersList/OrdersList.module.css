@@ -1,16 +1,16 @@
 @reference "@nino/ds/globals.css";
 
-.list {
+.ordersList {
   @apply mt-5 flex flex-col gap-2;
 }
 
-.item {
+.ordersListItem {
   @apply rounded-3 border border-border bg-surface-raised;
   @apply transition-colors;
   @apply hover:border-brand-muted hover:shadow-xs;
 }
 
-.link {
+.ordersListLink {
   @apply flex items-center gap-3.5 p-4;
 }
 
@@ -19,11 +19,11 @@
   @apply bg-black/[0.06] text-lg;
 }
 
-.body {
+.ordersListBody {
   @apply flex min-w-0 flex-1 flex-col;
 }
 
-.status {
+.ordersListStatus {
   @apply flex flex-wrap items-center gap-2 text-sm font-bold text-fg-muted;
 }
 
@@ -37,7 +37,7 @@
   font-variant-numeric: tabular-nums;
 }
 
-.total {
+.ordersListTotal {
   @apply shrink-0 text-sm font-extrabold text-fg-muted;
   font-variant-numeric: tabular-nums;
 }

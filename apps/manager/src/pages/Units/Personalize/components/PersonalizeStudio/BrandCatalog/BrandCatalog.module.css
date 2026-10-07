@@ -1,5 +1,5 @@
 @reference "@nino/ds/globals.css";
 
-.fields {
+.brandCatalogFields {
   @apply flex flex-col gap-3;
 }

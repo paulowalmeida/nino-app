@@ -1,6 +1,6 @@
 @reference "@nino/ds/globals.css";
 
-.body {
+.welcomeOnboardingContainerBody {
   @apply flex flex-1 flex-col-reverse gap-8 lg:grid lg:items-center;
   @apply lg:grid-cols-[minmax(0,1fr)_minmax(0,26rem)] lg:gap-14;
 }
@@ -13,12 +13,12 @@
   @apply text-xs font-bold uppercase tracking-widest text-brand-strong;
 }
 
-.title {
+.welcomeOnboardingContainerTitle {
   @apply mt-3 font-display text-3xl font-extrabold leading-display;
   @apply tracking-tight text-fg-strong lg:text-5xl;
 }
 
-.text {
+.welcomeOnboardingContainerText {
   @apply mt-4 max-w-md text-base leading-relaxed text-fg-subtle;
 }
 

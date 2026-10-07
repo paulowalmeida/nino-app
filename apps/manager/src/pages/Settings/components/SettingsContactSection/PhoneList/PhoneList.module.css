@@ -13,7 +13,7 @@
   @apply border-t border-border py-3;
 }
 
-/* o número é o alvo de edição — clicar nele abre a linha */
+
 .number {
   @apply h-auto min-w-0 justify-start truncate rounded-none bg-transparent p-0;
   @apply text-left text-sm font-semibold text-fg-default;
@@ -31,7 +31,7 @@
   @apply col-span-full min-w-0 items-center gap-2 py-1;
 }
 
-.actions {
+.phoneListActions {
   @apply col-span-2 justify-self-end gap-1 sm:col-auto;
 }
 
@@ -44,7 +44,7 @@
   @apply hover:bg-danger-surface hover:text-danger;
 }
 
-.section {
+.phoneListSection {
   @apply mt-6;
 }
 
@@ -56,10 +56,10 @@
   @apply shrink-0 tabular-nums;
 }
 
-.empty {
+.phoneListEmpty {
   @apply border-t border-border py-6;
 }
 
-.input {
+.phoneListInput {
   @apply w-full min-w-48 sm:w-72 sm:flex-none;
 }

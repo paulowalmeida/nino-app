@@ -26,7 +26,7 @@ export const CategoryNav = () => {
   }, [activeId])
 
   return (
-    <nav className={styles.nav} aria-label="Categorias do cardápio">
+    <nav className={styles.categoryNav} aria-label="Categorias do cardápio">
       <Text className={styles.railLabel}>Cardápio</Text>
       <Box direction="row" className={styles.track}>
         <Box direction="row" className={styles.chips}>

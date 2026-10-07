@@ -19,7 +19,7 @@ export const SubscriptionInterest = () => {
   const [submitted, setSubmitted] = useState(false)
 
   return (
-    <Box className={styles.page}>
+    <Box className={styles.subscriptionInterestPage}>
       <Header
         mb={{ mobile: 5, desktop: 8 }}
         title="Plano Rede"

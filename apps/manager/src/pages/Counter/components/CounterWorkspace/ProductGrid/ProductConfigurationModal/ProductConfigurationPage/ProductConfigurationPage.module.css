@@ -1,14 +1,14 @@
 @reference "@nino/ds/globals.css";
 
-.page {
+.productConfigurationPage {
   @apply flex min-h-0 flex-1 flex-col overflow-hidden bg-surface-page;
 }
 
-.grid {
+.productConfigurationPageGrid {
   @apply flex min-h-0 w-full flex-1 flex-col overflow-y-auto;
 }
 
-.media {
+.productConfigurationPageMedia {
   @apply relative flex aspect-[4/3] shrink-0 justify-center;
   @apply overflow-hidden bg-surface-cool;
 }
@@ -23,11 +23,11 @@
   @apply absolute left-4 top-4 z-10 rounded-full bg-surface-raised text-fg-strong shadow-warm-md;
 }
 
-.details {
+.productConfigurationPageDetails {
   @apply flex flex-col;
 }
 
-.summary {
+.productConfigurationPageSummary {
   @apply flex shrink-0 flex-col px-4 pb-5 pt-5 sm:px-6;
 }
 
@@ -36,7 +36,7 @@
   @apply text-fg-strong;
 }
 
-.description {
+.productConfigurationPageDescription {
   @apply mt-2 text-[0.9375rem] leading-relaxed text-fg-subtle;
 }
 
@@ -55,15 +55,15 @@
     display: none;
   }
 
-  .grid {
+  .productConfigurationPageGrid {
     @apply grid h-[26rem] grid-cols-[11rem_1fr] gap-x-6 overflow-visible;
   }
 
-  .media {
+  .productConfigurationPageMedia {
     @apply aspect-auto min-h-0;
   }
 
-  .details {
+  .productConfigurationPageDetails {
     @apply mr-8 min-h-0 overflow-y-auto;
   }
 }

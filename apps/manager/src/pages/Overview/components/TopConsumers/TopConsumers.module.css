@@ -1,5 +1,5 @@
 @reference "@nino/ds/globals.css";
 
-.grid {
+.topConsumersGrid {
   @apply grid grid-cols-1 items-stretch gap-4 lg:grid-cols-2 lg:gap-5;
 }

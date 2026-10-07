@@ -1,11 +1,6 @@
 @reference "@nino/ds/globals.css";
 
-/*
- * A trilha muda de forma com a largura porque muda o que ela consegue dizer.
- * No celular sobra espaço para um fio: quanto falta, e nada mais — o nome da
- * etapa já está no cabeçalho. Na largura de mesa cabe o caminho inteiro, com
- * os nomes, e aí o passo concluído volta a ser clicável.
- */
+
 .progress {
   @apply shrink-0 lg:hidden;
 }

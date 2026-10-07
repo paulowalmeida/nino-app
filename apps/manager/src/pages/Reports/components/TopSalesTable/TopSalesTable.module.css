@@ -1,6 +1,6 @@
 @reference "@nino/ds/globals.css";
 
-.top {
+.topSalesTableTop {
   @apply rounded-5 border border-border bg-surface-page/70 p-4 lg:p-5;
 }
 
@@ -9,7 +9,7 @@
   @apply text-fg-strong;
 }
 
-/* a mesma ficha quadrada da posição no ranking */
+
 .ghostPosition {
   @apply h-7 w-7 rounded-2;
 }
@@ -18,19 +18,19 @@
   @apply h-3.5 w-40;
 }
 
-/* coluna numérica é alinhada à direita: o bloco encosta na borda da célula */
+
 .ghostCell {
   @apply ml-auto h-3.5 w-14;
 }
 
-/* quatro colunas numéricas não cabem em 390px: a tabela rola dentro do
-   cartão em vez de empurrar a página inteira para os lados */
+/* WHY: quatro colunas numéricas não cabem em 390px: a tabela rola dentro do
+ * cartão em vez de empurrar a página inteira para os lados
+ */
 .tableWrap {
   @apply -mx-1 overflow-x-auto;
 }
 
-/* a posição no ranking é o gancho de leitura: ficha escura, como a
- * quantidade na comanda da cozinha */
+
 .position {
   @apply flex h-7 w-7 shrink-0 items-center justify-center rounded-2;
   @apply bg-surface-mute font-display text-sm font-extrabold;
@@ -38,11 +38,7 @@
   font-variant-numeric: tabular-nums;
 }
 
-/*
- * O pódio é o que se lê primeiro: do 4º em diante a ficha esmaece e o nome
- * perde peso. Só o líder leva a cor da marca — três laranjas lado a lado não
- * seriam mais um ranking, seriam três primeiros lugares.
- */
+
 .podium .position {
   @apply bg-fg-strong text-fg-inverse;
 }

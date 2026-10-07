@@ -55,7 +55,7 @@ export const AppLayout = () => {
   }
 
   return (
-    <Box direction="row" className={styles.shell}>
+    <Box direction="row" className={styles.appLayoutShell}>
       <AppLayoutHeader
         unitName={unit?.unitName}
         onOpenMenu={() => setMenuOpen(true)}
@@ -77,7 +77,7 @@ export const AppLayout = () => {
       {menuOpen && (
         <Button
           type="button"
-          className={styles.overlay}
+          className={styles.appLayoutOverlay}
           onClick={closeMenu}
           aria-label="Fechar menu"
         />

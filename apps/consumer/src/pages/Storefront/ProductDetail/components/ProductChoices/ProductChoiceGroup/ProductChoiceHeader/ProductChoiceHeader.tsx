@@ -17,7 +17,7 @@ export const ProductChoiceHeader = ({ group }: ProductChoiceHeaderProps) => {
   const chosen = (selections[group.id] ?? []).length
 
   return (
-    <Box direction="row" className={styles.header}>
+    <Box direction="row" className={styles.productChoiceHeader}>
       <Box className={styles.identity}>
         <Heading level={2} id={group.id} className={styles.name}>
           {group.name}

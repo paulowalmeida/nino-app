@@ -1,10 +1,10 @@
 @reference "@nino/ds/globals.css";
 
-.label {
+.chartSeriesTooltipLabel {
   @apply text-xs font-bold capitalize text-fg-strong;
 }
 
-.row {
+.chartSeriesTooltipRow {
   @apply mt-1 flex items-center gap-2 text-sm text-fg-default;
   @apply tabular-nums;
 }
@@ -33,6 +33,6 @@
   @apply flex-1 text-fg-muted;
 }
 
-.value {
+.chartSeriesTooltipValue {
   @apply font-semibold text-fg-strong;
 }

@@ -23,7 +23,7 @@ export const ProductDetailSkeleton = () => (
       <Skeleton className={styles.ghostBadge} />
     </Box>
 
-    <Box className={formStyles.form}>
+    <Box className={formStyles.productDetailForm}>
       <Box className={photoStyles.photoCol}>
         <Skeleton className={styles.ghostPhoto} />
         <Box gap={2} mt={3}>
@@ -31,30 +31,30 @@ export const ProductDetailSkeleton = () => (
         </Box>
       </Box>
 
-      <Box className={formStyles.fields}>
-        <Box className={formStyles.field}>
+      <Box className={formStyles.productDetailFormFields}>
+        <Box className={formStyles.productDetailFormField}>
           <Skeleton className={styles.ghostLabel} />
           <Skeleton className={styles.ghostInput} />
         </Box>
 
-        <Box className={formStyles.field}>
+        <Box className={formStyles.productDetailFormField}>
           <Skeleton className={styles.ghostLabel} />
           <Skeleton className={styles.ghostTextarea} />
           <Skeleton className={styles.ghostHelper} />
         </Box>
 
-        <Box className={formStyles.row}>
-          <Box className={formStyles.field}>
+        <Box className={formStyles.productDetailFormRow}>
+          <Box className={formStyles.productDetailFormField}>
             <Skeleton className={styles.ghostLabel} />
             <Skeleton className={styles.ghostInput} />
           </Box>
-          <Box className={formStyles.field}>
+          <Box className={formStyles.productDetailFormField}>
             <Skeleton className={styles.ghostLabel} />
             <Skeleton className={styles.ghostInput} />
           </Box>
         </Box>
 
-        <Box className={formStyles.field}>
+        <Box className={formStyles.productDetailFormField}>
           <Skeleton className={styles.ghostLabel} />
           <Skeleton className={styles.ghostInput} />
         </Box>
@@ -68,7 +68,7 @@ export const ProductDetailSkeleton = () => (
         </Box>
       </Box>
 
-      <Box className={formStyles.actions}>
+      <Box className={formStyles.productDetailFormActions}>
         <Skeleton className={styles.ghostButton} />
         <Skeleton className={styles.ghostButton} />
         <Skeleton className={styles.ghostButton} />

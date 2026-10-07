@@ -1,19 +1,18 @@
 @reference "@nino/ds/globals.css";
 
-.panel {
+.salePanel {
   @apply flex h-full w-full flex-col bg-surface-page;
 }
 
-/* O checkout é uma comanda, não uma planilha: a coluna para de crescer na
-   medida em que um formulário ainda se lê de uma olhada só. */
+
 .bare {
   @apply flex min-h-0 w-full min-w-0 flex-1 flex-col overflow-hidden;
 }
 
-.header {
+.salePanelHeader {
   @apply shrink-0 items-center justify-between border-b border-border px-4 py-3;
 }
 
-.title {
+.salePanelTitle {
   @apply tracking-[-0.01em];
 }

@@ -12,11 +12,11 @@
   @apply hidden;
 }
 
-.label {
+.checkoutFooterLabel {
   @apply text-sm font-semibold text-fg-muted;
 }
 
-.total {
+.checkoutFooterTotal {
   @apply font-display text-2xl font-extrabold text-fg-strong;
   font-variant-numeric: tabular-nums;
 }
@@ -25,7 +25,7 @@
   @apply h-12 flex-1 text-base;
 }
 
-.actions {
+.checkoutFooterActions {
   @apply w-full;
 }
 

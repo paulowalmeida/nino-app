@@ -1,9 +1,9 @@
 @reference '../../../../theme.css';
-.row {
+.billingRow {
   @apply flex justify-between items-center px-[1.4rem] py-4;
   @apply border-t border-border text-base text-fg-default;
 }
-.row:first-of-type {
+.billingRow:first-of-type {
   @apply border-t-0;
 }
 

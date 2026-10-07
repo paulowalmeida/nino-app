@@ -5,15 +5,15 @@ import { Text } from '@nino/ds/components/Text'
 import ghost from './PersonalizeSkeleton.module.css'
 
 export const PersonalizeSkeleton = () => (
-  <Box className={ghost.page}>
+  <Box className={ghost.personalizeSkeletonPage}>
     <Text as="p" role="status" className={ghost.loadingLabel}>
       Carregando a personalização da loja
     </Text>
 
-    <Box className={ghost.header}>
+    <Box className={ghost.personalizeSkeletonHeader}>
       <Skeleton className={ghost.trail} />
-      <Skeleton className={ghost.title} />
-      <Skeleton className={ghost.subtitle} />
+      <Skeleton className={ghost.personalizeSkeletonTitle} />
+      <Skeleton className={ghost.personalizeSkeletonSubtitle} />
     </Box>
 
     <Box className={ghost.studio}>
@@ -22,8 +22,8 @@ export const PersonalizeSkeleton = () => (
         <Skeleton className={ghost.frame} />
       </Box>
 
-      <Box className={ghost.controls}>
-        <Box className={ghost.section}>
+      <Box className={ghost.personalizeSkeletonControls}>
+        <Box className={ghost.personalizeSkeletonSection}>
           <Skeleton className={ghost.sectionTitle} />
           <Box direction="row" gap={2} className={ghost.themes}>
             <Skeleton className={ghost.theme} />
@@ -32,9 +32,9 @@ export const PersonalizeSkeleton = () => (
           </Box>
         </Box>
 
-        <Box className={ghost.section}>
+        <Box className={ghost.personalizeSkeletonSection}>
           <Skeleton className={ghost.sectionTitle} />
-          <Box className={ghost.grid}>
+          <Box className={ghost.personalizeSkeletonGrid}>
             <Skeleton className={ghost.tile} />
             <Skeleton className={ghost.tile} />
             <Skeleton className={ghost.tile} />
@@ -44,7 +44,7 @@ export const PersonalizeSkeleton = () => (
           </Box>
         </Box>
 
-        <Box className={ghost.section}>
+        <Box className={ghost.personalizeSkeletonSection}>
           <Skeleton className={ghost.sectionTitle} />
           <Skeleton className={ghost.upload} />
         </Box>

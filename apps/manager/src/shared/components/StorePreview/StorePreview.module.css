@@ -21,7 +21,7 @@
   @apply bg-brand text-fg-on-brand;
 }
 
-.text {
+.storePreviewText {
   @apply flex min-w-0 flex-1 flex-col;
 }
 
@@ -35,11 +35,11 @@
   @apply text-fg-strong;
 }
 
-.link {
+.storePreviewLink {
   @apply mt-0.5 block truncate text-xs text-fg-faint transition-colors;
   @apply duration-300;
 }
 
-.preview[data-lit='true'] .link {
+.preview[data-lit='true'] .storePreviewLink {
   @apply text-brand-strong;
 }

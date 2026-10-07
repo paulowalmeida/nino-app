@@ -1,11 +1,11 @@
 @reference '../../../../theme.css';
-.card {
+.featureCard {
   @apply relative flex flex-col p-8 rounded-5 overflow-hidden;
   @apply bg-surface-raised border border-brand-soft transition-all;
   @apply shadow-warm-sm duration-[280ms];
 }
 
-.card:hover {
+.featureCard:hover {
   @apply -translate-y-1.5 border-brand-bold;
   @apply shadow-brand-lg;
 }
@@ -16,7 +16,7 @@
   @apply [font-family:var(--font-display)] text-brand-ghost;
 }
 
-.card:hover .sequenceNumber {
+.featureCard:hover .sequenceNumber {
   @apply text-brand-soft;
 }
 
@@ -90,7 +90,7 @@
 
 @supports (animation-timeline: view()) {
   @media (prefers-reduced-motion: no-preference) {
-    .card {
+    .featureCard {
       animation: revealUp linear both;
       animation-timeline: view();
       animation-range: entry 0% entry 55%;

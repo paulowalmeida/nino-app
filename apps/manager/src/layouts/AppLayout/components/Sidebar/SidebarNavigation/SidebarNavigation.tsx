@@ -26,10 +26,10 @@ export const SidebarNavigation = ({
   let staggerIndex = 0
 
   return (
-    <ScrollArea fadeEdges className={styles.navigation}>
-      <Box as="nav" direction="column" className={styles.list}>
+    <ScrollArea fadeEdges className={styles.sidebarNavigation}>
+      <Box as="nav" direction="column" className={styles.sidebarNavigationList}>
         {groups.map(({ title, items }) => (
-          <Box key={title ?? 'home'} gap={0.5} className={styles.section}>
+          <Box key={title ?? 'home'} gap={0.5} className={styles.sidebarNavigationSection}>
             {!isCollapsed && title && (
               <Text as="p" className={styles.sectionTitle}>
                 {title}

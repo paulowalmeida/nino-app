@@ -1,6 +1,6 @@
 @reference "@nino/ds/globals.css";
 
-.list {
+.catalogItemsList {
   @apply overflow-hidden px-4 pb-4;
   @apply lg:px-10 lg:pb-10;
 }

@@ -9,7 +9,7 @@ export function CounterTab() {
 
   return (
     <div>
-      <header className={styles.header}>
+      <header className={styles.counterTabHeader}>
         <div>
           <p className={styles.greeting}>Boa noite</p>
 
@@ -21,15 +21,15 @@ export function CounterTab() {
         <span className={styles.openBadge}>Aberto até 23h</span>
       </header>
 
-      <div className={styles.body}>
+      <div className={styles.counterTabBody}>
         <p className={styles.eyebrow}>Agora na loja</p>
 
         <div className={styles.board}>
           {queueTiles.map(({ value, label, urgent }) => (
             <article key={label} className={tileClass(urgent)}>
-              <span className={styles.value}>{value}</span>
+              <span className={styles.counterTabValue}>{value}</span>
 
-              <span className={styles.label}>{label}</span>
+              <span className={styles.counterTabLabel}>{label}</span>
             </article>
           ))}
         </div>

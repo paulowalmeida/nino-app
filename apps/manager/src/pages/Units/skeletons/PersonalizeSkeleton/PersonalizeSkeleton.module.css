@@ -1,6 +1,6 @@
 @reference "@nino/ds/globals.css";
 
-.page {
+.personalizeSkeletonPage {
   @apply flex min-h-dvh w-full min-w-0 flex-col gap-6 p-4 lg:p-10;
 }
 
@@ -8,7 +8,7 @@
   @apply sr-only;
 }
 
-.header {
+.personalizeSkeletonHeader {
   @apply flex min-w-0 flex-col gap-2;
 }
 
@@ -16,11 +16,11 @@
   @apply h-4 w-40;
 }
 
-.title {
+.personalizeSkeletonTitle {
   @apply h-8 w-64;
 }
 
-.subtitle {
+.personalizeSkeletonSubtitle {
   @apply h-4 w-full max-w-prose;
 }
 
@@ -42,12 +42,12 @@
   @apply mx-auto h-80 w-full max-w-[21rem] rounded-6 lg:max-w-none;
 }
 
-.controls {
+.personalizeSkeletonControls {
   @apply row-start-2 flex min-w-0 flex-col gap-6;
   @apply lg:col-start-1 lg:row-start-1;
 }
 
-.section {
+.personalizeSkeletonSection {
   @apply flex min-w-0 flex-col gap-3;
 }
 
@@ -63,7 +63,7 @@
   @apply h-9 w-28 shrink-0 rounded-full;
 }
 
-.grid {
+.personalizeSkeletonGrid {
   @apply grid grid-cols-1 gap-2 sm:grid-cols-2;
 }
 

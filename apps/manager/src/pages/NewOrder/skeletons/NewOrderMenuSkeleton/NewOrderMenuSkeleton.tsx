@@ -9,14 +9,14 @@ import {
 import styles from './NewOrderMenuSkeleton.module.css'
 
 export const NewOrderMenuSkeleton = () => (
-  <Box as="section" className={styles.menu} aria-label="Carregando cardápio">
+  <Box as="section" className={styles.newOrderMenuSkeletonMenu} aria-label="Carregando cardápio">
     {NEW_ORDER_MENU_GHOST_SECTIONS.map((section) => (
       <Box as="section" key={section}>
         <Skeleton variant="text" className={styles.ghostSectionName} />
 
         <Box as="ul" direction="column">
           {NEW_ORDER_MENU_GHOST_ITEMS.map((item) => (
-            <ListRow key={item} className={styles.item}>
+            <ListRow key={item} className={styles.newOrderMenuSkeletonItem}>
               <Skeleton className={styles.ghostThumb} />
               <Skeleton variant="text" className={styles.ghostItemName} />
               <Skeleton variant="text" className={styles.ghostItemPrice} />

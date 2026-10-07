@@ -1,7 +1,8 @@
 @reference "@nino/ds/globals.css";
 
-/* o Button do DS no tamanho sm: 32px de altura, cantos redondos */
-.action {
+/* WHY: o Button do DS no tamanho sm: 32px de altura, cantos redondos
+ */
+.consumerContactSkeletonAction {
   @apply h-8 w-40 max-w-full rounded-full;
 }
 

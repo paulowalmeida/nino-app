@@ -10,15 +10,15 @@ export const CatalogContentSkeleton = () => (
     <Skeleton className={styles.tally} />
 
     <Box className={styles.scroll}>
-      <Box className={styles.list}>
+      <Box className={styles.catalogContentSkeletonList}>
         <Box as="ul" direction="column">
           {MENU_BOARD_GHOST_ROWS.map((row) => (
-            <li key={row} className={rowStyles.item}>
+            <li key={row} className={rowStyles.menuRowItem}>
               <Box className={rowStyles.itemLink}>
                 <Skeleton className={styles.thumb} />
                 <Box className={rowStyles.itemText}>
                   <Skeleton className={styles.name} />
-                  <Skeleton className={styles.description} />
+                  <Skeleton className={styles.catalogContentSkeletonDescription} />
                 </Box>
                 <Skeleton className={styles.price} />
               </Box>

@@ -21,7 +21,7 @@
   }
 }
 
-.value {
+.tallyCardValue {
   @apply font-display text-lg font-extrabold leading-none tracking-tight;
   @apply text-fg-strong lg:text-lg;
   font-variant-numeric: tabular-nums;

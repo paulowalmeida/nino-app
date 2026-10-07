@@ -1,12 +1,7 @@
 @reference "@nino/ds/globals.css";
 
-/*
- * WHY: a comanda é papel de recado, e papel não tem moldura. A cor do papel
- * diz pra onde o prato vai; a pressa mora só na régua entre o cabeçalho e os
- * itens. Nenhum estado desenha contorno em volta do cartão — contorno de
- * alerta sobre papel pastel briga com a cor que já carrega informação.
- */
-.card {
+
+.kitchenCard {
   --paper: var(--color-warm-200);
   --edge: color-mix(in srgb, var(--paper) 88%, var(--color-warm-950));
   @apply relative flex flex-col overflow-hidden rounded-3;
@@ -16,11 +11,7 @@
     color-mix(in srgb, var(--color-warm-950) 45%, transparent);
 }
 
-/*
- * WHY: papéis de recado precisam ser distinguíveis a alguns metros sem virar
- * bloco fluorescente. O sistema não tem escala de papel — os tons abaixo são
- * dessaturados de propósito e todos mantêm o texto em fg-strong acima de 12:1.
- */
+
 .paperPlain {
   --paper: #f3efe8;
 }
@@ -45,12 +36,7 @@
   @apply flex items-baseline justify-between gap-3 px-3 pt-3 sm:px-4;
 }
 
-/*
- * O número é o que se grita de um lado ao outro da cozinha, então é o maior
- * elemento do papel — e o `#` sai: na parede ele só rouba peso do que importa.
- * No celular o papel some da parede pra virar leitura de perto, então o
- * mesmo peso visual não precisa do mesmo tamanho de fonte.
- */
+
 .number {
   @apply font-display text-2xl leading-none font-extrabold text-fg-strong;
   @apply tracking-[-0.03em] sm:text-3xl;
@@ -86,21 +72,13 @@
   @apply bg-brand-muted text-brand;
 }
 
-/*
- * A régua: o divisor entre cabeçalho e itens É o cronômetro. Em vez de somar
- * mais um enfeite ao papel, a linha que já separava as duas metades passa a
- * medir o tempo que resta — some da esquerda para a direita conforme corre.
- */
+
 .ruler {
   @apply h-1.5 shrink-0 overflow-hidden;
   background: color-mix(in srgb, var(--paper) 88%, var(--color-warm-950));
 }
 
-/*
- * WHY: a crista percorrendo a barra é o que prova que o relógio está vivo —
- * sem ela, comanda parada e tela travada são indistinguíveis na parede. O
- * ritmo carrega a pressa: arrasta no verde, fica inquieta no vermelho.
- */
+
 .fill {
   @apply block h-full;
   width: calc((1 - var(--t, 0)) * 100%);
@@ -127,10 +105,7 @@
   }
 }
 
-/*
- * WHY: a cor anda em degraus, não em gradiente — a três metros a cozinha
- * precisa nomear ("aquela está vermelha"), e tom intermediário não se nomeia.
- */
+
 .paceFresh .fill {
   --crest-pace: 5s;
   background-color: var(--color-success);
@@ -146,10 +121,7 @@
   background-color: var(--color-danger);
 }
 
-/*
- * WHY: uma comanda atrasada precisa acusar atraso inteiro no primeiro segundo:
- * vermelho cheio é mais legível do que uma régua vazia que parece recém-criada.
- */
+
 .paceLate .fill {
   --crest-pace: 1.3s;
   width: 100%;
@@ -176,15 +148,12 @@
   @apply flex flex-1 flex-col gap-2 px-3 py-3 sm:px-4;
 }
 
-.item {
+.kitchenCardItem {
   @apply flex items-center gap-3 text-base leading-tight text-fg-strong;
   @apply sm:text-xl;
 }
 
-/*
- * A quantidade vira selo: no aperto a cozinha lê "quantos" antes de "o quê",
- * e um número solto na mesma cor se perde dentro do nome.
- */
+
 .quantity {
   @apply shrink-0 font-display text-base font-extrabold;
   @apply bg-fg-strong text-fg-inverse;
@@ -195,21 +164,18 @@
   @apply min-w-0 flex-1 font-medium;
 }
 
-/* o recado é o que mais causa retrabalho: fica logo acima da ação */
+
 .notes {
   @apply mx-3 mb-3 py-1 pl-3 text-sm leading-snug italic sm:mx-4 sm:text-base;
   @apply font-semibold text-fg-strong;
   border-left: 3px solid var(--color-fg-strong);
 }
 
-.action {
+.kitchenCardAction {
   @apply mx-3 mb-4 h-12 text-sm sm:mx-4 sm:h-14 sm:text-base;
 }
 
-/*
- * Modo compacto: em pico a coluna precisa caber mais comanda na altura, e o
- * que a cozinha ainda precisa ler de longe é número, régua e ação.
- */
+
 .compact .head {
   @apply pt-2;
 }
@@ -226,11 +192,11 @@
   @apply pb-2;
 }
 
-.summary {
+.kitchenCardSummary {
   @apply mx-3 my-3 text-sm font-semibold text-fg-subtle sm:mx-4;
 }
 
-.compact .action {
+.compact .kitchenCardAction {
   @apply h-11;
 }
 

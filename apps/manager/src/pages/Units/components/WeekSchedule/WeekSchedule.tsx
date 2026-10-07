@@ -89,7 +89,7 @@ export const WeekSchedule = ({
   if (isPending) return <WeekScheduleSkeleton />
 
   return (
-    <Box as="section" className={local.panel}>
+    <Box as="section" className={local.weekSchedulePanel}>
       <Box as="header" className={`${motion.unroll} ${local.head}`}>
         <Heading level={2} size="xl">
           Quando a unidade abre

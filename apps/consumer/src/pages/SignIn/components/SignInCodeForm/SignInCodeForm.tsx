@@ -42,10 +42,10 @@ export const SignInCodeForm = () => {
       style={riseDelay(60)}
       onSubmit={handleSubmit}
     >
-      <Heading level={1} className={styles.title}>
+      <Heading level={1} className={styles.signInCodeFormTitle}>
         Digite o código
       </Heading>
-      <Text size="sm" className={styles.subtitle}>
+      <Text size="sm" className={styles.signInCodeFormSubtitle}>
         Enviamos para{' '}
         <Text as="span" weight="bold" color="strong">
           {sentTo}
@@ -89,7 +89,7 @@ export const SignInCodeForm = () => {
       <Button
         type="button"
         variant="ghost"
-        className={`${motion.press} ${styles.secondary}`}
+        className={`${motion.press} ${styles.signInCodeFormSecondary}`}
         onClick={goToIdentify}
       >
         {isEmail ? 'Usar outro e-mail' : 'Usar outro celular'}

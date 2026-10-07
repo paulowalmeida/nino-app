@@ -3,7 +3,7 @@ import { Chip } from '@nino/ds/components/Chip'
 import { Icon } from '@nino/ds/components/Icon'
 import type { PreviewDevice } from '@pages/Units/types/PreviewDevice.type'
 
-import styles from './StudioToolbar.module.css'
+import styles from './StudioDeviceTabs.module.css'
 
 const DEVICE_TABS = [
   { value: 'mobile', label: 'Celular', icon: 'smartphone' },
@@ -24,7 +24,7 @@ export const StudioDeviceTabs = ({
     gap={1}
     role="tablist"
     aria-label="Formato da prévia"
-    className={styles.devices}
+    className={styles.deviceTabs}
   >
     {DEVICE_TABS.map(({ value, label, icon }) => (
       <Chip

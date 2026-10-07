@@ -69,9 +69,9 @@ export const StoreTopBar = ({ slug, isDocked }: StoreTopBarProps) => {
       as="header"
       className={isDocked ? `${styles.bar} ${styles.barDocked}` : styles.bar}
     >
-      <Box direction="row" className={styles.inner}>
-        <a href={base || '/'} className={styles.brand}>
-          <Box className={styles.logo} aria-hidden="true">
+      <Box direction="row" className={styles.storeTopBarInner}>
+        <a href={base || '/'} className={styles.storeTopBarBrand}>
+          <Box className={styles.storeTopBarLogo} aria-hidden="true">
             <Image
               src={logoUrl}
               alt=""

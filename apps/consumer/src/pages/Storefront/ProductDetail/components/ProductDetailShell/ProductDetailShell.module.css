@@ -4,12 +4,12 @@
   @apply p-0 lg:p-4;
 }
 
-.panel {
+.productDetailShellPanel {
   @apply flex h-dvh w-screen max-w-none flex-col rounded-none;
   @apply lg:h-auto lg:w-auto lg:max-w-5xl lg:rounded-2;
 }
 
-.body {
+.productDetailShellBody {
   @apply min-h-0 flex-1 overflow-y-auto overscroll-contain p-0;
   @apply lg:flex-none lg:overflow-visible lg:px-6 lg:py-5;
 }
@@ -27,21 +27,21 @@
   }
 }
 
-.grid {
+.productDetailShellGrid {
   @apply flex min-h-0 w-full flex-col bg-surface-page;
   @apply lg:grid lg:h-[75vh] lg:grid-cols-2 lg:grid-rows-[minmax(0,1fr)_auto];
   @apply lg:gap-x-8 lg:overflow-visible lg:bg-transparent;
 }
 
-.media {
+.productDetailShellMedia {
   @apply relative flex shrink-0 items-center justify-center;
   @apply lg:min-h-0;
 }
 
-.details {
+.productDetailShellDetails {
   @apply lg:mr-8 lg:min-h-0 lg:overflow-y-auto;
 }
 
-.footer {
+.productDetailShellFooter {
   @apply lg:col-span-2;
 }

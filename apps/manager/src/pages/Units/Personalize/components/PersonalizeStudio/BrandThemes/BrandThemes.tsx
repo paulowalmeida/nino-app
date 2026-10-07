@@ -28,7 +28,7 @@ export const BrandThemes = ({ colors, onApply }: BrandThemesProps) => (
     title="Ponto de partida"
     description="Aplique um conjunto pronto e ajuste o que quiser depois."
   >
-    <Box direction="row" gap={2} className={styles.row}>
+    <Box direction="row" gap={2} className={styles.brandThemesRow}>
       {BRAND_THEMES.map((theme) => (
         <Chip
           key={theme.id}

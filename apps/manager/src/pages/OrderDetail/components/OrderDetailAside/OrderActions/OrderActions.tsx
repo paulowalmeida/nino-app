@@ -34,7 +34,7 @@ export const OrderActions = () => {
   return (
     <section
       aria-label="Ações do pedido"
-      className={`${motion.settle} ${styles.actions}`}
+      className={`${motion.settle} ${styles.orderActions}`}
       style={riseDelay(260)}
     >
       {canAdvance && requiresPickupCode && (

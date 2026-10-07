@@ -11,7 +11,7 @@ import styles from './ConsumerDetailSkeleton.module.css'
 /* WHY: o Breadcrumb não vira osso — já navega sem o cliente carregado e
  * sumiria da tela se virasse barra cinza. */
 export const ConsumerDetailSkeleton = () => (
-  <Box className={styles.page}>
+  <Box className={styles.consumerDetailSkeletonPage}>
     <Breadcrumb trail={[{ label: 'Clientes', to: '..' }, { label: '—' }]} />
 
     <Text as="p" role="status" className="sr-only">
