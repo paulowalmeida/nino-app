@@ -1,9 +1,11 @@
 import { render, screen } from '@testing-library/react'
+import { MemoryRouter } from 'react-router'
 import { describe, expect, it, vi } from 'vitest'
 
 import {
   MenuBoardEmptyState,
 } from '@pages/Catalog/components/MenuBoardEmptyState/MenuBoardEmptyState'
+import { CATALOG_CAPABILITIES } from '@pages/Catalog/constants/catalog.constants'
 import { useCatalogFacade } from '@pages/Catalog/facades/useCatalogFacade'
 
 import { menuBoardEmptyStateMock } from './MenuBoardEmptyState.mock'
@@ -16,7 +18,11 @@ describe(MenuBoardEmptyState.name, () => {
       search: menuBoardEmptyStateMock.searching,
     } as unknown as ReturnType<typeof useCatalogFacade>)
 
-    render(<MenuBoardEmptyState />)
+    render(
+      <MemoryRouter>
+        <MenuBoardEmptyState />
+      </MemoryRouter>
+    )
 
     expect(
       screen.getByText(
@@ -25,15 +31,23 @@ describe(MenuBoardEmptyState.name, () => {
     ).toBeInTheDocument()
   })
 
-  it('invites the user to create the first item in an empty category', () => {
+  it('invites the user to create the first item and lists what the screen does', () => {
     vi.mocked(useCatalogFacade).mockReturnValue({
       search: '',
     } as unknown as ReturnType<typeof useCatalogFacade>)
 
-    render(<MenuBoardEmptyState />)
+    render(
+      <MemoryRouter>
+        <MenuBoardEmptyState />
+      </MemoryRouter>
+    )
 
+    expect(screen.getByText(menuBoardEmptyStateMock.title)).toBeInTheDocument()
     expect(
-      screen.getByText(menuBoardEmptyStateMock.categoryMessage)
+      screen.getByRole('link', { name: 'Cadastrar primeiro item' })
     ).toBeInTheDocument()
+    CATALOG_CAPABILITIES.forEach(({ title }) =>
+      expect(screen.getByText(title)).toBeInTheDocument()
+    )
   })
 })
