@@ -73,6 +73,10 @@
   }
 
   .productConfigurationPageDetails {
-    @apply mr-8 min-h-0 overflow-y-auto;
+    @apply mr-8 min-h-0 overflow-hidden;
+  }
+
+  .groups {
+    @apply flex min-h-0 flex-1 flex-col overflow-y-auto;
   }
 }
