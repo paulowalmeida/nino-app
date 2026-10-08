@@ -1,13 +1,11 @@
 import { Alert } from '@nino/ds/components/Alert'
 import { Box } from '@nino/ds/components/Box'
-import { EmptyState } from '@nino/ds/components/EmptyState'
+import { ConsumersEmptyState } from '@pages/Consumers/components/ConsumersEmptyState/ConsumersEmptyState'
 import { ConsumersHeader } from '@pages/Consumers/components/ConsumersHeader/ConsumersHeader'
 import { ConsumersList } from '@pages/Consumers/components/ConsumersList/ConsumersList'
 import { useConsumersFacade } from '@pages/Consumers/facades/useConsumersFacade/useConsumersFacade'
 import { ConsumersListSkeleton } from '@pages/Consumers/skeletons/ConsumersListSkeleton/ConsumersListSkeleton'
-import { consumersEmptyMessage } from '@pages/Consumers/utils/consumersEmptyMessage/consumersEmptyMessage'
 
-import motion from '@styles/motion.module.css'
 import styles from './Consumers.module.css'
 
 export const Consumers = () => {
@@ -26,9 +24,7 @@ export const Consumers = () => {
       )}
 
       {!isPending && !isError && rows.length === 0 && (
-        <EmptyState className={`${motion.unroll} ${styles.consumersEmpty}`}>
-          {consumersEmptyMessage(search)}
-        </EmptyState>
+        <ConsumersEmptyState search={search} />
       )}
 
       {rows.length > 0 && <ConsumersList />}

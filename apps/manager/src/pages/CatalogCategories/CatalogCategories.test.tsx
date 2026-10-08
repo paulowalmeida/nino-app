@@ -32,6 +32,12 @@ vi.mock(
   })
 )
 vi.mock(
+  '@pages/CatalogCategories/components/CategoriesEmptyState/CategoriesEmptyState',
+  () => ({
+    CategoriesEmptyState: () => <div>categories-empty-state</div>,
+  })
+)
+vi.mock(
   '@pages/CatalogCategories/skeletons/CategoryRowsSkeleton/CategoryRowsSkeleton',
   () => ({
     CategoryRowsSkeleton: () => <div>category-rows-skeleton</div>,
@@ -93,7 +99,7 @@ describe(CatalogCategories.name, () => {
 
     render(<CatalogCategories />)
 
-    expect(screen.getByText(/Nenhuma categoria ainda/)).toBeInTheDocument()
+    expect(screen.getByText('categories-empty-state')).toBeInTheDocument()
     expect(screen.queryByText('categories-list')).not.toBeInTheDocument()
   })
 })

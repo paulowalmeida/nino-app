@@ -1,6 +1,6 @@
 import { Alert } from '@nino/ds/components/Alert'
 import { Box } from '@nino/ds/components/Box'
-import { EmptyState } from '@nino/ds/components/EmptyState'
+import { CategoriesEmptyState } from '@pages/CatalogCategories/components/CategoriesEmptyState/CategoriesEmptyState'
 import { CategoriesHeader } from '@pages/CatalogCategories/components/CategoriesHeader/CategoriesHeader'
 import { CategoriesList } from '@pages/CatalogCategories/components/CategoriesList/CategoriesList'
 import { DeleteCategoryDialog } from '@pages/CatalogCategories/components/DeleteCategoryDialog/DeleteCategoryDialog'
@@ -8,7 +8,6 @@ import { EditCategoryDialog } from '@pages/CatalogCategories/components/EditCate
 import { useCatalogCategoriesFacade } from '@pages/CatalogCategories/facades/useCatalogCategoriesFacade/useCatalogCategoriesFacade'
 import { CategoryRowsSkeleton } from '@pages/CatalogCategories/skeletons/CategoryRowsSkeleton/CategoryRowsSkeleton'
 
-import motion from '@styles/motion.module.css'
 import styles from './CatalogCategories.module.css'
 
 export const CatalogCategories = () => {
@@ -37,10 +36,7 @@ export const CatalogCategories = () => {
 
       {isEmpty && (
         <Box className={styles.feedback}>
-          <EmptyState className={motion.unroll}>
-            Nenhuma categoria ainda. Crie a primeira acima — depois cadastre
-            itens dentro dela.
-          </EmptyState>
+          <CategoriesEmptyState />
         </Box>
       )}
 

@@ -1,5 +1,5 @@
 @reference "@nino/ds/globals.css";
 
 .companyPage {
-  @apply relative mx-auto w-full max-w-3xl p-4 lg:p-10;
+  @apply relative w-full max-w-3xl p-4 lg:p-10;
 }

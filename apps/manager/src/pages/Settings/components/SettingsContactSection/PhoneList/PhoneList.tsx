@@ -2,11 +2,11 @@ import { useState } from 'react'
 
 import { Box } from '@nino/ds/components/Box'
 import { Button } from '@nino/ds/components/Button'
-import { EmptyState } from '@nino/ds/components/EmptyState'
 import { Heading } from '@nino/ds/components/Heading'
 import { PhoneInput } from '@nino/ds/components/PhoneInput'
 import { Skeleton } from '@nino/ds/components/Skeleton'
 import { Text } from '@nino/ds/components/Text'
+import { PhoneListEmptyState } from '@pages/Settings/components/SettingsContactSection/PhoneListEmptyState/PhoneListEmptyState'
 import type { UnitPhone } from '@shared/types/settings/unit-phone'
 import { formatPhone, toE164 } from '@shared/utils/phone/phone'
 import { riseDelay } from '@shared/utils/rise-delay/rise-delay'
@@ -60,11 +60,7 @@ export const PhoneList = ({
         </Text>
       </Box>
 
-      {phones.length === 0 && (
-        <EmptyState className={local.phoneListEmpty}>
-          Adicione um número para que os clientes saibam como falar com a loja.
-        </EmptyState>
-      )}
+      {phones.length === 0 && <PhoneListEmptyState />}
 
       {phones.length > 0 && (
         <ul className={local.phones}>

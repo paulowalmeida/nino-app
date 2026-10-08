@@ -13,7 +13,6 @@
   @apply border-t border-border py-3;
 }
 
-
 .number {
   @apply h-auto min-w-0 justify-start truncate rounded-none bg-transparent p-0;
   @apply text-left text-sm font-semibold text-fg-default;
@@ -54,10 +53,6 @@
 
 .phonesMeta {
   @apply shrink-0 tabular-nums;
-}
-
-.phoneListEmpty {
-  @apply border-t border-border py-6;
 }
 
 .phoneListInput {

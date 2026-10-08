@@ -1,0 +1,10 @@
+@reference "@nino/ds/globals.css";
+
+.phoneListEmptyState {
+  @apply flex flex-col gap-8 border-t border-border py-6;
+}
+
+.capabilities {
+  @apply mt-4 grid list-none grid-cols-1 gap-x-8 gap-y-5 p-0;
+  @apply md:grid-cols-3;
+}

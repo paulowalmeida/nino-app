@@ -1,0 +1,10 @@
+@reference "@nino/ds/globals.css";
+
+.categoriesEmptyState {
+  @apply mx-auto flex w-full max-w-3xl flex-col gap-8 py-8;
+}
+
+.capabilities {
+  @apply mt-4 grid list-none grid-cols-1 gap-x-8 gap-y-5 p-0;
+  @apply md:grid-cols-2;
+}

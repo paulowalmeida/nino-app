@@ -42,3 +42,21 @@ export const EMPTY_SERVICE_RULES_DRAFT: ServiceRulesDraft = {
   deliveryMinutes: '0',
   acceptedPaymentMethods: [],
 }
+
+export const PHONE_LIST_CAPABILITIES = [
+  {
+    icon: 'smartphone',
+    title: 'Cadastrar números',
+    description: 'Use o campo acima para adicionar o telefone da loja.',
+  },
+  {
+    icon: 'phone',
+    title: 'Ter mais de um contato',
+    description: 'Cadastre quantos números a loja precisar.',
+  },
+  {
+    icon: 'edit',
+    title: 'Editar ou remover',
+    description: 'Troque ou tire um número quando ele mudar.',
+  },
+] as const
