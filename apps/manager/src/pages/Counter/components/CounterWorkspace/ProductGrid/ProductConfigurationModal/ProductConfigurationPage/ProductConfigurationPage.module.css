@@ -51,16 +51,25 @@
 }
 
 @media (min-width: 426px) {
+  .productConfigurationPage {
+    @apply h-[75vh] flex-none bg-transparent;
+  }
+
   .back {
     display: none;
   }
 
   .productConfigurationPageGrid {
-    @apply grid h-[26rem] grid-cols-[11rem_1fr] gap-x-6 overflow-visible;
+    @apply grid min-h-0 flex-1 grid-cols-2 gap-x-8 overflow-visible;
   }
 
   .productConfigurationPageMedia {
-    @apply aspect-auto min-h-0;
+    @apply aspect-auto min-h-0 bg-transparent;
+  }
+
+  .heroImageWrapper,
+  .heroImage {
+    @apply rounded-2 object-contain;
   }
 
   .productConfigurationPageDetails {

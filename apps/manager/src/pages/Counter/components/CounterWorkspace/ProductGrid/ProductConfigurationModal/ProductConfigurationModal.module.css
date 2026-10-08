@@ -30,12 +30,15 @@
   .modal {
     @apply h-auto rounded-2;
     max-height: calc(100dvh - 2rem);
-    width: min(42rem, calc(100vw - 2rem));
+    width: min(64rem, calc(100vw - 2rem));
+  }
+
+  .productConfigurationModalBody {
+    @apply flex-none overflow-visible px-6 py-5;
   }
 
   .productConfigurationModalFooter {
-    @apply border-0 bg-transparent px-6 pb-6 pt-4;
-    padding-bottom: 1.5rem;
+    @apply border-0 bg-transparent px-0 pb-0 pt-4;
   }
 }
 
