@@ -8,6 +8,10 @@ import type { MenuSection } from '@shared/types/product/menu-section'
 import { ProductGrid } from './ProductGrid'
 import { productGridPickedLines } from './ProductGrid.mock'
 
+vi.mock('./CounterEmptyMenu/CounterEmptyMenu', () => ({
+  CounterEmptyMenu: () => <p>empty menu</p>,
+}))
+
 vi.mock('@shared/components/CategoryChips/CategoryChips', () => ({
   CategoryChips: ({ onChange }: { onChange: (id: string) => void }) => (
     <button onClick={() => onChange('drinks')}>category</button>
@@ -98,6 +102,7 @@ describe(ProductGrid.name, () => {
     facadeState.isSuccess = true
     rerender(<ProductGrid />)
     expect(screen.queryByText(/cardápio está vazio/)).not.toBeInTheDocument()
+    expect(screen.getByText('empty menu')).toBeInTheDocument()
   })
 
   it('keeps the skeleton until the menu query is complete', () => {

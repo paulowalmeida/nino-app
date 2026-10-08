@@ -60,3 +60,26 @@ export const COUNTER_STEP_COPY: Record<
   payment: { title: 'Pagamento', hint: 'Como o cliente vai pagar' },
   review: { title: 'Revisão', hint: 'Confira e feche a venda' },
 }
+
+export const COUNTER_CAPABILITIES = [
+  {
+    icon: 'shopping-bag',
+    title: 'Lançar pedidos',
+    description: 'Toque nos produtos para montar o pedido do cliente.',
+  },
+  {
+    icon: 'truck',
+    title: 'Escolher o destino',
+    description: 'Retirada, consumo no local ou entrega com taxa por zona.',
+  },
+  {
+    icon: 'banknote',
+    title: 'Receber na hora',
+    description: 'Dinheiro com troco, Pix ou cartão, direto no balcão.',
+  },
+  {
+    icon: 'clipboard',
+    title: 'Entregar o comprovante',
+    description: 'Baixe o recibo da venda assim que o pedido fechar.',
+  },
+] as const

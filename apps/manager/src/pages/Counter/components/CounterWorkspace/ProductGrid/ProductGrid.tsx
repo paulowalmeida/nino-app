@@ -13,6 +13,7 @@ import { useCounterFacade } from '@pages/Counter/facades/useCounterFacade/useCou
 import { CategoryChips } from '@shared/components/CategoryChips/CategoryChips'
 import type { MenuItem } from '@shared/types/product/menu-item'
 
+import { CounterEmptyMenu } from './CounterEmptyMenu/CounterEmptyMenu'
 import { ProductCard } from './ProductCard/ProductCard'
 import { ProductConfigurationModal } from './ProductConfigurationModal/ProductConfigurationModal'
 import { ProductPreviewModal } from './ProductPreviewModal/ProductPreviewModal'
@@ -114,6 +115,18 @@ export const ProductGrid = () => {
             </Box>
           ))}
         </Box>
+      </Box>
+    )
+  }
+
+  const hasActiveItems = sections.some(({ items }) =>
+    items.some(({ isActive }) => isActive)
+  )
+
+  if (!hasActiveItems) {
+    return (
+      <Box className={styles.feedback}>
+        <CounterEmptyMenu />
       </Box>
     )
   }
