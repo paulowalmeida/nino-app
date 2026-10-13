@@ -10,6 +10,17 @@ export default defineConfig({
   /* O design system aponta diretamente para TypeScript do workspace. Se ele
    * for pré-otimizado, o dev server mantém uma cópia em cache e ignora HMR. */
   optimizeDeps: {
+    // The default scan starts at index.html and does not reach route modules
+    // loaded through React Router's `lazy`. Scanning application sources keeps
+    // Vite from discovering a dependency during the first route navigation,
+    // which otherwise invalidates that import and reloads the current page.
+    entries: [
+      'index.html',
+      'src/**/*.{ts,tsx}',
+      '!src/**/*.test.{ts,tsx}',
+      '!src/**/*.mock.{ts,tsx}',
+      '!src/test/**',
+    ],
     exclude: ['@nino/ds'],
     // Leaflet is imported by a lazy route; pre-bundle it before the first
     // sidebar navigation so Vite does not discover it during route loading.
