@@ -5,6 +5,7 @@ import { Box } from '@nino/ds/components/Box'
 import { Button } from '@nino/ds/components/Button'
 import { Heading } from '@nino/ds/components/Heading'
 import { Text } from '@nino/ds/components/Text'
+import { recoveryTarget } from '@router/pending-navigation'
 
 import styles from './RouteErrorBoundary.module.css'
 
@@ -42,7 +43,7 @@ export const RouteErrorBoundary = () => {
     if (Date.now() - lastReload < RELOAD_COOLDOWN_MS) return
 
     rememberReload()
-    window.location.reload()
+    window.location.assign(recoveryTarget(window.location.href))
   }, [isStaleChunk])
 
   if (isStaleChunk) return null
