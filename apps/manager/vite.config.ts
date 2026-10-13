@@ -1,9 +1,25 @@
 import tailwindcss from '@tailwindcss/vite'
 import react from '@vitejs/plugin-react'
+import { readdirSync, readFileSync } from 'node:fs'
 import { resolve } from 'node:path'
 import { defineConfig } from 'vite'
 
 const API = 'https://api-dev.nino.delivery'
+
+const DS_SOURCE = resolve(__dirname, '../../packages/ds/src')
+const BARE_IMPORT = /from '((?:@[\w-]+\/)?[\w-][^']*)'/g
+const DS_INTERNAL = /^(react|@ds\/|@nino\/|@storybook\/|@testing-library\/|vitest)/
+
+const dsDependencies = () => {
+  const sources = readdirSync(DS_SOURCE, { recursive: true, encoding: 'utf8' })
+    .filter((file) => /\.tsx?$/.test(file) && !/\.(test|stories|mock)\./.test(file))
+  const imports = sources.flatMap((file) =>
+    [...readFileSync(resolve(DS_SOURCE, file), 'utf8').matchAll(BARE_IMPORT)].map(
+      ([, specifier]) => specifier
+    )
+  )
+  return [...new Set(imports)].filter((specifier) => !DS_INTERNAL.test(specifier))
+}
 
 export default defineConfig({
   plugins: [react(), tailwindcss()],
@@ -11,9 +27,10 @@ export default defineConfig({
    * for pré-otimizado, o dev server mantém uma cópia em cache e ignora HMR. */
   optimizeDeps: {
     exclude: ['@nino/ds'],
-    // Leaflet is imported by a lazy route; pre-bundle it before the first
-    // sidebar navigation so Vite does not discover it during route loading.
-    include: ['leaflet'],
+    // WHY: excluir o DS tira as dependências dele do scan; o Vite só descobre
+    // `@ark-ui/react/*` quando a rota lazy carrega, reotimiza e recarrega a
+    // página antes da navegação concluir.
+    include: ['leaflet', ...dsDependencies()],
   },
   /**
    * O nome gerado carrega o arquivo de origem (`Alert-module__title___a1b2c`)
