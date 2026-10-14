@@ -16,7 +16,9 @@ plugins.md
 .vscode/
 .vercel
 .env*
-.claude
+.claude/*
+!.claude/settings.json
+!.claude/skills
 
 # saída do build do Storybook
 storybook-static
