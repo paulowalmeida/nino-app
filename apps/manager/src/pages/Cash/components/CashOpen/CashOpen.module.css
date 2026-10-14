@@ -1,9 +1,9 @@
 @reference "@nino/ds/globals.css";
 
 .open {
-  @apply max-w-md gap-3 rounded-4 border border-border bg-surface-raised p-5;
+  @apply max-w-md gap-3;
 }
 
 .confirm {
-  @apply mt-1;
+  @apply mt-1 self-start;
 }

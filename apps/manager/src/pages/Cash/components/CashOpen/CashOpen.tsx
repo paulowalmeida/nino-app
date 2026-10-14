@@ -2,6 +2,7 @@ import { useState } from 'react'
 
 import { Box } from '@nino/ds/components/Box'
 import { Button } from '@nino/ds/components/Button'
+import { FormField } from '@nino/ds/components/FormField'
 import { Heading } from '@nino/ds/components/Heading'
 import { Input } from '@nino/ds/components/Input'
 import { Text } from '@nino/ds/components/Text'
@@ -24,13 +25,14 @@ export const CashOpen = () => {
         Informe quanto de troco fica na gaveta para começar o dia. Sem caixa
         aberto o balcão continua vendendo, só não entra na conferência.
       </Text>
-      <Input
-        inputMode="decimal"
-        placeholder="0,00"
-        aria-label="Fundo de troco"
-        value={openingFloat}
-        onChange={(event) => setOpeningFloat(maskMoney(event.target.value))}
-      />
+      <FormField label="Fundo de troco">
+        <Input
+          inputMode="decimal"
+          placeholder="0,00"
+          value={openingFloat}
+          onChange={(event) => setOpeningFloat(maskMoney(event.target.value))}
+        />
+      </FormField>
       <Button
         loading={isOpening}
         className={styles.confirm}
