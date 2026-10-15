@@ -1,6 +1,5 @@
 import { Box } from '@nino/ds/components/Box'
 import { Button } from '@nino/ds/components/Button'
-import { Icon } from '@nino/ds/components/Icon'
 import { Text } from '@nino/ds/components/Text'
 import { useCounterFacade } from '@pages/Counter/facades/useCounterFacade/useCounterFacade'
 import { brl } from '@shared/utils/money/money'

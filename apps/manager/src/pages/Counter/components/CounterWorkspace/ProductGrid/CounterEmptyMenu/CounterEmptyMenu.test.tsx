@@ -1,5 +1,6 @@
-import { render, screen } from '@testing-library/react'
 import { MemoryRouter } from 'react-router'
+
+import { render, screen } from '@testing-library/react'
 import { describe, expect, it } from 'vitest'
 
 import { COUNTER_CAPABILITIES } from '@pages/Counter/constants/counter.constants'
