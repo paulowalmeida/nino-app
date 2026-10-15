@@ -1,5 +1,6 @@
 import { Box } from '@nino/ds/components/Box'
 import { Skeleton } from '@nino/ds/components/Skeleton'
+import { Text } from '@nino/ds/components/Text'
 
 import styles from './SubscriptionSkeleton.module.css'
 
@@ -7,9 +8,14 @@ const SUBSCRIPTION_GHOST_FACTS = ['first', 'second', 'third', 'fourth', 'fifth']
 
 export const SubscriptionSkeleton = () => (
   <>
-    <p role="status" aria-label="Carregando assinatura" className="sr-only">
+    <Text
+      as="p"
+      role="status"
+      aria-label="Carregando assinatura"
+      className="sr-only"
+    >
       Carregando assinatura
-    </p>
+    </Text>
 
     <Box className={styles.subscription}>
       <Box

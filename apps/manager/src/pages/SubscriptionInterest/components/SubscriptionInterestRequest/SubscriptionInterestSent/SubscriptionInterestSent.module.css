@@ -1,0 +1,5 @@
+@reference "@nino/ds/globals.css";
+
+.subscriptionInterestSent {
+  @apply max-w-2xl;
+}

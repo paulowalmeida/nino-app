@@ -69,6 +69,24 @@ describe(SubscriptionActions.name, () => {
     expect(onChangePlan).not.toHaveBeenCalled()
   })
 
+  it('dismisses the confirmation with Escape', async () => {
+    // Arrange
+    const onChangePlan = vi.fn().mockResolvedValue(undefined)
+    renderActions(onChangePlan)
+    await userEvent.click(
+      screen.getByRole('button', { name: 'Trocar para o plano Padrão' })
+    )
+
+    // Act
+    await userEvent.keyboard('{Escape}')
+
+    // Assert
+    await waitFor(() =>
+      expect(screen.queryByRole('dialog')).not.toBeInTheDocument()
+    )
+    expect(onChangePlan).not.toHaveBeenCalled()
+  })
+
   it('confirms cancellation and keeps the dialog open when it fails', async () => {
     const onCancel = vi.fn().mockRejectedValue(new Error('request failed'))
     renderActions(undefined, onCancel)

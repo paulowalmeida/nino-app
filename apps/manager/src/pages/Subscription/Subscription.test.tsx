@@ -1,12 +1,14 @@
-import { render, screen } from '@testing-library/react'
+import { fireEvent, render, screen } from '@testing-library/react'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 
 import { useSubscriptionFacade } from './facades/useSubscriptionFacade/useSubscriptionFacade'
 import { Subscription } from './Subscription'
 import { subscriptionPageMock } from './Subscription.mock'
 
+const navigate = vi.hoisted(() => vi.fn())
+
 vi.mock('react-router', () => ({
-  useNavigate: () => vi.fn(),
+  useNavigate: () => navigate,
 }))
 
 vi.mock(
@@ -14,7 +16,17 @@ vi.mock(
 )
 vi.mock(
   '@pages/Subscription/components/SubscriptionCard/SubscriptionCard',
-  () => ({ SubscriptionCard: () => <div>subscription card</div> })
+  () => ({
+    SubscriptionCard: ({
+      onRequestInterest,
+    }: {
+      onRequestInterest: () => void
+    }) => (
+      <button type="button" onClick={onRequestInterest}>
+        subscription card
+      </button>
+    ),
+  })
 )
 vi.mock(
   '@pages/Subscription/skeletons/SubscriptionSkeleton/SubscriptionSkeleton',
@@ -94,5 +106,19 @@ describe('Subscription', () => {
     expect(screen.getByRole('alert')).toHaveTextContent(
       'Carregando planos disponíveis...'
     )
+  })
+
+  it('opens the Rede plan request from the card', () => {
+    // Arrange
+    facadeWith({
+      subscription: { plan: { name: subscriptionPageMock.planName } },
+    })
+    render(<Subscription />)
+
+    // Act
+    fireEvent.click(screen.getByText('subscription card'))
+
+    // Assert
+    expect(navigate).toHaveBeenCalledWith(subscriptionPageMock.redeRequestPath)
   })
 })

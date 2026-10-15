@@ -1,4 +1,5 @@
 import { type FormEvent, useState } from 'react'
+import { useNavigate } from 'react-router'
 
 import { Alert } from '@nino/ds/components/Alert'
 import { Box } from '@nino/ds/components/Box'
@@ -14,6 +15,8 @@ import type {
   CreateSubscriptionInterestInput,
   SubscriptionInterestContactMethod,
 } from '@shared/types/profile/subscription-interest'
+
+import { useSubscriptionInterestFacade } from '../../../facades/useSubscriptionInterestFacade/useSubscriptionInterestFacade'
 
 import styles from './SubscriptionInterestForm.module.css'
 
@@ -31,11 +34,7 @@ type InterestField = keyof InterestDraft
 type InterestErrors = Partial<Record<InterestField, string>>
 
 type SubscriptionInterestFormProps = {
-  requestInterest: (input: CreateSubscriptionInterestInput) => Promise<unknown>
-  isRequestingInterest: boolean
-  isRequestInterestError: boolean
-  onSuccess: () => void
-  onCancel: () => void
+  onInterestSent: () => void
 }
 
 const initialDraft: InterestDraft = {
@@ -57,12 +56,11 @@ const contactOptions = [
 const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
 export const SubscriptionInterestForm = ({
-  requestInterest,
-  isRequestingInterest,
-  isRequestInterestError,
-  onSuccess,
-  onCancel,
+  onInterestSent,
 }: SubscriptionInterestFormProps) => {
+  const navigate = useNavigate()
+  const { requestInterest, isRequestingInterest, isRequestInterestError } =
+    useSubscriptionInterestFacade()
   const [draft, setDraft] = useState(initialDraft)
   const [errors, setErrors] = useState<InterestErrors>({})
 
@@ -109,23 +107,18 @@ export const SubscriptionInterestForm = ({
     }
   }
 
-  const submit = async (event: FormEvent<HTMLFormElement>) => {
+  const submit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
     const input = validate()
     if (!input) return
 
-    try {
-      await requestInterest(input)
-      onSuccess()
-    } catch {
-      // The mutation state exposes the error and the draft stays intact.
-    }
+    requestInterest(input, { onSuccess: onInterestSent })
   }
 
   return (
     <form
       className={styles.subscriptionInterestForm}
-      onSubmit={(event) => void submit(event)}
+      onSubmit={submit}
       noValidate
     >
       <Box gap={6}>
@@ -164,6 +157,7 @@ export const SubscriptionInterestForm = ({
               }
             >
               <PhoneInput
+                aria-label="Telefone"
                 value={draft.contactPhone}
                 autoComplete="tel"
                 onChange={(event) => change('contactPhone', event.target.value)}
@@ -239,7 +233,11 @@ export const SubscriptionInterestForm = ({
           justify={{ tablet: 'end' }}
           gap={3}
         >
-          <Button type="button" variant="ghost" onClick={onCancel}>
+          <Button
+            type="button"
+            variant="ghost"
+            onClick={() => void navigate('..', { relative: 'path' })}
+          >
             Voltar
           </Button>
           <Button type="submit" loading={isRequestingInterest}>

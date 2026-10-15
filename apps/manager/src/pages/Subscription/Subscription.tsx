@@ -2,9 +2,9 @@ import { useNavigate } from 'react-router'
 
 import { Alert } from '@nino/ds/components/Alert'
 import { Box } from '@nino/ds/components/Box'
-import { Header } from '@nino/ds/components/Header'
 
 import { SubscriptionCard } from './components/SubscriptionCard/SubscriptionCard'
+import { SubscriptionHeader } from './components/SubscriptionHeader/SubscriptionHeader'
 import { useSubscriptionFacade } from './facades/useSubscriptionFacade/useSubscriptionFacade'
 import { SubscriptionSkeleton } from './skeletons/SubscriptionSkeleton/SubscriptionSkeleton'
 
@@ -27,12 +27,7 @@ export const Subscription = () => {
 
   return (
     <Box className={styles.subscriptionPage}>
-      <Header
-        mb={{ mobile: 5, desktop: 8 }}
-        title="Assinatura e plano"
-        accent="plano"
-        description="A assinatura é da empresa e vale para todas as unidades."
-      />
+      <SubscriptionHeader />
 
       {isPending && <SubscriptionSkeleton />}
 
