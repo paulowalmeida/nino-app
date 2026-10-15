@@ -4,6 +4,7 @@ import type { MenuItemModifier } from '@shared/types/product/menu-item-modifier'
 import { ProductChoiceHeader } from './ProductChoiceHeader/ProductChoiceHeader'
 import { ProductChoiceMultiple } from './ProductChoiceMultiple/ProductChoiceMultiple'
 import { ProductChoiceSingle } from './ProductChoiceSingle/ProductChoiceSingle'
+
 import styles from './ProductChoiceGroup.module.css'
 
 type ProductChoiceGroupProps = {
