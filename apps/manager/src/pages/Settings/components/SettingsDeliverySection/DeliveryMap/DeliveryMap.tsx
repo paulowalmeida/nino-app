@@ -1,14 +1,16 @@
-import { useEffect, useMemo, useRef } from 'react'
+import { useMemo, useState } from 'react'
 
-import L from 'leaflet'
+import { APIProvider, Circle, Map, Marker } from '@vis.gl/react-google-maps'
 
 import { Box } from '@nino/ds/components/Box'
 import { Text } from '@nino/ds/components/Text'
+import { readColorToken } from '@pages/Settings/utils/readColorToken/readColorToken'
 import type { DeliveryZone } from '@shared/types/settings/delivery-zone'
 import type { UnitMapLocation } from '@shared/types/store/unit-map-location'
 
+import { FitZoneBounds } from './FitZoneBounds/FitZoneBounds'
+
 import local from './DeliveryMap.module.css'
-import 'leaflet/dist/leaflet.css'
 
 type DeliveryMapProps = {
   zones: DeliveryZone[]
@@ -18,6 +20,30 @@ type DeliveryMapProps = {
 }
 
 const MAP_ZOOM = 13
+const METERS_PER_KM = 1000
+const MINIMUM_FIT_RADIUS_KM = 1
+
+const ZONE_RING_STYLE = {
+  focused: { strokeWeight: 3, fillOpacity: 0.2 },
+  active: { strokeWeight: 2, fillOpacity: 0.1 },
+  inactive: { strokeWeight: 1, fillOpacity: 0.03 },
+}
+
+const toZoneRingState = (
+  zone: DeliveryZone,
+  focusedZoneId: string | null
+): keyof typeof ZONE_RING_STYLE => {
+  if (zone.id === focusedZoneId) return 'focused'
+  if (zone.isActive) return 'active'
+  return 'inactive'
+}
+
+const readMapColors = () => ({
+  brand: readColorToken('--color-brand'),
+  unitOutline: readColorToken('--color-fg-inverse'),
+  preview: readColorToken('--color-accent-clay'),
+  inactive: readColorToken('--color-fg-faint'),
+})
 
 export const DeliveryMap = ({
   zones,
@@ -25,81 +51,25 @@ export const DeliveryMap = ({
   previewKm = null,
   focusedZoneId = null,
 }: DeliveryMapProps) => {
-  const mapElement = useRef<HTMLDivElement>(null)
-  const map = useRef<L.Map | null>(null)
-  const layers = useRef<L.LayerGroup | null>(null)
-  const center = useMemo<L.LatLngExpression | null>(
-    () => (coordinates ? [coordinates.latitude, coordinates.longitude] : null),
+  const mapsApiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY as
+    | string
+    | undefined
+  const [mapColors] = useState(readMapColors)
+  const center = useMemo<google.maps.LatLngLiteral | null>(
+    () =>
+      coordinates
+        ? { lat: coordinates.latitude, lng: coordinates.longitude }
+        : null,
     [coordinates]
   )
-
-  useEffect(() => {
-    if (!mapElement.current || map.current || !center) return
-
-    map.current = L.map(mapElement.current, {
-      center,
-      zoom: MAP_ZOOM,
-      zoomControl: true,
-    })
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution: '&copy; OpenStreetMap contributors',
-    }).addTo(map.current)
-    layers.current = L.layerGroup().addTo(map.current)
-
-    return () => {
-      map.current?.remove()
-      map.current = null
-    }
-  }, [center])
-
-  useEffect(() => {
-    if (!map.current || !layers.current || !center) return
-    const layerGroup = layers.current
-    layerGroup.clearLayers()
-
-    L.circleMarker(center, {
-      radius: 7,
-      weight: 3,
-      fillOpacity: 1,
-      className: local.unitDot,
-    })
-      .bindTooltip('Unidade', { direction: 'top' })
-      .addTo(layerGroup)
-
-    zones.forEach((zone) => {
-      const isFocused = focusedZoneId === zone.id
-      L.circle(center, {
-        radius: zone.maxRadiusKm * 1000,
-        weight: isFocused ? 3 : zone.isActive ? 2 : 1,
-        fillOpacity: isFocused ? 0.2 : zone.isActive ? 0.1 : 0.03,
-        dashArray: zone.isActive ? undefined : '6 6',
-        className: zone.isActive ? local.zoneRing : local.zoneRingOff,
-      })
-        .bindTooltip(`De ${zone.minRadiusKm} até ${zone.maxRadiusKm} km`)
-        .addTo(layerGroup)
-    })
-
-    if (previewKm) {
-      L.circle(center, {
-        radius: previewKm * 1000,
-        weight: 2,
-        fillOpacity: 0.06,
-        dashArray: '4 6',
-        className: local.previewRing,
-      })
-        .bindTooltip(`Nova faixa: até ${previewKm} km`)
-        .addTo(layerGroup)
-    }
-
-    const outerKm = Math.max(
-      previewKm ?? 0,
-      ...zones.map((zone) => zone.maxRadiusKm),
-      1
-    )
-    map.current.fitBounds(L.latLng(center).toBounds(outerKm * 1000), {
-      padding: [16, 16],
-    })
-  }, [center, zones, previewKm, focusedZoneId])
+  const outerRadiusKm = Math.max(
+    previewKm ?? 0,
+    ...zones.map((zone) => zone.maxRadiusKm),
+    MINIMUM_FIT_RADIUS_KM
+  )
+  const unavailableMessage = coordinates
+    ? 'O mapa não está disponível no momento.'
+    : 'Não foi possível localizar o endereço da unidade. O mapa não está disponível.'
 
   return (
     <Box className={local.deliveryMapWrapper}>
@@ -109,20 +79,71 @@ export const DeliveryMap = ({
         </Text>
       </Box>
 
-      {center ? (
-        <Box className={local.frame}>
-          <div
-            ref={mapElement}
-            className={local.map}
-            role="img"
-            aria-label="Mapa das áreas de entrega"
-          />
+      {coordinates && center && mapsApiKey ? (
+        <Box
+          className={local.frame}
+          role="img"
+          aria-label="Mapa das áreas de entrega"
+        >
+          <APIProvider apiKey={mapsApiKey}>
+            <Map
+              className={local.map}
+              defaultCenter={center}
+              defaultZoom={MAP_ZOOM}
+              disableDefaultUI
+              zoomControl
+              gestureHandling="cooperative"
+            >
+              <FitZoneBounds center={coordinates} radiusKm={outerRadiusKm} />
+
+              {zones.map((zone) => {
+                const zoneColor = zone.isActive
+                  ? mapColors.brand
+                  : mapColors.inactive
+                return (
+                  <Circle
+                    key={zone.id}
+                    center={center}
+                    radius={zone.maxRadiusKm * METERS_PER_KM}
+                    strokeColor={zoneColor}
+                    fillColor={zoneColor}
+                    clickable={false}
+                    {...ZONE_RING_STYLE[toZoneRingState(zone, focusedZoneId)]}
+                  />
+                )
+              })}
+
+              {previewKm ? (
+                <Circle
+                  center={center}
+                  radius={previewKm * METERS_PER_KM}
+                  strokeColor={mapColors.preview}
+                  fillColor={mapColors.preview}
+                  strokeWeight={2}
+                  fillOpacity={0.06}
+                  clickable={false}
+                />
+              ) : null}
+
+              <Marker
+                position={center}
+                title="Unidade"
+                icon={{
+                  path: google.maps.SymbolPath.CIRCLE,
+                  scale: 7,
+                  fillColor: mapColors.brand,
+                  fillOpacity: 1,
+                  strokeColor: mapColors.unitOutline,
+                  strokeWeight: 3,
+                }}
+              />
+            </Map>
+          </APIProvider>
         </Box>
       ) : (
         <Box className={local.error}>
           <Text size="sm" color="subtle">
-            Não foi possível localizar o endereço da unidade. O mapa não está
-            disponível.
+            {unavailableMessage}
           </Text>
         </Box>
       )}

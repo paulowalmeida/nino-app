@@ -30,7 +30,7 @@ export default defineConfig({
     // WHY: excluir o DS tira as dependências dele do scan; o Vite só descobre
     // `@ark-ui/react/*` quando a rota lazy carrega, reotimiza e recarrega a
     // página antes da navegação concluir.
-    include: ['leaflet', ...dsDependencies()],
+    include: ['@vis.gl/react-google-maps', ...dsDependencies()],
   },
   /**
    * O nome gerado carrega o arquivo de origem (`Alert-module__title___a1b2c`)
