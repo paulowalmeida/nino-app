@@ -1,0 +1,29 @@
+@reference "@nino/ds/globals.css";
+
+.addressConfirm {
+  @apply min-h-0 flex-1;
+}
+
+.frame {
+  @apply overflow-hidden rounded-xl border border-border;
+}
+
+.map {
+  @apply block h-64 w-full border-0 sm:h-80;
+}
+
+.addressSummary {
+  @apply items-start;
+}
+
+.addressPin {
+  @apply mt-0.5 shrink-0 text-brand;
+}
+
+.addressText {
+  @apply min-w-0 flex-1;
+}
+
+.actions {
+  @apply justify-end;
+}

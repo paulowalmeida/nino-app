@@ -176,8 +176,66 @@ describe('DeliveryRecipientFields', () => {
     expect(screen.getByText(/Nenhum endereço encontrado/)).toBeInTheDocument()
   })
 
-  it('resolves the full address once a prediction is selected', async () => {
-    // Arrange: the search came back with one candidate.
+  it('shows the picked address on the map before filling the fields', async () => {
+    // Arrange
+    const onChange = vi.fn()
+    const onAddressLookupRequested = vi.fn()
+    render(
+      <DeliveryRecipientFields
+        value={typedAddress}
+        addressSuggestions={[addressPredictionMock]}
+        isSearchingAddress={false}
+        onChange={onChange}
+        resolveSelectedAddress={vi
+          .fn()
+          .mockResolvedValue(addressSearchResultMock)}
+        isResolvingSelectedAddress={false}
+        addressLookupRequested
+        onAddressLookupRequested={onAddressLookupRequested}
+      />
+    )
+
+    // Act
+    fireEvent.click(screen.getByText(addressPredictionMock.mainText))
+
+    // Assert
+    expect(
+      await screen.findByRole('button', { name: 'Confirmar endereço' })
+    ).toBeInTheDocument()
+    expect(onChange).not.toHaveBeenCalled()
+    expect(onAddressLookupRequested).not.toHaveBeenCalled()
+  })
+
+  it('goes back to the candidates when the pin is wrong', async () => {
+    // Arrange
+    render(
+      <DeliveryRecipientFields
+        value={typedAddress}
+        addressSuggestions={[addressPredictionMock]}
+        isSearchingAddress={false}
+        onChange={vi.fn()}
+        resolveSelectedAddress={vi
+          .fn()
+          .mockResolvedValue(addressSearchResultMock)}
+        isResolvingSelectedAddress={false}
+        addressLookupRequested
+      />
+    )
+    fireEvent.click(screen.getByText(addressPredictionMock.mainText))
+
+    // Act
+    fireEvent.click(
+      await screen.findByRole('button', { name: 'Escolher outro' })
+    )
+
+    // Assert
+    expect(
+      screen.getByText(addressPredictionMock.mainText)
+    ).toBeInTheDocument()
+  })
+
+  it('resolves the full address once the pin is confirmed', async () => {
+    // Arrange
     const onChange = vi.fn()
     const onAddressLookupRequested = vi.fn()
     const resolveSelectedAddress = vi
@@ -196,10 +254,13 @@ describe('DeliveryRecipientFields', () => {
       />
     )
 
-    // Act: pick the candidate.
+    // Act
     fireEvent.click(screen.getByText(addressPredictionMock.mainText))
+    fireEvent.click(
+      await screen.findByRole('button', { name: 'Confirmar endereço' })
+    )
 
-    // Assert: the details call populated the address and closed the dialog.
+    // Assert
     await waitFor(() =>
       expect(resolveSelectedAddress).toHaveBeenCalledWith(
         addressPredictionMock.placeId
@@ -224,7 +285,7 @@ describe('DeliveryRecipientFields', () => {
   })
 
   it('warns when the store cannot deliver to the picked address', async () => {
-    // Arrange: the backend rejects this specific address as out of range.
+    // Arrange
     const resolveSelectedAddress = vi.fn().mockRejectedValue(new Error('422'))
     render(
       <DeliveryRecipientFields
@@ -238,10 +299,10 @@ describe('DeliveryRecipientFields', () => {
       />
     )
 
-    // Act: pick the candidate the store cannot deliver to.
+    // Act
     fireEvent.click(screen.getByText(addressPredictionMock.mainText))
 
-    // Assert: the attendant sees why the address wasn't accepted.
+    // Assert
     await waitFor(() =>
       expect(
         screen.getByText('A loja não entrega nesse endereço.')

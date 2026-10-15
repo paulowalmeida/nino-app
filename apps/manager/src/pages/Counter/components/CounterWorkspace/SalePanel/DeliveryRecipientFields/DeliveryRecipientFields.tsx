@@ -16,6 +16,8 @@ import { ADDRESS_LOOKUP_SKELETON_ROWS } from '@pages/Counter/constants/counter.c
 import { AddressFields } from '@shared/components/AddressFields/AddressFields'
 import type { Recipient } from '@shared/types/order/recipient'
 
+import { AddressConfirmMap } from './AddressConfirmMap/AddressConfirmMap'
+
 import styles from './DeliveryRecipientFields.module.css'
 
 type DeliveryRecipientFieldsProps = {
@@ -40,6 +42,8 @@ export const DeliveryRecipientFields = ({
   onAddressLookupRequested,
 }: DeliveryRecipientFieldsProps) => {
   const [selectionError, setSelectionError] = useState<string | null>(null)
+  const [pickedAddress, setPickedAddress] =
+    useState<AddressSearchResult | null>(null)
   const searchedAddress = useRef('')
   const isConfirmingAddress = Boolean(addressLookupRequested)
   const isLoadingAddresses = isSearchingAddress || isResolvingSelectedAddress
@@ -72,24 +76,34 @@ export const DeliveryRecipientFields = ({
 
   const selectPrediction = async (placeId: string) => {
     setSelectionError(null)
-    onAddressLookupRequested?.(false)
     try {
       const address = await resolveSelectedAddress(placeId)
-      onChange({
-        providerId: address.providerId,
-        zipCode: address.zipCode,
-        street: address.street,
-        number: address.number || value.number,
-        neighborhood: address.neighborhood,
-        city: address.city,
-        state: address.state,
-        latitude: address.latitude,
-        longitude: address.longitude,
-      })
-      searchedAddress.current = `${address.street}, ${address.number || value.number}`
+      setPickedAddress({ ...address, number: address.number || value.number })
     } catch {
       setSelectionError('A loja não entrega nesse endereço.')
     }
+  }
+
+  const confirmPickedAddress = (address: AddressSearchResult) => {
+    onChange({
+      providerId: address.providerId,
+      zipCode: address.zipCode,
+      street: address.street,
+      number: address.number,
+      neighborhood: address.neighborhood,
+      city: address.city,
+      state: address.state,
+      latitude: address.latitude,
+      longitude: address.longitude,
+    })
+    searchedAddress.current = `${address.street}, ${address.number}`
+    setPickedAddress(null)
+    onAddressLookupRequested?.(false)
+  }
+
+  const leaveAddressConfirmation = () => {
+    setPickedAddress(null)
+    onAddressLookupRequested?.(false)
   }
 
   const streetField = (
@@ -148,6 +162,16 @@ export const DeliveryRecipientFields = ({
     </Text>
   )
 
+  const confirmationContent = pickedAddress ? (
+    <AddressConfirmMap
+      address={pickedAddress}
+      onConfirm={() => confirmPickedAddress(pickedAddress)}
+      onPickAnother={() => setPickedAddress(null)}
+    />
+  ) : (
+    addressResults
+  )
+
   if (isConfirmingAddress) {
     return (
       <Box direction="column" gap={2} className={styles.confirm}>
@@ -155,7 +179,7 @@ export const DeliveryRecipientFields = ({
           type="button"
           variant="ghost"
           className={styles.confirmBack}
-          onClick={() => onAddressLookupRequested?.(false)}
+          onClick={leaveAddressConfirmation}
         >
           <Icon name="arrow-left" size="sm" />
           Confirme o endereço
@@ -168,7 +192,7 @@ export const DeliveryRecipientFields = ({
             {selectionError}
           </Text>
         )}
-        {addressResults}
+        {confirmationContent}
       </Box>
     )
   }
