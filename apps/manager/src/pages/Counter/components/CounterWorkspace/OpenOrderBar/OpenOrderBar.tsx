@@ -26,9 +26,6 @@ export const OpenOrderBar = () => {
           {brl(total)}
         </Text>
         <kbd className={styles.shortcut}>Enter</kbd>
-        <Box className={styles.hint} aria-hidden="true">
-          <Icon name="arrow-up" size="sm" />
-        </Box>
       </Box>
     </Button>
   )

@@ -59,11 +59,6 @@
   font-variant-numeric: tabular-nums;
 }
 
-.hint {
-  @apply grid size-7 shrink-0 place-items-center rounded-full;
-  @apply bg-brand text-fg-on-brand;
-}
-
 @media (min-width: 768px) {
   .openOrderBarTab {
     @apply inset-x-auto bottom-6 left-1/2 z-content -translate-x-1/2;
