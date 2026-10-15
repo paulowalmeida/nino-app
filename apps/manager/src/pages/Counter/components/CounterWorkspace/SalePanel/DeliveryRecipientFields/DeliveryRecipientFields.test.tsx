@@ -5,6 +5,7 @@ import { DeliveryRecipientFields } from './DeliveryRecipientFields'
 import {
   addressPredictionMock,
   addressSearchResultMock,
+  addressWithoutNumberMock,
   deliveryRecipientMock,
 } from './DeliveryRecipientFields.mock'
 
@@ -308,5 +309,63 @@ describe('DeliveryRecipientFields', () => {
         screen.getByText('A loja não entrega nesse endereço.')
       ).toBeInTheDocument()
     )
+  })
+
+  it('keeps the typed number when the provider returns none', async () => {
+    // Arrange
+    const onChange = vi.fn()
+    render(
+      <DeliveryRecipientFields
+        value={typedAddress}
+        addressSuggestions={[addressPredictionMock]}
+        isSearchingAddress={false}
+        onChange={onChange}
+        resolveSelectedAddress={vi
+          .fn()
+          .mockResolvedValue(addressWithoutNumberMock)}
+        isResolvingSelectedAddress={false}
+        addressLookupRequested
+      />
+    )
+
+    // Act
+    fireEvent.click(screen.getByText(addressPredictionMock.mainText))
+    fireEvent.click(
+      await screen.findByRole('button', { name: 'Confirmar endereço' })
+    )
+
+    // Assert
+    expect(onChange).toHaveBeenCalledWith(
+      expect.objectContaining({ number: typedAddress.number })
+    )
+  })
+
+  it('leaves the confirmation without filling the address', async () => {
+    // Arrange
+    const onChange = vi.fn()
+    const onAddressLookupRequested = vi.fn()
+    render(
+      <DeliveryRecipientFields
+        value={typedAddress}
+        addressSuggestions={[addressPredictionMock]}
+        isSearchingAddress={false}
+        onChange={onChange}
+        resolveSelectedAddress={vi
+          .fn()
+          .mockResolvedValue(addressSearchResultMock)}
+        isResolvingSelectedAddress={false}
+        addressLookupRequested
+        onAddressLookupRequested={onAddressLookupRequested}
+      />
+    )
+    fireEvent.click(screen.getByText(addressPredictionMock.mainText))
+    await screen.findByRole('button', { name: 'Confirmar endereço' })
+
+    // Act
+    fireEvent.click(screen.getByRole('button', { name: /Confirme o endereço/ }))
+
+    // Assert
+    expect(onAddressLookupRequested).toHaveBeenCalledWith(false)
+    expect(onChange).not.toHaveBeenCalled()
   })
 })

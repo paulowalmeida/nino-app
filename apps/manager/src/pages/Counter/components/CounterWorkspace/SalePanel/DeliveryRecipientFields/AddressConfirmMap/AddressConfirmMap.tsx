@@ -23,19 +23,21 @@ export const AddressConfirmMap = ({
   const mapsApiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY as
     | string
     | undefined
-  const mapQuery = new URLSearchParams({
-    key: mapsApiKey ?? '',
-    q: `${address.latitude},${address.longitude}`,
-    zoom: STREET_LEVEL_ZOOM,
-  })
+  const mapUrl = mapsApiKey
+    ? `${GOOGLE_MAPS_EMBED_URL}?${new URLSearchParams({
+        key: mapsApiKey,
+        q: `${address.latitude},${address.longitude}`,
+        zoom: STREET_LEVEL_ZOOM,
+      })}`
+    : null
 
   return (
     <Box direction="column" gap={3} className={styles.addressConfirm}>
-      {mapsApiKey && (
+      {mapUrl && (
         <Box className={styles.frame}>
           <iframe
             title={`Mapa de ${address.street}, ${address.number}`}
-            src={`${GOOGLE_MAPS_EMBED_URL}?${mapQuery}`}
+            src={mapUrl}
             className={styles.map}
             loading="lazy"
             referrerPolicy="strict-origin-when-cross-origin"

@@ -36,3 +36,8 @@ export const addressSearchResultMock = {
   latitude: -1.35,
   longitude: -48.37,
 } satisfies AddressSearchResult
+
+export const addressWithoutNumberMock = {
+  ...addressSearchResultMock,
+  number: '',
+} satisfies AddressSearchResult
