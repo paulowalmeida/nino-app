@@ -69,7 +69,7 @@ describe(SubscriptionActions.name, () => {
     expect(onChangePlan).not.toHaveBeenCalled()
   })
 
-  it('dismisses the confirmation with Escape', async () => {
+  it('dismisses the confirmation from its close button', async () => {
     // Arrange
     const onChangePlan = vi.fn().mockResolvedValue(undefined)
     renderActions(onChangePlan)
@@ -78,7 +78,7 @@ describe(SubscriptionActions.name, () => {
     )
 
     // Act
-    await userEvent.keyboard('{Escape}')
+    await userEvent.click(screen.getByRole('button', { name: 'Fechar' }))
 
     // Assert
     await waitFor(() =>
