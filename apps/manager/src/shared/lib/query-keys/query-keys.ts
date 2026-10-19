@@ -96,6 +96,13 @@ export const queryKeys = {
         ...rangeKey(range),
       ] as const,
   },
+  tabs: {
+    all: (unitId: string) => ['tabs', unitId] as const,
+    list: (unitId: string, statuses: readonly string[]) =>
+      [...queryKeys.tabs.all(unitId), 'list', statuses.join(',')] as const,
+    detail: (unitId: string, tabId: string) =>
+      [...queryKeys.tabs.all(unitId), 'detail', tabId] as const,
+  },
   unit: {
     all: (unitId: string) => ['unit', unitId] as const,
     settings: (unitId: string) =>

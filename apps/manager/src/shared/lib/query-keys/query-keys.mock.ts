@@ -7,3 +7,5 @@ export const queryKeyReportRangeMock = {
   to: '2026-01-31',
 } as const
 export const queryKeyGranularityMock = 'day' as const
+export const queryKeyTabIdMock = 'tab-1'
+export const queryKeyTabStatusesMock = ['OPEN', 'AWAITING_PAYMENT'] as const

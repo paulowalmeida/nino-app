@@ -7,6 +7,8 @@ import {
   queryKeyOtherUnitIdMock,
   queryKeyReportRangeMock,
   queryKeySearchMock,
+  queryKeyTabIdMock,
+  queryKeyTabStatusesMock,
   queryKeyUnitIdMock,
 } from './query-keys.mock'
 
@@ -67,6 +69,18 @@ describe('queryKeys', () => {
         from: 'a',
         to: 'b:c',
       })
+    )
+  })
+
+  it('scopes tab lists by unit and every status filter, and details by tab', () => {
+    expect(
+      queryKeys.tabs.list(queryKeyUnitIdMock, queryKeyTabStatusesMock)
+    ).toEqual(['tabs', queryKeyUnitIdMock, 'list', 'OPEN,AWAITING_PAYMENT'])
+    expect(queryKeys.tabs.list(queryKeyUnitIdMock, ['FINALIZED'])).not.toEqual(
+      queryKeys.tabs.list(queryKeyUnitIdMock, queryKeyTabStatusesMock)
+    )
+    expect(queryKeys.tabs.detail(queryKeyUnitIdMock, queryKeyTabIdMock)).toEqual(
+      ['tabs', queryKeyUnitIdMock, 'detail', queryKeyTabIdMock]
     )
   })
 })
