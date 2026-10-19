@@ -1,59 +1,117 @@
+import { MemoryRouter, Route, Routes } from 'react-router'
+
 import { renderHook } from '@testing-library/react'
 import { describe, expect, it, vi } from 'vitest'
 
-import { useTableTabItemCancellation } from '@pages/TableTabDetail/hooks/useTableTabItemCancellation/useTableTabItemCancellation'
-import { useOrders } from '@shared/hooks/order/useOrders/useOrders'
+import { useTabDetail } from '@pages/TableTabDetail/hooks/useTabDetail/useTabDetail'
+import { useTabItemCommands } from '@pages/TableTabDetail/hooks/useTabItemCommands/useTabItemCommands'
+import { useTabPermissions } from '@pages/TableTabDetail/hooks/useTabPermissions/useTabPermissions'
+import { useTabTransitions } from '@pages/TableTabDetail/hooks/useTabTransitions/useTabTransitions'
+import { useMenu } from '@shared/hooks/product/useMenu/useMenu'
 import { useCurrentUnit } from '@shared/hooks/session/useCurrentUnit/useCurrentUnit'
 
 import { useTableTabDetailFacade } from './useTableTabDetailFacade'
 import { tableTabDetailFacadeMock } from './useTableTabDetailFacade.mock'
 
-vi.mock('react-router', () => ({ useParams: () => ({ tabId: 'tab-1' }) }))
-vi.mock('@shared/hooks/order/useOrders/useOrders')
 vi.mock('@shared/hooks/session/useCurrentUnit/useCurrentUnit')
-vi.mock(
-  '@pages/TableTabDetail/hooks/useTableTabItemCancellation/useTableTabItemCancellation'
-)
+vi.mock('@shared/hooks/product/useMenu/useMenu')
+vi.mock('@pages/TableTabDetail/hooks/useTabDetail/useTabDetail')
+vi.mock('@pages/TableTabDetail/hooks/useTabItemCommands/useTabItemCommands')
+vi.mock('@pages/TableTabDetail/hooks/useTabTransitions/useTabTransitions')
+vi.mock('@pages/TableTabDetail/hooks/useTabPermissions/useTabPermissions')
 
-describe(useTableTabDetailFacade.name, () => {
-  it('composes the detail query and item cancellation command', () => {
-    vi.mocked(useCurrentUnit).mockReturnValue({
-      unitId: 'unit-1',
-      unitName: 'Padoca do Bairro',
-      unitSlug: 'padoca-do-bairro',
-      companyId: 'company-1',
-      companyName: 'Padoca do Bairro',
-      role: 'UNIT_OWNER',
-      isCurrent: true,
+const mockHooks = (unit: { unitId: string } | null) => {
+  const commands = {
+    submitAddItem: vi.fn(),
+    submitCancelItem: vi.fn(),
+    submitClose: vi.fn(),
+    submitReopen: vi.fn(),
+    submitPay: vi.fn(),
+    submitCancel: vi.fn(),
+  }
+  vi.mocked(useCurrentUnit).mockReturnValue(
+    unit as unknown as ReturnType<typeof useCurrentUnit>
+  )
+  vi.mocked(useTabDetail).mockReturnValue({
+    tab: { id: 'tab-1' },
+    isPending: false,
+    isError: false,
+  } as unknown as ReturnType<typeof useTabDetail>)
+  vi.mocked(useMenu).mockReturnValue({
+    sections: [{ id: 'category-1' }],
+  } as unknown as ReturnType<typeof useMenu>)
+  vi.mocked(useTabPermissions).mockReturnValue({ canCancelTab: true })
+  vi.mocked(useTabItemCommands).mockReturnValue({
+    submitAddItem: commands.submitAddItem,
+    submitCancelItem: commands.submitCancelItem,
+    isAddingItem: true,
+    isCancellingItem: false,
+  })
+  vi.mocked(useTabTransitions).mockReturnValue({
+    submitClose: commands.submitClose,
+    submitReopen: commands.submitReopen,
+    submitPay: commands.submitPay,
+    submitCancel: commands.submitCancel,
+    isClosing: false,
+    isReopening: true,
+    isPaying: false,
+    isCancelling: true,
+  })
+  return commands
+}
+
+describe('useTableTabDetailFacade', () => {
+  it('exposes the tab, the menu and every command under the route scope', () => {
+    const commands = mockHooks({ unitId: tableTabDetailFacadeMock.unitId })
+
+    const { result } = renderHook(() => useTableTabDetailFacade(), {
+      wrapper: ({ children }) => (
+        <MemoryRouter initialEntries={[tableTabDetailFacadeMock.route]}>
+          <Routes>
+            <Route
+              path={tableTabDetailFacadeMock.routePattern}
+              element={children}
+            />
+          </Routes>
+        </MemoryRouter>
+      ),
     })
-    vi.mocked(useOrders).mockReturnValue({
-      orders: [],
-      isPending: false,
-      isError: false,
-    } as unknown as ReturnType<typeof useOrders>)
-    vi.mocked(useTableTabItemCancellation).mockReturnValue({
-      cancelItem: vi.fn(),
-      isCancelling: false,
+
+    expect(useTabDetail).toHaveBeenCalledWith('unit-1', 'tab-1')
+    expect(useTabItemCommands).toHaveBeenCalledWith('unit-1', 'tab-1')
+    expect(useTabTransitions).toHaveBeenCalledWith('unit-1', 'tab-1')
+    expect(useMenu).toHaveBeenCalledWith('unit-1')
+    expect(result.current.tab).toEqual({ id: 'tab-1' })
+    expect(result.current.menuSections).toEqual([{ id: 'category-1' }])
+    expect(result.current.canCancelTab).toBe(true)
+    expect(result.current.submitAddItem).toBe(commands.submitAddItem)
+    expect(result.current.submitCancelItem).toBe(commands.submitCancelItem)
+    expect(result.current.submitClose).toBe(commands.submitClose)
+    expect(result.current.submitReopen).toBe(commands.submitReopen)
+    expect(result.current.submitPay).toBe(commands.submitPay)
+    expect(result.current.submitCancel).toBe(commands.submitCancel)
+    expect(result.current.isAddingItem).toBe(true)
+    expect(result.current.isCancellingItem).toBe(false)
+    expect(result.current.isClosing).toBe(false)
+    expect(result.current.isReopening).toBe(true)
+    expect(result.current.isPaying).toBe(false)
+    expect(result.current.isCancelling).toBe(true)
+    expect(result.current.isPending).toBe(false)
+    expect(result.current.isError).toBe(false)
+  })
+
+  it('falls back to an empty scope without unit or route param', () => {
+    mockHooks(null)
+
+    renderHook(() => useTableTabDetailFacade(), {
+      wrapper: ({ children }) => (
+        <MemoryRouter initialEntries={['/comandas']}>{children}</MemoryRouter>
+      ),
     })
 
-    const { result } = renderHook(() => useTableTabDetailFacade())
-
-    expect(result.current.isPending).toBe(tableTabDetailFacadeMock.isPending)
-    expect(result.current.isError).toBe(tableTabDetailFacadeMock.isError)
-    expect(useOrders).toHaveBeenCalledWith(
-      'unit-1',
-      'tab-1',
-      [
-        'PENDING',
-        'ACCEPTED',
-        'PREPARING',
-        'READY_FOR_PICKUP',
-        'DELIVERED',
-        'COMPLETED',
-        'CANCELLED',
-      ],
-      'TABLE_TAB',
-      undefined
-    )
+    expect(useTabDetail).toHaveBeenLastCalledWith(null, '')
+    expect(useTabItemCommands).toHaveBeenLastCalledWith(null, '')
+    expect(useTabTransitions).toHaveBeenLastCalledWith(null, '')
+    expect(useMenu).toHaveBeenLastCalledWith(null)
   })
 })

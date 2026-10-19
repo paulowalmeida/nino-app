@@ -1,5 +1,11 @@
+import { openTabMock } from '@shared/utils/active-tab-items/active-tab-items.mock'
+
 export const tableTabsFacadeMock = {
   unitId: 'unit-1',
-  openOrderCount: 0,
-  closedOrderCount: 0,
+  board: {
+    activeTabs: [openTabMock],
+    finalizedTabs: [],
+    isPending: false,
+    isError: false,
+  },
 }

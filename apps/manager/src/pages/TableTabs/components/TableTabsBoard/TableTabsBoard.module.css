@@ -1,0 +1,27 @@
+@reference "@nino/ds/globals.css";
+
+.tableTabsBoard {
+  @apply flex min-h-0 flex-1 flex-col;
+}
+
+.tableTabsBoardControls {
+  @apply flex shrink-0 flex-col gap-5 px-4 pt-5;
+  @apply lg:gap-7 lg:px-10 lg:pt-7;
+}
+
+.tableTabsBoardSearch {
+  @apply w-full sm:max-w-md;
+}
+
+.tableTabsBoardGroups {
+  @apply w-fit gap-2;
+}
+
+.tableTabsBoardScroll {
+  @apply min-h-0 flex-1 overflow-y-auto px-4 pb-4 pt-5;
+  @apply lg:px-10 lg:pb-10 lg:pt-7;
+}
+
+.tableTabsBoardList {
+  @apply grid gap-4 pr-1.5 sm:grid-cols-2 xl:grid-cols-3;
+}

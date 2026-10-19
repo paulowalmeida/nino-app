@@ -1,0 +1,6 @@
+@reference "@nino/ds/globals.css";
+
+.tableTabsHeader {
+  @apply shrink-0 px-4 pt-4;
+  @apply lg:px-10 lg:pt-10;
+}

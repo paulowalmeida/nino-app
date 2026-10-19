@@ -1,5 +1,6 @@
 export const tableTabDetailFacadeMock = {
-  isPending: false,
-  isError: false,
-  isCancellingItem: false,
+  unitId: 'unit-1',
+  tabId: 'tab-1',
+  route: '/comandas/tab-1',
+  routePattern: '/comandas/:tabId',
 }

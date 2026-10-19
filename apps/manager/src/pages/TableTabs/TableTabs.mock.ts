@@ -1,3 +1,4 @@
 export const tableTabsPageMock = {
-  title: 'Comandas',
+  header: 'cabeçalho das comandas',
+  board: 'quadro das comandas',
 }

@@ -1,0 +1,9 @@
+@reference "@nino/ds/globals.css";
+
+.tabPaymentForm {
+  @apply flex flex-col gap-4;
+}
+
+.tabPaymentFormChange {
+  @apply rounded-2 bg-surface-mute px-3 py-2;
+}

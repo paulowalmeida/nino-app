@@ -1,0 +1,19 @@
+@reference "@nino/ds/globals.css";
+
+.tableTabCard {
+  @apply mb-1.5 ml-1.5 mt-1 flex min-h-36 flex-col justify-between gap-6 rounded-4 p-5;
+  @apply transition-[box-shadow,transform] duration-base;
+  @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand;
+  --card-ring: 0 0 0 1px
+    color-mix(in srgb, var(--color-warm-950) 14%, transparent);
+}
+
+@media (hover: hover) {
+  .tableTabCard:hover {
+    box-shadow:
+      0 0 0 1px color-mix(in srgb, var(--color-brand) 45%, transparent),
+      0 8px 20px -12px
+        color-mix(in srgb, var(--color-warm-950) 20%, transparent);
+    transform: translateY(-2px);
+  }
+}

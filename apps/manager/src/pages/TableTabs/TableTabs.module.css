@@ -1,0 +1,12 @@
+@reference "@nino/ds/globals.css";
+
+.tableTabsPage {
+  @apply flex h-[calc(100dvh-3.5rem)] min-h-0 flex-col overflow-hidden;
+  @apply lg:h-dvh;
+}
+
+@media (min-width: 2560px) {
+  .tableTabsPage {
+    @apply mx-auto max-w-[120rem];
+  }
+}

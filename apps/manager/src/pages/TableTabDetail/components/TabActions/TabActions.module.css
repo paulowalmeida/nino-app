@@ -1,0 +1,9 @@
+@reference "@nino/ds/globals.css";
+
+.tabActions {
+  @apply flex flex-col gap-5 border-border bg-surface-raised;
+}
+
+.tabActionsHead {
+  @apply flex flex-col gap-1;
+}

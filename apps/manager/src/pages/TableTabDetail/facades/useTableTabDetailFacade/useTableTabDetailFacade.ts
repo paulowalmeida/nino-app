@@ -1,34 +1,38 @@
 import { useParams } from 'react-router'
 
-import { useTableTabItemCancellation } from '@pages/TableTabDetail/hooks/useTableTabItemCancellation/useTableTabItemCancellation'
-import { useOrders } from '@shared/hooks/order/useOrders/useOrders'
+import { useTabDetail } from '@pages/TableTabDetail/hooks/useTabDetail/useTabDetail'
+import { useTabItemCommands } from '@pages/TableTabDetail/hooks/useTabItemCommands/useTabItemCommands'
+import { useTabPermissions } from '@pages/TableTabDetail/hooks/useTabPermissions/useTabPermissions'
+import { useTabTransitions } from '@pages/TableTabDetail/hooks/useTabTransitions/useTabTransitions'
+import { useMenu } from '@shared/hooks/product/useMenu/useMenu'
 import { useCurrentUnit } from '@shared/hooks/session/useCurrentUnit/useCurrentUnit'
 
 export const useTableTabDetailFacade = () => {
   const { tabId } = useParams()
   const unitId = useCurrentUnit()?.unitId ?? null
-  const detailQuery = useOrders(
-    unitId,
-    tabId,
-    [
-      'PENDING',
-      'ACCEPTED',
-      'PREPARING',
-      'READY_FOR_PICKUP',
-      'DELIVERED',
-      'COMPLETED',
-      'CANCELLED',
-    ],
-    'TABLE_TAB',
-    undefined
-  )
-  const itemCancellation = useTableTabItemCancellation(unitId)
+  const detail = useTabDetail(unitId, tabId ?? '')
+  const itemCommands = useTabItemCommands(unitId, tabId ?? '')
+  const transitions = useTabTransitions(unitId, tabId ?? '')
+  const permissions = useTabPermissions()
+  const menu = useMenu(unitId)
 
   return {
-    order: detailQuery.orders[0],
-    cancelItem: itemCancellation.cancelItem,
-    isCancellingItem: itemCancellation.isCancelling,
-    isPending: detailQuery.isPending,
-    isError: detailQuery.isError,
+    tab: detail.tab,
+    isPending: detail.isPending,
+    isError: detail.isError,
+    menuSections: menu.sections,
+    canCancelTab: permissions.canCancelTab,
+    submitAddItem: itemCommands.submitAddItem,
+    submitCancelItem: itemCommands.submitCancelItem,
+    isAddingItem: itemCommands.isAddingItem,
+    isCancellingItem: itemCommands.isCancellingItem,
+    submitClose: transitions.submitClose,
+    submitReopen: transitions.submitReopen,
+    submitPay: transitions.submitPay,
+    submitCancel: transitions.submitCancel,
+    isClosing: transitions.isClosing,
+    isReopening: transitions.isReopening,
+    isPaying: transitions.isPaying,
+    isCancelling: transitions.isCancelling,
   }
 }

@@ -1,36 +1,47 @@
 import { renderHook } from '@testing-library/react'
 import { describe, expect, it, vi } from 'vitest'
 
+import { useOpenTab } from '@pages/TableTabs/hooks/useOpenTab/useOpenTab'
+import { useTabBoard } from '@pages/TableTabs/hooks/useTabBoard/useTabBoard'
+import { useCurrentUnit } from '@shared/hooks/session/useCurrentUnit/useCurrentUnit'
+
 import { useTableTabsFacade } from './useTableTabsFacade'
+import { tableTabsFacadeMock } from './useTableTabsFacade.mock'
 
-vi.mock('@shared/hooks/session/useCurrentUnit/useCurrentUnit', () => ({
-  useCurrentUnit: () => ({ unitId: 'unit-1' }),
-}))
-vi.mock('@shared/hooks/order/useOrders/useOrders', () => ({
-  useOrders: vi.fn(() => ({ orders: [], isPending: false, isError: false })),
-}))
+vi.mock('@shared/hooks/session/useCurrentUnit/useCurrentUnit')
+vi.mock('@pages/TableTabs/hooks/useTabBoard/useTabBoard')
+vi.mock('@pages/TableTabs/hooks/useOpenTab/useOpenTab')
 
-describe(useTableTabsFacade.name, () => {
-  it('requests open and closed table-tab orders for the current unit', async () => {
-    const { useOrders } =
-      await import('@shared/hooks/order/useOrders/useOrders')
+describe('useTableTabsFacade', () => {
+  it('exposes the board and the open command under the current unit', () => {
+    const submitOpen = vi.fn()
+    vi.mocked(useCurrentUnit).mockReturnValue({
+      unitId: tableTabsFacadeMock.unitId,
+    } as unknown as ReturnType<typeof useCurrentUnit>)
+    vi.mocked(useTabBoard).mockReturnValue(tableTabsFacadeMock.board)
+    vi.mocked(useOpenTab).mockReturnValue({ submitOpen, isOpening: true })
+
+    const { result } = renderHook(() => useTableTabsFacade())
+
+    expect(useTabBoard).toHaveBeenCalledWith('unit-1')
+    expect(useOpenTab).toHaveBeenCalledWith('unit-1')
+    expect(result.current.activeTabs).toBe(tableTabsFacadeMock.board.activeTabs)
+    expect(result.current.finalizedTabs).toEqual([])
+    expect(result.current.submitOpen).toBe(submitOpen)
+    expect(result.current.isOpening).toBe(true)
+  })
+
+  it('falls back to no unit when none is selected', () => {
+    vi.mocked(useCurrentUnit).mockReturnValue(null)
+    vi.mocked(useTabBoard).mockReturnValue(tableTabsFacadeMock.board)
+    vi.mocked(useOpenTab).mockReturnValue({
+      submitOpen: vi.fn(),
+      isOpening: false,
+    })
+
     renderHook(() => useTableTabsFacade())
 
-    expect(useOrders).toHaveBeenNthCalledWith(
-      1,
-      'unit-1',
-      undefined,
-      ['PENDING', 'ACCEPTED', 'PREPARING', 'READY_FOR_PICKUP'],
-      'TABLE_TAB',
-      undefined
-    )
-    expect(useOrders).toHaveBeenNthCalledWith(
-      2,
-      'unit-1',
-      undefined,
-      ['DELIVERED', 'COMPLETED', 'CANCELLED'],
-      'TABLE_TAB',
-      undefined
-    )
+    expect(useTabBoard).toHaveBeenLastCalledWith(null)
+    expect(useOpenTab).toHaveBeenLastCalledWith(null)
   })
 })
