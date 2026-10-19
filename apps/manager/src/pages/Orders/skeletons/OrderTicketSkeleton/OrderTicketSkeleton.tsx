@@ -17,7 +17,7 @@ export const OrderTicketSkeleton = () => (
         <Skeleton className={styles.ghostStatus} />
       </Box>
 
-      <div className={ticketStyles.orderTicketBody}>
+      <Box className={ticketStyles.orderTicketBody}>
         <Skeleton className={styles.ghostConsumer} />
         <Skeleton className={styles.ghostMeta} />
         <Skeleton className={styles.ghostSummary} />
@@ -35,7 +35,7 @@ export const OrderTicketSkeleton = () => (
             </ListRow>
           ))}
         </Box>
-      </div>
+      </Box>
 
       <footer className={ticketStyles.foot}>
         <Box direction="column">
