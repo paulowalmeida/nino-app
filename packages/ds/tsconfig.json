@@ -5,6 +5,7 @@
     "types": ["vite/client"],
     "declaration": true,
     "outDir": "dist",
+    "rootDir": "src",
     "baseUrl": ".",
     "paths": {
       "@ds/*": ["src/*"]

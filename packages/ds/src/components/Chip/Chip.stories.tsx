@@ -24,7 +24,7 @@ type Story = StoryObj<typeof Chip>
 type ChipPlaygroundProps = {
   variant: 'tab' | 'toggle'
   selected: boolean
-  borderless: boolean
+  borderless?: boolean
   label: ReactNode
 }
 
