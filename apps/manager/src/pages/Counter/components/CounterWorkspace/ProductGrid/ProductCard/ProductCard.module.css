@@ -4,7 +4,7 @@
 .productCard {
   @apply relative flex cursor-pointer flex-col overflow-hidden rounded-3;
   @apply bg-surface-page text-left;
-  @apply transition-colors duration-150;
+  @apply transition-[box-shadow,transform] duration-fast;
   @apply select-none;
   --card-ring: 0 0 0 1px
     color-mix(in srgb, var(--color-warm-950) 14%, transparent);
@@ -14,12 +14,12 @@
 }
 
 
-.picked {
-  box-shadow: 0 0 0 1px var(--color-brand);
-}
-
-.productCard.picked:hover {
-  box-shadow: 0 0 0 1px var(--color-brand);
+@media (hover: hover) {
+  .productCard:hover {
+    box-shadow:
+      var(--card-ring),
+      0 8px 20px -12px color-mix(in srgb, var(--color-warm-950) 20%, transparent);
+  }
 }
 
 .photoWrap {

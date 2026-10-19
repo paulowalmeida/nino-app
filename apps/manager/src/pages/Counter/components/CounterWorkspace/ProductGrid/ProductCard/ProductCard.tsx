@@ -133,7 +133,7 @@ export const ProductCard = ({
     <>
       <Card
         asChild
-        variant="flat"
+        variant={isPicked ? 'elevated' : 'flat'}
         padding="none"
         role="button"
         tabIndex={0}
@@ -153,7 +153,6 @@ export const ProductCard = ({
           motion.settle,
           motion.press,
           styles.productCard,
-          isPicked && styles.picked,
           isPressing && styles.pressing
         )}
         onPointerEnter={openQuantityWithMouse}
