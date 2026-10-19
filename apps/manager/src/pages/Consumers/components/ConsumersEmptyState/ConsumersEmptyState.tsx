@@ -7,7 +7,6 @@ import { CONSUMERS_CAPABILITIES } from '@pages/Consumers/constants/consumers.con
 import { consumersEmptyMessage } from '@pages/Consumers/utils/consumersEmptyMessage/consumersEmptyMessage'
 
 import motion from '@styles/motion.module.css'
-
 import styles from './ConsumersEmptyState.module.css'
 
 type ConsumersEmptyStateProps = {

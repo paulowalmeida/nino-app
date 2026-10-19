@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react'
 
-import { Box } from '@ds/components/Box/Box'
+import { Box } from '@nino/ds/components/Box'
 import { Chip } from '@nino/ds/components/Chip'
 import { CountUp } from '@nino/ds/components/CountUp'
 import { Icon } from '@nino/ds/components/Icon'

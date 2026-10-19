@@ -1,5 +1,5 @@
-import { Box } from '@ds/components/Box/Box'
-import { Text } from '@ds/components/Text/Text'
+import { Box } from '@nino/ds/components/Box'
+import { Text } from '@nino/ds/components/Text'
 import type { StaffDetail } from '@shared/types/team/staff-detail'
 import { brl } from '@shared/utils/money/money'
 import { riseDelay } from '@shared/utils/rise-delay/rise-delay'

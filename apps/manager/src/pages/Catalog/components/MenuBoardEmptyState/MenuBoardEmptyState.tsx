@@ -10,7 +10,6 @@ import { CATALOG_CAPABILITIES } from '@pages/Catalog/constants/catalog.constants
 import { useCatalogFacade } from '@pages/Catalog/facades/useCatalogFacade'
 
 import motion from '@styles/motion.module.css'
-
 import styles from './MenuBoardEmptyState.module.css'
 
 export const MenuBoardEmptyState = () => {

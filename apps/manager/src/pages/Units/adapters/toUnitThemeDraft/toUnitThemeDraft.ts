@@ -1,6 +1,6 @@
 import { toThemeColors } from '@pages/Units/adapters/toThemeColors/toThemeColors'
-import type { UnitTheme } from '@pages/Units/types/UnitTheme.type'
 import { toUnitDraft } from '@pages/Units/adapters/toUnitDraft/toUnitDraft'
+import type { UnitTheme } from '@pages/Units/types/UnitTheme.type'
 import type { UnitDetail } from '@shared/types/store/unit-detail'
 import type { UnitDraft } from '@shared/types/store/unit-draft'
 

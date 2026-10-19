@@ -1,5 +1,4 @@
 import { useState } from 'react'
-
 import { useSearchParams } from 'react-router'
 
 import { Box } from '@nino/ds/components/Box'

@@ -2,11 +2,11 @@ import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 
 import { dismissSplashWhenReady } from '@lib/dismiss-splash/dismiss-splash'
-import { router } from '@router/routes'
 import {
   clearCompletedNavigation,
   rememberPendingNavigation,
 } from '@router/pending-navigation'
+import { router } from '@router/routes'
 
 import { App } from './App.tsx'
 

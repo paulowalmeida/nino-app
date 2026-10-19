@@ -6,7 +6,6 @@ import { Text } from '@nino/ds/components/Text'
 import { CATEGORIES_CAPABILITIES } from '@pages/CatalogCategories/constants/catalog-categories.constants'
 
 import motion from '@styles/motion.module.css'
-
 import styles from './CategoriesEmptyState.module.css'
 
 export const CategoriesEmptyState = () => {

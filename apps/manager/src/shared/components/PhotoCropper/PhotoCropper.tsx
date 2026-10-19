@@ -1,9 +1,10 @@
-import { useEffect, useRef, useState } from 'react'
+import { useRef, useState } from 'react'
 
 import { Alert } from '@nino/ds/components/Alert'
 import { Box } from '@nino/ds/components/Box'
 import { Button } from '@nino/ds/components/Button'
 import { Text } from '@nino/ds/components/Text'
+import { useObjectUrl } from '@shared/hooks/ui/useObjectUrl/useObjectUrl'
 import type { CropArea } from '@shared/types/ui/crop-area'
 import type { CropCorner } from '@shared/types/ui/crop-corner'
 import { cropToArea } from '@shared/utils/crop-image/crop-image'
@@ -64,20 +65,11 @@ export const PhotoCropper = ({
   onRemove,
 }: PhotoCropperProps) => {
   const imageRef = useRef<HTMLImageElement>(null)
+  const source = useObjectUrl(file)
   const dragRef = useRef<Drag | null>(null)
-  const [source, setSource] = useState<string>()
   const [imageRatio, setImageRatio] = useState(1)
   const [area, setArea] = useState<CropArea | null>(null)
   const [error, setError] = useState<string | null>(null)
-
-  useEffect(() => {
-    const nextSource = URL.createObjectURL(file)
-    setSource(nextSource)
-
-    return () => {
-      URL.revokeObjectURL(nextSource)
-    }
-  }, [file])
 
   const startCrop = () => {
     const image = imageRef.current

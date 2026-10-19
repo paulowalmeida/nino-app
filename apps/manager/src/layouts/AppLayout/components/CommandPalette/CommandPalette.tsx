@@ -5,7 +5,6 @@ import {
   useRef,
   useState,
 } from 'react'
-
 import { useNavigate } from 'react-router'
 
 import { useSidemenu } from '@layouts/AppLayout/hooks/useSidemenu/useSidemenu'
@@ -18,6 +17,7 @@ import { Text } from '@nino/ds/components/Text'
 import { useCurrentUnit } from '@shared/hooks/session/useCurrentUnit/useCurrentUnit'
 
 import { FUNCTIONALITY_SEARCH_ITEMS } from './CommandPalette.constants'
+
 import styles from './CommandPalette.module.css'
 
 const commandShortcut = 'k'
@@ -97,20 +97,29 @@ export const CommandPalette = ({ open, onOpenChange }: CommandPaletteProps) => {
   useEffect(() => {
     if (!open) return
 
-    setQuery('')
-    setActiveIndex(0)
     const frame = requestAnimationFrame(() => inputRef.current?.focus())
     return () => cancelAnimationFrame(frame)
   }, [open])
 
-  useEffect(() => setActiveIndex(0), [query])
+  const changeOpen = (next: boolean) => {
+    if (!next) {
+      setQuery('')
+      setActiveIndex(0)
+    }
+    onOpenChange(next)
+  }
+
+  const changeQuery = (value: string) => {
+    setQuery(value)
+    setActiveIndex(0)
+  }
 
   const navigateTo = (value: string) => {
     if (!unitId) return
 
     const section = value.split('::')[0]
     navigate(`/${unitId}/${section}`)
-    onOpenChange(false)
+    changeOpen(false)
   }
 
   const handleSearchKeyDown = (
@@ -137,7 +146,7 @@ export const CommandPalette = ({ open, onOpenChange }: CommandPaletteProps) => {
   return (
     <Modal
       open={open}
-      onOpenChange={onOpenChange}
+      onOpenChange={changeOpen}
       ariaLabel="Buscar funcionalidade"
       size="md"
       contentClassName={styles.modal}
@@ -159,7 +168,7 @@ export const CommandPalette = ({ open, onOpenChange }: CommandPaletteProps) => {
                   : undefined
               }
               value={query}
-              onChange={(event) => setQuery(event.target.value)}
+              onChange={(event) => changeQuery(event.target.value)}
               onKeyDown={handleSearchKeyDown}
               className={styles.commandPaletteInput}
             />

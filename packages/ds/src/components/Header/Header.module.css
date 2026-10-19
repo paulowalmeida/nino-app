@@ -1,8 +1,0 @@
-@reference "../../styles/globals.css";
-
-.accent {
-  @apply relative whitespace-nowrap;
-  @apply after:absolute after:inset-x-0 after:bottom-0.5;
-  @apply after:z-below after:h-0.5 after:rounded-1;
-  @apply after:bg-accent-peach-deep after:content-[''];
-}

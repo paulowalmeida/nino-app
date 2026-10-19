@@ -3,8 +3,9 @@ import { Button } from '@nino/ds/components/Button'
 import { Text } from '@nino/ds/components/Text'
 import type { PreviewDevice } from '@pages/Units/types/PreviewDevice.type'
 
-import motion from '@styles/motion.module.css'
 import { StudioDeviceTabs } from './StudioDeviceTabs'
+
+import motion from '@styles/motion.module.css'
 import styles from './StudioToolbar.module.css'
 
 export type StudioToolbarProps = {

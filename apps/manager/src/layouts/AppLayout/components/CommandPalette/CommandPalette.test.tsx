@@ -1,7 +1,8 @@
+import { MemoryRouter } from 'react-router'
+
 import { render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { describe, expect, it, vi } from 'vitest'
-import { MemoryRouter } from 'react-router'
 
 import { useSidemenu } from '@layouts/AppLayout/hooks/useSidemenu/useSidemenu'
 import { useCurrentUnit } from '@shared/hooks/session/useCurrentUnit/useCurrentUnit'

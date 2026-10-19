@@ -1,4 +1,4 @@
-import { type CSSProperties, useEffect, useState } from 'react'
+import type { CSSProperties } from 'react'
 
 import { Box } from '@nino/ds/components/Box'
 import { Button } from '@nino/ds/components/Button'
@@ -15,6 +15,7 @@ import type { BrandColors } from '@pages/Units/types/BrandColors.type'
 import type { CatalogDraft } from '@pages/Units/types/CatalogDraft.type'
 import type { HomeDraft } from '@pages/Units/types/HomeDraft.type'
 import type { PreviewDevice } from '@pages/Units/types/PreviewDevice.type'
+import { useObjectUrl } from '@shared/hooks/ui/useObjectUrl/useObjectUrl'
 import { resolveApiAssetUrl } from '@shared/utils/api-asset-url/api-asset-url'
 
 import motion from '@styles/motion.module.css'
@@ -126,26 +127,6 @@ const PreviewProductCard = ({ product, catalog }: PreviewProductCardProps) => (
   </Card>
 )
 
-const useFilePreview = (file?: File) => {
-  const [url, setUrl] = useState<string>()
-
-  useEffect(() => {
-    if (!file) {
-      setUrl(undefined)
-      return
-    }
-
-    const nextUrl = URL.createObjectURL(file)
-    setUrl(nextUrl)
-
-    return () => {
-      URL.revokeObjectURL(nextUrl)
-    }
-  }, [file])
-
-  return url
-}
-
 export const StorefrontPreview = ({
   storeName,
   colors,
@@ -157,8 +138,8 @@ export const StorefrontPreview = ({
   catalog = DEFAULT_CATALOG_DRAFT,
   home = DEFAULT_HOME_DRAFT,
 }: StorefrontPreviewProps) => {
-  const localLogoUrl = useFilePreview(logoFile)
-  const localBannerUrl = useFilePreview(bannerFile)
+  const localLogoUrl = useObjectUrl(logoFile)
+  const localBannerUrl = useObjectUrl(bannerFile)
   const shownLogoUrl = localLogoUrl ?? logoUrl
   const shownBannerUrl = localBannerUrl ?? bannerUrl
   const shownName = storeName.trim() || 'Nome da unidade'
@@ -315,7 +296,7 @@ export const StorefrontPreview = ({
               )}
             </Box>
             <Box className={local.identityText}>
-              <Heading level={1} className={local.storeName}>
+              <Heading level={1} accent className={local.storeName}>
                 {shownName}
               </Heading>
               <Box direction="row" className={local.statusLine}>

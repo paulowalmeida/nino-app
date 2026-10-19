@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 
 import { Box } from '@nino/ds/components/Box'
 import { Button } from '@nino/ds/components/Button'
@@ -60,20 +60,12 @@ export const BrandHistory = ({ onLoadVersion }: BrandHistoryProps) => {
       theme: version,
     })),
   ]
-  const [selectedVersionId, setSelectedVersionId] = useState(
-    versions[0]?.value ?? ''
-  )
-
-  useEffect(() => {
-    setSelectedVersionId((current) =>
-      versions.some((version) => version.value === current)
-        ? current
-        : (versions[0]?.value ?? '')
-    )
-  }, [versions])
-
+  const [pickedVersionId, setPickedVersionId] = useState('')
   const selectedVersion =
-    versions.find((version) => version.value === selectedVersionId) ?? null
+    versions.find((version) => version.value === pickedVersionId) ??
+    versions[0] ??
+    null
+  const selectedVersionId = selectedVersion?.value ?? ''
   const canRestoreSelected = Boolean(
     selectedVersion &&
     history.some((version) => version.id === selectedVersion.theme.id)
@@ -91,7 +83,7 @@ export const BrandHistory = ({ onLoadVersion }: BrandHistoryProps) => {
               options={versions.map(({ value, label }) => ({ value, label }))}
               value={selectedVersionId}
               onValueChange={(value) => {
-                setSelectedVersionId(value)
+                setPickedVersionId(value)
                 const version = versions.find(
                   (candidate) => candidate.value === value
                 )

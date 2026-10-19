@@ -1,9 +1,9 @@
 import { Link } from 'react-router'
 
-import { Box } from '@ds/components/Box/Box'
-import { Eyebrow } from '@ds/components/Eyebrow/Eyebrow'
-import { ListRow } from '@ds/components/ListRow/ListRow'
-import { Text } from '@ds/components/Text/Text'
+import { Box } from '@nino/ds/components/Box'
+import { Eyebrow } from '@nino/ds/components/Eyebrow'
+import { ListRow } from '@nino/ds/components/ListRow'
+import { Text } from '@nino/ds/components/Text'
 import { STATUS_LABEL } from '@shared/constants/order.constants'
 import { Order } from '@shared/types/order/order'
 import { brl } from '@shared/utils/money/money'
