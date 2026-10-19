@@ -21,6 +21,17 @@ if [ -z "$package" ]; then
   exit 1
 fi
 
+# Only develop and main are deployed. Every other branch would add a Preview
+# build per project on top of the Production one, and a Preview has no
+# comparable previous deployment, so it builds even when nothing changed.
+case "${VERCEL_GIT_COMMIT_REF:-}" in
+  develop|main) ;;
+  *)
+    echo "Branch '${VERCEL_GIT_COMMIT_REF:-unknown}' is not deployed — skipping $package."
+    exit 0
+    ;;
+esac
+
 # SHA of the last successful deployment of THIS project — Vercel only exposes
 # it when an Ignored Build Step is configured, which is exactly this script.
 base="${VERCEL_GIT_PREVIOUS_SHA:-}"
