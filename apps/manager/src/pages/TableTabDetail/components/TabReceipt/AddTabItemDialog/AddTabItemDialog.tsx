@@ -9,8 +9,14 @@ import { Input } from '@nino/ds/components/Input'
 import { Modal } from '@nino/ds/components/Modal'
 import { NumberInput } from '@nino/ds/components/NumberInput'
 import { Select } from '@nino/ds/components/Select'
+import { TabItemModifierPicker } from '@pages/TableTabDetail/components/TabReceipt/AddTabItemDialog/TabItemModifierPicker/TabItemModifierPicker'
 import { useTableTabDetailFacade } from '@pages/TableTabDetail/facades/useTableTabDetailFacade/useTableTabDetailFacade'
+import type { TabModifierSelection } from '@pages/TableTabDetail/types/TabModifierSelection.type'
+import { findTabProduct } from '@pages/TableTabDetail/utils/findTabProduct/findTabProduct'
+import { isTabModifierSelectionComplete } from '@pages/TableTabDetail/utils/isTabModifierSelectionComplete/isTabModifierSelectionComplete'
 import { tabProductOptions } from '@pages/TableTabDetail/utils/tabProductOptions/tabProductOptions'
+import { toggleTabModifierOption } from '@pages/TableTabDetail/utils/toggleTabModifierOption/toggleTabModifierOption'
+import { toTabItemModifiers } from '@pages/TableTabDetail/utils/toTabItemModifiers/toTabItemModifiers'
 
 import styles from './AddTabItemDialog.module.css'
 
@@ -27,18 +33,34 @@ export const AddTabItemDialog = ({ open, onClose }: AddTabItemDialogProps) => {
   const [productId, setProductId] = useState('')
   const [quantity, setQuantity] = useState(1)
   const [notes, setNotes] = useState('')
+  const [modifierSelection, setModifierSelection] =
+    useState<TabModifierSelection>({})
+  const modifiers = findTabProduct(menuSections, productId)?.modifiers ?? []
+  const canLaunch =
+    !!productId && isTabModifierSelectionComplete(modifiers, modifierSelection)
 
   const resetForm = () => {
     setProductId('')
     setQuantity(1)
     setNotes('')
+    setModifierSelection({})
+  }
+
+  const pickProduct = (nextProductId: string) => {
+    setProductId(nextProductId)
+    setModifierSelection({})
   }
 
   const addItem = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
-    if (!productId) return
+    if (!canLaunch) return
     submitAddItem(
-      { productId, quantity, notes: notes.trim() || undefined },
+      {
+        productId,
+        quantity,
+        notes: notes.trim() || undefined,
+        modifiers: toTabItemModifiers(modifierSelection),
+      },
       {
         onSuccess: () => {
           resetForm()
@@ -69,9 +91,18 @@ export const AddTabItemDialog = ({ open, onClose }: AddTabItemDialogProps) => {
               options={tabProductOptions(menuSections)}
               placeholder="Escolha o produto"
               value={productId}
-              onValueChange={setProductId}
+              onValueChange={pickProduct}
             />
           </FormField>
+          <TabItemModifierPicker
+            modifiers={modifiers}
+            selection={modifierSelection}
+            onToggle={(modifier, optionId, isChecked) =>
+              setModifierSelection((current) =>
+                toggleTabModifierOption(current, modifier, optionId, isChecked)
+              )
+            }
+          />
           <FormField label="Quantidade">
             <NumberInput
               value={quantity}
@@ -99,7 +130,7 @@ export const AddTabItemDialog = ({ open, onClose }: AddTabItemDialogProps) => {
             type="submit"
             form={ADD_TAB_ITEM_FORM_ID}
             loading={isAddingItem}
-            disabled={!productId}
+            disabled={!canLaunch}
           >
             Lançar item
           </Button>

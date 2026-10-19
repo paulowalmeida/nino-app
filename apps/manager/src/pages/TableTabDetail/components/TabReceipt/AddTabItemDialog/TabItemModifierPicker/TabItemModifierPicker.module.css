@@ -1,0 +1,13 @@
+@reference "@nino/ds/globals.css";
+
+.tabItemModifierPicker {
+  @apply flex flex-col gap-4;
+}
+
+.tabItemModifierPickerGroup {
+  @apply flex flex-col gap-2 border-t border-border pt-3;
+}
+
+.tabItemModifierPickerOption {
+  @apply flex items-center justify-between gap-3 py-1;
+}

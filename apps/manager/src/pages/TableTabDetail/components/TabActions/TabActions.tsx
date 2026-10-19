@@ -34,7 +34,7 @@ export const TabActions = () => {
       <Card
         variant="flat"
         padding="lg"
-        className={`${motion.settle} ${styles.tabActions}`}
+        className={`${motion.deal} ${styles.tabActions}`}
       >
         <TabFinalizedSummary />
       </Card>
@@ -53,7 +53,7 @@ export const TabActions = () => {
     <Card
       variant="flat"
       padding="lg"
-      className={`${motion.settle} ${styles.tabActions}`}
+      className={`${motion.deal} ${styles.tabActions}`}
     >
       <Box className={styles.tabActionsHead}>
         <Heading level={2} size="lg">

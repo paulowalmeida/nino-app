@@ -21,11 +21,11 @@ const mockFacade = (isAddingItem = false) => {
   return submitAddItem
 }
 
-const pickProduct = async () => {
+const pickProduct = async (label = addTabItemDialogMock.productLabel) => {
   const user = userEvent.setup({ pointerEventsCheck: 0 })
   await user.click(screen.getByRole('combobox'))
   const listbox = await screen.findByRole('listbox', { hidden: true })
-  await user.click(within(listbox).getByText(addTabItemDialogMock.productLabel))
+  await user.click(within(listbox).getByText(label))
 }
 
 describe('AddTabItemDialog', () => {
@@ -61,7 +61,12 @@ describe('AddTabItemDialog', () => {
     await userEvent.click(screen.getByRole('button', { name: 'Lançar item' }))
 
     expect(submitAddItem).toHaveBeenCalledWith(
-      { productId: 'product-1', quantity: 3, notes: 'sem cebola' },
+      {
+        productId: 'product-1',
+        quantity: 3,
+        notes: 'sem cebola',
+        modifiers: [],
+      },
       expect.objectContaining({ onSuccess: expect.any(Function) })
     )
     expect(onClose).toHaveBeenCalled()
@@ -75,9 +80,46 @@ describe('AddTabItemDialog', () => {
     await userEvent.click(screen.getByRole('button', { name: 'Lançar item' }))
 
     expect(submitAddItem).toHaveBeenCalledWith(
-      { productId: 'product-1', quantity: 1, notes: undefined },
+      { productId: 'product-1', quantity: 1, notes: undefined, modifiers: [] },
       expect.anything()
     )
+  })
+
+  it('asks for the required modifiers before launching a product that has them', async () => {
+    const submitAddItem = mockFacade()
+    render(<AddTabItemDialog open onClose={vi.fn()} />)
+
+    await pickProduct(addTabItemDialogMock.burgerLabel)
+
+    const confirm = screen.getByRole('button', { name: 'Lançar item' })
+    expect(confirm).toBeDisabled()
+
+    await userEvent.click(screen.getByLabelText('Bem passado'))
+    expect(confirm).toBeEnabled()
+
+    await userEvent.click(confirm)
+
+    expect(submitAddItem).toHaveBeenCalledWith(
+      {
+        productId: 'product-2',
+        quantity: 1,
+        notes: undefined,
+        modifiers: [{ optionId: 'option-2', quantity: 1 }],
+      },
+      expect.anything()
+    )
+  })
+
+  it('forgets the chosen modifiers when another product is picked', async () => {
+    mockFacade()
+    render(<AddTabItemDialog open onClose={vi.fn()} />)
+
+    await pickProduct(addTabItemDialogMock.burgerLabel)
+    await userEvent.click(screen.getByLabelText('Bem passado'))
+    await pickProduct()
+
+    expect(screen.queryByLabelText('Bem passado')).not.toBeInTheDocument()
+    expect(screen.getByRole('button', { name: 'Lançar item' })).toBeEnabled()
   })
 
   it('does not submit with the form when no product is chosen', async () => {

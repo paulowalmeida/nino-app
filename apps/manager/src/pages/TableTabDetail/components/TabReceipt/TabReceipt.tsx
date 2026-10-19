@@ -25,7 +25,7 @@ export const TabReceipt = () => {
     <Card
       variant="flat"
       padding="lg"
-      className={`${motion.unroll} ${styles.tabReceipt}`}
+      className={`${motion.deal} ${styles.tabReceipt}`}
     >
       <Box direction="row" justify="between" align="center" gap={3}>
         <Heading level={2} size="lg">

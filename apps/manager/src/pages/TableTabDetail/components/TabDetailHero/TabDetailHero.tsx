@@ -21,9 +21,14 @@ export const TabDetailHero = () => {
   const itemCount = activeTabItems(tab).length
 
   return (
-    <Box as="header" className={`${motion.settle} ${styles.tabDetailHero}`}>
+    <Box as="header" className={`${motion.deal} ${styles.tabDetailHero}`}>
       <Box className={styles.tabDetailHeroIdentity}>
-        <Heading level={1} size="2xl" className={styles.tabDetailHeroLabel}>
+        <Heading
+          level={1}
+          accent
+          size="2xl"
+          className={styles.tabDetailHeroLabel}
+        >
           {tab.label}
         </Heading>
         <Box direction="row" align="center" gap={2} wrap>
