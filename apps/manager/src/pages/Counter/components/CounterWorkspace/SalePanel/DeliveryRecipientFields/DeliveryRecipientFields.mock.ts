@@ -41,3 +41,23 @@ export const addressWithoutNumberMock = {
   ...addressSearchResultMock,
   number: '',
 } satisfies AddressSearchResult
+
+export const addressAtFirstPointMock = {
+  ...addressSearchResultMock,
+  id: 'place-2',
+  providerId: 'place-2',
+  street: 'Travessa WE-70',
+  number: '',
+  latitude: -1.36,
+  longitude: -48.38,
+} satisfies AddressSearchResult
+
+export const addressAtSecondPointMock = {
+  ...addressSearchResultMock,
+  id: 'place-3',
+  providerId: 'place-3',
+  street: 'Travessa WE-71',
+  number: '9',
+  latitude: -1.37,
+  longitude: -48.39,
+} satisfies AddressSearchResult

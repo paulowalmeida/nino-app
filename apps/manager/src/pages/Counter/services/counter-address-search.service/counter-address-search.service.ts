@@ -27,4 +27,15 @@ export const CounterAddressSearchService = {
       unitId,
       sessionToken,
     }),
+
+  reverse: (
+    unitId: string,
+    latitude: number,
+    longitude: number
+  ): Promise<AddressSearchResult> =>
+    api.getAll<AddressSearchResult>('addresses/reverse', {
+      unitId,
+      latitude,
+      longitude,
+    }),
 }

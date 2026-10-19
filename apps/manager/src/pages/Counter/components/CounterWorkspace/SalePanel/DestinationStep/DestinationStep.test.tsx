@@ -27,6 +27,7 @@ describe('DestinationStep', () => {
         onRecipient={onRecipient}
         addressSuggestions={[]}
         isSearchingAddress={false}
+        resolveAddressAtPoint={vi.fn()}
         resolveSelectedAddress={vi.fn()}
         isResolvingSelectedAddress={false}
       />
@@ -47,6 +48,7 @@ describe('DestinationStep', () => {
         onRecipient={vi.fn()}
         addressSuggestions={[]}
         isSearchingAddress={false}
+        resolveAddressAtPoint={vi.fn()}
         resolveSelectedAddress={vi.fn()}
         isResolvingSelectedAddress={false}
       />
@@ -78,6 +80,7 @@ describe('DestinationStep', () => {
           }
           addressSuggestions={[]}
           isSearchingAddress={false}
+          resolveAddressAtPoint={vi.fn()}
           resolveSelectedAddress={vi.fn()}
           isResolvingSelectedAddress={false}
         />
@@ -102,6 +105,7 @@ describe('DestinationStep', () => {
         onRecipient={vi.fn()}
         addressSuggestions={[]}
         isSearchingAddress={false}
+        resolveAddressAtPoint={vi.fn()}
         resolveSelectedAddress={vi.fn()}
         isResolvingSelectedAddress={false}
       />

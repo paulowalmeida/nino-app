@@ -27,6 +27,7 @@ describe('DeliveryRecipientFields', () => {
         addressSuggestions={[]}
         isSearchingAddress={false}
         onChange={onChange}
+        resolveAddressAtPoint={vi.fn()}
         resolveSelectedAddress={vi.fn()}
         isResolvingSelectedAddress={false}
       />
@@ -44,6 +45,7 @@ describe('DeliveryRecipientFields', () => {
         addressSuggestions={[addressPredictionMock]}
         isSearchingAddress={false}
         onChange={vi.fn()}
+        resolveAddressAtPoint={vi.fn()}
         resolveSelectedAddress={vi.fn()}
         isResolvingSelectedAddress={false}
       />
@@ -68,6 +70,7 @@ describe('DeliveryRecipientFields', () => {
         addressSuggestions={[]}
         isSearchingAddress={false}
         onChange={vi.fn()}
+        resolveAddressAtPoint={vi.fn()}
         resolveSelectedAddress={vi.fn()}
         isResolvingSelectedAddress={false}
         onAddressLookupRequested={onAddressLookupRequested}
@@ -87,6 +90,7 @@ describe('DeliveryRecipientFields', () => {
         addressSuggestions={[]}
         isSearchingAddress={false}
         onChange={vi.fn()}
+        resolveAddressAtPoint={vi.fn()}
         resolveSelectedAddress={vi.fn()}
         isResolvingSelectedAddress={false}
         onAddressLookupRequested={onAddressLookupRequested}
@@ -107,6 +111,7 @@ describe('DeliveryRecipientFields', () => {
         addressSuggestions={[]}
         isSearchingAddress={false}
         onChange={vi.fn()}
+        resolveAddressAtPoint={vi.fn()}
         resolveSelectedAddress={vi.fn()}
         isResolvingSelectedAddress
       />
@@ -127,6 +132,7 @@ describe('DeliveryRecipientFields', () => {
         addressSuggestions={[]}
         isSearchingAddress
         onChange={vi.fn()}
+        resolveAddressAtPoint={vi.fn()}
         resolveSelectedAddress={vi.fn()}
         isResolvingSelectedAddress={false}
         addressLookupRequested
@@ -150,6 +156,7 @@ describe('DeliveryRecipientFields', () => {
         addressSuggestions={[addressPredictionMock]}
         isSearchingAddress={false}
         onChange={vi.fn()}
+        resolveAddressAtPoint={vi.fn()}
         resolveSelectedAddress={vi.fn()}
         isResolvingSelectedAddress={false}
         addressLookupRequested
@@ -168,6 +175,7 @@ describe('DeliveryRecipientFields', () => {
         addressSuggestions={[]}
         isSearchingAddress={false}
         onChange={vi.fn()}
+        resolveAddressAtPoint={vi.fn()}
         resolveSelectedAddress={vi.fn()}
         isResolvingSelectedAddress={false}
         addressLookupRequested
@@ -187,6 +195,7 @@ describe('DeliveryRecipientFields', () => {
         addressSuggestions={[addressPredictionMock]}
         isSearchingAddress={false}
         onChange={onChange}
+        resolveAddressAtPoint={vi.fn()}
         resolveSelectedAddress={vi
           .fn()
           .mockResolvedValue(addressSearchResultMock)}
@@ -215,6 +224,7 @@ describe('DeliveryRecipientFields', () => {
         addressSuggestions={[addressPredictionMock]}
         isSearchingAddress={false}
         onChange={vi.fn()}
+        resolveAddressAtPoint={vi.fn()}
         resolveSelectedAddress={vi
           .fn()
           .mockResolvedValue(addressSearchResultMock)}
@@ -248,6 +258,7 @@ describe('DeliveryRecipientFields', () => {
         addressSuggestions={[addressPredictionMock]}
         isSearchingAddress={false}
         onChange={onChange}
+        resolveAddressAtPoint={vi.fn()}
         resolveSelectedAddress={resolveSelectedAddress}
         isResolvingSelectedAddress={false}
         addressLookupRequested
@@ -294,6 +305,7 @@ describe('DeliveryRecipientFields', () => {
         addressSuggestions={[addressPredictionMock]}
         isSearchingAddress={false}
         onChange={vi.fn()}
+        resolveAddressAtPoint={vi.fn()}
         resolveSelectedAddress={resolveSelectedAddress}
         isResolvingSelectedAddress={false}
         addressLookupRequested
@@ -320,6 +332,7 @@ describe('DeliveryRecipientFields', () => {
         addressSuggestions={[addressPredictionMock]}
         isSearchingAddress={false}
         onChange={onChange}
+        resolveAddressAtPoint={vi.fn()}
         resolveSelectedAddress={vi
           .fn()
           .mockResolvedValue(addressWithoutNumberMock)}
@@ -350,6 +363,7 @@ describe('DeliveryRecipientFields', () => {
         addressSuggestions={[addressPredictionMock]}
         isSearchingAddress={false}
         onChange={onChange}
+        resolveAddressAtPoint={vi.fn()}
         resolveSelectedAddress={vi
           .fn()
           .mockResolvedValue(addressSearchResultMock)}

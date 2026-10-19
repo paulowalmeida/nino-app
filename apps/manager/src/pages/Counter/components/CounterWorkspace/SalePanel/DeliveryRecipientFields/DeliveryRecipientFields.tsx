@@ -13,8 +13,10 @@ import type {
   AddressSearchResult,
 } from '@nino/lib/types/address/address-lookup'
 import { ADDRESS_LOOKUP_SKELETON_ROWS } from '@pages/Counter/constants/counter.constants'
+import { toMovedPinAddress } from '@pages/Counter/utils/toMovedPinAddress/toMovedPinAddress'
 import { AddressFields } from '@shared/components/AddressFields/AddressFields'
 import type { Recipient } from '@shared/types/order/recipient'
+import type { UnitMapLocation } from '@shared/types/store/unit-map-location'
 
 import { AddressConfirmMap } from './AddressConfirmMap/AddressConfirmMap'
 
@@ -26,6 +28,9 @@ type DeliveryRecipientFieldsProps = {
   isSearchingAddress: boolean
   onChange: (patch: Partial<Recipient>) => void
   resolveSelectedAddress: (placeId: string) => Promise<AddressSearchResult>
+  resolveAddressAtPoint: (
+    location: UnitMapLocation
+  ) => Promise<AddressSearchResult>
   isResolvingSelectedAddress: boolean
   addressLookupRequested?: boolean
   onAddressLookupRequested?: (requested: boolean) => void
@@ -37,6 +42,7 @@ export const DeliveryRecipientFields = ({
   isSearchingAddress,
   onChange,
   resolveSelectedAddress,
+  resolveAddressAtPoint,
   isResolvingSelectedAddress,
   addressLookupRequested,
   onAddressLookupRequested,
@@ -44,7 +50,10 @@ export const DeliveryRecipientFields = ({
   const [selectionError, setSelectionError] = useState<string | null>(null)
   const [pickedAddress, setPickedAddress] =
     useState<AddressSearchResult | null>(null)
+  const [isUpdatingPinAddress, setIsUpdatingPinAddress] = useState(false)
   const searchedAddress = useRef('')
+  const addressBeforePinMoves = useRef<AddressSearchResult | null>(null)
+  const pinMoveRequest = useRef(0)
   const isConfirmingAddress = Boolean(addressLookupRequested)
   const isLoadingAddresses = isSearchingAddress || isResolvingSelectedAddress
 
@@ -84,7 +93,41 @@ export const DeliveryRecipientFields = ({
     }
   }
 
+  const cancelPinMove = () => {
+    pinMoveRequest.current += 1
+    addressBeforePinMoves.current = null
+    setIsUpdatingPinAddress(false)
+  }
+
+  const movePin = async (
+    shownAddress: AddressSearchResult,
+    location: UnitMapLocation
+  ) => {
+    const addressBeforeMove = addressBeforePinMoves.current ?? shownAddress
+    addressBeforePinMoves.current = addressBeforeMove
+    const requestId = pinMoveRequest.current + 1
+    pinMoveRequest.current = requestId
+    setSelectionError(null)
+    setIsUpdatingPinAddress(true)
+    setPickedAddress({ ...shownAddress, ...location })
+
+    try {
+      const addressAtPin = await resolveAddressAtPoint(location)
+      if (requestId !== pinMoveRequest.current) return
+      setPickedAddress(toMovedPinAddress(addressBeforeMove, addressAtPin))
+    } catch {
+      if (requestId !== pinMoveRequest.current) return
+      setPickedAddress(addressBeforeMove)
+      setSelectionError(
+        'Não foi possível usar esse ponto: sem endereço ou fora da área de entrega.'
+      )
+    } finally {
+      if (requestId === pinMoveRequest.current) cancelPinMove()
+    }
+  }
+
   const confirmPickedAddress = (address: AddressSearchResult) => {
+    cancelPinMove()
     onChange({
       providerId: address.providerId,
       zipCode: address.zipCode,
@@ -101,7 +144,13 @@ export const DeliveryRecipientFields = ({
     onAddressLookupRequested?.(false)
   }
 
+  const pickAnotherAddress = () => {
+    cancelPinMove()
+    setPickedAddress(null)
+  }
+
   const leaveAddressConfirmation = () => {
+    cancelPinMove()
     setPickedAddress(null)
     onAddressLookupRequested?.(false)
   }
@@ -165,8 +214,10 @@ export const DeliveryRecipientFields = ({
   const confirmationContent = pickedAddress ? (
     <AddressConfirmMap
       address={pickedAddress}
+      isUpdatingAddress={isUpdatingPinAddress}
+      onPinMove={(location) => void movePin(pickedAddress, location)}
       onConfirm={() => confirmPickedAddress(pickedAddress)}
-      onPickAnother={() => setPickedAddress(null)}
+      onPickAnother={pickAnotherAddress}
     />
   ) : (
     addressResults

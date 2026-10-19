@@ -13,3 +13,5 @@ export const confirmedAddressMock = {
   latitude: -1.35,
   longitude: -48.37,
 } satisfies AddressSearchResult
+
+export const movedPinLocationMock = { latitude: -1.36, longitude: -48.38 }

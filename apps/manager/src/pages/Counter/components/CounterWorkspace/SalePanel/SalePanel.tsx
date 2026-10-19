@@ -52,6 +52,7 @@ export const SalePanel = ({ bare = false }: { bare?: boolean }) => {
     isSearchingAddress,
     resolveSelectedAddress,
     isResolvingSelectedAddress,
+    resolveAddressAtPoint,
   } = useCounterFacade()
 
   const goNext = () => {
@@ -125,6 +126,7 @@ export const SalePanel = ({ bare = false }: { bare?: boolean }) => {
           addressLookupRequested={addressLookupRequested}
           onAddressLookupRequested={setAddressLookupRequested}
           resolveSelectedAddress={resolveSelectedAddress}
+          resolveAddressAtPoint={resolveAddressAtPoint}
           isResolvingSelectedAddress={isResolvingSelectedAddress}
         />
       )}

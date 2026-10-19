@@ -128,6 +128,7 @@ export const useCounterFacade = () => {
     isSearchingAddress: addressSearch.isSearching,
     resolveSelectedAddress: addressSearch.resolveSelectedAddress,
     isResolvingSelectedAddress: addressSearch.isResolvingSelectedAddress,
+    resolveAddressAtPoint: addressSearch.resolveAddressAtPoint,
     isQuotingDelivery: deliveryQuote.isQuoting,
     changeFor,
     setSheet,

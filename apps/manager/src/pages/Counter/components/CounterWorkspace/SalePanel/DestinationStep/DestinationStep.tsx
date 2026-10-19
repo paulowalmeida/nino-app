@@ -11,6 +11,7 @@ import type {
 import { COUNTER_CHANNEL_HINT } from '@pages/Counter/constants/counter.constants'
 import type { OrderChannel } from '@shared/types/order/order-channel'
 import type { Recipient } from '@shared/types/order/recipient'
+import type { UnitMapLocation } from '@shared/types/store/unit-map-location'
 
 import { ChoiceCard } from '../ChoiceCard/ChoiceCard'
 import { DeliveryRecipientFields } from '../DeliveryRecipientFields/DeliveryRecipientFields'
@@ -29,6 +30,9 @@ type DestinationStepProps = {
   onTableNumber: (table: string) => void
   onRecipient: (patch: Partial<Recipient>) => void
   resolveSelectedAddress: (placeId: string) => Promise<AddressSearchResult>
+  resolveAddressAtPoint: (
+    location: UnitMapLocation
+  ) => Promise<AddressSearchResult>
   isResolvingSelectedAddress: boolean
   addressLookupRequested?: boolean
   onAddressLookupRequested?: (requested: boolean) => void
@@ -64,6 +68,7 @@ export const DestinationStep = ({
   onTableNumber,
   onRecipient,
   resolveSelectedAddress,
+  resolveAddressAtPoint,
   isResolvingSelectedAddress,
   addressLookupRequested,
   onAddressLookupRequested,
@@ -119,6 +124,7 @@ export const DestinationStep = ({
         isSearchingAddress={isSearchingAddress}
         onChange={onRecipient}
         resolveSelectedAddress={resolveSelectedAddress}
+        resolveAddressAtPoint={resolveAddressAtPoint}
         isResolvingSelectedAddress={isResolvingSelectedAddress}
         addressLookupRequested={addressLookupRequested}
         onAddressLookupRequested={onAddressLookupRequested}

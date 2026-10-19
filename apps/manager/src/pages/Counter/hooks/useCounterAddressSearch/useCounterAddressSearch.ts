@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react'
 import { useMutation, useQuery } from '@tanstack/react-query'
 
 import { CounterAddressSearchService } from '@pages/Counter/services/counter-address-search.service/counter-address-search.service'
+import type { UnitMapLocation } from '@shared/types/store/unit-map-location'
 
 export const useCounterAddressSearch = (
   unitId: string | null,
@@ -68,6 +69,15 @@ export const useCounterAddressSearch = (
     onSettled: () => setSessionToken(crypto.randomUUID()),
   })
 
+  const reverseMutation = useMutation({
+    mutationFn: ({ latitude, longitude }: UnitMapLocation) =>
+      CounterAddressSearchService.reverse(
+        unitId as string,
+        latitude,
+        longitude
+      ),
+  })
+
   const isWaitingForDebounce =
     normalizedStreet.length >= 3 &&
     normalizedNumber.length > 0 &&
@@ -80,5 +90,6 @@ export const useCounterAddressSearch = (
     isSearching: isWaitingForDebounce || query.isFetching,
     resolveSelectedAddress: detailsMutation.mutateAsync,
     isResolvingSelectedAddress: detailsMutation.isPending,
+    resolveAddressAtPoint: reverseMutation.mutateAsync,
   }
 }

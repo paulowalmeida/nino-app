@@ -73,3 +73,24 @@ describe(CounterAddressSearchService.details.name, () => {
     })
   })
 })
+
+describe(CounterAddressSearchService.reverse.name, () => {
+  afterEach(() => vi.clearAllMocks())
+
+  it('resolves the address of a dropped pin for the active unit', async () => {
+    vi.mocked(api.getAll).mockResolvedValue(counterAddressSearchResultMock)
+
+    await expect(
+      CounterAddressSearchService.reverse(
+        counterAddressSearchParamsMock.unitId,
+        -1.36,
+        -48.38
+      )
+    ).resolves.toEqual(counterAddressSearchResultMock)
+    expect(api.getAll).toHaveBeenCalledWith('addresses/reverse', {
+      unitId: counterAddressSearchParamsMock.unitId,
+      latitude: -1.36,
+      longitude: -48.38,
+    })
+  })
+})

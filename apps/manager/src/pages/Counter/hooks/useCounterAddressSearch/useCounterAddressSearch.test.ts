@@ -15,7 +15,11 @@ import {
 vi.mock(
   '@pages/Counter/services/counter-address-search.service/counter-address-search.service',
   () => ({
-    CounterAddressSearchService: { search: vi.fn(), details: vi.fn() },
+    CounterAddressSearchService: {
+      search: vi.fn(),
+      details: vi.fn(),
+      reverse: vi.fn(),
+    },
   })
 )
 
@@ -166,5 +170,34 @@ describe(useCounterAddressSearch.name, () => {
     })
 
     expect(CounterAddressSearchService.search).not.toHaveBeenCalled()
+  })
+
+  it('resolves the address of a dropped pin without consuming the search session', async () => {
+    // Arrange
+    vi.mocked(CounterAddressSearchService.reverse).mockResolvedValue(
+      addressSearchResultMock
+    )
+    const { result } = renderHook(
+      () => useCounterAddressSearch('unit-1', '', '', 'PA', false),
+      { wrapper }
+    )
+
+    // Act
+    let addressAtPin
+    await act(async () => {
+      addressAtPin = await result.current.resolveAddressAtPoint({
+        latitude: -1.36,
+        longitude: -48.38,
+      })
+    })
+
+    // Assert
+    expect(addressAtPin).toEqual(addressSearchResultMock)
+    expect(CounterAddressSearchService.reverse).toHaveBeenCalledWith(
+      'unit-1',
+      -1.36,
+      -48.38
+    )
+    expect(CounterAddressSearchService.details).not.toHaveBeenCalled()
   })
 })
