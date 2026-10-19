@@ -1,0 +1,9 @@
+@reference "@nino/ds/globals.css";
+
+.tableTabDetailPage {
+  @apply flex min-h-full w-full flex-col gap-5 p-4 lg:gap-7 lg:p-10;
+}
+
+.tableTabDetailBody {
+  @apply grid items-start gap-5 lg:grid-cols-[minmax(0,1.35fr)_minmax(18rem,0.65fr)];
+}

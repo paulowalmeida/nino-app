@@ -1,0 +1,9 @@
+@reference "@nino/ds/globals.css";
+
+.addTabItemDialogFields {
+  @apply flex flex-col gap-4;
+}
+
+.addTabItemDialogActions {
+  @apply justify-end gap-2;
+}
