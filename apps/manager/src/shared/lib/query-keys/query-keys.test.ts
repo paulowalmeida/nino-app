@@ -76,6 +76,11 @@ describe('queryKeys', () => {
     expect(
       queryKeys.tabs.list(queryKeyUnitIdMock, queryKeyTabStatusesMock)
     ).toEqual(['tabs', queryKeyUnitIdMock, 'list', 'OPEN,AWAITING_PAYMENT'])
+    expect(queryKeys.tabs.lists(queryKeyUnitIdMock)).toEqual([
+      'tabs',
+      queryKeyUnitIdMock,
+      'list',
+    ])
     expect(queryKeys.tabs.list(queryKeyUnitIdMock, ['FINALIZED'])).not.toEqual(
       queryKeys.tabs.list(queryKeyUnitIdMock, queryKeyTabStatusesMock)
     )

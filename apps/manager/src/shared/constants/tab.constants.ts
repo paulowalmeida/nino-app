@@ -16,19 +16,11 @@ export const TAB_STATUS_LABEL = {
   FINALIZED: 'Finalizada',
 } as const satisfies Readonly<Record<TabStatus, string>>
 
-export const TAB_PAYMENT_METHODS = [
-  'CASH',
-  'CARD_ON_DELIVERY',
-  'PIX',
-] as const satisfies readonly PaymentMethod[]
-
-export const TAB_PAYMENT_METHOD_LABEL = {
-  CASH: 'Dinheiro',
-  CARD_ON_DELIVERY: 'Cartão na maquininha',
-  PIX: 'Pix',
-} as const satisfies Readonly<
-  Record<(typeof TAB_PAYMENT_METHODS)[number], string>
->
+export const TAB_PAYMENT_OPTIONS = [
+  { value: 'CASH', label: 'Dinheiro' },
+  { value: 'CARD_ON_DELIVERY', label: 'Cartão na maquininha' },
+  { value: 'PIX', label: 'Pix' },
+] as const satisfies readonly { value: PaymentMethod; label: string }[]
 
 export const TAB_STATUS_BADGE_VARIANT = {
   OPEN: 'brand',
