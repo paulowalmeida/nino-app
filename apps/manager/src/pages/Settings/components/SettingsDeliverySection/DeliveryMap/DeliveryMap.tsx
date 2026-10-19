@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react'
 
-import { APIProvider, Circle, Map, Marker } from '@vis.gl/react-google-maps'
+import { APIProvider, Circle, Map } from '@vis.gl/react-google-maps'
 
 import { Box } from '@nino/ds/components/Box'
 import { Text } from '@nino/ds/components/Text'
@@ -9,6 +9,7 @@ import type { DeliveryZone } from '@shared/types/settings/delivery-zone'
 import type { UnitMapLocation } from '@shared/types/store/unit-map-location'
 
 import { FitZoneBounds } from './FitZoneBounds/FitZoneBounds'
+import { UnitMarker } from './UnitMarker/UnitMarker'
 
 import local from './DeliveryMap.module.css'
 
@@ -125,17 +126,10 @@ export const DeliveryMap = ({
                 />
               ) : null}
 
-              <Marker
-                position={center}
-                title="Unidade"
-                icon={{
-                  path: google.maps.SymbolPath.CIRCLE,
-                  scale: 7,
-                  fillColor: mapColors.brand,
-                  fillOpacity: 1,
-                  strokeColor: mapColors.unitOutline,
-                  strokeWeight: 3,
-                }}
+              <UnitMarker
+                location={coordinates}
+                fillColor={mapColors.brand}
+                outlineColor={mapColors.unitOutline}
               />
             </Map>
           </APIProvider>

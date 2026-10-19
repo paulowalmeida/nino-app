@@ -1,6 +1,7 @@
 import type { ReactNode } from 'react'
 
 import { render, screen } from '@testing-library/react'
+import { useApiIsLoaded } from '@vis.gl/react-google-maps'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
 import { DeliveryMap } from './DeliveryMap'
@@ -27,6 +28,7 @@ vi.mock('@vis.gl/react-google-maps', () => ({
   ),
   Marker: ({ title }: { title: string }) => <span title={title} />,
   useMap: () => null,
+  useApiIsLoaded: vi.fn(),
 }))
 
 const renderedRings = () =>
@@ -40,9 +42,11 @@ describe('DeliveryMap', () => {
   beforeEach(() => {
     vi.stubGlobal('google', { maps: { SymbolPath: { CIRCLE: 0 } } })
     vi.stubEnv('VITE_GOOGLE_MAPS_API_KEY', 'browser-key')
+    vi.mocked(useApiIsLoaded).mockReturnValue(true)
   })
 
   afterEach(() => {
+    vi.mocked(useApiIsLoaded).mockReset()
     vi.unstubAllGlobals()
     vi.unstubAllEnvs()
   })
@@ -80,6 +84,22 @@ describe('DeliveryMap', () => {
       { radius: 4000, strokeWeight: 3, fillOpacity: 0.2 },
       { radius: 6000, strokeWeight: 2, fillOpacity: 0.06 },
     ])
+  })
+
+  it('renders the rings without the unit marker while Google Maps is still loading', () => {
+    vi.unstubAllGlobals()
+    vi.mocked(useApiIsLoaded).mockReturnValue(false)
+
+    render(
+      <DeliveryMap
+        zones={deliveryZonesMock}
+        coordinates={unitCoordinatesMock}
+      />
+    )
+
+    expect(screen.getByTestId('google-map')).toBeInTheDocument()
+    expect(screen.queryByTitle('Unidade')).not.toBeInTheDocument()
+    expect(renderedRings()).toHaveLength(2)
   })
 
   it('explains that the unit address could not be located', () => {
