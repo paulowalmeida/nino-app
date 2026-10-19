@@ -59,7 +59,9 @@ export function CountUp({ value }: CountUpProps) {
 
     const tick = (now: number) => {
       const progress = Math.min((now - start) / duration, 1)
-      const current = Math.round(from + (target - from) * easeOutCubic(progress))
+      const current = Math.round(
+        from + (target - from) * easeOutCubic(progress)
+      )
       shownRef.current = current
       node.textContent = String(current)
       if (progress < 1) frameRef.current = requestAnimationFrame(tick)

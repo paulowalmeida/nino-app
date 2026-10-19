@@ -2,7 +2,6 @@ import { render, screen } from '@testing-library/react'
 import { describe, expect, it } from 'vitest'
 
 import { Header } from './Header'
-import styles from './Header.module.css'
 
 describe(Header.name, () => {
   it('renders the title as a heading', () => {
@@ -55,42 +54,14 @@ describe(Header.name, () => {
     ).toBeInTheDocument()
   })
 
-  it('wraps only the accent in its own element', () => {
-    // Arrange / Act
-    render(<Header title="Meus dados" accent="dados" />)
-
-    // Assert
-    const mark = screen.getByText('dados')
-    expect(mark.tagName).toBe('SPAN')
-    expect(mark).toHaveClass(styles.accent)
-  })
-
-  it('keeps an accent in the middle of the title in place', () => {
+  it('underlines the whole title, whatever accent value is passed', () => {
     // Arrange / Act
     render(<Header title="Sua sacola está vazia" accent="sacola" />)
 
     // Assert
-    expect(
-      screen.getByRole('heading', { name: 'Sua sacola está vazia' })
-    ).toBeInTheDocument()
-    expect(screen.getByText('sacola').tagName).toBe('SPAN')
-  })
-
-  it('accents a title that is a single word', () => {
-    // Arrange / Act
-    render(<Header title="Cardápio" accent="Cardápio" />)
-
-    // Assert
-    expect(screen.getByText('Cardápio').tagName).toBe('SPAN')
-  })
-
-  it('ignores an accent absent from the title', () => {
-    // Arrange / Act
-    render(<Header title="Pedidos" accent="clientes" />)
-
-    // Assert
-    expect(screen.getByRole('heading', { name: 'Pedidos' })).toBeInTheDocument()
-    expect(screen.queryByText('clientes')).not.toBeInTheDocument()
+    const underlined = screen.getByText('Sua sacola está vazia')
+    expect(underlined.tagName).toBe('SPAN')
+    expect(underlined.parentElement).toBe(screen.getByRole('heading'))
   })
 
   it('applies the margin props to the root', () => {

@@ -73,4 +73,20 @@ describe(Heading.name, () => {
     // Assert
     expect(screen.getByRole('heading', { level: 2 })).toHaveClass('mb-4')
   })
+
+  it('wraps the content in the underline only when accented', () => {
+    // Arrange / Act
+    render(
+      <>
+        <Heading level={1} accent>
+          Pedidos
+        </Heading>
+        <Heading level={2}>Clientes</Heading>
+      </>
+    )
+
+    // Assert
+    expect(screen.getByText('Pedidos')).toHaveClass(styles.accent)
+    expect(screen.getByText('Clientes').tagName).toBe('H2')
+  })
 })

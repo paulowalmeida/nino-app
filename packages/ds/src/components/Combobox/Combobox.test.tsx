@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react'
+import { render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { describe, expect, it, vi } from 'vitest'
 
@@ -79,7 +79,9 @@ describe(Combobox.name, () => {
 
     const input = screen.getByRole('combobox')
     await user.click(input)
-    await user.keyboard('{ArrowDown}{Enter}')
+    await user.keyboard('{ArrowDown}')
+    await waitFor(() => expect(input).toHaveAttribute('aria-activedescendant'))
+    await user.keyboard('{Enter}')
 
     expect(input).toHaveValue('Travessa WE-69-A')
   })
