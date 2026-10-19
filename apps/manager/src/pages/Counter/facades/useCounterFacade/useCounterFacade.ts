@@ -106,6 +106,11 @@ export const useCounterFacade = () => {
   return {
     ...menu,
     ...payments,
+    // Payment methods also expose query status fields. Keep the menu status
+    // explicit so product loading is never driven by the payment request.
+    isMenuPending: menu.isPending,
+    isMenuError: menu.isError,
+    isMenuSuccess: menu.isSuccess,
     ...cart,
     subtotal: cart.total,
     deliveryFee,

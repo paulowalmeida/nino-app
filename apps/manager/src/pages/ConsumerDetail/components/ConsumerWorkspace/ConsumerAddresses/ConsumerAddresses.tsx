@@ -25,9 +25,9 @@ export const ConsumerAddresses = () => {
             align="start"
             divider={index === 0 ? 'none' : 'top'}
           >
-            <div className={styles.address}>
+            <Box className={styles.address}>
               <Icon name="map-pin" size="sm" color="faint" />
-              <div className={styles.lines}>
+              <Box className={styles.lines}>
                 <Text
                   size="sm"
                   weight="semibold"
@@ -44,8 +44,8 @@ export const ConsumerAddresses = () => {
                 <Text size="xs" color="subtle" className={styles.cityLine}>
                   {address.cityLine}
                 </Text>
-              </div>
-            </div>
+              </Box>
+            </Box>
           </ListRow>
         ))}
       </Box>

@@ -1,3 +1,5 @@
+import { Box } from '@nino/ds/components/Box'
+import { Text } from '@nino/ds/components/Text'
 import { useOrderDetailFacade } from '@pages/OrderDetail/facades/useOrderDetailFacade/useOrderDetailFacade'
 import { OrderTimeline } from '@shared/components/OrderTimeline/OrderTimeline'
 import { riseDelay } from '@shared/utils/rise-delay/rise-delay'
@@ -11,9 +13,9 @@ export const OrderProgressBlock = () => {
   if (!order) return null
 
   return (
-    <section
+    <Box as="section"
       aria-label="Andamento"
-      className={`${motion.settle} ${styles.block}`}
+      className={`${motion.deal} ${styles.block}`}
       style={riseDelay(200)}
     >
       <h2 className={styles.cardTitle}>Andamento</h2>
@@ -21,10 +23,10 @@ export const OrderProgressBlock = () => {
       <OrderTimeline entries={order.statusHistory} />
 
       {order.cancelReason && (
-        <p className={styles.cancelReason}>
+        <Text className={styles.cancelReason}>
           Motivo do cancelamento: {order.cancelReason}
-        </p>
+        </Text>
       )}
-    </section>
+    </Box>
   )
 }

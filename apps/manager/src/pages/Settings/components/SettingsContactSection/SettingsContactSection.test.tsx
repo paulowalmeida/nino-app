@@ -27,7 +27,7 @@ describe('SettingsContactSection', () => {
     render(<SettingsContactSection />)
 
     expect(
-      screen.getByRole('heading', { name: 'Contato da loja' })
+      screen.getByRole('heading', { name: 'Contato' })
     ).toBeInTheDocument()
     expect(
       screen.getByRole('heading', { name: 'Adicionar telefone' })

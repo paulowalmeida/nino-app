@@ -86,13 +86,13 @@ export const CatalogItems = ({ className }: CatalogItemsProps) => {
         </Reorder.Group>
       </Box>
 
-      <div ref={loadMoreSentinelRef} className={styles.sentinel}>
+      <Box ref={loadMoreSentinelRef} className={styles.sentinel}>
         {isFetchingNextPage && (
           <Text as="span" size="xs" color="faint">
             Carregando mais itens…
           </Text>
         )}
-      </div>
+      </Box>
     </ScrollArea>
   )
 }

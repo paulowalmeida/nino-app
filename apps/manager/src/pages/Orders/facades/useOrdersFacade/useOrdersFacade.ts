@@ -23,7 +23,8 @@ export const useOrdersFacade = () => {
   return {
     orders: ordersQuery.orders,
     isPending: ordersQuery.isPending,
-    isError: ordersQuery.isError,
+    isError: ordersQuery.isError || queueSummary.isError,
+    isPagePending: ordersQuery.isPending || queueSummary.isPending,
     hasNextPage: ordersQuery.hasNextPage,
     isFetchingNextPage: ordersQuery.isFetchingNextPage,
     fetchNextPage: ordersQuery.fetchNextPage,

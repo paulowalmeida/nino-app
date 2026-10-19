@@ -10,15 +10,24 @@ import { OrdersQueue } from './OrdersQueue'
 import { ordersQueueMock } from './OrdersQueue.mock'
 
 vi.mock('@pages/Orders/facades/useOrdersFacade/useOrdersFacade')
-vi.mock('@shared/hooks/ui/useLoadMore/useLoadMore', () => ({ useLoadMore: vi.fn(() => null) }))
+vi.mock('@shared/hooks/ui/useLoadMore/useLoadMore', () => ({
+  useLoadMore: vi.fn(() => null),
+}))
 vi.mock('@shared/components/OrderTicket/OrderTicket', () => ({
-  OrderTicket: ({ onAdvance }: { onAdvance: (id: string, status: string) => void }) => (
+  OrderTicket: ({
+    onAdvance,
+  }: {
+    onAdvance: (id: string, status: string) => void
+  }) => (
     <button onClick={() => onAdvance('order-1', 'ACCEPTED')}>ticket</button>
   ),
 }))
-vi.mock('@pages/Orders/skeletons/OrderTicketSkeleton/OrderTicketSkeleton', () => ({
-  OrderTicketSkeleton: () => <div>ticket loading</div>,
-}))
+vi.mock(
+  '@pages/Orders/skeletons/OrderTicketSkeleton/OrderTicketSkeleton',
+  () => ({
+    OrderTicketSkeleton: () => <div>ticket loading</div>,
+  })
+)
 
 describe('OrdersQueue', () => {
   it('renders an empty search state', () => {
@@ -64,7 +73,9 @@ describe('OrdersQueue', () => {
 
     render(<OrdersQueue />, { wrapper: MemoryRouter })
 
-    expect(screen.getByText('Os pedidos concluídos aparecem aqui.')).toBeInTheDocument()
+    expect(
+      screen.getByText('Os pedidos concluídos aparecem aqui.')
+    ).toBeInTheDocument()
   })
 
   it('keeps an empty state safe for an unknown stage', () => {
@@ -117,12 +128,16 @@ describe('OrdersQueue', () => {
 
   it('renders the loading tickets', () => {
     vi.mocked(useOrdersFacade).mockReturnValue({
-      orders: [], isPending: true, isError: false,
-      isSearching: false, stage: 'incoming',
+      orders: [],
+      isPending: true,
+      isError: false,
+      isSearching: false,
+      stage: 'incoming',
     } as never)
 
     render(<OrdersQueue />, { wrapper: MemoryRouter })
 
     expect(screen.getAllByText('ticket loading')).toHaveLength(4)
+    expect(screen.getByRole('status')).toHaveTextContent('Carregando pedidos')
   })
 })

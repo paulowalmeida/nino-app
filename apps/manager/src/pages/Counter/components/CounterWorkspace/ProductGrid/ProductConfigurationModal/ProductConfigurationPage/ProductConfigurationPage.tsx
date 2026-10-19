@@ -61,7 +61,7 @@ export const ProductConfigurationPage = ({
 
       <Box className={styles.productConfigurationPageDetails}>
         <Box className={styles.productConfigurationPageSummary}>
-          <Heading level={1} className={styles.name}>
+          <Heading level={1} accent className={styles.name}>
             {item.name}
           </Heading>
           {item.description && (

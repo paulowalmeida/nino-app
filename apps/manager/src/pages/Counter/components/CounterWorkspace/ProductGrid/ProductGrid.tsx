@@ -10,6 +10,7 @@ import {
   PRODUCT_GRID_SKELETON_TABS,
 } from '@pages/Counter/constants/counter.constants'
 import { useCounterFacade } from '@pages/Counter/facades/useCounterFacade/useCounterFacade'
+import { useMenuImagesReady } from '@pages/Counter/hooks/useMenuImagesReady/useMenuImagesReady'
 import { CategoryChips } from '@shared/components/CategoryChips/CategoryChips'
 import type { MenuItem } from '@shared/types/product/menu-item'
 
@@ -23,9 +24,9 @@ import styles from './ProductGrid.module.css'
 export const ProductGrid = () => {
   const {
     sections,
-    isPending,
-    isError,
-    isSuccess,
+    isMenuPending,
+    isMenuError,
+    isMenuSuccess,
     lines,
     add: onPick,
     updateQuantity: onStep,
@@ -34,8 +35,12 @@ export const ProductGrid = () => {
   const [configuredItem, setConfiguredItem] = useState<MenuItem | null>(null)
   const [previewedItem, setPreviewedItem] = useState<MenuItem | null>(null)
   const [term, setTerm] = useState('')
+  const areMenuImagesReady = useMenuImagesReady(sections)
 
-  const active = current ?? sections[0]?.id ?? null
+  const active =
+    current ??
+    sections.find(({ items }) => items.some(({ isActive }) => isActive))?.id ??
+    null
   const searching = term.trim().length > 0
 
   const query = term.trim().toLowerCase()
@@ -80,7 +85,7 @@ export const ProductGrid = () => {
     </Box>
   )
 
-  if (isError) {
+  if (isMenuError) {
     return (
       <Box className={styles.feedback}>
         <Alert variant="error" title="Não foi possível carregar o cardápio">
@@ -91,7 +96,11 @@ export const ProductGrid = () => {
     )
   }
 
-  if (isPending || (!isError && !isSuccess)) {
+  if (
+    isMenuPending ||
+    (!isMenuError && !isMenuSuccess) ||
+    !areMenuImagesReady
+  ) {
     return (
       <Box className={styles.wrap}>
         <Box className={styles.productGridControls}>
@@ -122,6 +131,10 @@ export const ProductGrid = () => {
   const hasActiveItems = sections.some(({ items }) =>
     items.some(({ isActive }) => isActive)
   )
+  const activeItems =
+    sections
+      .find(({ id }) => id === active)
+      ?.items.filter(({ isActive }) => isActive) ?? []
 
   if (!hasActiveItems) {
     return (
@@ -162,11 +175,13 @@ export const ProductGrid = () => {
         ))}
 
       {!searching &&
-        renderGrid(
-          sections
-            .find(({ id }) => id === active)
-            ?.items.filter(({ isActive }) => isActive) ?? []
-        )}
+        (activeItems.length === 0 ? (
+          <Box className={styles.feedback}>
+            <EmptyState>Nenhum item ativo nesta categoria.</EmptyState>
+          </Box>
+        ) : (
+          renderGrid(activeItems)
+        ))}
 
       <ProductPreviewModal
         item={previewedItem}

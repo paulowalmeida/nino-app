@@ -7,6 +7,7 @@ import { useCatalogFacade } from '@pages/Catalog/facades/useCatalogFacade'
 import { CategoryChips } from '@shared/components/CategoryChips/CategoryChips'
 import { useDebouncedValue } from '@shared/hooks/ui/useDebouncedValue/useDebouncedValue'
 
+import motion from '@styles/motion.module.css'
 import styles from '@pages/Catalog/components/CatalogHeader/CatalogHeader.module.css'
 
 const DESCRIPTION =
@@ -30,9 +31,9 @@ export const CatalogHeader = () => {
     <>
       <Header
         mb={{ mobile: 3, desktop: 4 }}
-        className={styles.catalogHeader}
-        title="Cardápio"
-        accent="Cardápio"
+        className={`${motion.deal} ${styles.catalogHeader}`}
+        title="Produtos"
+        accent="Produtos"
         description={DESCRIPTION}
       />
 

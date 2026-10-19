@@ -1,4 +1,5 @@
 import { Box } from '@nino/ds/components/Box'
+import { ListRow } from '@nino/ds/components/ListRow'
 import { Skeleton } from '@nino/ds/components/Skeleton'
 import { MENU_BOARD_GHOST_ROWS } from '@pages/Catalog/constants/catalog.constants'
 
@@ -13,7 +14,7 @@ export const CatalogContentSkeleton = () => (
       <Box className={styles.catalogContentSkeletonList}>
         <Box as="ul" direction="column">
           {MENU_BOARD_GHOST_ROWS.map((row) => (
-            <li key={row} className={rowStyles.menuRowItem}>
+            <ListRow divider="none" padding={0} gap={0} key={row} className={rowStyles.menuRowItem}>
               <Box className={rowStyles.itemLink}>
                 <Skeleton className={styles.thumb} />
                 <Box className={rowStyles.itemText}>
@@ -23,7 +24,7 @@ export const CatalogContentSkeleton = () => (
                 <Skeleton className={styles.price} />
               </Box>
               <Skeleton className={styles.switch} />
-            </li>
+            </ListRow>
           ))}
         </Box>
       </Box>

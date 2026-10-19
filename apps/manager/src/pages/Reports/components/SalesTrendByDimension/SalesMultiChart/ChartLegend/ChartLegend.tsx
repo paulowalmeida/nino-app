@@ -1,3 +1,4 @@
+import { Box } from '@nino/ds/components/Box'
 import { ListRow } from '@nino/ds/components/ListRow'
 import { Text } from '@nino/ds/components/Text'
 import { CHART_PALETTE } from '@pages/Reports/constants/reports.constants'
@@ -11,7 +12,7 @@ export type ChartLegendProps = {
 }
 
 export const ChartLegend = ({ items }: ChartLegendProps) => (
-  <ul className={styles.legend}>
+  <Box as="ul" className={styles.legend}>
     {items.map((item, index) => (
       <ListRow
         key={item.key}
@@ -29,5 +30,5 @@ export const ChartLegend = ({ items }: ChartLegendProps) => (
         <Text as="span">{item.label}</Text>
       </ListRow>
     ))}
-  </ul>
+  </Box>
 )

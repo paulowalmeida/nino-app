@@ -1,4 +1,4 @@
 export const categoriesHeaderMock = {
-  title: 'Como o cardápio se organiza',
+  title: 'Categorias',
   createFormText: 'create-category-form',
 }

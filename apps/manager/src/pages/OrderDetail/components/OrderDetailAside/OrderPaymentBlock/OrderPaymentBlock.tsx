@@ -1,4 +1,6 @@
+import { Box } from '@nino/ds/components/Box'
 import { Button } from '@nino/ds/components/Button'
+import { Text } from '@nino/ds/components/Text'
 import { useOrderDetailFacade } from '@pages/OrderDetail/facades/useOrderDetailFacade/useOrderDetailFacade'
 import {
   PAYMENT_METHOD_LABEL_BY_CHANNEL,
@@ -17,20 +19,20 @@ export const OrderPaymentBlock = () => {
   if (!order) return null
 
   return (
-    <section
+    <Box as="section"
       aria-label="Pagamento"
-      className={`${motion.settle} ${styles.block}`}
+      className={`${motion.deal} ${styles.block}`}
       style={riseDelay(140)}
     >
       <h2 className={styles.cardTitle}>Pagamento</h2>
 
-      <p className={styles.payLine}>
+      <Text className={styles.payLine}>
         {PAYMENT_METHOD_LABEL_BY_CHANNEL[order.channel][order.paymentMethod]}
-        <span className={styles.payState}>
+        <Text as="span" className={styles.payState}>
           {' '}
           · {PAYMENT_STATUS_LABEL[order.paymentStatus]}
-        </span>
-      </p>
+        </Text>
+      </Text>
 
       <OrderChangeLine order={order} />
 
@@ -45,6 +47,6 @@ export const OrderPaymentBlock = () => {
           Recebi o pagamento
         </Button>
       )}
-    </section>
+    </Box>
   )
 }

@@ -1,4 +1,4 @@
-import { fireEvent, render, screen } from '@testing-library/react'
+import { fireEvent, render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 
@@ -53,6 +53,9 @@ const facadeState = vi.hoisted(() => ({
   isPending: false,
   isError: false,
   isSuccess: false,
+  isMenuPending: false,
+  isMenuError: false,
+  isMenuSuccess: false,
   error: null as Error | null,
   lines: [] as CartLine[],
   add: vi.fn(),
@@ -87,26 +90,29 @@ describe(ProductGrid.name, () => {
     facadeState.isPending = false
     facadeState.isError = false
     facadeState.isSuccess = true
+    facadeState.isMenuPending = false
+    facadeState.isMenuError = false
+    facadeState.isMenuSuccess = true
     facadeState.error = null
     facadeState.lines = []
     facadeState.add.mockClear()
   })
 
   it('keeps the layout without claiming the catalog is empty', () => {
-    facadeState.isPending = true
+    facadeState.isMenuPending = true
     const { container, rerender } = render(<ProductGrid />)
     expect(
       container.querySelectorAll('[aria-hidden="true"]').length
     ).toBeGreaterThan(0)
-    facadeState.isPending = false
-    facadeState.isSuccess = true
+    facadeState.isMenuPending = false
+    facadeState.isMenuSuccess = true
     rerender(<ProductGrid />)
     expect(screen.queryByText(/cardápio está vazio/)).not.toBeInTheDocument()
     expect(screen.getByText('empty menu')).toBeInTheDocument()
   })
 
   it('keeps the skeleton until the menu query is complete', () => {
-    facadeState.isSuccess = false
+    facadeState.isMenuSuccess = false
     const { container } = render(<ProductGrid />)
 
     expect(
@@ -114,9 +120,56 @@ describe(ProductGrid.name, () => {
     ).toBeGreaterThan(0)
   })
 
+  it('keeps the grid skeleton until every menu image is decoded', async () => {
+    const preloads: Array<{ onload: (() => void) | null }> = []
+
+    class PendingImage {
+      onload: (() => void) | null = null
+      onerror: (() => void) | null = null
+      complete = false
+      naturalWidth = 0
+
+      set src(_source: string) {
+        preloads.push(this)
+      }
+
+      decode = () => Promise.resolve()
+    }
+
+    vi.stubGlobal('Image', PendingImage)
+    facadeState.sections = [
+      {
+        ...sections[0],
+        items: [
+          {
+            ...sections[0].items[0],
+            images: [{ id: 'image-1', url: '/coffee.png', isPrimary: true }],
+          },
+        ],
+      },
+    ]
+
+    const { container } = render(<ProductGrid />)
+
+    await waitFor(() => expect(preloads).toHaveLength(1))
+    expect(
+      container.querySelectorAll('[aria-hidden="true"]').length
+    ).toBeGreaterThan(0)
+    expect(
+      screen.queryByRole('button', { name: 'Café' })
+    ).not.toBeInTheDocument()
+
+    preloads[0].onload?.()
+
+    expect(
+      await screen.findByRole('button', { name: 'Café' })
+    ).toBeInTheDocument()
+    vi.unstubAllGlobals()
+  })
+
   it('shows an error instead of an empty-state message after a failed request', () => {
-    facadeState.isError = true
-    facadeState.isSuccess = false
+    facadeState.isMenuError = true
+    facadeState.isMenuSuccess = false
     facadeState.error = new Error('Request timed out')
 
     render(<ProductGrid />)

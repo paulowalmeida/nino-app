@@ -1,5 +1,10 @@
+import { Box } from '@nino/ds/components/Box'
+import { Text } from '@nino/ds/components/Text'
 import { useOrderDetailFacade } from '@pages/OrderDetail/facades/useOrderDetailFacade/useOrderDetailFacade'
-import { addressOf, consumerNameOf } from '@shared/utils/order-consumer/order-consumer'
+import {
+  addressOf,
+  consumerNameOf,
+} from '@shared/utils/order-consumer/order-consumer'
 import { formatPhone } from '@shared/utils/phone/phone'
 import { riseDelay } from '@shared/utils/rise-delay/rise-delay'
 
@@ -14,13 +19,13 @@ export const OrderConsumerBlock = () => {
   const address = addressOf(order)
 
   return (
-    <section
+    <Box as="section"
       aria-label="Quem pediu"
-      className={`${motion.settle} ${styles.block}`}
+      className={`${motion.deal} ${styles.block}`}
       style={riseDelay(80)}
     >
       <h2 className={styles.cardTitle}>Quem pediu</h2>
-      <p className={styles.consumer}>{consumerNameOf(order)}</p>
+      <Text className={styles.consumer}>{consumerNameOf(order)}</Text>
 
       {order.guestPhone && (
         <a href={`tel:${order.guestPhone}`} className={styles.phone}>
@@ -28,11 +33,11 @@ export const OrderConsumerBlock = () => {
         </a>
       )}
 
-      {address && <p className={styles.address}>{address}</p>}
+      {address && <Text className={styles.address}>{address}</Text>}
 
       {order.tableNumber && (
-        <p className={styles.address}>Mesa {order.tableNumber}</p>
+        <Text className={styles.address}>Mesa {order.tableNumber}</Text>
       )}
-    </section>
+    </Box>
   )
 }

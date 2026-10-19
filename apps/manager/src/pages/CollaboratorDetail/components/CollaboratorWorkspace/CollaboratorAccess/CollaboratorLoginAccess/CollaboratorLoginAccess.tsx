@@ -19,7 +19,7 @@ export const CollaboratorLoginAccess = ({
   emailLockHint,
   onOpenEmailModal,
 }: CollaboratorLoginAccessProps) => (
-  <section aria-labelledby={LOGIN_LABEL_ID}>
+  <Box as="section" aria-labelledby={LOGIN_LABEL_ID}>
     <Heading
       level={3}
       size="sm"
@@ -66,5 +66,5 @@ export const CollaboratorLoginAccess = ({
         </Text>
       </Box>
     )}
-  </section>
+  </Box>
 )

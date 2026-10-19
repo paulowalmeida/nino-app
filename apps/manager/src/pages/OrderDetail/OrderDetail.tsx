@@ -3,6 +3,7 @@ import { Badge } from '@nino/ds/components/Badge'
 import { Box } from '@nino/ds/components/Box'
 import { Eyebrow } from '@nino/ds/components/Eyebrow'
 import { Heading } from '@nino/ds/components/Heading'
+import { ListRow } from '@nino/ds/components/ListRow'
 import { ScrollArea } from '@nino/ds/components/ScrollArea'
 import { Text } from '@nino/ds/components/Text'
 import { OrderDetailAside } from '@pages/OrderDetail/components/OrderDetailAside/OrderDetailAside'
@@ -64,81 +65,81 @@ export const OrderDetail = () => {
         <BackLink to={back.to}>{back.label}</BackLink>
       </Box>
 
-      <header className={`${motion.settle} ${styles.hero}`}>
-        <div className={styles.heroText}>
+      <Box as="header" className={`${motion.deal} ${styles.hero}`}>
+        <Box className={styles.heroText}>
           <Eyebrow className={styles.channel}>
             {CHANNEL_LABEL[order.channel]}
           </Eyebrow>
-          <Heading level={1} className={`${motion.land} ${styles.number}`}>
+          <Heading level={1} accent className={styles.number}>
             #{ticketNumber(order.orderNumber)}
           </Heading>
           <Text className={styles.opened}>
             aberto em {stamp.format(new Date(order.createdAt))}
           </Text>
-        </div>
+        </Box>
         <Badge
           variant={toOrderBadgeVariant(order.status)}
           className={styles.orderDetailBadge}
         >
           {STATUS_LABEL[order.status]}
         </Badge>
-      </header>
+      </Box>
 
       <Box className={styles.columns}>
-        <section
+        <Box as="section"
           aria-label="Itens do pedido"
-          className={`${motion.unroll} ${styles.receipt}`}
+          className={`${motion.deal} ${styles.receipt}`}
         >
           <ScrollArea className={styles.itemsScroll}>
             <Box as="ul" className={styles.items}>
               {order.items.map((item, index) => (
-                <li
+                <ListRow divider="none" padding={0} gap={0}
                   key={item.id}
                   className={`${motion.deal} ${styles.orderDetailItem}`}
                   style={riseDelay(index * 45 + 60)}
                 >
-                  <span className={styles.quantity}>{item.quantity}×</span>
-                  <span className={styles.itemName}>{item.product.name}</span>
-                  <span className={styles.itemPrice}>
+                  <Text as="span" className={styles.quantity}>{item.quantity}×</Text>
+                  <Text as="span" className={styles.itemName}>{item.product.name}</Text>
+                  <Text as="span" className={styles.itemPrice}>
                     {brl(Number(item.unitPrice) * item.quantity)}
-                  </span>
-                </li>
+                  </Text>
+                </ListRow>
               ))}
             </Box>
           </ScrollArea>
 
           <dl className={styles.totals}>
-            <div className={styles.totalRow}>
+            <Box className={styles.totalRow}>
               <dt>Subtotal</dt>
               <dd>{brl(order.subtotal)}</dd>
-            </div>
+            </Box>
             {Number(order.deliveryFee) > 0 && (
-              <div className={styles.totalRow}>
+              <Box className={styles.totalRow}>
                 <dt>
                   Entrega
                   {order.deliveryZoneName && (
-                    <span className={styles.zone}>
+                    <Text as="span" className={styles.zone}>
                       {' '}
                       · {order.deliveryZoneName}
-                    </span>
+                    </Text>
                   )}
                 </dt>
                 <dd>{brl(order.deliveryFee)}</dd>
-              </div>
+              </Box>
             )}
-            <div className={`${styles.totalRow} ${styles.grandTotal}`}>
+            <Box className={`${styles.totalRow} ${styles.grandTotal}`}>
               <dt>Total</dt>
               <dd>{brl(order.totalAmount)}</dd>
-            </div>
+            </Box>
           </dl>
 
           {order.notes && (
-            <p className={styles.notes}>
-              <span className={styles.notesLabel}>Observação do cliente</span>
+            <Text className={styles.notes}>
+              <Text as="span" className={styles.notesLabel}>Observação do cliente</Text>
               {order.notes}
-            </p>
+            </Text>
           )}
-        </section>
+        </Box>
 
         <OrderDetailAside />
       </Box>

@@ -26,13 +26,13 @@ export const CollaboratorHeader = ({ member }: CollaboratorHeaderProps) => (
     direction="row"
     gap={4}
     align="center"
-    className={`${motion.settle} ${styles.hero}`}
+    className={`${motion.deal} ${styles.hero}`}
   >
     <PersonMark name={member.user.name} className={styles.mark} />
 
     <Box className={styles.heroText}>
       <Eyebrow>Equipe</Eyebrow>
-      <Heading level={1} size="xl" className={styles.name}>
+      <Heading level={1} accent size="xl" className={styles.name}>
         {member.user.name}
       </Heading>
       <Text className={styles.cadence}>

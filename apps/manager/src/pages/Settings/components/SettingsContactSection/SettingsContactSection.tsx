@@ -1,8 +1,7 @@
 import { useState } from 'react'
 
 import { Box } from '@nino/ds/components/Box'
-import { Heading } from '@nino/ds/components/Heading'
-import { Text } from '@nino/ds/components/Text'
+import { Header } from '@nino/ds/components/Header'
 import { useSettingsFacade } from '@pages/Settings/facades/useSettingsFacade/useSettingsFacade'
 import type { UnitPhone } from '@shared/types/settings/unit-phone'
 import { formatPhone } from '@shared/utils/phone/phone'
@@ -28,14 +27,13 @@ export const SettingsContactSection = () => {
 
   return (
     <Box as="section" className={local.settingsContactSectionPanel}>
-      <Box as="header" className={`${motion.unroll} ${local.head}`}>
-        <Heading level={2} size="xl">
-          Contato da loja
-        </Heading>
-        <Text size="sm" color="subtle" mt={1}>
-          Cadastre os números que os clientes podem usar para falar com você.
-        </Text>
-      </Box>
+      <Header
+        className={`${motion.deal} ${local.head}`}
+        level={2}
+        size="xl"
+        title="Contato"
+        description="Cadastre os números que os clientes podem usar para falar com você."
+      />
 
       <PhoneForm isAdding={add.isPending} onAdd={add.mutate} />
       <PhoneList

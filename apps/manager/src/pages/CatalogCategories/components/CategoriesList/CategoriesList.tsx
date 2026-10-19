@@ -9,6 +9,7 @@ import {
   TableHeader,
   TableRow,
 } from '@nino/ds/components/Table'
+import { Text } from '@nino/ds/components/Text'
 import { CategoryRow } from '@pages/CatalogCategories/components/CategoriesList/CategoryRow/CategoryRow'
 import { useCatalogCategoriesFacade } from '@pages/CatalogCategories/facades/useCatalogCategoriesFacade/useCatalogCategoriesFacade'
 
@@ -31,11 +32,11 @@ export const CategoriesList = () => {
         <TableHeader>
           <TableRow className={styles.headRow}>
             <TableHead className={styles.dragHead}>
-              <span className="sr-only">Reordenar</span>
+              <Text as="span" className="sr-only">Reordenar</Text>
             </TableHead>
             <TableHead>Categoria</TableHead>
             <TableHead className={styles.actionsHead}>
-              <span className="sr-only">Ações</span>
+              <Text as="span" className="sr-only">Ações</Text>
             </TableHead>
           </TableRow>
         </TableHeader>

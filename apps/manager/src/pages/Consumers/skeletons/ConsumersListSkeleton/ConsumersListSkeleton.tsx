@@ -6,15 +6,16 @@ import {
   TableCell,
   TableRow,
 } from '@nino/ds/components/Table'
+import { Text } from '@nino/ds/components/Text'
 import { CONSUMERS_GHOST_ROWS } from '@pages/Consumers/constants/consumers.constants'
 
 import styles from './ConsumersListSkeleton.module.css'
 
 export const ConsumersListSkeleton = () => (
   <Box mt={6}>
-    <p role="status" className="sr-only">
+    <Text role="status" className="sr-only">
       Carregando clientes
-    </p>
+    </Text>
 
     <Table>
       <TableBody>

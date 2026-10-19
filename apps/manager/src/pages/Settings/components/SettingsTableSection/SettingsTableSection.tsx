@@ -1,7 +1,6 @@
 import { Box } from '@nino/ds/components/Box'
-import { Heading } from '@nino/ds/components/Heading'
+import { Header } from '@nino/ds/components/Header'
 import { Tabs } from '@nino/ds/components/Tabs'
-import { Text } from '@nino/ds/components/Text'
 
 import { SettingsPhysicalTab } from './SettingsPhysicalTab/SettingsPhysicalTab'
 import { SettingsTablesTab } from './SettingsTablesTab/SettingsTablesTab'
@@ -12,15 +11,13 @@ import local from './SettingsTableSection.module.css'
 export const SettingsTableSection = () => {
   return (
     <Box as="section" className={local.settingsTableSectionPanel}>
-      <Box as="header" className={`${motion.unroll} ${local.head}`}>
-        <Heading level={2} size="xl">
-          Salão e comandas
-        </Heading>
-        <Text size="sm" color="subtle" mt={1}>
-          Organize as mesas da unidade e escolha como cada comanda será
-          identificada.
-        </Text>
-      </Box>
+      <Header
+        className={`${motion.deal} ${local.head}`}
+        level={2}
+        size="xl"
+        title="Salão e comandas"
+        description="Organize as mesas da unidade e escolha como cada comanda será identificada."
+      />
 
       <Tabs
         className={local.settingsTableSectionTabs}

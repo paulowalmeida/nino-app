@@ -47,7 +47,7 @@ describe(CatalogHeader.name, () => {
     )
     await user.click(screen.getByRole('tab', { name: 'Bebidas' }))
 
-    expect(screen.getByRole('heading', { name: 'Cardápio' })).toBeInTheDocument()
+    expect(screen.getByRole('heading', { name: 'Produtos' })).toBeInTheDocument()
     expect(screen.getByRole('link', { name: 'Gerenciar categorias' })).toBeInTheDocument()
   })
 

@@ -11,8 +11,8 @@ export const CategoriesHeader = () => {
         mb={{ mobile: 5, desktop: 8 }}
         mt={2}
         className={motion.deal}
-        title="Como o cardápio se organiza"
-        accent="organiza"
+        title="Categorias"
+        accent="Categorias"
         description={CATEGORIES_DESCRIPTION}
       />
 

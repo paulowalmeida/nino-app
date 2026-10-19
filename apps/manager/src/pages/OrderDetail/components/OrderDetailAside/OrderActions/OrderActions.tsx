@@ -1,5 +1,6 @@
 import { useState } from 'react'
 
+import { Box } from '@nino/ds/components/Box'
 import { Button } from '@nino/ds/components/Button'
 import { FormField } from '@nino/ds/components/FormField'
 import { Icon } from '@nino/ds/components/Icon'
@@ -32,9 +33,9 @@ export const OrderActions = () => {
     nextStep?.target === 'COMPLETED'
 
   return (
-    <section
+    <Box as="section"
       aria-label="Ações do pedido"
-      className={`${motion.settle} ${styles.orderActions}`}
+      className={`${motion.deal} ${styles.orderActions}`}
       style={riseDelay(260)}
     >
       {canAdvance && requiresPickupCode && (
@@ -90,6 +91,6 @@ export const OrderActions = () => {
         <Icon name="receipt" size="sm" />
         Gerar recibo
       </Button>
-    </section>
+    </Box>
   )
 }

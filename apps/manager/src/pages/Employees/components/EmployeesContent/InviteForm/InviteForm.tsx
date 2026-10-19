@@ -3,6 +3,7 @@ import { useState } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 
 import { Alert } from '@nino/ds/components/Alert'
+import { Box } from '@nino/ds/components/Box'
 import { Button } from '@nino/ds/components/Button'
 import { FieldHint } from '@nino/ds/components/FieldHint'
 import { FormField } from '@nino/ds/components/FormField'
@@ -65,11 +66,11 @@ export const InviteForm = ({ onInvite }: InviteFormProps) => {
       onSubmit={handleSubmit(onSubmit)}
       className={`${motion.settle} ${styles.inviteForm}`}
     >
-      <div className={styles.copy}>
+      <Box className={styles.copy}>
         <h2 className={styles.inviteFormTitle}>Chamar alguém para a loja</h2>
-      </div>
+      </Box>
 
-      <div className={styles.inviteFormFields}>
+      <Box className={styles.inviteFormFields}>
         <FormField
           label={
             <FieldHint
@@ -104,7 +105,7 @@ export const InviteForm = ({ onInvite }: InviteFormProps) => {
             )}
           />
         </FormField>
-      </div>
+      </Box>
 
       {errors.root && <Alert variant="error">{errors.root.message}</Alert>}
 

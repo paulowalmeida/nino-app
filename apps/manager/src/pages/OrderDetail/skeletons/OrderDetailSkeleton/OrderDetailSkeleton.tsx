@@ -1,5 +1,6 @@
 import { Box } from '@nino/ds/components/Box'
 import { Skeleton } from '@nino/ds/components/Skeleton'
+import { Text } from '@nino/ds/components/Text'
 import { BackLink } from '@shared/components/BackLink/BackLink'
 
 import styles from './OrderDetailSkeleton.module.css'
@@ -13,44 +14,44 @@ export const OrderDetailSkeleton = () => (
       <BackLink>Pedidos</BackLink>
     </Box>
 
-    <p role="status" className="sr-only">
+    <Text role="status" className="sr-only">
       Carregando detalhes do pedido
-    </p>
+    </Text>
 
-    <header className={styles.hero}>
+    <Box as="header" className={styles.hero}>
       <Box className={styles.heroText}>
         <Skeleton variant="text" className={styles.ghostEyebrow} />
         <Skeleton variant="text" className={styles.ghostNumber} />
         <Skeleton variant="text" className={styles.ghostLine} />
       </Box>
       <Skeleton className={styles.ghostBadge} />
-    </header>
+    </Box>
 
-    <div className={styles.columns}>
+    <Box className={styles.columns}>
       <Box className={styles.receipt}>
         <Box as="ul" className={styles.items}>
           {GHOST_ITEMS.map((item) => (
-            <div key={item} className={styles.orderDetailSkeletonItem}>
+            <Box key={item} className={styles.orderDetailSkeletonItem}>
               <Skeleton variant="text" className={styles.ghostQuantity} />
               <Skeleton variant="text" className={styles.ghostItemName} />
               <Skeleton variant="text" className={styles.ghostPrice} />
-            </div>
+            </Box>
           ))}
         </Box>
-        <div className={styles.totals}>
+        <Box className={styles.totals}>
           <Skeleton variant="text" className={styles.ghostTotal} />
-        </div>
+        </Box>
       </Box>
 
-      <div className={styles.aside}>
+      <Box className={styles.aside}>
         {GHOST_CARDS.map((card) => (
-          <div key={card} className={styles.block}>
+          <Box key={card} className={styles.block}>
             <Skeleton variant="text" className={styles.ghostEyebrow} />
             <Skeleton variant="text" className={styles.ghostLine} />
             <Skeleton variant="text" className={styles.ghostLineShort} />
-          </div>
+          </Box>
         ))}
-      </div>
-    </div>
+      </Box>
+    </Box>
   </Box>
 )

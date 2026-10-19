@@ -1,5 +1,6 @@
 import { Link } from 'react-router'
 
+import { Text } from '@nino/ds/components/Text'
 import { ItemThumb } from '@shared/components/ItemThumb/ItemThumb'
 import type { MenuItem } from '@shared/types/product/menu-item'
 
@@ -21,22 +22,22 @@ export const MenuRowContent = ({ item }: MenuRowContentProps) => (
       imageUrl={item.images?.[0]?.url}
       fallbackUrl={item.fallbackUrl}
     />
-    <span className={styles.itemText}>
-      <span
+    <Text as="span" className={styles.itemText}>
+      <Text as="span"
         className={`${styles.itemName} ${
           !item.isActive ? styles.itemNameInactive : ''
         }`}
       >
         {item.name}
-      </span>
+      </Text>
       {item.description && (
-        <span className={styles.itemDescription}>{item.description}</span>
+        <Text as="span" className={styles.itemDescription}>{item.description}</Text>
       )}
-    </span>
-    <span
+    </Text>
+    <Text as="span"
       className={`${styles.price} ${!item.isActive ? styles.priceInactive : ''}`}
     >
       {brl.format(+item.price)}
-    </span>
+    </Text>
   </Link>
 )

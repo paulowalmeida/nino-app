@@ -24,7 +24,7 @@ describe('ConsumersHeader', () => {
     render(<ConsumersHeader />)
 
     expect(
-      screen.getByRole('heading', { name: 'Quem já comprou e volta' })
+      screen.getByRole('heading', { name: 'Clientes' })
     ).toBeInTheDocument()
     expect(screen.getByText(/42 pessoas com pedido/)).toBeInTheDocument()
   })

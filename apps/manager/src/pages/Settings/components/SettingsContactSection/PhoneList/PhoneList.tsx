@@ -3,6 +3,7 @@ import { useState } from 'react'
 import { Box } from '@nino/ds/components/Box'
 import { Button } from '@nino/ds/components/Button'
 import { Heading } from '@nino/ds/components/Heading'
+import { ListRow } from '@nino/ds/components/ListRow'
 import { PhoneInput } from '@nino/ds/components/PhoneInput'
 import { Skeleton } from '@nino/ds/components/Skeleton'
 import { Text } from '@nino/ds/components/Text'
@@ -63,9 +64,9 @@ export const PhoneList = ({
       {phones.length === 0 && <PhoneListEmptyState />}
 
       {phones.length > 0 && (
-        <ul className={local.phones}>
+        <Box as="ul" className={local.phones}>
           {phones.map((entry, index) => (
-            <li
+            <ListRow divider="none" padding={0} gap={0}
               key={entry.id}
               className={`${motion.deal} ${local.phone}`}
               style={riseDelay(index * 45 + 60)}
@@ -122,9 +123,9 @@ export const PhoneList = ({
                   </Box>
                 </>
               )}
-            </li>
+            </ListRow>
           ))}
-        </ul>
+        </Box>
       )}
     </Box>
   )

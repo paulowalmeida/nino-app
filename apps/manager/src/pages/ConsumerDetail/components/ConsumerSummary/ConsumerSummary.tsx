@@ -18,7 +18,7 @@ export const ConsumerSummary = () => {
   ]
 
   return (
-    <section aria-label="Resumo" className={styles.strip}>
+    <Box as="section" aria-label="Resumo" className={styles.strip}>
       <dl className={styles.facts}>
         {facts.map(([label, value], index) => (
           <Box
@@ -31,6 +31,6 @@ export const ConsumerSummary = () => {
           </Box>
         ))}
       </dl>
-    </section>
+    </Box>
   )
 }

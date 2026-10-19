@@ -1,8 +1,7 @@
 import { useState } from 'react'
 
 import { Box } from '@nino/ds/components/Box'
-import { Heading } from '@nino/ds/components/Heading'
-import { Text } from '@nino/ds/components/Text'
+import { Header } from '@nino/ds/components/Header'
 import { useSettingsFacade } from '@pages/Settings/facades/useSettingsFacade/useSettingsFacade'
 import { DeliveryMapSkeleton } from '@pages/Settings/skeletons/DeliveryMapSkeleton/DeliveryMapSkeleton'
 import { ZoneFormSkeleton } from '@pages/Settings/skeletons/ZoneFormSkeleton/ZoneFormSkeleton'
@@ -33,15 +32,13 @@ export const SettingsDeliverySection = () => {
 
   return (
     <Box as="section" className={local.settingsDeliverySectionPanel}>
-      <Box as="header" className={`${motion.unroll} ${local.head}`}>
-        <Heading level={2} size="xl">
-          Entrega
-        </Heading>
-        <Text size="sm" color="subtle" mt={1}>
-          A loja entrega em faixas de distância a partir da unidade. Cada faixa
-          tem a sua taxa.
-        </Text>
-      </Box>
+      <Header
+        className={`${motion.deal} ${local.head}`}
+        level={2}
+        size="xl"
+        title="Entrega"
+        description="A loja entrega em faixas de distância a partir da unidade. Cada faixa tem a sua taxa."
+      />
 
       <Box className={local.territory}>
         {isResolved ? (

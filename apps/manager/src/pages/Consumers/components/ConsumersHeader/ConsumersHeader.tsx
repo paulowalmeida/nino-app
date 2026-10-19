@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 
 import { Box } from '@nino/ds/components/Box'
-import { Heading } from '@nino/ds/components/Heading'
+import { Header } from '@nino/ds/components/Header'
 import { Input } from '@nino/ds/components/Input'
 import { Text } from '@nino/ds/components/Text'
 import { useConsumersFacade } from '@pages/Consumers/facades/useConsumersFacade/useConsumersFacade'
@@ -24,20 +24,14 @@ export const ConsumersHeader = () => {
 
   return (
     <>
-      <Text
-        size="xs"
-        color="faint"
-        weight="bold"
-        case="uppercase"
-        className={styles.eyebrow}
-      >
-        Clientes
-      </Text>
+     <Header
+        mb={{ mobile: 4, desktop: 6 }}
+        className={motion.deal}
+        title="Clientes"
+        description="Aqui você consegue acompanhar os clientes que já compraram na loja, além de conferir o histórico de pedidos e dados de contato."
+      />
 
       <Box as="header" className={`${motion.deal} ${styles.head}`}>
-        <Heading level={1} className={styles.consumersHeaderTitle}>
-          Quem já comprou e volta
-        </Heading>
         <Text size="sm" color="subtle" className={styles.consumersHeaderSubtitle}>
           {consumersSubtitle(total)}
         </Text>

@@ -59,7 +59,7 @@ export const CollaboratorActivity = ({
       wrap
       className={styles.activityHead}
     >
-      <Heading
+      <Heading accent
         level={headingLevel}
         size="sm"
         color="faint"

@@ -1,7 +1,9 @@
 import { Alert } from '@nino/ds/components/Alert'
 import { Box } from '@nino/ds/components/Box'
 import { EmptyState } from '@nino/ds/components/EmptyState'
+import { ListRow } from '@nino/ds/components/ListRow'
 import { NinoMascot } from '@nino/ds/components/NinoMascot'
+import { Text } from '@nino/ds/components/Text'
 import {
   ORDERS_LOADING_TICKETS,
   ORDERS_STAGES,
@@ -20,6 +22,7 @@ export const OrdersQueue = () => {
   const {
     orders,
     isPending,
+    isPagePending,
     isError,
     isSearching,
     search,
@@ -37,14 +40,17 @@ export const OrdersQueue = () => {
     () => void fetchNextPage()
   )
 
-  if (isPending) {
+  if (isPending || isPagePending) {
     return (
-      <Box className={styles.scrollArea}>
+      <Box aria-busy="true" className={styles.scrollArea}>
+        <Text as="p" role="status" className={styles.loadingLabel}>
+          Carregando pedidos
+        </Text>
         <Box as="ul" className={styles.board}>
           {ORDERS_LOADING_TICKETS.map((ticket) => (
-            <li key={ticket}>
+            <ListRow divider="none" padding={0} gap={0} key={ticket}>
               <OrderTicketSkeleton />
-            </li>
+            </ListRow>
           ))}
         </Box>
       </Box>
@@ -90,7 +96,10 @@ export const OrdersQueue = () => {
     <Box className={styles.scrollArea}>
       <Box as="ul" className={styles.board}>
         {orders.map((order, index) => (
-          <li
+          <ListRow
+            divider="none"
+            padding={0}
+            gap={0}
             key={order.id}
             className={motion.settle}
             style={riseDelay(Math.min(index, 11) * 55 + 80)}
@@ -100,16 +109,18 @@ export const OrdersQueue = () => {
               onAdvance={handleAdvance}
               isBusy={isAdvancing && advancingOrderId === order.id}
             />
-          </li>
+          </ListRow>
         ))}
       </Box>
 
       {paginates && hasNextPage && (
-        <div ref={sentinelRef} className={styles.sentinel}>
+        <Box ref={sentinelRef} className={styles.sentinel}>
           {isFetchingNextPage && (
-            <span className={styles.loadingMore}>Carregando mais…</span>
+            <Text as="span" className={styles.loadingMore}>
+              Carregando mais…
+            </Text>
           )}
-        </div>
+        </Box>
       )}
     </Box>
   )

@@ -12,4 +12,12 @@ describe(OrderTicketSkeleton.name, () => {
       orderTicketSkeletonMock.itemCount + 12
     )
   })
+
+  it('uses the same horizontal header, item rows, and footer as a ticket', () => {
+    const { container } = render(<OrderTicketSkeleton />)
+
+    expect(container.querySelector('header')).toHaveClass('flex-row')
+    expect(container.querySelector('li')).not.toHaveClass('flex-col')
+    expect(container.querySelector('footer')).not.toHaveClass('flex-col')
+  })
 })

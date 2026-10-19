@@ -4,6 +4,7 @@ import { Box } from '@nino/ds/components/Box'
 import { Chip } from '@nino/ds/components/Chip'
 import { CountUp } from '@nino/ds/components/CountUp'
 import { Icon } from '@nino/ds/components/Icon'
+import { Text } from '@nino/ds/components/Text'
 import type { StageOption } from '@pages/Orders/types/stage-option'
 import type { OrderStage } from '@shared/types/order/order-stage'
 import { riseDelay } from '@shared/utils/rise-delay/rise-delay'
@@ -119,10 +120,10 @@ export const StageTrack = ({ stages, value, onChange }: StageTrackProps) => {
           }`}
         >
           <Icon name={icon} className={styles.stageTrackIcon} />
-          <span className={styles.stageTrackLabel}>{label}</span>
-          <span className={styles.stageTrackCount}>
+          <Text as="span" className={styles.stageTrackLabel}>{label}</Text>
+          <Text as="span" className={styles.stageTrackCount}>
             <CountUp value={count} />
-          </span>
+          </Text>
         </Chip>
       ))}
     </Box>

@@ -17,6 +17,7 @@ import {
   TableHeader,
   TableRow,
 } from '@nino/ds/components/Table'
+import { Text } from '@nino/ds/components/Text'
 import { TEAM_ROSTER_GHOST_ROWS } from '@pages/Employees/constants/employees.constants'
 import { PersonMark } from '@shared/components/PersonMark/PersonMark'
 import {
@@ -128,12 +129,12 @@ export const TeamRoster = ({
     title === 'Na rua' ? 'entregadores-na-rua' : 'equipe-do-painel'
 
   return (
-    <section id={sectionId} className={styles.roster}>
-      <header className={`${motion.unroll} ${styles.head}`}>
-        <div className={styles.headings}>
+    <Box as="section" id={sectionId} className={styles.roster}>
+      <Box as="header" className={`${motion.unroll} ${styles.head}`}>
+        <Box className={styles.headings}>
           <h2 className="sr-only">{title}</h2>
-          <p className={styles.hint}>{hint}</p>
-        </div>
+          <Text className={styles.hint}>{hint}</Text>
+        </Box>
 
         {isSearchable && (
           <Input
@@ -145,7 +146,7 @@ export const TeamRoster = ({
             onChange={(event) => setTerm(event.target.value)}
           />
         )}
-      </header>
+      </Box>
 
       {/* the same list, with the people yet to arrive: avatar, name, e-mail,
           role */}
@@ -164,7 +165,7 @@ export const TeamRoster = ({
                 <TableHead>Último acesso</TableHead>
                 <TableHead className={styles.colRight}>Papel</TableHead>
                 <TableHead>
-                  <span className="sr-only">Ações</span>
+                  <Text as="span" className="sr-only">Ações</Text>
                 </TableHead>
               </TableRow>
             </TableHeader>
@@ -173,13 +174,13 @@ export const TeamRoster = ({
               {TEAM_ROSTER_GHOST_ROWS.map((row) => (
                 <TableRow key={row}>
                   <TableCell>
-                    <div className={styles.identityCell}>
+                    <Box className={styles.identityCell}>
                       <Skeleton className={styles.ghostMark} />
-                      <div className={styles.person}>
+                      <Box className={styles.person}>
                         <Skeleton className={styles.ghostName} />
                         <Skeleton className={styles.ghostEmail} />
-                      </div>
-                    </div>
+                      </Box>
+                    </Box>
                   </TableCell>
                   <TableCell>
                     <Skeleton className={styles.ghostEmail} />
@@ -214,7 +215,7 @@ export const TeamRoster = ({
                 <TableHead>Último acesso</TableHead>
                 <TableHead className={styles.colRight}>Papel</TableHead>
                 <TableHead>
-                  <span className="sr-only">Ações</span>
+                  <Text as="span" className="sr-only">Ações</Text>
                 </TableHead>
               </TableRow>
             </TableHeader>
@@ -232,12 +233,12 @@ export const TeamRoster = ({
                       tone={entry.quiet ? 'quiet' : 'brand'}
                     />
 
-                    <div className={styles.person}>
-                      <p className={styles.name}>{entry.name}</p>
+                    <Box className={styles.person}>
+                      <Text className={styles.name}>{entry.name}</Text>
                       {entry.email && (
-                        <p className={styles.email}>{entry.email}</p>
+                        <Text className={styles.email}>{entry.email}</Text>
                       )}
-                    </div>
+                    </Box>
                   </>
                 )
 
@@ -253,7 +254,7 @@ export const TeamRoster = ({
                           {identity}
                         </Link>
                       ) : (
-                        <div className={styles.identityCell}>{identity}</div>
+                        <Box className={styles.identityCell}>{identity}</Box>
                       )}
                     </TableCell>
 
@@ -323,6 +324,6 @@ export const TeamRoster = ({
         </Box>
       )}
 
-    </section>
+    </Box>
   )
 }

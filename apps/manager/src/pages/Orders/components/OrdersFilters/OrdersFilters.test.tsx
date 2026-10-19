@@ -28,7 +28,9 @@ describe('OrdersFilters', () => {
 
     render(<OrdersFilters />, { wrapper: MemoryRouter })
 
-    expect(screen.getByLabelText(ordersFiltersMock.searchLabel)).toBeInTheDocument()
+    expect(
+      screen.getByLabelText(ordersFiltersMock.searchLabel)
+    ).toBeInTheDocument()
     expect(screen.getByText('stage track')).toBeInTheDocument()
     fireEvent.change(screen.getByLabelText(ordersFiltersMock.searchLabel), {
       target: { value: 'novo' },
@@ -69,5 +71,21 @@ describe('OrdersFilters', () => {
     render(<OrdersFilters />, { wrapper: MemoryRouter })
 
     expect(screen.getByText(/1 pedido para/)).toBeInTheDocument()
+  })
+
+  it('keeps search and stages as skeletons until the page data is ready', () => {
+    vi.mocked(useOrdersFacade).mockReturnValue({
+      summary: undefined,
+      isPagePending: true,
+    } as never)
+
+    render(<OrdersFilters />, { wrapper: MemoryRouter })
+
+    expect(screen.getByRole('status')).toHaveTextContent(
+      'Carregando filtros dos pedidos'
+    )
+    expect(
+      screen.queryByLabelText(ordersFiltersMock.searchLabel)
+    ).not.toBeInTheDocument()
   })
 })

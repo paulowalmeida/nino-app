@@ -29,7 +29,7 @@ type CollaboratorSummaryProps = {
 }
 
 export const CollaboratorSummary = ({ member }: CollaboratorSummaryProps) => (
-  <section aria-label="Resumo do trabalho" className={styles.strip}>
+  <Box as="section" aria-label="Resumo do trabalho" className={styles.strip}>
     <dl className={styles.facts}>
       {[
         ['Vendido no balcão', brl(member.revenueHandled)],
@@ -52,5 +52,5 @@ export const CollaboratorSummary = ({ member }: CollaboratorSummaryProps) => (
       {' · '}
       {cancellationShare(member)}
     </Text>
-  </section>
+  </Box>
 )

@@ -21,6 +21,7 @@ import {
   TableHeader,
   TableRow,
 } from '@nino/ds/components/Table'
+import { Text } from '@nino/ds/components/Text'
 import type { DiningTable } from '@shared/types/settings/dining-table'
 
 import local from './DiningTables.module.css'
@@ -147,7 +148,7 @@ export const DiningTablesList = ({
               {tables.map((table) => (
                 <TableRow key={table.id}>
                   <TableCell className={local.colName}>
-                    <span className={local.tableName}>{table.name}</span>
+                    <Text as="span" className={local.tableName}>{table.name}</Text>
                   </TableCell>
                   <TableCell className={local.colStatus}>
                     <Badge

@@ -22,3 +22,7 @@
 .loadingMore {
   @apply text-xs text-fg-faint;
 }
+
+.loadingLabel {
+  @apply sr-only;
+}

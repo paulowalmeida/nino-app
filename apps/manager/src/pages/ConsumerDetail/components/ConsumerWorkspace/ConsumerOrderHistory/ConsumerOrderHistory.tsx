@@ -68,13 +68,13 @@ export const ConsumerOrderHistory = () => {
 
           <TableRow className={styles.sentinelRow}>
             <TableCell colSpan={4} className={styles.sentinelCell}>
-              <div ref={sentinelRef} className={styles.sentinel}>
+              <Box ref={sentinelRef} className={styles.sentinel}>
                 {isFetchingNextPage && (
                   <Text size="xs" color="faint" className={styles.loadingMore}>
                     Carregando mais pedidos…
                   </Text>
                 )}
-              </div>
+              </Box>
             </TableCell>
           </TableRow>
         </TableBody>

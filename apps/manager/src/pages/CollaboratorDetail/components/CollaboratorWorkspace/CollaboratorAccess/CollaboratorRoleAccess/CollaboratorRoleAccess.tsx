@@ -32,7 +32,7 @@ export const CollaboratorRoleAccess = ({
   isChangingRole,
   onChangeRole,
 }: CollaboratorRoleAccessProps) => (
-  <section aria-labelledby={ROLE_LABEL_ID}>
+  <Box as="section" aria-labelledby={ROLE_LABEL_ID}>
     <Heading
       level={3}
       size="sm"
@@ -61,5 +61,5 @@ export const CollaboratorRoleAccess = ({
         </Text>
       </Box>
     )}
-  </section>
+  </Box>
 )

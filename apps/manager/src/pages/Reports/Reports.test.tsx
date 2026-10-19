@@ -22,6 +22,6 @@ vi.mock('./components/TopSalesTable/TopSalesTable', () => ({ TopSalesTable: () =
 describe('Reports', () => {
   it('governs the reports screen through domain regions', () => {
     render(<Reports />)
-    expect(screen.getByRole('heading', { name: /Relatório de venda/ })).toBeInTheDocument()
+    expect(screen.getByRole('heading', { name: 'Relatório' })).toBeInTheDocument()
   })
 })

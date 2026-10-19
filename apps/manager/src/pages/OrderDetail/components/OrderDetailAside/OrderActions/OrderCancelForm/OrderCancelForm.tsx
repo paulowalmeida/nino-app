@@ -28,7 +28,7 @@ export const OrderCancelForm = ({
   }
 
   return (
-    <div className={`${motion.unroll} ${styles.cancelBox}`}>
+    <Box className={`${motion.unroll} ${styles.cancelBox}`}>
       <Label className={styles.cancelLabel} htmlFor="cancel-reason">
         Por que o pedido está sendo cancelado?
       </Label>
@@ -55,6 +55,6 @@ export const OrderCancelForm = ({
           Voltar
         </Button>
       </Box>
-    </div>
+    </Box>
   )
 }

@@ -3,7 +3,7 @@ import { useState } from 'react'
 import { Box } from '@nino/ds/components/Box'
 import { Button } from '@nino/ds/components/Button'
 import { FieldHint } from '@nino/ds/components/FieldHint'
-import { Heading } from '@nino/ds/components/Heading'
+import { Header } from '@nino/ds/components/Header'
 import { Icon } from '@nino/ds/components/Icon'
 import { Input } from '@nino/ds/components/Input'
 import { Label } from '@nino/ds/components/Label'
@@ -80,14 +80,13 @@ export const PaymentRules = ({
 
   return (
     <Box as="section" className={local.paymentRulesPanel}>
-      <Box as="header" className={`${motion.unroll} ${local.head}`}>
-        <Heading level={2} size="xl">
-          Pagamento
-        </Heading>
-        <Text size="sm" color="subtle" mt={1}>
-          Defina como o cliente paga e as regras mínimas para fazer um pedido.
-        </Text>
-      </Box>
+      <Header
+        className={`${motion.deal} ${local.head}`}
+        level={2}
+        size="xl"
+        title="Pagamento"
+        description="Defina como o cliente paga e as regras mínimas para fazer um pedido."
+      />
 
       <Box id="formas-de-pagamento" className={local.paymentRulesGroup}>
         <Text className={local.groupTitle}>Formas de pagamento aceitas</Text>
