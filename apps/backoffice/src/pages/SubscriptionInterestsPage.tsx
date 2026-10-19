@@ -13,7 +13,7 @@ import { Heading } from '@nino/ds/components/Heading'
 import { Select } from '@nino/ds/components/Select'
 import { Text } from '@nino/ds/components/Text'
 import { ApiError } from '@nino/lib/utils/api-error'
-import { useCallback, useEffect, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 
 type InterestFilter = SubscriptionInterestStatus | 'ALL'
 
@@ -71,67 +71,96 @@ export function SubscriptionInterestsPage() {
   const [saveSuccess, setSaveSuccess] = useState(false)
   const [isSaving, setIsSaving] = useState(false)
 
-  const loadQueue = useCallback(async (currentFilter: InterestFilter) => {
-    setIsQueueLoading(true)
-    setQueueError(null)
+  const detailRequest = useRef(0)
+
+  const applyQueue = useCallback((queue: SubscriptionInterest[]) => {
+    setInterests(queue)
+    setSelectedId((currentSelectedId) =>
+      currentSelectedId && queue.some(({ id }) => id === currentSelectedId)
+        ? currentSelectedId
+        : null,
+    )
+    setSelected((currentSelected) =>
+      currentSelected && queue.some(({ id }) => id === currentSelected.id)
+        ? currentSelected
+        : null,
+    )
+  }, [])
+
+  const fetchQueue = useCallback(async (currentFilter: InterestFilter) => {
     try {
       const response = await backofficeService.listSubscriptionInterests(
         currentFilter === 'ALL' ? undefined : currentFilter,
       )
-      setInterests(response.data)
-      setSelectedId((currentSelectedId) =>
-        currentSelectedId && response.data.some(({ id }) => id === currentSelectedId)
-          ? currentSelectedId
-          : null,
-      )
+      applyQueue(response.data)
     } catch (error) {
       setQueueError(errorMessage(error, 'Não foi possível carregar as solicitações.'))
     } finally {
       setIsQueueLoading(false)
     }
-  }, [])
+  }, [applyQueue])
+
+  const reloadQueue = useCallback(
+    (currentFilter: InterestFilter) => {
+      setIsQueueLoading(true)
+      setQueueError(null)
+      return fetchQueue(currentFilter)
+    },
+    [fetchQueue],
+  )
 
   useEffect(() => {
-    void loadQueue(filter)
-  }, [filter, loadQueue])
-
-  useEffect(() => {
-    if (!selectedId) {
-      setSelected(null)
-      return
+    let isCurrent = true
+    backofficeService
+      .listSubscriptionInterests()
+      .then((response) => isCurrent && applyQueue(response.data))
+      .catch(
+        (error) =>
+          isCurrent &&
+          setQueueError(
+            errorMessage(error, 'Não foi possível carregar as solicitações.'),
+          ),
+      )
+      .finally(() => isCurrent && setIsQueueLoading(false))
+    return () => {
+      isCurrent = false
     }
+  }, [applyQueue])
 
-    const selectedFromQueue = interests.find(({ id }) => id === selectedId)
+  const closeInterest = () => {
+    detailRequest.current += 1
+    setSelectedId(null)
+    setSelected(null)
+    setDetailError(null)
+    setIsDetailLoading(false)
+  }
+
+  const openInterest = async (id: string) => {
+    detailRequest.current += 1
+    const requestId = detailRequest.current
+    const selectedFromQueue = interests.find((interest) => interest.id === id)
+    setSelectedId(id)
     if (selectedFromQueue) {
       setSelected(selectedFromQueue)
       setStatus(selectedFromQueue.status)
       setNotes(selectedFromQueue.backofficeNotes ?? '')
     }
-
-    let isCurrent = true
     setIsDetailLoading(true)
     setDetailError(null)
-    void backofficeService
-      .getSubscriptionInterest(selectedId)
-      .then((interest) => {
-        if (!isCurrent) return
-        setSelected(interest)
-        setStatus(interest.status)
-        setNotes(interest.backofficeNotes ?? '')
-      })
-      .catch((error) => {
-        if (isCurrent) {
-          setDetailError(errorMessage(error, 'Não foi possível abrir esta solicitação.'))
-        }
-      })
-      .finally(() => {
-        if (isCurrent) setIsDetailLoading(false)
-      })
-
-    return () => {
-      isCurrent = false
+    try {
+      const interest = await backofficeService.getSubscriptionInterest(id)
+      if (requestId !== detailRequest.current) return
+      setSelected(interest)
+      setStatus(interest.status)
+      setNotes(interest.backofficeNotes ?? '')
+    } catch (error) {
+      if (requestId === detailRequest.current) {
+        setDetailError(errorMessage(error, 'Não foi possível abrir esta solicitação.'))
+      }
+    } finally {
+      if (requestId === detailRequest.current) setIsDetailLoading(false)
     }
-  }, [interests, selectedId])
+  }
 
   const visibleCount = useMemo(() => interests.length, [interests.length])
 
@@ -180,7 +209,11 @@ export function SubscriptionInterestsPage() {
           <Select
             options={filterOptions}
             value={filter}
-            onValueChange={(value) => setFilter(value as InterestFilter)}
+            onValueChange={(value) => {
+              const nextFilter = value as InterestFilter
+              setFilter(nextFilter)
+              void reloadQueue(nextFilter)
+            }}
           />
         </FormField>
         <Text size="sm" color="muted" className={styles.filterHint}>
@@ -191,7 +224,7 @@ export function SubscriptionInterestsPage() {
       {queueError && (
         <Alert variant="error" title="Fila indisponível">
           <span>{queueError}</span>{' '}
-          <button className={styles.inlineAction} onClick={() => void loadQueue(filter)} type="button">
+          <button className={styles.inlineAction} onClick={() => void reloadQueue(filter)} type="button">
             Tentar novamente
           </button>
         </Alert>
@@ -237,7 +270,7 @@ export function SubscriptionInterestsPage() {
                   key={interest.id}
                   onClick={() => {
                     setSaveSuccess(false)
-                    setSelectedId(interest.id)
+                    void openInterest(interest.id)
                   }}
                   type="button"
                 >
@@ -275,7 +308,7 @@ export function SubscriptionInterestsPage() {
           {selectedId && detailError && !isDetailLoading && (
             <div className={styles.detailError}>
               <Alert variant="error" title="Detalhe indisponível">{detailError}</Alert>
-              <Button variant="outline" onClick={() => setSelectedId(selectedId)}>
+              <Button variant="outline" onClick={() => void openInterest(selectedId)}>
                 Tentar novamente
               </Button>
             </div>
@@ -290,7 +323,7 @@ export function SubscriptionInterestsPage() {
                 setStatus(value as SubscriptionInterestStatus)
                 setSaveSuccess(false)
               }}
-              onBack={() => setSelectedId(null)}
+              onBack={closeInterest}
               onSave={() => void handleSave()}
               saveError={saveError}
               saveSuccess={saveSuccess}

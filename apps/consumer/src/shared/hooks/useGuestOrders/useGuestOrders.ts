@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import type { GuestOrderReference } from '@shared/lib/last-order/last-order'
 import {
@@ -7,13 +7,18 @@ import {
 } from '@shared/lib/last-order/last-order'
 
 export const useGuestOrders = (slug?: string): GuestOrderReference[] => {
-  const read = useCallback(() => readGuestOrders(slug), [slug])
-  const [orders, setOrders] = useState(read)
+  const [orders, setOrders] = useState(() => readGuestOrders(slug))
+  const [ordersSlug, setOrdersSlug] = useState(slug)
 
-  useEffect(() => {
-    setOrders(read())
-    return subscribeGuestOrders(() => setOrders(read()))
-  }, [read])
+  if (ordersSlug !== slug) {
+    setOrdersSlug(slug)
+    setOrders(readGuestOrders(slug))
+  }
+
+  useEffect(
+    () => subscribeGuestOrders(() => setOrders(readGuestOrders(slug))),
+    [slug]
+  )
 
   return orders
 }

@@ -1,4 +1,4 @@
-import { useRef } from 'react'
+import { useState } from 'react'
 import { useMutation } from '@tanstack/react-query'
 
 import type { CartLine } from '@custom_types/cart/cart-line'
@@ -20,21 +20,18 @@ type PlaceOrderInput = {
  * pedido em vez de criar outro.
  */
 export const usePlaceOrder = (isAuthenticated: boolean) => {
-  const idempotencyKey = useRef<string | null>(null)
-  if (!idempotencyKey.current) {
-    idempotencyKey.current = globalThis.crypto.randomUUID()
-  }
+  const [idempotencyKey] = useState(() => globalThis.crypto.randomUUID())
 
   return useMutation({
     mutationFn: ({ values, store, cartLines }: PlaceOrderInput) =>
       isAuthenticated
         ? orderService.createMine(
             consumerOrderRequest(values, store, cartLines),
-            idempotencyKey.current as string
+            idempotencyKey
           )
         : orderService.createGuest(
             guestOrderRequest(values, store, cartLines),
-            idempotencyKey.current as string
+            idempotencyKey
           ),
   })
 }
