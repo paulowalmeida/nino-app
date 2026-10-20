@@ -1,4 +1,4 @@
-import type { CashSession } from '@shared/types/cash/cash-session'
+import type { CashSession } from '@shared/types/cash/cash-session.type'
 
 export const closedSessionDateKeyMock = '2026-08-29'
 
@@ -25,6 +25,9 @@ export const openSessionMock: CashSession = {
       amount: 60,
       reason: null,
       orderId: 'order-1',
+      tabPaymentId: null,
+      orderNumber: 41,
+      tabLabel: null,
       createdAt: '2026-08-30T11:00:00.000Z',
     },
     {
@@ -33,6 +36,9 @@ export const openSessionMock: CashSession = {
       amount: 30,
       reason: 'Pagamento do gás',
       orderId: null,
+      tabPaymentId: null,
+      orderNumber: null,
+      tabLabel: null,
       createdAt: '2026-08-30T12:00:00.000Z',
     },
   ],

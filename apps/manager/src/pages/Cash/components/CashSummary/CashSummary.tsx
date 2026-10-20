@@ -1,7 +1,7 @@
 import { Box } from '@nino/ds/components/Box'
 import { Header } from '@nino/ds/components/Header'
 import { Text } from '@nino/ds/components/Text'
-import type { CashSession } from '@shared/types/cash/cash-session'
+import type { CashSession } from '@shared/types/cash/cash-session.type'
 import { brl } from '@shared/utils/money/money'
 
 import styles from './CashSummary.module.css'

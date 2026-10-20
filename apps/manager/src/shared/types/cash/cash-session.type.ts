@@ -1,4 +1,4 @@
-import type { CashMovement } from '@shared/types/cash/cash-movement'
+import type { CashMovement } from '@shared/types/cash/cash-movement.type'
 
 export type CashSession = {
   id: string

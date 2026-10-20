@@ -1,6 +1,6 @@
 import { api } from '@shared/services/http/http.service'
 import type { CashMovementInput } from '@shared/types/cash/cash-movement-input'
-import type { CashSession } from '@shared/types/cash/cash-session'
+import type { CashSession } from '@shared/types/cash/cash-session.type'
 import type { CloseCashRequest } from '@shared/types/cash/close-cash'
 import type { OpenCashRequest } from '@shared/types/cash/open-cash'
 

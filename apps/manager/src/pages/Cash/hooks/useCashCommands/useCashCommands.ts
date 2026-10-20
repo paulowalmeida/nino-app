@@ -4,7 +4,7 @@ import { toast } from '@nino/ds/components/Toast'
 import { queryKeys } from '@shared/lib/query-keys/query-keys'
 import { CashService } from '@shared/services/cash/cash.service'
 import type { CashMovementInput } from '@shared/types/cash/cash-movement-input'
-import type { CashSession } from '@shared/types/cash/cash-session'
+import type { CashSession } from '@shared/types/cash/cash-session.type'
 import type { CloseCashRequest } from '@shared/types/cash/close-cash'
 
 export const useCashCommands = (

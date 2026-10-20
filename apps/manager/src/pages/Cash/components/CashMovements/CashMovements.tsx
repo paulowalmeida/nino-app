@@ -10,7 +10,8 @@ import {
 } from '@nino/ds/components/Table'
 import { Text } from '@nino/ds/components/Text'
 import { CASH_MOVEMENT_LABEL } from '@pages/Cash/constants/cash.constants'
-import type { CashMovement } from '@shared/types/cash/cash-movement'
+import { cashMovementDetail } from '@pages/Cash/utils/cashMovementDetail/cashMovementDetail'
+import type { CashMovement } from '@shared/types/cash/cash-movement.type'
 import { brl } from '@shared/utils/money/money'
 
 import styles from './CashMovements.module.css'
@@ -75,7 +76,7 @@ export const CashMovements = ({ movements }: CashMovementsProps) => (
                     {CASH_MOVEMENT_LABEL[movement.kind]}
                   </TableCell>
                   <TableCell className={styles.reason}>
-                    {movement.reason || '—'}
+                    {cashMovementDetail(movement)}
                   </TableCell>
                   <TableCell
                     className={`${styles.amount} ${
