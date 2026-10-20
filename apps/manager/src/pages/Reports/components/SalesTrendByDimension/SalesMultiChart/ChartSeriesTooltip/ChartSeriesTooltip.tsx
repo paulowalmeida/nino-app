@@ -15,10 +15,7 @@ export type ChartSeriesTooltipProps = {
   lines: ChartSeriesTooltipLine[]
 }
 
-export const ChartSeriesTooltip = ({
-  at,
-  lines,
-}: ChartSeriesTooltipProps) => (
+export const ChartSeriesTooltip = ({ at, lines }: ChartSeriesTooltipProps) => (
   <>
     <Text as="p" className={styles.chartSeriesTooltipLabel}>
       {chartFullDateLabel.format(at)}

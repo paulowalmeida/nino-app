@@ -9,7 +9,3 @@
   @apply mb-3 font-display text-lg font-extrabold tracking-tight;
   @apply text-fg-strong;
 }
-
-.salesPeriodTrendEmpty {
-  @apply py-6;
-}

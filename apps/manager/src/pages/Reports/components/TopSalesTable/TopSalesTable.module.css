@@ -9,20 +9,6 @@
   @apply text-fg-strong;
 }
 
-
-.ghostPosition {
-  @apply h-7 w-7 rounded-2;
-}
-
-.ghostName {
-  @apply h-3.5 w-40;
-}
-
-
-.ghostCell {
-  @apply ml-auto h-3.5 w-14;
-}
-
 /* WHY: quatro colunas numéricas não cabem em 390px: a tabela rola dentro do
  * cartão em vez de empurrar a página inteira para os lados
  */
@@ -30,14 +16,12 @@
   @apply -mx-1 overflow-x-auto;
 }
 
-
 .position {
   @apply flex h-7 w-7 shrink-0 items-center justify-center rounded-2;
   @apply bg-surface-mute font-display text-sm font-extrabold;
   @apply text-fg-subtle;
   font-variant-numeric: tabular-nums;
 }
-
 
 .podium .position {
   @apply bg-fg-strong text-fg-inverse;

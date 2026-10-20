@@ -23,7 +23,3 @@
   @apply font-display text-sm font-semibold leading-tight text-fg-faint;
   @apply lg:text-base;
 }
-
-.ghostCount {
-  @apply h-5 w-12 lg:h-6 lg:w-16;
-}

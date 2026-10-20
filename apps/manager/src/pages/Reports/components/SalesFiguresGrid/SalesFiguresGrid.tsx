@@ -1,7 +1,6 @@
 import { Box } from '@nino/ds/components/Box'
 import { CountUp } from '@nino/ds/components/CountUp'
 import { Grid } from '@nino/ds/components/Grid'
-import { Skeleton } from '@nino/ds/components/Skeleton'
 import { Text } from '@nino/ds/components/Text'
 import { REPORTS_FIGURES } from '@pages/Reports/constants/reports.constants'
 import type { SalesReport } from '@shared/types/order/sales-report'
@@ -12,14 +11,10 @@ import motion from '@styles/motion.module.css'
 import styles from './SalesFiguresGrid.module.css'
 
 export type SalesFiguresGridProps = {
-  report: SalesReport | undefined
-  isPending: boolean
+  report: SalesReport
 }
 
-export const SalesFiguresGrid = ({
-  report,
-  isPending,
-}: SalesFiguresGridProps) => (
+export const SalesFiguresGrid = ({ report }: SalesFiguresGridProps) => (
   <Grid
     columns={{ mobile: 2, tablet: 3 }}
     gap={{ mobile: 2, desktop: 4 }}
@@ -33,15 +28,7 @@ export const SalesFiguresGrid = ({
         style={riseDelay(index * 60)}
       >
         <Text as="span" className={styles.salesFiguresGridValue}>
-          {isPending || !report ? (
-            <Skeleton
-              className={money ? styles.ghostMoney : styles.ghostCount}
-            />
-          ) : money ? (
-            brl(report[key])
-          ) : (
-            <CountUp value={report[key]} />
-          )}
+          {money ? brl(report[key]) : <CountUp value={report[key]} />}
         </Text>
         <Text as="span" className={styles.salesFiguresGridLabel}>
           {label}

@@ -19,9 +19,7 @@ import { brl } from '@shared/utils/money/money'
 import { nearestIndexByTime } from '@shared/utils/nearest-index-by-time/nearest-index-by-time'
 
 import { ChartLegend } from './ChartLegend/ChartLegend'
-import {
-  ChartSeriesTooltip,
-} from './ChartSeriesTooltip/ChartSeriesTooltip'
+import { ChartSeriesTooltip } from './ChartSeriesTooltip/ChartSeriesTooltip'
 
 import styles from './SalesMultiChart.module.css'
 
@@ -141,7 +139,13 @@ export const SalesMultiChart = ({
   return (
     <figure className={styles.figure} ref={holder}>
       <Box className={styles.canvas}>
-        <svg ref={containerRef} width={width} height={drawHeight} role="img" aria-label={label}>
+        <svg
+          ref={containerRef}
+          width={width}
+          height={drawHeight}
+          role="img"
+          aria-label={label}
+        >
           <Group left={margin.left} top={margin.top}>
             {lines.map((line) => (
               <LinePath<ChartPoint>

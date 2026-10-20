@@ -9,20 +9,7 @@
   @apply text-fg-strong;
 }
 
-
 .salesBreakdownEmpty {
   @apply font-display text-sm font-semibold leading-tight text-fg-faint;
   @apply lg:text-base;
-}
-
-.skeletonRows {
-  @apply flex flex-col gap-2.5;
-}
-
-.skeletonBar {
-  @apply h-8 w-full rounded-3;
-}
-
-.skeletonBarShort {
-  @apply h-8 w-2/3 rounded-3;
 }

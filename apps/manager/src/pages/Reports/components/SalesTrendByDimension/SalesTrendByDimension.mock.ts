@@ -1,1 +1,6 @@
-export const salesTrendByDimensionMock = { title: 'Por canal', breakdown: undefined, isPending: false, labelOf: (key: string) => key, emptyMessage: 'Sem vendas' }
+export const salesTrendByDimensionMock = {
+  breakdown: {
+    granularity: 'day' as const,
+    series: [{ key: 'DELIVERY', points: [] }],
+  },
+}

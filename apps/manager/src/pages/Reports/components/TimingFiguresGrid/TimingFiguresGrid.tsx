@@ -1,6 +1,5 @@
 import { Box } from '@nino/ds/components/Box'
 import { CountUp } from '@nino/ds/components/CountUp'
-import { Skeleton } from '@nino/ds/components/Skeleton'
 import { Text } from '@nino/ds/components/Text'
 import { REPORTS_TIMING_FIGURES } from '@pages/Reports/constants/reports.constants'
 import type { TimingReport } from '@shared/types/order/timing-report'
@@ -10,17 +9,13 @@ import motion from '@styles/motion.module.css'
 import styles from './TimingFiguresGrid.module.css'
 
 export type TimingFiguresGridProps = {
-  timing: TimingReport | undefined
-  isPending: boolean
+  timing: TimingReport
 }
 
-export const TimingFiguresGrid = ({
-  timing,
-  isPending,
-}: TimingFiguresGridProps) => (
+export const TimingFiguresGrid = ({ timing }: TimingFiguresGridProps) => (
   <Box className={styles.figures}>
     {REPORTS_TIMING_FIGURES.map(({ key, sampleKey, label, empty }, index) => {
-      const noSample = !isPending && timing?.[sampleKey] === 0
+      const noSample = timing[sampleKey] === 0
 
       return (
         <Box
@@ -30,11 +25,11 @@ export const TimingFiguresGrid = ({
         >
           <Text
             as="span"
-            className={noSample ? styles.valueEmpty : styles.timingFiguresGridValue}
+            className={
+              noSample ? styles.valueEmpty : styles.timingFiguresGridValue
+            }
           >
-            {isPending || !timing ? (
-              <Skeleton className={styles.ghostCount} />
-            ) : noSample ? (
+            {noSample ? (
               empty
             ) : (
               <>
