@@ -1,6 +1,6 @@
-import { usePositionCommands } from '@pages/Positions/hooks/usePositionCommands/usePositionCommands'
-import { usePositionPermissions } from '@pages/Positions/hooks/usePositionPermissions/usePositionPermissions'
 import { useCurrentUnit } from '@shared/hooks/session/useCurrentUnit/useCurrentUnit'
+import { usePositionCommands } from '@shared/hooks/team/usePositionCommands/usePositionCommands'
+import { usePositionPermissions } from '@shared/hooks/team/usePositionPermissions/usePositionPermissions'
 import { useUnitPositions } from '@shared/hooks/team/useUnitPositions/useUnitPositions'
 
 export const usePositionsFacade = () => {
@@ -11,11 +11,9 @@ export const usePositionsFacade = () => {
 
   return {
     positions: positionsQuery.data ?? [],
-    permissionCatalog: permissionsQuery.data ?? [],
+    permissionTotal: permissionsQuery.data?.length ?? 0,
     isPending: positionsQuery.isPending,
     isError: positionsQuery.isError,
-    createPosition: commands.create.mutateAsync,
-    updatePosition: commands.update.mutateAsync,
     duplicatePosition: commands.duplicate.mutate,
     duplicatingId: commands.duplicate.isPending
       ? commands.duplicate.variables

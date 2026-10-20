@@ -1,25 +1,24 @@
 import { useState } from 'react'
+import { Link } from 'react-router'
 
 import { Alert } from '@nino/ds/components/Alert'
 import { Box } from '@nino/ds/components/Box'
 import { Button } from '@nino/ds/components/Button'
 import { Icon } from '@nino/ds/components/Icon'
 import { Skeleton } from '@nino/ds/components/Skeleton'
-import { POSITIONS_GHOST_ROWS } from '@pages/Positions/constants/positions.constants'
 import { usePositionsFacade } from '@pages/Positions/facades/usePositionsFacade/usePositionsFacade'
+import { PositionRemoveDialog } from '@shared/components/PositionRemoveDialog/PositionRemoveDialog'
+import { POSITIONS_GHOST_ROWS } from '@shared/constants/positions.constants'
 import type { UnitPosition } from '@shared/types/team/unit-position.type'
 
-import { PositionDialog } from '../PositionDialog/PositionDialog'
-import { PositionRemoveDialog } from '../PositionRemoveDialog/PositionRemoveDialog'
-import { PositionRow } from '../PositionRow/PositionRow'
+import { PositionsTable } from '../PositionsTable/PositionsTable'
 
 import motion from '@styles/motion.module.css'
 import styles from './PositionsContent.module.css'
 
 export const PositionsContent = () => {
-  const { positions, isPending, isError } = usePositionsFacade()
-  const [isCreating, setIsCreating] = useState(false)
-  const [editing, setEditing] = useState<UnitPosition | null>(null)
+  const { positions, isPending, isError, removePosition } =
+    usePositionsFacade()
   const [removing, setRemoving] = useState<UnitPosition | null>(null)
 
   if (isPending) {
@@ -40,43 +39,23 @@ export const PositionsContent = () => {
     )
   }
 
-  const closeForm = () => {
-    setIsCreating(false)
-    setEditing(null)
-  }
-
   return (
     <>
       <Box className={styles.toolbar}>
-        <Button
-          className={motion.press}
-          onClick={() => setIsCreating(true)}
-        >
-          <Icon name="plus" />
-          Novo cargo
+        <Button asChild className={motion.press}>
+          <Link to="novo">
+            <Icon name="plus" />
+            Novo cargo
+          </Link>
         </Button>
       </Box>
 
-      <Box as="ul" className={styles.list}>
-        {positions.map((position) => (
-          <PositionRow
-            key={position.id}
-            position={position}
-            onEdit={setEditing}
-            onRemove={setRemoving}
-          />
-        ))}
-      </Box>
-
-      <PositionDialog
-        open={isCreating || !!editing}
-        position={editing}
-        onOpenChange={(open) => !open && closeForm()}
-      />
+      <PositionsTable positions={positions} onRemove={setRemoving} />
 
       {removing && (
         <PositionRemoveDialog
           position={removing}
+          onConfirm={() => removePosition(removing.id)}
           onClose={() => setRemoving(null)}
         />
       )}

@@ -1,0 +1,21 @@
+@reference "@nino/ds/globals.css";
+
+.skeleton {
+  @apply flex flex-col gap-6;
+}
+
+.title {
+  @apply h-12 w-72 max-w-full rounded-4;
+}
+
+.layout {
+  @apply grid gap-6 lg:grid-cols-[minmax(0,1fr)_18rem] lg:gap-10;
+}
+
+.form {
+  @apply h-96 w-full rounded-6;
+}
+
+.summary {
+  @apply h-48 w-full rounded-6;
+}

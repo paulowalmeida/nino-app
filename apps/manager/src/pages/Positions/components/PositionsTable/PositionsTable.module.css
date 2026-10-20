@@ -1,0 +1,55 @@
+@reference "@nino/ds/globals.css";
+
+.shell {
+  @apply min-w-0 rounded-6 bg-surface-2;
+}
+
+.headRow > th {
+  @apply border-b border-border;
+}
+
+.colName {
+  width: auto;
+}
+
+.colLevel,
+.colPeople {
+  width: 8rem;
+}
+
+.colAccess {
+  width: 9rem;
+}
+
+.colActions {
+  width: 4rem;
+}
+
+.identity {
+  @apply inline-flex max-w-full items-center gap-2 py-1;
+  @apply font-semibold text-fg-strong hover:underline;
+}
+
+.name {
+  @apply truncate;
+}
+
+.access {
+  @apply text-sm text-fg-faint;
+}
+
+.number {
+  @apply text-sm tabular-nums text-fg-faint;
+}
+
+.actions {
+  @apply text-right;
+}
+
+.smallOnly {
+  @apply block text-xs text-fg-faint md:hidden;
+}
+
+.hideOnSmall {
+  @apply hidden md:table-cell;
+}

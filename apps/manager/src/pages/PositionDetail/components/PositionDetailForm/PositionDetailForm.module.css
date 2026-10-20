@@ -1,0 +1,35 @@
+@reference "@nino/ds/globals.css";
+
+.layout {
+  @apply grid gap-6 lg:grid-cols-[minmax(0,1fr)_18rem] lg:items-start lg:gap-10;
+}
+
+.main {
+  @apply min-w-0;
+}
+
+.identity,
+.permissions {
+  @apply flex flex-col gap-4;
+}
+
+.identityFields {
+  @apply grid gap-4 md:grid-cols-[minmax(0,1fr)_14rem];
+}
+
+.groups {
+  @apply grid gap-4 xl:grid-cols-2;
+}
+
+.group {
+  @apply min-w-0 rounded-6 bg-surface-2 p-5;
+}
+
+.groupTitle {
+  @apply text-sm font-semibold text-fg-strong;
+}
+
+.actions {
+  @apply sticky bottom-0 -mx-4 flex justify-end gap-3 border-t border-border;
+  @apply bg-surface-raised px-4 py-3 lg:static lg:mx-0 lg:border-0 lg:bg-transparent lg:px-0;
+}

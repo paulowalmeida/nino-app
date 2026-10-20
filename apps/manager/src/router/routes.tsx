@@ -244,6 +244,22 @@ export const router = createBrowserRouter([
           })),
       },
       {
+        path: 'cargos/novo',
+        loader: roleGuard(['UNIT_OWNER']),
+        lazy: () =>
+          import('@pages/PositionDetail/PositionDetail').then(
+            ({ PositionDetail }) => ({ Component: PositionDetail })
+          ),
+      },
+      {
+        path: 'cargos/:positionId',
+        loader: roleGuard(['UNIT_OWNER']),
+        lazy: () =>
+          import('@pages/PositionDetail/PositionDetail').then(
+            ({ PositionDetail }) => ({ Component: PositionDetail })
+          ),
+      },
+      {
         path: 'perfil',
         lazy: () =>
           import('@pages/Profile/Profile').then(({ Profile }) => ({

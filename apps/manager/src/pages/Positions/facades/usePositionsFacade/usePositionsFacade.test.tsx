@@ -1,9 +1,9 @@
 import { renderHook } from '@testing-library/react'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 
-import { usePositionCommands } from '@pages/Positions/hooks/usePositionCommands/usePositionCommands'
-import { usePositionPermissions } from '@pages/Positions/hooks/usePositionPermissions/usePositionPermissions'
 import { useCurrentUnit } from '@shared/hooks/session/useCurrentUnit/useCurrentUnit'
+import { usePositionCommands } from '@shared/hooks/team/usePositionCommands/usePositionCommands'
+import { usePositionPermissions } from '@shared/hooks/team/usePositionPermissions/usePositionPermissions'
 import { useUnitPositions } from '@shared/hooks/team/useUnitPositions/useUnitPositions'
 
 import { usePositionsFacade } from './usePositionsFacade'
@@ -13,20 +13,16 @@ import {
   positionsFacadeUnitMock,
 } from './usePositionsFacade.mock'
 
-vi.mock('@pages/Positions/hooks/usePositionCommands/usePositionCommands')
-vi.mock('@pages/Positions/hooks/usePositionPermissions/usePositionPermissions')
+vi.mock('@shared/hooks/team/usePositionCommands/usePositionCommands')
+vi.mock('@shared/hooks/team/usePositionPermissions/usePositionPermissions')
 vi.mock('@shared/hooks/session/useCurrentUnit/useCurrentUnit')
 vi.mock('@shared/hooks/team/useUnitPositions/useUnitPositions')
 
-const createPosition = vi.fn()
-const updatePosition = vi.fn()
 const duplicatePosition = vi.fn()
 const removePosition = vi.fn()
 
 const givenCommands = (duplicate: object = { isPending: false }) =>
   vi.mocked(usePositionCommands).mockReturnValue({
-    create: { mutateAsync: createPosition },
-    update: { mutateAsync: updatePosition },
     duplicate: { mutate: duplicatePosition, ...duplicate },
     remove: { mutateAsync: removePosition },
   } as never)
@@ -51,11 +47,9 @@ describe(usePositionsFacade.name, () => {
 
     expect(useUnitPositions).toHaveBeenCalledWith('unit-1')
     expect(result.current.positions).toBe(positionsFacadePositionsMock)
-    expect(result.current.permissionCatalog).toBe(positionsFacadeCatalogMock)
+    expect(result.current.permissionTotal).toBe(positionsFacadeCatalogMock.length)
     expect(result.current.isPending).toBe(false)
     expect(result.current.isError).toBe(false)
-    expect(result.current.createPosition).toBe(createPosition)
-    expect(result.current.updatePosition).toBe(updatePosition)
     expect(result.current.duplicatePosition).toBe(duplicatePosition)
     expect(result.current.removePosition).toBe(removePosition)
     expect(result.current.duplicatingId).toBeUndefined()
@@ -84,7 +78,7 @@ describe(usePositionsFacade.name, () => {
 
     expect(useUnitPositions).toHaveBeenCalledWith(null)
     expect(result.current.positions).toEqual([])
-    expect(result.current.permissionCatalog).toEqual([])
+    expect(result.current.permissionTotal).toBe(0)
     expect(result.current.isPending).toBe(true)
   })
 })

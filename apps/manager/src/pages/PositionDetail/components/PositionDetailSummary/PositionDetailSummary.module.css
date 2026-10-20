@@ -1,0 +1,18 @@
+@reference "@nino/ds/globals.css";
+
+.summary {
+  @apply flex flex-col gap-4 rounded-6 bg-surface-2 p-5;
+  @apply lg:sticky lg:top-6;
+}
+
+.item {
+  @apply flex flex-col gap-0.5;
+}
+
+.value {
+  @apply font-display text-2xl font-extrabold tabular-nums text-fg-strong;
+}
+
+.caption {
+  @apply text-sm text-fg-faint;
+}
