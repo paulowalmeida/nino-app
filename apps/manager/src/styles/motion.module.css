@@ -78,13 +78,16 @@
   }
 }
 
+/* WHY: o inset negativo no estado final mantém sombra, anel e borda desenhada
+ * por box-shadow visíveis; com `inset(0)` o clip-path, que fica aplicado após a
+ * animação (fill both), cortava tudo que é desenhado fora da caixa. */
 @keyframes deal {
   from {
-    clip-path: inset(0 0 100% 0);
+    clip-path: inset(-32px -32px 100% -32px);
     transform: translateX(-10px);
   }
   to {
-    clip-path: inset(0 0 0 0);
+    clip-path: inset(-32px -32px -32px -32px);
     transform: translateX(0);
   }
 }
