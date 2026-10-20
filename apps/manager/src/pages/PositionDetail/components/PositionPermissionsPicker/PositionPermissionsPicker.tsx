@@ -1,12 +1,12 @@
 import { useMemo, useState } from 'react'
 
-import { Accordion } from '@nino/ds/components/Accordion'
 import { Box } from '@nino/ds/components/Box'
 import { Checkbox } from '@nino/ds/components/Checkbox'
 import { EmptyState } from '@nino/ds/components/EmptyState'
 import { FormField } from '@nino/ds/components/FormField'
+import { Grid } from '@nino/ds/components/Grid'
 import { Heading } from '@nino/ds/components/Heading'
-import { Text } from '@nino/ds/components/Text'
+import { Tabs } from '@nino/ds/components/Tabs'
 import { usePositionDetailFacade } from '@pages/PositionDetail/facades/usePositionDetailFacade/usePositionDetailFacade'
 import type { UnitPermission } from '@shared/types/auth/unit-permission.type'
 import {
@@ -36,11 +36,8 @@ export const PositionPermissionsPicker = ({
     () => groupPermissions(permissionCatalog),
     [permissionCatalog]
   )
-  const [openGroups, setOpenGroups] = useState<string[]>(
-    groups.slice(0, 1).map(({ group }) => group)
-  )
+  const [activeTab, setActiveTab] = useState<string>(groups[0]?.group ?? '')
 
-  const isFiltering = term.trim().length > 0
   const shownGroups = groups
     .map((entry) => ({
       ...entry,
@@ -49,6 +46,9 @@ export const PositionPermissionsPicker = ({
       ),
     }))
     .filter(({ visible }) => visible.length > 0)
+  const activeGroup = shownGroups.some(({ group }) => group === activeTab)
+    ? activeTab
+    : shownGroups[0]?.group
 
   return (
     <Box direction="column" gap={3}>
@@ -57,32 +57,20 @@ export const PositionPermissionsPicker = ({
       </Heading>
 
       {shownGroups.length === 0 ? (
-        <EmptyState>{`Nenhuma permissão com "${term.trim()}".`}</EmptyState>
+        <EmptyState>Nenhuma permissão para mostrar.</EmptyState>
       ) : (
-        <Accordion
-          multiple
-          value={isFiltering ? shownGroups.map(({ group }) => group) : openGroups}
-          onValueChange={setOpenGroups}
-          className={styles.groups}
-          itemClassName={styles.group}
-          items={shownGroups.map(({ group, label, permissions, visible }) => ({
+        <Tabs
+          value={activeGroup}
+          onValueChange={setActiveTab}
+          tabs={shownGroups.map(({ group, label, permissions, visible }) => ({
             value: group,
-            trigger: (
-              <Box
-                direction="row"
-                align="baseline"
-                className={styles.groupTrigger}
-              >
-                <Text as="span" className={styles.groupTitle}>
-                  {label}
-                </Text>
-                <Text as="span" className={styles.groupCount}>
-                  {`${permissions.filter(({ key }) => value.includes(key)).length} de ${permissions.length}`}
-                </Text>
-              </Box>
-            ),
+            label: `${label} · ${permissions.filter(({ key }) => value.includes(key)).length}/${permissions.length}`,
             content: (
-              <Box className={styles.groupItems}>
+              <Grid
+                columns={{ mobile: 1, desktop: 2 }}
+                gap={{ mobile: 3, desktop: 4 }}
+                className={styles.items}
+              >
                 {visible.map((definition) => (
                   <FormField
                     key={definition.key}
@@ -105,7 +93,7 @@ export const PositionPermissionsPicker = ({
                     />
                   </FormField>
                 ))}
-              </Box>
+              </Grid>
             ),
           }))}
         />

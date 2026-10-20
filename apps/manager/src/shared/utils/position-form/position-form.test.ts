@@ -69,8 +69,8 @@ describe('position form helpers', () => {
     const groups = groupPermissions(positionFormCatalogMock)
 
     expect(groups.map(({ group, label }) => [group, label])).toEqual([
-      ['operation', 'Operação do dia'],
-      ['sales', 'Vendas e clientes'],
+      ['operation', 'Operação'],
+      ['business', 'Negócio'],
     ])
     expect(groups[0].permissions.map(({ key }) => key)).toEqual([
       'cashbox.operate',

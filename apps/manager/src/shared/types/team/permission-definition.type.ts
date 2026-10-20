@@ -2,7 +2,7 @@ import type { UnitPermission } from '@shared/types/auth/unit-permission.type'
 
 export type PermissionDefinition = {
   key: UnitPermission
-  group: 'operation' | 'sales' | 'catalog' | 'delivery' | 'team' | 'store'
+  group: 'operation' | 'catalog' | 'business' | 'unit' | 'company'
   label: string
   description: string
 }

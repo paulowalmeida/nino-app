@@ -10,7 +10,7 @@ export const positionFormCatalogMock: PermissionDefinition[] = [
   },
   {
     key: 'reports.view',
-    group: 'sales',
+    group: 'business',
     label: 'Ver relatórios',
     description: 'Relatórios de vendas.',
   },

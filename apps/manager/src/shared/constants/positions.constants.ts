@@ -4,12 +4,11 @@ export const PERMISSION_GROUP_LABEL: Record<
   PermissionDefinition['group'],
   string
 > = {
-  operation: 'Operação do dia',
-  sales: 'Vendas e clientes',
+  operation: 'Operação',
   catalog: 'Cardápio',
-  delivery: 'Entrega',
-  team: 'Equipe',
-  store: 'Loja',
+  business: 'Negócio',
+  unit: 'Unidade',
+  company: 'Empresa',
 }
 
 export const POSITIONS_GHOST_ROWS = ['first', 'second', 'third']

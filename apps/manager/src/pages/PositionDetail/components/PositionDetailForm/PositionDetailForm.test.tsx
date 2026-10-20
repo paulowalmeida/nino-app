@@ -45,8 +45,8 @@ describe(PositionDetailForm.name, () => {
   it('groups the permissions and starts empty for a new cargo', () => {
     renderForm()
 
-    expect(screen.getByText('Operação do dia')).toBeInTheDocument()
-    expect(screen.getByText('Vendas e clientes')).toBeInTheDocument()
+    expect(screen.getByRole('tab', { name: /Operação/ })).toBeInTheDocument()
+    expect(screen.getByRole('tab', { name: /Negócio/ })).toBeInTheDocument()
     expect(screen.getByLabelText('Nome do cargo')).toHaveValue('')
   })
 
@@ -85,14 +85,14 @@ describe(PositionDetailForm.name, () => {
     )
   })
 
-  it('counts the chosen permissions in each group header', async () => {
+  it('counts the chosen permissions in each tab', async () => {
     renderForm()
-    const operation = screen.getByRole('button', { name: /Operação do dia/ })
+    const operation = screen.getByRole('tab', { name: /Operação/ })
 
-    expect(operation).toHaveTextContent('0 de 1')
+    expect(operation).toHaveTextContent('0/1')
     await userEvent.click(screen.getByLabelText(/Mexer no caixa/))
 
-    expect(operation).toHaveTextContent('1 de 1')
+    expect(operation).toHaveTextContent('1/1')
   })
 
   it('filters the permissions with the field next to the hierarchy', async () => {
