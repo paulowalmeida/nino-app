@@ -7,7 +7,7 @@
 
 .board {
   @apply mt-1 grid items-start gap-4;
-  @apply sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4;
+  @apply grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4;
   @apply lg:mt-3;
 }
 
