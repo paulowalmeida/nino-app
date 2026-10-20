@@ -31,7 +31,7 @@ export const CatalogContentSkeleton = () => (
               key={row}
               className={rowStyles.menuRowItem}
             >
-              <Box className={contentStyles.itemLink}>
+              <Box direction="row" className={contentStyles.itemLink}>
                 <Skeleton className={styles.thumb} />
                 <Box className={contentStyles.itemText}>
                   <Skeleton className={styles.name} />
