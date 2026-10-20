@@ -14,14 +14,8 @@ import motion from '@styles/motion.module.css'
 import styles from './TabActions.module.css'
 
 export const TabActions = () => {
-  const {
-    tab,
-    canCancelTab,
-    submitClose,
-    submitReopen,
-    isClosing,
-    isReopening,
-  } = useTableTabDetailFacade()
+  const { tab, submitClose, submitReopen, isClosing, isReopening } =
+    useTableTabDetailFacade()
   const [isConfirmingClose, setConfirmingClose] = useState(false)
   const [isCancellingTab, setCancellingTab] = useState(false)
 
@@ -72,11 +66,9 @@ export const TabActions = () => {
           Reabrir comanda
         </Button>
       )}
-      {canCancelTab && (
-        <Button variant="ghost" onClick={() => setCancellingTab(true)}>
-          Cancelar comanda
-        </Button>
-      )}
+      <Button variant="ghost" onClick={() => setCancellingTab(true)}>
+        Cancelar comanda
+      </Button>
       <Dialog
         open={isConfirmingClose}
         onOpenChange={(open) => !open && setConfirmingClose(false)}

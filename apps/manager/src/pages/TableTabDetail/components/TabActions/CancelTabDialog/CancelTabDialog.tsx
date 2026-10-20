@@ -5,7 +5,9 @@ import { Box } from '@nino/ds/components/Box'
 import { Button } from '@nino/ds/components/Button'
 import { FormField } from '@nino/ds/components/FormField'
 import { Heading } from '@nino/ds/components/Heading'
+import { Input } from '@nino/ds/components/Input'
 import { Modal } from '@nino/ds/components/Modal'
+import { PasswordInput } from '@nino/ds/components/PasswordInput'
 import { Text } from '@nino/ds/components/Text'
 import { Textarea } from '@nino/ds/components/Textarea'
 import { useTableTabDetailFacade } from '@pages/TableTabDetail/facades/useTableTabDetailFacade/useTableTabDetailFacade'
@@ -20,18 +22,32 @@ type CancelTabDialogProps = {
 }
 
 export const CancelTabDialog = ({ open, onClose }: CancelTabDialogProps) => {
-  const { submitCancel, isCancelling } = useTableTabDetailFacade()
+  const { submitCancel, isCancelling, canCancelTab } = useTableTabDetailFacade()
   const [reason, setReason] = useState('')
+  const [supervisorEmail, setSupervisorEmail] = useState('')
+  const [supervisorPassword, setSupervisorPassword] = useState('')
   const trimmedReason = reason.trim()
+  const needsSupervisor = !canCancelTab
+  const isReady =
+    Boolean(trimmedReason) &&
+    (!needsSupervisor || Boolean(supervisorEmail.trim() && supervisorPassword))
 
   const cancelTab = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
-    if (!trimmedReason) return
+    if (!isReady) return
     submitCancel(
-      { cancelReason: trimmedReason },
+      {
+        cancelReason: trimmedReason,
+        ...(needsSupervisor && {
+          supervisorEmail: supervisorEmail.trim(),
+          supervisorPassword,
+        }),
+      },
       {
         onSuccess: () => {
           setReason('')
+          setSupervisorEmail('')
+          setSupervisorPassword('')
           onClose()
         },
       }
@@ -66,6 +82,31 @@ export const CancelTabDialog = ({ open, onClose }: CancelTabDialogProps) => {
               onChange={(event) => setReason(event.target.value)}
             />
           </FormField>
+          {needsSupervisor && (
+            <>
+              <Text size="sm" color="muted">
+                Um gestor ou dono precisa autorizar com o próprio e-mail e
+                senha.
+              </Text>
+              <FormField label="E-mail do gestor">
+                <Input
+                  type="email"
+                  autoComplete="off"
+                  value={supervisorEmail}
+                  onChange={(event) => setSupervisorEmail(event.target.value)}
+                />
+              </FormField>
+              <FormField label="Senha do gestor">
+                <PasswordInput
+                  autoComplete="off"
+                  value={supervisorPassword}
+                  onChange={(event) =>
+                    setSupervisorPassword(event.target.value)
+                  }
+                />
+              </FormField>
+            </>
+          )}
         </form>
       }
       footer={
@@ -78,7 +119,7 @@ export const CancelTabDialog = ({ open, onClose }: CancelTabDialogProps) => {
             form={CANCEL_TAB_FORM_ID}
             variant="danger"
             loading={isCancelling}
-            disabled={!trimmedReason}
+            disabled={!isReady}
           >
             Cancelar comanda
           </Button>

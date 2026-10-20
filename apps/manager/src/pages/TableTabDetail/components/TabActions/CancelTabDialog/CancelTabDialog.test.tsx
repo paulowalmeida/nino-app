@@ -11,11 +11,12 @@ vi.mock(
   '@pages/TableTabDetail/facades/useTableTabDetailFacade/useTableTabDetailFacade'
 )
 
-const mockFacade = (isCancelling = false) => {
+const mockFacade = (isCancelling = false, canCancelTab = true) => {
   const submitCancel = vi.fn()
   vi.mocked(useTableTabDetailFacade).mockReturnValue({
     submitCancel,
     isCancelling,
+    canCancelTab,
   } as unknown as ReturnType<typeof useTableTabDetailFacade>)
   return submitCancel
 }
@@ -57,6 +58,45 @@ describe('CancelTabDialog', () => {
       expect.objectContaining({ onSuccess: expect.any(Function) })
     )
     expect(onClose).toHaveBeenCalled()
+  })
+
+  it('asks staff for a manager e-mail and password before cancelling', async () => {
+    const submitCancel = mockFacade(false, false)
+    submitCancel.mockImplementation((_request, options) => options.onSuccess())
+    render(<CancelTabDialog open onClose={vi.fn()} />)
+
+    await userEvent.type(
+      screen.getByRole('textbox', { name: 'Motivo do cancelamento' }),
+      cancelTabDialogMock.reason
+    )
+    const confirm = screen.getByRole('button', { name: 'Cancelar comanda' })
+    expect(confirm).toBeDisabled()
+
+    await userEvent.type(
+      screen.getByRole('textbox', { name: 'E-mail do gestor' }),
+      cancelTabDialogMock.supervisorEmail
+    )
+    await userEvent.type(
+      screen.getByLabelText('Senha do gestor'),
+      cancelTabDialogMock.supervisorPassword
+    )
+    await userEvent.click(confirm)
+
+    expect(submitCancel).toHaveBeenCalledWith(
+      {
+        cancelReason: cancelTabDialogMock.reason,
+        supervisorEmail: cancelTabDialogMock.supervisorEmail,
+        supervisorPassword: cancelTabDialogMock.supervisorPassword,
+      },
+      expect.objectContaining({ onSuccess: expect.any(Function) })
+    )
+  })
+
+  it('does not ask a manager for credentials', () => {
+    mockFacade()
+    render(<CancelTabDialog open onClose={vi.fn()} />)
+
+    expect(screen.queryByText('E-mail do gestor')).not.toBeInTheDocument()
   })
 
   it('does not submit a blank reason', async () => {

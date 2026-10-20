@@ -118,13 +118,13 @@ describe('TabActions', () => {
     expect(submitReopen).toHaveBeenCalledOnce()
   })
 
-  it('hides the cancellation from whoever cannot cancel', () => {
+  it('offers the cancellation to staff too, who will need a manager', () => {
     mockFacade({ canCancelTab: false })
     render(<TabActions />)
 
     expect(
-      screen.queryByRole('button', { name: 'Cancelar comanda' })
-    ).not.toBeInTheDocument()
+      screen.getByRole('button', { name: 'Cancelar comanda' })
+    ).toBeInTheDocument()
   })
 
   it('lets a manager open and dismiss the cancellation', async () => {
