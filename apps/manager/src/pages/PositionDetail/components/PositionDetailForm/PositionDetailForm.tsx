@@ -64,7 +64,7 @@ export const PositionDetailForm = () => {
       className={`${motion.deal} ${styles.layout}`}
     >
       <Box direction="column" gap={8} className={styles.main}>
-        <Box className={styles.fields}>
+        <Box direction="row" wrap gap={4} className={styles.fields}>
           {isCreating && (
             <FormField label="Nome do cargo" error={errors.name?.message}>
               <Input
