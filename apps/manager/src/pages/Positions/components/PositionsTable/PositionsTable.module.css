@@ -70,3 +70,17 @@
 .compactActions {
   @apply flex justify-end lg:hidden;
 }
+
+.belowTrigger {
+  @apply inline-flex min-h-11 items-center gap-1 rounded-1 bg-surface-cool px-2;
+  @apply text-xs font-bold uppercase tracking-wider text-fg-strong;
+  @apply transition-colors duration-150 hover:bg-surface-mute;
+}
+
+.belowChevron {
+  @apply h-3 w-3 shrink-0 text-fg-faint;
+}
+
+.menuPanel {
+  @apply min-w-56;
+}

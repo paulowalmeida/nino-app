@@ -1,6 +1,6 @@
 import { Link } from 'react-router'
 
-import { Controller, useForm, useWatch } from 'react-hook-form'
+import { Controller, useForm } from 'react-hook-form'
 
 import { Alert } from '@nino/ds/components/Alert'
 import { Box } from '@nino/ds/components/Box'
@@ -19,7 +19,6 @@ import {
   positionToFormValues,
 } from '@shared/utils/position-form/position-form'
 
-import { PositionDetailSummary } from '../PositionDetailSummary/PositionDetailSummary'
 import { PositionPermissionsPicker } from '../PositionPermissionsPicker/PositionPermissionsPicker'
 
 import motion from '@styles/motion.module.css'
@@ -28,7 +27,7 @@ import styles from './PositionDetailForm.module.css'
 const FORM_ID = 'position-form'
 
 export const PositionDetailForm = () => {
-  const { position, positions, isCreating, permissionCatalog, savePosition } =
+  const { position, positions, isCreating, savePosition } =
     usePositionDetailFacade()
   const isReadOnly = !!position?.isProtected
   const placements = placementOptions(positions, position?.id)
@@ -44,8 +43,6 @@ export const PositionDetailForm = () => {
       ? positionToFormValues(position)
       : emptyPositionFormValues(lowestPositionId(positions)),
   })
-  const belowPositionId = useWatch({ control, name: 'belowPositionId' })
-  const permissions = useWatch({ control, name: 'permissions' })
 
   const onSubmit = async (values: PositionFormValues) => {
     try {
@@ -142,16 +139,6 @@ export const PositionDetailForm = () => {
           </Box>
         )}
       </Box>
-
-      <PositionDetailSummary
-        aboveName={
-          placements.find(({ value }) => value === belowPositionId)?.label ??
-          null
-        }
-        selectedCount={permissions.length}
-        totalCount={permissionCatalog.length}
-        memberCount={position?.memberCount ?? 0}
-      />
     </form>
   )
 }

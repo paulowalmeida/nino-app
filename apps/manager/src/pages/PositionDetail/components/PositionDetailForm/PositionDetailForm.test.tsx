@@ -48,8 +48,6 @@ describe(PositionDetailForm.name, () => {
     expect(screen.getByText('Operação do dia')).toBeInTheDocument()
     expect(screen.getByText('Vendas e clientes')).toBeInTheDocument()
     expect(screen.getByLabelText('Nome do cargo')).toHaveValue('')
-    expect(screen.getByText('0 de 2')).toBeInTheDocument()
-    expect(screen.getByText('0 pessoas')).toBeInTheDocument()
   })
 
   it('saves the typed name, placement and chosen permissions', async () => {
@@ -59,7 +57,6 @@ describe(PositionDetailForm.name, () => {
     await userEvent.click(screen.getByLabelText(/Mexer no caixa/))
     await userEvent.click(screen.getByLabelText(/Ver relatórios/))
     await userEvent.click(screen.getByLabelText(/Ver relatórios/))
-    expect(screen.getByText('1 de 2')).toBeInTheDocument()
     await userEvent.click(screen.getByRole('button', { name: 'Salvar cargo' }))
 
     await waitFor(() =>
@@ -77,7 +74,6 @@ describe(PositionDetailForm.name, () => {
 
     expect(screen.queryByLabelText('Nome do cargo')).not.toBeInTheDocument()
     expect(screen.getByLabelText(/Mexer no caixa/)).toBeChecked()
-    expect(screen.getByText('2 pessoas')).toBeInTheDocument()
 
     await userEvent.click(screen.getByRole('button', { name: 'Salvar cargo' }))
 

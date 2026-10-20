@@ -4,7 +4,6 @@ import { Box } from '@nino/ds/components/Box'
 import { Button } from '@nino/ds/components/Button'
 import { Icon } from '@nino/ds/components/Icon'
 import { Menu, type MenuItem } from '@nino/ds/components/Menu'
-import { Select } from '@nino/ds/components/Select'
 import {
   Table,
   TableBody,
@@ -41,6 +40,21 @@ export const PositionsTable = ({
     isProtected
       ? 'Acesso total'
       : `${permissions.length} de ${permissionTotal}`
+
+  const aboveNameOf = ({ belowPositionId }: UnitPosition): string =>
+    positions.find(({ id }) => id === belowPositionId)?.name ?? '—'
+
+  const belowItemsOf = (position: UnitPosition): MenuItem[] =>
+    placementOptions(positions, position.id).map(({ value, label }) => ({
+      value,
+      label: value === position.belowPositionId ? `${label} — atual` : label,
+      disabled: value === position.belowPositionId,
+      onSelect: () =>
+        movePosition({
+          positionId: position.id,
+          draft: { belowPositionId: value },
+        }),
+    }))
 
   const itemsOf = (position: UnitPosition): MenuItem[] => {
     const items: MenuItem[] = []
@@ -109,16 +123,22 @@ export const PositionsTable = ({
                   {position.isProtected ? (
                     <Text className={styles.access}>Topo da hierarquia</Text>
                   ) : (
-                    <Select
-                      size="sm"
-                      options={placementOptions(positions, position.id)}
-                      value={position.belowPositionId ?? ''}
-                      onValueChange={(belowPositionId) =>
-                        movePosition({
-                          positionId: position.id,
-                          draft: { belowPositionId },
-                        })
+                    <Menu
+                      contentClassName={styles.menuPanel}
+                      trigger={
+                        <Button
+                          variant="ghost"
+                          className={`${motion.press} ${styles.belowTrigger}`}
+                        >
+                          {aboveNameOf(position)}
+                          <Icon
+                            name="chevron-down"
+                            size="sm"
+                            className={styles.belowChevron}
+                          />
+                        </Button>
                       }
+                      items={belowItemsOf(position)}
                     />
                   )}
                 </TableCell>

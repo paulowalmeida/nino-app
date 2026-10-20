@@ -83,18 +83,36 @@ describe(PositionsTable.name, () => {
     expect(screen.getByText('2 pessoas')).toBeInTheDocument()
   })
 
-  it('moves a cargo under the one chosen in the subordinate select', async () => {
-    renderTable([positionsTableOwnerMock, positionsTableCustomMock])
+  it('moves a cargo under the one chosen in the subordinate menu', async () => {
+    renderTable()
 
-    const nativeSelect = within(screen.getByRole('row', { name: /Caixa/ }))
-      .getAllByRole('combobox', { hidden: true })
-      .find((element) => element.tagName === 'SELECT') as HTMLSelectElement
-    await userEvent.selectOptions(nativeSelect, 'position-owner')
+    await userEvent.click(
+      within(screen.getByRole('row', { name: /Caixa/ })).getByRole('button', {
+        name: /Dono/,
+      })
+    )
+    await userEvent.click(
+      await screen.findByRole('menuitem', { name: 'Gerente' })
+    )
 
     expect(movePosition).toHaveBeenCalledWith({
       positionId: 'position-cashier',
-      draft: { belowPositionId: 'position-owner' },
+      draft: { belowPositionId: 'position-manager' },
     })
+  })
+
+  it('marks the current superior as taken in the menu', async () => {
+    renderTable()
+
+    await userEvent.click(
+      within(screen.getByRole('row', { name: /Caixa/ })).getByRole('button', {
+        name: /Dono/,
+      })
+    )
+
+    expect(
+      await screen.findByRole('menuitem', { name: 'Dono — atual' })
+    ).toHaveAttribute('aria-disabled', 'true')
   })
 
   it('duplicates through the icon on wide screens', async () => {
