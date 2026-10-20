@@ -14,7 +14,11 @@
 }
 
 .identityFields {
-  @apply grid gap-4 md:grid-cols-[minmax(0,1fr)_14rem];
+  @apply flex flex-wrap items-start gap-4;
+}
+
+.identityFields > * {
+  @apply w-full sm:w-72;
 }
 
 .groups {

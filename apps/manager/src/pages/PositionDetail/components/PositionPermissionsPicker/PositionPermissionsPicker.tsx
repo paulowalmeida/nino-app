@@ -5,6 +5,7 @@ import { Box } from '@nino/ds/components/Box'
 import { Checkbox } from '@nino/ds/components/Checkbox'
 import { EmptyState } from '@nino/ds/components/EmptyState'
 import { FormField } from '@nino/ds/components/FormField'
+import { Heading } from '@nino/ds/components/Heading'
 import { Input } from '@nino/ds/components/Input'
 import { Text } from '@nino/ds/components/Text'
 import { usePositionDetailFacade } from '@pages/PositionDetail/facades/usePositionDetailFacade/usePositionDetailFacade'
@@ -50,14 +51,19 @@ export const PositionPermissionsPicker = ({
 
   return (
     <Box direction="column" gap={3}>
-      <Input
-        type="search"
-        value={term}
-        placeholder="Filtrar permissões"
-        aria-label="Filtrar permissões"
-        className={styles.search}
-        onChange={(event) => setTerm(event.target.value)}
-      />
+      <Box className={styles.head}>
+        <Heading level={2} size="sm" id="position-permissions">
+          O que este cargo pode fazer
+        </Heading>
+        <Input
+          type="search"
+          value={term}
+          placeholder="Filtrar permissões"
+          aria-label="Filtrar permissões"
+          className={styles.search}
+          onChange={(event) => setTerm(event.target.value)}
+        />
+      </Box>
 
       {shownGroups.length === 0 ? (
         <EmptyState>{`Nenhuma permissão com "${term.trim()}".`}</EmptyState>

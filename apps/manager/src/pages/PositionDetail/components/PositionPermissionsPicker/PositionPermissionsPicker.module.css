@@ -1,5 +1,9 @@
 @reference "@nino/ds/globals.css";
 
+.head {
+  @apply flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between;
+}
+
 .search {
   @apply h-11 w-full sm:w-72;
 }

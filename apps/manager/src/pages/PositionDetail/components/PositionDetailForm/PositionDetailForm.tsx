@@ -108,9 +108,6 @@ export const PositionDetailForm = () => {
         )}
 
         <Box as="section" aria-labelledby="position-permissions" className={styles.permissions}>
-          <Heading level={2} size="sm" id="position-permissions">
-            O que este cargo pode fazer
-          </Heading>
           <Controller
             name="permissions"
             control={control}
