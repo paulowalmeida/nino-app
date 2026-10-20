@@ -75,6 +75,9 @@ export const AddTabItemDialog = ({ open, onClose }: AddTabItemDialogProps) => {
       open={open}
       onOpenChange={(next) => !next && onClose()}
       ariaLabel="Lançar item"
+      positionerClassName={styles.addTabItemDialogPositioner}
+      contentClassName={styles.addTabItemDialogPanel}
+      bodyClassName={styles.addTabItemDialogBody}
       header={
         <Heading level={2} size="md">
           Lançar item

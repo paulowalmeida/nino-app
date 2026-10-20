@@ -1,9 +1,46 @@
 @reference "@nino/ds/globals.css";
 
+/* Celular: ocupa a tela toda, com o corpo rolando entre o título e o rodapé,
+ * como o detalhe do pedido no balcão. */
+.addTabItemDialogPositioner {
+  @apply p-0;
+}
+
+.addTabItemDialogPanel {
+  @apply flex h-dvh max-h-none w-screen max-w-none flex-col rounded-none;
+}
+
+.addTabItemDialogBody {
+  @apply min-h-0 flex-1 overflow-y-auto;
+}
+
 .addTabItemDialogFields {
   @apply flex flex-col gap-4;
 }
 
 .addTabItemDialogActions {
-  @apply justify-end gap-2;
+  @apply w-full justify-end gap-2;
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+.addTabItemDialogActions > button:last-child {
+  @apply flex-1;
+}
+
+/* Tablet e desktop: janela centrada, como a de configurar produto no balcão;
+ * se o formulário for alto, só o corpo rola. */
+@media (min-width: 426px) {
+  .addTabItemDialogPositioner {
+    @apply p-4;
+  }
+
+  .addTabItemDialogPanel {
+    @apply h-auto rounded-2;
+    max-height: calc(100dvh - 2rem);
+    width: min(36rem, calc(100vw - 2rem));
+  }
+
+  .addTabItemDialogActions > button:last-child {
+    @apply flex-none;
+  }
 }
