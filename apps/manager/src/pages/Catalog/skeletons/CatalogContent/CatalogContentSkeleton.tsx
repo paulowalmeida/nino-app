@@ -3,8 +3,8 @@ import { ListRow } from '@nino/ds/components/ListRow'
 import { Skeleton } from '@nino/ds/components/Skeleton'
 import { MENU_BOARD_GHOST_ROWS } from '@pages/Catalog/constants/catalog.constants'
 
-import contentStyles from '@pages/Catalog/components/CatalogContent/CatalogItems/MenuRow/MenuRowContent/MenuRowContent.module.css'
 import rowStyles from '@pages/Catalog/components/CatalogContent/CatalogItems/MenuRow/MenuRow.module.css'
+import contentStyles from '@pages/Catalog/components/CatalogContent/CatalogItems/MenuRow/MenuRowContent/MenuRowContent.module.css'
 import styles from '@pages/Catalog/skeletons/CatalogContent/CatalogContentSkeleton.module.css'
 
 export const CatalogContentSkeleton = () => (
