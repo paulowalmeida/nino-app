@@ -124,8 +124,8 @@ describe(PositionsTable.name, () => {
 
     expect(duplicatePosition).toHaveBeenCalledWith('position-manager')
     expect(
-      screen.queryByRole('button', { name: 'Remover Gerente' })
-    ).not.toBeInTheDocument()
+      screen.getByRole('button', { name: 'Remover Gerente' })
+    ).toBeInTheDocument()
   })
 
   it('removes a custom cargo through the trash icon', async () => {
@@ -152,7 +152,7 @@ describe(PositionsTable.name, () => {
     expect(onRemove).toHaveBeenCalledWith(positionsTableCustomMock)
   })
 
-  it('offers only duplication in the menu of a starting cargo', async () => {
+  it('offers duplication and removal in the menu of a starting cargo', async () => {
     renderTable([positionsTableDefaultMock])
 
     await openMenu('Gerente')
@@ -161,8 +161,8 @@ describe(PositionsTable.name, () => {
       await screen.findByRole('menuitem', { name: 'Duplicar' })
     ).toBeInTheDocument()
     expect(
-      screen.queryByRole('menuitem', { name: 'Remover' })
-    ).not.toBeInTheDocument()
+      screen.getByRole('menuitem', { name: 'Remover' })
+    ).toBeInTheDocument()
   })
 
   it('disables the actions of the cargo being duplicated', () => {

@@ -59,20 +59,20 @@ export const PositionsTable = ({
   const itemsOf = (position: UnitPosition): MenuItem[] => {
     const items: MenuItem[] = []
     if (!position.isProtected) {
-      items.push({
-        value: 'duplicate',
-        label: 'Duplicar',
-        onSelect: () => duplicatePosition(position.id),
-      })
-    }
-    if (!position.isDefault) {
-      items.push({ separator: true })
-      items.push({
-        value: 'remove',
-        label: 'Remover',
-        destructive: true,
-        onSelect: () => onRemove(position),
-      })
+      items.push(
+        {
+          value: 'duplicate',
+          label: 'Duplicar',
+          onSelect: () => duplicatePosition(position.id),
+        },
+        { separator: true },
+        {
+          value: 'remove',
+          label: 'Remover',
+          destructive: true,
+          onSelect: () => onRemove(position),
+        }
+      )
     }
     return items
   }
@@ -156,7 +156,7 @@ export const PositionsTable = ({
                       size="icon"
                       aria-label={`Ver detalhes de ${position.name}`}
                     >
-                      <Link to={position.id}>
+                      <Link to={position.id} title="Ver detalhes">
                         <Icon name="eye" />
                       </Link>
                     </Button>
@@ -166,16 +166,19 @@ export const PositionsTable = ({
                         size="icon"
                         disabled={duplicatingId === position.id}
                         aria-label={`Duplicar ${position.name}`}
+                        title="Duplicar"
                         onClick={() => duplicatePosition(position.id)}
                       >
                         <Icon name="copy" />
                       </Button>
                     )}
-                    {!position.isDefault && (
+                    {!position.isProtected && (
                       <Button
                         variant="ghost"
                         size="icon"
+                        className={styles.removeButton}
                         aria-label={`Remover ${position.name}`}
+                        title="Remover"
                         onClick={() => onRemove(position)}
                       >
                         <Icon name="trash" />

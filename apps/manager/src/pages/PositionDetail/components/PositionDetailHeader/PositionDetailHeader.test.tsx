@@ -72,7 +72,7 @@ describe(PositionDetailHeader.name, () => {
     expect(screen.queryByRole('button')).not.toBeInTheDocument()
   })
 
-  it('lets a starting cargo be renamed but not removed', () => {
+  it('lets a starting cargo be renamed and removed', () => {
     givenFacade({ position: positionDetailHeaderDefaultMock })
 
     renderHeader()
@@ -81,8 +81,8 @@ describe(PositionDetailHeader.name, () => {
       screen.getByRole('heading', { name: 'editable:Atendente' })
     ).toBeInTheDocument()
     expect(
-      screen.queryByRole('button', { name: 'Remover cargo' })
-    ).not.toBeInTheDocument()
+      screen.getByRole('button', { name: 'Remover cargo' })
+    ).toBeInTheDocument()
   })
 
   it('lets a custom cargo be removed after confirming', async () => {

@@ -84,3 +84,7 @@
 .menuPanel {
   @apply min-w-56;
 }
+
+.removeButton {
+  @apply text-danger hover:bg-danger-surface hover:text-danger;
+}

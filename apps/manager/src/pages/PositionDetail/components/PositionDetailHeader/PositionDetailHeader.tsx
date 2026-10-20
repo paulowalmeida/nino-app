@@ -17,7 +17,7 @@ export const PositionDetailHeader = () => {
   const [isConfirmingRemoval, setIsConfirmingRemoval] = useState(false)
 
   const title = position?.name ?? 'Novo cargo'
-  const canRemove = !!position && !position.isDefault
+  const canRemove = !!position && !position.isProtected
 
   return (
     <Box direction="column" gap={4} className={styles.header}>
