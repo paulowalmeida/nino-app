@@ -3,13 +3,22 @@ import { ListRow } from '@nino/ds/components/ListRow'
 import { Skeleton } from '@nino/ds/components/Skeleton'
 import { MENU_BOARD_GHOST_ROWS } from '@pages/Catalog/constants/catalog.constants'
 
+import toolbarStyles from '@pages/Catalog/components/CatalogContent/CatalogControls/CatalogControls.module.css'
 import rowStyles from '@pages/Catalog/components/CatalogContent/CatalogItems/MenuRow/MenuRow.module.css'
 import contentStyles from '@pages/Catalog/components/CatalogContent/CatalogItems/MenuRow/MenuRowContent/MenuRowContent.module.css'
 import styles from '@pages/Catalog/skeletons/CatalogContent/CatalogContentSkeleton.module.css'
 
 export const CatalogContentSkeleton = () => (
   <Box className={styles.wrap}>
-    <Skeleton className={styles.tally} />
+    <Box
+      direction="row"
+      align="center"
+      gap={2}
+      className={toolbarStyles.catalogControlsToolbar}
+    >
+      <Skeleton className={styles.selectToggle} />
+      <Skeleton className={styles.tally} />
+    </Box>
 
     <Box className={styles.scroll}>
       <Box className={styles.catalogContentSkeletonList}>

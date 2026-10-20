@@ -4,9 +4,12 @@
   @apply flex min-h-0 flex-1 flex-col;
 }
 
+.selectToggle {
+  @apply size-9 shrink-0 rounded-2;
+}
+
 .tally {
-  @apply mb-2 ml-4 h-3 w-24 shrink-0;
-  @apply lg:ml-10 lg:h-3.5 lg:w-32;
+  @apply h-4 w-20 shrink-0;
 }
 
 .scroll {
@@ -23,11 +26,11 @@
 }
 
 .name {
-  @apply h-3.5 w-40 lg:h-4;
+  @apply h-4 w-44 lg:h-5;
 }
 
 .catalogContentSkeletonDescription {
-  @apply mt-1 hidden h-2.5 w-56 sm:block;
+  @apply mt-1.5 hidden h-3 w-72 max-w-full sm:block;
 }
 
 .price {
@@ -35,7 +38,7 @@
 }
 
 .switch {
-  @apply h-4 w-7 shrink-0 rounded-full;
+  @apply h-5 w-9 shrink-0 rounded-full;
 }
 
 .delete {
