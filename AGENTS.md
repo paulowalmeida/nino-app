@@ -230,3 +230,7 @@ The agent **MUST NOT**:
 **Investigate first. Decide second. Implement third. Verify fourth. Report precisely.**
 
 Never reverse this order when the preceding step is necessary to perform the task correctly.
+
+## User-authorized verification limit
+
+The repository owner explicitly authorized a reduced verification scope, and this overrides "Mandatory Verification Before Completion" and the page-domain coverage gate for day-to-day work: run only `tsc` and the tests of the folders changed, never the full suite, `quality:gate` or repository-wide lint unless the owner asks. Run each check once per change, stop and ask if a check exceeds ~30 seconds, and ask the owner to review visual results instead of validating screens. Report what was and was not verified.
