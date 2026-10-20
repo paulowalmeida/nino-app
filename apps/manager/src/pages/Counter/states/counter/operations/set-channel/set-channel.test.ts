@@ -17,7 +17,6 @@ describe(setChannel.name, () => {
     setChannel(set, 'DELIVERY')
     expect(set).toHaveBeenCalledWith({
       channel: 'DELIVERY',
-      tableNumber: '',
       recipient: {
         name: '',
         phone: '',

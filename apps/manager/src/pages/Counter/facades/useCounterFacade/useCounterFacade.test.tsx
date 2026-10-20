@@ -92,7 +92,6 @@ vi.mock('@pages/Counter/states/counter/counter.store', () => ({
     selector({
       sheet: false,
       consumerName: '',
-      tableNumber: '',
       recipient: {
         name: '',
         phone: '',
@@ -105,7 +104,6 @@ vi.mock('@pages/Counter/states/counter/counter.store', () => ({
       setSheet: vi.fn(),
       setChosenPaymentMethod: vi.fn(),
       setConsumerName: vi.fn(),
-      setTableNumber: vi.fn(),
       ...stateOverride.value,
     }),
 }))

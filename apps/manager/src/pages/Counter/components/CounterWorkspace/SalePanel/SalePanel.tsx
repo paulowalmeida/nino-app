@@ -41,8 +41,6 @@ export const SalePanel = ({ bare = false }: { bare?: boolean }) => {
     setStep,
     setSheet,
     setChannel,
-    tableNumber,
-    setTableNumber,
     recipient,
     setRecipient,
     addressLookupRequested,
@@ -116,13 +114,11 @@ export const SalePanel = ({ bare = false }: { bare?: boolean }) => {
         <DestinationStep
           channel={channel}
           consumerName={consumerName}
-          tableNumber={tableNumber}
           recipient={recipient}
           addressSuggestions={addressSuggestions}
           isSearchingAddress={isSearchingAddress}
           onChannel={setChannel}
           onConsumerName={setConsumerName}
-          onTableNumber={setTableNumber}
           onRecipient={setRecipient}
           addressLookupRequested={addressLookupRequested}
           onAddressLookupRequested={setAddressLookupRequested}
@@ -153,7 +149,6 @@ export const SalePanel = ({ bare = false }: { bare?: boolean }) => {
               ? recipient.name
               : consumerName
           }
-          tableNumber={tableNumber}
           recipient={recipient}
           method={method}
           changeFor={changeFor}

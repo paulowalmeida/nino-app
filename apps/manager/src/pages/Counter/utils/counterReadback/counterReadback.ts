@@ -6,7 +6,6 @@ import { brl } from '@shared/utils/money/money'
 type ReadbackParams = {
   channel: OrderChannel | null
   consumerName: string
-  tableNumber: string
   addressLine: string
   method: PaymentMethod | null
   changeAmount: number
@@ -15,14 +14,10 @@ type ReadbackParams = {
 const destinationPhrase = (
   channel: OrderChannel | null,
   who: string,
-  tableNumber: string,
   addressLine: string
 ): string => {
   if (channel === 'DELIVERY') return `Entrega para ${who}, na ${addressLine}.`
-  if (channel === 'COUNTER') {
-    const table = tableNumber.trim() ? `, mesa ${tableNumber.trim()}` : ''
-    return `No local${table}, para ${who}.`
-  }
+  if (channel === 'COUNTER') return `No local, para ${who}.`
   return `Retirada no balcão para ${who}.`
 }
 
@@ -33,13 +28,12 @@ const destinationPhrase = (
 export const counterReadback = ({
   channel,
   consumerName,
-  tableNumber,
   addressLine,
   method,
   changeAmount,
 }: ReadbackParams): string => {
   const who = consumerName.trim() || 'o cliente'
-  const destination = destinationPhrase(channel, who, tableNumber, addressLine)
+  const destination = destinationPhrase(channel, who, addressLine)
 
   const payment =
     method === 'CARD_ON_DELIVERY'

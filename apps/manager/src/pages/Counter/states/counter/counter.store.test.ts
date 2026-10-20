@@ -52,13 +52,11 @@ describe(useCounterStore.name, () => {
     store.setSheet(true)
     store.setChosenPaymentMethod('PIX')
     store.setConsumerName('Ana')
-    store.setTableNumber('4')
 
     expect(useCounterStore.getState()).toMatchObject({
       sheet: true,
       chosenPaymentMethod: 'PIX',
       consumerName: 'Ana',
-      tableNumber: '4',
     })
 
     store.clear()
@@ -67,7 +65,6 @@ describe(useCounterStore.name, () => {
       sheet: false,
       chosenPaymentMethod: null,
       consumerName: '',
-      tableNumber: '',
     })
   })
 

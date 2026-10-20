@@ -16,7 +16,6 @@ export const useCounterCommands = (
   const setSheet = useCounterStore((state) => state.setSheet)
   const setLastSale = useCounterStore((state) => state.setLastSale)
   const consumerName = useCounterStore((state) => state.consumerName)
-  const tableNumber = useCounterStore((state) => state.tableNumber)
   const changeFor = useCounterStore((state) => state.changeFor)
   const channel = useCounterStore((state) => state.channel)
   const recipient = useCounterStore((state) => state.recipient)
@@ -43,7 +42,6 @@ export const useCounterCommands = (
       lines,
       paymentMethod: method,
       consumerName,
-      tableNumber,
       changeFor,
       channel: channel ?? 'COUNTER',
       recipient:

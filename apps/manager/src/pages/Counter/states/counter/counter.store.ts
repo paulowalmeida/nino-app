@@ -12,7 +12,6 @@ import { setPaymentMethod } from '@pages/Counter/states/counter/operations/set-p
 import { setRecipient } from '@pages/Counter/states/counter/operations/set-recipient/set-recipient'
 import { setSheet } from '@pages/Counter/states/counter/operations/set-sheet/set-sheet'
 import { setStep } from '@pages/Counter/states/counter/operations/set-step/set-step'
-import { setTableNumber } from '@pages/Counter/states/counter/operations/set-table-number/set-table-number'
 import { stepLine } from '@pages/Counter/states/counter/operations/step-line/step-line'
 import type { CounterState } from '@pages/Counter/types/CounterState.type'
 
@@ -23,7 +22,6 @@ export const useCounterStore = create<CounterState>((set) => ({
   channel: null,
   chosenPaymentMethod: null,
   consumerName: '',
-  tableNumber: '',
   recipient: {
     name: '',
     phone: '',
@@ -50,7 +48,6 @@ export const useCounterStore = create<CounterState>((set) => ({
   setChannel: (channel) => setChannel(set, channel),
   setChosenPaymentMethod: (method) => setPaymentMethod(set, method),
   setConsumerName: (name) => setConsumerName(set, name),
-  setTableNumber: (table) => setTableNumber(set, table),
   setRecipient: (patch) => {
     setRecipient(set, patch)
     if ('street' in patch || 'number' in patch) {

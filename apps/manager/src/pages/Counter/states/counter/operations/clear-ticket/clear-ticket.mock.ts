@@ -3,5 +3,4 @@ export const counterClearTicketMock = {
   sheet: false,
   chosenPaymentMethod: null,
   consumerName: '',
-  tableNumber: '',
 }

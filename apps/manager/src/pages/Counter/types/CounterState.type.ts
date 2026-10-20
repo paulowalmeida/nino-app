@@ -14,7 +14,6 @@ export type CounterState = {
   channel: OrderChannel | null
   chosenPaymentMethod: PaymentMethod | null
   consumerName: string
-  tableNumber: string
   recipient: Recipient
   addressLookupRequested: boolean
   changeFor: string
@@ -27,7 +26,6 @@ export type CounterState = {
   setChannel: (channel: OrderChannel) => void
   setChosenPaymentMethod: (method: PaymentMethod | null) => void
   setConsumerName: (name: string) => void
-  setTableNumber: (table: string) => void
   setRecipient: (patch: Partial<Recipient>) => void
   setAddressLookupRequested: (requested: boolean) => void
   setChangeFor: (value: string) => void

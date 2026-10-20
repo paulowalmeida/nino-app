@@ -7,7 +7,6 @@ export const toCounterSaleRequest = ({
   channel = 'COUNTER',
   paymentMethod,
   consumerName,
-  tableNumber,
   recipient,
   changeFor,
 }: CounterSaleInput): CreateOrderRequest => ({
@@ -20,7 +19,6 @@ export const toCounterSaleRequest = ({
       : consumerName) || undefined,
   deliveryZoneId:
     channel === 'DELIVERY' ? recipient?.zoneId || undefined : undefined,
-  tableNumber: channel === 'COUNTER' && tableNumber ? tableNumber : undefined,
   guestPhone:
     channel === 'DELIVERY' || channel === 'PICKUP'
       ? recipient?.phone || undefined

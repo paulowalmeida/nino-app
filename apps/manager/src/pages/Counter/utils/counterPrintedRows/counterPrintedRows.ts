@@ -10,7 +10,6 @@ export type PrintedRow = { label: string; value: string }
 type PrintedRowsParams = {
   channel: OrderChannel | null
   consumerName: string
-  tableNumber: string
   recipient: Recipient
   method: PaymentMethod | null
   changeFor: string
@@ -51,7 +50,6 @@ const paymentRow = (
 export const counterPrintedRows = ({
   channel,
   consumerName,
-  tableNumber,
   recipient,
   method,
   changeFor,
@@ -63,7 +61,6 @@ export const counterPrintedRows = ({
     { label: 'Como sai', value: COUNTER_CHANNEL_HINT[channel] },
   ]
   const name = consumerName.trim()
-  const table = tableNumber.trim()
 
   if (channel === 'DELIVERY') {
     const who = [name, recipient.phone.trim()].filter(Boolean).join(' · ')
@@ -77,12 +74,7 @@ export const counterPrintedRows = ({
       })
     }
   } else if (channel === 'COUNTER') {
-    if (table || name) {
-      rows.push({
-        label: 'Identificação',
-        value: table ? `Mesa ${table}${name ? ` · ${name}` : ''}` : name,
-      })
-    }
+    if (name) rows.push({ label: 'Identificação', value: name })
   } else {
     const who = [name, recipient.phone.trim()].filter(Boolean).join(' · ')
     if (who) rows.push({ label: 'Chamar por', value: who })

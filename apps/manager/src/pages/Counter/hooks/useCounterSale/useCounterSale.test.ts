@@ -22,34 +22,9 @@ describe(useCounterSale.name, () => {
         lines: [],
         paymentMethod: 'CASH',
         consumerName: '',
-        tableNumber: '',
       })
     )
-    expect(result.current.error).toContain('nome de quem pediu ou a mesa')
-  })
-
-  it('accepts a local sale identified only by table number', async () => {
-    const mutateAsync = vi.fn().mockResolvedValue({ orderNumber: 9 })
-    vi.mocked(useCreateOrder).mockReturnValue({
-      mutateAsync,
-      isPending: false,
-    } as never)
-    const { result } = renderHook(() => useCounterSale('unit-1'))
-
-    await act(() =>
-      result.current.sell({
-        lines: [],
-        channel: 'COUNTER',
-        paymentMethod: 'CASH',
-        consumerName: '',
-        tableNumber: '12',
-      })
-    )
-
-    expect(result.current.error).toBeNull()
-    expect(mutateAsync).toHaveBeenCalledWith(
-      expect.objectContaining({ tableNumber: '12' })
-    )
+    expect(result.current.error).toContain('nome de quem pediu')
   })
 
   it('returns the created order id, number, and pickup code', async () => {
@@ -66,7 +41,6 @@ describe(useCounterSale.name, () => {
         lines: [],
         paymentMethod: 'CASH',
         consumerName: 'Ana',
-        tableNumber: '',
       })
     )
     expect(sale).toEqual({ id: 'order-7', orderNumber: 7 })
@@ -86,7 +60,6 @@ describe(useCounterSale.name, () => {
         channel: 'DELIVERY',
         paymentMethod: 'PIX',
         consumerName: '',
-        tableNumber: '',
         recipient: {
           name: 'Ana',
           phone: '91999999999',
@@ -120,7 +93,6 @@ describe(useCounterSale.name, () => {
         lines: [],
         paymentMethod: 'CASH',
         consumerName: 'Ana',
-        tableNumber: '',
       })
     )
     expect(result.current.error).toContain('Não foi possível')
@@ -142,7 +114,6 @@ describe(useCounterSale.name, () => {
         lines: [],
         paymentMethod: 'CASH',
         consumerName: 'Ana',
-        tableNumber: '',
       })
     )
     expect(result.current.error).toBe('E-mail inválido')

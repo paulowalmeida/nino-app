@@ -10,7 +10,6 @@ describe(toCounterSaleRequest.name, () => {
       paymentMethod: 'CASH',
       cashReceived: true,
       guestName: 'Ana',
-      tableNumber: '4',
       changeFor: undefined,
       items: [
         {
@@ -52,12 +51,6 @@ describe(toCounterSaleRequest.name, () => {
     ).toMatchObject({ channel: 'PICKUP' })
   })
 
-  it('keeps the table number out of a channel that has no tables', () => {
-    expect(
-      toCounterSaleRequest({ ...counterSaleInputMock, channel: 'DELIVERY' })
-    ).toMatchObject({ tableNumber: undefined })
-  })
-
   it.each(['DELIVERY', 'PICKUP'] as const)(
     'sends recipient fields for %s',
     (channel) => {
@@ -96,11 +89,9 @@ describe(toCounterSaleRequest.name, () => {
       toCounterSaleRequest({
         ...counterSaleInputMock,
         consumerName: '',
-        tableNumber: '',
       })
     ).toMatchObject({
       guestName: undefined,
-      tableNumber: undefined,
     })
   })
 

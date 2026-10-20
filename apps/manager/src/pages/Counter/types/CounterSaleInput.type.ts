@@ -8,7 +8,6 @@ export type CounterSaleInput = {
   channel?: OrderChannel
   paymentMethod: PaymentMethod
   consumerName: string
-  tableNumber: string
   recipient?: Recipient
   changeFor?: string
 }

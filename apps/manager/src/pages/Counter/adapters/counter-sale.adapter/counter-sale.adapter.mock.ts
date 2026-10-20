@@ -5,5 +5,4 @@ export const counterSaleInputMock: CounterSaleInput = {
   channel: 'COUNTER',
   paymentMethod: 'CASH',
   consumerName: 'Ana',
-  tableNumber: '4',
 }

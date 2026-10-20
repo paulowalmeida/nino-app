@@ -4,7 +4,6 @@ export const counterStoreMock = {
   addressLookupRequested: false,
   chosenPaymentMethod: null,
   consumerName: '',
-  tableNumber: '',
 }
 
 export const closedSaleMock = {

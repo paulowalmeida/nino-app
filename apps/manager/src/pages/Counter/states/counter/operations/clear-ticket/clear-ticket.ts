@@ -8,7 +8,6 @@ export const clearTicket = (set: SetCounterState) =>
     channel: null,
     chosenPaymentMethod: null,
     consumerName: '',
-    tableNumber: '',
     recipient: {
       name: '',
       phone: '',

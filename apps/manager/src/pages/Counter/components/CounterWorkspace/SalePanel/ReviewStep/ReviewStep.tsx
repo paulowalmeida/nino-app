@@ -13,7 +13,6 @@ type ReviewStepProps = {
   lines: CartLine[]
   channel: OrderChannel | null
   consumerName: string
-  tableNumber: string
   recipient: Recipient
   method: PaymentMethod | null
   changeFor: string
@@ -27,7 +26,6 @@ export const ReviewStep = ({
   lines,
   channel,
   consumerName,
-  tableNumber,
   recipient,
   method,
   changeFor,
@@ -39,7 +37,6 @@ export const ReviewStep = ({
   const printedRows = counterPrintedRows({
     channel,
     consumerName,
-    tableNumber,
     recipient,
     method,
     changeFor,

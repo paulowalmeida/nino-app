@@ -9,9 +9,9 @@ import {
 } from './counterReadback.mock'
 
 describe(counterReadback.name, () => {
-  it('reads a local order back with table and name', () => {
+  it('reads a local order back with the name', () => {
     expect(counterReadback(counterReadbackLocalMock)).toBe(
-      'No local, mesa 12, para Ana. Paga com Pix.'
+      'No local, para Ana. Paga com Pix.'
     )
   })
 

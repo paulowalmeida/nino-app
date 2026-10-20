@@ -50,14 +50,12 @@ export const useCounterFacade = () => {
   const sheet = useCounterStore((state) => state.sheet)
   const step = useCounterStore((state) => state.step)
   const consumerName = useCounterStore((state) => state.consumerName)
-  const tableNumber = useCounterStore((state) => state.tableNumber)
   const changeFor = useCounterStore((state) => state.changeFor)
   const setSheet = useCounterStore((state) => state.setSheet)
   const setStep = useCounterStore((state) => state.setStep)
   const setChannel = useCounterStore((state) => state.setChannel)
   const setChosen = useCounterStore((state) => state.setChosenPaymentMethod)
   const setConsumerName = useCounterStore((state) => state.setConsumerName)
-  const setTableNumber = useCounterStore((state) => state.setTableNumber)
   const setRecipient = useCounterStore((state) => state.setRecipient)
   const setAddressLookupRequested = useCounterStore(
     (state) => state.setAddressLookupRequested
@@ -80,8 +78,7 @@ export const useCounterFacade = () => {
             )
           : channel === 'PICKUP'
             ? hasPickupRecipient(recipient)
-            : channel === 'COUNTER' &&
-              Boolean(consumerName.trim() || tableNumber.trim())
+            : channel === 'COUNTER' && Boolean(consumerName.trim())
         : step === 'payment'
           ? selection.method !== null && selection.isChangeValid
           : true
@@ -124,7 +121,6 @@ export const useCounterFacade = () => {
     step,
     channel,
     consumerName,
-    tableNumber,
     recipient,
     addressLookupRequested,
     zones: availability.zones,
@@ -141,7 +137,6 @@ export const useCounterFacade = () => {
     setChannel,
     setChosen,
     setConsumerName,
-    setTableNumber,
     setRecipient,
     setAddressLookupRequested,
     setChangeFor,

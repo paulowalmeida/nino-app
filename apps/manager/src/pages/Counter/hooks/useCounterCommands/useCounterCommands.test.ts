@@ -51,7 +51,6 @@ vi.mock('@pages/Counter/states/counter/counter.store', () => ({
       setSheet: spies.setSheet,
       setLastSale: spies.setLastSale,
       consumerName: 'Ana',
-      tableNumber: '',
       changeFor: '50,00',
       channel: spies.channel,
       recipient: { name: 'Ana', zipCode: '67143450', zoneId: 'stale-zone' },

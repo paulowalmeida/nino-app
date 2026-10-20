@@ -21,13 +21,11 @@ import styles from './DestinationStep.module.css'
 type DestinationStepProps = {
   channel: OrderChannel | null
   consumerName: string
-  tableNumber: string
   recipient: Recipient
   addressSuggestions: AddressPrediction[]
   isSearchingAddress: boolean
   onChannel: (channel: OrderChannel) => void
   onConsumerName: (name: string) => void
-  onTableNumber: (table: string) => void
   onRecipient: (patch: Partial<Recipient>) => void
   resolveSelectedAddress: (placeId: string) => Promise<AddressSearchResult>
   resolveAddressAtPoint: (
@@ -59,13 +57,11 @@ const destinations = [
 export const DestinationStep = ({
   channel,
   consumerName,
-  tableNumber,
   recipient,
   addressSuggestions,
   isSearchingAddress,
   onChannel,
   onConsumerName,
-  onTableNumber,
   onRecipient,
   resolveSelectedAddress,
   resolveAddressAtPoint,
@@ -131,29 +127,16 @@ export const DestinationStep = ({
       />
     ) : channel ? (
       <Box direction="column" className={styles.destinationStepFields}>
-        <Box className={styles.identity}>
-          <FormField label="Nome de quem pediu">
-            <Input
-              placeholder="Ex.: Ana"
-              aria-label="Nome de quem pediu"
-              value={consumerName}
-              onChange={(event) => onConsumerName(event.target.value)}
-            />
-          </FormField>
-          {channel === 'COUNTER' && (
-            <FormField label="Mesa">
-              <Input
-                placeholder="Ex.: 12"
-                inputMode="numeric"
-                aria-label="Mesa"
-                value={tableNumber}
-                onChange={(event) => onTableNumber(event.target.value)}
-              />
-            </FormField>
-          )}
-        </Box>
+        <FormField label="Nome de quem pediu">
+          <Input
+            placeholder="Ex.: Ana"
+            aria-label="Nome de quem pediu"
+            value={consumerName}
+            onChange={(event) => onConsumerName(event.target.value)}
+          />
+        </FormField>
         <Text size="xs" color="muted" className={styles.destinationStepNote}>
-          Preencha o nome, a mesa ou os dois para identificar o pedido.
+          Preencha o nome para identificar o pedido.
         </Text>
       </Box>
     ) : null}

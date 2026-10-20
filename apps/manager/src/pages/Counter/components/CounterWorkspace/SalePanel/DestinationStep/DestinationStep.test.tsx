@@ -23,7 +23,6 @@ describe('DestinationStep', () => {
         channel="PICKUP"
         onChannel={vi.fn()}
         onConsumerName={vi.fn()}
-        onTableNumber={vi.fn()}
         onRecipient={onRecipient}
         addressSuggestions={[]}
         isSearchingAddress={false}
@@ -44,7 +43,6 @@ describe('DestinationStep', () => {
         channel="PICKUP"
         onChannel={vi.fn()}
         onConsumerName={vi.fn()}
-        onTableNumber={vi.fn()}
         onRecipient={vi.fn()}
         addressSuggestions={[]}
         isSearchingAddress={false}
@@ -74,7 +72,6 @@ describe('DestinationStep', () => {
           recipient={recipient}
           onChannel={vi.fn()}
           onConsumerName={vi.fn()}
-          onTableNumber={vi.fn()}
           onRecipient={(patch) =>
             setRecipient((current) => ({ ...current, ...patch }))
           }
@@ -101,7 +98,6 @@ describe('DestinationStep', () => {
         {...destinationStepMock}
         onChannel={vi.fn()}
         onConsumerName={vi.fn()}
-        onTableNumber={vi.fn()}
         onRecipient={vi.fn()}
         addressSuggestions={[]}
         isSearchingAddress={false}
