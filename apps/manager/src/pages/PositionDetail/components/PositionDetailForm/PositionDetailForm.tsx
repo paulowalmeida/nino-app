@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { Link } from 'react-router'
 
 import { Controller, useForm } from 'react-hook-form'
@@ -6,7 +7,6 @@ import { Alert } from '@nino/ds/components/Alert'
 import { Box } from '@nino/ds/components/Box'
 import { Button } from '@nino/ds/components/Button'
 import { FormField } from '@nino/ds/components/FormField'
-import { Heading } from '@nino/ds/components/Heading'
 import { Input } from '@nino/ds/components/Input'
 import { Select } from '@nino/ds/components/Select'
 import { usePositionDetailFacade } from '@pages/PositionDetail/facades/usePositionDetailFacade/usePositionDetailFacade'
@@ -31,6 +31,7 @@ export const PositionDetailForm = () => {
     usePositionDetailFacade()
   const isReadOnly = !!position?.isProtected
   const placements = placementOptions(positions, position?.id)
+  const [term, setTerm] = useState('')
 
   const {
     register,
@@ -63,49 +64,48 @@ export const PositionDetailForm = () => {
       className={`${motion.deal} ${styles.layout}`}
     >
       <Box direction="column" gap={8} className={styles.main}>
-        {!position?.isProtected && (
-          <Box
-            as="section"
-            aria-labelledby="position-identity"
-            className={styles.identity}
-          >
-            <Heading level={2} size="sm" id="position-identity">
-              {isCreating ? 'Identificação' : 'Hierarquia'}
-            </Heading>
-            <Box className={styles.identityFields}>
-              {isCreating && (
-                <FormField label="Nome do cargo" error={errors.name?.message}>
-                  <Input
-                    placeholder="Ex.: Caixa, Cozinheiro"
-                    maxLength={40}
-                    {...register('name', {
-                      validate: (value) =>
-                        value.trim().length > 0 || 'Informe o nome do cargo',
-                    })}
-                  />
-                </FormField>
-              )}
+        <Box className={styles.fields}>
+          {isCreating && (
+            <FormField label="Nome do cargo" error={errors.name?.message}>
+              <Input
+                placeholder="Ex.: Caixa, Cozinheiro"
+                maxLength={40}
+                {...register('name', {
+                  validate: (value) =>
+                    value.trim().length > 0 || 'Informe o nome do cargo',
+                })}
+              />
+            </FormField>
+          )}
 
-              <FormField
-                label="Fica logo abaixo de"
-                helperText="Quem está acima promove quem está abaixo."
-              >
-                <Controller
-                  name="belowPositionId"
-                  control={control}
-                  render={({ field }) => (
-                    <Select
-                      options={placements}
-                      value={field.value}
-                      disabled={isReadOnly}
-                      onValueChange={field.onChange}
-                    />
-                  )}
-                />
-              </FormField>
-            </Box>
-          </Box>
-        )}
+          {!position?.isProtected && (
+            <FormField
+              label="Fica logo abaixo de"
+              helperText="Quem está acima promove quem está abaixo."
+            >
+              <Controller
+                name="belowPositionId"
+                control={control}
+                render={({ field }) => (
+                  <Select
+                    options={placements}
+                    value={field.value}
+                    onValueChange={field.onChange}
+                  />
+                )}
+              />
+            </FormField>
+          )}
+
+          <FormField label="Filtrar permissões">
+            <Input
+              type="search"
+              value={term}
+              placeholder="Nome ou descrição"
+              onChange={(event) => setTerm(event.target.value)}
+            />
+          </FormField>
+        </Box>
 
         <Box as="section" aria-labelledby="position-permissions" className={styles.permissions}>
           <Controller
@@ -114,6 +114,7 @@ export const PositionDetailForm = () => {
             render={({ field }) => (
               <PositionPermissionsPicker
                 value={field.value}
+                term={term}
                 disabled={isReadOnly}
                 onChange={field.onChange}
               />

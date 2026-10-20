@@ -6,7 +6,6 @@ import { Checkbox } from '@nino/ds/components/Checkbox'
 import { EmptyState } from '@nino/ds/components/EmptyState'
 import { FormField } from '@nino/ds/components/FormField'
 import { Heading } from '@nino/ds/components/Heading'
-import { Input } from '@nino/ds/components/Input'
 import { Text } from '@nino/ds/components/Text'
 import { usePositionDetailFacade } from '@pages/PositionDetail/facades/usePositionDetailFacade/usePositionDetailFacade'
 import type { UnitPermission } from '@shared/types/auth/unit-permission.type'
@@ -20,12 +19,15 @@ import styles from './PositionPermissionsPicker.module.css'
 
 type PositionPermissionsPickerProps = {
   value: UnitPermission[]
+  /** Filter typed by the user; empty shows every permission. */
+  term: string
   disabled: boolean
   onChange: (permissions: UnitPermission[]) => void
 }
 
 export const PositionPermissionsPicker = ({
   value,
+  term,
   disabled,
   onChange,
 }: PositionPermissionsPickerProps) => {
@@ -34,7 +36,6 @@ export const PositionPermissionsPicker = ({
     () => groupPermissions(permissionCatalog),
     [permissionCatalog]
   )
-  const [term, setTerm] = useState('')
   const [openGroups, setOpenGroups] = useState<string[]>(
     groups.slice(0, 1).map(({ group }) => group)
   )
@@ -51,19 +52,9 @@ export const PositionPermissionsPicker = ({
 
   return (
     <Box direction="column" gap={3}>
-      <Box className={styles.head}>
-        <Heading level={2} size="sm" id="position-permissions">
-          O que este cargo pode fazer
-        </Heading>
-        <Input
-          type="search"
-          value={term}
-          placeholder="Filtrar permissões"
-          aria-label="Filtrar permissões"
-          className={styles.search}
-          onChange={(event) => setTerm(event.target.value)}
-        />
-      </Box>
+      <Heading level={2} size="sm" id="position-permissions">
+        O que este cargo pode fazer
+      </Heading>
 
       {shownGroups.length === 0 ? (
         <EmptyState>{`Nenhuma permissão com "${term.trim()}".`}</EmptyState>

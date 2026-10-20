@@ -11,10 +11,11 @@ vi.mock('@pages/PositionDetail/facades/usePositionDetailFacade/usePositionDetail
 
 const onChange = vi.fn()
 
-const renderPicker = (disabled = false) =>
+const renderPicker = (disabled = false, term = '') =>
   render(
     <PositionPermissionsPicker
       value={['cashbox.operate']}
+      term={term}
       disabled={disabled}
       onChange={onChange}
     />
@@ -62,13 +63,8 @@ describe(PositionPermissionsPicker.name, () => {
     expect(screen.getByLabelText(/Ver relatórios/)).toBeVisible()
   })
 
-  it('filters by name or description and opens the matching groups', async () => {
-    renderPicker()
-
-    await userEvent.type(
-      screen.getByRole('searchbox', { name: 'Filtrar permissões' }),
-      'relatorios'
-    )
+  it('shows only the groups and permissions matching the term, opened', () => {
+    renderPicker(false, 'relatorios')
 
     expect(screen.getByLabelText(/Ver relatórios/)).toBeVisible()
     expect(screen.queryByLabelText(/Mexer no caixa/)).not.toBeInTheDocument()
@@ -77,13 +73,8 @@ describe(PositionPermissionsPicker.name, () => {
     ).not.toBeInTheDocument()
   })
 
-  it('says when nothing matches', async () => {
-    renderPicker()
-
-    await userEvent.type(
-      screen.getByRole('searchbox', { name: 'Filtrar permissões' }),
-      'zzz'
-    )
+  it('says when nothing matches', () => {
+    renderPicker(false, 'zzz')
 
     expect(screen.getByText('Nenhuma permissão com "zzz".')).toBeVisible()
   })

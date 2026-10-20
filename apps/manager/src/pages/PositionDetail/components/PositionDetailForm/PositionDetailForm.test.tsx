@@ -95,6 +95,18 @@ describe(PositionDetailForm.name, () => {
     expect(operation).toHaveTextContent('1 de 1')
   })
 
+  it('filters the permissions with the field next to the hierarchy', async () => {
+    renderForm()
+
+    await userEvent.type(
+      screen.getByRole('searchbox', { name: 'Filtrar permissões' }),
+      'relatorios'
+    )
+
+    expect(screen.getByLabelText(/Ver relatórios/)).toBeVisible()
+    expect(screen.queryByLabelText(/Mexer no caixa/)).not.toBeInTheDocument()
+  })
+
   it('asks for a name before saving', async () => {
     renderForm()
 
@@ -128,7 +140,7 @@ describe(PositionDetailForm.name, () => {
     givenFacade(positionDetailFormDefaultMock)
     renderForm()
 
-    expect(screen.getByText('Hierarquia')).toBeInTheDocument()
+    expect(screen.getByText('Fica logo abaixo de')).toBeInTheDocument()
     expect(screen.getByRole('combobox')).toBeEnabled()
     expect(screen.getByLabelText(/Mexer no caixa/)).toBeEnabled()
     expect(
@@ -140,7 +152,7 @@ describe(PositionDetailForm.name, () => {
     givenFacade(positionDetailFormOwnerMock)
     renderForm()
 
-    expect(screen.queryByText('Hierarquia')).not.toBeInTheDocument()
+    expect(screen.queryByText('Fica logo abaixo de')).not.toBeInTheDocument()
     expect(screen.queryByText('fica logo abaixo de')).not.toBeInTheDocument()
     expect(screen.getByLabelText(/Mexer no caixa/)).toBeDisabled()
     expect(
