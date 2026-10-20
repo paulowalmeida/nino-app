@@ -102,7 +102,7 @@ describe(CollaboratorWorkspace.name, () => {
       isRemoving: false,
       isChangingRole: false,
       saveEmail: vi.fn(),
-      roleLockHint: undefined,
+      canChangeRole: false,
       emailLockHint: undefined,
       changeRole: vi.fn(),
       removalLockHint: undefined,

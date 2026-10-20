@@ -12,7 +12,7 @@ import styles from './CollaboratorAccess.module.css'
 
 type CollaboratorAccessProps = {
   member: StaffDetail
-  roleLockHint?: string
+  canChangeRole: boolean
   isChangingRole: boolean
   onChangeRole: (role: UnitRole) => void
   removalLockHint?: string
@@ -23,7 +23,7 @@ type CollaboratorAccessProps = {
 
 export const CollaboratorAccess = ({
   member,
-  roleLockHint,
+  canChangeRole,
   isChangingRole,
   onChangeRole,
   removalLockHint,
@@ -56,12 +56,13 @@ export const CollaboratorAccess = ({
         </Alert>
       )}
 
-      <CollaboratorRoleAccess
-        role={member.role}
-        roleLockHint={roleLockHint}
-        isChangingRole={isChangingRole}
-        onChangeRole={onChangeRole}
-      />
+      {canChangeRole && (
+        <CollaboratorRoleAccess
+          role={member.role}
+          isChangingRole={isChangingRole}
+          onChangeRole={onChangeRole}
+        />
+      )}
 
       <CollaboratorLoginAccess
         email={email}

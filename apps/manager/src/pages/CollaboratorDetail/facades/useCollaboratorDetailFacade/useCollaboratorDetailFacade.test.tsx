@@ -43,17 +43,14 @@ describe(useCollaboratorDetailFacade.name, () => {
     } as never)
     vi.mocked(useCollaboratorDetailAdmin).mockReturnValue({
       isRemoving: false,
-      roleLockHint: undefined,
+      canChangeRole: true,
     } as never)
     const { result } = renderHook(() => useCollaboratorDetailFacade(), {
       wrapper: routeWrapper,
     })
     expect(result.current.member).toBe(member)
-    expect(result.current.roleLockHint).toBeUndefined()
-    expect(useCollaboratorDetailQuery).toHaveBeenCalledWith(
-      'unit-1',
-      'user-1'
-    )
+    expect(result.current.canChangeRole).toBe(true)
+    expect(useCollaboratorDetailQuery).toHaveBeenCalledWith('unit-1', 'user-1')
     expect(useCollaboratorDetailAdmin).toHaveBeenCalledWith(
       'unit-1',
       'UNIT_OWNER',

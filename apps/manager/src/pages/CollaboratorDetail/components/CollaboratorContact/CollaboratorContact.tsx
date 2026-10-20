@@ -35,7 +35,10 @@ export const CollaboratorContact = ({ member }: CollaboratorContactProps) => {
       <Box direction="row" wrap className={styles.collaboratorContactActions}>
         {member.user.phone && (
           <Button variant="outline" size="sm" asChild>
-            <a href={`tel:${member.user.phone}`} className={styles.collaboratorContactAction}>
+            <a
+              href={`tel:${member.user.phone}`}
+              className={styles.collaboratorContactAction}
+            >
               <Icon name="phone" size="sm" aria-hidden />
               {formatPhone(member.user.phone)}
             </a>
@@ -44,7 +47,10 @@ export const CollaboratorContact = ({ member }: CollaboratorContactProps) => {
 
         {email && (
           <Button variant="outline" size="sm" asChild>
-            <a href={`mailto:${email}`} className={styles.collaboratorContactAction}>
+            <a
+              href={`mailto:${email}`}
+              className={styles.collaboratorContactAction}
+            >
               <Icon name="mail" size="sm" aria-hidden />
               <Text as="span" size="sm" color="strong" className={styles.email}>
                 {email}

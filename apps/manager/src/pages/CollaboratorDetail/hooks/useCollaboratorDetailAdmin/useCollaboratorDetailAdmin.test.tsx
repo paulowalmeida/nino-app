@@ -47,11 +47,10 @@ describe(useCollaboratorDetailAdmin.name, () => {
       isPending: false,
     } as never)
     const { result } = renderHook(
-      () =>
-        useCollaboratorDetailAdmin('unit-1', 'UNIT_OWNER', member as never),
+      () => useCollaboratorDetailAdmin('unit-1', 'UNIT_OWNER', member as never),
       { wrapper }
     )
-    expect(result.current.roleLockHint).toBeUndefined()
+    expect(result.current.canChangeRole).toBe(true)
     expect(result.current.emailLockHint).toBeUndefined()
     await act(() => result.current.saveEmail('ana@example.com'))
     act(() => result.current.changeRole('MANAGER'))
@@ -85,9 +84,35 @@ describe(useCollaboratorDetailAdmin.name, () => {
         } as never),
       { wrapper }
     )
-    expect(result.current.roleLockHint).toContain('Só o dono')
+    expect(result.current.canChangeRole).toBe(false)
     expect(result.current.emailLockHint).toContain('Só o dono')
     expect(result.current.removalLockHint).toContain('Só o dono')
+  })
+
+  it('offers a role change only for an owner looking at a staff member, never a manager', () => {
+    vi.mocked(useSessionStore).mockImplementation(
+      (selector) => selector({ user: { id: 'owner-1' } } as never) as never
+    )
+    vi.mocked(useRemoveMember).mockReturnValue({
+      mutateAsync: vi.fn(),
+      isPending: false,
+    } as never)
+    vi.mocked(useUpdateStaffEmail).mockReturnValue({
+      mutateAsync: vi.fn(),
+    } as never)
+    vi.mocked(useUpdateStaffRole).mockReturnValue({
+      mutate: vi.fn(),
+      isPending: false,
+    } as never)
+    const { result } = renderHook(
+      () =>
+        useCollaboratorDetailAdmin('unit-1', 'UNIT_OWNER', {
+          role: 'MANAGER',
+          user: { id: 'user-2' },
+        } as never),
+      { wrapper }
+    )
+    expect(result.current.canChangeRole).toBe(false)
   })
 
   it('locks changing your own role', () => {
@@ -106,11 +131,10 @@ describe(useCollaboratorDetailAdmin.name, () => {
       isPending: false,
     } as never)
     const { result } = renderHook(
-      () =>
-        useCollaboratorDetailAdmin('unit-1', 'UNIT_OWNER', member as never),
+      () => useCollaboratorDetailAdmin('unit-1', 'UNIT_OWNER', member as never),
       { wrapper }
     )
-    expect(result.current.roleLockHint).toContain('Você não pode')
+    expect(result.current.canChangeRole).toBe(false)
     expect(result.current.emailLockHint).toContain('próprio e-mail')
     expect(result.current.removalLockHint).toContain('não pode se remover')
   })
@@ -163,7 +187,7 @@ describe(useCollaboratorDetailAdmin.name, () => {
       () => useCollaboratorDetailAdmin(null, null, null),
       { wrapper }
     )
-    expect(result.current.roleLockHint).toContain('Só o dono')
+    expect(result.current.canChangeRole).toBe(false)
     expect(result.current.emailLockHint).toContain('Só o dono')
     expect(result.current.removalLockHint).toContain('Só o dono')
   })

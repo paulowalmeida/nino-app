@@ -8,7 +8,6 @@ import type { UnitRole } from '@shared/types/auth/unit-role'
 import type { StaffDetail } from '@shared/types/team/staff-detail'
 
 const OWNER_ONLY_HINT = 'Só o dono da loja muda o cargo de alguém.'
-const SELF_HINT = 'Você não pode mudar o próprio cargo.'
 const OWNER_TARGET_HINT = 'Rebaixe o dono antes de removê-lo da loja.'
 
 export const useCollaboratorDetailAdmin = (
@@ -29,11 +28,7 @@ export const useCollaboratorDetailAdmin = (
   const isSelf = memberUserId === signedInUserId
   const isOwnerSignedIn = unitRole === 'UNIT_OWNER'
   const isTargetOwner = member?.role === 'UNIT_OWNER'
-  const roleLockHint = !isOwnerSignedIn
-    ? OWNER_ONLY_HINT
-    : isSelf
-      ? SELF_HINT
-      : undefined
+  const canChangeRole = isOwnerSignedIn && !isSelf && member?.role === 'STAFF'
 
   const confirmRemoval = async () => {
     await removeMember({ id: memberUserId, kind: 'STAFF' })
@@ -51,9 +46,8 @@ export const useCollaboratorDetailAdmin = (
           ? 'Rebaixe o dono antes de alterar seu e-mail.'
           : undefined,
 
-    roleLockHint,
-    changeRole: (role: UnitRole) =>
-      changeRole({ userId: memberUserId, role }),
+    canChangeRole,
+    changeRole: (role: UnitRole) => changeRole({ userId: memberUserId, role }),
     isChangingRole,
 
     removalLockHint: !isOwnerSignedIn

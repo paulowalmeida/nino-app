@@ -60,7 +60,7 @@ export const CollaboratorLoginAccess = ({
 
     {emailLockHint && (
       <Box direction="row" align="center" gap={1.5}>
-        <Icon name="lock" size="sm" aria-hidden className='mt-3'/>
+        <Icon name="lock" size="sm" aria-hidden className="mt-3" />
         <Text as="span" size="xs" color="faint" mt={3}>
           {emailLockHint}
         </Text>

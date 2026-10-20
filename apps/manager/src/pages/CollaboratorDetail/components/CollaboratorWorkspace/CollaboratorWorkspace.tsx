@@ -39,7 +39,7 @@ export const CollaboratorWorkspace = () => {
             content: (
               <CollaboratorAccess
                 member={member}
-                roleLockHint={admin.roleLockHint}
+                canChangeRole={admin.canChangeRole}
                 isChangingRole={admin.isChangingRole}
                 onChangeRole={admin.changeRole}
                 removalLockHint={admin.removalLockHint}

@@ -18,6 +18,7 @@ describe(CollaboratorAccess.name, () => {
     render(
       <CollaboratorAccess
         member={member(null, false) as never}
+        canChangeRole
         isChangingRole={false}
         onChangeRole={vi.fn()}
         onOpenEmailModal={vi.fn()}
@@ -32,6 +33,7 @@ describe(CollaboratorAccess.name, () => {
     render(
       <CollaboratorAccess
         member={member('2024-01-01', true) as never}
+        canChangeRole
         isChangingRole={false}
         onChangeRole={vi.fn()}
         onOpenEmailModal={vi.fn()}
@@ -41,6 +43,34 @@ describe(CollaboratorAccess.name, () => {
     expect(screen.getByRole('region', { name: 'Acesso' })).toBeInTheDocument()
     expect(
       screen.queryByText(/Convite ainda não aceito/)
+    ).not.toBeInTheDocument()
+  })
+
+  it('shows the role choice only when the viewer can change it', () => {
+    const { rerender } = render(
+      <CollaboratorAccess
+        member={member('2024-01-01', true) as never}
+        canChangeRole
+        isChangingRole={false}
+        onChangeRole={vi.fn()}
+        onOpenEmailModal={vi.fn()}
+        onOpenRemovalConfirm={vi.fn()}
+      />
+    )
+    expect(screen.getByRole('heading', { name: 'Cargo' })).toBeInTheDocument()
+
+    rerender(
+      <CollaboratorAccess
+        member={member('2024-01-01', true) as never}
+        canChangeRole={false}
+        isChangingRole={false}
+        onChangeRole={vi.fn()}
+        onOpenEmailModal={vi.fn()}
+        onOpenRemovalConfirm={vi.fn()}
+      />
+    )
+    expect(
+      screen.queryByRole('heading', { name: 'Cargo' })
     ).not.toBeInTheDocument()
   })
 })

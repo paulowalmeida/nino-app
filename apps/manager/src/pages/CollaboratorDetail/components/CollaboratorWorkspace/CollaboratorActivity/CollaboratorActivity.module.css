@@ -26,7 +26,6 @@
   overflow-y: auto;
 }
 
-
 @media (min-width: 2560px) {
   .listShell > div {
     max-height: calc(100dvh - 26rem);

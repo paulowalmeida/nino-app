@@ -19,7 +19,7 @@ export const useCollaboratorDetailFacade = () => {
     member: detailQuery.data,
     isPending: detailQuery.isPending,
     isError: detailQuery.isError,
-    roleLockHint: admin.roleLockHint,
+    canChangeRole: admin.canChangeRole,
     emailLockHint: admin.emailLockHint,
     changeRole: admin.changeRole,
     isChangingRole: admin.isChangingRole,

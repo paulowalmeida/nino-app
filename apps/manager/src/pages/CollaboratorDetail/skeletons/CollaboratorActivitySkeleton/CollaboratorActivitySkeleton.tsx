@@ -84,7 +84,9 @@ export const CollaboratorActivitySkeleton = () => (
                 <Skeleton className={ghost.channel} />
               </TableCell>
               <TableCell className={activity.colRight}>
-                <Skeleton className={ghost.collaboratorActivitySkeletonStatus} />
+                <Skeleton
+                  className={ghost.collaboratorActivitySkeletonStatus}
+                />
               </TableCell>
               <TableCell className={activity.colRight}>
                 <Skeleton className={ghost.stamp} />
