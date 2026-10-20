@@ -18,17 +18,27 @@ export const nextStep = (order: Order): OrderStep | null => {
     return { target: 'ACCEPTED', label: 'Confirmar pedido' }
   if (status === 'ACCEPTED')
     return { target: 'PREPARING', label: 'Começar a preparar' }
-  if (status === 'PREPARING') {
-    return channel === 'DELIVERY'
-      ? { target: 'OUT_FOR_DELIVERY', label: 'Saiu para entrega' }
-      : { target: 'READY_FOR_PICKUP', label: 'Pronto para retirada' }
-  }
+  if (status === 'PREPARING') return readyStep(channel)
   if (status === 'OUT_FOR_DELIVERY')
     return { target: 'DELIVERED', label: 'Marcar como entregue' }
-  if (status === 'READY_FOR_PICKUP')
-    return { target: 'COMPLETED', label: 'Cliente retirou' }
+  if (status === 'READY_FOR_PICKUP') return handOverStep(channel)
   return null
 }
+
+/* WHY: pedido de mesa usa o mesmo trilho da retirada na API, mas no salão
+ * ninguém "retira": o garçom serve. Só o rótulo muda, o status é o mesmo. */
+const readyStep = (channel: Order['channel']): OrderStep => {
+  if (channel === 'DELIVERY')
+    return { target: 'OUT_FOR_DELIVERY', label: 'Saiu para entrega' }
+  if (channel === 'TABLE_TAB')
+    return { target: 'READY_FOR_PICKUP', label: 'Pronto para servir' }
+  return { target: 'READY_FOR_PICKUP', label: 'Pronto para retirada' }
+}
+
+const handOverStep = (channel: Order['channel']): OrderStep =>
+  channel === 'TABLE_TAB'
+    ? { target: 'COMPLETED', label: 'Entregue na mesa' }
+    : { target: 'COMPLETED', label: 'Cliente retirou' }
 
 /**
  * WHY: espelha os retrocessos que a API aceita — desfazer o passo que a loja

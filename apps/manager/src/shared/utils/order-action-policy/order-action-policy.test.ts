@@ -30,6 +30,27 @@ describe('nextStep', () => {
     expect(step).toEqual({ target: 'DELIVERED', label: 'Entregue na mesa' })
   })
 
+  it('calls a prepared tab order ready to serve, not ready for pickup', () => {
+    const step = nextStep({
+      ...baseOrderMock,
+      channel: 'TABLE_TAB',
+      status: 'PREPARING',
+    })
+    expect(step).toEqual({
+      target: 'READY_FOR_PICKUP',
+      label: 'Pronto para servir',
+    })
+  })
+
+  it('hands a ready tab order over at the table', () => {
+    const step = nextStep({
+      ...baseOrderMock,
+      channel: 'TABLE_TAB',
+      status: 'READY_FOR_PICKUP',
+    })
+    expect(step).toEqual({ target: 'COMPLETED', label: 'Entregue na mesa' })
+  })
+
   it('still sends an accepted tab item that needs preparation to the kitchen', () => {
     const step = nextStep({
       ...baseOrderMock,
