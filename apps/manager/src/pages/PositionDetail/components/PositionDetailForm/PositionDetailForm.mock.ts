@@ -20,6 +20,7 @@ export const positionDetailFormCustomMock: UnitPosition = {
   id: 'position-cashier',
   name: 'Caixa',
   level: 30,
+  belowPositionId: 'position-manager',
   permissions: ['cashbox.operate'],
   isDefault: false,
   isProtected: false,
@@ -31,4 +32,33 @@ export const positionDetailFormDefaultMock: UnitPosition = {
   id: 'position-staff',
   name: 'Atendente',
   isDefault: true,
+}
+
+export const positionDetailFormPositionsMock: UnitPosition[] = [
+  {
+    ...positionDetailFormCustomMock,
+    id: 'position-owner',
+    name: 'Dono',
+    level: 100,
+    belowPositionId: null,
+    isDefault: true,
+    isProtected: true,
+  },
+  {
+    ...positionDetailFormCustomMock,
+    id: 'position-manager',
+    name: 'Gerente',
+    level: 50,
+    belowPositionId: 'position-owner',
+    isDefault: true,
+  },
+  { ...positionDetailFormCustomMock, belowPositionId: 'position-manager' },
+]
+
+export const positionDetailFormOwnerMock: UnitPosition = {
+  ...positionDetailFormDefaultMock,
+  id: 'position-owner',
+  name: 'Dono',
+  belowPositionId: null,
+  isProtected: true,
 }

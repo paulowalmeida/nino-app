@@ -19,7 +19,8 @@ export const EmployeesContent = () => {
   )
   const removing = facade.isRemoving ? facade.removingVariables : undefined
   const canChangePosition = facade.unit?.role === 'UNIT_OWNER'
-  const activeTab = searchParams.get('tab') === 'couriers' ? 'couriers' : 'staff'
+  const activeTab =
+    searchParams.get('tab') === 'couriers' ? 'couriers' : 'staff'
 
   const changeTab = (value: string) => {
     const nextParams = new URLSearchParams(searchParams)

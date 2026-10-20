@@ -1,5 +1,5 @@
 import { Box } from '@nino/ds/components/Box'
-import { Heading } from '@nino/ds/components/Heading'
+import { Header } from '@nino/ds/components/Header'
 import { Skeleton } from '@nino/ds/components/Skeleton'
 import {
   Table,
@@ -35,17 +35,16 @@ export const CollaboratorActivitySkeleton = () => (
       wrap
       className={activity.activityHead}
     >
-      <Heading
+      <Header
         level={2}
         size="sm"
-        color="faint"
-        className={activity.activityTitle}
-      >
-        Atividade recente
-      </Heading>
-      <Text as="p" size="xs" color="faint">
-        Últimas 30 mudanças
-      </Text>
+        title="Atividade recente"
+        actions={
+          <Text as="p" size="xs" color="faint">
+            Últimas 30 mudanças
+          </Text>
+        }
+      />
     </Box>
 
     <Box className={activity.listShell}>

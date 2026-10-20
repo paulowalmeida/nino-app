@@ -26,8 +26,29 @@ export const positionFormPositionMock: UnitPosition = {
   id: 'position-1',
   name: 'Caixa',
   level: 30,
+  belowPositionId: 'position-manager',
   permissions: ['cashbox.operate'],
   isDefault: false,
   isProtected: false,
   memberCount: 1,
 }
+
+export const positionFormTopMock: UnitPosition = {
+  ...positionFormPositionMock,
+  id: 'position-owner',
+  name: 'Dono',
+  level: 100,
+  belowPositionId: null,
+}
+
+export const positionFormRankedMock: UnitPosition[] = [
+  positionFormTopMock,
+  {
+    ...positionFormPositionMock,
+    id: 'position-manager',
+    name: 'Gerente',
+    level: 50,
+    belowPositionId: 'position-owner',
+  },
+  positionFormPositionMock,
+]

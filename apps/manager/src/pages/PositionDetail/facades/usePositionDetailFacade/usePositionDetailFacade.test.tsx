@@ -41,6 +41,7 @@ describe(usePositionDetailFacade.name, () => {
     vi.mocked(useCurrentUnit).mockReturnValue({ unitId: 'unit-1' } as never)
     vi.mocked(usePositionDetailQuery).mockReturnValue({
       position: positionDetailFacadePositionMock,
+      positions: [positionDetailFacadePositionMock],
       isPending: false,
       isError: false,
     })
@@ -70,6 +71,9 @@ describe(usePositionDetailFacade.name, () => {
     )
     expect(result.current.isCreating).toBe(false)
     expect(result.current.position).toBe(positionDetailFacadePositionMock)
+    expect(result.current.positions).toEqual([
+      positionDetailFacadePositionMock,
+    ])
     expect(result.current.permissionCatalog).toBe(
       positionDetailFacadeCatalogMock
     )
@@ -86,6 +90,7 @@ describe(usePositionDetailFacade.name, () => {
     } as never)
     vi.mocked(usePositionDetailQuery).mockReturnValue({
       position: undefined,
+      positions: [],
       isPending: true,
       isError: true,
     })

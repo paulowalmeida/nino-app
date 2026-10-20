@@ -13,7 +13,11 @@ import { assignablePositions } from '@shared/utils/assignable-positions/assignab
 export const useEmployeesData = () => {
   const unit = useCurrentUnit()
   const unitId = unit?.unitId ?? null
-  const { data: staff, isPending: isStaffPending, isError: isStaffError } = useStaff(unitId)
+  const {
+    data: staff,
+    isPending: isStaffPending,
+    isError: isStaffError,
+  } = useStaff(unitId)
   const {
     data: couriers,
     isPending: isCourierPending,

@@ -3,6 +3,7 @@ import type { UnitPosition } from '@shared/types/team/unit-position.type'
 
 type PositionDetailQuery = {
   position: UnitPosition | undefined
+  positions: UnitPosition[]
   isPending: boolean
   isError: boolean
 }
@@ -15,6 +16,7 @@ export const usePositionDetailQuery = (
 
   return {
     position: data?.find(({ id }) => id === positionId),
+    positions: data ?? [],
     isPending,
     isError,
   }

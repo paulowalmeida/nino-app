@@ -6,7 +6,7 @@ import type { UnitPositionDraft } from '@shared/types/team/unit-position-draft.t
 
 export type PositionFormValues = {
   name: string
-  level: number
+  belowPositionId: string
   permissions: UnitPermission[]
 }
 
@@ -16,27 +16,46 @@ export type PermissionGroup = {
   permissions: PermissionDefinition[]
 }
 
-export const emptyPositionFormValues = (level: number): PositionFormValues => ({
+export const emptyPositionFormValues = (
+  belowPositionId: string
+): PositionFormValues => ({
   name: '',
-  level,
+  belowPositionId,
   permissions: [],
 })
 
 export const positionToFormValues = ({
   name,
-  level,
+  belowPositionId,
   permissions,
-}: UnitPosition): PositionFormValues => ({ name, level, permissions })
+}: UnitPosition): PositionFormValues => ({
+  name,
+  belowPositionId: belowPositionId ?? '',
+  permissions,
+})
 
 export const formValuesToDraft = ({
   name,
-  level,
+  belowPositionId,
   permissions,
 }: PositionFormValues): UnitPositionDraft => ({
   name: name.trim(),
-  level,
+  belowPositionId,
   permissions,
 })
+
+/** Cargos que podem ficar logo acima: todos, menos o próprio. */
+export const placementOptions = (
+  positions: UnitPosition[],
+  selfId: string | undefined
+): { value: string; label: string }[] =>
+  positions
+    .filter(({ id }) => id !== selfId)
+    .map(({ id, name }) => ({ value: id, label: name }))
+
+/** Um cargo novo nasce no fim da hierarquia, abaixo do último. */
+export const lowestPositionId = (positions: UnitPosition[]): string =>
+  positions[positions.length - 1]?.id ?? ''
 
 /** Mantém a ordem em que cada grupo aparece pela primeira vez no catálogo. */
 export const groupPermissions = (

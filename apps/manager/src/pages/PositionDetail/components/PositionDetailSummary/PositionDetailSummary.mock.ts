@@ -1,5 +1,5 @@
 export const positionDetailSummaryMock = {
-  level: 30,
+  aboveName: 'Gerente',
   selectedCount: 3,
   totalCount: 22,
   memberCount: 2,

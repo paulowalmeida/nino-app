@@ -14,9 +14,7 @@ describe(InviteForm.name, () => {
       />
     )
 
-    expect(
-      screen.getByPlaceholderText('nome@exemplo.com')
-    ).toBeInTheDocument()
+    expect(screen.getByPlaceholderText('nome@exemplo.com')).toBeInTheDocument()
     expect(screen.getByText('Enviar convite')).toBeInTheDocument()
   })
 
@@ -59,9 +57,7 @@ describe(InviteForm.name, () => {
 
   it('invites a courier without a cargo when it is the only seat', async () => {
     const onInvite = vi.fn().mockResolvedValue(undefined)
-    render(
-      <InviteForm onInvite={onInvite} seats={[inviteFormSeatsMock[2]]} />
-    )
+    render(<InviteForm onInvite={onInvite} seats={[inviteFormSeatsMock[2]]} />)
 
     await userEvent.type(
       screen.getByPlaceholderText('nome@exemplo.com'),

@@ -10,14 +10,15 @@ import { Checkbox } from '@nino/ds/components/Checkbox'
 import { FormField } from '@nino/ds/components/FormField'
 import { Heading } from '@nino/ds/components/Heading'
 import { Input } from '@nino/ds/components/Input'
-import { NumberInput } from '@nino/ds/components/NumberInput'
+import { Select } from '@nino/ds/components/Select'
 import { Text } from '@nino/ds/components/Text'
 import { usePositionDetailFacade } from '@pages/PositionDetail/facades/usePositionDetailFacade/usePositionDetailFacade'
-import { POSITION_LEVEL_LIMITS } from '@shared/constants/positions.constants'
 import {
   emptyPositionFormValues,
   formValuesToDraft,
   groupPermissions,
+  lowestPositionId,
+  placementOptions,
   type PositionFormValues,
   positionToFormValues,
   togglePermission,
@@ -31,13 +32,14 @@ import styles from './PositionDetailForm.module.css'
 const FORM_ID = 'position-form'
 
 export const PositionDetailForm = () => {
-  const { position, permissionCatalog, savePosition } =
+  const { position, positions, permissionCatalog, savePosition } =
     usePositionDetailFacade()
   const isReadOnly = !!position?.isDefault
   const groups = useMemo(
     () => groupPermissions(permissionCatalog),
     [permissionCatalog]
   )
+  const placements = placementOptions(positions, position?.id)
 
   const {
     register,
@@ -48,9 +50,9 @@ export const PositionDetailForm = () => {
   } = useForm<PositionFormValues>({
     defaultValues: position
       ? positionToFormValues(position)
-      : emptyPositionFormValues(POSITION_LEVEL_LIMITS.initial),
+      : emptyPositionFormValues(lowestPositionId(positions)),
   })
-  const level = useWatch({ control, name: 'level' })
+  const belowPositionId = useWatch({ control, name: 'belowPositionId' })
   const permissions = useWatch({ control, name: 'permissions' })
 
   const onSubmit = async (values: PositionFormValues) => {
@@ -96,17 +98,16 @@ export const PositionDetailForm = () => {
             </FormField>
 
             <FormField
-              label="Nível"
-              helperText="De 1 a 99. Quem tem nível maior promove quem tem nível menor."
+              label="Fica logo abaixo de"
+              helperText="Quem está acima promove quem está abaixo."
             >
               <Controller
-                name="level"
+                name="belowPositionId"
                 control={control}
                 render={({ field }) => (
-                  <NumberInput
+                  <Select
+                    options={placements}
                     value={field.value}
-                    min={POSITION_LEVEL_LIMITS.min}
-                    max={POSITION_LEVEL_LIMITS.max}
                     disabled={isReadOnly}
                     onValueChange={field.onChange}
                   />
@@ -183,7 +184,10 @@ export const PositionDetailForm = () => {
       </Box>
 
       <PositionDetailSummary
-        level={level}
+        aboveName={
+          placements.find(({ value }) => value === belowPositionId)?.label ??
+          null
+        }
         selectedCount={permissions.length}
         totalCount={permissionCatalog.length}
         memberCount={position?.memberCount ?? 0}

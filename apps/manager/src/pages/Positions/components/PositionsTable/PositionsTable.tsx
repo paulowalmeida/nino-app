@@ -67,7 +67,6 @@ export const PositionsTable = ({
       <Table>
         <colgroup>
           <col className={styles.colName} />
-          <col className={styles.colLevel} />
           <col className={styles.colAccess} />
           <col className={styles.colPeople} />
           <col className={styles.colActions} />
@@ -75,7 +74,6 @@ export const PositionsTable = ({
         <TableHeader>
           <TableRow className={styles.headRow}>
             <TableHead>Cargo</TableHead>
-            <TableHead className={styles.hideOnSmall}>Nível</TableHead>
             <TableHead>Permissões</TableHead>
             <TableHead className={styles.hideOnSmall}>Pessoas</TableHead>
             <TableHead>
@@ -104,11 +102,8 @@ export const PositionsTable = ({
                     )}
                   </Link>
                   <Text className={styles.smallOnly}>
-                    {`Nível ${position.level} · ${peopleLabel(position.memberCount)}`}
+                    {peopleLabel(position.memberCount)}
                   </Text>
-                </TableCell>
-                <TableCell className={styles.hideOnSmall}>
-                  <Text className={styles.number}>{position.level}</Text>
                 </TableCell>
                 <TableCell>
                   <Text className={styles.access}>{accessOf(position)}</Text>

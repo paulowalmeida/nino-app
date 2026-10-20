@@ -157,7 +157,9 @@ export const TeamRoster = ({
                 <TableHead>Último acesso</TableHead>
                 <TableHead className={styles.colRight}>Papel</TableHead>
                 <TableHead>
-                  <Text as="span" className="sr-only">Ações</Text>
+                  <Text as="span" className="sr-only">
+                    Ações
+                  </Text>
                 </TableHead>
               </TableRow>
             </TableHeader>
@@ -207,7 +209,9 @@ export const TeamRoster = ({
                 <TableHead>Último acesso</TableHead>
                 <TableHead className={styles.colRight}>Papel</TableHead>
                 <TableHead>
-                  <Text as="span" className="sr-only">Ações</Text>
+                  <Text as="span" className="sr-only">
+                    Ações
+                  </Text>
                 </TableHead>
               </TableRow>
             </TableHeader>
@@ -315,7 +319,6 @@ export const TeamRoster = ({
           </Table>
         </Box>
       )}
-
     </Box>
   )
 }

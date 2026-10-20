@@ -4,19 +4,23 @@ import {
   emptyPositionFormValues,
   formValuesToDraft,
   groupPermissions,
+  lowestPositionId,
+  placementOptions,
   positionToFormValues,
   togglePermission,
 } from './position-form'
 import {
   positionFormCatalogMock,
   positionFormPositionMock,
+  positionFormRankedMock,
+  positionFormTopMock,
 } from './position-form.mock'
 
 describe('position form helpers', () => {
-  it('starts a new cargo empty at the given level', () => {
-    expect(emptyPositionFormValues(20)).toEqual({
+  it('starts a new cargo empty, placed under the given one', () => {
+    expect(emptyPositionFormValues('position-staff')).toEqual({
       name: '',
-      level: 20,
+      belowPositionId: 'position-staff',
       permissions: [],
     })
   })
@@ -24,19 +28,40 @@ describe('position form helpers', () => {
   it('turns an existing cargo into form values', () => {
     expect(positionToFormValues(positionFormPositionMock)).toEqual({
       name: 'Caixa',
-      level: 30,
+      belowPositionId: 'position-manager',
       permissions: ['cashbox.operate'],
     })
+  })
+
+  it('keeps the placement empty for the cargo at the top', () => {
+    expect(positionToFormValues(positionFormTopMock).belowPositionId).toBe('')
   })
 
   it('trims the name when building the draft', () => {
     expect(
       formValuesToDraft({
         name: '  Caixa  ',
-        level: 30,
+        belowPositionId: 'position-manager',
         permissions: ['cashbox.operate'],
       })
-    ).toEqual({ name: 'Caixa', level: 30, permissions: ['cashbox.operate'] })
+    ).toEqual({
+      name: 'Caixa',
+      belowPositionId: 'position-manager',
+      permissions: ['cashbox.operate'],
+    })
+  })
+
+  it('offers every cargo but the one being edited as a placement', () => {
+    expect(placementOptions(positionFormRankedMock, 'position-1')).toEqual([
+      { value: 'position-owner', label: 'Dono' },
+      { value: 'position-manager', label: 'Gerente' },
+    ])
+    expect(placementOptions(positionFormRankedMock, undefined)).toHaveLength(3)
+  })
+
+  it('puts a new cargo under the lowest one, or nowhere on an empty list', () => {
+    expect(lowestPositionId(positionFormRankedMock)).toBe('position-1')
+    expect(lowestPositionId([])).toBe('')
   })
 
   it('groups the catalog keeping the order groups first appear', () => {

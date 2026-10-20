@@ -2,6 +2,7 @@ import type { ComponentProps } from 'react'
 
 import { Box } from '@nino/ds/components/Box'
 import { EmptyState } from '@nino/ds/components/EmptyState'
+import { Header } from '@nino/ds/components/Header'
 import { Heading } from '@nino/ds/components/Heading'
 import {
   Table,
@@ -52,26 +53,17 @@ export const CollaboratorActivity = ({
     className={styles.activity}
     aria-label="Atividade recente"
   >
-    <Box
-      direction="row"
-      align="baseline"
-      justify="between"
-      wrap
+    <Header
       className={styles.activityHead}
-    >
-      <Heading
-        accent
-        level={headingLevel}
-        size="sm"
-        color="faint"
-        className={styles.activityTitle}
-      >
-        Atividade recente
-      </Heading>
-      <Text as="p" size="xs" color="faint">
-        Últimas 30 mudanças
-      </Text>
-    </Box>
+      level={headingLevel}
+      size="sm"
+      title="Atividade recente"
+      actions={
+        <Text as="p" size="xs" color="faint">
+          Últimas 30 mudanças
+        </Text>
+      }
+    />
 
     {activity.length === 0 ? (
       <EmptyState className={styles.collaboratorActivityEmpty}>

@@ -30,7 +30,9 @@ vi.mock('./TeamRoster/TeamRoster', () => ({
         {`remove ${props.title}`}
       </button>
       {props.onEditEmail && (
-        <button onClick={() => props.onEditEmail?.('user-2')}>edit email</button>
+        <button onClick={() => props.onEditEmail?.('user-2')}>
+          edit email
+        </button>
       )}
       {props.onChangePosition && (
         <button onClick={() => props.onChangePosition?.('user-2', 'p-1')}>
@@ -134,9 +136,7 @@ describe(EmployeesContent.name, () => {
   it('removes a courier through the facade', async () => {
     renderContent('/colaboradores?tab=couriers')
 
-    await userEvent.click(
-      screen.getByRole('button', { name: 'remove Na rua' })
-    )
+    await userEvent.click(screen.getByRole('button', { name: 'remove Na rua' }))
 
     expect(facade.removeMember).toHaveBeenCalledWith({
       id: 'user-2',

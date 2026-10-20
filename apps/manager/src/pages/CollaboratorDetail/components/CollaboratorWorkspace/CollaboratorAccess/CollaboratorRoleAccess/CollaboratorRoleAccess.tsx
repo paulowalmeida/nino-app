@@ -1,5 +1,5 @@
 import { Box } from '@nino/ds/components/Box'
-import { Heading } from '@nino/ds/components/Heading'
+import { Header } from '@nino/ds/components/Header'
 import { RadioGroup } from '@nino/ds/components/RadioGroup'
 import type { StaffPosition } from '@shared/types/team/staff-position.type'
 import type { UnitPosition } from '@shared/types/team/unit-position.type'
@@ -28,15 +28,13 @@ export const CollaboratorRoleAccess = ({
 
   return (
     <Box as="section" aria-labelledby={ROLE_LABEL_ID}>
-      <Heading
+      <Header
+        className={styles.collaboratorRoleAccessTitle}
         level={3}
         size="sm"
-        color="faintest"
-        id={ROLE_LABEL_ID}
-        className={styles.collaboratorRoleAccessTitle}
-      >
-        Cargo
-      </Heading>
+        titleId={ROLE_LABEL_ID}
+        title="Cargo"
+      />
 
       <RadioGroup
         variant="card"

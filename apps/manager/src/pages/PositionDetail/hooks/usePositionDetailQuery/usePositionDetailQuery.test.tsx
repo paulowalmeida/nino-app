@@ -24,6 +24,7 @@ describe(usePositionDetailQuery.name, () => {
 
     expect(useUnitPositions).toHaveBeenCalledWith('unit-1')
     expect(result.current.position?.name).toBe('Atendente')
+    expect(result.current.positions).toBe(positionDetailQueryPositionsMock)
     expect(result.current.isPending).toBe(false)
   })
 
@@ -52,6 +53,7 @@ describe(usePositionDetailQuery.name, () => {
 
     expect(result.current).toEqual({
       position: undefined,
+      positions: [],
       isPending: true,
       isError: true,
     })

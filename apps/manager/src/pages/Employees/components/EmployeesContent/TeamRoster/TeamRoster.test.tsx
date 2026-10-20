@@ -20,13 +20,24 @@ describe(TeamRoster.name, () => {
         <TeamRoster
           title="No painel"
           hint="Quem recebe pedidos."
-          entries={[{ id: 'user-1', name: 'Ana Souza', email: 'ana@example.com', role: 'Gerente', lastLoginAt: null, removable: true }]}
+          entries={[
+            {
+              id: 'user-1',
+              name: 'Ana Souza',
+              email: 'ana@example.com',
+              role: 'Gerente',
+              lastLoginAt: null,
+              removable: true,
+            },
+          ]}
           empty="Nenhuma pessoa"
           onRemove={() => undefined}
         />
       </MemoryRouter>
     )
-    expect(screen.getByRole('heading', { name: 'No painel' })).toBeInTheDocument()
+    expect(
+      screen.getByRole('heading', { name: 'No painel' })
+    ).toBeInTheDocument()
     expect(screen.getByText('Ana Souza')).toBeInTheDocument()
   })
 

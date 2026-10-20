@@ -9,6 +9,7 @@ export const positionMock: UnitPosition = {
   id: positionIdMock,
   name: 'Caixa',
   level: 20,
+  belowPositionId: null,
   permissions: ['cashbox.operate'],
   isDefault: false,
   isProtected: false,
@@ -17,7 +18,7 @@ export const positionMock: UnitPosition = {
 
 export const positionDraftMock: UnitPositionDraft = {
   name: 'Caixa',
-  level: 20,
+  belowPositionId: 'position-manager',
   permissions: ['cashbox.operate'],
 }
 

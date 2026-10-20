@@ -4,6 +4,7 @@ export const positionRemoveDialogMock: UnitPosition = {
   id: 'position-cashier',
   name: 'Caixa',
   level: 30,
+  belowPositionId: null,
   permissions: ['cashbox.operate'],
   isDefault: false,
   isProtected: false,

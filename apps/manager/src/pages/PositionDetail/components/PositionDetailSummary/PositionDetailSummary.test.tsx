@@ -5,13 +5,21 @@ import { PositionDetailSummary } from './PositionDetailSummary'
 import { positionDetailSummaryMock } from './PositionDetailSummary.mock'
 
 describe(PositionDetailSummary.name, () => {
-  it('summarises level, permissions and people', () => {
+  it('shows a dash while no cargo above is chosen', () => {
+    render(
+      <PositionDetailSummary {...positionDetailSummaryMock} aboveName={null} />
+    )
+
+    expect(screen.getByText('—')).toBeInTheDocument()
+  })
+
+  it('summarises position, permissions and people', () => {
     render(<PositionDetailSummary {...positionDetailSummaryMock} />)
 
     expect(
       screen.getByRole('complementary', { name: 'Resumo do cargo' })
     ).toBeInTheDocument()
-    expect(screen.getByText('30')).toBeInTheDocument()
+    expect(screen.getByText('Gerente')).toBeInTheDocument()
     expect(screen.getByText('3 de 22')).toBeInTheDocument()
     expect(screen.getByText('2 pessoas')).toBeInTheDocument()
   })

@@ -5,6 +5,6 @@ export const positionCommandsPositionIdMock = 'position-1'
 
 export const positionCommandsDraftMock: UnitPositionDraft = {
   name: 'Caixa',
-  level: 20,
+  belowPositionId: 'position-manager',
   permissions: ['cashbox.operate'],
 }

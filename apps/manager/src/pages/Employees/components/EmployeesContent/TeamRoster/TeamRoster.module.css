@@ -1,10 +1,8 @@
 @reference "@nino/ds/globals.css";
 
-
 .roster {
   @apply min-w-0;
 }
-
 
 .head {
   @apply mb-3 flex flex-col gap-3;
@@ -64,7 +62,6 @@
   @apply text-right;
 }
 
-
 .identityCell {
   @apply flex min-w-0 items-center gap-3;
 }
@@ -72,7 +69,6 @@
 .person {
   @apply min-w-0 flex-1;
 }
-
 
 .identity {
   @apply flex min-w-0 items-center gap-3 rounded-2;
@@ -98,11 +94,9 @@
   @apply truncate whitespace-nowrap text-xs text-fg-faint;
 }
 
-
 .neverSeen {
   @apply truncate whitespace-nowrap text-xs font-semibold text-fg-muted;
 }
-
 
 .roleBadge {
   @apply shrink-0;

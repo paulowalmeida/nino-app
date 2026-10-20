@@ -2,6 +2,6 @@ import type { UnitPositionDraft } from '@shared/types/team/unit-position-draft.t
 
 export const positionDetailActionsDraftMock: UnitPositionDraft = {
   name: 'Caixa',
-  level: 20,
+  belowPositionId: 'position-manager',
   permissions: ['cashbox.operate'],
 }

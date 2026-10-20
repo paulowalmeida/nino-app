@@ -59,7 +59,7 @@ describe(PositionsTable.name, () => {
     renderTable([positionsTableDefaultMock])
 
     expect(screen.getByText('2 de 22')).toBeInTheDocument()
-    expect(screen.getByText('Nível 50 · 2 pessoas')).toBeInTheDocument()
+    expect(screen.getByText('2 pessoas')).toBeInTheDocument()
   })
 
   it('lets a default cargo be duplicated but not removed', async () => {
@@ -79,7 +79,7 @@ describe(PositionsTable.name, () => {
   it('lets a custom cargo be duplicated and removed', async () => {
     renderTable([positionsTableCustomMock])
     expect(screen.queryByText('Padrão')).not.toBeInTheDocument()
-    expect(screen.getByText('Nível 30 · 1 pessoa')).toBeInTheDocument()
+    expect(screen.getByText('1 pessoa')).toBeInTheDocument()
 
     await openMenu('Caixa')
     await userEvent.click(

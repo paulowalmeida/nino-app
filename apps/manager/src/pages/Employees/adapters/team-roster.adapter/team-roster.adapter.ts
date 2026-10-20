@@ -27,9 +27,7 @@ export const staffRosterEntries = (
     href: user.id,
   }))
 
-export const courierRosterEntries = (
-  members: CourierMember[]
-): RosterEntry[] =>
+export const courierRosterEntries = (members: CourierMember[]): RosterEntry[] =>
   members.map(({ courier, isActive }) => ({
     id: courier.id,
     name: courier.name,

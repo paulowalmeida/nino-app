@@ -15,6 +15,7 @@ export const usePositionDetailFacade = () => {
   return {
     isCreating: !positionId,
     position: detail.position,
+    positions: detail.positions,
     isPending: detail.isPending,
     isError: detail.isError,
     permissionCatalog: permissionsQuery.data ?? [],

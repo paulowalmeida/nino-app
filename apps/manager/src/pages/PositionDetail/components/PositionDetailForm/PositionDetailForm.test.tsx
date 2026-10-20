@@ -11,6 +11,8 @@ import {
   positionDetailFormCatalogMock,
   positionDetailFormCustomMock,
   positionDetailFormDefaultMock,
+  positionDetailFormOwnerMock,
+  positionDetailFormPositionsMock,
 } from './PositionDetailForm.mock'
 
 vi.mock('@pages/PositionDetail/facades/usePositionDetailFacade/usePositionDetailFacade')
@@ -21,6 +23,7 @@ const givenFacade = (position?: object) =>
   vi.mocked(usePositionDetailFacade).mockReturnValue({
     position,
     permissionCatalog: positionDetailFormCatalogMock,
+    positions: positionDetailFormPositionsMock,
     savePosition,
   } as never)
 
@@ -48,7 +51,7 @@ describe(PositionDetailForm.name, () => {
     expect(screen.getByText('0 pessoas')).toBeInTheDocument()
   })
 
-  it('saves the typed name, level and chosen permissions', async () => {
+  it('saves the typed name, placement and chosen permissions', async () => {
     renderForm()
 
     await userEvent.type(screen.getByLabelText('Nome do cargo'), '  Caixa ')
@@ -61,7 +64,7 @@ describe(PositionDetailForm.name, () => {
     await waitFor(() =>
       expect(savePosition).toHaveBeenCalledWith({
         name: 'Caixa',
-        level: 20,
+        belowPositionId: 'position-cashier',
         permissions: ['cashbox.operate'],
       })
     )
@@ -80,7 +83,7 @@ describe(PositionDetailForm.name, () => {
     await waitFor(() =>
       expect(savePosition).toHaveBeenCalledWith({
         name: 'Caixa',
-        level: 30,
+        belowPositionId: 'position-manager',
         permissions: ['cashbox.operate'],
       })
     )
@@ -125,5 +128,12 @@ describe(PositionDetailForm.name, () => {
     expect(
       screen.queryByRole('button', { name: 'Salvar cargo' })
     ).not.toBeInTheDocument()
+  })
+
+  it('shows no cargo above the owner', () => {
+    givenFacade(positionDetailFormOwnerMock)
+    renderForm()
+
+    expect(screen.getByText('—')).toBeInTheDocument()
   })
 })

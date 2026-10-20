@@ -12,6 +12,7 @@ export const collaboratorAccessPromotionOptionsMock: UnitPosition[] = [
     id: 'position-manager',
     name: 'Gerente',
     level: 50,
+    belowPositionId: null,
     permissions: ['catalog.manage'],
     isDefault: true,
     isProtected: false,

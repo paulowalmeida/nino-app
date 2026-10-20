@@ -1,6 +1,6 @@
 import { Box } from '@nino/ds/components/Box'
 import { Button } from '@nino/ds/components/Button'
-import { Heading } from '@nino/ds/components/Heading'
+import { Header } from '@nino/ds/components/Header'
 import { Icon } from '@nino/ds/components/Icon'
 import { Text } from '@nino/ds/components/Text'
 
@@ -20,16 +20,14 @@ export const CollaboratorLoginAccess = ({
   onOpenEmailModal,
 }: CollaboratorLoginAccessProps) => (
   <Box as="section" aria-labelledby={LOGIN_LABEL_ID}>
-    <Heading
+    <Header
+      className={styles.collaboratorLoginAccessTitle}
       level={3}
       size="sm"
-      color="faintest"
-      id={LOGIN_LABEL_ID}
-      className={styles.collaboratorLoginAccessTitle}
+      titleId={LOGIN_LABEL_ID}
       mt={3}
-    >
-      Como entra no painel
-    </Heading>
+      title="Como entra no painel"
+    />
 
     <Box
       direction="row"
