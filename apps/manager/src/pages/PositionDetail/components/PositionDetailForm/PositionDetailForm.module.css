@@ -18,11 +18,19 @@
 }
 
 .groups {
-  @apply grid gap-4 xl:grid-cols-2;
+  @apply flex flex-col gap-3;
 }
 
 .group {
-  @apply min-w-0 rounded-6 bg-surface-2 p-5;
+  @apply min-w-0 rounded-6 bg-surface-2;
+}
+
+.groupTrigger {
+  @apply flex min-w-0 flex-1 items-baseline justify-between gap-3;
+}
+
+.groupCount {
+  @apply text-sm tabular-nums text-fg-faint;
 }
 
 .groupTitle {

@@ -89,6 +89,16 @@ describe(PositionDetailForm.name, () => {
     )
   })
 
+  it('counts the chosen permissions in each group header', async () => {
+    renderForm()
+    const operation = screen.getByRole('button', { name: /Operação do dia/ })
+
+    expect(operation).toHaveTextContent('0 de 1')
+    await userEvent.click(screen.getByLabelText(/Mexer no caixa/))
+
+    expect(operation).toHaveTextContent('1 de 1')
+  })
+
   it('asks for a name before saving', async () => {
     renderForm()
 

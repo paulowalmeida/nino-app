@@ -3,6 +3,7 @@ import { Link } from 'react-router'
 
 import { Controller, useForm, useWatch } from 'react-hook-form'
 
+import { Accordion } from '@nino/ds/components/Accordion'
 import { Alert } from '@nino/ds/components/Alert'
 import { Box } from '@nino/ds/components/Box'
 import { Button } from '@nino/ds/components/Button'
@@ -127,44 +128,53 @@ export const PositionDetailForm = () => {
             name="permissions"
             control={control}
             render={({ field }) => (
-              <Box className={styles.groups}>
-                {groups.map(({ group, label, permissions: definitions }) => (
-                  <Box
-                    key={group}
-                    as="section"
-                    aria-label={label}
-                    direction="column"
-                    gap={3}
-                    className={styles.group}
-                  >
-                    <Text as="p" className={styles.groupTitle}>
-                      {label}
-                    </Text>
-                    {definitions.map((definition) => (
-                      <FormField
-                        key={definition.key}
-                        orientation="horizontal"
-                        label={definition.label}
-                        helperText={definition.description}
-                      >
-                        <Checkbox
-                          checked={field.value.includes(definition.key)}
-                          disabled={isReadOnly}
-                          onCheckedChange={(checked) =>
-                            field.onChange(
-                              togglePermission(
-                                field.value,
-                                definition.key,
-                                checked === true
-                              )
-                            )
-                          }
-                        />
-                      </FormField>
-                    ))}
-                  </Box>
-                ))}
-              </Box>
+              <Accordion
+                multiple
+                defaultValue={groups.slice(0, 1).map(({ group }) => group)}
+                className={styles.groups}
+                itemClassName={styles.group}
+                items={groups.map(
+                  ({ group, label, permissions: definitions }) => ({
+                    value: group,
+                    trigger: (
+                      <Box className={styles.groupTrigger}>
+                        <Text as="span" className={styles.groupTitle}>
+                          {label}
+                        </Text>
+                        <Text as="span" className={styles.groupCount}>
+                          {`${definitions.filter(({ key }) => field.value.includes(key)).length} de ${definitions.length}`}
+                        </Text>
+                      </Box>
+                    ),
+                    content: (
+                      <Box direction="column" gap={3}>
+                        {definitions.map((definition) => (
+                          <FormField
+                            key={definition.key}
+                            orientation="horizontal"
+                            label={definition.label}
+                            helperText={definition.description}
+                          >
+                            <Checkbox
+                              checked={field.value.includes(definition.key)}
+                              disabled={isReadOnly}
+                              onCheckedChange={(checked) =>
+                                field.onChange(
+                                  togglePermission(
+                                    field.value,
+                                    definition.key,
+                                    checked === true
+                                  )
+                                )
+                              }
+                            />
+                          </FormField>
+                        ))}
+                      </Box>
+                    ),
+                  })
+                )}
+              />
             )}
           />
         </Box>
