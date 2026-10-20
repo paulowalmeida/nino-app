@@ -71,16 +71,28 @@ export const TabItemModifierPicker = ({
                   className={styles.tabItemModifierPickerOption}
                 >
                   <Text as="span">{option.name}</Text>
-                  <Text as="span" size="sm" color="muted">
-                    {priceLabel(option)}
-                  </Text>
-                  <Checkbox
-                    checked={isChecked}
-                    disabled={!isChecked && isAtLimit}
-                    onCheckedChange={(checked) =>
-                      onToggle(modifier, option.id, !!checked)
-                    }
-                  />
+                  <Box
+                    direction="row"
+                    align="center"
+                    gap={3}
+                    className={styles.tabItemModifierPickerTrailing}
+                  >
+                    <Text
+                      as="span"
+                      size="sm"
+                      color="muted"
+                      className={styles.tabItemModifierPickerPrice}
+                    >
+                      {priceLabel(option)}
+                    </Text>
+                    <Checkbox
+                      checked={isChecked}
+                      disabled={!isChecked && isAtLimit}
+                      onCheckedChange={(checked) =>
+                        onToggle(modifier, option.id, !!checked)
+                      }
+                    />
+                  </Box>
                 </Label>
               )
             })

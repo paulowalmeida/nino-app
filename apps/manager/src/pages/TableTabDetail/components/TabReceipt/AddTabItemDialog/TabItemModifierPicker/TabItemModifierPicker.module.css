@@ -11,3 +11,11 @@
 .tabItemModifierPickerOption {
   @apply flex items-center justify-between gap-3 py-1;
 }
+
+.tabItemModifierPickerTrailing {
+  @apply shrink-0;
+}
+
+.tabItemModifierPickerPrice {
+  @apply w-20 text-right tabular-nums;
+}
