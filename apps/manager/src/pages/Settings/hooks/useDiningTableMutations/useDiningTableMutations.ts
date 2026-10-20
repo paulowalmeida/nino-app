@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 
-import { DiningTableService } from '@shared/services/dining-table/dining-table.service/dining-table.service'
 import { queryKeys } from '@shared/lib/query-keys/query-keys'
+import { DiningTableService } from '@shared/services/dining-table/dining-table.service/dining-table.service'
 import type { Page } from '@shared/types/http/page'
 import type { DiningTable } from '@shared/types/settings/dining-table'
 

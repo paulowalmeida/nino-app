@@ -9,7 +9,7 @@
 }
 
 .openTabTablePickerState {
-  @apply text-xs font-medium text-muted;
+  @apply text-xs font-medium text-fg-muted;
 }
 
 .openTabTablePickerSkeleton {

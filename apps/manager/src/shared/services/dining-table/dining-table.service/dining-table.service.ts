@@ -2,9 +2,16 @@ import { api } from '@shared/services/http/http.service'
 import type { Page } from '@shared/types/http/page'
 import type { DiningTable } from '@shared/types/settings/dining-table'
 
+export const DINING_TABLE_PAGE_SIZE = 100
+
 export const DiningTableService = {
   list: (unitId: string): Promise<Page<DiningTable>> =>
-    api.get<Page<DiningTable>>(`units/${unitId}/dining-tables`),
+    api.getAll<Page<DiningTable>>(`units/${unitId}/dining-tables`, {
+      target: 'name',
+      direction: 'asc',
+      size: DINING_TABLE_PAGE_SIZE,
+      page: 1,
+    }),
 
   create: (unitId: string, data: { name: string }): Promise<DiningTable> =>
     api.create<typeof data, DiningTable>(`units/${unitId}/dining-tables`, data),
