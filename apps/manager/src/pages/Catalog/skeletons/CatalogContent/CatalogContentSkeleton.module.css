@@ -37,3 +37,7 @@
 .switch {
   @apply h-4 w-7 shrink-0 rounded-full;
 }
+
+.delete {
+  @apply hidden h-9 w-9 shrink-0 rounded-full lg:block;
+}

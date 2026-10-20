@@ -9,7 +9,7 @@ describe(CatalogContentSkeleton.name, () => {
     const { container } = render(<CatalogContentSkeleton />)
 
     expect(container.querySelectorAll('[aria-hidden="true"]')).toHaveLength(
-      1 + MENU_BOARD_GHOST_ROWS.length * 5
+      1 + MENU_BOARD_GHOST_ROWS.length * 6
     )
   })
 })
