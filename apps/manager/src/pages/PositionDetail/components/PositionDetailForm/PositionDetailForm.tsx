@@ -73,7 +73,7 @@ export const PositionDetailForm = () => {
       className={`${motion.deal} ${styles.layout}`}
     >
       <Box direction="column" gap={8} className={styles.main}>
-        {isReadOnly && (
+        {isReadOnly && !position?.isProtected && (
           <Alert variant="info">
             Este é um cargo padrão e não pode ser alterado. Duplique para criar
             uma versão sua.
@@ -97,23 +97,25 @@ export const PositionDetailForm = () => {
               />
             </FormField>
 
-            <FormField
-              label="Fica logo abaixo de"
-              helperText="Quem está acima promove quem está abaixo."
-            >
-              <Controller
-                name="belowPositionId"
-                control={control}
-                render={({ field }) => (
-                  <Select
-                    options={placements}
-                    value={field.value}
-                    disabled={isReadOnly}
-                    onValueChange={field.onChange}
-                  />
-                )}
-              />
-            </FormField>
+            {!position?.isProtected && (
+              <FormField
+                label="Fica logo abaixo de"
+                helperText="Quem está acima promove quem está abaixo."
+              >
+                <Controller
+                  name="belowPositionId"
+                  control={control}
+                  render={({ field }) => (
+                    <Select
+                      options={placements}
+                      value={field.value}
+                      disabled={isReadOnly}
+                      onValueChange={field.onChange}
+                    />
+                  )}
+                />
+              </FormField>
+            )}
           </Box>
         </Box>
 

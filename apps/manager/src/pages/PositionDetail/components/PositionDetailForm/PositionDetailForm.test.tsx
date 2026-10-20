@@ -130,10 +130,14 @@ describe(PositionDetailForm.name, () => {
     ).not.toBeInTheDocument()
   })
 
-  it('shows no cargo above the owner', () => {
+  it('shows no cargo above the owner and no duplicate hint', () => {
     givenFacade(positionDetailFormOwnerMock)
     renderForm()
 
-    expect(screen.getByText('—')).toBeInTheDocument()
+    expect(screen.queryByText('fica logo abaixo de')).not.toBeInTheDocument()
+    expect(screen.queryByText('Fica logo abaixo de')).not.toBeInTheDocument()
+    expect(
+      screen.queryByText(/cargo padrão e não pode ser alterado/)
+    ).not.toBeInTheDocument()
   })
 })

@@ -5,12 +5,13 @@ import { PositionDetailSummary } from './PositionDetailSummary'
 import { positionDetailSummaryMock } from './PositionDetailSummary.mock'
 
 describe(PositionDetailSummary.name, () => {
-  it('shows a dash while no cargo above is chosen', () => {
+  it('omits the placement for the cargo at the top', () => {
     render(
       <PositionDetailSummary {...positionDetailSummaryMock} aboveName={null} />
     )
 
-    expect(screen.getByText('—')).toBeInTheDocument()
+    expect(screen.queryByText('fica logo abaixo de')).not.toBeInTheDocument()
+    expect(screen.getByText('3 de 22')).toBeInTheDocument()
   })
 
   it('summarises position, permissions and people', () => {

@@ -4,7 +4,7 @@ import { Text } from '@nino/ds/components/Text'
 import styles from './PositionDetailSummary.module.css'
 
 type PositionDetailSummaryProps = {
-  /** Name of the cargo right above; `null` while none is chosen. */
+  /** Name of the cargo right above; `null` at the top (the owner). */
   aboveName: string | null
   selectedCount: number
   totalCount: number
@@ -21,10 +21,12 @@ export const PositionDetailSummary = ({
   memberCount,
 }: PositionDetailSummaryProps) => (
   <Box as="aside" aria-label="Resumo do cargo" className={styles.summary}>
-    <Box className={styles.item}>
-      <Text className={styles.value}>{aboveName ?? '—'}</Text>
-      <Text className={styles.caption}>fica logo abaixo de</Text>
-    </Box>
+    {aboveName && (
+      <Box className={styles.item}>
+        <Text className={styles.value}>{aboveName}</Text>
+        <Text className={styles.caption}>fica logo abaixo de</Text>
+      </Box>
+    )}
     <Box className={styles.item}>
       <Text className={styles.value}>{`${selectedCount} de ${totalCount}`}</Text>
       <Text className={styles.caption}>permissões liberadas</Text>
