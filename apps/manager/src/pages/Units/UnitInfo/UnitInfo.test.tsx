@@ -8,19 +8,15 @@ const setMain = vi.fn()
 
 let unit: { id: string; isMain: boolean } | undefined = unitInfoMock.unit
 
-vi.mock(
-  '@pages/Units/facades/useSettingsUnitDetailFacade/useSettingsUnitDetailFacade',
-  () => ({
-    useSettingsUnitDetailFacade: () => ({
-      location: { states: {}, municipalities: {} },
-      units: {
-        detail: { data: unit, isPending: false },
-        save: { mutate: vi.fn(), isPending: false },
-        setMain: { mutate: setMain, isPending: false },
-      },
-    }),
-  })
-)
+vi.mock('@pages/Units/facades/useUnitsFacade/useUnitsFacade', () => ({
+  useUnitsFacade: () => ({
+    units: {
+      detail: { data: unit, isPending: false },
+      save: { mutate: vi.fn(), isPending: false },
+      setMain: { mutate: setMain, isPending: false },
+    },
+  }),
+}))
 vi.mock('@pages/Units/SettingsUnitDetailSection/UnitCard/UnitCard', () => ({
   UnitCard: ({ onSetMain }: { onSetMain: () => void }) => (
     <button onClick={onSetMain}>unit card</button>

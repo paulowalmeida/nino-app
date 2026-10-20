@@ -11,7 +11,6 @@ import { Icon } from '@nino/ds/components/Icon'
 import { Input } from '@nino/ds/components/Input'
 import { Select } from '@nino/ds/components/Select'
 import { Skeleton } from '@nino/ds/components/Skeleton'
-import { Tabs } from '@nino/ds/components/Tabs'
 import { Text } from '@nino/ds/components/Text'
 import type { AddressSearchResult } from '@nino/lib/types/address/address-lookup'
 import { toUnitDraft } from '@pages/Units/adapters/toUnitDraft/toUnitDraft'
@@ -23,8 +22,6 @@ import { AddressFields } from '@shared/components/AddressFields/AddressFields'
 import { BRAZIL_STATES } from '@shared/constants/address.constants'
 import type { UnitDetail } from '@shared/types/store/unit-detail'
 import type { UnitDraft } from '@shared/types/store/unit-draft'
-
-import { DeliveryCities } from '../DeliveryCities/DeliveryCities'
 
 import motion from '@styles/motion.module.css'
 import local from './UnitCard.module.css'
@@ -38,8 +35,6 @@ export type UnitCardProps = {
   isPromoting: boolean
   onSetMain: () => void
   onSave: (data: UnitDraft) => void
-  location: ReturnType<typeof useDeliveryLocation>
-  onDeliveryStateChange: (state: string) => void
 }
 
 export const UnitCard = ({
@@ -50,8 +45,6 @@ export const UnitCard = ({
   isPromoting,
   onSetMain,
   onSave,
-  location,
-  onDeliveryStateChange,
 }: UnitCardProps) => {
   const [draft, setDraft] = useState<UnitDraft>(EMPTY_UNIT_DRAFT)
   const [isDirty, setDirty] = useState(false)
@@ -263,13 +256,6 @@ export const UnitCard = ({
         }
       />
 
-      <Tabs
-        className={local.unitCardTabs}
-        tabs={[
-          {
-            value: 'unit',
-            label: 'Dados da unidade',
-            content: (
               <Box className={local.tabContent}>
                 <Box className={local.unitCardFields}>
                   <FormField label="Nome da unidade">
@@ -343,27 +329,6 @@ export const UnitCard = ({
                 </Box>
                 <Box mt={4}>{renderSaveButton()}</Box>
               </Box>
-            ),
-          },
-          {
-            value: 'delivery',
-            label: 'Atendimento',
-            content: (
-              <DeliveryCities
-                key={unit?.id ?? 'empty-unit'}
-                cities={draft.deliveryCities}
-                savedCities={unit ? toUnitDraft(unit).deliveryCities : []}
-                primaryCity={{ city: draft.city, state: draft.state }}
-                location={location}
-                onStateChange={onDeliveryStateChange}
-                onChange={(deliveryCities) => change({ deliveryCities })}
-                isSaving={isSaving}
-                onSave={() => onSave(draft)}
-              />
-            ),
-          },
-        ]}
-      />
     </Box>
   )
 }

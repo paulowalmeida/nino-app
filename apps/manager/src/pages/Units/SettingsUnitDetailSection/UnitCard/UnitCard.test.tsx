@@ -70,8 +70,6 @@ describe('UnitCard', () => {
         isPromoting={false}
         onSetMain={onSetMain}
         onSave={onSave}
-        location={location}
-        onDeliveryStateChange={() => undefined}
       />,
       { wrapper }
     )
@@ -86,15 +84,13 @@ describe('UnitCard', () => {
         isPromoting={false}
         onSetMain={() => undefined}
         onSave={() => undefined}
-        location={location}
-        onDeliveryStateChange={() => undefined}
       />,
       { wrapper }
     )
     expect(document.body).toBeTruthy()
   })
 
-  it('separates unit data from store identity', () => {
+  it('shows the unit data on a single screen, without tabs', () => {
     render(
       <UnitCard
         unit={undefined}
@@ -104,15 +100,12 @@ describe('UnitCard', () => {
         isPromoting={false}
         onSetMain={() => undefined}
         onSave={() => undefined}
-        location={location}
-        onDeliveryStateChange={() => undefined}
       />,
       { wrapper }
     )
 
-    expect(screen.getByRole('tab', { name: 'Dados da unidade' })).toBeTruthy()
-    expect(screen.getByRole('tab', { name: 'Atendimento' })).toBeTruthy()
-    expect(screen.queryByRole('tab', { name: 'Personalizar loja' })).toBeNull()
+    expect(screen.queryByRole('tab')).toBeNull()
+    expect(screen.getByText('Endereço da unidade')).toBeInTheDocument()
   })
 
   it('fills the form with the unit that came from the API', () => {
@@ -154,21 +147,6 @@ describe('UnitCard', () => {
     expect(screen.getByRole('combobox', { name: 'Cidade' })).toBeDisabled()
     expect(screen.getByLabelText('CEP')).toBeDisabled()
     expect(screen.getByLabelText('Endereço')).toBeDisabled()
-  })
-
-  it('opens the visible save action after choosing a delivery city', async () => {
-    const user = userEvent.setup({ pointerEventsCheck: 0 })
-    renderCard(unitCardDetailMock)
-
-    await user.click(screen.getByRole('tab', { name: 'Atendimento' }))
-    const cityInput = screen.getByRole('combobox', { name: 'Cidade atendida' })
-    await user.click(cityInput)
-    await user.type(cityInput, 'Ana')
-    await user.keyboard('{ArrowDown}{Enter}')
-
-    expect(screen.getByRole('button', { name: 'Salvar' })).toBeEnabled()
-    expect(screen.getByText('Belém · Pará')).toBeInTheDocument()
-    expect(screen.queryByText('Ananindeua · Pará')).not.toBeInTheDocument()
   })
 
   it('fills the unit address from a selected autocomplete suggestion', async () => {
@@ -245,5 +223,4 @@ describe('UnitCard', () => {
       screen.queryByRole('button', { name: 'Tornar matriz' })
     ).not.toBeInTheDocument()
   })
-
 })
