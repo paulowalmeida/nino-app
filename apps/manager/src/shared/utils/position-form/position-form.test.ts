@@ -5,6 +5,7 @@ import {
   formValuesToDraft,
   groupPermissions,
   lowestPositionId,
+  matchesPermission,
   placementOptions,
   positionToFormValues,
   togglePermission,
@@ -91,5 +92,19 @@ describe('position form helpers', () => {
         false
       )
     ).toEqual(['cashbox.operate'])
+  })
+})
+
+describe('matchesPermission', () => {
+  const [cashbox] = positionFormCatalogMock
+
+  it('matches label or description ignoring case and accents', () => {
+    expect(matchesPermission(cashbox, 'CAIXA')).toBe(true)
+    expect(matchesPermission(cashbox, 'movimentar')).toBe(true)
+    expect(matchesPermission(cashbox, 'relatorios')).toBe(false)
+  })
+
+  it('matches everything for an empty term', () => {
+    expect(matchesPermission(cashbox, '  ')).toBe(true)
   })
 })

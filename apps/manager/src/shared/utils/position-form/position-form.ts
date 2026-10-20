@@ -85,3 +85,18 @@ export const togglePermission = (
   isChecked
     ? [...selected.filter((key) => key !== permission), permission]
     : selected.filter((key) => key !== permission)
+
+/** Casa o termo com o nome ou a descrição da permissão, sem acento nem caixa. */
+export const matchesPermission = (
+  { label, description }: PermissionDefinition,
+  term: string
+): boolean => {
+  const plain = (text: string): string =>
+    text
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '')
+      .toLowerCase()
+  const needle = plain(term.trim())
+
+  return plain(`${label} ${description}`).includes(needle)
+}

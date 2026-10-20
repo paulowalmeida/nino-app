@@ -1,31 +1,26 @@
-import { useMemo } from 'react'
 import { Link } from 'react-router'
 
 import { Controller, useForm, useWatch } from 'react-hook-form'
 
-import { Accordion } from '@nino/ds/components/Accordion'
 import { Alert } from '@nino/ds/components/Alert'
 import { Box } from '@nino/ds/components/Box'
 import { Button } from '@nino/ds/components/Button'
-import { Checkbox } from '@nino/ds/components/Checkbox'
 import { FormField } from '@nino/ds/components/FormField'
 import { Heading } from '@nino/ds/components/Heading'
 import { Input } from '@nino/ds/components/Input'
 import { Select } from '@nino/ds/components/Select'
-import { Text } from '@nino/ds/components/Text'
 import { usePositionDetailFacade } from '@pages/PositionDetail/facades/usePositionDetailFacade/usePositionDetailFacade'
 import {
   emptyPositionFormValues,
   formValuesToDraft,
-  groupPermissions,
   lowestPositionId,
   placementOptions,
   type PositionFormValues,
   positionToFormValues,
-  togglePermission,
 } from '@shared/utils/position-form/position-form'
 
 import { PositionDetailSummary } from '../PositionDetailSummary/PositionDetailSummary'
+import { PositionPermissionsPicker } from '../PositionPermissionsPicker/PositionPermissionsPicker'
 
 import motion from '@styles/motion.module.css'
 import styles from './PositionDetailForm.module.css'
@@ -36,10 +31,6 @@ export const PositionDetailForm = () => {
   const { position, positions, permissionCatalog, savePosition } =
     usePositionDetailFacade()
   const isReadOnly = !!position?.isDefault
-  const groups = useMemo(
-    () => groupPermissions(permissionCatalog),
-    [permissionCatalog]
-  )
   const placements = placementOptions(positions, position?.id)
 
   const {
@@ -128,56 +119,10 @@ export const PositionDetailForm = () => {
             name="permissions"
             control={control}
             render={({ field }) => (
-              <Accordion
-                multiple
-                defaultValue={groups.slice(0, 1).map(({ group }) => group)}
-                className={styles.groups}
-                itemClassName={styles.group}
-                items={groups.map(
-                  ({ group, label, permissions: definitions }) => ({
-                    value: group,
-                    trigger: (
-                      <Box
-                        direction="row"
-                        align="baseline"
-                        className={styles.groupTrigger}
-                      >
-                        <Text as="span" className={styles.groupTitle}>
-                          {label}
-                        </Text>
-                        <Text as="span" className={styles.groupCount}>
-                          {`${definitions.filter(({ key }) => field.value.includes(key)).length} de ${definitions.length}`}
-                        </Text>
-                      </Box>
-                    ),
-                    content: (
-                      <Box className={styles.groupItems}>
-                        {definitions.map((definition) => (
-                          <FormField
-                            key={definition.key}
-                            orientation="horizontal"
-                            label={definition.label}
-                            helperText={definition.description}
-                          >
-                            <Checkbox
-                              checked={field.value.includes(definition.key)}
-                              disabled={isReadOnly}
-                              onCheckedChange={(checked) =>
-                                field.onChange(
-                                  togglePermission(
-                                    field.value,
-                                    definition.key,
-                                    checked === true
-                                  )
-                                )
-                              }
-                            />
-                          </FormField>
-                        ))}
-                      </Box>
-                    ),
-                  })
-                )}
+              <PositionPermissionsPicker
+                value={field.value}
+                disabled={isReadOnly}
+                onChange={field.onChange}
               />
             )}
           />
