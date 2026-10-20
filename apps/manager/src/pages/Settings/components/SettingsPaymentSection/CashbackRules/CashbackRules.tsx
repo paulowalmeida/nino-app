@@ -13,7 +13,7 @@ import { toCashbackDraft } from '@pages/Settings/adapters/toCashbackDraft/toCash
 import { EMPTY_CASHBACK_DRAFT } from '@pages/Settings/constants/settings.constants'
 import type { CashbackDraft } from '@shared/types/settings/cashback-draft'
 import type { UnitSettings } from '@shared/types/settings/unit-settings.type'
-import type { UpdateUnitSettingsRequest } from '@shared/types/settings/update-unit-settings-request'
+import type { UpdateUnitSettingsRequest } from '@shared/types/settings/update-unit-settings-request.type'
 import { maskMoney, moneyValue } from '@shared/utils/money/money'
 
 import motion from '@styles/motion.module.css'

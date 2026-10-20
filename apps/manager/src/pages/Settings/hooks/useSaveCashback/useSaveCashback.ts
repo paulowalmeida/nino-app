@@ -2,7 +2,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query'
 
 import { queryKeys } from '@shared/lib/query-keys/query-keys'
 import { SettingsService } from '@shared/services/settings/settings.service'
-import type { UpdateUnitSettingsRequest } from '@shared/types/settings/update-unit-settings-request'
+import type { UpdateUnitSettingsRequest } from '@shared/types/settings/update-unit-settings-request.type'
 
 /*
  * WHY: o cashback divide recurso com as outras configurações da unidade, então

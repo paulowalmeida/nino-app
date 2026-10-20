@@ -14,4 +14,6 @@ export type UpdateUnitSettingsRequest = {
   cashbackEnabled?: boolean
   cashbackPercent?: number
   cashbackMinRedeem?: number
+  serviceFeeEnabled?: boolean
+  serviceFeePercent?: number
 }

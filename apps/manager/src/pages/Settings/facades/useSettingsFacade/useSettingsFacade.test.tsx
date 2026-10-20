@@ -42,6 +42,9 @@ vi.mock('@pages/Settings/hooks/usePhones/usePhones', () => ({
 vi.mock('@pages/Settings/hooks/useSaveCashback/useSaveCashback', () => ({
   useSaveCashback: hook,
 }))
+vi.mock('@pages/Settings/hooks/useSaveServiceFee/useSaveServiceFee', () => ({
+  useSaveServiceFee: hook,
+}))
 vi.mock('@pages/Settings/hooks/useSaveSettings/useSaveSettings', () => ({
   useSaveSettings: hook,
 }))
@@ -72,5 +75,6 @@ describe(useSettingsFacade.name, () => {
     const { result } = renderHook(() => useSettingsFacade())
     expect(result.current.unit?.unitId).toBe('unit-1')
     expect(result.current.units.limit).toBeDefined()
+    expect(result.current.serviceFee.save.isPending).toBe(false)
   })
 })

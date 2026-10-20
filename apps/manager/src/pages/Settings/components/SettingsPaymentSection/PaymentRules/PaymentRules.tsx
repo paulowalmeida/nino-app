@@ -22,7 +22,7 @@ import {
 import type { PaymentMethod } from '@shared/types/order/payment-method'
 import type { ServiceRulesDraft } from '@shared/types/settings/service-rules-draft'
 import type { UnitSettings } from '@shared/types/settings/unit-settings.type'
-import type { UpdateUnitSettingsRequest } from '@shared/types/settings/update-unit-settings-request'
+import type { UpdateUnitSettingsRequest } from '@shared/types/settings/update-unit-settings-request.type'
 
 import motion from '@styles/motion.module.css'
 import local from './PaymentRules.module.css'

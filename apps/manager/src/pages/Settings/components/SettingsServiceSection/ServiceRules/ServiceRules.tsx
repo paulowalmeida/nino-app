@@ -16,7 +16,7 @@ import {
 } from '@pages/Settings/constants/settings.constants'
 import type { ServiceRulesDraft } from '@shared/types/settings/service-rules-draft'
 import type { UnitSettings } from '@shared/types/settings/unit-settings.type'
-import type { UpdateUnitSettingsRequest } from '@shared/types/settings/update-unit-settings-request'
+import type { UpdateUnitSettingsRequest } from '@shared/types/settings/update-unit-settings-request.type'
 import { riseDelay } from '@shared/utils/rise-delay/rise-delay'
 
 import motion from '@styles/motion.module.css'

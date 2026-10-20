@@ -2,7 +2,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query'
 
 import { queryKeys } from '@shared/lib/query-keys/query-keys'
 import { SettingsService } from '@shared/services/settings/settings.service'
-import type { UpdateUnitSettingsRequest } from '@shared/types/settings/update-unit-settings-request'
+import type { UpdateUnitSettingsRequest } from '@shared/types/settings/update-unit-settings-request.type'
 
 export const useSaveSettings = (unitId: string | null) => {
   const queryClient = useQueryClient()

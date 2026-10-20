@@ -1,0 +1,21 @@
+@reference "@nino/ds/globals.css";
+
+.settingsServiceFeeTab {
+  @apply flex min-w-0 flex-col gap-5 pt-2;
+}
+
+.settingsServiceFeeTabCopy {
+  @apply min-w-0 flex-1;
+}
+
+.settingsServiceFeeTabField {
+  @apply max-w-48;
+}
+
+.settingsServiceFeeTabSave {
+  @apply w-full min-[425px]:w-auto min-[425px]:self-end;
+}
+
+.settingsServiceFeeTabSkeleton {
+  @apply h-48 w-full rounded-6;
+}
