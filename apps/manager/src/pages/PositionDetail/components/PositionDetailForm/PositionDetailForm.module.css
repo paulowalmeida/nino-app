@@ -45,6 +45,6 @@
 }
 
 .actions {
-  @apply sticky bottom-0 -mx-4 flex justify-end gap-3 border-t border-border;
-  @apply bg-surface-raised px-4 py-3 lg:static lg:mx-0 lg:border-0 lg:bg-transparent lg:px-0;
+  @apply sticky bottom-0 -mx-4 justify-end border-t border-border;
+  @apply bg-surface-raised px-4 py-3 lg:mx-0 lg:px-0;
 }

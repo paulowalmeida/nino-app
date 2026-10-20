@@ -38,7 +38,7 @@ export const PositionDetailForm = () => {
     control,
     handleSubmit,
     setError,
-    formState: { errors, isSubmitting },
+    formState: { errors, isSubmitting, isDirty },
   } = useForm<PositionFormValues>({
     defaultValues: position
       ? positionToFormValues(position)
@@ -125,14 +125,19 @@ export const PositionDetailForm = () => {
         {errors.root && <Alert variant="error">{errors.root.message}</Alert>}
 
         {!isReadOnly && (
-          <Box className={styles.actions}>
+          <Box direction="row" gap={3} className={styles.actions}>
             <Button asChild variant="ghost">
               <Link to=".." relative="path">
                 Cancelar
               </Link>
             </Button>
-            <Button type="submit" form={FORM_ID} loading={isSubmitting}>
-              Salvar cargo
+            <Button
+              type="submit"
+              form={FORM_ID}
+              loading={isSubmitting}
+              disabled={!isDirty}
+            >
+              Salvar
             </Button>
           </Box>
         )}

@@ -57,7 +57,7 @@ describe(PositionDetailForm.name, () => {
     await userEvent.click(screen.getByLabelText(/Mexer no caixa/))
     await userEvent.click(screen.getByLabelText(/Ver relatórios/))
     await userEvent.click(screen.getByLabelText(/Ver relatórios/))
-    await userEvent.click(screen.getByRole('button', { name: 'Salvar cargo' }))
+    await userEvent.click(screen.getByRole('button', { name: 'Salvar' }))
 
     await waitFor(() =>
       expect(savePosition).toHaveBeenCalledWith({
@@ -74,15 +74,27 @@ describe(PositionDetailForm.name, () => {
 
     expect(screen.queryByLabelText('Nome do cargo')).not.toBeInTheDocument()
     expect(screen.getByLabelText(/Mexer no caixa/)).toBeChecked()
+    expect(screen.getByRole('button', { name: 'Salvar' })).toBeDisabled()
 
-    await userEvent.click(screen.getByRole('button', { name: 'Salvar cargo' }))
+    await userEvent.click(screen.getByLabelText(/Mexer no caixa/))
+    await userEvent.click(screen.getByRole('button', { name: 'Salvar' }))
 
     await waitFor(() =>
       expect(savePosition).toHaveBeenCalledWith({
         belowPositionId: 'position-manager',
-        permissions: ['cashbox.operate'],
+        permissions: [],
       })
     )
+  })
+
+  it('enables saving only once something has changed', async () => {
+    renderForm()
+    const save = screen.getByRole('button', { name: 'Salvar' })
+
+    expect(save).toBeDisabled()
+    await userEvent.type(screen.getByLabelText('Nome do cargo'), 'C')
+
+    expect(save).toBeEnabled()
   })
 
   it('counts the chosen permissions in each tab', async () => {
@@ -110,7 +122,8 @@ describe(PositionDetailForm.name, () => {
   it('asks for a name before saving', async () => {
     renderForm()
 
-    await userEvent.click(screen.getByRole('button', { name: 'Salvar cargo' }))
+    await userEvent.type(screen.getByLabelText('Nome do cargo'), '   ')
+    await userEvent.click(screen.getByRole('button', { name: 'Salvar' }))
 
     expect(
       await screen.findByText('Informe o nome do cargo')
@@ -123,7 +136,7 @@ describe(PositionDetailForm.name, () => {
     renderForm()
 
     await userEvent.type(screen.getByLabelText('Nome do cargo'), 'Caixa')
-    await userEvent.click(screen.getByRole('button', { name: 'Salvar cargo' }))
+    await userEvent.click(screen.getByRole('button', { name: 'Salvar' }))
 
     expect(
       await screen.findByText(/Não foi possível salvar o cargo/)
@@ -144,7 +157,7 @@ describe(PositionDetailForm.name, () => {
     expect(screen.getByRole('combobox')).toBeEnabled()
     expect(screen.getByLabelText(/Mexer no caixa/)).toBeEnabled()
     expect(
-      screen.getByRole('button', { name: 'Salvar cargo' })
+      screen.getByRole('button', { name: 'Salvar' })
     ).toBeInTheDocument()
   })
 
@@ -156,7 +169,7 @@ describe(PositionDetailForm.name, () => {
     expect(screen.queryByText('fica logo abaixo de')).not.toBeInTheDocument()
     expect(screen.getByLabelText(/Mexer no caixa/)).toBeDisabled()
     expect(
-      screen.queryByRole('button', { name: 'Salvar cargo' })
+      screen.queryByRole('button', { name: 'Salvar' })
     ).not.toBeInTheDocument()
   })
 })
