@@ -1,8 +1,11 @@
 @reference "@nino/ds/globals.css";
 
 
+/* WHY: o ticket é item flex da linha da lista; sem min-w-0 o resumo em uma
+ * linha dos itens fixa a largura mínima do card e ele estoura a tela no mobile
+ */
 .ticket {
-  @apply flex flex-col p-0 transition-all duration-300;
+  @apply flex min-w-0 flex-col p-0 transition-all duration-300;
   @apply hover:border-brand-vivid hover:shadow-md;
 }
 
