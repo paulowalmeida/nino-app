@@ -21,7 +21,7 @@ export const CatalogHeader = () => {
     setCategoryId,
     categories,
     categoriesStatus,
-    unitRole,
+    canManageCatalog,
   } = useCatalogFacade()
   const debouncedTerm = useDebouncedValue(term)
   useEffect(() => {
@@ -40,9 +40,7 @@ export const CatalogHeader = () => {
       <CatalogToolbar
         term={term}
         onTermChange={setTerm}
-        canManageCategories={
-          unitRole === 'UNIT_OWNER' || unitRole === 'MANAGER'
-        }
+        canManageCategories={canManageCatalog}
       />
 
       <Box shrink={false} mb={3}>

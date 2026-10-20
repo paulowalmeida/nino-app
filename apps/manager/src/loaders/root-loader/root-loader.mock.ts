@@ -14,6 +14,10 @@ export const rootLoaderSingleCompanyMembershipsMock: Membership[] = [
     companyId: 'company-1',
     companyName: 'Lanchonete do Zé',
     role: 'UNIT_OWNER',
+    positionId: 'position-owner',
+    positionName: 'Dono',
+    positionLevel: 100,
+    permissions: ['reports.view', 'catalog.manage', 'team.view'],
     isCurrent: true,
   },
 ]
@@ -27,6 +31,10 @@ export const rootLoaderMultiCompanyMembershipsMock: Membership[] = [
     companyId: 'company-2',
     companyName: 'Café da Praça',
     role: 'MANAGER',
+    positionId: 'position-manager',
+    positionName: 'Gerente',
+    positionLevel: 50,
+    permissions: ['reports.view', 'catalog.manage', 'team.view'],
     isCurrent: false,
   },
 ]
@@ -42,5 +50,6 @@ export const rootLoaderStaffMembershipsMock: Membership[] = [
   {
     ...rootLoaderSingleCompanyMembershipsMock[0],
     role: 'STAFF',
+    permissions: ['orders.operate'],
   },
 ]

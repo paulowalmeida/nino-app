@@ -13,7 +13,7 @@ vi.mock('@pages/Catalog/facades/useCatalogFacade')
 
 type BoardHarnessProps = {
   items?: MenuItem[]
-  unitRole?: string
+  canManageCatalog?: boolean
   isFetchingNextPage?: boolean
   isSelecting?: boolean
   selectedIds?: Set<string>
@@ -25,7 +25,7 @@ type BoardHarnessProps = {
 
 const BoardHarness = ({
   items = [item],
-  unitRole = 'MANAGER',
+  canManageCatalog = true,
   isFetchingNextPage = false,
   isSelecting = false,
   selectedIds = new Set(),
@@ -36,7 +36,7 @@ const BoardHarness = ({
 }: BoardHarnessProps) => {
   const catalogState = {
     unitId: 'unit-1',
-    unitRole,
+    canManageCatalog,
     categoryId: 'cat-1',
     search: '',
     items,

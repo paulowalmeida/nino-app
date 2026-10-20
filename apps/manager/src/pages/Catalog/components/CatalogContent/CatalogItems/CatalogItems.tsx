@@ -32,11 +32,9 @@ export const CatalogItems = ({ className }: CatalogItemsProps) => {
     setAvailability,
     reorderItems,
     resetSelection,
-    unitRole,
+    canManageCatalog,
   } = useCatalogFacade()
   const loadMoreSentinelRef = useLoadMore(hasNextPage, () => void loadMore())
-  const canManageCatalog =
-    unitRole === 'UNIT_OWNER' || unitRole === 'MANAGER'
   const canReorder = canManageCatalog && canReorderCatalog(categoryId, search)
   const [reorderedItems, setReorderedItems] = useState<{
     source: MenuItem[]

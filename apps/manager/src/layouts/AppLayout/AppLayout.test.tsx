@@ -6,7 +6,12 @@ import { describe, expect, it, vi } from 'vitest'
 import { AppLayout } from './AppLayout'
 
 vi.mock('@shared/hooks/session/useCurrentUnit/useCurrentUnit', () => ({
-  useCurrentUnit: () => ({ unitName: 'Loja Centro', unitId: 'unit-1' }),
+  useCurrentUnit: () => ({
+    unitName: 'Loja Centro',
+    unitId: 'unit-1',
+    role: 'STAFF',
+    permissions: [],
+  }),
 }))
 vi.mock('./components/Sidebar/Sidebar', () => ({ Sidebar: () => <aside /> }))
 

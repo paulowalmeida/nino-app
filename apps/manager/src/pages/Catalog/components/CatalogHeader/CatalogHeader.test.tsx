@@ -26,7 +26,7 @@ describe(CatalogHeader.name, () => {
     vi.clearAllMocks()
     vi.mocked(useCatalogFacade).mockReturnValue({
       unitId: 'unit-1',
-      unitRole: 'UNIT_OWNER',
+      canManageCatalog: true,
       categoryId: null,
       setSearch: vi.fn(),
       setCategoryId: vi.fn(),
@@ -55,7 +55,7 @@ describe(CatalogHeader.name, () => {
     const setSearch = vi.fn()
     vi.mocked(useCatalogFacade).mockReturnValue({
       unitId: 'unit-1',
-      unitRole: 'UNIT_OWNER',
+      canManageCatalog: true,
       categoryId: null,
       setSearch,
       setCategoryId: vi.fn(),

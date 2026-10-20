@@ -1,17 +1,18 @@
 import { renderHook } from '@testing-library/react'
 import { describe, expect, it, vi } from 'vitest'
 
-import { useUnitRole } from '../useUnitRole/useUnitRole'
-import { useSidemenu } from './useSidemenu'
-import { sidemenuRoleMock } from './useSidemenu.mock'
+import { useCurrentUnit } from '@shared/hooks/session/useCurrentUnit/useCurrentUnit'
 
-vi.mock('../useUnitRole/useUnitRole', () => ({
-  useUnitRole: vi.fn(),
+import { useSidemenu } from './useSidemenu'
+import { sidemenuCounterMembershipMock } from './useSidemenu.mock'
+
+vi.mock('@shared/hooks/session/useCurrentUnit/useCurrentUnit', () => ({
+  useCurrentUnit: vi.fn(),
 }))
 
 describe('useSidemenu', () => {
-  it('exposes only navigation items allowed for the current role', () => {
-    vi.mocked(useUnitRole).mockReturnValue(sidemenuRoleMock)
+  it('exposes only navigation items allowed for the current cargo', () => {
+    vi.mocked(useCurrentUnit).mockReturnValue(sidemenuCounterMembershipMock)
 
     const { result } = renderHook(() => useSidemenu())
     const sections = result.current.groups.flatMap(({ items }) =>

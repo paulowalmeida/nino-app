@@ -1,8 +1,8 @@
 import { redirect } from 'react-router'
 
-import { HOME_SECTION_BY_UNIT_ROLE } from '@shared/constants/roles.constants'
 import { useSessionStore } from '@shared/states/session/session.state'
 import type { Membership } from '@shared/types/auth/membership'
+import { homeSectionFor } from '@shared/utils/home-section/home-section'
 import { sawOnboarding } from '@shared/utils/onboarding-seen/onboarding-seen'
 
 const entryUnit = (memberships: Membership[]): Membership =>
@@ -31,6 +31,6 @@ export const RootLoader = async () => {
 
   const unit = entryUnit(memberships)
   return redirect(
-    `/${encodeURIComponent(unit.unitId)}/${HOME_SECTION_BY_UNIT_ROLE[unit.role]}`
+    `/${encodeURIComponent(unit.unitId)}/${homeSectionFor(unit)}`
   )
 }

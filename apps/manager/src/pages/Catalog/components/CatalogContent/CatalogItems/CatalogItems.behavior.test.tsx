@@ -71,7 +71,7 @@ describe('CatalogItems behavior', () => {
     currentItems = [item, secondItem]
     vi.mocked(useCatalogFacade).mockImplementation(() => ({
       categoryId: 'cat-1',
-      unitRole: 'MANAGER',
+      canManageCatalog: true,
       search: '',
       items: currentItems,
       isFetchingNextPage: false,

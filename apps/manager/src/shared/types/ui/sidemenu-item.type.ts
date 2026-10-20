@@ -1,5 +1,5 @@
 import type { IconName } from '@nino/ds/components/Icon'
-import type { UnitRole } from '@shared/types/auth/unit-role'
+import type { UnitPermission } from '@shared/types/auth/unit-permission.type'
 
 export type SidemenuItem = {
   title?: string
@@ -7,6 +7,7 @@ export type SidemenuItem = {
     section: string
     label: string
     icon: IconName
-    roles?: readonly UnitRole[]
+    permission?: UnitPermission
+    ownerOnly?: boolean
   }[]
 }

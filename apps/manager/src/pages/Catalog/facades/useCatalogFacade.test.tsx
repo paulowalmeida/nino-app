@@ -38,7 +38,7 @@ describe(useCatalogFacade.name, () => {
     vi.clearAllMocks()
     vi.mocked(useCurrentUnit).mockReturnValue({
       unitId: 'unit-1',
-      role: 'UNIT_OWNER',
+      permissions: ['catalog.manage'],
     } as ReturnType<typeof useCurrentUnit>)
     vi.mocked(useCatalogStore).mockReturnValue({
       categoryId: 'cat-1',

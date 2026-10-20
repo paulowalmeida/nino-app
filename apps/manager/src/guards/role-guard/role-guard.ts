@@ -1,8 +1,8 @@
 import { type LoaderFunctionArgs, redirect } from 'react-router'
 
-import { HOME_SECTION_BY_UNIT_ROLE } from '@shared/constants/roles.constants'
 import { useSessionStore } from '@shared/states/session/session.state'
 import type { UnitRole } from '@shared/types/auth/unit-role'
+import { homeSectionFor } from '@shared/utils/home-section/home-section'
 
 export const roleGuard =
   (allowed: readonly UnitRole[]) =>
@@ -18,7 +18,7 @@ export const roleGuard =
 
     if (!allowed.includes(membership.role)) {
       return redirect(
-        `/${encodeURIComponent(membership.unitId)}/${HOME_SECTION_BY_UNIT_ROLE[membership.role]}`
+        `/${encodeURIComponent(membership.unitId)}/${homeSectionFor(membership)}`
       )
     }
 

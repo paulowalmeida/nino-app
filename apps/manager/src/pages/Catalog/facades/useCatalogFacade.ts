@@ -3,12 +3,13 @@ import { useCatalogCommands } from '@pages/Catalog/hooks/useCatalogCommands/useC
 import { useCatalogMutations } from '@pages/Catalog/hooks/useCatalogMutations/useCatalogMutations'
 import { useCatalogQuery } from '@pages/Catalog/hooks/useCatalogQuery/useCatalogQuery'
 import { useCatalogStore } from '@pages/Catalog/states/catalog/catalog.store'
+import { useHasPermission } from '@shared/hooks/session/useHasPermission/useHasPermission'
 import { useCurrentUnit } from '@shared/hooks/session/useCurrentUnit/useCurrentUnit'
 
 export const useCatalogFacade = () => {
   const currentUnit = useCurrentUnit()
   const unitId = currentUnit?.unitId ?? null
-  const unitRole = currentUnit?.role ?? null
+  const canManageCatalog = useHasPermission('catalog.manage')
   const clientState = useCatalogStore()
   const catalogQuery = useCatalogQuery(
     unitId,
@@ -23,7 +24,7 @@ export const useCatalogFacade = () => {
     ...clientState,
     ...commands,
     unitId,
-    unitRole,
+    canManageCatalog,
     items: catalogQuery.items,
     total: catalogQuery.total,
     status: catalogQuery.status,

@@ -20,11 +20,9 @@ export const CatalogControls = () => {
     cancelSelection,
     toggleAllItemsSelection,
     requestDeleteItems,
-    unitRole,
+    canManageCatalog,
   } = useCatalogFacade()
 
-  const canManageCatalog =
-    unitRole === 'UNIT_OWNER' || unitRole === 'MANAGER'
   const canReorder = canManageCatalog && canReorderCatalog(categoryId, search)
   const selectedItemCount = selectedIds.size
   const isAllLoadedSelected =

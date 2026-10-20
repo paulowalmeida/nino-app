@@ -5,6 +5,7 @@ import { RootLoader } from '@loaders/root-loader/root-loader'
 import { AuthGuard } from '@guards/auth-guard/auth-guard'
 import { FirstStoreGuard } from '@guards/first-store-guard/first-store-guard'
 import { GuestGuard } from '@guards/guest-guard/guest-guard'
+import { permissionGuard } from '@guards/permission-guard/permission-guard'
 import { roleGuard } from '@guards/role-guard/role-guard'
 import { SessionGuard } from '@guards/session-guard/session-guard'
 import { AppLayout } from '@layouts/AppLayout/AppLayout'
@@ -12,7 +13,6 @@ import { AuthLayout } from '@layouts/AuthLayout/AuthLayout'
 import { RegisterLayout } from '@layouts/RegisterLayout/RegisterLayout'
 import { Skeleton } from '@nino/ds/components/Skeleton'
 import { RouteErrorBoundary } from '@shared/components/RouteErrorBoundary/RouteErrorBoundary'
-import { UNIT_MANAGER_ROLES } from '@shared/constants/roles.constants'
 
 export const router = createBrowserRouter([
   {
@@ -97,7 +97,7 @@ export const router = createBrowserRouter([
     children: [
       {
         path: 'visao-geral',
-        loader: roleGuard(UNIT_MANAGER_ROLES),
+        loader: permissionGuard('reports.view'),
         lazy: () =>
           import('@pages/Overview/Overview').then(({ Overview }) => ({
             Component: Overview,
@@ -161,7 +161,7 @@ export const router = createBrowserRouter([
       },
       {
         path: 'produtos',
-        loader: roleGuard(UNIT_MANAGER_ROLES),
+        loader: permissionGuard('catalog.manage'),
         lazy: () =>
           import('@pages/Catalog/Catalog').then(({ Catalog }) => ({
             Component: Catalog,
@@ -169,7 +169,7 @@ export const router = createBrowserRouter([
       },
       {
         path: 'produtos/novo',
-        loader: roleGuard(UNIT_MANAGER_ROLES),
+        loader: permissionGuard('catalog.manage'),
         lazy: () =>
           import('@pages/NewProduct/NewProduct').then(({ NewProduct }) => ({
             Component: NewProduct,
@@ -177,7 +177,7 @@ export const router = createBrowserRouter([
       },
       {
         path: 'categorias-produtos',
-        loader: roleGuard(UNIT_MANAGER_ROLES),
+        loader: permissionGuard('catalog.manage'),
         lazy: () =>
           import('@pages/CatalogCategories/CatalogCategories').then(
             ({ CatalogCategories }) => ({
@@ -187,7 +187,7 @@ export const router = createBrowserRouter([
       },
       {
         path: 'produtos/:productId',
-        loader: roleGuard(UNIT_MANAGER_ROLES),
+        loader: permissionGuard('catalog.manage'),
         lazy: () =>
           import('@pages/ProductDetail/ProductDetail').then(
             ({ ProductDetail }) => ({
@@ -197,7 +197,7 @@ export const router = createBrowserRouter([
       },
       {
         path: 'relatorios',
-        loader: roleGuard(UNIT_MANAGER_ROLES),
+        loader: permissionGuard('reports.view'),
         lazy: () =>
           import('@pages/Reports/Reports').then(({ Reports }) => ({
             Component: Reports,
@@ -205,7 +205,7 @@ export const router = createBrowserRouter([
       },
       {
         path: 'clientes',
-        loader: roleGuard(UNIT_MANAGER_ROLES),
+        loader: permissionGuard('customers.view'),
         lazy: () =>
           import('@pages/Consumers/Consumers').then(({ Consumers }) => ({
             Component: Consumers,
@@ -213,7 +213,7 @@ export const router = createBrowserRouter([
       },
       {
         path: 'clientes/:consumerId',
-        loader: roleGuard(UNIT_MANAGER_ROLES),
+        loader: permissionGuard('customers.view'),
         lazy: () =>
           import('@pages/ConsumerDetail/ConsumerDetail').then(
             ({ ConsumerDetail }) => ({ Component: ConsumerDetail })
@@ -221,7 +221,7 @@ export const router = createBrowserRouter([
       },
       {
         path: 'colaboradores',
-        loader: roleGuard(UNIT_MANAGER_ROLES),
+        loader: permissionGuard('team.view'),
         lazy: () =>
           import('@pages/Employees/Employees').then(({ Employees }) => ({
             Component: Employees,
@@ -229,7 +229,7 @@ export const router = createBrowserRouter([
       },
       {
         path: 'colaboradores/:userId',
-        loader: roleGuard(UNIT_MANAGER_ROLES),
+        loader: permissionGuard('team.view'),
         lazy: () =>
           import('@pages/CollaboratorDetail/CollaboratorDetail').then(
             ({ CollaboratorDetail }) => ({ Component: CollaboratorDetail })
@@ -272,7 +272,7 @@ export const router = createBrowserRouter([
       },
       {
         path: 'empresa/unidades',
-        loader: roleGuard(UNIT_MANAGER_ROLES),
+        loader: permissionGuard('settings.manage'),
         lazy: () =>
           import('@pages/Units/SettingsUnitSection/SettingsUnitSection').then(
             ({ SettingsUnitSection }) => ({ Component: SettingsUnitSection })
@@ -296,7 +296,7 @@ export const router = createBrowserRouter([
       },
       {
         path: 'unidade',
-        loader: roleGuard(UNIT_MANAGER_ROLES),
+        loader: permissionGuard('settings.manage'),
         lazy: () =>
           import('@pages/Settings/Settings').then(({ Settings }) => ({
             Component: Settings,
@@ -384,7 +384,7 @@ export const router = createBrowserRouter([
       },
       {
         path: 'marketing',
-        loader: roleGuard(UNIT_MANAGER_ROLES),
+        loader: permissionGuard('promotions.manage'),
         lazy: () =>
           import('@pages/Marketing/Marketing').then(({ Marketing }) => ({
             Component: Marketing,

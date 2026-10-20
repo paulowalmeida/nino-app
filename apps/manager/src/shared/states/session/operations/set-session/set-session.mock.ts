@@ -14,6 +14,10 @@ export const setSessionMembershipsMock: Membership[] = [
     companyId: 'company-1',
     companyName: 'Lanchonete do Zé',
     role: 'UNIT_OWNER',
+    positionId: 'position-owner',
+    positionName: 'Dono',
+    positionLevel: 100,
+    permissions: ['reports.view', 'catalog.manage', 'team.view'],
     isCurrent: true,
   },
 ]

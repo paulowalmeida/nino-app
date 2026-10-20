@@ -7,5 +7,9 @@ export const unitRoleMembershipMock: Membership = {
   companyId: 'company-1',
   companyName: 'Nino',
   role: 'MANAGER',
+  positionId: 'position-manager',
+  positionName: 'Gerente',
+  positionLevel: 50,
+  permissions: ['reports.view', 'catalog.manage', 'team.view'],
   isCurrent: true,
 }

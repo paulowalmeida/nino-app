@@ -1,3 +1,4 @@
+import type { Membership } from '@shared/types/auth/membership'
 import type { SidemenuItem } from '@shared/types/ui/sidemenu-item.type'
 
 export const sidemenuAccessGroupsMock: SidemenuItem[] = [
@@ -9,7 +10,7 @@ export const sidemenuAccessGroupsMock: SidemenuItem[] = [
         section: 'visao-geral',
         label: 'Visão geral',
         icon: 'home',
-        roles: ['UNIT_OWNER'],
+        permission: 'reports.view',
       },
     ],
   },
@@ -17,11 +18,26 @@ export const sidemenuAccessGroupsMock: SidemenuItem[] = [
     title: 'Configurações',
     items: [
       {
-        section: 'configuracoes/entrega',
-        label: 'Entrega',
-        icon: 'pin',
-        roles: ['UNIT_OWNER'],
+        section: 'empresa/informacoes',
+        label: 'Informações',
+        icon: 'building',
+        ownerOnly: true,
       },
     ],
   },
 ]
+
+export const sidemenuOwnerAccessMock: Pick<
+  Membership,
+  'role' | 'permissions'
+> = { role: 'UNIT_OWNER', permissions: ['reports.view'] }
+
+export const sidemenuReportsViewerAccessMock: Pick<
+  Membership,
+  'role' | 'permissions'
+> = { role: 'STAFF', permissions: ['reports.view'] }
+
+export const sidemenuCounterAccessMock: Pick<
+  Membership,
+  'role' | 'permissions'
+> = { role: 'STAFF', permissions: ['orders.operate'] }
