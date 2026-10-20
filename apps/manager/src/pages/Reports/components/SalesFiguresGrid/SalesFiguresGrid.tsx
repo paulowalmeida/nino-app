@@ -12,9 +12,10 @@ import styles from './SalesFiguresGrid.module.css'
 
 export type SalesFiguresGridProps = {
   report: SalesReport
+  delay?: number
 }
 
-export const SalesFiguresGrid = ({ report }: SalesFiguresGridProps) => (
+export const SalesFiguresGrid = ({ report, delay = 0 }: SalesFiguresGridProps) => (
   <Grid
     columns={{ mobile: 2, tablet: 3 }}
     gap={{ mobile: 2, desktop: 4 }}
@@ -24,8 +25,8 @@ export const SalesFiguresGrid = ({ report }: SalesFiguresGridProps) => (
       <Box
         key={key}
         gap={1}
-        className={`${motion.settle} ${styles.figure}`}
-        style={riseDelay(index * 60)}
+        className={`${motion.settle} ${motion.lift} ${styles.figure}`}
+        style={riseDelay(delay + index * 70)}
       >
         <Text as="span" className={styles.salesFiguresGridValue}>
           {money ? brl(report[key]) : <CountUp value={report[key]} />}

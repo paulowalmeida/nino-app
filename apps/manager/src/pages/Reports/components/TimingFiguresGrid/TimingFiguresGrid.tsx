@@ -10,9 +10,10 @@ import styles from './TimingFiguresGrid.module.css'
 
 export type TimingFiguresGridProps = {
   timing: TimingReport
+  delay?: number
 }
 
-export const TimingFiguresGrid = ({ timing }: TimingFiguresGridProps) => (
+export const TimingFiguresGrid = ({ timing, delay = 0 }: TimingFiguresGridProps) => (
   <Box className={styles.figures}>
     {REPORTS_TIMING_FIGURES.map(({ key, sampleKey, label, empty }, index) => {
       const noSample = timing[sampleKey] === 0
@@ -20,8 +21,8 @@ export const TimingFiguresGrid = ({ timing }: TimingFiguresGridProps) => (
       return (
         <Box
           key={key}
-          className={`${motion.settle} ${styles.figure}`}
-          style={riseDelay(index * 60)}
+          className={`${motion.settle} ${motion.lift} ${styles.figure}`}
+          style={riseDelay(delay + index * 70)}
         >
           <Text
             as="span"

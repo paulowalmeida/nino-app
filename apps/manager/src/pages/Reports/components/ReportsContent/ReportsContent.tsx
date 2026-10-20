@@ -23,23 +23,25 @@ export const ReportsContent = () => {
 
   return (
     <>
-      <SalesFiguresGrid report={report.report} />
+      <SalesFiguresGrid report={report.report} delay={80} />
 
-      <SalesPeriodTrend series={trend.series} />
+      <SalesPeriodTrend series={trend.series} delay={290} />
 
       <SalesTrendByDimension
         title="Faturamento por canal"
+        delay={360}
         breakdown={series.channel.breakdown}
         labelOf={(key) => labels.channel[key as keyof typeof labels.channel]}
       />
 
       <SalesTrendByDimension
         title="Faturamento por forma de pagamento"
+        delay={430}
         breakdown={series.payment.breakdown}
         labelOf={(key) => labels.payment[key as keyof typeof labels.payment]}
       />
 
-      <TimingFiguresGrid timing={timing.report} />
+      <TimingFiguresGrid timing={timing.report} delay={500} />
 
       <Grid
         columns={{ mobile: 1, desktop: 2 }}
@@ -48,17 +50,19 @@ export const ReportsContent = () => {
       >
         <SalesBreakdown
           title="Por canal"
+          delay={640}
           items={breakdown.channel}
           emptyMessage="Nenhuma venda concluída no período."
         />
         <SalesBreakdown
           title="Por forma de pagamento"
+          delay={710}
           items={breakdown.payment}
           emptyMessage="Nenhuma venda concluída no período."
         />
       </Grid>
 
-      <TopSalesTable products={report.report.topProducts} />
+      <TopSalesTable products={report.report.topProducts} delay={780} />
     </>
   )
 }

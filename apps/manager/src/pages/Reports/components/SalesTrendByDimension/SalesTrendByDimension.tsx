@@ -1,6 +1,7 @@
 import { Box } from '@nino/ds/components/Box'
 import { Heading } from '@nino/ds/components/Heading'
 import type { SalesSeriesBreakdown } from '@shared/types/order/sales-series-breakdown'
+import { riseDelay } from '@shared/utils/rise-delay/rise-delay'
 
 import { SalesMultiChart } from './SalesMultiChart/SalesMultiChart'
 
@@ -11,14 +12,20 @@ export type SalesTrendByDimensionProps = {
   title: string
   breakdown: SalesSeriesBreakdown
   labelOf: (key: string) => string
+  delay?: number
 }
 
 export const SalesTrendByDimension = ({
   title,
   breakdown,
   labelOf,
+  delay = 0,
 }: SalesTrendByDimensionProps) => (
-  <Box as="section" className={`${motion.settle} ${styles.trendBlock}`}>
+  <Box
+    as="section"
+    className={`${motion.settle} ${styles.trendBlock}`}
+    style={riseDelay(delay)}
+  >
     <Heading level={2} size="lg" mb={3}>
       {title}
     </Heading>

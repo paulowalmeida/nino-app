@@ -1,6 +1,7 @@
 import { BarList } from '@nino/ds/components/BarList'
 import { Box } from '@nino/ds/components/Box'
 import { Text } from '@nino/ds/components/Text'
+import { riseDelay } from '@shared/utils/rise-delay/rise-delay'
 
 import motion from '@styles/motion.module.css'
 import styles from './SalesBreakdown.module.css'
@@ -16,6 +17,7 @@ export type SalesBreakdownProps = {
   title: string
   items: SalesBreakdownItem[]
   emptyMessage: string
+  delay?: number
 }
 
 /**
@@ -28,8 +30,13 @@ export const SalesBreakdown = ({
   title,
   items,
   emptyMessage,
+  delay = 0,
 }: SalesBreakdownProps) => (
-  <Box as="section" className={`${motion.settle} ${styles.block}`}>
+  <Box
+    as="section"
+    className={`${motion.settle} ${styles.block}`}
+    style={riseDelay(delay)}
+  >
     <h2 className={styles.blockTitle}>{title}</h2>
 
     {items.length === 0 && (

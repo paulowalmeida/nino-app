@@ -35,13 +35,15 @@ const tableHead = (
 
 export type TopSalesTableProps = {
   products: TopProduct[]
+  delay?: number
 }
 
-export const TopSalesTable = ({ products }: TopSalesTableProps) => (
+export const TopSalesTable = ({ products, delay = 0 }: TopSalesTableProps) => (
   <Box
     as="section"
     id="mais-vendidos"
-    className={styles.topSalesTableTop}
+    className={`${motion.settle} ${styles.topSalesTableTop}`}
+    style={riseDelay(delay)}
     aria-label="Produtos mais vendidos"
   >
     <h2 className={styles.topTitle}>Mais vendidos</h2>
@@ -54,7 +56,7 @@ export const TopSalesTable = ({ products }: TopSalesTableProps) => (
             <TableRow
               key={item.productId}
               className={`${motion.deal} ${podiumClass(index)}`}
-              style={riseDelay(index * 40)}
+              style={riseDelay(delay + index * 40 + 80)}
             >
               <TableCell className={styles.colRank}>
                 <Text className={styles.position}>{index + 1}</Text>
