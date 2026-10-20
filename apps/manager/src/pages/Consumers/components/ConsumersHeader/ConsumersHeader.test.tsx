@@ -29,6 +29,21 @@ describe('ConsumersHeader', () => {
     expect(screen.getByText(/42 pessoas com pedido/)).toBeInTheDocument()
   })
 
+  it('holds the count back behind a placeholder while the base loads', () => {
+    vi.mocked(useConsumersFacade).mockReturnValue({
+      total: undefined,
+      isPending: true,
+      setSearch,
+    } as unknown as ReturnType<typeof useConsumersFacade>)
+
+    render(<ConsumersHeader />)
+
+    expect(screen.queryByText(/pessoas? com pedido/)).not.toBeInTheDocument()
+    expect(
+      screen.queryByText('Quem pede pelo app entra nesta lista.')
+    ).not.toBeInTheDocument()
+  })
+
   it('commits the typed term once it settles', async () => {
     render(<ConsumersHeader />)
 

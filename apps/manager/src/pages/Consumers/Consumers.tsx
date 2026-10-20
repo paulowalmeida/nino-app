@@ -27,7 +27,7 @@ export const Consumers = () => {
         <ConsumersEmptyState search={search} />
       )}
 
-      {rows.length > 0 && <ConsumersList />}
+      {!isPending && !isError && rows.length > 0 && <ConsumersList />}
     </Box>
   )
 }

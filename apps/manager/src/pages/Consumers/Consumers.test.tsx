@@ -49,6 +49,15 @@ describe('Consumers', () => {
     expect(screen.queryByText('list')).not.toBeInTheDocument()
   })
 
+  it('never shows stale rows while a new page of results is pending', () => {
+    facadeWith({ isPending: true })
+
+    render(<Consumers />)
+
+    expect(screen.getByText('loading')).toBeInTheDocument()
+    expect(screen.queryByText('list')).not.toBeInTheDocument()
+  })
+
   it('reports a failed load without an empty state', () => {
     facadeWith({ rows: [], isError: true })
 

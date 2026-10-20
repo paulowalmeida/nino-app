@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react'
 import { Box } from '@nino/ds/components/Box'
 import { Header } from '@nino/ds/components/Header'
 import { Input } from '@nino/ds/components/Input'
+import { Skeleton } from '@nino/ds/components/Skeleton'
 import { Text } from '@nino/ds/components/Text'
 import { useConsumersFacade } from '@pages/Consumers/facades/useConsumersFacade/useConsumersFacade'
 import { consumersSubtitle } from '@pages/Consumers/utils/consumersSubtitle/consumersSubtitle'
@@ -14,7 +15,7 @@ import styles from './ConsumersHeader.module.css'
 const SEARCH_LABEL = 'Buscar por nome, telefone ou e-mail'
 
 export const ConsumersHeader = () => {
-  const { total, setSearch } = useConsumersFacade()
+  const { total, isPending, setSearch } = useConsumersFacade()
   const [term, setTerm] = useState('')
   const debouncedTerm = useDebouncedValue(term)
 
@@ -24,7 +25,7 @@ export const ConsumersHeader = () => {
 
   return (
     <>
-     <Header
+      <Header
         mb={{ mobile: 4, desktop: 6 }}
         className={motion.deal}
         title="Clientes"
@@ -32,9 +33,17 @@ export const ConsumersHeader = () => {
       />
 
       <Box as="header" className={`${motion.deal} ${styles.head}`}>
-        <Text size="sm" color="subtle" className={styles.consumersHeaderSubtitle}>
-          {consumersSubtitle(total)}
-        </Text>
+        {isPending ? (
+          <Skeleton className={styles.consumersHeaderSubtitleGhost} />
+        ) : (
+          <Text
+            size="sm"
+            color="subtle"
+            className={styles.consumersHeaderSubtitle}
+          >
+            {consumersSubtitle(total)}
+          </Text>
+        )}
 
         <Input
           type="search"

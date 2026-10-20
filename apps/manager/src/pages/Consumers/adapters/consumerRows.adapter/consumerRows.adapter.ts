@@ -9,9 +9,7 @@ const day = new Intl.DateTimeFormat('pt-BR', {
   year: '2-digit',
 })
 
-export const toConsumerRows = (
-  consumers: UnitConsumer[]
-): ConsumerRowModel[] =>
+export const toConsumerRows = (consumers: UnitConsumer[]): ConsumerRowModel[] =>
   consumers.map((consumer) => ({
     id: consumer.id,
     name: consumer.name,

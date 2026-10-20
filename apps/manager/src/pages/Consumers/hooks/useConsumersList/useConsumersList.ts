@@ -4,7 +4,10 @@ import { useInfiniteQuery } from '@tanstack/react-query'
 
 import { toConsumerRows } from '@pages/Consumers/adapters/consumerRows.adapter/consumerRows.adapter'
 import { queryKeys } from '@shared/lib/query-keys/query-keys'
-import { CONSUMER_PAGE_SIZE, ConsumerService } from '@shared/services/consumer/consumer.service'
+import {
+  CONSUMER_PAGE_SIZE,
+  ConsumerService,
+} from '@shared/services/consumer/consumer.service'
 import { nextPageParam } from '@shared/utils/next-page-param/next-page-param'
 
 export const useConsumersList = (unitId: string | null, search: string) => {

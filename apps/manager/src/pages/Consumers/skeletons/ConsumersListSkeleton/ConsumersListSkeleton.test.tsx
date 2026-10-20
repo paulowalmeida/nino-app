@@ -5,12 +5,28 @@ import { ConsumersListSkeleton } from './ConsumersListSkeleton'
 import { consumersListSkeletonMock } from './ConsumersListSkeleton.mock'
 
 describe('ConsumersListSkeleton', () => {
-  it('announces loading and mirrors the list rows', () => {
-    const { container } = render(<ConsumersListSkeleton />)
+  it('announces loading', () => {
+    render(<ConsumersListSkeleton />)
 
     expect(screen.getByRole('status')).toHaveTextContent('Carregando clientes')
+  })
+
+  it('keeps the real column heads and mirrors every row cell', () => {
+    const { container } = render(<ConsumersListSkeleton />)
+
+    consumersListSkeletonMock.columns.forEach((column) =>
+      expect(
+        screen.getByRole('columnheader', { name: column, hidden: true })
+      ).toBeInTheDocument()
+    )
+    expect(container.querySelectorAll('tbody tr')).toHaveLength(
+      consumersListSkeletonMock.placeholderRowCount
+    )
     expect(
-      container.querySelectorAll('[aria-hidden="true"]').length
-    ).toBeGreaterThanOrEqual(consumersListSkeletonMock.placeholderRowCount * 5)
+      container.querySelectorAll('tbody [aria-hidden="true"]')
+    ).toHaveLength(
+      consumersListSkeletonMock.placeholderRowCount *
+        consumersListSkeletonMock.placeholdersPerRow
+    )
   })
 })

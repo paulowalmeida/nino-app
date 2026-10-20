@@ -4,7 +4,6 @@
   @apply text-xs font-bold uppercase tracking-[0.12em] text-fg-faint;
 }
 
-
 .head {
   @apply mt-1 border-b border-border/60 pb-5;
 }
@@ -21,4 +20,8 @@
 
 .consumersHeaderSearch {
   @apply mt-4 h-11 w-full lg:max-w-sm;
+}
+
+.consumersHeaderSubtitleGhost {
+  @apply mt-1.5 h-4 w-full max-w-md;
 }

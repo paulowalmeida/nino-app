@@ -24,7 +24,6 @@
   @apply text-right;
 }
 
-
 .ghostCell {
   @apply ml-auto h-3.5 w-14;
 }

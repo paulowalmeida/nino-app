@@ -7,8 +7,17 @@ export const CONSUMERS_COLUMNS = [
   'Cliente desde',
 ]
 
-/* WHY: três linhas são o que cabe na primeira tela antes de rolar. */
-export const CONSUMERS_GHOST_ROWS = ['first', 'second', 'third']
+/* WHY: oito linhas preenchem a primeira tela antes de rolar. */
+export const CONSUMERS_GHOST_ROWS = [
+  'first',
+  'second',
+  'third',
+  'fourth',
+  'fifth',
+  'sixth',
+  'seventh',
+  'eighth',
+]
 
 export const CONSUMERS_CAPABILITIES = [
   {
