@@ -18,6 +18,21 @@ describe(useCatalogCategoriesOrder.name, () => {
     expect(setOrder).toHaveBeenCalledWith(rows)
   })
 
+  it('adopts the server order when it changes after the first result', () => {
+    const setOrder = vi.fn()
+    const { rerender } = renderHook(
+      ({ serverRows }) =>
+        useCatalogCategoriesOrder(serverRows, rows, setOrder, vi.fn()),
+      { initialProps: { serverRows: rows } }
+    )
+    setOrder.mockClear()
+
+    const reordered = [...rows].reverse()
+    rerender({ serverRows: reordered })
+
+    expect(setOrder).toHaveBeenCalledWith(reordered)
+  })
+
   it('keeps an equivalent visual order untouched', () => {
     const setOrder = vi.fn()
 

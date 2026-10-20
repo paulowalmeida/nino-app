@@ -33,7 +33,6 @@
   font-variant-numeric: tabular-nums;
 }
 
-
 .hintEmpty {
   @apply block text-xs font-medium text-brand-vivid;
 }

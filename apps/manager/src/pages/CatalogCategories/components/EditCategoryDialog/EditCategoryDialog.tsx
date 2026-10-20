@@ -22,7 +22,7 @@ export const EditCategoryDialog = () => {
 
   return (
     <Modal
-      size='lg'
+      size="lg"
       open={!!target}
       onOpenChange={(open) => !open && closeEdit()}
       header={

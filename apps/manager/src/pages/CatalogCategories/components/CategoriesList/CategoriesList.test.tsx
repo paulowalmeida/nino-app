@@ -15,12 +15,19 @@ vi.mock('framer-motion', () => ({
     Group: ({
       children,
       onDragEnd,
+      onReorder,
     }: {
       children: ReactNode
       onDragEnd: () => void
+      onReorder: (order: { id: string }[]) => void
     }) => (
       <ul>
         {children}
+        <button
+          onClick={() => onReorder([{ id: 'desserts' }, { id: 'drinks' }])}
+        >
+          reorder
+        </button>
         <button onClick={onDragEnd}>finish-drag</button>
       </ul>
     ),
@@ -52,6 +59,7 @@ vi.mock(
 const requestEdit = vi.fn()
 const requestDelete = vi.fn()
 const persistOrder = vi.fn()
+const setOrder = vi.fn()
 
 describe(CategoriesList.name, () => {
   beforeEach(() => {
@@ -62,7 +70,7 @@ describe(CategoriesList.name, () => {
         { id: 'desserts', name: 'Sobremesas' },
       ],
       isDeleting: true,
-      setOrder: vi.fn(),
+      setOrder,
       persistOrder,
       requestEdit,
       requestDelete,
@@ -87,5 +95,22 @@ describe(CategoriesList.name, () => {
       expect.objectContaining({ id: 'drinks' })
     )
     expect(persistOrder).toHaveBeenCalledOnce()
+  })
+
+  it('keeps the dragged order and persists exactly that order when the drag ends', async () => {
+    const user = userEvent.setup()
+    render(<CategoriesList />)
+
+    await user.click(screen.getByRole('button', { name: 'reorder' }))
+    await user.click(screen.getByRole('button', { name: 'finish-drag' }))
+
+    expect(setOrder).toHaveBeenCalledWith([
+      { id: 'desserts' },
+      { id: 'drinks' },
+    ])
+    expect(persistOrder).toHaveBeenCalledWith([
+      { id: 'desserts' },
+      { id: 'drinks' },
+    ])
   })
 })

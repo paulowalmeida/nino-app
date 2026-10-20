@@ -38,6 +38,12 @@ vi.mock(
   })
 )
 vi.mock(
+  '@pages/CatalogCategories/skeletons/CategoriesHeaderSkeleton/CategoriesHeaderSkeleton',
+  () => ({
+    CategoriesHeaderSkeleton: () => <div>categories-header-skeleton</div>,
+  })
+)
+vi.mock(
   '@pages/CatalogCategories/skeletons/CategoryRowsSkeleton/CategoryRowsSkeleton',
   () => ({
     CategoryRowsSkeleton: () => <div>category-rows-skeleton</div>,
@@ -71,8 +77,11 @@ describe(CatalogCategories.name, () => {
 
     render(<CatalogCategories />)
 
+    expect(screen.getByText('categories-header-skeleton')).toBeInTheDocument()
     expect(screen.getByText('category-rows-skeleton')).toBeInTheDocument()
+    expect(screen.queryByText('categories-header')).not.toBeInTheDocument()
     expect(screen.queryByText('categories-list')).not.toBeInTheDocument()
+    expect(screen.queryByText('categories-empty-state')).not.toBeInTheDocument()
   })
 
   it('governs the screen error branch', () => {
@@ -87,6 +96,7 @@ describe(CatalogCategories.name, () => {
     expect(screen.getByRole('alert')).toHaveTextContent(
       'Não foi possível carregar as categorias'
     )
+    expect(screen.queryByText('categories-header')).not.toBeInTheDocument()
     expect(screen.queryByText('categories-list')).not.toBeInTheDocument()
   })
 
@@ -99,7 +109,9 @@ describe(CatalogCategories.name, () => {
 
     render(<CatalogCategories />)
 
+    expect(screen.getByText('categories-header')).toBeInTheDocument()
     expect(screen.getByText('categories-empty-state')).toBeInTheDocument()
     expect(screen.queryByText('categories-list')).not.toBeInTheDocument()
+    expect(screen.queryByText('category-rows-skeleton')).not.toBeInTheDocument()
   })
 })

@@ -9,7 +9,9 @@ import { CATEGORIES_HAS_PRODUCTS_HINT } from '@pages/CatalogCategories/constants
 import { useCatalogCategoriesFacade } from '@pages/CatalogCategories/facades/useCatalogCategoriesFacade/useCatalogCategoriesFacade'
 import type { CategoryWithCount } from '@shared/types/product/category-with-count'
 
-vi.mock('@pages/CatalogCategories/facades/useCatalogCategoriesFacade/useCatalogCategoriesFacade')
+vi.mock(
+  '@pages/CatalogCategories/facades/useCatalogCategoriesFacade/useCatalogCategoriesFacade'
+)
 vi.mock('@nino/ds/components/Dialog', () => ({
   Dialog: ({
     open,
@@ -29,16 +31,17 @@ vi.mock('@nino/ds/components/Dialog', () => ({
     onConfirm: () => void
     onCancel: () => void
     onOpenChange?: (open: boolean) => void
-  }) => open ? (
-    <div role="dialog">
-      <h2>{title}</h2>
-      <p>{description}</p>
-      <button onClick={onConfirm}>{confirmLabel}</button>
-      <button onClick={onCancel}>{cancelLabel}</button>
-      <button onClick={() => onOpenChange?.(false)}>dismiss</button>
-      <button onClick={() => onOpenChange?.(true)}>keep-open</button>
-    </div>
-  ) : null,
+  }) =>
+    open ? (
+      <div role="dialog">
+        <h2>{title}</h2>
+        <p>{description}</p>
+        <button onClick={onConfirm}>{confirmLabel}</button>
+        <button onClick={onCancel}>{cancelLabel}</button>
+        <button onClick={() => onOpenChange?.(false)}>dismiss</button>
+        <button onClick={() => onOpenChange?.(true)}>keep-open</button>
+      </div>
+    ) : null,
 }))
 vi.mock('react-router', async (importOriginal) => {
   const original = await importOriginal<typeof import('react-router')>()
@@ -54,7 +57,12 @@ const category = {
   count: 0,
 } as CategoryWithCount
 
-const renderDialog = () => render(<MemoryRouter><DeleteCategoryDialog /></MemoryRouter>)
+const renderDialog = () =>
+  render(
+    <MemoryRouter>
+      <DeleteCategoryDialog />
+    </MemoryRouter>
+  )
 
 describe(DeleteCategoryDialog.name, () => {
   beforeEach(() => {
@@ -73,7 +81,9 @@ describe(DeleteCategoryDialog.name, () => {
     const user = userEvent.setup()
     renderDialog()
 
-    expect(screen.getByRole('heading', { name: 'Excluir "Bebidas"' })).toBeInTheDocument()
+    expect(
+      screen.getByRole('heading', { name: 'Excluir "Bebidas"' })
+    ).toBeInTheDocument()
     await user.click(screen.getByRole('button', { name: 'Excluir' }))
 
     expect(confirmDelete).toHaveBeenCalledOnce()
@@ -92,7 +102,9 @@ describe(DeleteCategoryDialog.name, () => {
     renderDialog()
 
     expect(screen.getByText(CATEGORIES_HAS_PRODUCTS_HINT)).toBeInTheDocument()
-    await user.click(screen.getByRole('button', { name: 'Ver itens no cardápio' }))
+    await user.click(
+      screen.getByRole('button', { name: 'Ver itens no cardápio' })
+    )
 
     expect(navigate).toHaveBeenCalledWith('..', { relative: 'path' })
     expect(confirmDelete).not.toHaveBeenCalled()
@@ -110,7 +122,9 @@ describe(DeleteCategoryDialog.name, () => {
 
     renderDialog()
 
-    expect(screen.getByRole('alert')).toHaveTextContent('Não foi possível excluir')
+    expect(screen.getByRole('alert')).toHaveTextContent(
+      'Não foi possível excluir'
+    )
     await user.click(screen.getByRole('button', { name: 'Cancelar' }))
     await user.click(screen.getByRole('button', { name: 'dismiss' }))
     await user.click(screen.getByRole('button', { name: 'keep-open' }))

@@ -6,13 +6,38 @@ import { CategoriesList } from '@pages/CatalogCategories/components/CategoriesLi
 import { DeleteCategoryDialog } from '@pages/CatalogCategories/components/DeleteCategoryDialog/DeleteCategoryDialog'
 import { EditCategoryDialog } from '@pages/CatalogCategories/components/EditCategoryDialog/EditCategoryDialog'
 import { useCatalogCategoriesFacade } from '@pages/CatalogCategories/facades/useCatalogCategoriesFacade/useCatalogCategoriesFacade'
+import { CategoriesHeaderSkeleton } from '@pages/CatalogCategories/skeletons/CategoriesHeaderSkeleton/CategoriesHeaderSkeleton'
 import { CategoryRowsSkeleton } from '@pages/CatalogCategories/skeletons/CategoryRowsSkeleton/CategoryRowsSkeleton'
 
 import styles from './CatalogCategories.module.css'
 
 export const CatalogCategories = () => {
   const { categories, isPending, isError } = useCatalogCategoriesFacade()
-  const isEmpty = !isPending && !isError && categories.length === 0
+
+  if (isPending) {
+    return (
+      <Box className={styles.catalogCategoriesPage}>
+        <Box className={styles.headerRegion}>
+          <CategoriesHeaderSkeleton />
+        </Box>
+        <Box className={styles.feedback}>
+          <CategoryRowsSkeleton />
+        </Box>
+      </Box>
+    )
+  }
+
+  if (isError) {
+    return (
+      <Box className={styles.catalogCategoriesPage}>
+        <Box className={styles.headerRegion}>
+          <Alert variant="error">
+            Não foi possível carregar as categorias. Recarregue a página.
+          </Alert>
+        </Box>
+      </Box>
+    )
+  }
 
   return (
     <Box className={styles.catalogCategoriesPage}>
@@ -20,27 +45,13 @@ export const CatalogCategories = () => {
         <CategoriesHeader />
       </Box>
 
-      {isPending && (
-        <Box className={styles.feedback}>
-          <CategoryRowsSkeleton />
-        </Box>
-      )}
-
-      {isError && (
-        <Box className={styles.feedback}>
-          <Alert variant="error">
-            Não foi possível carregar as categorias. Recarregue a página.
-          </Alert>
-        </Box>
-      )}
-
-      {isEmpty && (
+      {categories.length === 0 ? (
         <Box className={styles.feedback}>
           <CategoriesEmptyState />
         </Box>
+      ) : (
+        <CategoriesList />
       )}
-
-      {!isPending && !isError && !isEmpty && <CategoriesList />}
 
       <DeleteCategoryDialog />
       <EditCategoryDialog />

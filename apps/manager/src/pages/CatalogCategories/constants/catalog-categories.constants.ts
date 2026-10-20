@@ -33,3 +33,14 @@ export const CATEGORIES_CAPABILITIES = [
     description: 'Cada item do cardápio mora dentro de uma categoria.',
   },
 ] as const
+
+export const CATEGORIES_GHOST_ICONS = [
+  'first',
+  'second',
+  'third',
+  'fourth',
+  'fifth',
+  'sixth',
+  'seventh',
+  'eighth',
+]

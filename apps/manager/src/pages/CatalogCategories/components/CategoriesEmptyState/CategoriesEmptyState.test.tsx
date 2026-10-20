@@ -10,9 +10,7 @@ describe(CategoriesEmptyState.name, () => {
   it('names what is missing and lists what the screen does', () => {
     render(<CategoriesEmptyState />)
 
-    expect(
-      screen.getByText(categoriesEmptyStateMock.title)
-    ).toBeInTheDocument()
+    expect(screen.getByText(categoriesEmptyStateMock.title)).toBeInTheDocument()
     CATEGORIES_CAPABILITIES.forEach(({ title }) =>
       expect(screen.getByText(title)).toBeInTheDocument()
     )

@@ -32,11 +32,15 @@ export const CategoriesList = () => {
         <TableHeader>
           <TableRow className={styles.headRow}>
             <TableHead className={styles.dragHead}>
-              <Text as="span" className="sr-only">Reordenar</Text>
+              <Text as="span" className="sr-only">
+                Reordenar
+              </Text>
             </TableHead>
             <TableHead>Categoria</TableHead>
             <TableHead className={styles.actionsHead}>
-              <Text as="span" className="sr-only">Ações</Text>
+              <Text as="span" className="sr-only">
+                Ações
+              </Text>
             </TableHead>
           </TableRow>
         </TableHeader>

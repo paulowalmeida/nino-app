@@ -5,7 +5,9 @@ import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { CreateCategoryForm } from '@pages/CatalogCategories/components/CategoriesHeader/CreateCategoryForm/CreateCategoryForm'
 import { useCatalogCategoriesFacade } from '@pages/CatalogCategories/facades/useCatalogCategoriesFacade/useCatalogCategoriesFacade'
 
-vi.mock('@pages/CatalogCategories/facades/useCatalogCategoriesFacade/useCatalogCategoriesFacade')
+vi.mock(
+  '@pages/CatalogCategories/facades/useCatalogCategoriesFacade/useCatalogCategoriesFacade'
+)
 
 const setCreateName = vi.fn()
 const submitCreate = vi.fn().mockResolvedValue(undefined)
@@ -38,7 +40,10 @@ describe(CreateCategoryForm.name, () => {
 
     render(<CreateCategoryForm />)
 
-    await user.type(screen.getByRole('textbox', { name: 'Nome da nova categoria' }), ' geladas')
+    await user.type(
+      screen.getByRole('textbox', { name: 'Nome da nova categoria' }),
+      ' geladas'
+    )
     await user.click(screen.getByRole('button', { name: 'Adicionar' }))
 
     expect(setCreateName).toHaveBeenCalled()
