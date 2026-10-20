@@ -54,12 +54,6 @@ export const SIDEMENU_GROUPS: SidemenuItem[] = [
         permission: 'customers.view',
       },
       {
-        section: 'promocoes',
-        label: 'Promoções',
-        icon: 'tag',
-        permission: 'promotions.manage',
-      },
-      {
         section: 'colaboradores',
         label: 'Colaboradores',
         icon: 'badge',
@@ -87,6 +81,12 @@ export const SIDEMENU_GROUPS: SidemenuItem[] = [
         label: 'Horários',
         icon: 'clock',
         permission: 'settings.manage',
+      },
+      {
+        section: 'promocoes',
+        label: 'Promoções',
+        icon: 'tag',
+        permission: 'promotions.manage',
       },
       {
         section: 'unidade/atendimento',

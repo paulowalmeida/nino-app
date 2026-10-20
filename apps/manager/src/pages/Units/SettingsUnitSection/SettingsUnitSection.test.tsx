@@ -35,20 +35,24 @@ vi.mock('@pages/Units/facades/useUnitsFacade/useUnitsFacade', () => ({
     },
   }),
 }))
-vi.mock('./UnitRow/UnitRow', () => ({
-  UnitRow: ({
-    name,
-    to,
+vi.mock('./UnitsTable/UnitsTable', () => ({
+  UnitsTable: ({
+    units,
+    detailTo,
     onRemove,
   }: {
-    name: string
-    to: string
-    onRemove: () => void
+    units: { id: string; name: string }[]
+    detailTo: (unitId: string) => string
+    onRemove: (unit: { id: string; name: string }) => void
   }) => (
-    <li>
-      <a href={to}>{name}</a>
-      <button onClick={onRemove}>fechar {name}</button>
-    </li>
+    <ul>
+      {units.map((unit) => (
+        <li key={unit.id}>
+          <a href={detailTo(unit.id)}>{unit.name}</a>
+          <button onClick={() => onRemove(unit)}>fechar {unit.name}</button>
+        </li>
+      ))}
+    </ul>
   ),
 }))
 vi.mock('./RemoveUnitModal/RemoveUnitModal', () => ({
@@ -84,7 +88,7 @@ describe(SettingsUnitSection.name, () => {
   it('renders unit settings', () => {
     render(<SettingsUnitSection />)
 
-    expect(screen.getByText('Lojas da empresa')).toBeInTheDocument()
+    expect(screen.getByText('Unidades')).toBeInTheDocument()
   })
 
   it('says the company has no store yet', () => {
@@ -98,7 +102,9 @@ describe(SettingsUnitSection.name, () => {
 
     render(<SettingsUnitSection />)
 
-    expect(screen.getByText('2 de 3 inclusas no plano Pro.')).toBeInTheDocument()
+    expect(
+      screen.getByText('2 de 3 inclusas no plano Pro.')
+    ).toBeInTheDocument()
   })
 
   it('says there is no ceiling when the plan has none', () => {
@@ -122,10 +128,9 @@ describe(SettingsUnitSection.name, () => {
 
     render(<SettingsUnitSection />)
 
-    expect(screen.getByRole('link', { name: 'Loja principal' })).toHaveAttribute(
-      'href',
-      '/unit-1/unidade/informacoes'
-    )
+    expect(
+      screen.getByRole('link', { name: 'Loja principal' })
+    ).toHaveAttribute('href', '/unit-1/unidade/informacoes')
     expect(screen.getByRole('link', { name: 'Loja Centro' })).toHaveAttribute(
       'href',
       '/unit-2/unidade/informacoes'
@@ -170,6 +175,6 @@ describe(SettingsUnitSection.name, () => {
 
     render(<SettingsUnitSection />)
 
-    expect(screen.queryByText('Lojas da empresa')).not.toBeInTheDocument()
+    expect(screen.queryByText('Unidades')).not.toBeInTheDocument()
   })
 })

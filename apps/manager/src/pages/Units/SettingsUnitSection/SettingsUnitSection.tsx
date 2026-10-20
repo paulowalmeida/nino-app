@@ -9,10 +9,9 @@ import { Text } from '@nino/ds/components/Text'
 import { mergeClasses } from '@nino/ds/mergeClasses'
 import { useUnitsFacade } from '@pages/Units/facades/useUnitsFacade/useUnitsFacade'
 import { SettingsUnitSkeleton } from '@pages/Units/skeletons/SettingsUnitSkeleton/SettingsUnitSkeleton'
-import { riseDelay } from '@shared/utils/rise-delay/rise-delay'
 
 import { RemoveUnitModal } from './RemoveUnitModal/RemoveUnitModal'
-import { UnitRow } from './UnitRow/UnitRow'
+import { UnitsTable } from './UnitsTable/UnitsTable'
 
 import motion from '@styles/motion.module.css'
 import local from './SettingsUnitSection.module.css'
@@ -58,20 +57,19 @@ export const SettingsUnitSection = () => {
 
       {units.length === 0 && <EmptyState>Nenhuma loja cadastrada.</EmptyState>}
 
-      <Box as="ul" direction="column">
-        {units.map(({ unitId: id, unitName, companyName }, index) => (
-          <UnitRow
-            key={id}
-            name={unitName}
-            companyName={companyName}
-            to={unitDetailTo(id)}
-            isCurrent={id === unitId}
-            isMain={id === unitId && (unitDetail?.isMain ?? false)}
-            delay={riseDelay(index * 40 + 60)}
-            onRemove={() => setConfirming({ id, name: unitName })}
-          />
-        ))}
-      </Box>
+      {units.length > 0 && (
+        <UnitsTable
+          units={units.map(({ unitId: id, unitName, companyName }) => ({
+            id,
+            name: unitName,
+            companyName,
+          }))}
+          currentUnitId={unitId}
+          isCurrentMain={unitDetail?.isMain ?? false}
+          detailTo={unitDetailTo}
+          onRemove={({ id, name }) => setConfirming({ id, name })}
+        />
+      )}
 
       <RemoveUnitModal
         open={confirming !== null}
