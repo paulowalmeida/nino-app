@@ -9,7 +9,9 @@ describe(toCashbackDraft.name, () => {
   })
 
   it('writes the minimum in the masked money the field expects', () => {
-    expect(toCashbackDraft(cashbackSettingsMock).cashbackMinRedeem).toBe('12,40')
+    expect(toCashbackDraft(cashbackSettingsMock).cashbackMinRedeem).toBe(
+      '12,40'
+    )
   })
 
   it('carries the switch as it came from the store', () => {

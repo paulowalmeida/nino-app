@@ -1,9 +1,9 @@
 @reference "@nino/ds/globals.css";
 
-.marketingPage {
+.promotionsPage {
   @apply mx-auto flex min-h-full w-full max-w-page flex-col gap-6 p-4 lg:p-10;
 }
 
-.marketingHeader {
+.promotionsHeader {
   @apply flex flex-col gap-1;
 }

@@ -31,7 +31,9 @@ describe(CashbackRules.name, () => {
   it('shows the rule the store has today', () => {
     renderRules()
 
-    expect(screen.getByRole('textbox', { name: /Quanto volta/ })).toHaveValue('5')
+    expect(screen.getByRole('textbox', { name: /Quanto volta/ })).toHaveValue(
+      '5'
+    )
     expect(screen.getByRole('textbox', { name: /Saldo mínimo/ })).toHaveValue(
       '10,00'
     )

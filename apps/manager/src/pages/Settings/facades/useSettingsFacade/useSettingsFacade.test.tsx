@@ -39,6 +39,9 @@ vi.mock('@pages/Settings/hooks/usePhoneMutations/usePhoneMutations', () => ({
 vi.mock('@pages/Settings/hooks/usePhones/usePhones', () => ({
   usePhones: hook,
 }))
+vi.mock('@pages/Settings/hooks/useSaveCashback/useSaveCashback', () => ({
+  useSaveCashback: hook,
+}))
 vi.mock('@pages/Settings/hooks/useSaveSettings/useSaveSettings', () => ({
   useSaveSettings: hook,
 }))

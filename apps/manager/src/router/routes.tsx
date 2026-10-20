@@ -407,27 +407,24 @@ export const router = createBrowserRouter([
         ],
       },
       {
-        path: 'marketing',
+        path: 'promocoes',
         loader: permissionGuard('promotions.manage'),
         lazy: () =>
-          import('@pages/Marketing/Marketing').then(({ Marketing }) => ({
-            Component: Marketing,
+          import('@pages/Promotions/Promotions').then(({ Promotions }) => ({
+            Component: Promotions,
           })),
+      },
+      {
+        path: 'marketing',
         children: [
-          { index: true, element: <Navigate to="cashback" replace /> },
+          { index: true, element: <Navigate to="../promocoes" replace /> },
           {
             path: 'cashback',
-            lazy: () =>
-              import('@pages/Units/UnitCashback/UnitCashback').then(
-                ({ UnitCashback }) => ({ Component: UnitCashback })
-              ),
+            element: <Navigate to="../../unidade/pagamento" replace />,
           },
           {
             path: 'promocoes',
-            lazy: () =>
-              import('@pages/Marketing/Promotions/Promotions').then(
-                ({ Promotions }) => ({ Component: Promotions })
-              ),
+            element: <Navigate to="../../promocoes" replace />,
           },
         ],
       },

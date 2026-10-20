@@ -12,7 +12,6 @@ const FLOW_SCROLL_ROUTES = [
   '/entrega',
   '/informacoes',
   '/horarios',
-  '/cashback',
   '/personalizar',
 ]
 

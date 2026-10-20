@@ -5,6 +5,7 @@ import { useMapLocation } from '@pages/Settings/hooks/useMapLocation/useMapLocat
 import { usePhoneMutations } from '@pages/Settings/hooks/usePhoneMutations/usePhoneMutations'
 import { usePhones } from '@pages/Settings/hooks/usePhones/usePhones'
 import { useRemoveUnit } from '@pages/Settings/hooks/useRemoveUnit/useRemoveUnit'
+import { useSaveCashback } from '@pages/Settings/hooks/useSaveCashback/useSaveCashback'
 import { useSaveSettings } from '@pages/Settings/hooks/useSaveSettings/useSaveSettings'
 import { useSaveUnit } from '@pages/Settings/hooks/useSaveUnit/useSaveUnit'
 import { useSetMainUnit } from '@pages/Settings/hooks/useSetMainUnit/useSetMainUnit'
@@ -33,6 +34,7 @@ export const useSettingsFacade = () => {
       mutations: useZoneMutations(unitId),
     },
     service: { query: useSettings(unitId), save: useSaveSettings(unitId) },
+    cashback: { save: useSaveCashback(unitId) },
     diningTables: {
       query: useDiningTables(unitId),
       mutations: useDiningTableMutations(unitId),

@@ -1,4 +1,5 @@
 import type { PaymentMethod } from '@shared/types/order/payment-method'
+import type { CashbackDraft } from '@shared/types/settings/cashback-draft'
 import type { ServiceRulesDraft } from '@shared/types/settings/service-rules-draft'
 
 export const SERVICE_RULES_CHANNELS: {
@@ -60,3 +61,9 @@ export const PHONE_LIST_CAPABILITIES = [
     description: 'Troque ou tire um número quando ele mudar.',
   },
 ] as const
+
+export const EMPTY_CASHBACK_DRAFT: CashbackDraft = {
+  cashbackEnabled: false,
+  cashbackPercent: '0',
+  cashbackMinRedeem: '0,00',
+}

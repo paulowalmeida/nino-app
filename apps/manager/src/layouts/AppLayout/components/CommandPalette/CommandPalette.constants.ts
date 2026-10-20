@@ -47,19 +47,19 @@ export const FUNCTIONALITY_SEARCH_ITEMS: FunctionalitySearchItem[] = [
     group: 'Unidade · Horários',
   },
   {
-    section: 'unidade/cashback',
+    section: 'unidade/pagamento',
     label: 'Oferecer cashback',
-    group: 'Unidade · Cashback',
+    group: 'Unidade · Pagamento',
   },
   {
-    section: 'unidade/cashback',
+    section: 'unidade/pagamento',
     label: 'Percentual de cashback',
-    group: 'Unidade · Cashback',
+    group: 'Unidade · Pagamento',
   },
   {
-    section: 'unidade/cashback',
+    section: 'unidade/pagamento',
     label: 'Saldo mínimo para usar cashback',
-    group: 'Unidade · Cashback',
+    group: 'Unidade · Pagamento',
   },
   {
     section: 'unidade/atendimento',
@@ -68,7 +68,7 @@ export const FUNCTIONALITY_SEARCH_ITEMS: FunctionalitySearchItem[] = [
   },
   {
     section: 'unidade/entrega',
-    label: 'Cidades de entrega',
+    label: 'Zonas e raios de entrega',
     group: 'Unidade · Entrega',
   },
   {

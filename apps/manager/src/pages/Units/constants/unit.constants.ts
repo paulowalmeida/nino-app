@@ -1,5 +1,4 @@
 import type { BrandTheme } from '@pages/Units/types/BrandTheme.type'
-import type { CashbackDraft } from '@shared/types/settings/cashback-draft'
 import type { UnitDraft } from '@shared/types/store/unit-draft'
 
 export const EMPTY_UNIT_DRAFT: UnitDraft = {
@@ -460,12 +459,6 @@ export const BRAND_THEMES: BrandTheme[] = [
     },
   },
 ]
-
-export const EMPTY_CASHBACK_DRAFT: CashbackDraft = {
-  cashbackEnabled: false,
-  cashbackPercent: '0',
-  cashbackMinRedeem: '0,00',
-}
 
 export const WEEK_SCHEDULE_DAYS = [
   'Domingo',
