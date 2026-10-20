@@ -23,7 +23,7 @@ export const SalesTrendByDimension = ({
 }: SalesTrendByDimensionProps) => (
   <Box
     as="section"
-    className={`${motion.settle} ${styles.trendBlock}`}
+    className={`${motion.deal} ${styles.trendBlock}`}
     style={riseDelay(delay)}
   >
     <Heading level={2} size="lg" mb={3}>

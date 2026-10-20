@@ -14,7 +14,7 @@ export type SalesPeriodTrendProps = {
 export const SalesPeriodTrend = ({ series, delay = 0 }: SalesPeriodTrendProps) => (
   <Box
     as="section"
-    className={`${motion.settle} ${styles.block}`}
+    className={`${motion.deal} ${styles.block}`}
     style={riseDelay(delay)}
   >
     <h2 className={styles.blockTitle}>Faturamento no período</h2>
