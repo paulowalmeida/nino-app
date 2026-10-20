@@ -179,9 +179,7 @@ export const DeliveryRecipientFields = ({
       <Text size="sm" color="muted">
         Procurando {value.street}, {value.number}…
       </Text>
-      {ADDRESS_LOOKUP_SKELETON_ROWS.map((row) => (
-        <Skeleton key={row} className={styles.addressOptionPlaceholder} />
-      ))}
+      <Skeleton className={styles.mapPlaceholder} />
     </Box>
   ) : addressSuggestions.length > 0 ? (
     <Box direction="column" gap={1.5}>
