@@ -8,4 +8,5 @@ export const tableTabsFacadeMock = {
     isPending: false,
     isError: false,
   },
+  seats: [{ id: 'table-4', name: 'Mesa 4', openTabId: 'tab-1' }],
 }

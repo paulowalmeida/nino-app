@@ -1,6 +1,6 @@
 import { useDeliveryZones } from '@pages/Settings/hooks/useDeliveryZones/useDeliveryZones'
 import { useDiningTableMutations } from '@pages/Settings/hooks/useDiningTableMutations/useDiningTableMutations'
-import { useDiningTables } from '@pages/Settings/hooks/useDiningTables/useDiningTables'
+import { useDiningTables } from '@shared/hooks/dining-table/useDiningTables/useDiningTables'
 import { useMapLocation } from '@pages/Settings/hooks/useMapLocation/useMapLocation'
 import { usePhoneMutations } from '@pages/Settings/hooks/usePhoneMutations/usePhoneMutations'
 import { usePhones } from '@pages/Settings/hooks/usePhones/usePhones'

@@ -18,7 +18,7 @@ vi.mock('@shared/hooks/session/useCurrentUnit/useCurrentUnit', () => ({
 vi.mock('@pages/Settings/hooks/useDeliveryZones/useDeliveryZones', () => ({
   useDeliveryZones: hook,
 }))
-vi.mock('@pages/Settings/hooks/useDiningTables/useDiningTables', () => ({
+vi.mock('@shared/hooks/dining-table/useDiningTables/useDiningTables', () => ({
   useDiningTables: hook,
 }))
 vi.mock(

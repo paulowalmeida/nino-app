@@ -1,0 +1,17 @@
+@reference "@nino/ds/globals.css";
+
+.openTabTablePickerSeat {
+  @apply h-auto min-h-14 min-w-0 flex-col gap-0 px-2 py-2;
+}
+
+.openTabTablePickerName {
+  @apply max-w-full truncate;
+}
+
+.openTabTablePickerState {
+  @apply text-xs font-medium text-muted;
+}
+
+.openTabTablePickerSkeleton {
+  @apply h-14 rounded-2;
+}

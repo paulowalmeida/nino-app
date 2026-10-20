@@ -31,6 +31,8 @@ const mockFacade = (overrides: Record<string, unknown> = {}) => {
   vi.mocked(useTableTabsFacade).mockReturnValue({
     submitOpen,
     isOpening: false,
+    diningTableSeats: openTabDialogMock.seats,
+    isLoadingSeats: false,
     ...overrides,
   } as unknown as ReturnType<typeof useTableTabsFacade>)
   return submitOpen
@@ -43,11 +45,11 @@ describe('OpenTabDialog', () => {
     mockFacade()
     renderDialog()
 
-    const confirm = screen.getByRole('button', { name: 'Abrir comanda' })
+    const confirm = screen.getByRole('button', { name: 'Abrir pelo nome' })
     expect(confirm).toBeDisabled()
 
     await userEvent.type(
-      screen.getByRole('textbox', { name: /Mesa ou nome do cliente/ }),
+      screen.getByRole('textbox', { name: /Comanda sem mesa/ }),
       openTabDialogMock.label
     )
 
@@ -63,10 +65,10 @@ describe('OpenTabDialog', () => {
     renderDialog(onClose)
 
     await userEvent.type(
-      screen.getByRole('textbox', { name: /Mesa ou nome do cliente/ }),
+      screen.getByRole('textbox', { name: /Comanda sem mesa/ }),
       openTabDialogMock.paddedLabel
     )
-    await userEvent.click(screen.getByRole('button', { name: 'Abrir comanda' }))
+    await userEvent.click(screen.getByRole('button', { name: 'Abrir pelo nome' }))
 
     expect(submitOpen).toHaveBeenCalledWith(
       { label: openTabDialogMock.label },
@@ -83,11 +85,25 @@ describe('OpenTabDialog', () => {
     renderDialog()
 
     await userEvent.type(
-      screen.getByRole('textbox', { name: /Mesa ou nome do cliente/ }),
+      screen.getByRole('textbox', { name: /Comanda sem mesa/ }),
       '   {Enter}'
     )
 
     expect(submitOpen).not.toHaveBeenCalled()
+  })
+
+  it('goes straight to the tab already open at an occupied table', async () => {
+    const submitOpen = mockFacade()
+    const onClose = vi.fn()
+    renderDialog(onClose)
+
+    await userEvent.click(
+      screen.getByRole('button', { name: 'Mesa 4, comanda aberta: ver comanda' })
+    )
+
+    expect(submitOpen).not.toHaveBeenCalled()
+    expect(onClose).toHaveBeenCalled()
+    expect(await screen.findByText('/comandas/tab-1')).toBeInTheDocument()
   })
 
   it('closes without opening when the person cancels', async () => {
