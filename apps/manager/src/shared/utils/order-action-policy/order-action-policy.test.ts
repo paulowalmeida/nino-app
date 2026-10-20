@@ -1,7 +1,10 @@
 import { describe, expect, it } from 'vitest'
 
 import { nextStep, previousStep } from './order-action-policy'
-import { baseOrderMock } from './order-action-policy.mock'
+import {
+  baseOrderMock,
+  tabItemWithoutPreparationMock,
+} from './order-action-policy.mock'
 
 describe('nextStep', () => {
   it('asks to confirm a pending order', () => {
@@ -15,6 +18,35 @@ describe('nextStep', () => {
       target: 'PREPARING',
       label: 'Começar a preparar',
     })
+  })
+
+  it('serves an accepted tab item without preparation straight to the table', () => {
+    const step = nextStep({
+      ...baseOrderMock,
+      channel: 'TABLE_TAB',
+      status: 'ACCEPTED',
+      items: [tabItemWithoutPreparationMock],
+    })
+    expect(step).toEqual({ target: 'DELIVERED', label: 'Entregue na mesa' })
+  })
+
+  it('still sends an accepted tab item that needs preparation to the kitchen', () => {
+    const step = nextStep({
+      ...baseOrderMock,
+      channel: 'TABLE_TAB',
+      status: 'ACCEPTED',
+      items: [
+        {
+          ...tabItemWithoutPreparationMock,
+          product: {
+            id: 'product-1',
+            name: 'Hambúrguer',
+            requiresPreparation: true,
+          },
+        },
+      ],
+    })
+    expect(step?.target).toBe('PREPARING')
   })
 
   it('sends a preparing delivery order out for delivery', () => {

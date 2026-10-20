@@ -10,5 +10,6 @@ export type OrderItem = {
   product: {
     id: string
     name: string
+    requiresPreparation?: boolean
   }
 }

@@ -36,3 +36,15 @@ export const baseOrderMock: Order = {
   items: [],
   statusHistory: [],
 }
+
+export const tabItemWithoutPreparationMock: Order['items'][number] = {
+  id: 'item-1',
+  productId: 'product-1',
+  quantity: 1,
+  unitPrice: '8.00',
+  product: {
+    id: 'product-1',
+    name: 'Refrigerante',
+    requiresPreparation: false,
+  },
+}
