@@ -18,6 +18,7 @@ export const usePositionsFacade = () => {
     duplicatingId: commands.duplicate.isPending
       ? commands.duplicate.variables
       : undefined,
+    movePosition: commands.update.mutate,
     removePosition: commands.remove.mutateAsync,
   }
 }

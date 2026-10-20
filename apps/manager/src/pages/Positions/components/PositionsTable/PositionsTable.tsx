@@ -4,6 +4,7 @@ import { Box } from '@nino/ds/components/Box'
 import { Button } from '@nino/ds/components/Button'
 import { Icon } from '@nino/ds/components/Icon'
 import { Menu, type MenuItem } from '@nino/ds/components/Menu'
+import { Select } from '@nino/ds/components/Select'
 import {
   Table,
   TableBody,
@@ -15,6 +16,7 @@ import {
 import { Text } from '@nino/ds/components/Text'
 import { usePositionsFacade } from '@pages/Positions/facades/usePositionsFacade/usePositionsFacade'
 import type { UnitPosition } from '@shared/types/team/unit-position.type'
+import { placementOptions } from '@shared/utils/position-form/position-form'
 import { riseDelay } from '@shared/utils/rise-delay/rise-delay'
 
 import motion from '@styles/motion.module.css'
@@ -32,7 +34,7 @@ export const PositionsTable = ({
   positions,
   onRemove,
 }: PositionsTableProps) => {
-  const { duplicatePosition, duplicatingId, permissionTotal } =
+  const { duplicatePosition, duplicatingId, movePosition, permissionTotal } =
     usePositionsFacade()
 
   const accessOf = ({ isProtected, permissions }: UnitPosition): string =>
@@ -66,6 +68,7 @@ export const PositionsTable = ({
       <Table>
         <colgroup>
           <col className={styles.colName} />
+          <col className={styles.colBelow} />
           <col className={styles.colAccess} />
           <col className={styles.colPeople} />
           <col className={styles.colActions} />
@@ -73,6 +76,7 @@ export const PositionsTable = ({
         <TableHeader>
           <TableRow className={styles.headRow}>
             <TableHead>Cargo</TableHead>
+            <TableHead className={styles.showOnWide}>Subordinado a</TableHead>
             <TableHead>Permissões</TableHead>
             <TableHead className={styles.hideOnSmall}>Pessoas</TableHead>
             <TableHead>
@@ -101,6 +105,23 @@ export const PositionsTable = ({
                     {peopleLabel(position.memberCount)}
                   </Text>
                 </TableCell>
+                <TableCell className={styles.showOnWide}>
+                  {position.isProtected ? (
+                    <Text className={styles.access}>Topo da hierarquia</Text>
+                  ) : (
+                    <Select
+                      size="sm"
+                      options={placementOptions(positions, position.id)}
+                      value={position.belowPositionId ?? ''}
+                      onValueChange={(belowPositionId) =>
+                        movePosition({
+                          positionId: position.id,
+                          draft: { belowPositionId },
+                        })
+                      }
+                    />
+                  )}
+                </TableCell>
                 <TableCell>
                   <Text className={styles.access}>{accessOf(position)}</Text>
                 </TableCell>
@@ -108,20 +129,55 @@ export const PositionsTable = ({
                   <Text className={styles.number}>{position.memberCount}</Text>
                 </TableCell>
                 <TableCell className={styles.actions}>
+                  <Box direction="row" className={styles.wideActions}>
+                    <Button
+                      asChild
+                      variant="ghost"
+                      size="icon"
+                      aria-label={`Ver detalhes de ${position.name}`}
+                    >
+                      <Link to={position.id}>
+                        <Icon name="eye" />
+                      </Link>
+                    </Button>
+                    {!position.isProtected && (
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        disabled={duplicatingId === position.id}
+                        aria-label={`Duplicar ${position.name}`}
+                        onClick={() => duplicatePosition(position.id)}
+                      >
+                        <Icon name="copy" />
+                      </Button>
+                    )}
+                    {!position.isDefault && (
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        aria-label={`Remover ${position.name}`}
+                        onClick={() => onRemove(position)}
+                      >
+                        <Icon name="trash" />
+                      </Button>
+                    )}
+                  </Box>
                   {items.length > 0 && (
-                    <Menu
-                      trigger={
-                        <Button
-                          variant="ghost"
-                          size="icon"
-                          disabled={duplicatingId === position.id}
-                          aria-label={`Mais ações para ${position.name}`}
-                        >
-                          <Icon name="kebab" />
-                        </Button>
-                      }
-                      items={items}
-                    />
+                    <Box className={styles.compactActions}>
+                      <Menu
+                        trigger={
+                          <Button
+                            variant="ghost"
+                            size="icon"
+                            disabled={duplicatingId === position.id}
+                            aria-label={`Mais ações para ${position.name}`}
+                          >
+                            <Icon name="kebab" />
+                          </Button>
+                        }
+                        items={items}
+                      />
+                    </Box>
                   )}
                 </TableCell>
               </TableRow>

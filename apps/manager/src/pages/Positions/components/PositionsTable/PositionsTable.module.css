@@ -17,12 +17,16 @@
   width: 8rem;
 }
 
+.colBelow {
+  width: 14rem;
+}
+
 .colAccess {
   width: 9rem;
 }
 
 .colActions {
-  width: 4rem;
+  width: 9rem;
 }
 
 .identity {
@@ -53,4 +57,16 @@
 
 .number {
   @apply text-sm tabular-nums text-fg-faint;
+}
+
+.showOnWide {
+  @apply hidden lg:table-cell;
+}
+
+.wideActions {
+  @apply hidden items-center justify-end lg:flex;
+}
+
+.compactActions {
+  @apply flex justify-end lg:hidden;
 }

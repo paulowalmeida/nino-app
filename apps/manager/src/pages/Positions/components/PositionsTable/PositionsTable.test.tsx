@@ -1,6 +1,6 @@
 import { MemoryRouter } from 'react-router'
 
-import { render, screen } from '@testing-library/react'
+import { render, screen, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 
@@ -16,16 +16,24 @@ import {
 vi.mock('@pages/Positions/facades/usePositionsFacade/usePositionsFacade')
 
 const duplicatePosition = vi.fn()
+const movePosition = vi.fn()
 const onRemove = vi.fn()
 
 const givenFacade = (duplicatingId?: string) =>
   vi.mocked(usePositionsFacade).mockReturnValue({
     duplicatePosition,
     duplicatingId,
+    movePosition,
     permissionTotal: 22,
   } as never)
 
-const renderTable = (positions = [positionsTableOwnerMock]) =>
+const allPositions = [
+  positionsTableOwnerMock,
+  positionsTableDefaultMock,
+  positionsTableCustomMock,
+]
+
+const renderTable = (positions = allPositions) =>
   render(
     <MemoryRouter>
       <PositionsTable positions={positions} onRemove={onRemove} />
@@ -33,7 +41,9 @@ const renderTable = (positions = [positionsTableOwnerMock]) =>
   )
 
 const openMenu = (name: string) =>
-  userEvent.click(screen.getByRole('button', { name: `Mais ações para ${name}` }))
+  userEvent.click(
+    screen.getByRole('button', { name: `Mais ações para ${name}` })
+  )
 
 describe(PositionsTable.name, () => {
   beforeEach(() => {
@@ -41,16 +51,28 @@ describe(PositionsTable.name, () => {
     givenFacade()
   })
 
-  it('shows the owner as full access, linked to its detail, with no actions', () => {
+  it('links every cargo name and the eye icon to its detail', () => {
     renderTable()
 
-    expect(screen.getByRole('link', { name: /Dono/ })).toHaveAttribute(
+    expect(screen.getByRole('link', { name: 'Dono' })).toHaveAttribute(
       'href',
       '/position-owner'
     )
+    expect(
+      screen.getByRole('link', { name: 'Ver detalhes de Caixa' })
+    ).toHaveAttribute('href', '/position-cashier')
+  })
+
+  it('shows the owner at the top of the hierarchy with full access and no actions but the eye', () => {
+    renderTable([positionsTableOwnerMock])
+
+    expect(screen.getByText('Topo da hierarquia')).toBeInTheDocument()
     expect(screen.getByText('Acesso total')).toBeInTheDocument()
     expect(
-      screen.queryByRole('button', { name: /Mais ações/ })
+      screen.getByRole('link', { name: 'Ver detalhes de Dono' })
+    ).toBeInTheDocument()
+    expect(
+      screen.queryByRole('button', { name: /Duplicar|Remover|Mais ações/ })
     ).not.toBeInTheDocument()
   })
 
@@ -61,23 +83,43 @@ describe(PositionsTable.name, () => {
     expect(screen.getByText('2 pessoas')).toBeInTheDocument()
   })
 
-  it('lets a default cargo be duplicated but not removed', async () => {
+  it('moves a cargo under the one chosen in the subordinate select', async () => {
+    renderTable([positionsTableOwnerMock, positionsTableCustomMock])
+
+    const nativeSelect = within(screen.getByRole('row', { name: /Caixa/ }))
+      .getAllByRole('combobox', { hidden: true })
+      .find((element) => element.tagName === 'SELECT') as HTMLSelectElement
+    await userEvent.selectOptions(nativeSelect, 'position-owner')
+
+    expect(movePosition).toHaveBeenCalledWith({
+      positionId: 'position-cashier',
+      draft: { belowPositionId: 'position-owner' },
+    })
+  })
+
+  it('duplicates through the icon on wide screens', async () => {
     renderTable([positionsTableDefaultMock])
 
-    await openMenu('Gerente')
-    expect(
-      screen.queryByRole('menuitem', { name: 'Remover' })
-    ).not.toBeInTheDocument()
     await userEvent.click(
-      await screen.findByRole('menuitem', { name: 'Duplicar' })
+      screen.getByRole('button', { name: 'Duplicar Gerente' })
     )
 
     expect(duplicatePosition).toHaveBeenCalledWith('position-manager')
+    expect(
+      screen.queryByRole('button', { name: 'Remover Gerente' })
+    ).not.toBeInTheDocument()
   })
 
-  it('lets a custom cargo be duplicated and removed', async () => {
+  it('removes a custom cargo through the trash icon', async () => {
     renderTable([positionsTableCustomMock])
-    expect(screen.getByText('1 pessoa')).toBeInTheDocument()
+
+    await userEvent.click(screen.getByRole('button', { name: 'Remover Caixa' }))
+
+    expect(onRemove).toHaveBeenCalledWith(positionsTableCustomMock)
+  })
+
+  it('keeps the dropdown menu for compact screens', async () => {
+    renderTable([positionsTableCustomMock])
 
     await openMenu('Caixa')
     await userEvent.click(
@@ -92,6 +134,19 @@ describe(PositionsTable.name, () => {
     expect(onRemove).toHaveBeenCalledWith(positionsTableCustomMock)
   })
 
+  it('offers only duplication in the menu of a starting cargo', async () => {
+    renderTable([positionsTableDefaultMock])
+
+    await openMenu('Gerente')
+
+    expect(
+      await screen.findByRole('menuitem', { name: 'Duplicar' })
+    ).toBeInTheDocument()
+    expect(
+      screen.queryByRole('menuitem', { name: 'Remover' })
+    ).not.toBeInTheDocument()
+  })
+
   it('disables the actions of the cargo being duplicated', () => {
     givenFacade('position-cashier')
 
@@ -100,5 +155,6 @@ describe(PositionsTable.name, () => {
     expect(
       screen.getByRole('button', { name: 'Mais ações para Caixa' })
     ).toBeDisabled()
+    expect(screen.getByRole('button', { name: 'Duplicar Caixa' })).toBeDisabled()
   })
 })

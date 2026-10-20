@@ -20,10 +20,12 @@ vi.mock('@shared/hooks/team/useUnitPositions/useUnitPositions')
 
 const duplicatePosition = vi.fn()
 const removePosition = vi.fn()
+const movePosition = vi.fn()
 
 const givenCommands = (duplicate: object = { isPending: false }) =>
   vi.mocked(usePositionCommands).mockReturnValue({
     duplicate: { mutate: duplicatePosition, ...duplicate },
+    update: { mutate: movePosition },
     remove: { mutateAsync: removePosition },
   } as never)
 
@@ -52,6 +54,7 @@ describe(usePositionsFacade.name, () => {
     expect(result.current.isError).toBe(false)
     expect(result.current.duplicatePosition).toBe(duplicatePosition)
     expect(result.current.removePosition).toBe(removePosition)
+    expect(result.current.movePosition).toBe(movePosition)
     expect(result.current.duplicatingId).toBeUndefined()
   })
 
