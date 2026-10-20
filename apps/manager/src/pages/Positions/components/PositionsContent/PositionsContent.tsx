@@ -23,7 +23,12 @@ export const PositionsContent = () => {
 
   if (isPending) {
     return (
-      <Box direction="column" gap={3} aria-busy="true">
+      <Box
+        direction="column"
+        gap={3}
+        aria-busy="true"
+        className={styles.content}
+      >
         {POSITIONS_GHOST_ROWS.map((row) => (
           <Skeleton key={row} className={styles.ghostRow} />
         ))}
@@ -40,8 +45,8 @@ export const PositionsContent = () => {
   }
 
   return (
-    <>
-      <Box className={styles.toolbar}>
+    <Box className={styles.content}>
+      <Box direction="row" className={styles.toolbar}>
         <Button asChild className={motion.press}>
           <Link to="novo">
             <Icon name="plus" />
@@ -59,6 +64,6 @@ export const PositionsContent = () => {
           onClose={() => setRemoving(null)}
         />
       )}
-    </>
+    </Box>
   )
 }
