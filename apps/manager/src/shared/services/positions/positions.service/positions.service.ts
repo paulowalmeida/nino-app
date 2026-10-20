@@ -1,7 +1,10 @@
 import { api } from '@shared/services/http/http.service'
 import type { PermissionDefinition } from '@shared/types/team/permission-definition.type'
 import type { UnitPosition } from '@shared/types/team/unit-position.type'
-import type { UnitPositionDraft } from '@shared/types/team/unit-position-draft.type'
+import type {
+  UnitPositionDraft,
+  UnitPositionPatch,
+} from '@shared/types/team/unit-position-draft.type'
 
 export const PositionsService = {
   list: (unitId: string): Promise<UnitPosition[]> =>
@@ -19,11 +22,11 @@ export const PositionsService = {
   update: (
     unitId: string,
     positionId: string,
-    draft: UnitPositionDraft
+    patch: UnitPositionPatch
   ): Promise<UnitPosition> =>
-    api.patch<UnitPositionDraft, UnitPosition>(
+    api.patch<UnitPositionPatch, UnitPosition>(
       `units/${unitId}/positions/${positionId}`,
-      draft
+      patch
     ),
 
   duplicate: (unitId: string, positionId: string): Promise<UnitPosition> =>

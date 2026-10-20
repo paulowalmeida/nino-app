@@ -28,7 +28,7 @@ import styles from './PositionDetailForm.module.css'
 const FORM_ID = 'position-form'
 
 export const PositionDetailForm = () => {
-  const { position, positions, permissionCatalog, savePosition } =
+  const { position, positions, isCreating, permissionCatalog, savePosition } =
     usePositionDetailFacade()
   const isReadOnly = !!position?.isDefault
   const placements = placementOptions(positions, position?.id)
@@ -49,7 +49,8 @@ export const PositionDetailForm = () => {
 
   const onSubmit = async (values: PositionFormValues) => {
     try {
-      await savePosition(formValuesToDraft(values))
+      const { name, ...changes } = formValuesToDraft(values)
+      await savePosition(isCreating ? { name, ...changes } : changes)
     } catch {
       setError('root', {
         message:
@@ -72,24 +73,29 @@ export const PositionDetailForm = () => {
           </Alert>
         )}
 
-        <Box as="section" aria-labelledby="position-identity" className={styles.identity}>
-          <Heading level={2} size="sm" id="position-identity">
-            Identificação
-          </Heading>
-          <Box className={styles.identityFields}>
-            <FormField label="Nome do cargo" error={errors.name?.message}>
-              <Input
-                placeholder="Ex.: Caixa, Cozinheiro"
-                maxLength={40}
-                disabled={isReadOnly}
-                {...register('name', {
-                  validate: (value) =>
-                    value.trim().length > 0 || 'Informe o nome do cargo',
-                })}
-              />
-            </FormField>
+        {!position?.isProtected && (
+          <Box
+            as="section"
+            aria-labelledby="position-identity"
+            className={styles.identity}
+          >
+            <Heading level={2} size="sm" id="position-identity">
+              {isCreating ? 'Identificação' : 'Hierarquia'}
+            </Heading>
+            <Box className={styles.identityFields}>
+              {isCreating && (
+                <FormField label="Nome do cargo" error={errors.name?.message}>
+                  <Input
+                    placeholder="Ex.: Caixa, Cozinheiro"
+                    maxLength={40}
+                    {...register('name', {
+                      validate: (value) =>
+                        value.trim().length > 0 || 'Informe o nome do cargo',
+                    })}
+                  />
+                </FormField>
+              )}
 
-            {!position?.isProtected && (
               <FormField
                 label="Fica logo abaixo de"
                 helperText="Quem está acima promove quem está abaixo."
@@ -107,9 +113,9 @@ export const PositionDetailForm = () => {
                   )}
                 />
               </FormField>
-            )}
+            </Box>
           </Box>
-        </Box>
+        )}
 
         <Box as="section" aria-labelledby="position-permissions" className={styles.permissions}>
           <Heading level={2} size="sm" id="position-permissions">

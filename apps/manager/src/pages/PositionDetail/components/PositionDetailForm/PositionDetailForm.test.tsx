@@ -22,6 +22,7 @@ const savePosition = vi.fn()
 const givenFacade = (position?: object) =>
   vi.mocked(usePositionDetailFacade).mockReturnValue({
     position,
+    isCreating: !position,
     permissionCatalog: positionDetailFormCatalogMock,
     positions: positionDetailFormPositionsMock,
     savePosition,
@@ -74,7 +75,7 @@ describe(PositionDetailForm.name, () => {
     givenFacade(positionDetailFormCustomMock)
     renderForm()
 
-    expect(screen.getByLabelText('Nome do cargo')).toHaveValue('Caixa')
+    expect(screen.queryByLabelText('Nome do cargo')).not.toBeInTheDocument()
     expect(screen.getByLabelText(/Mexer no caixa/)).toBeChecked()
     expect(screen.getByText('2 pessoas')).toBeInTheDocument()
 
@@ -82,7 +83,6 @@ describe(PositionDetailForm.name, () => {
 
     await waitFor(() =>
       expect(savePosition).toHaveBeenCalledWith({
-        name: 'Caixa',
         belowPositionId: 'position-manager',
         permissions: ['cashbox.operate'],
       })
@@ -133,7 +133,8 @@ describe(PositionDetailForm.name, () => {
     renderForm()
 
     expect(screen.getByText(/cargo padrão e não pode ser alterado/)).toBeVisible()
-    expect(screen.getByLabelText('Nome do cargo')).toBeDisabled()
+    expect(screen.getByText('Hierarquia')).toBeInTheDocument()
+    expect(screen.getByRole('combobox')).toBeDisabled()
     expect(screen.getByLabelText(/Mexer no caixa/)).toBeDisabled()
     expect(
       screen.queryByRole('button', { name: 'Salvar cargo' })

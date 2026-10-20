@@ -14,6 +14,11 @@ import {
 } from './PositionDetailHeader.mock'
 
 vi.mock('@pages/PositionDetail/facades/usePositionDetailFacade/usePositionDetailFacade')
+vi.mock('../PositionNameEditor/PositionNameEditor', () => ({
+  PositionNameEditor: (props: { name: string }) => (
+    <h1>{`editable:${props.name}`}</h1>
+  ),
+}))
 vi.mock('@shared/components/PositionRemoveDialog/PositionRemoveDialog', () => ({
   PositionRemoveDialog: (props: {
     onConfirm: () => Promise<unknown>
@@ -58,7 +63,6 @@ describe(PositionDetailHeader.name, () => {
     expect(
       screen.getByRole('heading', { name: 'Novo cargo' })
     ).toBeInTheDocument()
-    expect(screen.getByText(/Escolha o nome, o nível/)).toBeInTheDocument()
     expect(screen.queryByRole('button')).not.toBeInTheDocument()
   })
 
@@ -67,8 +71,7 @@ describe(PositionDetailHeader.name, () => {
 
     renderHeader()
 
-    expect(screen.getByText(/O Dono sempre tem acesso total/)).toBeVisible()
-    expect(screen.getByText('Padrão')).toBeInTheDocument()
+    expect(screen.getByRole('heading', { name: 'Dono' })).toBeInTheDocument()
     expect(screen.queryByRole('button')).not.toBeInTheDocument()
   })
 
@@ -80,7 +83,9 @@ describe(PositionDetailHeader.name, () => {
       screen.getByRole('button', { name: 'Duplicar para personalizar' })
     )
 
-    expect(screen.getByText('Cargo padrão da loja.')).toBeVisible()
+    expect(
+      screen.getByRole('heading', { name: 'Atendente' })
+    ).toBeInTheDocument()
     expect(duplicatePosition).toHaveBeenCalledTimes(1)
     expect(
       screen.queryByRole('button', { name: 'Remover cargo' })
@@ -91,8 +96,9 @@ describe(PositionDetailHeader.name, () => {
     givenFacade({ position: positionDetailHeaderCustomMock })
 
     renderHeader()
-    expect(screen.queryByText('Padrão')).not.toBeInTheDocument()
-    expect(screen.getByText(/só faz o que estiver marcado/)).toBeVisible()
+    expect(
+      screen.getByRole('heading', { name: 'editable:Caixa' })
+    ).toBeInTheDocument()
 
     await userEvent.click(screen.getByRole('button', { name: 'Remover cargo' }))
     await userEvent.click(

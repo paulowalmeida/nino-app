@@ -21,6 +21,13 @@ export const usePositionDetailActions = (
     await backToList()
   }
 
+  const rename = async (name: string) => {
+    await commands.update.mutateAsync({
+      positionId: positionId as string,
+      draft: { name },
+    })
+  }
+
   const duplicate = async () => {
     const copy = await commands.duplicate.mutateAsync(positionId as string)
     await navigate(`../${copy.id}`, { relative: 'path' })
@@ -33,6 +40,7 @@ export const usePositionDetailActions = (
 
   return {
     save,
+    rename,
     duplicate,
     remove,
     isDuplicating: commands.duplicate.isPending,

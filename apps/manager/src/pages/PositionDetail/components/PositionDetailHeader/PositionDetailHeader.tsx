@@ -1,12 +1,13 @@
 import { useState } from 'react'
 
-import { Badge } from '@nino/ds/components/Badge'
 import { Box } from '@nino/ds/components/Box'
 import { Button } from '@nino/ds/components/Button'
-import { Header } from '@nino/ds/components/Header'
+import { Heading } from '@nino/ds/components/Heading'
 import { usePositionDetailFacade } from '@pages/PositionDetail/facades/usePositionDetailFacade/usePositionDetailFacade'
 import { Breadcrumb } from '@shared/components/Breadcrumb/Breadcrumb'
 import { PositionRemoveDialog } from '@shared/components/PositionRemoveDialog/PositionRemoveDialog'
+
+import { PositionNameEditor } from '../PositionNameEditor/PositionNameEditor'
 
 import motion from '@styles/motion.module.css'
 import styles from './PositionDetailHeader.module.css'
@@ -14,7 +15,6 @@ import styles from './PositionDetailHeader.module.css'
 export const PositionDetailHeader = () => {
   const {
     position,
-    isCreating,
     duplicatePosition,
     isDuplicating,
     removePosition,
@@ -22,16 +22,8 @@ export const PositionDetailHeader = () => {
   const [isConfirmingRemoval, setIsConfirmingRemoval] = useState(false)
 
   const title = position?.name ?? 'Novo cargo'
-  const canDuplicate = !!position && !position.isProtected
+  const canDuplicate = !!position?.isDefault && !position.isProtected
   const canRemove = !!position && !position.isDefault
-
-  const description = isCreating
-    ? 'Escolha o nome, o nível e o que este cargo pode fazer na loja.'
-    : position?.isProtected
-      ? 'O Dono sempre tem acesso total à loja.'
-      : position?.isDefault
-        ? 'Cargo padrão da loja.'
-        : 'Quem tem este cargo só faz o que estiver marcado abaixo.'
 
   return (
     <Box direction="column" gap={4} className={styles.header}>
@@ -39,12 +31,17 @@ export const PositionDetailHeader = () => {
 
       <Box className={styles.heading}>
         <Box className={`${motion.deal} ${styles.identity}`}>
-          <Header title={title} accent={title} description={description} />
-          {position?.isDefault && <Badge variant="info">Padrão</Badge>}
+          {position && !position.isDefault ? (
+            <PositionNameEditor name={position.name} />
+          ) : (
+            <Heading level={1} accent size="xl">
+              {title}
+            </Heading>
+          )}
         </Box>
 
         <Box className={styles.actions}>
-          {position?.isDefault && canDuplicate && (
+          {canDuplicate && (
             <Button
               variant="secondary"
               loading={isDuplicating}

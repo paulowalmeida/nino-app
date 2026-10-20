@@ -20,6 +20,7 @@ export const usePositionDetailFacade = () => {
     isError: detail.isError,
     permissionCatalog: permissionsQuery.data ?? [],
     savePosition: actions.save,
+    renamePosition: actions.rename,
     duplicatePosition: actions.duplicate,
     isDuplicating: actions.isDuplicating,
     removePosition: actions.remove,

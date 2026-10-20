@@ -2,11 +2,14 @@ import { useMutation, useQueryClient } from '@tanstack/react-query'
 
 import { queryKeys } from '@shared/lib/query-keys/query-keys'
 import { PositionsService } from '@shared/services/positions/positions.service/positions.service'
-import type { UnitPositionDraft } from '@shared/types/team/unit-position-draft.type'
+import type {
+  UnitPositionDraft,
+  UnitPositionPatch,
+} from '@shared/types/team/unit-position-draft.type'
 
 type UpdatePositionVariables = {
   positionId: string
-  draft: UnitPositionDraft
+  draft: UnitPositionPatch
 }
 
 export const usePositionCommands = (unitId: string | null) => {

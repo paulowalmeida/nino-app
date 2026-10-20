@@ -61,6 +61,20 @@ describe(usePositionDetailActions.name, () => {
     expect(navigate).toHaveBeenCalledWith('..', { relative: 'path' })
   })
 
+  it('renames the addressed cargo without leaving the screen', async () => {
+    const { result } = renderHook(() =>
+      usePositionDetailActions('unit-1', 'position-1')
+    )
+
+    await result.current.rename('Cozinheiro')
+
+    expect(update).toHaveBeenCalledWith({
+      positionId: 'position-1',
+      draft: { name: 'Cozinheiro' },
+    })
+    expect(navigate).not.toHaveBeenCalled()
+  })
+
   it('opens the copy after duplicating', async () => {
     const { result } = renderHook(() =>
       usePositionDetailActions('unit-1', 'position-1')

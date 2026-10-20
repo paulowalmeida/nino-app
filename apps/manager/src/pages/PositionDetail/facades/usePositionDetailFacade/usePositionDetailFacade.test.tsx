@@ -21,6 +21,7 @@ vi.mock('@shared/hooks/session/useCurrentUnit/useCurrentUnit')
 vi.mock('@shared/hooks/team/usePositionPermissions/usePositionPermissions')
 
 const save = vi.fn()
+const rename = vi.fn()
 const duplicate = vi.fn()
 const remove = vi.fn()
 
@@ -50,6 +51,7 @@ describe(usePositionDetailFacade.name, () => {
     } as never)
     vi.mocked(usePositionDetailActions).mockReturnValue({
       save,
+      rename,
       duplicate,
       remove,
       isDuplicating: false,
@@ -78,6 +80,7 @@ describe(usePositionDetailFacade.name, () => {
       positionDetailFacadeCatalogMock
     )
     expect(result.current.savePosition).toBe(save)
+    expect(result.current.renamePosition).toBe(rename)
     expect(result.current.duplicatePosition).toBe(duplicate)
     expect(result.current.removePosition).toBe(remove)
     expect(result.current.isDuplicating).toBe(false)

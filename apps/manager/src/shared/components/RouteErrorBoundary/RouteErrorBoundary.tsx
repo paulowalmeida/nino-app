@@ -3,8 +3,7 @@ import { isRouteErrorResponse, useRouteError } from 'react-router'
 
 import { Box } from '@nino/ds/components/Box'
 import { Button } from '@nino/ds/components/Button'
-import { Heading } from '@nino/ds/components/Heading'
-import { Text } from '@nino/ds/components/Text'
+import { Header } from '@nino/ds/components/Header'
 import { recoveryTarget } from '@router/pending-navigation'
 
 import styles from './RouteErrorBoundary.module.css'
@@ -55,12 +54,12 @@ export const RouteErrorBoundary = () => {
   return (
     <Box direction="row" className={styles.routeErrorBoundaryShell}>
       <Box direction="column" className={styles.routeErrorBoundaryPanel}>
-        <Heading level={1} size="2xl" className={styles.routeErrorBoundaryTitle}>
-          {title}
-        </Heading>
-        <Text size="sm" color="muted">
-          Recarregue a página. Se continuar acontecendo, avise o suporte.
-        </Text>
+        <Header
+          level={1}
+          size="2xl"
+          title={title}
+          description="Recarregue a página. Se continuar acontecendo, avise o suporte."
+        />
         <Button onClick={() => window.location.reload()}>Recarregar</Button>
       </Box>
     </Box>

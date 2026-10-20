@@ -1,0 +1,9 @@
+@reference "@nino/ds/globals.css";
+
+.title {
+  @apply min-w-0;
+}
+
+.input {
+  @apply h-12 w-full max-w-md font-display text-xl font-extrabold;
+}
