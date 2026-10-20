@@ -22,7 +22,6 @@ vi.mock('@shared/hooks/team/usePositionPermissions/usePositionPermissions')
 
 const save = vi.fn()
 const rename = vi.fn()
-const duplicate = vi.fn()
 const remove = vi.fn()
 
 const routeWrapper =
@@ -52,9 +51,7 @@ describe(usePositionDetailFacade.name, () => {
     vi.mocked(usePositionDetailActions).mockReturnValue({
       save,
       rename,
-      duplicate,
       remove,
-      isDuplicating: false,
     })
   })
 
@@ -81,9 +78,7 @@ describe(usePositionDetailFacade.name, () => {
     )
     expect(result.current.savePosition).toBe(save)
     expect(result.current.renamePosition).toBe(rename)
-    expect(result.current.duplicatePosition).toBe(duplicate)
     expect(result.current.removePosition).toBe(remove)
-    expect(result.current.isDuplicating).toBe(false)
   })
 
   it('is in creation mode on the new cargo route and tolerates missing data', () => {

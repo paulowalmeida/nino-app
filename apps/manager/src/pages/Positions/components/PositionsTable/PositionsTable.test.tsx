@@ -49,7 +49,6 @@ describe(PositionsTable.name, () => {
       '/position-owner'
     )
     expect(screen.getByText('Acesso total')).toBeInTheDocument()
-    expect(screen.getByText('Padrão')).toBeInTheDocument()
     expect(
       screen.queryByRole('button', { name: /Mais ações/ })
     ).not.toBeInTheDocument()
@@ -78,7 +77,6 @@ describe(PositionsTable.name, () => {
 
   it('lets a custom cargo be duplicated and removed', async () => {
     renderTable([positionsTableCustomMock])
-    expect(screen.queryByText('Padrão')).not.toBeInTheDocument()
     expect(screen.getByText('1 pessoa')).toBeInTheDocument()
 
     await openMenu('Caixa')

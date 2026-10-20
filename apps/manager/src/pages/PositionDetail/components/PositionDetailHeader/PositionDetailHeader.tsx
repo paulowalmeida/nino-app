@@ -13,16 +13,10 @@ import motion from '@styles/motion.module.css'
 import styles from './PositionDetailHeader.module.css'
 
 export const PositionDetailHeader = () => {
-  const {
-    position,
-    duplicatePosition,
-    isDuplicating,
-    removePosition,
-  } = usePositionDetailFacade()
+  const { position, removePosition } = usePositionDetailFacade()
   const [isConfirmingRemoval, setIsConfirmingRemoval] = useState(false)
 
   const title = position?.name ?? 'Novo cargo'
-  const canDuplicate = !!position?.isDefault && !position.isProtected
   const canRemove = !!position && !position.isDefault
 
   return (
@@ -31,7 +25,7 @@ export const PositionDetailHeader = () => {
 
       <Box className={styles.heading}>
         <Box className={`${motion.deal} ${styles.identity}`}>
-          {position && !position.isDefault ? (
+          {position && !position.isProtected ? (
             <PositionNameEditor name={position.name} />
           ) : (
             <Heading level={1} accent size="xl">
@@ -41,15 +35,6 @@ export const PositionDetailHeader = () => {
         </Box>
 
         <Box className={styles.actions}>
-          {canDuplicate && (
-            <Button
-              variant="secondary"
-              loading={isDuplicating}
-              onClick={() => void duplicatePosition()}
-            >
-              Duplicar para personalizar
-            </Button>
-          )}
           {canRemove && (
             <Button
               variant="ghost"

@@ -30,7 +30,7 @@ const FORM_ID = 'position-form'
 export const PositionDetailForm = () => {
   const { position, positions, isCreating, permissionCatalog, savePosition } =
     usePositionDetailFacade()
-  const isReadOnly = !!position?.isDefault
+  const isReadOnly = !!position?.isProtected
   const placements = placementOptions(positions, position?.id)
 
   const {
@@ -66,13 +66,6 @@ export const PositionDetailForm = () => {
       className={`${motion.deal} ${styles.layout}`}
     >
       <Box direction="column" gap={8} className={styles.main}>
-        {isReadOnly && !position?.isProtected && (
-          <Alert variant="info">
-            Este é um cargo padrão e não pode ser alterado. Duplique para criar
-            uma versão sua.
-          </Alert>
-        )}
-
         {!position?.isProtected && (
           <Box
             as="section"

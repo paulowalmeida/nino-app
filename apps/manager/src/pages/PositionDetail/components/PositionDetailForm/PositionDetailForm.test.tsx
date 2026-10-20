@@ -128,27 +128,27 @@ describe(PositionDetailForm.name, () => {
     expect(screen.getByRole('link', { name: 'Cancelar' })).toBeInTheDocument()
   })
 
-  it('locks a default cargo and hides the save actions', () => {
+  it('keeps a starting cargo fully editable', () => {
     givenFacade(positionDetailFormDefaultMock)
     renderForm()
 
-    expect(screen.getByText(/cargo padrão e não pode ser alterado/)).toBeVisible()
     expect(screen.getByText('Hierarquia')).toBeInTheDocument()
-    expect(screen.getByRole('combobox')).toBeDisabled()
-    expect(screen.getByLabelText(/Mexer no caixa/)).toBeDisabled()
+    expect(screen.getByRole('combobox')).toBeEnabled()
+    expect(screen.getByLabelText(/Mexer no caixa/)).toBeEnabled()
     expect(
-      screen.queryByRole('button', { name: 'Salvar cargo' })
-    ).not.toBeInTheDocument()
+      screen.getByRole('button', { name: 'Salvar cargo' })
+    ).toBeInTheDocument()
   })
 
-  it('shows no cargo above the owner and no duplicate hint', () => {
+  it('locks the owner cargo: no hierarchy, no save, permissions fixed', () => {
     givenFacade(positionDetailFormOwnerMock)
     renderForm()
 
+    expect(screen.queryByText('Hierarquia')).not.toBeInTheDocument()
     expect(screen.queryByText('fica logo abaixo de')).not.toBeInTheDocument()
-    expect(screen.queryByText('Fica logo abaixo de')).not.toBeInTheDocument()
+    expect(screen.getByLabelText(/Mexer no caixa/)).toBeDisabled()
     expect(
-      screen.queryByText(/cargo padrão e não pode ser alterado/)
+      screen.queryByRole('button', { name: 'Salvar cargo' })
     ).not.toBeInTheDocument()
   })
 })

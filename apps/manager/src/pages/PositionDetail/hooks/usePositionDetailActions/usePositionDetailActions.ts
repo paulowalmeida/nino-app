@@ -28,11 +28,6 @@ export const usePositionDetailActions = (
     })
   }
 
-  const duplicate = async () => {
-    const copy = await commands.duplicate.mutateAsync(positionId as string)
-    await navigate(`../${copy.id}`, { relative: 'path' })
-  }
-
   const remove = async () => {
     await commands.remove.mutateAsync(positionId as string)
     await backToList()
@@ -41,8 +36,6 @@ export const usePositionDetailActions = (
   return {
     save,
     rename,
-    duplicate,
     remove,
-    isDuplicating: commands.duplicate.isPending,
   }
 }

@@ -16,7 +16,6 @@ vi.mock('react-router', async () => ({
 
 const create = vi.fn()
 const update = vi.fn()
-const duplicate = vi.fn()
 const remove = vi.fn()
 
 describe(usePositionDetailActions.name, () => {
@@ -24,12 +23,10 @@ describe(usePositionDetailActions.name, () => {
     vi.clearAllMocks()
     create.mockResolvedValue({})
     update.mockResolvedValue({})
-    duplicate.mockResolvedValue({ id: 'copy-1' })
     remove.mockResolvedValue({})
     vi.mocked(usePositionCommands).mockReturnValue({
       create: { mutateAsync: create },
       update: { mutateAsync: update },
-      duplicate: { mutateAsync: duplicate, isPending: true },
       remove: { mutateAsync: remove },
     } as never)
   })
@@ -73,18 +70,6 @@ describe(usePositionDetailActions.name, () => {
       draft: { name: 'Cozinheiro' },
     })
     expect(navigate).not.toHaveBeenCalled()
-  })
-
-  it('opens the copy after duplicating', async () => {
-    const { result } = renderHook(() =>
-      usePositionDetailActions('unit-1', 'position-1')
-    )
-
-    await result.current.duplicate()
-
-    expect(duplicate).toHaveBeenCalledWith('position-1')
-    expect(navigate).toHaveBeenCalledWith('../copy-1', { relative: 'path' })
-    expect(result.current.isDuplicating).toBe(true)
   })
 
   it('goes back to the list after removing', async () => {

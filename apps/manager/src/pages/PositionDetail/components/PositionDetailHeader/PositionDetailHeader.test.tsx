@@ -31,14 +31,11 @@ vi.mock('@shared/components/PositionRemoveDialog/PositionRemoveDialog', () => ({
   ),
 }))
 
-const duplicatePosition = vi.fn()
 const removePosition = vi.fn()
 
 const givenFacade = (state: object) =>
   vi.mocked(usePositionDetailFacade).mockReturnValue({
     isCreating: false,
-    isDuplicating: false,
-    duplicatePosition,
     removePosition,
     ...state,
   } as never)
@@ -66,7 +63,7 @@ describe(PositionDetailHeader.name, () => {
     expect(screen.queryByRole('button')).not.toBeInTheDocument()
   })
 
-  it('explains the owner cargo and offers no actions', () => {
+  it('shows the owner cargo as a fixed title with no actions', () => {
     givenFacade({ position: positionDetailHeaderOwnerMock })
 
     renderHeader()
@@ -75,18 +72,14 @@ describe(PositionDetailHeader.name, () => {
     expect(screen.queryByRole('button')).not.toBeInTheDocument()
   })
 
-  it('lets a default cargo be duplicated to customise', async () => {
+  it('lets a starting cargo be renamed but not removed', () => {
     givenFacade({ position: positionDetailHeaderDefaultMock })
 
     renderHeader()
-    await userEvent.click(
-      screen.getByRole('button', { name: 'Duplicar para personalizar' })
-    )
 
     expect(
-      screen.getByRole('heading', { name: 'Atendente' })
+      screen.getByRole('heading', { name: 'editable:Atendente' })
     ).toBeInTheDocument()
-    expect(duplicatePosition).toHaveBeenCalledTimes(1)
     expect(
       screen.queryByRole('button', { name: 'Remover cargo' })
     ).not.toBeInTheDocument()

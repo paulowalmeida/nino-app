@@ -1,6 +1,5 @@
 import { Link } from 'react-router'
 
-import { Badge } from '@nino/ds/components/Badge'
 import { Box } from '@nino/ds/components/Box'
 import { Button } from '@nino/ds/components/Button'
 import { Icon } from '@nino/ds/components/Icon'
@@ -97,9 +96,6 @@ export const PositionsTable = ({
                 <TableCell>
                   <Link to={position.id} className={styles.identity}>
                     <Text className={styles.name}>{position.name}</Text>
-                    {position.isDefault && (
-                      <Badge variant="info">Padrão</Badge>
-                    )}
                   </Link>
                   <Text className={styles.smallOnly}>
                     {peopleLabel(position.memberCount)}
