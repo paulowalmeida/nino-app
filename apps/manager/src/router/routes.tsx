@@ -236,6 +236,14 @@ export const router = createBrowserRouter([
           ),
       },
       {
+        path: 'cargos',
+        loader: roleGuard(['UNIT_OWNER']),
+        lazy: () =>
+          import('@pages/Positions/Positions').then(({ Positions }) => ({
+            Component: Positions,
+          })),
+      },
+      {
         path: 'perfil',
         lazy: () =>
           import('@pages/Profile/Profile').then(({ Profile }) => ({

@@ -59,6 +59,12 @@ export const SIDEMENU_GROUPS: SidemenuItem[] = [
         icon: 'badge',
         permission: 'team.view',
       },
+      {
+        section: 'cargos',
+        label: 'Cargos',
+        icon: 'shield',
+        ownerOnly: true,
+      },
     ],
   },
   {
