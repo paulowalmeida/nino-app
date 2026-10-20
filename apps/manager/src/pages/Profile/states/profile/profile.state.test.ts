@@ -88,15 +88,22 @@ describe(useProfileStore.name, () => {
     useProfileStore.setState({
       profile: {
         ...profile,
-        credentials: [...profile.credentials, { ...profile.credentials[0], email: 'old@example.com' }],
+        credentials: [
+          ...profile.credentials,
+          { ...profile.credentials[0], email: 'old@example.com' },
+        ],
       },
       status: 'success',
     })
 
     await useProfileStore.getState().updateEmail(credential.email ?? '')
 
-    expect(useProfileStore.getState().profile?.credentials[0]).toEqual(credential)
-    expect(useProfileStore.getState().profile?.credentials[1].email).toBe('old@example.com')
+    expect(useProfileStore.getState().profile?.credentials[0]).toEqual(
+      credential
+    )
+    expect(useProfileStore.getState().profile?.credentials[1].email).toBe(
+      'old@example.com'
+    )
   })
 
   it('updates an email when no profile is currently stored', async () => {

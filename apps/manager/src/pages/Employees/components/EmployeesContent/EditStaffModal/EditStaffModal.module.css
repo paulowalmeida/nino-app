@@ -1,0 +1,13 @@
+@reference "@nino/ds/globals.css";
+
+.title {
+  @apply font-display text-xl font-extrabold text-fg-strong;
+}
+
+.form {
+  @apply flex flex-col gap-4;
+}
+
+.hint {
+  @apply text-sm text-fg-faint;
+}

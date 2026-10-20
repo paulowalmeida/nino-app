@@ -3,9 +3,7 @@ import { useQuery } from '@tanstack/react-query'
 import { queryKeys } from '@shared/lib/query-keys/query-keys'
 import { ConsumerService } from '@shared/services/consumer/consumer.service'
 import type { TopConsumer } from '@shared/types/consumer/top-consumer'
-import type {
-  TopConsumerMetric,
-} from '@shared/types/consumer/top-consumer-metric'
+import type { TopConsumerMetric } from '@shared/types/consumer/top-consumer-metric'
 
 /** Ranking, não fila de trabalho: sem polling, como o relatório de vendas. */
 export const useTopConsumers = (

@@ -32,7 +32,9 @@ describe('TopConsumers', () => {
 
     render(<TopConsumers />)
 
-    expect(screen.getAllByText('Nenhum cliente identificado ainda.')).toHaveLength(1)
+    expect(
+      screen.getAllByText('Nenhum cliente identificado ainda.')
+    ).toHaveLength(1)
     expect(screen.getByText('Ana')).toBeInTheDocument()
   })
 

@@ -1,5 +1,5 @@
 import { Box } from '@nino/ds/components/Box'
-import { Heading } from '@nino/ds/components/Heading'
+import { Header } from '@nino/ds/components/Header'
 import { Icon } from '@nino/ds/components/Icon'
 import { Text } from '@nino/ds/components/Text'
 import { useOverviewFacade } from '@pages/Overview/facades/useOverviewFacade/useOverviewFacade'
@@ -34,13 +34,13 @@ export const OverviewHeader = () => {
       </Text>
 
       <Box className={styles.plate}>
-        <Box className={styles.identity}>
-          <Heading level={1} accent size="2xl" className={styles.storeName}>
-            {unit?.unitName ?? 'Sua loja'}
-          </Heading>
-
-          <StoreSign />
-        </Box>
+        <Header
+          className={styles.identity}
+          level={1}
+          size="2xl"
+          title={unit?.unitName ?? 'Sua loja'}
+          actions={<StoreSign />}
+        />
 
         {unit && (
           <a

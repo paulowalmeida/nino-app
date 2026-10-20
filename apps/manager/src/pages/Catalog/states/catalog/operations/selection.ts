@@ -27,8 +27,6 @@ export const toggleAllItemsSelection = (
   const isAllSelected =
     itemIds.length > 0 && itemIds.every((id) => selectedIds.has(id))
   set({
-    selectedIds: isAllSelected
-      ? new Set()
-      : new Set(itemIds),
+    selectedIds: isAllSelected ? new Set() : new Set(itemIds),
   })
 }

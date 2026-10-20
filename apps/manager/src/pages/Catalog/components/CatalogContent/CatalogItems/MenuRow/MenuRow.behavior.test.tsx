@@ -44,15 +44,24 @@ vi.mock('framer-motion', () => ({
   },
   useDragControls: () => ({ start: vi.fn() }),
 }))
-vi.mock('@pages/Catalog/components/CatalogContent/CatalogItems/MenuRow/MenuRowLeadingControl/MenuRowLeadingControl', () => ({
-  MenuRowLeadingControl: () => null,
-}))
-vi.mock('@pages/Catalog/components/CatalogContent/CatalogItems/MenuRow/MenuRowContent/MenuRowContent', () => ({
-  MenuRowContent: () => <span>conteúdo</span>,
-}))
-vi.mock('@pages/Catalog/components/CatalogContent/CatalogItems/MenuRow/MenuRowTrailingActions/MenuRowTrailingActions', () => ({
-  MenuRowTrailingActions: () => null,
-}))
+vi.mock(
+  '@pages/Catalog/components/CatalogContent/CatalogItems/MenuRow/MenuRowLeadingControl/MenuRowLeadingControl',
+  () => ({
+    MenuRowLeadingControl: () => null,
+  })
+)
+vi.mock(
+  '@pages/Catalog/components/CatalogContent/CatalogItems/MenuRow/MenuRowContent/MenuRowContent',
+  () => ({
+    MenuRowContent: () => <span>conteúdo</span>,
+  })
+)
+vi.mock(
+  '@pages/Catalog/components/CatalogContent/CatalogItems/MenuRow/MenuRowTrailingActions/MenuRowTrailingActions',
+  () => ({
+    MenuRowTrailingActions: () => null,
+  })
+)
 
 const item = { id: 'item-1', name: 'Coxinha', isActive: true } as MenuItem
 

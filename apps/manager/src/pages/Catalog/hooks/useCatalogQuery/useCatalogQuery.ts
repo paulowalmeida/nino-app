@@ -22,12 +22,7 @@ export const useCatalogQuery = (
     queryFn: ({ pageParam }) =>
       ProductService.listProducts(
         unitId as string,
-        toCatalogListParams(
-          pageParam,
-          CATALOG_PAGE_SIZE,
-          categoryId,
-          search
-        )
+        toCatalogListParams(pageParam, CATALOG_PAGE_SIZE, categoryId, search)
       ),
     initialPageParam: 1,
     getNextPageParam: (lastPage, pages) => {

@@ -19,7 +19,8 @@ export const OrderConsumerBlock = () => {
   const address = addressOf(order)
 
   return (
-    <Box as="section"
+    <Box
+      as="section"
       aria-label="Quem pediu"
       className={`${motion.deal} ${styles.block}`}
       style={riseDelay(80)}

@@ -21,6 +21,15 @@ vi.mock(
     useUpdateStaffPosition: () => ({ mutate: vi.fn(), isPending: false }),
   })
 )
+vi.mock(
+  '@shared/hooks/team/useUpdateStaffProfile/useUpdateStaffProfile',
+  () => ({
+    useUpdateStaffProfile: () => ({ mutateAsync: vi.fn() }),
+  })
+)
+vi.mock('@shared/hooks/team/useSetStaffActivity/useSetStaffActivity', () => ({
+  useSetStaffActivity: () => ({ mutate: vi.fn(), isPending: false }),
+}))
 
 describe(useEmployeesFacade.name, () => {
   it('exposes page data and existing team commands', () => {
@@ -28,8 +37,10 @@ describe(useEmployeesFacade.name, () => {
       unit: { role: 'UNIT_OWNER' },
       unitId: 'unit-1',
       staffEntries: [],
+      inactiveStaffEntries: [],
       courierEntries: [],
       isStaffPending: false,
+      isInactiveStaffPending: false,
       isCourierPending: false,
       isError: false,
     } as never)

@@ -6,7 +6,9 @@ import { useForgotPasswordForm } from '@pages/ForgotPassword/hooks/useForgotPass
 import { useForgotPasswordFacade } from './useForgotPasswordFacade'
 import { forgotPasswordFacadeMock } from './useForgotPasswordFacade.mock'
 
-vi.mock('@pages/ForgotPassword/hooks/useForgotPasswordForm/useForgotPasswordForm')
+vi.mock(
+  '@pages/ForgotPassword/hooks/useForgotPasswordForm/useForgotPasswordForm'
+)
 
 describe('useForgotPasswordFacade', () => {
   it('names the form contract the screen consumes', () => {
@@ -16,7 +18,9 @@ describe('useForgotPasswordFacade', () => {
       register,
       submit,
       formState: {
-        errors: { root: { message: forgotPasswordFacadeMock.rootErrorMessage } },
+        errors: {
+          root: { message: forgotPasswordFacadeMock.rootErrorMessage },
+        },
       },
       isSending: false,
       sentTo: null,

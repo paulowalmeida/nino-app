@@ -120,7 +120,9 @@ export const StageTrack = ({ stages, value, onChange }: StageTrackProps) => {
           }`}
         >
           <Icon name={icon} className={styles.stageTrackIcon} />
-          <Text as="span" className={styles.stageTrackLabel}>{label}</Text>
+          <Text as="span" className={styles.stageTrackLabel}>
+            {label}
+          </Text>
           <Text as="span" className={styles.stageTrackCount}>
             <CountUp value={count} />
           </Text>

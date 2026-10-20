@@ -2,9 +2,12 @@ import { useEffect, useState } from 'react'
 
 import { Box } from '@nino/ds/components/Box'
 import { Header } from '@nino/ds/components/Header'
+import { Skeleton } from '@nino/ds/components/Skeleton'
+import { Text } from '@nino/ds/components/Text'
 import { CatalogToolbar } from '@pages/Catalog/components/CatalogHeader/CatalogToolbar/CatalogToolbar'
 import { useCatalogFacade } from '@pages/Catalog/facades/useCatalogFacade'
 import { CategoryChips } from '@shared/components/CategoryChips/CategoryChips'
+import { useProductImagesReady } from '@shared/hooks/product/useProductImagesReady/useProductImagesReady'
 import { useDebouncedValue } from '@shared/hooks/ui/useDebouncedValue/useDebouncedValue'
 
 import motion from '@styles/motion.module.css'
@@ -21,12 +24,54 @@ export const CatalogHeader = () => {
     setCategoryId,
     categories,
     categoriesStatus,
+    isPagePending,
+    items,
     canManageCatalog,
   } = useCatalogFacade()
+  const areImagesReady = useProductImagesReady(items)
   const debouncedTerm = useDebouncedValue(term)
   useEffect(() => {
     setSearch(debouncedTerm.trim())
   }, [debouncedTerm, setSearch])
+
+  if (isPagePending || !areImagesReady) {
+    return (
+      <Box aria-busy="true" direction="column" className={styles.skeleton}>
+        <Text as="p" role="status" className={styles.loadingLabel}>
+          Carregando produtos
+        </Text>
+        <Box direction="column" gap={1} className={styles.skeletonIdentity}>
+          <Skeleton className={styles.skeletonTitle} />
+          <Skeleton className={styles.skeletonDescription} />
+        </Box>
+        <Box
+          direction={{ mobile: 'column', desktop: 'row' }}
+          gap={{ mobile: 2, desktop: 4 }}
+          className={styles.skeletonToolbar}
+        >
+          <Skeleton className={styles.skeletonSearch} />
+          <Box
+            direction={{ mobile: 'column', tablet: 'row' }}
+            gap={2}
+            className={styles.skeletonActions}
+          >
+            <Skeleton className={styles.skeletonManageCategories} />
+            <Skeleton className={styles.skeletonNewItem} />
+          </Box>
+        </Box>
+        <Box direction="row" className={styles.skeletonCategories}>
+          <Skeleton className={styles.skeletonCategory} />
+          <Skeleton className={styles.skeletonCategoryWide} />
+          <Skeleton className={styles.skeletonCategoryWide} />
+          <Skeleton className={styles.skeletonCategory} />
+          <Skeleton className={styles.skeletonCategoryWide} />
+          <Skeleton className={styles.skeletonCategory} />
+          <Skeleton className={styles.skeletonCategoryWide} />
+        </Box>
+      </Box>
+    )
+  }
+
   return (
     <>
       <Header

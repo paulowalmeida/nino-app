@@ -56,7 +56,9 @@ describe('useOpenTab', () => {
         openTabRequestMock
       )
     )
-    await waitFor(() => expect(toast.success).toHaveBeenCalledWith('Comanda aberta'))
+    await waitFor(() =>
+      expect(toast.success).toHaveBeenCalledWith('Comanda aberta')
+    )
     expect(invalidate).toHaveBeenCalledWith({
       queryKey: queryKeys.tabs.all('unit-1'),
     })

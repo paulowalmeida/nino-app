@@ -16,13 +16,16 @@ const renderDialog = () => render(<CatalogDeleteItemsDialog />)
 describe(CatalogDeleteItemsDialog.name, () => {
   beforeEach(() => {
     vi.clearAllMocks()
-    vi.mocked(useCatalogFacade).mockImplementation(() => ({
-      unitId: 'unit-1',
-      idsPendingDelete: itemIds,
-      isDeletingItems: false,
-      closeDeleteItems: close,
-      deleteItems: remove,
-    }) as unknown as ReturnType<typeof useCatalogFacade>)
+    vi.mocked(useCatalogFacade).mockImplementation(
+      () =>
+        ({
+          unitId: 'unit-1',
+          idsPendingDelete: itemIds,
+          isDeletingItems: false,
+          closeDeleteItems: close,
+          deleteItems: remove,
+        }) as unknown as ReturnType<typeof useCatalogFacade>
+    )
   })
 
   it('asks before deleting, naming the count of selected items', () => {

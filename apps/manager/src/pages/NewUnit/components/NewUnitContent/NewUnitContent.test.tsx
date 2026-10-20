@@ -14,6 +14,8 @@ describe('NewUnitContent', () => {
   it('renders the creation form and consumer preview', () => {
     render(<NewUnitContent />)
     expect(screen.getByText('Como o cliente vê')).toBeInTheDocument()
-    expect(screen.getByRole('button', { name: 'Abrir unidade' })).toBeInTheDocument()
+    expect(
+      screen.getByRole('button', { name: 'Abrir unidade' })
+    ).toBeInTheDocument()
   })
 })

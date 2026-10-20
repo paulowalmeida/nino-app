@@ -17,7 +17,11 @@ export const ForgotPasswordSent = ({
   onUseAnotherEmail,
 }: ForgotPasswordSentProps) => (
   <RiseIn>
-    <Box direction="column" role="status" className={styles.forgotPasswordSentPanel}>
+    <Box
+      direction="column"
+      role="status"
+      className={styles.forgotPasswordSentPanel}
+    >
       <Box direction="row" align="center" gap={2} className={styles.flag}>
         <Box className={styles.dot} aria-hidden="true" />
         <Text as="span" className={styles.flagLabel}>

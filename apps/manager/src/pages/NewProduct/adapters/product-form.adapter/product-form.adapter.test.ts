@@ -16,7 +16,8 @@ describe(toCreateMenuItemRequest.name, () => {
 
   it('omits an empty description', () => {
     expect(
-      toCreateMenuItemRequest({ ...productFormMock, description: '' }).description
+      toCreateMenuItemRequest({ ...productFormMock, description: '' })
+        .description
     ).toBeUndefined()
   })
 })

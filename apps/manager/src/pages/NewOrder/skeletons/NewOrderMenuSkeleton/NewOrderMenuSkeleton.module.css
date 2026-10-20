@@ -1,6 +1,5 @@
 @reference "@nino/ds/globals.css";
 
-
 .newOrderMenuSkeletonMenu {
   @apply flex min-w-0 flex-col gap-6 rounded-6 border border-border;
   @apply bg-surface-page/70;

@@ -2,8 +2,10 @@ import type { UnitPosition } from '@shared/types/team/unit-position.type'
 
 export const employeesDataMock = {
   staffEntries: [],
+  inactiveStaffEntries: [],
   courierEntries: [],
   isStaffPending: false,
+  isInactiveStaffPending: false,
   isCourierPending: false,
   isError: false,
   currentUnit: { unitId: 'unit-1', role: 'UNIT_OWNER', positionLevel: 100 },

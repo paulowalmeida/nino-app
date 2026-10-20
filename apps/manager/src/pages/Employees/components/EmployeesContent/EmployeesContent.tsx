@@ -4,9 +4,9 @@ import { useSearchParams } from 'react-router'
 import { Box } from '@nino/ds/components/Box'
 import { Tabs } from '@nino/ds/components/Tabs'
 import { useEmployeesFacade } from '@pages/Employees/facades/useEmployeesFacade/useEmployeesFacade'
-import { EditEmailModal } from '@shared/components/EditEmailModal/EditEmailModal'
 import type { RosterEntry } from '@shared/types/team/roster-entry'
 
+import { EditStaffModal } from './EditStaffModal/EditStaffModal'
 import { InviteForm } from './InviteForm/InviteForm'
 import { TeamRoster } from './TeamRoster/TeamRoster'
 
@@ -14,17 +14,21 @@ export const EmployeesContent = () => {
   const facade = useEmployeesFacade()
   const [searchParams, setSearchParams] = useSearchParams()
   const [editingStaffId, setEditingStaffId] = useState<string | null>(null)
-  const editingStaff = facade.staffEntries.find(
-    ({ id }: RosterEntry) => id === editingStaffId
-  )
+  const editingStaff = [
+    ...facade.staffEntries,
+    ...facade.inactiveStaffEntries,
+  ].find(({ id }: RosterEntry) => id === editingStaffId)
   const removing = facade.isRemoving ? facade.removingVariables : undefined
   const canChangePosition = facade.unit?.role === 'UNIT_OWNER'
+  const requestedTab = searchParams.get('tab')
   const activeTab =
-    searchParams.get('tab') === 'couriers' ? 'couriers' : 'staff'
+    requestedTab === 'inactive' || requestedTab === 'couriers'
+      ? requestedTab
+      : 'active'
 
   const changeTab = (value: string) => {
     const nextParams = new URLSearchParams(searchParams)
-    if (value === 'staff') nextParams.delete('tab')
+    if (value === 'active') nextParams.delete('tab')
     else nextParams.set('tab', value)
     setSearchParams(nextParams, { replace: true })
   }
@@ -39,11 +43,11 @@ export const EmployeesContent = () => {
           onValueChange={changeTab}
           tabs={[
             {
-              value: 'staff',
-              label: `No painel · ${facade.staffEntries.length}`,
+              value: 'active',
+              label: `Ativos · ${facade.staffEntries.length}`,
               content: (
                 <TeamRoster
-                  title="No painel"
+                  title="Ativos"
                   hint="Quem recebe, aceita e acompanha os pedidos."
                   entries={facade.staffEntries}
                   empty="Só você por enquanto. Chame alguém pelo convite acima."
@@ -53,7 +57,15 @@ export const EmployeesContent = () => {
                     removing?.kind === 'STAFF' ? removing.id : undefined
                   }
                   onRemove={(id) => facade.removeMember({ id, kind: 'STAFF' })}
-                  onEditEmail={setEditingStaffId}
+                  onEdit={setEditingStaffId}
+                  onSetActivity={(id) =>
+                    facade.setStaffActivity({ userId: id, isActive: false })
+                  }
+                  changingActivityId={
+                    facade.isChangingActivity
+                      ? facade.activityVariables?.userId
+                      : undefined
+                  }
                   onChangePosition={
                     canChangePosition
                       ? (userId, positionId) =>
@@ -65,6 +77,34 @@ export const EmployeesContent = () => {
                       ? facade.positionVariables?.userId
                       : undefined
                   }
+                />
+              ),
+            },
+            {
+              value: 'inactive',
+              label: `Inativos · ${facade.inactiveStaffEntries.length}`,
+              content: (
+                <TeamRoster
+                  title="Inativos"
+                  hint="Quem foi suspenso permanece no histórico da loja."
+                  entries={facade.inactiveStaffEntries}
+                  empty="Nenhum colaborador suspenso nesta loja."
+                  searchLabel="Buscar quem está inativo"
+                  isPending={facade.isInactiveStaffPending}
+                  removingId={
+                    removing?.kind === 'STAFF' ? removing.id : undefined
+                  }
+                  onRemove={(id) => facade.removeMember({ id, kind: 'STAFF' })}
+                  onEdit={setEditingStaffId}
+                  onSetActivity={(id) =>
+                    facade.setStaffActivity({ userId: id, isActive: true })
+                  }
+                  changingActivityId={
+                    facade.isChangingActivity
+                      ? facade.activityVariables?.userId
+                      : undefined
+                  }
+                  isInactive
                 />
               ),
             },
@@ -92,14 +132,16 @@ export const EmployeesContent = () => {
         />
       </Box>
 
-      <EditEmailModal
+      <EditStaffModal
         open={!!editingStaff}
         onOpenChange={(open) => !open && setEditingStaffId(null)}
-        title="Editar e-mail"
-        hint={`Usado por ${editingStaff?.name ?? ''} para entrar no painel.`}
-        currentEmail={editingStaff?.email ?? null}
-        onSave={(email) =>
-          facade.updateStaffEmail({ userId: editingStaff?.id ?? '', email })
+        staff={editingStaff ?? null}
+        onSave={({ name, email }) =>
+          facade.updateStaffProfile({
+            userId: editingStaff?.id ?? '',
+            name,
+            email,
+          })
         }
       />
     </>

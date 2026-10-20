@@ -66,7 +66,10 @@ describe(SubscriptionInterestForm.name, () => {
     render(<SubscriptionInterestForm onInterestSent={onInterestSent} />)
 
     // Act
-    await user.type(screen.getByLabelText(/Nome/), filledInterestMock.contactName)
+    await user.type(
+      screen.getByLabelText(/Nome/),
+      filledInterestMock.contactName
+    )
     await user.type(
       screen.getByLabelText(/E-mail/),
       filledInterestMock.contactEmail
@@ -110,7 +113,10 @@ describe(SubscriptionInterestForm.name, () => {
     render(<SubscriptionInterestForm onInterestSent={vi.fn()} />)
 
     // Act
-    await user.type(screen.getByLabelText(/Nome/), filledInterestMock.contactName)
+    await user.type(
+      screen.getByLabelText(/Nome/),
+      filledInterestMock.contactName
+    )
     await user.type(
       screen.getByLabelText(/E-mail/),
       filledInterestMock.contactEmail

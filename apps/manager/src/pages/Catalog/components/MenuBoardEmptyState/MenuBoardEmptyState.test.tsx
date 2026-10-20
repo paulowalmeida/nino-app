@@ -3,9 +3,7 @@ import { MemoryRouter } from 'react-router'
 import { render, screen } from '@testing-library/react'
 import { describe, expect, it, vi } from 'vitest'
 
-import {
-  MenuBoardEmptyState,
-} from '@pages/Catalog/components/MenuBoardEmptyState/MenuBoardEmptyState'
+import { MenuBoardEmptyState } from '@pages/Catalog/components/MenuBoardEmptyState/MenuBoardEmptyState'
 import { CATALOG_CAPABILITIES } from '@pages/Catalog/constants/catalog.constants'
 import { useCatalogFacade } from '@pages/Catalog/facades/useCatalogFacade'
 

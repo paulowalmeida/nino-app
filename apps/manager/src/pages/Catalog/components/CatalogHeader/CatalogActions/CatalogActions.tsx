@@ -17,7 +17,7 @@ export const CatalogActions = () => (
       variant="outline"
       className={`${motion.press} ${styles.manageCategories}`}
     >
-      <Link to="categorias">Gerenciar categorias</Link>
+      <Link to="../categorias-produtos">Gerenciar categorias</Link>
     </Button>
     <Button asChild className={`${motion.press} ${styles.newItem}`}>
       <Link to="novo">Novo item</Link>

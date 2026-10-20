@@ -30,7 +30,11 @@ export const ConsumerRankingCard = ({
       <Eyebrow className={styles.consumerRankingCardHeading}>{label}</Eyebrow>
     </Box>
 
-    <Card variant="flat" padding="lg" className={`${motion.deal} ${styles.consumerRankingCard}`}>
+    <Card
+      variant="flat"
+      padding="lg"
+      className={`${motion.deal} ${styles.consumerRankingCard}`}
+    >
       {isPending && (
         <Box className={styles.skeletonBars}>
           {TOP_CONSUMERS_SKELETON_WIDTHS.map((width) => (
@@ -50,11 +54,7 @@ export const ConsumerRankingCard = ({
       )}
 
       {!isPending && items.length > 0 && (
-        <BarList
-          items={items}
-          highlightTop={3}
-          className="text-brand"
-        />
+        <BarList items={items} highlightTop={3} className="text-brand" />
       )}
     </Card>
   </Box>

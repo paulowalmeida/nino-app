@@ -9,12 +9,8 @@ import {
 } from '@dnd-kit/core'
 
 import { Grid } from '@nino/ds/components/Grid'
-import {
-  KitchenColumn,
-} from '@pages/Kitchen/components/KitchenBoard/KitchenColumn/KitchenColumn'
-import {
-  KitchenOrderModal,
-} from '@pages/Kitchen/components/KitchenOrderModal/KitchenOrderModal'
+import { KitchenColumn } from '@pages/Kitchen/components/KitchenBoard/KitchenColumn/KitchenColumn'
+import { KitchenOrderModal } from '@pages/Kitchen/components/KitchenOrderModal/KitchenOrderModal'
 import { KITCHEN_COLUMNS } from '@pages/Kitchen/constants/kitchen.constants'
 import { useKitchenFacade } from '@pages/Kitchen/facades/useKitchenFacade/useKitchenFacade'
 import type { KitchenStage } from '@pages/Kitchen/types/KitchenStage.type'

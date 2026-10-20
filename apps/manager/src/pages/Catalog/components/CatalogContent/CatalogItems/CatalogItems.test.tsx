@@ -5,13 +5,16 @@ import userEvent from '@testing-library/user-event'
 import { describe, expect, it, vi } from 'vitest'
 
 import { CatalogItems } from '@pages/Catalog/components/CatalogContent/CatalogItems/CatalogItems'
-import { item, secondItem } from '@pages/Catalog/components/CatalogContent/CatalogItems/CatalogItems.mock'
+import {
+  item,
+  secondItem,
+} from '@pages/Catalog/components/CatalogContent/CatalogItems/CatalogItems.mock'
 import { useCatalogFacade } from '@pages/Catalog/facades/useCatalogFacade'
 
 vi.mock('@pages/Catalog/facades/useCatalogFacade')
 
 type CatalogItemsHarness = {
-  items: typeof item[]
+  items: (typeof item)[]
   isFetchingNextPage: boolean
   isSelecting: boolean
   selectedIds: Set<string>
@@ -19,9 +22,7 @@ type CatalogItemsHarness = {
   onRequestDelete: ReturnType<typeof vi.fn>
 }
 
-const renderList = (
-  overrides: Partial<CatalogItemsHarness> = {}
-) => {
+const renderList = (overrides: Partial<CatalogItemsHarness> = {}) => {
   const props: CatalogItemsHarness = {
     items: [item],
     isFetchingNextPage: false,

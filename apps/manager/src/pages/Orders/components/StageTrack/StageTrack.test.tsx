@@ -6,8 +6,18 @@ import { StageTrack } from './StageTrack'
 import { stageTrackMock } from './StageTrack.mock'
 
 const stages = [
-  { id: 'incoming' as const, label: 'Novos', count: 2, icon: 'receipt' as const },
-  { id: 'closed' as const, label: 'Finalizados', count: 1, icon: 'check' as const },
+  {
+    id: 'incoming' as const,
+    label: 'Novos',
+    count: 2,
+    icon: 'receipt' as const,
+  },
+  {
+    id: 'closed' as const,
+    label: 'Finalizados',
+    count: 1,
+    icon: 'check' as const,
+  },
 ]
 
 describe('StageTrack', () => {
@@ -21,7 +31,9 @@ describe('StageTrack', () => {
       />
     )
 
-    expect(screen.getByRole('tablist', { name: 'Etapas da fila' })).toBeInTheDocument()
+    expect(
+      screen.getByRole('tablist', { name: 'Etapas da fila' })
+    ).toBeInTheDocument()
     expect(screen.getByText('Novos')).toBeInTheDocument()
     fireEvent.click(screen.getByText('Novos'))
     expect(onChange).toHaveBeenCalledWith(stageTrackMock.selectedStage)

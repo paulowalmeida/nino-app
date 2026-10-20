@@ -13,11 +13,7 @@ export const queryKeys = {
   products: {
     all: (unitId: string) => ['products', unitId] as const,
     list: (unitId: string, categoryId?: string) =>
-      [
-        ...queryKeys.products.all(unitId),
-        'list',
-        categoryId ?? null,
-      ] as const,
+      [...queryKeys.products.all(unitId), 'list', categoryId ?? null] as const,
     catalog: (unitId: string, categoryId: string | null, search: string) =>
       [
         ...queryKeys.products.all(unitId),
@@ -56,11 +52,7 @@ export const queryKeys = {
       [...queryKeys.orders.all(unitId), 'detail', orderId] as const,
     report: (unitId: string, range: ReportRangeParams) =>
       [...queryKeys.orders.all(unitId), 'report', ...rangeKey(range)] as const,
-    series: (
-      unitId: string,
-      range: ReportRangeParams,
-      granularity?: string
-    ) =>
+    series: (unitId: string, range: ReportRangeParams, granularity?: string) =>
       [
         ...queryKeys.orders.all(unitId),
         'series',
@@ -117,7 +109,8 @@ export const queryKeys = {
   },
   promotions: {
     all: (unitId: string) => ['promotions', unitId] as const,
-    list: (unitId: string) => [...queryKeys.promotions.all(unitId), 'list'] as const,
+    list: (unitId: string) =>
+      [...queryKeys.promotions.all(unitId), 'list'] as const,
   },
   consumers: {
     all: (unitId: string) => ['consumers', unitId] as const,
@@ -130,8 +123,8 @@ export const queryKeys = {
   },
   team: {
     all: (unitId: string) => ['team', unitId] as const,
-    list: (unitId: string) =>
-      [...queryKeys.team.all(unitId), 'list'] as const,
+    list: (unitId: string, status: 'active' | 'inactive' = 'active') =>
+      [...queryKeys.team.all(unitId), 'list', status] as const,
   },
   positions: {
     all: (unitId: string) => ['positions', unitId] as const,

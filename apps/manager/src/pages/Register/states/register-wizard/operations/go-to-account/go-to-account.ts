@@ -2,5 +2,4 @@ import type { SetRegisterWizardState } from '@pages/Register/types/SetRegisterWi
 
 /* WHY: a conta preenchida fica guardada — voltar um passo repõe os campos em
  * vez de pedir tudo de novo. */
-export const goToAccount = (set: SetRegisterWizardState) =>
-  set({ step: 1 })
+export const goToAccount = (set: SetRegisterWizardState) => set({ step: 1 })

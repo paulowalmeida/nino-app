@@ -13,11 +13,13 @@ describe(useCatalogCommands.name, () => {
       deleteItem: { mutateAsync: vi.fn() },
       deleteItems: { mutateAsync: vi.fn() },
     }
-    const { result } = renderHook(() => useCatalogCommands(
-      { fetchNextPage, items: [{ id: 'item-1' }] } as never,
-      { toggleAllItemsSelection } as never,
-      mutations as never
-    ))
+    const { result } = renderHook(() =>
+      useCatalogCommands(
+        { fetchNextPage, items: [{ id: 'item-1' }] } as never,
+        { toggleAllItemsSelection } as never,
+        mutations as never
+      )
+    )
 
     await result.current.loadMore()
     result.current.toggleAllItemsSelection()

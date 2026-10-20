@@ -19,6 +19,11 @@ export const useEmployeesData = () => {
     isError: isStaffError,
   } = useStaff(unitId)
   const {
+    data: inactiveStaff,
+    isPending: isInactiveStaffPending,
+    isError: isInactiveStaffError,
+  } = useStaff(unitId, 'inactive')
+  const {
     data: couriers,
     isPending: isCourierPending,
     isError: isCourierError,
@@ -39,9 +44,15 @@ export const useEmployeesData = () => {
       currentUserId,
       assignable
     ),
+    inactiveStaffEntries: staffRosterEntries(
+      inactiveStaff?.data ?? [],
+      currentUserId,
+      assignable
+    ),
     courierEntries: courierRosterEntries(couriers?.data ?? []),
     isStaffPending,
+    isInactiveStaffPending,
     isCourierPending,
-    isError: isStaffError || isCourierError,
+    isError: isStaffError || isInactiveStaffError || isCourierError,
   }
 }

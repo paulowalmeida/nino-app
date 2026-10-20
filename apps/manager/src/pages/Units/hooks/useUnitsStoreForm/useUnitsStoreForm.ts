@@ -12,16 +12,20 @@ export const useUnitsStoreForm = () => {
   const { data: types = [] } = useStoreTypes()
   const { mutateAsync: createStore } = useCreateStore()
 
-  const submitStore = useCallback(async (data: FirstStoreFormValues): Promise<StoreSubmitResult> => {
-    try {
-      await createStore(toCreateStoreRequest(data))
-      return { status: 'success' }
-    } catch (error) {
-      if (error instanceof ApiError && error.status === 409) return { status: 'slug-taken' }
-      if (!navigator.onLine) return { status: 'offline' }
-      return { status: 'error' }
-    }
-  }, [createStore])
+  const submitStore = useCallback(
+    async (data: FirstStoreFormValues): Promise<StoreSubmitResult> => {
+      try {
+        await createStore(toCreateStoreRequest(data))
+        return { status: 'success' }
+      } catch (error) {
+        if (error instanceof ApiError && error.status === 409)
+          return { status: 'slug-taken' }
+        if (!navigator.onLine) return { status: 'offline' }
+        return { status: 'error' }
+      }
+    },
+    [createStore]
+  )
 
   return { typeOptions: toUnitsStoreTypeOptions(types), submitStore }
 }

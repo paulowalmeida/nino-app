@@ -18,6 +18,8 @@ describe(updateProfileEmail.name, () => {
 
     await updateProfileEmail(set, get, updateProfileEmailOperationMock.email)
 
-    expect(set).toHaveBeenLastCalledWith(expect.objectContaining({ isUpdatingEmail: false }))
+    expect(set).toHaveBeenLastCalledWith(
+      expect.objectContaining({ isUpdatingEmail: false })
+    )
   })
 })

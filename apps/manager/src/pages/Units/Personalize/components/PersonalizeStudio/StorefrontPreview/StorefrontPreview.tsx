@@ -288,7 +288,11 @@ export const StorefrontPreview = ({
           >
             <Box className={local.logoTile} aria-hidden="true">
               {shownLogoUrl ? (
-                <img src={shownLogoUrl} alt="" className={local.storefrontPreviewLogo} />
+                <img
+                  src={shownLogoUrl}
+                  alt=""
+                  className={local.storefrontPreviewLogo}
+                />
               ) : (
                 <Text as="span" className={local.logoFallback}>
                   {shownName.slice(0, 2).toUpperCase()}

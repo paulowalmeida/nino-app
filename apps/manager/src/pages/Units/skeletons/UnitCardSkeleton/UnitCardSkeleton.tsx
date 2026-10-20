@@ -39,10 +39,18 @@ export const UnitCardSkeleton = () => (
       <Skeleton className={ghost.groupTitle} />
       <Box className={ghost.addressGrid}>
         <Skeleton className={`${ghost.unitCardSkeletonInput} ${ghost.zip}`} />
-        <Skeleton className={`${ghost.unitCardSkeletonInput} ${ghost.street}`} />
-        <Skeleton className={`${ghost.unitCardSkeletonInput} ${ghost.number}`} />
-        <Skeleton className={`${ghost.unitCardSkeletonInput} ${ghost.complement}`} />
-        <Skeleton className={`${ghost.unitCardSkeletonInput} ${ghost.neighborhood}`} />
+        <Skeleton
+          className={`${ghost.unitCardSkeletonInput} ${ghost.street}`}
+        />
+        <Skeleton
+          className={`${ghost.unitCardSkeletonInput} ${ghost.number}`}
+        />
+        <Skeleton
+          className={`${ghost.unitCardSkeletonInput} ${ghost.complement}`}
+        />
+        <Skeleton
+          className={`${ghost.unitCardSkeletonInput} ${ghost.neighborhood}`}
+        />
         <Skeleton className={`${ghost.unitCardSkeletonInput} ${ghost.city}`} />
         <Skeleton className={`${ghost.unitCardSkeletonInput} ${ghost.state}`} />
       </Box>

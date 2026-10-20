@@ -7,8 +7,12 @@ import { SalesTrend } from './SalesTrend'
 import { salesTrendMock } from './SalesTrend.mock'
 
 vi.mock('@pages/Overview/facades/useOverviewFacade/useOverviewFacade')
-vi.mock('@shared/components/SalesChart/SalesChart', () => ({ SalesChart: () => <div>chart</div> }))
-vi.mock('@shared/skeletons/SalesTrendSkeleton/SalesTrendSkeleton', () => ({ SalesTrendSkeleton: () => <div>chart loading</div> }))
+vi.mock('@shared/components/SalesChart/SalesChart', () => ({
+  SalesChart: () => <div>chart</div>,
+}))
+vi.mock('@shared/skeletons/SalesTrendSkeleton/SalesTrendSkeleton', () => ({
+  SalesTrendSkeleton: () => <div>chart loading</div>,
+}))
 
 describe('SalesTrend', () => {
   it('renders the loading sales state', () => {

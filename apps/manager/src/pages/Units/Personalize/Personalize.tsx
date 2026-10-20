@@ -8,8 +8,8 @@ import { PersonalizeStudio } from './components/PersonalizeStudio/PersonalizeStu
 import styles from './Personalize.module.css'
 
 const loadErrorMessage = (errors: unknown[]) => {
-  const error = errors.find((candidate): candidate is Error =>
-    candidate instanceof Error
+  const error = errors.find(
+    (candidate): candidate is Error => candidate instanceof Error
   )
 
   if (!error) {

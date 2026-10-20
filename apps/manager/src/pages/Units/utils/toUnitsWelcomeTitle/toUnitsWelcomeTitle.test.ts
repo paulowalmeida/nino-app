@@ -4,7 +4,9 @@ import { toUnitsWelcomeTitle } from './toUnitsWelcomeTitle'
 
 describe(toUnitsWelcomeTitle.name, () => {
   it('uses the first name when a user name is available', () => {
-    expect(toUnitsWelcomeTitle('Marina Silva')).toBe('Sua primeira loja, Marina')
+    expect(toUnitsWelcomeTitle('Marina Silva')).toBe(
+      'Sua primeira loja, Marina'
+    )
   })
 
   it('uses the generic title without a user name', () => {

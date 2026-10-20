@@ -1,4 +1,2 @@
-export const canReorderCatalog = (
-  categoryId: string | null,
-  search: string
-) => !!categoryId && !search
+export const canReorderCatalog = (categoryId: string | null, search: string) =>
+  !!categoryId && !search

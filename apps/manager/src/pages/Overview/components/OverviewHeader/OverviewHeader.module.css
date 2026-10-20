@@ -25,7 +25,6 @@
   @apply min-w-0 break-words;
 }
 
-
 .identity > :not(.storeName) {
   @apply w-full sm:w-auto;
 }
@@ -37,7 +36,6 @@
   @apply focus-visible:outline focus-visible:outline-2;
   @apply focus-visible:outline-offset-2 focus-visible:outline-brand;
 }
-
 
 .lightStrip {
   @apply mt-4 h-0.5 w-full rounded-full bg-surface-5;
@@ -52,6 +50,5 @@
     color-mix(in srgb, var(--color-success) 45%, transparent) 55%,
     var(--color-surface-5) 100%
   );
-  box-shadow: 0 0 10px
-    color-mix(in srgb, var(--color-success) 28%, transparent);
+  box-shadow: 0 0 10px color-mix(in srgb, var(--color-success) 28%, transparent);
 }

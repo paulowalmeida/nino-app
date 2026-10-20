@@ -1,6 +1,6 @@
 import { Avatar } from '@nino/ds/components/Avatar'
 import { Box } from '@nino/ds/components/Box'
-import { Heading } from '@nino/ds/components/Heading'
+import { Header } from '@nino/ds/components/Header'
 import { Skeleton } from '@nino/ds/components/Skeleton'
 import { Text } from '@nino/ds/components/Text'
 import { useProfileFacade } from '@pages/Profile/facades/useProfileFacade/useProfileFacade'
@@ -54,9 +54,12 @@ export const ProfileHeader = () => {
 
       <Box gap={1.5} className={styles.identity}>
         {profile ? (
-          <Heading level={1} size="2xl" className={styles.name}>
-            {profile.name}
-          </Heading>
+          <Header
+            className={styles.name}
+            level={1}
+            size="2xl"
+            title={profile.name}
+          />
         ) : (
           <Skeleton className={styles.nameGhost} />
         )}

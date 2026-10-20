@@ -6,7 +6,10 @@ import {
   requestDeleteItem,
   requestDeleteItems,
 } from '@pages/Catalog/states/catalog/operations/delete-dialog'
-import { setCategoryId, setSearch } from '@pages/Catalog/states/catalog/operations/filters'
+import {
+  setCategoryId,
+  setSearch,
+} from '@pages/Catalog/states/catalog/operations/filters'
 import {
   clearSelection,
   startSelection,

@@ -20,9 +20,7 @@ export const CatalogCategories = () => {
         <Box className={styles.headerRegion}>
           <CategoriesHeaderSkeleton />
         </Box>
-        <Box className={styles.feedback}>
-          <CategoryRowsSkeleton />
-        </Box>
+        <CategoryRowsSkeleton />
       </Box>
     )
   }

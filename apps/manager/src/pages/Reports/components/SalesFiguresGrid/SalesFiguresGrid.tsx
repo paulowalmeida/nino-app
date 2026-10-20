@@ -15,7 +15,10 @@ export type SalesFiguresGridProps = {
   delay?: number
 }
 
-export const SalesFiguresGrid = ({ report, delay = 0 }: SalesFiguresGridProps) => (
+export const SalesFiguresGrid = ({
+  report,
+  delay = 0,
+}: SalesFiguresGridProps) => (
   <Grid
     columns={{ mobile: 2, tablet: 3 }}
     gap={{ mobile: 2, desktop: 4 }}

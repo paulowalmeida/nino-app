@@ -38,7 +38,9 @@ export const useKitchenOrders = (unitId: string | null) => {
       ),
       finished: finishedOrders,
     },
-    isPending: ordersQuery.isPending,
-    isError: ordersQuery.isError,
+    // The finished column is part of the same wall. Do not expose its empty
+    // state while its own request is still in flight.
+    isPending: ordersQuery.isPending || finishedQuery.isPending,
+    isError: ordersQuery.isError || finishedQuery.isError,
   }
 }

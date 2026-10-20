@@ -6,7 +6,7 @@ import type { MenuItem } from '@shared/types/product/menu-item'
 
 export const useCatalogMutations = (unitId: string | null) => {
   const queryClient = useQueryClient()
-  
+
   const invalidateCatalog = () =>
     queryClient.invalidateQueries({
       queryKey: queryKeys.products.all(unitId ?? ''),
@@ -14,7 +14,11 @@ export const useCatalogMutations = (unitId: string | null) => {
 
   const setAvailability = useMutation({
     mutationFn: (data: { id: string; isActive: boolean }) =>
-      ProductService.setItemAvailability(unitId as string, data.id, data.isActive),
+      ProductService.setItemAvailability(
+        unitId as string,
+        data.id,
+        data.isActive
+      ),
     onSuccess: invalidateCatalog,
   })
 
@@ -28,8 +32,7 @@ export const useCatalogMutations = (unitId: string | null) => {
   })
 
   const deleteItem = useMutation({
-    mutationFn: (id: string) =>
-      ProductService.removeItem(unitId as string, id),
+    mutationFn: (id: string) => ProductService.removeItem(unitId as string, id),
     onSuccess: invalidateCatalog,
   })
 

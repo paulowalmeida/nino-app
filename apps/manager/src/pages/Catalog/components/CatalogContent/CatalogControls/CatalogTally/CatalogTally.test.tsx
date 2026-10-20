@@ -20,15 +20,12 @@ describe(CatalogTally.name, () => {
 
   it('presents the selection count without reorder guidance', () => {
     render(
-      <CatalogTally
-        isSelecting
-        selectedItemCount={1}
-        total={3}
-        canReorder
-      />
+      <CatalogTally isSelecting selectedItemCount={1} total={3} canReorder />
     )
 
     expect(screen.getByText('1 selecionado')).toBeInTheDocument()
-    expect(screen.queryByText(/arraste para mudar a ordem/)).not.toBeInTheDocument()
+    expect(
+      screen.queryByText(/arraste para mudar a ordem/)
+    ).not.toBeInTheDocument()
   })
 })

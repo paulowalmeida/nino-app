@@ -13,7 +13,8 @@ export const OrderProgressBlock = () => {
   if (!order) return null
 
   return (
-    <Box as="section"
+    <Box
+      as="section"
       aria-label="Andamento"
       className={`${motion.deal} ${styles.block}`}
       style={riseDelay(200)}

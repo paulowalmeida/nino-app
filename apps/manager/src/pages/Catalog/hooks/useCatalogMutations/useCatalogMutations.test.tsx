@@ -1,7 +1,7 @@
 import type { ReactNode } from 'react'
 
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-import { act,renderHook } from '@testing-library/react'
+import { act, renderHook } from '@testing-library/react'
 import { afterEach, describe, expect, it, vi } from 'vitest'
 
 import { useCatalogMutations } from '@pages/Catalog/hooks/useCatalogMutations/useCatalogMutations'
@@ -32,7 +32,9 @@ describe(useCatalogMutations.name, () => {
   afterEach(() => vi.clearAllMocks())
 
   it('updates availability and invalidates the unit product cache', async () => {
-    vi.mocked(ProductService.setItemAvailability).mockResolvedValue({} as MenuItem)
+    vi.mocked(ProductService.setItemAvailability).mockResolvedValue(
+      {} as MenuItem
+    )
     const { queryClient, wrapper } = createHarness()
     const invalidateQueries = vi.spyOn(queryClient, 'invalidateQueries')
     const { result } = renderHook(() => useCatalogMutations('unit-1'), {
@@ -84,7 +86,9 @@ describe(useCatalogMutations.name, () => {
     })
 
     await act(() => result.current.deleteItem.mutateAsync('item-1'))
-    await act(() => result.current.deleteItems.mutateAsync(['item-1', 'item-2']))
+    await act(() =>
+      result.current.deleteItems.mutateAsync(['item-1', 'item-2'])
+    )
 
     expect(ProductService.removeItem).toHaveBeenCalledWith('unit-1', 'item-1')
     expect(ProductService.removeItems).toHaveBeenCalledWith('unit-1', [

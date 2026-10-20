@@ -7,7 +7,9 @@ import { OverviewHeader } from './OverviewHeader'
 import { overviewHeaderMock } from './OverviewHeader.mock'
 
 vi.mock('@pages/Overview/facades/useOverviewFacade/useOverviewFacade')
-vi.mock('./StoreSign/StoreSign', () => ({ StoreSign: () => <span>store sign</span> }))
+vi.mock('./StoreSign/StoreSign', () => ({
+  StoreSign: () => <span>store sign</span>,
+}))
 
 describe('OverviewHeader', () => {
   it('renders the unit identity and greeting', () => {
@@ -20,7 +22,9 @@ describe('OverviewHeader', () => {
 
     render(<OverviewHeader />)
 
-    expect(screen.getByRole('heading', { name: 'Minha loja' })).toBeInTheDocument()
+    expect(
+      screen.getByRole('heading', { name: 'Minha loja' })
+    ).toBeInTheDocument()
     expect(screen.getByText('store sign')).toBeInTheDocument()
     expect(screen.getByRole('link', { name: /Ver a loja/ })).toHaveAttribute(
       'href',
@@ -38,7 +42,11 @@ describe('OverviewHeader', () => {
 
     render(<OverviewHeader />)
 
-    expect(screen.getByRole('heading', { name: 'Sua loja' })).toBeInTheDocument()
-    expect(screen.queryByRole('link', { name: /Ver a loja/ })).not.toBeInTheDocument()
+    expect(
+      screen.getByRole('heading', { name: 'Sua loja' })
+    ).toBeInTheDocument()
+    expect(
+      screen.queryByRole('link', { name: /Ver a loja/ })
+    ).not.toBeInTheDocument()
   })
 })

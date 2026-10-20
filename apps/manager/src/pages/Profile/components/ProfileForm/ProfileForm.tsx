@@ -14,15 +14,7 @@ import styles from './ProfileForm.module.css'
 
 export const ProfileForm = () => {
   const { form } = useProfileFacade()
-  const {
-    draft,
-    change,
-    emailError,
-    isDirty,
-    isSaving,
-    save,
-    saveError,
-  } = form
+  const { draft, change, emailError, isDirty, isSaving, save, saveError } = form
 
   return (
     <>
@@ -78,7 +70,12 @@ export const ProfileForm = () => {
         className={styles.profileFormActions}
       >
         {!isDirty && !saveError && (
-          <Text as="p" size="xs" color="faint" className={styles.profileFormStatus}>
+          <Text
+            as="p"
+            size="xs"
+            color="faint"
+            className={styles.profileFormStatus}
+          >
             Nada mudou ainda.
           </Text>
         )}

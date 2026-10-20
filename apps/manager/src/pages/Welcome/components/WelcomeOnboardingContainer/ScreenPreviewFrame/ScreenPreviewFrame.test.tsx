@@ -13,8 +13,6 @@ describe('ScreenPreviewFrame', () => {
     )
 
     expect(screen.getByText(screenPreviewFrameMock.screen)).toBeInTheDocument()
-    expect(
-      screen.getByText(screenPreviewFrameMock.content)
-    ).toBeInTheDocument()
+    expect(screen.getByText(screenPreviewFrameMock.content)).toBeInTheDocument()
   })
 })

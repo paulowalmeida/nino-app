@@ -1,6 +1,6 @@
 import { Box } from '@nino/ds/components/Box'
 import { EmptyState } from '@nino/ds/components/EmptyState'
-import { Heading } from '@nino/ds/components/Heading'
+import { Header } from '@nino/ds/components/Header'
 import { NewOrderTicketActions } from '@pages/NewOrder/components/NewOrderTicket/NewOrderTicketActions/NewOrderTicketActions'
 import { NewOrderTicketFields } from '@pages/NewOrder/components/NewOrderTicket/NewOrderTicketFields/NewOrderTicketFields'
 import { NewOrderTicketLines } from '@pages/NewOrder/components/NewOrderTicket/NewOrderTicketLines/NewOrderTicketLines'
@@ -14,9 +14,7 @@ export const NewOrderTicket = () => {
 
   return (
     <Box as="aside" className={styles.ticket}>
-      <Heading level={2} className={styles.ticketTitle}>
-        A comanda
-      </Heading>
+      <Header className={styles.ticketTitle} level={2} title="A comanda" />
 
       {draft.lines.length === 0 && (
         <EmptyState>

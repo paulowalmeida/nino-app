@@ -3,12 +3,11 @@ import { Box } from '@nino/ds/components/Box'
 import { Button } from '@nino/ds/components/Button'
 import { CpfInput } from '@nino/ds/components/CpfInput'
 import { FormField } from '@nino/ds/components/FormField'
-import { Heading } from '@nino/ds/components/Heading'
+import { Header } from '@nino/ds/components/Header'
 import { Input } from '@nino/ds/components/Input'
 import { PasswordInput } from '@nino/ds/components/PasswordInput'
 import { PasswordStrength } from '@nino/ds/components/PasswordStrength'
 import { PhoneInput } from '@nino/ds/components/PhoneInput'
-import { Text } from '@nino/ds/components/Text'
 import { useRegisterFacade } from '@pages/Register/facades/useRegisterFacade/useRegisterFacade'
 import { ACCOUNT_FIELD_RULES } from '@pages/Register/utils/register-field-rules/register-field-rules'
 import { RiseIn } from '@shared/components/RiseIn/RiseIn'
@@ -31,12 +30,13 @@ export const AccountStep = () => {
   return (
     <Box direction="column">
       <RiseIn as="header">
-        <Heading level={1} size="2xl" align="center">
-          Crie sua conta
-        </Heading>
-        <Text size="sm" color="muted" align="center" mt={2}>
-          Comece pelos seus dados de responsável
-        </Text>
+        <Header
+          level={1}
+          size="2xl"
+          align="center"
+          title="Crie sua conta"
+          description="Comece pelos seus dados de responsável"
+        />
       </RiseIn>
 
       <Box

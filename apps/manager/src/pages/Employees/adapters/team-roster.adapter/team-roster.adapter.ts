@@ -23,7 +23,7 @@ export const staffRosterEntries = (
     roleLocked: user.id === currentUserId ? OWN_ROLE_LOCKED : undefined,
     lastLoginAt: user.lastLoginAt ?? null,
     removable: role !== 'UNIT_OWNER',
-    emailEditable: true,
+    emailEditable: role !== 'UNIT_OWNER',
     href: user.id,
   }))
 

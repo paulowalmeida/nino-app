@@ -23,7 +23,8 @@ export const MenuRowContent = ({ item }: MenuRowContentProps) => (
       fallbackUrl={item.fallbackUrl}
     />
     <Text as="span" className={styles.itemText}>
-      <Text as="span"
+      <Text
+        as="span"
         className={`${styles.itemName} ${
           !item.isActive ? styles.itemNameInactive : ''
         }`}
@@ -31,10 +32,13 @@ export const MenuRowContent = ({ item }: MenuRowContentProps) => (
         {item.name}
       </Text>
       {item.description && (
-        <Text as="span" className={styles.itemDescription}>{item.description}</Text>
+        <Text as="span" className={styles.itemDescription}>
+          {item.description}
+        </Text>
       )}
     </Text>
-    <Text as="span"
+    <Text
+      as="span"
       className={`${styles.price} ${!item.isActive ? styles.priceInactive : ''}`}
     >
       {brl.format(+item.price)}

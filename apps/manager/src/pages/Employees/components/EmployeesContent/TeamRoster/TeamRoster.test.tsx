@@ -139,9 +139,10 @@ describe(TeamRoster.name, () => {
     expect(screen.getByText('Nenhuma pessoa')).toBeInTheDocument()
   })
 
-  it('edits the e-mail and removes a member from the kebab menu', async () => {
-    const onEditEmail = vi.fn()
+  it('edits, suspends, and removes a member from the compact menu', async () => {
+    const onEdit = vi.fn()
     const onRemove = vi.fn()
+    const onSetActivity = vi.fn()
     render(
       <MemoryRouter>
         <TeamRoster
@@ -150,7 +151,8 @@ describe(TeamRoster.name, () => {
           entries={[teamRosterEditableEntryMock]}
           empty="Nenhuma pessoa"
           onRemove={onRemove}
-          onEditEmail={onEditEmail}
+          onEdit={onEdit}
+          onSetActivity={onSetActivity}
         />
       </MemoryRouter>
     )
@@ -159,15 +161,23 @@ describe(TeamRoster.name, () => {
       screen.getByRole('button', { name: 'Mais ações para Duda Reis' })
     )
     await userEvent.click(
-      await screen.findByRole('menuitem', { name: 'Editar e-mail' })
+      await screen.findByRole('menuitem', { name: 'Editar' })
     )
-    expect(onEditEmail).toHaveBeenCalledWith('user-3')
+    expect(onEdit).toHaveBeenCalledWith('user-3')
 
     await userEvent.click(
       screen.getByRole('button', { name: 'Mais ações para Duda Reis' })
     )
     await userEvent.click(
-      await screen.findByRole('menuitem', { name: 'Tirar da loja' })
+      await screen.findByRole('menuitem', { name: 'Suspender' })
+    )
+    expect(onSetActivity).toHaveBeenCalledWith('user-3')
+
+    await userEvent.click(
+      screen.getByRole('button', { name: 'Mais ações para Duda Reis' })
+    )
+    await userEvent.click(
+      await screen.findByRole('menuitem', { name: 'Remover da loja' })
     )
     expect(onRemove).toHaveBeenCalledWith('user-3')
   })
@@ -191,9 +201,9 @@ describe(TeamRoster.name, () => {
     await userEvent.click(
       screen.getByRole('button', { name: 'Mais ações para Beto Lima' })
     )
-    expect(screen.queryByRole('menuitem', { name: 'Editar e-mail' })).toBeNull()
+    expect(screen.queryByRole('menuitem', { name: 'Editar' })).toBeNull()
     await userEvent.click(
-      await screen.findByRole('menuitem', { name: 'Tirar da loja' })
+      await screen.findByRole('menuitem', { name: 'Remover da loja' })
     )
 
     expect(onRemove).toHaveBeenCalledWith('courier-1')
@@ -208,7 +218,7 @@ describe(TeamRoster.name, () => {
           entries={[teamRosterFixedEntryMock]}
           empty="Nenhuma pessoa"
           onRemove={() => undefined}
-          onEditEmail={() => undefined}
+          onEdit={() => undefined}
         />
       </MemoryRouter>
     )

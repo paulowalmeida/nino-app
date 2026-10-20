@@ -36,9 +36,7 @@ describe('ProfileService', () => {
     vi.mocked(api.patch).mockResolvedValue(profileMock)
 
     // Act
-    const result = await ProfileService.updateProfile(
-      updateProfileRequestMock
-    )
+    const result = await ProfileService.updateProfile(updateProfileRequestMock)
 
     // Assert
     expect(api.patch).toHaveBeenCalledWith(

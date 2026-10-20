@@ -33,7 +33,8 @@ export const OrderActions = () => {
     nextStep?.target === 'COMPLETED'
 
   return (
-    <Box as="section"
+    <Box
+      as="section"
       aria-label="Ações do pedido"
       className={`${motion.deal} ${styles.orderActions}`}
       style={riseDelay(260)}

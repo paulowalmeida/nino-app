@@ -33,11 +33,30 @@
   @apply text-fg-strong;
 }
 
-
 .alert .metricValue {
   @apply underline decoration-2 underline-offset-4;
 }
 
 .density {
   @apply w-full shrink-0 sm:w-auto;
+}
+
+.loadingLabel {
+  @apply sr-only;
+}
+
+.skeletonTitle {
+  @apply h-8 w-28 lg:h-9;
+}
+
+.skeletonDescription {
+  @apply h-5 w-72 max-w-full;
+}
+
+.skeletonMetric {
+  @apply h-7 w-24;
+}
+
+.skeletonAction {
+  @apply h-9 w-full rounded-3 sm:w-40;
 }

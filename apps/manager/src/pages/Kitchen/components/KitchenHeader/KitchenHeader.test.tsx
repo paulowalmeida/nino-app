@@ -47,4 +47,21 @@ describe(KitchenHeader.name, () => {
       screen.getByRole('button', { name: 'Ver pedido inteiro' })
     ).toHaveAttribute('aria-pressed', 'true')
   })
+
+  it('keeps the header skeleton until kitchen orders are ready', () => {
+    vi.mocked(useKitchenFacade).mockReturnValue({
+      orders: [],
+      isPending: true,
+      isError: false,
+    } as never)
+
+    render(
+      <KitchenHeader {...kitchenHeaderMock} onToggleCompact={() => undefined} />
+    )
+
+    expect(screen.getByRole('status')).toHaveTextContent(
+      'Carregando pedidos da cozinha'
+    )
+    expect(screen.queryByText('em aberto')).not.toBeInTheDocument()
+  })
 })

@@ -13,7 +13,10 @@ export type TimingFiguresGridProps = {
   delay?: number
 }
 
-export const TimingFiguresGrid = ({ timing, delay = 0 }: TimingFiguresGridProps) => (
+export const TimingFiguresGrid = ({
+  timing,
+  delay = 0,
+}: TimingFiguresGridProps) => (
   <Box className={styles.figures}>
     {REPORTS_TIMING_FIGURES.map(({ key, sampleKey, label, empty }, index) => {
       const noSample = timing[sampleKey] === 0

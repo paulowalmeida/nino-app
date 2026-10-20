@@ -17,12 +17,11 @@ export type BrandTrackingProps = {
 }
 
 export const BrandTracking = ({ tracking, onChange }: BrandTrackingProps) => {
-  const changeStage = (stage: keyof TrackingDraft['stageLabels']) => (
-    value: string
-  ) =>
-    onChange({
-      stageLabels: { ...tracking.stageLabels, [stage]: value },
-    })
+  const changeStage =
+    (stage: keyof TrackingDraft['stageLabels']) => (value: string) =>
+      onChange({
+        stageLabels: { ...tracking.stageLabels, [stage]: value },
+      })
 
   return (
     <StudioSection title="Acompanhamento" description={SECTION_DESCRIPTION}>

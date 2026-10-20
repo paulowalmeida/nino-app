@@ -6,10 +6,7 @@ import { useCheckAvailability } from '@pages/Register/hooks/useCheckAvailability
 import type { CompanyFormValues } from '@pages/Register/types/CompanyFormValues.type'
 
 import { useCompanyForm } from './useCompanyForm'
-import {
-  companyFormMock,
-  companyValuesMock,
-} from './useCompanyForm.mock'
+import { companyFormMock, companyValuesMock } from './useCompanyForm.mock'
 
 vi.mock('@pages/Register/hooks/useCheckAvailability/useCheckAvailability')
 
@@ -19,12 +16,10 @@ const goToUnit = vi.fn()
 /* O formState do react-hook-form so avisa sobre o que foi lido no render:
    ler os erros aqui e' o que faz o teste enxergar a mudanca. */
 const renderCompanyForm = () =>
-  renderHook(
-    () => {
-      const form = useCompanyForm({ goToUnit })
-      return { ...form, errors: form.formState.errors }
-    }
-  )
+  renderHook(() => {
+    const form = useCompanyForm({ goToUnit })
+    return { ...form, errors: form.formState.errors }
+  })
 
 const fillCompany = (setValue: UseFormSetValue<CompanyFormValues>) =>
   act(() => setValue('company', companyValuesMock))

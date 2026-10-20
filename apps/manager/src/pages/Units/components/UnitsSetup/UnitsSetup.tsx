@@ -11,7 +11,8 @@ import styles from './UnitsSetup.module.css'
 export const UnitsSetup = () => {
   const [storeName, setStoreName] = useState('')
   const handleFormChange = useCallback(
-    (values: Partial<FirstStoreFormValues>) => setStoreName(values.customName ?? ''),
+    (values: Partial<FirstStoreFormValues>) =>
+      setStoreName(values.customName ?? ''),
     []
   )
 

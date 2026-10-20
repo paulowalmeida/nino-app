@@ -1,6 +1,5 @@
 @reference "@nino/ds/globals.css";
 
-
 .board {
   @apply relative z-content grid min-h-0 flex-1 grid-cols-1 gap-x-5 gap-y-4;
 }

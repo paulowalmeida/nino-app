@@ -16,13 +16,19 @@ vi.mock('@pages/Catalog/components/CatalogContent/CatalogContent', () => ({
   CatalogContent: () => <div>board</div>,
 }))
 
-vi.mock('@pages/Catalog/components/CatalogDeleteItemDialog/CatalogDeleteItemDialog', () => ({
-  CatalogDeleteItemDialog: () => <div>delete-item-dialog</div>,
-}))
+vi.mock(
+  '@pages/Catalog/components/CatalogDeleteItemDialog/CatalogDeleteItemDialog',
+  () => ({
+    CatalogDeleteItemDialog: () => <div>delete-item-dialog</div>,
+  })
+)
 
-vi.mock('@pages/Catalog/components/CatalogDeleteItemsDialog/CatalogDeleteItemsDialog', () => ({
-  CatalogDeleteItemsDialog: () => <div>delete-items-dialog</div>,
-}))
+vi.mock(
+  '@pages/Catalog/components/CatalogDeleteItemsDialog/CatalogDeleteItemsDialog',
+  () => ({
+    CatalogDeleteItemsDialog: () => <div>delete-items-dialog</div>,
+  })
+)
 
 describe(Catalog.name, () => {
   beforeEach(() => {

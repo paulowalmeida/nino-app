@@ -15,6 +15,10 @@ describe(loadProfile.name, () => {
 
     await loadProfile(set, get)
 
-    expect(set).toHaveBeenCalledWith({ status: 'success', profile, error: null })
+    expect(set).toHaveBeenCalledWith({
+      status: 'success',
+      profile,
+      error: null,
+    })
   })
 })

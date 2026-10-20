@@ -88,6 +88,17 @@ describe(CategoryRow.name, () => {
     expect(props.onEdit).toHaveBeenCalledOnce()
   })
 
+  it('exposes direct edit and delete actions for desktop', async () => {
+    const user = userEvent.setup()
+    const { props } = renderRow()
+
+    await user.click(screen.getByRole('button', { name: 'Renomear Bebidas' }))
+    await user.click(screen.getByRole('button', { name: 'Excluir Bebidas' }))
+
+    expect(props.onEdit).toHaveBeenCalledOnce()
+    expect(props.onDelete).toHaveBeenCalledOnce()
+  })
+
   it('uses singular and empty count guidance', () => {
     const { rerender } = renderRow({
       category: { ...category, count: 1 },
@@ -113,6 +124,12 @@ describe(CategoryRow.name, () => {
   it('disables the actions menu while a mutation is in flight', () => {
     renderRow({ disabled: true })
 
+    expect(
+      screen.getByRole('button', { name: 'Renomear Bebidas' })
+    ).toBeDisabled()
+    expect(
+      screen.getByRole('button', { name: 'Excluir Bebidas' })
+    ).toBeDisabled()
     expect(
       screen.getByRole('button', { name: 'Mais ações para Bebidas' })
     ).toBeDisabled()

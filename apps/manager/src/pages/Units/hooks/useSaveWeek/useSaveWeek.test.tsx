@@ -23,7 +23,10 @@ describe(useSaveWeek.name, () => {
   beforeEach(() => {
     vi.clearAllMocks()
     client = new QueryClient({
-      defaultOptions: { queries: { retry: false }, mutations: { retry: false } },
+      defaultOptions: {
+        queries: { retry: false },
+        mutations: { retry: false },
+      },
     })
     vi.mocked(OpeningHoursService.createOpeningHours).mockResolvedValue(
       savedDayMock as unknown as OpeningHours

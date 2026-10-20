@@ -15,7 +15,9 @@ vi.mock('@pages/ForgotPassword/utils/authErrorMessage/authErrorMessage')
 
 const mutateAsync = vi.fn()
 
-const typeEmail = (result: { current: ReturnType<typeof useForgotPasswordForm> }) => {
+const typeEmail = (result: {
+  current: ReturnType<typeof useForgotPasswordForm>
+}) => {
   act(() => {
     result.current.register('email').onChange({
       target: { name: 'email', value: forgotPasswordFormCredentialsMock.email },
@@ -43,9 +45,7 @@ describe('useForgotPasswordForm', () => {
     await act(() => result.current.submit())
 
     expect(mutateAsync).toHaveBeenCalledWith(forgotPasswordFormCredentialsMock)
-    expect(result.current.sentTo).toBe(
-      forgotPasswordFormCredentialsMock.email
-    )
+    expect(result.current.sentTo).toBe(forgotPasswordFormCredentialsMock.email)
   })
 
   it('reports a failed request on the form, not as sent', async () => {

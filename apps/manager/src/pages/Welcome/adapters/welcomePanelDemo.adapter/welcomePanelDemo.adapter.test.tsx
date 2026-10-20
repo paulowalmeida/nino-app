@@ -10,7 +10,9 @@ import { welcomePanelDemoMock } from './welcomePanelDemo.adapter.mock'
 describe('welcomePanelDemo', () => {
   it('demonstrates the order ticket, including its advance action', async () => {
     const { container } = render(
-      <MemoryRouter>{welcomePanelDemo(welcomePanelDemoMock.orderTicketKey)}</MemoryRouter>
+      <MemoryRouter>
+        {welcomePanelDemo(welcomePanelDemoMock.orderTicketKey)}
+      </MemoryRouter>
     )
 
     await userEvent.click(
@@ -22,7 +24,9 @@ describe('welcomePanelDemo', () => {
 
   it('demonstrates the kitchen card', () => {
     const { container } = render(
-      <MemoryRouter>{welcomePanelDemo(welcomePanelDemoMock.kitchenCardKey)}</MemoryRouter>
+      <MemoryRouter>
+        {welcomePanelDemo(welcomePanelDemoMock.kitchenCardKey)}
+      </MemoryRouter>
     )
 
     expect(container).not.toBeEmptyDOMElement()
@@ -30,7 +34,9 @@ describe('welcomePanelDemo', () => {
 
   it('demonstrates the order timeline', () => {
     const { container } = render(
-      <MemoryRouter>{welcomePanelDemo(welcomePanelDemoMock.orderTimelineKey)}</MemoryRouter>
+      <MemoryRouter>
+        {welcomePanelDemo(welcomePanelDemoMock.orderTimelineKey)}
+      </MemoryRouter>
     )
 
     expect(container).not.toBeEmptyDOMElement()

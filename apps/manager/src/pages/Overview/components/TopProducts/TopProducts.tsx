@@ -4,9 +4,7 @@ import { Card } from '@nino/ds/components/Card'
 import { EmptyState } from '@nino/ds/components/EmptyState'
 import { Eyebrow } from '@nino/ds/components/Eyebrow'
 import { Skeleton } from '@nino/ds/components/Skeleton'
-import {
-  TOP_PRODUCTS_SKELETON_WIDTHS,
-} from '@pages/Overview/constants/overview.constants'
+import { TOP_PRODUCTS_SKELETON_WIDTHS } from '@pages/Overview/constants/overview.constants'
 import { useOverviewFacade } from '@pages/Overview/facades/useOverviewFacade/useOverviewFacade'
 import { brl } from '@shared/utils/money/money'
 
@@ -37,7 +35,11 @@ export const TopProducts = () => {
         <Eyebrow className={styles.topProductsHeading}>O que mais sai</Eyebrow>
       </Box>
 
-      <Card variant="flat" padding="lg" className={`${motion.deal} ${styles.topProductsCard}`}>
+      <Card
+        variant="flat"
+        padding="lg"
+        className={`${motion.deal} ${styles.topProductsCard}`}
+      >
         {isPending && (
           <Box className={styles.skeletonBars}>
             {TOP_PRODUCTS_SKELETON_WIDTHS.map((width) => (

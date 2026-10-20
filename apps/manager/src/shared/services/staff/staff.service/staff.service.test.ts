@@ -36,7 +36,9 @@ describe('StaffService', () => {
     const result = await StaffService.listStaff(unitIdMock)
 
     // Assert
-    expect(api.get).toHaveBeenCalledWith(`units/${unitIdMock}/staff`)
+    expect(api.get).toHaveBeenCalledWith(
+      `units/${unitIdMock}/staff?status=active`
+    )
     expect(result).toBe(staffPageMock)
   })
 

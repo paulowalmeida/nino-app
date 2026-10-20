@@ -19,7 +19,8 @@ vi.mock('./TeamRoster/TeamRoster', () => ({
     removingId?: string
     changingPositionId?: string
     onRemove: (id: string) => void
-    onEditEmail?: (id: string) => void
+    onEdit?: (id: string) => void
+    onSetActivity?: (id: string) => void
     onChangePosition?: (id: string, positionId: string) => void
   }) => (
     <section aria-label={props.title}>
@@ -29,9 +30,12 @@ vi.mock('./TeamRoster/TeamRoster', () => ({
       <button onClick={() => props.onRemove('user-2')}>
         {`remove ${props.title}`}
       </button>
-      {props.onEditEmail && (
-        <button onClick={() => props.onEditEmail?.('user-2')}>
-          edit email
+      {props.onEdit && (
+        <button onClick={() => props.onEdit?.('user-2')}>edit staff</button>
+      )}
+      {props.onSetActivity && (
+        <button onClick={() => props.onSetActivity?.('user-2')}>
+          toggle activity
         </button>
       )}
       {props.onChangePosition && (
@@ -42,17 +46,21 @@ vi.mock('./TeamRoster/TeamRoster', () => ({
     </section>
   ),
 }))
-vi.mock('@shared/components/EditEmailModal/EditEmailModal', () => ({
-  EditEmailModal: (props: {
+vi.mock('./EditStaffModal/EditStaffModal', () => ({
+  EditStaffModal: (props: {
     open: boolean
-    currentEmail: string | null
+    staff: { email: string | null } | null
     onOpenChange: (open: boolean) => void
-    onSave: (email: string) => void
+    onSave: (values: { name: string; email: string }) => void
   }) => (
     <div>
       <span>{`modal:${props.open ? 'open' : 'closed'}`}</span>
-      <button onClick={() => props.onSave('novo@example.com')}>
-        {`save ${props.currentEmail}`}
+      <button
+        onClick={() =>
+          props.onSave({ name: 'Novo nome', email: 'novo@example.com' })
+        }
+      >
+        {`save ${props.staff?.email ?? 'null'}`}
       </button>
       <button onClick={() => props.onOpenChange(false)}>close modal</button>
       <button onClick={() => props.onOpenChange(true)}>reopen modal</button>
@@ -65,6 +73,8 @@ const facade = {
   invite: vi.fn(),
   removeMember: vi.fn(),
   updateStaffEmail: vi.fn(),
+  updateStaffProfile: vi.fn(),
+  setStaffActivity: vi.fn(),
   changePosition: vi.fn(),
 }
 
@@ -85,7 +95,7 @@ describe(EmployeesContent.name, () => {
     renderContent()
 
     expect(screen.getByText('invite')).toBeInTheDocument()
-    expect(screen.getByText('No painel')).toBeInTheDocument()
+    expect(screen.getByText('Ativos')).toBeInTheDocument()
     expect(screen.getAllByText('Na rua').length).toBeGreaterThan(0)
   })
 
@@ -97,8 +107,8 @@ describe(EmployeesContent.name, () => {
       'true'
     )
 
-    await userEvent.click(screen.getByRole('tab', { name: 'No painel · 1' }))
-    expect(screen.getByRole('tab', { name: 'No painel · 1' })).toHaveAttribute(
+    await userEvent.click(screen.getByRole('tab', { name: 'Ativos · 1' }))
+    expect(screen.getByRole('tab', { name: 'Ativos · 1' })).toHaveAttribute(
       'aria-selected',
       'true'
     )
@@ -118,9 +128,7 @@ describe(EmployeesContent.name, () => {
   it('removes a staff member and promotes through the facade for the owner', async () => {
     renderContent()
 
-    await userEvent.click(
-      screen.getByRole('button', { name: 'remove No painel' })
-    )
+    await userEvent.click(screen.getByRole('button', { name: 'remove Ativos' }))
     await userEvent.click(screen.getByRole('button', { name: 'promote' }))
 
     expect(facade.removeMember).toHaveBeenCalledWith({
@@ -144,16 +152,17 @@ describe(EmployeesContent.name, () => {
     })
   })
 
-  it('edits the e-mail of the selected member through the modal', async () => {
+  it('edits the name and e-mail of the selected member through the modal', async () => {
     renderContent()
 
-    await userEvent.click(screen.getByRole('button', { name: 'edit email' }))
+    await userEvent.click(screen.getByRole('button', { name: 'edit staff' }))
     await userEvent.click(
       screen.getByRole('button', { name: 'save caio@example.com' })
     )
 
-    expect(facade.updateStaffEmail).toHaveBeenCalledWith({
+    expect(facade.updateStaffProfile).toHaveBeenCalledWith({
       userId: 'user-2',
+      name: 'Novo nome',
       email: 'novo@example.com',
     })
   })
@@ -182,14 +191,14 @@ describe(EmployeesContent.name, () => {
 
     renderContent()
 
-    expect(screen.getByText('removing:user-2')).toBeInTheDocument()
+    expect(screen.getAllByText('removing:user-2')).not.toHaveLength(0)
     expect(screen.getByText('changing:user-2')).toBeInTheDocument()
   })
 
   it('closes the e-mail modal and keeps it open on a reopen request', async () => {
     renderContent()
 
-    await userEvent.click(screen.getByRole('button', { name: 'edit email' }))
+    await userEvent.click(screen.getByRole('button', { name: 'edit staff' }))
     expect(screen.getByText('modal:open')).toBeInTheDocument()
 
     await userEvent.click(screen.getByRole('button', { name: 'reopen modal' }))
@@ -204,8 +213,9 @@ describe(EmployeesContent.name, () => {
 
     await userEvent.click(screen.getByRole('button', { name: 'save null' }))
 
-    expect(facade.updateStaffEmail).toHaveBeenCalledWith({
+    expect(facade.updateStaffProfile).toHaveBeenCalledWith({
       userId: '',
+      name: 'Novo nome',
       email: 'novo@example.com',
     })
   })

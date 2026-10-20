@@ -6,9 +6,7 @@ import { Text } from '@nino/ds/components/Text'
 import type { Order } from '@shared/types/order/order'
 import type { OrderChannel } from '@shared/types/order/order-channel'
 import { consumerNameOf } from '@shared/utils/order-consumer/order-consumer'
-import {
-  orderDestination,
-} from '@shared/utils/order-destination/order-destination'
+import { orderDestination } from '@shared/utils/order-destination/order-destination'
 import { ticketNumber } from '@shared/utils/order-ticket/order-ticket'
 
 export type KitchenOrderModalProps = {
@@ -37,9 +35,7 @@ export const KitchenOrderModal = ({
             <Heading level={2} size="lg">
               {title}
             </Heading>
-            {destination && (
-              <Badge size="sm">{destination.label}</Badge>
-            )}
+            {destination && <Badge size="sm">{destination.label}</Badge>}
           </Box>
         )
       }

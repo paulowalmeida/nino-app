@@ -1,11 +1,6 @@
 import { MemoryRouter } from 'react-router'
 
-import {
-  fireEvent,
-  render,
-  screen,
-  waitFor,
-} from '@testing-library/react'
+import { fireEvent, render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 
@@ -47,8 +42,12 @@ describe(CatalogHeader.name, () => {
     )
     await user.click(screen.getByRole('tab', { name: 'Bebidas' }))
 
-    expect(screen.getByRole('heading', { name: 'Produtos' })).toBeInTheDocument()
-    expect(screen.getByRole('link', { name: 'Gerenciar categorias' })).toBeInTheDocument()
+    expect(
+      screen.getByRole('heading', { name: 'Produtos' })
+    ).toBeInTheDocument()
+    expect(
+      screen.getByRole('link', { name: 'Gerenciar categorias' })
+    ).toBeInTheDocument()
   })
 
   it('debounces the typed term before triggering a search', async () => {
@@ -72,5 +71,20 @@ describe(CatalogHeader.name, () => {
     )
 
     await waitFor(() => expect(setSearch).toHaveBeenCalledWith('suco'))
+  })
+
+  it('keeps the entire header as a skeleton while the catalog is pending', () => {
+    vi.mocked(useCatalogFacade).mockReturnValue({
+      items: [],
+      isPagePending: true,
+      setSearch: vi.fn(),
+    } as unknown as ReturnType<typeof useCatalogFacade>)
+
+    renderContainer()
+
+    expect(screen.getByRole('status')).toHaveTextContent('Carregando produtos')
+    expect(
+      screen.queryByRole('heading', { name: 'Produtos' })
+    ).not.toBeInTheDocument()
   })
 })

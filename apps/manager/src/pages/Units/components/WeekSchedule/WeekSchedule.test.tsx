@@ -23,7 +23,7 @@ describe('WeekSchedule', () => {
   it('renders the weekly schedule', () => {
     renderWeek([])
 
-    expect(screen.getByText('Quando a unidade abre')).toBeInTheDocument()
+    expect(screen.getByText('Horários')).toBeInTheDocument()
   })
 
   it('lists every day of the week', () => {
@@ -58,7 +58,9 @@ describe('WeekSchedule', () => {
     renderWeek()
 
     await userEvent.click(screen.getByLabelText('Terça'))
-    await userEvent.click(screen.getByRole('button', { name: 'Salvar horários' }))
+    await userEvent.click(
+      screen.getByRole('button', { name: 'Salvar horários' })
+    )
 
     await waitFor(() => expect(onSave).toHaveBeenCalled())
     expect(onSave).toHaveBeenCalledWith([

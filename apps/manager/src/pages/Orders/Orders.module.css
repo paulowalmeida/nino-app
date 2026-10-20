@@ -16,7 +16,6 @@
   @apply lg:px-10 lg:pt-10;
 }
 
-
 @media (min-width: 2560px) {
   .ordersPage {
     @apply mx-auto w-full max-w-[120rem];

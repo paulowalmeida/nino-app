@@ -1,5 +1,5 @@
 import { Box } from '@nino/ds/components/Box'
-import { Heading } from '@nino/ds/components/Heading'
+import { Header } from '@nino/ds/components/Header'
 import { Text } from '@nino/ds/components/Text'
 import { useTableTabDetailFacade } from '@pages/TableTabDetail/facades/useTableTabDetailFacade/useTableTabDetailFacade'
 import { tabMomentLabel } from '@pages/TableTabDetail/utils/tabMomentLabel/tabMomentLabel'
@@ -19,9 +19,7 @@ export const TabFinalizedSummary = () => {
     <Box className={styles.tabFinalizedSummary}>
       {payment && (
         <>
-          <Heading level={2} size="lg">
-            Conta paga
-          </Heading>
+          <Header level={2} size="lg" title="Conta paga" />
           <Box className={styles.tabFinalizedSummaryFacts}>
             <Text>{PAYMENT_METHOD_LABEL[payment.method]}</Text>
             <Text weight="bold">{brl(payment.amount)}</Text>
@@ -38,9 +36,7 @@ export const TabFinalizedSummary = () => {
       )}
       {cancelledAt && (
         <>
-          <Heading level={2} size="lg">
-            Comanda cancelada
-          </Heading>
+          <Header level={2} size="lg" title="Comanda cancelada" />
           <Box className={styles.tabFinalizedSummaryFacts}>
             <Text>{cancelReason}</Text>
             <Text size="sm" color="muted">

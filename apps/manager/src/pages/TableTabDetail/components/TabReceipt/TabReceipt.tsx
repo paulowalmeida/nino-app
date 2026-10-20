@@ -3,7 +3,7 @@ import { useState } from 'react'
 import { Box } from '@nino/ds/components/Box'
 import { Button } from '@nino/ds/components/Button'
 import { Card } from '@nino/ds/components/Card'
-import { Heading } from '@nino/ds/components/Heading'
+import { Header } from '@nino/ds/components/Header'
 import { Text } from '@nino/ds/components/Text'
 import { AddTabItemDialog } from '@pages/TableTabDetail/components/TabReceipt/AddTabItemDialog/AddTabItemDialog'
 import { TabReceiptItem } from '@pages/TableTabDetail/components/TabReceipt/TabReceiptItem/TabReceiptItem'
@@ -27,16 +27,18 @@ export const TabReceipt = () => {
       padding="lg"
       className={`${motion.deal} ${styles.tabReceipt}`}
     >
-      <Box direction="row" justify="between" align="center" gap={3}>
-        <Heading level={2} size="lg">
-          Consumo
-        </Heading>
-        {isOpen && (
-          <Button size="sm" onClick={() => setLaunchingItem(true)}>
-            Lançar item
-          </Button>
-        )}
-      </Box>
+      <Header
+        level={2}
+        size="lg"
+        title="Consumo"
+        actions={
+          isOpen && (
+            <Button size="sm" onClick={() => setLaunchingItem(true)}>
+              Lançar item
+            </Button>
+          )
+        }
+      />
       {tab.items.length === 0 && (
         <Text color="muted" className={styles.tabReceiptEmpty}>
           Nenhum item lançado ainda.

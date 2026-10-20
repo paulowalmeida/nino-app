@@ -12,7 +12,6 @@
   @apply text-sm leading-relaxed text-fg-default;
 }
 
-
 .code {
   @apply rounded-2 bg-surface-5 px-1.5 py-0.5;
   @apply font-mono text-sm font-semibold text-fg-strong;

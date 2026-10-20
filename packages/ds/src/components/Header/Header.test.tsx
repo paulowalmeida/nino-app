@@ -71,4 +71,28 @@ describe(Header.name, () => {
     // Assert
     expect(container.firstChild).toHaveClass('mb-6')
   })
+
+  it('centers title and description when asked', () => {
+    // Arrange / Act
+    render(<Header title="Bem-vindo" description="Entre" align="center" />)
+
+    // Assert
+    expect(screen.getByRole('heading', { name: 'Bem-vindo' })).toHaveClass(
+      'text-center'
+    )
+    expect(screen.getByText('Entre')).toHaveClass('text-center')
+  })
+
+  it('puts the title id on the heading so a region can be named by it', () => {
+    // Arrange / Act
+    render(
+      <Header title="Cargo" titleId="role-title" description="Quem pode" />
+    )
+
+    // Assert
+    expect(screen.getByRole('heading', { name: 'Cargo' })).toHaveAttribute(
+      'id',
+      'role-title'
+    )
+  })
 })

@@ -2,7 +2,7 @@ import { Alert } from '@nino/ds/components/Alert'
 import { Box } from '@nino/ds/components/Box'
 import { Button } from '@nino/ds/components/Button'
 import { FormField } from '@nino/ds/components/FormField'
-import { Heading } from '@nino/ds/components/Heading'
+import { Header } from '@nino/ds/components/Header'
 import { Input } from '@nino/ds/components/Input'
 import { Text } from '@nino/ds/components/Text'
 import { useRegisterFacade } from '@pages/Register/facades/useRegisterFacade/useRegisterFacade'
@@ -32,12 +32,13 @@ export const UnitStep = () => {
   return (
     <Box direction="column">
       <RiseIn as="header">
-        <Heading level={1} size="2xl" align="center">
-          Abra sua unidade
-        </Heading>
-        <Text size="sm" color="muted" align="center" mt={2}>
-          O endereço que seus clientes vão encontrar
-        </Text>
+        <Header
+          level={1}
+          size="2xl"
+          align="center"
+          title="Abra sua unidade"
+          description="O endereço que seus clientes vão encontrar"
+        />
       </RiseIn>
 
       <Box

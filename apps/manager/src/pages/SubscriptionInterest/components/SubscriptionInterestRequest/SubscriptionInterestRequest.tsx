@@ -8,5 +8,7 @@ export const SubscriptionInterestRequest = () => {
 
   if (isInterestSent) return <SubscriptionInterestSent />
 
-  return <SubscriptionInterestForm onInterestSent={() => setIsInterestSent(true)} />
+  return (
+    <SubscriptionInterestForm onInterestSent={() => setIsInterestSent(true)} />
+  )
 }

@@ -56,7 +56,13 @@ export const StudioToolbar = ({
     >
       <StudioDeviceTabs device={device} onChange={onDeviceChange} />
 
-      <Box direction="row" align="center" gap={2} wrap className={styles.studioToolbarRight}>
+      <Box
+        direction="row"
+        align="center"
+        gap={2}
+        wrap
+        className={styles.studioToolbarRight}
+      >
         <Text size="sm" weight="semibold" aria-live="polite">
           {statusFor(isDirty, hasUnpublishedDraft, publishedVersion)}
         </Text>

@@ -73,9 +73,9 @@ describe('LoginForm', () => {
 
     renderForm()
     fireEvent.submit(
-      screen.getByRole('button', { name: loginFormMock.submitLabel }).closest(
-        'form'
-      ) as HTMLFormElement
+      screen
+        .getByRole('button', { name: loginFormMock.submitLabel })
+        .closest('form') as HTMLFormElement
     )
 
     expect(submit).toHaveBeenCalled()

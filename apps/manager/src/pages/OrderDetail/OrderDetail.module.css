@@ -1,10 +1,8 @@
 @reference "@nino/ds/globals.css";
 
-
 .orderDetailPage {
   @apply mx-auto flex max-w-page flex-col p-4 lg:p-10;
 }
-
 
 .ghostEyebrow {
   @apply mb-2 h-2.5 w-24;
@@ -50,7 +48,6 @@
   @apply shrink-0 pb-1;
 }
 
-
 .hero {
   @apply mt-2 flex items-start gap-4 border-b border-border/60 pb-5;
 }
@@ -58,7 +55,6 @@
 .heroText {
   @apply min-w-0 flex-1;
 }
-
 
 .channel {
   @apply mb-1;
@@ -80,16 +76,13 @@
   @apply shrink-0;
 }
 
-
 .columns {
   @apply mt-6 grid items-start gap-5 lg:grid-cols-[1.1fr_1fr] lg:gap-12;
 }
 
-
 .receipt {
   @apply min-w-0;
 }
-
 
 /* WHY: O teto vai no viewport, não na raiz: o `Viewport` do Ark é `h-full`, e
  * num pai que só tem `max-height` isso resolve para `auto` — a raiz recortava
@@ -126,7 +119,6 @@
   font-variant-numeric: tabular-nums;
 }
 
-
 .totals {
   @apply mt-4 flex flex-col gap-1.5 rounded-4 bg-surface-2 p-4;
 }
@@ -144,7 +136,6 @@
   @apply mt-1 border-t border-border pt-2.5;
   @apply font-display text-xl font-extrabold text-fg-strong;
 }
-
 
 .notes {
   @apply mt-4 rounded-2 bg-brand-ghost p-3 text-sm leading-relaxed;

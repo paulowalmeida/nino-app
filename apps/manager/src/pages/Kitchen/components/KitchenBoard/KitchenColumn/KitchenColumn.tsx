@@ -3,7 +3,7 @@ import { rectSortingStrategy, SortableContext } from '@dnd-kit/sortable'
 
 import { Box } from '@nino/ds/components/Box'
 import { EmptyState } from '@nino/ds/components/EmptyState'
-import { Heading } from '@nino/ds/components/Heading'
+import { Header } from '@nino/ds/components/Header'
 import { Skeleton } from '@nino/ds/components/Skeleton'
 import { Text } from '@nino/ds/components/Text'
 import { mergeClasses } from '@nino/ds/mergeClasses'
@@ -91,23 +91,20 @@ export const KitchenColumn = ({
       data-kitchen-stage={stage}
       data-drop-valid={activeOrder ? acceptsDrop : undefined}
     >
-      <Box
-        as="header"
-        direction="row"
-        align="center"
+      <Header
         className={`${motion.deal} ${styles.columnHead}`}
-      >
-        <Heading level={2} className={styles.columnTitle}>
-          {title}
-        </Heading>
-        {isPending ? (
-          <Skeleton className={styles.skeletonCount} />
-        ) : (
-          <Text as="span" className={styles.kitchenColumnCount}>
-            {orders.length}
-          </Text>
-        )}
-      </Box>
+        level={2}
+        title={title}
+        actions={
+          isPending ? (
+            <Skeleton className={styles.skeletonCount} />
+          ) : (
+            <Text as="span" className={styles.kitchenColumnCount}>
+              {orders.length}
+            </Text>
+          )
+        }
+      />
 
       <Box className={styles.stack}>
         {isPending &&

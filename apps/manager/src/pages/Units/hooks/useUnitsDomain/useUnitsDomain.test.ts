@@ -38,7 +38,10 @@ describe(useUnitsDomain.name, () => {
   beforeEach(() => {
     vi.clearAllMocks()
     client = new QueryClient({
-      defaultOptions: { queries: { retry: false }, mutations: { retry: false } },
+      defaultOptions: {
+        queries: { retry: false },
+        mutations: { retry: false },
+      },
     })
   })
 

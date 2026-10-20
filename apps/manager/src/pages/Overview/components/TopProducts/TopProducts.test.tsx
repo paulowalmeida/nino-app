@@ -16,7 +16,10 @@ describe('TopProducts', () => {
 
     render(<TopProducts />)
 
-    expect(screen.getByLabelText(topProductsMock.label)).toHaveAttribute('id', 'ultimos-vendidos')
+    expect(screen.getByLabelText(topProductsMock.label)).toHaveAttribute(
+      'id',
+      'ultimos-vendidos'
+    )
   })
 
   it('renders the empty product ranking', () => {
@@ -26,14 +29,23 @@ describe('TopProducts', () => {
 
     render(<TopProducts />)
 
-    expect(screen.getByText('Nenhuma venda concluída na semana.')).toBeInTheDocument()
+    expect(
+      screen.getByText('Nenhuma venda concluída na semana.')
+    ).toBeInTheDocument()
   })
 
   it('renders a populated product ranking', () => {
     vi.mocked(useOverviewFacade).mockReturnValue({
       salesReport: {
         report: {
-          topProducts: [{ productId: 'product-1', name: 'Pastel', quantity: 3, revenue: 30 }],
+          topProducts: [
+            {
+              productId: 'product-1',
+              name: 'Pastel',
+              quantity: 3,
+              revenue: 30,
+            },
+          ],
         },
         isPending: false,
       },

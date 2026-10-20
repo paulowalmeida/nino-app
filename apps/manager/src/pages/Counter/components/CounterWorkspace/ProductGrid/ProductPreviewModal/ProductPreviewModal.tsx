@@ -1,5 +1,5 @@
 import { Box } from '@nino/ds/components/Box'
-import { Heading } from '@nino/ds/components/Heading'
+import { Header } from '@nino/ds/components/Header'
 import { Modal } from '@nino/ds/components/Modal'
 import { Text } from '@nino/ds/components/Text'
 import { ItemThumb } from '@shared/components/ItemThumb/ItemThumb'
@@ -33,18 +33,12 @@ export const ProductPreviewModal = ({
             fallbackUrl={item.fallbackUrl}
             className={styles.photo}
           />
-          <Heading level={2} size="lg" className={styles.name}>
-            {item.name}
-          </Heading>
-          {item.description && (
-            <Text
-              size="sm"
-              color="muted"
-              className={styles.productPreviewModalDescription}
-            >
-              {item.description}
-            </Text>
-          )}
+          <Header
+            level={2}
+            size="lg"
+            title={item.name}
+            description={item.description ?? undefined}
+          />
           <Text size="lg" weight="bold" color="brand" className={styles.price}>
             {brl(item.price)}
           </Text>

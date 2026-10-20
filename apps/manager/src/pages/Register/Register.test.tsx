@@ -37,9 +37,7 @@ describe('Register', () => {
     render(<Register />)
 
     expect(resetWizard).toHaveBeenCalled()
-    expect(
-      screen.getByText(registerPageMock.stepperLabel)
-    ).toBeInTheDocument()
+    expect(screen.getByText(registerPageMock.stepperLabel)).toBeInTheDocument()
     expect(
       screen.getByText(registerPageMock.accountStepLabel)
     ).toBeInTheDocument()

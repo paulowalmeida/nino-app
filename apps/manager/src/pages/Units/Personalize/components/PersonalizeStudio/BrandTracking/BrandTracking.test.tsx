@@ -11,9 +11,7 @@ describe(BrandTracking.name, () => {
   beforeEach(() => onChange.mockClear())
 
   it('shows the store voice already saved for a stage', () => {
-    render(
-      <BrandTracking tracking={trackingDraftMock} onChange={onChange} />
-    )
+    render(<BrandTracking tracking={trackingDraftMock} onChange={onChange} />)
 
     expect(screen.getByLabelText('Pedido recebido')).toHaveValue(
       'Pedido na casa'
@@ -21,9 +19,7 @@ describe(BrandTracking.name, () => {
   })
 
   it('offers the nino default as the placeholder of an untouched stage', () => {
-    render(
-      <BrandTracking tracking={trackingDraftMock} onChange={onChange} />
-    )
+    render(<BrandTracking tracking={trackingDraftMock} onChange={onChange} />)
 
     expect(screen.getByLabelText('Em preparo')).toHaveAttribute(
       'placeholder',
@@ -32,9 +28,7 @@ describe(BrandTracking.name, () => {
   })
 
   it('reports an edited stage label without dropping the others', async () => {
-    render(
-      <BrandTracking tracking={trackingDraftMock} onChange={onChange} />
-    )
+    render(<BrandTracking tracking={trackingDraftMock} onChange={onChange} />)
 
     await userEvent.type(screen.getByLabelText('Entregue'), 'B')
 
@@ -44,9 +38,7 @@ describe(BrandTracking.name, () => {
   })
 
   it('reports the waiting message on its own', async () => {
-    render(
-      <BrandTracking tracking={trackingDraftMock} onChange={onChange} />
-    )
+    render(<BrandTracking tracking={trackingDraftMock} onChange={onChange} />)
 
     await userEvent.type(screen.getByLabelText('Mensagem de espera'), 'O')
 

@@ -16,7 +16,11 @@ describe(UnitsHeader.name, () => {
         <UnitsHeader />
       </MemoryRouter>
     )
-    expect(screen.getByRole('heading', { name: 'Sua primeira loja, Marina' })).toBeInTheDocument()
-    expect(screen.getByRole('link', { name: 'Ver como funciona' })).toHaveAttribute('href', '/boas-vindas')
+    expect(
+      screen.getByRole('heading', { name: 'Sua primeira loja, Marina' })
+    ).toBeInTheDocument()
+    expect(
+      screen.getByRole('link', { name: 'Ver como funciona' })
+    ).toHaveAttribute('href', '/boas-vindas')
   })
 })

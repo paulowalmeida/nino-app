@@ -44,18 +44,17 @@ export const useOrdersFilters = () => {
     isSearching,
     search,
     stage,
-    statuses:
-      isSearching
-        ? undefined
-        : stage === 'table'
-          ? [
-              ...statusesForStage('incoming'),
-              ...statusesForStage('confirmed'),
-              ...statusesForStage('kitchen'),
-              ...statusesForStage('street'),
-              ...statusesForStage('counter'),
-            ]
-          : statusesForStage(stage),
+    statuses: isSearching
+      ? undefined
+      : stage === 'table'
+        ? [
+            ...statusesForStage('incoming'),
+            ...statusesForStage('confirmed'),
+            ...statusesForStage('kitchen'),
+            ...statusesForStage('street'),
+            ...statusesForStage('counter'),
+          ]
+        : statusesForStage(stage),
     channel: (isSearching
       ? undefined
       : stage === 'table'

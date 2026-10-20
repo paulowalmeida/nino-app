@@ -30,10 +30,6 @@ export const useOverviewFacade = () => {
     salesSeries: useSalesSeries(unitId, { period: 'week' }),
     salesReport: useSalesReport(unitId, { period: 'week' }),
     topConsumersSpent: useTopConsumers(unitId, 'spent', TOP_CONSUMERS_LIMIT),
-    topConsumersOrders: useTopConsumers(
-      unitId,
-      'orders',
-      TOP_CONSUMERS_LIMIT
-    ),
+    topConsumersOrders: useTopConsumers(unitId, 'orders', TOP_CONSUMERS_LIMIT),
   }
 }

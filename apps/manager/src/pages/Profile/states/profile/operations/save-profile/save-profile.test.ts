@@ -13,7 +13,13 @@ describe(saveProfile.name, () => {
     vi.mocked(ProfileService.updateProfile).mockResolvedValue(profile)
     const set = vi.fn()
 
-    await expect(saveProfile(set, saveProfileOperationMock)).resolves.toBe(profile)
-    expect(set).toHaveBeenCalledWith({ profile, status: 'success', isSaving: false })
+    await expect(saveProfile(set, saveProfileOperationMock)).resolves.toBe(
+      profile
+    )
+    expect(set).toHaveBeenCalledWith({
+      profile,
+      status: 'success',
+      isSaving: false,
+    })
   })
 })

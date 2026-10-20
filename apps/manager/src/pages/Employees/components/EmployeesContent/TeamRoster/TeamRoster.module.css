@@ -72,7 +72,6 @@
 
 .identity {
   @apply flex min-w-0 items-center gap-3 rounded-2;
-  @apply transition-colors duration-150 hover:bg-surface-mute;
   @apply focus-visible:outline-none focus-visible:ring-2;
   @apply focus-visible:ring-brand focus-visible:ring-offset-1;
 }
@@ -135,6 +134,18 @@
   @apply disabled:opacity-disabled;
   @apply focus-visible:outline-2 focus-visible:outline-brand;
   @apply focus-visible:outline-offset-2;
+}
+
+.desktopActions {
+  @apply hidden justify-end lg:flex;
+}
+
+.compactActions {
+  @apply flex justify-end lg:hidden;
+}
+
+.delete {
+  @apply text-danger hover:bg-danger-surface hover:text-danger;
 }
 
 .menuPanel {

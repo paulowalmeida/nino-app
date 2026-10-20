@@ -2,6 +2,7 @@ import { type AnimationEvent, useState } from 'react'
 
 import { Reorder, useDragControls } from 'framer-motion'
 
+import { Box } from '@nino/ds/components/Box'
 import { Button } from '@nino/ds/components/Button'
 import { Icon } from '@nino/ds/components/Icon'
 import { Menu, type MenuItem } from '@nino/ds/components/Menu'
@@ -85,20 +86,44 @@ export const CategoryRow = ({
       </TableCell>
 
       <TableCell className={styles.actionsCell}>
-        <Menu
-          trigger={
-            <Button
-              variant="ghost"
-              size="icon"
-              className={motion.press}
-              disabled={disabled}
-              aria-label={`Mais ações para ${category.name}`}
-            >
-              <Icon name="kebab" />
-            </Button>
-          }
-          items={actionItems}
-        />
+        <Box direction="row" gap={1} className={styles.desktopActions}>
+          <Button
+            variant="ghost"
+            size="icon"
+            className={motion.press}
+            disabled={disabled}
+            aria-label={`Renomear ${category.name}`}
+            onClick={onEdit}
+          >
+            <Icon name="pencil" />
+          </Button>
+          <Button
+            variant="ghost"
+            size="icon"
+            className={`${motion.press} ${styles.delete}`}
+            disabled={disabled}
+            aria-label={`Excluir ${category.name}`}
+            onClick={onDelete}
+          >
+            <Icon name="trash" />
+          </Button>
+        </Box>
+        <Box className={styles.compactActions}>
+          <Menu
+            trigger={
+              <Button
+                variant="ghost"
+                size="icon"
+                className={motion.press}
+                disabled={disabled}
+                aria-label={`Mais ações para ${category.name}`}
+              >
+                <Icon name="kebab" />
+              </Button>
+            }
+            items={actionItems}
+          />
+        </Box>
       </TableCell>
     </Reorder.Item>
   )

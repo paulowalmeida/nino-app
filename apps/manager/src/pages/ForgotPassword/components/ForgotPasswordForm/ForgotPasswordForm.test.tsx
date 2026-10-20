@@ -55,7 +55,9 @@ describe('ForgotPasswordForm', () => {
 
   it('shows a failed request above the button', () => {
     facadeWith({
-      fieldErrors: { root: { message: forgotPasswordFormMock.rootErrorMessage } },
+      fieldErrors: {
+        root: { message: forgotPasswordFormMock.rootErrorMessage },
+      },
     })
 
     render(<ForgotPasswordForm />)

@@ -42,9 +42,7 @@ describe('CompanyStep', () => {
       screen.getByRole('heading', { name: companyStepMock.heading })
     ).toBeInTheDocument()
     expect(screen.getByText(companyStepMock.greeting)).toBeInTheDocument()
-    expect(
-      screen.getByLabelText(companyStepMock.cnpjLabel)
-    ).toBeInTheDocument()
+    expect(screen.getByLabelText(companyStepMock.cnpjLabel)).toBeInTheDocument()
   })
 
   it('walks back to the account step', async () => {

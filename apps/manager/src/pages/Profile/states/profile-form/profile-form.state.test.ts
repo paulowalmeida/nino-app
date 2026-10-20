@@ -81,11 +81,15 @@ describe(useProfileFormStore.name, () => {
 
     await useProfileFormStore.getState().save()
 
-    expect(ProfileService.updateMyEmail).toHaveBeenCalledWith('nova@example.com')
+    expect(ProfileService.updateMyEmail).toHaveBeenCalledWith(
+      'nova@example.com'
+    )
   })
 
   it('keeps the draft when the profile save returns no profile', async () => {
-    vi.mocked(ProfileService.updateProfile).mockResolvedValue(undefined as never)
+    vi.mocked(ProfileService.updateProfile).mockResolvedValue(
+      undefined as never
+    )
     useProfileFormStore.getState().initialize(profile)
     useProfileFormStore.getState().change({ name: 'Maria Souza' })
 
@@ -119,7 +123,10 @@ describe(useProfileFormStore.name, () => {
     useProfileStore.setState({ profile: profileWithoutContact })
     useProfileFormStore.getState().initialize(profileWithoutContact)
 
-    expect(useProfileFormStore.getState().draft).toMatchObject({ phone: '', email: '' })
+    expect(useProfileFormStore.getState().draft).toMatchObject({
+      phone: '',
+      email: '',
+    })
   })
 
   it('does not reinitialize a dirty or already initialized draft', () => {

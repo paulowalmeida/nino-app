@@ -25,6 +25,8 @@ type HeadingProps = HTMLAttributes<HTMLHeadingElement> &
     color?: TextColor
     /** Text alignment. Default: `left` */
     align?: TextAlign
+    /** Applies the manager's title underline. */
+    accent?: boolean
   }
 
 /* A escala saiu do que os apps já escreviam à mão, não de uma régua nova:
@@ -73,6 +75,7 @@ export function Heading({
   size,
   color = 'strong',
   align = 'left',
+  accent = false,
   m,
   mt,
   mb,
@@ -95,7 +98,7 @@ export function Heading({
       )}
       {...props}
     >
-      {children}
+      {accent ? <span className={styles.accent}>{children}</span> : children}
     </Component>
   )
 }

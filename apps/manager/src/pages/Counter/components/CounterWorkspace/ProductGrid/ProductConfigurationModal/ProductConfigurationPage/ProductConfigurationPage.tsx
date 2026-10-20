@@ -2,7 +2,7 @@ import type { ReactNode } from 'react'
 
 import { Box } from '@nino/ds/components/Box'
 import { Button } from '@nino/ds/components/Button'
-import { Heading } from '@nino/ds/components/Heading'
+import { Header } from '@nino/ds/components/Header'
 import { Icon } from '@nino/ds/components/Icon'
 import { Text } from '@nino/ds/components/Text'
 import { ItemThumb } from '@shared/components/ItemThumb/ItemThumb'
@@ -61,14 +61,11 @@ export const ProductConfigurationPage = ({
 
       <Box className={styles.productConfigurationPageDetails}>
         <Box className={styles.productConfigurationPageSummary}>
-          <Heading level={1} accent className={styles.name}>
-            {item.name}
-          </Heading>
-          {item.description && (
-            <Text as="p" className={styles.productConfigurationPageDescription}>
-              {item.description}
-            </Text>
-          )}
+          <Header
+            level={1}
+            title={item.name}
+            description={item.description ?? undefined}
+          />
           <Text as="span" className={styles.price}>
             {item.pricingType === 'COMPOSED' ? 'A partir de ' : ''}
             {brl(item.price)}

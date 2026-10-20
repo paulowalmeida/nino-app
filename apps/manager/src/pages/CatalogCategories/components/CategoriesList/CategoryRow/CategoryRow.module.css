@@ -40,3 +40,15 @@
 .actionsCell {
   @apply w-12 pl-3 pr-4 text-right lg:pr-10;
 }
+
+.desktopActions {
+  @apply hidden justify-end lg:flex;
+}
+
+.compactActions {
+  @apply flex justify-end lg:hidden;
+}
+
+.delete {
+  @apply text-danger hover:bg-danger-surface hover:text-danger;
+}

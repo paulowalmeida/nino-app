@@ -24,7 +24,10 @@ describe(MenuRowLeadingControl.name, () => {
       />
     )
 
-    await user.pointer({ keys: '[MouseLeft]', target: screen.getByRole('button') })
+    await user.pointer({
+      keys: '[MouseLeft]',
+      target: screen.getByRole('button'),
+    })
 
     expect(dragControls.start).toHaveBeenCalled()
   })
@@ -44,7 +47,9 @@ describe(MenuRowLeadingControl.name, () => {
       />
     )
 
-    await user.click(screen.getByRole('checkbox', { name: 'Selecionar Coxinha' }))
+    await user.click(
+      screen.getByRole('checkbox', { name: 'Selecionar Coxinha' })
+    )
 
     expect(onToggleSelect).toHaveBeenCalledOnce()
   })

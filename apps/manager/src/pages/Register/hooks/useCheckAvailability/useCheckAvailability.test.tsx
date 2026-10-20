@@ -35,9 +35,9 @@ describe('useCheckAvailability', () => {
     result.current.mutate(checkAvailabilityRequestMock)
 
     await waitFor(() => expect(result.current.isSuccess).toBe(true))
-    expect(
-      vi.mocked(AuthService.checkAvailability).mock.calls[0][0]
-    ).toEqual(checkAvailabilityRequestMock)
+    expect(vi.mocked(AuthService.checkAvailability).mock.calls[0][0]).toEqual(
+      checkAvailabilityRequestMock
+    )
     expect(result.current.data).toBe(checkAvailabilityResponseMock)
   })
 })

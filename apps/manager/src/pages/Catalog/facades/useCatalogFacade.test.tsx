@@ -11,7 +11,9 @@ import { useCurrentUnit } from '@shared/hooks/session/useCurrentUnit/useCurrentU
 import type { MenuItem } from '@shared/types/product/menu-item'
 
 vi.mock('@shared/hooks/session/useCurrentUnit/useCurrentUnit')
-vi.mock('@pages/Catalog/hooks/useCatalogCategoriesQuery/useCatalogCategoriesQuery')
+vi.mock(
+  '@pages/Catalog/hooks/useCatalogCategoriesQuery/useCatalogCategoriesQuery'
+)
 vi.mock('@pages/Catalog/hooks/useCatalogCommands/useCatalogCommands')
 vi.mock('@pages/Catalog/hooks/useCatalogMutations/useCatalogMutations')
 vi.mock('@pages/Catalog/hooks/useCatalogQuery/useCatalogQuery')

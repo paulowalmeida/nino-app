@@ -60,21 +60,19 @@ describe(useCatalogQuery.name, () => {
         pagination: { total: 2 },
       } as unknown as MenuPage)
 
-    const { result } = renderHook(
-      () => useCatalogQuery('unit-1', null, ''),
-      { wrapper: createWrapper() }
-    )
+    const { result } = renderHook(() => useCatalogQuery('unit-1', null, ''), {
+      wrapper: createWrapper(),
+    })
 
     await waitFor(() => expect(result.current.status).toBe('success'))
     expect(result.current.hasNextPage).toBe(true)
 
     await result.current.fetchNextPage()
 
-    expect(ProductService.listProducts).toHaveBeenNthCalledWith(
-      2,
-      'unit-1',
-      { page: 2, size: 20 }
-    )
+    expect(ProductService.listProducts).toHaveBeenNthCalledWith(2, 'unit-1', {
+      page: 2,
+      size: 20,
+    })
     await waitFor(() => {
       expect(result.current.items.map((item) => item.id)).toEqual([
         'item-1',
@@ -85,10 +83,9 @@ describe(useCatalogQuery.name, () => {
   })
 
   it('does not request products before a unit is available', () => {
-    const { result } = renderHook(
-      () => useCatalogQuery(null, null, ''),
-      { wrapper: createWrapper() }
-    )
+    const { result } = renderHook(() => useCatalogQuery(null, null, ''), {
+      wrapper: createWrapper(),
+    })
 
     expect(result.current.fetchStatus).toBe('idle')
     expect(ProductService.listProducts).not.toHaveBeenCalled()

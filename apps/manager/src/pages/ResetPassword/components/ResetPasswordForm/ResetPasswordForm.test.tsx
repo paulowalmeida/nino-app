@@ -58,7 +58,9 @@ describe('ResetPasswordForm', () => {
 
   it('shows a rejected reset above the button', () => {
     facadeWith({
-      fieldErrors: { root: { message: resetPasswordFormMock.rootErrorMessage } },
+      fieldErrors: {
+        root: { message: resetPasswordFormMock.rootErrorMessage },
+      },
     })
 
     render(<ResetPasswordForm />)

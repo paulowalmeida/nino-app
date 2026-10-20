@@ -82,9 +82,7 @@ describe(CatalogControls.name, () => {
     render(<CatalogControls />)
 
     // Act
-    await user.click(
-      screen.getByRole('checkbox', { name: 'Selecionar todos' })
-    )
+    await user.click(screen.getByRole('checkbox', { name: 'Selecionar todos' }))
 
     // Assert
     expect(toggleAllItemsSelection).toHaveBeenCalledOnce()

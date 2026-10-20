@@ -17,7 +17,8 @@
   .figure:hover {
     box-shadow:
       0 0 0 1px color-mix(in srgb, var(--color-brand) 45%, transparent),
-      0 8px 20px -12px color-mix(in srgb, var(--color-warm-950) 20%, transparent);
+      0 8px 20px -12px
+        color-mix(in srgb, var(--color-warm-950) 20%, transparent);
   }
 }
 

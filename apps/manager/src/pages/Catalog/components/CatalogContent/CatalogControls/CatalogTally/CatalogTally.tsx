@@ -23,6 +23,8 @@ export const CatalogTally = ({
       : total === 1
         ? '1 item'
         : `${total} itens`}
-    {canReorder && !isSelecting && ' · arraste para mudar a ordem no app do cliente'}
+    {canReorder &&
+      !isSelecting &&
+      ' · arraste para mudar a ordem no app do cliente'}
   </Text>
 )

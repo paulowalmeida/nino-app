@@ -16,7 +16,11 @@ export const TableTabsListSkeleton = () => (
       {tableTabsListSkeletonMock.status}
     </Text>
 
-    <Box as="ul" className={styles.tableTabsListSkeletonList} aria-hidden="true">
+    <Box
+      as="ul"
+      className={styles.tableTabsListSkeletonList}
+      aria-hidden="true"
+    >
       {Array.from(
         { length: tableTabsListSkeletonMock.cardCount },
         (_, index) => (

@@ -3,10 +3,7 @@ import { beforeEach, describe, expect, it } from 'vitest'
 
 import { useProfileStore } from '../../states/profile/profile.state'
 import { ProfileHeader } from './ProfileHeader'
-import {
-  googleProfile,
-  neverLoggedProfile,
-} from './ProfileHeader.mock'
+import { googleProfile, neverLoggedProfile } from './ProfileHeader.mock'
 
 describe(ProfileHeader.name, () => {
   beforeEach(() => {
@@ -48,7 +45,9 @@ describe(ProfileHeader.name, () => {
     useProfileStore.setState({
       profile: {
         ...neverLoggedProfile,
-        credentials: [{ ...neverLoggedProfile.credentials[0], provider: 'sso' }],
+        credentials: [
+          { ...neverLoggedProfile.credentials[0], provider: 'sso' },
+        ],
       },
       status: 'success',
     })
@@ -61,7 +60,9 @@ describe(ProfileHeader.name, () => {
     useProfileStore.setState({
       profile: {
         ...neverLoggedProfile,
-        credentials: [{ ...neverLoggedProfile.credentials[0], provider: null as never }],
+        credentials: [
+          { ...neverLoggedProfile.credentials[0], provider: null as never },
+        ],
       },
       status: 'success',
     })

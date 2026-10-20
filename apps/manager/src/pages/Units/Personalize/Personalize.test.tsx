@@ -1,4 +1,3 @@
-
 import { render, screen } from '@testing-library/react'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 
@@ -76,9 +75,12 @@ describe(Personalize.name, () => {
 
   it('explains when loading timed out', () => {
     vi.mocked(useUnitsFacade).mockReturnValue(
-      facadeWith(
-        { data: undefined, isPending: false, isError: true, error: new Error('Request timed out') }
-      )
+      facadeWith({
+        data: undefined,
+        isPending: false,
+        isError: true,
+        error: new Error('Request timed out'),
+      })
     )
 
     renderPage()
@@ -113,7 +115,7 @@ describe(Personalize.name, () => {
     renderPage()
 
     expect(
-      screen.getByRole('heading', { level: 1, name: 'Personalizar loja' })
+      screen.getByRole('heading', { level: 1, name: 'Personalizar' })
     ).toBeInTheDocument()
     expect(
       screen.getByRole('region', { name: 'Prévia da loja para o cliente' })

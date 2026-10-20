@@ -6,7 +6,6 @@ import { Box } from '../Box/Box'
 import { Heading } from '../Heading/Heading'
 import { HeadingLevel, HeadingSize } from '../Heading/Heading.types'
 import { Text } from '../Text/Text'
-import styles from './Header.module.css'
 
 type HeaderProps = HTMLAttributes<HTMLElement> &
   MarginProps & {
@@ -21,10 +20,17 @@ type HeaderProps = HTMLAttributes<HTMLElement> &
     /** Visual size of the title. Defaults to the size that matches `level` */
     size?: HeadingSize
     /**
-     * Word or phrase inside `title` that gets the peach underline. Must
-     * appear in `title` verbatim; ignored otherwise.
+     * Kept so existing screens keep compiling. The peach underline now
+     * covers the whole title, so the value is no longer read
      */
     accent?: string
+    /**
+     * Where title and description sit. `center` is for screens that stand
+     * alone on the page, like sign-in. Default: `left`
+     */
+    align?: 'left' | 'center'
+    /** `id` of the title element, for an `aria-labelledby` that names a region by it */
+    titleId?: string
     /** Supporting line under the title */
     description?: string
     /** Right-aligned actions (buttons, menus) */
@@ -41,7 +47,8 @@ type HeaderProps = HTMLAttributes<HTMLElement> &
  * <Header title="Quem toca a equipe" accent="equipe" />
  * <Header title="Pedidos" description="Um toque move o pedido adiante." />
  *
- * - `accent` — Word inside `title` that gets the peach underline
+ * - `align` — `left` (default) or `center`
+ * - `accent` — Kept for compatibility; the whole title gets the peach underline
  * - `m` — Margin on every side, from the Tailwind spacing scale. `mt`, `mb`, `mx` and `my` narrow it to one axis or side
  * - `className` — Additional CSS classes
  * ```
@@ -50,7 +57,9 @@ export function Header({
   title,
   level = 1,
   size,
-  accent,
+  accent: _accent,
+  align = 'left',
+  titleId,
   description,
   actions,
   m,
@@ -61,16 +70,11 @@ export function Header({
   className,
   ...props
 }: HeaderProps) {
-  /* Corta o título na posição real do destaque em vez de removê-lo e
-   * reescrevê-lo no fim: assim uma palavra destacada no meio da frase
-   * continua no lugar em que foi escrita. */
-  const accentAt = accent ? title.indexOf(accent) : -1
-
   return (
     <Box
       direction="row"
       align="start"
-      justify="between"
+      justify={align === 'center' ? 'center' : 'between'}
       gap={4}
       m={m}
       mt={mt}
@@ -80,20 +84,12 @@ export function Header({
       className={className}
       {...props}
     >
-      <Box gap={1}>
-        <Heading level={level} size={size}>
-          {accent && accentAt >= 0 ? (
-            <>
-              {title.slice(0, accentAt)}
-              <span className={styles.accent}>{accent}</span>
-              {title.slice(accentAt + accent.length)}
-            </>
-          ) : (
-            title
-          )}
+      <Box gap={1} align={align === 'center' ? 'center' : undefined}>
+        <Heading level={level} size={size} align={align} id={titleId} accent>
+          {title}
         </Heading>
         {description && (
-          <Text size="sm" color="subtle">
+          <Text size="sm" color="subtle" align={align}>
             {description}
           </Text>
         )}

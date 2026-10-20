@@ -19,7 +19,8 @@ export const OrderPaymentBlock = () => {
   if (!order) return null
 
   return (
-    <Box as="section"
+    <Box
+      as="section"
       aria-label="Pagamento"
       className={`${motion.deal} ${styles.block}`}
       style={riseDelay(140)}

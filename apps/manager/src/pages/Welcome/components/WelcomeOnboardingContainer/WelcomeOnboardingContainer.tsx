@@ -1,7 +1,7 @@
 import { useState } from 'react'
 
 import { Box } from '@nino/ds/components/Box'
-import { Heading } from '@nino/ds/components/Heading'
+import { Header } from '@nino/ds/components/Header'
 import { Text } from '@nino/ds/components/Text'
 import { welcomePanelDemo } from '@pages/Welcome/adapters/welcomePanelDemo.adapter/welcomePanelDemo.adapter'
 import { ScreenPreviewFrame } from '@pages/Welcome/components/WelcomeOnboardingContainer/ScreenPreviewFrame/ScreenPreviewFrame'
@@ -31,10 +31,12 @@ export const WelcomeOnboardingContainer = () => {
                 ? `Bem-vindo, ${firstName}`
                 : panel.stage}
             </Text>
-            <Heading level={1} className={styles.welcomeOnboardingContainerTitle}>
-              {panel.title}
-            </Heading>
-            <Text className={styles.welcomeOnboardingContainerText}>{panel.text}</Text>
+            <Header
+              level={1}
+              size="2xl"
+              title={panel.title}
+              description={panel.text}
+            />
           </Box>
 
           <WelcomeStepTrack panels={WELCOME_PANELS} index={index} />

@@ -38,7 +38,9 @@ describe('QueueBoard', () => {
 
     render(<QueueBoard />, { wrapper: MemoryRouter })
 
-    expect(screen.getByRole('link', { name: /Ver pedidos esperando aceite/ })).toBeInTheDocument()
+    expect(
+      screen.getByRole('link', { name: /Ver pedidos esperando aceite/ })
+    ).toBeInTheDocument()
     expect(screen.getByText('2')).toBeInTheDocument()
     expect(screen.queryByText(/Nenhum pedido na fila/)).not.toBeInTheDocument()
   })

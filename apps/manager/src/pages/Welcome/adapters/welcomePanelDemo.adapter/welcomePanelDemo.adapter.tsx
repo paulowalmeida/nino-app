@@ -1,5 +1,8 @@
 import type { WelcomePanelDemoKey } from '@pages/Welcome/types/WelcomePanelDemoKey.type'
-import { demoOrder, demoTimeline } from '@pages/Welcome/utils/welcomeDemoOrder/welcomeDemoOrder'
+import {
+  demoOrder,
+  demoTimeline,
+} from '@pages/Welcome/utils/welcomeDemoOrder/welcomeDemoOrder'
 import { KitchenCard } from '@shared/components/KitchenCard/KitchenCard'
 import { OrderTicket } from '@shared/components/OrderTicket/OrderTicket'
 import { OrderTimeline } from '@shared/components/OrderTimeline/OrderTimeline'

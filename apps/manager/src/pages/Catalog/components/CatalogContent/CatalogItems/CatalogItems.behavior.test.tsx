@@ -16,26 +16,31 @@ vi.mock('@shared/hooks/ui/useLoadMore/useLoadMore', () => ({
     return () => undefined
   },
 }))
-vi.mock('@pages/Catalog/components/CatalogContent/CatalogItems/MenuRow/MenuRow', () => ({
-  MenuRow: ({
-    item,
-    onToggleAvailability,
-    onDelete,
-    onDragEnd,
-  }: {
-    item: MenuItem
-    onToggleAvailability: (id: string, isActive: boolean) => void
-    onDelete: (item: MenuItem) => void
-    onDragEnd: () => void
-  }) => (
-    <div>
-      <span>{item.name}</span>
-      <button onClick={() => onToggleAvailability(item.id, false)}>disponibilidade</button>
-      <button onClick={() => onDelete(item)}>excluir</button>
-      <button onClick={onDragEnd}>arrastar</button>
-    </div>
-  ),
-}))
+vi.mock(
+  '@pages/Catalog/components/CatalogContent/CatalogItems/MenuRow/MenuRow',
+  () => ({
+    MenuRow: ({
+      item,
+      onToggleAvailability,
+      onDelete,
+      onDragEnd,
+    }: {
+      item: MenuItem
+      onToggleAvailability: (id: string, isActive: boolean) => void
+      onDelete: (item: MenuItem) => void
+      onDragEnd: () => void
+    }) => (
+      <div>
+        <span>{item.name}</span>
+        <button onClick={() => onToggleAvailability(item.id, false)}>
+          disponibilidade
+        </button>
+        <button onClick={() => onDelete(item)}>excluir</button>
+        <button onClick={onDragEnd}>arrastar</button>
+      </div>
+    ),
+  })
+)
 vi.mock('framer-motion', () => ({
   Reorder: {
     Group: ({
@@ -48,7 +53,9 @@ vi.mock('framer-motion', () => ({
       children: ReactNode
     }) => (
       <div>
-        <button onClick={() => onReorder([...values].reverse())}>reordenar</button>
+        <button onClick={() => onReorder([...values].reverse())}>
+          reordenar
+        </button>
         {children}
       </div>
     ),
@@ -69,55 +76,66 @@ describe('CatalogItems behavior', () => {
     vi.clearAllMocks()
     loadMoreCallback = undefined
     currentItems = [item, secondItem]
-    vi.mocked(useCatalogFacade).mockImplementation(() => ({
-      categoryId: 'cat-1',
-      canManageCatalog: true,
-      search: '',
-      items: currentItems,
-      isFetchingNextPage: false,
-      hasNextPage: false,
-      loadMore: vi.fn(),
-      isSelecting: false,
-      selectedIds: new Set(),
-      toggleItemSelection: vi.fn(),
-      requestDeleteItem,
-      setAvailability,
-      reorderItems,
-      resetSelection,
-    } as unknown as ReturnType<typeof useCatalogFacade>))
+    vi.mocked(useCatalogFacade).mockImplementation(
+      () =>
+        ({
+          categoryId: 'cat-1',
+          canManageCatalog: true,
+          search: '',
+          items: currentItems,
+          isFetchingNextPage: false,
+          hasNextPage: false,
+          loadMore: vi.fn(),
+          isSelecting: false,
+          selectedIds: new Set(),
+          toggleItemSelection: vi.fn(),
+          requestDeleteItem,
+          setAvailability,
+          reorderItems,
+          resetSelection,
+        }) as unknown as ReturnType<typeof useCatalogFacade>
+    )
   })
 
   it('forwards row actions and submits the locally reordered items', async () => {
     const user = userEvent.setup()
     render(<CatalogItems />)
 
-    await user.click(screen.getAllByRole('button', { name: 'disponibilidade' })[0])
+    await user.click(
+      screen.getAllByRole('button', { name: 'disponibilidade' })[0]
+    )
     await user.click(screen.getAllByRole('button', { name: 'excluir' })[0])
     await user.click(screen.getByRole('button', { name: 'reordenar' }))
     await user.click(screen.getAllByRole('button', { name: 'arrastar' })[0])
 
-    expect(setAvailability).toHaveBeenCalledWith({ id: 'item-1', isActive: false })
+    expect(setAvailability).toHaveBeenCalledWith({
+      id: 'item-1',
+      isActive: false,
+    })
     expect(requestDeleteItem).toHaveBeenCalledWith(item)
     expect(reorderItems).toHaveBeenCalledWith([secondItem, item])
   })
 
   it('loads the next page through the sentinel callback', () => {
     const loadMore = vi.fn()
-    vi.mocked(useCatalogFacade).mockImplementation(() => ({
-      categoryId: 'cat-1',
-      search: '',
-      items: currentItems,
-      isFetchingNextPage: false,
-      hasNextPage: true,
-      loadMore,
-      isSelecting: false,
-      selectedIds: new Set(),
-      toggleItemSelection: vi.fn(),
-      requestDeleteItem,
-      setAvailability,
-      reorderItems,
-      resetSelection,
-    } as unknown as ReturnType<typeof useCatalogFacade>))
+    vi.mocked(useCatalogFacade).mockImplementation(
+      () =>
+        ({
+          categoryId: 'cat-1',
+          search: '',
+          items: currentItems,
+          isFetchingNextPage: false,
+          hasNextPage: true,
+          loadMore,
+          isSelecting: false,
+          selectedIds: new Set(),
+          toggleItemSelection: vi.fn(),
+          requestDeleteItem,
+          setAvailability,
+          reorderItems,
+          resetSelection,
+        }) as unknown as ReturnType<typeof useCatalogFacade>
+    )
 
     render(<CatalogItems />)
     loadMoreCallback?.()

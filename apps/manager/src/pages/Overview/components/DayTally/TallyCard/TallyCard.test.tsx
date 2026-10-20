@@ -8,18 +8,36 @@ import { tallyCardMock } from './TallyCard.mock'
 
 describe('TallyCard', () => {
   it('renders the metric link', () => {
-    render(<TallyCard {...tallyCardMock} isPending={false} value="12" skeletonClassName="skeleton" />, {
-      wrapper: MemoryRouter,
-    })
+    render(
+      <TallyCard
+        {...tallyCardMock}
+        isPending={false}
+        value="12"
+        skeletonClassName="skeleton"
+      />,
+      {
+        wrapper: MemoryRouter,
+      }
+    )
 
-    expect(screen.getByRole('link', { name: tallyCardMock.ariaLabel })).toBeInTheDocument()
+    expect(
+      screen.getByRole('link', { name: tallyCardMock.ariaLabel })
+    ).toBeInTheDocument()
     expect(screen.getByText(tallyCardMock.label)).toBeInTheDocument()
   })
 
   it('renders a placeholder while pending', () => {
-    render(<TallyCard {...tallyCardMock} isPending value="12" skeletonClassName="skeleton" />, {
-      wrapper: MemoryRouter,
-    })
+    render(
+      <TallyCard
+        {...tallyCardMock}
+        isPending
+        value="12"
+        skeletonClassName="skeleton"
+      />,
+      {
+        wrapper: MemoryRouter,
+      }
+    )
 
     expect(screen.getByRole('link')).toBeInTheDocument()
   })

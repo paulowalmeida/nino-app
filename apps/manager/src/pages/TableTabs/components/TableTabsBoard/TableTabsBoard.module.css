@@ -17,6 +17,18 @@
   @apply w-fit gap-2;
 }
 
+.skeletonSearch {
+  @apply h-11 w-full sm:max-w-md;
+}
+
+.skeletonGroups {
+  @apply gap-2;
+}
+
+.skeletonGroup {
+  @apply h-10 w-28 rounded-full;
+}
+
 .tableTabsBoardScroll {
   @apply min-h-0 flex-1 overflow-y-auto px-4 pb-4 pt-5;
   @apply lg:px-10 lg:pb-10 lg:pt-7;

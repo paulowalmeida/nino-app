@@ -14,7 +14,7 @@
 }
 
 .week {
-  @apply flex flex-col gap-1 ;
+  @apply flex flex-col gap-1;
 }
 
 /* WHY: One row per day — a closed day recedes into the background. No
@@ -45,7 +45,6 @@
 .until {
   @apply text-xs text-fg-faint;
 }
-
 
 @media (min-width: 2560px) {
   .weekSchedulePanel {

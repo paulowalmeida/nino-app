@@ -1,20 +1,15 @@
 @reference "@nino/ds/globals.css";
 
 .categoryRowsSkeletonRow {
-  @apply flex min-h-16 flex-wrap items-center gap-3 rounded-3 px-2 py-3;
-  @apply border-t border-border;
-}
-
-.who {
-  @apply flex min-w-40 flex-1 flex-col;
+  @apply pointer-events-none;
 }
 
 .ghostHandle {
-  @apply size-10 shrink-0 rounded-2;
+  @apply size-9 rounded-2;
 }
 
 .ghostName {
-  @apply h-5 w-32;
+  @apply h-5 w-32 mb-1;
 }
 
 .ghostHint {
@@ -23,4 +18,12 @@
 
 .ghostAction {
   @apply size-9 shrink-0 rounded-2;
+}
+
+.ghostHeaderHandle {
+  @apply h-3 w-4;
+}
+
+.ghostHeaderName {
+  @apply h-3 w-20;
 }

@@ -30,10 +30,7 @@ describe('UnitThemeService', () => {
   it('sends the theme document to the draft endpoint', async () => {
     vi.mocked(api.update).mockResolvedValue(draftThemeMock)
 
-    await UnitThemeService.saveDraft(
-      themeServiceUnitId,
-      themeServiceConfigMock
-    )
+    await UnitThemeService.saveDraft(themeServiceUnitId, themeServiceConfigMock)
 
     expect(api.update).toHaveBeenCalledWith(
       'units/unit-1/theme/draft',

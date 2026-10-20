@@ -36,7 +36,9 @@ describe('useOrdersFilters', () => {
   it('falls back to incoming for an invalid stage and trims search', () => {
     const { result } = renderHook(() => useOrdersFilters(), {
       wrapper: ({ children }) => (
-        <MemoryRouter initialEntries={['/pedidos?etapa=invalid&busca=%20bolo%20']}>
+        <MemoryRouter
+          initialEntries={['/pedidos?etapa=invalid&busca=%20bolo%20']}
+        >
           {children}
         </MemoryRouter>
       ),

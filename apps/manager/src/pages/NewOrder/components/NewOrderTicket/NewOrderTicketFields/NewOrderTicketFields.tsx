@@ -22,7 +22,11 @@ export const NewOrderTicketFields = () => {
   return (
     <>
       <Box direction="column" gap={1.5}>
-        <Text as="span" className={styles.newOrderTicketFieldsLabel} id="channel-label">
+        <Text
+          as="span"
+          className={styles.newOrderTicketFieldsLabel}
+          id="channel-label"
+        >
           Como sai
         </Text>
         <Select
@@ -44,7 +48,11 @@ export const NewOrderTicketFields = () => {
       />
 
       <Box className={styles.newOrderTicketFieldsField}>
-        <Text as="span" className={styles.newOrderTicketFieldsLabel} id="payment-label">
+        <Text
+          as="span"
+          className={styles.newOrderTicketFieldsLabel}
+          id="payment-label"
+        >
           Pagamento
         </Text>
         <Select

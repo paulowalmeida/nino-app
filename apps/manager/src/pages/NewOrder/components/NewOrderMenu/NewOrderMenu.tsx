@@ -1,7 +1,7 @@
 import { Box } from '@nino/ds/components/Box'
 import { Button } from '@nino/ds/components/Button'
 import { EmptyState } from '@nino/ds/components/EmptyState'
-import { Heading } from '@nino/ds/components/Heading'
+import { Header } from '@nino/ds/components/Header'
 import { ListRow } from '@nino/ds/components/ListRow'
 import { Text } from '@nino/ds/components/Text'
 import { useNewOrderFacade } from '@pages/NewOrder/facades/useNewOrderFacade/useNewOrderFacade'
@@ -28,13 +28,12 @@ export const NewOrderMenu = () => {
 
       {sections.map(({ id, name, items }, sectionIndex) => (
         <Box as="section" key={id}>
-          <Heading
-            level={2}
-            className={`${motion.unroll} ${styles.sectionName}`}
+          <Header
+            className={`${motion.deal} ${styles.sectionName}`}
             style={riseDelay(sectionIndex * 70)}
-          >
-            {name}
-          </Heading>
+            level={2}
+            title={name}
+          />
 
           <Box as="ul" className={styles.items} direction="column">
             {items

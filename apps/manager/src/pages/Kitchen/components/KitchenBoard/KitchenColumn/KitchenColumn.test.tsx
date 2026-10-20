@@ -86,6 +86,22 @@ describe(KitchenColumn.name, () => {
     ).toHaveAttribute('data-drop-valid', 'true')
   })
 
+  it('keeps counts and cards as skeletons while orders are pending', () => {
+    const { container } = render(
+      <KitchenColumn
+        {...kitchenColumnMock}
+        {...columnProps}
+        isPending
+        orders={[]}
+      />
+    )
+
+    expect(screen.queryByText('0')).not.toBeInTheDocument()
+    expect(
+      container.querySelectorAll('[aria-hidden="true"]').length
+    ).toBeGreaterThan(0)
+  })
+
   it('marks a forbidden destination as an invalid drop target', () => {
     render(
       <KitchenColumn

@@ -1,6 +1,6 @@
 import { Badge } from '@nino/ds/components/Badge'
 import { Box } from '@nino/ds/components/Box'
-import { Heading } from '@nino/ds/components/Heading'
+import { Header } from '@nino/ds/components/Header'
 import { Text } from '@nino/ds/components/Text'
 import { useTableTabDetailFacade } from '@pages/TableTabDetail/facades/useTableTabDetailFacade/useTableTabDetailFacade'
 import {
@@ -23,14 +23,12 @@ export const TabDetailHero = () => {
   return (
     <Box as="header" className={`${motion.deal} ${styles.tabDetailHero}`}>
       <Box className={styles.tabDetailHeroIdentity}>
-        <Heading
-          level={1}
-          accent
-          size="2xl"
+        <Header
           className={styles.tabDetailHeroLabel}
-        >
-          {tab.label}
-        </Heading>
+          level={1}
+          size="2xl"
+          title={tab.label}
+        />
         <Box direction="row" align="center" gap={2} wrap>
           <Badge variant={TAB_STATUS_BADGE_VARIANT[tab.status]}>
             {TAB_STATUS_LABEL[tab.status]}

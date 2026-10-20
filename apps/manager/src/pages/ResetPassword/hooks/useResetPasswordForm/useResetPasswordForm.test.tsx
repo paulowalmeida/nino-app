@@ -22,7 +22,9 @@ vi.mock('@pages/ResetPassword/utils/authErrorMessage/authErrorMessage')
 
 const mutateAsync = vi.fn()
 
-const typePassword = (result: { current: ReturnType<typeof useResetPasswordForm> }) => {
+const typePassword = (result: {
+  current: ReturnType<typeof useResetPasswordForm>
+}) => {
   act(() => {
     result.current.register('password').onChange({
       target: { name: 'password', value: resetPasswordFormValuesMock.password },

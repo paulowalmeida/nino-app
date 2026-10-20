@@ -83,7 +83,9 @@ describe(useUnitAddressSearch.name, () => {
       { wrapper }
     )
 
-    await waitFor(() => expect(UnitAddressSearchService.search).toHaveBeenCalled())
+    await waitFor(() =>
+      expect(UnitAddressSearchService.search).toHaveBeenCalled()
+    )
     await act(async () => {
       await result.current.resolveSelectedAddress('place-1')
     })

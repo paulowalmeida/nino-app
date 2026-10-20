@@ -8,5 +8,12 @@ type UnitsStoreFormProps = {
 
 export const UnitsStoreForm = ({ onChange }: UnitsStoreFormProps) => {
   const { typeOptions, submitStore } = useUnitsFacade()
-  return <StoreForm typeOptions={typeOptions} onSubmitStore={submitStore} onChange={onChange} submitLabel="Criar loja" />
+  return (
+    <StoreForm
+      typeOptions={typeOptions}
+      onSubmitStore={submitStore}
+      onChange={onChange}
+      submitLabel="Criar loja"
+    />
+  )
 }

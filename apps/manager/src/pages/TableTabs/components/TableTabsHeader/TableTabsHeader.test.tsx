@@ -1,6 +1,8 @@
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import { describe, expect, it, vi } from 'vitest'
+import { beforeEach, describe, expect, it, vi } from 'vitest'
+
+import { useTableTabsFacade } from '@pages/TableTabs/facades/useTableTabsFacade/useTableTabsFacade'
 
 import { TableTabsHeader } from './TableTabsHeader'
 import { tableTabsHeaderMock } from './TableTabsHeader.mock'
@@ -22,8 +24,15 @@ vi.mock(
       ) : null,
   })
 )
+vi.mock('@pages/TableTabs/facades/useTableTabsFacade/useTableTabsFacade')
 
 describe('TableTabsHeader', () => {
+  beforeEach(() => {
+    vi.mocked(useTableTabsFacade).mockReturnValue({
+      isPending: false,
+    } as ReturnType<typeof useTableTabsFacade>)
+  })
+
   it('titles the screen and offers to open a tab', () => {
     render(<TableTabsHeader />)
 
@@ -41,10 +50,25 @@ describe('TableTabsHeader', () => {
     await userEvent.click(
       screen.getByRole('button', { name: tableTabsHeaderMock.openLabel })
     )
-    await userEvent.click(screen.getByRole('button', { name: 'fechar diálogo' }))
+    await userEvent.click(
+      screen.getByRole('button', { name: 'fechar diálogo' })
+    )
 
     expect(
       screen.queryByRole('button', { name: 'fechar diálogo' })
+    ).not.toBeInTheDocument()
+  })
+
+  it('keeps the page header as a skeleton while tabs are loading', () => {
+    vi.mocked(useTableTabsFacade).mockReturnValue({
+      isPending: true,
+    } as ReturnType<typeof useTableTabsFacade>)
+
+    render(<TableTabsHeader />)
+
+    expect(screen.getByRole('status')).toHaveTextContent('Carregando comandas')
+    expect(
+      screen.queryByRole('heading', { name: tableTabsHeaderMock.title })
     ).not.toBeInTheDocument()
   })
 })

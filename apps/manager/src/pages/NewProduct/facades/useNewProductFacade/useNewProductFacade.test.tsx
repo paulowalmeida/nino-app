@@ -48,9 +48,7 @@ describe('useNewProductFacade', () => {
     expect(useNewProductSubmission).toHaveBeenCalledWith(
       newProductFacadeMock.unitId
     )
-    expect(useCreateCategory).toHaveBeenCalledWith(
-      newProductFacadeMock.unitId
-    )
+    expect(useCreateCategory).toHaveBeenCalledWith(newProductFacadeMock.unitId)
     expect(result.current.categoryOptions).toHaveLength(1)
     expect(result.current.isCategoriesPending).toBe(false)
     expect(result.current.submitProduct).toBe(submitProduct)

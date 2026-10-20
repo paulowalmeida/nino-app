@@ -7,7 +7,7 @@ import { PauseSwitch } from './PauseSwitch'
 import { pauseSwitchMock } from './PauseSwitch.mock'
 
 vi.mock('@pages/Overview/facades/useOverviewFacade/useOverviewFacade')
-  vi.mock('./PauseDurationModal/PauseDurationModal', () => ({
+vi.mock('./PauseDurationModal/PauseDurationModal', () => ({
   PauseDurationModal: ({
     open,
     onSelectDuration,
@@ -76,7 +76,11 @@ describe('PauseSwitch', () => {
     vi.mocked(useOverviewFacade).mockReturnValue({
       timezone: null,
       pause: {
-        data: { isPaused: true, pausedUntil: Date.now(), pauseReason: 'Intervalo' },
+        data: {
+          isPaused: true,
+          pausedUntil: Date.now(),
+          pauseReason: 'Intervalo',
+        },
         isPending: false,
       },
       pauseActions: { resume: { mutate, isPending: true } },

@@ -54,10 +54,9 @@ describe('useTabs', () => {
   })
 
   it('does not request without a unit', () => {
-    const { result } = renderHook(
-      () => useTabs(null, tabsScopeMock.statuses),
-      { wrapper }
-    )
+    const { result } = renderHook(() => useTabs(null, tabsScopeMock.statuses), {
+      wrapper,
+    })
 
     expect(TabService.listTabs).not.toHaveBeenCalled()
     expect(result.current.tabs).toEqual([])

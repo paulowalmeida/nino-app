@@ -52,7 +52,9 @@ export const TallyHistory = ({ recent }: TallyHistoy) => {
               <time className={styles.at} dateTime={order.createdAt}>
                 {clock.format(new Date(order.createdAt))}
               </time>
-              <Text className={styles.tallyHistoryTotal}>{brl(order.totalAmount)}</Text>
+              <Text className={styles.tallyHistoryTotal}>
+                {brl(order.totalAmount)}
+              </Text>
             </Link>
           </ListRow>
         ))}

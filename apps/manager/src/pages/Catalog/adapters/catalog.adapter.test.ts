@@ -36,7 +36,10 @@ describe('catalog.adapter', () => {
   })
 
   it('flattens loaded pages and reads total from the last page', () => {
-    const data = { pages: [page([item], 3), page([secondItem], 3)], pageParams: [1, 2] }
+    const data = {
+      pages: [page([item], 3), page([secondItem], 3)],
+      pageParams: [1, 2],
+    }
 
     expect(toCatalogItems(data)).toEqual([item, secondItem])
     expect(toCatalogTotal(data)).toBe(3)

@@ -1,1 +1,3 @@
-export const authErrorMessageMock = { fallback: 'Falha de conexão. Verifique sua internet e tente de novo.' }
+export const authErrorMessageMock = {
+  fallback: 'Falha de conexão. Verifique sua internet e tente de novo.',
+}

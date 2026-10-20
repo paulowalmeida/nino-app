@@ -3,3 +3,55 @@
 .catalogHeader {
   @apply shrink-0;
 }
+
+.skeleton {
+  @apply gap-3;
+}
+
+.loadingLabel {
+  @apply sr-only;
+}
+
+.skeletonIdentity {
+  @apply mb-1;
+}
+
+.skeletonTitle {
+  @apply h-8 w-28 lg:h-9;
+}
+
+.skeletonDescription {
+  @apply h-5 w-full max-w-112;
+}
+
+.skeletonToolbar {
+  @apply mb-1;
+}
+
+.skeletonSearch {
+  @apply h-11 w-full lg:max-w-sm;
+}
+
+.skeletonActions {
+  @apply lg:ml-auto;
+}
+
+.skeletonManageCategories {
+  @apply h-11 w-full rounded-full sm:w-44;
+}
+
+.skeletonNewItem {
+  @apply h-11 w-full rounded-full sm:w-24;
+}
+
+.skeletonCategories {
+  @apply gap-2 overflow-hidden pb-3;
+}
+
+.skeletonCategory {
+  @apply h-10 w-24 shrink-0 rounded-full;
+}
+
+.skeletonCategoryWide {
+  @apply h-10 w-32 shrink-0 rounded-full;
+}

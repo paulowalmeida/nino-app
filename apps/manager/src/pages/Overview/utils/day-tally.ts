@@ -14,10 +14,7 @@ const byPaymentMethod = (today: Order[]): DayTally['byPaymentMethod'] => {
 
   for (const order of today) {
     const current = amountByMethod.get(order.paymentMethod) ?? 0
-    amountByMethod.set(
-      order.paymentMethod,
-      current + Number(order.totalAmount)
-    )
+    amountByMethod.set(order.paymentMethod, current + Number(order.totalAmount))
   }
 
   return [...amountByMethod.entries()]

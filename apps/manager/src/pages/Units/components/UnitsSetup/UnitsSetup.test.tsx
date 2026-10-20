@@ -5,9 +5,15 @@ import { describe, expect, it, vi } from 'vitest'
 import { UnitsSetup } from './UnitsSetup'
 
 vi.mock('../UnitsStoreForm/UnitsStoreForm', () => ({
-  UnitsStoreForm: ({ onChange }: { onChange: (values: { customName?: string }) => void }) => (
+  UnitsStoreForm: ({
+    onChange,
+  }: {
+    onChange: (values: { customName?: string }) => void
+  }) => (
     <>
-      <button onClick={() => onChange({ customName: 'Café da Vila' })}>Create store</button>
+      <button onClick={() => onChange({ customName: 'Café da Vila' })}>
+        Create store
+      </button>
       <button onClick={() => onChange({})}>Clear store name</button>
     </>
   ),
@@ -21,7 +27,9 @@ describe(UnitsSetup.name, () => {
     render(<UnitsSetup />)
     await userEvent.click(screen.getByRole('button', { name: 'Create store' }))
     expect(screen.getByText('Preview Café da Vila')).toBeInTheDocument()
-    await userEvent.click(screen.getByRole('button', { name: 'Clear store name' }))
+    await userEvent.click(
+      screen.getByRole('button', { name: 'Clear store name' })
+    )
     expect(screen.getByText('Preview')).toBeInTheDocument()
   })
 })

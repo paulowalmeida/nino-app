@@ -11,10 +11,7 @@ import { useSessionStore } from '@shared/states/session/session.state'
 import type { UnitDetail } from '@shared/types/store/unit-detail'
 import type { UnitDraft } from '@shared/types/store/unit-draft'
 
-const detailKey = (unitId: string) => [
-  ...queryKeys.unit.all(unitId),
-  'detail',
-]
+const detailKey = (unitId: string) => [...queryKeys.unit.all(unitId), 'detail']
 
 export const useUnitsDomain = () => {
   const unit = useCurrentUnit()

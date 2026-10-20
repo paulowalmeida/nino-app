@@ -7,9 +7,7 @@ import { toCatalogViewStatus } from '@pages/Catalog/utils/catalog-view-status/ca
 import { queryKeys } from '@shared/lib/query-keys/query-keys'
 import { CategoryService } from '@shared/services/category/category.service'
 
-export const useCatalogCategoriesQuery = (
-  unitId: string | null
-) => {
+export const useCatalogCategoriesQuery = (unitId: string | null) => {
   const query = useQuery({
     queryKey: queryKeys.productCategories.list(unitId ?? ''),
     queryFn: () => CategoryService.listCategories(unitId as string),

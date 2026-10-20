@@ -9,7 +9,6 @@ import { saveProfileForm } from './operations/save-profile-form/save-profile-for
 
 const EMPTY_DRAFT: ProfileDraft = { name: '', phone: '', email: '' }
 
-
 export const useProfileFormStore = create<ProfileFormState>((set, get) => ({
   draft: EMPTY_DRAFT,
   isDirty: false,

@@ -1,6 +1,6 @@
 import { Badge } from '@nino/ds/components/Badge'
 import { Box } from '@nino/ds/components/Box'
-import { Heading } from '@nino/ds/components/Heading'
+import { Header } from '@nino/ds/components/Header'
 import { Text } from '@nino/ds/components/Text'
 import type { MenuItemModifier } from '@shared/types/product/menu-item-modifier'
 
@@ -27,14 +27,13 @@ export const ProductChoiceHeader = ({
   selectedCount,
 }: ProductChoiceHeaderProps) => (
   <Box direction="row" className={styles.productChoiceHeader}>
-    <Box className={styles.identity}>
-      <Heading level={2} id={group.id} className={styles.name}>
-        {group.name}
-      </Heading>
-      <Text as="span" className={styles.rule}>
-        {choiceRuleLabel(group)}
-      </Text>
-    </Box>
+    <Header
+      className={styles.identity}
+      level={2}
+      titleId={group.id}
+      title={group.name}
+      description={choiceRuleLabel(group)}
+    />
 
     {selectedCount < group.minSelections ? (
       <Badge variant="default" size="sm">

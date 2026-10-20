@@ -69,7 +69,10 @@ export const NewProductForm = () => {
       </Box>
 
       <Box className={styles.newProductFormFields}>
-        <Box className={`${motion.deal} ${styles.newProductFormField}`} style={riseDelay(80)}>
+        <Box
+          className={`${motion.deal} ${styles.newProductFormField}`}
+          style={riseDelay(80)}
+        >
           <FormField label="Nome" error={errors.name?.message}>
             <Input
               autoFocus
@@ -101,7 +104,10 @@ export const NewProductForm = () => {
           </FormField>
         </Box>
 
-        <Box className={`${motion.deal} ${styles.newProductFormRow}`} style={riseDelay(200)}>
+        <Box
+          className={`${motion.deal} ${styles.newProductFormRow}`}
+          style={riseDelay(200)}
+        >
           <FormField label="Preço" error={errors.price?.message}>
             <Input
               inputMode="decimal"

@@ -17,6 +17,7 @@ export const companyValuesMock: SignupCompany = {
 
 export const companyFormMock = {
   takenCnpjMessage: 'CNPJ já cadastrado',
-  failureMessage: 'Não foi possível concluir. Confira os dados e tente de novo.',
+  failureMessage:
+    'Não foi possível concluir. Confira os dados e tente de novo.',
   home: '/',
 }

@@ -8,7 +8,10 @@ import { pauseDurationModalMock } from './PauseDurationModal.mock'
 
 vi.mock('@nino/ds/components/Modal', () => ({
   Modal: ({ body, footer }: { body: ReactNode; footer: ReactNode }) => (
-    <div>{body}{footer}</div>
+    <div>
+      {body}
+      {footer}
+    </div>
   ),
 }))
 
@@ -33,9 +36,12 @@ describe('PauseDurationModal', () => {
 
     expect(screen.getByText(/O cliente vê a loja fechada/)).toBeInTheDocument()
     expect(screen.getByRole('button', { name: 'Cancelar' })).toBeInTheDocument()
-    fireEvent.change(screen.getByPlaceholderText('Chuva forte, sem entregador...'), {
-      target: { value: 'Chuva' },
-    })
+    fireEvent.change(
+      screen.getByPlaceholderText('Chuva forte, sem entregador...'),
+      {
+        target: { value: 'Chuva' },
+      }
+    )
     screen.getByRole('button', { name: /30 min/i }).click()
     screen.getByRole('button', { name: 'Cancelar' }).click()
 

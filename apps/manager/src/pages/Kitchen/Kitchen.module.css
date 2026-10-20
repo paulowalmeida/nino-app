@@ -1,7 +1,5 @@
 @reference "@nino/ds/globals.css";
 
-
-
 /* WHY: quantas colunas de trilho cabem lado a lado depende do espaço real da
  * tela, não do viewport — a sidebar aberta come largura sem mudar o viewport.
  * container-type habilita a @container do KitchenBoard.

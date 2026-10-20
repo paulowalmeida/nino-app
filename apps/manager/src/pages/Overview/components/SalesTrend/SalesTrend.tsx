@@ -7,9 +7,7 @@ import { Text } from '@nino/ds/components/Text'
 import { Tooltip } from '@nino/ds/components/Tooltip'
 import { useOverviewFacade } from '@pages/Overview/facades/useOverviewFacade/useOverviewFacade'
 import { SalesChart } from '@shared/components/SalesChart/SalesChart'
-import {
-  SalesTrendSkeleton,
-} from '@shared/skeletons/SalesTrendSkeleton/SalesTrendSkeleton'
+import { SalesTrendSkeleton } from '@shared/skeletons/SalesTrendSkeleton/SalesTrendSkeleton'
 import { brl } from '@shared/utils/money/money'
 
 import motion from '@styles/motion.module.css'
@@ -49,7 +47,11 @@ export const SalesTrend = () => {
     >
       <Eyebrow className={styles.salesTrendHeading}>Os últimos 7 dias</Eyebrow>
 
-      <Card variant="flat" padding="lg" className={`${motion.deal} ${styles.salesTrendCard}`}>
+      <Card
+        variant="flat"
+        padding="lg"
+        className={`${motion.deal} ${styles.salesTrendCard}`}
+      >
         <Box
           as="header"
           direction="row"
@@ -62,16 +64,26 @@ export const SalesTrend = () => {
             {isPending ? (
               <Skeleton className={styles.skeletonTotal} />
             ) : (
-              <Text as="p" className={styles.salesTrendTotal}>{brl(total)}</Text>
+              <Text as="p" className={styles.salesTrendTotal}>
+                {brl(total)}
+              </Text>
             )}
-            <Text className={styles.salesTrendLabel}>faturamento na semana</Text>
+            <Text className={styles.salesTrendLabel}>
+              faturamento na semana
+            </Text>
           </Box>
 
           {delta !== null && (
             <Tooltip content="Variação do último dia sobre o anterior">
-              <Text as='p' className={delta < 0 ? styles.deltaDown : styles.deltaUp}>
+              <Text
+                as="p"
+                className={delta < 0 ? styles.deltaDown : styles.deltaUp}
+              >
                 {PERCENT.format(delta)}
-                <Text as='span' className={styles.deltaNote}> vs. ontem</Text>
+                <Text as="span" className={styles.deltaNote}>
+                  {' '}
+                  vs. ontem
+                </Text>
               </Text>
             </Tooltip>
           )}

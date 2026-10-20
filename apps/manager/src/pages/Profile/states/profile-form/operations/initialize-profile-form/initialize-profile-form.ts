@@ -10,7 +10,11 @@ const draftFromProfile = (profile: Profile) => ({
   email: profile.credentials[0]?.email ?? '',
 })
 
-export const initializeProfileForm = (set: SetForm, get: GetForm, profile: Profile) => {
+export const initializeProfileForm = (
+  set: SetForm,
+  get: GetForm,
+  profile: Profile
+) => {
   const current = get()
   if (current.isDirty || current.initializedProfileId === profile.id) return
   set({

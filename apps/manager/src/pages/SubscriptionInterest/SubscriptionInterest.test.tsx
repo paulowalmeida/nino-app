@@ -6,9 +6,7 @@ import { SubscriptionInterest } from './SubscriptionInterest'
 import { subscriptionInterestPageCopyMock } from './SubscriptionInterest.mock'
 
 vi.mock('react-router', () => ({ useNavigate: () => vi.fn() }))
-vi.mock(
-  './facades/useSubscriptionInterestFacade/useSubscriptionInterestFacade'
-)
+vi.mock('./facades/useSubscriptionInterestFacade/useSubscriptionInterestFacade')
 
 describe(SubscriptionInterest.name, () => {
   it('composes the header and the request form', () => {

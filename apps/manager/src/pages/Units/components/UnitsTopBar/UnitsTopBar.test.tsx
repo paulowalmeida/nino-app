@@ -4,8 +4,12 @@ import { describe, expect, it, vi } from 'vitest'
 import { UnitsTopBar } from './UnitsTopBar'
 
 const logout = vi.fn()
-vi.mock('@pages/Units/facades/useUnitsFacade/useUnitsFacade', () => ({ useUnitsFacade: () => ({ logout }) }))
-vi.mock('@shared/components/NinoLogo/NinoLogo', () => ({ NinoLogo: () => <span>logo</span> }))
+vi.mock('@pages/Units/facades/useUnitsFacade/useUnitsFacade', () => ({
+  useUnitsFacade: () => ({ logout }),
+}))
+vi.mock('@shared/components/NinoLogo/NinoLogo', () => ({
+  NinoLogo: () => <span>logo</span>,
+}))
 
 describe(UnitsTopBar.name, () => {
   it('logs out when the exit action is activated', async () => {

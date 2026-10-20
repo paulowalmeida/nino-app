@@ -2,7 +2,7 @@ import { Alert } from '@nino/ds/components/Alert'
 import { Badge } from '@nino/ds/components/Badge'
 import { Box } from '@nino/ds/components/Box'
 import { Eyebrow } from '@nino/ds/components/Eyebrow'
-import { Heading } from '@nino/ds/components/Heading'
+import { Header } from '@nino/ds/components/Header'
 import { ListRow } from '@nino/ds/components/ListRow'
 import { ScrollArea } from '@nino/ds/components/ScrollArea'
 import { Text } from '@nino/ds/components/Text'
@@ -70,12 +70,11 @@ export const OrderDetail = () => {
           <Eyebrow className={styles.channel}>
             {CHANNEL_LABEL[order.channel]}
           </Eyebrow>
-          <Heading level={1} accent className={styles.number}>
-            #{ticketNumber(order.orderNumber)}
-          </Heading>
-          <Text className={styles.opened}>
-            aberto em {stamp.format(new Date(order.createdAt))}
-          </Text>
+          <Header
+            level={1}
+            title={`#${ticketNumber(order.orderNumber)}`}
+            description={`aberto em ${stamp.format(new Date(order.createdAt))}`}
+          />
         </Box>
         <Badge
           variant={toOrderBadgeVariant(order.status)}
@@ -86,20 +85,28 @@ export const OrderDetail = () => {
       </Box>
 
       <Box className={styles.columns}>
-        <Box as="section"
+        <Box
+          as="section"
           aria-label="Itens do pedido"
           className={`${motion.deal} ${styles.receipt}`}
         >
           <ScrollArea className={styles.itemsScroll}>
             <Box as="ul" className={styles.items}>
               {order.items.map((item, index) => (
-                <ListRow divider="none" padding={0} gap={0}
+                <ListRow
+                  divider="none"
+                  padding={0}
+                  gap={0}
                   key={item.id}
                   className={`${motion.deal} ${styles.orderDetailItem}`}
                   style={riseDelay(index * 45 + 60)}
                 >
-                  <Text as="span" className={styles.quantity}>{item.quantity}×</Text>
-                  <Text as="span" className={styles.itemName}>{item.product.name}</Text>
+                  <Text as="span" className={styles.quantity}>
+                    {item.quantity}×
+                  </Text>
+                  <Text as="span" className={styles.itemName}>
+                    {item.product.name}
+                  </Text>
                   <Text as="span" className={styles.itemPrice}>
                     {brl(Number(item.unitPrice) * item.quantity)}
                   </Text>
@@ -135,7 +142,9 @@ export const OrderDetail = () => {
 
           {order.notes && (
             <Text className={styles.notes}>
-              <Text as="span" className={styles.notesLabel}>Observação do cliente</Text>
+              <Text as="span" className={styles.notesLabel}>
+                Observação do cliente
+              </Text>
               {order.notes}
             </Text>
           )}

@@ -9,7 +9,11 @@ import {
 import styles from './NewOrderMenuSkeleton.module.css'
 
 export const NewOrderMenuSkeleton = () => (
-  <Box as="section" className={styles.newOrderMenuSkeletonMenu} aria-label="Carregando cardápio">
+  <Box
+    as="section"
+    className={styles.newOrderMenuSkeletonMenu}
+    aria-label="Carregando cardápio"
+  >
     {NEW_ORDER_MENU_GHOST_SECTIONS.map((section) => (
       <Box as="section" key={section}>
         <Skeleton variant="text" className={styles.ghostSectionName} />

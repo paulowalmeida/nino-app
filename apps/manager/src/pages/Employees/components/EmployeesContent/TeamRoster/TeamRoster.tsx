@@ -40,8 +40,11 @@ export type TeamRosterProps = {
   searchLabel?: string
   isPending?: boolean
   removingId?: string
+  changingActivityId?: string
   onRemove: (id: string) => void
-  onEditEmail?: (id: string) => void
+  onEdit?: (id: string) => void
+  onSetActivity?: (id: string) => void
+  isInactive?: boolean
 }
 
 export const TeamRoster = ({
@@ -52,9 +55,12 @@ export const TeamRoster = ({
   searchLabel,
   isPending,
   removingId,
+  changingActivityId,
   changingPositionId,
   onRemove,
-  onEditEmail,
+  onEdit,
+  onSetActivity,
+  isInactive = false,
   onChangePosition,
 }: TeamRosterProps) => {
   const [term, setTerm] = useState('')
@@ -96,11 +102,20 @@ export const TeamRoster = ({
   const otherItemsOf = (entry: RosterEntry): MenuItem[] => {
     const items: MenuItem[] = []
 
-    if (entry.emailEditable && onEditEmail) {
+    if (entry.emailEditable && onEdit) {
       items.push({
-        value: 'edit-email',
-        label: 'Editar e-mail',
-        onSelect: () => onEditEmail(entry.id),
+        value: 'edit',
+        label: 'Editar',
+        onSelect: () => onEdit(entry.id),
+      })
+    }
+
+    if (entry.removable && onSetActivity) {
+      if (items.length > 0) items.push({ separator: true })
+      items.push({
+        value: isInactive ? 'activate' : 'suspend',
+        label: isInactive ? 'Reativar' : 'Suspender',
+        onSelect: () => onSetActivity(entry.id),
       })
     }
 
@@ -108,7 +123,7 @@ export const TeamRoster = ({
       if (items.length > 0) items.push({ separator: true })
       items.push({
         value: 'remove',
-        label: 'Tirar da loja',
+        label: 'Remover da loja',
         destructive: true,
         onSelect: () => onRemove(entry.id),
       })
@@ -155,7 +170,7 @@ export const TeamRoster = ({
               <TableRow className={styles.headRow}>
                 <TableHead>Pessoa</TableHead>
                 <TableHead>Último acesso</TableHead>
-                <TableHead className={styles.colRight}>Papel</TableHead>
+                <TableHead className={styles.colRight}>Cargo</TableHead>
                 <TableHead>
                   <Text as="span" className="sr-only">
                     Ações
@@ -207,7 +222,7 @@ export const TeamRoster = ({
               <TableRow className={styles.headRow}>
                 <TableHead>Pessoa</TableHead>
                 <TableHead>Último acesso</TableHead>
-                <TableHead className={styles.colRight}>Papel</TableHead>
+                <TableHead className={styles.colRight}>Cargo</TableHead>
                 <TableHead>
                   <Text as="span" className="sr-only">
                     Ações
@@ -221,7 +236,11 @@ export const TeamRoster = ({
                 const roleItems = roleItemsOf(entry)
                 const otherItems = otherItemsOf(entry)
                 const isBusy =
-                  changingPositionId === entry.id || removingId === entry.id
+                  changingPositionId === entry.id ||
+                  removingId === entry.id ||
+                  changingActivityId === entry.id
+                const canEdit = entry.emailEditable && !!onEdit
+                const canSetActivity = entry.removable && !!onSetActivity
                 const identity = (
                   <>
                     <PersonMark
@@ -294,22 +313,69 @@ export const TeamRoster = ({
                     </TableCell>
 
                     <TableCell className={styles.colRight}>
+                      <Box
+                        direction="row"
+                        gap={1}
+                        className={styles.desktopActions}
+                      >
+                        {canEdit && (
+                          <Button
+                            variant="ghost"
+                            size="icon"
+                            className={motion.press}
+                            disabled={isBusy}
+                            aria-label={`Editar ${entry.name}`}
+                            title="Editar"
+                            onClick={() => onEdit(entry.id)}
+                          >
+                            <Icon name="pencil" />
+                          </Button>
+                        )}
+                        {entry.removable && (
+                          <Button
+                            variant="ghost"
+                            size="icon"
+                            className={`${motion.press} ${styles.delete}`}
+                            disabled={isBusy}
+                            aria-label={`Remover ${entry.name} da loja`}
+                            title="Remover da loja"
+                            onClick={() => onRemove(entry.id)}
+                          >
+                            <Icon name="trash" />
+                          </Button>
+                        )}
+                        {canSetActivity && (
+                          <Button
+                            variant="ghost"
+                            size="icon"
+                            className={motion.press}
+                            disabled={isBusy}
+                            aria-label={`${isInactive ? 'Reativar' : 'Suspender'} ${entry.name}`}
+                            title={isInactive ? 'Reativar' : 'Suspender'}
+                            onClick={() => onSetActivity(entry.id)}
+                          >
+                            <Icon name={isInactive ? 'play' : 'pause'} />
+                          </Button>
+                        )}
+                      </Box>
                       {otherItems.length > 0 && (
-                        <Menu
-                          contentClassName={styles.menuPanel}
-                          trigger={
-                            <Button
-                              variant="ghost"
-                              size="icon"
-                              className={styles.kebab}
-                              disabled={isBusy}
-                              aria-label={`Mais ações para ${entry.name}`}
-                            >
-                              <Icon name="kebab" />
-                            </Button>
-                          }
-                          items={otherItems}
-                        />
+                        <Box className={styles.compactActions}>
+                          <Menu
+                            contentClassName={styles.menuPanel}
+                            trigger={
+                              <Button
+                                variant="ghost"
+                                size="icon"
+                                className={styles.kebab}
+                                disabled={isBusy}
+                                aria-label={`Mais ações para ${entry.name}`}
+                              >
+                                <Icon name="kebab" />
+                              </Button>
+                            }
+                            items={otherItems}
+                          />
+                        </Box>
                       )}
                     </TableCell>
                   </TableRow>

@@ -18,6 +18,10 @@
   font-variant-numeric: tabular-nums;
 }
 
+.skeletonCount {
+  @apply h-6 w-6 rounded-full;
+}
+
 /* WHY: com dois trilhos, uma comanda por linha deixaria metade da parede
  * vazia num monitor de cozinha. O papel tem largura de leitura própria
  * (~17rem), e o trilho encaixa quantos couberem em vez de esticar um só.
@@ -43,7 +47,6 @@
   @apply col-span-full;
 }
 
-
 .dropRegion {
   @apply rounded-3 outline-2 outline-offset-4 outline-dashed;
   @apply transition-[background-color,outline-color] duration-fast;
@@ -60,7 +63,6 @@
 .targeted {
   @apply outline-4;
 }
-
 
 .finished .columnTitle {
   @apply text-fg-faintest;

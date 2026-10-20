@@ -13,8 +13,15 @@ vi.mock('@pages/Profile/states/profile/profile.state')
 describe('useProfileFacade', () => {
   it('composes profile loading and form state', () => {
     const load = vi.fn()
-    vi.mocked(useProfileStore).mockImplementation(((selector: (state: never) => unknown) =>
-      selector({ profile: null, status: useProfileFacadeMock.status, error: null, load } as never)) as never)
+    vi.mocked(useProfileStore).mockImplementation(((
+      selector: (state: never) => unknown
+    ) =>
+      selector({
+        profile: null,
+        status: useProfileFacadeMock.status,
+        error: null,
+        load,
+      } as never)) as never)
     vi.mocked(useProfileFormStore).mockReturnValue({ draft: {} } as never)
 
     const { result } = renderHook(() => useProfileFacade())

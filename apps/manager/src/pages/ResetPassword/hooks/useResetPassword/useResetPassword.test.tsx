@@ -13,7 +13,9 @@ vi.mock('@tanstack/react-query', async (importOriginal) => {
   const actual = await importOriginal<typeof import('@tanstack/react-query')>()
   return {
     ...actual,
-    useMutation: (options: { mutationFn: typeof AuthService.resetPassword }) => {
+    useMutation: (options: {
+      mutationFn: typeof AuthService.resetPassword
+    }) => {
       mutationFn = options.mutationFn
       return { mutateAsync }
     },

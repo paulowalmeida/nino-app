@@ -29,14 +29,20 @@ vi.mock('@shared/states/session/session.state')
 describe('useOverviewFacade', () => {
   it('composes unit context and overview data hooks', () => {
     vi.mocked(useSessionStore).mockImplementation((selector) =>
-      selector({ user: { name: 'Ana Silva', timezone: useOverviewFacadeMock.timezone } } as never)
+      selector({
+        user: { name: 'Ana Silva', timezone: useOverviewFacadeMock.timezone },
+      } as never)
     )
     vi.mocked(useCurrentUnit).mockReturnValue({
       unitId: useOverviewFacadeMock.unitId,
       unitName: 'Sua loja',
       unitSlug: 'sua-loja',
     } as never)
-    vi.mocked(useStoreOpen).mockReturnValue({ isOpen: true, isPending: false, hasSchedule: true })
+    vi.mocked(useStoreOpen).mockReturnValue({
+      isOpen: true,
+      isPending: false,
+      hasSchedule: true,
+    })
     vi.mocked(usePause).mockReturnValue({} as never)
     vi.mocked(usePauseActions).mockReturnValue({} as never)
     vi.mocked(useOrders).mockReturnValue({} as never)
@@ -50,7 +56,9 @@ describe('useOverviewFacade', () => {
     expect(result.current.firstName).toBe('Ana')
     expect(result.current.unitId).toBe(useOverviewFacadeMock.unitId)
     expect(useOrders).toHaveBeenCalledWith(useOverviewFacadeMock.unitId)
-    expect(useSalesSeries).toHaveBeenCalledWith(useOverviewFacadeMock.unitId, { period: 'week' })
+    expect(useSalesSeries).toHaveBeenCalledWith(useOverviewFacadeMock.unitId, {
+      period: 'week',
+    })
   })
 
   it('keeps the facade safe without a user or unit', () => {
@@ -58,7 +66,11 @@ describe('useOverviewFacade', () => {
       selector({ user: null } as never)
     )
     vi.mocked(useCurrentUnit).mockReturnValue(null)
-    vi.mocked(useStoreOpen).mockReturnValue({ isOpen: false, isPending: false, hasSchedule: false })
+    vi.mocked(useStoreOpen).mockReturnValue({
+      isOpen: false,
+      isPending: false,
+      hasSchedule: false,
+    })
     vi.mocked(usePause).mockReturnValue({} as never)
     vi.mocked(usePauseActions).mockReturnValue({} as never)
     vi.mocked(useOrders).mockReturnValue({} as never)

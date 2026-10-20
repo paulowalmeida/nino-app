@@ -1,5 +1,5 @@
 import { Box } from '@nino/ds/components/Box'
-import { Heading } from '@nino/ds/components/Heading'
+import { Header } from '@nino/ds/components/Header'
 import {
   Table,
   TableBody,
@@ -27,24 +27,17 @@ const timeLabel = (createdAt: string): string =>
 
 export const CashMovements = ({ movements }: CashMovementsProps) => (
   <Box as="section" direction="column" className={styles.movements}>
-    <Box
-      direction="row"
-      justify="between"
-      align="baseline"
+    <Header
       className={styles.head}
-    >
-      <Heading
-        level={2}
-        size="sm"
-        color="faint"
-        className={styles.cashMovementsTitle}
-      >
-        Movimentações
-      </Heading>
-      <Text size="xs" color="faint">
-        {movements.length} {movements.length === 1 ? 'registro' : 'registros'}
-      </Text>
-    </Box>
+      level={2}
+      size="sm"
+      title="Movimentações"
+      actions={
+        <Text size="xs" color="faint">
+          {movements.length} {movements.length === 1 ? 'registro' : 'registros'}
+        </Text>
+      }
+    />
 
     {!movements.length ? (
       <Text size="sm" color="muted" className={styles.cashMovementsEmpty}>

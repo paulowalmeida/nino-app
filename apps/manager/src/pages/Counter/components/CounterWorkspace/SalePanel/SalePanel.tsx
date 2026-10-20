@@ -1,5 +1,5 @@
 import { Box } from '@nino/ds/components/Box'
-import { Heading } from '@nino/ds/components/Heading'
+import { Header } from '@nino/ds/components/Header'
 import { Text } from '@nino/ds/components/Text'
 import { useCounterFacade } from '@pages/Counter/facades/useCounterFacade/useCounterFacade'
 
@@ -96,11 +96,12 @@ export const SalePanel = ({ bare = false }: { bare?: boolean }) => {
   return (
     <Box className={bare ? styles.bare : styles.salePanel}>
       {!bare && (
-        <Box as="header" direction="row" className={styles.salePanelHeader}>
-          <Heading level={2} size="lg" className={styles.salePanelTitle}>
-            Venda
-          </Heading>
-        </Box>
+        <Header
+          className={styles.salePanelHeader}
+          level={2}
+          size="lg"
+          title="Venda"
+        />
       )}
       {bare && <CheckoutRail current={step} onStep={setStep} />}
       {step === 'items' && (

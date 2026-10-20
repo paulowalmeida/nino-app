@@ -37,9 +37,9 @@ describe(useSubscriptionActions.name, () => {
     })
 
     expect(AccountService.changePlan).toHaveBeenCalledWith('plan-pro')
-    expect(
-      queryClient.getQueryData(queryKeys.account.subscription())
-    ).toEqual(subscriptionAfterMutationMock)
+    expect(queryClient.getQueryData(queryKeys.account.subscription())).toEqual(
+      subscriptionAfterMutationMock
+    )
   })
 
   it('updates the subscription cache after cancellation', async () => {
@@ -53,9 +53,9 @@ describe(useSubscriptionActions.name, () => {
     })
 
     expect(AccountService.cancelSubscription).toHaveBeenCalledWith()
-    expect(
-      queryClient.getQueryData(queryKeys.account.subscription())
-    ).toEqual(subscriptionAfterMutationMock)
+    expect(queryClient.getQueryData(queryKeys.account.subscription())).toEqual(
+      subscriptionAfterMutationMock
+    )
   })
 
   it('exposes the failed mutation state without hiding the error', async () => {

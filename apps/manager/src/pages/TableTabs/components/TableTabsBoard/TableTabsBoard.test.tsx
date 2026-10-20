@@ -39,8 +39,12 @@ describe('TableTabsBoard', () => {
     expect(screen.getByText('Mesa 4')).toBeInTheDocument()
     expect(screen.getByText('Mesa 7')).toBeInTheDocument()
     expect(screen.queryByText('Ana Souza')).not.toBeInTheDocument()
-    expect(screen.getByRole('tab', { name: 'Em aberto (2)' })).toBeInTheDocument()
-    expect(screen.getByRole('tab', { name: 'Finalizadas (2)' })).toBeInTheDocument()
+    expect(
+      screen.getByRole('tab', { name: 'Em aberto (2)' })
+    ).toBeInTheDocument()
+    expect(
+      screen.getByRole('tab', { name: 'Finalizadas (2)' })
+    ).toBeInTheDocument()
   })
 
   it('switches to the finalized tabs', async () => {
@@ -101,6 +105,11 @@ describe('TableTabsBoard', () => {
 
     expect(screen.getByRole('status')).toHaveTextContent('Carregando comandas')
     expect(screen.queryByText('Mesa 4')).not.toBeInTheDocument()
+    expect(
+      screen.queryByRole('searchbox', {
+        name: tableTabsBoardMock.searchLabel,
+      })
+    ).not.toBeInTheDocument()
   })
 
   it('asks to try again when the lists fail', () => {

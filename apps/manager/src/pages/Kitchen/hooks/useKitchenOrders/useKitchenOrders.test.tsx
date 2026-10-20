@@ -39,4 +39,23 @@ describe('useKitchenOrders', () => {
       preparingOrderMock,
     ])
   })
+
+  it('stays pending until the finished-orders query also settles', () => {
+    vi.mocked(useOrders)
+      .mockReset()
+      .mockReturnValueOnce({
+        orders: [],
+        isPending: false,
+        isError: false,
+      } as unknown as ReturnType<typeof useOrders>)
+      .mockReturnValueOnce({
+        orders: [],
+        isPending: true,
+        isError: false,
+      } as unknown as ReturnType<typeof useOrders>)
+
+    const { result } = renderHook(() => useKitchenOrders('unit-1'))
+
+    expect(result.current.isPending).toBe(true)
+  })
 })

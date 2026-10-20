@@ -18,7 +18,9 @@ describe('Orders', () => {
   it('composes the orders screen regions', () => {
     render(<Orders />)
 
-    expect(screen.getByRole('heading', { name: ordersPageMock.title })).toBeInTheDocument()
+    expect(
+      screen.getByRole('heading', { name: ordersPageMock.title })
+    ).toBeInTheDocument()
     expect(screen.getByText('filters')).toBeInTheDocument()
     expect(screen.getByText('queue')).toBeInTheDocument()
   })

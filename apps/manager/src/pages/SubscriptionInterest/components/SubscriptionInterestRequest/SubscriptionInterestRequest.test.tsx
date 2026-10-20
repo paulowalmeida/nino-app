@@ -55,7 +55,10 @@ describe(SubscriptionInterestRequest.name, () => {
     render(<SubscriptionInterestRequest />)
 
     // Act
-    await user.type(screen.getByLabelText(/Nome/), interestRequestInputMock.contactName)
+    await user.type(
+      screen.getByLabelText(/Nome/),
+      interestRequestInputMock.contactName
+    )
     await user.type(
       screen.getByLabelText(/E-mail/),
       interestRequestInputMock.contactEmail

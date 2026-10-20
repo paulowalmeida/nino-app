@@ -62,14 +62,6 @@ export const CompanyCard = ({
 
   return (
     <Box as="section" className={local.companyCardPanel}>
-      <Header
-        className={`${motion.deal} ${local.head}`}
-        level={2}
-        size="xl"
-        title="A empresa"
-        description="O CNPJ é o dono da assinatura. Vale para todas as unidades."
-      />
-
       <Box className={local.identity}>
         <Text className={local.identityLabel}>CNPJ</Text>
         <Text className={local.identityValue}>

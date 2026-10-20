@@ -8,9 +8,15 @@ import { DayTally } from './DayTally'
 import { dayTallyMock } from './DayTally.mock'
 
 vi.mock('@pages/Overview/facades/useOverviewFacade/useOverviewFacade')
-vi.mock('./TallyCard/TallyCard', () => ({ TallyCard: () => <div>tally card</div> }))
-vi.mock('./TallyHistory/TallyHistory', () => ({ TallyHistory: () => <div>history</div> }))
-vi.mock('./DayTallySkeleton/DayTallySkeleton', () => ({ DayTallySkeleton: () => <div>tally loading</div> }))
+vi.mock('./TallyCard/TallyCard', () => ({
+  TallyCard: () => <div>tally card</div>,
+}))
+vi.mock('./TallyHistory/TallyHistory', () => ({
+  TallyHistory: () => <div>history</div>,
+}))
+vi.mock('./DayTallySkeleton/DayTallySkeleton', () => ({
+  DayTallySkeleton: () => <div>tally loading</div>,
+}))
 
 describe('DayTally', () => {
   it('renders the loading tally state', () => {
@@ -27,7 +33,12 @@ describe('DayTally', () => {
   it('renders payment and recent order sections', () => {
     vi.mocked(useOverviewFacade).mockReturnValue({
       timezone: dayTallyMock.timezone,
-      orders: { orders: [{ ...kitchenCardOrderMock, createdAt: new Date().toISOString() }], isPending: false },
+      orders: {
+        orders: [
+          { ...kitchenCardOrderMock, createdAt: new Date().toISOString() },
+        ],
+        isPending: false,
+      },
     } as never)
 
     render(<DayTally />)

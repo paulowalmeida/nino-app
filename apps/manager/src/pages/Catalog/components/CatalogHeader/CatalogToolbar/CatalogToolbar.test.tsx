@@ -31,13 +31,17 @@ describe(CatalogToolbar.name, () => {
     )
 
     expect(onTermChange).toHaveBeenLastCalledWith('suco')
-    expect(screen.queryByRole('link', { name: 'Gerenciar categorias' })).not.toBeInTheDocument()
+    expect(
+      screen.queryByRole('link', { name: 'Gerenciar categorias' })
+    ).not.toBeInTheDocument()
   })
 
   it('shows management actions for an authorized owner', () => {
     renderToolbar(true)
 
-    expect(screen.getByRole('link', { name: 'Gerenciar categorias' })).toBeInTheDocument()
+    expect(
+      screen.getByRole('link', { name: 'Gerenciar categorias' })
+    ).toBeInTheDocument()
     expect(screen.getByRole('link', { name: 'Novo item' })).toBeInTheDocument()
   })
 })

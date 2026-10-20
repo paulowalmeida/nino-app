@@ -33,10 +33,9 @@ describe(useCatalogCategoriesQuery.name, () => {
       ],
     } as unknown as { data: CategoryWithProductCount[] })
 
-    const { result } = renderHook(
-      () => useCatalogCategoriesQuery('unit-1'),
-      { wrapper: createWrapper() }
-    )
+    const { result } = renderHook(() => useCatalogCategoriesQuery('unit-1'), {
+      wrapper: createWrapper(),
+    })
 
     await waitFor(() => expect(result.current.status).toBe('success'))
 
@@ -48,10 +47,9 @@ describe(useCatalogCategoriesQuery.name, () => {
   })
 
   it('does not request categories before a unit is available', () => {
-    const { result } = renderHook(
-      () => useCatalogCategoriesQuery(null),
-      { wrapper: createWrapper() }
-    )
+    const { result } = renderHook(() => useCatalogCategoriesQuery(null), {
+      wrapper: createWrapper(),
+    })
 
     expect(result.current.fetchStatus).toBe('idle')
     expect(CategoryService.listCategories).not.toHaveBeenCalled()

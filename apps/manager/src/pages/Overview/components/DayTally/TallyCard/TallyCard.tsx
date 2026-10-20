@@ -39,7 +39,7 @@ export const TallyCard = ({
       relative="path"
       aria-label={ariaLabel}
       style={riseDelay(delay)}
-    className={styles.cardOverview}
+      className={styles.cardOverview}
     >
       <Text as="span" className={styles.tallyCardValue}>
         {isPending ? <Skeleton className={skeletonClassName} /> : value}

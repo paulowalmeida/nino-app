@@ -1,5 +1,5 @@
 import { Box } from '@nino/ds/components/Box'
-import { Heading } from '@nino/ds/components/Heading'
+import { Header } from '@nino/ds/components/Header'
 import type { SalesSeriesBreakdown } from '@shared/types/order/sales-series-breakdown'
 import { riseDelay } from '@shared/utils/rise-delay/rise-delay'
 
@@ -26,9 +26,7 @@ export const SalesTrendByDimension = ({
     className={`${motion.deal} ${styles.trendBlock}`}
     style={riseDelay(delay)}
   >
-    <Heading level={2} size="lg" mb={3}>
-      {title}
-    </Heading>
+    <Header level={2} size="lg" mb={3} title={title} />
 
     <SalesMultiChart
       series={breakdown.series}

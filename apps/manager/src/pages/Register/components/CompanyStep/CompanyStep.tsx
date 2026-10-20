@@ -3,9 +3,8 @@ import { Box } from '@nino/ds/components/Box'
 import { Button } from '@nino/ds/components/Button'
 import { CnpjInput } from '@nino/ds/components/CnpjInput'
 import { FormField } from '@nino/ds/components/FormField'
-import { Heading } from '@nino/ds/components/Heading'
+import { Header } from '@nino/ds/components/Header'
 import { Input } from '@nino/ds/components/Input'
-import { Text } from '@nino/ds/components/Text'
 import { useRegisterFacade } from '@pages/Register/facades/useRegisterFacade/useRegisterFacade'
 import { COMPANY_FIELD_RULES } from '@pages/Register/utils/register-field-rules/register-field-rules'
 import { RiseIn } from '@shared/components/RiseIn/RiseIn'
@@ -29,12 +28,13 @@ export const CompanyStep = () => {
   return (
     <Box direction="column">
       <RiseIn as="header">
-        <Heading level={1} size="2xl" align="center">
-          Sua empresa
-        </Heading>
-        <Text size="sm" color="muted" align="center" mt={2}>
-          Quase lá, {firstName(account.name)}
-        </Text>
+        <Header
+          level={1}
+          size="2xl"
+          align="center"
+          title="Sua empresa"
+          description={`Quase lá, ${firstName(account.name)}`}
+        />
       </RiseIn>
 
       <Box

@@ -11,7 +11,10 @@ export type SalesPeriodTrendProps = {
   delay?: number
 }
 
-export const SalesPeriodTrend = ({ series, delay = 0 }: SalesPeriodTrendProps) => (
+export const SalesPeriodTrend = ({
+  series,
+  delay = 0,
+}: SalesPeriodTrendProps) => (
   <Box
     as="section"
     className={`${motion.deal} ${styles.block}`}

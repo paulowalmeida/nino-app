@@ -3,7 +3,7 @@ import { Fragment, useState } from 'react'
 import { Box } from '@nino/ds/components/Box'
 import { Button } from '@nino/ds/components/Button'
 import { EmptyState } from '@nino/ds/components/EmptyState'
-import { Heading } from '@nino/ds/components/Heading'
+import { Header } from '@nino/ds/components/Header'
 import { Icon } from '@nino/ds/components/Icon'
 import { Input } from '@nino/ds/components/Input'
 import { Menu, type MenuItem } from '@nino/ds/components/Menu'
@@ -97,17 +97,12 @@ export const ZoneList = ({
 
   return (
     <Box as="section" className={local.zoneListSection}>
-      <Box
-        as="header"
-        direction="row"
-        align="baseline"
-        justify="between"
+      <Header
         className={local.head}
-      >
-        <Heading level={3} size="md">
-          Faixas configuradas
-        </Heading>
-      </Box>
+        level={3}
+        size="md"
+        title="Faixas configuradas"
+      />
 
       {zones.length === 0 ? (
         <EmptyState className={local.zoneListEmpty}>
