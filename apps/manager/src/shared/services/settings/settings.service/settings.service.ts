@@ -1,6 +1,6 @@
 import { api } from '@shared/services/http/http.service'
 import type { PublicUnitSettings } from '@shared/types/settings/public-unit-settings'
-import type { UnitSettings } from '@shared/types/settings/unit-settings'
+import type { UnitSettings } from '@shared/types/settings/unit-settings.type'
 import type { UpdateUnitSettingsRequest } from '@shared/types/settings/update-unit-settings-request'
 
 export const SettingsService = {

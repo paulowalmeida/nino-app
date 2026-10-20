@@ -16,7 +16,7 @@ const mockTab = (tab: unknown) =>
   } as unknown as ReturnType<typeof useTableTabDetailFacade>)
 
 describe('TabFinalizedSummary', () => {
-  it('states how the paid tab was settled, with change and moment', () => {
+  it('states what the paid tab added up to', () => {
     mockTab(tabFinalizedSummaryMock.paidTab)
 
     render(<TabFinalizedSummary />)
@@ -24,21 +24,24 @@ describe('TabFinalizedSummary', () => {
     expect(
       screen.getByRole('heading', { name: 'Conta paga' })
     ).toBeInTheDocument()
-    expect(screen.getByText('Dinheiro')).toBeInTheDocument()
-    expect(screen.getByText('R$ 36,00')).toBeInTheDocument()
-    expect(screen.getByText('Troco de R$ 14,00')).toBeInTheDocument()
-    expect(screen.getByText('Pago em 19/10/2026, 10:10')).toBeInTheDocument()
+    expect(screen.getByText('Total pago')).toBeInTheDocument()
+    expect(
+      screen.getByRole('list', { name: 'Pagamentos registrados' })
+    ).toBeInTheDocument()
+    expect(screen.queryByText(/Serviço/)).not.toBeInTheDocument()
     expect(
       screen.getByText('Comanda encerrada. Esta tela agora é só consulta.')
     ).toBeInTheDocument()
   })
 
-  it('omits the change line when the payment was exact', () => {
-    mockTab(tabFinalizedSummaryMock.exactPaymentTab)
+  it('shows the service fee the customer paid', () => {
+    mockTab(tabFinalizedSummaryMock.serviceFeeTab)
 
     render(<TabFinalizedSummary />)
 
-    expect(screen.queryByText(/Troco de/)).not.toBeInTheDocument()
+    expect(screen.getByText('Serviço (10%)')).toBeInTheDocument()
+    expect(screen.getByText('R$ 3,60')).toBeInTheDocument()
+    expect(screen.getAllByText('R$ 39,60')).not.toHaveLength(0)
   })
 
   it('states why a cancelled tab was closed', () => {

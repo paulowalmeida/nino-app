@@ -9,7 +9,7 @@ import {
   TAB_STATUS_BADGE_VARIANT,
   TAB_STATUS_LABEL,
 } from '@shared/constants/tab.constants'
-import type { Tab } from '@shared/types/tab/tab'
+import type { Tab } from '@shared/types/tab/tab.type'
 import { activeTabItems } from '@shared/utils/active-tab-items/active-tab-items'
 import { brl } from '@shared/utils/money/money'
 

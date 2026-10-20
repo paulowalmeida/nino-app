@@ -1,4 +1,4 @@
-import type { Tab } from './tab'
+import type { Tab } from './tab.type'
 
 export type TabPage = {
   data: Tab[]

@@ -1,10 +1,11 @@
 import { api } from '@shared/services/http/http.service'
 import type { AddTabItemRequest } from '@shared/types/tab/add-tab-item-request'
 import type { CancelTabRequest } from '@shared/types/tab/cancel-tab-request'
-import type { CreateTabRequest } from '@shared/types/tab/create-tab-request'
-import type { PayTabRequest } from '@shared/types/tab/pay-tab-request'
-import type { Tab } from '@shared/types/tab/tab'
-import type { TabPage } from '@shared/types/tab/tab-page'
+import type { CreateTabRequest } from '@shared/types/tab/create-tab-request.type'
+import type { PayTabRequest } from '@shared/types/tab/pay-tab-request.type'
+import type { SetTabServiceFeeRequest } from '@shared/types/tab/set-tab-service-fee-request.type'
+import type { Tab } from '@shared/types/tab/tab.type'
+import type { TabPage } from '@shared/types/tab/tab-page.type'
 import type { TabStatus } from '@shared/types/tab/tab-status'
 
 export const TAB_PAGE_SIZE = 40
@@ -53,11 +54,17 @@ export const TabService = {
       {}
     ),
 
-  payTab: (
+  setServiceFee: (
     unitId: string,
     tabId: string,
-    data: PayTabRequest
+    data: SetTabServiceFeeRequest
   ): Promise<Tab> =>
+    api.patch<SetTabServiceFeeRequest, Tab>(
+      `units/${unitId}/tabs/${tabId}/service-fee`,
+      data
+    ),
+
+  payTab: (unitId: string, tabId: string, data: PayTabRequest): Promise<Tab> =>
     api.create<PayTabRequest, Tab>(
       `units/${unitId}/tabs/${tabId}/payments`,
       data

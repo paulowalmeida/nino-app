@@ -13,6 +13,7 @@ import {
   tabTransitionsCancelRequestMock,
   tabTransitionsPayRequestMock,
   tabTransitionsScopeMock,
+  tabTransitionsServiceFeeTabMock,
   tabTransitionsTabMock,
 } from './useTabTransitions.mock'
 
@@ -21,6 +22,7 @@ vi.mock('@shared/services/tab/tab.service/tab.service', () => ({
     closeTab: vi.fn(),
     reopenTab: vi.fn(),
     payTab: vi.fn(),
+    setServiceFee: vi.fn(),
     cancelTab: vi.fn(),
   },
 }))
@@ -57,6 +59,33 @@ describe('useTabTransitions', () => {
     vi.mocked(TabService.reopenTab).mockResolvedValue(tabTransitionsTabMock)
     vi.mocked(TabService.payTab).mockResolvedValue(tabTransitionsTabMock)
     vi.mocked(TabService.cancelTab).mockResolvedValue(tabTransitionsTabMock)
+  })
+
+  it('takes the service fee off the bill and says so', async () => {
+    vi.mocked(TabService.setServiceFee).mockResolvedValue(tabTransitionsTabMock)
+    const { result } = renderTransitions()
+
+    act(() => result.current.submitServiceFee({ applied: false }))
+
+    await waitFor(() =>
+      expect(toast.success).toHaveBeenCalledWith('Taxa de serviço retirada')
+    )
+    expect(TabService.setServiceFee).toHaveBeenCalledWith('unit-1', 'tab-2', {
+      applied: false,
+    })
+  })
+
+  it('confirms the service fee back on the bill', async () => {
+    vi.mocked(TabService.setServiceFee).mockResolvedValue(
+      tabTransitionsServiceFeeTabMock
+    )
+    const { result } = renderTransitions()
+
+    act(() => result.current.submitServiceFee({ applied: true }))
+
+    await waitFor(() =>
+      expect(toast.success).toHaveBeenCalledWith('Taxa de serviço incluída')
+    )
   })
 
   it('closes the tab and confirms it', async () => {

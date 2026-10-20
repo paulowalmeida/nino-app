@@ -1,11 +1,14 @@
-import type { Tab } from '@shared/types/tab/tab'
+import type { Tab } from '@shared/types/tab/tab.type'
 
 export const openTabMock: Tab = {
   id: 'tab-1',
   unitId: 'unit-1',
   status: 'OPEN',
   label: 'Mesa 4',
+  diningTableId: 'table-4',
   subtotal: 36,
+  serviceFeePercent: 0,
+  serviceFeeAmount: 0,
   totalAmount: 36,
   openedByUserId: 'user-1',
   closedAt: null,
@@ -38,7 +41,9 @@ export const openTabMock: Tab = {
       modifiers: [],
     },
   ],
-  payment: null,
+  paidAmount: 0,
+  remainingAmount: 36,
+  payments: [],
   statusHistory: [
     {
       status: 'OPEN',
@@ -62,13 +67,17 @@ export const paidTabMock: Tab = {
   status: 'FINALIZED',
   label: 'Ana Souza',
   finalizedAt: '2026-10-19T13:10:00.000Z',
-  payment: {
-    id: 'payment-1',
-    method: 'CASH',
-    amount: 36,
-    changeAmount: 14,
-    paidAt: '2026-10-19T13:10:00.000Z',
-  },
+  paidAmount: 36,
+  remainingAmount: 0,
+  payments: [
+    {
+      id: 'payment-1',
+      method: 'CASH',
+      amount: 36,
+      changeAmount: 14,
+      paidAt: '2026-10-19T13:10:00.000Z',
+    },
+  ],
 }
 
 export const cancelledTabMock: Tab = {

@@ -1,7 +1,7 @@
 import { useQueryClient } from '@tanstack/react-query'
 
 import { queryKeys } from '@shared/lib/query-keys/query-keys'
-import type { Tab } from '@shared/types/tab/tab'
+import type { Tab } from '@shared/types/tab/tab.type'
 
 export const useSettleTab = (unitId: string | null) => {
   const queryClient = useQueryClient()

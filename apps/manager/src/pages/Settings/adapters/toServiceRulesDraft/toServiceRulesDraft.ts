@@ -1,5 +1,5 @@
 import type { ServiceRulesDraft } from '@shared/types/settings/service-rules-draft'
-import type { UnitSettings } from '@shared/types/settings/unit-settings'
+import type { UnitSettings } from '@shared/types/settings/unit-settings.type'
 
 export const toServiceRulesDraft = (
   settings: UnitSettings

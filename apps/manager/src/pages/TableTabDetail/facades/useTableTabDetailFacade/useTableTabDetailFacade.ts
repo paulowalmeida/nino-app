@@ -1,5 +1,6 @@
 import { useParams } from 'react-router'
 
+import { useStoreServiceFee } from '@pages/TableTabDetail/hooks/useStoreServiceFee/useStoreServiceFee'
 import { useTabDetail } from '@pages/TableTabDetail/hooks/useTabDetail/useTabDetail'
 import { useTabItemCommands } from '@pages/TableTabDetail/hooks/useTabItemCommands/useTabItemCommands'
 import { useTabPermissions } from '@pages/TableTabDetail/hooks/useTabPermissions/useTabPermissions'
@@ -15,6 +16,7 @@ export const useTableTabDetailFacade = () => {
   const transitions = useTabTransitions(unitId, tabId ?? '')
   const permissions = useTabPermissions()
   const menu = useMenu(unitId)
+  const storeServiceFee = useStoreServiceFee(unitId)
 
   return {
     tab: detail.tab,
@@ -22,6 +24,7 @@ export const useTableTabDetailFacade = () => {
     isError: detail.isError,
     menuSections: menu.sections,
     canCancelTab: permissions.canCancelTab,
+    storeServiceFeePercent: storeServiceFee.storeServiceFeePercent,
     submitAddItem: itemCommands.submitAddItem,
     submitCancelItem: itemCommands.submitCancelItem,
     isAddingItem: itemCommands.isAddingItem,
@@ -29,10 +32,12 @@ export const useTableTabDetailFacade = () => {
     submitClose: transitions.submitClose,
     submitReopen: transitions.submitReopen,
     submitPay: transitions.submitPay,
+    submitServiceFee: transitions.submitServiceFee,
     submitCancel: transitions.submitCancel,
     isClosing: transitions.isClosing,
     isReopening: transitions.isReopening,
     isPaying: transitions.isPaying,
+    isSettingServiceFee: transitions.isSettingServiceFee,
     isCancelling: transitions.isCancelling,
   }
 }

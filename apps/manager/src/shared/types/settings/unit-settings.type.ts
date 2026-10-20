@@ -15,4 +15,6 @@ export type UnitSettings = {
   cashbackPercent: number
   cashbackMinRedeem: number
   cashbackExpiresInDays: number | null
+  serviceFeeEnabled: boolean
+  serviceFeePercent: number
 }

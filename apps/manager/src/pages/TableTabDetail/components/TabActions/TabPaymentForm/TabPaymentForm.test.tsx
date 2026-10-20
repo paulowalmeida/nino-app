@@ -22,39 +22,63 @@ const mockFacade = (overrides: Record<string, unknown> = {}) => {
   return submitPay
 }
 
-const confirmButton = () =>
-  screen.getByRole('button', { name: 'Registrar pagamento' })
+const amountField = () =>
+  screen.getByRole('textbox', { name: tabPaymentFormMock.amountLabel })
 
 describe('TabPaymentForm', () => {
   beforeEach(() => vi.clearAllMocks())
 
-  it('offers to register the payment only after a method is chosen', async () => {
+  it('starts with what is left and asks for the method before registering', async () => {
     mockFacade()
     render(<TabPaymentForm />)
 
+    expect(amountField()).toHaveValue('36,00')
     expect(
-      screen.queryByRole('button', { name: 'Registrar pagamento' })
+      screen.queryByRole('button', { name: /Registrar/ })
     ).not.toBeInTheDocument()
 
     await userEvent.click(screen.getByLabelText(tabPaymentFormMock.pixLabel))
 
-    expect(confirmButton()).toBeEnabled()
+    expect(
+      screen.getByRole('button', { name: /Registrar R\$\s36,00/ })
+    ).toBeEnabled()
   })
 
-  it('registers a payment that gives no change with just the method', async () => {
+  it('splits what is left with a shortcut and registers that part', async () => {
     const submitPay = mockFacade()
     render(<TabPaymentForm />)
 
+    await userEvent.click(
+      screen.getByRole('button', { name: tabPaymentFormMock.halfSplitName })
+    )
     await userEvent.click(screen.getByLabelText(tabPaymentFormMock.pixLabel))
-    await userEvent.click(confirmButton())
+    await userEvent.click(
+      screen.getByRole('button', { name: /Registrar R\$\s18,00/ })
+    )
 
-    expect(submitPay).toHaveBeenCalledWith({ method: 'PIX' })
-    expect(
-      screen.queryByRole('textbox', { name: tabPaymentFormMock.receivedLabel })
-    ).not.toBeInTheDocument()
+    expect(amountField()).toHaveValue('18,00')
+    expect(submitPay).toHaveBeenCalledWith(
+      { method: 'PIX', amount: 18 },
+      expect.objectContaining({ onSuccess: expect.any(Function) })
+    )
   })
 
-  it('asks for the received amount on cash and shows the change', async () => {
+  it('refuses an amount above what is left', async () => {
+    const submitPay = mockFacade()
+    render(<TabPaymentForm />)
+
+    await userEvent.clear(amountField())
+    await userEvent.type(amountField(), '4000')
+    await userEvent.click(screen.getByLabelText(tabPaymentFormMock.pixLabel))
+
+    expect(screen.getByText('Passa do que falta pagar.')).toBeInTheDocument()
+    expect(
+      screen.getByRole('button', { name: /Registrar R\$\s40,00/ })
+    ).toBeDisabled()
+    expect(submitPay).not.toHaveBeenCalled()
+  })
+
+  it('asks for the received cash and shows the change of this part', async () => {
     const submitPay = mockFacade()
     render(<TabPaymentForm />)
 
@@ -67,27 +91,18 @@ describe('TabPaymentForm', () => {
     expect(screen.getByText('Troco')).toBeInTheDocument()
     expect(screen.getByText('R$ 14,00')).toBeInTheDocument()
 
-    await userEvent.click(confirmButton())
+    await userEvent.click(
+      screen.getByRole('button', { name: /Registrar R\$\s36,00/ })
+    )
 
-    expect(submitPay).toHaveBeenCalledWith({
-      method: 'CASH',
-      amountReceived: 50,
-    })
+    expect(submitPay).toHaveBeenCalledWith(
+      { method: 'CASH', amount: 36, amountReceived: 50 },
+      expect.anything()
+    )
   })
 
-  it('accepts cash without an amount as the exact total', async () => {
-    const submitPay = mockFacade()
-    render(<TabPaymentForm />)
-
-    await userEvent.click(screen.getByLabelText(tabPaymentFormMock.cashLabel))
-    await userEvent.click(confirmButton())
-
-    expect(submitPay).toHaveBeenCalledWith({ method: 'CASH' })
-    expect(screen.queryByText('Troco')).not.toBeInTheDocument()
-  })
-
-  it('blocks cash received below the total of the tab', async () => {
-    const submitPay = mockFacade()
+  it('blocks cash received below the amount being paid', async () => {
+    mockFacade()
     render(<TabPaymentForm />)
 
     await userEvent.click(screen.getByLabelText(tabPaymentFormMock.cashLabel))
@@ -96,9 +111,32 @@ describe('TabPaymentForm', () => {
       '1000'
     )
 
-    expect(screen.getByText('Menor que o total da conta.')).toBeInTheDocument()
-    expect(confirmButton()).toBeDisabled()
-    expect(submitPay).not.toHaveBeenCalled()
+    expect(screen.getByText('Menor que o valor a pagar.')).toBeInTheDocument()
+    expect(
+      screen.getByRole('button', { name: /Registrar R\$\s36,00/ })
+    ).toBeDisabled()
+  })
+
+  it('clears the form after the payment is registered', async () => {
+    const submitPay = mockFacade()
+    submitPay.mockImplementation(
+      (_request: unknown, options: { onSuccess: () => void }) =>
+        options.onSuccess()
+    )
+    render(<TabPaymentForm />)
+
+    await userEvent.click(
+      screen.getByRole('button', { name: tabPaymentFormMock.halfSplitName })
+    )
+    await userEvent.click(screen.getByLabelText(tabPaymentFormMock.pixLabel))
+    await userEvent.click(
+      screen.getByRole('button', { name: /Registrar R\$\s18,00/ })
+    )
+
+    expect(amountField()).toHaveValue('36,00')
+    expect(
+      screen.queryByRole('button', { name: /Registrar/ })
+    ).not.toBeInTheDocument()
   })
 
   it('shows the loading state while the payment is registered', async () => {

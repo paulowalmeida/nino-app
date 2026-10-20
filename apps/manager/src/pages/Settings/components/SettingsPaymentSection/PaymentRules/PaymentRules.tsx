@@ -21,7 +21,7 @@ import {
 } from '@shared/constants/order.constants'
 import type { PaymentMethod } from '@shared/types/order/payment-method'
 import type { ServiceRulesDraft } from '@shared/types/settings/service-rules-draft'
-import type { UnitSettings } from '@shared/types/settings/unit-settings'
+import type { UnitSettings } from '@shared/types/settings/unit-settings.type'
 import type { UpdateUnitSettingsRequest } from '@shared/types/settings/update-unit-settings-request'
 
 import motion from '@styles/motion.module.css'

@@ -1,4 +1,4 @@
-import type { UnitSettings } from '@shared/types/settings/unit-settings'
+import type { UnitSettings } from '@shared/types/settings/unit-settings.type'
 
 export const unitIdMock = 'unit-1'
 
@@ -17,4 +17,6 @@ export const savedSettingsMock = {
   cashbackPercent: 5,
   cashbackMinRedeem: 10,
   cashbackExpiresInDays: null,
+  serviceFeeEnabled: false,
+  serviceFeePercent: 10,
 } satisfies UnitSettings

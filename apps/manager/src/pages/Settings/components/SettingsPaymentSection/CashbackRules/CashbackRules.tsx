@@ -12,7 +12,7 @@ import { Text } from '@nino/ds/components/Text'
 import { toCashbackDraft } from '@pages/Settings/adapters/toCashbackDraft/toCashbackDraft'
 import { EMPTY_CASHBACK_DRAFT } from '@pages/Settings/constants/settings.constants'
 import type { CashbackDraft } from '@shared/types/settings/cashback-draft'
-import type { UnitSettings } from '@shared/types/settings/unit-settings'
+import type { UnitSettings } from '@shared/types/settings/unit-settings.type'
 import type { UpdateUnitSettingsRequest } from '@shared/types/settings/update-unit-settings-request'
 import { maskMoney, moneyValue } from '@shared/utils/money/money'
 

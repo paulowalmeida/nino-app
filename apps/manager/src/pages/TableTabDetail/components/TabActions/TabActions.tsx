@@ -5,6 +5,7 @@ import { Card } from '@nino/ds/components/Card'
 import { Dialog } from '@nino/ds/components/Dialog'
 import { Header } from '@nino/ds/components/Header'
 import { CancelTabDialog } from '@pages/TableTabDetail/components/TabActions/CancelTabDialog/CancelTabDialog'
+import { TabBill } from '@pages/TableTabDetail/components/TabActions/TabBill/TabBill'
 import { TabFinalizedSummary } from '@pages/TableTabDetail/components/TabActions/TabFinalizedSummary/TabFinalizedSummary'
 import { TabPaymentForm } from '@pages/TableTabDetail/components/TabActions/TabPaymentForm/TabPaymentForm'
 import { TAB_ACTIONS_COPY } from '@pages/TableTabDetail/constants/tableTabDetail.constants'
@@ -34,6 +35,7 @@ export const TabActions = () => {
   }
 
   const isOpen = tab.status === 'OPEN'
+  const hasPayments = tab.payments.length > 0
   const copy = TAB_ACTIONS_COPY[tab.status]
 
   const closeTab = () => {
@@ -56,6 +58,7 @@ export const TabActions = () => {
       {isOpen && (
         <Button onClick={() => setConfirmingClose(true)}>Fechar comanda</Button>
       )}
+      {!isOpen && <TabBill />}
       {!isOpen && <TabPaymentForm />}
       {!isOpen && (
         <Button
@@ -66,9 +69,11 @@ export const TabActions = () => {
           Reabrir comanda
         </Button>
       )}
-      <Button variant="ghost" onClick={() => setCancellingTab(true)}>
-        Cancelar comanda
-      </Button>
+      {!hasPayments && (
+        <Button variant="ghost" onClick={() => setCancellingTab(true)}>
+          Cancelar comanda
+        </Button>
+      )}
       <Dialog
         open={isConfirmingClose}
         onOpenChange={(open) => !open && setConfirmingClose(false)}

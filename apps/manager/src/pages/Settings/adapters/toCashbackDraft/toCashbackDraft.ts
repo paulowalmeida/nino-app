@@ -1,5 +1,5 @@
 import type { CashbackDraft } from '@shared/types/settings/cashback-draft'
-import type { UnitSettings } from '@shared/types/settings/unit-settings'
+import type { UnitSettings } from '@shared/types/settings/unit-settings.type'
 import { maskMoneyAmount } from '@shared/utils/money/money'
 
 /*

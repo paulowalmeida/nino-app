@@ -1,9 +1,9 @@
 import { Box } from '@nino/ds/components/Box'
 import { Header } from '@nino/ds/components/Header'
 import { Text } from '@nino/ds/components/Text'
+import { TabPaymentList } from '@pages/TableTabDetail/components/TabActions/TabPaymentList/TabPaymentList'
 import { useTableTabDetailFacade } from '@pages/TableTabDetail/facades/useTableTabDetailFacade/useTableTabDetailFacade'
 import { tabMomentLabel } from '@pages/TableTabDetail/utils/tabMomentLabel/tabMomentLabel'
-import { PAYMENT_METHOD_LABEL } from '@shared/constants/order.constants'
 import { brl } from '@shared/utils/money/money'
 
 import styles from './TabFinalizedSummary.module.css'
@@ -13,25 +13,36 @@ export const TabFinalizedSummary = () => {
 
   if (!tab) return null
 
-  const { payment, cancelledAt, cancelReason, finalizedAt } = tab
+  const { payments, cancelledAt, cancelReason, finalizedAt } = tab
 
   return (
     <Box className={styles.tabFinalizedSummary}>
-      {payment && (
+      {payments.length > 0 && (
         <>
           <Header level={2} size="lg" title="Conta paga" />
           <Box className={styles.tabFinalizedSummaryFacts}>
-            <Text>{PAYMENT_METHOD_LABEL[payment.method]}</Text>
-            <Text weight="bold">{brl(payment.amount)}</Text>
-            {payment.changeAmount !== null && payment.changeAmount > 0 && (
-              <Text size="sm" color="muted">
-                Troco de {brl(payment.changeAmount)}
+            <Box direction="row" justify="between" align="baseline">
+              <Text color="muted">Consumo</Text>
+              <Text className={styles.tabFinalizedSummaryAmount}>
+                {brl(tab.subtotal)}
               </Text>
+            </Box>
+            {tab.serviceFeeAmount > 0 && (
+              <Box direction="row" justify="between" align="baseline">
+                <Text color="muted">Serviço ({tab.serviceFeePercent}%)</Text>
+                <Text className={styles.tabFinalizedSummaryAmount}>
+                  {brl(tab.serviceFeeAmount)}
+                </Text>
+              </Box>
             )}
-            <Text size="sm" color="muted">
-              Pago em {tabMomentLabel(payment.paidAt)}
-            </Text>
+            <Box direction="row" justify="between" align="baseline">
+              <Text weight="bold">Total pago</Text>
+              <Text weight="bold" className={styles.tabFinalizedSummaryAmount}>
+                {brl(tab.paidAmount)}
+              </Text>
+            </Box>
           </Box>
+          <TabPaymentList />
         </>
       )}
       {cancelledAt && (

@@ -1,4 +1,4 @@
-import type { Tab } from '@shared/types/tab/tab'
+import type { Tab } from '@shared/types/tab/tab.type'
 
 const normalize = (value: string): string =>
   value.trim().toLocaleLowerCase('pt-BR')

@@ -19,7 +19,10 @@ export const tabServiceAddItemRequestMock = {
 
 export const tabServicePayRequestMock = {
   method: 'CASH' as const,
+  amount: 20,
   amountReceived: 50,
 }
+
+export const tabServiceServiceFeeRequestMock = { applied: false }
 
 export const tabServiceCancelRequestMock = { cancelReason: 'cliente saiu' }

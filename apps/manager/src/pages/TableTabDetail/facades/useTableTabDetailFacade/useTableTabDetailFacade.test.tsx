@@ -3,6 +3,7 @@ import { MemoryRouter, Route, Routes } from 'react-router'
 import { renderHook } from '@testing-library/react'
 import { describe, expect, it, vi } from 'vitest'
 
+import { useStoreServiceFee } from '@pages/TableTabDetail/hooks/useStoreServiceFee/useStoreServiceFee'
 import { useTabDetail } from '@pages/TableTabDetail/hooks/useTabDetail/useTabDetail'
 import { useTabItemCommands } from '@pages/TableTabDetail/hooks/useTabItemCommands/useTabItemCommands'
 import { useTabPermissions } from '@pages/TableTabDetail/hooks/useTabPermissions/useTabPermissions'
@@ -19,6 +20,7 @@ vi.mock('@pages/TableTabDetail/hooks/useTabDetail/useTabDetail')
 vi.mock('@pages/TableTabDetail/hooks/useTabItemCommands/useTabItemCommands')
 vi.mock('@pages/TableTabDetail/hooks/useTabTransitions/useTabTransitions')
 vi.mock('@pages/TableTabDetail/hooks/useTabPermissions/useTabPermissions')
+vi.mock('@pages/TableTabDetail/hooks/useStoreServiceFee/useStoreServiceFee')
 
 const mockHooks = (unit: { unitId: string } | null) => {
   const commands = {
@@ -27,6 +29,7 @@ const mockHooks = (unit: { unitId: string } | null) => {
     submitClose: vi.fn(),
     submitReopen: vi.fn(),
     submitPay: vi.fn(),
+    submitServiceFee: vi.fn(),
     submitCancel: vi.fn(),
   }
   vi.mocked(useCurrentUnit).mockReturnValue(
@@ -41,6 +44,7 @@ const mockHooks = (unit: { unitId: string } | null) => {
     sections: [{ id: 'category-1' }],
   } as unknown as ReturnType<typeof useMenu>)
   vi.mocked(useTabPermissions).mockReturnValue({ canCancelTab: true })
+  vi.mocked(useStoreServiceFee).mockReturnValue({ storeServiceFeePercent: 10 })
   vi.mocked(useTabItemCommands).mockReturnValue({
     submitAddItem: commands.submitAddItem,
     submitCancelItem: commands.submitCancelItem,
@@ -51,10 +55,12 @@ const mockHooks = (unit: { unitId: string } | null) => {
     submitClose: commands.submitClose,
     submitReopen: commands.submitReopen,
     submitPay: commands.submitPay,
+    submitServiceFee: commands.submitServiceFee,
     submitCancel: commands.submitCancel,
     isClosing: false,
     isReopening: true,
     isPaying: false,
+    isSettingServiceFee: true,
     isCancelling: true,
   })
   return commands
@@ -90,6 +96,9 @@ describe('useTableTabDetailFacade', () => {
     expect(result.current.submitReopen).toBe(commands.submitReopen)
     expect(result.current.submitPay).toBe(commands.submitPay)
     expect(result.current.submitCancel).toBe(commands.submitCancel)
+    expect(result.current.submitServiceFee).toBe(commands.submitServiceFee)
+    expect(result.current.storeServiceFeePercent).toBe(10)
+    expect(result.current.isSettingServiceFee).toBe(true)
     expect(result.current.isAddingItem).toBe(true)
     expect(result.current.isCancellingItem).toBe(false)
     expect(result.current.isClosing).toBe(false)

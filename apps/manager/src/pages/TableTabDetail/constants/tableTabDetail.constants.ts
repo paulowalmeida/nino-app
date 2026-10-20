@@ -4,7 +4,7 @@ export const TAB_ACTIONS_COPY = {
     description: 'Confira os itens e feche quando o cliente pedir a conta.',
   },
   AWAITING_PAYMENT: {
-    title: 'Pagamento',
-    description: 'A conta está fechada. Registre como o cliente pagou.',
+    title: 'Conta',
+    description: 'Confira com o cliente e registre cada pagamento até quitar.',
   },
 } as const

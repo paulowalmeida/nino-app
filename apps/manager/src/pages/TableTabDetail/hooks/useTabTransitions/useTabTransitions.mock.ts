@@ -9,3 +9,8 @@ export const tabTransitionsCancelRequestMock = {
   cancelReason: 'Cliente saiu sem consumir',
 }
 export const tabTransitionsTabMock = paidTabMock
+export const tabTransitionsServiceFeeTabMock = {
+  ...paidTabMock,
+  serviceFeePercent: 10,
+  serviceFeeAmount: 3.6,
+}

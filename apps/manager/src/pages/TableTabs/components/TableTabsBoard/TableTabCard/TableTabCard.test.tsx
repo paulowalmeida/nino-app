@@ -3,7 +3,7 @@ import { MemoryRouter } from 'react-router'
 import { render, screen } from '@testing-library/react'
 import { describe, expect, it } from 'vitest'
 
-import type { Tab } from '@shared/types/tab/tab'
+import type { Tab } from '@shared/types/tab/tab.type'
 
 import { TableTabCard } from './TableTabCard'
 import { tableTabCardMock } from './TableTabCard.mock'

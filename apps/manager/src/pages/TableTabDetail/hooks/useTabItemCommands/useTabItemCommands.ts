@@ -4,7 +4,7 @@ import { toast } from '@nino/ds/components/Toast'
 import { useSettleTab } from '@pages/TableTabDetail/hooks/useSettleTab/useSettleTab'
 import { TabService } from '@shared/services/tab/tab.service/tab.service'
 import type { AddTabItemRequest } from '@shared/types/tab/add-tab-item-request'
-import type { Tab } from '@shared/types/tab/tab'
+import type { Tab } from '@shared/types/tab/tab.type'
 
 export const useTabItemCommands = (unitId: string | null, tabId: string) => {
   const settleTab = useSettleTab(unitId)

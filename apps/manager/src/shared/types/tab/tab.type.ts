@@ -8,7 +8,10 @@ export type Tab = {
   unitId: string
   status: TabStatus
   label: string
+  diningTableId: string | null
   subtotal: number
+  serviceFeePercent: number
+  serviceFeeAmount: number
   totalAmount: number
   openedByUserId: string
   closedAt: string | null
@@ -18,6 +21,8 @@ export type Tab = {
   createdAt: string
   updatedAt: string
   items: TabItem[]
-  payment: TabPayment | null
+  paidAmount: number
+  remainingAmount: number
+  payments: TabPayment[]
   statusHistory: TabStatusHistoryEntry[]
 }

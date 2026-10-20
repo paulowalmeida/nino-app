@@ -1,4 +1,4 @@
-import type { UnitSettings } from '@shared/types/settings/unit-settings'
+import type { UnitSettings } from '@shared/types/settings/unit-settings.type'
 
 export const cashbackSettingsMock = {
   isDeliveryEnabled: true,
@@ -15,4 +15,6 @@ export const cashbackSettingsMock = {
   cashbackPercent: 7.5,
   cashbackMinRedeem: 12.4,
   cashbackExpiresInDays: null,
+  serviceFeeEnabled: false,
+  serviceFeePercent: 10,
 } satisfies UnitSettings

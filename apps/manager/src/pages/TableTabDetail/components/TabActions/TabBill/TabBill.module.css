@@ -1,0 +1,21 @@
+@reference "@nino/ds/globals.css";
+
+.tabBill {
+  @apply flex flex-col gap-3;
+}
+
+.tabBillLines {
+  @apply flex flex-col gap-2;
+}
+
+.tabBillTotal {
+  @apply border-t border-dashed border-border pt-2;
+}
+
+.tabBillAmount {
+  @apply shrink-0 tabular-nums;
+}
+
+.tabBillRemaining {
+  @apply flex-wrap gap-x-3 rounded-3 bg-surface-mute px-4 py-3;
+}

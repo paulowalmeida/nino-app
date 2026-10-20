@@ -9,6 +9,7 @@ import {
   tabServiceCreateRequestMock,
   tabServiceItemIdMock,
   tabServicePayRequestMock,
+  tabServiceServiceFeeRequestMock,
   tabServiceTabIdMock,
   tabServiceTabMock,
   tabServiceTabPageMock,
@@ -100,7 +101,7 @@ describe('TabService', () => {
     )
   })
 
-  it('payTab: posts the payment method and received amount', async () => {
+  it('payTab: posts the method, the part of the bill and the received amount', async () => {
     await TabService.payTab(
       tabServiceUnitIdMock,
       tabServiceTabIdMock,
@@ -110,6 +111,19 @@ describe('TabService', () => {
     expect(api.create).toHaveBeenCalledWith(
       'units/unit-1/tabs/tab-1/payments',
       tabServicePayRequestMock
+    )
+  })
+
+  it('setServiceFee: patches whether the service fee stays on the bill', async () => {
+    await TabService.setServiceFee(
+      tabServiceUnitIdMock,
+      tabServiceTabIdMock,
+      tabServiceServiceFeeRequestMock
+    )
+
+    expect(api.patch).toHaveBeenCalledWith(
+      'units/unit-1/tabs/tab-1/service-fee',
+      tabServiceServiceFeeRequestMock
     )
   })
 

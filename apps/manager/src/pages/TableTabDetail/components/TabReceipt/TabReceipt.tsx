@@ -55,9 +55,9 @@ export const TabReceipt = () => {
         align="center"
         className={styles.tabReceiptTotal}
       >
-        <Text color="muted">Total</Text>
+        <Text color="muted">Subtotal</Text>
         <Text weight="bold" size="lg">
-          {brl(tab.totalAmount)}
+          {brl(tab.subtotal)}
         </Text>
       </Box>
       <AddTabItemDialog

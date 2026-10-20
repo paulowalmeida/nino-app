@@ -4,21 +4,33 @@ import { tabPaymentRequest } from './tabPaymentRequest'
 import { tabPaymentRequestMock } from './tabPaymentRequest.mock'
 
 describe('tabPaymentRequest', () => {
-  it('carries the received amount for cash', () => {
+  it('carries the part of the bill and the received amount for cash', () => {
     expect(
-      tabPaymentRequest('CASH', tabPaymentRequestMock.receivedAmountText)
-    ).toEqual({ method: 'CASH', amountReceived: 50 })
+      tabPaymentRequest(
+        'CASH',
+        tabPaymentRequestMock.amountText,
+        tabPaymentRequestMock.receivedAmountText
+      )
+    ).toEqual({ method: 'CASH', amount: 18, amountReceived: 50 })
   })
 
-  it('assumes the exact total when cash has no received amount', () => {
+  it('assumes the exact amount when cash has no received amount', () => {
     expect(
-      tabPaymentRequest('CASH', tabPaymentRequestMock.blankAmountText)
-    ).toEqual({ method: 'CASH' })
+      tabPaymentRequest(
+        'CASH',
+        tabPaymentRequestMock.amountText,
+        tabPaymentRequestMock.blankAmountText
+      )
+    ).toEqual({ method: 'CASH', amount: 18 })
   })
 
-  it('ignores a typed amount for methods that give no change', () => {
+  it('ignores a typed received amount for methods that give no change', () => {
     expect(
-      tabPaymentRequest('PIX', tabPaymentRequestMock.receivedAmountText)
-    ).toEqual({ method: 'PIX' })
+      tabPaymentRequest(
+        'PIX',
+        tabPaymentRequestMock.amountText,
+        tabPaymentRequestMock.receivedAmountText
+      )
+    ).toEqual({ method: 'PIX', amount: 18 })
   })
 })

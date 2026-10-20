@@ -3,8 +3,8 @@ import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { toast } from '@nino/ds/components/Toast'
 import { queryKeys } from '@shared/lib/query-keys/query-keys'
 import { TabService } from '@shared/services/tab/tab.service/tab.service'
-import type { CreateTabRequest } from '@shared/types/tab/create-tab-request'
-import type { Tab } from '@shared/types/tab/tab'
+import type { CreateTabRequest } from '@shared/types/tab/create-tab-request.type'
+import type { Tab } from '@shared/types/tab/tab.type'
 
 export const useOpenTab = (unitId: string | null) => {
   const queryClient = useQueryClient()
