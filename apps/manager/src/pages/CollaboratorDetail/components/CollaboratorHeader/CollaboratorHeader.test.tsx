@@ -5,6 +5,7 @@ import { CollaboratorHeader } from './CollaboratorHeader'
 
 const makeMember = (active: boolean) => ({
   role: 'MANAGER' as const,
+  position: { id: 'position-manager', name: 'Gerente', level: 50 },
   createdAt: '2024-01-02T00:00:00.000Z',
   user: { name: 'Ana Souza', isActive: active, lastLoginAt: null },
 })
@@ -24,12 +25,17 @@ describe(CollaboratorHeader.name, () => {
     expect(screen.getByText('Acesso desativado')).toBeInTheDocument()
   })
 
-  it('falls back to the persisted role name', () => {
+  it('shows the name of a custom cargo', () => {
     render(
       <CollaboratorHeader
-        member={{ ...makeMember(false), role: 'UNKNOWN' } as never}
+        member={
+          {
+            ...makeMember(false),
+            position: { id: 'position-cashier', name: 'Caixa', level: 30 },
+          } as never
+        }
       />
     )
-    expect(screen.getByText(/UNKNOWN/)).toBeInTheDocument()
+    expect(screen.getByText(/Caixa/)).toBeInTheDocument()
   })
 })

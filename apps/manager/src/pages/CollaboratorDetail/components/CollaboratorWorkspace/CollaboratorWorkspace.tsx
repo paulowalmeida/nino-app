@@ -39,9 +39,10 @@ export const CollaboratorWorkspace = () => {
             content: (
               <CollaboratorAccess
                 member={member}
-                canChangeRole={admin.canChangeRole}
-                isChangingRole={admin.isChangingRole}
-                onChangeRole={admin.changeRole}
+                canChangePosition={admin.canChangePosition}
+                promotionOptions={admin.promotionOptions}
+                isChangingPosition={admin.isChangingPosition}
+                onChangePosition={admin.changePosition}
                 removalLockHint={admin.removalLockHint}
                 emailLockHint={admin.emailLockHint}
                 onOpenEmailModal={() => setEmailModalOpen(true)}

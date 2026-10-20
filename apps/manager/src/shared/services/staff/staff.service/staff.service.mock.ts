@@ -1,5 +1,6 @@
 export const unitIdMock = 'unit-1'
 export const userIdMock = 'user-1'
+export const positionIdMock = 'position-manager'
 
 export const staffPageMock = {
   data: [
@@ -25,7 +26,7 @@ export const staffDetailMock = {
 export const createInviteRequestMock = {
   email: 'novo@padoca.com',
   kind: 'STAFF' as const,
-  role: 'STAFF' as const,
+  positionId: positionIdMock,
 }
 
 export const inviteResultMock = { id: 'invite-1', email: 'novo@padoca.com' }

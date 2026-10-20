@@ -1,7 +1,7 @@
 import { Alert } from '@nino/ds/components/Alert'
 import { Box } from '@nino/ds/components/Box'
-import type { UnitRole } from '@shared/types/auth/unit-role'
 import type { StaffDetail } from '@shared/types/team/staff-detail'
+import type { UnitPosition } from '@shared/types/team/unit-position.type'
 import { loginEmailOf } from '@shared/utils/login-email/login-email'
 
 import { CollaboratorLoginAccess } from './CollaboratorLoginAccess/CollaboratorLoginAccess'
@@ -12,9 +12,10 @@ import styles from './CollaboratorAccess.module.css'
 
 type CollaboratorAccessProps = {
   member: StaffDetail
-  canChangeRole: boolean
-  isChangingRole: boolean
-  onChangeRole: (role: UnitRole) => void
+  canChangePosition: boolean
+  promotionOptions: UnitPosition[]
+  isChangingPosition: boolean
+  onChangePosition: (positionId: string) => void
   removalLockHint?: string
   emailLockHint?: string
   onOpenEmailModal: () => void
@@ -23,9 +24,10 @@ type CollaboratorAccessProps = {
 
 export const CollaboratorAccess = ({
   member,
-  canChangeRole,
-  isChangingRole,
-  onChangeRole,
+  canChangePosition,
+  promotionOptions,
+  isChangingPosition,
+  onChangePosition,
   removalLockHint,
   emailLockHint,
   onOpenEmailModal,
@@ -56,11 +58,12 @@ export const CollaboratorAccess = ({
         </Alert>
       )}
 
-      {canChangeRole && (
+      {canChangePosition && (
         <CollaboratorRoleAccess
-          role={member.role}
-          isChangingRole={isChangingRole}
-          onChangeRole={onChangeRole}
+          current={member.position}
+          promotionOptions={promotionOptions}
+          isChangingPosition={isChangingPosition}
+          onChangePosition={onChangePosition}
         />
       )}
 

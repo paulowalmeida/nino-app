@@ -2,14 +2,13 @@ import { useMutation, useQueryClient } from '@tanstack/react-query'
 
 import { queryKeys } from '@shared/lib/query-keys/query-keys'
 import { StaffService } from '@shared/services/staff/staff.service'
-import type { UnitRole } from '@shared/types/auth/unit-role'
 
-type UpdateStaffRoleVariables = {
+type UpdateStaffPositionVariables = {
   userId: string
-  role: UnitRole
+  positionId: string
 }
 
-export const useUpdateStaffRole = (unitId: string | null) => {
+export const useUpdateStaffPosition = (unitId: string | null) => {
   const queryClient = useQueryClient()
 
   return useMutation({
@@ -17,8 +16,8 @@ export const useUpdateStaffRole = (unitId: string | null) => {
       success: 'Cargo alterado',
       errorTitle: 'O cargo não foi alterado',
     },
-    mutationFn: ({ userId, role }: UpdateStaffRoleVariables) =>
-      StaffService.updateStaffRole(unitId as string, userId, role),
+    mutationFn: ({ userId, positionId }: UpdateStaffPositionVariables) =>
+      StaffService.updateStaffPosition(unitId as string, userId, positionId),
     onSuccess: () => {
       void queryClient.invalidateQueries({
         queryKey: queryKeys.team.all(unitId ?? ''),

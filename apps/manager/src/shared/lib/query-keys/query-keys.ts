@@ -133,6 +133,13 @@ export const queryKeys = {
     list: (unitId: string) =>
       [...queryKeys.team.all(unitId), 'list'] as const,
   },
+  positions: {
+    all: (unitId: string) => ['positions', unitId] as const,
+    list: (unitId: string) =>
+      [...queryKeys.positions.all(unitId), 'list'] as const,
+    permissions: (unitId: string) =>
+      [...queryKeys.positions.all(unitId), 'permissions'] as const,
+  },
   cash: {
     all: (unitId: string) => ['cash', unitId] as const,
     current: (unitId: string) =>

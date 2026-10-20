@@ -2,19 +2,26 @@ import type { ReactNode } from 'react'
 import { MemoryRouter } from 'react-router'
 
 import { act, renderHook } from '@testing-library/react'
-import { describe, expect, it, vi } from 'vitest'
+import { beforeEach, describe, expect, it, vi } from 'vitest'
 
 import { useRemoveMember } from '@shared/hooks/team/useRemoveMember/useRemoveMember'
 import { useUpdateStaffEmail } from '@shared/hooks/team/useUpdateStaffEmail/useUpdateStaffEmail'
-import { useUpdateStaffRole } from '@shared/hooks/team/useUpdateStaffRole/useUpdateStaffRole'
+import { useUpdateStaffPosition } from '@shared/hooks/team/useUpdateStaffPosition/useUpdateStaffPosition'
 import { useSessionStore } from '@shared/states/session/session.state'
 
 import { useCollaboratorDetailAdmin } from './useCollaboratorDetailAdmin'
+import {
+  managerMemberDetailMock,
+  ownerMemberDetailMock,
+  ownerPositionLevelMock,
+  staffMemberDetailMock,
+  unitPositionsMock,
+} from './useCollaboratorDetailAdmin.mock'
 
 vi.mock('@shared/states/session/session.state')
 vi.mock('@shared/hooks/team/useRemoveMember/useRemoveMember')
 vi.mock('@shared/hooks/team/useUpdateStaffEmail/useUpdateStaffEmail')
-vi.mock('@shared/hooks/team/useUpdateStaffRole/useUpdateStaffRole')
+vi.mock('@shared/hooks/team/useUpdateStaffPosition/useUpdateStaffPosition')
 
 const navigate = vi.fn()
 vi.mock('react-router', async () => ({
@@ -22,19 +29,25 @@ vi.mock('react-router', async () => ({
   useNavigate: () => navigate,
 }))
 
-const member = { role: 'STAFF', user: { id: 'user-1' } }
 const wrapper = ({ children }: { children: ReactNode }) => (
   <MemoryRouter>{children}</MemoryRouter>
 )
 
-describe(useCollaboratorDetailAdmin.name, () => {
-  it('exposes commands and owner permissions', async () => {
-    const removeMember = vi.fn().mockResolvedValue(undefined)
-    const updateEmail = vi.fn().mockResolvedValue(undefined)
-    const changeRole = vi.fn()
-    vi.mocked(useSessionStore).mockImplementation(
-      (selector) => selector({ user: null } as never) as never
+const signIn = (userId: string | null) =>
+  vi
+    .mocked(useSessionStore)
+    .mockImplementation(
+      (selector) =>
+        selector({ user: userId ? { id: userId } : null } as never) as never
     )
+
+describe(useCollaboratorDetailAdmin.name, () => {
+  const removeMember = vi.fn().mockResolvedValue(undefined)
+  const updateEmail = vi.fn().mockResolvedValue(undefined)
+  const changePosition = vi.fn()
+
+  beforeEach(() => {
+    vi.clearAllMocks()
     vi.mocked(useRemoveMember).mockReturnValue({
       mutateAsync: removeMember,
       isPending: false,
@@ -42,152 +55,132 @@ describe(useCollaboratorDetailAdmin.name, () => {
     vi.mocked(useUpdateStaffEmail).mockReturnValue({
       mutateAsync: updateEmail,
     } as never)
-    vi.mocked(useUpdateStaffRole).mockReturnValue({
-      mutate: changeRole,
+    vi.mocked(useUpdateStaffPosition).mockReturnValue({
+      mutate: changePosition,
       isPending: false,
     } as never)
+  })
+
+  it('lets the owner promote a staff member and exposes the commands', async () => {
+    signIn('owner-1')
     const { result } = renderHook(
-      () => useCollaboratorDetailAdmin('unit-1', 'UNIT_OWNER', member as never),
+      () =>
+        useCollaboratorDetailAdmin(
+          'unit-1',
+          'UNIT_OWNER',
+          staffMemberDetailMock,
+          unitPositionsMock,
+          ownerPositionLevelMock
+        ),
       { wrapper }
     )
-    expect(result.current.canChangeRole).toBe(true)
+
+    expect(result.current.canChangePosition).toBe(true)
+    expect(result.current.promotionOptions.map(({ id }) => id)).toEqual([
+      'position-manager',
+    ])
     expect(result.current.emailLockHint).toBeUndefined()
+
     await act(() => result.current.saveEmail('ana@example.com'))
-    act(() => result.current.changeRole('MANAGER'))
+    act(() => result.current.changePosition('position-manager'))
     await act(() => result.current.confirmRemoval())
-    expect(updateEmail).toHaveBeenCalled()
-    expect(changeRole).toHaveBeenCalled()
+
+    expect(updateEmail).toHaveBeenCalledWith({
+      userId: 'user-1',
+      email: 'ana@example.com',
+    })
+    expect(changePosition).toHaveBeenCalledWith({
+      userId: 'user-1',
+      positionId: 'position-manager',
+    })
     expect(removeMember).toHaveBeenCalledWith({ id: 'user-1', kind: 'STAFF' })
     expect(navigate).toHaveBeenCalledWith('..')
   })
 
-  it('reports permission and last-owner locks', () => {
-    vi.mocked(useSessionStore).mockImplementation(
-      (selector) => selector({ user: { id: 'signed-in' } } as never) as never
-    )
-    vi.mocked(useRemoveMember).mockReturnValue({
-      mutateAsync: vi.fn(),
-      isPending: false,
-    } as never)
-    vi.mocked(useUpdateStaffEmail).mockReturnValue({
-      mutateAsync: vi.fn(),
-    } as never)
-    vi.mocked(useUpdateStaffRole).mockReturnValue({
-      mutate: vi.fn(),
-      isPending: true,
-    } as never)
+  it('reports the owner-only lock to a viewer who is not the owner', () => {
+    signIn('signed-in')
     const { result } = renderHook(
       () =>
-        useCollaboratorDetailAdmin('unit-1', 'STAFF', {
-          role: 'UNIT_OWNER',
-          user: { id: 'user-1' },
-        } as never),
+        useCollaboratorDetailAdmin(
+          'unit-1',
+          'STAFF',
+          ownerMemberDetailMock,
+          unitPositionsMock,
+          10
+        ),
       { wrapper }
     )
-    expect(result.current.canChangeRole).toBe(false)
+
+    expect(result.current.canChangePosition).toBe(false)
     expect(result.current.emailLockHint).toContain('Só o dono')
     expect(result.current.removalLockHint).toContain('Só o dono')
   })
 
-  it('offers a role change only for an owner looking at a staff member, never a manager', () => {
-    vi.mocked(useSessionStore).mockImplementation(
-      (selector) => selector({ user: { id: 'owner-1' } } as never) as never
-    )
-    vi.mocked(useRemoveMember).mockReturnValue({
-      mutateAsync: vi.fn(),
-      isPending: false,
-    } as never)
-    vi.mocked(useUpdateStaffEmail).mockReturnValue({
-      mutateAsync: vi.fn(),
-    } as never)
-    vi.mocked(useUpdateStaffRole).mockReturnValue({
-      mutate: vi.fn(),
-      isPending: false,
-    } as never)
+  it('offers no promotion from the highest cargo the owner can grant', () => {
+    signIn('owner-1')
     const { result } = renderHook(
       () =>
-        useCollaboratorDetailAdmin('unit-1', 'UNIT_OWNER', {
-          role: 'MANAGER',
-          user: { id: 'user-2' },
-        } as never),
+        useCollaboratorDetailAdmin(
+          'unit-1',
+          'UNIT_OWNER',
+          managerMemberDetailMock,
+          unitPositionsMock,
+          ownerPositionLevelMock
+        ),
       { wrapper }
     )
-    expect(result.current.canChangeRole).toBe(false)
+
+    expect(result.current.promotionOptions).toEqual([])
+    expect(result.current.canChangePosition).toBe(false)
   })
 
-  it('locks changing your own role', () => {
-    vi.mocked(useSessionStore).mockImplementation(
-      (selector) => selector({ user: { id: 'user-1' } } as never) as never
-    )
-    vi.mocked(useRemoveMember).mockReturnValue({
-      mutateAsync: vi.fn(),
-      isPending: false,
-    } as never)
-    vi.mocked(useUpdateStaffEmail).mockReturnValue({
-      mutateAsync: vi.fn(),
-    } as never)
-    vi.mocked(useUpdateStaffRole).mockReturnValue({
-      mutate: vi.fn(),
-      isPending: false,
-    } as never)
+  it('locks changing your own cargo, e-mail and membership', () => {
+    signIn('user-1')
     const { result } = renderHook(
-      () => useCollaboratorDetailAdmin('unit-1', 'UNIT_OWNER', member as never),
+      () =>
+        useCollaboratorDetailAdmin(
+          'unit-1',
+          'UNIT_OWNER',
+          staffMemberDetailMock,
+          unitPositionsMock,
+          ownerPositionLevelMock
+        ),
       { wrapper }
     )
-    expect(result.current.canChangeRole).toBe(false)
+
+    expect(result.current.canChangePosition).toBe(false)
     expect(result.current.emailLockHint).toContain('próprio e-mail')
     expect(result.current.removalLockHint).toContain('não pode se remover')
   })
 
   it('locks identity changes and removal for another owner', () => {
-    vi.mocked(useSessionStore).mockImplementation(
-      (selector) => selector({ user: { id: 'owner-1' } } as never) as never
-    )
-    vi.mocked(useRemoveMember).mockReturnValue({
-      mutateAsync: vi.fn(),
-      isPending: false,
-    } as never)
-    vi.mocked(useUpdateStaffEmail).mockReturnValue({
-      mutateAsync: vi.fn(),
-    } as never)
-    vi.mocked(useUpdateStaffRole).mockReturnValue({
-      mutate: vi.fn(),
-      isPending: false,
-    } as never)
-
+    signIn('owner-1')
     const { result } = renderHook(
       () =>
-        useCollaboratorDetailAdmin('unit-1', 'UNIT_OWNER', {
-          role: 'UNIT_OWNER',
-          user: { id: 'owner-2' },
-        } as never),
+        useCollaboratorDetailAdmin(
+          'unit-1',
+          'UNIT_OWNER',
+          ownerMemberDetailMock,
+          unitPositionsMock,
+          ownerPositionLevelMock
+        ),
       { wrapper }
     )
 
+    expect(result.current.canChangePosition).toBe(false)
     expect(result.current.emailLockHint).toContain('Rebaixe o dono')
     expect(result.current.removalLockHint).toContain('Rebaixe o dono')
   })
 
   it('keeps commands available while the collaborator data is absent', () => {
-    vi.mocked(useSessionStore).mockImplementation(
-      (selector) => selector({ user: null } as never) as never
-    )
-    vi.mocked(useRemoveMember).mockReturnValue({
-      mutateAsync: vi.fn(),
-      isPending: false,
-    } as never)
-    vi.mocked(useUpdateStaffEmail).mockReturnValue({
-      mutateAsync: vi.fn(),
-    } as never)
-    vi.mocked(useUpdateStaffRole).mockReturnValue({
-      mutate: vi.fn(),
-      isPending: false,
-    } as never)
+    signIn(null)
     const { result } = renderHook(
-      () => useCollaboratorDetailAdmin(null, null, null),
+      () => useCollaboratorDetailAdmin(null, null, null, [], 0),
       { wrapper }
     )
-    expect(result.current.canChangeRole).toBe(false)
+
+    expect(result.current.canChangePosition).toBe(false)
+    expect(result.current.promotionOptions).toEqual([])
     expect(result.current.emailLockHint).toContain('Só o dono')
     expect(result.current.removalLockHint).toContain('Só o dono')
   })

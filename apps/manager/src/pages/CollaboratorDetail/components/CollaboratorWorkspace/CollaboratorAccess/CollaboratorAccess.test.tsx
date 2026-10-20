@@ -2,73 +2,53 @@ import { render, screen } from '@testing-library/react'
 import { describe, expect, it, vi } from 'vitest'
 
 import { CollaboratorAccess } from './CollaboratorAccess'
+import {
+  collaboratorAccessMemberOf,
+  collaboratorAccessPromotionOptionsMock,
+} from './CollaboratorAccess.mock'
 
-const member = (completed: string | null, active: boolean) => ({
-  role: 'STAFF',
-  user: {
-    name: 'Ana Souza',
-    isActive: active,
-    profileCompletedAt: completed,
-    credentials: [{ email: 'ana@example.com' }],
-  },
-})
+const renderAccess = (
+  member: ReturnType<typeof collaboratorAccessMemberOf>,
+  canChangePosition: boolean
+) =>
+  render(
+    <CollaboratorAccess
+      member={member}
+      canChangePosition={canChangePosition}
+      promotionOptions={collaboratorAccessPromotionOptionsMock}
+      isChangingPosition={false}
+      onChangePosition={vi.fn()}
+      onOpenEmailModal={vi.fn()}
+      onOpenRemovalConfirm={vi.fn()}
+    />
+  )
 
 describe(CollaboratorAccess.name, () => {
   it('shows pending invitation and disabled-account warnings', () => {
-    render(
-      <CollaboratorAccess
-        member={member(null, false) as never}
-        canChangeRole
-        isChangingRole={false}
-        onChangeRole={vi.fn()}
-        onOpenEmailModal={vi.fn()}
-        onOpenRemovalConfirm={vi.fn()}
-      />
-    )
+    renderAccess(collaboratorAccessMemberOf(null, false), true)
+
     expect(screen.getByText(/Convite ainda não aceito/)).toBeInTheDocument()
     expect(screen.getByText(/A conta está desativada/)).toBeInTheDocument()
   })
 
   it('shows access controls for a completed active collaborator', () => {
-    render(
-      <CollaboratorAccess
-        member={member('2024-01-01', true) as never}
-        canChangeRole
-        isChangingRole={false}
-        onChangeRole={vi.fn()}
-        onOpenEmailModal={vi.fn()}
-        onOpenRemovalConfirm={vi.fn()}
-      />
-    )
+    renderAccess(collaboratorAccessMemberOf('2024-01-01', true), true)
+
     expect(screen.getByRole('region', { name: 'Acesso' })).toBeInTheDocument()
     expect(
       screen.queryByText(/Convite ainda não aceito/)
     ).not.toBeInTheDocument()
   })
 
-  it('shows the role choice only when the viewer can change it', () => {
-    const { rerender } = render(
-      <CollaboratorAccess
-        member={member('2024-01-01', true) as never}
-        canChangeRole
-        isChangingRole={false}
-        onChangeRole={vi.fn()}
-        onOpenEmailModal={vi.fn()}
-        onOpenRemovalConfirm={vi.fn()}
-      />
+  it('shows the cargo choice only when the viewer can change it', () => {
+    const { unmount } = renderAccess(
+      collaboratorAccessMemberOf('2024-01-01', true),
+      true
     )
     expect(screen.getByRole('heading', { name: 'Cargo' })).toBeInTheDocument()
+    unmount()
 
-    rerender(
-      <CollaboratorAccess
-        member={member('2024-01-01', true) as never}
-        canChangeRole={false}
-        isChangingRole={false}
-        onChangeRole={vi.fn()}
-        onOpenEmailModal={vi.fn()}
-        onOpenRemovalConfirm={vi.fn()}
-      />
-    )
+    renderAccess(collaboratorAccessMemberOf('2024-01-01', true), false)
     expect(
       screen.queryByRole('heading', { name: 'Cargo' })
     ).not.toBeInTheDocument()

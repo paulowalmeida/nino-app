@@ -152,7 +152,11 @@ describe(KitchenCard.name, () => {
         isBusy={false}
         cookName="João Silva"
         staff={[
-          { role: 'STAFF', user: { id: 'staff-1', name: 'Marina Silva' } },
+          {
+            role: 'STAFF',
+            position: { id: 'position-staff', name: 'Atendente', level: 10 },
+            user: { id: 'staff-1', name: 'Marina Silva' },
+          },
         ]}
         onCookChange={onCookChange}
         onOpenDetails={onOpenDetails}

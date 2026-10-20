@@ -2,14 +2,14 @@ import { useEmployeesData } from '@pages/Employees/hooks/useEmployeesData/useEmp
 import { useInvite } from '@shared/hooks/team/useInvite/useInvite'
 import { useRemoveMember } from '@shared/hooks/team/useRemoveMember/useRemoveMember'
 import { useUpdateStaffEmail } from '@shared/hooks/team/useUpdateStaffEmail/useUpdateStaffEmail'
-import { useUpdateStaffRole } from '@shared/hooks/team/useUpdateStaffRole/useUpdateStaffRole'
+import { useUpdateStaffPosition } from '@shared/hooks/team/useUpdateStaffPosition/useUpdateStaffPosition'
 
 export const useEmployeesFacade = () => {
   const data = useEmployeesData()
   const invite = useInvite(data.unitId)
   const removeMember = useRemoveMember(data.unitId)
   const updateEmail = useUpdateStaffEmail(data.unitId)
-  const updateRole = useUpdateStaffRole(data.unitId)
+  const updatePosition = useUpdateStaffPosition(data.unitId)
 
   return {
     ...data,
@@ -18,8 +18,8 @@ export const useEmployeesFacade = () => {
     removeMember: removeMember.mutate,
     removingVariables: removeMember.variables,
     isRemoving: removeMember.isPending,
-    changeRole: updateRole.mutate,
-    roleVariables: updateRole.variables,
-    isChangingRole: updateRole.isPending,
+    changePosition: updatePosition.mutate,
+    positionVariables: updatePosition.variables,
+    isChangingPosition: updatePosition.isPending,
   }
 }

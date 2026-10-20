@@ -5,59 +5,57 @@ import { describe, expect, it, vi } from 'vitest'
 import { CollaboratorRoleAccess } from './CollaboratorRoleAccess'
 import { collaboratorRoleAccessMock } from './CollaboratorRoleAccess.mock'
 
+const renderRoleAccess = (
+  onChangePosition = vi.fn(),
+  isChangingPosition = false
+) =>
+  render(
+    <CollaboratorRoleAccess
+      current={collaboratorRoleAccessMock.current}
+      promotionOptions={collaboratorRoleAccessMock.promotionOptions}
+      isChangingPosition={isChangingPosition}
+      onChangePosition={onChangePosition}
+    />
+  )
+
 describe(CollaboratorRoleAccess.name, () => {
-  it('titles the choice as the collaborator role', () => {
-    render(
-      <CollaboratorRoleAccess
-        role={collaboratorRoleAccessMock.role}
-        onChangeRole={vi.fn()}
-        isChangingRole={false}
-      />
-    )
+  it('titles the choice as the collaborator cargo', () => {
+    renderRoleAccess()
 
     expect(screen.getByRole('heading', { name: 'Cargo' })).toBeInTheDocument()
   })
 
-  it('offers only the roles a promotion can reach, never owner', () => {
-    render(
-      <CollaboratorRoleAccess
-        role={collaboratorRoleAccessMock.role}
-        onChangeRole={vi.fn()}
-        isChangingRole={false}
-      />
-    )
+  it('offers the current cargo and only the ones a promotion can reach', () => {
+    renderRoleAccess()
 
-    collaboratorRoleAccessMock.roleLabels.forEach((label) =>
-      expect(screen.getByText(label)).toBeInTheDocument()
-    )
+    expect(screen.getByLabelText(/Atendente/)).toBeChecked()
+    expect(screen.getByLabelText(/Caixa/)).toBeInTheDocument()
+    expect(screen.getByLabelText(/Gerente/)).toBeInTheDocument()
     expect(
       screen.queryByText(collaboratorRoleAccessMock.hiddenRoleLabel)
     ).not.toBeInTheDocument()
   })
 
-  it('promotes to manager', async () => {
-    const onChangeRole = vi.fn()
-    render(
-      <CollaboratorRoleAccess
-        role={collaboratorRoleAccessMock.role}
-        onChangeRole={onChangeRole}
-        isChangingRole={false}
-      />
-    )
+  it('promotes to the chosen cargo', async () => {
+    const onChangePosition = vi.fn()
+    renderRoleAccess(onChangePosition)
 
     await userEvent.click(screen.getByLabelText(/Gerente/))
 
-    expect(onChangeRole).toHaveBeenCalledWith('MANAGER')
+    expect(onChangePosition).toHaveBeenCalledWith('position-manager')
+  })
+
+  it('ignores a click on the cargo already held', async () => {
+    const onChangePosition = vi.fn()
+    renderRoleAccess(onChangePosition)
+
+    await userEvent.click(screen.getByLabelText(/Atendente/))
+
+    expect(onChangePosition).not.toHaveBeenCalled()
   })
 
   it('locks the choice while the change is saved', () => {
-    render(
-      <CollaboratorRoleAccess
-        role={collaboratorRoleAccessMock.role}
-        onChangeRole={vi.fn()}
-        isChangingRole
-      />
-    )
+    renderRoleAccess(vi.fn(), true)
 
     screen
       .getAllByRole('radio')

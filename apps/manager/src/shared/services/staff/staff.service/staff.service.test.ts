@@ -7,6 +7,7 @@ import {
   createInviteRequestMock,
   credentialInfoMock,
   inviteResultMock,
+  positionIdMock,
   removeStaffMessageMock,
   staffDetailMock,
   staffMemberMock,
@@ -71,21 +72,21 @@ describe('StaffService', () => {
     expect(result).toBe(inviteResultMock)
   })
 
-  it('updateStaffRole: patches the member role', async () => {
+  it('updateStaffPosition: patches the member cargo', async () => {
     // Arrange
     vi.mocked(api.patch).mockResolvedValue(staffMemberMock)
 
     // Act
-    const result = await StaffService.updateStaffRole(
+    const result = await StaffService.updateStaffPosition(
       unitIdMock,
       userIdMock,
-      'MANAGER'
+      positionIdMock
     )
 
     // Assert
     expect(api.patch).toHaveBeenCalledWith(
       `units/${unitIdMock}/staff/${userIdMock}/role`,
-      { role: 'MANAGER' }
+      { positionId: positionIdMock }
     )
     expect(result).toBe(staffMemberMock)
   })

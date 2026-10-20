@@ -1,56 +1,52 @@
 import { Box } from '@nino/ds/components/Box'
 import { Heading } from '@nino/ds/components/Heading'
 import { RadioGroup } from '@nino/ds/components/RadioGroup'
-import { TEAM_ROLE_OPTIONS } from '@shared/constants/team.constants'
-import type { UnitRole } from '@shared/types/auth/unit-role'
+import type { StaffPosition } from '@shared/types/team/staff-position.type'
+import type { UnitPosition } from '@shared/types/team/unit-position.type'
 
 import styles from './CollaboratorRoleAccess.module.css'
 
-const PROMOTABLE_ROLES: UnitRole[] = ['STAFF', 'MANAGER']
-
-const ROLE_REACH = TEAM_ROLE_OPTIONS.filter(({ value }) =>
-  PROMOTABLE_ROLES.includes(value)
-).map(({ value, label, hint }) => ({
-  value,
-  label,
-  description: hint,
-}))
-
 const ROLE_LABEL_ID = 'collaborator-role-choice'
 
-const isUnitRole = (value: string): value is UnitRole =>
-  PROMOTABLE_ROLES.includes(value as UnitRole)
-
 type CollaboratorRoleAccessProps = {
-  role: UnitRole
-  isChangingRole: boolean
-  onChangeRole: (role: UnitRole) => void
+  current: StaffPosition
+  promotionOptions: UnitPosition[]
+  isChangingPosition: boolean
+  onChangePosition: (positionId: string) => void
 }
 
 export const CollaboratorRoleAccess = ({
-  role,
-  isChangingRole,
-  onChangeRole,
-}: CollaboratorRoleAccessProps) => (
-  <Box as="section" aria-labelledby={ROLE_LABEL_ID}>
-    <Heading
-      level={3}
-      size="sm"
-      color="faintest"
-      id={ROLE_LABEL_ID}
-      className={styles.collaboratorRoleAccessTitle}
-    >
-      Cargo
-    </Heading>
+  current,
+  promotionOptions,
+  isChangingPosition,
+  onChangePosition,
+}: CollaboratorRoleAccessProps) => {
+  const options = [
+    { value: current.id, label: current.name, description: 'Cargo atual' },
+    ...promotionOptions.map(({ id, name }) => ({ value: id, label: name })),
+  ]
 
-    <RadioGroup
-      variant="card"
-      options={ROLE_REACH}
-      value={role}
-      disabled={isChangingRole}
-      onValueChange={(value) => isUnitRole(value) && onChangeRole(value)}
-      aria-labelledby={ROLE_LABEL_ID}
-      className={styles.choice}
-    />
-  </Box>
-)
+  return (
+    <Box as="section" aria-labelledby={ROLE_LABEL_ID}>
+      <Heading
+        level={3}
+        size="sm"
+        color="faintest"
+        id={ROLE_LABEL_ID}
+        className={styles.collaboratorRoleAccessTitle}
+      >
+        Cargo
+      </Heading>
+
+      <RadioGroup
+        variant="card"
+        options={options}
+        value={current.id}
+        disabled={isChangingPosition}
+        onValueChange={(value) => value !== current.id && onChangePosition(value)}
+        aria-labelledby={ROLE_LABEL_ID}
+        className={styles.choice}
+      />
+    </Box>
+  )
+}

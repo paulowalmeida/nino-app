@@ -4,7 +4,6 @@ import { Eyebrow } from '@nino/ds/components/Eyebrow'
 import { Heading } from '@nino/ds/components/Heading'
 import { Text } from '@nino/ds/components/Text'
 import { PersonMark } from '@shared/components/PersonMark/PersonMark'
-import { TEAM_ROLE_LABEL } from '@shared/constants/team.constants'
 import type { StaffDetail } from '@shared/types/team/staff-detail'
 import { lastSeenLabel } from '@shared/utils/last-seen/last-seen'
 
@@ -36,7 +35,7 @@ export const CollaboratorHeader = ({ member }: CollaboratorHeaderProps) => (
         {member.user.name}
       </Heading>
       <Text className={styles.cadence}>
-        {TEAM_ROLE_LABEL[member.role] ?? member.role}
+        {member.position.name}
         {' · '}
         Na equipe desde {monthYear.format(new Date(member.createdAt))}
         {' · '}

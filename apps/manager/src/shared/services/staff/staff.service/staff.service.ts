@@ -1,5 +1,4 @@
 import { api } from '@shared/services/http/http.service'
-import type { UnitRole } from '@shared/types/auth/unit-role'
 import type { CredentialInfo } from '@shared/types/profile/credential-info'
 import type { UpdateEmailRequest } from '@shared/types/profile/update-email-request'
 import type { CreateInviteRequest } from '@shared/types/team/create-invite-request'
@@ -23,14 +22,14 @@ export const StaffService = {
       data
     ),
 
-  updateStaffRole: (
+  updateStaffPosition: (
     unitId: string,
     userId: string,
-    role: UnitRole
+    positionId: string
   ): Promise<StaffMember> =>
-    api.patch<{ role: UnitRole }, StaffMember>(
+    api.patch<{ positionId: string }, StaffMember>(
       `units/${unitId}/staff/${userId}/role`,
-      { role }
+      { positionId }
     ),
 
   updateStaffEmail: (

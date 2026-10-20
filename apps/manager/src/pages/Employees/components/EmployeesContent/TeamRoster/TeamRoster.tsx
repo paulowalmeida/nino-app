@@ -20,10 +20,6 @@ import {
 import { Text } from '@nino/ds/components/Text'
 import { TEAM_ROSTER_GHOST_ROWS } from '@pages/Employees/constants/employees.constants'
 import { PersonMark } from '@shared/components/PersonMark/PersonMark'
-import {
-  TEAM_ROLE_OPTIONS,
-} from '@shared/constants/team.constants'
-import type { UnitRole } from '@shared/types/auth/unit-role'
 import type { RosterEntry } from '@shared/types/team/roster-entry'
 import { lastSeenLabel } from '@shared/utils/last-seen/last-seen'
 import { riseDelay } from '@shared/utils/rise-delay/rise-delay'
@@ -32,10 +28,10 @@ import motion from '@styles/motion.module.css'
 import styles from './TeamRoster.module.css'
 
 export type TeamRosterProps = {
-  /** Enables switching roles. Only the store owner gets this. */
-  onChangeRole?: (id: string, role: UnitRole) => void
-  /** Row with a role change in progress. */
-  changingRoleId?: string
+  /** Enables moving a member up to a higher cargo. Only the store owner gets this. */
+  onChangePosition?: (id: string, positionId: string) => void
+  /** Row with a cargo change in progress. */
+  changingPositionId?: string
   title: string
   hint: string
   entries: RosterEntry[]
@@ -56,10 +52,10 @@ export const TeamRoster = ({
   searchLabel,
   isPending,
   removingId,
-  changingRoleId,
+  changingPositionId,
   onRemove,
   onEditEmail,
-  onChangeRole,
+  onChangePosition,
 }: TeamRosterProps) => {
   const [term, setTerm] = useState('')
   const query = term.trim().toLowerCase()
@@ -86,16 +82,12 @@ export const TeamRoster = ({
    * values" — closer to what changing a role actually is.
    */
   const roleItemsOf = (entry: RosterEntry): MenuItem[] => {
-    if (!onChangeRole || !entry.roleKey || entry.roleLocked) return []
+    if (!onChangePosition || entry.roleLocked) return []
 
-    return TEAM_ROLE_OPTIONS.map(({ value, label, hint: roleHint }) => ({
-      value: `role-${value}`,
-      label:
-        entry.roleKey === value
-          ? `${label} — atual`
-          : `${label} — ${roleHint}`,
-      disabled: entry.roleKey === value,
-      onSelect: () => onChangeRole(entry.id, value),
+    return (entry.promotionOptions ?? []).map(({ id, label }) => ({
+      value: `position-${id}`,
+      label: `Promover a ${label}`,
+      onSelect: () => onChangePosition(entry.id, id),
     }))
   }
 
@@ -225,7 +217,7 @@ export const TeamRoster = ({
                 const roleItems = roleItemsOf(entry)
                 const otherItems = otherItemsOf(entry)
                 const isBusy =
-                  changingRoleId === entry.id || removingId === entry.id
+                  changingPositionId === entry.id || removingId === entry.id
                 const identity = (
                   <>
                     <PersonMark

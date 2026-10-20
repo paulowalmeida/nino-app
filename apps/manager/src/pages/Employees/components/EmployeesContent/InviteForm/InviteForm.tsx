@@ -10,26 +10,25 @@ import { FormField } from '@nino/ds/components/FormField'
 import { Input } from '@nino/ds/components/Input'
 import { Select } from '@nino/ds/components/Select'
 import {
-  INVITE_FORM_REQUEST_OF,
-  INVITE_FORM_SEATS,
-} from '@pages/Employees/constants/employees.constants'
+  COURIER_SEAT,
+  type InviteSeat,
+} from '@pages/Employees/adapters/invite-seats.adapter/invite-seats.adapter'
 import type { CreateInviteRequest } from '@shared/types/team/create-invite-request'
 
 import motion from '@styles/motion.module.css'
 import styles from './InviteForm.module.css'
 
-type InviteSeat = 'STAFF' | 'MANAGER' | 'COURIER'
-
 type InviteFormValues = {
   email: string
-  seat: InviteSeat
+  seat: string
 }
 
 type InviteFormProps = {
+  seats: InviteSeat[]
   onInvite: (data: CreateInviteRequest) => Promise<unknown>
 }
 
-export const InviteForm = ({ onInvite }: InviteFormProps) => {
+export const InviteForm = ({ onInvite, seats }: InviteFormProps) => {
   const [sentTo, setSentTo] = useState<string | null>(null)
 
   const {
@@ -40,18 +39,18 @@ export const InviteForm = ({ onInvite }: InviteFormProps) => {
     setError,
     formState: { errors, isSubmitting },
   } = useForm<InviteFormValues>({
-    defaultValues: { email: '', seat: 'STAFF' },
+    defaultValues: { email: '', seat: seats[0].value },
   })
 
   const onSubmit = async ({ email, seat }: InviteFormValues) => {
-    const kind = INVITE_FORM_REQUEST_OF[seat]
+    const isCourier = seat === COURIER_SEAT
 
     try {
-      await onInvite({
-        email,
-        kind,
-        role: kind === 'STAFF' ? (seat as 'STAFF' | 'MANAGER') : undefined,
-      })
+      await onInvite(
+        isCourier
+          ? { email, kind: 'COURIER' }
+          : { email, kind: 'STAFF', positionId: seat }
+      )
       setSentTo(email)
       reset({ email: '', seat })
     } catch {
@@ -98,7 +97,7 @@ export const InviteForm = ({ onInvite }: InviteFormProps) => {
             control={control}
             render={({ field }) => (
               <Select
-                options={INVITE_FORM_SEATS}
+                options={seats}
                 value={field.value}
                 onValueChange={field.onChange}
               />

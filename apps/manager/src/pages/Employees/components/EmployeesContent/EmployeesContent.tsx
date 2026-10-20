@@ -18,7 +18,7 @@ export const EmployeesContent = () => {
     ({ id }: RosterEntry) => id === editingStaffId
   )
   const removing = facade.isRemoving ? facade.removingVariables : undefined
-  const canChangeRole = facade.unit?.role === 'UNIT_OWNER'
+  const canChangePosition = facade.unit?.role === 'UNIT_OWNER'
   const activeTab = searchParams.get('tab') === 'couriers' ? 'couriers' : 'staff'
 
   const changeTab = (value: string) => {
@@ -31,7 +31,7 @@ export const EmployeesContent = () => {
   return (
     <>
       <Box direction="column" gap={{ mobile: 8, desktop: 10 }}>
-        <InviteForm onInvite={facade.invite} />
+        <InviteForm onInvite={facade.invite} seats={facade.inviteSeats} />
 
         <Tabs
           value={activeTab}
@@ -53,14 +53,15 @@ export const EmployeesContent = () => {
                   }
                   onRemove={(id) => facade.removeMember({ id, kind: 'STAFF' })}
                   onEditEmail={setEditingStaffId}
-                  onChangeRole={
-                    canChangeRole
-                      ? (userId, role) => facade.changeRole({ userId, role })
+                  onChangePosition={
+                    canChangePosition
+                      ? (userId, positionId) =>
+                          facade.changePosition({ userId, positionId })
                       : undefined
                   }
-                  changingRoleId={
-                    facade.isChangingRole
-                      ? facade.roleVariables?.userId
+                  changingPositionId={
+                    facade.isChangingPosition
+                      ? facade.positionVariables?.userId
                       : undefined
                   }
                 />

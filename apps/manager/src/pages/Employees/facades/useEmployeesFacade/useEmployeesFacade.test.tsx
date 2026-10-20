@@ -9,7 +9,7 @@ vi.mock('@pages/Employees/hooks/useEmployeesData/useEmployeesData')
 vi.mock('@shared/hooks/team/useInvite/useInvite', () => ({ useInvite: () => ({ mutateAsync: vi.fn() }) }))
 vi.mock('@shared/hooks/team/useRemoveMember/useRemoveMember', () => ({ useRemoveMember: () => ({ mutate: vi.fn(), isPending: false }) }))
 vi.mock('@shared/hooks/team/useUpdateStaffEmail/useUpdateStaffEmail', () => ({ useUpdateStaffEmail: () => ({ mutateAsync: vi.fn() }) }))
-vi.mock('@shared/hooks/team/useUpdateStaffRole/useUpdateStaffRole', () => ({ useUpdateStaffRole: () => ({ mutate: vi.fn(), isPending: false }) }))
+vi.mock('@shared/hooks/team/useUpdateStaffPosition/useUpdateStaffPosition', () => ({ useUpdateStaffPosition: () => ({ mutate: vi.fn(), isPending: false }) }))
 
 describe(useEmployeesFacade.name, () => {
   it('exposes page data and existing team commands', () => {

@@ -49,6 +49,7 @@ export const cookOrderMock: Order = {
 export const kitchenStaffMock: StaffMember[] = [
   {
     role: 'STAFF',
+    position: { id: 'position-staff', name: 'Atendente', level: 10 },
     user: { id: 'cook-1', name: 'Marina Silva' },
   },
 ]

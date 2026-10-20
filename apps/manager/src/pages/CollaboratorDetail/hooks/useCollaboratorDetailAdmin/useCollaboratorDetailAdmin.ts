@@ -2,10 +2,15 @@ import { useNavigate } from 'react-router'
 
 import { useRemoveMember } from '@shared/hooks/team/useRemoveMember/useRemoveMember'
 import { useUpdateStaffEmail } from '@shared/hooks/team/useUpdateStaffEmail/useUpdateStaffEmail'
-import { useUpdateStaffRole } from '@shared/hooks/team/useUpdateStaffRole/useUpdateStaffRole'
+import { useUpdateStaffPosition } from '@shared/hooks/team/useUpdateStaffPosition/useUpdateStaffPosition'
 import { useSessionStore } from '@shared/states/session/session.state'
 import type { UnitRole } from '@shared/types/auth/unit-role'
 import type { StaffDetail } from '@shared/types/team/staff-detail'
+import type { UnitPosition } from '@shared/types/team/unit-position.type'
+import {
+  assignablePositions,
+  promotionTargets,
+} from '@shared/utils/assignable-positions/assignable-positions'
 
 const OWNER_ONLY_HINT = 'Só o dono da loja muda o cargo de alguém.'
 const OWNER_TARGET_HINT = 'Rebaixe o dono antes de removê-lo da loja.'
@@ -13,13 +18,15 @@ const OWNER_TARGET_HINT = 'Rebaixe o dono antes de removê-lo da loja.'
 export const useCollaboratorDetailAdmin = (
   unitId: string | null,
   unitRole: UnitRole | null,
-  member: StaffDetail | null
+  member: StaffDetail | null,
+  positions: UnitPosition[],
+  actorLevel: number
 ) => {
   const navigate = useNavigate()
   const signedInUserId = useSessionStore((state) => state.user?.id)
 
-  const { mutate: changeRole, isPending: isChangingRole } =
-    useUpdateStaffRole(unitId)
+  const { mutate: changePosition, isPending: isChangingPosition } =
+    useUpdateStaffPosition(unitId)
   const { mutateAsync: updateEmail } = useUpdateStaffEmail(unitId)
   const { mutateAsync: removeMember, isPending: isRemoving } =
     useRemoveMember(unitId)
@@ -28,7 +35,14 @@ export const useCollaboratorDetailAdmin = (
   const isSelf = memberUserId === signedInUserId
   const isOwnerSignedIn = unitRole === 'UNIT_OWNER'
   const isTargetOwner = member?.role === 'UNIT_OWNER'
-  const canChangeRole = isOwnerSignedIn && !isSelf && member?.role === 'STAFF'
+  const promotionOptions = member
+    ? promotionTargets(
+        assignablePositions(positions, actorLevel),
+        member.position.level
+      )
+    : []
+  const canChangePosition =
+    isOwnerSignedIn && !isSelf && !isTargetOwner && promotionOptions.length > 0
 
   const confirmRemoval = async () => {
     await removeMember({ id: memberUserId, kind: 'STAFF' })
@@ -46,9 +60,11 @@ export const useCollaboratorDetailAdmin = (
           ? 'Rebaixe o dono antes de alterar seu e-mail.'
           : undefined,
 
-    canChangeRole,
-    changeRole: (role: UnitRole) => changeRole({ userId: memberUserId, role }),
-    isChangingRole,
+    canChangePosition,
+    promotionOptions,
+    changePosition: (positionId: string) =>
+      changePosition({ userId: memberUserId, positionId }),
+    isChangingPosition,
 
     removalLockHint: !isOwnerSignedIn
       ? OWNER_ONLY_HINT

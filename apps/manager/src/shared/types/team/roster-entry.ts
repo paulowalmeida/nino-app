@@ -1,11 +1,11 @@
-import type { UnitRole } from '@shared/types/auth/unit-role'
+import type { PromotionOption } from '@shared/types/team/promotion-option.type'
 
 export type RosterEntry = {
   id: string
   name: string
   email: string | null
   role: string
-  roleKey?: UnitRole
+  promotionOptions?: PromotionOption[]
   roleLocked?: string
   href?: string
   lastLoginAt: string | null
