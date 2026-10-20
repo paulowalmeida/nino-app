@@ -1,7 +1,7 @@
 @reference "@nino/ds/globals.css";
 
 .content {
-  @apply w-full max-w-4xl;
+  @apply w-full max-w-6xl;
 }
 
 .toolbar {
