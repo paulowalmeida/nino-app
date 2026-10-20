@@ -7,10 +7,7 @@ export const DiningTableService = {
     api.get<Page<DiningTable>>(`units/${unitId}/dining-tables`),
 
   create: (unitId: string, data: { name: string }): Promise<DiningTable> =>
-    api.create<typeof data, DiningTable>(
-      `units/${unitId}/dining-tables`,
-      data
-    ),
+    api.create<typeof data, DiningTable>(`units/${unitId}/dining-tables`, data),
 
   createBatch: (
     unitId: string,

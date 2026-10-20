@@ -1,6 +1,6 @@
 import { Box } from '@nino/ds/components/Box'
 import { Button } from '@nino/ds/components/Button'
-import { Heading } from '@nino/ds/components/Heading'
+import { Header } from '@nino/ds/components/Header'
 import { HoverCard } from '@nino/ds/components/HoverCard'
 import { Icon } from '@nino/ds/components/Icon'
 import { Text } from '@nino/ds/components/Text'
@@ -18,29 +18,31 @@ export const SettingsTablesTab = () => {
   return (
     <Box className={local.settingsTablesTabContent}>
       <Box className={local.intro}>
-        <Box direction="row" align="center" gap={1}>
-          <Heading level={2} size="lg">
-            Mesas e QR Codes
-          </Heading>
-          <HoverCard
-            trigger={
-              <Button
-                size="icon"
-                variant="ghost"
-                className="-my-3 h-11 w-11"
-                aria-label="Mais informações sobre Mesas e QR Codes"
-              >
-                <Icon name="info" size="sm" />
-              </Button>
-            }
-          >
-            <Text size="sm">
-              Cadastre as mesas da unidade, de uma vez ou aos poucos — o Nino
-              numera e gera o QR Code de cada uma para o cliente iniciar ou
-              consultar a comanda.
-            </Text>
-          </HoverCard>
-        </Box>
+        <Header
+          level={2}
+          size="lg"
+          title="Mesas e QR Codes"
+          actions={
+            <HoverCard
+              trigger={
+                <Button
+                  size="icon"
+                  variant="ghost"
+                  className="-my-3 h-11 w-11"
+                  aria-label="Mais informações sobre Mesas e QR Codes"
+                >
+                  <Icon name="info" size="sm" />
+                </Button>
+              }
+            >
+              <Text size="sm">
+                Cadastre as mesas da unidade, de uma vez ou aos poucos — o Nino
+                numera e gera o QR Code de cada uma para o cliente iniciar ou
+                consultar a comanda.
+              </Text>
+            </HoverCard>
+          }
+        />
       </Box>
 
       <DiningTables

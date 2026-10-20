@@ -1,6 +1,5 @@
 @reference "@nino/ds/globals.css";
 
-
 .saleFinishActionsFooter {
   @apply -mx-4 gap-3 bg-surface-page px-4 pb-4 pt-3;
   filter: drop-shadow(0 -1px 0 var(--color-border));

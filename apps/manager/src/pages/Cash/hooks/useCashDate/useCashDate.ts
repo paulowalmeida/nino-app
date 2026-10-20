@@ -1,6 +1,10 @@
 import { useSearchParams } from 'react-router'
 
-import { dateToKey, parseKey, todayKey } from '@pages/Cash/utils/cash-date/cash-date'
+import {
+  dateToKey,
+  parseKey,
+  todayKey,
+} from '@pages/Cash/utils/cash-date/cash-date'
 
 export const useCashDate = () => {
   const [params, setParams] = useSearchParams()

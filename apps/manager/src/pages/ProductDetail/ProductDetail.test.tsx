@@ -35,9 +35,11 @@ const mockScreenState = (state: {
   isMissing: boolean
   isReady: boolean
 }) =>
-  vi.mocked(useProductDetailFacade).mockReturnValue(
-    state as unknown as ReturnType<typeof useProductDetailFacade>
-  )
+  vi
+    .mocked(useProductDetailFacade)
+    .mockReturnValue(
+      state as unknown as ReturnType<typeof useProductDetailFacade>
+    )
 
 const renderPage = () =>
   render(

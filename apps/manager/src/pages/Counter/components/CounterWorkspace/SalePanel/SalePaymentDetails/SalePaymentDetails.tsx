@@ -90,7 +90,12 @@ export const SalePaymentDetails = ({
             </Text>
           </Box>
         ) : (
-          <Text as="p" size="xs" color="muted" className={styles.salePaymentDetailsNote}>
+          <Text
+            as="p"
+            size="xs"
+            color="muted"
+            className={styles.salePaymentDetailsNote}
+          >
             Escolha quanto o cliente entregou e o troco aparece aqui.
           </Text>
         )}

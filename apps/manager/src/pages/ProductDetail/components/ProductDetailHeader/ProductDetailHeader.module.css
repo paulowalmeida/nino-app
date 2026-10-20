@@ -1,6 +1,5 @@
 @reference "@nino/ds/globals.css";
 
-
 .head {
   @apply min-w-0 flex-1;
 }

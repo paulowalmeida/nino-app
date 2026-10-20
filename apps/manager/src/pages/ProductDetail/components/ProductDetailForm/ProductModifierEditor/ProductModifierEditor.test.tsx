@@ -33,9 +33,7 @@ describe('ProductModifierEditor', () => {
     expect(screen.getByLabelText('Nome da seção')).toBeInTheDocument()
     expect(screen.getByLabelText('Opção 1')).toBeInTheDocument()
 
-    await userEvent.click(
-      screen.getByRole('button', { name: 'Remover seção' })
-    )
+    await userEvent.click(screen.getByRole('button', { name: 'Remover seção' }))
     expect(
       screen.getByText('Este produto ainda não possui escolhas configuradas.')
     ).toBeInTheDocument()

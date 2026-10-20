@@ -28,7 +28,6 @@
   .split {
     @apply grid items-start gap-8;
 
-
     grid-template-columns: minmax(21rem, 1fr) minmax(0, 44.5rem);
   }
 

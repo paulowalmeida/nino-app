@@ -1,9 +1,8 @@
 import { Box } from '@nino/ds/components/Box'
 import { Button } from '@nino/ds/components/Button'
-import { Heading } from '@nino/ds/components/Heading'
+import { Header } from '@nino/ds/components/Header'
 import { Icon } from '@nino/ds/components/Icon'
 import { Modal } from '@nino/ds/components/Modal'
-import { Text } from '@nino/ds/components/Text'
 import { useCounterFacade } from '@pages/Counter/facades/useCounterFacade/useCounterFacade'
 
 import { OpenOrderBar } from './OpenOrderBar/OpenOrderBar'
@@ -30,7 +29,11 @@ export const CounterWorkspace = () => {
   return (
     <>
       <Box className={styles.floor}>
-        <Box as="section" className={styles.counterWorkspaceMenu} aria-label="Cardápio">
+        <Box
+          as="section"
+          className={styles.counterWorkspaceMenu}
+          aria-label="Cardápio"
+        >
           <ProductGrid />
         </Box>
       </Box>
@@ -68,14 +71,12 @@ export const CounterWorkspace = () => {
               >
                 <Icon name="arrow-left" size="sm" />
               </Button>
-              <Box direction="column" gap={0.5}>
-                <Heading level={2} size="lg">
-                  Pedido
-                </Heading>
-                <Text size="sm" color="muted">
-                  {counter.count} {counter.count === 1 ? 'item' : 'itens'}
-                </Text>
-              </Box>
+              <Header
+                level={2}
+                size="lg"
+                title="Pedido"
+                description={`${counter.count} ${counter.count === 1 ? 'item' : 'itens'}`}
+              />
             </Box>
             <SalePanel bare />
           </Box>

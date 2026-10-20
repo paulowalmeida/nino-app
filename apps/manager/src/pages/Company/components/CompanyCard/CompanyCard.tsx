@@ -3,7 +3,7 @@ import { useState } from 'react'
 import { Box } from '@nino/ds/components/Box'
 import { Button } from '@nino/ds/components/Button'
 import { FormField } from '@nino/ds/components/FormField'
-import { Heading } from '@nino/ds/components/Heading'
+import { Header } from '@nino/ds/components/Header'
 import { Input } from '@nino/ds/components/Input'
 import { Text } from '@nino/ds/components/Text'
 import { EMPTY_COMPANY_DRAFT } from '@pages/Company/constants/company.constants'
@@ -62,14 +62,13 @@ export const CompanyCard = ({
 
   return (
     <Box as="section" className={local.companyCardPanel}>
-      <Box as="header" className={`${motion.unroll} ${local.head}`}>
-        <Heading level={2} size="xl">
-          A empresa
-        </Heading>
-        <Text size="sm" color="subtle" mt={1}>
-          O CNPJ é o dono da assinatura. Vale para todas as unidades.
-        </Text>
-      </Box>
+      <Header
+        className={`${motion.deal} ${local.head}`}
+        level={2}
+        size="xl"
+        title="A empresa"
+        description="O CNPJ é o dono da assinatura. Vale para todas as unidades."
+      />
 
       <Box className={local.identity}>
         <Text className={local.identityLabel}>CNPJ</Text>

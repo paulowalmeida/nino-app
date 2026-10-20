@@ -17,9 +17,9 @@ describe(ProductConfigurationPage.name, () => {
       />
     )
 
-    expect(screen.getByRole('heading', { name: 'X-Salada' })).toBeInTheDocument()
     expect(
-      screen.getByRole('button', { name: /Adicionar/ })
-    ).toBeDisabled()
+      screen.getByRole('heading', { name: 'X-Salada' })
+    ).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: /Adicionar/ })).toBeDisabled()
   })
 })

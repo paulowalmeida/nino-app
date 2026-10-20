@@ -14,13 +14,8 @@ import styles from './ProductDetailPhoto.module.css'
 
 export const ProductDetailPhoto = () => {
   const [isPreviewOpen, setIsPreviewOpen] = useState(false)
-  const {
-    item,
-    uploadImage,
-    removeImage,
-    isUploadingImage,
-    isRemovingImage,
-  } = useProductDetailFacade()
+  const { item, uploadImage, removeImage, isUploadingImage, isRemovingImage } =
+    useProductDetailFacade()
 
   if (!item) return null
 

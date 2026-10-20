@@ -22,9 +22,9 @@ const mockMenu = (menu: Partial<ReturnType<typeof useMenu>>) =>
 const mockCategoryOptions = (
   options: Partial<ReturnType<typeof useProductCategoryOptions>>
 ) =>
-  vi.mocked(useProductCategoryOptions).mockReturnValue(
-    options as ReturnType<typeof useProductCategoryOptions>
-  )
+  vi
+    .mocked(useProductCategoryOptions)
+    .mockReturnValue(options as ReturnType<typeof useProductCategoryOptions>)
 
 const renderDetail = (productId: string | undefined) =>
   renderHook(() => useProductDetail(productDetailMock.unitId, productId))
@@ -34,7 +34,10 @@ describe('useProductDetail', () => {
 
   it('reads the item from the menu and the categories from the API', () => {
     mockMenu({
-      data: { data: [menuItemMock], pagination: { total: 1, page: 1, size: 1 } },
+      data: {
+        data: [menuItemMock],
+        pagination: { total: 1, page: 1, size: 1 },
+      },
       isPending: false,
     })
     mockCategoryOptions({ categoryOptions: categoryOptionsMock })
@@ -53,7 +56,10 @@ describe('useProductDetail', () => {
 
   it('reports a missing item when the menu has no such product', () => {
     mockMenu({
-      data: { data: [menuItemMock], pagination: { total: 1, page: 1, size: 1 } },
+      data: {
+        data: [menuItemMock],
+        pagination: { total: 1, page: 1, size: 1 },
+      },
       isPending: false,
     })
     mockCategoryOptions({ categoryOptions: categoryOptionsMock })

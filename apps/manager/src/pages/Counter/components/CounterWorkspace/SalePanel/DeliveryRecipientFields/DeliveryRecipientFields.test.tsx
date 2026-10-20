@@ -240,9 +240,7 @@ describe('DeliveryRecipientFields', () => {
     )
 
     // Assert
-    expect(
-      screen.getByText(addressPredictionMock.mainText)
-    ).toBeInTheDocument()
+    expect(screen.getByText(addressPredictionMock.mainText)).toBeInTheDocument()
   })
 
   it('resolves the full address once the pin is confirmed', async () => {

@@ -6,7 +6,6 @@
   overscroll-behavior: contain;
 }
 
-
 .ticket {
   @apply gap-3 rounded-3 border border-border bg-surface-page p-4;
 }
@@ -53,7 +52,6 @@
   @apply font-semibold text-fg-default;
   font-size: 13.5px;
 }
-
 
 .totals {
   @apply gap-1;

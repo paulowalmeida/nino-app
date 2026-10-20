@@ -3,9 +3,8 @@ import { useState } from 'react'
 import { Box } from '@nino/ds/components/Box'
 import { Button } from '@nino/ds/components/Button'
 import { FormField } from '@nino/ds/components/FormField'
-import { Heading } from '@nino/ds/components/Heading'
+import { Header } from '@nino/ds/components/Header'
 import { Input } from '@nino/ds/components/Input'
-import { Text } from '@nino/ds/components/Text'
 import { maskMoney, moneyValue } from '@shared/utils/money/money'
 
 import { useCashFacade } from '../../facades/useCashFacade/useCashFacade'
@@ -18,13 +17,12 @@ export const CashOpen = () => {
 
   return (
     <Box direction="column" className={styles.open}>
-      <Heading level={2} size="lg">
-        Abrir o caixa
-      </Heading>
-      <Text size="sm" color="muted">
-        Informe quanto de troco fica na gaveta para começar o dia. Sem caixa
-        aberto o balcão continua vendendo, só não entra na conferência.
-      </Text>
+      <Header
+        level={2}
+        size="lg"
+        title="Abrir o caixa"
+        description="Informe quanto de troco fica na gaveta para começar o dia. Sem caixa aberto o balcão continua vendendo, só não entra na conferência."
+      />
       <FormField label="Fundo de troco">
         <Input
           inputMode="decimal"

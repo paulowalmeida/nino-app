@@ -1,7 +1,6 @@
 import { Box } from '@nino/ds/components/Box'
 import { Eyebrow } from '@nino/ds/components/Eyebrow'
-import { Heading } from '@nino/ds/components/Heading'
-import { Text } from '@nino/ds/components/Text'
+import { Header } from '@nino/ds/components/Header'
 import { useConsumerDetailFacade } from '@pages/ConsumerDetail/facades/useConsumerDetailFacade/useConsumerDetailFacade'
 import { consumerCadenceLabel } from '@pages/ConsumerDetail/utils/consumerCadenceLabel/consumerCadenceLabel'
 import { PersonMark } from '@shared/components/PersonMark/PersonMark'
@@ -26,12 +25,15 @@ export const ConsumerHeader = () => {
 
       <Box className={styles.heroText}>
         <Eyebrow>Cliente</Eyebrow>
-        <Heading level={1} accent size="xl" className={styles.name}>
-          {consumer.name}
-        </Heading>
-        <Text size="xs" color="faint" className={styles.cadence}>
-          {consumerCadenceLabel(consumer.since, consumer.lastOrderAt)}
-        </Text>
+        <Header
+          level={1}
+          size="xl"
+          title={consumer.name}
+          description={consumerCadenceLabel(
+            consumer.since,
+            consumer.lastOrderAt
+          )}
+        />
       </Box>
     </Box>
   )

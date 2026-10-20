@@ -4,7 +4,10 @@ import { beforeEach, describe, expect, it, vi } from 'vitest'
 
 import { useCashFacade } from '../../facades/useCashFacade/useCashFacade'
 import { CashDateSelector } from './CashDateSelector'
-import { cashDateSelectorPastMock, cashDateSelectorTodayMock } from './CashDateSelector.mock'
+import {
+  cashDateSelectorPastMock,
+  cashDateSelectorTodayMock,
+} from './CashDateSelector.mock'
 
 vi.mock('../../facades/useCashFacade/useCashFacade')
 

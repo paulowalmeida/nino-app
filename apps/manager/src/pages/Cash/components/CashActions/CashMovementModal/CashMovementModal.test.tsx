@@ -105,9 +105,7 @@ describe(CashMovementModal.name, () => {
   it('closes when the modal itself is dismissed', async () => {
     render(<CashMovementModal open kind="DEPOSIT" onClose={onClose} />)
 
-    await userEvent.click(
-      screen.getByRole('textbox', { name: 'Valor' })
-    )
+    await userEvent.click(screen.getByRole('textbox', { name: 'Valor' }))
     await userEvent.keyboard('{Escape}')
 
     expect(onClose).toHaveBeenCalled()

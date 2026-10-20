@@ -28,10 +28,9 @@ describe('useMapLocation', () => {
   it('resolves the unit coordinates', async () => {
     vi.mocked(UnitService.getMapLocation).mockResolvedValue(mapLocationMock)
 
-    const { result } = renderHook(
-      () => useMapLocation(mapLocationUnitIdMock),
-      { wrapper }
-    )
+    const { result } = renderHook(() => useMapLocation(mapLocationUnitIdMock), {
+      wrapper,
+    })
 
     await waitFor(() => expect(result.current.isResolved).toBe(true))
     expect(result.current.coordinates).toEqual(mapLocationMock)
@@ -41,10 +40,9 @@ describe('useMapLocation', () => {
   it('resolves without coordinates when the unit has no address', async () => {
     vi.mocked(UnitService.getMapLocation).mockResolvedValue(null)
 
-    const { result } = renderHook(
-      () => useMapLocation(mapLocationUnitIdMock),
-      { wrapper }
-    )
+    const { result } = renderHook(() => useMapLocation(mapLocationUnitIdMock), {
+      wrapper,
+    })
 
     await waitFor(() => expect(result.current.isResolved).toBe(true))
     expect(result.current.hasLocation).toBe(false)

@@ -1,15 +1,53 @@
 @reference "@nino/ds/globals.css";
 
 .cashSkeletonPage {
-  @apply gap-4 p-4 lg:p-10;
+  @apply flex h-[calc(100dvh-3.5rem)] min-h-0 flex-col overflow-hidden;
+  @apply lg:h-dvh;
+}
+
+.loadingLabel {
+  @apply sr-only;
+}
+
+.cashSkeletonControls {
+  @apply shrink-0 gap-4 px-4 pt-4;
+  @apply lg:px-10 lg:pt-10;
+}
+
+.header {
+  @apply mb-3 shrink-0 lg:mb-4;
+}
+
+.title {
+  @apply h-8 w-24 lg:h-9;
+}
+
+.description {
+  @apply h-5 w-full max-w-[44rem];
+}
+
+.dateSelector {
+  @apply w-44;
+}
+
+.dateLabel {
+  @apply h-5 w-24;
+}
+
+.dateField {
+  @apply h-11 w-44 rounded-3;
 }
 
 .cashSkeletonCard {
   @apply gap-4 rounded-4 border border-border bg-surface-raised p-5;
 }
 
-.cashSkeletonTitle {
-  @apply h-6 w-40;
+.summaryTitle {
+  @apply h-7 w-36;
+}
+
+.summaryMeta {
+  @apply h-4 w-28;
 }
 
 .figures {
@@ -17,11 +55,27 @@
 }
 
 .figure {
-  @apply h-12 w-32;
+  @apply min-w-32 gap-2;
+}
+
+.figureLabel {
+  @apply h-3 w-24;
+}
+
+.figureValue {
+  @apply h-6 w-28;
 }
 
 .expected {
-  @apply h-14 w-full rounded-3;
+  @apply rounded-3 bg-surface-mute px-4 py-3;
+}
+
+.expectedLabel {
+  @apply h-5 w-36;
+}
+
+.expectedValue {
+  @apply h-8 w-28;
 }
 
 .cashSkeletonActions {
@@ -29,5 +83,49 @@
 }
 
 .cashSkeletonAction {
-  @apply h-11 w-32 rounded-3;
+  @apply h-11 w-28 rounded-full;
+}
+
+.movements {
+  @apply min-h-0 flex-1;
+}
+
+.movementsHead {
+  @apply mx-4 shrink-0 border-b border-border/60 pb-3 pt-5;
+  @apply lg:mx-10 lg:pt-7;
+}
+
+.movementsTitle {
+  @apply h-4 w-28;
+}
+
+.movementsCount {
+  @apply h-3 w-16;
+}
+
+.tableShell {
+  @apply mx-4 min-h-0 flex-1 overflow-hidden lg:mx-10;
+}
+
+.tableHeader,
+.tableRow {
+  @apply grid items-center gap-4 border-b border-border/60 py-3;
+  grid-template-columns: 6rem 12rem minmax(8rem, 1fr) 9rem;
+}
+
+.tableHeader {
+  @apply py-2.5;
+}
+
+.tableHeader > * {
+  @apply h-3;
+}
+
+.tableRow > * {
+  @apply h-4;
+}
+
+.tableHeader > :last-child,
+.tableRow > :last-child {
+  @apply justify-self-end w-20;
 }

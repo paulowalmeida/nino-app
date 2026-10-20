@@ -4,10 +4,7 @@ import { beforeEach, describe, expect, it, vi } from 'vitest'
 
 import { useCashFacade } from '../../../facades/useCashFacade/useCashFacade'
 import { CashCloseModal } from './CashCloseModal'
-import {
-  cashCloseModalMock,
-  cashCountedTypedMock,
-} from './CashCloseModal.mock'
+import { cashCloseModalMock, cashCountedTypedMock } from './CashCloseModal.mock'
 
 vi.mock('../../../facades/useCashFacade/useCashFacade')
 
@@ -100,7 +97,11 @@ describe(CashCloseModal.name, () => {
   it('signs a surplus with a plus', async () => {
     // Arrange
     render(
-      <CashCloseModal {...cashCloseModalMock} expectedAmount={100} onClose={onClose} />
+      <CashCloseModal
+        {...cashCloseModalMock}
+        expectedAmount={100}
+        onClose={onClose}
+      />
     )
 
     // Act

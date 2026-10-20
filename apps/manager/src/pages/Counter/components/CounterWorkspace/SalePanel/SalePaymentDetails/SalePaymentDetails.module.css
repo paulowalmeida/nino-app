@@ -19,7 +19,6 @@
   @apply gap-1.5;
 }
 
-
 .fieldLabel {
   @apply font-bold uppercase text-fg-faint;
   font-size: 10px;
@@ -35,7 +34,6 @@
   font-size: 15px;
   font-variant-numeric: tabular-nums;
 }
-
 
 .salePaymentDetailsNote {
   @apply rounded-3 bg-surface-2 px-3 py-2.5 leading-snug;

@@ -12,8 +12,11 @@ vi.mock(
 )
 
 const mockItem = (item: typeof menuItemMock | null) =>
-  vi.mocked(useProductDetailFacade).mockReturnValue({ item } as unknown as
-    ReturnType<typeof useProductDetailFacade>)
+  vi
+    .mocked(useProductDetailFacade)
+    .mockReturnValue({ item } as unknown as ReturnType<
+      typeof useProductDetailFacade
+    >)
 
 describe('ProductDetailHeader', () => {
   beforeEach(() => vi.clearAllMocks())

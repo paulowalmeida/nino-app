@@ -3,8 +3,8 @@ import { useEffect, useState } from 'react'
 const MOBILE_QUERY = '(max-width: 425px)'
 
 export const useProductConfigurationMobile = (): boolean => {
-  const [isMobile, setIsMobile] = useState(() =>
-    window.matchMedia(MOBILE_QUERY).matches
+  const [isMobile, setIsMobile] = useState(
+    () => window.matchMedia(MOBILE_QUERY).matches
   )
 
   useEffect(() => {

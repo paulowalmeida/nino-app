@@ -220,7 +220,10 @@ export const ZoneList = ({
                           />
                         </TableCell>
                         <TableCell className={local.actionsCell}>
-                          <Box direction="row" className={local.zoneListActions}>
+                          <Box
+                            direction="row"
+                            className={local.zoneListActions}
+                          >
                             <Button
                               variant="ghost"
                               size="sm"

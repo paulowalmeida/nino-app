@@ -3,11 +3,10 @@ import { useState } from 'react'
 import { Box } from '@nino/ds/components/Box'
 import { Button } from '@nino/ds/components/Button'
 import { FormField } from '@nino/ds/components/FormField'
-import { Heading } from '@nino/ds/components/Heading'
+import { Header } from '@nino/ds/components/Header'
 import { Input } from '@nino/ds/components/Input'
 import { NumberInput } from '@nino/ds/components/NumberInput'
 import { Slider } from '@nino/ds/components/Slider'
-import { Text } from '@nino/ds/components/Text'
 
 import motion from '@styles/motion.module.css'
 import local from './ZoneForm.module.css'
@@ -66,16 +65,17 @@ export const ZoneForm = ({
 
   return (
     <Box as="section" className={local.zoneFormSection}>
-      <Box className={local.intro}>
-        <Heading level={3} size="md">
-          Nova faixa
-        </Heading>
-        <Text size="sm" color="subtle">
-          {lastMaxRadiusKm > 0
+      <Header
+        className={local.intro}
+        level={3}
+        size="md"
+        title="Nova faixa"
+        description={
+          lastMaxRadiusKm > 0
             ? `Começa em ${lastMaxRadiusKm} km, onde a última faixa termina.`
-            : 'A primeira faixa começa na porta da loja.'}
-        </Text>
-      </Box>
+            : 'A primeira faixa começa na porta da loja.'
+        }
+      />
 
       <Slider
         className={local.slider}

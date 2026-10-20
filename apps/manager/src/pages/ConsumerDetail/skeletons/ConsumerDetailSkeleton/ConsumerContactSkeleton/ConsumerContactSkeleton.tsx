@@ -14,7 +14,12 @@ export const ConsumerContactSkeleton = () => (
     wrap
     className={contact.contact}
   >
-    <Box direction="row" gap={2} wrap className={contact.consumerContactActions}>
+    <Box
+      direction="row"
+      gap={2}
+      wrap
+      className={contact.consumerContactActions}
+    >
       <Skeleton className={ghost.consumerContactSkeletonAction} />
       <Skeleton className={ghost.consumerContactSkeletonAction} />
     </Box>

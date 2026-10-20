@@ -43,7 +43,9 @@ export const CollaboratorRoleAccess = ({
         options={options}
         value={current.id}
         disabled={isChangingPosition}
-        onValueChange={(value) => value !== current.id && onChangePosition(value)}
+        onValueChange={(value) =>
+          value !== current.id && onChangePosition(value)
+        }
         aria-labelledby={ROLE_LABEL_ID}
         className={styles.choice}
       />

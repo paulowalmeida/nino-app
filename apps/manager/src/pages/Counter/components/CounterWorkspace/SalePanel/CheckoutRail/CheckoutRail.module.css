@@ -1,6 +1,5 @@
 @reference "@nino/ds/globals.css";
 
-
 .progress {
   @apply shrink-0 lg:hidden;
 }

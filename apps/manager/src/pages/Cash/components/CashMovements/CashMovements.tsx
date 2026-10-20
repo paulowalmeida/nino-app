@@ -33,7 +33,12 @@ export const CashMovements = ({ movements }: CashMovementsProps) => (
       align="baseline"
       className={styles.head}
     >
-      <Heading level={2} size="sm" color="faint" className={styles.cashMovementsTitle}>
+      <Heading
+        level={2}
+        size="sm"
+        color="faint"
+        className={styles.cashMovementsTitle}
+      >
         Movimentações
       </Heading>
       <Text size="xs" color="faint">

@@ -32,7 +32,6 @@
   @apply min-w-0;
 }
 
-
 .productDetailFormRow {
   @apply grid grid-cols-2 gap-4 sm:grid-cols-[9rem_7rem];
 }
@@ -56,7 +55,6 @@
 .availabilityHint {
   @apply mt-0.5 block text-xs leading-relaxed text-fg-faint;
 }
-
 
 .productDetailFormActions {
   @apply flex flex-col gap-2 border-t border-border/60 pt-5;

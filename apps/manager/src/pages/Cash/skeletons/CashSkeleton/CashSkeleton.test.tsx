@@ -2,10 +2,6 @@ import { render, screen } from '@testing-library/react'
 import { describe, expect, it } from 'vitest'
 
 import { CashSkeleton } from './CashSkeleton'
-import {
-  cashSkeletonActionCountMock,
-  cashSkeletonFigureCountMock,
-} from './CashSkeleton.mock'
 
 describe(CashSkeleton.name, () => {
   it('announces that the drawer is still loading', () => {
@@ -14,12 +10,10 @@ describe(CashSkeleton.name, () => {
     expect(screen.getByLabelText('Carregando o caixa')).toBeInTheDocument()
   })
 
-  it('mirrors the figures and the actions of the real screen', () => {
+  it('mirrors the header, summary, actions, and movements of the real screen', () => {
     const { container } = render(<CashSkeleton />)
 
-    const placeholders = container.querySelectorAll('[class]')
-    expect(placeholders.length).toBeGreaterThanOrEqual(
-      cashSkeletonFigureCountMock + cashSkeletonActionCountMock
-    )
+    expect(container.querySelectorAll('[aria-hidden="true"]')).toHaveLength(41)
+    expect(container.querySelectorAll('[class*="tableRow"]')).toHaveLength(4)
   })
 })

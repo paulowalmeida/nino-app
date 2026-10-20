@@ -99,6 +99,12 @@ describe(useCollaboratorDetailFacade.name, () => {
     })
 
     expect(useCollaboratorDetailQuery).toHaveBeenCalledWith(null, '')
-    expect(useCollaboratorDetailAdmin).toHaveBeenCalledWith(null, null, null, [], 0)
+    expect(useCollaboratorDetailAdmin).toHaveBeenCalledWith(
+      null,
+      null,
+      null,
+      [],
+      0
+    )
   })
 })

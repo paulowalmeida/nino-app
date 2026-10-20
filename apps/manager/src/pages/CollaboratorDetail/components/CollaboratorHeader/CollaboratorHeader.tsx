@@ -1,8 +1,7 @@
 import { Badge } from '@nino/ds/components/Badge'
 import { Box } from '@nino/ds/components/Box'
 import { Eyebrow } from '@nino/ds/components/Eyebrow'
-import { Heading } from '@nino/ds/components/Heading'
-import { Text } from '@nino/ds/components/Text'
+import { Header } from '@nino/ds/components/Header'
 import { PersonMark } from '@shared/components/PersonMark/PersonMark'
 import type { StaffDetail } from '@shared/types/team/staff-detail'
 import { lastSeenLabel } from '@shared/utils/last-seen/last-seen'
@@ -31,16 +30,12 @@ export const CollaboratorHeader = ({ member }: CollaboratorHeaderProps) => (
 
     <Box className={styles.heroText}>
       <Eyebrow>Equipe</Eyebrow>
-      <Heading level={1} accent size="xl" className={styles.name}>
-        {member.user.name}
-      </Heading>
-      <Text className={styles.cadence}>
-        {member.position.name}
-        {' · '}
-        Na equipe desde {monthYear.format(new Date(member.createdAt))}
-        {' · '}
-        {lastSeenLabel(member.user.lastLoginAt)}
-      </Text>
+      <Header
+        level={1}
+        size="xl"
+        title={member.user.name}
+        description={`${member.position.name} · Na equipe desde ${monthYear.format(new Date(member.createdAt))} · ${lastSeenLabel(member.user.lastLoginAt)}`}
+      />
     </Box>
 
     {!member.user.isActive && (

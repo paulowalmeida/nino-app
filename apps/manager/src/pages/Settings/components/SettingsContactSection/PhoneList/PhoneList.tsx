@@ -2,7 +2,7 @@ import { useState } from 'react'
 
 import { Box } from '@nino/ds/components/Box'
 import { Button } from '@nino/ds/components/Button'
-import { Heading } from '@nino/ds/components/Heading'
+import { Header } from '@nino/ds/components/Header'
 import { ListRow } from '@nino/ds/components/ListRow'
 import { PhoneInput } from '@nino/ds/components/PhoneInput'
 import { Skeleton } from '@nino/ds/components/Skeleton'
@@ -46,27 +46,27 @@ export const PhoneList = ({
 
   return (
     <Box as="section" className={local.phoneListSection}>
-      <Box
-        as="header"
-        direction="row"
-        align="center"
-        justify="between"
+      <Header
         className={local.phonesHeader}
-      >
-        <Heading level={3} size="md">
-          Telefones cadastrados
-        </Heading>
-        <Text size="sm" color="subtle" className={local.phonesMeta}>
-          {phones.length === 1 ? '1 telefone' : `${phones.length} telefones`}
-        </Text>
-      </Box>
+        level={3}
+        size="md"
+        title="Telefones cadastrados"
+        actions={
+          <Text size="sm" color="subtle" className={local.phonesMeta}>
+            {phones.length === 1 ? '1 telefone' : `${phones.length} telefones`}
+          </Text>
+        }
+      />
 
       {phones.length === 0 && <PhoneListEmptyState />}
 
       {phones.length > 0 && (
         <Box as="ul" className={local.phones}>
           {phones.map((entry, index) => (
-            <ListRow divider="none" padding={0} gap={0}
+            <ListRow
+              divider="none"
+              padding={0}
+              gap={0}
               key={entry.id}
               className={`${motion.deal} ${local.phone}`}
               style={riseDelay(index * 45 + 60)}

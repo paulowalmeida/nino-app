@@ -13,7 +13,11 @@ export const CashDateSelector = () => {
         <Text size="sm" color="muted">
           Dia do caixa
         </Text>
-        <DatePicker value={date} onValueChange={setDate} endMonth={new Date()} />
+        <DatePicker
+          value={date}
+          onValueChange={setDate}
+          endMonth={new Date()}
+        />
       </Box>
 
       {!isToday && (

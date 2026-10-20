@@ -20,7 +20,6 @@
     drop-shadow(var(--shadow-up));
 }
 
-
 .shortcut {
   @apply hidden;
 }
@@ -31,7 +30,6 @@
 .openOrderBarTab:not(:disabled):active {
   scale: 1;
 }
-
 
 .perforation {
   --tooth: 8px;

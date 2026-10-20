@@ -36,8 +36,7 @@ export const usePhoneMutations = (unitId: string | null) => {
       success: 'Telefone removido',
       errorTitle: 'O telefone não foi removido',
     },
-    mutationFn: (id: string) =>
-      PhoneService.removePhone(unitId as string, id),
+    mutationFn: (id: string) => PhoneService.removePhone(unitId as string, id),
     onSuccess: invalidate,
   })
 

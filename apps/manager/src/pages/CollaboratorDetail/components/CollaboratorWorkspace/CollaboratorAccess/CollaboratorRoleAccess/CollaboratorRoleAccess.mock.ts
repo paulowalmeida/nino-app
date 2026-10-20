@@ -2,7 +2,11 @@ import type { StaffPosition } from '@shared/types/team/staff-position.type'
 import type { UnitPosition } from '@shared/types/team/unit-position.type'
 
 export const collaboratorRoleAccessMock = {
-  current: { id: 'position-staff', name: 'Atendente', level: 10 } as StaffPosition,
+  current: {
+    id: 'position-staff',
+    name: 'Atendente',
+    level: 10,
+  } as StaffPosition,
   promotionOptions: [
     {
       id: 'position-cashier',

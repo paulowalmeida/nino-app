@@ -27,9 +27,7 @@ describe(useCashSession.name, () => {
 
   it('reads the open session of the store when viewing today', async () => {
     // Arrange
-    vi.mocked(CashService.getCurrentSession).mockResolvedValue(
-      openSessionMock
-    )
+    vi.mocked(CashService.getCurrentSession).mockResolvedValue(openSessionMock)
 
     // Act
     const { result } = renderHook(
@@ -38,9 +36,7 @@ describe(useCashSession.name, () => {
     )
 
     // Assert
-    await waitFor(() => expect(result.current.session).toEqual(
-      openSessionMock
-    ))
+    await waitFor(() => expect(result.current.session).toEqual(openSessionMock))
     expect(CashService.getCurrentSession).toHaveBeenCalledWith('unit-1')
     expect(CashService.getSessionByDate).not.toHaveBeenCalled()
   })
@@ -63,9 +59,7 @@ describe(useCashSession.name, () => {
   it('reads the session that covered a past date', async () => {
     // Arrange
     vi.mocked(CashService.getCurrentSession).mockResolvedValue(null)
-    vi.mocked(CashService.getSessionByDate).mockResolvedValue(
-      closedSessionMock
-    )
+    vi.mocked(CashService.getSessionByDate).mockResolvedValue(closedSessionMock)
 
     // Act
     const { result } = renderHook(
@@ -74,9 +68,9 @@ describe(useCashSession.name, () => {
     )
 
     // Assert
-    await waitFor(() => expect(result.current.session).toEqual(
-      closedSessionMock
-    ))
+    await waitFor(() =>
+      expect(result.current.session).toEqual(closedSessionMock)
+    )
     expect(CashService.getSessionByDate).toHaveBeenCalledWith(
       'unit-1',
       closedSessionDateKeyMock
@@ -85,12 +79,8 @@ describe(useCashSession.name, () => {
 
   it('still exposes the open session for a past date, for commands', async () => {
     // Arrange
-    vi.mocked(CashService.getCurrentSession).mockResolvedValue(
-      openSessionMock
-    )
-    vi.mocked(CashService.getSessionByDate).mockResolvedValue(
-      closedSessionMock
-    )
+    vi.mocked(CashService.getCurrentSession).mockResolvedValue(openSessionMock)
+    vi.mocked(CashService.getSessionByDate).mockResolvedValue(closedSessionMock)
 
     // Act
     const { result } = renderHook(
@@ -99,9 +89,9 @@ describe(useCashSession.name, () => {
     )
 
     // Assert
-    await waitFor(() => expect(result.current.currentSession).toEqual(
-      openSessionMock
-    ))
+    await waitFor(() =>
+      expect(result.current.currentSession).toEqual(openSessionMock)
+    )
     expect(result.current.session).toEqual(closedSessionMock)
   })
 

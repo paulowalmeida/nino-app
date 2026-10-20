@@ -3,7 +3,7 @@ import { useFieldArray, useFormContext, useWatch } from 'react-hook-form'
 import { Accordion } from '@nino/ds/components/Accordion'
 import { Box } from '@nino/ds/components/Box'
 import { Button } from '@nino/ds/components/Button'
-import { Heading } from '@nino/ds/components/Heading'
+import { Header } from '@nino/ds/components/Header'
 import { Text } from '@nino/ds/components/Text'
 import { ProductModifierGroupEditor } from '@pages/ProductDetail/components/ProductDetailForm/ProductModifierEditor/ProductModifierGroupEditor/ProductModifierGroupEditor'
 import type { ProductDetailFormValues } from '@pages/ProductDetail/types/ProductDetailFormValues.type'
@@ -20,33 +20,32 @@ export const ProductModifierEditor = () => {
 
   return (
     <Box className={styles.editor}>
-      <Box direction="row" className={styles.productModifierEditorHeader}>
-        <Box>
-          <Heading level={2} className={styles.productModifierEditorTitle}>
-            Escolhas do cliente
-          </Heading>
-          <Text as="p" className={styles.hint}>
-            Crie seções obrigatórias de composição e adicionais opcionais.
-          </Text>
-        </Box>
-        <Button
-          type="button"
-          variant="outline"
-          size="sm"
-          onClick={() =>
-            append({
-              name: '',
-              description: '',
-              role: 'ADDITION',
-              minSelections: 0,
-              maxSelections: 1,
-              options: [{ name: '', price: '0,00' }],
-            })
-          }
-        >
-          Adicionar seção
-        </Button>
-      </Box>
+      <Header
+        className={styles.productModifierEditorHeader}
+        level={2}
+        size="lg"
+        title="Escolhas do cliente"
+        description="Crie seções obrigatórias de composição e adicionais opcionais."
+        actions={
+          <Button
+            type="button"
+            variant="outline"
+            size="sm"
+            onClick={() =>
+              append({
+                name: '',
+                description: '',
+                role: 'ADDITION',
+                minSelections: 0,
+                maxSelections: 1,
+                options: [{ name: '', price: '0,00' }],
+              })
+            }
+          >
+            Adicionar seção
+          </Button>
+        }
+      />
 
       {fields.length === 0 ? (
         <Text as="p" className={styles.productModifierEditorEmpty}>

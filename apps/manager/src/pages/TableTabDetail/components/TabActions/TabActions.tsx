@@ -1,11 +1,9 @@
 import { useState } from 'react'
 
-import { Box } from '@nino/ds/components/Box'
 import { Button } from '@nino/ds/components/Button'
 import { Card } from '@nino/ds/components/Card'
 import { Dialog } from '@nino/ds/components/Dialog'
-import { Heading } from '@nino/ds/components/Heading'
-import { Text } from '@nino/ds/components/Text'
+import { Header } from '@nino/ds/components/Header'
 import { CancelTabDialog } from '@pages/TableTabDetail/components/TabActions/CancelTabDialog/CancelTabDialog'
 import { TabFinalizedSummary } from '@pages/TableTabDetail/components/TabActions/TabFinalizedSummary/TabFinalizedSummary'
 import { TabPaymentForm } from '@pages/TableTabDetail/components/TabActions/TabPaymentForm/TabPaymentForm'
@@ -55,14 +53,12 @@ export const TabActions = () => {
       padding="lg"
       className={`${motion.deal} ${styles.tabActions}`}
     >
-      <Box className={styles.tabActionsHead}>
-        <Heading level={2} size="lg">
-          {copy.title}
-        </Heading>
-        <Text size="sm" color="muted">
-          {copy.description}
-        </Text>
-      </Box>
+      <Header
+        level={2}
+        size="lg"
+        title={copy.title}
+        description={copy.description}
+      />
       {isOpen && (
         <Button onClick={() => setConfirmingClose(true)}>Fechar comanda</Button>
       )}

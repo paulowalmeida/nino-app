@@ -1,4 +1,5 @@
-export const dateToKey = (date: Date): string => date.toLocaleDateString('sv-SE')
+export const dateToKey = (date: Date): string =>
+  date.toLocaleDateString('sv-SE')
 
 export const todayKey = (): string => dateToKey(new Date())
 

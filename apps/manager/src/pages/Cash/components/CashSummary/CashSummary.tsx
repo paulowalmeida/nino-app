@@ -1,5 +1,5 @@
 import { Box } from '@nino/ds/components/Box'
-import { Heading } from '@nino/ds/components/Heading'
+import { Header } from '@nino/ds/components/Header'
 import { Text } from '@nino/ds/components/Text'
 import type { CashSession } from '@shared/types/cash/cash-session'
 import { brl } from '@shared/utils/money/money'
@@ -18,16 +18,16 @@ const timeLabel = (isoDate: string): string =>
 
 export const CashSummary = ({ session }: CashSummaryProps) => (
   <Box as="section" direction="column" className={styles.cashSummary}>
-    <Box direction="row" justify="between" align="baseline">
-      <Heading level={2} size="lg">
-        {session.closedAt ? 'Caixa fechado' : 'Caixa aberto'}
-      </Heading>
-      <Text size="sm" color="muted">
-        {session.closedAt
+    <Header
+      level={2}
+      size="lg"
+      title={session.closedAt ? 'Caixa fechado' : 'Caixa aberto'}
+      description={
+        session.closedAt
           ? `Fechado às ${timeLabel(session.closedAt)}`
-          : `${session.openedByName} · desde ${timeLabel(session.openedAt)}`}
-      </Text>
-    </Box>
+          : `${session.openedByName} · desde ${timeLabel(session.openedAt)}`
+      }
+    />
 
     <Box direction="row" wrap className={styles.figures}>
       <Box direction="column" className={styles.figure}>
@@ -87,10 +87,7 @@ export const CashSummary = ({ session }: CashSummaryProps) => (
           </Text>
         </Box>
         {session.difference !== 0 && (
-          <Text
-            size="sm"
-            color={session.difference < 0 ? 'danger' : 'success'}
-          >
+          <Text size="sm" color={session.difference < 0 ? 'danger' : 'success'}>
             {session.difference > 0 ? 'Sobrou' : 'Faltou'}{' '}
             {brl(Math.abs(session.difference))}
           </Text>

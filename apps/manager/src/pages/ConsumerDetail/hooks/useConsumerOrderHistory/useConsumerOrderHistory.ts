@@ -4,7 +4,10 @@ import { useInfiniteQuery } from '@tanstack/react-query'
 
 import { toConsumerOrderRows } from '@pages/ConsumerDetail/adapters/consumerOrderRows.adapter/consumerOrderRows.adapter'
 import { queryKeys } from '@shared/lib/query-keys/query-keys'
-import { ConsumerService, HISTORY_PAGE_SIZE } from '@shared/services/consumer/consumer.service'
+import {
+  ConsumerService,
+  HISTORY_PAGE_SIZE,
+} from '@shared/services/consumer/consumer.service'
 import { nextPageParam } from '@shared/utils/next-page-param/next-page-param'
 
 /* WHY: a ficha abre com a primeira página e só busca a próxima quando quem

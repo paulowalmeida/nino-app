@@ -148,7 +148,9 @@ export const DiningTablesList = ({
               {tables.map((table) => (
                 <TableRow key={table.id}>
                   <TableCell className={local.colName}>
-                    <Text as="span" className={local.tableName}>{table.name}</Text>
+                    <Text as="span" className={local.tableName}>
+                      {table.name}
+                    </Text>
                   </TableCell>
                   <TableCell className={local.colStatus}>
                     <Badge

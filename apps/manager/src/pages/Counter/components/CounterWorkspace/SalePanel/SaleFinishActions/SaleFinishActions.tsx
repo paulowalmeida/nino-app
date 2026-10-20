@@ -43,7 +43,9 @@ export const SaleFinishActions = ({
 
   return (
     <>
-      <Box className={bare ? styles.footerBare : styles.saleFinishActionsFooter}>
+      <Box
+        className={bare ? styles.footerBare : styles.saleFinishActionsFooter}
+      >
         {hasLines && !isPaymentAvailable && (
           <Alert variant="error">
             Nenhum método de pagamento está disponível no balcão.

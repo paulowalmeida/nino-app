@@ -46,8 +46,7 @@ export const useDiningTableMutations = (unitId: string | null) => {
       success: 'Mesa removida',
       errorTitle: 'A mesa não foi removida',
     },
-    mutationFn: (id: string) =>
-      DiningTableService.remove(unitId as string, id),
+    mutationFn: (id: string) => DiningTableService.remove(unitId as string, id),
     onSuccess: invalidate,
   })
 

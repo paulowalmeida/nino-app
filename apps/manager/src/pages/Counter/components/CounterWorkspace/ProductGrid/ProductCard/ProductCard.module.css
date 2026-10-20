@@ -1,6 +1,5 @@
 @reference "@nino/ds/globals.css";
 
-
 .productCard {
   @apply relative flex cursor-pointer flex-col overflow-hidden rounded-3;
   @apply bg-surface-page text-left;
@@ -13,12 +12,12 @@
   @apply focus-ring;
 }
 
-
 @media (hover: hover) {
   .productCard:hover {
     box-shadow:
       var(--card-ring),
-      0 8px 20px -12px color-mix(in srgb, var(--color-warm-950) 20%, transparent);
+      0 8px 20px -12px
+        color-mix(in srgb, var(--color-warm-950) 20%, transparent);
   }
 }
 

@@ -85,10 +85,9 @@ describe(useCounterCommands.name, () => {
     createElement(QueryClientProvider, { client: new QueryClient() }, children)
 
   it('closes the sheet when the last line is removed', () => {
-    const { result } = renderHook(
-      () => useCounterCommands('unit-1', 'CASH'),
-      { wrapper }
-    )
+    const { result } = renderHook(() => useCounterCommands('unit-1', 'CASH'), {
+      wrapper,
+    })
     act(() => result.current.handleStep('item-1', -1))
     expect(spies.setSheet).toHaveBeenCalledWith(false)
     expect(spies.step).toHaveBeenCalledWith('item-1', -1)
@@ -96,20 +95,18 @@ describe(useCounterCommands.name, () => {
 
   it('keeps the sheet open when stepping a non-final line', () => {
     spies.setSheet.mockClear()
-    const { result } = renderHook(
-      () => useCounterCommands('unit-1', 'CASH'),
-      { wrapper }
-    )
+    const { result } = renderHook(() => useCounterCommands('unit-1', 'CASH'), {
+      wrapper,
+    })
     act(() => result.current.handleStep('other-item', 1))
     expect(spies.setSheet).not.toHaveBeenCalled()
   })
 
   it('clears the ticket after a successful sale', async () => {
     spies.sell.mockResolvedValue({ orderNumber: 7 })
-    const { result } = renderHook(
-      () => useCounterCommands('unit-1', 'CASH'),
-      { wrapper }
-    )
+    const { result } = renderHook(() => useCounterCommands('unit-1', 'CASH'), {
+      wrapper,
+    })
     await act(() => result.current.finish())
     expect(spies.clear).toHaveBeenCalled()
     expect(spies.reset).toHaveBeenCalled()
@@ -122,10 +119,9 @@ describe(useCounterCommands.name, () => {
       orderNumber: 128,
       pickupCode: '123456',
     })
-    const { result } = renderHook(
-      () => useCounterCommands('unit-1', 'CASH'),
-      { wrapper }
-    )
+    const { result } = renderHook(() => useCounterCommands('unit-1', 'CASH'), {
+      wrapper,
+    })
 
     // Act
     await act(() => result.current.finish())
@@ -151,10 +147,9 @@ describe(useCounterCommands.name, () => {
     spies.sell.mockClear()
     spies.clear.mockClear()
     spies.sell.mockResolvedValue(null)
-    const { result } = renderHook(
-      () => useCounterCommands('unit-1', 'CASH'),
-      { wrapper }
-    )
+    const { result } = renderHook(() => useCounterCommands('unit-1', 'CASH'), {
+      wrapper,
+    })
     await act(() => result.current.finish())
     expect(spies.clear).not.toHaveBeenCalled()
   })

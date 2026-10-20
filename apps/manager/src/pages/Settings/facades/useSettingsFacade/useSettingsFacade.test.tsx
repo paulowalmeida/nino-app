@@ -21,9 +21,12 @@ vi.mock('@pages/Settings/hooks/useDeliveryZones/useDeliveryZones', () => ({
 vi.mock('@pages/Settings/hooks/useDiningTables/useDiningTables', () => ({
   useDiningTables: hook,
 }))
-vi.mock('@pages/Settings/hooks/useDiningTableMutations/useDiningTableMutations', () => ({
-  useDiningTableMutations: hook,
-}))
+vi.mock(
+  '@pages/Settings/hooks/useDiningTableMutations/useDiningTableMutations',
+  () => ({
+    useDiningTableMutations: hook,
+  })
+)
 vi.mock('@shared/hooks/settings/useOpeningHours/useOpeningHours', () => ({
   useOpeningHours: hook,
 }))

@@ -1,6 +1,5 @@
 @reference "@nino/ds/globals.css";
 
-
 .scroll {
   @apply min-h-0 flex-1;
 }

@@ -6,7 +6,11 @@ import { describe, expect, it } from 'vitest'
 import { todayKey } from '@pages/Cash/utils/cash-date/cash-date'
 
 import { useCashDate } from './useCashDate'
-import { futureDateMock, pastDateKeyMock, pastDateMock } from './useCashDate.mock'
+import {
+  futureDateMock,
+  pastDateKeyMock,
+  pastDateMock,
+} from './useCashDate.mock'
 
 describe('useCashDate', () => {
   it('defaults to today when the URL has no date', () => {

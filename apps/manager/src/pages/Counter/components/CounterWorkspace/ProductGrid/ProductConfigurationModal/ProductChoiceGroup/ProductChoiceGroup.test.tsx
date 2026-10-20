@@ -41,7 +41,9 @@ describe('ProductChoiceGroup', () => {
     )
 
     // Assert
-    expect(screen.getByRole('group', { name: 'Adicionais' })).toBeInTheDocument()
+    expect(
+      screen.getByRole('group', { name: 'Adicionais' })
+    ).toBeInTheDocument()
     expect(screen.getAllByRole('checkbox')).toHaveLength(2)
     expect(screen.queryByRole('radio')).not.toBeInTheDocument()
   })

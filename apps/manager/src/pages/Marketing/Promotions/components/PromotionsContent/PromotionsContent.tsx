@@ -6,7 +6,7 @@ import { Card } from '@nino/ds/components/Card'
 import { Checkbox } from '@nino/ds/components/Checkbox'
 import { EmptyState } from '@nino/ds/components/EmptyState'
 import { FieldHint } from '@nino/ds/components/FieldHint'
-import { Heading } from '@nino/ds/components/Heading'
+import { Header } from '@nino/ds/components/Header'
 import { Input } from '@nino/ds/components/Input'
 import { Label } from '@nino/ds/components/Label'
 import { Select } from '@nino/ds/components/Select'
@@ -190,14 +190,13 @@ export const PromotionsContent = ({
   return (
     <Box className={styles.promotionsContentLayout}>
       <Card variant="flat" padding="lg" className={styles.editor}>
-        <Box className={styles.sectionHeader}>
-          <Heading level={2} size="xl">
-            {editingId ? 'Editar promoção' : 'Nova promoção'}
-          </Heading>
-          <Text size="sm" color="subtle">
-            Configure a regra e confira o resumo antes de salvar.
-          </Text>
-        </Box>
+        <Header
+          className={styles.sectionHeader}
+          level={2}
+          size="xl"
+          title={editingId ? 'Editar promoção' : 'Nova promoção'}
+          description="Configure a regra e confira o resumo antes de salvar."
+        />
 
         <Box className={styles.formGrid}>
           <Box className={styles.fieldWide}>
@@ -425,15 +424,18 @@ export const PromotionsContent = ({
         </Box>
       </Card>
 
-      <Card variant="flat" padding="lg" className={styles.promotionsContentList}>
-        <Box className={styles.sectionHeader}>
-          <Heading level={2} size="xl">
-            Promoções cadastradas
-          </Heading>
-          <Text size="sm" color="subtle">
-            Edite uma regra existente para reaproveitar sua configuração.
-          </Text>
-        </Box>
+      <Card
+        variant="flat"
+        padding="lg"
+        className={styles.promotionsContentList}
+      >
+        <Header
+          className={styles.sectionHeader}
+          level={2}
+          size="xl"
+          title="Promoções cadastradas"
+          description="Edite uma regra existente para reaproveitar sua configuração."
+        />
         {promotions.length === 0 ? (
           <EmptyState>Ainda não há promoções nesta unidade.</EmptyState>
         ) : (

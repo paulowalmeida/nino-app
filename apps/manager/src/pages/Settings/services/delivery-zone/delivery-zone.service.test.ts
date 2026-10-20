@@ -33,9 +33,7 @@ describe('DeliveryZoneService', () => {
     const result = await DeliveryZoneService.listDeliveryZones(unitIdMock)
 
     // Assert
-    expect(api.get).toHaveBeenCalledWith(
-      `units/${unitIdMock}/delivery-zones`
-    )
+    expect(api.get).toHaveBeenCalledWith(`units/${unitIdMock}/delivery-zones`)
     expect(result).toBe(deliveryZonePageMock)
   })
 

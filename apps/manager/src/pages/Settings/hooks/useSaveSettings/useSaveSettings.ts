@@ -15,10 +15,7 @@ export const useSaveSettings = (unitId: string | null) => {
     mutationFn: (data: UpdateUnitSettingsRequest) =>
       SettingsService.saveSettings(unitId as string, data),
     onSuccess: (settings) => {
-      queryClient.setQueryData(
-        queryKeys.unit.settings(unitId ?? ''),
-        settings
-      )
+      queryClient.setQueryData(queryKeys.unit.settings(unitId ?? ''), settings)
       void queryClient.invalidateQueries({
         queryKey: queryKeys.unit.publicSettings(unitId ?? ''),
       })

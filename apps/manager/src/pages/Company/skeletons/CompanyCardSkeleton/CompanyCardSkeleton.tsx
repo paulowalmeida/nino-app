@@ -45,8 +45,13 @@ export const CompanyCardSkeleton = () => (
 
     <Box className={card.companyCardFields}>
       {COMPANY_FIELDS.map(({ span, label }) => (
-        <Box key={label} className={mergeClasses(ghost.companyCardSkeletonField, span)}>
-          <Skeleton className={mergeClasses(ghost.companyCardSkeletonLabel, label)} />
+        <Box
+          key={label}
+          className={mergeClasses(ghost.companyCardSkeletonField, span)}
+        >
+          <Skeleton
+            className={mergeClasses(ghost.companyCardSkeletonLabel, label)}
+          />
           <Skeleton className={ghost.companyCardSkeletonInput} />
         </Box>
       ))}
@@ -57,8 +62,13 @@ export const CompanyCardSkeleton = () => (
 
       <Box className={address.addressFieldsGrid}>
         {ADDRESS_FIELDS.map(({ span, label }) => (
-          <Box key={label} className={mergeClasses(ghost.companyCardSkeletonField, span)}>
-            <Skeleton className={mergeClasses(ghost.companyCardSkeletonLabel, label)} />
+          <Box
+            key={label}
+            className={mergeClasses(ghost.companyCardSkeletonField, span)}
+          >
+            <Skeleton
+              className={mergeClasses(ghost.companyCardSkeletonLabel, label)}
+            />
             <Skeleton className={ghost.companyCardSkeletonInput} />
           </Box>
         ))}

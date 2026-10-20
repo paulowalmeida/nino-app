@@ -4,7 +4,6 @@
   @apply flex h-full w-full flex-col bg-surface-page;
 }
 
-
 .bare {
   @apply flex min-h-0 w-full min-w-0 flex-1 flex-col overflow-hidden;
 }

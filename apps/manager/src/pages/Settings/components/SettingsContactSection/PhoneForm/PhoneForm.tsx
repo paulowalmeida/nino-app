@@ -3,9 +3,8 @@ import { useState } from 'react'
 import { Box } from '@nino/ds/components/Box'
 import { Button } from '@nino/ds/components/Button'
 import { FormField } from '@nino/ds/components/FormField'
-import { Heading } from '@nino/ds/components/Heading'
+import { Header } from '@nino/ds/components/Header'
 import { PhoneInput } from '@nino/ds/components/PhoneInput'
-import { Text } from '@nino/ds/components/Text'
 import { toE164 } from '@shared/utils/phone/phone'
 
 import motion from '@styles/motion.module.css'
@@ -28,14 +27,13 @@ export const PhoneForm = ({ isAdding, onAdd }: PhoneFormProps) => {
 
   return (
     <Box className={local.phoneFormSection}>
-      <Box className={local.intro}>
-        <Heading level={3} size="md">
-          Adicionar telefone
-        </Heading>
-        <Text size="sm" color="subtle">
-          Use um número que sua equipe acompanha durante o atendimento.
-        </Text>
-      </Box>
+      <Header
+        className={local.intro}
+        level={3}
+        size="md"
+        title="Adicionar telefone"
+        description="Use um número que sua equipe acompanha durante o atendimento."
+      />
 
       <Box className={local.phoneForm}>
         <FormField label="Telefone" className={local.phoneFormField}>

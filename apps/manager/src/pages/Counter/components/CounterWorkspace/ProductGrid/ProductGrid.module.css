@@ -1,6 +1,5 @@
 @reference "@nino/ds/globals.css";
 
-
 .productGridSearch {
   @apply mb-3 h-11 lg:max-w-[460px];
 }
@@ -43,13 +42,11 @@
   }
 }
 
-
 @container (min-width: 58rem) {
   .productGrid {
     grid-template-columns: repeat(5, 1fr);
   }
 }
-
 
 @container (min-width: 70rem) {
   .productGrid {
@@ -82,7 +79,6 @@
 .skeletonTab {
   @apply h-11 w-24 shrink-0 rounded-full;
 }
-
 
 .skeletonCard {
   @apply flex flex-col overflow-hidden rounded-3 border border-border;

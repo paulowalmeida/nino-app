@@ -5,12 +5,13 @@ export const replaceProductModifiersContextMock = {
   productId: 'product-1',
 }
 
-export const replaceProductModifiersRequestMock: ReplaceProductModifierRequest[] = [
-  {
-    name: 'Primeiro sabor',
-    role: 'COMPOSITION',
-    minSelections: 1,
-    maxSelections: 1,
-    options: [{ name: 'Queijo', price: 20 }],
-  },
-]
+export const replaceProductModifiersRequestMock: ReplaceProductModifierRequest[] =
+  [
+    {
+      name: 'Primeiro sabor',
+      role: 'COMPOSITION',
+      minSelections: 1,
+      maxSelections: 1,
+      options: [{ name: 'Queijo', price: 20 }],
+    },
+  ]
