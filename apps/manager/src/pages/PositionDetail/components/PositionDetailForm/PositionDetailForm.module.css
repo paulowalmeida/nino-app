@@ -1,11 +1,11 @@
 @reference "@nino/ds/globals.css";
 
 .layout {
-  @apply max-w-4xl;
+  @apply flex w-full max-w-4xl flex-1 flex-col;
 }
 
 .main {
-  @apply min-w-0;
+  @apply min-w-0 flex-1;
 }
 
 .permissions {
@@ -45,6 +45,6 @@
 }
 
 .actions {
-  @apply sticky bottom-0 -mx-4 justify-end;
+  @apply sticky bottom-0 -mx-4 mt-auto justify-end;
   @apply bg-surface-raised px-4 py-3 lg:mx-0 lg:px-0;
 }
