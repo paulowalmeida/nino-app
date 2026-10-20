@@ -137,7 +137,11 @@ export const PositionDetailForm = () => {
                   ({ group, label, permissions: definitions }) => ({
                     value: group,
                     trigger: (
-                      <Box className={styles.groupTrigger}>
+                      <Box
+                        direction="row"
+                        align="baseline"
+                        className={styles.groupTrigger}
+                      >
                         <Text as="span" className={styles.groupTitle}>
                           {label}
                         </Text>
@@ -147,7 +151,7 @@ export const PositionDetailForm = () => {
                       </Box>
                     ),
                     content: (
-                      <Box direction="column" gap={3}>
+                      <Box className={styles.groupItems}>
                         {definitions.map((definition) => (
                           <FormField
                             key={definition.key}
