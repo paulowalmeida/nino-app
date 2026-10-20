@@ -1,6 +1,7 @@
 import { Box } from '@nino/ds/components/Box'
 import { Button } from '@nino/ds/components/Button'
-import { Heading } from '@nino/ds/components/Heading'
+import { Header } from '@nino/ds/components/Header'
+import { Skeleton } from '@nino/ds/components/Skeleton'
 import { Text } from '@nino/ds/components/Text'
 import { useKitchenFacade } from '@pages/Kitchen/facades/useKitchenFacade/useKitchenFacade'
 import { countLateOrders } from '@pages/Kitchen/utils/late-orders/late-orders'
@@ -17,8 +18,40 @@ export const KitchenHeader = ({
   isCompact,
   onToggleCompact,
 }: KitchenHeaderProps) => {
-  const { orders } = useKitchenFacade()
+  const { orders, isPending } = useKitchenFacade()
   const lateCount = countLateOrders(orders)
+
+  if (isPending) {
+    return (
+      <Box
+        as="header"
+        aria-busy="true"
+        direction={{ mobile: 'column', tablet: 'row' }}
+        align={{ mobile: 'start', tablet: 'end' }}
+        justify="between"
+        className={`${motion.deal} ${styles.kitchenHeader}`}
+      >
+        <Text as="p" role="status" className={styles.loadingLabel}>
+          Carregando pedidos da cozinha
+        </Text>
+        <Box direction="column" gap={1} className={styles.identity}>
+          <Skeleton className={styles.skeletonTitle} />
+          <Skeleton className={styles.skeletonDescription} />
+        </Box>
+        <Box
+          direction={{ mobile: 'column', tablet: 'row' }}
+          align={{ mobile: 'start', tablet: 'center' }}
+          className={styles.tally}
+        >
+          <Box direction="row" className={styles.metrics} aria-hidden="true">
+            <Skeleton className={styles.skeletonMetric} />
+            <Skeleton className={styles.skeletonMetric} />
+          </Box>
+          <Skeleton className={styles.skeletonAction} />
+        </Box>
+      </Box>
+    )
+  }
 
   return (
     <Box
@@ -28,14 +61,12 @@ export const KitchenHeader = ({
       justify="between"
       className={`${motion.deal} ${styles.kitchenHeader}`}
     >
-      <Box className={styles.identity}>
-        <Heading level={1} size="xl">
-          Cozinha
-        </Heading>
-        <Text size="sm" color="subtle">
-          Acompanhe apenas os itens que precisam de preparo.
-        </Text>
-      </Box>
+      <Header
+        className={styles.identity}
+        title="Cozinha"
+        accent="Cozinha"
+        description="Acompanhe apenas os itens que precisam de preparo."
+      />
 
       <Box
         direction={{ mobile: 'column', tablet: 'row' }}

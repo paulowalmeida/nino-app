@@ -3,7 +3,7 @@ import { useState } from 'react'
 import { Box } from '@nino/ds/components/Box'
 import { Button } from '@nino/ds/components/Button'
 import { FieldHint } from '@nino/ds/components/FieldHint'
-import { Heading } from '@nino/ds/components/Heading'
+import { Header } from '@nino/ds/components/Header'
 import { Input } from '@nino/ds/components/Input'
 import { Label } from '@nino/ds/components/Label'
 import { Skeleton } from '@nino/ds/components/Skeleton'
@@ -64,15 +64,13 @@ export const CashbackRules = ({
 
   return (
     <Box as="section" className={local.cashbackRulesPanel}>
-      <Box as="header" className={`${motion.unroll} ${local.head}`}>
-        <Heading level={2} size="xl">
-          Cashback desta unidade
-        </Heading>
-        <Text size="sm" color="subtle" mt={1}>
-          Parte do que o cliente gasta volta como crédito para a próxima compra
-          aqui. O crédito não vale nas outras unidades.
-        </Text>
-      </Box>
+      <Header
+        className={`${motion.deal} ${local.head}`}
+        level={2}
+        size="xl"
+        title="Cashback desta unidade"
+        description="Parte do que o cliente gasta volta como crédito para a próxima compra aqui. O crédito não vale nas outras unidades."
+      />
 
       <Box className={local.cashbackRulesGroup}>
         <Box className={local.switchRow}>

@@ -64,7 +64,7 @@ export const InviteForm = ({ onInvite }: InviteFormProps) => {
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className={`${motion.settle} ${styles.inviteForm}`}
+      className={`${motion.deal} ${styles.inviteForm}`}
     >
       <Box className={styles.copy}>
         <h2 className={styles.inviteFormTitle}>Chamar alguém para a loja</h2>

@@ -49,7 +49,7 @@ export const SalesTrend = () => {
     >
       <Eyebrow className={styles.salesTrendHeading}>Os últimos 7 dias</Eyebrow>
 
-      <Card variant="flat" padding="lg" className={`${motion.settle} ${styles.salesTrendCard}`}>
+      <Card variant="flat" padding="lg" className={`${motion.deal} ${styles.salesTrendCard}`}>
         <Box
           as="header"
           direction="row"

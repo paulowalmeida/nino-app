@@ -1,5 +1,5 @@
 import { Box } from '@nino/ds/components/Box'
-import { Heading } from '@nino/ds/components/Heading'
+import { Header } from '@nino/ds/components/Header'
 import { Text } from '@nino/ds/components/Text'
 import { NewUnitContent } from '@pages/NewUnit/components/NewUnitContent/NewUnitContent'
 import { Breadcrumb } from '@shared/components/Breadcrumb/Breadcrumb'
@@ -30,16 +30,12 @@ export const NewUnit = () => {
         Unidades
       </Text>
 
-      <Box as="header" className={`${motion.deal} ${styles.head}`}>
-        <Heading level={1} size="2xl" className={styles.newUnitTitle}>
-          Abrir nova unidade
-        </Heading>
-        <Text size="sm" color="muted" className={styles.newUnitSubtitle}>
-          Uma unidade é uma loja com endereço próprio. Preencha o que os
-          clientes vão ver e onde ela fica — o resto se ajusta depois, no painel
-          da unidade.
-        </Text>
-      </Box>
+      <Header
+        className={`${motion.deal} ${styles.head}`}
+        size="2xl"
+        title="Abrir nova unidade"
+        description="Uma unidade é uma loja com endereço próprio. Preencha o que os clientes vão ver e onde ela fica — o resto se ajusta depois, no painel da unidade."
+      />
 
       <NewUnitContent />
     </Box>

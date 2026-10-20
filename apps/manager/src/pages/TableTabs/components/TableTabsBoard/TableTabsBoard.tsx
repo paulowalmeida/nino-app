@@ -6,6 +6,7 @@ import { Chip } from '@nino/ds/components/Chip'
 import { EmptyState } from '@nino/ds/components/EmptyState'
 import { Input } from '@nino/ds/components/Input'
 import { NinoMascot } from '@nino/ds/components/NinoMascot'
+import { Skeleton } from '@nino/ds/components/Skeleton'
 import { TableTabCard } from '@pages/TableTabs/components/TableTabsBoard/TableTabCard/TableTabCard'
 import { TABLE_TABS_EMPTY_MESSAGE } from '@pages/TableTabs/constants/tableTabs.constants'
 import { useTableTabsFacade } from '@pages/TableTabs/facades/useTableTabsFacade/useTableTabsFacade'
@@ -18,8 +19,7 @@ import styles from './TableTabsBoard.module.css'
 type TabGroup = 'active' | 'finalized'
 
 export const TableTabsBoard = () => {
-  const { activeTabs, finalizedTabs, isPending, isError } =
-    useTableTabsFacade()
+  const { activeTabs, finalizedTabs, isPending, isError } = useTableTabsFacade()
   const [group, setGroup] = useState<TabGroup>('active')
   const [search, setSearch] = useState('')
   const isSearching = search.trim().length > 0
@@ -28,8 +28,25 @@ export const TableTabsBoard = () => {
     ? [...activeTabs, ...finalizedTabs]
     : groupTabs
   const visibleTabs = filterTableTabs(searchableTabs, search)
-  const emptyMessage =
-    TABLE_TABS_EMPTY_MESSAGE[isSearching ? 'search' : group]
+  const emptyMessage = TABLE_TABS_EMPTY_MESSAGE[isSearching ? 'search' : group]
+
+  if (isPending) {
+    return (
+      <Box className={styles.tableTabsBoard}>
+        <Box className={styles.tableTabsBoardControls} aria-hidden="true">
+          <Skeleton className={styles.skeletonSearch} />
+          <Box direction="row" className={styles.skeletonGroups}>
+            <Skeleton className={styles.skeletonGroup} />
+            <Skeleton className={styles.skeletonGroup} />
+          </Box>
+        </Box>
+
+        <Box className={styles.tableTabsBoardScroll}>
+          <TableTabsListSkeleton />
+        </Box>
+      </Box>
+    )
+  }
 
   return (
     <Box className={styles.tableTabsBoard}>
@@ -46,7 +63,7 @@ export const TableTabsBoard = () => {
           direction="row"
           role="tablist"
           aria-label="Situação das comandas"
-          className={`${motion.unroll} ${styles.tableTabsBoardGroups}`}
+          className={`${motion.deal} ${styles.tableTabsBoardGroups}`}
         >
           <Chip
             variant="tab"
@@ -66,26 +83,25 @@ export const TableTabsBoard = () => {
       </Box>
 
       <Box className={styles.tableTabsBoardScroll}>
-        {isPending && <TableTabsListSkeleton />}
         {isError && (
           <Alert variant="error">
             Não foi possível carregar as comandas. Tente novamente.
           </Alert>
         )}
-        {!isPending && !isError && visibleTabs.length === 0 && (
+        {!isError && visibleTabs.length === 0 && (
           <EmptyState
             size="md"
             illustration={isSearching ? undefined : <NinoMascot />}
-            className={motion.settle}
+            className={motion.deal}
           >
             {emptyMessage}
           </EmptyState>
         )}
-        {!isPending && !isError && visibleTabs.length > 0 && (
+        {!isError && visibleTabs.length > 0 && (
           <Box
             key={group}
             as="ul"
-            className={`${motion.unroll} ${styles.tableTabsBoardList}`}
+            className={`${motion.deal} ${styles.tableTabsBoardList}`}
           >
             {visibleTabs.map((tab) => (
               <TableTabCard key={tab.id} tab={tab} />

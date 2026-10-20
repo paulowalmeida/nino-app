@@ -150,7 +150,7 @@ export const ProductCard = ({
         }}
         style={riseDelay(index * 25)}
         className={mergeClasses(
-          motion.settle,
+          motion.deal,
           motion.press,
           styles.productCard,
           isPressing && styles.pressing

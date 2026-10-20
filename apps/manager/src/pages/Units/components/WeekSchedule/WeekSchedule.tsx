@@ -2,7 +2,7 @@ import { useState } from 'react'
 
 import { Box } from '@nino/ds/components/Box'
 import { Button } from '@nino/ds/components/Button'
-import { Heading } from '@nino/ds/components/Heading'
+import { Header } from '@nino/ds/components/Header'
 import { ListRow } from '@nino/ds/components/ListRow'
 import { Switch } from '@nino/ds/components/Switch'
 import { Text } from '@nino/ds/components/Text'
@@ -90,14 +90,13 @@ export const WeekSchedule = ({
 
   return (
     <Box as="section" className={local.weekSchedulePanel}>
-      <Box as="header" className={`${motion.unroll} ${local.head}`}>
-        <Heading level={2} size="xl">
-          Quando a unidade abre
-        </Heading>
-        <Text size="sm" color="subtle" mt={1}>
-          Fora do horário, o cliente vê a loja fechada e não consegue pedir.
-        </Text>
-      </Box>
+      <Header
+        className={`${motion.deal} ${local.head}`}
+        level={2}
+        size="xl"
+        title="Horários"
+        description="Fora do horário, o cliente vê a loja fechada e não consegue pedir."
+      />
 
       <Box className={local.body}>
         <Box as="ul" className={local.week}>
@@ -113,7 +112,7 @@ export const WeekSchedule = ({
               }`}
               style={riseDelay(index * 45 + 60)}
             >
-              <Box direction='row'>
+              <Box direction="row">
                 <Switch
                   checked={entry.isOpen}
                   onCheckedChange={(checked) =>

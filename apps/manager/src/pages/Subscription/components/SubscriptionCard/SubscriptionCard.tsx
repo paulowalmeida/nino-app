@@ -27,7 +27,7 @@ export const SubscriptionCard = ({
   onCancel,
   onRequestInterest,
 }: SubscriptionCardProps) => (
-  <Box as="section" className={`${motion.settle} ${styles.subscription}`}>
+  <Box as="section" className={`${motion.deal} ${styles.subscription}`}>
     <SubscriptionPlanSummary plan={subscription.plan} />
     <SubscriptionFacts subscription={subscription} />
     {plans && onChangePlan && onCancel ? (

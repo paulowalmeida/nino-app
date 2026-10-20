@@ -23,7 +23,7 @@ export const ConsumerSummary = () => {
         {facts.map(([label, value], index) => (
           <Box
             key={label}
-            className={`${motion.settle} ${styles.fact}`}
+            className={`${motion.deal} ${styles.fact}`}
             style={riseDelay(index * 60 + 120)}
           >
             <dt className={styles.factLabel}>{label}</dt>

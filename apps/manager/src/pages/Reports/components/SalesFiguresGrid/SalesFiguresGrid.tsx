@@ -25,7 +25,7 @@ export const SalesFiguresGrid = ({ report, delay = 0 }: SalesFiguresGridProps) =
       <Box
         key={key}
         gap={1}
-        className={`${motion.settle} ${motion.lift} ${styles.figure}`}
+        className={`${motion.deal} ${motion.lift} ${styles.figure}`}
         style={riseDelay(delay + index * 70)}
       >
         <Text as="span" className={styles.salesFiguresGridValue}>

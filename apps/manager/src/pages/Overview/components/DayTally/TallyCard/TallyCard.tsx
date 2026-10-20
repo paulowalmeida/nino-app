@@ -32,7 +32,7 @@ export const TallyCard = ({
     variant="flat"
     padding="lg"
     asChild
-    className={`${motion.settle} ${motion.lift} ${styles.figure}`}
+    className={`${motion.deal} ${motion.lift} ${styles.figure}`}
   >
     <Link
       to={to}

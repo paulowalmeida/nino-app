@@ -86,7 +86,7 @@ export const KitchenCard = ({
   )
 
   const card = mergeClasses(
-    motion.settle,
+    motion.deal,
     styles.kitchenCard,
     destination ? paperClasses[destination.kind] : styles.paperPlain,
     paceClasses[pace],

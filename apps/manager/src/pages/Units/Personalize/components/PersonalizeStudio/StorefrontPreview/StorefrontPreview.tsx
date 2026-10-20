@@ -252,7 +252,7 @@ export const StorefrontPreview = ({
           as="section"
           key={device}
           aria-label="Prévia da loja para o cliente"
-          className={`${local.storefront} ${motion.settle}`}
+          className={`${local.storefront} ${motion.deal}`}
         >
           {home.showBanner && (
             <Box

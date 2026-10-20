@@ -1,15 +1,13 @@
-import { Heading } from '@nino/ds/components/Heading'
-import { Text } from '@nino/ds/components/Text'
+import { Header } from '@nino/ds/components/Header'
 
+import motion from '@styles/motion.module.css'
 import styles from './StoreSelectionHeader.module.css'
 
 export const StoreSelectionHeader = () => (
-  <>
-    <Heading level={1} size="2xl" className={styles.storeSelectionHeaderTitle}>
-      Seus restaurantes
-    </Heading>
-    <Text size="sm" color="muted" mt={2}>
-      Escolha qual você quer gerenciar
-    </Text>
-  </>
+  <Header
+    className={`${motion.deal} ${styles.storeSelectionHeaderTitle}`}
+    size="2xl"
+    title="Seus restaurantes"
+    description="Escolha qual você quer gerenciar"
+  />
 )

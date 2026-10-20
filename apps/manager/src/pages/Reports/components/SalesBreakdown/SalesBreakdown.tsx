@@ -34,7 +34,7 @@ export const SalesBreakdown = ({
 }: SalesBreakdownProps) => (
   <Box
     as="section"
-    className={`${motion.settle} ${styles.block}`}
+    className={`${motion.deal} ${styles.block}`}
     style={riseDelay(delay)}
   >
     <h2 className={styles.blockTitle}>{title}</h2>

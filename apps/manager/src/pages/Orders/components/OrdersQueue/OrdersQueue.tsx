@@ -101,7 +101,7 @@ export const OrdersQueue = () => {
             padding={0}
             gap={0}
             key={order.id}
-            className={motion.settle}
+            className={motion.deal}
             style={riseDelay(Math.min(index, 11) * 55 + 80)}
           >
             <OrderTicket

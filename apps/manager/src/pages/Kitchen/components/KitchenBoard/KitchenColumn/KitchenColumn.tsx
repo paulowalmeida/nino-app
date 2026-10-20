@@ -4,6 +4,7 @@ import { rectSortingStrategy, SortableContext } from '@dnd-kit/sortable'
 import { Box } from '@nino/ds/components/Box'
 import { EmptyState } from '@nino/ds/components/EmptyState'
 import { Heading } from '@nino/ds/components/Heading'
+import { Skeleton } from '@nino/ds/components/Skeleton'
 import { Text } from '@nino/ds/components/Text'
 import { mergeClasses } from '@nino/ds/mergeClasses'
 import { DraggableOrder } from '@pages/Kitchen/components/KitchenBoard/KitchenColumn/DraggableOrder/DraggableOrder'
@@ -94,14 +95,18 @@ export const KitchenColumn = ({
         as="header"
         direction="row"
         align="center"
-        className={`${motion.unroll} ${styles.columnHead}`}
+        className={`${motion.deal} ${styles.columnHead}`}
       >
         <Heading level={2} className={styles.columnTitle}>
           {title}
         </Heading>
-        <Text as="span" className={styles.kitchenColumnCount}>
-          {orders.length}
-        </Text>
+        {isPending ? (
+          <Skeleton className={styles.skeletonCount} />
+        ) : (
+          <Text as="span" className={styles.kitchenColumnCount}>
+            {orders.length}
+          </Text>
+        )}
       </Box>
 
       <Box className={styles.stack}>

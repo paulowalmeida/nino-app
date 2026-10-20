@@ -24,7 +24,7 @@ export const CompanyPickCard = ({
     variant="flat"
     onClick={onClick}
     style={riseDelay(index * 80 + 100)}
-    className={`${motion.settle} ${motion.lift} ${styles.companyPickCard}`}
+    className={`${motion.deal} ${motion.lift} ${styles.companyPickCard}`}
   >
     <Text as="span" weight="semibold" className={styles.name}>
       {companyName}

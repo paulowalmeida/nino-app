@@ -37,7 +37,7 @@ export const TopProducts = () => {
         <Eyebrow className={styles.topProductsHeading}>O que mais sai</Eyebrow>
       </Box>
 
-      <Card variant="flat" padding="lg" className={`${motion.settle} ${styles.topProductsCard}`}>
+      <Card variant="flat" padding="lg" className={`${motion.deal} ${styles.topProductsCard}`}>
         {isPending && (
           <Box className={styles.skeletonBars}>
             {TOP_PRODUCTS_SKELETON_WIDTHS.map((width) => (

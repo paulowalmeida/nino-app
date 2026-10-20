@@ -11,7 +11,7 @@ export const SubscriptionInterestSent = () => {
   const navigate = useNavigate()
 
   return (
-    <Box gap={5} className={`${motion.settle} ${styles.subscriptionInterestSent}`}>
+    <Box gap={5} className={`${motion.deal} ${styles.subscriptionInterestSent}`}>
       <Alert variant="success" title="Solicitação enviada">
         Recebemos os detalhes da sua operação. Nossa equipe vai analisar o
         cenário e entrar em contato pelo canal escolhido.

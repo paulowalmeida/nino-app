@@ -77,7 +77,7 @@ export const QueueBoard = () => {
             key={label}
             variant="flat"
             asChild
-            className={`${motion.settle} ${motion.lift} ${
+            className={`${motion.deal} ${motion.lift} ${
               urgent ? `${styles.tile} ${styles.urgent}` : styles.tile
             }`}
           >

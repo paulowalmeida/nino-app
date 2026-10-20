@@ -173,8 +173,8 @@ export const PhotoCropper = ({
     <Box
       className={
         framed
-          ? `${motion.settle} ${styles.editor} ${styles.framed}`
-          : `${motion.settle} ${styles.editor}`
+          ? `${motion.deal} ${styles.editor} ${styles.framed}`
+          : `${motion.deal} ${styles.editor}`
       }
     >
       <Box className={styles.stage}>

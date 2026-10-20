@@ -27,7 +27,7 @@ export const AccountHeader = () => {
   const name = consumer.profileCompletedAt ? firstName(consumer.name) : null
 
   return (
-    <Box as="header" className={`${motion.settle} ${styles.accountHeader}`}>
+    <Box as="header" className={`${motion.deal} ${styles.accountHeader}`}>
       <Link
         to={home}
         className={`${motion.press} ${styles.back}`}

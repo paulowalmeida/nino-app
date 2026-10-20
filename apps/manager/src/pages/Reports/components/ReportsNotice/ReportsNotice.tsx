@@ -14,7 +14,7 @@ export const ReportsNotice = () => {
 
   return (
     <EmptyState
-      className={motion.settle}
+      className={motion.deal}
       title={'title' in notice ? notice.title : undefined}
       illustration={status === 'empty' ? <NinoMascot /> : undefined}
     >

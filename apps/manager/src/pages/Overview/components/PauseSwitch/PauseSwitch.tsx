@@ -46,7 +46,7 @@ export const PauseSwitch = () => {
         align="center"
         justify="between"
         gap={3}
-        className={`${motion.settle} ${styles.paused}`}
+        className={`${motion.deal} ${styles.paused}`}
       >
         <Box className={styles.pausedSummary}>
           <Text as="p" className={styles.pauseSwitchTitle}>

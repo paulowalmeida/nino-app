@@ -173,6 +173,12 @@ The agent **MUST NOT** introduce JavaScript-driven animation when CSS/Tailwind s
 
 When an existing component uses an animation library as part of its contract, consumers **MUST NOT** recreate equivalent motion locally without a concrete requirement.
 
+### Entrance animation: always `deal`
+
+Every element that animates on entry (headers, cards, charts, figures, blocks, rows) **MUST** use `motion.deal` from `@styles/motion.module.css`, staggered with `riseDelay` when several elements enter together. This is the effect of the screen headers: a top-down reveal with a slight sideways slide.
+
+The `settle` animation was removed and **MUST NOT** be recreated. Entrance by opacity fade (`opacity: 0` → `1`) **MUST NOT** be used for page content; fade is reserved for overlays, where the layer matters more than the content.
+
 ## Naming and Organization of Styling Code
 
 Styling abstractions **MUST** have names that communicate their semantic purpose.

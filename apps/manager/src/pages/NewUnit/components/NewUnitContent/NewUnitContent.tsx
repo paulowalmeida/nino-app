@@ -22,7 +22,7 @@ export const NewUnitContent = () => {
 
   return (
     <Box className={styles.newUnitContentBody}>
-      <Box className={`${motion.settle} ${styles.newUnitContentForm}`}>
+      <Box className={`${motion.deal} ${styles.newUnitContentForm}`}>
         <StoreForm
           typeOptions={typeOptions}
           onSubmitStore={submitStore}
@@ -31,7 +31,7 @@ export const NewUnitContent = () => {
         />
       </Box>
 
-      <Box as="aside" className={`${motion.settle} ${styles.aside}`}>
+      <Box as="aside" className={`${motion.deal} ${styles.aside}`}>
         <Text
           size="xs"
           weight="bold"

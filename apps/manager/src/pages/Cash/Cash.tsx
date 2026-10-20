@@ -1,6 +1,7 @@
 import { Alert } from '@nino/ds/components/Alert'
 import { Box } from '@nino/ds/components/Box'
 import { EmptyState } from '@nino/ds/components/EmptyState'
+import { Header } from '@nino/ds/components/Header'
 import { NinoMascot } from '@nino/ds/components/NinoMascot'
 
 import { CashActions } from './components/CashActions/CashActions'
@@ -11,6 +12,7 @@ import { CashSummary } from './components/CashSummary/CashSummary'
 import { useCashFacade } from './facades/useCashFacade/useCashFacade'
 import { CashSkeleton } from './skeletons/CashSkeleton/CashSkeleton'
 
+import motion from '@styles/motion.module.css'
 import styles from './Cash.module.css'
 
 export const Cash = () => {
@@ -33,6 +35,16 @@ export const Cash = () => {
   return (
     <Box direction="column" className={styles.cashPage}>
       <Box className={styles.cashControls}>
+        <Header
+          mb={{ mobile: 3, desktop: 4 }}
+          className={`${motion.deal} shrink-0`}
+          title="Caixa"
+          accent="Caixa"
+          description={
+            'Aqui você consegue acompanhar o fluxo de caixa do dia, abrir e fechar o caixa, além de conferir os detalhes das movimentações.'
+          }
+        />
+
         <CashDateSelector />
 
         {!session && isToday && <CashOpen />}

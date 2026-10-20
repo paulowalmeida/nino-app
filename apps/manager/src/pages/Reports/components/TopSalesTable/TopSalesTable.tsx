@@ -42,7 +42,7 @@ export const TopSalesTable = ({ products, delay = 0 }: TopSalesTableProps) => (
   <Box
     as="section"
     id="mais-vendidos"
-    className={`${motion.settle} ${styles.topSalesTableTop}`}
+    className={`${motion.deal} ${styles.topSalesTableTop}`}
     style={riseDelay(delay)}
     aria-label="Produtos mais vendidos"
   >

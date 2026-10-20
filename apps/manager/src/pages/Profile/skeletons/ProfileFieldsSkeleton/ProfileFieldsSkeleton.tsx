@@ -11,7 +11,7 @@ export const ProfileFieldsSkeleton = () => (
     columns={{ mobile: 1, tablet: 2 }}
     gap={4}
     mt={6}
-    className={motion.settle}
+    className={motion.deal}
   >
     {PROFILE_GHOST_FIELDS.map((size, index) => (
       <Skeleton

@@ -122,8 +122,8 @@ export const ItemPhoto = ({
       <Box
         className={
           isDragging
-            ? `${motion.settle} ${styles.frame} ${styles.frameOver}`
-            : `${motion.settle} ${styles.frame}`
+            ? `${motion.deal} ${styles.frame} ${styles.frameOver}`
+            : `${motion.deal} ${styles.frame}`
         }
         onDragOver={(event) => {
           event.preventDefault()

@@ -17,10 +17,10 @@ export const ProductDetailHeader = () => {
       direction="row"
       align="center"
       gap={4}
-      className={`${motion.settle} ${styles.head}`}
+      className={`${motion.deal} ${styles.head}`}
     >
       <Box className={styles.headText}>
-        <Heading level={1} size="2xl" className={styles.name}>
+        <Heading level={1} accent size="2xl" className={styles.name}>
           {item.name}
         </Heading>
       </Box>

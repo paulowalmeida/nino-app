@@ -33,7 +33,7 @@ export const AccountLayout = () => {
 
           <Box
             key={pathname}
-            className={`${motion.settle} ${styles.accountLayoutPanel}`}
+            className={`${motion.deal} ${styles.accountLayoutPanel}`}
             style={riseDelay(60)}
           >
             <Outlet />

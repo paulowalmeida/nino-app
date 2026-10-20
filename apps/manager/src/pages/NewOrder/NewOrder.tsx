@@ -7,6 +7,7 @@ import { NewOrderTicket } from '@pages/NewOrder/components/NewOrderTicket/NewOrd
 import { useNewOrderFacade } from '@pages/NewOrder/facades/useNewOrderFacade/useNewOrderFacade'
 import { BackLink } from '@shared/components/BackLink/BackLink'
 
+import motion from '@styles/motion.module.css'
 import styles from './NewOrder.module.css'
 
 const DESCRIPTION =
@@ -27,6 +28,7 @@ export const NewOrder = () => {
       <Header
         mt={4}
         mb={5}
+        className={motion.deal}
         title="Pedido na mão"
         accent="mão"
         description={DESCRIPTION}

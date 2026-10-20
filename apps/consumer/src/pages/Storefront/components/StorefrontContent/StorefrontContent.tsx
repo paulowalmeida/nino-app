@@ -113,14 +113,14 @@ export const StorefrontContent = ({ pathSlug }: StorefrontContentProps) => {
       {!isMenuContentPending &&
         blocks.showCategoryBar &&
         home.visibleSections.length > 0 && (
-          <CategoryBar className={motion.settle} style={riseDelay(140)}>
+          <CategoryBar className={motion.deal} style={riseDelay(140)}>
             <CategoryNav />
           </CategoryBar>
         )}
 
       <Box as="main" className={`${styles.storefrontContentShell} ${styles.storefrontContentMain}`}>
         <Box
-          className={`${motion.settle} ${styles.storefrontContentMenu}`}
+          className={`${motion.deal} ${styles.storefrontContentMenu}`}
           style={riseDelay(200)}
         >
           {isMenuContentPending && <MenuRowsSkeleton />}

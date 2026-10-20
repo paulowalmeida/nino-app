@@ -24,16 +24,18 @@ export const OverviewHeader = () => {
     : greetingFor(timezone)
 
   return (
-    <Box as="header" className={`${motion.settle} ${styles.overviewHeader}`}>
+    <Box as="header" className={`${motion.deal} ${styles.overviewHeader}`}>
       <Text as="p" size="xs" color="faint" className={styles.eyebrow}>
         <Text as="span">{greeting}</Text>
         <span aria-hidden="true">·</span>
-        <Text as="span" className={styles.date}>{dateFor(timezone)}</Text>
+        <Text as="span" className={styles.date}>
+          {dateFor(timezone)}
+        </Text>
       </Text>
 
       <Box className={styles.plate}>
         <Box className={styles.identity}>
-          <Heading level={1} size="2xl" className={styles.storeName}>
+          <Heading level={1} accent size="2xl" className={styles.storeName}>
             {unit?.unitName ?? 'Sua loja'}
           </Heading>
 

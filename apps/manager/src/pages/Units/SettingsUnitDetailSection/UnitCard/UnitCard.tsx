@@ -6,7 +6,7 @@ import { Button } from '@nino/ds/components/Button'
 import { Combobox } from '@nino/ds/components/Combobox'
 import { FieldHint } from '@nino/ds/components/FieldHint'
 import { FormField } from '@nino/ds/components/FormField'
-import { Heading } from '@nino/ds/components/Heading'
+import { Header } from '@nino/ds/components/Header'
 import { Icon } from '@nino/ds/components/Icon'
 import { Input } from '@nino/ds/components/Input'
 import { Select } from '@nino/ds/components/Select'
@@ -98,9 +98,10 @@ export const UnitCard = ({
 
   const cityField = (
     <Combobox
-      options={(addressLocation.municipalities.data ?? []).map(
-        ({ nome }) => ({ value: nome, label: nome })
-      )}
+      options={(addressLocation.municipalities.data ?? []).map(({ nome }) => ({
+        value: nome,
+        label: nome,
+      }))}
       placeholder="Busque uma cidade"
       ariaLabel="Cidade"
       inputValue={draft.city}
@@ -168,7 +169,9 @@ export const UnitCard = ({
       aria-label="Endereço"
       value={draft.street}
       disabled={addressDisabled || addressSearch.isResolvingSelectedAddress}
-      onChange={(event) => clearAddressSelection({ street: event.target.value })}
+      onChange={(event) =>
+        clearAddressSelection({ street: event.target.value })
+      }
       onBlur={startAddressLookup}
     />
   )
@@ -231,44 +234,34 @@ export const UnitCard = ({
 
   return (
     <Box as="section" className={local.unitCardPanel}>
-      <Box
-        as="header"
-        direction="row"
-        gap={3}
-        align="start"
-        justify="between"
-        wrap
+      <Header
+        className={motion.deal}
+        level={2}
+        size="xl"
         mb={4}
-        className={motion.unroll}
-      >
-        <Box>
-          <Heading level={2} size="xl">
-            {unit?.customName || 'Esta unidade'}
+        title={unit?.customName || 'Esta unidade'}
+        description="É o endereço de onde o pedido sai."
+        actions={
+          <Box direction="row" gap={2} wrap className={local.headerActions}>
             {isMain && (
               <Badge size="sm" className={local.unitCardMain}>
                 matriz
               </Badge>
             )}
-          </Heading>
-          <Text size="sm" color="subtle" mt={1}>
-            É o endereço de onde o pedido sai.
-          </Text>
-        </Box>
-
-        <Box direction="row" gap={2} wrap className={local.headerActions}>
-          {!isMain && (
-            <Button
-              variant="outline"
-              size="sm"
-              loading={isPromoting}
-              className={`${motion.press} ${local.promote}`}
-              onClick={onSetMain}
-            >
-              Tornar matriz
-            </Button>
-          )}
-        </Box>
-      </Box>
+            {!isMain && (
+              <Button
+                variant="outline"
+                size="sm"
+                loading={isPromoting}
+                className={`${motion.press} ${local.promote}`}
+                onClick={onSetMain}
+              >
+                Tornar matriz
+              </Button>
+            )}
+          </Box>
+        }
+      />
 
       <Tabs
         className={local.unitCardTabs}

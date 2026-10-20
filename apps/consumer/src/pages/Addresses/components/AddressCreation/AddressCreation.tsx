@@ -15,7 +15,7 @@ export const AddressCreation = () => {
 
   if (editingAddressId === NEW_ADDRESS_ID) {
     return (
-      <Box className={`${motion.settle} ${styles.newForm}`}>
+      <Box className={`${motion.deal} ${styles.newForm}`}>
         <Text className={styles.newTitle}>Novo endereço</Text>
         <AddressForm
           onCancel={cancelEditingAddress}

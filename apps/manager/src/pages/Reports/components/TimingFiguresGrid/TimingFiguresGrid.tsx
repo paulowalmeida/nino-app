@@ -21,7 +21,7 @@ export const TimingFiguresGrid = ({ timing, delay = 0 }: TimingFiguresGridProps)
       return (
         <Box
           key={key}
-          className={`${motion.settle} ${motion.lift} ${styles.figure}`}
+          className={`${motion.deal} ${motion.lift} ${styles.figure}`}
           style={riseDelay(delay + index * 70)}
         >
           <Text

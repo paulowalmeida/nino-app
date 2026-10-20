@@ -30,7 +30,7 @@ export const ProfileForm = () => {
         columns={{ mobile: 1, tablet: 2 }}
         gap={4}
         mt={8}
-        className={motion.settle}
+        className={motion.deal}
       >
         <FormField
           label="Nome"
