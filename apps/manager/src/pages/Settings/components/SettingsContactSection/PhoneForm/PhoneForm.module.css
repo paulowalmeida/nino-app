@@ -1,19 +1,12 @@
 @reference "@nino/ds/globals.css";
 
-.phoneFormSection {
-  @apply border-y border-border py-5;
-}
-
-.intro {
-  @apply flex flex-col gap-1;
-}
-
 .phoneForm {
-  @apply mt-4 grid grid-cols-1 gap-3;
+  @apply grid w-full grid-cols-1 gap-3;
 
   @media (min-width: 640px) {
-    grid-template-columns: minmax(0, 28rem) auto;
+    grid-template-columns: minmax(0, 28rem) max-content;
     align-items: end;
+    justify-content: start;
   }
 }
 
@@ -22,11 +15,6 @@
 }
 
 .submit {
+  @apply w-full sm:w-auto;
   @apply self-start sm:self-end;
-}
-
-@media (min-width: 2560px) {
-  .submit {
-    @apply w-fit;
-  }
 }

@@ -18,6 +18,7 @@ describe('PhoneList', () => {
     expect(
       screen.getByText(/Adicione um número para que os clientes saibam/)
     ).toBeInTheDocument()
+    expect(screen.queryByText('0 telefones')).not.toBeInTheDocument()
   })
 
   it('shows the configured phone with its actions', () => {

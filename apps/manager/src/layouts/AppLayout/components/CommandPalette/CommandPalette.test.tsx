@@ -5,6 +5,7 @@ import userEvent from '@testing-library/user-event'
 import { describe, expect, it, vi } from 'vitest'
 
 import { useSidemenu } from '@layouts/AppLayout/hooks/useSidemenu/useSidemenu'
+import { useUnitRole } from '@layouts/AppLayout/hooks/useUnitRole/useUnitRole'
 import { useCurrentUnit } from '@shared/hooks/session/useCurrentUnit/useCurrentUnit'
 
 import { CommandPalette } from './CommandPalette'
@@ -12,6 +13,10 @@ import { commandPaletteMock } from './CommandPalette.mock'
 
 vi.mock('@layouts/AppLayout/hooks/useSidemenu/useSidemenu', () => ({
   useSidemenu: vi.fn(),
+}))
+
+vi.mock('@layouts/AppLayout/hooks/useUnitRole/useUnitRole', () => ({
+  useUnitRole: vi.fn(),
 }))
 
 vi.mock('@shared/hooks/session/useCurrentUnit/useCurrentUnit', () => ({
@@ -55,6 +60,22 @@ describe(CommandPalette.name, () => {
     )
   })
 
+  it('closes through the close button', async () => {
+    const onOpenChange = vi.fn()
+    vi.mocked(useCurrentUnit).mockReturnValue(commandPaletteMock.currentUnit)
+    vi.mocked(useSidemenu).mockReturnValue({ groups: [] })
+
+    render(
+      <MemoryRouter>
+        <CommandPalette open onOpenChange={onOpenChange} />
+      </MemoryRouter>
+    )
+
+    await userEvent.click(screen.getByRole('button', { name: 'Fechar busca' }))
+
+    expect(onOpenChange).toHaveBeenCalledWith(false)
+  })
+
   it('includes settings controls in the search index', async () => {
     vi.mocked(useCurrentUnit).mockReturnValue(commandPaletteMock.currentUnit)
     vi.mocked(useSidemenu).mockReturnValue({
@@ -96,12 +117,35 @@ describe(CommandPalette.name, () => {
     ).not.toBeInTheDocument()
   })
 
+  it('includes notifications from the account navigation', async () => {
+    navigate.mockClear()
+    vi.mocked(useUnitRole).mockReturnValue(null)
+    vi.mocked(useCurrentUnit).mockReturnValue(commandPaletteMock.currentUnit)
+    vi.mocked(useSidemenu).mockReturnValue({ groups: [] })
+
+    render(
+      <MemoryRouter>
+        <CommandPalette open onOpenChange={vi.fn()} />
+      </MemoryRouter>
+    )
+
+    await userEvent.click(
+      screen.getByRole('option', { name: 'Conta · Notificações', hidden: true })
+    )
+
+    expect(navigate).toHaveBeenCalledWith(
+      `/${commandPaletteMock.currentUnit.unitId}/notificacoes`
+    )
+  })
+
   it('indexes the overview functionality and keeps its deep link', async () => {
     vi.mocked(useCurrentUnit).mockReturnValue(commandPaletteMock.currentUnit)
     vi.mocked(useSidemenu).mockReturnValue({
       groups: [
         {
-          items: [{ section: 'visao-geral', label: 'Visão geral', icon: 'home' }],
+          items: [
+            { section: 'visao-geral', label: 'Visão geral', icon: 'home' },
+          ],
         },
       ],
     })

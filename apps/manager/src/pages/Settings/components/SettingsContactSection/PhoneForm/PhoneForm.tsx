@@ -3,7 +3,6 @@ import { useState } from 'react'
 import { Box } from '@nino/ds/components/Box'
 import { Button } from '@nino/ds/components/Button'
 import { FormField } from '@nino/ds/components/FormField'
-import { Header } from '@nino/ds/components/Header'
 import { PhoneInput } from '@nino/ds/components/PhoneInput'
 import { toE164 } from '@shared/utils/phone/phone'
 
@@ -26,31 +25,21 @@ export const PhoneForm = ({ isAdding, onAdd }: PhoneFormProps) => {
   }
 
   return (
-    <Box className={local.phoneFormSection}>
-      <Header
-        className={local.intro}
-        level={3}
-        size="md"
-        title="Adicionar telefone"
-        description="Use um número que sua equipe acompanha durante o atendimento."
-      />
-
-      <Box className={local.phoneForm}>
-        <FormField label="Telefone" className={local.phoneFormField}>
-          <PhoneInput
-            value={phone}
-            onChange={(event) => setPhone(event.target.value)}
-          />
-        </FormField>
-        <Button
-          loading={isAdding}
-          disabled={!isValid}
-          className={`${motion.press} ${local.submit}`}
-          onClick={addPhone}
-        >
-          Adicionar telefone
-        </Button>
-      </Box>
+    <Box className={local.phoneForm}>
+      <FormField label="Telefone" className={local.phoneFormField}>
+        <PhoneInput
+          value={phone}
+          onChange={(event) => setPhone(event.target.value)}
+        />
+      </FormField>
+      <Button
+        loading={isAdding}
+        disabled={!isValid}
+        className={`${motion.press} ${local.submit}`}
+        onClick={addPhone}
+      >
+        Adicionar telefone
+      </Button>
     </Box>
   )
 }

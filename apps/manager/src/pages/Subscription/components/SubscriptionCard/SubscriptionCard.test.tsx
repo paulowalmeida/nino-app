@@ -33,16 +33,15 @@ describe(SubscriptionCard.name, () => {
     expect(screen.getAllByText('—')).toHaveLength(2)
   })
 
-  it('shows subscription actions when the plan data is available', () => {
+  it('shows management actions when the callbacks are available', () => {
     render(
       <SubscriptionCard
         subscription={activeSubscription}
-        plans={[activeSubscription.plan]}
-        onChangePlan={async () => undefined}
+        onManagePlan={() => undefined}
         onCancel={async () => undefined}
       />
     )
 
-    expect(screen.getByText('Planos disponíveis')).toBeInTheDocument()
+    expect(screen.getByText('Gerenciar plano')).toBeInTheDocument()
   })
 })

@@ -2,8 +2,7 @@ import { Box } from '@nino/ds/components/Box'
 import { Text } from '@nino/ds/components/Text'
 import type { Subscription } from '@shared/types/profile/subscription'
 import { brl } from '@shared/utils/money/money'
-
-import { isConsultativePlan } from '../../../utils/isConsultativePlan/isConsultativePlan'
+import { isConsultativePlan } from '@shared/utils/subscription/isConsultativePlan/isConsultativePlan'
 
 import styles from './SubscriptionPlanSummary.module.css'
 

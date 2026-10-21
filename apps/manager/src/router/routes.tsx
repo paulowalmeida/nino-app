@@ -282,6 +282,26 @@ export const router = createBrowserRouter([
           ),
       },
       {
+        path: 'assinatura/planos/:planId/confirmar',
+        loader: roleGuard(['UNIT_OWNER']),
+        lazy: () =>
+          import('@pages/SubscriptionPlanChange/SubscriptionPlanChange').then(
+            ({ SubscriptionPlanChange }) => ({
+              Component: SubscriptionPlanChange,
+            })
+          ),
+      },
+      {
+        path: 'assinatura/planos',
+        loader: roleGuard(['UNIT_OWNER']),
+        lazy: () =>
+          import('@pages/SubscriptionPlanChange/SubscriptionPlanChange').then(
+            ({ SubscriptionPlanChange }) => ({
+              Component: SubscriptionPlanChange,
+            })
+          ),
+      },
+      {
         path: 'assinatura',
         loader: roleGuard(['UNIT_OWNER']),
         lazy: () =>

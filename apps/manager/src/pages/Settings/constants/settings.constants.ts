@@ -44,24 +44,6 @@ export const EMPTY_SERVICE_RULES_DRAFT: ServiceRulesDraft = {
   acceptedPaymentMethods: [],
 }
 
-export const PHONE_LIST_CAPABILITIES = [
-  {
-    icon: 'smartphone',
-    title: 'Cadastrar números',
-    description: 'Use o campo acima para adicionar o telefone da loja.',
-  },
-  {
-    icon: 'phone',
-    title: 'Ter mais de um contato',
-    description: 'Cadastre quantos números a loja precisar.',
-  },
-  {
-    icon: 'edit',
-    title: 'Editar ou remover',
-    description: 'Troque ou tire um número quando ele mudar.',
-  },
-] as const
-
 export const EMPTY_CASHBACK_DRAFT: CashbackDraft = {
   cashbackEnabled: false,
   cashbackPercent: '0',

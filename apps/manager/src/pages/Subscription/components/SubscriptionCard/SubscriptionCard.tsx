@@ -1,6 +1,5 @@
 import { Box } from '@nino/ds/components/Box'
 import type { Subscription } from '@shared/types/profile/subscription'
-import type { SubscriptionPlan } from '@shared/types/profile/subscription'
 
 import { SubscriptionActions } from './SubscriptionActions/SubscriptionActions'
 import { SubscriptionFacts } from './SubscriptionFacts/SubscriptionFacts'
@@ -12,32 +11,26 @@ import styles from './SubscriptionCard.module.css'
 
 type SubscriptionCardProps = {
   subscription: Subscription
-  plans?: SubscriptionPlan[]
   isUpdating?: boolean
-  onChangePlan?: (planId: string) => Promise<unknown>
+  onManagePlan?: () => void
   onCancel?: () => Promise<unknown>
-  onRequestInterest?: () => void
 }
 
 export const SubscriptionCard = ({
   subscription,
-  plans,
   isUpdating,
-  onChangePlan,
+  onManagePlan,
   onCancel,
-  onRequestInterest,
 }: SubscriptionCardProps) => (
   <Box as="section" className={`${motion.deal} ${styles.subscription}`}>
     <SubscriptionPlanSummary plan={subscription.plan} />
     <SubscriptionFacts subscription={subscription} />
-    {plans && onChangePlan && onCancel ? (
+    {onManagePlan && onCancel ? (
       <SubscriptionActions
         subscription={subscription}
-        plans={plans}
         isUpdating={isUpdating ?? false}
-        onChangePlan={onChangePlan}
+        onManagePlan={onManagePlan}
         onCancel={onCancel}
-        onRequestInterest={onRequestInterest}
       />
     ) : null}
     <SubscriptionSupportHint />

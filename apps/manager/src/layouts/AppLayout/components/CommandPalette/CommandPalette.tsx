@@ -8,7 +8,9 @@ import {
 } from 'react'
 import { useNavigate } from 'react-router'
 
+import { ACCOUNT_NAVIGATION_ITEMS } from '@layouts/AppLayout/constants/account-navigation.constants'
 import { useSidemenu } from '@layouts/AppLayout/hooks/useSidemenu/useSidemenu'
+import { useUnitRole } from '@layouts/AppLayout/hooks/useUnitRole/useUnitRole'
 import { Box } from '@nino/ds/components/Box'
 import { Button } from '@nino/ds/components/Button'
 import { Icon, type IconName } from '@nino/ds/components/Icon'
@@ -38,6 +40,7 @@ type CommandPaletteProps = {
 export const CommandPalette = ({ open, onOpenChange }: CommandPaletteProps) => {
   const navigate = useNavigate()
   const { groups } = useSidemenu()
+  const isOwner = useUnitRole() === 'UNIT_OWNER'
   const unitId = useCurrentUnit()?.unitId
   const inputRef = useRef<HTMLInputElement>(null)
   const [query, setQuery] = useState('')
@@ -61,6 +64,17 @@ export const CommandPalette = ({ open, onOpenChange }: CommandPaletteProps) => {
       }))
     )
 
+    const accountNavigationOptions = ACCOUNT_NAVIGATION_ITEMS.filter(
+      ({ ownerOnly }) => !ownerOnly || isOwner
+    ).map(({ section, label, icon }) => ({
+      value: section,
+      label: `Conta · ${label}`,
+      inputLabel: label,
+      path: 'Conta',
+      icon,
+      kind: 'screen' as const,
+    }))
+
     const functionalityOptions = FUNCTIONALITY_SEARCH_ITEMS.filter((item) =>
       iconBySection.has(item.section)
     ).map(({ section, label, group, target }) => ({
@@ -72,8 +86,12 @@ export const CommandPalette = ({ open, onOpenChange }: CommandPaletteProps) => {
       kind: 'action' as const,
     }))
 
-    return [...navigationOptions, ...functionalityOptions]
-  }, [groups])
+    return [
+      ...navigationOptions,
+      ...accountNavigationOptions,
+      ...functionalityOptions,
+    ]
+  }, [groups, isOwner])
 
   /* Screens first, then actions; inside each, the closer the title is to
      what was typed, the higher it ranks. With nothing typed only the screens
@@ -188,7 +206,9 @@ export const CommandPalette = ({ open, onOpenChange }: CommandPaletteProps) => {
       onOpenChange={changeOpen}
       ariaLabel="Buscar funcionalidade"
       size="md"
+      dismissible={false}
       contentClassName={styles.modal}
+      positionerClassName={styles.positioner}
       bodyClassName={styles.commandPaletteBody}
       footerClassName={styles.commandPaletteFooter}
       body={
@@ -213,6 +233,15 @@ export const CommandPalette = ({ open, onOpenChange }: CommandPaletteProps) => {
               onKeyDown={handleSearchKeyDown}
               className={styles.commandPaletteInput}
             />
+            <Button
+              type="button"
+              variant="ghost"
+              aria-label="Fechar busca"
+              className={styles.closeButton}
+              onClick={() => changeOpen(false)}
+            >
+              <Icon name="x" size="sm" />
+            </Button>
           </Box>
           <ScrollArea className={styles.optionScroll} fadeEdges>
             <Box

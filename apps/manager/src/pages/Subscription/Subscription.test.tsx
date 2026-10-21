@@ -17,12 +17,8 @@ vi.mock(
 vi.mock(
   '@pages/Subscription/components/SubscriptionCard/SubscriptionCard',
   () => ({
-    SubscriptionCard: ({
-      onRequestInterest,
-    }: {
-      onRequestInterest: () => void
-    }) => (
-      <button type="button" onClick={onRequestInterest}>
+    SubscriptionCard: ({ onManagePlan }: { onManagePlan: () => void }) => (
+      <button type="button" onClick={onManagePlan}>
         subscription card
       </button>
     ),
@@ -88,27 +84,7 @@ describe('Subscription', () => {
     )
   })
 
-  it('reports when the available plans could not be read', () => {
-    facadeWith({ isPlansError: true })
-
-    render(<Subscription />)
-
-    expect(screen.getByRole('alert')).toHaveTextContent(
-      'Não foi possível carregar os planos disponíveis.'
-    )
-  })
-
-  it('shows feedback while the available plans are loading', () => {
-    facadeWith({ isPlansPending: true })
-
-    render(<Subscription />)
-
-    expect(screen.getByRole('alert')).toHaveTextContent(
-      'Carregando planos disponíveis...'
-    )
-  })
-
-  it('opens the Rede plan request from the card', () => {
+  it('opens the plan change journey from the card', () => {
     // Arrange
     facadeWith({
       subscription: { plan: { name: subscriptionPageMock.planName } },
@@ -119,6 +95,6 @@ describe('Subscription', () => {
     fireEvent.click(screen.getByText('subscription card'))
 
     // Assert
-    expect(navigate).toHaveBeenCalledWith(subscriptionPageMock.redeRequestPath)
+    expect(navigate).toHaveBeenCalledWith('planos')
   })
 })

@@ -16,12 +16,8 @@ export const Subscription = () => {
     subscription,
     isPending,
     isError,
-    plans,
-    isPlansPending,
-    isPlansError,
     isUpdating,
     isUpdateError,
-    changePlan,
     cancelPlan,
   } = useSubscriptionFacade()
 
@@ -46,20 +42,10 @@ export const Subscription = () => {
       {subscription && (
         <SubscriptionCard
           subscription={subscription}
-          plans={plans}
           isUpdating={isUpdating}
-          onChangePlan={changePlan}
+          onManagePlan={() => navigate('planos')}
           onCancel={cancelPlan}
-          onRequestInterest={() => navigate('rede')}
         />
-      )}
-      {isPlansError && (
-        <Alert variant="error">
-          Não foi possível carregar os planos disponíveis.
-        </Alert>
-      )}
-      {isPlansPending && !isPending && (
-        <Alert variant="info">Carregando planos disponíveis...</Alert>
       )}
     </Box>
   )

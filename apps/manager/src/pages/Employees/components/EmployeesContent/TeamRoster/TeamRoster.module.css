@@ -33,6 +33,10 @@
   width: auto;
 }
 
+.colEmail {
+  width: 15rem;
+}
+
 .colSeen {
   width: 10rem;
 }
@@ -65,6 +69,10 @@
 
 .name {
   @apply truncate text-sm font-semibold text-fg-default;
+}
+
+.row > td {
+  @apply py-2;
 }
 
 .email {
@@ -152,7 +160,11 @@
 }
 
 .ghostEmail {
-  @apply mt-1 h-2.5 w-44;
+  @apply h-2.5 w-44;
+}
+
+.ghostSeen {
+  @apply h-2.5 w-24;
 }
 
 .ghostRole {
@@ -164,9 +176,9 @@
   @apply ml-auto;
 }
 
-/* WHY: abaixo do tablet a tabela de 4 colunas empurrava cargo e ações para
- * fora da tela; cada pessoa vira um cartão com identidade, cargo e menu na
- * mesma linha e o último acesso embaixo, alinhado ao nome.
+/* WHY: abaixo do tablet a tabela de 5 colunas empurrava cargo e ações para
+ * fora da tela. O cartão móvel preserva a leitura: pessoa e ações no topo,
+ * e-mail no meio, cargo e último acesso embaixo.
  */
 @media (max-width: 639px) {
   .tableShell table,
@@ -181,9 +193,10 @@
 
   .row {
     display: grid;
-    grid-template-columns: minmax(0, 1fr) auto auto;
+    grid-template-columns: minmax(0, 1fr) auto;
     align-items: center;
-    column-gap: 0.5rem;
+    column-gap: 0.75rem;
+    row-gap: 0.25rem;
     padding: 0.75rem 1rem;
   }
 
@@ -198,18 +211,31 @@
   }
 
   .roleCol {
-    grid-row: 1;
-    grid-column: 2;
+    grid-row: 3;
+    grid-column: 1;
+    padding-left: 3.25rem;
   }
 
   .actionsCol {
     grid-row: 1;
-    grid-column: 3;
+    grid-column: 2;
   }
 
   .row > .seenCol {
+    grid-row: 3;
+    grid-column: 2;
+    text-align: right;
+  }
+
+  .row > .emailCol {
+    display: table-cell;
     grid-row: 2;
     grid-column: 1 / -1;
+    min-width: 0;
     padding-left: 3.25rem;
+  }
+
+  .roleTrigger {
+    margin-left: 0;
   }
 }

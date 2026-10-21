@@ -1,30 +1,13 @@
 @reference "@nino/ds/globals.css";
 
 .subscriptionActions {
-  @apply border-t border-border pt-5;
+  @apply pt-6;
 }
 
-.planList {
-  @apply m-0 list-none;
-}
-
-.planRow {
-  @apply items-start gap-4;
-}
-
-.planDetails {
-  @apply min-w-0 flex-1;
-}
-
-.planDecision {
-  @apply w-full shrink-0;
-  @apply sm:w-auto;
-}
-
-.consultativePlan {
+.cancellation {
   @apply rounded-2 bg-surface-2 px-3 py-3;
 }
 
-.consultativeAction {
-  @apply self-start;
+.cancelAction {
+  @apply mt-1 w-full sm:w-auto sm:self-start;
 }

@@ -126,13 +126,13 @@ export const TeamRoster = ({
     <Box as="section" id="equipe-do-painel" className={styles.roster}>
       <h2 className="sr-only">{title}</h2>
 
-      {/* the same list, with the people yet to arrive: avatar, name, e-mail,
-          role */}
+      {/* Skeleton keeps the same table geometry as the loaded roster. */}
       {isPending && (
         <Box className={styles.tableShell}>
           <Table>
             <colgroup>
               <col className={styles.colPerson} />
+              <col className={styles.colEmail} />
               <col className={styles.colSeen} />
               <col className={styles.colRole} />
               <col className={styles.colActions} />
@@ -140,6 +140,7 @@ export const TeamRoster = ({
             <TableHeader>
               <TableRow className={styles.headRow}>
                 <TableHead>Pessoa</TableHead>
+                <TableHead>E-mail</TableHead>
                 <TableHead>Último acesso</TableHead>
                 <TableHead className={styles.colRight}>Cargo</TableHead>
                 <TableHead>
@@ -158,12 +159,14 @@ export const TeamRoster = ({
                       <Skeleton className={styles.ghostMark} />
                       <Box className={styles.person}>
                         <Skeleton className={styles.ghostName} />
-                        <Skeleton className={styles.ghostEmail} />
                       </Box>
                     </Box>
                   </TableCell>
-                  <TableCell className={styles.seenCol}>
+                  <TableCell className={styles.emailCol}>
                     <Skeleton className={styles.ghostEmail} />
+                  </TableCell>
+                  <TableCell className={styles.seenCol}>
+                    <Skeleton className={styles.ghostSeen} />
                   </TableCell>
                   <TableCell className={`${styles.colRight} ${styles.roleCol}`}>
                     <Skeleton className={styles.ghostRole} />
@@ -185,6 +188,7 @@ export const TeamRoster = ({
           <Table>
             <colgroup>
               <col className={styles.colPerson} />
+              <col className={styles.colEmail} />
               <col className={styles.colSeen} />
               <col className={styles.colRole} />
               <col className={styles.colActions} />
@@ -192,6 +196,7 @@ export const TeamRoster = ({
             <TableHeader>
               <TableRow className={styles.headRow}>
                 <TableHead>Pessoa</TableHead>
+                <TableHead>E-mail</TableHead>
                 <TableHead>Último acesso</TableHead>
                 <TableHead className={styles.colRight}>Cargo</TableHead>
                 <TableHead>
@@ -222,9 +227,6 @@ export const TeamRoster = ({
 
                     <Box className={styles.person}>
                       <Text className={styles.name}>{entry.name}</Text>
-                      {entry.email && (
-                        <Text className={styles.email}>{entry.email}</Text>
-                      )}
                     </Box>
                   </>
                 )
@@ -243,6 +245,10 @@ export const TeamRoster = ({
                       ) : (
                         <Box className={styles.identityCell}>{identity}</Box>
                       )}
+                    </TableCell>
+
+                    <TableCell className={styles.emailCol}>
+                      <Text className={styles.email}>{entry.email ?? '—'}</Text>
                     </TableCell>
 
                     <TableCell

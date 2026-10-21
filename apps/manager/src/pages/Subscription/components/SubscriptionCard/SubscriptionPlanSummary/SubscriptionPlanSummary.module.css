@@ -1,7 +1,7 @@
 @reference "@nino/ds/globals.css";
 
 .plan {
-  @apply border-b border-border pb-5;
+  @apply items-start;
 }
 
 .planName {
@@ -9,5 +9,6 @@
 }
 
 .price {
+  @apply whitespace-nowrap;
   font-variant-numeric: tabular-nums;
 }

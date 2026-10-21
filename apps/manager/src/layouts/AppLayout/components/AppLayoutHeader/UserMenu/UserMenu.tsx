@@ -1,5 +1,6 @@
 import { useNavigate } from 'react-router'
 
+import { ACCOUNT_NAVIGATION_ITEMS } from '@layouts/AppLayout/constants/account-navigation.constants'
 import { useUnitRole } from '@layouts/AppLayout/hooks/useUnitRole/useUnitRole'
 import { Box } from '@nino/ds/components/Box'
 import { Button } from '@nino/ds/components/Button'
@@ -32,6 +33,9 @@ export const UserMenu = ({
 
   const go = (path: string) => void navigate(`/${unitId}/${path}`)
   const membershipLine = [positionName, unitName].filter(Boolean).join(' · ')
+  const accountItems = ACCOUNT_NAVIGATION_ITEMS.filter(
+    ({ ownerOnly }) => !ownerOnly || isOwner
+  )
 
   return (
     <Menu
@@ -66,28 +70,12 @@ export const UserMenu = ({
       }
       items={[
         { separator: true },
-        {
-          value: 'profile',
-          label: 'Meu perfil',
-          icon: <Icon name="user" className={styles.itemIcon} />,
-          onSelect: () => go('perfil'),
-        },
-        {
-          value: 'notifications',
-          label: 'Notificações',
-          icon: <Icon name="bell" className={styles.itemIcon} />,
-          onSelect: () => go('notificacoes'),
-        },
-        ...(isOwner
-          ? [
-              {
-                value: 'subscription',
-                label: 'Assinatura e plano',
-                icon: <Icon name="receipt" className={styles.itemIcon} />,
-                onSelect: () => go('assinatura'),
-              },
-            ]
-          : []),
+        ...accountItems.map(({ value, label, icon, section }) => ({
+          value,
+          label,
+          icon: <Icon name={icon} className={styles.itemIcon} />,
+          onSelect: () => go(section),
+        })),
         { separator: true },
         {
           value: 'logout',

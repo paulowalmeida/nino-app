@@ -1,0 +1,14 @@
+@reference "@nino/ds/globals.css";
+
+.currentPlan,
+.consultativePlan {
+  @apply rounded-2 bg-surface-2 px-4 py-3;
+}
+
+.selectionFooter {
+  @apply sticky bottom-0 -mx-4 bg-surface-raised px-4 py-4 sm:static sm:mx-0 sm:bg-transparent sm:px-0 sm:py-0;
+}
+
+.selectionFooter button {
+  @apply w-full sm:w-auto;
+}

@@ -39,6 +39,9 @@ describe(TeamRoster.name, () => {
       screen.getByRole('heading', { name: 'No painel' })
     ).toBeInTheDocument()
     expect(screen.getByText('Ana Souza')).toBeInTheDocument()
+    expect(
+      screen.getByRole('columnheader', { name: 'E-mail' })
+    ).toBeInTheDocument()
   })
 
   it('promotes a member through the cargo menu', async () => {

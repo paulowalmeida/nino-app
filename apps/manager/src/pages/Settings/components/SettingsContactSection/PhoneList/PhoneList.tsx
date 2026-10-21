@@ -51,11 +51,11 @@ export const PhoneList = ({
         level={3}
         size="md"
         title="Telefones cadastrados"
-        actions={
+        actions={phones.length > 0 ? (
           <Text size="sm" color="subtle" className={local.phonesMeta}>
             {phones.length === 1 ? '1 telefone' : `${phones.length} telefones`}
           </Text>
-        }
+        ) : undefined}
       />
 
       {phones.length === 0 && <PhoneListEmptyState />}
