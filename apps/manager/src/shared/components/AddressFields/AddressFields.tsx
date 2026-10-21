@@ -202,16 +202,12 @@ export const AddressFields = ({
     >
       {locationFirst ? (
         <>
-          <div className={styles.locationFirstRow}>{cityAndStateFields}</div>
-          <div className={styles.locationFirstRow}>
-            {zipCodeField}
-            {streetAddressField}
-            {numberField}
-          </div>
-          <div className={styles.locationFirstRow}>
-            {neighborhoodField}
-            {complementField}
-          </div>
+          {cityAndStateFields}
+          {zipCodeField}
+          {streetAddressField}
+          {numberField}
+          {neighborhoodField}
+          {complementField}
         </>
       ) : (
         <>
