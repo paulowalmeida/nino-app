@@ -66,17 +66,23 @@ export const ConsumerOrderHistory = () => {
             />
           ))}
 
-          <TableRow className={styles.sentinelRow}>
-            <TableCell colSpan={4} className={styles.sentinelCell}>
-              <Box ref={sentinelRef} className={styles.sentinel}>
-                {isFetchingNextPage && (
-                  <Text size="xs" color="faint" className={styles.loadingMore}>
-                    Carregando mais pedidos…
-                  </Text>
-                )}
-              </Box>
-            </TableCell>
-          </TableRow>
+          {(hasNextPage || isFetchingNextPage) && (
+            <TableRow className={styles.sentinelRow}>
+              <TableCell colSpan={4} className={styles.sentinelCell}>
+                <Box ref={sentinelRef} className={styles.sentinel}>
+                  {isFetchingNextPage && (
+                    <Text
+                      size="xs"
+                      color="faint"
+                      className={styles.loadingMore}
+                    >
+                      Carregando mais pedidos…
+                    </Text>
+                  )}
+                </Box>
+              </TableCell>
+            </TableRow>
+          )}
         </TableBody>
       </Table>
     </Box>

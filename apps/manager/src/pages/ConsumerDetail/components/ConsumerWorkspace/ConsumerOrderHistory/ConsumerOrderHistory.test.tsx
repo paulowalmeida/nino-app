@@ -52,6 +52,20 @@ describe('ConsumerOrderHistory', () => {
     expect(screen.getByText('Carregando mais pedidos…')).toBeInTheDocument()
   })
 
+  it('ends the table at the last order once every page is loaded', () => {
+    facadeWith({})
+
+    render(
+      <MemoryRouter>
+        <ConsumerOrderHistory />
+      </MemoryRouter>
+    )
+
+    expect(screen.getAllByRole('row')).toHaveLength(
+      consumerOrderRowsMock.length + 1
+    )
+  })
+
   it('states the empty history window', () => {
     facadeWith({ orderRows: [] })
 
