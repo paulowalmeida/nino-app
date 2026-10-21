@@ -43,7 +43,7 @@ export const CategoryRow = ({
   }
 
   const actionItems: MenuItem[] = [
-    { value: 'edit', label: 'Renomear', onSelect: onEdit },
+    { value: 'edit', label: 'Editar', onSelect: onEdit },
     { separator: true },
     {
       value: 'delete',

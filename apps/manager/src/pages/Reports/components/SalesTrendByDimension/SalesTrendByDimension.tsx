@@ -26,7 +26,13 @@ export const SalesTrendByDimension = ({
     className={`${motion.deal} ${styles.trendBlock}`}
     style={riseDelay(delay)}
   >
-    <Header level={2} size="lg" mb={3} title={title} />
+    <Header
+      level={2}
+      size="lg"
+      mb={3}
+      title={title}
+      className={styles.trendHeader}
+    />
 
     <SalesMultiChart
       series={breakdown.series}

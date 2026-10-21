@@ -5,7 +5,7 @@
 }
 
 .categoriesList {
-  @apply min-h-0 flex-1;
+  @apply min-h-0 flex-1 md:px-10;
 }
 
 .categoriesList > div {
@@ -21,9 +21,9 @@
 }
 
 .dragHead {
-  @apply w-10 pl-4 pr-1 lg:pl-10;
+  @apply w-10 pl-4 pr-1 md:pl-2;
 }
 
 .actionsHead {
-  @apply w-12 pl-3 pr-4 lg:pr-10;
+  @apply w-12 pl-3 pr-4 md:pr-2;
 }

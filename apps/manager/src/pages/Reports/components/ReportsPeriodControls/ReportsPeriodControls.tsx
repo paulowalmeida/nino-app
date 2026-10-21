@@ -13,7 +13,7 @@ export const ReportsPeriodControls = () => {
   const { period, setPeriod, custom } = useReportsFacade()
 
   return (
-    <Box direction="column" gap={4}>
+    <Box direction="column" gap={4} className={styles.periodControls}>
       <Tabs
         className={`${motion.unroll} ${styles.periodTabs}`}
         tabs={REPORTS_PERIODS.map(({ id, label }) => ({

@@ -81,7 +81,7 @@ describe(CategoryRow.name, () => {
     await user.click(
       screen.getByRole('button', { name: 'Mais ações para Bebidas' })
     )
-    await user.click(screen.getByRole('menuitem', { name: 'Renomear' }))
+    await user.click(screen.getByRole('menuitem', { name: 'Editar' }))
 
     expect(startDrag).toHaveBeenCalled()
     expect(props.onDelete).toHaveBeenCalledOnce()

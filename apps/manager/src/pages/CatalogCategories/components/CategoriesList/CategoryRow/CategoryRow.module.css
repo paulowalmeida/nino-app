@@ -10,7 +10,7 @@
 }
 
 .dragCell {
-  @apply w-10 pl-4 pr-1 lg:pl-10;
+  @apply w-10 pl-4 pr-1 md:pl-2;
 }
 
 .dragHandle {
@@ -38,7 +38,7 @@
 }
 
 .actionsCell {
-  @apply w-12 pl-3 pr-4 text-right lg:pr-10;
+  @apply w-12 pl-3 pr-4 text-right md:pr-2;
 }
 
 .desktopActions {

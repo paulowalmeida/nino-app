@@ -5,9 +5,10 @@
 }
 
 .appLayoutOverlay {
-  @apply fixed inset-0 z-overlay bg-fg-cool/60 backdrop-blur-sm lg:hidden;
+  @apply fixed inset-0 z-overlay backdrop-blur-sm lg:hidden;
 }
 
 .appLayoutOverlay.appLayoutOverlay {
-  @apply h-dvh rounded-none;
+  @apply h-dvh rounded-none bg-fg-cool/60 shadow-none;
+  @apply hover:bg-fg-cool/60 active:bg-fg-cool/60;
 }

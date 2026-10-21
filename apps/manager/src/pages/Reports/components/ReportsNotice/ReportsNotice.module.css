@@ -1,0 +1,6 @@
+@reference "@nino/ds/globals.css";
+
+.reportsNotice {
+  @apply mx-4 pb-4;
+  @apply lg:mx-10 lg:pb-10;
+}

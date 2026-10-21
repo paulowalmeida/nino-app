@@ -4,6 +4,7 @@ import { REPORTS_NOTICES } from '@pages/Reports/constants/reports.constants'
 import { useReportsFacade } from '@pages/Reports/facades/useReportsFacade/useReportsFacade'
 
 import motion from '@styles/motion.module.css'
+import styles from './ReportsNotice.module.css'
 
 export const ReportsNotice = () => {
   const { status } = useReportsFacade()
@@ -14,7 +15,7 @@ export const ReportsNotice = () => {
 
   return (
     <EmptyState
-      className={motion.deal}
+      className={`${motion.deal} ${styles.reportsNotice}`}
       title={'title' in notice ? notice.title : undefined}
       illustration={status === 'empty' ? <NinoMascot /> : undefined}
     >

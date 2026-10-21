@@ -16,7 +16,7 @@ export const Reports = () => {
     <Box className={styles.reportsPage} direction="column">
       <Header
         mb={{ mobile: 4, desktop: 6 }}
-        className={motion.deal}
+        className={`${motion.deal} ${styles.headerRegion}`}
         title="Relatório"
         description="O que a loja vendeu no período — só pedidos concluídos entram na conta."
       />

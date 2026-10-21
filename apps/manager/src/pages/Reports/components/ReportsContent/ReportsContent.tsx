@@ -1,3 +1,4 @@
+import { Box } from '@nino/ds/components/Box'
 import { Grid } from '@nino/ds/components/Grid'
 import { SalesBreakdown } from '@pages/Reports/components/SalesBreakdown/SalesBreakdown'
 import { SalesFiguresGrid } from '@pages/Reports/components/SalesFiguresGrid/SalesFiguresGrid'
@@ -6,6 +7,8 @@ import { SalesTrendByDimension } from '@pages/Reports/components/SalesTrendByDim
 import { TimingFiguresGrid } from '@pages/Reports/components/TimingFiguresGrid/TimingFiguresGrid'
 import { TopSalesTable } from '@pages/Reports/components/TopSalesTable/TopSalesTable'
 import { useReportsFacade } from '@pages/Reports/facades/useReportsFacade/useReportsFacade'
+
+import styles from './ReportsContent.module.css'
 
 export const ReportsContent = () => {
   const { report, timing, trend, series, breakdown, labels } =
@@ -22,7 +25,7 @@ export const ReportsContent = () => {
   }
 
   return (
-    <>
+    <Box direction="column" className={styles.reportsContent}>
       <SalesFiguresGrid report={report.report} delay={80} />
 
       <SalesPeriodTrend series={trend.series} delay={290} />
@@ -63,6 +66,6 @@ export const ReportsContent = () => {
       </Grid>
 
       <TopSalesTable products={report.report.topProducts} delay={780} />
-    </>
+    </Box>
   )
 }

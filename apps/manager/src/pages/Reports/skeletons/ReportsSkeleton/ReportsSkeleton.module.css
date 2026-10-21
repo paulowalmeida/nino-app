@@ -56,3 +56,8 @@
 .cell {
   @apply ml-auto h-3.5 w-14;
 }
+
+.reportsSkeleton {
+  @apply px-4 pb-4;
+  @apply lg:px-10 lg:pb-10;
+}

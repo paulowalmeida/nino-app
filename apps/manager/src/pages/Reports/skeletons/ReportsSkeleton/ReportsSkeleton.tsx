@@ -20,7 +20,7 @@ export const ReportsSkeleton = () => (
       Carregando relatório
     </Text>
 
-    <Box aria-hidden="true">
+    <Box aria-hidden="true" className={styles.reportsSkeleton}>
       <Grid
         columns={{ mobile: 2, tablet: 3 }}
         gap={{ mobile: 2, desktop: 4 }}
