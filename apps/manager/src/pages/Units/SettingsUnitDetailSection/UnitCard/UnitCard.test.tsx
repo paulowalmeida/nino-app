@@ -113,7 +113,7 @@ describe('UnitCard', () => {
 
     expect(screen.getByDisplayValue('Loja principal')).toBeInTheDocument()
     expect(screen.getByDisplayValue('loja-principal')).toBeInTheDocument()
-    expect(screen.getByText('.localhost:3002')).toBeInTheDocument()
+    expect(screen.getByText('loja-principal.localhost:3002')).toBeInTheDocument()
     expect(screen.queryByText('http://')).not.toBeInTheDocument()
   })
 

@@ -17,18 +17,8 @@
   max-width: 56rem;
 }
 
-.storeUrlComposer {
-  @apply flex min-w-0 flex-wrap items-center justify-start gap-x-1;
-}
-
-.storeUrlAffix {
-  @apply whitespace-nowrap;
-}
-
-.storeUrlSlug {
-  @apply min-w-0;
-  flex: 0 1 auto;
-  max-width: 100%;
+.storeUrl {
+  @apply break-all;
 }
 
 .tabContent {

@@ -15,7 +15,7 @@
 /* WHY: as ações agem sobre a lista, então moram na mesma linha do filtro
  * dela — não no cabeçalho, onde ficavam soltas longe do que afetam. */
 .toolbar {
-  @apply shrink-0 border-b border-border/70 px-4 pb-3 lg:px-10;
+  @apply shrink-0 px-4 pb-3 lg:px-10;
 }
 
 .tabs {

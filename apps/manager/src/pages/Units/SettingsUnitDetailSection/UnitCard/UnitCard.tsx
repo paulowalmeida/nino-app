@@ -79,11 +79,7 @@ export const UnitCard = ({
     ? storeDisplayUrlFor(unit.slug, window.location.hostname)
     : ''
   const storeSlug = unit?.slug ?? ''
-  const storeSlugIndex = storeSlug ? storeUrl.indexOf(storeSlug) : -1
-  const storeUrlSuffix =
-    storeSlugIndex >= 0
-      ? storeUrl.slice(storeSlugIndex + storeSlug.length)
-      : ''
+  const storeAddress = storeUrl.replace(/^https?:\/\//, '')
 
   const stateField = (
     <Select
@@ -266,95 +262,81 @@ export const UnitCard = ({
         }
       />
 
-              <Box className={local.tabContent}>
-                <Box className={local.unitCardFields}>
-                  <FormField label="Nome da unidade">
-                    <Input
-                      placeholder="Matriz, Centro, Unidade 2…"
-                      value={draft.customName}
-                      onChange={(event) =>
-                        change({ customName: event.target.value })
-                      }
-                    />
-                  </FormField>
+      <Box className={local.tabContent}>
+        <Box className={local.unitCardFields}>
+          <FormField label="Nome da unidade">
+            <Input
+              placeholder="Matriz, Centro, Unidade 2…"
+              value={draft.customName}
+              onChange={(event) => change({ customName: event.target.value })}
+            />
+          </FormField>
 
-                  <FormField
-                    label={
-                      <FieldHint
-                        label="Link da loja"
-                        hint={
-                          'Muda só pelo suporte — ' +
-                          'links já divulgados quebrariam'
-                        }
-                      />
-                    }
-                  >
-                    <div className={local.storeUrlComposer}>
-                      <Input
-                        className={local.storeUrlSlug}
-                        style={{
-                          width: `${Math.max(storeSlug.length + 16, 24)}ch`,
-                        }}
-                        value={storeSlug}
-                        readOnly
-                      />
-                      <Text
-                        size="sm"
-                        color="subtle"
-                        className={local.storeUrlAffix}
-                      >
-                        {storeUrlSuffix}
-                      </Text>
-                    </div>
-                  </FormField>
-                </Box>
+          <FormField
+            label={
+              <FieldHint
+                label="Link da loja"
+                hint={
+                  'Muda só pelo suporte — ' + 'links já divulgados quebrariam'
+                }
+              />
+            }
+          >
+            <Box gap={1}>
+              <Input value={storeSlug} readOnly />
+              <Text size="sm" color="subtle" className={local.storeUrl}>
+                {storeAddress}
+              </Text>
+            </Box>
+          </FormField>
+        </Box>
 
-                <Box className={local.address}>
-                  <Text className={local.groupTitle}>Endereço da unidade</Text>
-                  {isConfirmingAddress ? (
-                    <Box direction="column" gap={2} className={local.confirm}>
-                      <Button
-                        type="button"
-                        variant="ghost"
-                        className={local.confirmBack}
-                        disabled={addressSearch.isResolvingSelectedAddress}
-                        onClick={() => setAddressLookupRequested(false)}
-                      >
-                        <Icon name="arrow-left" size="sm" />
-                        Confirme o endereço
-                      </Button>
-                      <Text size="sm" color="subtle">
-                        Escolha a opção encontrada para preencher o endereço.
-                      </Text>
-                      {selectionError && (
-                        <Text size="sm" color="danger">
-                          {selectionError}
-                        </Text>
-                      )}
-                      {addressResults}
-                    </Box>
-                  ) : (
-                    <>
-                      {selectionError && (
-                        <Text size="sm" color="danger" className="mb-3">
-                          {selectionError}
-                        </Text>
-                      )}
-                      <AddressFields
-                        value={draft}
-                        streetField={streetField}
-                        cityField={cityField}
-                        stateField={stateField}
-                        locationFirst
-                        requiresState
-                        onChange={clearAddressSelection}
-                        onNumberBlur={startAddressLookup}
-                      />
-                    </>
-                  )}
-                </Box>
-                <Box mt={4}>{renderSaveButton()}</Box>
-              </Box>
+        <Box className={local.address}>
+          <Text className={local.groupTitle}>Endereço da unidade</Text>
+          {isConfirmingAddress ? (
+            <Box direction="column" gap={2} className={local.confirm}>
+              <Button
+                type="button"
+                variant="ghost"
+                className={local.confirmBack}
+                disabled={addressSearch.isResolvingSelectedAddress}
+                onClick={() => setAddressLookupRequested(false)}
+              >
+                <Icon name="arrow-left" size="sm" />
+                Confirme o endereço
+              </Button>
+              <Text size="sm" color="subtle">
+                Escolha a opção encontrada para preencher o endereço.
+              </Text>
+              {selectionError && (
+                <Text size="sm" color="danger">
+                  {selectionError}
+                </Text>
+              )}
+              {addressResults}
+            </Box>
+          ) : (
+            <>
+              {selectionError && (
+                <Text size="sm" color="danger" className="mb-3">
+                  {selectionError}
+                </Text>
+              )}
+              <AddressFields
+                value={draft}
+                streetField={streetField}
+                cityField={cityField}
+                stateField={stateField}
+                locationFirst
+                requiresState
+                onChange={clearAddressSelection}
+                onNumberBlur={startAddressLookup}
+              />
+            </>
+          )}
+        </Box>
+        <Box mt={4}>{renderSaveButton()}</Box>
+      </Box>
     </Box>
   )
 }
