@@ -20,7 +20,7 @@
 /* CONSTRAINT: o Button do DS fixa altura, padding e raio; o seletor dobrado
  * vence a especificidade dele, como em `.appLayoutOverlay`. */
 .collapseTab.collapseTab {
-  @apply absolute left-50 top-1/2 z-overlay hidden h-12 w-4 -translate-y-1/2;
+  @apply absolute left-55 top-1/2 z-overlay hidden h-12 w-4 -translate-y-1/2;
   @apply rounded-none rounded-r-2 bg-fg-cool p-0 text-fg-on-brand/85 shadow-none;
   @apply transition-[left,color] duration-300 ease-in-out;
   @apply hover:bg-fg-cool hover:text-fg-on-brand active:bg-fg-cool lg:flex;
