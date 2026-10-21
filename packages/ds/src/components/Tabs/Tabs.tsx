@@ -33,6 +33,8 @@ type TabsProps = {
    * tablet, desktop }`
    */
   fullWidth?: Responsive<boolean>
+  /** Accessible name of the tab rail, read before its tabs */
+  label?: string
   className?: string
 }
 
@@ -96,6 +98,7 @@ export function Tabs({
   value: controlledValue,
   onValueChange,
   fullWidth = false,
+  label,
   ...props
 }: TabsProps) {
   const initial = defaultValue ?? controlledValue ?? tabs[0]?.value
@@ -114,6 +117,7 @@ export function Tabs({
       {...props}
     >
       <ArkTabs.List
+        aria-label={label}
         className={mergeClasses(styles.tabBar, railWidthClasses(fullWidth))}
       >
         <ArkTabs.Indicator className={styles.selectionPill} />

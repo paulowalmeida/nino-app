@@ -100,6 +100,7 @@ export function Header({
           align={{ mobile: 'stretch', tablet: 'center' }}
           gap={2}
           shrink={false}
+          className="w-full *:w-full sm:w-auto sm:*:w-auto"
         >
           {actions}
         </Box>

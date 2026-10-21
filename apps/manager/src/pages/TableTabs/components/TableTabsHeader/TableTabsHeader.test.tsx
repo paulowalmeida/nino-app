@@ -1,3 +1,5 @@
+import { MemoryRouter } from 'react-router'
+
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
@@ -34,7 +36,7 @@ describe('TableTabsHeader', () => {
   })
 
   it('titles the screen and offers to open a tab', () => {
-    render(<TableTabsHeader />)
+    render(<TableTabsHeader />, { wrapper: MemoryRouter })
 
     expect(
       screen.getByRole('heading', { name: tableTabsHeaderMock.title })
@@ -45,7 +47,7 @@ describe('TableTabsHeader', () => {
   })
 
   it('opens and closes the dialog for a new tab', async () => {
-    render(<TableTabsHeader />)
+    render(<TableTabsHeader />, { wrapper: MemoryRouter })
 
     await userEvent.click(
       screen.getByRole('button', { name: tableTabsHeaderMock.openLabel })
@@ -64,7 +66,7 @@ describe('TableTabsHeader', () => {
       isPending: true,
     } as ReturnType<typeof useTableTabsFacade>)
 
-    render(<TableTabsHeader />)
+    render(<TableTabsHeader />, { wrapper: MemoryRouter })
 
     expect(screen.getByRole('status')).toHaveTextContent('Carregando comandas')
     expect(

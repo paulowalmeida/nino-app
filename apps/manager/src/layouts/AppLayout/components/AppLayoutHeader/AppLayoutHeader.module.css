@@ -1,16 +1,42 @@
 @reference "@nino/ds/globals.css";
 
-.topbar {
-  @apply fixed left-0 right-0 top-0 z-dock flex h-14 items-center gap-3;
-  @apply border-b border-fg-on-brand/10 bg-fg-cool px-4 lg:hidden;
+.appLayoutHeader {
+  @apply relative z-dock flex h-14 shrink-0 items-center gap-1;
+  @apply border-b border-fg-on-brand/8 bg-fg-cool px-2 lg:gap-3 lg:px-4;
 }
 
 .hamburger {
-  @apply flex h-11 w-11 shrink-0 cursor-pointer items-center justify-center;
-  @apply rounded-2 text-fg-on-brand/70 transition-colors duration-150;
+  @apply shrink-0 text-fg-on-brand/70 lg:hidden;
   @apply hover:bg-surface-raised/10 hover:text-fg-on-brand;
 }
 
-.storeName {
-  @apply min-w-0 truncate text-sm font-semibold text-fg-on-brand/85;
+.brand {
+  @apply hidden shrink-0 items-center pl-2 pr-4 lg:flex;
+}
+
+/* WHY: no celular a loja ocupa o meio e empurra lupa e avatar para a
+ * direita; no desktop ela encolhe ao nome e a busca vem logo depois. */
+.switcherSlot {
+  @apply min-w-0 flex-1 items-center lg:max-w-64 lg:flex-none;
+}
+
+.searchButton {
+  @apply shrink-0 gap-2 text-fg-on-brand/70;
+  @apply hover:bg-surface-raised/10 hover:text-fg-on-brand;
+  @apply lg:h-9 lg:w-72 lg:justify-start lg:rounded-2 lg:border;
+  @apply lg:border-fg-on-brand/10 lg:bg-surface-raised/8 lg:px-3;
+  @apply lg:text-fg-on-brand/55 lg:hover:bg-surface-raised/12;
+}
+
+.searchLabel {
+  @apply hidden truncate text-sm font-medium lg:inline;
+}
+
+.searchShortcut {
+  @apply ml-auto hidden rounded-2 border border-fg-on-brand/10;
+  @apply px-1.5 text-2xs font-semibold text-fg-on-brand/40 lg:inline;
+}
+
+.actions {
+  @apply shrink-0 items-center gap-1 lg:ml-auto;
 }

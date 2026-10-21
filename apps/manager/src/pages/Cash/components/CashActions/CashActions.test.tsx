@@ -1,3 +1,5 @@
+import { MemoryRouter } from 'react-router'
+
 import { render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
@@ -20,7 +22,7 @@ describe(CashActions.name, () => {
   })
 
   it('offers the three things one does to an open drawer', () => {
-    render(<CashActions {...cashActionsMock} />)
+    render(<CashActions {...cashActionsMock} />, { wrapper: MemoryRouter })
 
     expect(screen.getByRole('button', { name: 'Sangria' })).toBeInTheDocument()
     expect(
@@ -32,7 +34,7 @@ describe(CashActions.name, () => {
   })
 
   it('opens the withdrawal form', async () => {
-    render(<CashActions {...cashActionsMock} />)
+    render(<CashActions {...cashActionsMock} />, { wrapper: MemoryRouter })
 
     await userEvent.click(screen.getByRole('button', { name: 'Sangria' }))
 
@@ -42,7 +44,7 @@ describe(CashActions.name, () => {
   })
 
   it('opens the deposit form', async () => {
-    render(<CashActions {...cashActionsMock} />)
+    render(<CashActions {...cashActionsMock} />, { wrapper: MemoryRouter })
 
     await userEvent.click(screen.getByRole('button', { name: 'Suprimento' }))
 
@@ -52,7 +54,7 @@ describe(CashActions.name, () => {
   })
 
   it('opens the closing form with the expected amount', async () => {
-    render(<CashActions {...cashActionsMock} />)
+    render(<CashActions {...cashActionsMock} />, { wrapper: MemoryRouter })
 
     await userEvent.click(screen.getByRole('button', { name: 'Fechar caixa' }))
 
@@ -63,7 +65,7 @@ describe(CashActions.name, () => {
 
   it('puts the withdrawal form away on cancel', async () => {
     // Arrange
-    render(<CashActions {...cashActionsMock} />)
+    render(<CashActions {...cashActionsMock} />, { wrapper: MemoryRouter })
     await userEvent.click(screen.getByRole('button', { name: 'Sangria' }))
 
     // Act
@@ -77,7 +79,7 @@ describe(CashActions.name, () => {
 
   it('puts the closing form away on cancel', async () => {
     // Arrange
-    render(<CashActions {...cashActionsMock} />)
+    render(<CashActions {...cashActionsMock} />, { wrapper: MemoryRouter })
     await userEvent.click(screen.getByRole('button', { name: 'Fechar caixa' }))
 
     // Act
@@ -90,7 +92,7 @@ describe(CashActions.name, () => {
   })
 
   it('keeps every form shut until it is asked for', () => {
-    render(<CashActions {...cashActionsMock} />)
+    render(<CashActions {...cashActionsMock} />, { wrapper: MemoryRouter })
 
     expect(screen.queryByRole('dialog')).not.toBeInTheDocument()
   })

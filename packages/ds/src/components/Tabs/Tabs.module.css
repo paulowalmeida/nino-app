@@ -10,7 +10,7 @@
 }
 
 .fill {
-  @apply flex w-full self-stretch;
+  @apply flex self-stretch;
 }
 
 .fill > .tab {
@@ -18,7 +18,7 @@
 }
 
 .fillTablet {
-  @apply sm:flex sm:w-full sm:self-stretch;
+  @apply sm:flex sm:self-stretch;
 }
 
 .fillTablet > .tab {
@@ -34,7 +34,7 @@
 }
 
 .fillDesktop {
-  @apply lg:flex lg:w-full lg:self-stretch;
+  @apply lg:flex lg:self-stretch;
 }
 
 .fillDesktop > .tab {

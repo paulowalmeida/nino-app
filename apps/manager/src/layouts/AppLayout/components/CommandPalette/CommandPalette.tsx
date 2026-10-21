@@ -1,4 +1,5 @@
 import {
+  Fragment,
   type KeyboardEvent as ReactKeyboardEvent,
   useEffect,
   useMemo,
@@ -42,48 +43,69 @@ export const CommandPalette = ({ open, onOpenChange }: CommandPaletteProps) => {
   const [query, setQuery] = useState('')
   const [activeIndex, setActiveIndex] = useState(0)
 
-  const options = useMemo(
-    () => {
-      const iconBySection = new Map<string, IconName>(
-        groups.flatMap(({ items }) =>
-          items.map(({ section, icon }) => [section, icon] as const)
-        )
-      )
-
-      const navigationOptions = groups.flatMap(({ title, items }) =>
-        items.map(({ section, label, icon }) => ({
-          value: section,
-          label: title ? `${title} · ${label}` : label,
-          inputLabel: label,
-          path: title,
-          icon,
-        }))
-      )
-
-      const functionalityOptions = FUNCTIONALITY_SEARCH_ITEMS.filter((item) =>
-        iconBySection.has(item.section)
-      ).map(({ section, label, group, target }) => ({
-        value: `${target ?? section}::${label}`,
-        label: `${group} · ${label}`,
-        inputLabel: label,
-        path: group,
-        icon: iconBySection.get(section),
-      }))
-
-      return [...navigationOptions, ...functionalityOptions]
-    },
-    [groups]
-  )
-
-  const filteredOptions = useMemo(() => {
-    const normalizedQuery = normalizeSearchText(query.trim())
-    if (!normalizedQuery) return options
-
-    return options.filter(({ label, inputLabel }) =>
-      normalizeSearchText(`${label} ${inputLabel ?? ''}`).includes(
-        normalizedQuery
+  const options = useMemo(() => {
+    const iconBySection = new Map<string, IconName>(
+      groups.flatMap(({ items }) =>
+        items.map(({ section, icon }) => [section, icon] as const)
       )
     )
+
+    const navigationOptions = groups.flatMap(({ title, items }) =>
+      items.map(({ section, label, icon }) => ({
+        value: section,
+        label: title ? `${title} · ${label}` : label,
+        inputLabel: label,
+        path: title,
+        icon,
+        kind: 'screen' as const,
+      }))
+    )
+
+    const functionalityOptions = FUNCTIONALITY_SEARCH_ITEMS.filter((item) =>
+      iconBySection.has(item.section)
+    ).map(({ section, label, group, target }) => ({
+      value: `${target ?? section}::${label}`,
+      label: `${group} · ${label}`,
+      inputLabel: label,
+      path: group,
+      icon: iconBySection.get(section),
+      kind: 'action' as const,
+    }))
+
+    return [...navigationOptions, ...functionalityOptions]
+  }, [groups])
+
+  /* Screens first, then actions; inside each, the closer the title is to
+     what was typed, the higher it ranks. With nothing typed only the screens
+     show — the list opens as a map of the panel, not a wall of settings. */
+  const filteredOptions = useMemo(() => {
+    const words = normalizeSearchText(query).split(/\s+/).filter(Boolean)
+    if (words.length === 0) {
+      return options.filter(({ kind }) => kind === 'screen')
+    }
+
+    const phrase = words.join(' ')
+    const rankOf = (title: string) => {
+      if (title.startsWith(phrase)) return 0
+      if (title.includes(` ${phrase}`)) return 1
+      if (words.every((word) => title.includes(word))) return 2
+      return 3
+    }
+
+    return options
+      .map((option) => ({
+        option,
+        title: normalizeSearchText(option.inputLabel),
+        haystack: normalizeSearchText(`${option.label} ${option.inputLabel}`),
+      }))
+      .filter(({ haystack }) => words.every((word) => haystack.includes(word)))
+      .map((entry) => ({ ...entry, rank: rankOf(entry.title) }))
+      .sort(
+        (a, b) =>
+          Number(a.option.kind === 'action') -
+            Number(b.option.kind === 'action') || a.rank - b.rank
+      )
+      .map(({ option }) => option)
   }, [options, query])
 
   useEffect(() => {
@@ -135,19 +157,23 @@ export const CommandPalette = ({ open, onOpenChange }: CommandPaletteProps) => {
     changeOpen(false)
   }
 
-  const handleSearchKeyDown = (
-    event: ReactKeyboardEvent<HTMLInputElement>
-  ) => {
+  const handleSearchKeyDown = (event: ReactKeyboardEvent<HTMLInputElement>) => {
+    const lastIndex = filteredOptions.length - 1
+    if (lastIndex < 0) return
+
     if (event.key === 'ArrowDown') {
       event.preventDefault()
-      setActiveIndex((current) =>
-        Math.min(current + 1, Math.max(filteredOptions.length - 1, 0))
-      )
+      setActiveIndex((current) => (current >= lastIndex ? 0 : current + 1))
     }
 
     if (event.key === 'ArrowUp') {
       event.preventDefault()
-      setActiveIndex((current) => Math.max(current - 1, 0))
+      setActiveIndex((current) => (current <= 0 ? lastIndex : current - 1))
+    }
+
+    if (event.key === 'Home' || event.key === 'End') {
+      event.preventDefault()
+      setActiveIndex(event.key === 'Home' ? 0 : lastIndex)
     }
 
     if (event.key === 'Enter' && filteredOptions[activeIndex]) {
@@ -198,48 +224,64 @@ export const CommandPalette = ({ open, onOpenChange }: CommandPaletteProps) => {
               {filteredOptions.length > 0 ? (
                 filteredOptions.map((option, index) => {
                   const isActive = index === activeIndex
+                  const startsSection =
+                    index === 0 ||
+                    filteredOptions[index - 1].kind !== option.kind
 
                   return (
-                    <Button
-                      key={option.value}
-                      id={`command-palette-option-${index}`}
-                      role="option"
-                      aria-selected={isActive}
-                      aria-label={option.label}
-                      variant="ghost"
-                      className={`${styles.option} ${
-                        isActive ? styles.optionActive : ''
-                      }`}
-                      onMouseMove={() => setActiveIndex(index)}
-                      onClick={() => navigateTo(option.value)}
-                    >
-                      <Box className={styles.optionIcon} aria-hidden="true">
-                        <Icon name={option.icon ?? 'search'} size="sm" />
-                      </Box>
-                      <Box className={styles.optionText}>
-                        <Text as="span" className={styles.optionTitle}>
-                          {option.inputLabel}
+                    <Fragment key={option.value}>
+                      {startsSection && (
+                        <Text
+                          as="span"
+                          role="presentation"
+                          className={styles.sectionLabel}
+                        >
+                          {option.kind === 'screen' ? 'Telas' : 'Ações'}
                         </Text>
-                        {option.path && (
-                          <Text as="span" className={styles.optionPath}>
-                            {option.path}
-                          </Text>
-                        )}
-                      </Box>
-                      {isActive && (
-                        <kbd className={styles.optionEnter} aria-hidden="true">
-                          ↵
-                        </kbd>
                       )}
-                    </Button>
+                      <Button
+                        id={`command-palette-option-${index}`}
+                        role="option"
+                        aria-selected={isActive}
+                        aria-label={option.label}
+                        variant="ghost"
+                        className={`${styles.option} ${
+                          isActive ? styles.optionActive : ''
+                        }`}
+                        onMouseMove={() => setActiveIndex(index)}
+                        onClick={() => navigateTo(option.value)}
+                      >
+                        <Box className={styles.optionIcon} aria-hidden="true">
+                          <Icon name={option.icon ?? 'search'} size="sm" />
+                        </Box>
+                        <Box className={styles.optionText}>
+                          <Text as="span" className={styles.optionTitle}>
+                            {option.inputLabel}
+                          </Text>
+                          {option.path && (
+                            <Text as="span" className={styles.optionPath}>
+                              {option.path}
+                            </Text>
+                          )}
+                        </Box>
+                        {isActive && (
+                          <kbd
+                            className={styles.optionEnter}
+                            aria-hidden="true"
+                          >
+                            ↵
+                          </kbd>
+                        )}
+                      </Button>
+                    </Fragment>
                   )
                 })
               ) : (
                 <Box className={styles.empty}>
-                  <Text as="p" className={styles.emptyTitle}>
+                  <Text as="p" align="center" className={styles.emptyTitle}>
                     Nada encontrado para “{query.trim()}”
                   </Text>
-                  <Text as="p" className={styles.emptyHint}>
+                  <Text as="p" align="center" className={styles.emptyHint}>
                     Tente o nome da tela, como Caixa ou Produtos.
                   </Text>
                 </Box>
@@ -249,7 +291,12 @@ export const CommandPalette = ({ open, onOpenChange }: CommandPaletteProps) => {
         </>
       }
       footer={
-        <Box direction="row" gap={4} className={styles.hints} aria-hidden="true">
+        <Box
+          direction="row"
+          gap={4}
+          className={styles.hints}
+          aria-hidden="true"
+        >
           <Text as="span" className={styles.hint}>
             <kbd className={styles.key}>↑</kbd>
             <kbd className={styles.key}>↓</kbd>

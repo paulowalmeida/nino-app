@@ -10,7 +10,7 @@
   @apply fixed left-0 top-0 z-modal flex h-dvh w-70 flex-col overflow-hidden;
   @apply -translate-x-full bg-fg-cool;
   @apply transition-[translate,width] duration-300 ease-in-out;
-  @apply lg:sticky lg:left-auto lg:translate-x-0 lg:shrink-0 lg:self-start;
+  @apply lg:relative lg:left-auto lg:z-nav lg:h-auto lg:translate-x-0 lg:shrink-0;
 }
 
 .open {
@@ -22,47 +22,7 @@
 }
 
 .topBar {
-  @apply relative z-content flex shrink-0 items-center justify-between;
-  @apply border-b border-fg-on-brand/8 px-5 py-4;
+  @apply relative z-content flex shrink-0 items-center;
+  @apply h-14 border-b border-fg-on-brand/8 px-5 lg:hidden;
 }
 
-.sidebar.collapsed .topBar {
-  @apply lg:justify-center lg:px-2;
-}
-
-.collapseBtn {
-  @apply flex h-11 w-11 shrink-0 cursor-pointer items-center justify-center;
-  @apply rounded-2 text-fg-on-brand/35 transition-colors duration-150;
-  @apply hover:bg-surface-raised/10 hover:text-fg-on-brand/80;
-  @apply hidden lg:flex;
-}
-
-.collapseIcon {
-  @apply rotate-90 transition-transform duration-300;
-}
-
-.switcherWrap {
-  @apply relative z-sticky shrink-0 border-b border-fg-on-brand/8 px-2;
-  @apply py-2;
-}
-
-.searchWrap {
-  @apply relative z-content shrink-0 px-2 py-2;
-}
-
-.searchButton {
-  @apply w-full justify-start gap-3 rounded-2 text-fg-on-brand/75;
-  @apply hover:bg-surface-raised/10 hover:text-fg-on-brand;
-}
-
-.sidebar.collapsed .searchButton {
-  @apply lg:justify-center;
-}
-
-.searchLabel {
-  @apply truncate text-sm font-semibold;
-}
-
-.sidebarFooter {
-  @apply relative z-content shrink-0 border-t border-fg-on-brand/8 p-2;
-}

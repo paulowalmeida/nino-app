@@ -7,12 +7,14 @@ import { Skeleton } from '@nino/ds/components/Skeleton'
 import { Text } from '@nino/ds/components/Text'
 import { OpenTabDialog } from '@pages/TableTabs/components/TableTabsHeader/OpenTabDialog/OpenTabDialog'
 import { useTableTabsFacade } from '@pages/TableTabs/facades/useTableTabsFacade/useTableTabsFacade'
+import { useRouteAction } from '@shared/hooks/ui/useRouteAction/useRouteAction'
 
 import motion from '@styles/motion.module.css'
 import styles from './TableTabsHeader.module.css'
 
 export const TableTabsHeader = () => {
   const [isOpeningTab, setOpeningTab] = useState(false)
+  useRouteAction('abrir-comanda', () => setOpeningTab(true))
   const { isPending } = useTableTabsFacade()
 
   if (isPending) {

@@ -61,4 +61,18 @@ describe(Menu.name, () => {
       'text-fg-on-brand/70'
     )
   })
+
+  it('shows the header above the entries without making it an entry', async () => {
+    const user = userEvent.setup({ pointerEventsCheck: 0 })
+    render(
+      <Menu
+        trigger={<Button>Ações</Button>}
+        header={<span>Marina Silva</span>}
+        items={items()}
+      />
+    )
+    await user.click(screen.getByRole('button', { name: 'Ações' }))
+    expect(await screen.findByText('Marina Silva')).toBeInTheDocument()
+    expect(screen.getAllByRole('menuitem')).toHaveLength(3)
+  })
 })

@@ -4,6 +4,8 @@
  * caixa pular a cada letra, e no celular sobra espaço acima do teclado. */
 .modal {
   @apply mt-[12vh] max-w-xl self-start;
+  @apply max-md:m-0 max-md:h-dvh max-md:max-h-none max-md:max-w-none;
+  @apply max-md:rounded-none;
 }
 
 .commandPaletteBody {
@@ -24,12 +26,21 @@
   @apply shadow-none focus-visible:ring-0 focus-visible:outline-none;
 }
 
+.commandPaletteInput::-webkit-search-cancel-button {
+  appearance: none;
+}
+
 .optionScroll {
   @apply max-h-[min(24rem,55vh)];
 }
 
 .optionPanel {
   @apply gap-0.5 p-2;
+}
+
+.sectionLabel {
+  @apply px-3 pb-1 pt-3 text-2xs font-bold uppercase tracking-wider;
+  @apply text-fg-faint first:pt-1;
 }
 
 .option {

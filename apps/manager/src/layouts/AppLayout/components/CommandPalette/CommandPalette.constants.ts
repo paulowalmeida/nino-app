@@ -467,6 +467,7 @@ export const FUNCTIONALITY_SEARCH_ITEMS: FunctionalitySearchItem[] = [
     section: 'caixa',
     label: 'Fechar caixa',
     group: 'Operação · Caixa',
+    target: 'caixa?acao=fechar-caixa',
   },
   {
     section: 'caixa',
@@ -493,5 +494,173 @@ export const FUNCTIONALITY_SEARCH_ITEMS: FunctionalitySearchItem[] = [
     section: 'categorias-produtos',
     label: 'Organizar categorias do cardápio',
     group: 'Cardápio · Categorias',
+  },
+  {
+    section: 'balcao',
+    label: 'Venda no balcão',
+    group: 'Operação · Balcão',
+  },
+  {
+    section: 'balcao',
+    label: 'Buscar item no cardápio do balcão',
+    group: 'Operação · Balcão',
+  },
+  {
+    section: 'balcao',
+    label: 'Pedido com entrega pelo balcão',
+    group: 'Operação · Balcão',
+  },
+  {
+    section: 'balcao',
+    label: 'Calcular troco',
+    group: 'Operação · Balcão',
+  },
+  {
+    section: 'comandas',
+    label: 'Abrir comanda',
+    group: 'Operação · Comandas',
+    target: 'comandas?acao=abrir-comanda',
+  },
+  {
+    section: 'comandas',
+    label: 'Comanda sem mesa',
+    group: 'Operação · Comandas',
+  },
+  {
+    section: 'comandas',
+    label: 'Comandas finalizadas',
+    group: 'Operação · Comandas',
+  },
+  {
+    section: 'pedidos',
+    label: 'Lançar pedido manual',
+    group: 'Operação · Pedidos',
+    target: 'pedidos/novo',
+  },
+  {
+    section: 'pedidos',
+    label: 'Buscar pedido por código, nome ou telefone',
+    group: 'Operação · Pedidos',
+  },
+  {
+    section: 'pedidos',
+    label: 'Etapas da fila de pedidos',
+    group: 'Operação · Pedidos',
+  },
+  {
+    section: 'caixa',
+    label: 'Abrir o caixa',
+    group: 'Operação · Caixa',
+  },
+  {
+    section: 'caixa',
+    label: 'Fundo de troco',
+    group: 'Operação · Caixa',
+  },
+  {
+    section: 'caixa',
+    label: 'Sangria',
+    group: 'Operação · Caixa',
+    target: 'caixa?acao=sangria',
+  },
+  {
+    section: 'caixa',
+    label: 'Suprimento',
+    group: 'Operação · Caixa',
+    target: 'caixa?acao=suprimento',
+  },
+  {
+    section: 'caixa',
+    label: 'Caixa de outro dia',
+    group: 'Operação · Caixa',
+  },
+  {
+    section: 'produtos',
+    label: 'Novo item no cardápio',
+    group: 'Cardápio · Produtos',
+    target: 'produtos/novo',
+  },
+  {
+    section: 'produtos',
+    label: 'Desligar item que acabou',
+    group: 'Cardápio · Produtos',
+  },
+  {
+    section: 'produtos',
+    label: 'Filtrar produtos por categoria',
+    group: 'Cardápio · Produtos',
+  },
+  {
+    section: 'categorias-produtos',
+    label: 'Nova categoria',
+    group: 'Cardápio · Categorias',
+    target: 'categorias-produtos?acao=nova-categoria',
+  },
+  {
+    section: 'categorias-produtos',
+    label: 'Ícone da categoria',
+    group: 'Cardápio · Categorias',
+  },
+  {
+    section: 'categorias-produtos',
+    label: 'Ordem das categorias no app',
+    group: 'Cardápio · Categorias',
+  },
+  {
+    section: 'colaboradores',
+    label: 'Colaboradores inativos',
+    group: 'Negócio · Colaboradores',
+    target: 'colaboradores?tab=inactive',
+  },
+  {
+    section: 'colaboradores',
+    label: 'Suspender colaborador',
+    group: 'Negócio · Colaboradores',
+  },
+  {
+    section: 'colaboradores',
+    label: 'Mudar cargo de um colaborador',
+    group: 'Negócio · Colaboradores',
+  },
+  {
+    section: 'cargos',
+    label: 'Cargos e permissões',
+    group: 'Negócio · Cargos',
+  },
+  {
+    section: 'cargos',
+    label: 'Novo cargo',
+    group: 'Negócio · Cargos',
+    target: 'cargos/novo',
+  },
+  {
+    section: 'cargos',
+    label: 'Duplicar cargo',
+    group: 'Negócio · Cargos',
+  },
+  {
+    section: 'cargos',
+    label: 'Hierarquia dos cargos',
+    group: 'Negócio · Cargos',
+  },
+  {
+    section: 'promocoes',
+    label: 'Promoções cadastradas',
+    group: 'Unidade · Promoções',
+  },
+  {
+    section: 'promocoes',
+    label: 'Cupom de desconto',
+    group: 'Unidade · Promoções',
+  },
+  {
+    section: 'promocoes',
+    label: 'Promoção com pedido mínimo',
+    group: 'Unidade · Promoções',
+  },
+  {
+    section: 'promocoes',
+    label: 'Período da promoção',
+    group: 'Unidade · Promoções',
   },
 ]

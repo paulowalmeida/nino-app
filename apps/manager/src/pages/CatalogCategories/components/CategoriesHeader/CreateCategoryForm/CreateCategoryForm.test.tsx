@@ -1,3 +1,5 @@
+import { MemoryRouter } from 'react-router'
+
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
@@ -24,7 +26,7 @@ describe(CreateCategoryForm.name, () => {
   })
 
   it('keeps submission disabled for an empty category name', () => {
-    render(<CreateCategoryForm />)
+    render(<CreateCategoryForm />, { wrapper: MemoryRouter })
 
     expect(screen.getByRole('button', { name: 'Adicionar' })).toBeDisabled()
   })
@@ -38,7 +40,7 @@ describe(CreateCategoryForm.name, () => {
       submitCreate,
     } as unknown as ReturnType<typeof useCatalogCategoriesFacade>)
 
-    render(<CreateCategoryForm />)
+    render(<CreateCategoryForm />, { wrapper: MemoryRouter })
 
     await user.type(
       screen.getByRole('textbox', { name: 'Nome da nova categoria' }),
@@ -58,7 +60,7 @@ describe(CreateCategoryForm.name, () => {
       submitCreate,
     } as unknown as ReturnType<typeof useCatalogCategoriesFacade>)
 
-    render(<CreateCategoryForm />)
+    render(<CreateCategoryForm />, { wrapper: MemoryRouter })
 
     expect(screen.getByRole('button', { name: 'Carregando' })).toBeDisabled()
   })

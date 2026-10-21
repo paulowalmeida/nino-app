@@ -37,6 +37,11 @@ type MenuProps = {
    */
   items: MenuItem[]
   /**
+   * Informative block above the entries — who is signed in, for instance.
+   * Not focusable and not selectable
+   */
+  header?: ReactNode
+  /**
    * Extra classes on the panel, for an app that gives the menu its own
    * surface
    */
@@ -76,6 +81,7 @@ export function Menu({
   trigger,
   triggerTooltip,
   items,
+  header,
   contentClassName,
   itemClassName,
   placement = 'bottom-start',
@@ -118,6 +124,7 @@ export function Menu({
               contentClassName ?? ''
             )}
           >
+            {header && <div className={styles.header}>{header}</div>}
             {items.map((item, i) =>
               isSeparator(item) ? (
                 <ArkMenu.Separator

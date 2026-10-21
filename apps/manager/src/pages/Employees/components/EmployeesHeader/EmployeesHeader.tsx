@@ -1,10 +1,10 @@
 import { useState } from 'react'
-import { useSearchParams } from 'react-router'
 
 import { Button } from '@nino/ds/components/Button'
 import { Header } from '@nino/ds/components/Header'
 import { Icon } from '@nino/ds/components/Icon'
 import { useEmployeesFacade } from '@pages/Employees/facades/useEmployeesFacade/useEmployeesFacade'
+import { useRouteAction } from '@shared/hooks/ui/useRouteAction/useRouteAction'
 
 import { InviteModal } from './InviteModal/InviteModal'
 
@@ -15,18 +15,10 @@ const INVITE_ACTION = 'convidar'
 
 export const EmployeesHeader = () => {
   const { invite, inviteSeats } = useEmployeesFacade()
-  const [searchParams, setSearchParams] = useSearchParams()
-  const [isInviteOpen, setInviteOpen] = useState(
-    () => searchParams.get('acao') === INVITE_ACTION
-  )
+  const [isInviteOpen, setInviteOpen] = useState(false)
+  useRouteAction(INVITE_ACTION, () => setInviteOpen(true))
 
-  const changeInviteOpen = (open: boolean) => {
-    setInviteOpen(open)
-    if (open || !searchParams.has('acao')) return
-    const nextParams = new URLSearchParams(searchParams)
-    nextParams.delete('acao')
-    setSearchParams(nextParams, { replace: true })
-  }
+  const changeInviteOpen = (open: boolean) => setInviteOpen(open)
 
   return (
     <>

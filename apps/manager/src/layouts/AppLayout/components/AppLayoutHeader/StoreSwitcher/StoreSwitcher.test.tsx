@@ -24,15 +24,6 @@ describe('StoreSwitcher', () => {
     )
 
     expect(screen.getByText('Loja Centro')).toBeInTheDocument()
-  })
-
-  it('keeps the current store represented when collapsed', () => {
-    render(
-      <MemoryRouter initialEntries={['/unit-1/pedidos']}>
-        <StoreSwitcher currentUnitId="unit-1" collapsed />
-      </MemoryRouter>
-    )
-
-    expect(screen.getByLabelText('Unidade: Loja Centro')).toBeInTheDocument()
+    expect(screen.queryByRole('button')).not.toBeInTheDocument()
   })
 })

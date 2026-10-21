@@ -19,6 +19,10 @@
   @apply data-[highlighted]:text-danger;
 }
 
+.header {
+  @apply px-3 py-2.5;
+}
+
 .separator {
   @apply my-1 h-px border-0 bg-surface-5;
 }

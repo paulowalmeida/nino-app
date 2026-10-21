@@ -1,0 +1,25 @@
+@reference "@nino/ds/globals.css";
+
+.userMenuTrigger {
+  @apply shrink-0 rounded-full hover:bg-surface-raised/10;
+}
+
+.identity {
+  @apply min-w-0 gap-0.5;
+}
+
+.name {
+  @apply truncate text-sm font-semibold text-fg-strong;
+}
+
+.detail {
+  @apply truncate text-xs text-fg-faint;
+}
+
+.itemIcon {
+  @apply h-[17px] w-[17px] shrink-0;
+}
+
+.userMenuPanel {
+  @apply max-w-72 min-w-60;
+}

@@ -2,6 +2,7 @@ import { useState } from 'react'
 
 import { Box } from '@nino/ds/components/Box'
 import { Button } from '@nino/ds/components/Button'
+import { useRouteAction } from '@shared/hooks/ui/useRouteAction/useRouteAction'
 import type { CashMovementKind } from '@shared/types/cash/cash-movement-kind'
 
 import { CashCloseModal } from './CashCloseModal/CashCloseModal'
@@ -18,6 +19,9 @@ type MovementKind = Exclude<CashMovementKind, 'SALE'>
 export const CashActions = ({ expectedAmount }: CashActionsProps) => {
   const [movementKind, setMovementKind] = useState<MovementKind | null>(null)
   const [isClosingOpen, setClosingOpen] = useState(false)
+  useRouteAction('sangria', () => setMovementKind('WITHDRAWAL'))
+  useRouteAction('suprimento', () => setMovementKind('DEPOSIT'))
+  useRouteAction('fechar-caixa', () => setClosingOpen(true))
 
   return (
     <Box as="section" direction="row" wrap className={styles.cashActions}>

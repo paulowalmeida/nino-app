@@ -1,8 +1,11 @@
+import { useRef } from 'react'
+
 import { Box } from '@nino/ds/components/Box'
 import { Button } from '@nino/ds/components/Button'
 import { Input } from '@nino/ds/components/Input'
 import { useCatalogCategoriesFacade } from '@pages/CatalogCategories/facades/useCatalogCategoriesFacade/useCatalogCategoriesFacade'
 import { CategoryIconPicker } from '@shared/components/CategoryIconPicker/CategoryIconPicker'
+import { useRouteAction } from '@shared/hooks/ui/useRouteAction/useRouteAction'
 import { riseDelay } from '@shared/utils/rise-delay/rise-delay'
 
 import motion from '@styles/motion.module.css'
@@ -17,6 +20,8 @@ export const CreateCategoryForm = () => {
     setCreateIcon,
     submitCreate,
   } = useCatalogCategoriesFacade()
+  const nameRef = useRef<HTMLInputElement>(null)
+  useRouteAction('nova-categoria', () => nameRef.current?.focus())
 
   return (
     <Box
@@ -36,6 +41,7 @@ export const CreateCategoryForm = () => {
         gap={2}
       >
         <Input
+          ref={nameRef}
           value={createName}
           placeholder="Nova categoria — ex.: Sobremesas"
           aria-label="Nome da nova categoria"
