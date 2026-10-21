@@ -1,0 +1,40 @@
+@reference "@nino/ds/globals.css";
+
+.item {
+  @apply relative flex items-start gap-3 rounded-3 px-3 py-3 text-left;
+  @apply transition-colors duration-150 hover:bg-surface-mute;
+  @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand;
+}
+
+.iconTile {
+  @apply flex h-9 w-9 shrink-0 items-center justify-center rounded-2;
+  @apply bg-surface-mute text-fg-faint;
+}
+
+.unread .iconTile {
+  @apply bg-brand-soft text-brand;
+}
+
+.body {
+  @apply min-w-0 flex-1 gap-0.5;
+}
+
+.title {
+  @apply text-sm font-medium text-fg-default;
+}
+
+.unread .title {
+  @apply font-semibold text-fg-strong;
+}
+
+.description {
+  @apply truncate text-xs text-fg-faint;
+}
+
+.time {
+  @apply text-2xs text-fg-faint tabular-nums;
+}
+
+.unreadDot {
+  @apply mt-1.5 h-2 w-2 shrink-0 rounded-full bg-brand;
+}

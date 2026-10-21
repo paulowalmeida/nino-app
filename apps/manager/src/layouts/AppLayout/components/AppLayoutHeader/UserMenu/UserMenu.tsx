@@ -72,6 +72,12 @@ export const UserMenu = ({
           icon: <Icon name="user" className={styles.itemIcon} />,
           onSelect: () => go('perfil'),
         },
+        {
+          value: 'notifications',
+          label: 'Notificações',
+          icon: <Icon name="bell" className={styles.itemIcon} />,
+          onSelect: () => go('notificacoes'),
+        },
         ...(isOwner
           ? [
               {

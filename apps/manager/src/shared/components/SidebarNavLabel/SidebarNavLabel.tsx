@@ -31,7 +31,18 @@ export const SidebarNavLabel = ({
 
   return (
     <>
-      <Icon name={icon} size={size} />
+      <span className={styles.iconSlot}>
+        <Icon name={icon} size={size} />
+        {!!tally && (
+          <Text
+            as="span"
+            className={`${motion.pop} ${styles.tally}`}
+            aria-label={`${tally} aguardando`}
+          >
+            {tally > 99 ? '99+' : tally}
+          </Text>
+        )}
+      </span>
       <Text
         as="span"
         size="sm"
@@ -40,9 +51,6 @@ export const SidebarNavLabel = ({
       >
         {label}
       </Text>
-      {!!tally && (
-        <Text as="span" className={`${motion.pop} ${styles.tally}`}>{tally}</Text>
-      )}
     </>
   )
 }

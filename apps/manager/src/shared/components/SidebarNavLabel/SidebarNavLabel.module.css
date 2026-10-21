@@ -1,6 +1,13 @@
 @reference "@nino/ds/globals.css";
 
+.iconSlot {
+  @apply relative inline-flex shrink-0;
+}
+
+/* WHY: o anel na cor da sidebar recorta o badge do ícone, que continua
+ * legível por baixo em vez de ser coberto por uma bolha chapada. */
 .tally {
-  @apply ml-auto flex h-5 min-w-5 items-center justify-center rounded-full;
-  @apply bg-brand px-1.5 text-2xs font-bold text-fg-on-brand tabular-nums;
+  @apply absolute -right-2 -top-1.5 flex h-4 min-w-4 items-center justify-center;
+  @apply rounded-full bg-brand px-1 text-[0.625rem] leading-none font-bold;
+  @apply text-fg-on-brand tabular-nums ring-2 ring-fg-cool;
 }

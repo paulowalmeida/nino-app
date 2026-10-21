@@ -5,6 +5,7 @@ import { Text } from '@nino/ds/components/Text'
 import { shortcutLabel } from '@layouts/AppLayout/utils/shortcut-label/shortcut-label'
 import { NinoLogo } from '@shared/components/NinoLogo/NinoLogo'
 
+import { NotificationBell } from './NotificationBell/NotificationBell'
 import { StoreSwitcher } from './StoreSwitcher/StoreSwitcher'
 import { UserMenu } from './UserMenu/UserMenu'
 
@@ -50,22 +51,22 @@ export const AppLayoutHeader = ({
       <StoreSwitcher currentUnitId={unitId} />
     </Box>
 
-    <Button
-      variant="ghost"
-      className={styles.searchButton}
-      onClick={onOpenCommandPalette}
-      aria-label="Buscar funcionalidade"
-    >
-      <Icon name="search" size="sm" />
-      <Text as="span" className={styles.searchLabel}>
-        Buscar funcionalidade
-      </Text>
-      <Text as="span" className={styles.searchShortcut} aria-hidden="true">
-        {SEARCH_SHORTCUT}
-      </Text>
-    </Button>
-
     <Box direction="row" className={styles.actions}>
+      <Button
+        variant="ghost"
+        className={styles.searchButton}
+        onClick={onOpenCommandPalette}
+        aria-label="Buscar funcionalidade"
+      >
+        <Icon name="search" size="sm" />
+        <Text as="span" className={styles.searchLabel}>
+          Buscar funcionalidade
+        </Text>
+        <Text as="span" className={styles.searchShortcut} aria-hidden="true">
+          {SEARCH_SHORTCUT}
+        </Text>
+      </Button>
+      <NotificationBell unitId={unitId} />
       <UserMenu
         name={userName}
         email={userEmail}

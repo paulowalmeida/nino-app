@@ -260,6 +260,13 @@ export const router = createBrowserRouter([
           ),
       },
       {
+        path: 'notificacoes',
+        lazy: () =>
+          import('@pages/Notifications/Notifications').then(
+            ({ Notifications }) => ({ Component: Notifications })
+          ),
+      },
+      {
         path: 'perfil',
         lazy: () =>
           import('@pages/Profile/Profile').then(({ Profile }) => ({

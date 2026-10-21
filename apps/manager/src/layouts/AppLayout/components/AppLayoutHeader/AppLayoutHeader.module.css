@@ -14,16 +14,14 @@
   @apply hidden shrink-0 items-center pl-2 pr-4 lg:flex;
 }
 
-/* WHY: no celular a loja ocupa o meio e empurra lupa e avatar para a
- * direita; no desktop ela encolhe ao nome e a busca vem logo depois. */
 .switcherSlot {
-  @apply min-w-0 flex-1 items-center lg:max-w-64 lg:flex-none;
+  @apply min-w-0 flex-1 items-center;
 }
 
 .searchButton {
   @apply shrink-0 gap-2 text-fg-on-brand/70;
   @apply hover:bg-surface-raised/10 hover:text-fg-on-brand;
-  @apply lg:h-9 lg:w-72 lg:justify-start lg:rounded-2 lg:border;
+  @apply lg:h-9 lg:w-64 lg:justify-start lg:rounded-2 lg:border;
   @apply lg:border-fg-on-brand/10 lg:bg-surface-raised/8 lg:px-3;
   @apply lg:text-fg-on-brand/55 lg:hover:bg-surface-raised/12;
 }
@@ -38,5 +36,5 @@
 }
 
 .actions {
-  @apply shrink-0 items-center gap-1 lg:ml-auto;
+  @apply ml-auto shrink-0 items-center gap-1 lg:gap-2;
 }

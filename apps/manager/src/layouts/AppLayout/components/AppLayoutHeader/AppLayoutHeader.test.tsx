@@ -9,6 +9,9 @@ vi.mock('./StoreSwitcher/StoreSwitcher', () => ({
   StoreSwitcher: () => <span>Loja Centro</span>,
 }))
 vi.mock('./UserMenu/UserMenu', () => ({ UserMenu: () => null }))
+vi.mock('./NotificationBell/NotificationBell', () => ({
+  NotificationBell: () => null,
+}))
 vi.mock('@shared/components/NinoLogo/NinoLogo', () => ({ NinoLogo: () => null }))
 
 describe('AppLayoutHeader', () => {

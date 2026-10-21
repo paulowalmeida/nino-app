@@ -39,6 +39,14 @@ describe('UserMenu', () => {
     expect(screen.getByText('Gerente · Loja Centro')).toBeInTheDocument()
   })
 
+  it('reaches the notifications screen', async () => {
+    await openMenu()
+
+    expect(
+      await screen.findByRole('menuitem', { name: /Notificações/ })
+    ).toBeInTheDocument()
+  })
+
   it('offers the plan to the owner of the unit', async () => {
     await openMenu(ownerRoleMock)
 

@@ -51,6 +51,7 @@ export const ICON_NAMES = [
   'cash-register',
   'cast',
   'check',
+  'check-check',
   'check-circle',
   'check-square',
   'chef-hat',

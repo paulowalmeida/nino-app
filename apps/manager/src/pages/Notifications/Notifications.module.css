@@ -1,0 +1,58 @@
+@reference "@nino/ds/globals.css";
+
+/* WHY: título, filtro e ações em lote ficam parados; só a lista rola. O
+ * padding lateral mora em cada região (e no painel que rola), nunca na
+ * página, para a barra de rolagem encostar na borda. */
+.notificationsPage {
+  @apply relative flex h-full min-h-0 w-full max-w-workspace flex-col;
+  @apply overflow-hidden pt-4 lg:pt-10;
+}
+
+.header {
+  @apply mb-6 shrink-0 px-4 lg:px-10;
+}
+
+/* WHY: as ações agem sobre a lista, então moram na mesma linha do filtro
+ * dela — não no cabeçalho, onde ficavam soltas longe do que afetam. */
+.toolbar {
+  @apply shrink-0 border-b border-border/70 px-4 pb-3 lg:px-10;
+}
+
+.tabs {
+  @apply min-w-0 flex-1 sm:flex-none;
+}
+
+.tabs [data-part='content'] {
+  @apply hidden;
+}
+
+.bulkActions {
+  @apply ml-auto shrink-0;
+}
+
+/* WHY: do tablet para cima as duas ações cabem como ícones ao lado do
+ * filtro; no celular vão para um menu só, para o filtro manter a linha
+ * inteira. */
+.wideActions {
+  @apply hidden sm:flex;
+}
+
+.clear {
+  @apply hover:bg-danger-surface hover:text-danger;
+}
+
+.compactMenu {
+  @apply flex sm:hidden;
+}
+
+.listScroll {
+  @apply min-h-0 flex-1 overflow-y-auto px-4 pb-4 pt-2 lg:px-10 lg:pb-10;
+}
+
+.list {
+  @apply gap-0.5;
+}
+
+.empty {
+  @apply mt-6;
+}

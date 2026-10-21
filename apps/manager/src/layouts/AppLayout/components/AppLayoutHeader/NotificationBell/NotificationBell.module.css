@@ -1,0 +1,42 @@
+@reference "@nino/ds/globals.css";
+
+.bellTrigger {
+  @apply relative shrink-0 text-fg-on-brand/70;
+  @apply hover:bg-surface-raised/10 hover:text-fg-on-brand;
+  @apply data-[state=open]:bg-surface-raised/10 data-[state=open]:text-fg-on-brand;
+}
+
+/* WHY: mesmo recorte do badge da sidebar — o anel na cor do header separa a
+ * contagem do sino em vez de colar uma bolha chapada por cima. */
+.badge {
+  @apply absolute right-1.5 top-1.5 flex h-4 min-w-4 items-center justify-center;
+  @apply rounded-full bg-brand px-1 text-[0.625rem] leading-none font-bold;
+  @apply text-fg-on-brand tabular-nums ring-2 ring-fg-cool;
+}
+
+.panel {
+  @apply w-[min(24rem,calc(100vw-2rem))] p-0;
+}
+
+.panelHeader {
+  @apply items-center justify-between gap-2 border-b border-border px-4 py-3;
+}
+
+.panelTitle {
+  @apply text-sm font-semibold text-fg-strong;
+}
+
+.markAll {
+  @apply -mr-2 text-xs text-brand hover:text-brand;
+}
+
+.list {
+  @apply max-h-[min(26rem,60dvh)] gap-0.5 overflow-y-auto p-1.5;
+}
+
+.seeAll {
+  @apply block border-t border-border px-4 py-3 text-center text-sm;
+  @apply font-semibold text-brand transition-colors duration-150;
+  @apply hover:bg-surface-mute focus-visible:outline-none;
+  @apply focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-brand;
+}
