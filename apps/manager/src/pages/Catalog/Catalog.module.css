@@ -1,7 +1,7 @@
 @reference "@nino/ds/globals.css";
 
 .catalogPage {
-  @apply relative mx-auto flex h-full min-h-0 max-w-workspace;
+  @apply relative flex h-full min-h-0 max-w-workspace;
   @apply flex-col overflow-hidden;
 }
 

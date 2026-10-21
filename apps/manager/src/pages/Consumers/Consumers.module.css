@@ -6,7 +6,7 @@
  * tela.
  */
 .consumersPage {
-  @apply relative mx-auto flex h-full w-full max-w-workspace flex-col;
+  @apply relative flex h-full w-full max-w-workspace flex-col;
 }
 
 .feedback {

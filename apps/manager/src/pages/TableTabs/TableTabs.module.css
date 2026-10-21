@@ -2,5 +2,5 @@
 
 .tableTabsPage {
   @apply flex h-full min-h-0 flex-col overflow-hidden;
-  @apply mx-auto w-full max-w-workspace;
+  @apply w-full max-w-workspace;
 }

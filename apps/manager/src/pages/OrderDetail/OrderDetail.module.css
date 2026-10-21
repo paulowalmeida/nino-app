@@ -1,7 +1,7 @@
 @reference "@nino/ds/globals.css";
 
 .orderDetailPage {
-  @apply mx-auto flex max-w-workspace flex-col p-4 lg:p-10;
+  @apply flex max-w-workspace flex-col p-4 lg:p-10;
 }
 
 .ghostEyebrow {
