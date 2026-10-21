@@ -10,15 +10,12 @@ import { EmployeesContent } from './EmployeesContent'
 import { employeesContentFacadeMock } from './EmployeesContent.mock'
 
 vi.mock('@pages/Employees/facades/useEmployeesFacade/useEmployeesFacade')
-vi.mock('./InviteForm/InviteForm', () => ({
-  InviteForm: () => <div>invite</div>,
-}))
 vi.mock('./TeamRoster/TeamRoster', () => ({
   TeamRoster: (props: {
     title: string
     removingId?: string
     changingPositionId?: string
-    onRemove: (id: string) => void
+    onRemove: (id: string, kind: 'STAFF' | 'COURIER') => void
     onEdit?: (id: string) => void
     onSetActivity?: (id: string) => void
     onChangePosition?: (id: string, positionId: string) => void
@@ -27,8 +24,11 @@ vi.mock('./TeamRoster/TeamRoster', () => ({
       <span>{props.title}</span>
       <span>{`removing:${props.removingId ?? 'none'}`}</span>
       <span>{`changing:${props.changingPositionId ?? 'none'}`}</span>
-      <button onClick={() => props.onRemove('user-2')}>
+      <button onClick={() => props.onRemove('user-2', 'STAFF')}>
         {`remove ${props.title}`}
+      </button>
+      <button onClick={() => props.onRemove('courier-1', 'COURIER')}>
+        {`remove courier ${props.title}`}
       </button>
       {props.onEdit && (
         <button onClick={() => props.onEdit?.('user-2')}>edit staff</button>
@@ -91,18 +91,19 @@ describe(EmployeesContent.name, () => {
     vi.mocked(useEmployeesFacade).mockReturnValue(facade as never)
   })
 
-  it('composes the invitation and both team rosters', () => {
+  it('composes the active and inactive rosters only', () => {
     renderContent()
 
-    expect(screen.getByText('invite')).toBeInTheDocument()
     expect(screen.getByText('Ativos')).toBeInTheDocument()
-    expect(screen.getAllByText('Na rua').length).toBeGreaterThan(0)
+    expect(
+      screen.queryByRole('tab', { name: /Na rua/ })
+    ).not.toBeInTheDocument()
   })
 
   it('opens the requested team tab from the URL and switches back', async () => {
-    renderContent('/colaboradores?tab=couriers')
+    renderContent('/colaboradores?tab=inactive')
 
-    expect(screen.getByRole('tab', { name: 'Na rua · 0' })).toHaveAttribute(
+    expect(screen.getByRole('tab', { name: 'Inativos · 0' })).toHaveAttribute(
       'aria-selected',
       'true'
     )
@@ -114,12 +115,10 @@ describe(EmployeesContent.name, () => {
     )
   })
 
-  it('switches to the couriers tab', async () => {
-    renderContent()
+  it('opens the active tab from an old couriers link', () => {
+    renderContent('/colaboradores?tab=couriers')
 
-    await userEvent.click(screen.getByRole('tab', { name: 'Na rua · 0' }))
-
-    expect(screen.getByRole('tab', { name: 'Na rua · 0' })).toHaveAttribute(
+    expect(screen.getByRole('tab', { name: 'Ativos · 1' })).toHaveAttribute(
       'aria-selected',
       'true'
     )
@@ -141,13 +140,15 @@ describe(EmployeesContent.name, () => {
     })
   })
 
-  it('removes a courier through the facade', async () => {
-    renderContent('/colaboradores?tab=couriers')
+  it('removes a courier listed among the active members', async () => {
+    renderContent()
 
-    await userEvent.click(screen.getByRole('button', { name: 'remove Na rua' }))
+    await userEvent.click(
+      screen.getByRole('button', { name: 'remove courier Ativos' })
+    )
 
     expect(facade.removeMember).toHaveBeenCalledWith({
-      id: 'user-2',
+      id: 'courier-1',
       kind: 'COURIER',
     })
   })
@@ -220,15 +221,15 @@ describe(EmployeesContent.name, () => {
     })
   })
 
-  it('tells the couriers roster which courier is being removed', () => {
+  it('tells the roster which courier is being removed', () => {
     vi.mocked(useEmployeesFacade).mockReturnValue({
       ...facade,
       isRemoving: true,
       removingVariables: { id: 'courier-1', kind: 'COURIER' },
     } as never)
 
-    renderContent('/colaboradores?tab=couriers')
+    renderContent()
 
-    expect(screen.getByText('removing:courier-1')).toBeInTheDocument()
+    expect(screen.getAllByText('removing:courier-1')).not.toHaveLength(0)
   })
 })

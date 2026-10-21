@@ -2,6 +2,7 @@ import type { PromotionOption } from '@shared/types/team/promotion-option.type'
 
 export type RosterEntry = {
   id: string
+  kind: 'STAFF' | 'COURIER'
   name: string
   email: string | null
   role: string

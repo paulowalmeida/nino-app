@@ -7,24 +7,22 @@ import { useEmployeesFacade } from '@pages/Employees/facades/useEmployeesFacade/
 import type { RosterEntry } from '@shared/types/team/roster-entry'
 
 import { EditStaffModal } from './EditStaffModal/EditStaffModal'
-import { InviteForm } from './InviteForm/InviteForm'
 import { TeamRoster } from './TeamRoster/TeamRoster'
+
+import styles from './EmployeesContent.module.css'
 
 export const EmployeesContent = () => {
   const facade = useEmployeesFacade()
   const [searchParams, setSearchParams] = useSearchParams()
   const [editingStaffId, setEditingStaffId] = useState<string | null>(null)
   const editingStaff = [
-    ...facade.staffEntries,
-    ...facade.inactiveStaffEntries,
+    ...facade.activeEntries,
+    ...facade.inactiveEntries,
   ].find(({ id }: RosterEntry) => id === editingStaffId)
   const removing = facade.isRemoving ? facade.removingVariables : undefined
   const canChangePosition = facade.unit?.role === 'UNIT_OWNER'
   const requestedTab = searchParams.get('tab')
-  const activeTab =
-    requestedTab === 'inactive' || requestedTab === 'couriers'
-      ? requestedTab
-      : 'active'
+  const activeTab = requestedTab === 'inactive' ? 'inactive' : 'active'
 
   const changeTab = (value: string) => {
     const nextParams = new URLSearchParams(searchParams)
@@ -35,28 +33,25 @@ export const EmployeesContent = () => {
 
   return (
     <>
-      <Box direction="column" gap={{ mobile: 8, desktop: 10 }}>
-        <InviteForm onInvite={facade.invite} seats={facade.inviteSeats} />
-
+      <Box direction="column" className={styles.employeesContent}>
         <Tabs
+          className={styles.employeesTabs}
           value={activeTab}
           onValueChange={changeTab}
           tabs={[
             {
               value: 'active',
-              label: `Ativos · ${facade.staffEntries.length}`,
+              label: `Ativos · ${facade.activeEntries.length}`,
               content: (
                 <TeamRoster
                   title="Ativos"
                   hint="Quem recebe, aceita e acompanha os pedidos."
-                  entries={facade.staffEntries}
+                  entries={facade.activeEntries}
                   empty="Só você por enquanto. Chame alguém pelo convite acima."
                   searchLabel="Buscar quem está no painel"
-                  isPending={facade.isStaffPending}
-                  removingId={
-                    removing?.kind === 'STAFF' ? removing.id : undefined
-                  }
-                  onRemove={(id) => facade.removeMember({ id, kind: 'STAFF' })}
+                  isPending={facade.isActivePending}
+                  removingId={removing?.id}
+                  onRemove={(id, kind) => facade.removeMember({ id, kind })}
                   onEdit={setEditingStaffId}
                   onSetActivity={(id) =>
                     facade.setStaffActivity({ userId: id, isActive: false })
@@ -82,19 +77,17 @@ export const EmployeesContent = () => {
             },
             {
               value: 'inactive',
-              label: `Inativos · ${facade.inactiveStaffEntries.length}`,
+              label: `Inativos · ${facade.inactiveEntries.length}`,
               content: (
                 <TeamRoster
                   title="Inativos"
                   hint="Quem foi suspenso permanece no histórico da loja."
-                  entries={facade.inactiveStaffEntries}
+                  entries={facade.inactiveEntries}
                   empty="Nenhum colaborador suspenso nesta loja."
                   searchLabel="Buscar quem está inativo"
-                  isPending={facade.isInactiveStaffPending}
-                  removingId={
-                    removing?.kind === 'STAFF' ? removing.id : undefined
-                  }
-                  onRemove={(id) => facade.removeMember({ id, kind: 'STAFF' })}
+                  isPending={facade.isInactivePending}
+                  removingId={removing?.id}
+                  onRemove={(id, kind) => facade.removeMember({ id, kind })}
                   onEdit={setEditingStaffId}
                   onSetActivity={(id) =>
                     facade.setStaffActivity({ userId: id, isActive: true })
@@ -105,26 +98,6 @@ export const EmployeesContent = () => {
                       : undefined
                   }
                   isInactive
-                />
-              ),
-            },
-            {
-              value: 'couriers',
-              label: `Na rua · ${facade.courierEntries.length}`,
-              content: (
-                <TeamRoster
-                  title="Na rua"
-                  hint="Quem leva o pedido até a porta do cliente."
-                  entries={facade.courierEntries}
-                  empty="Nenhum entregador cadastrado nesta loja."
-                  searchLabel="Buscar quem está na rua"
-                  isPending={facade.isCourierPending}
-                  removingId={
-                    removing?.kind === 'COURIER' ? removing.id : undefined
-                  }
-                  onRemove={(id) =>
-                    facade.removeMember({ id, kind: 'COURIER' })
-                  }
                 />
               ),
             },

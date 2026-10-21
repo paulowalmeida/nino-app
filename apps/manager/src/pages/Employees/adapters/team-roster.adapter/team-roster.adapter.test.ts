@@ -39,7 +39,7 @@ describe('team roster adapter', () => {
     expect(entries[1].roleLocked).toBeUndefined()
   })
 
-  it('converts courier activity into a quiet roster entry', () => {
+  it('labels a courier as such, whatever their activity', () => {
     const entries = courierRosterEntries([
       {
         courier: {
@@ -53,8 +53,9 @@ describe('team roster adapter', () => {
     ] as never)
 
     expect(entries[0]).toMatchObject({
+      kind: 'COURIER',
       name: teamRosterAdapterMock.courierName,
-      role: 'Parado',
+      role: 'Entregador',
       quiet: true,
     })
   })
@@ -73,7 +74,7 @@ describe('team roster adapter', () => {
     ] as never)
 
     expect(entries[0]).toMatchObject({
-      role: 'Ativo',
+      role: 'Entregador',
       lastLoginAt: '2026-01-01T00:00:00.000Z',
     })
   })

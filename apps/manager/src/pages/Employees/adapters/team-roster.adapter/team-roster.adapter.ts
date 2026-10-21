@@ -14,6 +14,7 @@ export const staffRosterEntries = (
 ): RosterEntry[] =>
   members.map(({ user, role, position }) => ({
     id: user.id,
+    kind: 'STAFF',
     name: user.name,
     email: loginEmailOf(user),
     role: position.name,
@@ -28,11 +29,12 @@ export const staffRosterEntries = (
   }))
 
 export const courierRosterEntries = (members: CourierMember[]): RosterEntry[] =>
-  members.map(({ courier, isActive }) => ({
+  members.map(({ courier }) => ({
     id: courier.id,
+    kind: 'COURIER',
     name: courier.name,
     email: loginEmailOf(courier),
-    role: isActive ? 'Ativo' : 'Parado',
+    role: 'Entregador',
     lastLoginAt: courier.lastLoginAt ?? null,
     quiet: true,
     removable: true,

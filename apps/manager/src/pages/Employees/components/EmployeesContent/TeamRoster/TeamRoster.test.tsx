@@ -23,6 +23,7 @@ describe(TeamRoster.name, () => {
           entries={[
             {
               id: 'user-1',
+              kind: 'STAFF',
               name: 'Ana Souza',
               email: 'ana@example.com',
               role: 'Gerente',
@@ -179,20 +180,21 @@ describe(TeamRoster.name, () => {
     await userEvent.click(
       await screen.findByRole('menuitem', { name: 'Remover da loja' })
     )
-    expect(onRemove).toHaveBeenCalledWith('user-3')
+    expect(onRemove).toHaveBeenCalledWith('user-3', 'STAFF')
   })
 
-  it('removes a courier through the kebab without an e-mail action', async () => {
+  it('removes a courier through the kebab without e-mail or activity actions', async () => {
     const onRemove = vi.fn()
     render(
       <MemoryRouter>
         <TeamRoster
-          title="Na rua"
-          hint="Quem entrega."
+          title="Ativos"
+          hint="Quem recebe, aceita e acompanha os pedidos."
           entries={[teamRosterCourierEntryMock]}
           empty="Nenhum"
           removingId="other"
           onRemove={onRemove}
+          onSetActivity={vi.fn()}
           onChangePosition={vi.fn()}
         />
       </MemoryRouter>
@@ -202,11 +204,12 @@ describe(TeamRoster.name, () => {
       screen.getByRole('button', { name: 'Mais ações para Beto Lima' })
     )
     expect(screen.queryByRole('menuitem', { name: 'Editar' })).toBeNull()
+    expect(screen.queryByRole('menuitem', { name: 'Suspender' })).toBeNull()
     await userEvent.click(
       await screen.findByRole('menuitem', { name: 'Remover da loja' })
     )
 
-    expect(onRemove).toHaveBeenCalledWith('courier-1')
+    expect(onRemove).toHaveBeenCalledWith('courier-1', 'COURIER')
   })
 
   it('offers no actions for a member that cannot be removed', () => {

@@ -1,10 +1,10 @@
 import { useEmployeesData } from '@pages/Employees/hooks/useEmployeesData/useEmployeesData'
 import { useInvite } from '@shared/hooks/team/useInvite/useInvite'
 import { useRemoveMember } from '@shared/hooks/team/useRemoveMember/useRemoveMember'
+import { useSetStaffActivity } from '@shared/hooks/team/useSetStaffActivity/useSetStaffActivity'
 import { useUpdateStaffEmail } from '@shared/hooks/team/useUpdateStaffEmail/useUpdateStaffEmail'
 import { useUpdateStaffPosition } from '@shared/hooks/team/useUpdateStaffPosition/useUpdateStaffPosition'
 import { useUpdateStaffProfile } from '@shared/hooks/team/useUpdateStaffProfile/useUpdateStaffProfile'
-import { useSetStaffActivity } from '@shared/hooks/team/useSetStaffActivity/useSetStaffActivity'
 
 export const useEmployeesFacade = () => {
   const data = useEmployeesData()

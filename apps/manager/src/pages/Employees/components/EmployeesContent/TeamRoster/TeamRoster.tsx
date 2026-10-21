@@ -41,7 +41,7 @@ export type TeamRosterProps = {
   isPending?: boolean
   removingId?: string
   changingActivityId?: string
-  onRemove: (id: string) => void
+  onRemove: (id: string, kind: RosterEntry['kind']) => void
   onEdit?: (id: string) => void
   onSetActivity?: (id: string) => void
   isInactive?: boolean
@@ -110,7 +110,7 @@ export const TeamRoster = ({
       })
     }
 
-    if (entry.removable && onSetActivity) {
+    if (entry.removable && entry.kind === 'STAFF' && onSetActivity) {
       if (items.length > 0) items.push({ separator: true })
       items.push({
         value: isInactive ? 'activate' : 'suspend',
@@ -125,18 +125,15 @@ export const TeamRoster = ({
         value: 'remove',
         label: 'Remover da loja',
         destructive: true,
-        onSelect: () => onRemove(entry.id),
+        onSelect: () => onRemove(entry.id, entry.kind),
       })
     }
 
     return items
   }
 
-  const sectionId =
-    title === 'Na rua' ? 'entregadores-na-rua' : 'equipe-do-painel'
-
   return (
-    <Box as="section" id={sectionId} className={styles.roster}>
+    <Box as="section" id="equipe-do-painel" className={styles.roster}>
       <Box as="header" className={`${motion.unroll} ${styles.head}`}>
         <Box className={styles.headings}>
           <h2 className="sr-only">{title}</h2>
@@ -240,7 +237,8 @@ export const TeamRoster = ({
                   removingId === entry.id ||
                   changingActivityId === entry.id
                 const canEdit = entry.emailEditable && !!onEdit
-                const canSetActivity = entry.removable && !!onSetActivity
+                const canSetActivity =
+                  entry.removable && entry.kind === 'STAFF' && !!onSetActivity
                 const identity = (
                   <>
                     <PersonMark
@@ -339,7 +337,7 @@ export const TeamRoster = ({
                             disabled={isBusy}
                             aria-label={`Remover ${entry.name} da loja`}
                             title="Remover da loja"
-                            onClick={() => onRemove(entry.id)}
+                            onClick={() => onRemove(entry.id, entry.kind)}
                           >
                             <Icon name="trash" />
                           </Button>

@@ -3,9 +3,10 @@ import type { RosterEntry } from '@shared/types/team/roster-entry'
 export const employeesContentFacadeMock = {
   unit: { role: 'UNIT_OWNER' },
   inviteSeats: [],
-  staffEntries: [
+  activeEntries: [
     {
       id: 'user-2',
+      kind: 'STAFF',
       name: 'Caio Dias',
       email: 'caio@example.com',
       role: 'Atendente',
@@ -13,11 +14,9 @@ export const employeesContentFacadeMock = {
       removable: true,
     },
   ] as RosterEntry[],
-  inactiveStaffEntries: [] as RosterEntry[],
-  courierEntries: [] as RosterEntry[],
-  isStaffPending: false,
-  isInactiveStaffPending: false,
-  isCourierPending: false,
+  inactiveEntries: [] as RosterEntry[],
+  isActivePending: false,
+  isInactivePending: false,
   isRemoving: false,
   removingVariables: undefined,
   isChangingPosition: false,

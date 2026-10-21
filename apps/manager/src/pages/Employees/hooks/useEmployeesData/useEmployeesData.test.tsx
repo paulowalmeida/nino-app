@@ -8,6 +8,7 @@ import { useUnitPositions } from '@shared/hooks/team/useUnitPositions/useUnitPos
 
 import { useEmployeesData } from './useEmployeesData'
 import {
+  employeesDataCouriersMock,
   employeesDataMock,
   employeesDataPositionsMock,
 } from './useEmployeesData.mock'
@@ -39,7 +40,7 @@ describe(useEmployeesData.name, () => {
     const { result } = renderHook(() => useEmployeesData())
 
     expect(result.current.unitId).toBe('unit-1')
-    expect(result.current.staffEntries).toEqual([])
+    expect(result.current.activeEntries).toEqual([])
     expect(result.current.isError).toBe(false)
   })
 
@@ -70,8 +71,8 @@ describe(useEmployeesData.name, () => {
     const { result } = renderHook(() => useEmployeesData())
 
     expect(result.current.unitId).toBeNull()
-    expect(result.current.staffEntries).toEqual([])
-    expect(result.current.courierEntries).toEqual([])
+    expect(result.current.activeEntries).toEqual([])
+    expect(result.current.inactiveEntries).toEqual([])
     expect(result.current.inviteSeats.map(({ value }) => value)).toEqual([
       'COURIER',
     ])
@@ -88,5 +89,35 @@ describe(useEmployeesData.name, () => {
     const { result } = renderHook(() => useEmployeesData())
 
     expect(result.current.isError).toBe(true)
+  })
+
+  it('puts each courier in the tab that matches their activity', () => {
+    vi.mocked(useCouriers).mockReturnValue({
+      data: { data: employeesDataCouriersMock },
+      isPending: false,
+      isError: false,
+    } as never)
+
+    const { result } = renderHook(() => useEmployeesData())
+
+    expect(result.current.activeEntries.map(({ id }) => id)).toEqual([
+      'courier-active',
+    ])
+    expect(result.current.inactiveEntries.map(({ id }) => id)).toEqual([
+      'courier-parked',
+    ])
+  })
+
+  it('keeps a tab loading while its couriers are still on the way', () => {
+    vi.mocked(useCouriers).mockReturnValue({
+      data: undefined,
+      isPending: true,
+      isError: false,
+    } as never)
+
+    const { result } = renderHook(() => useEmployeesData())
+
+    expect(result.current.isActivePending).toBe(true)
+    expect(result.current.isInactivePending).toBe(true)
   })
 })

@@ -1,12 +1,11 @@
+import type { CourierMember } from '@shared/types/team/courier-member'
 import type { UnitPosition } from '@shared/types/team/unit-position.type'
 
 export const employeesDataMock = {
-  staffEntries: [],
-  inactiveStaffEntries: [],
-  courierEntries: [],
-  isStaffPending: false,
-  isInactiveStaffPending: false,
-  isCourierPending: false,
+  activeEntries: [],
+  inactiveEntries: [],
+  isActivePending: false,
+  isInactivePending: false,
   isError: false,
   currentUnit: { unitId: 'unit-1', role: 'UNIT_OWNER', positionLevel: 100 },
 }
@@ -43,3 +42,24 @@ export const employeesDataPositionsMock: UnitPosition[] = [
     memberCount: 2,
   },
 ]
+
+export const employeesDataCouriersMock = [
+  {
+    courier: {
+      id: 'courier-active',
+      name: 'Bruno Lima',
+      credentials: [],
+      lastLoginAt: null,
+    },
+    isActive: true,
+  },
+  {
+    courier: {
+      id: 'courier-parked',
+      name: 'Caio Reis',
+      credentials: [],
+      lastLoginAt: null,
+    },
+    isActive: false,
+  },
+] as unknown as CourierMember[]

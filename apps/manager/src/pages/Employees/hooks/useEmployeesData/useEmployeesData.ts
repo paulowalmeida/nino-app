@@ -35,24 +35,32 @@ export const useEmployeesData = () => {
     unit?.positionLevel ?? 0
   )
 
+  const courierMembers = couriers?.data ?? []
+  const activeCourierEntries = courierRosterEntries(
+    courierMembers.filter(({ isActive }) => isActive)
+  )
+  const parkedCourierEntries = courierRosterEntries(
+    courierMembers.filter(({ isActive }) => !isActive)
+  )
+
   return {
     unit,
     unitId,
     inviteSeats: inviteSeatsOf(assignable),
-    staffEntries: staffRosterEntries(
-      staff?.data ?? [],
-      currentUserId,
-      assignable
-    ),
-    inactiveStaffEntries: staffRosterEntries(
-      inactiveStaff?.data ?? [],
-      currentUserId,
-      assignable
-    ),
-    courierEntries: courierRosterEntries(couriers?.data ?? []),
-    isStaffPending,
-    isInactiveStaffPending,
-    isCourierPending,
+    activeEntries: [
+      ...staffRosterEntries(staff?.data ?? [], currentUserId, assignable),
+      ...activeCourierEntries,
+    ],
+    inactiveEntries: [
+      ...staffRosterEntries(
+        inactiveStaff?.data ?? [],
+        currentUserId,
+        assignable
+      ),
+      ...parkedCourierEntries,
+    ],
+    isActivePending: isStaffPending || isCourierPending,
+    isInactivePending: isInactiveStaffPending || isCourierPending,
     isError: isStaffError || isInactiveStaffError || isCourierError,
   }
 }

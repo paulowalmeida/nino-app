@@ -439,18 +439,13 @@ export const FUNCTIONALITY_SEARCH_ITEMS: FunctionalitySearchItem[] = [
     section: 'colaboradores',
     label: 'Convidar colaborador',
     group: 'Negócio · Colaboradores',
+    target: 'colaboradores?acao=convidar',
   },
   {
     section: 'colaboradores',
     label: 'Equipe do painel',
     group: 'Negócio · Colaboradores',
     target: 'colaboradores?tab=staff#equipe-do-painel',
-  },
-  {
-    section: 'colaboradores',
-    label: 'Entregadores na rua',
-    group: 'Negócio · Colaboradores',
-    target: 'colaboradores?tab=couriers#entregadores-na-rua',
   },
   {
     section: 'colaboradores',
