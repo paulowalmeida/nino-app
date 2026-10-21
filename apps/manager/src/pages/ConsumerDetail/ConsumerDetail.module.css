@@ -1,6 +1,6 @@
 @reference "@nino/ds/globals.css";
 
 .consumerDetailPage {
-  @apply mx-auto flex h-[calc(100dvh-3.5rem)] max-w-page flex-col p-4;
-  @apply lg:h-dvh lg:p-10;
+  @apply mx-auto flex h-full max-w-workspace flex-col p-4;
+  @apply lg:p-10;
 }

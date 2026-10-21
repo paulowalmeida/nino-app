@@ -41,7 +41,7 @@ export const EmployeesHeader = () => {
         }
         actions={
           <Button
-            className={`${motion.press} w-full`}
+            className={motion.press}
             onClick={() => changeInviteOpen(true)}
           >
             <Icon name="plus" size="sm" />

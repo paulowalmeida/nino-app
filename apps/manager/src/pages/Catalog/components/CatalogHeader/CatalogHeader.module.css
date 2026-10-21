@@ -24,16 +24,8 @@
   @apply h-5 w-full max-w-112;
 }
 
-.skeletonToolbar {
-  @apply mb-1;
-}
-
 .skeletonSearch {
-  @apply h-11 w-full lg:max-w-sm;
-}
-
-.skeletonActions {
-  @apply lg:ml-auto;
+  @apply mb-1 h-11 w-full lg:max-w-sm;
 }
 
 .skeletonManageCategories {

@@ -40,10 +40,10 @@ describe('TableTabsBoard', () => {
     expect(screen.getByText('Mesa 7')).toBeInTheDocument()
     expect(screen.queryByText('Ana Souza')).not.toBeInTheDocument()
     expect(
-      screen.getByRole('tab', { name: 'Em aberto (2)' })
+      screen.getByRole('tab', { name: 'Em aberto · 2' })
     ).toBeInTheDocument()
     expect(
-      screen.getByRole('tab', { name: 'Finalizadas (2)' })
+      screen.getByRole('tab', { name: 'Finalizadas · 2' })
     ).toBeInTheDocument()
   })
 

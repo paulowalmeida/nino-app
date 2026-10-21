@@ -22,6 +22,7 @@ export const SettingsTableSection = () => {
 
       <Tabs
         className={local.settingsTableSectionTabs}
+        fullWidth={{ mobile: true, tablet: false }}
         tabs={[
           {
             value: 'tables',

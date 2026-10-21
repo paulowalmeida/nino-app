@@ -1,5 +1,5 @@
 @reference "@nino/ds/globals.css";
 
 .appLayoutContentMain {
-  @apply min-h-dvh min-w-0 flex-1 pt-14 lg:pt-0;
+  @apply h-dvh min-w-0 flex-1 overflow-y-auto pt-14 lg:pt-0;
 }

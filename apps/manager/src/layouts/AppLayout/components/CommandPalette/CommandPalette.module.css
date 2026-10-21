@@ -1,39 +1,107 @@
 @reference "@nino/ds/globals.css";
 
+/* WHY: a paleta abre alta e fixa no topo — a lista cresce para baixo sem a
+ * caixa pular a cada letra, e no celular sobra espaço acima do teclado. */
 .modal {
-  @apply max-w-xl;
+  @apply mt-[12vh] max-w-xl self-start;
 }
 
 .commandPaletteBody {
-  @apply gap-3;
+  @apply flex flex-col p-0;
 }
 
 .searchField {
-  @apply relative;
+  @apply relative border-b border-border/70;
 }
 
 .searchIcon {
-  @apply pointer-events-none absolute left-3 top-1/2 z-10 -translate-y-1/2 text-fg-faint;
+  @apply pointer-events-none absolute left-5 top-1/2 z-10 -translate-y-1/2;
+  @apply text-fg-faint;
 }
 
 .commandPaletteInput {
-  @apply pl-10;
+  @apply h-14 rounded-none border-0 bg-transparent pl-13 pr-5 text-base;
+  @apply shadow-none focus-visible:ring-0 focus-visible:outline-none;
+}
+
+.optionScroll {
+  @apply max-h-[min(24rem,55vh)];
 }
 
 .optionPanel {
-  @apply max-h-[min(18rem,60vh)] overflow-y-auto overscroll-contain rounded-2;
-  @apply bg-surface-raised p-1 shadow-warm-lg;
+  @apply gap-0.5 p-2;
 }
 
 .option {
-  @apply w-full justify-start rounded-1 px-3 py-2 text-left text-sm;
-  @apply text-fg-strong;
+  @apply h-auto min-h-12 w-full justify-start gap-3 rounded-2 px-3 py-2;
+  @apply text-left transition-colors duration-fast;
+}
+
+.optionIcon {
+  @apply flex size-8 shrink-0 items-center justify-center rounded-2;
+  @apply bg-surface-mute text-fg-subtle transition-colors duration-fast;
+}
+
+.optionText {
+  @apply min-w-0 flex-1 gap-0.5;
+}
+
+.optionTitle {
+  @apply truncate text-sm font-semibold text-fg-strong;
+}
+
+.optionPath {
+  @apply truncate text-xs text-fg-faint;
+}
+
+.optionEnter {
+  @apply shrink-0 font-sans text-sm text-brand-strong;
 }
 
 .optionActive {
-  @apply bg-brand-soft text-brand;
+  @apply bg-brand-soft;
 }
 
-.emptyMessage {
-  @apply px-3 py-2;
+.optionActive .optionIcon {
+  @apply bg-brand text-fg-on-brand;
+}
+
+.optionActive .optionTitle {
+  @apply text-brand-strong;
+}
+
+.empty {
+  @apply gap-1 px-3 py-10 text-center;
+}
+
+.emptyTitle {
+  @apply text-sm font-semibold text-fg-strong;
+}
+
+.emptyHint {
+  @apply text-xs text-fg-faint;
+}
+
+.commandPaletteFooter {
+  @apply justify-start border-t border-border/70 bg-surface-1 px-5 py-3;
+}
+
+.hints {
+  @apply flex-wrap;
+}
+
+.hint {
+  @apply inline-flex items-center gap-1 text-xs text-fg-faint;
+}
+
+.key {
+  @apply inline-flex h-5 min-w-5 items-center justify-center rounded-1 px-1;
+  @apply border border-border bg-surface-raised font-sans text-2xs;
+  @apply font-semibold text-fg-subtle;
+}
+
+@media (pointer: coarse) {
+  .commandPaletteFooter {
+    @apply hidden;
+  }
 }

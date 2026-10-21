@@ -4,6 +4,7 @@ import { Box } from '@nino/ds/components/Box'
 import { Header } from '@nino/ds/components/Header'
 import { Skeleton } from '@nino/ds/components/Skeleton'
 import { Text } from '@nino/ds/components/Text'
+import { CatalogActions } from '@pages/Catalog/components/CatalogHeader/CatalogActions/CatalogActions'
 import { CatalogToolbar } from '@pages/Catalog/components/CatalogHeader/CatalogToolbar/CatalogToolbar'
 import { useCatalogFacade } from '@pages/Catalog/facades/useCatalogFacade'
 import { CategoryChips } from '@shared/components/CategoryChips/CategoryChips'
@@ -38,25 +39,26 @@ export const CatalogHeader = () => {
         <Text as="p" role="status" className={styles.loadingLabel}>
           Carregando produtos
         </Text>
-        <Box direction="column" gap={1} className={styles.skeletonIdentity}>
-          <Skeleton className={styles.skeletonTitle} />
-          <Skeleton className={styles.skeletonDescription} />
-        </Box>
         <Box
-          direction={{ mobile: 'column', desktop: 'row' }}
-          gap={{ mobile: 2, desktop: 4 }}
-          className={styles.skeletonToolbar}
+          direction={{ mobile: 'column', tablet: 'row' }}
+          justify="between"
+          gap={4}
+          className={styles.skeletonIdentity}
         >
-          <Skeleton className={styles.skeletonSearch} />
+          <Box direction="column" gap={1}>
+            <Skeleton className={styles.skeletonTitle} />
+            <Skeleton className={styles.skeletonDescription} />
+          </Box>
           <Box
             direction={{ mobile: 'column', tablet: 'row' }}
             gap={2}
-            className={styles.skeletonActions}
+            shrink={false}
           >
             <Skeleton className={styles.skeletonManageCategories} />
             <Skeleton className={styles.skeletonNewItem} />
           </Box>
         </Box>
+        <Skeleton className={styles.skeletonSearch} />
         <Box direction="row" className={styles.skeletonCategories}>
           <Skeleton className={styles.skeletonCategory} />
           <Skeleton className={styles.skeletonCategoryWide} />
@@ -78,13 +80,10 @@ export const CatalogHeader = () => {
         title="Produtos"
         accent="Produtos"
         description={DESCRIPTION}
+        actions={canManageCatalog ? <CatalogActions /> : undefined}
       />
 
-      <CatalogToolbar
-        term={term}
-        onTermChange={setTerm}
-        canManageCategories={canManageCatalog}
-      />
+      <CatalogToolbar term={term} onTermChange={setTerm} />
 
       <Box shrink={false} mb={3}>
         <CategoryChips

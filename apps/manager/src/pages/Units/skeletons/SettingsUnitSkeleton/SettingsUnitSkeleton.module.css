@@ -1,7 +1,7 @@
 @reference "@nino/ds/globals.css";
 
 .settingsUnitSkeletonPanel {
-  @apply relative mx-auto flex min-h-dvh w-full max-w-page flex-col overflow-visible p-4 lg:p-10;
+  @apply relative mx-auto flex min-h-dvh w-full max-w-workspace flex-col overflow-visible p-4 lg:p-10;
 }
 
 .loadingLabel {

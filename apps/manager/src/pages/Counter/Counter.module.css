@@ -1,8 +1,8 @@
 @reference "@nino/ds/globals.css";
 
 .counterPage {
-  @apply mx-auto flex min-h-dvh w-full max-w-page flex-col overflow-hidden;
-  @apply lg:h-dvh lg:min-h-0;
+  @apply mx-auto flex min-h-full w-full max-w-workspace flex-col overflow-hidden;
+  @apply lg:h-full lg:min-h-0;
 }
 
 .headerRegion {

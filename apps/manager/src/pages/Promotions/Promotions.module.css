@@ -1,7 +1,7 @@
 @reference "@nino/ds/globals.css";
 
 .promotionsPage {
-  @apply mx-auto flex min-h-full w-full max-w-page flex-col gap-6 p-4 lg:p-10;
+  @apply mx-auto flex min-h-full w-full max-w-workspace flex-col gap-6 p-4 lg:p-10;
 }
 
 .promotionsHeader {

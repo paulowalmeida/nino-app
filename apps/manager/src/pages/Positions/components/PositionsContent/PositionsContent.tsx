@@ -1,10 +1,7 @@
 import { useState } from 'react'
-import { Link } from 'react-router'
 
 import { Alert } from '@nino/ds/components/Alert'
 import { Box } from '@nino/ds/components/Box'
-import { Button } from '@nino/ds/components/Button'
-import { Icon } from '@nino/ds/components/Icon'
 import { Skeleton } from '@nino/ds/components/Skeleton'
 import { usePositionsFacade } from '@pages/Positions/facades/usePositionsFacade/usePositionsFacade'
 import { PositionRemoveDialog } from '@shared/components/PositionRemoveDialog/PositionRemoveDialog'
@@ -13,7 +10,6 @@ import type { UnitPosition } from '@shared/types/team/unit-position.type'
 
 import { PositionsTable } from '../PositionsTable/PositionsTable'
 
-import motion from '@styles/motion.module.css'
 import styles from './PositionsContent.module.css'
 
 export const PositionsContent = () => {
@@ -46,15 +42,6 @@ export const PositionsContent = () => {
 
   return (
     <Box className={styles.content}>
-      <Box direction="row" className={styles.toolbar}>
-        <Button asChild className={motion.press}>
-          <Link to="novo">
-            <Icon name="plus" />
-            Novo cargo
-          </Link>
-        </Button>
-      </Box>
-
       <PositionsTable positions={positions} onRemove={setRemoving} />
 
       {removing && (

@@ -1,5 +1,5 @@
 @reference "@nino/ds/globals.css";
 
 .positionsPage {
-  @apply relative mx-auto max-w-page p-4 lg:p-10;
+  @apply relative mx-auto max-w-workspace p-4 lg:p-10;
 }

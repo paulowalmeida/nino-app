@@ -4,14 +4,15 @@
   @apply pb-4 md:min-h-0 md:flex-1 lg:pb-10;
 }
 
-.employeesTabs {
-  @apply flex flex-col md:min-h-0 md:flex-1;
+.employeesToolbar {
+  @apply mb-3 flex shrink-0 flex-col gap-4 px-4;
+  @apply sm:flex-row sm:items-center lg:px-10;
 }
 
-.employeesTabs :global([role='tablist']) {
-  @apply mx-4 lg:mx-10;
+.employeesSearch {
+  @apply h-11 w-full sm:max-w-md;
 }
 
-.employeesTabs > :global([data-part='content']:not([hidden])) {
-  @apply md:flex md:min-h-0 md:flex-1 md:flex-col;
+.employeesTabs [data-part='content'] {
+  @apply hidden;
 }

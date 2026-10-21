@@ -19,7 +19,6 @@ describe(TeamRoster.name, () => {
       <MemoryRouter>
         <TeamRoster
           title="No painel"
-          hint="Quem recebe pedidos."
           entries={[
             {
               id: 'user-1',
@@ -48,7 +47,6 @@ describe(TeamRoster.name, () => {
       <MemoryRouter>
         <TeamRoster
           title="No painel"
-          hint="Quem recebe pedidos."
           entries={[teamRosterPromotableEntryMock]}
           empty="Nenhuma pessoa"
           onRemove={() => undefined}
@@ -70,7 +68,6 @@ describe(TeamRoster.name, () => {
       <MemoryRouter>
         <TeamRoster
           title="No painel"
-          hint="Quem recebe pedidos."
           entries={[teamRosterLockedEntryMock]}
           empty="Nenhuma pessoa"
           onRemove={() => undefined}
@@ -85,29 +82,24 @@ describe(TeamRoster.name, () => {
     expect(screen.getByText('Atendente')).toBeInTheDocument()
   })
 
-  it('filters the roster by name or e-mail and explains an empty search', async () => {
-    render(
+  it('filters the roster by name or e-mail and explains an empty search', () => {
+    const renderWithTerm = (term: string) => (
       <MemoryRouter>
         <TeamRoster
           title="No painel"
-          hint="Quem recebe pedidos."
           entries={[teamRosterPromotableEntryMock, teamRosterEditableEntryMock]}
           empty="Nenhuma pessoa"
-          searchLabel="Buscar quem está no painel"
+          term={term}
           onRemove={() => undefined}
         />
       </MemoryRouter>
     )
-    const search = screen.getByRole('searchbox', {
-      name: 'Buscar quem está no painel',
-    })
+    const { rerender } = render(renderWithTerm('duda@'))
 
-    await userEvent.type(search, 'duda@')
     expect(screen.getByText('Duda Reis')).toBeInTheDocument()
     expect(screen.queryByText('Caio Dias')).not.toBeInTheDocument()
 
-    await userEvent.clear(search)
-    await userEvent.type(search, 'zzz')
+    rerender(renderWithTerm('zzz'))
     expect(screen.getByText(/Ninguém com "zzz"/)).toBeInTheDocument()
   })
 
@@ -116,7 +108,6 @@ describe(TeamRoster.name, () => {
       <MemoryRouter>
         <TeamRoster
           title="No painel"
-          hint="Quem recebe pedidos."
           entries={[]}
           empty="Nenhuma pessoa"
           isPending
@@ -130,7 +121,6 @@ describe(TeamRoster.name, () => {
       <MemoryRouter>
         <TeamRoster
           title="Na rua"
-          hint="Quem entrega."
           entries={[]}
           empty="Nenhuma pessoa"
           onRemove={() => undefined}
@@ -148,7 +138,6 @@ describe(TeamRoster.name, () => {
       <MemoryRouter>
         <TeamRoster
           title="No painel"
-          hint="Quem recebe pedidos."
           entries={[teamRosterEditableEntryMock]}
           empty="Nenhuma pessoa"
           onRemove={onRemove}
@@ -189,7 +178,6 @@ describe(TeamRoster.name, () => {
       <MemoryRouter>
         <TeamRoster
           title="Ativos"
-          hint="Quem recebe, aceita e acompanha os pedidos."
           entries={[teamRosterCourierEntryMock]}
           empty="Nenhum"
           removingId="other"
@@ -217,7 +205,6 @@ describe(TeamRoster.name, () => {
       <MemoryRouter>
         <TeamRoster
           title="No painel"
-          hint="Quem recebe pedidos."
           entries={[teamRosterFixedEntryMock]}
           empty="Nenhuma pessoa"
           onRemove={() => undefined}
@@ -236,7 +223,6 @@ describe(TeamRoster.name, () => {
       <MemoryRouter>
         <TeamRoster
           title="No painel"
-          hint="Quem recebe pedidos."
           entries={[teamRosterPromotableEntryMock]}
           empty="Nenhuma pessoa"
           changingPositionId="user-2"

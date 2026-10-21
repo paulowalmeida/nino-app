@@ -14,19 +14,21 @@
 
 
 .colPeople {
+  @apply hidden md:table-column;
   width: 8rem;
 }
 
 .colBelow {
+  @apply hidden lg:table-column;
   width: 14rem;
 }
 
 .colAccess {
-  width: 9rem;
+  @apply w-24 lg:w-36;
 }
 
 .colActions {
-  width: 9rem;
+  @apply w-14 sm:w-36;
 }
 
 .identity {
@@ -64,11 +66,11 @@
 }
 
 .wideActions {
-  @apply hidden items-center justify-end lg:flex;
+  @apply hidden items-center justify-end sm:flex;
 }
 
 .compactActions {
-  @apply flex justify-end lg:hidden;
+  @apply flex justify-end sm:hidden;
 }
 
 .belowTrigger {

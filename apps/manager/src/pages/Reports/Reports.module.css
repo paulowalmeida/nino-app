@@ -1,7 +1,7 @@
 @reference "@nino/ds/globals.css";
 
 .reportsPage {
-  @apply relative mx-auto flex w-full max-w-page flex-col;
+  @apply relative mx-auto flex w-full max-w-workspace flex-col;
 }
 
 .dateLabel {

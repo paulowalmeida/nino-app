@@ -10,9 +10,10 @@ import { useNavigate } from 'react-router'
 import { useSidemenu } from '@layouts/AppLayout/hooks/useSidemenu/useSidemenu'
 import { Box } from '@nino/ds/components/Box'
 import { Button } from '@nino/ds/components/Button'
-import { Icon } from '@nino/ds/components/Icon'
+import { Icon, type IconName } from '@nino/ds/components/Icon'
 import { Input } from '@nino/ds/components/Input'
 import { Modal } from '@nino/ds/components/Modal'
+import { ScrollArea } from '@nino/ds/components/ScrollArea'
 import { Text } from '@nino/ds/components/Text'
 import { useCurrentUnit } from '@shared/hooks/session/useCurrentUnit/useCurrentUnit'
 
@@ -43,24 +44,30 @@ export const CommandPalette = ({ open, onOpenChange }: CommandPaletteProps) => {
 
   const options = useMemo(
     () => {
+      const iconBySection = new Map<string, IconName>(
+        groups.flatMap(({ items }) =>
+          items.map(({ section, icon }) => [section, icon] as const)
+        )
+      )
+
       const navigationOptions = groups.flatMap(({ title, items }) =>
-        items.map(({ section, label }) => ({
+        items.map(({ section, label, icon }) => ({
           value: section,
           label: title ? `${title} · ${label}` : label,
           inputLabel: label,
+          path: title,
+          icon,
         }))
       )
 
-      const allowedSections = new Set(
-        groups.flatMap(({ items }) => items.map(({ section }) => section))
-      )
-
       const functionalityOptions = FUNCTIONALITY_SEARCH_ITEMS.filter((item) =>
-        allowedSections.has(item.section)
+        iconBySection.has(item.section)
       ).map(({ section, label, group, target }) => ({
         value: `${target ?? section}::${label}`,
         label: `${group} · ${label}`,
         inputLabel: label,
+        path: group,
+        icon: iconBySection.get(section),
       }))
 
       return [...navigationOptions, ...functionalityOptions]
@@ -93,6 +100,12 @@ export const CommandPalette = ({ open, onOpenChange }: CommandPaletteProps) => {
     document.addEventListener('keydown', onKeyDown)
     return () => document.removeEventListener('keydown', onKeyDown)
   }, [onOpenChange])
+
+  useEffect(() => {
+    document
+      .getElementById(`command-palette-option-${activeIndex}`)
+      ?.scrollIntoView?.({ block: 'nearest' })
+  }, [activeIndex])
 
   useEffect(() => {
     if (!open) return
@@ -150,13 +163,15 @@ export const CommandPalette = ({ open, onOpenChange }: CommandPaletteProps) => {
       ariaLabel="Buscar funcionalidade"
       size="md"
       contentClassName={styles.modal}
+      bodyClassName={styles.commandPaletteBody}
+      footerClassName={styles.commandPaletteFooter}
       body={
-        <Box className={styles.commandPaletteBody}>
+        <>
           <Box className={styles.searchField}>
-            <Icon name="search" size="sm" className={styles.searchIcon} />
+            <Icon name="search" className={styles.searchIcon} />
             <Input
               ref={inputRef}
-              placeholder="Buscar uma funcionalidade…"
+              placeholder="Para onde você quer ir?"
               type="search"
               aria-label="Buscar funcionalidade"
               aria-autocomplete="list"
@@ -173,41 +188,82 @@ export const CommandPalette = ({ open, onOpenChange }: CommandPaletteProps) => {
               className={styles.commandPaletteInput}
             />
           </Box>
-          <Box
-            id="command-palette-options"
-            role="listbox"
-            aria-label="Resultados da busca"
-            className={styles.optionPanel}
-          >
-            {filteredOptions.length > 0 ? (
-              filteredOptions.map((option, index) => (
-                <Button
-                  key={option.value}
-                  id={`command-palette-option-${index}`}
-                  role="option"
-                  aria-selected={index === activeIndex}
-                  variant="ghost"
-                  className={`${styles.option} ${
-                    index === activeIndex ? styles.optionActive : ''
-                  }`}
-                  onMouseEnter={() => setActiveIndex(index)}
-                  onClick={() => navigateTo(option.value)}
-                >
-                  {option.label}
-                </Button>
-              ))
-            ) : (
-              <Text size="sm" color="faint" className={styles.emptyMessage}>
-                Nenhuma funcionalidade encontrada
-              </Text>
-            )}
-          </Box>
-        </Box>
+          <ScrollArea className={styles.optionScroll} fadeEdges>
+            <Box
+              id="command-palette-options"
+              role="listbox"
+              aria-label="Resultados da busca"
+              className={styles.optionPanel}
+            >
+              {filteredOptions.length > 0 ? (
+                filteredOptions.map((option, index) => {
+                  const isActive = index === activeIndex
+
+                  return (
+                    <Button
+                      key={option.value}
+                      id={`command-palette-option-${index}`}
+                      role="option"
+                      aria-selected={isActive}
+                      aria-label={option.label}
+                      variant="ghost"
+                      className={`${styles.option} ${
+                        isActive ? styles.optionActive : ''
+                      }`}
+                      onMouseMove={() => setActiveIndex(index)}
+                      onClick={() => navigateTo(option.value)}
+                    >
+                      <Box className={styles.optionIcon} aria-hidden="true">
+                        <Icon name={option.icon ?? 'search'} size="sm" />
+                      </Box>
+                      <Box className={styles.optionText}>
+                        <Text as="span" className={styles.optionTitle}>
+                          {option.inputLabel}
+                        </Text>
+                        {option.path && (
+                          <Text as="span" className={styles.optionPath}>
+                            {option.path}
+                          </Text>
+                        )}
+                      </Box>
+                      {isActive && (
+                        <kbd className={styles.optionEnter} aria-hidden="true">
+                          ↵
+                        </kbd>
+                      )}
+                    </Button>
+                  )
+                })
+              ) : (
+                <Box className={styles.empty}>
+                  <Text as="p" className={styles.emptyTitle}>
+                    Nada encontrado para “{query.trim()}”
+                  </Text>
+                  <Text as="p" className={styles.emptyHint}>
+                    Tente o nome da tela, como Caixa ou Produtos.
+                  </Text>
+                </Box>
+              )}
+            </Box>
+          </ScrollArea>
+        </>
       }
       footer={
-        <Text size="xs" color="faint">
-          Ctrl/Cmd + K para abrir
-        </Text>
+        <Box direction="row" gap={4} className={styles.hints} aria-hidden="true">
+          <Text as="span" className={styles.hint}>
+            <kbd className={styles.key}>↑</kbd>
+            <kbd className={styles.key}>↓</kbd>
+            navegar
+          </Text>
+          <Text as="span" className={styles.hint}>
+            <kbd className={styles.key}>↵</kbd>
+            abrir
+          </Text>
+          <Text as="span" className={styles.hint}>
+            <kbd className={styles.key}>esc</kbd>
+            fechar
+          </Text>
+        </Box>
       }
     />
   )

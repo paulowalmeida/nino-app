@@ -1,8 +1,7 @@
 @reference "@nino/ds/globals.css";
 
 .catalogCategoriesPage {
-  @apply relative flex h-[calc(100dvh-3.5rem)] min-h-0 flex-col overflow-hidden;
-  @apply lg:h-dvh;
+  @apply relative flex h-full min-h-0 flex-col overflow-hidden;
 }
 
 .headerRegion {

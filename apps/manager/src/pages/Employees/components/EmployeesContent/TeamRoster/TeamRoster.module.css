@@ -8,34 +8,17 @@
   @apply md:flex md:min-h-0 md:flex-1 md:flex-col;
 }
 
-.head {
-  @apply mb-3 flex shrink-0 flex-col gap-3 px-4 lg:px-10;
-  @apply sm:flex-row sm:items-end sm:justify-between sm:gap-4;
-}
 
-.headings {
-  @apply min-w-0;
-}
 
-.teamRosterSearch {
-  @apply h-11 w-full shrink-0 sm:w-56;
-}
 
-.teamRosterTitle {
-  @apply font-display text-lg font-extrabold tracking-[-0.01em];
-  @apply text-fg-strong;
-}
 
-.hint {
-  @apply mt-0.5 text-sm text-fg-faint;
-}
 
 /* CONSTRAINT: Table já envolve a <table> no seu próprio scroller, e o
  * cabeçalho sticky só gruda se a rolagem vertical acontecer nesse mesmo
  * elemento.
  */
 .tableShell > div {
-  @apply md:min-h-0 md:flex-1 md:px-10;
+  @apply md:min-h-0 md:flex-1 md:px-4 lg:px-10;
   overflow-y: auto;
 }
 
@@ -179,4 +162,54 @@
 .roleTrigger,
 .kebab {
   @apply ml-auto;
+}
+
+/* WHY: abaixo do tablet a tabela de 4 colunas empurrava cargo e ações para
+ * fora da tela; cada pessoa vira um cartão com identidade, cargo e menu na
+ * mesma linha e o último acesso embaixo, alinhado ao nome.
+ */
+@media (max-width: 639px) {
+  .tableShell table,
+  .tableShell tbody {
+    display: block;
+  }
+
+  .tableShell colgroup,
+  .tableShell thead {
+    display: none;
+  }
+
+  .row {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto auto;
+    align-items: center;
+    column-gap: 0.5rem;
+    padding: 0.75rem 1rem;
+  }
+
+  .row > td {
+    padding: 0;
+  }
+
+  .identityCol {
+    grid-row: 1;
+    grid-column: 1;
+    min-width: 0;
+  }
+
+  .roleCol {
+    grid-row: 1;
+    grid-column: 2;
+  }
+
+  .actionsCol {
+    grid-row: 1;
+    grid-column: 3;
+  }
+
+  .row > .seenCol {
+    grid-row: 2;
+    grid-column: 1 / -1;
+    padding-left: 3.25rem;
+  }
 }

@@ -1,11 +1,7 @@
 @reference "@nino/ds/globals.css";
 
 .content {
-  @apply w-full max-w-6xl;
-}
-
-.toolbar {
-  @apply mb-4 flex justify-end;
+  @apply w-full;
 }
 
 .ghostRow {

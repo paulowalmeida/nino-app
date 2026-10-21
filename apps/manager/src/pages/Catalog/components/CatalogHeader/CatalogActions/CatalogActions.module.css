@@ -1,9 +1,5 @@
 @reference "@nino/ds/globals.css";
 
-.catalogActions {
-  @apply lg:ml-auto;
-}
-
 .manageCategories {
   @apply w-full shrink-0 sm:w-auto;
 }

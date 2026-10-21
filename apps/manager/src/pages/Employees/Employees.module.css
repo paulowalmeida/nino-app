@@ -1,6 +1,6 @@
 @reference "@nino/ds/globals.css";
 
 .employeesPage {
-  @apply relative mx-auto flex w-full max-w-page flex-col;
-  @apply md:h-[calc(100dvh-3.5rem)] md:overflow-hidden lg:h-dvh;
+  @apply relative mx-auto flex w-full max-w-workspace flex-col;
+  @apply md:h-full md:overflow-hidden;
 }

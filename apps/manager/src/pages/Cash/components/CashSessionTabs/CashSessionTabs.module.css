@@ -5,7 +5,7 @@
 }
 
 .cashSessionTabs [data-part='list'] {
-  @apply mx-4 w-auto lg:mx-10;
+  @apply mx-4 lg:mx-10;
 }
 
 .cashSessionTabs [data-part='content'] {

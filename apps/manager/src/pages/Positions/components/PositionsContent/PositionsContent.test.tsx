@@ -69,9 +69,6 @@ describe(PositionsContent.name, () => {
 
     renderContent()
 
-    expect(
-      screen.queryByRole('link', { name: /Novo cargo/ })
-    ).not.toBeInTheDocument()
     expect(document.querySelector('[aria-busy="true"]')).not.toBeNull()
   })
 
@@ -83,13 +80,9 @@ describe(PositionsContent.name, () => {
     expect(screen.getByText(/Não foi possível carregar os cargos/)).toBeVisible()
   })
 
-  it('links to the new cargo screen next to the table', () => {
+  it('lists the cargos with their actions', () => {
     renderContent()
 
-    expect(screen.getByRole('link', { name: /Novo cargo/ })).toHaveAttribute(
-      'href',
-      '/novo'
-    )
     expect(screen.getByText('remove Caixa')).toBeInTheDocument()
   })
 

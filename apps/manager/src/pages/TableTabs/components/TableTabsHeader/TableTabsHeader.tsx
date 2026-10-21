@@ -45,7 +45,7 @@ export const TableTabsHeader = () => {
         accent="Comandas"
         description="Acompanhe as mesas abertas e feche a conta quando o cliente pedir."
         actions={
-          <Button onClick={() => setOpeningTab(true)} className='w-full'>Abrir comanda</Button>
+          <Button onClick={() => setOpeningTab(true)}>Abrir comanda</Button>
         }
       />
       <OpenTabDialog open={isOpeningTab} onClose={() => setOpeningTab(false)} />

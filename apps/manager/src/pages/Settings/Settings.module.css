@@ -1,8 +1,8 @@
 @reference "@nino/ds/globals.css";
 
 .settingsPage {
-  @apply relative mx-auto flex h-[calc(100dvh-3.5rem)] w-full flex-col;
-  @apply max-w-page overflow-hidden p-4 lg:h-dvh lg:p-10;
+  @apply relative mx-auto flex h-full w-full flex-col;
+  @apply max-w-workspace overflow-hidden p-4 lg:p-10;
 }
 
 .settingsPanel {

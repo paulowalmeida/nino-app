@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import { Link } from 'react-router'
 
 import { Badge } from '@nino/ds/components/Badge'
@@ -6,7 +5,6 @@ import { Box } from '@nino/ds/components/Box'
 import { Button } from '@nino/ds/components/Button'
 import { EmptyState } from '@nino/ds/components/EmptyState'
 import { Icon } from '@nino/ds/components/Icon'
-import { Input } from '@nino/ds/components/Input'
 import { Menu, type MenuItem } from '@nino/ds/components/Menu'
 import { Skeleton } from '@nino/ds/components/Skeleton'
 import {
@@ -33,11 +31,10 @@ export type TeamRosterProps = {
   /** Row with a cargo change in progress. */
   changingPositionId?: string
   title: string
-  hint: string
   entries: RosterEntry[]
   empty: string
-  /** Enables filtering this group. Reads as the field's accessible name. */
-  searchLabel?: string
+  /** Name or e-mail typed in the page toolbar */
+  term?: string
   isPending?: boolean
   removingId?: string
   changingActivityId?: string
@@ -49,10 +46,9 @@ export type TeamRosterProps = {
 
 export const TeamRoster = ({
   title,
-  hint,
   entries,
   empty,
-  searchLabel,
+  term = '',
   isPending,
   removingId,
   changingActivityId,
@@ -63,13 +59,7 @@ export const TeamRoster = ({
   isInactive = false,
   onChangePosition,
 }: TeamRosterProps) => {
-  const [term, setTerm] = useState('')
   const query = term.trim().toLowerCase()
-
-  /* The field is measured against the group it heads, never the filtered
-     result — it must not vanish under the cursor when a search matches
-     nobody. */
-  const isSearchable = !!searchLabel && entries.length > 0
 
   const matches = (entry: RosterEntry): boolean =>
     entry.name.toLowerCase().includes(query) ||
@@ -134,23 +124,7 @@ export const TeamRoster = ({
 
   return (
     <Box as="section" id="equipe-do-painel" className={styles.roster}>
-      <Box as="header" className={`${motion.unroll} ${styles.head}`}>
-        <Box className={styles.headings}>
-          <h2 className="sr-only">{title}</h2>
-          <Text className={styles.hint}>{hint}</Text>
-        </Box>
-
-        {isSearchable && (
-          <Input
-            type="search"
-            value={term}
-            placeholder="Nome ou e-mail"
-            aria-label={searchLabel}
-            className={styles.teamRosterSearch}
-            onChange={(event) => setTerm(event.target.value)}
-          />
-        )}
-      </Box>
+      <h2 className="sr-only">{title}</h2>
 
       {/* the same list, with the people yet to arrive: avatar, name, e-mail,
           role */}
@@ -178,8 +152,8 @@ export const TeamRoster = ({
 
             <TableBody>
               {TEAM_ROSTER_GHOST_ROWS.map((row) => (
-                <TableRow key={row}>
-                  <TableCell>
+                <TableRow key={row} className={styles.row}>
+                  <TableCell className={styles.identityCol}>
                     <Box className={styles.identityCell}>
                       <Skeleton className={styles.ghostMark} />
                       <Box className={styles.person}>
@@ -188,13 +162,13 @@ export const TeamRoster = ({
                       </Box>
                     </Box>
                   </TableCell>
-                  <TableCell>
+                  <TableCell className={styles.seenCol}>
                     <Skeleton className={styles.ghostEmail} />
                   </TableCell>
-                  <TableCell className={styles.colRight}>
+                  <TableCell className={`${styles.colRight} ${styles.roleCol}`}>
                     <Skeleton className={styles.ghostRole} />
                   </TableCell>
-                  <TableCell />
+                  <TableCell className={styles.actionsCol} />
                 </TableRow>
               ))}
             </TableBody>
@@ -258,10 +232,10 @@ export const TeamRoster = ({
                 return (
                   <TableRow
                     key={entry.id}
-                    className={motion.deal}
+                    className={`${motion.deal} ${styles.row}`}
                     style={riseDelay(index * 50 + 60)}
                   >
-                    <TableCell>
+                    <TableCell className={styles.identityCol}>
                       {entry.href ? (
                         <Link to={entry.href} className={styles.identity}>
                           {identity}
@@ -272,14 +246,14 @@ export const TeamRoster = ({
                     </TableCell>
 
                     <TableCell
-                      className={
+                      className={`${styles.seenCol} ${
                         entry.lastLoginAt ? styles.lastSeen : styles.neverSeen
-                      }
+                      }`}
                     >
                       {lastSeenLabel(entry.lastLoginAt)}
                     </TableCell>
 
-                    <TableCell className={styles.colRight}>
+                    <TableCell className={`${styles.colRight} ${styles.roleCol}`}>
                       {roleItems.length > 0 ? (
                         <Menu
                           contentClassName={styles.menuPanel}
@@ -310,7 +284,9 @@ export const TeamRoster = ({
                       )}
                     </TableCell>
 
-                    <TableCell className={styles.colRight}>
+                    <TableCell
+                      className={`${styles.colRight} ${styles.actionsCol}`}
+                    >
                       <Box
                         direction="row"
                         gap={1}
@@ -329,19 +305,6 @@ export const TeamRoster = ({
                             <Icon name="pencil" />
                           </Button>
                         )}
-                        {entry.removable && (
-                          <Button
-                            variant="ghost"
-                            size="icon"
-                            className={`${motion.press} ${styles.delete}`}
-                            disabled={isBusy}
-                            aria-label={`Remover ${entry.name} da loja`}
-                            title="Remover da loja"
-                            onClick={() => onRemove(entry.id, entry.kind)}
-                          >
-                            <Icon name="trash" />
-                          </Button>
-                        )}
                         {canSetActivity && (
                           <Button
                             variant="ghost"
@@ -353,6 +316,19 @@ export const TeamRoster = ({
                             onClick={() => onSetActivity(entry.id)}
                           >
                             <Icon name={isInactive ? 'play' : 'pause'} />
+                          </Button>
+                        )}
+                        {entry.removable && (
+                          <Button
+                            variant="ghost"
+                            size="icon"
+                            className={`${motion.press} ${styles.delete}`}
+                            disabled={isBusy}
+                            aria-label={`Remover ${entry.name} da loja`}
+                            title="Remover da loja"
+                            onClick={() => onRemove(entry.id, entry.kind)}
+                          >
+                            <Icon name="trash" />
                           </Button>
                         )}
                       </Box>

@@ -12,15 +12,9 @@
   @apply flex min-w-0 flex-col;
 }
 
-.settingsTableSectionTabs > [data-part='list'] {
-  @apply w-fit;
-}
-
-@media (max-width: 374px) {
-  .settingsTableSectionTabs > [data-part='list'] {
-    @apply flex w-full;
-  }
-
+/* WHY: três rótulos longos não cabem lado a lado no celular no tamanho
+ * normal; o trilho largo divide a linha e o texto encolhe para caber. */
+@media (max-width: 639px) {
   .settingsTableSectionTabs > [data-part='list'] > [role='tab'] {
     @apply min-w-0 flex-1 justify-center px-2 text-xs;
   }

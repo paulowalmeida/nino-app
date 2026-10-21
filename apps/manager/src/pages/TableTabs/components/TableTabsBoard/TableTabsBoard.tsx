@@ -2,11 +2,11 @@ import { useEffect, useRef, useState } from 'react'
 
 import { Alert } from '@nino/ds/components/Alert'
 import { Box } from '@nino/ds/components/Box'
-import { Chip } from '@nino/ds/components/Chip'
 import { EmptyState } from '@nino/ds/components/EmptyState'
 import { Input } from '@nino/ds/components/Input'
 import { NinoMascot } from '@nino/ds/components/NinoMascot'
 import { Skeleton } from '@nino/ds/components/Skeleton'
+import { Tabs } from '@nino/ds/components/Tabs'
 import { TableTabCard } from '@pages/TableTabs/components/TableTabsBoard/TableTabCard/TableTabCard'
 import { TABLE_TABS_EMPTY_MESSAGE } from '@pages/TableTabs/constants/tableTabs.constants'
 import { useTableTabsFacade } from '@pages/TableTabs/facades/useTableTabsFacade/useTableTabsFacade'
@@ -71,10 +71,7 @@ export const TableTabsBoard = () => {
       <Box className={styles.tableTabsBoard}>
         <Box className={styles.tableTabsBoardControls} aria-hidden="true">
           <Skeleton className={styles.skeletonSearch} />
-          <Box direction="row" className={styles.skeletonGroups}>
-            <Skeleton className={styles.skeletonGroup} />
-            <Skeleton className={styles.skeletonGroup} />
-          </Box>
+          <Skeleton className={styles.skeletonGroups} />
         </Box>
 
         <Box className={styles.tableTabsBoardScroll}>
@@ -95,29 +92,25 @@ export const TableTabsBoard = () => {
           className={styles.tableTabsBoardSearch}
           onChange={(event) => updateSearch(event.target.value)}
         />
-        <Box
-          direction="row"
-          role="tablist"
-          aria-label="Situação das comandas"
+        <Tabs
+          label="Situação das comandas"
           className={`${motion.deal} ${styles.tableTabsBoardGroups}`}
-        >
-          <Chip
-            variant="tab"
-            className={styles.tableTabsBoardGroup}
-            selected={group === 'active'}
-            onClick={() => selectGroup('active')}
-          >
-            Em aberto ({activeTabs.length})
-          </Chip>
-          <Chip
-            variant="tab"
-            className={styles.tableTabsBoardGroup}
-            selected={group === 'finalized'}
-            onClick={() => selectGroup('finalized')}
-          >
-            Finalizadas ({finalizedTabs.length})
-          </Chip>
-        </Box>
+          fullWidth={{ mobile: true, tablet: false }}
+          value={group}
+          onValueChange={(value) => selectGroup(value as TabGroup)}
+          tabs={[
+            {
+              value: 'active',
+              label: `Em aberto · ${activeTabs.length}`,
+              content: null,
+            },
+            {
+              value: 'finalized',
+              label: `Finalizadas · ${finalizedTabs.length}`,
+              content: null,
+            },
+          ]}
+        />
       </Box>
 
       <Box className={styles.tableTabsBoardScroll}>

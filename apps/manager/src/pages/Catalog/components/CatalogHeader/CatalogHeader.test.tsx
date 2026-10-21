@@ -87,4 +87,19 @@ describe(CatalogHeader.name, () => {
       screen.queryByRole('heading', { name: 'Produtos' })
     ).not.toBeInTheDocument()
   })
+  it('hides the management actions from who cannot manage the catalog', () => {
+    vi.mocked(useCatalogFacade).mockReturnValue({
+      ...useCatalogFacade(),
+      canManageCatalog: false,
+    })
+
+    renderContainer()
+
+    expect(
+      screen.queryByRole('link', { name: 'Gerenciar categorias' })
+    ).not.toBeInTheDocument()
+    expect(
+      screen.queryByRole('link', { name: 'Novo item' })
+    ).not.toBeInTheDocument()
+  })
 })

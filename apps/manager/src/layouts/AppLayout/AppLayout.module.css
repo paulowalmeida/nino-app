@@ -1,7 +1,7 @@
 @reference "@nino/ds/globals.css";
 
 .appLayoutShell {
-  @apply flex min-h-dvh bg-surface-raised;
+  @apply flex h-dvh bg-surface-raised;
 }
 
 .appLayoutOverlay {
