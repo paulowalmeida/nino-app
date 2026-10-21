@@ -60,3 +60,14 @@
   @apply flex flex-col gap-2 border-t border-border/60 pt-5;
   @apply sm:flex-row sm:justify-end;
 }
+
+@media (max-width: 639px) {
+  .productDetailFormTabs :global([role='tablist']) {
+    @apply max-w-full overflow-x-auto overscroll-x-contain;
+    scrollbar-width: none;
+  }
+
+  .productDetailFormTabs :global([role='tab']) {
+    @apply flex-none;
+  }
+}
