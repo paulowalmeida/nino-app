@@ -7,7 +7,6 @@ import { Text } from '@nino/ds/components/Text'
 import { CatalogToolbar } from '@pages/Catalog/components/CatalogHeader/CatalogToolbar/CatalogToolbar'
 import { useCatalogFacade } from '@pages/Catalog/facades/useCatalogFacade'
 import { CategoryChips } from '@shared/components/CategoryChips/CategoryChips'
-import { useProductImagesReady } from '@shared/hooks/product/useProductImagesReady/useProductImagesReady'
 import { useDebouncedValue } from '@shared/hooks/ui/useDebouncedValue/useDebouncedValue'
 
 import motion from '@styles/motion.module.css'
@@ -25,16 +24,15 @@ export const CatalogHeader = () => {
     categories,
     categoriesStatus,
     isPagePending,
-    items,
+    isFirstRevealPending,
     canManageCatalog,
   } = useCatalogFacade()
-  const areImagesReady = useProductImagesReady(items)
   const debouncedTerm = useDebouncedValue(term)
   useEffect(() => {
     setSearch(debouncedTerm.trim())
   }, [debouncedTerm, setSearch])
 
-  if (isPagePending || !areImagesReady) {
+  if (isPagePending || isFirstRevealPending) {
     return (
       <Box aria-busy="true" direction="column" className={styles.skeleton}>
         <Text as="p" role="status" className={styles.loadingLabel}>

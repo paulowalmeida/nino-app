@@ -13,14 +13,19 @@ const brl = new Intl.NumberFormat('pt-BR', {
 
 type MenuRowContentProps = {
   item: MenuItem
+  isImagePreloaded?: boolean
 }
 
-export const MenuRowContent = ({ item }: MenuRowContentProps) => (
+export const MenuRowContent = ({
+  item,
+  isImagePreloaded = false,
+}: MenuRowContentProps) => (
   <Link to={item.id} className={styles.itemLink}>
     <ItemThumb
       name={item.name}
       imageUrl={item.images?.[0]?.url}
       fallbackUrl={item.fallbackUrl}
+      isPreloaded={isImagePreloaded}
     />
     <Text as="span" className={styles.itemText}>
       <Text

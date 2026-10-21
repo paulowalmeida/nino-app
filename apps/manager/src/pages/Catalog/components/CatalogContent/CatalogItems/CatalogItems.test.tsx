@@ -41,6 +41,7 @@ const renderList = (overrides: Partial<CatalogItemsHarness> = {}) => {
     isFetchingNextPage: props.isFetchingNextPage,
     hasNextPage: false,
     loadMore: vi.fn(),
+    preloadedImageItemIds: new Set(),
     isSelecting: props.isSelecting,
     selectedIds: props.selectedIds,
     toggleItemSelection: props.onToggleSelection,

@@ -1,6 +1,6 @@
 import { useMemo } from 'react'
 
-import { useInfiniteQuery } from '@tanstack/react-query'
+import { keepPreviousData, useInfiniteQuery } from '@tanstack/react-query'
 
 import {
   toCatalogItems,
@@ -35,6 +35,7 @@ export const useCatalogQuery = (
         : undefined
     },
     enabled: !!unitId,
+    placeholderData: keepPreviousData,
   })
 
   const items = useMemo(() => toCatalogItems(query.data), [query.data])
@@ -49,5 +50,6 @@ export const useCatalogQuery = (
     fetchNextPage: query.fetchNextPage,
     isFetchingNextPage: query.isFetchingNextPage,
     hasNextPage: query.hasNextPage,
+    isPlaceholderData: query.isPlaceholderData,
   }
 }

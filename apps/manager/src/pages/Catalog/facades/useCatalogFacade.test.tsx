@@ -4,6 +4,7 @@ import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { useCatalogFacade } from '@pages/Catalog/facades/useCatalogFacade'
 import { useCatalogCategoriesQuery } from '@pages/Catalog/hooks/useCatalogCategoriesQuery/useCatalogCategoriesQuery'
 import { useCatalogCommands } from '@pages/Catalog/hooks/useCatalogCommands/useCatalogCommands'
+import { useCatalogListReveal } from '@pages/Catalog/hooks/useCatalogListReveal/useCatalogListReveal'
 import { useCatalogMutations } from '@pages/Catalog/hooks/useCatalogMutations/useCatalogMutations'
 import { useCatalogQuery } from '@pages/Catalog/hooks/useCatalogQuery/useCatalogQuery'
 import { useCatalogStore } from '@pages/Catalog/states/catalog/catalog.store'
@@ -14,6 +15,7 @@ vi.mock('@shared/hooks/session/useCurrentUnit/useCurrentUnit')
 vi.mock(
   '@pages/Catalog/hooks/useCatalogCategoriesQuery/useCatalogCategoriesQuery'
 )
+vi.mock('@pages/Catalog/hooks/useCatalogListReveal/useCatalogListReveal')
 vi.mock('@pages/Catalog/hooks/useCatalogCommands/useCatalogCommands')
 vi.mock('@pages/Catalog/hooks/useCatalogMutations/useCatalogMutations')
 vi.mock('@pages/Catalog/hooks/useCatalogQuery/useCatalogQuery')
@@ -53,6 +55,8 @@ describe(useCatalogFacade.name, () => {
       items: [{ id: 'item-1' }],
       total: 1,
       status: 'success',
+      queryStatus: 'success',
+      isPlaceholderData: false,
       isFetchingNextPage: false,
       hasNextPage: false,
     } as unknown as ReturnType<typeof useCatalogQuery>)
@@ -67,6 +71,24 @@ describe(useCatalogFacade.name, () => {
       deleteItems: { isPending: false, mutateAsync: deleteItems },
     } as unknown as ReturnType<typeof useCatalogMutations>)
     vi.mocked(useCatalogCommands).mockReturnValue(commands as never)
+    vi.mocked(useCatalogListReveal).mockReturnValue({
+      isFirstRevealPending: false,
+      isListSwitching: true,
+      preloadedImageItemIds: new Set(['item-1']),
+    })
+  })
+
+  it('exposes the list reveal state of the loaded catalog page', () => {
+    const { result } = renderHook(() => useCatalogFacade())
+
+    expect(useCatalogListReveal).toHaveBeenCalledWith(
+      [{ id: 'item-1' }],
+      true,
+      false
+    )
+    expect(result.current.isFirstRevealPending).toBe(false)
+    expect(result.current.isListSwitching).toBe(true)
+    expect(result.current.preloadedImageItemIds).toEqual(new Set(['item-1']))
   })
 
   it('exposes view data and delegates catalog commands through the facade', async () => {

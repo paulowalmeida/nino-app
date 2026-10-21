@@ -1,6 +1,6 @@
 import { MemoryRouter } from 'react-router'
 
-import { render, screen, waitFor } from '@testing-library/react'
+import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { describe, expect, it, vi } from 'vitest'
 
@@ -49,6 +49,7 @@ const BoardHarness = ({
     hasNextPage: false,
     load: vi.fn(),
     loadMore: vi.fn(),
+    preloadedImageItemIds: new Set(),
     requestDeleteItems,
     requestDeleteItem: onRequestDelete,
     setAvailability: vi.fn(),
@@ -155,44 +156,5 @@ describe(CatalogContent.name, () => {
 
     // Assert
     expect(screen.getByText('Carregando mais itens…')).toBeInTheDocument()
-  })
-
-  it('keeps list skeletons until product thumbnails finish decoding', async () => {
-    const preloads: Array<{ onload: (() => void) | null }> = []
-
-    class PendingImage {
-      onload: (() => void) | null = null
-      onerror: (() => void) | null = null
-      complete = false
-      naturalWidth = 0
-
-      set src(_source: string) {
-        preloads.push(this)
-      }
-
-      decode = () => Promise.resolve()
-    }
-
-    vi.stubGlobal('Image', PendingImage)
-    render(
-      <BoardHarness
-        items={[
-          {
-            ...item,
-            images: [
-              { id: 'image-1', url: '/catalog-coxinha.png', isPrimary: true },
-            ],
-          },
-        ]}
-      />
-    )
-
-    await waitFor(() => expect(preloads).toHaveLength(1))
-    expect(screen.queryByLabelText('Excluir Coxinha')).not.toBeInTheDocument()
-
-    preloads[0].onload?.()
-
-    expect(await screen.findByLabelText('Excluir Coxinha')).toBeInTheDocument()
-    vi.unstubAllGlobals()
   })
 })

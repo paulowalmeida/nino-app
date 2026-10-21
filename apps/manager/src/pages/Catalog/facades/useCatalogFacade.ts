@@ -1,5 +1,6 @@
 import { useCatalogCategoriesQuery } from '@pages/Catalog/hooks/useCatalogCategoriesQuery/useCatalogCategoriesQuery'
 import { useCatalogCommands } from '@pages/Catalog/hooks/useCatalogCommands/useCatalogCommands'
+import { useCatalogListReveal } from '@pages/Catalog/hooks/useCatalogListReveal/useCatalogListReveal'
 import { useCatalogMutations } from '@pages/Catalog/hooks/useCatalogMutations/useCatalogMutations'
 import { useCatalogQuery } from '@pages/Catalog/hooks/useCatalogQuery/useCatalogQuery'
 import { useCatalogStore } from '@pages/Catalog/states/catalog/catalog.store'
@@ -19,6 +20,11 @@ export const useCatalogFacade = () => {
   const categoriesQuery = useCatalogCategoriesQuery(unitId)
   const mutations = useCatalogMutations(unitId)
   const commands = useCatalogCommands(catalogQuery, clientState, mutations)
+  const listReveal = useCatalogListReveal(
+    catalogQuery.items,
+    catalogQuery.queryStatus === 'success',
+    catalogQuery.isPlaceholderData
+  )
 
   return {
     ...clientState,
@@ -30,6 +36,9 @@ export const useCatalogFacade = () => {
     status: catalogQuery.status,
     isPagePending:
       catalogQuery.status === 'loading' || categoriesQuery.status === 'loading',
+    isFirstRevealPending: listReveal.isFirstRevealPending,
+    isListSwitching: listReveal.isListSwitching,
+    preloadedImageItemIds: listReveal.preloadedImageItemIds,
     isFetchingNextPage: catalogQuery.isFetchingNextPage,
     hasNextPage: catalogQuery.hasNextPage ?? false,
     categories: categoriesQuery.categories,

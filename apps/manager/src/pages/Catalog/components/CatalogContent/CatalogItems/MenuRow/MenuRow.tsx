@@ -20,6 +20,7 @@ const entranceDelay = (index: number): number =>
 
 export type MenuRowProps = {
   item: MenuItem
+  isImagePreloaded?: boolean
   index: number
   canReorder: boolean
   canManageCatalog?: boolean
@@ -33,6 +34,7 @@ export type MenuRowProps = {
 
 export const MenuRow = ({
   item,
+  isImagePreloaded = false,
   index,
   canReorder,
   canManageCatalog = true,
@@ -73,7 +75,7 @@ export const MenuRow = ({
         onToggleSelect={() => onToggleSelect(item.id)}
       />
 
-      <MenuRowContent item={item} />
+      <MenuRowContent item={item} isImagePreloaded={isImagePreloaded} />
 
       <MenuRowTrailingActions
         item={item}

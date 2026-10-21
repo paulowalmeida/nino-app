@@ -11,8 +11,17 @@ import { CatalogContentSkeleton } from '@pages/Catalog/skeletons/CatalogContent/
 import styles from '@pages/Catalog/Catalog.module.css'
 
 export const Catalog = () => {
-  const { items, status, isPagePending } = useCatalogFacade()
-  const isPending = isPagePending ?? status === 'loading'
+  const {
+    items,
+    status,
+    isPagePending,
+    isFirstRevealPending,
+    isListSwitching,
+  } = useCatalogFacade()
+  const isPending =
+    (isPagePending ?? status === 'loading') ||
+    isFirstRevealPending ||
+    isListSwitching
   const isError = status === 'error'
   const isEmpty = !isPending && !isError && items.length === 0
 

@@ -33,6 +33,7 @@ export const CatalogItems = ({ className }: CatalogItemsProps) => {
     reorderItems,
     resetSelection,
     canManageCatalog,
+    preloadedImageItemIds,
   } = useCatalogFacade()
   const loadMoreSentinelRef = useLoadMore(hasNextPage, () => void loadMore())
   const canReorder = canManageCatalog && canReorderCatalog(categoryId, search)
@@ -68,6 +69,7 @@ export const CatalogItems = ({ className }: CatalogItemsProps) => {
             <MenuRow
               key={item.id}
               item={item}
+              isImagePreloaded={preloadedImageItemIds.has(item.id)}
               index={index}
               canReorder={canReorder && !isSelecting}
               canManageCatalog={canManageCatalog}

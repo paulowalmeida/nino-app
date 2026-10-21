@@ -1,7 +1,7 @@
 @reference "@nino/ds/globals.css";
 
 .catalogItemsList {
-  @apply overflow-hidden px-4 pb-4;
+  @apply w-0 min-w-full overflow-hidden pb-4 min-[426px]:px-4;
   @apply lg:px-10 lg:pb-10;
 }
 
