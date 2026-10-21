@@ -26,6 +26,11 @@ export const lineLengthViolations = (lines) =>
   lines.map((line, index) => [index + 1, line.length]).filter(([, length]) => length > 80).map(([number, length]) => `linha ${number} do trecho escrito: ${length} caracteres (máx 80)`)
 
 export const runSkillHook = async (skill) => {
+  // enforce.mjs imports every hook in one process; register instead of exiting.
+  if (globalThis.__ninoSkillRegistry) {
+    globalThis.__ninoSkillRegistry.push(skill)
+    return
+  }
   const input = JSON.parse((await readStdin()) || '{}')
   const path = input.tool_input?.file_path ?? ''
   if (!path.includes('nino-app/') || !skill.match(path)) process.exit(0)

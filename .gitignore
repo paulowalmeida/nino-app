@@ -10,6 +10,8 @@ coverage/
 TODO.md
 STATUS.md
 FRONTEND.md
+AGENT.md
+CLAUDE.md
 line-length-check.skill
 plugins.md
 .vercel/
@@ -19,6 +21,7 @@ plugins.md
 .claude/*
 !.claude/settings.json
 !.claude/skills
+.agents/*
 
 # saída do build do Storybook
 storybook-static

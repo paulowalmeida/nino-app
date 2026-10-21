@@ -58,15 +58,31 @@ For any task whose correctness depends on an external standard, the agent MUST v
 Before any `Write`, `Edit`, file creation, deletion, rename, or move, the agent **MUST complete these steps in order**:
 
 1. **Understand the request.** Identify exactly what must change and what is explicitly out of scope.
-2. **Identify applicable rules and Skills.** Locate every relevant `rules/` file and Skill for the task type and affected paths.
-3. **Read the applicable rules and Skills.** Locating a file is not enough. The relevant instructions **MUST actually be read** before implementation decisions are made.
-4. **Inspect existing code.** Read the necessary context from files being modified and directly related components, layers, and dependencies.
+2. **Pick the applicable rules from the index below.** Do not search for them; the index is the complete list. Read only the sections that govern the change, not every file.
+3. **Do not pre-read what a hook enforces.** Mechanical rules (line length, CSS tokens, imports, facades, page paths, tests, types, accessibility, boundaries, cycles) are injected as a checklist by the `PreToolUse` hook the first time a file type is touched and are checked by `PostToolUse`. Write the change, then fix every reported violation in one edit.
+4. **Inspect existing code.** Read the files being modified and only the directly related components, layers, and dependencies.
 5. **Search for existing solutions.** Look for existing components, Hooks, Services, utilities, patterns, APIs, and configuration before creating alternatives.
 6. **For UI, search the Design System first.** This is mandatory even when the agent believes it already knows what the DS contains.
 7. **Determine the correct responsibility and architectural layer.** Do this before creating or moving code.
 8. **Only then implement.**
 
 If a required step cannot be completed with sufficient confidence, **DO NOT invent an answer**. Continue investigating or report the limitation/conflict.
+
+### Rule index (`.agents/rules/`)
+
+| Touching | Read |
+| --- | --- |
+| Folder placement, new module, page/feature structure | `architecture.md` |
+| Services, adapters, API types, routing, query keys | `data-boundaries.md` |
+| Hooks, facades, Zustand, TanStack Query | `hooks.md` |
+| Any UI component or JSX | `design-system.md` |
+| `.module.css`, classes, tokens | `styling.md` |
+| Naming, constants, comments, types, general source code | `coding.md` |
+| `*.test.tsx`, `*.mock.ts` | `testing.md` |
+| Multi-file implementation flow | `change-protocol.md` |
+| Audit, review, or rating request (read-only) | `audit-mode.md` |
+
+Skills in `.agents/skills/` are **review and audit procedures**. Load one only when the task is that review/audit or the user names it; they are not part of the implementation preflight.
 
 ## Implementation Rules
 
@@ -105,8 +121,8 @@ When a hook, lint, test, AST check, or other automated check blocks a change:
 1. **Read the complete violation message.**
 2. Identify exactly which rule was violated.
 3. Correct the implementation while respecting the rule.
-4. Run the relevant check again.
-5. Repeat until it passes or until a real conflict prevents completion.
+4. Fix every violation reported in the same message with one edit, not one edit per violation.
+5. If the same check blocks twice for the same reason, stop and report the conflict instead of looping.
 
 The following are **PROHIBITED**:
 
@@ -165,32 +181,7 @@ Before stating that the task is complete, the agent **MUST**:
 
 ## 9/10 Rule Validation Gate
 
-The label **"9/10" is a verification result, not an opinion**.
-
-The agent **MUST NOT** call a rule, Skill, or rule set "9/10" unless every **applicable** gate below has been evaluated explicitly:
-
-```text
-[ ] Rules are normative and unambiguous.
-[ ] Scope and affected code are explicitly defined.
-[ ] Allowed cases are explicit.
-[ ] Forbidden cases are explicit.
-[ ] Exceptions are explicit and narrowly scoped.
-[ ] Common bypasses are explicitly prohibited.
-[ ] Dependencies and layer/state boundaries are explicit.
-[ ] When an external standard is the basis for the rule, the relevant primary technical documentation was checked and the project-specific deviation, if any, is explicit.
-[ ] Relevant repository conventions for the scoped task were inspected.
-[ ] Mechanically verifiable rules have a concrete enforcement path, or the rule is explicitly documented as semantic/non-mechanical and therefore requires Skill review.
-[ ] The final written rule was reread after editing.
-[ ] An adversarial review found no known high-impact ambiguity or contradiction in the scoped rule set.
-```
-
-A gate item is **applicable** when the rule or task actually depends on it. For example, an external-standard check is not applicable to a purely project-specific convention. A mechanical-enforcement check is not applicable when the rule is inherently semantic and cannot be verified reliably without judgment.
-
-If an applicable gate item cannot be established, the agent **MUST NOT** claim 9/10.
-
-The agent **MUST** report which applicable gate items remain unresolved instead of replacing missing evidence with confidence, familiarity, or subjective judgment.
-
-A 9/10 claim MUST be supported by evidence from the scoped repository/rule inspection and, when applicable, primary external documentation. The claim applies only to the inspected scope; it does not certify unrelated rules or the entire repository.
+Only relevant when asked to rate a rule, Skill, or rule set. The gate lives in `.agents/rules/audit-mode.md`; read it only then.
 
 ## Fail-Closed Mode
 

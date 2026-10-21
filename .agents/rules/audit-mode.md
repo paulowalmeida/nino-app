@@ -60,4 +60,31 @@ Wait for an explicit user decision. Do not implement, accept a deviation, select
 
 ## Completion Gate
 
-Before calling an audit complete, review every explicit request, every inspected scope, each finding disposition, applicable checks, and unresolved evidence. Inspect the final audit output for unsupported claims. Do not call a rule or audit 9/10 unless the applicable `AGENTS.md` 9/10 validation gates have been evaluated explicitly.
+Before calling an audit complete, review every explicit request, every inspected scope, each finding disposition, applicable checks, and unresolved evidence. Inspect the final audit output for unsupported claims. Do not call a rule or audit 9/10 unless the applicable 9/10 validation gates below have been evaluated explicitly.
+
+## 9/10 Rule Validation Gate
+
+The label **"9/10" is a verification result, not an opinion**.
+
+The agent **MUST NOT** call a rule, Skill, or rule set "9/10" unless every **applicable** gate below has been evaluated explicitly:
+
+```text
+[ ] Rules are normative and unambiguous.
+[ ] Scope and affected code are explicitly defined.
+[ ] Allowed cases are explicit.
+[ ] Forbidden cases are explicit.
+[ ] Exceptions are explicit and narrowly scoped.
+[ ] Common bypasses are explicitly prohibited.
+[ ] Dependencies and layer/state boundaries are explicit.
+[ ] When an external standard is the basis for the rule, the relevant primary technical documentation was checked and the project-specific deviation, if any, is explicit.
+[ ] Relevant repository conventions for the scoped task were inspected.
+[ ] Mechanically verifiable rules have a concrete enforcement path, or the rule is explicitly documented as semantic/non-mechanical and therefore requires Skill review.
+[ ] The final written rule was reread after editing.
+[ ] An adversarial review found no known high-impact ambiguity or contradiction in the scoped rule set.
+```
+
+A gate item is **applicable** when the rule or task actually depends on it. For example, an external-standard check is not applicable to a purely project-specific convention. A mechanical-enforcement check is not applicable when the rule is inherently semantic and cannot be verified reliably without judgment.
+
+If an applicable gate item cannot be established, the agent **MUST NOT** claim 9/10. Report which applicable gate items remain unresolved instead of replacing missing evidence with confidence, familiarity, or subjective judgment.
+
+A 9/10 claim MUST be supported by evidence from the scoped repository/rule inspection and, when applicable, primary external documentation. The claim applies only to the inspected scope; it does not certify unrelated rules or the entire repository.
