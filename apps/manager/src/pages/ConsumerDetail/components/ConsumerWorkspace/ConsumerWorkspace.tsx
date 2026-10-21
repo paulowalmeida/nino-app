@@ -14,6 +14,7 @@ export const ConsumerWorkspace = () => {
   return (
     <Tabs
       className={styles.panels}
+      fullWidth={{ mobile: true, tablet: false }}
       tabs={[
         {
           value: 'orders',

@@ -2,7 +2,6 @@ import { Box } from '@nino/ds/components/Box'
 import { Text } from '@nino/ds/components/Text'
 import { CollaboratorContactSkeleton } from '@pages/CollaboratorDetail/skeletons/CollaboratorDetailSkeleton/CollaboratorContactSkeleton/CollaboratorContactSkeleton'
 import { CollaboratorHeaderSkeleton } from '@pages/CollaboratorDetail/skeletons/CollaboratorDetailSkeleton/CollaboratorHeaderSkeleton/CollaboratorHeaderSkeleton'
-import { CollaboratorSummarySkeleton } from '@pages/CollaboratorDetail/skeletons/CollaboratorDetailSkeleton/CollaboratorSummarySkeleton/CollaboratorSummarySkeleton'
 import { CollaboratorWorkspaceSkeleton } from '@pages/CollaboratorDetail/skeletons/CollaboratorDetailSkeleton/CollaboratorWorkspaceSkeleton/CollaboratorWorkspaceSkeleton'
 import { Breadcrumb } from '@shared/components/Breadcrumb/Breadcrumb'
 
@@ -19,7 +18,6 @@ export const CollaboratorDetailSkeleton = () => (
     </Text>
 
     <CollaboratorHeaderSkeleton />
-    <CollaboratorSummarySkeleton />
     <CollaboratorContactSkeleton />
     <CollaboratorWorkspaceSkeleton />
   </Box>

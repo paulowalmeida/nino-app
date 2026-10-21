@@ -2,7 +2,7 @@ import { Box } from '@nino/ds/components/Box'
 import { Skeleton } from '@nino/ds/components/Skeleton'
 
 import ghost from './CollaboratorSummarySkeleton.module.css'
-import summary from '@pages/CollaboratorDetail/components/CollaboratorSummary/CollaboratorSummary.module.css'
+import summary from '@pages/CollaboratorDetail/components/CollaboratorWorkspace/CollaboratorSummary/CollaboratorSummary.module.css'
 
 const GHOST_FACTS = ['revenue', 'orders', 'changes']
 

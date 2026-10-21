@@ -14,7 +14,11 @@
 }
 
 .tableTabsBoardGroups {
-  @apply w-fit gap-2;
+  @apply w-full gap-2 sm:w-fit justify-center;
+}
+
+.tableTabsBoardGroup {
+  @apply flex-1 justify-center sm:flex-none;
 }
 
 .skeletonSearch {

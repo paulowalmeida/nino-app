@@ -32,7 +32,6 @@ describe('CollaboratorDetailSkeleton', () => {
     // Assert
     expect(screen.getByLabelText('Resumo do trabalho')).toBeVisible()
     expect(screen.getByLabelText('Contato')).toBeVisible()
-    expect(screen.getByLabelText('Atividade recente')).toBeVisible()
     expect(bones).toHaveLength(placeholderBoneCount)
   })
 })

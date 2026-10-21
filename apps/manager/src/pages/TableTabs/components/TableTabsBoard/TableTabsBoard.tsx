@@ -103,6 +103,7 @@ export const TableTabsBoard = () => {
         >
           <Chip
             variant="tab"
+            className={styles.tableTabsBoardGroup}
             selected={group === 'active'}
             onClick={() => selectGroup('active')}
           >
@@ -110,6 +111,7 @@ export const TableTabsBoard = () => {
           </Chip>
           <Chip
             variant="tab"
+            className={styles.tableTabsBoardGroup}
             selected={group === 'finalized'}
             onClick={() => selectGroup('finalized')}
           >

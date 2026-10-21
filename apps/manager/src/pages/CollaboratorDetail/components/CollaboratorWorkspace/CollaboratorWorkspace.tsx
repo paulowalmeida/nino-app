@@ -4,6 +4,7 @@ import { Dialog } from '@nino/ds/components/Dialog'
 import { Tabs } from '@nino/ds/components/Tabs'
 import { CollaboratorAccess } from '@pages/CollaboratorDetail/components/CollaboratorWorkspace/CollaboratorAccess/CollaboratorAccess'
 import { CollaboratorActivity } from '@pages/CollaboratorDetail/components/CollaboratorWorkspace/CollaboratorActivity/CollaboratorActivity'
+import { CollaboratorSummary } from '@pages/CollaboratorDetail/components/CollaboratorWorkspace/CollaboratorSummary/CollaboratorSummary'
 import { useCollaboratorDetailFacade } from '@pages/CollaboratorDetail/facades/useCollaboratorDetailFacade/useCollaboratorDetailFacade'
 import { EditEmailModal } from '@shared/components/EditEmailModal/EditEmailModal'
 import { loginEmailOf } from '@shared/utils/login-email/login-email'
@@ -22,7 +23,13 @@ export const CollaboratorWorkspace = () => {
     <>
       <Tabs
         className={styles.panels}
+        fullWidth={{ mobile: true, tablet: false }}
         tabs={[
+          {
+            value: 'overview',
+            label: 'Geral',
+            content: <CollaboratorSummary member={member} />,
+          },
           {
             value: 'activity',
             label: `Atividade · ${member.activity.length}`,

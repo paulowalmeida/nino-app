@@ -10,8 +10,8 @@
 
 
 .options {
-  @apply grid w-fit gap-1;
-  @apply grid-cols-6 sm:grid-cols-8 lg:grid-cols-12;
+  @apply grid w-full gap-1;
+  @apply grid-cols-[repeat(auto-fit,minmax(2.25rem,1fr))];
 }
 
 @media (min-width: 2560px) {
@@ -21,7 +21,7 @@
 }
 
 .option {
-  @apply flex size-9 items-center justify-center rounded-2 border border-border;
+  @apply flex h-9 w-full items-center justify-center rounded-2 border border-border;
   @apply bg-surface-page text-lg transition-colors duration-150;
   @apply hover:border-brand-muted hover:bg-brand-soft;
   @apply focus-ring;

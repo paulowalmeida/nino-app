@@ -16,6 +16,7 @@ export type CashSessionTabsProps = {
 export const CashSessionTabs = ({ session, isToday }: CashSessionTabsProps) => (
   <Tabs
     className={styles.cashSessionTabs}
+    fullWidth={{ mobile: true, tablet: false }}
     tabs={[
       {
         value: 'summary',
@@ -30,7 +31,11 @@ export const CashSessionTabs = ({ session, isToday }: CashSessionTabsProps) => (
       {
         value: 'movements',
         label: `Movimentações · ${session.movements.length}`,
-        content: <CashMovements movements={session.movements} />,
+        content: (
+          <Box className={styles.movementsPanel}>
+            <CashMovements movements={session.movements} />
+          </Box>
+        ),
       },
     ]}
   />

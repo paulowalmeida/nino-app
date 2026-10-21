@@ -14,10 +14,6 @@ vi.mock(
   () => ({ CollaboratorHeader: () => <div>header</div> })
 )
 vi.mock(
-  '@pages/CollaboratorDetail/components/CollaboratorSummary/CollaboratorSummary',
-  () => ({ CollaboratorSummary: () => <div>summary</div> })
-)
-vi.mock(
   '@pages/CollaboratorDetail/components/CollaboratorContact/CollaboratorContact',
   () => ({ CollaboratorContact: () => <div>contact</div> })
 )
@@ -48,7 +44,6 @@ describe(CollaboratorDetail.name, () => {
       </MemoryRouter>
     )
     expect(screen.getByText('header')).toBeInTheDocument()
-    expect(screen.getByText('summary')).toBeInTheDocument()
     expect(screen.getByText('contact')).toBeInTheDocument()
     expect(screen.getByText('workspace')).toBeInTheDocument()
   })

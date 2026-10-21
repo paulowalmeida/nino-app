@@ -3,7 +3,6 @@ import { Box } from '@nino/ds/components/Box'
 import { EmptyState } from '@nino/ds/components/EmptyState'
 import { CollaboratorContact } from '@pages/CollaboratorDetail/components/CollaboratorContact/CollaboratorContact'
 import { CollaboratorHeader } from '@pages/CollaboratorDetail/components/CollaboratorHeader/CollaboratorHeader'
-import { CollaboratorSummary } from '@pages/CollaboratorDetail/components/CollaboratorSummary/CollaboratorSummary'
 import { CollaboratorWorkspace } from '@pages/CollaboratorDetail/components/CollaboratorWorkspace/CollaboratorWorkspace'
 import { useCollaboratorDetailFacade } from '@pages/CollaboratorDetail/facades/useCollaboratorDetailFacade/useCollaboratorDetailFacade'
 import { CollaboratorDetailSkeleton } from '@pages/CollaboratorDetail/skeletons/CollaboratorDetailSkeleton/CollaboratorDetailSkeleton'
@@ -42,7 +41,6 @@ export const CollaboratorDetail = () => {
         trail={[{ label: 'Equipe', to: '..' }, { label: member.user.name }]}
       />
       <CollaboratorHeader member={member} />
-      <CollaboratorSummary member={member} />
       <CollaboratorContact member={member} />
       <CollaboratorWorkspace />
     </Box>

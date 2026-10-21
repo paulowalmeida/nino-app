@@ -16,6 +16,7 @@ export const ReportsPeriodControls = () => {
     <Box direction="column" gap={4} className={styles.periodControls}>
       <Tabs
         className={`${motion.unroll} ${styles.periodTabs}`}
+        fullWidth={{ mobile: true, tablet: false }}
         tabs={REPORTS_PERIODS.map(({ id, label }) => ({
           value: id,
           label,

@@ -36,6 +36,7 @@ export const EmployeesContent = () => {
       <Box direction="column" className={styles.employeesContent}>
         <Tabs
           className={styles.employeesTabs}
+          fullWidth={{ mobile: true, tablet: false }}
           value={activeTab}
           onValueChange={changeTab}
           tabs={[

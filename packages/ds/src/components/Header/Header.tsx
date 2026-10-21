@@ -72,8 +72,8 @@ export function Header({
 }: HeaderProps) {
   return (
     <Box
-      direction="row"
-      align="start"
+      direction={{ mobile: 'column', tablet: 'row' }}
+      align={{ mobile: 'stretch', tablet: 'start' }}
       justify={align === 'center' ? 'center' : 'between'}
       gap={4}
       m={m}
@@ -95,7 +95,12 @@ export function Header({
         )}
       </Box>
       {actions && (
-        <Box direction="row" align="center" gap={2} shrink={false}>
+        <Box
+          direction={{ mobile: 'column', tablet: 'row' }}
+          align={{ mobile: 'stretch', tablet: 'center' }}
+          gap={2}
+          shrink={false}
+        >
           {actions}
         </Box>
       )}

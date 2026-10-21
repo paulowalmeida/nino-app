@@ -42,11 +42,11 @@
 }
 
 .desktopActions {
-  @apply hidden justify-end lg:flex;
+  @apply hidden justify-end sm:flex;
 }
 
 .compactActions {
-  @apply flex justify-end lg:hidden;
+  @apply flex justify-end sm:hidden;
 }
 
 .delete {

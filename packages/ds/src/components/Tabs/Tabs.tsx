@@ -2,6 +2,12 @@ import { ReactNode, useState } from 'react'
 
 import { Tabs as ArkTabs } from '@ark-ui/react/tabs'
 
+import { mergeClasses } from '@ds/lib/mergeClasses/mergeClasses'
+import {
+  Responsive,
+  responsiveToClasses,
+} from '@ds/lib/responsive/responsive'
+
 import styles from './Tabs.module.css'
 
 type TabItem = {
@@ -21,7 +27,53 @@ type TabsProps = {
    */
   value?: string
   onValueChange?: (value: string) => void
+  /**
+   * Stretches the rail to the full width and splits it evenly between the
+   * tabs. Default: `false` — the rail hugs its tabs. Accepts `{ mobile,
+   * tablet, desktop }`
+   */
+  fullWidth?: Responsive<boolean>
   className?: string
+}
+
+type RailWidth = 'fill' | 'fit'
+
+const railWidthMobile: Record<RailWidth, string> = {
+  fill: styles.fill,
+  fit: '',
+}
+
+const railWidthTablet: Record<RailWidth, string> = {
+  fill: styles.fillTablet,
+  fit: styles.fitTablet,
+}
+
+const railWidthDesktop: Record<RailWidth, string> = {
+  fill: styles.fillDesktop,
+  fit: styles.fitDesktop,
+}
+
+const toRailWidth = (fullWidth?: boolean): RailWidth | undefined => {
+  if (fullWidth === undefined) return undefined
+  return fullWidth ? 'fill' : 'fit'
+}
+
+const railWidthClasses = (fullWidth: Responsive<boolean>) => {
+  const railWidth =
+    typeof fullWidth === 'boolean'
+      ? toRailWidth(fullWidth)
+      : {
+          mobile: toRailWidth(fullWidth.mobile),
+          tablet: toRailWidth(fullWidth.tablet),
+          desktop: toRailWidth(fullWidth.desktop),
+        }
+
+  return responsiveToClasses(
+    railWidth,
+    railWidthMobile,
+    railWidthDesktop,
+    railWidthTablet
+  )
 }
 
 /**
@@ -35,6 +87,7 @@ type TabsProps = {
  *
  * ```tsx
  * <Tabs tabs={[{ value: 'day', label: 'Hoje', content: <Today /> }]} />
+ * <Tabs fullWidth={{ mobile: true, tablet: false }} tabs={tabs} />
  * ```
  */
 export function Tabs({
@@ -42,6 +95,7 @@ export function Tabs({
   defaultValue,
   value: controlledValue,
   onValueChange,
+  fullWidth = false,
   ...props
 }: TabsProps) {
   const initial = defaultValue ?? controlledValue ?? tabs[0]?.value
@@ -59,7 +113,9 @@ export function Tabs({
       onValueChange={({ value }) => handleValueChange(value)}
       {...props}
     >
-      <ArkTabs.List className={styles.tabBar}>
+      <ArkTabs.List
+        className={mergeClasses(styles.tabBar, railWidthClasses(fullWidth))}
+      >
         <ArkTabs.Indicator className={styles.selectionPill} />
         {tabs.map((tab) => (
           <ArkTabs.Trigger

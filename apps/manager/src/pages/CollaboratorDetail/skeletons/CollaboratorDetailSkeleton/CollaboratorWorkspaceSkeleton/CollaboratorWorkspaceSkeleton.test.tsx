@@ -7,7 +7,7 @@ import { collaboratorWorkspaceSkeletonMock } from './CollaboratorWorkspaceSkelet
 const { placeholderTabCount } = collaboratorWorkspaceSkeletonMock
 
 describe('CollaboratorWorkspaceSkeleton', () => {
-  it('draws the tab rail and opens on the activity panel', () => {
+  it('draws the tab rail and opens on the overview panel', () => {
     // Arrange
     const { container } = render(<CollaboratorWorkspaceSkeleton />)
 
@@ -16,6 +16,6 @@ describe('CollaboratorWorkspaceSkeleton', () => {
 
     // Assert
     expect(rail).toHaveLength(placeholderTabCount)
-    expect(screen.getByLabelText('Atividade recente')).toBeVisible()
+    expect(screen.getByLabelText('Resumo do trabalho')).toBeVisible()
   })
 })

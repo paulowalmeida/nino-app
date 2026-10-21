@@ -1,14 +1,14 @@
 import { Box } from '@nino/ds/components/Box'
 import { Skeleton } from '@nino/ds/components/Skeleton'
-import { CollaboratorActivitySkeleton } from '@pages/CollaboratorDetail/skeletons/CollaboratorActivitySkeleton/CollaboratorActivitySkeleton'
+import { CollaboratorSummarySkeleton } from '@pages/CollaboratorDetail/skeletons/CollaboratorDetailSkeleton/CollaboratorWorkspaceSkeleton/CollaboratorSummarySkeleton/CollaboratorSummarySkeleton'
 
 import ghost from './CollaboratorWorkspaceSkeleton.module.css'
 import workspace from '@pages/CollaboratorDetail/components/CollaboratorWorkspace/CollaboratorWorkspace.module.css'
 
-const GHOST_TABS = ['activity', 'access']
+const GHOST_TABS = ['overview', 'activity', 'access']
 
-/* WHY: só a aba de atividade abre por padrão, então é a única que o esqueleto
- * desenha — a de acesso só existe depois do clique. */
+/* WHY: só a aba geral abre por padrão, então é a única que o esqueleto
+ * desenha — as outras só existem depois do clique. */
 export const CollaboratorWorkspaceSkeleton = () => (
   <Box className={workspace.panels}>
     <Box direction="row" className={ghost.tabBar}>
@@ -21,7 +21,7 @@ export const CollaboratorWorkspaceSkeleton = () => (
     </Box>
 
     <Box className={ghost.collaboratorWorkspaceSkeletonPanel}>
-      <CollaboratorActivitySkeleton />
+      <CollaboratorSummarySkeleton />
     </Box>
   </Box>
 )

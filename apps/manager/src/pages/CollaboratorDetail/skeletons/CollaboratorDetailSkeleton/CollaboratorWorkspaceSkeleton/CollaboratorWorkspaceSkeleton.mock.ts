@@ -1,3 +1,3 @@
 export const collaboratorWorkspaceSkeletonMock = {
-  placeholderTabCount: 2,
+  placeholderTabCount: 3,
 }

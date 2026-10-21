@@ -9,6 +9,46 @@
   @apply p-1;
 }
 
+.fill {
+  @apply flex w-full self-stretch;
+}
+
+.fill > .tab {
+  @apply flex-1 justify-center;
+}
+
+.fillTablet {
+  @apply sm:flex sm:w-full sm:self-stretch;
+}
+
+.fillTablet > .tab {
+  @apply sm:flex-1 sm:justify-center;
+}
+
+.fitTablet {
+  @apply sm:inline-flex sm:w-auto sm:self-start;
+}
+
+.fitTablet > .tab {
+  @apply sm:flex-none sm:justify-start;
+}
+
+.fillDesktop {
+  @apply lg:flex lg:w-full lg:self-stretch;
+}
+
+.fillDesktop > .tab {
+  @apply lg:flex-1 lg:justify-center;
+}
+
+.fitDesktop {
+  @apply lg:inline-flex lg:w-auto lg:self-start;
+}
+
+.fitDesktop > .tab {
+  @apply lg:flex-none lg:justify-start;
+}
+
 .selectionPill {
   @apply absolute rounded-2 bg-brand-soft;
   @apply left-(--left) top-(--top) w-(--width) h-(--height);

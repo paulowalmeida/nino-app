@@ -9,7 +9,7 @@
 }
 
 .factValue {
-  @apply my-0.5 h-6 w-24 rounded-1 lg:h-7;
+  @apply my-0.5 h-5 w-24 rounded-1 sm:h-6 lg:h-7;
 }
 
 .footnote {
