@@ -18,7 +18,7 @@ export const Consumers = () => {
       {isPending && <ConsumersListSkeleton />}
 
       {isError && (
-        <Alert variant="error">
+        <Alert variant="error" className={styles.feedback}>
           Não foi possível carregar a base agora. Recarregue a página.
         </Alert>
       )}

@@ -24,7 +24,7 @@ export const ConsumersHeader = () => {
   }, [debouncedTerm, setSearch])
 
   return (
-    <>
+    <Box direction="column" className={styles.consumersHeader}>
       <Header
         mb={{ mobile: 4, desktop: 6 }}
         className={motion.deal}
@@ -54,6 +54,6 @@ export const ConsumersHeader = () => {
           onChange={(event) => setTerm(event.target.value)}
         />
       </Box>
-    </>
+    </Box>
   )
 }

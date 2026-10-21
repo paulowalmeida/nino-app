@@ -6,6 +6,10 @@
  * tela. `3.5rem` é a barra superior do celular, que o `.main` já reserva.
  */
 .consumersPage {
-  @apply relative mx-auto flex h-[calc(100dvh-3.5rem)] max-w-page flex-col p-4;
-  @apply lg:h-dvh lg:p-10;
+  @apply relative mx-auto flex h-[calc(100dvh-3.5rem)] w-full max-w-page flex-col;
+  @apply lg:h-dvh;
+}
+
+.feedback {
+  @apply mx-4 lg:mx-10;
 }

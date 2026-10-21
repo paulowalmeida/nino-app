@@ -1,7 +1,7 @@
 @reference "@nino/ds/globals.css";
 
 .listShell {
-  @apply flex min-h-0 flex-1 flex-col;
+  @apply flex min-h-0 flex-1 flex-col pb-4 md:px-10 lg:pb-10;
 }
 
 /* CONSTRAINT: Table já envolve a <table> no seu próprio scroller, e o
@@ -46,4 +46,27 @@
 
 .more {
   @apply mt-4 flex shrink-0 justify-center border-t border-border pt-4;
+}
+
+/* WHY: No celular só nome, gasto e pedidos cabem sem rolar de lado; pontos e
+ * data de cadastro ficam no detalhe do cliente.
+ */
+@media (max-width: 639px) {
+  .listShell col:nth-child(n + 4),
+  .listShell th:nth-child(n + 4),
+  .listShell td:nth-child(n + 4) {
+    display: none;
+  }
+
+  .listShell table {
+    @apply w-full table-fixed;
+  }
+
+  .colSpent {
+    width: 6.5rem;
+  }
+
+  .colOrders {
+    width: 5.5rem;
+  }
 }
