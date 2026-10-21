@@ -16,6 +16,8 @@ type ImageProps = Omit<
 > & {
   /** Image URL. Empty or null keeps the placeholder for good */
   src?: string | null
+  /** Set only when this exact source was successfully fetched and decoded. */
+  preloaded?: boolean
   /**
    * Shown while the file downloads, and kept for good when there is no `src`
    * or the download fails
@@ -44,6 +46,7 @@ type ImageProps = Omit<
  */
 export function Image({
   src,
+  preloaded = false,
   placeholder,
   className,
   wrapperClassName,
@@ -73,6 +76,7 @@ export function Image({
   }, [src])
 
   const showsImage = !!src && !hasFailed
+  const isVisible = !!src && !hasFailed && (preloaded || isReady)
 
   return (
     <span className={mergeClasses(styles.stackLayer, wrapperClassName)}>
@@ -85,9 +89,9 @@ export function Image({
           className={mergeClasses(
             styles.stackLayer,
             styles.fadeTransition,
-            isReady && styles.hidden
+            isVisible && styles.hidden
           )}
-          aria-hidden={isReady || undefined}
+          aria-hidden={isVisible || undefined}
         >
           {placeholder}
         </span>
@@ -99,7 +103,7 @@ export function Image({
           src={src}
           className={mergeClasses(
             styles.fadeTransition,
-            isReady ? styles.visible : styles.hidden,
+            isVisible ? styles.visible : styles.hidden,
             className
           )}
           onLoad={(event) => {

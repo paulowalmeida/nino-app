@@ -31,7 +31,7 @@
 
 .scrollbar {
   @apply flex touch-none select-none p-0.5;
-  @apply data-[orientation=vertical]:w-3;
+  @apply data-[orientation=vertical]:w-3 data-[orientation=vertical]:pr-0;
   @apply data-[orientation=horizontal]:h-3;
   @apply data-[orientation=horizontal]:flex-col;
 }
@@ -69,7 +69,7 @@
 }
 
 .thumbVertical {
-  @apply mx-auto w-0.5;
+  @apply ml-auto w-1;
 }
 
 .thumbHorizontal {

@@ -15,6 +15,8 @@ type ModalProps = {
   body?: ReactNode
   /** Actions, aligned to the end */
   footer?: ReactNode
+  /** Overrides the footer wrapper — e.g. controlling its layout in a full-screen dialog */
+  footerClassName?: string
   /** Maximum width. Default: `md` */
   size?: ModalSize
   /**
@@ -75,6 +77,7 @@ export function Modal({
   header,
   body,
   footer,
+  footerClassName,
   size = 'md',
   ariaLabel,
   open,
@@ -140,7 +143,9 @@ export function Modal({
                 {body}
               </div>
             )}
-            {footer && <div className={styles.footer}>{footer}</div>}
+            {footer && (
+              <div className={footerClassName ?? styles.footer}>{footer}</div>
+            )}
           </ArkDialog.Content>
         </ArkDialog.Positioner>
       </Portal>

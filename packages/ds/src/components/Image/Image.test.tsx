@@ -25,6 +25,17 @@ describe(Image.name, () => {
     expect(screen.getByTestId('placeholder')).toBeInTheDocument()
   })
 
+  it('shows a decoded preloaded image on its first render', () => {
+    render(
+      <Image src="/ready.jpg" preloaded placeholder={placeholder} alt="" />
+    )
+
+    expect(screen.getByRole('presentation')).toHaveClass(styles.visible)
+    expect(screen.getByTestId('placeholder').parentElement).toHaveClass(
+      styles.hidden
+    )
+  })
+
   it('reveals the image once it loads', () => {
     // Arrange
     render(<Image src="/burger.jpg" placeholder={placeholder} alt="" />)
