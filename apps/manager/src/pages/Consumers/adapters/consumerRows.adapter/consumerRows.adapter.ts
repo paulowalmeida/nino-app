@@ -17,6 +17,6 @@ export const toConsumerRows = (consumers: UnitConsumer[]): ConsumerRowModel[] =>
     spentLabel: brl(consumer.spent),
     ordersCount: String(consumer.orders),
     ordersLabel: consumer.orders === 1 ? ' pedido' : ' pedidos',
-    pointsLabel: String(consumer.loyaltyPoints),
+    cashbackLabel: brl(consumer.cashbackBalance),
     sinceLabel: day.format(new Date(consumer.since)),
   }))

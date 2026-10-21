@@ -27,4 +27,20 @@ describe('ConsumerRow', () => {
     expect(row).toHaveTextContent('12 pedidos')
     expect(row).toHaveTextContent(consumerRowMock.sinceLabel)
   })
+
+  it('opens the consumer file from the avatar as well as the name', () => {
+    render(
+      <MemoryRouter>
+        <table>
+          <tbody>
+            <ConsumerRow consumer={consumerRowMock} index={0} />
+          </tbody>
+        </table>
+      </MemoryRouter>
+    )
+
+    expect(
+      screen.getByRole('link').querySelector('[aria-hidden="true"]')
+    ).toBeInTheDocument()
+  })
 })

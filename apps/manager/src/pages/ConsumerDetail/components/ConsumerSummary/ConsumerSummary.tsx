@@ -14,7 +14,7 @@ export const ConsumerSummary = () => {
   const facts = [
     ['Gastos', brl(consumer.spent)],
     ['Pedidos', String(consumer.orders)],
-    ['Pontos', String(consumer.loyaltyPoints)],
+    ['Cashback', brl(consumer.cashbackBalance)],
   ]
 
   return (

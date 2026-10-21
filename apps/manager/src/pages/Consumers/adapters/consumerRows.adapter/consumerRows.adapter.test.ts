@@ -12,7 +12,7 @@ describe('toConsumerRows', () => {
     expect(maria.phoneLabel).toBe('(11) 98888-7777')
     expect(maria.spentLabel).toMatch(/^R\$\s890,50$/)
     expect(maria.ordersCount).toBe('12')
-    expect(maria.pointsLabel).toBe('120')
+    expect(maria.cashbackLabel).toBe('R$\u00a012,50')
     expect(maria.sinceLabel).toMatch(/24$/)
   })
 

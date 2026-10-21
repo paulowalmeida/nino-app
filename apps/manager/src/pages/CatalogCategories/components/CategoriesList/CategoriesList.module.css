@@ -5,11 +5,11 @@
 }
 
 .categoriesList {
-  @apply min-h-0 flex-1 md:px-10;
+  @apply min-h-0 flex-1;
 }
 
 .categoriesList > div {
-  @apply h-full min-h-0;
+  @apply h-full min-h-0 md:px-10;
   overflow-y: auto;
 }
 

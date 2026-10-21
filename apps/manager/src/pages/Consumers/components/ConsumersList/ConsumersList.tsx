@@ -25,7 +25,7 @@ export const ConsumersList = () => {
             <col className={styles.colConsumer} />
             <col className={styles.colSpent} />
             <col className={styles.colOrders} />
-            <col className={styles.colPoints} />
+            <col className={styles.colCashback} />
             <col className={styles.colSince} />
           </colgroup>
           <TableHeader>

@@ -3,7 +3,7 @@ export type UnitConsumer = {
   name: string
   phone: string
   email: string | null
-  loyaltyPoints: number
+  cashbackBalance: number
   since: string
   orders: number
   spent: number

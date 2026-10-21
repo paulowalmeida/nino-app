@@ -29,7 +29,7 @@ export const ConsumersListSkeleton = () => (
           <col className={listStyles.colConsumer} />
           <col className={listStyles.colSpent} />
           <col className={listStyles.colOrders} />
-          <col className={listStyles.colPoints} />
+          <col className={listStyles.colCashback} />
           <col className={listStyles.colSince} />
         </colgroup>
         <TableHeader>

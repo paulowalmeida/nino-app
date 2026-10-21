@@ -11,7 +11,7 @@ export const consumerDetailMock: ConsumerHistory = {
   phone: '11988887777',
   email: 'maria@example.com',
   cpf: '39053344705',
-  loyaltyPoints: 120,
+  cashbackBalance: 12.5,
   since: '2024-03-10T12:00:00.000Z',
   orders: 12,
   spent: 890.5,

@@ -21,18 +21,18 @@ export const ConsumerRow = ({ consumer, index }: ConsumerRowProps) => (
     style={riseDelay(index * 35 + 60)}
   >
     <TableCell>
-      <Box direction="row" align="center" className={styles.who}>
+      <Link to={consumer.id} className={styles.who}>
         <PersonMark name={consumer.name} />
 
         <Box className={styles.identity}>
-          <Link to={consumer.id} className={styles.nameLink}>
+          <Text as="span" className={styles.name}>
             {consumer.name}
-          </Link>
+          </Text>
           <Text as="span" size="xs" color="faint" className={styles.phone}>
             {consumer.phoneLabel}
           </Text>
         </Box>
-      </Box>
+      </Link>
     </TableCell>
 
     <TableCell className={styles.colNumber}>{consumer.spentLabel}</TableCell>
@@ -42,7 +42,7 @@ export const ConsumerRow = ({ consumer, index }: ConsumerRowProps) => (
       {consumer.ordersLabel}
     </TableCell>
 
-    <TableCell className={styles.colNumber}>{consumer.pointsLabel}</TableCell>
+    <TableCell className={styles.colNumber}>{consumer.cashbackLabel}</TableCell>
 
     <TableCell className={`${styles.colNumber} ${styles.since}`}>
       {consumer.sinceLabel}

@@ -21,7 +21,8 @@ describe('ConsumerSummary', () => {
     const summary = screen.getByRole('region', { name: 'Resumo' })
     expect(summary).toHaveTextContent('R$ 890,50')
     expect(summary).toHaveTextContent('12')
-    expect(summary).toHaveTextContent('120')
+    expect(summary).toHaveTextContent('Cashback')
+    expect(summary).toHaveTextContent('R$ 12,50')
   })
 
   it('renders nothing while the consumer is unknown', () => {

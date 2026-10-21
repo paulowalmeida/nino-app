@@ -7,6 +7,6 @@ export const consumerRowMock: ConsumerRowModel = {
   spentLabel: 'R$ 890,50',
   ordersCount: '12',
   ordersLabel: ' pedidos',
-  pointsLabel: '120',
+  cashbackLabel: 'R$ 12,50',
   sinceLabel: '10 de mar. de 24',
 }

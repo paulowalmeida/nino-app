@@ -8,7 +8,7 @@ export const consumerRowsMock: ConsumerRowModel[] = [
     spentLabel: 'R$ 890,50',
     ordersCount: '12',
     ordersLabel: ' pedidos',
-    pointsLabel: '120',
+    cashbackLabel: 'R$ 12,50',
     sinceLabel: '10 de mar. de 24',
   },
   {
@@ -18,7 +18,7 @@ export const consumerRowsMock: ConsumerRowModel[] = [
     spentLabel: 'R$ 42,00',
     ordersCount: '1',
     ordersLabel: ' pedido',
-    pointsLabel: '0',
+    cashbackLabel: 'R$ 0,00',
     sinceLabel: '02 de nov. de 25',
   },
 ]

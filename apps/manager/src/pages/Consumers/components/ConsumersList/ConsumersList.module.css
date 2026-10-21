@@ -1,7 +1,7 @@
 @reference "@nino/ds/globals.css";
 
 .listShell {
-  @apply flex min-h-0 flex-1 flex-col pb-4 md:px-10 lg:pb-10;
+  @apply flex min-h-0 flex-1 flex-col pb-4 lg:pb-10;
 }
 
 /* CONSTRAINT: Table já envolve a <table> no seu próprio scroller, e o
@@ -9,7 +9,7 @@
  * elemento.
  */
 .listShell > div {
-  @apply min-h-0 flex-1;
+  @apply min-h-0 flex-1 md:px-10;
   overflow-y: auto;
 }
 
@@ -32,7 +32,7 @@
   width: 7rem;
 }
 
-.colPoints {
+.colCashback {
   width: 7rem;
 }
 

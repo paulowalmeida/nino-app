@@ -13,7 +13,7 @@ export const consumersPageMock: ConsumerPage = {
       name: 'Maria Clara Souza',
       phone: '11988887777',
       email: 'maria@example.com',
-      loyaltyPoints: 120,
+      cashbackBalance: 12.5,
       since: '2024-03-10T12:00:00.000Z',
       orders: 12,
       spent: 890.5,

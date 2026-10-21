@@ -5,6 +5,6 @@ export type ConsumerRowModel = {
   spentLabel: string
   ordersCount: string
   ordersLabel: string
-  pointsLabel: string
+  cashbackLabel: string
   sinceLabel: string
 }

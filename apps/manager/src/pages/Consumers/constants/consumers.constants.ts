@@ -3,7 +3,7 @@ export const CONSUMERS_COLUMNS = [
   'Cliente',
   'Gasto',
   'Pedidos',
-  'Pontos',
+  'Cashback',
   'Cliente desde',
 ]
 
