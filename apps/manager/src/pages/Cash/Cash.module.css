@@ -1,8 +1,8 @@
 @reference "@nino/ds/globals.css";
 
 .cashPage {
-  @apply flex h-[calc(100dvh-3.5rem)] min-h-0 flex-col overflow-hidden;
-  @apply lg:h-dvh;
+  @apply flex min-h-[calc(100dvh-3.5rem)] flex-col;
+  @apply lg:h-dvh lg:min-h-0 lg:overflow-hidden;
 }
 
 .cashControls {

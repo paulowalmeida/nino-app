@@ -4,11 +4,9 @@ import { EmptyState } from '@nino/ds/components/EmptyState'
 import { Header } from '@nino/ds/components/Header'
 import { NinoMascot } from '@nino/ds/components/NinoMascot'
 
-import { CashActions } from './components/CashActions/CashActions'
 import { CashDateSelector } from './components/CashDateSelector/CashDateSelector'
-import { CashMovements } from './components/CashMovements/CashMovements'
 import { CashOpen } from './components/CashOpen/CashOpen'
-import { CashSummary } from './components/CashSummary/CashSummary'
+import { CashSessionTabs } from './components/CashSessionTabs/CashSessionTabs'
 import { useCashFacade } from './facades/useCashFacade/useCashFacade'
 import { CashSkeleton } from './skeletons/CashSkeleton/CashSkeleton'
 
@@ -36,7 +34,7 @@ export const Cash = () => {
     <Box direction="column" className={styles.cashPage}>
       <Box className={styles.cashControls}>
         <Header
-          mb={{ mobile: 3, desktop: 4 }}
+          mb={{ mobile: 0, desktop: 4 }}
           className={`${motion.deal} shrink-0`}
           title="Caixa"
           accent="Caixa"
@@ -60,15 +58,9 @@ export const Cash = () => {
           </EmptyState>
         )}
 
-        {session && (
-          <>
-            <CashSummary session={session} />
-            {isToday && <CashActions expectedAmount={session.expectedAmount} />}
-          </>
-        )}
       </Box>
 
-      {session && <CashMovements movements={session.movements} />}
+      {session && <CashSessionTabs session={session} isToday={isToday} />}
     </Box>
   )
 }

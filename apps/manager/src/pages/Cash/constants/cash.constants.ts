@@ -5,3 +5,5 @@ export const CASH_MOVEMENT_LABEL: Record<CashMovementKind, string> = {
   WITHDRAWAL: 'Sangria',
   DEPOSIT: 'Suprimento',
 }
+
+export const CASH_MOVEMENTS_PAGE_SIZE = 8

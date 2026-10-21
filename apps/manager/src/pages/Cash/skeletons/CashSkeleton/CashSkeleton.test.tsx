@@ -10,10 +10,9 @@ describe(CashSkeleton.name, () => {
     expect(screen.getByLabelText('Carregando o caixa')).toBeInTheDocument()
   })
 
-  it('mirrors the header, summary, actions, and movements of the real screen', () => {
+  it('mirrors the header, tabs, summary, and actions of the real screen', () => {
     const { container } = render(<CashSkeleton />)
 
-    expect(container.querySelectorAll('[aria-hidden="true"]')).toHaveLength(41)
-    expect(container.querySelectorAll('[class*="tableRow"]')).toHaveLength(4)
+    expect(container.querySelectorAll('[aria-hidden="true"]')).toHaveLength(21)
   })
 })

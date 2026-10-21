@@ -1,5 +1,7 @@
+import { useState } from 'react'
+
 import { Box } from '@nino/ds/components/Box'
-import { Header } from '@nino/ds/components/Header'
+import { Pagination } from '@nino/ds/components/Pagination'
 import {
   Table,
   TableBody,
@@ -9,7 +11,10 @@ import {
   TableRow,
 } from '@nino/ds/components/Table'
 import { Text } from '@nino/ds/components/Text'
-import { CASH_MOVEMENT_LABEL } from '@pages/Cash/constants/cash.constants'
+import {
+  CASH_MOVEMENT_LABEL,
+  CASH_MOVEMENTS_PAGE_SIZE,
+} from '@pages/Cash/constants/cash.constants'
 import { cashMovementDetail } from '@pages/Cash/utils/cashMovementDetail/cashMovementDetail'
 import type { CashMovement } from '@shared/types/cash/cash-movement.type'
 import { brl } from '@shared/utils/money/money'
@@ -26,25 +31,29 @@ const timeLabel = (createdAt: string): string =>
     minute: '2-digit',
   })
 
-export const CashMovements = ({ movements }: CashMovementsProps) => (
-  <Box as="section" direction="column" className={styles.movements}>
-    <Header
-      className={styles.head}
-      level={2}
-      size="sm"
-      title="Movimentações"
-      actions={
-        <Text size="xs" color="faint">
-          {movements.length} {movements.length === 1 ? 'registro' : 'registros'}
-        </Text>
-      }
-    />
+export const CashMovements = ({ movements }: CashMovementsProps) => {
+  const [requestedPage, setRequestedPage] = useState(1)
+  const pageCount = Math.max(
+    1,
+    Math.ceil(movements.length / CASH_MOVEMENTS_PAGE_SIZE)
+  )
+  const page = Math.min(requestedPage, pageCount)
+  const pageStart = (page - 1) * CASH_MOVEMENTS_PAGE_SIZE
+  const visibleMovements = movements.slice(
+    pageStart,
+    pageStart + CASH_MOVEMENTS_PAGE_SIZE
+  )
 
-    {!movements.length ? (
-      <Text size="sm" color="muted" className={styles.cashMovementsEmpty}>
+  if (!movements.length) {
+    return (
+      <Text size="sm" color="muted">
         Nada entrou nem saiu da gaveta desde a abertura.
       </Text>
-    ) : (
+    )
+  }
+
+  return (
+    <Box as="section" direction="column" className={styles.movements}>
       <Box className={styles.tableShell}>
         <Table>
           <colgroup>
@@ -62,7 +71,7 @@ export const CashMovements = ({ movements }: CashMovementsProps) => (
             </TableRow>
           </TableHeader>
           <TableBody>
-            {movements.map((movement) => {
+            {visibleMovements.map((movement) => {
               const isWithdrawal = movement.kind === 'WITHDRAWAL'
 
               return (
@@ -92,6 +101,16 @@ export const CashMovements = ({ movements }: CashMovementsProps) => (
           </TableBody>
         </Table>
       </Box>
-    )}
-  </Box>
-)
+
+      {pageCount > 1 && (
+        <Pagination
+          className={styles.pagination}
+          count={movements.length}
+          pageSize={CASH_MOVEMENTS_PAGE_SIZE}
+          page={page}
+          onPageChange={setRequestedPage}
+        />
+      )}
+    </Box>
+  )
+}

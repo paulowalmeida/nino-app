@@ -6,7 +6,6 @@ import styles from './CashSkeleton.module.css'
 
 const FIGURES = ['float', 'sales', 'deposits', 'withdrawals']
 const ACTIONS = ['withdrawal', 'deposit', 'close']
-const MOVEMENT_ROWS = ['first', 'second', 'third', 'fourth']
 
 export const CashSkeleton = () => (
   <Box
@@ -28,6 +27,11 @@ export const CashSkeleton = () => (
       <Box direction="column" gap={1} className={styles.dateSelector}>
         <Skeleton className={styles.dateLabel} />
         <Skeleton className={styles.dateField} />
+      </Box>
+
+      <Box direction="row" className={styles.tabRail}>
+        <Skeleton className={styles.tab} />
+        <Skeleton className={styles.tab} />
       </Box>
 
       <Box direction="column" className={styles.cashSkeletonCard}>
@@ -59,35 +63,6 @@ export const CashSkeleton = () => (
       <Box direction="row" wrap className={styles.cashSkeletonActions}>
         {ACTIONS.map((action) => (
           <Skeleton key={action} className={styles.cashSkeletonAction} />
-        ))}
-      </Box>
-    </Box>
-
-    <Box direction="column" className={styles.movements}>
-      <Box
-        direction="row"
-        justify="between"
-        align="baseline"
-        className={styles.movementsHead}
-      >
-        <Skeleton className={styles.movementsTitle} />
-        <Skeleton className={styles.movementsCount} />
-      </Box>
-
-      <Box className={styles.tableShell}>
-        <Box className={styles.tableHeader}>
-          <Skeleton />
-          <Skeleton />
-          <Skeleton />
-          <Skeleton />
-        </Box>
-        {MOVEMENT_ROWS.map((row) => (
-          <Box key={row} className={styles.tableRow}>
-            <Skeleton />
-            <Skeleton />
-            <Skeleton />
-            <Skeleton />
-          </Box>
         ))}
       </Box>
     </Box>

@@ -1,26 +1,15 @@
 @reference "@nino/ds/globals.css";
 
 .movements {
-  @apply min-h-0 flex-1;
-}
-
-.head {
-  @apply mx-4 shrink-0 border-b border-border/60 pb-3 pt-5;
-  @apply lg:mx-10 lg:pt-7;
-}
-
-.cashMovementsTitle {
-  @apply text-xs font-bold uppercase tracking-[0.12em];
+  @apply flex-none;
 }
 
 .tableShell {
-  @apply mx-4 min-h-0 flex-1;
-  @apply lg:mx-10;
+  @apply min-h-0;
 }
 
-.tableShell > div {
-  @apply h-full min-h-0;
-  overflow-y: auto;
+.pagination {
+  @apply mt-4 self-center lg:self-end;
 }
 
 .headRow > th {
@@ -81,6 +70,58 @@
   @apply text-danger;
 }
 
-.cashMovementsEmpty {
-  @apply px-4 pt-4 lg:px-10;
+@media (max-width: 639px) {
+  .tableShell table,
+  .tableShell tbody,
+  .tableShell .row {
+    display: block;
+  }
+
+  .tableShell colgroup,
+  .tableShell thead {
+    display: none;
+  }
+
+  .tableShell .row {
+    position: relative;
+    padding-block: 0.875rem;
+    border-bottom: 1px solid var(--color-border);
+    background: transparent;
+  }
+
+  .tableShell .row:last-child {
+    border-bottom: 0;
+  }
+
+  .tableShell .row > td {
+    display: block;
+    min-width: 0;
+    padding: 0;
+  }
+
+  .tableShell .time {
+    font-size: 0.75rem;
+    line-height: 1.25rem;
+  }
+
+  .tableShell .kind {
+    margin-top: 0.25rem;
+    white-space: normal;
+  }
+
+  .tableShell .reason {
+    max-width: none;
+    margin-top: 0.125rem;
+    overflow: visible;
+    text-overflow: clip;
+    white-space: normal;
+    overflow-wrap: anywhere;
+  }
+
+  .tableShell .amount {
+    position: absolute;
+    top: 0.875rem;
+    right: 0;
+    line-height: 1.25rem;
+  }
 }

@@ -1,0 +1,14 @@
+@reference "@nino/ds/globals.css";
+
+.cashSessionTabs {
+  @apply flex flex-col px-4 pb-6 pt-4;
+  @apply lg:min-h-0 lg:flex-1 lg:px-10 lg:pb-0;
+}
+
+.cashSessionTabs [data-part='content'] {
+  @apply lg:min-h-0 lg:flex-1 lg:overflow-y-auto lg:pb-8;
+}
+
+.summaryPanel {
+  @apply gap-4 lg:max-w-3xl;
+}

@@ -55,14 +55,16 @@ describe(Cash.name, () => {
     ).toBeInTheDocument()
   })
 
-  it('maps the open drawer into its three regions', () => {
+  it('maps the open drawer into its summary and movements', () => {
     facadeWith({ session: cashPageSessionMock })
 
     render(<Cash />)
 
     expect(screen.getByText('Caixa aberto')).toBeInTheDocument()
     expect(screen.getByRole('button', { name: 'Sangria' })).toBeInTheDocument()
-    expect(screen.getByText('Movimentações')).toBeInTheDocument()
+    expect(
+      screen.getByRole('tab', { name: /Movimentações/ })
+    ).toBeInTheDocument()
   })
 
   it('says plainly when no drawer was opened on a past date', () => {
@@ -85,6 +87,8 @@ describe(Cash.name, () => {
     expect(
       screen.queryByRole('button', { name: 'Sangria' })
     ).not.toBeInTheDocument()
-    expect(screen.getByText('Movimentações')).toBeInTheDocument()
+    expect(
+      screen.getByRole('tab', { name: /Movimentações/ })
+    ).toBeInTheDocument()
   })
 })

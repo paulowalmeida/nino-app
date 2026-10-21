@@ -3,3 +3,13 @@
 .cashActions {
   @apply gap-2;
 }
+
+@media (max-width: 359px) {
+  .cashActions > button:nth-of-type(-n + 2) {
+    flex: 1;
+  }
+
+  .cashActions > button:nth-of-type(3) {
+    width: 100%;
+  }
+}
