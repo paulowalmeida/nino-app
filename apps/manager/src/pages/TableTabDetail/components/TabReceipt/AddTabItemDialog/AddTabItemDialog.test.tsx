@@ -23,8 +23,14 @@ const mockFacade = (isAddingItem = false) => {
 
 const pickProduct = async (label = addTabItemDialogMock.productLabel) => {
   const user = userEvent.setup({ pointerEventsCheck: 0 })
-  await user.click(screen.getByRole('combobox'))
-  const listbox = await screen.findByRole('listbox', { hidden: true })
+  const [productSelector] = screen.getAllByRole('combobox')
+  if (!productSelector) throw new Error('Seletor de produto não renderizado')
+  await user.click(productSelector)
+  const listboxId = productSelector.getAttribute('aria-controls')
+  if (!listboxId) throw new Error('Lista de produtos não vinculada ao seletor')
+  const listboxes = await screen.findAllByRole('listbox', { hidden: true })
+  const listbox = listboxes.find((candidate) => candidate.id === listboxId)
+  if (!listbox) throw new Error('Lista de produtos não renderizada')
   await user.click(within(listbox).getByText(label))
 }
 

@@ -1,6 +1,6 @@
 import { MemoryRouter } from 'react-router'
 
-import { render, screen } from '@testing-library/react'
+import { render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 
@@ -52,12 +52,18 @@ describe('TableTabsBoard', () => {
 
     await userEvent.click(screen.getByRole('tab', { name: /Finalizadas/ }))
 
-    expect(screen.getByText('Ana Souza')).toBeInTheDocument()
+    expect(screen.getByTestId('tabs-chip-skeleton')).toBeInTheDocument()
+    expect(screen.queryByText('Ana Souza')).not.toBeInTheDocument()
+    expect(await screen.findByText('Ana Souza')).toBeInTheDocument()
     expect(screen.queryByText('Mesa 4')).not.toBeInTheDocument()
+    await waitFor(() =>
+      expect(screen.queryByTestId('tabs-chip-skeleton')).not.toBeInTheDocument()
+    )
 
     await userEvent.click(screen.getByRole('tab', { name: /Em aberto/ }))
 
-    expect(screen.getByText('Mesa 4')).toBeInTheDocument()
+    expect(screen.getByTestId('tabs-chip-skeleton')).toBeInTheDocument()
+    expect(await screen.findByText('Mesa 4')).toBeInTheDocument()
   })
 
   it('searches across both groups ignoring the selected one', async () => {

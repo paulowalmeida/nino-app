@@ -146,6 +146,52 @@ export const AddressFields = ({
     </FormField>
   )
 
+  const streetAddressField = (
+    <FormField label={streetLabel} className={styles.street}>
+      {streetField ?? (
+        <Input
+          autoComplete="address-line1"
+          disabled={addressDisabled || lookup === 'loading'}
+          value={value.street}
+          onChange={(event) => onChange({ street: event.target.value })}
+        />
+      )}
+    </FormField>
+  )
+
+  const numberField = (
+    <FormField label="Número" className={styles.number}>
+      <Input
+        ref={numberRef}
+        inputMode="numeric"
+        disabled={addressDisabled}
+        value={value.number}
+        onChange={(event) => onChange({ number: event.target.value })}
+        onBlur={onNumberBlur}
+      />
+    </FormField>
+  )
+
+  const complementField = (
+    <FormField label="Complemento" className={styles.complement}>
+      <Input
+        disabled={addressDisabled}
+        value={value.complement}
+        onChange={(event) => onChange({ complement: event.target.value })}
+      />
+    </FormField>
+  )
+
+  const neighborhoodField = (
+    <FormField label="Bairro" className={styles.neighborhood}>
+      <Input
+        disabled={addressDisabled || lookup === 'loading'}
+        value={value.neighborhood}
+        onChange={(event) => onChange({ neighborhood: event.target.value })}
+      />
+    </FormField>
+  )
+
   return (
     <Box
       className={mergeClasses(
@@ -154,51 +200,30 @@ export const AddressFields = ({
         locationFirst && styles.locationFirst
       )}
     >
-      {locationFirst && cityAndStateFields}
-
-      {!leadsWithStreet && zipCodeField}
-
-      <FormField label={streetLabel} className={styles.street}>
-        {streetField ?? (
-          <Input
-            autoComplete="address-line1"
-            disabled={addressDisabled || lookup === 'loading'}
-            value={value.street}
-            onChange={(event) => onChange({ street: event.target.value })}
-          />
-        )}
-      </FormField>
-
-      <FormField label="Número" className={styles.number}>
-        <Input
-          ref={numberRef}
-          inputMode="numeric"
-          disabled={addressDisabled}
-          value={value.number}
-          onChange={(event) => onChange({ number: event.target.value })}
-          onBlur={onNumberBlur}
-        />
-      </FormField>
-
-      <FormField label="Complemento" className={styles.complement}>
-        <Input
-          disabled={addressDisabled}
-          value={value.complement}
-          onChange={(event) => onChange({ complement: event.target.value })}
-        />
-      </FormField>
-
-      <FormField label="Bairro" className={styles.neighborhood}>
-        <Input
-          disabled={addressDisabled || lookup === 'loading'}
-          value={value.neighborhood}
-          onChange={(event) => onChange({ neighborhood: event.target.value })}
-        />
-      </FormField>
-
-      {leadsWithStreet && zipCodeField}
-
-      {!locationFirst && cityAndStateFields}
+      {locationFirst ? (
+        <>
+          <div className={styles.locationFirstRow}>{cityAndStateFields}</div>
+          <div className={styles.locationFirstRow}>
+            {zipCodeField}
+            {streetAddressField}
+            {numberField}
+          </div>
+          <div className={styles.locationFirstRow}>
+            {neighborhoodField}
+            {complementField}
+          </div>
+        </>
+      ) : (
+        <>
+          {!leadsWithStreet && zipCodeField}
+          {streetAddressField}
+          {numberField}
+          {complementField}
+          {neighborhoodField}
+          {leadsWithStreet && zipCodeField}
+          {cityAndStateFields}
+        </>
+      )}
     </Box>
   )
 }

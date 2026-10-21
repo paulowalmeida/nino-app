@@ -1,3 +1,4 @@
+import { Badge } from '@nino/ds/components/Badge'
 import { Box } from '@nino/ds/components/Box'
 import { Checkbox } from '@nino/ds/components/Checkbox'
 import { Label } from '@nino/ds/components/Label'
@@ -39,19 +40,34 @@ export const TabItemModifierPicker = ({
           as="fieldset"
           className={styles.tabItemModifierPickerGroup}
         >
-          <Text as="span" weight="bold">
-            {modifier.name}
-          </Text>
-          <Text size="sm" color="muted">
-            {modifier.minSelections > 0
-              ? `Escolha ao menos ${modifier.minSelections}`
-              : 'Opcional'}
-            {modifier.maxSelections > 1
-              ? `, até ${modifier.maxSelections}`
-              : ''}
-          </Text>
+          <Box direction="row" className={styles.tabItemModifierPickerHeader}>
+            <Box className={styles.tabItemModifierPickerIdentity}>
+              <Text as="span" weight="bold">
+                {modifier.name}
+              </Text>
+              <Text size="sm" color="muted">
+                {modifier.minSelections > 0
+                  ? `Escolha ao menos ${modifier.minSelections}`
+                  : 'Opcional'}
+                {modifier.maxSelections > 1
+                  ? `, até ${modifier.maxSelections}`
+                  : ''}
+              </Text>
+            </Box>
+            {modifier.minSelections > 0 &&
+            chosenOptionIds.length < modifier.minSelections ? (
+              <Badge variant="default" size="sm">
+                Obrigatório
+              </Badge>
+            ) : (
+              <Text size="sm" color="muted" className={styles.tally}>
+                {chosenOptionIds.length}/{modifier.maxSelections}
+              </Text>
+            )}
+          </Box>
           {modifier.maxSelections === 1 ? (
             <RadioGroup
+              className={styles.donenessOptions}
               aria-label={modifier.name}
               value={chosenOptionIds[0] ?? ''}
               options={modifier.options.map((option) => ({

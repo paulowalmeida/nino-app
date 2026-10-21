@@ -1,7 +1,7 @@
 @reference "@nino/ds/globals.css";
 
 .unitCardPanel {
-  @apply flex w-full min-w-0 max-w-6xl flex-col;
+  @apply flex w-full min-w-0 max-w-4xl flex-col;
 }
 
 .groupTitle {
@@ -14,6 +14,21 @@
 
 .unitCardFields {
   @apply grid grid-cols-1 gap-3 sm:grid-cols-2;
+  max-width: 56rem;
+}
+
+.storeUrlComposer {
+  @apply flex min-w-0 flex-wrap items-center justify-start gap-x-1;
+}
+
+.storeUrlAffix {
+  @apply whitespace-nowrap;
+}
+
+.storeUrlSlug {
+  @apply min-w-0;
+  flex: 0 1 auto;
+  max-width: 100%;
 }
 
 .tabContent {

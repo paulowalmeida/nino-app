@@ -6,12 +6,16 @@ import { itemThumbMock } from './ItemThumb.mock'
 
 describe(ItemThumb.name, () => {
   it('renders an accessible decorative thumbnail', () => {
-    const { container } = render(<ItemThumb {...itemThumbMock} />)
-    expect(container.querySelector('[aria-hidden="true"]')).toBeInTheDocument()
+    const { container } = render(
+      <ItemThumb {...itemThumbMock} imageUrl="/coffee.png" />
+    )
+    expect(container.querySelector('img')).toHaveAttribute('aria-hidden', 'true')
   })
 
   it('renders a provided image source', () => {
-    const { container } = render(<ItemThumb {...itemThumbMock} imageUrl="/coffee.png" />)
+    const { container } = render(
+      <ItemThumb {...itemThumbMock} imageUrl="/coffee.png" />
+    )
     expect(container.querySelector('img')).toHaveAttribute('src', '/coffee.png')
   })
 
@@ -35,8 +39,9 @@ describe(ItemThumb.name, () => {
     vi.unstubAllEnvs()
   })
 
-  it('uses the default glyph for an unmatched name', () => {
+  it('keeps a neutral slot instead of an emoji when no image exists', () => {
     const { container } = render(<ItemThumb name="Produto desconhecido" />)
-    expect(container).toHaveTextContent('🍽️')
+    expect(container.querySelector('img')).not.toBeInTheDocument()
+    expect(container).not.toHaveTextContent('🍽️')
   })
 })

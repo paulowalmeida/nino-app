@@ -7,20 +7,124 @@
 }
 
 .addTabItemDialogPanel {
-  @apply flex h-dvh max-h-none w-screen max-w-none flex-col rounded-none;
+  @apply flex h-dvh max-h-none w-screen max-w-none flex-col overflow-clip rounded-none;
 }
 
 .addTabItemDialogBody {
-  @apply min-h-0 flex-1 overflow-y-auto;
+  @apply min-h-0 flex flex-1 flex-col overflow-y-auto overscroll-contain p-0;
 }
 
 .addTabItemDialogFields {
   @apply flex flex-col gap-4;
 }
 
+.mobileProductSelector {
+  @apply sticky isolate z-[var(--z-modal)] shrink-0 bg-surface-raised;
+  top: 0;
+}
+
+.mobileProductHeading {
+  @apply mx-6 flex items-center gap-1;
+}
+
+.mobileBackButton {
+  @apply flex size-10 shrink-0 items-center justify-center rounded-1 text-fg-subtle;
+}
+
+.mobileBackButton:hover {
+  @apply bg-surface-mute text-fg-strong;
+}
+
+.mobileBackButton:focus-visible {
+  @apply outline outline-2 outline-offset-2 outline-brand;
+}
+
+.mobileProductTitle {
+  @apply text-sm font-medium text-fg-strong;
+}
+
+.mobileProductField {
+  @apply mx-6 mb-3;
+}
+
+.mobileProductField :global(label) {
+  @apply sr-only;
+}
+
+.desktopProductSelector {
+  @apply hidden;
+}
+
+.addTabItemDialogScrollableContent {
+  @apply overflow-visible;
+}
+
+.addTabItemDialogLayout {
+  @apply flex flex-col gap-5;
+}
+
+.addTabItemDialogProduct {
+  @apply flex min-w-0 flex-col gap-4;
+  margin: 1rem 1.5rem 0;
+}
+
+.productImageWrapper,
+.productPlaceholder {
+  @apply aspect-[4/3] w-full overflow-hidden rounded-2 bg-surface-2;
+}
+
+.productImage {
+  @apply h-full w-full rounded-2 object-cover;
+}
+
+.productPlaceholder {
+  @apply flex items-center justify-center px-6 text-center;
+}
+
+.addTabItemDialogConfiguration {
+  @apply flex min-w-0 flex-col gap-4;
+  margin: 0 1.5rem 1rem;
+}
+
+.productSummary {
+  @apply flex flex-col gap-2;
+}
+
+.productDescriptionSlot {
+  @apply flex flex-col items-start;
+  height: 3.75rem;
+  flex: 0 0 3.75rem;
+}
+
+.productDescription {
+  @apply m-0 w-full overflow-hidden text-sm text-fg-subtle;
+  display: -webkit-box;
+  line-height: 1.25rem;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+.showDescription {
+  @apply cursor-pointer border-0 bg-transparent p-0 text-sm font-medium text-brand underline underline-offset-2;
+}
+
+.showDescription:focus-visible {
+  @apply rounded-1 outline outline-2 outline-offset-2 outline-brand;
+}
+
+.productPrice {
+  @apply mt-1 font-display text-xl font-medium;
+  color: var(--color-success);
+  font-variant-numeric: tabular-nums;
+}
+
 .addTabItemDialogActions {
   @apply w-full justify-end gap-2;
-  padding-bottom: env(safe-area-inset-bottom);
+}
+
+.addTabItemDialogFooter {
+  @apply relative flex min-h-[4.5rem] shrink-0 items-center justify-end gap-3 bg-surface-raised px-6;
+  padding-bottom: calc(1rem + env(safe-area-inset-bottom));
 }
 
 .addTabItemDialogActions > button:last-child {
@@ -37,10 +141,127 @@
   .addTabItemDialogPanel {
     @apply h-auto rounded-2;
     max-height: calc(100dvh - 2rem);
-    width: min(36rem, calc(100vw - 2rem));
+    height: min(82dvh, 52rem);
+    width: min(64rem, calc(100vw - 2rem));
+  }
+
+  .addTabItemDialogBody {
+    @apply overflow-hidden px-6 py-5;
+  }
+
+  .mobileProductSelector {
+    @apply hidden;
+  }
+
+  .mobileProductField {
+    @apply m-0;
+  }
+
+  .desktopProductSelector {
+    @apply block;
+  }
+
+  .addTabItemDialogScrollableContent {
+    @apply min-h-0 flex-1 overflow-hidden p-0;
   }
 
   .addTabItemDialogActions > button:last-child {
     @apply flex-none;
+  }
+
+  .addTabItemDialogFooter {
+    @apply h-auto border-t border-border bg-surface-page px-6 pt-4;
+    padding-bottom: 1rem;
+  }
+
+  .addTabItemDialogFields,
+  .addTabItemDialogLayout {
+    @apply h-full min-h-0;
+  }
+
+  .addTabItemDialogFields {
+    @apply flex-1 overflow-hidden;
+  }
+
+  .addTabItemDialogFields {
+    @apply gap-0;
+  }
+
+  .addTabItemDialogLayout {
+    @apply flex-row gap-8;
+  }
+
+  .addTabItemDialogProduct {
+    @apply flex min-h-0 flex-col gap-4;
+    flex: 0 0 42%;
+    margin: 0;
+  }
+
+  .productImageWrapper,
+  .productPlaceholder {
+    @apply min-h-0 flex-1;
+    aspect-ratio: auto;
+  }
+
+  .addTabItemDialogConfiguration {
+    @apply min-h-0 overflow-y-auto pr-2;
+    flex: 1 1 0%;
+    margin: 2.75rem 0 0;
+  }
+}
+
+@media (min-width: 426px) and (max-width: 1023px) {
+  .addTabItemDialogProduct {
+    flex: 0 0 calc((100% - 2rem) / 2);
+  }
+}
+
+@media (min-width: 426px) {
+  .productImageWrapper,
+  .productPlaceholder {
+    @apply flex-none;
+    aspect-ratio: 1;
+    margin-block: auto;
+  }
+
+  .productImage {
+    @apply object-contain;
+  }
+}
+
+@media (max-width: 425px) {
+  .addTabItemDialogPanel :global([data-part='close-trigger']) {
+    @apply hidden;
+  }
+
+  .mobileProductField {
+    @apply mb-0;
+  }
+
+  .addTabItemDialogProduct {
+    margin-top: 0;
+  }
+
+  .addTabItemDialogConfiguration {
+    margin-inline: 0;
+  }
+
+  .productSummary {
+    padding-inline: 1.5rem;
+  }
+
+  .configurationField,
+  .configurationEmptyState {
+    padding-inline: 1.5rem;
+  }
+
+  .productImageWrapper {
+    width: calc(100% + 3rem);
+    margin-inline: -1.5rem;
+    border-radius: 0;
+  }
+
+  .productImage {
+    border-radius: 0;
   }
 }

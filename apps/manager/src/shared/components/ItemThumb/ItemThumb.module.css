@@ -9,30 +9,6 @@
   @apply rounded-3 object-cover select-none;
 }
 
-.glyph {
-  @apply text-lg leading-none;
-}
-
-.brandSoftTone {
-  @apply bg-brand-soft text-brand-strong;
-}
-
-.peachTone {
-  @apply bg-accent-peach text-accent-clay;
-}
-
-.neutralTone {
-  @apply bg-surface-6 text-fg-strong/70;
-}
-
-.mutedBrandTone {
-  @apply bg-surface-4 text-brand-strong;
-}
-
-.palePeachTone {
-  @apply bg-accent-peach-light text-accent-clay;
-}
-
-.limeTone {
-  @apply bg-accent-lime/20 text-fg-strong/70;
+.empty {
+  @apply bg-surface-mute;
 }

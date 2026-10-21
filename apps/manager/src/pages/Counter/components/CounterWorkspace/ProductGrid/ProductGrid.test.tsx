@@ -20,12 +20,14 @@ vi.mock('@shared/components/CategoryChips/CategoryChips', () => ({
 vi.mock('./ProductCard/ProductCard', () => ({
   ProductCard: ({
     item,
+    isImagePreloaded,
     isPicked,
     onPick,
     onPreviewStart,
     onPreviewEnd,
   }: {
     item: { name: string }
+    isImagePreloaded?: boolean
     isPicked: boolean
     onPick: (item: unknown) => void
     onPreviewStart: (item: unknown) => void
@@ -33,6 +35,7 @@ vi.mock('./ProductCard/ProductCard', () => ({
   }) => (
     <button
       aria-pressed={isPicked}
+      data-preloaded={isImagePreloaded}
       onClick={() => onPick(item)}
       onMouseEnter={() => onPreviewStart(item)}
       onMouseLeave={onPreviewEnd}
@@ -164,6 +167,83 @@ describe(ProductGrid.name, () => {
     expect(
       await screen.findByRole('button', { name: 'Café' })
     ).toBeInTheDocument()
+    vi.unstubAllGlobals()
+  })
+
+  it('preloads every category and briefly shows card skeletons when switching', async () => {
+    const preloads: Array<{ onload: (() => void) | null }> = []
+
+    class PendingImage {
+      onload: (() => void) | null = null
+      onerror: (() => void) | null = null
+      complete = false
+      naturalWidth = 0
+
+      set src(_source: string) {
+        preloads.push(this)
+      }
+
+      decode = () => Promise.resolve()
+    }
+
+    vi.stubGlobal('Image', PendingImage)
+    facadeState.sections = [
+      {
+        ...sections[0],
+        id: 'food',
+        name: 'Lanches',
+        items: [
+          {
+            ...sections[0].items[0],
+            id: 'food-1',
+            name: 'X-Salada',
+            images: [
+              { id: 'image-food', url: '/food-ready.png', isPrimary: true },
+            ],
+          },
+        ],
+      },
+      {
+        ...sections[0],
+        items: [
+          {
+            ...sections[0].items[0],
+            images: [],
+            fallbackUrl: '/drink-ready.png',
+          },
+        ],
+      },
+    ]
+
+    const { container } = render(<ProductGrid />)
+
+    await waitFor(() => expect(preloads).toHaveLength(2))
+    preloads[0].onload?.()
+    expect(
+      screen.queryByRole('button', { name: 'X-Salada' })
+    ).not.toBeInTheDocument()
+
+    preloads[1].onload?.()
+    expect(
+      await screen.findByRole('button', { name: 'X-Salada' })
+    ).toHaveAttribute('data-preloaded', 'true')
+
+    fireEvent.click(screen.getByRole('button', { name: 'category' }))
+    expect(screen.queryByRole('button', { name: 'Café' })).not.toBeInTheDocument()
+    expect(
+      container.querySelectorAll('[aria-hidden="true"]').length
+    ).toBeGreaterThan(0)
+    expect(await screen.findByRole('button', { name: 'Café' })).toHaveAttribute(
+      'data-preloaded',
+      'true'
+    )
+    expect(screen.getByRole('button', { name: 'Café' }).parentElement).toHaveStyle(
+      { animationDelay: '20ms' }
+    )
+    expect(screen.getByTestId('category-skeleton')).toBeInTheDocument()
+    await waitFor(() =>
+      expect(screen.queryByTestId('category-skeleton')).not.toBeInTheDocument()
+    )
     vi.unstubAllGlobals()
   })
 

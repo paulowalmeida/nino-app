@@ -18,13 +18,23 @@ import styles from './TableTabCard.module.css'
 
 type TableTabCardProps = {
   tab: Tab
+  revealDelayMs?: number
 }
 
-export const TableTabCard = ({ tab }: TableTabCardProps) => {
+export const TableTabCard = ({ tab, revealDelayMs }: TableTabCardProps) => {
   const itemCount = activeTabItems(tab).length
 
   return (
-    <ListRow divider="none" padding={0} className={motion.deal}>
+    <ListRow
+      divider="none"
+      padding={0}
+      className={revealDelayMs !== undefined ? motion.chipCardEnter : undefined}
+      style={
+        revealDelayMs !== undefined
+          ? { animationDelay: `${revealDelayMs}ms` }
+          : undefined
+      }
+    >
       <Card
         variant="flat"
         padding="none"

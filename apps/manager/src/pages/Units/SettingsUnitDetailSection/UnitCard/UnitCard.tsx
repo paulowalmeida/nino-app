@@ -22,6 +22,7 @@ import { AddressFields } from '@shared/components/AddressFields/AddressFields'
 import { BRAZIL_STATES } from '@shared/constants/address.constants'
 import type { UnitDetail } from '@shared/types/store/unit-detail'
 import type { UnitDraft } from '@shared/types/store/unit-draft'
+import { storeDisplayUrlFor } from '@shared/utils/store-url/store-url'
 
 import motion from '@styles/motion.module.css'
 import local from './UnitCard.module.css'
@@ -74,6 +75,15 @@ export const UnitCard = ({
   )
   const addressLocation = useDeliveryLocation(draft.state)
   const addressDisabled = !draft.state
+  const storeUrl = unit?.slug
+    ? storeDisplayUrlFor(unit.slug, window.location.hostname)
+    : ''
+  const storeSlug = unit?.slug ?? ''
+  const storeSlugIndex = storeSlug ? storeUrl.indexOf(storeSlug) : -1
+  const storeUrlSuffix =
+    storeSlugIndex >= 0
+      ? storeUrl.slice(storeSlugIndex + storeSlug.length)
+      : ''
 
   const stateField = (
     <Select
@@ -279,7 +289,23 @@ export const UnitCard = ({
                       />
                     }
                   >
-                    <Input value={unit?.slug ?? ''} disabled readOnly />
+                    <div className={local.storeUrlComposer}>
+                      <Input
+                        className={local.storeUrlSlug}
+                        style={{
+                          width: `${Math.max(storeSlug.length + 16, 24)}ch`,
+                        }}
+                        value={storeSlug}
+                        readOnly
+                      />
+                      <Text
+                        size="sm"
+                        color="subtle"
+                        className={local.storeUrlAffix}
+                      >
+                        {storeUrlSuffix}
+                      </Text>
+                    </div>
                   </FormField>
                 </Box>
 

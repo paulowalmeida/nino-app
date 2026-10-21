@@ -8,5 +8,5 @@ export const inviteFormMock = {
 export const inviteFormSeatsMock: InviteSeat[] = [
   { value: 'position-staff', label: 'Atendente' },
   { value: 'position-manager', label: 'Gerente' },
-  { value: 'COURIER', label: 'Entregador — recebe as entregas' },
+  { value: 'COURIER', label: 'Entregador' },
 ]

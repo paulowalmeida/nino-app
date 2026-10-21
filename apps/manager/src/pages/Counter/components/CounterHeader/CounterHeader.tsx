@@ -12,7 +12,7 @@ import styles from './CounterHeader.module.css'
 export const CounterHeader = () => {
   const unitId = useCurrentUnit()?.unitId ?? null
   const { sections, isPending, isError, isSuccess } = useMenu(unitId)
-  const areMenuImagesReady = useMenuImagesReady(sections)
+  const { areMenuImagesReady } = useMenuImagesReady(sections)
   const isLoading = !isError && (isPending || !isSuccess || !areMenuImagesReady)
 
   if (isLoading) {

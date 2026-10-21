@@ -6,13 +6,36 @@
 }
 
 .board {
-  @apply mt-1 grid items-start gap-4;
+  @apply mt-1 grid items-stretch gap-4;
   @apply grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4;
   @apply lg:mt-3;
+  grid-auto-rows: minmax(14rem, auto);
 }
 
 .board > li {
-  @apply min-w-0;
+  @apply flex min-w-0;
+}
+
+.resultTransition {
+  @apply relative;
+}
+
+.skeletonOverlay {
+  @apply pointer-events-none absolute inset-0;
+  animation: skeleton-out 160ms var(--ease-out) both;
+}
+
+@keyframes skeleton-out {
+  to {
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .skeletonOverlay {
+    animation: none;
+    opacity: 0;
+  }
 }
 
 .sentinel {

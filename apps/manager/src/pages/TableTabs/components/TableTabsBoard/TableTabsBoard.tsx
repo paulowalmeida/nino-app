@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 import { Alert } from '@nino/ds/components/Alert'
 import { Box } from '@nino/ds/components/Box'
@@ -17,11 +17,23 @@ import motion from '@styles/motion.module.css'
 import styles from './TableTabsBoard.module.css'
 
 type TabGroup = 'active' | 'finalized'
+const CHIP_SKELETON_MS = 180
+const CHIP_REVEAL_MS = 420
 
 export const TableTabsBoard = () => {
   const { activeTabs, finalizedTabs, isPending, isError } = useTableTabsFacade()
   const [group, setGroup] = useState<TabGroup>('active')
   const [search, setSearch] = useState('')
+  const [phase, setPhase] = useState<'idle' | 'loading' | 'revealing'>('idle')
+  const transitionTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
+
+  useEffect(
+    () => () => {
+      if (transitionTimer.current) clearTimeout(transitionTimer.current)
+    },
+    []
+  )
+
   const isSearching = search.trim().length > 0
   const groupTabs = group === 'active' ? activeTabs : finalizedTabs
   const searchableTabs = isSearching
@@ -29,6 +41,30 @@ export const TableTabsBoard = () => {
     : groupTabs
   const visibleTabs = filterTableTabs(searchableTabs, search)
   const emptyMessage = TABLE_TABS_EMPTY_MESSAGE[isSearching ? 'search' : group]
+
+  const selectGroup = (next: TabGroup) => {
+    if (next === group) return
+    if (transitionTimer.current) clearTimeout(transitionTimer.current)
+    setGroup(next)
+    if (isSearching) {
+      setPhase('idle')
+      return
+    }
+    setPhase('loading')
+    transitionTimer.current = setTimeout(() => {
+      setPhase('revealing')
+      transitionTimer.current = setTimeout(() => {
+        setPhase('idle')
+        transitionTimer.current = null
+      }, CHIP_REVEAL_MS)
+    }, CHIP_SKELETON_MS)
+  }
+
+  const updateSearch = (value: string) => {
+    if (transitionTimer.current) clearTimeout(transitionTimer.current)
+    setPhase('idle')
+    setSearch(value)
+  }
 
   if (isPending) {
     return (
@@ -57,7 +93,7 @@ export const TableTabsBoard = () => {
           placeholder="Buscar por mesa ou nome"
           aria-label="Buscar comandas por mesa ou nome"
           className={styles.tableTabsBoardSearch}
-          onChange={(event) => setSearch(event.target.value)}
+          onChange={(event) => updateSearch(event.target.value)}
         />
         <Box
           direction="row"
@@ -68,14 +104,14 @@ export const TableTabsBoard = () => {
           <Chip
             variant="tab"
             selected={group === 'active'}
-            onClick={() => setGroup('active')}
+            onClick={() => selectGroup('active')}
           >
             Em aberto ({activeTabs.length})
           </Chip>
           <Chip
             variant="tab"
             selected={group === 'finalized'}
-            onClick={() => setGroup('finalized')}
+            onClick={() => selectGroup('finalized')}
           >
             Finalizadas ({finalizedTabs.length})
           </Chip>
@@ -98,14 +134,31 @@ export const TableTabsBoard = () => {
           </EmptyState>
         )}
         {!isError && visibleTabs.length > 0 && (
-          <Box
-            key={group}
-            as="ul"
-            className={`${motion.deal} ${styles.tableTabsBoardList}`}
-          >
-            {visibleTabs.map((tab) => (
-              <TableTabCard key={tab.id} tab={tab} />
-            ))}
+          <Box className={styles.resultTransition}>
+            {phase !== 'loading' && (
+              <Box as="ul" className={styles.tableTabsBoardList}>
+                {visibleTabs.map((tab, index) => (
+                  <TableTabCard
+                    key={tab.id}
+                    tab={tab}
+                    revealDelayMs={
+                      phase === 'revealing'
+                        ? 20 + Math.min(index, 5) * 20
+                        : undefined
+                    }
+                  />
+                ))}
+              </Box>
+            )}
+            {phase !== 'idle' && (
+              <Box
+                className={`${styles.resultSkeleton} ${phase === 'revealing' ? styles.resultSkeletonExit : ''}`}
+                aria-hidden={phase === 'revealing'}
+                data-testid="tabs-chip-skeleton"
+              >
+                <TableTabsListSkeleton count={visibleTabs.length} />
+              </Box>
+            )}
           </Box>
         )}
       </Box>

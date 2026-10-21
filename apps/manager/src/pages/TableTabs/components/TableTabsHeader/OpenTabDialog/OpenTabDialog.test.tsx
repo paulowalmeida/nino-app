@@ -80,6 +80,34 @@ describe('OpenTabDialog', () => {
     ).toBeInTheDocument()
   })
 
+  it('waits for confirmation after selecting a free table', async () => {
+    const submitOpen = mockFacade()
+    submitOpen.mockImplementation((_request, options) =>
+      options.onSuccess(openTabDialogMock.openedTab)
+    )
+    const onClose = vi.fn()
+    renderDialog(onClose)
+
+    await userEvent.click(
+      screen.getByRole('button', { name: 'Mesa 5: selecionar' })
+    )
+
+    expect(submitOpen).not.toHaveBeenCalled()
+    const confirm = screen.getByRole('button', { name: 'Abrir comanda' })
+    expect(confirm).toBeEnabled()
+
+    await userEvent.click(confirm)
+
+    expect(submitOpen).toHaveBeenCalledWith(
+      { diningTableId: 'table-5' },
+      expect.objectContaining({ onSuccess: expect.any(Function) })
+    )
+    expect(onClose).toHaveBeenCalled()
+    expect(
+      await screen.findByText(openTabDialogMock.navigationTarget)
+    ).toBeInTheDocument()
+  })
+
   it('does not submit a blank label', async () => {
     const submitOpen = mockFacade()
     renderDialog()

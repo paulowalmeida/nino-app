@@ -10,7 +10,6 @@ import { mergeClasses } from '@nino/ds/mergeClasses'
 import { ItemThumb } from '@shared/components/ItemThumb/ItemThumb'
 import type { MenuItem } from '@shared/types/product/menu-item'
 import { brl } from '@shared/utils/money/money'
-import { riseDelay } from '@shared/utils/rise-delay/rise-delay'
 
 import motion from '@styles/motion.module.css'
 import styles from './ProductCard.module.css'
@@ -78,7 +77,7 @@ const useProductCardLongPress = ({
 
 export type ProductCardProps = {
   item: MenuItem
-  index: number
+  isImagePreloaded?: boolean
   isPicked?: boolean
   quantity?: number
   onPick: (item: MenuItem) => void
@@ -89,7 +88,7 @@ export type ProductCardProps = {
 
 export const ProductCard = ({
   item,
-  index,
+  isImagePreloaded = false,
   isPicked = false,
   quantity,
   onPick,
@@ -148,9 +147,7 @@ export const ProductCard = ({
             onPick(item)
           }
         }}
-        style={riseDelay(index * 25)}
         className={mergeClasses(
-          motion.deal,
           motion.press,
           styles.productCard,
           isPressing && styles.pressing
@@ -168,6 +165,7 @@ export const ProductCard = ({
             name={item.name}
             imageUrl={imageUrl}
             fallbackUrl={item.fallbackUrl}
+            isPreloaded={isImagePreloaded}
             className={styles.photo}
             wrapperClassName={styles.photoWrap}
           />

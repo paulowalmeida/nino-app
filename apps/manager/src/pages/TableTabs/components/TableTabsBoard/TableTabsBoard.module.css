@@ -35,5 +35,31 @@
 }
 
 .tableTabsBoardList {
-  @apply grid gap-4 pr-1.5 sm:grid-cols-2 xl:grid-cols-3;
+  @apply grid gap-4 pr-1.5 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4;
+}
+
+.resultTransition {
+  @apply relative;
+}
+
+.resultSkeleton {
+  @apply min-w-0;
+}
+
+.resultSkeletonExit {
+  @apply pointer-events-none absolute inset-0;
+  animation: skeleton-out 160ms var(--ease-out) both;
+}
+
+@keyframes skeleton-out {
+  to {
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .resultSkeletonExit {
+    animation: none;
+    opacity: 0;
+  }
 }

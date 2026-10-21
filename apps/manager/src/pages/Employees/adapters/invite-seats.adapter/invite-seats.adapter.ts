@@ -9,7 +9,7 @@ export type InviteSeat = {
 
 const COURIER_SEAT_OPTION: InviteSeat = {
   value: COURIER_SEAT,
-  label: 'Entregador — recebe as entregas',
+  label: 'Entregador',
 }
 
 /**

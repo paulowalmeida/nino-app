@@ -26,7 +26,6 @@ describe(ProductCard.name, () => {
     render(
       <ProductCard
         item={item}
-        index={0}
         onPick={onPick}
         onPreviewStart={onPreviewStart}
         onPreviewEnd={onPreviewEnd}
@@ -49,7 +48,6 @@ describe(ProductCard.name, () => {
     render(
       <ProductCard
         item={item}
-        index={0}
         onPick={vi.fn()}
         onPreviewStart={onPreviewStart}
         onPreviewEnd={vi.fn()}
@@ -68,7 +66,6 @@ describe(ProductCard.name, () => {
     render(
       <ProductCard
         item={item}
-        index={0}
         isPicked
         quantity={1}
         onPick={vi.fn()}
@@ -91,7 +88,6 @@ describe(ProductCard.name, () => {
     render(
       <ProductCard
         item={item}
-        index={0}
         isPicked
         quantity={1}
         onPick={vi.fn()}
@@ -117,7 +113,6 @@ describe(ProductCard.name, () => {
     render(
       <ProductCard
         item={item}
-        index={0}
         isPicked
         quantity={1}
         onPick={vi.fn()}

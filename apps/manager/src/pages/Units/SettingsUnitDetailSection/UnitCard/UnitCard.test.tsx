@@ -113,12 +113,16 @@ describe('UnitCard', () => {
 
     expect(screen.getByDisplayValue('Loja principal')).toBeInTheDocument()
     expect(screen.getByDisplayValue('loja-principal')).toBeInTheDocument()
+    expect(screen.getByText('.localhost:3002')).toBeInTheDocument()
+    expect(screen.queryByText('http://')).not.toBeInTheDocument()
   })
 
-  it('keeps the store link out of reach', () => {
+  it('shows the store slug as read-only', () => {
     renderCard(unitCardDetailMock)
 
-    expect(screen.getByDisplayValue('loja-principal')).toBeDisabled()
+    const storeSlug = screen.getByDisplayValue('loja-principal')
+    expect(storeSlug).toHaveAttribute('readonly')
+    expect(storeSlug).not.toBeDisabled()
   })
 
   it('saves the renamed unit', async () => {

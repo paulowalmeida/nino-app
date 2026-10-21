@@ -36,6 +36,22 @@
   animation: deal 0.42s var(--ease-out) var(--d, 0ms) both;
 }
 
+.chipCardEnter {
+  animation: chip-card-enter 280ms var(--ease-out) both;
+}
+
+@keyframes chip-card-enter {
+  from {
+    opacity: 0;
+    transform: translateY(8px) scale(0.985);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
 @keyframes unroll {
   from {
     clip-path: inset(0 0 100% 0);
@@ -98,6 +114,10 @@
   .slide,
   .pop,
   .deal {
+    animation: none;
+  }
+
+  .chipCardEnter {
     animation: none;
   }
 }

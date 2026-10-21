@@ -62,33 +62,53 @@
   grid-area: sa;
 }
 
-.locationFirst {
-  grid-template-areas:
-    'sa sa sa sa sa sa sa sa sa sa sa sa'
-    'ci ci ci ci ci ci ci ci ci ci ci ci'
-    'z z z z z z z z z z z z'
-    'st st st st st st st st st st st st'
-    'n n n n n n n n n n n n'
-    'co co co co co co co co co co co co'
-    'h h h h h h h h h h h h';
+.addressFieldsGrid.locationFirst {
+  display: flex;
+  flex-direction: column;
 }
 
-@media (min-width: 640px) {
-  .locationFirst {
-    grid-template-areas:
-      'sa sa sa sa ci ci ci ci ci ci ci ci'
-      'z z z st st st st st st st n n'
-      'h h h h h h co co co co co co';
-  }
+.locationFirstRow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: 0.75rem;
+  width: 42.25rem;
+  max-width: 100%;
 }
 
-@media (min-width: 768px) {
-  .locationFirst {
-    grid-template-areas:
-      'sa sa sa sa ci ci ci ci ci ci ci ci'
-      'z z st st st st st st st st n n'
-      'h h h h h h co co co co co co';
-  }
+.locationFirst .state {
+  flex: 0 1 13rem;
+  max-width: 100%;
+}
+
+.locationFirst .city {
+  flex: 1 1 28rem;
+  max-width: 100%;
+}
+
+.locationFirst .zip {
+  flex: 0 1 7.5rem;
+  max-width: 100%;
+}
+
+.locationFirst .street {
+  flex: 0 1 25rem;
+  max-width: 100%;
+}
+
+.locationFirst .number {
+  flex: 1 1 8rem;
+  max-width: 100%;
+}
+
+.locationFirst .neighborhood {
+  flex: 0 1 20rem;
+  max-width: 100%;
+}
+
+.locationFirst .complement {
+  flex: 1 1 21.5rem;
+  max-width: 100%;
 }
 
 

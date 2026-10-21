@@ -1,6 +1,6 @@
 import { MemoryRouter } from 'react-router'
 
-import { render, screen } from '@testing-library/react'
+import { render, screen, waitFor } from '@testing-library/react'
 import { describe, expect, it, vi } from 'vitest'
 
 import { useOrdersFacade } from '@pages/Orders/facades/useOrdersFacade/useOrdersFacade'
@@ -139,5 +139,50 @@ describe('OrdersQueue', () => {
 
     expect(screen.getAllByText('ticket loading')).toHaveLength(4)
     expect(screen.getByRole('status')).toHaveTextContent('Carregando pedidos')
+  })
+
+  it('keeps skeletons through a stage request, then reveals tickets', async () => {
+    vi.mocked(useOrdersFacade).mockReturnValue({
+      orders: [{ id: 'order-1' }],
+      isPending: false,
+      isOrdersPending: false,
+      isPagePending: false,
+      isError: false,
+      isSearching: false,
+      stage: 'incoming',
+      hasNextPage: false,
+    } as never)
+    const { rerender } = render(<OrdersQueue />, { wrapper: MemoryRouter })
+
+    vi.mocked(useOrdersFacade).mockReturnValue({
+      orders: [],
+      isPending: false,
+      isOrdersPending: true,
+      isPagePending: false,
+      isError: false,
+      isSearching: false,
+      stage: 'closed',
+      hasNextPage: false,
+    } as never)
+    rerender(<OrdersQueue />)
+    expect(screen.getByRole('status')).toHaveTextContent('Carregando pedidos')
+    expect(screen.queryByRole('button', { name: 'ticket' })).not.toBeInTheDocument()
+
+    vi.mocked(useOrdersFacade).mockReturnValue({
+      orders: [{ id: 'order-2' }],
+      isPending: false,
+      isOrdersPending: false,
+      isPagePending: false,
+      isError: false,
+      isSearching: false,
+      stage: 'closed',
+      hasNextPage: false,
+    } as never)
+    rerender(<OrdersQueue />)
+    expect(await screen.findByRole('button', { name: 'ticket' })).toBeInTheDocument()
+    expect(screen.getByTestId('orders-chip-skeleton')).toBeInTheDocument()
+    await waitFor(() =>
+      expect(screen.queryByTestId('orders-chip-skeleton')).not.toBeInTheDocument()
+    )
   })
 })
