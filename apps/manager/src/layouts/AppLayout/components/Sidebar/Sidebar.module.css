@@ -7,7 +7,7 @@
 }
 
 .sidebar {
-  @apply fixed left-0 top-0 z-modal flex h-dvh w-70 flex-col overflow-hidden;
+  @apply fixed left-0 top-0 z-modal flex h-dvh w-50 flex-col overflow-hidden;
   @apply -translate-x-full bg-fg-cool;
   @apply transition-[translate,width] duration-300 ease-in-out;
   @apply lg:relative lg:left-auto lg:z-nav lg:h-auto lg:translate-x-0 lg:shrink-0;
