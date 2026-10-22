@@ -5,6 +5,7 @@ export type PromotionSummarySource = Pick<
   | 'type'
   | 'value'
   | 'minOrderValue'
+  | 'maxDiscount'
   | 'startsAt'
   | 'endsAt'
   | 'weekdays'

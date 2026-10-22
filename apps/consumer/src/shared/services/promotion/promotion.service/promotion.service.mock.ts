@@ -9,6 +9,7 @@ export const freeDeliveryPromotionMock: PublicPromotion = {
   value: 0,
   code: null,
   minOrderValue: 60,
+  maxDiscount: null,
   endsAt: null,
   allDeliveryZones: false,
   deliveryZoneIds: ['zone-centro'],

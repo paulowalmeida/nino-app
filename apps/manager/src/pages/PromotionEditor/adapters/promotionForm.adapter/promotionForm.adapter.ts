@@ -33,6 +33,10 @@ const perCustomerOf = (
       : { perCustomer: 'custom', perCustomerCount: limit }
 
 const blankValues = (now: Date): PromotionFormValues => ({
+  campaignType: 'free-delivery',
+  discountKind: 'PERCENTAGE_DISCOUNT',
+  discountValue: '',
+  maxDiscount: '',
   minOrderValue: '',
   zoneScope: 'all',
   deliveryZoneIds: [],
@@ -66,6 +70,7 @@ export const toPromotionFormValues = (
   const start = keepStart ? startsAt : now
   return {
     ...blankValues(now),
+    ...discountFieldsOf(promotion),
     minOrderValue: promotion.minOrderValue
       ? maskMoneyAmount(promotion.minOrderValue)
       : '',
@@ -86,6 +91,46 @@ export const toPromotionFormValues = (
   }
 }
 
+const discountFieldsOf = ({
+  type,
+  value,
+  maxDiscount,
+}: Promotion): Pick<
+  PromotionFormValues,
+  'campaignType' | 'discountKind' | 'discountValue' | 'maxDiscount'
+> =>
+  type === 'FREE_DELIVERY'
+    ? {
+        campaignType: 'free-delivery',
+        discountKind: 'PERCENTAGE_DISCOUNT',
+        discountValue: '',
+        maxDiscount: '',
+      }
+    : {
+        campaignType: 'discount',
+        discountKind: type,
+        discountValue:
+          type === 'PERCENTAGE_DISCOUNT' ? String(value) : maskMoneyAmount(value),
+        maxDiscount: maxDiscount ? maskMoneyAmount(maxDiscount) : '',
+      }
+
+const typeOf = ({
+  campaignType,
+  discountKind,
+}: PromotionFormValues): Promotion['type'] =>
+  campaignType === 'free-delivery' ? 'FREE_DELIVERY' : discountKind
+
+// CONSTRAINT: percentual chega digitado ("12,5"); valor fixo, mascarado ("10,00").
+export const discountAmountOf = ({
+  discountKind,
+  discountValue,
+}: Pick<PromotionFormValues, 'discountKind' | 'discountValue'>): number =>
+  !discountValue
+    ? 0
+    : discountKind === 'PERCENTAGE_DISCOUNT'
+      ? Number(discountValue.replace(',', '.'))
+      : moneyValue(discountValue)
+
 const perCustomerLimitOf = ({
   perCustomer,
   perCustomerCount,
@@ -98,9 +143,16 @@ const perCustomerLimitOf = ({
 
 export const toPromotionSummarySource = (
   values: PromotionFormValues
-): PromotionSummarySource => ({
-  type: 'FREE_DELIVERY',
-  value: 0,
+): PromotionSummarySource => {
+  const type = typeOf(values)
+  const isFreeDelivery = type === 'FREE_DELIVERY'
+  return {
+  type,
+  value: isFreeDelivery ? 0 : discountAmountOf(values),
+  maxDiscount:
+    type === 'PERCENTAGE_DISCOUNT' && values.maxDiscount
+      ? moneyValue(values.maxDiscount)
+      : null,
   minOrderValue: values.minOrderValue ? moneyValue(values.minOrderValue) : 0,
   startsAt: (
     combineDateTime(values.startsAtDate, values.startsAtTime) ?? new Date()
@@ -111,16 +163,20 @@ export const toPromotionSummarySource = (
   weekdays: values.weekdays,
   dailyStartTime: values.hasDailyWindow ? values.dailyStartTime : null,
   dailyEndTime: values.hasDailyWindow ? values.dailyEndTime : null,
-  allDeliveryZones: values.zoneScope === 'all',
-  deliveryZoneIds: values.zoneScope === 'all' ? [] : values.deliveryZoneIds,
-})
+  allDeliveryZones: !isFreeDelivery || values.zoneScope === 'all',
+  deliveryZoneIds:
+    isFreeDelivery && values.zoneScope === 'chosen' ? values.deliveryZoneIds : [],
+  }
+}
 
 export const toPromotionInput = (values: PromotionFormValues): PromotionInput => {
   const source = toPromotionSummarySource(values)
   return {
     name: promotionSummaryParts(source).headline,
-    type: 'FREE_DELIVERY',
+    type: source.type,
     code: values.code.trim() || null,
+    value: source.value,
+    maxDiscount: source.maxDiscount,
     minOrderValue: source.minOrderValue,
     startsAt: source.startsAt,
     endsAt: source.endsAt,

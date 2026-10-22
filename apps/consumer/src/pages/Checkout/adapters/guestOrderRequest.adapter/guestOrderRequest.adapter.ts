@@ -1,6 +1,7 @@
 import type { CartLine } from '@custom_types/cart/cart-line'
 import type { CheckoutFormValues } from '@pages/checkout/types/checkout/CheckoutFormValues.type'
 import type { CreateGuestOrderRequest } from '@custom_types/order/create-guest-order-request'
+import type { OrderPromotionsRequest } from '@custom_types/order/order-promotions-request.type'
 import type { Store } from '@custom_types/store/store'
 import { orderItemsRequest } from '@pages/checkout/adapters/orderItemsRequest.adapter/orderItemsRequest.adapter'
 
@@ -11,7 +12,7 @@ export const guestOrderRequest = (
   values: CheckoutFormValues,
   store: Store,
   cartLines: CartLine[],
-  expectsFreeDelivery = false
+  promotions: OrderPromotionsRequest = {}
 ): CreateGuestOrderRequest => {
   const isDelivery = values.channel === 'DELIVERY'
 
@@ -33,7 +34,7 @@ export const guestOrderRequest = (
     guestLatitude: isDelivery ? values.guestLatitude : undefined,
     guestLongitude: isDelivery ? values.guestLongitude : undefined,
     notes: values.notes,
-    expectsFreeDelivery,
+    ...promotions,
     items: orderItemsRequest(cartLines),
   }
 }

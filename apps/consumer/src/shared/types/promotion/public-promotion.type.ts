@@ -5,6 +5,7 @@ export type PublicPromotion = {
   value: number
   code: string | null
   minOrderValue: number
+  maxDiscount: number | null
   endsAt: string | null
   allDeliveryZones: boolean
   deliveryZoneIds: string[]

@@ -35,7 +35,7 @@ describe('CheckoutAlerts', () => {
     expect(
       screen.getByText(checkoutAlertsMock.promotionEndedTitle)
     ).toBeInTheDocument()
-    expect(screen.getByText(/O frete agora é R\$\s7,00/)).toBeInTheDocument()
+    expect(screen.getByText(/O novo total já está no resumo/)).toBeInTheDocument()
     expect(
       screen.queryByText(checkoutAlertsMock.failedTitle)
     ).not.toBeInTheDocument()

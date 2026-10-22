@@ -35,11 +35,11 @@ export const CodeSection = () => {
           Quem pode usar
         </Heading>
 
+        <Box className={styles.codeFields}>
         <FormField
           label="Código"
           helperText="Sem código, vale para todos. Com código, só para quem digitar."
           error={errors.code?.message}
-          className={styles.codeField}
         >
           <Controller
             name="code"
@@ -88,6 +88,7 @@ export const CodeSection = () => {
             </FormField>
           )}
         />
+        </Box>
       </Card>
     </Box>
   )

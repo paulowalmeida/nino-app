@@ -91,3 +91,7 @@
 .freeDeliveryNote {
   @apply text-xs text-fg-subtle;
 }
+
+.discountAmount {
+  @apply font-bold text-success;
+}

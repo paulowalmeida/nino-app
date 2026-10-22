@@ -17,7 +17,7 @@ export const PromotionEditorHeader = () => {
         mb={5}
         title={EDITOR_TITLES[mode]}
         accent="campanha"
-        description="Frete grátis: o cliente vê a condição no cardápio e paga zero de entrega quando cumpre."
+        description="O cliente vê a condição no cardápio e ganha o benefício quando cumpre."
       />
     </>
   )

@@ -4,6 +4,10 @@
   @apply flex flex-col gap-4;
 }
 
-.countField {
-  @apply sm:max-w-56;
+.limitsFields {
+  @apply grid grid-cols-1 items-start gap-4 md:grid-cols-2;
+}
+
+.perCustomer {
+  @apply flex flex-col gap-4;
 }

@@ -75,4 +75,30 @@ describe(promotionSummaryParts.name, () => {
       ).period
     ).toBeNull()
   })
+
+  it('names percentage and fixed discounts, with the cap when there is one', () => {
+    expect(
+      promotionSummaryParts(
+        {
+          ...freeDeliverySummaryMock,
+          type: 'PERCENTAGE_DISCOUNT',
+          value: 10,
+          maxDiscount: 15,
+          minOrderValue: 50,
+        },
+        summaryNowMock
+      ).headline
+    ).toBe('10% de desconto (até R$\u00a015,00) acima de R$\u00a050,00')
+    expect(
+      promotionSummaryParts(
+        {
+          ...freeDeliverySummaryMock,
+          type: 'FIXED_DISCOUNT',
+          value: 10,
+          minOrderValue: 0,
+        },
+        summaryNowMock
+      ).headline
+    ).toBe('R$\u00a010,00 de desconto em qualquer pedido')
+  })
 })

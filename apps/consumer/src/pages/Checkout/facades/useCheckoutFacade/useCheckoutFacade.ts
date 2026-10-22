@@ -1,9 +1,10 @@
 import { useCheckoutCart } from '@pages/checkout/hooks/useCheckoutCart/useCheckoutCart'
 import { useDeliveryZones } from '@pages/checkout/hooks/useDeliveryZones/useDeliveryZones'
 import { useOpeningHours } from '@hooks/useOpeningHours/useOpeningHours'
-import { useFreeDeliveryOffer } from '@hooks/useFreeDeliveryOffer/useFreeDeliveryOffer'
+import { usePromotionOffers } from '@hooks/usePromotionOffers/usePromotionOffers'
 import { usePublicSettings } from '@hooks/usePublicSettings/usePublicSettings'
 import { useStore } from '@hooks/useStore/useStore'
+import { useCheckoutCoupon } from '@pages/checkout/hooks/useCheckoutCoupon/useCheckoutCoupon'
 import { useCheckoutWorkflow } from '@pages/checkout/hooks/useCheckoutWorkflow/useCheckoutWorkflow'
 import { useCheckoutResume } from '@pages/checkout/hooks/useCheckoutResume/useCheckoutResume'
 import { useCheckoutStore } from '@pages/checkout/states/checkout/checkout.state'
@@ -26,7 +27,8 @@ export const useCheckoutFacadeValue = (pathSlug?: string | null) => {
   const zonesQuery = useDeliveryZones(storeQuery.store?.id)
   const hoursQuery = useOpeningHours(storeQuery.store?.id)
   const cart = useCheckoutCart(storeQuery.store?.id)
-  const offer = useFreeDeliveryOffer(storeQuery.store?.id)
+  const offers = usePromotionOffers(storeQuery.store?.id)
+  const couponState = useCheckoutCoupon(storeQuery.store?.id)
   const { cartLines } = cart
 
   const checkout = useCheckoutWorkflow({
@@ -41,8 +43,10 @@ export const useCheckoutFacadeValue = (pathSlug?: string | null) => {
     minimumOrderAmount: settingsQuery.settings?.minOrderAmount,
     clearCart: cart.clear,
     slug,
-    freeDelivery: offer.freeDelivery,
-    refetchOffer: offer.refetchOffer,
+    freeDelivery: offers.freeDelivery,
+    discountOffers: offers.discountOffers,
+    coupon: couponState.coupon,
+    refetchOffers: offers.refetchOffers,
   })
   const lastOrder = useCheckoutResume({
     pathSlug: pathSlug ?? null,
@@ -64,6 +68,12 @@ export const useCheckoutFacadeValue = (pathSlug?: string | null) => {
       hoursQuery.isPending ||
       (storeQuery.store ? isOpen(storeQuery.store, hoursQuery.hours) : false),
     setSlug,
+    couponSuggestions: offers.couponSuggestions,
+    applyCouponCode: couponState.applyCouponCode,
+    applyCoupon: couponState.applyCoupon,
+    removeCoupon: couponState.removeCoupon,
+    isApplyingCoupon: couponState.isApplyingCoupon,
+    couponError: couponState.couponError,
     ...checkout,
   }
 }

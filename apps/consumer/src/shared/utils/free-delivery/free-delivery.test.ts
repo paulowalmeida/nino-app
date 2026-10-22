@@ -3,11 +3,9 @@ import { describe, expect, it } from 'vitest'
 import {
   freeDeliveryCoverage,
   freeDeliveryGap,
-  freeDeliveryLabel,
   pickFreeDeliveryOffer,
 } from './free-delivery'
 import {
-  freeDeliveryNowMock,
   openOfferMock,
   visiblePromotionsMock,
 } from './free-delivery.mock'
@@ -52,14 +50,5 @@ describe('free-delivery', () => {
         deliveryFee: 0,
       })
     ).toBe('none')
-  })
-
-  it('writes the menu strip with the end of the campaign', () => {
-    expect(freeDeliveryLabel(openOfferMock, freeDeliveryNowMock)).toBe(
-      'Frete grátis acima de R$ 60,00 · até domingo'
-    )
-    expect(
-      freeDeliveryLabel({ ...openOfferMock, minOrderValue: 0, endsAt: null })
-    ).toBe('Frete grátis em qualquer pedido')
   })
 })

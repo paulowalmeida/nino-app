@@ -27,8 +27,16 @@ vi.mock('@shared/hooks/useMyAddresses/useMyAddresses')
 vi.mock('@pages/checkout/hooks/useCheckoutResume/useCheckoutResume')
 vi.mock('@utils/store-info', () => ({ isOpen: vi.fn(() => true) }))
 
-vi.mock('@hooks/useFreeDeliveryOffer/useFreeDeliveryOffer', () => ({
-  useFreeDeliveryOffer: () => ({ freeDelivery: undefined, refetchOffer: () => undefined }),
+vi.mock('@hooks/usePromotionOffers/usePromotionOffers', () => ({
+  usePromotionOffers: () => ({
+    freeDelivery: undefined,
+    discountOffers: [],
+    couponSuggestions: [],
+    refetchOffers: () => undefined,
+  }),
+}))
+vi.mock('@pages/checkout/hooks/useCheckoutCoupon/useCheckoutCoupon', () => ({
+  useCheckoutCoupon: () => ({ coupon: undefined }),
 }))
 
 describe('useCheckoutFacadeValue', () => {

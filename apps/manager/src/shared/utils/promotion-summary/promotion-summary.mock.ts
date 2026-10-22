@@ -6,6 +6,7 @@ export const freeDeliverySummaryMock: PromotionSummarySource = {
   type: 'FREE_DELIVERY',
   value: 0,
   minOrderValue: 60,
+  maxDiscount: null,
   startsAt: '2026-10-01T03:00:00.000Z',
   endsAt: '2026-10-25T23:00:00.000Z',
   weekdays: [],

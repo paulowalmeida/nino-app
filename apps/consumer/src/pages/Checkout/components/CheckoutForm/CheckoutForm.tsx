@@ -14,6 +14,7 @@ import { PAYMENT_METHOD_LABEL } from '@pages/checkout/constants/paymentMethodLab
 
 import { ChannelFields } from './ChannelFields/ChannelFields'
 import { CheckoutAlerts } from './CheckoutAlerts/CheckoutAlerts'
+import { CheckoutCoupon } from './CheckoutCoupon/CheckoutCoupon'
 import { CheckoutFooter } from './CheckoutFooter/CheckoutFooter'
 import { CheckoutHeader } from './CheckoutHeader/CheckoutHeader'
 import { CheckoutReceipt } from './CheckoutReceipt/CheckoutReceipt'
@@ -239,6 +240,7 @@ export const CheckoutForm = ({
                         </dd>
                       </Box>
                     </dl>
+                    <CheckoutCoupon checkout={facade} />
                   </Box>
                 )}
               </Box>

@@ -7,6 +7,8 @@ export type Promotion = {
   code: string | null
   value: number
   minOrderValue: number
+  // CONSTRAINT: teto em reais, só no desconto percentual.
+  maxDiscount: number | null
   channels: ('DELIVERY' | 'PICKUP' | 'COUNTER' | 'TABLE_TAB')[]
   startsAt: string
   endsAt: string | null

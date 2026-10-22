@@ -28,6 +28,7 @@ export const checkoutTotalsMock = {
     value: 0,
     code: null,
     minOrderValue: 20,
+    maxDiscount: null,
     endsAt: null,
     allDeliveryZones: false,
     deliveryZoneIds: ['zone-centro'],

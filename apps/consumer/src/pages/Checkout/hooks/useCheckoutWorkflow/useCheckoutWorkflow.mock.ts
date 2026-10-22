@@ -11,6 +11,7 @@ export const freeDeliveryOfferMock = {
   value: 0,
   code: null,
   minOrderValue: 60,
+  maxDiscount: null,
   endsAt: null,
   allDeliveryZones: true,
   deliveryZoneIds: [],

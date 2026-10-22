@@ -95,4 +95,46 @@ describe('promotionForm.adapter', () => {
       endsAt: null,
     })
   })
+
+  it('sends a capped percentage discount for every address', () => {
+    const input = toPromotionInput({
+      ...filledFormMock,
+      campaignType: 'discount',
+      discountKind: 'PERCENTAGE_DISCOUNT',
+      discountValue: '12,5',
+      maxDiscount: '15,00',
+    })
+
+    expect(input).toMatchObject({
+      type: 'PERCENTAGE_DISCOUNT',
+      value: 12.5,
+      maxDiscount: 15,
+      allDeliveryZones: true,
+      deliveryZoneIds: [],
+    })
+  })
+
+  it('drops the cap from a fixed discount and reloads it for editing', () => {
+    const input = toPromotionInput({
+      ...filledFormMock,
+      campaignType: 'discount',
+      discountKind: 'FIXED_DISCOUNT',
+      discountValue: '10,00',
+      maxDiscount: '15,00',
+    })
+    expect(input).toMatchObject({ type: 'FIXED_DISCOUNT', value: 10, maxDiscount: null })
+
+    expect(
+      toPromotionFormValues(
+        { ...pastCampaignMock, type: 'PERCENTAGE_DISCOUNT', value: 10, maxDiscount: 15 },
+        'edit',
+        formNowMock
+      )
+    ).toMatchObject({
+      campaignType: 'discount',
+      discountKind: 'PERCENTAGE_DISCOUNT',
+      discountValue: '10',
+      maxDiscount: '15,00',
+    })
+  })
 })

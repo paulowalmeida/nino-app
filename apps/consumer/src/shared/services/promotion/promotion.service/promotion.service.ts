@@ -4,4 +4,9 @@ import { api } from '@shared/services/http/http.service'
 export const promotionService = {
   listVisible: (unitId: string): Promise<PublicPromotion[]> =>
     api.get<PublicPromotion[]>(`units/${unitId}/promotions/public`),
+
+  findCoupon: (unitId: string, code: string): Promise<PublicPromotion> =>
+    api.get<PublicPromotion>(
+      `units/${unitId}/promotions/public/coupons/${encodeURIComponent(code)}`
+    ),
 }

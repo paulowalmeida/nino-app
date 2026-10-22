@@ -43,6 +43,7 @@ export const DeliveryAddressFields = ({
     register,
     errors,
     zone: quote,
+    deliveryDiscount,
     isQuoting,
     isAuthenticated,
     addresses,
@@ -219,7 +220,9 @@ export const DeliveryAddressFields = ({
               />
               {hasDeliveryQuote ? (
                 <Text as="span" className={styles.deliveryFee}>
-                  Taxa de entrega · {brl(quote.fee)}
+                  {deliveryDiscount > 0
+                    ? 'Frete grátis'
+                    : `Taxa de entrega · ${brl(quote.fee)}`}
                 </Text>
               ) : (
                 <Text color="subtle">

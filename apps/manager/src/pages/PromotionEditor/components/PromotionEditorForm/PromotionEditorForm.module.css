@@ -14,11 +14,19 @@
   @apply flex min-w-0 flex-col gap-4;
 }
 
+.promotionEditorStepper {
+  @apply mb-2;
+}
+
+.promotionEditorRules {
+  @apply flex flex-col gap-4;
+}
+
 .promotionEditorPreview {
   @apply lg:sticky lg:top-6 lg:col-start-2 lg:row-span-2 lg:row-start-1;
 }
 
 .promotionEditorActions {
-  @apply flex flex-col-reverse gap-2 border-t border-border/60 pt-5;
+  @apply flex flex-col-reverse gap-2;
   @apply sm:flex-row sm:justify-end lg:col-start-1;
 }

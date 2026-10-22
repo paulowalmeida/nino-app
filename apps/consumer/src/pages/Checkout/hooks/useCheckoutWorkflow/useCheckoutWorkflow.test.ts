@@ -36,6 +36,8 @@ describe('useCheckoutWorkflow', () => {
       deliveryFee: 6.5,
       deliveryDiscount: 0,
       freeDeliveryCoverage: 'none',
+      promotionDiscount: 0,
+      appliedDiscount: undefined,
       total: 42.5,
       deliveryNote: 'Chega em cerca de 40 min',
     })
@@ -95,6 +97,8 @@ it('shows a friendly message when guest checkout is throttled', () => {
     deliveryFee: 0,
     deliveryDiscount: 0,
     freeDeliveryCoverage: 'none',
+    promotionDiscount: 0,
+    appliedDiscount: undefined,
     total: 36,
     deliveryNote: '',
   })
@@ -150,6 +154,8 @@ it('drops free delivery and shows the new fee when the campaign ends mid-order',
     deliveryFee: 7,
     deliveryDiscount: freeDelivery ? 7 : 0,
     freeDeliveryCoverage: freeDelivery ? 'applied' : 'none',
+    promotionDiscount: 0,
+    appliedDiscount: undefined,
     total: freeDelivery ? 70 : 77,
     deliveryNote: '',
   }))
@@ -169,7 +175,7 @@ it('drops free delivery and shows the new fee when the campaign ends mid-order',
       clearCart: vi.fn(),
       slug: useCheckoutWorkflowMock.slug,
       freeDelivery: freeDeliveryOfferMock,
-      refetchOffer,
+      refetchOffers: refetchOffer,
     })
   )
   expect(result.current.total).toBe(70)
@@ -184,7 +190,9 @@ it('drops free delivery and shows the new fee when the campaign ends mid-order',
   rerender()
 
   expect(placeOrder.mutate).toHaveBeenCalledWith(
-    expect.objectContaining({ expectsFreeDelivery: true }),
+    expect.objectContaining({
+      promotions: expect.objectContaining({ expectsFreeDelivery: true }),
+    }),
     expect.anything()
   )
   expect(refetchOffer).toHaveBeenCalled()

@@ -1,6 +1,10 @@
 import type { PromotionFormValues } from '@pages/PromotionEditor/types/PromotionFormValues.type'
 
 export const previewValuesMock: PromotionFormValues = {
+  campaignType: 'free-delivery',
+  discountKind: 'PERCENTAGE_DISCOUNT',
+  discountValue: '',
+  maxDiscount: '',
   minOrderValue: '60,00',
   zoneScope: 'all',
   deliveryZoneIds: [],

@@ -16,17 +16,21 @@ const hourLabel = (time: string): string => {
   return minute === '00' ? `${Number(hour)}h` : `${Number(hour)}h${minute}`
 }
 
-const headlineOf = ({
+const benefitOf = ({
   type,
   value,
-  minOrderValue,
+  maxDiscount,
 }: PromotionSummarySource): string => {
-  const benefit =
-    type === 'FREE_DELIVERY'
-      ? 'Frete grátis'
-      : type === 'PERCENTAGE_DISCOUNT'
-        ? `${value}% de desconto`
-        : `${brl(value)} de desconto`
+  if (type === 'FREE_DELIVERY') return 'Frete grátis'
+  if (type === 'FIXED_DISCOUNT') return `${brl(value)} de desconto`
+  return maxDiscount
+    ? `${value}% de desconto (até ${brl(maxDiscount)})`
+    : `${value}% de desconto`
+}
+
+const headlineOf = (promotion: PromotionSummarySource): string => {
+  const { minOrderValue } = promotion
+  const benefit = benefitOf(promotion)
   return minOrderValue > 0
     ? `${benefit} acima de ${brl(minOrderValue)}`
     : `${benefit} em qualquer pedido`

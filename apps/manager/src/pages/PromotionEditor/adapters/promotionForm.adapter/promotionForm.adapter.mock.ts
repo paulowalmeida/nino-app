@@ -21,6 +21,10 @@ export const pastCampaignMock: Promotion = {
 }
 
 export const filledFormMock: PromotionFormValues = {
+  campaignType: 'free-delivery',
+  discountKind: 'PERCENTAGE_DISCOUNT',
+  discountValue: '',
+  maxDiscount: '',
   minOrderValue: '60,00',
   zoneScope: 'chosen',
   deliveryZoneIds: ['zone-1'],

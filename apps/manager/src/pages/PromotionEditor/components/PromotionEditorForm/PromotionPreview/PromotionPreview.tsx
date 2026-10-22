@@ -22,7 +22,9 @@ export const PromotionPreview = () => {
   const facts = [
     { label: 'Quando', value: schedule ?? 'Todos os dias, o dia todo' },
     { label: 'Período', value: period ?? 'Sem data de fim' },
-    { label: 'Zonas', value: zones ?? 'Todas as zonas' },
+    ...(values.campaignType === 'free-delivery'
+      ? [{ label: 'Zonas', value: zones ?? 'Todas as zonas' }]
+      : []),
     { label: 'Código', value: values.code || 'Sem código' },
     { label: 'Limites', value: promotionLimitsLabel(values) },
   ]
@@ -37,7 +39,11 @@ export const PromotionPreview = () => {
           className={styles.menuStrip}
           aria-label="Prévia da faixa no cardápio"
         >
-          <Icon name="truck" size="sm" className={styles.menuStripIcon} />
+          <Icon
+            name={values.campaignType === 'free-delivery' ? 'truck' : 'tag'}
+            size="sm"
+            className={styles.menuStripIcon}
+          />
           <Text as="span" className={styles.menuStripText}>
             {[headline, period].filter(Boolean).join(' · ')}
           </Text>

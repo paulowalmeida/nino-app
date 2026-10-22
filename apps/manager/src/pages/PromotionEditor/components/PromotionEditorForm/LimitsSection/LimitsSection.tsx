@@ -25,6 +25,8 @@ export const LimitsSection = () => {
           Limites
         </Heading>
 
+        <Box className={styles.limitsFields}>
+        <Box className={styles.perCustomer}>
         <FormField
           label="Usos por cliente"
           helperText="Cliente sem cadastro é reconhecido pelo telefone."
@@ -48,7 +50,6 @@ export const LimitsSection = () => {
           <FormField
             label="Quantas vezes cada cliente"
             error={errors.perCustomerCount?.message}
-            className={styles.countField}
           >
             <Controller
               name="perCustomerCount"
@@ -69,11 +70,12 @@ export const LimitsSection = () => {
           </FormField>
         )}
 
+        </Box>
+
         <FormField
           label="Limite total de pedidos"
           helperText="Ex.: só os primeiros 50 pedidos. Vazio não limita."
           error={errors.totalLimit?.message}
-          className={styles.countField}
         >
           <Controller
             name="totalLimit"
@@ -95,6 +97,7 @@ export const LimitsSection = () => {
             )}
           />
         </FormField>
+        </Box>
       </Card>
     </Box>
   )

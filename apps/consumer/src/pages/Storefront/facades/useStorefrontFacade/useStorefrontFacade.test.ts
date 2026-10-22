@@ -28,8 +28,13 @@ vi.mock('@pages/Storefront/hooks/useStorefrontSlug/useStorefrontSlug')
 vi.mock('@shared/hooks/useConsumerSession/useConsumerSession')
 vi.mock('@shared/hooks/useLogout/useLogout')
 
-vi.mock('@hooks/useFreeDeliveryOffer/useFreeDeliveryOffer', () => ({
-  useFreeDeliveryOffer: () => ({ freeDelivery: undefined, refetchOffer: () => undefined }),
+vi.mock('@hooks/usePromotionOffers/usePromotionOffers', () => ({
+  usePromotionOffers: () => ({
+    freeDelivery: undefined,
+    discountOffers: [],
+    couponSuggestions: [],
+    refetchOffers: () => undefined,
+  }),
 }))
 
 describe('useStorefrontFacade', () => {

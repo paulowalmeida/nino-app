@@ -20,6 +20,8 @@ describe('checkoutTotals', () => {
       deliveryFee: 5,
       deliveryDiscount: 0,
       freeDeliveryCoverage: 'none',
+      promotionDiscount: 0,
+      appliedDiscount: undefined,
       total: 30,
       deliveryNote: 'Chega em ~30 min',
     })
@@ -31,7 +33,8 @@ describe('checkoutTotals', () => {
       estimatedMinutes: undefined,
     })).toEqual({
       subtotal: 0, deliveryFee: 0, deliveryDiscount: 0,
-      freeDeliveryCoverage: 'none', total: 0,
+      freeDeliveryCoverage: 'none', promotionDiscount: 0,
+      appliedDiscount: undefined, total: 0,
       deliveryNote: 'Levamos até você',
     })
   })
@@ -67,5 +70,27 @@ describe('checkoutTotals', () => {
       freeDeliveryCoverage: 'outside-zone',
       total: 30,
     })
+  })
+
+  it('takes the largest discount off the items, on top of free delivery', () => {
+    const result = checkoutTotals({
+      cartLines: checkoutTotalsMock.cartLines,
+      isDelivery: true,
+      zone: checkoutTotalsMock.campaignZone,
+      estimatedMinutes: undefined,
+      freeDelivery: checkoutTotalsMock.freeDelivery,
+      discountCandidates: [
+        undefined,
+        { ...checkoutTotalsMock.freeDelivery, id: 'ten', type: 'PERCENTAGE_DISCOUNT', value: 10 },
+        { ...checkoutTotalsMock.freeDelivery, id: 'two', type: 'FIXED_DISCOUNT', value: 2 },
+      ],
+    })
+
+    expect(result).toMatchObject({
+      deliveryDiscount: 5,
+      promotionDiscount: 2.5,
+      total: 22.5,
+    })
+    expect(result.appliedDiscount?.id).toBe('ten')
   })
 })

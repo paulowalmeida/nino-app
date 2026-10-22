@@ -1,7 +1,8 @@
-import { FormProvider, useForm } from 'react-hook-form'
+import { FormProvider, useForm, useWatch } from 'react-hook-form'
 
 import { Box } from '@nino/ds/components/Box'
 import { Button } from '@nino/ds/components/Button'
+import { Stepper } from '@nino/ds/components/Stepper'
 import { toPromotionFormValues } from '@pages/PromotionEditor/adapters/promotionForm.adapter/promotionForm.adapter'
 import { BenefitSection } from '@pages/PromotionEditor/components/PromotionEditorForm/BenefitSection/BenefitSection'
 import { CodeSection } from '@pages/PromotionEditor/components/PromotionEditorForm/CodeSection/CodeSection'
@@ -11,8 +12,8 @@ import { PromotionPreview } from '@pages/PromotionEditor/components/PromotionEdi
 import { ZonesSection } from '@pages/PromotionEditor/components/PromotionEditorForm/ZonesSection/ZonesSection'
 import { EDITOR_SUBMIT_LABELS } from '@pages/PromotionEditor/constants/promotionEditor.constants'
 import { usePromotionEditorFacade } from '@pages/PromotionEditor/facades/usePromotionEditorFacade/usePromotionEditorFacade'
+import { useEditorSteps } from '@pages/PromotionEditor/hooks/useEditorSteps/useEditorSteps'
 import type { PromotionFormValues } from '@pages/PromotionEditor/types/PromotionFormValues.type'
-import { riseDelay } from '@shared/utils/rise-delay/rise-delay'
 
 import motion from '@styles/motion.module.css'
 import styles from './PromotionEditorForm.module.css'
@@ -23,47 +24,66 @@ export const PromotionEditorForm = () => {
   const form = useForm<PromotionFormValues>({
     defaultValues: toPromotionFormValues(promotion, mode),
   })
+  const campaignType = useWatch({ control: form.control, name: 'campaignType' })
+  const { steps, stepKey, step, isLastStep, goNext, goBack, goTo } =
+    useEditorSteps(mode, form.trigger, campaignType)
 
   return (
     <FormProvider {...form}>
       <Box
         as="form"
-        onSubmit={form.handleSubmit((values) => savePromotion(values))}
+        onSubmit={form.handleSubmit((values) =>
+          isLastStep ? savePromotion(values) : void goNext()
+        )}
         className={styles.promotionEditorForm}
       >
         <Box className={styles.promotionEditorFields}>
-          <Box className={motion.deal} style={riseDelay(40)}>
-            <BenefitSection />
-          </Box>
-          <Box className={motion.deal} style={riseDelay(90)}>
-            <ZonesSection />
-          </Box>
-          <Box className={motion.deal} style={riseDelay(140)}>
-            <PeriodSection />
-          </Box>
-          <Box className={motion.deal} style={riseDelay(190)}>
-            <CodeSection />
-          </Box>
-          <Box className={motion.deal} style={riseDelay(240)}>
-            <LimitsSection />
+          <Stepper
+            steps={steps}
+            step={step}
+            onStepChange={goTo}
+            className={styles.promotionEditorStepper}
+          />
+
+          <Box key={stepKey} className={motion.deal}>
+            {stepKey === 'benefit' && <BenefitSection />}
+            {stepKey === 'zones' && <ZonesSection />}
+            {stepKey === 'period' && <PeriodSection />}
+            {stepKey === 'rules' && (
+              <Box className={styles.promotionEditorRules}>
+                <CodeSection />
+                <LimitsSection />
+              </Box>
+            )}
           </Box>
         </Box>
 
-        <Box
-          as="aside"
-          className={`${motion.deal} ${styles.promotionEditorPreview}`}
-          style={riseDelay(120)}
-        >
+        <Box as="aside" className={styles.promotionEditorPreview}>
           <PromotionPreview />
         </Box>
 
         <Box direction="row" className={styles.promotionEditorActions}>
-          <Button type="button" variant="ghost" onClick={cancel}>
-            Cancelar
-          </Button>
-          <Button type="submit" loading={isSaving}>
-            {EDITOR_SUBMIT_LABELS[mode]}
-          </Button>
+          {step === 0 ? (
+            <Button type="button" variant="ghost" onClick={cancel}>
+              Cancelar
+            </Button>
+          ) : (
+            <Button type="button" variant="ghost" onClick={goBack}>
+              Voltar
+            </Button>
+          )}
+          {isLastStep ? (
+            /* WHY: chaves distintas — sem elas o React reaproveita o mesmo
+             * <button>, que vira type="submit" no meio do clique em
+             * "Continuar" do penúltimo passo e já envia o formulário. */
+            <Button key="submit" type="submit" loading={isSaving}>
+              {EDITOR_SUBMIT_LABELS[mode]}
+            </Button>
+          ) : (
+            <Button key="next" type="button" onClick={() => void goNext()}>
+              Continuar
+            </Button>
+          )}
         </Box>
       </Box>
     </FormProvider>

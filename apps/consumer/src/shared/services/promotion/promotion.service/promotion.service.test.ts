@@ -23,4 +23,14 @@ describe('promotionService', () => {
       `units/${promotionUnitIdMock}/promotions/public`
     )
   })
+
+  it('findCoupon: looks up the typed code, escaped for the URL', async () => {
+    vi.mocked(api.get).mockResolvedValue(freeDeliveryPromotionMock)
+
+    await promotionService.findCoupon(promotionUnitIdMock, 'FRETE/JA')
+
+    expect(api.get).toHaveBeenCalledWith(
+      `units/${promotionUnitIdMock}/promotions/public/coupons/FRETE%2FJA`
+    )
+  })
 })

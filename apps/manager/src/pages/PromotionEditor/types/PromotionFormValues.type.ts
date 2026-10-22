@@ -1,4 +1,9 @@
 export type PromotionFormValues = {
+  campaignType: 'free-delivery' | 'discount'
+  discountKind: 'PERCENTAGE_DISCOUNT' | 'FIXED_DISCOUNT'
+  // CONSTRAINT: percentual em número ("10") ou valor mascarado ("10,00").
+  discountValue: string
+  maxDiscount: string
   // CONSTRAINT: valor mascarado ("60,00"); vazio significa sem mínimo.
   minOrderValue: string
   zoneScope: 'all' | 'chosen'

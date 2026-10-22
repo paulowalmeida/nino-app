@@ -10,7 +10,9 @@ import type { PaymentMethod } from '@custom_types/order/payment-method'
 import type { PublicPromotion } from '@custom_types/promotion/public-promotion.type'
 import type { Store } from '@custom_types/store/store'
 import { checkoutTotals } from '@pages/checkout/utils/checkout-totals/checkout-totals'
+import { orderOffers } from '@pages/checkout/utils/order-offers/order-offers'
 import { promotionUnavailableFee } from '@pages/checkout/utils/promotion-unavailable/promotion-unavailable'
+import { discountAmount } from '@utils/discount/discount'
 import { useDeliveryQuote } from '@pages/checkout/hooks/useDeliveryQuote/useDeliveryQuote'
 import { usePlaceOrder } from '@pages/checkout/hooks/usePlaceOrder/usePlaceOrder'
 import { writeLastOrder } from '@utils/last-order'
@@ -29,7 +31,9 @@ type UseCheckoutWorkflowParams = {
   clearCart: () => void
   slug: string | undefined
   freeDelivery?: PublicPromotion
-  refetchOffer?: () => unknown
+  discountOffers?: PublicPromotion[]
+  coupon?: PublicPromotion
+  refetchOffers?: () => unknown
 }
 
 /** WHY: concentra o formulário, a cotação e a criação em uma única instância. */
@@ -46,7 +50,9 @@ export const useCheckoutWorkflow = ({
   clearCart,
   slug,
   freeDelivery,
-  refetchOffer,
+  discountOffers = [],
+  coupon,
+  refetchOffers,
 }: UseCheckoutWorkflowParams) => {
   const isAuthenticated = consumer !== null
   const paymentOptions = configuredPaymentOptions ?? ['CASH']
@@ -127,11 +133,19 @@ export const useCheckoutWorkflow = ({
     null
   )
 
+  const offers = orderOffers({
+    freeDelivery,
+    discountOffers,
+    coupon,
+    hasPromotionEnded: promotionEndedFee !== null,
+  })
   const {
     subtotal,
     deliveryFee,
     deliveryDiscount,
     freeDeliveryCoverage,
+    promotionDiscount,
+    appliedDiscount,
     total,
     deliveryNote,
   } = checkoutTotals({
@@ -139,8 +153,16 @@ export const useCheckoutWorkflow = ({
     isDelivery,
     zone,
     estimatedMinutes,
-    freeDelivery: promotionEndedFee === null ? freeDelivery : undefined,
+    ...offers,
   })
+  /* WHY: cupom fora da condição (mínimo, zona) faria a API recusar o pedido;
+   * ele só vai no pedido quando já vale. */
+  const isCouponEligible =
+    !!coupon &&
+    promotionEndedFee === null &&
+    (coupon.type === 'FREE_DELIVERY'
+      ? freeDeliveryCoverage === 'applied'
+      : discountAmount(coupon, subtotal) > 0)
   const minimum = minimumOrderAmount ?? 0
   const isBelowMinimum = minimum > 0 && subtotal < minimum
 
@@ -152,14 +174,18 @@ export const useCheckoutWorkflow = ({
         values,
         store,
         cartLines,
-        expectsFreeDelivery: freeDeliveryCoverage === 'applied',
+        promotions: {
+          couponCode: isCouponEligible ? coupon?.code ?? undefined : undefined,
+          expectsFreeDelivery: freeDeliveryCoverage === 'applied',
+          expectsDiscount: promotionDiscount > 0,
+        },
       },
       {
         onError: (error) => {
           const fee = promotionUnavailableFee(error)
           if (fee === null) return
           setPromotionEndedFee(fee)
-          void refetchOffer?.()
+          void refetchOffers?.()
         },
         onSuccess: (order) => {
           if (!order.trackingToken) return
@@ -190,6 +216,10 @@ export const useCheckoutWorkflow = ({
     deliveryFee,
     deliveryDiscount,
     freeDeliveryCoverage,
+    promotionDiscount,
+    appliedDiscount,
+    coupon,
+    isCouponEligible,
     total,
     deliveryNote,
     promotionEndedFee:

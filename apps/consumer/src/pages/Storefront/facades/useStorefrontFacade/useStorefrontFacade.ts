@@ -8,7 +8,7 @@ import { useMenuItemAction } from '@pages/Storefront/hooks/useMenuItemAction/use
 import { useStorefrontCart } from '@pages/Storefront/hooks/useStorefrontCart/useStorefrontCart'
 import { useStorefrontSlug } from '@pages/Storefront/hooks/useStorefrontSlug/useStorefrontSlug'
 import { useHomeInteractionStore } from '@pages/Storefront/states/storefront/storefront.state'
-import { useFreeDeliveryOffer } from '@hooks/useFreeDeliveryOffer/useFreeDeliveryOffer'
+import { usePromotionOffers } from '@hooks/usePromotionOffers/usePromotionOffers'
 import { useConsumerSession } from '@shared/hooks/useConsumerSession/useConsumerSession'
 import { useLogout } from '@shared/hooks/useLogout/useLogout'
 
@@ -21,7 +21,7 @@ export const useStorefrontFacade = (requestedSlug?: string) => {
   const hoursQuery = useOpeningHours(unitId)
   const settingsQuery = usePublicSettings(unitId)
   const cart = useStorefrontCart(unitId)
-  const offer = useFreeDeliveryOffer(unitId)
+  const offers = usePromotionOffers(unitId)
   const menuItemAction = useMenuItemAction(unitId)
   const search = useHomeInteractionStore((state) => state.search)
   const setSearch = useHomeInteractionStore((state) => state.setSearch)
@@ -58,7 +58,8 @@ export const useStorefrontFacade = (requestedSlug?: string) => {
     showAddressOnStoreInfo:
       settingsQuery.settings?.showAddressOnStoreInfo ?? true,
     ...cart,
-    freeDelivery: offer.freeDelivery,
+    freeDelivery: offers.freeDelivery,
+    discountOffer: offers.discountOffers[0],
     ...menuItemAction,
     ...menuSections,
     isDesktop,

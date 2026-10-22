@@ -23,6 +23,8 @@ export const CheckoutReceipt = ({
     deliveryFee,
     deliveryDiscount,
     freeDeliveryCoverage,
+    promotionDiscount,
+    appliedDiscount,
   } = useCheckoutFacade(checkout)
   const [isOpen, setIsOpen] = useState(
     () => window.matchMedia?.('(min-width: 1024px)').matches ?? false
@@ -96,6 +98,16 @@ export const CheckoutReceipt = ({
               ) : (
                 <Text as="span">{hasZone ? brl(deliveryFee) : 'a definir'}</Text>
               )}
+            </Text>
+          )}
+          {promotionDiscount > 0 && (
+            <Text className={styles.tallyRow}>
+              <Text as="span">
+                {appliedDiscount?.code ? `Cupom ${appliedDiscount.code}` : 'Desconto'}
+              </Text>
+              <Text as="span" className={styles.discountAmount}>
+                − {brl(promotionDiscount)}
+              </Text>
             </Text>
           )}
           {freeDeliveryCoverage === 'outside-zone' && (

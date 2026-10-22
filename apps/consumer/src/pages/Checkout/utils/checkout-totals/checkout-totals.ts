@@ -2,6 +2,7 @@ import type { CartLine } from '@custom_types/cart/cart-line'
 import type { PublicDeliveryZone } from '@custom_types/delivery-zone/PublicDeliveryZone.type'
 import type { PublicPromotion } from '@custom_types/promotion/public-promotion.type'
 import { cartItemPrice } from '@utils/cart-item-price/cart-item-price'
+import { largestDiscount } from '@utils/discount/discount'
 import { freeDeliveryCoverage } from '@utils/free-delivery/free-delivery'
 
 export type CheckoutTotalsInput = {
@@ -10,6 +11,7 @@ export type CheckoutTotalsInput = {
   zone: PublicDeliveryZone | undefined
   estimatedMinutes: number | undefined
   freeDelivery?: PublicPromotion
+  discountCandidates?: (PublicPromotion | undefined)[]
 }
 
 export const checkoutTotals = ({
@@ -18,6 +20,7 @@ export const checkoutTotals = ({
   zone,
   estimatedMinutes,
   freeDelivery,
+  discountCandidates = [],
 }: CheckoutTotalsInput) => {
   const subtotal = cartLines.reduce(
     (total, line) => total + cartItemPrice(line.item) * line.quantity,
@@ -31,7 +34,9 @@ export const checkoutTotals = ({
     deliveryFee,
   })
   const deliveryDiscount = coverage === 'applied' ? deliveryFee : 0
-  const total = subtotal + deliveryFee - deliveryDiscount
+  const discount = largestDiscount(discountCandidates, subtotal)
+  const promotionDiscount = discount?.amount ?? 0
+  const total = subtotal + deliveryFee - deliveryDiscount - promotionDiscount
   const deliveryNote = estimatedMinutes
     ? `Chega em ~${estimatedMinutes} min`
     : 'Levamos até você'
@@ -41,6 +46,8 @@ export const checkoutTotals = ({
     deliveryFee,
     deliveryDiscount,
     freeDeliveryCoverage: coverage,
+    promotionDiscount,
+    appliedDiscount: discount?.promotion,
     total,
     deliveryNote,
   }

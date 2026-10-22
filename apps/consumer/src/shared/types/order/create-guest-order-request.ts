@@ -14,5 +14,7 @@ export type CreateGuestOrderRequest = GuestInfo & {
   notes?: string
   // WHY: a API devolve 409 com o frete novo se a campanha acabou até aqui.
   expectsFreeDelivery?: boolean
+  couponCode?: string
+  expectsDiscount?: boolean
   items: CreateOrderItemRequest[]
 }

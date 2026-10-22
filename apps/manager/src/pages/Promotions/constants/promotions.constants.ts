@@ -23,26 +23,3 @@ export const PROMOTION_STATE_BADGES: Partial<
 }
 
 export const CAMPAIGN_TABLE_GHOST_ROWS = ['ghost-1', 'ghost-2', 'ghost-3']
-
-export const CAMPAIGN_TYPE_OPTIONS = [
-  {
-    value: 'free-delivery',
-    label: 'Frete grátis',
-    description:
-      'Zera a taxa de entrega acima de um valor, nas zonas que você escolher.',
-  },
-  {
-    value: 'discount',
-    label: 'Desconto',
-    description: 'Percentual ou valor fixo no pedido.',
-    disabled: true,
-    trailing: 'Em breve',
-  },
-  {
-    value: 'gift',
-    label: 'Brinde',
-    description: 'Um item de presente quando o pedido cumpre a condição.',
-    disabled: true,
-    trailing: 'Em breve',
-  },
-]

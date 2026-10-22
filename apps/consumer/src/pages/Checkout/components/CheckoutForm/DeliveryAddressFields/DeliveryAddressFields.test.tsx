@@ -22,8 +22,10 @@ vi.mock('@pages/checkout/hooks/useGuestAddressSearch/useGuestAddressSearch')
  * `control`/`form` de mentira não reproduziria essa amarração. */
 const Harness = ({
   zone,
+  deliveryDiscount = 0,
 }: {
   zone?: { name: string; fee: number }
+  deliveryDiscount?: number
 } = {}) => {
   const form = useForm<CheckoutFormValues>({
     defaultValues: { guestStreet: '', guestNumber: '' },
@@ -34,6 +36,7 @@ const Harness = ({
     register: form.register,
     errors: form.formState.errors,
     zone,
+    deliveryDiscount,
     isQuoting: false,
     isAuthenticated: false,
     addresses: [],
@@ -79,6 +82,23 @@ describe('DeliveryAddressFields', () => {
     )
 
     expect(screen.getByText(/Taxa de entrega/)).toBeInTheDocument()
+  })
+
+  it('shows free delivery instead of the fee when the campaign covers the address', () => {
+    setup()
+
+    render(
+      <Harness
+        zone={{
+          name: deliveryAddressFieldsMock.zoneName,
+          fee: deliveryAddressFieldsMock.zoneFee,
+        }}
+        deliveryDiscount={deliveryAddressFieldsMock.zoneFee}
+      />
+    )
+
+    expect(screen.getByText('Frete grátis')).toBeInTheDocument()
+    expect(screen.queryByText(/Taxa de entrega/)).toBeNull()
   })
 
   it('opens the confirmation screen once street and number are filled', async () => {

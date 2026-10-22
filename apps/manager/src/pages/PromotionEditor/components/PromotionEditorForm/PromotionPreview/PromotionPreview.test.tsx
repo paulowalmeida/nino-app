@@ -49,4 +49,24 @@ describe(PromotionPreview.name, () => {
     ).not.toBeInTheDocument()
     expect(screen.getByText(/Não aparece no cardápio/)).toBeInTheDocument()
   })
+
+  it('previews a capped discount without the zones fact', () => {
+    render(
+      <Form
+        values={{
+          ...previewValuesMock,
+          campaignType: 'discount',
+          discountValue: '10',
+          maxDiscount: '15,00',
+        }}
+      >
+        <PromotionPreview />
+      </Form>
+    )
+
+    expect(screen.getByLabelText('Prévia da faixa no cardápio')).toHaveTextContent(
+      /10% de desconto \(até R\$\s15,00\) acima de R\$\s60,00/
+    )
+    expect(screen.queryByText('Zonas')).not.toBeInTheDocument()
+  })
 })

@@ -20,9 +20,8 @@ export const CheckoutAlerts = ({
 }: CheckoutAlertsProps) => (
   <>
     {promotionEndedFee !== null && (
-      <Alert variant="warning" title="A promoção de frete grátis acabou">
-        O frete agora é {brl(promotionEndedFee)}. Confira o total e confirme de
-        novo.
+      <Alert variant="warning" title="A promoção acabou">
+        O novo total já está no resumo. Confira e confirme de novo.
       </Alert>
     )}
 

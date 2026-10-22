@@ -1,4 +1,4 @@
-import { MemoryRouter } from 'react-router'
+import { MemoryRouter, Route, Routes } from 'react-router'
 
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
@@ -8,10 +8,13 @@ import { PromotionsHeader } from './PromotionsHeader'
 import { promotionsHeaderMock } from './PromotionsHeader.mock'
 
 describe(PromotionsHeader.name, () => {
-  it('opens the campaign type choice from Nova campanha', async () => {
+  it('goes straight to the new campaign screen, without a modal', async () => {
     render(
-      <MemoryRouter>
-        <PromotionsHeader />
+      <MemoryRouter initialEntries={['/promocoes']}>
+        <Routes>
+          <Route path="/promocoes" element={<PromotionsHeader />} />
+          <Route path="/promocoes/nova" element={<p>nova campanha</p>} />
+        </Routes>
       </MemoryRouter>
     )
 
@@ -23,8 +26,7 @@ describe(PromotionsHeader.name, () => {
       screen.getByRole('button', { name: promotionsHeaderMock.action })
     )
 
-    expect(
-      await screen.findByText(promotionsHeaderMock.modalTitle)
-    ).toBeInTheDocument()
+    expect(screen.getByText('nova campanha')).toBeInTheDocument()
+    expect(screen.queryByRole('dialog')).not.toBeInTheDocument()
   })
 })

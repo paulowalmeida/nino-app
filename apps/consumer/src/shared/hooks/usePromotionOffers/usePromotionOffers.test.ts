@@ -3,8 +3,8 @@ import { describe, expect, it, vi } from 'vitest'
 
 import { queryKeys } from '@constants/query-keys'
 
-import { useFreeDeliveryOffer } from './useFreeDeliveryOffer'
-import { offerUnitIdMock, visibleOfferMock } from './useFreeDeliveryOffer.mock'
+import { usePromotionOffers } from './usePromotionOffers'
+import { offerUnitIdMock, visibleOfferMock } from './usePromotionOffers.mock'
 
 let queryOptions: { queryKey: unknown; enabled: boolean } | undefined
 let queryData: unknown
@@ -16,19 +16,25 @@ vi.mock('@tanstack/react-query', () => ({
   },
 }))
 
-describe('useFreeDeliveryOffer', () => {
+describe('usePromotionOffers', () => {
   it('waits for the store before asking for its campaigns', () => {
-    renderHook(() => useFreeDeliveryOffer(undefined))
+    renderHook(() => usePromotionOffers(undefined))
 
     expect(queryOptions?.queryKey).toEqual(queryKeys.promotions.visibleByUnit(''))
     expect(queryOptions?.enabled).toBe(false)
   })
 
-  it('exposes the free delivery the store shows on the menu', () => {
+  it('splits what the store shows into free delivery, discounts and coupons', () => {
     queryData = visibleOfferMock
 
-    const { result } = renderHook(() => useFreeDeliveryOffer(offerUnitIdMock))
+    const { result } = renderHook(() => usePromotionOffers(offerUnitIdMock))
 
     expect(result.current.freeDelivery?.id).toBe('promotion-1')
+    expect(result.current.discountOffers.map(({ id }) => id)).toEqual([
+      'promotion-2',
+    ])
+    expect(result.current.couponSuggestions.map(({ id }) => id)).toEqual([
+      'promotion-3',
+    ])
   })
 })

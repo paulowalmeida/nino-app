@@ -3,6 +3,7 @@ import { useMutation } from '@tanstack/react-query'
 
 import type { CartLine } from '@custom_types/cart/cart-line'
 import type { CheckoutFormValues } from '@pages/checkout/types/checkout/CheckoutFormValues.type'
+import type { OrderPromotionsRequest } from '@custom_types/order/order-promotions-request.type'
 import type { Store } from '@custom_types/store/store'
 import { consumerOrderRequest } from '@pages/checkout/adapters/consumerOrderRequest.adapter/consumerOrderRequest.adapter'
 import { guestOrderRequest } from '@pages/checkout/adapters/guestOrderRequest.adapter/guestOrderRequest.adapter'
@@ -12,7 +13,7 @@ type PlaceOrderInput = {
   values: CheckoutFormValues
   store: Store
   cartLines: CartLine[]
-  expectsFreeDelivery?: boolean
+  promotions?: OrderPromotionsRequest
 }
 
 /**
@@ -28,15 +29,15 @@ export const usePlaceOrder = (isAuthenticated: boolean) => {
       values,
       store,
       cartLines,
-      expectsFreeDelivery,
+      promotions,
     }: PlaceOrderInput) =>
       isAuthenticated
         ? orderService.createMine(
-            consumerOrderRequest(values, store, cartLines, expectsFreeDelivery),
+            consumerOrderRequest(values, store, cartLines, promotions),
             idempotencyKey
           )
         : orderService.createGuest(
-            guestOrderRequest(values, store, cartLines, expectsFreeDelivery),
+            guestOrderRequest(values, store, cartLines, promotions),
             idempotencyKey
           ),
   })

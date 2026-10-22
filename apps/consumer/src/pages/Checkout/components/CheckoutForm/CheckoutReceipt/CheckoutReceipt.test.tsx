@@ -71,4 +71,24 @@ describe('CheckoutReceipt', () => {
     ).toBeInTheDocument()
     expect(screen.queryByText('Grátis')).not.toBeInTheDocument()
   })
+
+  it('shows the coupon discount as its own line', async () => {
+    vi.mocked(useCheckoutFacade).mockReturnValue({
+      cartLines: [],
+      subtotal: checkoutReceiptMock.subtotal,
+      isDelivery: false,
+      zone: undefined,
+      deliveryFee: 0,
+      deliveryDiscount: 0,
+      freeDeliveryCoverage: 'none',
+      promotionDiscount: 3.6,
+      appliedDiscount: { code: 'VOLTA10' },
+    } as never)
+
+    render(<CheckoutReceipt />)
+    await userEvent.click(screen.getByRole('button'))
+
+    expect(screen.getByText('Cupom VOLTA10')).toBeInTheDocument()
+    expect(screen.getByText(/−\sR\$\s3,60/)).toBeInTheDocument()
+  })
 })
