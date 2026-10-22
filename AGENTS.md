@@ -59,7 +59,7 @@ Before any `Write`, `Edit`, file creation, deletion, rename, or move, the agent 
 
 1. **Understand the request.** Identify exactly what must change and what is explicitly out of scope.
 2. **Pick the applicable rules from the index below.** Do not search for them; the index is the complete list. Read only the sections that govern the change, not every file.
-3. **Do not pre-read what a hook enforces.** Mechanical rules (line length, CSS tokens, imports, facades, page paths, tests, types, accessibility, boundaries, cycles) are injected as a checklist by the `PreToolUse` hook the first time a file type is touched and are checked by `PostToolUse`. Write the change, then fix every reported violation in one edit.
+3. **Do not pre-read what a hook enforces.** Mechanical rules (line length, CSS tokens, imports, facades, page paths, tests, types, accessibility, boundaries, cycles) are announced once by `PreToolUse` and checked by `PostToolUse`. Write the change, then fix every reported violation in one edit. When the active client does not invoke `.agents/settings.json` for its edit tool, run the relevant scoped checker once after the edit batch instead of emulating hooks after every file.
 4. **Inspect existing code.** Read the files being modified and only the directly related components, layers, and dependencies.
 5. **Search for existing solutions.** Look for existing components, Hooks, Services, utilities, patterns, APIs, and configuration before creating alternatives.
 6. **For UI, search the Design System first.** This is mandatory even when the agent believes it already knows what the DS contains.
@@ -67,6 +67,30 @@ Before any `Write`, `Edit`, file creation, deletion, rename, or move, the agent 
 8. **Only then implement.**
 
 If a required step cannot be completed with sufficient confidence, **DO NOT invent an answer**. Continue investigating or report the limitation/conflict.
+
+### Proportional fast lane
+
+The preflight above is proportional to the risk of the change. Use the fast
+lane only when all of these conditions hold:
+
+- no file is created, moved, renamed, or deleted;
+- no import, export, public type, API contract, query key, route, provider,
+  shared package, dependency, environment, persistence, or authorization
+  boundary changes;
+- no application/server-state ownership or Design System primitive changes;
+- the edit is local copy, local styling, local markup, a deterministic local
+  correction, or maintenance of an existing colocated test.
+
+For a fast-lane change, satisfy steps 3-7 by inspecting the target unit and its
+direct owner, reading only the applicable rule sections, and searching only
+when the edit introduces a new symbol or the existing owner is unclear. Do not
+inventory the repository or consumer graph. A UI fast-lane change may skip a
+new Design System search only when it preserves the component already in use;
+adding or replacing a control still requires the Design System search.
+
+Any uncertainty about the conditions above exits the fast lane and restores
+the full preflight. Verification remains governed by the user-authorized limit
+at the end of this file.
 
 ### Rule index (`.agents/rules/`)
 
