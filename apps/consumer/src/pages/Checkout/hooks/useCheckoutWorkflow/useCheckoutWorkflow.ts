@@ -12,7 +12,7 @@ import type { Store } from '@custom_types/store/store'
 import { checkoutTotals } from '@pages/checkout/utils/checkout-totals/checkout-totals'
 import { orderOffers } from '@pages/checkout/utils/order-offers/order-offers'
 import { promotionUnavailableFee } from '@pages/checkout/utils/promotion-unavailable/promotion-unavailable'
-import { discountAmount } from '@utils/discount/discount'
+import { couponApplies } from '@pages/checkout/utils/coupon-applies/coupon-applies'
 import { useDeliveryQuote } from '@pages/checkout/hooks/useDeliveryQuote/useDeliveryQuote'
 import { usePlaceOrder } from '@pages/checkout/hooks/usePlaceOrder/usePlaceOrder'
 import { writeLastOrder } from '@utils/last-order'
@@ -32,6 +32,7 @@ type UseCheckoutWorkflowParams = {
   slug: string | undefined
   freeDelivery?: PublicPromotion
   discountOffers?: PublicPromotion[]
+  giftOffer?: PublicPromotion
   coupon?: PublicPromotion
   refetchOffers?: () => unknown
 }
@@ -51,6 +52,7 @@ export const useCheckoutWorkflow = ({
   slug,
   freeDelivery,
   discountOffers = [],
+  giftOffer,
   coupon,
   refetchOffers,
 }: UseCheckoutWorkflowParams) => {
@@ -136,6 +138,7 @@ export const useCheckoutWorkflow = ({
   const offers = orderOffers({
     freeDelivery,
     discountOffers,
+    giftOffer,
     coupon,
     hasPromotionEnded: promotionEndedFee !== null,
   })
@@ -146,6 +149,7 @@ export const useCheckoutWorkflow = ({
     freeDeliveryCoverage,
     promotionDiscount,
     appliedDiscount,
+    appliedGift,
     total,
     deliveryNote,
   } = checkoutTotals({
@@ -155,14 +159,13 @@ export const useCheckoutWorkflow = ({
     estimatedMinutes,
     ...offers,
   })
-  /* WHY: cupom fora da condição (mínimo, zona) faria a API recusar o pedido;
-   * ele só vai no pedido quando já vale. */
   const isCouponEligible =
     !!coupon &&
     promotionEndedFee === null &&
-    (coupon.type === 'FREE_DELIVERY'
-      ? freeDeliveryCoverage === 'applied'
-      : discountAmount(coupon, subtotal) > 0)
+    couponApplies(coupon, {
+      subtotal,
+      isFreeDeliveryApplied: freeDeliveryCoverage === 'applied',
+    })
   const minimum = minimumOrderAmount ?? 0
   const isBelowMinimum = minimum > 0 && subtotal < minimum
 
@@ -178,6 +181,7 @@ export const useCheckoutWorkflow = ({
           couponCode: isCouponEligible ? coupon?.code ?? undefined : undefined,
           expectsFreeDelivery: freeDeliveryCoverage === 'applied',
           expectsDiscount: promotionDiscount > 0,
+          expectsGift: !!appliedGift,
         },
       },
       {
@@ -218,6 +222,7 @@ export const useCheckoutWorkflow = ({
     freeDeliveryCoverage,
     promotionDiscount,
     appliedDiscount,
+    appliedGift,
     coupon,
     isCouponEligible,
     total,

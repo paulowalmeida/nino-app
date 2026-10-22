@@ -13,4 +13,6 @@ export type PromotionSummarySource = Pick<
   | 'dailyEndTime'
   | 'allDeliveryZones'
   | 'deliveryZoneIds'
->
+> & {
+  giftProduct?: { name: string } | null
+}

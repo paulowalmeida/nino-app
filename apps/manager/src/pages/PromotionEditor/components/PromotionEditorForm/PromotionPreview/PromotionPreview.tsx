@@ -7,17 +7,28 @@ import { Icon } from '@nino/ds/components/Icon'
 import { Separator } from '@nino/ds/components/Separator'
 import { Text } from '@nino/ds/components/Text'
 import { toPromotionSummarySource } from '@pages/PromotionEditor/adapters/promotionForm.adapter/promotionForm.adapter'
+import { usePromotionEditorFacade } from '@pages/PromotionEditor/facades/usePromotionEditorFacade/usePromotionEditorFacade'
 import type { PromotionFormValues } from '@pages/PromotionEditor/types/PromotionFormValues.type'
 import { promotionLimitsLabel } from '@pages/PromotionEditor/utils/promotionLimitsLabel/promotionLimitsLabel'
 import { promotionSummaryParts } from '@shared/utils/promotion-summary/promotion-summary'
 
 import styles from './PromotionPreview.module.css'
 
+const PREVIEW_ICONS = {
+  'free-delivery': 'truck',
+  discount: 'tag',
+  gift: 'gift',
+} as const
+
 export const PromotionPreview = () => {
+  const { giftProductOptions } = usePromotionEditorFacade()
   const { control } = useFormContext<PromotionFormValues>()
   const values = useWatch({ control }) as PromotionFormValues
   const { headline, schedule, zones, period } = promotionSummaryParts(
-    toPromotionSummarySource(values)
+    toPromotionSummarySource(
+      values,
+      giftProductOptions.find(({ value }) => value === values.giftProductId)?.name
+    )
   )
   const facts = [
     { label: 'Quando', value: schedule ?? 'Todos os dias, o dia todo' },
@@ -40,7 +51,7 @@ export const PromotionPreview = () => {
           aria-label="Prévia da faixa no cardápio"
         >
           <Icon
-            name={values.campaignType === 'free-delivery' ? 'truck' : 'tag'}
+            name={PREVIEW_ICONS[values.campaignType]}
             size="sm"
             className={styles.menuStripIcon}
           />

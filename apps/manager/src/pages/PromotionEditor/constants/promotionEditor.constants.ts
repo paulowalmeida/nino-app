@@ -30,7 +30,7 @@ export const EDITOR_GHOST_SECTIONS = ['benefit', 'zones', 'period', 'code']
 export const CAMPAIGN_TYPE_OPTIONS = [
   { value: 'free-delivery', label: 'Frete grátis' },
   { value: 'discount', label: 'Desconto' },
-  { value: 'gift', label: 'Brinde · em breve', disabled: true },
+  { value: 'gift', label: 'Brinde' },
 ]
 
 export const DISCOUNT_KIND_OPTIONS = [
@@ -45,15 +45,16 @@ export const EDITOR_STEP_TITLES = {
   rules: 'Regras',
 } as const
 
-// WHY: desconto vale para qualquer endereço, então não tem o passo de zonas.
+// WHY: desconto e brinde valem para qualquer endereço, então não têm zonas.
 export const EDITOR_STEPS_BY_TYPE = {
   'free-delivery': ['benefit', 'zones', 'period', 'rules'],
   discount: ['benefit', 'period', 'rules'],
+  gift: ['benefit', 'period', 'rules'],
 } as const
 
 // CONSTRAINT: campos validados antes de sair de cada passo.
 export const EDITOR_STEP_FIELDS = {
-  benefit: ['minOrderValue', 'discountValue', 'maxDiscount'],
+  benefit: ['minOrderValue', 'discountValue', 'maxDiscount', 'giftProductId'],
   zones: ['deliveryZoneIds'],
   period: ['startsAtDate', 'endsAtDate', 'dailyEndTime'],
   rules: ['code', 'perCustomerCount', 'totalLimit'],

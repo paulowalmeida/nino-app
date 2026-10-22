@@ -137,4 +137,19 @@ describe('promotionForm.adapter', () => {
       maxDiscount: '15,00',
     })
   })
+
+  it('sends a gift with its product and no value', () => {
+    expect(
+      toPromotionInput({
+        ...filledFormMock,
+        campaignType: 'gift',
+        giftProductId: 'coke',
+      })
+    ).toMatchObject({
+      type: 'GIFT',
+      value: 0,
+      giftProductId: 'coke',
+      allDeliveryZones: true,
+    })
+  })
 })

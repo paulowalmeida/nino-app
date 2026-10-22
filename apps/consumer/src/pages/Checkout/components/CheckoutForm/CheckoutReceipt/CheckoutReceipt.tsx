@@ -25,6 +25,7 @@ export const CheckoutReceipt = ({
     freeDeliveryCoverage,
     promotionDiscount,
     appliedDiscount,
+    appliedGift,
   } = useCheckoutFacade(checkout)
   const [isOpen, setIsOpen] = useState(
     () => window.matchMedia?.('(min-width: 1024px)').matches ?? false
@@ -107,6 +108,14 @@ export const CheckoutReceipt = ({
               </Text>
               <Text as="span" className={styles.discountAmount}>
                 − {brl(promotionDiscount)}
+              </Text>
+            </Text>
+          )}
+          {appliedGift?.giftProduct && (
+            <Text className={styles.tallyRow}>
+              <Text as="span">{appliedGift.giftProduct.name} · Brinde</Text>
+              <Text as="span" className={styles.freeDeliveryNow}>
+                Grátis
               </Text>
             </Text>
           )}

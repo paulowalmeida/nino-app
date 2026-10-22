@@ -71,3 +71,19 @@ export const kitchenCardLateOrderMock: Order = {
   status: 'PREPARING',
   createdAt: '2026-08-01T11:20:00.000Z',
 }
+
+export const kitchenCardGiftOrderMock: Order = {
+  ...kitchenCardOrderMock,
+  id: 'order-gift',
+  items: [
+    ...kitchenCardOrderMock.items,
+    {
+      id: 'line-gift',
+      productId: 'product-coke',
+      quantity: 1,
+      unitPrice: '0.00',
+      isGift: true,
+      product: { id: 'product-coke', name: 'Coca-Cola Lata' },
+    },
+  ],
+}

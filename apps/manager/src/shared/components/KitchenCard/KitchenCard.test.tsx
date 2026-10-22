@@ -3,7 +3,11 @@ import userEvent from '@testing-library/user-event'
 import { describe, expect, it, vi } from 'vitest'
 
 import { KitchenCard } from './KitchenCard'
-import { kitchenCardOrderMock, tableDestinationMock } from './KitchenCard.mock'
+import {
+  kitchenCardGiftOrderMock,
+  kitchenCardOrderMock,
+  tableDestinationMock,
+} from './KitchenCard.mock'
 
 vi.mock('@shared/hooks/order/useElapsed/useElapsed', () => ({
   useElapsed: () => ({
@@ -35,6 +39,20 @@ describe(KitchenCard.name, () => {
 
     fireEvent.click(screen.getByRole('button', { name: 'Confirmar pedido' }))
     expect(onStep).toHaveBeenCalledWith('order-1234', 'ACCEPTED')
+  })
+
+  it('marks the gift item so the kitchen does not mistake it', () => {
+    render(
+      <KitchenCard
+        order={kitchenCardGiftOrderMock}
+        destination={tableDestinationMock}
+        onStep={vi.fn()}
+        isBusy={false}
+      />
+    )
+
+    expect(screen.getByText('Coca-Cola Lata')).toBeInTheDocument()
+    expect(screen.getByText('Brinde')).toBeInTheDocument()
   })
 
   it('omits the destination label when the store has one format', () => {

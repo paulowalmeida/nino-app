@@ -7,6 +7,7 @@ export type PromotionInput = {
   value?: number
   minOrderValue?: number
   maxDiscount?: number | null
+  giftProductId?: string | null
   startsAt: string
   endsAt?: string | null
   weekdays?: number[]

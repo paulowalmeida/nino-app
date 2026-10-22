@@ -32,5 +32,6 @@ export const checkoutTotalsMock = {
     endsAt: null,
     allDeliveryZones: false,
     deliveryZoneIds: ['zone-centro'],
+    giftProduct: null,
   },
 }

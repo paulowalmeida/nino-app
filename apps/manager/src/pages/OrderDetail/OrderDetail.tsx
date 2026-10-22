@@ -106,9 +106,14 @@ export const OrderDetail = () => {
                   </Text>
                   <Text as="span" className={styles.itemName}>
                     {item.product.name}
+                    {item.isGift && (
+                      <Badge size="sm" variant="brand" className={styles.giftBadge}>
+                        Brinde
+                      </Badge>
+                    )}
                   </Text>
                   <Text as="span" className={styles.itemPrice}>
-                    {brl(Number(item.unitPrice) * item.quantity)}
+                    {brl(item.isGift ? 0 : Number(item.unitPrice) * item.quantity)}
                   </Text>
                 </ListRow>
               ))}

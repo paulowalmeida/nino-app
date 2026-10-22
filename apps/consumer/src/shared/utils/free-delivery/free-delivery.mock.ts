@@ -11,6 +11,7 @@ export const openOfferMock: PublicPromotion = {
   endsAt: '2026-10-25T23:00:00.000Z',
   allDeliveryZones: false,
   deliveryZoneIds: ['zone-centro'],
+  giftProduct: null,
 }
 
 export const visiblePromotionsMock: PublicPromotion[] = [

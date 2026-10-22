@@ -16,5 +16,6 @@ export type CreateGuestOrderRequest = GuestInfo & {
   expectsFreeDelivery?: boolean
   couponCode?: string
   expectsDiscount?: boolean
+  expectsGift?: boolean
   items: CreateOrderItemRequest[]
 }

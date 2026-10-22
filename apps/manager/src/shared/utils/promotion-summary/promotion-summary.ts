@@ -20,8 +20,10 @@ const benefitOf = ({
   type,
   value,
   maxDiscount,
+  giftProduct,
 }: PromotionSummarySource): string => {
   if (type === 'FREE_DELIVERY') return 'Frete grátis'
+  if (type === 'GIFT') return `Ganhe ${giftProduct?.name ?? 'um brinde'}`
   if (type === 'FIXED_DISCOUNT') return `${brl(value)} de desconto`
   return maxDiscount
     ? `${value}% de desconto (até ${brl(maxDiscount)})`

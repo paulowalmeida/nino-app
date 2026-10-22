@@ -13,4 +13,5 @@ export const freeDeliveryPromotionMock: PublicPromotion = {
   endsAt: null,
   allDeliveryZones: false,
   deliveryZoneIds: ['zone-centro'],
+  giftProduct: null,
 }

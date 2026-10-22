@@ -6,9 +6,18 @@ import { promotionLabel } from '@utils/promotion-label/promotion-label'
 
 import styles from './PromotionStrip.module.css'
 
+const STRIP_ICONS = {
+  FREE_DELIVERY: 'truck',
+  PERCENTAGE_DISCOUNT: 'tag',
+  FIXED_DISCOUNT: 'tag',
+  GIFT: 'gift',
+} as const
+
 export const PromotionStrip = () => {
-  const { freeDelivery, discountOffer } = useStorefrontFacade()
-  const offers = [freeDelivery, discountOffer].filter((offer) => !!offer)
+  const { freeDelivery, discountOffer, giftOffer } = useStorefrontFacade()
+  const offers = [freeDelivery, discountOffer, giftOffer].filter(
+    (offer) => !!offer
+  )
 
   if (!offers.length) return null
 
@@ -17,7 +26,7 @@ export const PromotionStrip = () => {
       {offers.map((offer) => (
         <Box key={offer.id} direction="row" className={styles.promotionOffer}>
           <Icon
-            name={offer.type === 'FREE_DELIVERY' ? 'truck' : 'tag'}
+            name={STRIP_ICONS[offer.type]}
             size="sm"
             className={styles.promotionIcon}
           />

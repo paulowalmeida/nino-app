@@ -60,6 +60,7 @@ export const useStorefrontFacade = (requestedSlug?: string) => {
     ...cart,
     freeDelivery: offers.freeDelivery,
     discountOffer: offers.discountOffers[0],
+    giftOffer: offers.giftOffer,
     ...menuItemAction,
     ...menuSections,
     isDesktop,

@@ -4,6 +4,7 @@ import type { PublicPromotion } from '@custom_types/promotion/public-promotion.t
 import { cartItemPrice } from '@utils/cart-item-price/cart-item-price'
 import { largestDiscount } from '@utils/discount/discount'
 import { freeDeliveryCoverage } from '@utils/free-delivery/free-delivery'
+import { giftApplies } from '@utils/gift/gift'
 
 export type CheckoutTotalsInput = {
   cartLines: CartLine[]
@@ -12,6 +13,7 @@ export type CheckoutTotalsInput = {
   estimatedMinutes: number | undefined
   freeDelivery?: PublicPromotion
   discountCandidates?: (PublicPromotion | undefined)[]
+  gift?: PublicPromotion
 }
 
 export const checkoutTotals = ({
@@ -21,6 +23,7 @@ export const checkoutTotals = ({
   estimatedMinutes,
   freeDelivery,
   discountCandidates = [],
+  gift,
 }: CheckoutTotalsInput) => {
   const subtotal = cartLines.reduce(
     (total, line) => total + cartItemPrice(line.item) * line.quantity,
@@ -48,6 +51,7 @@ export const checkoutTotals = ({
     freeDeliveryCoverage: coverage,
     promotionDiscount,
     appliedDiscount: discount?.promotion,
+    appliedGift: giftApplies(gift, subtotal) ? gift : undefined,
     total,
     deliveryNote,
   }

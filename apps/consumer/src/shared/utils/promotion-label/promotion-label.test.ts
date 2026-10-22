@@ -30,4 +30,15 @@ describe(promotionLabel.name, () => {
       })
     ).toBe('R$ 10,00 de desconto em qualquer pedido')
   })
+
+  it('names the gift product', () => {
+    expect(
+      promotionLabel({
+        ...labelOfferMock,
+        type: 'GIFT',
+        endsAt: null,
+        giftProduct: { id: 'coke', name: 'Coca-Cola Lata', price: 6.5 },
+      })
+    ).toBe('Ganhe Coca-Cola Lata acima de R$\u00a060,00')
+  })
 })

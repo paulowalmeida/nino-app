@@ -38,6 +38,7 @@ describe('useCheckoutWorkflow', () => {
       freeDeliveryCoverage: 'none',
       promotionDiscount: 0,
       appliedDiscount: undefined,
+      appliedGift: undefined,
       total: 42.5,
       deliveryNote: 'Chega em cerca de 40 min',
     })
@@ -99,6 +100,7 @@ it('shows a friendly message when guest checkout is throttled', () => {
     freeDeliveryCoverage: 'none',
     promotionDiscount: 0,
     appliedDiscount: undefined,
+      appliedGift: undefined,
     total: 36,
     deliveryNote: '',
   })
@@ -156,6 +158,7 @@ it('drops free delivery and shows the new fee when the campaign ends mid-order',
     freeDeliveryCoverage: freeDelivery ? 'applied' : 'none',
     promotionDiscount: 0,
     appliedDiscount: undefined,
+      appliedGift: undefined,
     total: freeDelivery ? 70 : 77,
     deliveryNote: '',
   }))

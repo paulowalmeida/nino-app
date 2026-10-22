@@ -11,6 +11,7 @@ export const percentageOfferMock: PublicPromotion = {
   endsAt: null,
   allDeliveryZones: true,
   deliveryZoneIds: [],
+  giftProduct: null,
 }
 
 export const fixedCouponMock: PublicPromotion = {

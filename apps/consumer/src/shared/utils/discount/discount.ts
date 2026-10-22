@@ -38,7 +38,10 @@ export const automaticDiscounts = (
   promotions: PublicPromotion[] = []
 ): PublicPromotion[] =>
   promotions
-    .filter(({ type, code }) => type !== 'FREE_DELIVERY' && !code)
+    .filter(
+      ({ type, code }) =>
+        (type === 'PERCENTAGE_DISCOUNT' || type === 'FIXED_DISCOUNT') && !code
+    )
     .sort((first, second) => first.minOrderValue - second.minOrderValue)
 
 export const couponSuggestions = (

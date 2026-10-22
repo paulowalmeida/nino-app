@@ -2,8 +2,9 @@ import type { ReactNode } from 'react'
 
 import { render, screen } from '@testing-library/react'
 import { FormProvider, useForm } from 'react-hook-form'
-import { describe, expect, it } from 'vitest'
+import { beforeEach, describe, expect, it, vi } from 'vitest'
 
+import { usePromotionEditorFacade } from '@pages/PromotionEditor/facades/usePromotionEditorFacade/usePromotionEditorFacade'
 import type { PromotionFormValues } from '@pages/PromotionEditor/types/PromotionFormValues.type'
 
 import { PromotionPreview } from './PromotionPreview'
@@ -20,7 +21,17 @@ const Form = ({
   return <FormProvider {...form}>{children}</FormProvider>
 }
 
+vi.mock('@pages/PromotionEditor/facades/usePromotionEditorFacade/usePromotionEditorFacade')
+
 describe(PromotionPreview.name, () => {
+  beforeEach(() =>
+    vi.mocked(usePromotionEditorFacade).mockReturnValue({
+      giftProductOptions: [
+        { value: 'coke', name: 'Coca-Cola Lata', label: 'Coca-Cola Lata' },
+      ],
+    } as unknown as ReturnType<typeof usePromotionEditorFacade>)
+  )
+
   it('shows the menu strip and the campaign facts as the owner fills them', () => {
     render(
       <Form values={previewValuesMock}>
@@ -68,5 +79,19 @@ describe(PromotionPreview.name, () => {
       /10% de desconto \(até R\$\s15,00\) acima de R\$\s60,00/
     )
     expect(screen.queryByText('Zonas')).not.toBeInTheDocument()
+  })
+
+  it('names the chosen gift product', () => {
+    render(
+      <Form
+        values={{ ...previewValuesMock, campaignType: 'gift', giftProductId: 'coke' }}
+      >
+        <PromotionPreview />
+      </Form>
+    )
+
+    expect(screen.getByLabelText('Prévia da faixa no cardápio')).toHaveTextContent(
+      /Ganhe Coca-Cola Lata acima de R\$\s60,00/
+    )
   })
 })

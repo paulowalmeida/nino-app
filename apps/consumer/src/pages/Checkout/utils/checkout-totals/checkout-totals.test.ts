@@ -22,6 +22,7 @@ describe('checkoutTotals', () => {
       freeDeliveryCoverage: 'none',
       promotionDiscount: 0,
       appliedDiscount: undefined,
+      appliedGift: undefined,
       total: 30,
       deliveryNote: 'Chega em ~30 min',
     })
@@ -34,7 +35,7 @@ describe('checkoutTotals', () => {
     })).toEqual({
       subtotal: 0, deliveryFee: 0, deliveryDiscount: 0,
       freeDeliveryCoverage: 'none', promotionDiscount: 0,
-      appliedDiscount: undefined, total: 0,
+      appliedDiscount: undefined, appliedGift: undefined, total: 0,
       deliveryNote: 'Levamos até você',
     })
   })
@@ -92,5 +93,25 @@ describe('checkoutTotals', () => {
       total: 22.5,
     })
     expect(result.appliedDiscount?.id).toBe('ten')
+  })
+
+  it('adds the gift once the order reaches its minimum, without changing the total', () => {
+    const gift = {
+      ...checkoutTotalsMock.freeDelivery,
+      id: 'gift',
+      type: 'GIFT' as const,
+      giftProduct: { id: 'coke', name: 'Coca-Cola Lata', price: 6.5 },
+    }
+
+    const result = checkoutTotals({
+      cartLines: checkoutTotalsMock.cartLines,
+      isDelivery: false,
+      zone: undefined,
+      estimatedMinutes: undefined,
+      gift,
+    })
+
+    expect(result.appliedGift).toBe(gift)
+    expect(result.total).toBe(25)
   })
 })

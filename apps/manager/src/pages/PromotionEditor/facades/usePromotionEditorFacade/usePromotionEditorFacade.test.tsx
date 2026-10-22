@@ -2,6 +2,7 @@ import { renderHook } from '@testing-library/react'
 import { describe, expect, it, vi } from 'vitest'
 
 import { useEditablePromotion } from '@pages/PromotionEditor/hooks/useEditablePromotion/useEditablePromotion'
+import { useGiftProductOptions } from '@pages/PromotionEditor/hooks/useGiftProductOptions/useGiftProductOptions'
 import { usePromotionSave } from '@pages/PromotionEditor/hooks/usePromotionSave/usePromotionSave'
 import { useZoneOptions } from '@pages/PromotionEditor/hooks/useZoneOptions/useZoneOptions'
 import { useCurrentUnit } from '@shared/hooks/session/useCurrentUnit/useCurrentUnit'
@@ -14,6 +15,7 @@ vi.mock('@shared/hooks/session/useCurrentUnit/useCurrentUnit')
 vi.mock('@pages/PromotionEditor/hooks/useEditablePromotion/useEditablePromotion')
 vi.mock('@pages/PromotionEditor/hooks/usePromotionSave/usePromotionSave')
 vi.mock('@pages/PromotionEditor/hooks/useZoneOptions/useZoneOptions')
+vi.mock('@pages/PromotionEditor/hooks/useGiftProductOptions/useGiftProductOptions')
 
 describe('usePromotionEditorFacade', () => {
   it('saves the campaign being edited, in the current unit', () => {
@@ -28,6 +30,10 @@ describe('usePromotionEditorFacade', () => {
       isUnavailable: false,
     })
     vi.mocked(useZoneOptions).mockReturnValue({ zoneOptions: [], isPending: true })
+    vi.mocked(useGiftProductOptions).mockReturnValue({
+      giftProductOptions: [],
+      isPending: false,
+    })
     vi.mocked(usePromotionSave).mockReturnValue({
       savePromotion,
     } as unknown as ReturnType<typeof usePromotionSave>)

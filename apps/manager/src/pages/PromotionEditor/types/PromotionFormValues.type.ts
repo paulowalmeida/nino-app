@@ -1,5 +1,6 @@
 export type PromotionFormValues = {
-  campaignType: 'free-delivery' | 'discount'
+  campaignType: 'free-delivery' | 'discount' | 'gift'
+  giftProductId: string
   discountKind: 'PERCENTAGE_DISCOUNT' | 'FIXED_DISCOUNT'
   // CONSTRAINT: percentual em número ("10") ou valor mascarado ("10,00").
   discountValue: string

@@ -135,6 +135,12 @@ export const CampaignTable = ({
                   <TableCell className={styles.campaignCol}>
                     <Box direction="row" className={styles.headlineLine}>
                       <Text className={styles.headline}>{headline}</Text>
+                      {promotion.giftProduct &&
+                        !promotion.giftProduct.isAvailable && (
+                          <Badge variant="warning" className={styles.stateBadge}>
+                            Produto indisponível
+                          </Badge>
+                        )}
                       {badge && (
                         <Badge variant={badge.variant} className={styles.stateBadge}>
                           {badge.label}

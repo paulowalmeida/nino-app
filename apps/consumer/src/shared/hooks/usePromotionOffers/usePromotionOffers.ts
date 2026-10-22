@@ -7,6 +7,7 @@ import {
   couponSuggestions,
 } from '@utils/discount/discount'
 import { pickFreeDeliveryOffer } from '@utils/free-delivery/free-delivery'
+import { pickGiftOffer } from '@utils/gift/gift'
 
 export const usePromotionOffers = (unitId: string | undefined) => {
   const query = useQuery({
@@ -18,6 +19,7 @@ export const usePromotionOffers = (unitId: string | undefined) => {
   return {
     freeDelivery: pickFreeDeliveryOffer(query.data),
     discountOffers: automaticDiscounts(query.data),
+    giftOffer: pickGiftOffer(query.data),
     couponSuggestions: couponSuggestions(query.data),
     refetchOffers: query.refetch,
   }

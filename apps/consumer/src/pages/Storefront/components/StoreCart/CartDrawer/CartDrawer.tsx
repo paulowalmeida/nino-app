@@ -17,7 +17,7 @@ import { categoryIcon } from '@utils/category-icon'
 import { brl } from '@utils/money'
 import { cartItemPrice } from '@utils/cart-item-price/cart-item-price'
 import { useStorefrontFacade } from '@pages/Storefront/facades/useStorefrontFacade/useStorefrontFacade'
-import { CartFreeDeliveryProgress } from '@pages/Storefront/components/StoreCart/CartDrawer/CartFreeDeliveryProgress/CartFreeDeliveryProgress'
+import { CartPromotionProgress } from '@pages/Storefront/components/StoreCart/CartDrawer/CartPromotionProgress/CartPromotionProgress'
 
 import styles from './CartDrawer.module.css'
 import motionStyles from '@styles/motion.module.css'
@@ -194,7 +194,7 @@ export const CartDrawer = () => {
               </Box>
 
               <Box className={styles.cartDrawerFooter}>
-                <CartFreeDeliveryProgress />
+                <CartPromotionProgress />
                 <Box direction="row" className={styles.totalRow}>
                   <Box>
                     <Text className={styles.totalLabel}>Total</Text>

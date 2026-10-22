@@ -2,13 +2,19 @@ export type Promotion = {
   id: string
   name: string
   description: string | null
-  type: 'PERCENTAGE_DISCOUNT' | 'FIXED_DISCOUNT' | 'FREE_DELIVERY'
+  type: 'PERCENTAGE_DISCOUNT' | 'FIXED_DISCOUNT' | 'FREE_DELIVERY' | 'GIFT'
   trigger: 'AUTOMATIC' | 'COUPON'
   code: string | null
   value: number
   minOrderValue: number
   // CONSTRAINT: teto em reais, só no desconto percentual.
   maxDiscount: number | null
+  giftProduct: {
+    id: string
+    name: string
+    price: number
+    isAvailable: boolean
+  } | null
   channels: ('DELIVERY' | 'PICKUP' | 'COUNTER' | 'TABLE_TAB')[]
   startsAt: string
   endsAt: string | null

@@ -22,6 +22,7 @@ export const promotionMock: Promotion = {
   value: 0,
   minOrderValue: 60,
   maxDiscount: null,
+  giftProduct: null,
   channels: [],
   startsAt: '2026-10-22T12:00:00.000Z',
   endsAt: null,

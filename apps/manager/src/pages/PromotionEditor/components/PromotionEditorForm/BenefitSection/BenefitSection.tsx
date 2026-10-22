@@ -21,10 +21,11 @@ import styles from './BenefitSection.module.css'
 const TYPE_HINTS = {
   'free-delivery': 'A taxa de entrega some do pedido que cumprir a condição.',
   discount: 'Sai do valor dos itens; o frete continua o normal.',
+  gift: 'Um produto do cardápio entra no pedido a R$ 0.',
 } as const
 
 export const BenefitSection = () => {
-  const { mode } = usePromotionEditorFacade()
+  const { mode, giftProductOptions } = usePromotionEditorFacade()
   const {
     control,
     getValues,
@@ -57,6 +58,34 @@ export const BenefitSection = () => {
               )}
             />
           </FormField>
+
+          {campaignType === 'gift' && (
+            <FormField
+              label="Produto de brinde"
+              helperText="Só aparecem produtos ativos sem escolha obrigatória."
+              error={errors.giftProductId?.message}
+            >
+              <Controller
+                name="giftProductId"
+                control={control}
+                rules={{
+                  validate: (productId) =>
+                    getValues('campaignType') !== 'gift' ||
+                    !!productId ||
+                    'Escolha o produto de brinde',
+                }}
+                render={({ field }) => (
+                  <Select
+                    options={giftProductOptions}
+                    placeholder="Escolha um produto"
+                    value={field.value}
+                    onValueChange={field.onChange}
+                    error={!!errors.giftProductId}
+                  />
+                )}
+              />
+            </FormField>
+          )}
 
           {isDiscount && (
             <FormField label="Como desconta">

@@ -146,3 +146,9 @@
   @apply mb-0.5 block text-2xs font-bold uppercase tracking-[0.1em];
   @apply text-brand-strong/70;
 }
+
+/* WHY: o brinde sai da cozinha como item normal; o selo evita que alguém
+ * estranhe o item a R$ 0 ou o cobre do cliente. */
+.giftBadge {
+  @apply ml-2 align-middle;
+}

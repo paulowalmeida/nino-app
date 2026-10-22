@@ -11,4 +11,13 @@ export const cartOfferMock: PublicPromotion = {
   endsAt: null,
   allDeliveryZones: true,
   deliveryZoneIds: [],
+  giftProduct: null,
+}
+
+export const cartGiftMock: PublicPromotion = {
+  ...cartOfferMock,
+  id: 'gift-1',
+  type: 'GIFT',
+  minOrderValue: 80,
+  giftProduct: { id: 'product-coke', name: 'Coca-Cola Lata', price: 6.5 },
 }

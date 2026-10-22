@@ -39,6 +39,7 @@ describe(BenefitSection.name, () => {
   it('types the minimum order as money, right to left', async () => {
     vi.mocked(usePromotionEditorFacade).mockReturnValue({
       mode: 'create',
+      giftProductOptions: [],
     } as unknown as ReturnType<typeof usePromotionEditorFacade>)
     render(
       <Form>
@@ -55,6 +56,7 @@ describe(BenefitSection.name, () => {
   it('asks for the discount and offers a cap only on percentage', async () => {
     vi.mocked(usePromotionEditorFacade).mockReturnValue({
       mode: 'create',
+      giftProductOptions: [],
     } as unknown as ReturnType<typeof usePromotionEditorFacade>)
     const onValid = vi.fn()
     render(
@@ -80,5 +82,27 @@ describe(BenefitSection.name, () => {
     expect(
       screen.queryByRole('textbox', { name: 'Teto do desconto em reais' })
     ).not.toBeInTheDocument()
+  })
+
+  it('asks which product is the gift', async () => {
+    vi.mocked(usePromotionEditorFacade).mockReturnValue({
+      mode: 'create',
+      giftProductOptions: [
+        { value: 'coke', name: 'Coca-Cola Lata', label: 'Coca-Cola Lata' },
+      ],
+    } as unknown as ReturnType<typeof usePromotionEditorFacade>)
+    const onValid = vi.fn()
+    render(
+      <Form defaults={{ campaignType: 'gift' }} onValid={onValid}>
+        <BenefitSection />
+      </Form>
+    )
+
+    await userEvent.click(screen.getByRole('button', { name: 'enviar' }))
+
+    expect(
+      await screen.findByText('Escolha o produto de brinde')
+    ).toBeInTheDocument()
+    expect(onValid).not.toHaveBeenCalled()
   })
 })

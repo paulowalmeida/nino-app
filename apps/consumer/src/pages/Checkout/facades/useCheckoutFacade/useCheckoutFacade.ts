@@ -45,6 +45,7 @@ export const useCheckoutFacadeValue = (pathSlug?: string | null) => {
     slug,
     freeDelivery: offers.freeDelivery,
     discountOffers: offers.discountOffers,
+    giftOffer: offers.giftOffer,
     coupon: couponState.coupon,
     refetchOffers: offers.refetchOffers,
   })

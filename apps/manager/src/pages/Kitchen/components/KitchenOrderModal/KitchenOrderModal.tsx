@@ -46,10 +46,15 @@ export const KitchenOrderModal = ({
 
             <Box as="ul" direction="column" gap={1.5}>
               {order.items.map((item) => (
-                <Box as="li" key={item.id}>
+                <Box as="li" key={item.id} direction="row" align="center" gap={2}>
                   <Text as="span">
                     {item.quantity}× {item.product.name}
                   </Text>
+                  {item.isGift && (
+                    <Badge size="sm" variant="brand">
+                      Brinde
+                    </Badge>
+                  )}
                 </Box>
               ))}
             </Box>

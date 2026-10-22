@@ -1,17 +1,21 @@
 @reference "@nino/ds/globals.css";
 
-.freeDeliveryProgress {
+.cartPromotionProgress {
+  @apply flex flex-col gap-3;
+}
+
+.promotionProgress {
   @apply flex flex-col gap-2;
 }
 
-.freeDeliveryGap {
+.promotionGap {
   @apply text-sm text-fg-muted;
 }
 
-.freeDeliveryGap strong {
+.promotionGap strong {
   @apply font-semibold text-fg-strong;
 }
 
-.freeDeliveryReached {
+.promotionReached {
   @apply text-sm font-semibold text-success;
 }

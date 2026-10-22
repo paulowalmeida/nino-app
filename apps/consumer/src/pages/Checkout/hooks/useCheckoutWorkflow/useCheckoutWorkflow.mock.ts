@@ -15,6 +15,7 @@ export const freeDeliveryOfferMock = {
   endsAt: null,
   allDeliveryZones: true,
   deliveryZoneIds: [],
+  giftProduct: null,
 }
 
 export const promotionEndedErrorBodyMock = {

@@ -13,4 +13,5 @@ export const typedCouponMock: PublicPromotion = {
   endsAt: null,
   allDeliveryZones: true,
   deliveryZoneIds: [],
+  giftProduct: null,
 }

@@ -243,6 +243,11 @@ export const KitchenCard = ({
               </Stamp>
               <Text as="span" className={styles.itemName}>
                 {item.product.name}
+                {item.isGift && (
+                  <Badge size="sm" variant="brand" className={styles.giftBadge}>
+                    Brinde
+                  </Badge>
+                )}
               </Text>
             </ListRow>
           ))}

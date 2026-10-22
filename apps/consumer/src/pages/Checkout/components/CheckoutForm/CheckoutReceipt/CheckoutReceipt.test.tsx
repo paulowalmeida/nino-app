@@ -91,4 +91,24 @@ describe('CheckoutReceipt', () => {
     expect(screen.getByText('Cupom VOLTA10')).toBeInTheDocument()
     expect(screen.getByText(/−\sR\$\s3,60/)).toBeInTheDocument()
   })
+
+  it('lists the gift at no charge', async () => {
+    vi.mocked(useCheckoutFacade).mockReturnValue({
+      cartLines: [],
+      subtotal: checkoutReceiptMock.subtotal,
+      isDelivery: false,
+      zone: undefined,
+      deliveryFee: 0,
+      deliveryDiscount: 0,
+      freeDeliveryCoverage: 'none',
+      promotionDiscount: 0,
+      appliedGift: { giftProduct: { name: 'Coca-Cola Lata' } },
+    } as never)
+
+    render(<CheckoutReceipt />)
+    await userEvent.click(screen.getByRole('button'))
+
+    expect(screen.getByText('Coca-Cola Lata · Brinde')).toBeInTheDocument()
+    expect(screen.getByText('Grátis')).toBeInTheDocument()
+  })
 })

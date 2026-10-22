@@ -34,6 +34,7 @@ const perCustomerOf = (
 
 const blankValues = (now: Date): PromotionFormValues => ({
   campaignType: 'free-delivery',
+  giftProductId: '',
   discountKind: 'PERCENTAGE_DISCOUNT',
   discountValue: '',
   maxDiscount: '',
@@ -95,19 +96,26 @@ const discountFieldsOf = ({
   type,
   value,
   maxDiscount,
+  giftProduct,
 }: Promotion): Pick<
   PromotionFormValues,
-  'campaignType' | 'discountKind' | 'discountValue' | 'maxDiscount'
+  | 'campaignType'
+  | 'giftProductId'
+  | 'discountKind'
+  | 'discountValue'
+  | 'maxDiscount'
 > =>
-  type === 'FREE_DELIVERY'
+  type === 'FREE_DELIVERY' || type === 'GIFT'
     ? {
-        campaignType: 'free-delivery',
+        campaignType: type === 'GIFT' ? 'gift' : 'free-delivery',
+        giftProductId: giftProduct?.id ?? '',
         discountKind: 'PERCENTAGE_DISCOUNT',
         discountValue: '',
         maxDiscount: '',
       }
     : {
         campaignType: 'discount',
+        giftProductId: '',
         discountKind: type,
         discountValue:
           type === 'PERCENTAGE_DISCOUNT' ? String(value) : maskMoneyAmount(value),
@@ -118,7 +126,11 @@ const typeOf = ({
   campaignType,
   discountKind,
 }: PromotionFormValues): Promotion['type'] =>
-  campaignType === 'free-delivery' ? 'FREE_DELIVERY' : discountKind
+  campaignType === 'free-delivery'
+    ? 'FREE_DELIVERY'
+    : campaignType === 'gift'
+      ? 'GIFT'
+      : discountKind
 
 // CONSTRAINT: percentual chega digitado ("12,5"); valor fixo, mascarado ("10,00").
 export const discountAmountOf = ({
@@ -142,13 +154,15 @@ const perCustomerLimitOf = ({
       : Number(perCustomerCount)
 
 export const toPromotionSummarySource = (
-  values: PromotionFormValues
+  values: PromotionFormValues,
+  giftProductName?: string
 ): PromotionSummarySource => {
   const type = typeOf(values)
   const isFreeDelivery = type === 'FREE_DELIVERY'
   return {
   type,
-  value: isFreeDelivery ? 0 : discountAmountOf(values),
+  value: type === 'FREE_DELIVERY' || type === 'GIFT' ? 0 : discountAmountOf(values),
+  giftProduct: giftProductName ? { name: giftProductName } : null,
   maxDiscount:
     type === 'PERCENTAGE_DISCOUNT' && values.maxDiscount
       ? moneyValue(values.maxDiscount)
@@ -177,6 +191,7 @@ export const toPromotionInput = (values: PromotionFormValues): PromotionInput =>
     code: values.code.trim() || null,
     value: source.value,
     maxDiscount: source.maxDiscount,
+    giftProductId: source.type === 'GIFT' ? values.giftProductId : null,
     minOrderValue: source.minOrderValue,
     startsAt: source.startsAt,
     endsAt: source.endsAt,

@@ -11,6 +11,7 @@ export const stripFreeDeliveryMock: PublicPromotion = {
   endsAt: null,
   allDeliveryZones: true,
   deliveryZoneIds: [],
+  giftProduct: null,
 }
 
 export const stripDiscountMock: PublicPromotion = {

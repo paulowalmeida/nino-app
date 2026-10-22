@@ -8,8 +8,14 @@ const shortDate = new Intl.DateTimeFormat('pt-BR', {
 })
 const weekdayName = new Intl.DateTimeFormat('pt-BR', { weekday: 'long' })
 
-const benefitOf = ({ type, value, maxDiscount }: PublicPromotion): string => {
+const benefitOf = ({
+  type,
+  value,
+  maxDiscount,
+  giftProduct,
+}: PublicPromotion): string => {
   if (type === 'FREE_DELIVERY') return 'Frete grátis'
+  if (type === 'GIFT') return `Ganhe ${giftProduct?.name ?? 'um brinde'}`
   if (type === 'FIXED_DISCOUNT') return `${brl(value)} de desconto`
   return maxDiscount
     ? `${value}% de desconto (até ${brl(maxDiscount)})`

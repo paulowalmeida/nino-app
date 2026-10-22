@@ -11,6 +11,7 @@ export const autoFreeDeliveryMock: PublicPromotion = {
   endsAt: null,
   allDeliveryZones: true,
   deliveryZoneIds: [],
+  giftProduct: null,
 }
 
 export const autoDiscountMock: PublicPromotion = {

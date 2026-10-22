@@ -101,4 +101,17 @@ describe(promotionSummaryParts.name, () => {
       ).headline
     ).toBe('R$\u00a010,00 de desconto em qualquer pedido')
   })
+
+  it('names the gift product', () => {
+    expect(
+      promotionSummaryParts(
+        {
+          ...freeDeliverySummaryMock,
+          type: 'GIFT',
+          giftProduct: { name: 'Coca-Cola Lata' },
+        },
+        summaryNowMock
+      ).headline
+    ).toBe('Ganhe Coca-Cola Lata acima de R$\u00a060,00')
+  })
 })

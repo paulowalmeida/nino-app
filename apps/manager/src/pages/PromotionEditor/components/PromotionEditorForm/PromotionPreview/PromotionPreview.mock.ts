@@ -2,6 +2,7 @@ import type { PromotionFormValues } from '@pages/PromotionEditor/types/Promotion
 
 export const previewValuesMock: PromotionFormValues = {
   campaignType: 'free-delivery',
+  giftProductId: '',
   discountKind: 'PERCENTAGE_DISCOUNT',
   discountValue: '',
   maxDiscount: '',

@@ -14,6 +14,7 @@ export const visibleOfferMock: PublicPromotion[] = [
     endsAt: null,
     allDeliveryZones: true,
     deliveryZoneIds: [],
+    giftProduct: null,
   },
   {
     id: 'promotion-2',
@@ -26,6 +27,7 @@ export const visibleOfferMock: PublicPromotion[] = [
     endsAt: null,
     allDeliveryZones: true,
     deliveryZoneIds: [],
+    giftProduct: null,
   },
   {
     id: 'promotion-3',
@@ -38,5 +40,6 @@ export const visibleOfferMock: PublicPromotion[] = [
     endsAt: null,
     allDeliveryZones: true,
     deliveryZoneIds: [],
+    giftProduct: null,
   },
 ]

@@ -33,6 +33,7 @@ describe(PromotionEditorForm.name, () => {
       mode: 'create',
       promotion: undefined,
       zoneOptions: [{ value: 'zone-1', label: '0 a 3 km' }],
+      giftProductOptions: [],
       savePromotion,
       isSaving: false,
       cancel,

@@ -14,7 +14,7 @@ describe(useEditorSteps.name, () => {
     await act(() => result.current.goNext())
     expect(result.current.step).toBe(0)
     expect(trigger).toHaveBeenCalledWith(
-      ['minOrderValue', 'discountValue', 'maxDiscount'],
+      ['minOrderValue', 'discountValue', 'maxDiscount', 'giftProductId'],
       { shouldFocus: true }
     )
 

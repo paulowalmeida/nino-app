@@ -112,4 +112,21 @@ describe(CampaignTable.name, () => {
 
     expect(screen.getByText(campaignTableEmptyMock)).toBeInTheDocument()
   })
+
+  it('warns when the gift product is unavailable', () => {
+    renderTable([
+      {
+        ...usedActiveCampaignMock,
+        type: 'GIFT',
+        giftProduct: {
+          id: 'product-coke',
+          name: 'Coca-Cola Lata',
+          price: 6.5,
+          isAvailable: false,
+        },
+      },
+    ])
+
+    expect(screen.getByText('Produto indisponível')).toBeInTheDocument()
+  })
 })

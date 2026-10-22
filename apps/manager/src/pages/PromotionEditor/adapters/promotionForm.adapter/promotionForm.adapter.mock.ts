@@ -22,6 +22,7 @@ export const pastCampaignMock: Promotion = {
 
 export const filledFormMock: PromotionFormValues = {
   campaignType: 'free-delivery',
+  giftProductId: '',
   discountKind: 'PERCENTAGE_DISCOUNT',
   discountValue: '',
   maxDiscount: '',

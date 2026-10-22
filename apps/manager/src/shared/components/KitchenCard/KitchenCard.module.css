@@ -227,3 +227,9 @@
 .ghostAction {
   @apply mx-4 mt-1 mb-4 h-14;
 }
+
+/* WHY: o brinde sai da cozinha como item normal; o selo evita que alguém
+ * estranhe o item a R$ 0 ou o cobre do cliente. */
+.giftBadge {
+  @apply ml-2 align-middle;
+}
