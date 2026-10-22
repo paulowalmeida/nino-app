@@ -1,5 +1,11 @@
 @reference "../../styles/globals.css";
 
+/* CONSTRAINT: o HiddenInput do Ark é absolute; sem âncora ele escapa do
+ * container que rola e estica o documento (barra de rolagem dupla). */
+.checkbox {
+  @apply relative;
+}
+
 .box {
   @apply relative flex shrink-0 cursor-pointer items-center justify-center;
   @apply rounded-1 border bg-surface-raised;

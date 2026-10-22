@@ -26,4 +26,18 @@ describe('CheckoutAlerts', () => {
     expect(screen.getByText(checkoutAlertsMock.failedTitle)).toBeInTheDocument()
     expect(screen.getByText(checkoutAlertsMock.closedTitle)).toBeInTheDocument()
   })
+
+  it('explains the ended campaign with the new fee instead of a generic failure', () => {
+    render(
+      <CheckoutAlerts isSubmitFailed isStoreClosed={false} promotionEndedFee={7} />
+    )
+
+    expect(
+      screen.getByText(checkoutAlertsMock.promotionEndedTitle)
+    ).toBeInTheDocument()
+    expect(screen.getByText(/O frete agora é R\$\s7,00/)).toBeInTheDocument()
+    expect(
+      screen.queryByText(checkoutAlertsMock.failedTitle)
+    ).not.toBeInTheDocument()
+  })
 })

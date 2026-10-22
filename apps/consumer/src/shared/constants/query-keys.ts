@@ -26,6 +26,11 @@ export const queryKeys = {
     byUnitAndZip: (unitId: string, zipCode: string) =>
       [...queryKeys.deliveryQuote.all, unitId, zipCode] as const,
   },
+  promotions: {
+    all: ['promotions'] as const,
+    visibleByUnit: (unitId: string) =>
+      [...queryKeys.promotions.all, unitId, 'visible'] as const,
+  },
   openingHours: {
     all: ['opening-hours'] as const,
     byUnit: (unitId: string) =>

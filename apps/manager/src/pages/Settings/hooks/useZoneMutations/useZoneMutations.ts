@@ -1,9 +1,8 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 
 import { toast } from '@nino/ds/components/Toast'
-import { DeliveryZoneService } from '@pages/Settings/services/delivery-zone/delivery-zone.service'
-
-import { zonesKey } from '../useDeliveryZones/useDeliveryZones'
+import { zonesKey } from '@shared/hooks/delivery-zone/useDeliveryZones/useDeliveryZones'
+import { DeliveryZoneService } from '@shared/services/delivery-zone/delivery-zone.service/delivery-zone.service'
 
 export const useZoneMutations = (unitId: string | null) => {
   const queryClient = useQueryClient()

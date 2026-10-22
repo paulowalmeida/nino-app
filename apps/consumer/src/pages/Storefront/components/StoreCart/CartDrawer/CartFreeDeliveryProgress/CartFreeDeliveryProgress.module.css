@@ -1,0 +1,17 @@
+@reference "@nino/ds/globals.css";
+
+.freeDeliveryProgress {
+  @apply flex flex-col gap-2;
+}
+
+.freeDeliveryGap {
+  @apply text-sm text-fg-muted;
+}
+
+.freeDeliveryGap strong {
+  @apply font-semibold text-fg-strong;
+}
+
+.freeDeliveryReached {
+  @apply text-sm font-semibold text-success;
+}

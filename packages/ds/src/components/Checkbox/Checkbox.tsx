@@ -65,6 +65,7 @@ export function Checkbox({
 }: CheckboxProps) {
   return (
     <ArkCheckbox.Root
+      className={styles.checkbox}
       onCheckedChange={({ checked }) => onCheckedChange?.(checked)}
       {...props}
     >

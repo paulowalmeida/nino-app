@@ -15,7 +15,7 @@ vi.mock('@shared/hooks/session/useCompanyGroups/useCompanyGroups', () => ({
 vi.mock('@shared/hooks/session/useCurrentUnit/useCurrentUnit', () => ({
   useCurrentUnit: () => ({ unitId: 'unit-1' }),
 }))
-vi.mock('@pages/Settings/hooks/useDeliveryZones/useDeliveryZones', () => ({
+vi.mock('@shared/hooks/delivery-zone/useDeliveryZones/useDeliveryZones', () => ({
   useDeliveryZones: hook,
 }))
 vi.mock('@shared/hooks/dining-table/useDiningTables/useDiningTables', () => ({

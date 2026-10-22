@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useForm, useWatch } from 'react-hook-form'
 
 import type { Address } from '@custom_types/address/address'
@@ -7,8 +7,10 @@ import type { CheckoutFormValues } from '@pages/checkout/types/checkout/Checkout
 import type { Consumer } from '@custom_types/consumer/consumer'
 import type { PublicDeliveryZone } from '@pages/checkout/types/delivery-zone/PublicDeliveryZone.type'
 import type { PaymentMethod } from '@custom_types/order/payment-method'
+import type { PublicPromotion } from '@custom_types/promotion/public-promotion.type'
 import type { Store } from '@custom_types/store/store'
 import { checkoutTotals } from '@pages/checkout/utils/checkout-totals/checkout-totals'
+import { promotionUnavailableFee } from '@pages/checkout/utils/promotion-unavailable/promotion-unavailable'
 import { useDeliveryQuote } from '@pages/checkout/hooks/useDeliveryQuote/useDeliveryQuote'
 import { usePlaceOrder } from '@pages/checkout/hooks/usePlaceOrder/usePlaceOrder'
 import { writeLastOrder } from '@utils/last-order'
@@ -26,6 +28,8 @@ type UseCheckoutWorkflowParams = {
   minimumOrderAmount?: number | undefined
   clearCart: () => void
   slug: string | undefined
+  freeDelivery?: PublicPromotion
+  refetchOffer?: () => unknown
 }
 
 /** WHY: concentra o formulário, a cotação e a criação em uma única instância. */
@@ -41,6 +45,8 @@ export const useCheckoutWorkflow = ({
   minimumOrderAmount,
   clearCart,
   slug,
+  freeDelivery,
+  refetchOffer,
 }: UseCheckoutWorkflowParams) => {
   const isAuthenticated = consumer !== null
   const paymentOptions = configuredPaymentOptions ?? ['CASH']
@@ -115,12 +121,25 @@ export const useCheckoutWorkflow = ({
 
   const isDelivery = channel === 'DELIVERY'
   const zone = zones.find(({ id }) => id === deliveryZoneId) ?? quote
+  /* WHY: depois do 409 a campanha não vale mais para este pedido, mesmo que a
+   * vitrine ainda não tenha recarregado a lista de campanhas. */
+  const [promotionEndedFee, setPromotionEndedFee] = useState<number | null>(
+    null
+  )
 
-  const { subtotal, deliveryFee, total, deliveryNote } = checkoutTotals({
+  const {
+    subtotal,
+    deliveryFee,
+    deliveryDiscount,
+    freeDeliveryCoverage,
+    total,
+    deliveryNote,
+  } = checkoutTotals({
     cartLines,
     isDelivery,
     zone,
     estimatedMinutes,
+    freeDelivery: promotionEndedFee === null ? freeDelivery : undefined,
   })
   const minimum = minimumOrderAmount ?? 0
   const isBelowMinimum = minimum > 0 && subtotal < minimum
@@ -129,8 +148,19 @@ export const useCheckoutWorkflow = ({
     if (!store || isBelowMinimum) return
 
     createOrder(
-      { values, store, cartLines },
       {
+        values,
+        store,
+        cartLines,
+        expectsFreeDelivery: freeDeliveryCoverage === 'applied',
+      },
+      {
+        onError: (error) => {
+          const fee = promotionUnavailableFee(error)
+          if (fee === null) return
+          setPromotionEndedFee(fee)
+          void refetchOffer?.()
+        },
         onSuccess: (order) => {
           if (!order.trackingToken) return
           writeLastOrder({
@@ -158,8 +188,14 @@ export const useCheckoutWorkflow = ({
     zone,
     subtotal,
     deliveryFee,
+    deliveryDiscount,
+    freeDeliveryCoverage,
     total,
     deliveryNote,
+    promotionEndedFee:
+      submitFailed && promotionUnavailableFee(submitError) !== null
+        ? promotionEndedFee
+        : null,
     created,
     isSubmitting,
     submitFailed,

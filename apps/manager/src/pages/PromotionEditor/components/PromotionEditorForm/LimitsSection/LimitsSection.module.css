@@ -1,0 +1,9 @@
+@reference "@nino/ds/globals.css";
+
+.limitsSection {
+  @apply flex flex-col gap-4;
+}
+
+.countField {
+  @apply sm:max-w-56;
+}

@@ -72,3 +72,22 @@
 .choices {
   @apply block text-xs leading-snug text-fg-subtle;
 }
+
+/* WHY: o frete riscado prova o desconto; o "Grátis" em verde é o que o
+ * cliente procura na revisão antes de confirmar.
+ */
+.freeDelivery {
+  @apply flex items-baseline gap-2;
+}
+
+.freeDeliveryWas {
+  @apply text-fg-subtle line-through;
+}
+
+.freeDeliveryNow {
+  @apply font-bold text-success;
+}
+
+.freeDeliveryNote {
+  @apply text-xs text-fg-subtle;
+}

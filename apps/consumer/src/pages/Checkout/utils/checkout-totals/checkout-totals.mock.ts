@@ -14,4 +14,22 @@ export const checkoutTotalsMock = {
   ],
   deliveryFee: '5',
   estimatedMinutes: 30,
+  campaignZone: {
+    id: 'zone-centro',
+    name: 'Centro',
+    minRadiusKm: 0,
+    maxRadiusKm: 5,
+    fee: '5',
+  },
+  freeDelivery: {
+    id: 'promotion-1',
+    name: 'Frete grátis acima de R$ 20,00',
+    type: 'FREE_DELIVERY' as const,
+    value: 0,
+    code: null,
+    minOrderValue: 20,
+    endsAt: null,
+    allDeliveryZones: false,
+    deliveryZoneIds: ['zone-centro'],
+  },
 }

@@ -1,7 +1,7 @@
 @reference "@nino/ds/globals.css";
 
 .settingsPage {
-  @apply relative mx-auto flex h-full w-full flex-col;
+  @apply relative flex h-full w-full flex-col;
   @apply max-w-workspace overflow-hidden p-4 lg:p-10;
 }
 

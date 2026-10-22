@@ -27,6 +27,10 @@ vi.mock('@shared/hooks/useMyAddresses/useMyAddresses')
 vi.mock('@pages/checkout/hooks/useCheckoutResume/useCheckoutResume')
 vi.mock('@utils/store-info', () => ({ isOpen: vi.fn(() => true) }))
 
+vi.mock('@hooks/useFreeDeliveryOffer/useFreeDeliveryOffer', () => ({
+  useFreeDeliveryOffer: () => ({ freeDelivery: undefined, refetchOffer: () => undefined }),
+}))
+
 describe('useCheckoutFacadeValue', () => {
   it('composes checkout data and exposes the existing workflow contract', () => {
     const setSlug = vi.fn()

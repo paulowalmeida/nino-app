@@ -1,55 +1,18 @@
 @reference "@nino/ds/globals.css";
 
-.promotionsContentLayout {
-  @apply grid gap-6 xl:grid-cols-[minmax(0,1.4fr)_minmax(20rem,0.8fr)];
+.promotionsContent {
+  @apply pb-4 md:min-h-0 md:flex-1 lg:pb-10;
 }
 
-.editor,
-.promotionsContentList {
-  @apply flex flex-col gap-5;
+.promotionsToolbar {
+  @apply mb-3 flex shrink-0 flex-col gap-4 px-4;
+  @apply sm:flex-row sm:items-center lg:px-10;
 }
 
-.sectionHeader {
-  @apply flex flex-col gap-1;
+.promotionsSearch {
+  @apply h-11 w-full sm:max-w-md;
 }
 
-.formGrid {
-  @apply grid gap-4 md:grid-cols-2;
-}
-
-.promotionsContentField,
-.fieldWide {
-  @apply flex flex-col gap-1.5;
-}
-
-.fieldWide {
-  @apply md:col-span-2;
-}
-
-.promotionsContentGroup {
-  @apply flex flex-col gap-2;
-}
-
-.checkGrid {
-  @apply grid gap-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4;
-}
-
-.checkItem {
-  @apply flex items-center gap-2 border-b border-border px-1 py-2 text-sm text-fg-strong;
-}
-
-.switchRow {
-  @apply flex items-center gap-2;
-}
-
-.promotionsContentSummary {
-  @apply flex flex-col gap-1 border-l-2 border-brand bg-brand-soft/20 px-4 py-3;
-}
-
-.promotionRow {
-  @apply flex items-center justify-between gap-3 border-b border-border pb-4 last:border-b-0 last:pb-0;
-}
-
-.skeleton {
-  @apply min-h-96 w-full;
+.promotionsTabs [data-part='content'] {
+  @apply hidden;
 }

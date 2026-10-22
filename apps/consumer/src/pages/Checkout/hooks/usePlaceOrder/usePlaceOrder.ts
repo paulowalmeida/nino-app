@@ -12,6 +12,7 @@ type PlaceOrderInput = {
   values: CheckoutFormValues
   store: Store
   cartLines: CartLine[]
+  expectsFreeDelivery?: boolean
 }
 
 /**
@@ -23,14 +24,19 @@ export const usePlaceOrder = (isAuthenticated: boolean) => {
   const [idempotencyKey] = useState(() => globalThis.crypto.randomUUID())
 
   return useMutation({
-    mutationFn: ({ values, store, cartLines }: PlaceOrderInput) =>
+    mutationFn: ({
+      values,
+      store,
+      cartLines,
+      expectsFreeDelivery,
+    }: PlaceOrderInput) =>
       isAuthenticated
         ? orderService.createMine(
-            consumerOrderRequest(values, store, cartLines),
+            consumerOrderRequest(values, store, cartLines, expectsFreeDelivery),
             idempotencyKey
           )
         : orderService.createGuest(
-            guestOrderRequest(values, store, cartLines),
+            guestOrderRequest(values, store, cartLines, expectsFreeDelivery),
             idempotencyKey
           ),
   })

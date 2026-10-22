@@ -1,0 +1,13 @@
+@reference "@nino/ds/globals.css";
+
+.benefitSection {
+  @apply flex flex-col gap-1;
+}
+
+.benefitLead {
+  @apply text-sm text-fg-muted;
+}
+
+.benefitField {
+  @apply mt-4 sm:max-w-56;
+}

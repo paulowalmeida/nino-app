@@ -1,24 +1,25 @@
 import { Box } from '@nino/ds/components/Box'
-import { Header } from '@nino/ds/components/Header'
+import { PromotionsContent } from '@pages/Promotions/components/PromotionsContent/PromotionsContent'
+import { PromotionsHeader } from '@pages/Promotions/components/PromotionsHeader/PromotionsHeader'
+import { PromotionsLoadError } from '@pages/Promotions/components/PromotionsLoadError/PromotionsLoadError'
 import { usePromotionsFacade } from '@pages/Promotions/facades/usePromotionsFacade/usePromotionsFacade'
+import { CampaignTableSkeleton } from '@pages/Promotions/skeletons/CampaignTableSkeleton/CampaignTableSkeleton'
 
-import { PromotionsContent } from './components/PromotionsContent/PromotionsContent'
-
-import motion from '@styles/motion.module.css'
 import styles from './Promotions.module.css'
 
 export const Promotions = () => {
-  const facade = usePromotionsFacade()
+  const { isPending, isError } = usePromotionsFacade()
 
   return (
-    <Box as="main" className={styles.promotionsPage}>
-      <Header
-        className={`${motion.deal} ${styles.promotionsHeader}`}
-        size="xl"
-        title="Promoções"
-        description="Crie descontos e ofertas para aumentar conversão e recorrência na unidade."
-      />
-      <PromotionsContent {...facade} />
+    <Box className={styles.promotionsPage}>
+      <PromotionsHeader />
+      {isError ? (
+        <PromotionsLoadError />
+      ) : isPending ? (
+        <CampaignTableSkeleton />
+      ) : (
+        <PromotionsContent />
+      )}
     </Box>
   )
 }

@@ -1,9 +1,6 @@
 @reference "@nino/ds/globals.css";
 
 .promotionsPage {
-  @apply flex min-h-full w-full max-w-workspace flex-col gap-6 p-4 lg:p-10;
-}
-
-.promotionsHeader {
-  @apply flex flex-col gap-1;
+  @apply relative flex w-full max-w-workspace flex-col;
+  @apply md:h-full md:overflow-hidden;
 }

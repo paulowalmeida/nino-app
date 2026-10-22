@@ -1,0 +1,5 @@
+@reference "@nino/ds/globals.css";
+
+.campaignTypeOptions {
+  @apply flex flex-col gap-2;
+}

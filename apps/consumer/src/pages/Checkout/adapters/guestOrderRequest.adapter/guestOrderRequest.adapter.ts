@@ -10,7 +10,8 @@ import { toE164 } from '@utils/phone'
 export const guestOrderRequest = (
   values: CheckoutFormValues,
   store: Store,
-  cartLines: CartLine[]
+  cartLines: CartLine[],
+  expectsFreeDelivery = false
 ): CreateGuestOrderRequest => {
   const isDelivery = values.channel === 'DELIVERY'
 
@@ -32,6 +33,7 @@ export const guestOrderRequest = (
     guestLatitude: isDelivery ? values.guestLatitude : undefined,
     guestLongitude: isDelivery ? values.guestLongitude : undefined,
     notes: values.notes,
+    expectsFreeDelivery,
     items: orderItemsRequest(cartLines),
   }
 }

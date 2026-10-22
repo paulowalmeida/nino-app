@@ -1,0 +1,160 @@
+@reference "@nino/ds/globals.css";
+
+.campaignTable {
+  @apply min-w-0 md:flex md:min-h-0 md:flex-1 md:flex-col;
+}
+
+.campaignEmpty {
+  @apply mx-4 lg:mx-10;
+}
+
+.tableShell {
+  @apply md:flex md:min-h-0 md:flex-1 md:flex-col;
+}
+
+/* CONSTRAINT: Table já envolve a <table> no seu próprio scroller, e o
+ * cabeçalho sticky só gruda se a rolagem vertical acontecer nesse mesmo
+ * elemento.
+ */
+.tableShell > div {
+  @apply md:min-h-0 md:flex-1 md:px-4 lg:px-10;
+  overflow-y: auto;
+}
+
+.headRow > th {
+  @apply border-b border-border bg-surface-raised;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+.colCampaign {
+  width: auto;
+}
+
+.colUsage {
+  width: 7rem;
+}
+
+.colPeriod {
+  width: 11rem;
+}
+
+.colActions {
+  width: 4rem;
+}
+
+.colRight {
+  @apply text-right;
+}
+
+.row > td {
+  @apply py-3;
+}
+
+.headlineLine {
+  @apply flex min-w-0 items-center gap-2;
+}
+
+.headline {
+  @apply truncate text-sm font-semibold text-fg-default;
+}
+
+.stateBadge {
+  @apply shrink-0;
+}
+
+.conditions {
+  @apply mt-0.5 truncate text-xs text-fg-faint;
+}
+
+.usage {
+  @apply whitespace-nowrap text-sm tabular-nums text-fg-default;
+}
+
+.period {
+  @apply whitespace-nowrap text-xs text-fg-muted;
+}
+
+/* WHY: mesmo kebab redondo de Colaboradores — um menu por campanha cabe em
+ * qualquer largura sem trocar de layout por breakpoint.
+ */
+.kebab {
+  @apply ml-auto flex h-10 w-10 shrink-0 items-center justify-center;
+  @apply rounded-full text-fg-faint transition-colors duration-150;
+  @apply hover:bg-surface-mute hover:text-fg-default;
+  @apply disabled:pointer-events-none disabled:opacity-disabled;
+  @apply focus-visible:outline-2 focus-visible:outline-brand;
+  @apply focus-visible:outline-offset-2;
+}
+
+.menuPanel {
+  @apply min-w-48;
+}
+
+/* Skeleton: barras com a altura da linha de texto que vão ocupar. */
+.ghostHeadline {
+  @apply h-3.5 w-56;
+}
+
+.ghostConditions {
+  @apply mt-1.5 h-2.5 w-36;
+}
+
+.ghostUsage {
+  @apply ml-auto h-3.5 w-10;
+}
+
+.ghostPeriod {
+  @apply h-2.5 w-24;
+}
+
+/* WHY: abaixo do tablet a tabela de 4 colunas empurrava período e ações para
+ * fora da tela. No cartão móvel, campanha e menu ficam no topo; usos e
+ * período, na linha de baixo.
+ */
+@media (max-width: 639px) {
+  .tableShell table,
+  .tableShell tbody {
+    display: block;
+  }
+
+  .tableShell colgroup,
+  .tableShell thead {
+    display: none;
+  }
+
+  .row {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    column-gap: 0.75rem;
+    row-gap: 0.25rem;
+    padding: 0.75rem 1rem;
+  }
+
+  .row > td {
+    padding: 0;
+  }
+
+  .campaignCol {
+    grid-row: 1;
+    grid-column: 1;
+    min-width: 0;
+  }
+
+  .actionsCol {
+    grid-row: 1;
+    grid-column: 2;
+  }
+
+  .row > .periodCol {
+    grid-row: 2;
+    grid-column: 1;
+  }
+
+  .row > .usageCol {
+    grid-row: 2;
+    grid-column: 2;
+  }
+}

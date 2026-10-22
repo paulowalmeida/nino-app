@@ -28,6 +28,10 @@ vi.mock('@pages/Storefront/hooks/useStorefrontSlug/useStorefrontSlug')
 vi.mock('@shared/hooks/useConsumerSession/useConsumerSession')
 vi.mock('@shared/hooks/useLogout/useLogout')
 
+vi.mock('@hooks/useFreeDeliveryOffer/useFreeDeliveryOffer', () => ({
+  useFreeDeliveryOffer: () => ({ freeDelivery: undefined, refetchOffer: () => undefined }),
+}))
+
 describe('useStorefrontFacade', () => {
   it('exposes the composed home contract for the requested store', () => {
     vi.mocked(useStorefrontSlug).mockReturnValue(storefrontFacadeMock.slug)

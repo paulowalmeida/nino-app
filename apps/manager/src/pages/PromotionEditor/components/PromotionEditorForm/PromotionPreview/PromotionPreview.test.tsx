@@ -1,0 +1,52 @@
+import type { ReactNode } from 'react'
+
+import { render, screen } from '@testing-library/react'
+import { FormProvider, useForm } from 'react-hook-form'
+import { describe, expect, it } from 'vitest'
+
+import type { PromotionFormValues } from '@pages/PromotionEditor/types/PromotionFormValues.type'
+
+import { PromotionPreview } from './PromotionPreview'
+import { previewValuesMock } from './PromotionPreview.mock'
+
+const Form = ({
+  children,
+  values,
+}: {
+  children: ReactNode
+  values: PromotionFormValues
+}) => {
+  const form = useForm<PromotionFormValues>({ defaultValues: values })
+  return <FormProvider {...form}>{children}</FormProvider>
+}
+
+describe(PromotionPreview.name, () => {
+  it('shows the menu strip and the campaign facts as the owner fills them', () => {
+    render(
+      <Form values={previewValuesMock}>
+        <PromotionPreview />
+      </Form>
+    )
+
+    expect(screen.getByLabelText('Prévia da faixa no cardápio')).toHaveTextContent(
+      'Frete grátis acima de R$ 60,00'
+    )
+    expect(screen.getByText('ter, 18h–23h')).toBeInTheDocument()
+    expect(
+      screen.getByText('1 vez por cliente · primeiros 50 pedidos')
+    ).toBeInTheDocument()
+  })
+
+  it('says a hidden coded campaign does not reach the menu', () => {
+    render(
+      <Form values={{ ...previewValuesMock, code: 'VIP', showInMenu: false }}>
+        <PromotionPreview />
+      </Form>
+    )
+
+    expect(
+      screen.queryByLabelText('Prévia da faixa no cardápio')
+    ).not.toBeInTheDocument()
+    expect(screen.getByText(/Não aparece no cardápio/)).toBeInTheDocument()
+  })
+})

@@ -7,7 +7,8 @@ import { orderItemsRequest } from '@pages/checkout/adapters/orderItemsRequest.ad
 export const consumerOrderRequest = (
   values: CheckoutFormValues,
   store: Store,
-  cartLines: CartLine[]
+  cartLines: CartLine[],
+  expectsFreeDelivery = false
 ): CreateConsumerOrderRequest => ({
   unitId: store.id,
   channel: values.channel,
@@ -18,5 +19,6 @@ export const consumerOrderRequest = (
   paymentMethod: values.paymentMethod,
   changeFor: values.paymentMethod === 'CASH' ? values.changeFor : undefined,
   notes: values.notes,
+  expectsFreeDelivery,
   items: orderItemsRequest(cartLines),
 })

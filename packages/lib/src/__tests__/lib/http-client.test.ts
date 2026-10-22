@@ -318,6 +318,24 @@ describe('createHttpClient', () => {
     expect(config.onUnrecoverable).not.toHaveBeenCalled()
   })
 
+  it('non-401 error: keeps the error body for callers that need its code', async () => {
+    // Arrange
+    const body = {
+      message: 'A promoção acabou.',
+      code: 'PROMOTION_UNAVAILABLE',
+      deliveryFee: 7,
+    }
+    stubFetch(jsonResponse(409, body))
+    const client = createHttpClient(baseConfig())
+
+    // Act
+    const error = await client.post('orders/me', {}).catch((err) => err)
+
+    // Assert
+    expectApiError(error, 409, 'A promoção acabou.')
+    expect((error as { body: unknown }).body).toEqual(body)
+  })
+
   it('error with an array message: joins entries with a comma', async () => {
     // Arrange
     stubFetch(jsonResponse(400, { message: ['name is required', 'bad price'] }))

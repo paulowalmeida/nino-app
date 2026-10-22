@@ -1,0 +1,24 @@
+@reference "@nino/ds/globals.css";
+
+/* WHY: no desktop a prévia fica ao lado e acompanha a rolagem, para o gestor
+ * ver a frase mudar enquanto preenche; no celular ela desce para depois dos
+ * campos, logo antes das ações.
+ */
+.promotionEditorForm {
+  @apply mt-2 flex flex-col gap-6;
+  @apply lg:grid lg:grid-cols-[minmax(0,1fr)_20rem] lg:items-start;
+  @apply lg:gap-x-10;
+}
+
+.promotionEditorFields {
+  @apply flex min-w-0 flex-col gap-4;
+}
+
+.promotionEditorPreview {
+  @apply lg:sticky lg:top-6 lg:col-start-2 lg:row-span-2 lg:row-start-1;
+}
+
+.promotionEditorActions {
+  @apply flex flex-col-reverse gap-2 border-t border-border/60 pt-5;
+  @apply sm:flex-row sm:justify-end lg:col-start-1;
+}

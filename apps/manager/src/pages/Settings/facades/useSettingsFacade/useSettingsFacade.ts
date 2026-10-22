@@ -1,4 +1,3 @@
-import { useDeliveryZones } from '@pages/Settings/hooks/useDeliveryZones/useDeliveryZones'
 import { useDiningTableMutations } from '@pages/Settings/hooks/useDiningTableMutations/useDiningTableMutations'
 import { useMapLocation } from '@pages/Settings/hooks/useMapLocation/useMapLocation'
 import { usePhoneMutations } from '@pages/Settings/hooks/usePhoneMutations/usePhoneMutations'
@@ -12,6 +11,7 @@ import { useSetMainUnit } from '@pages/Settings/hooks/useSetMainUnit/useSetMainU
 import { useUnitDetail } from '@pages/Settings/hooks/useUnitDetail/useUnitDetail'
 import { useUnitLimit } from '@pages/Settings/hooks/useUnitLimit/useUnitLimit'
 import { useZoneMutations } from '@pages/Settings/hooks/useZoneMutations/useZoneMutations'
+import { useDeliveryZones } from '@shared/hooks/delivery-zone/useDeliveryZones/useDeliveryZones'
 import { useDiningTables } from '@shared/hooks/dining-table/useDiningTables/useDiningTables'
 import { useCompanyGroups } from '@shared/hooks/session/useCompanyGroups/useCompanyGroups'
 import { useCurrentUnit } from '@shared/hooks/session/useCurrentUnit/useCurrentUnit'

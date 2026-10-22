@@ -10,6 +10,7 @@ import { StoreCart } from '@pages/Storefront/components/StoreCart/StoreCart'
 import { CategoryNav } from '@pages/Storefront/components/StoreMenu/CategoryNav/CategoryNav'
 import { MenuSection } from '@pages/Storefront/components/StoreMenu/MenuSection/MenuSection'
 import { StoreIdentity } from '@pages/Storefront/components/StoreHeader/StoreIdentity/StoreIdentity'
+import { FreeDeliveryStrip } from '@pages/Storefront/components/StoreHeader/FreeDeliveryStrip/FreeDeliveryStrip'
 import { StoreAvailabilityBanner } from '@pages/Storefront/components/StoreHeader/StoreAvailabilityBanner/StoreAvailabilityBanner'
 import { StoreInfo } from '@pages/Storefront/components/StoreHeader/StoreInfo/StoreInfo'
 import { StoreTopBar } from '@pages/Storefront/components/StoreHeader/StoreTopBar/StoreTopBar'
@@ -89,6 +90,8 @@ export const StorefrontContent = ({ pathSlug }: StorefrontContentProps) => {
 
       <Box className={styles.storefrontContentShell}>
         <StoreIdentity />
+
+        <FreeDeliveryStrip />
 
         <StoreAvailabilityBanner />
 

@@ -55,6 +55,7 @@ export const CheckoutForm = ({
     submitErrorMessage,
     isBelowMinimum,
     minimumOrderAmount,
+    promotionEndedFee,
   } = facade
   const [step, setStep] = useState(0)
   const [furthestStep, setFurthestStep] = useState(0)
@@ -134,6 +135,7 @@ export const CheckoutForm = ({
                   isStoreClosed={!isStoreOpen}
                   isBelowMinimum={isBelowMinimum}
                   minimumOrderAmount={minimumOrderAmount}
+                  promotionEndedFee={promotionEndedFee}
                 />
               </Box>
               <Box className={styles.footerArea}>

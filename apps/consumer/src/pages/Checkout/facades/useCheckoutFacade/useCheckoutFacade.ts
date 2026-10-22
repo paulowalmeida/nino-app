@@ -1,6 +1,7 @@
 import { useCheckoutCart } from '@pages/checkout/hooks/useCheckoutCart/useCheckoutCart'
 import { useDeliveryZones } from '@pages/checkout/hooks/useDeliveryZones/useDeliveryZones'
 import { useOpeningHours } from '@hooks/useOpeningHours/useOpeningHours'
+import { useFreeDeliveryOffer } from '@hooks/useFreeDeliveryOffer/useFreeDeliveryOffer'
 import { usePublicSettings } from '@hooks/usePublicSettings/usePublicSettings'
 import { useStore } from '@hooks/useStore/useStore'
 import { useCheckoutWorkflow } from '@pages/checkout/hooks/useCheckoutWorkflow/useCheckoutWorkflow'
@@ -25,6 +26,7 @@ export const useCheckoutFacadeValue = (pathSlug?: string | null) => {
   const zonesQuery = useDeliveryZones(storeQuery.store?.id)
   const hoursQuery = useOpeningHours(storeQuery.store?.id)
   const cart = useCheckoutCart(storeQuery.store?.id)
+  const offer = useFreeDeliveryOffer(storeQuery.store?.id)
   const { cartLines } = cart
 
   const checkout = useCheckoutWorkflow({
@@ -39,6 +41,8 @@ export const useCheckoutFacadeValue = (pathSlug?: string | null) => {
     minimumOrderAmount: settingsQuery.settings?.minOrderAmount,
     clearCart: cart.clear,
     slug,
+    freeDelivery: offer.freeDelivery,
+    refetchOffer: offer.refetchOffer,
   })
   const lastOrder = useCheckoutResume({
     pathSlug: pathSlug ?? null,

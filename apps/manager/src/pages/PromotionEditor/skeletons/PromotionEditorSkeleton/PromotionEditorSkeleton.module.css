@@ -1,0 +1,18 @@
+@reference "@nino/ds/globals.css";
+
+/* Barras com a altura do título de seção (Heading sm) e do campo (Input md). */
+.ghostTitle {
+  @apply h-4 w-32;
+}
+
+.ghostField {
+  @apply mt-4 h-11 w-full;
+}
+
+.ghostEyebrow {
+  @apply h-3 w-28;
+}
+
+.ghostStrip {
+  @apply mt-4 h-10 w-full;
+}

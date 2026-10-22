@@ -442,6 +442,22 @@ export const router = createBrowserRouter([
           })),
       },
       {
+        path: 'promocoes/nova',
+        loader: permissionGuard('promotions.manage'),
+        lazy: () =>
+          import('@pages/PromotionEditor/PromotionEditor').then(
+            ({ PromotionEditor }) => ({ Component: PromotionEditor })
+          ),
+      },
+      {
+        path: 'promocoes/:promotionId',
+        loader: permissionGuard('promotions.manage'),
+        lazy: () =>
+          import('@pages/PromotionEditor/PromotionEditor').then(
+            ({ PromotionEditor }) => ({ Component: PromotionEditor })
+          ),
+      },
+      {
         path: 'marketing',
         children: [
           { index: true, element: <Navigate to="../promocoes" replace /> },

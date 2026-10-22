@@ -90,7 +90,8 @@ export const createHttpClient = (config: HttpClientConfig): HttpClient => {
       }
       throw new ApiError(
         status,
-        parseMessage(error.data, status, statusText, config.httpErrorLabels)
+        parseMessage(error.data, status, statusText, config.httpErrorLabels),
+        error.data
       )
     }
     if (error instanceof TimeoutError) {

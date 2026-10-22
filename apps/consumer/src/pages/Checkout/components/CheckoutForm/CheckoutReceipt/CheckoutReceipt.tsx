@@ -15,8 +15,15 @@ export const CheckoutReceipt = ({
 }: {
   checkout?: CheckoutFacade
 }) => {
-  const { cartLines, subtotal, isDelivery, zone, deliveryFee } =
-    useCheckoutFacade(checkout)
+  const {
+    cartLines,
+    subtotal,
+    isDelivery,
+    zone,
+    deliveryFee,
+    deliveryDiscount,
+    freeDeliveryCoverage,
+  } = useCheckoutFacade(checkout)
   const [isOpen, setIsOpen] = useState(
     () => window.matchMedia?.('(min-width: 1024px)').matches ?? false
   )
@@ -74,7 +81,26 @@ export const CheckoutReceipt = ({
           {isDelivery && (
             <Text className={styles.tallyRow}>
               <Text as="span">Entrega</Text>
-              <Text as="span">{hasZone ? brl(deliveryFee) : 'a definir'}</Text>
+              {deliveryDiscount > 0 ? (
+                <Text as="span" className={styles.freeDelivery}>
+                  <Text as="span" className={styles.freeDeliveryWas}>
+                    <Text as="span" className="sr-only">
+                      de
+                    </Text>
+                    {brl(deliveryFee)}
+                  </Text>
+                  <Text as="span" className={styles.freeDeliveryNow}>
+                    Grátis
+                  </Text>
+                </Text>
+              ) : (
+                <Text as="span">{hasZone ? brl(deliveryFee) : 'a definir'}</Text>
+              )}
+            </Text>
+          )}
+          {freeDeliveryCoverage === 'outside-zone' && (
+            <Text className={styles.freeDeliveryNote}>
+              Frete grátis não vale para este endereço.
             </Text>
           )}
         </Box>

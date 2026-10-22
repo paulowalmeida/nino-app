@@ -1,0 +1,13 @@
+@reference "@nino/ds/globals.css";
+
+.codeSection {
+  @apply flex flex-col gap-4;
+}
+
+.codeField {
+  @apply sm:max-w-72;
+}
+
+.visibility {
+  @apply rounded-2 bg-surface-2 p-4;
+}

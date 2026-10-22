@@ -18,6 +18,8 @@ describe('checkoutTotals', () => {
     expect(result).toEqual({
       subtotal: 25,
       deliveryFee: 5,
+      deliveryDiscount: 0,
+      freeDeliveryCoverage: 'none',
       total: 30,
       deliveryNote: 'Chega em ~30 min',
     })
@@ -28,8 +30,42 @@ describe('checkoutTotals', () => {
       cartLines: [], isDelivery: false, zone: undefined,
       estimatedMinutes: undefined,
     })).toEqual({
-      subtotal: 0, deliveryFee: 0, total: 0,
+      subtotal: 0, deliveryFee: 0, deliveryDiscount: 0,
+      freeDeliveryCoverage: 'none', total: 0,
       deliveryNote: 'Levamos até você',
+    })
+  })
+
+  it('zeroes the delivery fee inside a free delivery campaign', () => {
+    const result = checkoutTotals({
+      cartLines: checkoutTotalsMock.cartLines,
+      isDelivery: true,
+      zone: checkoutTotalsMock.campaignZone,
+      estimatedMinutes: undefined,
+      freeDelivery: checkoutTotalsMock.freeDelivery,
+    })
+
+    expect(result).toMatchObject({
+      deliveryFee: 5,
+      deliveryDiscount: 5,
+      freeDeliveryCoverage: 'applied',
+      total: 25,
+    })
+  })
+
+  it('charges the normal fee outside the campaign zones', () => {
+    const result = checkoutTotals({
+      cartLines: checkoutTotalsMock.cartLines,
+      isDelivery: true,
+      zone: { ...checkoutTotalsMock.campaignZone, id: 'zone-longe' },
+      estimatedMinutes: undefined,
+      freeDelivery: checkoutTotalsMock.freeDelivery,
+    })
+
+    expect(result).toMatchObject({
+      deliveryDiscount: 0,
+      freeDeliveryCoverage: 'outside-zone',
+      total: 30,
     })
   })
 })
