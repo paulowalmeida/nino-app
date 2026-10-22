@@ -10,7 +10,7 @@ import {
   PRODUCT_GRID_SKELETON_TABS,
 } from '@pages/Counter/constants/counter.constants'
 import { useCounterFacade } from '@pages/Counter/facades/useCounterFacade/useCounterFacade'
-import { useMenuImagesReady } from '@pages/Counter/hooks/useMenuImagesReady/useMenuImagesReady'
+import { useMenuImagesReady } from '@pages/Counter/hooks/ui/useMenuImagesReady/useMenuImagesReady'
 import { CategoryChips } from '@shared/components/CategoryChips/CategoryChips'
 import type { MenuItem } from '@shared/types/product/menu-item'
 import { resolveApiAssetUrl } from '@shared/utils/api-asset-url/api-asset-url'

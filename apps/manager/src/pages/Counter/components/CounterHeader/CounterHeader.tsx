@@ -2,18 +2,19 @@ import { Box } from '@nino/ds/components/Box'
 import { Header } from '@nino/ds/components/Header'
 import { Skeleton } from '@nino/ds/components/Skeleton'
 import { Text } from '@nino/ds/components/Text'
-import { useMenuImagesReady } from '@pages/Counter/hooks/useMenuImagesReady/useMenuImagesReady'
-import { useMenu } from '@shared/hooks/product/useMenu/useMenu'
-import { useCurrentUnit } from '@shared/hooks/session/useCurrentUnit/useCurrentUnit'
+import { useCounterFacade } from '@pages/Counter/facades/useCounterFacade/useCounterFacade'
+import { useMenuImagesReady } from '@pages/Counter/hooks/ui/useMenuImagesReady/useMenuImagesReady'
 
 import motion from '@styles/motion.module.css'
 import styles from './CounterHeader.module.css'
 
 export const CounterHeader = () => {
-  const unitId = useCurrentUnit()?.unitId ?? null
-  const { sections, isPending, isError, isSuccess } = useMenu(unitId)
+  const { sections, isMenuPending, isMenuError, isMenuSuccess } =
+    useCounterFacade()
   const { areMenuImagesReady } = useMenuImagesReady(sections)
-  const isLoading = !isError && (isPending || !isSuccess || !areMenuImagesReady)
+  const isLoading =
+    !isMenuError &&
+    (isMenuPending || !isMenuSuccess || !areMenuImagesReady)
 
   if (isLoading) {
     return (

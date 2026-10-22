@@ -12,7 +12,7 @@ import { PromotionPreview } from '@pages/PromotionEditor/components/PromotionEdi
 import { ZonesSection } from '@pages/PromotionEditor/components/PromotionEditorForm/ZonesSection/ZonesSection'
 import { EDITOR_SUBMIT_LABELS } from '@pages/PromotionEditor/constants/promotionEditor.constants'
 import { usePromotionEditorFacade } from '@pages/PromotionEditor/facades/usePromotionEditorFacade/usePromotionEditorFacade'
-import { useEditorSteps } from '@pages/PromotionEditor/hooks/useEditorSteps/useEditorSteps'
+import { useEditorSteps } from '@pages/PromotionEditor/hooks/ui/useEditorSteps/useEditorSteps'
 import type { PromotionFormValues } from '@pages/PromotionEditor/types/PromotionFormValues.type'
 
 import motion from '@styles/motion.module.css'
