@@ -51,7 +51,9 @@ When a rule names an external implementation, tool, algorithm, or measurement, t
 
 When a project-specific rule is stricter than an external standard, **the project rule wins**.
 
-For any task whose correctness depends on an external standard, the agent MUST verify the relevant primary documentation before calling the result compliant. The verification MUST be specific to the rule being evaluated; a general memory of the standard is insufficient.
+Verify primary documentation when interpreting or changing an externally based
+rule, or when the relevant version/behavior is unresolved. Routine work under a
+complete, pinned project rule does not require repeating that external lookup.
 
 ## Mandatory Preflight Before Any Change
 
@@ -102,11 +104,21 @@ at the end of this file.
 | Any UI component or JSX | `design-system.md` |
 | `.module.css`, classes, tokens | `styling.md` |
 | Naming, constants, comments, types, general source code | `coding.md` |
+| Complexity analysis or metric-driven refactoring | `complexity.md` |
 | `*.test.tsx`, `*.mock.ts` | `testing.md` |
 | Multi-file implementation flow | `change-protocol.md` |
 | Audit, review, or rating request (read-only) | `audit-mode.md` |
 
 Skills in `.agents/skills/` are **review and audit procedures**. Load one only when the task is that review/audit or the user names it; they are not part of the implementation preflight.
+
+### Mechanical enforcement scope
+
+The complete architecture, UI, CSS, accessibility, test-structure, and module-
+graph policy currently covers `apps/manager`. Generic source checks such as
+comments, imports, and type syntax may cover additional workspaces when their
+hook matcher explicitly includes them. Do not apply Manager-only policy to
+another app by analogy or claim repository-wide parity without explicit
+enforcement for that workspace.
 
 ## Implementation Rules
 
@@ -248,4 +260,18 @@ Never reverse this order when the preceding step is necessary to perform the tas
 
 ## User-authorized verification limit
 
-The repository owner explicitly authorized a reduced verification scope, and this overrides "Mandatory Verification Before Completion" and the page-domain coverage gate for day-to-day work: run only `tsc` and the tests of the folders changed, never the full suite, `quality:gate` or repository-wide lint unless the owner asks. Run each check once per change, stop and ask if a check exceeds ~30 seconds, and ask the owner to review visual results instead of validating screens. Report what was and was not verified.
+This section is the single command authority and overrides broader verification
+language in rules and Skills. For day-to-day work:
+
+- application TypeScript: run `tsc` for the affected workspace and tests from
+  changed folders;
+- harness JavaScript or documentation: run only focused harness tests for the
+  changed enforcement/tool folder; no application `tsc` is required;
+- CSS/documentation-only application changes: run changed-folder tests when
+  available; do not run `tsc` merely because the repository contains TS;
+- never run the full suite, `quality:gate`, repository-wide lint, coverage, or
+  builds unless the owner explicitly asks.
+
+Run each permitted check once per change. Stop and ask if it exceeds about 30
+seconds. Ask the owner to review visual results instead of validating screens.
+Report exactly what was and was not verified.

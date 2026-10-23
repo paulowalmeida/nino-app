@@ -18,10 +18,10 @@ plugins.md
 .vscode/
 .vercel
 .env*
-.agents/
 .agent/
 .claude/
 .codex/
 
 # saída do build do Storybook
 storybook-static
+.agents/settings.local.json
