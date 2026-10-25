@@ -79,13 +79,26 @@ export const PromotionEditorForm = () => {
               )}
               {stepKey === 'zones' && <ZonesSection />}
               {stepKey === 'period' && <PeriodSection />}
-              {stepKey === 'rules' && (
-                <Box className={styles.promotionEditorRules}>
-                  {campaignType === 'discount' && <CodeSection />}
-                  {campaignType !== 'free-delivery' && <MediaSection />}
-                  <LimitsSection />
-                </Box>
-              )}
+              {stepKey === 'rules' &&
+                (campaignType === 'discount' ? (
+                  <Box
+                    direction="row"
+                    className={styles.promotionEditorDiscountRules}
+                  >
+                    <Box className={styles.promotionEditorRuleColumn}>
+                      <CodeSection />
+                      <LimitsSection />
+                    </Box>
+                    <Box className={styles.promotionEditorRuleColumn}>
+                      <MediaSection />
+                    </Box>
+                  </Box>
+                ) : (
+                  <Box className={styles.promotionEditorRules}>
+                    {campaignType !== 'free-delivery' && <MediaSection />}
+                    <LimitsSection />
+                  </Box>
+                ))}
             </Box>
 
             {isLastStep && (

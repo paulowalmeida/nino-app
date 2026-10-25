@@ -36,6 +36,16 @@
   @apply flex flex-col gap-4;
 }
 
+.promotionEditorDiscountRules {
+  @apply flex min-w-0 flex-col items-start gap-4;
+  @apply 2xl:flex-row;
+}
+
+.promotionEditorRuleColumn {
+  @apply flex w-full min-w-0 flex-col gap-4;
+  @apply 2xl:flex-1;
+}
+
 .promotionEditorReview {
   @apply w-full lg:max-w-xl lg:flex-1 lg:self-stretch;
 }
