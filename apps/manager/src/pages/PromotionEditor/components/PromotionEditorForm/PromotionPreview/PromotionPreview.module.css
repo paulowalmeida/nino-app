@@ -38,15 +38,11 @@
 }
 
 .facts {
-  @apply flex flex-col;
+  @apply flex flex-col gap-3;
 }
 
 .fact {
-  @apply flex w-full items-baseline justify-between gap-4 border-b py-3 first:pt-0;
-}
-
-.fact:last-child {
-  @apply border-b-0 pb-0;
+  @apply flex w-full items-baseline justify-between gap-4;
 }
 
 .factLabel {

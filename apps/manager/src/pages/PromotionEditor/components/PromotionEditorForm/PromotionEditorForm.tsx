@@ -44,7 +44,7 @@ export const PromotionEditorForm = () => {
             : void goNext()
         )}
         className={`${styles.promotionEditorForm} ${
-          stepKey === 'benefit' && campaignType === 'package'
+          (stepKey === 'benefit' && campaignType === 'package') || isLastStep
             ? ''
             : styles.promotionEditorCompact
         }`}
@@ -57,30 +57,39 @@ export const PromotionEditorForm = () => {
             className={styles.promotionEditorStepper}
           />
 
-          <Box key={stepKey} className={motion.deal}>
-            {stepKey === 'benefit' && (
-              <Box className={styles.promotionEditorRules}>
-                <BenefitSection />
-                {campaignType === 'package' && <PackageSection />}
-              </Box>
-            )}
-            {stepKey === 'zones' && <ZonesSection />}
-            {stepKey === 'period' && <PeriodSection />}
-            {stepKey === 'rules' && (
-              <Box className={styles.promotionEditorRules}>
-                {campaignType === 'discount' && <CodeSection />}
-                {campaignType !== 'free-delivery' && <MediaSection />}
-                <LimitsSection />
+          <Box
+            className={`${styles.promotionEditorContent} ${
+              isLastStep ? styles.promotionEditorContentReview : ''
+            }`}
+          >
+            <Box
+              key={stepKey}
+              className={`${motion.deal} ${styles.promotionEditorStep}`}
+            >
+              {stepKey === 'benefit' && (
+                <Box className={styles.promotionEditorRules}>
+                  <BenefitSection />
+                  {campaignType === 'package' && <PackageSection />}
+                </Box>
+              )}
+              {stepKey === 'zones' && <ZonesSection />}
+              {stepKey === 'period' && <PeriodSection />}
+              {stepKey === 'rules' && (
+                <Box className={styles.promotionEditorRules}>
+                  {campaignType === 'discount' && <CodeSection />}
+                  {campaignType !== 'free-delivery' && <MediaSection />}
+                  <LimitsSection />
+                </Box>
+              )}
+            </Box>
+
+            {isLastStep && (
+              <Box className={styles.promotionEditorReview}>
+                <PromotionPreview />
               </Box>
             )}
           </Box>
         </Box>
-
-        {isLastStep && (
-          <Box className={styles.promotionEditorReview}>
-            <PromotionPreview />
-          </Box>
-        )}
 
         <Box direction="row" className={styles.promotionEditorActions}>
           {step === 0 ? (

@@ -13,7 +13,19 @@
 }
 
 .promotionEditorStepper {
-  @apply mb-2;
+  @apply mb-2 max-w-2xl;
+}
+
+.promotionEditorContent {
+  @apply flex flex-col gap-4;
+}
+
+.promotionEditorContentReview {
+  @apply lg:flex-row lg:items-start;
+}
+
+.promotionEditorStep {
+  @apply min-w-0 flex-1;
 }
 
 .promotionEditorRules {
@@ -21,7 +33,7 @@
 }
 
 .promotionEditorReview {
-  @apply w-full;
+  @apply w-full lg:max-w-xl lg:flex-1;
 }
 
 .promotionEditorActions {
