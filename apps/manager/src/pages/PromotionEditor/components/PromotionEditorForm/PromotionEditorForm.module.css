@@ -8,6 +8,10 @@
   @apply max-w-2xl;
 }
 
+.promotionEditorDiscount {
+  @apply max-w-5xl;
+}
+
 .promotionEditorFields {
   @apply flex min-w-0 flex-col gap-4;
 }

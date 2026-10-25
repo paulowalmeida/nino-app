@@ -29,6 +29,9 @@ export const PromotionEditorForm = () => {
   const campaignType = useWatch({ control: form.control, name: 'campaignType' })
   const { steps, stepKey, step, isLastStep, goNext, goBack, goTo } =
     useEditorSteps(mode, form.trigger, campaignType)
+  const isPackageComposition =
+    stepKey === 'benefit' && campaignType === 'package'
+  const isDiscountBenefit = stepKey === 'benefit' && campaignType === 'discount'
 
   return (
     <FormProvider {...form}>
@@ -44,9 +47,11 @@ export const PromotionEditorForm = () => {
             : void goNext()
         )}
         className={`${styles.promotionEditorForm} ${
-          (stepKey === 'benefit' && campaignType === 'package') || isLastStep
+          isPackageComposition || isLastStep
             ? ''
-            : styles.promotionEditorCompact
+            : isDiscountBenefit
+              ? styles.promotionEditorDiscount
+              : styles.promotionEditorCompact
         }`}
       >
         <Box className={styles.promotionEditorFields}>

@@ -12,6 +12,10 @@
   @apply w-full md:max-w-72;
 }
 
+.amountInput {
+  @apply w-full md:max-w-32;
+}
+
 .campaignTypeField {
   @apply w-full md:max-w-72;
 }

@@ -147,6 +147,7 @@ export const BenefitSection = () => {
                     }
                     value={field.value}
                     error={!!errors.discountValue}
+                    className={styles.amountInput}
                     onBlur={field.onBlur}
                     onChange={(event) =>
                       field.onChange(
@@ -176,6 +177,7 @@ export const BenefitSection = () => {
                     placeholder="Sem teto"
                     aria-label="Teto do desconto em reais"
                     value={field.value}
+                    className={styles.amountInput}
                     onBlur={field.onBlur}
                     onChange={(event) =>
                       field.onChange(maskMoney(event.target.value))
@@ -209,6 +211,7 @@ export const BenefitSection = () => {
                     aria-label="Preço fechado da promoção"
                     value={field.value}
                     error={!!errors.packagePrice}
+                    className={styles.amountInput}
                     onBlur={field.onBlur}
                     onChange={(event) =>
                       field.onChange(maskMoney(event.target.value))
