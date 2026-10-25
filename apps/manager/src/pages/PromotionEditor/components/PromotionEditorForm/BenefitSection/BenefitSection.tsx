@@ -37,6 +37,29 @@ export const BenefitSection = () => {
   const isDiscount = campaignType === 'discount'
   const isPackage = campaignType === 'package'
   const isPercentage = discountKind === 'PERCENTAGE_DISCOUNT'
+  const minOrderField = (
+    <FormField
+      label="Pedido mínimo"
+      helperText="Só conta itens; vazio = sem mínimo."
+      className={isDiscount ? styles.discountAuxField : styles.amountField}
+    >
+      <Controller
+        name="minOrderValue"
+        control={control}
+        render={({ field }) => (
+          <Input
+            inputMode="decimal"
+            placeholder="60,00"
+            aria-label="Pedido mínimo em reais"
+            value={field.value}
+            className={styles.minOrderInput}
+            onBlur={field.onBlur}
+            onChange={(event) => field.onChange(maskMoney(event.target.value))}
+          />
+        )}
+      />
+    </FormField>
+  )
 
   return (
     <Box as="section" aria-labelledby="campaign-benefit">
@@ -165,30 +188,35 @@ export const BenefitSection = () => {
             </FormField>
           )}
 
-          {isDiscount && isPercentage && (
-            <FormField
-              label="Teto do desconto"
-              helperText="Opcional: limite o desconto em reais."
-              className={styles.discountAuxField}
-            >
-              <Controller
-                name="maxDiscount"
-                control={control}
-                render={({ field }) => (
-                  <Input
-                    inputMode="decimal"
-                    placeholder="Sem teto"
-                    aria-label="Teto do desconto em reais"
-                    value={field.value}
-                    className={styles.amountInput}
-                    onBlur={field.onBlur}
-                    onChange={(event) =>
-                      field.onChange(maskMoney(event.target.value))
-                    }
+          {isDiscount && (
+            <Box className={styles.discountAuxFields}>
+              {isPercentage && (
+                <FormField
+                  label="Teto do desconto"
+                  helperText="Opcional: limite o desconto em reais."
+                  className={styles.discountAuxField}
+                >
+                  <Controller
+                    name="maxDiscount"
+                    control={control}
+                    render={({ field }) => (
+                      <Input
+                        inputMode="decimal"
+                        placeholder="Sem teto"
+                        aria-label="Teto do desconto em reais"
+                        value={field.value}
+                        className={styles.amountInput}
+                        onBlur={field.onBlur}
+                        onChange={(event) =>
+                          field.onChange(maskMoney(event.target.value))
+                        }
+                      />
+                    )}
                   />
-                )}
-              />
-            </FormField>
+                </FormField>
+              )}
+              {minOrderField}
+            </Box>
           )}
 
           {isPackage && (
@@ -225,31 +253,7 @@ export const BenefitSection = () => {
             </FormField>
           )}
 
-          <FormField
-            label="Pedido mínimo"
-            helperText="Só conta itens; vazio = sem mínimo."
-            className={
-              isDiscount ? styles.discountAuxField : styles.amountField
-            }
-          >
-            <Controller
-              name="minOrderValue"
-              control={control}
-              render={({ field }) => (
-                <Input
-                  inputMode="decimal"
-                  placeholder="60,00"
-                  aria-label="Pedido mínimo em reais"
-                  value={field.value}
-                  className={styles.minOrderInput}
-                  onBlur={field.onBlur}
-                  onChange={(event) =>
-                    field.onChange(maskMoney(event.target.value))
-                  }
-                />
-              )}
-            />
-          </FormField>
+          {!isDiscount && minOrderField}
         </Box>
       </Card>
     </Box>
