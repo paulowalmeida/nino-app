@@ -16,6 +16,18 @@
   @apply w-full md:max-w-32;
 }
 
+.discountKindField {
+  @apply w-full md:max-w-60;
+}
+
+.discountValueField {
+  @apply w-full md:max-w-36;
+}
+
+.discountRowBreak {
+  @apply hidden basis-full md:block;
+}
+
 .campaignTypeField {
   @apply w-full md:max-w-72;
 }

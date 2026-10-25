@@ -95,7 +95,10 @@ export const BenefitSection = () => {
           )}
 
           {isDiscount && (
-            <FormField label="Como desconta">
+            <FormField
+              label="Como desconta"
+              className={styles.discountKindField}
+            >
               <Controller
                 name="discountKind"
                 control={control}
@@ -116,7 +119,7 @@ export const BenefitSection = () => {
             <FormField
               label={isPercentage ? 'Desconto (%)' : 'Desconto (R$)'}
               error={errors.discountValue?.message}
-              className={styles.amountField}
+              className={styles.discountValueField}
             >
               <Controller
                 name="discountValue"
@@ -160,6 +163,10 @@ export const BenefitSection = () => {
                 )}
               />
             </FormField>
+          )}
+
+          {isDiscount && isPercentage && (
+            <Box className={styles.discountRowBreak} aria-hidden="true" />
           )}
 
           {isDiscount && isPercentage && (
