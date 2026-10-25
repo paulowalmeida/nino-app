@@ -26,6 +26,7 @@ export const CheckoutReceipt = ({
     promotionDiscount,
     appliedDiscount,
     appliedGift,
+    appliedPackage,
   } = useCheckoutFacade(checkout)
   const [isOpen, setIsOpen] = useState(
     () => window.matchMedia?.('(min-width: 1024px)').matches ?? false
@@ -57,7 +58,11 @@ export const CheckoutReceipt = ({
       <Box className={styles.items}>
         <Box className={styles.itemsList}>
           {cartLines.map(({ id, item, quantity }) => (
-            <Text as="p" key={id ?? item.id} className={styles.checkoutReceiptItem}>
+            <Text
+              as="p"
+              key={id ?? item.id}
+              className={styles.checkoutReceiptItem}
+            >
               <Text as="span" className={styles.name}>
                 <Text as="span" className={styles.qty}>
                   {quantity}×
@@ -69,7 +74,11 @@ export const CheckoutReceipt = ({
                   </Text>
                 )}
               </Text>
-              <Text as="span">{brl(cartItemPrice(item) * quantity)}</Text>
+              <Text as="span">
+                {brl(
+                  (item.package?.listPrice ?? cartItemPrice(item)) * quantity
+                )}
+              </Text>
             </Text>
           ))}
         </Box>
@@ -97,14 +106,20 @@ export const CheckoutReceipt = ({
                   </Text>
                 </Text>
               ) : (
-                <Text as="span">{hasZone ? brl(deliveryFee) : 'a definir'}</Text>
+                <Text as="span">
+                  {hasZone ? brl(deliveryFee) : 'a definir'}
+                </Text>
               )}
             </Text>
           )}
           {promotionDiscount > 0 && (
             <Text className={styles.tallyRow}>
               <Text as="span">
-                {appliedDiscount?.code ? `Cupom ${appliedDiscount.code}` : 'Desconto'}
+                {appliedPackage
+                  ? 'Preço da promoção'
+                  : appliedDiscount?.code
+                    ? `Cupom ${appliedDiscount.code}`
+                    : 'Desconto'}
               </Text>
               <Text as="span" className={styles.discountAmount}>
                 − {brl(promotionDiscount)}

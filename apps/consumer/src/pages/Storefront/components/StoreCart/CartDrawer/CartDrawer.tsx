@@ -158,29 +158,45 @@ export const CartDrawer = () => {
                             </Text>
                           )}
                           <Text as="span" className={styles.lineMath}>
-                            {brl(cartItemPrice(item))} cada
+                            {item.package
+                              ? 'Preço fechado da promoção'
+                              : `${brl(cartItemPrice(item))} cada`}
                           </Text>
 
-                          <QuantityStepper
-                            size="sm"
-                            className={styles.stepper}
-                            quantity={quantity}
-                            count={<AnimatedNumber value={quantity} />}
-                            decrementIcon={isLastUnit ? 'trash' : 'minus'}
-                            decrementLabel={
-                              isLastUnit
-                                ? `Remover ${item.name} da sacola`
-                                : `Remover uma unidade de ${item.name}`
-                            }
-                            incrementLabel={`Adicionar mais uma unidade de ${item.name}`}
-                            onDecrement={() =>
-                              handleDecrement(
-                                id,
-                                isLastUnit && lines.length === 1
-                              )
-                            }
-                            onIncrement={() => onIncrement(id)}
-                          />
+                          {item.package ? (
+                            <Button
+                              type="button"
+                              size="sm"
+                              variant="ghost"
+                              className={styles.stepper}
+                              onClick={() =>
+                                handleDecrement(id, lines.length === 1)
+                              }
+                            >
+                              Remover
+                            </Button>
+                          ) : (
+                            <QuantityStepper
+                              size="sm"
+                              className={styles.stepper}
+                              quantity={quantity}
+                              count={<AnimatedNumber value={quantity} />}
+                              decrementIcon={isLastUnit ? 'trash' : 'minus'}
+                              decrementLabel={
+                                isLastUnit
+                                  ? `Remover ${item.name} da sacola`
+                                  : `Remover uma unidade de ${item.name}`
+                              }
+                              incrementLabel={`Adicionar mais uma unidade de ${item.name}`}
+                              onDecrement={() =>
+                                handleDecrement(
+                                  id,
+                                  isLastUnit && lines.length === 1
+                                )
+                              }
+                              onIncrement={() => onIncrement(id)}
+                            />
+                          )}
                         </Box>
 
                         <AnimatedNumber
@@ -204,7 +220,10 @@ export const CartDrawer = () => {
                       </Text>
                     ) : null}
                   </Box>
-                  <AnimatedNumber value={brl(total)} className={styles.cartDrawerTotal} />
+                  <AnimatedNumber
+                    value={brl(total)}
+                    className={styles.cartDrawerTotal}
+                  />
                 </Box>
                 <Button className={styles.checkout} onClick={onCheckout}>
                   Finalizar pedido

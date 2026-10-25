@@ -12,9 +12,12 @@ import { promotionMock } from '@shared/services/promotion/promotion.service/prom
 import { usePromotionSave } from './usePromotionSave'
 import { savePromotionIdMock, saveUnitIdMock } from './usePromotionSave.mock'
 
-vi.mock('@shared/services/promotion/promotion.service/promotion.service', () => ({
-  PromotionService: { create: vi.fn(), update: vi.fn() },
-}))
+vi.mock(
+  '@shared/services/promotion/promotion.service/promotion.service',
+  () => ({
+    PromotionService: { create: vi.fn(), update: vi.fn() },
+  })
+)
 
 const wrapperAt =
   (path: string) =>
@@ -64,7 +67,7 @@ describe(usePromotionSave.name, () => {
       expect(PromotionService.update).toHaveBeenCalledWith(
         saveUnitIdMock,
         savePromotionIdMock,
-        expect.objectContaining({ code: 'frete' })
+        expect.objectContaining({ code: null })
       )
     )
     expect(PromotionService.create).not.toHaveBeenCalled()

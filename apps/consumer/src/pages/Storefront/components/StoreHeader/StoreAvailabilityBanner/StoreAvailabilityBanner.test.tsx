@@ -7,9 +7,12 @@ import { storefrontStoreMock as homeStoreMock } from '@pages/Storefront/Storefro
 import { StoreAvailabilityBanner } from './StoreAvailabilityBanner'
 import { storeAvailabilityBannerMock } from './StoreAvailabilityBanner.mock'
 
-vi.mock('@pages/Storefront/facades/useStorefrontFacade/useStorefrontFacade', () => ({
-  useStorefrontFacade: vi.fn(),
-}))
+vi.mock(
+  '@pages/Storefront/facades/useStorefrontFacade/useStorefrontFacade',
+  () => ({
+    useStorefrontFacade: vi.fn(),
+  })
+)
 
 describe('StoreAvailabilityBanner', () => {
   it('explains that ordering is unavailable when the store is paused', () => {

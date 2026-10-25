@@ -27,7 +27,9 @@ const renderSection = () =>
 describe(CodeSection.name, () => {
   it('hides a coded campaign from the menu by default and shows it again without code', async () => {
     renderSection()
-    const visibility = screen.getByRole('checkbox', { name: 'Mostrar no cardápio' })
+    const visibility = screen.getByRole('checkbox', {
+      name: 'Mostrar no cardápio',
+    })
     const code = screen.getByRole('textbox', { name: /Código/ })
 
     expect(visibility).toBeChecked()
@@ -41,7 +43,9 @@ describe(CodeSection.name, () => {
 
   it('keeps the visibility the owner chose by hand', async () => {
     renderSection()
-    const visibility = screen.getByRole('checkbox', { name: 'Mostrar no cardápio' })
+    const visibility = screen.getByRole('checkbox', {
+      name: 'Mostrar no cardápio',
+    })
 
     await userEvent.click(visibility)
     await userEvent.click(visibility)

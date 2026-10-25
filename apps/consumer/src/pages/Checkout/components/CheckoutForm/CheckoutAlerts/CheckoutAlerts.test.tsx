@@ -29,13 +29,19 @@ describe('CheckoutAlerts', () => {
 
   it('explains the ended campaign with the new fee instead of a generic failure', () => {
     render(
-      <CheckoutAlerts isSubmitFailed isStoreClosed={false} promotionEndedFee={7} />
+      <CheckoutAlerts
+        isSubmitFailed
+        isStoreClosed={false}
+        promotionEndedFee={7}
+      />
     )
 
     expect(
       screen.getByText(checkoutAlertsMock.promotionEndedTitle)
     ).toBeInTheDocument()
-    expect(screen.getByText(/O novo total já está no resumo/)).toBeInTheDocument()
+    expect(
+      screen.getByText(/O novo total já está no resumo/)
+    ).toBeInTheDocument()
     expect(
       screen.queryByText(checkoutAlertsMock.failedTitle)
     ).not.toBeInTheDocument()

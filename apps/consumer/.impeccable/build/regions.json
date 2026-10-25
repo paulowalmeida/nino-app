@@ -1,0 +1,26 @@
+{
+  "regions": [
+    { "id": "masthead", "kind": "chrome", "grid": "A0:J0", "note": "cabeçalho branco com marca central e botão de fechar" },
+    { "id": "offer-kicker", "kind": "text", "grid": "A1:D1", "note": "selo OFERTA DO DIA" },
+    { "id": "offer-title", "kind": "text", "grid": "A1:H1", "note": "2 hambúrgueres + 2 bebidas" },
+    { "id": "offer-subtitle", "kind": "text", "grid": "A1:G1", "note": "Monte seu pacote e economize" },
+    { "id": "offer-prices", "kind": "text", "grid": "A2:F2", "note": "preço promocional e soma riscada" },
+    { "id": "builder-heading", "kind": "text", "grid": "A3:F3", "note": "Monte sua comanda" },
+    { "id": "builder-progress", "kind": "text", "grid": "H3:J3", "note": "indicador 2 de 3" },
+    { "id": "step-tabs", "kind": "control", "grid": "A3:J4", "note": "três passos da montagem; segundo ativo" },
+    { "id": "group-heading", "kind": "text", "grid": "A4:F4", "note": "Escolha 2 bebidas" },
+    { "id": "group-count", "kind": "text", "grid": "A4:E4", "note": "0 de 2 selecionadas" },
+    { "id": "coca-bottle", "kind": "plate", "grid": "A5:C6", "note": "garrafa de Coca-Cola 350 ml recortada" },
+    { "id": "coca-copy", "kind": "text", "grid": "C5:G5", "note": "nome e preço incluído da Coca-Cola" },
+    { "id": "coca-add", "kind": "control", "grid": "I5:J6", "note": "botão circular adicionar Coca-Cola" },
+    { "id": "guarana-bottle", "kind": "plate", "grid": "A6:C7", "bleed": true, "note": "garrafa de Guaraná Antarctica 350 ml recortada; o recorte toca a faixa superior do card" },
+    { "id": "guarana-copy", "kind": "text", "grid": "C6:H7", "note": "nome e preço incluído do Guaraná" },
+    { "id": "guarana-add", "kind": "control", "grid": "I6:J7", "note": "botão circular adicionar Guaraná" },
+    { "id": "water-bottle", "kind": "plate", "grid": "A7:C8", "note": "garrafa de água 500 ml recortada" },
+    { "id": "water-copy", "kind": "text", "grid": "C7:G8", "note": "nome e preço incluído da água" },
+    { "id": "water-add", "kind": "control", "grid": "I7:J8", "note": "botão circular adicionar água" },
+    { "id": "checkout-bar", "kind": "chrome", "grid": "A9:J9", "note": "barra inferior fixa branca" },
+    { "id": "package-total", "kind": "text", "grid": "A9:D9", "note": "rótulo pacote fechado e preço" },
+    { "id": "continue-button", "kind": "control", "grid": "F9:J9", "note": "botão laranja Continuar" }
+  ]
+}

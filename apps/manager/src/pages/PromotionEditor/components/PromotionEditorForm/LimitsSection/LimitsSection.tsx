@@ -26,77 +26,76 @@ export const LimitsSection = () => {
         </Heading>
 
         <Box className={styles.limitsFields}>
-        <Box className={styles.perCustomer}>
-        <FormField
-          label="Usos por cliente"
-          helperText="Cliente sem cadastro é reconhecido pelo telefone."
-        >
-          <Controller
-            name="perCustomer"
-            control={control}
-            render={({ field }) => (
-              <RadioGroup
-                aria-label="Usos por cliente"
-                orientation="horizontal"
-                options={PER_CUSTOMER_OPTIONS}
-                value={field.value}
-                onValueChange={field.onChange}
+          <Box className={styles.perCustomer}>
+            <FormField
+              label="Usos por cliente"
+              helperText="Cliente sem cadastro é reconhecido pelo telefone."
+            >
+              <Controller
+                name="perCustomer"
+                control={control}
+                render={({ field }) => (
+                  <RadioGroup
+                    aria-label="Usos por cliente"
+                    orientation="horizontal"
+                    options={PER_CUSTOMER_OPTIONS}
+                    value={field.value}
+                    onValueChange={field.onChange}
+                  />
+                )}
               />
-            )}
-          />
-        </FormField>
+            </FormField>
 
-        {perCustomer === 'custom' && (
+            {perCustomer === 'custom' && (
+              <FormField
+                label="Quantas vezes cada cliente"
+                error={errors.perCustomerCount?.message}
+              >
+                <Controller
+                  name="perCustomerCount"
+                  control={control}
+                  rules={{
+                    validate: (count) =>
+                      (count !== '' && count >= 2) || 'Informe 2 ou mais',
+                  }}
+                  render={({ field }) => (
+                    <NumberInput
+                      min={2}
+                      value={field.value}
+                      error={!!errors.perCustomerCount}
+                      onValueChange={field.onChange}
+                    />
+                  )}
+                />
+              </FormField>
+            )}
+          </Box>
+
           <FormField
-            label="Quantas vezes cada cliente"
-            error={errors.perCustomerCount?.message}
+            label="Limite total de pedidos"
+            helperText="Ex.: só os primeiros 50 pedidos. Vazio não limita."
+            error={errors.totalLimit?.message}
           >
             <Controller
-              name="perCustomerCount"
+              name="totalLimit"
               control={control}
               rules={{
-                validate: (count) =>
-                  (count !== '' && count >= 2) || 'Informe 2 ou mais',
+                validate: (limit) =>
+                  limit === '' || limit >= 1 || 'Informe 1 ou mais',
               }}
               render={({ field }) => (
                 <NumberInput
-                  min={2}
+                  min={1}
+                  placeholder="Sem limite"
                   value={field.value}
-                  error={!!errors.perCustomerCount}
-                  onValueChange={field.onChange}
+                  error={!!errors.totalLimit}
+                  onValueChange={(value) =>
+                    field.onChange(Number.isNaN(value) ? '' : value)
+                  }
                 />
               )}
             />
           </FormField>
-        )}
-
-        </Box>
-
-        <FormField
-          label="Limite total de pedidos"
-          helperText="Ex.: só os primeiros 50 pedidos. Vazio não limita."
-          error={errors.totalLimit?.message}
-        >
-          <Controller
-            name="totalLimit"
-            control={control}
-            rules={{
-              validate: (limit) =>
-                limit === '' || limit >= 1 || 'Informe 1 ou mais',
-            }}
-            render={({ field }) => (
-              <NumberInput
-                min={1}
-                placeholder="Sem limite"
-                value={field.value}
-                error={!!errors.totalLimit}
-                onValueChange={(value) =>
-                  field.onChange(Number.isNaN(value) ? '' : value)
-                }
-              />
-            )}
-          />
-        </FormField>
         </Box>
       </Card>
     </Box>

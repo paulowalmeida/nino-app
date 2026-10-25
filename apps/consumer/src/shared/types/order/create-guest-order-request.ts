@@ -2,6 +2,7 @@ import type { CreateOrderItemRequest } from './create-order-item-request'
 import type { GuestInfo } from './guest-info'
 import type { OrderChannel } from './order-channel'
 import type { PaymentMethod } from './payment-method'
+import type { CreateOrderPackageRequest } from './create-order-package-request'
 
 export type CreateGuestOrderRequest = GuestInfo & {
   unitId: string
@@ -17,5 +18,7 @@ export type CreateGuestOrderRequest = GuestInfo & {
   couponCode?: string
   expectsDiscount?: boolean
   expectsGift?: boolean
+  expectsPackage?: boolean
+  package?: CreateOrderPackageRequest
   items: CreateOrderItemRequest[]
 }

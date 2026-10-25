@@ -1,11 +1,9 @@
 @reference "@nino/ds/globals.css";
 
-
 .stage {
   @apply relative overflow-hidden rounded-4 border border-brand-muted;
   @apply bg-surface-page px-5 pb-7 pt-5 text-fg-muted shadow-warm-sm;
 }
-
 
 .stageCancelled {
   @apply border-black/[0.08] bg-black/[0.08] pb-5;

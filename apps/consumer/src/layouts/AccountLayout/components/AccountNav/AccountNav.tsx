@@ -31,7 +31,9 @@ export const AccountNav = () => {
             <NavLink
               to={`${base}/${to}`}
               className={({ isActive }) =>
-                isActive ? `${styles.accountNavLink} ${styles.linkOn}` : styles.accountNavLink
+                isActive
+                  ? `${styles.accountNavLink} ${styles.linkOn}`
+                  : styles.accountNavLink
               }
             >
               <Icon name={icon} className={styles.accountNavIcon} />

@@ -7,12 +7,14 @@ import { addCartItem } from './operations/add-cart-item/add-cart-item'
 import { clearCart } from './operations/clear-cart/clear-cart'
 import { decrementCartItem } from './operations/decrement-cart-item/decrement-cart-item'
 import { incrementCartItem } from './operations/increment-cart-item/increment-cart-item'
+import { cartLineKey } from '@utils/cart-line-key/cart-line-key'
 
 type CartState = {
   unitId: string | null
   lines: Record<string, CartLine>
   add: (unitId: string, item: CartItem, quantity?: number) => boolean
   replace: (unitId: string, item: CartItem, quantity?: number) => void
+  setPackage: (unitId: string, item: CartItem) => boolean
   increment: (lineId: string) => void
   decrement: (lineId: string) => void
   clear: () => void
@@ -45,6 +47,17 @@ export const useCartStore = create<CartState>()(
       replace: (unitId, item, quantity = 1) =>
         set({ unitId, lines: addCartItem({}, item, quantity) }),
 
+      setPackage: (unitId, item) => {
+        const current = get()
+        if (current.unitId && current.unitId !== unitId) return false
+        const lines = Object.fromEntries(
+          Object.entries(current.lines).filter(([, line]) => !line.item.package)
+        )
+        const id = cartLineKey(item)
+        set({ unitId, lines: { ...lines, [id]: { id, item, quantity: 1 } } })
+        return true
+      },
+
       increment: (lineId) =>
         set((state) => ({ lines: incrementCartItem(state.lines, lineId) })),
 
@@ -61,7 +74,7 @@ export const useCartStore = create<CartState>()(
     }),
     {
       name: 'nino.cart',
-      version: 3,
+      version: 4,
       migrate: (persisted, version) =>
         version < 3 ? { unitId: null, lines: {} } : (persisted as CartState),
       partialize: (state) => ({

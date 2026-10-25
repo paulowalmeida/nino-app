@@ -1,6 +1,5 @@
 @reference "@nino/ds/globals.css";
 
-
 .signInPage {
   @apply flex min-h-dvh w-full flex-col bg-surface-raised;
   @apply lg:grid lg:grid-cols-[minmax(0,24rem)_1fr] lg:items-stretch;

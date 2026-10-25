@@ -68,7 +68,9 @@ export const StoreHeaderSkeleton = ({
           </Box>
         </Box>
 
-        {showSearch && <Skeleton className={styles.storeHeaderSkeletonSearch} />}
+        {showSearch && (
+          <Skeleton className={styles.storeHeaderSkeletonSearch} />
+        )}
       </Box>
     </Box>
   )

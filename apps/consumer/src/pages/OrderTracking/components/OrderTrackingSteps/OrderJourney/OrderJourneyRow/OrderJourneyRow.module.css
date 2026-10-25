@@ -1,11 +1,9 @@
 @reference "@nino/ds/globals.css";
 
-
 .orderJourneyRow {
   @apply relative grid items-center gap-x-3.5 py-2;
   grid-template-columns: 2rem minmax(0, 1fr) auto;
 }
-
 
 .orderJourneyRow:not(:last-child)::before {
   content: '';
@@ -31,7 +29,6 @@
   @apply rounded-full;
   @apply text-base leading-none;
 }
-
 
 .done .node,
 .final .node {
@@ -76,7 +73,6 @@
 .ahead .time {
   @apply text-xs text-fg-faintest;
 }
-
 
 .cancelled .node {
   @apply bg-danger-surface text-sm font-bold text-danger;

@@ -16,11 +16,13 @@ describe(useGiftProductOptions.name, () => {
       isPending: false,
     } as unknown as ReturnType<typeof useMenu>)
 
-    const { result } = renderHook(() => useGiftProductOptions(giftOptionsUnitIdMock))
+    const { result } = renderHook(() =>
+      useGiftProductOptions(giftOptionsUnitIdMock)
+    )
 
     expect(useMenu).toHaveBeenCalledWith(giftOptionsUnitIdMock)
-    expect(result.current.giftProductOptions.map(({ value }) => value)).toEqual([
-      'coke',
-    ])
+    expect(result.current.giftProductOptions.map(({ value }) => value)).toEqual(
+      ['coke']
+    )
   })
 })

@@ -25,7 +25,9 @@ describe('PromotionService', () => {
     await expect(PromotionService.list(promotionUnitIdMock)).resolves.toEqual([
       promotionMock,
     ])
-    expect(api.get).toHaveBeenCalledWith(`units/${promotionUnitIdMock}/promotions`)
+    expect(api.get).toHaveBeenCalledWith(
+      `units/${promotionUnitIdMock}/promotions`
+    )
   })
 
   it('create and update: send the campaign form', async () => {
@@ -55,6 +57,9 @@ describe('PromotionService', () => {
 
     await PromotionService[method](promotionUnitIdMock, promotionIdMock)
 
-    expect(api.create).toHaveBeenCalledWith(`${campaignPath}/${action}`, undefined)
+    expect(api.create).toHaveBeenCalledWith(
+      `${campaignPath}/${action}`,
+      undefined
+    )
   })
 })

@@ -8,9 +8,12 @@ import { StoreIdentity } from './StoreIdentity'
 import { storeIdentityMock } from './StoreIdentity.mock'
 import styles from './StoreIdentity.module.css'
 
-vi.mock('@pages/Storefront/facades/useStorefrontFacade/useStorefrontFacade', () => ({
-  useStorefrontFacade: vi.fn(),
-}))
+vi.mock(
+  '@pages/Storefront/facades/useStorefrontFacade/useStorefrontFacade',
+  () => ({
+    useStorefrontFacade: vi.fn(),
+  })
+)
 
 describe('StoreIdentity', () => {
   it('hides the delivery estimate and opens details when ordering is unavailable', () => {

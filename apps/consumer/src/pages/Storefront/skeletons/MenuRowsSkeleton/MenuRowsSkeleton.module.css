@@ -24,7 +24,6 @@
   }
 }
 
-
 .skRow {
   @apply flex flex-row items-stretch gap-3 rounded-4 p-3;
   @apply sm:flex-col sm:gap-0;

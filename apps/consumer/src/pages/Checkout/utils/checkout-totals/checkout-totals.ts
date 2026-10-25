@@ -13,7 +13,9 @@ export type CheckoutTotalsInput = {
   estimatedMinutes: number | undefined
   freeDelivery?: PublicPromotion
   discountCandidates?: (PublicPromotion | undefined)[]
+  giftCandidates?: PublicPromotion[]
   gift?: PublicPromotion
+  packageOffer?: PublicPromotion
 }
 
 export const checkoutTotals = ({
@@ -23,10 +25,15 @@ export const checkoutTotals = ({
   estimatedMinutes,
   freeDelivery,
   discountCandidates = [],
-  gift,
+  giftCandidates = [],
+  gift: legacyGift,
+  packageOffer,
 }: CheckoutTotalsInput) => {
   const subtotal = cartLines.reduce(
-    (total, line) => total + cartItemPrice(line.item) * line.quantity,
+    (total, line) =>
+      total +
+      (line.item.package?.listPrice ?? cartItemPrice(line.item)) *
+        line.quantity,
     0
   )
   const deliveryFee = isDelivery ? Number(zone?.fee ?? 0) : 0
@@ -38,7 +45,46 @@ export const checkoutTotals = ({
   })
   const deliveryDiscount = coverage === 'applied' ? deliveryFee : 0
   const discount = largestDiscount(discountCandidates, subtotal)
-  const promotionDiscount = discount?.amount ?? 0
+  const packageLine = cartLines.find(({ item }) => !!item.package)
+  const packageData = packageLine?.item.package
+  const packageSavings =
+    packageData &&
+    packageOffer &&
+    packageOffer.id === packageData.promotionId &&
+    subtotal >= packageOffer.minOrderValue
+      ? Math.max(0, packageData.listPrice - cartItemPrice(packageLine.item))
+      : 0
+  const gift = [...giftCandidates, legacyGift]
+    .filter((candidate): candidate is PublicPromotion => !!candidate)
+    .filter((candidate) => giftApplies(candidate, subtotal))
+    .sort(
+      (first, second) =>
+        (second.giftProduct?.price ?? 0) - (first.giftProduct?.price ?? 0)
+    )[0]
+  const benefits = [
+    packageSavings > 0
+      ? { kind: 'package' as const, amount: packageSavings }
+      : undefined,
+    discount
+      ? { kind: 'discount' as const, amount: discount.amount }
+      : undefined,
+    gift?.giftProduct
+      ? { kind: 'gift' as const, amount: gift.giftProduct.price }
+      : undefined,
+  ].filter((benefit) => !!benefit)
+  const selected = benefits.reduce<(typeof benefits)[number] | undefined>(
+    (largest, benefit) =>
+      !largest || benefit.amount > largest.amount ? benefit : largest,
+    undefined
+  )
+  const appliedPackage = selected?.kind === 'package' ? packageOffer : undefined
+  const appliedDiscount =
+    selected?.kind === 'discount' ? discount?.promotion : undefined
+  const appliedGift = selected?.kind === 'gift' ? gift : undefined
+  const promotionDiscount =
+    selected?.kind === 'package' || selected?.kind === 'discount'
+      ? selected.amount
+      : 0
   const total = subtotal + deliveryFee - deliveryDiscount - promotionDiscount
   const deliveryNote = estimatedMinutes
     ? `Chega em ~${estimatedMinutes} min`
@@ -50,8 +96,9 @@ export const checkoutTotals = ({
     deliveryDiscount,
     freeDeliveryCoverage: coverage,
     promotionDiscount,
-    appliedDiscount: discount?.promotion,
-    appliedGift: giftApplies(gift, subtotal) ? gift : undefined,
+    appliedDiscount,
+    appliedGift,
+    ...(appliedPackage ? { appliedPackage } : {}),
     total,
     deliveryNote,
   }

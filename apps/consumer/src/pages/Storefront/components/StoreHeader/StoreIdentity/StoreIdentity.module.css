@@ -1,7 +1,5 @@
 @reference "@nino/ds/globals.css";
 
-
-
 .identityRow {
   @apply relative z-content -mx-4 -mt-9 flex w-[calc(100%+2rem)] items-center;
   @apply gap-3.5 border-y border-border bg-surface-page px-4 py-4;
@@ -10,7 +8,6 @@
   box-shadow: 0 12px 32px -18px
     color-mix(in srgb, var(--color-warm-950) 40%, transparent);
 }
-
 
 .afterCustomBanner {
   margin-top: 0;
@@ -78,7 +75,6 @@
   background-color: var(--color-success);
 }
 
-
 .dotOn::after {
   content: '';
   @apply absolute inset-0 rounded-full;
@@ -103,7 +99,6 @@
     animation: none;
   }
 }
-
 
 .time {
   @apply inline-flex items-center;

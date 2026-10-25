@@ -39,8 +39,12 @@ describe(LimitsSection.name, () => {
       </Form>
     )
 
-    expect(screen.queryByText('Quantas vezes cada cliente')).not.toBeInTheDocument()
-    await userEvent.click(screen.getByRole('radio', { name: 'Mais de uma vez' }))
+    expect(
+      screen.queryByText('Quantas vezes cada cliente')
+    ).not.toBeInTheDocument()
+    await userEvent.click(
+      screen.getByRole('radio', { name: 'Mais de uma vez' })
+    )
     await userEvent.click(screen.getByRole('button', { name: 'enviar' }))
 
     expect(await screen.findByText('Informe 2 ou mais')).toBeInTheDocument()

@@ -125,7 +125,11 @@ export const CheckoutForm = ({
             storeLogoUrl={storeLogoUrl}
           />
           <Box className={styles.workspace}>
-            <Box as="aside" className={styles.checkoutFormSummary} aria-label="Seu pedido">
+            <Box
+              as="aside"
+              className={styles.checkoutFormSummary}
+              aria-label="Seu pedido"
+            >
               <Box className={styles.receiptArea}>
                 <CheckoutReceipt checkout={facade} />
               </Box>

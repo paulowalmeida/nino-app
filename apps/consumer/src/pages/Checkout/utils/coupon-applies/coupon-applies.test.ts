@@ -6,10 +6,16 @@ import { couponAppliesMock } from './coupon-applies.mock'
 describe(couponApplies.name, () => {
   it('sends a discount coupon only above its minimum', () => {
     expect(
-      couponApplies(couponAppliesMock, { subtotal: 49, isFreeDeliveryApplied: false })
+      couponApplies(couponAppliesMock, {
+        subtotal: 49,
+        isFreeDeliveryApplied: false,
+      })
     ).toBe(false)
     expect(
-      couponApplies(couponAppliesMock, { subtotal: 50, isFreeDeliveryApplied: false })
+      couponApplies(couponAppliesMock, {
+        subtotal: 50,
+        isFreeDeliveryApplied: false,
+      })
     ).toBe(true)
   })
 

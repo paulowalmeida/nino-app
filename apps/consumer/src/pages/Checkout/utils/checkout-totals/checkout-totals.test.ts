@@ -9,8 +9,11 @@ describe('checkoutTotals', () => {
       cartLines: checkoutTotalsMock.cartLines,
       isDelivery: true,
       zone: {
-        id: 'zone-1', name: 'Centro', minRadiusKm: 0,
-        maxRadiusKm: 5, fee: checkoutTotalsMock.deliveryFee,
+        id: 'zone-1',
+        name: 'Centro',
+        minRadiusKm: 0,
+        maxRadiusKm: 5,
+        fee: checkoutTotalsMock.deliveryFee,
       },
       estimatedMinutes: checkoutTotalsMock.estimatedMinutes,
     })
@@ -29,13 +32,22 @@ describe('checkoutTotals', () => {
   })
 
   it('returns zero delivery fee and fallback note for pickup', () => {
-    expect(checkoutTotals({
-      cartLines: [], isDelivery: false, zone: undefined,
-      estimatedMinutes: undefined,
-    })).toEqual({
-      subtotal: 0, deliveryFee: 0, deliveryDiscount: 0,
-      freeDeliveryCoverage: 'none', promotionDiscount: 0,
-      appliedDiscount: undefined, appliedGift: undefined, total: 0,
+    expect(
+      checkoutTotals({
+        cartLines: [],
+        isDelivery: false,
+        zone: undefined,
+        estimatedMinutes: undefined,
+      })
+    ).toEqual({
+      subtotal: 0,
+      deliveryFee: 0,
+      deliveryDiscount: 0,
+      freeDeliveryCoverage: 'none',
+      promotionDiscount: 0,
+      appliedDiscount: undefined,
+      appliedGift: undefined,
+      total: 0,
       deliveryNote: 'Levamos até você',
     })
   })
@@ -82,8 +94,18 @@ describe('checkoutTotals', () => {
       freeDelivery: checkoutTotalsMock.freeDelivery,
       discountCandidates: [
         undefined,
-        { ...checkoutTotalsMock.freeDelivery, id: 'ten', type: 'PERCENTAGE_DISCOUNT', value: 10 },
-        { ...checkoutTotalsMock.freeDelivery, id: 'two', type: 'FIXED_DISCOUNT', value: 2 },
+        {
+          ...checkoutTotalsMock.freeDelivery,
+          id: 'ten',
+          type: 'PERCENTAGE_DISCOUNT',
+          value: 10,
+        },
+        {
+          ...checkoutTotalsMock.freeDelivery,
+          id: 'two',
+          type: 'FIXED_DISCOUNT',
+          value: 2,
+        },
       ],
     })
 
@@ -113,5 +135,60 @@ describe('checkoutTotals', () => {
 
     expect(result.appliedGift).toBe(gift)
     expect(result.total).toBe(25)
+  })
+
+  it('uses the package saving when it beats coupon and gift', () => {
+    const packageOffer = {
+      ...checkoutTotalsMock.freeDelivery,
+      id: 'package',
+      type: 'PACKAGE' as const,
+      value: 20,
+    }
+    const packageLine = {
+      id: 'package-line',
+      quantity: 1,
+      item: {
+        id: 'package:package',
+        name: 'Combo',
+        price: '20',
+        imageUrl: null,
+        package: {
+          promotionId: 'package',
+          listPrice: 30,
+          groups: [],
+        },
+      },
+    }
+
+    const result = checkoutTotals({
+      cartLines: [packageLine],
+      isDelivery: false,
+      zone: undefined,
+      estimatedMinutes: undefined,
+      packageOffer,
+      discountCandidates: [
+        {
+          ...checkoutTotalsMock.freeDelivery,
+          type: 'FIXED_DISCOUNT',
+          value: 5,
+        },
+      ],
+      giftCandidates: [
+        {
+          ...checkoutTotalsMock.freeDelivery,
+          type: 'GIFT',
+          giftProduct: { id: 'coke', name: 'Coca-Cola', price: 6 },
+        },
+      ],
+    })
+
+    expect(result).toMatchObject({
+      subtotal: 30,
+      promotionDiscount: 10,
+      appliedPackage: packageOffer,
+      appliedDiscount: undefined,
+      appliedGift: undefined,
+      total: 20,
+    })
   })
 })

@@ -36,7 +36,10 @@ export const OrderTracking = () => {
   }
 
   return (
-    <Box className={styles.orderTrackingPage} style={{ '--p': progress } as CSSProperties}>
+    <Box
+      className={styles.orderTrackingPage}
+      style={{ '--p': progress } as CSSProperties}
+    >
       <Box className={styles.orderTrackingShell}>
         <OrderTrackingHeader
           backHref={backHref}

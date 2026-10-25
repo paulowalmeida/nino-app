@@ -5,9 +5,12 @@ import { useStorefrontFacade } from '@pages/Storefront/facades/useStorefrontFaca
 import { MenuSearchField } from './MenuSearchField'
 import { menuSearchFieldMock } from './MenuSearchField.mock'
 
-vi.mock('@pages/Storefront/facades/useStorefrontFacade/useStorefrontFacade', () => ({
-  useStorefrontFacade: vi.fn(),
-}))
+vi.mock(
+  '@pages/Storefront/facades/useStorefrontFacade/useStorefrontFacade',
+  () => ({
+    useStorefrontFacade: vi.fn(),
+  })
+)
 
 describe('MenuSearchField', () => {
   it('exposes the menu search input', () => {

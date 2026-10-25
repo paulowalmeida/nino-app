@@ -45,7 +45,11 @@ export const PeriodSection = () => {
         </Heading>
 
         <Box className={styles.periodRow}>
-          <FormField label="Início" error={errors.startsAtDate?.message} required>
+          <FormField
+            label="Início"
+            error={errors.startsAtDate?.message}
+            required
+          >
             <Box direction="row" className={styles.dateTime}>
               <Controller
                 name="startsAtDate"
@@ -129,7 +133,9 @@ export const PeriodSection = () => {
                     type="button"
                     variant="toggle"
                     selected={field.value.includes(day)}
-                    onClick={() => field.onChange(toggleWeekday(field.value, day))}
+                    onClick={() =>
+                      field.onChange(toggleWeekday(field.value, day))
+                    }
                   >
                     {label}
                   </Chip>

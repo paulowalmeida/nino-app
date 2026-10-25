@@ -1,6 +1,4 @@
-import type {
-  ConsumerNotification,
-} from '@custom_types/notification/consumer-notification'
+import type { ConsumerNotification } from '@custom_types/notification/consumer-notification'
 import { api } from '@shared/services/http/http.service'
 
 /** O que a loja mandou ao cliente logado fora do rastreio ao vivo do pedido. */

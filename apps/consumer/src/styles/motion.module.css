@@ -1,14 +1,8 @@
 @reference "@nino/ds/globals.css";
 
-
-
-
-
-
 .deal {
   animation: deal 0.42s var(--ease-out) var(--d, 0ms) both;
 }
-
 
 .land {
   animation: land 0.66s var(--ease-back) var(--d, 0ms) both;
@@ -20,11 +14,9 @@
   animation: unroll 0.46s var(--ease-out) var(--d, 0ms) both;
 }
 
-
 .pop {
   animation: pop 0.42s var(--ease-back) var(--d, 0ms) both;
 }
-
 
 .riseIn {
   animation: rise-in 0.36s var(--ease-out) var(--d, 0ms) both;
@@ -94,7 +86,6 @@
     animation: none;
   }
 }
-
 
 .press {
   @apply transition-transform duration-150 ease-out;

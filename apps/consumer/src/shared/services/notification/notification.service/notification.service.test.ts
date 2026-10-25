@@ -16,9 +16,7 @@ describe('notificationService', () => {
 
   it('lists the logged consumer notifications', async () => {
     // Arrange
-    vi.mocked(api.get).mockResolvedValue([
-      notificationServiceMock.notification,
-    ])
+    vi.mocked(api.get).mockResolvedValue([notificationServiceMock.notification])
 
     // Act
     const result = await notificationService.listMine()

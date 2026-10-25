@@ -16,7 +16,12 @@ export const openOfferMock: PublicPromotion = {
 
 export const visiblePromotionsMock: PublicPromotion[] = [
   { ...openOfferMock, id: 'coded', code: 'VIP', minOrderValue: 0 },
-  { ...openOfferMock, id: 'discount', type: 'FIXED_DISCOUNT', minOrderValue: 0 },
+  {
+    ...openOfferMock,
+    id: 'discount',
+    type: 'FIXED_DISCOUNT',
+    minOrderValue: 0,
+  },
   { ...openOfferMock, id: 'pricier', minOrderValue: 90 },
   openOfferMock,
 ]

@@ -21,7 +21,6 @@ vi.mock('@hooks/useStoreTracking/useStoreTracking', () => ({
   }),
 }))
 
-
 const minutesState = vi.hoisted(() => ({ value: 20 as number | null }))
 const motionState = vi.hoisted(() => ({ reduce: false }))
 

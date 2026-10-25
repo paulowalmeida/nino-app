@@ -32,7 +32,8 @@ type UseCheckoutWorkflowParams = {
   slug: string | undefined
   freeDelivery?: PublicPromotion
   discountOffers?: PublicPromotion[]
-  giftOffer?: PublicPromotion
+  giftOffers?: PublicPromotion[]
+  packageOffers?: PublicPromotion[]
   coupon?: PublicPromotion
   refetchOffers?: () => unknown
 }
@@ -52,7 +53,8 @@ export const useCheckoutWorkflow = ({
   slug,
   freeDelivery,
   discountOffers = [],
-  giftOffer,
+  giftOffers = [],
+  packageOffers = [],
   coupon,
   refetchOffers,
 }: UseCheckoutWorkflowParams) => {
@@ -134,11 +136,18 @@ export const useCheckoutWorkflow = ({
   const [promotionEndedFee, setPromotionEndedFee] = useState<number | null>(
     null
   )
+  const packageCart = cartLines.find(({ item }) => item.package)?.item.package
+  const packageRequest = packageCart
+    ? { promotionId: packageCart.promotionId, groups: packageCart.groups }
+    : undefined
 
   const offers = orderOffers({
     freeDelivery,
     discountOffers,
-    giftOffer,
+    giftOffers,
+    packageOffer: packageOffers.find(
+      ({ id }) => id === packageCart?.promotionId
+    ),
     coupon,
     hasPromotionEnded: promotionEndedFee !== null,
   })
@@ -150,6 +159,7 @@ export const useCheckoutWorkflow = ({
     promotionDiscount,
     appliedDiscount,
     appliedGift,
+    appliedPackage,
     total,
     deliveryNote,
   } = checkoutTotals({
@@ -178,10 +188,14 @@ export const useCheckoutWorkflow = ({
         store,
         cartLines,
         promotions: {
-          couponCode: isCouponEligible ? coupon?.code ?? undefined : undefined,
+          couponCode: isCouponEligible
+            ? (coupon?.code ?? undefined)
+            : undefined,
           expectsFreeDelivery: freeDeliveryCoverage === 'applied',
           expectsDiscount: promotionDiscount > 0,
           expectsGift: !!appliedGift,
+          expectsPackage: !!appliedPackage,
+          package: packageRequest,
         },
       },
       {
@@ -223,6 +237,7 @@ export const useCheckoutWorkflow = ({
     promotionDiscount,
     appliedDiscount,
     appliedGift,
+    appliedPackage,
     coupon,
     isCouponEligible,
     total,

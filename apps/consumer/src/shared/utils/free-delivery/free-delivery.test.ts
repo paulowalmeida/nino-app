@@ -5,10 +5,7 @@ import {
   freeDeliveryGap,
   pickFreeDeliveryOffer,
 } from './free-delivery'
-import {
-  openOfferMock,
-  visiblePromotionsMock,
-} from './free-delivery.mock'
+import { openOfferMock, visiblePromotionsMock } from './free-delivery.mock'
 
 const deliveryOrder = {
   isDelivery: true,
@@ -38,7 +35,10 @@ describe('free-delivery', () => {
 
   it('does not apply outside the campaign zones', () => {
     expect(
-      freeDeliveryCoverage(openOfferMock, { ...deliveryOrder, zoneId: 'zone-longe' })
+      freeDeliveryCoverage(openOfferMock, {
+        ...deliveryOrder,
+        zoneId: 'zone-longe',
+      })
     ).toBe('outside-zone')
   })
 

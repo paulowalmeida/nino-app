@@ -74,7 +74,11 @@ export const AccountProfilePhoneField = () => {
 
   if (codeSent) {
     return (
-      <Box as="form" className={styles.accountProfilePhoneField} onSubmit={handleVerify}>
+      <Box
+        as="form"
+        className={styles.accountProfilePhoneField}
+        onSubmit={handleVerify}
+      >
         <Text as="span" className={styles.fieldLabel}>
           Telefone
         </Text>
@@ -124,7 +128,11 @@ export const AccountProfilePhoneField = () => {
   }
 
   return (
-    <Box as="form" className={styles.accountProfilePhoneField} onSubmit={handleRequest}>
+    <Box
+      as="form"
+      className={styles.accountProfilePhoneField}
+      onSubmit={handleRequest}
+    >
       <Text as="span" className={styles.fieldLabel} id="profile-phone-label">
         Telefone
       </Text>

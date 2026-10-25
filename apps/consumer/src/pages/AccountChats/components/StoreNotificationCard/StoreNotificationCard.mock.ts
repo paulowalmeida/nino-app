@@ -1,6 +1,4 @@
-import type {
-  ConsumerNotification,
-} from '@custom_types/notification/consumer-notification'
+import type { ConsumerNotification } from '@custom_types/notification/consumer-notification'
 
 export const storeNotificationCardMock: {
   unread: ConsumerNotification

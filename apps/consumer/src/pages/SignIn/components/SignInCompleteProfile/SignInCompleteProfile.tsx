@@ -88,7 +88,11 @@ export const SignInCompleteProfile = () => {
         </Box>
       )}
 
-      <FormField label="Nome" required className={styles.signInCompleteProfileField}>
+      <FormField
+        label="Nome"
+        required
+        className={styles.signInCompleteProfileField}
+      >
         <Input
           size="lg"
           autoFocus

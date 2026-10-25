@@ -21,7 +21,9 @@ const Form = ({
   return <FormProvider {...form}>{children}</FormProvider>
 }
 
-vi.mock('@pages/PromotionEditor/facades/usePromotionEditorFacade/usePromotionEditorFacade')
+vi.mock(
+  '@pages/PromotionEditor/facades/usePromotionEditorFacade/usePromotionEditorFacade'
+)
 
 describe(PromotionPreview.name, () => {
   beforeEach(() =>
@@ -39,9 +41,9 @@ describe(PromotionPreview.name, () => {
       </Form>
     )
 
-    expect(screen.getByLabelText('Prévia da faixa no cardápio')).toHaveTextContent(
-      'Frete grátis acima de R$ 60,00'
-    )
+    expect(
+      screen.getByLabelText('Prévia da faixa no cardápio')
+    ).toHaveTextContent('Frete grátis acima de R$ 60,00')
     expect(screen.getByText('ter, 18h–23h')).toBeInTheDocument()
     expect(
       screen.getByText('1 vez por cliente · primeiros 50 pedidos')
@@ -75,7 +77,9 @@ describe(PromotionPreview.name, () => {
       </Form>
     )
 
-    expect(screen.getByLabelText('Prévia da faixa no cardápio')).toHaveTextContent(
+    expect(
+      screen.getByLabelText('Prévia da faixa no cardápio')
+    ).toHaveTextContent(
       /10% de desconto \(até R\$\s15,00\) acima de R\$\s60,00/
     )
     expect(screen.queryByText('Zonas')).not.toBeInTheDocument()
@@ -84,14 +88,18 @@ describe(PromotionPreview.name, () => {
   it('names the chosen gift product', () => {
     render(
       <Form
-        values={{ ...previewValuesMock, campaignType: 'gift', giftProductId: 'coke' }}
+        values={{
+          ...previewValuesMock,
+          campaignType: 'gift',
+          giftProductId: 'coke',
+        }}
       >
         <PromotionPreview />
       </Form>
     )
 
-    expect(screen.getByLabelText('Prévia da faixa no cardápio')).toHaveTextContent(
-      /Ganhe Coca-Cola Lata acima de R\$\s60,00/
-    )
+    expect(
+      screen.getByLabelText('Prévia da faixa no cardápio')
+    ).toHaveTextContent(/Ganhe Coca-Cola Lata acima de R\$\s60,00/)
   })
 })

@@ -12,7 +12,11 @@ describe(promotionUnavailableFee.name, () => {
   it('reads the new delivery fee when the campaign ended', () => {
     expect(
       promotionUnavailableFee(
-        new ApiError(409, promotionUnavailableBodyMock.message, promotionUnavailableBodyMock)
+        new ApiError(
+          409,
+          promotionUnavailableBodyMock.message,
+          promotionUnavailableBodyMock
+        )
       )
     ).toBe(7)
   })
@@ -20,7 +24,11 @@ describe(promotionUnavailableFee.name, () => {
   it('ignores other conflicts and other errors', () => {
     expect(
       promotionUnavailableFee(
-        new ApiError(409, idempotencyConflictBodyMock.message, idempotencyConflictBodyMock)
+        new ApiError(
+          409,
+          idempotencyConflictBodyMock.message,
+          idempotencyConflictBodyMock
+        )
       )
     ).toBeNull()
     expect(promotionUnavailableFee(new ApiError(500, 'erro'))).toBeNull()

@@ -31,6 +31,7 @@ export const CAMPAIGN_TYPE_OPTIONS = [
   { value: 'free-delivery', label: 'Frete grátis' },
   { value: 'discount', label: 'Desconto' },
   { value: 'gift', label: 'Brinde' },
+  { value: 'package', label: 'Promoção' },
 ]
 
 export const DISCOUNT_KIND_OPTIONS = [
@@ -50,11 +51,19 @@ export const EDITOR_STEPS_BY_TYPE = {
   'free-delivery': ['benefit', 'zones', 'period', 'rules'],
   discount: ['benefit', 'period', 'rules'],
   gift: ['benefit', 'period', 'rules'],
+  package: ['benefit', 'period', 'rules'],
 } as const
 
 // CONSTRAINT: campos validados antes de sair de cada passo.
 export const EDITOR_STEP_FIELDS = {
-  benefit: ['minOrderValue', 'discountValue', 'maxDiscount', 'giftProductId'],
+  benefit: [
+    'minOrderValue',
+    'discountValue',
+    'maxDiscount',
+    'giftProductId',
+    'packagePrice',
+    'packageGroups',
+  ],
   zones: ['deliveryZoneIds'],
   period: ['startsAtDate', 'endsAtDate', 'dailyEndTime'],
   rules: ['code', 'perCustomerCount', 'totalLimit'],

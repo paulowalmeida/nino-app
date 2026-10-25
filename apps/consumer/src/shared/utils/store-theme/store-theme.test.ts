@@ -27,9 +27,7 @@ describe('store theme', () => {
 
     expect(storeThemePrimaryColor(store)).toBe('#ff6b00')
     expect(storeThemeLogoUrl(store)).toBe('https://legacy.example/logo.png')
-    expect(storeThemeBannerUrl(store)).toBe(
-      'https://legacy.example/banner.png'
-    )
+    expect(storeThemeBannerUrl(store)).toBe('https://legacy.example/banner.png')
   })
 
   it('makes the published theme authoritative', () => {

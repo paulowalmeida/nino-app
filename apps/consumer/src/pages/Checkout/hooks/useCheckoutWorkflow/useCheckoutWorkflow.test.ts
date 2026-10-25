@@ -79,7 +79,6 @@ describe('useCheckoutWorkflow', () => {
   })
 })
 
-
 it('shows a friendly message when guest checkout is throttled', () => {
   const clearCart = vi.fn()
   vi.mocked(usePlaceOrder).mockReturnValue({
@@ -100,7 +99,7 @@ it('shows a friendly message when guest checkout is throttled', () => {
     freeDeliveryCoverage: 'none',
     promotionDiscount: 0,
     appliedDiscount: undefined,
-      appliedGift: undefined,
+    appliedGift: undefined,
     total: 36,
     deliveryNote: '',
   })
@@ -158,7 +157,7 @@ it('drops free delivery and shows the new fee when the campaign ends mid-order',
     freeDeliveryCoverage: freeDelivery ? 'applied' : 'none',
     promotionDiscount: 0,
     appliedDiscount: undefined,
-      appliedGift: undefined,
+    appliedGift: undefined,
     total: freeDelivery ? 70 : 77,
     deliveryNote: '',
   }))
@@ -184,9 +183,7 @@ it('drops free delivery and shows the new fee when the campaign ends mid-order',
   expect(result.current.total).toBe(70)
 
   act(() =>
-    result.current.onSubmit(
-      {} as Parameters<typeof result.current.onSubmit>[0]
-    )
+    result.current.onSubmit({} as Parameters<typeof result.current.onSubmit>[0])
   )
   placeOrder.isError = true
   placeOrder.error = promotionEnded

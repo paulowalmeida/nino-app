@@ -54,6 +54,30 @@ describe('useCartStore', () => {
     expect(useCartStore.getState().lines).toEqual({})
   })
 
+  it('keeps regular items and replaces the previous package', () => {
+    useCartStore.getState().add(cartStateMock.unitId, cartStateMock.item)
+    const firstPackage = {
+      ...cartStateMock.item,
+      id: 'package:first',
+      package: { promotionId: 'first', groups: [], listPrice: 30 },
+    }
+    const secondPackage = {
+      ...cartStateMock.item,
+      id: 'package:second',
+      package: { promotionId: 'second', groups: [], listPrice: 40 },
+    }
+
+    useCartStore.getState().setPackage(cartStateMock.unitId, firstPackage)
+    useCartStore.getState().setPackage(cartStateMock.unitId, secondPackage)
+
+    expect(Object.values(useCartStore.getState().lines)).toHaveLength(2)
+    expect(
+      Object.values(useCartStore.getState().lines).find(
+        ({ item }) => item.package
+      )?.item.package?.promotionId
+    ).toBe('second')
+  })
+
   it('discards persisted carts created before unit ownership existed', async () => {
     window.localStorage.setItem(
       'nino.cart',

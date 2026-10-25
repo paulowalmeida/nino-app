@@ -1,6 +1,5 @@
 @reference "@nino/ds/globals.css";
 
-
 .menuSection {
   @apply scroll-mt-[8.5rem] lg:scroll-mt-[10.5rem];
 }
@@ -22,7 +21,6 @@
   @apply shrink-0 text-xs text-fg-faint;
   font-variant-numeric: tabular-nums;
 }
-
 
 .items {
   @apply grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4;

@@ -3,7 +3,8 @@ import type { PublicPromotion } from '@custom_types/promotion/public-promotion.t
 type OrderOffersInput = {
   freeDelivery: PublicPromotion | undefined
   discountOffers: PublicPromotion[]
-  giftOffer?: PublicPromotion
+  giftOffers?: PublicPromotion[]
+  packageOffer?: PublicPromotion
   coupon: PublicPromotion | undefined
   hasPromotionEnded: boolean
 }
@@ -13,12 +14,17 @@ type OrderOffersInput = {
 export const orderOffers = ({
   freeDelivery,
   discountOffers,
-  giftOffer,
+  giftOffers = [],
+  packageOffer,
   coupon,
   hasPromotionEnded,
 }: OrderOffersInput) => {
   if (hasPromotionEnded)
-    return { freeDelivery: undefined, discountCandidates: [], gift: undefined }
+    return {
+      freeDelivery: undefined,
+      discountCandidates: [],
+      gift: undefined,
+    }
   const isFreeDeliveryCoupon = coupon?.type === 'FREE_DELIVERY'
   const isGiftCoupon = coupon?.type === 'GIFT'
   return {
@@ -27,6 +33,8 @@ export const orderOffers = ({
       isFreeDeliveryCoupon || isGiftCoupon ? undefined : coupon,
       ...discountOffers,
     ],
-    gift: isGiftCoupon ? coupon : giftOffer,
+    giftCandidates: isGiftCoupon ? [coupon] : giftOffers,
+    gift: isGiftCoupon ? coupon : giftOffers[0],
+    packageOffer,
   }
 }

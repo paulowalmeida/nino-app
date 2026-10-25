@@ -21,7 +21,6 @@ vi.mock('@hooks/useStoreTracking/useStoreTracking', () => ({
   }),
 }))
 
-
 describe('OrderTrackingReassurance', () => {
   it('reassures the consumer about WhatsApp updates', () => {
     render(<OrderTrackingReassurance />)

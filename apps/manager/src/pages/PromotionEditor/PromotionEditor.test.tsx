@@ -6,7 +6,9 @@ import { usePromotionEditorFacade } from '@pages/PromotionEditor/facades/useProm
 import { PromotionEditor } from './PromotionEditor'
 import { promotionEditorPageMock } from './PromotionEditor.mock'
 
-vi.mock('@pages/PromotionEditor/facades/usePromotionEditorFacade/usePromotionEditorFacade')
+vi.mock(
+  '@pages/PromotionEditor/facades/usePromotionEditorFacade/usePromotionEditorFacade'
+)
 vi.mock(
   '@pages/PromotionEditor/components/PromotionEditorHeader/PromotionEditorHeader',
   () => ({ PromotionEditorHeader: () => <div>editor header</div> })
@@ -27,7 +29,9 @@ vi.mock(
 const withFacade = (state: { isPending: boolean; isUnavailable: boolean }) =>
   vi
     .mocked(usePromotionEditorFacade)
-    .mockReturnValue(state as unknown as ReturnType<typeof usePromotionEditorFacade>)
+    .mockReturnValue(
+      state as unknown as ReturnType<typeof usePromotionEditorFacade>
+    )
 
 describe('PromotionEditor', () => {
   beforeEach(() => vi.clearAllMocks())
@@ -46,7 +50,9 @@ describe('PromotionEditor', () => {
 
     render(<PromotionEditor />)
 
-    expect(screen.getByText(promotionEditorPageMock.skeleton)).toBeInTheDocument()
+    expect(
+      screen.getByText(promotionEditorPageMock.skeleton)
+    ).toBeInTheDocument()
   })
 
   it('explains why a used or missing campaign cannot be edited', () => {
@@ -54,7 +60,11 @@ describe('PromotionEditor', () => {
 
     render(<PromotionEditor />)
 
-    expect(screen.getByText(promotionEditorPageMock.unavailable)).toBeInTheDocument()
-    expect(screen.queryByText(promotionEditorPageMock.form)).not.toBeInTheDocument()
+    expect(
+      screen.getByText(promotionEditorPageMock.unavailable)
+    ).toBeInTheDocument()
+    expect(
+      screen.queryByText(promotionEditorPageMock.form)
+    ).not.toBeInTheDocument()
   })
 })

@@ -33,7 +33,10 @@ export const CheckoutFooter = ({
         <Text as="span" className={styles.checkoutFooterLabel}>
           Total
         </Text>
-        <AnimatedNumber value={brl(total)} className={styles.checkoutFooterTotal} />
+        <AnimatedNumber
+          value={brl(total)}
+          className={styles.checkoutFooterTotal}
+        />
       </Box>
       <Box direction="row" gap={2} className={styles.checkoutFooterActions}>
         {canGoBack && (

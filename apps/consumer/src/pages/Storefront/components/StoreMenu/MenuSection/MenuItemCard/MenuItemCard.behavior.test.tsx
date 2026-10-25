@@ -2,10 +2,7 @@ import { render, screen } from '@testing-library/react'
 import { describe, expect, it, vi } from 'vitest'
 
 import { MenuItemCard } from './MenuItemCard'
-import {
-  describedMenuItemMock,
-  menuItemCardMock,
-} from './MenuItemCard.mock'
+import { describedMenuItemMock, menuItemCardMock } from './MenuItemCard.mock'
 
 vi.mock('@hooks/useStoreCatalog/useStoreCatalog', () => ({
   useStoreCatalog: () => ({

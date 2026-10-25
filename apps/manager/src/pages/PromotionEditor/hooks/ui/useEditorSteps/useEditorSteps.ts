@@ -26,9 +26,12 @@ export const useEditorSteps = (
   const currentStep = Math.min(step, lastStep)
 
   const goNext = async () => {
-    const isValid = await trigger([...EDITOR_STEP_FIELDS[stepKeys[currentStep]]], {
-      shouldFocus: true,
-    })
+    const isValid = await trigger(
+      [...EDITOR_STEP_FIELDS[stepKeys[currentStep]]],
+      {
+        shouldFocus: true,
+      }
+    )
     if (!isValid) return
     const nextStep = Math.min(currentStep + 1, lastStep)
     setStep(nextStep)

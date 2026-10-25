@@ -12,7 +12,9 @@ import type { PromotionFormValues } from '@pages/PromotionEditor/types/Promotion
 import { ZonesSection } from './ZonesSection'
 import { zoneOptionsMock } from './ZonesSection.mock'
 
-vi.mock('@pages/PromotionEditor/facades/usePromotionEditorFacade/usePromotionEditorFacade')
+vi.mock(
+  '@pages/PromotionEditor/facades/usePromotionEditorFacade/usePromotionEditorFacade'
+)
 
 const Form = ({
   children,
@@ -57,11 +59,16 @@ describe(ZonesSection.name, () => {
     )
     expect(onValid).not.toHaveBeenCalled()
 
-    await userEvent.click(screen.getByRole('checkbox', { name: zoneOptionsMock[1].label }))
+    await userEvent.click(
+      screen.getByRole('checkbox', { name: zoneOptionsMock[1].label })
+    )
     await userEvent.click(screen.getByRole('button', { name: 'enviar' }))
 
     expect(onValid).toHaveBeenCalledWith(
-      expect.objectContaining({ zoneScope: 'chosen', deliveryZoneIds: ['zone-2'] }),
+      expect.objectContaining({
+        zoneScope: 'chosen',
+        deliveryZoneIds: ['zone-2'],
+      }),
       expect.anything()
     )
   })
@@ -74,6 +81,8 @@ describe(ZonesSection.name, () => {
       </Form>
     )
 
-    expect(screen.getByText('A unidade não tem zonas ativas')).toBeInTheDocument()
+    expect(
+      screen.getByText('A unidade não tem zonas ativas')
+    ).toBeInTheDocument()
   })
 })

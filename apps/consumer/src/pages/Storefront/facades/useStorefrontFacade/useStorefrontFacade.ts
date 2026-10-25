@@ -61,6 +61,8 @@ export const useStorefrontFacade = (requestedSlug?: string) => {
     freeDelivery: offers.freeDelivery,
     discountOffer: offers.discountOffers[0],
     giftOffer: offers.giftOffer,
+    packageOffers: offers.packageOffers,
+    bannerOffers: offers.bannerOffers,
     ...menuItemAction,
     ...menuSections,
     isDesktop,

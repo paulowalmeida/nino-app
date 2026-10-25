@@ -11,6 +11,7 @@ const STRIP_ICONS = {
   PERCENTAGE_DISCOUNT: 'tag',
   FIXED_DISCOUNT: 'tag',
   GIFT: 'gift',
+  PACKAGE: 'tag',
 } as const
 
 export const PromotionStrip = () => {

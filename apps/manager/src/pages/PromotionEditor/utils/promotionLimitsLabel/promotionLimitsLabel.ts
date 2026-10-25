@@ -15,6 +15,10 @@ export const promotionLimitsLabel = ({
         ? `${perCustomerCount} vezes por cliente`
         : null
   const totalLabel =
-    totalLimit !== '' && totalLimit > 0 ? `primeiros ${totalLimit} pedidos` : null
-  return [perCustomerLabel, totalLabel].filter(Boolean).join(' · ') || 'Sem limite'
+    totalLimit !== '' && totalLimit > 0
+      ? `primeiros ${totalLimit} pedidos`
+      : null
+  return (
+    [perCustomerLabel, totalLabel].filter(Boolean).join(' · ') || 'Sem limite'
+  )
 }

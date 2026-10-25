@@ -15,7 +15,6 @@
   @apply text-brand-strong;
 }
 
-
 .home {
   @apply flex h-full flex-1 flex-col items-center justify-center gap-0.5;
   @apply min-h-12 text-fg-subtle transition-colors;
@@ -31,7 +30,6 @@
   );
   color: var(--store-tint, var(--color-brand));
 }
-
 
 .homeOn .homeRing {
   border-color: var(--store-tint, var(--color-brand));
@@ -49,7 +47,6 @@
 .tabBarLabel {
   @apply text-xs font-semibold;
 }
-
 
 .cartIcon {
   @apply relative inline-flex items-center justify-center;

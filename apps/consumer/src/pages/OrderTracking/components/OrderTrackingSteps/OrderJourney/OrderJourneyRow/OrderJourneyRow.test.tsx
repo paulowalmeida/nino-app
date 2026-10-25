@@ -21,7 +21,6 @@ vi.mock('@hooks/useStoreTracking/useStoreTracking', () => ({
   }),
 }))
 
-
 describe('OrderJourneyRow', () => {
   it('renders an order stage row', () => {
     render(

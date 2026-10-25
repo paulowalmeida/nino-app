@@ -8,7 +8,13 @@ const baseItem = {
 } as unknown as MenuItem
 
 export const giftMenuMock: MenuItem[] = [
-  { ...baseItem, id: 'coke', name: 'Coca-Cola Lata', price: '6.50', isActive: true },
+  {
+    ...baseItem,
+    id: 'coke',
+    name: 'Coca-Cola Lata',
+    price: '6.50',
+    isActive: true,
+  },
   { ...baseItem, id: 'paused', name: 'Suco', price: '9.00', isActive: false },
   {
     ...baseItem,

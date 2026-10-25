@@ -22,7 +22,10 @@ export const OrderJourney = ({
   const lastAhead = rows.at(-1)?.state === 'ahead' ? rows.length - 1 : -1
 
   return (
-    <ol className={`${styles.orderJourneyList} ${className ?? ''}`} style={style}>
+    <ol
+      className={`${styles.orderJourneyList} ${className ?? ''}`}
+      style={style}
+    >
       {rows.map((row, i) => (
         <OrderJourneyRow
           key={row.status}

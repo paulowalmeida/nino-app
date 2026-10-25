@@ -21,7 +21,6 @@ vi.mock('@hooks/useStoreTracking/useStoreTracking', () => ({
   }),
 }))
 
-
 const journeyState = vi.hoisted(() => ({
   rows: [
     { status: 'PREPARING', at: undefined, state: 'done' },

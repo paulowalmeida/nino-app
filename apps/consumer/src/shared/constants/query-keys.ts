@@ -13,8 +13,7 @@ export const queryKeys = {
   },
   settings: {
     all: ['settings'] as const,
-    byUnit: (unitId: string) =>
-      [...queryKeys.settings.all, unitId] as const,
+    byUnit: (unitId: string) => [...queryKeys.settings.all, unitId] as const,
   },
   deliveryZones: {
     all: ['delivery-zones'] as const,

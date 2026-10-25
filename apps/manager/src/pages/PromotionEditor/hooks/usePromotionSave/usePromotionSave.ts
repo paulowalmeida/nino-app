@@ -22,14 +22,30 @@ export const usePromotionSave = (
       success: mode === 'edit' ? 'Campanha salva' : 'Campanha criada',
       errorTitle: 'A campanha não foi salva',
     },
-    mutationFn: (values: PromotionFormValues) =>
-      mode === 'edit' && promotionId
-        ? PromotionService.update(
-            unitId as string,
-            promotionId,
-            toPromotionInput(values)
-          )
-        : PromotionService.create(unitId as string, toPromotionInput(values)),
+    mutationFn: async (values: PromotionFormValues) => {
+      const saved =
+        mode === 'edit' && promotionId
+          ? await PromotionService.update(
+              unitId as string,
+              promotionId,
+              toPromotionInput(values)
+            )
+          : await PromotionService.create(
+              unitId as string,
+              toPromotionInput(values)
+            )
+      if (values.imageFile) {
+        return PromotionService.uploadImage(
+          unitId as string,
+          saved.id,
+          values.imageFile
+        )
+      }
+      if (values.removeImage && saved.imageUrl) {
+        return PromotionService.removeImage(unitId as string, saved.id)
+      }
+      return saved
+    },
     onSuccess: async () => {
       await queryClient.invalidateQueries({
         queryKey: queryKeys.promotions.list(unitId ?? ''),

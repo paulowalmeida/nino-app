@@ -38,6 +38,8 @@ const blankValues = (now: Date): PromotionFormValues => ({
   discountKind: 'PERCENTAGE_DISCOUNT',
   discountValue: '',
   maxDiscount: '',
+  packagePrice: '',
+  packageGroups: [],
   minOrderValue: '',
   zoneScope: 'all',
   deliveryZoneIds: [],
@@ -51,6 +53,10 @@ const blankValues = (now: Date): PromotionFormValues => ({
   dailyEndTime: '23:00',
   code: '',
   showInMenu: true,
+  imageUrl: null,
+  imageFile: null,
+  removeImage: false,
+  showInBanner: false,
   perCustomer: 'unlimited',
   perCustomerCount: '',
   totalLimit: '',
@@ -87,6 +93,19 @@ export const toPromotionFormValues = (
     dailyEndTime: promotion.dailyEndTime ?? '23:00',
     code: promotion.code ?? '',
     showInMenu: promotion.showInMenu,
+    imageUrl: promotion.imageUrl ?? null,
+    showInBanner: promotion.showInBanner ?? false,
+    packagePrice:
+      promotion.type === 'PACKAGE' ? maskMoneyAmount(promotion.value) : '',
+    packageGroups: (promotion.packageGroups ?? []).map((group) => ({
+      kind: group.kind,
+      quantity: group.quantity,
+      allowRepeatedProducts: group.allowRepeatedProducts,
+      products: group.products.map((product) => ({
+        productId: product.id,
+        allowedOptionIds: product.allowedOptions.map(({ id }) => id),
+      })),
+    })),
     ...perCustomerOf(promotion.perCustomerLimit),
     totalLimit: promotion.totalLimit ?? '',
   }
@@ -105,9 +124,14 @@ const discountFieldsOf = ({
   | 'discountValue'
   | 'maxDiscount'
 > =>
-  type === 'FREE_DELIVERY' || type === 'GIFT'
+  type === 'FREE_DELIVERY' || type === 'GIFT' || type === 'PACKAGE'
     ? {
-        campaignType: type === 'GIFT' ? 'gift' : 'free-delivery',
+        campaignType:
+          type === 'GIFT'
+            ? 'gift'
+            : type === 'PACKAGE'
+              ? 'package'
+              : 'free-delivery',
         giftProductId: giftProduct?.id ?? '',
         discountKind: 'PERCENTAGE_DISCOUNT',
         discountValue: '',
@@ -118,7 +142,9 @@ const discountFieldsOf = ({
         giftProductId: '',
         discountKind: type,
         discountValue:
-          type === 'PERCENTAGE_DISCOUNT' ? String(value) : maskMoneyAmount(value),
+          type === 'PERCENTAGE_DISCOUNT'
+            ? String(value)
+            : maskMoneyAmount(value),
         maxDiscount: maxDiscount ? maskMoneyAmount(maxDiscount) : '',
       }
 
@@ -130,7 +156,9 @@ const typeOf = ({
     ? 'FREE_DELIVERY'
     : campaignType === 'gift'
       ? 'GIFT'
-      : discountKind
+      : campaignType === 'package'
+        ? 'PACKAGE'
+        : discountKind
 
 // CONSTRAINT: percentual chega digitado ("12,5"); valor fixo, mascarado ("10,00").
 export const discountAmountOf = ({
@@ -160,38 +188,51 @@ export const toPromotionSummarySource = (
   const type = typeOf(values)
   const isFreeDelivery = type === 'FREE_DELIVERY'
   return {
-  type,
-  value: type === 'FREE_DELIVERY' || type === 'GIFT' ? 0 : discountAmountOf(values),
-  giftProduct: giftProductName ? { name: giftProductName } : null,
-  maxDiscount:
-    type === 'PERCENTAGE_DISCOUNT' && values.maxDiscount
-      ? moneyValue(values.maxDiscount)
-      : null,
-  minOrderValue: values.minOrderValue ? moneyValue(values.minOrderValue) : 0,
-  startsAt: (
-    combineDateTime(values.startsAtDate, values.startsAtTime) ?? new Date()
-  ).toISOString(),
-  endsAt:
-    combineDateTime(values.endsAtDate, values.endsAtTime)?.toISOString() ??
-    null,
-  weekdays: values.weekdays,
-  dailyStartTime: values.hasDailyWindow ? values.dailyStartTime : null,
-  dailyEndTime: values.hasDailyWindow ? values.dailyEndTime : null,
-  allDeliveryZones: !isFreeDelivery || values.zoneScope === 'all',
-  deliveryZoneIds:
-    isFreeDelivery && values.zoneScope === 'chosen' ? values.deliveryZoneIds : [],
+    type,
+    value:
+      type === 'FREE_DELIVERY' || type === 'GIFT'
+        ? 0
+        : type === 'PACKAGE'
+          ? moneyValue(values.packagePrice)
+          : discountAmountOf(values),
+    giftProduct: giftProductName ? { name: giftProductName } : null,
+    maxDiscount:
+      type === 'PERCENTAGE_DISCOUNT' && values.maxDiscount
+        ? moneyValue(values.maxDiscount)
+        : null,
+    minOrderValue: values.minOrderValue ? moneyValue(values.minOrderValue) : 0,
+    startsAt: (
+      combineDateTime(values.startsAtDate, values.startsAtTime) ?? new Date()
+    ).toISOString(),
+    endsAt:
+      combineDateTime(values.endsAtDate, values.endsAtTime)?.toISOString() ??
+      null,
+    weekdays: values.weekdays,
+    dailyStartTime: values.hasDailyWindow ? values.dailyStartTime : null,
+    dailyEndTime: values.hasDailyWindow ? values.dailyEndTime : null,
+    allDeliveryZones: !isFreeDelivery || values.zoneScope === 'all',
+    deliveryZoneIds:
+      isFreeDelivery && values.zoneScope === 'chosen'
+        ? values.deliveryZoneIds
+        : [],
   }
 }
 
-export const toPromotionInput = (values: PromotionFormValues): PromotionInput => {
+export const toPromotionInput = (
+  values: PromotionFormValues
+): PromotionInput => {
   const source = toPromotionSummarySource(values)
   return {
     name: promotionSummaryParts(source).headline,
     type: source.type,
-    code: values.code.trim() || null,
+    code:
+      source.type === 'PERCENTAGE_DISCOUNT' || source.type === 'FIXED_DISCOUNT'
+        ? values.code.trim() || null
+        : null,
     value: source.value,
     maxDiscount: source.maxDiscount,
     giftProductId: source.type === 'GIFT' ? values.giftProductId : null,
+    packageGroups: source.type === 'PACKAGE' ? values.packageGroups : undefined,
     minOrderValue: source.minOrderValue,
     startsAt: source.startsAt,
     endsAt: source.endsAt,
@@ -200,7 +241,8 @@ export const toPromotionInput = (values: PromotionFormValues): PromotionInput =>
     dailyEndTime: source.dailyEndTime,
     allDeliveryZones: source.allDeliveryZones,
     deliveryZoneIds: source.deliveryZoneIds,
-    showInMenu: values.showInMenu,
+    showInMenu: source.type === 'PACKAGE' ? true : values.showInMenu,
+    showInBanner: values.showInBanner,
     perCustomerLimit: perCustomerLimitOf(values),
     totalLimit: values.totalLimit === '' ? null : Number(values.totalLimit),
   }

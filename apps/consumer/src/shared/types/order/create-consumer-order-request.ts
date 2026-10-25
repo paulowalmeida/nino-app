@@ -1,6 +1,7 @@
 import type { CreateOrderItemRequest } from './create-order-item-request'
 import type { OrderChannel } from './order-channel'
 import type { PaymentMethod } from './payment-method'
+import type { CreateOrderPackageRequest } from './create-order-package-request'
 
 export type CreateConsumerOrderRequest = {
   unitId: string
@@ -15,5 +16,7 @@ export type CreateConsumerOrderRequest = {
   couponCode?: string
   expectsDiscount?: boolean
   expectsGift?: boolean
+  expectsPackage?: boolean
+  package?: CreateOrderPackageRequest
   items: CreateOrderItemRequest[]
 }

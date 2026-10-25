@@ -4,12 +4,8 @@ import { Box } from '@nino/ds/components/Box'
 import { Text } from '@nino/ds/components/Text'
 
 import { OrderRail } from '@shared/components/OrderRail/OrderRail'
-import {
-  useConsumerSession,
-} from '@shared/hooks/useConsumerSession/useConsumerSession'
-import {
-  useGuestOrderStatus,
-} from '@hooks/useGuestOrderStatus/useGuestOrderStatus'
+import { useConsumerSession } from '@shared/hooks/useConsumerSession/useConsumerSession'
+import { useGuestOrderStatus } from '@hooks/useGuestOrderStatus/useGuestOrderStatus'
 import { useGuestOrders } from '@shared/hooks/useGuestOrders/useGuestOrders'
 import { useMinutesUntil } from '@hooks/useMinutesUntil/useMinutesUntil'
 import { useMyOrders } from '@shared/hooks/useMyOrders/useMyOrders'
@@ -50,7 +46,10 @@ export const ActiveOrderBanner = ({ slug }: ActiveOrderBannerProps) => {
   const query = token ? `?token=${token}` : ''
 
   return (
-    <Link to={`/${slug}/pedido/${orderId}${query}`} className={styles.activeOrderBanner}>
+    <Link
+      to={`/${slug}/pedido/${orderId}${query}`}
+      className={styles.activeOrderBanner}
+    >
       <span className={styles.activeOrderBannerIcon} aria-hidden="true">
         {stageIcon(order.status)}
       </span>

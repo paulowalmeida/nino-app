@@ -56,12 +56,17 @@ describe('CheckoutCoupon', () => {
   })
 
   it('explains an unknown coupon', async () => {
-    withFacade({ isAuthenticated: false, couponError: 'Cupom inválido ou indisponível' })
+    withFacade({
+      isAuthenticated: false,
+      couponError: 'Cupom inválido ou indisponível',
+    })
 
     render(<CheckoutCoupon />)
     await userEvent.click(screen.getByText('Tenho um cupom'))
 
-    expect(screen.getByRole('alert')).toHaveTextContent('Cupom inválido ou indisponível')
+    expect(screen.getByRole('alert')).toHaveTextContent(
+      'Cupom inválido ou indisponível'
+    )
   })
 
   it('shows the applied coupon, warns when it does not apply yet, and removes it', async () => {
@@ -70,7 +75,9 @@ describe('CheckoutCoupon', () => {
     render(<CheckoutCoupon />)
 
     expect(screen.getByText('Cupom VOLTA10')).toBeInTheDocument()
-    expect(screen.getByText(/Ainda não vale para este pedido/)).toBeInTheDocument()
+    expect(
+      screen.getByText(/Ainda não vale para este pedido/)
+    ).toBeInTheDocument()
     await userEvent.click(screen.getByRole('button', { name: 'Remover' }))
     expect(removeCoupon).toHaveBeenCalled()
   })

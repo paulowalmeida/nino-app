@@ -8,13 +8,15 @@ import type { CreateOrderItemRequest } from '@custom_types/order/create-order-it
 export const orderItemsRequest = (
   cartLines: CartLine[]
 ): CreateOrderItemRequest[] =>
-  cartLines.map(({ item, quantity }) => ({
-    productId: item.id,
-    quantity,
-    unitPrice: Number(item.price),
-    modifiers: (item.modifiers ?? []).map((modifier) => ({
-      optionId: modifier.optionId,
-      quantity: modifier.quantity,
-    })),
-    notes: item.notes,
-  }))
+  cartLines
+    .filter(({ item }) => !item.package)
+    .map(({ item, quantity }) => ({
+      productId: item.id,
+      quantity,
+      unitPrice: Number(item.price),
+      modifiers: (item.modifiers ?? []).map((modifier) => ({
+        optionId: modifier.optionId,
+        quantity: modifier.quantity,
+      })),
+      notes: item.notes,
+    }))

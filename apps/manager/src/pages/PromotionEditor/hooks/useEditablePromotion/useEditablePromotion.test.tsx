@@ -8,7 +8,10 @@ import { usePromotions } from '@shared/hooks/promotion/usePromotions/usePromotio
 import { promotionMock } from '@shared/services/promotion/promotion.service/promotion.service.mock'
 
 import { useEditablePromotion } from './useEditablePromotion'
-import { editableUnitIdMock, usedPromotionMock } from './useEditablePromotion.mock'
+import {
+  editableUnitIdMock,
+  usedPromotionMock,
+} from './useEditablePromotion.mock'
 
 vi.mock('@shared/hooks/promotion/usePromotions/usePromotions')
 
@@ -32,18 +35,27 @@ describe(useEditablePromotion.name, () => {
   )
 
   it('opens a blank campaign without asking for the list', () => {
-    const { result } = renderHook(() => useEditablePromotion(editableUnitIdMock), {
-      wrapper: at('/promocoes/nova'),
-    })
+    const { result } = renderHook(
+      () => useEditablePromotion(editableUnitIdMock),
+      {
+        wrapper: at('/promocoes/nova'),
+      }
+    )
 
-    expect(result.current).toMatchObject({ mode: 'create', isUnavailable: false })
+    expect(result.current).toMatchObject({
+      mode: 'create',
+      isUnavailable: false,
+    })
     expect(usePromotions).toHaveBeenCalledWith(null)
   })
 
   it('edits an unused campaign from the route', () => {
-    const { result } = renderHook(() => useEditablePromotion(editableUnitIdMock), {
-      wrapper: at(`/promocoes/${promotionMock.id}`),
-    })
+    const { result } = renderHook(
+      () => useEditablePromotion(editableUnitIdMock),
+      {
+        wrapper: at(`/promocoes/${promotionMock.id}`),
+      }
+    )
 
     expect(result.current).toMatchObject({
       mode: 'edit',
@@ -53,17 +65,23 @@ describe(useEditablePromotion.name, () => {
   })
 
   it('refuses to edit a campaign that was already used', () => {
-    const { result } = renderHook(() => useEditablePromotion(editableUnitIdMock), {
-      wrapper: at(`/promocoes/${usedPromotionMock.id}`),
-    })
+    const { result } = renderHook(
+      () => useEditablePromotion(editableUnitIdMock),
+      {
+        wrapper: at(`/promocoes/${usedPromotionMock.id}`),
+      }
+    )
 
     expect(result.current.isUnavailable).toBe(true)
   })
 
   it('duplicates a used campaign', () => {
-    const { result } = renderHook(() => useEditablePromotion(editableUnitIdMock), {
-      wrapper: at(`/promocoes/nova?duplicar=${usedPromotionMock.id}`),
-    })
+    const { result } = renderHook(
+      () => useEditablePromotion(editableUnitIdMock),
+      {
+        wrapper: at(`/promocoes/nova?duplicar=${usedPromotionMock.id}`),
+      }
+    )
 
     expect(result.current).toMatchObject({
       mode: 'duplicate',

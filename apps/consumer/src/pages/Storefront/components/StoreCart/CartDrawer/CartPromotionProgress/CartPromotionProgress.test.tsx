@@ -6,9 +6,12 @@ import { useStorefrontFacade } from '@pages/Storefront/facades/useStorefrontFaca
 import { CartPromotionProgress } from './CartPromotionProgress'
 import { cartGiftMock, cartOfferMock } from './CartPromotionProgress.mock'
 
-vi.mock('@pages/Storefront/facades/useStorefrontFacade/useStorefrontFacade', () => ({
-  useStorefrontFacade: vi.fn(),
-}))
+vi.mock(
+  '@pages/Storefront/facades/useStorefrontFacade/useStorefrontFacade',
+  () => ({
+    useStorefrontFacade: vi.fn(),
+  })
+)
 
 const withCart = (cartTotal: number) =>
   vi.mocked(useStorefrontFacade).mockReturnValue({
@@ -33,7 +36,9 @@ describe('CartPromotionProgress', () => {
 
     render(<CartPromotionProgress />)
 
-    expect(screen.getByText('Frete grátis liberado na entrega')).toBeInTheDocument()
+    expect(
+      screen.getByText('Frete grátis liberado na entrega')
+    ).toBeInTheDocument()
   })
 
   it('shows nothing when the store has no free delivery campaign', () => {
@@ -57,9 +62,11 @@ describe('CartPromotionProgress', () => {
 
     render(<CartPromotionProgress />)
 
-    expect(screen.getByText('Frete grátis liberado na entrega')).toBeInTheDocument()
     expect(
-      screen.getByText(/para ganhar Coca-Cola Lata/)
-    ).toHaveTextContent(/Faltam R\$\s10,00/)
+      screen.getByText('Frete grátis liberado na entrega')
+    ).toBeInTheDocument()
+    expect(screen.getByText(/para ganhar Coca-Cola Lata/)).toHaveTextContent(
+      /Faltam R\$\s10,00/
+    )
   })
 })

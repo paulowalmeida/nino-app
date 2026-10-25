@@ -18,6 +18,7 @@ const PREVIEW_ICONS = {
   'free-delivery': 'truck',
   discount: 'tag',
   gift: 'gift',
+  package: 'tag',
 } as const
 
 export const PromotionPreview = () => {
@@ -27,7 +28,8 @@ export const PromotionPreview = () => {
   const { headline, schedule, zones, period } = promotionSummaryParts(
     toPromotionSummarySource(
       values,
-      giftProductOptions.find(({ value }) => value === values.giftProductId)?.name
+      giftProductOptions.find(({ value }) => value === values.giftProductId)
+        ?.name
     )
   )
   const facts = [

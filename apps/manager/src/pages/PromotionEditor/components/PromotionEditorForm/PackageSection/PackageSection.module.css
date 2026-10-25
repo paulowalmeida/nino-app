@@ -1,0 +1,62 @@
+@reference "@nino/ds/globals.css";
+
+.packageSection,
+.groups,
+.group,
+.products,
+.options {
+  @apply flex flex-col;
+}
+
+.packageSection,
+.groups {
+  @apply gap-4;
+}
+
+.headingRow,
+.groupHeader {
+  @apply items-start justify-between gap-4;
+}
+
+.sectionHint,
+.emptyGroups,
+.optionsLabel {
+  @apply mt-1 text-sm text-fg-muted;
+}
+
+.emptyGroups {
+  @apply rounded-xl border border-dashed p-4;
+}
+
+.group {
+  @apply gap-4 rounded-xl border p-4;
+}
+
+.groupSettings {
+  @apply grid gap-4 sm:grid-cols-2;
+}
+
+.checkRow,
+.optionRow {
+  @apply flex cursor-pointer items-center gap-2 text-sm;
+}
+
+.productsLabel {
+  @apply font-semibold;
+}
+
+.products {
+  @apply gap-3;
+}
+
+.product {
+  @apply rounded-xl bg-surface-mute p-3;
+}
+
+.options {
+  @apply mt-3 gap-2 border-t pt-3 pl-7;
+}
+
+.errorText {
+  @apply text-sm text-danger;
+}

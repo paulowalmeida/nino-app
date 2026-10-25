@@ -7,6 +7,8 @@ import { toPromotionFormValues } from '@pages/PromotionEditor/adapters/promotion
 import { BenefitSection } from '@pages/PromotionEditor/components/PromotionEditorForm/BenefitSection/BenefitSection'
 import { CodeSection } from '@pages/PromotionEditor/components/PromotionEditorForm/CodeSection/CodeSection'
 import { LimitsSection } from '@pages/PromotionEditor/components/PromotionEditorForm/LimitsSection/LimitsSection'
+import { MediaSection } from '@pages/PromotionEditor/components/PromotionEditorForm/MediaSection/MediaSection'
+import { PackageSection } from '@pages/PromotionEditor/components/PromotionEditorForm/PackageSection/PackageSection'
 import { PeriodSection } from '@pages/PromotionEditor/components/PromotionEditorForm/PeriodSection/PeriodSection'
 import { PromotionPreview } from '@pages/PromotionEditor/components/PromotionEditorForm/PromotionPreview/PromotionPreview'
 import { ZonesSection } from '@pages/PromotionEditor/components/PromotionEditorForm/ZonesSection/ZonesSection'
@@ -46,12 +48,18 @@ export const PromotionEditorForm = () => {
           />
 
           <Box key={stepKey} className={motion.deal}>
-            {stepKey === 'benefit' && <BenefitSection />}
+            {stepKey === 'benefit' && (
+              <Box className={styles.promotionEditorRules}>
+                <BenefitSection />
+                {campaignType === 'package' && <PackageSection />}
+              </Box>
+            )}
             {stepKey === 'zones' && <ZonesSection />}
             {stepKey === 'period' && <PeriodSection />}
             {stepKey === 'rules' && (
               <Box className={styles.promotionEditorRules}>
-                <CodeSection />
+                {campaignType === 'discount' && <CodeSection />}
+                <MediaSection />
                 <LimitsSection />
               </Box>
             )}

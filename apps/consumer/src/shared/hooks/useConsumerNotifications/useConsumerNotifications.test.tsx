@@ -3,9 +3,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { renderHook, waitFor } from '@testing-library/react'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 
-import {
-  notificationService,
-} from '@shared/services/notification/notification.service'
+import { notificationService } from '@shared/services/notification/notification.service'
 
 import { useConsumerNotifications } from './useConsumerNotifications'
 import { useConsumerNotificationsMock } from './useConsumerNotifications.mock'

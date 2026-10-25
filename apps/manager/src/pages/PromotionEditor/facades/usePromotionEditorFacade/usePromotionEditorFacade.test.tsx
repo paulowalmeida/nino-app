@@ -12,10 +12,14 @@ import { usePromotionEditorFacade } from './usePromotionEditorFacade'
 import { editorFacadeUnitIdMock } from './usePromotionEditorFacade.mock'
 
 vi.mock('@shared/hooks/session/useCurrentUnit/useCurrentUnit')
-vi.mock('@pages/PromotionEditor/hooks/useEditablePromotion/useEditablePromotion')
+vi.mock(
+  '@pages/PromotionEditor/hooks/useEditablePromotion/useEditablePromotion'
+)
 vi.mock('@pages/PromotionEditor/hooks/usePromotionSave/usePromotionSave')
 vi.mock('@pages/PromotionEditor/hooks/useZoneOptions/useZoneOptions')
-vi.mock('@pages/PromotionEditor/hooks/useGiftProductOptions/useGiftProductOptions')
+vi.mock(
+  '@pages/PromotionEditor/hooks/useGiftProductOptions/useGiftProductOptions'
+)
 
 describe('usePromotionEditorFacade', () => {
   it('saves the campaign being edited, in the current unit', () => {
@@ -29,7 +33,10 @@ describe('usePromotionEditorFacade', () => {
       isPending: false,
       isUnavailable: false,
     })
-    vi.mocked(useZoneOptions).mockReturnValue({ zoneOptions: [], isPending: true })
+    vi.mocked(useZoneOptions).mockReturnValue({
+      zoneOptions: [],
+      isPending: true,
+    })
     vi.mocked(useGiftProductOptions).mockReturnValue({
       giftProductOptions: [],
       isPending: false,

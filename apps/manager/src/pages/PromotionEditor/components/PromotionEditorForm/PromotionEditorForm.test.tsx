@@ -9,7 +9,9 @@ import { usePromotionEditorFacade } from '@pages/PromotionEditor/facades/useProm
 import { PromotionEditorForm } from './PromotionEditorForm'
 import { promotionEditorFormMock } from './PromotionEditorForm.mock'
 
-vi.mock('@pages/PromotionEditor/facades/usePromotionEditorFacade/usePromotionEditorFacade')
+vi.mock(
+  '@pages/PromotionEditor/facades/usePromotionEditorFacade/usePromotionEditorFacade'
+)
 
 const savePromotion = vi.fn()
 const cancel = vi.fn()

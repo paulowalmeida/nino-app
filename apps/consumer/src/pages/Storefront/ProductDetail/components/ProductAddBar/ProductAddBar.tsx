@@ -35,7 +35,10 @@ export const ProductAddBar = () => {
         ) : (
           <>
             Adicionar{' '}
-            <AnimatedNumber className={styles.confirmValue} value={brl(total)} />
+            <AnimatedNumber
+              className={styles.confirmValue}
+              value={brl(total)}
+            />
           </>
         )}
       </Button>

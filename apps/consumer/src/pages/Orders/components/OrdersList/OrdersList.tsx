@@ -45,8 +45,7 @@ export const OrdersList = ({ orders, slug }: OrdersListProps) => (
               )}
             </Text>
             <Text as="span" className={styles.when}>
-              {orderDateLabel(order.createdAt)} ·{' '}
-              {clockLabel(order.createdAt)}
+              {orderDateLabel(order.createdAt)} · {clockLabel(order.createdAt)}
             </Text>
           </Text>
 

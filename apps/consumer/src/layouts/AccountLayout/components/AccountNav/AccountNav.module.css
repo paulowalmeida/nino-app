@@ -33,7 +33,6 @@
   @apply lg:bg-transparent lg:px-3.5 lg:py-2.5;
 }
 
-
 .linkOn {
   @apply border-transparent bg-brand text-fg-on-brand;
   @apply hover:border-transparent hover:text-fg-on-brand;

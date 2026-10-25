@@ -61,7 +61,6 @@
   @apply ml-auto hidden h-12 min-w-56 max-w-[44rem] flex-1 rounded-3 lg:flex;
 }
 
-
 .topBarActions {
   @apply ml-auto flex shrink-0 flex-nowrap items-center gap-1 lg:ml-0;
 }
@@ -72,7 +71,6 @@
 .topBarStatus {
   @apply hidden h-6 w-28 rounded-1 xl:block;
 }
-
 
 .topBarAction {
   @apply h-10 w-10 rounded-full;

@@ -1,6 +1,5 @@
 @reference "@nino/ds/globals.css";
 
-
 .storeBanner {
   @apply relative w-full overflow-hidden bg-cover bg-center;
   @apply h-48;
@@ -23,21 +22,9 @@
   will-change: transform;
 }
 
-
 .customBanner {
-  display: block;
-  width: fit-content;
-  height: fit-content;
-  max-width: 100%;
-  min-height: 0;
-  aspect-ratio: auto;
-  max-height: none;
-  margin-inline: auto;
-  border: 0;
-  border-radius: 0;
-  background-color: transparent;
-  overflow: hidden;
   @apply sm:rounded-4;
+  background-color: transparent;
 }
 
 .customBanner::before {
@@ -45,27 +32,11 @@
 }
 
 .customImage {
-  display: block;
-  width: auto;
-  height: auto;
-  max-width: 100%;
-  max-height: none;
-  margin: auto;
-  border: 0;
-  border-radius: 0;
-  object-fit: contain;
-}
-
-@media (min-width: 640px) {
-  .customImage {
-    border-radius: inherit;
-  }
+  @apply h-full w-full object-cover;
 }
 
 .customImageWrap {
-  display: block;
-  width: fit-content;
-  max-width: 100%;
+  @apply h-full w-full;
 }
 
 .imagePlaceholder {
@@ -94,6 +65,35 @@
   transition: transform 70ms linear;
   will-change: transform;
   z-index: 1;
+}
+
+.slideAction {
+  @apply absolute inset-0 z-content cursor-pointer;
+}
+
+.carouselButton {
+  @apply absolute top-1/2 z-overlay h-9 w-9 -translate-y-1/2 rounded-full;
+  @apply bg-black/45 text-white;
+}
+
+.previous {
+  @apply left-3;
+}
+
+.next {
+  @apply right-3;
+}
+
+.dots {
+  @apply absolute bottom-3 left-1/2 z-overlay flex -translate-x-1/2 gap-2;
+}
+
+.dot {
+  @apply h-2 w-2 rounded-full bg-white/55;
+}
+
+.activeDot {
+  @apply w-6 bg-white;
 }
 
 @media (prefers-reduced-motion: reduce) {

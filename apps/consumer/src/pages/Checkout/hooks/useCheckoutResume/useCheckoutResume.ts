@@ -25,8 +25,7 @@ export const useCheckoutResume = ({
   // Um pedido salvo pertence a uma loja específica. Nunca monte o id/token de
   // uma loja antiga na URL da loja que está aberta agora.
   const lastOrder = useMemo(
-    () =>
-      storeSlug && storedOrder?.slug === storeSlug ? storedOrder : null,
+    () => (storeSlug && storedOrder?.slug === storeSlug ? storedOrder : null),
     [storeSlug, storedOrder]
   )
 
@@ -40,14 +39,7 @@ export const useCheckoutResume = ({
         `${lastOrder.orderId}?token=${lastOrder.token}`,
       { replace: true }
     )
-  }, [
-    cartItemCount,
-    created,
-    isStoreReady,
-    lastOrder,
-    navigate,
-    pathSlug,
-  ])
+  }, [cartItemCount, created, isStoreReady, lastOrder, navigate, pathSlug])
 
   return lastOrder
 }

@@ -83,7 +83,9 @@ export const AccountDrawer = ({
   ) => {
     const href = `${base}/conta/${to}`
     const isOn = pathname === href
-    const className = isOn ? `${styles.accountDrawerItem} ${styles.itemOn}` : styles.accountDrawerItem
+    const className = isOn
+      ? `${styles.accountDrawerItem} ${styles.itemOn}`
+      : styles.accountDrawerItem
 
     return (
       <ListRow key={to} divider="none" padding={0}>
@@ -161,7 +163,10 @@ export const AccountDrawer = ({
 
         {consumer ? (
           <>
-            <nav className={styles.accountDrawerNav} aria-label="Seções da conta">
+            <nav
+              className={styles.accountDrawerNav}
+              aria-label="Seções da conta"
+            >
               <Box as="ul" className={styles.accountDrawerList}>
                 {ready.map(({ to, label, icon }, index) =>
                   sectionRow(to, label, icon, index)
@@ -172,7 +177,10 @@ export const AccountDrawer = ({
                   dizia três vezes a mesma coisa e roubava a leitura do nome */}
               <Text className={styles.eyebrow}>em breve</Text>
 
-              <Box as="ul" className={`${styles.accountDrawerList} ${styles.listSoon}`}>
+              <Box
+                as="ul"
+                className={`${styles.accountDrawerList} ${styles.listSoon}`}
+              >
                 {soon.map(({ to, label, icon }, index) =>
                   sectionRow(to, label, icon, ready.length + index)
                 )}

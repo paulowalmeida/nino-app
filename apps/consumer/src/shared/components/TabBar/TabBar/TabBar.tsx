@@ -4,9 +4,7 @@ import { useLocation, useNavigate } from 'react-router'
 import { Icon } from '@nino/ds/components/Icon'
 import { Button } from '@nino/ds/components/Button'
 import { Text } from '@nino/ds/components/Text'
-import {
-  useConsumerSession,
-} from '@shared/hooks/useConsumerSession/useConsumerSession'
+import { useConsumerSession } from '@shared/hooks/useConsumerSession/useConsumerSession'
 import { useGuestOrders } from '@shared/hooks/useGuestOrders/useGuestOrders'
 import { useMyOrders } from '@shared/hooks/useMyOrders/useMyOrders'
 import { isTerminal } from '@utils/order-journey'
@@ -100,7 +98,9 @@ export const TabBar = ({ base, cartCount = 0, onOpenCart }: TabBarProps) => {
             onClick={() => void navigate(notifications)}
             aria-current={isNotifications ? 'page' : undefined}
             className={
-              isNotifications ? `${styles.tabBarTab} ${styles.tabOn}` : styles.tabBarTab
+              isNotifications
+                ? `${styles.tabBarTab} ${styles.tabOn}`
+                : styles.tabBarTab
             }
           >
             <Icon name="receipt" />
@@ -115,7 +115,9 @@ export const TabBar = ({ base, cartCount = 0, onOpenCart }: TabBarProps) => {
           onClick={() => setIsAccountOpen(true)}
           aria-haspopup="dialog"
           aria-expanded={isAccountOpen}
-          className={isAccount ? `${styles.tabBarTab} ${styles.tabOn}` : styles.tabBarTab}
+          className={
+            isAccount ? `${styles.tabBarTab} ${styles.tabOn}` : styles.tabBarTab
+          }
         >
           <Icon name="user" />
           <Text as="span" className={styles.tabBarLabel}>

@@ -14,7 +14,7 @@ import {
 } from '@pages/PromotionEditor/constants/promotionEditor.constants'
 import { usePromotionEditorFacade } from '@pages/PromotionEditor/facades/usePromotionEditorFacade/usePromotionEditorFacade'
 import type { PromotionFormValues } from '@pages/PromotionEditor/types/PromotionFormValues.type'
-import { maskMoney } from '@shared/utils/money/money'
+import { maskMoney, moneyValue } from '@shared/utils/money/money'
 
 import styles from './BenefitSection.module.css'
 
@@ -22,6 +22,7 @@ const TYPE_HINTS = {
   'free-delivery': 'A taxa de entrega some do pedido que cumprir a condição.',
   discount: 'Sai do valor dos itens; o frete continua o normal.',
   gift: 'Um produto do cardápio entra no pedido a R$ 0.',
+  package: 'O cliente monta só com os produtos e opções que você liberar.',
 } as const
 
 export const BenefitSection = () => {
@@ -34,6 +35,7 @@ export const BenefitSection = () => {
   const campaignType = useWatch({ control, name: 'campaignType' })
   const discountKind = useWatch({ control, name: 'discountKind' })
   const isDiscount = campaignType === 'discount'
+  const isPackage = campaignType === 'package'
   const isPercentage = discountKind === 'PERCENTAGE_DISCOUNT'
 
   return (
@@ -44,7 +46,10 @@ export const BenefitSection = () => {
         </Heading>
 
         <Box className={styles.benefitFields}>
-          <FormField label="Tipo de campanha" helperText={TYPE_HINTS[campaignType]}>
+          <FormField
+            label="Tipo de campanha"
+            helperText={TYPE_HINTS[campaignType]}
+          >
             <Controller
               name="campaignType"
               control={control}
@@ -132,7 +137,11 @@ export const BenefitSection = () => {
                   <Input
                     inputMode="decimal"
                     placeholder={isPercentage ? '10' : '10,00'}
-                    aria-label={isPercentage ? 'Desconto em percentual' : 'Desconto em reais'}
+                    aria-label={
+                      isPercentage
+                        ? 'Desconto em percentual'
+                        : 'Desconto em reais'
+                    }
                     value={field.value}
                     error={!!errors.discountValue}
                     onBlur={field.onBlur}
@@ -164,7 +173,41 @@ export const BenefitSection = () => {
                     aria-label="Teto do desconto em reais"
                     value={field.value}
                     onBlur={field.onBlur}
-                    onChange={(event) => field.onChange(maskMoney(event.target.value))}
+                    onChange={(event) =>
+                      field.onChange(maskMoney(event.target.value))
+                    }
+                  />
+                )}
+              />
+            </FormField>
+          )}
+
+          {isPackage && (
+            <FormField
+              label="Preço fechado"
+              helperText="A soma normal dos itens aparece riscada no cardápio."
+              error={errors.packagePrice?.message}
+            >
+              <Controller
+                name="packagePrice"
+                control={control}
+                rules={{
+                  validate: (value) =>
+                    getValues('campaignType') !== 'package' ||
+                    moneyValue(value) > 0 ||
+                    'Informe o preço da promoção',
+                }}
+                render={({ field }) => (
+                  <Input
+                    inputMode="decimal"
+                    placeholder="49,90"
+                    aria-label="Preço fechado da promoção"
+                    value={field.value}
+                    error={!!errors.packagePrice}
+                    onBlur={field.onBlur}
+                    onChange={(event) =>
+                      field.onChange(maskMoney(event.target.value))
+                    }
                   />
                 )}
               />
@@ -185,7 +228,9 @@ export const BenefitSection = () => {
                   aria-label="Pedido mínimo em reais"
                   value={field.value}
                   onBlur={field.onBlur}
-                  onChange={(event) => field.onChange(maskMoney(event.target.value))}
+                  onChange={(event) =>
+                    field.onChange(maskMoney(event.target.value))
+                  }
                 />
               )}
             />

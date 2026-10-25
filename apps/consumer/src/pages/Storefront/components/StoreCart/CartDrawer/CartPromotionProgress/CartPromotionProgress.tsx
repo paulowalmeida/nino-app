@@ -29,11 +29,19 @@ export const CartPromotionProgress = () => {
       {offers.map((offer) => {
         const gap = freeDeliveryGap(offer, cartTotal)
         return gap === 0 ? (
-          <Text key={offer.id} role="status" className={styles.promotionReached}>
+          <Text
+            key={offer.id}
+            role="status"
+            className={styles.promotionReached}
+          >
             {reachedOf(offer)}
           </Text>
         ) : (
-          <Box key={offer.id} className={styles.promotionProgress} role="status">
+          <Box
+            key={offer.id}
+            className={styles.promotionProgress}
+            role="status"
+          >
             <Text className={styles.promotionGap}>
               Faltam <strong>{brl(gap)}</strong> para {goalOf(offer)}
             </Text>

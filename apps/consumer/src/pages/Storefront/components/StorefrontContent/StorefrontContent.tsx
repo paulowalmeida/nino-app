@@ -20,6 +20,7 @@ import { MenuRowsSkeleton } from '@pages/Storefront/skeletons/MenuRowsSkeleton/M
 import { StoreHeaderSkeleton } from '@pages/Storefront/skeletons/StoreHeaderSkeleton/StoreHeaderSkeleton'
 import { FooterNav } from '@shared/components/FooterNav/FooterNav'
 import { StoreBanner } from '@pages/Storefront/components/StoreHeader/StoreBanner/StoreBanner'
+import { PromotionSection } from '@pages/Storefront/components/PromotionSection/PromotionSection'
 import { useDockedHeader } from '@pages/Storefront/hooks/useDockedHeader/useDockedHeader'
 import { useImagePreload } from '@pages/Storefront/hooks/useImagePreload/useImagePreload'
 import { useStorefrontFacade } from '@pages/Storefront/facades/useStorefrontFacade/useStorefrontFacade'
@@ -86,7 +87,9 @@ export const StorefrontContent = ({ pathSlug }: StorefrontContentProps) => {
     <>
       <StoreTopBar slug={pathSlug ?? ''} isDocked={isHeaderDocked} />
 
-      {blocks.showBanner && <StoreBanner />}
+      {(blocks.showBanner || home.bannerOffers.length > 0) && (
+        <StoreBanner includeStoreBanner={blocks.showBanner} />
+      )}
 
       <Box className={styles.storefrontContentShell}>
         <StoreIdentity />
@@ -121,7 +124,10 @@ export const StorefrontContent = ({ pathSlug }: StorefrontContentProps) => {
           </CategoryBar>
         )}
 
-      <Box as="main" className={`${styles.storefrontContentShell} ${styles.storefrontContentMain}`}>
+      <Box
+        as="main"
+        className={`${styles.storefrontContentShell} ${styles.storefrontContentMain}`}
+      >
         <Box
           className={`${motion.deal} ${styles.storefrontContentMenu}`}
           style={riseDelay(200)}
@@ -168,6 +174,10 @@ export const StorefrontContent = ({ pathSlug }: StorefrontContentProps) => {
                 Não encontramos resultados para “{search}”. Tente outro termo.
               </EmptyState>
             )}
+
+          {!isMenuContentPending && !home.isMenuError && !isSearching && (
+            <PromotionSection />
+          )}
 
           {!isMenuContentPending &&
             visibleSections.map((section) => (

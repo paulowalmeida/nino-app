@@ -1,0 +1,1471 @@
+{
+  "tool": "comp-spec",
+  "version": 1,
+  "createdAt": "2026-10-23T18:46:14.397Z",
+  "comp": ".impeccable/mocks/decision/passagem-viva.png",
+  "warnings": [
+    "region guarana-bottle: \"bleed\": true set in the regions file (the clipped-artwork refusal is overridden: the page crops it there)"
+  ],
+  "uncoveredInkCells": [
+    "I2"
+  ],
+  "compSize": {
+    "width": 390,
+    "height": 844
+  },
+  "aspect": 0.4621,
+  "orientation": "portrait",
+  "palette": [
+    {
+      "hex": "#f8f7f4",
+      "coverage": 0.931
+    },
+    {
+      "hex": "#f86709",
+      "coverage": 0.0244
+    },
+    {
+      "hex": "#938f8c",
+      "coverage": 0.0179
+    },
+    {
+      "hex": "#3d3836",
+      "coverage": 0.0152
+    },
+    {
+      "hex": "#c3bfbe",
+      "coverage": 0.0114
+    }
+  ],
+  "bands": [
+    {
+      "y": 0.0361,
+      "strength": 0.2471
+    },
+    {
+      "y": 0.148,
+      "strength": 1
+    },
+    {
+      "y": 0.1733,
+      "strength": 0.2947
+    },
+    {
+      "y": 0.2166,
+      "strength": 0.2799
+    },
+    {
+      "y": 0.296,
+      "strength": 0.8601
+    },
+    {
+      "y": 0.3213,
+      "strength": 0.3555
+    },
+    {
+      "y": 0.3718,
+      "strength": 0.5061
+    },
+    {
+      "y": 0.3971,
+      "strength": 0.3894
+    },
+    {
+      "y": 0.4188,
+      "strength": 0.3367
+    },
+    {
+      "y": 0.4765,
+      "strength": 0.7034
+    },
+    {
+      "y": 0.5776,
+      "strength": 0.5137
+    },
+    {
+      "y": 0.6968,
+      "strength": 0.416
+    },
+    {
+      "y": 0.8339,
+      "strength": 0.3626
+    },
+    {
+      "y": 0.9278,
+      "strength": 0.5283
+    },
+    {
+      "y": 0.9819,
+      "strength": 0.7543
+    }
+  ],
+  "regions": [
+    {
+      "id": "masthead",
+      "kind": "chrome",
+      "note": "cabeçalho branco com marca central e botão de fechar",
+      "grid": "A0:J0",
+      "box": {
+        "x": 0,
+        "y": 0,
+        "w": 1,
+        "h": 0.1
+      },
+      "px": {
+        "x": 0,
+        "y": 0,
+        "w": 390,
+        "h": 84
+      },
+      "aspect": 4.6429,
+      "palette": [
+        {
+          "hex": "#f8f7f3",
+          "coverage": 0.9704
+        },
+        {
+          "hex": "#635c57",
+          "coverage": 0.0108
+        },
+        {
+          "hex": "#c0bcba",
+          "coverage": 0.0075
+        },
+        {
+          "hex": "#f8e8c8",
+          "coverage": 0.0064
+        },
+        {
+          "hex": "#89877d",
+          "coverage": 0.005
+        }
+      ],
+      "detail": {
+        "energy": 9.3769
+      },
+      "medium": "semantic",
+      "plate": null,
+      "text": null
+    },
+    {
+      "id": "offer-kicker",
+      "kind": "text",
+      "note": "selo OFERTA DO DIA",
+      "grid": "A1:D1",
+      "coverBox": {
+        "x": 0,
+        "y": 0.1,
+        "w": 0.4,
+        "h": 0.1
+      },
+      "box": {
+        "x": 0.0462,
+        "y": 0.0995,
+        "w": 0.3538,
+        "h": 0.0995
+      },
+      "px": {
+        "x": 18,
+        "y": 84,
+        "w": 138,
+        "h": 84
+      },
+      "aspect": 1.6429,
+      "palette": [
+        {
+          "hex": "#f7f5e6",
+          "coverage": 0.8209
+        },
+        {
+          "hex": "#9e9794",
+          "coverage": 0.0697
+        },
+        {
+          "hex": "#363230",
+          "coverage": 0.0608
+        },
+        {
+          "hex": "#6c6964",
+          "coverage": 0.0251
+        },
+        {
+          "hex": "#d2ccc9",
+          "coverage": 0.0235
+        }
+      ],
+      "detail": {
+        "energy": 24.0293
+      },
+      "medium": "semantic",
+      "plate": null,
+      "text": null,
+      "type": {
+        "comp": {
+          "lines": 1,
+          "glyphs": 9,
+          "capHeightPx": 16.6,
+          "inkIsDark": true,
+          "allCaps": false,
+          "advance": 0.6612,
+          "advTall": 0.6612,
+          "advX": 0.6461,
+          "gap": 0.0902,
+          "xRatio": 0.7136,
+          "stemW": 0.2342,
+          "contrast": 1.2295,
+          "serif": 0.6377,
+          "densTall": 0.6313,
+          "densX": 0.7268,
+          "weight": 0.6313
+        },
+        "widthClass": "normal",
+        "weightClass": "bold"
+      }
+    },
+    {
+      "id": "offer-title",
+      "kind": "text",
+      "note": "2 hambúrgueres + 2 bebidas",
+      "grid": "A1:H1",
+      "coverBox": {
+        "x": 0,
+        "y": 0.1,
+        "w": 0.8,
+        "h": 0.1
+      },
+      "box": {
+        "x": 0.0462,
+        "y": 0.0995,
+        "w": 0.7385,
+        "h": 0.0995
+      },
+      "px": {
+        "x": 18,
+        "y": 84,
+        "w": 288,
+        "h": 84
+      },
+      "aspect": 3.4286,
+      "palette": [
+        {
+          "hex": "#f7f6e7",
+          "coverage": 0.8539
+        },
+        {
+          "hex": "#363230",
+          "coverage": 0.0568
+        },
+        {
+          "hex": "#a09996",
+          "coverage": 0.0458
+        },
+        {
+          "hex": "#726c69",
+          "coverage": 0.0324
+        },
+        {
+          "hex": "#c6c1bb",
+          "coverage": 0.0111
+        }
+      ],
+      "detail": {
+        "energy": 37.6961
+      },
+      "medium": "semantic",
+      "plate": null,
+      "text": null,
+      "type": {
+        "comp": {
+          "lines": 1,
+          "glyphs": 19,
+          "capHeightPx": 16.6,
+          "inkIsDark": true,
+          "allCaps": false,
+          "advance": 0.6628,
+          "advTall": 0.6628,
+          "advX": 0.6326,
+          "gap": 0.0753,
+          "xRatio": 0.7146,
+          "stemW": 0.2326,
+          "contrast": 1.2306,
+          "serif": 0.5994,
+          "densTall": 0.6296,
+          "densX": 0.7195,
+          "weight": 0.6296
+        },
+        "widthClass": "normal",
+        "weightClass": "bold"
+      }
+    },
+    {
+      "id": "offer-subtitle",
+      "kind": "text",
+      "note": "Monte seu pacote e economize",
+      "grid": "A1:G1",
+      "coverBox": {
+        "x": 0,
+        "y": 0.1,
+        "w": 0.7,
+        "h": 0.1
+      },
+      "box": {
+        "x": 0.0462,
+        "y": 0.0995,
+        "w": 0.6538,
+        "h": 0.0995
+      },
+      "px": {
+        "x": 18,
+        "y": 84,
+        "w": 255,
+        "h": 84
+      },
+      "aspect": 3.0357,
+      "palette": [
+        {
+          "hex": "#f7f6e7",
+          "coverage": 0.8396
+        },
+        {
+          "hex": "#363230",
+          "coverage": 0.0597
+        },
+        {
+          "hex": "#a49d9b",
+          "coverage": 0.0428
+        },
+        {
+          "hex": "#77726e",
+          "coverage": 0.0419
+        },
+        {
+          "hex": "#cec7c2",
+          "coverage": 0.016
+        }
+      ],
+      "detail": {
+        "energy": 36.073
+      },
+      "medium": "semantic",
+      "plate": null,
+      "text": null,
+      "type": {
+        "comp": {
+          "lines": 1,
+          "glyphs": 17,
+          "capHeightPx": 16.6,
+          "inkIsDark": true,
+          "allCaps": false,
+          "advance": 0.6625,
+          "advTall": 0.6625,
+          "advX": 0.6474,
+          "gap": 0.0903,
+          "xRatio": 0.7144,
+          "stemW": 0.2321,
+          "contrast": 1.219,
+          "serif": 0.6014,
+          "densTall": 0.63,
+          "densX": 0.7189,
+          "weight": 0.63
+        },
+        "widthClass": "normal",
+        "weightClass": "bold"
+      }
+    },
+    {
+      "id": "offer-prices",
+      "kind": "text",
+      "note": "preço promocional e soma riscada",
+      "grid": "A2:F2",
+      "coverBox": {
+        "x": 0,
+        "y": 0.2,
+        "w": 0.6,
+        "h": 0.1
+      },
+      "box": {
+        "x": 0.0154,
+        "y": 0.2642,
+        "w": 0.5385,
+        "h": 0.0355
+      },
+      "px": {
+        "x": 6,
+        "y": 223,
+        "w": 210,
+        "h": 30
+      },
+      "aspect": 7,
+      "palette": [
+        {
+          "hex": "#f7f7f7",
+          "coverage": 0.7171
+        },
+        {
+          "hex": "#3e3734",
+          "coverage": 0.1686
+        },
+        {
+          "hex": "#706e6d",
+          "coverage": 0.0743
+        },
+        {
+          "hex": "#b1b1b1",
+          "coverage": 0.04
+        }
+      ],
+      "detail": {
+        "energy": 55.5415
+      },
+      "medium": "semantic",
+      "plate": null,
+      "text": null,
+      "type": {
+        "comp": {
+          "lines": 1,
+          "glyphs": 13,
+          "capHeightPx": 16.5,
+          "inkIsDark": true,
+          "allCaps": false,
+          "advance": 0.6649,
+          "advTall": 0.9973,
+          "advX": 0.6649,
+          "gap": 0.0604,
+          "xRatio": 0.7157,
+          "stemW": 0.2336,
+          "contrast": 1.256,
+          "serif": 0.398,
+          "densTall": 0.636,
+          "densX": 0.7007,
+          "weight": 0.636
+        },
+        "widthClass": "normal",
+        "weightClass": "bold"
+      }
+    },
+    {
+      "id": "builder-heading",
+      "kind": "text",
+      "note": "Monte sua comanda",
+      "grid": "A3:F3",
+      "box": {
+        "x": 0,
+        "y": 0.3,
+        "w": 0.6,
+        "h": 0.1
+      },
+      "px": {
+        "x": 0,
+        "y": 253,
+        "w": 234,
+        "h": 84
+      },
+      "aspect": 2.7857,
+      "palette": [
+        {
+          "hex": "#f7f7f5",
+          "coverage": 0.9076
+        },
+        {
+          "hex": "#c7c3bf",
+          "coverage": 0.0332
+        },
+        {
+          "hex": "#97968f",
+          "coverage": 0.0241
+        },
+        {
+          "hex": "#403a36",
+          "coverage": 0.0197
+        },
+        {
+          "hex": "#f78c4c",
+          "coverage": 0.0154
+        }
+      ],
+      "detail": {
+        "energy": 27.716
+      },
+      "medium": "semantic",
+      "plate": null,
+      "text": null,
+      "type": {
+        "comp": {
+          "lines": 2,
+          "glyphs": 47,
+          "capHeightPx": 9.9,
+          "inkIsDark": true,
+          "allCaps": false,
+          "advance": 0.6083,
+          "advTall": 0.6083,
+          "advX": 0.6083,
+          "gap": 0.1064,
+          "xRatio": 0.7478,
+          "stemW": 0.1459,
+          "contrast": 1.1426,
+          "serif": null,
+          "densTall": 0.5023,
+          "densX": 0.5275,
+          "weight": 0.5023
+        },
+        "widthClass": "normal",
+        "weightClass": "medium"
+      }
+    },
+    {
+      "id": "builder-progress",
+      "kind": "text",
+      "note": "indicador 2 de 3",
+      "grid": "H3:J3",
+      "coverBox": {
+        "x": 0.7,
+        "y": 0.3,
+        "w": 0.3,
+        "h": 0.1
+      },
+      "box": {
+        "x": 0.7154,
+        "y": 0.3495,
+        "w": 0.2615,
+        "h": 0.0498
+      },
+      "px": {
+        "x": 279,
+        "y": 295,
+        "w": 102,
+        "h": 42
+      },
+      "aspect": 2.4286,
+      "palette": [
+        {
+          "hex": "#f6f6f6",
+          "coverage": 0.855
+        },
+        {
+          "hex": "#b3acac",
+          "coverage": 0.1134
+        },
+        {
+          "hex": "#847f7b",
+          "coverage": 0.0315
+        }
+      ],
+      "detail": {
+        "energy": 16.048
+      },
+      "medium": "semantic",
+      "plate": null,
+      "text": null,
+      "type": {
+        "comp": {
+          "lines": 2,
+          "glyphs": 19,
+          "capHeightPx": 9.8,
+          "inkIsDark": true,
+          "allCaps": false,
+          "advance": 0.6788,
+          "advTall": 0.4849,
+          "advX": 0.6851,
+          "gap": 0.0721,
+          "xRatio": 0.7514,
+          "stemW": 0.217,
+          "contrast": 1.2389,
+          "serif": 0.2083,
+          "densTall": 0.62,
+          "densX": 0.5732,
+          "weight": 0.62
+        },
+        "widthClass": "normal",
+        "weightClass": "bold"
+      }
+    },
+    {
+      "id": "step-tabs",
+      "kind": "control",
+      "note": "três passos da montagem; segundo ativo",
+      "grid": "A3:J4",
+      "coverBox": {
+        "x": 0,
+        "y": 0.3,
+        "w": 1,
+        "h": 0.2
+      },
+      "box": {
+        "x": 0.0154,
+        "y": 0.2998,
+        "w": 0.6923,
+        "h": 0.128
+      },
+      "px": {
+        "x": 6,
+        "y": 253,
+        "w": 270,
+        "h": 108
+      },
+      "aspect": 2.5,
+      "palette": [
+        {
+          "hex": "#f7f7f5",
+          "coverage": 0.9232
+        },
+        {
+          "hex": "#f89252",
+          "coverage": 0.0245
+        },
+        {
+          "hex": "#c7c3bf",
+          "coverage": 0.0229
+        },
+        {
+          "hex": "#97968f",
+          "coverage": 0.0161
+        },
+        {
+          "hex": "#403a36",
+          "coverage": 0.0132
+        }
+      ],
+      "detail": {
+        "energy": 25.5484
+      },
+      "medium": "semantic",
+      "plate": null,
+      "text": null
+    },
+    {
+      "id": "group-heading",
+      "kind": "text",
+      "note": "Escolha 2 bebidas",
+      "grid": "A4:F4",
+      "coverBox": {
+        "x": 0,
+        "y": 0.4,
+        "w": 0.6,
+        "h": 0.1
+      },
+      "box": {
+        "x": 0.0154,
+        "y": 0.4502,
+        "w": 0.4769,
+        "h": 0.0498
+      },
+      "px": {
+        "x": 6,
+        "y": 380,
+        "w": 186,
+        "h": 42
+      },
+      "aspect": 4.4286,
+      "palette": [
+        {
+          "hex": "#f7f7f7",
+          "coverage": 0.7506
+        },
+        {
+          "hex": "#393531",
+          "coverage": 0.1351
+        },
+        {
+          "hex": "#b7b5b3",
+          "coverage": 0.0612
+        },
+        {
+          "hex": "#948f8e",
+          "coverage": 0.0346
+        },
+        {
+          "hex": "#6c6b69",
+          "coverage": 0.0185
+        }
+      ],
+      "detail": {
+        "energy": 44.1652
+      },
+      "medium": "semantic",
+      "plate": null,
+      "text": null,
+      "type": {
+        "comp": {
+          "lines": 1,
+          "glyphs": 12,
+          "capHeightPx": 16.9,
+          "inkIsDark": true,
+          "allCaps": false,
+          "advance": 0.6203,
+          "advTall": 0.6351,
+          "advX": 0.6203,
+          "gap": 0.0591,
+          "xRatio": 0.6986,
+          "stemW": 0.2184,
+          "contrast": 1.1795,
+          "serif": 0.2764,
+          "densTall": 0.6053,
+          "densX": 0.7316,
+          "weight": 0.6053
+        },
+        "widthClass": "normal",
+        "weightClass": "bold",
+        "chosen": {
+          "family": "Hanuman",
+          "weight": 700,
+          "fontSizePx": 24,
+          "source": "catalog",
+          "estimatedSize": true,
+          "stamp": "12658107810b"
+        }
+      }
+    },
+    {
+      "id": "group-count",
+      "kind": "text",
+      "note": "0 de 2 selecionadas",
+      "grid": "A4:E4",
+      "coverBox": {
+        "x": 0,
+        "y": 0.4,
+        "w": 0.5,
+        "h": 0.1
+      },
+      "box": {
+        "x": 0.0154,
+        "y": 0.4502,
+        "w": 0.4769,
+        "h": 0.0498
+      },
+      "px": {
+        "x": 6,
+        "y": 380,
+        "w": 186,
+        "h": 42
+      },
+      "aspect": 4.4286,
+      "palette": [
+        {
+          "hex": "#f7f7f7",
+          "coverage": 0.7506
+        },
+        {
+          "hex": "#393531",
+          "coverage": 0.1351
+        },
+        {
+          "hex": "#b7b5b3",
+          "coverage": 0.0612
+        },
+        {
+          "hex": "#948f8e",
+          "coverage": 0.0346
+        },
+        {
+          "hex": "#6c6b69",
+          "coverage": 0.0185
+        }
+      ],
+      "detail": {
+        "energy": 44.1652
+      },
+      "medium": "semantic",
+      "plate": null,
+      "text": null,
+      "type": {
+        "comp": {
+          "lines": 1,
+          "glyphs": 12,
+          "capHeightPx": 16.9,
+          "inkIsDark": true,
+          "allCaps": false,
+          "advance": 0.6203,
+          "advTall": 0.6351,
+          "advX": 0.6203,
+          "gap": 0.0591,
+          "xRatio": 0.6986,
+          "stemW": 0.2184,
+          "contrast": 1.1795,
+          "serif": 0.2764,
+          "densTall": 0.6053,
+          "densX": 0.7316,
+          "weight": 0.6053
+        },
+        "widthClass": "normal",
+        "weightClass": "bold"
+      }
+    },
+    {
+      "id": "coca-bottle",
+      "kind": "plate",
+      "note": "garrafa de Coca-Cola 350 ml recortada",
+      "grid": "A5:C6",
+      "box": {
+        "x": 0,
+        "y": 0.5,
+        "w": 0.3,
+        "h": 0.2
+      },
+      "px": {
+        "x": 0,
+        "y": 422,
+        "w": 117,
+        "h": 169
+      },
+      "aspect": 0.6923,
+      "palette": [
+        {
+          "hex": "#f7f5f5",
+          "coverage": 0.8266
+        },
+        {
+          "hex": "#b31a1f",
+          "coverage": 0.0945
+        },
+        {
+          "hex": "#e24f52",
+          "coverage": 0.033
+        },
+        {
+          "hex": "#cac5c3",
+          "coverage": 0.024
+        },
+        {
+          "hex": "#115c2c",
+          "coverage": 0.022
+        }
+      ],
+      "detail": {
+        "energy": 9.7116
+      },
+      "medium": "raster",
+      "plate": "assets/plates/coca-bottle.png",
+      "text": null
+    },
+    {
+      "id": "coca-copy",
+      "kind": "text",
+      "note": "nome e preço incluído da Coca-Cola",
+      "grid": "C5:G5",
+      "coverBox": {
+        "x": 0.2,
+        "y": 0.5,
+        "w": 0.5,
+        "h": 0.1
+      },
+      "box": {
+        "x": 0.2615,
+        "y": 0.5498,
+        "w": 0.4,
+        "h": 0.0498
+      },
+      "px": {
+        "x": 102,
+        "y": 464,
+        "w": 156,
+        "h": 42
+      },
+      "aspect": 3.7143,
+      "palette": [
+        {
+          "hex": "#f7f7f7",
+          "coverage": 0.8503
+        },
+        {
+          "hex": "#3f3a37",
+          "coverage": 0.0563
+        },
+        {
+          "hex": "#6a6765",
+          "coverage": 0.0549
+        },
+        {
+          "hex": "#959592",
+          "coverage": 0.0192
+        },
+        {
+          "hex": "#c3bebb",
+          "coverage": 0.0192
+        }
+      ],
+      "detail": {
+        "energy": 27.1219
+      },
+      "medium": "semantic",
+      "plate": null,
+      "text": null,
+      "type": {
+        "comp": {
+          "lines": 1,
+          "glyphs": 13,
+          "capHeightPx": 11.1,
+          "inkIsDark": true,
+          "allCaps": false,
+          "advance": 0.6619,
+          "advTall": 0.6619,
+          "advX": 0.6318,
+          "gap": 0.0451,
+          "xRatio": 0.7425,
+          "stemW": 0.2293,
+          "contrast": 1.1274,
+          "serif": 0.436,
+          "densTall": 0.6247,
+          "densX": 0.7658,
+          "weight": 0.6247
+        },
+        "widthClass": "normal",
+        "weightClass": "bold"
+      }
+    },
+    {
+      "id": "coca-add",
+      "kind": "control",
+      "note": "botão circular adicionar Coca-Cola",
+      "grid": "I5:J6",
+      "coverBox": {
+        "x": 0.8,
+        "y": 0.5,
+        "w": 0.2,
+        "h": 0.2
+      },
+      "box": {
+        "x": 0.8462,
+        "y": 0.564,
+        "w": 0.0923,
+        "h": 0.0355
+      },
+      "px": {
+        "x": 330,
+        "y": 476,
+        "w": 36,
+        "h": 30
+      },
+      "aspect": 1.2,
+      "palette": [
+        {
+          "hex": "#f8f5ea",
+          "coverage": 0.925
+        },
+        {
+          "hex": "#f86b18",
+          "coverage": 0.0417
+        },
+        {
+          "hex": "#f8c098",
+          "coverage": 0.0333
+        }
+      ],
+      "detail": {
+        "energy": 2.5629
+      },
+      "medium": "semantic",
+      "plate": null,
+      "text": null
+    },
+    {
+      "id": "guarana-bottle",
+      "kind": "plate",
+      "note": "garrafa de Guaraná Antarctica 350 ml recortada; o recorte toca a faixa superior do card",
+      "grid": "A6:C7",
+      "bleed": true,
+      "box": {
+        "x": 0,
+        "y": 0.6,
+        "w": 0.3,
+        "h": 0.2
+      },
+      "px": {
+        "x": 0,
+        "y": 506,
+        "w": 117,
+        "h": 169
+      },
+      "aspect": 0.6923,
+      "palette": [
+        {
+          "hex": "#f7f7f6",
+          "coverage": 0.8285
+        },
+        {
+          "hex": "#10562c",
+          "coverage": 0.0673
+        },
+        {
+          "hex": "#388652",
+          "coverage": 0.0469
+        },
+        {
+          "hex": "#b1161b",
+          "coverage": 0.0384
+        },
+        {
+          "hex": "#787a79",
+          "coverage": 0.0189
+        }
+      ],
+      "detail": {
+        "energy": 8.8806
+      },
+      "medium": "raster",
+      "plate": "assets/plates/guarana-bottle.png",
+      "text": null
+    },
+    {
+      "id": "guarana-copy",
+      "kind": "text",
+      "note": "nome e preço incluído do Guaraná",
+      "grid": "C6:H7",
+      "coverBox": {
+        "x": 0.2,
+        "y": 0.6,
+        "w": 0.6,
+        "h": 0.2
+      },
+      "box": {
+        "x": 0.2615,
+        "y": 0.6848,
+        "w": 0.4615,
+        "h": 0.0569
+      },
+      "px": {
+        "x": 102,
+        "y": 578,
+        "w": 180,
+        "h": 48
+      },
+      "aspect": 3.75,
+      "palette": [
+        {
+          "hex": "#f7f7f7",
+          "coverage": 0.901
+        },
+        {
+          "hex": "#b6b4b2",
+          "coverage": 0.0385
+        },
+        {
+          "hex": "#757371",
+          "coverage": 0.0302
+        },
+        {
+          "hex": "#3d3634",
+          "coverage": 0.0281
+        },
+        {
+          "hex": "#e0d8d0",
+          "coverage": 0.0021
+        }
+      ],
+      "detail": {
+        "energy": 27.6073
+      },
+      "medium": "semantic",
+      "plate": null,
+      "text": null,
+      "type": {
+        "comp": {
+          "lines": 1,
+          "glyphs": 13,
+          "capHeightPx": 11.1,
+          "inkIsDark": true,
+          "allCaps": false,
+          "advance": 1.0844,
+          "advTall": 0.8434,
+          "advX": 1.1898,
+          "gap": 0.0602,
+          "xRatio": 0.7423,
+          "stemW": 0.2236,
+          "contrast": 1.1012,
+          "serif": 0.1829,
+          "densTall": 0.6058,
+          "densX": 0.6816,
+          "weight": 0.6058
+        },
+        "widthClass": "wide",
+        "weightClass": "bold"
+      }
+    },
+    {
+      "id": "guarana-add",
+      "kind": "control",
+      "note": "botão circular adicionar Guaraná",
+      "grid": "I6:J7",
+      "coverBox": {
+        "x": 0.8,
+        "y": 0.6,
+        "w": 0.2,
+        "h": 0.2
+      },
+      "box": {
+        "x": 0.8462,
+        "y": 0.6919,
+        "w": 0.0923,
+        "h": 0.0355
+      },
+      "px": {
+        "x": 330,
+        "y": 584,
+        "w": 36,
+        "h": 30
+      },
+      "aspect": 1.2,
+      "palette": [
+        {
+          "hex": "#f8efea",
+          "coverage": 0.925
+        },
+        {
+          "hex": "#f85f0d",
+          "coverage": 0.075
+        }
+      ],
+      "detail": {
+        "energy": 2.5344
+      },
+      "medium": "semantic",
+      "plate": null,
+      "text": null
+    },
+    {
+      "id": "water-bottle",
+      "kind": "plate",
+      "note": "garrafa de água 500 ml recortada",
+      "grid": "A7:C8",
+      "box": {
+        "x": 0,
+        "y": 0.7,
+        "w": 0.3,
+        "h": 0.2
+      },
+      "px": {
+        "x": 0,
+        "y": 591,
+        "w": 117,
+        "h": 169
+      },
+      "aspect": 0.6923,
+      "palette": [
+        {
+          "hex": "#f5f6f6",
+          "coverage": 0.8875
+        },
+        {
+          "hex": "#0e532c",
+          "coverage": 0.0443
+        },
+        {
+          "hex": "#357a4f",
+          "coverage": 0.0263
+        },
+        {
+          "hex": "#bfc6cb",
+          "coverage": 0.0253
+        },
+        {
+          "hex": "#a1acb4",
+          "coverage": 0.0166
+        }
+      ],
+      "detail": {
+        "energy": 8.1332
+      },
+      "medium": "raster",
+      "plate": "assets/plates/water-bottle.png",
+      "text": null
+    },
+    {
+      "id": "water-copy",
+      "kind": "text",
+      "note": "nome e preço incluído da água",
+      "grid": "C7:G8",
+      "coverBox": {
+        "x": 0.2,
+        "y": 0.7,
+        "w": 0.5,
+        "h": 0.2
+      },
+      "box": {
+        "x": 0.2615,
+        "y": 0.8069,
+        "w": 0.3846,
+        "h": 0.064
+      },
+      "px": {
+        "x": 102,
+        "y": 681,
+        "w": 150,
+        "h": 54
+      },
+      "aspect": 2.7778,
+      "palette": [
+        {
+          "hex": "#f7f7f7",
+          "coverage": 0.8667
+        },
+        {
+          "hex": "#474240",
+          "coverage": 0.0667
+        },
+        {
+          "hex": "#979493",
+          "coverage": 0.0367
+        },
+        {
+          "hex": "#c9c4c3",
+          "coverage": 0.0178
+        },
+        {
+          "hex": "#726b68",
+          "coverage": 0.0122
+        }
+      ],
+      "detail": {
+        "energy": 21.7712
+      },
+      "medium": "semantic",
+      "plate": null,
+      "text": null,
+      "type": {
+        "comp": {
+          "lines": 1,
+          "glyphs": 7,
+          "capHeightPx": 13.7,
+          "inkIsDark": true,
+          "allCaps": false,
+          "advance": 0.8763,
+          "advTall": null,
+          "advX": 0.8763,
+          "gap": 0.2738,
+          "xRatio": 0.6091,
+          "stemW": 0.192,
+          "contrast": 1.098,
+          "serif": 0.466,
+          "densTall": null,
+          "densX": 0.6618,
+          "weight": 0.6618
+        },
+        "widthClass": "wide",
+        "weightClass": "black"
+      }
+    },
+    {
+      "id": "water-add",
+      "kind": "control",
+      "note": "botão circular adicionar água",
+      "grid": "I7:J8",
+      "coverBox": {
+        "x": 0.8,
+        "y": 0.7,
+        "w": 0.2,
+        "h": 0.2
+      },
+      "box": {
+        "x": 0.8462,
+        "y": 0.7002,
+        "w": 0.0923,
+        "h": 0.0284
+      },
+      "px": {
+        "x": 330,
+        "y": 591,
+        "w": 36,
+        "h": 24
+      },
+      "aspect": 1.5,
+      "palette": [
+        {
+          "hex": "#f8efe9",
+          "coverage": 0.8958
+        },
+        {
+          "hex": "#f8cbab",
+          "coverage": 0.0521
+        },
+        {
+          "hex": "#f86810",
+          "coverage": 0.0417
+        },
+        {
+          "hex": "#f88858",
+          "coverage": 0.0104
+        }
+      ],
+      "detail": {
+        "energy": 2.8867
+      },
+      "medium": "semantic",
+      "plate": null,
+      "text": null
+    },
+    {
+      "id": "checkout-bar",
+      "kind": "chrome",
+      "note": "barra inferior fixa branca",
+      "grid": "A9:J9",
+      "box": {
+        "x": 0,
+        "y": 0.9,
+        "w": 1,
+        "h": 0.1
+      },
+      "px": {
+        "x": 0,
+        "y": 760,
+        "w": 390,
+        "h": 84
+      },
+      "aspect": 4.6429,
+      "palette": [
+        {
+          "hex": "#f8f8f8",
+          "coverage": 0.7611
+        },
+        {
+          "hex": "#f86708",
+          "coverage": 0.2003
+        },
+        {
+          "hex": "#3e3938",
+          "coverage": 0.0142
+        },
+        {
+          "hex": "#f8d4b6",
+          "coverage": 0.014
+        },
+        {
+          "hex": "#bab7b6",
+          "coverage": 0.0103
+        }
+      ],
+      "detail": {
+        "energy": 18.3876
+      },
+      "medium": "semantic",
+      "plate": null,
+      "text": null
+    },
+    {
+      "id": "package-total",
+      "kind": "text",
+      "note": "rótulo pacote fechado e preço",
+      "grid": "A9:D9",
+      "coverBox": {
+        "x": 0,
+        "y": 0.9,
+        "w": 0.4,
+        "h": 0.1
+      },
+      "box": {
+        "x": 0.0154,
+        "y": 0.9218,
+        "w": 0.2615,
+        "h": 0.064
+      },
+      "px": {
+        "x": 6,
+        "y": 778,
+        "w": 102,
+        "h": 54
+      },
+      "aspect": 1.8889,
+      "palette": [
+        {
+          "hex": "#f7f6f6",
+          "coverage": 0.8101
+        },
+        {
+          "hex": "#3e3938",
+          "coverage": 0.0851
+        },
+        {
+          "hex": "#bbb8b6",
+          "coverage": 0.0622
+        },
+        {
+          "hex": "#928e8c",
+          "coverage": 0.0278
+        },
+        {
+          "hex": "#5f5c54",
+          "coverage": 0.0147
+        }
+      ],
+      "detail": {
+        "energy": 21.0298
+      },
+      "medium": "semantic",
+      "plate": null,
+      "text": null,
+      "type": {
+        "comp": {
+          "lines": 1,
+          "glyphs": 5,
+          "capHeightPx": 15.1,
+          "inkIsDark": true,
+          "allCaps": true,
+          "advance": 0.7628,
+          "advTall": 0.7628,
+          "advX": null,
+          "gap": 0.199,
+          "xRatio": null,
+          "stemW": 0.253,
+          "contrast": 1.0934,
+          "serif": null,
+          "densTall": 0.6616,
+          "densX": null,
+          "weight": 0.6616
+        },
+        "widthClass": "normal",
+        "weightClass": "black"
+      }
+    },
+    {
+      "id": "continue-button",
+      "kind": "control",
+      "note": "botão laranja Continuar",
+      "grid": "F9:J9",
+      "coverBox": {
+        "x": 0.5,
+        "y": 0.9,
+        "w": 0.5,
+        "h": 0.1
+      },
+      "box": {
+        "x": 0.5308,
+        "y": 0.9147,
+        "w": 0.4615,
+        "h": 0.0782
+      },
+      "px": {
+        "x": 207,
+        "y": 772,
+        "w": 180,
+        "h": 66
+      },
+      "aspect": 2.7273,
+      "palette": [
+        {
+          "hex": "#f86708",
+          "coverage": 0.5432
+        },
+        {
+          "hex": "#f8f8f8",
+          "coverage": 0.3947
+        },
+        {
+          "hex": "#f8d4b6",
+          "coverage": 0.0394
+        },
+        {
+          "hex": "#f8924a",
+          "coverage": 0.0129
+        },
+        {
+          "hex": "#f8ae7c",
+          "coverage": 0.0098
+        }
+      ],
+      "detail": {
+        "energy": 12.0026
+      },
+      "medium": "semantic",
+      "plate": null,
+      "text": null
+    }
+  ]
+}

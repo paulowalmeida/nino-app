@@ -20,7 +20,9 @@ describe('usePromotionOffers', () => {
   it('waits for the store before asking for its campaigns', () => {
     renderHook(() => usePromotionOffers(undefined))
 
-    expect(queryOptions?.queryKey).toEqual(queryKeys.promotions.visibleByUnit(''))
+    expect(queryOptions?.queryKey).toEqual(
+      queryKeys.promotions.visibleByUnit('')
+    )
     expect(queryOptions?.enabled).toBe(false)
   })
 

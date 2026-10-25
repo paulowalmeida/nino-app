@@ -1,0 +1,18 @@
+Use case: ui-mockup
+Asset type: north-star decision comp for a mobile-first food ordering app, single portrait viewport 390x844 pixels
+Primary request: Create one polished, realistic high-fidelity mobile UI screen for the Nino Consumer white-label package builder. This is the entire first viewport, edge to edge, not shown inside a phone device. The store identity leads; Nino is invisible infrastructure.
+Structure from top to bottom:
+1) compact top bar with a back chevron and centered store name "Burger da Casa";
+2) concise offer summary with title "Monte seu combo" and line "2 hambúrgueres + 2 bebidas", alongside a small savings badge "Economize R$ 17,70" and price relationship "de R$ 67,60 por R$ 49,90";
+3) very short numbered progress row with three steps: current orange filled circle "1" labeled "Hambúrgueres", then neutral "2" labeled "Bebidas", then neutral "3" labeled "Revisão";
+4) exactly one product group in focus titled "Escolha 2 hambúrgueres", helper "2 de 2 selecionados", showing exactly three compact product rows with small square food photos: "Clássico da Casa" selected with quantity stepper showing 1, "Smash Bacon" selected with quantity stepper showing 1, and "Veggie Crocante" unselected with outlined add button; include plausible short descriptions but no extra groups;
+5) a compact warm-white selection tray titled "No seu combo" showing two concise chips/rows "1× Clássico da Casa" and "1× Smash Bacon";
+6) a fixed bottom action area with one orange pill button whose exact text is "Continuar · R$ 49,90", plus a subtle top border/shadow only because it is sticky.
+Style/medium: pixel-perfect premium ecommerce app UI mockup, flat interface, no device frame.
+Typography: Bricolage Grotesque character for compact heavy human headings and decisive values; Hanken Grotesk character for body and functional labels. All text in Brazilian Portuguese, sharp and legible.
+Color palette: white and very warm off-white surfaces, ink #645e56 and muted warm gray; store orange #ff6b00 strictly limited to active progress, selected state accents, quantity control, savings/primary action. No large orange areas.
+Materials/textures: flat digital surfaces, subtle 1px warm-gray borders, 16px group radius, 8px controls, fully rounded primary button; cards use borders rather than shadows.
+Composition/framing: portrait 390x844, dense but calm mobile rhythm based on 8px; 16px side margins; content fits naturally above sticky action, no clipped text. Use realistic hamburger thumbnail photography only in product rows.
+Text (verbatim where specified): "Burger da Casa"; "Monte seu combo"; "2 hambúrgueres + 2 bebidas"; "Economize R$ 17,70"; "de R$ 67,60 por R$ 49,90"; "1"; "Hambúrgueres"; "2"; "Bebidas"; "3"; "Revisão"; "Escolha 2 hambúrgueres"; "2 de 2 selecionados"; "Clássico da Casa"; "Smash Bacon"; "Veggie Crocante"; "No seu combo"; "1× Clássico da Casa"; "1× Smash Bacon"; "Continuar · R$ 49,90".
+Constraints: one coherent app screen only; mobile-first portrait; accurate hierarchy and legible pt-BR copy; product photographs are small functional thumbnails, not hero imagery; no add-ons; no Nino marketing; no invented claims beyond the supplied offer.
+Avoid: gradients, glassmorphism, decorative blobs, generic decoration, floating cards, excessive shadows, large brand-color fills, desktop layout, device bezel, status bar mockup, bottom navigation, extra products, extra steps, extra actions, dark theme, English text, watermarks.

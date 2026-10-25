@@ -25,12 +25,7 @@ export const usePlaceOrder = (isAuthenticated: boolean) => {
   const [idempotencyKey] = useState(() => globalThis.crypto.randomUUID())
 
   return useMutation({
-    mutationFn: ({
-      values,
-      store,
-      cartLines,
-      promotions,
-    }: PlaceOrderInput) =>
+    mutationFn: ({ values, store, cartLines, promotions }: PlaceOrderInput) =>
       isAuthenticated
         ? orderService.createMine(
             consumerOrderRequest(values, store, cartLines, promotions),

@@ -63,7 +63,9 @@ export const ProductDetailShell = ({
             {media}
           </Box>
           <Box className={styles.productDetailShellDetails}>{details}</Box>
-          {footer && <Box className={styles.productDetailShellFooter}>{footer}</Box>}
+          {footer && (
+            <Box className={styles.productDetailShellFooter}>{footer}</Box>
+          )}
         </Box>
       }
     />

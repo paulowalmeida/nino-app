@@ -1,6 +1,5 @@
 @reference "@nino/ds/globals.css";
 
-
 .bar {
   @apply sticky top-14 z-sticky mt-4 border-b border-border lg:top-20;
   @apply bg-surface-page/92 backdrop-blur;

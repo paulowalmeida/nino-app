@@ -20,10 +20,12 @@ describe('discount', () => {
   })
 
   it('keeps only the largest discount of the order', () => {
-    expect(largestDiscount([fixedCouponMock, percentageOfferMock], 80)).toEqual({
-      promotion: fixedCouponMock,
-      amount: 12,
-    })
+    expect(largestDiscount([fixedCouponMock, percentageOfferMock], 80)).toEqual(
+      {
+        promotion: fixedCouponMock,
+        amount: 12,
+      }
+    )
     expect(
       largestDiscount([fixedCouponMock, percentageOfferMock], 300)?.promotion.id
     ).toBe('percent')

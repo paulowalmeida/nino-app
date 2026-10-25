@@ -1,6 +1,5 @@
 @reference "@nino/ds/globals.css";
 
-
 .bar {
   @apply fixed top-0 z-nav w-full bg-surface-page;
   @apply lg:h-20;
@@ -17,7 +16,6 @@
   transform: translateY(0);
 }
 
-
 @media (min-width: 1024px) {
   .bar {
     transform: none;
@@ -29,7 +27,6 @@
     transition: none;
   }
 }
-
 
 .storeTopBarInner {
   @apply relative mx-auto flex h-14 w-full max-w-page items-center gap-3;
@@ -77,7 +74,6 @@
   @apply text-fg-strong lg:text-2xl lg:tracking-tight;
 }
 
-
 /* WHY: em 1024px o "Aberto agora" disputava espaço com a busca — a base do
  * campo já encolhe seis vezes mais rápido que a marca, e mesmo assim ficava
  * espremida a 256px com o status ocupando ~107px ao lado dela. A partir de
@@ -104,7 +100,6 @@
   background-color: var(--color-success);
 }
 
-
 .dotOn::after {
   content: '';
   @apply absolute inset-0 rounded-full;
@@ -130,7 +125,6 @@
   }
 }
 
-
 .deskSearch {
   @apply relative hidden min-w-0 items-center lg:mr-8 lg:flex;
 
@@ -147,7 +141,6 @@
     display: none;
   }
 }
-
 
 .searchPanel {
   @apply absolute inset-y-0 left-0 right-0 z-content flex items-center gap-2;
@@ -167,7 +160,6 @@
     transition: none;
   }
 }
-
 
 .searchField {
   @apply relative min-w-0 flex-1;
@@ -189,7 +181,6 @@
 .tools {
   @apply ml-auto flex shrink-0 items-center gap-1;
 }
-
 
 @media (min-width: 1024px) {
   .tools {
@@ -271,7 +262,6 @@
     filter: brightness(0.94);
   }
 }
-
 
 .cartBadge {
   @apply absolute right-1 top-1 flex h-4 min-w-4 items-center justify-center;

@@ -6,9 +6,12 @@ import { useStorefrontFacade } from '@pages/Storefront/facades/useStorefrontFaca
 import { PromotionStrip } from './PromotionStrip'
 import { stripDiscountMock, stripFreeDeliveryMock } from './PromotionStrip.mock'
 
-vi.mock('@pages/Storefront/facades/useStorefrontFacade/useStorefrontFacade', () => ({
-  useStorefrontFacade: vi.fn(),
-}))
+vi.mock(
+  '@pages/Storefront/facades/useStorefrontFacade/useStorefrontFacade',
+  () => ({
+    useStorefrontFacade: vi.fn(),
+  })
+)
 
 describe('PromotionStrip', () => {
   it('shows free delivery and the automatic discount at the top of the menu', () => {
@@ -19,7 +22,9 @@ describe('PromotionStrip', () => {
 
     render(<PromotionStrip />)
 
-    expect(screen.getByText(/Frete grátis acima de R\$\s60,00/)).toBeInTheDocument()
+    expect(
+      screen.getByText(/Frete grátis acima de R\$\s60,00/)
+    ).toBeInTheDocument()
     expect(
       screen.getByText(/10% de desconto \(até R\$\s15,00\) acima de R\$\s50,00/)
     ).toBeInTheDocument()

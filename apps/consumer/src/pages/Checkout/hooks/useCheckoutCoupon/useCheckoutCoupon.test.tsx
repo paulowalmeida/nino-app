@@ -10,13 +10,18 @@ import { promotionService } from '@shared/services/promotion/promotion.service/p
 import { useCheckoutCoupon } from './useCheckoutCoupon'
 import { couponUnitIdMock, typedCouponMock } from './useCheckoutCoupon.mock'
 
-vi.mock('@shared/services/promotion/promotion.service/promotion.service', () => ({
-  promotionService: { findCoupon: vi.fn() },
-}))
+vi.mock(
+  '@shared/services/promotion/promotion.service/promotion.service',
+  () => ({
+    promotionService: { findCoupon: vi.fn() },
+  })
+)
 
 const wrapper = ({ children }: { children: ReactNode }) => (
   <QueryClientProvider
-    client={new QueryClient({ defaultOptions: { mutations: { retry: false } } })}
+    client={
+      new QueryClient({ defaultOptions: { mutations: { retry: false } } })
+    }
   >
     {children}
   </QueryClientProvider>

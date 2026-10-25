@@ -4,7 +4,6 @@
   @apply flex flex-col gap-4;
 }
 
-
 .blockLabel {
   @apply font-display text-xl font-extrabold tracking-snug text-fg-strong;
 }
@@ -40,7 +39,6 @@
   }
 }
 
-
 .confirm {
   @apply min-h-0 flex-1;
 }
@@ -64,7 +62,6 @@
 .addressText {
   @apply min-w-0 flex-1;
 }
-
 
 .addressOptionPlaceholder {
   @apply h-14 w-full rounded-3;

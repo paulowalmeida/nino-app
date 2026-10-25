@@ -20,7 +20,11 @@ const chipWidths = [
  * real, então a página não salta ao trocar o placeholder pelo cardápio.
  */
 export const StorefrontSkeleton = () => (
-  <Box className={styles.storefrontSkeletonPage} aria-busy="true" aria-label="Carregando a loja">
+  <Box
+    className={styles.storefrontSkeletonPage}
+    aria-busy="true"
+    aria-label="Carregando a loja"
+  >
     <StoreHeaderSkeleton showBanner showSearch />
 
     <Box className={styles.storefrontSkeletonShell}>

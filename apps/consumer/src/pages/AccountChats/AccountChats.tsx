@@ -6,28 +6,20 @@ import { Heading } from '@nino/ds/components/Heading'
 import { Icon, type IconName } from '@nino/ds/components/Icon'
 import { Text } from '@nino/ds/components/Text'
 import type { GuestOrderStatus } from '@custom_types/order/guest-order-status'
-import {
-  useConsumerSession,
-} from '@shared/hooks/useConsumerSession/useConsumerSession'
-import {
-  useGuestOrderStatus,
-} from '@hooks/useGuestOrderStatus/useGuestOrderStatus'
+import { useConsumerSession } from '@shared/hooks/useConsumerSession/useConsumerSession'
+import { useGuestOrderStatus } from '@hooks/useGuestOrderStatus/useGuestOrderStatus'
 import { useMyOrders } from '@shared/hooks/useMyOrders/useMyOrders'
 import { useStoreTracking } from '@hooks/useStoreTracking/useStoreTracking'
 import { PoweredBy } from '@shared/components/PoweredBy/PoweredBy'
 import { useGuestOrders } from '@shared/hooks/useGuestOrders/useGuestOrders'
-import {
-  useConsumerNotifications,
-} from '@shared/hooks/useConsumerNotifications/useConsumerNotifications'
+import { useConsumerNotifications } from '@shared/hooks/useConsumerNotifications/useConsumerNotifications'
 import {
   markGuestOrderSeen,
   recordGuestOrderStatus,
 } from '@shared/lib/last-order/last-order'
 import { isTerminal, stageNote } from '@utils/order-journey'
 
-import {
-  StoreNotificationCard,
-} from './components/StoreNotificationCard/StoreNotificationCard'
+import { StoreNotificationCard } from './components/StoreNotificationCard/StoreNotificationCard'
 import styles from './AccountChats.module.css'
 
 /**
@@ -75,7 +67,12 @@ const trackingHref = (reference: OrderRow, pathSlug?: string) => {
 }
 
 const OrderHeader = ({ backHref }: { backHref: string }) => (
-  <Box as="header" direction="row" align="center" className={styles.accountChatsHeader}>
+  <Box
+    as="header"
+    direction="row"
+    align="center"
+    className={styles.accountChatsHeader}
+  >
     <Link to={backHref} className={styles.back} aria-label="Voltar para a loja">
       <Icon name="arrow-left" />
     </Link>
@@ -102,8 +99,8 @@ const OrderEmpty = ({ backHref }: { backHref: string }) => (
           Nenhum pedido para acompanhar
         </Heading>
         <Text as="p" className={styles.emptyCopy}>
-          Esta área aparece quando há um pedido em andamento, recém-concluído
-          ou um aviso da loja.
+          Esta área aparece quando há um pedido em andamento, recém-concluído ou
+          um aviso da loja.
         </Text>
         <Link to={backHref} className={styles.emptyAction}>
           Ver cardápio
@@ -223,9 +220,8 @@ export const AccountChats = () => {
   const { consumer } = useConsumerSession()
   const guestOrders = useGuestOrders(slug)
   const { data: myOrders } = useMyOrders(!!consumer)
-  const { data: storeNotifications, markRead } = useConsumerNotifications(
-    !!consumer
-  )
+  const { data: storeNotifications, markRead } =
+    useConsumerNotifications(!!consumer)
   const notifications = storeNotifications ?? []
 
   /* WHY: quem tem conta já enxerga o histórico completo em /conta/pedidos —
@@ -246,7 +242,10 @@ export const AccountChats = () => {
         <OrderHeader backHref={backHref} />
         <main className={styles.accountChatsContent}>
           {orders.length > 0 && (
-            <Box className={styles.accountChatsList} aria-label="Pedidos deste dispositivo">
+            <Box
+              className={styles.accountChatsList}
+              aria-label="Pedidos deste dispositivo"
+            >
               {orders.map((reference) => (
                 <OrderCard
                   key={reference.orderId}

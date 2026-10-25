@@ -73,11 +73,16 @@ export const storeThemeVariables = (store?: Store): ThemeVars => {
     const mixTarget = foreground ?? '#000000'
     vars['--color-surface-raised'] = surface
     vars['--color-surface-1'] = surface
-    vars['--color-surface-2'] = `color-mix(in srgb, ${surface} 94%, ${mixTarget})`
-    vars['--color-surface-3'] = `color-mix(in srgb, ${surface} 90%, ${mixTarget})`
-    vars['--color-surface-4'] = `color-mix(in srgb, ${surface} 86%, ${mixTarget})`
-    vars['--color-surface-5'] = `color-mix(in srgb, ${surface} 82%, ${mixTarget})`
-    vars['--color-surface-6'] = `color-mix(in srgb, ${surface} 78%, ${mixTarget})`
+    vars['--color-surface-2'] =
+      `color-mix(in srgb, ${surface} 94%, ${mixTarget})`
+    vars['--color-surface-3'] =
+      `color-mix(in srgb, ${surface} 90%, ${mixTarget})`
+    vars['--color-surface-4'] =
+      `color-mix(in srgb, ${surface} 86%, ${mixTarget})`
+    vars['--color-surface-5'] =
+      `color-mix(in srgb, ${surface} 82%, ${mixTarget})`
+    vars['--color-surface-6'] =
+      `color-mix(in srgb, ${surface} 78%, ${mixTarget})`
   }
 
   if (foreground) {
@@ -100,7 +105,8 @@ export const storeThemeVariables = (store?: Store): ThemeVars => {
 
   const headingFont = value(config?.typography.headingFont)
   const bodyFont = value(config?.typography.bodyFont)
-  if (headingFont && headingFont !== 'default') vars['--font-display'] = headingFont
+  if (headingFont && headingFont !== 'default')
+    vars['--font-display'] = headingFont
   if (bodyFont && bodyFont !== 'default') vars['--font-sans'] = bodyFont
 
   return vars

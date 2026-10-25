@@ -1,0 +1,43 @@
+{
+  "title": "Escolha a montagem da Promoção",
+  "question": "A identidade da loja continua intacta; escolha como o cliente monta o pacote.",
+  "options": [
+    {
+      "id": "passagem-viva",
+      "label": "Passagem viva",
+      "kicker": "THE ROLL",
+      "lineage": "comandas alinhadas na passagem da cozinha",
+      "thesis": "Cada grupo vira uma comanda curta que avança para a direita conforme a promoção ganha forma.",
+      "palette": ["#ffffff", "#645e56", "#ff6b00", "#f6f2ed"],
+      "materials": ["papel de comanda", "trilho de cozinha", "bordas quentes"],
+      "viewport": "Oferta e economia no alto; abaixo, um trilho horizontal mostra grupos pendentes, ativos e concluídos, com a bandeja do pacote fixa no rodapé.",
+      "risk": "Precisa preservar leitura e foco em celulares estreitos sem parecer um carrossel promocional.",
+      "comp": ".impeccable/mocks/decision/passagem-viva.png"
+    },
+    {
+      "id": "montagem-guiada",
+      "label": "Montagem guiada",
+      "lineage": "fluxo de pedido por etapas",
+      "thesis": "Uma escolha por vez, com o pacote sempre visível como uma bandeja sendo preenchida.",
+      "palette": ["#ffffff", "#645e56", "#ff6b00", "#f6f2ed"],
+      "materials": ["superfícies claras", "progresso numerado", "bandeja compacta"],
+      "viewport": "Resumo da oferta, progresso curto, um único grupo em foco e ação principal ancorada com preço fechado.",
+      "risk": "É a composição mais clara, mas pode parecer próxima demais do checkout existente.",
+      "comp": ".impeccable/mocks/decision/montagem-guiada.png"
+    },
+    {
+      "id": "bancada-modular",
+      "label": "Bancada modular",
+      "lineage": "mise en place organizada por recipientes",
+      "thesis": "Todos os grupos aparecem juntos como módulos de uma bancada, permitindo comparar e corrigir sem voltar etapas.",
+      "palette": ["#ffffff", "#645e56", "#ff6b00", "#f6f2ed"],
+      "materials": ["módulos contidos", "rótulos diretos", "ritmo de 8px"],
+      "viewport": "Oferta à esquerda e módulos de escolha empilhados; cada módulo fecha quando completa e o resumo acompanha a rolagem.",
+      "risk": "Pacotes com muitos produtos podem aumentar a carga cognitiva e a altura da tela.",
+      "comp": ".impeccable/mocks/decision/bancada-modular.png"
+    }
+  ],
+  "reroll": { "registers": ["safer", "bolder"] },
+  "buildPath": { "value": "comp", "toggle": true },
+  "steer": true
+}

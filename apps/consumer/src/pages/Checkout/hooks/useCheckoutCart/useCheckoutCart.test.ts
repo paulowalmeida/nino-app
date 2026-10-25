@@ -10,17 +10,13 @@ vi.mock('@hooks/useCartSummary/useCartSummary')
 
 describe('useCheckoutCart', () => {
   it('keeps cart lines for the current store', () => {
-    vi.mocked(useCartSummary).mockReturnValue(
-      useCheckoutCartMock.cart as never
-    )
+    vi.mocked(useCartSummary).mockReturnValue(useCheckoutCartMock.cart as never)
 
     const { result } = renderHook(() =>
       useCheckoutCart(useCheckoutCartMock.storeId)
     )
 
-    expect(result.current.cartLines).toBe(
-      useCheckoutCartMock.cart.cartLines
-    )
+    expect(result.current.cartLines).toBe(useCheckoutCartMock.cart.cartLines)
   })
 
   it('hides cart lines belonging to another store', () => {

@@ -49,7 +49,9 @@ export const StoreInfo = () => {
             <Heading level={3} className={styles.storeInfoLabel}>
               Tempo de entrega
             </Heading>
-            <Text className={styles.storeInfoValue}>~{estimatedMinutes} min</Text>
+            <Text className={styles.storeInfoValue}>
+              ~{estimatedMinutes} min
+            </Text>
           </Box>
         ) : null}
 

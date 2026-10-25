@@ -9,15 +9,14 @@ const ABSOLUTE_URL = /^[a-z][a-z\d+.-]*:/i
  * `base` seja absoluto e lança quando não é, então concatenar strings é o
  * único jeito que funciona com os dois formatos de base.
  */
-export const resolveApiAssetUrl = (
-  input?: string | null
-): string | null => {
+export const resolveApiAssetUrl = (input?: string | null): string | null => {
   const url = input?.trim()
   if (!url) return null
   if (ABSOLUTE_URL.test(url) || url.startsWith('//')) return url
 
-  const configuredBase = (import.meta.env.VITE_BASE_URL as string | undefined)
-    ?.trim()
+  const configuredBase = (
+    import.meta.env.VITE_BASE_URL as string | undefined
+  )?.trim()
   if (!configuredBase) return url
 
   const base = configuredBase.replace(/\/$/, '')

@@ -1,0 +1,49 @@
+@reference "@nino/ds/globals.css";
+
+.promotionSection {
+  @apply mb-8 flex flex-col gap-3;
+}
+
+.heading {
+  font-family: var(--font-display);
+  letter-spacing: -0.02em;
+}
+
+.promotionRail {
+  @apply grid gap-3 sm:grid-cols-2;
+}
+
+.promotionCard {
+  @apply h-auto w-full justify-start gap-4 overflow-hidden rounded-xl border p-0 text-left;
+  @apply bg-surface-page;
+}
+
+.imageWrap {
+  @apply h-28 w-28 shrink-0 bg-surface-2;
+}
+
+.image {
+  @apply h-full w-full object-cover;
+}
+
+.copy {
+  @apply min-w-0 flex-1 py-3 pr-4;
+}
+
+.name {
+  @apply line-clamp-2 font-semibold text-fg-strong;
+}
+
+.prices {
+  @apply mt-2 items-baseline gap-2;
+}
+
+.price {
+  @apply text-lg font-bold text-[var(--store-tint,var(--color-accent-600))];
+  font-variant-numeric: tabular-nums;
+}
+
+.listPrice {
+  @apply text-sm text-muted-foreground;
+  font-variant-numeric: tabular-nums;
+}

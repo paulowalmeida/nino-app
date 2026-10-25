@@ -34,41 +34,41 @@ export const OrderJourneyRow = ({
 
   return (
     <ListRow
-    divider="none"
-    padding={0}
-    className={[
-      motion.riseIn,
-      styles.orderJourneyRow,
-      rowStyles[row.state],
-      row.status === 'CANCELLED' ? styles.cancelled : '',
-    ]
-      .filter(Boolean)
-      .join(' ')}
-    style={riseDelay(60 + index * 55)}
-    aria-current={row.state === 'current' ? 'step' : undefined}
-  >
-    <Text as="span" className={styles.node} aria-hidden="true">
-      {row.state === 'done' ||
-      (row.state === 'final' && row.status !== 'CANCELLED')
-        ? CHECK
-        : stageIcon(row.status)}
-    </Text>
-
-    <Text as="p" className={styles.label}>
-      {stageLabel(row.status)}
-    </Text>
-
-    {row.at && (
-      <Text as="p" className={styles.time}>
-        {clockLabel(row.at)}
+      divider="none"
+      padding={0}
+      className={[
+        motion.riseIn,
+        styles.orderJourneyRow,
+        rowStyles[row.state],
+        row.status === 'CANCELLED' ? styles.cancelled : '',
+      ]
+        .filter(Boolean)
+        .join(' ')}
+      style={riseDelay(60 + index * 55)}
+      aria-current={row.state === 'current' ? 'step' : undefined}
+    >
+      <Text as="span" className={styles.node} aria-hidden="true">
+        {row.state === 'done' ||
+        (row.state === 'final' && row.status !== 'CANCELLED')
+          ? CHECK
+          : stageIcon(row.status)}
       </Text>
-    )}
 
-    {!row.at && estimatedAt && (
-      <Text as="p" className={styles.time}>
-        ~ {clockLabel(estimatedAt)}
+      <Text as="p" className={styles.label}>
+        {stageLabel(row.status)}
       </Text>
-    )}
+
+      {row.at && (
+        <Text as="p" className={styles.time}>
+          {clockLabel(row.at)}
+        </Text>
+      )}
+
+      {!row.at && estimatedAt && (
+        <Text as="p" className={styles.time}>
+          ~ {clockLabel(estimatedAt)}
+        </Text>
+      )}
     </ListRow>
   )
 }

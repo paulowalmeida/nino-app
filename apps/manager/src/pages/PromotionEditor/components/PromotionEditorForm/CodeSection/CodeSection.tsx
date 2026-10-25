@@ -36,58 +36,61 @@ export const CodeSection = () => {
         </Heading>
 
         <Box className={styles.codeFields}>
-        <FormField
-          label="Código"
-          helperText="Sem código, vale para todos. Com código, só para quem digitar."
-          error={errors.code?.message}
-        >
+          <FormField
+            label="Código"
+            helperText="O desconto só vale para quem digitar este cupom."
+            error={errors.code?.message}
+          >
+            <Controller
+              name="code"
+              control={control}
+              rules={{
+                required: 'Informe o código do cupom',
+                maxLength: { value: 40, message: 'Use até 40 caracteres' },
+                pattern: {
+                  value: CODE_PATTERN,
+                  message: 'Use só letras, números, - e _',
+                },
+              }}
+              render={({ field }) => (
+                <Input
+                  placeholder="Opcional, ex.: FRETEJA"
+                  autoCapitalize="characters"
+                  value={field.value}
+                  onBlur={field.onBlur}
+                  onChange={(event) => {
+                    const code = event.target.value
+                      .toUpperCase()
+                      .replace(/\s/g, '')
+                    field.onChange(code)
+                    followCode(code)
+                  }}
+                />
+              )}
+            />
+          </FormField>
+
           <Controller
-            name="code"
+            name="showInMenu"
             control={control}
-            rules={{
-              maxLength: { value: 40, message: 'Use até 40 caracteres' },
-              pattern: {
-                value: CODE_PATTERN,
-                message: 'Use só letras, números, - e _',
-              },
-            }}
             render={({ field }) => (
-              <Input
-                placeholder="Opcional, ex.: FRETEJA"
-                autoCapitalize="characters"
-                value={field.value}
-                onBlur={field.onBlur}
-                onChange={(event) => {
-                  const code = event.target.value.toUpperCase().replace(/\s/g, '')
-                  field.onChange(code)
-                  followCode(code)
-                }}
-              />
+              <FormField
+                label="Mostrar no cardápio"
+                helperText="Faixa no topo do cardápio com a condição da campanha."
+                orientation="horizontal"
+                className={styles.visibility}
+              >
+                <Switch
+                  checked={field.value}
+                  onCheckedChange={(checked) => {
+                    setVisibilityChosen(true)
+                    field.onChange(checked)
+                  }}
+                  aria-label="Mostrar no cardápio"
+                />
+              </FormField>
             )}
           />
-        </FormField>
-
-        <Controller
-          name="showInMenu"
-          control={control}
-          render={({ field }) => (
-            <FormField
-              label="Mostrar no cardápio"
-              helperText="Faixa no topo do cardápio com a condição da campanha."
-              orientation="horizontal"
-              className={styles.visibility}
-            >
-              <Switch
-                checked={field.value}
-                onCheckedChange={(checked) => {
-                  setVisibilityChosen(true)
-                  field.onChange(checked)
-                }}
-                aria-label="Mostrar no cardápio"
-              />
-            </FormField>
-          )}
-        />
         </Box>
       </Card>
     </Box>

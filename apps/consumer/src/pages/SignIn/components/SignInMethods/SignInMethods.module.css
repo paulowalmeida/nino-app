@@ -11,7 +11,6 @@
   @apply mt-2.5 text-center leading-relaxed text-fg-default;
 }
 
-
 .signInMethodsPrimary {
   @apply mt-6 h-13 w-full rounded-3 text-sm font-bold;
 }

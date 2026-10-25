@@ -49,7 +49,11 @@ export const MenuItemCard = ({
   return (
     <Card
       padding="sm"
-      className={disabled ? `${styles.menuItemCard} ${styles.disabled}` : styles.menuItemCard}
+      className={
+        disabled
+          ? `${styles.menuItemCard} ${styles.disabled}`
+          : styles.menuItemCard
+      }
       role="group"
       aria-disabled={disabled}
       data-item-style={itemStyle}

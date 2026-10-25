@@ -21,7 +21,10 @@ const Form = ({
   onValid?: (values: PromotionFormValues) => void
 }) => {
   const form = useForm<PromotionFormValues>({
-    defaultValues: { ...benefitDefaultsMock, ...defaults } as PromotionFormValues,
+    defaultValues: {
+      ...benefitDefaultsMock,
+      ...defaults,
+    } as PromotionFormValues,
   })
   return (
     <FormProvider {...form}>
@@ -33,7 +36,9 @@ const Form = ({
   )
 }
 
-vi.mock('@pages/PromotionEditor/facades/usePromotionEditorFacade/usePromotionEditorFacade')
+vi.mock(
+  '@pages/PromotionEditor/facades/usePromotionEditorFacade/usePromotionEditorFacade'
+)
 
 describe(BenefitSection.name, () => {
   it('types the minimum order as money, right to left', async () => {
@@ -47,7 +52,9 @@ describe(BenefitSection.name, () => {
       </Form>
     )
 
-    const field = screen.getByRole('textbox', { name: 'Pedido mínimo em reais' })
+    const field = screen.getByRole('textbox', {
+      name: 'Pedido mínimo em reais',
+    })
     await userEvent.type(field, '6000')
 
     expect(field).toHaveValue('60,00')
@@ -73,7 +80,9 @@ describe(BenefitSection.name, () => {
       '150'
     )
     await userEvent.click(screen.getByRole('button', { name: 'enviar' }))
-    expect(await screen.findByText('O percentual vai até 100')).toBeInTheDocument()
+    expect(
+      await screen.findByText('O percentual vai até 100')
+    ).toBeInTheDocument()
     expect(
       screen.getByRole('textbox', { name: 'Teto do desconto em reais' })
     ).toBeInTheDocument()

@@ -21,6 +21,4 @@ it('uses the fallback URL returned by the API when there are no images', () => {
 })
 
 it('returns null for an unknown item without images', () =>
-  expect(
-    primaryImage({ images: [], fallbackUrl: null } as never)
-  ).toBeNull())
+  expect(primaryImage({ images: [], fallbackUrl: null } as never)).toBeNull())

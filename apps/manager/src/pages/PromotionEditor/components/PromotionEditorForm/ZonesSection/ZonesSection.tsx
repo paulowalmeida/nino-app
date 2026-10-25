@@ -76,7 +76,11 @@ export const ZonesSection = () => {
                           checked={field.value.includes(zone.value)}
                           onCheckedChange={(checked) =>
                             field.onChange(
-                              toggleZone(field.value, zone.value, checked === true)
+                              toggleZone(
+                                field.value,
+                                zone.value,
+                                checked === true
+                              )
                             )
                           }
                         />

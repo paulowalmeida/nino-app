@@ -10,6 +10,11 @@ const productDetailLazy = () =>
     ({ ProductDetail }) => ({ Component: ProductDetail })
   )
 
+const packageDetailLazy = () =>
+  import('@pages/Storefront/PackageDetail/PackageDetail').then(
+    ({ PackageDetail }) => ({ Component: PackageDetail })
+  )
+
 const checkoutLazy = () =>
   import('@pages/checkout/Checkout').then(({ Checkout }) => ({
     Component: Checkout,
@@ -58,11 +63,9 @@ const ordersLazy = () =>
   )
 
 const paymentLazy = () =>
-  import('@pages/AccountPayment/AccountPayment').then(
-    ({ AccountPayment }) => ({
-      Component: AccountPayment,
-    })
-  )
+  import('@pages/AccountPayment/AccountPayment').then(({ AccountPayment }) => ({
+    Component: AccountPayment,
+  }))
 
 const notificationsLazy = () =>
   import('@pages/AccountChats/AccountChats').then(({ AccountChats }) => ({
@@ -70,9 +73,11 @@ const notificationsLazy = () =>
   }))
 
 const invoicesLazy = () =>
-  import('@pages/AccountInvoices/AccountInvoices').then(({ AccountInvoices }) => ({
-    Component: AccountInvoices,
-  }))
+  import('@pages/AccountInvoices/AccountInvoices').then(
+    ({ AccountInvoices }) => ({
+      Component: AccountInvoices,
+    })
+  )
 
 const accountChildren: RouteObject[] = [
   { index: true, element: <Navigate to="dados" replace /> },
@@ -95,6 +100,7 @@ const storeChildren: RouteObject[] = [
     children: [
       { index: true },
       { path: 'produto/:productId', lazy: productDetailLazy },
+      { path: 'promocao/:promotionId', lazy: packageDetailLazy },
     ],
   },
   { path: 'checkout', lazy: checkoutLazy },

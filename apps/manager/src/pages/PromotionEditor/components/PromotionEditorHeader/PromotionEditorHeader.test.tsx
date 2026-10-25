@@ -8,7 +8,9 @@ import { usePromotionEditorFacade } from '@pages/PromotionEditor/facades/useProm
 import { PromotionEditorHeader } from './PromotionEditorHeader'
 import { promotionEditorHeaderMock } from './PromotionEditorHeader.mock'
 
-vi.mock('@pages/PromotionEditor/facades/usePromotionEditorFacade/usePromotionEditorFacade')
+vi.mock(
+  '@pages/PromotionEditor/facades/usePromotionEditorFacade/usePromotionEditorFacade'
+)
 
 describe(PromotionEditorHeader.name, () => {
   it('names the editing mode and links back to the campaigns', () => {
@@ -26,7 +28,9 @@ describe(PromotionEditorHeader.name, () => {
       screen.getByRole('link', { name: promotionEditorHeaderMock.backLabel })
     ).toBeInTheDocument()
     expect(
-      screen.getByRole('heading', { name: promotionEditorHeaderMock.duplicateTitle })
+      screen.getByRole('heading', {
+        name: promotionEditorHeaderMock.duplicateTitle,
+      })
     ).toBeInTheDocument()
   })
 })

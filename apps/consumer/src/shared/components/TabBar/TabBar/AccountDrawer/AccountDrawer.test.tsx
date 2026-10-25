@@ -41,7 +41,9 @@ describe('AccountDrawer', () => {
 
     renderDrawer()
 
-    expect(screen.getByText(/Entre para acompanhar seus pedidos/)).toBeInTheDocument()
+    expect(
+      screen.getByText(/Entre para acompanhar seus pedidos/)
+    ).toBeInTheDocument()
     expect(screen.getByRole('button', { name: 'Entrar' })).toBeInTheDocument()
   })
 })

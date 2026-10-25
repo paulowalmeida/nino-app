@@ -17,10 +17,7 @@ describe('OrderNotFound', () => {
     ).toBeInTheDocument()
     expect(
       screen.getByRole('link', { name: 'Voltar para a loja' })
-    ).toHaveAttribute(
-      'href',
-      orderNotFoundMock.backHref
-    )
+    ).toHaveAttribute('href', orderNotFoundMock.backHref)
   })
 
   it('explains an invalid order link', () => {

@@ -12,7 +12,6 @@
   @apply grid w-full gap-4 lg:max-w-block-lg;
 }
 
-
 .pair {
   @apply grid gap-3;
   grid-template-columns: 1fr 5.5rem;

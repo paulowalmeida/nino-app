@@ -31,7 +31,8 @@ export const useStoreTheme = (): string | undefined => {
 
     return () => {
       for (const [name, state] of previous) {
-        if (state.value) root.style.setProperty(name, state.value, state.priority)
+        if (state.value)
+          root.style.setProperty(name, state.value, state.priority)
         else root.style.removeProperty(name)
       }
     }

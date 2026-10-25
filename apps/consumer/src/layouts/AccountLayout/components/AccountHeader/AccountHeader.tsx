@@ -37,7 +37,12 @@ export const AccountHeader = () => {
       </Link>
 
       <Box className={styles.identity}>
-        <Heading level={1} size="xl" color="muted" className={styles.accountHeaderTitle}>
+        <Heading
+          level={1}
+          size="xl"
+          color="muted"
+          className={styles.accountHeaderTitle}
+        >
           {greeting()}
           {name ? `, ${name}` : ''}
         </Heading>

@@ -3,7 +3,9 @@ import type { MenuItem } from '@shared/types/product/menu-item'
 import { brl } from '@shared/utils/money/money'
 
 // CONSTRAINT: a API recusa produto inativo ou com opção obrigatória como brinde.
-export const toGiftProductOptions = (items: MenuItem[] = []): GiftProductOption[] =>
+export const toGiftProductOptions = (
+  items: MenuItem[] = []
+): GiftProductOption[] =>
   items
     .filter(
       ({ isActive, modifiers = [] }) =>
