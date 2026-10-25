@@ -21,7 +21,7 @@
 }
 
 .discountMainFields {
-  @apply flex w-full flex-wrap items-start gap-4 md:w-[26rem];
+  @apply flex w-full items-start gap-4 md:w-[26rem];
 }
 
 .discountValueField {

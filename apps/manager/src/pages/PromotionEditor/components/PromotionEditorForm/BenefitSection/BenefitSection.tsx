@@ -137,7 +137,7 @@ export const BenefitSection = () => {
 
         <Box direction="row" className={styles.benefitFields}>
           {isDiscount ? (
-            <Box direction="row" className={styles.discountMainFields}>
+            <Box direction="column" className={styles.discountMainFields}>
               {campaignTypeField}
               <FormField
                 label="Como desconta"
