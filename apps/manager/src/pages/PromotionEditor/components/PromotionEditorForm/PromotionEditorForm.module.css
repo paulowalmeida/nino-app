@@ -4,6 +4,10 @@
   @apply mt-2 flex flex-col gap-6;
 }
 
+.promotionEditorCompact {
+  @apply max-w-2xl;
+}
+
 .promotionEditorFields {
   @apply flex min-w-0 flex-col gap-4;
 }

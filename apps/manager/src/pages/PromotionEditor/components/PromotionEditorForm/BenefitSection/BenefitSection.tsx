@@ -70,6 +70,7 @@ export const BenefitSection = () => {
               label="Produto de brinde"
               helperText="Só aparecem produtos ativos sem escolha obrigatória."
               error={errors.giftProductId?.message}
+              className={styles.giftProductField}
             >
               <Controller
                 name="giftProductId"
@@ -221,6 +222,7 @@ export const BenefitSection = () => {
           <FormField
             label="Pedido mínimo"
             helperText="Conta só os itens, sem o frete. Vazio vale para qualquer pedido."
+            className={styles.amountField}
           >
             <Controller
               name="minOrderValue"

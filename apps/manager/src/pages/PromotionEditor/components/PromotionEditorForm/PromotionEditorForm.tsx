@@ -43,7 +43,11 @@ export const PromotionEditorForm = () => {
               )
             : void goNext()
         )}
-        className={styles.promotionEditorForm}
+        className={`${styles.promotionEditorForm} ${
+          stepKey === 'benefit' && campaignType !== 'package'
+            ? styles.promotionEditorCompact
+            : ''
+        }`}
       >
         <Box className={styles.promotionEditorFields}>
           <Stepper
