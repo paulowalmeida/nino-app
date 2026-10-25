@@ -19,10 +19,10 @@ import { maskMoney, moneyValue } from '@shared/utils/money/money'
 import styles from './BenefitSection.module.css'
 
 const TYPE_HINTS = {
-  'free-delivery': 'A taxa de entrega some do pedido que cumprir a condição.',
-  discount: 'Sai do valor dos itens; o frete continua o normal.',
-  gift: 'Um produto do cardápio entra no pedido a R$ 0.',
-  package: 'O cliente monta só com os produtos e opções que você liberar.',
+  'free-delivery': 'Zera a entrega se a condição for cumprida.',
+  discount: 'Desconta dos itens; frete normal.',
+  gift: 'O brinde custa R$ 0 no pedido.',
+  package: 'Só permite os itens e opções liberados.',
 } as const
 
 export const BenefitSection = () => {
@@ -68,7 +68,7 @@ export const BenefitSection = () => {
           {campaignType === 'gift' && (
             <FormField
               label="Produto de brinde"
-              helperText="Só aparecem produtos ativos sem escolha obrigatória."
+              helperText="Produtos ativos, sem opções obrigatórias."
               error={errors.giftProductId?.message}
               className={styles.giftProductField}
             >
@@ -164,7 +164,7 @@ export const BenefitSection = () => {
           {isDiscount && isPercentage && (
             <FormField
               label="Teto do desconto"
-              helperText="Opcional. Ex.: 10% até R$ 15,00 protege a margem em pedido grande."
+              helperText="Opcional: limite o desconto em reais."
               className={styles.amountField}
             >
               <Controller
@@ -189,7 +189,7 @@ export const BenefitSection = () => {
           {isPackage && (
             <FormField
               label="Preço fechado"
-              helperText="A soma normal dos itens aparece riscada no cardápio."
+              helperText="A soma dos itens aparece riscada."
               error={errors.packagePrice?.message}
               className={styles.amountField}
             >
@@ -221,7 +221,7 @@ export const BenefitSection = () => {
 
           <FormField
             label="Pedido mínimo"
-            helperText="Conta só os itens, sem o frete. Vazio vale para qualquer pedido."
+            helperText="Só conta itens; vazio = sem mínimo."
             className={styles.amountField}
           >
             <Controller
