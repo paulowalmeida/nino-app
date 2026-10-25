@@ -1,43 +1,23 @@
 @reference "@nino/ds/globals.css";
 
 .promotionPreview {
-  @apply flex flex-col gap-4;
-}
-
-/* WHY: a mesma tira que o consumer mostra abaixo do banner da loja — fundo de
- * marca suave, ícone de caminhão e a condição em uma linha —, para o gestor
- * reconhecer na hora o que o cliente vai ler.
- */
-.menuStrip {
-  @apply flex items-center gap-2 rounded-2 bg-brand-soft px-3 py-2.5;
-}
-
-.menuStripIcon {
-  @apply shrink-0 text-brand-strong;
-}
-
-.menuStripText {
-  @apply text-sm font-semibold leading-snug text-brand-strong;
-}
-
-.hiddenNote {
-  @apply rounded-2 bg-surface-2 px-3 py-2.5 text-sm text-fg-muted;
+  @apply flex flex-col gap-3;
 }
 
 .headline {
-  @apply text-base font-semibold text-fg-strong;
+  @apply text-sm font-semibold text-fg-strong;
 }
 
 .facts {
-  @apply flex flex-col gap-2;
+  @apply grid grid-cols-1 gap-x-8 gap-y-2 sm:grid-cols-2;
 }
 
 .fact {
-  @apply flex items-baseline justify-between gap-4;
+  @apply flex items-baseline justify-between gap-2;
 }
 
 .factLabel {
-  @apply shrink-0 text-xs text-fg-faint;
+  @apply shrink-0 text-xs text-fg-muted;
 }
 
 .factValue {

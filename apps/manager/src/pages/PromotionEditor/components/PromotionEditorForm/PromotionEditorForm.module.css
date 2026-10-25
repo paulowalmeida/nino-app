@@ -17,7 +17,7 @@
 }
 
 .promotionEditorReview {
-  @apply max-w-3xl;
+  @apply max-w-xl;
 }
 
 .promotionEditorActions {

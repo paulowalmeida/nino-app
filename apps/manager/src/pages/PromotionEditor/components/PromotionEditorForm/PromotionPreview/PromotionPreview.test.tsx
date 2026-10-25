@@ -34,7 +34,7 @@ describe(PromotionPreview.name, () => {
     } as unknown as ReturnType<typeof usePromotionEditorFacade>)
   )
 
-  it('shows the menu strip and the campaign facts as the owner fills them', () => {
+  it('summarizes the configured benefit and conditions', () => {
     render(
       <Form values={previewValuesMock}>
         <PromotionPreview />
@@ -42,25 +42,28 @@ describe(PromotionPreview.name, () => {
     )
 
     expect(
-      screen.getByLabelText('Prévia da faixa no cardápio')
-    ).toHaveTextContent('Frete grátis acima de R$ 60,00')
+      screen.getByRole('heading', { name: 'Resumo da campanha' })
+    ).toBeInTheDocument()
+    expect(
+      screen.getByText('Frete grátis acima de R$ 60,00')
+    ).toBeInTheDocument()
     expect(screen.getByText('ter, 18h–23h')).toBeInTheDocument()
+    expect(screen.getByText('Visível no cardápio')).toBeInTheDocument()
     expect(
       screen.getByText('1 vez por cliente · primeiros 50 pedidos')
     ).toBeInTheDocument()
   })
 
-  it('says a hidden coded campaign does not reach the menu', () => {
+  it('states when a campaign is hidden from the menu', () => {
     render(
       <Form values={{ ...previewValuesMock, code: 'VIP', showInMenu: false }}>
         <PromotionPreview />
       </Form>
     )
 
-    expect(
-      screen.queryByLabelText('Prévia da faixa no cardápio')
-    ).not.toBeInTheDocument()
-    expect(screen.getByText(/Não aparece no cardápio/)).toBeInTheDocument()
+    expect(screen.getByText('Oculta do cardápio')).toBeInTheDocument()
+    expect(screen.getByText('Cupom')).toBeInTheDocument()
+    expect(screen.getByText('VIP')).toBeInTheDocument()
   })
 
   it('previews a capped discount without the zones fact', () => {
@@ -78,10 +81,8 @@ describe(PromotionPreview.name, () => {
     )
 
     expect(
-      screen.getByLabelText('Prévia da faixa no cardápio')
-    ).toHaveTextContent(
-      /10% de desconto \(até R\$\s15,00\) acima de R\$\s60,00/
-    )
+      screen.getByText(/10% de desconto \(até R\$\s15,00\) acima de R\$\s60,00/)
+    ).toBeInTheDocument()
     expect(screen.queryByText('Zonas')).not.toBeInTheDocument()
   })
 
