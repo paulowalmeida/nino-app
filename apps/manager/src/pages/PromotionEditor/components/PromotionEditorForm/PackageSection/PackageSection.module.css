@@ -4,6 +4,8 @@
 .groups,
 .group,
 .products,
+.productPicker,
+.productList,
 .options {
   @apply flex flex-col;
 }
@@ -49,8 +51,26 @@
   @apply gap-3;
 }
 
+.productPicker,
+.productList {
+  @apply gap-2;
+}
+
+.productTools {
+  @apply grid gap-3 sm:grid-cols-[minmax(0,1fr)_9rem];
+}
+
+.resultCount,
+.emptyProducts {
+  @apply text-sm text-fg-muted;
+}
+
 .product {
   @apply rounded-xl bg-surface-mute p-3;
+}
+
+.pagination {
+  @apply mt-2 self-center;
 }
 
 .options {

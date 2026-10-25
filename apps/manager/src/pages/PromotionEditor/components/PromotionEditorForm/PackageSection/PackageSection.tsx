@@ -1,3 +1,4 @@
+import { useEffect, useMemo, useState } from 'react'
 import { Controller, useFieldArray, useFormContext } from 'react-hook-form'
 
 import { Box } from '@nino/ds/components/Box'
@@ -7,6 +8,7 @@ import { Checkbox } from '@nino/ds/components/Checkbox'
 import { FormField } from '@nino/ds/components/FormField'
 import { Heading } from '@nino/ds/components/Heading'
 import { Input } from '@nino/ds/components/Input'
+import { Pagination } from '@nino/ds/components/Pagination'
 import { Select } from '@nino/ds/components/Select'
 import { Text } from '@nino/ds/components/Text'
 import { usePromotionEditorFacade } from '@pages/PromotionEditor/facades/usePromotionEditorFacade/usePromotionEditorFacade'
@@ -20,6 +22,14 @@ const GROUP_KIND_OPTIONS = [
   { value: 'CHOICE', label: 'À escolha' },
 ]
 
+const PAGE_SIZE_OPTIONS = [10, 20, 50, 100].map((size) => ({
+  value: String(size),
+  label: String(size),
+}))
+
+type PackageProduct =
+  PromotionFormValues['packageGroups'][number]['products'][number]
+
 const compositionOptions = (item: MenuItem) =>
   (item.modifiers ?? [])
     .filter(({ role }) => role === 'COMPOSITION')
@@ -30,6 +40,154 @@ const acceptsPackage = (item: MenuItem) =>
   !(item.modifiers ?? []).some(
     ({ role, minSelections }) => role === 'ADDITION' && minSelections > 0
   )
+
+type PackageProductListProps = {
+  items: MenuItem[]
+  getKind: () => PromotionFormValues['packageGroups'][number]['kind']
+  value: PackageProduct[]
+  onChange: (products: PackageProduct[]) => void
+}
+
+const PackageProductList = ({
+  items,
+  getKind,
+  value,
+  onChange,
+}: PackageProductListProps) => {
+  const [query, setQuery] = useState('')
+  const [page, setPage] = useState(1)
+  const [pageSize, setPageSize] = useState(10)
+  const filteredItems = useMemo(() => {
+    const normalizedQuery = query.trim().toLocaleLowerCase('pt-BR')
+    if (!normalizedQuery) return items
+    return items.filter((item) =>
+      item.name.toLocaleLowerCase('pt-BR').includes(normalizedQuery)
+    )
+  }, [items, query])
+  const pageCount = Math.max(1, Math.ceil(filteredItems.length / pageSize))
+  const visibleItems = filteredItems.slice(
+    (page - 1) * pageSize,
+    page * pageSize
+  )
+
+  useEffect(() => {
+    if (page > pageCount) setPage(pageCount)
+  }, [page, pageCount])
+
+  return (
+    <Box className={styles.productPicker}>
+      <Box className={styles.productTools}>
+        <FormField label="Pesquisar produtos">
+          <Input
+            type="search"
+            value={query}
+            placeholder="Nome do produto"
+            onChange={(event) => {
+              setQuery(event.target.value)
+              setPage(1)
+            }}
+          />
+        </FormField>
+        <FormField label="Itens por página">
+          <Select
+            options={PAGE_SIZE_OPTIONS}
+            value={String(pageSize)}
+            onValueChange={(size) => {
+              setPageSize(Number(size))
+              setPage(1)
+            }}
+          />
+        </FormField>
+      </Box>
+
+      <Text className={styles.resultCount}>
+        {filteredItems.length} produto{filteredItems.length === 1 ? '' : 's'} ·{' '}
+        {value.length} selecionado{value.length === 1 ? '' : 's'}
+      </Text>
+
+      <Box className={styles.productList}>
+        {visibleItems.map((item) => {
+          const selected = value.find(({ productId }) => productId === item.id)
+          const options = compositionOptions(item)
+          const toggleProduct = (checked: boolean) => {
+            if (!checked) {
+              onChange(value.filter(({ productId }) => productId !== item.id))
+              return
+            }
+            const product = {
+              productId: item.id,
+              allowedOptionIds: options.map(({ id }) => id),
+            }
+            onChange(getKind() === 'FIXED' ? [product] : [...value, product])
+          }
+
+          return (
+            <Box key={item.id} className={styles.product}>
+              <label className={styles.checkRow}>
+                <Checkbox
+                  checked={!!selected}
+                  onCheckedChange={(checked) => toggleProduct(checked === true)}
+                />
+                <span>{item.name}</span>
+              </label>
+              {selected && options.length > 0 && (
+                <Box className={styles.options}>
+                  <Text className={styles.optionsLabel}>
+                    Opções de composição aceitas
+                  </Text>
+                  {options.map((option) => (
+                    <label key={option.id} className={styles.optionRow}>
+                      <Checkbox
+                        size="sm"
+                        checked={selected.allowedOptionIds.includes(option.id)}
+                        onCheckedChange={(checked) => {
+                          onChange(
+                            value.map((product) =>
+                              product.productId !== item.id
+                                ? product
+                                : {
+                                    ...product,
+                                    allowedOptionIds:
+                                      checked === true
+                                        ? [
+                                            ...product.allowedOptionIds,
+                                            option.id,
+                                          ]
+                                        : product.allowedOptionIds.filter(
+                                            (id) => id !== option.id
+                                          ),
+                                  }
+                            )
+                          )
+                        }}
+                      />
+                      <span>{option.name}</span>
+                    </label>
+                  ))}
+                </Box>
+              )}
+            </Box>
+          )
+        })}
+        {visibleItems.length === 0 && (
+          <Text className={styles.emptyProducts}>
+            Nenhum produto encontrado.
+          </Text>
+        )}
+      </Box>
+
+      {filteredItems.length > pageSize && (
+        <Pagination
+          className={styles.pagination}
+          count={filteredItems.length}
+          pageSize={pageSize}
+          page={page}
+          onPageChange={setPage}
+        />
+      )}
+    </Box>
+  )
+}
 
 export const PackageSection = () => {
   const { menuItems } = usePromotionEditorFacade()
@@ -190,86 +348,12 @@ export const PackageSection = () => {
                       <Text className={styles.productsLabel}>
                         Produtos liberados
                       </Text>
-                      {availableItems.map((item) => {
-                        const selected = field.value.find(
-                          ({ productId }) => productId === item.id
-                        )
-                        const options = compositionOptions(item)
-                        const toggleProduct = (checked: boolean) => {
-                          if (!checked) {
-                            field.onChange(
-                              field.value.filter(
-                                ({ productId }) => productId !== item.id
-                              )
-                            )
-                            return
-                          }
-                          const product = {
-                            productId: item.id,
-                            allowedOptionIds: options.map(({ id }) => id),
-                          }
-                          field.onChange(
-                            getValues(kindName) === 'FIXED'
-                              ? [product]
-                              : [...field.value, product]
-                          )
-                        }
-                        return (
-                          <Box key={item.id} className={styles.product}>
-                            <label className={styles.checkRow}>
-                              <Checkbox
-                                checked={!!selected}
-                                onCheckedChange={(checked) =>
-                                  toggleProduct(checked === true)
-                                }
-                              />
-                              <span>{item.name}</span>
-                            </label>
-                            {selected && options.length > 0 && (
-                              <Box className={styles.options}>
-                                <Text className={styles.optionsLabel}>
-                                  Opções de composição aceitas
-                                </Text>
-                                {options.map((option) => (
-                                  <label
-                                    key={option.id}
-                                    className={styles.optionRow}
-                                  >
-                                    <Checkbox
-                                      size="sm"
-                                      checked={selected.allowedOptionIds.includes(
-                                        option.id
-                                      )}
-                                      onCheckedChange={(checked) => {
-                                        field.onChange(
-                                          field.value.map((product) =>
-                                            product.productId !== item.id
-                                              ? product
-                                              : {
-                                                  ...product,
-                                                  allowedOptionIds:
-                                                    checked === true
-                                                      ? [
-                                                          ...product.allowedOptionIds,
-                                                          option.id,
-                                                        ]
-                                                      : product.allowedOptionIds.filter(
-                                                          (id) =>
-                                                            id !== option.id
-                                                        ),
-                                                }
-                                          )
-                                        )
-                                      }}
-                                    />
-                                    <span>{option.name}</span>
-                                  </label>
-                                ))}
-                              </Box>
-                            )}
-                          </Box>
-                        )
-                      })}
+                      <PackageProductList
+                        items={availableItems}
+                        getKind={() => getValues(kindName)}
+                        value={field.value}
+                        onChange={field.onChange}
+                      />
                       {errors.packageGroups?.[groupIndex]?.products
                         ?.message && (
                         <Text className={styles.errorText}>
