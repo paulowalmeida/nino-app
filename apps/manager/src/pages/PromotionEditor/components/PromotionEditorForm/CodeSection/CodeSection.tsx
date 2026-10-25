@@ -40,6 +40,7 @@ export const CodeSection = () => {
             label="Código"
             helperText="O desconto só vale para quem digitar este cupom."
             error={errors.code?.message}
+            className={styles.codeField}
           >
             <Controller
               name="code"

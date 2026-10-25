@@ -5,9 +5,13 @@
 }
 
 .codeFields {
-  @apply grid grid-cols-1 items-start gap-4 md:grid-cols-2;
+  @apply flex flex-wrap items-start gap-4;
+}
+
+.codeField {
+  @apply w-full md:max-w-72;
 }
 
 .visibility {
-  @apply rounded-2 bg-surface-2 p-4;
+  @apply w-full rounded-2 bg-surface-2 p-4 md:w-auto;
 }

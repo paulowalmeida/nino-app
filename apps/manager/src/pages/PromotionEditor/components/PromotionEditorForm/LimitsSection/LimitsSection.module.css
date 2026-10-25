@@ -5,11 +5,11 @@
 }
 
 .limitsFields {
-  @apply grid grid-cols-1 items-start gap-4 md:grid-cols-2;
+  @apply flex flex-wrap items-start gap-6;
 }
 
 .perCustomer {
-  @apply flex flex-col gap-4;
+  @apply flex w-full flex-col gap-4 md:w-auto;
 }
 
 .totalLimitInput {

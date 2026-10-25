@@ -86,7 +86,10 @@ const PackageProductList = ({
   return (
     <Box className={styles.productPicker}>
       <Box className={styles.productTools}>
-        <FormField label="Pesquisar produtos">
+        <FormField
+          label="Pesquisar produtos"
+          className={styles.productSearchField}
+        >
           <Input
             type="search"
             value={query}
@@ -97,7 +100,7 @@ const PackageProductList = ({
             }}
           />
         </FormField>
-        <FormField label="Itens por página">
+        <FormField label="Itens por página" className={styles.pageSizeField}>
           <Select
             options={PAGE_SIZE_OPTIONS}
             value={String(pageSize)}
@@ -363,7 +366,7 @@ export const PackageSection = () => {
                 </Box>
 
                 <Box className={styles.groupSettings}>
-                  <FormField label="Montagem">
+                  <FormField label="Montagem" className={styles.groupKindField}>
                     <Controller
                       name={kindName}
                       control={control}
@@ -388,7 +391,10 @@ export const PackageSection = () => {
                     />
                   </FormField>
 
-                  <FormField label="Quantidade">
+                  <FormField
+                    label="Quantidade"
+                    className={styles.groupQuantityField}
+                  >
                     <Controller
                       name={quantityName}
                       control={control}
