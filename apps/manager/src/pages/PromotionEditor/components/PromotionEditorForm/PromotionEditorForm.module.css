@@ -21,7 +21,7 @@
 }
 
 .promotionEditorContentReview {
-  @apply lg:flex-row lg:items-start;
+  @apply lg:flex-row lg:items-stretch;
 }
 
 .promotionEditorStep {
@@ -33,7 +33,7 @@
 }
 
 .promotionEditorReview {
-  @apply w-full lg:max-w-xl lg:flex-1;
+  @apply w-full lg:max-w-xl lg:flex-1 lg:self-stretch;
 }
 
 .promotionEditorActions {
