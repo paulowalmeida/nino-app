@@ -63,6 +63,7 @@ export const LimitsSection = () => {
                       min={2}
                       value={field.value}
                       error={!!errors.perCustomerCount}
+                      className={styles.perCustomerCountInput}
                       onValueChange={field.onChange}
                     />
                   )}

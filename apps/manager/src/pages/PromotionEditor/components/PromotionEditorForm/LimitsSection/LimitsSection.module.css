@@ -15,3 +15,7 @@
 .totalLimitInput {
   @apply w-full md:max-w-32;
 }
+
+.perCustomerCountInput {
+  @apply w-full md:max-w-32;
+}

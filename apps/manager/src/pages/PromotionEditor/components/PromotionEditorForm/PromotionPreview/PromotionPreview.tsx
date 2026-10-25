@@ -3,6 +3,7 @@ import { useFormContext, useWatch } from 'react-hook-form'
 import { Box } from '@nino/ds/components/Box'
 import { Card } from '@nino/ds/components/Card'
 import { Heading } from '@nino/ds/components/Heading'
+import { Icon } from '@nino/ds/components/Icon'
 import { Text } from '@nino/ds/components/Text'
 import { toPromotionSummarySource } from '@pages/PromotionEditor/adapters/promotionForm.adapter/promotionForm.adapter'
 import { usePromotionEditorFacade } from '@pages/PromotionEditor/facades/usePromotionEditorFacade/usePromotionEditorFacade'
@@ -11,6 +12,13 @@ import { promotionLimitsLabel } from '@pages/PromotionEditor/utils/promotionLimi
 import { promotionSummaryParts } from '@shared/utils/promotion-summary/promotion-summary'
 
 import styles from './PromotionPreview.module.css'
+
+const SUMMARY_ICONS = {
+  'free-delivery': 'truck',
+  discount: 'tag',
+  gift: 'gift',
+  package: 'tag',
+} as const
 
 export const PromotionPreview = () => {
   const { giftProductOptions } = usePromotionEditorFacade()
@@ -49,10 +57,27 @@ export const PromotionPreview = () => {
 
   return (
     <Card variant="flat" padding="lg" className={styles.promotionPreview}>
-      <Heading level={2} size="sm">
-        Resumo da campanha
-      </Heading>
-      <Text className={styles.headline}>{headline}</Text>
+      <Box className={styles.summaryIntro}>
+        <Heading level={2} size="md">
+          Confira antes de criar
+        </Heading>
+        <Text className={styles.summaryHint}>
+          Estas são as regras que serão aplicadas à campanha.
+        </Text>
+      </Box>
+
+      <Box direction="row" className={styles.benefit}>
+        <Box className={styles.benefitIcon}>
+          <Icon name={SUMMARY_ICONS[values.campaignType]} size="md" />
+        </Box>
+        <Box className={styles.benefitCopy}>
+          <Text as="span" className={styles.benefitLabel}>
+            Benefício
+          </Text>
+          <Text className={styles.headline}>{headline}</Text>
+        </Box>
+      </Box>
+
       <Box className={styles.facts}>
         {facts.map(({ label, value }) => (
           <Box key={label} direction="row" className={styles.fact}>
