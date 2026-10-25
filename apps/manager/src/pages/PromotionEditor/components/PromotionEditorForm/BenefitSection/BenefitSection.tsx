@@ -166,14 +166,10 @@ export const BenefitSection = () => {
           )}
 
           {isDiscount && isPercentage && (
-            <Box className={styles.discountRowBreak} aria-hidden="true" />
-          )}
-
-          {isDiscount && isPercentage && (
             <FormField
               label="Teto do desconto"
               helperText="Opcional: limite o desconto em reais."
-              className={styles.amountField}
+              className={styles.discountAuxField}
             >
               <Controller
                 name="maxDiscount"
@@ -232,7 +228,9 @@ export const BenefitSection = () => {
           <FormField
             label="Pedido mínimo"
             helperText="Só conta itens; vazio = sem mínimo."
-            className={styles.amountField}
+            className={
+              isDiscount ? styles.discountAuxField : styles.amountField
+            }
           >
             <Controller
               name="minOrderValue"

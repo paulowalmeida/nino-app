@@ -24,8 +24,8 @@
   @apply w-full md:max-w-36;
 }
 
-.discountRowBreak {
-  @apply hidden basis-full md:block;
+.discountAuxField {
+  @apply w-full md:max-w-60;
 }
 
 .campaignTypeField {
