@@ -139,6 +139,24 @@ export const BenefitSection = () => {
           {isDiscount ? (
             <Box direction="column" className={styles.discountMainFields}>
               {campaignTypeField}
+              <FormField
+                label="Como desconta"
+                className={styles.discountKindField}
+              >
+                <Controller
+                  name="discountKind"
+                  control={control}
+                  render={({ field }) => (
+                    <RadioGroup
+                      aria-label="Como desconta"
+                      orientation="horizontal"
+                      options={DISCOUNT_KIND_OPTIONS}
+                      value={field.value}
+                      onValueChange={field.onChange}
+                    />
+                  )}
+                />
+              </FormField>
               {discountValueField}
             </Box>
           ) : (
@@ -168,27 +186,6 @@ export const BenefitSection = () => {
                     value={field.value}
                     onValueChange={field.onChange}
                     error={!!errors.giftProductId}
-                  />
-                )}
-              />
-            </FormField>
-          )}
-
-          {isDiscount && (
-            <FormField
-              label="Como desconta"
-              className={styles.discountKindField}
-            >
-              <Controller
-                name="discountKind"
-                control={control}
-                render={({ field }) => (
-                  <RadioGroup
-                    aria-label="Como desconta"
-                    orientation="horizontal"
-                    options={DISCOUNT_KIND_OPTIONS}
-                    value={field.value}
-                    onValueChange={field.onChange}
                   />
                 )}
               />

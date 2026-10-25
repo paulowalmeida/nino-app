@@ -34,7 +34,7 @@
 
 .discountAuxFields {
   @apply flex w-full items-start gap-4;
-  @apply xl:ml-auto xl:w-60;
+  @apply md:w-60;
 }
 
 .campaignTypeField {
