@@ -27,6 +27,7 @@ export const PeriodSection = () => {
     formState: { errors },
   } = useFormContext<PromotionFormValues>()
   const hasDailyWindow = useWatch({ control, name: 'hasDailyWindow' })
+  const endsAtDate = useWatch({ control, name: 'endsAtDate' })
 
   const endsAfterStart = (endsAtDate: Date | undefined) => {
     const end = combineDateTime(endsAtDate, getValues('endsAtTime'))
@@ -97,18 +98,20 @@ export const PeriodSection = () => {
                   />
                 )}
               />
-              <Controller
-                name="endsAtTime"
-                control={control}
-                render={({ field }) => (
-                  <TimePicker
-                    className={styles.time}
-                    ariaLabel="Hora de fim"
-                    value={field.value}
-                    onValueChange={field.onChange}
-                  />
-                )}
-              />
+              {endsAtDate && (
+                <Controller
+                  name="endsAtTime"
+                  control={control}
+                  render={({ field }) => (
+                    <TimePicker
+                      className={styles.time}
+                      ariaLabel="Hora de fim"
+                      value={field.value}
+                      onValueChange={field.onChange}
+                    />
+                  )}
+                />
+              )}
             </Box>
           </FormField>
         </Box>
@@ -127,6 +130,17 @@ export const PeriodSection = () => {
                 role="group"
                 aria-label="Dias da semana"
               >
+                <Chip
+                  type="button"
+                  variant="toggle"
+                  selected={
+                    field.value.length === 0 ||
+                    field.value.length === PROMOTION_WEEKDAY_LABELS.length
+                  }
+                  onClick={() => field.onChange([])}
+                >
+                  Todos
+                </Chip>
                 {PROMOTION_WEEKDAY_LABELS.map((label, day) => (
                   <Chip
                     key={label}

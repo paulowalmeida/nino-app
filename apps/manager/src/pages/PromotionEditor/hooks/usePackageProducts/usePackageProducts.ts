@@ -4,7 +4,7 @@ import { queryKeys } from '@shared/lib/query-keys/query-keys'
 import { ProductService } from '@shared/services/product/product.service'
 
 export type PackageProductOrder = {
-  target: 'name' | 'category' | 'price'
+  sortBy: 'name' | 'category'
   direction: 'asc' | 'desc'
 }
 

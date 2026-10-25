@@ -13,7 +13,8 @@ type ProductListParams = {
   size: number
   categoryId?: string
   search?: string
-  target?: 'position' | 'name' | 'category' | 'price'
+  target?: 'position' | 'name' | 'price'
+  sortBy?: 'name' | 'category'
   direction?: 'asc' | 'desc'
   packageEligible?: boolean
 }
@@ -52,6 +53,7 @@ export const ProductService = {
       categoryId,
       search,
       target = 'position',
+      sortBy,
       direction,
       packageEligible,
     }: ProductListParams
@@ -63,6 +65,7 @@ export const ProductService = {
     }
     if (categoryId) params['categoryId'] = categoryId
     if (search) params['search'] = search
+    if (sortBy) params['sortBy'] = sortBy
     if (direction) params['direction'] = direction
     if (packageEligible) params['packageEligible'] = 'true'
 

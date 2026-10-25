@@ -35,7 +35,13 @@ export const PromotionEditorForm = () => {
       <Box
         as="form"
         onSubmit={form.handleSubmit((values) =>
-          isLastStep ? savePromotion(values) : void goNext()
+          isLastStep
+            ? savePromotion(
+                values.campaignType === 'free-delivery'
+                  ? { ...values, showInBanner: false }
+                  : values
+              )
+            : void goNext()
         )}
         className={styles.promotionEditorForm}
       >
@@ -59,16 +65,18 @@ export const PromotionEditorForm = () => {
             {stepKey === 'rules' && (
               <Box className={styles.promotionEditorRules}>
                 {campaignType === 'discount' && <CodeSection />}
-                <MediaSection />
+                {campaignType !== 'free-delivery' && <MediaSection />}
                 <LimitsSection />
               </Box>
             )}
           </Box>
         </Box>
 
-        <Box as="aside" className={styles.promotionEditorPreview}>
-          <PromotionPreview />
-        </Box>
+        {isLastStep && (
+          <Box className={styles.promotionEditorReview}>
+            <PromotionPreview />
+          </Box>
+        )}
 
         <Box direction="row" className={styles.promotionEditorActions}>
           {step === 0 ? (

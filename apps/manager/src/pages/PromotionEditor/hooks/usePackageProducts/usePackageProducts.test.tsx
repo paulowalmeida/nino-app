@@ -34,7 +34,7 @@ describe(usePackageProducts.name, () => {
           page: 2,
           size: 20,
           search: 'batata',
-          target: 'category',
+          sortBy: 'category',
           direction: 'desc',
         }),
       { wrapper }
@@ -45,7 +45,7 @@ describe(usePackageProducts.name, () => {
       page: 2,
       size: 20,
       search: 'batata',
-      target: 'category',
+      sortBy: 'category',
       direction: 'desc',
       packageEligible: true,
     })

@@ -27,7 +27,7 @@ export const queryKeys = {
         page: number
         size: number
         search: string
-        target: string
+        sortBy: string
         direction: string
       }
     ) => [...queryKeys.products.all(unitId), 'package-picker', params] as const,

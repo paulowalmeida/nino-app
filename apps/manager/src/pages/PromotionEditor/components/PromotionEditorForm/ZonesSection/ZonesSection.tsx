@@ -14,8 +14,26 @@ import type { PromotionFormValues } from '@pages/PromotionEditor/types/Promotion
 
 import styles from './ZonesSection.module.css'
 
-const toggleZone = (zoneIds: string[], zoneId: string, checked: boolean) =>
-  checked ? [...zoneIds, zoneId] : zoneIds.filter((id) => id !== zoneId)
+const selectThroughZone = (
+  zoneIds: string[],
+  zoneOptions: { value: string }[],
+  zoneId: string,
+  checked: boolean
+) => {
+  const selectedIndex = zoneOptions.findIndex(({ value }) => value === zoneId)
+  if (selectedIndex < 0) return zoneIds
+
+  const selectedPrefix = zoneOptions
+    .slice(0, selectedIndex + 1)
+    .map(({ value }) => value)
+
+  if (checked) return selectedPrefix
+
+  return zoneOptions
+    .slice(0, selectedIndex)
+    .map(({ value }) => value)
+    .filter((id) => zoneIds.includes(id))
+}
 
 export const ZonesSection = () => {
   const { zoneOptions } = usePromotionEditorFacade()
@@ -32,8 +50,8 @@ export const ZonesSection = () => {
           Zonas de entrega
         </Heading>
         <Text className={styles.zonesLead}>
-          Fora delas o frete é o normal, e o cliente vê que a campanha não vale
-          para o endereço.
+          Ao marcar uma zona, as menores também entram na campanha. Fora da
+          maior selecionada, vale o frete normal.
         </Text>
 
         {zoneOptions.length === 0 ? (
@@ -76,8 +94,9 @@ export const ZonesSection = () => {
                           checked={field.value.includes(zone.value)}
                           onCheckedChange={(checked) =>
                             field.onChange(
-                              toggleZone(
+                              selectThroughZone(
                                 field.value,
+                                zoneOptions,
                                 zone.value,
                                 checked === true
                               )

@@ -49,6 +49,7 @@ export const BenefitSection = () => {
           <FormField
             label="Tipo de campanha"
             helperText={TYPE_HINTS[campaignType]}
+            className={styles.campaignTypeField}
           >
             <Controller
               name="campaignType"
@@ -114,6 +115,7 @@ export const BenefitSection = () => {
             <FormField
               label={isPercentage ? 'Desconto (%)' : 'Desconto (R$)'}
               error={errors.discountValue?.message}
+              className={styles.amountField}
             >
               <Controller
                 name="discountValue"
@@ -162,6 +164,7 @@ export const BenefitSection = () => {
             <FormField
               label="Teto do desconto"
               helperText="Opcional. Ex.: 10% até R$ 15,00 protege a margem em pedido grande."
+              className={styles.amountField}
             >
               <Controller
                 name="maxDiscount"
@@ -187,6 +190,7 @@ export const BenefitSection = () => {
               label="Preço fechado"
               helperText="A soma normal dos itens aparece riscada no cardápio."
               error={errors.packagePrice?.message}
+              className={styles.amountField}
             >
               <Controller
                 name="packagePrice"
@@ -217,6 +221,7 @@ export const BenefitSection = () => {
           <FormField
             label="Pedido mínimo"
             helperText="Conta só os itens, sem o frete. Vazio vale para qualquer pedido."
+            className={styles.amountField}
           >
             <Controller
               name="minOrderValue"

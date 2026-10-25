@@ -70,7 +70,7 @@ describe('ProductService', () => {
       size: 20,
       categoryId: 'category-1',
       search: 'coxinha',
-      target: 'category',
+      sortBy: 'category',
       direction: 'desc',
       packageEligible: true,
     })
@@ -79,11 +79,12 @@ describe('ProductService', () => {
     expect(api.getAll).toHaveBeenCalledWith(
       `units/${unitIdMock}/products/manage`,
       {
-        target: 'category',
+        target: 'position',
         page: 1,
         size: 20,
         categoryId: 'category-1',
         search: 'coxinha',
+        sortBy: 'category',
         direction: 'desc',
         packageEligible: 'true',
       }

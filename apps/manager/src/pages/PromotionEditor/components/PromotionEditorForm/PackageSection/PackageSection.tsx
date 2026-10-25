@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { Fragment, useEffect, useState } from 'react'
 import { Controller, useFieldArray, useFormContext } from 'react-hook-form'
 
 import { Box } from '@nino/ds/components/Box'
@@ -10,6 +10,14 @@ import { Heading } from '@nino/ds/components/Heading'
 import { Input } from '@nino/ds/components/Input'
 import { Pagination } from '@nino/ds/components/Pagination'
 import { Select } from '@nino/ds/components/Select'
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@nino/ds/components/Table'
 import { Text } from '@nino/ds/components/Text'
 import { usePromotionEditorFacade } from '@pages/PromotionEditor/facades/usePromotionEditorFacade/usePromotionEditorFacade'
 import {
@@ -31,24 +39,6 @@ const PAGE_SIZE_OPTIONS = [10, 20, 50, 100].map((size) => ({
   value: String(size),
   label: String(size),
 }))
-
-const ORDER_OPTIONS = [
-  { value: 'name-asc', label: 'Nome: A–Z' },
-  { value: 'name-desc', label: 'Nome: Z–A' },
-  { value: 'category-asc', label: 'Categoria: A–Z' },
-  { value: 'category-desc', label: 'Categoria: Z–A' },
-  { value: 'price-asc', label: 'Menor preço' },
-  { value: 'price-desc', label: 'Maior preço' },
-]
-
-const PRODUCT_ORDER: Record<string, PackageProductOrder> = {
-  'name-asc': { target: 'name', direction: 'asc' },
-  'name-desc': { target: 'name', direction: 'desc' },
-  'category-asc': { target: 'category', direction: 'asc' },
-  'category-desc': { target: 'category', direction: 'desc' },
-  'price-asc': { target: 'price', direction: 'asc' },
-  'price-desc': { target: 'price', direction: 'desc' },
-}
 
 type PackageProduct =
   PromotionFormValues['packageGroups'][number]['products'][number]
@@ -74,13 +64,16 @@ const PackageProductList = ({
   const [query, setQuery] = useState('')
   const [page, setPage] = useState(1)
   const [pageSize, setPageSize] = useState(10)
-  const [order, setOrder] = useState<keyof typeof PRODUCT_ORDER>('name-asc')
+  const [sortBy, setSortBy] = useState<PackageProductOrder['sortBy']>('name')
+  const [direction, setDirection] =
+    useState<PackageProductOrder['direction']>('asc')
   const search = useDebouncedValue(query.trim())
   const products = usePackageProducts(unitId, {
     page,
     size: pageSize,
     search,
-    ...PRODUCT_ORDER[order],
+    sortBy,
+    direction,
   })
   const total = products.data?.pagination.total ?? 0
   const items = products.data?.data ?? []
@@ -104,16 +97,6 @@ const PackageProductList = ({
             }}
           />
         </FormField>
-        <FormField label="Ordenar por">
-          <Select
-            options={ORDER_OPTIONS}
-            value={order}
-            onValueChange={(nextOrder) => {
-              setOrder(nextOrder as keyof typeof PRODUCT_ORDER)
-              setPage(1)
-            }}
-          />
-        </FormField>
         <FormField label="Itens por página">
           <Select
             options={PAGE_SIZE_OPTIONS}
@@ -131,97 +114,171 @@ const PackageProductList = ({
         {value.length === 1 ? '' : 's'}
       </Text>
 
-      <Box className={styles.productList}>
-        {items.length > 0 && (
-          <Box className={styles.productHeader} aria-hidden="true">
-            <span>Produto</span>
-            <span>Categoria</span>
-          </Box>
-        )}
-        {items.map((item) => {
-          const selected = value.find(({ productId }) => productId === item.id)
-          const options = compositionOptions(item)
-          const toggleProduct = (checked: boolean) => {
-            if (!checked) {
-              onChange(value.filter(({ productId }) => productId !== item.id))
-              return
+      <Table className={styles.productTable}>
+        <TableHeader>
+          <TableRow>
+            <TableHead
+              aria-sort={
+                sortBy === 'name'
+                  ? direction === 'asc'
+                    ? 'ascending'
+                    : 'descending'
+                  : 'none'
+              }
+            >
+              <button
+                type="button"
+                className={styles.sortButton}
+                onClick={() => {
+                  setDirection(
+                    sortBy === 'name' && direction === 'asc' ? 'desc' : 'asc'
+                  )
+                  setSortBy('name')
+                  setPage(1)
+                }}
+              >
+                Produto{' '}
+                {sortBy === 'name' ? (direction === 'asc' ? '↑' : '↓') : ''}
+              </button>
+            </TableHead>
+            <TableHead
+              aria-sort={
+                sortBy === 'category'
+                  ? direction === 'asc'
+                    ? 'ascending'
+                    : 'descending'
+                  : 'none'
+              }
+            >
+              <button
+                type="button"
+                className={styles.sortButton}
+                onClick={() => {
+                  setDirection(
+                    sortBy === 'category' && direction === 'asc'
+                      ? 'desc'
+                      : 'asc'
+                  )
+                  setSortBy('category')
+                  setPage(1)
+                }}
+              >
+                Categoria{' '}
+                {sortBy === 'category' ? (direction === 'asc' ? '↑' : '↓') : ''}
+              </button>
+            </TableHead>
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          {items.map((item) => {
+            const selected = value.find(
+              ({ productId }) => productId === item.id
+            )
+            const options = compositionOptions(item)
+            const toggleProduct = (checked: boolean) => {
+              if (!checked) {
+                onChange(value.filter(({ productId }) => productId !== item.id))
+                return
+              }
+              const product = {
+                productId: item.id,
+                allowedOptionIds: options.map(({ id }) => id),
+              }
+              onChange(getKind() === 'FIXED' ? [product] : [...value, product])
             }
-            const product = {
-              productId: item.id,
-              allowedOptionIds: options.map(({ id }) => id),
-            }
-            onChange(getKind() === 'FIXED' ? [product] : [...value, product])
-          }
 
-          return (
-            <Box key={item.id} className={styles.product}>
-              <Box className={styles.productColumns}>
-                <label className={styles.checkRow}>
-                  <Checkbox
-                    checked={!!selected}
-                    onCheckedChange={(checked) =>
-                      toggleProduct(checked === true)
-                    }
-                  />
-                  <span>{item.name}</span>
-                </label>
-                <Text className={styles.productCategory}>
-                  {item.category.name}
-                </Text>
-              </Box>
-              {selected && options.length > 0 && (
-                <Box className={styles.options}>
-                  <Text className={styles.optionsLabel}>
-                    Opções de composição aceitas
-                  </Text>
-                  {options.map((option) => (
-                    <label key={option.id} className={styles.optionRow}>
+            return (
+              <Fragment key={item.id}>
+                <TableRow className={styles.productRow}>
+                  <TableCell>
+                    <label className={styles.checkRow}>
                       <Checkbox
-                        size="sm"
-                        checked={selected.allowedOptionIds.includes(option.id)}
-                        onCheckedChange={(checked) => {
-                          onChange(
-                            value.map((product) =>
-                              product.productId !== item.id
-                                ? product
-                                : {
-                                    ...product,
-                                    allowedOptionIds:
-                                      checked === true
-                                        ? [
-                                            ...product.allowedOptionIds,
-                                            option.id,
-                                          ]
-                                        : product.allowedOptionIds.filter(
-                                            (id) => id !== option.id
-                                          ),
-                                  }
-                            )
-                          )
-                        }}
+                        checked={!!selected}
+                        onCheckedChange={(checked) =>
+                          toggleProduct(checked === true)
+                        }
                       />
-                      <span>{option.name}</span>
+                      <span>{item.name}</span>
                     </label>
-                  ))}
-                </Box>
-              )}
-            </Box>
-          )
-        })}
-        {products.isPending && (
-          <Text className={styles.emptyProducts}>Carregando produtos…</Text>
-        )}
-        {products.isError && (
-          <Text className={styles.errorText}>
-            Não foi possível carregar os produtos.
-          </Text>
-        )}
-        {!products.isPending && !products.isError && items.length === 0 && (
-          <Text className={styles.emptyProducts}>
-            Nenhum produto encontrado.
-          </Text>
-        )}
-      </Box>
+                  </TableCell>
+                  <TableCell className={styles.productCategory}>
+                    {item.category.name}
+                  </TableCell>
+                </TableRow>
+                {selected && options.length > 0 && (
+                  <TableRow>
+                    <TableCell colSpan={2}>
+                      <Box className={styles.options}>
+                        <Text className={styles.optionsLabel}>
+                          Opções de composição aceitas
+                        </Text>
+                        {options.map((option) => (
+                          <label key={option.id} className={styles.optionRow}>
+                            <Checkbox
+                              size="sm"
+                              checked={selected.allowedOptionIds.includes(
+                                option.id
+                              )}
+                              onCheckedChange={(checked) => {
+                                onChange(
+                                  value.map((product) =>
+                                    product.productId !== item.id
+                                      ? product
+                                      : {
+                                          ...product,
+                                          allowedOptionIds:
+                                            checked === true
+                                              ? [
+                                                  ...product.allowedOptionIds,
+                                                  option.id,
+                                                ]
+                                              : product.allowedOptionIds.filter(
+                                                  (id) => id !== option.id
+                                                ),
+                                        }
+                                  )
+                                )
+                              }}
+                            />
+                            <span>{option.name}</span>
+                          </label>
+                        ))}
+                      </Box>
+                    </TableCell>
+                  </TableRow>
+                )}
+              </Fragment>
+            )
+          })}
+          {products.isPending && (
+            <TableRow>
+              <TableCell colSpan={2}>
+                <Text className={styles.emptyProducts}>
+                  Carregando produtos…
+                </Text>
+              </TableCell>
+            </TableRow>
+          )}
+          {products.isError && (
+            <TableRow>
+              <TableCell colSpan={2}>
+                <Text className={styles.errorText}>
+                  Não foi possível carregar os produtos.
+                </Text>
+              </TableCell>
+            </TableRow>
+          )}
+          {!products.isPending && !products.isError && items.length === 0 && (
+            <TableRow>
+              <TableCell colSpan={2}>
+                <Text className={styles.emptyProducts}>
+                  Nenhum produto encontrado.
+                </Text>
+              </TableCell>
+            </TableRow>
+          )}
+        </TableBody>
+      </Table>
 
       {total > pageSize && (
         <Pagination
