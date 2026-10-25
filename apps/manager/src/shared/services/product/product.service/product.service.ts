@@ -13,6 +13,9 @@ type ProductListParams = {
   size: number
   categoryId?: string
   search?: string
+  target?: 'position' | 'name' | 'category' | 'price'
+  direction?: 'asc' | 'desc'
+  packageEligible?: boolean
 }
 
 export type CreateMenuItemWithImageResult = {
@@ -43,15 +46,25 @@ export const ProductService = {
 
   listProducts: (
     unitId: string,
-    { page, size, categoryId, search }: ProductListParams
+    {
+      page,
+      size,
+      categoryId,
+      search,
+      target = 'position',
+      direction,
+      packageEligible,
+    }: ProductListParams
   ): Promise<MenuPage> => {
     const params: Record<string, string | number> = {
-      target: 'position',
+      target,
       page,
       size,
     }
     if (categoryId) params['categoryId'] = categoryId
     if (search) params['search'] = search
+    if (direction) params['direction'] = direction
+    if (packageEligible) params['packageEligible'] = 'true'
 
     return api.getAll<MenuPage>(`units/${unitId}/products/manage`, params)
   },
@@ -102,10 +115,7 @@ export const ProductService = {
       { position }
     ),
 
-  reorderItems: (
-    unitId: string,
-    ids: string[]
-  ): Promise<{ message: string }> =>
+  reorderItems: (unitId: string, ids: string[]): Promise<{ message: string }> =>
     api.patch<{ ids: string[] }, { message: string }>(
       `units/${unitId}/products/reorder`,
       { ids }

@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Controller, useFieldArray, useFormContext } from 'react-hook-form'
 
 import { Box } from '@nino/ds/components/Box'
@@ -12,7 +12,12 @@ import { Pagination } from '@nino/ds/components/Pagination'
 import { Select } from '@nino/ds/components/Select'
 import { Text } from '@nino/ds/components/Text'
 import { usePromotionEditorFacade } from '@pages/PromotionEditor/facades/usePromotionEditorFacade/usePromotionEditorFacade'
+import {
+  type PackageProductOrder,
+  usePackageProducts,
+} from '@pages/PromotionEditor/hooks/usePackageProducts/usePackageProducts'
 import type { PromotionFormValues } from '@pages/PromotionEditor/types/PromotionFormValues.type'
+import { useDebouncedValue } from '@shared/hooks/ui/useDebouncedValue/useDebouncedValue'
 import type { MenuItem } from '@shared/types/product/menu-item'
 
 import styles from './PackageSection.module.css'
@@ -27,6 +32,24 @@ const PAGE_SIZE_OPTIONS = [10, 20, 50, 100].map((size) => ({
   label: String(size),
 }))
 
+const ORDER_OPTIONS = [
+  { value: 'name-asc', label: 'Nome: A–Z' },
+  { value: 'name-desc', label: 'Nome: Z–A' },
+  { value: 'category-asc', label: 'Categoria: A–Z' },
+  { value: 'category-desc', label: 'Categoria: Z–A' },
+  { value: 'price-asc', label: 'Menor preço' },
+  { value: 'price-desc', label: 'Maior preço' },
+]
+
+const PRODUCT_ORDER: Record<string, PackageProductOrder> = {
+  'name-asc': { target: 'name', direction: 'asc' },
+  'name-desc': { target: 'name', direction: 'desc' },
+  'category-asc': { target: 'category', direction: 'asc' },
+  'category-desc': { target: 'category', direction: 'desc' },
+  'price-asc': { target: 'price', direction: 'asc' },
+  'price-desc': { target: 'price', direction: 'desc' },
+}
+
 type PackageProduct =
   PromotionFormValues['packageGroups'][number]['products'][number]
 
@@ -35,21 +58,15 @@ const compositionOptions = (item: MenuItem) =>
     .filter(({ role }) => role === 'COMPOSITION')
     .flatMap(({ options }) => options)
 
-const acceptsPackage = (item: MenuItem) =>
-  item.isActive &&
-  !(item.modifiers ?? []).some(
-    ({ role, minSelections }) => role === 'ADDITION' && minSelections > 0
-  )
-
 type PackageProductListProps = {
-  items: MenuItem[]
+  unitId: string | null
   getKind: () => PromotionFormValues['packageGroups'][number]['kind']
   value: PackageProduct[]
   onChange: (products: PackageProduct[]) => void
 }
 
 const PackageProductList = ({
-  items,
+  unitId,
   getKind,
   value,
   onChange,
@@ -57,18 +74,17 @@ const PackageProductList = ({
   const [query, setQuery] = useState('')
   const [page, setPage] = useState(1)
   const [pageSize, setPageSize] = useState(10)
-  const filteredItems = useMemo(() => {
-    const normalizedQuery = query.trim().toLocaleLowerCase('pt-BR')
-    if (!normalizedQuery) return items
-    return items.filter((item) =>
-      item.name.toLocaleLowerCase('pt-BR').includes(normalizedQuery)
-    )
-  }, [items, query])
-  const pageCount = Math.max(1, Math.ceil(filteredItems.length / pageSize))
-  const visibleItems = filteredItems.slice(
-    (page - 1) * pageSize,
-    page * pageSize
-  )
+  const [order, setOrder] = useState<keyof typeof PRODUCT_ORDER>('name-asc')
+  const search = useDebouncedValue(query.trim())
+  const products = usePackageProducts(unitId, {
+    page,
+    size: pageSize,
+    search,
+    ...PRODUCT_ORDER[order],
+  })
+  const total = products.data?.pagination.total ?? 0
+  const items = products.data?.data ?? []
+  const pageCount = Math.max(1, Math.ceil(total / pageSize))
 
   useEffect(() => {
     if (page > pageCount) setPage(pageCount)
@@ -88,6 +104,16 @@ const PackageProductList = ({
             }}
           />
         </FormField>
+        <FormField label="Ordenar por">
+          <Select
+            options={ORDER_OPTIONS}
+            value={order}
+            onValueChange={(nextOrder) => {
+              setOrder(nextOrder as keyof typeof PRODUCT_ORDER)
+              setPage(1)
+            }}
+          />
+        </FormField>
         <FormField label="Itens por página">
           <Select
             options={PAGE_SIZE_OPTIONS}
@@ -101,12 +127,18 @@ const PackageProductList = ({
       </Box>
 
       <Text className={styles.resultCount}>
-        {filteredItems.length} produto{filteredItems.length === 1 ? '' : 's'} ·{' '}
-        {value.length} selecionado{value.length === 1 ? '' : 's'}
+        {total} produto{total === 1 ? '' : 's'} · {value.length} selecionado
+        {value.length === 1 ? '' : 's'}
       </Text>
 
       <Box className={styles.productList}>
-        {visibleItems.map((item) => {
+        {items.length > 0 && (
+          <Box className={styles.productHeader} aria-hidden="true">
+            <span>Produto</span>
+            <span>Categoria</span>
+          </Box>
+        )}
+        {items.map((item) => {
           const selected = value.find(({ productId }) => productId === item.id)
           const options = compositionOptions(item)
           const toggleProduct = (checked: boolean) => {
@@ -123,13 +155,20 @@ const PackageProductList = ({
 
           return (
             <Box key={item.id} className={styles.product}>
-              <label className={styles.checkRow}>
-                <Checkbox
-                  checked={!!selected}
-                  onCheckedChange={(checked) => toggleProduct(checked === true)}
-                />
-                <span>{item.name}</span>
-              </label>
+              <Box className={styles.productColumns}>
+                <label className={styles.checkRow}>
+                  <Checkbox
+                    checked={!!selected}
+                    onCheckedChange={(checked) =>
+                      toggleProduct(checked === true)
+                    }
+                  />
+                  <span>{item.name}</span>
+                </label>
+                <Text className={styles.productCategory}>
+                  {item.category.name}
+                </Text>
+              </Box>
               {selected && options.length > 0 && (
                 <Box className={styles.options}>
                   <Text className={styles.optionsLabel}>
@@ -169,17 +208,25 @@ const PackageProductList = ({
             </Box>
           )
         })}
-        {visibleItems.length === 0 && (
+        {products.isPending && (
+          <Text className={styles.emptyProducts}>Carregando produtos…</Text>
+        )}
+        {products.isError && (
+          <Text className={styles.errorText}>
+            Não foi possível carregar os produtos.
+          </Text>
+        )}
+        {!products.isPending && !products.isError && items.length === 0 && (
           <Text className={styles.emptyProducts}>
             Nenhum produto encontrado.
           </Text>
         )}
       </Box>
 
-      {filteredItems.length > pageSize && (
+      {total > pageSize && (
         <Pagination
           className={styles.pagination}
-          count={filteredItems.length}
+          count={total}
           pageSize={pageSize}
           page={page}
           onPageChange={setPage}
@@ -190,7 +237,7 @@ const PackageProductList = ({
 }
 
 export const PackageSection = () => {
-  const { menuItems } = usePromotionEditorFacade()
+  const { unitId } = usePromotionEditorFacade()
   const {
     control,
     getValues,
@@ -201,8 +248,6 @@ export const PackageSection = () => {
     control,
     name: 'packageGroups',
   })
-  const availableItems = menuItems.filter(acceptsPackage)
-
   return (
     <Box as="section" aria-labelledby="package-composition">
       <Card variant="flat" padding="lg" className={styles.packageSection}>
@@ -349,7 +394,7 @@ export const PackageSection = () => {
                         Produtos liberados
                       </Text>
                       <PackageProductList
-                        items={availableItems}
+                        unitId={unitId}
                         getKind={() => getValues(kindName)}
                         value={field.value}
                         onChange={field.onChange}

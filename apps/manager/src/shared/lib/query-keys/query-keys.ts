@@ -21,6 +21,16 @@ export const queryKeys = {
         categoryId,
         search,
       ] as const,
+    packagePicker: (
+      unitId: string,
+      params: {
+        page: number
+        size: number
+        search: string
+        target: string
+        direction: string
+      }
+    ) => [...queryKeys.products.all(unitId), 'package-picker', params] as const,
     detail: (unitId: string, productId: string) =>
       [...queryKeys.products.all(unitId), 'detail', productId] as const,
   },

@@ -60,7 +60,7 @@ describe('ProductService', () => {
     expect(result.data).toEqual([menuItemMock, secondItem])
   })
 
-  it('listProducts: paginates by position with filters', async () => {
+  it('listProducts: sends pagination, filters and ordering to the API', async () => {
     // Arrange
     vi.mocked(api.getAll).mockResolvedValue(menuPageMock)
 
@@ -70,17 +70,22 @@ describe('ProductService', () => {
       size: 20,
       categoryId: 'category-1',
       search: 'coxinha',
+      target: 'category',
+      direction: 'desc',
+      packageEligible: true,
     })
 
     // Assert
     expect(api.getAll).toHaveBeenCalledWith(
       `units/${unitIdMock}/products/manage`,
       {
-        target: 'position',
+        target: 'category',
         page: 1,
         size: 20,
         categoryId: 'category-1',
         search: 'coxinha',
+        direction: 'desc',
+        packageEligible: 'true',
       }
     )
     expect(result).toBe(menuPageMock)
@@ -160,11 +165,7 @@ describe('ProductService', () => {
 
   it('setItemAvailability: patches the item active flag', async () => {
     // Act
-    await ProductService.setItemAvailability(
-      unitIdMock,
-      productIdMock,
-      false
-    )
+    await ProductService.setItemAvailability(unitIdMock, productIdMock, false)
 
     // Assert
     expect(api.patch).toHaveBeenCalledWith(
@@ -255,10 +256,7 @@ describe('ProductService', () => {
     vi.mocked(api.remove).mockResolvedValue(removeMessageMock)
 
     // Act
-    const result = await ProductService.removeItem(
-      unitIdMock,
-      productIdMock
-    )
+    const result = await ProductService.removeItem(unitIdMock, productIdMock)
 
     // Assert
     expect(api.remove).toHaveBeenCalledWith(
@@ -272,10 +270,7 @@ describe('ProductService', () => {
     vi.mocked(api.remove).mockResolvedValue(removeManyMessageMock)
 
     // Act
-    const result = await ProductService.removeItems(
-      unitIdMock,
-      reorderIdsMock
-    )
+    const result = await ProductService.removeItems(unitIdMock, reorderIdsMock)
 
     // Assert
     expect(api.remove).toHaveBeenCalledWith(
