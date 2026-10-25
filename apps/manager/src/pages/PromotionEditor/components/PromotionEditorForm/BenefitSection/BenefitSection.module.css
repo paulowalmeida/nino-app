@@ -15,3 +15,7 @@
 .campaignTypeField {
   @apply w-full md:max-w-72;
 }
+
+.minOrderInput {
+  @apply w-full md:max-w-32;
+}

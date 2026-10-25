@@ -221,7 +221,6 @@ export const BenefitSection = () => {
           <FormField
             label="Pedido mínimo"
             helperText="Conta só os itens, sem o frete. Vazio vale para qualquer pedido."
-            className={styles.amountField}
           >
             <Controller
               name="minOrderValue"
@@ -232,6 +231,7 @@ export const BenefitSection = () => {
                   placeholder="60,00"
                   aria-label="Pedido mínimo em reais"
                   value={field.value}
+                  className={styles.minOrderInput}
                   onBlur={field.onBlur}
                   onChange={(event) =>
                     field.onChange(maskMoney(event.target.value))
