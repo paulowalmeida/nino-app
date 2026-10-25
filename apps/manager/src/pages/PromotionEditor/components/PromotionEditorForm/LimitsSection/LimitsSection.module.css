@@ -12,6 +12,6 @@
   @apply flex flex-col gap-4;
 }
 
-.totalLimitField {
-  @apply w-full md:max-w-72;
+.totalLimitInput {
+  @apply w-full md:max-w-32;
 }

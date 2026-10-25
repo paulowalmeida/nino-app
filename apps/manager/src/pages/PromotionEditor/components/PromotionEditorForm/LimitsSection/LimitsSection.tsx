@@ -75,7 +75,6 @@ export const LimitsSection = () => {
             label="Limite total de pedidos"
             helperText="Ex.: só os primeiros 50 pedidos. Vazio não limita."
             error={errors.totalLimit?.message}
-            className={styles.totalLimitField}
           >
             <Controller
               name="totalLimit"
@@ -90,6 +89,7 @@ export const LimitsSection = () => {
                   placeholder="Sem limite"
                   value={field.value}
                   error={!!errors.totalLimit}
+                  className={styles.totalLimitInput}
                   onValueChange={(value) =>
                     field.onChange(Number.isNaN(value) ? '' : value)
                   }
