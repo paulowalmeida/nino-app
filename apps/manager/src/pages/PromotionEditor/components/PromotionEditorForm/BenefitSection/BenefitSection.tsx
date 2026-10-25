@@ -68,7 +68,7 @@ export const BenefitSection = () => {
           Benefício
         </Heading>
 
-        <Box className={styles.benefitFields}>
+        <Box direction="row" className={styles.benefitFields}>
           <FormField
             label="Tipo de campanha"
             helperText={TYPE_HINTS[campaignType]}
@@ -189,7 +189,7 @@ export const BenefitSection = () => {
           )}
 
           {isDiscount && (
-            <Box className={styles.discountAuxFields}>
+            <Box direction="column" className={styles.discountAuxFields}>
               {isPercentage && (
                 <FormField
                   label="Teto do desconto"

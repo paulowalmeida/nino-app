@@ -29,8 +29,8 @@
 }
 
 .discountAuxFields {
-  @apply flex w-full flex-wrap items-start gap-4;
-  @apply xl:ml-auto xl:w-auto xl:flex-nowrap;
+  @apply flex w-full items-start gap-4;
+  @apply xl:ml-auto xl:w-60;
 }
 
 .campaignTypeField {
