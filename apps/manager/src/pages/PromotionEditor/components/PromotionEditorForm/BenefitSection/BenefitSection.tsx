@@ -37,6 +37,73 @@ export const BenefitSection = () => {
   const isDiscount = campaignType === 'discount'
   const isPackage = campaignType === 'package'
   const isPercentage = discountKind === 'PERCENTAGE_DISCOUNT'
+  const campaignTypeField = (
+    <FormField
+      label="Tipo de campanha"
+      helperText={TYPE_HINTS[campaignType]}
+      className={styles.campaignTypeField}
+    >
+      <Controller
+        name="campaignType"
+        control={control}
+        render={({ field }) => (
+          <Select
+            options={CAMPAIGN_TYPE_OPTIONS}
+            value={field.value}
+            disabled={mode !== 'create'}
+            onValueChange={field.onChange}
+          />
+        )}
+      />
+    </FormField>
+  )
+  const discountValueField = isDiscount ? (
+    <FormField
+      label={isPercentage ? 'Desconto (%)' : 'Desconto (R$)'}
+      error={errors.discountValue?.message}
+      className={styles.discountValueField}
+    >
+      <Controller
+        name="discountValue"
+        control={control}
+        rules={{
+          validate: (value) => {
+            if (getValues('campaignType') !== 'discount') return true
+            const amount = discountAmountOf({
+              discountKind: getValues('discountKind'),
+              discountValue: value,
+            })
+            if (!(amount > 0)) return 'Informe o desconto'
+            return (
+              getValues('discountKind') !== 'PERCENTAGE_DISCOUNT' ||
+              amount <= 100 ||
+              'O percentual vai até 100'
+            )
+          },
+        }}
+        render={({ field }) => (
+          <Input
+            inputMode="decimal"
+            placeholder={isPercentage ? '10' : '10,00'}
+            aria-label={
+              isPercentage ? 'Desconto em percentual' : 'Desconto em reais'
+            }
+            value={field.value}
+            error={!!errors.discountValue}
+            className={styles.amountInput}
+            onBlur={field.onBlur}
+            onChange={(event) =>
+              field.onChange(
+                isPercentage
+                  ? event.target.value.replace(/[^\d,]/g, '')
+                  : maskMoney(event.target.value)
+              )
+            }
+          />
+        )}
+      />
+    </FormField>
+  ) : null
   const minOrderField = (
     <FormField
       label="Pedido mínimo"
@@ -69,24 +136,14 @@ export const BenefitSection = () => {
         </Heading>
 
         <Box direction="row" className={styles.benefitFields}>
-          <FormField
-            label="Tipo de campanha"
-            helperText={TYPE_HINTS[campaignType]}
-            className={styles.campaignTypeField}
-          >
-            <Controller
-              name="campaignType"
-              control={control}
-              render={({ field }) => (
-                <Select
-                  options={CAMPAIGN_TYPE_OPTIONS}
-                  value={field.value}
-                  disabled={mode !== 'create'}
-                  onValueChange={field.onChange}
-                />
-              )}
-            />
-          </FormField>
+          {isDiscount ? (
+            <Box direction="column" className={styles.discountMainFields}>
+              {campaignTypeField}
+              {discountValueField}
+            </Box>
+          ) : (
+            campaignTypeField
+          )}
 
           {campaignType === 'gift' && (
             <FormField
@@ -132,56 +189,6 @@ export const BenefitSection = () => {
                     options={DISCOUNT_KIND_OPTIONS}
                     value={field.value}
                     onValueChange={field.onChange}
-                  />
-                )}
-              />
-            </FormField>
-          )}
-
-          {isDiscount && (
-            <FormField
-              label={isPercentage ? 'Desconto (%)' : 'Desconto (R$)'}
-              error={errors.discountValue?.message}
-              className={styles.discountValueField}
-            >
-              <Controller
-                name="discountValue"
-                control={control}
-                rules={{
-                  validate: (value) => {
-                    if (getValues('campaignType') !== 'discount') return true
-                    const amount = discountAmountOf({
-                      discountKind: getValues('discountKind'),
-                      discountValue: value,
-                    })
-                    if (!(amount > 0)) return 'Informe o desconto'
-                    return (
-                      getValues('discountKind') !== 'PERCENTAGE_DISCOUNT' ||
-                      amount <= 100 ||
-                      'O percentual vai até 100'
-                    )
-                  },
-                }}
-                render={({ field }) => (
-                  <Input
-                    inputMode="decimal"
-                    placeholder={isPercentage ? '10' : '10,00'}
-                    aria-label={
-                      isPercentage
-                        ? 'Desconto em percentual'
-                        : 'Desconto em reais'
-                    }
-                    value={field.value}
-                    error={!!errors.discountValue}
-                    className={styles.amountInput}
-                    onBlur={field.onBlur}
-                    onChange={(event) =>
-                      field.onChange(
-                        isPercentage
-                          ? event.target.value.replace(/[^\d,]/g, '')
-                          : maskMoney(event.target.value)
-                      )
-                    }
                   />
                 )}
               />

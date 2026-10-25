@@ -20,6 +20,10 @@
   @apply w-full md:max-w-60;
 }
 
+.discountMainFields {
+  @apply flex w-full items-start gap-4 md:w-72;
+}
+
 .discountValueField {
   @apply w-full md:max-w-36;
 }
