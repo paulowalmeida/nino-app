@@ -75,6 +75,7 @@ export const LimitsSection = () => {
             label="Limite total de pedidos"
             helperText="Ex.: só os primeiros 50 pedidos. Vazio não limita."
             error={errors.totalLimit?.message}
+            className={styles.totalLimitField}
           >
             <Controller
               name="totalLimit"

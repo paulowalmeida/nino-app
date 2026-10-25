@@ -11,3 +11,7 @@
 .perCustomer {
   @apply flex flex-col gap-4;
 }
+
+.totalLimitField {
+  @apply w-full md:max-w-72;
+}
