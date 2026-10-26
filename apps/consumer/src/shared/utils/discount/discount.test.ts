@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest'
 
 import {
+  acceptsPayment,
   automaticDiscounts,
   couponSuggestions,
   discountAmount,
@@ -32,10 +33,27 @@ describe('discount', () => {
     expect(largestDiscount([undefined], 300)).toBeUndefined()
   })
 
-  it('separates automatic discounts from coupons the store announced', () => {
+  it('lists every announced discount, with or without code, as a coupon to pick', () => {
     const visible = [fixedCouponMock, percentageOfferMock]
 
     expect(automaticDiscounts(visible).map(({ id }) => id)).toEqual(['percent'])
-    expect(couponSuggestions(visible).map(({ id }) => id)).toEqual(['fixed'])
+    expect(couponSuggestions(visible).map(({ id }) => id)).toEqual([
+      'fixed',
+      'percent',
+    ])
+  })
+
+  it('discounts only the campaign items while the minimum looks at the whole order', () => {
+    expect(discountAmount(percentageOfferMock, 200, 50)).toBe(5)
+    expect(discountAmount(fixedCouponMock, 200, 3)).toBe(3)
+  })
+
+  it('accepts a payment-restricted campaign only for that method', () => {
+    const pixOnly = { ...percentageOfferMock, paymentMethods: ['PIX'] }
+
+    expect(acceptsPayment(pixOnly, 'PIX')).toBe(true)
+    expect(acceptsPayment(pixOnly, 'CASH')).toBe(false)
+    expect(acceptsPayment(pixOnly, undefined)).toBe(false)
+    expect(acceptsPayment(percentageOfferMock, 'CASH')).toBe(true)
   })
 })

@@ -171,7 +171,9 @@ export const BenefitSection = () => {
             render={({ field }) => (
               <Input
                 placeholder={
-                  isPackage ? 'Ex.: Combo burger + refri' : 'Ex.: Frete de sexta'
+                  isPackage
+                    ? 'Ex.: Combo burger + refri'
+                    : 'Ex.: Frete de sexta'
                 }
                 value={field.value}
                 error={!!errors.name}

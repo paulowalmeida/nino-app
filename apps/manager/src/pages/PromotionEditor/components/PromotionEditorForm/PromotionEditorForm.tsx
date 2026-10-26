@@ -11,6 +11,7 @@ import { MenuPreview } from '@pages/PromotionEditor/components/PromotionEditorFo
 import { MediaSection } from '@pages/PromotionEditor/components/PromotionEditorForm/MediaSection/MediaSection'
 import { PackageSection } from '@pages/PromotionEditor/components/PromotionEditorForm/PackageSection/PackageSection'
 import { PeriodSection } from '@pages/PromotionEditor/components/PromotionEditorForm/PeriodSection/PeriodSection'
+import { ScopeSection } from '@pages/PromotionEditor/components/PromotionEditorForm/ScopeSection/ScopeSection'
 import { PromotionPreview } from '@pages/PromotionEditor/components/PromotionEditorForm/PromotionPreview/PromotionPreview'
 import { ZonesSection } from '@pages/PromotionEditor/components/PromotionEditorForm/ZonesSection/ZonesSection'
 import { PromotionEditorHeader } from '@pages/PromotionEditor/components/PromotionEditorHeader/PromotionEditorHeader'
@@ -77,6 +78,7 @@ export const PromotionEditorForm = () => {
               {stepKey === 'benefit' && (
                 <Box className={styles.promotionEditorRules}>
                   <BenefitSection />
+                  {campaignType === 'discount' && <ScopeSection />}
                   {campaignType === 'package' && <PackageSection />}
                 </Box>
               )}

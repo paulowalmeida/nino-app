@@ -2,8 +2,10 @@ import type { PromotionFormValues } from '@pages/PromotionEditor/types/Promotion
 
 export const codeDefaultsMock: Pick<
   PromotionFormValues,
-  'code' | 'showInMenu'
+  'code' | 'showInMenu' | 'firstOrderOnly' | 'paymentMethods'
 > = {
   code: '',
   showInMenu: true,
+  firstOrderOnly: false,
+  paymentMethods: [],
 }

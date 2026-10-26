@@ -16,6 +16,7 @@ describe(useEditorSteps.name, () => {
     expect(trigger).toHaveBeenCalledWith(
       [
         'name',
+        'scopeCategoryIds',
         'minOrderValue',
         'discountValue',
         'maxDiscount',

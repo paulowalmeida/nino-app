@@ -205,4 +205,39 @@ describe('promotionForm.adapter', () => {
       ],
     })
   })
+
+  it('sends first order, payment and item rules only for discounts', () => {
+    const discount = toPromotionInput({
+      ...filledFormMock,
+      campaignType: 'discount',
+      discountValue: '10',
+      firstOrderOnly: true,
+      paymentMethods: ['PIX'],
+      productScope: 'chosen',
+      scopeCategoryIds: ['burgers'],
+      scopeProductIds: ['x-salada'],
+    })
+    expect(discount).toMatchObject({
+      firstOrderOnly: true,
+      paymentMethods: ['PIX'],
+      categoryIds: ['burgers'],
+      productIds: ['x-salada'],
+    })
+
+    expect(
+      toPromotionInput({
+        ...filledFormMock,
+        campaignType: 'gift',
+        firstOrderOnly: true,
+        paymentMethods: ['PIX'],
+        productScope: 'chosen',
+        scopeCategoryIds: ['burgers'],
+      })
+    ).toMatchObject({
+      firstOrderOnly: false,
+      paymentMethods: [],
+      categoryIds: [],
+      productIds: [],
+    })
+  })
 })

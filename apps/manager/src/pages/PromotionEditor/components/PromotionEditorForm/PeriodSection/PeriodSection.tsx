@@ -22,7 +22,7 @@ const DAILY_WINDOW_HINTS = {
   package: 'Fora dele a promoção não vale. No fuso da loja.',
 } as const
 
-const toggleWeekday =(weekdays: number[], day: number) =>
+const toggleWeekday = (weekdays: number[], day: number) =>
   weekdays.includes(day)
     ? weekdays.filter((weekday) => weekday !== day)
     : [...weekdays, day]

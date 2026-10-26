@@ -1,4 +1,5 @@
 import type { Promotion } from '@shared/types/marketing/promotion.type'
+import type { PaymentMethod } from '@shared/types/order/payment-method'
 
 export type PromotionInput = {
   name: string
@@ -25,4 +26,8 @@ export type PromotionInput = {
   showInBanner?: boolean
   perCustomerLimit?: number | null
   totalLimit?: number | null
+  firstOrderOnly?: boolean
+  paymentMethods?: PaymentMethod[]
+  productIds?: string[]
+  categoryIds?: string[]
 }

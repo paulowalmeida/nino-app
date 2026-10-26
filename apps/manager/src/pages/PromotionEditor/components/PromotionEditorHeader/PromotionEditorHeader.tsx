@@ -29,7 +29,9 @@ export const PromotionEditorHeader = ({
         className={`${motion.deal} ${styles.promotionEditorHeader}`}
         mb={5}
         title={
-          typeLabel ? `${EDITOR_TITLES[mode]} – ${typeLabel}` : EDITOR_TITLES[mode]
+          typeLabel
+            ? `${EDITOR_TITLES[mode]} – ${typeLabel}`
+            : EDITOR_TITLES[mode]
         }
         accent="campanha"
         description="O cliente vê a condição no cardápio e ganha o benefício quando cumpre."

@@ -30,22 +30,35 @@ const withFacade = (overrides: Record<string, unknown>) =>
 describe('CheckoutCoupon', () => {
   beforeEach(() => vi.clearAllMocks())
 
-  it('suggests the announced coupon to a signed-in customer with one tap', async () => {
-    withFacade({})
+  it('lists the announced coupons for any customer and applies one with a tap', async () => {
+    withFacade({ isAuthenticated: false })
 
     render(<CheckoutCoupon />)
-    await userEvent.click(screen.getByRole('button', { name: 'Aplicar' }))
+    expect(
+      screen.getByRole('heading', { name: 'Cupons e descontos' })
+    ).toBeInTheDocument()
+    expect(screen.getByText('Cupom VOLTA10')).toBeInTheDocument()
 
-    expect(screen.getByText('Você tem o cupom VOLTA10')).toBeInTheDocument()
+    await userEvent.click(screen.getByRole('button', { name: 'Aplicar' }))
     expect(applyCoupon).toHaveBeenCalledWith(suggestedCouponMock)
+  })
+
+  it('names a code-free discount by the campaign name', () => {
+    withFacade({
+      couponSuggestions: [
+        { ...suggestedCouponMock, code: null, name: 'Desconto de sexta' },
+      ],
+    })
+
+    render(<CheckoutCoupon />)
+
+    expect(screen.getByText('Desconto de sexta')).toBeInTheDocument()
   })
 
   it('lets a guest type the code, and Enter applies it instead of ordering', async () => {
     withFacade({ isAuthenticated: false })
 
     render(<CheckoutCoupon />)
-    expect(screen.queryByText(/Você tem o cupom/)).not.toBeInTheDocument()
-
     await userEvent.click(screen.getByText('Tenho um cupom'))
     await userEvent.type(
       screen.getByRole('textbox', { name: 'Código do cupom' }),

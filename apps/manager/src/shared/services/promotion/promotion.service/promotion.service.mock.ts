@@ -38,6 +38,8 @@ export const promotionMock: Promotion = {
   showInMenu: true,
   perCustomerLimit: null,
   totalLimit: null,
+  firstOrderOnly: false,
+  paymentMethods: [],
   usageCount: 0,
   productIds: [],
   categoryIds: [],

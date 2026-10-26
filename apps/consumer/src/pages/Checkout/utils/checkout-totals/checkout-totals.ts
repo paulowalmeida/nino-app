@@ -2,7 +2,8 @@ import type { CartLine } from '@custom_types/cart/cart-line'
 import type { PublicDeliveryZone } from '@custom_types/delivery-zone/PublicDeliveryZone.type'
 import type { PublicPromotion } from '@custom_types/promotion/public-promotion.type'
 import { cartItemPrice } from '@utils/cart-item-price/cart-item-price'
-import { largestDiscount } from '@utils/discount/discount'
+import { eligibleSubtotal } from '@pages/checkout/utils/eligible-subtotal/eligible-subtotal'
+import { acceptsPayment, largestDiscount } from '@utils/discount/discount'
 import { freeDeliveryCoverage } from '@utils/free-delivery/free-delivery'
 import { giftApplies } from '@utils/gift/gift'
 
@@ -16,6 +17,7 @@ export type CheckoutTotalsInput = {
   giftCandidates?: PublicPromotion[]
   gift?: PublicPromotion
   packageOffer?: PublicPromotion
+  paymentMethod?: string
 }
 
 export const checkoutTotals = ({
@@ -28,6 +30,7 @@ export const checkoutTotals = ({
   giftCandidates = [],
   gift: legacyGift,
   packageOffer,
+  paymentMethod,
 }: CheckoutTotalsInput) => {
   const subtotal = cartLines.reduce(
     (total, line) =>
@@ -44,7 +47,13 @@ export const checkoutTotals = ({
     deliveryFee,
   })
   const deliveryDiscount = coverage === 'applied' ? deliveryFee : 0
-  const discount = largestDiscount(discountCandidates, subtotal)
+  const discount = largestDiscount(
+    discountCandidates.filter(
+      (candidate) => !candidate || acceptsPayment(candidate, paymentMethod)
+    ),
+    subtotal,
+    ({ eligibleProductIds }) => eligibleSubtotal(cartLines, eligibleProductIds)
+  )
   const packageLine = cartLines.find(({ item }) => !!item.package)
   const packageData = packageLine?.item.package
   const packageSavings =

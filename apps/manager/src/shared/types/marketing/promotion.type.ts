@@ -1,3 +1,5 @@
+import type { PaymentMethod } from '@shared/types/order/payment-method'
+
 export type Promotion = {
   id: string
   name: string
@@ -60,6 +62,8 @@ export type Promotion = {
   showInMenu: boolean
   perCustomerLimit: number | null
   totalLimit: number | null
+  firstOrderOnly: boolean
+  paymentMethods: PaymentMethod[]
   usageCount: number
   productIds: string[]
   categoryIds: string[]

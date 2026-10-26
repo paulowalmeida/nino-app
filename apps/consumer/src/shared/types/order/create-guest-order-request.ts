@@ -16,6 +16,7 @@ export type CreateGuestOrderRequest = GuestInfo & {
   // WHY: a API devolve 409 com o frete novo se a campanha acabou até aqui.
   expectsFreeDelivery?: boolean
   couponCode?: string
+  selectedPromotionId?: string
   expectsDiscount?: boolean
   expectsGift?: boolean
   expectsPackage?: boolean

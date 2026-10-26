@@ -15,3 +15,7 @@
 .visibility {
   @apply w-full rounded-2 bg-surface-2 p-4;
 }
+
+.paymentChips {
+  @apply flex flex-wrap gap-2;
+}

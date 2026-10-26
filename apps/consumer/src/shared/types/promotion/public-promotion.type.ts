@@ -17,6 +17,11 @@ export type PublicPromotion = {
   giftProduct: { id: string; name: string; price: number } | null
   imageUrl?: string | null
   showInBanner?: boolean
+  firstOrderOnly?: boolean
+  /** Vazio ou ausente = qualquer forma de pagamento. */
+  paymentMethods?: string[]
+  /** Produtos em que o desconto incide; null ou ausente = cardápio todo. */
+  eligibleProductIds?: string[] | null
   packageGroups?: {
     id: string
     kind: 'FIXED' | 'CHOICE'

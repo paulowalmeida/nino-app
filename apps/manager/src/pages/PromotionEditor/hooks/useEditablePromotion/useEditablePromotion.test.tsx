@@ -32,9 +32,11 @@ describe(useEditablePromotion.name, () => {
     vi.mocked(usePromotion).mockImplementation(
       (_, promotionId) =>
         ({
-          data: [editablePromotionMock, usedPromotionMock, retiredFreeDeliveryMock].find(
-            ({ id }) => id === promotionId
-          ),
+          data: [
+            editablePromotionMock,
+            usedPromotionMock,
+            retiredFreeDeliveryMock,
+          ].find(({ id }) => id === promotionId),
           isPending: false,
         }) as unknown as ReturnType<typeof usePromotion>
     )

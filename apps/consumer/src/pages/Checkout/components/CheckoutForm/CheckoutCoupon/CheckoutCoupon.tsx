@@ -4,23 +4,28 @@ import type { KeyboardEvent } from 'react'
 import { Box } from '@nino/ds/components/Box'
 import { Button } from '@nino/ds/components/Button'
 import { Collapsible } from '@nino/ds/components/Collapsible'
+import { Heading } from '@nino/ds/components/Heading'
 import { Icon } from '@nino/ds/components/Icon'
 import { Input } from '@nino/ds/components/Input'
 import { Text } from '@nino/ds/components/Text'
 import { useCheckoutFacade } from '@pages/checkout/facades/useCheckoutFacade/useCheckoutFacade'
 import type { CheckoutFacade } from '@pages/checkout/facades/useCheckoutFacade/useCheckoutFacade'
+import type { PublicPromotion } from '@custom_types/promotion/public-promotion.type'
 import { promotionLabel } from '@utils/promotion-label/promotion-label'
 
 import { DisclosureTrigger } from '../DisclosureTrigger/DisclosureTrigger'
 
 import styles from './CheckoutCoupon.module.css'
 
+// WHY: desconto sem código se identifica pelo nome que a loja deu a ele.
+const couponTitle = ({ code, name }: PublicPromotion) =>
+  code ? `Cupom ${code}` : name
+
 export const CheckoutCoupon = ({ checkout }: { checkout?: CheckoutFacade }) => {
   const {
     coupon,
     isCouponEligible,
     couponSuggestions,
-    isAuthenticated,
     applyCouponCode,
     applyCoupon,
     removeCoupon,
@@ -47,7 +52,7 @@ export const CheckoutCoupon = ({ checkout }: { checkout?: CheckoutFacade }) => {
         <Icon name="tag" size="sm" className={styles.couponIcon} />
         <Box className={styles.couponText}>
           <Text as="span" className={styles.couponCode}>
-            Cupom {coupon.code}
+            {couponTitle(coupon)}
           </Text>
           <Text as="span" className={styles.couponLabel}>
             {promotionLabel(coupon)}
@@ -68,32 +73,36 @@ export const CheckoutCoupon = ({ checkout }: { checkout?: CheckoutFacade }) => {
 
   return (
     <Box className={styles.checkoutCoupon}>
-      {isAuthenticated &&
-        couponSuggestions.map((suggestion) => (
-          <Box
-            key={suggestion.id}
-            direction="row"
-            className={styles.couponSuggestion}
-          >
-            <Icon name="tag" size="sm" className={styles.couponIcon} />
-            <Box className={styles.couponText}>
-              <Text as="span" className={styles.couponCode}>
-                Você tem o cupom {suggestion.code}
-              </Text>
-              <Text as="span" className={styles.couponLabel}>
-                {promotionLabel(suggestion)}
-              </Text>
-            </Box>
-            <Button
-              type="button"
-              variant="secondary"
-              size="sm"
-              onClick={() => applyCoupon(suggestion)}
-            >
-              Aplicar
-            </Button>
+      {couponSuggestions.length > 0 && (
+        <Heading level={3} size="sm" className={styles.couponHeading}>
+          Cupons e descontos
+        </Heading>
+      )}
+      {couponSuggestions.map((suggestion) => (
+        <Box
+          key={suggestion.id}
+          direction="row"
+          className={styles.couponSuggestion}
+        >
+          <Icon name="tag" size="sm" className={styles.couponIcon} />
+          <Box className={styles.couponText}>
+            <Text as="span" className={styles.couponCode}>
+              {couponTitle(suggestion)}
+            </Text>
+            <Text as="span" className={styles.couponLabel}>
+              {promotionLabel(suggestion)}
+            </Text>
           </Box>
-        ))}
+          <Button
+            type="button"
+            variant="secondary"
+            size="sm"
+            onClick={() => applyCoupon(suggestion)}
+          >
+            Aplicar
+          </Button>
+        </Box>
+      ))}
 
       <Collapsible
         className={styles.couponDisclosure}

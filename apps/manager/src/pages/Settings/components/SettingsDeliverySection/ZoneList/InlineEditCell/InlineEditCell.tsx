@@ -61,8 +61,6 @@ export const InlineEditCell = ({
   return (
     <Input
       autoFocus
-      // WHY: sem isso o input pede ~20 caracteres e a tabela alarga a coluna.
-      size={1}
       inputMode={inputMode}
       aria-label={label}
       className={styles.inlineEditInput}

@@ -11,21 +11,19 @@ describe(orderOffers.name, () => {
   it('puts a free delivery coupon in the free delivery class', () => {
     const offers = orderOffers({
       freeDelivery: autoFreeDeliveryMock,
-      discountOffers: [autoDiscountMock],
       coupon: freeDeliveryCouponMock,
       hasPromotionEnded: false,
     })
 
     expect(offers.freeDelivery).toBe(freeDeliveryCouponMock)
-    expect(offers.discountCandidates).toEqual([undefined, autoDiscountMock])
+    expect(offers.discountCandidates).toEqual([undefined])
   })
 
   it('drops every campaign after the API said one ended', () => {
     expect(
       orderOffers({
         freeDelivery: autoFreeDeliveryMock,
-        discountOffers: [autoDiscountMock],
-        coupon: undefined,
+          coupon: undefined,
         hasPromotionEnded: true,
       })
     ).toEqual({
@@ -45,13 +43,22 @@ describe(orderOffers.name, () => {
 
     const offers = orderOffers({
       freeDelivery: autoFreeDeliveryMock,
-      discountOffers: [autoDiscountMock],
       coupon: giftCoupon,
       hasPromotionEnded: false,
     })
 
     expect(offers.gift).toBe(giftCoupon)
     expect(offers.freeDelivery).toBe(autoFreeDeliveryMock)
-    expect(offers.discountCandidates).toEqual([undefined, autoDiscountMock])
+    expect(offers.discountCandidates).toEqual([undefined])
+  })
+
+  it('counts a discount only when the customer picked it', () => {
+    expect(
+      orderOffers({
+        freeDelivery: undefined,
+        coupon: autoDiscountMock,
+        hasPromotionEnded: false,
+      }).discountCandidates
+    ).toEqual([autoDiscountMock])
   })
 })

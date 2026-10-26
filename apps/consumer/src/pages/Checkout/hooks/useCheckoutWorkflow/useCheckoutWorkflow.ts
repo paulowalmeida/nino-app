@@ -12,6 +12,7 @@ import type { Store } from '@custom_types/store/store'
 import { checkoutTotals } from '@pages/checkout/utils/checkout-totals/checkout-totals'
 import { orderOffers } from '@pages/checkout/utils/order-offers/order-offers'
 import { promotionUnavailableFee } from '@pages/checkout/utils/promotion-unavailable/promotion-unavailable'
+import { eligibleSubtotal } from '@pages/checkout/utils/eligible-subtotal/eligible-subtotal'
 import { couponApplies } from '@pages/checkout/utils/coupon-applies/coupon-applies'
 import { useDeliveryQuote } from '@pages/checkout/hooks/useDeliveryQuote/useDeliveryQuote'
 import { usePlaceOrder } from '@pages/checkout/hooks/usePlaceOrder/usePlaceOrder'
@@ -31,7 +32,6 @@ type UseCheckoutWorkflowParams = {
   clearCart: () => void
   slug: string | undefined
   freeDelivery?: PublicPromotion
-  discountOffers?: PublicPromotion[]
   giftOffers?: PublicPromotion[]
   packageOffers?: PublicPromotion[]
   coupon?: PublicPromotion
@@ -52,7 +52,6 @@ export const useCheckoutWorkflow = ({
   clearCart,
   slug,
   freeDelivery,
-  discountOffers = [],
   giftOffers = [],
   packageOffers = [],
   coupon,
@@ -143,7 +142,6 @@ export const useCheckoutWorkflow = ({
 
   const offers = orderOffers({
     freeDelivery,
-    discountOffers,
     giftOffers,
     packageOffer: packageOffers.find(
       ({ id }) => id === packageCart?.promotionId
@@ -168,6 +166,7 @@ export const useCheckoutWorkflow = ({
     zone,
     estimatedMinutes,
     ...offers,
+    paymentMethod,
   })
   const isCouponEligible =
     !!coupon &&
@@ -175,6 +174,8 @@ export const useCheckoutWorkflow = ({
     couponApplies(coupon, {
       subtotal,
       isFreeDeliveryApplied: freeDeliveryCoverage === 'applied',
+      paymentMethod,
+      eligibleSubtotal: eligibleSubtotal(cartLines, coupon.eligibleProductIds),
     })
   const minimum = minimumOrderAmount ?? 0
   const isBelowMinimum = minimum > 0 && subtotal < minimum
@@ -191,6 +192,8 @@ export const useCheckoutWorkflow = ({
           couponCode: isCouponEligible
             ? (coupon?.code ?? undefined)
             : undefined,
+          selectedPromotionId:
+            isCouponEligible && coupon && !coupon.code ? coupon.id : undefined,
           expectsFreeDelivery: freeDeliveryCoverage === 'applied',
           expectsDiscount: promotionDiscount > 0,
           expectsGift: !!appliedGift,

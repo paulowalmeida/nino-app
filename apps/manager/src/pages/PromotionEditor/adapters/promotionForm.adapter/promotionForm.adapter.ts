@@ -62,6 +62,11 @@ const blankValues = (now: Date): PromotionFormValues => ({
   perCustomer: 'unlimited',
   perCustomerCount: '',
   totalLimit: '',
+  firstOrderOnly: false,
+  paymentMethods: [],
+  productScope: 'all',
+  scopeCategoryIds: [],
+  scopeProductIds: [],
 })
 
 /* WHY: duplicar copia as regras, mas início e fim que já passaram voltam para
@@ -111,6 +116,14 @@ export const toPromotionFormValues = (
     })),
     ...perCustomerOf(promotion.perCustomerLimit),
     totalLimit: promotion.totalLimit ?? '',
+    firstOrderOnly: promotion.firstOrderOnly,
+    paymentMethods: promotion.paymentMethods,
+    productScope:
+      promotion.productIds.length || promotion.categoryIds.length
+        ? 'chosen'
+        : 'all',
+    scopeCategoryIds: promotion.categoryIds,
+    scopeProductIds: promotion.productIds,
   }
 }
 
@@ -221,6 +234,24 @@ export const toPromotionSummarySource = (
   }
 }
 
+// WHY: 1º pedido, pagamento e itens só restringem o desconto.
+const discountRulesOf = (
+  values: PromotionFormValues,
+  type: PromotionSummarySource['type']
+): Pick<
+  PromotionInput,
+  'firstOrderOnly' | 'paymentMethods' | 'productIds' | 'categoryIds'
+> => {
+  const isDiscount = type === 'PERCENTAGE_DISCOUNT' || type === 'FIXED_DISCOUNT'
+  const isChosen = isDiscount && values.productScope === 'chosen'
+  return {
+    firstOrderOnly: isDiscount && values.firstOrderOnly,
+    paymentMethods: isDiscount ? values.paymentMethods : [],
+    productIds: isChosen ? values.scopeProductIds : [],
+    categoryIds: isChosen ? values.scopeCategoryIds : [],
+  }
+}
+
 export const toPromotionInput = (
   values: PromotionFormValues
 ): PromotionInput => {
@@ -248,5 +279,6 @@ export const toPromotionInput = (
     showInBanner: values.showInBanner,
     perCustomerLimit: perCustomerLimitOf(values),
     totalLimit: values.totalLimit === '' ? null : Number(values.totalLimit),
+    ...discountRulesOf(values, source.type),
   }
 }

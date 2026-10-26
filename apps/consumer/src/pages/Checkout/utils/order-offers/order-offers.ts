@@ -2,18 +2,16 @@ import type { PublicPromotion } from '@custom_types/promotion/public-promotion.t
 
 type OrderOffersInput = {
   freeDelivery: PublicPromotion | undefined
-  discountOffers: PublicPromotion[]
   giftOffers?: PublicPromotion[]
   packageOffer?: PublicPromotion
   coupon: PublicPromotion | undefined
   hasPromotionEnded: boolean
 }
 
-/* WHY: o cupom digitado entra na disputa da sua classe — frete grátis,
+/* WHY: o cupom escolhido entra na disputa da sua classe — frete grátis,
  * desconto ou brinde — e, depois de um 409, nenhuma campanha vale mais. */
 export const orderOffers = ({
   freeDelivery,
-  discountOffers,
   giftOffers = [],
   packageOffer,
   coupon,
@@ -29,9 +27,9 @@ export const orderOffers = ({
   const isGiftCoupon = coupon?.type === 'GIFT'
   return {
     freeDelivery: isFreeDeliveryCoupon ? coupon : freeDelivery,
+    // WHY: desconto só entra quando o cliente o escolhe na lista de cupons.
     discountCandidates: [
       isFreeDeliveryCoupon || isGiftCoupon ? undefined : coupon,
-      ...discountOffers,
     ],
     giftCandidates: isGiftCoupon ? [coupon] : giftOffers,
     gift: isGiftCoupon ? coupon : giftOffers[0],

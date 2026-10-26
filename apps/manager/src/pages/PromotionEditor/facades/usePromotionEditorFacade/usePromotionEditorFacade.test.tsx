@@ -3,6 +3,7 @@ import { describe, expect, it, vi } from 'vitest'
 
 import { useEditablePromotion } from '@pages/PromotionEditor/hooks/useEditablePromotion/useEditablePromotion'
 import { useGiftProductOptions } from '@pages/PromotionEditor/hooks/useGiftProductOptions/useGiftProductOptions'
+import { useScopeOptions } from '@pages/PromotionEditor/hooks/useScopeOptions/useScopeOptions'
 import { usePromotionSave } from '@pages/PromotionEditor/hooks/usePromotionSave/usePromotionSave'
 import { useZoneOptions } from '@pages/PromotionEditor/hooks/useZoneOptions/useZoneOptions'
 import { useCurrentUnit } from '@shared/hooks/session/useCurrentUnit/useCurrentUnit'
@@ -16,6 +17,7 @@ vi.mock(
   '@pages/PromotionEditor/hooks/useEditablePromotion/useEditablePromotion'
 )
 vi.mock('@pages/PromotionEditor/hooks/usePromotionSave/usePromotionSave')
+vi.mock('@pages/PromotionEditor/hooks/useScopeOptions/useScopeOptions')
 vi.mock('@pages/PromotionEditor/hooks/useZoneOptions/useZoneOptions')
 vi.mock(
   '@pages/PromotionEditor/hooks/useGiftProductOptions/useGiftProductOptions'
@@ -39,6 +41,11 @@ describe('usePromotionEditorFacade', () => {
     })
     vi.mocked(useGiftProductOptions).mockReturnValue({
       giftProductOptions: [],
+      isPending: false,
+    })
+    vi.mocked(useScopeOptions).mockReturnValue({
+      scopeProductOptions: [],
+      scopeCategoryOptions: [],
       isPending: false,
     })
     vi.mocked(usePromotionSave).mockReturnValue({

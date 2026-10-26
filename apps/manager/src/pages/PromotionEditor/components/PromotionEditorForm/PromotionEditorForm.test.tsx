@@ -56,7 +56,7 @@ describe(PromotionEditorForm.name, () => {
     await next()
     expect(screen.getByRole('button', { name: 'ter' })).toBeInTheDocument()
     await next()
-    await userEvent.type(screen.getByRole('textbox', { name: 'Código' }), 'vip')
+    await userEvent.type(screen.getByRole('textbox', { name: 'Código (opcional)' }), 'vip')
     expect(
       screen.queryByRole('button', { name: promotionEditorFormMock.nextLabel })
     ).not.toBeInTheDocument()

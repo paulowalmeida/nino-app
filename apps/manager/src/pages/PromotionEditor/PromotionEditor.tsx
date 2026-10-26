@@ -17,7 +17,11 @@ export const PromotionEditor = () => {
       {isUnavailable || isPending ? (
         <>
           <PromotionEditorHeader />
-          {isUnavailable ? <PromotionUnavailable /> : <PromotionEditorSkeleton />}
+          {isUnavailable ? (
+            <PromotionUnavailable />
+          ) : (
+            <PromotionEditorSkeleton />
+          )}
         </>
       ) : (
         <PromotionEditorForm />

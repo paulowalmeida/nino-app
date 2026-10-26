@@ -43,3 +43,7 @@
 .couponDisclosure {
   @apply -mx-3;
 }
+
+.couponHeading {
+  @apply text-sm font-semibold text-fg-strong;
+}

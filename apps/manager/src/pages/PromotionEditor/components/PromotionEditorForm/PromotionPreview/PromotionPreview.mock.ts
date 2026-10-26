@@ -29,4 +29,9 @@ export const previewValuesMock: PromotionFormValues = {
   perCustomer: 'once',
   perCustomerCount: '',
   totalLimit: 50,
+  firstOrderOnly: false,
+  paymentMethods: [],
+  productScope: 'all',
+  scopeCategoryIds: [],
+  scopeProductIds: [],
 }

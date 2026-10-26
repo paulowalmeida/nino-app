@@ -41,6 +41,18 @@ export const CAMPAIGN_TYPE_ICONS = {
   package: 'tag',
 } as const
 
+export const PROMOTION_PAYMENT_METHODS = [
+  'PIX',
+  'CARD_ONLINE',
+  'CARD_ON_DELIVERY',
+  'CASH',
+] as const
+
+export const PRODUCT_SCOPE_OPTIONS = [
+  { value: 'all', label: 'Todo o cardápio' },
+  { value: 'chosen', label: 'Só alguns itens' },
+]
+
 export const DISCOUNT_KIND_OPTIONS = [
   { value: 'PERCENTAGE_DISCOUNT', label: 'Percentual' },
   { value: 'FIXED_DISCOUNT', label: 'Valor fixo' },
@@ -65,6 +77,7 @@ export const EDITOR_STEPS_BY_TYPE = {
 export const EDITOR_STEP_FIELDS = {
   benefit: [
     'name',
+    'scopeCategoryIds',
     'minOrderValue',
     'discountValue',
     'maxDiscount',

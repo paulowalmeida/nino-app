@@ -1,0 +1,27 @@
+@reference "@nino/ds/globals.css";
+
+.scopeSection,
+.scopeChoices,
+.scopeProducts {
+  @apply flex flex-col;
+}
+
+.scopeSection {
+  @apply gap-4;
+}
+
+.scopeChoices {
+  @apply gap-5;
+}
+
+.scopeProducts {
+  @apply gap-3;
+}
+
+.scopeChips {
+  @apply flex flex-wrap gap-2;
+}
+
+.scopeHint {
+  @apply text-sm text-fg-muted;
+}

@@ -1,3 +1,5 @@
+import type { PaymentMethod } from '@shared/types/order/payment-method'
+
 export type PromotionFormValues = {
   // CONSTRAINT: vazio cai na headline ao salvar.
   name: string
@@ -35,4 +37,10 @@ export type PromotionFormValues = {
   perCustomer: 'unlimited' | 'once' | 'custom'
   perCustomerCount: number | ''
   totalLimit: number | ''
+  firstOrderOnly: boolean
+  // CONSTRAINT: vazio = qualquer forma de pagamento.
+  paymentMethods: PaymentMethod[]
+  productScope: 'all' | 'chosen'
+  scopeCategoryIds: string[]
+  scopeProductIds: string[]
 }

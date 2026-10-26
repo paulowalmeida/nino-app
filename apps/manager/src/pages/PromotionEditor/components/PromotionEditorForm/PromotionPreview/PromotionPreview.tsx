@@ -10,9 +10,25 @@ import { CAMPAIGN_TYPE_ICONS } from '@pages/PromotionEditor/constants/promotionE
 import { usePromotionEditorFacade } from '@pages/PromotionEditor/facades/usePromotionEditorFacade/usePromotionEditorFacade'
 import type { PromotionFormValues } from '@pages/PromotionEditor/types/PromotionFormValues.type'
 import { promotionLimitsLabel } from '@pages/PromotionEditor/utils/promotionLimitsLabel/promotionLimitsLabel'
+import { PAYMENT_METHOD_LABEL } from '@shared/constants/order.constants'
 import { promotionSummaryParts } from '@shared/utils/promotion-summary/promotion-summary'
 
 import styles from './PromotionPreview.module.css'
+
+const scopeLabel = ({
+  productScope,
+  scopeCategoryIds,
+  scopeProductIds,
+}: PromotionFormValues): string => {
+  if (productScope === 'all') return 'Todo o cardápio'
+  const parts = [
+    scopeCategoryIds.length &&
+      `${scopeCategoryIds.length} ${scopeCategoryIds.length === 1 ? 'categoria' : 'categorias'}`,
+    scopeProductIds.length &&
+      `${scopeProductIds.length} ${scopeProductIds.length === 1 ? 'produto' : 'produtos'}`,
+  ].filter(Boolean)
+  return parts.join(' e ') || 'Nenhum item escolhido'
+}
 
 export const PromotionPreview = () => {
   const { giftProductOptions } = usePromotionEditorFacade()
@@ -36,7 +52,25 @@ export const PromotionPreview = () => {
       ? [{ label: 'Zonas', value: zones ?? 'Todas as zonas' }]
       : []),
     ...(values.campaignType === 'discount'
-      ? [{ label: 'Cupom', value: values.code || 'Não informado' }]
+      ? [
+          {
+            label: 'Cupom',
+            value: values.code || 'Sem código, escolhido na lista',
+          },
+          { label: 'Vale para', value: scopeLabel(values) },
+          {
+            label: 'Clientes',
+            value: values.firstOrderOnly ? 'Só no 1º pedido' : 'Todos',
+          },
+          {
+            label: 'Pagamento',
+            value: values.paymentMethods.length
+              ? values.paymentMethods
+                  .map((method) => PAYMENT_METHOD_LABEL[method])
+                  .join(', ')
+              : 'Qualquer forma',
+          },
+        ]
       : []),
     ...(values.campaignType !== 'free-delivery'
       ? [

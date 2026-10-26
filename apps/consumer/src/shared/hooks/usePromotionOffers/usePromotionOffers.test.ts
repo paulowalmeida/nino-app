@@ -36,6 +36,7 @@ describe('usePromotionOffers', () => {
       'promotion-2',
     ])
     expect(result.current.couponSuggestions.map(({ id }) => id)).toEqual([
+      'promotion-2',
       'promotion-3',
     ])
   })

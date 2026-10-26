@@ -1,5 +1,5 @@
 import type { PublicPromotion } from '@custom_types/promotion/public-promotion.type'
-import { discountAmount } from '@utils/discount/discount'
+import { acceptsPayment, discountAmount } from '@utils/discount/discount'
 import { giftApplies } from '@utils/gift/gift'
 
 /* WHY: cupom fora da condição (mínimo, zona) faria a API recusar o pedido
@@ -9,9 +9,19 @@ export const couponApplies = (
   {
     subtotal,
     isFreeDeliveryApplied,
-  }: { subtotal: number; isFreeDeliveryApplied: boolean }
+    paymentMethod,
+    eligibleSubtotal = subtotal,
+  }: {
+    subtotal: number
+    isFreeDeliveryApplied: boolean
+    paymentMethod?: string
+    eligibleSubtotal?: number
+  }
 ): boolean => {
   if (coupon.type === 'FREE_DELIVERY') return isFreeDeliveryApplied
   if (coupon.type === 'GIFT') return giftApplies(coupon, subtotal)
-  return discountAmount(coupon, subtotal) > 0
+  return (
+    acceptsPayment(coupon, paymentMethod) &&
+    discountAmount(coupon, subtotal, eligibleSubtotal) > 0
+  )
 }
