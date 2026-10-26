@@ -1,3 +1,5 @@
+import { MemoryRouter } from 'react-router'
+
 import { render, screen } from '@testing-library/react'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 
@@ -30,7 +32,7 @@ describe(Cash.name, () => {
   it('shows the skeleton while the drawer is unknown', () => {
     facadeWith({ isLoadingSession: true })
 
-    render(<Cash />)
+    render(<Cash />, { wrapper: MemoryRouter })
 
     expect(screen.getByLabelText('Carregando o caixa')).toBeInTheDocument()
   })
@@ -38,7 +40,7 @@ describe(Cash.name, () => {
   it('says plainly when the drawer could not be read', () => {
     facadeWith({ isSessionError: true })
 
-    render(<Cash />)
+    render(<Cash />, { wrapper: MemoryRouter })
 
     expect(
       screen.getByText(/Não deu para carregar o caixa/)
@@ -48,7 +50,7 @@ describe(Cash.name, () => {
   it('offers to open the drawer when none is open', () => {
     facadeWith({})
 
-    render(<Cash />)
+    render(<Cash />, { wrapper: MemoryRouter })
 
     expect(
       screen.getByRole('button', { name: 'Abrir caixa' })
@@ -58,7 +60,7 @@ describe(Cash.name, () => {
   it('maps the open drawer into its summary and movements', () => {
     facadeWith({ session: cashPageSessionMock })
 
-    render(<Cash />)
+    render(<Cash />, { wrapper: MemoryRouter })
 
     expect(screen.getByText('Caixa aberto')).toBeInTheDocument()
     expect(screen.getByRole('button', { name: 'Sangria' })).toBeInTheDocument()
@@ -70,7 +72,7 @@ describe(Cash.name, () => {
   it('says plainly when no drawer was opened on a past date', () => {
     facadeWith({ isToday: false })
 
-    render(<Cash />)
+    render(<Cash />, { wrapper: MemoryRouter })
 
     expect(screen.getByText('Nenhum caixa nesse dia')).toBeInTheDocument()
     expect(
@@ -81,7 +83,7 @@ describe(Cash.name, () => {
   it('hides the drawer actions while looking at a past date', () => {
     facadeWith({ session: cashPageSessionMock, isToday: false })
 
-    render(<Cash />)
+    render(<Cash />, { wrapper: MemoryRouter })
 
     expect(screen.getByText('Caixa aberto')).toBeInTheDocument()
     expect(

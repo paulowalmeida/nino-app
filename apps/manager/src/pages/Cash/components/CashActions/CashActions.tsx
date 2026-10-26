@@ -10,13 +10,9 @@ import { CashMovementModal } from './CashMovementModal/CashMovementModal'
 
 import styles from './CashActions.module.css'
 
-export type CashActionsProps = {
-  expectedAmount: number
-}
-
 type MovementKind = Exclude<CashMovementKind, 'SALE'>
 
-export const CashActions = ({ expectedAmount }: CashActionsProps) => {
+export const CashActions = () => {
   const [movementKind, setMovementKind] = useState<MovementKind | null>(null)
   const [isClosingOpen, setClosingOpen] = useState(false)
   useRouteAction('sangria', () => setMovementKind('WITHDRAWAL'))
@@ -40,7 +36,6 @@ export const CashActions = ({ expectedAmount }: CashActionsProps) => {
       />
       <CashCloseModal
         open={isClosingOpen}
-        expectedAmount={expectedAmount}
         onClose={() => setClosingOpen(false)}
       />
     </Box>

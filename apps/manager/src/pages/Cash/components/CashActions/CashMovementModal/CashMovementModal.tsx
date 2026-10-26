@@ -13,7 +13,7 @@ import { useCashFacade } from '../../../facades/useCashFacade/useCashFacade'
 
 import styles from './CashMovementModal.module.css'
 
-export type CashMovementModalProps = {
+type CashMovementModalProps = {
   open: boolean
   kind: Exclude<CashMovementKind, 'SALE'>
   onClose: () => void

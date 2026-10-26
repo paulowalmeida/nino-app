@@ -4,20 +4,36 @@ import { beforeEach, describe, expect, it, vi } from 'vitest'
 
 import { useCashFacade } from '../../../facades/useCashFacade/useCashFacade'
 import { CashCloseModal } from './CashCloseModal'
-import { cashCloseModalMock, cashCountedTypedMock } from './CashCloseModal.mock'
+import {
+  cashCloseModalMock,
+  cashCloseSessionMock,
+  cashCountedTypedMock,
+} from './CashCloseModal.mock'
 
 vi.mock('../../../facades/useCashFacade/useCashFacade')
 
 const submitClose = vi.fn()
 const onClose = vi.fn()
 
+const facadeWith = (session: unknown) =>
+  vi.mocked(useCashFacade).mockReturnValue({
+    session,
+    submitClose,
+    isClosing: false,
+  } as unknown as ReturnType<typeof useCashFacade>)
+
 describe(CashCloseModal.name, () => {
   beforeEach(() => {
     vi.clearAllMocks()
-    vi.mocked(useCashFacade).mockReturnValue({
-      submitClose,
-      isClosing: false,
-    } as unknown as ReturnType<typeof useCashFacade>)
+    facadeWith(cashCloseSessionMock)
+  })
+
+  it('renders nothing while there is no session', () => {
+    facadeWith(null)
+
+    render(<CashCloseModal {...cashCloseModalMock} onClose={onClose} />)
+
+    expect(screen.queryByRole('dialog')).not.toBeInTheDocument()
   })
 
   it('states what the drawer is expected to hold', () => {
@@ -76,13 +92,8 @@ describe(CashCloseModal.name, () => {
 
   it('shows no gap when the count matches the expectation', async () => {
     // Arrange
-    render(
-      <CashCloseModal
-        {...cashCloseModalMock}
-        expectedAmount={175}
-        onClose={onClose}
-      />
-    )
+    facadeWith({ ...cashCloseSessionMock, expectedAmount: 175 })
+    render(<CashCloseModal {...cashCloseModalMock} onClose={onClose} />)
 
     // Act
     await userEvent.type(
@@ -96,13 +107,8 @@ describe(CashCloseModal.name, () => {
 
   it('signs a surplus with a plus', async () => {
     // Arrange
-    render(
-      <CashCloseModal
-        {...cashCloseModalMock}
-        expectedAmount={100}
-        onClose={onClose}
-      />
-    )
+    facadeWith({ ...cashCloseSessionMock, expectedAmount: 100 })
+    render(<CashCloseModal {...cashCloseModalMock} onClose={onClose} />)
 
     // Act
     await userEvent.type(

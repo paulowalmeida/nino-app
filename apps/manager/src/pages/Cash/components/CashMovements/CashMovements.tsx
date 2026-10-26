@@ -15,15 +15,11 @@ import {
   CASH_MOVEMENT_LABEL,
   CASH_MOVEMENTS_PAGE_SIZE,
 } from '@pages/Cash/constants/cash.constants'
+import { useCashFacade } from '@pages/Cash/facades/useCashFacade/useCashFacade'
 import { cashMovementDetail } from '@pages/Cash/utils/cashMovementDetail/cashMovementDetail'
-import type { CashMovement } from '@shared/types/cash/cash-movement.type'
 import { brl } from '@shared/utils/money/money'
 
 import styles from './CashMovements.module.css'
-
-export type CashMovementsProps = {
-  movements: CashMovement[]
-}
 
 const timeLabel = (createdAt: string): string =>
   new Date(createdAt).toLocaleTimeString('pt-BR', {
@@ -31,8 +27,13 @@ const timeLabel = (createdAt: string): string =>
     minute: '2-digit',
   })
 
-export const CashMovements = ({ movements }: CashMovementsProps) => {
+export const CashMovements = () => {
+  const { session } = useCashFacade()
   const [requestedPage, setRequestedPage] = useState(1)
+
+  if (!session) return null
+
+  const { movements } = session
   const pageCount = Math.max(
     1,
     Math.ceil(movements.length / CASH_MOVEMENTS_PAGE_SIZE)

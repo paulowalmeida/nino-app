@@ -12,21 +12,19 @@ import { useCashFacade } from '../../../facades/useCashFacade/useCashFacade'
 
 import styles from './CashCloseModal.module.css'
 
-export type CashCloseModalProps = {
+type CashCloseModalProps = {
   open: boolean
-  expectedAmount: number
   onClose: () => void
 }
 
-export const CashCloseModal = ({
-  open,
-  expectedAmount,
-  onClose,
-}: CashCloseModalProps) => {
-  const { submitClose, isClosing } = useCashFacade()
+export const CashCloseModal = ({ open, onClose }: CashCloseModalProps) => {
+  const { session, submitClose, isClosing } = useCashFacade()
   const [counted, setCounted] = useState('')
   const [note, setNote] = useState('')
 
+  if (!session) return null
+
+  const { expectedAmount } = session
   const gap = counted.trim() ? moneyValue(counted) - expectedAmount : null
 
   const handleConfirm = () => {

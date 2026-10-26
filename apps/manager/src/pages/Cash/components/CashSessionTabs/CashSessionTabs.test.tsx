@@ -1,3 +1,5 @@
+import { MemoryRouter } from 'react-router'
+
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
@@ -8,25 +10,36 @@ import { cashSessionTabsMock } from './CashSessionTabs.mock'
 
 vi.mock('../../facades/useCashFacade/useCashFacade')
 
+const facadeWith = (overrides: Record<string, unknown>) =>
+  vi.mocked(useCashFacade).mockReturnValue({
+    ...cashSessionTabsMock,
+    submitMovement: vi.fn(),
+    submitClose: vi.fn(),
+    isMoving: false,
+    isClosing: false,
+    ...overrides,
+  } as unknown as ReturnType<typeof useCashFacade>)
+
 describe(CashSessionTabs.name, () => {
-  beforeEach(() => {
-    vi.mocked(useCashFacade).mockReturnValue({
-      submitMovement: vi.fn(),
-      submitClose: vi.fn(),
-      isMoving: false,
-      isClosing: false,
-    } as unknown as ReturnType<typeof useCashFacade>)
+  beforeEach(() => facadeWith({}))
+
+  it('renders nothing while there is no session', () => {
+    facadeWith({ session: null })
+
+    const { container } = render(<CashSessionTabs />)
+
+    expect(container).toBeEmptyDOMElement()
   })
 
   it('opens on the summary with the drawer actions', () => {
-    render(<CashSessionTabs {...cashSessionTabsMock} />)
+    render(<CashSessionTabs />, { wrapper: MemoryRouter })
 
     expect(screen.getByText('Caixa aberto')).toBeInTheDocument()
     expect(screen.getByRole('button', { name: 'Sangria' })).toBeInTheDocument()
   })
 
   it('counts the movements on their tab', () => {
-    render(<CashSessionTabs {...cashSessionTabsMock} />)
+    render(<CashSessionTabs />, { wrapper: MemoryRouter })
 
     expect(
       screen.getByRole('tab', { name: 'Movimentações · 2' })
@@ -34,7 +47,7 @@ describe(CashSessionTabs.name, () => {
   })
 
   it('moves to the movements without leaving the page', async () => {
-    render(<CashSessionTabs {...cashSessionTabsMock} />)
+    render(<CashSessionTabs />, { wrapper: MemoryRouter })
 
     await userEvent.click(screen.getByRole('tab', { name: /Movimentações/ }))
 
@@ -42,7 +55,9 @@ describe(CashSessionTabs.name, () => {
   })
 
   it('keeps the actions out of a past day', () => {
-    render(<CashSessionTabs {...cashSessionTabsMock} isToday={false} />)
+    facadeWith({ isToday: false })
+
+    render(<CashSessionTabs />, { wrapper: MemoryRouter })
 
     expect(
       screen.queryByRole('button', { name: 'Sangria' })
