@@ -1,0 +1,17 @@
+/* Raio de canto. */
+@theme static {
+  /*
+   * Estrutural — o raio anda de 4 em 4, como o espaçamento, e é escolhido
+   * pelo tamanho da peça: quanto menor a superfície, mais apertado o canto.
+   * `1` marca o que é quase texto (badge, selo); `2` é a superfície padrão
+   * (cartão, campo, item de menu); daí para cima são as molduras grandes do
+   * app e da landing. Ação continua pílula — o contraste entre as duas
+   * formas é o que separa "onde estou" de "o que faço".
+   */
+  --radius-1: 4px;
+  --radius-2: 8px;
+  --radius-3: 12px;
+  --radius-4: 16px;
+  --radius-5: 20px;
+  --radius-6: 24px;
+}

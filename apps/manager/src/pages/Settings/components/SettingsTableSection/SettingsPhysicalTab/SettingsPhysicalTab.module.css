@@ -1,0 +1,21 @@
+@reference "@nino/ds/globals.css";
+
+.option {
+  @apply border-border bg-surface-raised;
+}
+
+.settingsPhysicalTabBody {
+  @apply flex h-full flex-col justify-between gap-8;
+}
+
+.copy {
+  @apply flex flex-col gap-2;
+}
+
+.settingsPhysicalTabTitle {
+  @apply flex items-center justify-between gap-3;
+}
+
+.next {
+  @apply border-t border-border pt-4;
+}

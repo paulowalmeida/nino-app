@@ -1,0 +1,21 @@
+@reference '../../../../theme.css';
+.step {
+  @apply relative z-content flex flex-col items-center text-center;
+}
+
+.number {
+  @apply flex items-center justify-center w-[72px] h-[72px];
+  @apply rounded-full text-fg-on-brand text-[1.7rem] font-extrabold mb-6;
+  @apply [font-family:var(--font-display)] border-4 border-border;
+  background: linear-gradient(150deg, #ff8a33, #ec5a0e);
+  @apply shadow-brand;
+}
+
+.stepCardTitle {
+  @apply [font-family:var(--font-display)] font-bold;
+  @apply text-xl text-fg-strong mb-2.5;
+}
+
+.stepCardBody {
+  @apply text-base leading-relaxed text-fg-muted max-w-[272px];
+}

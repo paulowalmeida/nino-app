@@ -1,0 +1,39 @@
+@reference "@nino/ds/globals.css";
+
+/* WHY: a coluna do cardápio tem largura própria. `max-w-page` (110rem) é a
+ * medida das telas largas do manager; num cardápio ela espalha os cards por
+ * 1760px e a leitura se perde. 80rem é a coluna, declarada aqui e herdada por
+ * todas as faixas fixas da tela.
+ */
+.storefrontContentPage {
+  --storefront-column: 80rem;
+  @apply relative flex min-h-dvh w-full flex-col bg-surface-page pb-24;
+  /* WHY: no desktop a StoreTopBar é fixa e permanente; sem reservar a altura
+ * dela, o banner nasce 80px por baixo da barra.
+ */
+  @apply lg:pt-20;
+  padding-bottom: calc(6rem + env(safe-area-inset-bottom));
+}
+
+@media (min-width: 1024px) {
+  .storefrontContentPage {
+    padding-bottom: 3rem;
+  }
+}
+
+.storefrontContentMain {
+  @apply flex-1;
+}
+
+.storefrontContentShell {
+  @apply mx-auto w-full px-4 sm:px-6;
+  max-width: var(--storefront-column);
+}
+
+.storefrontContentMenu {
+  @apply mt-8 sm:mt-10;
+}
+
+.storefrontContentEmpty {
+  @apply mt-10;
+}

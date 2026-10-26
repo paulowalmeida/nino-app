@@ -1,0 +1,51 @@
+@reference "@nino/ds/globals.css";
+
+.signInCompletePhoneCodeTitle {
+  @apply mt-8 text-center font-display text-[1.65rem] font-extrabold;
+  @apply leading-[1.15] text-fg-strong sm:text-[1.85rem];
+  letter-spacing: -0.025em;
+  text-wrap: balance;
+}
+
+.signInCompletePhoneCodeSubtitle {
+  @apply mt-2.5 text-center leading-relaxed text-fg-default;
+}
+
+.codeField {
+  @apply mt-6 justify-between gap-2;
+}
+
+.codeField input {
+  @apply h-14 w-full rounded-3 border-black/10 text-center;
+  @apply font-display text-xl font-extrabold text-fg-strong;
+  font-variant-numeric: tabular-nums;
+}
+
+.codeField input:focus {
+  border-color: var(--store-tint, var(--color-brand));
+  box-shadow: inset 0 0 0 1px var(--store-tint, var(--color-brand));
+}
+
+.alert {
+  @apply mt-4;
+}
+
+.cta {
+  @apply mt-6 h-14 w-full rounded-full text-base font-bold;
+}
+
+.cta:not(:disabled) {
+  background: var(--store-tint, var(--color-brand));
+}
+
+.cta:not(:disabled):hover {
+  background: color-mix(
+    in srgb,
+    var(--store-tint, var(--color-brand)) 88%,
+    black
+  );
+}
+
+.signInCompletePhoneCodeSecondary {
+  @apply mt-2 h-12 w-full rounded-full text-sm font-bold text-fg-faint;
+}

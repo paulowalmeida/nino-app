@@ -1,0 +1,9 @@
+@reference "@nino/ds/globals.css";
+
+.settingsContactSectionPanel {
+  @apply flex min-w-0 max-w-page-narrow flex-col;
+}
+
+.head {
+  @apply mb-5 lg:mb-6;
+}

@@ -1,0 +1,15 @@
+@reference "@nino/ds/globals.css";
+
+.newOrderPage {
+  @apply max-w-5xl p-4 lg:p-10;
+}
+
+.backLink {
+  @apply inline-flex items-center gap-1.5 text-sm font-medium;
+  @apply text-fg-faint;
+  @apply transition-colors duration-150 hover:text-brand-strong;
+}
+
+.columns {
+  @apply mt-6 grid items-start gap-5 lg:grid-cols-[1.2fr_1fr];
+}

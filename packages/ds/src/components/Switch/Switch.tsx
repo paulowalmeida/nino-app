@@ -1,48 +1,90 @@
+import { FocusEventHandler, Ref } from 'react'
+
 import { Switch as ArkSwitch } from '@ark-ui/react/switch'
+import { mergeClasses } from '@ds/lib/mergeClasses/mergeClasses'
 
-import { mergeClasses } from '@ds/lib/mergeClasses'
+import styles from './Switch.module.css'
 
-import { SwitchProps, SwitchSize } from './Switch.types'
+type SwitchSize = 'sm' | 'md'
+
+type SwitchProps = {
+  /** `sm` or `md` (default) */
+  size?: SwitchSize
+  /**
+   * Controlled state. Leave it out and pass `defaultChecked` to let the
+   * component keep its own
+   */
+  checked?: boolean
+  defaultChecked?: boolean
+  onCheckedChange?: (checked: boolean) => void
+  id?: string
+  disabled?: boolean
+  name?: string
+  value?: string
+  className?: string
+  /** Fired when focus leaves the control, for a form that validates on blur */
+  onBlur?: FocusEventHandler<HTMLInputElement>
+  /**
+   * Points at the hidden input, which is what takes focus — a form library
+   * moving focus to the first invalid field lands here
+   */
+  ref?: Ref<HTMLInputElement>
+}
 
 const rootSizeClasses: Record<SwitchSize, string> = {
-  sm: 'h-4 w-7',
-  md: 'h-5 w-9',
+  sm: styles.trackSizeSmall,
+  md: styles.trackSizeMedium,
 }
 
 const thumbSizeClasses: Record<SwitchSize, string> = {
-  sm: 'h-3 w-3 data-[state=checked]:translate-x-3',
-  md: 'h-4 w-4 data-[state=checked]:translate-x-4',
+  sm: styles.knobSizeSmall,
+  md: styles.knobSizeMedium,
 }
 
-const baseControl =
-  'inline-flex shrink-0 cursor-pointer items-center rounded-full border-2 border-transparent bg-gray-200 transition-colors data-[state=checked]:bg-brand focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50'
-
-const baseThumb =
-  'pointer-events-none block rounded-full bg-white shadow-sm ring-0 transition-transform data-[state=unchecked]:translate-x-0'
-
+/**
+ * Toggle that takes effect the moment it is flipped — the store opening,
+ * an item leaving the menu.
+ *
+ * That is what sets it apart from `Checkbox`: a checkbox is an answer that
+ * only counts when the form is submitted, a switch acts at once. If what
+ * you have is a choice to be confirmed later, it is a checkbox.
+ *
+ * It has no label of its own: wrap it in `FormField` with
+ * `orientation="horizontal"`, which ties the text to the control and makes
+ * the text clickable too.
+ *
+ * ```tsx
+ * <FormField label="Loja aberta" orientation="horizontal">
+ *   <Switch checked={isOpen} onCheckedChange={setOpen} />
+ * </FormField>
+ * ```
+ */
 export function Switch({
   size = 'md',
   className,
   onCheckedChange,
   checked,
   defaultChecked,
+  onBlur,
+  ref,
   ...props
 }: SwitchProps) {
   return (
     <ArkSwitch.Root
+      className={styles.switch}
       checked={checked}
       defaultChecked={defaultChecked}
-      onCheckedChange={({ checked: c }) => onCheckedChange?.(c)}
+      onCheckedChange={({ checked: isChecked }) => onCheckedChange?.(isChecked)}
       {...props}
     >
       <ArkSwitch.Control
-        className={mergeClasses(baseControl, rootSizeClasses[size], className)}
+        className={mergeClasses(styles.track, rootSizeClasses[size], className)}
       >
         <ArkSwitch.Thumb
-          className={mergeClasses(baseThumb, thumbSizeClasses[size])}
+          className={mergeClasses(styles.knob, thumbSizeClasses[size])}
         />
       </ArkSwitch.Control>
-      <ArkSwitch.HiddenInput />
+      <ArkSwitch.HiddenInput ref={ref} onBlur={onBlur} />
     </ArkSwitch.Root>
   )
 }

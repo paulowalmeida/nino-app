@@ -1,0 +1,21 @@
+@reference "@nino/ds/globals.css";
+
+.limitsSection {
+  @apply flex flex-col gap-4;
+}
+
+.limitsFields {
+  @apply flex flex-col gap-6;
+}
+
+.perCustomer {
+  @apply flex w-full flex-col gap-4;
+}
+
+.totalLimitInput {
+  @apply w-full md:max-w-40;
+}
+
+.perCustomerCountInput {
+  @apply w-full md:max-w-32;
+}

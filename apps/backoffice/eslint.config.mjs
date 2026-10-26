@@ -1,38 +1,49 @@
-import { dirname } from 'path'
-import { fileURLToPath } from 'url'
-import { FlatCompat } from '@eslint/eslintrc'
+import js from '@eslint/js'
+import globals from 'globals'
+import reactHooks from 'eslint-plugin-react-hooks'
+import reactRefresh from 'eslint-plugin-react-refresh'
 import simpleImportSort from 'eslint-plugin-simple-import-sort'
+import tseslint from 'typescript-eslint'
+import { defineConfig, globalIgnores } from 'eslint/config'
 
-const __filename = fileURLToPath(import.meta.url)
-const __dirname = dirname(__filename)
-
-const compat = new FlatCompat({ baseDirectory: __dirname })
-
-const eslintConfig = [
-  { ignores: ['next-env.d.ts', '.next/**', 'node_modules/**'] },
-  ...compat.extends('next/core-web-vitals', 'next/typescript'),
+export default defineConfig([
+  globalIgnores(['dist', 'coverage', '.next', 'node_modules']),
   {
-    plugins: { 'simple-import-sort': simpleImportSort },
+    files: ['**/*.{ts,tsx}'],
+    extends: [
+      js.configs.recommended,
+      tseslint.configs.recommended,
+      reactHooks.configs.flat.recommended,
+      reactRefresh.configs.vite,
+    ],
+    languageOptions: {
+      globals: globals.browser,
+    },
+    plugins: {
+      'simple-import-sort': simpleImportSort,
+    },
     rules: {
-      'simple-import-sort/imports': [
+      'simple-import-sort/imports': 'error',
+      'simple-import-sort/exports': 'error',
+      'no-console': 'error',
+      'no-debugger': 'error',
+      'no-restricted-imports': [
         'error',
         {
-          groups: [
-            ['^react', '^next'],
-            ['^@?\\w'],
-            ['^@nino/'],
-            ['^\\.\\./|^\\./'],
+          paths: [
+            {
+              name: '@nino/ds',
+              message:
+                "Importe o subcaminho: '@nino/ds/components/<Componente>'.",
+            },
+            {
+              name: '@nino/lib',
+              message:
+                "Importe o subcaminho: '@nino/lib/types/<dominio>' ou '@nino/lib/services/<arquivo>'.",
+            },
           ],
         },
       ],
-      'simple-import-sort/exports': 'error',
-      '@typescript-eslint/no-explicit-any': 'error',
-      '@typescript-eslint/no-unused-vars': [
-        'error',
-        { varsIgnorePattern: '^_', argsIgnorePattern: '^_' },
-      ],
     },
   },
-]
-
-export default eslintConfig
+])

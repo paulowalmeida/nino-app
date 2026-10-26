@@ -1,0 +1,122 @@
+@reference '../../../../theme.css';
+.storeHeader {
+  @apply flex items-center gap-4 px-6 py-3.5;
+  @apply border-b border-gray-100;
+}
+
+.storeLogo {
+  @apply w-10 h-10 bg-gray-100 rounded-3;
+  @apply flex items-center justify-center text-xl shrink-0;
+}
+
+.storeDetails {
+  @apply flex-1 min-w-0;
+}
+
+.storeName {
+  @apply font-extrabold text-base text-gray-900;
+}
+
+.storeMetaInfo {
+  @apply flex items-center gap-2 text-xs text-gray-500 mt-0.5;
+}
+
+.storeRating {
+  @apply text-brand font-semibold;
+}
+
+.searchButton {
+  @apply bg-gray-100 px-4 py-1.5 rounded-2 text-gray-600;
+  @apply text-xs font-medium whitespace-nowrap shrink-0;
+}
+
+.searchBarWrapper {
+  @apply px-6 py-3.5 bg-gray-50 border-b border-gray-100;
+}
+
+.searchInputField {
+  @apply bg-surface-raised border border-gray-200 rounded-3;
+  @apply px-4 py-2 flex items-center gap-2;
+}
+
+.searchIcon {
+  @apply text-gray-300 text-sm;
+}
+
+.searchPlaceholder {
+  @apply text-sm text-gray-400;
+}
+
+.promo {
+  @apply mx-6 my-4 bg-orange-50 border border-orange-200;
+  @apply rounded-3 p-3.5 flex justify-between items-center;
+}
+
+.promoDetails {
+  @apply flex items-center gap-2.5;
+}
+
+.promoIcon {
+  @apply text-xl;
+}
+
+.promoTitle {
+  @apply font-bold text-sm text-gray-900;
+}
+
+.promoSubtitle {
+  @apply text-xs text-gray-500 mt-0.5;
+}
+
+.promoActivateButton {
+  @apply bg-brand text-fg-on-brand text-xs font-bold;
+  @apply px-2.5 py-1 rounded-2 whitespace-nowrap shrink-0;
+}
+
+.categorySection {
+  @apply px-6 pb-3;
+}
+
+.categoryScrollList {
+  @apply flex gap-2 overflow-x-auto pb-1;
+}
+
+.categoryPill {
+  @apply shrink-0 px-4 py-1.5 rounded-full;
+  @apply text-xs font-medium bg-gray-100 text-gray-600;
+}
+
+.categoryPillActive {
+  @apply bg-brand text-fg-on-brand font-bold;
+}
+
+.menuSectionTitle {
+  @apply px-6 font-extrabold text-sm text-gray-900;
+  @apply mb-3 flex items-center gap-1;
+}
+
+.menuItemList {
+  @apply px-6 pb-4 flex flex-col;
+}
+
+.checkoutBar {
+  @apply bg-brand text-fg-on-brand px-6 py-4;
+  @apply flex justify-between items-center cursor-pointer;
+}
+
+.checkoutBarLeft {
+  @apply flex items-center gap-3;
+}
+
+.cartItemCount {
+  @apply bg-surface-raised/25 px-2.5 py-0.5 rounded-2;
+  @apply text-xs font-bold;
+}
+
+.viewCartLabel {
+  @apply font-semibold text-sm;
+}
+
+.checkoutTotal {
+  @apply font-extrabold text-sm;
+}

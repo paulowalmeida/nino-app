@@ -1,0 +1,9 @@
+@reference "@nino/ds/globals.css";
+
+.panels {
+  @apply mt-6 flex min-h-0 flex-1 flex-col;
+}
+
+.panels > [data-part='content']:not([hidden]) {
+  @apply flex min-h-0 flex-1 flex-col;
+}

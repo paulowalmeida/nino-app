@@ -1,42 +1,61 @@
-import { mergeClasses } from '@ds/lib/mergeClasses'
+import { HTMLAttributes } from 'react'
 
-import { SkeletonAnimation, SkeletonProps, SkeletonVariant } from './Skeleton.types'
+import { mergeClasses } from '@ds/lib/mergeClasses/mergeClasses'
+
+import styles from './Skeleton.module.css'
+
+type SkeletonVariant = 'rect' | 'circle' | 'text'
+type SkeletonAnimation = 'pulse' | 'wave' | 'none'
+
+type SkeletonProps = HTMLAttributes<HTMLDivElement> & {
+  /**
+   * Shape. `rect` (default), `circle` or `text` — only `text` brings its own
+   * size
+   */
+  variant?: SkeletonVariant
+  /**
+   * `wave` (default) sweeps a shine across, `pulse` fades in place, `none`
+   * stays still. All three stop under `prefers-reduced-motion`
+   */
+  animation?: SkeletonAnimation
+}
 
 const variantClasses: Record<SkeletonVariant, string> = {
-  rect:   'rounded-md',
-  circle: 'rounded-full',
-  text:   'rounded w-full h-4',
+  rect: styles.variantRect,
+  circle: styles.variantCircle,
+  text: styles.variantText,
 }
 
 const animationClasses: Record<SkeletonAnimation, string> = {
-  pulse: 'animate-pulse bg-gray-200',
-  wave:  'skeleton-wave',
-  none:  'bg-gray-200',
+  pulse: styles.animationPulse,
+  wave: styles.animationWave,
+  none: '',
 }
 
 /**
- * Visual placeholder shown while content is loading.
+ * Grey block standing in for content that has not arrived.
  *
- * @param variant - Shape of the skeleton. Default: `rect`
+ * It is always silent to a screen reader: what matters is announced by
+ * whoever owns the loading state, not by each grey rectangle on the page.
  *
- * @param animation - Animation type. Default: `pulse`
- *
- * @param className - Additional classes (width and height required for rect/circle)
- *
- * @example
+ * ```tsx
  * <Skeleton variant="circle" className="w-10 h-10" />
  * <Skeleton variant="text" animation="wave" />
  * <Skeleton className="w-full h-32" animation="none" />
+ *
+ * - `className` — Width and height, which `rect` and `circle` do not carry — a skeleton takes the measure of what it replaces
+ * ```
  */
 export function Skeleton({
   variant = 'rect',
-  animation = 'pulse',
+  animation = 'wave',
   className,
   ...props
 }: SkeletonProps) {
   return (
     <div
       className={mergeClasses(
+        styles.skeleton,
         animationClasses[animation],
         variantClasses[variant],
         className

@@ -4,7 +4,7 @@ import { describe, expect, it, vi } from 'vitest'
 
 import { Rating } from './Rating'
 
-describe(Rating.displayName!, () => {
+describe(Rating.name, () => {
   it('renders the correct number of stars', () => {
     render(<Rating count={5} />)
     expect(screen.getAllByRole('radio')).toHaveLength(5)

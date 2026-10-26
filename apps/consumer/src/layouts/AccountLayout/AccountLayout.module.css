@@ -1,0 +1,27 @@
+@reference "@nino/ds/globals.css";
+
+.accountLayoutPage {
+  @apply flex min-h-dvh w-full flex-col bg-surface-1 pb-24 lg:pb-12;
+}
+
+.accountLayoutShell {
+  @apply mx-auto w-full max-w-page flex-1 px-4 sm:px-6;
+}
+
+.accountLayoutBody {
+  @apply lg:grid lg:grid-cols-[14rem_minmax(0,1fr)] lg:items-start lg:gap-8;
+  padding-top: calc(2rem + env(safe-area-inset-top));
+}
+
+@media (min-width: 1024px) {
+  .accountLayoutBody {
+    padding-top: 1.5rem;
+  }
+}
+
+.accountLayoutPanel {
+  @apply min-w-0 flex-1;
+  @apply lg:rounded-5 lg:border lg:border-border lg:bg-surface-raised;
+  @apply lg:shadow-warm-sm;
+  min-height: min(42rem, calc(100dvh - 8rem));
+}

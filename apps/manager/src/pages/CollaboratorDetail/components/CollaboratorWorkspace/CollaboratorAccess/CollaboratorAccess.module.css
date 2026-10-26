@@ -1,0 +1,5 @@
+@reference "@nino/ds/globals.css";
+
+.access {
+  @apply min-h-0 overflow-y-auto pt-4;
+}

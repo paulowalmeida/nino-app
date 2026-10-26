@@ -1,0 +1,18 @@
+@reference "@nino/ds/globals.css";
+
+.ticket {
+  --tooth: 10px;
+  @apply relative flex min-w-0 flex-col gap-3 rounded-t-3;
+  @apply bg-surface-page p-5;
+  @apply lg:sticky lg:top-5;
+  padding-bottom: calc(var(--tooth) + 0.75rem);
+  box-shadow: inset 0 0 0 1px var(--color-surface-5);
+  mask:
+    radial-gradient(var(--tooth) at 50% 0, #0000 98%, #000 100%) 50% 100% /
+      calc(2 * var(--tooth)) var(--tooth) repeat-x,
+    linear-gradient(#000 0 0) 0 0 / 100% calc(100% - var(--tooth)) no-repeat;
+}
+
+.ticketTitle {
+  @apply text-xs font-bold uppercase tracking-[0.12em] text-fg-faint;
+}

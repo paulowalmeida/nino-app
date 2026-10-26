@@ -4,7 +4,7 @@ import { describe, expect, it, vi } from 'vitest'
 
 import { NumberInput } from './NumberInput'
 
-describe(NumberInput.displayName!, () => {
+describe(NumberInput.name, () => {
   it('renders the input', () => {
     render(<NumberInput />)
     expect(screen.getByRole('spinbutton')).toBeInTheDocument()
@@ -30,6 +30,6 @@ describe(NumberInput.displayName!, () => {
 
   it('applies error styling when error=true', () => {
     render(<NumberInput error />)
-    expect(screen.getByRole('spinbutton')).toHaveClass('border-red-500')
+    expect(screen.getByRole('spinbutton')).toHaveAttribute('data-invalid')
   })
 })

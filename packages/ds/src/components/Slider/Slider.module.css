@@ -1,0 +1,39 @@
+@reference "../../styles/globals.css";
+
+.slider {
+  @apply w-full;
+}
+
+.trackRow {
+  @apply relative flex w-full items-center py-2;
+}
+
+.track {
+  @apply relative h-1.5 w-full grow rounded-full bg-surface-mute;
+}
+
+.fill {
+  @apply absolute h-full rounded-full bg-brand;
+}
+
+.handle {
+  @apply relative block size-4 rounded-full bg-brand shadow-warm-sm;
+  @apply outline-none;
+  @apply transition-shadow duration-fast;
+  @apply focus-ring;
+  @apply data-[disabled]:opacity-disabled;
+}
+
+.handle::before {
+  content: '';
+  @apply absolute left-1/2 top-1/2 size-11 -translate-x-1/2 -translate-y-1/2;
+}
+
+.labelRow {
+  @apply flex items-center justify-between text-sm font-medium;
+  @apply text-fg-default;
+}
+
+.valueText {
+  @apply text-sm tabular-nums text-fg-subtle;
+}

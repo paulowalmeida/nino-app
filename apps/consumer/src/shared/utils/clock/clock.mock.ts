@@ -1,0 +1,1 @@
+export const clockMock = { iso: '2026-08-29T18:00:00.000Z' }

@@ -1,0 +1,52 @@
+@reference "@nino/ds/globals.css";
+
+.stage {
+  @apply relative flex w-full items-center justify-center;
+  @apply h-[15rem] sm:h-[17rem] lg:h-auto lg:min-h-dvh;
+  background: color-mix(
+    in srgb,
+    var(--store-tint, var(--color-brand)) 14%,
+    white
+  );
+  border-radius: 0 0 2.5rem 2.5rem;
+}
+
+@media (width >= 64rem) {
+  .stage {
+    border-radius: 0 3.5rem 3.5rem 0;
+  }
+}
+
+.back {
+  @apply absolute left-4 top-4 flex h-11 w-11 items-center justify-center;
+  @apply rounded-full bg-white/70 text-lg text-fg-strong backdrop-blur-sm;
+  @apply transition-colors hover:bg-white;
+  @apply lg:left-8 lg:top-8;
+}
+
+.identity {
+  @apply flex flex-col items-center gap-4 px-6 text-center;
+}
+
+.mark {
+  @apply flex h-28 w-28 items-center justify-center overflow-hidden;
+  @apply rounded-[2rem] bg-surface-raised lg:h-36 lg:w-36;
+  box-shadow: 0 22px 45px -22px
+    color-mix(in srgb, var(--store-tint, var(--color-brand)) 90%, transparent);
+}
+
+.signInBrandStageLogo {
+  @apply h-full w-full object-cover;
+}
+
+.initials {
+  @apply flex h-full w-full items-center justify-center font-display;
+  @apply text-3xl font-extrabold text-fg-on-brand lg:text-4xl;
+  background: var(--store-tint, var(--color-brand));
+}
+
+.name {
+  @apply max-w-[16rem] font-display text-lg font-extrabold text-fg-strong;
+  @apply lg:text-xl;
+  text-wrap: balance;
+}

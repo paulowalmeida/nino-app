@@ -1,0 +1,29 @@
+@reference "@nino/ds/globals.css";
+
+.who {
+  @apply inline-flex min-w-0 max-w-full items-center gap-3 rounded-2;
+  @apply focus-visible:ring-2 focus-visible:ring-brand;
+  @apply focus-visible:ring-offset-1;
+}
+
+.identity {
+  @apply flex min-w-0 flex-col;
+}
+
+.name {
+  @apply truncate text-sm font-semibold text-fg-default;
+}
+
+.phone {
+  @apply truncate text-xs text-fg-faint;
+  font-variant-numeric: tabular-nums;
+}
+
+.colNumber {
+  @apply whitespace-nowrap text-right text-fg-muted;
+  font-variant-numeric: tabular-nums;
+}
+
+.since {
+  @apply text-fg-faintest;
+}

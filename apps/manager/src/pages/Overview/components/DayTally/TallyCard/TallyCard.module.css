@@ -1,0 +1,33 @@
+@reference "@nino/ds/globals.css";
+
+.cardOverview {
+  @apply flex flex-row items-center gap-x-2;
+}
+
+.figure {
+  @apply flex flex-col gap-2;
+  @apply transition-shadow duration-150;
+  @apply focus-visible:outline-hidden focus-visible:ring-2;
+  @apply focus-visible:ring-brand focus-visible:ring-offset-2;
+  --card-ring: 0 0 0 1px
+    color-mix(in srgb, var(--color-warm-950) 14%, transparent);
+}
+
+@media (hover: hover) {
+  .figure:hover {
+    box-shadow:
+      0 0 0 1px color-mix(in srgb, var(--color-brand) 45%, transparent),
+      0 8px 20px -12px
+        color-mix(in srgb, var(--color-warm-950) 20%, transparent);
+  }
+}
+
+.tallyCardValue {
+  @apply font-display text-lg font-extrabold leading-none tracking-tight;
+  @apply text-fg-strong lg:text-lg;
+  font-variant-numeric: tabular-nums;
+}
+
+.metricLabel {
+  @apply leading-snug text-fg-faint;
+}

@@ -8,20 +8,27 @@
   ],
   "scripts": {
     "dev": "turbo dev",
+    "dev:manager": "turbo dev --filter=nino-manager",
+    "dev:backoffice": "turbo dev --filter=nino-backoffice",
+    "dev:landing": "turbo dev --filter=nino-landing",
+    "dev:consumer": "turbo dev --filter=nino-consumer", 
+    "ds:storybook": "turbo run storybook --filter=@nino/ds",
     "build": "turbo build",
     "lint": "turbo lint",
     "type-check": "turbo type-check",
     "format": "prettier --write \"**/*.{ts,tsx,css,md}\"",
-    "ds:storybook": "turbo run storybook --filter=@nino/ds"
+    "quality:gate": "node .agents/enforcement/completion-gate.mjs"
   },
   "dependencies": {
+    "@tanstack/react-query": "^5.101.0",
     "clsx": "^2.1.1",
     "i18next": "^26.2.0",
-    "next": "^16.2.6",
+    "next": "^16.3.5",
     "react": "^19.2.6",
     "react-dom": "^19.2.6",
     "react-hook-form": "^7.76.0",
     "react-i18next": "^17.0.8",
+    "react-router": "^8.3.1",
     "tailwind-merge": "^3.6.0",
     "tailwindcss-animate": "^1.0.7"
   },
@@ -41,7 +48,7 @@
     "@types/react": "^19.0.0",
     "@types/react-dom": "^19.0.0",
     "@vitejs/plugin-react": "^5.2.0",
-    "@vitest/coverage-v8": "^4.1.7",
+    "@vitest/coverage-v8": "^4.1.11",
     "eslint": "^9.0.0",
     "eslint-config-next": "^15.0.0",
     "eslint-config-prettier": "^10.0.0",
@@ -54,6 +61,11 @@
     "turbo": "^2.5.4",
     "typescript": "^5.7.3",
     "typescript-eslint": "^8.0.0",
-    "vitest": "^4.1.7"
+    "vitest": "^4.1.11"
+  },
+  "overrides": {
+    "@storybook/addon-essentials": {
+      "@storybook/addon-actions": "9.0.8"
+    }
   }
 }

@@ -1,0 +1,22 @@
+@reference "@nino/ds/globals.css";
+
+.board {
+  @apply relative z-content grid min-h-0 flex-1 grid-cols-1 gap-x-5 gap-y-4;
+}
+
+@container (min-width: 28rem) {
+  .board {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* WHY: com a sidebar aberta em 1024px sobra ~44rem — dá pra 2 colunas
+ * confortáveis, a terceira desce pra segunda linha. Fechando a sidebar sobe
+ * pra ~57rem, aí sim cabem as 3 lado a lado sem espremer o mínimo do card
+ * (17rem, ver KitchenColumn).
+ */
+@container (min-width: 50rem) {
+  .board {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}

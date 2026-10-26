@@ -1,0 +1,31 @@
+@reference "@nino/ds/globals.css";
+
+.tallyHistorySection {
+  @apply mt-6;
+}
+
+.tallyHistoryLink {
+  @apply flex items-baseline gap-3 rounded-3 px-2 py-2.5;
+  @apply transition-colors duration-150 hover:bg-surface-mute;
+  @apply focus-visible:outline-hidden focus-visible:ring-2;
+  @apply focus-visible:ring-brand focus-visible:ring-offset-1;
+}
+
+.number {
+  @apply font-display text-sm font-extrabold text-fg-strong;
+  font-variant-numeric: tabular-nums;
+}
+
+.state {
+  @apply min-w-0 flex-1 truncate text-sm text-fg-muted;
+}
+
+.at {
+  @apply text-xs text-fg-faint;
+  font-variant-numeric: tabular-nums;
+}
+
+.tallyHistoryTotal {
+  @apply text-sm font-semibold text-fg-default;
+  font-variant-numeric: tabular-nums;
+}

@@ -1,0 +1,21 @@
+@reference "../../styles/globals.css";
+
+.seal {
+  @apply group-data-[state=open]:bg-brand;
+  @apply group-data-[state=open]:text-fg-on-brand;
+}
+
+.chevron {
+  rotate: 0deg;
+  transition: rotate var(--duration-slow) var(--ease-out-soft);
+}
+
+:global(.group[data-state='open']) .chevron {
+  rotate: 180deg;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .chevron {
+    transition-duration: 1ms;
+  }
+}

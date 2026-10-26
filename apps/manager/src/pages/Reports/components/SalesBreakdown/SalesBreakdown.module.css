@@ -1,0 +1,15 @@
+@reference "@nino/ds/globals.css";
+
+.block {
+  @apply rounded-5 border border-border bg-surface-page/70 p-4 lg:p-5;
+}
+
+.blockTitle {
+  @apply mb-3 font-display text-lg font-extrabold tracking-tight;
+  @apply text-fg-strong;
+}
+
+.salesBreakdownEmpty {
+  @apply font-display text-sm font-semibold leading-tight text-fg-faint;
+  @apply lg:text-base;
+}

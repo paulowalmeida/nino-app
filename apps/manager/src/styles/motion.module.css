@@ -1,0 +1,158 @@
+@reference "@nino/ds/globals.css";
+
+/* WHY: Vocabulário de movimento do painel. O gesto base é a comanda saindo da
+ * impressora: o conteúdo se revela de cima para baixo por clip-path, não por
+ * opacidade. Fade fica reservado a sobreposições, onde o que importa é a
+ * camada e não o conteúdo. Tempos: 380–620ms. Abaixo disso o movimento não é
+ * lido, acima atrapalha quem já sabe onde clicar. Easing expo-out em tudo,
+ * exceto onde o overshoot é intencional. Todas as classes aceitam --d para
+ * escalonar entradas em sequência.
+ */
+
+
+.unroll {
+  animation: unroll 0.46s var(--ease-out) var(--d, 0ms) both;
+}
+
+
+
+
+.land {
+  animation: land 0.66s var(--ease-back) var(--d, 0ms) both;
+}
+
+
+.slide {
+  animation: slide 0.4s var(--ease-out) var(--d, 0ms) both;
+}
+
+
+.pop {
+  animation: pop 0.42s var(--ease-back) var(--d, 0ms) both;
+}
+
+
+.deal {
+  animation: deal 0.42s var(--ease-out) var(--d, 0ms) both;
+}
+
+.chipCardEnter {
+  animation: chip-card-enter 280ms var(--ease-out) both;
+}
+
+@keyframes chip-card-enter {
+  from {
+    opacity: 0;
+    transform: translateY(8px) scale(0.985);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes unroll {
+  from {
+    clip-path: inset(0 0 100% 0);
+    transform: translateY(-6px);
+  }
+  to {
+    clip-path: inset(0 0 0 0);
+    transform: translateY(0);
+  }
+}
+
+@keyframes land {
+  from {
+    opacity: 0;
+    transform: translateY(-16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slide {
+  from {
+    transform: translateX(-12px);
+    clip-path: inset(0 100% 0 0);
+  }
+  to {
+    transform: translateX(0);
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+@keyframes pop {
+  from {
+    transform: scale(0.82);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+
+/* WHY: o inset negativo no estado final mantém sombra, anel e borda desenhada
+ * por box-shadow visíveis; com `inset(0)` o clip-path, que fica aplicado após a
+ * animação (fill both), cortava tudo que é desenhado fora da caixa. */
+@keyframes deal {
+  from {
+    clip-path: inset(-32px -32px 100% -32px);
+    transform: translateX(-10px);
+  }
+  to {
+    clip-path: inset(-32px -32px -32px -32px);
+    transform: translateX(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .unroll,
+  .land,
+  .slide,
+  .pop,
+  .deal {
+    animation: none;
+  }
+
+  .chipCardEnter {
+    animation: none;
+  }
+}
+
+
+
+
+.lift {
+  @apply transition-transform duration-200 ease-out;
+}
+
+.lift:hover {
+  transform: translateY(-2px);
+}
+
+.lift:active {
+  transform: translateY(0) scale(0.995);
+}
+
+
+.press {
+  @apply transition-transform duration-150 ease-out;
+}
+
+.press:active {
+  transform: scale(0.97);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lift,
+  .lift:hover,
+  .lift:active,
+  .press,
+  .press:active {
+    transform: none;
+    transition: none;
+  }
+}

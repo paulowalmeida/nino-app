@@ -1,108 +1,108 @@
-import { forwardRef } from 'react'
+import { HTMLAttributes, Ref, TdHTMLAttributes, ThHTMLAttributes } from 'react'
 
-import { mergeClasses } from '@ds/lib/mergeClasses'
+import { mergeClasses } from '@ds/lib/mergeClasses/mergeClasses'
 
-import {
-  TableCellProps,
-  TableHeadProps,
-  TableProps,
-  TableRowProps,
-  TableSectionProps,
-} from './Table.types'
+import styles from './Table.module.css'
+
+type TableProps = HTMLAttributes<HTMLTableElement> & {
+  ref?: Ref<HTMLTableElement>
+}
+
+type TableSectionProps = HTMLAttributes<HTMLTableSectionElement> & {
+  ref?: Ref<HTMLTableSectionElement>
+}
+
+type TableRowProps = HTMLAttributes<HTMLTableRowElement> & {
+  ref?: Ref<HTMLTableRowElement>
+}
+
+type TableHeadProps = ThHTMLAttributes<HTMLTableCellElement> & {
+  ref?: Ref<HTMLTableCellElement>
+}
+
+type TableCellProps = TdHTMLAttributes<HTMLTableCellElement> & {
+  ref?: Ref<HTMLTableCellElement>
+}
 
 /**
- * Styled table primitives for composition. Bring your own data
- * (or TanStack Table) and assemble with Table + TableHeader/Body/Row/Head/Cell.
+ * Table pieces to assemble by hand — bring the data (or TanStack Table) and
+ * put together `Table` with `TableHeader`, `TableBody`, `TableRow`,
+ * `TableHead` and `TableCell`.
  *
- * White surface; hover and selected row (`data-selected`) use the tenant brand
- * light variant, same as dropdowns. All parts accept `className` overrides.
+ * They live in one file because they only make sense together: a
+ * `TableCell` outside a `Table` is not a component, it is a stray `<td>`.
  *
- * @example
+ * ```tsx
  * <Table>
  *   <TableHeader>
- *     <TableRow><TableHead>Name</TableHead><TableHead>Price</TableHead></TableRow>
+ *     <TableRow>
+ *       <TableHead>Item</TableHead>
+ *       <TableHead>Preço</TableHead>
+ *     </TableRow>
  *   </TableHeader>
  *   <TableBody>
- *     <TableRow><TableCell>Bread</TableCell><TableCell>$5</TableCell></TableRow>
+ *     <TableRow>
+ *       <TableCell>Pão</TableCell>
+ *       <TableCell>R$ 5</TableCell>
+ *     </TableRow>
  *   </TableBody>
  * </Table>
+ * ```
  */
-export const Table = forwardRef<HTMLTableElement, TableProps>(
-  ({ className, ...props }, ref) => (
-    <div className='w-full overflow-x-auto'>
+export function Table({ className, ref, ...props }: TableProps) {
+  return (
+    <div className={styles.scroller}>
       <table
         ref={ref}
-        className={mergeClasses(
-          'w-full caption-bottom bg-white text-sm',
-          className
-        )}
+        className={mergeClasses(styles.table, className)}
         {...props}
       />
     </div>
   )
-)
-Table.displayName = 'Table'
+}
 
-export const TableHeader = forwardRef<HTMLTableSectionElement, TableSectionProps>(
-  ({ className, ...props }, ref) => (
+export function TableHeader({ className, ref, ...props }: TableSectionProps) {
+  return (
     <thead
       ref={ref}
-      className={mergeClasses('[&_tr]:border-b [&_tr]:border-gray-200', className)}
+      className={mergeClasses(styles.header, className)}
       {...props}
     />
   )
-)
-TableHeader.displayName = 'TableHeader'
+}
 
-export const TableBody = forwardRef<HTMLTableSectionElement, TableSectionProps>(
-  ({ className, ...props }, ref) => (
+export function TableBody({ className, ref, ...props }: TableSectionProps) {
+  return (
     <tbody
       ref={ref}
-      className={mergeClasses(
-        '[&_tr:last-child]:border-0 [&_tr:hover]:bg-[color-mix(in_srgb,var(--color-brand)_10%,white)]',
-        className
-      )}
+      className={mergeClasses(styles.body, className)}
       {...props}
     />
   )
-)
-TableBody.displayName = 'TableBody'
+}
 
-export const TableRow = forwardRef<HTMLTableRowElement, TableRowProps>(
-  ({ className, ...props }, ref) => (
-    <tr
-      ref={ref}
-      className={mergeClasses(
-        'border-b border-gray-200 transition-colors data-selected:bg-[color-mix(in_srgb,var(--color-brand)_10%,white)]',
-        className
-      )}
-      {...props}
-    />
+export function TableRow({ className, ref, ...props }: TableRowProps) {
+  return (
+    <tr ref={ref} className={mergeClasses(styles.row, className)} {...props} />
   )
-)
-TableRow.displayName = 'TableRow'
+}
 
-export const TableHead = forwardRef<HTMLTableCellElement, TableHeadProps>(
-  ({ className, ...props }, ref) => (
+export function TableHead({ className, ref, ...props }: TableHeadProps) {
+  return (
     <th
       ref={ref}
-      className={mergeClasses(
-        'h-10 px-3 text-left align-middle text-xs font-medium text-gray-500',
-        className
-      )}
+      className={mergeClasses(styles.headerCell, className)}
       {...props}
     />
   )
-)
-TableHead.displayName = 'TableHead'
+}
 
-export const TableCell = forwardRef<HTMLTableCellElement, TableCellProps>(
-  ({ className, ...props }, ref) => (
+export function TableCell({ className, ref, ...props }: TableCellProps) {
+  return (
     <td
       ref={ref}
-      className={mergeClasses('px-3 py-2.5 align-middle text-gray-900', className)}
+      className={mergeClasses(styles.bodyCell, className)}
       {...props}
     />
   )
-)
-TableCell.displayName = 'TableCell'
+}

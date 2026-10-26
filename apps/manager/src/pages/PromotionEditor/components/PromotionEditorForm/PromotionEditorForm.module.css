@@ -1,0 +1,35 @@
+@reference "@nino/ds/globals.css";
+
+.promotionEditorForm {
+  @apply mt-2 flex flex-col gap-6;
+}
+
+.promotionEditorFields {
+  @apply flex min-w-0 max-w-6xl flex-col gap-3;
+}
+
+.promotionEditorStepper {
+  @apply mb-2;
+}
+
+.promotionEditorContent {
+  @apply flex flex-col gap-6;
+  @apply lg:grid lg:grid-cols-[minmax(0,1fr)_24rem] lg:items-start;
+}
+
+.promotionEditorStep {
+  @apply min-w-0 flex-1;
+}
+
+.promotionEditorRules {
+  @apply flex flex-col gap-4;
+}
+
+.promotionEditorAside {
+  @apply flex w-full flex-col gap-4 lg:sticky lg:top-6;
+}
+
+.promotionEditorActions {
+  @apply flex max-w-6xl flex-col-reverse gap-2;
+  @apply sm:flex-row sm:justify-end;
+}

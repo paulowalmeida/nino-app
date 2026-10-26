@@ -1,0 +1,61 @@
+@reference "@nino/ds/globals.css";
+
+.bar {
+  @apply fixed inset-x-0 bottom-0 z-nav flex h-[4.5rem] items-stretch;
+  @apply border-t border-border bg-surface-raised/95 backdrop-blur lg:hidden;
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+.tabBarTab {
+  @apply flex h-full flex-1 flex-col items-center justify-center gap-1;
+  @apply min-h-12 text-fg-subtle transition-colors;
+}
+
+.tabOn {
+  @apply text-brand-strong;
+}
+
+.home {
+  @apply flex h-full flex-1 flex-col items-center justify-center gap-0.5;
+  @apply min-h-12 text-fg-subtle transition-colors;
+}
+
+.homeRing {
+  @apply flex h-9 w-9 items-center justify-center rounded-3 border;
+  @apply transition-all;
+  border-color: color-mix(
+    in srgb,
+    var(--store-tint, var(--color-brand)) 40%,
+    transparent
+  );
+  color: var(--store-tint, var(--color-brand));
+}
+
+.homeOn .homeRing {
+  border-color: var(--store-tint, var(--color-brand));
+  background: var(--store-tint, var(--color-brand));
+  @apply text-fg-on-brand;
+  box-shadow: var(--shadow-warm-sm);
+}
+
+.homeOn {
+  color: var(--store-tint, var(--color-brand));
+}
+
+/* WHY: três alvos numa tela de 360px: o rótulo aperta antes do ícone
+ */
+.tabBarLabel {
+  @apply text-xs font-semibold;
+}
+
+.cartIcon {
+  @apply relative inline-flex items-center justify-center;
+}
+
+.cartBadge {
+  @apply absolute -right-2.5 -top-1.5 flex h-4 min-w-4 items-center;
+  @apply justify-center rounded-full px-1 text-2xs font-extrabold;
+  @apply text-fg-on-brand;
+  background-color: var(--store-tint, var(--color-brand));
+  font-variant-numeric: tabular-nums;
+}

@@ -1,0 +1,27 @@
+/*
+ * Elevação. A escala neutra (`shadow-xs` a `shadow-2xl`) é a do Tailwind.
+ * Aqui ficam só as sombras que ela não tem: a que projeta para cima, a
+ * família quente da landing — `burnt-900` porque preto puro sobre creme
+ * acinzenta e faz a peça parecer recortada em vez de assentada — e o halo de
+ * marca, onde a peça não é levantada, é acesa.
+ */
+@theme static {
+  /* Projeta para cima: barra fixa no rodapé, que se levanta do conteúdo que
+     passa por baixo dela */
+  --shadow-up: 0 -8px 24px
+    color-mix(in srgb, var(--color-warm-950) 8%, transparent);
+
+  /* Quentes — landing */
+  --shadow-warm-sm: 0 2px 18px
+    color-mix(in srgb, var(--color-burnt-900) 6%, transparent);
+  --shadow-warm-md: 0 8px 24px
+    color-mix(in srgb, var(--color-burnt-900) 12%, transparent);
+  --shadow-warm-lg: 0 20px 44px
+    color-mix(in srgb, var(--color-burnt-900) 28%, transparent);
+
+  /* Halo da marca: a peça não é levantada, é acesa */
+  --shadow-brand: 0 8px 20px
+    color-mix(in srgb, var(--color-brand) 30%, transparent);
+  --shadow-brand-lg: 0 26px 56px
+    color-mix(in srgb, var(--color-brand-strong) 34%, transparent);
+}

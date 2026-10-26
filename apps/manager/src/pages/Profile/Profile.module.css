@@ -1,0 +1,5 @@
+@reference "@nino/ds/globals.css";
+
+.profilePage {
+  @apply relative w-full max-w-2xl p-4 lg:p-10;
+}

@@ -30,16 +30,17 @@ const items = [
 ]
 
 export const Default: Story = {
-  render: () => (
-    <div className='w-full max-w-md'>
-      <Accordion items={items} />
+  args: { items },
+  render: (args) => (
+    <div className="w-full max-w-md">
+      <Accordion {...args} />
     </div>
   ),
 }
 
 export const DefaultOpen: Story = {
   render: () => (
-    <div className='w-full max-w-md'>
+    <div className="w-full max-w-md">
       <Accordion items={items} defaultValue={['hours']} />
     </div>
   ),
@@ -47,8 +48,27 @@ export const DefaultOpen: Story = {
 
 export const Multiple: Story = {
   render: () => (
-    <div className='w-full max-w-md'>
+    <div className="w-full max-w-md">
       <Accordion items={items} multiple defaultValue={['hours', 'delivery']} />
+    </div>
+  ),
+}
+
+/**
+ * `itemClassName`/`triggerClassName`/`contentClassName` para superfícies com
+ * tema próprio (ex.: uma sidebar escura), onde o cartão branco padrão não
+ * faz sentido.
+ */
+export const OnDarkSurface: Story = {
+  render: () => (
+    <div className="w-full max-w-md rounded-2xl bg-gray-900 p-4">
+      <Accordion
+        items={items}
+        className="border-0 bg-transparent divide-y-0"
+        itemClassName="bg-transparent"
+        triggerClassName="text-fg-on-brand/80 hover:bg-surface-raised/10 rounded-2"
+        contentClassName="text-fg-on-brand/60"
+      />
     </div>
   ),
 }

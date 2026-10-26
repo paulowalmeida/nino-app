@@ -1,0 +1,100 @@
+@reference '../../theme.css';
+
+@media (prefers-reduced-motion: reduce) {
+  .mascot {
+    animation: none !important;
+  }
+}
+
+.getStartedSection {
+  @apply px-10 pb-24 pt-20 bg-surface-1;
+}
+
+.wrap {
+  @apply relative mx-auto max-w-[980px];
+}
+
+.getStartedCard {
+  @apply relative overflow-hidden rounded-6 px-10;
+  @apply py-20 text-center text-fg-on-brand;
+  background:
+    radial-gradient(80% 120% at 15% 0%, #ff8a33 0%, transparent 50%),
+    radial-gradient(90% 130% at 100% 100%, #d94d08 0%, transparent 55%),
+    linear-gradient(160deg, #ff7e1f 0%, #ec5a0e 100%);
+  @apply shadow-brand-lg;
+}
+
+.getStartedCard::after {
+  content: "";
+  @apply absolute inset-0 pointer-events-none opacity-disabled;
+  @apply mix-blend-overlay;
+  background-image: url("/noise.svg");
+}
+
+.getStartedInner {
+  @apply relative z-raised;
+
+  @apply lg:pr-44;
+}
+
+.pill {
+  @apply inline-flex items-center gap-2 mb-6;
+  @apply rounded-full border border-fg-on-brand/30;
+  @apply bg-surface-raised/16;
+  @apply px-4 py-[0.4rem] text-xs font-semibold backdrop-blur-sm;
+}
+
+.getStartedTitle {
+  @apply [font-family:var(--font-display)] font-extrabold;
+  @apply text-[clamp(2.3rem,5vw,3.6rem)] leading-display;
+  @apply tracking-[-0.02em];
+}
+
+.lead {
+  @apply mx-auto mt-[1.3rem] max-w-[544px];
+  @apply text-lg leading-relaxed text-fg-on-brand/92;
+}
+
+.btn {
+  @apply mt-[2.2rem] inline-box rounded-full bg-surface-raised;
+  @apply px-[2.4rem] py-[1.1rem] font-bold text-base;
+  @apply text-brand-strong no-underline;
+  @apply shadow-warm-lg;
+  @apply transition-all duration-200;
+}
+
+.btn:hover {
+  @apply translate-y-[-3px] shadow-warm-lg;
+}
+
+.fine {
+  @apply mt-[1.3rem] text-sm text-fg-on-brand/80;
+}
+
+.mascot {
+  @apply hidden pointer-events-none select-none;
+  @apply lg:block;
+  position: absolute;
+  bottom: 4rem;
+  right: 2.5rem;
+  width: 220px;
+  height: 220px;
+  animation: mascotFloat 6s ease-in-out infinite;
+  filter: drop-shadow(
+    0 20px 32px color-mix(in srgb, var(--color-burnt-900) 28%, transparent)
+  );
+}
+
+@media (max-width: 720px) {
+  .getStartedSection {
+    @apply px-5 pb-16 pt-12;
+  }
+
+  .getStartedCard {
+    @apply rounded-6 px-6 py-14;
+  }
+
+  .getStartedInner {
+    @apply pr-0;
+  }
+}

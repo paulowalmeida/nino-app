@@ -1,0 +1,119 @@
+@reference "@nino/ds/globals.css";
+
+.productCard {
+  @apply relative flex cursor-pointer flex-col overflow-hidden rounded-3;
+  @apply bg-surface-page text-left;
+  @apply transition-[box-shadow,transform] duration-fast;
+  @apply select-none;
+  --card-ring: 0 0 0 1px
+    color-mix(in srgb, var(--color-warm-950) 14%, transparent);
+  -webkit-touch-callout: none;
+  @apply hover:bg-surface-page;
+  @apply focus-ring;
+}
+
+@media (hover: hover) {
+  .productCard:hover {
+    box-shadow:
+      var(--card-ring),
+      0 8px 20px -12px
+        color-mix(in srgb, var(--color-warm-950) 20%, transparent);
+  }
+}
+
+.photoWrap {
+  @apply w-full;
+}
+
+.photo {
+  @apply h-[120px] w-full rounded-none text-3xl lg:h-[144px] lg:text-4xl;
+}
+
+.productCardFooter {
+  @apply flex flex-col gap-0.5 px-2.5 pb-2.5 pt-2;
+}
+
+.quantity {
+  @apply absolute right-2 top-2 z-10;
+}
+
+.quantity .quantityBadge {
+  @apply size-7 min-w-7 rounded-full border-0 bg-brand p-0;
+  @apply text-xs font-bold tabular-nums text-fg-on-brand shadow-warm-sm;
+  @apply hover:bg-brand-hover;
+}
+
+.quantityPanel {
+  width: max-content;
+  padding: 0.25rem;
+  border-radius: 999px;
+}
+
+.quantityPanel.quantityPanel[data-state='open'] {
+  animation: quantity-panel-unroll 180ms var(--ease-out) both;
+}
+
+.quantityPanel.quantityPanel[data-state='closed'] {
+  animation: quantity-panel-rollup 100ms var(--ease-in) both;
+}
+
+.quantityStepper {
+  @apply gap-0.5;
+}
+
+.stepQuantity,
+.removeQuantity {
+  @apply size-7 rounded-full text-fg-muted;
+  @apply transition-colors duration-150;
+}
+
+.stepQuantity {
+  @apply hover:bg-brand-soft hover:text-brand-strong;
+}
+
+.removeQuantity {
+  @apply hover:bg-danger-surface hover:text-danger;
+}
+
+@keyframes quantity-panel-unroll {
+  from {
+    clip-path: inset(0 0 0 100% round 999px);
+    transform: translateX(6px);
+  }
+
+  to {
+    clip-path: inset(0 0 0 0 round 999px);
+    transform: translateX(0);
+  }
+}
+
+@keyframes quantity-panel-rollup {
+  from {
+    clip-path: inset(0 0 0 0 round 999px);
+    transform: translateX(0);
+  }
+
+  to {
+    clip-path: inset(0 0 0 100% round 999px);
+    transform: translateX(4px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .quantityPanel.quantityPanel[data-state='open'],
+  .quantityPanel.quantityPanel[data-state='closed'] {
+    animation: none;
+  }
+}
+
+.name {
+  @apply line-clamp-2 leading-tight;
+}
+
+.price {
+  font-variant-numeric: tabular-nums;
+}
+
+.pressing {
+  @apply scale-[0.98] transition-transform duration-150;
+}

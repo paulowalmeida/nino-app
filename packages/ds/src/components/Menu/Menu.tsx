@@ -1,75 +1,157 @@
+import { ReactNode } from 'react'
+
 import { Menu as ArkMenu } from '@ark-ui/react/menu'
 import { Portal } from '@ark-ui/react/portal'
+import { mergeClasses } from '@ds/lib/mergeClasses/mergeClasses'
 
-import { mergeClasses } from '@ds/lib/mergeClasses'
+import { Tooltip } from '../Tooltip/Tooltip'
+import styles from './Menu.module.css'
+import { MenuItem } from './Menu.types'
 
-import { MenuItem, MenuProps } from './Menu.types'
+export type { MenuItem } from './Menu.types'
 
-const baseContent =
-  'z-50 min-w-40 overflow-hidden rounded-md border border-gray-200 bg-white shadow-md p-1'
+type MenuPlacement =
+  | 'top'
+  | 'top-start'
+  | 'top-end'
+  | 'bottom'
+  | 'bottom-start'
+  | 'bottom-end'
+  | 'left'
+  | 'left-start'
+  | 'left-end'
+  | 'right'
+  | 'right-start'
+  | 'right-end'
 
-const baseItem =
-  'relative flex cursor-pointer select-none items-center gap-2 rounded px-3 py-2 text-sm text-gray-900 outline-none transition-colors data-[highlighted]:bg-[color-mix(in_srgb,var(--color-brand)_10%,white)] data-[highlighted]:text-brand data-[disabled]:pointer-events-none data-[disabled]:opacity-50'
-
-const destructiveItem =
-  'text-red-600 data-[highlighted]:bg-red-50 data-[highlighted]:text-red-600'
-
-const baseSeparator = 'my-1 h-px bg-gray-200'
-
-function isSeparator(item: MenuItem): item is { separator: true } {
-  return 'separator' in item
+type MenuProps = {
+  /**
+   * What opens the menu. Gets the open state through `asChild`, so pass a
+   * real `Button`, not a `<div>`
+   */
+  trigger: ReactNode
+  /** Short description shown when the trigger is icon-only. */
+  triggerTooltip?: ReactNode
+  /**
+   * The entries, in order. `{ separator: true }` draws a rule between groups
+   */
+  items: MenuItem[]
+  /**
+   * Informative block above the entries — who is signed in, for instance.
+   * Not focusable and not selectable
+   */
+  header?: ReactNode
+  /**
+   * Extra classes on the panel, for an app that gives the menu its own
+   * surface
+   */
+  contentClassName?: string
+  /** Extra classes per entry, for a themed surface */
+  itemClassName?: string
+  /**
+   * Side it opens on, with `-start`/`-end` to align by an edge. Default:
+   * `bottom-start`
+   */
+  placement?: MenuPlacement
 }
 
+const isSeparator = (
+  item: MenuItem
+): item is Extract<MenuItem, { separator: true }> => 'separator' in item
+
 /**
- * Dropdown menu for card/header actions. Wraps Ark Menu.
- * Item hover uses the tenant brand light variant.
+ * List of actions that opens from a trigger — the three dots of a card, the
+ * avatar in the header.
  *
- * @param trigger - Element that opens the menu (passed via asChild)
+ * Every entry is an action on the thing the trigger belongs to. A menu that
+ * navigates somewhere is a nav; a menu that picks a value is a `Select`.
  *
- * @param items - Action list; use `{ separator: true }` for dividers
- *
- * @example
- * <Menu trigger={<Button>Actions</Button>} items={[
- *   { value: 'edit', label: 'Edit', onSelect: edit },
- *   { separator: true },
- *   { value: 'del', label: 'Delete', destructive: true, onSelect: del },
- * ]} />
+ * ```tsx
+ * <Menu
+ *   trigger={<Button variant="ghost"><Icon name="more-vertical" /></Button>}
+ *   items={[
+ *     { value: 'edit', label: 'Editar', onSelect: edit },
+ *     { separator: true },
+ *     { value: 'del', label: 'Excluir', destructive: true, onSelect: del },
+ *   ]}
+ * />
+ * ```
  */
-export function Menu({ trigger, items }: MenuProps) {
-  function handleSelect(value: string) {
-    const item = items.find((i) => !isSeparator(i) && i.value === value)
-    if (item && !isSeparator(item)) item.onSelect?.()
+export function Menu({
+  trigger,
+  triggerTooltip,
+  items,
+  header,
+  contentClassName,
+  itemClassName,
+  placement = 'bottom-start',
+}: MenuProps) {
+  const handleSelect = (value: string) => {
+    const selected = items.find(
+      (item) => !isSeparator(item) && item.value === value
+    )
+    if (selected && !isSeparator(selected)) selected.onSelect?.()
   }
 
   return (
-    <ArkMenu.Root onSelect={({ value }) => handleSelect(value)}>
-      <ArkMenu.Trigger asChild>{trigger}</ArkMenu.Trigger>
+    <ArkMenu.Root
+      onSelect={({ value }) => handleSelect(value)}
+      positioning={{ placement, gutter: 8, strategy: 'fixed' }}
+      lazyMount
+      unmountOnExit
+    >
+      {triggerTooltip ? (
+        <Tooltip content={triggerTooltip} side="right" delayDuration={0}>
+          {/* WHY: dois `asChild` no mesmo elemento colidem — o tooltip vence o
+              merge e o menu fica sem âncora, abrindo em 0,0. O span dá a cada
+              máquina um elemento próprio. */}
+          <span className={styles.triggerWrap}>
+            <ArkMenu.Trigger asChild>{trigger}</ArkMenu.Trigger>
+          </span>
+        </Tooltip>
+      ) : (
+        <ArkMenu.Trigger asChild>{trigger}</ArkMenu.Trigger>
+      )}
       <Portal>
-        <ArkMenu.Positioner>
-          <ArkMenu.Content className={baseContent}>
-          {items.map((item, i) =>
-            isSeparator(item) ? (
-              <ArkMenu.Separator key={`sep-${i}`} className={baseSeparator} />
-            ) : (
-              <ArkMenu.Item
-                key={item.value}
-                value={item.value}
-                disabled={item.disabled}
-                className={mergeClasses(
-                  baseItem,
-                  item.destructive ? destructiveItem : ''
-                )}
-              >
-                {item.icon}
-                {item.label}
-              </ArkMenu.Item>
-            )
-          )}
+        <ArkMenu.Positioner className={styles.positioner}>
+          {/* `menu-animated-content` é gancho global: as regras de entrada e
+              saída (e o corte delas em prefers-reduced-motion) vivem em
+              globals.css e precisam do nome literal, sem hash. */}
+          <ArkMenu.Content
+            className={mergeClasses(
+              'menu-animated-content',
+              styles.panel,
+              contentClassName ?? ''
+            )}
+          >
+            {header && <div className={styles.header}>{header}</div>}
+            {items.map((item, i) =>
+              isSeparator(item) ? (
+                <ArkMenu.Separator
+                  key={`sep-${i}`}
+                  className={styles.separator}
+                />
+              ) : (
+                <ArkMenu.Item
+                  key={item.value}
+                  value={item.value}
+                  disabled={item.disabled}
+                  className={mergeClasses(
+                    styles.option,
+                    item.destructive
+                      ? styles.optionDanger
+                      : styles.optionDefault,
+                    itemClassName ?? ''
+                  )}
+                >
+                  {item.icon}
+                  {item.label}
+                </ArkMenu.Item>
+              )
+            )}
           </ArkMenu.Content>
         </ArkMenu.Positioner>
       </Portal>
     </ArkMenu.Root>
   )
 }
-
-Menu.displayName = 'Menu'

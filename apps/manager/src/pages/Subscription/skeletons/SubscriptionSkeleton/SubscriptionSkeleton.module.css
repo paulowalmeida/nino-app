@@ -1,0 +1,37 @@
+@reference "@nino/ds/globals.css";
+
+.subscription {
+  @apply max-w-xl;
+}
+
+.plan {
+  @apply border-b border-border pb-4;
+}
+
+.facts {
+  @apply flex flex-col pt-1;
+}
+
+.fact {
+  @apply border-b border-border py-2.5;
+}
+
+.ghostPlanLabel {
+  @apply h-3 w-20;
+}
+
+.ghostPlanName {
+  @apply mt-1.5 h-7 w-32;
+}
+
+.ghostPrice {
+  @apply h-6 w-20;
+}
+
+.ghostFactLabel {
+  @apply h-4 w-36 shrink-0;
+}
+
+.ghostFactValue {
+  @apply h-4 w-16;
+}

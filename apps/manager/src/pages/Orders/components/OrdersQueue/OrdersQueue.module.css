@@ -1,0 +1,51 @@
+@reference "@nino/ds/globals.css";
+
+.scrollArea {
+  @apply min-h-0 flex-1 overflow-y-auto px-4 pb-4;
+  @apply lg:px-10 lg:pb-10;
+}
+
+.board {
+  @apply mt-1 grid items-stretch gap-4;
+  @apply grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4;
+  @apply lg:mt-3;
+  grid-auto-rows: minmax(14rem, auto);
+}
+
+.board > li {
+  @apply flex min-w-0;
+}
+
+.resultTransition {
+  @apply relative;
+}
+
+.skeletonOverlay {
+  @apply pointer-events-none absolute inset-0;
+  animation: skeleton-out 160ms var(--ease-out) both;
+}
+
+@keyframes skeleton-out {
+  to {
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .skeletonOverlay {
+    animation: none;
+    opacity: 0;
+  }
+}
+
+.sentinel {
+  @apply flex h-10 items-center justify-center;
+}
+
+.loadingMore {
+  @apply text-xs text-fg-faint;
+}
+
+.loadingLabel {
+  @apply sr-only;
+}

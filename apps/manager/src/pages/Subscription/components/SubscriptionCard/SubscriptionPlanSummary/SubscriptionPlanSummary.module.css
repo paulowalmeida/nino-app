@@ -1,0 +1,14 @@
+@reference "@nino/ds/globals.css";
+
+.plan {
+  @apply items-start;
+}
+
+.planName {
+  @apply mt-1 tracking-[-0.02em];
+}
+
+.price {
+  @apply whitespace-nowrap;
+  font-variant-numeric: tabular-nums;
+}

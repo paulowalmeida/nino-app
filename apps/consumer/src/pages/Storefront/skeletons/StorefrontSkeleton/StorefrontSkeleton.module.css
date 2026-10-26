@@ -1,0 +1,32 @@
+@reference "@nino/ds/globals.css";
+
+.storefrontSkeletonPage {
+  @apply relative flex min-h-dvh w-full flex-col bg-surface-raised pb-24;
+  @apply lg:pb-12;
+}
+
+.storefrontSkeletonShell {
+  @apply mx-auto w-full max-w-[80rem] px-4 sm:px-6;
+}
+
+.skTrack {
+  @apply mx-auto mt-6 flex w-full flex-row gap-2 overflow-hidden;
+  @apply border-y border-black/[0.07] py-3;
+}
+
+.skChip {
+  composes: nino-skeleton from global;
+  @apply h-8 shrink-0 rounded-full bg-black/[0.06];
+}
+
+.skChipS {
+  @apply w-20;
+}
+
+.skChipM {
+  @apply w-28;
+}
+
+.skChipL {
+  @apply w-24;
+}

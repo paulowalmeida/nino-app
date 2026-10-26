@@ -3,11 +3,20 @@
   "version": "0.0.1",
   "private": true,
   "exports": {
-    ".": "./src/index.ts"
+    "./enums": "./src/enums.ts",
+    "./lib/*": "./src/lib/*.ts",
+    "./services/*": "./src/services/*.ts",
+    "./types/*": "./src/types/*.ts",
+    "./utils/*": "./src/utils/*.ts"
   },
   "scripts": {
+    "test": "vitest run",
+    "test:watch": "vitest",
     "lint": "eslint src/ --max-warnings=0",
     "lint:fix": "eslint src/ --fix",
     "type-check": "tsc --noEmit"
+  },
+  "dependencies": {
+    "ky": "^2.0.2"
   }
 }

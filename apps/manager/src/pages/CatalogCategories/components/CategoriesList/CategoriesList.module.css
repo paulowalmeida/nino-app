@@ -1,0 +1,29 @@
+@reference "@nino/ds/globals.css";
+
+.categoriesListBody {
+  @apply [&_tr:last-child]:border-0;
+}
+
+.categoriesList {
+  @apply min-h-0 flex-1;
+}
+
+.categoriesList > div {
+  @apply h-full min-h-0 md:px-10;
+  overflow-y: auto;
+}
+
+.headRow > th {
+  @apply border-b border-border bg-surface-raised;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+.dragHead {
+  @apply w-10 pl-4 pr-1 md:pl-2;
+}
+
+.actionsHead {
+  @apply w-12 pl-3 pr-4 md:pr-2;
+}

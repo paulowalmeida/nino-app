@@ -1,0 +1,5 @@
+@reference "@nino/ds/globals.css";
+
+.employeesHeader {
+  @apply shrink-0 px-4 pt-4 lg:px-10 lg:pt-10;
+}

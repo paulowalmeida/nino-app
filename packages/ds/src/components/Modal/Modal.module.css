@@ -1,0 +1,49 @@
+@reference "../../styles/globals.css";
+
+.backdrop {
+  @apply fixed inset-0 z-overlay bg-fg-strong/45;
+}
+
+.panel {
+  @apply relative overflow-hidden rounded-2 bg-surface-raised;
+  @apply shadow-warm-lg outline-none;
+}
+
+.positioner {
+  @apply fixed inset-0 z-modal flex items-center justify-center p-4;
+}
+
+.closeButton {
+  @apply absolute right-2 top-2 flex size-11 items-center justify-center;
+  @apply cursor-pointer rounded-2 text-fg-faint;
+  @apply transition-colors duration-fast hover:text-fg-strong;
+  @apply focus-ring;
+}
+
+.header {
+  @apply px-6 pb-1 pt-6 pr-12;
+}
+
+.headerFullWidth {
+  @apply px-6 pb-1 pt-6;
+}
+
+.body {
+  @apply px-6 py-5;
+}
+
+.footer {
+  @apply flex items-center justify-end gap-3 px-6 pb-6 pt-2;
+}
+
+.sizeSmall {
+  @apply w-full max-w-sm;
+}
+
+.sizeMedium {
+  @apply w-full max-w-md;
+}
+
+.sizeLarge {
+  @apply w-full max-w-lg;
+}

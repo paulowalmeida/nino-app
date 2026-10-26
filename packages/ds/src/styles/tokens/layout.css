@@ -1,0 +1,20 @@
+@theme static {
+  --container-page: 110rem;
+  --container-page-narrow: 60rem;
+  /* Manager screens: wide enough for tables, narrow enough that a header
+     action never drifts far from the content it acts on. */
+  --container-workspace: 80rem;
+
+  --container-block: 42rem;
+  --container-block-lg: 34rem;
+  --container-block-md: 24rem;
+  --container-block-sm: 17rem;
+}
+
+@theme static {
+  --width-sidebar-collapsed: 4.75rem;
+}
+
+@theme static {
+  --leading-display: 1.05;
+}

@@ -1,0 +1,65 @@
+@reference "../../styles/globals.css";
+
+.skeleton {
+  @apply bg-fg-strong/8;
+}
+
+.variantRect {
+  @apply rounded-2;
+}
+
+.variantCircle {
+  @apply rounded-full;
+}
+
+.variantText {
+  @apply h-4 w-full rounded-1;
+}
+
+.animationPulse {
+  @apply animate-pulse;
+}
+
+.animationWave {
+  @apply relative isolate overflow-hidden;
+  animation: breathe 2.6s ease-in-out infinite;
+}
+
+.animationWave::after {
+  @apply absolute inset-0 content-[''];
+  background-image: linear-gradient(
+    90deg,
+    transparent 0%,
+    color-mix(in srgb, var(--color-white) 35%, transparent) 38%,
+    color-mix(in srgb, var(--color-white) 90%, transparent) 50%,
+    color-mix(in srgb, var(--color-white) 35%, transparent) 62%,
+    transparent 100%
+  );
+  animation: sweep 1.5s var(--ease-in-out) infinite;
+}
+
+@keyframes sweep {
+  from {
+    transform: translateX(-140%) skewX(-14deg);
+  }
+  to {
+    transform: translateX(140%) skewX(-14deg);
+  }
+}
+
+@keyframes breathe {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.72;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animationWave,
+  .animationWave::after {
+    animation: none;
+  }
+}

@@ -1,0 +1,387 @@
+<svg width="100%" viewBox="0 0 1700 1660" xmlns="http://www.w3.org/2000/svg" role="img">
+  <title>Diagrama de Componentes (C4 nível 3) — nino-manager</title>
+  <desc>Componentes do container nino-manager agrupados por camada, com as relações entre camadas, os containers de biblioteca do monorepo e o sistema externo nino-api.</desc>
+
+  <style>
+    text { font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+    .cName { font-size: 12.5px; font-weight: 700; fill: #06263F; }
+    .cType { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 9px; fill: #1B4B76; }
+    .cDesc { font-size: 9.5px; fill: #123A5E; }
+    .wName { font-size: 12.5px; font-weight: 700; fill: #FFFFFF; }
+    .wType { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 9px; fill: #BBD3EA; }
+    .wDesc { font-size: 9.5px; fill: #DCE8F4; }
+    .gLabel { font-size: 10px; font-weight: 700; fill: #3D5872; letter-spacing: 1.3px; }
+    .rel { font-size: 9.5px; fill: #40515F; }
+    .relT { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 8.5px; fill: #6B7B8C; }
+    .relR { font-size: 9.5px; fill: #1F7A6B; }
+    .pTitle { font-size: 10px; font-weight: 700; fill: #3D5872; letter-spacing: 1.2px; }
+    .pText { font-size: 9.5px; fill: #4A5A6A; }
+    .pMono { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 8.5px; fill: #2C4257; }
+    .panel { fill: #FFFFFF; stroke: #C9D4E0; stroke-width: 1; }
+  </style>
+
+  <defs>
+    <marker id="ar" viewBox="0 0 10 10" refX="9.5" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#5B6B7C"/>
+    </marker>
+    <marker id="arR" viewBox="0 0 10 10" refX="9.5" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1F7A6B"/>
+    </marker>
+    <marker id="arX" viewBox="0 0 10 10" refX="9.5" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#C0392B"/>
+    </marker>
+  </defs>
+
+  <rect width="1700" height="1660" fill="#F4F6F9"/>
+
+  <!-- ================= TÍTULO ================= -->
+  <rect x="0" y="0" width="1700" height="96" fill="#08427B"/>
+  <text x="48" y="46" font-size="23" font-weight="800" fill="#FFFFFF">Diagrama de Componentes — nino-manager</text>
+  <text x="48" y="70" font-size="12" fill="#A9C4DE">C4 nível 3 · Sistema: <tspan font-weight="700" fill="#FFFFFF">Nino Delivery</tspan> · Container: <tspan class="mono" fill="#FFFFFF">nino-manager</tspan> · Componentes agrupados por camada · O mesmo modelo vale para o <tspan class="mono" fill="#FFFFFF">nino-consumer</tspan></text>
+  <text x="1652" y="46" text-anchor="end" font-size="11" fill="#A9C4DE">Levantado do código em apps/manager/src</text>
+  <text x="1652" y="66" text-anchor="end" font-size="11" fill="#A9C4DE">2026-09-10</text>
+
+  <!-- ================= PESSOA ================= -->
+  <rect x="48" y="124" width="222" height="96" rx="8" fill="#08427B"/>
+  <text x="62" y="150" class="wName">Gestor da loja</text>
+  <text x="62" y="166" class="wType">[Person]</text>
+  <text x="62" y="188" class="wDesc">Opera a loja no navegador com papel</text>
+  <text x="62" y="202" class="wDesc">OWNER, MANAGER ou STAFF.</text>
+
+  <path d="M270 172 L306 172" stroke="#5B6B7C" stroke-width="1.6" marker-end="url(#ar)"/>
+  <text x="288" y="164" text-anchor="middle" class="rel">Usa</text>
+
+  <!-- ================= PAINEL: FLUXOS ================= -->
+  <rect x="48" y="252" width="222" height="200" rx="8" class="panel"/>
+  <text x="62" y="274" class="pTitle">FLUXOS ENTRE AS CAMADAS</text>
+  <rect x="62" y="286" width="80" height="16" rx="8" fill="#1168BD"/>
+  <text x="102" y="298" text-anchor="middle" font-size="8.5" font-weight="700" fill="#FFFFFF" letter-spacing="0.8">SERVIDOR</text>
+  <text x="62" y="318" class="pMono">UI → facade → hook</text>
+  <text x="62" y="332" class="pMono">→ adapter → service</text>
+  <text x="62" y="346" class="pMono">→ @nino/lib → nino-api</text>
+  <rect x="62" y="360" width="72" height="16" rx="8" fill="#6D28D9"/>
+  <text x="98" y="372" text-anchor="middle" font-size="8.5" font-weight="700" fill="#FFFFFF" letter-spacing="0.8">CLIENTE</text>
+  <text x="62" y="392" class="pMono">UI → facade → action</text>
+  <text x="62" y="406" class="pMono">→ operation → store</text>
+  <text x="62" y="420" class="pMono">→ facade → UI</text>
+  <text x="62" y="440" class="pText">Estado de cliente não vira request.</text>
+
+  <!-- ================= PAINEL: MUROS ================= -->
+  <rect x="48" y="476" width="222" height="286" rx="8" fill="#FBEFEE" stroke="#E3B7B2" stroke-width="1"/>
+  <text x="62" y="498" class="pTitle" fill="#9B2C20">MUROS · BLOQUEADO NA BUILD</text>
+  <text x="62" y="514" font-size="8.5" fill="#A2564D">.agents/enforcement/</text>
+  <text x="62" y="526" font-size="8.5" fill="#A2564D">architecture-boundaries.json</text>
+
+  <text x="62" y="550" class="mono" font-size="7.8" font-weight="700" fill="#C0392B">page-ui-cannot-bypass-facade</text>
+  <text x="62" y="564" class="pText" font-size="9">Page e componente não alcançam</text>
+  <text x="62" y="576" class="pText" font-size="9">service, hook ou store direto.</text>
+
+  <text x="62" y="600" class="mono" font-size="7.8" font-weight="700" fill="#C0392B">page-domain-cannot-import-</text>
+  <text x="62" y="611" class="mono" font-size="7.8" font-weight="700" fill="#C0392B">another-page-domain</text>
+  <text x="62" y="625" class="pText" font-size="9">Um domínio não enxerga o interior</text>
+  <text x="62" y="637" class="pText" font-size="9">de outro.</text>
+
+  <text x="62" y="661" class="mono" font-size="7.8" font-weight="700" fill="#C0392B">shared-cannot-import-page-domain</text>
+  <text x="62" y="675" class="pText" font-size="9">Código compartilhado não depende</text>
+  <text x="62" y="687" class="pText" font-size="9">de domínio de página.</text>
+
+  <text x="62" y="711" class="mono" font-size="7.8" font-weight="700" fill="#C0392B">layout-cannot-import-page-domain</text>
+  <text x="62" y="725" class="pText" font-size="9">Layout é moldura: não implementa</text>
+  <text x="62" y="737" class="pText" font-size="9">nem seleciona a feature da vez.</text>
+  <text x="62" y="753" class="pText" font-size="8.5" fill="#A2564D">+ check-page-governance · check-ds-first</text>
+
+  <!-- ================= PAINEL: NÚMEROS ================= -->
+  <rect x="48" y="786" width="222" height="172" rx="8" class="panel"/>
+  <text x="62" y="808" class="pTitle">O TAMANHO DE CADA CAMADA</text>
+  <text x="62" y="830" class="pText">Pages (domínios de tela)</text>
+  <text x="256" y="830" text-anchor="end" class="pMono" font-size="10" font-weight="700">30</text>
+  <text x="62" y="850" class="pText">Facades</text>
+  <text x="256" y="850" text-anchor="end" class="pMono" font-size="10" font-weight="700">34</text>
+  <text x="62" y="870" class="pText">Hooks</text>
+  <text x="256" y="870" text-anchor="end" class="pMono" font-size="10" font-weight="700">131</text>
+  <text x="62" y="890" class="pText">Stores Zustand</text>
+  <text x="256" y="890" text-anchor="end" class="pMono" font-size="10" font-weight="700">10</text>
+  <text x="62" y="910" class="pText">Operations</text>
+  <text x="256" y="910" text-anchor="end" class="pMono" font-size="10" font-weight="700">46</text>
+  <text x="62" y="930" class="pText">Adapters</text>
+  <text x="256" y="930" text-anchor="end" class="pMono" font-size="10" font-weight="700">19</text>
+  <text x="62" y="950" class="pText">Services de domínio</text>
+  <text x="256" y="950" text-anchor="end" class="pMono" font-size="10" font-weight="700">16</text>
+
+  <!-- ================= LEGENDA ================= -->
+  <rect x="48" y="982" width="222" height="450" rx="8" class="panel"/>
+  <text x="62" y="1004" class="pTitle">LEGENDA</text>
+
+  <rect x="62" y="1016" width="26" height="17" rx="3" fill="#08427B"/>
+  <text x="98" y="1029" class="pText">Pessoa</text>
+  <rect x="62" y="1044" width="26" height="17" rx="3" fill="#438DD5"/>
+  <text x="98" y="1057" class="pText">Container (deste sistema)</text>
+  <rect x="62" y="1072" width="26" height="17" rx="3" fill="#85BBF0" stroke="#5A9BD5"/>
+  <text x="98" y="1085" class="pText">Componente</text>
+  <rect x="62" y="1100" width="26" height="17" rx="3" fill="#1168BD"/>
+  <text x="98" y="1113" class="pText">Componente de fronteira</text>
+  <rect x="62" y="1128" width="26" height="17" rx="3" fill="#8A8A8A"/>
+  <text x="98" y="1141" class="pText">Sistema externo</text>
+
+  <rect x="62" y="1156" width="26" height="17" rx="3" fill="none" stroke="#1168BD" stroke-width="1.6" stroke-dasharray="4,3"/>
+  <text x="98" y="1169" class="pText">Fronteira do container</text>
+  <rect x="62" y="1184" width="26" height="17" rx="3" fill="#D6E2EE" stroke="#93AEC7" stroke-width="1.2" stroke-dasharray="4,3"/>
+  <text x="98" y="1197" class="pText">Grupo = camada</text>
+
+  <line x1="62" y1="1220" x2="88" y2="1220" stroke="#5B6B7C" stroke-width="1.6" marker-end="url(#ar)"/>
+  <text x="98" y="1224" class="pText">Relação (com tecnologia)</text>
+  <line x1="62" y1="1248" x2="88" y2="1248" stroke="#1F7A6B" stroke-width="1.6" marker-end="url(#arR)"/>
+  <text x="98" y="1252" class="pText">Retorno de dados</text>
+  <line x1="62" y1="1276" x2="88" y2="1276" stroke="#C0392B" stroke-width="1.6" stroke-dasharray="5,3" marker-end="url(#arX)"/>
+  <text x="98" y="1280" class="pText">Relação proibida</text>
+
+  <line x1="62" y1="1300" x2="256" y2="1300" stroke="#E4E9EF" stroke-width="1"/>
+  <text x="62" y="1322" class="pText">Cada componente é uma pasta real</text>
+  <text x="62" y="1336" class="pText">do repositório; o caminho aparece</text>
+  <text x="62" y="1350" class="pText">em monoespaçada na caixa.</text>
+  <text x="62" y="1374" class="pText">Camadas 03 a 08 existem por domínio,</text>
+  <text x="62" y="1388" class="pText">dentro de <tspan class="mono" font-size="9">pages/&lt;Domínio&gt;/</tspan>. O que</text>
+  <text x="62" y="1402" class="pText">é usado por vários domínios sobe</text>
+  <text x="62" y="1416" class="pText">para <tspan class="mono" font-size="9">shared/</tspan>.</text>
+
+  <!-- ================= FRONTEIRA DO CONTAINER ================= -->
+  <rect x="310" y="124" width="1010" height="1310" rx="12" fill="#E9EFF5" stroke="#1168BD" stroke-width="2" stroke-dasharray="8,5"/>
+  <text x="330" y="148" font-size="14" font-weight="800" fill="#1168BD">nino-manager</text>
+  <text x="330" y="164" class="mono" font-size="9.5" fill="#4E7BA5">[Container: SPA React 19 · Vite · React Router 8 · TanStack Query · Zustand]</text>
+
+  <!-- G1 -->
+  <rect x="326" y="180" width="978" height="118" rx="8" fill="#D6E2EE" stroke="#93AEC7" stroke-width="1.2" stroke-dasharray="5,4"/>
+  <text x="340" y="199" class="gLabel">01 · ENTRADA E ROTA</text>
+
+  <rect x="340" y="208" width="228" height="76" rx="6" fill="#85BBF0" stroke="#5A9BD5"/>
+  <text x="352" y="228" class="cName">Bootstrap</text>
+  <text x="352" y="242" class="cType">[Componente: React 19]</text>
+  <text x="352" y="258" class="cDesc">main.tsx · App.tsx</text>
+  <text x="352" y="272" class="cDesc">Monta a árvore e o RouterProvider.</text>
+
+  <rect x="580" y="208" width="228" height="76" rx="6" fill="#85BBF0" stroke="#5A9BD5"/>
+  <text x="592" y="228" class="cName">QueryProvider</text>
+  <text x="592" y="242" class="cType">[Componente: TanStack Query]</text>
+  <text x="592" y="258" class="cDesc">providers/ · lib/query-client</text>
+  <text x="592" y="272" class="cDesc">Fornece o QueryClient à árvore.</text>
+
+  <rect x="820" y="208" width="228" height="76" rx="6" fill="#85BBF0" stroke="#5A9BD5"/>
+  <text x="832" y="228" class="cName">Router</text>
+  <text x="832" y="242" class="cType">[Componente: React Router 8]</text>
+  <text x="832" y="258" class="cDesc">router/routes.tsx</text>
+  <text x="832" y="272" class="cDesc">URL, aninhamento e lazy() por Page.</text>
+
+  <rect x="1060" y="208" width="228" height="76" rx="6" fill="#85BBF0" stroke="#5A9BD5"/>
+  <text x="1072" y="228" class="cName">Guards e Loaders</text>
+  <text x="1072" y="242" class="cType">[Componente: React Router]</text>
+  <text x="1072" y="258" class="cDesc">guards/ (5) · loaders/</text>
+  <text x="1072" y="272" class="cDesc">Decidem acesso antes do render.</text>
+
+  <line x1="815" y1="302" x2="815" y2="328" stroke="#5B6B7C" stroke-width="1.6" marker-end="url(#ar)"/>
+  <text x="828" y="320" class="rel">Renderiza a moldura ativa</text>
+
+  <!-- G2 -->
+  <rect x="326" y="332" width="978" height="118" rx="8" fill="#D6E2EE" stroke="#93AEC7" stroke-width="1.2" stroke-dasharray="5,4"/>
+  <text x="340" y="351" class="gLabel">02 · SHELL</text>
+
+  <rect x="340" y="360" width="308" height="76" rx="6" fill="#85BBF0" stroke="#5A9BD5"/>
+  <text x="352" y="380" class="cName">AppLayout</text>
+  <text x="352" y="394" class="cType">[Componente: React + CSS Modules]</text>
+  <text x="352" y="410" class="cDesc">layouts/AppLayout</text>
+  <text x="352" y="424" class="cDesc">Sidebar, header, switcher e &lt;Outlet /&gt;.</text>
+
+  <rect x="660" y="360" width="308" height="76" rx="6" fill="#85BBF0" stroke="#5A9BD5"/>
+  <text x="672" y="380" class="cName">AuthLayout</text>
+  <text x="672" y="394" class="cType">[Componente: React + CSS Modules]</text>
+  <text x="672" y="410" class="cDesc">layouts/AuthLayout</text>
+  <text x="672" y="424" class="cDesc">Moldura das telas de sessão.</text>
+
+  <rect x="980" y="360" width="308" height="76" rx="6" fill="#85BBF0" stroke="#5A9BD5"/>
+  <text x="992" y="380" class="cName">RegisterLayout</text>
+  <text x="992" y="394" class="cType">[Componente: React + CSS Modules]</text>
+  <text x="992" y="410" class="cDesc">layouts/RegisterLayout</text>
+  <text x="992" y="424" class="cDesc">Moldura do cadastro e onboarding.</text>
+
+  <line x1="815" y1="454" x2="815" y2="480" stroke="#5B6B7C" stroke-width="1.6" marker-end="url(#ar)"/>
+  <text x="828" y="472" class="rel">Resolve a Page da rota <tspan class="relT">[lazy()]</tspan></text>
+
+  <!-- G3 -->
+  <rect x="326" y="484" width="978" height="118" rx="8" fill="#D6E2EE" stroke="#93AEC7" stroke-width="1.2" stroke-dasharray="5,4"/>
+  <text x="340" y="503" class="gLabel">03 · GOVERNANÇA DE TELA</text>
+
+  <rect x="340" y="512" width="948" height="76" rx="6" fill="#85BBF0" stroke="#5A9BD5"/>
+  <text x="352" y="532" class="cName">Page</text>
+  <text x="352" y="546" class="cType">[Componente: React]  ·  pages/&lt;Domínio&gt;/&lt;Domínio&gt;.tsx</text>
+  <text x="352" y="562" class="cDesc">Única camada que governa a tela: escolhe o macroestado (loading, error, empty, content) e a ordem das regiões.</text>
+  <text x="352" y="576" class="cDesc">Não implementa região, não formata, não decide fluxo de domínio. Consome exatamente uma facade.</text>
+
+  <line x1="815" y1="606" x2="815" y2="632" stroke="#5B6B7C" stroke-width="1.6" marker-end="url(#ar)"/>
+  <text x="828" y="624" class="rel">Compõe as regiões nomeadas</text>
+
+  <!-- G4 -->
+  <rect x="326" y="636" width="978" height="118" rx="8" fill="#D6E2EE" stroke="#93AEC7" stroke-width="1.2" stroke-dasharray="5,4"/>
+  <text x="340" y="655" class="gLabel">04 · APRESENTAÇÃO DE DOMÍNIO</text>
+
+  <rect x="340" y="664" width="468" height="76" rx="6" fill="#85BBF0" stroke="#5A9BD5"/>
+  <text x="352" y="684" class="cName">Componentes de domínio</text>
+  <text x="352" y="698" class="cType">[Componente: React + CSS Modules]  ·  pages/&lt;D&gt;/components/**</text>
+  <text x="352" y="714" class="cDesc">Regiões visuais nomeadas, uma por pasta. Cada uma consome</text>
+  <text x="352" y="728" class="cDesc">a mesma facade do domínio — sem prop drilling de integração.</text>
+
+  <rect x="820" y="664" width="468" height="76" rx="6" fill="#85BBF0" stroke="#5A9BD5"/>
+  <text x="832" y="684" class="cName">Skeletons</text>
+  <text x="832" y="698" class="cType">[Componente: React]  ·  pages/&lt;D&gt;/skeletons/**</text>
+  <text x="832" y="714" class="cDesc">Estado de carregamento que espelha o CSS do componente</text>
+  <text x="832" y="728" class="cDesc">real, importando o module dele para manter a geometria.</text>
+
+  <line x1="815" y1="758" x2="815" y2="784" stroke="#5B6B7C" stroke-width="1.6" marker-end="url(#ar)"/>
+  <text x="828" y="776" class="rel">Lê dados e dispara comandos <tspan class="relT">[Hook React]</tspan></text>
+  <line x1="700" y1="784" x2="700" y2="758" stroke="#1F7A6B" stroke-width="1.6" marker-end="url(#arR)"/>
+  <text x="690" y="776" text-anchor="end" class="relR">Devolve valores prontos</text>
+
+  <!-- G5 · FACADE -->
+  <rect x="326" y="788" width="978" height="104" rx="8" fill="#D6E2EE" stroke="#93AEC7" stroke-width="1.2" stroke-dasharray="5,4"/>
+  <text x="340" y="807" class="gLabel">05 · FRONTEIRA DE INTEGRAÇÃO</text>
+
+  <rect x="340" y="816" width="948" height="62" rx="6" fill="#1168BD"/>
+  <text x="352" y="838" class="wName">Facade do domínio</text>
+  <text x="352" y="852" class="wType">[Componente: Hook React]  ·  pages/&lt;Domínio&gt;/facades/use&lt;Domínio&gt;Facade.ts</text>
+  <text x="352" y="868" class="wDesc">Ponto único por onde a UI alcança a integração: chama os hooks e o store do domínio e devolve valores prontos e comandos existentes — sem lógica própria.</text>
+  <text x="1276" y="838" text-anchor="end" class="wType">34 no app · 1 por domínio</text>
+
+  <line x1="600" y1="896" x2="600" y2="922" stroke="#5B6B7C" stroke-width="1.6" marker-end="url(#ar)"/>
+  <text x="613" y="914" class="rel">Consulta e comanda <tspan class="relT">[TanStack Query]</tspan></text>
+  <line x1="1030" y1="896" x2="1030" y2="922" stroke="#5B6B7C" stroke-width="1.6" marker-end="url(#ar)"/>
+  <text x="1043" y="914" class="rel">Lê e dispara transição <tspan class="relT">[Zustand]</tspan></text>
+
+  <!-- G6 -->
+  <rect x="326" y="926" width="978" height="212" rx="8" fill="#D6E2EE" stroke="#93AEC7" stroke-width="1.2" stroke-dasharray="5,4"/>
+  <text x="340" y="945" class="gLabel">06 · ORQUESTRAÇÃO</text>
+  <text x="808" y="945" text-anchor="end" class="gLabel" fill="#1168BD">ESTADO DE SERVIDOR</text>
+  <text x="1288" y="945" text-anchor="end" class="gLabel" fill="#6D28D9">ESTADO DE CLIENTE</text>
+
+  <rect x="340" y="954" width="468" height="76" rx="6" fill="#85BBF0" stroke="#5A9BD5"/>
+  <text x="352" y="974" class="cName">Hooks de consulta e mutação</text>
+  <text x="352" y="988" class="cType">[Componente: TanStack Query]  ·  pages/&lt;D&gt;/hooks/**</text>
+  <text x="352" y="1004" class="cDesc">Donos de useQuery, useInfiniteQuery e useMutation, do estado</text>
+  <text x="352" y="1018" class="cDesc">assíncrono e da decisão de cache de cada operação.</text>
+
+  <rect x="340" y="1040" width="468" height="76" rx="6" fill="#85BBF0" stroke="#5A9BD5"/>
+  <text x="352" y="1060" class="cName">Query keys</text>
+  <text x="352" y="1074" class="cType">[Componente: TypeScript]  ·  shared/lib/query-keys.ts</text>
+  <text x="352" y="1090" class="cDesc">Fábrica central de chaves por unit e filtro. A mutação</text>
+  <text x="352" y="1104" class="cDesc">invalida a raiz do domínio depois de gravar.</text>
+
+  <rect x="820" y="954" width="468" height="76" rx="6" fill="#85BBF0" stroke="#5A9BD5"/>
+  <text x="832" y="974" class="cName">Store do domínio</text>
+  <text x="832" y="988" class="cType">[Componente: Zustand]  ·  pages/&lt;D&gt;/states/&lt;x&gt;/&lt;x&gt;.state.ts</text>
+  <text x="832" y="1004" class="cDesc">Estado de cliente compartilhado: seleção, filtro, diálogo aberto,</text>
+  <text x="832" y="1018" class="cDesc">rascunho. Não recebe dado de servidor nem chama endpoint.</text>
+
+  <rect x="820" y="1040" width="468" height="76" rx="6" fill="#85BBF0" stroke="#5A9BD5"/>
+  <text x="832" y="1060" class="cName">Operations</text>
+  <text x="832" y="1074" class="cType">[Componente: TypeScript]  ·  states/&lt;x&gt;/operations/&lt;op&gt;/</text>
+  <text x="832" y="1090" class="cDesc">A transição não mora no store: cada uma tem arquivo, teste</text>
+  <text x="832" y="1104" class="cDesc">e mock próprios. O store apenas monta as ações.</text>
+
+  <line x1="600" y1="1142" x2="600" y2="1168" stroke="#5B6B7C" stroke-width="1.6" marker-end="url(#ar)"/>
+  <text x="613" y="1160" class="rel">Monta parâmetros e normaliza a resposta</text>
+
+  <!-- G7 -->
+  <rect x="326" y="1172" width="978" height="118" rx="8" fill="#D6E2EE" stroke="#93AEC7" stroke-width="1.2" stroke-dasharray="5,4"/>
+  <text x="340" y="1191" class="gLabel">07 · REPRESENTAÇÃO</text>
+
+  <rect x="340" y="1200" width="228" height="76" rx="6" fill="#85BBF0" stroke="#5A9BD5"/>
+  <text x="352" y="1220" class="cName">Adapters</text>
+  <text x="352" y="1234" class="cType">[Componente: TypeScript]</text>
+  <text x="352" y="1250" class="cDesc">pages/&lt;D&gt;/adapters/*.adapter.ts</text>
+  <text x="352" y="1264" class="cDesc">Transporte ↔ modelo de domínio.</text>
+
+  <rect x="580" y="1200" width="228" height="76" rx="6" fill="#85BBF0" stroke="#5A9BD5"/>
+  <text x="592" y="1220" class="cName">Utils</text>
+  <text x="592" y="1234" class="cType">[Componente: TypeScript]</text>
+  <text x="592" y="1250" class="cDesc">Cálculo determinístico e estreito,</text>
+  <text x="592" y="1264" class="cDesc">sem JSX e sem transporte.</text>
+
+  <rect x="820" y="1200" width="228" height="76" rx="6" fill="#85BBF0" stroke="#5A9BD5"/>
+  <text x="832" y="1220" class="cName">Constants</text>
+  <text x="832" y="1234" class="cType">[Componente: TypeScript]</text>
+  <text x="832" y="1250" class="cDesc">Dado nomeado e imutável, nunca</text>
+  <text x="832" y="1264" class="cDesc">comportamento disfarçado.</text>
+
+  <rect x="1060" y="1200" width="228" height="76" rx="6" fill="#85BBF0" stroke="#5A9BD5"/>
+  <text x="1072" y="1220" class="cName">Types</text>
+  <text x="1072" y="1234" class="cType">[Componente: TypeScript]</text>
+  <text x="1072" y="1250" class="cDesc">Um contrato por arquivo, no</text>
+  <text x="1072" y="1264" class="cDesc">domínio ou em shared/.</text>
+
+  <line x1="600" y1="1294" x2="600" y2="1320" stroke="#5B6B7C" stroke-width="1.6" marker-end="url(#ar)"/>
+  <text x="613" y="1312" class="rel">Chama a operação nomeada do domínio</text>
+
+  <!-- G8 -->
+  <rect x="326" y="1324" width="978" height="102" rx="8" fill="#D6E2EE" stroke="#93AEC7" stroke-width="1.2" stroke-dasharray="5,4"/>
+  <text x="340" y="1343" class="gLabel">08 · TRANSPORTE</text>
+
+  <rect x="340" y="1352" width="620" height="62" rx="6" fill="#85BBF0" stroke="#5A9BD5"/>
+  <text x="352" y="1372" class="cName">Services de domínio</text>
+  <text x="352" y="1386" class="cType">[Componente: TypeScript]  ·  shared/services/&lt;domínio&gt;/&lt;domínio&gt;.service.ts</text>
+  <text x="352" y="1402" class="cDesc">16 domínios. Cada operação tem nome de domínio e monta só endpoint, request e resposta.</text>
+
+  <rect x="972" y="1352" width="316" height="62" rx="6" fill="#85BBF0" stroke="#5A9BD5"/>
+  <text x="984" y="1372" class="cName">HTTP service</text>
+  <text x="984" y="1386" class="cType">[Componente: TypeScript]</text>
+  <text x="984" y="1402" class="cDesc">Instância única `api` de todo o app.</text>
+
+  <!-- RELAÇÃO PROIBIDA -->
+  <path d="M340 550 L296 550 L296 1383 L336 1383" fill="none" stroke="#C0392B" stroke-width="1.6" stroke-dasharray="6,4" marker-end="url(#arX)"/>
+  <line x1="290" y1="960" x2="302" y2="972" stroke="#C0392B" stroke-width="2.2"/>
+  <line x1="302" y1="960" x2="290" y2="972" stroke="#C0392B" stroke-width="2.2"/>
+  <text transform="rotate(-90 286 1120)" x="286" y="1120" text-anchor="middle" class="mono" font-size="8.5" fill="#C0392B">page-ui-cannot-bypass-facade</text>
+
+  <!-- RETORNO LONGO -->
+  <line x1="800" y1="922" x2="800" y2="896" stroke="#1F7A6B" stroke-width="1.6" marker-end="url(#arR)"/>
+  <text x="813" y="914" class="relR">Devolve o dado do cache</text>
+
+  <!-- ================= CONTAINERS IRMÃOS ================= -->
+  <rect x="1350" y="664" width="302" height="86" rx="8" fill="#438DD5"/>
+  <text x="1364" y="686" class="wName">@nino/ds</text>
+  <text x="1364" y="700" class="wType">[Container: Biblioteca React]</text>
+  <text x="1364" y="716" class="wDesc">Design system white-label: 78 componentes</text>
+  <text x="1364" y="730" class="wDesc">sobre Ark UI + Tailwind v4. Regra DS-first.</text>
+
+  <rect x="1350" y="770" width="302" height="86" rx="8" fill="#438DD5"/>
+  <text x="1364" y="792" class="wName">@nino/forms</text>
+  <text x="1364" y="806" class="wType">[Container: Biblioteca React]</text>
+  <text x="1364" y="822" class="wDesc">FormBuilder sobre React Hook Form, com</text>
+  <text x="1364" y="836" class="wDesc">os controles do @nino/ds.</text>
+
+  <rect x="1350" y="1324" width="302" height="102" rx="8" fill="#438DD5"/>
+  <text x="1364" y="1346" class="wName">@nino/lib</text>
+  <text x="1364" y="1360" class="wType">[Container: Biblioteca TypeScript · ky]</text>
+  <text x="1364" y="1376" class="wDesc">Cliente HTTP compartilhado: 401 dispara</text>
+  <text x="1364" y="1390" class="wDesc">auth/refresh e repete a request uma vez,</text>
+  <text x="1364" y="1404" class="wDesc">com promise de refresh única. O front</text>
+  <text x="1364" y="1418" class="wDesc">nunca lê o token — cookie httpOnly.</text>
+
+  <path d="M1292 702 L1344 702" stroke="#5B6B7C" stroke-width="1.6" marker-end="url(#ar)"/>
+  <text x="1318" y="694" text-anchor="middle" class="rel">Usa</text>
+  <path d="M1292 730 L1320 730 L1320 806 L1344 806" fill="none" stroke="#5B6B7C" stroke-width="1.6" marker-end="url(#ar)"/>
+  <text x="1332" y="770" class="rel">Usa</text>
+  <path d="M1292 1383 L1344 1383" stroke="#5B6B7C" stroke-width="1.6" marker-end="url(#ar)"/>
+  <text x="1318" y="1375" text-anchor="middle" class="rel">Delega</text>
+
+  <!-- ================= SISTEMA EXTERNO ================= -->
+  <rect x="326" y="1490" width="1326" height="104" rx="8" fill="#8A8A8A"/>
+  <text x="344" y="1516" class="wName">nino-api</text>
+  <text x="344" y="1532" class="wType">[Sistema externo: NestJS + PostgreSQL]</text>
+  <text x="344" y="1552" class="wDesc">Backend-for-frontend do painel. Resolve unit, papel, preço e escopo no servidor — o browser é caller não confiável.</text>
+  <text x="344" y="1568" class="wDesc">Sessão em cookie httpOnly (access 15min, refresh 7 dias) · RBAC combinando papel global e papel de unit · multi-unit Company → N Units.</text>
+  <text x="1634" y="1516" text-anchor="end" class="wType">github.com/paulowalmeida/nino-api</text>
+
+  <path d="M1501 1430 L1501 1462 L989 1462 L989 1486" fill="none" stroke="#5B6B7C" stroke-width="1.8" marker-end="url(#ar)"/>
+  <text x="1000" y="1456" class="rel">Envia requisição <tspan class="relT">[HTTPS/JSON · credentials: include]</tspan></text>
+
+  <text x="48" y="1626" font-size="10" fill="#7B8794">Notação: caixas preenchidas com nome, tipo entre colchetes e responsabilidade; relações unidirecionais rotuladas com intenção e tecnologia; grupos tracejados representam as camadas. Legenda ao lado.</text>
+  <text x="1652" y="1626" text-anchor="end" font-size="10" fill="#7B8794">Contrapartida do backend: nino-api/docs/nino_arquitetura_v2.svg</text>
+</svg>

@@ -1,0 +1,25 @@
+@reference "@nino/ds/globals.css";
+
+.title {
+  @apply h-8 w-28;
+}
+
+.description {
+  @apply h-5 w-full max-w-2xl;
+}
+
+.input {
+  @apply h-11 w-full sm:flex-1;
+}
+
+.button {
+  @apply h-11 w-full shrink-0 sm:w-28;
+}
+
+.icon {
+  @apply size-9 rounded-2;
+}
+
+.iconLabel {
+  @apply h-3 w-28;
+}

@@ -1,0 +1,126 @@
+@reference "../../styles/globals.css";
+
+/* CONSTRAINT: o HiddenInput do Ark é absolute; sem âncora ele escapa do
+ * container que rola e estica o documento (barra de rolagem dupla). */
+.checkbox {
+  @apply relative;
+}
+
+.box {
+  @apply relative flex shrink-0 cursor-pointer items-center justify-center;
+  @apply rounded-1 border bg-surface-raised;
+  @apply transition-field duration-fast;
+  @apply focus-ring;
+  @apply active:scale-90;
+  @apply disabled:pointer-events-none;
+  @apply data-[disabled]:pointer-events-none data-[disabled]:opacity-disabled;
+  transition-property: color, box-shadow, border-color, transform;
+}
+
+.box::before {
+  content: '';
+  @apply absolute left-1/2 top-1/2 size-11 -translate-x-1/2 -translate-y-1/2;
+}
+
+.box::after {
+  content: '';
+  @apply absolute inset-0 rounded-[inherit];
+  opacity: 0;
+  scale: 0.3;
+  transition:
+    scale var(--duration-fast) var(--ease-in),
+    opacity var(--duration-fast) var(--ease-in);
+}
+
+.box[data-state='checked']::after,
+.box[data-state='indeterminate']::after {
+  opacity: 1;
+  scale: 1;
+  transition:
+    scale var(--duration-base) var(--ease-back),
+    opacity var(--duration-fast) linear;
+}
+
+.boxResting {
+  @apply border-input-border;
+  @apply data-[state=unchecked]:hover:border-brand/60;
+  @apply data-[state=checked]:border-brand;
+  @apply data-[state=indeterminate]:border-brand;
+}
+
+.boxResting::after {
+  @apply bg-brand;
+}
+
+.boxInvalid {
+  @apply border-danger;
+  @apply data-[state=checked]:border-danger;
+  @apply data-[state=indeterminate]:border-danger;
+}
+
+.boxInvalid::after {
+  @apply bg-danger;
+}
+
+.checkMark {
+  @apply relative z-raised flex items-center justify-center text-fg-on-brand;
+  stroke-dasharray: 24;
+}
+
+@keyframes drawCheck {
+  from {
+    stroke-dashoffset: 24;
+    opacity: 0;
+  }
+  to {
+    stroke-dashoffset: 0;
+    opacity: 1;
+  }
+}
+
+.box[data-state='checked'] .checkMark,
+.box[data-state='indeterminate'] .checkMark {
+  animation: drawCheck var(--duration-slow) var(--ease-out) 60ms backwards;
+}
+
+.sizeSmall {
+  @apply size-4;
+}
+
+.sizeMedium {
+  @apply size-5;
+}
+
+.sizeLarge {
+  @apply size-6;
+}
+
+.checkSizeSmall {
+  @apply size-2.5;
+}
+
+.checkSizeMedium {
+  @apply size-3;
+}
+
+.checkSizeLarge {
+  @apply size-3.5;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .box,
+  .box::after,
+  .box[data-state='checked']::after,
+  .box[data-state='indeterminate']::after {
+    transition-duration: 1ms;
+  }
+
+  .box:active {
+    transform: none;
+  }
+
+  .box[data-state='checked'] .checkMark,
+  .box[data-state='indeterminate'] .checkMark {
+    animation: none;
+  }
+}

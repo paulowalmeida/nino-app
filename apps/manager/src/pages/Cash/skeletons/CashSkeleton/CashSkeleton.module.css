@@ -1,0 +1,94 @@
+@reference "@nino/ds/globals.css";
+
+.cashSkeletonPage {
+  @apply flex h-full min-h-0 flex-col overflow-hidden;
+}
+
+.loadingLabel {
+  @apply sr-only;
+}
+
+.cashSkeletonControls {
+  @apply shrink-0 gap-4 px-4 pt-4;
+  @apply lg:px-10 lg:pt-10;
+}
+
+.header {
+  @apply mb-3 shrink-0 lg:mb-4;
+}
+
+.title {
+  @apply h-8 w-24 lg:h-9;
+}
+
+.description {
+  @apply h-5 w-full max-w-[44rem];
+}
+
+.dateSelector {
+  @apply w-44;
+}
+
+.dateLabel {
+  @apply h-5 w-24;
+}
+
+.dateField {
+  @apply h-11 w-44 rounded-3;
+}
+
+.cashSkeletonCard {
+  @apply gap-4 rounded-4 border border-border bg-surface-raised p-5;
+}
+
+.summaryTitle {
+  @apply h-7 w-36;
+}
+
+.summaryMeta {
+  @apply h-4 w-28;
+}
+
+.figures {
+  @apply gap-4 sm:gap-8;
+}
+
+.figure {
+  @apply min-w-32 gap-2;
+}
+
+.figureLabel {
+  @apply h-3 w-24;
+}
+
+.figureValue {
+  @apply h-6 w-28;
+}
+
+.expected {
+  @apply rounded-3 bg-surface-mute px-4 py-3;
+}
+
+.expectedLabel {
+  @apply h-5 w-36;
+}
+
+.expectedValue {
+  @apply h-8 w-28;
+}
+
+.cashSkeletonActions {
+  @apply gap-2;
+}
+
+.cashSkeletonAction {
+  @apply h-11 w-28 rounded-full;
+}
+
+.tabRail {
+  @apply gap-1 self-start rounded-2 bg-surface-mute p-1;
+}
+
+.tab {
+  @apply h-11 w-28 rounded-2;
+}

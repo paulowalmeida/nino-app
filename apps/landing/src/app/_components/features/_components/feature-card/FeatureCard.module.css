@@ -1,0 +1,110 @@
+@reference '../../../../theme.css';
+.featureCard {
+  @apply relative flex flex-col p-8 rounded-5 overflow-hidden;
+  @apply bg-surface-raised border border-brand-soft transition-all;
+  @apply shadow-warm-sm duration-[280ms];
+}
+
+.featureCard:hover {
+  @apply -translate-y-1.5 border-brand-bold;
+  @apply shadow-brand-lg;
+}
+
+.sequenceNumber {
+  @apply absolute top-2.5 right-[1.1rem] pointer-events-none;
+  @apply leading-none text-[3.4rem] font-extrabold transition-colors;
+  @apply [font-family:var(--font-display)] text-brand-ghost;
+}
+
+.featureCard:hover .sequenceNumber {
+  @apply text-brand-soft;
+}
+
+.iconWrapper {
+  @apply inline-flex items-center justify-center mb-5;
+  @apply w-[52px] h-[52px] rounded-4 text-[1.6rem];
+  background: linear-gradient(
+    135deg,
+    color-mix(in srgb, var(--color-brand-light) 18%, transparent),
+    color-mix(in srgb, var(--color-brand) 9%, transparent)
+  );
+}
+
+.cardTitle {
+  @apply font-bold text-lg text-fg-strong mb-2;
+  @apply [font-family:var(--font-display)];
+}
+
+.cardBody {
+  @apply text-sm leading-relaxed text-fg-muted;
+}
+
+.highlightTag {
+  @apply self-start mt-4 inline-flex items-center gap-1.5;
+  @apply px-3 py-1.5 rounded-full text-xs font-bold;
+  @apply text-brand-strong bg-surface-raised/[0.92];
+}
+
+.planBadge {
+  @apply self-start mt-4 inline-flex items-center no-underline;
+  @apply px-2.5 py-1 rounded-full text-xs font-bold;
+  @apply tracking-[0.04em] text-brand-strong bg-brand-ghost;
+  @apply transition-colors duration-200;
+  @apply [font-family:var(--font-sans)];
+}
+
+.planBadge:hover {
+  @apply bg-brand-soft;
+}
+
+.featured {
+  @apply border-transparent shadow-brand;
+  background:
+    radial-gradient(120% 100% at 90% 0%, #ff8a33 0%, transparent 55%),
+    linear-gradient(160deg, #ff7e1f 0%, #ec5a0e 100%);
+}
+
+.featured:hover {
+  @apply shadow-brand-lg border-transparent;
+}
+
+.featured .sequenceNumber {
+  @apply text-fg-on-brand/[0.18];
+}
+
+.featured:hover .sequenceNumber {
+  @apply text-fg-on-brand/[0.28];
+}
+
+.featured .iconWrapper {
+  @apply bg-surface-raised/[0.18];
+}
+
+.featured .cardTitle {
+  @apply text-fg-on-brand;
+}
+
+.featured .cardBody {
+  @apply text-fg-on-brand/[0.92];
+}
+
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .featureCard {
+      animation: revealUp linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 55%;
+    }
+  }
+}
+
+@keyframes revealUp {
+  from {
+    opacity: 0;
+    transform: translateY(34px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

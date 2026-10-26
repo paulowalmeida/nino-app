@@ -1,0 +1,5 @@
+@reference "@nino/ds/globals.css";
+
+.newProductPage {
+  @apply max-w-5xl p-4 lg:p-10;
+}

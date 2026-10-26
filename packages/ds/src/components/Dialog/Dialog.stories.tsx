@@ -2,7 +2,7 @@ import { useState } from 'react'
 
 import type { Meta, StoryObj } from '@storybook/react'
 
-import { Button } from '../Button'
+import { Button } from '../Button/Button'
 import { Dialog } from './Dialog'
 
 const meta: Meta<typeof Dialog> = {
@@ -18,16 +18,20 @@ export default meta
 type Story = StoryObj<typeof Dialog>
 
 export const Default: Story = {
-  render: () => {
+  args: {
+    title: 'Confirm action',
+    description:
+      'Are you sure you want to continue? This action cannot be undone.',
+  },
+  render: (args) => {
     const [open, setOpen] = useState(false)
     return (
       <>
         <Button onClick={() => setOpen(true)}>Open dialog</Button>
         <Dialog
+          {...args}
           open={open}
           onOpenChange={setOpen}
-          title='Confirm action'
-          description='Are you sure you want to continue? This action cannot be undone.'
           onConfirm={() => setOpen(false)}
           onCancel={() => setOpen(false)}
         />
@@ -54,9 +58,11 @@ export const Loading: Story = {
         <Button onClick={() => setOpen(true)}>Open dialog</Button>
         <Dialog
           open={open}
-          onOpenChange={(v) => { if (!loading) setOpen(v) }}
-          title='Save changes'
-          description='Changes will be applied immediately after confirmation.'
+          onOpenChange={(v) => {
+            if (!loading) setOpen(v)
+          }}
+          title="Save changes"
+          description="Changes will be applied immediately after confirmation."
           loading={loading}
           onConfirm={handleConfirm}
           onCancel={() => setOpen(false)}
@@ -71,14 +77,16 @@ export const CustomLabels: Story = {
     const [open, setOpen] = useState(false)
     return (
       <>
-        <Button variant='outline' onClick={() => setOpen(true)}>Delete item</Button>
+        <Button variant="outline" onClick={() => setOpen(true)}>
+          Delete item
+        </Button>
         <Dialog
           open={open}
           onOpenChange={setOpen}
-          title='Delete item'
-          description='The item will be permanently removed from your list.'
-          confirmLabel='Delete'
-          cancelLabel='Keep'
+          title="Delete item"
+          description="The item will be permanently removed from your list."
+          confirmLabel="Delete"
+          cancelLabel="Keep"
           onConfirm={() => setOpen(false)}
           onCancel={() => setOpen(false)}
         />

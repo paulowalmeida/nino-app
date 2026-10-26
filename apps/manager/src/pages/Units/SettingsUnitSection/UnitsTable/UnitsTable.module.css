@@ -1,0 +1,49 @@
+@reference "@nino/ds/globals.css";
+
+.shell {
+  @apply w-full min-w-0 max-w-6xl rounded-6 bg-surface-2;
+}
+
+.headRow > th {
+  @apply border-b border-border;
+}
+
+.colName {
+  width: auto;
+}
+
+.colCompany {
+  width: 16rem;
+}
+
+.colActions {
+  width: 6.5rem;
+}
+
+.name {
+  @apply truncate py-1 font-semibold text-fg-strong hover:underline;
+}
+
+.company {
+  @apply text-sm text-fg-faint;
+}
+
+.smallOnly {
+  @apply block text-xs text-fg-faint md:hidden;
+}
+
+.hideOnSmall {
+  @apply hidden md:table-cell;
+}
+
+.actions {
+  @apply text-right;
+}
+
+.buttons {
+  @apply justify-end;
+}
+
+.removeButton {
+  @apply text-danger hover:bg-danger-surface hover:text-danger;
+}

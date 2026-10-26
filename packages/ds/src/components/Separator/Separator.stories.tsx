@@ -15,23 +15,23 @@ export default meta
 type Story = StoryObj<typeof Separator>
 
 export const Default: Story = {
-  render: () => (
-    <div className='w-64'>
-      <p className='text-sm text-gray-600'>Section A</p>
-      <Separator className='my-3' />
-      <p className='text-sm text-gray-600'>Section B</p>
+  render: (args) => (
+    <div className="w-64">
+      <p className="text-sm text-gray-600">Section A</p>
+      <Separator {...args} className="my-3" />
+      <p className="text-sm text-gray-600">Section B</p>
     </div>
   ),
 }
 
 export const Vertical: Story = {
   render: () => (
-    <div className='flex items-center gap-4 h-8'>
-      <span className='text-sm text-gray-600'>Item A</span>
-      <Separator orientation='vertical' />
-      <span className='text-sm text-gray-600'>Item B</span>
-      <Separator orientation='vertical' />
-      <span className='text-sm text-gray-600'>Item C</span>
+    <div className="flex items-center gap-4 h-8">
+      <span className="text-sm text-gray-600">Item A</span>
+      <Separator orientation="vertical" />
+      <span className="text-sm text-gray-600">Item B</span>
+      <Separator orientation="vertical" />
+      <span className="text-sm text-gray-600">Item C</span>
     </div>
   ),
 }

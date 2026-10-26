@@ -1,0 +1,18 @@
+@reference "@nino/ds/globals.css";
+
+/* WHY: a barra tem a altura da tinta e a margem completa a caixa de linha do
+ * texto real (h-3 + my-0.5 = os 16px de um text-xs), para o cabeçalho não
+ * saltar quando a pessoa chega.
+ */
+
+.eyebrow {
+  @apply my-0.5 h-3 w-20 rounded-1;
+}
+
+.name {
+  @apply my-0.5 h-6 w-48 max-w-full rounded-2 lg:h-7 lg:w-64;
+}
+
+.cadence {
+  @apply mt-1.5 mb-0.5 h-3 w-80 max-w-full rounded-1;
+}

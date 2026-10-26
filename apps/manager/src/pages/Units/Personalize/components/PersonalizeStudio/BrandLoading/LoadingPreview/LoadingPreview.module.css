@@ -1,0 +1,10 @@
+@reference "@nino/ds/globals.css";
+
+.stage {
+  @apply flex h-28 w-full items-center justify-center;
+  @apply overflow-hidden rounded-3 border border-border;
+}
+
+.mascot {
+  @apply h-16 w-16 object-contain;
+}

@@ -1,0 +1,13 @@
+@reference "@nino/ds/globals.css";
+
+.subscriptionActions {
+  @apply pt-6;
+}
+
+.cancellation {
+  @apply rounded-2 bg-surface-2 px-3 py-3;
+}
+
+.cancelAction {
+  @apply mt-1 w-full sm:w-auto sm:self-start;
+}

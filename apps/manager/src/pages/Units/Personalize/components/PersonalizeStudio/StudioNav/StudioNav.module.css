@@ -1,0 +1,9 @@
+@reference "@nino/ds/globals.css";
+
+.studioNav {
+  @apply min-w-0;
+}
+
+.select {
+  @apply w-full;
+}

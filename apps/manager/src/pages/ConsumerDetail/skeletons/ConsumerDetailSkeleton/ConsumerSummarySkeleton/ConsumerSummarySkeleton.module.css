@@ -1,0 +1,13 @@
+@reference "@nino/ds/globals.css";
+
+/* WHY: h-2.5 + my-0.5 = os 14px de um text-2xs, a caixa de linha do rótulo
+ * real; o valor segue o text-xl que vira text-2xl no desktop.
+ */
+
+.factLabel {
+  @apply my-0.5 h-2.5 w-16 rounded-1;
+}
+
+.factValue {
+  @apply my-0.5 h-6 w-24 rounded-1 lg:h-7;
+}

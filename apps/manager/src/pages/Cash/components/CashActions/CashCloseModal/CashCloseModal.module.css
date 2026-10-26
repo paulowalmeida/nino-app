@@ -1,0 +1,13 @@
+@reference "@nino/ds/globals.css";
+
+.cashCloseModalFields {
+  @apply gap-3;
+}
+
+.difference {
+  @apply rounded-2 bg-surface-mute px-3 py-2;
+}
+
+.cashCloseModalActions {
+  @apply justify-end gap-2;
+}

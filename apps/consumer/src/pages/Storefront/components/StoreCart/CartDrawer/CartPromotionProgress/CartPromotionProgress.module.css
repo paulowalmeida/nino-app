@@ -1,0 +1,21 @@
+@reference "@nino/ds/globals.css";
+
+.cartPromotionProgress {
+  @apply flex flex-col gap-3;
+}
+
+.promotionProgress {
+  @apply flex flex-col gap-2;
+}
+
+.promotionGap {
+  @apply text-sm text-fg-muted;
+}
+
+.promotionGap strong {
+  @apply font-semibold text-fg-strong;
+}
+
+.promotionReached {
+  @apply text-sm font-semibold text-success;
+}

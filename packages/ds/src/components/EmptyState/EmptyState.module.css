@@ -1,0 +1,29 @@
+@reference "../../styles/globals.css";
+
+.emptyState {
+  @apply flex flex-col items-center justify-center text-center;
+}
+
+.sizeSmall {
+  @apply gap-1 py-6;
+}
+
+.sizeMedium {
+  @apply gap-1.5 py-10;
+}
+
+.illustration {
+  @apply mb-2.5 [&_img]:h-24 [&_img]:w-24 [&_svg]:h-24;
+}
+
+.actionSlot {
+  @apply mt-4;
+}
+
+.messageNarrow {
+  @apply leading-relaxed;
+}
+
+.messageWide {
+  @apply max-w-block-sm leading-relaxed;
+}

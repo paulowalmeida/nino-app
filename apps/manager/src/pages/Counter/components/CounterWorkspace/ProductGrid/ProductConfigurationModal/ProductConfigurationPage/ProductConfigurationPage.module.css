@@ -1,0 +1,88 @@
+@reference "@nino/ds/globals.css";
+
+.productConfigurationPage {
+  @apply flex min-h-0 flex-1 flex-col overflow-hidden bg-surface-page;
+}
+
+.productConfigurationPageGrid {
+  @apply flex min-h-0 w-full flex-1 flex-col overflow-y-auto;
+}
+
+.productConfigurationPageMedia {
+  @apply relative flex aspect-[4/3] shrink-0 justify-center;
+  @apply overflow-hidden bg-surface-cool;
+}
+
+.heroImageWrapper,
+.heroImage {
+  @apply h-full w-full max-w-none rounded-none;
+  @apply object-cover text-5xl;
+}
+
+.back {
+  @apply absolute left-4 top-4 z-10 rounded-full bg-surface-raised text-fg-strong shadow-warm-md;
+}
+
+.productConfigurationPageDetails {
+  @apply flex flex-col;
+}
+
+.productConfigurationPageSummary {
+  @apply flex shrink-0 flex-col px-4 pb-5 pt-5 sm:px-6;
+}
+
+.name {
+  @apply font-display text-2xl font-extrabold leading-tight tracking-tight;
+  @apply text-fg-strong;
+}
+
+.productConfigurationPageDescription {
+  @apply mt-2 text-[0.9375rem] leading-relaxed text-fg-subtle;
+}
+
+.price {
+  @apply mt-4 font-display text-xl font-medium;
+  color: var(--color-success);
+  font-variant-numeric: tabular-nums;
+}
+
+.groups {
+  @apply flex-none;
+}
+
+@media (min-width: 426px) {
+  .productConfigurationPage {
+    @apply h-[75vh] flex-none bg-transparent;
+  }
+
+  .back {
+    display: none;
+  }
+
+  .productConfigurationPageGrid {
+    @apply grid min-h-0 flex-1 grid-cols-2 gap-x-8 overflow-visible;
+  }
+
+  .productConfigurationPageMedia {
+    @apply aspect-auto min-h-0 bg-transparent;
+  }
+
+  .heroImageWrapper,
+  .heroImage {
+    @apply rounded-2 object-contain;
+  }
+
+  .productConfigurationPageDetails {
+    @apply min-h-0 overflow-hidden;
+  }
+
+  .groups {
+    @apply flex min-h-0 flex-1 flex-col overflow-y-auto;
+  }
+}
+
+@media (min-width: 1024px) {
+  .productConfigurationPageDetails {
+    @apply mr-8;
+  }
+}

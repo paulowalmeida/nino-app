@@ -1,0 +1,32 @@
+@reference "@nino/ds/globals.css";
+
+.fieldset {
+  @apply min-w-0 border-0 p-0;
+}
+
+.legend {
+  @apply mb-1 text-xs font-medium text-fg-subtle;
+}
+
+
+.options {
+  @apply grid w-full gap-1;
+  @apply grid-cols-[repeat(auto-fit,minmax(2.25rem,1fr))];
+}
+
+@media (min-width: 2560px) {
+  .singleRowAt4k {
+    grid-template-columns: repeat(24, minmax(0, 1fr));
+  }
+}
+
+.option {
+  @apply flex h-9 w-full items-center justify-center rounded-2 border border-border;
+  @apply bg-surface-page text-lg transition-colors duration-150;
+  @apply hover:border-brand-muted hover:bg-brand-soft;
+  @apply focus-ring;
+}
+
+.selected {
+  @apply border-brand bg-brand-soft;
+}

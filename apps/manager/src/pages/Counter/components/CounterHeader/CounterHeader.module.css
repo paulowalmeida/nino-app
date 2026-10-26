@@ -1,0 +1,17 @@
+@reference "@nino/ds/globals.css";
+
+.skeletonHeader {
+  @apply min-w-0;
+}
+
+.loadingLabel {
+  @apply sr-only;
+}
+
+.title {
+  @apply h-8 w-24 lg:h-9;
+}
+
+.description {
+  @apply h-5 w-full max-w-112;
+}

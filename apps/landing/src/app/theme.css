@@ -1,0 +1,33 @@
+@import "tailwindcss";
+@import "@nino/ds/tokens.css";
+
+/* WHY: o token --container-block do DS faz o Tailwind resolver `inline-block`
+   como inline-size: 42rem em vez de display. Esta utility entrega o display. */
+@utility inline-box {
+  display: inline-block;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    font-family: var(--font-sans);
+    background: var(--color-surface-2);
+    color: #2d2d2d;
+    overflow-x: hidden;
+  }
+
+  /* Grão sutil global — atmosfera, não textura óbvia */
+  body::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: var(--z-grain);
+    opacity: 0.4;
+    mix-blend-mode: multiply;
+    background-image: url("/noise.svg");
+  }
+}

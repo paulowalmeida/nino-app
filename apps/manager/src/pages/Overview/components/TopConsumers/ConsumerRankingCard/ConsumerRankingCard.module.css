@@ -1,0 +1,27 @@
+@reference "@nino/ds/globals.css";
+
+.consumerRankingCardSection {
+  @apply lg:flex lg:h-full lg:min-w-0 lg:flex-col;
+}
+
+.consumerRankingCardHeading {
+  @apply mb-3;
+}
+
+.consumerRankingCard {
+  @apply flex min-w-0 flex-col lg:flex-1;
+  --card-ring: 0 0 0 1px
+    color-mix(in srgb, var(--color-warm-950) 14%, transparent);
+}
+
+.consumerRankingCardEmpty {
+  @apply flex-1;
+}
+
+.skeletonBars {
+  @apply flex flex-1 flex-col gap-2;
+}
+
+.skeletonBar {
+  @apply h-8 rounded-1;
+}

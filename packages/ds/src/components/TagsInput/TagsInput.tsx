@@ -1,92 +1,92 @@
-import { forwardRef } from 'react'
+import { Ref } from 'react'
 
 import { TagsInput as ArkTagsInput } from '@ark-ui/react/tags-input'
+import { mergeClasses } from '@ds/lib/mergeClasses/mergeClasses'
 
-import { mergeClasses } from '@ds/lib/mergeClasses'
+import { Icon } from '../Icon/Icon'
+import { InputSize } from '../Input/Input.types'
+import styles from './TagsInput.module.css'
 
-import { TagsInputProps, TagsInputSize } from './TagsInput.types'
-
-const sizeClasses: Record<TagsInputSize, string> = {
-  sm: 'min-h-8 text-sm',
-  md: 'min-h-10 text-sm',
-  lg: 'min-h-12 text-base',
+type TagsInputProps = {
+  /**
+   * Controlled tags. Leave it out and pass `defaultValue` to let the
+   * component keep its own
+   */
+  value?: string[]
+  defaultValue?: string[]
+  onValueChange?: (value: string[]) => void
+  placeholder?: string
+  /** Ceiling on how many chips. Reached it, the field stops taking new ones */
+  max?: number
+  disabled?: boolean
+  error?: boolean
+  /** Height and typography, matching `Input`. Default: `md` */
+  size?: InputSize
+  className?: string
+  ref?: Ref<HTMLInputElement>
 }
 
-const baseControl =
-  'flex w-full flex-wrap items-center gap-1.5 rounded-md border bg-white px-2 py-1 transition-colors focus-within:ring-2'
-
-const controlDefault =
-  'border-gray-300 focus-within:ring-brand focus-within:border-brand'
-
-const controlError =
-  'border-red-500 focus-within:ring-red-500 focus-within:border-red-500'
-
-const chip =
-  'inline-flex items-center gap-1 rounded bg-[color-mix(in_srgb,var(--color-brand)_12%,white)] px-2 py-0.5 text-sm text-brand'
-
-const chipDelete =
-  'rounded-full p-0.5 leading-none text-brand/70 transition-colors hover:bg-[color-mix(in_srgb,var(--color-brand)_20%,white)] hover:text-brand'
-
-const baseInput =
-  'flex-1 min-w-24 bg-transparent px-1 py-0.5 outline-none placeholder:text-gray-400 disabled:cursor-not-allowed'
+const sizeClasses: Record<InputSize, string> = {
+  sm: styles.sizeSmall,
+  md: styles.sizeMedium,
+  lg: styles.sizeLarge,
+}
 
 /**
- * Tag input field — type and press Enter to create removable chips.
- * Wraps Ark TagsInput. Chips use the tenant brand color.
+ * Field where each entry becomes a removable chip — categories of an item,
+ * e-mails of a team, words that trigger a rule.
  *
- * @param value - Controlled tags array
+ * Enter closes a chip, Backspace on an empty field takes back the last one.
  *
- * @param onValueChange - Fired with the updated tags array
- *
- * @param max - Maximum number of tags
- *
- * @param error - Applies error styling
- *
- * @param size - Height/typography scale. Default: `md`
+ * ```tsx
+ * <FormField label="Categorias">
+ *   <TagsInput value={tags} onValueChange={setTags} max={5} />
+ * </FormField>
+ * ```
  */
-export const TagsInput = forwardRef<HTMLInputElement, TagsInputProps>(
-  (
-    {
-      value,
-      defaultValue,
-      onValueChange,
-      placeholder,
-      max,
-      disabled,
-      error = false,
-      size = 'md',
-      className,
-    },
-    ref
-  ) => (
+export function TagsInput({
+  value,
+  defaultValue,
+  onValueChange,
+  placeholder,
+  max,
+  disabled,
+  error = false,
+  size = 'md',
+  className,
+  ref,
+}: TagsInputProps) {
+  return (
     <ArkTagsInput.Root
       value={value}
       defaultValue={defaultValue}
-      onValueChange={({ value: v }) => onValueChange?.(v)}
+      onValueChange={({ value: tags }) => onValueChange?.(tags)}
       max={max}
       disabled={disabled}
     >
       <ArkTagsInput.Control
         className={mergeClasses(
-          baseControl,
+          styles.field,
           sizeClasses[size],
-          error ? controlError : controlDefault,
+          error ? styles.fieldInvalid : styles.fieldResting,
           className
         )}
       >
         <ArkTagsInput.Context>
           {(api) =>
-            api.value.map((val, index) => (
-              <ArkTagsInput.Item key={`${val}-${index}`} index={index} value={val}>
-                <ArkTagsInput.ItemPreview className={chip}>
-                  <ArkTagsInput.ItemText>{val}</ArkTagsInput.ItemText>
+            api.value.map((tag, index) => (
+              <ArkTagsInput.Item
+                key={`${tag}-${index}`}
+                index={index}
+                value={tag}
+              >
+                <ArkTagsInput.ItemPreview className={styles.tag}>
+                  <ArkTagsInput.ItemText>{tag}</ArkTagsInput.ItemText>
                   <ArkTagsInput.ItemDeleteTrigger
-                    className={chipDelete}
-                    aria-label={`Remove ${val}`}
+                    className={styles.tagRemoveButton}
+                    aria-label={`Remover ${tag}`}
                   >
-                    <svg width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='currentColor' strokeWidth='2.5' strokeLinecap='round'>
-                      <path d='M18 6 6 18M6 6l12 12' />
-                    </svg>
+                    <Icon name="x" size="xs" />
                   </ArkTagsInput.ItemDeleteTrigger>
                 </ArkTagsInput.ItemPreview>
                 <ArkTagsInput.ItemInput />
@@ -97,12 +97,10 @@ export const TagsInput = forwardRef<HTMLInputElement, TagsInputProps>(
         <ArkTagsInput.Input
           ref={ref}
           placeholder={placeholder}
-          className={baseInput}
+          className={styles.textInput}
         />
       </ArkTagsInput.Control>
       <ArkTagsInput.HiddenInput />
     </ArkTagsInput.Root>
   )
-)
-
-TagsInput.displayName = 'TagsInput'
+}

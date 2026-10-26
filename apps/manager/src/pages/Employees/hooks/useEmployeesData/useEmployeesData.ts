@@ -1,0 +1,66 @@
+import { inviteSeatsOf } from '@pages/Employees/adapters/invite-seats.adapter/invite-seats.adapter'
+import {
+  courierRosterEntries,
+  staffRosterEntries,
+} from '@pages/Employees/adapters/team-roster.adapter/team-roster.adapter'
+import { useCurrentUnit } from '@shared/hooks/session/useCurrentUnit/useCurrentUnit'
+import { useCouriers } from '@shared/hooks/team/useCouriers/useCouriers'
+import { useStaff } from '@shared/hooks/team/useStaff/useStaff'
+import { useUnitPositions } from '@shared/hooks/team/useUnitPositions/useUnitPositions'
+import { useSessionStore } from '@shared/states/session/session.state'
+import { assignablePositions } from '@shared/utils/assignable-positions/assignable-positions'
+
+export const useEmployeesData = () => {
+  const unit = useCurrentUnit()
+  const unitId = unit?.unitId ?? null
+  const {
+    data: staff,
+    isPending: isStaffPending,
+    isError: isStaffError,
+  } = useStaff(unitId)
+  const {
+    data: inactiveStaff,
+    isPending: isInactiveStaffPending,
+    isError: isInactiveStaffError,
+  } = useStaff(unitId, 'inactive')
+  const {
+    data: couriers,
+    isPending: isCourierPending,
+    isError: isCourierError,
+  } = useCouriers(unitId)
+  const { data: positions } = useUnitPositions(unitId)
+  const currentUserId = useSessionStore((state) => state.user?.id)
+  const assignable = assignablePositions(
+    positions ?? [],
+    unit?.positionLevel ?? 0
+  )
+
+  const courierMembers = couriers?.data ?? []
+  const activeCourierEntries = courierRosterEntries(
+    courierMembers.filter(({ isActive }) => isActive)
+  )
+  const parkedCourierEntries = courierRosterEntries(
+    courierMembers.filter(({ isActive }) => !isActive)
+  )
+
+  return {
+    unit,
+    unitId,
+    inviteSeats: inviteSeatsOf(assignable),
+    activeEntries: [
+      ...staffRosterEntries(staff?.data ?? [], currentUserId, assignable),
+      ...activeCourierEntries,
+    ],
+    inactiveEntries: [
+      ...staffRosterEntries(
+        inactiveStaff?.data ?? [],
+        currentUserId,
+        assignable
+      ),
+      ...parkedCourierEntries,
+    ],
+    isActivePending: isStaffPending || isCourierPending,
+    isInactivePending: isInactiveStaffPending || isCourierPending,
+    isError: isStaffError || isInactiveStaffError || isCourierError,
+  }
+}

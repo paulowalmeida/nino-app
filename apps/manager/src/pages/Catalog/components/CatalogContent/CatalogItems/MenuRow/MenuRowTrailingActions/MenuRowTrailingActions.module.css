@@ -1,0 +1,6 @@
+@reference "@nino/ds/globals.css";
+
+.delete {
+  @apply hidden h-9 w-9 text-danger lg:inline-flex;
+  @apply hover:bg-danger-surface hover:text-danger;
+}

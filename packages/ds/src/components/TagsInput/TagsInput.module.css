@@ -1,0 +1,49 @@
+@reference "../../styles/globals.css";
+
+.field {
+  @apply flex w-full flex-wrap items-center gap-1.5 rounded-2 border;
+  @apply bg-surface-raised;
+  @apply px-2 py-1 transition-field;
+  @apply focus-within:ring-1;
+  @apply focus-within:ring-inset;
+}
+
+.fieldResting {
+  @apply border-input-border focus-within:border-brand;
+  @apply focus-within:ring-brand;
+}
+
+.fieldInvalid {
+  @apply border-danger focus-within:border-danger;
+  @apply focus-within:ring-danger;
+}
+
+.tag {
+  @apply inline-flex items-center gap-1 rounded-1 bg-brand-soft;
+  @apply px-2 py-0.5 text-sm text-brand;
+}
+
+.tagRemoveButton {
+  @apply flex size-6 shrink-0 cursor-pointer items-center justify-center;
+  @apply rounded-full text-brand-vivid transition-colors duration-fast;
+  @apply hover:bg-brand-muted hover:text-brand;
+  @apply focus-ring-inset;
+}
+
+.textInput {
+  @apply flex-1 min-w-24 bg-transparent px-1 py-0.5 outline-none;
+  @apply placeholder:text-fg-faint;
+  @apply disabled:cursor-not-allowed;
+}
+
+.sizeSmall {
+  @apply min-h-8 text-sm;
+}
+
+.sizeMedium {
+  @apply min-h-11 text-base;
+}
+
+.sizeLarge {
+  @apply min-h-12 text-base;
+}

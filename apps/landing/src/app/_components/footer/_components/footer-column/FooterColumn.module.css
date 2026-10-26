@@ -1,0 +1,14 @@
+@reference '../../../../theme.css';
+.columnTitle {
+  @apply [font-family:var(--font-sans)] text-xs font-bold;
+  @apply uppercase tracking-[0.1em] text-brand-light mb-[1.1rem];
+}
+
+.columnLink {
+  @apply block text-sm text-fg-on-brand/[0.62];
+  @apply no-underline mb-[0.65rem] transition-all duration-200;
+}
+
+.columnLink:hover {
+  @apply text-fg-on-brand translate-x-[3px];
+}

@@ -1,0 +1,37 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "jsx": "preserve",
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ],
+    "paths": {
+      "@ds/*": ["../../packages/ds/src/*"],
+      "@/*": ["./src/*"],
+      "@demo/*": ["./src/app/_components/demo/*"],
+      "@features/*": ["./src/app/_components/features/*"],
+      "@footer/*": ["./src/app/_components/footer/*"],
+      "@for-restaurants/*": ["./src/app/_components/for-restaurants/*"],
+      "@get-started/*": ["./src/app/_components/get-started/*"],
+      "@header/*": ["./src/app/_components/header/*"],
+      "@hero/*": ["./src/app/_components/hero/*"],
+      "@how-it-works/*": ["./src/app/_components/how-it-works/*"],
+      "@pricing/*": ["./src/app/_components/pricing/*"]
+    },
+    "allowJs": true,
+    "noEmit": true,
+    "incremental": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true
+  },
+  "include": [
+    "../../global.d.ts",
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    ".next/types/**/*.ts"
+  ],
+  "exclude": ["node_modules"]
+}

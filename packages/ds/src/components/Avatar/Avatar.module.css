@@ -1,0 +1,32 @@
+@reference "../../styles/globals.css";
+
+.avatar {
+  @apply relative inline-flex shrink-0 items-center justify-center;
+  @apply overflow-hidden rounded-full bg-surface-mute text-fg-muted;
+  @apply select-none;
+}
+
+.sizeSmall {
+  @apply size-8 text-xs;
+}
+
+.sizeMedium {
+  @apply size-10 text-sm;
+}
+
+.sizeLarge {
+  @apply size-12 text-base;
+}
+
+.sizeExtraLarge {
+  @apply size-16 text-lg;
+}
+
+.photo {
+  @apply size-full object-cover;
+}
+
+.initials {
+  @apply flex size-full items-center justify-center font-bold;
+  @apply tracking-wide uppercase;
+}

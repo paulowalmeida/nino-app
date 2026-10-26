@@ -1,0 +1,33 @@
+@reference "@nino/ds/globals.css";
+
+.accountStepForm {
+  @apply grid grid-cols-1 gap-x-5 gap-y-4 sm:grid-cols-12;
+}
+
+.primaryField {
+  @apply sm:col-span-8;
+}
+
+.compactField {
+  @apply sm:col-span-4;
+}
+
+.halfField {
+  @apply sm:col-span-6;
+}
+
+.formFeedback {
+  @apply sm:col-span-12;
+}
+
+.accountStepActions {
+  @apply mt-2 items-end sm:col-span-12;
+}
+
+.continueButton {
+  @apply self-end;
+}
+
+.strengthMeter {
+  @apply mt-1;
+}

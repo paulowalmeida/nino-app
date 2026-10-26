@@ -1,0 +1,109 @@
+import { Alert } from '@nino/ds/components/Alert'
+import { Box } from '@nino/ds/components/Box'
+import { Button } from '@nino/ds/components/Button'
+import { CnpjInput } from '@nino/ds/components/CnpjInput'
+import { FormField } from '@nino/ds/components/FormField'
+import { Header } from '@nino/ds/components/Header'
+import { Input } from '@nino/ds/components/Input'
+import { useRegisterFacade } from '@pages/Register/facades/useRegisterFacade/useRegisterFacade'
+import { COMPANY_FIELD_RULES } from '@pages/Register/utils/register-field-rules/register-field-rules'
+import { RiseIn } from '@shared/components/RiseIn/RiseIn'
+import { firstName } from '@shared/utils/firstName/firstName'
+
+import styles from './CompanyStep.module.css'
+
+export const CompanyStep = () => {
+  const {
+    account,
+    goToAccount,
+    companyForm: {
+      register,
+      submit,
+      formState: { errors, isSubmitting },
+    },
+  } = useRegisterFacade()
+
+  if (!account) return null
+
+  return (
+    <Box direction="column">
+      <RiseIn as="header">
+        <Header
+          level={1}
+          size="2xl"
+          align="center"
+          title="Sua empresa"
+          description={`Quase lá, ${firstName(account.name)}`}
+        />
+      </RiseIn>
+
+      <Box
+        as="form"
+        direction="column"
+        gap={4}
+        mt={12}
+        onSubmit={submit}
+        className={styles.companyStepForm}
+      >
+        <RiseIn delay={120} className={styles.primaryField}>
+          <FormField label="Nome" error={errors.company?.name?.message}>
+            <Input
+              placeholder="Lanchonete do Zé"
+              autoComplete="organization"
+              {...register('company.name', COMPANY_FIELD_RULES.name)}
+            />
+          </FormField>
+        </RiseIn>
+
+        <RiseIn delay={180} className={styles.compactField}>
+          <FormField label="CNPJ" error={errors.company?.cnpj?.message}>
+            <CnpjInput
+              autoComplete="off"
+              error={!!errors.company?.cnpj}
+              {...register('company.cnpj', COMPANY_FIELD_RULES.cnpj)}
+            />
+          </FormField>
+        </RiseIn>
+
+        <RiseIn delay={240} className={styles.legalNameField}>
+          <FormField
+            label="Razão social (opcional)"
+            error={errors.company?.legalName?.message}
+          >
+            <Input
+              placeholder="Zé Alimentos LTDA"
+              autoComplete="off"
+              {...register('company.legalName')}
+            />
+          </FormField>
+        </RiseIn>
+
+        {errors.root && (
+          <Alert variant="error" className={styles.formFeedback}>
+            {errors.root.message}
+          </Alert>
+        )}
+
+        <RiseIn delay={300} className={styles.companyStepActions}>
+          <Box direction="row" justify="end" gap={2}>
+            <Button
+              type="button"
+              variant="ghost"
+              onClick={goToAccount}
+              disabled={isSubmitting}
+            >
+              Voltar
+            </Button>
+            <Button
+              type="submit"
+              loading={isSubmitting}
+              loadingIndicator="dots"
+            >
+              Continuar
+            </Button>
+          </Box>
+        </RiseIn>
+      </Box>
+    </Box>
+  )
+}

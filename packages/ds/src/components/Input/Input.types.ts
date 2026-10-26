@@ -1,13 +1,18 @@
-import { InputHTMLAttributes } from 'react'
+import { InputHTMLAttributes, Ref } from 'react'
 
 export type InputSize = 'sm' | 'md' | 'lg'
 
-export interface InputProps
-  extends Omit<InputHTMLAttributes<HTMLInputElement>, 'size'> {
-  /** Height and padding of the input. Default: `md` */
+export type InputProps = Omit<InputHTMLAttributes<HTMLInputElement>, 'size'> & {
+  /**
+   * Height and padding. Default: `md`. `lg` is the one that clears the 44px
+   * touch target on its own
+   */
   size?: InputSize
-  /** Applies error styles to indicate invalid input */
+  /**
+   * Paints the invalid state. Redundant inside a `FormField` that already got
+   * an `error`
+   */
   error?: boolean
-  /** Additional CSS classes merged with base styles */
-  className?: string
+  /** Forwarded to the `<input>`, for focus and for form libraries */
+  ref?: Ref<HTMLInputElement>
 }

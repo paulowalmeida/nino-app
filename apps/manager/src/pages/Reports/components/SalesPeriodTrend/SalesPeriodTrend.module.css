@@ -1,0 +1,11 @@
+@reference "@nino/ds/globals.css";
+
+.block {
+  @apply mb-4 rounded-5 border border-border bg-surface-page/70 p-4;
+  @apply lg:mb-8 lg:p-5;
+}
+
+.blockTitle {
+  @apply mb-3 font-display text-lg font-extrabold tracking-tight;
+  @apply text-fg-strong;
+}

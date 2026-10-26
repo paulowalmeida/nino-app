@@ -1,0 +1,76 @@
+@reference "@nino/ds/globals.css";
+
+.personalizeSkeletonPage {
+  @apply flex min-h-dvh w-full min-w-0 flex-col gap-6 p-4 lg:p-10;
+}
+
+.loadingLabel {
+  @apply sr-only;
+}
+
+.personalizeSkeletonHeader {
+  @apply flex min-w-0 flex-col gap-2;
+}
+
+.trail {
+  @apply h-4 w-40;
+}
+
+.personalizeSkeletonTitle {
+  @apply h-8 w-64;
+}
+
+.personalizeSkeletonSubtitle {
+  @apply h-4 w-full max-w-prose;
+}
+
+.studio {
+  @apply grid min-w-0 grid-cols-1 items-start gap-x-8 gap-y-6;
+  @apply lg:grid-cols-[minmax(0,1fr)_minmax(0,21rem)];
+  @apply xl:grid-cols-[minmax(0,1fr)_minmax(0,25rem)];
+}
+
+.dock {
+  @apply row-start-1 flex min-w-0 flex-col gap-3 lg:col-start-2;
+}
+
+.dockBar {
+  @apply h-6 w-full;
+}
+
+.frame {
+  @apply mx-auto h-80 w-full max-w-[21rem] rounded-6 lg:max-w-none;
+}
+
+.personalizeSkeletonControls {
+  @apply row-start-2 flex min-w-0 flex-col gap-6;
+  @apply lg:col-start-1 lg:row-start-1;
+}
+
+.personalizeSkeletonSection {
+  @apply flex min-w-0 flex-col gap-3;
+}
+
+.sectionTitle {
+  @apply h-5 w-44;
+}
+
+.themes {
+  @apply min-w-0 flex-nowrap overflow-hidden;
+}
+
+.theme {
+  @apply h-9 w-28 shrink-0 rounded-full;
+}
+
+.personalizeSkeletonGrid {
+  @apply grid grid-cols-1 gap-2 sm:grid-cols-2;
+}
+
+.tile {
+  @apply h-16 w-full rounded-3;
+}
+
+.upload {
+  @apply h-24 w-full rounded-3;
+}

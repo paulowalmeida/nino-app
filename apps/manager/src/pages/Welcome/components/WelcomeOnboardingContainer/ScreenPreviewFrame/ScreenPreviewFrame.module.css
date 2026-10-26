@@ -1,0 +1,27 @@
+@reference "@nino/ds/globals.css";
+
+.frame {
+  @apply overflow-hidden rounded-5 border border-border/60;
+  @apply bg-surface-raised;
+  @apply shadow-sm;
+}
+
+.bar {
+  @apply flex items-center gap-2 border-b border-border/60 px-4 py-2.5;
+}
+
+.dot {
+  @apply h-2 w-2 rounded-full bg-border/70;
+}
+
+.name {
+  @apply ml-1 text-xs font-semibold text-fg-faint;
+}
+
+.screenPreviewFrameBody {
+  @apply p-4;
+}
+
+.preview {
+  @apply pointer-events-none select-none;
+}

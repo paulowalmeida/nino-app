@@ -1,0 +1,70 @@
+@reference "@nino/ds/globals.css";
+
+.unitCardPanel {
+  @apply flex w-full min-w-0 max-w-4xl flex-col;
+}
+
+.groupTitle {
+  @apply text-xs font-bold uppercase tracking-[0.12em] text-fg-faint;
+}
+
+.save {
+  @apply min-w-32 w-full self-start min-[426px]:w-fit sm:self-end;
+}
+
+.unitCardFields {
+  @apply grid grid-cols-1 gap-3 sm:grid-cols-2;
+  max-width: 56rem;
+}
+
+.storeUrl {
+  @apply break-all;
+}
+
+.tabContent {
+  @apply flex flex-col;
+}
+
+.address {
+  @apply mt-4 flex flex-col gap-2 border-t border-border pt-4;
+}
+
+.confirm {
+  @apply min-h-0 flex-1;
+}
+
+.confirmBack {
+  @apply h-auto w-fit gap-2 px-0 text-base font-bold text-fg-strong;
+  @apply hover:text-brand-strong;
+}
+
+.addressOption {
+  @apply h-auto min-h-14 w-full justify-start gap-3 rounded-3 px-4 py-3;
+  @apply border border-border bg-surface-1 text-left transition-colors;
+  @apply hover:border-brand-bold hover:bg-surface-page;
+  @apply focus-visible:border-brand-bold focus-visible:bg-surface-page;
+}
+
+.addressPin {
+  @apply shrink-0 text-brand;
+}
+
+.addressText {
+  @apply min-w-0 flex-1;
+}
+
+.addressOptionPlaceholder {
+  @apply h-14 w-full rounded-3;
+}
+
+.unitCardMain {
+  @apply ml-2 align-middle;
+}
+
+.promote {
+  @apply shrink-0;
+}
+
+.headerActions {
+  @apply shrink-0;
+}

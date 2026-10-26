@@ -1,0 +1,41 @@
+@reference "../../styles/globals.css";
+
+.chip {
+  @apply inline-flex shrink-0 cursor-pointer items-center gap-2 rounded-full;
+  @apply min-h-11 px-4 py-2 text-sm font-semibold;
+  @apply transition-colors duration-base;
+  @apply hover:text-fg-default;
+  @apply focus-ring;
+}
+
+.outlined {
+  @apply border;
+}
+
+.borderless {
+  @apply border border-transparent;
+}
+
+.outlined:hover {
+  @apply border-brand-muted;
+}
+
+.resting {
+  @apply bg-surface-page text-fg-subtle;
+}
+
+.selected {
+  @apply bg-brand-soft text-brand-strong;
+}
+
+.outlined.resting {
+  @apply border-border;
+}
+
+.borderless.resting {
+  @apply bg-surface-cool;
+}
+
+.outlined.selected {
+  @apply border-brand-muted;
+}

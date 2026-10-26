@@ -1,0 +1,134 @@
+@reference "@nino/ds/globals.css";
+
+.accountChatsPage {
+  @apply flex min-h-dvh w-full flex-col bg-surface-1 pb-16;
+}
+
+.accountChatsShell {
+  @apply mx-auto w-full max-w-5xl flex-1 px-5 sm:px-6 lg:px-10;
+}
+
+.accountChatsHeader {
+  @apply sticky top-0 z-dock -mx-5 gap-3;
+  @apply border-b border-border bg-surface-raised/95 px-5 py-4 backdrop-blur;
+  @apply sm:-mx-6 sm:px-6 lg:-mx-10 lg:px-10;
+}
+
+.back {
+  @apply flex h-11 w-11 shrink-0 items-center justify-center rounded-full;
+  @apply border border-black/[0.08] bg-surface-page text-lg text-fg-muted;
+  @apply transition-colors hover:border-accent-peach hover:text-brand-strong;
+  @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand;
+}
+
+.accountChatsTitle {
+  @apply font-display text-xl font-extrabold leading-tight text-fg-muted;
+}
+
+.accountChatsSubtitle {
+  @apply mt-0.5 max-w-[46ch] text-sm leading-snug text-fg-faint;
+}
+
+.accountChatsContent {
+  @apply mx-auto w-full max-w-2xl py-7 sm:py-9;
+}
+
+.accountChatsList {
+  @apply flex flex-col gap-4;
+}
+
+.listSpaced {
+  @apply mt-6;
+}
+
+.orderCard {
+  @apply gap-4 rounded-4 border border-border bg-surface-raised p-4 sm:p-5;
+}
+
+.resolvedCard {
+  @apply bg-surface-2;
+}
+
+.orderMain {
+  @apply gap-3;
+}
+
+.orderIcon {
+  @apply flex h-11 w-11 shrink-0 items-center justify-center rounded-full;
+  @apply bg-brand-soft text-brand-strong;
+}
+
+.resolvedCard .orderIcon {
+  @apply bg-surface-raised text-fg-subtle;
+}
+
+.orderCopy {
+  @apply min-w-0 flex-1;
+}
+
+.orderMeta {
+  @apply flex-wrap gap-2;
+}
+
+.orderReference {
+  @apply text-xs font-bold uppercase tracking-[0.1em] text-fg-faint;
+  font-variant-numeric: tabular-nums;
+}
+
+.unreadLabel {
+  @apply rounded-full bg-brand-soft px-2 py-0.5 text-xs font-bold text-brand-strong;
+}
+
+.orderTitle {
+  @apply mt-1 font-display text-lg font-extrabold leading-tight text-fg-muted;
+}
+
+.orderBody {
+  @apply mt-1.5 text-sm leading-relaxed text-fg-subtle;
+}
+
+.orderTime {
+  @apply mt-2 block text-xs font-semibold text-fg-faint;
+  font-variant-numeric: tabular-nums;
+}
+
+.cardLink {
+  @apply flex min-h-11 items-center justify-between border-t border-border pt-3;
+  @apply text-sm font-bold text-brand-strong transition-colors hover:text-brand;
+  @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand;
+}
+
+.retentionNote {
+  @apply mx-auto mt-6 max-w-xl text-center text-xs leading-relaxed text-fg-faint;
+}
+
+.emptyShell {
+  @apply mx-auto flex max-w-sm flex-1 flex-col items-center justify-center pb-20 text-center;
+  @apply lg:max-w-xl;
+}
+
+.emptyIcon {
+  @apply flex h-14 w-14 items-center justify-center rounded-full bg-brand-soft text-brand-strong;
+}
+
+.emptyTitle {
+  @apply mt-5 font-display text-xl font-extrabold text-fg-muted;
+}
+
+.emptyCopy {
+  @apply mt-2 text-sm leading-relaxed text-fg-subtle;
+}
+
+.emptyAction {
+  @apply mt-6 inline-flex min-h-11 items-center gap-2 text-sm font-bold text-brand-strong;
+  @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand;
+}
+
+.accountChatsFooter {
+  @apply mt-auto w-full;
+}
+
+.cardSkeleton {
+  composes: nino-skeleton from global;
+  @apply h-48 rounded-4 bg-black/[0.06];
+}

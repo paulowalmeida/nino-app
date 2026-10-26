@@ -1,0 +1,44 @@
+@reference "../../styles/globals.css";
+
+.switch {
+  @apply relative;
+}
+
+.track {
+  @apply relative inline-flex shrink-0 cursor-pointer items-center;
+  @apply rounded-full border-2 border-transparent bg-border;
+  @apply transition-colors duration-fast;
+  @apply data-[state=checked]:bg-brand;
+  @apply focus-ring;
+  @apply data-[disabled]:cursor-not-allowed data-[disabled]:opacity-disabled;
+}
+
+.track::before {
+  content: '';
+  @apply absolute left-1/2 top-1/2 h-11 w-full min-w-11;
+  @apply -translate-x-1/2 -translate-y-1/2;
+}
+
+.knob {
+  @apply pointer-events-none block rounded-full bg-surface-raised;
+  @apply shadow-warm-sm;
+  @apply ring-0;
+  @apply transition-transform duration-fast;
+  @apply data-[state=unchecked]:translate-x-0;
+}
+
+.trackSizeSmall {
+  @apply h-4 w-7;
+}
+
+.trackSizeMedium {
+  @apply h-5 w-9;
+}
+
+.knobSizeSmall {
+  @apply size-3 data-[state=checked]:translate-x-3;
+}
+
+.knobSizeMedium {
+  @apply size-4 data-[state=checked]:translate-x-4;
+}

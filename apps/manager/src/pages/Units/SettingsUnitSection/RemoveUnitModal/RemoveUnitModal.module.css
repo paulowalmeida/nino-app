@@ -1,0 +1,24 @@
+@reference "@nino/ds/globals.css";
+
+.removeUnitModalTitle {
+  @apply font-display text-lg font-extrabold tracking-tight text-fg-strong;
+}
+
+.removeUnitModalForm {
+  @apply flex flex-col gap-4;
+}
+
+.removeUnitModalLabel {
+  @apply text-sm leading-relaxed text-fg-default;
+}
+
+.code {
+  @apply rounded-2 bg-surface-5 px-1.5 py-0.5;
+  @apply font-mono text-sm font-semibold text-fg-strong;
+  user-select: all;
+}
+
+.danger {
+  @apply bg-danger text-fg-on-brand;
+  @apply hover:bg-danger disabled:opacity-disabled;
+}

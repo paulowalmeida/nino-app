@@ -6,9 +6,22 @@ out/
 .env.*.local
 .turbo/
 coverage/
-CLAUDE.md
+*.tsbuildinfo
 TODO.md
 STATUS.md
 FRONTEND.md
+AGENT.md
+CLAUDE.md
 line-length-check.skill
 plugins.md
+.vercel/
+.vscode/
+.vercel
+.env*
+.agent/
+.claude/
+.codex/
+
+# saída do build do Storybook
+storybook-static
+.agents/settings.local.json

@@ -1,0 +1,29 @@
+@reference "@nino/ds/globals.css";
+
+.zoneFormSection {
+  @apply flex min-w-0 flex-col gap-4 rounded-xl border border-border p-4;
+}
+
+.intro {
+  @apply flex flex-col gap-1;
+}
+
+.slider {
+  @apply mt-1;
+}
+
+.zoneForm {
+  @apply flex flex-row flex-wrap items-start gap-3;
+}
+
+.radiusField {
+  @apply w-28;
+}
+
+.feeField {
+  @apply w-36;
+}
+
+.submit {
+  @apply w-full;
+}

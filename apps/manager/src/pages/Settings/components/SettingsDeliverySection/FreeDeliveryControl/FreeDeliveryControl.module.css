@@ -1,0 +1,25 @@
+@reference "@nino/ds/globals.css";
+
+.freeDeliveryControl {
+  @apply flex flex-col gap-2 rounded-2 bg-surface-2 p-3;
+}
+
+.freeDeliveryLine {
+  @apply flex flex-wrap items-center justify-between gap-3;
+}
+
+.freeDeliveryMinimum {
+  @apply flex items-center gap-2;
+}
+
+.freeDeliveryAbove {
+  @apply text-sm text-fg-muted;
+}
+
+.freeDeliveryInput {
+  @apply w-36 tabular-nums;
+}
+
+.freeDeliveryHint {
+  @apply text-sm text-fg-muted;
+}

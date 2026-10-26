@@ -1,0 +1,26 @@
+@reference "@nino/ds/globals.css";
+
+.newOrderMenu {
+  @apply flex min-w-0 flex-col gap-6 rounded-6 border border-border;
+  @apply bg-surface-page/70;
+  @apply p-5 backdrop-blur-sm lg:p-6;
+}
+
+.sectionName {
+  @apply mb-2 border-b border-border pb-2;
+  @apply font-display text-base font-extrabold tracking-tight;
+  @apply text-fg-strong;
+}
+
+.newOrderMenuItem {
+  @apply flex min-w-0 items-center gap-3 border-b border-border/60 py-2.5;
+}
+
+.itemName {
+  @apply min-w-0 flex-1 truncate text-sm font-semibold text-fg-default;
+}
+
+.itemPrice {
+  @apply shrink-0 text-sm text-fg-muted;
+  font-variant-numeric: tabular-nums;
+}

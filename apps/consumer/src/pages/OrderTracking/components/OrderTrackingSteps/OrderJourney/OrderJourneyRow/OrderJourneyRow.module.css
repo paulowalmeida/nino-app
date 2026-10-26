@@ -1,0 +1,104 @@
+@reference "@nino/ds/globals.css";
+
+.orderJourneyRow {
+  @apply relative grid items-center gap-x-3.5 py-2;
+  grid-template-columns: 2rem minmax(0, 1fr) auto;
+}
+
+.orderJourneyRow:not(:last-child)::before {
+  content: '';
+  @apply absolute w-0.5 rounded-full;
+  left: 15px;
+  top: calc(50% + 18px);
+  bottom: calc(-50% + 18px);
+  background: var(--color-surface-6);
+}
+
+.done:not(:last-child)::before,
+.final:not(:last-child)::before {
+  background: color-mix(in srgb, var(--color-brand) 35%, transparent);
+}
+
+/* WHY: O marcador é o mesmo da demo da landing: um disco de 2rem com a cara
+ * do passo dentro. É o que dá ritmo à coluna — cinco discos em vez de cinco
+ * pontinhos —, e é o que se lê antes do texto quando a tela é conferida de
+ * relance.
+ */
+.node {
+  @apply relative z-content flex h-8 w-8 items-center justify-center;
+  @apply rounded-full;
+  @apply text-base leading-none;
+}
+
+.done .node,
+.final .node {
+  @apply bg-brand text-xs font-bold text-fg-on-brand;
+}
+
+.done .label {
+  @apply text-sm font-medium text-fg-muted;
+}
+
+.done .time {
+  @apply text-xs text-fg-faint;
+}
+
+.current .node {
+  @apply bg-surface-page text-base;
+  box-shadow:
+    inset 0 0 0 2px var(--color-brand),
+    0 0 0 4px var(--color-brand-soft);
+  animation: journey-pulse 2.2s ease-in-out infinite;
+}
+
+.current .label,
+.final .label {
+  @apply font-display text-base font-extrabold leading-tight text-fg-muted;
+}
+
+.current .time,
+.final .time {
+  @apply text-xs font-bold text-brand-strong;
+}
+
+.ahead .node {
+  @apply bg-surface-3 opacity-strong;
+  box-shadow: inset 0 0 0 1.5px var(--color-surface-6);
+}
+
+.ahead .label {
+  @apply text-sm font-medium text-fg-faintest;
+}
+
+.ahead .time {
+  @apply text-xs text-fg-faintest;
+}
+
+.cancelled .node {
+  @apply bg-danger-surface text-sm font-bold text-danger;
+  box-shadow: none;
+  animation: none;
+}
+
+.cancelled .time {
+  @apply text-danger;
+}
+
+.time {
+  @apply justify-self-end;
+  font-variant-numeric: tabular-nums;
+}
+
+@keyframes journey-pulse {
+  50% {
+    box-shadow:
+      inset 0 0 0 2px var(--color-brand),
+      0 0 0 8px transparent;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .current .node {
+    animation: none;
+  }
+}

@@ -1,0 +1,71 @@
+@reference "@nino/ds/globals.css";
+
+.serviceRulesPanel {
+  @apply flex min-w-0 flex-col;
+}
+
+.head {
+  @apply mb-4 lg:mb-6;
+}
+
+.serviceRulesGroup {
+  @apply flex flex-col gap-3 border-t border-border py-4;
+}
+
+.serviceRulesRow {
+  @apply flex items-start gap-3;
+}
+
+.channelRow {
+  @apply grid items-center gap-x-5 gap-y-0;
+  grid-template-columns: auto max-content minmax(0, 1fr);
+}
+
+.channelRow .rowLabel {
+  @apply whitespace-nowrap;
+}
+
+.channelTextCell {
+  @apply self-center;
+  position: relative;
+  top: -4px;
+}
+
+@media (max-width: 640px) {
+  .channelRow {
+    grid-template-columns: auto minmax(0, 1fr);
+  }
+
+  .channelRow .rowHint {
+    grid-column: 2;
+    @apply mt-1;
+  }
+}
+
+.rowText {
+  @apply min-w-0;
+}
+
+.rowLabel {
+  @apply text-sm font-semibold text-fg-default;
+}
+
+.rowHint {
+  @apply mt-0.5 text-xs leading-relaxed text-fg-faint;
+}
+
+.save {
+  @apply mt-4 w-full min-[425px]:w-auto min-[425px]:self-end;
+}
+
+.skeleton {
+  @apply h-64 w-full rounded-6;
+}
+
+.minimum {
+  @apply mt-4 flex flex-col gap-1.5;
+}
+
+.minimumInput {
+  @apply max-w-40;
+}

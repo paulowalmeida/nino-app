@@ -1,0 +1,29 @@
+/* Tipografia — famílias, escala de tamanho com a altura de linha de
+   cada degrau, e espaçamento entre letras. */
+@theme static {
+  /* Typography — cores e estruturais vêm de ./tokens.css */
+  --font-sans: 'Hanken Grotesk', sans-serif;
+  --font-display: 'Bricolage Grotesque', sans-serif;
+
+  /*
+   * A escala é a do Tailwind (`xs` a `9xl`) — só os dois degraus que faltam
+   * embaixo moram aqui: 8px e 10px, para carimbo e rótulo em versalete.
+   */
+  --text-3xs: 0.5rem; /* 8px */
+  --text-3xs--line-height: 0.75rem; /* 12px */
+  --text-2xs: 0.625rem; /* 10px */
+  --text-2xs--line-height: 0.875rem; /* 14px */
+
+  /*
+   * Espaçamento entre letras — a escala (`tighter` a `widest`) é a do
+   * Tailwind. Aqui ficam os três degraus que ela não tem: `caps` para
+   * versalete pequeno, onde 0.1em ainda fecha demais as letras (maiúscula
+   * miúda precisa de mais ar para não virar borrão), `snug` para o aperto
+   * leve de título médio, e `logo` só para a marca.
+   */
+  /* Aperto leve: título médio, onde -0.025em já fecha demais */
+  --tracking-snug: -0.01em;
+  --tracking-caps: 0.14em;
+  /* Só a marca: letra espalhada como assinatura, não como rótulo */
+  --tracking-logo: 0.25em;
+}

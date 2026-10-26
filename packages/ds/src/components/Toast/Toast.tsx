@@ -1,106 +1,254 @@
-import { Toast as ArkToast, Toaster as ArkToaster, createToaster } from '@ark-ui/react/toast'
-import { motion } from 'framer-motion'
+import {
+  type PointerEvent,
+  useRef,
+  useState,
+  useSyncExternalStore,
+} from 'react'
 
-import { mergeClasses } from '@ds/lib/mergeClasses'
+import {
+  Toast as ArkToast,
+  Toaster as ArkToaster,
+  type ToastOptions as ArkToastOptions,
+  useToastContext,
+} from '@ark-ui/react/toast'
+import { Icon } from '@ds/components/Icon/Icon'
+import { IconName } from '@ds/components/Icon/Icon.types'
+import { mergeClasses } from '@ds/lib/mergeClasses/mergeClasses'
 
-import { ToastContainerProps, ToastMeta, ToastProviderProps, ToastVariant } from './Toast.types'
+import { Spinner } from '../Spinner/Spinner'
+import styles from './Toast.module.css'
+import {
+  ToastContainerProps,
+  ToastMeta,
+  ToastPlacement,
+  ToastProviderProps,
+  ToastVariant,
+} from './Toast.types'
+import {
+  configureToasts,
+  getActivePlacements,
+  getToaster,
+  subscribeToPlacements,
+} from './toastRegistry'
 
-const variantClasses: Record<ToastVariant, string> = {
-  default: 'bg-white border-gray-200 text-gray-900',
-  success: 'bg-white border-green-500 text-gray-900',
-  error: 'bg-white border-red-500 text-gray-900',
-  warning: 'bg-white border-yellow-500 text-gray-900',
+/*
+ * Não existe um componente `Toast` aqui, e não é esquecimento: o cartão não
+ * é montado no JSX como os outros: ele é disparado por chamada
+ * (`toast.success('Salvo')`) e vive num store de módulo, de onde o `Toaster`
+ * do Ark os desenha. O que se monta é o `ToastContainer`, uma vez por app.
+ *
+ * O arquivo se chama `Toast.tsx` porque o `exports` do pacote resolve
+ * `@nino/ds/components/Toast` para `Toast/Toast.tsx` — o nome é o caminho
+ * público, não a promessa de um componente com esse nome.
+ */
+export { toast } from './toast'
+
+const statusIcon: Record<Exclude<ToastVariant, 'loading'>, IconName> = {
+  default: 'status-info',
+  success: 'status-success',
+  error: 'status-error',
+  warning: 'status-warning',
 }
 
-const variantAccent: Record<ToastVariant, string> = {
-  default: 'bg-gray-500',
-  success: 'bg-green-500',
-  error: 'bg-red-500',
-  warning: 'bg-yellow-500',
+const surfaceClass: Record<ToastVariant, string> = {
+  default: styles.surfaceDefault,
+  success: styles.surfaceSuccess,
+  error: styles.surfaceError,
+  warning: styles.surfaceWarning,
+  loading: styles.surfaceLoading,
 }
 
-const titleClass = 'text-sm font-semibold'
-const descriptionClass = 'text-sm text-gray-500'
-const closeClass =
-  'absolute right-2 top-2 rounded p-0.5 text-gray-400 hover:text-gray-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand'
+/* A marca à esquerda do cartão: um spinner enquanto espera, o símbolo do
+ * estado quando há desfecho. */
+const ToastIcon = ({ variant }: { variant: ToastVariant }) =>
+  variant === 'loading' ? (
+    <span className={styles.statusIcon}>
+      <Spinner visible size={18} />
+    </span>
+  ) : (
+    <Icon name={statusIcon[variant]} className={styles.statusIcon} />
+  )
 
-export const toaster = createToaster({
-  placement: 'bottom-end',
-  gap: 8,
-})
+const SWIPE_DISMISS_THRESHOLD = 72
 
-export const toast = {
-  default: (title: string, description?: string, duration = 4000) =>
-    toaster.create({ title, description, duration, type: 'info', meta: { variant: 'default', createdAt: Date.now() } as ToastMeta }),
-  success: (title: string, description?: string, duration = 4000) =>
-    toaster.create({ title, description, duration, type: 'success', meta: { variant: 'success', createdAt: Date.now() } as ToastMeta }),
-  error: (title: string, description?: string, duration = 4000) =>
-    toaster.create({ title, description, duration, type: 'error', meta: { variant: 'error', createdAt: Date.now() } as ToastMeta }),
-  warning: (title: string, description?: string, duration = 4000) =>
-    toaster.create({ title, description, duration, type: 'warning', meta: { variant: 'warning', createdAt: Date.now() } as ToastMeta }),
+const ToastCard = ({ toast }: { toast: ArkToastOptions }) => {
+  const toastApi = useToastContext()
+  const meta = toast.meta as ToastMeta | undefined
+  const variant = meta?.variant ?? 'default'
+  const [swipeOffset, setSwipeOffset] = useState(0)
+  const [isDragging, setIsDragging] = useState(false)
+  const pointerRef = useRef<{
+    id: number
+    startX: number
+    startY: number
+    offset: number
+  } | null>(null)
+
+  const resetSwipe = () => {
+    pointerRef.current = null
+    setIsDragging(false)
+    setSwipeOffset(0)
+  }
+
+  const handlePointerDown = (event: PointerEvent<HTMLDivElement>) => {
+    if (event.pointerType === 'mouse' && event.button !== 0) return
+    if ((event.target as HTMLElement).closest('button')) return
+
+    pointerRef.current = {
+      id: event.pointerId,
+      startX: event.clientX,
+      startY: event.clientY,
+      offset: 0,
+    }
+    event.currentTarget.setPointerCapture?.(event.pointerId)
+  }
+
+  const handlePointerMove = (event: PointerEvent<HTMLDivElement>) => {
+    const pointer = pointerRef.current
+    if (!pointer || pointer.id !== event.pointerId) return
+
+    const offsetX = event.clientX - pointer.startX
+    const offsetY = event.clientY - pointer.startY
+    if (Math.abs(offsetY) > Math.abs(offsetX)) {
+      resetSwipe()
+      return
+    }
+
+    if (Math.abs(offsetX) < 8) return
+
+    event.preventDefault()
+    pointer.offset = offsetX
+    setIsDragging(true)
+    setSwipeOffset(offsetX)
+  }
+
+  const handlePointerUp = (event: PointerEvent<HTMLDivElement>) => {
+    const pointer = pointerRef.current
+    if (!pointer || pointer.id !== event.pointerId) return
+
+    const width = event.currentTarget.getBoundingClientRect().width
+    const threshold = Math.max(SWIPE_DISMISS_THRESHOLD, width * 0.3)
+    pointerRef.current = null
+    setIsDragging(false)
+
+    if (Math.abs(pointer.offset) >= threshold) {
+      setSwipeOffset(Math.sign(pointer.offset) * Math.max(width, threshold))
+      toastApi.dismiss()
+      return
+    }
+
+    setSwipeOffset(0)
+  }
+
+  return (
+    <div
+      className={mergeClasses(
+        styles.card,
+        surfaceClass[variant],
+        isDragging && styles.dragging
+      )}
+      style={{ transform: `translateX(${swipeOffset}px)` }}
+      onPointerDown={handlePointerDown}
+      onPointerMove={handlePointerMove}
+      onPointerUp={handlePointerUp}
+      onPointerCancel={resetSwipe}
+    >
+      <ToastIcon variant={variant} />
+      <div className={styles.textStack}>
+        <ArkToast.Title className={styles.title}>{toast.title}</ArkToast.Title>
+        {toast.description && (
+          <ArkToast.Description className={styles.description}>
+            {toast.description}
+          </ArkToast.Description>
+        )}
+        {toast.action && (
+          <ArkToast.ActionTrigger className={styles.actionButton}>
+            {toast.action.label}
+          </ArkToast.ActionTrigger>
+        )}
+      </div>
+      {toast.closable !== false && (
+        <ArkToast.CloseTrigger
+          className={styles.closeButton}
+          aria-label="Fechar"
+        >
+          <Icon name="x" size="sm" />
+        </ArkToast.CloseTrigger>
+      )}
+      {meta?.timed && (
+        <span className={styles.timerTrack} aria-hidden="true">
+          <span className={mergeClasses('toast-timer', styles.timerBar)} />
+        </span>
+      )}
+    </div>
+  )
 }
 
+/* A pilha de cartões de uma quina da tela. Existe uma por quina em uso — o
+ * container monta cada uma. */
+const ToastStack = ({
+  placement,
+  className,
+}: {
+  placement: ToastPlacement
+  /**
+   * Extra classes on each deck, for an app that needs to dodge fixed chrome
+   * of its own
+   */
+  className?: string
+}) => (
+  <ArkToaster toaster={getToaster(placement)} className={className}>
+    {(t) => {
+      return (
+        <ArkToast.Root key={t.id} className={styles.toast}>
+          <ToastCard toast={t} />
+        </ArkToast.Root>
+      )
+    }}
+  </ArkToaster>
+)
+
+/**
+ * Kept for symmetry with other providers — the toasts live in a module-level
+ * store, so nothing has to wrap the app for them to work.
+ */
 export function ToastProvider({ children }: ToastProviderProps) {
   return <>{children}</>
 }
 
-export function ToastContainer({ className: _ }: ToastContainerProps) {
-  return (
-    <ArkToaster toaster={toaster}>
-      {(t) => {
-        const meta = t.meta as ToastMeta | undefined
-        const variant = meta?.variant ?? 'default'
-        const duration = t.duration ?? 4000
-        const elapsed = meta?.createdAt ? Date.now() - meta.createdAt : 0
-        const remaining = Math.max(0, duration - elapsed)
-        const startPct = duration > 0 ? (remaining / duration) * 100 : 0
+/**
+ * Mounts the decks of toasts. One per app, near the root — the settings
+ * given here (placement, duration, how many stack) apply to every toast
+ * fired from anywhere.
+ *
+ * @example
+ * <ToastContainer placement="bottom-end" duration={4000} />
+ */
+export function ToastContainer({
+  className,
+  ...settings
+}: ToastContainerProps) {
+  /* Runs once, before the first paint: a toast fired during module init (a
+   * query-client handler, say) must already read the app's settings. */
+  useState(() => {
+    if (Object.keys(settings).length > 0) configureToasts(settings)
+  })
 
-        return (
-          <ArkToast.Root
-            key={t.id}
-            className={mergeClasses(
-              'relative flex flex-col gap-1 rounded-lg border p-4 pr-8 shadow-md overflow-hidden toast-animated',
-              variantClasses[variant]
-            )}
-          >
-            <span
-              className={mergeClasses(
-                'absolute left-0 top-0 bottom-0 w-1 rounded-l-lg',
-                variantAccent[variant]
-              )}
-            />
-            <ArkToast.Title className={titleClass}>{t.title}</ArkToast.Title>
-            {t.description && (
-              <ArkToast.Description className={descriptionClass}>
-                {t.description}
-              </ArkToast.Description>
-            )}
-            <ArkToast.CloseTrigger className={closeClass} aria-label='Close'>
-              <svg
-                width='14'
-                height='14'
-                viewBox='0 0 24 24'
-                fill='none'
-                stroke='currentColor'
-                strokeWidth='2'
-              >
-                <path d='M18 6 6 18M6 6l12 12' />
-              </svg>
-            </ArkToast.CloseTrigger>
-            {duration !== Infinity && (
-              <motion.div
-                className={mergeClasses(
-                  'absolute bottom-0 left-0 h-0.5 opacity-60',
-                  variantAccent[variant]
-                )}
-                initial={{ width: `${startPct}%` }}
-                animate={{ width: '0%' }}
-                transition={{ duration: remaining / 1000, ease: 'linear' }}
-              />
-            )}
-          </ArkToast.Root>
-        )
-      }}
-    </ArkToaster>
+  const placements = useSyncExternalStore(
+    subscribeToPlacements,
+    getActivePlacements,
+    getActivePlacements
+  )
+
+  return (
+    <>
+      {placements.map((placement) => (
+        <ToastStack
+          key={placement}
+          placement={placement}
+          className={className}
+        />
+      ))}
+    </>
   )
 }

@@ -40,7 +40,9 @@ describe(Dialog.name, () => {
   it('shows loading on confirm button when loading=true', () => {
     render(<Dialog open loading {...defaultProps} />)
     const allButtons = screen.getAllByRole('button')
-    const confirmBtn = allButtons.find((b) => b.getAttribute('aria-busy') === 'true')
+    const confirmBtn = allButtons.find(
+      (b) => b.getAttribute('aria-busy') === 'true'
+    )
     expect(confirmBtn).toBeDisabled()
   })
 
@@ -61,5 +63,4 @@ describe(Dialog.name, () => {
     expect(screen.getByRole('button', { name: 'Excluir' })).toBeInTheDocument()
     expect(screen.getByRole('button', { name: 'Manter' })).toBeInTheDocument()
   })
-
 })

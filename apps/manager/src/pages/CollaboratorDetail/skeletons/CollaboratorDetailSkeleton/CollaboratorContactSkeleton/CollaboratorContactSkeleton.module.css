@@ -1,0 +1,11 @@
+@reference "@nino/ds/globals.css";
+
+/* WHY: o Button do DS no tamanho sm: 32px de altura, cantos redondos
+ */
+.collaboratorContactSkeletonAction {
+  @apply h-8 w-40 max-w-full rounded-full;
+}
+
+.provider {
+  @apply my-0.5 h-3 w-40 rounded-1;
+}

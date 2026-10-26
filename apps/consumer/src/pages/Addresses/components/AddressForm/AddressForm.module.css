@@ -1,0 +1,82 @@
+@reference "@nino/ds/globals.css";
+
+/* WORKAROUND: grade, não linhas de flex com margem — a versão anterior
+ * espaçava os campos pelo `mt` de cada um, e dentro de uma linha o segundo
+ * campo herdava essa margem e descia sozinho, tirando "Nº" e "UF" do esquadro
+ * com os vizinhos. Aqui o espaço é do container.
+ */
+/* WHY: teto de largura no desktop — o painel tem 800px, e um campo de rua
+ * esticado até lá fica mais difícil de mirar, não mais fácil de ler.
+ */
+.addressForm {
+  @apply grid w-full gap-4 lg:max-w-block-lg;
+}
+
+.pair {
+  @apply grid gap-3;
+  grid-template-columns: 1fr 5.5rem;
+}
+
+.pairState {
+  @apply grid gap-3;
+  grid-template-columns: 1fr 4.5rem;
+}
+
+.addressFormLabel {
+  @apply text-xs font-bold text-fg-muted;
+}
+
+.optional {
+  @apply font-medium text-fg-faintest;
+}
+
+.addressFormInput {
+  @apply h-12 w-full rounded-3 border-black/10 bg-surface-raised text-base;
+  @apply text-fg-muted;
+}
+
+.addressFormInput:focus {
+  border-color: var(--store-tint, var(--color-brand));
+  box-shadow: inset 0 0 0 1px var(--store-tint, var(--color-brand));
+}
+
+.zip {
+  @apply grid gap-1.5;
+  grid-template-columns: minmax(0, 11rem);
+}
+
+.zipStatus {
+  @apply mt-1.5 text-xs leading-snug text-fg-faint;
+}
+
+.zipStatusError {
+  @apply mt-1.5 text-xs leading-snug text-danger;
+}
+
+.alert {
+  @apply mt-4;
+}
+
+.addressFormActions {
+  @apply mt-6 flex flex-col gap-2.5 sm:flex-row-reverse;
+}
+
+/* WORKAROUND: largura por `w-full`, nunca por `flex-1` — no celular
+ * `.addressFormActions` é coluna, e em coluna o `flex-1` zera a altura-base do botão e
+ * passa por cima do `h-12`, esmagando-o numa faixa de texto.
+ */
+.addressFormPrimary {
+  @apply flex h-12 w-full items-center justify-center rounded-full;
+  @apply bg-brand;
+  @apply font-bold text-fg-on-brand transition-colors;
+  @apply hover:bg-brand-hover sm:w-auto sm:px-7;
+  @apply disabled:cursor-not-allowed disabled:opacity-dim;
+}
+
+.ghost {
+  @apply flex h-12 w-full items-center justify-center rounded-full border;
+  @apply border-black/[0.08] font-bold text-fg-muted transition-colors;
+  @apply hover:border-accent-peach hover:text-brand-strong sm:w-auto;
+  @apply sm:px-7;
+  @apply disabled:cursor-not-allowed disabled:opacity-dim;
+}

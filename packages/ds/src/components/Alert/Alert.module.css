@@ -1,0 +1,33 @@
+@reference "../../styles/globals.css";
+
+.alert {
+  @apply flex gap-3 rounded-2 p-4;
+}
+
+.info {
+  @apply bg-surface-4 text-fg-default;
+}
+
+.success {
+  @apply bg-success-surface text-success;
+}
+
+.warning {
+  @apply bg-warning-surface text-warning;
+}
+
+.error {
+  @apply bg-danger-surface text-danger;
+}
+
+.text {
+  @apply pt-0.5;
+}
+
+.title {
+  @apply tracking-snug;
+}
+
+.message {
+  @apply leading-normal;
+}

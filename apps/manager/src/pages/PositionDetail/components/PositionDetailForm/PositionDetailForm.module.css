@@ -1,0 +1,50 @@
+@reference "@nino/ds/globals.css";
+
+.layout {
+  @apply flex w-full max-w-4xl flex-1 flex-col;
+}
+
+.main {
+  @apply min-w-0 flex-1;
+}
+
+.permissions {
+  @apply flex flex-col gap-4;
+}
+
+.fields {
+  @apply flex flex-wrap items-start gap-4;
+}
+
+.fields > * {
+  @apply w-full sm:w-72;
+}
+
+.groups {
+  @apply flex flex-col gap-3;
+}
+
+.group {
+  @apply min-w-0 rounded-6 bg-surface-2;
+}
+
+.groupTrigger {
+  @apply min-w-0 flex-1 justify-between gap-3;
+}
+
+.groupItems {
+  @apply grid gap-x-8 gap-y-3 pt-4 xl:grid-cols-2;
+}
+
+.groupCount {
+  @apply text-sm tabular-nums text-fg-faint;
+}
+
+.groupTitle {
+  @apply text-sm font-semibold text-fg-strong;
+}
+
+.actions {
+  @apply sticky bottom-0 -mx-4 justify-end;
+  @apply bg-surface-raised px-4 py-3 lg:mx-0 lg:px-0;
+}

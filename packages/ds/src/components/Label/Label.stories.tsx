@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react'
 
-import { Input } from '../Input'
+import { Input } from '../Input/Input'
 import { Label } from './Label'
 
 const meta: Meta<typeof Label> = {
@@ -26,7 +26,9 @@ export const Required: Story = {
 export const WithInput: Story = {
   render: () => (
     <div className="flex flex-col gap-1.5">
-      <Label htmlFor="email" required>Email address</Label>
+      <Label htmlFor="email" required>
+        Email address
+      </Label>
       <Input id="email" placeholder="you@example.com" />
     </div>
   ),
@@ -35,7 +37,9 @@ export const WithInput: Story = {
 export const WithInputError: Story = {
   render: () => (
     <div className="flex flex-col gap-1.5">
-      <Label htmlFor="email" required>Email address</Label>
+      <Label htmlFor="email" required>
+        Email address
+      </Label>
       <Input id="email" defaultValue="not-an-email" error />
     </div>
   ),

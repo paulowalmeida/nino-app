@@ -1,0 +1,31 @@
+@reference "@nino/ds/globals.css";
+
+.tableTabsListSkeletonList {
+  @apply grid gap-4 pr-1.5 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4;
+}
+
+.tableTabsListSkeletonCard {
+  @apply mb-1.5 ml-1.5 flex min-h-36 flex-col justify-between gap-6 rounded-4 bg-surface-raised p-5;
+  box-shadow: 0 0 0 1px
+    color-mix(in srgb, var(--color-warm-950) 14%, transparent);
+}
+
+.orderNumber {
+  @apply h-4 w-24;
+}
+
+.tableName {
+  @apply mt-2 h-6 w-32;
+}
+
+.tableTabsListSkeletonStatus {
+  @apply h-6 w-16 rounded-full;
+}
+
+.itemCount {
+  @apply h-4 w-14;
+}
+
+.tableTabsListSkeletonTotal {
+  @apply h-6 w-20;
+}

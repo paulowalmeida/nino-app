@@ -1,0 +1,9 @@
+@reference "@nino/ds/globals.css";
+
+.content {
+  @apply w-full;
+}
+
+.ghostRow {
+  @apply h-16 w-full rounded-4;
+}

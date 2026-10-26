@@ -1,45 +1,54 @@
 import { useState } from 'react'
 
-import { mergeClasses } from '@ds/lib/mergeClasses'
+import { Icon } from '@ds/components/Icon/Icon'
+import { Stamp, StampTone } from '@ds/components/Stamp/Stamp'
+import { mergeClasses } from '@ds/lib/mergeClasses/mergeClasses'
 
-import { StepperProps } from './Stepper.types'
+import styles from './Stepper.module.css'
 
-const baseIndicator =
-  'flex h-8 w-8 shrink-0 items-center justify-center rounded-full border-2 text-sm font-semibold transition-colors'
+type StepperStep = {
+  title: string
+  description?: string
+}
 
-const indicatorDefault = 'border-gray-300 bg-white text-gray-500'
-const indicatorActive = 'border-brand bg-brand text-white'
-const indicatorCompleted = 'border-brand bg-brand text-white'
+type StepperOrientation = 'horizontal' | 'vertical'
 
-const separatorHClass = 'h-0.5 flex-1 mx-2 transition-colors'
-const separatorVClass = 'ml-4 mt-1 mb-1 h-6 w-0.5 transition-colors'
-const separatorDone = 'bg-brand'
-const separatorPending = 'bg-gray-200'
+type StepperProps = {
+  /** Title and optional description of each step, in order */
+  steps: StepperStep[]
+  /**
+   * Current step, zero-based. Leave it out and pass `defaultStep` to let the
+   * component keep its own
+   */
+  step?: number
+  defaultStep?: number
+  /**
+   * Called when a marker is clicked. A step the person cannot reach yet
+   * should not be clickable — guard it here.
+   *
+   * Leave it out on a controlled Stepper and the markers stop being
+   * buttons: the path becomes a read-only progress indicator
+   */
+  onStepChange?: (step: number) => void
+  /**
+   * `horizontal` (default) puts the steps side by side; `vertical` stacks
+   * them, which is what fits a narrow screen
+   */
+  orientation?: StepperOrientation
+  className?: string
+}
 
-const baseTrigger =
-  'flex items-center gap-3 rounded outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-1'
-
-const titleActive = 'text-sm font-medium text-brand'
-const titleCompleted = 'text-sm font-medium text-gray-900'
-const titleDefault = 'text-sm font-medium text-gray-500'
-
-const descriptionClass = 'text-xs text-gray-400 mt-0.5'
-
-const CheckIcon = () => (
-  <svg
-    width='14'
-    height='14'
-    viewBox='0 0 24 24'
-    fill='none'
-    stroke='currentColor'
-    strokeWidth='3'
-    strokeLinecap='round'
-    strokeLinejoin='round'
-  >
-    <polyline points='20 6 9 17 4 12' />
-  </svg>
-)
-
+/**
+ * Numbered path through a form that was split in parts — sign-up, checkout.
+ *
+ * The marker is a square with a broken corner, not a bead: a step is a block
+ * in a sequence, and the state is told by how full it is — empty is a
+ * lowered surface, done is solid ink.
+ *
+ * ```tsx
+ * <Stepper steps={[{ title: 'Conta' }, { title: 'Empresa' }]} step={done} />
+ * ```
+ */
 export function Stepper({
   steps,
   step: controlledStep,
@@ -51,6 +60,7 @@ export function Stepper({
   const [internalStep, setInternalStep] = useState(defaultStep)
   const current = controlledStep ?? internalStep
   const isVertical = orientation === 'vertical'
+  const isInteractive = !!onStepChange || controlledStep === undefined
 
   const handleClick = (index: number) => {
     if (controlledStep === undefined) setInternalStep(index)
@@ -58,98 +68,95 @@ export function Stepper({
   }
 
   return (
-    <div
-      role='list'
-      aria-label='Progress'
+    <ol
+      aria-label="Progresso"
       className={mergeClasses(
-        'flex w-full',
-        isVertical ? 'flex-col' : 'items-start',
+        styles.stepper,
+        isVertical ? styles.stepperVertical : styles.stepperHorizontal,
         className
       )}
     >
-      {steps.map((s, index) => {
+      {steps.map((step, index) => {
         const isCompleted = index < current
         const isCurrent = index === current
-        const indicatorClass = isCompleted || isCurrent
-          ? isCurrent
-            ? indicatorActive
-            : indicatorCompleted
-          : indicatorDefault
-        const titleClass = isCurrent
-          ? titleActive
+        const tone: StampTone = isCurrent
+          ? 'brand'
           : isCompleted
-            ? titleCompleted
-            : titleDefault
+            ? 'inverse'
+            : 'neutral'
+        const titleClass = isCurrent
+          ? styles.titleActive
+          : isCompleted
+            ? styles.titleCompleted
+            : styles.titleDefault
 
-        return (
+        const label = (
           <div
-            key={index}
-            role='listitem'
-            className={mergeClasses(
-              'flex',
-              isVertical ? 'flex-col' : 'flex-1 flex-col items-center'
-            )}
+            className={
+              isVertical ? styles.labelVertical : styles.labelHorizontal
+            }
           >
-            <div
-              className={mergeClasses(
-                'flex items-center',
-                isVertical ? 'gap-3' : 'w-full'
-              )}
-            >
-              <button
-                type='button'
-                aria-label={s.title}
-                aria-current={isCurrent ? 'step' : undefined}
-                onClick={() => handleClick(index)}
-                className={mergeClasses(
-                  baseTrigger,
-                  isVertical ? '' : 'justify-center'
-                )}
-              >
-                <span className={mergeClasses(baseIndicator, indicatorClass)}>
-                  {isCompleted ? <CheckIcon /> : <span>{index + 1}</span>}
-                </span>
-              </button>
-              {!isVertical && index < steps.length - 1 && (
-                <div
-                  aria-hidden
-                  className={mergeClasses(
-                    separatorHClass,
-                    isCompleted ? separatorDone : separatorPending
-                  )}
-                />
-              )}
-            </div>
-            {!isVertical && (
-              <div className='mt-2 text-center'>
-                <p className={titleClass}>{s.title}</p>
-                {s.description && (
-                  <p className={descriptionClass}>{s.description}</p>
-                )}
-              </div>
-            )}
-            {isVertical && (
-              <div className='ml-11'>
-                <p className={titleClass}>{s.title}</p>
-                {s.description && (
-                  <p className={descriptionClass}>{s.description}</p>
-                )}
-              </div>
-            )}
-            {isVertical && index < steps.length - 1 && (
-              <div
-                aria-hidden
-                className={mergeClasses(
-                  separatorVClass,
-                  isCompleted ? separatorDone : separatorPending
-                )}
-              />
+            <p className={titleClass}>{step.title}</p>
+            {step.description && (
+              <p className={styles.description}>{step.description}</p>
             )}
           </div>
         )
+
+        const separator = index < steps.length - 1 && (
+          <div
+            aria-hidden
+            className={mergeClasses(
+              isVertical
+                ? styles.separatorVertical
+                : styles.separatorHorizontal,
+              isCompleted ? styles.separatorDone : styles.separatorPending
+            )}
+          />
+        )
+
+        return (
+          <li
+            key={index}
+            className={mergeClasses(
+              styles.step,
+              isVertical ? styles.stepVertical : styles.stepHorizontal
+            )}
+          >
+            {isInteractive ? (
+              <button
+                type="button"
+                aria-label={step.title}
+                aria-current={isCurrent ? 'step' : undefined}
+                onClick={() => handleClick(index)}
+                className={mergeClasses(
+                  styles.stepButton,
+                  !isVertical && styles.stepButtonHorizontal
+                )}
+              >
+                <Stamp size="lg" tone={tone} className={styles.stepNumber}>
+                  {isCompleted ? <Icon name="check" size="sm" /> : index + 1}
+                </Stamp>
+              </button>
+            ) : (
+              <div
+                aria-current={isCurrent ? 'step' : undefined}
+                className={mergeClasses(
+                  styles.stepMarker,
+                  !isVertical && styles.stepButtonHorizontal
+                )}
+              >
+                <Stamp size="lg" tone={tone} className={styles.stepNumber}>
+                  {isCompleted ? <Icon name="check" size="sm" /> : index + 1}
+                </Stamp>
+              </div>
+            )}
+            {!isVertical && separator}
+            {label}
+            {isVertical && separator}
+          </li>
+        )
       })}
-    </div>
+    </ol>
   )
 }
-
-Stepper.displayName = 'Stepper'

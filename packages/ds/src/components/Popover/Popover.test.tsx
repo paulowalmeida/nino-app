@@ -4,7 +4,7 @@ import { describe, expect, it, vi } from 'vitest'
 
 import { Popover } from './Popover'
 
-describe(Popover.displayName!, () => {
+describe(Popover.name, () => {
   it('does not show content initially', () => {
     render(
       <Popover trigger={<button>Abrir</button>}>
@@ -26,7 +26,7 @@ describe(Popover.displayName!, () => {
 
   it('renders title when provided', async () => {
     render(
-      <Popover trigger={<button>Abrir</button>} title='Título'>
+      <Popover trigger={<button>Abrir</button>} title="Título">
         <span>Conteúdo</span>
       </Popover>
     )

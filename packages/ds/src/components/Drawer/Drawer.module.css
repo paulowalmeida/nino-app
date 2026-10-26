@@ -1,0 +1,208 @@
+@reference "../../styles/globals.css";
+
+@keyframes drawerVeilIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes drawerVeilOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes slideInFromRight {
+  from {
+    translate: 100% 0;
+  }
+  to {
+    translate: 0 0;
+  }
+}
+
+@keyframes slideOutToRight {
+  from {
+    translate: 0 0;
+  }
+  to {
+    translate: 100% 0;
+  }
+}
+
+@keyframes slideInFromLeft {
+  from {
+    translate: -100% 0;
+  }
+  to {
+    translate: 0 0;
+  }
+}
+
+@keyframes slideOutToLeft {
+  from {
+    translate: 0 0;
+  }
+  to {
+    translate: -100% 0;
+  }
+}
+
+@keyframes slideInFromBottom {
+  from {
+    translate: 0 100%;
+  }
+  to {
+    translate: 0 0;
+  }
+}
+
+@keyframes slideOutToBottom {
+  from {
+    translate: 0 0;
+  }
+  to {
+    translate: 0 100%;
+  }
+}
+
+@keyframes slideInFromTop {
+  from {
+    translate: 0 -100%;
+  }
+  to {
+    translate: 0 0;
+  }
+}
+
+@keyframes slideOutToTop {
+  from {
+    translate: 0 0;
+  }
+  to {
+    translate: 0 -100%;
+  }
+}
+
+.backdrop {
+  @apply fixed inset-0 z-overlay bg-fg-strong/50 backdrop-blur-sm;
+}
+
+.backdrop[data-state='open'] {
+  animation: drawerVeilIn var(--duration-base) var(--ease-out);
+}
+
+.backdrop[data-state='closed'] {
+  animation: drawerVeilOut var(--duration-fast) var(--ease-in) forwards;
+}
+
+.positioner {
+  @apply fixed inset-0 z-modal flex overflow-hidden;
+}
+
+.alignRight {
+  @apply ml-auto;
+}
+
+.alignLeft {
+  @apply mr-auto;
+}
+
+.alignBottom {
+  @apply mt-auto;
+}
+
+.alignTop {
+  @apply mb-auto;
+}
+
+.sizeVertical {
+  @apply h-full;
+}
+
+.sizeHorizontal {
+  @apply w-full;
+}
+
+.panel {
+  @apply flex max-w-full flex-col outline-none;
+  @apply bg-surface-raised shadow-warm-lg;
+}
+
+.slideFromRight[data-state='open'] {
+  animation: slideInFromRight var(--duration-slow) var(--ease-out-soft);
+}
+
+.slideFromRight[data-state='closed'] {
+  animation: slideOutToRight var(--duration-base) var(--ease-in) forwards;
+}
+
+.slideFromLeft[data-state='open'] {
+  animation: slideInFromLeft var(--duration-slow) var(--ease-out-soft);
+}
+
+.slideFromLeft[data-state='closed'] {
+  animation: slideOutToLeft var(--duration-base) var(--ease-in) forwards;
+}
+
+.slideFromBottom[data-state='open'] {
+  animation: slideInFromBottom var(--duration-slow) var(--ease-out-soft);
+}
+
+.slideFromBottom[data-state='closed'] {
+  animation: slideOutToBottom var(--duration-base) var(--ease-in) forwards;
+}
+
+.slideFromTop[data-state='open'] {
+  animation: slideInFromTop var(--duration-slow) var(--ease-out-soft);
+}
+
+.slideFromTop[data-state='closed'] {
+  animation: slideOutToTop var(--duration-base) var(--ease-in) forwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .backdrop[data-state='open'],
+  .backdrop[data-state='closed'],
+  .panel[data-state='open'],
+  .panel[data-state='closed'] {
+    animation-duration: 1ms;
+  }
+}
+
+.header {
+  @apply flex items-center justify-between px-6 pb-2 pt-6;
+}
+
+.title {
+  @apply font-display text-base font-semibold tracking-snug text-fg-strong;
+}
+
+.description {
+  @apply mt-1 text-sm leading-normal text-fg-muted;
+}
+
+.scrollArea {
+  @apply flex-1 overflow-y-auto px-6 py-4;
+}
+
+.closeButton {
+  @apply flex cursor-pointer rounded-full p-3.5 text-fg-faint;
+  @apply transition-colors;
+  @apply hover:bg-surface-5 hover:text-fg-strong;
+  @apply focus-ring;
+}
+
+.dragHandleRow {
+  @apply flex h-11 shrink-0 touch-none cursor-grab items-center justify-center;
+}
+
+.dragHandlePill {
+  @apply h-1 w-9 rounded-full bg-fg-strong/15;
+}

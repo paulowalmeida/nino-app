@@ -1,0 +1,62 @@
+@reference "@nino/ds/globals.css";
+
+.step {
+  @apply min-h-0 flex-1 gap-3.5 overflow-y-auto px-6 py-4;
+  padding-inline: var(--checkout-gutter, 1.5rem);
+  overscroll-behavior: contain;
+}
+
+.ticket {
+  @apply gap-3 rounded-3 border border-border bg-surface-page p-4;
+}
+
+.ticketItems {
+  @apply gap-1.5;
+}
+
+.ticketItem {
+  @apply flex flex-row justify-between gap-2.5 text-sm;
+  font-variant-numeric: tabular-nums;
+}
+
+.ticketQuantity {
+  @apply text-fg-faint;
+}
+
+.ticketName {
+  @apply flex-1;
+}
+
+.modifiers {
+  @apply mt-0.5 border-l-2 border-brand-soft pl-2;
+}
+
+.dashed {
+  @apply h-px;
+  background: repeating-linear-gradient(
+    to right,
+    var(--color-border) 0 5px,
+    transparent 5px 10px
+  );
+}
+
+.printed {
+  @apply gap-2.5;
+}
+
+.printedRow {
+  @apply gap-px;
+}
+
+.printedValue {
+  @apply font-semibold text-fg-default;
+  font-size: 13.5px;
+}
+
+.totals {
+  @apply gap-1;
+}
+
+.money {
+  font-variant-numeric: tabular-nums;
+}

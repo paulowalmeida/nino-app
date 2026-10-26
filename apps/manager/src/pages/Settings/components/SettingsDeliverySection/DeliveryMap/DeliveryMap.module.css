@@ -1,0 +1,25 @@
+@reference "@nino/ds/globals.css";
+
+.deliveryMapWrapper {
+  @apply flex min-w-0 flex-col gap-2;
+}
+
+.deliveryMapHeader {
+  @apply flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1;
+}
+
+.frame {
+  @apply overflow-hidden rounded-xl border border-border;
+}
+
+.map {
+  @apply h-64 w-full sm:h-80 lg:h-96;
+}
+
+.error {
+  @apply flex h-40 items-center justify-center rounded-xl border border-dashed border-border px-6 text-center;
+}
+
+.skeleton {
+  @apply h-64 w-full rounded-xl sm:h-80 lg:h-96;
+}

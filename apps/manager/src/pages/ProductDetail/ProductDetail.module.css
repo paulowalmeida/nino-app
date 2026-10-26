@@ -1,0 +1,10 @@
+@reference "@nino/ds/globals.css";
+
+.productDetailPage {
+  @apply max-w-5xl p-4 lg:p-10;
+}
+
+.headerRow {
+  @apply flex-col items-start gap-3 border-b border-border/60 pb-5;
+  @apply sm:flex-row sm:items-center sm:gap-4;
+}

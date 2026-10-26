@@ -1,0 +1,5 @@
+@reference "@nino/ds/globals.css";
+
+.positionDetailPage {
+  @apply relative flex max-w-workspace flex-col p-4 lg:p-10;
+}

@@ -1,0 +1,29 @@
+@reference "@nino/ds/globals.css";
+
+.who {
+  @apply flex min-w-0 items-center gap-3;
+}
+
+.identity {
+  @apply flex min-w-0 flex-col gap-1.5;
+}
+
+.ghostMark {
+  @apply h-10 w-10 shrink-0;
+}
+
+.ghostName {
+  @apply h-4 w-28;
+}
+
+.ghostPhone {
+  @apply h-3 w-20;
+}
+
+.colNumber {
+  @apply text-right;
+}
+
+.ghostCell {
+  @apply ml-auto h-3.5 w-14;
+}

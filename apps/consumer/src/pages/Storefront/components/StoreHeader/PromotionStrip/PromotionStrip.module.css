@@ -1,0 +1,31 @@
+@reference "@nino/ds/globals.css";
+
+/* WHY: tira fina na cor de marca da loja (suave) para a condição ler como
+ * oferta da casa, não como aviso de sistema — o Alert fica para indisponível.
+ */
+.promotionStrip {
+  @apply mt-4 flex flex-col gap-1 rounded-3 bg-brand-soft px-4 py-3;
+}
+
+.promotionOffer {
+  @apply flex items-center gap-2;
+}
+
+.promotionIcon {
+  @apply shrink-0 text-brand-strong;
+}
+
+.promotionText {
+  @apply text-sm font-semibold leading-snug text-brand-strong;
+}
+
+/* WHY: frete grátis fala em verde, como no carrinho e no recibo. A tira só
+ * fica verde quando não divide espaço com outra oferta. */
+.freeDeliveryStrip {
+  @apply bg-success-surface;
+}
+
+.freeDeliveryOffer .promotionIcon,
+.freeDeliveryOffer .promotionText {
+  @apply text-success;
+}

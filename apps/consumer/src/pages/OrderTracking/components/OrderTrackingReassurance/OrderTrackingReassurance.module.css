@@ -1,0 +1,10 @@
+@reference "@nino/ds/globals.css";
+
+.reassurance {
+  @apply mt-3.5 flex items-center gap-2.5 px-1 text-xs leading-snug;
+  @apply text-fg-muted;
+}
+
+.whatsappDot {
+  @apply h-2 w-2 shrink-0 rounded-full bg-accent-whatsapp;
+}

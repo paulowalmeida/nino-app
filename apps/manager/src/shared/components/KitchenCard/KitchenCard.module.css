@@ -1,0 +1,235 @@
+@reference "@nino/ds/globals.css";
+
+
+.kitchenCard {
+  --paper: var(--color-warm-200);
+  --edge: color-mix(in srgb, var(--paper) 88%, var(--color-warm-950));
+  @apply relative flex flex-col overflow-hidden rounded-3;
+  background: var(--paper);
+  border: 1px solid var(--edge);
+  box-shadow: 0 8px 16px -12px
+    color-mix(in srgb, var(--color-warm-950) 45%, transparent);
+}
+
+
+.paperPlain {
+  --paper: #f3efe8;
+}
+
+.paperDelivery {
+  --paper: #e5edf4;
+}
+
+.paperPickup {
+  --paper: #f8f0d6;
+}
+
+.paperCounter {
+  --paper: #f2eade;
+}
+
+.paperTable {
+  --paper: #e6eee5;
+}
+
+.head {
+  @apply flex items-baseline justify-between gap-3 px-3 pt-3 sm:px-4;
+}
+
+
+.number {
+  @apply font-display text-2xl leading-none font-extrabold text-fg-strong;
+  @apply tracking-[-0.03em] sm:text-3xl;
+  font-variant-numeric: tabular-nums;
+}
+
+.clock {
+  @apply shrink-0 text-lg leading-none font-bold text-fg-subtle sm:text-xl;
+  font-variant-numeric: tabular-nums;
+}
+
+.who {
+  @apply flex-wrap gap-x-2 gap-y-1 px-3 pt-2 pb-3 sm:px-4;
+}
+
+.destination {
+  @apply shrink-0 px-2 py-0.5 text-xs;
+}
+
+.name {
+  @apply min-w-0 flex-1 truncate text-base font-semibold text-fg-muted;
+}
+
+.cook {
+  @apply shrink-0 rounded-full;
+}
+
+.cook:focus-visible {
+  @apply ring-2 ring-fg-strong ring-offset-2 ring-offset-transparent;
+}
+
+.cookAvatar {
+  @apply bg-brand-muted text-brand;
+}
+
+
+.ruler {
+  @apply h-1.5 shrink-0 overflow-hidden;
+  background: color-mix(in srgb, var(--paper) 88%, var(--color-warm-950));
+}
+
+
+.fill {
+  @apply block h-full;
+  width: calc((1 - var(--t, 0)) * 100%);
+  background-image: linear-gradient(
+    100deg,
+    transparent 12%,
+    color-mix(in srgb, var(--color-white) 38%, transparent) 50%,
+    transparent 88%
+  );
+  background-size: 45% 100%;
+  background-repeat: no-repeat;
+  animation: crest var(--crest-pace, 4.5s) linear infinite;
+  transition:
+    width 900ms linear,
+    background-color 600ms var(--ease-out-soft);
+}
+
+@keyframes crest {
+  from {
+    background-position: -55% 0;
+  }
+  to {
+    background-position: 155% 0;
+  }
+}
+
+
+.paceFresh .fill {
+  --crest-pace: 5s;
+  background-color: var(--color-success);
+}
+
+.paceClosing .fill {
+  --crest-pace: 3.2s;
+  background-color: var(--color-warning);
+}
+
+.paceDue .fill {
+  --crest-pace: 2s;
+  background-color: var(--color-danger);
+}
+
+
+.paceLate .fill {
+  --crest-pace: 1.3s;
+  width: 100%;
+  background-color: var(--color-danger);
+}
+
+.paceLate .ruler {
+  @apply h-2;
+}
+
+.paceLate .clock {
+  @apply text-danger;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fill {
+    animation: none;
+    background-image: none;
+    transition: none;
+  }
+}
+
+.items {
+  @apply flex flex-1 flex-col gap-2 px-3 py-3 sm:px-4;
+}
+
+.kitchenCardItem {
+  @apply flex items-center gap-3 text-base leading-tight text-fg-strong;
+  @apply sm:text-xl;
+}
+
+
+.quantity {
+  @apply shrink-0 font-display text-base font-extrabold;
+  @apply bg-fg-strong text-fg-inverse;
+  font-variant-numeric: tabular-nums;
+}
+
+.itemName {
+  @apply min-w-0 flex-1 font-medium;
+}
+
+
+.notes {
+  @apply mx-3 mb-3 py-1 pl-3 text-sm leading-snug italic sm:mx-4 sm:text-base;
+  @apply font-semibold text-fg-strong;
+  border-left: 3px solid var(--color-fg-strong);
+}
+
+.kitchenCardAction {
+  @apply mx-3 mb-4 h-12 text-sm sm:mx-4 sm:h-14 sm:text-base;
+}
+
+
+.compact .head {
+  @apply pt-2;
+}
+
+.compact .number {
+  @apply text-2xl;
+}
+
+.compact .clock {
+  @apply text-lg;
+}
+
+.compact .who {
+  @apply pb-2;
+}
+
+.kitchenCardSummary {
+  @apply mx-3 my-3 text-sm font-semibold text-fg-subtle sm:mx-4;
+}
+
+.compact .kitchenCardAction {
+  @apply h-11;
+}
+
+.ghostNumber {
+  @apply h-8 w-12;
+}
+
+.ghostClock {
+  @apply h-6 w-14;
+}
+
+.ghostDestination {
+  @apply h-5 w-16 rounded-1;
+}
+
+.ghostName {
+  @apply h-5 min-w-0 flex-1;
+}
+
+.ghostQuantity {
+  @apply h-8 w-8 shrink-0 rounded-2;
+}
+
+.ghostItemName {
+  @apply h-5 min-w-0 flex-1;
+}
+
+.ghostAction {
+  @apply mx-4 mt-1 mb-4 h-14;
+}
+
+/* WHY: o brinde sai da cozinha como item normal; o selo evita que alguém
+ * estranhe o item a R$ 0 ou o cobre do cliente. */
+.giftBadge {
+  @apply ml-2 align-middle;
+}

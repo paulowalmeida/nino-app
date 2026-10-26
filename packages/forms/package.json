@@ -3,7 +3,9 @@
   "version": "0.0.1",
   "private": true,
   "exports": {
-    ".": "./src/index.ts"
+    "./FormBuilder": "./src/FormBuilder.tsx",
+    "./renderField": "./src/renderField.tsx",
+    "./types": "./src/types.ts"
   },
   "scripts": {
     "test": "vitest run",

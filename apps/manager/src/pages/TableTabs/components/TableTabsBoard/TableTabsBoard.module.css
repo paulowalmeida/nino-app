@@ -1,0 +1,61 @@
+@reference "@nino/ds/globals.css";
+
+.tableTabsBoard {
+  @apply flex min-h-0 flex-1 flex-col;
+}
+
+.tableTabsBoardControls {
+  @apply flex shrink-0 flex-col gap-4 px-4 pt-5;
+  @apply sm:flex-row sm:items-center lg:px-10 lg:pt-7;
+}
+
+.tableTabsBoardSearch {
+  @apply w-full sm:max-w-md;
+}
+
+.tableTabsBoardGroups [data-part='content'] {
+  @apply hidden;
+}
+
+.skeletonSearch {
+  @apply h-11 w-full sm:max-w-md;
+}
+
+.skeletonGroups {
+  @apply h-13 w-full shrink-0 rounded-2 sm:w-64;
+}
+
+.tableTabsBoardScroll {
+  @apply min-h-0 flex-1 overflow-y-auto px-4 pb-4 pt-5;
+  @apply lg:px-10 lg:pb-10 lg:pt-7;
+}
+
+.tableTabsBoardList {
+  @apply grid gap-4 pr-1.5 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4;
+}
+
+.resultTransition {
+  @apply relative;
+}
+
+.resultSkeleton {
+  @apply min-w-0;
+}
+
+.resultSkeletonExit {
+  @apply pointer-events-none absolute inset-0;
+  animation: skeleton-out 160ms var(--ease-out) both;
+}
+
+@keyframes skeleton-out {
+  to {
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .resultSkeletonExit {
+    animation: none;
+    opacity: 0;
+  }
+}

@@ -1,0 +1,190 @@
+@reference "@nino/ds/globals.css";
+
+/* WHY: A superfície, o anel e a elevação vêm do `Card` do Design System. Aqui
+ * fica só o que é do cardápio: o canto mais largo que o padrão e o realce na
+ * cor da loja ao passar o mouse.
+ */
+.menuItemCard {
+  @apply relative isolate rounded-4;
+  @apply transition-[box-shadow,transform] duration-base;
+}
+
+@media (hover: hover) {
+  .menuItemCard:hover {
+    box-shadow:
+      0 0 0 1px
+        color-mix(
+          in srgb,
+          var(--store-tint, var(--color-brand)) 45%,
+          transparent
+        ),
+      0 8px 20px -12px
+        color-mix(in srgb, var(--color-warm-950) 20%, transparent);
+    transform: translateY(-2px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .menuItemCard,
+  .menuItemCard:hover {
+    transform: none;
+  }
+}
+
+.menuItemCard:has(.open:focus-visible) {
+  outline: 2px solid var(--store-tint, var(--color-brand));
+  outline-offset: 2px;
+}
+
+.disabled {
+  @apply grayscale;
+  opacity: 0.55;
+}
+
+@media (hover: hover) {
+  .disabled:hover {
+    transform: none;
+    box-shadow: var(--card-ring);
+  }
+}
+
+.open {
+  @apply flex w-full cursor-pointer appearance-none gap-3 border-0;
+  @apply bg-transparent p-0 text-left;
+  @apply flex-row items-stretch;
+  height: auto;
+  border-radius: inherit;
+}
+
+.open:disabled {
+  @apply cursor-not-allowed;
+}
+
+.open:hover,
+.open:active {
+  background-color: transparent;
+}
+
+.open:focus-visible {
+  outline: none;
+}
+
+.menuItemCardMedia {
+  @apply relative shrink-0 self-start overflow-hidden rounded-3 bg-surface-cool;
+  @apply w-28 lg:w-36;
+  aspect-ratio: 4 / 3;
+}
+
+.photoWrap {
+  @apply h-full min-h-0 min-w-0 w-full;
+}
+
+.photoPlaceholder {
+  composes: nino-skeleton from global;
+  @apply h-full min-h-0 min-w-0 w-full bg-black/[0.06];
+}
+
+.photo {
+  @apply block h-full min-h-0 min-w-0 w-full object-cover;
+}
+
+.menuItemCardBody {
+  @apply flex min-w-0 flex-1 flex-col pr-10;
+}
+
+.name {
+  @apply font-display text-[0.9375rem] font-bold leading-snug text-fg-strong;
+  @apply sm:text-base;
+}
+
+.menuItemCardDescription {
+  @apply mt-2 line-clamp-2 text-[0.8125rem] leading-relaxed text-fg-subtle;
+  @apply lg:mt-2.5 lg:line-clamp-3 lg:text-sm;
+}
+
+.price {
+  @apply mt-auto pt-2 font-display text-[0.9375rem] font-medium;
+  color: var(--color-success);
+  font-variant-numeric: tabular-nums;
+}
+
+.tally {
+  @apply absolute left-1.5 top-1.5 z-content inline-flex h-6 min-w-6;
+  @apply items-center justify-center rounded-full px-1.5;
+  @apply text-xs font-extrabold text-fg-on-brand;
+  background-color: var(--store-tint, var(--color-brand));
+  font-variant-numeric: tabular-nums;
+}
+
+/* WHY: o somar fica no mesmo canto do card em todo breakpoint; o anel branco
+ * separa o controle da foto por baixo dele.
+ */
+.add {
+  @apply absolute bottom-2 right-2 z-content flex h-9 w-9 items-center;
+  @apply justify-center rounded-full border-0 text-fg-on-brand;
+  @apply ring-2 ring-surface-page;
+  @apply sm:bottom-3 sm:right-3 sm:h-10 sm:w-10;
+  background-color: var(--store-tint, var(--color-brand));
+  box-shadow: 0 4px 12px -4px
+    color-mix(in srgb, var(--store-tint, var(--color-brand)) 55%, transparent);
+  transition:
+    transform var(--duration-fast) var(--ease-out),
+    filter var(--duration-fast) var(--ease-out);
+}
+
+@media (hover: hover) {
+  .add:hover {
+    filter: brightness(0.94);
+  }
+}
+
+.add:active {
+  transform: scale(0.9);
+}
+
+.add:disabled {
+  @apply cursor-not-allowed;
+  filter: grayscale(1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .add:active {
+    transform: none;
+  }
+}
+
+.menuItemCard[data-image-ratio='1:1'] .menuItemCardMedia {
+  aspect-ratio: 1 / 1;
+}
+
+.menuItemCard[data-image-ratio='4:3'] .menuItemCardMedia {
+  aspect-ratio: 4 / 3;
+}
+
+.menuItemCard[data-image-ratio='16:9'] .menuItemCardMedia {
+  aspect-ratio: 16 / 9;
+}
+
+.menuItemCard[data-density='compact'] .menuItemCardBody {
+  @apply gap-0.5;
+}
+
+.menuItemCard[data-density='compact'] .menuItemCardDescription {
+  @apply line-clamp-1;
+}
+
+.menuItemCard[data-item-style='big-image'] .open {
+  @apply flex-col items-stretch;
+}
+
+.menuItemCard[data-item-style='big-image'] .menuItemCardMedia {
+  @apply w-full max-h-60 sm:max-h-72;
+}
+
+.menuItemCard[data-item-style='condensed'] .menuItemCardMedia {
+  @apply size-12;
+}
+
+.menuItemCard[data-item-style='text-only'] .menuItemCardMedia {
+  @apply hidden;
+}

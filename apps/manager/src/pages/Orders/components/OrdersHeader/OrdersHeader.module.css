@@ -1,0 +1,22 @@
+@reference "@nino/ds/globals.css";
+
+.ordersHeader {
+  @apply flex shrink-0 items-center justify-between gap-3;
+  @apply lg:items-start;
+}
+
+.ordersHeader p {
+  @apply hidden lg:block;
+}
+
+.loadingLabel {
+  @apply sr-only;
+}
+
+.skeletonTitle {
+  @apply h-8 w-28 lg:h-9;
+}
+
+.skeletonDescription {
+  @apply hidden h-5 w-96 max-w-full lg:block;
+}

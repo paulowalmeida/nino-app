@@ -1,0 +1,12 @@
+@reference "@nino/ds/globals.css";
+
+.inlineEditTrigger {
+  @apply -ml-1.5 h-auto justify-start px-1.5 py-1;
+  @apply text-sm font-semibold tabular-nums text-fg-default;
+  @apply hover:bg-surface-2;
+}
+
+/* WHY: ocupa só a largura da coluna — o campo não empurra as vizinhas. */
+.inlineEditInput {
+  @apply h-9 w-full min-w-0 px-1.5 text-sm font-semibold tabular-nums;
+}

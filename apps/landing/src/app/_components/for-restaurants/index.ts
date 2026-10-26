@@ -1,0 +1,1 @@
+export { ForRestaurants } from "./ForRestaurants"

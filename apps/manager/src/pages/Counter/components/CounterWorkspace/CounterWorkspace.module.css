@@ -1,0 +1,53 @@
+@reference "@nino/ds/globals.css";
+
+.floor {
+  @apply flex min-h-0 flex-1 flex-col gap-4 overflow-hidden pb-24;
+  @apply lg:min-h-0 lg:pb-0;
+}
+
+/* WHY: o positioner do Modal centraliza o painel dentro de um p-4; `fixed
+ * inset-0` tira o painel desse fluxo para ele encostar nas quatro bordas da
+ * tela, que é o que a venda no celular pede.
+ */
+.sheet {
+  @apply fixed inset-0 h-[100dvh] w-full max-w-none;
+  @apply overflow-hidden rounded-none p-0;
+  --checkout-gutter: 1rem;
+}
+
+.sheet > div:last-child {
+  @apply h-full min-h-0 p-0;
+}
+
+.sheetBody {
+  @apply flex h-full min-h-0 flex-col;
+}
+
+.sheetTitle {
+  @apply shrink-0 pb-1 pr-14;
+  padding-left: var(--checkout-gutter);
+  padding-top: max(1rem, env(safe-area-inset-top));
+}
+
+.sheetBack {
+  @apply size-11 shrink-0 rounded-full p-0 text-fg-faint;
+}
+
+.counterWorkspaceMenu {
+  @apply flex min-w-0 flex-1 flex-col lg:min-h-0;
+  container-type: inline-size;
+}
+
+.sale {
+  @apply flex w-full flex-col bg-surface-page;
+  @apply lg:h-full lg:min-h-0;
+}
+
+@media (min-width: 640px) and (min-height: 480px) {
+  .sheet {
+    @apply relative inset-auto w-full rounded-4;
+    max-width: 60rem;
+    height: min(56rem, calc(100dvh - 2rem));
+    --checkout-gutter: 1.5rem;
+  }
+}

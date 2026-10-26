@@ -1,0 +1,156 @@
+@reference '../../theme.css';
+.landingHeader {
+  @apply fixed top-0 left-0 right-0 z-nav;
+  @apply py-[1.1rem] px-0 bg-transparent;
+  @apply transition-[padding] duration-300;
+}
+
+.landingHeader::before {
+  content: "";
+  @apply absolute inset-0 z-below opacity-0 transition-opacity duration-300;
+  background: linear-gradient(165deg, #ff7e1f 0%, #ec5a0e 100%);
+  @apply shadow-warm-md;
+}
+
+.scrolled::before {
+  @apply opacity-100;
+}
+
+.scrolled {
+  @apply py-[0.55rem];
+}
+
+@supports (animation-timeline: scroll()) {
+  .landingHeader::before {
+    animation: header-fill linear both;
+    animation-timeline: scroll(root);
+    animation-range: 16px 72px;
+  }
+}
+
+@keyframes header-fill {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.headerInner {
+  @apply max-w-[1200px] mx-auto px-10;
+  @apply flex items-center justify-between;
+}
+
+.headerBrand {
+  @apply flex items-center gap-2 no-underline;
+}
+
+.mascot {
+  @apply block w-10 h-10;
+  filter: drop-shadow(
+    0 2px 6px color-mix(in srgb, var(--color-burnt-900) 20%, transparent)
+  );
+  @apply transition-[width,height] duration-300;
+}
+
+.scrolled .mascot {
+  @apply w-[34px] h-[34px];
+}
+
+.wordmark {
+  @apply [font-family:var(--font-display)] font-extrabold;
+  @apply text-[1.7rem] tracking-[-0.5px] text-fg-on-brand;
+}
+
+.wordmark i {
+  @apply text-fg-inverse not-italic;
+}
+
+.headerNav {
+  @apply flex items-center gap-8;
+  @apply static inset-auto p-0 bg-transparent bg-none;
+  @apply border-0 z-auto;
+  backdrop-filter: none;
+}
+
+.navLink {
+  @apply text-fg-on-brand/85 no-underline font-medium;
+  @apply text-base transition-colors duration-200;
+}
+
+.navLink:hover {
+  @apply text-fg-on-brand;
+}
+
+.enterButton {
+  @apply inline-flex items-center gap-[0.45rem];
+  @apply text-fg-on-brand no-underline font-medium text-base;
+  @apply border-2 border-fg-on-brand/55 py-2 px-[1.2rem] rounded-full;
+  @apply transition-all duration-200;
+}
+
+.enterButton:hover {
+  @apply bg-surface-raised text-brand-strong border-fg-on-brand;
+}
+
+.enterIcon {
+  @apply inline-box w-4 h-4 shrink-0 bg-current;
+  -webkit-mask: url(/assets/icon-login.svg) no-repeat center / contain;
+  mask: url(/assets/icon-login.svg) no-repeat center / contain;
+}
+
+.burger {
+  @apply hidden flex-col gap-[5px] cursor-pointer p-1;
+  @apply bg-transparent border-0;
+}
+
+.burger span {
+  @apply block w-6 h-0.5 bg-surface-raised rounded-1;
+  @apply transition-all duration-300 origin-center;
+}
+
+.burger.open span:nth-child(1) {
+  @apply translate-y-[7px] rotate-45;
+}
+
+.burger.open span:nth-child(2) {
+  @apply opacity-0 scale-x-0;
+}
+
+.burger.open span:nth-child(3) {
+  @apply -translate-y-[7px] -rotate-45;
+}
+
+.mobileMenu {
+  @apply fixed inset-0 z-modal;
+  @apply flex flex-col items-center justify-center gap-7;
+  background: linear-gradient(165deg, #ff7e1f 0%, #ec5a0e 100%);
+  @apply opacity-0 pointer-events-none;
+  @apply -translate-y-4 transition-all duration-300;
+}
+
+.mobileMenu.open {
+  @apply opacity-100 pointer-events-auto translate-y-0;
+}
+
+.mobileMenu a {
+  @apply [font-family:var(--font-display)] text-[1.6rem];
+  @apply font-bold text-fg-on-brand no-underline;
+}
+
+.mobileClose {
+  @apply absolute top-5 right-5;
+  @apply bg-surface-raised/[0.18] border-0 text-fg-on-brand;
+  @apply w-10 h-10 rounded-full text-lg cursor-pointer;
+}
+
+@media (max-width: 900px) {
+  .headerNav {
+    @apply hidden;
+  }
+
+  .burger {
+    @apply flex;
+  }
+}

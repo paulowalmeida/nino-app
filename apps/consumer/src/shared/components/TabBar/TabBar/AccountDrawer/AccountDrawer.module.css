@@ -1,0 +1,133 @@
+@reference "@nino/ds/globals.css";
+
+.accountDrawerPanel {
+  @apply bg-surface-raised;
+  box-shadow: 24px 0 60px -30px
+    color-mix(in srgb, var(--color-warm-950) 45%, transparent);
+}
+
+.accountDrawerBody {
+  @apply flex flex-col overflow-y-auto p-0;
+}
+
+.tint {
+  display: contents;
+}
+
+.head {
+  @apply relative px-6 pb-7 pt-8;
+  padding-top: calc(2rem + env(safe-area-inset-top));
+  background: radial-gradient(
+    115% 85% at 0% 0%,
+    color-mix(in srgb, var(--store-tint, var(--color-brand)) 10%, transparent)
+      0%,
+    transparent 60%
+  );
+}
+
+.tile {
+  @apply mb-4 flex h-14 w-14 items-center justify-center rounded-2xl;
+  @apply border-4 border-fg-on-brand font-display text-lg font-extrabold;
+  @apply text-fg-on-brand;
+  background: var(--store-tint, var(--color-brand));
+  box-shadow: 0 10px 24px -12px
+    color-mix(in srgb, var(--store-tint, var(--color-brand)) 85%, transparent);
+}
+
+.tilePhoto {
+  @apply h-full w-full rounded-xl object-cover;
+}
+
+.tileIcon {
+  @apply text-fg-on-brand;
+}
+
+.greeting {
+  @apply text-sm font-semibold text-fg-muted;
+}
+
+.name {
+  @apply truncate font-display text-[1.75rem] font-extrabold leading-none;
+  @apply text-fg-muted;
+}
+
+.since {
+  @apply mt-2 text-xs text-fg-faintest;
+}
+
+.accountDrawerNav {
+  @apply flex-1 px-3 pt-2;
+}
+
+.accountDrawerList {
+  @apply flex flex-col;
+}
+
+.accountDrawerItem {
+  @apply relative flex h-12 w-full items-center gap-3 rounded-3 px-3;
+  @apply text-base font-semibold text-fg-muted transition-colors;
+  @apply hover:bg-black/[0.04];
+}
+
+.itemOn {
+  background: color-mix(
+    in srgb,
+    var(--store-tint, var(--color-brand)) 8%,
+    transparent
+  );
+}
+
+.itemOn::before {
+  content: '';
+  @apply absolute bottom-2.5 left-0 top-2.5 w-[3px] rounded-full;
+  background: var(--store-tint, var(--color-brand));
+}
+
+.accountDrawerIcon {
+  @apply shrink-0 text-fg-muted;
+}
+
+.itemOn .accountDrawerIcon {
+  color: var(--store-tint, var(--color-brand));
+}
+
+.accountDrawerLabel {
+  @apply flex-1 truncate text-left;
+}
+
+.eyebrow {
+  @apply mb-1 mt-5 px-3 text-2xs font-bold uppercase;
+  @apply tracking-[0.14em] text-fg-faintest;
+}
+
+.eyebrow::after {
+  content: '';
+  @apply mt-2 block h-px w-full bg-black/[0.07];
+}
+
+.foot {
+  @apply mt-6 border-t border-black/[0.07] px-3 pb-3 pt-3;
+  padding-bottom: calc(0.75rem + env(safe-area-inset-bottom));
+}
+
+.logout {
+  @apply flex h-12 w-full items-center gap-3 rounded-3 px-3 text-sm;
+  @apply font-semibold text-fg-muted transition-colors;
+  @apply hover:bg-black/[0.04] hover:text-brand-strong;
+  @apply disabled:cursor-not-allowed disabled:opacity-dim;
+}
+
+.guest {
+  @apply flex flex-1 flex-col items-start gap-5 px-6 pb-6 pt-1;
+}
+
+.guestText {
+  @apply text-sm leading-relaxed text-fg-muted;
+}
+
+.enter {
+  @apply flex h-12 w-full items-center justify-center rounded-full;
+  @apply font-bold text-fg-on-brand transition-opacity;
+  @apply hover:opacity-strong;
+  background: var(--store-tint, var(--color-brand));
+}

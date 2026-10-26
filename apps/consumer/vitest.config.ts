@@ -1,0 +1,23 @@
+import { resolve } from 'node:path'
+import { defineConfig, mergeConfig } from 'vitest/config'
+
+import viteConfig from './vite.config'
+
+export default mergeConfig(
+  viteConfig,
+  defineConfig({
+    test: {
+    /* Cinco pacotes rodam juntos sob `turbo test`; sem teto cada um abria um
+     * worker por núcleo e os 16 da máquina viravam ~75 processos. */
+    maxWorkers: 3,
+      environment: 'jsdom',
+      globals: true,
+      setupFiles: [resolve(__dirname, 'src/test/setup.ts')],
+      coverage: {
+        provider: 'v8',
+        reporter: ['text', 'lcov'],
+        exclude: ['**/*.mock.ts', '**/*.mock.tsx'],
+      },
+    },
+  })
+)

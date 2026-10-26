@@ -1,0 +1,1 @@
+export const PRODUCT_NOTES_LIMIT = 140

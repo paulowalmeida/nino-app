@@ -1,0 +1,152 @@
+@reference "@nino/ds/globals.css";
+
+.storeHeaderSkeletonHeader {
+  @apply w-full;
+}
+
+.topBar {
+  @apply block w-full overflow-hidden bg-surface-page;
+
+  @apply lg:fixed lg:top-0 lg:z-nav;
+  height: 3.5rem;
+  min-height: 3.5rem;
+  max-height: 3.5rem;
+  contain: layout paint;
+  box-shadow:
+    0 1px 2px color-mix(in srgb, var(--color-warm-950) 4%, transparent),
+    0 10px 28px -18px color-mix(in srgb, var(--color-warm-950) 30%, transparent);
+}
+
+@media (min-width: 1024px) {
+  .topBar {
+    height: 5rem;
+    min-height: 5rem;
+    max-height: 5rem;
+  }
+}
+
+.topBarInner {
+  @apply mx-auto flex max-w-page flex-nowrap items-center gap-3 px-4 sm:px-6;
+  height: 3.5rem;
+  min-height: 3.5rem;
+  max-height: 3.5rem;
+}
+
+@media (min-width: 1024px) {
+  .topBarInner {
+    height: 5rem;
+    min-height: 5rem;
+    max-height: 5rem;
+    @apply gap-5;
+  }
+}
+
+.topBarBrand {
+  @apply flex min-w-0 shrink-0 flex-nowrap items-center gap-3.5;
+}
+
+.topBarLogo {
+  @apply h-8 w-8 rounded-2 lg:h-14 lg:w-14 lg:rounded-3;
+}
+
+/* WHY: largura calibrada pelo nome real ("Burgão do Nino — Centro"
+ * renderizado mede ~172px no celular e ~277px no desktop) — a largura antiga
+ * (112/208px) media visivelmente menor que o título de verdade.
+ */
+.topBarName {
+  @apply h-6 w-44 rounded-1 lg:w-72;
+}
+
+.topBarSearch {
+  @apply ml-auto hidden h-12 min-w-56 max-w-[44rem] flex-1 rounded-3 lg:flex;
+}
+
+.topBarActions {
+  @apply ml-auto flex shrink-0 flex-nowrap items-center gap-1 lg:ml-0;
+}
+
+/* WHY: "Aberto agora" mede ~107×24px no header real (xl+); a caixa antiga
+ * (96×16px) ficava menor e mais baixa que o texto que ela substitui.
+ */
+.topBarStatus {
+  @apply hidden h-6 w-28 rounded-1 xl:block;
+}
+
+.topBarAction {
+  @apply h-10 w-10 rounded-full;
+}
+
+.searchAction {
+  @apply lg:hidden;
+}
+
+.desktopAction {
+  @apply hidden min-[769px]:block;
+}
+
+.storeHeaderSkeletonBanner {
+  @apply relative h-64 w-full overflow-hidden bg-surface-raised;
+  @apply sm:mx-auto sm:mt-4 sm:h-auto sm:w-[calc(100%-3rem)];
+  @apply sm:aspect-[1300/250] sm:max-h-60 sm:rounded-4;
+  max-width: 80rem;
+}
+
+.bannerFill {
+  @apply h-full w-full rounded-none;
+}
+
+.storeHeaderSkeletonShell {
+  @apply mx-auto w-full px-4 sm:px-6;
+  max-width: 80rem;
+}
+
+.identityRow {
+  @apply relative z-content -mx-4 -mt-9 flex w-[calc(100%+2rem)] items-center;
+  @apply gap-3.5 border-y border-border bg-surface-page px-4 py-4;
+  @apply sm:mx-0 sm:mt-5 sm:w-auto sm:gap-4 sm:border-0 sm:px-0 sm:py-0;
+  @apply lg:hidden;
+  box-shadow: 0 12px 32px -18px
+    color-mix(in srgb, var(--color-warm-950) 40%, transparent);
+}
+
+.afterBanner {
+  @apply mt-4;
+  box-shadow: none;
+}
+
+.identityLogo {
+  @apply h-16 w-16 shrink-0 rounded-3 sm:h-20 sm:w-20;
+}
+
+.identityText {
+  @apply min-w-0 flex-1;
+}
+
+.identityName {
+  @apply h-6 w-3/4 max-w-64 rounded-1 sm:h-7;
+}
+
+/* WHY: "Aberto agora" mede ~107×24px no cartão real; a caixa antiga
+ * (192×16px) ficava mais larga e mais baixa que o indicador de verdade.
+ */
+.identityMeta {
+  @apply h-6 w-40 max-w-full rounded-1;
+}
+
+.identityMetaRow {
+  @apply mt-2 flex-wrap items-center gap-2;
+}
+
+.identityDetails {
+  @apply h-8 w-28 shrink-0 rounded-3;
+}
+
+.storeHeaderSkeletonSearch {
+  @apply mt-5 h-12 w-full rounded-3 lg:hidden;
+}
+
+@media (min-width: 640px) {
+  .identityRow {
+    box-shadow: none;
+  }
+}

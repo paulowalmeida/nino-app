@@ -2,7 +2,7 @@ import { useState } from 'react'
 
 import type { Meta, StoryObj } from '@storybook/react'
 
-import { Label } from '../Label'
+import { Label } from '../Label/Label'
 import { Switch } from './Switch'
 
 const meta: Meta<typeof Switch> = {
@@ -18,12 +18,19 @@ export default meta
 type Story = StoryObj<typeof Switch>
 
 export const Default: Story = {
-  render: () => {
+  render: (args) => {
     const [checked, setChecked] = useState(false)
     return (
       <div className="flex items-center gap-3">
-        <Switch id="switch-default" checked={checked} onCheckedChange={setChecked} />
-        <Label htmlFor="switch-default">{checked ? 'Ativado' : 'Desativado'}</Label>
+        <Switch
+          {...args}
+          id="switch-default"
+          checked={checked}
+          onCheckedChange={setChecked}
+        />
+        <Label htmlFor="switch-default">
+          {checked ? 'Ativado' : 'Desativado'}
+        </Label>
       </div>
     )
   },

@@ -1,0 +1,47 @@
+@reference '../../../../theme.css';
+.notification {
+  @apply absolute z-[4] w-[220px] bg-surface-raised rounded-4;
+  @apply py-[0.8rem] px-[0.9rem] text-fg-strong;
+  @apply shadow-warm-lg;
+  @apply flex gap-[0.6rem] items-center;
+  @apply animate-[float_4s_ease-in-out_infinite];
+}
+
+.floatingNotificationTop {
+  @apply top-10 right-[2px];
+}
+
+.floatingNotificationBottom {
+  @apply bottom-[46px] right-[-10px] [animation-delay:1.2s];
+}
+
+.floatingNotificationIcon {
+  @apply w-[34px] h-[34px] flex items-center justify-center;
+  @apply shrink-0 text-base;
+}
+
+.whatsapp {
+  @apply rounded-full bg-accent-whatsapp;
+}
+
+.delivery {
+  @apply rounded-2 bg-accent-peach-light text-lg;
+}
+
+.floatingNotificationTitle {
+  @apply text-xs font-bold block;
+}
+
+.floatingNotificationSubtitle {
+  @apply text-2xs text-fg-faint;
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-9px);
+  }
+}

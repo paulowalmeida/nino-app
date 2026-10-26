@@ -1,0 +1,5 @@
+@reference "@nino/ds/globals.css";
+
+.comparison {
+  @apply grid gap-3 rounded-2 bg-surface-2 p-4 sm:grid-cols-2;
+}

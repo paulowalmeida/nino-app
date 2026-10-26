@@ -1,0 +1,30 @@
+@reference "@nino/ds/globals.css";
+
+.track {
+  @apply w-full min-w-0 shrink-0 overflow-hidden pb-2 lg:pb-0;
+}
+
+.ordersFiltersSearch {
+  @apply w-full lg:max-w-sm;
+}
+
+.results {
+  @apply mb-3 flex shrink-0 flex-wrap items-center gap-x-2 gap-y-1 text-sm;
+  @apply text-fg-muted;
+}
+
+.loadingLabel {
+  @apply sr-only;
+}
+
+.skeletonSearch {
+  @apply h-11 w-full lg:max-w-sm;
+}
+
+.skeletonTrack {
+  @apply min-w-0 gap-2 overflow-hidden pb-2 lg:pb-0;
+}
+
+.skeletonStage {
+  @apply h-10 w-28 shrink-0 rounded-full;
+}

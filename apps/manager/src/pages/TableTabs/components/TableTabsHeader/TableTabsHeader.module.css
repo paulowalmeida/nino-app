@@ -1,0 +1,26 @@
+@reference "@nino/ds/globals.css";
+
+.tableTabsHeader {
+  @apply shrink-0 px-4 pt-4;
+  @apply lg:px-10 lg:pt-10;
+}
+
+.headerSkeleton {
+  @apply shrink-0;
+}
+
+.loadingLabel {
+  @apply sr-only;
+}
+
+.skeletonTitle {
+  @apply h-8 w-32 lg:h-9;
+}
+
+.skeletonDescription {
+  @apply h-5 w-72 max-w-full;
+}
+
+.skeletonAction {
+  @apply h-10 w-32 shrink-0 rounded-3;
+}

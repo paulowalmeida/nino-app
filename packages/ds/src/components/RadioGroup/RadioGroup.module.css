@@ -1,0 +1,64 @@
+@reference "../../styles/globals.css";
+
+.radioGroup {
+  @apply flex gap-3;
+}
+
+.stackVertical {
+  @apply flex-col;
+}
+
+.stackHorizontal {
+  @apply flex-row flex-wrap;
+}
+
+.optionRow {
+  @apply flex min-h-11 cursor-pointer items-center gap-2;
+}
+
+.optionCard {
+  @apply flex flex-1 cursor-pointer items-start gap-2.5 rounded-2 border;
+  @apply border-border bg-surface-raised p-3;
+  @apply transition-colors duration-fast hover:border-brand-bold;
+  @apply data-[state=checked]:border-brand;
+  @apply data-[state=checked]:bg-brand-soft;
+  @apply data-[disabled]:cursor-not-allowed data-[disabled]:opacity-disabled;
+}
+
+.radioCircle {
+  @apply flex size-4 shrink-0 items-center justify-center rounded-full;
+  @apply border border-input-border bg-surface-raised outline-none;
+  @apply transition-field;
+  @apply focus-ring;
+  @apply data-[state=checked]:border-brand;
+  @apply data-[state=checked]:bg-brand;
+  @apply data-[disabled]:cursor-not-allowed data-[disabled]:opacity-disabled;
+}
+
+.radioCircleInCard {
+  @apply mt-0.5;
+}
+
+.selectedDot {
+  @apply size-1.5 rounded-full bg-surface-raised;
+}
+
+.labelText {
+  @apply min-w-0 flex-1 cursor-pointer text-sm leading-none text-fg-default;
+}
+
+.trailing {
+  @apply shrink-0 text-sm font-medium tabular-nums text-fg-subtle;
+}
+
+.cardLabelText {
+  @apply block cursor-pointer text-sm font-semibold text-fg-strong;
+}
+
+.cardTextBlock {
+  @apply min-w-0;
+}
+
+.descriptionText {
+  @apply mt-0.5 block text-xs leading-relaxed text-fg-faint;
+}

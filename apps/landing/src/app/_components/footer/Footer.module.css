@@ -1,0 +1,53 @@
+@reference '../../theme.css';
+.landingFooter {
+  @apply bg-fg-strong text-fg-on-brand/70 pt-[4.5rem] pb-10 px-10;
+}
+
+.footerInner {
+  @apply max-w-[1120px] mx-auto;
+}
+
+.footerTop {
+  @apply grid grid-cols-[1.5fr_1fr_1fr_1fr] gap-12;
+  @apply pb-12 border-b border-fg-on-brand/10;
+}
+
+.footerBrand {
+  @apply max-w-[240px];
+}
+
+.footerLogo {
+  @apply [font-family:var(--font-display)] font-extrabold;
+  @apply text-[1.7rem] tracking-[-0.5px] text-fg-on-brand;
+}
+
+.footerLogo i {
+  @apply text-brand-light not-italic;
+}
+
+.tagline {
+  @apply mt-[0.85rem] text-sm leading-relaxed text-fg-on-brand/55;
+}
+
+.footerBottom {
+  @apply flex justify-between items-center;
+  @apply pt-7 text-sm text-fg-on-brand/[0.45];
+}
+
+@media (max-width: 760px) {
+  .landingFooter {
+    @apply pt-12 pb-8 px-5;
+  }
+
+  .footerTop {
+    @apply grid-cols-2 gap-8;
+  }
+
+  .footerBrand {
+    @apply col-span-full;
+  }
+
+  .footerBottom {
+    @apply flex-col gap-[0.6rem] text-center;
+  }
+}

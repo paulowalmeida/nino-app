@@ -1,0 +1,87 @@
+@reference "../../styles/globals.css";
+
+.logo {
+  @apply inline-flex items-center gap-2.5;
+}
+
+.link {
+  @apply inline-flex min-h-11 items-center gap-2.5 rounded-2 no-underline;
+  @apply transition-opacity duration-fast hover:opacity-strong;
+  @apply focus-ring;
+}
+
+.markOnlyPadding {
+  @apply p-1;
+}
+
+.mark {
+  @apply inline-flex items-center justify-center;
+}
+
+.markDefault {
+  @apply shrink-0 rounded-full bg-brand-soft;
+  @apply font-display font-extrabold text-brand;
+}
+
+.wordmark {
+  @apply font-display font-extrabold leading-none tracking-tight;
+  @apply text-brand;
+}
+
+.stack {
+  @apply inline-flex flex-col;
+}
+
+.label {
+  @apply mt-1 font-semibold leading-none tracking-logo;
+}
+
+.toneLight .label {
+  @apply text-fg-on-brand/60;
+}
+
+.toneDark .label {
+  @apply text-fg-faintest;
+}
+
+.sizeSmall .markDefault {
+  @apply size-9;
+}
+
+.sizeSmall .markDefault,
+.sizeSmall .wordmark {
+  @apply text-xl;
+}
+
+.sizeSmall .label {
+  @apply text-2xs;
+}
+
+.sizeMedium .markDefault {
+  @apply size-12;
+}
+
+.sizeMedium .markDefault,
+.sizeMedium .wordmark {
+  @apply text-2xl;
+}
+
+.sizeMedium .label {
+  @apply text-sm;
+}
+
+.sizeLarge .markDefault {
+  @apply size-16;
+}
+
+.sizeLarge .markDefault {
+  @apply text-3xl;
+}
+
+.sizeLarge .wordmark {
+  @apply text-4xl;
+}
+
+.sizeLarge .label {
+  @apply text-2xl;
+}

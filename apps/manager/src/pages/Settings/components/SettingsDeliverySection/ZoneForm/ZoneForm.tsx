@@ -1,0 +1,142 @@
+import { useState } from 'react'
+
+import { Box } from '@nino/ds/components/Box'
+import { Button } from '@nino/ds/components/Button'
+import { FormField } from '@nino/ds/components/FormField'
+import { Header } from '@nino/ds/components/Header'
+import { Input } from '@nino/ds/components/Input'
+import { NumberInput } from '@nino/ds/components/NumberInput'
+import { Slider } from '@nino/ds/components/Slider'
+import type { ZoneDraft } from '@pages/Settings/types/ZoneDraft.type'
+import { moneyValue } from '@shared/utils/money/money'
+
+import { FreeDeliveryControl } from '@pages/Settings/components/SettingsDeliverySection/FreeDeliveryControl/FreeDeliveryControl'
+
+import motion from '@styles/motion.module.css'
+import local from './ZoneForm.module.css'
+
+export type ZoneFormProps = {
+  isAdding: boolean
+  lastMaxRadiusKm?: number
+  onAdd: (data: ZoneDraft) => void
+  onPreviewRadius?: (maxRadiusKm: number | null) => void
+}
+
+const MAX_RADIUS_KM = 15
+const MIN_RADIUS_KM = 0.5
+const RADIUS_STEP_KM = 0.1
+
+export const ZoneForm = ({
+  isAdding,
+  lastMaxRadiusKm = 0,
+  onAdd,
+  onPreviewRadius,
+}: ZoneFormProps) => {
+  const [maxRadiusKm, setMaxRadiusKm] = useState<number | ''>('')
+  const [fee, setFee] = useState('')
+  const [isFreeDelivery, setFreeDelivery] = useState(false)
+  const [freeMinOrder, setFreeMinOrder] = useState('')
+
+  const feeValue = Number(fee.replace(',', '.'))
+  const maxValue = maxRadiusKm || 0
+  const draggedKm = Math.min(
+    Math.max(maxRadiusKm || MIN_RADIUS_KM, MIN_RADIUS_KM),
+    MAX_RADIUS_KM
+  )
+  const canAdd =
+    Number.isFinite(maxValue) &&
+    Number.isInteger(maxValue * 10) &&
+    maxValue > lastMaxRadiusKm &&
+    maxValue <= MAX_RADIUS_KM &&
+    fee.trim() !== '' &&
+    Number.isFinite(feeValue) &&
+    feeValue >= 0 &&
+    Math.round(feeValue * 100) === feeValue * 100
+
+  const previewRadius = (km: number) => {
+    setMaxRadiusKm(km)
+    onPreviewRadius?.(
+      Number.isInteger(km * 10) && km > lastMaxRadiusKm && km <= MAX_RADIUS_KM
+        ? km
+        : null
+    )
+  }
+
+  const addZone = () => {
+    if (!canAdd) return
+    const minOrder = moneyValue(freeMinOrder)
+    onAdd({
+      maxRadiusKm: maxValue,
+      fee: feeValue,
+      freeDeliveryEnabled: isFreeDelivery,
+      freeDeliveryMinOrder: isFreeDelivery && minOrder > 0 ? minOrder : null,
+    })
+    setMaxRadiusKm('')
+    setFee('')
+    setFreeDelivery(false)
+    setFreeMinOrder('')
+  }
+
+  return (
+    <Box as="section" className={local.zoneFormSection}>
+      <Header
+        className={local.intro}
+        level={3}
+        size="md"
+        title="Nova faixa"
+        description={
+          lastMaxRadiusKm > 0
+            ? `Começa em ${lastMaxRadiusKm} km, onde a última faixa termina.`
+            : 'A primeira faixa começa na porta da loja.'
+        }
+      />
+
+      <Slider
+        className={local.slider}
+        label="Raio em Km da faixa"
+        showValue
+        min={MIN_RADIUS_KM}
+        max={MAX_RADIUS_KM}
+        step={RADIUS_STEP_KM}
+        value={draggedKm}
+        onValueChange={previewRadius}
+      />
+
+      <Box className={local.zoneForm}>
+        <FormField label="Até (km)" className={local.radiusField}>
+          <NumberInput
+            min={MIN_RADIUS_KM}
+            max={MAX_RADIUS_KM}
+            step={RADIUS_STEP_KM}
+            value={maxRadiusKm}
+            onValueChange={previewRadius}
+          />
+        </FormField>
+        <FormField label="Taxa de entrega (R$)" className={local.feeField}>
+          <Input
+            inputMode="decimal"
+            placeholder="0,00"
+            value={fee}
+            onChange={(event) => setFee(event.target.value)}
+          />
+        </FormField>
+      </Box>
+
+      <FreeDeliveryControl
+        enabled={isFreeDelivery}
+        minOrder={freeMinOrder}
+        onEnabledChange={setFreeDelivery}
+        onMinOrderChange={setFreeMinOrder}
+      />
+
+      <Button
+        loading={isAdding}
+        disabled={!canAdd}
+        className={`${motion.press} ${local.submit}`}
+        onClick={addZone}
+      >
+        Adicionar faixa
+      </Button>
+    </Box>
+  )
+}

@@ -1,31 +1,62 @@
+import { ReactNode } from 'react'
+
 import { Field } from '@ark-ui/react/field'
+import { mergeClasses } from '@ds/lib/mergeClasses/mergeClasses'
 
-import { mergeClasses } from '@ds/lib/mergeClasses'
+import styles from './FormField.module.css'
 
-import { FormFieldProps } from './FormField.types'
+type FormFieldOrientation = 'vertical' | 'horizontal'
 
-const baseLabel = 'text-sm font-medium text-gray-700 leading-none'
-const baseHelper = 'text-sm text-gray-500'
-const baseError = 'text-sm text-red-500'
-const baseRequired = 'ml-1 text-red-500'
-const horizontalRow = 'flex items-center gap-2'
+type FormFieldLabelVariant = 'default' | 'compact'
+
+type FormFieldProps = {
+  /**
+   * Text next to the control. Takes a node, for the muted "(opcional)" that
+   * some labels carry inline
+   */
+  label?: ReactNode
+  /** Line below the control, explaining what to type */
+  helperText?: string
+  /**
+   * Error message. Also puts the control in the invalid state, and replaces
+   * the helper text while it shows
+   */
+  error?: string
+  /** Marks the label with the required indicator */
+  required?: boolean
+  /**
+   * `vertical` (default) puts the label above; `horizontal` puts it beside
+   * the control — the shape of Checkbox and Switch
+   */
+  orientation?: FormFieldOrientation
+  /**
+   * `default` for a form the screen is built around; `compact` for a data
+   * sheet, where the label is the caption of the value below it and must
+   * weigh less than it
+   */
+  labelVariant?: FormFieldLabelVariant
+  children: ReactNode
+  className?: string
+}
+
+const labelClasses: Record<FormFieldLabelVariant, string> = {
+  default: styles.labelDefault,
+  compact: styles.labelCompact,
+}
 
 /**
- * Wraps a form input with label, helper text, and error message.
- * Uses Ark UI Field for built-in accessibility (aria-describedby, aria-invalid).
+ * Wraps a form control with its label, helper text and error message.
  *
- * @param label - Label text shown next to the input
+ * The wiring between the three is what this exists for: the label points at
+ * the control, the message is announced with it, and an error flips the
+ * control to invalid — none of which a hand-built `<label>` + `<span>` does
+ * on its own.
  *
- * @param helperText - Helper text shown below the input
- *
- * @param error - Error message — also puts the field in invalid state
- *
- * @param required - Adds a required indicator (*) to the label
- *
- * @param orientation - `vertical` (label above, default) or `horizontal`
- * (control and label side by side — for Checkbox/Switch)
- *
- * @param children - The input element
+ * ```tsx
+ * <FormField label="E-mail" error={errors.email?.message}>
+ *   <Input {...register('email')} />
+ * </FormField>
+ * ```
  */
 export function FormField({
   label,
@@ -33,32 +64,35 @@ export function FormField({
   error,
   required,
   orientation = 'vertical',
+  labelVariant = 'default',
   children,
   className,
 }: FormFieldProps) {
   const isHorizontal = orientation === 'horizontal'
 
   const labelEl = label && (
-    <Field.Label className={baseLabel}>
+    <Field.Label className={labelClasses[labelVariant]}>
       {label}
-      {required && <Field.RequiredIndicator className={baseRequired} />}
+      {required && <Field.RequiredIndicator className={styles.requiredMark} />}
     </Field.Label>
   )
 
   const message = error ? (
-    <Field.ErrorText className={baseError}>{error}</Field.ErrorText>
+    <Field.ErrorText className={styles.errorText}>{error}</Field.ErrorText>
   ) : helperText ? (
-    <Field.HelperText className={baseHelper}>{helperText}</Field.HelperText>
+    <Field.HelperText className={styles.helperText}>
+      {helperText}
+    </Field.HelperText>
   ) : null
 
   return (
     <Field.Root
       invalid={!!error}
       required={required}
-      className={mergeClasses('flex flex-col gap-1.5', className)}
+      className={mergeClasses(styles.field, className)}
     >
       {isHorizontal ? (
-        <div className={horizontalRow}>
+        <div className={styles.horizontalRow}>
           {children}
           {labelEl}
         </div>
@@ -72,5 +106,3 @@ export function FormField({
     </Field.Root>
   )
 }
-
-FormField.displayName = 'FormField'

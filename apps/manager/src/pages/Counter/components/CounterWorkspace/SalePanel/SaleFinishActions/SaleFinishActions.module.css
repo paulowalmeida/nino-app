@@ -1,0 +1,39 @@
+@reference "@nino/ds/globals.css";
+
+.saleFinishActionsFooter {
+  @apply -mx-4 gap-3 bg-surface-page px-4 pb-4 pt-3;
+  filter: drop-shadow(0 -1px 0 var(--color-border));
+}
+
+.footerBare {
+  @apply shrink-0 gap-2 bg-surface-page px-6 pb-5 pt-3;
+  filter: drop-shadow(0 -1px 0 var(--color-border));
+  padding-inline: var(--checkout-gutter, 1.5rem);
+  padding-bottom: max(1rem, env(safe-area-inset-bottom));
+}
+
+.saleFinishActions {
+  @apply w-full;
+}
+
+.footerBare .saleFinishActions {
+  @apply justify-end;
+}
+
+.footerBare .finish {
+  @apply w-fit;
+}
+
+.finish {
+  @apply w-full;
+}
+
+.clear {
+  @apply w-fit self-end px-4 text-fg-muted hover:text-danger;
+}
+
+@media (min-width: 640px) {
+  .footerBare .clear {
+    @apply w-fit px-4;
+  }
+}

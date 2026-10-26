@@ -2,7 +2,7 @@ import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { describe, expect, it, vi } from 'vitest'
 
-import { Button } from '../Button'
+import { Button } from '../Button/Button'
 import { Menu } from './Menu'
 
 function items(onSelect = vi.fn()) {
@@ -14,7 +14,7 @@ function items(onSelect = vi.fn()) {
   ]
 }
 
-describe(Menu.displayName!, () => {
+describe(Menu.name, () => {
   it('renders the trigger', () => {
     render(<Menu trigger={<Button>Ações</Button>} items={items()} />)
     expect(screen.getByRole('button', { name: 'Ações' })).toBeInTheDocument()
@@ -45,5 +45,34 @@ describe(Menu.displayName!, () => {
     await user.click(screen.getByRole('button', { name: 'Ações' }))
     await user.click(await screen.findByRole('menuitem', { name: 'Bloquear' }))
     expect(onSelect).not.toHaveBeenCalled()
+  })
+
+  it('applies itemClassName to every item', async () => {
+    const user = userEvent.setup({ pointerEventsCheck: 0 })
+    render(
+      <Menu
+        trigger={<Button>Ações</Button>}
+        items={items()}
+        itemClassName="text-fg-on-brand/70"
+      />
+    )
+    await user.click(screen.getByRole('button', { name: 'Ações' }))
+    expect(await screen.findByRole('menuitem', { name: 'Editar' })).toHaveClass(
+      'text-fg-on-brand/70'
+    )
+  })
+
+  it('shows the header above the entries without making it an entry', async () => {
+    const user = userEvent.setup({ pointerEventsCheck: 0 })
+    render(
+      <Menu
+        trigger={<Button>Ações</Button>}
+        header={<span>Marina Silva</span>}
+        items={items()}
+      />
+    )
+    await user.click(screen.getByRole('button', { name: 'Ações' }))
+    expect(await screen.findByText('Marina Silva')).toBeInTheDocument()
+    expect(screen.getAllByRole('menuitem')).toHaveLength(3)
   })
 })

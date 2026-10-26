@@ -1,0 +1,17 @@
+@reference "../../styles/globals.css";
+
+.stackLayer {
+  @apply grid [&>*]:col-start-1 [&>*]:row-start-1;
+}
+
+.fadeTransition {
+  @apply transition-opacity duration-slow ease-out;
+}
+
+.hidden {
+  @apply opacity-0;
+}
+
+.visible {
+  @apply opacity-100;
+}

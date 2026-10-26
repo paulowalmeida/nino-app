@@ -1,0 +1,30 @@
+@reference "@nino/ds/globals.css";
+
+.head {
+  @apply w-full min-w-0 flex-1;
+}
+
+.headText {
+  @apply min-w-0 flex-1;
+}
+
+.headText > :first-child {
+  @apply min-w-0;
+}
+
+@media (max-width: 639px) {
+  .headText :global(h1),
+  .headText :global(h1) > span {
+    inline-size: auto;
+    white-space: normal;
+    overflow-wrap: anywhere;
+  }
+}
+
+.name {
+  @apply truncate;
+}
+
+.headBadge {
+  @apply shrink-0;
+}

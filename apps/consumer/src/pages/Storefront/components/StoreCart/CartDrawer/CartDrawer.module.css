@@ -1,0 +1,162 @@
+@reference "@nino/ds/globals.css";
+
+.sheet {
+  --cart-drawer-height: 88dvh;
+
+  @apply max-h-[88dvh] rounded-t-6 bg-surface-page;
+}
+
+@media (max-width: 425px) {
+  .sheet {
+    --cart-drawer-height: 100dvh;
+
+    max-height: 100dvh;
+  }
+
+  .cartDrawerFooter {
+    padding-bottom: max(1rem, env(safe-area-inset-bottom));
+  }
+}
+
+.cartDrawerPanel {
+  @apply bg-surface-page;
+  box-shadow: -24px 0 60px -30px
+    color-mix(in srgb, var(--color-warm-950) 35%, transparent);
+}
+
+.cartDrawerBody {
+  @apply flex min-h-full flex-col;
+}
+
+/* WHY: O cabeçalho é nosso: o do Drawer é miúdo demais para nomear a tela.
+ * WHY -mt-4: acima do título há a faixa da alça de arraste (44px) somada ao
+ * `pt-6` do cabeçalho do Drawer — 68px de vão antes de qualquer conteúdo.
+ * Puxar o nó daqui encurta isso sem alcançar a estrutura interna do DS.
+ */
+.head {
+  @apply -mt-4 flex flex-col gap-0.5;
+}
+
+.headTitle {
+  @apply font-display text-lg font-extrabold tracking-tight text-fg-strong;
+}
+
+.headCount {
+  @apply text-xs text-fg-faint;
+  font-variant-numeric: tabular-nums;
+}
+
+.lines {
+  @apply flex flex-col pb-4;
+}
+
+.line {
+  @apply flex items-center gap-3 py-2.5 first:pt-1;
+}
+
+.line + .line {
+  @apply border-t border-border;
+}
+
+.photoWrap {
+  @apply shrink-0;
+}
+
+.photo {
+  @apply h-14 w-14 shrink-0 rounded-2 object-cover;
+  box-shadow: inset 0 0 0 1px
+    color-mix(in srgb, var(--color-warm-950) 10%, transparent);
+}
+
+.photoFallback {
+  @apply flex h-14 w-14 shrink-0 items-center justify-center rounded-2;
+  @apply bg-surface-cool text-xl;
+  box-shadow: inset 0 0 0 1px
+    color-mix(in srgb, var(--color-warm-950) 10%, transparent);
+}
+
+.lineText {
+  @apply flex min-w-0 flex-1 flex-col items-start gap-1;
+}
+
+.lineName {
+  @apply truncate font-display text-sm font-bold text-fg-strong;
+}
+
+.lineMath {
+  @apply text-[0.6875rem] text-fg-faint;
+  font-variant-numeric: tabular-nums;
+}
+
+.stepper {
+  @apply -ml-0.5 mt-0.5 inline-flex items-center rounded-full bg-surface-1;
+}
+
+.stepper button {
+  @apply h-8 w-8 rounded-full border-0 bg-transparent text-fg-default;
+}
+
+@media (hover: hover) {
+  .stepper button:hover {
+    @apply bg-surface-3;
+  }
+}
+
+.stepper span {
+  @apply w-5 text-center text-xs font-bold text-fg-strong;
+  font-variant-numeric: tabular-nums;
+}
+
+.lineTotal {
+  @apply shrink-0 font-display text-sm font-semibold text-fg-strong;
+  font-variant-numeric: tabular-nums;
+}
+
+.cartDrawerEmpty {
+  @apply flex-1 justify-center py-3;
+}
+
+.emptyAction {
+  @apply h-11 rounded-3 px-6 text-[0.9375rem];
+  background-color: var(--store-tint, var(--color-brand));
+}
+
+.cartDrawerFooter {
+  @apply sticky bottom-0 -mx-6 -mb-4 mt-auto flex flex-col gap-2.5;
+  @apply border-t border-border bg-surface-1 px-6 pb-4 pt-3.5;
+}
+
+.totalRow {
+  @apply flex items-end justify-between gap-3;
+}
+
+.totalLabel {
+  @apply text-2xs font-bold uppercase tracking-caps text-fg-faint;
+}
+
+.totalEta {
+  @apply mt-0.5 text-[0.6875rem] text-fg-faint;
+  font-variant-numeric: tabular-nums;
+}
+
+.cartDrawerTotal {
+  @apply font-display text-lg font-extrabold leading-none;
+  color: var(--color-success);
+  font-variant-numeric: tabular-nums;
+}
+
+.checkout {
+  @apply h-12 w-full rounded-3 text-[0.9375rem] font-bold;
+  background-color: var(--store-tint, var(--color-brand));
+  box-shadow: 0 10px 24px -12px
+    color-mix(in srgb, var(--store-tint, var(--color-brand)) 70%, transparent);
+}
+
+.clear {
+  @apply mx-auto h-7 w-auto px-3 text-[0.6875rem] font-semibold text-fg-faint;
+  @apply hover:text-fg-default;
+}
+
+.lineChoices {
+  @apply mt-0.5 text-xs leading-snug text-fg-subtle;
+}

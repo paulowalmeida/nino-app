@@ -11,10 +11,10 @@ Convidado por link de email pelo ADMIN. Fluxo: rota pública do invite → entra
 ### MERCHANT
 Rota pública de cadastro. O sistema cria atomicamente: `Company` + `CompanyResponsible` + `User` + `Credential` + `Subscription`. Trial de 30 dias sem cartão.
 
-Acesso total ao backoffice de todos os seus tenants. Em lojas sem equipe, opera sozinho todo o fluxo (pedidos, cardápio, configurações, entregas). Quando tem equipe, convida colaboradores definindo o perfil.
+Acesso total ao backoffice de todos os seus units. Em lojas sem equipe, opera sozinho todo o fluxo (pedidos, cardápio, configurações, entregas). Quando tem equipe, convida colaboradores definindo o perfil.
 
-- Plano com tenant único → entra direto na visão da loja
-- Planos com múltiplos tenants → tela de seleção de loja
+- Plano com unit único → entra direto na visão da loja
+- Planos com múltiplos units → tela de seleção de loja
 
 **Pode convidar:** OWNER, MANAGER, STAFF
 

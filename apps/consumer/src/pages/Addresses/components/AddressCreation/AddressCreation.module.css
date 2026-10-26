@@ -1,0 +1,16 @@
+@reference "@nino/ds/globals.css";
+
+.newForm {
+  @apply mt-6 border-t border-black/[0.07] pt-6;
+}
+
+.newTitle {
+  @apply mb-4 text-2xs font-bold uppercase tracking-[0.14em] text-fg-faint;
+}
+
+.add {
+  @apply mt-5 flex h-12 w-full items-center justify-center rounded-full;
+  @apply border border-dashed border-black/[0.08] font-bold text-fg-muted;
+  @apply transition-colors hover:border-accent-peach;
+  @apply hover:text-brand-strong;
+}

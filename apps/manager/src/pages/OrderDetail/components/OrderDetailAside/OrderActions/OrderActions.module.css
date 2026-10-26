@@ -1,0 +1,13 @@
+@reference "@nino/ds/globals.css";
+
+.orderActions {
+  @apply mt-2 flex flex-col gap-2 border-t border-border/60 pt-4;
+}
+
+.advance {
+  @apply w-full;
+}
+
+.receipt {
+  @apply w-full;
+}

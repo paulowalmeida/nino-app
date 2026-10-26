@@ -1,0 +1,49 @@
+import { Box } from '@nino/ds/components/Box'
+import { Card } from '@nino/ds/components/Card'
+import { ListRow } from '@nino/ds/components/ListRow'
+import { Skeleton } from '@nino/ds/components/Skeleton'
+
+import styles from './OrderTicketSkeleton.module.css'
+import ticketStyles from '@shared/components/OrderTicket/OrderTicket.module.css'
+
+const GHOST_ITEMS = ['first', 'second', 'third']
+
+export const OrderTicketSkeleton = () => (
+  <Card asChild className={ticketStyles.ticket}>
+    <article>
+      <Box as="header" direction="row" className={ticketStyles.head}>
+        <Skeleton className={styles.ghostNumber} />
+        <Skeleton className={styles.ghostWaited} />
+        <Skeleton className={styles.ghostStatus} />
+      </Box>
+
+      <Box className={ticketStyles.orderTicketBody}>
+        <Skeleton className={styles.ghostConsumer} />
+        <Skeleton className={styles.ghostMeta} />
+        <Skeleton className={styles.ghostSummary} />
+
+        <Box as="ul" className={ticketStyles.items}>
+          {GHOST_ITEMS.map((item) => (
+            <ListRow
+              key={item}
+              divider="none"
+              padding={0}
+              className={ticketStyles.orderTicketItem}
+            >
+              <Skeleton className={styles.ghostQuantity} />
+              <Skeleton className={styles.ghostItemName} />
+            </ListRow>
+          ))}
+        </Box>
+      </Box>
+
+      <footer className={ticketStyles.foot}>
+        <Box direction="column">
+          <Skeleton className={styles.ghostTotal} />
+          <Skeleton className={styles.ghostPayment} />
+        </Box>
+        <Skeleton className={styles.ghostAction} />
+      </footer>
+    </article>
+  </Card>
+)

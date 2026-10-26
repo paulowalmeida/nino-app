@@ -1,0 +1,23 @@
+export const reviewStepMock = {
+  lines: [{ productId: 'p1', name: 'Café', quantity: 1, unitPrice: '10' }],
+  channel: 'COUNTER' as const,
+  consumerName: 'Ana',
+  recipient: {
+    name: '',
+    phone: '',
+    street: '',
+    number: '',
+    complement: '',
+    neighborhood: '',
+    city: '',
+    state: '',
+    zipCode: '',
+    zoneId: '',
+  },
+  method: 'CASH' as const,
+  changeFor: '',
+  changeAmount: 0,
+  subtotal: 10,
+  deliveryFee: 0,
+  total: 10,
+}

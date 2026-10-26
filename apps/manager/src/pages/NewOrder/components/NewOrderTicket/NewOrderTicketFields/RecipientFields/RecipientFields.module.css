@@ -1,0 +1,21 @@
+@reference "@nino/ds/globals.css";
+
+.block {
+  @apply flex flex-col gap-2 border-t border-dashed border-border pt-3;
+}
+
+.recipientFieldsTitle {
+  @apply text-xs font-bold uppercase tracking-[0.12em] text-fg-faint;
+}
+
+.pair {
+  @apply grid grid-cols-2 gap-2;
+}
+
+.street {
+  @apply col-span-1;
+}
+
+.hint {
+  @apply text-xs leading-relaxed text-fg-faint;
+}

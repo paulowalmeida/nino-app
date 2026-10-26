@@ -1,0 +1,117 @@
+{
+  "tool": "build-phase",
+  "version": 2,
+  "startedAt": "2026-10-23T18:43:16.805Z",
+  "comp": ".impeccable/mocks/decision/passagem-viva.png",
+  "direction": null,
+  "breakpoint": "390x844",
+  "artifact": null,
+  "phase": "hero",
+  "phases": {
+    "comps": {
+      "status": "skipped",
+      "openedAt": null,
+      "closedAt": null,
+      "attempts": 0,
+      "notes": [
+        {
+          "at": "2026-10-23T18:43:16.805Z",
+          "text": "started with an approved comp; the comp round happened before this state (surface round or manual)"
+        }
+      ],
+      "gate": null,
+      "forced": null
+    },
+    "spec": {
+      "status": "closed",
+      "openedAt": "2026-10-23T18:43:16.805Z",
+      "closedAt": "2026-10-23T18:46:29.320Z",
+      "attempts": 3,
+      "notes": [],
+      "gate": {
+        "ok": true,
+        "reasons": [],
+        "summary": "22 regions, 3 plates, 12 text regions measured",
+        "at": "2026-10-23T18:46:29.320Z"
+      },
+      "forced": null
+    },
+    "plates": {
+      "status": "closed",
+      "openedAt": "2026-10-23T18:46:29.320Z",
+      "closedAt": "2026-10-23T18:49:57.358Z",
+      "attempts": 2,
+      "notes": [],
+      "gate": {
+        "ok": true,
+        "reasons": [],
+        "summary": "3/3 plates",
+        "at": "2026-10-23T18:49:57.358Z"
+      },
+      "forced": null
+    },
+    "hero": {
+      "status": "open",
+      "openedAt": "2026-10-23T18:49:57.358Z",
+      "closedAt": null,
+      "attempts": 0,
+      "notes": [],
+      "gate": null,
+      "forced": null
+    },
+    "sections": {
+      "status": "pending",
+      "openedAt": null,
+      "closedAt": null,
+      "attempts": 0,
+      "notes": [],
+      "gate": null,
+      "forced": null
+    },
+    "motion": {
+      "status": "pending",
+      "openedAt": null,
+      "closedAt": null,
+      "attempts": 0,
+      "notes": [],
+      "gate": null,
+      "forced": null
+    },
+    "responsive": {
+      "status": "pending",
+      "openedAt": null,
+      "closedAt": null,
+      "attempts": 0,
+      "notes": [],
+      "gate": null,
+      "forced": null
+    },
+    "review": {
+      "status": "pending",
+      "openedAt": null,
+      "closedAt": null,
+      "attempts": 0,
+      "notes": [],
+      "gate": null,
+      "forced": null
+    }
+  },
+  "finish": null,
+  "plates": {
+    "coca-bottle": {
+      "status": "ok",
+      "score": 0.5159,
+      "size": "1044x1507"
+    },
+    "guarana-bottle": {
+      "status": "ok",
+      "score": 0.5456,
+      "size": "1044x1507"
+    },
+    "water-bottle": {
+      "status": "ok",
+      "score": 0.5506,
+      "size": "1044x1507"
+    }
+  }
+}

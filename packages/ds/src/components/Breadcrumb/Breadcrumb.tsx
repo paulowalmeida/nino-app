@@ -1,37 +1,36 @@
-import { Fragment } from 'react'
+import { Fragment, MouseEvent, ReactNode } from 'react'
 
-import { mergeClasses } from '@ds/lib/mergeClasses'
+import { Box } from '@ds/components/Box/Box'
+import { Icon } from '@ds/components/Icon/Icon'
+import { mergeClasses } from '@ds/lib/mergeClasses/mergeClasses'
 
-import { BreadcrumbProps } from './Breadcrumb.types'
+import styles from './Breadcrumb.module.css'
 
-const baseNav = 'flex items-center text-sm'
+type BreadcrumbItem = {
+  label: ReactNode
+  href?: string
+  onClick?: (e: MouseEvent<HTMLAnchorElement>) => void
+}
 
-const baseLink =
-  'text-gray-500 transition-colors hover:text-brand focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-1 rounded'
+export type BreadcrumbProps = {
+  items: BreadcrumbItem[]
+  separator?: ReactNode
+  className?: string
+  ariaLabel?: string
+}
 
-const activeLinkClass = 'text-gray-900 font-medium pointer-events-none'
-
-const separatorClass = 'mx-2 text-gray-400 select-none'
-
-const DefaultSeparator = () => (
-  <svg
-    width='14'
-    height='14'
-    viewBox='0 0 24 24'
-    fill='none'
-    stroke='currentColor'
-    strokeWidth='2'
-    strokeLinecap='round'
-    strokeLinejoin='round'
-  >
-    <path d='m9 18 6-6-6-6' />
-  </svg>
-)
-
-export function Breadcrumb({ items, separator, className }: BreadcrumbProps) {
+export function Breadcrumb({
+  items,
+  separator,
+  className,
+  ariaLabel = 'Breadcrumb',
+}: BreadcrumbProps) {
   return (
-    <nav aria-label='Breadcrumb' className={mergeClasses(baseNav, className)}>
-      <ol className='flex items-center'>
+    <nav
+      aria-label={ariaLabel}
+      className={mergeClasses(styles.trail, className)}
+    >
+      <Box as="ol" direction="row" align="center">
         {items.map((item, index) => {
           const isLast = index === items.length - 1
           return (
@@ -41,22 +40,23 @@ export function Breadcrumb({ items, separator, className }: BreadcrumbProps) {
                   href={item.href}
                   onClick={item.onClick}
                   aria-current={isLast ? 'page' : undefined}
-                  className={mergeClasses(baseLink, isLast && activeLinkClass)}
+                  className={mergeClasses(
+                    styles.link,
+                    isLast ? styles.currentLink : styles.restingLink
+                  )}
                 >
                   {item.label}
                 </a>
               </li>
               {!isLast && (
-                <li aria-hidden className={separatorClass}>
-                  {separator ?? <DefaultSeparator />}
+                <li aria-hidden className={styles.separator}>
+                  {separator ?? <Icon name="chevron-right" size="sm" />}
                 </li>
               )}
             </Fragment>
           )
         })}
-      </ol>
+      </Box>
     </nav>
   )
 }
-
-Breadcrumb.displayName = 'Breadcrumb'

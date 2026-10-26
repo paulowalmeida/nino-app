@@ -1,0 +1,10 @@
+@reference "@nino/ds/globals.css";
+
+.catalogItemsList {
+  @apply w-0 min-w-full overflow-hidden pb-4 min-[426px]:px-4;
+  @apply lg:px-10 lg:pb-10;
+}
+
+.sentinel {
+  @apply flex h-10 items-center justify-center;
+}

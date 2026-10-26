@@ -1,0 +1,8 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "framework": null,
+  "ignoreCommand": "cd ../.. && sh scripts/skip-unaffected-build.sh @nino/ds",
+  "installCommand": "cd ../.. && npm install",
+  "buildCommand": "cd ../.. && npx turbo run build-storybook --filter=@nino/ds",
+  "outputDirectory": "storybook-static"
+}

@@ -1,0 +1,62 @@
+@reference '../../theme.css';
+.forRestaurantsSection {
+  @apply relative overflow-hidden bg-surface-1 py-[6.5rem] px-10;
+}
+
+.forRestaurantsInner {
+  @apply max-w-[1100px] mx-auto grid items-center;
+  @apply grid-cols-[1.05fr_0.95fr] gap-14;
+}
+
+.eyebrow {
+  @apply inline-flex items-center gap-2 mb-4;
+  @apply [font-family:var(--font-sans)] text-xs font-bold;
+  @apply tracking-[0.12em] uppercase text-brand-strong;
+}
+
+.eyebrow::before {
+  content: "";
+  @apply inline-box w-[22px] h-0.5 bg-brand rounded-1;
+}
+
+.forRestaurantsTitle {
+  @apply [font-family:var(--font-display)] font-extrabold;
+  @apply text-[clamp(2rem,3.8vw,3rem)] leading-display;
+  @apply tracking-[-0.02em] text-fg-strong;
+}
+
+.titleAccent {
+  @apply text-brand;
+}
+
+.lead {
+  @apply mt-[1.1rem] text-base leading-relaxed;
+  @apply text-fg-muted max-w-[480px];
+}
+
+.forRestaurantsList {
+  @apply mt-8 flex flex-col gap-[0.9rem];
+}
+
+.comparisonCard {
+  @apply bg-surface-raised border border-brand-soft;
+  @apply rounded-5 overflow-hidden;
+  @apply shadow-warm-md;
+}
+
+.comparisonHead {
+  @apply flex justify-between bg-surface-2;
+  @apply py-4 px-[1.4rem];
+  @apply border-b border-brand-soft;
+  @apply text-xs font-bold tracking-[0.08em] uppercase text-fg-faintest;
+}
+
+@media (max-width: 860px) {
+  .forRestaurantsSection {
+    @apply py-16 px-5;
+  }
+
+  .forRestaurantsInner {
+    @apply grid-cols-1 gap-10;
+  }
+}

@@ -1,0 +1,31 @@
+@reference "@nino/ds/globals.css";
+
+.track {
+  @apply mt-8 flex max-w-md items-center gap-2;
+}
+
+.step {
+  @apply flex min-w-0 flex-1 items-center gap-2;
+}
+
+.stepDot {
+  @apply h-2 w-2 shrink-0 rounded-full bg-border transition-colors;
+  @apply duration-300;
+}
+
+.step[data-on='true'] .stepDot {
+  @apply bg-brand;
+}
+
+.stepLabel {
+  @apply truncate text-xs font-medium text-fg-faint transition-colors;
+  @apply duration-300;
+}
+
+.step[data-on='true'] .stepLabel {
+  @apply font-semibold text-fg-strong;
+}
+
+.stepLine {
+  @apply h-px min-w-4 flex-1 bg-border/60;
+}

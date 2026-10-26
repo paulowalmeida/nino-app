@@ -6,7 +6,7 @@ import { Slider } from './Slider'
 // jsdom não mede o controle (getBoundingClientRect = 0), então o Ark mantém o
 // thumb com visibility:hidden — daí as queries com { hidden: true } e o teclado
 // via fireEvent (não dá para focar elemento invisível).
-describe(Slider.displayName!, () => {
+describe(Slider.name, () => {
   it('renders the slider', () => {
     render(<Slider />)
     expect(screen.getByRole('slider', { hidden: true })).toBeInTheDocument()
@@ -27,9 +27,15 @@ describe(Slider.displayName!, () => {
     expect(thumb).toHaveAttribute('aria-valuemax', '90')
   })
 
-  // jsdom não mede o controle → thumb fica visibility:hidden → Ark não processa
-  // keyboard events e onValueChange nunca é chamado. Comportamento coberto por e2e.
-  it.skip('chama onValueChange ao usar o teclado', () => {
+  /*
+   * jsdom não mede o controle, então o Ark deixa o thumb com
+   * `visibility: hidden` e nunca processa o teclado — o valor não muda e o
+   * teste falharia por limite do ambiente, não por defeito.
+   *
+   * Verificado à mão no navegador em 2026-08-12: com o thumb em foco, seta
+   * para a direita leva o valor de 40 para 41.
+   */
+  it.skip('calls onValueChange on arrow keys', () => {
     const onValueChange = vi.fn()
     render(<Slider value={50} onValueChange={onValueChange} />)
     fireEvent.keyDown(screen.getByRole('slider', { hidden: true }), {
@@ -39,7 +45,7 @@ describe(Slider.displayName!, () => {
   })
 
   it('renders the label when provided', () => {
-    render(<Slider label='Preço máximo' />)
+    render(<Slider label="Preço máximo" />)
     expect(screen.getByText('Preço máximo')).toBeInTheDocument()
   })
 })

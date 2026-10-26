@@ -1,0 +1,28 @@
+@reference "@nino/ds/globals.css";
+
+.confirmed {
+  @apply mx-auto flex min-h-dvh max-w-md flex-col items-center justify-center;
+  @apply gap-3 px-6 text-center;
+}
+
+.mascot {
+  @apply h-36 w-36;
+  filter: drop-shadow(
+    0 12px 24px color-mix(in srgb, var(--color-brand-strong) 22%, transparent)
+  );
+}
+
+.orderConfirmedTitle {
+  @apply font-display text-3xl font-extrabold text-fg-muted;
+}
+
+.orderConfirmedText {
+  @apply max-w-xs text-sm leading-relaxed text-fg-muted;
+}
+
+.code {
+  @apply mb-2 rounded-full border border-black/[0.08] bg-black/[0.05] px-5 py-2;
+  @apply font-display;
+  @apply text-base font-extrabold uppercase tracking-widest;
+  @apply text-brand-strong;
+}

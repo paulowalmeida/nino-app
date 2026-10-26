@@ -34,7 +34,7 @@ export const FallbackIcone: Story = {
   args: { size: 'lg' },
 }
 
-export const Tamanhos: Story = {
+export const Sizes: Story = {
   render: () => (
     <div className="flex items-center gap-4">
       <Avatar size="sm" fallback="sm" />
@@ -49,7 +49,11 @@ export const ComRing: Story = {
   render: () => (
     <div className="flex items-center gap-4">
       <Avatar fallback="AB" className="ring-2 ring-brand ring-offset-2" />
-      <Avatar fallback="CD" size="lg" className="ring-2 ring-gray-300 ring-offset-2" />
+      <Avatar
+        fallback="CD"
+        size="lg"
+        className="ring-2 ring-gray-300 ring-offset-2"
+      />
     </div>
   ),
 }

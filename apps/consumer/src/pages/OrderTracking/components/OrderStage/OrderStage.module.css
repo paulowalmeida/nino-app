@@ -1,0 +1,86 @@
+@reference "@nino/ds/globals.css";
+
+.stage {
+  @apply relative overflow-hidden rounded-4 border border-brand-muted;
+  @apply bg-surface-page px-5 pb-7 pt-5 text-fg-muted shadow-warm-sm;
+}
+
+.stageCancelled {
+  @apply border-black/[0.08] bg-black/[0.08] pb-5;
+}
+
+.flag {
+  @apply flex items-center gap-2 text-2xs font-bold uppercase;
+  @apply tracking-[0.14em] text-brand-strong;
+}
+
+.flagDone {
+  @apply flex items-center gap-2 text-2xs font-bold uppercase;
+  @apply tracking-[0.14em] text-fg-subtle;
+}
+
+.flagDot {
+  @apply h-1.5 w-1.5 shrink-0 rounded-full bg-success;
+  animation: stage-pulse 2s ease-in-out infinite;
+}
+
+.flagDone .flagDot {
+  @apply bg-fg-faintest;
+  animation: none;
+}
+
+@keyframes stage-pulse {
+  50% {
+    opacity: 0.3;
+  }
+}
+
+.copy {
+  @apply mt-2.5;
+}
+
+.headline {
+  @apply font-display text-[1.4rem] font-extrabold leading-tight;
+  @apply text-fg-strong;
+  @apply sm:text-2xl;
+}
+
+.orderStageNote {
+  @apply mt-1.5 text-sm leading-snug text-fg-muted;
+}
+
+/* WHY: A previsão é a resposta que a pessoa veio buscar, então ela é o maior
+ * número da tela — e conta sozinha, minuto a minuto. Antes era uma linha de
+ * 13px abaixo do nome do estado, do mesmo tamanho de todo o resto.
+ */
+.eta {
+  @apply mt-6;
+}
+
+.etaLead {
+  @apply text-2xs font-bold uppercase tracking-[0.14em] text-brand-strong;
+}
+
+.etaValue {
+  @apply flex items-baseline gap-2 font-display text-[3.1rem] font-extrabold;
+  @apply leading-none text-fg-strong;
+  font-variant-numeric: tabular-nums;
+}
+
+.etaUnit {
+  @apply font-sans text-base font-bold text-fg-subtle;
+}
+
+.etaClock {
+  @apply mt-1.5 text-xs text-fg-subtle;
+}
+
+.etaSoon {
+  @apply font-display text-2xl font-extrabold leading-tight text-fg-muted;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .flagDot {
+    animation: none;
+  }
+}

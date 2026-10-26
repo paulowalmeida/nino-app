@@ -1,0 +1,14 @@
+@reference "@nino/ds/globals.css";
+
+.groups {
+  @apply flex max-h-[calc(100dvh-23rem)] min-w-0 flex-col gap-5 overflow-y-auto pr-2;
+}
+
+.brandPaletteGroup {
+  @apply min-w-0;
+}
+
+.brandPaletteGrid {
+  @apply grid gap-2;
+  grid-template-columns: repeat(auto-fill, minmax(13.5rem, 1fr));
+}

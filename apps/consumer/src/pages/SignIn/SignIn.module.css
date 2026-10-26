@@ -1,0 +1,19 @@
+@reference "@nino/ds/globals.css";
+
+.signInPage {
+  @apply flex min-h-dvh w-full flex-col bg-surface-raised;
+  @apply lg:grid lg:grid-cols-[minmax(0,24rem)_1fr] lg:items-stretch;
+  @apply xl:grid-cols-[minmax(0,30rem)_1fr];
+}
+
+.signInContent {
+  @apply flex w-full flex-1 flex-col px-5 sm:px-6 lg:justify-center lg:px-0;
+  padding-bottom: calc(2.5rem + env(safe-area-inset-bottom));
+}
+
+.signInShell {
+  @apply mx-auto flex w-full max-w-[24rem] flex-col;
+
+  @apply lg:max-w-[25rem] lg:rounded-5 lg:border lg:border-border;
+  @apply lg:bg-surface-raised lg:px-9 lg:pb-9 lg:pt-1 lg:shadow-warm-md;
+}

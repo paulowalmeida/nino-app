@@ -1,0 +1,24 @@
+import type { ProductCategoryIcon } from '@nino/lib/types/product/product-category-icon'
+
+import type { MenuItemImage } from './menu-item-image'
+import type { MenuItemModifier } from './menu-item-modifier'
+
+/** Item do cardápio como o consumidor o vê. Preço em string decimal. */
+export type MenuItem = {
+  id: string
+  name: string
+  description: string | null
+  price: string
+  pricingType?: 'FIXED' | 'COMPOSED'
+  isActive: boolean
+  category: {
+    id: string
+    name: string
+    position: number
+    icon?: ProductCategoryIcon | null
+  }
+  images: MenuItemImage[]
+  /** Preset returned by the API when the product has no uploaded image. */
+  fallbackUrl?: string | null
+  modifiers: MenuItemModifier[]
+}

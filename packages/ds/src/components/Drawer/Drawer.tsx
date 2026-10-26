@@ -1,67 +1,60 @@
+import { ReactNode } from 'react'
+
 import { Dialog as ArkDialog } from '@ark-ui/react/dialog'
 import { Portal } from '@ark-ui/react/portal'
+import { Icon } from '@ds/components/Icon/Icon'
+import { mergeClasses } from '@ds/lib/mergeClasses/mergeClasses'
 
-import { mergeClasses } from '@ds/lib/mergeClasses'
+import styles from './Drawer.module.css'
+import { useDrawerDrag } from './useDragDrawer'
 
-import { DrawerPlacement, DrawerProps } from './Drawer.types'
+type DrawerPlacement = 'left' | 'right' | 'top' | 'bottom'
 
-const backdropClass =
-  'fixed inset-0 z-40 bg-black/50 backdrop-blur-sm data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 duration-200'
-
-const positionerClass = 'fixed inset-0 z-50 flex overflow-hidden'
+type DrawerProps = {
+  open: boolean
+  onOpenChange: (open: boolean) => void
+  placement?: DrawerPlacement
+  title?: ReactNode
+  description?: ReactNode
+  children?: ReactNode
+  /** Width (for left/right) or height (for top/bottom). E.g. '400px', '80%' */
+  size?: string
+  /** Extra classes for the content surface — for apps with their own theme */
+  contentClassName?: string
+  /**
+   * Extra classes for the scrolling body. Use it when the drawer's own child
+   * owns the scrolling — a cart that keeps its total fixed and scrolls only
+   * the item list needs the body to stop scrolling and hand over its height.
+   */
+  bodyClassName?: string
+  /**
+   * The X in the corner. Turn it off when the drawer already closes by other
+   * means — a bottom sheet closes by dragging the handle down, by the backdrop
+   * and by Escape, so the X earns nothing there. Mirrors `Modal`.
+   */
+  dismissible?: boolean
+}
 
 const alignByPlacement: Record<DrawerPlacement, string> = {
-  right: 'ml-auto',
-  left: 'mr-auto',
-  bottom: 'mt-auto',
-  top: 'mb-auto',
+  right: styles.alignRight,
+  left: styles.alignLeft,
+  bottom: styles.alignBottom,
+  top: styles.alignTop,
 }
 
 const sizeByPlacement: Record<DrawerPlacement, string> = {
-  right: 'h-full',
-  left: 'h-full',
-  bottom: 'w-full',
-  top: 'w-full',
+  right: styles.sizeVertical,
+  left: styles.sizeVertical,
+  bottom: styles.sizeHorizontal,
+  top: styles.sizeHorizontal,
 }
 
-const animationByPlacement: Record<DrawerPlacement, string> = {
-  right:
-    'data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:slide-out-to-right data-[state=open]:slide-in-from-right',
-  left:
-    'data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:slide-out-to-left data-[state=open]:slide-in-from-left',
-  bottom:
-    'data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:slide-out-to-bottom data-[state=open]:slide-in-from-bottom',
-  top:
-    'data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:slide-out-to-top data-[state=open]:slide-in-from-top',
+const slideByPlacement: Record<DrawerPlacement, string> = {
+  right: styles.slideFromRight,
+  left: styles.slideFromLeft,
+  bottom: styles.slideFromBottom,
+  top: styles.slideFromTop,
 }
-
-const baseContent =
-  'flex flex-col bg-white shadow-xl outline-none duration-300'
-
-const baseHeader =
-  'flex items-center justify-between border-b border-gray-200 px-6 py-4'
-
-const titleClass = 'text-base font-semibold text-gray-900'
-const descriptionClass = 'mt-1 text-sm text-gray-500'
-const baseBody = 'flex-1 overflow-y-auto px-6 py-4'
-
-const closeButtonClass =
-  'rounded-full p-1.5 text-gray-400 transition-colors hover:bg-gray-100 hover:text-gray-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand'
-
-const CloseIcon = () => (
-  <svg
-    width='16'
-    height='16'
-    viewBox='0 0 24 24'
-    fill='none'
-    stroke='currentColor'
-    strokeWidth='2'
-    strokeLinecap='round'
-    strokeLinejoin='round'
-  >
-    <path d='M18 6 6 18M6 6l12 12' />
-  </svg>
-)
 
 export function Drawer({
   open,
@@ -71,7 +64,12 @@ export function Drawer({
   description,
   children,
   size,
+  dismissible = true,
+  contentClassName,
+  bodyClassName,
 }: DrawerProps) {
+  const { handleDragStart, handleDragMove, handleDragEnd } =
+    useDrawerDrag(onOpenChange)
   const isHorizontal = placement === 'left' || placement === 'right'
   const sizeStyle = size
     ? isHorizontal
@@ -89,43 +87,61 @@ export function Drawer({
       unmountOnExit
     >
       <Portal>
-        <ArkDialog.Backdrop className={backdropClass} />
-        <ArkDialog.Positioner className={positionerClass}>
+        <ArkDialog.Backdrop className={styles.backdrop} />
+        <ArkDialog.Positioner className={styles.positioner}>
           <ArkDialog.Content
             className={mergeClasses(
-              baseContent,
+              styles.panel,
               sizeByPlacement[placement],
               alignByPlacement[placement],
-              animationByPlacement[placement]
+              slideByPlacement[placement],
+              contentClassName ?? ''
             )}
             style={sizeStyle}
           >
+            {placement === 'bottom' && (
+              <div
+                aria-hidden="true"
+                className={styles.dragHandleRow}
+                onPointerDown={handleDragStart}
+                onPointerMove={handleDragMove}
+                onPointerUp={handleDragEnd}
+              >
+                <span className={styles.dragHandlePill} />
+              </div>
+            )}
             {(title || description) && (
-              <div className={baseHeader}>
+              <div className={styles.header}>
                 <div>
                   {title && (
-                    <ArkDialog.Title className={titleClass}>{title}</ArkDialog.Title>
+                    <ArkDialog.Title className={styles.title}>
+                      {title}
+                    </ArkDialog.Title>
                   )}
                   {description && (
-                    <ArkDialog.Description className={descriptionClass}>
+                    <ArkDialog.Description className={styles.description}>
                       {description}
                     </ArkDialog.Description>
                   )}
                 </div>
-                <ArkDialog.CloseTrigger
-                  className={closeButtonClass}
-                  aria-label='Close'
-                >
-                  <CloseIcon />
-                </ArkDialog.CloseTrigger>
+                {dismissible && (
+                  <ArkDialog.CloseTrigger
+                    className={styles.closeButton}
+                    aria-label="Fechar"
+                  >
+                    <Icon name="x" size="sm" />
+                  </ArkDialog.CloseTrigger>
+                )}
               </div>
             )}
-            <div className={baseBody}>{children}</div>
+            <div
+              className={mergeClasses(styles.scrollArea, bodyClassName ?? '')}
+            >
+              {children}
+            </div>
           </ArkDialog.Content>
         </ArkDialog.Positioner>
       </Portal>
     </ArkDialog.Root>
   )
 }
-
-Drawer.displayName = 'Drawer'

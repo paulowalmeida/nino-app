@@ -1,0 +1,12 @@
+@reference "@nino/ds/globals.css";
+
+.storeSelectionShell {
+  @apply flex min-h-screen items-center justify-center px-6 py-12;
+  @apply bg-surface-raised;
+}
+
+.storeSelectionPanel {
+  @apply w-full max-w-md rounded-6 border border-fg-on-brand/70;
+  @apply bg-surface-page/75 p-8 shadow-2xl shadow-brand/10;
+  @apply backdrop-blur-md;
+}

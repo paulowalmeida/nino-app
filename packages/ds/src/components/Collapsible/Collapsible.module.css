@@ -1,0 +1,19 @@
+@reference "../../styles/globals.css";
+
+.toggleHeader {
+  @apply flex w-full cursor-pointer items-center justify-between gap-2;
+  @apply rounded-2 px-3 py-2 text-sm font-semibold;
+  @apply transition-colors duration-base;
+  @apply bg-surface-1 text-fg-strong hover:bg-surface-2;
+  @apply focus-ring state-disabled;
+  @apply data-[state=open]:bg-surface-2;
+  @apply data-[state=open]:hover:bg-surface-3;
+}
+
+.panel {
+  @apply overflow-hidden text-sm text-fg-muted;
+}
+
+.panelBody {
+  @apply px-3 pt-1 pb-3;
+}

@@ -1,0 +1,118 @@
+@reference "@nino/ds/globals.css";
+
+.identityRow {
+  @apply relative z-content -mx-4 -mt-9 flex w-[calc(100%+2rem)] items-center;
+  @apply gap-3.5 border-y border-border bg-surface-page px-4 py-4;
+  @apply sm:mx-0 sm:mt-5 sm:w-auto sm:gap-4 sm:border-0 sm:px-0 sm:py-0;
+  @apply lg:hidden;
+  box-shadow: 0 12px 32px -18px
+    color-mix(in srgb, var(--color-warm-950) 40%, transparent);
+}
+
+.afterCustomBanner {
+  margin-top: 0;
+  box-shadow: none;
+}
+
+@media (min-width: 640px) {
+  .identityRow {
+    box-shadow: none;
+  }
+}
+
+.logoTile {
+  @apply relative h-16 w-16 shrink-0 overflow-hidden rounded-3;
+  @apply border border-border bg-surface-raised;
+  @apply sm:h-20 sm:w-20;
+}
+
+.logoImg {
+  @apply h-full w-full object-cover;
+}
+
+.logoStack {
+  @apply h-full w-full;
+}
+
+.logoPlaceholder {
+  composes: nino-skeleton from global;
+  @apply h-full w-full bg-black/[0.06];
+}
+
+.logoFallback {
+  @apply flex h-full w-full items-center justify-center;
+  @apply font-display text-xl font-extrabold text-fg-on-brand;
+  background-color: var(--store-tint, var(--color-brand));
+}
+
+.identity {
+  @apply min-w-0 flex-1;
+}
+
+.name {
+  @apply line-clamp-2 font-display text-xl font-extrabold leading-tight;
+  @apply tracking-tight text-fg-strong sm:text-2xl;
+}
+
+.identityMeta {
+  @apply mt-1.5 flex flex-wrap items-center gap-x-1.5 gap-y-1;
+  @apply text-[0.8125rem] text-fg-subtle;
+}
+
+.storeIdentityStatus {
+  @apply inline-flex items-center gap-1.5 font-semibold text-fg-default;
+}
+
+.statusOn {
+  color: var(--color-success);
+}
+
+.dot {
+  @apply relative h-1.5 w-1.5 shrink-0 rounded-full bg-fg-ghost;
+}
+
+.dotOn {
+  background-color: var(--color-success);
+}
+
+.dotOn::after {
+  content: '';
+  @apply absolute inset-0 rounded-full;
+  background-color: var(--color-success);
+  animation: statusPing 2.4s var(--ease-out) infinite;
+}
+
+@keyframes statusPing {
+  0% {
+    transform: scale(1);
+    opacity: 0.55;
+  }
+  70%,
+  100% {
+    transform: scale(3.2);
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dotOn::after {
+    animation: none;
+  }
+}
+
+.time {
+  @apply inline-flex items-center;
+  font-variant-numeric: tabular-nums;
+}
+
+.sep {
+  @apply inline-block text-fg-faint;
+}
+
+.more {
+  @apply inline-flex w-auto shrink-0 justify-start px-0 text-[0.8125rem];
+  @apply font-semibold text-fg-faint underline underline-offset-4;
+  @apply hover:text-fg-default;
+  height: auto;
+  flex: 0 0 auto;
+}

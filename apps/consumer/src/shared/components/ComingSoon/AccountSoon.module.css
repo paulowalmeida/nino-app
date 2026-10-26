@@ -1,0 +1,20 @@
+@reference "@nino/ds/globals.css";
+
+.accountSoonCard {
+  @apply mt-6 flex flex-col items-center gap-3 rounded-4 border;
+  @apply border-border bg-surface-1 px-6 py-12;
+  @apply text-center;
+}
+
+.accountSoonIcon {
+  @apply text-fg-faintest;
+}
+
+.accountSoonNote {
+  @apply max-w-xs text-sm leading-snug text-fg-muted;
+}
+
+.tag {
+  @apply rounded-full bg-surface-4 px-3 py-1 text-2xs font-bold uppercase;
+  @apply tracking-[0.12em] text-fg-faint;
+}

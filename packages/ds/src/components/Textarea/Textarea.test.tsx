@@ -4,7 +4,7 @@ import { describe, expect, it, vi } from 'vitest'
 
 import { Textarea } from './Textarea'
 
-describe(Textarea.displayName!, () => {
+describe(Textarea.name, () => {
   it('renders with placeholder', () => {
     render(<Textarea placeholder="Digite aqui" />)
     expect(screen.getByPlaceholderText('Digite aqui')).toBeInTheDocument()

@@ -1,262 +1,153 @@
-# Nino Delivery — nino-app
+# Nino Delivery — nino-app (manager, consumer, landing, backoffice e courier)
 
-## Sumário
+Frontend do **Nino Delivery** — plataforma SaaS White-Label B2B para delivery. O consumidor final nunca vê a marca "Nino": cada loja tem sua própria identidade visual (cor, logo, domínio).
 
-* [1. Visão Geral](#1-visão-geral)
-* [2. Arquitetura do Monorepo](#2-arquitetura-do-monorepo)
-* [3. Stack](#3-stack)
-* [4. Estrutura de Pastas](#4-estrutura-de-pastas)
-* [5. Apps](#5-apps)
-* [6. Packages](#6-packages)
-* [7. Status](#7-status)
-* [8. Roadmap](#8-roadmap)
-* [9. Variáveis de Ambiente](#9-variáveis-de-ambiente)
-* [10. Desenvolvimento Local](#10-desenvolvimento-local)
-* [11. Contribuição & Commits](#11-contribuição--commits)
+Monorepo Turborepo + npm workspaces: 5 apps, 3 packages compartilhados. Backend: [`nino-api`](https://github.com/paulowalmeida/nino-api) (NestJS + JWT + RBAC).
+
+## Arquitetura
+
+Diagrama de componentes (C4 nível 3) do `nino-manager`, com os componentes agrupados por camada: o caminho que uma intenção da UI percorre até virar request, e os muros que a build bloqueia no caminho. O `nino-consumer` segue o mesmo modelo.
+
+![Diagrama de componentes C4 do nino-manager, agrupado por camada](docs/arquitetura-frontend.svg)
 
 ---
 
-## 1. Visão Geral
+## Apps
 
-Frontend do **Nino Delivery** — plataforma SaaS White-Label B2B para o mercado de alimentação. O consumidor final nunca vê a marca "Nino": cada loja tem sua identidade visual própria (`primaryColor`, `secondaryColor`, `logoUrl`, `customDomain`).
+### `nino-manager` — painel do gestor da loja
 
-O monorepo agrupa os quatro apps Next.js e os dois packages compartilhados. Cada app atende um perfil de usuário específico e consome a `nino-api` via `@nino/lib`.
+**Tem:** app mais maduro do monorepo. 30 domínios de página implementados — auth (`Login`/`Register`/`Welcome`/`ForgotPassword`/`ResetPassword`), seleção de loja, `Overview`, `Orders`/`OrderDetail`/`NewOrder`, catálogo (`Catalog`/`CatalogCategories`/`NewProduct`/`ProductDetail`), `Counter` (PDV), `Kitchen`, `TableTabs`/`TableTabDetail`, `Cash`, `Consumers`/`ConsumerDetail`, `Employees`/`CollaboratorDetail`, `Company`, `Units`/`NewUnit`, `Subscription`, `Settings`, `Reports`, `Profile`. Perfis `OWNER`/`MANAGER`/`STAFF`. SPA Vite + React Router, auth via cookie httpOnly com refresh transparente. Detalhes em [`apps/manager/README.md`](apps/manager/README.md).
 
-> Backend: [`nino-api`](https://github.com/paulowalmeida/nino-api)
+**Falta:** itens abertos no roadmap interno do app (switcher de unidade no shell, refinos de M2).
 
----
+### `nino-consumer` — consumidor final
 
-## 2. Arquitetura do Monorepo
+**Tem:** pedido guest (`POST /orders/guest`, sem conta) e com conta (OAuth → perfil → histórico, fidelidade, endereços e pagamentos salvos). Páginas: `Storefront`, `Checkout`, `OrderTracking`, `Orders`, `SignIn`, `Profile`, `Addresses`, `AccountPayment`, `AccountInvoices`, `AccountChats`. Regras em [`docs/consumer.md`](apps/consumer/docs/consumer.md); direção visual em [`DESIGN.md`](apps/consumer/DESIGN.md).
 
-Gerenciado com **Turborepo** + **npm workspaces**. Cada app e package é um workspace independente com seu próprio `package.json` e `tsconfig.json`.
+**Falta:** geolocalização automática de endereço no checkout guest (citada como melhoria futura na própria doc de regras).
 
-```
-nino-app/
-├── apps/          # Quatro apps Next.js (um por perfil de usuário)
-└── packages/      # Packages compartilhados entre os apps
-```
+### `nino-courier` — entregador
 
-### Fluxo de dependências
+**Falta:** tudo. Só existe o scaffold default do Next.js (`page.tsx`/`layout.tsx`), sem lógica. As regras de negócio já estão escritas em [`docs/courier.md`](apps/courier/docs/courier.md): vínculo N:N com units via `CourierUnit`, atribuição de pedido feita pela loja, status de entrega, pagamento negociado fora da plataforma.
 
-```
-nino-consumer  ──┐
-nino-manager   ──┤──→ @nino/ui ──→ @nino/lib
-nino-courier   ──┤──→ @nino/lib
-nino-backoffice──┘
-```
+### `nino-backoffice` — administração da plataforma Nino
 
-`@nino/lib` é a camada de contrato com a API — interfaces TypeScript e enums gerados a partir dos DTOs do backend. Nenhum app define seus próprios tipos de API.
+**Falta:** tudo, mesma situação do courier — só scaffold. Regras já documentadas em [`docs/backoffice.md`](apps/backoffice/docs/backoffice.md) (ciclo de vida de subscription, trial, limites de plano, faturamento) e [`docs/profiles.md`](apps/backoffice/docs/profiles.md) (hierarquia `ADMIN`/`SUPPORT`/`MERCHANT`).
+
+### `nino-landing` — site público do lojista
+
+**Entrou depois:** não fazia parte dos 4 apps do plano original. Next.js SSG, consome `@nino/ds`. Setup em [`apps/landing/README.md`](apps/landing/README.md).
 
 ---
 
-## 3. Stack
+## Packages
 
-| Camada | Tecnologia |
-|---|---|
-| Framework | Next.js 15 (App Router, SSR) |
-| Linguagem | TypeScript 5.7 |
-| UI base | Radix UI + tokens CSS (white-label) |
-| Monorepo | Turborepo v2 + npm workspaces |
-| Linting | ESLint + Prettier |
-| Infra (produção) | Fly.io — shared-cpu-1x, 256MB ~$2–3/app |
+### `@nino/ds` — Design System
 
----
+**Tem:** 78 componentes sobre Ark UI + Tailwind v4, compartilhado pelos 5 apps. Cor de marca `#FF6B00`. Auditoria de adoção real no manager em [`docs/ds-adocao-gestor.md`](docs/ds-adocao-gestor.md); catálogo completo em [`packages/ds/README.md`](packages/ds/README.md).
 
-## 4. Estrutura de Pastas
+**Falta:** componentes pendentes listados no próprio roadmap do DS (`EmptyState` é a lacuna real identificada na auditoria; o resto do backlog é sob demanda, conforme os apps pedirem).
 
-```text
-nino-app/
-├── apps/
-│   ├── consumer/               # App do consumidor final
-│   │   ├── docs/               # Regras de negócio do consumidor
-│   │   └── src/app/
-│   ├── manager/                # App do gestor da loja
-│   │   ├── docs/               # Perfis OWNER / MANAGER / STAFF
-│   │   └── src/app/
-│   ├── courier/                # App do entregador
-│   │   ├── docs/               # Regras do courier
-│   │   └── src/app/
-│   └── backoffice/             # App administrativo Nino
-│       ├── docs/               # Subscription, planos, profiles ADMIN/SUPPORT
-│       └── src/app/
-├── packages/
-│   ├── lib/
-│   │   └── src/
-│   │       ├── enums.ts        # GlobalRole, OrderStatus, etc.
-│   │       ├── types/          # Interfaces por domínio
-│   │       └── index.ts
-│   └── ui/
-│       └── src/
-│           ├── components/     # Componentes base
-│           └── index.ts
-├── package.json
-├── turbo.json
-└── tsconfig.json
-```
+**Entrou depois:** substituiu o `@nino/ui` do plano original, que nunca chegou a existir com esse nome — o escopo final (78 componentes, i18n, máscaras, validadores, Storybook) é bem maior do que os "componentes base" planejados.
 
----
+### `@nino/forms`
 
-## 5. Apps
-
-### `nino-consumer`
-
-App do consumidor final. Suporta dois modos:
-
-**Sem conta (guest):** navega o cardápio → informa nome + telefone + endereço → faz pedido via `POST /orders/guest`. Sem login, sem cadastro obrigatório.
-
-**Com conta:** OAuth → completa perfil → acessa histórico, fidelidade, endereços salvos e métodos de pagamento.
-
-Acessa: `GET /tenants/slug/:slug` · `GET /tenants/:id/products` · `POST /orders/guest` · `POST /orders` · rotas de customer autenticadas.
-
-### `nino-manager`
-
-App do gestor da loja. Perfis: `OWNER`, `MANAGER`, `STAFF`.
-
-Funcionalidades por perfil:
-
-| Funcionalidade | OWNER | MANAGER | STAFF |
-|---|:---:|:---:|:---:|
-| Cardápio (CRUD) | ✓ | ✓ | — |
-| Pedidos | ✓ | ✓ | ✓ |
-| Configurações da loja | ✓ | — | — |
-| Financeiro | ✓ | — | — |
-| Convidar colaboradores | ✓ | ✓* | — |
-
-> *MANAGER pode convidar apenas STAFF
-
-### `nino-courier`
-
-App do entregador autônomo. Acesso restrito a pedidos atribuídos, rota de entrega e histórico próprio.
-
-Fluxo: login → pedidos atribuídos → saiu para entrega → entregue / cancelado.
-
-### `nino-backoffice`
-
-App administrativo da plataforma Nino. Perfis: `ADMIN`, `SUPPORT`.
-
-Gerencia empresas, planos, assinaturas, tenants, usuários e tem visibilidade global de pedidos. `SUPPORT` tem restrição de dados sensíveis.
-
----
-
-## 6. Packages
+**Entrou depois:** não estava no plano. Integração tipada com React Hook Form sobre o `@nino/ds` — modo schema (formulário linear) e modo composto (layout livre). Detalhes em [`packages/forms/README.md`](packages/forms/README.md).
 
 ### `@nino/lib`
 
-Contrato tipado entre os apps e a `nino-api`. Não tem dependências de runtime — TypeScript puro.
+**Tem:** `http-client`, `ApiError` e parte dos tipos de domínio, usados por `consumer` e, pontualmente, por `manager`.
 
-```
-packages/lib/src/
-├── enums.ts          # GlobalRole, TenantRole, OrderStatus, PaymentMethod, ...
-└── types/
-    ├── auth.ts        # LoginRequest, RegisterRequest, LoginResponse, Tokens
-    ├── user.ts        # User, CredentialInfo, UserTenant, CreateUserRequest
-    ├── tenant.ts      # Tenant, TenantSettings, OpeningHours, TenantPhone, ...
-    ├── product.ts     # Product, ProductCategory, CreateProductRequest, ...
-    ├── order.ts       # Order, OrderItem, CreateGuestOrderRequest, ...
-    ├── customer.ts    # Customer, CustomerAddress, LoyaltyTransaction, ...
-    ├── company.ts     # Company, CompanyResponsible, ...
-    ├── subscription.ts
-    ├── plan.ts
-    ├── courier.ts
-    └── common.ts      # PaginatedResponse, PaginationMeta, PaginatedQuery
-```
-
-### `@nino/ui`
-
-Componentes base com Radix UI e tokens CSS para white-label. Ainda não implementado — ver TODO.
+**Falta:** geração automática de tipos a partir da API (o Swagger da `nino-api` foi removido, sem substituto ainda). O `manager` já considera os tipos daqui desatualizados e mantém os próprios em `@custom_types` — migração/consolidação pendente.
 
 ---
 
-## 7. Status
+## Stack
 
-**Última atualização:** Maio 2026 · **Desenvolvedor:** Paulo (Solo)
+| | `manager` / `consumer` | `landing` | `courier` / `backoffice` |
+|---|---|---|---|
+| Framework | Vite SPA + React 19 | Next.js 16 (SSG) | Next.js 16 (scaffold) |
+| Roteamento | React Router 8 (data router) | App Router | App Router |
+| Server state | TanStack Query 5 | — | — |
+| Client state | Zustand | — | — |
+| UI | `@nino/ds` | `@nino/ds` | — |
+| Testes | Vitest + Testing Library | — | — |
 
-| Item | Status |
-|---|---|
-| `@nino/lib` — interfaces e enums | ✅ |
-| `@nino/ui` — componentes base | ⏳ |
-| `nino-consumer` | ⏳ |
-| `nino-manager` | ⏳ |
-| `nino-courier` | ⏳ |
-| `nino-backoffice` | ⏳ |
-
----
-
-## 8. Roadmap
-
-### Curto prazo
-
-- [ ] `@nino/lib` — API client (funções tipadas por endpoint)
-- [ ] `@nino/ui` — setup inicial com Radix UI e tokens CSS
-
-### Médio prazo
-
-- [ ] `nino-consumer` — browse público + fluxo guest + auth
-- [ ] `nino-manager` — gestão de cardápio e pedidos
-
-### Longo prazo
-
-- [ ] `nino-courier` — fluxo de entrega
-- [ ] `nino-backoffice` — gestão de plataforma
+Comum a todo o monorepo: TypeScript 5.7, ESLint + Prettier, Turborepo v2.
 
 ---
 
-## 9. Variáveis de Ambiente
+## Arquitetura (manager/consumer)
 
-Cada app tem seu próprio `.env.local` baseado no `.env.example` da pasta do app.
+Organização **domain-first** por página, em `src/pages/<domínio>/`. `shared/` só entra para o que é genuinamente cross-domínio.
+
+- **components** — regiões visuais nomeadas da página (header, lista, formulário); consomem a facade, nunca Zustand/Service direto.
+- **facades** — fronteira de integração da UI com o domínio; só composição (seleciona/expõe valores e comandos já prontos), sem lógica.
+- **hooks** — orquestram `useQuery`/`useMutation`, cache e invalidação do React Query.
+- **adapters** — conversão entre o formato de transporte (API) e o modelo de domínio/view.
+- **states** — Zustand do domínio (estado client-side compartilhado); operações de transição ficam em `states/<state>/operations/`.
+- **skeletons** — loading state que espelha o CSS do componente real que substitui.
+- **utils** — cálculo determinístico local ao domínio, sem side effect.
+
+Regras:
+
+- Page governa a tela (macro-estados, composição); não implementa região nem lógica de domínio.
+- Domain component consome a facade do domínio; nunca acessa Zustand/Service/React Query direto.
+- DS-first: qualquer UI nova investiga o `@nino/ds` antes de implementação local.
+
+Contrato completo em `AGENTS.md` e `.agents/rules/*.md`, auditado por 8 skills e checks mecânicos (`enforce-facades`, `enforce-services`, etc.). **Entrou depois** — não fazia parte do plano original; substituiu a organização Atomic Design antiga (evidência legada em `src/UI`, não destino para código novo).
+
+---
+
+## Variáveis de Ambiente
 
 ```env
-# URL da API (nino-api)
-NEXT_PUBLIC_API_URL=http://localhost:3000
+# apps/manager — .env.local (sem .env.example versionado)
+VITE_BASE_URL=http://localhost:3000
 
-# Ambiente
-NODE_ENV=development
+# apps/consumer — .env.example (local)
+VITE_BASE_URL=/api
+VITE_GOOGLE_CLIENT_ID=""   # sem ele, botão "Continuar com Google" some
+# O deploy usa https://api-dev.nino.delivery via apps/consumer/vercel.json.
+
+# apps/landing — .env.example
+NEXT_PUBLIC_MANAGER_URL=http://localhost:3002
+
+# apps/courier, apps/backoffice — .env.example
+NEXT_PUBLIC_API_URL=http://localhost:3000
 ```
 
 ---
 
-## 10. Desenvolvimento Local
+## Desenvolvimento Local
 
 ```bash
-# Instalar dependências (raiz do monorepo)
-npm install
+npm install                # raiz do monorepo
+npm run dev                 # todos os apps
+npm run dev:manager         # ou dev:consumer, dev:landing
+cd apps/courier && npm run dev
 
-# Rodar todos os apps em paralelo
-npm run dev
-
-# Rodar um app específico
-cd apps/consumer && npm run dev
-
-# Type check de todos os packages e apps
 npm run type-check
-
-# Lint
 npm run lint
+npm run ds:storybook
 ```
-
-Cada app roda em uma porta diferente:
 
 | App | Porta |
 |---|---|
-| nino-consumer | 3001 |
-| nino-manager | 3002 |
+| nino-manager | 3001 |
+| nino-consumer | 3002 |
 | nino-courier | 3003 |
 | nino-backoffice | 3004 |
+| nino-landing | 3005 |
 
 ---
 
-## 11. Contribuição & Commits
+## Commits
 
-### Branches
-
-- `main` → Produção
-- `feat/NAPP-XX` → Features (incremental, ex: feat/NAPP-01)
-
-### Padrão de Commits
+Fase atual: desenvolvimento solo, commits diretos em `develop`, sem feature branch nem PR. `main` recebe só releases. Conventional Commits sem prefixo de ticket:
 
 ```
-feat(consumer): implementar fluxo de pedido guest
-fix(ui): corrigir responsividade do card de produto
-chore(lib): atualizar interfaces de order
-refactor(manager): extrair hook de listagem de pedidos
+feat: implementar fluxo de pedido guest
+fix: corrige breadcrumbs que voltavam pra própria tela
+refactor: abas da unidade viram destinos soltos
 ```

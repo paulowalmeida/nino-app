@@ -10,7 +10,7 @@ const steps = [
   { title: 'Pagamento' },
 ]
 
-describe(Stepper.displayName!, () => {
+describe(Stepper.name, () => {
   it('renders the step titles', () => {
     render(<Stepper steps={steps} />)
     expect(screen.getByText('Dados pessoais')).toBeInTheDocument()
@@ -33,5 +33,14 @@ describe(Stepper.displayName!, () => {
   it('renders the correct number of steps', () => {
     render(<Stepper steps={steps} />)
     expect(screen.getAllByRole('button')).toHaveLength(steps.length)
+  })
+
+  it('drops the buttons when a controlled path has no step handler', () => {
+    // Arrange / Act: caminho controlado e sem onStepChange é só progresso
+    render(<Stepper steps={steps} step={1} />)
+
+    // Assert
+    expect(screen.queryAllByRole('button')).toHaveLength(0)
+    expect(screen.getByText('Endereço')).toBeInTheDocument()
   })
 })

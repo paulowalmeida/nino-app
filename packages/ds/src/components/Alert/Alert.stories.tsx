@@ -7,7 +7,10 @@ const meta: Meta<typeof Alert> = {
   component: Alert,
   tags: ['autodocs'],
   argTypes: {
-    variant: { control: 'select', options: ['info', 'success', 'warning', 'error'] },
+    variant: {
+      control: 'select',
+      options: ['info', 'success', 'warning', 'error'],
+    },
   },
 }
 
@@ -26,7 +29,7 @@ export const ComTitulo: Story = {
   },
 }
 
-export const Variantes: Story = {
+export const Variants: Story = {
   render: () => (
     <div className="flex flex-col gap-3 w-96">
       <Alert variant="info" title="Informação">

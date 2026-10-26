@@ -1,0 +1,31 @@
+@reference "@nino/ds/globals.css";
+
+.consumersHeader {
+  @apply shrink-0 px-4 pt-4 lg:px-10 lg:pt-10;
+}
+
+.eyebrow {
+  @apply text-xs font-bold uppercase tracking-[0.12em] text-fg-faint;
+}
+
+.head {
+  @apply mt-1 border-b border-border/60 pb-5;
+}
+
+.consumersHeaderTitle {
+  @apply font-display text-2xl font-extrabold tracking-[-0.02em];
+  @apply text-fg-strong;
+  @apply lg:text-3xl;
+}
+
+.consumersHeaderSubtitle {
+  @apply mt-1.5 text-sm text-fg-subtle;
+}
+
+.consumersHeaderSearch {
+  @apply mt-4 h-11 w-full lg:max-w-sm;
+}
+
+.consumersHeaderSubtitleGhost {
+  @apply mt-1.5 h-4 w-full max-w-md;
+}

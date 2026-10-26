@@ -1,0 +1,41 @@
+@reference "../../styles/globals.css";
+
+.carousel {
+  @apply relative;
+}
+
+.slideTrack {
+  @apply flex;
+}
+
+.slide {
+  @apply min-w-0 shrink-0 grow-0;
+}
+
+.arrowButton {
+  @apply absolute top-1/2 z-content flex size-11 -translate-y-1/2;
+  @apply items-center justify-center rounded-2;
+  @apply bg-surface-raised text-fg-default shadow-sm;
+  @apply cursor-pointer transition-colors duration-fast;
+  @apply hover:bg-surface-mute hover:text-brand-strong;
+  @apply focus-ring state-disabled;
+}
+
+.dotRow {
+  @apply mt-3 flex items-center justify-center gap-2;
+}
+
+.dot {
+  @apply h-1.5 w-4 cursor-pointer rounded-full bg-fg-ghost;
+  @apply transition-all duration-base;
+  @apply data-[current]:w-8 data-[current]:bg-fg-default;
+  @apply focus-ring;
+}
+
+.arrowLeft {
+  @apply left-2;
+}
+
+.arrowRight {
+  @apply right-2;
+}

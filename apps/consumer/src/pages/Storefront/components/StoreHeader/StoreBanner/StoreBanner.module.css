@@ -1,0 +1,105 @@
+@reference "@nino/ds/globals.css";
+
+.storeBanner {
+  @apply relative w-full overflow-hidden bg-cover bg-center;
+  @apply h-48;
+  @apply sm:mx-auto sm:mt-4 sm:h-auto sm:w-[calc(100%-3rem)];
+  @apply sm:aspect-[1300/250] sm:max-h-60 sm:rounded-4;
+  max-width: var(--storefront-column);
+  background-color: var(--store-tint, var(--color-brand));
+}
+
+.storeBanner::before {
+  content: '';
+  @apply pointer-events-none absolute -inset-y-12 -inset-x-8;
+  background: radial-gradient(
+    ellipse at 72% 45%,
+    color-mix(in srgb, var(--color-fg-on-brand) 38%, transparent) 0%,
+    transparent 64%
+  );
+  transform: translate3d(0, calc(var(--banner-parallax, 0px) * -0.32), 0);
+  transition: transform 70ms linear;
+  will-change: transform;
+}
+
+.customBanner {
+  @apply sm:rounded-4;
+  background-color: transparent;
+}
+
+.customBanner::before {
+  display: none;
+}
+
+.customImage {
+  @apply h-full w-full object-cover;
+}
+
+.customImageWrap {
+  @apply h-full w-full;
+}
+
+.imagePlaceholder {
+  composes: nino-skeleton from global;
+  @apply h-full w-full bg-black/[0.06];
+}
+
+.mark {
+  @apply pointer-events-none absolute -bottom-4 right-2 h-[135%] w-auto;
+  @apply select-none;
+  opacity: 0.3;
+  filter: saturate(0);
+  transform: translate3d(0, var(--banner-parallax, 0px), 0) scale(1.06);
+  transition: transform 70ms linear;
+  will-change: transform;
+  z-index: 1;
+}
+
+.monogram {
+  @apply pointer-events-none absolute -bottom-4 right-4 select-none;
+  @apply font-display text-[8rem] font-black leading-none text-fg-on-brand;
+  @apply sm:text-[10rem];
+  opacity: 0.28;
+  letter-spacing: -0.08em;
+  transform: translate3d(0, var(--banner-parallax, 0px), 0) scale(1.06);
+  transition: transform 70ms linear;
+  will-change: transform;
+  z-index: 1;
+}
+
+.slideAction {
+  @apply absolute inset-0 z-content cursor-pointer;
+}
+
+.carouselButton {
+  @apply absolute top-1/2 z-overlay h-9 w-9 -translate-y-1/2 rounded-full;
+  @apply bg-black/45 text-white;
+}
+
+.previous {
+  @apply left-3;
+}
+
+.next {
+  @apply right-3;
+}
+
+.dots {
+  @apply absolute bottom-3 left-1/2 z-overlay flex -translate-x-1/2 gap-2;
+}
+
+.dot {
+  @apply h-2 w-2 rounded-full bg-white/55;
+}
+
+.activeDot {
+  @apply w-6 bg-white;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mark,
+  .monogram,
+  .storeBanner::before {
+    transform: none;
+  }
+}

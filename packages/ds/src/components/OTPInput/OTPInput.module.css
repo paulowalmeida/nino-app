@@ -1,0 +1,21 @@
+@reference "../../styles/globals.css";
+
+.digitRow {
+  @apply flex items-center gap-2;
+}
+
+.digitBox {
+  @apply size-12 rounded-2 border border-input-border;
+  @apply bg-surface-raised;
+  @apply text-center;
+  @apply text-lg font-semibold text-fg-strong outline-none;
+  @apply transition-field placeholder:text-fg-faint;
+  @apply focus:border-brand;
+  @apply focus:ring-1;
+  @apply focus:ring-inset focus:ring-brand;
+  @apply data-[invalid]:border-danger;
+  @apply data-[invalid]:focus:ring-danger;
+  @apply data-[invalid]:focus:border-danger;
+  @apply data-[complete]:border-brand;
+  @apply disabled:pointer-events-none state-disabled;
+}

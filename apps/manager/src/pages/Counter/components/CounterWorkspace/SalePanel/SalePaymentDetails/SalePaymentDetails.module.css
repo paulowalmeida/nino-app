@@ -1,0 +1,40 @@
+@reference "@nino/ds/globals.css";
+
+.salePaymentDetails {
+  @apply min-h-0 flex-1 gap-2 overflow-y-auto px-6;
+  @apply py-2.5 sm:py-3;
+  padding-inline: var(--checkout-gutter, 1.5rem);
+  overscroll-behavior: contain;
+}
+
+.choices {
+  @apply grid grid-cols-3 gap-2;
+}
+
+.cashDetails {
+  @apply gap-2.5 border-t border-border pt-3;
+}
+
+.salePaymentDetailsField {
+  @apply gap-1.5;
+}
+
+.fieldLabel {
+  @apply font-bold uppercase text-fg-faint;
+  font-size: 10px;
+  letter-spacing: 0.14em;
+}
+
+.change {
+  @apply pt-0.5;
+}
+
+.changeValue {
+  @apply font-display font-extrabold;
+  font-size: 15px;
+  font-variant-numeric: tabular-nums;
+}
+
+.salePaymentDetailsNote {
+  @apply rounded-3 bg-surface-2 px-3 py-2.5 leading-snug;
+}

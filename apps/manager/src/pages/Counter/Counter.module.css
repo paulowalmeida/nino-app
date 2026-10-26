@@ -1,0 +1,11 @@
+@reference "@nino/ds/globals.css";
+
+.counterPage {
+  @apply flex min-h-full w-full max-w-workspace flex-col overflow-hidden;
+  @apply lg:h-full lg:min-h-0;
+}
+
+.headerRegion {
+  @apply shrink-0 px-4 pt-4;
+  @apply lg:px-10 lg:pt-10;
+}

@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Scaffold reference: passagem-viva.png</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hanuman:wght@700&display=swap">
+  <link rel="stylesheet" href="layout.css">
+  <style>html,body{margin:0}body{background:#f8f7f4}.region{box-sizing:border-box}.region.text p{white-space:pre-wrap}</style>
+</head>
+<body>
+<!-- Reference only. Every region sits at its measured box inside a comp-aspect frame. Take the boxes (layout.css), keep your own semantic structure. -->
+<main class="comp-frame" style="max-width:390px">
+  <div class="r-masthead region chrome" data-region="masthead"><!-- cabeçalho branco com marca central e botão de fechar --></div>
+  <div class="r-offer-kicker region text" data-region="offer-kicker"><!-- selo OFERTA DO DIA --><p style="font-size:var(--r-offer-kicker-font);line-height:1.05;margin:0">offer-kicker</p></div>
+  <div class="r-offer-title region text" data-region="offer-title"><!-- 2 hambúrgueres + 2 bebidas --><p style="font-size:var(--r-offer-title-font);line-height:1.05;margin:0">offer-title</p></div>
+  <div class="r-offer-subtitle region text" data-region="offer-subtitle"><!-- Monte seu pacote e economize --><p style="font-size:var(--r-offer-subtitle-font);line-height:1.05;margin:0">offer-subtitle</p></div>
+  <div class="r-offer-prices region text" data-region="offer-prices"><!-- preço promocional e soma riscada --><p style="font-size:var(--r-offer-prices-font);line-height:1.05;margin:0">offer-prices</p></div>
+  <div class="r-builder-heading region text" data-region="builder-heading"><!-- Monte sua comanda --><p style="font-size:var(--r-builder-heading-font);line-height:1.05;margin:0">builder-heading</p></div>
+  <div class="r-builder-progress region text" data-region="builder-progress"><!-- indicador 2 de 3 --><p style="font-size:var(--r-builder-progress-font);line-height:1.05;margin:0">builder-progress</p></div>
+  <div class="r-step-tabs region control" data-region="step-tabs"><!-- três passos da montagem; segundo ativo: rebuild the control's chrome from the crop (comp-spec.mjs --crop step-tabs); its ink box, border, fill, radius, and label size are the comp's --></div>
+  <div class="r-group-heading region text" data-region="group-heading"><!-- Escolha 2 bebidas --><p style="font-size:var(--r-group-heading-font);font-family:var(--r-group-heading-family),sans-serif;font-weight:var(--r-group-heading-weight);line-height:1.05;margin:0">group-heading</p></div>
+  <div class="r-group-count region text" data-region="group-count"><!-- 0 de 2 selecionadas --><p style="font-size:var(--r-group-count-font);line-height:1.05;margin:0">group-count</p></div>
+  <figure class="r-coca-bottle region plate" data-region="coca-bottle"><img src="../../../assets/plates/coca-bottle.png" alt="" style="width:100%;height:100%;object-fit:contain;object-position:top left"></figure>
+  <div class="r-coca-copy region text" data-region="coca-copy"><!-- nome e preço incluído da Coca-Cola --><p style="font-size:var(--r-coca-copy-font);line-height:1.05;margin:0">coca-copy</p></div>
+  <div class="r-coca-add region control" data-region="coca-add"><!-- botão circular adicionar Coca-Cola: rebuild the control's chrome from the crop (comp-spec.mjs --crop coca-add); its ink box, border, fill, radius, and label size are the comp's --></div>
+  <figure class="r-guarana-bottle region plate" data-region="guarana-bottle"><img src="../../../assets/plates/guarana-bottle.png" alt="" style="width:100%;height:100%;object-fit:contain;object-position:top left"></figure>
+  <div class="r-guarana-copy region text" data-region="guarana-copy"><!-- nome e preço incluído do Guaraná --><p style="font-size:var(--r-guarana-copy-font);line-height:1.05;margin:0">guarana-copy</p></div>
+  <div class="r-guarana-add region control" data-region="guarana-add"><!-- botão circular adicionar Guaraná: rebuild the control's chrome from the crop (comp-spec.mjs --crop guarana-add); its ink box, border, fill, radius, and label size are the comp's --></div>
+  <figure class="r-water-bottle region plate" data-region="water-bottle"><img src="../../../assets/plates/water-bottle.png" alt="" style="width:100%;height:100%;object-fit:contain;object-position:top left"></figure>
+  <div class="r-water-copy region text" data-region="water-copy"><!-- nome e preço incluído da água --><p style="font-size:var(--r-water-copy-font);line-height:1.05;margin:0">water-copy</p></div>
+  <div class="r-water-add region control" data-region="water-add"><!-- botão circular adicionar água: rebuild the control's chrome from the crop (comp-spec.mjs --crop water-add); its ink box, border, fill, radius, and label size are the comp's --></div>
+  <div class="r-checkout-bar region chrome" data-region="checkout-bar"><!-- barra inferior fixa branca --></div>
+  <div class="r-package-total region text" data-region="package-total"><!-- rótulo pacote fechado e preço --><p style="font-size:var(--r-package-total-font);line-height:1.05;margin:0">package-total</p></div>
+  <div class="r-continue-button region control" data-region="continue-button"><!-- botão laranja Continuar: rebuild the control's chrome from the crop (comp-spec.mjs --crop continue-button); its ink box, border, fill, radius, and label size are the comp's --></div>
+</main>
+</body>
+</html>

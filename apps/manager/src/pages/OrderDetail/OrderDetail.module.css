@@ -1,0 +1,154 @@
+@reference "@nino/ds/globals.css";
+
+.orderDetailPage {
+  @apply flex max-w-workspace flex-col p-4 lg:p-10;
+}
+
+.ghostEyebrow {
+  @apply mb-2 h-2.5 w-24;
+}
+
+.ghostNumber {
+  @apply h-7 w-32 lg:h-8;
+}
+
+.ghostLine {
+  @apply mt-2 h-3.5 w-40;
+}
+
+.ghostLineShort {
+  @apply mt-2 h-3.5 w-24;
+}
+
+.ghostBadge {
+  @apply h-5 w-24 shrink-0 rounded-1;
+}
+
+.ghostQuantity {
+  @apply h-3.5 w-7 shrink-0;
+}
+
+.ghostItemName {
+  @apply h-3.5 flex-1;
+}
+
+.ghostPrice {
+  @apply h-3.5 w-14 shrink-0;
+}
+
+.ghostTotal {
+  @apply h-5 w-full;
+}
+
+/* WHY: Voltar fica fora da área rolável, então não depende de `sticky`: não
+ * há fundo para borrar nem conteúdo passando por baixo, e ele nunca sai do
+ * lugar.
+ */
+.backBar {
+  @apply shrink-0 pb-1;
+}
+
+.hero {
+  @apply mt-2 flex items-start gap-4 border-b border-border/60 pb-5;
+}
+
+.heroText {
+  @apply min-w-0 flex-1;
+}
+
+.channel {
+  @apply mb-1;
+}
+
+.number {
+  @apply font-display text-2xl font-extrabold tracking-[-0.02em];
+  @apply text-fg-strong;
+  @apply lg:text-3xl;
+  font-variant-numeric: tabular-nums;
+}
+
+.opened {
+  @apply mt-1 text-sm text-fg-subtle;
+  font-variant-numeric: tabular-nums;
+}
+
+.orderDetailBadge {
+  @apply shrink-0;
+}
+
+.columns {
+  @apply mt-6 grid items-start gap-5 lg:grid-cols-[1.1fr_1fr] lg:gap-12;
+}
+
+.receipt {
+  @apply min-w-0;
+}
+
+/* WHY: O teto vai no viewport, não na raiz: o `Viewport` do Ark é `h-full`, e
+ * num pai que só tem `max-height` isso resolve para `auto` — a raiz recortava
+ * a lista em 22rem e ninguém conseguia rolar até o fim dela.
+ */
+.itemsScroll {
+  @apply lg:pr-2;
+}
+
+.itemsScroll [data-part='viewport'] {
+  @apply lg:max-h-[22rem];
+}
+
+.items {
+  @apply flex flex-col divide-y divide-border/50;
+}
+
+.orderDetailItem {
+  @apply flex items-baseline gap-3 py-2.5 text-sm text-fg-default;
+  @apply first:pt-0;
+}
+
+.quantity {
+  @apply w-7 shrink-0 text-right font-bold text-brand-strong;
+  font-variant-numeric: tabular-nums;
+}
+
+.itemName {
+  @apply min-w-0 flex-1 truncate;
+}
+
+.itemPrice {
+  @apply shrink-0 text-fg-muted;
+  font-variant-numeric: tabular-nums;
+}
+
+.totals {
+  @apply mt-4 flex flex-col gap-1.5 rounded-4 bg-surface-2 p-4;
+}
+
+.totalRow {
+  @apply flex items-baseline justify-between text-sm text-fg-muted;
+  font-variant-numeric: tabular-nums;
+}
+
+.zone {
+  @apply text-fg-faintest;
+}
+
+.grandTotal {
+  @apply mt-1 border-t border-border pt-2.5;
+  @apply font-display text-xl font-extrabold text-fg-strong;
+}
+
+.notes {
+  @apply mt-4 rounded-2 bg-brand-ghost p-3 text-sm leading-relaxed;
+  @apply text-brand-strong;
+}
+
+.notesLabel {
+  @apply mb-0.5 block text-2xs font-bold uppercase tracking-[0.1em];
+  @apply text-brand-strong/70;
+}
+
+/* WHY: o brinde sai da cozinha como item normal; o selo evita que alguém
+ * estranhe o item a R$ 0 ou o cobre do cliente. */
+.giftBadge {
+  @apply ml-2 align-middle;
+}

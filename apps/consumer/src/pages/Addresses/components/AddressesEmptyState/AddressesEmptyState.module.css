@@ -1,0 +1,5 @@
+@reference "@nino/ds/globals.css";
+
+.addressesEmptyStateEmpty {
+  @apply mt-5;
+}

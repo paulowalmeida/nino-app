@@ -1,0 +1,11 @@
+@reference "@nino/ds/globals.css";
+
+.addressesList {
+  @apply mt-5 flex flex-col gap-3;
+}
+
+.addressesListItem {
+  @apply relative rounded-3 border border-border bg-surface-raised;
+  @apply p-4;
+  @apply transition-all hover:border-brand-muted hover:shadow-xs;
+}

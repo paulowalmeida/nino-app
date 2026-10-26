@@ -1,0 +1,14 @@
+@reference "@nino/ds/globals.css";
+
+.dayTallyHeading {
+  @apply mb-3;
+}
+
+.tally {
+  @apply grid grid-cols-1 gap-2 mb-6;
+  @apply lg:max-w-page-narrow lg:grid-cols-3 lg:gap-4;
+}
+
+.payments {
+  @apply mb-6 lg:max-w-page-narrow;
+}

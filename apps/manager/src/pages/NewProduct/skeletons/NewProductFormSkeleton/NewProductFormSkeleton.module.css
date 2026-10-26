@@ -1,0 +1,65 @@
+@reference "@nino/ds/globals.css";
+
+.newProductFormSkeletonForm {
+  @apply mt-6 flex flex-col gap-5;
+  @apply lg:grid lg:grid-cols-[20rem_1fr] lg:items-start lg:gap-x-10;
+}
+
+.photoCol {
+  @apply min-w-0;
+}
+
+.newProductFormSkeletonFields {
+  @apply flex min-w-0 flex-col gap-5;
+}
+
+.newProductFormSkeletonField {
+  @apply min-w-0;
+}
+
+.newProductFormSkeletonRow {
+  @apply grid grid-cols-1 gap-4 sm:grid-cols-[9rem_1fr];
+}
+
+.category {
+  @apply -mt-2;
+}
+
+.newProductFormSkeletonActions {
+  @apply flex flex-col gap-2 border-t border-border/60 pt-5;
+  @apply sm:flex-row sm:justify-end lg:col-span-2;
+}
+
+.ghostPhoto {
+  @apply aspect-[4/3] h-auto w-full rounded-5;
+}
+
+.ghostPhotoAction {
+  @apply h-9 w-32 rounded-3;
+}
+
+.ghostLabel {
+  @apply mb-2 h-3.5 w-28 rounded-1;
+}
+
+.ghostInput {
+  @apply h-10 w-full rounded-2;
+}
+
+.ghostTextarea {
+  @apply h-20 w-full rounded-2;
+}
+
+.ghostHelper {
+  @apply mt-1.5 h-3 w-64 max-w-full rounded-1;
+}
+
+/* WHY: o "Criar uma categoria" fantasma, mesmo porte do Button size sm
+ */
+.ghostCategoryButton {
+  @apply h-8 w-40 rounded-full;
+}
+
+.ghostButton {
+  @apply h-10 w-full rounded-full sm:w-40;
+}

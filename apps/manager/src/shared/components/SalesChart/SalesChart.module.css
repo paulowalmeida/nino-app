@@ -1,0 +1,47 @@
+@reference "@nino/ds/globals.css";
+
+
+.figure {
+  @apply m-0 w-full min-w-0;
+}
+
+/* WHY: `overflow-hidden` closes the loop: without it an SVG wider than the
+ * card would feed back into the measurement and never shrink.
+ */
+.canvas {
+  @apply relative w-full min-w-0 overflow-hidden;
+}
+
+
+.touchArea {
+  @apply touch-none;
+}
+
+.line {
+  @apply stroke-brand;
+  fill: none;
+}
+
+
+.dot {
+  @apply fill-brand stroke-white;
+}
+
+.dotActive {
+  @apply fill-brand-strong stroke-white;
+}
+
+.areaTop {
+  stop-color: var(--color-brand);
+  stop-opacity: 0.2;
+}
+
+.areaBottom {
+  stop-color: var(--color-brand);
+  stop-opacity: 0.02;
+}
+
+.tooltip {
+  @apply rounded-2 border border-border bg-surface-raised px-3 py-2;
+  @apply shadow-sm;
+}

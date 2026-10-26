@@ -1,0 +1,18 @@
+@reference "@nino/ds/globals.css";
+
+.region {
+  @apply flex flex-col;
+}
+
+.signInGoogleButton {
+  @apply flex h-11 w-full items-center justify-center gap-2.5 rounded-full;
+  @apply text-sm font-bold;
+}
+
+.signInGoogleButtonLogo {
+  @apply h-[18px] w-[18px] shrink-0;
+}
+
+.alert {
+  @apply mt-4;
+}

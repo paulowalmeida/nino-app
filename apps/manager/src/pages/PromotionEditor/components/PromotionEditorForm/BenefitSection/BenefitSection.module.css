@@ -1,0 +1,53 @@
+@reference "@nino/ds/globals.css";
+
+.benefitSection {
+  @apply flex flex-col gap-4;
+}
+
+.nameField {
+  @apply w-full md:max-w-sm;
+}
+
+.benefitFields {
+  @apply flex flex-wrap items-start gap-4;
+}
+
+.amountField {
+  @apply w-full md:max-w-72;
+}
+
+.amountInput {
+  @apply w-full md:max-w-32;
+}
+
+.discountKindField {
+  @apply w-full md:max-w-60;
+}
+
+.discountMainFields {
+  @apply flex w-full items-start gap-4;
+}
+
+.discountValueField {
+  @apply w-full sm:w-44;
+}
+
+.discountAuxField {
+  @apply w-full sm:w-44;
+}
+
+.discountAuxFields {
+  @apply flex w-full items-start gap-4;
+}
+
+.campaignTypeField {
+  @apply w-full md:max-w-72;
+}
+
+.giftProductField {
+  @apply w-full md:max-w-72;
+}
+
+.minOrderInput {
+  @apply w-full md:max-w-32;
+}

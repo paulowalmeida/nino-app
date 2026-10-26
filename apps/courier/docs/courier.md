@@ -4,9 +4,9 @@
 
 Autônomo independente, sem vínculo empregatício com a plataforma. Rota pública de cadastro próprio.
 
-## Vínculo com tenants
+## Vínculo com units
 
-Via `CourierTenant`: a loja envia invite por email/link, ou o responsável associa manualmente via backoffice. Um entregador pode estar vinculado a múltiplos tenants de diferentes merchants.
+Via `CourierUnit`: a loja envia invite por email/link, ou o responsável associa manualmente via backoffice. Um entregador pode estar vinculado a múltiplos units de diferentes merchants.
 
 ## Acesso
 

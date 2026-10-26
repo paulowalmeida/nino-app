@@ -1,0 +1,73 @@
+@reference "@nino/ds/globals.css";
+
+.kitchenColumn {
+  @apply flex min-h-0 min-w-0 flex-col sm:border-l sm:border-border sm:pl-3;
+}
+
+.columnHead {
+  @apply mb-3 shrink-0 gap-2.5 px-0.5;
+}
+
+.columnTitle {
+  @apply text-xs font-bold uppercase tracking-[0.14em] text-fg-faint;
+}
+
+.kitchenColumnCount {
+  @apply flex h-6 min-w-6 items-center justify-center rounded-full px-1.5;
+  @apply bg-fg-strong text-xs font-bold text-fg-inverse;
+  font-variant-numeric: tabular-nums;
+}
+
+.skeletonCount {
+  @apply h-6 w-6 rounded-full;
+}
+
+/* WHY: com dois trilhos, uma comanda por linha deixaria metade da parede
+ * vazia num monitor de cozinha. O papel tem largura de leitura própria
+ * (~17rem), e o trilho encaixa quantos couberem em vez de esticar um só.
+ */
+
+/* WORKAROUND: se o trilho (definido em KitchenBoard) ficar mais estreito que
+ * o mínimo do papel, a rolagem horizontal segura o conteúdo em vez de deixar
+ * o `overflow-hidden` da tela cortar o card na lateral.
+ */
+.stack {
+  @apply grid min-h-0 min-w-0 flex-1 content-start gap-5 px-6 pb-4;
+  @apply sm:gap-4 sm:overflow-x-auto sm:overflow-y-auto sm:px-0 sm:pr-1;
+  grid-template-columns: repeat(auto-fill, minmax(14rem, 1fr));
+}
+
+@media (min-width: 640px) {
+  .stack {
+    grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
+  }
+}
+
+.kitchenColumnEmpty {
+  @apply col-span-full;
+}
+
+.dropRegion {
+  @apply rounded-3 outline-2 outline-offset-4 outline-dashed;
+  @apply transition-[background-color,outline-color] duration-fast;
+}
+
+.validDrop {
+  @apply bg-success-surface/40 outline-success;
+}
+
+.invalidDrop {
+  @apply bg-danger-surface/40 outline-danger;
+}
+
+.targeted {
+  @apply outline-4;
+}
+
+.finished .columnTitle {
+  @apply text-fg-faintest;
+}
+
+.finished .kitchenColumnCount {
+  @apply bg-surface-4 text-fg-subtle;
+}

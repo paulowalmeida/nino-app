@@ -9,7 +9,7 @@ const items = [
   { label: 'Detalhes' },
 ]
 
-describe(Breadcrumb.displayName!, () => {
+describe(Breadcrumb.name, () => {
   it('renders all items', () => {
     render(<Breadcrumb items={items} />)
     expect(screen.getByText('Início')).toBeInTheDocument()
@@ -27,20 +27,20 @@ describe(Breadcrumb.displayName!, () => {
 
   it('intermediate items do not have aria-current', () => {
     render(<Breadcrumb items={items} />)
-    expect(screen.getByText('Início').closest('a')).not.toHaveAttribute('aria-current')
+    expect(screen.getByText('Início').closest('a')).not.toHaveAttribute(
+      'aria-current'
+    )
   })
 
   it('calls onClick when clicking an item with handler', async () => {
     const onClick = vi.fn((e) => e.preventDefault())
-    render(
-      <Breadcrumb items={[{ label: 'Home', href: '/', onClick }]} />
-    )
+    render(<Breadcrumb items={[{ label: 'Home', href: '/', onClick }]} />)
     screen.getByText('Home').click()
     expect(onClick).toHaveBeenCalledTimes(1)
   })
 
   it('renders custom separator', () => {
-    render(<Breadcrumb items={items} separator='/' />)
+    render(<Breadcrumb items={items} separator="/" />)
     expect(screen.getAllByText('/')).toHaveLength(items.length - 1)
   })
 })

@@ -1,0 +1,5 @@
+@reference "@nino/ds/globals.css";
+
+.groups {
+  @apply flex flex-col;
+}

@@ -1,57 +1,139 @@
+import { FocusEventHandler, Ref } from 'react'
+
 import { RadioGroup as ArkRadioGroup } from '@ark-ui/react/radio-group'
+import { mergeClasses } from '@ds/lib/mergeClasses/mergeClasses'
 
-import { mergeClasses } from '@ds/lib/mergeClasses'
+import styles from './RadioGroup.module.css'
 
-import { RadioGroupProps } from './RadioGroup.types'
+type RadioOption = {
+  value: string
+  label: string
+  /** Supporting line under the label — a price, a delay, a consequence. */
+  description?: string
+  /** Optional value aligned to the right of the option. */
+  trailing?: string
+  disabled?: boolean
+}
 
-const baseRoot = 'flex gap-3'
-const rootVertical = 'flex-col'
-const rootHorizontal = 'flex-row flex-wrap'
+type RadioGroupVariant = 'default' | 'card'
 
-const baseControl =
-  'h-4 w-4 shrink-0 rounded-full border border-gray-300 flex items-center justify-center outline-none transition-colors focus-visible:ring-2 focus-visible:ring-brand data-[state=checked]:border-brand data-[state=checked]:bg-brand disabled:cursor-not-allowed disabled:opacity-50'
+type RadioGroupProps = {
+  /** Choices, each with `value`, `label` and optional `description` */
+  options: RadioOption[]
+  /**
+   * `card` turns each option into a surface of its own — for choices that
+   * carry a description and deserve a bigger touch target.
+   */
+  variant?: RadioGroupVariant
+  /** Stacking direction. Default: `vertical` */
+  orientation?: 'horizontal' | 'vertical'
+  value?: string
+  defaultValue?: string
+  /** Fired with the selected value */
+  onValueChange?: (value: string) => void
+  disabled?: boolean
+  className?: string
+  /** Names the group for assistive tech when no visible label points at it. */
+  'aria-label'?: string
+  /** Id of the visible element that already names the group. */
+  'aria-labelledby'?: string
+  onBlur?: FocusEventHandler<HTMLDivElement>
+  /**
+   * Points at the first option's input — the node a form library focuses
+   * when it walks to the first invalid field.
+   */
+  ref?: Ref<HTMLInputElement>
+}
 
-const baseIndicatorDot = 'h-1.5 w-1.5 rounded-full bg-white'
+const itemClasses: Record<RadioGroupVariant, string> = {
+  default: styles.optionRow,
+  card: styles.optionCard,
+}
 
-const baseLabelText =
-  'text-sm text-gray-700 leading-none cursor-pointer'
-
-const baseOptionWrapper = 'flex items-center gap-2 cursor-pointer'
-
+/**
+ * Single choice out of a short list.
+ *
+ * ```tsx
+ * <RadioGroup options={[{ value: 'pix', label: 'Pix' }]} />
+ *
+ * @example
+ * <RadioGroup
+ *   variant="card"
+ *   orientation="horizontal"
+ *   options={[
+ *     { value: 'DELIVERY', label: 'Entrega', description: 'Chega em ~40 min' },
+ *     { value: 'PICKUP', label: 'Retirada', description: 'Você busca na loja'
+ * },
+ *   ]}
+ * />
+ *
+ * - `variant` — `card` gives each option its own surface. Default: `default`
+ * ```
+ */
 export function RadioGroup({
   options,
+  variant = 'default',
   orientation = 'vertical',
   className,
   onValueChange,
+  ref,
   ...props
 }: RadioGroupProps) {
+  const isCard = variant === 'card'
+
   return (
     <ArkRadioGroup.Root
       className={mergeClasses(
-        baseRoot,
-        orientation === 'vertical' ? rootVertical : rootHorizontal,
+        styles.radioGroup,
+        orientation === 'vertical'
+          ? styles.stackVertical
+          : styles.stackHorizontal,
         className
       )}
       onValueChange={({ value }) => value !== null && onValueChange?.(value)}
       orientation={orientation}
       {...props}
     >
-      {options.map((option) => (
+      {options.map((option, index) => (
         <ArkRadioGroup.Item
           key={option.value}
           value={option.value}
           disabled={option.disabled}
-          className={baseOptionWrapper}
+          className={itemClasses[variant]}
         >
-          <ArkRadioGroup.ItemControl className={baseControl}>
+          <ArkRadioGroup.ItemControl
+            className={mergeClasses(
+              styles.radioCircle,
+              isCard && styles.radioCircleInCard
+            )}
+          >
             <ArkRadioGroup.Indicator>
-              <span className={baseIndicatorDot} />
+              <span className={styles.selectedDot} />
             </ArkRadioGroup.Indicator>
           </ArkRadioGroup.ItemControl>
-          <ArkRadioGroup.ItemText className={baseLabelText}>
-            {option.label}
-          </ArkRadioGroup.ItemText>
-          <ArkRadioGroup.ItemHiddenInput />
+
+          {isCard ? (
+            <span className={styles.cardTextBlock}>
+              <ArkRadioGroup.ItemText className={styles.cardLabelText}>
+                {option.label}
+              </ArkRadioGroup.ItemText>
+              {option.description && (
+                <span className={styles.descriptionText}>
+                  {option.description}
+                </span>
+              )}
+            </span>
+          ) : (
+            <ArkRadioGroup.ItemText className={styles.labelText}>
+              {option.label}
+            </ArkRadioGroup.ItemText>
+          )}
+
+          {option.trailing && (
+            <span className={styles.trailing}>{option.trailing}</span>
+          )}
+
+          <ArkRadioGroup.ItemHiddenInput ref={index === 0 ? ref : undefined} />
         </ArkRadioGroup.Item>
       ))}
     </ArkRadioGroup.Root>

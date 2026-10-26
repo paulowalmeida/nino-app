@@ -1,43 +1,41 @@
 import { Pagination as ArkPagination } from '@ark-ui/react/pagination'
+import { mergeClasses } from '@ds/lib/mergeClasses/mergeClasses'
 
-import { mergeClasses } from '@ds/lib/mergeClasses'
+import { Icon } from '../Icon/Icon'
+import styles from './Pagination.module.css'
 
-import { PaginationProps } from './Pagination.types'
-
-const baseRoot = 'flex items-center gap-1'
-
-const baseNav =
-  'inline-flex h-9 min-w-9 items-center justify-center rounded-full text-gray-600 transition-colors hover:bg-[color-mix(in_srgb,var(--color-brand)_10%,white)] hover:text-brand disabled:pointer-events-none disabled:opacity-40'
-
-const baseItem =
-  'inline-flex h-9 min-w-9 items-center justify-center rounded-full px-2 text-sm text-gray-700 transition-colors hover:bg-[color-mix(in_srgb,var(--color-brand)_10%,white)] hover:text-brand data-[selected]:bg-brand data-[selected]:text-brand-foreground data-[selected]:hover:bg-brand-hover'
-
-const baseEllipsis =
-  'inline-flex h-9 min-w-9 items-center justify-center text-sm text-gray-400'
-
-const ChevronLeft = () => (
-  <svg width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='currentColor' strokeWidth='2' strokeLinecap='round' strokeLinejoin='round'>
-    <path d='m15 18-6-6 6-6' />
-  </svg>
-)
-
-const ChevronRight = () => (
-  <svg width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='currentColor' strokeWidth='2' strokeLinecap='round' strokeLinejoin='round'>
-    <path d='m9 18 6-6-6-6' />
-  </svg>
-)
+type PaginationProps = {
+  /**
+   * How many items there are in total, not how many pages — the pages come
+   * from dividing this by `pageSize`
+   */
+  count: number
+  /** Items per page. Default: `10` */
+  pageSize?: number
+  /**
+   * Current page, when the screen keeps it (in the URL, for instance). Leave
+   * it out and pass `defaultPage` to let the component keep its own
+   */
+  page?: number
+  defaultPage?: number
+  /**
+   * How many pages show on each side of the current one before the ellipsis.
+   * Default: `1`
+   */
+  siblingCount?: number
+  onPageChange?: (page: number) => void
+  className?: string
+}
 
 /**
- * Pagination for lists and tables. Wraps Ark Pagination.
- * Active page uses the tenant brand color.
+ * Page numbers for a list that does not fit on one screen.
  *
- * @param count - Total number of items (not pages)
+ * Same object as the tabs: a lowered rail with a raised plate marking where
+ * the person is in the sequence.
  *
- * @param pageSize - Items per page. Default: 10
- *
- * @param page - Current page (controlled)
- *
- * @param onPageChange - Fired with the new page number
+ * ```tsx
+ * <Pagination count={total} pageSize={20} page={page} onPageChange={setPage} />
+ * ```
  */
 export function Pagination({
   count,
@@ -56,21 +54,32 @@ export function Pagination({
       defaultPage={defaultPage}
       siblingCount={siblingCount}
       onPageChange={({ page: p }) => onPageChange?.(p)}
-      className={mergeClasses(baseRoot, className)}
+      className={mergeClasses(styles.pageBar, className)}
     >
-      <ArkPagination.PrevTrigger className={baseNav} aria-label='Previous page'>
-        <ChevronLeft />
+      <ArkPagination.PrevTrigger
+        className={styles.stepButton}
+        aria-label="Página anterior"
+      >
+        <Icon name="chevron-left" />
       </ArkPagination.PrevTrigger>
 
       <ArkPagination.Context>
         {(pagination) =>
-          pagination.pages.map((page, i) =>
-            page.type === 'page' ? (
-              <ArkPagination.Item key={i} {...page} className={baseItem}>
-                {page.value}
+          pagination.pages.map((entry, i) =>
+            entry.type === 'page' ? (
+              <ArkPagination.Item
+                key={i}
+                {...entry}
+                className={styles.pageButton}
+              >
+                {entry.value}
               </ArkPagination.Item>
             ) : (
-              <ArkPagination.Ellipsis key={i} index={i} className={baseEllipsis}>
+              <ArkPagination.Ellipsis
+                key={i}
+                index={i}
+                className={styles.ellipsis}
+              >
                 &#8230;
               </ArkPagination.Ellipsis>
             )
@@ -78,11 +87,12 @@ export function Pagination({
         }
       </ArkPagination.Context>
 
-      <ArkPagination.NextTrigger className={baseNav} aria-label='Next page'>
-        <ChevronRight />
+      <ArkPagination.NextTrigger
+        className={styles.stepButton}
+        aria-label="Próxima página"
+      >
+        <Icon name="chevron-right" />
       </ArkPagination.NextTrigger>
     </ArkPagination.Root>
   )
 }
-
-Pagination.displayName = 'Pagination'

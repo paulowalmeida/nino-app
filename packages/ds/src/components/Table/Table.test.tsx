@@ -58,7 +58,7 @@ describe('Table', () => {
       <Table>
         <TableBody>
           <TableRow>
-            <TableCell className='text-right'>x</TableCell>
+            <TableCell className="text-right">x</TableCell>
           </TableRow>
         </TableBody>
       </Table>

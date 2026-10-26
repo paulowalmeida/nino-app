@@ -1,43 +1,49 @@
-import { AnimatePresence, motion } from 'framer-motion'
+import styles from './Spinner.module.css'
 
-import { SpinnerProps } from './Spinner.types'
+type SpinnerProps = {
+  /** Renders nothing when false */
+  visible: boolean
+  /**
+   * Side in pixels. Default: `16`, the size that sits inside a button without
+   * changing its height
+   */
+  size?: number
+  /** What a screen reader announces. Default: `Carregando` */
+  label?: string
+}
 
 /**
- * Animated loading indicator.
- * Uses `AnimatePresence` to smoothly animate enter and exit transitions.
+ * Ring turning while something is under way.
  *
- * @param visible - Controls visibility with enter/exit animation
- * 
- * @param size - Size in pixels. Default: 16
- * 
- * @param label - Accessible label for screen readers. Default: 'Loading'
+ * It announces itself as a live region, so a screen reader says the label
+ * when it appears — which is why the label is product copy, in Portuguese.
+ *
+ * ```tsx
+ * <Spinner visible={isPending} label="Salvando" />
+ * ```
  */
-export function Spinner({ visible, size = 16, label = 'Loading' }: SpinnerProps) {
+export function Spinner({
+  visible,
+  size = 16,
+  label = 'Carregando',
+}: SpinnerProps) {
+  if (!visible) return null
+
   return (
-    <AnimatePresence initial={true}>
-      {visible && (
-        <motion.svg
-          key="spinner"
-          role="status"
-          aria-label={label}
-          width={size}
-          height={size}
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2"
-          initial={{ opacity: 0, scale: 0.5 }}
-          animate={{ opacity: 1, scale: 1, rotate: 360 }}
-          exit={{ opacity: 0, scale: 0.5 }}
-          transition={{
-            rotate: { duration: 0.8, repeat: Infinity, ease: 'linear' },
-            opacity: { duration: 0.15 },
-            scale: { duration: 0.15 },
-          }}
-        >
-          <path d="M21 12a9 9 0 1 1-6.219-8.56" />
-        </motion.svg>
-      )}
-    </AnimatePresence>
+    <svg
+      role="status"
+      aria-label={label}
+      width={size}
+      height={size}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2.5"
+      strokeLinecap="round"
+      className={styles.spinner}
+    >
+      <circle cx="12" cy="12" r="9" className={styles.ring} />
+      <path d="M12 3a9 9 0 0 1 9 9" />
+    </svg>
   )
 }

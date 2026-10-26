@@ -1,0 +1,14 @@
+@reference "@nino/ds/globals.css";
+
+.block {
+  @apply border-t border-border/60 py-4 first:border-t-0 lg:first:pt-0;
+}
+
+.cardTitle {
+  @apply mb-2 text-xs font-bold uppercase tracking-[0.12em] text-fg-faint;
+}
+
+.cancelReason {
+  @apply mt-3 border-t border-border/60 pt-3 text-sm leading-relaxed;
+  @apply text-fg-muted;
+}

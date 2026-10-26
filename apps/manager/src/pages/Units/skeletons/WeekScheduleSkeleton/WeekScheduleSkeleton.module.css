@@ -1,0 +1,30 @@
+@reference "@nino/ds/globals.css";
+
+/* WHY: a barra tem a altura da tinta e a margem completa a caixa de linha do
+ * texto real (h-4 + my-0.5 = os 20px de um text-sm). O layout da semana vem
+ * do módulo do WeekSchedule, não daqui.
+ */
+
+.weekScheduleSkeletonHeading {
+  @apply my-0.5 h-6 w-56 max-w-full rounded-2 lg:h-7;
+}
+
+.lead {
+  @apply my-0.5 h-4 w-96 max-w-full rounded-1;
+}
+
+/* WHY: o Switch do DS no tamanho md: trilho de 20x36
+ */
+.switch {
+  @apply h-5 w-9 shrink-0 rounded-full;
+}
+
+/* WHY: o TimePicker é um Combobox size="sm": 32px de altura
+ */
+.timeInput {
+  @apply h-8 rounded-2;
+}
+
+.save {
+  @apply h-11 w-36 rounded-full;
+}

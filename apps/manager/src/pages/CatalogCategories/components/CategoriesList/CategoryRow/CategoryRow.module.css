@@ -1,0 +1,54 @@
+@reference "@nino/ds/globals.css";
+
+/* WHY: Reorder.Item só aceita `as` como nome de tag HTML (não um componente),
+ * então essa linha não pode literalmente ser o TableRow do DS — a listra
+ * zebrada e o hover replicam o mesmo visual usado nas outras tabelas.
+ */
+.categoryRow {
+  @apply transition-colors duration-fast even:bg-surface-mute;
+  @apply hover:bg-brand-soft;
+}
+
+.dragCell {
+  @apply w-10 pl-4 pr-1 md:pl-2;
+}
+
+.dragHandle {
+  @apply flex shrink-0 cursor-grab touch-none items-center justify-center;
+  @apply rounded-2 p-1.5 text-fg-faint transition-colors duration-150;
+  @apply hover:bg-surface-3 hover:text-fg-subtle;
+  @apply active:cursor-grabbing;
+}
+
+.who {
+  @apply min-w-0;
+}
+
+.name {
+  @apply block truncate text-sm font-semibold text-fg-default;
+}
+
+.hint {
+  @apply block text-xs text-fg-faint;
+  font-variant-numeric: tabular-nums;
+}
+
+.hintEmpty {
+  @apply block text-xs font-medium text-brand-vivid;
+}
+
+.actionsCell {
+  @apply w-12 pl-3 pr-4 text-right md:pr-2;
+}
+
+.desktopActions {
+  @apply hidden justify-end sm:flex;
+}
+
+.compactActions {
+  @apply flex justify-end sm:hidden;
+}
+
+.delete {
+  @apply text-danger hover:bg-danger-surface hover:text-danger;
+}

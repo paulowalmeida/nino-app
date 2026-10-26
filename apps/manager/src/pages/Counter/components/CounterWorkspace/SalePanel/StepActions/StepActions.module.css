@@ -1,0 +1,75 @@
+@reference "@nino/ds/globals.css";
+
+.stepActionsFooter {
+  @apply relative shrink-0 gap-3 bg-surface-page px-6 pb-4 pt-3;
+  filter: drop-shadow(0 -1px 0 var(--color-border));
+  padding-inline: var(--checkout-gutter, 1.5rem);
+  padding-bottom: max(1rem, env(safe-area-inset-bottom));
+}
+
+.stepActions {
+  @apply w-full justify-end;
+}
+
+.stepActionsFooter::before {
+  content: '';
+  position: absolute;
+  inset-inline: 0;
+  bottom: 100%;
+  height: 8px;
+  background: var(--color-surface-page);
+  mask: conic-gradient(
+      from 0deg at 50% 0,
+      #0000 0 135deg,
+      #000 135deg 225deg,
+      #0000 225deg
+    )
+    50% 0 / 16px 8px repeat-x;
+}
+
+.back,
+.continue {
+  @apply min-h-11 flex-1;
+}
+
+.tabular {
+  font-variant-numeric: tabular-nums;
+}
+
+.keys {
+  @apply hidden;
+}
+
+@media (min-width: 768px) {
+  .stepActionsFooter {
+    @apply flex-row items-center justify-between gap-5 px-6 pb-3.5 pt-3;
+  }
+
+  .totals {
+    @apply flex-1;
+  }
+
+  .stepActions {
+    @apply w-auto gap-3.5;
+  }
+
+  .back,
+  .continue {
+    @apply w-24 flex-none;
+  }
+
+  .keys {
+    @apply flex shrink-0 items-center gap-3 text-fg-faint;
+  }
+
+  .key {
+    @apply inline-flex items-center gap-1.5 whitespace-nowrap;
+  }
+
+  .keys kbd {
+    @apply rounded-1 border border-border px-1.5 font-bold;
+    @apply text-fg-muted;
+    font-family: inherit;
+    font-size: 10.5px;
+  }
+}

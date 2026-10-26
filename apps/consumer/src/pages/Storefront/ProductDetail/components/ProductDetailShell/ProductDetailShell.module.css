@@ -1,0 +1,47 @@
+@reference "@nino/ds/globals.css";
+
+.positioner {
+  @apply p-0 lg:p-4;
+}
+
+.productDetailShellPanel {
+  @apply flex h-dvh w-screen max-w-none flex-col rounded-none;
+  @apply lg:h-auto lg:w-auto lg:max-w-5xl lg:rounded-2;
+}
+
+.productDetailShellBody {
+  @apply min-h-0 flex-1 overflow-y-auto overscroll-contain p-0;
+  @apply lg:flex-none lg:overflow-visible lg:px-6 lg:py-5;
+}
+
+.mobileBack {
+  @apply absolute left-3 top-3 z-content flex h-11 w-11 items-center;
+  @apply justify-center rounded-full bg-surface-page text-fg-strong;
+  box-shadow: 0 2px 10px -2px
+    color-mix(in srgb, var(--color-warm-950) 35%, transparent);
+}
+
+@media (hover: hover) {
+  .mobileBack:hover {
+    @apply bg-surface-2;
+  }
+}
+
+.productDetailShellGrid {
+  @apply flex min-h-0 w-full flex-col bg-surface-page;
+  @apply lg:grid lg:h-[75vh] lg:grid-cols-2 lg:grid-rows-[minmax(0,1fr)_auto];
+  @apply lg:gap-x-8 lg:overflow-visible lg:bg-transparent;
+}
+
+.productDetailShellMedia {
+  @apply relative flex shrink-0 items-center justify-center;
+  @apply lg:min-h-0;
+}
+
+.productDetailShellDetails {
+  @apply lg:mr-8 lg:min-h-0 lg:overflow-y-auto;
+}
+
+.productDetailShellFooter {
+  @apply lg:col-span-2;
+}

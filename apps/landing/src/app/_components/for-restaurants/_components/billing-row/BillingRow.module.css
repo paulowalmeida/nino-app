@@ -1,0 +1,30 @@
+@reference '../../../../theme.css';
+.billingRow {
+  @apply flex justify-between items-center px-[1.4rem] py-4;
+  @apply border-t border-border text-base text-fg-default;
+}
+.billingRow:first-of-type {
+  @apply border-t-0;
+}
+
+.platformName {
+  @apply text-base;
+}
+
+.rate {
+  @apply font-semibold text-sm text-accent-clay;
+}
+
+.ninoRow {
+  @apply border-t-0;
+  background: linear-gradient(150deg, #ff7e1f, #ec5a0e);
+}
+
+.ninoName {
+  @apply [font-family:var(--font-display)] font-extrabold;
+  @apply text-base text-fg-on-brand;
+}
+
+.ninoRate {
+  @apply font-bold text-fg-on-brand;
+}

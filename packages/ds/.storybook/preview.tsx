@@ -1,8 +1,9 @@
-import type { Preview } from '@storybook/react'
-import { MotionConfig } from 'framer-motion'
 import { createRoot } from 'react-dom/client'
 
-import { ToastContainer } from '../src/components/Toast'
+import type { Preview } from '@storybook/react'
+import { MotionConfig } from 'framer-motion'
+
+import { ToastContainer } from '../src/components/Toast/Toast'
 
 import './preview.css'
 
@@ -10,7 +11,10 @@ import './preview.css'
 // mesma store e renderiza todos os toasts. Na Docs page há uma story por bloco,
 // então N containers = toasts duplicados. Montamos UM container só para todo o
 // preview do Storybook, fora da renderização das stories.
-if (typeof document !== 'undefined' && !document.getElementById('sb-toast-root')) {
+if (
+  typeof document !== 'undefined' &&
+  !document.getElementById('sb-toast-root')
+) {
   const el = document.createElement('div')
   el.id = 'sb-toast-root'
   document.body.appendChild(el)
@@ -20,8 +24,10 @@ if (typeof document !== 'undefined' && !document.getElementById('sb-toast-root')
 const preview: Preview = {
   decorators: [
     (Story) => (
-      <MotionConfig reducedMotion="never">
-        <Story />
+      <MotionConfig reducedMotion="user">
+        <div className="storybook-stage">
+          <Story />
+        </div>
       </MotionConfig>
     ),
   ],
@@ -34,41 +40,72 @@ const preview: Preview = {
             'Accordion',
             'Alert',
             'Avatar',
+            'BackLink',
             'Badge',
+            'BarList',
             'Breadcrumb',
             'Button',
             'Card',
+            'Carousel',
             'Checkbox',
+            'Chip',
+            'Clipboard',
+            'CnpjInput',
+            'Collapsible',
+            'ColorPicker',
             'Combobox',
+            'CountUp',
+            'CpfInput',
             'DatePicker',
             'Dialog',
             'Drawer',
+            'EmptyState',
+            'Eyebrow',
             'FileUpload',
+            'Box',
             'FormField',
+            'Grid',
+            'Header',
+            'Heading',
+            'HoverCard',
+            'Icon',
             'Input',
             'Label',
+            'Listbox',
+            'ListRow',
             'LoadingDots',
+            'MaskedInput',
             'Menu',
             'Modal',
+            'NinoLogo',
+            'NinoMascot',
             'NumberInput',
             'OTPInput',
             'Pagination',
+            'PasswordInput',
+            'PasswordStrength',
+            'PhoneInput',
             'Popover',
             'ProgressCircle',
             'ProgressLine',
+            'QRCode',
             'RadioGroup',
             'Rating',
+            'ScrollArea',
             'Select',
             'Separator',
             'Skeleton',
             'Slider',
+            'Sparkline',
             'Spinner',
             'Stepper',
             'Switch',
             'Table',
             'Tabs',
             'TagsInput',
+            'Text',
             'Textarea',
+            'TimePicker',
             'Toast',
             'Tooltip',
             '*',

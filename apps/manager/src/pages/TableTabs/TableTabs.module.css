@@ -1,0 +1,6 @@
+@reference "@nino/ds/globals.css";
+
+.tableTabsPage {
+  @apply flex h-full min-h-0 flex-col overflow-hidden;
+  @apply w-full max-w-workspace;
+}

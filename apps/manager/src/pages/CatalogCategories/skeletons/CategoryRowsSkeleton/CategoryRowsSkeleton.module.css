@@ -1,0 +1,29 @@
+@reference "@nino/ds/globals.css";
+
+.categoryRowsSkeletonRow {
+  @apply pointer-events-none;
+}
+
+.ghostHandle {
+  @apply size-9 rounded-2;
+}
+
+.ghostName {
+  @apply h-5 w-32 mb-1;
+}
+
+.ghostHint {
+  @apply h-4 w-16;
+}
+
+.ghostAction {
+  @apply size-9 shrink-0 rounded-2;
+}
+
+.ghostHeaderHandle {
+  @apply h-3 w-4;
+}
+
+.ghostHeaderName {
+  @apply h-3 w-20;
+}

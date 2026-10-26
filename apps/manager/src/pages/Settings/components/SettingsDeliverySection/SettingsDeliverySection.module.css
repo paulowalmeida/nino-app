@@ -1,0 +1,45 @@
+@reference "@nino/ds/globals.css";
+
+.settingsDeliverySectionPanel {
+  @apply flex min-w-0 flex-col gap-5 lg:gap-6;
+}
+
+.head {
+  @apply min-w-0 shrink-0;
+}
+
+.territory {
+  @apply flex min-w-0 shrink-0 flex-col;
+}
+
+.split {
+  @apply flex min-w-0 flex-col gap-6;
+}
+
+.settingsDeliverySectionRail {
+  @apply flex min-w-0 flex-col;
+}
+
+.zones {
+  @apply flex min-w-0 flex-col;
+}
+
+@media (min-width: 1024px) {
+  .split {
+    @apply grid items-start gap-8;
+
+    grid-template-columns: minmax(24rem, 1fr) minmax(0, 40rem);
+  }
+
+  .settingsDeliverySectionRail {
+    @apply self-start;
+  }
+
+  /* WHY: sem isso a tabela estica pra preencher a linha do grid inteira mesmo
+ * com poucas faixas (telas grandes sobram muita altura); self-start deixa ela
+ * abraçar o conteúdo em vez de esticar pra igualar a coluna do mapa.
+ */
+  .zones {
+    @apply self-start;
+  }
+}

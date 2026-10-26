@@ -1,0 +1,6 @@
+@reference "@nino/ds/globals.css";
+
+.catalogControlsToolbar {
+  @apply mb-2 px-4;
+  @apply lg:px-10;
+}

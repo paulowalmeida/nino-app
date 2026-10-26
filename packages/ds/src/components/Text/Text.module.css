@@ -1,0 +1,69 @@
+@reference "../../styles/globals.css";
+
+.sizeExtraSmall {
+  @apply text-xs;
+}
+
+.sizeSmall {
+  @apply text-sm;
+}
+
+.sizeBase {
+  @apply text-base;
+}
+
+.sizeLarge {
+  @apply text-lg;
+}
+
+.sizeExtraLarge {
+  @apply text-xl;
+}
+
+.size2Xl {
+  @apply text-2xl;
+}
+
+.size3Xl {
+  @apply text-3xl;
+}
+
+.weightNormal {
+  @apply font-normal;
+}
+
+.weightMedium {
+  @apply font-medium;
+}
+
+.weightSemibold {
+  @apply font-semibold;
+}
+
+.weightBold {
+  @apply font-bold;
+}
+
+.weightExtrabold {
+  @apply font-extrabold;
+}
+
+.fontSans {
+  @apply font-sans;
+}
+
+.fontDisplay {
+  @apply font-display;
+}
+
+.caseUppercase {
+  @apply uppercase tracking-widest;
+}
+
+.caseLowercase {
+  @apply lowercase;
+}
+
+.caseCapitalize {
+  @apply capitalize;
+}

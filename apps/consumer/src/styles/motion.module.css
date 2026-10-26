@@ -1,0 +1,104 @@
+@reference "@nino/ds/globals.css";
+
+.deal {
+  animation: deal 0.42s var(--ease-out) var(--d, 0ms) both;
+}
+
+.land {
+  animation: land 0.66s var(--ease-back) var(--d, 0ms) both;
+}
+
+/* WHY: revela de cima para baixo por clip-path, sem fade
+ */
+.unroll {
+  animation: unroll 0.46s var(--ease-out) var(--d, 0ms) both;
+}
+
+.pop {
+  animation: pop 0.42s var(--ease-back) var(--d, 0ms) both;
+}
+
+.riseIn {
+  animation: rise-in 0.36s var(--ease-out) var(--d, 0ms) both;
+}
+
+@keyframes deal {
+  from {
+    opacity: 0;
+    transform: translateX(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes land {
+  from {
+    opacity: 0;
+    transform: translateY(-16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes unroll {
+  from {
+    clip-path: inset(0 0 100% 0);
+    transform: translateY(-6px);
+  }
+  to {
+    clip-path: inset(0 0 0 0);
+    transform: translateY(0);
+  }
+}
+
+@keyframes pop {
+  from {
+    opacity: 0;
+    transform: scale(0.82);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes rise-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px) scale(0.985);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .deal,
+  .land,
+  .unroll,
+  .pop,
+  .riseIn {
+    animation: none;
+  }
+}
+
+.press {
+  @apply transition-transform duration-150 ease-out;
+}
+
+.press:active {
+  transform: scale(0.94);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .press,
+  .press:active {
+    transform: none;
+    transition: none;
+  }
+}

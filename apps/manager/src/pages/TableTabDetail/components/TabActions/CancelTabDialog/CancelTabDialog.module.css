@@ -1,0 +1,9 @@
+@reference "@nino/ds/globals.css";
+
+.cancelTabDialogFields {
+  @apply flex flex-col gap-4;
+}
+
+.cancelTabDialogActions {
+  @apply justify-end gap-2;
+}

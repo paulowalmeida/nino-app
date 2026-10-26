@@ -1,0 +1,17 @@
+@reference "@nino/ds/globals.css";
+
+.tabReceipt {
+  @apply min-w-0 border-border bg-surface-raised;
+}
+
+.tabReceiptEmpty {
+  @apply mt-5;
+}
+
+.tabReceiptItems {
+  @apply mt-5;
+}
+
+.tabReceiptTotal {
+  @apply mt-4 border-t border-dashed border-border pt-4;
+}

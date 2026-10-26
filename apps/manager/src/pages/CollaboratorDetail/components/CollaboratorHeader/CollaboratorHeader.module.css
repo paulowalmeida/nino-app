@@ -1,0 +1,25 @@
+@reference "@nino/ds/globals.css";
+
+.hero {
+  @apply mt-4;
+}
+
+.mark {
+  @apply h-14 w-14 shrink-0 text-base lg:h-16 lg:w-16 lg:text-lg;
+}
+
+.heroText {
+  @apply min-w-0;
+}
+
+.name {
+  @apply truncate;
+}
+
+.cadence {
+  @apply mt-1 truncate text-xs text-fg-faint;
+}
+
+.collaboratorHeaderStatus {
+  @apply shrink-0;
+}

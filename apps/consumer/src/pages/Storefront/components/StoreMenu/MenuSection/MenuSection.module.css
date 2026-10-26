@@ -1,0 +1,33 @@
+@reference "@nino/ds/globals.css";
+
+.menuSection {
+  @apply scroll-mt-[8.5rem] lg:scroll-mt-[10.5rem];
+}
+
+.menuSection + .menuSection {
+  @apply mt-10 sm:mt-12;
+}
+
+.sectionHead {
+  @apply mb-4 flex items-baseline justify-between gap-3;
+}
+
+.sectionTitle {
+  @apply font-display text-xl font-extrabold tracking-tight text-fg-strong;
+  @apply sm:text-2xl;
+}
+
+.sectionCount {
+  @apply shrink-0 text-xs text-fg-faint;
+  font-variant-numeric: tabular-nums;
+}
+
+.items {
+  @apply grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4;
+}
+
+@media (min-width: 2560px) {
+  .items {
+    @apply grid-cols-3;
+  }
+}

@@ -1,0 +1,14 @@
+@reference "@nino/ds/globals.css";
+
+.pairs {
+  @apply m-0 flex list-none flex-col p-0;
+}
+
+.pair {
+  @apply text-sm leading-snug;
+}
+
+.ratio {
+  @apply font-bold;
+  font-variant-numeric: tabular-nums;
+}

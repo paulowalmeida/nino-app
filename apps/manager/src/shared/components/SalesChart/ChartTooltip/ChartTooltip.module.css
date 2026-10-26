@@ -1,0 +1,9 @@
+@reference "@nino/ds/globals.css";
+
+.chartTooltipLabel {
+  @apply text-xs font-bold capitalize text-fg-strong;
+}
+
+.chartTooltipValue {
+  @apply mt-0.5 text-sm font-semibold text-brand-strong tabular-nums;
+}

@@ -1,0 +1,21 @@
+@reference "@nino/ds/globals.css";
+
+.orderNotFoundPage {
+  @apply flex min-h-dvh w-full flex-col bg-surface-1 pb-16;
+}
+
+.orderNotFoundContent {
+  @apply flex-1 items-center justify-center;
+}
+
+.notFound {
+  @apply w-full max-w-md gap-3 px-6 text-center;
+}
+
+.backLink {
+  @apply mt-2 font-bold text-brand-strong;
+}
+
+.orderNotFoundFooter {
+  @apply mt-auto w-full;
+}

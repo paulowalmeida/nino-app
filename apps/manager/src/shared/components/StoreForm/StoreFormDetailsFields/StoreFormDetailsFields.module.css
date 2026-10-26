@@ -1,0 +1,9 @@
+@reference "@nino/ds/globals.css";
+
+.groupTitle {
+  @apply text-xs font-bold uppercase tracking-[0.12em] text-fg-faint;
+}
+
+.slugPrefix {
+  @apply shrink-0 text-sm font-semibold tracking-[-0.01em] text-fg-faint;
+}

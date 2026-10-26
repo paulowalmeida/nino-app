@@ -1,36 +1,34 @@
-import { motion } from 'framer-motion'
+import styles from './LoadingDots.module.css'
 
-import { LoadingDotsProps } from './LoadingDots.types'
-
-const baseWrapper = 'inline-flex items-center gap-1'
-const baseDot = 'block h-1.5 w-1.5 rounded-full bg-current'
+type LoadingDotsProps = {
+  /** Renders nothing when false */
+  visible: boolean
+  /** What a screen reader announces. Default: `Carregando` */
+  label?: string
+}
 
 /**
- * Three-dot loading indicator with staggered bounce animation.
- * Use inside Button via `loadingIndicator="dots"` or standalone.
+ * Three dots rippling while something is under way.
  *
- * @param visible - Controls visibility with enter/exit animation
- * @param label - Accessible label for screen readers. Default: 'Loading'
+ * It announces itself as a live region, so a screen reader says the label
+ * when the dots appear — which is why the label is product copy, in
+ * Portuguese, and not a technical string.
+ *
+ * ```tsx
+ * <LoadingDots visible={isPending} label="Buscando pedidos" />
+ * ```
  */
-export function LoadingDots({ visible, label = 'Loading' }: LoadingDotsProps) {
+export function LoadingDots({
+  visible,
+  label = 'Carregando',
+}: LoadingDotsProps) {
   if (!visible) return null
 
   return (
-    <span role="status" aria-label={label} className={baseWrapper}>
-      {[0, 1, 2].map((i) => (
-        <motion.span
-          key={i}
-          animate={{ y: [0, -5, 0] }}
-          transition={{
-            duration: 0.6,
-            repeat: Infinity,
-            ease: 'easeInOut',
-            delay: i * 0.2,
-            repeatDelay: 0.4,
-          }}
-          className={baseDot}
-        />
-      ))}
+    <span role="status" aria-label={label} className={styles.dotRow}>
+      <span className={styles.dot} />
+      <span className={styles.dot} />
+      <span className={styles.dot} />
     </span>
   )
 }

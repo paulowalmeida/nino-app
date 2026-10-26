@@ -25,16 +25,16 @@ Avisos enviados **10 e 5 dias antes** do vencimento mensal.
 
 ---
 
-## Configurações do Tenant (`TenantSettings`)
+## Configurações do Unit (`UnitSettings`)
 
 ### Compartilhamento de colaboradores
 
-`allowSharedStaff` — controla se um colaborador pode estar vinculado a múltiplos tenants simultaneamente.
+`allowSharedStaff` — controla se um colaborador pode estar vinculado a múltiplos units simultaneamente.
 
 - `true` (padrão) — colaborador pode trabalhar em mais de um estabelecimento
-- `false` — ao aceitar um invite, o sistema verifica se o usuário já tem vínculo ativo em outro tenant e bloqueia se houver
+- `false` — ao aceitar um invite, o sistema verifica se o usuário já tem vínculo ativo em outro unit e bloqueia se houver
 
-Configurado via upsert em `PUT /tenants/:tenantId/settings` no campo `allowSharedStaff`.
+Configurado via upsert em `PUT /units/:unitId/settings` no campo `allowSharedStaff`.
 
 ---
 
@@ -49,9 +49,9 @@ Plano anual não está disponível no MVP. Será adicionado quando houver volume
 - **Todo dia 1** — nova fatura gerada para o ciclo do mês
 - **Fechamento do ciclo** — verifica excedente de pedidos; se houver, fatura já vem com valor ajustado pelo plano superior
 
-### Limites de tenants
+### Limites de units
 
-Ao criar um novo tenant, o sistema verifica se a empresa atingiu `Plan.maxTenants`. Se sim:
+Ao criar um novo unit, o sistema verifica se a empresa atingiu `Plan.maxUnits`. Se sim:
 - Recusa a criação
 - Informa que o limite do plano foi atingido
 - Sugere upgrade de plano

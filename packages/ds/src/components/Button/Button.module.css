@@ -1,0 +1,89 @@
+@reference "../../styles/globals.css";
+
+.button {
+  @apply inline-flex cursor-pointer items-center justify-center;
+  @apply rounded-full font-semibold;
+  @apply transition-all duration-base ease-out-soft;
+  @apply disabled:pointer-events-none;
+  @apply focus-ring;
+}
+
+.disabledFilled {
+  @apply bg-surface-5 text-fg-subtle shadow-none;
+}
+
+.disabledTransparent {
+  @apply opacity-disabled;
+}
+
+.loadingDimmed {
+  @apply opacity-disabled;
+}
+
+.variantPrimary {
+  @apply bg-brand text-fg-on-brand;
+  @apply hover:bg-brand-hover active:bg-brand-active;
+}
+
+.variantSecondary {
+  @apply bg-surface-5 text-fg-strong hover:bg-surface-6;
+  @apply active:bg-border;
+}
+
+.variantOutline {
+  @apply border border-border bg-transparent text-fg-strong;
+  @apply hover:bg-surface-2 active:bg-surface-4;
+}
+
+.variantGhost {
+  @apply bg-transparent text-fg-default;
+  @apply hover:bg-surface-2 active:bg-surface-4;
+}
+
+.variantInverse {
+  @apply bg-surface-raised text-brand-strong shadow-warm-sm;
+  @apply hover:bg-surface-2 active:bg-surface-4;
+}
+
+.variantInverseOutline {
+  @apply border-2 border-fg-on-brand/60 bg-transparent;
+  @apply text-fg-on-brand;
+  @apply hover:border-fg-on-brand hover:bg-surface-raised;
+  @apply hover:text-brand-strong;
+}
+
+.variantDanger {
+  @apply bg-danger text-fg-inverse;
+  @apply hover:bg-danger-hover active:bg-danger-active;
+}
+
+.variantWarning {
+  @apply bg-warning-bright text-fg-strong;
+  @apply hover:brightness-95 active:brightness-90;
+}
+
+.sizeSmall {
+  @apply h-8 px-3 text-sm gap-1.5;
+}
+
+.sizeMedium {
+  @apply h-11 px-4 text-sm gap-2;
+}
+
+.sizeLarge {
+  @apply h-12 px-6 text-base gap-2;
+}
+
+.sizeIcon {
+  @apply size-10 shrink-0 p-0;
+}
+
+.button:not(:disabled):active {
+  scale: 0.96;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .button:not(:disabled):active {
+    scale: 1;
+  }
+}

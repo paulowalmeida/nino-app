@@ -1,0 +1,41 @@
+@reference "@nino/ds/globals.css";
+
+.identity {
+  @apply grid gap-2.5 md:grid-cols-3;
+}
+
+.identityName {
+  @apply md:col-span-2;
+}
+
+.confirm {
+  @apply min-h-0 flex-1;
+}
+
+.confirmBack {
+  @apply h-auto w-fit gap-2 px-0 text-base font-bold text-fg-strong;
+  @apply hover:text-brand-strong;
+}
+
+.addressOption {
+  @apply h-auto min-h-14 w-full justify-start gap-3 rounded-3 px-4 py-3;
+  @apply border border-border bg-surface-1 text-left transition-colors;
+  @apply hover:border-brand-bold hover:bg-surface-page;
+  @apply focus-visible:border-brand-bold focus-visible:bg-surface-page;
+}
+
+.addressPin {
+  @apply shrink-0 text-brand;
+}
+
+.addressText {
+  @apply min-w-0 flex-1;
+}
+
+.fieldPlaceholder {
+  @apply h-11 w-full rounded-3;
+}
+
+.mapPlaceholder {
+  @apply h-64 w-full rounded-xl sm:h-80;
+}

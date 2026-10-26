@@ -1,0 +1,14 @@
+@reference "@nino/ds/globals.css";
+
+.reportsPage {
+  @apply relative flex w-full max-w-workspace flex-col;
+}
+
+.dateLabel {
+  @apply text-xs font-semibold uppercase tracking-[0.08em] text-fg-subtle;
+}
+
+.headerRegion {
+  @apply shrink-0 px-4 pt-4;
+  @apply lg:px-10 lg:pt-10;
+}

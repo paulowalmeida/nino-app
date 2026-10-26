@@ -1,0 +1,13 @@
+@reference "@nino/ds/globals.css";
+
+.personMarkBrand {
+  @apply bg-brand-soft text-brand-strong;
+}
+
+.quiet {
+  @apply bg-surface-3 text-fg-subtle;
+}
+
+.night {
+  @apply bg-brand-muted text-brand;
+}

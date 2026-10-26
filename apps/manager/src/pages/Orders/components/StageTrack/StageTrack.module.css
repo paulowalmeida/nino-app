@@ -1,0 +1,37 @@
+@reference "@nino/ds/globals.css";
+
+.track {
+  @apply relative flex w-full min-w-0 cursor-grab gap-2 overflow-x-auto pb-1;
+  @apply active:cursor-grabbing;
+  scrollbar-width: none;
+  touch-action: pan-y;
+}
+
+.track::-webkit-scrollbar {
+  display: none;
+}
+
+.stage {
+  @apply min-h-11 shrink-0;
+}
+
+.stageTrackIcon {
+  @apply h-4 w-4 shrink-0 text-fg-faintest transition-colors duration-200;
+}
+
+.current .stageTrackIcon {
+  @apply text-brand;
+}
+
+.stageTrackLabel {
+  @apply whitespace-nowrap;
+}
+
+.stageTrackCount {
+  @apply text-xs font-bold text-fg-faintest;
+  font-variant-numeric: tabular-nums;
+}
+
+.current .stageTrackCount {
+  @apply text-brand-strong;
+}

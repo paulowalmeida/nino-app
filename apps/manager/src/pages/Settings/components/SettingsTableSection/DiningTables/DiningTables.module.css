@@ -1,0 +1,75 @@
+@reference "@nino/ds/globals.css";
+
+.diningTablesSection {
+  @apply min-w-0 lg:mt-0;
+}
+
+.diningTablesForm {
+  @apply flex flex-col gap-3 sm:flex-row sm:items-end;
+}
+
+.quantity {
+  @apply min-w-0 sm:w-32;
+}
+
+.prefix {
+  @apply min-w-0 sm:w-56;
+}
+
+.diningTablesActions {
+  @apply flex-nowrap items-center justify-end gap-2;
+}
+
+.colName {
+  @apply min-w-0;
+}
+
+.colStatus {
+  @apply w-28 text-right;
+}
+
+.colQr {
+  @apply w-24 whitespace-nowrap text-center;
+}
+
+.colActions {
+  @apply w-48 text-right;
+}
+
+.tableName {
+  @apply block truncate text-sm font-semibold text-fg-default;
+}
+
+.qrPreview {
+  @apply items-center justify-center py-4;
+}
+
+/* CONSTRAINT: Table já envolve a <table> no seu próprio scroller, e o
+ * cabeçalho sticky só gruda se a rolagem vertical acontecer nesse mesmo
+ * elemento.
+ */
+.tableShell > div {
+  max-height: 28rem;
+  overflow-y: auto;
+}
+
+/* WHY: Em 4K, o teto fixo de 28rem deixava um grande vazio antes do rodapé.
+ * Reserva apenas o espaço do cabeçalho, abas e paddings; a tabela só passa a
+ * rolar quando alcança o limite vertical real da tela.
+ */
+@media (min-width: 2560px) {
+  .tableShell > div {
+    max-height: calc(100dvh - 22rem);
+  }
+}
+
+.headRow > th {
+  @apply border-b border-border bg-surface-raised;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+.diningTablesEmpty {
+  @apply border-0 py-6;
+}

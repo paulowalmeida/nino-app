@@ -1,0 +1,55 @@
+@reference "@nino/ds/globals.css";
+
+.categoryNav {
+  @apply flex w-full items-center;
+}
+
+/* WHY: num celular estreito o rótulo comia 80px da régua; a nav já se
+ * identifica pelo aria-label e pelos nomes das categorias
+ */
+.railLabel {
+  @apply hidden;
+}
+
+.track {
+  @apply flex min-w-0 flex-1 overflow-x-auto py-3;
+  scrollbar-width: none;
+}
+
+.track::-webkit-scrollbar {
+  display: none;
+}
+
+.chips {
+  @apply flex w-max min-w-full justify-start gap-2;
+}
+
+.chip {
+  @apply flex shrink-0 cursor-pointer items-center gap-1.5 rounded-full;
+  @apply bg-surface-cool px-3.5 py-2 text-sm font-semibold;
+  @apply text-fg-default transition-colors duration-fast;
+  min-height: 2.5rem;
+}
+
+@media (hover: hover) {
+  .chip:hover {
+    @apply bg-surface-4;
+  }
+}
+
+.chip:focus-visible {
+  outline: 2px solid var(--store-tint, var(--color-brand));
+  outline-offset: 2px;
+}
+
+.chipOn {
+  @apply font-bold text-fg-on-brand;
+  background-color: var(--store-tint, var(--color-brand));
+}
+
+@media (hover: hover) {
+  .chipOn:hover {
+    background-color: var(--store-tint, var(--color-brand));
+    filter: brightness(0.94);
+  }
+}

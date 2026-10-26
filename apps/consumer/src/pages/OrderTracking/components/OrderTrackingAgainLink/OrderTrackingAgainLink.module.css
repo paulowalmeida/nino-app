@@ -1,0 +1,13 @@
+@reference "@nino/ds/globals.css";
+
+.again {
+  @apply mt-8 flex h-12 items-center justify-center rounded-full;
+  @apply bg-brand font-bold text-fg-on-brand transition-colors;
+  @apply hover:bg-brand-hover;
+}
+
+.againQuiet {
+  @apply mt-8 flex h-12 items-center justify-center rounded-full border;
+  @apply border-black/[0.08] font-bold text-fg-muted transition-colors;
+  @apply hover:border-accent-peach hover:text-brand-strong;
+}

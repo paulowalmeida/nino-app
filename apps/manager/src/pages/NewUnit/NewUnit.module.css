@@ -1,0 +1,23 @@
+@reference "@nino/ds/globals.css";
+
+.newUnitPage {
+  @apply max-w-5xl p-4 lg:p-10;
+}
+
+.eyebrow {
+  @apply mt-3 text-xs font-bold uppercase tracking-[0.12em] text-fg-faint;
+}
+
+.head {
+  @apply mt-1 border-b border-border/60 pb-5;
+}
+
+.newUnitTitle {
+  @apply font-display text-2xl font-extrabold tracking-[-0.02em];
+  @apply text-fg-strong;
+  @apply lg:text-3xl;
+}
+
+.newUnitSubtitle {
+  @apply mt-1.5 max-w-xl text-sm leading-relaxed text-fg-subtle;
+}

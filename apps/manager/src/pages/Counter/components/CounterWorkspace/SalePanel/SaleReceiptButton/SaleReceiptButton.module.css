@@ -1,0 +1,9 @@
+@reference "@nino/ds/globals.css";
+
+.bar {
+  @apply gap-2 rounded-3 bg-surface-mute px-3 py-2;
+}
+
+.saleReceiptButtonLabel {
+  @apply flex-1;
+}

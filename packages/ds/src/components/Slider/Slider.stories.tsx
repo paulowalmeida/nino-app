@@ -6,7 +6,13 @@ const meta: Meta<typeof Slider> = {
   title: 'Components/Slider',
   component: Slider,
   tags: ['autodocs'],
-  decorators: [(Story) => <div className='w-80'><Story /></div>],
+  decorators: [
+    (Story) => (
+      <div className="w-80">
+        <Story />
+      </div>
+    ),
+  ],
 }
 
 export default meta
@@ -21,7 +27,14 @@ export const WithLabelAndValue: Story = {
 }
 
 export const WithStep: Story = {
-  args: { label: 'Rating', defaultValue: 3, min: 0, max: 5, step: 1, showValue: true },
+  args: {
+    label: 'Rating',
+    defaultValue: 3,
+    min: 0,
+    max: 5,
+    step: 1,
+    showValue: true,
+  },
 }
 
 export const Disabled: Story = {

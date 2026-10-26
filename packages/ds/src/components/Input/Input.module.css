@@ -1,0 +1,35 @@
+@reference "../../styles/globals.css";
+
+.input {
+  @apply w-full rounded-2 border border-input-border;
+  @apply bg-surface-raised;
+  @apply text-fg-strong placeholder:text-fg-faint;
+  @apply transition-field outline-none;
+  @apply disabled:pointer-events-none state-disabled;
+  @apply focus:border-brand focus:ring-1 focus:ring-inset;
+  @apply focus:ring-brand;
+}
+
+/* `data-invalid` vem do próprio componente, `aria-invalid` vem do Field do
+   Ark quando o FormField recebe um erro — os dois caminhos pintam igual. */
+.input[data-invalid],
+.input[aria-invalid='true'] {
+  @apply border-danger;
+}
+
+.input[data-invalid]:focus,
+.input[aria-invalid='true']:focus {
+  @apply border-danger ring-danger;
+}
+
+.sizeSmall {
+  @apply h-8 px-3 text-sm;
+}
+
+.sizeMedium {
+  @apply h-11 px-3 text-base;
+}
+
+.sizeLarge {
+  @apply h-12 px-4 text-base;
+}

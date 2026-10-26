@@ -1,0 +1,42 @@
+@reference "@nino/ds/globals.css";
+
+.skeleton {
+  @apply h-4 w-28 rounded-full;
+}
+
+.sign {
+  @apply w-fit;
+}
+
+.dot {
+  @apply h-2 w-2 shrink-0 rounded-full bg-fg-faint;
+}
+
+.dotOpen {
+  @apply bg-success;
+  animation: sign-glow 2.6s ease-in-out infinite;
+}
+
+@keyframes sign-glow {
+  0%,
+  100% {
+    box-shadow: 0 0 0 3px
+      color-mix(in srgb, var(--color-success) 20%, transparent);
+  }
+  50% {
+    box-shadow: 0 0 0 6px
+      color-mix(in srgb, var(--color-success) 6%, transparent);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dotOpen {
+    animation: none;
+    box-shadow: 0 0 0 3px
+      color-mix(in srgb, var(--color-success) 20%, transparent);
+  }
+}
+
+.storeSignLabel {
+  @apply uppercase tracking-[0.1em];
+}

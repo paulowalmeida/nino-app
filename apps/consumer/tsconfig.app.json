@@ -1,0 +1,65 @@
+{
+  "compilerOptions": {
+    "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.app.tsbuildinfo",
+    "target": "es2023",
+    "lib": ["ES2023", "DOM"],
+    "module": "esnext",
+    "types": ["vite/client"],
+    "skipLibCheck": true,
+
+    "moduleResolution": "bundler",
+    "allowImportingTsExtensions": true,
+    "moduleDetection": "force",
+    "noEmit": true,
+    "jsx": "react-jsx",
+
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "erasableSyntaxOnly": true,
+    "noFallthroughCasesInSwitch": true,
+
+    "ignoreDeprecations": "6.0",
+    "baseUrl": ".",
+    "paths": {
+      "@ds/*": ["../../packages/ds/src/*"],
+      "@adapters/*": ["src/adapters/*"],
+      "@assets/*": ["src/assets/*"],
+      "@components/*": ["src/components/*"],
+      "@compositions/*": ["src/compositions/*"],
+      "@constants/*": ["src/shared/constants/*"],
+      "@custom_types/account/*": ["src/shared/types/account/*"],
+      "@custom_types/checkout/*": ["src/pages/Checkout/types/checkout/*"],
+      "@custom_types/delivery-zone/*": [
+        "src/pages/Checkout/types/delivery-zone/*"
+      ],
+      "@custom_types/menu/*": ["src/pages/Storefront/types/menu/*"],
+      "@custom_types/*": ["src/shared/types/*"],
+      "@styles/*": ["src/styles/*"],
+      "@elements/*": ["src/elements/*"],
+      "@hooks/*": ["src/shared/hooks/*"],
+      "@layouts/*": ["src/layouts/*"],
+      "@lib/*": ["src/lib/*"],
+      "@pages/*": ["src/pages/*"],
+      "@pages/checkout": ["src/pages/Checkout"],
+      "@pages/checkout/*": ["src/pages/Checkout/*"],
+      "@pages/order-tracking": ["src/pages/OrderTracking"],
+      "@pages/order-tracking/*": ["src/pages/OrderTracking/*"],
+      "@pages/sign-in": ["src/pages/SignIn"],
+      "@pages/sign-in/*": ["src/pages/SignIn/*"],
+      "@providers/*": ["src/providers/*"],
+      "@router/*": ["src/router/*"],
+      "@shared/*": ["src/shared/*"],
+      "@utils/category-icon": ["src/pages/Storefront/utils/category-icon"],
+      "@utils/last-order": ["src/shared/lib/last-order"],
+      "@utils/local-store-redirect": [
+        "src/shared/lib/local-store-redirect/local-store-redirect"
+      ],
+      "@utils/menu-image": ["src/pages/Storefront/utils/menu-image"],
+      "@utils/resolve-slug": ["src/shared/lib/resolve-slug"],
+      "@utils/session-hint": ["src/shared/lib/session-hint"],
+      "@utils/*": ["src/shared/utils/*"]
+    }
+  },
+  "include": ["src"]
+}

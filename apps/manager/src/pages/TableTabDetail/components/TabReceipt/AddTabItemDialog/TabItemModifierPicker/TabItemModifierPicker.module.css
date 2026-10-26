@@ -1,0 +1,51 @@
+@reference "@nino/ds/globals.css";
+
+.tabItemModifierPicker {
+  @apply flex flex-col gap-4;
+}
+
+.tabItemModifierPickerGroup {
+  @apply flex flex-col border-t border-border pt-0;
+}
+
+.tabItemModifierPickerHeader {
+  @apply items-center justify-between gap-3 bg-surface-2 px-4 py-3;
+}
+
+.donenessOptions {
+  row-gap: 0.25rem;
+}
+
+.tabItemModifierPickerIdentity {
+  @apply flex min-w-0 flex-col;
+}
+
+.tally {
+  @apply shrink-0 tabular-nums;
+}
+
+.tabItemModifierPickerOption {
+  @apply flex items-center justify-between gap-3 border-b border-border px-4 py-3;
+}
+
+.tabItemModifierPickerTrailing {
+  @apply shrink-0;
+}
+
+.tabItemModifierPickerPrice {
+  @apply w-20 text-right tabular-nums;
+}
+
+@media (max-width: 425px) {
+  .tabItemModifierPickerHeader {
+    padding-inline: 1.5rem;
+  }
+
+  .donenessOptions {
+    padding-inline: 1.5rem;
+  }
+
+  .tabItemModifierPickerOption {
+    padding-inline: 1.5rem;
+  }
+}

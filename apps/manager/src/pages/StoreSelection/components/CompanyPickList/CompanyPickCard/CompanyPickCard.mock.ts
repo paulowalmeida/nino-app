@@ -1,0 +1,50 @@
+import type { Membership } from '@shared/types/auth/membership'
+
+export const companyPickCardMock = {
+  companyName: 'Lanchonete do Zé',
+  index: 1,
+  singleUnit: [
+    {
+      unitId: 'unit-1',
+      unitName: 'Loja Centro',
+      unitSlug: 'loja-centro',
+      companyId: 'company-1',
+      companyName: 'Lanchonete do Zé',
+      role: 'UNIT_OWNER',
+      positionId: 'position-owner',
+      positionName: 'Dono',
+      positionLevel: 100,
+      permissions: ['reports.view', 'catalog.manage', 'team.view'],
+      isCurrent: true,
+    },
+  ] satisfies Membership[],
+  multipleUnits: [
+    {
+      unitId: 'unit-1',
+      unitName: 'Loja Centro',
+      unitSlug: 'loja-centro',
+      companyId: 'company-1',
+      companyName: 'Lanchonete do Zé',
+      role: 'UNIT_OWNER',
+      positionId: 'position-owner',
+      positionName: 'Dono',
+      positionLevel: 100,
+      permissions: ['reports.view', 'catalog.manage', 'team.view'],
+      isCurrent: true,
+    },
+    {
+      unitId: 'unit-2',
+      unitName: 'Loja Zona Sul',
+      unitSlug: 'loja-zona-sul',
+      companyId: 'company-1',
+      companyName: 'Lanchonete do Zé',
+      role: 'UNIT_OWNER',
+      positionId: 'position-owner',
+      positionName: 'Dono',
+      positionLevel: 100,
+      permissions: ['reports.view', 'catalog.manage', 'team.view'],
+      isCurrent: false,
+    },
+  ] satisfies Membership[],
+  unitCountLabel: '2 unidades',
+}

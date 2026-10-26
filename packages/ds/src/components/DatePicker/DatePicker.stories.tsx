@@ -21,11 +21,11 @@ export default meta
 type Story = StoryObj<typeof DatePicker>
 
 export const Default: Story = {
-  render: () => {
+  render: (args) => {
     const [date, setDate] = useState<Date | undefined>()
     return (
       <div className="w-72 flex justify-center">
-        <DatePicker value={date} onValueChange={setDate} />
+        <DatePicker {...args} value={date} onValueChange={setDate} />
       </div>
     )
   },

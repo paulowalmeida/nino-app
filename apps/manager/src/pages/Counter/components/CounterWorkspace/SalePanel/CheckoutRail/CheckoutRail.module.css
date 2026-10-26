@@ -1,0 +1,10 @@
+@reference "@nino/ds/globals.css";
+
+.progress {
+  @apply shrink-0 lg:hidden;
+}
+
+.steps {
+  @apply hidden shrink-0 pb-2 pt-1 lg:flex;
+  padding-inline: var(--checkout-gutter, 1.5rem);
+}

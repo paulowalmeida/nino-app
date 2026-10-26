@@ -1,0 +1,10 @@
+@reference "@nino/ds/globals.css";
+
+.cashPage {
+  @apply flex h-full min-h-0 flex-col overflow-hidden;
+}
+
+.cashControls {
+  @apply flex min-h-0 flex-col gap-4 overflow-y-auto px-4 pt-4;
+  @apply lg:px-10 lg:pt-10;
+}

@@ -1,0 +1,106 @@
+@reference '../../theme.css';
+.demoSection {
+  @apply py-24 px-16 bg-surface-raised max-md:px-5 max-md:py-12;
+}
+
+.demoInner {
+  @apply max-w-[1000px] mx-auto;
+}
+
+.demoHeader {
+  @apply text-center max-w-[620px] mx-auto mb-10;
+}
+
+.eyebrow {
+  @apply inline-flex items-center gap-2 mb-4;
+  @apply [font-family:var(--font-sans)] text-xs font-bold;
+  @apply tracking-[0.12em] uppercase text-brand-strong;
+}
+
+.eyebrow::before,
+.eyebrow::after {
+  content: "";
+  @apply inline-box w-[22px] h-0.5 bg-brand rounded-1;
+}
+
+.demoTitle {
+  @apply [font-family:var(--font-display)] font-extrabold;
+  @apply text-[clamp(2rem,3.6vw,2.8rem)] leading-display;
+  @apply tracking-[-0.02em] text-fg-strong;
+}
+
+.titleAccent {
+  @apply text-brand;
+}
+
+.lead {
+  @apply mt-[0.9rem] text-base text-fg-muted;
+}
+
+.tabGroup {
+  @apply flex justify-center gap-2 mb-4 flex-wrap;
+}
+
+.demoTab {
+  @apply px-5 py-2 rounded-full border-2 border-gray-200;
+  @apply bg-surface-raised text-gray-600 font-semibold text-sm;
+  @apply cursor-pointer transition-all;
+}
+
+.demoTab:hover {
+  @apply border-brand-bold text-brand-strong;
+}
+
+.tabActive {
+  @apply border-brand bg-brand text-fg-on-brand;
+}
+
+.tabActive:hover {
+  @apply border-brand text-fg-on-brand;
+}
+
+.demoCaption {
+  @apply text-center text-sm text-fg-muted mb-6;
+  @apply max-w-[520px] mx-auto min-h-[2.4rem];
+}
+
+.mockup {
+  @apply bg-surface-raised rounded-5 overflow-hidden;
+  @apply shadow-md;
+  @apply max-w-[420px] mx-auto border border-gray-200;
+  @apply transition-[max-width] duration-500;
+}
+
+.mockupOwner {
+  @apply max-w-[620px];
+}
+
+.chrome {
+  @apply flex items-center justify-between gap-3 px-4 py-2;
+  @apply bg-fg-strong text-2xs [font-family:var(--font-sans)];
+}
+
+.chromeLabel {
+  @apply font-bold tracking-[0.08em] uppercase text-fg-on-brand/90;
+}
+
+.chromeMeta {
+  @apply truncate text-fg-on-brand/50;
+}
+
+.screen {
+  @apply bg-surface-raised;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mockup {
+    @apply transition-none;
+  }
+}
+
+@media (max-width: 560px) {
+  .mockup,
+  .mockupOwner {
+    @apply max-w-full;
+  }
+}

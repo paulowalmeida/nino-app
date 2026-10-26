@@ -1,0 +1,25 @@
+@reference "@nino/ds/globals.css";
+
+.confirm {
+  @apply mt-3 flex flex-wrap items-center justify-between gap-3 rounded-full;
+  @apply border border-black/[0.08] bg-black/[0.06] px-3.5 py-2.5;
+}
+
+.confirmText {
+  @apply text-xs font-bold text-fg-muted;
+}
+
+.confirmActions {
+  @apply flex gap-2;
+}
+
+.confirmNo {
+  @apply h-11 rounded-full px-3.5 text-xs font-bold text-fg-muted;
+  @apply transition-colors hover:text-brand-strong;
+}
+
+.confirmYes {
+  @apply h-11 rounded-full bg-brand px-3.5 text-xs font-bold;
+  @apply text-fg-on-brand transition-colors hover:bg-brand-hover;
+  @apply disabled:cursor-not-allowed disabled:opacity-dim;
+}

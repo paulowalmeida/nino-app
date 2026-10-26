@@ -1,0 +1,38 @@
+@reference "@nino/ds/globals.css";
+
+.entry {
+  @apply relative flex items-baseline gap-3 pb-4 pl-6;
+}
+
+
+.entry:not(.last)::before {
+  content: '';
+  @apply absolute left-[3px] top-2 bottom-0 w-px bg-surface-6;
+}
+
+.mark {
+  @apply absolute left-0 top-1.5 h-[7px] w-[7px] rounded-full;
+  @apply bg-surface-6;
+}
+
+.last .mark {
+  @apply bg-brand;
+  box-shadow: 0 0 0 3px var(--color-brand-soft);
+}
+
+.orderTimelineLabel {
+  @apply text-sm text-fg-muted;
+}
+
+.last .orderTimelineLabel {
+  @apply font-semibold text-fg-default;
+}
+
+.author {
+  @apply text-fg-faintest;
+}
+
+.at {
+  @apply ml-auto text-xs text-fg-faint;
+  font-variant-numeric: tabular-nums;
+}

@@ -1,0 +1,13 @@
+@reference "@nino/ds/globals.css";
+
+.tabFinalizedSummary {
+  @apply flex flex-col gap-4;
+}
+
+.tabFinalizedSummaryFacts {
+  @apply flex flex-col gap-1 border-y border-border py-4;
+}
+
+.tabFinalizedSummaryAmount {
+  @apply shrink-0 tabular-nums;
+}

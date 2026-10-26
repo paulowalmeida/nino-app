@@ -1,0 +1,14 @@
+@reference "@nino/ds/globals.css";
+
+/* WHY: A tela ocupa a altura da janela e a lista rola por dentro: cabeçalho,
+ * régua de colunas e o botão de carregar mais ficam parados, e o que corre é
+ * só a lista. Sem isto, uma base grande empurra a paginação para fora da
+ * tela.
+ */
+.consumersPage {
+  @apply relative flex h-full w-full max-w-workspace flex-col;
+}
+
+.feedback {
+  @apply mx-4 lg:mx-10;
+}

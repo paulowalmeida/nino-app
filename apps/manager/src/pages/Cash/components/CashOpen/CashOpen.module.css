@@ -1,0 +1,9 @@
+@reference "@nino/ds/globals.css";
+
+.open {
+  @apply max-w-md gap-3;
+}
+
+.confirm {
+  @apply mt-1 self-start;
+}

@@ -1,0 +1,5 @@
+@reference "../../styles/globals.css";
+
+.item {
+  @apply flex w-full flex-col gap-2;
+}

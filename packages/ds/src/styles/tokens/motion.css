@@ -1,0 +1,53 @@
+/*
+ * Movimento. As três curvas base (`ease-in`, `ease-out`, `ease-in-out`) são
+ * as do Tailwind — e ali o nome também é keyword CSS, então redefinir o valor
+ * faria a mesma palavra significar duas curvas dependendo de onde está
+ * escrita. Aqui ficam as duas que ele não tem.
+ */
+@theme static {
+  /* Mesma família do `out`, freada mais longa: troca de cor, hover */
+  --ease-out-soft: cubic-bezier(0.22, 1, 0.36, 1);
+  /* Passa do ponto e volta — só onde o exagero é a mensagem */
+  --ease-back: cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  /* Três tempos, um por natureza de mudança. `fast` é troca de tinta (hover,
+     foco), `base` é o padrão de qualquer transição de estado, `slow` é o que
+     envolve deslocamento ou tamanho, `slower` é o que o olho precisa
+     acompanhar até o fim. */
+  --duration-fast: 150ms;
+  --duration-base: 200ms;
+  --duration-slow: 300ms;
+  --duration-slower: 460ms;
+}
+
+@utility duration-fast {
+  transition-duration: var(--duration-fast);
+}
+
+@utility duration-base {
+  transition-duration: var(--duration-base);
+}
+
+@utility duration-slow {
+  transition-duration: var(--duration-slow);
+}
+
+/* Deslocamento longo, onde a peça precisa ser acompanhada pelo olho: a barra
+   enchendo, o toast empurrando a pilha */
+@utility duration-slower {
+  transition-duration: var(--duration-slower);
+}
+
+/* A transição que todo campo de formulário faz ao ganhar foco ou erro: a
+   borda, o anel e a tinta mudam juntos, e nada mais — animar `background`
+   junto faria o preenchimento do autocomplete piscar.
+   A curva é a mesma do Tailwind para não mudar o toque dos campos; trocar
+   por uma das nossas é uma decisão só, aqui. */
+@utility transition-field {
+  transition-property: color, box-shadow, border-color;
+  transition-timing-function: var(
+    --default-transition-timing-function,
+    cubic-bezier(0.4, 0, 0.2, 1)
+  );
+  transition-duration: var(--duration-base);
+}

@@ -1,0 +1,8 @@
+@reference "../../styles/globals.css";
+
+.eyebrow {
+  @apply inline-flex items-center gap-2;
+  @apply text-xs font-bold uppercase tracking-widest text-brand-strong;
+  @apply before:h-0.5 before:w-8;
+  @apply before:rounded-1 before:bg-brand before:content-[''];
+}

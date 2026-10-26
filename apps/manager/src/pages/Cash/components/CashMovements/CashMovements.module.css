@@ -1,0 +1,131 @@
+@reference "@nino/ds/globals.css";
+
+.movements {
+  @apply flex-none;
+}
+
+.tableShell {
+  @apply min-h-0;
+}
+
+.pagination {
+  @apply mt-4 self-center lg:self-end;
+}
+
+.headRow > th {
+  @apply border-b border-border bg-surface-raised;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+.colTime {
+  width: 6rem;
+}
+
+.colKind {
+  width: 12rem;
+}
+
+.colReason {
+  width: auto;
+}
+
+.colAmount {
+  width: 9rem;
+}
+
+.cashMovementsRight,
+.amount {
+  @apply whitespace-nowrap text-right;
+}
+
+.headRow > th.cashMovementsRight {
+  @apply text-right;
+}
+
+.time {
+  @apply whitespace-nowrap text-sm font-semibold text-fg-faint;
+  font-variant-numeric: tabular-nums;
+}
+
+.kind {
+  @apply whitespace-nowrap text-sm font-semibold text-fg-strong;
+}
+
+.reason {
+  @apply max-w-0 truncate text-sm text-fg-muted;
+}
+
+.amount {
+  @apply text-sm font-bold;
+  font-variant-numeric: tabular-nums;
+}
+
+.deposit {
+  @apply text-brand-strong;
+}
+
+.withdrawal {
+  @apply text-danger;
+}
+
+@media (max-width: 639px) {
+  .tableShell table,
+  .tableShell tbody,
+  .tableShell .row {
+    display: block;
+  }
+
+  .tableShell colgroup,
+  .tableShell thead {
+    display: none;
+  }
+
+  .tableShell .row {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    column-gap: 1rem;
+    padding-block: 0.875rem;
+    padding-inline: 1rem;
+    border-bottom: 1px solid var(--color-border);
+    background: transparent;
+  }
+
+  .tableShell .row:last-child {
+    border-bottom: 0;
+  }
+
+  .tableShell .row > td {
+    display: block;
+    min-width: 0;
+    padding: 0;
+  }
+
+  .tableShell .time {
+    font-size: 0.75rem;
+    line-height: 1.25rem;
+  }
+
+  .tableShell .kind {
+    grid-column: 1 / -1;
+    margin-top: 0.25rem;
+    white-space: normal;
+  }
+
+  .tableShell .reason {
+    grid-column: 1 / -1;
+    max-width: none;
+    margin-top: 0.125rem;
+    overflow: visible;
+    text-overflow: clip;
+    white-space: normal;
+    overflow-wrap: anywhere;
+  }
+
+  .tableShell .amount {
+    grid-row: 1;
+    grid-column: 2;
+    line-height: 1.25rem;
+  }
+}

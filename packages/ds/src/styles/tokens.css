@@ -1,0 +1,15 @@
+/*
+ * Índice dos tokens. Os primitivos vêm primeiro porque os semânticos
+ * apontam para eles. Este arquivo continua sendo o caminho público
+ * (`@nino/ds/tokens.css`), então quem importa de fora não vê a divisão.
+ */
+@import './tokens/restrict.css';
+@import './tokens/primitives.css';
+@import './tokens/color.css';
+@import './tokens/typography.css';
+@import './tokens/radius.css';
+@import './tokens/layer.css';
+@import './tokens/elevation.css';
+@import './tokens/opacity.css';
+@import './tokens/motion.css';
+@import './tokens/layout.css';

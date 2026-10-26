@@ -1,0 +1,33 @@
+@reference "../../styles/globals.css";
+
+.scroller {
+  @apply w-full overflow-x-auto;
+}
+
+.table {
+  @apply w-full caption-bottom bg-surface-raised text-sm;
+}
+
+.header {
+  @apply border-b border-border;
+}
+
+.body {
+  @apply [&_tr:last-child]:border-0;
+}
+
+.row {
+  @apply transition-colors duration-fast even:bg-surface-mute;
+  @apply hover:bg-brand-soft;
+  @apply data-selected:bg-fg-default data-selected:text-fg-inverse;
+  @apply data-selected:hover:bg-fg-default;
+}
+
+.headerCell {
+  @apply h-9 px-3 text-left align-middle text-xs font-bold uppercase;
+  @apply tracking-wider text-fg-subtle;
+}
+
+.bodyCell {
+  @apply px-3 py-3 align-middle text-fg-strong;
+}

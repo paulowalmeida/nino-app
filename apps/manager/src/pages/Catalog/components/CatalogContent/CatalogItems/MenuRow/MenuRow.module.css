@@ -1,0 +1,13 @@
+@reference "@nino/ds/globals.css";
+
+.menuRowItem {
+  @apply flex items-center gap-3 border-b border-border/60 px-2;
+  @apply last:border-b-0;
+  @apply transition-opacity duration-200;
+}
+
+.itemOff {
+  @apply flex items-center gap-3 border-b border-border/60 px-2;
+  @apply opacity-faint;
+  @apply transition-opacity duration-200 last:border-b-0;
+}

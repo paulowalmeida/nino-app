@@ -1,0 +1,52 @@
+import { Controller } from 'react-hook-form'
+
+import { Box } from '@nino/ds/components/Box'
+import { RadioGroup } from '@nino/ds/components/RadioGroup'
+import { Heading } from '@nino/ds/components/Heading'
+import { useCheckoutFacade } from '@pages/checkout/facades/useCheckoutFacade/useCheckoutFacade'
+import type { CheckoutFacade } from '@pages/checkout/facades/useCheckoutFacade/useCheckoutFacade'
+
+import styles from './ChannelFields.module.css'
+
+/** Entrega só aparece como opção quando a loja tem zona cadastrada. */
+export const ChannelFields = ({ checkout }: { checkout?: CheckoutFacade }) => {
+  const { control, zones, deliveryNote } = useCheckoutFacade(checkout)
+  const hasDeliveryZones = zones.length > 0
+
+  return (
+    <Box className={styles.block}>
+      <Heading level={2} size="md" className={styles.blockLabel}>
+        Como você quer receber?
+      </Heading>
+      <Controller
+        name="channel"
+        control={control}
+        render={({ field }) => (
+          <RadioGroup
+            variant="card"
+            orientation="horizontal"
+            aria-label="Como receber"
+            value={field.value}
+            onValueChange={field.onChange}
+            options={[
+              ...(hasDeliveryZones
+                ? [
+                    {
+                      value: 'DELIVERY',
+                      label: 'Entrega',
+                      description: deliveryNote,
+                    },
+                  ]
+                : []),
+              {
+                value: 'PICKUP',
+                label: 'Retirada',
+                description: 'Você busca na loja',
+              },
+            ]}
+          />
+        )}
+      />
+    </Box>
+  )
+}

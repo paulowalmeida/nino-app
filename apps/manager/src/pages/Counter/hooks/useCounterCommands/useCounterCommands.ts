@@ -1,0 +1,60 @@
+import { toast } from '@nino/ds/components/Toast'
+import { useCounterCart } from '@pages/Counter/hooks/useCounterCart/useCounterCart'
+import { useCounterDeliveryQuote } from '@pages/Counter/hooks/useCounterDeliveryQuote/useCounterDeliveryQuote'
+import { useCounterSale } from '@pages/Counter/hooks/useCounterSale/useCounterSale'
+import { useCounterStore } from '@pages/Counter/states/counter/counter.store'
+import type { PaymentMethod } from '@shared/types/order/payment-method'
+import { ticketNumber } from '@shared/utils/order-ticket/order-ticket'
+
+export const useCounterCommands = (
+  unitId: string | null,
+  method: PaymentMethod | null
+) => {
+  const { lines, updateQuantity } = useCounterCart()
+  const { error, isSending, sell, reset } = useCounterSale(unitId)
+  const clear = useCounterStore((state) => state.clear)
+  const setSheet = useCounterStore((state) => state.setSheet)
+  const setLastSale = useCounterStore((state) => state.setLastSale)
+  const consumerName = useCounterStore((state) => state.consumerName)
+  const changeFor = useCounterStore((state) => state.changeFor)
+  const channel = useCounterStore((state) => state.channel)
+  const recipient = useCounterStore((state) => state.recipient)
+  const deliveryQuote = useCounterDeliveryQuote(
+    unitId,
+    channel === 'DELIVERY' ? recipient : {}
+  )
+  const emptyTicket = () => {
+    clear()
+    reset()
+  }
+
+  const handleStep = (lineId: string, by: number) => {
+    const line = lines.find(
+      (current) => (current.lineId ?? current.productId) === lineId
+    )
+    if (lines.length === 1 && line && line.quantity + by <= 0) setSheet(false)
+    updateQuantity(lineId, by)
+  }
+
+  const finish = async () => {
+    if (!method) return
+    const sale = await sell({
+      lines,
+      paymentMethod: method,
+      consumerName,
+      changeFor,
+      channel: channel ?? 'COUNTER',
+      recipient:
+        channel === 'DELIVERY' && recipient
+          ? { ...recipient, zoneId: deliveryQuote.quote?.id ?? '' }
+          : recipient,
+    })
+    if (!sale) return
+    const { id, orderNumber, pickupCode } = sale
+    setLastSale({ orderId: id, orderNumber, pickupCode })
+    emptyTicket()
+    toast.success(`Venda #${ticketNumber(orderNumber)} fechada`)
+  }
+
+  return { error, isSending, handleStep, emptyTicket, finish }
+}

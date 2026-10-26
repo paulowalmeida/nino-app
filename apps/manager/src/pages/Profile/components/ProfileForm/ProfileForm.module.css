@@ -1,0 +1,17 @@
+@reference "@nino/ds/globals.css";
+
+.wide {
+  @apply sm:col-span-2;
+}
+
+.saveError {
+  @apply mt-4;
+}
+
+.profileFormActions {
+  @apply mt-8 border-t border-border pt-5;
+}
+
+.profileFormStatus {
+  @apply mb-2 sm:mb-0 sm:mr-auto;
+}

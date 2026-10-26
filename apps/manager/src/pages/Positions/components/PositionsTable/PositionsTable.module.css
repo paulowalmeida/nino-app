@@ -1,0 +1,92 @@
+@reference "@nino/ds/globals.css";
+
+.shell {
+  @apply min-w-0 rounded-6 bg-surface-2;
+}
+
+.headRow > th {
+  @apply border-b border-border;
+}
+
+.colName {
+  width: auto;
+}
+
+
+.colPeople {
+  @apply hidden md:table-column;
+  width: 8rem;
+}
+
+.colBelow {
+  @apply hidden lg:table-column;
+  width: 14rem;
+}
+
+.colAccess {
+  @apply w-24 lg:w-36;
+}
+
+.colActions {
+  @apply w-14 sm:w-36;
+}
+
+.identity {
+  @apply inline-flex max-w-full items-center gap-2 py-1;
+  @apply font-semibold text-fg-strong hover:underline;
+}
+
+.name {
+  @apply truncate;
+}
+
+.access {
+  @apply text-sm text-fg-faint;
+}
+
+
+.actions {
+  @apply text-right;
+}
+
+.smallOnly {
+  @apply block text-xs text-fg-faint md:hidden;
+}
+
+.hideOnSmall {
+  @apply hidden md:table-cell;
+}
+
+.number {
+  @apply text-sm tabular-nums text-fg-faint;
+}
+
+.showOnWide {
+  @apply hidden lg:table-cell;
+}
+
+.wideActions {
+  @apply hidden items-center justify-end sm:flex;
+}
+
+.compactActions {
+  @apply flex justify-end sm:hidden;
+}
+
+.belowTrigger {
+  @apply inline-flex min-h-11 items-center gap-1 rounded-1 bg-surface-cool px-2;
+  @apply text-xs font-bold uppercase tracking-wider text-fg-strong;
+  @apply transition-colors duration-150 hover:bg-surface-mute;
+}
+
+.belowChevron {
+  @apply h-3 w-3 shrink-0 text-fg-faint;
+}
+
+.menuPanel {
+  @apply min-w-56;
+}
+
+.removeButton {
+  @apply text-danger hover:bg-danger-surface hover:text-danger;
+}

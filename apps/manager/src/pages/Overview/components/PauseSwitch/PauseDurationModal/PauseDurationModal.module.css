@@ -1,0 +1,14 @@
+@reference "@nino/ds/globals.css";
+
+.durationCard {
+  @apply h-auto flex-col items-start gap-0.5 rounded-3 px-4 py-3 text-left;
+}
+
+.durationLabel {
+  @apply font-display text-sm font-extrabold text-fg-strong;
+}
+
+.durationHint {
+  @apply text-xs text-fg-faint;
+  font-variant-numeric: tabular-nums;
+}

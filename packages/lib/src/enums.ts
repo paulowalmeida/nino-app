@@ -2,25 +2,25 @@ export enum GlobalRole {
   ADMIN = 'ADMIN',
   SUPPORT = 'SUPPORT',
   OWNER = 'GLOBAL_OWNER',
-  CUSTOMER = 'CUSTOMER',
+  CONSUMER = 'CONSUMER',
   COURIER = 'COURIER',
   GUEST = 'GUEST',
 }
 
-export enum TenantRole {
-  OWNER = 'TENANT_OWNER',
+export enum UnitRole {
+  OWNER = 'UNIT_OWNER',
   MANAGER = 'MANAGER',
   STAFF = 'STAFF',
 }
 
-export enum TenantStatus {
+export enum UnitStatus {
   ACTIVE = 'ACTIVE',
   INACTIVE = 'INACTIVE',
   SUSPENDED = 'SUSPENDED',
   PENDING = 'PENDING',
 }
 
-export enum TenantType {
+export enum UnitType {
   RESTAURANT = 'RESTAURANT',
   FOOD_TRUCK = 'FOOD_TRUCK',
   DARK_KITCHEN = 'DARK_KITCHEN',
@@ -93,4 +93,11 @@ export enum InvoiceStatus {
   PAID = 'PAID',
   OVERDUE = 'OVERDUE',
   CANCELLED = 'CANCELLED',
+}
+
+export enum OrderChannel {
+  DELIVERY = 'DELIVERY',
+  PICKUP = 'PICKUP',
+  COUNTER = 'COUNTER',
+  TABLE_TAB = 'TABLE_TAB',
 }

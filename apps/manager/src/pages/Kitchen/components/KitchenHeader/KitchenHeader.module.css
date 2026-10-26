@@ -1,0 +1,62 @@
+@reference "@nino/ds/globals.css";
+
+.kitchenHeader {
+  @apply mb-4 shrink-0 flex-wrap gap-x-6 gap-y-4;
+}
+
+.identity {
+  @apply flex min-w-0 flex-col gap-1;
+}
+
+.tally {
+  @apply w-full shrink-0 flex-wrap gap-x-5 gap-y-4 sm:w-auto;
+}
+
+.metrics {
+  @apply flex-wrap gap-x-6 gap-y-2;
+}
+
+.metric {
+  @apply flex items-baseline gap-1.5;
+}
+
+.metricValue {
+  @apply text-2xl leading-none font-bold text-fg-strong tabular-nums;
+}
+
+.metricLabel {
+  @apply text-xs font-bold uppercase tracking-[0.12em] text-fg-faint;
+}
+
+.alert .metricValue,
+.alert .metricLabel {
+  @apply text-fg-strong;
+}
+
+.alert .metricValue {
+  @apply underline decoration-2 underline-offset-4;
+}
+
+.density {
+  @apply w-full shrink-0 sm:w-auto;
+}
+
+.loadingLabel {
+  @apply sr-only;
+}
+
+.skeletonTitle {
+  @apply h-8 w-28 lg:h-9;
+}
+
+.skeletonDescription {
+  @apply h-5 w-72 max-w-full;
+}
+
+.skeletonMetric {
+  @apply h-7 w-24;
+}
+
+.skeletonAction {
+  @apply h-9 w-full rounded-3 sm:w-40;
+}

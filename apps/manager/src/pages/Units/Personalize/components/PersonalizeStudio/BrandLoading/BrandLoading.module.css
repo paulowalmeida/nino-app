@@ -1,0 +1,9 @@
+@reference "@nino/ds/globals.css";
+
+.picker {
+  @apply flex min-w-0 flex-col gap-3;
+}
+
+.options {
+  @apply flex-wrap gap-y-2;
+}

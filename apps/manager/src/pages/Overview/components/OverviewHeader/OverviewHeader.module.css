@@ -1,0 +1,54 @@
+@reference "@nino/ds/globals.css";
+
+.overviewHeader {
+  @apply mb-6 w-full lg:mb-9;
+}
+
+.eyebrow {
+  @apply flex flex-wrap items-center gap-x-2 gap-y-0.5;
+  @apply text-[0.7rem] font-bold uppercase tracking-[0.12em];
+}
+
+.date {
+  @apply font-semibold text-fg-faintest;
+}
+
+.plate {
+  @apply mt-2 flex flex-wrap items-baseline justify-between gap-x-4 gap-y-2;
+}
+
+.identity {
+  @apply flex min-w-0 flex-wrap items-baseline gap-x-3 gap-y-1;
+}
+
+.storeName {
+  @apply min-w-0 break-words;
+}
+
+.identity > :not(.storeName) {
+  @apply w-full sm:w-auto;
+}
+
+.visit {
+  @apply inline-flex shrink-0 items-center gap-1 rounded-2 py-1 pr-1;
+  @apply text-xs font-bold uppercase tracking-[0.08em] text-brand-strong;
+  @apply transition-colors hover:text-brand;
+  @apply focus-visible:outline focus-visible:outline-2;
+  @apply focus-visible:outline-offset-2 focus-visible:outline-brand;
+}
+
+.lightStrip {
+  @apply mt-4 h-0.5 w-full rounded-full bg-surface-5;
+  @apply transition-[background-color,box-shadow] duration-slow ease-out-soft;
+  @apply motion-reduce:transition-none;
+}
+
+.lightStripOn {
+  background: linear-gradient(
+    90deg,
+    var(--color-success) 0%,
+    color-mix(in srgb, var(--color-success) 45%, transparent) 55%,
+    var(--color-surface-5) 100%
+  );
+  box-shadow: 0 0 10px color-mix(in srgb, var(--color-success) 28%, transparent);
+}

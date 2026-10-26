@@ -1,0 +1,21 @@
+@reference "@nino/ds/globals.css";
+
+.zoneFormSkeletonTitle {
+  @apply h-5 w-40 rounded-2;
+}
+
+.zoneFormSkeletonDescription {
+  @apply h-4 w-full max-w-lg rounded-2;
+}
+
+.slider {
+  @apply h-9 w-full rounded-2;
+}
+
+.zoneFormSkeletonField {
+  @apply h-16 w-full rounded-2;
+}
+
+.submit {
+  @apply h-10 rounded-3;
+}

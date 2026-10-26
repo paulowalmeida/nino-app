@@ -1,0 +1,4 @@
+export const useMinutesUntilMock = {
+  futureIso: '2026-08-29T20:00:00.000Z',
+  invalidIso: 'not-a-date',
+}

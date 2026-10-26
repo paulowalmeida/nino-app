@@ -1,0 +1,62 @@
+@reference "@nino/ds/globals.css";
+
+.topSalesTableTop {
+  @apply rounded-5 border border-border bg-surface-page/70 p-4 lg:p-5;
+}
+
+.topTitle {
+  @apply mb-3 font-display text-lg font-extrabold tracking-tight;
+  @apply text-fg-strong;
+}
+
+/* WHY: quatro colunas numéricas não cabem em 390px: a tabela rola dentro do
+ * cartão em vez de empurrar a página inteira para os lados
+ */
+.tableWrap {
+  @apply -mx-1 overflow-x-auto;
+}
+
+.position {
+  @apply flex h-7 w-7 shrink-0 items-center justify-center rounded-2;
+  @apply bg-surface-mute font-display text-sm font-extrabold;
+  @apply text-fg-subtle;
+  font-variant-numeric: tabular-nums;
+}
+
+.podium .position {
+  @apply bg-fg-strong text-fg-inverse;
+}
+
+.leader .position {
+  @apply bg-brand text-fg-on-brand shadow-brand;
+}
+
+.rankName {
+  @apply min-w-40 text-fg-default;
+}
+
+.podium .rankName {
+  @apply font-semibold text-fg-strong;
+}
+
+.leader .rankName {
+  @apply font-bold;
+}
+
+.podium .colTotal {
+  @apply text-brand-strong;
+}
+
+.colRank {
+  @apply w-10 pr-0;
+}
+
+.colNumber {
+  @apply whitespace-nowrap text-right text-fg-muted;
+  font-variant-numeric: tabular-nums;
+}
+
+.colTotal {
+  @apply whitespace-nowrap text-right font-semibold text-fg-strong;
+  font-variant-numeric: tabular-nums;
+}

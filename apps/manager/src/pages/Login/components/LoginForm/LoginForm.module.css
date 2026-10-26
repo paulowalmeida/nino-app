@@ -1,0 +1,9 @@
+@reference "@nino/ds/globals.css";
+
+.fullWidthAction {
+  @apply mt-2 w-full;
+}
+
+.forgotPasswordLink {
+  @apply font-semibold text-brand hover:underline;
+}

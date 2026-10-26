@@ -1,0 +1,5 @@
+@reference "@nino/ds/globals.css";
+
+.promotionEditorHeader {
+  @apply mt-3;
+}

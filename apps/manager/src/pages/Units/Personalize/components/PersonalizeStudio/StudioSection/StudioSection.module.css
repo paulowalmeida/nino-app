@@ -1,0 +1,9 @@
+@reference "@nino/ds/globals.css";
+
+.studioSection {
+  @apply flex min-w-0 flex-col;
+}
+
+.studioSectionBody {
+  @apply flex min-w-0 flex-col gap-4 pt-2;
+}

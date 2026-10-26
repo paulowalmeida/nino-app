@@ -1,0 +1,102 @@
+@reference "@nino/ds/globals.css";
+
+/* WHY: As áreas nomeadas mantêm a ordem de leitura e reagrupam os campos por
+ * breakpoint: no desktop, endereço+número, bairro+complemento e
+ * cidade+estado.
+ */
+.addressFieldsGrid {
+  @apply grid gap-3;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  grid-template-areas:
+    'z z z z z z z z n n n n'
+    'st st st st st st st st st st st st'
+    'co co co co co co co co co co co co'
+    'h h h h h h h h h h h h'
+    'ci ci ci ci ci ci ci ci ci sa sa sa';
+}
+
+@media (min-width: 640px) {
+  .addressFieldsGrid {
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    grid-template-areas:
+      'z z z z st st st st st st st st'
+      'n n co co co co co co co co co co'
+      'h h h h h h ci ci ci ci sa sa';
+  }
+}
+
+@media (min-width: 768px) {
+  .addressFieldsGrid {
+    grid-template-areas:
+      'z z st st st st st st st st n n'
+      'h h h h h h co co co co co co'
+      'ci ci ci ci ci ci ci ci ci sa sa sa';
+  }
+}
+
+.zip {
+  grid-area: z;
+}
+
+.street {
+  grid-area: st;
+}
+
+.number {
+  grid-area: n;
+}
+
+.complement {
+  grid-area: co;
+}
+
+.neighborhood {
+  grid-area: h;
+}
+
+.city {
+  grid-area: ci;
+}
+
+.state {
+  grid-area: sa;
+}
+
+.addressFieldsGrid.locationFirst {
+  grid-template-areas:
+    'sa sa sa sa sa sa sa sa sa sa sa sa'
+    'ci ci ci ci ci ci ci ci ci ci ci ci'
+    'z z z z z z z z z z z z'
+    'st st st st st st st st st st st st'
+    'n n n n n n n n n n n n'
+    'h h h h h h h h h h h h'
+    'co co co co co co co co co co co co';
+}
+
+@media (min-width: 640px) {
+  .addressFieldsGrid.locationFirst {
+    grid-template-areas:
+      'sa sa sa ci ci ci ci ci ci z z z'
+      'st st st st st st st st st n n n'
+      'h h h h h h co co co co co co';
+  }
+}
+
+
+.streetLed {
+  grid-template-areas:
+    'st st st st st st st st n n n n'
+    'co co co co co co co co co co co co'
+    'h h h h h h h z z z z z'
+    'ci ci ci ci ci ci ci ci ci sa sa sa';
+}
+
+@media (min-width: 640px) {
+  .streetLed {
+    grid-template-areas:
+      'st st st st st st st st st st n n'
+      'co co co co co co co co co co co co'
+      'h h h h h h h h z z z z'
+      'ci ci ci ci ci ci ci ci sa sa sa sa';
+  }
+}

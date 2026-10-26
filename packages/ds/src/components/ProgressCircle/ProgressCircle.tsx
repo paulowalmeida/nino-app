@@ -2,45 +2,52 @@ import { CSSProperties } from 'react'
 
 import { Progress as ArkProgress } from '@ark-ui/react/progress'
 
-import { mergeClasses } from '@ds/lib/mergeClasses'
+import styles from './ProgressCircle.module.css'
 
-import { ProgressCircleProps, ProgressCircleSize } from './ProgressCircle.types'
+type ProgressCircleSize = 'sm' | 'md' | 'lg'
 
-const sizeMap: Record<ProgressCircleSize, { size: string; thickness: string }> = {
-  sm: { size: '40px', thickness: '4px' },
-  md: { size: '56px', thickness: '5px' },
-  lg: { size: '80px', thickness: '7px' },
+type ProgressCircleProps = {
+  /**
+   * How far along. `null` means the length is unknown, and the ring spins
+   * instead of filling
+   */
+  value: number | null
+  /** Where the ring starts. Default: `0` */
+  min?: number
+  /** Where it is full. Default: `100` */
+  max?: number
+  /** `sm` (40px), `md` (56px) or `lg` (80px). Default: `md` */
+  size?: ProgressCircleSize
+  /**
+   * What a screen reader announces. Without it the ring is read as a bare
+   * number, with no clue of what is progressing
+   */
+  label?: string
+  className?: string
 }
 
-const trackStyle: CSSProperties = {
-  stroke: '#e5e7eb',
-}
-
-const rangeStyle: CSSProperties = {
-  stroke: 'var(--color-brand)',
-  strokeLinecap: 'round',
-}
+const sizeMap: Record<ProgressCircleSize, { size: string; thickness: string }> =
+  {
+    sm: { size: '40px', thickness: '4px' },
+    md: { size: '56px', thickness: '5px' },
+    lg: { size: '80px', thickness: '7px' },
+  }
 
 /**
- * Circular progress indicator themed via `--color-brand`.
+ * Progress drawn as a ring — for what fills up in place, where a bar would
+ * take a whole line: an upload inside a card, a quota on a dashboard.
  *
- * @param value - Current value (null for indeterminate)
- *
- * @param min - Minimum value. Default: `0`
- *
- * @param max - Maximum value. Default: `100`
- *
- * @param size - Circle size. Default: `md`
- *
- * @example
- * <ProgressCircle value={75} />
- * <ProgressCircle value={null} size="lg" />
+ * ```tsx
+ * <ProgressCircle value={uploaded} label="Enviando a foto" />
+ * <ProgressCircle value={null} label="Carregando" size="lg" />
+ * ```
  */
 export function ProgressCircle({
   value,
   min = 0,
   max = 100,
   size = 'md',
+  label,
   className,
 }: ProgressCircleProps) {
   const { size: cssSize, thickness } = sizeMap[size]
@@ -55,15 +62,13 @@ export function ProgressCircle({
       value={value}
       min={min}
       max={max}
+      aria-label={label}
       style={rootStyle}
-      className={mergeClasses(className)}
+      className={className}
     >
       <ArkProgress.Circle>
-        <ArkProgress.CircleTrack style={trackStyle} />
-        <ArkProgress.CircleRange
-          className="progress-circle-range"
-          style={rangeStyle}
-        />
+        <ArkProgress.CircleTrack className={styles.ring} />
+        <ArkProgress.CircleRange className={styles.arc} />
       </ArkProgress.Circle>
     </ArkProgress.Root>
   )

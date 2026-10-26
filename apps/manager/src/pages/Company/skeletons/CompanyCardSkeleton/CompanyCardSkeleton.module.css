@@ -1,0 +1,90 @@
+@reference "@nino/ds/globals.css";
+
+/* WHY: a barra tem a altura da tinta, e a margem completa a caixa de linha do
+ * texto real (h-4 + my-0.5 = as 20px de um text-sm). Sem isso o formulário
+ * inteiro salta quando a empresa chega.
+ */
+
+.companyCardSkeletonField {
+  @apply flex flex-col gap-1.5;
+}
+
+.companyCardSkeletonHeading {
+  @apply my-0.5 h-6 w-28 rounded-2 lg:h-7 lg:w-32;
+}
+
+.lead {
+  @apply my-0.5 h-4 w-96 max-w-full rounded-1;
+}
+
+.identityLabel {
+  @apply my-0.5 h-3 w-11 rounded-1;
+}
+
+.identityValue {
+  @apply my-0.5 h-6 w-44 rounded-1;
+}
+
+.identityHint {
+  @apply my-1 h-3 w-96 max-w-full rounded-1;
+}
+
+.companyCardSkeletonLabel {
+  @apply my-0.5 h-4 rounded-1;
+}
+
+.companyCardSkeletonInput {
+  @apply h-11 w-full rounded-2;
+}
+
+.groupTitle {
+  @apply my-0.5 h-3 w-40 rounded-1;
+}
+
+.companyCardSkeletonStatus {
+  @apply my-0.5 h-3 w-56 max-w-full rounded-1 sm:mr-auto;
+}
+
+.save {
+  @apply h-11 w-36 shrink-0 rounded-3;
+}
+
+.labelName {
+  @apply w-8;
+}
+
+.labelLegal {
+  @apply w-20;
+}
+
+.labelRegistration {
+  @apply w-32;
+}
+
+.labelZip {
+  @apply w-7;
+}
+
+.labelStreet {
+  @apply w-7;
+}
+
+.labelNumber {
+  @apply w-11;
+}
+
+.labelComplement {
+  @apply w-20;
+}
+
+.labelNeighborhood {
+  @apply w-11;
+}
+
+.labelCity {
+  @apply w-11;
+}
+
+.labelState {
+  @apply w-5;
+}

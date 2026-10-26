@@ -1,0 +1,5 @@
+@reference "@nino/ds/globals.css";
+
+.deviceTabs {
+  @apply shrink-0;
+}

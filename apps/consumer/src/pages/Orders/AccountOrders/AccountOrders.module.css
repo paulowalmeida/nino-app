@@ -1,0 +1,5 @@
+@reference "@nino/ds/globals.css";
+
+.accountOrdersPage {
+  @apply p-4 sm:p-6 lg:p-8;
+}

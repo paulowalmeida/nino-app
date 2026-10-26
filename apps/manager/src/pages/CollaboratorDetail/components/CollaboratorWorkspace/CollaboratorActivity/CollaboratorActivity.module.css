@@ -1,0 +1,87 @@
+@reference "@nino/ds/globals.css";
+
+.activity {
+  @apply min-h-0 pt-4;
+}
+
+.activityHead {
+  @apply gap-x-4 gap-y-1;
+  @apply border-b border-border/60 pb-3;
+}
+
+.activityTitle {
+  @apply text-xs font-bold uppercase tracking-[0.12em];
+}
+
+.listShell {
+  @apply min-h-0 flex-1;
+}
+
+/* CONSTRAINT: Table já envolve a <table> no seu próprio scroller, e o
+ * cabeçalho sticky só gruda se a rolagem vertical acontecer nesse mesmo
+ * elemento.
+ */
+.listShell > div {
+  max-height: 26rem;
+  overflow-y: auto;
+}
+
+@media (min-width: 2560px) {
+  .listShell > div {
+    max-height: calc(100dvh - 26rem);
+  }
+}
+
+.headRow > th {
+  @apply border-b border-border bg-surface-raised;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+.colTicket {
+  width: 5.5rem;
+}
+
+.colConsumer {
+  width: auto;
+}
+
+.colChannel {
+  width: 7rem;
+}
+
+.colStatus {
+  width: 8rem;
+}
+
+.colWhen {
+  width: 8rem;
+}
+
+.colAmount {
+  width: 7rem;
+}
+
+.colRight {
+  @apply whitespace-nowrap text-right text-fg-muted;
+}
+
+.entryTicket {
+  @apply whitespace-nowrap text-sm font-semibold text-fg-faint;
+  font-variant-numeric: tabular-nums;
+}
+
+.entryConsumer {
+  @apply min-w-0 truncate text-sm font-semibold text-fg-strong;
+}
+
+.entryTotal {
+  @apply whitespace-nowrap text-right text-sm font-semibold;
+  @apply text-fg-strong;
+  font-variant-numeric: tabular-nums;
+}
+
+.collaboratorActivityEmpty {
+  @apply mt-4;
+}

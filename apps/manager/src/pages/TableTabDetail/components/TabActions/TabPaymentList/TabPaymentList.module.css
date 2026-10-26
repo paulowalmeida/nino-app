@@ -1,0 +1,9 @@
+@reference "@nino/ds/globals.css";
+
+.tabPaymentListMethod {
+  @apply min-w-0 flex-1;
+}
+
+.tabPaymentListAmount {
+  @apply shrink-0 tabular-nums;
+}

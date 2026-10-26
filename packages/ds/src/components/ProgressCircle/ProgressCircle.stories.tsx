@@ -19,7 +19,7 @@ export const Default: Story = {
   args: { value: 65 },
 }
 
-export const Tamanhos: Story = {
+export const Sizes: Story = {
   render: () => (
     <div className="flex items-center gap-6">
       <ProgressCircle value={40} size="sm" />
@@ -29,10 +29,10 @@ export const Tamanhos: Story = {
   ),
 }
 
-export const Indeterminado: Story = {
+export const Indeterminate: Story = {
   args: { value: null, size: 'md' },
 }
 
-export const Completo: Story = {
+export const Complete: Story = {
   args: { value: 100, size: 'md' },
 }

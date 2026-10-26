@@ -7,7 +7,12 @@ import { Tabs } from './Tabs'
 const tabs = [
   { value: 'a', label: 'Aba A', content: <span>Conteúdo A</span> },
   { value: 'b', label: 'Aba B', content: <span>Conteúdo B</span> },
-  { value: 'c', label: 'Aba C', content: <span>Conteúdo C</span>, disabled: true },
+  {
+    value: 'c',
+    label: 'Aba C',
+    content: <span>Conteúdo C</span>,
+    disabled: true,
+  },
 ]
 
 describe(Tabs.name, () => {

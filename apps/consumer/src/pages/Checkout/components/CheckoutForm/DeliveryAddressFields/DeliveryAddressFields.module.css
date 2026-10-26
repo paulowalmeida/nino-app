@@ -1,0 +1,68 @@
+@reference "@nino/ds/globals.css";
+
+.block {
+  @apply flex flex-col gap-4;
+}
+
+.blockLabel {
+  @apply font-display text-xl font-extrabold tracking-snug text-fg-strong;
+}
+
+.deliveryAddressFieldsRow {
+  @apply grid gap-3;
+  grid-template-columns: 1fr 5.5rem;
+}
+
+.lookupStatus {
+  @apply min-h-5;
+}
+
+.deliveryConfirmed {
+  @apply text-success;
+}
+
+.deliveryFee {
+  @apply rounded-full bg-success-surface px-3 py-1 text-sm font-semibold text-success;
+}
+
+.disclosure {
+  @apply -mx-3;
+}
+
+.disclosureFields {
+  @apply flex flex-col gap-3;
+}
+
+@media (max-width: 420px) {
+  .deliveryAddressFieldsRow {
+    grid-template-columns: minmax(0, 1fr) 4.75rem;
+  }
+}
+
+.confirm {
+  @apply min-h-0 flex-1;
+}
+
+.confirmBack {
+  @apply h-auto w-fit gap-2 px-0 text-base font-bold text-fg-strong;
+  @apply hover:text-brand-strong;
+}
+
+.addressOption {
+  @apply h-auto min-h-14 w-full justify-start gap-3 rounded-3 px-4 py-3;
+  @apply border border-border bg-surface-1 text-left transition-colors;
+  @apply hover:border-brand-bold hover:bg-surface-page;
+  @apply focus-visible:border-brand-bold focus-visible:bg-surface-page;
+}
+
+.addressPin {
+  @apply shrink-0 text-brand;
+}
+
+.addressText {
+  @apply min-w-0 flex-1;
+}
+
+.addressOptionPlaceholder {
+  @apply h-14 w-full rounded-3;
+}

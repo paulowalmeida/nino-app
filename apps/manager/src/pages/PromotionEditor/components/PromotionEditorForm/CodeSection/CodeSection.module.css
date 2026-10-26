@@ -1,0 +1,17 @@
+@reference "@nino/ds/globals.css";
+
+.codeSection {
+  @apply flex flex-col gap-4;
+}
+
+.codeFields {
+  @apply flex flex-col gap-5;
+}
+
+.codeField {
+  @apply w-full md:max-w-sm;
+}
+
+.visibility {
+  @apply w-full rounded-2 bg-surface-2 p-4;
+}

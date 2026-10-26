@@ -1,0 +1,31 @@
+@reference "../../styles/globals.css";
+
+.sizeExtraExtraLarge {
+  @apply font-display text-2xl font-extrabold tracking-tight lg:text-3xl;
+}
+
+.sizeExtraLarge {
+  @apply font-display text-xl font-extrabold tracking-tight lg:text-2xl;
+}
+
+.sizeLarge {
+  @apply font-display text-lg font-extrabold tracking-snug;
+}
+
+.sizeMedium {
+  @apply font-display text-base font-extrabold tracking-snug;
+}
+
+.sizeSmall {
+  @apply font-display text-sm font-extrabold;
+}
+
+.accent {
+  position: relative;
+  display: inline-block;
+  inline-size: fit-content;
+  white-space: nowrap;
+  @apply after:absolute after:inset-x-0 after:-bottom-0.5;
+  @apply after:z-0 after:h-0.5 after:rounded-1;
+  @apply after:bg-accent-peach-deep after:content-[''];
+}

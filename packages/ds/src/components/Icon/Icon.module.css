@@ -1,0 +1,25 @@
+@reference "../../styles/globals.css";
+
+.icon {
+  @apply inline-block shrink-0;
+}
+
+.sizeExtraSmall {
+  @apply size-3;
+}
+
+.sizeSmall {
+  @apply size-4;
+}
+
+.sizeMedium {
+  @apply size-5;
+}
+
+.sizeLarge {
+  @apply size-6;
+}
+
+.sizeExtraLarge {
+  @apply size-8;
+}

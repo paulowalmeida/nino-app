@@ -1,0 +1,66 @@
+@reference '../../theme.css';
+.pricingSection {
+  @apply relative overflow-hidden bg-surface-3 py-[6.5rem] px-10;
+}
+
+.pricingInner {
+  @apply max-w-[1140px] mx-auto;
+}
+
+.head {
+  @apply text-center max-w-[560px] mx-auto mb-14;
+}
+
+.eyebrow {
+  @apply inline-flex items-center gap-2 mb-4;
+  @apply [font-family:var(--font-sans)] text-xs font-bold;
+  @apply tracking-[0.12em] uppercase text-brand-strong;
+}
+
+.eyebrow::before,
+.eyebrow::after {
+  content: "";
+  @apply inline-box w-[22px] h-0.5 bg-brand rounded-1;
+}
+
+.pricingTitle {
+  @apply [font-family:var(--font-display)] font-extrabold;
+  @apply text-[clamp(2rem,3.6vw,2.8rem)] leading-display;
+  @apply tracking-[-0.02em] text-fg-strong;
+}
+
+.lead {
+  @apply mt-[0.9rem] text-base text-fg-muted;
+}
+
+.pricingGrid {
+  @apply grid grid-cols-4 gap-[1.1rem] items-stretch;
+}
+
+.fine {
+  @apply mt-10 text-center text-sm text-fg-muted;
+}
+
+@media (max-width: 980px) {
+  .pricingGrid {
+    @apply grid-cols-2;
+  }
+
+  .featured {
+    @apply transform-none;
+  }
+
+  .featured:hover {
+    @apply -translate-y-1;
+  }
+}
+
+@media (max-width: 560px) {
+  .pricingSection {
+    @apply py-16 px-5;
+  }
+
+  .pricingGrid {
+    @apply grid-cols-1;
+  }
+}

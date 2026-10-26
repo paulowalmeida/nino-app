@@ -1,0 +1,21 @@
+@reference "@nino/ds/globals.css";
+
+.pair {
+  @apply grid gap-3;
+  grid-template-columns: 1fr 5.5rem;
+}
+.pairState {
+  @apply grid gap-3;
+  grid-template-columns: 1fr 4.5rem;
+}
+.optional {
+  @apply font-medium text-fg-faintest;
+}
+.addressFormFieldsInput {
+  @apply h-12 w-full rounded-3 border-black/10 bg-surface-raised;
+  @apply text-base text-fg-muted;
+}
+.addressFormFieldsInput:focus {
+  border-color: var(--store-tint, var(--color-brand));
+  box-shadow: inset 0 0 0 1px var(--store-tint, var(--color-brand));
+}

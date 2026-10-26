@@ -1,37 +1,40 @@
-import { Button } from '@ds/components/Button'
-import { Modal } from '@ds/components/Modal'
+import { Button } from '@ds/components/Button/Button'
+import { Heading } from '@ds/components/Heading/Heading'
+import { Modal } from '@ds/components/Modal/Modal'
+import { ModalSize } from '@ds/components/Modal/Modal.types'
+import { Text } from '@ds/components/Text/Text'
 
-import { DialogProps } from './Dialog.types'
+import styles from './Dialog.module.css'
 
-const headerClass = 'text-base font-semibold text-gray-900'
-const bodyClass = 'text-sm text-gray-600'
+type DialogProps = {
+  /** Controlled open state */
+  open?: boolean
+  /** Fired when open state changes */
+  onOpenChange?: (open: boolean) => void
+  /** Heading of the dialog */
+  title: string
+  /** Body text explaining the action */
+  description: string
+  /** Label for the confirm button. Default: `'Confirmar'` */
+  confirmLabel?: string
+  /** Label for the cancel button. Default: `'Cancelar'` */
+  cancelLabel?: string
+  /** Fired when the confirm button is clicked */
+  onConfirm: () => void
+  /** Fired when the cancel button is clicked */
+  onCancel: () => void
+  /** Shows loading dots on the confirm button and disables cancel */
+  loading?: boolean
+  /** Width of the dialog. Default: `sm` */
+  size?: ModalSize
+}
 
 /**
  * Confirmation dialog built on top of Modal.
  * Renders a title, description, and two action buttons (cancel + confirm).
- * The confirm button uses the tenant's primary brand color.
+ * The confirm button uses the unit's primary brand color.
  *
- * @param title - Heading of the dialog
- *
- * @param description - Body text explaining the action
- *
- * @param confirmLabel - Label for the confirm button. Default: `'Confirmar'`
- *
- * @param cancelLabel - Label for the cancel button. Default: `'Cancelar'`
- *
- * @param onConfirm - Fired when the confirm button is clicked
- *
- * @param onCancel - Fired when the cancel button is clicked
- *
- * @param loading - Shows loading dots on the confirm button and disables cancel
- *
- * @param size - Width of the dialog. Default: `sm`
- *
- * @param open - Controlled open state
- *
- * @param onOpenChange - Fired when open state changes
- *
- * @example
+ * ```tsx
  * <Dialog
  *   open={open}
  *   onOpenChange={setOpen}
@@ -40,6 +43,7 @@ const bodyClass = 'text-sm text-gray-600'
  *   onConfirm={handleDelete}
  *   onCancel={() => setOpen(false)}
  * />
+ * ```
  */
 export function Dialog({
   title,
@@ -55,8 +59,16 @@ export function Dialog({
   return (
     <Modal
       size={size}
-      header={<h2 className={headerClass}>{title}</h2>}
-      body={<p className={bodyClass}>{description}</p>}
+      header={
+        <Heading level={2} size="md" className={styles.title}>
+          {title}
+        </Heading>
+      }
+      body={
+        <Text size="sm" color="muted" className={styles.message}>
+          {description}
+        </Text>
+      }
       footer={
         <>
           <Button variant="ghost" onClick={onCancel} disabled={loading}>

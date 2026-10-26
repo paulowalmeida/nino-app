@@ -1,0 +1,9 @@
+@reference "@nino/ds/globals.css";
+
+.cashMovementModalFields {
+  @apply gap-3;
+}
+
+.cashMovementModalActions {
+  @apply justify-end gap-2;
+}

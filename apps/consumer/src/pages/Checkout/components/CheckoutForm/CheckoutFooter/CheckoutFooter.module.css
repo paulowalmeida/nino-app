@@ -1,0 +1,44 @@
+@reference "@nino/ds/globals.css";
+
+.tearBar {
+  @apply sticky bottom-0 z-sticky order-4 flex flex-col border-t;
+  @apply border-border bg-surface-raised px-4 py-2 sm:px-6;
+  padding-bottom: max(0.5rem, env(safe-area-inset-bottom));
+  box-shadow: 0 -12px 28px -22px
+    color-mix(in srgb, var(--color-fg-strong) 40%, transparent);
+}
+
+.totals {
+  @apply hidden;
+}
+
+.checkoutFooterLabel {
+  @apply text-sm font-semibold text-fg-muted;
+}
+
+.checkoutFooterTotal {
+  @apply font-display text-2xl font-extrabold text-fg-strong;
+  font-variant-numeric: tabular-nums;
+}
+
+.submit {
+  @apply h-12 flex-1 text-base;
+}
+
+.checkoutFooterActions {
+  @apply w-full;
+}
+
+.back {
+  @apply h-12 px-5 text-base;
+}
+
+@media (min-width: 1024px) {
+  .tearBar {
+    @apply static gap-3 rounded-4 border border-border p-4 shadow-none;
+  }
+
+  .totals {
+    @apply flex items-baseline justify-between;
+  }
+}

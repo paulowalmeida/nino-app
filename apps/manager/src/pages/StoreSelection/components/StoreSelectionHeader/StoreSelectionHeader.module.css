@@ -1,0 +1,5 @@
+@reference "@nino/ds/globals.css";
+
+.storeSelectionHeaderTitle {
+  @apply text-fg-cool;
+}

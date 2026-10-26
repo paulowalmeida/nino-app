@@ -1,0 +1,592 @@
+.appShell {
+  display: grid;
+  min-height: 100vh;
+  grid-template-columns: 224px minmax(0, 1fr);
+  background: var(--color-surface-1);
+}
+
+.appRail {
+  display: flex;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 28px 24px 24px;
+  color: var(--color-fg-inverse);
+  background: var(--color-cool-900);
+}
+
+.brandMark {
+  margin: 0;
+  color: var(--color-brand-light);
+  font-family: var(--font-display);
+  font-size: 2rem;
+  font-weight: 800;
+  letter-spacing: -0.06em;
+  line-height: 1;
+}
+
+.railLabel {
+  margin: 8px 0 0;
+  color: var(--color-fg-inverse);
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.railFooter {
+  display: grid;
+  gap: 4px;
+}
+
+.onDark {
+  color: var(--color-fg-inverse) !important;
+}
+
+.railButton {
+  width: 100%;
+  margin-top: 16px;
+}
+
+.mainContent {
+  min-width: 0;
+  padding: 48px clamp(24px, 5vw, 88px) 72px;
+}
+
+.appPage {
+  width: min(1320px, 100%);
+  margin: 0 auto;
+}
+
+.pageHeader {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 24px;
+  padding-bottom: 28px;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.pageHeader h1,
+.loginPanel h1 {
+  max-width: 720px;
+  margin: 5px 0 0;
+  font-family: var(--font-display);
+  letter-spacing: -0.045em;
+}
+
+.pageEyebrow,
+.loginEyebrow {
+  color: var(--color-brand-strong);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.pageIntro,
+.loginIntro {
+  max-width: 600px;
+  margin-top: 10px;
+}
+
+.queueSummary {
+  display: grid;
+  flex: 0 0 auto;
+  gap: 2px;
+  min-width: 150px;
+  padding-left: 18px;
+  border-left: 3px solid var(--color-brand);
+}
+
+.queueSummary strong {
+  color: var(--color-fg-strong);
+  font-family: var(--font-display);
+  font-size: 2.1rem;
+  line-height: 1;
+}
+
+.queueSummary span {
+  color: var(--color-fg-muted);
+  font-size: 0.78rem;
+}
+
+.filterBar {
+  display: flex;
+  align-items: end;
+  gap: 20px;
+  padding: 24px 0;
+}
+
+.filterBar > div:first-child {
+  width: min(300px, 100%);
+}
+
+.filterHint {
+  margin-bottom: 10px;
+}
+
+.workspaceGrid {
+  display: grid;
+  align-items: start;
+  grid-template-columns: minmax(300px, 0.85fr) minmax(0, 1.45fr);
+  gap: 20px;
+}
+
+.queuePanel,
+.detailPanel {
+  min-width: 0;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-4);
+  background: var(--color-surface-raised);
+}
+
+.queuePanel {
+  overflow: hidden;
+}
+
+.sectionHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 20px 20px 14px;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.sectionHeader h2 {
+  margin: 3px 0 0;
+}
+
+.queueList {
+  display: grid;
+}
+
+.queueItem {
+  display: grid;
+  width: 100%;
+  gap: 7px;
+  padding: 17px 20px;
+  border: 0;
+  border-bottom: 1px solid var(--color-border);
+  color: inherit;
+  text-align: left;
+  background: transparent;
+  cursor: pointer;
+  transition: background 150ms ease, box-shadow 150ms ease;
+}
+
+.queueItem:last-child {
+  border-bottom: 0;
+}
+
+.queueItem:hover,
+.queueItem:focus-visible {
+  background: var(--color-brand-ghost);
+}
+
+.queueItem:focus-visible {
+  position: relative;
+  outline: 2px solid var(--color-brand);
+  outline-offset: -2px;
+}
+
+.queueItemSelected {
+  box-shadow: inset 4px 0 0 var(--color-brand);
+  background: var(--color-brand-soft);
+}
+
+.queueItemTopline {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.companyName {
+  overflow: hidden;
+  color: var(--color-fg-strong);
+  font-family: var(--font-display);
+  font-size: 1rem;
+  font-weight: 700;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.queueItemMeta,
+.queueItemDate {
+  color: var(--color-fg-muted);
+  font-size: 0.82rem;
+}
+
+.queueItemDate {
+  color: var(--color-fg-subtle);
+  font-size: 0.75rem;
+}
+
+.emptyState {
+  display: grid;
+  gap: 10px;
+  margin: 16px;
+  background: var(--color-surface-1);
+}
+
+.detailPanel {
+  min-height: 520px;
+  padding: 28px;
+}
+
+.detailPlaceholder {
+  display: grid;
+  min-height: 460px;
+  align-content: center;
+  justify-items: start;
+  gap: 10px;
+  max-width: 360px;
+  margin: 0 auto;
+}
+
+.placeholderMark {
+  display: grid;
+  width: 44px;
+  height: 44px;
+  place-items: center;
+  margin-bottom: 8px;
+  border-radius: 50%;
+  color: var(--color-brand-strong);
+  font-size: 1.5rem;
+  background: var(--color-brand-soft);
+}
+
+.detailContent {
+  display: grid;
+  gap: 24px;
+}
+
+.detailTopline,
+.detailHeading,
+.statusEditor {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.backButton {
+  margin-left: -10px;
+}
+
+.detailHeading {
+  align-items: end;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.detailHeading h2 {
+  margin: 4px 0;
+  font-family: var(--font-display);
+  letter-spacing: -0.04em;
+}
+
+.unitCount {
+  display: grid;
+  flex: 0 0 auto;
+  justify-items: end;
+}
+
+.unitCount strong {
+  color: var(--color-fg-strong);
+  font-family: var(--font-display);
+  font-size: 2.3rem;
+  line-height: 1;
+}
+
+.unitCount span {
+  color: var(--color-fg-muted);
+  font-size: 0.8rem;
+}
+
+.contactGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px 24px;
+  margin: 0;
+  padding-bottom: 4px;
+}
+
+.contactGrid div {
+  min-width: 0;
+}
+
+.contactGrid dt {
+  margin-bottom: 4px;
+  color: var(--color-fg-muted);
+  font-size: 0.75rem;
+}
+
+.contactGrid dd {
+  overflow-wrap: anywhere;
+  margin: 0;
+  color: var(--color-fg-strong);
+  font-size: 0.92rem;
+  font-weight: 600;
+}
+
+.contactGrid a {
+  color: var(--color-brand-strong);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+
+.detailSection {
+  display: grid;
+  gap: 8px;
+  padding-top: 20px;
+  border-top: 1px solid var(--color-border);
+}
+
+.longText {
+  white-space: pre-wrap;
+}
+
+.statusEditor {
+  display: grid;
+  align-items: end;
+  grid-template-columns: minmax(180px, 0.8fr) minmax(180px, 1fr);
+  gap: 16px;
+  padding-top: 20px;
+  border-top: 1px solid var(--color-border);
+}
+
+.statusEditor > div:first-child,
+.statusEditor > button,
+.statusEditor > [role='alert'],
+.successMessage {
+  grid-column: 1 / -1;
+}
+
+.notesInput {
+  display: block;
+  width: 100%;
+  min-height: 88px;
+  box-sizing: border-box;
+  resize: vertical;
+  padding: 10px 12px;
+  border: 1px solid var(--color-input-border);
+  border-radius: var(--radius-2);
+  color: var(--color-fg-default);
+  background: var(--color-surface-page);
+}
+
+.notesInput:focus {
+  border-color: var(--color-input-border-focus);
+  outline: 2px solid var(--color-brand-soft);
+  outline-offset: 1px;
+}
+
+.successMessage {
+  margin: 0;
+  color: var(--color-success);
+  font-size: 0.88rem;
+  font-weight: 600;
+}
+
+.inlineAction {
+  padding: 0;
+  border: 0;
+  color: var(--color-brand-strong);
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  background: none;
+  cursor: pointer;
+}
+
+.detailError {
+  display: grid;
+  align-content: center;
+  gap: 16px;
+  min-height: 460px;
+}
+
+.loadingScreen,
+.centeredError {
+  display: grid;
+  min-height: 100vh;
+  place-content: center;
+  gap: 16px;
+  padding: 24px;
+}
+
+.loginShell {
+  display: grid;
+  min-height: 100vh;
+  grid-template-columns: minmax(0, 1fr) minmax(300px, 0.75fr);
+  background: var(--color-surface-1);
+}
+
+.loginPanel {
+  display: grid;
+  align-content: center;
+  width: min(440px, calc(100% - 48px));
+  gap: 12px;
+  margin: 0 auto;
+}
+
+.loginForm {
+  display: grid;
+  gap: 18px;
+  margin-top: 14px;
+}
+
+.loginSubmit {
+  width: 100%;
+  margin-top: 6px;
+}
+
+.loginAside {
+  display: grid;
+  align-content: end;
+  gap: 16px;
+  padding: 72px 56px;
+  color: var(--color-fg-inverse);
+  background: var(--color-cool-900);
+}
+
+.loginAside > p {
+  max-width: 390px;
+}
+
+.accentLine {
+  display: block;
+  width: 56px;
+  height: 4px;
+  margin-bottom: 18px;
+  background: var(--color-brand);
+}
+
+@media (max-width: 1199px) {
+  .mainContent {
+    padding-inline: 32px;
+  }
+
+  .appShell {
+    grid-template-columns: 176px minmax(0, 1fr);
+  }
+
+  .appRail {
+    padding-inline: 18px;
+  }
+}
+
+@media (max-width: 767px) {
+  .appShell {
+    display: block;
+  }
+
+  .appRail {
+    position: static;
+    display: flex;
+    height: auto;
+    flex-direction: row;
+    align-items: center;
+    gap: 16px;
+    padding: 16px 20px;
+  }
+
+  .railFooter {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-left: auto;
+  }
+
+  .railFooter > p {
+    display: none;
+  }
+
+  .railButton {
+    width: auto;
+    margin: 0;
+  }
+
+  .mainContent {
+    padding: 28px 16px 48px;
+  }
+
+  .pageHeader,
+  .filterBar,
+  .detailTopline {
+    align-items: start;
+    flex-direction: column;
+  }
+
+  .pageHeader {
+    gap: 20px;
+  }
+
+  .queueSummary {
+    width: 100%;
+  }
+
+  .filterBar > div:first-child {
+    width: 100%;
+  }
+
+  .filterHint {
+    margin: 0;
+  }
+
+  .workspaceGrid {
+    display: block;
+  }
+
+  .queuePanel {
+    margin-bottom: 16px;
+  }
+
+  .detailPanel {
+    min-height: 0;
+    padding: 20px;
+  }
+
+  .detailPlaceholder {
+    min-height: 280px;
+  }
+
+  .detailHeading {
+    align-items: start;
+    flex-direction: column;
+  }
+
+  .unitCount {
+    justify-items: start;
+  }
+
+  .contactGrid,
+  .statusEditor {
+    grid-template-columns: 1fr;
+  }
+
+  .statusEditor > div:first-child,
+  .statusEditor > button,
+  .statusEditor > [role='alert'],
+  .successMessage {
+    grid-column: auto;
+  }
+
+  .loginShell {
+    display: block;
+  }
+
+  .loginPanel {
+    min-height: 72vh;
+    padding-block: 56px;
+  }
+
+  .loginAside {
+    min-height: 28vh;
+    padding: 36px 24px;
+  }
+}

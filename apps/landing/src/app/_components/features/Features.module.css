@@ -1,0 +1,64 @@
+@reference '../../theme.css';
+.featuresSection {
+  @apply relative overflow-hidden pt-28 pb-24 px-10;
+  background: #fffbf5;
+  background: radial-gradient(
+    900px 380px at 50% -8%,
+    color-mix(in srgb, var(--color-brand-light) 12%, transparent),
+    transparent 60%
+  );
+}
+
+.featuresSection::after {
+  content: "";
+  @apply absolute inset-0 pointer-events-none opacity-disabled;
+  @apply mix-blend-multiply;
+  background-image: url("/noise.svg");
+}
+
+.featuresInner {
+  @apply relative z-raised max-w-[1120px] mx-auto;
+}
+
+.featuresHeader {
+  @apply max-w-[620px] mb-14;
+}
+
+.eyebrow {
+  @apply inline-flex items-center gap-2 mb-4;
+  @apply [font-family:var(--font-sans)] text-xs font-bold;
+  @apply tracking-[0.12em] uppercase text-brand-strong;
+}
+
+.eyebrow::before {
+  content: "";
+  @apply inline-box w-[22px] h-0.5 bg-brand rounded-1;
+}
+
+.featuresTitle {
+  @apply [font-family:var(--font-display)] font-extrabold;
+  @apply text-[clamp(2.1rem,4vw,3.1rem)] leading-display;
+  @apply tracking-[-0.02em] text-fg-strong;
+}
+
+.titleAccent {
+  @apply text-brand;
+}
+
+.featuresSubtitle {
+  @apply mt-4 text-lg leading-relaxed text-fg-muted;
+}
+
+.featuresGrid {
+  @apply grid grid-cols-3 gap-5;
+}
+
+@media (max-width: 900px) {
+  .featuresSection {
+    @apply py-16 px-5;
+  }
+
+  .featuresGrid {
+    @apply grid-cols-1;
+  }
+}

@@ -1,0 +1,54 @@
+@reference '../../../../theme.css';
+.orderHeader {
+  @apply px-6 py-3.5 border-b border-gray-100;
+  @apply flex justify-between items-center;
+}
+
+.orderTitle {
+  @apply font-extrabold text-base text-gray-900;
+}
+
+.orderSubtitle {
+  @apply text-xs text-gray-500 mt-0.5;
+}
+
+.statusBadge {
+  @apply bg-orange-50 text-brand text-xs font-bold;
+  @apply px-3 py-1 rounded-full border border-orange-200;
+  @apply flex items-center gap-1.5;
+}
+
+.statusPulseDot {
+  @apply w-1.5 h-1.5 bg-brand rounded-full inline-box animate-pulse;
+}
+
+.deliveryTimeline {
+  @apply px-6 py-5 flex flex-col;
+}
+
+.notices {
+  @apply px-6 pb-6 pt-1 flex flex-col gap-2.5;
+}
+
+.noticesTitle {
+  @apply text-xs font-bold uppercase tracking-[0.1em];
+  @apply text-brand-strong [font-family:var(--font-sans)];
+}
+
+.bubble {
+  @apply self-start max-w-[92%] px-3.5 py-2.5;
+  @apply rounded-2xl rounded-tl-md bg-emerald-500/10;
+  @apply border border-emerald-500/20;
+}
+
+.bubbleText {
+  @apply text-xs leading-snug text-gray-700;
+}
+
+.bubbleTime {
+  @apply block mt-1 text-2xs text-emerald-700/70 text-right;
+}
+
+.noticesFine {
+  @apply mt-1 text-xs leading-relaxed text-gray-500;
+}

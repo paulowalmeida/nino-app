@@ -1,0 +1,97 @@
+@reference "@nino/ds/globals.css";
+
+.receipt {
+  @apply overflow-hidden rounded-4 border border-border bg-surface-raised;
+}
+
+.head {
+  @apply flex min-w-0 flex-col items-start gap-0.5;
+}
+
+.checkoutReceiptLabel {
+  @apply font-display text-base font-extrabold text-fg-strong;
+}
+
+.checkoutReceiptCount {
+  @apply text-sm font-semibold text-fg-muted;
+  font-variant-numeric: tabular-nums;
+}
+
+.toggle {
+  @apply shrink-0 text-xs font-bold text-brand-strong;
+}
+
+.items {
+  @apply flex flex-col gap-3 pt-2;
+}
+
+.itemsList {
+  @apply flex flex-col gap-3;
+}
+
+/* WHY: no desktop o resumo é `sticky`, e um pedido com muitos itens estourava
+ * a altura da viewport — a página inteira precisava rolar para revelar o
+ * total e o botão "Continuar". Só a lista de itens rola; subtotal, entrega e
+ * o rodapé (fora deste componente) ficam sempre visíveis. A subtração fixa
+ * aproxima o espaço ocupado pelo cabeçalho do resumo, subtotal/entrega e o
+ * rodapé de total — não precisa ser exata, sobra de respiro é inofensiva.
+ */
+@media (min-width: 1024px) {
+  .itemsList {
+    @apply overflow-y-auto;
+    max-height: calc(100dvh - 531px);
+  }
+}
+
+.checkoutReceiptItem {
+  @apply flex items-baseline justify-between gap-3 text-sm text-fg-default;
+  font-variant-numeric: tabular-nums;
+}
+
+.qty {
+  @apply mr-1.5 font-bold text-brand-strong;
+}
+
+.name {
+  @apply min-w-0 flex-1;
+}
+
+.rule {
+  @apply my-2 border-t border-border;
+}
+
+.tally {
+  @apply flex flex-col gap-1.5;
+}
+
+.tallyRow {
+  @apply flex items-center justify-between text-sm text-fg-muted;
+  font-variant-numeric: tabular-nums;
+}
+
+.choices {
+  @apply block text-xs leading-snug text-fg-subtle;
+}
+
+/* WHY: o frete riscado prova o desconto; o "Grátis" em verde é o que o
+ * cliente procura na revisão antes de confirmar.
+ */
+.freeDelivery {
+  @apply flex items-baseline gap-2;
+}
+
+.freeDeliveryWas {
+  @apply text-fg-subtle line-through;
+}
+
+.freeDeliveryNow {
+  @apply font-bold text-success;
+}
+
+.freeDeliveryNote {
+  @apply text-xs text-fg-subtle;
+}
+
+.discountAmount {
+  @apply font-bold text-success;
+}

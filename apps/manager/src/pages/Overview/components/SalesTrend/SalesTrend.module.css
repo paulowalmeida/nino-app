@@ -1,0 +1,51 @@
+@reference "@nino/ds/globals.css";
+
+.salesTrendSection {
+  @apply lg:flex lg:h-full lg:flex-col;
+}
+
+.salesTrendHeading {
+  @apply mb-3;
+}
+
+.salesTrendCard {
+  @apply flex min-w-0 flex-col overflow-hidden lg:flex-1;
+  --card-ring: 0 0 0 1px
+    color-mix(in srgb, var(--color-warm-950) 14%, transparent);
+}
+
+.salesTrendEmpty {
+  @apply flex-1;
+}
+
+.salesTrendTotal {
+  @apply font-display text-3xl font-extrabold leading-none tracking-tight;
+  @apply text-fg-strong lg:text-2xl;
+  font-variant-numeric: tabular-nums;
+}
+
+.salesTrendLabel {
+  @apply mt-1.5 leading-snug text-fg-faint;
+}
+
+.deltaUp,
+.deltaDown {
+  @apply shrink-0 text-sm font-bold;
+  font-variant-numeric: tabular-nums;
+}
+
+.deltaUp {
+  @apply text-success;
+}
+
+.deltaDown {
+  @apply text-danger;
+}
+
+.deltaNote {
+  @apply font-medium text-fg-faint;
+}
+
+.skeletonTotal {
+  @apply h-8 w-40 lg:h-9 lg:w-48;
+}

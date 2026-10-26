@@ -1,0 +1,15 @@
+@reference "@nino/ds/globals.css";
+
+.feeRow {
+  @apply flex items-baseline justify-between;
+  @apply border-t border-dashed border-border pt-2 text-sm;
+  @apply text-fg-muted;
+  font-variant-numeric: tabular-nums;
+}
+
+.newOrderTicketSummaryTotal {
+  @apply flex items-baseline justify-between;
+  @apply border-t border-dashed border-border pt-3;
+  @apply font-display text-lg font-extrabold text-fg-strong;
+  font-variant-numeric: tabular-nums;
+}

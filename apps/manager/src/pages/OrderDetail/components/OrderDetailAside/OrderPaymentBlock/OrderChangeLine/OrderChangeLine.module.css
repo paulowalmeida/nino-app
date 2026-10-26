@@ -1,0 +1,5 @@
+@reference "@nino/ds/globals.css";
+
+.change {
+  @apply mt-1;
+}

@@ -1,0 +1,43 @@
+@reference "@nino/ds/globals.css";
+
+.newProductForm {
+  @apply mt-6 flex flex-col gap-5;
+  @apply lg:grid lg:grid-cols-[20rem_1fr] lg:items-start lg:gap-x-10;
+}
+
+.photoCol {
+  @apply min-w-0;
+}
+
+.newProductFormFields {
+  @apply flex min-w-0 flex-col gap-5;
+}
+
+.newProductFormField {
+  @apply min-w-0;
+}
+
+.newProductFormRow {
+  @apply grid grid-cols-1 gap-4 sm:grid-cols-[9rem_1fr];
+}
+
+.category {
+  @apply -mt-2;
+}
+
+.preparation {
+  @apply rounded-2xl bg-surface-2 p-4;
+}
+
+.preparationLabel {
+  @apply block text-sm font-semibold text-fg-strong;
+}
+
+.preparationHint {
+  @apply mt-0.5 block text-xs leading-relaxed text-fg-faint;
+}
+
+.newProductFormActions {
+  @apply flex flex-col gap-2 border-t border-border/60 pt-5;
+  @apply sm:flex-row sm:justify-end lg:col-span-2;
+}

@@ -1,0 +1,14 @@
+@reference "@nino/ds/globals.css";
+
+.figure {
+  @apply rounded-5 border border-border bg-surface-page p-3 lg:p-5;
+}
+
+.salesFiguresGridValue {
+  @apply font-display text-xl font-extrabold leading-none tracking-tight;
+  @apply text-fg-strong lg:text-2xl tabular-nums;
+}
+
+.salesFiguresGridLabel {
+  @apply text-xs leading-snug text-fg-faint lg:text-sm;
+}

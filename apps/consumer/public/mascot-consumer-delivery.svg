@@ -1,0 +1,192 @@
+<svg
+  viewBox="0 0 300 300"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <defs>
+    <radialGradient id="ninoBody" cx="50%" cy="40%" r="55%">
+      <stop offset="0%" stop-color="#FFFFFF" />
+      <stop offset="100%" stop-color="#E8E8E8" />
+    </radialGradient>
+    <linearGradient id="bagFront" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#FF8A33" />
+      <stop offset="100%" stop-color="#E8540C" />
+    </linearGradient>
+    <linearGradient id="scooterBody" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#FF8A33" />
+      <stop offset="100%" stop-color="#E8540C" />
+    </linearGradient>
+    <filter id="ninoShadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#00000015" />
+    </filter>
+  </defs>
+
+  <!-- rastro de velocidade: o pedido já saiu -->
+  <g stroke="#FF6B00" stroke-width="7" stroke-linecap="round" opacity="0.28">
+    <path d="M6 140 L52 140" />
+    <path d="M2 176 L40 176" />
+    <path d="M12 210 L50 210" />
+  </g>
+
+  <ellipse cx="156" cy="284" rx="112" ry="11" fill="#1A1A2E" opacity="0.1" />
+
+  <!-- rodas -->
+  <g>
+    <circle cx="92" cy="250" r="28" fill="#1A1A2E" />
+    <circle cx="92" cy="250" r="11" fill="#EDEDED" />
+    <circle cx="92" cy="250" r="4" fill="#1A1A2E" />
+    <circle cx="232" cy="250" r="28" fill="#1A1A2E" />
+    <circle cx="232" cy="250" r="11" fill="#EDEDED" />
+    <circle cx="232" cy="250" r="4" fill="#1A1A2E" />
+  </g>
+
+  <!-- a motoca -->
+  <g filter="url(#ninoShadow)">
+    <path
+      d="M200 244 L228 182"
+      stroke="#E8540C"
+      stroke-width="17"
+      stroke-linecap="round"
+    />
+    <rect
+      x="64"
+      y="204"
+      width="98"
+      height="48"
+      rx="18"
+      fill="url(#scooterBody)"
+    />
+    <rect x="150" y="228" width="58" height="24" rx="10" fill="#E8540C" />
+    <path
+      d="M70 214 L150 214"
+      stroke="#FFFFFF"
+      stroke-width="5"
+      stroke-linecap="round"
+      opacity="0.22"
+    />
+    <circle cx="236" cy="186" r="11" fill="#FFE3CC" />
+    <circle cx="236" cy="186" r="5" fill="#FFD9B8" />
+    <path
+      d="M216 176 L252 168"
+      stroke="#1A1A2E"
+      stroke-width="10"
+      stroke-linecap="round"
+    />
+  </g>
+
+  <!-- cauda ao vento: desenhada antes da bolsa, então a ponta escapa por trás -->
+  <path
+    d="M116 196 Q72 176 54 138"
+    stroke="#1A1A2E"
+    stroke-width="14"
+    fill="none"
+    stroke-linecap="round"
+  />
+
+  <!-- a bolsa de entrega nas costas -->
+  <g filter="url(#ninoShadow)">
+    <path
+      d="M88 148 Q88 136 100 136 Q112 136 112 148"
+      stroke="#C24709"
+      stroke-width="6"
+      fill="none"
+      stroke-linecap="round"
+    />
+    <path
+      d="M74 152 L128 152 L124 200 Q124 206 116 206 L82 206 Q74 206 74 200 Z"
+      fill="url(#bagFront)"
+    />
+    <path d="M74 152 L128 152 L126 164 L76 164 Z" fill="#FFFFFF" opacity="0.16" />
+    <path
+      d="M90 180 Q100 190 110 180"
+      stroke="#FFD9B8"
+      stroke-width="3.5"
+      fill="none"
+      stroke-linecap="round"
+    />
+  </g>
+
+  <!-- corpo montado na moto -->
+  <ellipse
+    cx="150"
+    cy="180"
+    rx="44"
+    ry="39"
+    fill="url(#ninoBody)"
+    filter="url(#ninoShadow)"
+  />
+
+  <!-- patas: uma no guidão, outra no estribo -->
+  <ellipse cx="172" cy="214" rx="17" ry="11" fill="url(#ninoBody)" />
+
+  <!-- cabeça inclinada pra frente, orelhas varridas pelo vento -->
+  <g transform="rotate(7 162 114)">
+    <path d="M130 80 Q108 40 134 30 Q147 54 154 76 Z" fill="#1A1A2E" />
+    <path
+      d="M134 76 Q118 46 137 40 Q146 58 150 74 Z"
+      fill="#e8a8a8"
+      opacity="0.7"
+    />
+    <path d="M188 76 Q206 38 182 28 Q170 52 164 72 Z" fill="#1A1A2E" />
+    <path
+      d="M185 72 Q199 44 181 38 Q172 56 168 70 Z"
+      fill="#e8a8a8"
+      opacity="0.7"
+    />
+
+    <ellipse
+      cx="162"
+      cy="114"
+      rx="45"
+      ry="42"
+      fill="url(#ninoBody)"
+      filter="url(#ninoShadow)"
+    />
+    <path
+      d="M126 84 Q134 72 154 68 Q160 90 144 100 Q132 96 126 84 Z"
+      fill="#1A1A2E"
+      opacity="0.85"
+    />
+
+    <!-- olhos fechados de contentamento: o gesto de gato feliz -->
+    <path
+      d="M138 116 Q147 105 156 116"
+      stroke="#1A1A2E"
+      stroke-width="5"
+      fill="none"
+      stroke-linecap="round"
+    />
+    <path
+      d="M174 114 Q183 103 192 114"
+      stroke="#1A1A2E"
+      stroke-width="5"
+      fill="none"
+      stroke-linecap="round"
+    />
+
+    <ellipse cx="136" cy="130" rx="13" ry="7" fill="#FF6B00" opacity="0.18" />
+    <ellipse cx="192" cy="128" rx="13" ry="7" fill="#FF6B00" opacity="0.18" />
+
+    <path d="M159 124 L165 130 L171 124 Q165 121 159 124 Z" fill="#E87070" />
+
+    <!-- sorriso aberto -->
+    <path d="M152 134 Q165 152 179 133 Q165 141 152 134 Z" fill="#C05050" />
+
+    <g stroke="#888" stroke-width="1" opacity="0.5">
+      <path d="M104 122 L130 126" />
+      <path d="M102 132 L130 133" />
+      <path d="M196 120 L222 116" />
+      <path d="M196 130 L224 128" />
+    </g>
+  </g>
+
+  <!-- pata da frente segurando o guidão, na frente de tudo -->
+  <ellipse
+    cx="214"
+    cy="176"
+    rx="16"
+    ry="11"
+    fill="url(#ninoBody)"
+    transform="rotate(-12 214 176)"
+  />
+</svg>

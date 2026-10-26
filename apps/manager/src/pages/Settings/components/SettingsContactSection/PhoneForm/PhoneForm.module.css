@@ -1,0 +1,20 @@
+@reference "@nino/ds/globals.css";
+
+.phoneForm {
+  @apply grid w-full grid-cols-1 gap-3;
+
+  @media (min-width: 640px) {
+    grid-template-columns: minmax(0, 28rem) max-content;
+    align-items: end;
+    justify-content: start;
+  }
+}
+
+.phoneFormField {
+  @apply min-w-0;
+}
+
+.submit {
+  @apply w-full sm:w-auto;
+  @apply self-start sm:self-end;
+}

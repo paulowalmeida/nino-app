@@ -1,0 +1,14 @@
+@reference "@nino/ds/globals.css";
+
+.editEmailModalTitle {
+  @apply font-display text-lg font-extrabold tracking-[-0.01em];
+  @apply text-fg-strong;
+}
+
+.editEmailModalForm {
+  @apply flex flex-col gap-3;
+}
+
+.hint {
+  @apply text-sm leading-relaxed text-fg-faint;
+}

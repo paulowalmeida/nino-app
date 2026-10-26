@@ -3,6 +3,7 @@ import userEvent from '@testing-library/user-event'
 import { describe, expect, it, vi } from 'vitest'
 
 import { Select } from './Select'
+import styles from './Select.module.css'
 
 const options = [
   { value: 'a', label: 'Option A' },
@@ -10,7 +11,7 @@ const options = [
   { value: 'c', label: 'Option C', disabled: true },
 ]
 
-describe(Select.displayName!, () => {
+describe(Select.name, () => {
   it('renders the trigger', () => {
     render(<Select options={options} />)
     expect(screen.getByRole('combobox')).toBeInTheDocument()
@@ -55,18 +56,21 @@ describe(Select.displayName!, () => {
 
   it('applies error classes when error is true', () => {
     render(<Select options={options} error />)
-    expect(screen.getByRole('combobox')).toHaveClass('border-red-500')
+    expect(screen.getByRole('combobox')).toHaveClass(styles.fieldInvalid)
   })
 
   it('applies default classes when error is false', () => {
     render(<Select options={options} />)
-    expect(screen.getByRole('combobox')).toHaveClass('border-gray-300')
+    expect(screen.getByRole('combobox')).toHaveClass(styles.fieldResting)
   })
 
-  it.each(['sm', 'md', 'lg'] as const)('renderiza tamanho %s sem erros', (size) => {
-    render(<Select options={options} size={size} />)
-    expect(screen.getByRole('combobox')).toBeInTheDocument()
-  })
+  it.each(['sm', 'md', 'lg'] as const)(
+    'renderiza tamanho %s sem erros',
+    (size) => {
+      render(<Select options={options} size={size} />)
+      expect(screen.getByRole('combobox')).toBeInTheDocument()
+    }
+  )
 
   it('forwards ref to the trigger element', () => {
     const ref = { current: null }

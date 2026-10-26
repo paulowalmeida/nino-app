@@ -1,0 +1,77 @@
+@reference "../../styles/globals.css";
+
+/* `self-start` protege o trilho de um pai flex/grid: sem ele o `inline-flex`
+   é esticado pelo stretch do pai e a faixa cinza sobra ao lado das abas, sem
+   nada dentro. Fora de um pai desses, não muda nada. */
+.tabBar {
+  @apply relative inline-flex items-center gap-0.5 self-start rounded-2;
+  @apply bg-surface-mute;
+  @apply p-1;
+}
+
+.fill {
+  @apply flex self-stretch;
+}
+
+.fill > .tab {
+  @apply flex-1 justify-center;
+}
+
+.fillTablet {
+  @apply sm:flex sm:self-stretch;
+}
+
+.fillTablet > .tab {
+  @apply sm:flex-1 sm:justify-center;
+}
+
+.fitTablet {
+  @apply sm:inline-flex sm:w-auto sm:self-start;
+}
+
+.fitTablet > .tab {
+  @apply sm:flex-none sm:justify-start;
+}
+
+.fillDesktop {
+  @apply lg:flex lg:self-stretch;
+}
+
+.fillDesktop > .tab {
+  @apply lg:flex-1 lg:justify-center;
+}
+
+.fitDesktop {
+  @apply lg:inline-flex lg:w-auto lg:self-start;
+}
+
+.fitDesktop > .tab {
+  @apply lg:flex-none lg:justify-start;
+}
+
+.selectionPill {
+  @apply absolute rounded-2 bg-brand-soft;
+  @apply left-(--left) top-(--top) w-(--width) h-(--height);
+  @apply duration-base ease-out-soft;
+  transition-property: var(--transition-property);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .selectionPill {
+    @apply transition-none;
+  }
+}
+
+.tab {
+  @apply relative z-raised inline-flex min-h-11 cursor-pointer items-center;
+  @apply rounded-2 px-4 py-1.5 text-sm font-semibold whitespace-nowrap;
+  @apply text-fg-subtle transition-colors duration-base outline-none;
+  @apply hover:text-fg-strong;
+  @apply focus-ring-inset;
+  @apply disabled:pointer-events-none disabled:opacity-disabled;
+  @apply data-[selected]:text-brand-strong;
+}
+
+.panel {
+  @apply mt-4 outline-none;
+}

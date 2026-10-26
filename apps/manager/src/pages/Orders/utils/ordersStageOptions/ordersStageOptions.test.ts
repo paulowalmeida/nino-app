@@ -1,0 +1,25 @@
+import { describe, expect, it } from 'vitest'
+
+import { ordersStageOptions } from './ordersStageOptions'
+import { ordersStageOptionsMock } from './ordersStageOptions.mock'
+
+describe('ordersStageOptions', () => {
+  it('aggregates status counts into stage counts', () => {
+    const options = ordersStageOptions(ordersStageOptionsMock.summary)
+
+    expect(options.find(({ id }) => id === 'incoming')?.count).toBe(2)
+    expect(options.find(({ id }) => id === 'closed')?.count).toBe(21)
+  })
+
+  it('replaces invalid status counts with zero', () => {
+    const options = ordersStageOptions({
+      PENDING: Number.NaN,
+      TABLE_TAB: Number.NaN,
+      TABLE_TAB_CLOSED: Number.NaN,
+    })
+
+    expect(options.find(({ id }) => id === 'incoming')?.count).toBe(0)
+    expect(options.find(({ id }) => id === 'table')?.count).toBe(0)
+    expect(options.find(({ id }) => id === 'closed')?.count).toBe(0)
+  })
+})

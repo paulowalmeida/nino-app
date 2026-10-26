@@ -1,0 +1,9 @@
+{
+  "tailwindCSS.experimental.configFile": {
+    "apps/manager/src/index.css": "apps/manager/**",
+    "apps/landing/src/app/theme.css": "apps/landing/**"
+  },
+  "editor.quickSuggestions": {
+    "strings": "on"
+  }
+}

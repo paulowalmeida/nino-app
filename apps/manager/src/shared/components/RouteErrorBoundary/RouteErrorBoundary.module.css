@@ -1,0 +1,14 @@
+@reference "@nino/ds/globals.css";
+
+.routeErrorBoundaryShell {
+  @apply flex min-h-screen items-center justify-center px-6 py-12;
+  @apply bg-surface-raised text-center;
+}
+
+.routeErrorBoundaryPanel {
+  @apply flex w-full max-w-sm flex-col items-center gap-4;
+}
+
+.routeErrorBoundaryTitle {
+  @apply text-fg-cool;
+}

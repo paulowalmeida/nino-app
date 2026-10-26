@@ -1,0 +1,9 @@
+@reference "@nino/ds/globals.css";
+
+.wrap {
+  @apply flex min-h-0 flex-1 flex-col;
+}
+
+.scroll {
+  @apply min-h-0 flex-1;
+}

@@ -1,0 +1,41 @@
+@reference "../../styles/globals.css";
+
+@keyframes panelIn {
+  from {
+    opacity: 0;
+    scale: 0.95;
+  }
+  to {
+    opacity: 1;
+    scale: 1;
+  }
+}
+
+@keyframes panelOut {
+  from {
+    opacity: 1;
+    scale: 1;
+  }
+  to {
+    opacity: 0;
+    scale: 0.95;
+  }
+}
+
+.panel {
+  @apply z-popover max-w-xs rounded-2 bg-surface-raised p-4 text-sm;
+  @apply text-fg-muted shadow-warm-lg outline-none;
+}
+
+.panel[data-state='open'] {
+  animation: panelIn var(--duration-fast) var(--ease-out);
+}
+
+.panel[data-state='closed'] {
+  animation: panelOut var(--duration-fast) var(--ease-in) forwards;
+}
+
+.arrow {
+  --arrow-size: 8px;
+  --arrow-background: var(--color-surface-raised);
+}

@@ -1,0 +1,21 @@
+@reference "@nino/ds/globals.css";
+
+.settingsPage {
+  @apply relative flex h-full w-full flex-col;
+  @apply max-w-workspace overflow-hidden p-4 lg:p-10;
+}
+
+.settingsPanel {
+  @apply flex min-h-0 min-w-0 flex-1 flex-col overflow-hidden;
+}
+
+/* WHY: abas sem painel interno com scroll próprio — deixa a página inteira
+ * rolar em vez de recortar o conteúdo no shell fixo.
+ */
+.pageFlow {
+  @apply h-auto overflow-visible lg:h-auto;
+}
+
+.panelFlow {
+  @apply min-h-0 overflow-visible;
+}

@@ -1,35 +1,33 @@
+import { ReactNode } from 'react'
+
 import { Accordion as ArkAccordion } from '@ark-ui/react/accordion'
+import { mergeClasses } from '@ds/lib/mergeClasses/mergeClasses'
 
-import { mergeClasses } from '@ds/lib/mergeClasses'
+import { AccordionItem } from '../AccordionItem/AccordionItem'
+import styles from './Accordion.module.css'
 
-import { AccordionProps } from './Accordion.types'
+type AccordionEntry = {
+  value: string
+  trigger: ReactNode
+  content: ReactNode
+  disabled?: boolean
+}
 
-const baseRoot = 'w-full divide-y divide-gray-200 rounded-md border border-gray-200'
-
-const baseItem = 'bg-white'
-
-const baseTrigger =
-  'flex w-full items-center justify-between px-4 py-3.5 text-sm font-medium text-gray-900 transition-colors outline-none hover:bg-[color-mix(in_srgb,var(--color-brand)_5%,white)] focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-brand disabled:pointer-events-none disabled:opacity-50'
-
-const baseContent = 'accordion-content overflow-hidden text-sm text-gray-600'
-
-const baseContentInner = 'px-4 pb-4 pt-0'
-
-const ChevronDown = () => (
-  <svg
-    width='16'
-    height='16'
-    viewBox='0 0 24 24'
-    fill='none'
-    stroke='currentColor'
-    strokeWidth='2'
-    strokeLinecap='round'
-    strokeLinejoin='round'
-    className='shrink-0 text-gray-400 transition-transform duration-200 group-data-[state=open]:rotate-180'
-  >
-    <path d='m6 9 6 6 6-6' />
-  </svg>
-)
+type AccordionProps = {
+  items: AccordionEntry[]
+  /** Allows multiple items to be open at the same time */
+  multiple?: boolean
+  defaultValue?: string[]
+  value?: string[]
+  onValueChange?: (value: string[]) => void
+  className?: string
+  /** Classes extras por item — para superfícies com tema próprio (ex.: dark). */
+  itemClassName?: string
+  /** Classes extras por trigger — para superfícies com tema próprio. */
+  triggerClassName?: string
+  /** Classes extras por painel de conteúdo — para tema próprio. */
+  contentClassName?: string
+}
 
 export function Accordion({
   items,
@@ -38,6 +36,9 @@ export function Accordion({
   value,
   onValueChange,
   className,
+  itemClassName,
+  triggerClassName,
+  contentClassName,
 }: AccordionProps) {
   return (
     <ArkAccordion.Root
@@ -46,26 +47,20 @@ export function Accordion({
       defaultValue={defaultValue}
       value={value}
       onValueChange={({ value: v }) => onValueChange?.(v)}
-      className={mergeClasses(baseRoot, className)}
+      className={mergeClasses(styles.item, className)}
     >
       {items.map((item) => (
-        <ArkAccordion.Item
+        <AccordionItem
           key={item.value}
           value={item.value}
           disabled={item.disabled}
-          className={baseItem}
-        >
-          <ArkAccordion.ItemTrigger className={mergeClasses(baseTrigger, 'group')}>
-            {item.trigger}
-            <ChevronDown />
-          </ArkAccordion.ItemTrigger>
-          <ArkAccordion.ItemContent className={baseContent}>
-            <div className={baseContentInner}>{item.content}</div>
-          </ArkAccordion.ItemContent>
-        </ArkAccordion.Item>
+          content={item.content}
+          trigger={item.trigger}
+          contentClassName={contentClassName}
+          itemClassName={itemClassName}
+          triggerClassName={triggerClassName}
+        />
       ))}
     </ArkAccordion.Root>
   )
 }
-
-Accordion.displayName = 'Accordion'

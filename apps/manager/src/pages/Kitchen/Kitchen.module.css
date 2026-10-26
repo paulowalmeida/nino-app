@@ -1,0 +1,16 @@
+@reference "@nino/ds/globals.css";
+
+/* WHY: quantas colunas de trilho cabem lado a lado depende do espaço real da
+ * tela, não do viewport — a sidebar aberta come largura sem mudar o viewport.
+ * container-type habilita a @container do KitchenBoard.
+ */
+.screen {
+  @apply relative flex min-h-full flex-col;
+  @apply px-3 pt-3 sm:h-full sm:overflow-hidden;
+  @apply lg:px-5 lg:pt-4;
+  container-type: inline-size;
+}
+
+.failure {
+  @apply flex-1 border border-dashed border-border;
+}

@@ -1,0 +1,15 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "framework": "vite",
+  "ignoreCommand": "cd ../.. && sh scripts/skip-unaffected-build.sh nino-backoffice",
+  "installCommand": "cd ../.. && npm install",
+  "buildCommand": "cd ../.. && npx turbo run build --filter=nino-backoffice",
+  "outputDirectory": "dist",
+  "rewrites": [
+    {
+      "source": "/api/:path*",
+      "destination": "https://api-dev.nino.delivery/:path*"
+    },
+    { "source": "/(.*)", "destination": "/index.html" }
+  ]
+}

@@ -1,0 +1,22 @@
+@reference "@nino/ds/globals.css";
+
+.promotionsContent {
+  @apply pb-4 md:min-h-0 md:flex-1 lg:pb-10;
+}
+
+.promotionsToolbar {
+  @apply mb-3 flex shrink-0 flex-col gap-4 px-4;
+  @apply sm:flex-row sm:items-center lg:px-10;
+}
+
+.promotionsSearch {
+  @apply h-11 w-full sm:max-w-md;
+}
+
+.promotionsTabs [data-part='content'] {
+  @apply hidden;
+}
+
+.promotionsPagination {
+  @apply mt-4 px-4 lg:px-10;
+}

@@ -1,0 +1,17 @@
+@reference "@nino/ds/globals.css";
+
+.orderLink {
+  @apply rounded-1 focus-visible:ring-2 focus-visible:ring-brand;
+  @apply focus-visible:ring-offset-1;
+}
+
+.orderAt {
+  @apply whitespace-nowrap text-right text-xs text-fg-faint;
+  font-variant-numeric: tabular-nums;
+}
+
+.orderTotal {
+  @apply whitespace-nowrap text-right text-sm font-semibold;
+  @apply text-fg-strong;
+  font-variant-numeric: tabular-nums;
+}

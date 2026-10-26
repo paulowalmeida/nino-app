@@ -1,0 +1,20 @@
+@reference "@nino/ds/globals.css";
+
+.track {
+  @apply flex w-full min-w-0 flex-row items-center gap-2;
+  @apply snap-x overflow-x-auto px-1.5 pb-1 pt-2;
+  @apply cursor-grab select-none active:cursor-grabbing;
+  scrollbar-width: none;
+}
+
+.track::-webkit-scrollbar {
+  display: none;
+}
+
+.chip {
+  @apply min-h-11 shrink-0 snap-start;
+}
+
+.ghostChip {
+  @apply h-11 w-24 shrink-0 rounded-full;
+}

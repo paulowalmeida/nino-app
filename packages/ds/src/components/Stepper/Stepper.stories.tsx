@@ -2,7 +2,7 @@ import { useState } from 'react'
 
 import type { Meta, StoryObj } from '@storybook/react'
 
-import { Button } from '../Button'
+import { Button } from '../Button/Button'
 import { Stepper } from './Stepper'
 
 const meta: Meta<typeof Stepper> = {
@@ -22,14 +22,15 @@ const steps = [
 ]
 
 export const Default: Story = {
-  render: () => {
+  args: { steps },
+  render: (args) => {
     const [step, setStep] = useState(1)
     return (
-      <div className='w-full max-w-2xl space-y-6'>
-        <Stepper steps={steps} step={step} onStepChange={setStep} />
-        <div className='flex gap-2'>
+      <div className="w-full max-w-2xl space-y-6">
+        <Stepper {...args} step={step} onStepChange={setStep} />
+        <div className="flex gap-2">
           <Button
-            variant='outline'
+            variant="outline"
             onClick={() => setStep((s) => Math.max(0, s - 1))}
             disabled={step === 0}
           >
@@ -51,12 +52,12 @@ export const Vertical: Story = {
   render: () => {
     const [step, setStep] = useState(0)
     return (
-      <div className='max-w-xs space-y-4'>
+      <div className="max-w-xs space-y-4">
         <Stepper
           steps={steps}
           step={step}
           onStepChange={setStep}
-          orientation='vertical'
+          orientation="vertical"
         />
       </div>
     )

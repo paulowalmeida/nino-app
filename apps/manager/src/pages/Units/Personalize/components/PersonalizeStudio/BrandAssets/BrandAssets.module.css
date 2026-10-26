@@ -1,0 +1,11 @@
+@reference "@nino/ds/globals.css";
+
+.slots {
+  @apply grid min-w-0 gap-5;
+}
+
+@container studioControls (min-width: 34rem) {
+  .slots {
+    @apply grid-cols-2 items-start gap-4;
+  }
+}

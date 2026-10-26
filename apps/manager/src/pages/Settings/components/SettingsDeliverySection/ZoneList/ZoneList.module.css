@@ -1,0 +1,118 @@
+@reference "@nino/ds/globals.css";
+
+.skeleton {
+  @apply h-64 w-full rounded-6;
+}
+
+.zoneListSection {
+  @apply flex min-h-0 min-w-0 flex-1 flex-col;
+}
+
+.head {
+  @apply mb-2 shrink-0 gap-x-3;
+}
+
+.zoneListSummary {
+  @apply shrink-0 tabular-nums;
+}
+
+/* WHY: a largura real dessa coluna depende da sidebar estar aberta ou não,
+ * não só do viewport — por isso ações usa container query, não media query. O
+ * scroll é o do painel da seção; o cabeçalho gruda nele mesmo assim, já que
+ * sticky funciona contra o ancestral rolável mais próximo.
+ */
+.scroll {
+  @apply rounded-xl border border-border;
+  container-type: inline-size;
+}
+
+.tableHeader {
+  @apply sticky top-0 z-sticky bg-surface-raised;
+}
+
+.rangeCell {
+  @apply w-24 pr-2;
+}
+
+.feeCell {
+  @apply w-24 pr-2;
+}
+
+
+
+.switchCell {
+  @apply w-20;
+}
+
+.actionsCell {
+  @apply w-32 text-right;
+}
+
+.freeMinCell {
+  @apply w-40;
+}
+
+.freeMinOff {
+  @apply text-fg-faint;
+}
+
+.zoneListActions {
+  @apply items-center justify-end gap-0.5;
+}
+
+
+.remove {
+  @apply h-auto shrink-0 px-2 py-1 text-xs text-danger;
+  @apply hover:bg-danger-surface hover:text-danger;
+}
+
+.kebab {
+  @apply hidden h-8 w-8;
+}
+
+/* WORKAROUND: sem token de breakpoint pra "coluna de ações sem espaço";
+ * abaixo disso os dois botões não cabem lado a lado, então troca pro menu
+ * compacto e encolhe a coluna pro texto da faixa respirar.
+ */
+@container (max-width: 26.5rem) {
+  .zoneListActions {
+    display: none;
+  }
+
+  .kebab {
+    display: inline-flex;
+  }
+
+  .actionsCell {
+    @apply w-10;
+  }
+
+  .switchCell {
+    @apply w-16;
+  }
+
+  .rangeCell {
+    @apply w-auto pr-2;
+  }
+}
+
+.gapCell {
+  @apply bg-surface-1 py-1.5 text-center text-xs text-fg-faint;
+}
+
+
+
+
+
+.zoneListEmpty {
+  @apply mt-1;
+}
+
+
+.focused {
+  @apply bg-brand-ghost;
+}
+
+.off {
+  @apply opacity-dim;
+}

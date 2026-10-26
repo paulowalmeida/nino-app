@@ -1,0 +1,5 @@
+@reference "@nino/ds/globals.css";
+
+.brandTrackingFields {
+  @apply flex max-h-[calc(100dvh-23rem)] flex-col gap-3 overflow-y-auto pr-2;
+}

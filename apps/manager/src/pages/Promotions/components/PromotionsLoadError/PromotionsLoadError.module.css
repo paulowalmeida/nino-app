@@ -1,0 +1,5 @@
+@reference "@nino/ds/globals.css";
+
+.promotionsLoadError {
+  @apply mx-4 lg:mx-10;
+}

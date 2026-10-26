@@ -1,0 +1,147 @@
+@reference "@nino/ds/globals.css";
+
+.productGridSearch {
+  @apply mb-3 h-11 lg:max-w-[460px];
+}
+
+.wrap {
+  @apply flex min-h-0 flex-1 flex-col gap-3;
+}
+
+.productGridControls {
+  @apply flex min-w-0 shrink-0 flex-col px-4;
+  @apply lg:px-10;
+}
+
+.feedback {
+  @apply px-4 lg:px-10;
+}
+
+/* WHY: Large targets: finger, not cursor. Column count answers to the menu
+ * column's own width (`container-type` set on the wrapping `.menu` in
+ * Counter.module.css), not the viewport — the counter's ticket panel and the
+ * app sidebar both eat into that width before the grid ever sees it, so a
+ * viewport-keyed breakpoint would size columns for space the grid doesn't
+ * actually have.
+ */
+.productGrid {
+  @apply grid flex-1 auto-rows-min grid-cols-2 gap-3 px-4 pb-4;
+  @apply lg:min-h-0 lg:gap-3.5 lg:overflow-y-auto;
+  @apply lg:px-10 lg:pb-10;
+}
+
+@container (min-width: 34rem) {
+  .productGrid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@container (min-width: 46rem) {
+  .productGrid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+@container (min-width: 58rem) {
+  .productGrid {
+    grid-template-columns: repeat(5, 1fr);
+  }
+}
+
+@container (min-width: 70rem) {
+  .productGrid {
+    grid-template-columns: repeat(6, 1fr);
+  }
+}
+
+/* WHY: Search results and tab content sit below the search bar/tab rail, so
+ * they need breathing room the skeleton grid doesn't.
+ */
+.resultsTop {
+  @apply pt-4;
+}
+
+.categoryContent {
+  @apply relative flex min-h-0 flex-1 flex-col;
+}
+
+.categorySkeleton {
+  @apply flex min-h-0 flex-1 flex-col;
+}
+
+.categorySkeletonExit {
+  @apply pointer-events-none absolute inset-0 z-10;
+  animation: category-skeleton-out 160ms var(--ease-out) both;
+}
+
+.categoryCardEnter {
+  animation: category-card-enter 280ms var(--ease-out) both;
+}
+
+@keyframes category-skeleton-out {
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes category-card-enter {
+  from {
+    opacity: 0;
+    transform: translateY(8px) scale(0.985);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .categorySkeletonExit {
+    animation: none;
+    opacity: 0;
+  }
+
+  .categoryCardEnter {
+    animation: none;
+  }
+}
+
+/* WHY: The loading state reuses `.wrap` and `.productGrid` instead of having its own
+ * geometry: this way the tray has the exact same measurements before and
+ * after the data loads, and only the box content changes.
+ */
+.skeletonSearch {
+  @apply mb-3 h-11 w-full;
+}
+
+.skeletonTabsRow {
+  @apply flex shrink-0 gap-2 pb-1;
+}
+
+/* WHY: Same pill size as a tab: `px-4 py-2.5` with 16px text gives 44px
+ * height
+ */
+.skeletonTab {
+  @apply h-11 w-24 shrink-0 rounded-full;
+}
+
+.skeletonCard {
+  @apply flex flex-col overflow-hidden rounded-3 border border-border;
+}
+
+.skeletonPhoto {
+  @apply h-[120px] w-full rounded-none lg:h-[144px];
+}
+
+.skeletonFooter {
+  @apply flex flex-col gap-0.5 px-2.5 pb-2.5 pt-2;
+}
+
+.skeletonName {
+  @apply w-3/4;
+}
+
+.skeletonPrice {
+  @apply w-1/3;
+}

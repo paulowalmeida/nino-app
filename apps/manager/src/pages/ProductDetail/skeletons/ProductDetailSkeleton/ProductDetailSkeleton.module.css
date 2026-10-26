@@ -1,0 +1,49 @@
+@reference "@nino/ds/globals.css";
+
+.ghostName {
+  @apply h-8 w-2/3 rounded-2 lg:h-9;
+}
+
+.ghostBadge {
+  @apply h-5 w-28 shrink-0 rounded-1;
+}
+
+.ghostPhoto {
+  @apply aspect-[4/3] h-auto w-full rounded-5;
+}
+
+.ghostPhotoAction {
+  @apply h-9 w-28 rounded-3;
+}
+
+.ghostLabel {
+  @apply mb-2 h-3.5 w-28 rounded-1;
+}
+
+.ghostInput {
+  @apply h-10 w-full rounded-2;
+}
+
+.ghostTextarea {
+  @apply h-20 w-full rounded-2;
+}
+
+.ghostHelper {
+  @apply mt-1.5 h-3 w-64 max-w-full rounded-1;
+}
+
+.ghostSwitch {
+  @apply h-5 w-9 shrink-0 rounded-full;
+}
+
+.ghostAvailabilityText {
+  @apply min-w-0 flex-1;
+}
+
+.ghostHint {
+  @apply h-3 w-full max-w-[42ch] rounded-1;
+}
+
+.ghostButton {
+  @apply h-10 w-full rounded-full sm:w-40;
+}

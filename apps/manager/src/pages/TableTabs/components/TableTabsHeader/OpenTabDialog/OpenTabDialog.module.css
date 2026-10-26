@@ -1,0 +1,13 @@
+@reference "@nino/ds/globals.css";
+
+.openTabDialogActions {
+  @apply justify-end gap-2;
+}
+
+.openTabDialogBody {
+  @apply flex flex-col gap-5;
+}
+
+.openTabDialogSection {
+  @apply flex flex-col gap-2;
+}

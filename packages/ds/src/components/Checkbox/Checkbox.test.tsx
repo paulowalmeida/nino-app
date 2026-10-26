@@ -1,10 +1,13 @@
+import { createRef } from 'react'
+
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { describe, expect, it, vi } from 'vitest'
 
 import { Checkbox } from './Checkbox'
+import styles from './Checkbox.module.css'
 
-describe(Checkbox.displayName!, () => {
+describe(Checkbox.name, () => {
   it('renders the checkbox', () => {
     render(<Checkbox />)
     expect(screen.getByRole('checkbox')).toBeInTheDocument()
@@ -44,25 +47,46 @@ describe(Checkbox.displayName!, () => {
   it('applies error classes when error is true', () => {
     const { container } = render(<Checkbox error />)
     expect(container.querySelector('[data-part="control"]')).toHaveClass(
-      'border-red-500'
+      styles.boxInvalid
     )
   })
 
   it('applies default classes when error is false', () => {
     const { container } = render(<Checkbox />)
     expect(container.querySelector('[data-part="control"]')).toHaveClass(
-      'border-gray-300'
+      styles.boxResting
     )
   })
 
-  it.each(['sm', 'md', 'lg'] as const)('renderiza tamanho %s sem erros', (size) => {
-    render(<Checkbox size={size} />)
-    expect(screen.getByRole('checkbox')).toBeInTheDocument()
+  it.each(['sm', 'md', 'lg'] as const)(
+    'renderiza tamanho %s sem erros',
+    (size) => {
+      render(<Checkbox size={size} />)
+      expect(screen.getByRole('checkbox')).toBeInTheDocument()
+    }
+  )
+
+  it('forwards ref to the input, which is what takes focus', () => {
+    // Arrange
+    const ref = createRef<HTMLInputElement>()
+
+    // Act
+    render(<Checkbox ref={ref} />)
+
+    // Assert
+    expect(ref.current).toBe(screen.getByRole('checkbox'))
   })
 
-  it('forwards ref to the control element', () => {
-    const ref = { current: null }
-    render(<Checkbox ref={ref} />)
-    expect(ref.current).toBeInstanceOf(HTMLDivElement)
+  it('fires onBlur when focus leaves the control', async () => {
+    // Arrange
+    const onBlur = vi.fn()
+    render(<Checkbox onBlur={onBlur} />)
+
+    // Act
+    await userEvent.click(screen.getByRole('checkbox'))
+    await userEvent.tab()
+
+    // Assert
+    expect(onBlur).toHaveBeenCalledTimes(1)
   })
 })

@@ -1,0 +1,25 @@
+@reference "@nino/ds/globals.css";
+
+.skeleton {
+  @apply h-9 w-56 rounded-full;
+}
+
+.paused {
+  @apply rounded-5 border border-brand-bold bg-brand-soft p-4;
+}
+
+.pausedSummary {
+  @apply min-w-0;
+}
+
+.pauseSwitchTitle {
+  @apply font-display text-base font-extrabold text-brand-strong;
+}
+
+.hint {
+  @apply mt-0.5 text-sm leading-relaxed text-fg-muted;
+}
+
+.pauseSwitchTrigger {
+  @apply text-white font-extrabold;
+}

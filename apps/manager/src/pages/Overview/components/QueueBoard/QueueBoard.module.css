@@ -1,0 +1,60 @@
+@reference "@nino/ds/globals.css";
+
+.cardOverview {
+  @apply flex flex-row items-center gap-x-2;
+}
+
+.board {
+  @apply grid gap-3 text-center lg:gap-4;
+  @apply grid-cols-[repeat(2,minmax(0,10rem))];
+  @apply sm:grid-cols-[repeat(3,minmax(0,10rem))];
+  @apply md:grid-cols-[repeat(5,minmax(0,10rem))];
+}
+
+.tile {
+  @apply flex w-full flex-col gap-2 p-5;
+  @apply transition-shadow duration-150;
+  @apply focus-visible:outline-none focus-visible:ring-2;
+  @apply focus-visible:ring-brand focus-visible:ring-offset-2;
+  --card-ring: 0 0 0 1px
+    color-mix(in srgb, var(--color-warm-950) 14%, transparent);
+}
+
+@media (hover: hover) {
+  .tile:hover {
+    box-shadow:
+      0 0 0 1px color-mix(in srgb, var(--color-brand) 45%, transparent),
+      0 8px 20px -12px
+        color-mix(in srgb, var(--color-warm-950) 20%, transparent);
+  }
+}
+
+.urgent {
+  @apply border-brand-bold bg-brand-ghost;
+}
+
+.tileValue {
+  @apply font-display text-3xl font-extrabold leading-none tracking-tight;
+  @apply text-fg-strong lg:text-4xl;
+  font-variant-numeric: tabular-nums;
+}
+
+/* WHY: A altura acompanha o número que vai ocupar o lugar — `text-3xl` com
+ * `leading-none` mede 1.875rem, `text-4xl` mede 2.25rem. Sem casar os dois, o
+ * quadro encolhe quando o dado chega e a página inteira dá um salto.
+ */
+.skeletonValue {
+  @apply h-[1.875rem] w-10 lg:h-9;
+}
+
+.urgent .tileValue {
+  @apply text-brand-strong;
+}
+
+.tileLabel {
+  @apply text-xs leading-snug text-fg-faint lg:text-sm text-center;
+}
+
+.idle {
+  @apply mt-4 text-sm text-fg-faint;
+}

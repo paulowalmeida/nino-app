@@ -1,0 +1,78 @@
+@reference "../../styles/globals.css";
+
+.searchField {
+  @apply w-full rounded-2 border bg-surface-raised text-fg-strong;
+  @apply disabled:pointer-events-none disabled:select-none state-disabled;
+  @apply placeholder:text-fg-faint;
+  @apply transition-field outline-none;
+  @apply border-input-border;
+  @apply focus:border-brand focus:ring-1 focus:ring-inset;
+  @apply focus:ring-brand;
+}
+
+.control {
+  @apply relative;
+  @apply data-[disabled]:select-none;
+}
+
+.control[data-disabled]::after {
+  content: '';
+  @apply absolute inset-0 z-10 cursor-default select-none;
+}
+
+.loadingInput {
+  @apply pr-10;
+}
+
+.loadingIndicator {
+  @apply pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-fg-muted;
+}
+
+.invalidState {
+  @apply data-[invalid]:border-danger;
+  @apply data-[invalid]:focus:ring-danger;
+  @apply aria-[invalid]:border-danger;
+  @apply aria-[invalid]:focus:border-danger;
+  @apply aria-[invalid]:focus:ring-danger;
+}
+
+.optionPanel {
+  @apply z-popover min-w-[var(--reference-width)];
+  @apply max-h-[min(18rem,var(--available-height))];
+  @apply overflow-y-auto overscroll-contain scrollbar-slim rounded-2;
+  @apply bg-surface-raised;
+  @apply shadow-warm-lg p-1;
+  scroll-behavior: smooth;
+}
+
+.option {
+  @apply relative flex cursor-default select-none items-center rounded-1 px-3;
+  @apply py-2 text-sm text-fg-strong outline-none;
+  @apply transition-field duration-fast;
+  @apply data-[highlighted]:bg-brand-soft;
+  @apply data-[highlighted]:text-brand;
+  @apply state-disabled;
+  transition-property: color, background-color, box-shadow, border-color;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .optionPanel {
+    scroll-behavior: auto;
+  }
+}
+
+.emptyMessage {
+  @apply px-3 py-2 text-sm text-fg-faint;
+}
+
+.sizeSmall {
+  @apply h-8 px-3 text-sm;
+}
+
+.sizeMedium {
+  @apply h-11 px-3 text-base;
+}
+
+.sizeLarge {
+  @apply h-12 px-4 text-base;
+}

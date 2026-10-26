@@ -1,0 +1,126 @@
+@reference "@nino/ds/globals.css";
+
+.modal {
+  @apply flex max-w-xl flex-col;
+  @apply max-md:h-dvh max-md:max-h-none max-md:max-w-none;
+  @apply max-md:rounded-none;
+}
+
+.positioner {
+  @apply max-md:p-0;
+}
+
+.commandPaletteBody {
+  @apply flex min-h-0 flex-1 flex-col p-0;
+}
+
+.searchField {
+  @apply relative border-b border-border/70;
+}
+
+.searchIcon {
+  @apply pointer-events-none absolute left-5 top-1/2 z-10 -translate-y-1/2;
+  @apply text-fg-faint;
+}
+
+.commandPaletteInput {
+  @apply h-14 rounded-none border-0 bg-transparent pl-13 pr-14 text-base;
+  @apply shadow-none focus-visible:ring-0 focus-visible:outline-none;
+}
+
+.commandPaletteInput::-webkit-search-cancel-button {
+  appearance: none;
+}
+
+.closeButton {
+  @apply absolute right-2 top-1/2 z-10 size-11 -translate-y-1/2;
+}
+
+.optionScroll {
+  @apply max-h-[min(24rem,55vh)];
+  @apply max-md:min-h-0 max-md:flex-1 max-md:max-h-none;
+}
+
+.optionPanel {
+  @apply gap-0.5 p-2;
+}
+
+.sectionLabel {
+  @apply px-3 pb-1 pt-3 text-2xs font-bold uppercase tracking-wider;
+  @apply text-fg-faint first:pt-1;
+}
+
+.option {
+  @apply h-auto min-h-12 w-full justify-start gap-3 rounded-2 px-3 py-2;
+  @apply text-left transition-colors duration-fast;
+}
+
+.optionIcon {
+  @apply flex size-8 shrink-0 items-center justify-center rounded-2;
+  @apply bg-surface-mute text-fg-subtle transition-colors duration-fast;
+}
+
+.optionText {
+  @apply min-w-0 flex-1 gap-0.5;
+}
+
+.optionTitle {
+  @apply truncate text-sm font-semibold text-fg-strong;
+}
+
+.optionPath {
+  @apply truncate text-xs text-fg-faint;
+}
+
+.optionEnter {
+  @apply shrink-0 font-sans text-sm text-brand-strong;
+}
+
+.optionActive {
+  @apply bg-brand-soft;
+}
+
+.optionActive .optionIcon {
+  @apply bg-brand text-fg-on-brand;
+}
+
+.optionActive .optionTitle {
+  @apply text-brand-strong;
+}
+
+.empty {
+  @apply gap-1 px-3 py-10 text-center;
+}
+
+.emptyTitle {
+  @apply text-sm font-semibold text-fg-strong;
+}
+
+.emptyHint {
+  @apply text-xs text-fg-faint;
+}
+
+.commandPaletteFooter {
+  @apply justify-start border-t border-border/70 bg-surface-1 px-5 py-3;
+  @apply max-md:hidden;
+}
+
+.hints {
+  @apply flex-wrap;
+}
+
+.hint {
+  @apply inline-flex items-center gap-1 text-xs text-fg-faint;
+}
+
+.key {
+  @apply inline-flex h-5 min-w-5 items-center justify-center rounded-1 px-1;
+  @apply border border-border bg-surface-raised font-sans text-2xs;
+  @apply font-semibold text-fg-subtle;
+}
+
+@media (pointer: coarse) {
+  .commandPaletteFooter {
+    @apply hidden;
+  }
+}

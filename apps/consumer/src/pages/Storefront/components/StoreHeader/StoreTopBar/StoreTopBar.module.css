@@ -1,0 +1,271 @@
+@reference "@nino/ds/globals.css";
+
+.bar {
+  @apply fixed top-0 z-nav w-full bg-surface-page;
+  @apply lg:h-20;
+
+  box-shadow:
+    0 1px 2px color-mix(in srgb, var(--color-warm-950) 4%, transparent),
+    0 10px 28px -18px color-mix(in srgb, var(--color-warm-950) 30%, transparent);
+  transform: translateY(-100%);
+  transition: transform 240ms var(--ease-out);
+  will-change: transform;
+}
+
+.barDocked {
+  transform: translateY(0);
+}
+
+@media (min-width: 1024px) {
+  .bar {
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bar {
+    transition: none;
+  }
+}
+
+.storeTopBarInner {
+  @apply relative mx-auto flex h-14 w-full max-w-page items-center gap-3;
+  @apply px-4 sm:px-6 lg:h-20 lg:gap-5;
+}
+
+.storeTopBarBrand {
+  @apply flex min-w-0 items-center gap-2.5 lg:gap-3.5;
+
+  @apply lg:max-w-[26rem] lg:shrink-0;
+}
+
+/* WHY: sem cor de fundo própria — a tinta da loja é o sinal de "sem logo",
+ * não o repouso do slot. Com fundo fixo aqui, o instante entre o placeholder
+ * do `Image` e o arquivo decodificar mostrava a tinta por baixo como se fosse
+ * um fallback, mesmo em loja com logo configurado.
+ */
+.storeTopBarLogo {
+  @apply flex h-8 w-8 shrink-0 items-center justify-center overflow-hidden;
+  @apply lg:h-14 lg:w-14 lg:rounded-3 lg:text-sm;
+  @apply origin-left rounded-2 border border-border bg-surface-raised;
+  @apply text-xs font-extrabold;
+}
+
+.logoImg {
+  @apply h-full w-full object-cover;
+}
+
+.logoStack {
+  @apply h-full w-full;
+}
+
+.logoFallback {
+  @apply flex h-full w-full items-center justify-center text-fg-on-brand;
+  background-color: var(--store-tint, var(--color-brand));
+}
+
+.logoPlaceholder {
+  composes: nino-skeleton from global;
+  @apply h-full w-full bg-black/[0.06];
+}
+
+.storeName {
+  @apply block min-w-0 truncate font-display text-sm font-extrabold;
+  @apply text-fg-strong lg:text-2xl lg:tracking-tight;
+}
+
+/* WHY: em 1024px o "Aberto agora" disputava espaço com a busca — a base do
+ * campo já encolhe seis vezes mais rápido que a marca, e mesmo assim ficava
+ * espremida a 256px com o status ocupando ~107px ao lado dela. A partir de
+ * 1280px sobra largura para os dois convivendo à vontade.
+ */
+.storeMeta {
+  @apply hidden shrink-0 items-center gap-3 text-[0.8125rem];
+  @apply text-fg-subtle xl:mr-2 xl:flex;
+}
+
+.metaStatus {
+  @apply inline-flex items-center gap-1.5 font-semibold text-fg-default;
+}
+
+.metaStatusOn {
+  color: var(--color-success);
+}
+
+.dot {
+  @apply relative h-1.5 w-1.5 shrink-0 rounded-full bg-fg-ghost;
+}
+
+.dotOn {
+  background-color: var(--color-success);
+}
+
+.dotOn::after {
+  content: '';
+  @apply absolute inset-0 rounded-full;
+  background-color: var(--color-success);
+  animation: statusPing 2.4s var(--ease-out) infinite;
+}
+
+@keyframes statusPing {
+  0% {
+    transform: scale(1);
+    opacity: 0.55;
+  }
+  70%,
+  100% {
+    transform: scale(3.2);
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dotOn::after {
+    animation: none;
+  }
+}
+
+.deskSearch {
+  @apply relative hidden min-w-0 items-center lg:mr-8 lg:flex;
+
+  flex: 0 6 44rem;
+  min-width: 14rem;
+  margin-left: auto;
+}
+
+/* WHY: precisa de duas classes na regra — sozinha ela perde para o `flex` do
+ * .iconBtn, escrito depois no arquivo, e media query não soma especificidade.
+ */
+@media (min-width: 1024px) {
+  .iconBtn.searchTrigger {
+    display: none;
+  }
+}
+
+.searchPanel {
+  @apply absolute inset-y-0 left-0 right-0 z-content flex items-center gap-2;
+  @apply bg-surface-page px-4 sm:px-6 lg:hidden;
+  clip-path: inset(0 0 0 100%);
+  pointer-events: none;
+  transition: clip-path 320ms var(--ease-out);
+}
+
+.searchPanelOpen {
+  clip-path: inset(0 0 0 0);
+  pointer-events: auto;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .searchPanel {
+    transition: none;
+  }
+}
+
+.searchField {
+  @apply relative min-w-0 flex-1;
+}
+
+.searchIcon {
+  @apply pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2;
+  @apply text-fg-faint;
+}
+
+.searchInput {
+  @apply h-10 w-full rounded-3 border border-border bg-surface-cool lg:h-12;
+  @apply pl-11 pr-3 text-base text-fg-default outline-none transition-field;
+  @apply placeholder:text-fg-faint;
+  @apply focus-visible:border-brand focus-visible:bg-surface-page;
+  @apply focus-visible:ring-2 focus-visible:ring-brand-soft;
+}
+
+.tools {
+  @apply ml-auto flex shrink-0 items-center gap-1;
+}
+
+@media (min-width: 1024px) {
+  .tools {
+    margin-left: 0;
+  }
+}
+
+/* WHY: no celular e no tablet estreito a conta, a sacola e as informações
+ * moram na TabBar de baixo; repetir aqui só rouba a largura do nome da loja.
+ * WHY 769px, não 768: `md:` do Tailwind é `min-width: 768px` — inclui o
+ * próprio 768, que é a largura real do iPad em retrato. O pedido foi "acima
+ * de 768px", ou seja, 768 continua no grupo estreito e só 769px em diante
+ * entra no grupo largo. `min-[769px]` expressa esse limite estrito. WHY
+ * !important: `.account` e `.signIn` vêm depois desta regra no arquivo e
+ * escrevem `flex` sem qualificador — sem o `!`, o `hidden` daqui nunca vence,
+ * em nenhuma largura. É o mesmo bug de especificidade do `.searchTrigger`.
+ */
+.accountEntry {
+  @apply !hidden min-[769px]:!flex;
+}
+
+.cartEntry {
+  @apply !hidden min-[769px]:!flex;
+}
+
+.infoEntry {
+  @apply !hidden min-[769px]:!flex;
+}
+
+.notificationsEntry {
+  @apply !hidden min-[769px]:!flex;
+}
+
+.iconBtn {
+  @apply relative flex h-10 w-10 items-center justify-center rounded-full;
+  @apply text-fg-muted transition-colors hover:bg-surface-2;
+}
+
+.account {
+  @apply flex h-10 items-center gap-2 rounded-full px-2.5;
+  @apply text-fg-muted transition-colors hover:bg-surface-2;
+}
+
+.accountPhoto {
+  @apply h-6 w-6 shrink-0 rounded-full object-cover;
+}
+
+.accountPhotoWrap {
+  @apply h-6 w-6 shrink-0 overflow-hidden rounded-full;
+}
+
+.accountPhotoPlaceholder {
+  composes: nino-skeleton from global;
+  @apply h-full w-full bg-black/[0.06];
+}
+
+.accountName {
+  @apply hidden max-w-32 truncate text-sm font-semibold sm:block;
+}
+
+.menuPanel {
+  @apply min-w-56;
+}
+
+/* WHY: ícone, não botão com rótulo. Em 1024px o header já disputa espaço
+ * entre o nome da loja e a busca, e "Entrar" era o único alvo com texto na
+ * fila de ações — as outras três já eram ícones. O disco na cor da loja
+ * mantém a entrada de conta como a ação de maior peso da fila.
+ */
+.signIn {
+  @apply flex h-10 w-10 items-center justify-center rounded-full border-0;
+  @apply text-fg-on-brand;
+  background-color: var(--store-tint, var(--color-brand));
+  transition: filter var(--duration-fast) var(--ease-out);
+}
+
+@media (hover: hover) {
+  .signIn:hover {
+    filter: brightness(0.94);
+  }
+}
+
+.cartBadge {
+  @apply absolute right-1 top-1 flex h-4 min-w-4 items-center justify-center;
+  @apply rounded-full px-1 text-2xs font-extrabold text-fg-on-brand;
+  background-color: var(--store-tint, var(--color-brand));
+  font-variant-numeric: tabular-nums;
+}
