@@ -1,3 +1,5 @@
+import { useState } from 'react'
+
 import { Controller, useFormContext, useWatch } from 'react-hook-form'
 
 import { Box } from '@nino/ds/components/Box'
@@ -14,6 +16,7 @@ import {
 } from '@pages/PromotionEditor/constants/promotionEditor.constants'
 import { usePromotionEditorFacade } from '@pages/PromotionEditor/facades/usePromotionEditorFacade/usePromotionEditorFacade'
 import type { PromotionFormValues } from '@pages/PromotionEditor/types/PromotionFormValues.type'
+import { campaignDefaultName } from '@pages/PromotionEditor/utils/campaignDefaultName/campaignDefaultName'
 import { maskMoney, moneyValue } from '@shared/utils/money/money'
 
 import styles from './BenefitSection.module.css'
@@ -30,6 +33,7 @@ export const BenefitSection = () => {
   const {
     control,
     getValues,
+    setValue,
     formState: { errors },
   } = useFormContext<PromotionFormValues>()
   const campaignType = useWatch({ control, name: 'campaignType' })
@@ -37,6 +41,8 @@ export const BenefitSection = () => {
   const isDiscount = campaignType === 'discount'
   const isPackage = campaignType === 'package'
   const isPercentage = discountKind === 'PERCENTAGE_DISCOUNT'
+  /* WHY: o nome sugerido acompanha o tipo só até o gestor digitar o dele. */
+  const [isNameEdited, setNameEdited] = useState(mode !== 'create')
   const campaignTypeField = (
     <FormField
       label="Tipo de campanha"
@@ -51,7 +57,18 @@ export const BenefitSection = () => {
             options={CAMPAIGN_TYPE_OPTIONS}
             value={field.value}
             disabled={mode !== 'create'}
-            onValueChange={field.onChange}
+            onValueChange={(type) => {
+              field.onChange(type)
+              if (!isNameEdited) {
+                setValue(
+                  'name',
+                  campaignDefaultName(
+                    type as PromotionFormValues['campaignType'],
+                    new Date()
+                  )
+                )
+              }
+            }}
           />
         )}
       />
@@ -84,7 +101,7 @@ export const BenefitSection = () => {
         render={({ field }) => (
           <Input
             inputMode="decimal"
-            placeholder={isPercentage ? '10' : '10,00'}
+            placeholder={isPercentage ? 'Ex.: 10' : 'Ex.: 10,00'}
             aria-label={
               isPercentage ? 'Desconto em percentual' : 'Desconto em reais'
             }
@@ -107,7 +124,7 @@ export const BenefitSection = () => {
   const minOrderField = (
     <FormField
       label="Pedido mínimo"
-      helperText="Só conta itens; vazio = sem mínimo."
+      helperText="Só conta o valor dos itens."
       className={isDiscount ? styles.discountAuxField : styles.amountField}
     >
       <Controller
@@ -116,7 +133,7 @@ export const BenefitSection = () => {
         render={({ field }) => (
           <Input
             inputMode="decimal"
-            placeholder="60,00"
+            placeholder="Sem mínimo"
             aria-label="Pedido mínimo em reais"
             value={field.value}
             className={styles.minOrderInput}
@@ -134,6 +151,39 @@ export const BenefitSection = () => {
         <Heading level={2} size="sm" id="campaign-benefit">
           Benefício
         </Heading>
+
+        <FormField
+          label="Nome da campanha"
+          helperText={
+            isPackage
+              ? 'O cliente vê este nome no card da promoção.'
+              : 'Só você vê; ajuda a achar a campanha na lista.'
+          }
+          error={errors.name?.message}
+          className={styles.nameField}
+        >
+          <Controller
+            name="name"
+            control={control}
+            rules={{
+              maxLength: { value: 120, message: 'Use até 120 caracteres' },
+            }}
+            render={({ field }) => (
+              <Input
+                placeholder={
+                  isPackage ? 'Ex.: Combo burger + refri' : 'Ex.: Frete de sexta'
+                }
+                value={field.value}
+                error={!!errors.name}
+                onBlur={field.onBlur}
+                onChange={(event) => {
+                  setNameEdited(true)
+                  field.onChange(event.target.value)
+                }}
+              />
+            )}
+          />
+        </FormField>
 
         <Box direction="row" className={styles.benefitFields}>
           {isDiscount ? (
@@ -157,7 +207,6 @@ export const BenefitSection = () => {
                   )}
                 />
               </FormField>
-              {discountValueField}
             </Box>
           ) : (
             campaignTypeField
@@ -193,7 +242,11 @@ export const BenefitSection = () => {
           )}
 
           {isDiscount && (
-            <Box direction="column" className={styles.discountAuxFields}>
+            <Box
+              direction={{ mobile: 'column', tablet: 'row' }}
+              className={styles.discountAuxFields}
+            >
+              {discountValueField}
               {isPercentage && (
                 <FormField
                   label="Teto do desconto"
@@ -242,7 +295,7 @@ export const BenefitSection = () => {
                 render={({ field }) => (
                   <Input
                     inputMode="decimal"
-                    placeholder="49,90"
+                    placeholder="Ex.: 49,90"
                     aria-label="Preço fechado da promoção"
                     value={field.value}
                     error={!!errors.packagePrice}

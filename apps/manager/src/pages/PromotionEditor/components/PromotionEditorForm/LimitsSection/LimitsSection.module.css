@@ -5,15 +5,15 @@
 }
 
 .limitsFields {
-  @apply flex flex-wrap items-start gap-6;
+  @apply flex flex-col gap-6;
 }
 
 .perCustomer {
-  @apply flex w-full flex-col gap-4 md:w-auto;
+  @apply flex w-full flex-col gap-4;
 }
 
 .totalLimitInput {
-  @apply w-full md:max-w-32;
+  @apply w-full md:max-w-40;
 }
 
 .perCustomerCountInput {

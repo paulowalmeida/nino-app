@@ -5,4 +5,6 @@ export const deliveryZoneMock = {
   maxRadiusKm: 5,
   fee: 7,
   isActive: true,
+  freeDeliveryEnabled: false,
+  freeDeliveryMinOrder: null,
 }

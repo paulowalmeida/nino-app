@@ -4,28 +4,17 @@
   @apply mt-2 flex flex-col gap-6;
 }
 
-.promotionEditorCompact {
-  @apply max-w-2xl;
-}
-
-.promotionEditorDiscount {
-  @apply max-w-3xl;
-}
-
 .promotionEditorFields {
-  @apply flex min-w-0 flex-col gap-4;
+  @apply flex min-w-0 max-w-6xl flex-col gap-3;
 }
 
 .promotionEditorStepper {
-  @apply mb-2 max-w-2xl;
+  @apply mb-2;
 }
 
 .promotionEditorContent {
-  @apply flex flex-col gap-4;
-}
-
-.promotionEditorContentReview {
-  @apply lg:flex-row lg:items-stretch;
+  @apply flex flex-col gap-6;
+  @apply lg:grid lg:grid-cols-[minmax(0,1fr)_24rem] lg:items-start;
 }
 
 .promotionEditorStep {
@@ -36,21 +25,11 @@
   @apply flex flex-col gap-4;
 }
 
-.promotionEditorDiscountRules {
-  @apply flex min-w-0 flex-col items-start gap-4;
-  @apply 2xl:flex-row;
-}
-
-.promotionEditorRuleColumn {
-  @apply flex w-full min-w-0 flex-col gap-4;
-  @apply 2xl:flex-1;
-}
-
-.promotionEditorReview {
-  @apply w-full lg:max-w-xl lg:flex-1 lg:self-stretch;
+.promotionEditorAside {
+  @apply flex w-full flex-col gap-4 lg:sticky lg:top-6;
 }
 
 .promotionEditorActions {
-  @apply flex flex-col-reverse gap-2;
+  @apply flex max-w-6xl flex-col-reverse gap-2;
   @apply sm:flex-row sm:justify-end;
 }

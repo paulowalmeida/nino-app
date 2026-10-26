@@ -21,7 +21,9 @@ import { PROMOTION_STATE_BADGES } from '@pages/Promotions/constants/promotions.c
 import { usePromotionsFacade } from '@pages/Promotions/facades/usePromotionsFacade/usePromotionsFacade'
 import type { CampaignAction } from '@pages/Promotions/types/CampaignAction.type'
 import { campaignActions } from '@pages/Promotions/utils/campaignActions/campaignActions'
+import { campaignCreatedAt } from '@pages/Promotions/utils/campaignCreatedAt/campaignCreatedAt'
 import type { Promotion } from '@shared/types/marketing/promotion.type'
+import type { PromotionListQuery } from '@shared/types/marketing/promotion-list-query.type'
 import { promotionSummaryParts } from '@shared/utils/promotion-summary/promotion-summary'
 import { riseDelay } from '@shared/utils/rise-delay/rise-delay'
 
@@ -37,8 +39,11 @@ const usageLabel = ({ usageCount, totalLimit }: Promotion): string =>
   totalLimit ? `${usageCount} de ${totalLimit}` : String(usageCount)
 
 const conditionsLabel = (promotion: Promotion): string => {
-  const { schedule, zones } = promotionSummaryParts(promotion)
+  const { headline, schedule, zones } = promotionSummaryParts(promotion)
   return [
+    // CONSTRAINT: nomes antigos são a própria headline, às vezes com espaço comum no lugar do NBSP do brl.
+    promotion.name.replace(/\s/g, ' ') !== headline.replace(/\s/g, ' ') &&
+      headline,
     schedule,
     zones,
     promotion.code && `código ${promotion.code}`,
@@ -53,8 +58,42 @@ export const CampaignTable = ({
   emptyMessage,
 }: CampaignTableProps) => {
   const navigate = useNavigate()
-  const { pause, resume, end, isEnding, changingId } = usePromotionsFacade()
+  const { pause, resume, end, isEnding, changingId, query, changeSort } =
+    usePromotionsFacade()
   const [endingCampaign, setEndingCampaign] = useState<Promotion | null>(null)
+  const sortableHead = (
+    target: PromotionListQuery['target'],
+    label: string,
+    className?: string
+  ) => {
+    const direction = query.target === target ? query.direction : null
+    return (
+      <TableHead
+        className={className}
+        aria-sort={
+          direction === 'asc'
+            ? 'ascending'
+            : direction === 'desc'
+              ? 'descending'
+              : 'none'
+        }
+      >
+        <button
+          type="button"
+          className={styles.sortButton}
+          onClick={() => changeSort(target)}
+        >
+          {label}
+          {direction && (
+            <Icon
+              name={direction === 'asc' ? 'arrow-up' : 'arrow-down'}
+              size="sm"
+            />
+          )}
+        </button>
+      </TableHead>
+    )
+  }
 
   const menuItemOf = (
     promotion: Promotion,
@@ -104,13 +143,17 @@ export const CampaignTable = ({
           <colgroup>
             <col className={styles.colCampaign} />
             <col className={styles.colUsage} />
+            <col className={styles.colCreatedAt} />
+            <col className={styles.colCreatedBy} />
             <col className={styles.colPeriod} />
             <col className={styles.colActions} />
           </colgroup>
           <TableHeader>
             <TableRow className={styles.headRow}>
               <TableHead>Campanha</TableHead>
-              <TableHead className={styles.colRight}>Usos</TableHead>
+              {sortableHead('usageCount', 'Usos', styles.colRight)}
+              {sortableHead('createdAt', 'Criada em')}
+              {sortableHead('createdBy', 'Criada por')}
               <TableHead>Período</TableHead>
               <TableHead>
                 <Text as="span" className="sr-only">
@@ -134,7 +177,7 @@ export const CampaignTable = ({
                 >
                   <TableCell className={styles.campaignCol}>
                     <Box direction="row" className={styles.headlineLine}>
-                      <Text className={styles.headline}>{headline}</Text>
+                      <Text className={styles.headline}>{promotion.name}</Text>
                       {promotion.giftProduct &&
                         !promotion.giftProduct.isAvailable && (
                           <Badge variant="warning" className={styles.stateBadge}>
@@ -155,6 +198,18 @@ export const CampaignTable = ({
                   <TableCell className={`${styles.colRight} ${styles.usageCol}`}>
                     <Text as="span" className={styles.usage}>
                       {usageLabel(promotion)}
+                    </Text>
+                  </TableCell>
+
+                  <TableCell className={styles.createdAtCol}>
+                    <Text as="span" className={styles.created}>
+                      {campaignCreatedAt(promotion)}
+                    </Text>
+                  </TableCell>
+
+                  <TableCell className={styles.createdByCol}>
+                    <Text as="span" className={styles.created}>
+                      {promotion.createdBy?.name ?? '—'}
                     </Text>
                   </TableCell>
 

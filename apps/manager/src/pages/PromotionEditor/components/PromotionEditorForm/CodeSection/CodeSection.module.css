@@ -5,13 +5,13 @@
 }
 
 .codeFields {
-  @apply flex flex-wrap items-start gap-4;
+  @apply flex flex-col gap-5;
 }
 
 .codeField {
-  @apply w-full md:max-w-72;
+  @apply w-full md:max-w-sm;
 }
 
 .visibility {
-  @apply w-full rounded-2 bg-surface-2 p-4 md:w-auto;
+  @apply w-full rounded-2 bg-surface-2 p-4;
 }

@@ -53,11 +53,17 @@ describe('promotionForm.adapter', () => {
     expect(values.weekdays).toEqual([2, 4])
   })
 
-  it('sends the API what the form says, named after the benefit', () => {
+  it('names the campaign after the benefit when the name is blank', () => {
+    expect(toPromotionInput({ ...filledFormMock, name: '  ' }).name).toMatch(
+      /^Frete grátis acima de R\$\s60,00$/
+    )
+  })
+
+  it('sends the API what the form says', () => {
     const input = toPromotionInput(filledFormMock)
 
     expect(input).toMatchObject({
-      name: 'Frete grátis acima de R$ 60,00',
+      name: 'Frete grátis - 11/11/26',
       type: 'FREE_DELIVERY',
       code: null,
       minOrderValue: 60,

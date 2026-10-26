@@ -19,7 +19,7 @@ export const SettingsDeliverySection = () => {
   const { delivery } = useSettingsFacade()
   const { zones, isPending } = delivery.query
   const { coordinates, isResolved } = delivery.location
-  const { add, edit, toggle, drop } = delivery.mutations
+  const { add, edit, toggle, setFreeDelivery, drop } = delivery.mutations
   const [removingZone, setRemovingZone] = useState<DeliveryZone | null>(null)
   const [previewKm, setPreviewKm] = useState<number | null>(null)
   const [focusedZoneId, setFocusedZoneId] = useState<string | null>(null)
@@ -73,6 +73,7 @@ export const SettingsDeliverySection = () => {
             isPending={isPending}
             onEdit={edit.mutate}
             onToggle={toggle.mutate}
+            onFreeDeliveryChange={setFreeDelivery.mutate}
             onRemove={setRemovingZone}
             focusedZoneId={focusedZoneId}
             onFocusZone={setFocusedZoneId}

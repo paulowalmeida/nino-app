@@ -63,6 +63,7 @@ export type Promotion = {
   usageCount: number
   productIds: string[]
   categoryIds: string[]
+  createdBy: { name: string } | null
   createdAt: string
   updatedAt: string
 }

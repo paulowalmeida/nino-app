@@ -67,7 +67,9 @@ describe(ZonesSection.name, () => {
     expect(onValid).toHaveBeenCalledWith(
       expect.objectContaining({
         zoneScope: 'chosen',
-        deliveryZoneIds: ['zone-2'],
+        deliveryZoneIds: zoneOptionsMock
+          .slice(0, 2)
+          .map(({ value }) => value),
       }),
       expect.anything()
     )

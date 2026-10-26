@@ -27,12 +27,19 @@ export const EDITOR_SUBMIT_LABELS = {
 
 export const EDITOR_GHOST_SECTIONS = ['benefit', 'zones', 'period', 'code']
 
+// WHY: frete grátis saiu das campanhas e é configurado na faixa de entrega.
 export const CAMPAIGN_TYPE_OPTIONS = [
-  { value: 'free-delivery', label: 'Frete grátis' },
   { value: 'discount', label: 'Desconto' },
   { value: 'gift', label: 'Brinde' },
   { value: 'package', label: 'Promoção' },
 ]
+
+export const CAMPAIGN_TYPE_ICONS = {
+  'free-delivery': 'truck',
+  discount: 'tag',
+  gift: 'gift',
+  package: 'tag',
+} as const
 
 export const DISCOUNT_KIND_OPTIONS = [
   { value: 'PERCENTAGE_DISCOUNT', label: 'Percentual' },
@@ -57,6 +64,7 @@ export const EDITOR_STEPS_BY_TYPE = {
 // CONSTRAINT: campos validados antes de sair de cada passo.
 export const EDITOR_STEP_FIELDS = {
   benefit: [
+    'name',
     'minOrderValue',
     'discountValue',
     'maxDiscount',

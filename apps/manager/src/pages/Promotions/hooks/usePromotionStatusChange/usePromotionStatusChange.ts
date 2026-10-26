@@ -7,7 +7,7 @@ export const usePromotionStatusChange = (unitId: string | null) => {
   const queryClient = useQueryClient()
   const onSuccess = () =>
     queryClient.invalidateQueries({
-      queryKey: queryKeys.promotions.list(unitId ?? ''),
+      queryKey: queryKeys.promotions.all(unitId ?? ''),
     })
 
   const pause = useMutation({

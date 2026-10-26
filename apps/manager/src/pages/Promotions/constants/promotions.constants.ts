@@ -2,6 +2,14 @@ import type { Promotion } from '@shared/types/marketing/promotion.type'
 
 export const PROMOTION_TABS = ['active', 'scheduled', 'inactive'] as const
 
+export const PROMOTION_ORDER_TARGETS = [
+  'createdAt',
+  'createdBy',
+  'usageCount',
+] as const
+
+export const PROMOTION_PAGE_SIZE = 20
+
 export const PROMOTION_TAB_LABELS = {
   active: 'Ativas',
   scheduled: 'Agendadas',

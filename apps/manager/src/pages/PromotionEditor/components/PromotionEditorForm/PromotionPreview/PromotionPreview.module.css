@@ -1,7 +1,7 @@
 @reference "@nino/ds/globals.css";
 
 .promotionPreview {
-  @apply flex h-full flex-col gap-5;
+  @apply flex flex-col gap-5;
 }
 
 .summaryIntro,

@@ -36,12 +36,14 @@ const withFacade = (state: { isPending: boolean; isUnavailable: boolean }) =>
 describe('PromotionEditor', () => {
   beforeEach(() => vi.clearAllMocks())
 
-  it('opens the campaign form under the header', () => {
+  it('lets the open form draw its own header with the chosen type', () => {
     withFacade({ isPending: false, isUnavailable: false })
 
     render(<PromotionEditor />)
 
-    expect(screen.getByText(promotionEditorPageMock.header)).toBeInTheDocument()
+    expect(
+      screen.queryByText(promotionEditorPageMock.header)
+    ).not.toBeInTheDocument()
     expect(screen.getByText(promotionEditorPageMock.form)).toBeInTheDocument()
   })
 

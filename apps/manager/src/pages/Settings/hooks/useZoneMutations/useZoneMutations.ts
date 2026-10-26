@@ -3,6 +3,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { toast } from '@nino/ds/components/Toast'
 import { zonesKey } from '@shared/hooks/delivery-zone/useDeliveryZones/useDeliveryZones'
 import { DeliveryZoneService } from '@shared/services/delivery-zone/delivery-zone.service/delivery-zone.service'
+import type { ZoneDraft } from '@pages/Settings/types/ZoneDraft.type'
 
 export const useZoneMutations = (unitId: string | null) => {
   const queryClient = useQueryClient()
@@ -16,7 +17,7 @@ export const useZoneMutations = (unitId: string | null) => {
       success: 'Região adicionada',
       errorTitle: 'A faixa não foi adicionada',
     },
-    mutationFn: (data: { maxRadiusKm: number; fee: number }) =>
+    mutationFn: (data: ZoneDraft) =>
       DeliveryZoneService.createDeliveryZone(unitId as string, data),
     onSuccess: invalidate,
   })
@@ -26,11 +27,8 @@ export const useZoneMutations = (unitId: string | null) => {
     mutationFn: ({
       id,
       ...data
-    }: {
-      id: string
-      maxRadiusKm: number
-      fee: number
-    }) => DeliveryZoneService.updateDeliveryZone(unitId as string, id, data),
+    }: Partial<ZoneDraft> & { id: string }) =>
+      DeliveryZoneService.updateDeliveryZone(unitId as string, id, data),
     onSuccess: invalidate,
   })
 
@@ -48,6 +46,28 @@ export const useZoneMutations = (unitId: string | null) => {
     },
   })
 
+  const setFreeDelivery = useMutation({
+    meta: { errorTitle: 'O frete grátis da faixa não mudou' },
+    mutationFn: ({
+      id,
+      ...data
+    }: {
+      id: string
+      freeDeliveryEnabled?: boolean
+      freeDeliveryMinOrder?: number | null
+    }) => DeliveryZoneService.updateDeliveryZone(unitId as string, id, data),
+    onSuccess: (_zone, { freeDeliveryEnabled }) => {
+      invalidate()
+      toast.success(
+        freeDeliveryEnabled === undefined
+          ? 'Mínimo do frete grátis salvo'
+          : freeDeliveryEnabled
+            ? 'Frete grátis ligado na faixa'
+            : 'Frete grátis desligado na faixa'
+      )
+    },
+  })
+
   const drop = useMutation({
     meta: {
       success: 'Região removida',
@@ -58,5 +78,5 @@ export const useZoneMutations = (unitId: string | null) => {
     onSuccess: invalidate,
   })
 
-  return { add, edit, toggle, drop }
+  return { add, edit, toggle, setFreeDelivery, drop }
 }

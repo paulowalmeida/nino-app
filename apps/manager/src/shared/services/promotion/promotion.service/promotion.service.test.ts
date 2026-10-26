@@ -6,12 +6,14 @@ import { PromotionService } from './promotion.service'
 import {
   promotionIdMock,
   promotionInputMock,
+  promotionListQueryMock,
   promotionMock,
+  promotionPageMock,
   promotionUnitIdMock,
 } from './promotion.service.mock'
 
 vi.mock('@shared/services/http/http.service', () => ({
-  api: { get: vi.fn(), create: vi.fn(), patch: vi.fn() },
+  api: { get: vi.fn(), getAll: vi.fn(), create: vi.fn(), patch: vi.fn() },
 }))
 
 const campaignPath = `units/${promotionUnitIdMock}/promotions/${promotionIdMock}`
@@ -19,15 +21,34 @@ const campaignPath = `units/${promotionUnitIdMock}/promotions/${promotionIdMock}
 describe('PromotionService', () => {
   afterEach(() => vi.clearAllMocks())
 
-  it('list: reads the unit campaigns', async () => {
-    vi.mocked(api.get).mockResolvedValue([promotionMock])
+  it('list: asks the API for one page and sends the search only when typed', async () => {
+    vi.mocked(api.getAll).mockResolvedValue(promotionPageMock)
 
-    await expect(PromotionService.list(promotionUnitIdMock)).resolves.toEqual([
-      promotionMock,
-    ])
-    expect(api.get).toHaveBeenCalledWith(
-      `units/${promotionUnitIdMock}/promotions`
+    await expect(
+      PromotionService.list(promotionUnitIdMock, promotionListQueryMock)
+    ).resolves.toEqual(promotionPageMock)
+    expect(api.getAll).toHaveBeenCalledWith(
+      `units/${promotionUnitIdMock}/promotions`,
+      { tab: 'active', target: 'createdAt', direction: 'desc', page: 1, size: 20 }
     )
+
+    await PromotionService.list(promotionUnitIdMock, {
+      ...promotionListQueryMock,
+      search: 'ana',
+    })
+    expect(api.getAll).toHaveBeenLastCalledWith(
+      `units/${promotionUnitIdMock}/promotions`,
+      expect.objectContaining({ search: 'ana' })
+    )
+  })
+
+  it('getById: reads one campaign', async () => {
+    vi.mocked(api.get).mockResolvedValue(promotionMock)
+
+    await expect(
+      PromotionService.getById(promotionUnitIdMock, promotionIdMock)
+    ).resolves.toEqual(promotionMock)
+    expect(api.get).toHaveBeenCalledWith(campaignPath)
   })
 
   it('create and update: send the campaign form', async () => {

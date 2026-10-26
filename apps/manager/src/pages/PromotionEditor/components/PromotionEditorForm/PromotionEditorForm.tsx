@@ -7,11 +7,13 @@ import { toPromotionFormValues } from '@pages/PromotionEditor/adapters/promotion
 import { BenefitSection } from '@pages/PromotionEditor/components/PromotionEditorForm/BenefitSection/BenefitSection'
 import { CodeSection } from '@pages/PromotionEditor/components/PromotionEditorForm/CodeSection/CodeSection'
 import { LimitsSection } from '@pages/PromotionEditor/components/PromotionEditorForm/LimitsSection/LimitsSection'
+import { MenuPreview } from '@pages/PromotionEditor/components/PromotionEditorForm/MenuPreview/MenuPreview'
 import { MediaSection } from '@pages/PromotionEditor/components/PromotionEditorForm/MediaSection/MediaSection'
 import { PackageSection } from '@pages/PromotionEditor/components/PromotionEditorForm/PackageSection/PackageSection'
 import { PeriodSection } from '@pages/PromotionEditor/components/PromotionEditorForm/PeriodSection/PeriodSection'
 import { PromotionPreview } from '@pages/PromotionEditor/components/PromotionEditorForm/PromotionPreview/PromotionPreview'
 import { ZonesSection } from '@pages/PromotionEditor/components/PromotionEditorForm/ZonesSection/ZonesSection'
+import { PromotionEditorHeader } from '@pages/PromotionEditor/components/PromotionEditorHeader/PromotionEditorHeader'
 import { EDITOR_SUBMIT_LABELS } from '@pages/PromotionEditor/constants/promotionEditor.constants'
 import { usePromotionEditorFacade } from '@pages/PromotionEditor/facades/usePromotionEditorFacade/usePromotionEditorFacade'
 import { useEditorSteps } from '@pages/PromotionEditor/hooks/ui/useEditorSteps/useEditorSteps'
@@ -29,12 +31,10 @@ export const PromotionEditorForm = () => {
   const campaignType = useWatch({ control: form.control, name: 'campaignType' })
   const { steps, stepKey, step, isLastStep, goNext, goBack, goTo } =
     useEditorSteps(mode, form.trigger, campaignType)
-  const isPackageComposition =
-    stepKey === 'benefit' && campaignType === 'package'
-  const isDiscountBenefit = stepKey === 'benefit' && campaignType === 'discount'
 
   return (
     <FormProvider {...form}>
+      <PromotionEditorHeader campaignType={campaignType} />
       <Box
         as="form"
         onSubmit={form.handleSubmit((values) =>
@@ -46,13 +46,20 @@ export const PromotionEditorForm = () => {
               )
             : void goNext()
         )}
-        className={`${styles.promotionEditorForm} ${
-          isPackageComposition || isLastStep
-            ? ''
-            : isDiscountBenefit
-              ? styles.promotionEditorDiscount
-              : styles.promotionEditorCompact
-        }`}
+        /* WHY: o navegador só envia com Enter quando o form tem um único
+         * campo de texto; com nome e pedido mínimo no mesmo passo, o Enter
+         * precisa avançar por conta própria. */
+        onKeyDown={(event) => {
+          if (
+            event.key !== 'Enter' ||
+            isLastStep ||
+            !(event.target instanceof HTMLInputElement)
+          )
+            return
+          event.preventDefault()
+          void goNext()
+        }}
+        className={styles.promotionEditorForm}
       >
         <Box className={styles.promotionEditorFields}>
           <Stepper
@@ -62,11 +69,7 @@ export const PromotionEditorForm = () => {
             className={styles.promotionEditorStepper}
           />
 
-          <Box
-            className={`${styles.promotionEditorContent} ${
-              isLastStep ? styles.promotionEditorContentReview : ''
-            }`}
-          >
+          <Box className={styles.promotionEditorContent}>
             <Box
               key={stepKey}
               className={`${motion.deal} ${styles.promotionEditorStep}`}
@@ -81,17 +84,10 @@ export const PromotionEditorForm = () => {
               {stepKey === 'period' && <PeriodSection />}
               {stepKey === 'rules' &&
                 (campaignType === 'discount' ? (
-                  <Box
-                    direction="row"
-                    className={styles.promotionEditorDiscountRules}
-                  >
-                    <Box className={styles.promotionEditorRuleColumn}>
-                      <CodeSection />
-                      <LimitsSection />
-                    </Box>
-                    <Box className={styles.promotionEditorRuleColumn}>
-                      <MediaSection />
-                    </Box>
+                  <Box className={styles.promotionEditorRules}>
+                    <CodeSection />
+                    <LimitsSection />
+                    <MediaSection />
                   </Box>
                 ) : (
                   <Box className={styles.promotionEditorRules}>
@@ -101,11 +97,10 @@ export const PromotionEditorForm = () => {
                 ))}
             </Box>
 
-            {isLastStep && (
-              <Box className={styles.promotionEditorReview}>
-                <PromotionPreview />
-              </Box>
-            )}
+            <Box className={styles.promotionEditorAside}>
+              <MenuPreview />
+              {isLastStep && <PromotionPreview />}
+            </Box>
           </Box>
         </Box>
 

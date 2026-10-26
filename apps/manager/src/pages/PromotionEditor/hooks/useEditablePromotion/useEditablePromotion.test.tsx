@@ -4,16 +4,17 @@ import { MemoryRouter, Route, Routes } from 'react-router'
 import { renderHook } from '@testing-library/react'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 
-import { usePromotions } from '@shared/hooks/promotion/usePromotions/usePromotions'
-import { promotionMock } from '@shared/services/promotion/promotion.service/promotion.service.mock'
+import { usePromotion } from '@shared/hooks/promotion/usePromotion/usePromotion'
 
 import { useEditablePromotion } from './useEditablePromotion'
 import {
+  editablePromotionMock,
   editableUnitIdMock,
+  retiredFreeDeliveryMock,
   usedPromotionMock,
 } from './useEditablePromotion.mock'
 
-vi.mock('@shared/hooks/promotion/usePromotions/usePromotions')
+vi.mock('@shared/hooks/promotion/usePromotion/usePromotion')
 
 const at =
   (path: string) =>
@@ -28,10 +29,15 @@ const at =
 
 describe(useEditablePromotion.name, () => {
   beforeEach(() =>
-    vi.mocked(usePromotions).mockReturnValue({
-      data: [promotionMock, usedPromotionMock],
-      isPending: false,
-    } as unknown as ReturnType<typeof usePromotions>)
+    vi.mocked(usePromotion).mockImplementation(
+      (_, promotionId) =>
+        ({
+          data: [editablePromotionMock, usedPromotionMock, retiredFreeDeliveryMock].find(
+            ({ id }) => id === promotionId
+          ),
+          isPending: false,
+        }) as unknown as ReturnType<typeof usePromotion>
+    )
   )
 
   it('opens a blank campaign without asking for the list', () => {
@@ -46,20 +52,20 @@ describe(useEditablePromotion.name, () => {
       mode: 'create',
       isUnavailable: false,
     })
-    expect(usePromotions).toHaveBeenCalledWith(null)
+    expect(usePromotion).toHaveBeenCalledWith(editableUnitIdMock, null)
   })
 
   it('edits an unused campaign from the route', () => {
     const { result } = renderHook(
       () => useEditablePromotion(editableUnitIdMock),
       {
-        wrapper: at(`/promocoes/${promotionMock.id}`),
+        wrapper: at(`/promocoes/${editablePromotionMock.id}`),
       }
     )
 
     expect(result.current).toMatchObject({
       mode: 'edit',
-      promotion: promotionMock,
+      promotion: editablePromotionMock,
       isUnavailable: false,
     })
   })
@@ -88,5 +94,16 @@ describe(useEditablePromotion.name, () => {
       promotion: usedPromotionMock,
       isUnavailable: false,
     })
+  })
+
+  it('refuses to reopen a retired free delivery campaign', () => {
+    const { result } = renderHook(
+      () => useEditablePromotion(editableUnitIdMock),
+      {
+        wrapper: at(`/promocoes/nova?duplicar=${retiredFreeDeliveryMock.id}`),
+      }
+    )
+
+    expect(result.current.isUnavailable).toBe(true)
   })
 })

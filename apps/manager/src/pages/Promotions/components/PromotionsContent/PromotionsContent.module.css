@@ -16,3 +16,7 @@
 .promotionsTabs [data-part='content'] {
   @apply hidden;
 }
+
+.promotionsPagination {
+  @apply mt-4 px-4 lg:px-10;
+}

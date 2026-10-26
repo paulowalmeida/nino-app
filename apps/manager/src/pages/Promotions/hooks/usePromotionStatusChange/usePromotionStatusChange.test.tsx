@@ -40,7 +40,7 @@ describe(usePromotionStatusChange.name, () => {
 
       await waitFor(() =>
         expect(invalidate).toHaveBeenCalledWith({
-          queryKey: queryKeys.promotions.list(statusChangeUnitIdMock),
+          queryKey: queryKeys.promotions.all(statusChangeUnitIdMock),
         })
       )
       expect(PromotionService[command]).toHaveBeenCalledWith(

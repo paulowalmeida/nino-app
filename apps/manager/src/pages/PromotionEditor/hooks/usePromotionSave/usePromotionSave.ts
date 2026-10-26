@@ -48,7 +48,7 @@ export const usePromotionSave = (
     },
     onSuccess: async () => {
       await queryClient.invalidateQueries({
-        queryKey: queryKeys.promotions.list(unitId ?? ''),
+        queryKey: queryKeys.promotions.all(unitId ?? ''),
       })
       backToList()
     },

@@ -9,6 +9,7 @@ const delivery = vi.hoisted(() => ({
   add: { mutate: vi.fn(), isPending: false },
   edit: { mutate: vi.fn() },
   toggle: { mutate: vi.fn() },
+  setFreeDelivery: { mutate: vi.fn() },
   drop: { mutate: vi.fn() },
 }))
 

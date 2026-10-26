@@ -1,7 +1,7 @@
 import { useParams, useSearchParams } from 'react-router'
 
 import type { PromotionEditorMode } from '@pages/PromotionEditor/types/PromotionEditorMode.type'
-import { usePromotions } from '@shared/hooks/promotion/usePromotions/usePromotions'
+import { usePromotion } from '@shared/hooks/promotion/usePromotion/usePromotion'
 
 // WHY: editar só existe antes do primeiro uso e nunca numa campanha encerrada.
 export const useEditablePromotion = (unitId: string | null) => {
@@ -14,13 +14,15 @@ export const useEditablePromotion = (unitId: string | null) => {
     : duplicateId
       ? 'duplicate'
       : 'create'
-  const promotions = usePromotions(sourceId ? unitId : null)
-  const promotion = promotions.data?.find(({ id }) => id === sourceId)
-  const isPending = !!sourceId && promotions.isPending
+  const source = usePromotion(unitId, sourceId)
+  const promotion = source.data
+  const isPending = !!sourceId && source.isPending
+  const isRetiredType = promotion?.type === 'FREE_DELIVERY'
   const isLocked =
-    mode === 'edit' &&
-    !!promotion &&
-    (promotion.usageCount > 0 || promotion.state === 'ENDED')
+    isRetiredType ||
+    (mode === 'edit' &&
+      !!promotion &&
+      (promotion.usageCount > 0 || promotion.state === 'ENDED'))
 
   return {
     mode,

@@ -42,7 +42,7 @@ describe(PromotionPreview.name, () => {
     )
 
     expect(
-      screen.getByRole('heading', { name: 'Resumo da campanha' })
+      screen.getByRole('heading', { name: 'Confira antes de criar' })
     ).toBeInTheDocument()
     expect(
       screen.getByText('Frete grátis acima de R$ 60,00')
@@ -56,7 +56,15 @@ describe(PromotionPreview.name, () => {
 
   it('states when a campaign is hidden from the menu', () => {
     render(
-      <Form values={{ ...previewValuesMock, code: 'VIP', showInMenu: false }}>
+      <Form
+        values={{
+          ...previewValuesMock,
+          campaignType: 'discount',
+          discountValue: '10',
+          code: 'VIP',
+          showInMenu: false,
+        }}
+      >
         <PromotionPreview />
       </Form>
     )
@@ -100,7 +108,7 @@ describe(PromotionPreview.name, () => {
     )
 
     expect(
-      screen.getByLabelText('Prévia da faixa no cardápio')
-    ).toHaveTextContent(/Ganhe Coca-Cola Lata acima de R\$\s60,00/)
+      screen.getByText(/Ganhe Coca-Cola Lata acima de R\$\s60,00/)
+    ).toBeInTheDocument()
   })
 })

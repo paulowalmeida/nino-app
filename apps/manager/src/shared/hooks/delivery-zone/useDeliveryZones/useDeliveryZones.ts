@@ -21,6 +21,10 @@ export const useDeliveryZones = (unitId: string | null) => {
       ...zone,
       maxRadiusKm: Number(zone.maxRadiusKm),
       fee: Number(zone.fee),
+      freeDeliveryMinOrder:
+        zone.freeDeliveryMinOrder === null
+          ? null
+          : Number(zone.freeDeliveryMinOrder),
     }))
     .sort((left, right) => left.maxRadiusKm - right.maxRadiusKm)
     .map((zone, index, sortedZones) => ({

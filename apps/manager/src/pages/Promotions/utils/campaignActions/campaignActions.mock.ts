@@ -1,2 +1,2 @@
-export const unusedCampaignMock = { usageCount: 0 }
-export const usedCampaignMock = { usageCount: 3 }
+export const unusedCampaignMock = { type: 'GIFT' as const, usageCount: 0 }
+export const usedCampaignMock = { type: 'GIFT' as const, usageCount: 3 }

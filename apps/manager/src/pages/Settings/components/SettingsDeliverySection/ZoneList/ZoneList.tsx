@@ -1,11 +1,10 @@
-import { Fragment, useState } from 'react'
+import { Fragment } from 'react'
 
 import { Box } from '@nino/ds/components/Box'
 import { Button } from '@nino/ds/components/Button'
 import { EmptyState } from '@nino/ds/components/EmptyState'
 import { Header } from '@nino/ds/components/Header'
 import { Icon } from '@nino/ds/components/Icon'
-import { Input } from '@nino/ds/components/Input'
 import { Menu, type MenuItem } from '@nino/ds/components/Menu'
 import { Skeleton } from '@nino/ds/components/Skeleton'
 import { Switch } from '@nino/ds/components/Switch'
@@ -17,17 +16,46 @@ import {
   TableHeader,
   TableRow,
 } from '@nino/ds/components/Table'
+import { toast } from '@nino/ds/components/Toast'
+import { Text } from '@nino/ds/components/Text'
 import type { DeliveryZone } from '@shared/types/settings/delivery-zone'
-import { brl } from '@shared/utils/money/money'
+import { FreeDeliveryMinField } from './FreeDeliveryMinField/FreeDeliveryMinField'
+import { InlineEditCell } from './InlineEditCell/InlineEditCell'
+import {
+  brl,
+  maskMoney,
+  maskMoneyAmount,
+  moneyValue,
+} from '@shared/utils/money/money'
 
 import motion from '@styles/motion.module.css'
 import local from './ZoneList.module.css'
 
+// CONSTRAINT: a faixa começa onde a anterior termina e não pode encostar na próxima.
+const radiusWithin = (
+  text: string,
+  previousMaxKm: number,
+  nextMaxKm: number | undefined
+): number | null => {
+  const km = Number(text.replace(',', '.'))
+  const isValid =
+    Number.isFinite(km) &&
+    Number.isInteger(Math.round(km * 1000) / 100) &&
+    km > previousMaxKm &&
+    (nextMaxKm === undefined || km < nextMaxKm)
+  return isValid ? km : null
+}
+
 type ZoneListProps = {
   zones: DeliveryZone[]
   isPending: boolean
-  onEdit: (data: { id: string; maxRadiusKm: number; fee: number }) => void
+  onEdit: (data: { id: string; maxRadiusKm?: number; fee?: number }) => void
   onToggle: (data: { id: string; isActive: boolean }) => void
+  onFreeDeliveryChange: (data: {
+    id: string
+    freeDeliveryEnabled?: boolean
+    freeDeliveryMinOrder?: number | null
+  }) => void
   onRemove: (zone: DeliveryZone) => void
   focusedZoneId?: string | null
   onFocusZone?: (zoneId: string | null) => void
@@ -38,53 +66,12 @@ export const ZoneList = ({
   isPending,
   onEdit,
   onToggle,
+  onFreeDeliveryChange,
   onRemove,
   focusedZoneId = null,
   onFocusZone,
 }: ZoneListProps) => {
-  const [editingId, setEditingId] = useState<string | null>(null)
-  const [draft, setDraft] = useState({
-    maxRadiusKm: '',
-    fee: '',
-  })
-
-  const startEdit = (zone: DeliveryZone) => {
-    setEditingId(zone.id)
-    setDraft({
-      maxRadiusKm: String(zone.maxRadiusKm),
-      fee: Number(zone.fee).toFixed(2).replace('.', ','),
-    })
-  }
-
-  const commitEdit = () => {
-    if (!editingId) return
-    const max = Number(draft.maxRadiusKm)
-    const currentIndex = zones.findIndex((zone) => zone.id === editingId)
-    const previousMax =
-      currentIndex > 0 ? zones[currentIndex - 1].maxRadiusKm : 0
-    const nextMax = zones[currentIndex + 1]?.maxRadiusKm
-    const fee = Number(draft.fee.replace(',', '.'))
-    if (
-      !Number.isInteger(max) ||
-      max <= previousMax ||
-      (nextMax !== undefined && max >= nextMax) ||
-      draft.fee.trim() === '' ||
-      !Number.isFinite(fee) ||
-      fee < 0 ||
-      Math.round(fee * 100) !== fee * 100
-    )
-      return
-    onEdit({
-      id: editingId,
-      maxRadiusKm: max,
-      fee,
-    })
-    setEditingId(null)
-  }
-
   const actionItemsOf = (zone: DeliveryZone): MenuItem[] => [
-    { value: 'edit', label: 'Editar', onSelect: () => startEdit(zone) },
-    { separator: true },
     {
       value: 'remove',
       label: 'Remover',
@@ -114,7 +101,9 @@ export const ZoneList = ({
             <TableHeader className={local.tableHeader}>
               <TableRow>
                 <TableHead className={local.rangeCell}>Faixa</TableHead>
-                <TableHead>Taxa</TableHead>
+                <TableHead className={local.feeCell}>Taxa</TableHead>
+                <TableHead className={local.switchCell}>Frete grátis</TableHead>
+                <TableHead className={local.freeMinCell}>Grátis acima de</TableHead>
                 <TableHead className={local.switchCell}>Atende</TableHead>
                 <TableHead className={local.actionsCell}>Ações</TableHead>
               </TableRow>
@@ -129,80 +118,89 @@ export const ZoneList = ({
                   <Fragment key={zone.id}>
                     {zone.minRadiusKm > coveredUpToKm && (
                       <TableRow>
-                        <TableCell colSpan={4} className={local.gapCell}>
+                        <TableCell colSpan={6} className={local.gapCell}>
                           Sem atendimento de {coveredUpToKm} a{' '}
                           {zone.minRadiusKm} km
                         </TableCell>
                       </TableRow>
                     )}
 
-                    {editingId === zone.id ? (
-                      <TableRow>
-                        <TableCell colSpan={4}>
-                          <Box direction="row" className={local.editRow}>
-                            <Input
-                              aria-label="Até (km)"
-                              inputMode="numeric"
-                              className={local.editRadius}
-                              value={draft.maxRadiusKm}
-                              onChange={(event) =>
-                                setDraft((current) => ({
-                                  ...current,
-                                  maxRadiusKm: event.target.value,
-                                }))
-                              }
-                            />
-                            <Input
-                              inputMode="decimal"
-                              aria-label="Valor da faixa"
-                              className={local.editFee}
-                              value={draft.fee}
-                              onChange={(event) =>
-                                setDraft((current) => ({
-                                  ...current,
-                                  fee: event.target.value,
-                                }))
-                              }
-                            />
-                            <Button
-                              size="sm"
-                              className={`${motion.press} ${local.editButton}`}
-                              onClick={commitEdit}
-                            >
-                              Salvar
-                            </Button>
-                            <Button
-                              size="sm"
-                              variant="ghost"
-                              className={local.editButton}
-                              onClick={() => setEditingId(null)}
-                            >
-                              Cancelar
-                            </Button>
-                          </Box>
-                        </TableCell>
-                      </TableRow>
-                    ) : (
-                      <TableRow
+                    <TableRow
                         className={`${zone.isActive ? '' : local.off} ${
                           isFocused ? local.focused : ''
                         }`}
                       >
                         <TableCell>
-                          <Button
-                            variant="ghost"
-                            size="sm"
-                            className={`${motion.press} ${local.rangeButton}`}
-                            aria-pressed={isFocused}
-                            onClick={() =>
-                              onFocusZone?.(isFocused ? null : zone.id)
+                          <InlineEditCell
+                            display={`${zone.minRadiusKm}–${zone.maxRadiusKm} km`}
+                            value={String(zone.maxRadiusKm)}
+                            label={`Até (km) da faixa ${zone.minRadiusKm}–${zone.maxRadiusKm} km`}
+                            inputMode="decimal"
+                            parse={(text) =>
+                              radiusWithin(
+                                text,
+                                coveredUpToKm,
+                                zones[index + 1]?.maxRadiusKm
+                              )
                             }
-                          >
-                            {zone.minRadiusKm}–{zone.maxRadiusKm} km
-                          </Button>
+                            onStartEdit={() => onFocusZone?.(zone.id)}
+                            onCommit={(maxRadiusKm) =>
+                              onEdit({ id: zone.id, maxRadiusKm })
+                            }
+                            onReject={() =>
+                              toast.error(
+                                zones[index + 1]
+                                  ? `O raio precisa ficar entre ${coveredUpToKm} e ${zones[index + 1].maxRadiusKm} km`
+                                  : `O raio precisa passar de ${coveredUpToKm} km`
+                              )
+                            }
+                          />
                         </TableCell>
-                        <TableCell className={local.feeCell}>
-                          {brl(zone.fee)}
+                        <TableCell>
+                          <InlineEditCell
+                            display={brl(zone.fee)}
+                            value={maskMoneyAmount(zone.fee)}
+                            label={`Taxa da faixa ${zone.minRadiusKm}–${zone.maxRadiusKm} km`}
+                            inputMode="decimal"
+                            mask={maskMoney}
+                            parse={(text) =>
+                              text.trim() === '' ? null : moneyValue(text)
+                            }
+                            onCommit={(fee) => onEdit({ id: zone.id, fee })}
+                            onReject={() => toast.error('Informe a taxa da faixa')}
+                          />
+                        </TableCell>
+                        <TableCell>
+                          <Switch
+                            size="sm"
+                            checked={zone.freeDeliveryEnabled}
+                            onCheckedChange={(freeDeliveryEnabled) =>
+                              onFreeDeliveryChange({
+                                id: zone.id,
+                                freeDeliveryEnabled,
+                              })
+                            }
+                            aria-label={`Frete grátis na faixa de até ${zone.maxRadiusKm} km`}
+                          />
+                        </TableCell>
+                        <TableCell>
+                          {zone.freeDeliveryEnabled ? (
+                            <FreeDeliveryMinField
+                              key={`${zone.id}-${zone.freeDeliveryMinOrder}`}
+                              minOrder={zone.freeDeliveryMinOrder}
+                              zoneLabel={`até ${zone.maxRadiusKm} km`}
+                              onSave={(freeDeliveryMinOrder) =>
+                                onFreeDeliveryChange({
+                                  id: zone.id,
+                                  freeDeliveryMinOrder,
+                                })
+                              }
+                            />
+                          ) : (
+                            <Text as="span" className={local.freeMinOff}>
+                              —
+                            </Text>
+                          )}
                         </TableCell>
                         <TableCell>
                           <Switch
@@ -219,14 +217,6 @@ export const ZoneList = ({
                             direction="row"
                             className={local.zoneListActions}
                           >
-                            <Button
-                              variant="ghost"
-                              size="sm"
-                              className={`${motion.press} ${local.edit}`}
-                              onClick={() => startEdit(zone)}
-                            >
-                              Editar
-                            </Button>
                             <Button
                               variant="ghost"
                               size="sm"
@@ -251,7 +241,6 @@ export const ZoneList = ({
                           />
                         </TableCell>
                       </TableRow>
-                    )}
                   </Fragment>
                 )
               })}

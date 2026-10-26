@@ -14,7 +14,15 @@ describe(useEditorSteps.name, () => {
     await act(() => result.current.goNext())
     expect(result.current.step).toBe(0)
     expect(trigger).toHaveBeenCalledWith(
-      ['minOrderValue', 'discountValue', 'maxDiscount', 'giftProductId'],
+      [
+        'name',
+        'minOrderValue',
+        'discountValue',
+        'maxDiscount',
+        'giftProductId',
+        'packagePrice',
+        'packageGroups',
+      ],
       { shouldFocus: true }
     )
 

@@ -13,6 +13,7 @@ describe('ZoneList', () => {
         isPending={false}
         onEdit={() => undefined}
         onToggle={() => undefined}
+        onFreeDeliveryChange={() => undefined}
         onRemove={() => undefined}
       />
     )
@@ -30,13 +31,16 @@ describe('ZoneList', () => {
         isPending={false}
         onEdit={() => undefined}
         onToggle={() => undefined}
+        onFreeDeliveryChange={() => undefined}
         onRemove={() => undefined}
       />
     )
 
     expect(screen.getByText('Faixas configuradas')).toBeInTheDocument()
     expect(screen.getByText(/R\$\s*7,00/)).toBeInTheDocument()
-    expect(screen.getByRole('button', { name: 'Editar' })).toBeInTheDocument()
+    expect(
+      screen.getByRole('button', { name: 'Editar Taxa da faixa 0–5 km' })
+    ).toBeInTheDocument()
     expect(screen.getByRole('button', { name: 'Remover' })).toBeInTheDocument()
     expect(
       screen.getByRole('button', {
@@ -55,6 +59,7 @@ describe('ZoneList', () => {
         isPending={false}
         onEdit={() => undefined}
         onToggle={() => undefined}
+        onFreeDeliveryChange={() => undefined}
         onRemove={onRemove}
       />
     )
@@ -64,7 +69,7 @@ describe('ZoneList', () => {
     expect(onRemove).toHaveBeenCalledWith(deliveryZoneMock)
   })
 
-  it('saves an edited range with a normalized fee', async () => {
+  it('edits the fee in place and saves it as money', async () => {
     const onEdit = vi.fn()
     const user = userEvent.setup()
 
@@ -74,22 +79,20 @@ describe('ZoneList', () => {
         isPending={false}
         onEdit={onEdit}
         onToggle={() => undefined}
+        onFreeDeliveryChange={() => undefined}
         onRemove={() => undefined}
       />
     )
 
-    await user.click(screen.getByRole('button', { name: 'Editar' }))
-    await user.clear(screen.getByLabelText('Valor da faixa'))
-    await user.type(screen.getByLabelText('Valor da faixa'), '8,50')
-    await user.clear(screen.getByLabelText('Até (km)'))
-    await user.type(screen.getByLabelText('Até (km)'), '6')
-    await user.click(screen.getByRole('button', { name: 'Salvar' }))
+    await user.click(
+      screen.getByRole('button', { name: 'Editar Taxa da faixa 0–5 km' })
+    )
+    const fee = screen.getByRole('textbox', { name: 'Taxa da faixa 0–5 km' })
+    await user.clear(fee)
+    await user.type(fee, '850')
+    await user.tab()
 
-    expect(onEdit).toHaveBeenCalledWith({
-      id: deliveryZoneMock.id,
-      maxRadiusKm: 6,
-      fee: 8.5,
-    })
+    expect(onEdit).toHaveBeenCalledWith({ id: deliveryZoneMock.id, fee: 8.5 })
   })
 
   it('changes whether a range receives delivery orders', async () => {
@@ -102,6 +105,7 @@ describe('ZoneList', () => {
         isPending={false}
         onEdit={() => undefined}
         onToggle={onToggle}
+        onFreeDeliveryChange={() => undefined}
         onRemove={() => undefined}
       />
     )
@@ -116,38 +120,85 @@ describe('ZoneList', () => {
     })
   })
 
-  it('focuses and unfocuses a range for the map', async () => {
-    const onFocusZone = vi.fn()
+  it('turns free delivery on and saves the minimum when the field loses focus', async () => {
+    const onFreeDeliveryChange = vi.fn()
     const user = userEvent.setup()
-
     const { rerender } = render(
       <ZoneList
         zones={[deliveryZoneMock]}
         isPending={false}
         onEdit={() => undefined}
         onToggle={() => undefined}
+        onFreeDeliveryChange={onFreeDeliveryChange}
         onRemove={() => undefined}
-        focusedZoneId={null}
-        onFocusZone={onFocusZone}
       />
     )
 
-    await user.click(screen.getByRole('button', { name: '0–5 km' }))
-    expect(onFocusZone).toHaveBeenCalledWith(deliveryZoneMock.id)
+    await user.click(
+      screen.getByRole('checkbox', {
+        name: 'Frete grátis na faixa de até 5 km',
+      })
+    )
+    expect(onFreeDeliveryChange).toHaveBeenCalledWith({
+      id: deliveryZoneMock.id,
+      freeDeliveryEnabled: true,
+    })
 
     rerender(
       <ZoneList
-        zones={[deliveryZoneMock]}
+        zones={[{ ...deliveryZoneMock, freeDeliveryEnabled: true }]}
         isPending={false}
         onEdit={() => undefined}
         onToggle={() => undefined}
+        onFreeDeliveryChange={onFreeDeliveryChange}
         onRemove={() => undefined}
-        focusedZoneId={deliveryZoneMock.id}
+      />
+    )
+    const minimum = screen.getByRole('textbox', {
+      name: 'Frete grátis acima de, faixa até 5 km',
+    })
+    expect(minimum).toHaveAttribute('placeholder', 'Qualquer valor')
+
+    await user.type(minimum, '4000')
+    await user.tab()
+    expect(onFreeDeliveryChange).toHaveBeenLastCalledWith({
+      id: deliveryZoneMock.id,
+      freeDeliveryMinOrder: 40,
+    })
+  })
+
+  it('edits the range in place, saves on blur and focuses it on the map', async () => {
+    const onEdit = vi.fn()
+    const onFocusZone = vi.fn()
+    const user = userEvent.setup()
+
+    render(
+      <ZoneList
+        zones={[deliveryZoneMock]}
+        isPending={false}
+        onEdit={onEdit}
+        onToggle={() => undefined}
+        onFreeDeliveryChange={() => undefined}
+        onRemove={() => undefined}
         onFocusZone={onFocusZone}
       />
     )
 
-    await user.click(screen.getByRole('button', { name: '0–5 km' }))
-    expect(onFocusZone).toHaveBeenLastCalledWith(null)
+    await user.click(
+      screen.getByRole('button', { name: 'Editar Até (km) da faixa 0–5 km' })
+    )
+    expect(onFocusZone).toHaveBeenCalledWith(deliveryZoneMock.id)
+
+    const radius = screen.getByRole('textbox', {
+      name: 'Até (km) da faixa 0–5 km',
+    })
+    await user.clear(radius)
+    await user.type(radius, '6')
+    await user.tab()
+
+    expect(onEdit).toHaveBeenCalledWith({
+      id: deliveryZoneMock.id,
+      maxRadiusKm: 6,
+    })
   })
 })

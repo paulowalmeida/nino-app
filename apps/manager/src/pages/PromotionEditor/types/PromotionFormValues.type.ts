@@ -1,4 +1,6 @@
 export type PromotionFormValues = {
+  // CONSTRAINT: vazio cai na headline ao salvar.
+  name: string
   campaignType: 'free-delivery' | 'discount' | 'gift' | 'package'
   giftProductId: string
   discountKind: 'PERCENTAGE_DISCOUNT' | 'FIXED_DISCOUNT'

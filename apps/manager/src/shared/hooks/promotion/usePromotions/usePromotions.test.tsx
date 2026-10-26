@@ -5,7 +5,10 @@ import { renderHook, waitFor } from '@testing-library/react'
 import { afterEach, describe, expect, it, vi } from 'vitest'
 
 import { PromotionService } from '@shared/services/promotion/promotion.service/promotion.service'
-import { promotionMock } from '@shared/services/promotion/promotion.service/promotion.service.mock'
+import {
+  promotionListQueryMock,
+  promotionPageMock,
+} from '@shared/services/promotion/promotion.service/promotion.service.mock'
 
 import { usePromotions } from './usePromotions'
 import { promotionsUnitIdMock } from './usePromotions.mock'
@@ -25,19 +28,23 @@ const wrapper = ({ children }: { children: ReactNode }) => (
 describe(usePromotions.name, () => {
   afterEach(() => vi.clearAllMocks())
 
-  it('loads the unit campaigns', async () => {
-    vi.mocked(PromotionService.list).mockResolvedValue([promotionMock])
+  it('loads the requested page of the unit campaigns', async () => {
+    vi.mocked(PromotionService.list).mockResolvedValue(promotionPageMock)
 
-    const { result } = renderHook(() => usePromotions(promotionsUnitIdMock), {
-      wrapper,
-    })
+    const { result } = renderHook(
+      () => usePromotions(promotionsUnitIdMock, promotionListQueryMock),
+      { wrapper }
+    )
 
-    await waitFor(() => expect(result.current.data).toEqual([promotionMock]))
-    expect(PromotionService.list).toHaveBeenCalledWith(promotionsUnitIdMock)
+    await waitFor(() => expect(result.current.data).toEqual(promotionPageMock))
+    expect(PromotionService.list).toHaveBeenCalledWith(
+      promotionsUnitIdMock,
+      promotionListQueryMock
+    )
   })
 
   it('waits for a unit before asking the API', () => {
-    renderHook(() => usePromotions(null), { wrapper })
+    renderHook(() => usePromotions(null, promotionListQueryMock), { wrapper })
 
     expect(PromotionService.list).not.toHaveBeenCalled()
   })

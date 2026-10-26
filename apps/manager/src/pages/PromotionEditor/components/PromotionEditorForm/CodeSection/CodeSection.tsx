@@ -55,7 +55,7 @@ export const CodeSection = () => {
               }}
               render={({ field }) => (
                 <Input
-                  placeholder="Opcional, ex.: FRETEJA"
+                  placeholder="Ex.: BEMVINDO10"
                   autoCapitalize="characters"
                   value={field.value}
                   onBlur={field.onBlur}

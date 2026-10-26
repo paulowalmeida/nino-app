@@ -8,7 +8,12 @@ export const DeliveryZoneService = {
 
   createDeliveryZone: (
     unitId: string,
-    data: { maxRadiusKm: number; fee: number }
+    data: {
+      maxRadiusKm: number
+      fee: number
+      freeDeliveryEnabled?: boolean
+      freeDeliveryMinOrder?: number | null
+    }
   ): Promise<DeliveryZone> =>
     api.create<typeof data, DeliveryZone>(
       `units/${unitId}/delivery-zones`,
@@ -22,6 +27,8 @@ export const DeliveryZoneService = {
       maxRadiusKm?: number
       fee?: number
       isActive?: boolean
+      freeDeliveryEnabled?: boolean
+      freeDeliveryMinOrder?: number | null
     }
   ): Promise<DeliveryZone> =>
     api.patch<typeof data, DeliveryZone>(

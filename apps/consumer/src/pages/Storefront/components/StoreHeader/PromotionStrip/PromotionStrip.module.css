@@ -18,3 +18,14 @@
 .promotionText {
   @apply text-sm font-semibold leading-snug text-brand-strong;
 }
+
+/* WHY: frete grátis fala em verde, como no carrinho e no recibo. A tira só
+ * fica verde quando não divide espaço com outra oferta. */
+.freeDeliveryStrip {
+  @apply bg-success-surface;
+}
+
+.freeDeliveryOffer .promotionIcon,
+.freeDeliveryOffer .promotionText {
+  @apply text-success;
+}

@@ -33,4 +33,13 @@ describe(campaignActions.name, () => {
       'end',
     ])
   })
+
+  it('only lets a retired free delivery campaign be ended', () => {
+    expect(
+      campaignActions({ type: 'FREE_DELIVERY', usageCount: 0, state: 'ACTIVE' })
+    ).toEqual(['end'])
+    expect(
+      campaignActions({ type: 'FREE_DELIVERY', usageCount: 4, state: 'ENDED' })
+    ).toEqual([])
+  })
 })

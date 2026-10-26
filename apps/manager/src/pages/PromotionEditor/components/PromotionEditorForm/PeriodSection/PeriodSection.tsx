@@ -15,7 +15,14 @@ import { PROMOTION_WEEKDAY_LABELS } from '@shared/constants/promotion.constants'
 
 import styles from './PeriodSection.module.css'
 
-const toggleWeekday = (weekdays: number[], day: number) =>
+const DAILY_WINDOW_HINTS = {
+  'free-delivery': 'Fora dele o frete volta ao normal. No fuso da loja.',
+  discount: 'Fora dele o pedido sai sem desconto. No fuso da loja.',
+  gift: 'Fora dele o pedido sai sem brinde. No fuso da loja.',
+  package: 'Fora dele a promoção não vale. No fuso da loja.',
+} as const
+
+const toggleWeekday =(weekdays: number[], day: number) =>
   weekdays.includes(day)
     ? weekdays.filter((weekday) => weekday !== day)
     : [...weekdays, day]
@@ -26,6 +33,7 @@ export const PeriodSection = () => {
     getValues,
     formState: { errors },
   } = useFormContext<PromotionFormValues>()
+  const campaignType = useWatch({ control, name: 'campaignType' })
   const hasDailyWindow = useWatch({ control, name: 'hasDailyWindow' })
   const endsAtDate = useWatch({ control, name: 'endsAtDate' })
 
@@ -166,7 +174,7 @@ export const PeriodSection = () => {
             render={({ field }) => (
               <FormField
                 label="Só em um horário"
-                helperText="Fora dele o frete volta ao normal. No fuso da loja."
+                helperText={DAILY_WINDOW_HINTS[campaignType]}
                 orientation="horizontal"
               >
                 <Switch

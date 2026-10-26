@@ -7,6 +7,8 @@ export const deliveryZonesMock = [
     maxRadiusKm: 2,
     fee: 5,
     isActive: true,
+    freeDeliveryEnabled: false,
+    freeDeliveryMinOrder: null,
   },
   {
     id: 'zone-bairros',
@@ -14,5 +16,7 @@ export const deliveryZonesMock = [
     maxRadiusKm: 4,
     fee: 8,
     isActive: false,
+    freeDeliveryEnabled: false,
+    freeDeliveryMinOrder: null,
   },
 ]

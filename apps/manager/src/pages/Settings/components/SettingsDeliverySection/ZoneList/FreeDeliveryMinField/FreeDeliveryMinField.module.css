@@ -1,0 +1,5 @@
+@reference "@nino/ds/globals.css";
+
+.freeDeliveryMinField {
+  @apply h-9 w-36 tabular-nums;
+}

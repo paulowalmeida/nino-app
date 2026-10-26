@@ -31,33 +31,35 @@
 }
 
 .rangeCell {
-  @apply w-40 pr-6;
-}
-
-.rangeButton {
-  @apply -ml-1.5 h-auto justify-start px-1.5 py-0.5;
-  @apply text-sm font-semibold tabular-nums text-fg-default;
+  @apply w-24 pr-2;
 }
 
 .feeCell {
-  @apply whitespace-nowrap font-semibold tabular-nums;
+  @apply w-24 pr-2;
 }
 
+
+
 .switchCell {
-  @apply w-24;
+  @apply w-20;
 }
 
 .actionsCell {
-  @apply w-40 text-right;
+  @apply w-32 text-right;
+}
+
+.freeMinCell {
+  @apply w-40;
+}
+
+.freeMinOff {
+  @apply text-fg-faint;
 }
 
 .zoneListActions {
   @apply items-center justify-end gap-0.5;
 }
 
-.edit {
-  @apply h-auto shrink-0 px-2 py-1 text-xs text-fg-faint;
-}
 
 .remove {
   @apply h-auto shrink-0 px-2 py-1 text-xs text-danger;
@@ -98,29 +100,14 @@
   @apply bg-surface-1 py-1.5 text-center text-xs text-fg-faint;
 }
 
-.editRow {
-  @apply min-w-0 flex-wrap items-center gap-2 md:flex-nowrap;
-}
 
-.editRadius {
-  @apply w-20 md:w-16;
-}
 
-.editFee {
-  @apply w-24 md:w-20;
-}
 
-.editButton {
-  @apply shrink-0;
-}
 
 .zoneListEmpty {
   @apply mt-1;
 }
 
-.focused .rangeButton {
-  @apply text-brand-strong;
-}
 
 .focused {
   @apply bg-brand-ghost;

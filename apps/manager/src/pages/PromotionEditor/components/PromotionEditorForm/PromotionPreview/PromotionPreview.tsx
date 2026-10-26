@@ -6,19 +6,13 @@ import { Heading } from '@nino/ds/components/Heading'
 import { Icon } from '@nino/ds/components/Icon'
 import { Text } from '@nino/ds/components/Text'
 import { toPromotionSummarySource } from '@pages/PromotionEditor/adapters/promotionForm.adapter/promotionForm.adapter'
+import { CAMPAIGN_TYPE_ICONS } from '@pages/PromotionEditor/constants/promotionEditor.constants'
 import { usePromotionEditorFacade } from '@pages/PromotionEditor/facades/usePromotionEditorFacade/usePromotionEditorFacade'
 import type { PromotionFormValues } from '@pages/PromotionEditor/types/PromotionFormValues.type'
 import { promotionLimitsLabel } from '@pages/PromotionEditor/utils/promotionLimitsLabel/promotionLimitsLabel'
 import { promotionSummaryParts } from '@shared/utils/promotion-summary/promotion-summary'
 
 import styles from './PromotionPreview.module.css'
-
-const SUMMARY_ICONS = {
-  'free-delivery': 'truck',
-  discount: 'tag',
-  gift: 'gift',
-  package: 'tag',
-} as const
 
 export const PromotionPreview = () => {
   const { giftProductOptions } = usePromotionEditorFacade()
@@ -68,7 +62,7 @@ export const PromotionPreview = () => {
 
       <Box direction="row" className={styles.benefit}>
         <Box className={styles.benefitIcon}>
-          <Icon name={SUMMARY_ICONS[values.campaignType]} size="md" />
+          <Icon name={CAMPAIGN_TYPE_ICONS[values.campaignType]} size="md" />
         </Box>
         <Box className={styles.benefitCopy}>
           <Text as="span" className={styles.benefitLabel}>

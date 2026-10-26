@@ -21,6 +21,7 @@ export const pastCampaignMock: Promotion = {
 }
 
 export const filledFormMock: PromotionFormValues = {
+  name: 'Frete grátis - 11/11/26',
   campaignType: 'free-delivery',
   giftProductId: '',
   discountKind: 'PERCENTAGE_DISCOUNT',

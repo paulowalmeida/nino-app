@@ -1,3 +1,4 @@
+import { campaignDefaultName } from '@pages/PromotionEditor/utils/campaignDefaultName/campaignDefaultName'
 import type { PromotionEditorMode } from '@pages/PromotionEditor/types/PromotionEditorMode.type'
 import type { PromotionFormValues } from '@pages/PromotionEditor/types/PromotionFormValues.type'
 import type { Promotion } from '@shared/types/marketing/promotion.type'
@@ -33,7 +34,8 @@ const perCustomerOf = (
       : { perCustomer: 'custom', perCustomerCount: limit }
 
 const blankValues = (now: Date): PromotionFormValues => ({
-  campaignType: 'free-delivery',
+  name: campaignDefaultName('discount', now),
+  campaignType: 'discount',
   giftProductId: '',
   discountKind: 'PERCENTAGE_DISCOUNT',
   discountValue: '',
@@ -78,6 +80,7 @@ export const toPromotionFormValues = (
   return {
     ...blankValues(now),
     ...discountFieldsOf(promotion),
+    name: promotion.name,
     minOrderValue: promotion.minOrderValue
       ? maskMoneyAmount(promotion.minOrderValue)
       : '',
@@ -223,7 +226,7 @@ export const toPromotionInput = (
 ): PromotionInput => {
   const source = toPromotionSummarySource(values)
   return {
-    name: promotionSummaryParts(source).headline,
+    name: values.name.trim() || promotionSummaryParts(source).headline,
     type: source.type,
     code:
       source.type === 'PERCENTAGE_DISCOUNT' || source.type === 'FIXED_DISCOUNT'

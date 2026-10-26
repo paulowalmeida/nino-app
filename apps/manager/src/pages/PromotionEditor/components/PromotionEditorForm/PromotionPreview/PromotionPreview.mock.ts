@@ -1,6 +1,7 @@
 import type { PromotionFormValues } from '@pages/PromotionEditor/types/PromotionFormValues.type'
 
 export const previewValuesMock: PromotionFormValues = {
+  name: 'Frete grátis - 11/11/26',
   campaignType: 'free-delivery',
   giftProductId: '',
   discountKind: 'PERCENTAGE_DISCOUNT',

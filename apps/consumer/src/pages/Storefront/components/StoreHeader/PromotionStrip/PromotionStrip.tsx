@@ -23,9 +23,21 @@ export const PromotionStrip = () => {
   if (!offers.length) return null
 
   return (
-    <Box className={styles.promotionStrip}>
+    <Box
+      className={`${styles.promotionStrip} ${
+        offers.every(({ type }) => type === 'FREE_DELIVERY')
+          ? styles.freeDeliveryStrip
+          : ''
+      }`}
+    >
       {offers.map((offer) => (
-        <Box key={offer.id} direction="row" className={styles.promotionOffer}>
+        <Box
+          key={offer.id}
+          direction="row"
+          className={`${styles.promotionOffer} ${
+            offer.type === 'FREE_DELIVERY' ? styles.freeDeliveryOffer : ''
+          }`}
+        >
           <Icon
             name={STRIP_ICONS[offer.type]}
             size="sm"

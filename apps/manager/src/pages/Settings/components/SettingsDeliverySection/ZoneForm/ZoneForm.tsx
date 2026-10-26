@@ -7,6 +7,10 @@ import { Header } from '@nino/ds/components/Header'
 import { Input } from '@nino/ds/components/Input'
 import { NumberInput } from '@nino/ds/components/NumberInput'
 import { Slider } from '@nino/ds/components/Slider'
+import type { ZoneDraft } from '@pages/Settings/types/ZoneDraft.type'
+import { moneyValue } from '@shared/utils/money/money'
+
+import { FreeDeliveryControl } from '@pages/Settings/components/SettingsDeliverySection/FreeDeliveryControl/FreeDeliveryControl'
 
 import motion from '@styles/motion.module.css'
 import local from './ZoneForm.module.css'
@@ -14,7 +18,7 @@ import local from './ZoneForm.module.css'
 export type ZoneFormProps = {
   isAdding: boolean
   lastMaxRadiusKm?: number
-  onAdd: (data: { maxRadiusKm: number; fee: number }) => void
+  onAdd: (data: ZoneDraft) => void
   onPreviewRadius?: (maxRadiusKm: number | null) => void
 }
 
@@ -30,6 +34,8 @@ export const ZoneForm = ({
 }: ZoneFormProps) => {
   const [maxRadiusKm, setMaxRadiusKm] = useState<number | ''>('')
   const [fee, setFee] = useState('')
+  const [isFreeDelivery, setFreeDelivery] = useState(false)
+  const [freeMinOrder, setFreeMinOrder] = useState('')
 
   const feeValue = Number(fee.replace(',', '.'))
   const maxValue = maxRadiusKm || 0
@@ -58,9 +64,17 @@ export const ZoneForm = ({
 
   const addZone = () => {
     if (!canAdd) return
-    onAdd({ maxRadiusKm: maxValue, fee: feeValue })
+    const minOrder = moneyValue(freeMinOrder)
+    onAdd({
+      maxRadiusKm: maxValue,
+      fee: feeValue,
+      freeDeliveryEnabled: isFreeDelivery,
+      freeDeliveryMinOrder: isFreeDelivery && minOrder > 0 ? minOrder : null,
+    })
     setMaxRadiusKm('')
     setFee('')
+    setFreeDelivery(false)
+    setFreeMinOrder('')
   }
 
   return (
@@ -89,7 +103,7 @@ export const ZoneForm = ({
       />
 
       <Box className={local.zoneForm}>
-        <FormField className={local.zoneFormField} label="Até (km)">
+        <FormField label="Até (km)" className={local.radiusField}>
           <NumberInput
             min={MIN_RADIUS_KM}
             max={MAX_RADIUS_KM}
@@ -98,7 +112,7 @@ export const ZoneForm = ({
             onValueChange={previewRadius}
           />
         </FormField>
-        <FormField className={local.zoneFormField} label="Taxa de entrega (R$)">
+        <FormField label="Taxa de entrega (R$)" className={local.feeField}>
           <Input
             inputMode="decimal"
             placeholder="0,00"
@@ -106,15 +120,23 @@ export const ZoneForm = ({
             onChange={(event) => setFee(event.target.value)}
           />
         </FormField>
-        <Button
-          loading={isAdding}
-          disabled={!canAdd}
-          className={`${motion.press} ${local.submit}`}
-          onClick={addZone}
-        >
-          Adicionar faixa
-        </Button>
       </Box>
+
+      <FreeDeliveryControl
+        enabled={isFreeDelivery}
+        minOrder={freeMinOrder}
+        onEnabledChange={setFreeDelivery}
+        onMinOrderChange={setFreeMinOrder}
+      />
+
+      <Button
+        loading={isAdding}
+        disabled={!canAdd}
+        className={`${motion.press} ${local.submit}`}
+        onClick={addZone}
+      >
+        Adicionar faixa
+      </Button>
     </Box>
   )
 }

@@ -4,4 +4,7 @@ export type DeliveryZone = {
   maxRadiusKm: number
   fee: number
   isActive: boolean
+  freeDeliveryEnabled: boolean
+  /** `null` = frete grátis em qualquer pedido. */
+  freeDeliveryMinOrder: number | null
 }

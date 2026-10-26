@@ -36,8 +36,26 @@
   width: 7rem;
 }
 
+.colCreatedAt {
+  width: 8.5rem;
+}
+
+.colCreatedBy {
+  width: 10rem;
+}
+
 .colPeriod {
   width: 11rem;
+}
+
+.sortButton {
+  @apply inline-flex cursor-pointer items-center gap-1 whitespace-nowrap uppercase;
+  @apply rounded-2 hover:text-fg-default;
+  @apply focus-visible:outline-2 focus-visible:outline-brand;
+}
+
+.created {
+  @apply block truncate whitespace-nowrap text-xs text-fg-muted;
 }
 
 .colActions {
@@ -156,5 +174,16 @@
   .row > .usageCol {
     grid-row: 2;
     grid-column: 2;
+  }
+
+  .row > .createdAtCol {
+    grid-row: 3;
+    grid-column: 1;
+  }
+
+  .row > .createdByCol {
+    grid-row: 3;
+    grid-column: 2;
+    text-align: right;
   }
 }

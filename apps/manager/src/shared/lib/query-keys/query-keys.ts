@@ -1,3 +1,4 @@
+import type { PromotionListQuery } from '@shared/types/marketing/promotion-list-query.type'
 import type { ReportRangeParams } from '@shared/types/order/report-range-params'
 
 const rangeKey = (range: ReportRangeParams) =>
@@ -119,8 +120,10 @@ export const queryKeys = {
   },
   promotions: {
     all: (unitId: string) => ['promotions', unitId] as const,
-    list: (unitId: string) =>
-      [...queryKeys.promotions.all(unitId), 'list'] as const,
+    list: (unitId: string, query: PromotionListQuery) =>
+      [...queryKeys.promotions.all(unitId), 'list', query] as const,
+    detail: (unitId: string, promotionId: string) =>
+      [...queryKeys.promotions.all(unitId), 'detail', promotionId] as const,
   },
   consumers: {
     all: (unitId: string) => ['consumers', unitId] as const,

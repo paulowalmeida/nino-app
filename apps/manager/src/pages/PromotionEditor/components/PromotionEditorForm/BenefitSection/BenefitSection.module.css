@@ -4,6 +4,10 @@
   @apply flex flex-col gap-4;
 }
 
+.nameField {
+  @apply w-full md:max-w-sm;
+}
+
 .benefitFields {
   @apply flex flex-wrap items-start gap-4;
 }
@@ -21,20 +25,19 @@
 }
 
 .discountMainFields {
-  @apply flex w-full items-start gap-4 md:w-[26rem];
+  @apply flex w-full items-start gap-4;
 }
 
 .discountValueField {
-  @apply w-full md:max-w-36;
+  @apply w-full sm:w-44;
 }
 
 .discountAuxField {
-  @apply w-full md:max-w-60;
+  @apply w-full sm:w-44;
 }
 
 .discountAuxFields {
   @apply flex w-full items-start gap-4;
-  @apply md:w-60;
 }
 
 .campaignTypeField {

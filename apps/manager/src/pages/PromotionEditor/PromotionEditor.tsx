@@ -12,11 +12,13 @@ export const PromotionEditor = () => {
 
   return (
     <Box className={styles.promotionEditorPage}>
-      <PromotionEditorHeader />
-      {isUnavailable ? (
-        <PromotionUnavailable />
-      ) : isPending ? (
-        <PromotionEditorSkeleton />
+      {/* WHY: o tipo escolhido vive no formulário, então é ele quem monta o
+       * cabeçalho quando está na tela. */}
+      {isUnavailable || isPending ? (
+        <>
+          <PromotionEditorHeader />
+          {isUnavailable ? <PromotionUnavailable /> : <PromotionEditorSkeleton />}
+        </>
       ) : (
         <PromotionEditorForm />
       )}

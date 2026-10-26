@@ -1,13 +1,7 @@
 @reference "@nino/ds/globals.css";
 
-/* WHY: com a sidebar recolhida o rail cresce (ver SettingsDeliverySection) —
- * os campos e o botão respondem à largura real do próprio card, não ao
- * viewport, então usam container query pra aproveitar esse espaço extra.
- */
 .zoneFormSection {
-  @apply flex min-w-0 flex-col gap-3 rounded-xl border border-border p-4;
-  @apply md:p-3;
-  container-type: inline-size;
+  @apply flex min-w-0 flex-col gap-4 rounded-xl border border-border p-4;
 }
 
 .intro {
@@ -19,29 +13,17 @@
 }
 
 .zoneForm {
-  @apply grid grid-cols-2 items-end gap-3;
-  @apply md:flex md:flex-row md:flex-nowrap md:gap-2;
+  @apply flex flex-row flex-wrap items-start gap-3;
 }
 
-.zoneFormField {
-  @apply md:w-20 md:flex-none;
+.radiusField {
+  @apply w-28;
+}
+
+.feeField {
+  @apply w-36;
 }
 
 .submit {
-  @apply col-span-2 w-full;
-  @apply md:ml-2 md:w-auto md:shrink-0 md:px-3;
-}
-
-@container (min-width: 26rem) {
-  .zoneForm {
-    @apply gap-3;
-  }
-
-  .zoneFormField {
-    @apply w-28;
-  }
-
-  .submit {
-    @apply ml-3 px-4;
-  }
+  @apply w-full;
 }

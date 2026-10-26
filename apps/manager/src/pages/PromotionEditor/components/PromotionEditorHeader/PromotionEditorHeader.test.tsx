@@ -33,4 +33,20 @@ describe(PromotionEditorHeader.name, () => {
       })
     ).toBeInTheDocument()
   })
+
+  it('adds the chosen campaign type to the title', () => {
+    vi.mocked(usePromotionEditorFacade).mockReturnValue({
+      mode: 'create',
+    } as unknown as ReturnType<typeof usePromotionEditorFacade>)
+
+    render(
+      <MemoryRouter>
+        <PromotionEditorHeader campaignType="discount" />
+      </MemoryRouter>
+    )
+
+    expect(
+      screen.getByRole('heading', { name: 'Nova campanha – Desconto' })
+    ).toBeInTheDocument()
+  })
 })
