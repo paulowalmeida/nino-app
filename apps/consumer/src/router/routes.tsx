@@ -1,5 +1,7 @@
 import { createBrowserRouter, Navigate, type RouteObject } from 'react-router'
 
+import { RouteErrorBoundary } from '@shared/components/RouteErrorBoundary/RouteErrorBoundary'
+
 const storefrontLazy = () =>
   import('@pages/Storefront/Storefront').then(({ Storefront }) => ({
     Component: Storefront,
@@ -113,6 +115,7 @@ const storeChildren: RouteObject[] = [
 const storeRoute = (path?: string): RouteObject => ({
   ...(path ? { path } : {}),
   lazy: storeLayoutLazy,
+  errorElement: <RouteErrorBoundary />,
   children: storeChildren,
 })
 

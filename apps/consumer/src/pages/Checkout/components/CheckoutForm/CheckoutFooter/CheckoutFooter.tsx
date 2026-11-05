@@ -49,7 +49,11 @@ export const CheckoutFooter = ({
             Voltar
           </Button>
         )}
+        {/* WHY: reaproveitar o mesmo <button> faz o clique em "Continuar"
+            terminar como submit, porque o tipo vira 'submit' antes da ação
+            padrão do clique; a key força um elemento novo. */}
         <Button
+          key={isLastStep ? 'confirm' : 'continue'}
           type={isLastStep ? 'submit' : 'button'}
           loading={isLastStep && isSubmitting}
           disabled={isLastStep && disabled}

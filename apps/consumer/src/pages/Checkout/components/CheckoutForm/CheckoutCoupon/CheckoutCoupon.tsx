@@ -25,6 +25,7 @@ export const CheckoutCoupon = ({ checkout }: { checkout?: CheckoutFacade }) => {
   const {
     coupon,
     isCouponEligible,
+    isDelivery,
     couponSuggestions,
     applyCouponCode,
     applyCoupon,
@@ -59,8 +60,9 @@ export const CheckoutCoupon = ({ checkout }: { checkout?: CheckoutFacade }) => {
           </Text>
           {!isCouponEligible && (
             <Text as="span" className={styles.couponNote}>
-              Ainda não vale para este pedido: confira o pedido mínimo e o
-              endereço.
+              {isDelivery
+                ? 'Ainda não vale para este pedido: confira o pedido mínimo e o endereço.'
+                : 'Ainda não vale para este pedido: confira o pedido mínimo e a retirada.'}
             </Text>
           )}
         </Box>

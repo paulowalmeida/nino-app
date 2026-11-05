@@ -4,12 +4,26 @@ import type { PublicPromotion } from '@custom_types/promotion/public-promotion.t
 /* WHY: campanha com código só vale para quem digita, e o app ainda não tem
  * onde digitar; entre as abertas, a de menor mínimo é a que o cliente ganha
  * primeiro. */
-export const pickFreeDeliveryOffer = (
+const coversZone = (offer: PublicPromotion, zoneId: string): boolean =>
+  offer.allDeliveryZones || offer.deliveryZoneIds.includes(zoneId)
+
+export const openFreeDeliveryOffers = (
   promotions: PublicPromotion[] = []
-): PublicPromotion | undefined =>
-  promotions
-    .filter(({ type, code }) => type === 'FREE_DELIVERY' && !code)
-    .sort((first, second) => first.minOrderValue - second.minOrderValue)[0]
+): PublicPromotion[] =>
+  promotions.filter(({ type, code }) => type === 'FREE_DELIVERY' && !code)
+
+export const pickFreeDeliveryOffer = (
+  promotions: PublicPromotion[] = [],
+  zoneId?: string
+): PublicPromotion | undefined => {
+  const open = openFreeDeliveryOffers(promotions)
+  const covering = zoneId
+    ? open.filter((offer) => coversZone(offer, zoneId))
+    : []
+  return (covering.length ? covering : open).sort(
+    (first, second) => first.minOrderValue - second.minOrderValue
+  )[0]
+}
 
 export const freeDeliveryGap = (
   offer: PublicPromotion | undefined,

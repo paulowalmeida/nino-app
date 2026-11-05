@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useMemo, useState } from 'react'
 import { useNavigate, useParams } from 'react-router'
 
 import { Box } from '@nino/ds/components/Box'
@@ -108,12 +108,10 @@ export const PackageDetail = () => {
   const navigate = useNavigate()
   const home = useStorefrontFacade()
   const promotion = home.packageOffers.find(({ id }) => id === promotionId)
-  const [selection, setSelection] = useState<PackageSelection>({})
+  const [selection, setSelection] = useState<PackageSelection>(() =>
+    promotion ? initialSelection(promotion) : {}
+  )
   const [groupIndex, setGroupIndex] = useState(0)
-
-  useEffect(() => {
-    if (promotion) setSelection(initialSelection(promotion))
-  }, [promotion])
 
   const close = () => void navigate(resolveBackHref(slug))
   const group = promotion?.packageGroups[groupIndex]

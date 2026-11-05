@@ -1,26 +1,36 @@
 @reference "@nino/ds/globals.css";
 
 .editor {
-  @apply flex min-w-0 flex-col gap-3;
+  @apply flex min-w-0 flex-col gap-4;
 }
 
 .framed {
-  @apply rounded-5 border border-brand-soft bg-brand-ghost p-4;
+  @apply rounded-5 border border-border bg-surface-2 p-4;
 }
 
 .stage {
-  @apply relative mx-auto flex w-full items-center justify-center;
-  @apply overflow-hidden rounded-4 bg-fg-strong;
+  @apply relative mx-auto flex w-full max-w-full items-center justify-center;
+  @apply overflow-hidden rounded-4 bg-fg-strong shadow-md;
+}
+
+.cropError {
+  @apply absolute inset-x-3 top-3 z-20;
 }
 
 .photoCropperImage {
-  @apply block max-h-[52vh] w-auto max-w-full select-none;
+  @apply absolute left-0 top-0 max-w-none select-none opacity-0;
+}
+
+.imageReady {
+  @apply opacity-100;
 }
 
 .selection {
-  @apply absolute cursor-move touch-none outline-none;
-  box-shadow: 0 0 0 9999px
-    color-mix(in srgb, var(--color-warm-950) 62%, transparent);
+  @apply absolute inset-0 z-10 cursor-grab touch-none outline-none;
+}
+
+.selection:active {
+  @apply cursor-grabbing;
 }
 
 .selection:focus-visible {
@@ -50,31 +60,53 @@
     );
 }
 
-.handle {
-  @apply absolute h-5 w-5 touch-none rounded-full border-2 border-white;
-  @apply bg-brand shadow-md;
+.zoomPanel {
+  @apply flex flex-col gap-2 rounded-4 border border-border bg-surface-2 p-3;
 }
 
-.nw {
-  @apply -left-2.5 -top-2.5 cursor-nwse-resize;
+.zoomControls {
+  @apply grid grid-cols-[2.5rem_minmax(0,1fr)_2.5rem] items-end gap-3;
 }
 
-.ne {
-  @apply -right-2.5 -top-2.5 cursor-nesw-resize;
+.zoomSlider {
+  @apply min-w-0;
 }
 
-.sw {
-  @apply -bottom-2.5 -left-2.5 cursor-nesw-resize;
+.zoomButton {
+  @apply mb-1 size-10 rounded-full border border-border bg-surface-raised text-fg-muted;
 }
 
-.se {
-  @apply -bottom-2.5 -right-2.5 cursor-nwse-resize;
+.resetButton {
+  @apply self-end text-fg-subtle;
 }
 
 .hint {
-  @apply text-xs leading-relaxed text-fg-faint;
+  @apply text-sm leading-relaxed text-fg-subtle;
+}
+
+.actions {
+  @apply flex flex-wrap items-center justify-between gap-3 border-t border-border pt-4;
+}
+
+.cancel {
+  @apply shrink-0;
 }
 
 .confirm {
-  @apply w-full;
+  @apply min-w-44;
+}
+
+.remove {
+  @apply ml-auto;
+}
+
+@media (max-width: 36rem) {
+  .actions {
+    @apply flex-col-reverse items-stretch;
+  }
+
+  .cancel,
+  .confirm {
+    @apply w-full;
+  }
 }

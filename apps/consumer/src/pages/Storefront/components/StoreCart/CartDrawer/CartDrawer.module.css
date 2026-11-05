@@ -13,9 +13,6 @@
     max-height: 100dvh;
   }
 
-  .cartDrawerFooter {
-    padding-bottom: max(1rem, env(safe-area-inset-bottom));
-  }
 }
 
 .cartDrawerPanel {
@@ -24,8 +21,12 @@
     color-mix(in srgb, var(--color-warm-950) 35%, transparent);
 }
 
+.cartDrawerViewport {
+  @apply min-h-0 overflow-hidden;
+}
+
 .cartDrawerBody {
-  @apply flex min-h-full flex-col;
+  @apply flex min-h-0 flex-1 flex-col;
 }
 
 /* WHY: O cabeçalho é nosso: o do Drawer é miúdo demais para nomear a tela.
@@ -47,7 +48,7 @@
 }
 
 .lines {
-  @apply flex flex-col pb-4;
+  @apply min-h-0 flex-1 overflow-y-auto pb-4;
 }
 
 .line {
@@ -122,8 +123,9 @@
 }
 
 .cartDrawerFooter {
-  @apply sticky bottom-0 -mx-6 -mb-4 mt-auto flex flex-col gap-2.5;
+  @apply shrink-0 -mx-6 -mb-4 mt-auto flex flex-col gap-2.5;
   @apply border-t border-border bg-surface-1 px-6 pb-4 pt-3.5;
+  padding-bottom: max(1rem, env(safe-area-inset-bottom));
 }
 
 .totalRow {

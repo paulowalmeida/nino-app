@@ -42,11 +42,10 @@ export const StoreBanner = ({
     ],
     [bannerOffers, bannerUrl, includeStoreBanner]
   )
-  const active = slides[activeIndex] ?? slides[0]
-
-  useEffect(() => {
-    if (activeIndex >= slides.length) setActiveIndex(0)
-  }, [activeIndex, slides.length])
+  const safeActiveIndex = slides.length
+    ? Math.min(activeIndex, slides.length - 1)
+    : 0
+  const active = slides[safeActiveIndex] ?? slides[0]
 
   useEffect(() => {
     const banner = bannerRef.current
@@ -129,9 +128,10 @@ export const StoreBanner = ({
             className={`${styles.carouselButton} ${styles.previous}`}
             aria-label="Banner anterior"
             onClick={() =>
-              setActiveIndex((index) =>
-                index === 0 ? slides.length - 1 : index - 1
-              )
+              setActiveIndex((index) => {
+                const current = Math.min(index, slides.length - 1)
+                return current === 0 ? slides.length - 1 : current - 1
+              })
             }
           >
             <Icon name="chevron-left" />
@@ -143,7 +143,10 @@ export const StoreBanner = ({
             className={`${styles.carouselButton} ${styles.next}`}
             aria-label="Próximo banner"
             onClick={() =>
-              setActiveIndex((index) => (index + 1) % slides.length)
+              setActiveIndex((index) => {
+                const current = Math.min(index, slides.length - 1)
+                return (current + 1) % slides.length
+              })
             }
           >
             <Icon name="chevron-right" />

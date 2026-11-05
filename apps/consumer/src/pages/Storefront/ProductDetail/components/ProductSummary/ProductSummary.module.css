@@ -4,17 +4,33 @@
   @apply flex flex-col px-4 pb-5 pt-5 sm:px-6;
 }
 
+.productIdentity {
+  @apply sticky top-0 z-content -mx-4 flex flex-col gap-1;
+  @apply border-b border-border bg-surface-page/95 px-4 pb-3 pt-3 backdrop-blur;
+  @apply sm:-mx-6 sm:px-6;
+}
+
 .name {
   @apply font-display text-2xl font-extrabold leading-tight tracking-tight;
   @apply text-fg-strong;
 }
 
 .productSummaryDescription {
-  @apply mt-2 text-[0.9375rem] leading-relaxed text-fg-subtle;
+  @apply mt-4 text-[0.9375rem] leading-relaxed text-fg-subtle;
 }
 
 .price {
-  @apply mt-4 font-display text-xl font-medium;
+  @apply font-display text-lg font-medium;
   color: var(--color-success);
   font-variant-numeric: tabular-nums;
+}
+
+@media (min-width: 1024px) {
+  .productIdentity {
+    @apply static mx-0 border-0 bg-transparent px-0 pb-0 pt-0 backdrop-blur-none;
+  }
+
+  .price {
+    @apply mt-4 text-xl;
+  }
 }

@@ -48,12 +48,13 @@ vi.mock('./CheckoutFooter/CheckoutFooter', () => ({
 describe('CheckoutForm', () => {
   beforeEach(() => vi.stubGlobal('scrollTo', vi.fn()))
 
-  const setupFacade = () => {
-    const trigger = vi.fn().mockResolvedValue(true)
+  const setupFacade = (trigger = vi.fn().mockResolvedValue(true)) => {
+    const clearErrors = vi.fn()
     vi.mocked(useCheckoutFacade).mockReturnValue({
       onSubmit: vi.fn(),
       form: {
         trigger,
+        clearErrors,
         getValues: () => ({
           channel: 'PICKUP',
           guestName: 'Paulo',
@@ -67,7 +68,7 @@ describe('CheckoutForm', () => {
       isBelowMinimum: false,
       minimumOrderAmount: 0,
     } as never)
-    return trigger
+    return { trigger, clearErrors }
   }
 
   it('starts with contact so returning customers can recover their data', () => {
@@ -84,12 +85,35 @@ describe('CheckoutForm', () => {
   })
 
   it('validates and advances one step at a time', async () => {
-    const trigger = setupFacade()
+    const { trigger, clearErrors } = setupFacade()
 
     render(<CheckoutForm {...checkoutFormMock} />)
     fireEvent.click(screen.getByRole('button', { name: 'Continuar' }))
 
     await waitFor(() => expect(trigger).toHaveBeenCalled())
+    expect(clearErrors).toHaveBeenCalledWith([
+      'guestName',
+      'guestPhone',
+    ])
     expect(screen.getByText('channel')).toBeInTheDocument()
+  })
+
+  it('keeps contact errors on invalid submit, then clears them after correction', async () => {
+    const trigger = vi
+      .fn()
+      .mockResolvedValueOnce(false)
+      .mockResolvedValueOnce(true)
+    const { clearErrors } = setupFacade(trigger)
+
+    render(<CheckoutForm {...checkoutFormMock} />)
+
+    fireEvent.click(screen.getByRole('button', { name: 'Continuar' }))
+    await waitFor(() => expect(trigger).toHaveBeenCalledTimes(1))
+    expect(clearErrors).not.toHaveBeenCalled()
+    expect(screen.getByText('contact')).toBeInTheDocument()
+
+    fireEvent.click(screen.getByRole('button', { name: 'Continuar' }))
+    await waitFor(() => expect(screen.getByText('channel')).toBeInTheDocument())
+    expect(clearErrors).toHaveBeenCalledWith(['guestName', 'guestPhone'])
   })
 })

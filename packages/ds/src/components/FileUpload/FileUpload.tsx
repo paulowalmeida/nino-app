@@ -21,6 +21,10 @@ type FileUploadProps = {
   }) => void
   /** Clickable trigger label. Default: `'Escolher arquivo'` */
   triggerLabel?: string
+  /** Mostra apenas o botão de seleção, sem a área de arrastar. */
+  compact?: boolean
+  /** Exibe a lista dos arquivos escolhidos abaixo da área de seleção. */
+  showFileList?: boolean
   /** Hint shown next to the trigger. Default: `'ou arraste até aqui'` */
   dragLabel?: string
   /** Text shown while a file is dragged over. Default: `'Solte aqui'` */
@@ -66,6 +70,8 @@ export function FileUpload({
   onFileChange,
   onFileReject,
   triggerLabel = 'Escolher arquivo',
+  compact = false,
+  showFileList = true,
   dragLabel = 'ou arraste até aqui',
   dropLabel = 'Solte aqui',
   removeLabel = 'Remover arquivo',
@@ -81,76 +87,88 @@ export function FileUpload({
       name={name}
       onFileChange={({ acceptedFiles }) => onFileChange?.(acceptedFiles)}
       onFileReject={onFileReject}
-      className={mergeClasses(styles.fileUpload, className)}
+      className={mergeClasses(
+        styles.fileUpload,
+        compact && styles.compactUpload,
+        className
+      )}
     >
-      <ArkFileUpload.Dropzone
-        className={mergeClasses('group', styles.dropzone)}
-      >
-        <Icon name="upload" size="xl" className={styles.uploadIcon} />
-        <div className={styles.restingPrompt}>
-          <ArkFileUpload.Trigger className={styles.browseButton}>
-            {triggerLabel}
-          </ArkFileUpload.Trigger>
-          <span className={styles.dragHint}> {dragLabel}</span>
-        </div>
-        <p className={styles.dropHint}>{dropLabel}</p>
-        {maxFileSize && (
-          <p className={styles.limitHint}>
-            Até {formatBytes(maxFileSize)} por arquivo
-          </p>
-        )}
-        {maxFiles > 1 && (
-          <p className={styles.limitHint}>No máximo {maxFiles} arquivos</p>
-        )}
-      </ArkFileUpload.Dropzone>
+      {compact ? (
+        <ArkFileUpload.Trigger className={styles.browseButton}>
+          {triggerLabel}
+        </ArkFileUpload.Trigger>
+      ) : (
+        <ArkFileUpload.Dropzone
+          className={mergeClasses('group', styles.dropzone)}
+        >
+          <Icon name="upload" size="xl" className={styles.uploadIcon} />
+          <div className={styles.restingPrompt}>
+            <ArkFileUpload.Trigger className={styles.browseButton}>
+              {triggerLabel}
+            </ArkFileUpload.Trigger>
+            <span className={styles.dragHint}> {dragLabel}</span>
+          </div>
+          <p className={styles.dropHint}>{dropLabel}</p>
+          {maxFileSize && (
+            <p className={styles.limitHint}>
+              Até {formatBytes(maxFileSize)} por arquivo
+            </p>
+          )}
+          {maxFiles > 1 && (
+            <p className={styles.limitHint}>No máximo {maxFiles} arquivos</p>
+          )}
+        </ArkFileUpload.Dropzone>
+      )}
 
-      <ArkFileUpload.ItemGroup className={styles.fileList}>
-        <ArkFileUpload.Context>
-          {({ acceptedFiles }) =>
-            acceptedFiles.map((file) => {
-              const percentSent = uploadProgressByFile?.[file.name]
-              const isSending = percentSent !== undefined && percentSent < 100
+      {!compact && showFileList && (
+        <ArkFileUpload.ItemGroup className={styles.fileList}>
+          <ArkFileUpload.Context>
+            {({ acceptedFiles }) =>
+              acceptedFiles.map((file) => {
+                const percentSent = uploadProgressByFile?.[file.name]
+                const isSending = percentSent !== undefined && percentSent < 100
 
-              return (
-                <ArkFileUpload.Item
-                  key={`${file.name}-${file.size}-${file.type}`}
-                  file={file}
-                  className={styles.fileRow}
-                >
-                  {isSending && (
-                    <span
-                      role="progressbar"
-                      aria-label={`Enviando ${file.name}`}
-                      aria-valuenow={Math.round(percentSent)}
-                      aria-valuemin={0}
-                      aria-valuemax={100}
-                      className={styles.progressTrack}
-                    >
-                      <span
-                        className={styles.progressFill}
-                        style={{ width: `${percentSent}%` }}
-                      />
-                    </span>
-                  )}
-                  <ArkFileUpload.ItemPreview type="image/*">
-                    <ArkFileUpload.ItemPreviewImage
-                      className={styles.previewImage}
-                    />
-                  </ArkFileUpload.ItemPreview>
-                  <ArkFileUpload.ItemName className={styles.itemName} />
-                  <ArkFileUpload.ItemSizeText className={styles.itemSize} />
-                  <ArkFileUpload.ItemDeleteTrigger
-                    className={styles.deleteButton}
-                    aria-label={removeLabel}
+                return (
+                  <ArkFileUpload.Item
+                    key={`${file.name}-${file.size}-${file.type}`}
+                    file={file}
+                    className={styles.fileRow}
                   >
-                    <Icon name="x" size="sm" />
-                  </ArkFileUpload.ItemDeleteTrigger>
-                </ArkFileUpload.Item>
-              )
-            })
-          }
-        </ArkFileUpload.Context>
-      </ArkFileUpload.ItemGroup>
+                    {isSending && (
+                      <span
+                        role="progressbar"
+                        aria-label={`Enviando ${file.name}`}
+                        aria-valuenow={Math.round(percentSent)}
+                        aria-valuemin={0}
+                        aria-valuemax={100}
+                        className={styles.progressTrack}
+                      >
+                        <span
+                          className={styles.progressFill}
+                          style={{ width: `${percentSent}%` }}
+                        />
+                      </span>
+                    )}
+                    <ArkFileUpload.ItemPreview type="image/*">
+                      <ArkFileUpload.ItemPreviewImage
+                        className={styles.previewImage}
+                      />
+                    </ArkFileUpload.ItemPreview>
+                    <ArkFileUpload.ItemName className={styles.itemName} />
+                    <ArkFileUpload.ItemSizeText className={styles.itemSize} />
+                    <ArkFileUpload.ItemDeleteTrigger
+                      className={styles.deleteButton}
+                      aria-label={removeLabel}
+                    >
+                      <Icon name="x" size="sm" />
+                    </ArkFileUpload.ItemDeleteTrigger>
+                  </ArkFileUpload.Item>
+                )
+              })
+            }
+          </ArkFileUpload.Context>
+        </ArkFileUpload.ItemGroup>
+      )}
 
       <ArkFileUpload.HiddenInput />
     </ArkFileUpload.Root>

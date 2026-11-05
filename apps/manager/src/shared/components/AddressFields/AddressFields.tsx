@@ -1,4 +1,4 @@
-import { ReactNode, useEffect, useRef, useState } from 'react'
+import { ReactNode } from 'react'
 
 import { Box } from '@nino/ds/components/Box'
 import { FormField } from '@nino/ds/components/FormField'
@@ -7,12 +7,9 @@ import { MaskedInput } from '@nino/ds/components/MaskedInput'
 import { Select } from '@nino/ds/components/Select'
 import { maskZipCode } from '@nino/ds/masks'
 import { mergeClasses } from '@nino/ds/mergeClasses'
-import { lookupZipCode, onlyDigits } from '@nino/lib/services/zip-code.service'
 import { BRAZIL_STATES } from '@shared/constants/address.constants'
 
 import styles from './AddressFields.module.css'
-
-type Lookup = 'idle' | 'loading' | 'done' | 'notFound'
 
 type AddressValue = {
   zipCode: string
@@ -39,10 +36,10 @@ type AddressFieldsProps = {
   /** Keeps address fields unavailable until a state has been selected. */
   requiresState?: boolean
   /**
-   * Which question opens the form. `zipCode` fills the address from the CEP
-   * and is what a registration asks first; `street` puts the address and the
-   * number up front and drops the CEP next to the complement, which is the
-   * order a delivery is dictated over the counter.
+   * Which question opens the form. `zipCode` is what a registration asks
+   * first; `street` puts the address and the number up front and drops the
+   * CEP next to the complement, which is the order a delivery is dictated
+   * over the counter.
    */
   leadWith?: 'zipCode' | 'street'
 }
@@ -61,49 +58,6 @@ export const AddressFields = ({
   locationFirst = false,
   requiresState = false,
 }: AddressFieldsProps) => {
-  const [lookup, setLookup] = useState<Lookup>('idle')
-  const numberRef = useRef<HTMLInputElement>(null)
-  const lookupRequest = useRef(0)
-  const isMounted = useRef(true)
-
-  useEffect(
-    () => () => {
-      isMounted.current = false
-    },
-    []
-  )
-
-  const handleZipChange = async (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    const requestId = ++lookupRequest.current
-    const zipCode = event.target.value
-    onChange({ zipCode })
-
-    if (onlyDigits(zipCode).length !== 8) {
-      if (isMounted.current) setLookup('idle')
-      return
-    }
-
-    if (isMounted.current) setLookup('loading')
-    const found = await lookupZipCode(zipCode).catch(() => null)
-    if (!isMounted.current || requestId !== lookupRequest.current) return
-
-    if (!found) {
-      setLookup('notFound')
-      return
-    }
-
-    setLookup('done')
-    onChange({
-      street: found.street || value.street,
-      neighborhood: found.neighborhood || value.neighborhood,
-      city: found.city || value.city,
-      state: found.state || value.state,
-    })
-    numberRef.current?.focus()
-  }
-
   const leadsWithStreet = leadWith === 'street'
   const addressDisabled = requiresState && !value.state
 
@@ -112,7 +66,6 @@ export const AddressFields = ({
       <FormField label="Estado" className={styles.state}>
         {stateField ?? (
           <Select
-            disabled={lookup === 'loading'}
             options={BRAZIL_STATES}
             value={value.state}
             aria-label="Estado do endereço"
@@ -124,7 +77,7 @@ export const AddressFields = ({
       <FormField label="Cidade" className={styles.city}>
         {cityField ?? (
           <Input
-            disabled={addressDisabled || lookup === 'loading'}
+            disabled={addressDisabled}
             value={value.city}
             onChange={(event) => onChange({ city: event.target.value })}
           />
@@ -141,7 +94,7 @@ export const AddressFields = ({
         autoComplete="postal-code"
         disabled={addressDisabled}
         value={value.zipCode}
-        onChange={handleZipChange}
+        onChange={(event) => onChange({ zipCode: event.target.value })}
       />
     </FormField>
   )
@@ -151,7 +104,7 @@ export const AddressFields = ({
       {streetField ?? (
         <Input
           autoComplete="address-line1"
-          disabled={addressDisabled || lookup === 'loading'}
+          disabled={addressDisabled}
           value={value.street}
           onChange={(event) => onChange({ street: event.target.value })}
         />
@@ -162,7 +115,6 @@ export const AddressFields = ({
   const numberField = (
     <FormField label="Número" className={styles.number}>
       <Input
-        ref={numberRef}
         inputMode="numeric"
         disabled={addressDisabled}
         value={value.number}
@@ -185,7 +137,7 @@ export const AddressFields = ({
   const neighborhoodField = (
     <FormField label="Bairro" className={styles.neighborhood}>
       <Input
-        disabled={addressDisabled || lookup === 'loading'}
+        disabled={addressDisabled}
         value={value.neighborhood}
         onChange={(event) => onChange({ neighborhood: event.target.value })}
       />

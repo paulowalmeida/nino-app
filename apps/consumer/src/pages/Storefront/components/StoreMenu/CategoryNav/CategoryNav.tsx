@@ -27,6 +27,9 @@ export const CategoryNav = () => {
 
   return (
     <nav className={styles.categoryNav} aria-label="Categorias do cardápio">
+      <Text className="sr-only">
+        Deslize horizontalmente para ver mais categorias.
+      </Text>
       <Text className={styles.railLabel}>Cardápio</Text>
       <Box direction="row" className={styles.track}>
         <Box direction="row" className={styles.chips}>

@@ -22,8 +22,8 @@ export const queryKeys = {
   },
   deliveryQuote: {
     all: ['delivery-quote'] as const,
-    byUnitAndZip: (unitId: string, zipCode: string) =>
-      [...queryKeys.deliveryQuote.all, unitId, zipCode] as const,
+    byUnitAndDestination: (unitId: string, destination: string) =>
+      [...queryKeys.deliveryQuote.all, unitId, destination] as const,
   },
   promotions: {
     all: ['promotions'] as const,

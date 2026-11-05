@@ -1,11 +1,14 @@
 import { fireEvent, render, screen, waitFor } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
 import { useForm } from 'react-hook-form'
+import type { UseFormReturn } from 'react-hook-form'
+import { MemoryRouter, Route, Routes } from 'react-router'
 import { describe, expect, it, vi } from 'vitest'
 
 import type { CheckoutFormValues } from '@pages/checkout/types/checkout/CheckoutFormValues.type'
 import { useCheckoutFacade } from '@pages/checkout/facades/useCheckoutFacade/useCheckoutFacade'
 import type { CheckoutFacade } from '@pages/checkout/facades/useCheckoutFacade/useCheckoutFacade'
-import { useGuestAddressSearch } from '@pages/checkout/hooks/useGuestAddressSearch/useGuestAddressSearch'
+import { useStoreAddressSearch } from '@shared/hooks/useStoreAddressSearch/useStoreAddressSearch'
 
 import { DeliveryAddressFields } from './DeliveryAddressFields'
 import {
@@ -15,7 +18,7 @@ import {
 } from './DeliveryAddressFields.mock'
 
 vi.mock('@pages/checkout/facades/useCheckoutFacade/useCheckoutFacade')
-vi.mock('@pages/checkout/hooks/useGuestAddressSearch/useGuestAddressSearch')
+vi.mock('@shared/hooks/useStoreAddressSearch/useStoreAddressSearch')
 
 /** WHY: o formulário real vem de `react-hook-form`, e o fluxo de endereço
  * depende de `useWatch`/`form.setValue` refletindo o valor digitado — um
@@ -23,13 +26,22 @@ vi.mock('@pages/checkout/hooks/useGuestAddressSearch/useGuestAddressSearch')
 const Harness = ({
   zone,
   deliveryDiscount = 0,
+  quoteError = false,
+  onRetryQuote = vi.fn(),
+  isAuthenticated = false,
+  onForm,
 }: {
   zone?: { name: string; fee: number }
   deliveryDiscount?: number
+  quoteError?: boolean
+  onRetryQuote?: () => void
+  isAuthenticated?: boolean
+  onForm?: (form: UseFormReturn<CheckoutFormValues>) => void
 } = {}) => {
   const form = useForm<CheckoutFormValues>({
     defaultValues: { guestStreet: '', guestNumber: '' },
   })
+  onForm?.(form)
   vi.mocked(useCheckoutFacade).mockReturnValue({
     form,
     control: form.control,
@@ -38,7 +50,9 @@ const Harness = ({
     zone,
     deliveryDiscount,
     isQuoting: false,
-    isAuthenticated: false,
+    isDeliveryQuoteError: quoteError,
+    retryDeliveryQuote: onRetryQuote,
+    isAuthenticated,
     addresses: [],
     store: { id: 'store-1', state: 'PA' },
   } as unknown as CheckoutFacade)
@@ -48,14 +62,16 @@ const Harness = ({
 
 describe('DeliveryAddressFields', () => {
   const setup = (
-    searchOverrides: Partial<ReturnType<typeof useGuestAddressSearch>> = {}
+    searchOverrides: Partial<ReturnType<typeof useStoreAddressSearch>> = {}
   ) => {
-    vi.mocked(useGuestAddressSearch).mockReturnValue({
+    vi.mocked(useStoreAddressSearch).mockReturnValue({
       suggestions: [],
       isSearching: false,
       resolveSelectedAddress: vi.fn(),
       isResolvingSelectedAddress: false,
       ...searchOverrides,
+      isSearchError: searchOverrides.isSearchError ?? false,
+      retrySearch: searchOverrides.retrySearch ?? vi.fn(),
     })
   }
 
@@ -99,6 +115,22 @@ describe('DeliveryAddressFields', () => {
 
     expect(screen.getByText('Frete grátis')).toBeInTheDocument()
     expect(screen.queryByText(/Taxa de entrega/)).toBeNull()
+  })
+
+  it('keeps the address form context and offers quote retry after a failure', async () => {
+    setup()
+    const onRetryQuote = vi.fn()
+    render(<Harness quoteError onRetryQuote={onRetryQuote} />)
+
+    expect(
+      screen.getByText('Não foi possível calcular a taxa de entrega.')
+    ).toBeInTheDocument()
+    expect(screen.getByLabelText('Endereço')).toBeInTheDocument()
+
+    await userEvent.click(
+      screen.getByRole('button', { name: 'Tentar novamente' })
+    )
+    expect(onRetryQuote).toHaveBeenCalledOnce()
   })
 
   it('opens the confirmation screen once street and number are filled', async () => {
@@ -213,6 +245,40 @@ describe('DeliveryAddressFields', () => {
         screen.getByText('A loja não entrega nesse endereço.')
       ).toBeInTheDocument()
     )
+  })
+
+  it('does not leave guest address rules blocking a signed-in checkout', async () => {
+    setup()
+    let form: UseFormReturn<CheckoutFormValues> | undefined
+    render(
+      <MemoryRouter>
+        <Harness
+          isAuthenticated
+          onForm={(current) => {
+            form = current
+          }}
+        />
+      </MemoryRouter>
+    )
+
+    expect(screen.queryByLabelText('Bairro')).toBeNull()
+    expect(await form?.trigger('guestNeighborhood')).toBe(true)
+  })
+
+  it('sends a signed-in customer with no saved address to register one', () => {
+    setup()
+    render(
+      <MemoryRouter initialEntries={['/burgao-centro/checkout']}>
+        <Routes>
+          <Route path=":slug/checkout" element={<Harness isAuthenticated />} />
+        </Routes>
+      </MemoryRouter>
+    )
+
+    expect(screen.queryByRole('radiogroup')).toBeNull()
+    expect(
+      screen.getByRole('link', { name: 'Cadastrar endereço' })
+    ).toHaveAttribute('href', '/burgao-centro/conta/enderecos')
   })
 
   it('lets the guest go back to editing without picking a prediction', async () => {

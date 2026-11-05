@@ -3,21 +3,23 @@ import { useRef, useState } from 'react'
 import { Alert } from '@nino/ds/components/Alert'
 import { Box } from '@nino/ds/components/Box'
 import { Button } from '@nino/ds/components/Button'
+import { Icon } from '@nino/ds/components/Icon'
+import { Slider } from '@nino/ds/components/Slider'
 import { Text } from '@nino/ds/components/Text'
 import { useObjectUrl } from '@shared/hooks/ui/useObjectUrl/useObjectUrl'
 import type { CropArea } from '@shared/types/ui/crop-area'
-import type { CropCorner } from '@shared/types/ui/crop-corner'
 import { cropToArea } from '@shared/utils/crop-image/crop-image'
 import { toCenteredCropArea } from '@shared/utils/toCenteredCropArea/toCenteredCropArea'
-import { toResizedCropArea } from '@shared/utils/toResizedCropArea/toResizedCropArea'
 
 import motion from '@styles/motion.module.css'
 import styles from './PhotoCropper.module.css'
 
-const CORNERS: CropCorner[] = ['nw', 'ne', 'sw', 'se']
 const KEYBOARD_STEP = 0.02
+const MIN_ZOOM = 1
+const MAX_ZOOM = 3
+const ZOOM_STEP = 0.1
 const DEFAULT_HINT =
-  'Arraste a área para escolher o que aparece. Os cantos mudam o tamanho.'
+  'Arraste a área de recorte para posicionar. Use o zoom para aproximar ou afastar.'
 
 const ARROW_MOVES: Record<string, [number, number]> = {
   ArrowRight: [1, 0],
@@ -30,7 +32,6 @@ const clamp = (value: number, max: number) =>
   Math.min(Math.max(value, 0), Math.max(max, 0))
 
 type Drag = {
-  corner: CropCorner | null
   pointerX: number
   pointerY: number
   stageWidth: number
@@ -66,26 +67,28 @@ export const PhotoCropper = ({
 }: PhotoCropperProps) => {
   const imageRef = useRef<HTMLImageElement>(null)
   const source = useObjectUrl(file)
+  const baseAreaRef = useRef<CropArea | null>(null)
   const dragRef = useRef<Drag | null>(null)
-  const [imageRatio, setImageRatio] = useState(1)
   const [area, setArea] = useState<CropArea | null>(null)
+  const [zoom, setZoom] = useState(MIN_ZOOM)
   const [error, setError] = useState<string | null>(null)
 
   const startCrop = () => {
     const image = imageRef.current
     if (!image?.naturalWidth || !image.naturalHeight) return
     const ratio = image.naturalWidth / image.naturalHeight
-    setImageRatio(ratio)
-    setArea(toCenteredCropArea(ratio, aspectRatio))
+    const initialArea = toCenteredCropArea(ratio, aspectRatio)
+    baseAreaRef.current = initialArea
+    setZoom(MIN_ZOOM)
+    setArea(initialArea)
   }
 
   const startDrag = (event: React.PointerEvent<HTMLElement>) => {
-    const stage = imageRef.current?.getBoundingClientRect()
+    const stage = imageRef.current?.parentElement?.getBoundingClientRect()
     if (!stage || !area) return
     event.stopPropagation()
     event.currentTarget.setPointerCapture(event.pointerId)
     dragRef.current = {
-      corner: (event.currentTarget.dataset.corner ?? null) as CropCorner | null,
       pointerX: event.clientX,
       pointerY: event.clientY,
       stageWidth: stage.width,
@@ -100,24 +103,14 @@ export const PhotoCropper = ({
     const deltaX = (event.clientX - start.pointerX) / start.stageWidth
     const deltaY = (event.clientY - start.pointerY) / start.stageHeight
 
-    if (!start.corner) {
-      setArea({
-        ...start.area,
-        x: clamp(start.area.x + deltaX, 1 - start.area.width),
-        y: clamp(start.area.y + deltaY, 1 - start.area.height),
-      })
-      return
-    }
-
-    setArea(
-      toResizedCropArea({
-        area: start.area,
-        corner: start.corner,
-        deltaX,
-        imageRatio,
-        aspectRatio,
-      })
-    )
+    setArea({
+      ...start.area,
+      x: clamp(start.area.x - deltaX * start.area.width, 1 - start.area.width),
+      y: clamp(
+        start.area.y - deltaY * start.area.height,
+        1 - start.area.height
+      ),
+    })
   }
 
   const endDrag = () => {
@@ -130,24 +123,37 @@ export const PhotoCropper = ({
     event.preventDefault()
 
     const [stepX, stepY] = move
-    if (event.shiftKey && stepY === 0) {
-      setArea(
-        toResizedCropArea({
-          area,
-          corner: 'se',
-          deltaX: stepX * KEYBOARD_STEP,
-          imageRatio,
-          aspectRatio,
-        })
-      )
-      return
-    }
-
     setArea({
       ...area,
-      x: clamp(area.x + stepX * KEYBOARD_STEP, 1 - area.width),
-      y: clamp(area.y + stepY * KEYBOARD_STEP, 1 - area.height),
+      x: clamp(area.x - stepX * KEYBOARD_STEP * area.width, 1 - area.width),
+      y: clamp(area.y - stepY * KEYBOARD_STEP * area.height, 1 - area.height),
     })
+  }
+
+  const changeZoom = (askedZoom: number) => {
+    const baseArea = baseAreaRef.current
+    if (!area || !baseArea) return
+
+    const nextZoom = Math.min(MAX_ZOOM, Math.max(MIN_ZOOM, askedZoom))
+    const width = baseArea.width / nextZoom
+    const height = baseArea.height / nextZoom
+    const centerX = area.x + area.width / 2
+    const centerY = area.y + area.height / 2
+
+    setArea({
+      x: clamp(centerX - width / 2, 1 - width),
+      y: clamp(centerY - height / 2, 1 - height),
+      width,
+      height,
+    })
+    setZoom(nextZoom)
+  }
+
+  const resetCrop = () => {
+    const baseArea = baseAreaRef.current
+    if (!baseArea) return
+    setArea(baseArea)
+    setZoom(MIN_ZOOM)
   }
 
   const handleConfirm = async () => {
@@ -177,14 +183,36 @@ export const PhotoCropper = ({
           : `${motion.deal} ${styles.editor}`
       }
     >
-      <Box className={styles.stage}>
-        {error && <Alert variant="error">{error}</Alert>}
+      <Box
+        className={styles.stage}
+        style={{
+          aspectRatio,
+          width: `min(100%, ${52 * aspectRatio}vh)`,
+        }}
+      >
+        {error && (
+          <Box className={styles.cropError}>
+            <Alert variant="error">{error}</Alert>
+          </Box>
+        )}
         <img
           ref={imageRef}
           src={source}
           alt="Imagem a recortar"
           draggable={false}
           className={styles.photoCropperImage}
+          style={{
+            position: 'absolute',
+            maxWidth: 'none',
+            maxHeight: 'none',
+            opacity: area ? 1 : 0,
+            ...(area && {
+              left: `${(-area.x / area.width) * 100}%`,
+              top: `${(-area.y / area.height) * 100}%`,
+              width: `${100 / area.width}%`,
+              height: `${100 / area.height}%`,
+            }),
+          }}
           onLoad={startCrop}
         />
 
@@ -192,16 +220,13 @@ export const PhotoCropper = ({
           <Box
             tabIndex={0}
             role="group"
-            aria-label={
-              'Área do recorte. Setas movem, shift com as setas ' +
-              'esquerda e direita mudam o tamanho.'
-            }
+            aria-label="Prévia do recorte. Use as setas para mover a imagem."
             className={styles.selection}
             style={{
-              left: `${area.x * 100}%`,
-              top: `${area.y * 100}%`,
-              width: `${area.width * 100}%`,
-              height: `${area.height * 100}%`,
+              left: 0,
+              top: 0,
+              width: '100%',
+              height: '100%',
             }}
             onPointerDown={startDrag}
             onPointerMove={drag}
@@ -210,27 +235,80 @@ export const PhotoCropper = ({
             onKeyDown={nudge}
           >
             <Box className={styles.guide} aria-hidden="true" />
-            {CORNERS.map((corner) => (
-              <Box
-                key={corner}
-                aria-hidden="true"
-                className={`${styles.handle} ${styles[corner]}`}
-                data-corner={corner}
-                onPointerDown={startDrag}
-                onPointerMove={drag}
-                onPointerUp={endDrag}
-                onPointerCancel={endDrag}
-              />
-            ))}
           </Box>
         )}
+      </Box>
+
+      <Box className={styles.zoomPanel}>
+        <div
+          className={styles.zoomControls}
+          style={{
+            display: 'grid',
+            gridTemplateColumns: '2.5rem minmax(0, 1fr) 2.5rem',
+            alignItems: 'end',
+            gap: '0.75rem',
+          }}
+        >
+          <Button
+            variant="ghost"
+            size="icon"
+            className={styles.zoomButton}
+            aria-label="Diminuir zoom"
+            title="Diminuir zoom"
+            disabled={!area || zoom <= MIN_ZOOM}
+            onClick={() => changeZoom(zoom - ZOOM_STEP)}
+          >
+            <Icon name="zoom-out" size="sm" />
+          </Button>
+          <Slider
+            label="Zoom (%)"
+            value={Math.round(zoom * 100)}
+            min={MIN_ZOOM * 100}
+            max={MAX_ZOOM * 100}
+            step={ZOOM_STEP * 100}
+            showValue
+            disabled={!area}
+            className={styles.zoomSlider}
+            onValueChange={(value) => changeZoom(value / 100)}
+          />
+          <Button
+            variant="ghost"
+            size="icon"
+            className={styles.zoomButton}
+            aria-label="Aumentar zoom"
+            title="Aumentar zoom"
+            disabled={!area || zoom >= MAX_ZOOM}
+            onClick={() => changeZoom(zoom + ZOOM_STEP)}
+          >
+            <Icon name="zoom-in" size="sm" />
+          </Button>
+        </div>
+        <Button
+          variant="ghost"
+          size="sm"
+          className={styles.resetButton}
+          disabled={!area}
+          onClick={resetCrop}
+        >
+          <Icon name="rotate-ccw" size="sm" />
+          Redefinir enquadramento
+        </Button>
       </Box>
 
       <Text as="p" className={styles.hint}>
         {hint}
       </Text>
 
-      <Box direction="column" gap={2}>
+      <Box direction="row" className={styles.actions}>
+        <Button
+          variant="ghost"
+          size="sm"
+          className={styles.cancel}
+          onClick={handleCancel}
+          disabled={isSending}
+        >
+          Escolher outra
+        </Button>
         <Button
           loading={isSending}
           disabled={!area}
@@ -239,28 +317,17 @@ export const PhotoCropper = ({
         >
           {confirmLabel}
         </Button>
-        <Box gap={2} align="center" justify="between">
+        {onRemove && (
           <Button
-            variant="ghost"
+            variant="danger"
             size="sm"
-            className={motion.press}
-            onClick={handleCancel}
+            className={`${motion.press} ${styles.remove}`}
+            onClick={handleRemove}
             disabled={isSending}
           >
-            Escolher outra
+            Remover foto
           </Button>
-          {onRemove && (
-            <Button
-              variant="danger"
-              size="sm"
-              className={motion.press}
-              onClick={handleRemove}
-              disabled={isSending}
-            >
-              Remover foto
-            </Button>
-          )}
-        </Box>
+        )}
       </Box>
     </Box>
   )

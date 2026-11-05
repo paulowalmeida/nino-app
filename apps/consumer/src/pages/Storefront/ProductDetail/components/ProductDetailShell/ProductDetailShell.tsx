@@ -12,6 +12,7 @@ type ProductDetailShellProps = {
   ariaLabel: string
   onClose: () => void
   media: ReactNode
+  stickyDetails?: ReactNode
   details: ReactNode
   footer?: ReactNode
 }
@@ -26,6 +27,7 @@ export const ProductDetailShell = ({
   ariaLabel,
   onClose,
   media,
+  stickyDetails,
   details,
   footer,
 }: ProductDetailShellProps) => {
@@ -62,7 +64,10 @@ export const ProductDetailShell = ({
             )}
             {media}
           </Box>
-          <Box className={styles.productDetailShellDetails}>{details}</Box>
+          <Box className={styles.productDetailShellDetails}>
+            {stickyDetails}
+            {details}
+          </Box>
           {footer && (
             <Box className={styles.productDetailShellFooter}>{footer}</Box>
           )}

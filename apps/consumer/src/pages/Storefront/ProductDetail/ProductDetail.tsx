@@ -51,6 +51,7 @@ export const ProductDetail = () => {
     <ProductDetailShell
       {...shellProps}
       media={<ProductHero />}
+      stickyDetails={<ProductSummary compact />}
       details={
         <>
           <ProductSummary />

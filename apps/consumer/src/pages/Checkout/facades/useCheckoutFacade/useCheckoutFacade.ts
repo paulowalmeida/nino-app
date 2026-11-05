@@ -44,6 +44,7 @@ export const useCheckoutFacadeValue = (pathSlug?: string | null) => {
     clearCart: cart.clear,
     slug,
     freeDelivery: offers.freeDelivery,
+    freeDeliveryOffers: offers.freeDeliveryOffers,
     giftOffers: offers.giftOffers,
     packageOffers: offers.packageOffers,
     coupon: couponState.coupon,

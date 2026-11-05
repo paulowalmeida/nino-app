@@ -3,7 +3,10 @@ import { useQuery } from '@tanstack/react-query'
 import { queryKeys } from '@constants/query-keys'
 import { promotionService } from '@shared/services/promotion/promotion.service/promotion.service'
 import { automaticDiscounts, couponSuggestions } from '@utils/discount/discount'
-import { pickFreeDeliveryOffer } from '@utils/free-delivery/free-delivery'
+import {
+  openFreeDeliveryOffers,
+  pickFreeDeliveryOffer,
+} from '@utils/free-delivery/free-delivery'
 import { pickGiftOffer } from '@utils/gift/gift'
 import type { PublicPromotion } from '@custom_types/promotion/public-promotion.type'
 
@@ -27,6 +30,7 @@ export const usePromotionOffers = (unitId: string | undefined) => {
 
   return {
     freeDelivery: pickFreeDeliveryOffer(query.data),
+    freeDeliveryOffers: openFreeDeliveryOffers(query.data),
     discountOffers: automaticDiscounts(query.data),
     giftOffer: pickGiftOffer(query.data),
     giftOffers: (query.data ?? []).filter(

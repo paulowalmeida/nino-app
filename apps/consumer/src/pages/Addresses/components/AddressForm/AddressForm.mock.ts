@@ -1,13 +1,6 @@
-import type { AddressLookup } from '@nino/lib/types/address/address-lookup'
 import type { Address } from '@custom_types/address/address'
 
-export const addressFormMock: { lookup: AddressLookup; address: Address } = {
-  lookup: {
-    street: 'Rua das Flores',
-    neighborhood: 'Centro',
-    city: 'São Paulo',
-    state: 'SP',
-  },
+export const addressFormMock: { address: Address } = {
   address: {
     id: 'address-1',
     street: 'Rua das Flores',

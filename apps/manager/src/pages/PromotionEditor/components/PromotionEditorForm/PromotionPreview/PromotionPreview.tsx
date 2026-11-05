@@ -41,6 +41,13 @@ export const PromotionPreview = () => {
         ?.name
     )
   )
+  const benefitHeadline =
+    values.campaignType === 'discount' &&
+    values.productScope === 'chosen' &&
+    (values.scopeProductIds.length > 0 || values.scopeCategoryIds.length > 0)
+      ? headline.replace(/ em qualquer pedido$/, '') +
+        ' em itens selecionados'
+      : headline
   const facts = [
     {
       label: 'Visibilidade',
@@ -102,7 +109,7 @@ export const PromotionPreview = () => {
           <Text as="span" className={styles.benefitLabel}>
             Benefício
           </Text>
-          <Text className={styles.headline}>{headline}</Text>
+          <Text className={styles.headline}>{benefitHeadline}</Text>
         </Box>
       </Box>
 

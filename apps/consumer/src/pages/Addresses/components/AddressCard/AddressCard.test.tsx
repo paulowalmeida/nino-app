@@ -6,6 +6,14 @@ import { useAddressesFacade } from '@pages/Addresses/facades/useAddressesFacade/
 import { AddressCard } from './AddressCard'
 import { addressCardMock } from './AddressCard.mock'
 
+vi.mock('@shared/hooks/useStoreAddressSearch/useStoreAddressSearch', () => ({
+  useStoreAddressSearch: vi.fn(() => ({
+    suggestions: [],
+    isSearching: false,
+    resolveSelectedAddress: vi.fn(),
+    isResolvingSelectedAddress: false,
+  })),
+}))
 vi.mock('@pages/Addresses/facades/useAddressesFacade/useAddressesFacade')
 
 const facadeWith = (overrides: Record<string, unknown>) =>

@@ -1,4 +1,4 @@
-import { onlyDigits } from '@nino/lib/services/zip-code.service'
+import { onlyDigits } from '@nino/ds/masks'
 import { toStoreSlug } from '@shared/adapters/store-slug.adapter/store-slug.adapter'
 import type { CreateStoreRequest } from '@shared/types/store/create-store-request'
 import type { FirstStoreFormValues } from '@shared/types/store/first-store-form-values'

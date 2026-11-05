@@ -44,6 +44,6 @@
 }
 
 .listPrice {
-  @apply text-sm text-muted-foreground;
+  @apply text-sm text-fg-muted;
   font-variant-numeric: tabular-nums;
 }

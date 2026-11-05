@@ -20,4 +20,18 @@ describe('OrderNotesField', () => {
       screen.getByText(orderNotesFieldMock.triggerLabel)
     ).toBeInTheDocument()
   })
+
+  it('exposes and enforces the API note boundary', () => {
+    vi.mocked(useCheckoutFacade).mockReturnValue({
+      register: () => ({}),
+    } as never)
+
+    render(<OrderNotesField />)
+
+    expect(screen.getByLabelText('Observação para a loja')).toHaveAttribute(
+      'maxlength',
+      '140'
+    )
+    expect(screen.getByText('Máximo de 140 caracteres')).toBeInTheDocument()
+  })
 })

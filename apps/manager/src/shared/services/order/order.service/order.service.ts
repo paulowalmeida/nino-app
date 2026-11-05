@@ -1,6 +1,7 @@
 import { api } from '@shared/services/http/http.service'
 import type { AssignKitchenAssigneeRequest } from '@shared/types/order/assign-kitchen-assignee-request'
 import type { CreateOrderRequest } from '@shared/types/order/create-order-request'
+import type { DeliveryQuoteDestination } from '@shared/types/order/delivery-quote-destination.type'
 import type { Order } from '@shared/types/order/order'
 import type { OrderAvailability } from '@shared/types/order/order-availability'
 import type { OrderChannel } from '@shared/types/order/order-channel'
@@ -22,10 +23,18 @@ type DeliveryQuote = { id: string; name: string; fee: number }
 type DeliveryQuoteResponse = Omit<DeliveryQuote, 'fee'> & {
   fee: number | string
 }
-type DeliveryCoordinates = {
-  latitude?: number
-  longitude?: number
-}
+
+const quoteParams = (
+  unitId: string,
+  destination: DeliveryQuoteDestination
+): URLSearchParams =>
+  'latitude' in destination
+    ? new URLSearchParams({
+        unitId,
+        latitude: String(destination.latitude),
+        longitude: String(destination.longitude),
+      })
+    : new URLSearchParams({ unitId, ...destination })
 
 const isCustomRange = (
   params: ReportRangeParams
@@ -48,23 +57,11 @@ export const OrderService = {
 
   getDeliveryQuote: (
     unitId: string,
-    zipCode: string,
-    coordinates: DeliveryCoordinates = {}
+    destination: DeliveryQuoteDestination
   ): Promise<DeliveryQuote | null> =>
     api
       .get<DeliveryQuoteResponse | null>(
-        (() => {
-          const params = new URLSearchParams({ unitId })
-          if (zipCode) params.set('zipCode', zipCode)
-          if (
-            coordinates.latitude !== undefined &&
-            coordinates.longitude !== undefined
-          ) {
-            params.set('latitude', String(coordinates.latitude))
-            params.set('longitude', String(coordinates.longitude))
-          }
-          return `orders/guest/quote?${params.toString()}`
-        })()
+        `orders/guest/quote?${quoteParams(unitId, destination).toString()}`
       )
       .then((quote) =>
         quote

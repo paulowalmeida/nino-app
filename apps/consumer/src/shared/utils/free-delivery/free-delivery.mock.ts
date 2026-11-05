@@ -25,3 +25,20 @@ export const visiblePromotionsMock: PublicPromotion[] = [
   { ...openOfferMock, id: 'pricier', minOrderValue: 90 },
   openOfferMock,
 ]
+
+export const zoneOffersMock: PublicPromotion[] = [
+  {
+    ...openOfferMock,
+    id: 'up-to-1km',
+    minOrderValue: 25,
+    allDeliveryZones: false,
+    deliveryZoneIds: ['zone-1km'],
+  },
+  {
+    ...openOfferMock,
+    id: 'up-to-2km',
+    minOrderValue: 40,
+    allDeliveryZones: false,
+    deliveryZoneIds: ['zone-2km'],
+  },
+]

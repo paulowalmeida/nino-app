@@ -6,13 +6,13 @@ import userEvent from '@testing-library/user-event'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 
 import { useDeliveryLocation } from '@pages/Units/hooks/useDeliveryLocation/useDeliveryLocation'
-import { useUnitAddressSearch } from '@pages/Units/hooks/useUnitAddressSearch/useUnitAddressSearch'
+import { useUnitAddressSearch } from '@shared/hooks/unit/useUnitAddressSearch/useUnitAddressSearch'
 import type { UnitDetail } from '@shared/types/store/unit-detail'
 
 import { UnitCard } from './UnitCard'
 import { unitCardDetailMock } from './UnitCard.mock'
 
-vi.mock('@pages/Units/hooks/useUnitAddressSearch/useUnitAddressSearch', () => ({
+vi.mock('@shared/hooks/unit/useUnitAddressSearch/useUnitAddressSearch', () => ({
   useUnitAddressSearch: vi.fn(),
 }))
 
@@ -113,7 +113,9 @@ describe('UnitCard', () => {
 
     expect(screen.getByDisplayValue('Loja principal')).toBeInTheDocument()
     expect(screen.getByDisplayValue('loja-principal')).toBeInTheDocument()
-    expect(screen.getByText('loja-principal.localhost:3002')).toBeInTheDocument()
+    expect(
+      screen.getByText('loja-principal.localhost:3002')
+    ).toBeInTheDocument()
     expect(screen.queryByText('http://')).not.toBeInTheDocument()
   })
 

@@ -19,9 +19,9 @@ export const UnitStep = () => {
     goToCompanyStep,
     unitForm: {
       register,
+      control,
       submit,
       setValue,
-      setError,
       fillSlugFromName,
       formState: { errors, isSubmitting },
     },
@@ -84,8 +84,8 @@ export const UnitStep = () => {
           <StoreFormAddressFields
             register={register}
             errors={errors}
+            control={control}
             setValue={setValue}
-            setError={setError}
           />
         </Box>
 

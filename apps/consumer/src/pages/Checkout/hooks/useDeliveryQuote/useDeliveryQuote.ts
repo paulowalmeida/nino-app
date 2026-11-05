@@ -2,40 +2,33 @@ import { useQuery } from '@tanstack/react-query'
 
 import { queryKeys } from '@constants/query-keys'
 import { deliveryZoneService } from '@pages/Checkout/services/delivery-zone/delivery-zone.service'
-
-type DeliveryQuoteAddress = {
-  providerId?: string
-  zipCode?: string
-  latitude?: number
-  longitude?: number
-}
+import type { DeliveryQuoteDestination } from '@pages/checkout/types/delivery-quote/DeliveryQuoteDestination.type'
 
 /**
- * WHY: a cotação só depende do CEP e das coordenadas — é só isso que
- * `getQuote` manda pro backend. Incluir rua/número/complemento/bairro na
- * chave da query fazia qualquer tecla nesses campos (mesmo sem mudar CEP ou
- * coordenada) disparar uma nova cotação, piscando o spinner e a taxa.
+ * WHY: a chave é só o destino que vai para o backend (o ponto ou o id do
+ * endereço salvo). Rua/complemento digitados não entram, senão cada tecla
+ * dispararia uma nova cotação e faria a taxa piscar.
  */
+const destinationKey = (destination: DeliveryQuoteDestination): string =>
+  'id' in destination
+    ? destination.id
+    : `${destination.latitude},${destination.longitude}`
+
 export const useDeliveryQuote = (
   unitId: string | undefined,
-  address: DeliveryQuoteAddress
+  destination: DeliveryQuoteDestination | undefined
 ) => {
-  const normalizedZipCode = address.zipCode?.replace(/\D/g, '') ?? ''
-  const hasCoordinates =
-    address.latitude !== undefined && address.longitude !== undefined
   const query = useQuery({
-    queryKey: [
-      ...queryKeys.deliveryQuote.byUnitAndZip(unitId ?? '', normalizedZipCode),
-      address.providerId,
-      address.latitude,
-      address.longitude,
-    ],
+    queryKey: queryKeys.deliveryQuote.byUnitAndDestination(
+      unitId ?? '',
+      destination ? destinationKey(destination) : ''
+    ),
     queryFn: () =>
-      deliveryZoneService.getQuote(unitId as string, normalizedZipCode, {
-        latitude: address.latitude,
-        longitude: address.longitude,
-      }),
-    enabled: !!unitId && (normalizedZipCode.length === 8 || hasCoordinates),
+      deliveryZoneService.getQuote(
+        unitId as string,
+        destination as DeliveryQuoteDestination
+      ),
+    enabled: !!unitId && !!destination,
   })
 
   return { ...query, quote: query.data ?? undefined }

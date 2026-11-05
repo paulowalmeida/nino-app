@@ -57,6 +57,22 @@ describe('ProductDetailShell', () => {
     expect(screen.getByText('Escolhas do produto')).toBeInTheDocument()
   })
 
+  it('places the sticky identity inside the scrollable details owner', () => {
+    render(
+      <ProductDetailShell
+        isDesktop={false}
+        ariaLabel={productDetailShellMock.ariaLabel}
+        onClose={vi.fn()}
+        media={null}
+        stickyDetails={<p>{productDetailShellMock.ariaLabel}</p>}
+        details={<p>{productDetailShellMock.details}</p>}
+      />
+    )
+
+    expect(screen.getByText(productDetailShellMock.ariaLabel)).toBeInTheDocument()
+    expect(screen.getByText(productDetailShellMock.details)).toBeInTheDocument()
+  })
+
   it('keeps only the back button on mobile/tablet, without a close X', () => {
     const onClose = vi.fn()
 

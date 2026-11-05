@@ -17,6 +17,7 @@ const withFacade = (overrides: Record<string, unknown>) =>
   vi.mocked(useCheckoutFacade).mockReturnValue({
     coupon: undefined,
     isCouponEligible: false,
+    isDelivery: true,
     couponSuggestions: [suggestedCouponMock],
     isAuthenticated: true,
     applyCouponCode,
@@ -93,5 +94,19 @@ describe('CheckoutCoupon', () => {
     ).toBeInTheDocument()
     await userEvent.click(screen.getByRole('button', { name: 'Remover' }))
     expect(removeCoupon).toHaveBeenCalled()
+  })
+
+  it('uses pickup context when an applied coupon is ineligible', () => {
+    withFacade({
+      coupon: suggestedCouponMock,
+      isCouponEligible: false,
+      isDelivery: false,
+    })
+
+    render(<CheckoutCoupon />)
+
+    expect(
+      screen.getByText(/confira o pedido mínimo e a retirada/)
+    ).toBeInTheDocument()
   })
 })

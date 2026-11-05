@@ -1,44 +1,82 @@
+import { useState } from 'react'
+
+import { useWatch } from 'react-hook-form'
 import type { UseFormReturn } from 'react-hook-form'
 
 import { Box } from '@nino/ds/components/Box'
+import { Button } from '@nino/ds/components/Button'
 import { FormField } from '@nino/ds/components/FormField'
+import { Icon } from '@nino/ds/components/Icon'
 import { Input } from '@nino/ds/components/Input'
 import { Text } from '@nino/ds/components/Text'
 import type { SaveAddressRequest } from '@custom_types/address/save-address-request'
-import type { AddressLookupStatus } from '@pages/Addresses/types/AddressLookupStatus.type'
+import { AddressSuggestionList } from '@shared/components/AddressSuggestionList/AddressSuggestionList'
+import { useStoreAddressSearch } from '@shared/hooks/useStoreAddressSearch/useStoreAddressSearch'
 
 import { AddressZipCodeField } from '../AddressZipCodeField/AddressZipCodeField'
 import styles from './AddressFormFields.module.css'
 
 type AddressFormFieldsProps = {
   form: UseFormReturn<SaveAddressRequest>
-  lookup: AddressLookupStatus
-  isLookingUp: boolean
-  lookupAddress: Parameters<typeof AddressZipCodeField>[0]['lookupAddress']
-  onLookupChange: (status: AddressLookupStatus) => void
+  storeId: string | undefined
+  storeState: string | undefined
 }
 
 const required = (value: string) => value.trim() !== '' || 'Campo obrigatório'
 
 export const AddressFormFields = ({
   form,
-  lookup,
-  isLookingUp,
-  lookupAddress,
-  onLookupChange,
+  storeId,
+  storeState,
 }: AddressFormFieldsProps) => {
-  const { register, formState } = form
+  const { register, formState, control, setValue } = form
   const stateField = register('state', { validate: required })
+  const [isLookupRequested, setIsLookupRequested] = useState(false)
+  const [selectionError, setSelectionError] = useState<string | null>(null)
+  const [searchedAddress, setSearchedAddress] = useState('')
+  const street = useWatch({ control, name: 'street' }) ?? ''
+  const number = useWatch({ control, name: 'number' }) ?? ''
+  const state = useWatch({ control, name: 'state' }) ?? ''
+  const addressSearch = useStoreAddressSearch(
+    storeId,
+    state || storeState,
+    street,
+    number,
+    isLookupRequested
+  )
+
+  const startAddressLookup = () => {
+    if (!street.trim() || !number.trim()) return
+    const typedAddress = `${street.trim()}, ${number.trim()}`
+    if (typedAddress === searchedAddress) return
+
+    setSearchedAddress(typedAddress)
+    setSelectionError(null)
+    setIsLookupRequested(true)
+  }
+
+  const selectAddress = async (placeId: string) => {
+    setIsLookupRequested(false)
+    try {
+      const address = await addressSearch.resolveSelectedAddress(placeId)
+      const options = { shouldDirty: true, shouldValidate: true }
+      setValue('zipCode', address.zipCode, options)
+      setValue('street', address.street, options)
+      setValue('number', address.number || number, options)
+      setValue('neighborhood', address.neighborhood, options)
+      setValue('city', address.city, options)
+      setValue('state', address.state, options)
+      setSearchedAddress(`${address.street}, ${address.number || number}`)
+    } catch {
+      setSelectionError('A loja não entrega nesse endereço.')
+    }
+  }
+
+  const isConfirmingAddress =
+    isLookupRequested || addressSearch.isResolvingSelectedAddress
 
   return (
     <>
-      <AddressZipCodeField
-        form={form}
-        lookup={lookup}
-        isLookingUp={isLookingUp}
-        lookupAddress={lookupAddress}
-        onLookupChange={onLookupChange}
-      />
       <Box className={styles.pair}>
         <FormField
           label="Rua"
@@ -48,7 +86,10 @@ export const AddressFormFields = ({
           <Input
             autoComplete="address-line1"
             className={styles.addressFormFieldsInput}
-            {...register('street', { validate: required })}
+            {...register('street', {
+              validate: required,
+              onBlur: startAddressLookup,
+            })}
           />
         </FormField>
         <FormField
@@ -59,10 +100,41 @@ export const AddressFormFields = ({
           <Input
             inputMode="numeric"
             className={styles.addressFormFieldsInput}
-            {...register('number', { validate: required })}
+            {...register('number', {
+              validate: required,
+              onBlur: startAddressLookup,
+            })}
           />
         </FormField>
       </Box>
+      {selectionError && (
+        <Text size="sm" color="danger">
+          {selectionError}
+        </Text>
+      )}
+      {isConfirmingAddress && (
+        <Box direction="column" gap={2}>
+          <Button
+            type="button"
+            variant="ghost"
+            className={styles.confirmBack}
+            disabled={addressSearch.isResolvingSelectedAddress}
+            onClick={() => setIsLookupRequested(false)}
+          >
+            <Icon name="arrow-left" size="sm" />
+            Confirme o endereço
+          </Button>
+          <AddressSuggestionList
+            searchedText={`${street}, ${number}`}
+            suggestions={addressSearch.suggestions}
+            isLoading={
+              addressSearch.isSearching ||
+              addressSearch.isResolvingSelectedAddress
+            }
+            onSelect={(placeId) => void selectAddress(placeId)}
+          />
+        </Box>
+      )}
       <FormField
         label={
           <>
@@ -121,6 +193,7 @@ export const AddressFormFields = ({
           />
         </FormField>
       </Box>
+      <AddressZipCodeField form={form} />
     </>
   )
 }

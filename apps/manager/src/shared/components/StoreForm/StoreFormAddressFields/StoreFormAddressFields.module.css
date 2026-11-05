@@ -1,6 +1,5 @@
 @reference "@nino/ds/globals.css";
 
-
 .storeFormAddressFields {
   container-type: inline-size;
 }
@@ -9,25 +8,27 @@
   @apply text-xs font-bold uppercase tracking-[0.12em] text-fg-faint;
 }
 
+.rowCity {
+  @apply grid gap-4;
+  grid-template-columns: 1fr 5.5rem;
+}
 
 .rowLocator {
   @apply grid gap-4;
-  grid-template-columns: 9rem 7rem;
-  grid-template-areas:
-    'zipCode number'
-    'street street';
+  grid-template-columns: 1fr 7rem;
+  grid-template-areas: 'street number';
 }
 
-.zipCodeField {
-  grid-area: zipCode;
+.streetField {
+  grid-area: street;
 }
 
 .numberField {
   grid-area: number;
 }
 
-.streetField {
-  grid-area: street;
+.confirmBack {
+  @apply h-auto self-start gap-2 px-0 font-semibold text-fg-default;
 }
 
 .rowPlace {
@@ -35,19 +36,8 @@
   grid-template-columns: 1fr;
 }
 
-
-.rowCity {
-  @apply grid gap-4;
-  grid-template-columns: 1fr 5.5rem;
-}
-
 @container (min-width: 32rem) {
-  .rowLocator {
-    grid-template-columns: 9rem 7rem 1fr;
-    grid-template-areas: 'zipCode number street';
-  }
-
   .rowPlace {
-    grid-template-columns: 1fr 1.4fr;
+    grid-template-columns: 1fr 1.4fr 9rem;
   }
 }

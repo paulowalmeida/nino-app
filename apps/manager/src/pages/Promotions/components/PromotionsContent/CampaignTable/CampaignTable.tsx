@@ -168,6 +168,11 @@ export const CampaignTable = ({
               const { headline, period } = promotionSummaryParts(promotion)
               const badge = PROMOTION_STATE_BADGES[promotion.state]
               const conditions = conditionsLabel(promotion)
+              const actions = campaignActions(promotion)
+              const actionItems = actions.map((action) =>
+                menuItemOf(promotion, action)
+              )
+              const [onlyAction] = actionItems
 
               return (
                 <TableRow
@@ -220,24 +225,40 @@ export const CampaignTable = ({
                   </TableCell>
 
                   <TableCell className={`${styles.colRight} ${styles.actionsCol}`}>
-                    <Menu
-                      contentClassName={styles.menuPanel}
-                      placement="bottom-end"
-                      trigger={
-                        <Button
-                          variant="ghost"
-                          size="icon"
-                          disabled={changingId === promotion.id}
-                          className={`${motion.press} ${styles.kebab}`}
-                          aria-label={`Ações de ${headline}`}
-                        >
-                          <Icon name="more-horizontal" />
-                        </Button>
-                      }
-                      items={campaignActions(promotion).map((action) =>
-                        menuItemOf(promotion, action)
-                      )}
-                    />
+                    {actions.length > 1 ? (
+                      <Menu
+                        contentClassName={styles.menuPanel}
+                        placement="bottom-end"
+                        trigger={
+                          <Button
+                            variant="ghost"
+                            size="icon"
+                            disabled={changingId === promotion.id}
+                            className={`${motion.press} ${styles.kebab}`}
+                            aria-label={`Ações de ${headline}`}
+                          >
+                            <Icon name="more-horizontal" />
+                          </Button>
+                        }
+                        items={actionItems}
+                      />
+                    ) : onlyAction && 'onSelect' in onlyAction ? (
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        disabled={changingId === promotion.id}
+                        className={`${motion.press} ${styles.kebab}`}
+                        aria-label={`${onlyAction.label} ${headline}`}
+                        title={onlyAction.label}
+                        onClick={onlyAction.onSelect}
+                      >
+                        <Icon
+                          name={
+                            actions[0] === 'duplicate' ? 'copy' : 'archive'
+                          }
+                        />
+                      </Button>
+                    ) : null}
                   </TableCell>
                 </TableRow>
               )

@@ -1,12 +1,8 @@
-import { ReactNode, useState } from 'react'
+import { type ReactNode, useState } from 'react'
 
 import { Tabs as ArkTabs } from '@ark-ui/react/tabs'
-
 import { mergeClasses } from '@ds/lib/mergeClasses/mergeClasses'
-import {
-  Responsive,
-  responsiveToClasses,
-} from '@ds/lib/responsive/responsive'
+import { Responsive, responsiveToClasses } from '@ds/lib/responsive/responsive'
 
 import styles from './Tabs.module.css'
 

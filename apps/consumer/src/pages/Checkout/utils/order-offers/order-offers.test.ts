@@ -23,7 +23,7 @@ describe(orderOffers.name, () => {
     expect(
       orderOffers({
         freeDelivery: autoFreeDeliveryMock,
-          coupon: undefined,
+        coupon: undefined,
         hasPromotionEnded: true,
       })
     ).toEqual({

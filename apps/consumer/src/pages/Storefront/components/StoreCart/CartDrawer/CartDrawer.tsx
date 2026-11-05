@@ -81,6 +81,7 @@ export const CartDrawer = () => {
         }
         size={isDesktop ? '25rem' : 'var(--cart-drawer-height)'}
         contentClassName={isDesktop ? styles.cartDrawerPanel : styles.sheet}
+        bodyClassName={styles.cartDrawerViewport}
       >
         <Box className={styles.cartDrawerBody}>
           {lines.length === 0 ? (

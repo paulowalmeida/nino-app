@@ -1,24 +1,25 @@
 import { useRef, useState } from 'react'
 import type { ChangeEvent } from 'react'
 import { Controller, useWatch } from 'react-hook-form'
+import { Link, useParams } from 'react-router'
 
 import { Collapsible } from '@nino/ds/components/Collapsible'
 import { Box } from '@nino/ds/components/Box'
 import { Button } from '@nino/ds/components/Button'
+import { EmptyState } from '@nino/ds/components/EmptyState'
 import { FormField } from '@nino/ds/components/FormField'
 import { Icon } from '@nino/ds/components/Icon'
 import { Input } from '@nino/ds/components/Input'
 import { MaskedInput } from '@nino/ds/components/MaskedInput'
-import { Skeleton } from '@nino/ds/components/Skeleton'
 import { Text } from '@nino/ds/components/Text'
 import { Heading } from '@nino/ds/components/Heading'
 import { RadioGroup } from '@nino/ds/components/RadioGroup'
 import { Spinner } from '@nino/ds/components/Spinner'
 import { maskZipCode } from '@nino/ds/masks'
-import { ADDRESS_LOOKUP_SKELETON_ROWS } from '@pages/checkout/constants/addressLookupSkeletonRows.constants'
 import { useCheckoutFacade } from '@pages/checkout/facades/useCheckoutFacade/useCheckoutFacade'
 import type { CheckoutFacade } from '@pages/checkout/facades/useCheckoutFacade/useCheckoutFacade'
-import { useGuestAddressSearch } from '@pages/checkout/hooks/useGuestAddressSearch/useGuestAddressSearch'
+import { AddressSuggestionList } from '@shared/components/AddressSuggestionList/AddressSuggestionList'
+import { useStoreAddressSearch } from '@shared/hooks/useStoreAddressSearch/useStoreAddressSearch'
 import { brl } from '@utils/money'
 
 import { DisclosureTrigger } from '../DisclosureTrigger/DisclosureTrigger'
@@ -45,27 +46,40 @@ export const DeliveryAddressFields = ({
     zone: quote,
     deliveryDiscount,
     isQuoting,
+    isDeliveryQuoteError,
+    retryDeliveryQuote,
     isAuthenticated,
     addresses,
     store,
   } = useCheckoutFacade(checkout)
+  const { slug: pathSlug } = useParams()
+  const accountAddressesHref = `${pathSlug ? `/${pathSlug}` : ''}/conta/enderecos`
   const [isConfirmingAddress, setIsConfirmingAddress] = useState(false)
   const [selectionError, setSelectionError] = useState<string | null>(null)
   const searchedAddress = useRef('')
-  const zipCodeField = register('guestZipCode')
-  const guestNeighborhoodField = register('guestNeighborhood', {
-    required: 'Informe o bairro',
-  })
-  const guestComplementField = register('guestComplement')
+  /* WHY: `register` já marca o campo como montado; sem o input na tela
+   * (cliente logado) ele nunca desmonta, e o "Informe o bairro" invisível
+   * barra o envio do pedido. */
+  const guestFields = isAuthenticated
+    ? null
+    : {
+        zipCode: register('guestZipCode'),
+        neighborhood: register('guestNeighborhood', {
+          required: 'Informe o bairro',
+        }),
+        complement: register('guestComplement'),
+      }
   const guestStreet = useWatch({ control, name: 'guestStreet' }) ?? ''
   const guestNumber = useWatch({ control, name: 'guestNumber' }) ?? ''
   const guestState = useWatch({ control, name: 'guestState' })
   const {
     suggestions,
     isSearching: isSearchingAddress,
+    isSearchError: isAddressSearchError,
+    retrySearch: retryAddressSearch,
     resolveSelectedAddress,
     isResolvingSelectedAddress,
-  } = useGuestAddressSearch(
+  } = useStoreAddressSearch(
     store?.id,
     guestState || store?.state,
     guestStreet,
@@ -156,41 +170,15 @@ export const DeliveryAddressFields = ({
     }
   }
 
-  const addressResults = isLoadingAddresses ? (
-    <Box direction="column" gap={1.5} aria-live="polite">
-      <Text size="sm" color="muted">
-        Procurando {guestStreet}, {guestNumber}…
-      </Text>
-      {ADDRESS_LOOKUP_SKELETON_ROWS.map((row) => (
-        <Skeleton key={row} className={styles.addressOptionPlaceholder} />
-      ))}
-    </Box>
-  ) : suggestions.length > 0 ? (
-    <Box direction="column" gap={1.5}>
-      {suggestions.map((suggestion) => (
-        <Button
-          key={suggestion.placeId}
-          type="button"
-          variant="ghost"
-          onClick={() => void selectPrediction(suggestion.placeId)}
-          className={styles.addressOption}
-        >
-          <Icon name="map-pin" size="sm" className={styles.addressPin} />
-          <Box direction="column" gap={0.5} className={styles.addressText}>
-            <Text as="span" size="sm" weight="semibold">
-              {suggestion.mainText}
-            </Text>
-            <Text as="span" size="xs" color="muted">
-              {suggestion.secondaryText}
-            </Text>
-          </Box>
-        </Button>
-      ))}
-    </Box>
-  ) : (
-    <Text color="muted">
-      Nenhum endereço encontrado. Confira o logradouro e o número.
-    </Text>
+  const addressResults = (
+    <AddressSuggestionList
+      searchedText={`${guestStreet}, ${guestNumber}`}
+      suggestions={suggestions}
+      isLoading={isLoadingAddresses}
+      isError={isAddressSearchError}
+      onRetry={() => void retryAddressSearch()}
+      onSelect={(placeId) => void selectPrediction(placeId)}
+    />
   )
 
   return (
@@ -218,7 +206,21 @@ export const DeliveryAddressFields = ({
                 visible={isQuoting}
                 label="Calculando a taxa de entrega"
               />
-              {hasDeliveryQuote ? (
+              {isDeliveryQuoteError ? (
+                <>
+                  <Text as="span" color="danger">
+                    Não foi possível calcular a taxa de entrega.
+                  </Text>
+                  <Button
+                    type="button"
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => void retryDeliveryQuote()}
+                  >
+                    Tentar novamente
+                  </Button>
+                </>
+              ) : hasDeliveryQuote ? (
                 <Text as="span" className={styles.deliveryFee}>
                   {deliveryDiscount > 0
                     ? 'Frete grátis'
@@ -236,7 +238,18 @@ export const DeliveryAddressFields = ({
         />
       </FormField>
 
-      {isAuthenticated ? (
+      {isAuthenticated && addresses.length === 0 ? (
+        <EmptyState
+          action={
+            <Link to={accountAddressesHref} className={styles.addAddressLink}>
+              Cadastrar endereço
+            </Link>
+          }
+        >
+          Você ainda não tem endereço salvo. Cadastre um na sua conta para
+          receber em casa, ou escolha retirada.
+        </EmptyState>
+      ) : isAuthenticated ? (
         <FormField error={errors.deliveryAddressId?.message}>
           <Controller
             name="deliveryAddressId"
@@ -281,83 +294,88 @@ export const DeliveryAddressFields = ({
           {addressResults}
         </Box>
       ) : (
-        <>
-          {selectionError && (
-            <Text size="sm" color="danger">
-              {selectionError}
-            </Text>
-          )}
+        guestFields && (
+          <>
+            {selectionError && (
+              <Text size="sm" color="danger">
+                {selectionError}
+              </Text>
+            )}
 
-          <Box className={styles.deliveryAddressFieldsRow}>
-            <FormField>
-              <Input
-                placeholder="Rua, avenida, travessa…"
-                aria-label="Endereço"
-                value={guestStreet}
-                onChange={handleStreetChange}
-                onBlur={startAddressLookup}
-              />
-            </FormField>
-            <FormField>
-              <Input
-                placeholder="Nº"
-                aria-label="Número"
-                inputMode="numeric"
-                value={guestNumber}
-                onChange={handleNumberChange}
-                onBlur={startAddressLookup}
-              />
-            </FormField>
-          </Box>
-
-          <Collapsible
-            className={styles.disclosure}
-            trigger={
-              <DisclosureTrigger>Complemento ou referência</DisclosureTrigger>
-            }
-          >
-            <Box className={styles.disclosureFields}>
-              <Input
-                placeholder="Apto, bloco ou ponto de referência"
-                aria-label="Complemento ou ponto de referência"
-                autoComplete="address-line2"
-                {...guestComplementField}
-              />
+            <Box className={styles.deliveryAddressFieldsRow}>
+              <FormField>
+                <Input
+                  placeholder="Rua, avenida, travessa…"
+                  aria-label="Endereço"
+                  value={guestStreet}
+                  onChange={handleStreetChange}
+                  onBlur={startAddressLookup}
+                />
+              </FormField>
+              <FormField>
+                <Input
+                  placeholder="Nº"
+                  aria-label="Número"
+                  inputMode="numeric"
+                  value={guestNumber}
+                  onChange={handleNumberChange}
+                  onBlur={startAddressLookup}
+                />
+              </FormField>
             </Box>
-          </Collapsible>
 
-          <Box className={styles.deliveryAddressFieldsRow}>
-            <FormField error={errors.guestNeighborhood?.message}>
-              <Input
-                placeholder="Bairro"
-                aria-label="Bairro"
-                autoComplete="address-level3"
-                error={!!errors.guestNeighborhood}
-                {...guestNeighborhoodField}
-                onChange={(event) =>
-                  handleManualAddressChange(
-                    guestNeighborhoodField.onChange,
-                    event,
-                    true
-                  )
-                }
-              />
-            </FormField>
-            <FormField error={errors.guestZipCode?.message}>
-              <MaskedInput
-                {...zipCodeField}
-                mask={maskZipCode}
-                placeholder="CEP"
-                aria-label="CEP"
-                autoComplete="postal-code"
-                inputMode="numeric"
-                onChange={(event) =>
-                  handleManualAddressChange(zipCodeField.onChange, event)
-                }
-              />
-            </FormField>
-          </Box>
-        </>
+            <Collapsible
+              className={styles.disclosure}
+              trigger={
+                <DisclosureTrigger>Complemento ou referência</DisclosureTrigger>
+              }
+            >
+              <Box className={styles.disclosureFields}>
+                <Input
+                  placeholder="Apto, bloco ou ponto de referência"
+                  aria-label="Complemento ou ponto de referência"
+                  autoComplete="address-line2"
+                  {...guestFields.complement}
+                />
+              </Box>
+            </Collapsible>
+
+            <Box className={styles.deliveryAddressFieldsRow}>
+              <FormField error={errors.guestNeighborhood?.message}>
+                <Input
+                  placeholder="Bairro"
+                  aria-label="Bairro"
+                  autoComplete="address-level3"
+                  error={!!errors.guestNeighborhood}
+                  {...guestFields.neighborhood}
+                  onChange={(event) =>
+                    handleManualAddressChange(
+                      guestFields.neighborhood.onChange,
+                      event,
+                      true
+                    )
+                  }
+                />
+              </FormField>
+              <FormField error={errors.guestZipCode?.message}>
+                <MaskedInput
+                  {...guestFields.zipCode}
+                  mask={maskZipCode}
+                  placeholder="CEP"
+                  aria-label="CEP"
+                  autoComplete="postal-code"
+                  inputMode="numeric"
+                  onChange={(event) =>
+                    handleManualAddressChange(
+                      guestFields.zipCode.onChange,
+                      event
+                    )
+                  }
+                />
+              </FormField>
+            </Box>
+          </>
+        )
       )}
     </Box>
   )

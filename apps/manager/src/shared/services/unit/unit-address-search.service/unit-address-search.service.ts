@@ -6,14 +6,14 @@ import { api } from '@shared/services/http/http.service'
 
 export const UnitAddressSearchService = {
   search: (
-    unitId: string,
+    unitId: string | null,
     street: string,
     state: string,
     sessionToken: string,
     city?: string
   ): Promise<AddressPrediction[]> =>
     api.getAll<AddressPrediction[]>('addresses/unit/search', {
-      unitId,
+      ...(unitId ? { unitId } : {}),
       street,
       state,
       sessionToken,
@@ -21,12 +21,12 @@ export const UnitAddressSearchService = {
     }),
 
   details: (
-    unitId: string,
+    unitId: string | null,
     placeId: string,
     sessionToken: string
   ): Promise<AddressSearchResult> =>
     api.getAll<AddressSearchResult>(`addresses/unit/${placeId}/details`, {
-      unitId,
+      ...(unitId ? { unitId } : {}),
       sessionToken,
     }),
 }

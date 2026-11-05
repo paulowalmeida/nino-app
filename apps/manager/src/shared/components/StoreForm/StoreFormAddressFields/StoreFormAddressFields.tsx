@@ -1,95 +1,140 @@
-import { useEffect, useRef, useState } from 'react'
+import { useState } from 'react'
 
 import type {
+  Control,
   FieldErrors,
   UseFormRegister,
-  UseFormSetError,
   UseFormSetValue,
 } from 'react-hook-form'
+import { useWatch } from 'react-hook-form'
 
 import { Box } from '@nino/ds/components/Box'
+import { Button } from '@nino/ds/components/Button'
 import { FormField } from '@nino/ds/components/FormField'
+import { Icon } from '@nino/ds/components/Icon'
 import { Input } from '@nino/ds/components/Input'
 import { MaskedInput } from '@nino/ds/components/MaskedInput'
 import { Text } from '@nino/ds/components/Text'
 import { maskZipCode } from '@nino/ds/masks'
-import { lookupZipCode, onlyDigits } from '@nino/lib/services/zip-code.service'
+import { AddressSuggestionList } from '@shared/components/AddressSuggestionList/AddressSuggestionList'
+import { useUnitAddressSearch } from '@shared/hooks/unit/useUnitAddressSearch/useUnitAddressSearch'
 import type { FirstStoreFormValues } from '@shared/types/store/first-store-form-values'
 import { riseDelay } from '@shared/utils/rise-delay/rise-delay'
 
 import motion from '@styles/rise.module.css'
 import styles from './StoreFormAddressFields.module.css'
 
-export type StoreFormAddressFieldsProps = {
+type StoreFormAddressFieldsProps = {
   register: UseFormRegister<FirstStoreFormValues>
   errors: FieldErrors<FirstStoreFormValues>
+  control: Control<FirstStoreFormValues>
   setValue: UseFormSetValue<FirstStoreFormValues>
-  setError: UseFormSetError<FirstStoreFormValues>
 }
 
 export const StoreFormAddressFields = ({
   register,
   errors,
+  control,
   setValue,
-  setError,
 }: StoreFormAddressFieldsProps) => {
-  const [isLookingUp, setIsLookingUp] = useState(false)
-  const lookupRequest = useRef(0)
-  const isMounted = useRef(true)
+  const [isLookupRequested, setIsLookupRequested] = useState(false)
+  const [selectionError, setSelectionError] = useState<string | null>(null)
+  const [searchedAddress, setSearchedAddress] = useState('')
+  const street = useWatch({ control, name: 'street' }) ?? ''
+  const number = useWatch({ control, name: 'number' }) ?? ''
+  const city = useWatch({ control, name: 'city' }) ?? ''
+  const state = useWatch({ control, name: 'state' }) ?? ''
+  const addressSearch = useUnitAddressSearch(
+    null,
+    street,
+    number,
+    state,
+    city,
+    isLookupRequested
+  )
 
-  useEffect(() => () => {
-    isMounted.current = false
-  }, [])
-
-  const handleZipCodeBlur = async (
-    event: React.FocusEvent<HTMLInputElement>
-  ) => {
-    const requestId = ++lookupRequest.current
-    const zipCode = event.target.value
-    if (onlyDigits(zipCode).length !== 8) return
-
-    setIsLookingUp(true)
-    const address = await lookupZipCode(zipCode).finally(() => {
-      if (isMounted.current && requestId === lookupRequest.current) {
-        setIsLookingUp(false)
-      }
-    })
-
-    if (!isMounted.current || requestId !== lookupRequest.current) return
-
-    if (!address) {
-      setError('zipCode', { message: 'CEP não encontrado' })
+  const startAddressLookup = () => {
+    if (!street.trim() || !number.trim() || !city.trim() || !state.trim()) {
       return
     }
+    const typedAddress = `${street.trim()}, ${number.trim()}`
+    if (typedAddress === searchedAddress) return
 
-    setValue('street', address.street)
-    setValue('neighborhood', address.neighborhood)
-    setValue('city', address.city)
-    setValue('state', address.state)
+    setSearchedAddress(typedAddress)
+    setSelectionError(null)
+    setIsLookupRequested(true)
   }
 
+  const selectAddress = async (placeId: string) => {
+    setIsLookupRequested(false)
+    try {
+      const address = await addressSearch.resolveSelectedAddress(placeId)
+      const options = { shouldDirty: true, shouldValidate: true }
+      setValue('zipCode', address.zipCode, options)
+      setValue('street', address.street, options)
+      setValue('number', address.number || number, options)
+      setValue('neighborhood', address.neighborhood, options)
+      setValue('city', address.city, options)
+      setValue('state', address.state, options)
+      setSearchedAddress(`${address.street}, ${address.number || number}`)
+    } catch {
+      setSelectionError(
+        'Não foi possível preencher esse endereço. Escolha outra sugestão.'
+      )
+    }
+  }
+
+  const isConfirmingAddress =
+    isLookupRequested || addressSearch.isResolvingSelectedAddress
+
   return (
-    <Box as="section" direction="column" gap={4} className={styles.storeFormAddressFields}>
-      <Text as="p" className={`${motion.rise} ${styles.groupTitle}`}>Onde fica</Text>
+    <Box
+      as="section"
+      direction="column"
+      gap={4}
+      className={styles.storeFormAddressFields}
+    >
+      <Text as="p" className={`${motion.rise} ${styles.groupTitle}`}>
+        Onde fica
+      </Text>
+
+      <Box
+        className={`${motion.rise} ${styles.rowCity}`}
+        style={riseDelay(300)}
+      >
+        <FormField label="Cidade" error={errors.city?.message}>
+          <Input
+            placeholder="Belém"
+            autoComplete="address-level2"
+            {...register('city', { required: 'Informe a cidade' })}
+          />
+        </FormField>
+
+        <FormField label="UF" error={errors.state?.message}>
+          <Input
+            placeholder="PA"
+            maxLength={2}
+            autoComplete="address-level1"
+            {...register('state', { required: 'Informe o estado' })}
+          />
+        </FormField>
+      </Box>
 
       <Box
         className={`${motion.rise} ${styles.rowLocator}`}
-        style={riseDelay(300)}
+        style={riseDelay(340)}
       >
         <FormField
-          label="CEP"
-          className={styles.zipCodeField}
-          error={errors.zipCode?.message}
+          label="Logradouro"
+          className={styles.streetField}
+          error={errors.street?.message}
         >
-          <MaskedInput
-            mask={maskZipCode}
-            placeholder="00000-000"
-            autoComplete="postal-code"
-            error={!!errors.zipCode}
-            // eslint-disable-next-line react-hooks/refs -- react-hook-form requires register during render.
-            {...register('zipCode', {
-              required: 'Informe o CEP',
-              onBlur: handleZipCodeBlur,
+          <Input
+            placeholder="Rua das Flores"
+            autoComplete="address-line1"
+            {...register('street', {
+              required: 'Informe o logradouro',
+              onBlur: startAddressLookup,
             })}
           />
         </FormField>
@@ -102,22 +147,43 @@ export const StoreFormAddressFields = ({
           <Input
             placeholder="123"
             autoComplete="off"
-            {...register('number', { required: 'Informe o número' })}
-          />
-        </FormField>
-
-        <FormField
-          label="Logradouro"
-          className={styles.streetField}
-          error={errors.street?.message}
-        >
-          <Input
-            placeholder={isLookingUp ? 'Buscando…' : 'Rua das Flores'}
-            autoComplete="address-line1"
-            {...register('street', { required: 'Informe o logradouro' })}
+            {...register('number', {
+              required: 'Informe o número',
+              onBlur: startAddressLookup,
+            })}
           />
         </FormField>
       </Box>
+
+      {selectionError && (
+        <Text size="sm" color="danger">
+          {selectionError}
+        </Text>
+      )}
+
+      {isConfirmingAddress && (
+        <Box direction="column" gap={2}>
+          <Button
+            type="button"
+            variant="ghost"
+            className={styles.confirmBack}
+            disabled={addressSearch.isResolvingSelectedAddress}
+            onClick={() => setIsLookupRequested(false)}
+          >
+            <Icon name="arrow-left" size="sm" />
+            Confirme o endereço
+          </Button>
+          <AddressSuggestionList
+            searchedText={`${street}, ${number}`}
+            suggestions={addressSearch.suggestions}
+            isLoading={
+              addressSearch.isSearching ||
+              addressSearch.isResolvingSelectedAddress
+            }
+            onSelect={(placeId) => void selectAddress(placeId)}
+          />
+        </Box>
+      )}
 
       <Box
         className={`${motion.rise} ${styles.rowPlace}`}
@@ -138,26 +204,14 @@ export const StoreFormAddressFields = ({
             {...register('neighborhood', { required: 'Informe o bairro' })}
           />
         </FormField>
-      </Box>
 
-      <Box
-        className={`${motion.rise} ${styles.rowCity}`}
-        style={riseDelay(420)}
-      >
-        <FormField label="Cidade" error={errors.city?.message}>
-          <Input
-            placeholder="Belém"
-            autoComplete="address-level2"
-            {...register('city', { required: 'Informe a cidade' })}
-          />
-        </FormField>
-
-        <FormField label="UF" error={errors.state?.message}>
-          <Input
-            placeholder="PA"
-            maxLength={2}
-            autoComplete="address-level1"
-            {...register('state', { required: 'Informe o estado' })}
+        <FormField label="CEP" error={errors.zipCode?.message}>
+          <MaskedInput
+            mask={maskZipCode}
+            placeholder="00000-000"
+            autoComplete="postal-code"
+            error={!!errors.zipCode}
+            {...register('zipCode', { required: 'Informe o CEP' })}
           />
         </FormField>
       </Box>

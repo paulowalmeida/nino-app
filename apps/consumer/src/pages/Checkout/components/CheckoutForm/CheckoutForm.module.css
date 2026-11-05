@@ -1,11 +1,11 @@
 @reference "@nino/ds/globals.css";
 
 .checkoutForm {
-  @apply mx-auto flex min-h-dvh w-full max-w-7xl flex-col;
+  @apply mx-auto flex min-h-dvh w-full min-w-0 max-w-7xl flex-col;
 }
 
 .workspace {
-  @apply flex flex-1 flex-col px-4 pb-28 pt-4 sm:px-6;
+  @apply flex min-w-0 flex-1 flex-col px-4 pb-28 pt-4 sm:px-6;
 }
 
 .checkoutFormSummary {
@@ -17,7 +17,7 @@
 }
 
 .checkoutFormDetails {
-  @apply order-2 min-w-0;
+  @apply order-2 w-full min-w-0 max-w-full;
 }
 
 .stepper {
@@ -25,7 +25,7 @@
 }
 
 .stepContent {
-  @apply rounded-4 border border-border bg-surface-raised p-5 sm:p-7;
+  @apply w-full min-w-0 rounded-4 border border-border bg-surface-raised p-5 sm:p-7;
 }
 
 .stepFields {

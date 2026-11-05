@@ -2,6 +2,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query'
 
 import { queryKeys } from '@constants/query-keys'
 import { consumerAuthService } from '@shared/services/consumer-auth/consumer-auth.service'
+import { useCartStore } from '@shared/states/cart/cart.state'
 import { forgetSession } from '@utils/session-hint'
 
 /**
@@ -16,6 +17,7 @@ export const useLogout = () => {
     mutationFn: consumerAuthService.logout,
     onSuccess: () => {
       forgetSession()
+      useCartStore.getState().clear()
       queryClient.setQueryData(queryKeys.session.all, null)
       void queryClient.removeQueries({ queryKey: queryKeys.myOrders.all })
       void queryClient.removeQueries({ queryKey: queryKeys.myAddresses.all })

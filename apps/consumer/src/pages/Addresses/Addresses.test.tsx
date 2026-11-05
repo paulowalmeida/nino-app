@@ -6,6 +6,14 @@ import { useAddressesFacade } from '@pages/Addresses/facades/useAddressesFacade/
 import { Addresses } from './Addresses'
 import { accountAddressesMock } from './AccountAddresses.mock'
 
+vi.mock('@shared/hooks/useStoreAddressSearch/useStoreAddressSearch', () => ({
+  useStoreAddressSearch: vi.fn(() => ({
+    suggestions: [],
+    isSearching: false,
+    resolveSelectedAddress: vi.fn(),
+    isResolvingSelectedAddress: false,
+  })),
+}))
 vi.mock('@pages/Addresses/facades/useAddressesFacade/useAddressesFacade')
 
 const facadeWith = (overrides: Record<string, unknown>) =>
@@ -23,8 +31,8 @@ const facadeWith = (overrides: Record<string, unknown>) =>
     hasSaveAddressError: false,
     deleteAddress: vi.fn(),
     isDeletingAddress: false,
-    lookupAddress: vi.fn(),
-    isLookingUpAddress: false,
+    storeId: 'unit-1',
+    storeState: 'PA',
     ...overrides,
   } as unknown as ReturnType<typeof useAddressesFacade>)
 

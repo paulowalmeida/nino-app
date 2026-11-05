@@ -23,13 +23,22 @@ export const MenuPreview = () => {
   const { control } = useFormContext<PromotionFormValues>()
   const values = useWatch({ control }) as PromotionFormValues
   const uploadedImageUrl = useObjectUrl(values.imageFile ?? undefined)
-  const { headline, period } = promotionSummaryParts(
+  const summary = promotionSummaryParts(
     toPromotionSummarySource(
       values,
       giftProductOptions.find(({ value }) => value === values.giftProductId)
         ?.name
     )
   )
+  const hasSelectedItems =
+    values.campaignType === 'discount' &&
+    values.productScope === 'chosen' &&
+    (values.scopeProductIds.length > 0 || values.scopeCategoryIds.length > 0)
+  const headline = hasSelectedItems
+    ? summary.headline.replace(/ em qualquer pedido$/, '') +
+      ' em itens selecionados'
+    : summary.headline
+  const { period } = summary
   const imageUrl =
     uploadedImageUrl ??
     (values.imageUrl && !values.removeImage

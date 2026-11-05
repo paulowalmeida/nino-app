@@ -9,10 +9,6 @@ export const selectChoice = (
     selections: { ...state.selections, [groupId]: [optionId] },
   }))
 
-/**
- * WHY: no teto, a opção mais antiga sai para dar lugar à nova — travar o
- * clique deixaria o cliente sem saber por que nada aconteceu.
- */
 export const toggleChoice = (
   set: SetProductChoicesState,
   groupId: string,
@@ -21,9 +17,18 @@ export const toggleChoice = (
 ) =>
   set((state) => {
     const chosen = state.selections[groupId] ?? []
-    const next = chosen.includes(optionId)
-      ? chosen.filter((id) => id !== optionId)
-      : [...chosen, optionId].slice(-limit)
+    if (chosen.includes(optionId)) {
+      return {
+        selections: {
+          ...state.selections,
+          [groupId]: chosen.filter((id) => id !== optionId),
+        },
+      }
+    }
 
-    return { selections: { ...state.selections, [groupId]: next } }
+    if (chosen.length >= limit) return state
+
+    return {
+      selections: { ...state.selections, [groupId]: [...chosen, optionId] },
+    }
   })

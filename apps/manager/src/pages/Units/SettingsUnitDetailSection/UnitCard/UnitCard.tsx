@@ -10,16 +10,16 @@ import { Header } from '@nino/ds/components/Header'
 import { Icon } from '@nino/ds/components/Icon'
 import { Input } from '@nino/ds/components/Input'
 import { Select } from '@nino/ds/components/Select'
-import { Skeleton } from '@nino/ds/components/Skeleton'
 import { Text } from '@nino/ds/components/Text'
 import type { AddressSearchResult } from '@nino/lib/types/address/address-lookup'
 import { toUnitDraft } from '@pages/Units/adapters/toUnitDraft/toUnitDraft'
 import { EMPTY_UNIT_DRAFT } from '@pages/Units/constants/unit.constants'
 import { useDeliveryLocation } from '@pages/Units/hooks/useDeliveryLocation/useDeliveryLocation'
-import { useUnitAddressSearch } from '@pages/Units/hooks/useUnitAddressSearch/useUnitAddressSearch'
 import { UnitCardSkeleton } from '@pages/Units/skeletons/UnitCardSkeleton/UnitCardSkeleton'
 import { AddressFields } from '@shared/components/AddressFields/AddressFields'
+import { AddressSuggestionList } from '@shared/components/AddressSuggestionList/AddressSuggestionList'
 import { BRAZIL_STATES } from '@shared/constants/address.constants'
+import { useUnitAddressSearch } from '@shared/hooks/unit/useUnitAddressSearch/useUnitAddressSearch'
 import type { UnitDetail } from '@shared/types/store/unit-detail'
 import type { UnitDraft } from '@shared/types/store/unit-draft'
 import { storeDisplayUrlFor } from '@shared/utils/store-url/store-url'
@@ -27,7 +27,7 @@ import { storeDisplayUrlFor } from '@shared/utils/store-url/store-url'
 import motion from '@styles/motion.module.css'
 import local from './UnitCard.module.css'
 
-export type UnitCardProps = {
+type UnitCardProps = {
   unit: UnitDetail | undefined
   isPending: boolean
   isSaving: boolean
@@ -180,41 +180,13 @@ export const UnitCard = ({
   )
   const isLoadingAddresses =
     addressSearch.isSearching || addressSearch.isResolvingSelectedAddress
-  const addressResults = isLoadingAddresses ? (
-    <Box direction="column" gap={1.5} aria-live="polite">
-      <Text size="sm" color="subtle">
-        Procurando {draft.street}, {draft.number}…
-      </Text>
-      {['first', 'second', 'third'].map((row) => (
-        <Skeleton key={row} className={local.addressOptionPlaceholder} />
-      ))}
-    </Box>
-  ) : addressSearch.suggestions.length > 0 ? (
-    <Box direction="column" gap={1.5}>
-      {addressSearch.suggestions.map((suggestion) => (
-        <Button
-          key={suggestion.placeId}
-          type="button"
-          variant="ghost"
-          onClick={() => void selectAddress(suggestion.placeId)}
-          className={local.addressOption}
-        >
-          <Icon name="map-pin" size="sm" className={local.addressPin} />
-          <Box direction="column" gap={0.5} className={local.addressText}>
-            <Text as="span" size="sm" weight="semibold">
-              {suggestion.mainText}
-            </Text>
-            <Text as="span" size="xs" color="subtle">
-              {suggestion.secondaryText}
-            </Text>
-          </Box>
-        </Button>
-      ))}
-    </Box>
-  ) : (
-    <Text color="subtle">
-      Nenhum endereço encontrado. Confira o endereço e o número.
-    </Text>
+  const addressResults = (
+    <AddressSuggestionList
+      searchedText={`${draft.street}, ${draft.number}`}
+      suggestions={addressSearch.suggestions}
+      isLoading={isLoadingAddresses}
+      onSelect={(placeId) => void selectAddress(placeId)}
+    />
   )
 
   if (isPending) return <UnitCardSkeleton />

@@ -3,13 +3,13 @@
 .tearBar {
   @apply sticky bottom-0 z-sticky order-4 flex flex-col border-t;
   @apply border-border bg-surface-raised px-4 py-2 sm:px-6;
-  padding-bottom: max(0.5rem, env(safe-area-inset-bottom));
+  padding-bottom: max(0.75rem, env(safe-area-inset-bottom));
   box-shadow: 0 -12px 28px -22px
     color-mix(in srgb, var(--color-fg-strong) 40%, transparent);
 }
 
 .totals {
-  @apply hidden;
+  @apply flex items-baseline justify-between;
 }
 
 .checkoutFooterLabel {
@@ -38,7 +38,4 @@
     @apply static gap-3 rounded-4 border border-border p-4 shadow-none;
   }
 
-  .totals {
-    @apply flex items-baseline justify-between;
-  }
 }

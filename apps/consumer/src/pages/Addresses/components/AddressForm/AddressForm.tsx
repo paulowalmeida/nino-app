@@ -1,5 +1,3 @@
-import { useState } from 'react'
-
 import { Alert } from '@nino/ds/components/Alert'
 import { toast } from '@nino/ds/components/Toast'
 import { FormBuilder } from '@nino/forms/FormBuilder'
@@ -10,7 +8,6 @@ import { useAddressesFacade } from '@pages/Addresses/facades/useAddressesFacade/
 
 import { AddressFormActions } from './AddressFormActions/AddressFormActions'
 import { AddressFormFields } from './AddressFormFields/AddressFormFields'
-import type { AddressLookupStatus } from '@pages/Addresses/types/AddressLookupStatus.type'
 import styles from './AddressForm.module.css'
 
 const EMPTY: SaveAddressRequest = {
@@ -38,10 +35,9 @@ export const AddressForm = ({
     saveAddress,
     isSavingAddress,
     hasSaveAddressError,
-    lookupAddress,
-    isLookingUpAddress,
+    storeId,
+    storeState,
   } = useAddressesFacade()
-  const [lookup, setLookup] = useState<AddressLookupStatus>('idle')
   const defaultValues: SaveAddressRequest = address
     ? { ...addressSaveRequest(address), complement: address.complement ?? '' }
     : EMPTY
@@ -71,10 +67,8 @@ export const AddressForm = ({
         <>
           <AddressFormFields
             form={form}
-            lookup={lookup}
-            isLookingUp={isLookingUpAddress}
-            lookupAddress={lookupAddress}
-            onLookupChange={setLookup}
+            storeId={storeId}
+            storeState={storeState}
           />
           {hasSaveAddressError && (
             <Alert variant="error" className={styles.alert}>

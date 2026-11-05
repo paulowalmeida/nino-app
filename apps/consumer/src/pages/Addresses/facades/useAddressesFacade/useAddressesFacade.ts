@@ -1,6 +1,9 @@
+import { useParams } from 'react-router'
+
 import { useDeleteAddress } from '@pages/Addresses/hooks/useDeleteAddress/useDeleteAddress'
-import { useAddressLookup } from '@pages/Addresses/hooks/useAddressLookup/useAddressLookup'
 import { useMyAddresses } from '@shared/hooks/useMyAddresses/useMyAddresses'
+import { useStore } from '@shared/hooks/useStore/useStore'
+import { resolveSlug } from '@utils/resolve-slug'
 import { useSaveAddress } from '@pages/Addresses/hooks/useSaveAddress/useSaveAddress'
 import { useAddressesStore } from '@pages/Addresses/states/addresses/addresses.store'
 
@@ -8,7 +11,8 @@ export const useAddressesFacade = () => {
   const addresses = useMyAddresses(true)
   const saveAddress = useSaveAddress()
   const deleteAddress = useDeleteAddress()
-  const addressLookup = useAddressLookup()
+  const { slug: pathSlug } = useParams()
+  const { store } = useStore(resolveSlug(pathSlug) ?? undefined)
   const editingAddressId = useAddressesStore((state) => state.editingId)
   const startEditingAddress = useAddressesStore((state) => state.startEditing)
   const cancelEditingAddress = useAddressesStore((state) => state.cancelEditing)
@@ -27,8 +31,8 @@ export const useAddressesFacade = () => {
     hasSaveAddressError: saveAddress.isError,
     deleteAddress: deleteAddress.mutate,
     isDeletingAddress: deleteAddress.isPending,
-    lookupAddress: addressLookup.mutate,
-    isLookingUpAddress: addressLookup.isPending,
+    storeId: store?.id,
+    storeState: store?.state,
     editingAddressId,
     startEditingAddress,
     cancelEditingAddress,

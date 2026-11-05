@@ -1,5 +1,5 @@
 import { renderHook } from '@testing-library/react'
-import { describe, expect, it, vi } from 'vitest'
+import { afterEach, describe, expect, it, vi } from 'vitest'
 
 import { queryKeys } from '@constants/query-keys'
 
@@ -17,6 +17,10 @@ vi.mock('@tanstack/react-query', () => ({
 }))
 
 describe('usePromotionOffers', () => {
+  afterEach(() => {
+    queryData = undefined
+  })
+
   it('waits for the store before asking for its campaigns', () => {
     renderHook(() => usePromotionOffers(undefined))
 
@@ -38,6 +42,37 @@ describe('usePromotionOffers', () => {
     expect(result.current.couponSuggestions.map(({ id }) => id)).toEqual([
       'promotion-2',
       'promotion-3',
+    ])
+  })
+
+  it('exposes package promotions only when the API returns package groups', () => {
+    queryData = [
+      {
+        ...visibleOfferMock[0],
+        id: 'package-with-groups',
+        type: 'PACKAGE',
+        packageGroups: [
+          {
+            id: 'group-1',
+            kind: 'FIXED',
+            quantity: 1,
+            allowRepeatedProducts: false,
+            products: [],
+          },
+        ],
+      },
+      {
+        ...visibleOfferMock[0],
+        id: 'package-without-groups',
+        type: 'PACKAGE',
+        packageGroups: [],
+      },
+    ]
+
+    const { result } = renderHook(() => usePromotionOffers(offerUnitIdMock))
+
+    expect(result.current.packageOffers.map(({ id }) => id)).toEqual([
+      'package-with-groups',
     ])
   })
 })

@@ -4,15 +4,20 @@ import { describe, expect, it, vi } from 'vitest'
 import { queryKeys } from '@constants/query-keys'
 import { consumerAuthService } from '@shared/services/consumer-auth/consumer-auth.service'
 import { forgetSession } from '@utils/session-hint'
+import { useCartStore } from '@shared/states/cart/cart.state'
 
 import { useLogout } from './useLogout'
 import { useLogoutMock } from './useLogout.mock'
 
 vi.mock('@shared/services/consumer-auth/consumer-auth.service')
 vi.mock('@utils/session-hint')
+vi.mock('@shared/states/cart/cart.state', () => ({
+  useCartStore: { getState: () => ({ clear: clearCart }) },
+}))
 
 const setQueryData = vi.fn()
 const removeQueries = vi.fn()
+const clearCart = vi.fn()
 
 let onSuccess: (() => void) | undefined
 let mutationFn: (() => unknown) | undefined
@@ -74,5 +79,13 @@ describe('useLogout', () => {
     expect(removeQueries).toHaveBeenCalledWith({
       queryKey: queryKeys.myAddresses.all,
     })
+  })
+
+  it('clears the persisted cart at the logout boundary', () => {
+    renderHook(() => useLogout())
+
+    onSuccess?.()
+
+    expect(useCartStore.getState().clear).toHaveBeenCalled()
   })
 })

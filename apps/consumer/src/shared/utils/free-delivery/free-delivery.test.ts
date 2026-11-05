@@ -5,7 +5,11 @@ import {
   freeDeliveryGap,
   pickFreeDeliveryOffer,
 } from './free-delivery'
-import { openOfferMock, visiblePromotionsMock } from './free-delivery.mock'
+import {
+  openOfferMock,
+  visiblePromotionsMock,
+  zoneOffersMock,
+} from './free-delivery.mock'
 
 const deliveryOrder = {
   isDelivery: true,
@@ -18,6 +22,22 @@ describe('free-delivery', () => {
   it('offers the open free delivery with the lowest minimum, never a coded one', () => {
     expect(pickFreeDeliveryOffer(visiblePromotionsMock)?.id).toBe('open')
     expect(pickFreeDeliveryOffer(undefined)).toBeUndefined()
+  })
+
+  it('picks the offer that covers the order zone, not just the cheapest minimum', () => {
+    expect(pickFreeDeliveryOffer(zoneOffersMock, 'zone-2km')?.id).toBe(
+      'up-to-2km'
+    )
+    expect(pickFreeDeliveryOffer(zoneOffersMock, 'zone-1km')?.id).toBe(
+      'up-to-1km'
+    )
+  })
+
+  it('falls back to the cheapest minimum when no offer covers the zone', () => {
+    expect(pickFreeDeliveryOffer(zoneOffersMock, 'zone-5km')?.id).toBe(
+      'up-to-1km'
+    )
+    expect(pickFreeDeliveryOffer(zoneOffersMock)?.id).toBe('up-to-1km')
   })
 
   it('says how much is missing to reach the minimum', () => {

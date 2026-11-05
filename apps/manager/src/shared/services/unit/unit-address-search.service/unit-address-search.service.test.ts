@@ -39,6 +39,35 @@ describe(UnitAddressSearchService.search.name, () => {
   })
 })
 
+describe('UnitAddressSearchService without a store yet', () => {
+  afterEach(() => vi.clearAllMocks())
+
+  it('searches and resolves without sending a unit id', async () => {
+    vi.mocked(api.getAll).mockResolvedValue([])
+
+    await UnitAddressSearchService.search(
+      null,
+      'Rua das Flores',
+      'PA',
+      'session-1',
+      'Belém'
+    )
+    await UnitAddressSearchService.details(null, 'place-1', 'session-1')
+
+    expect(api.getAll).toHaveBeenNthCalledWith(1, 'addresses/unit/search', {
+      street: 'Rua das Flores',
+      state: 'PA',
+      sessionToken: 'session-1',
+      city: 'Belém',
+    })
+    expect(api.getAll).toHaveBeenNthCalledWith(
+      2,
+      'addresses/unit/place-1/details',
+      { sessionToken: 'session-1' }
+    )
+  })
+})
+
 describe(UnitAddressSearchService.details.name, () => {
   afterEach(() => vi.clearAllMocks())
 

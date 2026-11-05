@@ -2,7 +2,6 @@ import { fireEvent, render, screen, waitFor } from '@testing-library/react'
 import { describe, expect, it, vi } from 'vitest'
 
 import { toast } from '@nino/ds/components/Toast'
-import type { AddressLookup } from '@nino/lib/types/address/address-lookup'
 import { useAddressesFacade } from '@pages/Addresses/facades/useAddressesFacade/useAddressesFacade'
 
 import { AddressForm } from './AddressForm'
@@ -10,34 +9,36 @@ import { addressFormMock } from './AddressForm.mock'
 
 vi.mock('@pages/Addresses/facades/useAddressesFacade/useAddressesFacade')
 vi.mock('@nino/ds/components/Toast')
+vi.mock('@shared/hooks/useStoreAddressSearch/useStoreAddressSearch', () => ({
+  useStoreAddressSearch: vi.fn(() => ({
+    suggestions: [],
+    isSearching: false,
+    resolveSelectedAddress: vi.fn(),
+    isResolvingSelectedAddress: false,
+  })),
+}))
 
 const facadeWith = (overrides: Record<string, unknown>) =>
   vi.mocked(useAddressesFacade).mockReturnValue({
     saveAddress: vi.fn(),
     isSavingAddress: false,
     hasSaveAddressError: false,
-    lookupAddress: vi.fn(),
-    isLookingUpAddress: false,
+    storeId: 'unit-1',
+    storeState: 'SP',
     ...overrides,
   } as unknown as ReturnType<typeof useAddressesFacade>)
 
-const lookupWith = (address: AddressLookup | null) =>
-  vi.fn(
-    (
-      _zipCode: string,
-      options: { onSuccess: (found: AddressLookup | null) => void }
-    ) => options.onSuccess(address)
-  )
+const typeField = (label: string, value: string) =>
+  fireEvent.change(screen.getByLabelText(label), { target: { value } })
 
-const fillRequiredAddress = async () => {
+const fillRequiredAddress = () => {
+  typeField('Rua', 'Rua das Flores')
+  typeField('Nº', '123')
+  typeField('Bairro', 'Centro')
+  typeField('Cidade', 'São Paulo')
+  typeField('UF', 'sp')
   fireEvent.change(screen.getByPlaceholderText('00000-000'), {
     target: { value: '01001000' },
-  })
-  await waitFor(() =>
-    expect(screen.getByDisplayValue('Rua das Flores')).toBeInTheDocument()
-  )
-  fireEvent.change(screen.getByLabelText('Nº'), {
-    target: { value: '123' },
   })
 }
 
@@ -55,54 +56,6 @@ describe('AddressForm', () => {
     ).toBeDisabled()
   })
 
-  it('fills the address fields once the zip code lookup resolves', async () => {
-    // Arrange
-    facadeWith({ lookupAddress: lookupWith(addressFormMock.lookup) })
-
-    // Act
-    render(<AddressForm onCancel={vi.fn()} onDone={vi.fn()} />)
-    fireEvent.change(screen.getByPlaceholderText('00000-000'), {
-      target: { value: '01001000' },
-    })
-
-    // Assert
-    await waitFor(() =>
-      expect(screen.getByDisplayValue('Rua das Flores')).toBeInTheDocument()
-    )
-    expect(screen.getByDisplayValue('Centro')).toBeInTheDocument()
-    expect(screen.getByLabelText('Nº')).toHaveFocus()
-  })
-
-  it('warns when the zip code is not found', async () => {
-    // Arrange
-    facadeWith({ lookupAddress: lookupWith(null) })
-
-    // Act
-    render(<AddressForm onCancel={vi.fn()} onDone={vi.fn()} />)
-    fireEvent.change(screen.getByPlaceholderText('00000-000'), {
-      target: { value: '99999999' },
-    })
-
-    // Assert
-    await waitFor(() =>
-      expect(
-        screen.getByText('Não achamos esse CEP. Preencha o endereço abaixo.')
-      ).toBeInTheDocument()
-    )
-  })
-
-  it('does not look up an incomplete zip code', () => {
-    const lookupAddress = vi.fn()
-    facadeWith({ lookupAddress })
-
-    render(<AddressForm onCancel={vi.fn()} onDone={vi.fn()} />)
-    fireEvent.change(screen.getByPlaceholderText('00000-000'), {
-      target: { value: '01001' },
-    })
-
-    expect(lookupAddress).not.toHaveBeenCalled()
-  })
-
   it('does not submit an incomplete address', () => {
     const saveAddress = vi.fn()
     facadeWith({ saveAddress })
@@ -117,34 +70,14 @@ describe('AddressForm', () => {
     expect(saveAddress).not.toHaveBeenCalled()
   })
 
-  it('warns when the zip code lookup fails', async () => {
-    const lookupAddress = vi.fn(
-      (_zipCode: string, options: { onError: () => void }) => options.onError()
-    )
-    facadeWith({ lookupAddress })
-
-    render(<AddressForm onCancel={vi.fn()} onDone={vi.fn()} />)
-    fireEvent.change(screen.getByPlaceholderText('00000-000'), {
-      target: { value: '01001000' },
-    })
-
-    expect(
-      await screen.findByText(
-        'Não achamos esse CEP. Preencha o endereço abaixo.'
-      )
-    ).toBeInTheDocument()
-  })
-
-  it('shows lookup and save feedback from the facade', () => {
+  it('shows save feedback from the facade', () => {
     facadeWith({
-      isLookingUpAddress: true,
       hasSaveAddressError: true,
       isSavingAddress: true,
     })
 
     render(<AddressForm onCancel={vi.fn()} onDone={vi.fn()} />)
 
-    expect(screen.getByText('Buscando endereço…')).toBeInTheDocument()
     expect(
       screen.getByText(
         'Não deu para salvar este endereço. Confira os campos e tente de novo.'
@@ -153,70 +86,14 @@ describe('AddressForm', () => {
     expect(screen.getByRole('button', { name: 'Salvando…' })).toBeDisabled()
   })
 
-  it('keeps typed fields when the zip code service returns them empty', async () => {
-    facadeWith({
-      lookupAddress: lookupWith({
-        street: '',
-        neighborhood: '',
-        city: '',
-        state: '',
-      }),
-    })
-
-    render(<AddressForm onCancel={vi.fn()} onDone={vi.fn()} />)
-    fireEvent.change(screen.getByLabelText('Rua'), {
-      target: { value: 'Rua informada' },
-    })
-    fireEvent.change(screen.getByLabelText('Bairro'), {
-      target: { value: 'Bairro informado' },
-    })
-    fireEvent.change(screen.getByLabelText('Cidade'), {
-      target: { value: 'Cidade informada' },
-    })
-    fireEvent.change(screen.getByLabelText('UF'), {
-      target: { value: 'pa' },
-    })
-    fireEvent.change(screen.getByPlaceholderText('00000-000'), {
-      target: { value: '01001000' },
-    })
-
-    expect(await screen.findByDisplayValue('Rua informada')).toBeInTheDocument()
-    expect(screen.getByDisplayValue('Bairro informado')).toBeInTheDocument()
-    expect(screen.getByDisplayValue('Cidade informada')).toBeInTheDocument()
-    expect(screen.getByDisplayValue('PA')).toBeInTheDocument()
-  })
-
-  it.each(['Rua', 'Nº', 'Bairro', 'Cidade', 'UF'])(
-    'blocks saving when %s is blank',
-    (label) => {
-      facadeWith({})
-
-      render(
-        <AddressForm
-          address={addressFormMock.address}
-          onCancel={vi.fn()}
-          onDone={vi.fn()}
-        />
-      )
-      fireEvent.change(screen.getByLabelText(label), { target: { value: '' } })
-
-      expect(
-        screen.getByRole('button', { name: 'Salvar endereço' })
-      ).toBeDisabled()
-    }
-  )
-
   it('submits once every required field is filled in', async () => {
     // Arrange
     const saveAddress = vi.fn()
-    facadeWith({
-      saveAddress,
-      lookupAddress: lookupWith(addressFormMock.lookup),
-    })
+    facadeWith({ saveAddress })
 
     // Act
     render(<AddressForm onCancel={vi.fn()} onDone={vi.fn()} />)
-    await fillRequiredAddress()
+    fillRequiredAddress()
     const submit = screen.getByRole('button', { name: 'Salvar endereço' })
     await waitFor(() => expect(submit).toBeEnabled())
     fireEvent.click(submit)
@@ -243,13 +120,10 @@ describe('AddressForm', () => {
       (_input: unknown, options: { onSuccess: () => void }) =>
         options.onSuccess()
     )
-    facadeWith({
-      saveAddress,
-      lookupAddress: lookupWith(addressFormMock.lookup),
-    })
+    facadeWith({ saveAddress })
 
     render(<AddressForm onCancel={vi.fn()} onDone={onDone} />)
-    await fillRequiredAddress()
+    fillRequiredAddress()
     const submit = screen.getByRole('button', { name: 'Salvar endereço' })
     await waitFor(() => expect(submit).toBeEnabled())
     fireEvent.click(submit)

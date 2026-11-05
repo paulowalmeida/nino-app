@@ -17,6 +17,7 @@ export const ProductChoiceMultiple = ({
 }: ProductChoiceMultipleProps) => {
   const { selections, toggleChoice } = useProductDetailFacade()
   const chosen = selections[group.id] ?? []
+  const isAtLimit = chosen.length >= group.maxSelections
 
   return (
     <Box className={styles.options}>
@@ -35,12 +36,18 @@ export const ProductChoiceMultiple = ({
           )}
           <Checkbox
             checked={chosen.includes(option.id)}
+            disabled={isAtLimit && !chosen.includes(option.id)}
             onCheckedChange={() =>
               toggleChoice(group.id, option.id, group.maxSelections)
             }
           />
         </Label>
       ))}
+      {isAtLimit && (
+        <Text size="xs" color="muted" role="status">
+          Você já escolheu o máximo de {group.maxSelections} opções.
+        </Text>
+      )}
     </Box>
   )
 }

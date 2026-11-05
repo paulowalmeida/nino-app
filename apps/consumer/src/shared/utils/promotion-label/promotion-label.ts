@@ -1,4 +1,6 @@
 import type { PublicPromotion } from '@custom_types/promotion/public-promotion.type'
+import { PROMOTION_PAYMENT_PHRASE } from '@constants/promotionPaymentPhrase.constants'
+import type { PaymentMethod } from '@custom_types/order/payment-method'
 import { brl } from '@utils/money/money'
 
 const DAY_MS = 24 * 60 * 60 * 1000
@@ -31,15 +33,42 @@ const untilOf = (endsAt: string, now: Date): string => {
     : shortDate.format(end)
 }
 
+const paymentRestrictionOf = (methods: string[]): string => {
+  const phrase =
+    methods.length === 1
+      ? PROMOTION_PAYMENT_PHRASE[methods[0] as PaymentMethod]
+      : undefined
+  return phrase ? `pagando ${phrase}` : 'em formas de pagamento selecionadas'
+}
+
+const restrictionOf = (promotion: PublicPromotion): string | null => {
+  if (promotion.eligibleProductName) {
+    return `no ${promotion.eligibleProductName}`
+  }
+  if (promotion.eligibleProductIds?.length) return 'em itens selecionados'
+  if (promotion.firstOrderOnly) return 'no seu primeiro pedido'
+  if (!promotion.allDeliveryZones) return 'em alguns bairros'
+  if (promotion.paymentMethods?.length) {
+    return paymentRestrictionOf(promotion.paymentMethods)
+  }
+  return null
+}
+
+const conditionOf = (promotion: PublicPromotion): string => {
+  const restriction = restrictionOf(promotion)
+  const minimum =
+    promotion.minOrderValue > 0
+      ? `acima de ${brl(promotion.minOrderValue)}`
+      : null
+  if (!restriction && !minimum) return 'em qualquer pedido'
+  return [restriction, minimum].filter(Boolean).join(' ')
+}
+
 export const promotionLabel = (
   promotion: PublicPromotion,
   now: Date = new Date()
 ): string => {
-  const benefit = benefitOf(promotion)
-  const condition =
-    promotion.minOrderValue > 0
-      ? `${benefit} acima de ${brl(promotion.minOrderValue)}`
-      : `${benefit} em qualquer pedido`
+  const condition = `${benefitOf(promotion)} ${conditionOf(promotion)}`
   return promotion.endsAt
     ? `${condition} · até ${untilOf(promotion.endsAt, now)}`
     : condition

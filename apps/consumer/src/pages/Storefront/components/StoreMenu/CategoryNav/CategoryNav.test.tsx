@@ -7,6 +7,13 @@ import { useStorefrontFacade } from '@pages/Storefront/facades/useStorefrontFaca
 import { CategoryNav } from './CategoryNav'
 import { categoryNavMock } from './CategoryNav.mock'
 
+vi.mock('./CategoryNav.module.css', () => ({
+  default: new Proxy(
+    {},
+    { get: (_target, property: string) => property }
+  ),
+}))
+
 vi.mock(
   '@pages/Storefront/facades/useStorefrontFacade/useStorefrontFacade',
   () => ({
@@ -14,7 +21,9 @@ vi.mock(
   })
 )
 vi.mock('@nino/ds/components/Box', () => ({
-  Box: ({ children }: { children?: ReactNode }) => <div>{children}</div>,
+  Box: ({ children, className }: { children?: ReactNode; className?: string }) => (
+    <div className={className}>{children}</div>
+  ),
 }))
 vi.mock('@nino/ds/components/Text', () => ({
   Text: ({ children }: { children?: ReactNode }) => <span>{children}</span>,
@@ -39,10 +48,14 @@ describe('CategoryNav', () => {
       goToSection: vi.fn(),
     } as never)
 
-    render(<CategoryNav />)
+    const { container } = render(<CategoryNav />)
 
     expect(
       screen.getByRole('button', { name: 'Hambúrgueres' })
     ).toBeInTheDocument()
+    expect(
+      screen.getByText('Deslize horizontalmente para ver mais categorias.')
+    ).toBeInTheDocument()
+    expect(container.querySelector('.track')).toBeInTheDocument()
   })
 })

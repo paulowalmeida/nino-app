@@ -14,6 +14,7 @@ import { orderOffers } from '@pages/checkout/utils/order-offers/order-offers'
 import { promotionUnavailableFee } from '@pages/checkout/utils/promotion-unavailable/promotion-unavailable'
 import { eligibleSubtotal } from '@pages/checkout/utils/eligible-subtotal/eligible-subtotal'
 import { couponApplies } from '@pages/checkout/utils/coupon-applies/coupon-applies'
+import { pickFreeDeliveryOffer } from '@utils/free-delivery/free-delivery'
 import { useDeliveryQuote } from '@pages/checkout/hooks/useDeliveryQuote/useDeliveryQuote'
 import { usePlaceOrder } from '@pages/checkout/hooks/usePlaceOrder/usePlaceOrder'
 import { writeLastOrder } from '@utils/last-order'
@@ -32,6 +33,7 @@ type UseCheckoutWorkflowParams = {
   clearCart: () => void
   slug: string | undefined
   freeDelivery?: PublicPromotion
+  freeDeliveryOffers?: PublicPromotion[]
   giftOffers?: PublicPromotion[]
   packageOffers?: PublicPromotion[]
   coupon?: PublicPromotion
@@ -52,6 +54,7 @@ export const useCheckoutWorkflow = ({
   clearCart,
   slug,
   freeDelivery,
+  freeDeliveryOffers = [],
   giftOffers = [],
   packageOffers = [],
   coupon,
@@ -81,21 +84,21 @@ export const useCheckoutWorkflow = ({
   const paymentMethod = useWatch({ control, name: 'paymentMethod' })
   const deliveryZoneId = useWatch({ control, name: 'deliveryZoneId' })
   const deliveryAddressId = useWatch({ control, name: 'deliveryAddressId' })
-  const guestZipCode = useWatch({ control, name: 'guestZipCode' })
-  const guestProviderId = useWatch({ control, name: 'guestProviderId' })
   const guestLatitude = useWatch({ control, name: 'guestLatitude' })
   const guestLongitude = useWatch({ control, name: 'guestLongitude' })
   const selectedAddress = addresses.find(({ id }) => id === deliveryAddressId)
-  const { quote, isFetching: isQuoting } = useDeliveryQuote(
+  const guestPoint =
+    guestLatitude !== undefined && guestLongitude !== undefined
+      ? { latitude: guestLatitude, longitude: guestLongitude }
+      : undefined
+  const {
+    quote,
+    isFetching: isQuoting,
+    isError: isDeliveryQuoteError,
+    refetch: retryDeliveryQuote,
+  } = useDeliveryQuote(
     store?.id,
-    isAuthenticated
-      ? (selectedAddress ?? {})
-      : {
-          providerId: guestProviderId,
-          zipCode: guestZipCode,
-          latitude: guestLatitude,
-          longitude: guestLongitude,
-        }
+    isAuthenticated ? selectedAddress : guestPoint
   )
 
   useEffect(() => {
@@ -141,7 +144,8 @@ export const useCheckoutWorkflow = ({
     : undefined
 
   const offers = orderOffers({
-    freeDelivery,
+    freeDelivery:
+      pickFreeDeliveryOffer(freeDeliveryOffers, zone?.id) ?? freeDelivery,
     giftOffers,
     packageOffer: packageOffers.find(
       ({ id }) => id === packageCart?.promotionId
@@ -259,6 +263,8 @@ export const useCheckoutWorkflow = ({
           ? submitError.message
           : undefined,
     isQuoting,
+    isDeliveryQuoteError,
+    retryDeliveryQuote,
     minimumOrderAmount: minimum,
     isBelowMinimum,
   }

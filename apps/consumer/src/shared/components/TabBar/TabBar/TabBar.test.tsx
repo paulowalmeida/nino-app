@@ -67,6 +67,18 @@ describe('TabBar', () => {
     ).not.toBeInTheDocument()
   })
 
+  it('exposes one accessible cart entry when the storefront provides it', () => {
+    render(
+      <MemoryRouter>
+        <TabBar base="/demo" onOpenCart={vi.fn()} />
+      </MemoryRouter>
+    )
+
+    expect(screen.getAllByRole('button', { name: 'Sacola vazia' })).toHaveLength(
+      1
+    )
+  })
+
   it('shows the Pedido tab for a guest order tracked on this device', () => {
     // Arrange
     guestOrdersState.orders = [guestOrderMock]

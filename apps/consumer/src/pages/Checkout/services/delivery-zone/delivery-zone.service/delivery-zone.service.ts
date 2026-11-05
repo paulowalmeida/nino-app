@@ -1,26 +1,35 @@
 import type { PublicDeliveryZone } from '@pages/checkout/types/delivery-zone/PublicDeliveryZone.type'
+import type { DeliveryQuoteDestination } from '@pages/checkout/types/delivery-quote/DeliveryQuoteDestination.type'
 import { api } from '@shared/services/http/http.service'
+
+const quoteParams = (
+  unitId: string,
+  destination: DeliveryQuoteDestination
+): URLSearchParams =>
+  'id' in destination
+    ? new URLSearchParams({
+        unitId,
+        street: destination.street,
+        number: destination.number,
+        neighborhood: destination.neighborhood,
+        city: destination.city,
+        state: destination.state,
+        zipCode: destination.zipCode,
+      })
+    : new URLSearchParams({
+        unitId,
+        latitude: String(destination.latitude),
+        longitude: String(destination.longitude),
+      })
 
 export const deliveryZoneService = {
   listPublic: (unitId: string): Promise<PublicDeliveryZone[]> =>
     api.get<PublicDeliveryZone[]>(`units/${unitId}/delivery-zones/public`),
   getQuote: (
     unitId: string,
-    zipCode: string,
-    coordinates: { latitude?: number; longitude?: number } = {}
+    destination: DeliveryQuoteDestination
   ): Promise<PublicDeliveryZone | null> =>
     api.get<PublicDeliveryZone | null>(
-      (() => {
-        const params = new URLSearchParams({ unitId })
-        if (zipCode) params.set('zipCode', zipCode)
-        if (
-          coordinates.latitude !== undefined &&
-          coordinates.longitude !== undefined
-        ) {
-          params.set('latitude', String(coordinates.latitude))
-          params.set('longitude', String(coordinates.longitude))
-        }
-        return `orders/guest/quote?${params.toString()}`
-      })()
+      `orders/guest/quote?${quoteParams(unitId, destination).toString()}`
     ),
 }

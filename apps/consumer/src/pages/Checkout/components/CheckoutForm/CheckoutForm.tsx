@@ -83,8 +83,11 @@ export const CheckoutForm = ({
   }
 
   const goNext = async () => {
-    const isValid = await form.trigger(fieldsForStep(), { shouldFocus: true })
+    const fields = fieldsForStep()
+    const isValid = await form.trigger(fields, { shouldFocus: true })
     if (!isValid) return
+
+    form.clearErrors(fields)
 
     const nextStep = Math.min(step + 1, CHECKOUT_STEPS.length - 1)
     setStep(nextStep)

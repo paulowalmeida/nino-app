@@ -51,7 +51,7 @@ describe(PhotoCropper.name, () => {
     expect(onCancel).toHaveBeenCalledOnce()
   })
 
-  it('opens the biggest centered selection once the image is measured', () => {
+  it('fills a fixed crop frame with the measured image', () => {
     render(
       <PhotoCropper
         {...photoCropperMock}
@@ -64,15 +64,20 @@ describe(PhotoCropper.name, () => {
 
     loadImage()
 
-    // 2:1 image, square crop: half the width, centered.
+    // 2:1 image, square crop: the image fills the fixed frame by width.
     expect(screen.getByRole('group')).toHaveStyle({
-      left: '25%',
-      width: '50%',
+      left: '0px',
+      width: '100%',
+      height: '100%',
+    })
+    expect(screen.getByAltText('Imagem a recortar')).toHaveStyle({
+      left: '-50%',
+      width: '200%',
       height: '100%',
     })
   })
 
-  it('moves the selection with the arrow keys', () => {
+  it('moves the image with the arrow keys', () => {
     render(
       <PhotoCropper
         {...photoCropperMock}
@@ -84,7 +89,9 @@ describe(PhotoCropper.name, () => {
 
     fireEvent.keyDown(screen.getByRole('group'), { key: 'ArrowRight' })
 
-    expect(screen.getByRole('group')).toHaveStyle({ left: '27%' })
+    expect(screen.getByAltText('Imagem a recortar')).toHaveStyle({
+      left: '-48%',
+    })
   })
 
   it('keeps the caller framing ratio when it asks for a wide crop', () => {
@@ -97,10 +104,32 @@ describe(PhotoCropper.name, () => {
     )
     loadImage()
 
-    // 2:1 image, 3:1 crop: full width, two thirds of the height.
+    // 2:1 image, 3:1 crop: the viewport stays fixed while the image fills it.
     expect(screen.getByRole('group')).toHaveStyle({
       width: '100%',
-      height: `${(2 / 3) * 100}%`,
+      height: '100%',
+    })
+    expect(screen.getByAltText('Imagem a recortar')).toHaveStyle({
+      width: '100%',
+      height: '150%',
+    })
+  })
+
+  it('visibly enlarges the image when zoom increases', () => {
+    render(
+      <PhotoCropper
+        {...photoCropperMock}
+        onConfirm={vi.fn()}
+        onCancel={vi.fn()}
+      />
+    )
+    loadImage()
+
+    fireEvent.click(screen.getByRole('button', { name: 'Aumentar zoom' }))
+
+    expect(screen.getByAltText('Imagem a recortar')).toHaveStyle({
+      width: '220%',
+      maxWidth: 'none',
     })
   })
 

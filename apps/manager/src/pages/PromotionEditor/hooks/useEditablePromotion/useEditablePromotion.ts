@@ -3,7 +3,7 @@ import { useParams, useSearchParams } from 'react-router'
 import type { PromotionEditorMode } from '@pages/PromotionEditor/types/PromotionEditorMode.type'
 import { usePromotion } from '@shared/hooks/promotion/usePromotion/usePromotion'
 
-// WHY: editar só existe antes do primeiro uso e nunca numa campanha encerrada.
+// WHY: editar só existe antes do primeiro uso; frete grátis é um tipo legado.
 export const useEditablePromotion = (unitId: string | null) => {
   const { promotionId } = useParams()
   const [searchParams] = useSearchParams()

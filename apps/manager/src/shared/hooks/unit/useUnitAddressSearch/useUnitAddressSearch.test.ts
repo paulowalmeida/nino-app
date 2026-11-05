@@ -4,13 +4,14 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { act, renderHook, waitFor } from '@testing-library/react'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
-import { UnitAddressSearchService } from '@pages/Units/services/unit-address-search.service/unit-address-search.service'
+import type { AddressSearchResult } from '@nino/lib/types/address/address-lookup'
+import { UnitAddressSearchService } from '@shared/services/unit/unit-address-search.service/unit-address-search.service'
 
 import { useUnitAddressSearch } from './useUnitAddressSearch'
 import { unitAddressSearchInputMock } from './useUnitAddressSearch.mock'
 
 vi.mock(
-  '@pages/Units/services/unit-address-search.service/unit-address-search.service',
+  '@shared/services/unit/unit-address-search.service/unit-address-search.service',
   () => ({
     UnitAddressSearchService: { search: vi.fn(), details: vi.fn() },
   })
@@ -64,11 +65,42 @@ describe(useUnitAddressSearch.name, () => {
     )
   })
 
+  it('searches before the store exists, with no unit id', async () => {
+    vi.useFakeTimers()
+    vi.mocked(UnitAddressSearchService.search).mockResolvedValue([])
+
+    renderHook(
+      () =>
+        useUnitAddressSearch(
+          null,
+          unitAddressSearchInputMock.street,
+          unitAddressSearchInputMock.number,
+          unitAddressSearchInputMock.state,
+          unitAddressSearchInputMock.city,
+          true
+        ),
+      { wrapper }
+    )
+
+    await act(async () => {
+      vi.advanceTimersByTime(500)
+      await Promise.resolve()
+    })
+
+    expect(UnitAddressSearchService.search).toHaveBeenCalledWith(
+      null,
+      'Rua das Flores, 26',
+      'PA',
+      'session-1',
+      'Belém'
+    )
+  })
+
   it('rotates the session token after resolving an address', async () => {
     vi.mocked(UnitAddressSearchService.search).mockResolvedValue([])
     vi.mocked(UnitAddressSearchService.details).mockResolvedValue({
       street: 'Rua das Flores',
-    } as never)
+    } as unknown as AddressSearchResult)
 
     const { result } = renderHook(
       () =>

@@ -11,7 +11,11 @@ import { mergeClasses } from '@nino/ds/mergeClasses'
 import { STORE_DRAFT_KEY } from '@shared/constants/store-draft.constants'
 import type { FirstStoreFormValues } from '@shared/types/store/first-store-form-values'
 import type { StoreSubmitResult } from '@shared/types/store/store-submit-result'
-import { clearDraft, readDraft, writeDraft } from '@shared/utils/form-draft/form-draft'
+import {
+  clearDraft,
+  readDraft,
+  writeDraft,
+} from '@shared/utils/form-draft/form-draft'
 import { riseDelay } from '@shared/utils/rise-delay/rise-delay'
 
 import { StoreFormAddressFields } from './StoreFormAddressFields/StoreFormAddressFields'
@@ -62,8 +66,8 @@ export const StoreForm = ({
     return subscribe({
       formState: { values: true },
       callback: ({ values }) => {
-      writeDraft<FirstStoreFormValues>(STORE_DRAFT_KEY, values)
-      onChange?.(values)
+        writeDraft<FirstStoreFormValues>(STORE_DRAFT_KEY, values)
+        onChange?.(values)
       },
     })
   }, [subscribe, onChange])
@@ -124,8 +128,8 @@ export const StoreForm = ({
         <StoreFormAddressFields
           register={register}
           errors={errors}
+          control={control}
           setValue={setValue}
-          setError={setError}
         />
       </Box>
 

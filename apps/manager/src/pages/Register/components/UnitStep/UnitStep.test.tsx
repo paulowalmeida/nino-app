@@ -14,6 +14,10 @@ import {
 } from './UnitStep.mock'
 
 vi.mock('@pages/Register/facades/useRegisterFacade/useRegisterFacade')
+vi.mock(
+  '@shared/components/StoreForm/StoreFormAddressFields/StoreFormAddressFields',
+  () => ({ StoreFormAddressFields: () => <div>endereço da loja</div> })
+)
 
 const goToCompanyStep = vi.fn()
 const fillSlugFromName = vi.fn()
@@ -21,8 +25,8 @@ const fillSlugFromName = vi.fn()
 const unitFormWith = (overrides: Record<string, unknown>) => ({
   register: vi.fn(() => ({})),
   submit: vi.fn(),
+  control: {},
   setValue: vi.fn(),
-  setError: vi.fn(),
   fillSlugFromName,
   formState: { errors: {}, isSubmitting: false },
   ...overrides,
@@ -54,7 +58,7 @@ describe('UnitStep', () => {
     ).toBeInTheDocument()
     expect(screen.getByLabelText(unitStepMock.nameLabel)).toBeInTheDocument()
     expect(screen.getByText('.dev.nino.delivery')).toBeInTheDocument()
-    expect(screen.getByLabelText('CEP')).toBeInTheDocument()
+    expect(screen.getByText('endereço da loja')).toBeInTheDocument()
   })
 
   it('returns to the company step', async () => {

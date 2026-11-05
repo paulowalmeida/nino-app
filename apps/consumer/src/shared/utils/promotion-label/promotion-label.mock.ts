@@ -15,3 +15,11 @@ export const labelOfferMock: PublicPromotion = {
   deliveryZoneIds: [],
   giftProduct: null,
 }
+
+export const restrictedDiscountMock: PublicPromotion = {
+  ...labelOfferMock,
+  type: 'FIXED_DISCOUNT',
+  value: 10,
+  minOrderValue: 0,
+  endsAt: null,
+}

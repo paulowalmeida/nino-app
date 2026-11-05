@@ -43,10 +43,13 @@ describe('OrderService', () => {
       internalRuleId: 'must-not-leak',
     })
 
-    const result = await OrderService.getDeliveryQuote('unit/1', '66000-000')
+    const result = await OrderService.getDeliveryQuote('unit/1', {
+      latitude: -1.45,
+      longitude: -48.5,
+    })
 
     expect(api.get).toHaveBeenCalledWith(
-      'orders/guest/quote?unitId=unit%2F1&zipCode=66000-000'
+      'orders/guest/quote?unitId=unit%2F1&latitude=-1.45&longitude=-48.5'
     )
     expect(result).toEqual({ id: 'zone-1', name: 'Centro', fee: 12.5 })
   })

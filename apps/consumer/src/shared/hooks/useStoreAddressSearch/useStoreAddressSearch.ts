@@ -2,81 +2,79 @@ import { useEffect, useState } from 'react'
 
 import { useMutation, useQuery } from '@tanstack/react-query'
 
-import { UnitAddressSearchService } from '@pages/Units/services/unit-address-search.service/unit-address-search.service'
+import { storeAddressSearchService } from '@shared/services/address-search/address-search.service/address-search.service'
 
-const SEARCH_DEBOUNCE_MS = 500
-
-export const useUnitAddressSearch = (
-  unitId: string | null,
+export const useStoreAddressSearch = (
+  unitId: string | undefined,
+  state: string | undefined,
   street: string,
   number: string,
-  state: string,
-  city: string,
   searchRequested: boolean
 ) => {
   const normalizedStreet = street.trim()
   const normalizedNumber = number.trim()
-  const normalizedState = state.trim().toUpperCase()
-  const normalizedCity = city.trim()
   const normalizedSearch =
     normalizedStreet && normalizedNumber
       ? `${normalizedStreet}, ${normalizedNumber}`
       : ''
-  const [debouncedStreet, setDebouncedStreet] = useState('')
+  const [debouncedSearch, setDebouncedSearch] = useState('')
   const [sessionToken, setSessionToken] = useState(() => crypto.randomUUID())
 
   useEffect(() => {
     const timer = window.setTimeout(
-      () => setDebouncedStreet(searchRequested ? normalizedSearch : ''),
-      SEARCH_DEBOUNCE_MS
+      () => setDebouncedSearch(searchRequested ? normalizedSearch : ''),
+      600
     )
     return () => window.clearTimeout(timer)
   }, [normalizedSearch, searchRequested])
 
   const query = useQuery({
     queryKey: [
-      'units',
-      'address-search',
+      'store-address-search',
       unitId,
-      debouncedStreet,
-      normalizedState,
-      normalizedCity,
+      state,
+      debouncedSearch,
       sessionToken,
     ],
     queryFn: () =>
-      UnitAddressSearchService.search(
+      storeAddressSearchService.search(
         unitId as string,
-        debouncedStreet,
-        normalizedState,
-        sessionToken,
-        normalizedCity
+        debouncedSearch,
+        state ?? '',
+        sessionToken
       ),
     enabled:
       !!unitId &&
       searchRequested &&
-      debouncedStreet.length >= 3 &&
-      normalizedState.length === 2 &&
-      normalizedCity.length > 0,
+      state?.length === 2 &&
+      debouncedSearch.length >= 3,
     staleTime: 60_000,
-    retry: false,
   })
 
+  /* WORKAROUND: the provider only prices autocomplete for free when a
+     session ends in exactly one details call, so the token must be replaced
+     once the guest confirms a selection — reusing it past that point would
+     mis-attribute the next search to an already-closed session. */
   const detailsMutation = useMutation({
     mutationFn: (placeId: string) =>
-      UnitAddressSearchService.details(unitId as string, placeId, sessionToken),
+      storeAddressSearchService.details(
+        unitId as string,
+        placeId,
+        sessionToken
+      ),
     onSettled: () => setSessionToken(crypto.randomUUID()),
   })
 
   const isWaitingForDebounce =
-    normalizedSearch.length >= 3 &&
     searchRequested &&
-    normalizedState.length === 2 &&
-    normalizedCity.length > 0 &&
-    normalizedSearch !== debouncedStreet
+    normalizedSearch.length > 0 &&
+    normalizedSearch !== debouncedSearch
 
   return {
     suggestions: query.data ?? [],
     isSearching: isWaitingForDebounce || query.isFetching,
+    isSearchError: query.isError,
+    retrySearch: query.refetch,
     resolveSelectedAddress: detailsMutation.mutateAsync,
     isResolvingSelectedAddress: detailsMutation.isPending,
   }

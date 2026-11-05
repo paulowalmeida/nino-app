@@ -22,6 +22,7 @@ export type PublicPromotion = {
   paymentMethods?: string[]
   /** Produtos em que o desconto incide; null ou ausente = cardápio todo. */
   eligibleProductIds?: string[] | null
+  eligibleProductName?: string | null
   packageGroups?: {
     id: string
     kind: 'FIXED' | 'CHOICE'

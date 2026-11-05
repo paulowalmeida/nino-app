@@ -1,5 +1,6 @@
 import { render } from '@testing-library/react'
 import { describe, expect, it, vi } from 'vitest'
+import { MemoryRouter } from 'react-router'
 import { useStorefrontFacade } from '@pages/Storefront/facades/useStorefrontFacade/useStorefrontFacade'
 
 import { StoreBanner } from './StoreBanner'
@@ -20,8 +21,13 @@ describe('StoreBanner', () => {
         logoUrl: storeBannerMock.logoUrl,
         customName: storeBannerMock.customName,
       },
+      bannerOffers: [],
     } as never)
-    const { container } = render(<StoreBanner />)
+    const { container } = render(
+      <MemoryRouter>
+        <StoreBanner />
+      </MemoryRouter>
+    )
 
     expect(container.querySelector('img')).not.toBeInTheDocument()
     expect(container).toHaveTextContent(storeBannerMock.initials)
@@ -33,8 +39,13 @@ describe('StoreBanner', () => {
         logoUrl: 'https://cdn.example/logo.png',
         bannerUrl: 'https://cdn.example/banner.png',
       },
+      bannerOffers: [],
     } as never)
-    const { container } = render(<StoreBanner />)
+    const { container } = render(
+      <MemoryRouter>
+        <StoreBanner />
+      </MemoryRouter>
+    )
 
     expect(container.querySelector('img')).toHaveAttribute(
       'src',
