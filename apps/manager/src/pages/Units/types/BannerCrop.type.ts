@@ -6,11 +6,7 @@ export const BANNER_CROP_PRESETS = [
   { id: 'phone425', label: 'Celular grande · 425 px', aspectRatio: 425 / 192 },
   { id: 'tablet768', label: 'Tablet · 768 px', aspectRatio: 26 / 5 },
   { id: 'desktop1024', label: 'Desktop · 1024 px', aspectRatio: 11 / 2 },
-  {
-    id: 'desktop1920',
-    label: 'Desktop amplo · 1920 × 1080',
-    aspectRatio: 36 / 5,
-  },
+  { id: 'desktop1920', label: 'Desktop amplo · 1920 px', aspectRatio: 11 / 2 },
 ] as const
 
 export type BannerCropId = (typeof BANNER_CROP_PRESETS)[number]['id']
