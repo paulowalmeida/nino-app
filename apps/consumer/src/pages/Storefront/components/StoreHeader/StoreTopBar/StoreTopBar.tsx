@@ -76,18 +76,6 @@ export const StoreTopBar = ({ slug, isDocked }: StoreTopBarProps) => {
           </Text>
         </a>
 
-        {sections.length > 0 && (
-          <Button
-            variant="ghost"
-            className={styles.deskSearch}
-            aria-haspopup="dialog"
-            onClick={() => setSearchOpen(true)}
-          >
-            <Icon name="search" className={styles.searchIcon} />
-            Buscar no cardápio
-          </Button>
-        )}
-
         <Box direction="row" className={styles.tools}>
           <Box direction="row" className={styles.storeMeta}>
             <Text
@@ -107,6 +95,19 @@ export const StoreTopBar = ({ slug, isDocked }: StoreTopBarProps) => {
               {isStoreOpen ? 'Aberto agora' : 'Fechado'}
             </Text>
           </Box>
+
+          {sections.length > 0 && (
+            <Button
+              variant="ghost"
+              size="icon"
+              className={`${styles.iconBtn} ${styles.searchEntry}`}
+              onClick={() => setSearchOpen(true)}
+              aria-label="Buscar no cardápio"
+              aria-haspopup="dialog"
+            >
+              <Icon name="search" />
+            </Button>
+          )}
 
           <Button
             variant="ghost"

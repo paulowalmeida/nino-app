@@ -51,8 +51,12 @@ export const useUnitTheme = () => {
     catalog,
     home,
   }: ThemeDraftInput) => {
+    const uploadedBannerVariants = await UnitService.uploadBannerVariants(
+      unitId as string,
+      draft.bannerVariantFiles
+    )
     const hasAssetChange =
-      !!(draft.logoFile || draft.bannerFile) ||
+      !!(draft.logoFile || draft.bannerFile || draft.bannerVariantFiles) ||
       (draft.logoUrl !== undefined &&
         (draft.logoUrl ?? null) !== (detail?.logoUrl ?? null)) ||
       (draft.bannerUrl !== undefined &&
@@ -63,7 +67,15 @@ export const useUnitTheme = () => {
 
     return UnitThemeService.saveDraft(
       unitId as string,
-      toThemeConfig(draft, saved, undefined, tracking, catalog, home)
+      toThemeConfig(
+        draft,
+        saved,
+        undefined,
+        tracking,
+        catalog,
+        home,
+        uploadedBannerVariants
+      )
     )
   }
 

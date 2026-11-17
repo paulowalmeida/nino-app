@@ -49,6 +49,9 @@ export type PhotoCropperProps = {
   hint?: string
   confirmLabel?: string
   onConfirm: (edited: File) => void
+  /** Salva somente a janela de enquadramento, sem gerar um arquivo novo. */
+  onConfirmArea?: (area: CropArea) => void
+  initialArea?: CropArea
   onCancel: () => void
   /** Quando ausente, o recorte não oferece remoção. */
   onRemove?: () => void
@@ -62,6 +65,8 @@ export const PhotoCropper = ({
   hint = DEFAULT_HINT,
   confirmLabel = 'Usar esta foto',
   onConfirm,
+  onConfirmArea,
+  initialArea,
   onCancel,
   onRemove,
 }: PhotoCropperProps) => {
@@ -77,10 +82,11 @@ export const PhotoCropper = ({
     const image = imageRef.current
     if (!image?.naturalWidth || !image.naturalHeight) return
     const ratio = image.naturalWidth / image.naturalHeight
-    const initialArea = toCenteredCropArea(ratio, aspectRatio)
-    baseAreaRef.current = initialArea
+    const centeredArea = toCenteredCropArea(ratio, aspectRatio)
+    const startingArea = initialArea ?? centeredArea
+    baseAreaRef.current = centeredArea
     setZoom(MIN_ZOOM)
-    setArea(initialArea)
+    setArea(startingArea)
   }
 
   const startDrag = (event: React.PointerEvent<HTMLElement>) => {
@@ -159,6 +165,10 @@ export const PhotoCropper = ({
   const handleConfirm = async () => {
     const image = imageRef.current
     if (!image || !area) return
+    if (onConfirmArea) {
+      onConfirmArea(area)
+      return
+    }
     try {
       const edited = await cropToArea(image, area, file.name)
       onConfirm(edited)

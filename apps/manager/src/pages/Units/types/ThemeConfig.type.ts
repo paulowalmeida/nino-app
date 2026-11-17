@@ -1,9 +1,13 @@
+import type { BannerCrops, BannerVariants } from './BannerCrop.type'
+
 /** O documento de tema da loja, como a API o guarda e devolve. */
 export type ThemeConfig = {
   brand: {
     logoUrl: string | null
     faviconUrl: string | null
     bannerUrl: string | null
+    bannerCrops?: BannerCrops
+    bannerVariants?: BannerVariants
   }
   colors: {
     primary: string | null

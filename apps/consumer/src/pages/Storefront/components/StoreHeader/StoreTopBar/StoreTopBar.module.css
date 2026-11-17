@@ -130,31 +130,12 @@
   }
 }
 
-.deskSearch {
-  @apply relative hidden min-w-0 items-center lg:mr-8 lg:flex;
-  @apply h-12 cursor-pointer justify-start rounded-3 border border-border;
-  @apply bg-surface-cool pl-11 pr-3 text-base font-normal text-fg-faint;
-  @apply transition-field hover:border-fg-faintest hover:bg-surface-cool;
-  @apply focus-visible:border-brand focus-visible:ring-2 focus-visible:ring-brand-soft;
-
-  flex: 0 6 44rem;
-  min-width: 14rem;
-  margin-left: auto;
-}
-
-.searchIcon {
-  @apply pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2;
-  @apply text-fg-faint;
+.searchEntry {
+  @apply !hidden lg:!flex;
 }
 
 .tools {
   @apply ml-auto flex shrink-0 items-center gap-1;
-}
-
-@media (min-width: 1024px) {
-  .tools {
-    margin-left: 0;
-  }
 }
 
 /* WHY: no celular e no tablet estreito a conta e a sacola moram na TabBar de

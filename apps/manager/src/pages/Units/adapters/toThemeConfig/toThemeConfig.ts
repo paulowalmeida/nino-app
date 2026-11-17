@@ -1,4 +1,5 @@
 import type { CatalogDraft } from '@pages/Units/types/CatalogDraft.type'
+import type { BannerVariants } from '@pages/Units/types/BannerCrop.type'
 import type { HomeDraft } from '@pages/Units/types/HomeDraft.type'
 import type { ThemeConfig } from '@pages/Units/types/ThemeConfig.type'
 import type { TrackingDraft } from '@pages/Units/types/TrackingDraft.type'
@@ -14,16 +15,33 @@ export const toThemeConfig = (
   shape?: ThemeConfig['shape'],
   tracking?: TrackingDraft,
   catalog?: CatalogDraft,
-  home?: HomeDraft
+  home?: HomeDraft,
+  uploadedBannerVariants?: BannerVariants
 ): ThemeConfig => ({
   brand: {
-    logoUrl:
-      draft.logoUrl !== undefined ? draft.logoUrl : (unit?.logoUrl ?? null),
+    logoUrl: draft.logoFile
+      ? (unit?.logoUrl ?? null)
+      : draft.logoUrl !== undefined
+        ? draft.logoUrl
+        : (unit?.logoUrl ?? null),
     faviconUrl: null,
-    bannerUrl:
-      draft.bannerUrl !== undefined
+    bannerUrl: draft.bannerFile
+      ? (unit?.bannerUrl ?? null)
+      : draft.bannerUrl !== undefined
         ? draft.bannerUrl
         : (unit?.bannerUrl ?? null),
+    ...(draft.bannerCrops ? { bannerCrops: draft.bannerCrops } : {}),
+    ...(Object.keys({
+      ...draft.bannerVariants,
+      ...uploadedBannerVariants,
+    }).length > 0
+      ? {
+          bannerVariants: {
+            ...draft.bannerVariants,
+            ...uploadedBannerVariants,
+          },
+        }
+      : {}),
   },
   colors: {
     primary: draft.primaryColor || null,

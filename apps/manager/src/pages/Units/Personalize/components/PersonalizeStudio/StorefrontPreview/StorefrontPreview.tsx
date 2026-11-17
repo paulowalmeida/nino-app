@@ -12,6 +12,11 @@ import { Text } from '@nino/ds/components/Text'
 import { DEFAULT_CATALOG_DRAFT } from '@pages/Units/constants/catalog.constants'
 import { DEFAULT_HOME_DRAFT } from '@pages/Units/constants/home.constants'
 import type { BrandColors } from '@pages/Units/types/BrandColors.type'
+import type {
+  BannerCrops,
+  BannerVariantFiles,
+  BannerVariants,
+} from '@pages/Units/types/BannerCrop.type'
 import type { CatalogDraft } from '@pages/Units/types/CatalogDraft.type'
 import type { HomeDraft } from '@pages/Units/types/HomeDraft.type'
 import type { PreviewDevice } from '@pages/Units/types/PreviewDevice.type'
@@ -27,8 +32,11 @@ export type StorefrontPreviewProps = {
   device: PreviewDevice
   logoUrl?: string | null
   bannerUrl?: string | null
+  bannerCrops?: BannerCrops
+  bannerVariants?: BannerVariants
   logoFile?: File
   bannerFile?: File
+  bannerVariantFiles?: BannerVariantFiles
   catalog?: CatalogDraft
   home?: HomeDraft
 }
@@ -77,6 +85,21 @@ const PREVIEW_CATEGORIES = [
   { name: 'Combos', icon: '🍟' },
   { name: 'Bebidas', icon: '🥤' },
 ]
+
+const cropStyle = (
+  crops: BannerCrops | undefined,
+  device: PreviewDevice
+): CSSProperties | undefined => {
+  const crop = crops?.[device === 'mobile' ? 'phone320' : 'desktop1920']
+  if (!crop) return undefined
+
+  return {
+    '--banner-crop-x': String(crop.x),
+    '--banner-crop-y': String(crop.y),
+    '--banner-crop-width': String(crop.width),
+    '--banner-crop-height': String(crop.height),
+  } as CSSProperties
+}
 
 type PreviewProductCardProps = {
   product: PreviewProduct
@@ -133,15 +156,25 @@ export const StorefrontPreview = ({
   device,
   logoUrl,
   bannerUrl,
+  bannerCrops,
+  bannerVariants,
   logoFile,
   bannerFile,
+  bannerVariantFiles,
   catalog = DEFAULT_CATALOG_DRAFT,
   home = DEFAULT_HOME_DRAFT,
 }: StorefrontPreviewProps) => {
   const localLogoUrl = useObjectUrl(logoFile)
   const localBannerUrl = useObjectUrl(bannerFile)
+  const bannerVariantId = device === 'mobile' ? 'phone320' : 'desktop1920'
+  const localVariantUrl = useObjectUrl(bannerVariantFiles?.[bannerVariantId])
   const shownLogoUrl = localLogoUrl ?? logoUrl
-  const shownBannerUrl = localBannerUrl ?? bannerUrl
+  const shownBannerVariantUrl =
+    localVariantUrl ?? bannerVariants?.[bannerVariantId]
+  const shownBannerUrl = shownBannerVariantUrl ?? localBannerUrl ?? bannerUrl
+  const bannerCropStyle = shownBannerVariantUrl
+    ? undefined
+    : cropStyle(bannerCrops, device)
   const shownName = storeName.trim() || 'Nome da unidade'
   const visibleProducts =
     device === 'desktop' ? PREVIEW_PRODUCTS : PREVIEW_PRODUCTS.slice(0, 2)
@@ -257,12 +290,15 @@ export const StorefrontPreview = ({
           {home.showBanner && (
             <Box
               className={`${local.storefrontPreviewBanner} ${shownBannerUrl ? local.customBanner : ''}`}
+              style={bannerCropStyle}
             >
               {shownBannerUrl && (
                 <img
                   src={shownBannerUrl}
                   alt=""
-                  className={local.customImage}
+                  className={`${local.customImage} ${
+                    bannerCropStyle ? local.croppedImage : ''
+                  }`}
                 />
               )}
               {!shownBannerUrl &&

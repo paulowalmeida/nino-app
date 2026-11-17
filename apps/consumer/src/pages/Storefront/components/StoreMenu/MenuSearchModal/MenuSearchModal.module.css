@@ -48,7 +48,7 @@
 }
 
 .menuSearchModalClose {
-  @apply shrink-0 px-3 text-fg-subtle;
+  @apply shrink-0 px-3 font-semibold text-fg-strong;
 }
 
 .menuSearchModalScroll {

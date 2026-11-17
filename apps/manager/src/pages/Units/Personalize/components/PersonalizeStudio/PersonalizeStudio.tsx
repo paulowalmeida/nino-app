@@ -62,7 +62,13 @@ export const PersonalizeStudio = () => {
 
   const seedDraft = (detail: UnitDetail) =>
     storedConfig
-      ? { ...toUnitDraft(detail), ...toThemeColors(storedConfig) }
+      ? {
+          ...toUnitDraft(detail),
+          ...toThemeColors(storedConfig),
+          bannerUrl: storedConfig.brand.bannerUrl,
+          bannerCrops: storedConfig.brand.bannerCrops,
+          bannerVariants: storedConfig.brand.bannerVariants,
+        }
       : toUnitDraft(detail)
 
   const seedTracking = () =>
@@ -134,6 +140,8 @@ export const PersonalizeStudio = () => {
       <BrandAssets
         hasLogo={!!(draft.logoUrl || draft.logoFile)}
         hasBanner={!!(draft.bannerUrl || draft.bannerFile)}
+        bannerCrops={draft.bannerCrops}
+        bannerVariants={draft.bannerVariants}
         onChange={change}
       />
     ),
@@ -184,8 +192,11 @@ export const PersonalizeStudio = () => {
             device={device}
             logoUrl={draft.logoUrl}
             bannerUrl={draft.bannerUrl}
+            bannerCrops={draft.bannerCrops}
+            bannerVariants={draft.bannerVariants}
             logoFile={draft.logoFile}
             bannerFile={draft.bannerFile}
+            bannerVariantFiles={draft.bannerVariantFiles}
             catalog={catalog}
             home={home}
           />

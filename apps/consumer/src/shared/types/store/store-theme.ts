@@ -1,4 +1,25 @@
 /** O tema publicado da loja, como `GET /units/slug/:slug` o entrega. */
+export type BannerCrop = {
+  x: number
+  y: number
+  width: number
+  height: number
+}
+
+export type BannerCrops = Partial<
+  Record<
+    'phone320' | 'phone425' | 'tablet768' | 'desktop1024' | 'desktop1920',
+    BannerCrop
+  >
+>
+
+export type BannerVariants = Partial<
+  Record<
+    'phone320' | 'phone425' | 'tablet768' | 'desktop1024' | 'desktop1920',
+    string
+  >
+>
+
 export type StoreTheme = {
   version: number
   configVersion: number
@@ -9,6 +30,8 @@ export type StoreTheme = {
       logoUrl: string | null
       faviconUrl: string | null
       bannerUrl: string | null
+      bannerCrops?: BannerCrops
+      bannerVariants?: BannerVariants
     }
     colors: {
       primary: string | null

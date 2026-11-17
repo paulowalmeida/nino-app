@@ -209,14 +209,14 @@
 
 .customBanner {
   width: min(100%, 900px);
-  height: fit-content;
-  min-height: 0;
-  aspect-ratio: auto;
+  height: auto;
+  min-height: auto;
+  aspect-ratio: 18 / 5;
   max-width: min(100%, 900px);
   max-height: none;
   margin-inline: auto;
   background-color: transparent;
-  overflow: visible;
+  overflow: hidden;
 }
 
 .customBanner::before {
@@ -226,11 +226,22 @@
 .customImage {
   display: block;
   width: 100%;
-  height: auto;
+  height: 100%;
   max-width: none;
   max-height: none;
   margin: auto;
-  object-fit: contain;
+  object-fit: cover;
+}
+
+.croppedImage {
+  position: absolute;
+  left: calc(-100% * var(--banner-crop-x, 0) / var(--banner-crop-width, 1));
+  top: calc(-100% * var(--banner-crop-y, 0) / var(--banner-crop-height, 1));
+  width: calc(100% / var(--banner-crop-width, 1));
+  height: calc(100% / var(--banner-crop-height, 1));
+  max-width: none;
+  max-height: none;
+  object-fit: fill;
 }
 
 .storefrontPreviewBanner::before {

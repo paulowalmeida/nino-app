@@ -3,22 +3,34 @@ import type { UnitDraft } from '@shared/types/store/unit-draft'
 
 import { StudioSection } from '../StudioSection/StudioSection'
 import { BrandAssetSlot } from './BrandAssetSlot/BrandAssetSlot'
+import { ResponsiveBannerAsset } from './ResponsiveBannerAsset'
 
 import styles from './BrandAssets.module.css'
-
-const STORE_BANNER_ASPECT_RATIO = 900 / 250
 
 export type BrandAssetsProps = {
   hasLogo: boolean
   hasBanner: boolean
+  bannerCrops?: UnitDraft['bannerCrops']
+  bannerVariants?: UnitDraft['bannerVariants']
   onChange: (
-    files: Pick<UnitDraft, 'logoFile' | 'bannerFile' | 'logoUrl' | 'bannerUrl'>
+    files: Pick<
+      UnitDraft,
+      | 'logoFile'
+      | 'bannerFile'
+      | 'bannerVariantFiles'
+      | 'logoUrl'
+      | 'bannerUrl'
+      | 'bannerCrops'
+      | 'bannerVariants'
+    >
   ) => void
 }
 
 export const BrandAssets = ({
   hasLogo,
   hasBanner,
+  bannerCrops,
+  bannerVariants,
   onChange,
 }: BrandAssetsProps) => (
   <StudioSection
@@ -39,17 +51,20 @@ export const BrandAssets = ({
         onRemove={() => onChange({ logoFile: undefined, logoUrl: null })}
       />
 
-      <BrandAssetSlot
-        label="Banner"
-        helperText="Horizontal · evite texto, ele some no celular"
-        triggerLabel={hasBanner ? 'Trocar banner' : 'Escolher banner'}
-        framingTitle="Enquadrar o banner"
-        framingHint="Arraste para escolher a faixa que aparece no topo da loja."
-        confirmLabel="Usar este banner"
-        aspectRatio={STORE_BANNER_ASPECT_RATIO}
-        onCropped={(bannerFile) => onChange({ bannerFile })}
+      <ResponsiveBannerAsset
         hasAsset={hasBanner}
-        onRemove={() => onChange({ bannerFile: undefined, bannerUrl: null })}
+        crops={bannerCrops}
+        variants={bannerVariants}
+        onChange={onChange}
+        onRemove={() =>
+          onChange({
+            bannerFile: undefined,
+            bannerUrl: null,
+            bannerCrops: undefined,
+            bannerVariants: undefined,
+            bannerVariantFiles: undefined,
+          })
+        }
       />
     </Box>
   </StudioSection>

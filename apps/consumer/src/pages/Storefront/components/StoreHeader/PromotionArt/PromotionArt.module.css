@@ -1,34 +1,185 @@
 @reference "@nino/ds/globals.css";
 
+/* WHY: o slide tem proporção fixa (5:2), então tudo é medido pela altura do
+ * cartaz (cqh) e a composição é a mesma no celular e no desktop. As fotos do
+ * cardápio entram como pratos vistos de cima, saindo pela borda direita. */
 .art {
-  @apply flex h-full w-full items-center gap-3 p-4 text-left sm:gap-4 sm:p-5;
-  @apply transition-colors focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-brand;
   --art-tint: var(--store-tint, var(--color-brand));
-  background-color: color-mix(in srgb, var(--art-tint) 12%, white);
+  --art-ink: color-mix(in oklab, var(--art-tint) 62%, black);
+  container-type: size;
+  @apply relative block h-full w-full cursor-pointer overflow-hidden text-left;
+  background:
+    radial-gradient(
+      80% 140% at 100% 50%,
+      color-mix(in oklab, var(--art-tint) 26%, white),
+      transparent 70%
+    ),
+    color-mix(in oklab, var(--art-tint) 9%, white);
 }
 
-.art:hover {
-  background-color: color-mix(in srgb, var(--art-tint) 18%, white);
+.art:focus-visible {
+  outline: 2px solid var(--art-tint);
+  outline-offset: -4px;
 }
 
-.badge {
-  @apply flex size-12 shrink-0 sm:size-14 items-center justify-center rounded-3 text-fg-on-brand;
+.poster {
+  @apply relative h-full w-full justify-center;
+  padding: 0 0 0 8cqh;
+}
+
+.copy {
+  @apply relative z-content min-w-0 items-start;
+  max-width: 50%;
+}
+
+.art .lead,
+.art .tail {
+  @apply font-display font-bold leading-tight;
+  font-size: 9cqh;
+  color: var(--art-ink);
+}
+
+.art .headline {
+  @apply font-display font-extrabold text-balance;
+  font-size: 22cqh;
+  line-height: 0.92;
+  letter-spacing: -0.03em;
+  color: var(--art-ink);
+}
+
+.art .giftName {
+  @apply line-clamp-2;
+  font-size: 16cqh;
+}
+
+.amount {
+  @apply items-start font-display font-extrabold tabular-nums;
+  letter-spacing: -0.04em;
+  color: var(--art-ink);
+}
+
+.art .whole {
+  font-size: 38cqh;
+  line-height: 0.84;
+  color: inherit;
+}
+
+.art .minor {
+  font-size: 13cqh;
+  line-height: 1;
+  margin-top: 2cqh;
+  color: inherit;
+}
+
+.art .minor:first-child {
+  margin-right: 0.1em;
+}
+
+.condition {
+  @apply items-center;
+  gap: 3cqh;
+  margin-top: 6cqh;
+}
+
+.seal {
+  @apply flex shrink-0 items-center justify-center rounded-full text-fg-on-brand;
+  width: 13cqh;
+  height: 13cqh;
+  font-size: 7.5cqh;
   background-color: var(--art-tint);
 }
 
-.text {
-  @apply flex min-w-0 flex-col gap-1;
+.art .detail {
+  @apply line-clamp-2 font-semibold text-pretty text-fg-default;
+  font-size: clamp(0.875rem, 8cqh, 1rem);
+  line-height: 1.25;
 }
 
-.benefit {
-  @apply font-display text-xl font-extrabold sm:text-2xl leading-tight text-balance text-fg-strong;
+.mainPlate,
+.sidePlate {
+  @apply absolute rounded-full object-cover;
+  box-shadow:
+    0 0 0 1.6cqh white,
+    0 1.5cqh 5cqh color-mix(in oklab, var(--art-ink) 28%, transparent);
+  transition: transform 400ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.detail {
-  @apply text-sm leading-snug text-pretty text-fg-muted;
+.mainPlate {
+  width: 112cqh;
+  height: 112cqh;
+  top: -6cqh;
+  right: -14cqh;
 }
 
-/* WHY: frete grátis fala em verde, como no carrinho e no recibo. */
+.sidePlate {
+  width: 46cqh;
+  height: 46cqh;
+  bottom: 5cqh;
+  right: 72cqh;
+}
+
+.emptyPlate {
+  @apply flex items-center justify-center text-fg-on-brand;
+  font-size: 30cqh;
+  background-color: var(--art-tint);
+}
+
+.art:hover .mainPlate {
+  transform: rotate(-6deg) scale(1.03);
+}
+
+.art:hover .sidePlate {
+  transform: rotate(8deg) scale(1.05);
+}
+
+/* Entregador ilustrado comunica a entrega sem depender de fotos do cardápio. */
 .freeDelivery {
   --art-tint: var(--color-success);
+  background:
+    radial-gradient(
+      73% 110% at 100% 90%,
+      color-mix(in oklab, var(--art-tint) 21%, white),
+      transparent 72%
+    ),
+    #fff8ef;
+}
+
+.freeDelivery .copy {
+  max-width: 53%;
+}
+
+.freeDelivery .headline {
+  font-size: 21cqh;
+}
+
+.freeDelivery .condition {
+  margin-top: 8cqh;
+  padding-top: 5cqh;
+  border-top: 1px solid color-mix(in oklab, var(--art-tint) 28%, transparent);
+}
+
+.deliveryScene {
+  @apply absolute inset-0 pointer-events-none;
+}
+
+.deliveryIllustration {
+  @apply absolute object-contain;
+  width: 145cqh;
+  height: 105cqh;
+  right: -7cqh;
+  bottom: -3cqh;
+  filter: drop-shadow(0 2cqh 3cqh rgb(71 51 29 / 0.14));
+  transition: transform 400ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.art:hover .deliveryIllustration {
+  transform: translateY(-2cqh) rotate(2deg);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mainPlate,
+  .sidePlate,
+  .deliveryIllustration {
+    transition: none;
+  }
 }

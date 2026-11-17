@@ -11,8 +11,23 @@
 }
 
 .afterCustomBanner {
-  margin-top: 0;
+  margin-top: 1rem;
+  border: 0;
+  justify-content: center;
   box-shadow: none;
+}
+
+.afterCustomBanner .logoTile,
+.afterCustomBanner .name {
+  display: none;
+}
+
+.afterCustomBanner .identity {
+  flex: none;
+}
+
+.afterCustomBanner .identityMeta {
+  @apply mt-0 justify-center;
 }
 
 @media (min-width: 640px) {

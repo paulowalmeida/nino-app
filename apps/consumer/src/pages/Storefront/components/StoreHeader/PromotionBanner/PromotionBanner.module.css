@@ -1,12 +1,14 @@
 @reference "@nino/ds/globals.css";
 
 .promotionBanner {
-  @apply relative mt-4 w-full;
+  @apply relative mt-4 w-full sm:mx-auto sm:max-w-2xl;
 }
 
 /* WHY: todos os slides têm a mesma proporção (5:2, a da arte das promoções) para
- * imagem e arte gerada terem a mesma altura no carrossel. O próximo cartão aparece pela borda (peek) para dizer que há mais
- * ofertas sem setas fixas nem rotação automática; no toque o swipe resolve. */
+ * imagem e arte gerada terem a mesma altura no carrossel. No celular o próximo
+ * cartão aparece pela borda (peek) para dizer que há mais ofertas; no desktop
+ * cada slide ocupa a largura do contêiner (limitada para a altura não crescer)
+ * e as setas e os pontos fazem a navegação. */
 .track {
   @apply flex snap-x snap-mandatory flex-row gap-3 overflow-x-auto;
   @apply overscroll-x-contain;
@@ -19,12 +21,18 @@
 
 .slide {
   @apply relative aspect-[5/2] shrink-0 basis-[88%] snap-start overflow-hidden;
-  @apply rounded-4 sm:basis-[28rem];
+  @apply rounded-4 sm:basis-full;
   background-color: var(--store-tint, var(--color-brand));
 }
 
 .single {
-  @apply basis-full sm:mx-auto sm:max-w-xl;
+  @apply basis-full;
+}
+
+/* WHY: o cartaz gerado tem fundo próprio, claro; o tom da loja no slide só
+ * vazaria pelas bordas arredondadas. */
+.artSlide {
+  background-color: transparent;
 }
 
 .imageWrap {
@@ -47,14 +55,17 @@
 .arrow {
   @apply absolute top-[calc(50%-0.75rem)] z-overlay hidden h-9 w-9;
   @apply -translate-y-1/2 rounded-full bg-black/45 text-white md:flex;
+  @apply lg:bg-surface-raised lg:text-fg-default lg:shadow-sm;
 }
 
+/* WHY: no desktop largo as setas saem do banner para não cobrir o valor do
+ * cartaz nem o começo da imagem. */
 .previous {
-  @apply left-3;
+  @apply left-3 lg:-left-14;
 }
 
 .next {
-  @apply right-3;
+  @apply right-3 lg:-right-14;
 }
 
 .dots {

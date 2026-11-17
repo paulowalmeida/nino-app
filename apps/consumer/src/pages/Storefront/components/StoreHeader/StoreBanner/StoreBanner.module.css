@@ -1,42 +1,173 @@
 @reference "@nino/ds/globals.css";
 
 .storeBanner {
-  @apply relative w-full overflow-hidden bg-cover bg-center;
-  @apply h-48;
-  @apply sm:mx-auto sm:mt-4 sm:h-auto sm:w-[calc(100%-3rem)];
-  @apply sm:aspect-[1300/250] sm:max-h-60 sm:rounded-4 lg:max-h-44;
+  @apply relative w-full overflow-hidden;
+  @apply aspect-[5/3] sm:mx-auto sm:mt-4 sm:w-[calc(100%-3rem)];
+  @apply sm:rounded-4;
   max-width: var(--storefront-column);
-  background-color: var(--store-tint, var(--color-brand));
+  background: linear-gradient(
+    110deg,
+    color-mix(in srgb, var(--store-tint, var(--color-brand)) 83%, black),
+    var(--store-tint, var(--color-brand)) 67%,
+    color-mix(in srgb, var(--store-tint, var(--color-brand)) 74%, white)
+  );
 }
 
 .storeBanner::before {
   content: '';
-  @apply pointer-events-none absolute -inset-y-12 -inset-x-8;
+  @apply pointer-events-none absolute inset-0;
   background: radial-gradient(
-    ellipse at 72% 45%,
-    color-mix(in srgb, var(--color-fg-on-brand) 38%, transparent) 0%,
-    transparent 64%
+    ellipse at 76% 40%,
+    color-mix(in srgb, white 29%, transparent),
+    transparent 55%
   );
-  transform: translate3d(0, calc(var(--banner-parallax, 0px) * -0.32), 0);
-  transition: transform 70ms linear;
-  will-change: transform;
 }
 
 .customBanner {
-  @apply sm:rounded-4;
-  background-color: transparent;
+  background: none;
 }
 
 .customBanner::before {
   display: none;
 }
 
-.customImage {
+.image {
   @apply h-full w-full object-cover;
 }
 
-.customImageWrap {
+.imageWrap {
   @apply h-full w-full;
+}
+
+.responsiveImage {
+  position: absolute;
+  left: calc(
+    -100% * var(--banner-phone320-x, 0) / var(--banner-phone320-width, 1)
+  );
+  top: calc(
+    -100% * var(--banner-phone320-y, 0) / var(--banner-phone320-height, 1)
+  );
+  width: calc(100% / var(--banner-phone320-width, 1));
+  height: calc(100% / var(--banner-phone320-height, 1));
+  max-width: none;
+  object-fit: fill;
+}
+
+@media (max-width: 374px) {
+  .variantPhone320 .responsiveImage {
+    position: static;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+
+@media (min-width: 375px) and (max-width: 639px) {
+  .storeBanner {
+    aspect-ratio: 425 / 192;
+  }
+
+  .responsiveImage {
+    left: calc(
+      -100% * var(--banner-phone425-x, 0) / var(--banner-phone425-width, 1)
+    );
+    top: calc(
+      -100% * var(--banner-phone425-y, 0) / var(--banner-phone425-height, 1)
+    );
+    width: calc(100% / var(--banner-phone425-width, 1));
+    height: calc(100% / var(--banner-phone425-height, 1));
+  }
+
+  .variantPhone425 .responsiveImage {
+    position: static;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+
+@media (min-width: 640px) and (max-width: 1023px) {
+  .storeBanner {
+    width: 100%;
+    max-width: none;
+    margin: 0;
+    border-radius: 0;
+    aspect-ratio: 26 / 5;
+  }
+
+  .responsiveImage {
+    left: calc(
+      -100% * var(--banner-tablet768-x, 0) / var(--banner-tablet768-width, 1)
+    );
+    top: calc(
+      -100% * var(--banner-tablet768-y, 0) / var(--banner-tablet768-height, 1)
+    );
+    width: calc(100% / var(--banner-tablet768-width, 1));
+    height: calc(100% / var(--banner-tablet768-height, 1));
+  }
+
+  .variantTablet768 .responsiveImage {
+    position: static;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+
+@media (min-width: 1024px) and (max-width: 1279px) {
+  .storeBanner {
+    @apply rounded-4;
+    width: calc(100% - 3rem);
+    max-width: var(--storefront-column);
+    margin: 1rem auto 0;
+    aspect-ratio: 11 / 2;
+  }
+
+  .responsiveImage {
+    left: calc(
+      -100% * var(--banner-desktop1024-x, 0) /
+        var(--banner-desktop1024-width, 1)
+    );
+    top: calc(
+      -100% * var(--banner-desktop1024-y, 0) /
+        var(--banner-desktop1024-height, 1)
+    );
+    width: calc(100% / var(--banner-desktop1024-width, 1));
+    height: calc(100% / var(--banner-desktop1024-height, 1));
+  }
+
+  .variantDesktop1024 .responsiveImage {
+    position: static;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+
+@media (min-width: 1280px) {
+  .storeBanner {
+    aspect-ratio: 36 / 5;
+  }
+
+  .responsiveImage {
+    left: calc(
+      -100% * var(--banner-desktop1920-x, 0) /
+        var(--banner-desktop1920-width, 1)
+    );
+    top: calc(
+      -100% * var(--banner-desktop1920-y, 0) /
+        var(--banner-desktop1920-height, 1)
+    );
+    width: calc(100% / var(--banner-desktop1920-width, 1));
+    height: calc(100% / var(--banner-desktop1920-height, 1));
+  }
+
+  .variantDesktop1920 .responsiveImage {
+    position: static;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
 }
 
 .imagePlaceholder {
@@ -45,32 +176,15 @@
 }
 
 .mark {
-  @apply pointer-events-none absolute -bottom-4 right-2 h-[135%] w-auto;
-  @apply select-none;
-  opacity: 0.3;
-  filter: saturate(0);
-  transform: translate3d(0, var(--banner-parallax, 0px), 0) scale(1.06);
-  transition: transform 70ms linear;
-  will-change: transform;
-  z-index: 1;
+  @apply pointer-events-none absolute -bottom-8 right-6 h-[145%] w-auto select-none object-contain;
+  opacity: 0.24;
+  filter: grayscale(1) brightness(0) invert(1);
 }
 
 .monogram {
-  @apply pointer-events-none absolute -bottom-4 right-4 select-none;
-  @apply font-display text-[8rem] font-black leading-none text-fg-on-brand;
-  @apply sm:text-[10rem];
-  opacity: 0.28;
+  @apply pointer-events-none absolute -bottom-10 right-8 select-none;
+  @apply font-display text-[11rem] font-black leading-none text-fg-on-brand;
+  @apply sm:text-[14rem];
+  opacity: 0.24;
   letter-spacing: -0.08em;
-  transform: translate3d(0, var(--banner-parallax, 0px), 0) scale(1.06);
-  transition: transform 70ms linear;
-  will-change: transform;
-  z-index: 1;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .mark,
-  .monogram,
-  .storeBanner::before {
-    transform: none;
-  }
 }

@@ -13,4 +13,6 @@ export const toUnitThemeDraft = (
   ...toThemeColors(theme.config),
   logoUrl: theme.config.brand.logoUrl,
   bannerUrl: theme.config.brand.bannerUrl,
+  bannerCrops: theme.config.brand.bannerCrops,
+  bannerVariants: theme.config.brand.bannerVariants,
 })

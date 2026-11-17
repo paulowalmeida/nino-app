@@ -1,4 +1,8 @@
 import type { Store } from '@custom_types/store/store'
+import type {
+  BannerCrops,
+  BannerVariants,
+} from '@custom_types/store/store-theme'
 
 type ThemeVars = Record<`--${string}`, string>
 
@@ -15,6 +19,13 @@ export const storeThemeLogoUrl = (store?: Store): string | null =>
 
 export const storeThemeBannerUrl = (store?: Store): string | null =>
   value(store?.theme?.config.brand.bannerUrl) ?? value(store?.bannerUrl) ?? null
+
+export const storeThemeBannerCrops = (store?: Store): BannerCrops | undefined =>
+  store?.theme?.config.brand.bannerCrops
+
+export const storeThemeBannerVariants = (
+  store?: Store
+): BannerVariants | undefined => store?.theme?.config.brand.bannerVariants
 
 const radiusVars = (radius: 'square' | 'soft' | 'round'): ThemeVars => {
   if (radius === 'square') {

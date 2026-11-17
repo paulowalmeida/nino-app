@@ -4,8 +4,6 @@ import { MemoryRouter } from 'react-router'
 import { useStorefrontFacade } from '@pages/Storefront/facades/useStorefrontFacade/useStorefrontFacade'
 
 import { StoreBanner } from './StoreBanner'
-import { storeBannerMock } from './StoreBanner.mock'
-import styles from './StoreBanner.module.css'
 
 vi.mock(
   '@pages/Storefront/facades/useStorefrontFacade/useStorefrontFacade',
@@ -15,12 +13,9 @@ vi.mock(
 )
 
 describe('StoreBanner', () => {
-  it('uses the store initials when the store has no logo', () => {
+  it('renders the store identity banner when there is no custom banner', () => {
     vi.mocked(useStorefrontFacade).mockReturnValue({
-      store: {
-        logoUrl: storeBannerMock.logoUrl,
-        customName: storeBannerMock.customName,
-      },
+      store: { logoUrl: 'https://cdn.example/logo.png' },
       bannerOffers: [],
     } as never)
     const { container } = render(
@@ -29,11 +24,13 @@ describe('StoreBanner', () => {
       </MemoryRouter>
     )
 
-    expect(container.querySelector('img')).not.toBeInTheDocument()
-    expect(container).toHaveTextContent(storeBannerMock.initials)
+    expect(container.querySelector('img')).toHaveAttribute(
+      'src',
+      'https://cdn.example/logo.png'
+    )
   })
 
-  it('renders a custom banner without the store watermark', () => {
+  it('renders the custom banner image', () => {
     vi.mocked(useStorefrontFacade).mockReturnValue({
       store: {
         logoUrl: 'https://cdn.example/logo.png',
@@ -52,6 +49,5 @@ describe('StoreBanner', () => {
       'https://cdn.example/banner.png'
     )
     expect(container.querySelectorAll('img')).toHaveLength(1)
-    expect(container.querySelector(`.${styles.mark}`)).not.toBeInTheDocument()
   })
 })

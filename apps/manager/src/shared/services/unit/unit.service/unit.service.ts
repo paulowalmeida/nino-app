@@ -8,6 +8,10 @@ import type { UnitDraft } from '@shared/types/store/unit-draft'
 import type { UnitMapLocation } from '@shared/types/store/unit-map-location'
 import type { UnitPause } from '@shared/types/store/unit-pause'
 import type { UpdateUnitRequest } from '@shared/types/store/update-unit-request'
+import type {
+  BannerVariantFiles,
+  BannerVariants,
+} from '@pages/Units/types/BannerCrop.type'
 
 export const UnitService = {
   uploadBrandAsset: async (
@@ -24,7 +28,16 @@ export const UnitService = {
   },
 
   saveUnit: async (unitId: string, draft: UnitDraft): Promise<UnitDetail> => {
-    const { logoFile, bannerFile, logoUrl, bannerUrl, ...data } = draft
+    const {
+      logoFile,
+      bannerFile,
+      bannerVariantFiles,
+      logoUrl,
+      bannerUrl,
+      bannerCrops,
+      bannerVariants,
+      ...data
+    } = draft
     let nextLogoUrl = logoUrl
     let nextBannerUrl = bannerUrl
 
@@ -42,6 +55,22 @@ export const UnitService = {
       ...(nextLogoUrl !== undefined ? { logoUrl: nextLogoUrl } : {}),
       ...(nextBannerUrl !== undefined ? { bannerUrl: nextBannerUrl } : {}),
     })
+  },
+
+  uploadBannerVariants: async (
+    unitId: string,
+    files?: BannerVariantFiles
+  ): Promise<BannerVariants> => {
+    if (!files) return {}
+
+    const uploads = await Promise.all(
+      Object.entries(files).map(async ([id, file]) => {
+        const saved = await UnitService.uploadBrandAsset(unitId, 'banner', file)
+        return [id, saved.bannerUrl] as const
+      })
+    )
+
+    return Object.fromEntries(uploads) as BannerVariants
   },
 
   createStore: (data: CreateStoreRequest): Promise<CreatedStore> =>

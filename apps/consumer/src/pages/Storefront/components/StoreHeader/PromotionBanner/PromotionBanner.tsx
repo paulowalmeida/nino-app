@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { useNavigate, useParams } from 'react-router'
 
 import { Box } from '@nino/ds/components/Box'
@@ -7,6 +7,7 @@ import { Icon } from '@nino/ds/components/Icon'
 import { Image } from '@nino/ds/components/Image'
 import { useStorefrontFacade } from '@pages/Storefront/facades/useStorefrontFacade/useStorefrontFacade'
 import { PromotionArt } from '@pages/Storefront/components/StoreHeader/PromotionArt/PromotionArt'
+import { promotionPhotos } from '@pages/Storefront/utils/promotion-photos/promotion-photos'
 import type { PublicPromotion } from '@custom_types/promotion/public-promotion.type'
 import { resolveApiAssetUrl } from '@utils/api-asset-url/api-asset-url'
 
@@ -18,12 +19,16 @@ export const PromotionBanner = () => {
     freeDelivery,
     discountOffer,
     giftOffer,
+    sections,
     setFocusedPromotionId,
   } = useStorefrontFacade()
   const { slug } = useParams()
   const navigate = useNavigate()
   const trackRef = useRef<HTMLDivElement>(null)
   const [active, setActive] = useState(0)
+  const [isHovered, setIsHovered] = useState(false)
+  const [isFocused, setIsFocused] = useState(false)
+  const [isVisible, setIsVisible] = useState(true)
 
   const imageIds = new Set(imageOffers.map(({ id }) => id))
   const artOffers = [freeDelivery, discountOffer, giftOffer].filter(
@@ -31,26 +36,57 @@ export const PromotionBanner = () => {
   )
   const bannerOffers = [...imageOffers, ...artOffers]
 
-  if (bannerOffers.length === 0) return null
-
   const hasMany = bannerOffers.length > 1
 
-  const slideStep = () => {
+  const slideStep = useCallback(() => {
     const [first, second] = Array.from(trackRef.current?.children ?? [])
     if (!(first instanceof HTMLElement) || !(second instanceof HTMLElement))
       return 0
     return second.offsetLeft - first.offsetLeft
-  }
+  }, [])
 
-  const goTo = (index: number) => {
-    const target = Math.max(0, Math.min(index, bannerOffers.length - 1))
-    trackRef.current?.scrollTo({
-      left: target * slideStep(),
-      behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches
-        ? 'auto'
-        : 'smooth',
+  const goTo = useCallback(
+    (index: number) => {
+      const count = bannerOffers.length
+      if (!count) return
+      const target = ((index % count) + count) % count
+      trackRef.current?.scrollTo({
+        left: target * slideStep(),
+        behavior: window.matchMedia?.('(prefers-reduced-motion: reduce)')
+          .matches
+          ? 'auto'
+          : 'smooth',
+      })
+    },
+    [bannerOffers.length, slideStep]
+  )
+
+  useEffect(() => {
+    if (!trackRef.current || !('IntersectionObserver' in window)) return
+    const observer = new IntersectionObserver(([entry]) => {
+      setIsVisible(entry.isIntersecting)
     })
-  }
+    observer.observe(trackRef.current)
+    return () => observer.disconnect()
+  }, [hasMany])
+
+  useEffect(() => {
+    if (
+      !hasMany ||
+      isHovered ||
+      isFocused ||
+      !isVisible ||
+      window.matchMedia?.('(prefers-reduced-motion: reduce)').matches
+    )
+      return
+
+    const timer = window.setInterval(() => {
+      if (!document.hidden) goTo(active + 1)
+    }, 5000)
+    return () => window.clearInterval(timer)
+  }, [active, goTo, hasMany, isFocused, isHovered, isVisible])
+
+  if (bannerOffers.length === 0) return null
 
   const handleScroll = () => {
     const step = slideStep()
@@ -59,7 +95,17 @@ export const PromotionBanner = () => {
   }
 
   return (
-    <Box className={styles.promotionBanner}>
+    <Box
+      className={styles.promotionBanner}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+      onFocusCapture={() => setIsFocused(true)}
+      onBlurCapture={(event) => {
+        if (!event.currentTarget.contains(event.relatedTarget)) {
+          setIsFocused(false)
+        }
+      }}
+    >
       <Box
         ref={trackRef}
         className={styles.track}
@@ -71,7 +117,9 @@ export const PromotionBanner = () => {
         {bannerOffers.map((promotion) => (
           <Box
             key={promotion.id}
-            className={`${styles.slide} ${hasMany ? '' : styles.single}`}
+            className={`${styles.slide} ${hasMany ? '' : styles.single} ${
+              imageIds.has(promotion.id) ? '' : styles.artSlide
+            }`}
           >
             {imageIds.has(promotion.id) ? (
               <Image
@@ -86,6 +134,7 @@ export const PromotionBanner = () => {
             ) : (
               <PromotionArt
                 promotion={promotion}
+                photos={promotionPhotos(promotion, sections)}
                 onSelect={({ id }) => setFocusedPromotionId(id)}
               />
             )}

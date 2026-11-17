@@ -1,4 +1,4 @@
-import { fireEvent, render, screen } from '@testing-library/react'
+import { act, fireEvent, render, screen } from '@testing-library/react'
 import { describe, expect, it, vi } from 'vitest'
 import { MemoryRouter } from 'react-router'
 import { useStorefrontFacade } from '@pages/Storefront/facades/useStorefrontFacade/useStorefrontFacade'
@@ -16,6 +16,7 @@ vi.mock(
 const renderBanner = (offers: unknown[], extra: object = {}) => {
   vi.mocked(useStorefrontFacade).mockReturnValue({
     bannerOffers: offers,
+    sections: [],
     setFocusedPromotionId: vi.fn(),
     ...extra,
   } as never)
@@ -73,5 +74,27 @@ describe('PromotionBanner', () => {
     fireEvent.click(screen.getByLabelText('Próxima promoção'))
 
     expect(scrollTo).toHaveBeenCalledTimes(1)
+  })
+
+  it('advances automatically and pauses while hovered', () => {
+    vi.useFakeTimers()
+    const scrollTo = vi.fn()
+    Element.prototype.scrollTo = scrollTo
+    window.matchMedia = vi.fn().mockReturnValue({ matches: false })
+
+    try {
+      renderBanner(promotionBannerMock.offers)
+
+      act(() => vi.advanceTimersByTime(5000))
+      expect(scrollTo).toHaveBeenCalledTimes(1)
+
+      fireEvent.mouseEnter(
+        screen.getByRole('group', { name: 'Promoções da loja' }).parentElement!
+      )
+      act(() => vi.advanceTimersByTime(5000))
+      expect(scrollTo).toHaveBeenCalledTimes(1)
+    } finally {
+      vi.useRealTimers()
+    }
   })
 })
