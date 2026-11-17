@@ -122,7 +122,6 @@ export const StorefrontContent = ({ pathSlug }: StorefrontContentProps) => {
           <>
             <Box ref={setCategorySentinel} aria-hidden="true" />
             <CategoryBar
-              compact={isCategoryDocked}
               className={motion.deal}
               style={riseDelay(140)}
             >

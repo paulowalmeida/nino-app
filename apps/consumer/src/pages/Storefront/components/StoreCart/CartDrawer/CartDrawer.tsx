@@ -111,8 +111,12 @@ export const CartDrawer = () => {
             {lines.length === 0 ? (
               <EmptyState
                 size="md"
-                className={`${motionStyles.riseIn} ${styles.cartDrawerEmpty}`}
-                illustration={<CartEmptyIllustration />}
+                className={styles.cartDrawerEmpty}
+                illustration={
+                  <Box className={motionStyles.land}>
+                    <CartEmptyIllustration />
+                  </Box>
+                }
                 title="Sua sacola está vazia"
                 action={
                   <Button

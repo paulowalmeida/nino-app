@@ -5,8 +5,6 @@ import styles from './CategoryBar.module.css'
 
 type CategoryBarProps = {
   children: ReactNode
-  /** Grudada no topo: as categorias viram abas de texto. */
-  compact?: boolean
   className?: string
   style?: CSSProperties
 }
@@ -17,14 +15,15 @@ type CategoryBarProps = {
  */
 export const CategoryBar = ({
   children,
-  compact = false,
   className,
   style,
 }: CategoryBarProps) => (
   <Box
-    className={`${styles.bar} ${compact ? styles.barCompact : ''} ${className ?? ''}`}
+    className={`${styles.bar} ${className ?? ''}`}
     style={style}
   >
-    <Box className={styles.categoryBarInner}>{children}</Box>
+    <Box className={styles.surface}>
+      <Box className={styles.categoryBarInner}>{children}</Box>
+    </Box>
   </Box>
 )

@@ -12,6 +12,7 @@ import { Text } from '@nino/ds/components/Text'
 import type { MenuItem } from '@custom_types/menu/menu-item'
 import { MenuSearchResult } from '@pages/Storefront/components/StoreMenu/MenuSearchResult/MenuSearchResult'
 import { StoreTintScope } from '@shared/components/StoreTintScope/StoreTintScope'
+import motion from '@styles/motion.module.css'
 import { SearchEmptyIllustration } from '@shared/components/Illustrations/SearchEmptyIllustration/SearchEmptyIllustration'
 import { SearchIllustration } from '@shared/components/Illustrations/SearchIllustration/SearchIllustration'
 import { useStorefrontFacade } from '@pages/Storefront/facades/useStorefrontFacade/useStorefrontFacade'
@@ -42,9 +43,11 @@ export const MenuSearchModal = () => {
 
   /* WHY: `autoFocus` dispara com a gaveta ainda fora da tela; o navegador rola
      até o campo e a entrada pisca vindo do lado errado. O foco vem depois do
-     primeiro quadro e sem rolagem. */
+     primeiro quadro e sem rolagem. No toque o foco abriria o teclado por cima
+     das categorias, então lá a pessoa toca no campo quando quiser. */
   useEffect(() => {
     if (!isSearchOpen) return
+    if (!window.matchMedia('(hover: hover) and (pointer: fine)').matches) return
     const frame = requestAnimationFrame(() =>
       inputRef.current?.focus({ preventScroll: true })
     )
@@ -138,7 +141,11 @@ export const MenuSearchModal = () => {
             <EmptyState
               size="md"
               className={styles.menuSearchModalEmpty}
-              illustration={<SearchIllustration />}
+              illustration={
+                <Box className={motion.land}>
+                  <SearchIllustration />
+                </Box>
+              }
               title="O que vai ser hoje?"
             >
               Digite o nome de um prato ou escolha uma categoria.
@@ -191,7 +198,11 @@ export const MenuSearchModal = () => {
             size="md"
             role="status"
             className={styles.menuSearchModalEmpty}
-            illustration={<SearchEmptyIllustration />}
+            illustration={
+              <Box className={motion.land}>
+                <SearchEmptyIllustration />
+              </Box>
+            }
             title="Nenhum item encontrado"
             action={
               <Button variant="outline" onClick={clear}>

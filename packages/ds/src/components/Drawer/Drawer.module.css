@@ -90,8 +90,10 @@
   }
 }
 
+/* WHY: blur de tela cheia animando junto com o painel derrubava quadros no
+ * celular; lá o véu escuro basta */
 .backdrop {
-  @apply fixed inset-0 z-overlay bg-fg-strong/50 backdrop-blur-sm;
+  @apply fixed inset-0 z-overlay bg-fg-strong/50 md:backdrop-blur-sm;
 }
 
 .backdrop[data-state='open'] {
@@ -137,6 +139,7 @@
 
 .panel {
   @apply flex max-w-full flex-col outline-none;
+  will-change: translate;
   @apply bg-surface-raised shadow-warm-lg;
 }
 

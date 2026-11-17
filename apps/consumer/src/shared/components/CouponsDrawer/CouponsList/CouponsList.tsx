@@ -12,6 +12,7 @@ import type { CouponCodeForm } from '@custom_types/promotion/coupon-code-form.ty
 import type { PublicPromotion } from '@custom_types/promotion/public-promotion.type'
 import type { CouponBlocker } from '@utils/coupon-blocker/coupon-blocker'
 
+import motion from '@styles/motion.module.css'
 import { CouponsEmptyIllustration } from '@shared/components/Illustrations/CouponsEmptyIllustration/CouponsEmptyIllustration'
 import { CouponCard } from '@shared/components/CouponCard/CouponCard'
 
@@ -61,7 +62,11 @@ export const CouponsList = ({
         <EmptyState
           size="md"
           className={styles.emptyState}
-          illustration={<CouponsEmptyIllustration />}
+          illustration={
+            <Box className={motion.land}>
+              <CouponsEmptyIllustration />
+            </Box>
+          }
         >
           {emptyText}
         </EmptyState>
@@ -126,6 +131,7 @@ export const CouponsList = ({
         </>
       )}
       <Tabs
+        className={styles.couponTabs}
         fullWidth
         label="Cupons da loja"
         defaultValue={defaultTab}

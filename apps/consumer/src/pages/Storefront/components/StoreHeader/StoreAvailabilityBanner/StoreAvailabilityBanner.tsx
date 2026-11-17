@@ -2,6 +2,7 @@ import { Box } from '@nino/ds/components/Box'
 import { Text } from '@nino/ds/components/Text'
 import { useStorefrontFacade } from '@pages/Storefront/facades/useStorefrontFacade/useStorefrontFacade'
 import { StoreClosedIllustration } from '@shared/components/Illustrations/StoreClosedIllustration/StoreClosedIllustration'
+import motion from '@styles/motion.module.css'
 import { isOpen } from '@utils/store-info'
 
 import styles from './StoreAvailabilityBanner.module.css'
@@ -18,7 +19,9 @@ export const StoreAvailabilityBanner = () => {
       role="status"
       className={styles.storeAvailabilityBanner}
     >
-      <StoreClosedIllustration className={styles.storeAvailabilityBannerArt} />
+      <StoreClosedIllustration
+        className={`${motion.land} ${styles.storeAvailabilityBannerArt}`}
+      />
       <Box className={styles.storeAvailabilityBannerText}>
         <Text size="base" weight="bold" font="display" color="strong">
           Pedidos indisponíveis no momento

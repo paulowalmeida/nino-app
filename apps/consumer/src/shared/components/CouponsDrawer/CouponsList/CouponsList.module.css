@@ -1,7 +1,15 @@
 @reference "@nino/ds/globals.css";
 
 .couponsList {
-  @apply flex flex-col gap-4 px-6 py-4;
+  @apply flex min-h-full flex-col gap-4 px-6 py-4;
+}
+
+/* WHY: abas, painel e lista esticam até o fim da página para o vazio poder
+ * ficar no meio dela */
+.couponTabs,
+.couponTabs [data-part='content'],
+.couponList {
+  @apply flex flex-1 flex-col;
 }
 
 .codeForm {
@@ -27,7 +35,7 @@
 }
 
 .emptyState {
-  @apply py-4;
+  @apply my-auto py-4;
 }
 
 /* WHY: o EmptyState fixa 96px no desenho; o cupom é paisagem e pede mais. */

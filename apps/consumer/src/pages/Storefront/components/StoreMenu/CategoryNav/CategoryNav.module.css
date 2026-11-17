@@ -65,6 +65,7 @@
 /* WHY: a ilustração encolhe junto com a trilha em vez de sumir de uma vez;
  * fica no DOM para a transição ter de onde partir */
 .tileArt {
+  transform-origin: bottom center;
   transition:
     height var(--duration-slow) var(--ease-out-soft),
     opacity var(--duration-base) var(--ease-out-soft),
@@ -104,12 +105,14 @@
   @apply w-full whitespace-nowrap text-center text-xs font-semibold;
 }
 
-.categoryNavCompact .tileLabel {
-  @apply text-sm;
+/* WHY: font-size animado recalcula o texto a cada quadro e anda aos degraus;
+ * scale roda na GPU e fica liso */
+.tileLabel {
+  transition: scale var(--duration-slow) var(--ease-out-soft);
 }
 
-.tileLabel {
-  transition: font-size var(--duration-slow) var(--ease-out-soft);
+.categoryNavCompact .tileLabel {
+  scale: 1.15;
 }
 
 @media (prefers-reduced-motion: reduce) {
