@@ -58,17 +58,19 @@ export const CouponsDrawer = ({
       : ('available' as const)
 
   /* WHY: ao entrar no detalhe o foco vai ao voltar; ao sair, retorna ao cupom
-   * de onde o cliente veio — ninguém perde o lugar na lista. */
+   * de onde o cliente veio — ninguém perde o lugar na lista. Sem
+   * preventScroll, o navegador rolava os contêineres do painel para mostrar a
+   * página que ainda estava fora da esteira, e a gaveta inteira saltava. */
   useEffect(() => {
     if (pages.isDetail === wasDetailRef.current) return
     wasDetailRef.current = pages.isDetail
     if (pages.isDetail) {
-      backRef.current?.focus()
+      backRef.current?.focus({ preventScroll: true })
       return
     }
     viewportRef.current
       ?.querySelector<HTMLElement>(`[data-coupon-id="${pages.shownId}"]`)
-      ?.focus()
+      ?.focus({ preventScroll: true })
   }, [pages.isDetail, pages.shownId])
 
   return (
