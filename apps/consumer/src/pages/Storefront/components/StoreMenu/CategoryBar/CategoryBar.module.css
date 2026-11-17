@@ -6,7 +6,7 @@
  * uma área que muda de tamanho a cada quadro travava no celular. */
 .bar {
   @apply pointer-events-none sticky top-14 z-sticky mt-4 lg:top-20;
-  --category-track-tall: 6.75rem;
+  --category-track-tall: 7.75rem;
   --category-track-short: 3rem;
   height: calc(var(--category-track-tall) + 1px);
 }

@@ -31,7 +31,7 @@
 }
 
 .storefrontContentMenu {
-  @apply mt-8 sm:mt-10;
+  @apply mt-8 sm:mt-5;
 }
 
 .storefrontContentEmpty {

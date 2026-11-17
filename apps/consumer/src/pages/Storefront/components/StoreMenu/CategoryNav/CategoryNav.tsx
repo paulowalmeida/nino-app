@@ -19,6 +19,32 @@ export const CategoryNav = ({ compact = false }: CategoryNavProps) => {
   const trackRef = useRef<HTMLDivElement>(null)
   const tilesRef = useRef<HTMLDivElement>(null)
   const [fits, setFits] = useState(false)
+  const [indicator, setIndicator] = useState({ left: 0, width: 0 })
+
+  /* WHY: um indicador só, que desliza até a aba ativa, em vez de um traço por
+     aba que aparecia e sumia de uma vez. Mede a aba de novo quando a barra
+     compacta ou o tamanho muda, porque a largura dela muda junto. */
+  useLayoutEffect(() => {
+    const tiles = tilesRef.current
+    if (!tiles) return
+    const measure = () => {
+      const tile = activeRef.current
+      const left = tile?.offsetLeft ?? 0
+      const width = tile?.offsetWidth ?? 0
+      /* WHY: `visibleSections` chega com referência nova a cada render; sem
+         devolver o mesmo objeto quando nada mudou, o efeito vira loop */
+      setIndicator((current) =>
+        current.left === left && current.width === width
+          ? current
+          : { left, width }
+      )
+    }
+    measure()
+    if (typeof ResizeObserver === 'undefined') return
+    const observer = new ResizeObserver(measure)
+    observer.observe(tiles)
+    return () => observer.disconnect()
+  }, [activeId, visibleSections, compact])
 
   /* WHY: `justify-content: center` num container com overflow-x deixa o
      primeiro item inalcançável; centralizar só quando tudo cabe, medindo. */
@@ -84,6 +110,15 @@ export const CategoryNav = ({ compact = false }: CategoryNavProps) => {
               </Button>
             )
           })}
+          <Box
+            aria-hidden="true"
+            className={styles.indicator}
+            style={{
+              width: indicator.width,
+              transform: `translateX(${indicator.left}px)`,
+              opacity: indicator.width ? 1 : 0,
+            }}
+          />
         </Box>
       </Box>
     </nav>

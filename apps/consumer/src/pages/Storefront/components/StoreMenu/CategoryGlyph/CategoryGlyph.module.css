@@ -1,5 +1,5 @@
 @reference "@nino/ds/globals.css";
 
 .categoryGlyph {
-  @apply size-14 shrink-0;
+  @apply size-18 shrink-0;
 }
