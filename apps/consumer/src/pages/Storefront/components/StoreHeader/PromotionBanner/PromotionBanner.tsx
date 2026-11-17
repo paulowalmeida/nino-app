@@ -11,6 +11,8 @@ import { promotionPhotos } from '@pages/Storefront/utils/promotion-photos/promot
 import type { PublicPromotion } from '@custom_types/promotion/public-promotion.type'
 import { resolveApiAssetUrl } from '@utils/api-asset-url/api-asset-url'
 
+import motion from '@styles/motion.module.css'
+import { riseDelay } from '@utils/rise-delay'
 import styles from './PromotionBanner.module.css'
 
 export const PromotionBanner = () => {
@@ -96,7 +98,8 @@ export const PromotionBanner = () => {
 
   return (
     <Box
-      className={styles.promotionBanner}
+      className={`${motion.land} ${styles.promotionBanner}`}
+      style={riseDelay(80)}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       onFocusCapture={() => setIsFocused(true)}

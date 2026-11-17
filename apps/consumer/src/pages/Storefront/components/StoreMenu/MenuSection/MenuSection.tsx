@@ -10,10 +10,21 @@ import styles from './MenuSection.module.css'
 
 type MenuSectionProps = {
   section: MenuSectionType
+  /** Primeira seção da vitrine: os cards da primeira dobra entram em cascata. */
+  animateEntrance?: boolean
 }
 
+/* WHY: só a primeira dobra anima; o resto entra parado para o cardápio não
+   virar um desfile ao rolar */
+const ENTRANCE_ITEMS = 6
+const ENTRANCE_START_MS = 200
+const ENTRANCE_STEP_MS = 50
+
 /** Uma categoria do cardápio: título, contagem de opções e a grade de itens. */
-export const MenuSection = ({ section }: MenuSectionProps) => {
+export const MenuSection = ({
+  section,
+  animateEntrance = false,
+}: MenuSectionProps) => {
   const {
     quantityByProduct,
     isHoursPending,
@@ -42,7 +53,7 @@ export const MenuSection = ({ section }: MenuSectionProps) => {
         </Text>
       </Box>
       <Box className={styles.items}>
-        {section.items.map((item) => (
+        {section.items.map((item, index) => (
           <MenuItemCard
             key={item.id}
             item={item}
@@ -50,6 +61,11 @@ export const MenuSection = ({ section }: MenuSectionProps) => {
             onSelect={openProduct}
             disabled={!storeOpen}
             quantity={quantityByProduct[item.id] ?? 0}
+            entranceDelay={
+              animateEntrance && index < ENTRANCE_ITEMS
+                ? ENTRANCE_START_MS + index * ENTRANCE_STEP_MS
+                : undefined
+            }
           />
         ))}
       </Box>

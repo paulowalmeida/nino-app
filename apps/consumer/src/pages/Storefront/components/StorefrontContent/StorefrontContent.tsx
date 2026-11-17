@@ -134,10 +134,7 @@ export const StorefrontContent = ({ pathSlug }: StorefrontContentProps) => {
         as="main"
         className={`${styles.storefrontContentShell} ${styles.storefrontContentMain}`}
       >
-        <Box
-          className={`${motion.deal} ${styles.storefrontContentMenu}`}
-          style={riseDelay(200)}
-        >
+        <Box className={styles.storefrontContentMenu}>
           {isMenuContentPending && <MenuRowsSkeleton />}
 
           {!isMenuContentPending && home.isMenuError && (
@@ -170,8 +167,12 @@ export const StorefrontContent = ({ pathSlug }: StorefrontContentProps) => {
           {!isMenuContentPending && !home.isMenuError && <PromotionSection />}
 
           {!isMenuContentPending &&
-            visibleSections.map((section) => (
-              <MenuSection key={section.id} section={section} />
+            visibleSections.map((section, index) => (
+              <MenuSection
+                key={section.id}
+                section={section}
+                animateEntrance={index === 0}
+              />
             ))}
         </Box>
       </Box>

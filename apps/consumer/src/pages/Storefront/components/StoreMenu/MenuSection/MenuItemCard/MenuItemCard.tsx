@@ -13,6 +13,8 @@ import { primaryImage } from '@utils/menu-image'
 import { useStoreCatalog } from '@hooks/useStoreCatalog/useStoreCatalog'
 import type { MenuItem } from '@custom_types/menu/menu-item'
 
+import motion from '@styles/motion.module.css'
+import { riseDelay } from '@utils/rise-delay'
 import styles from './MenuItemCard.module.css'
 
 type MenuItemCardProps = {
@@ -23,6 +25,8 @@ type MenuItemCardProps = {
   disabled?: boolean
   /** Quantas unidades já estão na sacola — 0 não marca nada. */
   quantity?: number
+  /** Atraso da entrada em ms; sem valor o card aparece parado. */
+  entranceDelay?: number
 }
 
 /**
@@ -36,6 +40,7 @@ export const MenuItemCard = ({
   onSelect,
   disabled = false,
   quantity = 0,
+  entranceDelay,
 }: MenuItemCardProps) => {
   const { itemStyle, imageRatio, density, showDescription } = useStoreCatalog()
   const image = primaryImage(item)
@@ -49,10 +54,15 @@ export const MenuItemCard = ({
   return (
     <Card
       padding="sm"
-      className={
-        disabled
-          ? `${styles.menuItemCard} ${styles.disabled}`
-          : styles.menuItemCard
+      className={[
+        styles.menuItemCard,
+        disabled && styles.disabled,
+        entranceDelay !== undefined && motion.land,
+      ]
+        .filter(Boolean)
+        .join(' ')}
+      style={
+        entranceDelay !== undefined ? riseDelay(entranceDelay) : undefined
       }
       role="group"
       aria-disabled={disabled}
