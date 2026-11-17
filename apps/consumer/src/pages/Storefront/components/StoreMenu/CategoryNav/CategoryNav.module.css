@@ -24,7 +24,6 @@
   @apply relative flex min-w-0 flex-1 items-stretch overflow-x-auto pr-6;
   height: var(--category-track-tall);
   scrollbar-width: none;
-  transition: height var(--duration-slower) var(--ease-in-out);
 }
 
 .categoryNavCompact .track {
@@ -52,26 +51,45 @@
   @apply relative flex h-full w-auto min-w-20 shrink-0 cursor-pointer flex-col items-center;
   @apply justify-center gap-1 rounded-none border-0 bg-transparent px-1 py-2;
   @apply text-fg-muted;
-  transition:
-    color var(--duration-fast),
-    gap var(--duration-slower) var(--ease-in-out),
-    padding var(--duration-slower) var(--ease-in-out);
+  transition: color var(--duration-fast);
 }
 
 .categoryNavCompact .tile {
   @apply flex-row gap-1.5 px-3 py-0;
 }
 
-/* WHY: compacta a barra sem perder o ícone; ele vai para o lado do nome e
- * só encolhe, então a troca de altura não tem nada sumindo à vista */
-.tileArt {
-  transition:
-    width var(--duration-slower) var(--ease-in-out),
-    height var(--duration-slower) var(--ease-in-out);
-}
-
+/* WHY: compacta a barra sem perder o ícone; ele vai para o lado do nome */
 .categoryNavCompact .tileArt {
   @apply size-6;
+}
+
+/* WHY: altura, gap e tamanho animados recalculavam o layout da barra fixa a
+ * cada quadro e travavam no celular. O layout troca de uma vez e o conteúdo
+ * assenta só com transform e opacity, que rodam na GPU. Dois keyframes iguais
+ * com nomes diferentes porque trocar o nome é o que faz a animação rodar de
+ * novo a cada mudança de estado */
+@keyframes tileSettleTall {
+  from {
+    opacity: 0;
+    transform: translateY(-0.375rem) scale(0.92);
+  }
+}
+
+@keyframes tileSettleShort {
+  from {
+    opacity: 0;
+    transform: translateY(0.375rem) scale(0.92);
+  }
+}
+
+.tileArt,
+.tileLabel {
+  animation: tileSettleTall var(--duration-slow) var(--ease-out-soft);
+}
+
+.categoryNavCompact .tileArt,
+.categoryNavCompact .tileLabel {
+  animation-name: tileSettleShort;
 }
 
 .tile:hover,
@@ -104,10 +122,13 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .track,
-  .tile,
-  .tileArt {
+  .tile {
     transition: none;
+  }
+
+  .tileArt,
+  .tileLabel {
+    animation: none;
   }
 }
 
