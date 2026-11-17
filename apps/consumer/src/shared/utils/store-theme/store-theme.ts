@@ -61,7 +61,6 @@ export const storeThemeVariables = (store?: Store): ThemeVars => {
   const colors = config?.colors
   const primary = storeThemePrimaryColor(store)
   const secondary = value(colors?.secondary) ?? value(store.secondaryColor)
-  const tertiary = value(colors?.tertiary) ?? value(store.tertiaryColor)
   const background = value(colors?.background) ?? value(store.backgroundColor)
   const surface = value(colors?.surface) ?? value(store.cardColor)
   const foreground = value(colors?.text) ?? value(store.textColor)
@@ -74,7 +73,10 @@ export const storeThemeVariables = (store?: Store): ThemeVars => {
     vars['--store-tint'] = primary
     vars['--color-brand'] = primary
     vars['--color-brand-light'] = secondary ?? primary
-    vars['--color-brand-strong'] = tertiary ?? primary
+    // A terciária pode ser branca (texto sobre botão), mas brand-strong
+    // aparece em textos e ícones sobre superfícies claras, como cupons.
+    vars['--color-brand-strong'] =
+      `color-mix(in srgb, ${primary} 80%, black)`
     vars['--color-input-border-focus'] = primary
   }
 

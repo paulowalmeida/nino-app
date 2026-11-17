@@ -30,6 +30,15 @@ describe('store theme', () => {
     expect(storeThemeBannerUrl(store)).toBe('https://legacy.example/banner.png')
   })
 
+  it('keeps coupon brand text readable when the tertiary color is white', () => {
+    const store = { ...legacy, tertiaryColor: '#ffffff', theme: null }
+
+    expect(storeThemeVariables(store)).toMatchObject({
+      '--color-brand': '#ff6b00',
+      '--color-brand-strong': 'color-mix(in srgb, #ff6b00 80%, black)',
+    })
+  })
+
   it('makes the published theme authoritative', () => {
     const store = {
       ...legacy,
