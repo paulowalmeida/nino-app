@@ -4,7 +4,7 @@ import { Chip } from '@nino/ds/components/Chip'
 import { Box } from '@nino/ds/components/Box'
 import { Text } from '@nino/ds/components/Text'
 import { useStorefrontFacade } from '@pages/Storefront/facades/useStorefrontFacade/useStorefrontFacade'
-import { categoryIcon } from '@utils/category-icon'
+import { CategoryGlyph } from '@pages/Storefront/components/StoreMenu/CategoryGlyph/CategoryGlyph'
 
 import styles from './CategoryNav.module.css'
 
@@ -70,9 +70,7 @@ export const CategoryNav = () => {
                 onClick={() => goToSection(section.id)}
                 className={`${styles.chip} ${isActive ? styles.chipOn : ''}`}
                 leadingIcon={
-                  <span aria-hidden="true">
-                    {categoryIcon(section.name, section.icon) ?? '🍽️'}
-                  </span>
+                  <CategoryGlyph name={section.name} icon={section.icon} />
                 }
               >
                 {section.name}
