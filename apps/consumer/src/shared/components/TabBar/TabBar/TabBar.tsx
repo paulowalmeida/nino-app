@@ -20,6 +20,8 @@ type TabBarProps = {
   onOpenCart?: () => void
   /** Abre a busca do cardápio. Só a vitrine tem cardápio, então é opcional. */
   onOpenSearch?: () => void
+  /** Abre os cupons da loja. Só existe quando a vitrine tem oferta. */
+  onOpenCoupons?: () => void
 }
 
 export const TabBar = ({
@@ -27,6 +29,7 @@ export const TabBar = ({
   cartCount = 0,
   onOpenCart,
   onOpenSearch,
+  onOpenCoupons,
 }: TabBarProps) => {
   const navigate = useNavigate()
   const { pathname } = useLocation()
@@ -109,6 +112,20 @@ export const TabBar = ({
             <Icon name="search" />
             <Text as="span" className={styles.tabBarLabel}>
               Busca
+            </Text>
+          </Button>
+        )}
+
+        {onOpenCoupons && (
+          <Button
+            variant="ghost"
+            onClick={onOpenCoupons}
+            className={styles.tabBarTab}
+            aria-haspopup="dialog"
+          >
+            <Icon name="tag" />
+            <Text as="span" className={styles.tabBarLabel}>
+              Cupons
             </Text>
           </Button>
         )}

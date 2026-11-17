@@ -31,6 +31,8 @@ export const StoreTopBar = ({ slug, isDocked }: StoreTopBarProps) => {
     hours,
     isHoursPending,
     setInfoOpen,
+    promotionPanelOffers,
+    setCouponsOpen,
   } = useStorefrontFacade()
   const navigate = useNavigate()
   if (!store) return null
@@ -106,6 +108,19 @@ export const StoreTopBar = ({ slug, isDocked }: StoreTopBarProps) => {
               aria-haspopup="dialog"
             >
               <Icon name="search" />
+            </Button>
+          )}
+
+          {promotionPanelOffers.length > 0 && (
+            <Button
+              variant="ghost"
+              size="icon"
+              className={`${styles.iconBtn} ${styles.couponsEntry}`}
+              onClick={() => setCouponsOpen(true)}
+              aria-label="Cupons da loja"
+              aria-haspopup="dialog"
+            >
+              <Icon name="tag" />
             </Button>
           )}
 

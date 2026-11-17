@@ -90,7 +90,9 @@ describe('CouponDetail', () => {
   it('says the coupon is already applied', () => {
     renderDetail({ isApplied: true })
 
-    expect(screen.getByRole('button', { name: 'Cupom aplicado' })).toBeDisabled()
+    expect(
+      screen.getByRole('button', { name: 'Cupom aplicado' })
+    ).toBeDisabled()
   })
 
   it('goes back to the list', async () => {

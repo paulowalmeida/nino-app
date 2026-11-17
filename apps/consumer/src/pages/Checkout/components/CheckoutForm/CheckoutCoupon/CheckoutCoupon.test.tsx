@@ -7,6 +7,10 @@ import { useCheckoutFacade } from '@pages/checkout/facades/useCheckoutFacade/use
 import { CheckoutCoupon } from './CheckoutCoupon'
 import { suggestedCouponMock } from './CheckoutCoupon.mock'
 
+vi.mock('@shared/hooks/useStoreTint/useStoreTint', () => ({
+  useStoreTint: () => undefined,
+}))
+
 vi.mock('@pages/checkout/facades/useCheckoutFacade/useCheckoutFacade')
 
 const removeCoupon = vi.fn()

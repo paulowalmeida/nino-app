@@ -6,6 +6,7 @@ type FooterNavProps = {
   cartCount?: number
   onOpenCart?: () => void
   onOpenSearch?: () => void
+  onOpenCoupons?: () => void
 }
 
 export const FooterNav = ({
@@ -13,6 +14,7 @@ export const FooterNav = ({
   cartCount,
   onOpenCart,
   onOpenSearch,
+  onOpenCoupons,
 }: FooterNavProps) => (
   <>
     <PoweredBy />
@@ -21,6 +23,7 @@ export const FooterNav = ({
       cartCount={cartCount}
       onOpenCart={onOpenCart}
       onOpenSearch={onOpenSearch}
+      onOpenCoupons={onOpenCoupons}
     />
   </>
 )

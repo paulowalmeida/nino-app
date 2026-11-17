@@ -49,6 +49,10 @@ export const useStorefrontFacade = (requestedSlug?: string) => {
   const setFocusedPromotionId = useHomeInteractionStore(
     (state) => state.setFocusedPromotionId
   )
+  const isCouponsOpen = useHomeInteractionStore((state) => state.isCouponsOpen)
+  const setCouponsOpen = useHomeInteractionStore(
+    (state) => state.setCouponsOpen
+  )
   const isDesktop = useIsDesktop()
   // WHY: o painel lista tudo que a loja divulga, sem repetir a oferta que
   // entra por mais de um caminho (cupom com código e desconto automático).
@@ -100,6 +104,8 @@ export const useStorefrontFacade = (requestedSlug?: string) => {
     deliveryZones: zonesQuery.zones,
     focusedPromotionId,
     setFocusedPromotionId,
+    isCouponsOpen,
+    setCouponsOpen,
     bannerOffers: offers.bannerOffers,
     ...menuItemAction,
     ...menuSections,

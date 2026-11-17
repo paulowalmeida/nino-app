@@ -3,6 +3,7 @@ import type { KeyboardEvent } from 'react'
 
 import { Box } from '@nino/ds/components/Box'
 import { Button } from '@nino/ds/components/Button'
+import { EmptyState } from '@nino/ds/components/EmptyState'
 import { Icon } from '@nino/ds/components/Icon'
 import { Input } from '@nino/ds/components/Input'
 import { Tabs } from '@nino/ds/components/Tabs'
@@ -11,6 +12,7 @@ import type { CouponCodeForm } from '@custom_types/promotion/coupon-code-form.ty
 import type { PublicPromotion } from '@custom_types/promotion/public-promotion.type'
 import type { CouponBlocker } from '@utils/coupon-blocker/coupon-blocker'
 
+import { CouponsEmptyIllustration } from '@shared/components/Illustrations/CouponsEmptyIllustration/CouponsEmptyIllustration'
 import { CouponCard } from '@shared/components/CouponCard/CouponCard'
 
 import styles from './CouponsList.module.css'
@@ -56,7 +58,13 @@ export const CouponsList = ({
   const list = (items: PublicPromotion[], emptyText: string) => (
     <Box as="ul" className={styles.couponList}>
       {items.length === 0 && (
-        <Text className={styles.emptyText}>{emptyText}</Text>
+        <EmptyState
+          size="md"
+          className={styles.emptyState}
+          illustration={<CouponsEmptyIllustration />}
+        >
+          {emptyText}
+        </EmptyState>
       )}
       {items.map((promotion) => (
         <li key={promotion.id}>

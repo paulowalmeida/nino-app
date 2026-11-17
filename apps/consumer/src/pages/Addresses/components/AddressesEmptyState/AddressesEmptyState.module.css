@@ -3,3 +3,8 @@
 .addressesEmptyStateEmpty {
   @apply mt-5;
 }
+
+/* WHY: o EmptyState fixa 96px no desenho; esta ilustração é paisagem e pede mais. */
+.addressesEmptyStateEmpty [aria-hidden] svg {
+  @apply h-32 w-auto;
+}

@@ -12,6 +12,7 @@ import { useCouponsPages } from '@hooks/useCouponsPages/useCouponsPages'
 import { CouponDetail } from './CouponDetail/CouponDetail'
 import { CouponsList } from './CouponsList/CouponsList'
 
+import { StoreTintScope } from '@shared/components/StoreTintScope/StoreTintScope'
 import styles from './CouponsDrawer.module.css'
 
 type CouponsDrawerProps = {
@@ -52,7 +53,9 @@ export const CouponsDrawer = ({
 
   const shown = coupons.find(({ id }) => id === pages.shownId)
   const defaultTab =
-    shown && blockerOf(shown) ? ('unavailable' as const) : ('available' as const)
+    shown && blockerOf(shown)
+      ? ('unavailable' as const)
+      : ('available' as const)
 
   /* WHY: ao entrar no detalhe o foco vai ao voltar; ao sair, retorna ao cupom
    * de onde o cliente veio — ninguém perde o lugar na lista. */
@@ -83,46 +86,48 @@ export const CouponsDrawer = ({
         pages.back()
       }}
     >
-      <div ref={viewportRef} className={styles.viewport}>
-        <Box
-          direction="row"
-          className={pages.isDetail ? styles.trackDetail : styles.trackList}
-        >
+      <StoreTintScope>
+        <div ref={viewportRef} className={styles.viewport}>
           <Box
-            className={styles.page}
-            inert={pages.isDetail}
-            aria-hidden={pages.isDetail}
+            direction="row"
+            className={pages.isDetail ? styles.trackDetail : styles.trackList}
           >
-            <CouponsList
-              coupons={coupons}
-              blockerOf={blockerOf}
-              appliedId={appliedId}
-              codeForm={codeForm}
-              defaultTab={defaultTab}
-              emptyAvailable={emptyAvailable}
-              emptyUnavailable={emptyUnavailable}
-              onOpen={pages.openDetail}
-            />
-          </Box>
-          <Box
-            className={styles.page}
-            inert={!pages.isDetail}
-            aria-hidden={!pages.isDetail}
-          >
-            {shown && (
-              <CouponDetail
-                promotion={shown}
-                blocker={blockerOf(shown)}
-                zones={zones}
-                isApplied={appliedId === shown.id}
-                action={action}
-                backRef={backRef}
-                onBack={pages.back}
+            <Box
+              className={styles.page}
+              inert={pages.isDetail}
+              aria-hidden={pages.isDetail}
+            >
+              <CouponsList
+                coupons={coupons}
+                blockerOf={blockerOf}
+                appliedId={appliedId}
+                codeForm={codeForm}
+                defaultTab={defaultTab}
+                emptyAvailable={emptyAvailable}
+                emptyUnavailable={emptyUnavailable}
+                onOpen={pages.openDetail}
               />
-            )}
+            </Box>
+            <Box
+              className={styles.page}
+              inert={!pages.isDetail}
+              aria-hidden={!pages.isDetail}
+            >
+              {shown && (
+                <CouponDetail
+                  promotion={shown}
+                  blocker={blockerOf(shown)}
+                  zones={zones}
+                  isApplied={appliedId === shown.id}
+                  action={action}
+                  backRef={backRef}
+                  onBack={pages.back}
+                />
+              )}
+            </Box>
           </Box>
-        </Box>
-      </div>
+        </div>
+      </StoreTintScope>
     </Drawer>
   )
 }

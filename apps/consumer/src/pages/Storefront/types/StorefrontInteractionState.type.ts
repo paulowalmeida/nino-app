@@ -7,11 +7,13 @@ export type StorefrontInteractionState = {
   isInfoOpen: boolean
   selectedItem: MenuItem | null
   focusedPromotionId: string | null
+  isCouponsOpen: boolean
   setSearch: (search: string) => void
   setSearchOpen: (open: boolean) => void
   setCartOpen: (open: boolean) => void
   setInfoOpen: (open: boolean) => void
   setSelectedItem: (item: MenuItem | null) => void
   setFocusedPromotionId: (id: string | null) => void
+  setCouponsOpen: (open: boolean) => void
   reset: () => void
 }

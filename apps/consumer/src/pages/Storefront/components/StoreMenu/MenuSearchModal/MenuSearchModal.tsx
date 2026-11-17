@@ -11,7 +11,11 @@ import { Modal } from '@nino/ds/components/Modal'
 import { Text } from '@nino/ds/components/Text'
 import type { MenuItem } from '@custom_types/menu/menu-item'
 import { MenuSearchResult } from '@pages/Storefront/components/StoreMenu/MenuSearchResult/MenuSearchResult'
+import { StoreTintScope } from '@shared/components/StoreTintScope/StoreTintScope'
+import { SearchEmptyIllustration } from '@shared/components/Illustrations/SearchEmptyIllustration/SearchEmptyIllustration'
+import { SearchIllustration } from '@shared/components/Illustrations/SearchIllustration/SearchIllustration'
 import { useStorefrontFacade } from '@pages/Storefront/facades/useStorefrontFacade/useStorefrontFacade'
+import { requiresChoice } from '@pages/Storefront/hooks/useMenuItemAction/useMenuItemAction'
 import { isOpen } from '@utils/store-info'
 
 import styles from './MenuSearchModal.module.css'
@@ -53,7 +57,7 @@ export const MenuSearchModal = () => {
   // WHY: item com escolha obrigatória vai para a página do produto; aí a
   // busca fecha. Os demais entram na sacola e a busca fica para o próximo.
   const add = (item: MenuItem) => {
-    if (item.modifiers.length > 0) setSearchOpen(false)
+    if (requiresChoice(item)) setSearchOpen(false)
     addFromMenu(item)
   }
 
@@ -63,7 +67,9 @@ export const MenuSearchModal = () => {
   }
 
   const rows = () =>
-    Array.from(listRef.current?.querySelectorAll<HTMLElement>(RESULT_SELECTOR) ?? [])
+    Array.from(
+      listRef.current?.querySelectorAll<HTMLElement>(RESULT_SELECTOR) ?? []
+    )
 
   const handleInputKeyDown = (event: KeyboardEvent) => {
     if (event.key === 'Enter' && searchResults[0]) {
@@ -132,35 +138,41 @@ export const MenuSearchModal = () => {
         onKeyDown={handleListKeyDown}
       >
         {!hasSearchQuery && (
-          <Box as="section" className={styles.menuSearchModalCategories}>
-            <Heading level={3} className={styles.menuSearchModalHeading}>
-              Buscar por categoria
-            </Heading>
-            <Box direction="row" className={styles.menuSearchModalChips}>
-              {sections.map((section) => (
-                <Button
-                  key={section.id}
-                  variant="outline"
-                  size="sm"
-                  onClick={() => {
-                    setSearch(section.name)
-                    inputRef.current?.focus()
-                  }}
-                >
-                  {section.name}
-                </Button>
-              ))}
+          <Box className={styles.menuSearchModalIdle}>
+            <EmptyState
+              size="md"
+              className={styles.menuSearchModalEmpty}
+              illustration={<SearchIllustration />}
+              title="O que vai ser hoje?"
+            >
+              Digite o nome de um prato ou escolha uma categoria.
+            </EmptyState>
+            <Box as="section" className={styles.menuSearchModalCategories}>
+              <Heading level={3} className={styles.menuSearchModalHeading}>
+                Buscar por categoria
+              </Heading>
+              <Box direction="row" className={styles.menuSearchModalChips}>
+                {sections.map((section) => (
+                  <Button
+                    key={section.id}
+                    variant="outline"
+                    size="sm"
+                    onClick={() => {
+                      setSearch(section.name)
+                      inputRef.current?.focus()
+                    }}
+                  >
+                    {section.name}
+                  </Button>
+                ))}
+              </Box>
             </Box>
           </Box>
         )}
 
         {hasSearchQuery && count > 0 && (
           <>
-            <Text
-              as="p"
-              role="status"
-              className={styles.menuSearchModalCount}
-            >
+            <Text as="p" role="status" className={styles.menuSearchModalCount}>
               {count} {count === 1 ? 'resultado' : 'resultados'}
             </Text>
             <Box as="ul" className={styles.menuSearchModalList}>
@@ -184,7 +196,8 @@ export const MenuSearchModal = () => {
           <EmptyState
             size="md"
             role="status"
-            illustration={<Icon name="search" size="xl" />}
+            className={styles.menuSearchModalEmpty}
+            illustration={<SearchEmptyIllustration />}
             title="Nenhum item encontrado"
             action={
               <Button variant="outline" onClick={clear}>
@@ -210,7 +223,7 @@ export const MenuSearchModal = () => {
       positionerClassName={styles.menuSearchModalPositioner}
       contentClassName={styles.menuSearchModalPanel}
       bodyClassName={styles.menuSearchModalBody}
-      body={body}
+      body={<StoreTintScope>{body}</StoreTintScope>}
     />
   )
 }

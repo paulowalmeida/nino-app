@@ -11,6 +11,10 @@ import {
   blockedCouponMock,
 } from './CheckoutCouponsDrawer.mock'
 
+vi.mock('@shared/hooks/useStoreTint/useStoreTint', () => ({
+  useStoreTint: () => undefined,
+}))
+
 vi.mock('@pages/checkout/facades/useCheckoutFacade/useCheckoutFacade')
 
 const applyCoupon = vi.fn()
@@ -62,7 +66,9 @@ describe('CheckoutCouponsDrawer', () => {
     )
 
     expect(screen.getByRole('button', { name: 'Aplicar cupom' })).toBeDisabled()
-    expect(screen.getAllByText(/Faltam R\$\s10,00 para usar/).length).toBeGreaterThan(0)
+    expect(
+      screen.getAllByText(/Faltam R\$\s10,00 para usar/).length
+    ).toBeGreaterThan(0)
     expect(applyCoupon).not.toHaveBeenCalled()
   })
 

@@ -47,7 +47,7 @@ const orderIcon = (status: GuestOrderStatus['status']): IconName => {
     PENDING: 'clock',
     ACCEPTED: 'receipt',
     PREPARING: 'chef-hat',
-    OUT_FOR_DELIVERY: 'truck',
+    OUT_FOR_DELIVERY: 'motorbike',
     READY_FOR_PICKUP: 'shopping-bag',
     DELIVERED: 'check-circle',
     COMPLETED: 'check-circle',

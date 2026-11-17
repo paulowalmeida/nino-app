@@ -38,7 +38,7 @@ type CouponDetailProps = {
 const iconByType: Record<PublicPromotion['type'], IconName> = {
   PERCENTAGE_DISCOUNT: 'percent',
   FIXED_DISCOUNT: 'tag',
-  FREE_DELIVERY: 'truck',
+  FREE_DELIVERY: 'motorbike',
   GIFT: 'gift',
   PACKAGE: 'package',
 }
@@ -169,15 +169,21 @@ export const CouponDetail = ({
 
       <Box className={styles.footer}>
         {caption && (
-          <Text id={`coupon-caption-${promotion.id}`} className={styles.caption}>
+          <Text
+            id={`coupon-caption-${promotion.id}`}
+            className={styles.caption}
+          >
             {caption}
           </Text>
         )}
         <Button
           type="button"
           size="lg"
+          className={action.mobileOnly ? styles.mobileOnly : undefined}
           disabled={isDisabled}
-          aria-describedby={caption ? `coupon-caption-${promotion.id}` : undefined}
+          aria-describedby={
+            caption ? `coupon-caption-${promotion.id}` : undefined
+          }
           onClick={() => action.onSelect(promotion)}
         >
           {isApplied ? 'Cupom aplicado' : action.label}

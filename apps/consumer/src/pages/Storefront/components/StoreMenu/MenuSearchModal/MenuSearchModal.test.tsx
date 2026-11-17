@@ -6,6 +6,9 @@ import { useStorefrontFacade } from '@pages/Storefront/facades/useStorefrontFaca
 import { MenuSearchModal } from './MenuSearchModal'
 import { menuSearchModalMock } from './MenuSearchModal.mock'
 
+vi.mock('@shared/hooks/useStoreTint/useStoreTint', () => ({
+  useStoreTint: () => undefined,
+}))
 vi.mock(
   '@pages/Storefront/facades/useStorefrontFacade/useStorefrontFacade',
   () => ({ useStorefrontFacade: vi.fn() })

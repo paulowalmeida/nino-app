@@ -13,6 +13,10 @@ export const setHomeFocusedPromotion = (
   set: SetStorefrontInteractionState,
   id: string | null
 ) => set({ focusedPromotionId: id })
+export const setHomeCouponsOpen = (
+  set: SetStorefrontInteractionState,
+  open: boolean
+) => set({ isCouponsOpen: open })
 export const setHomeSelectedItem = (
   set: SetStorefrontInteractionState,
   item: MenuItem | null

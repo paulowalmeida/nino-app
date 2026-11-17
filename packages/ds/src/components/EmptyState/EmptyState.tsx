@@ -78,17 +78,24 @@ export function EmptyState({
       )}
       {title &&
         (isFullScreen ? (
-          <Text size="lg" weight="bold" font="display" color="strong">
+          <Text
+            size="lg"
+            weight="bold"
+            font="display"
+            color="strong"
+            align="center"
+          >
             {title}
           </Text>
         ) : (
-          <Text size="sm" weight="semibold" color="subtle">
+          <Text size="sm" weight="semibold" color="subtle" align="center">
             {title}
           </Text>
         ))}
       {children && (
         <Text
           size="sm"
+          align="center"
           color={isFullScreen ? 'muted' : 'faint'}
           className={isFullScreen ? styles.messageWide : styles.messageNarrow}
         >

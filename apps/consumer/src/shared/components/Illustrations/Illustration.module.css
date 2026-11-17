@@ -1,0 +1,13 @@
+/* WHY: a cor da loja chega só como `--store-tint` (um hex); os tons da
+ * ilustração saem dela por mistura, e sem loja caem na marca do nino.
+ */
+.illustration {
+  --ill-main: var(--store-tint, var(--color-brand));
+  --ill-strong: color-mix(in oklab, var(--ill-main) 80%, black);
+  --ill-bold: color-mix(in oklab, var(--ill-main) 62%, black);
+  --ill-muted: color-mix(in oklab, var(--ill-main) 55%, white);
+  --ill-light: color-mix(in oklab, var(--ill-main) 40%, white);
+  --ill-soft: color-mix(in oklab, var(--ill-main) 26%, white);
+  --ill-ghost: color-mix(in oklab, var(--ill-main) 7%, white);
+  --ill-wash: color-mix(in oklab, var(--ill-main) 14%, white);
+}

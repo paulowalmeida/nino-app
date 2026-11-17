@@ -170,6 +170,11 @@ export const StorefrontContent = ({ pathSlug }: StorefrontContentProps) => {
             ? () => home.setSearchOpen(true)
             : undefined
         }
+        onOpenCoupons={
+          home.promotionPanelOffers.length > 0
+            ? () => home.setCouponsOpen(true)
+            : undefined
+        }
       />
 
       {blocks.showStoreInfo && <StoreInfo />}

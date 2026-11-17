@@ -26,8 +26,13 @@
   @apply shrink-0 text-fg-muted;
 }
 
-.emptyText {
-  @apply py-6 text-center text-sm text-fg-muted;
+.emptyState {
+  @apply py-4;
+}
+
+/* WHY: o EmptyState fixa 96px no desenho; o cupom é paisagem e pede mais. */
+.emptyState [aria-hidden] svg {
+  @apply h-32 w-auto;
 }
 
 .appliedTag {

@@ -10,12 +10,17 @@ import {
   storefrontBlockedMock,
 } from './StorefrontCouponsDrawer.mock'
 
+vi.mock('@shared/hooks/useStoreTint/useStoreTint', () => ({
+  useStoreTint: () => undefined,
+}))
+
 vi.mock(
   '@pages/Storefront/facades/useStorefrontFacade/useStorefrontFacade',
   () => ({ useStorefrontFacade: vi.fn() })
 )
 
 const setFocusedPromotionId = vi.fn()
+const setCouponsOpen = vi.fn()
 
 const withFacade = (focusedPromotionId: string | null) =>
   vi.mocked(useStorefrontFacade).mockReturnValue({
@@ -27,6 +32,8 @@ const withFacade = (focusedPromotionId: string | null) =>
     deliveryZones: [],
     focusedPromotionId,
     setFocusedPromotionId,
+    isCouponsOpen: false,
+    setCouponsOpen,
   } as never)
 
 describe('StorefrontCouponsDrawer', () => {

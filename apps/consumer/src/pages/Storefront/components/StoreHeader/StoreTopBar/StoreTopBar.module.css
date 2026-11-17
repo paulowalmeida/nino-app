@@ -157,6 +157,10 @@
   @apply !hidden min-[769px]:!flex;
 }
 
+.couponsEntry {
+  @apply !hidden min-[769px]:!flex;
+}
+
 .notificationsEntry {
   @apply !hidden min-[769px]:!flex;
 }

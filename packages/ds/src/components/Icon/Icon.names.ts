@@ -184,6 +184,7 @@ export const ICON_NAMES = [
   'moon',
   'more-horizontal',
   'more-vertical',
+  'motorbike',
   'mouse-pointer',
   'move',
   'music',

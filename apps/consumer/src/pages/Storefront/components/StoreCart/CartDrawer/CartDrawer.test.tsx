@@ -9,6 +9,9 @@ import { CartDrawer } from './CartDrawer'
 import { cartDrawerMock } from './CartDrawer.mock'
 
 const navigate = vi.fn()
+vi.mock('@shared/hooks/useStoreTint/useStoreTint', () => ({
+  useStoreTint: () => undefined,
+}))
 vi.mock('react-router', async (importOriginal) => ({
   ...(await importOriginal<typeof import('react-router')>()),
   useNavigate: () => navigate,

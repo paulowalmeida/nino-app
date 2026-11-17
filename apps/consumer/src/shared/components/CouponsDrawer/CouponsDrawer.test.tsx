@@ -7,6 +7,10 @@ import type { PublicPromotion } from '@custom_types/promotion/public-promotion.t
 import { CouponsDrawer } from './CouponsDrawer'
 import { drawerAvailableMock, drawerBlockedMock } from './CouponsDrawer.mock'
 
+vi.mock('@shared/hooks/useStoreTint/useStoreTint', () => ({
+  useStoreTint: () => undefined,
+}))
+
 const onOpenChange = vi.fn()
 const onSelect = vi.fn()
 

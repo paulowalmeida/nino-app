@@ -8,4 +8,6 @@ export type CouponDetailAction = {
   disabledWhenBlocked: boolean
   /** Frase de apoio sob o botão quando nada bloqueia. */
   note?: string
+  /** Botão só onde o painel cobre a tela; ao lado do cardápio ele não leva a lugar nenhum. */
+  mobileOnly?: boolean
 }
