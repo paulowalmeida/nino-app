@@ -8,13 +8,15 @@
   --art-ink: color-mix(in oklab, var(--art-tint) 62%, black);
   container-type: size;
   @apply relative block h-full w-full cursor-pointer overflow-hidden text-left;
+  /* WHY: o mesmo papel creme do frete grátis em toda arte; a cor da loja
+   * entra só no brilho atrás da ilustração */
   background:
     radial-gradient(
-      80% 140% at 100% 50%,
-      color-mix(in oklab, var(--art-tint) 26%, white),
-      transparent 70%
+      73% 110% at 100% 90%,
+      color-mix(in oklab, var(--art-tint) 21%, white),
+      transparent 72%
     ),
-    color-mix(in oklab, var(--art-tint) 9%, white);
+    #fff8ef;
 }
 
 .art:focus-visible {
@@ -29,13 +31,13 @@
 
 .copy {
   @apply relative z-content min-w-0 items-start;
-  max-width: 50%;
+  max-width: 53%;
 }
 
 .art .lead,
 .art .tail {
   @apply font-display font-bold leading-tight;
-  font-size: 9cqh;
+  font-size: max(0.8125rem, 9cqh);
   color: var(--art-ink);
 }
 
@@ -77,16 +79,9 @@
 
 .condition {
   @apply items-center;
-  gap: 3cqh;
-  margin-top: 6cqh;
-}
-
-.seal {
-  @apply flex shrink-0 items-center justify-center rounded-full text-fg-on-brand;
-  width: 13cqh;
-  height: 13cqh;
-  font-size: 7.5cqh;
-  background-color: var(--art-tint);
+  margin-top: 8cqh;
+  padding-top: 5cqh;
+  border-top: 1px solid color-mix(in oklab, var(--art-tint) 28%, transparent);
 }
 
 .art .detail {
@@ -118,10 +113,25 @@
   right: 72cqh;
 }
 
-.emptyPlate {
-  @apply flex items-center justify-center text-fg-on-brand;
-  font-size: 30cqh;
-  background-color: var(--art-tint);
+/* Etiqueta pendurada pelo barbante: balança a partir do topo */
+.tagScene {
+  @apply absolute inset-0 pointer-events-none;
+}
+
+.tagIllustration {
+  @apply absolute;
+  height: 112cqh;
+  width: auto;
+  right: 14cqh;
+  top: -8cqh;
+  transform: rotate(-9deg);
+  transform-origin: 50% 0;
+  filter: drop-shadow(0 2cqh 3cqh rgb(71 51 29 / 0.14));
+  transition: transform 500ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.art:hover .tagIllustration {
+  transform: rotate(-2deg);
 }
 
 .art:hover .mainPlate {
@@ -135,27 +145,10 @@
 /* Entregador ilustrado comunica a entrega sem depender de fotos do cardápio. */
 .freeDelivery {
   --art-tint: var(--color-success);
-  background:
-    radial-gradient(
-      73% 110% at 100% 90%,
-      color-mix(in oklab, var(--art-tint) 21%, white),
-      transparent 72%
-    ),
-    #fff8ef;
-}
-
-.freeDelivery .copy {
-  max-width: 53%;
 }
 
 .freeDelivery .headline {
   font-size: 21cqh;
-}
-
-.freeDelivery .condition {
-  margin-top: 8cqh;
-  padding-top: 5cqh;
-  border-top: 1px solid color-mix(in oklab, var(--art-tint) 28%, transparent);
 }
 
 .deliveryScene {
@@ -179,7 +172,8 @@
 @media (prefers-reduced-motion: reduce) {
   .mainPlate,
   .sidePlate,
-  .deliveryIllustration {
+  .deliveryIllustration,
+  .tagIllustration {
     transition: none;
   }
 }

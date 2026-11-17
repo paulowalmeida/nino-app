@@ -84,7 +84,7 @@ export const CodeSection = () => {
             render={({ field }) => (
               <FormField
                 label="Mostrar no cardápio"
-                helperText="Faixa no topo do cardápio com a condição da campanha."
+                helperText="Aparece na lista de cupons da loja. Desligado, vale só para quem digitar o código."
                 orientation="horizontal"
                 className={styles.visibility}
               >

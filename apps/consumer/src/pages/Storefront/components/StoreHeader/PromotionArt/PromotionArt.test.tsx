@@ -15,6 +15,19 @@ describe('PromotionArt', () => {
     expect(container.querySelector('svg use[href*="truck"]')).not.toBeInTheDocument()
   })
 
+  it('hangs the price tag instead of a dish on a store-wide discount', () => {
+    const { container } = render(
+      <PromotionArt
+        promotion={{ ...fixedDiscountMock, eligibleProductIds: [] }}
+        photos={['/burger.jpg']}
+        onSelect={vi.fn()}
+      />
+    )
+
+    expect(container.querySelector('img')).not.toBeInTheDocument()
+    expect(container.querySelector('svg text')).toHaveTextContent('R$')
+  })
+
   it('reports the selected promotion on click', () => {
     const onSelect = vi.fn()
     render(<PromotionArt promotion={fixedDiscountMock} onSelect={onSelect} />)

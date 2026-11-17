@@ -1,5 +1,4 @@
 import { Box } from '@nino/ds/components/Box'
-import { Icon } from '@nino/ds/components/Icon'
 import { Text } from '@nino/ds/components/Text'
 import type { PublicPromotion } from '@custom_types/promotion/public-promotion.type'
 import { brl } from '@utils/money/money'
@@ -8,14 +7,16 @@ import {
   promotionDetail,
 } from '@utils/promotion-label/promotion-label'
 
+import { DiscountTagArt } from '@pages/Storefront/components/StoreHeader/DiscountTagArt/DiscountTagArt'
+
 import styles from './PromotionArt.module.css'
 
-const ICONS = {
-  FREE_DELIVERY: 'tag',
-  PERCENTAGE_DISCOUNT: 'tag',
-  FIXED_DISCOUNT: 'tag',
-  GIFT: 'gift',
-  PACKAGE: 'tag',
+const TAG_GLYPHS = {
+  FREE_DELIVERY: 'R$',
+  PERCENTAGE_DISCOUNT: '%',
+  FIXED_DISCOUNT: 'R$',
+  GIFT: '+1',
+  PACKAGE: 'R$',
 } as const
 
 type Amount = {
@@ -78,6 +79,13 @@ export const PromotionArt = ({
   const detail = promotionDetail(promotion)
   const [mainPhoto, sidePhoto] = photos
   const isFreeDelivery = promotion.type === 'FREE_DELIVERY'
+  /* WHY: desconto em qualquer pedido não tem prato próprio; uma foto aleatória
+     do cardápio sugeriria que só aquele item tem desconto */
+  const isStoreWideDiscount =
+    (promotion.type === 'FIXED_DISCOUNT' ||
+      promotion.type === 'PERCENTAGE_DISCOUNT') &&
+    !promotion.eligibleProductIds?.length
+  const showsPhotos = !isFreeDelivery && !isStoreWideDiscount && !!mainPhoto
 
   return (
     <button
@@ -128,11 +136,6 @@ export const PromotionArt = ({
             </Text>
           )}
           <Box direction="row" className={styles.condition}>
-            {!isFreeDelivery && (
-              <Box className={styles.seal}>
-                <Icon name={ICONS[promotion.type]} />
-              </Box>
-            )}
             <Text as="span" className={styles.detail}>
               {detail}
             </Text>
@@ -147,14 +150,17 @@ export const PromotionArt = ({
               className={styles.deliveryIllustration}
             />
           </Box>
-        ) : mainPhoto ? (
+        ) : showsPhotos ? (
           <img src={mainPhoto} alt="" className={styles.mainPlate} />
         ) : (
-          <Box className={`${styles.mainPlate} ${styles.emptyPlate}`}>
-            <Icon name={ICONS[promotion.type]} />
+          <Box className={styles.tagScene}>
+            <DiscountTagArt
+              glyph={TAG_GLYPHS[promotion.type]}
+              className={styles.tagIllustration}
+            />
           </Box>
         )}
-        {sidePhoto && !isFreeDelivery && (
+        {showsPhotos && sidePhoto && (
           <img src={sidePhoto} alt="" className={styles.sidePlate} />
         )}
       </Box>

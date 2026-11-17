@@ -41,12 +41,11 @@ describe(MenuPreview.name, () => {
     } as unknown as ReturnType<typeof usePromotionEditorFacade>)
   )
 
-  it('shows the menu strip with the campaign condition', () => {
+  it('tells where a visible campaign shows up in the menu', () => {
     renderPreview()
 
-    expect(screen.getByText('Topo do cardápio')).toBeInTheDocument()
     expect(
-      screen.getByText('Frete grátis acima de R$ 60,00')
+      screen.getByText('No cardápio: aparece na lista de cupons da loja.')
     ).toBeInTheDocument()
   })
 
@@ -58,7 +57,9 @@ describe(MenuPreview.name, () => {
       showInMenu: false,
     })
 
-    expect(screen.queryByText('Topo do cardápio')).not.toBeInTheDocument()
+    expect(
+      screen.queryByText('No cardápio: aparece na lista de cupons da loja.')
+    ).not.toBeInTheDocument()
     expect(
       screen.getByText('Fora do cardápio: só vale para quem digitar VIP.')
     ).toBeInTheDocument()

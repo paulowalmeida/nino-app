@@ -1,0 +1,74 @@
+@reference "@nino/ds/globals.css";
+
+/* WHY: mesmas regras de traço do entregador do frete grátis — contorno
+ * marrom-escuro grosso, cor chapada da loja, uma faixa de sombra e uma de
+ * luz. O tom vem de --art-tint, definido pela arte que usa a etiqueta. */
+.discountTagArt {
+  --tag-tint: var(--art-tint, var(--color-brand));
+  --tag-ink: color-mix(in oklab, var(--tag-tint) 22%, #2b1a10);
+  @apply overflow-visible;
+}
+
+.string {
+  fill: none;
+  stroke: var(--tag-ink);
+  stroke-width: 4;
+  stroke-linecap: round;
+}
+
+.backTag path {
+  fill: color-mix(in oklab, var(--tag-tint) 38%, #fff8ef);
+  stroke: var(--tag-ink);
+  stroke-width: 6;
+  stroke-linejoin: round;
+}
+
+.body {
+  fill: var(--tag-tint);
+}
+
+.shade {
+  fill: color-mix(in oklab, var(--tag-tint) 78%, black);
+}
+
+.light {
+  fill: color-mix(in oklab, var(--tag-tint) 45%, white);
+}
+
+.perforation {
+  stroke: #fff8ef;
+  stroke-width: 4;
+  stroke-linecap: round;
+  stroke-dasharray: 2 10;
+}
+
+.outline {
+  fill: none;
+  stroke: var(--tag-ink);
+  stroke-width: 6;
+  stroke-linejoin: round;
+}
+
+.hole {
+  fill: #fff8ef;
+  stroke: var(--tag-ink);
+  stroke-width: 5;
+}
+
+.glyph {
+  @apply font-display font-extrabold;
+  font-size: 64px;
+  letter-spacing: -0.04em;
+  fill: white;
+  stroke: var(--tag-ink);
+  stroke-width: 6;
+  stroke-linejoin: round;
+  paint-order: stroke;
+}
+
+.sparkle {
+  fill: #ffc93c;
+  stroke: var(--tag-ink);
+  stroke-width: 3;
+  stroke-linejoin: round;
+}

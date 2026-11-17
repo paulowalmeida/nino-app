@@ -7,10 +7,8 @@ import { Icon } from '@nino/ds/components/Icon'
 import { Image } from '@nino/ds/components/Image'
 import { Text } from '@nino/ds/components/Text'
 import { toPromotionSummarySource } from '@pages/PromotionEditor/adapters/promotionForm.adapter/promotionForm.adapter'
-import { CAMPAIGN_TYPE_ICONS } from '@pages/PromotionEditor/constants/promotionEditor.constants'
 import { usePromotionEditorFacade } from '@pages/PromotionEditor/facades/usePromotionEditorFacade/usePromotionEditorFacade'
 import type { PromotionFormValues } from '@pages/PromotionEditor/types/PromotionFormValues.type'
-import { promotionStripLabel } from '@pages/PromotionEditor/utils/promotionStripLabel/promotionStripLabel'
 import { useObjectUrl } from '@shared/hooks/ui/useObjectUrl/useObjectUrl'
 import { resolveApiAssetUrl } from '@shared/utils/api-asset-url/api-asset-url'
 import { brl, moneyValue } from '@shared/utils/money/money'
@@ -38,7 +36,6 @@ export const MenuPreview = () => {
     ? summary.headline.replace(/ em qualquer pedido$/, '') +
       ' em itens selecionados'
     : summary.headline
-  const { period } = summary
   const imageUrl =
     uploadedImageUrl ??
     (values.imageUrl && !values.removeImage
@@ -90,28 +87,9 @@ export const MenuPreview = () => {
           </Box>
         </Box>
       ) : values.showInMenu ? (
-        <Box className={styles.slot}>
-          <Text as="span" className={styles.slotLabel}>
-            Topo do cardápio
-          </Text>
-          <Box
-            direction="row"
-            className={`${styles.strip} ${
-              values.campaignType === 'free-delivery'
-                ? styles.stripFreeDelivery
-                : ''
-            }`}
-          >
-            <Icon
-              name={CAMPAIGN_TYPE_ICONS[values.campaignType]}
-              size="sm"
-              className={styles.stripIcon}
-            />
-            <Text className={styles.stripText}>
-              {promotionStripLabel({ headline, period })}
-            </Text>
-          </Box>
-        </Box>
+        <Text className={styles.offMenu}>
+          No cardápio: aparece na lista de cupons da loja.
+        </Text>
       ) : (
         <Text className={styles.offMenu}>
           {values.code
