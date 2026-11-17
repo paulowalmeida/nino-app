@@ -52,6 +52,13 @@ export const StorefrontContent = ({ pathSlug }: StorefrontContentProps) => {
   const { reset } = home
   const [dockSentinel, setDockSentinel] = useState<HTMLElement | null>(null)
   const isHeaderDocked = useDockedHeader(dockSentinel, DOCKED_HEADER_OFFSET_PX)
+  const [categorySentinel, setCategorySentinel] = useState<HTMLElement | null>(
+    null
+  )
+  const isCategoryDocked = useDockedHeader(
+    categorySentinel,
+    DOCKED_HEADER_OFFSET_PX
+  )
   const { visibleSections } = home
   const blocks = useStoreHome()
   const tint = storeThemePrimaryColor(home.store)
@@ -112,9 +119,16 @@ export const StorefrontContent = ({ pathSlug }: StorefrontContentProps) => {
       {!isMenuContentPending &&
         blocks.showCategoryBar &&
         home.visibleSections.length > 0 && (
-          <CategoryBar className={motion.deal} style={riseDelay(140)}>
-            <CategoryNav />
-          </CategoryBar>
+          <>
+            <Box ref={setCategorySentinel} aria-hidden="true" />
+            <CategoryBar
+              compact={isCategoryDocked}
+              className={motion.deal}
+              style={riseDelay(140)}
+            >
+              <CategoryNav compact={isCategoryDocked} />
+            </CategoryBar>
+          </>
         )}
 
       <Box

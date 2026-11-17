@@ -4,20 +4,8 @@
   @apply relative flex w-full items-center;
 }
 
-/* WHY: num celular estreito o rótulo comia 80px da régua; a nav já se
- * identifica pelo aria-label e pelos nomes das categorias
- */
-.railLabel {
-  @apply hidden;
-}
-
-.track {
-  @apply relative flex min-w-0 flex-1 overflow-x-auto py-3 pr-8;
-  scrollbar-width: none;
-}
-
 /* WHY: o degradê fica no nav, que não rola; no próprio track ele andava com os
- * chips e deixava uma faixa branca no meio */
+ * itens e deixava uma faixa branca no meio */
 .categoryNav::after {
   content: '';
   @apply pointer-events-none absolute bottom-0 right-0 top-0 w-6;
@@ -28,53 +16,111 @@
   );
 }
 
-/* WHY: tudo cabe, então sem reserva do degradê e chips centralizados */
-.trackFits {
-  @apply pr-0;
-}
-
 .categoryNavFits::after {
   @apply hidden;
 }
 
-.trackFits .chips {
-  @apply justify-center;
+.track {
+  @apply relative flex min-w-0 flex-1 items-stretch overflow-x-auto pr-6;
+  height: var(--category-track-tall);
+  scrollbar-width: none;
+  transition: height var(--duration-slow) var(--ease-out-soft);
+}
+
+.categoryNavCompact .track {
+  height: var(--category-track-short);
 }
 
 .track::-webkit-scrollbar {
   display: none;
 }
 
-.chips {
-  @apply flex w-max min-w-full justify-start gap-2;
+/* WHY: tudo cabe, então sem reserva do degradê e itens centralizados */
+.trackFits {
+  @apply pr-0;
 }
 
-.chip {
-  @apply flex shrink-0 cursor-pointer items-center gap-1.5 rounded-full;
-  @apply bg-surface-cool px-3.5 py-2 text-sm font-semibold;
-  @apply text-fg-default transition-colors duration-fast;
-  min-height: 2.5rem;
+.tiles {
+  @apply flex w-max min-w-full items-stretch justify-start gap-1;
 }
 
-@media (hover: hover) {
-  .chip:hover {
-    @apply bg-surface-4;
-  }
+.trackFits .tiles {
+  @apply justify-center;
 }
 
-.chip:focus-visible {
+.tile {
+  @apply relative flex h-full w-auto min-w-20 shrink-0 cursor-pointer flex-col items-center;
+  @apply justify-center gap-1 rounded-none border-0 bg-transparent px-1 py-2;
+  @apply text-fg-muted;
+  transition:
+    color var(--duration-fast),
+    gap var(--duration-slow) var(--ease-out-soft),
+    padding var(--duration-slow) var(--ease-out-soft);
+}
+
+.categoryNavCompact .tile {
+  @apply gap-0 px-3 py-0;
+}
+
+/* WHY: a ilustração encolhe junto com a trilha em vez de sumir de uma vez;
+ * fica no DOM para a transição ter de onde partir */
+.tileArt {
+  transition:
+    height var(--duration-slow) var(--ease-out-soft),
+    opacity var(--duration-base) var(--ease-out-soft),
+    transform var(--duration-slow) var(--ease-out-soft);
+}
+
+.categoryNavCompact .tileArt {
+  @apply h-0 scale-50 opacity-0;
+}
+
+.tile:hover,
+.tile:active {
+  @apply bg-transparent text-fg-default;
+}
+
+.tile:focus-visible {
   outline: 2px solid var(--store-tint, var(--color-brand));
-  outline-offset: 2px;
+  outline-offset: -2px;
 }
 
-.chipOn {
-  @apply font-bold text-fg-on-brand;
+/* WHY: a cor da loja marca só a categoria ativa; a ilustração mantém as
+ * cores da comida */
+.tile::after {
+  content: '';
+  @apply absolute bottom-0 left-3 right-3 h-0.5 rounded-full bg-transparent;
+}
+
+.tileOn {
+  @apply text-fg-default;
+}
+
+.tileOn::after {
   background-color: var(--store-tint, var(--color-brand));
 }
 
-@media (hover: hover) {
-  .chipOn:hover {
-    background-color: var(--store-tint, var(--color-brand));
-    filter: brightness(0.94);
+.tileLabel {
+  @apply w-full whitespace-nowrap text-center text-xs font-semibold;
+}
+
+.categoryNavCompact .tileLabel {
+  @apply text-sm;
+}
+
+.tileLabel {
+  transition: font-size var(--duration-slow) var(--ease-out-soft);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .track,
+  .tile,
+  .tileArt,
+  .tileLabel {
+    transition: none;
   }
+}
+
+.tileOn .tileLabel {
+  @apply font-bold;
 }

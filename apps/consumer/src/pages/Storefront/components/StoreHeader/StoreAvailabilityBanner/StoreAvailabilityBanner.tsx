@@ -20,7 +20,7 @@ export const StoreAvailabilityBanner = () => {
     >
       <StoreClosedIllustration className={styles.storeAvailabilityBannerArt} />
       <Box className={styles.storeAvailabilityBannerText}>
-        <Text size="md" weight="bold" font="display" color="strong">
+        <Text size="base" weight="bold" font="display" color="strong">
           Pedidos indisponíveis no momento
         </Text>
         <Text size="sm" color="muted">

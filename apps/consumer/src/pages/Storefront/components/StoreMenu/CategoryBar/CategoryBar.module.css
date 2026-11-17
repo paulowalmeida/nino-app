@@ -3,6 +3,15 @@
 .bar {
   @apply sticky top-14 z-sticky mt-4 border-b border-border lg:top-20;
   @apply bg-surface-page/92 backdrop-blur;
+  --category-track-tall: 6.75rem;
+  --category-track-short: 3rem;
+  transition: margin-bottom var(--duration-slow) var(--ease-out-soft);
+}
+
+/* WHY: compacta, a barra fica mais baixa; a margem devolve a altura perdida
+ * ao fluxo, senão o cardápio sobe de uma vez sob o dedo de quem rola */
+.barCompact {
+  margin-bottom: calc(var(--category-track-tall) - var(--category-track-short));
 }
 
 .categoryBarInner {

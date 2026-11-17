@@ -4,7 +4,7 @@
   @apply relative mt-4 w-full sm:mx-auto sm:max-w-2xl;
 }
 
-/* WHY: todos os slides têm a mesma proporção (5:2, a da arte das promoções) para
+/* WHY: todos os slides têm a mesma proporção (3:1) para
  * imagem e arte gerada terem a mesma altura no carrossel. No celular o próximo
  * cartão aparece pela borda (peek) para dizer que há mais ofertas; no desktop
  * cada slide ocupa a largura do contêiner (limitada para a altura não crescer)
@@ -20,7 +20,7 @@
 }
 
 .slide {
-  @apply relative aspect-[5/2] shrink-0 basis-[88%] snap-start overflow-hidden;
+  @apply relative aspect-[3/1] shrink-0 basis-[88%] snap-start overflow-hidden;
   @apply rounded-4 sm:basis-full;
   background-color: var(--store-tint, var(--color-brand));
 }

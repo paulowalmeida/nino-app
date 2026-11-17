@@ -8,10 +8,7 @@ import { CategoryNav } from './CategoryNav'
 import { categoryNavMock } from './CategoryNav.mock'
 
 vi.mock('./CategoryNav.module.css', () => ({
-  default: new Proxy(
-    {},
-    { get: (_target, property: string) => property }
-  ),
+  default: new Proxy({}, { get: (_target, property: string) => property }),
 }))
 
 vi.mock(
@@ -21,19 +18,26 @@ vi.mock(
   })
 )
 vi.mock('@nino/ds/components/Box', () => ({
-  Box: ({ children, className }: { children?: ReactNode; className?: string }) => (
-    <div className={className}>{children}</div>
-  ),
+  Box: ({
+    children,
+    className,
+  }: {
+    children?: ReactNode
+    className?: string
+  }) => <div className={className}>{children}</div>,
 }))
 vi.mock('@nino/ds/components/Text', () => ({
   Text: ({ children }: { children?: ReactNode }) => <span>{children}</span>,
 }))
-vi.mock('@nino/ds/components/Chip', () => ({
-  Chip: ({ children }: { children?: ReactNode }) => (
+vi.mock('@nino/ds/components/Button', () => ({
+  Button: ({ children }: { children?: ReactNode }) => (
     <button type="button">{children}</button>
   ),
 }))
-vi.mock('@utils/category-icon', () => ({ categoryIcon: () => null }))
+vi.mock(
+  '@pages/Storefront/components/StoreMenu/CategoryGlyph/CategoryGlyph',
+  () => ({ CategoryGlyph: () => <img alt="" /> })
+)
 
 describe('CategoryNav', () => {
   it('exports the category navigation contract', () => {
@@ -57,5 +61,19 @@ describe('CategoryNav', () => {
       screen.getByText('Deslize horizontalmente para ver mais categorias.')
     ).toBeInTheDocument()
     expect(container.querySelector('.track')).toBeInTheDocument()
+    expect(container.querySelector('img')).toBeInTheDocument()
+  })
+
+  it('keeps the illustration in the DOM to animate it out when compact', () => {
+    vi.mocked(useStorefrontFacade).mockReturnValue({
+      visibleSections: [{ id: 'burgers', name: 'Hambúrgueres' }],
+      activeId: null,
+      goToSection: vi.fn(),
+    } as never)
+
+    const { container } = render(<CategoryNav compact />)
+
+    expect(container.querySelector('img')).toBeInTheDocument()
+    expect(container.querySelector('.categoryNavCompact')).toBeInTheDocument()
   })
 })

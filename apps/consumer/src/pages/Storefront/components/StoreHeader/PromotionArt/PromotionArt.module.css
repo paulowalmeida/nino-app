@@ -1,6 +1,6 @@
 @reference "@nino/ds/globals.css";
 
-/* WHY: o slide tem proporção fixa (5:2), então tudo é medido pela altura do
+/* WHY: o slide tem proporção fixa (3:1), então tudo é medido pela altura do
  * cartaz (cqh) e a composição é a mesma no celular e no desktop. As fotos do
  * cardápio entram como pratos vistos de cima, saindo pela borda direita. */
 .art {
