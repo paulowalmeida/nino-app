@@ -1,24 +1,22 @@
 @reference "@nino/ds/globals.css";
 
-/* WHY: no desktop a janela nasce perto do topo, como uma paleta de busca, e
- * cresce com os resultados até um teto; abaixo de 1024px o `size="full"` do
- * Modal já ocupa a tela.
- */
-.menuSearchModalPositioner {
-  @apply lg:items-start lg:pt-[10dvh];
+.menuSearchModalPanel {
+  @apply bg-surface-page;
 }
 
-.menuSearchModalPanel {
-  @apply flex flex-col bg-surface-page lg:h-auto lg:max-h-[75dvh];
+/* WHY: o título da gaveta carrega o campo. No Drawer ele mora numa div sem
+ * classe, que é o item flex ao lado do X — é ela que precisa crescer.
+ */
+.menuSearchModalPanel div:has(> [data-part='title']) {
+  @apply mr-3 min-w-0 flex-1;
+}
+
+.menuSearchModalPanel [data-part='title'] {
+  @apply w-full;
 }
 
 .menuSearchModalBody {
   @apply flex min-h-0 flex-1 flex-col p-0;
-}
-
-.menuSearchModalBar {
-  @apply shrink-0 items-center gap-1 border-b border-border px-4 py-3;
-  @apply lg:px-5;
 }
 
 .menuSearchModalField {
@@ -47,13 +45,9 @@
   @apply absolute right-1 top-1/2 size-10 -translate-y-1/2 text-fg-faint;
 }
 
-.menuSearchModalClose {
-  @apply shrink-0 px-3 font-semibold text-fg-strong;
-}
 
 .menuSearchModalScroll {
-  @apply min-h-0 flex-1 overflow-y-auto overscroll-contain px-4 pb-6 pt-3;
-  @apply lg:px-5;
+  @apply min-h-0 flex-1 overflow-y-auto overscroll-contain border-t border-border px-4 pb-6 pt-3 sm:px-5;
 }
 
 .menuSearchModalHeading {

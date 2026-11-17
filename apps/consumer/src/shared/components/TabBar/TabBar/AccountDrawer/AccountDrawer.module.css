@@ -1,9 +1,7 @@
 @reference "@nino/ds/globals.css";
 
 .accountDrawerPanel {
-  @apply bg-surface-raised;
-  box-shadow: 24px 0 60px -30px
-    color-mix(in srgb, var(--color-warm-950) 45%, transparent);
+  @apply bg-surface-page;
 }
 
 .accountDrawerBody {
@@ -15,44 +13,33 @@
 }
 
 .head {
-  @apply relative px-6 pb-7 pt-8;
-  padding-top: calc(2rem + env(safe-area-inset-top));
-  background: radial-gradient(
-    115% 85% at 0% 0%,
-    color-mix(in srgb, var(--store-tint, var(--color-brand)) 10%, transparent)
-      0%,
-    transparent 60%
-  );
+  @apply min-w-0 items-center gap-3;
 }
 
 .tile {
-  @apply mb-4 flex h-14 w-14 items-center justify-center rounded-2xl;
-  @apply border-4 border-fg-on-brand font-display text-lg font-extrabold;
-  @apply text-fg-on-brand;
+  @apply flex h-11 w-11 shrink-0 items-center justify-center overflow-hidden;
+  @apply rounded-full font-display text-sm font-extrabold text-fg-on-brand;
   background: var(--store-tint, var(--color-brand));
-  box-shadow: 0 10px 24px -12px
-    color-mix(in srgb, var(--store-tint, var(--color-brand)) 85%, transparent);
 }
 
 .tilePhoto {
-  @apply h-full w-full rounded-xl object-cover;
+  @apply h-full w-full object-cover;
 }
 
 .tileIcon {
   @apply text-fg-on-brand;
 }
 
+.headText {
+  @apply min-w-0 flex-col;
+}
+
 .greeting {
-  @apply text-sm font-semibold text-fg-muted;
+  @apply text-xs font-semibold text-fg-subtle;
 }
 
 .name {
-  @apply truncate font-display text-[1.75rem] font-extrabold leading-none;
-  @apply text-fg-muted;
-}
-
-.since {
-  @apply mt-2 text-xs text-fg-faintest;
+  @apply truncate font-display text-lg font-extrabold leading-tight text-fg-strong;
 }
 
 .accountDrawerNav {

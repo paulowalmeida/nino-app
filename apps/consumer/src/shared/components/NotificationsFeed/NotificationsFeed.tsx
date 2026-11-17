@@ -10,7 +10,7 @@ import { useConsumerSession } from '@shared/hooks/useConsumerSession/useConsumer
 import { useGuestOrderStatus } from '@hooks/useGuestOrderStatus/useGuestOrderStatus'
 import { useMyOrders } from '@shared/hooks/useMyOrders/useMyOrders'
 import { useStoreTracking } from '@hooks/useStoreTracking/useStoreTracking'
-import { PoweredBy } from '@shared/components/PoweredBy/PoweredBy'
+import { UpdatesEmptyIllustration } from '@shared/components/Illustrations/UpdatesEmptyIllustration/UpdatesEmptyIllustration'
 import { useGuestOrders } from '@shared/hooks/useGuestOrders/useGuestOrders'
 import { useConsumerNotifications } from '@shared/hooks/useConsumerNotifications/useConsumerNotifications'
 import {
@@ -20,7 +20,7 @@ import {
 import { isTerminal, stageNote } from '@utils/order-journey'
 
 import { StoreNotificationCard } from './components/StoreNotificationCard/StoreNotificationCard'
-import styles from './AccountChats.module.css'
+import styles from './NotificationsFeed.module.css'
 
 /**
  * Um cartão só sabe acompanhar um pedido: com token (convidado, link do
@@ -66,51 +66,20 @@ const trackingHref = (reference: OrderRow, pathSlug?: string) => {
   return `${base}/pedido/${reference.orderId}${query}`
 }
 
-const OrderHeader = ({ backHref }: { backHref: string }) => (
-  <Box
-    as="header"
-    direction="row"
-    align="center"
-    className={styles.accountChatsHeader}
-  >
-    <Link to={backHref} className={styles.back} aria-label="Voltar para a loja">
-      <Icon name="arrow-left" />
+const FeedEmpty = ({ menuHref }: { menuHref: string }) => (
+  <Box className={styles.emptyShell}>
+    <UpdatesEmptyIllustration className={styles.emptyArt} />
+    <Heading level={2} className={styles.emptyTitle}>
+      Nenhum pedido para acompanhar
+    </Heading>
+    <Text as="p" align="center" className={styles.emptyCopy}>
+      Esta área aparece quando há um pedido em andamento, recém-concluído ou um
+      aviso da loja.
+    </Text>
+    <Link to={menuHref} className={styles.emptyAction}>
+      Ver cardápio
+      <Icon name="arrow-right" size="sm" />
     </Link>
-    <Box>
-      <Heading level={1} className={styles.accountChatsTitle}>
-        Atualizações do pedido
-      </Heading>
-      <Text as="p" className={styles.accountChatsSubtitle}>
-        Pedidos em andamento e conclusões recentes
-      </Text>
-    </Box>
-  </Box>
-)
-
-const OrderEmpty = ({ backHref }: { backHref: string }) => (
-  <Box className={styles.accountChatsPage}>
-    <Box className={styles.accountChatsShell}>
-      <OrderHeader backHref={backHref} />
-      <Box className={styles.emptyShell}>
-        <Box className={styles.emptyIcon} aria-hidden="true">
-          <Icon name="receipt" size="lg" />
-        </Box>
-        <Heading level={2} className={styles.emptyTitle}>
-          Nenhum pedido para acompanhar
-        </Heading>
-        <Text as="p" className={styles.emptyCopy}>
-          Esta área aparece quando há um pedido em andamento, recém-concluído ou
-          um aviso da loja.
-        </Text>
-        <Link to={backHref} className={styles.emptyAction}>
-          Ver cardápio
-          <Icon name="arrow-right" size="sm" />
-        </Link>
-      </Box>
-    </Box>
-    <Box className={styles.accountChatsFooter}>
-      <PoweredBy compact />
-    </Box>
   </Box>
 )
 
@@ -214,9 +183,13 @@ const OrderCard = ({
   )
 }
 
-export const AccountChats = () => {
+/**
+ * Pedidos em andamento, conclusões recentes e avisos da loja. Vive dentro da
+ * gaveta da vitrine; quem dá o título e o fechar é a gaveta.
+ */
+export const NotificationsFeed = () => {
   const { slug } = useParams()
-  const backHref = slug ? `/${slug}` : '/'
+  const menuHref = slug ? `/${slug}` : '/'
   const { consumer } = useConsumerSession()
   const guestOrders = useGuestOrders(slug)
   const { data: myOrders } = useMyOrders(!!consumer)
@@ -233,58 +206,47 @@ export const AccountChats = () => {
   const orders: OrderRow[] = [...guestOrders, ...activeMyOrders]
 
   if (orders.length === 0 && notifications.length === 0) {
-    return <OrderEmpty backHref={backHref} />
+    return <FeedEmpty menuHref={menuHref} />
   }
 
   return (
-    <Box className={styles.accountChatsPage}>
-      <Box className={styles.accountChatsShell}>
-        <OrderHeader backHref={backHref} />
-        <main className={styles.accountChatsContent}>
-          {orders.length > 0 && (
-            <Box
-              className={styles.accountChatsList}
-              aria-label="Pedidos deste dispositivo"
-            >
-              {orders.map((reference) => (
-                <OrderCard
-                  key={reference.orderId}
-                  reference={reference}
-                  pathSlug={slug}
-                  hasSession={!!consumer}
-                />
-              ))}
-            </Box>
-          )}
-          {notifications.length > 0 && (
-            <Box
-              className={
-                orders.length > 0
-                  ? `${styles.accountChatsList} ${styles.listSpaced}`
-                  : styles.accountChatsList
-              }
-              aria-label="Avisos da loja"
-            >
-              {notifications.map((notification) => (
-                <StoreNotificationCard
-                  key={notification.id}
-                  notification={notification}
-                  onSeen={markRead}
-                />
-              ))}
-            </Box>
-          )}
-          {guestOrders.length > 0 && (
-            <Text as="p" className={styles.retentionNote}>
-              Pedidos concluídos permanecem aqui por 7 dias. Para acessar em
-              outro dispositivo, use o link recebido da loja.
-            </Text>
-          )}
-        </main>
-      </Box>
-      <Box className={styles.accountChatsFooter}>
-        <PoweredBy compact />
-      </Box>
+    <Box className={styles.notificationsFeed}>
+      {orders.length > 0 && (
+        <Box className={styles.feedList} aria-label="Pedidos deste dispositivo">
+          {orders.map((reference) => (
+            <OrderCard
+              key={reference.orderId}
+              reference={reference}
+              pathSlug={slug}
+              hasSession={!!consumer}
+            />
+          ))}
+        </Box>
+      )}
+      {notifications.length > 0 && (
+        <Box
+          className={
+            orders.length > 0
+              ? `${styles.feedList} ${styles.listSpaced}`
+              : styles.feedList
+          }
+          aria-label="Avisos da loja"
+        >
+          {notifications.map((notification) => (
+            <StoreNotificationCard
+              key={notification.id}
+              notification={notification}
+              onSeen={markRead}
+            />
+          ))}
+        </Box>
+      )}
+      {guestOrders.length > 0 && (
+        <Text as="p" className={styles.retentionNote}>
+          Pedidos concluídos permanecem aqui por 7 dias. Para acessar em outro
+          dispositivo, use o link recebido da loja.
+        </Text>
+      )}
     </Box>
   )
 }

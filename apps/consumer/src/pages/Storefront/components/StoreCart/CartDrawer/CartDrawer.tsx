@@ -9,6 +9,7 @@ import { Text } from '@nino/ds/components/Text'
 import { Dialog } from '@nino/ds/components/Dialog'
 import { Drawer } from '@nino/ds/components/Drawer'
 import { EmptyState } from '@nino/ds/components/EmptyState'
+import { Icon } from '@nino/ds/components/Icon'
 import { Image } from '@nino/ds/components/Image'
 import { QuantityStepper } from '@nino/ds/components/QuantityStepper'
 import { AnimatedNumber } from '@shared/components/AnimatedNumber/AnimatedNumber'
@@ -44,7 +45,6 @@ export const CartDrawer = () => {
     void navigate(slug ? `/${slug}/checkout` : '/checkout')
   }
   const itemCount = lines.reduce((sum, line) => sum + line.quantity, 0)
-  const { isDesktop } = home
   const [isConfirmingClear, setIsConfirmingClear] = useState(false)
 
   /*
@@ -75,8 +75,8 @@ export const CartDrawer = () => {
       <Drawer
         open={open}
         onOpenChange={onOpenChange}
-        placement={isDesktop ? 'right' : 'bottom'}
-        dismissible={isDesktop}
+        placement="right"
+        fullOnMobile
         title={
           <Box direction="row" className={styles.head}>
             <Box className={styles.headText}>
@@ -102,8 +102,8 @@ export const CartDrawer = () => {
             )}
           </Box>
         }
-        size={isDesktop ? '25rem' : 'var(--cart-drawer-height)'}
-        contentClassName={isDesktop ? styles.cartDrawerPanel : styles.sheet}
+        size="26rem"
+        contentClassName={styles.cartDrawerPanel}
         bodyClassName={styles.cartDrawerViewport}
       >
         <StoreTintScope>
@@ -116,10 +116,12 @@ export const CartDrawer = () => {
                 title="Sua sacola está vazia"
                 action={
                   <Button
+                    variant="ghost"
                     className={styles.emptyAction}
                     onClick={() => onOpenChange(false)}
                   >
                     Ver cardápio
+                    <Icon name="arrow-right" size="sm" />
                   </Button>
                 }
               >

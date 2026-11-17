@@ -72,21 +72,6 @@ describe('TabBar', () => {
     expect(onOpenSearch).toHaveBeenCalledTimes(1)
   })
 
-  it('hides the Pedido tab with no tracked order', () => {
-    // Arrange
-    // Act
-    render(
-      <MemoryRouter>
-        <TabBar base="/demo" />
-      </MemoryRouter>
-    )
-
-    // Assert
-    expect(
-      screen.queryByRole('button', { name: 'Pedido' })
-    ).not.toBeInTheDocument()
-  })
-
   it('exposes one accessible cart entry when the storefront provides it', () => {
     render(
       <MemoryRouter>
@@ -94,57 +79,78 @@ describe('TabBar', () => {
       </MemoryRouter>
     )
 
-    expect(screen.getAllByRole('button', { name: 'Sacola vazia' })).toHaveLength(
-      1
-    )
+    expect(
+      screen.getAllByRole('button', { name: 'Sacola vazia' })
+    ).toHaveLength(1)
   })
 
-  it('shows the Pedido tab for a guest order tracked on this device', () => {
-    // Arrange
+  it('keeps a plain Mais tab with no tracked order', () => {
+    render(
+      <MemoryRouter>
+        <TabBar base="/demo" />
+      </MemoryRouter>
+    )
+
+    expect(
+      screen.getByRole('button', { name: 'Mais opções' })
+    ).toBeInTheDocument()
+  })
+
+  it('flags the Mais tab for a guest order tracked on this device', () => {
     guestOrdersState.orders = [guestOrderMock]
 
-    // Act
     render(
       <MemoryRouter>
         <TabBar base="/demo" />
       </MemoryRouter>
     )
 
-    // Assert
-    expect(screen.getByRole('button', { name: 'Pedido' })).toBeInTheDocument()
+    expect(
+      screen.getByRole('button', {
+        name: 'Mais opções — pedido em andamento',
+      })
+    ).toBeInTheDocument()
   })
 
-  it('shows the Pedido tab for a logged consumer active order', () => {
-    // Arrange
-    sessionState.consumer = consumerMock
-    myOrdersState.data = [activeMyOrderMock]
-
-    // Act
-    render(
-      <MemoryRouter>
-        <TabBar base="/demo" />
-      </MemoryRouter>
-    )
-
-    // Assert
-    expect(screen.getByRole('button', { name: 'Pedido' })).toBeInTheDocument()
-  })
-
-  it('hides the Pedido tab for a logged consumer with no active order', () => {
-    // Arrange
+  it('flags the Mais tab only for an active order of a logged consumer', () => {
     sessionState.consumer = consumerMock
     myOrdersState.data = [deliveredMyOrderMock]
 
-    // Act
-    render(
+    const { rerender } = render(
       <MemoryRouter>
         <TabBar base="/demo" />
       </MemoryRouter>
     )
-
-    // Assert
     expect(
-      screen.queryByRole('button', { name: 'Pedido' })
-    ).not.toBeInTheDocument()
+      screen.getByRole('button', { name: 'Mais opções' })
+    ).toBeInTheDocument()
+
+    myOrdersState.data = [activeMyOrderMock]
+    rerender(
+      <MemoryRouter>
+        <TabBar base="/demo" />
+      </MemoryRouter>
+    )
+    expect(
+      screen.getByRole('button', {
+        name: 'Mais opções — pedido em andamento',
+      })
+    ).toBeInTheDocument()
+  })
+
+  it('lists coupons, notices and profile under Mais', async () => {
+    render(
+      <MemoryRouter>
+        <TabBar base="/demo" onOpenCoupons={vi.fn()} />
+      </MemoryRouter>
+    )
+
+    fireEvent.click(screen.getByRole('button', { name: 'Mais opções' }))
+
+    expect(
+      await screen.findByRole('menuitem', { name: 'Cupons' })
+    ).toBeInTheDocument()
+    expect(screen.getByRole('menuitem', { name: 'Avisos' })).toBeInTheDocument()
+    expect(screen.getByRole('menuitem', { name: 'Perfil' })).toBeInTheDocument()
   })
 })

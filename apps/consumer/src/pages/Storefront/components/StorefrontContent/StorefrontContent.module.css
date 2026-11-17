@@ -15,7 +15,7 @@
   padding-bottom: calc(6rem + env(safe-area-inset-bottom));
 }
 
-@media (min-width: 1024px) {
+@media (min-width: 769px) {
   .storefrontContentPage {
     padding-bottom: 3rem;
   }
@@ -35,5 +35,10 @@
 }
 
 .storefrontContentEmpty {
-  @apply mt-10;
+  @apply mt-6;
+}
+
+/* WHY: o EmptyState fixa 96px no desenho; no cardápio vazio ele é a tela. */
+.storefrontContentEmpty [aria-hidden] svg {
+  @apply h-36 w-auto;
 }

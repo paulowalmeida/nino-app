@@ -69,11 +69,6 @@ const paymentLazy = () =>
     Component: AccountPayment,
   }))
 
-const notificationsLazy = () =>
-  import('@pages/AccountChats/AccountChats').then(({ AccountChats }) => ({
-    Component: AccountChats,
-  }))
-
 const invoicesLazy = () =>
   import('@pages/AccountInvoices/AccountInvoices').then(
     ({ AccountInvoices }) => ({
@@ -103,12 +98,12 @@ const storeChildren: RouteObject[] = [
       { index: true },
       { path: 'produto/:productId', lazy: productDetailLazy },
       { path: 'promocao/:promotionId', lazy: packageDetailLazy },
+      { path: 'conta/conversas' },
     ],
   },
   { path: 'checkout', lazy: checkoutLazy },
   { path: 'pedido/:orderId', lazy: orderTrackingLazy },
   { path: 'entrar', lazy: signInLazy },
-  { path: 'conta/conversas', lazy: notificationsLazy },
   consumerAccountRoute,
 ]
 

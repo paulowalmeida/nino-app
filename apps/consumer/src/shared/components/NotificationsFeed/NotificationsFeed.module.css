@@ -1,39 +1,10 @@
 @reference "@nino/ds/globals.css";
 
-.accountChatsPage {
-  @apply flex min-h-dvh w-full flex-col bg-surface-1 pb-16;
+.notificationsFeed {
+  @apply w-full py-2;
 }
 
-.accountChatsShell {
-  @apply mx-auto w-full max-w-5xl flex-1 px-5 sm:px-6 lg:px-10;
-}
-
-.accountChatsHeader {
-  @apply sticky top-0 z-dock -mx-5 gap-3;
-  @apply border-b border-border bg-surface-raised/95 px-5 py-4 backdrop-blur;
-  @apply sm:-mx-6 sm:px-6 lg:-mx-10 lg:px-10;
-}
-
-.back {
-  @apply flex h-11 w-11 shrink-0 items-center justify-center rounded-full;
-  @apply border border-black/[0.08] bg-surface-page text-lg text-fg-muted;
-  @apply transition-colors hover:border-accent-peach hover:text-brand-strong;
-  @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand;
-}
-
-.accountChatsTitle {
-  @apply font-display text-xl font-extrabold leading-tight text-fg-muted;
-}
-
-.accountChatsSubtitle {
-  @apply mt-0.5 max-w-[46ch] text-sm leading-snug text-fg-faint;
-}
-
-.accountChatsContent {
-  @apply mx-auto w-full max-w-2xl py-7 sm:py-9;
-}
-
-.accountChatsList {
+.feedList {
   @apply flex flex-col gap-4;
 }
 
@@ -103,12 +74,11 @@
 }
 
 .emptyShell {
-  @apply mx-auto flex max-w-sm flex-1 flex-col items-center justify-center pb-20 text-center;
-  @apply lg:max-w-xl;
+  @apply flex min-h-full flex-col items-center justify-center py-10 text-center;
 }
 
-.emptyIcon {
-  @apply flex h-14 w-14 items-center justify-center rounded-full bg-brand-soft text-brand-strong;
+.emptyArt {
+  @apply h-40 w-auto sm:h-48;
 }
 
 .emptyTitle {
@@ -122,10 +92,8 @@
 .emptyAction {
   @apply mt-6 inline-flex min-h-11 items-center gap-2 text-sm font-bold text-brand-strong;
   @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand;
-}
-
-.accountChatsFooter {
-  @apply mt-auto w-full;
+  /* WHY: a partir de md a gaveta é lateral e o cardápio já está visível ao lado. */
+  @apply md:hidden;
 }
 
 .cardSkeleton {

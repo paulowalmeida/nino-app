@@ -52,6 +52,10 @@ vi.mock(
   '@pages/Storefront/components/ActiveOrderBanner/ActiveOrderBanner',
   () => ({ ActiveOrderBanner: emptyComponent })
 )
+vi.mock(
+  '@pages/Storefront/components/StorefrontNotificationsDrawer/StorefrontNotificationsDrawer',
+  () => ({ StorefrontNotificationsDrawer: () => null })
+)
 vi.mock('@pages/Storefront/components/StoreCart/StoreCart', () => ({
   StoreCart: emptyComponent,
 }))

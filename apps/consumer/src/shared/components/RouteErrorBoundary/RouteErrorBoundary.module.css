@@ -9,13 +9,28 @@
 }
 
 .routeError {
-  @apply w-full max-w-md gap-3 px-6 text-center;
+  @apply w-full max-w-md gap-3 px-6 text-center sm:max-w-lg lg:max-w-xl;
 }
 
 .backLink {
-  @apply mt-2 font-bold text-brand-strong;
+  @apply mt-2 font-bold text-brand-strong sm:text-lg;
 }
 
 .routeErrorFooter {
   @apply mt-auto w-full;
+}
+
+/* WHY: o EmptyState é desenhado para caber num painel (96px de desenho, texto
+ * sm); aqui ele é a tela inteira, então desenho e texto crescem com ela.
+ */
+.routeError [aria-hidden] svg {
+  @apply h-52 w-auto sm:h-64 lg:h-80;
+}
+
+.routeError p:first-of-type {
+  @apply text-xl sm:text-2xl lg:text-3xl;
+}
+
+.routeError p:nth-of-type(2) {
+  @apply max-w-none text-base sm:text-lg;
 }

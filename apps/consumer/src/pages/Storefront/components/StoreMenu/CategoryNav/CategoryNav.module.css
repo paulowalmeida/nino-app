@@ -1,7 +1,7 @@
 @reference "@nino/ds/globals.css";
 
 .categoryNav {
-  @apply flex w-full items-center;
+  @apply relative flex w-full items-center;
 }
 
 /* WHY: num celular estreito o rótulo comia 80px da régua; a nav já se
@@ -16,13 +16,15 @@
   scrollbar-width: none;
 }
 
-.track::after {
+/* WHY: o degradê fica no nav, que não rola; no próprio track ele andava com os
+ * chips e deixava uma faixa branca no meio */
+.categoryNav::after {
   content: '';
-  @apply pointer-events-none absolute bottom-0 right-0 top-0 w-10;
+  @apply pointer-events-none absolute bottom-0 right-0 top-0 w-6;
   background: linear-gradient(
     to right,
     color-mix(in srgb, var(--color-surface-page) 0%, transparent),
-    var(--color-surface-page)
+    color-mix(in srgb, var(--color-surface-page) 85%, transparent)
   );
 }
 
@@ -31,7 +33,7 @@
   @apply pr-0;
 }
 
-.trackFits::after {
+.categoryNavFits::after {
   @apply hidden;
 }
 

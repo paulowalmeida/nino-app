@@ -1,6 +1,7 @@
-import { Alert } from '@nino/ds/components/Alert'
 import { Box } from '@nino/ds/components/Box'
+import { Text } from '@nino/ds/components/Text'
 import { useStorefrontFacade } from '@pages/Storefront/facades/useStorefrontFacade/useStorefrontFacade'
+import { StoreClosedIllustration } from '@shared/components/Illustrations/StoreClosedIllustration/StoreClosedIllustration'
 import { isOpen } from '@utils/store-info'
 
 import styles from './StoreAvailabilityBanner.module.css'
@@ -12,10 +13,20 @@ export const StoreAvailabilityBanner = () => {
   if (!store || isHoursPending || isOpen(store, hours)) return null
 
   return (
-    <Box className={styles.storeAvailabilityBannerWrapper}>
-      <Alert variant="warning" title="Pedidos indisponíveis no momento">
-        Abra “Detalhes da loja” para consultar os horários.
-      </Alert>
+    <Box
+      direction="row"
+      role="status"
+      className={styles.storeAvailabilityBanner}
+    >
+      <StoreClosedIllustration className={styles.storeAvailabilityBannerArt} />
+      <Box className={styles.storeAvailabilityBannerText}>
+        <Text size="md" weight="bold" font="display" color="strong">
+          Pedidos indisponíveis no momento
+        </Text>
+        <Text size="sm" color="muted">
+          Abra “Detalhes da loja” para consultar os horários.
+        </Text>
+      </Box>
     </Box>
   )
 }

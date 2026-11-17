@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import {
   isRouteErrorResponse,
   Link,
@@ -8,7 +9,8 @@ import {
 
 import { Box } from '@nino/ds/components/Box'
 import { EmptyState } from '@nino/ds/components/EmptyState'
-import { Image } from '@nino/ds/components/Image'
+import { ErrorIllustration } from '@shared/components/Illustrations/ErrorIllustration/ErrorIllustration'
+import { NotFoundIllustration } from '@shared/components/Illustrations/NotFoundIllustration/NotFoundIllustration'
 import { PoweredBy } from '@shared/components/PoweredBy/PoweredBy'
 import { resolveBackHref } from '@utils/resolve-back-href'
 import { resolveSlug } from '@utils/resolve-slug'
@@ -20,6 +22,12 @@ export const RouteErrorBoundary = () => {
   const params = useParams()
   const { pathname } = useLocation()
   const isMissingPage = isRouteErrorResponse(error) && error.status === 404
+
+  /* WHY: com `errorElement` próprio o router engole o erro — sem isto o
+     console de dev só mostra a tela, nunca a causa. */
+  useEffect(() => {
+    if (import.meta.env.DEV) console.error(error)
+  }, [error])
   /* WHY: numa rota sem correspondência o router não preenche `params`; o
      slug sai do caminho, a não ser que a loja venha pelo subdomínio. */
   const pathSlug =
@@ -31,7 +39,9 @@ export const RouteErrorBoundary = () => {
         <EmptyState
           size="md"
           className={styles.routeError}
-          illustration={<Image src="/mascot-consumer-sad.svg" alt="" />}
+          illustration={
+            isMissingPage ? <NotFoundIllustration /> : <ErrorIllustration />
+          }
           title={
             isMissingPage ? 'Essa página não existe' : 'Algo deu errado aqui'
           }

@@ -3,11 +3,9 @@ import { useLocation, useNavigate } from 'react-router'
 
 import { Icon } from '@nino/ds/components/Icon'
 import { Button } from '@nino/ds/components/Button'
+import { Menu } from '@nino/ds/components/Menu'
 import { Text } from '@nino/ds/components/Text'
-import { useConsumerSession } from '@shared/hooks/useConsumerSession/useConsumerSession'
-import { useGuestOrders } from '@shared/hooks/useGuestOrders/useGuestOrders'
-import { useMyOrders } from '@shared/hooks/useMyOrders/useMyOrders'
-import { isTerminal } from '@utils/order-journey'
+import { useHasActiveOrder } from '@shared/hooks/useHasActiveOrder/useHasActiveOrder'
 import { AccountDrawer } from './AccountDrawer/AccountDrawer'
 
 import styles from './TabBar.module.css'
@@ -35,12 +33,7 @@ export const TabBar = ({
   const { pathname } = useLocation()
   const [isAccountOpen, setIsAccountOpen] = useState(false)
   const slug = base.startsWith('/') ? base.slice(1).split('/')[0] : undefined
-  const { consumer } = useConsumerSession()
-  const guestOrders = useGuestOrders(slug)
-  const { data: myOrders } = useMyOrders(!!consumer)
-  const hasActiveOrder =
-    guestOrders.length > 0 ||
-    (myOrders ?? []).some((order) => !isTerminal(order.status))
+  const hasActiveOrder = useHasActiveOrder(slug)
 
   const home = base || '/'
   const isHome = pathname === home || pathname === `${home}/`
@@ -61,32 +54,9 @@ export const TabBar = ({
 
   return (
     <>
+      {/* WHY: três abas para o que se usa a toda hora; o resto vai no Mais —
+          seis alvos numa tela de 360px apertavam rótulo e polegar. */}
       <nav className={styles.bar} aria-label="Atalhos">
-        {onOpenCart && (
-          <Button
-            variant="ghost"
-            onClick={onOpenCart}
-            className={styles.tabBarTab}
-            aria-label={
-              cartCount > 0
-                ? `Sacola com ${cartCount} ${cartCount === 1 ? 'item' : 'itens'}`
-                : 'Sacola vazia'
-            }
-          >
-            <Text as="span" className={styles.cartIcon}>
-              <Icon name="bag" />
-              {cartCount > 0 && (
-                <Text as="span" className={styles.cartBadge}>
-                  {cartCount}
-                </Text>
-              )}
-            </Text>
-            <Text as="span" className={styles.tabBarLabel}>
-              Sacola
-            </Text>
-          </Button>
-        )}
-
         <Button
           variant="ghost"
           onClick={handleHome}
@@ -116,12 +86,38 @@ export const TabBar = ({
           </Button>
         )}
 
+        {onOpenCart && (
+          <Button
+            variant="ghost"
+            onClick={onOpenCart}
+            className={styles.tabBarTab}
+            aria-label={
+              cartCount > 0
+                ? `Sacola com ${cartCount} ${cartCount === 1 ? 'item' : 'itens'}`
+                : 'Sacola vazia'
+            }
+          >
+            <Text as="span" className={styles.cartIcon}>
+              <Icon name="bag" />
+              {cartCount > 0 && (
+                <Text as="span" className={styles.cartBadge}>
+                  {cartCount}
+                </Text>
+              )}
+            </Text>
+            <Text as="span" className={styles.tabBarLabel}>
+              Sacola
+            </Text>
+          </Button>
+        )}
+
+        {/* tablet: cabe tudo na barra; o Mais só existe no celular */}
         {onOpenCoupons && (
           <Button
             variant="ghost"
             onClick={onOpenCoupons}
-            className={styles.tabBarTab}
             aria-haspopup="dialog"
+            className={`${styles.tabBarTab} ${styles.wideOnly}`}
           >
             <Icon name="tag" />
             <Text as="span" className={styles.tabBarLabel}>
@@ -130,38 +126,102 @@ export const TabBar = ({
           </Button>
         )}
 
-        {hasActiveOrder && (
-          <Button
-            variant="ghost"
-            onClick={() => void navigate(notifications)}
-            aria-current={isNotifications ? 'page' : undefined}
-            className={
-              isNotifications
-                ? `${styles.tabBarTab} ${styles.tabOn}`
-                : styles.tabBarTab
-            }
-          >
-            <Icon name="receipt" />
-            <Text as="span" className={styles.tabBarLabel}>
-              Pedido
-            </Text>
-          </Button>
-        )}
+        <Button
+          variant="ghost"
+          onClick={() => void navigate(notifications)}
+          aria-current={isNotifications ? 'page' : undefined}
+          aria-label={
+            hasActiveOrder ? 'Avisos — pedido em andamento' : 'Avisos'
+          }
+          className={`${styles.tabBarTab} ${styles.wideOnly} ${isNotifications ? styles.tabOn : ''}`}
+        >
+          <Text as="span" className={styles.moreIcon}>
+            <Icon name="bell" />
+            {hasActiveOrder && (
+              <Text as="span" aria-hidden="true" className={styles.moreDot} />
+            )}
+          </Text>
+          <Text as="span" className={styles.tabBarLabel}>
+            Avisos
+          </Text>
+        </Button>
 
         <Button
           variant="ghost"
           onClick={() => setIsAccountOpen(true)}
           aria-haspopup="dialog"
           aria-expanded={isAccountOpen}
-          className={
-            isAccount ? `${styles.tabBarTab} ${styles.tabOn}` : styles.tabBarTab
-          }
+          className={`${styles.tabBarTab} ${styles.wideOnly} ${isAccount ? styles.tabOn : ''}`}
         >
           <Icon name="user" />
           <Text as="span" className={styles.tabBarLabel}>
             Perfil
           </Text>
         </Button>
+
+        <Menu
+          placement="top-end"
+          trigger={
+            <Button
+              variant="ghost"
+              aria-label={
+                hasActiveOrder
+                  ? 'Mais opções — pedido em andamento'
+                  : 'Mais opções'
+              }
+              className={`${styles.tabBarTab} ${styles.narrowOnly} ${isAccount || isNotifications ? styles.tabOn : ''}`}
+            >
+              <Text as="span" className={styles.moreIcon}>
+                <Icon name="more-horizontal" />
+                {hasActiveOrder && (
+                  <Text
+                    as="span"
+                    aria-hidden="true"
+                    className={styles.moreDot}
+                  />
+                )}
+              </Text>
+              <Text as="span" className={styles.tabBarLabel}>
+                Mais
+              </Text>
+            </Button>
+          }
+          items={[
+            ...(onOpenCoupons
+              ? [
+                  {
+                    value: 'coupons',
+                    label: 'Cupons',
+                    icon: <Icon name="tag" />,
+                    onSelect: onOpenCoupons,
+                  },
+                ]
+              : []),
+            {
+              value: 'notices',
+              label: 'Avisos',
+              icon: (
+                <Text as="span" className={styles.moreIcon}>
+                  <Icon name="bell" />
+                  {hasActiveOrder && (
+                    <Text
+                      as="span"
+                      aria-hidden="true"
+                      className={styles.moreDot}
+                    />
+                  )}
+                </Text>
+              ),
+              onSelect: () => void navigate(notifications),
+            },
+            {
+              value: 'profile',
+              label: 'Perfil',
+              icon: <Icon name="user" />,
+              onSelect: () => setIsAccountOpen(true),
+            },
+          ]}
+        />
       </nav>
 
       <AccountDrawer

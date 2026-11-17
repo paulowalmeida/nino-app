@@ -44,7 +44,10 @@ export const CategoryNav = () => {
   }, [activeId, fits])
 
   return (
-    <nav className={styles.categoryNav} aria-label="Categorias do cardápio">
+    <nav
+      className={`${styles.categoryNav} ${fits ? styles.categoryNavFits : ''}`}
+      aria-label="Categorias do cardápio"
+    >
       <Text className="sr-only">
         Deslize horizontalmente para ver mais categorias.
       </Text>

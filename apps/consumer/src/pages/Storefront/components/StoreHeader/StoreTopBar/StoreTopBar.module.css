@@ -131,7 +131,7 @@
 }
 
 .searchEntry {
-  @apply !hidden lg:!flex;
+  @apply !hidden min-[769px]:!flex;
 }
 
 .tools {
@@ -212,6 +212,12 @@
   .signIn:hover {
     filter: brightness(0.94);
   }
+}
+
+/* pedido em andamento: o mesmo sinal que, no celular, faz surgir a aba Pedido */
+.activeOrderDot {
+  @apply absolute right-2 top-2 h-2.5 w-2.5 rounded-full ring-2 ring-surface-page;
+  background-color: var(--store-tint, var(--color-brand));
 }
 
 .cartBadge {

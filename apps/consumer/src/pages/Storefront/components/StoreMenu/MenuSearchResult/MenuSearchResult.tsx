@@ -18,10 +18,7 @@ type MenuSearchResultProps = {
   query: string
   /** Quantas unidades já estão na sacola — 0 não marca nada. */
   quantity?: number
-  /** Loja fechada: mostra o item mas não deixa pedir. */
-  disabled?: boolean
   onSelect: (item: MenuItem) => void
-  onAdd: (item: MenuItem) => void
 }
 
 const Highlighted = ({ text, query }: { text: string; query: string }) => (
@@ -40,17 +37,14 @@ const Highlighted = ({ text, query }: { text: string; query: string }) => (
 
 /**
  * Uma linha de resultado: foto pequena, nome com o trecho que casou, uma
- * linha de descrição e o preço ao lado da categoria. O "+" é o mesmo atalho
- * do card da vitrine.
+ * linha de descrição e o preço ao lado da categoria.
  */
 export const MenuSearchResult = ({
   item,
   categoryName,
   query,
   quantity = 0,
-  disabled = false,
   onSelect,
-  onAdd,
 }: MenuSearchResultProps) => {
   const image = primaryImage(item)
 
@@ -91,16 +85,7 @@ export const MenuSearchResult = ({
             </Text>
           </Text>
         </Box>
-      </Button>
-      <Button
-        variant="primary"
-        size="icon"
-        className={styles.menuSearchResultAdd}
-        aria-label={`Adicionar ${item.name}`}
-        disabled={disabled}
-        onClick={() => onAdd(item)}
-      >
-        <Icon name="plus" />
+        <Icon name="chevron-right" className={styles.menuSearchResultChevron} />
       </Button>
     </ListRow>
   )

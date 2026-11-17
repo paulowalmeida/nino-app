@@ -1,23 +1,7 @@
 @reference "@nino/ds/globals.css";
 
-.sheet {
-  --cart-drawer-height: 88dvh;
-
-  @apply max-h-[88dvh] rounded-t-6 bg-surface-page;
-}
-
-@media (max-width: 425px) {
-  .sheet {
-    --cart-drawer-height: 100dvh;
-
-    max-height: 100dvh;
-  }
-}
-
 .cartDrawerPanel {
   @apply bg-surface-page;
-  box-shadow: -24px 0 60px -30px
-    color-mix(in srgb, var(--color-warm-950) 35%, transparent);
 }
 
 .cartDrawerViewport {
@@ -122,9 +106,16 @@
   @apply flex-1 justify-center py-3;
 }
 
+/* WHY: mesmo desenho do vazio das outras gavetas — ilustração grande e um
+ * link de saída que só faz sentido quando a gaveta cobre a tela.
+ */
+.cartDrawerEmpty [aria-hidden] svg {
+  @apply h-40 w-auto sm:h-48;
+}
+
 .emptyAction {
-  @apply h-11 rounded-3 px-6 text-[0.9375rem];
-  background-color: var(--store-tint, var(--color-brand));
+  @apply mt-2 inline-flex min-h-11 items-center gap-2 text-sm font-bold text-brand-strong;
+  @apply md:hidden;
 }
 
 .cartDrawerFooter {

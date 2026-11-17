@@ -9,6 +9,7 @@ import { StoreCart } from '@pages/Storefront/components/StoreCart/StoreCart'
 import { CategoryNav } from '@pages/Storefront/components/StoreMenu/CategoryNav/CategoryNav'
 import { MenuSection } from '@pages/Storefront/components/StoreMenu/MenuSection/MenuSection'
 import { StoreIdentity } from '@pages/Storefront/components/StoreHeader/StoreIdentity/StoreIdentity'
+import { StorefrontNotificationsDrawer } from '@pages/Storefront/components/StorefrontNotificationsDrawer/StorefrontNotificationsDrawer'
 import { StorefrontCouponsDrawer } from '@pages/Storefront/components/StorefrontCouponsDrawer/StorefrontCouponsDrawer'
 import { StoreAvailabilityBanner } from '@pages/Storefront/components/StoreHeader/StoreAvailabilityBanner/StoreAvailabilityBanner'
 import { StoreInfo } from '@pages/Storefront/components/StoreHeader/StoreInfo/StoreInfo'
@@ -18,6 +19,7 @@ import { MenuSearchModal } from '@pages/Storefront/components/StoreMenu/MenuSear
 import { MenuSearchField } from '@pages/Storefront/components/StoreMenu/MenuSearchField/MenuSearchField'
 import { MenuRowsSkeleton } from '@pages/Storefront/skeletons/MenuRowsSkeleton/MenuRowsSkeleton'
 import { StoreHeaderSkeleton } from '@pages/Storefront/skeletons/StoreHeaderSkeleton/StoreHeaderSkeleton'
+import { MenuEmptyIllustration } from '@shared/components/Illustrations/MenuEmptyIllustration/MenuEmptyIllustration'
 import { FooterNav } from '@shared/components/FooterNav/FooterNav'
 import { PromotionBanner } from '@pages/Storefront/components/StoreHeader/PromotionBanner/PromotionBanner'
 import { StoreBanner } from '@pages/Storefront/components/StoreHeader/StoreBanner/StoreBanner'
@@ -142,7 +144,12 @@ export const StorefrontContent = ({ pathSlug }: StorefrontContentProps) => {
           {!isMenuContentPending &&
             !home.isMenuError &&
             home.sections.length === 0 && (
-              <EmptyState className={styles.storefrontContentEmpty}>
+              <EmptyState
+                size="md"
+                className={styles.storefrontContentEmpty}
+                illustration={<MenuEmptyIllustration />}
+                title="Cardápio em preparo"
+              >
                 Esta loja ainda não publicou itens no cardápio.
               </EmptyState>
             )}
@@ -179,6 +186,7 @@ export const StorefrontContent = ({ pathSlug }: StorefrontContentProps) => {
 
       {blocks.showStoreInfo && <StoreInfo />}
       <StorefrontCouponsDrawer />
+      <StorefrontNotificationsDrawer />
     </Box>
   )
 }

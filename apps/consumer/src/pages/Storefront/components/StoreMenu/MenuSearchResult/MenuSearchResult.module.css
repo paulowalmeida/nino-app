@@ -69,12 +69,6 @@
   );
 }
 
-.menuSearchResultAdd {
-  @apply size-9 shrink-0 rounded-full border-0 text-fg-on-brand;
-  background-color: var(--store-tint, var(--color-brand));
-}
-
-.menuSearchResultAdd:disabled {
-  @apply cursor-not-allowed;
-  filter: grayscale(1);
+.menuSearchResultChevron {
+  @apply size-5 shrink-0 text-fg-muted;
 }

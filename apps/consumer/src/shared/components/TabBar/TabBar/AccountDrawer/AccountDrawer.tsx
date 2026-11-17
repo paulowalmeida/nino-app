@@ -27,11 +27,6 @@ type AccountDrawerProps = {
   base: string
 }
 
-const since = new Intl.DateTimeFormat('pt-BR', {
-  month: 'long',
-  year: 'numeric',
-})
-
 /**
  * A caderneta do freguês — a gaveta que o "Perfil" da barra abre no celular.
  *
@@ -67,8 +62,11 @@ export const AccountDrawer = ({
   const name = firstName(named)
   const mark = consumerInitials(named)
 
-  const ready = ACCOUNT_SECTIONS.filter((section) => !section.soon)
-  const soon = ACCOUNT_SECTIONS.filter((section) => section.soon)
+  /* WHY: na vitrine os avisos já têm entrada própria (sino no topo, Avisos na
+     barra); repetir na gaveta da conta seria o mesmo destino duas vezes. */
+  const sections = ACCOUNT_SECTIONS.filter(({ to }) => to !== 'conversas')
+  const ready = sections.filter((section) => !section.soon)
+  const soon = sections.filter((section) => section.soon)
 
   const go = (to: string) => {
     onOpenChange(false)
@@ -105,12 +103,49 @@ export const AccountDrawer = ({
     )
   }
 
+  /* WHY: avatar, saudação e nome são o título da gaveta — um "Perfil" em cima
+     de um bloco que já diz quem é seria eco. O título sai do portal sem a cor
+     da loja, por isso a declara de novo. */
+  const head = (
+    <Box
+      direction="row"
+      className={styles.head}
+      style={tint ? ({ '--store-tint': tint } as React.CSSProperties) : {}}
+    >
+      <Box className={`${motion.land} ${styles.tile}`}>
+        {consumer?.photoUrl ? (
+          <img
+            src={consumer.photoUrl}
+            alt=""
+            className={styles.tilePhoto}
+            referrerPolicy="no-referrer"
+          />
+        ) : (
+          (mark ?? <Icon name="user" className={styles.tileIcon} />)
+        )}
+      </Box>
+      <Box className={styles.headText}>
+        <Text as="span" className={styles.greeting}>
+          {greeting()}
+          {name ? ',' : ''}
+        </Text>
+        {name && (
+          <Text as="span" className={styles.name}>
+            {name}
+          </Text>
+        )}
+      </Box>
+    </Box>
+  )
+
   return (
     <Drawer
       open={open}
       onOpenChange={onOpenChange}
-      placement="left"
-      size="19.5rem"
+      placement="right"
+      size="26rem"
+      fullOnMobile
+      title={head}
       contentClassName={styles.accountDrawerPanel}
       bodyClassName={styles.accountDrawerBody}
     >
@@ -120,47 +155,6 @@ export const AccountDrawer = ({
         className={styles.tint}
         style={tint ? ({ '--store-tint': tint } as React.CSSProperties) : {}}
       >
-        <Box as="header" className={styles.head}>
-          <Box className={`${motion.land} ${styles.tile}`}>
-            {consumer?.photoUrl ? (
-              <img
-                src={consumer.photoUrl}
-                alt=""
-                className={styles.tilePhoto}
-                referrerPolicy="no-referrer"
-              />
-            ) : (
-              (mark ?? <Icon name="user" className={styles.tileIcon} />)
-            )}
-          </Box>
-
-          <Text
-            className={`${motion.deal} ${styles.greeting}`}
-            style={riseDelay(60)}
-          >
-            {greeting()}
-            {name ? ',' : ''}
-          </Text>
-
-          {name && (
-            <Text
-              className={`${motion.deal} ${styles.name}`}
-              style={riseDelay(90)}
-            >
-              {name}
-            </Text>
-          )}
-
-          {consumer && (
-            <Text
-              className={`${motion.deal} ${styles.since}`}
-              style={riseDelay(120)}
-            >
-              na casa desde {since.format(new Date(consumer.createdAt))}
-            </Text>
-          )}
-        </Box>
-
         {consumer ? (
           <>
             <nav

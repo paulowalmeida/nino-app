@@ -2,7 +2,7 @@
 
 .bar {
   @apply fixed inset-x-0 bottom-0 z-nav flex h-[4.5rem] items-stretch;
-  @apply border-t border-border bg-surface-raised/95 backdrop-blur lg:hidden;
+  @apply border-t border-border bg-surface-raised/95 backdrop-blur min-[769px]:hidden;
   padding-bottom: env(safe-area-inset-bottom);
 }
 
@@ -42,8 +42,6 @@
   color: var(--store-tint, var(--color-brand));
 }
 
-/* WHY: três alvos numa tela de 360px: o rótulo aperta antes do ícone
- */
 .tabBarLabel {
   @apply text-xs font-semibold;
 }
@@ -58,4 +56,25 @@
   @apply text-fg-on-brand;
   background-color: var(--store-tint, var(--color-brand));
   font-variant-numeric: tabular-nums;
+}
+
+.moreIcon {
+  @apply relative inline-flex items-center justify-center;
+}
+
+/* pedido em andamento: o sinal fica no Mais, senão some junto com a aba */
+.moreDot {
+  @apply absolute -right-1 -top-0.5 h-2.5 w-2.5 rounded-full ring-2 ring-surface-raised;
+  background-color: var(--store-tint, var(--color-brand));
+}
+
+/* WHY: abaixo de sm (celular) seis alvos apertam rótulo e polegar, então
+ * Cupons, Avisos e Perfil vão para o Mais; no tablet estreito cabe tudo.
+ * O `!` vence o `flex` que o Button escreve sem qualificador. */
+.wideOnly {
+  @apply !hidden sm:!flex;
+}
+
+.narrowOnly {
+  @apply sm:!hidden;
 }

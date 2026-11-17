@@ -7,6 +7,7 @@ import { Icon } from '@nino/ds/components/Icon'
 import { Image } from '@nino/ds/components/Image'
 import { Button } from '@nino/ds/components/Button'
 import { useStorefrontFacade } from '@pages/Storefront/facades/useStorefrontFacade/useStorefrontFacade'
+import { useHasActiveOrder } from '@shared/hooks/useHasActiveOrder/useHasActiveOrder'
 import { displayName, isOpen, storeInitials } from '@utils/store-info'
 import { firstName } from '@shared/utils/consumer-name/consumer-name'
 import { formatPhone } from '@utils/phone'
@@ -35,6 +36,7 @@ export const StoreTopBar = ({ slug, isDocked }: StoreTopBarProps) => {
     setCouponsOpen,
   } = useStorefrontFacade()
   const navigate = useNavigate()
+  const hasActiveOrder = useHasActiveOrder(slug || undefined)
   if (!store) return null
 
   const base = slug ? `/${slug}` : ''
@@ -139,9 +141,20 @@ export const StoreTopBar = ({ slug, isDocked }: StoreTopBarProps) => {
             size="icon"
             className={`${styles.iconBtn} ${styles.notificationsEntry}`}
             onClick={go('/conta/conversas')}
-            aria-label="Notificações do pedido"
+            aria-label={
+              hasActiveOrder
+                ? 'Notificações do pedido — pedido em andamento'
+                : 'Notificações do pedido'
+            }
           >
             <Icon name="bell" />
+            {hasActiveOrder && (
+              <Text
+                as="span"
+                aria-hidden="true"
+                className={styles.activeOrderDot}
+              />
+            )}
           </Button>
 
           <Button
@@ -155,7 +168,7 @@ export const StoreTopBar = ({ slug, isDocked }: StoreTopBarProps) => {
                 : 'Sacola vazia'
             }
           >
-            <Icon name="shopping-cart" />
+            <Icon name="bag" />
             {cartCount > 0 && (
               <Text as="span" className={styles.cartBadge}>
                 {cartCount}

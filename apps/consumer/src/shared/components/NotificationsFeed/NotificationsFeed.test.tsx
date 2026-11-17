@@ -2,7 +2,7 @@ import { render, screen } from '@testing-library/react'
 import { MemoryRouter } from 'react-router'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 
-import { AccountChats } from './AccountChats'
+import { NotificationsFeed } from './NotificationsFeed'
 
 const statusState = vi.hoisted(() => ({
   data: undefined as unknown,
@@ -60,7 +60,7 @@ vi.mock('@hooks/useStoreTracking/useStoreTracking', () => ({
   }),
 }))
 
-describe('AccountChats', () => {
+describe('NotificationsFeed', () => {
   beforeEach(() => {
     window.localStorage.clear()
     statusState.data = undefined
@@ -76,7 +76,7 @@ describe('AccountChats', () => {
     // Act
     render(
       <MemoryRouter>
-        <AccountChats />
+        <NotificationsFeed />
       </MemoryRouter>
     )
 
@@ -107,13 +107,10 @@ describe('AccountChats', () => {
 
     render(
       <MemoryRouter initialEntries={['/demo/conta/conversas']}>
-        <AccountChats />
+        <NotificationsFeed />
       </MemoryRouter>
     )
 
-    expect(
-      screen.getByRole('heading', { name: 'Atualizações do pedido' })
-    ).toBeInTheDocument()
     expect(
       screen.getByRole('heading', {
         name: 'Sua comida está sendo preparada',
@@ -144,7 +141,7 @@ describe('AccountChats', () => {
 
     render(
       <MemoryRouter initialEntries={['/demo/conta/conversas']}>
-        <AccountChats />
+        <NotificationsFeed />
       </MemoryRouter>
     )
 
@@ -183,7 +180,7 @@ describe('AccountChats', () => {
     // Act
     render(
       <MemoryRouter initialEntries={['/demo/conta/conversas']}>
-        <AccountChats />
+        <NotificationsFeed />
       </MemoryRouter>
     )
 
@@ -211,7 +208,7 @@ describe('AccountChats', () => {
     // Act
     render(
       <MemoryRouter initialEntries={['/demo/conta/conversas']}>
-        <AccountChats />
+        <NotificationsFeed />
       </MemoryRouter>
     )
 
@@ -240,7 +237,7 @@ describe('AccountChats', () => {
     // Act
     render(
       <MemoryRouter initialEntries={['/demo/conta/conversas']}>
-        <AccountChats />
+        <NotificationsFeed />
       </MemoryRouter>
     )
 

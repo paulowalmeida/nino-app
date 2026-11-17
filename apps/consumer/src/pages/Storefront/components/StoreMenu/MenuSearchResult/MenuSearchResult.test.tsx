@@ -10,7 +10,6 @@ const item = menuSearchResultMock.item as unknown as MenuItem
 
 const renderRow = (props = {}) => {
   const onSelect = vi.fn()
-  const onAdd = vi.fn()
   render(
     <ul>
       <MenuSearchResult
@@ -18,12 +17,11 @@ const renderRow = (props = {}) => {
         categoryName={menuSearchResultMock.categoryName}
         query={menuSearchResultMock.query}
         onSelect={onSelect}
-        onAdd={onAdd}
         {...props}
       />
     </ul>
   )
-  return { onSelect, onAdd }
+  return { onSelect }
 }
 
 describe('MenuSearchResult', () => {
@@ -36,16 +34,5 @@ describe('MenuSearchResult', () => {
     const { onSelect } = renderRow()
     fireEvent.click(screen.getByRole('button', { name: /Ver detalhes/ }))
     expect(onSelect).toHaveBeenCalledWith(item)
-  })
-
-  it('adds from the quick button', () => {
-    const { onAdd } = renderRow()
-    fireEvent.click(screen.getByRole('button', { name: /Adicionar/ }))
-    expect(onAdd).toHaveBeenCalledWith(item)
-  })
-
-  it('blocks adding when the store is closed', () => {
-    renderRow({ disabled: true })
-    expect(screen.getByRole('button', { name: /Adicionar/ })).toBeDisabled()
   })
 })

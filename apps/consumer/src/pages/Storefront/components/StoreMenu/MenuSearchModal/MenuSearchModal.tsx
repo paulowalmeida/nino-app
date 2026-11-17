@@ -1,4 +1,4 @@
-import { useRef } from 'react'
+import { useEffect, useRef } from 'react'
 import type { KeyboardEvent } from 'react'
 
 import { Box } from '@nino/ds/components/Box'
@@ -7,7 +7,7 @@ import { EmptyState } from '@nino/ds/components/EmptyState'
 import { Heading } from '@nino/ds/components/Heading'
 import { Icon } from '@nino/ds/components/Icon'
 import { Input } from '@nino/ds/components/Input'
-import { Modal } from '@nino/ds/components/Modal'
+import { Drawer } from '@nino/ds/components/Drawer'
 import { Text } from '@nino/ds/components/Text'
 import type { MenuItem } from '@custom_types/menu/menu-item'
 import { MenuSearchResult } from '@pages/Storefront/components/StoreMenu/MenuSearchResult/MenuSearchResult'
@@ -15,15 +15,13 @@ import { StoreTintScope } from '@shared/components/StoreTintScope/StoreTintScope
 import { SearchEmptyIllustration } from '@shared/components/Illustrations/SearchEmptyIllustration/SearchEmptyIllustration'
 import { SearchIllustration } from '@shared/components/Illustrations/SearchIllustration/SearchIllustration'
 import { useStorefrontFacade } from '@pages/Storefront/facades/useStorefrontFacade/useStorefrontFacade'
-import { requiresChoice } from '@pages/Storefront/hooks/useMenuItemAction/useMenuItemAction'
-import { isOpen } from '@utils/store-info'
 
 import styles from './MenuSearchModal.module.css'
 
 const RESULT_SELECTOR = '[data-search-result]'
 
 /**
- * A busca do cardápio: tela cheia abaixo de 1024px, janela de lista acima. O
+ * A busca do cardápio: gaveta lateral como as demais, tela cheia abaixo de md. O
  * campo da página só abre esta modal — a lista da página nunca é filtrada por
  * baixo. Seta para baixo desce do campo para os resultados, Enter abre o
  * primeiro e Escape fecha (o foco volta ao campo que abriu).
@@ -37,28 +35,26 @@ export const MenuSearchModal = () => {
     searchResults,
     hasSearchQuery,
     sections,
-    store,
-    hours,
-    isHoursPending,
     quantityByProduct,
-    addFromMenu,
     openProduct,
-    isDesktop,
   } = useStorefrontFacade()
   const inputRef = useRef<HTMLInputElement>(null)
+
+  /* WHY: `autoFocus` dispara com a gaveta ainda fora da tela; o navegador rola
+     até o campo e a entrada pisca vindo do lado errado. O foco vem depois do
+     primeiro quadro e sem rolagem. */
+  useEffect(() => {
+    if (!isSearchOpen) return
+    const frame = requestAnimationFrame(() =>
+      inputRef.current?.focus({ preventScroll: true })
+    )
+    return () => cancelAnimationFrame(frame)
+  }, [isSearchOpen])
   const listRef = useRef<HTMLDivElement>(null)
-  const storeOpen = !store || isHoursPending || isOpen(store, hours)
 
   const select = (item: MenuItem) => {
     setSearchOpen(false)
     openProduct(item)
-  }
-
-  // WHY: item com escolha obrigatória vai para a página do produto; aí a
-  // busca fecha. Os demais entram na sacola e a busca fica para o próximo.
-  const add = (item: MenuItem) => {
-    if (requiresChoice(item)) setSearchOpen(false)
-    addFromMenu(item)
   }
 
   const clear = () => {
@@ -95,43 +91,43 @@ export const MenuSearchModal = () => {
 
   const count = searchResults.length
 
+  /* WHY: o campo é o próprio título da gaveta — um título "Buscar no
+     cardápio" acima de um campo que diz o mesmo seria eco. O nome acessível
+     do diálogo fica no texto oculto. */
+  const field = (
+    <>
+      <Text as="span" className="sr-only">
+        Buscar no cardápio
+      </Text>
+      <Box className={styles.menuSearchModalField}>
+        <Icon name="search" className={styles.menuSearchModalIcon} />
+        <Input
+          ref={inputRef}
+          type="search"
+          aria-label="Buscar no cardápio"
+          placeholder="Buscar no cardápio"
+          className={styles.menuSearchModalInput}
+          value={search}
+          onChange={(event) => setSearch(event.target.value)}
+          onKeyDown={handleInputKeyDown}
+        />
+        {hasSearchQuery && (
+          <Button
+            variant="ghost"
+            size="icon"
+            className={styles.menuSearchModalClear}
+            aria-label="Apagar texto"
+            onClick={clear}
+          >
+            <Icon name="x" size="sm" />
+          </Button>
+        )}
+      </Box>
+    </>
+  )
+
   const body = (
     <>
-      <Box direction="row" className={styles.menuSearchModalBar}>
-        <Box className={styles.menuSearchModalField}>
-          <Icon name="search" className={styles.menuSearchModalIcon} />
-          <Input
-            ref={inputRef}
-            autoFocus
-            type="search"
-            aria-label="Buscar no cardápio"
-            placeholder="Buscar no cardápio"
-            className={styles.menuSearchModalInput}
-            value={search}
-            onChange={(event) => setSearch(event.target.value)}
-            onKeyDown={handleInputKeyDown}
-          />
-          {hasSearchQuery && (
-            <Button
-              variant="ghost"
-              size="icon"
-              className={styles.menuSearchModalClear}
-              aria-label="Apagar texto"
-              onClick={clear}
-            >
-              <Icon name="x" size="sm" />
-            </Button>
-          )}
-        </Box>
-        <Button
-          variant="ghost"
-          className={styles.menuSearchModalClose}
-          onClick={() => setSearchOpen(false)}
-        >
-          Fechar
-        </Button>
-      </Box>
-
       <Box
         ref={listRef}
         className={styles.menuSearchModalScroll}
@@ -183,9 +179,7 @@ export const MenuSearchModal = () => {
                   categoryName={categoryName}
                   query={search}
                   quantity={quantityByProduct[item.id] ?? 0}
-                  disabled={!storeOpen}
                   onSelect={select}
-                  onAdd={add}
                 />
               ))}
             </Box>
@@ -214,16 +208,17 @@ export const MenuSearchModal = () => {
   )
 
   return (
-    <Modal
+    <Drawer
       open={isSearchOpen}
       onOpenChange={setSearchOpen}
-      ariaLabel="Buscar no cardápio"
-      size={isDesktop ? 'lg' : 'full'}
-      dismissible={false}
-      positionerClassName={styles.menuSearchModalPositioner}
+      placement="right"
+      size="26rem"
+      fullOnMobile
+      title={field}
       contentClassName={styles.menuSearchModalPanel}
       bodyClassName={styles.menuSearchModalBody}
-      body={<StoreTintScope>{body}</StoreTintScope>}
-    />
+    >
+      <StoreTintScope>{body}</StoreTintScope>
+    </Drawer>
   )
 }
