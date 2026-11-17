@@ -24,7 +24,7 @@
   @apply relative flex min-w-0 flex-1 items-stretch overflow-x-auto pr-6;
   height: var(--category-track-tall);
   scrollbar-width: none;
-  transition: height var(--duration-slow) var(--ease-out-soft);
+  transition: height var(--duration-slower) var(--ease-in-out);
 }
 
 .categoryNavCompact .track {
@@ -54,26 +54,24 @@
   @apply text-fg-muted;
   transition:
     color var(--duration-fast),
-    gap var(--duration-slow) var(--ease-out-soft),
-    padding var(--duration-slow) var(--ease-out-soft);
+    gap var(--duration-slower) var(--ease-in-out),
+    padding var(--duration-slower) var(--ease-in-out);
 }
 
 .categoryNavCompact .tile {
-  @apply gap-0 px-3 py-0;
+  @apply flex-row gap-1.5 px-3 py-0;
 }
 
-/* WHY: a ilustração encolhe junto com a trilha em vez de sumir de uma vez;
- * fica no DOM para a transição ter de onde partir */
+/* WHY: compacta a barra sem perder o ícone; ele vai para o lado do nome e
+ * só encolhe, então a troca de altura não tem nada sumindo à vista */
 .tileArt {
-  transform-origin: bottom center;
   transition:
-    height var(--duration-slow) var(--ease-out-soft),
-    opacity var(--duration-base) var(--ease-out-soft),
-    transform var(--duration-slow) var(--ease-out-soft);
+    width var(--duration-slower) var(--ease-in-out),
+    height var(--duration-slower) var(--ease-in-out);
 }
 
 .categoryNavCompact .tileArt {
-  @apply h-0 scale-50 opacity-0;
+  @apply size-6;
 }
 
 .tile:hover,
@@ -105,25 +103,18 @@
   @apply w-full whitespace-nowrap text-center text-xs font-semibold;
 }
 
-/* WHY: font-size animado recalcula o texto a cada quadro e anda aos degraus;
- * scale roda na GPU e fica liso */
-.tileLabel {
-  transition: scale var(--duration-slow) var(--ease-out-soft);
-}
-
-.categoryNavCompact .tileLabel {
-  scale: 1.15;
-}
-
 @media (prefers-reduced-motion: reduce) {
   .track,
   .tile,
-  .tileArt,
-  .tileLabel {
+  .tileArt {
     transition: none;
   }
 }
 
 .tileOn .tileLabel {
   @apply font-bold;
+}
+
+.categoryNavCompact .tileLabel {
+  @apply w-auto;
 }

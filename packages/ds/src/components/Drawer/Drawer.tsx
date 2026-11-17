@@ -43,6 +43,12 @@ type DrawerProps = {
    * keep it open — for a drawer with inner pages, where Escape steps back.
    */
   onEscapeKeyDown?: (event: KeyboardEvent) => void
+  /**
+   * Element that takes focus when the drawer opens. Defaults to the first
+   * focusable one — point it elsewhere when that is a text field that would
+   * pop the on-screen keyboard on touch.
+   */
+  initialFocusEl?: () => HTMLElement | null
 }
 
 const alignByPlacement: Record<DrawerPlacement, string> = {
@@ -79,6 +85,7 @@ export function Drawer({
   bodyClassName,
   fullOnMobile = false,
   onEscapeKeyDown,
+  initialFocusEl,
 }: DrawerProps) {
   const { handleDragStart, handleDragMove, handleDragEnd } =
     useDrawerDrag(onOpenChange)
@@ -96,6 +103,7 @@ export function Drawer({
       open={open}
       onOpenChange={({ open: o }) => onOpenChange(o)}
       onEscapeKeyDown={onEscapeKeyDown}
+      initialFocusEl={initialFocusEl}
       lazyMount
       unmountOnExit
     >

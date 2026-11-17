@@ -64,7 +64,7 @@ describe('CategoryNav', () => {
     expect(container.querySelector('img')).toBeInTheDocument()
   })
 
-  it('keeps the illustration in the DOM to animate it out when compact', () => {
+  it('keeps the illustration next to the label when compact', () => {
     vi.mocked(useStorefrontFacade).mockReturnValue({
       visibleSections: [{ id: 'burgers', name: 'Hambúrgueres' }],
       activeId: null,

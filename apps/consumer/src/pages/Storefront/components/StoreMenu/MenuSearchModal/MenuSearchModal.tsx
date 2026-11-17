@@ -44,7 +44,8 @@ export const MenuSearchModal = () => {
   /* WHY: `autoFocus` dispara com a gaveta ainda fora da tela; o navegador rola
      até o campo e a entrada pisca vindo do lado errado. O foco vem depois do
      primeiro quadro e sem rolagem. No toque o foco abriria o teclado por cima
-     das categorias, então lá a pessoa toca no campo quando quiser. */
+     das categorias, então lá a pessoa toca no campo quando quiser — e a gaveta
+     abre com o foco na lista, senão o Drawer focaria o campo sozinho. */
   useEffect(() => {
     if (!isSearchOpen) return
     if (!window.matchMedia('(hover: hover) and (pointer: fine)').matches) return
@@ -133,6 +134,7 @@ export const MenuSearchModal = () => {
     <>
       <Box
         ref={listRef}
+        tabIndex={-1}
         className={styles.menuSearchModalScroll}
         onKeyDown={handleListKeyDown}
       >
@@ -225,6 +227,7 @@ export const MenuSearchModal = () => {
       placement="right"
       size="26rem"
       fullOnMobile
+      initialFocusEl={() => listRef.current}
       title={field}
       contentClassName={styles.menuSearchModalPanel}
       bodyClassName={styles.menuSearchModalBody}
