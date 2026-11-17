@@ -71,7 +71,7 @@ describe(MenuPreview.name, () => {
     expect(screen.getByText(/^R\$\s49,90$/)).toBeInTheDocument()
   })
 
-  it('asks for an image when the campaign goes to the carousel', () => {
+  it('explains the generated art when the carousel has no image', () => {
     renderPreview({
       campaignType: 'gift',
       giftProductId: 'coke',
@@ -79,7 +79,7 @@ describe(MenuPreview.name, () => {
     })
 
     expect(
-      screen.getByText('Envie uma imagem para a campanha entrar no carrossel.')
+      screen.getByText('Sem imagem, o nino monta a arte com os dados da promoção.')
     ).toBeInTheDocument()
   })
 })

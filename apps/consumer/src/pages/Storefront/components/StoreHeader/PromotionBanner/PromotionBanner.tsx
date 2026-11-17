@@ -17,7 +17,7 @@ import styles from './PromotionBanner.module.css'
 
 export const PromotionBanner = () => {
   const {
-    bannerOffers: imageOffers,
+    bannerOffers: carouselOffers,
     freeDelivery,
     discountOffer,
     giftOffer,
@@ -32,11 +32,14 @@ export const PromotionBanner = () => {
   const [isFocused, setIsFocused] = useState(false)
   const [isVisible, setIsVisible] = useState(true)
 
-  const imageIds = new Set(imageOffers.map(({ id }) => id))
-  const artOffers = [freeDelivery, discountOffer, giftOffer].filter(
-    (offer): offer is PublicPromotion => !!offer && !imageIds.has(offer.id)
+  const carouselIds = new Set(carouselOffers.map(({ id }) => id))
+  const imageIds = new Set(
+    carouselOffers.filter(({ imageUrl }) => !!imageUrl).map(({ id }) => id)
   )
-  const bannerOffers = [...imageOffers, ...artOffers]
+  const artOffers = [freeDelivery, discountOffer, giftOffer].filter(
+    (offer): offer is PublicPromotion => !!offer && !carouselIds.has(offer.id)
+  )
+  const bannerOffers = [...carouselOffers, ...artOffers]
 
   const hasMany = bannerOffers.length > 1
 

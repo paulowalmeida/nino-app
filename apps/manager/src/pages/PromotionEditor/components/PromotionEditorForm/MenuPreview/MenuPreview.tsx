@@ -135,7 +135,7 @@ export const MenuPreview = () => {
           ) : (
             <Box className={styles.bannerEmpty}>
               <Text className={styles.hint}>
-                Envie uma imagem para a campanha entrar no carrossel.
+                Sem imagem, o nino monta a arte com os dados da promoção.
               </Text>
             </Box>
           )}

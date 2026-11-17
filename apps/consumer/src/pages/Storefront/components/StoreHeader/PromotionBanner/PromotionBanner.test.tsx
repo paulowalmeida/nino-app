@@ -48,6 +48,23 @@ describe('PromotionBanner', () => {
     expect(screen.getByText('Frete grátis')).toBeInTheDocument()
   })
 
+  it('draws the art for a carousel campaign sent without an image', () => {
+    const { container } = renderBanner([
+      {
+        id: 'c1',
+        type: 'FIXED_DISCOUNT',
+        value: 10,
+        name: 'Dez off',
+        imageUrl: null,
+        showInBanner: true,
+      },
+    ])
+
+    expect(container.querySelector('img')).not.toBeInTheDocument()
+    expect(screen.queryByLabelText('Abrir Dez off')).not.toBeInTheDocument()
+    expect(container.querySelector('button')).toBeInTheDocument()
+  })
+
   it('opens the promotion detail when an image offer is not a package', () => {
     const setFocusedPromotionId = vi.fn()
     renderBanner(promotionBannerMock.offers.slice(1), { setFocusedPromotionId })

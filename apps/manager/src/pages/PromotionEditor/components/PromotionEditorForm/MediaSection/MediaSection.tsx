@@ -21,7 +21,7 @@ import styles from './MediaSection.module.css'
 const CAMPAIGN_BANNER_ASPECT_RATIO = 16 / 7
 
 export const MediaSection = () => {
-  const { control, getValues, setValue } = useFormContext<PromotionFormValues>()
+  const { control, setValue } = useFormContext<PromotionFormValues>()
   const [chosenFile, setChosenFile] = useState<File | null>(null)
   const [dropzoneKey, setDropzoneKey] = useState(0)
   const imageUrl = useWatch({ control, name: 'imageUrl' })
@@ -99,17 +99,10 @@ export const MediaSection = () => {
         <Controller
           name="showInBanner"
           control={control}
-          rules={{
-            validate: (show) =>
-              !show ||
-              !!getValues('imageFile') ||
-              (!!getValues('imageUrl') && !getValues('removeImage')) ||
-              'Envie uma imagem para colocar a campanha no carrossel',
-          }}
           render={({ field }) => (
             <FormField
               label="Mostrar no carrossel do cardápio"
-              helperText="A campanha entra junto do banner da loja."
+              helperText="A campanha entra junto do banner da loja. Sem imagem, o nino monta a arte com os dados da promoção."
               orientation="horizontal"
             >
               <Switch

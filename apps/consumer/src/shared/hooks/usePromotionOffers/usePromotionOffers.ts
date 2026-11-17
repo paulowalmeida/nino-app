@@ -37,9 +37,9 @@ export const usePromotionOffers = (unitId: string | undefined) => {
       ({ type, code }) => type === 'GIFT' && !code
     ),
     packageOffers: (query.data ?? []).filter(isPackagePromotion),
-    bannerOffers: (query.data ?? []).filter(
-      ({ imageUrl, showInBanner }) => showInBanner && !!imageUrl
-    ),
+    /* WHY: sem imagem a campanha continua no carrossel; a vitrine monta a
+       arte dela com os dados da promoção, como no frete grátis */
+    bannerOffers: (query.data ?? []).filter(({ showInBanner }) => showInBanner),
     couponSuggestions: couponSuggestions(query.data),
     refetchOffers: query.refetch,
   }
