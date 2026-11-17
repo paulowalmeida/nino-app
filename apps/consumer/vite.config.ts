@@ -78,10 +78,6 @@ export default defineConfig({
         __dirname,
         'src/pages/Checkout/types/checkout'
       ),
-      '@custom_types/delivery-zone': resolve(
-        __dirname,
-        'src/pages/Checkout/types/delivery-zone'
-      ),
       '@custom_types/menu': resolve(
         __dirname,
         'src/pages/Storefront/types/menu'

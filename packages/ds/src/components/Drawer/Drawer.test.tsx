@@ -142,4 +142,33 @@ describe(Drawer.name, () => {
     expect(onOpenChange).not.toHaveBeenCalled()
     vi.useRealTimers()
   })
+  it('keeps the width in a CSS variable when it fills the screen on mobile', () => {
+    render(
+      <Drawer open onOpenChange={vi.fn()} title="Painel" size="26rem" fullOnMobile>
+        <p>x</p>
+      </Drawer>
+    )
+    const content = screen.getByRole('dialog')
+
+    expect(content.style.getPropertyValue('--drawer-size')).toBe('26rem')
+    expect(content.style.width).toBe('')
+  })
+
+  it('lets the owner keep the drawer open when Escape is pressed', async () => {
+    const onOpenChange = vi.fn()
+    render(
+      <Drawer
+        open
+        onOpenChange={onOpenChange}
+        title="Painel"
+        onEscapeKeyDown={(event) => event.preventDefault()}
+      >
+        <p>x</p>
+      </Drawer>
+    )
+
+    await userEvent.keyboard('{Escape}')
+
+    expect(onOpenChange).not.toHaveBeenCalled()
+  })
 })

@@ -1,0 +1,34 @@
+@reference "@nino/ds/globals.css";
+
+.art {
+  @apply flex h-full w-full items-center gap-3 p-4 text-left sm:gap-4 sm:p-5;
+  @apply transition-colors focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-brand;
+  --art-tint: var(--store-tint, var(--color-brand));
+  background-color: color-mix(in srgb, var(--art-tint) 12%, white);
+}
+
+.art:hover {
+  background-color: color-mix(in srgb, var(--art-tint) 18%, white);
+}
+
+.badge {
+  @apply flex size-12 shrink-0 sm:size-14 items-center justify-center rounded-3 text-fg-on-brand;
+  background-color: var(--art-tint);
+}
+
+.text {
+  @apply flex min-w-0 flex-col gap-1;
+}
+
+.benefit {
+  @apply font-display text-xl font-extrabold sm:text-2xl leading-tight text-balance text-fg-strong;
+}
+
+.detail {
+  @apply text-sm leading-snug text-pretty text-fg-muted;
+}
+
+/* WHY: frete grátis fala em verde, como no carrinho e no recibo. */
+.freeDelivery {
+  --art-tint: var(--color-success);
+}

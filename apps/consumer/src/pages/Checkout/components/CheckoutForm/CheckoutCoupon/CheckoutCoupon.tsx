@@ -1,142 +1,110 @@
-import { useState } from 'react'
-import type { KeyboardEvent } from 'react'
+import { useEffect, useState } from 'react'
 
 import { Box } from '@nino/ds/components/Box'
 import { Button } from '@nino/ds/components/Button'
-import { Collapsible } from '@nino/ds/components/Collapsible'
 import { Heading } from '@nino/ds/components/Heading'
 import { Icon } from '@nino/ds/components/Icon'
-import { Input } from '@nino/ds/components/Input'
 import { Text } from '@nino/ds/components/Text'
 import { useCheckoutFacade } from '@pages/checkout/facades/useCheckoutFacade/useCheckoutFacade'
 import type { CheckoutFacade } from '@pages/checkout/facades/useCheckoutFacade/useCheckoutFacade'
-import type { PublicPromotion } from '@custom_types/promotion/public-promotion.type'
-import { promotionLabel } from '@utils/promotion-label/promotion-label'
 
-import { DisclosureTrigger } from '../DisclosureTrigger/DisclosureTrigger'
+import { CouponCard } from '@shared/components/CouponCard/CouponCard'
+import { CheckoutCouponsDrawer } from './CheckoutCouponsDrawer/CheckoutCouponsDrawer'
 
 import styles from './CheckoutCoupon.module.css'
 
-// WHY: desconto sem código se identifica pelo nome que a loja deu a ele.
-const couponTitle = ({ code, name }: PublicPromotion) =>
-  code ? `Cupom ${code}` : name
+const availableSummary = (count: number) => {
+  if (count === 0) return 'Nenhum cupom vale para este pedido'
+  return count === 1 ? '1 cupom disponível' : `${count} cupons disponíveis`
+}
 
 export const CheckoutCoupon = ({ checkout }: { checkout?: CheckoutFacade }) => {
   const {
     coupon,
     isCouponEligible,
+    couponBlockerOf,
     isDelivery,
     couponSuggestions,
-    applyCouponCode,
-    applyCoupon,
     removeCoupon,
-    isApplyingCoupon,
-    couponError,
   } = useCheckoutFacade(checkout)
-  const [code, setCode] = useState('')
+  const [isDrawerOpen, setDrawerOpen] = useState(false)
 
-  const submitCode = () => {
-    if (code.trim()) applyCouponCode(code)
-  }
+  /* WHY: o cupom digitado chega depois da validação na API; quando ele entra
+   * no pedido, o painel já cumpriu o papel. */
+  const couponId = coupon?.id
+  useEffect(() => {
+    if (couponId) setDrawerOpen(false)
+  }, [couponId])
 
-  /* WHY: o campo vive dentro do formulário do pedido; Enter aqui aplica o
-   * cupom em vez de confirmar o pedido. */
-  const handleKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
-    if (event.key !== 'Enter') return
-    event.preventDefault()
-    submitCode()
-  }
-
-  if (coupon) {
-    return (
-      <Box direction="row" className={styles.couponApplied} role="status">
-        <Icon name="tag" size="sm" className={styles.couponIcon} />
-        <Box className={styles.couponText}>
-          <Text as="span" className={styles.couponCode}>
-            {couponTitle(coupon)}
-          </Text>
-          <Text as="span" className={styles.couponLabel}>
-            {promotionLabel(coupon)}
-          </Text>
-          {!isCouponEligible && (
-            <Text as="span" className={styles.couponNote}>
-              {isDelivery
-                ? 'Ainda não vale para este pedido: confira o pedido mínimo e o endereço.'
-                : 'Ainda não vale para este pedido: confira o pedido mínimo e a retirada.'}
-            </Text>
-          )}
-        </Box>
-        <Button type="button" variant="ghost" size="sm" onClick={removeCoupon}>
-          Remover
-        </Button>
-      </Box>
-    )
-  }
+  const availableCount = couponSuggestions.filter(
+    (promotion) => !couponBlockerOf(promotion)
+  ).length
+  const appliedBlocker =
+    coupon && !isCouponEligible ? couponBlockerOf(coupon) : null
+  const appliedNote =
+    coupon && !isCouponEligible && !appliedBlocker
+      ? isDelivery
+        ? 'Ainda não vale para este pedido: confira o endereço.'
+        : 'Ainda não vale para este pedido: confira a retirada.'
+      : undefined
 
   return (
     <Box className={styles.checkoutCoupon}>
-      {couponSuggestions.length > 0 && (
-        <Heading level={3} size="sm" className={styles.couponHeading}>
-          Cupons e descontos
-        </Heading>
-      )}
-      {couponSuggestions.map((suggestion) => (
-        <Box
-          key={suggestion.id}
-          direction="row"
-          className={styles.couponSuggestion}
+      <Heading level={3} size="sm" className={styles.couponHeading}>
+        Cupons e descontos
+      </Heading>
+
+      {coupon ? (
+        <Box role="status">
+          <CouponCard
+            promotion={coupon}
+            blocker={appliedBlocker}
+            note={appliedNote}
+          >
+            <Box direction="row" className={styles.appliedActions}>
+              <Button
+                type="button"
+                variant="ghost"
+                size="sm"
+                onClick={() => setDrawerOpen(true)}
+              >
+                Trocar
+              </Button>
+              <Button
+                type="button"
+                variant="ghost"
+                size="sm"
+                onClick={removeCoupon}
+              >
+                Remover
+              </Button>
+            </Box>
+          </CouponCard>
+        </Box>
+      ) : (
+        <button
+          type="button"
+          className={styles.couponsEntry}
+          onClick={() => setDrawerOpen(true)}
         >
-          <Icon name="tag" size="sm" className={styles.couponIcon} />
-          <Box className={styles.couponText}>
-            <Text as="span" className={styles.couponCode}>
-              {couponTitle(suggestion)}
+          <Icon name="tag" size="sm" className={styles.entryIcon} />
+          <Box className={styles.entryText}>
+            <Text as="span" className={styles.entryTitle}>
+              Ver cupons
             </Text>
-            <Text as="span" className={styles.couponLabel}>
-              {promotionLabel(suggestion)}
+            <Text as="span" className={styles.entrySummary}>
+              {availableSummary(availableCount)}
             </Text>
           </Box>
-          <Button
-            type="button"
-            variant="secondary"
-            size="sm"
-            onClick={() => applyCoupon(suggestion)}
-          >
-            Aplicar
-          </Button>
-        </Box>
-      ))}
+          <Icon name="chevron-right" size="sm" className={styles.entryIcon} />
+        </button>
+      )}
 
-      <Collapsible
-        className={styles.couponDisclosure}
-        trigger={<DisclosureTrigger>Tenho um cupom</DisclosureTrigger>}
-      >
-        <Box direction="row" className={styles.couponForm}>
-          <Input
-            value={code}
-            placeholder="Código do cupom"
-            aria-label="Código do cupom"
-            autoCapitalize="characters"
-            error={!!couponError}
-            onKeyDown={handleKeyDown}
-            onChange={(event) =>
-              setCode(event.target.value.toUpperCase().replace(/\s/g, ''))
-            }
-          />
-          <Button
-            type="button"
-            variant="secondary"
-            loading={isApplyingCoupon}
-            onClick={submitCode}
-          >
-            Aplicar
-          </Button>
-        </Box>
-        {couponError && (
-          <Text role="alert" className={styles.couponError}>
-            {couponError}
-          </Text>
-        )}
-      </Collapsible>
+      <CheckoutCouponsDrawer
+        checkout={checkout}
+        open={isDrawerOpen}
+        onOpenChange={setDrawerOpen}
+      />
     </Box>
   )
 }

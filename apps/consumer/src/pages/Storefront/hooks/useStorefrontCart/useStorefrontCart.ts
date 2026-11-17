@@ -8,6 +8,7 @@ import { useCartStore } from '@shared/states/cart/cart.state'
 export const useStorefrontCart = (unitId: string | undefined) => {
   const cart = useCartSummary()
   const setPackage = useCartStore((state) => state.setPackage)
+  const updateLine = useCartStore((state) => state.updateLine)
   const ownsCart = !cart.unitId || cart.unitId === unitId
 
   const addToCart = (item: MenuItem, quantity = 1, choices?: ProductChoices) =>
@@ -21,6 +22,16 @@ export const useStorefrontCart = (unitId: string | undefined) => {
     if (unitId) cart.replace(unitId, cartItem(item, choices), quantity)
   }
 
+  const updateCartLine = (
+    lineId: string,
+    item: MenuItem,
+    quantity: number,
+    choices?: ProductChoices
+  ) =>
+    unitId
+      ? updateLine(unitId, lineId, cartItem(item, choices), quantity)
+      : false
+
   const addPackageToCart = (item: Parameters<typeof setPackage>[1]) =>
     unitId ? setPackage(unitId, item) : false
 
@@ -32,6 +43,7 @@ export const useStorefrontCart = (unitId: string | undefined) => {
     cartTotal: ownsCart ? cart.total : 0,
     addToCart,
     replaceCart,
+    updateCartLine,
     addPackageToCart,
     incrementCartLine: cart.increment,
     decrementCartLine: cart.decrement,

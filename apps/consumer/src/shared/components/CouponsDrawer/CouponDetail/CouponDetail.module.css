@@ -1,0 +1,109 @@
+@reference "@nino/ds/globals.css";
+
+.detail {
+  @apply flex h-full min-h-0 flex-col;
+}
+
+.scroll {
+  @apply flex min-h-0 flex-1 flex-col gap-5 overflow-y-auto px-6 pb-6 pt-1;
+}
+
+/* WHY: o voltar encosta no canto de cima à esquerda, alinhado ao texto, e
+ * mantém a área de toque de 44px sem empurrar o conteúdo para a direita. */
+.backButton {
+  @apply -ml-3 min-h-11 self-start text-fg-default;
+}
+
+.hero {
+  @apply flex flex-col gap-2 rounded-4 bg-brand-soft px-5 py-5;
+}
+
+.heroIcon {
+  @apply mb-1 flex h-10 w-10 items-center justify-center rounded-full bg-surface-page text-brand-strong;
+}
+
+.benefit {
+  @apply text-balance text-brand-strong;
+}
+
+.name {
+  @apply text-sm text-fg-default;
+}
+
+.statusAvailable,
+.statusBlocked {
+  @apply -mb-2 flex items-center gap-2 text-sm font-semibold;
+}
+
+.statusAvailable {
+  @apply text-success;
+}
+
+.statusBlocked {
+  @apply text-fg-strong;
+}
+
+.statusText {
+  @apply min-w-0;
+}
+
+.codeBlock {
+  @apply flex flex-col gap-1.5;
+}
+
+.sectionHint {
+  @apply text-xs font-semibold text-fg-muted;
+}
+
+.section {
+  @apply flex flex-col gap-3;
+}
+
+.steps {
+  @apply flex flex-col gap-3;
+  counter-reset: step;
+}
+
+.step {
+  @apply flex items-start gap-3 text-sm leading-snug text-fg-default;
+  counter-increment: step;
+}
+
+.step::before {
+  content: counter(step);
+  @apply flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-brand-soft;
+  @apply text-xs font-bold text-brand-strong;
+}
+
+.conditions {
+  @apply flex flex-col;
+}
+
+.rowIcon {
+  @apply mt-0.5 shrink-0 text-fg-muted;
+}
+
+.rowText {
+  @apply flex min-w-0 flex-1 flex-col gap-0.5;
+}
+
+.rowLabel {
+  @apply text-xs text-fg-muted;
+}
+
+.rowValue {
+  @apply break-words text-sm font-semibold text-fg-strong;
+}
+
+.remaining {
+  @apply text-xs font-semibold text-brand-strong;
+}
+
+.footer {
+  @apply flex shrink-0 flex-col gap-2 border-t border-border bg-surface-page px-6 pt-3;
+  padding-bottom: max(0.75rem, env(safe-area-inset-bottom));
+}
+
+.caption {
+  @apply text-center text-xs text-fg-muted;
+}

@@ -44,10 +44,13 @@ export const ProductDetailShell = ({
       open
       onOpenChange={handleOpenChange}
       ariaLabel={ariaLabel}
+      size={isDesktop ? 'lg' : 'full'}
       dismissible={isDesktop}
       positionerClassName={styles.positioner}
       contentClassName={styles.productDetailShellPanel}
       bodyClassName={styles.productDetailShellBody}
+      footerClassName={styles.productDetailShellFooter}
+      footer={footer}
       body={
         <Box className={styles.productDetailShellGrid}>
           <Box className={styles.productDetailShellMedia}>
@@ -68,9 +71,6 @@ export const ProductDetailShell = ({
             {stickyDetails}
             {details}
           </Box>
-          {footer && (
-            <Box className={styles.productDetailShellFooter}>{footer}</Box>
-          )}
         </Box>
       }
     />

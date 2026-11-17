@@ -17,11 +17,13 @@ import { selectChoice, toggleChoice } from './operations/selection/selection'
 
 export const useProductChoicesStore = create<ProductChoicesState>((set) => ({
   productId: null,
+  editingLineId: null,
   selections: {},
   quantity: 1,
   notes: '',
   isReplacementPending: false,
-  openProduct: (productId) => openProductChoices(set, productId),
+  openProduct: (productId, editing) =>
+    openProductChoices(set, productId, editing),
   selectChoice: (groupId, optionId) => selectChoice(set, groupId, optionId),
   toggleChoice: (groupId, optionId, limit) =>
     toggleChoice(set, groupId, optionId, limit),

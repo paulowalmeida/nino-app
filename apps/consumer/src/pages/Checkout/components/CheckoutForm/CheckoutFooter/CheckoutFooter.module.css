@@ -1,41 +1,88 @@
 @reference "@nino/ds/globals.css";
 
+/* WHY: fixed, não sticky — o pai (workspace) tem a altura do conteúdo, então
+   sticky só prende quando o conteúdo passa da viewport. O workspace reserva
+   o espaço com padding-bottom. */
 .tearBar {
-  @apply sticky bottom-0 z-sticky order-4 flex flex-col border-t;
-  @apply border-border bg-surface-raised px-4 py-2 sm:px-6;
-  padding-bottom: max(0.75rem, env(safe-area-inset-bottom));
-  box-shadow: 0 -12px 28px -22px
+  @apply fixed inset-x-0 bottom-0 z-sticky flex flex-col gap-2;
+  @apply border-t border-border bg-surface-raised;
+  @apply px-4 pt-2 sm:px-6;
+  padding-bottom: max(0.5rem, env(safe-area-inset-bottom));
+  box-shadow: 0 -8px 20px -16px
     color-mix(in srgb, var(--color-fg-strong) 40%, transparent);
 }
 
 .totals {
-  @apply flex items-baseline justify-between;
+  @apply flex min-w-0 items-baseline justify-between leading-tight;
 }
 
 .checkoutFooterLabel {
-  @apply text-sm font-semibold text-fg-muted;
+  @apply text-xs font-semibold text-fg-muted;
 }
 
 .checkoutFooterTotal {
-  @apply font-display text-2xl font-extrabold text-fg-strong;
+  @apply font-display text-lg font-extrabold text-fg-strong;
   font-variant-numeric: tabular-nums;
-}
-
-.submit {
-  @apply h-12 flex-1 text-base;
 }
 
 .checkoutFooterActions {
   @apply w-full;
 }
 
+.submit {
+  @apply h-11 flex-1 px-5 text-sm;
+}
+
 .back {
-  @apply h-12 px-5 text-base;
+  @apply h-11 px-4 text-sm;
+}
+
+/* WHY: >= 400px total e botão cabem lado a lado; abaixo, empilham para o
+ * total não ser esmagado pelo botão. */
+@media (min-width: 400px) {
+  .tearBar {
+    @apply flex-row items-center justify-between gap-3;
+  }
+
+  .totals {
+    @apply flex-col items-start;
+  }
+
+  .checkoutFooterActions {
+    @apply w-auto shrink-0;
+  }
+
+  .submit {
+    @apply flex-none;
+  }
 }
 
 @media (min-width: 1024px) {
   .tearBar {
-    @apply static gap-3 rounded-4 border border-border p-4 shadow-none;
+    @apply static flex-col items-stretch justify-start gap-3 rounded-4 border p-4 shadow-none;
   }
 
+  .totals {
+    @apply flex-row items-baseline justify-between;
+  }
+
+  .checkoutFooterLabel {
+    @apply text-sm;
+  }
+
+  .checkoutFooterTotal {
+    @apply text-2xl;
+  }
+
+  .checkoutFooterActions {
+    @apply w-full shrink;
+  }
+
+  .submit {
+    @apply h-12 flex-1 text-base;
+  }
+
+  .back {
+    @apply h-12 px-5 text-base;
+  }
 }

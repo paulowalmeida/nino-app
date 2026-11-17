@@ -30,9 +30,6 @@
       "@constants/*": ["src/shared/constants/*"],
       "@custom_types/account/*": ["src/shared/types/account/*"],
       "@custom_types/checkout/*": ["src/pages/Checkout/types/checkout/*"],
-      "@custom_types/delivery-zone/*": [
-        "src/pages/Checkout/types/delivery-zone/*"
-      ],
       "@custom_types/menu/*": ["src/pages/Storefront/types/menu/*"],
       "@custom_types/*": ["src/shared/types/*"],
       "@styles/*": ["src/styles/*"],

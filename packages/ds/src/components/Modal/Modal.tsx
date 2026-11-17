@@ -17,7 +17,7 @@ type ModalProps = {
   footer?: ReactNode
   /** Overrides the footer wrapper — e.g. controlling its layout in a full-screen dialog */
   footerClassName?: string
-  /** Maximum width. Default: `md` */
+  /** Maximum width; `full` fills the whole screen edge to edge. Default: `md` */
   size?: ModalSize
   /**
    * Name for screen readers. Required when there is no header, and wins over
@@ -49,6 +49,7 @@ const sizeClasses: Record<ModalSize, string> = {
   sm: styles.sizeSmall,
   md: styles.sizeMedium,
   lg: styles.sizeLarge,
+  full: styles.sizeFull,
 }
 
 /**
@@ -109,7 +110,11 @@ export function Modal({
           )}
         />
         <ArkDialog.Positioner
-          className={mergeClasses(styles.positioner, positionerClassName)}
+          className={mergeClasses(
+            styles.positioner,
+            size === 'full' && styles.positionerFull,
+            positionerClassName
+          )}
         >
           <ArkDialog.Content
             aria-label={ariaLabel}

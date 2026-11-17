@@ -62,7 +62,7 @@ describe(Modal.name, () => {
     ).toBeInTheDocument()
   })
 
-  it.each(['sm', 'md', 'lg'] as const)(
+  it.each(['sm', 'md', 'lg', 'full'] as const)(
     'renders size %s without errors',
     (size) => {
       render(<Modal open size={size} body={<span>Corpo</span>} />)

@@ -8,13 +8,18 @@ import { productDetailShellMock } from './ProductDetailShell.mock'
 vi.mock('@nino/ds/components/Modal', () => ({
   Modal: ({
     body,
+    footer,
+    size,
     dismissible,
   }: {
     body?: ReactNode
+    footer?: ReactNode
+    size?: string
     dismissible?: boolean
   }) => (
-    <div data-testid="modal" data-dismissible={dismissible}>
+    <div data-testid="modal" data-dismissible={dismissible} data-size={size}>
       {body}
+      {footer}
     </div>
   ),
 }))
@@ -69,7 +74,9 @@ describe('ProductDetailShell', () => {
       />
     )
 
-    expect(screen.getByText(productDetailShellMock.ariaLabel)).toBeInTheDocument()
+    expect(
+      screen.getByText(productDetailShellMock.ariaLabel)
+    ).toBeInTheDocument()
     expect(screen.getByText(productDetailShellMock.details)).toBeInTheDocument()
   })
 
@@ -126,5 +133,46 @@ describe('ProductDetailShell', () => {
     )
 
     expect(vi.mocked(window.scrollTo)).toHaveBeenCalledWith(0, 0)
+  })
+
+  it('pins the footer outside the scrolling body', () => {
+    render(
+      <ProductDetailShell
+        isDesktop={false}
+        ariaLabel={productDetailShellMock.ariaLabel}
+        onClose={vi.fn()}
+        media={null}
+        details={<p>{productDetailShellMock.details}</p>}
+        footer={<p>{productDetailShellMock.footer}</p>}
+      />
+    )
+
+    expect(screen.getByText(productDetailShellMock.footer)).toBeInTheDocument()
+  })
+
+  it('fills the whole screen on mobile and uses the large panel on desktop', () => {
+    const { rerender } = render(
+      <ProductDetailShell
+        isDesktop={false}
+        ariaLabel={productDetailShellMock.ariaLabel}
+        onClose={vi.fn()}
+        media={null}
+        details={<p>{productDetailShellMock.details}</p>}
+      />
+    )
+
+    expect(screen.getByTestId('modal')).toHaveAttribute('data-size', 'full')
+
+    rerender(
+      <ProductDetailShell
+        isDesktop
+        ariaLabel={productDetailShellMock.ariaLabel}
+        onClose={vi.fn()}
+        media={null}
+        details={<p>{productDetailShellMock.details}</p>}
+      />
+    )
+
+    expect(screen.getByTestId('modal')).toHaveAttribute('data-size', 'lg')
   })
 })

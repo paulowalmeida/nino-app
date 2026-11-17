@@ -1,0 +1,38 @@
+@reference "@nino/ds/globals.css";
+
+/* WHY: o corpo do Drawer vira só moldura; cada página rola e prende o
+ * próprio rodapé, então o padding e o scroll saem daqui. */
+.viewportBody {
+  @apply flex min-h-0 flex-col overflow-hidden p-0;
+}
+
+.viewport {
+  @apply min-h-0 flex-1 overflow-hidden;
+}
+
+/* WHY: as duas páginas lado a lado; deslizar a esteira troca de página sem
+ * remontar a lista (o scroll dela fica onde estava). */
+.trackList,
+.trackDetail {
+  @apply flex h-full;
+  transition: translate var(--duration-slow) var(--ease-out-soft);
+}
+
+.trackList {
+  translate: 0 0;
+}
+
+.trackDetail {
+  translate: -100% 0;
+}
+
+.page {
+  @apply h-full w-full shrink-0 overflow-y-auto;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .trackList,
+  .trackDetail {
+    transition: none;
+  }
+}

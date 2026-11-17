@@ -13,6 +13,10 @@
   @apply fixed inset-0 z-modal flex items-center justify-center p-4;
 }
 
+.positionerFull {
+  @apply p-0;
+}
+
 .closeButton {
   @apply absolute right-2 top-2 flex size-11 items-center justify-center;
   @apply cursor-pointer rounded-2 text-fg-faint;
@@ -46,4 +50,8 @@
 
 .sizeLarge {
   @apply w-full max-w-lg;
+}
+
+.sizeFull {
+  @apply h-dvh w-screen max-w-none rounded-none;
 }

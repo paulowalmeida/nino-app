@@ -92,4 +92,22 @@ describe('useCartStore', () => {
     expect(useCartStore.getState().unitId).toBeNull()
     expect(useCartStore.getState().lines).toEqual({})
   })
+
+  it('updates a line in place and clears the unit when quantity is zero', () => {
+    const { unitId, otherUnitId, item } = cartStateMock
+    useCartStore.getState().add(unitId, item, 2)
+
+    expect(
+      useCartStore.getState().updateLine(otherUnitId, item.id, item, 1)
+    ).toBe(false)
+    expect(useCartStore.getState().updateLine(unitId, item.id, item, 5)).toBe(
+      true
+    )
+    expect(useCartStore.getState().lines[item.id].quantity).toBe(5)
+
+    useCartStore.getState().updateLine(unitId, item.id, item, 0)
+
+    expect(useCartStore.getState().lines).toEqual({})
+    expect(useCartStore.getState().unitId).toBeNull()
+  })
 })

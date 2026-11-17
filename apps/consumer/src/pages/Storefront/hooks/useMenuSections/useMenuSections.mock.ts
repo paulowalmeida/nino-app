@@ -1,1 +1,1 @@
-export const menuSectionsMock = { search: 'burger' }
+export const menuSectionsMock = { sections: [] }

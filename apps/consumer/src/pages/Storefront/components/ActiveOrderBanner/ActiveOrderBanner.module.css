@@ -1,31 +1,30 @@
 @reference "@nino/ds/globals.css";
 
+/* WHY: pedido ativo é estado transitório, não conteúdo da vitrine: fica numa
+ * barra fixa logo acima da tab bar para o cardápio subir na tela. A varredura
+ * na etapa atual (do OrderRail) é o único movimento. De md em diante ele tem
+ * teto e centraliza; no desktop não há tab bar, então desce até a borda.
+ */
 .activeOrderBanner {
-  @apply relative mx-5 mt-4 flex items-center gap-3.5 overflow-hidden;
-  @apply rounded-2 border border-brand-soft bg-black/[0.07] px-4 pb-4 pt-3;
-  @apply shadow-sm transition-shadow lg:mx-9;
-  @apply hover:shadow-md;
+  @apply fixed inset-x-3 z-nav flex flex-col gap-2.5 rounded-3 border;
+  @apply border-border bg-surface-raised p-3 shadow-lg transition-shadow;
+  @apply focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand;
+  @apply md:inset-x-auto md:left-1/2 md:w-full md:max-w-xl md:-translate-x-1/2;
+  bottom: calc(4.5rem + env(safe-area-inset-bottom) + 0.5rem);
 }
 
-.activeOrderBannerIcon {
-  @apply flex h-10 w-10 shrink-0 items-center justify-center rounded-full;
-  @apply bg-surface-page text-lg leading-none;
-  box-shadow:
-    inset 0 0 0 2px var(--color-brand),
-    0 0 0 4px var(--color-brand-soft);
+@media (min-width: 1024px) {
+  .activeOrderBanner {
+    bottom: 1rem;
+  }
 }
 
-.activeOrderBannerBody {
-  @apply min-w-0 flex-1;
+.top {
+  @apply flex items-center gap-3;
 }
 
-.flag {
-  @apply flex items-center gap-2 text-2xs font-bold uppercase;
-  @apply tracking-[0.14em] text-brand-strong;
-}
-
-.flagDot {
-  @apply h-1.5 w-1.5 shrink-0 rounded-full bg-success;
+.liveDot {
+  @apply size-2 shrink-0 rounded-full bg-success;
   animation: banner-pulse 2s ease-in-out infinite;
 }
 
@@ -36,12 +35,12 @@
 }
 
 .step {
-  @apply mt-0.5 line-clamp-2 font-display text-base font-extrabold;
-  @apply leading-tight text-fg-muted;
+  @apply min-w-0 flex-1 line-clamp-2 font-display text-base font-extrabold;
+  @apply leading-tight text-fg-strong;
 }
 
 .eta {
-  @apply flex shrink-0 items-baseline gap-1 text-fg-muted;
+  @apply flex shrink-0 items-baseline gap-1 text-brand-strong;
   font-variant-numeric: tabular-nums;
 }
 
@@ -53,8 +52,12 @@
   @apply text-xs font-bold text-fg-subtle;
 }
 
+.chevron {
+  @apply shrink-0 text-fg-muted;
+}
+
 @media (prefers-reduced-motion: reduce) {
-  .flagDot {
+  .liveDot {
     animation: none;
   }
 }

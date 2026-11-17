@@ -1,4 +1,4 @@
-import { ReactNode } from 'react'
+import { CSSProperties, ReactNode } from 'react'
 
 import { Dialog as ArkDialog } from '@ark-ui/react/dialog'
 import { Portal } from '@ark-ui/react/portal'
@@ -33,6 +33,16 @@ type DrawerProps = {
    * and by Escape, so the X earns nothing there. Mirrors `Modal`.
    */
   dismissible?: boolean
+  /**
+   * Left/right drawers only: fill the whole screen below `md` and keep `size`
+   * as the panel width from `md` up, with the backdrop dimming the rest.
+   */
+  fullOnMobile?: boolean
+  /**
+   * Fires before Escape closes the drawer. Call `event.preventDefault()` to
+   * keep it open — for a drawer with inner pages, where Escape steps back.
+   */
+  onEscapeKeyDown?: (event: KeyboardEvent) => void
 }
 
 const alignByPlacement: Record<DrawerPlacement, string> = {
@@ -67,22 +77,25 @@ export function Drawer({
   dismissible = true,
   contentClassName,
   bodyClassName,
+  fullOnMobile = false,
+  onEscapeKeyDown,
 }: DrawerProps) {
   const { handleDragStart, handleDragMove, handleDragEnd } =
     useDrawerDrag(onOpenChange)
   const isHorizontal = placement === 'left' || placement === 'right'
-  const sizeStyle = size
-    ? isHorizontal
-      ? { width: size }
-      : { height: size }
+  const resolvedSize = size ?? (isHorizontal ? '400px' : '320px')
+  const isResponsive = fullOnMobile && isHorizontal
+  const sizeStyle: CSSProperties = isResponsive
+    ? ({ '--drawer-size': resolvedSize } as CSSProperties)
     : isHorizontal
-      ? { width: '400px' }
-      : { height: '320px' }
+      ? { width: resolvedSize }
+      : { height: resolvedSize }
 
   return (
     <ArkDialog.Root
       open={open}
       onOpenChange={({ open: o }) => onOpenChange(o)}
+      onEscapeKeyDown={onEscapeKeyDown}
       lazyMount
       unmountOnExit
     >
@@ -95,6 +108,7 @@ export function Drawer({
               sizeByPlacement[placement],
               alignByPlacement[placement],
               slideByPlacement[placement],
+              isResponsive && styles.fullBelowMd,
               contentClassName ?? ''
             )}
             style={sizeStyle}

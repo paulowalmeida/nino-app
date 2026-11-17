@@ -4,6 +4,7 @@ import type { GuestOrderCreatedResponse } from '@custom_types/order/guest-order-
 import type { OrderCreatedResponse } from '@custom_types/order/order-created-response'
 import type { GuestOrderStatus } from '@custom_types/order/guest-order-status'
 import type { MyOrder } from '@custom_types/order/my-order'
+import { guestOrderStatus } from '@shared/adapters/guestOrderStatus/guestOrderStatus.adapter'
 import { myOrderStatus } from '@shared/adapters/myOrderStatus/myOrderStatus.adapter'
 import { api } from '@shared/services/http/http.service'
 
@@ -27,10 +28,16 @@ export const orderService = {
       data,
       { headers: { 'Idempotency-Key': idempotencyKey } }
     ),
-  getGuestStatus: (orderId: string, token: string): Promise<GuestOrderStatus> =>
-    api.get<GuestOrderStatus>(`orders/guest/${orderId}/status`, {
-      headers: { 'x-guest-order-token': token },
-    }),
+  getGuestStatus: async (
+    orderId: string,
+    token: string
+  ): Promise<GuestOrderStatus> => {
+    const order = await api.get<Parameters<typeof guestOrderStatus>[0]>(
+      `orders/guest/${orderId}/status`,
+      { headers: { 'x-guest-order-token': token } }
+    )
+    return guestOrderStatus(order)
+  },
   listMine: async (): Promise<MyOrder[]> => {
     const page = await api.get<{ data: MyOrder[] }>('my/orders')
     return page.data

@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 
-import { promotionLabel } from './promotion-label'
+import { promotionBenefit, promotionDetail, promotionLabel } from './promotion-label'
 import {
   labelNowMock,
   labelOfferMock,
@@ -107,5 +107,14 @@ describe(promotionLabel.name, () => {
         paymentMethods: [],
       })
     ).toBe('R$\u00a010,00 de desconto em qualquer pedido')
+  })
+})
+
+describe(promotionDetail.name, () => {
+  it('splits benefit from a capitalized condition with the campaign end', () => {
+    expect(promotionBenefit(labelOfferMock)).toBe('Frete grátis')
+    expect(promotionDetail(labelOfferMock, labelNowMock)).toBe(
+      'Acima de R$\u00a060,00 · até domingo'
+    )
   })
 })

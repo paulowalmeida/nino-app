@@ -1,1 +1,1 @@
-export const menuSearchFieldMock = { value: 'burger' }
+export const menuSearchFieldMock = { label: 'Buscar no cardápio' }

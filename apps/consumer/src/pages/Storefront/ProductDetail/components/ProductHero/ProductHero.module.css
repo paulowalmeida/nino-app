@@ -13,6 +13,10 @@
   }
 }
 
+.zoom {
+  @apply block h-full w-full cursor-zoom-in;
+}
+
 .photoWrap,
 .photo {
   @apply h-full w-full object-cover;

@@ -27,12 +27,17 @@ vi.mock('@pages/Storefront/hooks/useStorefrontCart/useStorefrontCart')
 vi.mock('@pages/Storefront/hooks/useStorefrontSlug/useStorefrontSlug')
 vi.mock('@shared/hooks/useConsumerSession/useConsumerSession')
 vi.mock('@shared/hooks/useLogout/useLogout')
+vi.mock('@shared/hooks/useDeliveryZones/useDeliveryZones', () => ({
+  useDeliveryZones: () => ({ zones: [] }),
+}))
 
 vi.mock('@hooks/usePromotionOffers/usePromotionOffers', () => ({
   usePromotionOffers: () => ({
     freeDelivery: undefined,
     discountOffers: [],
     couponSuggestions: [],
+    freeDeliveryOffers: [],
+    giftOffers: [],
     refetchOffers: () => undefined,
   }),
 }))
@@ -70,7 +75,6 @@ describe('useStorefrontFacade', () => {
       activeId: null,
       goToSection: vi.fn(),
       sectionDomId: vi.fn(),
-      isSearching: false,
     })
     vi.mocked(useMenuItemAction).mockReturnValue({
       addFromMenu: vi.fn(),

@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { useNavigate } from 'react-router'
 
 import { Box } from '@nino/ds/components/Box'
@@ -12,11 +13,14 @@ import { resolveApiAssetUrl } from '@utils/api-asset-url/api-asset-url'
 import { resolveBackHref } from '@utils/resolve-back-href'
 
 import styles from './ProductHero.module.css'
+import { ProductImageLightbox } from './ProductImageLightbox/ProductImageLightbox'
 
 export const ProductHero = () => {
   const { product, slug } = useProductDetailFacade()
   const navigate = useNavigate()
   const isDesktop = useIsDesktop()
+
+  const [zoomedUrl, setZoomedUrl] = useState<string | null>(null)
 
   const fallback = <Skeleton className={styles.fallback} />
 
@@ -28,24 +32,38 @@ export const ProductHero = () => {
       {images.length > 0 ? (
         <Carousel
           slides={images.map((image) => (
-            <Image
+            <button
               key={image.id}
-              src={image.url}
-              alt=""
-              className={styles.photo}
-              wrapperClassName={styles.photoWrap}
-              placeholder={fallback}
-            />
+              type="button"
+              className={styles.zoom}
+              aria-label="Ampliar imagem"
+              onClick={() => setZoomedUrl(image.url)}
+            >
+              <Image
+                src={image.url}
+                alt=""
+                className={styles.photo}
+                wrapperClassName={styles.photoWrap}
+                placeholder={fallback}
+              />
+            </button>
           ))}
         />
       ) : fallbackUrl ? (
-        <Image
-          src={fallbackUrl}
-          alt=""
-          className={styles.photo}
-          wrapperClassName={styles.photoWrap}
-          placeholder={fallback}
-        />
+        <button
+          type="button"
+          className={styles.zoom}
+          aria-label="Ampliar imagem"
+          onClick={() => setZoomedUrl(fallbackUrl)}
+        >
+          <Image
+            src={fallbackUrl}
+            alt=""
+            className={styles.photo}
+            wrapperClassName={styles.photoWrap}
+            placeholder={fallback}
+          />
+        </button>
       ) : (
         fallback
       )}
@@ -61,6 +79,13 @@ export const ProductHero = () => {
           <Icon name="arrow-left" />
         </Button>
       )}
+
+      <ProductImageLightbox
+        src={zoomedUrl}
+        title={product?.name}
+        description={product?.description}
+        onClose={() => setZoomedUrl(null)}
+      />
     </Box>
   )
 }

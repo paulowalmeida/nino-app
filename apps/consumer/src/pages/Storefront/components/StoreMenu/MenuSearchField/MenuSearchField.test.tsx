@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react'
+import { fireEvent, render, screen } from '@testing-library/react'
 import { describe, expect, it, vi } from 'vitest'
 import { useStorefrontFacade } from '@pages/Storefront/facades/useStorefrontFacade/useStorefrontFacade'
 
@@ -13,14 +13,13 @@ vi.mock(
 )
 
 describe('MenuSearchField', () => {
-  it('exposes the menu search input', () => {
-    vi.mocked(useStorefrontFacade).mockReturnValue({
-      search: menuSearchFieldMock.value,
-      setSearch: vi.fn(),
-    } as never)
+  it('opens the search instead of filtering the page', () => {
+    const setSearchOpen = vi.fn()
+    vi.mocked(useStorefrontFacade).mockReturnValue({ setSearchOpen } as never)
     render(<MenuSearchField />)
-    expect(
-      screen.getByRole('searchbox', { name: 'Buscar no cardápio' })
-    ).toHaveValue(menuSearchFieldMock.value)
+    fireEvent.click(
+      screen.getByRole('button', { name: menuSearchFieldMock.label })
+    )
+    expect(setSearchOpen).toHaveBeenCalledWith(true)
   })
 })

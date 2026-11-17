@@ -71,4 +71,15 @@ describe('OrderJourneyRow', () => {
 
     expect(screen.getByText('Pedido cancelado')).toBeInTheDocument()
   })
+
+  it('flags the current step as happening now', () => {
+    render(
+      <OrderJourneyRow
+        row={{ status: 'PREPARING', state: 'current' } as never}
+        index={0}
+      />
+    )
+
+    expect(screen.getByText('Agora')).toBeInTheDocument()
+  })
 })

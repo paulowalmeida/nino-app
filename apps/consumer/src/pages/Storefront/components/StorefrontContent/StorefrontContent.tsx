@@ -1,8 +1,7 @@
-import { useEffect, useLayoutEffect, useState } from 'react'
+import { useLayoutEffect, useState } from 'react'
 
 import { Alert } from '@nino/ds/components/Alert'
 import { EmptyState } from '@nino/ds/components/EmptyState'
-import { Icon } from '@nino/ds/components/Icon'
 import { Box } from '@nino/ds/components/Box'
 import { Button } from '@nino/ds/components/Button'
 import { ActiveOrderBanner } from '@pages/Storefront/components/ActiveOrderBanner/ActiveOrderBanner'
@@ -10,15 +9,17 @@ import { StoreCart } from '@pages/Storefront/components/StoreCart/StoreCart'
 import { CategoryNav } from '@pages/Storefront/components/StoreMenu/CategoryNav/CategoryNav'
 import { MenuSection } from '@pages/Storefront/components/StoreMenu/MenuSection/MenuSection'
 import { StoreIdentity } from '@pages/Storefront/components/StoreHeader/StoreIdentity/StoreIdentity'
-import { PromotionStrip } from '@pages/Storefront/components/StoreHeader/PromotionStrip/PromotionStrip'
+import { StorefrontCouponsDrawer } from '@pages/Storefront/components/StorefrontCouponsDrawer/StorefrontCouponsDrawer'
 import { StoreAvailabilityBanner } from '@pages/Storefront/components/StoreHeader/StoreAvailabilityBanner/StoreAvailabilityBanner'
 import { StoreInfo } from '@pages/Storefront/components/StoreHeader/StoreInfo/StoreInfo'
 import { StoreTopBar } from '@pages/Storefront/components/StoreHeader/StoreTopBar/StoreTopBar'
 import { CategoryBar } from '@pages/Storefront/components/StoreMenu/CategoryBar/CategoryBar'
+import { MenuSearchModal } from '@pages/Storefront/components/StoreMenu/MenuSearchModal/MenuSearchModal'
 import { MenuSearchField } from '@pages/Storefront/components/StoreMenu/MenuSearchField/MenuSearchField'
 import { MenuRowsSkeleton } from '@pages/Storefront/skeletons/MenuRowsSkeleton/MenuRowsSkeleton'
 import { StoreHeaderSkeleton } from '@pages/Storefront/skeletons/StoreHeaderSkeleton/StoreHeaderSkeleton'
 import { FooterNav } from '@shared/components/FooterNav/FooterNav'
+import { PromotionBanner } from '@pages/Storefront/components/StoreHeader/PromotionBanner/PromotionBanner'
 import { StoreBanner } from '@pages/Storefront/components/StoreHeader/StoreBanner/StoreBanner'
 import { PromotionSection } from '@pages/Storefront/components/PromotionSection/PromotionSection'
 import { useDockedHeader } from '@pages/Storefront/hooks/useDockedHeader/useDockedHeader'
@@ -47,9 +48,9 @@ export const StorefrontContent = ({ pathSlug }: StorefrontContentProps) => {
   const slug = resolveSlug(pathSlug)
   const home = useStorefrontFacade(slug ?? undefined)
   const { reset } = home
-  const [searchField, setSearchField] = useState<HTMLInputElement | null>(null)
-  const isHeaderDocked = useDockedHeader(searchField, DOCKED_HEADER_OFFSET_PX)
-  const { search, setSearch, visibleSections, isSearching } = home
+  const [dockSentinel, setDockSentinel] = useState<HTMLElement | null>(null)
+  const isHeaderDocked = useDockedHeader(dockSentinel, DOCKED_HEADER_OFFSET_PX)
+  const { visibleSections } = home
   const blocks = useStoreHome()
   const tint = storeThemePrimaryColor(home.store)
   const bannerUrl = blocks.showBanner ? storeThemeBannerUrl(home.store) : null
@@ -66,13 +67,6 @@ export const StorefrontContent = ({ pathSlug }: StorefrontContentProps) => {
   const isHeaderReady =
     !home.isHeaderPending && !isBannerPending && !isLogoPending
 
-  useEffect(() => {
-    if (!isSearching) return
-
-    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)')
-    window.scrollTo({ top: 0, behavior: reduced.matches ? 'auto' : 'smooth' })
-  }, [isSearching, search])
-
   useLayoutEffect(() => {
     reset()
   }, [reset, slug])
@@ -87,22 +81,19 @@ export const StorefrontContent = ({ pathSlug }: StorefrontContentProps) => {
     <>
       <StoreTopBar slug={pathSlug ?? ''} isDocked={isHeaderDocked} />
 
-      {(blocks.showBanner || home.bannerOffers.length > 0) && (
-        <StoreBanner includeStoreBanner={blocks.showBanner} />
-      )}
+      {blocks.showBanner && <StoreBanner />}
 
       <Box className={styles.storefrontContentShell}>
         <StoreIdentity />
 
-        <PromotionStrip />
+        {/* WHY: a barra do topo assume quando a identidade da loja passa por baixo dela. */}
+        <Box ref={setDockSentinel} aria-hidden="true" />
+
+        <PromotionBanner />
 
         <StoreAvailabilityBanner />
 
-        <ActiveOrderBanner slug={slug ?? ''} />
-
-        {blocks.showSearch && home.sections.length > 0 && (
-          <MenuSearchField ref={setSearchField} />
-        )}
+        {blocks.showSearch && home.sections.length > 0 && <MenuSearchField />}
       </Box>
     </>
   )
@@ -156,28 +147,7 @@ export const StorefrontContent = ({ pathSlug }: StorefrontContentProps) => {
               </EmptyState>
             )}
 
-          {!isMenuContentPending &&
-            !home.isMenuError &&
-            isSearching &&
-            visibleSections.length === 0 && (
-              <EmptyState
-                size="md"
-                className={styles.storefrontContentEmpty}
-                illustration={<Icon name="search" size="xl" />}
-                title="Nenhum item encontrado"
-                action={
-                  <Button variant="outline" onClick={() => setSearch('')}>
-                    Limpar busca
-                  </Button>
-                }
-              >
-                Não encontramos resultados para “{search}”. Tente outro termo.
-              </EmptyState>
-            )}
-
-          {!isMenuContentPending && !home.isMenuError && !isSearching && (
-            <PromotionSection />
-          )}
+          {!isMenuContentPending && !home.isMenuError && <PromotionSection />}
 
           {!isMenuContentPending &&
             visibleSections.map((section) => (
@@ -186,15 +156,24 @@ export const StorefrontContent = ({ pathSlug }: StorefrontContentProps) => {
         </Box>
       </Box>
 
+      <ActiveOrderBanner slug={slug ?? ''} />
+
       <StoreCart />
+      {home.sections.length > 0 && <MenuSearchModal />}
 
       <FooterNav
         base={base}
         cartCount={home.cartCount}
         onOpenCart={() => home.setCartOpen(true)}
+        onOpenSearch={
+          blocks.showSearch && home.sections.length > 0
+            ? () => home.setSearchOpen(true)
+            : undefined
+        }
       />
 
       {blocks.showStoreInfo && <StoreInfo />}
+      <StorefrontCouponsDrawer />
     </Box>
   )
 }

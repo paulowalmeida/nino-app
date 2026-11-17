@@ -1,0 +1,77 @@
+@reference "@nino/ds/globals.css";
+
+/* WHY: no desktop a janela nasce perto do topo, como uma paleta de busca, e
+ * cresce com os resultados até um teto; abaixo de 1024px o `size="full"` do
+ * Modal já ocupa a tela.
+ */
+.menuSearchModalPositioner {
+  @apply lg:items-start lg:pt-[10dvh];
+}
+
+.menuSearchModalPanel {
+  @apply flex flex-col bg-surface-page lg:h-auto lg:max-h-[75dvh];
+}
+
+.menuSearchModalBody {
+  @apply flex min-h-0 flex-1 flex-col p-0;
+}
+
+.menuSearchModalBar {
+  @apply shrink-0 items-center gap-1 border-b border-border px-4 py-3;
+  @apply lg:px-5;
+}
+
+.menuSearchModalField {
+  @apply relative min-w-0 flex-1;
+}
+
+.menuSearchModalIcon {
+  @apply pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2;
+  @apply text-fg-faint;
+}
+
+.menuSearchModalInput {
+  @apply h-12 w-full rounded-3 border border-border bg-surface-cool;
+  @apply pl-11 pr-11 text-base text-fg-default outline-none transition-field;
+  @apply placeholder:text-fg-faint;
+  @apply focus-visible:border-brand focus-visible:bg-surface-page;
+  @apply focus-visible:ring-2 focus-visible:ring-brand-soft;
+}
+
+/* o X nativo do input type=search duplicaria o nosso */
+.menuSearchModalInput::-webkit-search-cancel-button {
+  display: none;
+}
+
+.menuSearchModalClear {
+  @apply absolute right-1 top-1/2 size-10 -translate-y-1/2 text-fg-faint;
+}
+
+.menuSearchModalClose {
+  @apply shrink-0 px-3 text-fg-subtle;
+}
+
+.menuSearchModalScroll {
+  @apply min-h-0 flex-1 overflow-y-auto overscroll-contain px-4 pb-6 pt-3;
+  @apply lg:px-5;
+}
+
+.menuSearchModalHeading {
+  @apply font-display text-sm font-bold text-fg-strong;
+}
+
+.menuSearchModalCategories {
+  @apply flex flex-col gap-3 pt-2;
+}
+
+.menuSearchModalChips {
+  @apply flex-wrap gap-2;
+}
+
+.menuSearchModalCount {
+  @apply pb-1 text-xs text-fg-faint;
+}
+
+.menuSearchModalList {
+  @apply m-0 list-none p-0;
+}

@@ -26,6 +26,19 @@
   );
 }
 
+/* WHY: tudo cabe, então sem reserva do degradê e chips centralizados */
+.trackFits {
+  @apply pr-0;
+}
+
+.trackFits::after {
+  @apply hidden;
+}
+
+.trackFits .chips {
+  @apply justify-center;
+}
+
 .track::-webkit-scrollbar {
   display: none;
 }

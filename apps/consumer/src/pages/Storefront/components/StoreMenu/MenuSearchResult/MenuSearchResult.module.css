@@ -1,0 +1,80 @@
+@reference "@nino/ds/globals.css";
+
+.menuSearchResult {
+  @apply relative;
+}
+
+.menuSearchResultOpen {
+  @apply flex h-auto min-w-0 flex-1 cursor-pointer appearance-none items-center;
+  @apply justify-start gap-3 rounded-3 border-0 bg-transparent p-1 text-left;
+}
+
+.menuSearchResultOpen:hover,
+.menuSearchResultOpen:active {
+  background-color: transparent;
+}
+
+.menuSearchResultOpen:focus-visible {
+  outline: 2px solid var(--store-tint, var(--color-brand));
+  outline-offset: 2px;
+}
+
+.menuSearchResultMedia {
+  @apply size-16 shrink-0 overflow-hidden rounded-3 bg-surface-cool;
+}
+
+.menuSearchResultPhotoWrap {
+  @apply size-full min-h-0 min-w-0;
+}
+
+.menuSearchResultPhoto {
+  @apply block size-full min-h-0 min-w-0 object-cover;
+}
+
+.menuSearchResultBody {
+  @apply flex min-w-0 flex-1 flex-col gap-0.5;
+}
+
+.menuSearchResultName {
+  @apply truncate font-display text-[0.9375rem] font-bold leading-snug text-fg-strong;
+}
+
+.menuSearchResultDescription {
+  @apply truncate text-[0.8125rem] leading-snug text-fg-subtle;
+}
+
+.menuSearchResultMeta {
+  @apply flex min-w-0 items-baseline gap-2 pt-0.5 text-xs;
+}
+
+.menuSearchResultPrice {
+  @apply shrink-0 font-display text-[0.8125rem] font-medium;
+  color: var(--color-success);
+  font-variant-numeric: tabular-nums;
+}
+
+.menuSearchResultCategory {
+  @apply truncate text-fg-faint;
+}
+
+/* WHY: o trecho que casou ganha o fundo suave da cor da loja, sem trocar a
+ * cor do texto — o nome continua legível e o olho cai no que foi digitado.
+ */
+.menuSearchResultMark {
+  @apply rounded-1 text-inherit;
+  background-color: color-mix(
+    in srgb,
+    var(--store-tint, var(--color-brand)) 18%,
+    transparent
+  );
+}
+
+.menuSearchResultAdd {
+  @apply size-9 shrink-0 rounded-full border-0 text-fg-on-brand;
+  background-color: var(--store-tint, var(--color-brand));
+}
+
+.menuSearchResultAdd:disabled {
+  @apply cursor-not-allowed;
+  filter: grayscale(1);
+}

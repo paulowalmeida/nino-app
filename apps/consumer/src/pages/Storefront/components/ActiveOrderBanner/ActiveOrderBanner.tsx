@@ -1,6 +1,7 @@
 import { useEffect } from 'react'
 import { Link } from 'react-router'
 import { Box } from '@nino/ds/components/Box'
+import { Icon } from '@nino/ds/components/Icon'
 import { Text } from '@nino/ds/components/Text'
 
 import { OrderRail } from '@shared/components/OrderRail/OrderRail'
@@ -11,7 +12,7 @@ import { useMinutesUntil } from '@hooks/useMinutesUntil/useMinutesUntil'
 import { useMyOrders } from '@shared/hooks/useMyOrders/useMyOrders'
 import { recordGuestOrderStatus } from '@utils/last-order'
 import { STATUS_LABEL } from '@constants/order.constants'
-import { isTerminal, stageIcon } from '@utils/order-journey'
+import { isTerminal } from '@utils/order-journey'
 
 import styles from './ActiveOrderBanner.module.css'
 
@@ -44,36 +45,32 @@ export const ActiveOrderBanner = ({ slug }: ActiveOrderBannerProps) => {
   if (!orderId || !order || isTerminal(order.status)) return null
 
   const query = token ? `?token=${token}` : ''
+  const hasEta = minutes !== null && minutes > 0
 
   return (
     <Link
       to={`/${slug}/pedido/${orderId}${query}`}
       className={styles.activeOrderBanner}
+      aria-label={`Acompanhar pedido: ${STATUS_LABEL[order.status]}`}
     >
-      <span className={styles.activeOrderBannerIcon} aria-hidden="true">
-        {stageIcon(order.status)}
-      </span>
-
-      <Box className={styles.activeOrderBannerBody}>
-        <Text className={styles.flag}>
-          <span className={styles.flagDot} aria-hidden="true" />
-          Acompanhando ao vivo
-        </Text>
+      <Box direction="row" className={styles.top}>
+        <span className={styles.liveDot} aria-hidden="true" />
         <Text className={styles.step}>{STATUS_LABEL[order.status]}</Text>
+
+        {hasEta && (
+          <Text className={styles.eta}>
+            <Text as="span" className={styles.etaValue}>
+              {minutes}
+            </Text>
+            <Text as="span" className={styles.etaUnit}>
+              min
+            </Text>
+          </Text>
+        )}
+        <Icon name="chevron-right" size="sm" className={styles.chevron} />
       </Box>
 
-      {minutes !== null && minutes > 0 && (
-        <Text className={styles.eta}>
-          <Text as="span" className={styles.etaValue}>
-            {minutes}
-          </Text>
-          <Text as="span" className={styles.etaUnit}>
-            min
-          </Text>
-        </Text>
-      )}
-
-      <OrderRail order={order} />
+      <OrderRail order={order} inline />
     </Link>
   )
 }

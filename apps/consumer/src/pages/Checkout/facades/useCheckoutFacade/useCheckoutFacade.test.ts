@@ -2,7 +2,7 @@ import { renderHook } from '@testing-library/react'
 import { describe, expect, it, vi } from 'vitest'
 
 import { useCheckoutCart } from '@pages/checkout/hooks/useCheckoutCart/useCheckoutCart'
-import { useDeliveryZones } from '@pages/checkout/hooks/useDeliveryZones/useDeliveryZones'
+import { useDeliveryZones } from '@shared/hooks/useDeliveryZones/useDeliveryZones'
 import { useOpeningHours } from '@hooks/useOpeningHours/useOpeningHours'
 import { usePublicSettings } from '@hooks/usePublicSettings/usePublicSettings'
 import { useStore } from '@hooks/useStore/useStore'
@@ -16,7 +16,7 @@ import { useCheckoutFacadeValue } from './useCheckoutFacade'
 import { useCheckoutFacadeMock } from './useCheckoutFacade.mock'
 
 vi.mock('@pages/checkout/hooks/useCheckoutCart/useCheckoutCart')
-vi.mock('@pages/checkout/hooks/useDeliveryZones/useDeliveryZones')
+vi.mock('@shared/hooks/useDeliveryZones/useDeliveryZones')
 vi.mock('@hooks/useOpeningHours/useOpeningHours')
 vi.mock('@hooks/usePublicSettings/usePublicSettings')
 vi.mock('@hooks/useStore/useStore')

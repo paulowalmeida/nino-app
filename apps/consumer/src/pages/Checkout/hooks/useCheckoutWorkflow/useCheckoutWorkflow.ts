@@ -5,15 +5,16 @@ import type { Address } from '@custom_types/address/address'
 import type { CartLine } from '@custom_types/cart/cart-line'
 import type { CheckoutFormValues } from '@pages/checkout/types/checkout/CheckoutFormValues.type'
 import type { Consumer } from '@custom_types/consumer/consumer'
-import type { PublicDeliveryZone } from '@pages/checkout/types/delivery-zone/PublicDeliveryZone.type'
+import type { PublicDeliveryZone } from '@custom_types/delivery-zone/PublicDeliveryZone.type'
 import type { PaymentMethod } from '@custom_types/order/payment-method'
 import type { PublicPromotion } from '@custom_types/promotion/public-promotion.type'
 import type { Store } from '@custom_types/store/store'
 import { checkoutTotals } from '@pages/checkout/utils/checkout-totals/checkout-totals'
 import { orderOffers } from '@pages/checkout/utils/order-offers/order-offers'
 import { promotionUnavailableFee } from '@pages/checkout/utils/promotion-unavailable/promotion-unavailable'
-import { eligibleSubtotal } from '@pages/checkout/utils/eligible-subtotal/eligible-subtotal'
+import { eligibleSubtotal } from '@utils/eligible-subtotal/eligible-subtotal'
 import { couponApplies } from '@pages/checkout/utils/coupon-applies/coupon-applies'
+import { couponBlocker } from '@utils/coupon-blocker/coupon-blocker'
 import { pickFreeDeliveryOffer } from '@utils/free-delivery/free-delivery'
 import { useDeliveryQuote } from '@pages/checkout/hooks/useDeliveryQuote/useDeliveryQuote'
 import { usePlaceOrder } from '@pages/checkout/hooks/usePlaceOrder/usePlaceOrder'
@@ -181,6 +182,15 @@ export const useCheckoutWorkflow = ({
       paymentMethod,
       eligibleSubtotal: eligibleSubtotal(cartLines, coupon.eligibleProductIds),
     })
+  const couponBlockerOf = (promotion: PublicPromotion) =>
+    couponBlocker(promotion, {
+      subtotal,
+      paymentMethod,
+      eligibleSubtotal: eligibleSubtotal(
+        cartLines,
+        promotion.eligibleProductIds
+      ),
+    })
   const minimum = minimumOrderAmount ?? 0
   const isBelowMinimum = minimum > 0 && subtotal < minimum
 
@@ -247,6 +257,7 @@ export const useCheckoutWorkflow = ({
     appliedPackage,
     coupon,
     isCouponEligible,
+    couponBlockerOf,
     total,
     deliveryNote,
     promotionEndedFee:

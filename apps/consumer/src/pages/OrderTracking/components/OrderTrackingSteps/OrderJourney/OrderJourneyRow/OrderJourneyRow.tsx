@@ -1,4 +1,5 @@
 import type { OrderJourneyRow as OrderJourneyRowData } from '@custom_types/order/order-journey-row'
+import { Box } from '@nino/ds/components/Box'
 import { ListRow } from '@nino/ds/components/ListRow'
 import { Text } from '@nino/ds/components/Text'
 import { clockLabel } from '@utils/clock'
@@ -49,14 +50,27 @@ export const OrderJourneyRow = ({
     >
       <Text as="span" className={styles.node} aria-hidden="true">
         {row.state === 'done' ||
-        (row.state === 'final' && row.status !== 'CANCELLED')
-          ? CHECK
-          : stageIcon(row.status)}
+        (row.state === 'final' && row.status !== 'CANCELLED') ? (
+          <Text as="span" className={styles.check}>
+            {CHECK}
+          </Text>
+        ) : (
+          <Text as="span" className={styles.icon}>
+            {stageIcon(row.status)}
+          </Text>
+        )}
       </Text>
 
-      <Text as="p" className={styles.label}>
-        {stageLabel(row.status)}
-      </Text>
+      <Box className={styles.body}>
+        {row.state === 'current' && (
+          <Text as="span" className={styles.now}>
+            Agora
+          </Text>
+        )}
+        <Text as="p" className={styles.label}>
+          {stageLabel(row.status)}
+        </Text>
+      </Box>
 
       {row.at && (
         <Text as="p" className={styles.time}>

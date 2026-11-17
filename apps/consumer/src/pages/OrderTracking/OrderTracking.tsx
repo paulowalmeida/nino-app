@@ -1,8 +1,7 @@
-import type { CSSProperties } from 'react'
-
 import { Box } from '@nino/ds/components/Box'
 import { OrderStage } from '@pages/order-tracking/components/OrderStage/OrderStage'
 import { PoweredBy } from '@shared/components/PoweredBy/PoweredBy'
+import { OrderDetails } from '@pages/order-tracking/components/OrderDetails/OrderDetails'
 import { OrderNotFound } from '@pages/order-tracking/components/OrderNotFound/OrderNotFound'
 import { OrderTrackingAgainLink } from '@pages/order-tracking/components/OrderTrackingAgainLink/OrderTrackingAgainLink'
 import { OrderTrackingHeader } from '@pages/order-tracking/components/OrderTrackingHeader/OrderTrackingHeader'
@@ -16,7 +15,6 @@ import styles from './OrderTracking.module.css'
 export const OrderTracking = () => {
   const {
     backHref,
-    progress,
     order,
     isPending,
     isSessionPending,
@@ -36,21 +34,26 @@ export const OrderTracking = () => {
   }
 
   return (
-    <Box
-      className={styles.orderTrackingPage}
-      style={{ '--p': progress } as CSSProperties}
-    >
+    <Box className={styles.orderTrackingPage}>
       <Box className={styles.orderTrackingShell}>
-        <OrderTrackingHeader
-          backHref={backHref}
-          orderNumber={order.orderNumber}
-        />
+        <Box
+          className={`${styles.hero} ${order.status === 'CANCELLED' ? styles.heroCancelled : ''}`}
+        >
+          <OrderTrackingHeader
+            backHref={backHref}
+            orderNumber={order.orderNumber}
+          />
 
-        <OrderStage order={order} />
+          <OrderStage order={order} />
+        </Box>
 
         {!done && <OrderTrackingReassurance />}
 
         <OrderTrackingSteps order={order} />
+
+        {order.details && (
+          <OrderDetails details={order.details} channel={order.channel} />
+        )}
 
         {done && (
           <OrderTrackingAgainLink backHref={backHref} status={order.status} />

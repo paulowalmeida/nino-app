@@ -1,4 +1,3 @@
-import { useEffect, useRef, useState } from 'react'
 import { useNavigate } from 'react-router'
 
 import { Menu } from '@nino/ds/components/Menu'
@@ -6,7 +5,6 @@ import { Box } from '@nino/ds/components/Box'
 import { Text } from '@nino/ds/components/Text'
 import { Icon } from '@nino/ds/components/Icon'
 import { Image } from '@nino/ds/components/Image'
-import { Input } from '@nino/ds/components/Input'
 import { Button } from '@nino/ds/components/Button'
 import { useStorefrontFacade } from '@pages/Storefront/facades/useStorefrontFacade/useStorefrontFacade'
 import { displayName, isOpen, storeInitials } from '@utils/store-info'
@@ -27,8 +25,7 @@ export const StoreTopBar = ({ slug, isDocked }: StoreTopBarProps) => {
     sections,
     cartCount,
     setCartOpen,
-    search,
-    setSearch,
+    setSearchOpen,
     consumer,
     logout,
     hours,
@@ -36,20 +33,6 @@ export const StoreTopBar = ({ slug, isDocked }: StoreTopBarProps) => {
     setInfoOpen,
   } = useStorefrontFacade()
   const navigate = useNavigate()
-  const [isSearchOpen, setSearchOpen] = useState(false)
-  const searchRef = useRef<HTMLInputElement>(null)
-
-  useEffect(() => {
-    if (isSearchOpen) searchRef.current?.focus()
-  }, [isSearchOpen])
-
-  /* WHY: fechar sem limpar deixava o cardápio filtrado por um texto que não
-     está mais em lugar nenhum da tela, com a régua de categorias escondida. */
-  const closeSearch = () => {
-    setSearch('')
-    setSearchOpen(false)
-  }
-
   if (!store) return null
 
   const base = slug ? `/${slug}` : ''
@@ -94,17 +77,15 @@ export const StoreTopBar = ({ slug, isDocked }: StoreTopBarProps) => {
         </a>
 
         {sections.length > 0 && (
-          <Box className={styles.deskSearch}>
+          <Button
+            variant="ghost"
+            className={styles.deskSearch}
+            aria-haspopup="dialog"
+            onClick={() => setSearchOpen(true)}
+          >
             <Icon name="search" className={styles.searchIcon} />
-            <Input
-              type="search"
-              aria-label="Buscar no cardápio"
-              placeholder="Buscar no cardápio"
-              className={styles.searchInput}
-              value={search}
-              onChange={(event) => setSearch(event.target.value)}
-            />
-          </Box>
+            Buscar no cardápio
+          </Button>
         )}
 
         <Box direction="row" className={styles.tools}>
@@ -127,23 +108,10 @@ export const StoreTopBar = ({ slug, isDocked }: StoreTopBarProps) => {
             </Text>
           </Box>
 
-          {sections.length > 0 && (
-            <Button
-              variant="ghost"
-              size="icon"
-              className={`${styles.iconBtn} ${styles.searchTrigger}`}
-              onClick={() => setSearchOpen(true)}
-              aria-label="Buscar no cardápio"
-              aria-expanded={isSearchOpen}
-            >
-              <Icon name="search" />
-            </Button>
-          )}
-
           <Button
             variant="ghost"
             size="icon"
-            className={`${styles.iconBtn} ${styles.infoEntry}`}
+            className={styles.iconBtn}
             onClick={() => setInfoOpen(true)}
             aria-label="Informações da loja"
           >
@@ -257,45 +225,6 @@ export const StoreTopBar = ({ slug, isDocked }: StoreTopBarProps) => {
             </Button>
           )}
         </Box>
-
-        {sections.length > 0 && (
-          <Box
-            direction="row"
-            className={
-              isSearchOpen
-                ? `${styles.searchPanel} ${styles.searchPanelOpen}`
-                : styles.searchPanel
-            }
-            aria-hidden={!isSearchOpen}
-          >
-            <Box className={styles.searchField}>
-              <Icon name="search" className={styles.searchIcon} />
-              <Input
-                ref={searchRef}
-                type="search"
-                aria-label="Buscar no cardápio"
-                placeholder="Buscar no cardápio"
-                className={styles.searchInput}
-                value={search}
-                tabIndex={isSearchOpen ? undefined : -1}
-                onChange={(event) => setSearch(event.target.value)}
-                onKeyDown={(event) => {
-                  if (event.key === 'Escape') closeSearch()
-                }}
-              />
-            </Box>
-            <Button
-              variant="ghost"
-              size="icon"
-              className={styles.iconBtn}
-              onClick={closeSearch}
-              aria-label="Fechar busca"
-              tabIndex={isSearchOpen ? undefined : -1}
-            >
-              <Icon name="x" />
-            </Button>
-          </Box>
-        )}
       </Box>
     </Box>
   )

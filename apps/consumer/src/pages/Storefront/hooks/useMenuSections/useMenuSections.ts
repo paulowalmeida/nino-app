@@ -5,27 +5,13 @@ import { useActiveSection } from '@pages/Storefront/hooks/useActiveSection/useAc
 const sectionDomId = (id: string): string => `section-${id}`
 
 /**
- * O cardápio como a tela precisa dele: as seções que sobrevivem à busca, qual
- * delas está sob os olhos agora, e como pular até uma. Durante a busca, a
- * mesma lista filtrada alimenta os chips e o rastreio para não apontar para
- * uma categoria que não aparece nos resultados.
+ * O cardápio como a tela precisa dele: as seções, qual delas está sob os
+ * olhos agora, e como pular até uma. A busca vive na própria modal e nunca
+ * filtra esta lista.
  */
-export const useMenuSections = (sections: MenuSection[], search: string) => {
-  const query = search.trim().toLowerCase()
-
-  const visibleSections = query
-    ? sections
-        .map((section) => ({
-          ...section,
-          items: section.items.filter(({ name }) =>
-            name.toLowerCase().includes(query)
-          ),
-        }))
-        .filter((section) => section.items.length > 0)
-    : sections
-
+export const useMenuSections = (sections: MenuSection[]) => {
   const activeDomId = useActiveSection(
-    visibleSections.map((section) => sectionDomId(section.id))
+    sections.map((section) => sectionDomId(section.id))
   )
   const activeId = activeDomId?.replace(/^section-/, '') ?? null
 
@@ -36,10 +22,9 @@ export const useMenuSections = (sections: MenuSection[], search: string) => {
   }
 
   return {
-    visibleSections,
+    visibleSections: sections,
     activeId,
     goToSection,
     sectionDomId,
-    isSearching: query.length > 0,
   }
 }

@@ -6,6 +6,7 @@ import type { CartItem } from '@custom_types/cart/cart-item'
 import { addCartItem } from './operations/add-cart-item/add-cart-item'
 import { clearCart } from './operations/clear-cart/clear-cart'
 import { decrementCartItem } from './operations/decrement-cart-item/decrement-cart-item'
+import { updateCartLine } from './operations/update-cart-line/update-cart-line'
 import { incrementCartItem } from './operations/increment-cart-item/increment-cart-item'
 import { cartLineKey } from '@utils/cart-line-key/cart-line-key'
 
@@ -17,6 +18,12 @@ type CartState = {
   setPackage: (unitId: string, item: CartItem) => boolean
   increment: (lineId: string) => void
   decrement: (lineId: string) => void
+  updateLine: (
+    unitId: string,
+    lineId: string,
+    item: CartItem,
+    quantity: number
+  ) => boolean
   clear: () => void
 }
 
@@ -69,6 +76,17 @@ export const useCartStore = create<CartState>()(
             unitId: Object.keys(lines).length === 0 ? null : state.unitId,
           }
         }),
+
+      updateLine: (unitId, lineId, item, quantity) => {
+        const current = get()
+        if (current.unitId !== unitId || !current.lines[lineId]) return false
+        const lines = updateCartLine(current.lines, lineId, item, quantity)
+        set({
+          lines,
+          unitId: Object.keys(lines).length === 0 ? null : unitId,
+        })
+        return true
+      },
 
       clear: () => set({ unitId: null, lines: clearCart() }),
     }),

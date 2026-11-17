@@ -1,4 +1,5 @@
 import type { OrderChannel } from './order-channel'
+import type { OrderDetails } from './order-details'
 import type { OrderStatus } from './order-status'
 import type { OrderTimelineEntry } from './order-timeline-entry'
 
@@ -13,4 +14,6 @@ export type GuestOrderStatus = {
   timeline: OrderTimelineEntry[]
   /** Mensagem opcional publicada pela loja para este pedido. */
   storeMessage?: string | null
+  /** Comanda do pedido; vem tanto do cliente logado quanto do visitante com token. */
+  details?: OrderDetails
 }

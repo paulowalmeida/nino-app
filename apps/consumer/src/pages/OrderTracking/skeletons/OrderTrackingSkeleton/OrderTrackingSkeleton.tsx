@@ -1,4 +1,6 @@
 import { Box } from '@nino/ds/components/Box'
+import stageStyles from '@pages/order-tracking/components/OrderStage/OrderStage.module.css'
+import pageStyles from '@pages/order-tracking/OrderTracking.module.css'
 import headerStyles from '@pages/order-tracking/components/OrderTrackingHeader/OrderTrackingHeader.module.css'
 import stepsStyles from '@pages/order-tracking/components/OrderTrackingSteps/OrderTrackingSteps.module.css'
 import { PoweredBy } from '@shared/components/PoweredBy/PoweredBy'
@@ -12,11 +14,23 @@ export const OrderTrackingSkeleton = () => (
     aria-label="Carregando o pedido"
   >
     <Box className={styles.orderTrackingSkeletonShell}>
-      <Box as="header" direction="row" className={headerStyles.header}>
-        <Box className={headerStyles.skBack} />
-        <Box className={headerStyles.skTitle} />
+      <Box className={pageStyles.hero}>
+        <Box
+          as="header"
+          direction="row"
+          className={headerStyles.orderTrackingHeader}
+        >
+          <Box className={headerStyles.skBack} />
+          <Box className={headerStyles.skTitle} />
+        </Box>
+        <Box className={stageStyles.stage}>
+          <Box className={stageStyles.skFlag} />
+          <Box className={stageStyles.skHeadline} />
+          <Box className={stageStyles.skNote} />
+          <Box className={stageStyles.skEtaLead} />
+          <Box className={stageStyles.skEtaValue} />
+        </Box>
       </Box>
-      <Box className={styles.stage} />
       <Box className={stepsStyles.skJourney}>
         {Array.from({ length: 5 }).map((_, i) => (
           <Box key={i} className={stepsStyles.skRow}>

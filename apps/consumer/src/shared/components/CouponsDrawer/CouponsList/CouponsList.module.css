@@ -1,0 +1,35 @@
+@reference "@nino/ds/globals.css";
+
+.couponsList {
+  @apply flex flex-col gap-4 px-6 py-4;
+}
+
+.codeForm {
+  @apply flex items-start gap-2;
+}
+
+.codeError {
+  @apply -mt-2 text-xs font-semibold text-danger;
+}
+
+.couponList {
+  @apply flex flex-col gap-3 pt-3;
+}
+
+/* WHY: o cartão inteiro é o gatilho do detalhe; o botão só carrega o toque. */
+.couponButton {
+  @apply w-full cursor-pointer rounded-3 text-left;
+  @apply focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand;
+}
+
+.chevron {
+  @apply shrink-0 text-fg-muted;
+}
+
+.emptyText {
+  @apply py-6 text-center text-sm text-fg-muted;
+}
+
+.appliedTag {
+  @apply shrink-0 text-xs font-semibold text-brand-strong;
+}

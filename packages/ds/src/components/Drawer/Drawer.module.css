@@ -130,6 +130,11 @@
   @apply w-full;
 }
 
+/* Full screen on phones; from md the width comes from `--drawer-size`. */
+.fullBelowMd {
+  @apply w-full md:w-(--drawer-size);
+}
+
 .panel {
   @apply flex max-w-full flex-col outline-none;
   @apply bg-surface-raised shadow-warm-lg;

@@ -17,6 +17,7 @@ import { categoryIcon } from '@utils/category-icon'
 import { brl } from '@utils/money'
 import { cartItemPrice } from '@utils/cart-item-price/cart-item-price'
 import { useStorefrontFacade } from '@pages/Storefront/facades/useStorefrontFacade/useStorefrontFacade'
+import { EDITING_LINE_PARAM } from '@pages/Storefront/ProductDetail/hooks/useEditingCartLine/useEditingCartLine'
 import { CartPromotionProgress } from '@pages/Storefront/components/StoreCart/CartDrawer/CartPromotionProgress/CartPromotionProgress'
 
 import styles from './CartDrawer.module.css'
@@ -55,6 +56,13 @@ export const CartDrawer = () => {
     onOpenChange(false)
   }
 
+  const handleEdit = (lineId: string, productId: string) => {
+    onOpenChange(false)
+    const base = slug ? `/${slug}` : ''
+    const query = `${EDITING_LINE_PARAM}=${encodeURIComponent(lineId)}`
+    void navigate(`${base}/produto/${productId}?${query}`)
+  }
+
   const handleDecrement = (itemId: string, isLastOfCart: boolean) => {
     onDecrement(itemId)
     if (isLastOfCart) onOpenChange(false)
@@ -68,14 +76,27 @@ export const CartDrawer = () => {
         placement={isDesktop ? 'right' : 'bottom'}
         dismissible={isDesktop}
         title={
-          <Box className={styles.head}>
-            <Text as="span" className={styles.headTitle}>
-              Sua sacola
-            </Text>
-            {lines.length > 0 && (
-              <Text as="span" className={styles.headCount}>
-                {itemCount} {itemCount === 1 ? 'item' : 'itens'}
+          <Box direction="row" className={styles.head}>
+            <Box className={styles.headText}>
+              <Text as="span" className={styles.headTitle}>
+                Sua sacola
               </Text>
+              {lines.length > 0 && (
+                <Text as="span" className={styles.headCount}>
+                  {itemCount} {itemCount === 1 ? 'item' : 'itens'}
+                </Text>
+              )}
+            </Box>
+            {lines.length > 0 && (
+              <Button
+                type="button"
+                size="sm"
+                variant="ghost"
+                className={styles.clear}
+                onClick={() => setIsConfirmingClear(true)}
+              >
+                Esvaziar
+              </Button>
             )}
           </Box>
         }
@@ -107,6 +128,30 @@ export const CartDrawer = () => {
                 <AnimatePresence initial={false}>
                   {lines.map(({ id, item, quantity }, index) => {
                     const isLastUnit = quantity === 1
+                    const details = (
+                      <>
+                        <Text as="span" className={styles.lineName}>
+                          {item.name}
+                        </Text>
+                        {item.modifiers && item.modifiers.length > 0 && (
+                          <Text as="span" className={styles.lineChoices}>
+                            {item.modifiers
+                              .map((modifier) => modifier.name)
+                              .join(', ')}
+                          </Text>
+                        )}
+                        {item.notes && (
+                          <Text as="span" className={styles.lineChoices}>
+                            {item.notes}
+                          </Text>
+                        )}
+                        <Text as="span" className={styles.lineMath}>
+                          {item.package
+                            ? 'Preço fechado da promoção'
+                            : `${brl(cartItemPrice(item))} cada`}
+                        </Text>
+                      </>
+                    )
 
                     return (
                       <motion.div
@@ -143,26 +188,19 @@ export const CartDrawer = () => {
                         />
 
                         <Box className={styles.lineText}>
-                          <Text as="span" className={styles.lineName}>
-                            {item.name}
-                          </Text>
-                          {item.modifiers && item.modifiers.length > 0 && (
-                            <Text as="span" className={styles.lineChoices}>
-                              {item.modifiers
-                                .map((modifier) => modifier.name)
-                                .join(', ')}
-                            </Text>
+                          {item.package ? (
+                            <Box className={styles.lineDetails}>{details}</Box>
+                          ) : (
+                            <Button
+                              type="button"
+                              variant="ghost"
+                              className={styles.lineDetails}
+                              aria-label={`Editar ${item.name}`}
+                              onClick={() => handleEdit(id, item.id)}
+                            >
+                              {details}
+                            </Button>
                           )}
-                          {item.notes && (
-                            <Text as="span" className={styles.lineChoices}>
-                              {item.notes}
-                            </Text>
-                          )}
-                          <Text as="span" className={styles.lineMath}>
-                            {item.package
-                              ? 'Preço fechado da promoção'
-                              : `${brl(cartItemPrice(item))} cada`}
-                          </Text>
 
                           {item.package ? (
                             <Button
@@ -212,30 +250,26 @@ export const CartDrawer = () => {
 
               <Box className={styles.cartDrawerFooter}>
                 <CartPromotionProgress />
-                <Box direction="row" className={styles.totalRow}>
-                  <Box>
-                    <Text className={styles.totalLabel}>Total</Text>
-                    {estimatedMinutes ? (
-                      <Text className={styles.totalEta}>
-                        pronto em ~{estimatedMinutes} min
-                      </Text>
-                    ) : null}
+                <Box direction="row" className={styles.footerRow}>
+                  <Box className={styles.totalInfo}>
+                    <Text className={styles.totalLabel}>
+                      Total
+                      {estimatedMinutes ? (
+                        <span className={styles.totalEta}>
+                          {' '}
+                          · ~{estimatedMinutes} min
+                        </span>
+                      ) : null}
+                    </Text>
+                    <AnimatedNumber
+                      value={brl(total)}
+                      className={styles.cartDrawerTotal}
+                    />
                   </Box>
-                  <AnimatedNumber
-                    value={brl(total)}
-                    className={styles.cartDrawerTotal}
-                  />
+                  <Button className={styles.checkout} onClick={onCheckout}>
+                    Finalizar pedido
+                  </Button>
                 </Box>
-                <Button className={styles.checkout} onClick={onCheckout}>
-                  Finalizar pedido
-                </Button>
-                <Button
-                  variant="ghost"
-                  className={styles.clear}
-                  onClick={() => setIsConfirmingClear(true)}
-                >
-                  Esvaziar sacola
-                </Button>
               </Box>
             </>
           )}

@@ -64,12 +64,30 @@ const conditionOf = (promotion: PublicPromotion): string => {
   return [restriction, minimum].filter(Boolean).join(' ')
 }
 
-export const promotionLabel = (
+const withUntil = (text: string, promotion: PublicPromotion, now: Date) =>
+  promotion.endsAt ? `${text} · até ${untilOf(promotion.endsAt, now)}` : text
+
+export const promotionBenefit = benefitOf
+
+// WHY: a faixa da vitrine separa o benefício (destaque) da condição (apoio).
+export const promotionDetail = (
   promotion: PublicPromotion,
   now: Date = new Date()
 ): string => {
-  const condition = `${benefitOf(promotion)} ${conditionOf(promotion)}`
-  return promotion.endsAt
-    ? `${condition} · até ${untilOf(promotion.endsAt, now)}`
-    : condition
+  const condition = conditionOf(promotion)
+  return withUntil(
+    `${condition.charAt(0).toUpperCase()}${condition.slice(1)}`,
+    promotion,
+    now
+  )
 }
+
+export const promotionLabel = (
+  promotion: PublicPromotion,
+  now: Date = new Date()
+): string =>
+  withUntil(
+    `${benefitOf(promotion)} ${conditionOf(promotion)}`,
+    promotion,
+    now
+  )

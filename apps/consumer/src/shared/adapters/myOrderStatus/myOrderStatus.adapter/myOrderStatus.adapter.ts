@@ -1,6 +1,10 @@
 import type { GuestOrderStatus } from '@custom_types/order/guest-order-status'
+import {
+  toOrderDetails,
+  type OrderDetailsSource,
+} from '@shared/adapters/orderDetails/orderDetails.adapter'
 
-type MyOrderStatusResponse = {
+type MyOrderStatusResponse = OrderDetailsSource & {
   id: string
   orderNumber: number
   status: GuestOrderStatus['status']
@@ -23,4 +27,5 @@ export const myOrderStatus = (
     status,
     at: createdAt,
   })),
+  details: toOrderDetails(order),
 })

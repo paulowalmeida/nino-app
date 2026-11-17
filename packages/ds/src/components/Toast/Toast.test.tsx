@@ -45,6 +45,43 @@ describe(ToastContainer.name, () => {
     )
   })
 
+  it('closes when the body is clicked', async () => {
+    renderContainer()
+    act(() => toast.default('Mensagem clicável'))
+    await userEvent.click(await screen.findByText('Mensagem clicável'))
+    await waitFor(
+      () =>
+        expect(screen.queryByText('Mensagem clicável')).not.toBeInTheDocument(),
+      { timeout: 3000 }
+    )
+  })
+
+  it('keeps the toast open when a swipe ends with a click', async () => {
+    renderContainer()
+    act(() => toast.default('Mensagem curta'))
+    const title = await screen.findByText('Mensagem curta')
+    const card = title.parentElement!.parentElement!
+
+    act(() => {
+      fireEvent.pointerDown(card, {
+        pointerId: 1,
+        pointerType: 'touch',
+        clientX: 300,
+        clientY: 10,
+      })
+      fireEvent.pointerMove(card, {
+        pointerId: 1,
+        pointerType: 'touch',
+        clientX: 320,
+        clientY: 10,
+      })
+      fireEvent.pointerUp(card, { pointerId: 1, pointerType: 'touch' })
+      fireEvent.click(card)
+    })
+
+    expect(screen.getByText('Mensagem curta')).toBeInTheDocument()
+  })
+
   it('dismisses when swiped horizontally', async () => {
     renderContainer()
     act(() => toast.default('Mensagem arrastável'))

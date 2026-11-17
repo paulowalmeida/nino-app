@@ -1,0 +1,70 @@
+@reference "@nino/ds/globals.css";
+
+.promotionBanner {
+  @apply relative mt-4 w-full;
+}
+
+/* WHY: todos os slides têm a mesma proporção (5:2, a da arte das promoções) para
+ * imagem e arte gerada terem a mesma altura no carrossel. O próximo cartão aparece pela borda (peek) para dizer que há mais
+ * ofertas sem setas fixas nem rotação automática; no toque o swipe resolve. */
+.track {
+  @apply flex snap-x snap-mandatory flex-row gap-3 overflow-x-auto;
+  @apply overscroll-x-contain;
+  scrollbar-width: none;
+}
+
+.track::-webkit-scrollbar {
+  display: none;
+}
+
+.slide {
+  @apply relative aspect-[5/2] shrink-0 basis-[88%] snap-start overflow-hidden;
+  @apply rounded-4 sm:basis-[28rem];
+  background-color: var(--store-tint, var(--color-brand));
+}
+
+.single {
+  @apply basis-full sm:mx-auto sm:max-w-xl;
+}
+
+.imageWrap {
+  @apply h-full w-full;
+}
+
+.image {
+  @apply block h-full w-full object-cover;
+}
+
+.placeholder {
+  composes: nino-skeleton from global;
+  @apply h-full w-full bg-black/[0.06];
+}
+
+.action {
+  @apply absolute inset-0 z-content cursor-pointer;
+}
+
+.arrow {
+  @apply absolute top-[calc(50%-0.75rem)] z-overlay hidden h-9 w-9;
+  @apply -translate-y-1/2 rounded-full bg-black/45 text-white md:flex;
+}
+
+.previous {
+  @apply left-3;
+}
+
+.next {
+  @apply right-3;
+}
+
+.dots {
+  @apply mt-3 justify-center gap-2;
+}
+
+.dot {
+  @apply h-2 w-2 rounded-full bg-black/15 transition-all;
+}
+
+.activeDot {
+  @apply w-6 bg-brand;
+}

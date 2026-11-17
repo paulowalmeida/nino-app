@@ -18,9 +18,16 @@ type TabBarProps = {
   cartCount?: number
   /** Abre a sacola. Só a vitrine tem sacola, então o atalho é opcional. */
   onOpenCart?: () => void
+  /** Abre a busca do cardápio. Só a vitrine tem cardápio, então é opcional. */
+  onOpenSearch?: () => void
 }
 
-export const TabBar = ({ base, cartCount = 0, onOpenCart }: TabBarProps) => {
+export const TabBar = ({
+  base,
+  cartCount = 0,
+  onOpenCart,
+  onOpenSearch,
+}: TabBarProps) => {
   const navigate = useNavigate()
   const { pathname } = useLocation()
   const [isAccountOpen, setIsAccountOpen] = useState(false)
@@ -91,6 +98,20 @@ export const TabBar = ({ base, cartCount = 0, onOpenCart }: TabBarProps) => {
             Início
           </Text>
         </Button>
+
+        {onOpenSearch && (
+          <Button
+            variant="ghost"
+            onClick={onOpenSearch}
+            className={styles.tabBarTab}
+            aria-label="Buscar no cardápio"
+          >
+            <Icon name="search" />
+            <Text as="span" className={styles.tabBarLabel}>
+              Busca
+            </Text>
+          </Button>
+        )}
 
         {hasActiveOrder && (
           <Button

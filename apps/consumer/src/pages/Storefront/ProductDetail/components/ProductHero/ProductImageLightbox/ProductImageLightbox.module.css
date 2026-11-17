@@ -1,0 +1,41 @@
+@reference "@nino/ds/globals.css";
+
+.panel {
+  @apply flex flex-col bg-black;
+}
+
+.body {
+  @apply flex min-h-0 flex-1 flex-col p-0;
+}
+
+.close {
+  @apply absolute right-3 top-3 z-content size-11 rounded-full;
+  @apply bg-black/60 text-fg-on-brand;
+}
+
+.imageButton {
+  @apply min-h-0 w-full flex-1 cursor-zoom-out;
+}
+
+.imageWrap {
+  @apply h-full w-full;
+}
+
+.image {
+  @apply h-full w-full object-contain;
+}
+
+/* WHY: a faixa escura sob a imagem ampliada é onde o iFood e similares dizem
+ * o que o cliente está vendo; sem ela a foto fica sem nome.
+ */
+.caption {
+  @apply flex shrink-0 flex-col gap-1 px-5 pb-6 pt-4;
+}
+
+.captionTitle {
+  @apply text-base font-bold text-fg-on-brand;
+}
+
+.captionDescription {
+  @apply line-clamp-3 text-sm text-fg-on-brand/70;
+}

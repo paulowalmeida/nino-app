@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query'
 
 import { queryKeys } from '@constants/query-keys'
-import { deliveryZoneService } from '@pages/Checkout/services/delivery-zone/delivery-zone.service'
+import { deliveryZoneService } from '@shared/services/delivery-zone/delivery-zone.service'
 import type { DeliveryQuoteDestination } from '@pages/checkout/types/delivery-quote/DeliveryQuoteDestination.type'
 
 /**

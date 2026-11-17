@@ -1,1 +1,4 @@
-export const homeVisibilityOperationMock = { open: true }
+export const homeVisibilityOperationMock = {
+  open: true,
+  promotionId: 'promo-1',
+}

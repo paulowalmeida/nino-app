@@ -1,4 +1,5 @@
 import {
+  type MouseEvent,
   type PointerEvent,
   useRef,
   useState,
@@ -83,6 +84,7 @@ const ToastCard = ({ toast }: { toast: ArkToastOptions }) => {
     startY: number
     offset: number
   } | null>(null)
+  const swipedRef = useRef(false)
 
   const resetSwipe = () => {
     pointerRef.current = null
@@ -100,6 +102,7 @@ const ToastCard = ({ toast }: { toast: ArkToastOptions }) => {
       startY: event.clientY,
       offset: 0,
     }
+    swipedRef.current = false
     event.currentTarget.setPointerCapture?.(event.pointerId)
   }
 
@@ -118,6 +121,7 @@ const ToastCard = ({ toast }: { toast: ArkToastOptions }) => {
 
     event.preventDefault()
     pointer.offset = offsetX
+    swipedRef.current = true
     setIsDragging(true)
     setSwipeOffset(offsetX)
   }
@@ -140,6 +144,12 @@ const ToastCard = ({ toast }: { toast: ArkToastOptions }) => {
     setSwipeOffset(0)
   }
 
+  const handleClick = (event: MouseEvent<HTMLDivElement>) => {
+    if (swipedRef.current) return
+    if ((event.target as HTMLElement).closest('button, a')) return
+    toastApi.dismiss()
+  }
+
   return (
     <div
       className={mergeClasses(
@@ -148,6 +158,7 @@ const ToastCard = ({ toast }: { toast: ArkToastOptions }) => {
         isDragging && styles.dragging
       )}
       style={{ transform: `translateX(${swipeOffset}px)` }}
+      onClick={handleClick}
       onPointerDown={handlePointerDown}
       onPointerMove={handlePointerMove}
       onPointerUp={handlePointerUp}

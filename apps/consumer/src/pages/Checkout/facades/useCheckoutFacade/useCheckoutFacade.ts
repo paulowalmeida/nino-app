@@ -1,5 +1,5 @@
 import { useCheckoutCart } from '@pages/checkout/hooks/useCheckoutCart/useCheckoutCart'
-import { useDeliveryZones } from '@pages/checkout/hooks/useDeliveryZones/useDeliveryZones'
+import { useDeliveryZones } from '@shared/hooks/useDeliveryZones/useDeliveryZones'
 import { useOpeningHours } from '@hooks/useOpeningHours/useOpeningHours'
 import { usePromotionOffers } from '@hooks/usePromotionOffers/usePromotionOffers'
 import { usePublicSettings } from '@hooks/usePublicSettings/usePublicSettings'

@@ -3,11 +3,16 @@ import { useOpeningHours } from '@hooks/useOpeningHours/useOpeningHours'
 import { usePublicSettings } from '@hooks/usePublicSettings/usePublicSettings'
 import { useStore } from '@hooks/useStore/useStore'
 import { useIsDesktop } from '@pages/Storefront/hooks/useIsDesktop/useIsDesktop'
+import { useMenuSearch } from '@pages/Storefront/hooks/useMenuSearch/useMenuSearch'
 import { useMenuSections } from '@pages/Storefront/hooks/useMenuSections/useMenuSections'
 import { useMenuItemAction } from '@pages/Storefront/hooks/useMenuItemAction/useMenuItemAction'
 import { useStorefrontCart } from '@pages/Storefront/hooks/useStorefrontCart/useStorefrontCart'
 import { useStorefrontSlug } from '@pages/Storefront/hooks/useStorefrontSlug/useStorefrontSlug'
 import { useHomeInteractionStore } from '@pages/Storefront/states/storefront/storefront.state'
+import { useDeliveryZones } from '@shared/hooks/useDeliveryZones/useDeliveryZones'
+import { couponBlocker } from '@utils/coupon-blocker/coupon-blocker'
+import { eligibleSubtotal } from '@utils/eligible-subtotal/eligible-subtotal'
+import type { PublicPromotion } from '@custom_types/promotion/public-promotion.type'
 import { usePromotionOffers } from '@hooks/usePromotionOffers/usePromotionOffers'
 import { useConsumerSession } from '@shared/hooks/useConsumerSession/useConsumerSession'
 import { useLogout } from '@shared/hooks/useLogout/useLogout'
@@ -22,9 +27,12 @@ export const useStorefrontFacade = (requestedSlug?: string) => {
   const settingsQuery = usePublicSettings(unitId)
   const cart = useStorefrontCart(unitId)
   const offers = usePromotionOffers(unitId)
+  const zonesQuery = useDeliveryZones(unitId)
   const menuItemAction = useMenuItemAction(unitId)
   const search = useHomeInteractionStore((state) => state.search)
   const setSearch = useHomeInteractionStore((state) => state.setSearch)
+  const isSearchOpen = useHomeInteractionStore((state) => state.isSearchOpen)
+  const setSearchOpen = useHomeInteractionStore((state) => state.setSearchOpen)
   const isCartOpen = useHomeInteractionStore((state) => state.isCartOpen)
   const setCartOpen = useHomeInteractionStore((state) => state.setCartOpen)
   const isInfoOpen = useHomeInteractionStore((state) => state.isInfoOpen)
@@ -33,8 +41,33 @@ export const useStorefrontFacade = (requestedSlug?: string) => {
   const setSelectedItem = useHomeInteractionStore(
     (state) => state.setSelectedItem
   )
-  const menuSections = useMenuSections(menuQuery.sections, search)
+  const menuSections = useMenuSections(menuQuery.sections)
+  const menuSearch = useMenuSearch(menuQuery.sections, search)
+  const focusedPromotionId = useHomeInteractionStore(
+    (state) => state.focusedPromotionId
+  )
+  const setFocusedPromotionId = useHomeInteractionStore(
+    (state) => state.setFocusedPromotionId
+  )
   const isDesktop = useIsDesktop()
+  // WHY: o painel lista tudo que a loja divulga, sem repetir a oferta que
+  // entra por mais de um caminho (cupom com código e desconto automático).
+  const promotionPanelOffers = [
+    ...offers.couponSuggestions,
+    ...offers.freeDeliveryOffers,
+    ...offers.giftOffers,
+  ].filter(
+    (promotion, index, all) =>
+      all.findIndex(({ id }) => id === promotion.id) === index
+  )
+  const couponBlockerOf = (promotion: PublicPromotion) =>
+    couponBlocker(promotion, {
+      subtotal: cart.cartTotal,
+      eligibleSubtotal: eligibleSubtotal(
+        cart.cartLines,
+        promotion.eligibleProductIds
+      ),
+    })
   const { consumer, isPending: isConsumerPending } = useConsumerSession()
   const logout = useLogout()
 
@@ -62,15 +95,23 @@ export const useStorefrontFacade = (requestedSlug?: string) => {
     discountOffer: offers.discountOffers[0],
     giftOffer: offers.giftOffer,
     packageOffers: offers.packageOffers,
+    promotionPanelOffers,
+    couponBlockerOf,
+    deliveryZones: zonesQuery.zones,
+    focusedPromotionId,
+    setFocusedPromotionId,
     bannerOffers: offers.bannerOffers,
     ...menuItemAction,
     ...menuSections,
+    ...menuSearch,
     isDesktop,
     consumer,
     logout: logout.mutate,
     isLoggingOut: logout.isPending,
     search,
     setSearch,
+    isSearchOpen,
+    setSearchOpen,
     isCartOpen,
     setCartOpen,
     isInfoOpen,

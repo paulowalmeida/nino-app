@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react'
+import { fireEvent, render, screen } from '@testing-library/react'
 import { MemoryRouter } from 'react-router'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 
@@ -50,6 +50,26 @@ describe('TabBar', () => {
     sessionState.consumer = null
     guestOrdersState.orders = []
     myOrdersState.data = undefined
+  })
+
+  it('shows the Busca tab only when a search handler is given', () => {
+    const onOpenSearch = vi.fn()
+    const { rerender } = render(
+      <MemoryRouter>
+        <TabBar base="/demo" />
+      </MemoryRouter>
+    )
+
+    expect(screen.queryByText('Busca')).not.toBeInTheDocument()
+
+    rerender(
+      <MemoryRouter>
+        <TabBar base="/demo" onOpenSearch={onOpenSearch} />
+      </MemoryRouter>
+    )
+    fireEvent.click(screen.getByLabelText('Buscar no cardápio'))
+
+    expect(onOpenSearch).toHaveBeenCalledTimes(1)
   })
 
   it('hides the Pedido tab with no tracked order', () => {

@@ -1,26 +1,27 @@
 @reference "@nino/ds/globals.css";
 
+/* WHY: O estado vive dentro do `hero` (OrderTracking.module.css), que
+ * entrega a superfície tingida; aqui só o respiro interno. A régua de
+ * progresso (OrderRail) fecha o painel pela base.
+ */
 .stage {
-  @apply relative overflow-hidden rounded-4 border border-brand-muted;
-  @apply bg-surface-page px-5 pb-7 pt-5 text-fg-muted shadow-warm-sm;
+  @apply relative px-5 pb-9 pt-2 text-fg-muted sm:px-6 md:px-8;
 }
 
 .stageCancelled {
-  @apply border-black/[0.08] bg-black/[0.08] pb-5;
+  @apply pb-6;
 }
 
 .flag {
-  @apply flex items-center gap-2 text-2xs font-bold uppercase;
-  @apply tracking-[0.14em] text-brand-strong;
+  @apply flex items-center gap-2 text-sm font-semibold text-brand-strong;
 }
 
 .flagDone {
-  @apply flex items-center gap-2 text-2xs font-bold uppercase;
-  @apply tracking-[0.14em] text-fg-subtle;
+  @apply flex items-center gap-2 text-sm font-semibold text-fg-subtle;
 }
 
 .flagDot {
-  @apply h-1.5 w-1.5 shrink-0 rounded-full bg-success;
+  @apply h-2 w-2 shrink-0 rounded-full bg-success;
   animation: stage-pulse 2s ease-in-out infinite;
 }
 
@@ -36,17 +37,17 @@
 }
 
 .copy {
-  @apply mt-2.5;
+  @apply mt-3;
 }
 
 .headline {
-  @apply font-display text-[1.4rem] font-extrabold leading-tight;
+  @apply font-display text-2xl font-extrabold leading-tight;
   @apply text-fg-strong;
-  @apply sm:text-2xl;
+  @apply sm:text-3xl;
 }
 
 .orderStageNote {
-  @apply mt-1.5 text-sm leading-snug text-fg-muted;
+  @apply mt-2 max-w-prose text-sm leading-snug text-fg-muted;
 }
 
 /* WHY: A previsão é a resposta que a pessoa veio buscar, então ela é o maior
@@ -54,15 +55,15 @@
  * 13px abaixo do nome do estado, do mesmo tamanho de todo o resto.
  */
 .eta {
-  @apply mt-6;
+  @apply mt-8;
 }
 
 .etaLead {
-  @apply text-2xs font-bold uppercase tracking-[0.14em] text-brand-strong;
+  @apply text-xs font-semibold text-brand-strong;
 }
 
 .etaValue {
-  @apply flex items-baseline gap-2 font-display text-[3.1rem] font-extrabold;
+  @apply mt-1 flex items-baseline gap-2 font-display text-5xl font-extrabold;
   @apply leading-none text-fg-strong;
   font-variant-numeric: tabular-nums;
 }
@@ -76,7 +77,35 @@
 }
 
 .etaSoon {
-  @apply font-display text-2xl font-extrabold leading-tight text-fg-muted;
+  @apply mt-1 font-display text-2xl font-extrabold leading-tight text-fg-muted;
+}
+
+/* WHY: ----- skeleton -----
+ * Cada barra ocupa a caixa de linha do texto real que substitui.
+ */
+.skFlag {
+  composes: nino-skeleton from global;
+  @apply h-5 w-36 rounded-2 bg-black/[0.06];
+}
+
+.skHeadline {
+  composes: nino-skeleton from global;
+  @apply mt-3 h-7.5 w-3/4 rounded-2 bg-black/[0.06];
+}
+
+.skNote {
+  composes: nino-skeleton from global;
+  @apply mt-2 h-5 w-2/3 rounded-2 bg-black/[0.06];
+}
+
+.skEtaLead {
+  composes: nino-skeleton from global;
+  @apply mt-8 h-4 w-20 rounded-2 bg-black/[0.06];
+}
+
+.skEtaValue {
+  composes: nino-skeleton from global;
+  @apply mt-1 h-12 w-32 rounded-2 bg-black/[0.06];
 }
 
 @media (prefers-reduced-motion: reduce) {

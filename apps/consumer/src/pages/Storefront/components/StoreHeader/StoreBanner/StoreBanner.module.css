@@ -4,7 +4,7 @@
   @apply relative w-full overflow-hidden bg-cover bg-center;
   @apply h-48;
   @apply sm:mx-auto sm:mt-4 sm:h-auto sm:w-[calc(100%-3rem)];
-  @apply sm:aspect-[1300/250] sm:max-h-60 sm:rounded-4;
+  @apply sm:aspect-[1300/250] sm:max-h-60 sm:rounded-4 lg:max-h-44;
   max-width: var(--storefront-column);
   background-color: var(--store-tint, var(--color-brand));
 }
@@ -65,35 +65,6 @@
   transition: transform 70ms linear;
   will-change: transform;
   z-index: 1;
-}
-
-.slideAction {
-  @apply absolute inset-0 z-content cursor-pointer;
-}
-
-.carouselButton {
-  @apply absolute top-1/2 z-overlay h-9 w-9 -translate-y-1/2 rounded-full;
-  @apply bg-black/45 text-white;
-}
-
-.previous {
-  @apply left-3;
-}
-
-.next {
-  @apply right-3;
-}
-
-.dots {
-  @apply absolute bottom-3 left-1/2 z-overlay flex -translate-x-1/2 gap-2;
-}
-
-.dot {
-  @apply h-2 w-2 rounded-full bg-white/55;
-}
-
-.activeDot {
-  @apply w-6 bg-white;
 }
 
 @media (prefers-reduced-motion: reduce) {

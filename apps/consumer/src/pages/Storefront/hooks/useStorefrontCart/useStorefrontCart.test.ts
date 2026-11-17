@@ -2,6 +2,7 @@ import { renderHook } from '@testing-library/react'
 import { describe, expect, it, vi } from 'vitest'
 
 import { cartItemAdapterMock } from '@pages/Storefront/adapters/cartItem.adapter/cartItem.adapter.mock'
+import { useCartStore } from '@shared/states/cart/cart.state'
 import { useCartSummary } from '@shared/hooks/useCartSummary/useCartSummary'
 
 import { useStorefrontCart } from './useStorefrontCart'
@@ -64,5 +65,42 @@ describe('useStorefrontCart', () => {
     expect(result.current.cartLines).toEqual([])
     expect(result.current.cartCount).toBe(0)
     expect(result.current.cartTotal).toBe(0)
+  })
+
+  it('updates an existing line with the adapted item', () => {
+    const { item } = cartItemAdapterMock
+    useCartStore.getState().clear()
+    useCartStore.getState().add(useStorefrontCartMock.unitId, {
+      id: item.id,
+      name: item.name,
+      price: item.price,
+      imageUrl: null,
+    })
+    vi.mocked(useCartSummary).mockReturnValue({
+      unitId: useStorefrontCartMock.unitId,
+      lines: {},
+      cartLines: [],
+      count: 0,
+      total: 0,
+      add: vi.fn(),
+      replace: vi.fn(),
+      increment: vi.fn(),
+      decrement: vi.fn(),
+      clear: vi.fn(),
+    })
+
+    const { result } = renderHook(() =>
+      useStorefrontCart(useStorefrontCartMock.unitId)
+    )
+    const updated = result.current.updateCartLine(item.id, item, 4, {
+      modifiers: [],
+      notes: 'Sem cebola',
+    })
+
+    expect(updated).toBe(true)
+    expect(Object.values(useCartStore.getState().lines)).toMatchObject([
+      { quantity: 4, item: { notes: 'Sem cebola' } },
+    ])
+    useCartStore.getState().clear()
   })
 })

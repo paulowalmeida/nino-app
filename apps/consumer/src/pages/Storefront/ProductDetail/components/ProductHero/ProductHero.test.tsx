@@ -2,10 +2,12 @@ import { render, screen } from '@testing-library/react'
 import { describe, expect, it, vi } from 'vitest'
 
 import { ProductHero } from './ProductHero'
-import { productHeroMock } from './ProductHero.mock'
+import userEvent from '@testing-library/user-event'
+import { productHeroMock, productHeroWithImageMock } from './ProductHero.mock'
 
 const navigate = vi.fn()
 let isDesktop = false
+let currentProduct: typeof productHeroMock.product = productHeroMock.product
 
 vi.mock('react-router', () => ({
   useNavigate: () => navigate,
@@ -15,7 +17,7 @@ vi.mock(
   '@pages/Storefront/ProductDetail/facades/useProductDetailFacade/useProductDetailFacade',
   () => ({
     useProductDetailFacade: () => ({
-      product: productHeroMock.product,
+      product: currentProduct,
       slug: productHeroMock.slug,
     }),
   })
@@ -50,5 +52,24 @@ describe('ProductHero', () => {
     expect(
       screen.queryByRole('button', { name: 'Voltar ao cardápio' })
     ).not.toBeInTheDocument()
+  })
+
+  it('opens the image full screen on click', async () => {
+    // Arrange
+    isDesktop = true
+    currentProduct = productHeroWithImageMock.product
+    render(<ProductHero />)
+
+    // Act
+    await userEvent.click(
+      screen.getByRole('button', { name: 'Ampliar imagem', hidden: true })
+    )
+
+    // Assert
+    expect(
+      screen.getByRole('dialog', { name: 'Imagem ampliada' })
+    ).toBeInTheDocument()
+
+    currentProduct = productHeroMock.product
   })
 })

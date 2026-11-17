@@ -2,8 +2,9 @@
 
 .identityRow {
   @apply relative z-content -mx-4 -mt-9 flex w-[calc(100%+2rem)] items-center;
-  @apply gap-3.5 border-y border-border bg-surface-page px-4 py-4;
-  @apply sm:mx-0 sm:mt-5 sm:w-auto sm:gap-4 sm:border-0 sm:px-0 sm:py-0;
+  @apply gap-3 border-y border-border bg-surface-page px-4 py-3;
+  @apply sm:mx-0 sm:mt-5 sm:w-auto sm:justify-center sm:gap-4 sm:border-0;
+  @apply sm:px-0 sm:py-0 sm:text-center;
   @apply lg:hidden;
   box-shadow: 0 12px 32px -18px
     color-mix(in srgb, var(--color-warm-950) 40%, transparent);
@@ -21,7 +22,7 @@
 }
 
 .logoTile {
-  @apply relative h-16 w-16 shrink-0 overflow-hidden rounded-3;
+  @apply relative h-14 w-14 shrink-0 overflow-hidden rounded-3;
   @apply border border-border bg-surface-raised;
   @apply sm:h-20 sm:w-20;
 }
@@ -46,16 +47,16 @@
 }
 
 .identity {
-  @apply min-w-0 flex-1;
+  @apply min-w-0 flex-1 sm:flex-none;
 }
 
 .name {
-  @apply line-clamp-2 font-display text-xl font-extrabold leading-tight;
+  @apply line-clamp-2 font-display text-lg font-extrabold leading-tight;
   @apply tracking-tight text-fg-strong sm:text-2xl;
 }
 
 .identityMeta {
-  @apply mt-1.5 flex flex-wrap items-center gap-x-1.5 gap-y-1;
+  @apply mt-1 flex flex-wrap items-center gap-x-1.5 gap-y-1 sm:justify-center;
   @apply text-[0.8125rem] text-fg-subtle;
 }
 

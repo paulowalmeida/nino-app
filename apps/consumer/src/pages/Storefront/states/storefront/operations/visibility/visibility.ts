@@ -9,6 +9,10 @@ export const setHomeInfoOpen = (
   set: SetStorefrontInteractionState,
   open: boolean
 ) => set({ isInfoOpen: open })
+export const setHomeFocusedPromotion = (
+  set: SetStorefrontInteractionState,
+  id: string | null
+) => set({ focusedPromotionId: id })
 export const setHomeSelectedItem = (
   set: SetStorefrontInteractionState,
   item: MenuItem | null

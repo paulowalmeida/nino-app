@@ -4,46 +4,33 @@
   @apply flex flex-col gap-3;
 }
 
-/* WHY: o cupom sugerido e o aplicado usam a mesma tira de marca suave da
- * faixa do cardápio — o cliente reconhece a oferta que viu lá.
- */
-.couponSuggestion,
-.couponApplied {
-  @apply flex items-center gap-3 rounded-3 bg-brand-soft px-4 py-3;
+.couponHeading {
+  @apply text-sm font-semibold text-fg-strong;
 }
 
-.couponIcon {
-  @apply shrink-0 text-brand-strong;
+/* WHY: o DS não tem linha clicável (ListRow é <li>, Button é pílula); a
+ * entrada para o painel é um botão nativo com a cara de uma linha. */
+.couponsEntry {
+  @apply flex w-full items-center gap-3 rounded-3 border border-border bg-surface-raised px-4 py-3 text-left;
+  @apply transition-colors hover:bg-surface-mute focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand;
 }
 
-.couponText {
+.entryIcon {
+  @apply shrink-0 text-fg-muted;
+}
+
+.entryText {
   @apply flex min-w-0 flex-1 flex-col gap-0.5;
 }
 
-.couponCode {
-  @apply text-sm font-bold text-brand-strong;
+.entryTitle {
+  @apply text-sm font-semibold text-fg-strong;
 }
 
-.couponLabel {
+.entrySummary {
   @apply text-xs text-fg-muted;
 }
 
-.couponNote {
-  @apply text-xs font-semibold text-warning;
-}
-
-.couponForm {
-  @apply flex items-start gap-2 pt-2;
-}
-
-.couponError {
-  @apply mt-1.5 text-xs font-semibold text-danger;
-}
-
-.couponDisclosure {
-  @apply -mx-3;
-}
-
-.couponHeading {
-  @apply text-sm font-semibold text-fg-strong;
+.appliedActions {
+  @apply flex shrink-0 items-center gap-1;
 }

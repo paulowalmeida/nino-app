@@ -1,4 +1,4 @@
-import { fireEvent, render, screen } from '@testing-library/react'
+import { render, screen } from '@testing-library/react'
 import type { ReactNode } from 'react'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 
@@ -28,6 +28,10 @@ vi.mock(
   () => ({
     useStorefrontFacade: vi.fn(),
   })
+)
+vi.mock(
+  '@pages/Storefront/components/StorefrontCouponsDrawer/StorefrontCouponsDrawer',
+  () => ({ StorefrontCouponsDrawer: () => null })
 )
 vi.mock('@hooks/useScrollProgress/useScrollProgress', () => ({
   useScrollProgress: () => 0,
@@ -99,6 +103,10 @@ vi.mock(
   '@pages/Storefront/components/StoreMenu/MenuSearchField/MenuSearchField',
   () => ({ MenuSearchField: emptyComponent })
 )
+vi.mock(
+  '@pages/Storefront/components/StoreMenu/MenuSearchModal/MenuSearchModal',
+  () => ({ MenuSearchModal: emptyComponent })
+)
 vi.mock('@shared/components/PoweredBy/PoweredBy', () => ({
   PoweredBy: emptyComponent,
 }))
@@ -106,6 +114,12 @@ vi.mock(
   '@pages/Storefront/components/StoreHeader/StoreBanner/StoreBanner',
   () => ({
     StoreBanner: emptyComponent,
+  })
+)
+vi.mock(
+  '@pages/Storefront/components/StoreHeader/PromotionBanner/PromotionBanner',
+  () => ({
+    PromotionBanner: emptyComponent,
   })
 )
 vi.mock(
@@ -161,9 +175,9 @@ describe('StorefrontContent', () => {
       cartCount: 0,
       cartTotal: 0,
       visibleSections: [],
-      isSearching: false,
       isMenuError: false,
       retryMenu: vi.fn(),
+      packageOffers: [],
       reset: vi.fn(),
     } as never)
 
@@ -186,9 +200,9 @@ describe('StorefrontContent', () => {
       cartCount: 0,
       cartTotal: 0,
       visibleSections: [],
-      isSearching: false,
       isMenuError: false,
       retryMenu: vi.fn(),
+      packageOffers: [],
       reset: vi.fn(),
     } as never)
 
@@ -217,9 +231,9 @@ describe('StorefrontContent', () => {
       cartCount: 0,
       cartTotal: 0,
       visibleSections: [menuSectionWithImageMock],
-      isSearching: false,
       isMenuError: false,
       retryMenu: vi.fn(),
+      packageOffers: [],
       reset: vi.fn(),
     } as never)
 
@@ -229,10 +243,7 @@ describe('StorefrontContent', () => {
     expect(screen.queryByText('seção Hambúrgueres')).not.toBeInTheDocument()
   })
 
-  it('scrolls to the top when searching for a product', () => {
-    const scrollTo = vi
-      .spyOn(window, 'scrollTo')
-      .mockImplementation(() => undefined)
+  it('does not filter the menu while the search is typed', () => {
     vi.mocked(useStorefrontFacade).mockReturnValue({
       store: homeStoreMock,
       search: 'burger',
@@ -246,52 +257,15 @@ describe('StorefrontContent', () => {
       cartCount: 0,
       cartTotal: 0,
       visibleSections: homeContentMock.sections,
-      isSearching: true,
       isMenuError: false,
       retryMenu: vi.fn(),
+      packageOffers: [],
       reset: vi.fn(),
     } as never)
 
     render(<StorefrontContent pathSlug={homeContentMock.pathSlug} />)
 
-    expect(scrollTo).toHaveBeenCalledWith({ top: 0, behavior: 'smooth' })
     expect(screen.getByText('categorias filtradas')).toBeInTheDocument()
-    scrollTo.mockRestore()
-  })
-
-  it('offers a way to recover when the search has no results', () => {
-    const setSearch = vi.fn()
-    vi.mocked(useStorefrontFacade).mockReturnValue({
-      store: homeStoreMock,
-      search: 'pizza',
-      setSearch,
-      sections: homeContentMock.sections,
-      isMenuPending: false,
-      isHoursPending: false,
-      hours: [],
-      estimatedMinutes: homeContentMock.pathSlug.length,
-      cart: {},
-      cartLines: [],
-      cartCount: 0,
-      cartTotal: 0,
-      visibleSections: [],
-      isSearching: true,
-      isMenuError: false,
-      retryMenu: vi.fn(),
-      reset: vi.fn(),
-    } as never)
-
-    render(<StorefrontContent pathSlug={homeContentMock.pathSlug} />)
-
-    expect(screen.getByText('Nenhum item encontrado')).toBeInTheDocument()
-    expect(
-      screen.getByText(
-        'Não encontramos resultados para “pizza”. Tente outro termo.'
-      )
-    ).toBeInTheDocument()
-
-    fireEvent.click(screen.getByRole('button', { name: 'Limpar busca' }))
-
-    expect(setSearch).toHaveBeenCalledWith('')
+    expect(screen.queryByText('Nenhum item encontrado')).not.toBeInTheDocument()
   })
 })

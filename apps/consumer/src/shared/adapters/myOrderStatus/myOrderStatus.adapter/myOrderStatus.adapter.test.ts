@@ -10,4 +10,22 @@ describe('myOrderStatus', () => {
       timeline: [{ status: 'PREPARING', at: '2026-08-29T19:10:00.000Z' }],
     })
   })
+
+  it('exposes the order details, dropping cancelled items', () => {
+    const order = myOrderStatus({
+      ...myOrderStatusMock.response,
+      ...myOrderStatusMock.withDetails,
+    })
+
+    expect(order.details?.items).toHaveLength(1)
+    expect(order.details?.items[0]).toMatchObject({
+      name: 'Pizza',
+      modifiers: [{ name: 'Borda' }],
+    })
+    expect(order.details?.paymentMethod).toBe('PIX')
+  })
+
+  it('has no details when the API does not send them', () => {
+    expect(myOrderStatus(myOrderStatusMock.response).details).toBeUndefined()
+  })
 })

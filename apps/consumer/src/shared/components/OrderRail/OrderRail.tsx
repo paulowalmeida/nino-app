@@ -8,6 +8,8 @@ import styles from './OrderRail.module.css'
 type OrderRailProps = {
   order: GuestOrderStatus
   className?: string
+  /** Em fluxo, com altura própria, em vez de colada na borda de baixo do host. */
+  inline?: boolean
 }
 
 /**
@@ -20,7 +22,7 @@ type OrderRailProps = {
  * miniatura: é o trilho que faz o banner da loja e a tela de acompanhamento
  * lerem como o mesmo objeto.
  */
-export const OrderRail = ({ order, className }: OrderRailProps) => {
+export const OrderRail = ({ order, className, inline }: OrderRailProps) => {
   const journey = journeyFor(order)
 
   /* Pedido encerrado preenche o trilho inteiro: o último passo não fica
@@ -32,7 +34,7 @@ export const OrderRail = ({ order, className }: OrderRailProps) => {
   return (
     <Box
       direction="row"
-      className={`${styles.orderRail} ${className ?? ''}`}
+      className={`${styles.orderRail} ${inline ? styles.inline : ''} ${className ?? ''}`}
       aria-hidden="true"
     >
       {journey.map((step, i) => (

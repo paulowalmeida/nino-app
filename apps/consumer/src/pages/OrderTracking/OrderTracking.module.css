@@ -1,11 +1,25 @@
 @reference "@nino/ds/globals.css";
 
 .orderTrackingPage {
-  @apply flex min-h-dvh w-full flex-col bg-surface-1 pb-16;
+  @apply flex min-h-dvh w-full flex-col overflow-x-clip bg-surface-page pb-16;
 }
 
 .orderTrackingShell {
   @apply mx-auto w-full max-w-2xl flex-1 px-5 sm:px-6;
+}
+
+/* WHY: Cabeçalho e estado são UMA peça: a mesma superfície tingida do topo
+ * da tela até a régua. No celular ela sangra de borda a borda e fecha com
+ * cantos arredondados embaixo; de tablet para cima vira um painel dentro da
+ * coluna (max-w-2xl), em vez de uma faixa esticada pela viewport.
+ */
+.hero {
+  @apply relative -mx-5 overflow-hidden rounded-b-6 bg-brand-soft sm:-mx-6;
+  @apply md:mx-0 md:mt-6 md:rounded-6;
+}
+
+.heroCancelled {
+  @apply bg-surface-2;
 }
 
 .orderTrackingFooter {
